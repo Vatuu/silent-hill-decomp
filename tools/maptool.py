@@ -520,7 +520,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
             content1 = clean_file(file1_text, funcname_file1)
             content2 = clean_file(file2_text, funcname_file2)
 
-            file2_sym_path = f"configs/maps/sym.{map2}.txt"
+            file2_sym_path = f"configs/USA/maps/sym.{map2}.txt"
             file2_sym_text = read_file(file2_sym_path)
             file2_syms = parse_sym_addrs(file2_sym_text)
             
@@ -622,7 +622,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
         # Optional sym.[map2].txt update
         if updateSymTxtFile and sharedFuncSymbols:
 
-            file1_sym_path = f"configs/maps/sym.{map1}.txt"
+            file1_sym_path = f"configs/USA/maps/sym.{map1}.txt"
             file1_sym_text = read_file(file1_sym_path)
             file1_syms = parse_sym_comments(file1_sym_text)
 
@@ -881,7 +881,7 @@ def main():
         print()
 
         for map_name in map_files:
-            sym_path = f"configs/maps/sym.{map_name}.txt"
+            sym_path = f"configs/USA/maps/sym.{map_name}.txt"
             sym_text = sort_sym_by_address(read_file(sym_path))
             sym_text += "\n" # end file with newline
             with open(sym_path, "w", encoding="utf-8") as f:

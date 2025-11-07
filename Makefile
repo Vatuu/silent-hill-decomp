@@ -415,7 +415,6 @@ $(foreach target,$(TARGET_IN),$(eval $(call make_elf_target,$(target),$(call get
 # Generate objects.
 # (Running make with MAKE_COMPILE_LOG=1 will create a compile.log that can be passed to tools/create_compile_commands.py)
 
-
 $(BUILD_DIR)/%.i: %.c
 	@mkdir -p $(dir $@)
 	$(call FlagsSwitch, $@)
