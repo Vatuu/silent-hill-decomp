@@ -680,6 +680,7 @@ void func_800E3244(void)
             Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, (1<<1));
             break;
     }
+    
     if (g_SysWork.sysStateStep_C[0] >= 22 && g_SysWork.sysStateStep_C[0] <= 27)
     {
         posx = FP_FROM(Math_Sin(D_800ED5B6) * Q12(5.2f), Q12_SHIFT) + Q12(20.0f);
@@ -693,9 +694,10 @@ void func_800E3244(void)
             FP_FROM(Math_Cos(D_800ED5B6 - Q12(0.2188f)) * Q12(4.8f), Q12_SHIFT) + Q12(100.0f)
         );
 
-        Math_SetSVectorFast(g_SysWork.field_2370, FP_ANGLE(-39.4f), (D_800ED5B6 + FP_ANGLE(182.9f)), FP_ANGLE(0.0f));
+        Math_SetSVectorFast(&g_SysWork.field_2370, FP_ANGLE(-39.4f), (D_800ED5B6 + FP_ANGLE(182.9f)), FP_ANGLE(0.0f));
         func_800E74C4();
     }
+
     if (D_800ED5B0 > 0)
     {
         Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, &D_800CC4C4, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);

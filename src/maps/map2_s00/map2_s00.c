@@ -2204,7 +2204,7 @@ void func_800EB908(void) // 0x800EB908
     Math_Vector3Set(&D_800F55DC[0], Q12(205.0f), Q12(0.0f), Q12(-80.0f));
     Math_Vector3Set(&D_800F55DC[1], Q12(-35.0f), Q12(0.0f), Q12(360.0f));
 
-    Math_SetSVectorFast(D_800F5344, 0, 0, 0);
+    Math_SetSVectorFast(&D_800F5344, 0, 0, 0);
 
     WorldObject_ModelNameSet(&g_WorldObject6[0], "CHAIN1_1");
     WorldObject_ModelNameSet(&g_WorldObject6[1], "CHAIN1_2");
@@ -2220,7 +2220,7 @@ void func_800EB908(void) // 0x800EB908
     WorldObject_ModelNameSet(&D_800F535C, "DOOR1_BA");
     Math_Vector3Set(&D_800F537C, Q12(-263.0f), Q12(0.0f), Q12(-104.0f));
 
-    Math_SetSVectorFast(D_800F538C, 0, 0, 0);
+    Math_SetSVectorFast(&D_800F538C, 0, 0, 0);
     WorldObject_ModelNameSet(&D_800F56EC, D_800A99E4.savePadName_4);
 
     WorldObjectPoseInit(&D_800F570C, 117.681641f, -1.01f, 216.263f, 0.0f, 193.51f, 0.0f);

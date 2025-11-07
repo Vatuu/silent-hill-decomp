@@ -7486,14 +7486,14 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                 case NO_VALUE:
                 case EquippedWeaponId_Unk8:
                 case EquippedWeaponId_Unk9:
-                    Math_SetSVectorFast(sp90, 0, 60, 134);
+                    Math_SetSVectorFast(&sp90, 0, 60, 134);
                     Vw_CoordHierarchyMatrixCompute(&coord[17], &sp50);
                     break;
 
                 default:
                     if (g_SysWork.player_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim)
                     {
-                        Math_SetSVectorFast(sp90, 0, 60, 134);
+                        Math_SetSVectorFast(&sp90, 0, 60, 134);
                         Vw_CoordHierarchyMatrixCompute(&coord[17], &sp50);
                     }
                     else
@@ -7501,43 +7501,43 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                         switch (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F))
                         {
                             case EquippedWeaponId_KitchenKnife:
-                                Math_SetSVectorFastSum(sp90, FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT),
+                                Math_SetSVectorFastSum(&sp90, FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT),
                                                         -FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x4B, Q12_SHIFT - 1),
                                                          FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x4B, Q12_SHIFT) >> 1);
                                 break;
 
                             case EquippedWeaponId_SteelPipe:
-                                Math_SetSVectorFastSum(sp90, FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT),
+                                Math_SetSVectorFastSum(&sp90, FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT),
                                                         -(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xE1, Q12_SHIFT) >> 1),
                                                          FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT - 2));
                                 break;
 
                             case EquippedWeaponId_Chainsaw:
-                                Math_SetSVectorFastSum(sp90, FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1,
+                                Math_SetSVectorFastSum(&sp90, FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1,
                                                         -(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x87, Q12_SHIFT) >> 1),
                                                          (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x1EF, Q12_SHIFT) >> 1));
                                 break;
 
                             case EquippedWeaponId_RockDrill:
-                                Math_SetSVectorFastSum(sp90, 0,
+                                Math_SetSVectorFastSum(&sp90, 0,
                                                         -(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT)),
                                                          FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT - 2));
                                 break;
 
                             case EquippedWeaponId_Axe:
-                                Math_SetSVectorFastSum(sp90, 0,
+                                Math_SetSVectorFastSum(&sp90, 0,
                                                         -(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x2C1, Q12_SHIFT) >> 1),
                                                          FP_MULTIPLY((u32)D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xC3, Q12_SHIFT));
                                 break;
 
                             case EquippedWeaponId_Hammer:
-                                Math_SetSVectorFastSum(sp90, (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1),
+                                Math_SetSVectorFastSum(&sp90, (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1),
                                                         -(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x69, Q12_SHIFT)),
                                                          FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x13B, Q12_SHIFT) >> 1);
                                 break;
 
                             case EquippedWeaponId_Katana:
-                                Math_SetSVectorFastSum(sp90, (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1),
+                                Math_SetSVectorFastSum(&sp90, (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1),
                                                         -(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0x13B, Q12_SHIFT) >> 1),
                                                          FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT));
                                 break;
@@ -7574,7 +7574,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                     g_SysWork.targetNpcIdx_2353 = NO_VALUE;
                 }
 
-                Math_SetSVectorFast(sp90, 0, -39, 87);
+                Math_SetSVectorFast(&sp90, 0, -39, 87);
                 sp90.vz = 87;
 
                 Vw_CoordHierarchyMatrixCompute(&coord[10], &sp50);
@@ -7604,7 +7604,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                 (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
                  chara->model_0.anim_4.keyframeIdx_8 >= 577 && model->anim_4.keyframeIdx_8 <  583))
             {
-                Math_SetSVectorFast(sp90, 0, 0, 0);
+                Math_SetSVectorFast(&sp90, 0, 0, 0);
                 Vw_CoordHierarchyMatrixCompute(&coord[10], &sp50);
                 gte_SetRotMatrix(&sp50);
                 gte_SetTransMatrix(&sp50);
@@ -7612,7 +7612,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                 gte_rt();
                 gte_stlvnl(&sp80);
 
-                Math_SetSVectorFast(sp90, 0, 0, 0);
+                Math_SetSVectorFast(&sp90, 0, 0, 0);
                 sp30.vx = Q8_TO_Q12(sp80.vx);
                 sp30.vy = Q8_TO_Q12(sp80.vy);
                 sp30.vz = Q8_TO_Q12(sp80.vz);

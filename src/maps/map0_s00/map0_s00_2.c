@@ -1007,7 +1007,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
             }
             else
             {
-                Math_SetSVectorFast(offset, 0, -38, 0);
+                Math_SetSVectorFast(&offset, 0, -38, 0);
 
                 Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords_890[2], &neck_lwm);
 

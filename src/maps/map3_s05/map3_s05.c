@@ -663,8 +663,8 @@ void func_800D8424(void) // 0x800D8424
 
     Math_Vector3Set(&D_800DD420, Q12(20.0f), Q12(0.0f), Q12(-20.0f));
     Math_Vector3Set(&D_800DD430, Q12(19.9998f), Q12(-0.682f), Q12(-21.05005f));
-    Math_SetSVectorFast(D_800DD440, FP_ANGLE(0.0f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
-    Math_SetSVectorFast(D_800DD448, FP_ANGLE(58.05f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
+    Math_SetSVectorFast(&D_800DD440, FP_ANGLE(0.0f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
+    Math_SetSVectorFast(&D_800DD448, FP_ANGLE(58.05f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
 
     Math_Vector3Set(&g_WorldObject1[0].position_1C, Q12(19.1f), Q12(0.0f), Q12(59.1f));
     WorldObject_ModelNameSet(&g_WorldObject1[0].object_0, "DR1L_HID");

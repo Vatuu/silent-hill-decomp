@@ -2666,7 +2666,7 @@ typedef struct
 #define WorldObjectPoseSet(eventPose, posX, posY, posZ, rotX, rotY, rotZ) \
 {                                                                         \
     Math_Vector3Set(&(eventPose)->position_0, posX, posY, posZ);          \
-    Math_SetSVectorFast((eventPose)->rotation_C, rotX, rotY, rotZ);       \
+    Math_SetSVectorFast(&(eventPose)->rotation_C, rotX, rotY, rotZ);       \
 }
 
 #endif
