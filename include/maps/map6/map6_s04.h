@@ -38,7 +38,7 @@ extern VECTOR3 D_800ED590;
 
 extern VECTOR3 D_800ED5A0;
 
-extern s8 D_800ED5AC;
+extern u8 D_800ED5AC; // g_MapMsgSoundIdx
 
 extern s32 D_800ED5B0;
 
@@ -66,6 +66,13 @@ extern s8 D_800ED5B8;
 extern s8 D_800ED5F0;
 extern s8 D_800ED840;
 extern s8 D_800ED841;
+extern s8 D_800CC4C4;
+extern s8 D_800CC4CC;
+extern s8 D_800CC4D4;
+extern s8 D_800CC4DC;
+extern u16 D_800EBA34[23]; // g_MapMsgSounds
+extern s16 D_800ED5B4;
+extern s8 D_800ED5B8;
 
 void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_MonsterCybil_Init(s_SubCharacter*, s_Model*);
@@ -94,5 +101,7 @@ void func_800E1290(void);
 void func_800E2CA0(void);
 
 void func_800E5D44(void);
+
+void func_800E3244(void);
 
 #endif
