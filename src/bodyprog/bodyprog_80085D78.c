@@ -3190,7 +3190,152 @@ void func_8008E794(VECTOR3* arg0, q3_12 angle, s32 arg2) // 0x8008E794
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008EA68); // 0x8008EA68
+void func_8008EA68(SVECTOR* arg0, VECTOR3* arg1, s32 arg2) // 0x8008EA68
+{
+    typedef struct
+    {
+        POLY_G4 g4[2];
+        POLY_G3 g3[2];
+    } s_poly;
+
+    SVECTOR       sp28[5];
+    GsCOORDINATE2 sp50;
+    MATRIX        spA0;
+    SVECTOR       spC0;
+    s32           spC8;
+    s32           spCC;
+    GsOT_TAG*     spD0;
+    GsOT_TAG*     spD4;
+    GsOT_TAG*     temp_v1;
+    s16           temp_v0;
+    s16           var_s7;
+    s32           temp_s0;
+    s32           temp_s0_2;
+    s16           temp_s1;
+    s32           temp_s2;
+    s32           temp_v0_2;
+    s32           temp_v0_3;
+    s32           temp_v1_2;
+    s32           var_fp;
+    PACKET*       packet;
+    s_poly*       poly;
+    s32           temp;
+
+    temp_v1    = g_OrderingTable0[g_ActiveBufferIdx].org;
+    sp50.flg   = 0;
+    sp50.coord = GsIDMATRIX;
+
+    spD0 = &temp_v1[641];
+    spD4 = &temp_v1[639];
+
+    temp_v0 = ratan2(arg0->vx, arg0->vz);
+
+    sp50.coord.m[0][0] = Math_Cos(temp_v0);
+    sp50.coord.m[2][2] = Math_Cos(temp_v0);
+    sp50.coord.m[0][2] = Math_Sin(temp_v0);
+    sp50.coord.m[2][0] = -Math_Sin(temp_v0);
+
+    sp50.super = NULL;
+
+    sp50.coord.t[0] = arg1->vx >> 4;
+    sp50.coord.t[1] = arg2 >> 4;
+    sp50.coord.t[2] = arg1->vz >> 4;
+
+    func_80049AF8(&sp50, &spA0);
+    SetRotMatrix(&spA0);
+    SetTransMatrix(&spA0);
+
+    spC0.vx = 0;
+    spC0.vy = 0;
+    spC0.vz = 0xB3;
+
+    RotTransPers(&spC0.vx, &spC8, &spCC, &spCC);
+
+    packet     = GsOUT_PACKET_P;
+    sp28[1].vy = 0;
+    sp28[0].vy = 0;
+    sp28[3].vy = 0x33;
+    sp28[2].vy = 0x33;
+
+    for (var_fp = 0, var_s7 = 0; var_fp < 8; var_fp++, var_s7 += 0x200)
+    {
+        temp_s1   = Math_Sin(var_s7);
+        temp_s0   = var_s7 + 0x200;
+        temp_s2   = Math_Cos(var_s7);
+        temp_s0_2 = Math_Sin(temp_s0);
+        temp_v0_2 = Math_Cos(temp_s0);
+
+        sp28[0].vx = FP_MULTIPLY((s16)temp_s1, 0x33, Q12_SHIFT - 2);
+        sp28[0].vz = FP_MULTIPLY((s16)temp_s2, 0x33, Q12_SHIFT - 2) + 0x133;
+        sp28[1].vx = FP_MULTIPLY((s16)temp_s0_2, 0x33, Q12_SHIFT - 2);
+        sp28[1].vz = FP_MULTIPLY((s16)temp_v0_2, 0x33, Q12_SHIFT - 2) + 0x133;
+        sp28[2].vx = FP_MULTIPLY((s16)temp_s1, 0x233, Q12_SHIFT);
+        sp28[2].vz = FP_MULTIPLY((s16)temp_s2, 0x233, Q12_SHIFT) + 0x180;
+        sp28[3].vx = FP_MULTIPLY((s16)temp_s0_2, 0x233, Q12_SHIFT);
+        sp28[3].vz = FP_MULTIPLY((s16)temp_v0_2, 0x233, Q12_SHIFT) + 0x180;
+
+        poly = packet;
+
+        temp = 0;
+
+        *(s32*)&poly->g4[0].r0 = 0xC1214;
+        *(s32*)&poly->g4[0].r1 = 0xC1214;
+        *(s32*)&poly->g4[0].r3 = 0x40404;
+        *(s32*)&poly->g4[0].r2 = 0x40404;
+
+        *(s32*)&poly->g3[0].r0 = 0xC1618;
+        *(s32*)&poly->g3[0].r2 = 0xC1214;
+        *(s32*)&poly->g3[0].r1 = 0xC1214;
+
+        *(s32*)&poly->g4[1].r0 = 0x40804;
+        *(s32*)&poly->g4[1].r1 = 0x40804;
+        *(s32*)&poly->g4[1].r3 = 0;
+        *(s32*)&poly->g4[1].r2 = 0;
+
+        *(s32*)&poly->g3[1].r0 = 0x40808;
+        *(s32*)&poly->g3[1].r2 = 0x40804;
+        *(s32*)&poly->g3[1].r1 = 0x40804;
+
+        setPolyG4(&poly->g4[0]);
+        setPolyG3(&poly->g3[0]);
+        setPolyG4(&poly->g4[1]);
+        setSemiTrans(&poly->g4[1], 1);
+        setPolyG3(&poly->g3[1]);
+        setSemiTrans(&poly->g3[1], 1);
+
+        *(s32*)&poly->g3[1].x0 = *(s32*)&spC8;
+        *(s32*)&poly->g3[0].x0 = *(s32*)&spC8;
+
+        RotTransPers4(&sp28[0], &sp28[1], &sp28[2], &sp28[3], &poly->g4[0].x0, &poly->g4[0].x1, &poly->g4[0].x2, &poly->g4[0].x3, &spCC, &spCC);
+
+        temp_v0_3 = *(s32*)&poly->g4[0].x0;
+        temp_v1_2 = *(s32*)&poly->g4[0].x1;
+
+        *(s32*)&poly->g3[1].x1 = temp_v0_3;
+        *(s32*)&poly->g3[0].x1 = temp_v0_3;
+        *(s32*)&poly->g4[1].x0 = temp_v0_3;
+
+        *(s32*)&poly->g3[1].x2 = temp_v1_2;
+        *(s32*)&poly->g3[0].x2 = temp_v1_2;
+        *(s32*)&poly->g4[1].x1 = temp_v1_2;
+
+        *(s32*)&poly->g4[1].x2 = *(s32*)&poly->g4[0].x2;
+        *(s32*)&poly->g4[1].x3 = *(s32*)&poly->g4[0].x3;
+
+        AddPrim(spD0, &poly->g4[0]);
+        AddPrim(spD0, &poly->g3[0]);
+        AddPrim(spD4, &poly->g4[1]);
+        AddPrim(spD4, &poly->g3[1]);
+
+        poly++;
+        packet = poly;
+    }
+
+    SetDrawTPage((DR_TPAGE*)packet, temp, 1, 0x20);
+    AddPrim(spD4, packet);
+    packet        += sizeof(DR_TPAGE);
+    GsOUT_PACKET_P = packet;
+}
 
 void func_8008EF18() {}
 
