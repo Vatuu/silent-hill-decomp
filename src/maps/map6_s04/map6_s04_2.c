@@ -251,7 +251,80 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E1CA0);
 
 void func_800E1D48() {}
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E1D50);
+void func_800E1D50(void)
+{
+    VECTOR3 lintPos;
+    SVECTOR3 lintRot;
+    s32 rotx;
+    s32 rotz;
+    #define STATE_SKIP 3
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < STATE_SKIP)
+    {
+        SysWork_StateStepSet(0, STATE_SKIP);
+    }
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            D_800ED5AC = 0;
+            D_800ED5B0 = 0;
+            g_SysWork.flags_22A4 |= (1<<4);
+            Game_TurnFlashlightOn();
+            func_800E1CA0();
+            func_8007E860();
+            Fs_QueueStartRead(FILE_ANIM_HBM6_S4B_ANM, FS_BUFFER_4);
+            Fs_QueueStartRead(FILE_ANIM_PARK_DMS, FS_BUFFER_14);
+            D_800A9938 = 0x38630;
+            Fs_QueueWaitForEmpty();
+            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_14);
+            g_SysWork.field_235C = NULL;
+            g_SysWork.field_236C = NULL;
+            g_SysWork.field_2378 = Q12(1.0f);
+            func_800348C0();
+            Chara_Load(0, Chara_MonsterCybil, g_SysWork.npcCoords_FC0, -1, NULL, NULL);
+            g_SysWork.field_30 = 20;
+            g_SysWork.flags_22A4 |= (1<<3);
+            SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 113, false);
+            SysWork_StateStepIncrement(0);
+            break;
+        case 2:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(0.0f), Q12(19.0f), false, true);
+            break;
+        case 3:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            break;
+        default:
+            D_800ED5B0 = NO_VALUE;
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            vcReturnPreAutoCamWork(true);
+            func_80088D0C();
+            Chara_Spawn(Chara_MonsterCybil, 0, Q12(26.5f), Q12(108.5f), Q12(0.03125f), 3);
+            func_800E15FC(&g_SysWork.player_4C.chara_0, &g_SysWork.npcs_1A0[0], 1);
+            Savegame_EventFlagSet(EventFlag_441);
+            break;
+    }
+    if (D_800ED5B0 >= 0)
+    {
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, &D_800CC4C4, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800ED590, &D_800ED5A0, NULL, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14));
+        vcUserCamTarget(&D_800ED590, NULL, true);
+        vcUserWatchTarget(&D_800ED5A0, NULL, true);
+        Dms_CharacterGetPosRot(&g_SysWork.field_2360, &lintRot, &D_800CC4CC, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterGetPosRot(&lintPos, &lintRot, &D_800CC4D4, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
+        rotx = Q12_TO_Q6(lintPos.vx - g_SysWork.field_2360.vx);
+        rotz = Q12_TO_Q6(lintPos.vz - g_SysWork.field_2360.vz);
+        g_SysWork.field_2370.vx = -ratan2(lintPos.vy - g_SysWork.field_2360.vy, Q6_TO_Q12(SquareRoot0(SQUARE(rotx) + SQUARE(rotz))));
+        g_SysWork.field_2370.vy = ratan2(lintPos.vx - g_SysWork.field_2360.vx, lintPos.vz - g_SysWork.field_2360.vz);
+        g_SysWork.field_2370.vz = 0;
+    }
+}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
