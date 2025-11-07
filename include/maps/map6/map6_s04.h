@@ -49,6 +49,24 @@ extern s_Model    g_Ai_MonsterCybil_ExtraModel; // Some kind of attachment or an
 extern s32 D_800ED588;
 extern s32 D_800ED58C;
 
+extern s_WorldObject_0 g_WorldObject0[2]; // 800ED600
+extern s_WorldObject_0 g_WorldObject1[3]; // 800ED640
+extern s_WorldObject_0 g_WorldObject2;    // 800ED6A0
+extern s_WorldObject_0 g_WorldObject3;    // 800ED6C0
+extern s_WorldObject_0 g_WorldObject4[2]; // 800ED6E0
+extern s_WorldObject_0 g_WorldObject5;    // 800ED720
+extern VECTOR3 D_800ED740;
+extern s_WorldObject_0 g_WorldObject6[3]; // 800ED750
+extern s_WorldObject_0 g_WorldObject7[2]; // 800ED7B0
+extern s_WorldObject_0 g_WorldObject8;    // 800ED7F0
+extern s_WorldObjectDesc g_WorldObject9;  // 800ED810
+extern s8 D_800ED5AD;
+extern s16 D_800ED5B4;
+extern s8 D_800ED5B8;
+extern s8 D_800ED5F0;
+extern s8 D_800ED840;
+extern s8 D_800ED841;
+
 void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_MonsterCybil_Init(s_SubCharacter*, s_Model*);
 void func_800D8B14(s_SubCharacter*, s_Model*);
@@ -74,5 +92,7 @@ void func_800E1258(s32 arg0);
 void func_800E1290(void);
 
 void func_800E2CA0(void);
+
+void func_800E5D44(void);
 
 #endif

@@ -489,7 +489,41 @@ INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04_2", jtbl_800CC5D0); // T
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E558C);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E5D44);
+void func_800E5D44(void)
+{
+    D_800ED841 = 0;
+    D_800ED5F0 = 0;
+    D_800ED840 = 0;
+    D_800ED5AD = 0;
+    D_800ED5B4 = 0;
+    D_800ED5B8 = 0;
+    D_800ED740.vx = Q12(20.0f);
+    D_800ED740.vy = Q12(0.0f);
+    D_800ED740.vz = Q12(100.0f);
+    D_800ED5B6 = 0;
+    WorldObject_ModelNameSet(&g_WorldObject0[0], "UMA1_HID");
+    WorldObject_ModelNameSet(&g_WorldObject0[1], "UMA2_HID");
+    WorldObject_ModelNameSet(&g_WorldObject1[0], "MGR_KOYA");
+    WorldObject_ModelNameSet(&g_WorldObject1[1], "MGR_STR_");
+    WorldObject_ModelNameSet(&g_WorldObject1[2], "SAKU2_BA");
+    WorldObject_ModelNameSet(&g_WorldObject2,    "SAK_POL_");
+    WorldObject_ModelNameSet(&g_WorldObject3,    "ROT_POL2");
+    WorldObject_ModelNameSet(&g_WorldObject4[0], "MGR_DRL_");
+    WorldObject_ModelNameSet(&g_WorldObject4[1], "DRL2_ILI");
+    WorldObject_ModelNameSet(&g_WorldObject5,    "CHAIR_HI");
+    WorldObject_ModelNameSet(&g_WorldObject6[0], "FW1_BACK");
+    WorldObject_ModelNameSet(&g_WorldObject6[1], "FW2_BACK");
+    WorldObject_ModelNameSet(&g_WorldObject6[2], "FW3WIR_H");
+    WorldObject_ModelNameSet(&g_WorldObject7[0], "FWBOX1_B");
+    WorldObject_ModelNameSet(&g_WorldObject7[1], "FWBOX2_B");
+    WorldObject_ModelNameSet(&g_WorldObject8,    "WHEEL_BA");
+
+    WorldObjectPoseInit(&g_WorldObject9.position_1C, -13.6f, -1.0f, -28.3f, 0.0f, -165.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject9.object_0, D_800A99E4.savePadName_4);
+    func_800E02E0();
+    func_800E10F8();
+    g_SysWork.field_2280 = 3;
+}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E5F54);
 
