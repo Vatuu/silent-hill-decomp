@@ -1001,7 +1001,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
                 Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
                 Camera_PositionSet(NULL, Q12(-250.81f), Q12(-0.32f), Q12(218.59f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), val);
                 Camera_LookAtSet(NULL, Q12(-247.13f), Q12(-0.56f), Q12(217.04f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), val);
-                Math_Vector3Set(&g_SysWork.player_4C.chara_0.position_18.vx, Q12(-251.12f), Q12(0.0f), Q12(218.56f));
+                Math_Vector3Set(&g_SysWork.player_4C.chara_0.position_18, Q12(-251.12f), Q12(0.0f), Q12(218.56f));
 
                 D_800DFACC++;
             }
