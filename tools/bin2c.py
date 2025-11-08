@@ -14,6 +14,7 @@ Usage:
 # - inner-structs might have issues with `self.struct_field_types`?
 # - make Q conversion an option (right now it's always enabled for qX_X types)
 # - multi-dimension arrays aren't emitted properly
+# - return enum values for fields that are typed as enums
 
 import sys
 import argparse
@@ -23,16 +24,7 @@ from io import StringIO
 from pycparser import c_parser, c_ast, parse_file
 from construct import *
 
-# ---------- FP converter ----------
-def to_signed(val, bits=32):
-    """Convert unsigned int to signed (two's complement)."""
-    if val & (1 << (bits - 1)):
-        val -= 1 << bits
-    return val
-
-def process_fp(val, qval = 12):
-    scale = (1 << qval)
-
+def round_fp(val, scale):
     float_val = val / scale;
 
     # Try to find the shortest rounded representation that still matches
@@ -47,7 +39,16 @@ def process_fp(val, qval = 12):
             float_val = rounded
             break
 
-    return f"Q{qval}({float_val}f)"
+    return f"{float_val}f"
+
+def process_fp(val, qval = 12):
+    scale = (1 << qval)
+    float_val = round_fp(val, scale)
+
+    return f"Q{qval}({float_val})"
+
+def process_fp_angle_packed(val):
+    return round_fp(val, 0.711111);    
 
 class StructParser:
     def __init__(self, alignment=4, verbose=False, union_choices=None):
@@ -60,6 +61,7 @@ class StructParser:
         self.verbose = verbose  # Debug output
         self.union_choices = union_choices or {}  # Dict: "StructName.unionField" -> "memberName"
         self.enum_values = {}
+        self.enum_value_mappings = {} # Dict: enumName -> array of value -> name
         self.struct_sizes = {}  # name -> size in bytes
         self.union_sizes = {}   # union name -> size in bytes
         self.struct_field_types = {} # e.g. {'MyStruct': {'field_a': 'u32', 'field_b': 'pointer'}}
@@ -609,6 +611,8 @@ class StructParser:
                 # Skip declaration-only enums
                 if enum_decl is None:
                     continue
+
+                self.enum_value_mappings[enum_name] = {}
                     
                 current_value = 0
                 if enum_decl.values:
@@ -618,6 +622,7 @@ class StructParser:
                             current_value = self.eval_expr(enum_constant.value)
                         
                         self.enum_values[enum_constant.name] = current_value
+                        self.enum_value_mappings[enum_name][current_value] = enum_constant.name
                         current_value += 1
                         
             # Handle Structs
@@ -658,6 +663,50 @@ class StructParser:
                 # Only build the union immediately if it has declarations
                 if union_decl.decls:
                     self.build_union(union_name, union_decl)
+
+    def lookup_enum_name(self, enum_type_name, value):
+        """Looks up an integer value in a specific parsed enum type."""
+        # Resolve aliases (important if 'enum_type_name' is a typedef)
+        resolved_type = self.resolve_type(enum_type_name) 
+        
+        if resolved_type in self.enum_value_mappings:
+            return self.enum_value_mappings[resolved_type].get(value)
+        
+        return None
+
+    def lookup_flag_name(self, flag_enum_type_name, value):
+        """Decomposes an integer value into its flag names (bitwise OR format)."""
+        resolved_type = self.resolve_type(flag_enum_type_name)
+        if resolved_type not in self.enum_value_mappings:
+            return None # Not a known flag type
+
+        flag_map = self.enum_value_mappings[resolved_type]
+        
+        # Sort flags by value descending to prioritize higher bits
+        sorted_flags = sorted(flag_map.items(), key=lambda item: item[0], reverse=True)
+        
+        result_flags = []
+        remaining_value = value
+        
+        # Check for the zero constant (e.g., VC_RD_NOFLAG = 0)
+        zero_constant_name = flag_map.get(0)
+        if value == 0 and zero_constant_name:
+            return zero_constant_name
+
+        for flag_value, flag_name in sorted_flags:
+            if flag_value == 0:
+                continue
+            if (remaining_value & flag_value) == flag_value:
+                result_flags.append(flag_name)
+                remaining_value &= ~flag_value # Clear the bit
+        
+        if not result_flags:
+            # If no flags are set, return 0 or the hex representation
+            return None
+        
+        # Reverse the list so flags are displayed from lowest bit to highest bit
+        return " | ".join(reversed(result_flags))
+
 
     def eval_expr(self, node):
         """Recursively evaluate a constant expression (e.g., math, enums, sizeof)."""
@@ -893,9 +942,9 @@ class StructParser:
                     for bf_name, bf_value in decoded.items():
                         bf_type = current_field_types.get(bf_name)
                         if not self.unnamed_values:
-                            self.append_line(lines, f"{indent_str}  .{bf_name} = {self.format_value(bf_value, bf_type, bf_name)},")
+                            self.append_line(lines, f"{indent_str}  .{bf_name} = {self.format_value(bf_value, bf_type, f"{struct_name}.{bf_name}")},")
                         else:
-                            self.append_line(lines, f"{indent_str}  {self.format_value(bf_value, bf_type, bf_name)},")
+                            self.append_line(lines, f"{indent_str}  {self.format_value(bf_value, bf_type, f"{struct_name}.{bf_name}")},")
                     
                     continue
 
@@ -966,18 +1015,41 @@ class StructParser:
                 return self.sym_addrs[value] if value in self.sym_addrs else f"0x{value:X}"
             else:
                 # silent-hill-decomp value customizations
+                if field_key == "s_AnimInfo.status_4" or field_key == "s_AnimInfo.status_6":
+                    return f"ANIM_STATUS({value // 2}, {'true' if value % 2 == 1 else 'false'})" if value != 255 else "NO_VALUE"
+                elif field_key == "s_AnimInfo.hasVariableDuration_5" and (value == 0 or value == 1):
+                    return 'true' if value == 1 else 'false'
+                elif value == -1 and (field_key == "s_AnimInfo.startKeyframeIdx_C" or field_key == "s_AnimInfo.endKeyframeIdx_E"):
+                    return "NO_VALUE"
+                elif field_key == "VC_ROAD_DATA.fix_ang_x_16" or field_key == "VC_ROAD_DATA.fix_ang_y_17":
+                    return f"FP_ANGLE_PACKED({process_fp_angle_packed(value & 0xFF)})"
+                elif field_key == "VC_ROAD_DATA.area_size_type_11":
+                    enum_val = self.lookup_enum_name("VC_AREA_SIZE_TYPE", value)
+                    if enum_val is not None:
+                        return enum_val
+                elif field_key == "VC_ROAD_DATA.rd_type_11":
+                    enum_val = self.lookup_enum_name("VC_ROAD_TYPE", value)
+                    if enum_val is not None:
+                        return enum_val
+                elif field_key == "VC_ROAD_DATA.mv_y_type_11":
+                    enum_val = self.lookup_enum_name("VC_CAM_MV_TYPE", value)
+                    if enum_val is not None:
+                        return enum_val
+                elif field_key == "VC_ROAD_DATA.cam_mv_type_14":
+                    enum_val = self.lookup_enum_name("VC_CAM_MV_TYPE", value)
+                    if enum_val is not None:
+                        return enum_val
+                elif field_key == "VC_ROAD_DATA.flags_10":
+                    flag_val = self.lookup_flag_name("VC_ROAD_FLAGS", value)
+                    if flag_val is not None:
+                        return flag_val
+                        
                 if field_type in ("q19_12", "q20_12"):
                     return process_fp(value, 12)
                 elif field_type in ("q0_8", "q7_8", "q23_8", "q8_8"):
                     return process_fp(value, 8)
                 elif field_type in ("q11_4", "q12_4", "q27_4", "q28_4"):
                     return process_fp(value, 4)
-                elif field_key == "s_AnimInfo.status_4" or field_key == "s_AnimInfo.status_6":
-                    return f"ANIM_STATUS({value // 2}, {'true' if value % 2 == 1 else 'false'})" if value != 255 else "NO_VALUE"
-                elif field_key == "s_AnimInfo.hasVariableDuration_5" and (value == 0 or value == 1):
-                    return 'true' if value == 1 else 'false'
-                elif value == -1 and (field_key == "s_AnimInfo.startKeyframeIdx_C" or field_key == "s_AnimInfo.endKeyframeIdx_E"):
-                    return "NO_VALUE"
 
                 return f"0x{value:X}" if self.numbers_hex else str(value)
         
