@@ -6,15 +6,21 @@ Parses C struct definitions from .h / ctx.c file and generates initializers from
 Usage:
  - tools/m2ctx.py src/maps/...
  - tools/bin2c.py -s ctx.c -b assets/VIN/MAP0_S00.BIN -o 0x4 -t s_MapOverlayHeader --use-cpp
- - That will parse structs from ctx.c, read from assets/VIN/MAP0_S00.BIN, and emit an initializer for s_MapOverlayHeader based on the data at offset 0x4
+ - That parses structs from ctx.c, reads from assets/VIN/MAP0_S00.BIN, and emits initializer for s_MapOverlayHeader from the data at offset 0x4
+
+Options used regularly can be saved to a file and read with @ argument, eg. `tools/bin2c.py @bin2c.txt -b assets/VIN/MAP0_S00.BIN ...`
+
+Recommended defaults for bin2c.txt:
+--use-cpp
+--sym
+configs/sym.bodyprog.txt
+-s
+ctx.c
 """
 
 # TODO:
-# - build_struct_internal still uses Int32 as pointer (and default for unknown data), ignoring pointer_size
 # - inner-structs might have issues with `self.struct_field_types`?
-# - make Q conversion an option (right now it's always enabled for qX_X types)
 # - multi-dimension arrays aren't emitted properly
-# - return enum values for fields that are typed as enums
 
 import sys
 import argparse
@@ -205,10 +211,10 @@ class StructParser:
         if isinstance(type_node, c_ast.TypeDecl):
             return self.parse_type(type_node.type, check_bitfield)
         elif isinstance(type_node, c_ast.PtrDecl):
-            # Pointer to any type - treat as u32 (4 bytes on PSX)
+            # Pointer to any type - treat as u64/u32
             return 'pointer'
         elif isinstance(type_node, c_ast.FuncDecl):
-            # Function pointer - treat as u32 (4 bytes)
+            # Function pointer - treat as u64/u32
             return 'pointer'
         elif isinstance(type_node, c_ast.IdentifierType):
             return ' '.join(type_node.names)
@@ -466,7 +472,7 @@ class StructParser:
                 resolved_base = self.resolve_type(base_type)
                 
                 if resolved_base == 'pointer':
-                    element_type = Int32ul
+                    element_type = Int64ul if self.pointer_size == 8 else Int32ul
                 elif resolved_base in self.type_map:
                     element_type = self.type_map[resolved_base]
                 elif resolved_base in self.structs:
@@ -476,7 +482,7 @@ class StructParser:
                 
                 element = Array(size, element_type)
             elif type_info == 'pointer':
-                element = Int32ul
+                element = Int64ul if self.pointer_size == 8 else Int32ul
             elif resolved_type in self.type_map:
                 element = self.type_map[resolved_type]
             elif resolved_type in self.structs:
@@ -1014,6 +1020,11 @@ class StructParser:
                 # Return symbol name if value exists inside sym_addrs, else return pointer as hex
                 return self.sym_addrs[value] if value in self.sym_addrs else f"0x{value:X}"
             else:
+                if field_type in self.enum_value_mappings:
+                    enum_val = self.lookup_enum_name(field_type, value)
+                    if enum_val is not None:
+                        return enum_val
+
                 # silent-hill-decomp value customizations
                 if field_key == "s_AnimInfo.status_4" or field_key == "s_AnimInfo.status_6":
                     return f"ANIM_STATUS({value // 2}, {'true' if value % 2 == 1 else 'false'})" if value != 255 else "NO_VALUE"
@@ -1023,14 +1034,6 @@ class StructParser:
                     return "NO_VALUE"
                 elif field_key == "VC_ROAD_DATA.fix_ang_x_16" or field_key == "VC_ROAD_DATA.fix_ang_y_17":
                     return f"FP_ANGLE_PACKED({process_fp_angle_packed(value & 0xFF)})"
-                elif field_key == "VC_ROAD_DATA.area_size_type_11":
-                    enum_val = self.lookup_enum_name("VC_AREA_SIZE_TYPE", value)
-                    if enum_val is not None:
-                        return enum_val
-                elif field_key == "VC_ROAD_DATA.rd_type_11":
-                    enum_val = self.lookup_enum_name("VC_ROAD_TYPE", value)
-                    if enum_val is not None:
-                        return enum_val
                 elif field_key == "VC_ROAD_DATA.mv_y_type_11":
                     enum_val = self.lookup_enum_name("VC_CAM_MV_TYPE", value)
                     if enum_val is not None:
@@ -1043,7 +1046,7 @@ class StructParser:
                     flag_val = self.lookup_flag_name("VC_ROAD_FLAGS", value)
                     if flag_val is not None:
                         return flag_val
-                        
+
                 if field_type in ("q19_12", "q20_12"):
                     return process_fp(value, 12)
                 elif field_type in ("q0_8", "q7_8", "q23_8", "q8_8"):
@@ -1065,6 +1068,7 @@ def main():
     parser = argparse.ArgumentParser(
         description='Decompile binary data into C struct initializers',
         formatter_class=argparse.RawDescriptionHelpFormatter,
+        fromfile_prefix_chars="@",
         epilog="""
 Examples:
   # Parse a struct from binary file
@@ -1248,7 +1252,7 @@ Examples:
         if is_basic_type or is_pointer_type:
             # Use pointer construct if specified, otherwise use resolved basic type
             if is_pointer_type:
-                construct_type = struct_parser.type_map['u32'] # Pointers are treated as u32
+                construct_type = struct_parser.type_map['u64' if self.pointer_size == 8 else 'u32'] # Pointers are treated as u64/u32
                 array_base_type_for_format = 'pointer'
             else:
                 construct_type = struct_parser.type_map[resolved_type]
