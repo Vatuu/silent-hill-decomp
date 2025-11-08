@@ -2988,17 +2988,299 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
 }
 
 // Used by `func_8008D990`.
-u16 D_800AFD7C[] = {
+s16 D_800AFD7C[] = {
     0xF839, 0xF889, 0xFA39, 0xFAE4,
     0xFD56, 0xFDC8, 0xFF56, 0xFFEA,
-    0x38,   0x18E,  0x1C7,  0x2AA,
-    0x4E3,  0x64F,  0x688,  0x6E3
+    0x38, 0x18E, 0x1C7, 0x2AA,
+    0x4E3, 0x64F, 0x688, 0x6E3
 };
 
 s_FsImageDesc img0 = { .tPage = { 0, 13 } }; // 0x800AFD9C
 
-// Large function.
+// TODO: Fix problem with `hack_vcSetWatchTgtXzPos_fix`.
+#ifdef NON_MATCHING
+void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8008D990
+{
+    s32       sp20;
+    s32       sp24;
+    s32       sp28;
+    s32       sp2C;
+    GsOT_TAG* temp_s2;
+    GsOT_TAG* temp_s7;
+    s16       temp_v0_7;
+    s32       temp_a0;
+    s32       temp_a0_4;
+    s32       temp_a0_5;
+    s32       temp_a1;
+    s32       temp_a1_2;
+    s32       temp_a1_5;
+    s32       temp_a2;
+    s32       temp_a2_3;
+    s32       temp_a3_2;
+    s16       temp_s0_3;
+    s32       temp_s0_6;
+    s16       temp_s1;
+    s32       temp_s2_2;
+    s32       temp_t0;
+    s32       temp_v0_11;
+    s32       temp_v0_13;
+    s32       temp_v0_3;
+    s32       temp_v0_5;
+    s32       temp_v0_9;
+    s32       temp_v1_10;
+    s32       temp_v1_12;
+    s32       temp_v1_4;
+    s32       temp_v1_6;
+    s32       temp_v1_8;
+    s16       var_s3;
+    s32       i;
+    POLY_FT4* poly;
+
+    DVECTOR D_8002B2BC[] = {
+        { 0x0000, 0xFFFC },
+        { 0xFFD1, 0x002B },
+        { 0x002F, 0x002B },
+        { 0x0000, 0x005A }
+    };
+
+    if (arg2->vx < (-g_GameWork.gsScreenWidth_588 >> 1) - 0x200 || (g_GameWork.gsScreenWidth_588 >> 1) + 0x200 < arg2->vx ||
+        arg2->vy < (-g_GameWork.gsScreenHeight_58A >> 1) - 0x200 || (g_GameWork.gsScreenHeight_58A >> 1) + 0x200 < arg2->vy)
+    {
+        return;
+    }
+
+    temp_s1   = FP_MULTIPLY(Math_Sin(arg4), Math_Cos(arg3), Q12_SHIFT);
+    temp_s0_3 = FP_MULTIPLY(Math_Sin(arg4), Math_Sin(arg3), Q12_SHIFT);
+
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
+
+    temp_s7 = &g_OrderingTable0[g_ActiveBufferIdx].org[1];
+    temp_s2 = &g_OrderingTable0[g_ActiveBufferIdx].org[arg2->vz >> 3];
+
+    SetPolyFT4(poly);
+
+    poly->tpage = 0x2C;
+    poly->clut  = 0x18C;
+
+    setUV4(poly, 0, 0, 0x3F, 0, 0, 0x3F, 0x3F, 0x3F);
+
+    temp_a1 = (arg1 + 0x3000) >> 2;
+
+    setRGB0(poly, FP_MULTIPLY(temp_a1, 0x28, Q12_SHIFT), FP_MULTIPLY(temp_a1, 0x28, Q12_SHIFT), FP_MULTIPLY(temp_a1, 0x28, Q12_SHIFT));
+    setSemiTrans(poly, 1);
+
+    temp_a2   = arg2->vx + FP_MULTIPLY(temp_s1, 5, Q12_SHIFT);
+    temp_a0   = FP_MULTIPLY(temp_a1, 0x1E, Q12_SHIFT);
+    temp_a1_2 = arg2->vy + FP_MULTIPLY(temp_s0_3, 5, Q12_SHIFT);
+
+    setXY4(poly,
+           temp_a2 - temp_a0, temp_a1_2 - temp_a0,
+           temp_a2 + temp_a0, temp_a1_2 - temp_a0,
+           temp_a2 - temp_a0, temp_a1_2 + temp_a0,
+           temp_a2 + temp_a0, temp_a1_2 + temp_a0);
+
+    if (arg0)
+    {
+        AddPrim(temp_s7, poly);
+    }
+    else
+    {
+        if (arg4 > 0x400)
+        {
+            AddPrim(temp_s2, poly);
+        }
+        else
+        {
+            AddPrim(temp_s2 + 7, poly);
+        }
+    }
+
+    poly++;
+
+    SetPolyFT4(poly);
+
+    poly->tpage = 0x2C;
+    poly->clut  = 0x18C;
+
+    setUV4(poly, 0, 0, 0x3F, 0, 0, 0x3F, 0x3F, 0x3F);
+    setRGB0(poly, 0x10, 0x10, 0x10);
+    setSemiTrans(poly, 1);
+
+    temp_v0_3 = arg2->vx;
+    temp_v1_4 = arg2->vy;
+
+    setXY4(poly,
+           temp_v0_3 - 0xB, temp_v1_4 - 0xB,
+           temp_v0_3 + 0xB, temp_v1_4 - 0xB,
+           temp_v0_3 - 0xB, temp_v1_4 + 0xB,
+           temp_v0_3 + 0xB, temp_v1_4 + 0xB);
+
+    if (arg0)
+    {
+        AddPrim(temp_s7, poly);
+    }
+    else
+    {
+        if (arg4 > 0x400)
+        {
+            AddPrim(temp_s2, poly);
+        }
+        else
+        {
+            AddPrim(temp_s2 + 7, poly);
+        }
+    }
+
+    poly++;
+
+    SetPolyFT4(poly);
+    setSemiTrans(poly, 1);
+
+    temp_v0_5 = FP_MULTIPLY(MIN(arg1 * 2, 0x1000), 0x30, Q12_SHIFT);
+    setRGB0(poly, temp_v0_5, temp_v0_5, temp_v0_5);
+
+    poly->tpage = 0x2C;
+    poly->clut  = 0x18C;
+
+    setUV4(poly, 0, 0, 0x3F, 0, 0, 0x3F, 0x3F, 0x3F);
+
+    temp_t0   = arg2->vx + FP_MULTIPLY(temp_s1, 9, Q12_SHIFT - 1);
+    temp_a2_3 = FP_MULTIPLY((arg1 + 0x3000) >> 2, 0x30, Q12_SHIFT);
+    temp_a3_2 = arg2->vy + FP_MULTIPLY(temp_s0_3, 9, Q12_SHIFT - 1);
+
+    setXY4(poly,
+           temp_t0 - temp_a2_3, temp_a3_2 - temp_a2_3,
+           temp_t0 + temp_a2_3, temp_a3_2 - temp_a2_3,
+           temp_t0 - temp_a2_3, temp_a3_2 + temp_a2_3,
+           temp_t0 + temp_a2_3, temp_a3_2 + temp_a2_3);
+
+    AddPrim(temp_s7, poly);
+    poly++;
+
+    if (!arg1)
+    {
+        GsOUT_PACKET_P = (PACKET*)poly;
+        return;
+    }
+
+    sp20 = (-arg4 >> 1) + (arg2->vx + arg2->vy) * 4 + 0x2AA;
+    sp24 = arg2->vz * 4 + (arg2->vx + arg2->vy) * 16;
+
+    for (i = 0; i < 16; i++)
+    {
+        temp_v0_7 = D_800AFD7C[i] + sp20;
+
+        var_s3 = FP_MULTIPLY((Math_Cos(temp_v0_7 - arg3) + 0x1B33), (Math_Cos(temp_v0_7 * 0xC + sp24) + 0x1000) >> 1, Q12_SHIFT);
+        var_s3 = MIN(var_s3, 0x1800);
+
+        temp_s1   = Math_Sin(temp_v0_7);
+        temp_s0_3 = Math_Cos(temp_v0_7);
+
+        SetPolyFT4(poly);
+
+        poly->tpage = 0x2C;
+        poly->clut  = 0x14C;
+
+        setUV4(poly, 0x20, 0x40, 0x3F, 0x40, 0x20, 0x5F, 0x3F, 0x5F);
+        setSemiTrans(poly, 1);
+
+        temp_v0_9 = (arg1 * var_s3) >> 0x12;
+        setRGB0(poly, temp_v0_9, temp_v0_9, temp_v0_9);
+
+        temp_a0_4 = arg2->vy;
+        temp_v1_6 = arg2->vx;
+
+        setXY4(poly,
+               temp_v1_6 + FP_FROM(D_8002B2BC[0].vx * temp_s0_3 - D_8002B2BC[0].vy * temp_s1, Q12_SHIFT),
+               temp_a0_4 + FP_FROM(D_8002B2BC[0].vx * temp_s1 + D_8002B2BC[0].vy * temp_s0_3, Q12_SHIFT),
+               temp_v1_6 + FP_FROM(D_8002B2BC[1].vx * temp_s0_3 - D_8002B2BC[1].vy * temp_s1, Q12_SHIFT),
+               temp_a0_4 + FP_FROM(D_8002B2BC[1].vx * temp_s1 + D_8002B2BC[1].vy * temp_s0_3, Q12_SHIFT),
+               temp_v1_6 + FP_FROM(D_8002B2BC[2].vx * temp_s0_3 - D_8002B2BC[2].vy * temp_s1, Q12_SHIFT),
+               temp_a0_4 + FP_FROM(D_8002B2BC[2].vx * temp_s1 + D_8002B2BC[2].vy * temp_s0_3, Q12_SHIFT),
+               temp_v1_6 + FP_FROM(D_8002B2BC[3].vx * temp_s0_3 - D_8002B2BC[3].vy * temp_s1, Q12_SHIFT),
+               temp_a0_4 + FP_FROM(D_8002B2BC[3].vx * temp_s1 + D_8002B2BC[3].vy * temp_s0_3, Q12_SHIFT));
+
+        addPrim(temp_s7, poly);
+        poly++;
+    }
+
+    sp28 = 0x3F;
+    sp2C = 0x40;
+
+    SetPolyFT4(poly);
+
+    setRGB0(poly, FP_MULTIPLY(arg1, 32, Q12_SHIFT), FP_MULTIPLY(arg1, 0x30, Q12_SHIFT), FP_MULTIPLY(arg1, 32, Q12_SHIFT));
+
+    poly->tpage = 0x2C;
+    poly->clut  = 0x1CC;
+
+    setUV4(poly, 0x40, 0, 0x7F, 0, 0x40, 0x3F, 0x7F, 0x3F);
+    setSemiTrans(poly, 1);
+
+    temp_s2_2 = (arg1 + 0x3000) >> 2;
+    temp_a1_5 = FP_MULTIPLY(temp_s2_2, 0x10, Q12_SHIFT);
+    temp_a0_5 = FP_MULTIPLY(arg2->vx, 0x333, Q12_SHIFT);
+    setSemiTrans(poly, 1);
+    temp_v1_8 = FP_MULTIPLY(arg2->vy, 0x333, Q12_SHIFT);
+
+    setXY4(poly,
+           temp_a0_5 - temp_a1_5, temp_v1_8 - temp_a1_5,
+           temp_a0_5 + temp_a1_5, temp_v1_8 - temp_a1_5,
+           temp_a0_5 - temp_a1_5, temp_v1_8 + temp_a1_5,
+           temp_a0_5 + temp_a1_5, temp_v1_8 + temp_a1_5);
+
+    addPrim(temp_s7, poly);
+    poly++;
+
+    SetPolyFT4(poly);
+
+    temp_s0_6 = FP_MULTIPLY(arg1, 0x18, Q12_SHIFT);
+    setRGB0(poly, ((u32)arg1 * 7) >> 9, ((u32)arg1 * 0x13) >> 0xB, temp_s0_6);
+
+    poly->tpage = 0x2C;
+    poly->clut  = 0x1CC;
+
+    setUV4(poly, 0x40, 0, 0x7F, 0, 0x40, 0x3F, 0x7F, 0x3F);
+    setSemiTrans(poly, 1);
+
+    temp_v1_10 = FP_MULTIPLY(arg2->vx, -0x4CC, Q12_SHIFT);
+    temp_v0_11 = FP_MULTIPLY(arg2->vy, -0x4CC, Q12_SHIFT);
+
+    setXY4(poly,
+           temp_v1_10 - FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT), temp_v0_11 - FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT),
+           temp_v1_10 + FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT), temp_v0_11 - FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT),
+           temp_v1_10 - FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT), temp_v0_11 + FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT),
+           temp_v1_10 + FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT), temp_v0_11 + FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT));
+
+    addPrim(temp_s7, poly);
+    poly++;
+
+    SetPolyFT4(poly);
+
+    setRGB0(poly, (u32)arg1 >> 6, temp_s0_6, ((u32)arg1 * 0x2F) >> 0xB);
+
+    poly->tpage = 0x4C;
+    poly->clut  = 0x18C;
+
+    setUV4(poly, 0, 0, 0x3F, 0, 0, 0x3F, 0x3F, 0x3F);
+    setSemiTrans(poly, 1);
+
+    temp_v0_13 = arg2->vx;
+    temp_v1_12 = arg2->vy;
+
+    setXY4(poly,
+           temp_v0_13 - 0xA, temp_v1_12 - 0xA,
+           temp_v0_13 + 0xA, temp_v1_12 - 0xA,
+           temp_v0_13 - 0xA, temp_v1_12 + 0xA,
+           temp_v0_13 + 0xA, temp_v1_12 + 0xA);
+
+    addPrim(temp_s7, poly);
+    poly++;
+    GsOUT_PACKET_P = (PACKET*)poly;
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990); // 0x8008D990
+#endif
 
 void func_8008E4EC(s_LmHeader* lmHdr) // 0x8008E4EC
 {
@@ -3190,30 +3472,30 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
     {
         POLY_G4 g4[2];
         POLY_G3 g3[2];
-    } s_poly;
+    } s_func_8008EA68;
 
-    SVECTOR       sp28[5];
-    GsCOORDINATE2 sp50;
-    MATRIX        spA0;
-    SVECTOR       spC0; // Q3.8 | Rotation?
-    s32           spC8;
-    s32           spCC;
-    s16           angle1;
-    q3_12         angle;
-    q19_12        angle0;
-    s32           temp_s0_2;
-    s16           temp_s1;
-    s32           temp_s2;
-    s32           temp_v0_2;
-    s32           temp_v0_3;
-    s32           temp_v1_2;
-    s32           i;
-    s32           temp;
-    PACKET*       packet;
-    s_poly*       poly;
-    GsOT_TAG*     spD0;
-    GsOT_TAG*     spD4;
-    GsOT_TAG*     ot;
+    SVECTOR          sp28[5];
+    GsCOORDINATE2    sp50;
+    MATRIX           spA0;
+    SVECTOR          spC0; // Q3.8 | Rotation?
+    s32              spC8;
+    s32              spCC;
+    s16              angle1;
+    q3_12            angle;
+    q19_12           angle0;
+    s32              temp_s0_2;
+    s16              temp_s1;
+    s32              temp_s2;
+    s32              temp_v0_2;
+    s32              temp_v0_3;
+    s32              temp_v1_2;
+    s32              i;
+    s32              temp;
+    PACKET*          packet;
+    s_func_8008EA68* poly;
+    GsOT_TAG*        spD0;
+    GsOT_TAG*        spD4;
+    GsOT_TAG*        ot;
 
     ot         = g_OrderingTable0[g_ActiveBufferIdx].org;
     sp50.flg   = false;
