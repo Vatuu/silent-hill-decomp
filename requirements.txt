@@ -7,3 +7,4 @@ clang-format
 clang-tidy
 pycparser
 pyelftools
+construct
