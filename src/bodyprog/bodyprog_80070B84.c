@@ -7815,9 +7815,39 @@ void func_8007E860() // 0x8007E860
     }
 }
 
-// TODO: Matched with displaced instruction.
-// Scratch: https://decomp.me/scratch/uu71G
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80070B84", func_8007E8C0); // 0x8007E8C0
+void func_8007E8C0() // 0x8007E8C0
+{
+    s32             i;
+    s_AnimInfo*     ptr;
+    s_SubCharacter* chara;
+
+    chara = &g_SysWork.player_4C.chara_0;
+    ptr   = g_MapOverlayHeader.animInfos_34;
+
+    for (i = 0x4C; ptr->updateFunc_0 != NULL; i++, ptr++)
+    {
+        HARRY_BASE_ANIM_INFOS[i] = g_MapOverlayHeader.animInfos_34[i - 0x4C];
+    }
+
+    if (g_SavegamePtr->mapOverlayId_A4 == 1)
+    {
+        g_SysWork.field_2358 = 0;
+    }
+
+    chara->properties_E4.player.exhaustionTimer_FC = 0;
+    g_SysWork.player_4C.chara_0.field_C8           = -0x1999;
+    g_SysWork.player_4C.chara_0.field_CA           = 0;
+    g_SysWork.player_4C.chara_0.field_CE           = -0x1199;
+    g_SysWork.player_4C.chara_0.field_D8.offsetZ_6 = 0;
+    g_SysWork.player_4C.chara_0.field_D8.offsetX_4 = 0;
+    g_SysWork.player_4C.chara_0.field_D8.offsetZ_2 = 0;
+    g_SysWork.player_4C.chara_0.field_D8.offsetX_0 = 0;
+    chara->field_D4                                = 0x4CC;
+    chara->field_D6                                = 0x3AE;
+    g_GameWork.mapAnimIdx_5B1                      = -1;
+
+    func_8007E9C4();
+}
 
 void func_8007E9C4() // 0x8007E9C4
 {
