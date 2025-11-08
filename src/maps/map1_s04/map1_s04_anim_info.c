@@ -2,10 +2,10 @@
 #include "bodyprog/math/math.h"
 
 s_AnimInfo HARRY_M1S04_ANIM_INFOS[] = {
-    { Anim_Update2, 76, 0, 77, { Q12(10.0f) }, -1, 676 },
-    { Anim_Update0, 77, 0, 77, { Q12(10.0f) }, 676, 677 },
-    { Anim_Update2, 108, 0, 109, { Q12(10.0f) }, -1, 485 },
-    { Anim_Update0, 109, 0, 109, { Q12(20.0f) }, 485, 502 },
+    { Anim_Update2, ANIM_STATUS(38, false), false, ANIM_STATUS(38, true), { Q12(10.0f) }, NO_VALUE, 676},
+    { Anim_Update0, ANIM_STATUS(38, true), false, ANIM_STATUS(38, true), { Q12(10.0f) }, 676, 677},
+    { Anim_Update2, ANIM_STATUS(54, false), false, ANIM_STATUS(54, true), { Q12(10.0f) }, NO_VALUE, 485},
+    { Anim_Update0, ANIM_STATUS(54, true), false, ANIM_STATUS(54, true), { Q12(20.0f) }, 485, 502},
     {}
 };
 

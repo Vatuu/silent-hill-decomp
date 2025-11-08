@@ -68,6 +68,7 @@ class StructParser:
         self.sym_addrs = {} # sym.txt address -> name mappings
         self.unnamed_values = False
         self.numbers_hex = False
+        self.single_line_values = False
         
         # Basic type mappings to construct
         self.type_map = {
@@ -770,6 +771,13 @@ class StructParser:
             raise ValueError(f"Struct '{struct_name}' not found")
         
         return self.structs[struct_name].parse(data)
+
+    def append_line(self, lines, line):
+        # TODO: This should also handle self.unnamed_values somehow.
+        if not self.single_line_values:
+            lines.append(line)
+        else:
+            lines[-1] += line
     
     def to_initializer(self, parsed_data, struct_name, indent=0):
         """Convert parsed data to C initializer format."""
@@ -807,15 +815,21 @@ class StructParser:
                                     # Simple type - just output the value directly
                                     field_value = parsed_union["_union_value"]
                                     field_type = member_field_types.get("_union_value")
-                                    formatted_value = self.format_value(field_value, field_type)
-                                    if not self.unnamed_values:
-                                        lines.append(f"{indent_str}  .{actual_field_name} = {{")
-                                        lines.append(f"{indent_str}    .{chosen_member} = {formatted_value},")
-                                        lines.append(f"{indent_str}  }},")
+                                    formatted_value = self.format_value(field_value, field_type, union_key)
+                                    if self.single_line_values:
+                                        if not self.unnamed_values:
+                                            self.append_line(lines, f"{indent_str}  .{actual_field_name} = {{  .{chosen_member} = {formatted_value} }}")
+                                        else:
+                                            self.append_line(lines, f"{indent_str}  {{ {formatted_value} }},")
                                     else:
-                                        lines.append(f"{indent_str}  {{")
-                                        lines.append(f"{indent_str}    {formatted_value},")
-                                        lines.append(f"{indent_str}  }},")
+                                        if not self.unnamed_values:
+                                            self.append_line(lines, f"{indent_str}  .{actual_field_name} = {{")
+                                            self.append_line(lines, f"{indent_str}    .{chosen_member} = {formatted_value}")
+                                            self.append_line(lines, f"{indent_str}  }},")
+                                        else:
+                                            self.append_line(lines, f"{indent_str}  {{")
+                                            self.append_line(lines, f"{indent_str}    {formatted_value}")
+                                            self.append_line(lines, f"{indent_str}  }},")
                                 else:
                                     # Recurse with the chosen member's internal name for correct type lookups
                                     union_init = self.to_initializer(parsed_union, f"{union_name}.{chosen_member}", indent + 1)
@@ -828,32 +842,41 @@ class StructParser:
                                     ])
                                     
                                     # Recombine: First line + newline + fixed body
-                                    adjusted_union_init = union_lines[0] + '\n' + body_lines_fixed
-
-                                    if not self.unnamed_values:
-                                        # Output the nested C initializer using the chosen member's name
-                                        # The output of to_initializer for a nested struct/bitfield group starts with '{'
-                                        lines.append(f"{indent_str}  .{actual_field_name} = {{")
-                                        lines.append(f"{indent_str}    .{chosen_member} = {adjusted_union_init},")
-                                        lines.append(f"{indent_str}  }},")
+                                    if not self.single_line_values:
+                                        adjusted_union_init = union_lines[0] + '\n' + body_lines_fixed
                                     else:
-                                        lines.append(f"{indent_str}  {{")
-                                        lines.append(f"{indent_str}    {adjusted_union_init},")
-                                        lines.append(f"{indent_str}  }},")
+                                        adjusted_union_init = union_lines[0] + body_lines_fixed
+
+                                    if self.single_line_values:
+                                        if not self.unnamed_values:
+                                            self.append_line(lines, f"{indent_str}  .{actual_field_name} = {{  .{chosen_member} = {adjusted_union_init} }}")
+                                        else:
+                                            self.append_line(lines, f"{indent_str}  {{ {adjusted_union_init} }},")
+                                    else:
+                                        if not self.unnamed_values:
+                                            # Output the nested C initializer using the chosen member's name
+                                            # The output of to_initializer for a nested struct/bitfield group starts with '{'
+                                            self.append_line(lines, f"{indent_str}  .{actual_field_name} = {{")
+                                            self.append_line(lines, f"{indent_str}    .{chosen_member} = {adjusted_union_init}")
+                                            self.append_line(lines, f"{indent_str}  }},")
+                                        else:
+                                            self.append_line(lines, f"{indent_str}  {{")
+                                            self.append_line(lines, f"{indent_str}    {adjusted_union_init}")
+                                            self.append_line(lines, f"{indent_str}  }},")
                             except Exception as e:
                                 # Fallback to raw hex on parsing failure
                                 hex_str = "".join(f"{b:02X}" for b in value)
                                 if not self.unnamed_values:
-                                    lines.append(f"{indent_str}  .{actual_field_name} = {{ /* ERROR parsing '{chosen_member}': 0x{hex_str} */ }},")
+                                    self.append_line(lines, f"{indent_str}  .{actual_field_name} = {{ /* ERROR parsing '{chosen_member}': 0x{hex_str} */ }},")
                                 else:
-                                    lines.append(f"{indent_str}  {{ /* ERROR parsing '{chosen_member}': 0x{hex_str} */ }},")
+                                    self.append_line(lines, f"{indent_str}  {{ /* ERROR parsing '{chosen_member}': 0x{hex_str} */ }},")
                         else:
                             # No choice specified - output as comment with hex
                             hex_str = "".join(f"{b:02X}" for b in value)
                             if not self.unnamed_values:
-                                lines.append(f"{indent_str}  .{actual_field_name} = {{ /* union: 0x{hex_str} */ }},")
+                                self.append_line(lines, f"{indent_str}  .{actual_field_name} = {{ /* union: 0x{hex_str} */ }},")
                             else:
-                                lines.append(f"{indent_str}  {{ /* union: 0x{hex_str} */ }},")
+                                self.append_line(lines, f"{indent_str}  {{ /* union: 0x{hex_str} */ }},")
                     
                     continue # Union field processed, move to next item
                 
@@ -870,9 +893,9 @@ class StructParser:
                     for bf_name, bf_value in decoded.items():
                         bf_type = current_field_types.get(bf_name)
                         if not self.unnamed_values:
-                            lines.append(f"{indent_str}  .{bf_name} = {self.format_value(bf_value, bf_type)},")
+                            self.append_line(lines, f"{indent_str}  .{bf_name} = {self.format_value(bf_value, bf_type, bf_name)},")
                         else:
-                            lines.append(f"{indent_str}  {self.format_value(bf_value, bf_type)},")
+                            self.append_line(lines, f"{indent_str}  {self.format_value(bf_value, bf_type, bf_name)},")
                     
                     continue
 
@@ -885,26 +908,26 @@ class StructParser:
                     # For nested structs (not bitfields)
                     nested = self.to_initializer(value, field_type, indent + 1)
                     if not self.unnamed_values:
-                        lines.append(f"{indent_str}  .{key} = {nested},")
+                        self.append_line(lines, f"{indent_str}  .{key} = {nested},")
                     else:
-                        lines.append(f"{indent_str}  {nested},")
+                        self.append_line(lines, f"{indent_str}  {nested},")
                 elif isinstance(value, list) or isinstance(value, ListContainer):
                     # For arrays
                     # Array type is stored as ('array', base_type, count)
                     array_base_type = field_type[1] if isinstance(field_type, tuple) else None
                     array_str = self.format_array(value, array_base_type, indent + 1)
                     if not self.unnamed_values:
-                        lines.append(f"{indent_str}  .{key} = {array_str},")
+                        self.append_line(lines, f"{indent_str}  .{key} = {array_str},")
                     else:
-                        lines.append(f"{indent_str}  {array_str},")
+                        self.append_line(lines, f"{indent_str}  {array_str},")
                 else:
                     # For basic types and pointers
                     if not self.unnamed_values:
-                        lines.append(f"{indent_str}  .{key} = {self.format_value(value, field_type)},")
+                        self.append_line(lines, f"{indent_str}  .{key} = {self.format_value(value, field_type, f"{struct_name}.{key}")},")
                     else:
-                        lines.append(f"{indent_str}  {self.format_value(value, field_type)},")
+                        self.append_line(lines, f"{indent_str}  {self.format_value(value, field_type, f"{struct_name}.{key}")},")
             
-            lines.append(f"{indent_str}}}")
+            self.append_line(lines, f"{indent_str}}}")
             return "\n".join(lines)
         else:
             return str(parsed_data) # Should not happen for a top-level struct
@@ -917,21 +940,21 @@ class StructParser:
             lines = ["{"]
             for item in array:
                 nested = self.to_initializer(item, base_type, indent + 1)
-                lines.append(f"{indent_str}  {nested},")
-            lines.append(f"{indent_str}}}")
+                self.append_line(lines, f"{indent_str}  {nested},")
+            self.append_line(lines, f"{indent_str}}}")
             return "\n".join(lines)
         else:
-            values = [self.format_value(v, base_type) for v in array]
+            values = [self.format_value(v, base_type, "") for v in array]
             if len(values) <= 8:
                 return "{ " + ", ".join(values) + " }"
             lines = ["{"]
             for i in range(0, len(values), 8):
                 chunk = values[i:i+8]
-                lines.append(f"{indent_str}  " + ", ".join(chunk) + ",")
-            lines.append(f"{indent_str}}}")
+                self.append_line(lines, f"{indent_str}  " + ", ".join(chunk) + ",")
+            self.append_line(lines, f"{indent_str}}}")
             return "\n".join(lines)
     
-    def format_value(self, value, field_type):
+    def format_value(self, value, field_type, field_key):
         """Format a value for C output."""
         if isinstance(value, int):
             is_pointer = (field_type == 'pointer')
@@ -942,14 +965,21 @@ class StructParser:
                 # Return symbol name if value exists inside sym_addrs, else return pointer as hex
                 return self.sym_addrs[value] if value in self.sym_addrs else f"0x{value:X}"
             else:
+                # silent-hill-decomp value customizations
                 if field_type in ("q19_12", "q20_12"):
                     return process_fp(value, 12)
                 elif field_type in ("q0_8", "q7_8", "q23_8", "q8_8"):
                     return process_fp(value, 8)
                 elif field_type in ("q11_4", "q12_4", "q27_4", "q28_4"):
                     return process_fp(value, 4)
-                else:
-                    return f"0x{value:X}" if self.numbers_hex else str(value)
+                elif field_key == "s_AnimInfo.status_4" or field_key == "s_AnimInfo.status_6":
+                    return f"ANIM_STATUS({value // 2}, {'true' if value % 2 == 1 else 'false'})" if value != 255 else "NO_VALUE"
+                elif field_key == "s_AnimInfo.hasVariableDuration_5" and (value == 0 or value == 1):
+                    return 'true' if value == 1 else 'false'
+                elif value == -1 and (field_key == "s_AnimInfo.startKeyframeIdx_C" or field_key == "s_AnimInfo.endKeyframeIdx_E"):
+                    return "NO_VALUE"
+
+                return f"0x{value:X}" if self.numbers_hex else str(value)
         
         # Handle raw byte data from unions that weren't parsed
         if isinstance(value, bytes):
@@ -1015,8 +1045,10 @@ Examples:
                         help='Specify union member to use: "StructName.unionField=memberName"')
     parser.add_argument('--unnamed-values', action='store_true',
                         help='Don\'t output value names inside initializers')
-    parser.add_argument('--hex', action='store_true', help='Always output numbers as hexadecimal.')
-    
+    parser.add_argument('--hex', action='store_true',
+                        help='Always output numbers as hexadecimal.')
+    parser.add_argument('-sl', '--single-line', action='store_true',
+                        help='Output array entries on a single line')
     args = parser.parse_args()
     
     # Parse union choices
@@ -1064,6 +1096,7 @@ Examples:
         struct_parser.pointer_size = args.pointer_size
         struct_parser.unnamed_values = args.unnamed_values
         struct_parser.numbers_hex = args.hex
+        struct_parser.single_line_values = args.single_line
 
         if args.debug_output:
             cleaned = struct_parser.preprocess_code(c_code)
