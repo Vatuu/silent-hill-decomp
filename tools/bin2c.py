@@ -67,6 +67,7 @@ class StructParser:
         self.pointer_size = 4   # 32-bit pointers (PSX)
         self.sym_addrs = {} # sym.txt address -> name mappings
         self.unnamed_values = False
+        self.numbers_hex = False
         
         # Basic type mappings to construct
         self.type_map = {
@@ -948,7 +949,7 @@ class StructParser:
                 elif field_type in ("q11_4", "q12_4", "q27_4", "q28_4"):
                     return process_fp(value, 4)
                 else:
-                    return str(value)
+                    return f"0x{value:X}" if self.numbers_hex else str(value)
         
         # Handle raw byte data from unions that weren't parsed
         if isinstance(value, bytes):
@@ -1014,6 +1015,7 @@ Examples:
                         help='Specify union member to use: "StructName.unionField=memberName"')
     parser.add_argument('--unnamed-values', action='store_true',
                         help='Don\'t output value names inside initializers')
+    parser.add_argument('--hex', action='store_true', help='Always output numbers as hexadecimal.')
     
     args = parser.parse_args()
     
@@ -1056,7 +1058,8 @@ Examples:
         struct_parser = StructParser(alignment=args.alignment, verbose=args.verbose, union_choices=union_choice_dict)
         struct_parser.pointer_size = args.pointer_size
         struct_parser.unnamed_values = args.unnamed_values
-        
+        struct_parser.numbers_hex = args.hex
+
         if args.debug_output:
             cleaned = struct_parser.preprocess_code(c_code)
             with open(args.debug_output, 'w') as f:
@@ -1071,27 +1074,30 @@ Examples:
         return 1
     
     resolved_type = struct_parser.resolve_type(args.type)
-    # Check if struct exists
-    if args.type not in struct_parser.structs and args.type not in struct_parser.type_map:
-        if resolved_type not in struct_parser.structs and resolved_type not in struct_parser.type_map:
+    
+    # Check if struct or basic type exists, OR if it's the specific keyword 'pointer'
+    is_basic_type = args.type in struct_parser.type_map or resolved_type in struct_parser.type_map or args.type == 'pointer'
+
+    if not is_basic_type and args.type not in struct_parser.structs:
+        if not is_basic_type and resolved_type not in struct_parser.structs:
             print(f"Error: Type '{args.type}' not found", file=sys.stderr)
             print(f"Available structs: {', '.join(str(k) for k in struct_parser.structs.keys() if k is not None)}", file=sys.stderr)
-            print(f"Available basic types: {', '.join(struct_parser.type_map.keys())}", file=sys.stderr)
+            print(f"Available basic types: {', '.join(struct_parser.type_map.keys())} or 'pointer'", file=sys.stderr)
             return 1
+            
+    # Determine if we're dealing with a struct, basic type, or pointer
+    is_pointer_type = args.type == 'pointer'
+    
+    if is_basic_type or is_pointer_type:
+        struct_size = struct_parser.get_type_size(resolved_type if not is_pointer_type else 'pointer')
+    else:
+        struct_size = struct_parser.struct_sizes[args.type]
     
     # Show size if requested
     if args.show_size:
-        size = struct_parser.struct_sizes[args.type]
+        size = struct_size
         print(f"{args.type}: {size} bytes (0x{size:X})")
         return 0
-    
-    # Determine if we're dealing with a struct or basic type
-    is_basic_type = args.type in struct_parser.type_map or resolved_type in struct_parser.type_map
-
-    if is_basic_type:
-        struct_size = struct_parser.get_type_size(resolved_type)
-    else:
-        struct_size = struct_parser.struct_sizes[args.type]
 
     # Read binary file
     try:
@@ -1129,15 +1135,25 @@ Examples:
     
     # Parse the data
     try:
-        if is_basic_type:
-            # Parse as array of basic type
-            construct_type = struct_parser.type_map[resolved_type]
+        if is_basic_type or is_pointer_type:
+            # Use pointer construct if specified, otherwise use resolved basic type
+            if is_pointer_type:
+                construct_type = struct_parser.type_map['u32'] # Pointers are treated as u32
+                array_base_type_for_format = 'pointer'
+            else:
+                construct_type = struct_parser.type_map[resolved_type]
+                array_base_type_for_format = args.type
+                
             array_construct = Array(args.count, construct_type)
             results = array_construct.parse(data)
             
             # Format output
-            formatted = struct_parser.format_array(results, args.type, indent=0)
-            print(f"{args.type} {args.name}[] = {formatted};")
+            formatted = struct_parser.format_array(results, array_base_type_for_format, indent=0)
+            
+            if is_pointer_type:
+                print(f"void* {args.name}[] = {formatted};")
+            else:
+                print(f"{args.type} {args.name}[] = {formatted};")
         else:
             if args.count == 1:
                 # Single struct
