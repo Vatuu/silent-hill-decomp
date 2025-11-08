@@ -323,7 +323,7 @@ void func_800D2408(void) // 0x800D2408
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 2:
@@ -536,7 +536,7 @@ void func_800D2408(void) // 0x800D2408
             SysWork_StateStepIncrement(0);
 
         case 42:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
             if (g_SysWork.sysStateStep_C[0] != 42)
             {
@@ -546,7 +546,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case CUTSCENE_SKIP_STATE:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 44:
@@ -639,7 +639,7 @@ void func_800D2F74(void) // 0x800D2F74
             break;
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -678,7 +678,7 @@ void func_800D2F74(void) // 0x800D2F74
             break;
 
         case CUTSCENE_SKIP_STATE:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
             if (g_SysWork.sysStateStep_C[0] != 10)
             {
@@ -695,8 +695,8 @@ void func_800D2F74(void) // 0x800D2F74
             Savegame_EventFlagSet(EventFlag_305);
             vcReturnPreAutoCamWork(true);
             Fs_QueueWaitForEmpty();
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Sd_EngineCmd(19);
             sharedFunc_800D2EF4_0_s00();
             func_8003D01C();
@@ -828,7 +828,7 @@ void func_800D4410(void) // 0x800D4410
             break;
 
         case CUTSCENE_SKIP_STATE:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:
@@ -836,8 +836,8 @@ void func_800D4410(void) // 0x800D4410
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_309);
             vcReturnPreAutoCamWork(true);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             func_8003ED74(7, 4);
             func_8008D448();
             func_8003EBA0();

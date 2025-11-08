@@ -2453,7 +2453,7 @@ void func_8003E740() // 0x8003E740
     if (temp_s6 >= 129 && var_s5 < 2047)
     {
         SetPolyFT4(poly);
-        setSemiTrans(poly, 1);
+        setSemiTrans(poly, true);
 
         temp_a0 = D_800BCDE8[temp_s2++];
 

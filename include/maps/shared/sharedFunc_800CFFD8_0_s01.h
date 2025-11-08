@@ -100,7 +100,7 @@ void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
         if (zScreenEnd >= 1 && zScreenEnd <= 254u)
         {
             setPolyGT4(polyGt4);
-            setSemiTrans(polyGt4, 1);
+            setSemiTrans(polyGt4, true);
             polyGt4->tpage = 44;
 
             switch (Game_HyperBlasterBeamColorGet())

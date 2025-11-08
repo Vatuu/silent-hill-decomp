@@ -315,7 +315,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         case CUTSCENE_SKIP_STATE:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 28:
@@ -328,8 +328,8 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateSetNext(SysState_Gameplay);
     
             vcReturnPreAutoCamWork(true);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             func_8008D448();
             func_8003EBA0();
 

@@ -257,7 +257,7 @@ void func_800D02B4(void) // 0x800D02B4
             break;
 
         case EventState_1:
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case EventState_2:

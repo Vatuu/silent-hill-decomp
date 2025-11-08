@@ -64,7 +64,7 @@ void func_80085DF0(void) // 0x80085DF0
     }
 }
 
-void SysWork_StateStepIncrementDelayed(s32 delay, bool reset) // 0x80085E6C
+void SysWork_StateStepIncrementDelayed(q19_12 delay, bool reset) // 0x80085E6C
 {
     g_SysWork.timer_2C += g_DeltaTime1;
     if (delay < g_SysWork.timer_2C)
@@ -187,7 +187,7 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 step
     }
 }
 
-void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 fadeType, q19_12 fadeTimestep, bool reset) // 0x8008616C
+void SysWork_StateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType, q19_12 fadeTimestep, bool reset) // 0x8008616C
 {
     typedef enum _FadeType
     {
@@ -197,19 +197,19 @@ void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 fadeType, q19_
         FadeType_Unk3  = 3  // TODO: Investigate.
     } s_FadeType;
 
-    s32 caseVar;
+    s32 activeStateStep;
 
-    // If `arg0 != 2`, `field_14` dictates what happens. This field is manipulated often in event/cutscene code.
-    if (arg0 != 2)
+    // If `stateStep != 2`, `field_14` dictates what happens. This field is manipulated often in map event functions.
+    if (stateStep != 2)
     {
-        caseVar = arg0;
+        activeStateStep = stateStep;
     }
     else
     {
-        caseVar = g_SysWork.sysStateStep_C[2];
+        activeStateStep = g_SysWork.sysStateStep_C[2];
     }
 
-    switch (caseVar)
+    switch (activeStateStep)
     {
         case 0:
             if (fadeType != FadeType_Unk2)
@@ -217,7 +217,7 @@ void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 fadeType, q19_
                 g_ScreenFadeTimestep = fadeTimestep;
             }
 
-            if (arg1)
+            if (cond)
             {
                 if (fadeType == FadeType_Black)
                 {
@@ -250,7 +250,7 @@ void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 fadeType, q19_
                 g_SysWork.field_30 = 22;
             }
 
-            if (arg0 != 0)
+            if (stateStep != 0)
             {
                 SysWork_StateStepIncrement(2);
             }
@@ -259,16 +259,16 @@ void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 fadeType, q19_
         case 1:
             if (fadeType < FadeType_Unk2)
             {
-                if (arg1 != 0 || g_Screen_FadeStatus != caseVar)
+                if (cond || g_Screen_FadeStatus != activeStateStep)
                 {
-                    if (arg1 == caseVar && ScreenFade_IsFinished())
+                    if (cond == activeStateStep && ScreenFade_IsFinished())
                     {
                         func_80085D78(reset);
                     }
                     break;
                 }
             }
-            else if ((arg1 != 0 || g_SysWork.field_30 != caseVar) && !(arg1 == caseVar && g_SysWork.field_30 == 21))
+            else if ((cond || g_SysWork.field_30 != activeStateStep) && !(cond == activeStateStep && g_SysWork.field_30 == 21))
             {
                 break;
             }
@@ -466,9 +466,9 @@ void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x8008677C
     g_MapOverlayHeader.func_13C(chara, arg1, &D_800C46A0, D_800C4702, arg2);
 }
 
-void func_800867B4(s32 caseParam, s32 idx) // 0x800867B4
+void func_800867B4(s32 state, s32 idx) // 0x800867B4
 {
-    switch (caseParam)
+    switch (state)
     {
         case 0:
             DrawSync(SyncMode_Wait);
@@ -688,7 +688,6 @@ void func_80086D04(s_SubCharacter* chara) // 0x80086D04
     {
         case 0:
             func_80085EB8(3, chara, 0, false);
-
             SysWork_StateStepIncrement(1);
             break;
 
@@ -854,7 +853,6 @@ void MapMsg_DisplayWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q1
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
             SysWork_StateStepIncrementAfterFade(0, true, 0, fadeTimestep0, false);
-
             SysWork_StateStepIncrement(1);
 
         case 1:
@@ -895,7 +893,6 @@ void func_80087540(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTim
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
             SysWork_StateStepIncrementAfterFade(0, true, 0, fadeTimestep0, false);
-
             SysWork_StateStepIncrement(1);
 
         case 1:
@@ -955,7 +952,7 @@ void Event_ItemTake(e_InventoryItemId itemId, s32 itemCount, e_EventFlag eventFl
 
     if (!(g_SysWork.flags_22A4 & (1 << 5)))
     {
-        // Traverse NPCs.
+        // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
             if (g_SysWork.npcs_1A0[i].model_0.charaId_0 >= Chara_Harry && g_SysWork.npcs_1A0[i].model_0.charaId_0 <= Chara_MonsterCybil &&
@@ -1071,7 +1068,6 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx]);
-
             SysWork_StateStepIncrement(1);
 
         case 1:
@@ -1132,7 +1128,6 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
             }
 
             Savegame_EventFlagSet(eventFlagIdx);
-
             SysWork_StateStepIncrement(1);
 
         case 5:
@@ -1225,7 +1220,6 @@ void func_80088048() // 0x80088048
         case 0:
             func_80035E1C();
             Sd_EngineCmd(18);
-
             SysWork_StateStepIncrement(1);
             break;
 
@@ -1294,7 +1288,7 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
     *(u16*)(&poly->r0) = arg8 + (arg8 << 8);
     poly->b0 = arg8;
 
-    setSemiTrans(poly, 0);
+    setSemiTrans(poly, false);
 
     addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, poly);
     poly++;
@@ -3066,12 +3060,12 @@ void func_8008E5B4(void) // 0x8008E5B4
         D_800AFDAC++;
     }
 
-    setRGBC0(&packet->poly_1C[1], 128, 128, 128, 0);
-    setRGBC0(&packet->poly_1C[0], 128, 128, 128, 0);
+    setRGBC0(&packet->poly_1C[1], 128, 128, 128, 0x0);
+    setRGBC0(&packet->poly_1C[0], 128, 128, 128, 0x0);
 
     setPolyFT4(&packet->poly_1C[0]);
     setPolyFT4(&packet->poly_1C[1]);
-    setSemiTrans(&packet->poly_1C[1], 1);
+    setSemiTrans(&packet->poly_1C[1], true);
 
     packet->poly_1C[1].tpage = 45;
     packet->poly_1C[0].tpage = 45;
@@ -3117,7 +3111,7 @@ void func_8008E5B4(void) // 0x8008E5B4
     DrawOTag((u32*)packet);
 }
 
-void func_8008E794(VECTOR3* arg0, q3_12 angle, s32 arg2) // 0x8008E794
+void func_8008E794(VECTOR3* posXz, q3_12 angle, q19_12 posY) // 0x8008E794
 {
     VECTOR    sp10;
     VECTOR    sp20; // Q23.8
@@ -3130,9 +3124,9 @@ void func_8008E794(VECTOR3* arg0, q3_12 angle, s32 arg2) // 0x8008E794
     static SVECTOR svec0 = {};
 
     memset(&sp20, 0, 16);
-    sp20.vx = Q12_TO_Q8(arg0->vx);
-    sp20.vy = Q12_TO_Q8(arg2 * 2) - Q12_TO_Q8(arg0->vy);
-    sp20.vz = Q12_TO_Q8(arg0->vz);
+    sp20.vx = Q12_TO_Q8(posXz->vx);
+    sp20.vy = Q12_TO_Q8(posY * 2) - Q12_TO_Q8(posXz->vy);
+    sp20.vz = Q12_TO_Q8(posXz->vz);
     sp10    = sp20;
 
     sp30 = GsWSMATRIX;
@@ -3146,7 +3140,7 @@ void func_8008E794(VECTOR3* arg0, q3_12 angle, s32 arg2) // 0x8008E794
     {
         poly = GsOUT_PACKET_P;
         SetPolyFT4(poly);
-        setSemiTrans(poly, 1);
+        setSemiTrans(poly, true);
 
         angle0 = angle - FP_ANGLE(40.0f);
         if (angle0 > FP_ANGLE(90.0f))
@@ -3190,7 +3184,7 @@ void func_8008E794(VECTOR3* arg0, q3_12 angle, s32 arg2) // 0x8008E794
     }
 }
 
-void func_8008EA68(SVECTOR* arg0, VECTOR3* arg1, s32 arg2) // 0x8008EA68
+void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
 {
     typedef struct
     {
@@ -3201,10 +3195,10 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* arg1, s32 arg2) // 0x8008EA68
     SVECTOR       sp28[5];
     GsCOORDINATE2 sp50;
     MATRIX        spA0;
-    SVECTOR       spC0;
+    SVECTOR       spC0; // Q3.8 | Rotation?
     s32           spC8;
     s32           spCC;
-    s16           temp_v0;
+    s16           angle1;
     q3_12         angle;
     q19_12        angle0;
     s32           temp_s0_2;
@@ -3219,36 +3213,33 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* arg1, s32 arg2) // 0x8008EA68
     s_poly*       poly;
     GsOT_TAG*     spD0;
     GsOT_TAG*     spD4;
-    GsOT_TAG*     temp_v1;
+    GsOT_TAG*     ot;
 
-    temp_v1    = g_OrderingTable0[g_ActiveBufferIdx].org;
-    sp50.flg   = 0;
+    ot         = g_OrderingTable0[g_ActiveBufferIdx].org;
+    sp50.flg   = false;
     sp50.coord = GsIDMATRIX;
 
-    spD0 = &temp_v1[641];
-    spD4 = &temp_v1[639];
+    spD0 = &ot[641];
+    spD4 = &ot[639];
 
-    temp_v0 = ratan2(arg0->vx, arg0->vz);
-
-    sp50.coord.m[0][0] = Math_Cos(temp_v0);
-    sp50.coord.m[2][2] = Math_Cos(temp_v0);
-    sp50.coord.m[0][2] = Math_Sin(temp_v0);
-    sp50.coord.m[2][0] = -Math_Sin(temp_v0);
+    angle1  = ratan2(arg0->vx, arg0->vz);
+    sp50.coord.m[0][0] =  Math_Cos(angle1);
+    sp50.coord.m[2][2] =  Math_Cos(angle1);
+    sp50.coord.m[0][2] =  Math_Sin(angle1);
+    sp50.coord.m[2][0] = -Math_Sin(angle1);
 
     sp50.super = NULL;
-
-    sp50.coord.t[0] = arg1->vx >> 4;
-    sp50.coord.t[1] = arg2 >> 4;
-    sp50.coord.t[2] = arg1->vz >> 4;
+    sp50.coord.t[0] = Q12_TO_Q8(posXz->vx);
+    sp50.coord.t[1] = Q12_TO_Q8(posY);
+    sp50.coord.t[2] = Q12_TO_Q8(posXz->vz);
 
     func_80049AF8(&sp50, &spA0);
     SetRotMatrix(&spA0);
     SetTransMatrix(&spA0);
 
-    spC0.vx = 0;
-    spC0.vy = 0;
-    spC0.vz = 0xB3;
-
+    spC0.vx = Q8(0.0f);
+    spC0.vy = Q8(0.0f);
+    spC0.vz = Q8(0.7f);
     RotTransPers(&spC0.vx, &spC8, &spCC, &spCC);
 
     packet     = GsOUT_PACKET_P;
@@ -3265,10 +3256,10 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* arg1, s32 arg2) // 0x8008EA68
         temp_s0_2 = Math_Sin(angle0);
         temp_v0_2 = Math_Cos(angle0);
 
-        sp28[0].vx = FP_MULTIPLY((s16)temp_s1, 0x33, Q12_SHIFT - 2);
-        sp28[0].vz = FP_MULTIPLY((s16)temp_s2, 0x33, Q12_SHIFT - 2) + 0x133;
-        sp28[1].vx = FP_MULTIPLY((s16)temp_s0_2, 0x33, Q12_SHIFT - 2);
-        sp28[1].vz = FP_MULTIPLY((s16)temp_v0_2, 0x33, Q12_SHIFT - 2) + 0x133;
+        sp28[0].vx = FP_MULTIPLY((s16)temp_s1, 0x33, 10);
+        sp28[0].vz = FP_MULTIPLY((s16)temp_s2, 0x33, 10) + 0x133;
+        sp28[1].vx = FP_MULTIPLY((s16)temp_s0_2, 0x33, 10);
+        sp28[1].vz = FP_MULTIPLY((s16)temp_v0_2, 0x33, 10) + 0x133;
         sp28[2].vx = FP_MULTIPLY((s16)temp_s1, 0x233, Q12_SHIFT);
         sp28[2].vz = FP_MULTIPLY((s16)temp_s2, 0x233, Q12_SHIFT) + 0x180;
         sp28[3].vx = FP_MULTIPLY((s16)temp_s0_2, 0x233, Q12_SHIFT);
@@ -3289,8 +3280,8 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* arg1, s32 arg2) // 0x8008EA68
 
         *(s32*)&poly->g4[1].r0 = 0x40804;
         *(s32*)&poly->g4[1].r1 = 0x40804;
-        *(s32*)&poly->g4[1].r3 = 0;
-        *(s32*)&poly->g4[1].r2 = 0;
+        *(s32*)&poly->g4[1].r3 = PACKED_COLOR(0, 0, 0, 0x0);
+        *(s32*)&poly->g4[1].r2 = PACKED_COLOR(0, 0, 0, 0x0);
 
         *(s32*)&poly->g3[1].r0 = 0x40808;
         *(s32*)&poly->g3[1].r2 = 0x40804;
@@ -3299,9 +3290,9 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* arg1, s32 arg2) // 0x8008EA68
         setPolyG4(&poly->g4[0]);
         setPolyG3(&poly->g3[0]);
         setPolyG4(&poly->g4[1]);
-        setSemiTrans(&poly->g4[1], 1);
+        setSemiTrans(&poly->g4[1], true);
         setPolyG3(&poly->g3[1]);
-        setSemiTrans(&poly->g3[1], 1);
+        setSemiTrans(&poly->g3[1], true);
 
         *(s32*)&poly->g3[1].x0 = *(s32*)&spC8;
         *(s32*)&poly->g3[0].x0 = *(s32*)&spC8;

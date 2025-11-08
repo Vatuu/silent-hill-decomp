@@ -507,7 +507,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
         case 1:
             func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 2:
@@ -706,7 +706,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 43:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 44:
@@ -746,7 +746,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
                 }
             }
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         default:
@@ -766,7 +766,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             func_8008D448();
             func_8003EBA0();
             g_SysWork.field_2378 = Q12(1.0f);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             g_SysWork.player_4C.chara_0.field_E1_0 = 3;
             Sd_EngineCmd(19);
             break;

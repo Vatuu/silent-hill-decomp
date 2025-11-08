@@ -120,9 +120,9 @@ void func_80040BAC() // 0x80040BAC
         for (i = 0; i < 16; i++, poly_g3++, poly_f4++)
         {
             SetPolyG3(poly_g3);
-            setSemiTrans(poly_g3, 1);
+            setSemiTrans(poly_g3, true);
             SetPolyF4(poly_f4);
-            setSemiTrans(poly_f4, 1);
+            setSemiTrans(poly_f4, true);
 
             *(s32*)&poly_f4->x2 = ptr[i % 16];
             *(s32*)&poly_f4->x3 = ptr[i % 16 + 1];
@@ -135,7 +135,7 @@ void func_80040BAC() // 0x80040BAC
             for (i = 0; i < 16; i++, poly_g4++)
             {
                 SetPolyG4(poly_g4);
-                setSemiTrans(poly_g4, 1);
+                setSemiTrans(poly_g4, true);
             }
         }
     }

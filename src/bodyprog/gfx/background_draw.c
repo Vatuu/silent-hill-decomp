@@ -153,7 +153,7 @@ void Gfx_BackgroundSpriteDraw_2(s_FsImageDesc* image) // 0x80031AAC
         *((u16*)&poly->u2) = (image->v + 239) << 8;
         *((u16*)&poly->u3) = ((image->v + 239) << 8) + ((i == 2) ? 64 : 128);
 
-        setSemiTrans(poly, 0);
+        setSemiTrans(poly, false);
 
         *((u16*)&poly->r0) = g_BackgroundColor + (g_BackgroundColor << 8);
         poly->b0           = g_BackgroundColor;

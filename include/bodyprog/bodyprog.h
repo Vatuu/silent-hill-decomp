@@ -3601,9 +3601,9 @@ s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones);
 
 void func_8008E5B4(void);
 
-void func_8008E794(VECTOR3* arg0, q3_12 angle, s32 arg2);
+void func_8008E794(VECTOR3* posXz, q3_12 angle, q19_12 posY);
 
-void func_8008EA68(SVECTOR* arg0, VECTOR3* arg1, s32 arg2);
+void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY);
 
 void func_80085D78(bool reset);
 
@@ -3611,7 +3611,7 @@ void func_80085DC0(bool arg0, s32 sysStateStep);
 
 void func_80085DF0(void);
 
-void SysWork_StateStepIncrementDelayed(s32 delay, bool reset);
+void SysWork_StateStepIncrementDelayed(q19_12 delay, bool reset);
 
 /** Unknown state handler. */
 void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset);
@@ -3637,7 +3637,7 @@ void func_8008605C(e_EventFlag eventFlagIdx, s32 stepTrue, s32 stepFalse, bool s
 void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 step0, s32 step1, s32 step2, bool stepSecondary);
 
 /** Handles giving the player items. */
-void SysWork_StateStepIncrementAfterFade(s32 arg0, bool arg1, s32 arg2, q19_12 fadeTimestep, bool reset);
+void SysWork_StateStepIncrementAfterFade(s32 stateStep, bool cond, s32 fadeType, q19_12 fadeTimestep, bool reset);
 
 /** Handles a busy wait while loading assets? */
 void func_800862F8(s32 stateStep, e_FsFile fileIdx, bool reset);
@@ -3653,7 +3653,8 @@ void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool reset);
 
 void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
-void func_800867B4(s32 caseParam, s32 idx);
+/** Background draw state handler? */
+void func_800867B4(s32 state, s32 idx);
 
 void func_800868DC(s32 idx);
 

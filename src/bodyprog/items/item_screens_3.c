@@ -1364,7 +1364,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         poly_g4 = (POLY_G4*)GsOUT_PACKET_P;
 
         setPolyG4(poly_g4);
-        setSemiTrans(poly_g4, 1);
+        setSemiTrans(poly_g4, true);
 
         if (D_800AE190 < 0x21) 
         {
@@ -1672,10 +1672,10 @@ void Gfx_Inventory_HealthStatusDraw()
     poly_g4 = (POLY_G4*)GsOUT_PACKET_P;
 
     setPolyG4(poly_g4);
-    setSemiTrans(poly_g4, 1);
-    setRGB0(poly_g4, 0xFF, 0xFF, 0xFF);
+    setSemiTrans(poly_g4, true);
+    setRGB0(poly_g4, 255, 255, 255);
     setRGB1(poly_g4, 0, 0, 0);
-    setRGB2(poly_g4, 0xFF, 0xFF, 0xFF);
+    setRGB2(poly_g4, 255, 255, 255);
     setRGB3(poly_g4, 0, 0, 0);
     setXY4(poly_g4,
            -136, g_Inventory_HealthStatusScanlineTimer - 212,

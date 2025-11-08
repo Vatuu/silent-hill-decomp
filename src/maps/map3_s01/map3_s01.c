@@ -242,7 +242,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(false, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -250,12 +250,12 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(true, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             break;
 
         case 6:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 7:
@@ -265,11 +265,11 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
 
         case 8:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 9:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 10:
@@ -288,12 +288,12 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
 {
     typedef enum _EventState
     {
-        EventState_0   = 0,
-        EventState_1   = 1,
-        EventState_2   = 2,
+        EventState_0     = 0,
+        EventState_1     = 1,
+        EventState_2     = 2,
         EventState_SfxId = 3,
-        EventState_Msg = 4,
-        EventState_5   = 5
+        EventState_Msg   = 4,
+        EventState_5     = 5
     } e_EventState;
 
     switch (g_SysWork.sysStateStep_C[0])

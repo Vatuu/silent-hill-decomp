@@ -276,7 +276,7 @@ void func_800D7B2C(void)
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrementAfterFade(false, true, 0, Q12(2.5f), false);
+            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(2.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -284,12 +284,12 @@ void func_800D7B2C(void)
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(true, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
             func_800862F8(3, 0, false);
-            SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(2.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -299,7 +299,7 @@ void func_800D7B2C(void)
 
         case 5:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(true, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -342,7 +342,7 @@ void func_800D7B2C(void)
 
         default:
             func_800862F8(6, 0, false);
-            SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(2.5f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
             
             Savegame_EventFlagSet(EventFlag_71);
             Savegame_MapMarkingSet(MapMarkFlag_FogSchool1F_ClockTowerCircle);
@@ -374,7 +374,7 @@ void func_800D7EB0(void)
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrementAfterFade(false, true, 0, Q12(2.5f), false);
+            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(2.5f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -382,12 +382,12 @@ void func_800D7EB0(void)
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(true, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             break;
 
         case 3:
             func_800862F8(3, 0, false);
-            SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(2.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -397,7 +397,7 @@ void func_800D7EB0(void)
 
         case 5:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(true, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -440,7 +440,7 @@ void func_800D7EB0(void)
 
         default:
             func_800862F8(6, 0, false);
-            SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(2.5f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
 
             Savegame_EventFlagSet(EventFlag_72);
             Savegame_MapMarkingSet(MapMarkFlag_FogSchool1F_ClockTowerCircle);
@@ -681,7 +681,7 @@ void func_800D8948(void) // 0x800D8948
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             break;
 
         case 3:

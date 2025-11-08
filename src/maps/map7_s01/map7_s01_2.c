@@ -395,7 +395,7 @@ void func_800D7A60(void) // 0x800D7A60
         case 1:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 156, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 6, false);
-            SysWork_StateStepIncrementAfterFade(0, false, false, false, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -1647,7 +1647,7 @@ void func_800DAE00(void) // 0x800DAE00
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 148, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
             D_800E1690.field_2 = Q12(0.3f);
             D_800E2C68         = 0;
@@ -1675,7 +1675,7 @@ void func_800DAE00(void) // 0x800DAE00
             break;
 
         case 2:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterTime(&D_800E2C68, Q12(10.0f), Q12(0.0f), Q12(32.0f), true, false);
 
             // TODO: Possible inline?
@@ -1889,7 +1889,7 @@ void func_800DBDE0(void) // 0x800DBDE0
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 2:
@@ -1897,7 +1897,7 @@ void func_800DBDE0(void) // 0x800DBDE0
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, false, false, false, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             func_800862F8(2, 0, false);
             break;
 
@@ -1935,13 +1935,13 @@ void func_800DBDE0(void) // 0x800DBDE0
             g_BackgroundColor = 48;
 
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, false, false, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             break;
     }
 }

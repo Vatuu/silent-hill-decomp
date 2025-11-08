@@ -78,7 +78,7 @@ void func_800550D0() // 0x800550D0
         *(s32*)&poly->r0 = color0;
 
         setPolyG4(poly);
-        setSemiTrans(poly, 1);
+        setSemiTrans(poly, true);
         setXY4(poly,
                -180, -120,
                 180, -120,
@@ -1158,7 +1158,7 @@ void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, G
         *(s32*)&poly->x2 = var_a3 + (temp_s5 << 16);
         *(s32*)&poly->x3 = temp_s6 + (temp_s5 << 16);
 
-        setSemiTrans(poly, 1);
+        setSemiTrans(poly, true);
         AddPrim(tag, poly);
 
         mode           = (DR_MODE*)(packet + 0x30);
@@ -4105,7 +4105,7 @@ bool func_80060044(POLY_FT4** poly, s32 arg1) // 0x80060044
     ptr->field_150 = ((g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_0 & 0x7) + 2);
     ptr->field_164 = CLAMP_LOW_THEN_MIN((ptr->field_148 / 327), 0, 7);
 
-    setSemiTrans(*poly, 1);
+    setSemiTrans(*poly, true);
 
     if (g_GameWork.config_0.optExtraBloodColor_24 == 0xE)
     {
@@ -4137,7 +4137,7 @@ bool func_80060044(POLY_FT4** poly, s32 arg1) // 0x80060044
             (*poly + 1)->b0         = ptr->field_134.b >> 4;
             (*poly + 1)->clut       = (g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_0 << 6) | 0x13;
 
-            setSemiTrans(*poly + 1, 0);
+            setSemiTrans(*poly + 1, false);
 
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *poly);
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[arg1].field_E.s_0.field_1) >> 3], *poly + 1);
@@ -4540,7 +4540,7 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
     *(s32*)&(*arg0)->u2 = ((ptr->field_190 + ptr->field_19C) << 8) + (ptr->field_17C + ptr->field_188);
     *(s32*)&(*arg0)->u3 = ((ptr->field_190 + ptr->field_1A0) << 8) + (ptr->field_17C + ptr->field_18C);
 
-    setSemiTrans(*arg0, 1);
+    setSemiTrans(*arg0, true);
 
     if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3))
     {
@@ -4827,7 +4827,7 @@ bool func_80062708(POLY_FT4** poly, s32 arg1) // 0x80062708
             *(s32*)&(*poly)->u0 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_1 << 6) | 0x13) << 16) + temp_s2;
             *(s32*)&(*poly)->u1 = temp_s2 + 0x4B0007;
 
-            setSemiTrans(*poly, 1);
+            setSemiTrans(*poly, true);
 
             *(s32*)&(*poly)->u2 = temp_s2 + 0x700;
             *(s32*)&(*poly)->u3 = temp_s2 + 0x707;
@@ -5335,7 +5335,7 @@ bool func_80064334(POLY_FT4** poly, s32 arg1) // 0x80064334
     *(u16*)&(*poly)->u2 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 191) << 8) + 0xE0;
     *(u16*)&(*poly)->u3 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_B << 5) + 191) << 8) + 0xFF;
 
-    setSemiTrans(*poly, 1);
+    setSemiTrans(*poly, true);
 
     if (ptr->field_15A < (ptr->field_168 >> 3))
     {
@@ -5458,7 +5458,7 @@ bool func_80064FC0(POLY_FT4** polys, s32 arg1) // 0x80064FC0
     *(u16*)&(*polys)->r0 = 0x1020;
     (*polys)->b0         = 0x10;
 
-    setSemiTrans((*polys), 1);
+    setSemiTrans((*polys), true);
 
     *(u32*)&(*polys)->u0 = 0x018C0000;
     *(u32*)&(*polys)->u1 = 0x2C003F;
@@ -5561,7 +5561,7 @@ void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4
             setXY3Fast(ptr->field_0, sp10[temp_a1][j + 1].vx, sp10[temp_a1][j + 1].vy);
 
             ptr->field_68 = (sp190[i][j] + sp190[temp_a1][j] + sp190[i][j + 1] + sp190[temp_a1][j + 1]) >> 2;
-            setSemiTrans(ptr->field_0, 1);
+            setSemiTrans(ptr->field_0, true);
 
             ptr->field_0->r0 = ptr->field_0->r1 = CLAMP_LOW(D_800AE710[j].field_0 - (arg3 >> 4) - (arg2 >> 5), 0);
             ptr->field_0->g0 = ptr->field_0->g1 = CLAMP_LOW(D_800AE710[j].field_1 - (arg3 >> 4) - (arg2 >> 5), 0);
@@ -5633,7 +5633,7 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
     *(s32*)&ptr->field_0->u1 = 0x2C403F;
     *(u16*)&ptr->field_0->u2 = 0x5F20;
     *(u16*)&ptr->field_0->u3 = 0x5F3F;
-    setSemiTrans(ptr->field_0, 1);
+    setSemiTrans(ptr->field_0, true);
 
     temp_fp = ptr->field_38 * (s32)FP_MULTIPLY_PRECISE((arg1 >> 1) + 0x800, 0x100, Q12_SHIFT) / ptr->field_40;
 
@@ -5750,7 +5750,7 @@ void func_80066184() // 0x80066184
     *(u16*)&ptr->field_0->r3 = ptr->field_78 + (ptr->field_78 << 8);
     ptr->field_0->b3         = ptr->field_78;
 
-    setSemiTrans(ptr->field_0, 1);
+    setSemiTrans(ptr->field_0, true);
 
     poly  = ptr->field_0 + 1;
     *poly = *ptr->field_0;

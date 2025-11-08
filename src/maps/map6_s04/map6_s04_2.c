@@ -296,7 +296,7 @@ void func_800E1D50(void) // 0x800E1D50
             g_SysWork.field_30 = 20;
             g_SysWork.flags_22A4 |= 1 << 3;
 
-            SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
             SysWork_StateStepIncrement(0);
 
@@ -310,7 +310,7 @@ void func_800E1D50(void) // 0x800E1D50
             break;
 
         case 3:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:
@@ -602,7 +602,7 @@ void func_800E3244(void) // 0x800E3244
 
             Game_TurnFlashlightOn();
             D_800ED5B0 = 0;
-            SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             D_800ED5AC = 0;
 
             Fs_QueueStartRead(FILE_ANIM_AMUSE1_DMS, FS_BUFFER_14);

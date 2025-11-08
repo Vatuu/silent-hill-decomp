@@ -168,7 +168,7 @@ void func_800D0CF8(void) // 0x800D0CF8
 
         case 2:
             func_80085EB8(2, g_SysWork.npcs_1A0, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 3:
@@ -268,18 +268,18 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 14:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 15:
             D_800D253C = Q12(110.0f);
 
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 0x33, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
             SysWork_StateStepIncrement(0);
 
         case 16:
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 17:
@@ -418,7 +418,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case EventState_CutsceneSkip:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 37:
@@ -431,8 +431,8 @@ void func_800D0CF8(void) // 0x800D0CF8
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
             Sd_EngineCmd(0x13);
 

@@ -321,7 +321,7 @@ void func_800D5FC4(void) // 0x800D5FC4
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
 
             D_800DACE8 = Q12(-0.3f);
 
@@ -402,7 +402,7 @@ void func_800D5FC4(void) // 0x800D5FC4
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_M3S05_AlcoholPouredOnVeins);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
             break;
     }
@@ -557,7 +557,7 @@ void func_800D72AC(void) // 0x800D72AC
             Camera_PositionSet(NULL, Q12(57.86f), Q12(-3.62f), Q12(-21.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(58.37f), Q12(-0.4f), Q12(-23.42f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 105, false);
 
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(57.15f);
@@ -608,7 +608,7 @@ void func_800D72AC(void) // 0x800D72AC
             }
 
             func_8005DE0C(Sfx_Unk1535, &g_WorldObject0.position_1C.position_0, D_800DACF0 >> 5, Q12(16.0f), 0);
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
             if (g_SysWork.sysStateStep_C[0] != 7)
             {
@@ -619,9 +619,9 @@ void func_800D72AC(void) // 0x800D72AC
         default:
             sharedFunc_800D2244_0_s00(true);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             func_8004690C(Sfx_Unk1535);
             break;
     }

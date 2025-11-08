@@ -207,7 +207,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
 
         if (zScreenStart >= 33 && zScreenStart < (2048 - 1))
         {
-            setSemiTrans(polyFt3, 1);
+            setSemiTrans(polyFt3, true);
             polyFt3->x1 = polyFt3->x0;
             polyFt3->y2 = polyFt3->y0;
 

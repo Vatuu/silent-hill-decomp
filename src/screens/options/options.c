@@ -1072,7 +1072,7 @@ void Options_Menu_VignetteDraw(void) // 0x801E49F0
         poly = (POLY_G4*)GsOUT_PACKET_P;
 
         setPolyG4(poly);
-        setSemiTrans(poly, 1);
+        setSemiTrans(poly, true);
 
         setRGB0(poly, 0x60, 0x60, 0x60);
         setRGB1(poly, 0, 0, 0);
@@ -1849,7 +1849,7 @@ void Options_Selection_HighlightDraw(const s_Line2d* line, bool hasShadow, bool 
     {
         poly = (POLY_G4*)GsOUT_PACKET_P;
         setPolyG4(poly);
-        setSemiTrans(poly, 1);
+        setSemiTrans(poly, true);
         setRGB0(poly, 0, 0, 0);
         setRGB1(poly, FP_COLOR(0.375f), FP_COLOR(0.375f), FP_COLOR(0.375f));
         setRGB2(poly, 0, 0, 0);

@@ -396,7 +396,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD9F8);
 
 bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 {
-    u8              curStateStep;
+    u8              activeStateStep;
     s_SubCharacter* localChara; // TODO: Not sure why this is needed here, could be an inline in this func.
 
     chara->model_0.anim_4.alpha_A = Q12(0.0f);
@@ -431,12 +431,11 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
         localChara->properties_E4.larvalStalker.properties_E8[3].val32 = Q12(30.0f);
     }
 
-    curStateStep = chara->model_0.stateStep_3;
-
-    if (curStateStep != 0)
+    activeStateStep = chara->model_0.stateStep_3;
+    if (activeStateStep != 0)
     {
         chara->model_0.stateStep_3 = 0;
-        chara->model_0.state_2     = curStateStep;
+        chara->model_0.state_2     = activeStateStep;
     }
     else
     {

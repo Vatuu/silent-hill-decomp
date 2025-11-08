@@ -496,7 +496,7 @@ void func_800DAD2C(void)
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrementAfterFade(0, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
             func_800862F8(0, FILE_TIM_RECEPDR1_TIM, false);
             D_800E1FD0 = 0;
             SysWork_StateStepIncrement(0);
@@ -504,7 +504,7 @@ void func_800DAD2C(void)
             func_800862F8(1, 0, false);
             break;
         case 2:
-            SysWork_StateStepIncrementAfterFade(1, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
             break;
         case 3:
             func_800862F8(3, 0, false);
@@ -513,7 +513,7 @@ void func_800DAD2C(void)
             /* fallthrough */
         case 4:
             func_800862F8(2, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
         case 5:
             func_800862F8(2, 0, false);
@@ -560,11 +560,11 @@ void func_800DAD2C(void)
             break;
         case 10:
             func_800862F8(5, 0, false);
-            SysWork_StateStepIncrementAfterFade(2, 1, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, 1, 0, Q12(0.0f), false);
             break;
         default:
             func_800862F8(6, 0, false);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_M1S02_SeenDoorWithHorizontalSlot);
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);

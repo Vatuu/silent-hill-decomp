@@ -1359,7 +1359,7 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
 
         arrowPoly = (POLY_G3*)GsOUT_PACKET_P;
         setPolyG3(arrowPoly);
-        setSemiTrans(arrowPoly, 1);
+        setSemiTrans(arrowPoly, true);
 
         baseColor = 255 - (timestep * 8);
         setRGB0(arrowPoly, baseColor, baseColor, baseColor);

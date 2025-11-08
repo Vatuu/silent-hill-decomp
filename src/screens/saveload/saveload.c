@@ -655,7 +655,7 @@ void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
 
             poly = (POLY_F4*)GsOUT_PACKET_P;
             setPolyF4(poly);
-            setSemiTrans(poly, 1);
+            setSemiTrans(poly, true);
 
             if (time < 32)
             {
@@ -703,7 +703,7 @@ void Gfx_SavedFlashDraw() // 0x801E3E78
         sin  = Math_Sin((g_Gfx_SaveFlashTimer << 10) / SAVE_FLASH_TIMER_MAX);
         poly = (POLY_F4*)GsOUT_PACKET_P;
         setPolyF4(poly);
-        setSemiTrans(poly, 1);
+        setSemiTrans(poly, true);
 
         color = ~FP_FROM(sin * 255, Q12_SHIFT);
         setRGB0(poly, color, color, color);
@@ -818,7 +818,7 @@ void Gfx_SaveSlotBorderDraw() // 0x801E4010
         {
             glowPoly = (POLY_G4*)GsOUT_PACKET_P;
             setPolyG4(glowPoly);
-            setSemiTrans(glowPoly, 1);
+            setSemiTrans(glowPoly, true);
 
             setRGB0(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.5f), FP_COLOR(0.0f));
             setRGB1(glowPoly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
@@ -855,7 +855,7 @@ void Gfx_SaveSlotMemCardMsgBoxShineDraw(s32 slotIdx) // 0x801E43C8
     {
         poly = (POLY_F4*)GsOUT_PACKET_P;
         setPolyF4(poly);
-        setSemiTrans(poly, 1);
+        setSemiTrans(poly, true);
 
         if ((u16)colorTimer < FP_COLOR(0.125f))
         {
@@ -995,7 +995,7 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
     {
         highlightPoly = (POLY_F4*)GsOUT_PACKET_P;
         setPolyF4(highlightPoly);
-        setSemiTrans(highlightPoly, 1);
+        setSemiTrans(highlightPoly, true);
 
         // Fade in and out.
         if (selectedSaveHighlightTimer < 0x20u)
@@ -1069,7 +1069,7 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
     // Draw transparent background.
     unkPoly = (POLY_F4*)GsOUT_PACKET_P;
     setPolyF4(unkPoly);
-    setSemiTrans(unkPoly, 1);
+    setSemiTrans(unkPoly, true);
 
     setRGB0(unkPoly, FP_COLOR(0.1875f), FP_COLOR(0.1875f), FP_COLOR(0.1875f));
 
@@ -1281,7 +1281,7 @@ void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* b
     {
         glowPoly = (POLY_G4*)GsOUT_PACKET_P;
         setPolyG4(glowPoly);
-        setSemiTrans(glowPoly, 1);
+        setSemiTrans(glowPoly, true);
 
         setRGB0(glowPoly, coloredLine->r_8 / 2, coloredLine->g_A / 2, coloredLine->b_C / 2);
         setRGB1(glowPoly, 0, 0, 0);
@@ -1304,7 +1304,7 @@ void Gfx_SaveSlotMemCardMsgBoxSubDraw(s_LineBorder* borderLines, s_QuadBorder* b
     // Draw (???)'
     unkPoly = (POLY_F4*)GsOUT_PACKET_P;
     setPolyF4(unkPoly);
-    setSemiTrans(unkPoly, 1);
+    setSemiTrans(unkPoly, true);
 
     setRGB0(unkPoly, FP_COLOR(0.1875f), FP_COLOR(0.1875f), FP_COLOR(0.1875f));
 
@@ -1361,7 +1361,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
 
         color = FP_COLOR(0.1875f); // @hack
 
-        setSemiTrans(poly_f3, 1);
+        setSemiTrans(poly_f3, true);
         setRGB0(poly_f3, color, FP_COLOR(0.1875f), FP_COLOR(0.1875f));
 
         setXY3(poly_f3,
@@ -1378,7 +1378,7 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line) // 0x801E5898
 
     poly_f4 = (POLY_F4*)GsOUT_PACKET_P;
     setPolyF4(poly_f4);
-    setSemiTrans(poly_f4, 1);
+    setSemiTrans(poly_f4, true);
 
     setRGB0(poly_f4, FP_COLOR(0.1875f), FP_COLOR(0.1875f), FP_COLOR(0.1875f));
 
@@ -1535,7 +1535,7 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         {
             poly = (POLY_G4*)GsOUT_PACKET_P;
             setPolyG4(poly);
-            setSemiTrans(poly, 1);
+            setSemiTrans(poly, true);
 
             hasFlag = flags & 0x10;
 

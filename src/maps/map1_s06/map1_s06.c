@@ -458,7 +458,7 @@ void func_800D5DD8(void) // 0x800D5DD8
         if (D_800D7790 == 0 && g_SysWork.sysStateStep_C[0] > 6 && g_SysWork.sysStateStep_C[0] < 12)
         {
             D_800D7790 = 1;
-            SysWork_StateStepIncrementAfterFade(0, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
         }
     }
 
@@ -507,7 +507,7 @@ void func_800D5DD8(void) // 0x800D5DD8
             SysWork_StateStepIncrement(0);
 
         case 5:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 6:
@@ -520,7 +520,7 @@ void func_800D5DD8(void) // 0x800D5DD8
 
         case 7:
             func_800D5D6C(0);
-            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
             break;
 
         case 8:
@@ -568,7 +568,7 @@ void func_800D5DD8(void) // 0x800D5DD8
         case 12:
             func_800D5D6C(122);
             func_80068E0C(2, 1, 926, 128, 122, 120, Q12(0.5f));
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         case 13:
@@ -576,13 +576,13 @@ void func_800D5DD8(void) // 0x800D5DD8
             SysWork_StateStepIncrement(0);
 
         case CUTSCENE_SKIP_STATE:
-            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
         default:
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
             g_SavegamePtr->current2dMapIdx_A9 = D_800D778E;
 

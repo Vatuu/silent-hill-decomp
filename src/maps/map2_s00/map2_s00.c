@@ -1740,7 +1740,7 @@ void func_800EA960(void) // 0x800EA960
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
-            SysWork_StateStepIncrementAfterFade(0, true, 3, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1824,7 +1824,7 @@ void func_800EA960(void) // 0x800EA960
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             break;
     }
 
@@ -1866,7 +1866,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             break;
 
         case STATE_PRESS_SWITCH:
-            SysWork_StateStepIncrementAfterFade(0, true, 3, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -1921,7 +1921,7 @@ void func_800EAD2C(void) // 0x800EAD2C
                 Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotBridgeArrow);
             }
 
-            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         default:
@@ -2028,7 +2028,7 @@ void func_800EB174(void) // 0x800EB174
             sharedFunc_800D2EF4_0_s00();
 
             Savegame_EventFlagSet(EventFlag_167);
-            SysWork_StateStepIncrementAfterFade(false, false, 2, false, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             break;
     }
 }
