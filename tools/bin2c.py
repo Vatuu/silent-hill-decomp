@@ -1031,6 +1031,11 @@ Examples:
     
     # Parse offset
     offset = int(args.offset, 0)
+
+    # silent-hill-decomp map address hack
+    if offset > 0x800C9578:
+        offset -= 0x800C9578
+
     max_size = int(args.size, 0) if args.size else None
     
     # Read header file

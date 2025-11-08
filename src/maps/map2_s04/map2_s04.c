@@ -4,10 +4,6 @@
 #include "maps/shared.h"
 #include "maps/map2/map2_s04.h"
 
-INCLUDE_RODATA("asm/maps/map2_s04/nonmatchings/map2_s04", D_800C9578);
-
-INCLUDE_RODATA("asm/maps/map2_s04/nonmatchings/map2_s04", g_MapOverlayHeader);
-
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CABCC
 
 #include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CAD34
@@ -34,7 +30,7 @@ INCLUDE_RODATA("asm/maps/map2_s04/nonmatchings/map2_s04", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CC61C
 
-s32 func_800CC7F4() // 0x800CC7F4
+s32 func_800CC7F4(void) // 0x800CC7F4
 {
     return 0;
 }
@@ -65,7 +61,7 @@ void func_800CCA04(void) {}
 
 void func_800CCA0C(void) {}
 
-s32 func_800CCA14() // 0x800CCA14
+s32 func_800CCA14(void) // 0x800CCA14
 {
     return 0;
 }
@@ -88,7 +84,7 @@ void func_800CCA1C(void) {}
 
 #include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800CCBE0
 
-void func_800CCE6C(void) {}
+void func_800CCE6C(void) {} // 0x800CCE6C
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800CCE74
 

@@ -7,11 +7,29 @@
 #define MAP_ROOM_MIN_Z Q12(0.0f)
 #define MAP_ROOM_MAX_Z Q12(120.0f)
 
-s32 func_800CC7F4();
+s32 func_800CC7F4(void);
 
-s32 func_800CCA14();
+void func_800CC9EC(void);
+
+void func_800CC9F4(void);
+
+void func_800CC9FC(void);
+
+void func_800CCA04(void);
+
+void func_800CCA0C(void);
+
+s32 func_800CCA14(void);
+
+void func_800CCA1C(void);
 
 void func_800CCB30(s32 arg0);
+
+void func_800CCE6C(void);
+
+void MapEvent_DoorJammed(void);
+
+void MapEvent_DoorLocked(void);
 
 void func_800CCF9C(void);
 
@@ -24,5 +42,9 @@ void MapEvent_MapTake(void);
 
 /** @brief Handles the Shotgun item pickup event. */
 void MapEvent_ShotgunTake(void);
+
+void Map_WorldObjectsInit(void);
+
+void Map_WorldObjectsUpdate(void);
 
 #endif
