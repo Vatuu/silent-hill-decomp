@@ -988,6 +988,8 @@ Examples:
                         help='Struct type name to parse')
     parser.add_argument('-o', '--offset', type=str, default='0',
                         help='Offset in binary file to start reading (hex or decimal, default: 0)')
+    parser.add_argument('-c', '--count', type=int, default=1,
+                        help='Number of array elements to parse (default: 1)')
     parser.add_argument('-a', '--alignment', type=int, default=4,
                         help='Struct alignment in bytes (default: 4 for 32-bit/PSX)')
     parser.add_argument('--pointer-size', type=int, default=4,
@@ -1012,7 +1014,6 @@ Examples:
                         help='Specify union member to use: "StructName.unionField=memberName"')
     parser.add_argument('--unnamed-values', action='store_true',
                         help='Don\'t output value names inside initializers')
-    
     
     args = parser.parse_args()
     
@@ -1069,11 +1070,14 @@ Examples:
             print(f"Check {args.debug_output} to see what the parser received", file=sys.stderr)
         return 1
     
+    resolved_type = struct_parser.resolve_type(args.type)
     # Check if struct exists
-    if args.type not in struct_parser.structs:
-        print(f"Error: Struct '{args.type}' not found in header file", file=sys.stderr)
-        print(f"Available structs: {', '.join(struct_parser.structs.keys())}", file=sys.stderr)
-        return 1
+    if args.type not in struct_parser.structs and args.type not in struct_parser.type_map:
+        if resolved_type not in struct_parser.structs and resolved_type not in struct_parser.type_map:
+            print(f"Error: Type '{args.type}' not found", file=sys.stderr)
+            print(f"Available structs: {', '.join(str(k) for k in struct_parser.structs.keys() if k is not None)}", file=sys.stderr)
+            print(f"Available basic types: {', '.join(struct_parser.type_map.keys())}", file=sys.stderr)
+            return 1
     
     # Show size if requested
     if args.show_size:
@@ -1081,6 +1085,14 @@ Examples:
         print(f"{args.type}: {size} bytes (0x{size:X})")
         return 0
     
+    # Determine if we're dealing with a struct or basic type
+    is_basic_type = args.type in struct_parser.type_map or resolved_type in struct_parser.type_map
+
+    if is_basic_type:
+        struct_size = struct_parser.get_type_size(resolved_type)
+    else:
+        struct_size = struct_parser.struct_sizes[args.type]
+
     # Read binary file
     try:
         with open(args.binary, 'rb') as f:
@@ -1088,8 +1100,7 @@ Examples:
             if max_size:
                 data = f.read(max_size)
             else:
-                struct_size = struct_parser.struct_sizes[args.type]
-                data = f.read(struct_size)
+                data = f.read(struct_size * args.count)
     except FileNotFoundError:
         print(f"Error: Binary file '{args.binary}' not found", file=sys.stderr)
         return 1
@@ -1098,10 +1109,10 @@ Examples:
         return 1
     
     # Check data size
-    struct_size = struct_parser.struct_sizes[args.type]
-    if len(data) < struct_size:
-        print(f"Warning: Only read {len(data)} bytes, but {args.type} needs {struct_size} bytes", 
-              file=sys.stderr)
+    required_size = struct_size * args.count
+    if len(data) < required_size:
+        print(f"Warning: Only read {len(data)} bytes, but {args.type}[{args.count}] needs {required_size} bytes", 
+            file=sys.stderr)
 
     # Parse symbol.txt files
     if args.symfiles:
@@ -1118,11 +1129,48 @@ Examples:
     
     # Parse the data
     try:
-        result = struct_parser.parse_data(args.type, data)
-        initializer = struct_parser.to_initializer(result, args.type)
-        
-        print(f"{args.type} {args.name} = {initializer};")
-        
+        if is_basic_type:
+            # Parse as array of basic type
+            construct_type = struct_parser.type_map[resolved_type]
+            array_construct = Array(args.count, construct_type)
+            results = array_construct.parse(data)
+            
+            # Format output
+            formatted = struct_parser.format_array(results, args.type, indent=0)
+            print(f"{args.type} {args.name}[] = {formatted};")
+        else:
+            if args.count == 1:
+                # Single struct
+                result = struct_parser.parse_data(args.type, data)
+                initializer = struct_parser.to_initializer(result, args.type)
+                print(f"{args.type} {args.name} = {initializer};")
+            else:
+                # Array of structs
+                results = []
+                for i in range(args.count):
+                    start = i * struct_size
+                    end = start + struct_size
+                    if end > len(data):
+                        print(f"Warning: Not enough data for element {i}", file=sys.stderr)
+                        break
+                    
+                    chunk = data[start:end]
+                    result = struct_parser.parse_data(args.type, chunk)
+                    results.append(result)
+                
+                # Output as C array
+                print(f"{args.type} {args.name}[] = {{")
+                for i, result in enumerate(results):
+                    initializer = struct_parser.to_initializer(result, args.type)
+                    # Add comma except for last element
+                    comma = "," if i < len(results) - 1 else ""
+                    
+                    # Indent the initializer
+                    indented = "\n".join("  " + line for line in initializer.split("\n"))
+                    print(f"{indented}{comma}")
+                
+                print("};")
+            
     except Exception as e:
         print(f"Error parsing binary data: {e}", file=sys.stderr)
         import traceback
@@ -1130,7 +1178,6 @@ Examples:
         return 1
     
     return 0
-
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
