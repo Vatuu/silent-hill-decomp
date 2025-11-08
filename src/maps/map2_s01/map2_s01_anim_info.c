@@ -1,8 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 
-// 6768 start
-
 s_AnimInfo HARRY_M2S01_ANIM_INFOS[] = {
     { Anim_Update2, 76, 0, 77, { Q12(10.0f) }, -1, 676 },
     { Anim_Update0, 77, 0, 77, { Q12(10.0f) }, 676, 677 },
@@ -39,5 +37,3 @@ u8 sharedData_800DD584_0_s00 = 0;
 s32 sharedData_800DD598_0_s00 = 0;
 
 u8 sharedData_800DD59C_0_s00 = 255;
-
-// 6874 end
