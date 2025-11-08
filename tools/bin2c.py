@@ -13,6 +13,7 @@ Usage:
 # - build_struct_internal still uses Int32 as pointer (and default for unknown data), ignoring pointer_size
 # - inner-structs might have issues with `self.struct_field_types`?
 # - make Q conversion an option (right now it's always enabled for qX_X types)
+# - multi-dimension arrays aren't emitted properly
 
 import sys
 import argparse
@@ -65,6 +66,7 @@ class StructParser:
         self.union_members = {}  # union name -> dict of member name -> (construct, field_types)
         self.pointer_size = 4   # 32-bit pointers (PSX)
         self.sym_addrs = {} # sym.txt address -> name mappings
+        self.unnamed_values = False
         
         # Basic type mappings to construct
         self.type_map = {
@@ -243,18 +245,20 @@ class StructParser:
             # Check if this member is an anonymous struct
             member_type = self.parse_type(member_decl.type)
             
+            # Resolve the type first to handle typedefs
+            resolved_type = self.resolve_type(member_type)
+            
             if isinstance(member_decl.type, c_ast.TypeDecl) and isinstance(member_decl.type.type, c_ast.Struct):
                 # Anonymous struct within union
                 anon_struct = member_decl.type.type
                 member_construct, member_field_types = self.build_struct_internal(f"{union_name}.{member_name}", anon_struct)
                 member_size = member_construct.sizeof()
-            elif member_type in self.type_map:
-                # Simple type member
-                resolved = self.resolve_type(member_type)
-                # Note: 'value' here is a placeholder name for the construct definition
-                member_construct = Struct("value" / self.type_map[resolved])
-                member_field_types = {"value": member_type} 
-                member_size = self.type_sizes[resolved]
+            elif resolved_type in self.type_map:
+                # Simple type member (including typedefs that resolve to basic types)
+                # Note: member_name is used as the field name in the construct definition
+                member_construct = Struct("_union_value" / self.type_map[resolved_type])
+                member_field_types = {"_union_value": member_type}  # Store original type, not resolved
+                member_size = self.type_sizes[resolved_type]
             else:
                 # Unknown/complex type - store as raw bytes based on alignment
                 # For safety, let's try to calculate size if it's a known struct/type
@@ -281,6 +285,28 @@ class StructParser:
         # Return a construct that reads the union as raw bytes
         # We'll interpret it later based on union_choices
         return Bytes(max_size)
+
+    def decode_bitfields(self, data_bytes, bitfield_info):
+        """Manually decode C-style bitfields from raw bytes (LSB-first packing)"""
+        # Convert bytes to integer (little-endian)
+        value = int.from_bytes(data_bytes, byteorder='little')
+        
+        results = {}
+        bit_pos = 0
+        
+        for bf_name, bf_bits, is_signed, bf_type in bitfield_info:
+            # Extract bits from LSB side
+            mask = (1 << bf_bits) - 1
+            field_value = (value >> bit_pos) & mask
+            
+            # Handle signed values
+            if is_signed and (field_value & (1 << (bf_bits - 1))):
+                field_value -= (1 << bf_bits)
+            
+            results[bf_name] = field_value
+            bit_pos += bf_bits
+        
+        return results
 
     def build_struct_internal(self, struct_name, struct_decl):
         """Internal struct builder that returns both construct and field types."""
@@ -371,21 +397,25 @@ class StructParser:
                     fields.append(f"_pad_{offset}" / Padding(padding_needed))
                     offset += padding_needed
                 
-                bitfield_fields = []
+                # Read as raw bytes first, then manually extract bitfields
+                # Store the bitfield info for later extraction
+                bitfield_info = []
                 for bf_name, bf_bits, bf_type in bitfield_buffer:
                     resolved_type = self.resolve_type(bf_type)
                     is_signed = resolved_type in self.signed_types_set
+                    bitfield_info.append((bf_name, bf_bits, is_signed, bf_type))
                     
                     if self.verbose:
                         print(f"  Bitfield: {bf_name} ({bf_bits} bits, signed: {is_signed})", file=sys.stderr)
-                    
-                    bitfield_fields.append(bf_name / BitsInteger(bf_bits, signed=is_signed))
                 
-                padding_bits = num_bytes * 8 - bitfield_bit_offset
-                if padding_bits > 0:
-                    bitfield_fields.append(f"_bit_pad_{offset}" / BitsInteger(padding_bits))
+                # Store bitfield group as raw bytes - we'll decode manually
+                fields.append(f"_bitfields_{offset}" / Bytes(num_bytes))
                 
-                fields.append(f"_bitfields_{offset}" / Bitwise(Struct(*bitfield_fields)))
+                # Store metadata for manual decoding
+                if not hasattr(self, 'bitfield_metadata'):
+                    self.bitfield_metadata = {}
+                self.bitfield_metadata[f"{struct_name}._bitfields_{offset}"] = bitfield_info
+                
                 offset += num_bytes
                 
                 if self.verbose:
@@ -456,25 +486,39 @@ class StructParser:
         # Final bitfield flush
         # TODO: dedupe this bitfield code, it's mostly already repeated above
         if bitfield_buffer:
+            # Flush bitfields
             num_bytes = (bitfield_bit_offset + 7) // 8
+            
+            if self.verbose:
+                print(f"\n  --- Flushing Bitfield Group ({bitfield_bit_offset} bits) ---", file=sys.stderr)
             
             field_alignment = min(num_bytes, self.alignment)
             padding_needed = self.calculate_padding(offset, field_alignment)
             if padding_needed > 0:
+                if self.verbose:
+                    print(f"  Adding padding: {padding_needed} bytes", file=sys.stderr)
                 fields.append(f"_pad_{offset}" / Padding(padding_needed))
                 offset += padding_needed
             
-            bitfield_fields = []
+            # Read as raw bytes first, then manually extract bitfields
+            # Store the bitfield info for later extraction
+            bitfield_info = []
             for bf_name, bf_bits, bf_type in bitfield_buffer:
                 resolved_type = self.resolve_type(bf_type)
                 is_signed = resolved_type in self.signed_types_set
-                bitfield_fields.append(bf_name / BitsInteger(bf_bits, signed=is_signed))
+                bitfield_info.append((bf_name, bf_bits, is_signed, bf_type))
+                
+                if self.verbose:
+                    print(f"  Bitfield: {bf_name} ({bf_bits} bits, signed: {is_signed})", file=sys.stderr)
             
-            padding_bits = num_bytes * 8 - bitfield_bit_offset
-            if padding_bits > 0:
-                bitfield_fields.append(f"_bit_pad_{offset}" / BitsInteger(padding_bits))
+            # Store bitfield group as raw bytes - we'll decode manually
+            fields.append(f"_bitfields_{offset}" / Bytes(num_bytes))
             
-            fields.append(f"_bitfields_{offset}" / Bitwise(Struct(*bitfield_fields)))
+            # Store metadata for manual decoding
+            if not hasattr(self, 'bitfield_metadata'):
+                self.bitfield_metadata = {}
+            self.bitfield_metadata[f"{struct_name}._bitfields_{offset}"] = bitfield_info
+            
             offset += num_bytes
         
         # Final padding
@@ -756,47 +800,78 @@ class StructParser:
                             try:
                                 # Re-parse the raw byte value using the chosen member's construct
                                 parsed_union = member_construct.parse(value)
-                                # Recurse with the chosen member's internal name for correct type lookups
-                                union_init = self.to_initializer(parsed_union, f"{union_name}.{chosen_member}", indent + 1)
-                                
-                                union_lines = union_init.splitlines()
-                                
-                                # Prepend an extra two spaces to every line *after* the opening brace.
-                                body_lines_fixed = '\n'.join([
-                                    '  ' + line for line in union_lines[1:]
-                                ])
-                                
-                                # Recombine: First line + newline + fixed body
-                                adjusted_union_init = union_lines[0] + '\n' + body_lines_fixed
+                            
+                                # Check if this is a simple type (contains single field named _union_value)
+                                if isinstance(parsed_union, Container) and "_union_value" in parsed_union:
+                                    # Simple type - just output the value directly
+                                    field_value = parsed_union["_union_value"]
+                                    field_type = member_field_types.get("_union_value")
+                                    formatted_value = self.format_value(field_value, field_type)
+                                    if not self.unnamed_values:
+                                        lines.append(f"{indent_str}  .{actual_field_name} = {{")
+                                        lines.append(f"{indent_str}    .{chosen_member} = {formatted_value},")
+                                        lines.append(f"{indent_str}  }},")
+                                    else:
+                                        lines.append(f"{indent_str}  {{")
+                                        lines.append(f"{indent_str}    {formatted_value},")
+                                        lines.append(f"{indent_str}  }},")
+                                else:
+                                    # Recurse with the chosen member's internal name for correct type lookups
+                                    union_init = self.to_initializer(parsed_union, f"{union_name}.{chosen_member}", indent + 1)
+                                    
+                                    union_lines = union_init.splitlines()
+                                    
+                                    # Prepend an extra two spaces to every line *after* the opening brace.
+                                    body_lines_fixed = '\n'.join([
+                                        '  ' + line for line in union_lines[1:]
+                                    ])
+                                    
+                                    # Recombine: First line + newline + fixed body
+                                    adjusted_union_init = union_lines[0] + '\n' + body_lines_fixed
 
-                                # Output the nested C initializer using the chosen member's name
-                                lines.append(f"{indent_str}  .{actual_field_name} = {{")
-                                # The output of to_initializer for a nested struct/bitfield group starts with '{'
-                                lines.append(f"{indent_str}    .{chosen_member} = {adjusted_union_init},")
-                                lines.append(f"{indent_str}  }},")
+                                    if not self.unnamed_values:
+                                        # Output the nested C initializer using the chosen member's name
+                                        # The output of to_initializer for a nested struct/bitfield group starts with '{'
+                                        lines.append(f"{indent_str}  .{actual_field_name} = {{")
+                                        lines.append(f"{indent_str}    .{chosen_member} = {adjusted_union_init},")
+                                        lines.append(f"{indent_str}  }},")
+                                    else:
+                                        lines.append(f"{indent_str}  {{")
+                                        lines.append(f"{indent_str}    {adjusted_union_init},")
+                                        lines.append(f"{indent_str}  }},")
                             except Exception as e:
                                 # Fallback to raw hex on parsing failure
                                 hex_str = "".join(f"{b:02X}" for b in value)
-                                lines.append(f"{indent_str}  .{actual_field_name} = {{ /* ERROR parsing '{chosen_member}': 0x{hex_str} */ }},")
+                                if not self.unnamed_values:
+                                    lines.append(f"{indent_str}  .{actual_field_name} = {{ /* ERROR parsing '{chosen_member}': 0x{hex_str} */ }},")
+                                else:
+                                    lines.append(f"{indent_str}  {{ /* ERROR parsing '{chosen_member}': 0x{hex_str} */ }},")
                         else:
                             # No choice specified - output as comment with hex
                             hex_str = "".join(f"{b:02X}" for b in value)
-                            lines.append(f"{indent_str}  .{actual_field_name} = {{ /* union: 0x{hex_str} */ }},")
+                            if not self.unnamed_values:
+                                lines.append(f"{indent_str}  .{actual_field_name} = {{ /* union: 0x{hex_str} */ }},")
+                            else:
+                                lines.append(f"{indent_str}  {{ /* union: 0x{hex_str} */ }},")
                     
                     continue # Union field processed, move to next item
                 
                 # Handle bitfields (already present, keep it)
                 if key.startswith("_bitfields_"):
-                    if not isinstance(value, Container):
+                    # Manually decode the bitfield bytes
+                    metadata_key = f"{struct_name}.{key}"
+                    if metadata_key not in self.bitfield_metadata:
                         continue
-                        
-                    for bf_key, bf_value in value.items():
-                        if bf_key.startswith("_"):
-                            continue
-                        
-                        # Bitfields do not use nested C struct initializers, so directly format value
-                        bf_type = current_field_types.get(bf_key)
-                        lines.append(f"{indent_str}  .{bf_key} = {self.format_value(bf_value, bf_type)},")
+                    
+                    bitfield_info = self.bitfield_metadata[metadata_key]
+                    decoded = self.decode_bitfields(value, bitfield_info)
+                    
+                    for bf_name, bf_value in decoded.items():
+                        bf_type = current_field_types.get(bf_name)
+                        if not self.unnamed_values:
+                            lines.append(f"{indent_str}  .{bf_name} = {self.format_value(bf_value, bf_type)},")
+                        else:
+                            lines.append(f"{indent_str}  {self.format_value(bf_value, bf_type)},")
                     
                     continue
 
@@ -808,16 +883,25 @@ class StructParser:
                 if isinstance(value, Container):
                     # For nested structs (not bitfields)
                     nested = self.to_initializer(value, field_type, indent + 1)
-                    lines.append(f"{indent_str}  .{key} = {nested},")
+                    if not self.unnamed_values:
+                        lines.append(f"{indent_str}  .{key} = {nested},")
+                    else:
+                        lines.append(f"{indent_str}  {nested},")
                 elif isinstance(value, list) or isinstance(value, ListContainer):
                     # For arrays
                     # Array type is stored as ('array', base_type, count)
                     array_base_type = field_type[1] if isinstance(field_type, tuple) else None
                     array_str = self.format_array(value, array_base_type, indent + 1)
-                    lines.append(f"{indent_str}  .{key} = {array_str},")
+                    if not self.unnamed_values:
+                        lines.append(f"{indent_str}  .{key} = {array_str},")
+                    else:
+                        lines.append(f"{indent_str}  {array_str},")
                 else:
                     # For basic types and pointers
-                    lines.append(f"{indent_str}  .{key} = {self.format_value(value, field_type)},")
+                    if not self.unnamed_values:
+                        lines.append(f"{indent_str}  .{key} = {self.format_value(value, field_type)},")
+                    else:
+                        lines.append(f"{indent_str}  {self.format_value(value, field_type)},")
             
             lines.append(f"{indent_str}}}")
             return "\n".join(lines)
@@ -926,6 +1010,9 @@ Examples:
                         help='Print verbose debug information about struct layout')
     parser.add_argument('-u', '--union', action='append', dest='union_choices',
                         help='Specify union member to use: "StructName.unionField=memberName"')
+    parser.add_argument('--unnamed-values', action='store_true',
+                        help='Don\'t output value names inside initializers')
+    
     
     args = parser.parse_args()
     
@@ -967,6 +1054,7 @@ Examples:
     try:
         struct_parser = StructParser(alignment=args.alignment, verbose=args.verbose, union_choices=union_choice_dict)
         struct_parser.pointer_size = args.pointer_size
+        struct_parser.unnamed_values = args.unnamed_values
         
         if args.debug_output:
             cleaned = struct_parser.preprocess_code(c_code)
