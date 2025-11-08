@@ -49,17 +49,20 @@ extern s_Model    g_Ai_MonsterCybil_ExtraModel; // Some kind of attachment or an
 extern s32 D_800ED588;
 extern s32 D_800ED58C;
 
-extern s_WorldObject_0 g_WorldObject0[2]; // 800ED600
-extern s_WorldObject_0 g_WorldObject1[3]; // 800ED640
-extern s_WorldObject_0 g_WorldObject2;    // 800ED6A0
-extern s_WorldObject_0 g_WorldObject3;    // 800ED6C0
-extern s_WorldObject_0 g_WorldObject4[2]; // 800ED6E0
-extern s_WorldObject_0 g_WorldObject5;    // 800ED720
+extern s_WorldObject_0 g_WorldObject0[2];
+extern s_WorldObject_0 g_WorldObject1[3];
+extern s_WorldObject_0 g_WorldObject2;
+extern s_WorldObject_0 g_WorldObject3;
+extern s_WorldObject_0 g_WorldObject4[2];
+extern s_WorldObject_0 g_WorldObject5;
+
 extern VECTOR3 D_800ED740;
-extern s_WorldObject_0 g_WorldObject6[3]; // 800ED750
-extern s_WorldObject_0 g_WorldObject7[2]; // 800ED7B0
-extern s_WorldObject_0 g_WorldObject8;    // 800ED7F0
-extern s_WorldObjectDesc g_WorldObject9;  // 800ED810
+
+extern s_WorldObject_0 g_WorldObject6[3];
+extern s_WorldObject_0 g_WorldObject7[2];
+extern s_WorldObject_0 g_WorldObject8;
+extern s_WorldObjectDesc g_WorldObject9;
+
 extern s8 D_800ED5AD;
 extern s16 D_800ED5B4;
 extern s8 D_800ED5B8;
@@ -70,7 +73,7 @@ extern s8 D_800CC4C4;
 extern s8 D_800CC4CC;
 extern s8 D_800CC4D4;
 extern s8 D_800CC4DC;
-extern u16 D_800EBA34[23]; // g_MapMsgSounds
+extern u16 D_800EBA34[23]; // `g_MapMsgSounds`
 extern s16 D_800ED5B4;
 extern s8 D_800ED5B8;
 extern s32 D_800A9938;
@@ -102,15 +105,16 @@ void func_800E1258(s32 arg0);
 
 void func_800E1290(void);
 
-void func_800E2CA0(void);
-
-void func_800E5D44(void);
-
-void func_800E3244(void);
-
 void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, s32);
 
 void func_800E1CA0(void);
 
 void func_800E1D50(void);
+
+void func_800E2CA0(void);
+
+void func_800E3244(void);
+
+void func_800E5D44(void);
+
 #endif

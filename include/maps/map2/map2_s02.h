@@ -11,6 +11,20 @@ extern s_WorldObject_0   g_CommonWorldObjects[6];
 extern u8 D_800ED43C;
 extern s8 D_800ED43F;
 
+void func_800D240C(s_SubCharacter* chara);
+
+void func_800DEC04(s_SubCharacter* chara);
+
+void func_800DEC98(s_SubCharacter* chara);
+
+u32 func_800DEE80(s_SubCharacter* chara);
+
+void func_800E3FB0(s_SubCharacter* chara);
+
+void func_800E5FC8(s_SubCharacter* chara, s16 arg1, s16 arg2, u8* arg3);
+
+void func_800E6758(s_SubCharacter* chara);
+
 void func_800E9B38(void);
 
 void func_800E9D54(void);
@@ -24,19 +38,5 @@ void func_800EA0E0(void);
 void func_800EA1C4(void);
 
 void func_800EAA50(void);
-
-void func_800E6758(s_SubCharacter* arg0);
-
-void func_800E5FC8(s_SubCharacter* chara, s16 arg1, s16 arg2, u8* arg3);
-
-void func_800E3FB0(s_SubCharacter* chara);
-
-void func_800DEC98(s_SubCharacter* arg0);
-
-void func_800DEC04(s_SubCharacter* chara);
-
-u32 func_800DEE80(s_SubCharacter* chara);
-
-void func_800D240C(s_SubCharacter* arg0);
 
 #endif

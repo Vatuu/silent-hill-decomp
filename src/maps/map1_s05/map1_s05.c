@@ -103,7 +103,7 @@ void func_800CF424(void) {}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CF42C);
 
-s32 func_800CF7A4() // 0x800CF7A4
+s32 func_800CF7A4(void) // 0x800CF7A4
 {
     return 0;
 }
@@ -292,7 +292,7 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D49AC);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4D1C);
 
-void func_800D525C(void)
+void func_800D525C(void) // 0x800D525C
 {
     D_800D86F8[0] = 0;
     D_800D86F8[1] = 0;
@@ -300,7 +300,7 @@ void func_800D525C(void)
     D_800D86FC[1] = 0x40;
     D_800D8568.field_0 = 9;
     D_800D8568.field_C = 0x12C;
-    D_800D8568.field_12 = -0x2CCCU;
+    D_800D8568.field_12 = -0x2CCCu;
     D_800D8568.field_14 = -0x800;
     D_800D8568.field_1C = 0xA00;
     D_800D8568.field_E = -0x1000;
@@ -315,11 +315,13 @@ void func_800D525C(void)
     D_800D8568.field_20 = Q12(19.7f);
     D_800D8568.field_24 = Q12(-19.1f);
     D_800D86FE = 48;
+
     if (Savegame_EventFlagGet(EventFlag_130))
     {
         g_SysWork.field_2378 = Q12(1.3843f);
         D_800D8568.field_1 = 0;
     }
+
     func_800CAAD0();
     WorldObjectPoseInit(&g_WorldObject0.position_1C, 19.7f, 1.58f, -19.1f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject0.object_0, "SPHERE_H");
@@ -336,7 +338,8 @@ void func_800D525C(void)
     g_SysWork.field_2370.vx = Q12(-0.25f);
     g_SysWork.field_2370.vy = Q12(0.0f);
     g_SysWork.field_2370.vz = Q12(0.0f);
-    Sd_EngineCmd(0x5C6U);
+
+    Sd_EngineCmd(Sfx_Unk1478);
 }
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D5400);

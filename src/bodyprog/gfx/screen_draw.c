@@ -20,7 +20,7 @@ void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) //
 void Screen_Refresh(s32 screenWidth, bool isInterlaced) // 0x800323C8
 {
     DrawSync(SyncMode_Wait);
-    Screen_RectInterlacedClear(0, 32, 320, 448, 0, 0, 0);
+    Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
     Screen_Init(screenWidth, isInterlaced);
 }
 
@@ -30,7 +30,7 @@ void Screen_Init(s32 screenWidth, bool isInterlaced) // 0x80032428
     g_GameWork.gsScreenHeight_58A = !isInterlaced ? FRAMEBUFFER_HEIGHT_PROGRESSIVE : FRAMEBUFFER_HEIGHT_INTERLACED;
 
     DrawSync(SyncMode_Wait);
-    GsInitGraph2(g_GameWork.gsScreenWidth_588, g_GameWork.gsScreenHeight_58A, isInterlaced | 0x4, 1, 0);
+    GsInitGraph2(g_GameWork.gsScreenWidth_588, g_GameWork.gsScreenHeight_58A, isInterlaced | (1 << 2), 1, 0);
     GsDefDispBuff2(0, 32, 0, isInterlaced ? 32 : 256);
 
     D_800C6E8E =

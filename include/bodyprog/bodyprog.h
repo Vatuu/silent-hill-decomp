@@ -3603,7 +3603,7 @@ void func_8008E5B4(void);
 
 void func_8008E794(VECTOR3* arg0, q3_12 angle, s32 arg2);
 
-void func_8008EA68(SVECTOR*, VECTOR3*, s32);
+void func_8008EA68(SVECTOR* arg0, VECTOR3* arg1, s32 arg2);
 
 void func_80085D78(bool reset);
 
@@ -4630,7 +4630,8 @@ void func_8007FD4C(bool cond);
 /** Returns data in last 3 pointer args. Outputs? */
 void func_8007FDE0(s8, e_SfxId* sfx, s8* pitch0, s8* pitch1);
 
-s32 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1);
+/** Returns angle. */
+q19_12 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1);
 
 /** Generates a random angle? */
 s32 func_80080514(void);

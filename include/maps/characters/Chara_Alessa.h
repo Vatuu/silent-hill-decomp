@@ -51,6 +51,11 @@ void Ai_Alessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
 void Ai_Alessa_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_Alessa_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void Ai_Alessa_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords);
+
+/** @brief Initializes an Alessa character.
+ *
+ * @param chara Alessa character.
+ */
 void Ai_Alessa_Init(s_SubCharacter* chara);
 
 #endif

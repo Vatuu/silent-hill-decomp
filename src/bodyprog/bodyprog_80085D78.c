@@ -3204,22 +3204,22 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* arg1, s32 arg2) // 0x8008EA68
     SVECTOR       spC0;
     s32           spC8;
     s32           spCC;
-    GsOT_TAG*     spD0;
-    GsOT_TAG*     spD4;
-    GsOT_TAG*     temp_v1;
     s16           temp_v0;
-    s16           var_s7;
-    s32           temp_s0;
+    q3_12         angle;
+    q19_12        angle0;
     s32           temp_s0_2;
     s16           temp_s1;
     s32           temp_s2;
     s32           temp_v0_2;
     s32           temp_v0_3;
     s32           temp_v1_2;
-    s32           var_fp;
+    s32           i;
+    s32           temp;
     PACKET*       packet;
     s_poly*       poly;
-    s32           temp;
+    GsOT_TAG*     spD0;
+    GsOT_TAG*     spD4;
+    GsOT_TAG*     temp_v1;
 
     temp_v1    = g_OrderingTable0[g_ActiveBufferIdx].org;
     sp50.flg   = 0;
@@ -3257,13 +3257,13 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* arg1, s32 arg2) // 0x8008EA68
     sp28[3].vy = 0x33;
     sp28[2].vy = 0x33;
 
-    for (var_fp = 0, var_s7 = 0; var_fp < 8; var_fp++, var_s7 += 0x200)
+    for (i = 0, angle = 0; i < 8; i++, angle += FP_ANGLE(45.0f))
     {
-        temp_s1   = Math_Sin(var_s7);
-        temp_s0   = var_s7 + 0x200;
-        temp_s2   = Math_Cos(var_s7);
-        temp_s0_2 = Math_Sin(temp_s0);
-        temp_v0_2 = Math_Cos(temp_s0);
+        temp_s1   = Math_Sin(angle);
+        angle0    = angle + FP_ANGLE(45.0f);
+        temp_s2   = Math_Cos(angle);
+        temp_s0_2 = Math_Sin(angle0);
+        temp_v0_2 = Math_Cos(angle0);
 
         sp28[0].vx = FP_MULTIPLY((s16)temp_s1, 0x33, Q12_SHIFT - 2);
         sp28[0].vz = FP_MULTIPLY((s16)temp_s2, 0x33, Q12_SHIFT - 2) + 0x133;
@@ -3331,7 +3331,7 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* arg1, s32 arg2) // 0x8008EA68
         packet = poly;
     }
 
-    SetDrawTPage((DR_TPAGE*)packet, temp, 1, 0x20);
+    SetDrawTPage((DR_TPAGE*)packet, temp, 1, 32);
     AddPrim(spD4, packet);
     packet        += sizeof(DR_TPAGE);
     GsOUT_PACKET_P = packet;

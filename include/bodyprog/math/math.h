@@ -145,11 +145,11 @@ static inline q3_12 Math_AngleNormalize(q19_12 angle)
  * @param vec Output vector.
  */
 #define Math_SVectorZero(vec) \
-    {                         \
-        (vec)->vx = 0;        \
-        (vec)->vy = 0;        \
-        (vec)->vz = 0;        \
-    }
+{                             \
+    (vec)->vx = 0;            \
+    (vec)->vy = 0;            \
+    (vec)->vz = 0;            \
+}
 
 /** @brief Sets an `SVECTOR`'s components.
  *
@@ -159,22 +159,22 @@ static inline q3_12 Math_AngleNormalize(q19_12 angle)
  * @param z Z component.
  */
 #define Math_SVectorSet(vec, x, y, z) \
-    {                                 \
-        (vec)->vx = (x);              \
-        (vec)->vy = (y);              \
-        (vec)->vz = (z);              \
-    }
+{                                     \
+    (vec)->vx = (x);                  \
+    (vec)->vy = (y);                  \
+    (vec)->vz = (z);                  \
+}
 
 /** @brief Clears a `VECTOR3`'s components.
  *
  * @param vec Output vector.
  */
 #define Math_Vector3Zero(vec) \
-    {                         \
-        (vec)->vx = 0;        \
-        (vec)->vy = 0;        \
-        (vec)->vz = 0;        \
-    }
+{                             \
+    (vec)->vx = 0;            \
+    (vec)->vy = 0;            \
+    (vec)->vz = 0;            \
+}
 
 /** @brief Sets a `VECTOR3`'s components.
  *
@@ -184,11 +184,11 @@ static inline q3_12 Math_AngleNormalize(q19_12 angle)
  * @param z Z component.
  */
 #define Math_Vector3Set(vec, x, y, z) \
-    {                                 \
-        (vec)->vx = (x);              \
-        (vec)->vy = (y);              \
-        (vec)->vz = (z);              \
-    }
+{                                     \
+    (vec)->vx = (x);                  \
+    (vec)->vy = (y);                  \
+    (vec)->vz = (z);                  \
+}
 
 void Math_MatrixRotate0(SVECTOR* rot, MATRIX* mat); // Custom `vwRotMatrix[...]`?
 void Math_MatrixRotate1(SVECTOR* rot, MATRIX* mat); // Another custom `vwRotMatrix[...]`?

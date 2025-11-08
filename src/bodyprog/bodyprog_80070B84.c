@@ -8534,7 +8534,7 @@ void Input_SelectClickSet() // 0x80080458
     g_Controller1->btnsClicked_10 |= ControllerFlag_Select;
 }
 
-s32 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1) // 0x80080478
+q19_12 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1) // 0x80080478
 {
     s32 x0;
     s32 x1;

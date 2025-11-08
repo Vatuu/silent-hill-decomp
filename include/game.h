@@ -1925,15 +1925,6 @@ static inline void Model_AnimStatusSet(s_Model* model, s32 animIdx, bool isActiv
     }
 }
 
-/** @brief Decrements the anim status of a model anim.
- *
- * @param anim Anim to update.
- */
-static inline void ModelAnim_StatusDecrement(s_ModelAnim* anim)
-{
-    anim->status_0--;
-}
-
 /** @brief Increments the anim status of a model anim.
  *
  * @param anim Anim to update.
@@ -1941,6 +1932,15 @@ static inline void ModelAnim_StatusDecrement(s_ModelAnim* anim)
 static inline void ModelAnim_StatusIncrement(s_ModelAnim* anim)
 {
     anim->status_0++;
+}
+
+/** @brief Decrements the anim status of a model anim.
+ *
+ * @param anim Anim to update.
+ */
+static inline void ModelAnim_StatusDecrement(s_ModelAnim* anim)
+{
+    anim->status_0--;
 }
 
 /** @brief Similar to `Model_AnimStatusSet`, but also sets `anim_4.time_4` and `anim_4.keyframeIdx_8`

@@ -6,14 +6,15 @@
 #define MAP_ROOM_MIN_Z Q12(-80.0f)
 #define MAP_ROOM_MAX_Z Q12(200.0f)
 
-typedef struct {
-    u8 field_0;
-    u8 field_1;
-    u8 field_2;
-    u8 field_3;
-    u8 field_4;
-    u8 field_5;
-    u8 field_6;
+typedef struct
+{
+    u8  field_0;
+    u8  field_1;
+    u8  field_2;
+    u8  field_3;
+    u8  field_4;
+    u8  field_5;
+    u8  field_6;
     u16 field_8;
     u16 field_A;
     u16 field_C;
@@ -39,7 +40,9 @@ extern s_MapHdr_field_4C g_MapHdr_Table_4C[500];
 extern s_WorldObjectDesc g_WorldObject0; //800D8698
 extern s_WorldObjectDesc g_WorldObject1; //800D86C8
 
-s32 func_800CF7A4();
+void func_800CAAD0(void);
+
+s32 func_800CF7A4(void);
 
 void func_800D263C(s_SubCharacter* chara);
 
@@ -53,6 +56,6 @@ s32 func_800D4530(s_SubCharacter* chara);
 
 void func_800D494C(void);
 
-void func_800CAAD0(void);
+void func_800D525C(void);
 
 #endif
