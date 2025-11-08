@@ -5,10 +5,6 @@
 #include "maps/shared.h"
 #include "maps/map1/map1_s04.h"
 
-INCLUDE_RODATA("asm/maps/map1_s04/nonmatchings/map1_s04", D_800C9578);
-
-INCLUDE_RODATA("asm/maps/map1_s04/nonmatchings/map1_s04", g_MapOverlayHeader);
-
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CA95C
 
 #include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CAAC4
@@ -35,7 +31,7 @@ INCLUDE_RODATA("asm/maps/map1_s04/nonmatchings/map1_s04", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CC3AC
 
-s32 func_800CC584()
+s32 func_800CC584(void) // 0x800CC584
 {
     return 0;
 }
@@ -66,7 +62,7 @@ void func_800CC794(void) {}
 
 void func_800CC79C(void) {}
 
-s32 func_800CC7A4()
+s32 func_800CC7A4(void)
 {
     return 0;
 }
@@ -263,7 +259,7 @@ void func_800CCA2C(void) // 0x800CCA2C
     }
 }
 
-void func_800CCE30(void) {}
+void func_800CCE30(void) {} // 0x800CCE30
 
 void func_800CCE38(void) // 0x800CCE38
 {
@@ -283,4 +279,7 @@ void func_800CCE38(void) // 0x800CCE38
     }
 }
 
-INCLUDE_RODATA("asm/maps/map1_s04/nonmatchings/map1_s04", D_800CA6A0);
+const char* MAP_MESSAGES[] = {
+#include "maps/shared/mapMsg_common.h"
+    "\tNO_STAGE! ~E "
+};
