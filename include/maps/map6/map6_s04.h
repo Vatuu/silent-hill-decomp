@@ -80,6 +80,11 @@ extern s32 D_800A9938;
 extern s8 D_800CC4C4;
 extern s8 D_800CC4CC;
 extern s8 D_800CC4D4;
+extern u8 D_800EB740[2];
+extern u8 D_800EB738;
+extern u8 D_800EB748;
+extern s8 D_800EB74A;
+extern VECTOR3 D_800EB750;
 
 void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_MonsterCybil_Init(s_SubCharacter*, s_Model*);
@@ -116,5 +121,7 @@ void func_800E2CA0(void);
 void func_800E3244(void);
 
 void func_800E5D44(void);
+
+void func_800E12D0(void);
 
 #endif

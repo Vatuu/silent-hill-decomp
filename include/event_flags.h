@@ -310,24 +310,35 @@ typedef enum _EventFlag
     EventFlag_M6S03_PickupMap = 436,
     EventFlag_437             = 437,
 
+    EventFlag_438 = 438,
+    EventFlag_439 = 439,
     EventFlag_440 = 440,
     EventFlag_441 = 441,
+    EventFlag_442 = 442,
+    EventFlag_443 = 443,
+    EventFlag_444 = 444,
+    EventFlag_445 = 445,
+    EventFlag_446 = 446,
     EventFlag_447 = 447,
     EventFlag_448 = 448,
     EventFlag_449 = 449,
     EventFlag_450 = 450,
 
+    EventFlag_455 = 455,
     EventFlag_456 = 456,
     EventFlag_457 = 457,
     EventFlag_458 = 458,
     EventFlag_459 = 459,
     EventFlag_460 = 460,
 
+    EventFlag_461 = 461,
     EventFlag_462 = 462,
     EventFlag_463 = 463,
+    EventFlag_464 = 464,
+    EventFlag_465 = 465,
 
     EventFlag_469 = 469,
-
+    EventFlag_470 = 470,
     EventFlag_471 = 471,
 
     EventFlag_474 = 474,
