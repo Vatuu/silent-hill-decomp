@@ -56,9 +56,39 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
     while (false);
 }
 
-// TODO: Matched with register swap issues.
-// Scratch: https://decomp.me/scratch/AItzp
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80070B84", func_80070CF0); // 0x80070CF0
+void func_80070CF0(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80070CF0
+{
+    s32  var_v0_2;
+    s16* ptr;
+
+    do
+    {
+        if ((chara->model_0.anim_4.keyframeIdx_8 >= 0x28 && chara->model_0.anim_4.keyframeIdx_8 < 0x2E) ||
+            (chara->model_0.anim_4.keyframeIdx_8 >= 0x1E && chara->model_0.anim_4.keyframeIdx_8 < 0x24))
+        {
+            var_v0_2 = D_800AF216 ? D_800AF216 : ABS(g_Controller0->sticks_20.sticks_0.leftY);
+            arg2     = arg1 + ((arg2 - arg1) * (var_v0_2 - 0x40) / 64);
+        }
+    } while (0); // @hack Required for match.
+
+    if (arg2 < g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126)
+    {
+        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= arg4;
+        if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < arg2)
+        {
+            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = arg2;
+        }
+    }
+    else
+    {
+        ptr = &g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
+        if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < arg2)
+        {
+            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += arg3;
+            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126  = CLAMP(*ptr, 0, arg2);
+        }
+    }
+}
 
 void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weaponAttack, s32 animStatus)  // 0x80070DF0
 {
