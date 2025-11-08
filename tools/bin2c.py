@@ -64,7 +64,8 @@ class StructParser:
         self.struct_field_types = {} # e.g. {'MyStruct': {'field_a': 'u32', 'field_b': 'pointer'}}
         self.union_members = {}  # union name -> dict of member name -> (construct, field_types)
         self.pointer_size = 4   # 32-bit pointers (PSX)
-
+        self.sym_addrs = {} # sym.txt address -> name mappings
+        
         # Basic type mappings to construct
         self.type_map = {
             'u8': Int8ul,
@@ -494,6 +495,35 @@ class StructParser:
         struct_construct, field_types = self.build_struct_internal(struct_name, struct_decl)
         self.struct_field_types[struct_name] = field_types
         return struct_construct
+
+    def parse_sym_addrs(self, content):
+        lines = content.strip().splitlines()
+        for line in lines:
+            # Strip leading/trailing spaces and ignore empty lines
+            line = line.strip()
+            if not line or line.startswith('//'):
+                continue  # Skip empty lines and full-line comments
+
+            # Split by '='
+            parts = line.split('=')
+            if len(parts) != 2:
+                continue  # Skip lines that don't have exactly one '='
+
+            # Get function name and value
+            func_name = parts[0].strip()
+            value_part = parts[1].split('//')[0].strip()  # Ignore anything after a comment
+
+            # Ensure value is a valid hex number
+            if value_part.startswith("0x"):
+                try:
+                    if value_part.endswith(";"):
+                        value_part = value_part[:-1]
+                    value = int(value_part, 16)  # Convert hex string to integer
+                    self.sym_addrs[value] = func_name
+                except ValueError:
+                    continue  # Skip invalid hex values
+            else:
+                continue  # Skip lines without a valid hex value
     
     def parse_definitions(self, c_code):
         """Parse C code and build construct definitions."""
@@ -824,10 +854,9 @@ class StructParser:
             if value == 0 and is_pointer:
                 return "NULL"
             elif is_pointer:
-                # Format non-NULL pointers as hex
-                return f"0x{value:X}"
+                # Return symbol name if value exists inside sym_addrs, else return pointer as hex
+                return self.sym_addrs[value] if value in self.sym_addrs else f"0x{value:X}"
             else:
-                # Fixed-point conversion logic is correct
                 if field_type in ("q19_12", "q20_12"):
                     return process_fp(value, 12)
                 elif field_type in ("q0_8", "q7_8", "q23_8", "q8_8"):
@@ -889,6 +918,8 @@ Examples:
                         help='Use C preprocessor (cpp) to process header file first')
     parser.add_argument('--cpp-args', type=str, default='',
                         help='Additional arguments to pass to cpp (e.g., "-I./include")')
+    parser.add_argument('--sym', action='append', dest='symfiles',
+                        help='sym.txt files to use to resolve pointer names')
     parser.add_argument('--debug-output', type=str,
                         help='Write preprocessed code to this file for debugging')
     parser.add_argument('-v', '--verbose', action='store_true',
@@ -983,6 +1014,19 @@ Examples:
     if len(data) < struct_size:
         print(f"Warning: Only read {len(data)} bytes, but {args.type} needs {struct_size} bytes", 
               file=sys.stderr)
+
+    # Parse symbol.txt files
+    if args.symfiles:
+        for file in args.symfiles:
+            try:
+                with open(file, 'r') as f:
+                    struct_parser.parse_sym_addrs(f.read())
+            except FileNotFoundError:
+                print(f"Error: Symbol file '{file}' not found", file=sys.stderr)
+                return 1
+            except Exception as e:
+                print(f"Error reading symbol file '{file}': {e}", file=sys.stderr)
+                return 1
     
     # Parse the data
     try:
