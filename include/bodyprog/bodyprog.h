@@ -61,7 +61,30 @@ typedef enum _MapTypeFlags
     MapTypeFlag_TwoActiveChunks  = 1 << 1,
     MapTypeFlag_Interior         = 1 << 2,
     MapTypeFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
-} e_MapTypeFlags;
+} e_MapTypeFlags;   
+
+/** @brief Used as index into `MAP_TYPES` array.
+ * TODO: Add descriptions for which areas are included in each type?
+*/
+typedef enum _e_MapType // Conflict with _MapType
+{
+    MapType_THR = 0,
+    MapType_SC  = 1,
+    MapType_SU  = 2,
+    MapType_SPR = 3,
+    MapType_SPU = 4,
+    MapType_RSR = 5,
+    MapType_RSU = 6,
+    MapType_APR = 7,
+    MapType_APU = 8,
+    MapType_ER  = 9,
+    MapType_ER2 = 10,
+    MapType_DR  = 11,
+    MapType_DRU = 12,
+    MapType_HP  = 13,
+    MapType_HU  = 14,
+    MapType_XXX = 15,
+} e_MapType;
 
 typedef enum _BoneHierarchy
 {
@@ -1549,7 +1572,7 @@ typedef struct _MapOverlayHeader
     s8                     field_8;
     s8                     unk_9[3];
     s32                    (*func_C)();
-    void                   (*func_10)(s32 arg);
+    void                   (*func_10)();
     s8                     field_14; // Flags?
     u8                     field_15;
     s8                     field_16; // Used for switch case in `func_8003EBF4`.

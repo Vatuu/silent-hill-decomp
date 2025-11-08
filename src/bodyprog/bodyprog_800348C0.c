@@ -825,7 +825,7 @@ void func_80035DB4(s32 arg0) // 0x80035DB4
 
     if (g_MapOverlayHeader.func_10)
     {
-        g_MapOverlayHeader.func_10(arg0);
+        g_MapOverlayHeader.func_10();
         if (arg0 == 0 && D_800BCD5C == 0)
         {
             func_80035F4C(1 << 0, Q12(240.0f), 0);

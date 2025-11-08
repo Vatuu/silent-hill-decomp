@@ -6,10 +6,6 @@
 #include "maps/shared.h"
 #include "maps/map2/map2_s01.h"
 
-INCLUDE_RODATA("asm/maps/map2_s01/nonmatchings/map2_s01", D_800C9578);
-
-INCLUDE_RODATA("asm/maps/map2_s01/nonmatchings/map2_s01", g_MapOverlayHeader);
-
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CB010
 
 #include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CB178
@@ -36,7 +32,7 @@ INCLUDE_RODATA("asm/maps/map2_s01/nonmatchings/map2_s01", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CCDA0
 
-s32 func_800CCF78()
+s32 func_800CCF78(void) // 0x800CCF78
 {
     return 0;
 }
@@ -57,22 +53,22 @@ s32 func_800CCF78()
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CD164
 
-void func_800CD170(void) {}
+void func_800CD170(void) {} // 0x800CD170
 
-void func_800CD178(void) {}
+void func_800CD178(void) {} // 0x800CD178
 
-void func_800CD180(void) {}
+void func_800CD180(void) {} // 0x800CD180
 
-void func_800CD188(void) {}
+void func_800CD188(void) {} // 0x800CD188
 
-void func_800CD190(void) {}
+void func_800CD190(void) {} // 0x800CD190
 
-s32 func_800CD198()
+s32 func_800CD198() // 0x800CD198
 {
     return 0;
 }
 
-void func_800CD1A0(void) {}
+void func_800CD1A0(void) {} // 0x800CD1A0
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CD1A8
 

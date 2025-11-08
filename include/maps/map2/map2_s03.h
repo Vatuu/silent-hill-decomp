@@ -11,10 +11,28 @@ extern u8 D_800CCCAC;
 
 extern s8 D_800CCCAF;
 
-s32 func_800CC52C();
+s32 func_800CC52C(void);
 
-s32 func_800CC74C();
+void func_800CC724(void);
+
+void func_800CC72C(void);
+
+void func_800CC734(void);
+
+void func_800CC73C(void);
+
+void func_800CC744(void);
+
+s32 func_800CC74C(void);
+
+void func_800CC754(void);
 
 void func_800CCA1C(void);
+
+void func_800CCB24(void);
+
+void func_800CCB2C(void);
+
+void func_800CCB34(void);
 
 #endif

@@ -929,7 +929,7 @@ void func_8003C220(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ) /
     mapType = mapHdr->type_0;
     func_800421D8(mapType->tag_2, mapType->plmFileIdx_0, activeIpdCount, CHECK_FLAG(mapType->flags_6, MapTypeFlag_Interior, false), 0, 0);
 
-    if (mapHdr->type_0 == &MAP_TYPES[0])
+    if (mapHdr->type_0 == &MAP_TYPES[MapType_THR])
     {
         Map_PlaceIpdAtGridPos(FILE_BG_THR05FD_IPD, -1, 8);
     }
@@ -1002,7 +1002,7 @@ void func_8003C3AC() // 0x8003C3AC
     pos0.vx += FP_MULTIPLY_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     pos0.vz += FP_MULTIPLY_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    if (g_WorldGfx.type_0 == &MAP_TYPES[0] &&
+    if (g_WorldGfx.type_0 == &MAP_TYPES[MapType_THR] &&
         chara->position_18.vx >= Q12(-40.0f) && chara->position_18.vx <= Q12(40.0f) &&
         chara->position_18.vz >= Q12(200.0f) && chara->position_18.vz <= Q12(240.0f))
     {

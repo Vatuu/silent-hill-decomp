@@ -1,5 +1,13 @@
-
-
+g_LoadScreenFuncs = 0x800CCCB4;
+MAP_POINTS = 0x800CCCC4;
+g_MapEventFuncs = 0x800CCCD0;
+LOADABLE_INVENTORY_ITEMS = 0x800CCBA4;
+MAP_MESSAGES = 0x800CCCD4;
+HARRY_M2S03_ANIM_INFOS = 0x800CCB3C;
+g_MapHeaderTable_38 = 0x800CCB8C;
+g_Effect_BloodSplats = 0x800CDCEC;
+g_Particle_SpeedX = 0x800CCD34;
+g_Particle_SpeedZ = 0x800CCD38;
 
 //================================================
 //=== .rodata section

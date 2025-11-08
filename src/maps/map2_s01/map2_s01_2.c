@@ -48,16 +48,16 @@
 
 #include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800CE908
 
-void func_800CEB94(void) {}
+void func_800CEB94(void) {} // 0x800CEB94
 
-void func_800CEB9C(void)
+void func_800CEB9C(void) // 0x800CEB9C
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
 }
 
-void func_800CEC30(void)
+void func_800CEC30(void) // 0x800CEC30
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 

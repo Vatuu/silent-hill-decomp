@@ -4,10 +4,6 @@
 #include "maps/shared.h"
 #include "maps/map2/map2_s03.h"
 
-INCLUDE_RODATA("asm/maps/map2_s03/nonmatchings/map2_s03", D_800C9578);
-
-INCLUDE_RODATA("asm/maps/map2_s03/nonmatchings/map2_s03", g_MapOverlayHeader);
-
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CA904
 
 #include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CAA6C
@@ -34,7 +30,7 @@ INCLUDE_RODATA("asm/maps/map2_s03/nonmatchings/map2_s03", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CC354
 
-s32 func_800CC52C() // 0x800CC52C
+s32 func_800CC52C(void) // 0x800CC52C
 {
     return 0;
 }
@@ -55,22 +51,22 @@ s32 func_800CC52C() // 0x800CC52C
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CC718
 
-void func_800CC724() {}
+void func_800CC724(void) {} // 0x800CC724
 
-void func_800CC72C() {}
+void func_800CC72C(void) {} // 0x800CC72C
 
-void func_800CC734() {}
+void func_800CC734(void) {} // 0x800CC734
 
-void func_800CC73C() {}
+void func_800CC73C(void) {} // 0x800CC73C
 
-void func_800CC744() {}
+void func_800CC744(void) {} // 0x800CC744
 
-s32 func_800CC74C() // 0x800CC74C
+s32 func_800CC74C(void) // 0x800CC74C
 {
     return 0;
 }
 
-void func_800CC754() {}
+void func_800CC754(void) {} // 0x800CC754
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CC75C
 
@@ -126,10 +122,14 @@ void func_800CCA1C(void) // 0x800CCA1C
     func_80035F4C(flags, Q12(0.1f), &D_800CCCAC);
 }
 
-void func_800CCB24() {}
+void func_800CCB24(void) {} // 0x800CCB24
 
-void func_800CCB2C() {}
+void func_800CCB2C(void) {} // 0x800CCB2C
 
-void func_800CCB34() {}
+void func_800CCB34(void) {} // 0x800CCB34
 
-INCLUDE_RODATA("asm/maps/map2_s03/nonmatchings/map2_s03", D_800CA648);
+const char* MAP_MESSAGES[] = {
+#include "maps/shared/mapMsg_common.h"
+    "\tNO_STAGE! ~E "
+};
+

@@ -1,4 +1,10 @@
-
+g_LoadScreenFuncs = 0x800D019C;
+g_MapEventFuncs = 0x800D02E4;
+LOADABLE_INVENTORY_ITEMS = 0x800CFDC0;
+g_MapHeaderTable_38 = 0x800CFD90;
+g_Effect_BloodSplats = 0x800D151C;
+g_Particle_SpeedX = 0x800D056C;
+g_Particle_SpeedZ = 0x800D0570;
 
 
 //================================================
