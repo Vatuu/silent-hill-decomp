@@ -442,11 +442,128 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DCB54);
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800DCD44
 
-INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBC04);
+void func_800DCDDC(void)
+{
+    s32 pitch;
+    s32 tmp0;
+    s32 tmp1;
+    s32 cos0;
+    s32 sin0;
 
-INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBC0C);
+    tmp0 = D_800E201C;
+    tmp1 = tmp0 >> 2;
+    sin0 = Math_Sin(tmp1);
+    cos0 = Math_Cos(tmp0 >> 4);
+    pitch = ((sin0 * 2) + cos0 + Math_Cos(Math_Sin(tmp1 * 2))) >> 9;
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DCDDC);
+    if (g_SysWork.sysStateStep_C[0] >= 10)
+    {
+        D_800E2018 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
+        if (D_800E2018 < 0)
+        {
+            D_800E2018 = 0;
+        }
+        func_800463C0(Sfx_Unk1467, 0, ~(D_800E2018 >> 4), pitch);
+    }
+    else if (g_SysWork.sysStateStep_C[0] > 0)
+    {
+        D_800E2018 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.25f), Q12_SHIFT);
+        if (D_800E2018 > Q12(0.9961f))
+        {
+            D_800E2018 = Q12(0.9961f);
+        }
+        func_800463C0(Sfx_Unk1467, 0, ~(D_800E2018 >> 4), pitch);
+    }
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            D_800E2102 = 0;
+            Fs_QueueStartReadTim(FILE_TIM_ENBAN_TIM, FS_BUFFER_1, &D_800E2004);
+            Fs_QueueStartRead(FILE_ANIM_UFO1_DMS, FS_BUFFER_13);
+            D_800E617C = -1;
+            g_Screen_FadeStatus = 4;
+            Sd_EngineCmd(Sfx_Unk1467);
+            func_800463C0(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
+            D_800E2018 = 0;
+            D_800E201C = 0;
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            if (Fs_QueueDoThingWhenEmpty())
+            {
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+        case 3:
+            D_800E617C = 0;
+            SysWork_StateStepIncrementAfterFade(0, true, 3, 0, false);
+            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_13);
+            func_8003D03C();
+            sharedFunc_800D2EB4_0_s00();
+            Game_TurnFlashlightOn();
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 4:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            /* fallthrough */
+        case 5:
+            Map_MessageWithAudio(46, &D_800E2102, D_800E2000); // "What?"
+            break;
+        case 6:
+            SysWork_StateStepIncrementAfterTime(&D_800E617C, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
+            sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
+            break;
+        case 7:
+            MapMsg_DisplayAndHandleSelection(false, 47, 0, 0, 0, false); // "That light!?"
+            sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
+            break;
+        case 8:
+            func_80080B58(&g_SysWork.playerBoneCoords_890[2], &(SVECTOR3){}, &QVECTOR3(-13.91f, -11.5f, 22.11f));
+            sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
+            SysWork_StateStepIncrementDelayed(0x2800, false);
+            break;
+        case 9:
+            sharedFunc_800CE5D4_1_s03(&D_800E200C, Q12(0.5f), Q12(0.05f), 0);
+            g_SysWork.field_28 += g_DeltaTime0;
+            if (g_SysWork.field_28 > Q12(4.0f))
+            {
+                D_800E200C.vx += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-1.2f), Q12_SHIFT);
+                D_800E200C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.4f), Q12_SHIFT);
+            }
+            if (g_SysWork.field_28 > Q12(6.0f))
+            {
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+        case 10:
+            SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            vcReturnPreAutoCamWork(true);
+            Savegame_EventFlagSet(EventFlag_456);
+            func_80086470(3, InventoryItemId_ChannelingStone, 1, false);
+            func_8003D01C();
+            sharedFunc_800D2EF4_0_s00();
+            D_800E617C = -1;
+            func_8004690C(Sfx_Unk1467);
+            break;
+    }
+    D_800E201C += g_DeltaTime0;
+    if (D_800E617C >= 0)
+    {
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, "HERO", D_800E617C, (s_DmsHeader*)FS_BUFFER_13);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800E6160, &D_800E6170, NULL, D_800E617C, (s_DmsHeader*)FS_BUFFER_13));
+        vcUserCamTarget(&D_800E6160, NULL, true);
+        vcUserWatchTarget(&D_800E6170, NULL, true);
+    }
+}
 
 void func_800DD3AC(void)
 {
@@ -503,7 +620,7 @@ void func_800DD688(void)
         g_WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position_1C.position_0, &g_WorldObject5.position_1C.rotation_C);
         if (g_SavegamePtr->eventFlags_168[3] & 0x8000)
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject6.object_0, &g_WorldObject6.position_1C, &D_800CBC04);
+            g_WorldGfx_ObjectAdd(&g_WorldObject6.object_0, &g_WorldObject6.position_1C, &(SVECTOR3){});
         }
     }
 
@@ -768,11 +885,11 @@ void func_800DE828(void)
     {
         if (Savegame_EventFlagGet(EventFlag_105))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C, &D_800CBC04);
+            g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C, &(SVECTOR3){});
         }
         if (Savegame_EventFlagGet(EventFlag_101) && Savegame_EventFlagGet(EventFlag_102))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &D_800CBC04);
+            g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &(SVECTOR3){});
         }
         g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C.position_0, &g_WorldObject0.position_1C.rotation_C);
         g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C.position_0, &g_WorldObject1.position_1C.rotation_C);
@@ -815,12 +932,12 @@ void func_800DE828(void)
             {
                 Savegame_EventFlagSet(EventFlag_106);
             }
-            g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C, &D_800CBC04);
+            g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C, &(SVECTOR3){});
         }
         else if (Savegame_EventFlagGet(EventFlag_106))
         {
             g_WorldObject2.position_1C.rotation_C.vy = FP_ANGLE(-157.4f);
-            g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C, &D_800CBC04);
+            g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C, &(SVECTOR3){});
         }
 
         if (!Savegame_EventFlagGet(EventFlag_101) || !Savegame_EventFlagGet(EventFlag_102))
@@ -920,7 +1037,7 @@ void func_800DE828(void)
                     }
                     D_800E20E8 = tmp0;
                     g_WorldObject1.position_1C.rotation_C.vy += FP_FROM(tmp0, Q12_SHIFT);
-                    g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &D_800CBC04);
+                    g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &(SVECTOR3){});
                     if (D_800E20EE == 4)
                     {
                         if (g_WorldObject1.position_1C.rotation_C.vy < FP_ANGLE(-5.7f))
@@ -946,7 +1063,7 @@ void func_800DE828(void)
         else
         {
             g_WorldObject1.position_1C.rotation_C.vy = FP_ANGLE(-157.5f);
-            g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &D_800CBC04);
+            g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &(SVECTOR3){});
             if (!Savegame_EventFlagGet(EventFlag_105))
             {
                 D_800E20EE = 6;

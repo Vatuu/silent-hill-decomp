@@ -41,6 +41,17 @@ extern u8 D_800E62D0;
 extern u8 D_800E6388;
 extern s32 D_800E638C;
 
+extern u16 D_800E2000[1]; // g_MapMsgSounds
+extern s_FsImageDesc D_800E2004;
+extern VECTOR3 D_800E200C;
+extern s16 D_800E2018;
+extern s32 D_800E201C;
+extern u8 D_800E2102; // g_MapMsgSoundIdx
+extern VECTOR3 D_800E6160;
+extern VECTOR3 D_800E6170;
+extern s32 D_800E617C;
+
+
 
 extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8];
 
