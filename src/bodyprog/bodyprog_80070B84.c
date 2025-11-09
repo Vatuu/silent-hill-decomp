@@ -891,7 +891,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = SQUARE(chara->field_B4) + SQUARE(chara->field_BC) + SQUARE(chara->field_B8);
             }
 
-            if (extra->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            if (extra->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
                 chara->attackReceived_41                                                = NO_VALUE;
                 g_SysWork.targetNpcIdx_2353                                           = NO_VALUE;
@@ -930,7 +930,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
             func_8007FB94(chara, extra, animStatus);
 
-            if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
                 g_SysWork.player_4C.extra_128.state_1C          = thrownState;
                 chara->model_0.stateStep_3                      = 0;
@@ -1028,7 +1028,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 g_Player_HeadingAngle += FP_ANGLE(0.0f);
             }
 
-            if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
                 g_SysWork.player_4C.extra_128.state_1C          = romperAttackState;
                 chara->model_0.stateStep_3                      = 0;
@@ -1581,7 +1581,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     chara->damageReceived_C0                = Q12(0.0f);
                     chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
 
-                    if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+                    if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
                     {
                         g_SysWork.player_4C.extra_128.state_1C                      = PlayerState_None;
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
@@ -1624,7 +1624,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         chara->field_D4 = 0;
                     }
 
-                    if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+                    if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
                         switch (g_SysWork.player_4C.extra_128.state_1C)
@@ -1671,7 +1671,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                         chara->attackReceived_41 = NO_VALUE;
                     }
 
-                    if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+                    if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
                     {
                         g_SysWork.player_4C.extra_128.state_1C                      = PlayerState_None;
                         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
@@ -1797,7 +1797,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
         case PlayerState_Unk43:
             func_8007FB94(chara, extra, ANIM_STATUS(130, true));
 
-            if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
                 g_SysWork.player_4C.extra_128.state_1C          = PlayerState_None;
                 chara->model_0.stateStep_3                      = 0;
@@ -1813,7 +1813,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
         case PlayerState_Unk44:
             func_8007FB94(chara, extra, ANIM_STATUS(131, false));
 
-            if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
                 g_SysWork.player_4C.extra_128.state_1C          = PlayerState_None;
                 chara->model_0.stateStep_3                      = 0;
@@ -1842,7 +1842,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 }
             }
 
-            if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
                 g_MapOverlayHeader.func_DC();
 
@@ -1876,7 +1876,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
                 temp_a2 = D_800AF070[chara->model_0.anim_4.keyframeIdx_8 - g_MapOverlayHeader.field_38[D_800AF220].time_4];
 
-                if (chara->model_0.anim_4.keyframeIdx_8 != g_MapOverlayHeader.field_38[D_800AF220].field_6)
+                if (chara->model_0.anim_4.keyframeIdx_8 != g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
                 {
                     var_v1_5 = D_800AF070[(chara->model_0.anim_4.keyframeIdx_8 + 1) - g_MapOverlayHeader.field_38[D_800AF220].time_4];
                 }
@@ -1893,7 +1893,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 chara->field_D4                                = Q12(0.3f);
             }
 
-            if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
                 if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
                 {
@@ -1932,7 +1932,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             func_8007FB94(chara, extra, ANIM_STATUS(101, true));
             chara->field_D6 = Q12(0.0f);
 
-            if (chara->model_0.anim_4.keyframeIdx_8 == (g_MapOverlayHeader.field_38[D_800AF220].field_6 - 25))
+            if (chara->model_0.anim_4.keyframeIdx_8 == (g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6 - 25))
             {
                 g_MapOverlayHeader.func_DC();
 
@@ -2045,10 +2045,10 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = SQUARE(chara->field_B4) + SQUARE(chara->field_BC) + SQUARE(chara->field_B8);
             }
 
-            if (extra->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].field_6)
+            if (extra->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
                 chara->attackReceived_41                                                = NO_VALUE;
-                g_SysWork.targetNpcIdx_2353                                           = NO_VALUE;
+                g_SysWork.targetNpcIdx_2353                                             = NO_VALUE;
                 g_SysWork.player_4C.extra_128.state_1C                                  = PlayerState_None;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C             &= ~PlayerFlag_DamageReceived;
                 chara->model_0.stateStep_3                                              = 0;

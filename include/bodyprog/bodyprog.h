@@ -1487,13 +1487,13 @@ typedef struct
     s8  field_5;
 } s_Sfx;
 
-/** Map-specific Harry anim data. */
+/** Special map-specific Harry anim data. */
 typedef struct
 {
-    s16 status_0;  /** Packed anim status. See `s_ModelAnim::status_0`. */
-    s16 status_2;  /** Packed anim status. See `s_ModelAnim::status_0`. */
-    s16 time_4;    /** Fixed-point anim time. */
-    s16 field_6;   // Keyframe index.
+    s16   status_0; /** Packed anim status. See `s_ModelAnim::status_0`. */
+    s16   status_2; /** Packed anim status. See `s_ModelAnim::status_0`. */
+    q3_12 time_4;   /** Fixed-point anim time. */
+    s16   keyframeIdx_6;
 } s_UnkStruct3_Mo; // Probable size: 8 bytes.
 
 /** Guessed based on in-debugger observation during gameplay.
