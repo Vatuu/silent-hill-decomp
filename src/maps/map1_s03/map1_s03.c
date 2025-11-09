@@ -456,6 +456,203 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DE624);
 
 INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBCAC);
 
-INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBCB8);
+void func_800DE828(void)
+{
+    s32 tmp0;
+    s32 tmp1;
+    const static VECTOR3 soundPos = VECTOR3(-58.81f, -1.4f, 18.02f);
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DE828);
+    if (g_DeltaTime0 == 0)
+    {
+        if (Savegame_EventFlagGet(EventFlag_105))
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C, &D_800CBC04);
+        }
+        if (Savegame_EventFlagGet(EventFlag_101) && Savegame_EventFlagGet(EventFlag_102))
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &D_800CBC04);
+        }
+        g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C.position_0, &g_WorldObject0.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C.position_0, &g_WorldObject1.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C.position_0, &g_WorldObject2.position_1C.rotation_C);
+    }
+    else
+    {
+        if (Savegame_EventFlagGet(EventFlag_105) && !Savegame_EventFlagGet(EventFlag_106))
+        {
+            if (D_800E20EE == 6)
+            {
+                func_800892A4(18);
+                func_8005DC1C(Sfx_Unk1460, &g_WorldObject2.position_1C.position_0, Q8_CLAMPED(1.0f), 2);
+                D_800E20E8 = FP_ANGLE(-11.3f);
+                D_800E20EE = 7;
+                D_800E20EC = 0;
+            }
+            g_WorldObject2.position_1C.rotation_C.vy += D_800E20E8;
+            if (D_800E20E8 == FP_ANGLE(-11.3f))
+            {
+                if (g_WorldObject2.position_1C.rotation_C.vy < FP_ANGLE(-168.8f))
+                {
+                    g_WorldObject2.position_1C.rotation_C.vy = FP_ANGLE(-168.8f);
+                    D_800E20E8 = FP_ANGLE(2.9f);
+                    func_8005DC1C(Sfx_Unk1434, &g_WorldObject2.position_1C.position_0, Q8_CLAMPED(1.0f), 2);
+                }
+            } 
+            else if (((g_WorldObject2.position_1C.rotation_C.vy < FP_ANGLE(-168.8f)) && (D_800E20E8 < 0)) ||
+                     ((g_WorldObject2.position_1C.rotation_C.vy >= FP_ANGLE(-157.45f)) && (D_800E20E8 > 0)))
+            {
+
+                tmp1 = -D_800E20E8 >> 1;
+                D_800E20E8 = tmp1;
+                if (ABS(tmp1) == 1)
+                {
+                    D_800E20E8 = 0;
+                }
+            }
+            if (D_800E20E8 == 0)
+            {
+                Savegame_EventFlagSet(EventFlag_106);
+            }
+            g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C, &D_800CBC04);
+        }
+        else if (Savegame_EventFlagGet(EventFlag_106))
+        {
+            g_WorldObject2.position_1C.rotation_C.vy = FP_ANGLE(-157.4f);
+            g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C, &D_800CBC04);
+        }
+
+        if (!Savegame_EventFlagGet(EventFlag_101) || !Savegame_EventFlagGet(EventFlag_102))
+        {
+            if (D_800E20E8 == 0)
+            {
+                if (!(Rng_Rand16() & 0x1F))
+                {
+                    D_800E20E8 = -((Rng_Rand16() & 7) + 2);
+                }
+            }
+            if (D_800E20E8 != 0)
+            {
+                if (ABS(D_800E20E8) == 1)
+                {
+                    g_WorldObject1.position_1C.rotation_C.vy += D_800E20E8;
+                }
+                g_WorldObject1.position_1C.rotation_C.vy += D_800E20E8;
+
+                if (D_800E20E8 > 0)
+                {
+                    if (g_WorldObject1.position_1C.rotation_C.vy > 0)
+                    {
+                        func_8005DC1C(Sfx_Unk1435, &soundPos, Q8_CLAMPED(0.5f), 0);
+                        g_WorldObject1.position_1C.rotation_C.vy = 0;
+    
+                        if ((D_800E20E8 >= 8) && !(Rng_Rand16() & 3))
+                        {
+                            D_800E20E8 = 0;
+                        }
+                        else
+                        {
+                            D_800E20E8 = ((Rng_Rand16() & 3) - D_800E20E8) + 1;
+                        }
+                        D_800E20E8 = MIN(D_800E20E8, 0);
+                    }
+                }
+                else if (g_WorldObject1.position_1C.rotation_C.vy < -FP_ANGLE(1.8f))
+                {
+                    func_8005DC1C(Sfx_Unk1435, &soundPos, Q8_CLAMPED(0.5f), 0);
+    
+                    D_800E20E8 = ~(Rng_Rand16() & 3) - D_800E20E8;
+                    D_800E20E8 = MAX(D_800E20E8, 1);
+                }
+            }
+        }
+        else if (!Savegame_EventFlagGet(EventFlag_103) || D_800E20EE == 5)
+        {
+            switch (D_800E20EE)
+            {
+                case 0:
+                    D_800E20E8 = FP_ANGLE(-1.45f);
+                    D_800E20EC = 0;
+                    D_800E20EE = 1;
+                    /* fallthrough */
+                case 1:
+                    g_WorldObject1.position_1C.rotation_C.vy += D_800E20E8;
+                    if (g_WorldObject1.position_1C.rotation_C.vy <  FP_ANGLE(-2.9f))
+                    {
+                        func_800892DC(18, 0x60);
+                        func_8005DC1C(Sfx_Unk1434, &soundPos, Q8(0.7657f), 2);
+                        g_WorldObject1.position_1C.rotation_C.vy = FP_ANGLE(-2.9f);
+                        D_800E20E8 = FP_ANGLE(1.45f);
+                        D_800E20EE = 2;
+                    }
+                    break;
+                case 2:
+                    D_800E20E8 -= 2;
+                    g_WorldObject1.position_1C.rotation_C.vy += D_800E20E8;
+                    if (g_WorldObject1.position_1C.rotation_C.vy > 0)
+                    {
+                        func_8005DC1C(Sfx_Unk1434, &soundPos, Q8(0.7657f), 2);
+                        do { // @hack permuter find.
+                            D_800E20E8 = Q12(-10.0f);
+                            g_WorldObject1.position_1C.rotation_C.vy = 0;
+                            D_800E20EE = 3;
+                        } while (0);
+                    }
+                    break;
+                case 3:
+                    D_800E20EC += g_DeltaTime0;
+                    if (D_800E20EC > Q12(3.0f))
+                    {
+                        D_800E20EE = 4;
+                    }
+                    break;
+                case 4:
+                case 5:
+                    D_800E20E8 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(4.0f), Q12_SHIFT);
+                    if (D_800E20E8 <= Q12(-2.0f))
+                    {
+                        tmp0 = D_800E20E8;
+                    }
+                    else
+                    {
+                        tmp0 = Q12(-2.0f);
+                    }
+                    D_800E20E8 = tmp0;
+                    g_WorldObject1.position_1C.rotation_C.vy += FP_FROM(tmp0, Q12_SHIFT);
+                    g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &D_800CBC04);
+                    if (D_800E20EE == 4)
+                    {
+                        if (g_WorldObject1.position_1C.rotation_C.vy < FP_ANGLE(-5.7f))
+                        {
+                            func_8005DC1C(Sfx_Unk1436, &g_WorldObject1.position_1C.position_0, 0x80, 0);
+                            D_800E20EE = 5;
+                        }
+                    }
+                    if (g_WorldObject1.position_1C.rotation_C.vy < FP_ANGLE(-39.4f))
+                    {
+                        Savegame_EventFlagSet(EventFlag_103);
+                    }
+                    if (Savegame_EventFlagGet(EventFlag_104) || ScreenFade_IsFinished() || g_WorldObject1.position_1C.rotation_C.vy < -0x300)
+                    {
+                        g_WorldObject1.position_1C.rotation_C.vy = FP_ANGLE(-67.5f);
+                        D_800E20EE = 6;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } 
+        else
+        {
+            g_WorldObject1.position_1C.rotation_C.vy = FP_ANGLE(-157.5f);
+            g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &D_800CBC04);
+            if (!Savegame_EventFlagGet(EventFlag_105))
+            {
+                D_800E20EE = 6;
+            }
+        }
+        g_WorldObject0.position_1C.rotation_C.vy = g_WorldObject1.position_1C.rotation_C.vy;
+        g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C.position_0, &g_WorldObject0.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C.position_0, &g_WorldObject1.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C.position_0, &g_WorldObject2.position_1C.rotation_C);
+    }
+}

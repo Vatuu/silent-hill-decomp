@@ -98,11 +98,14 @@ typedef enum _EventFlag
     EventFlag_98                               = 98,
     EventFlag_99                               = 99,
     EventFlag_100                              = 100,
-
-    EventFlag_105                           = 105,
-    EventFlag_106                           = 106,
-    EventFlag_107                           = 107,
-    EventFlag_M1S03_PickupLibraryReserveKey = 108,
+    EventFlag_101                              = 101,
+    EventFlag_102                              = 102,
+    EventFlag_103                              = 103,
+    EventFlag_104                              = 104,
+    EventFlag_105                              = 105,
+    EventFlag_106                              = 106,
+    EventFlag_107                              = 107,
+    EventFlag_M1S03_PickupLibraryReserveKey    = 108,
 
     EventFlag_M1S02_PickupRubberBall = 110,
 
