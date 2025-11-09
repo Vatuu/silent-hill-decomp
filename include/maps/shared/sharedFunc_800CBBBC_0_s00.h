@@ -1,4 +1,4 @@
-bool sharedFunc_800CBBBC_0_s00()
+bool sharedFunc_800CBBBC_0_s00(void)
 {
     q19_12 dist;
     q19_12 rotY;

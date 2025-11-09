@@ -2158,7 +2158,7 @@ extern const char* MAP_MESSAGES[]; // 0x800DF6B8
 
 void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3);
 
-bool sharedFunc_800CBBBC_0_s00();
+bool sharedFunc_800CBBBC_0_s00(void);
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
 

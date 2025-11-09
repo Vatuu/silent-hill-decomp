@@ -70,7 +70,7 @@ const char* MAP_MESSAGES[] = {
     "\tI_have_more_important_stuff_to_do. ~E "
 };
 
-void MapEvent_CafeCutscene() // 0x800DA980
+void MapEvent_CafeCutscene(void) // 0x800DA980
 {
     #define CUTSCENE_SKIP_STATE 52
 
@@ -530,7 +530,7 @@ const VECTOR3 D_800CCA58 = {
     0x00108199,
 };
 
-void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
+void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 {
     q19_12 time;
 
@@ -723,19 +723,19 @@ void MapEvent_AirScreamerIntroCutscene() // 0x800DBAA0
     }
 }
 
-void MapEvent_PocketRadioItemTake() // 0x800DC34C
+void MapEvent_PocketRadioItemTake(void) // 0x800DC34C
 {
     Event_ItemTake(InventoryItemId_PocketRadio, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupPocketRadio, 64);
     g_SavegamePtr->itemToggleFlags_AC |= ItemToggleFlag_RadioOn;
 }
 
-void MapEvent_FlashlightItemTake() // 0x800DC394
+void MapEvent_FlashlightItemTake(void) // 0x800DC394
 {
     Event_ItemTake(InventoryItemId_Flashlight, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupFlashlight, 61);
     Game_TurnFlashlightOff();
 }
 
-void MapEvent_MapItemTake() // 0x800DC3C8
+void MapEvent_MapItemTake(void) // 0x800DC3C8
 {
     static const RECT IMG_BUFFER_RECT = { 320, 256, 160, 240 };
 
@@ -838,15 +838,15 @@ void MapEvent_MapItemTake() // 0x800DC3C8
     }
 }
 
-void MapEvent_KitchenKnifeItemTake() // 0x800DC830
+void MapEvent_KitchenKnifeItemTake(void) // 0x800DC830
 {
     Event_ItemTake(InventoryItemId_KitchenKnife, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S01_PickupKitchenKnife, 60);
 }
 
 /** Presumably a pickup function. Maybe debug or something unused and commented out. */
-void MapEvent_EmptyFunction() {}
+void MapEvent_EmptyFunction(void) {} // 0x800DC85C
 
-void MapEvent_CommonItemTake() // 0x800DC864
+void MapEvent_CommonItemTake(void) // 0x800DC864
 {
     s32 eventFlagIdx;
     u32 pickupType;
@@ -870,7 +870,7 @@ void MapEvent_CommonItemTake() // 0x800DC864
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-void MapEvent_AirScreamerDeath() // 0x800DC8C8
+void MapEvent_AirScreamerDeath(void) // 0x800DC8C8
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -896,7 +896,7 @@ void MapEvent_AirScreamerDeath() // 0x800DC8C8
     }
 }
 
-void Map_WorldObjectsInit() // 0x800DC9C8
+void Map_WorldObjectsInit(void) // 0x800DC9C8
 {
     D_800E23A1 = 224;
     Math_Vector3Set(&g_CutscenePosition, Q12(0.0f), Q12(0.0f), Q12(280.0f));

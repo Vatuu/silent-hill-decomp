@@ -95,7 +95,7 @@ void func_800D28C4(void) {}
 
 void func_800D28CC(void) {}
 
-s32 func_800D28D4()
+s32 func_800D28D4(void) // 0x800D28D4
 {
     return 0;
 }

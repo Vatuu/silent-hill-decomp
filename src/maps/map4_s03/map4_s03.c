@@ -67,7 +67,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", sharedFunc_800CFFF8_0_s00
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800D0050
 
-s32 func_800D0228()
+s32 func_800D0228(void) // 0x800D0228
 {
     return 0;
 }
@@ -88,22 +88,22 @@ s32 func_800D0228()
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D0414
 
-void func_800D0420() {}
+void func_800D0420(void) {}
 
-void func_800D0428() {}
+void func_800D0428(void) {}
 
-void func_800D0430() {}
+void func_800D0430(void) {}
 
-void func_800D0438() {}
+void func_800D0438(void) {}
 
-void func_800D0440() {}
+void func_800D0440(void) {}
 
-s32 func_800D0448() // 0x800D0448
+s32 func_800D0448(void) // 0x800D0448
 {
     return 0;
 }
 
-void func_800D0450() {}
+void func_800D0450(void) {}
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D0458
 
@@ -191,7 +191,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D2D28);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D2ED0);
 
-void Ai_Twinfeeler_TextureLoad() // 0x800D3038
+void Ai_Twinfeeler_TextureLoad(void) // 0x800D3038
 {
     // TODO: Does game ever use this texture afterward?
     // After this `Ai_Twinfeeler_Init` checks `Fs_QueueDoThingWhenEmpty()` before proceeding.
@@ -569,7 +569,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D607C);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6278);
 
-void func_800D654C() {}
+void func_800D654C(void) {}
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800D6554
 

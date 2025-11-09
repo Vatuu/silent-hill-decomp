@@ -113,7 +113,7 @@ void func_800CD8E8(s32, s32, s_800E330C*);
 
 void func_800CE02C(s32, s32, s_800E34FC* arg2, s32 mapId);
 
-void func_800D0124();
+void func_800D0124(void);
 
 /** Collision space distance check. @hack Guessed types. */
 bool func_800D012C(VECTOR3* pos, MATRIX* unused0, s32* unused1);
@@ -132,30 +132,30 @@ void func_800D0274(s32 arg0, s_Particle* part, u16* arg2);
  * @return `true` if the player distance from either position is `< Q12(40.0f)`,
  *          otherwise `false`.
  */
-bool func_800D0600();
+bool func_800D0600(void);
 
-void func_800D2E6C();
+void func_800D2E6C(void);
 
-void func_800D2E74();
+void func_800D2E74(void);
 
-void func_800D2E7C();
+void func_800D2E7C(void);
 
-void func_800D2E84();
+void func_800D2E84(void);
 
-void func_800D2E8C();
+void func_800D2E8C(void);
 
-s32 func_800D2E94();
+s32 func_800D2E94(void);
 
-void func_800D2E9C();
+void func_800D2E9C(void);
 
 void func_800D94F8(void);
 
 /** Debug function? */
-void Gfx_LoadingScreen_StageString();
+void Gfx_LoadingScreen_StageString(void);
 
 void MapEvent_CutsceneAlleyNightmare(void);
 
-void func_800DBE00();
+void func_800DBE00(void);
 
 void func_800DC33C(void);
 
@@ -165,7 +165,7 @@ void func_800DC8D8(void);
 
 void func_800DCA30(void);
 
-s32 func_800DCDA8();
+s32 func_800DCDA8(void);
 
 s32 func_800DCF38(s32);
 
@@ -177,7 +177,7 @@ void Map_WorldObjectsUpdate(void);
 
 void MapEvent_GreyChildrenSpawn(void);
 
-void func_800DD0CC();
+void func_800DD0CC(void);
 
 void func_800DCC54(void);
 

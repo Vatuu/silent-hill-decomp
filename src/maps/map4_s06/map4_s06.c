@@ -34,7 +34,7 @@ INCLUDE_RODATA("asm/maps/map4_s06/nonmatchings/map4_s06", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CC324
 
-s32 func_800CC4FC()
+s32 func_800CC4FC(void) // 0x800CC4FC
 {
     return 0;
 }
@@ -65,7 +65,7 @@ void func_800CC70C(void) {}
 
 void func_800CC714(void) {}
 
-s32 func_800CC71C()
+s32 func_800CC71C(void) // 0x800CC71C
 {
     return 0;
 }

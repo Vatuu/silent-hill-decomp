@@ -404,7 +404,7 @@ void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     D_800C45B0.vz = 0;
 }
 
-static inline void func_80071968_Switch0()
+static inline void func_80071968_Switch0(void)
 {
     if (g_SysWork.playerCombatInfo_38.weaponAttack_F != NO_VALUE)
     {
@@ -463,7 +463,7 @@ static inline void func_80071968_Switch0()
     }
 }
 
-static inline void func_80071968_Switch1()
+static inline void func_80071968_Switch1(void)
 {
     if (g_SysWork.playerCombatInfo_38.weaponAttack_F != NO_VALUE)
     {

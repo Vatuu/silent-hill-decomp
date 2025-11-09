@@ -1,4 +1,4 @@
-void sharedFunc_800D2EB4_0_s00()
+void sharedFunc_800D2EB4_0_s00(void)
 {
     u8 prevVar;
 

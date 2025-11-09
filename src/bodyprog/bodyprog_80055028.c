@@ -6742,7 +6742,7 @@ bool func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800692A4); // 0x800692A4
 
-void func_800697EC()
+void func_800697EC(void) // 0x800697EC
 {
     func_80069820(1);
     D_800C447A = 0;

@@ -14,7 +14,7 @@ extern s32 D_800DB918; // }
 
 void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 
-void Ai_Twinfeeler_TextureLoad();
+void Ai_Twinfeeler_TextureLoad(void);
 void func_800D354C(VECTOR3*);
 u8   func_800D3B1C(void);
 void func_800D3B44(s32);

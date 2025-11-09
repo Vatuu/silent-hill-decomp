@@ -390,7 +390,7 @@ void MainMenu_SelectedOptionIdxReset(void) // 0x8003B550
     g_MainMenu_SelectedEntry = MainMenuEntry_Continue;
 }
 
-void func_8003B560() {}
+void func_8003B560(void) {} // 0x8003B560
 
 static const char* MAIN_MENU_ENTRY_STRINGS[] = {
     "LOAD",
@@ -1662,7 +1662,7 @@ bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId) // 0x8003D444
     return g_WorldGfx.registeredCharaModels_18[charaId] != NULL;
 }
 
-void func_8003D460() {}
+void func_8003D460(void) {} // 0x8003D460
 
 void func_8003D468(e_CharacterId charaId, bool flag) // 0x8003D468
 {

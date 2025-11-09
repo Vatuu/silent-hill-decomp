@@ -848,7 +848,7 @@ u8 midi_file_out(s32 file_no) // 0x800A8674
 }
 
 // TODO: goto jumps below which I'm not sure how to remove yet, maybe code actually included them.
-u8 midi_smf_main()
+u8 midi_smf_main(void) // 0x800A8950
 {
     SMF_SONG* s;
     SMF*      p;

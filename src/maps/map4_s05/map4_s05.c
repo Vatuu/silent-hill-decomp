@@ -89,22 +89,22 @@ INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D0BE0);
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D1654
 
-void func_800D1660() {}
+void func_800D1660(void) {}
 
-void func_800D1668() {}
+void func_800D1668(void) {}
 
-void func_800D1670() {}
+void func_800D1670(void) {}
 
-void func_800D1678() {}
+void func_800D1678(void) {}
 
-void func_800D1680() {}
+void func_800D1680(void) {}
 
-s32 func_800D1688()
+s32 func_800D1688(void) // 0x800D1688
 {
     return 0;
 }
 
-void func_800D1690() {}
+void func_800D1690(void) {}
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D1698
 
@@ -229,7 +229,7 @@ INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D1BF8);
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D2B90);
 
-void func_800D341C() {}
+void func_800D341C(void) {}
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D3424);
 
@@ -257,7 +257,7 @@ INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D5B0C);
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D5D08);
 
-void func_800D5FDC() {}
+void func_800D5FDC(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D5FE4
 
@@ -265,7 +265,7 @@ void func_800D5FDC() {}
 
 #include "maps/shared/MapEvent_DoorLocked.h" // 0x800D6110
 
-void func_800D61A4() {}
+void func_800D61A4(void) {}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

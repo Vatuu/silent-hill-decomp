@@ -1,4 +1,4 @@
-s32 sharedFunc_800D2DAC_0_s00()
+s32 sharedFunc_800D2DAC_0_s00(void)
 {
     s_Model*    model;
     s_AnimInfo* animInfo;   

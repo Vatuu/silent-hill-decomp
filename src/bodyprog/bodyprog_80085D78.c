@@ -2974,7 +2974,7 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1) // 0x8008D5A0
     AddPrim(g_OrderingTable0[g_ActiveBufferIdx].org + 5, packet);
 }
 
-void func_8008D78C()
+void func_8008D78C(void) // 0x8008D78C
 {
     s32 var0;
     s32 var1;
@@ -3702,7 +3702,7 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
     GsOUT_PACKET_P = packet;
 }
 
-void func_8008EF18() {}
+void func_8008EF18(void) {} // 0x8008EF18
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", hack_vcSetWatchTgtXzPos_fix);
 

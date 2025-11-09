@@ -90,7 +90,7 @@ void func_800D98E4(void) // 0x800D98E4
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D9924);
 
-void func_800DA1A8() {}
+void func_800DA1A8(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800DA1B0
 

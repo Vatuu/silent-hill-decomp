@@ -177,14 +177,14 @@ SysWork_StateStepIncrementAfterTime = 0x800DA8E8; // type:func
 //------------------------------------------------------------------
 //--- PA: 0x011408   VA: 0x800DA980   subsegment: c, map0_s01_events
 //------------------------------------------------------------------
-MapEvent_CafeCutscene               = 0x800DA980;
-MapEvent_ToBeContinued              = 0x800DB790;
+MapEvent_CafeCutscene               = 0x800DA980; // type:func
+MapEvent_ToBeContinued              = 0x800DB790; // type:func
 MapEvent_AirScreamerIntroCutscene   = 0x800DBAA0; // type:func
 MapEvent_PocketRadioItemTake        = 0x800DC34C; // type:func
 MapEvent_FlashlightItemTake         = 0x800DC394; // type:func
 MapEvent_MapItemTake                = 0x800DC3C8; // type:func
 MapEvent_KitchenKnifeItemTake       = 0x800DC830; // type:func
-MapEvent_EmptyFunction              = 0x800DC85C;
+MapEvent_EmptyFunction              = 0x800DC85C; // type:func
 MapEvent_CommonItemTake             = 0x800DC864; // type:func
 MapEvent_AirScreamerDeath           = 0x800DC8C8; // type:func
 Map_WorldObjectsInit                = 0x800DC9C8; // type:func

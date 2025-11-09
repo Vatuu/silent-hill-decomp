@@ -61,7 +61,7 @@ void GameState_LoadScreen_Update(void) // 0x800348E8
     }
 }
 
-static inline void Game_StateStepIncrement()
+static inline void Game_StateStepIncrement(void) // TODO: Move to header?
 {
     s32 gameStateStep0 = g_GameWork.gameStateStep_598[0];
 
@@ -843,7 +843,7 @@ void func_80035E1C(void) // 0x80035E1C
     }
 }
 
-bool func_80035E44()
+bool func_80035E44(void) // 0x80035E44
 {
     s32 i;
     u16 val;
@@ -2342,7 +2342,7 @@ void SysState_OptionsMenu_Update(void) // 0x80039344
     }
 }
 
-void func_8003943C()
+void func_8003943C(void) // 0x8003943C
 {
     s32 roundedVal0;
     s32 roundedVal1;

@@ -24,17 +24,17 @@ void func_800CE758(void);
 
 void func_800CE760(void);
 
-s32 func_800CE768();
+s32 func_800CE768(void);
 
 void func_800CE770(void);
 
 // TODO: Make shared function?
-void Gfx_LoadingScreen_StageString();
+void Gfx_LoadingScreen_StageString(void);
 
 /** @brief Handles a First Aid Kit, Health Drink, or Handgun Bullets item pickup event. */
 void MapEvent_CommonItemTake(void);
 
-void MapEvent_EmptyFunction();
+void MapEvent_EmptyFunction(void);
 
 /** @brief Handles the Gasoline Tank item pickup event. */
 void MapEvent_GasolineTankItemTake(void);

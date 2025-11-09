@@ -86,13 +86,13 @@ void func_800D00D0(void) // 0x800D00D0
 
 INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00_2", func_800D0110);
 
-void func_800D0994() {}
+void func_800D0994(void) {}
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800D099C
 
 #include "maps/shared/MapEvent_DoorLocked.h" // 0x800D0A30
 
-void func_800D0AC4() {}
+void func_800D0AC4(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D0ACC
 

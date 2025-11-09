@@ -96,7 +96,7 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
     animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 }
 
-void func_800DE26C() {}
+void func_800DE26C(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800DE274);
 
@@ -389,7 +389,7 @@ void func_800E12D0(void) // 0x800E12D0
     func_80035F4C(flags, fArg1, dataPtr);
 }
 
-void func_800E155C() {}
+void func_800E155C(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800E1564
 
@@ -397,7 +397,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E15FC);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E1CA0);
 
-void func_800E1D48() {}
+void func_800E1D48(void) {}
 
 void func_800E1D50(void) // 0x800E1D50
 {

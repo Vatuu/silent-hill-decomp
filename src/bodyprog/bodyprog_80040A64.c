@@ -46,7 +46,7 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
     return balance;
 }
 
-void func_80040B6C() {}
+void func_80040B6C(void) {} // 0x80040B6C
 
 bool func_80040B74(e_CharacterId charaId) // 0x80040B74
 {

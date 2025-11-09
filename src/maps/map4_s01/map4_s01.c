@@ -97,7 +97,7 @@ INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800CCF50);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CF984
 
-s32 func_800CFB5C() // 0x800CFB5C
+s32 func_800CFB5C(void) // 0x800CFB5C
 {
     return 0;
 }
@@ -128,7 +128,7 @@ void func_800CFD6C(void) {}
 
 void func_800CFD74(void) {}
 
-s32 func_800CFD7C() // 0x800CFD7C
+s32 func_800CFD7C(void) // 0x800CFD7C
 {
     return 0;
 }

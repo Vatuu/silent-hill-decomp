@@ -39,7 +39,7 @@ INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01", func_800CC2DC);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CE090
 
-s32 func_800CE268()
+s32 func_800CE268(void) // 0x800CE268
 {
     return 0;
 }
@@ -70,7 +70,7 @@ void func_800CE478(void) {}
 
 void func_800CE480(void) {}
 
-s32 func_800CE488()
+s32 func_800CE488(void) // 0x800CE488
 {
     return 0;
 }

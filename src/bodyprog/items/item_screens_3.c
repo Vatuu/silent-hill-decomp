@@ -1535,7 +1535,7 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/items/item_screens_3", D_80027E9C);
 INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", Gfx_Inventory_2dBackgroundDraw); // 0x8004FBCC
 #endif
 
-static inline s16 GetUvOrRandom()
+static inline s16 GetUvOrRandom(void)
 {
     if (D_800AE198 == 1) 
     {
@@ -1548,7 +1548,7 @@ static inline s16 GetUvOrRandom()
     }
 }
 
-void Gfx_Inventory_HealthStatusDraw() 
+void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
 {
     s32       tempOverlayY;
     s16       overlayYPos;

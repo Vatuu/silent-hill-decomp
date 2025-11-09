@@ -90,6 +90,6 @@ void Settings_RestoreControlDefaults(s32 arg0) // 0x80033480
     }
 }
 
-void nullsub_800334C8() {}
+void nullsub_800334C8(void) {} // 0x800334C8
 
-void func_800334D0() {}
+void func_800334D0(void) {} // 0x800334D0

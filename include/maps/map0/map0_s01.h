@@ -88,51 +88,51 @@ q19_12 Model_AnimDurationGet(s_Model* model);
 
 void func_800DA778(s32 arg0);
 
-void func_800DA7AC();
+void func_800DA7AC(void);
 
-void func_800DA7FC();
+void func_800DA7FC(void);
 
-void Gfx_LoadingScreen_StageString();
+void Gfx_LoadingScreen_StageString(void);
 
 /** @brief Handles the Air Screamer cutscene in the cafe. */
-void MapEvent_AirScreamerIntroCutscene();
+void MapEvent_AirScreamerIntroCutscene(void);
 
 /** @brief Handles the Pocket Radio item pickup event. */
-void MapEvent_PocketRadioItemTake();
+void MapEvent_PocketRadioItemTake(void);
 
 /** @brief Handles the Flashlight item pickup event. */
-void MapEvent_FlashlightItemTake();
+void MapEvent_FlashlightItemTake(void);
 
 /** @brief Handles the Silent Hill town map pickup event in the cafe.
  *
  * Also responsible for air screamer scene setup.
  */
-void MapEvent_MapItemTake();
+void MapEvent_MapItemTake(void);
 
 /** @brief Handles the Kitchen Knife item pickup event. */
-void MapEvent_KitchenKnifeItemTake();
+void MapEvent_KitchenKnifeItemTake(void);
 
-void MapEvent_EmptyFunction();
+void MapEvent_EmptyFunction(void);
 
 /** @brief Handles a First Aid Kit or Health Drink item pickup event. */
-void MapEvent_CommonItemTake();
+void MapEvent_CommonItemTake(void);
 
 /** @brief Handles the Air Screamer death event. */
-void MapEvent_AirScreamerDeath();
+void MapEvent_AirScreamerDeath(void);
 
-void Map_WorldObjectsInit();
+void Map_WorldObjectsInit(void);
 
 void Map_WorldObjectsUpdate(void);
 
 void CutsceneObjects_Add(s32 arg0);
 
-s32 func_800D1E5C();
+s32 func_800D1E5C(void);
 
 void func_800D2054(void);
 
 void Player_FallBackward(void);
 
-s32 func_800D20FC();
+s32 func_800D20FC(void);
 
 void func_800D3EB8(s_SubCharacter* chara);
 
@@ -165,7 +165,7 @@ void func_800D5B10(s_SubCharacter* chara);
 
 void func_800D5C90(s_SubCharacter*);
 
-void MapEvent_CafeCutscene();
+void MapEvent_CafeCutscene(void);
 
 /** @brief @unused Handles the demo end screen event after the Air Screamer breaks through the cafe window. Seen in demo builds. */
 void MapEvent_ToBeContinued(void);

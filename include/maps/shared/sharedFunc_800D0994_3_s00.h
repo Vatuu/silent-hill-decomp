@@ -1,4 +1,4 @@
-void sharedFunc_800D0994_3_s00()
+void sharedFunc_800D0994_3_s00(void)
 {
     #define OVERLAY_VAL_ON  0x10
     #define OVERLAY_VAL_OFF 0x19

@@ -380,7 +380,7 @@ void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
     }
 }
 
-bool func_800D0600() // 0x800D0600
+bool func_800D0600(void) // 0x800D0600
 {
     #define DIST_MAX Q12(40.0f)
 
@@ -441,22 +441,22 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800D23EC);
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D2E60
 
-void func_800D2E6C() {}
+void func_800D2E6C(void) {}
 
-void func_800D2E74() {}
+void func_800D2E74(void) {}
 
-void func_800D2E7C() {}
+void func_800D2E7C(void) {}
 
-void func_800D2E84() {}
+void func_800D2E84(void) {}
 
-void func_800D2E8C() {}
+void func_800D2E8C(void) {}
 
-s32 func_800D2E94() // 0x800D2E94
+s32 func_800D2E94(void) // 0x800D2E94
 {
     return 0;
 }
 
-void func_800D2E9C() {}
+void func_800D2E9C(void) {}
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D2EA4
 

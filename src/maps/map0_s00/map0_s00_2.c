@@ -72,7 +72,7 @@ void func_800D94F8(void) // 0x800D94F8
     func_80035F4C(flags0, var1, &D_800DF2F8);
 }
 
-void Gfx_LoadingScreen_StageString() // 0x800D95D4
+void Gfx_LoadingScreen_StageString(void) // 0x800D95D4
 {
     ScreenFade_Start(false, true, false);
 

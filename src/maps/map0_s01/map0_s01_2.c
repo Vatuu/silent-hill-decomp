@@ -45,7 +45,7 @@ void func_800DA778(s32 arg0) // 0x800DA778
     (arg0 != 0) ? func_800DA7AC() : func_800DA7FC();
 }
 
-void func_800DA7AC() // 0x800DA7AC
+void func_800DA7AC(void) // 0x800DA7AC
 {
     s32 var;
 
@@ -68,7 +68,7 @@ void func_800DA7AC() // 0x800DA7AC
     func_8003640C(var);
 }
 
-void func_800DA7FC() // 0x800DA7FC
+void func_800DA7FC(void) // 0x800DA7FC
 {
     s32    flags;
     q19_12 var1;
@@ -114,7 +114,7 @@ void func_800DA7FC() // 0x800DA7FC
     func_80035F4C(flags, var1, NULL);
 }
 
-void Gfx_LoadingScreen_StageString() // 0x800DA8A4
+void Gfx_LoadingScreen_StageString(void) // 0x800DA8A4
 {
     ScreenFade_Start(false, true, false);
 

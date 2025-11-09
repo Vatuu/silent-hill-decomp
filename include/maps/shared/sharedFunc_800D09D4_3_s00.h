@@ -1,4 +1,4 @@
-void sharedFunc_800D09D4_3_s00()
+void sharedFunc_800D09D4_3_s00(void)
 {
     s32    flags;
     q19_12 var;

@@ -35,7 +35,7 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CB460);
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CD244
 
-s32 func_800CD41C()
+s32 func_800CD41C(void) // 0x800CD41C
 {
     return 0;
 }
@@ -66,7 +66,7 @@ void func_800CD62C(void) {}
 
 void func_800CD634(void) {}
 
-s32 func_800CD63C()
+s32 func_800CD63C(void) // 0x800CD63C
 {
     return 0;
 }

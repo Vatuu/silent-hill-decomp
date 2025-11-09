@@ -63,7 +63,7 @@ void func_800CD188(void) {} // 0x800CD188
 
 void func_800CD190(void) {} // 0x800CD190
 
-s32 func_800CD198() // 0x800CD198
+s32 func_800CD198(void) // 0x800CD198
 {
     return 0;
 }

@@ -1,4 +1,4 @@
-void sharedFunc_800D0CB8_0_s00()
+void sharedFunc_800D0CB8_0_s00(void)
 {
     u8 unkValDiv4;
 

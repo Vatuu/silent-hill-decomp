@@ -70,7 +70,7 @@ void func_800D1620(void) {}
 
 void func_800D1628(void) {}
 
-s32 func_800D1630() // 0x800D1630
+s32 func_800D1630(void) // 0x800D1630
 {
     return 0;
 }

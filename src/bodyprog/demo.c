@@ -226,9 +226,9 @@ void Demo_ExitDemo(void) // 0x8008F4E4
     g_SysWork.flags_22A4 |= 1 << 8;
 }
 
-void func_8008F518() {}
+void func_8008F518(void) {} // 0x8008F518
 
-bool func_8008F520()
+bool func_8008F520(void) // 0x8008F520 
 {
     return false;
 }

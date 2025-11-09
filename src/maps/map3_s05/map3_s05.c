@@ -71,7 +71,7 @@ void func_800CFE28(void) {}
 
 void func_800CFE30(void) {}
 
-s32 func_800CFE38()
+s32 func_800CFE38(void) // 0x800CFE38
 {
     return 0;
 }

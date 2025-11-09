@@ -76,7 +76,7 @@
 #endif
 
 // Very similar to `func_80071968_Switch1`
-static inline void sharedFunc_800CDAA8_0_s02_Switch()
+static inline void sharedFunc_800CDAA8_0_s02_Switch(void)
 {
     if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Unk52)
     {

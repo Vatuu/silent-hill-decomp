@@ -802,7 +802,7 @@ void sound_off(void) // 0x800A4D20
     while (stat != SPU_OFF_ENV_ON && stat != SPU_OFF);
 }
 
-void vol_calc() {} // 0x800A4E90
+void vol_calc(void) {} // 0x800A4E90
 
 void adsr_set(s32 vo, PORT* p) // 0x800A4E98
 {

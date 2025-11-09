@@ -59,7 +59,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800D1CA8
 
-s32 func_800D1E5C() // 0x800D1E5C
+s32 func_800D1E5C(void) // 0x800D1E5C
 {
     return 0;
 }
@@ -113,18 +113,18 @@ void Player_FallBackward(void) // 0x800D2094
     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
 }
 
-void func_800D20E4() {}
+void func_800D20E4(void) {}
 
-void func_800D20EC() {}
+void func_800D20EC(void) {}
 
-void func_800D20F4() {}
+void func_800D20F4(void) {}
 
-s32 func_800D20FC() // 0x800D20FC
+s32 func_800D20FC(void) // 0x800D20FC
 {
     return 0;
 }
 
-void func_800D2104() {}
+void func_800D2104(void) {}
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D210C
 
@@ -358,91 +358,91 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
     }
 }
 
-void func_800D4114() {}
+void func_800D4114(void) {}
 
-void func_800D411C() {}
+void func_800D411C(void) {}
 
-void func_800D4124() {}
+void func_800D4124(void) {}
 
-void func_800D412C() {}
+void func_800D412C(void) {}
 
-void func_800D4134() {}
+void func_800D4134(void) {}
 
-void func_800D413C() {}
+void func_800D413C(void) {}
 
-void func_800D4144() {}
+void func_800D4144(void) {}
 
-void func_800D414C() {}
+void func_800D414C(void) {}
 
-void func_800D4154() {}
+void func_800D4154(void) {}
 
-void func_800D415C() {}
+void func_800D415C(void) {}
 
-void func_800D4164() {}
+void func_800D4164(void) {}
 
-void func_800D416C() {}
+void func_800D416C(void) {}
 
-void func_800D4174() {}
+void func_800D4174(void) {}
 
-void func_800D417C() {}
+void func_800D417C(void) {}
 
-void func_800D4184() {}
+void func_800D4184(void) {}
 
-void func_800D418C() {}
+void func_800D418C(void) {}
 
-void func_800D4194() {}
+void func_800D4194(void) {}
 
-void func_800D419C() {}
+void func_800D419C(void) {}
 
-void func_800D41A4() {}
+void func_800D41A4(void) {}
 
-void func_800D41AC() {}
+void func_800D41AC(void) {}
 
-void func_800D41B4() {}
+void func_800D41B4(void) {}
 
-void func_800D41BC() {}
+void func_800D41BC(void) {}
 
-void func_800D41C4() {}
+void func_800D41C4(void) {}
 
-void func_800D41CC() {}
+void func_800D41CC(void) {}
 
-void func_800D41D4() {}
+void func_800D41D4(void) {}
 
-void func_800D41DC() {}
+void func_800D41DC(void) {}
 
-void func_800D41E4() {}
+void func_800D41E4(void) {}
 
-void func_800D41EC() {}
+void func_800D41EC(void) {}
 
-void func_800D41F4() {}
+void func_800D41F4(void) {}
 
-void func_800D41FC() {}
+void func_800D41FC(void) {}
 
-void func_800D4204() {}
+void func_800D4204(void) {}
 
-void func_800D420C() {}
+void func_800D420C(void) {}
 
-void func_800D4214() {}
+void func_800D4214(void) {}
 
-void func_800D421C() {}
+void func_800D421C(void) {}
 
-void func_800D4224() {}
+void func_800D4224(void) {}
 
-void func_800D422C() {}
+void func_800D422C(void) {}
 
-void func_800D4234() {}
+void func_800D4234(void) {}
 
-void func_800D423C() {}
+void func_800D423C(void) {}
 
-void func_800D4244() {}
+void func_800D4244(void) {}
 
-void func_800D424C() {}
+void func_800D424C(void) {}
 
-void func_800D4254() {}
+void func_800D4254(void) {}
 
-void func_800D425C() {}
+void func_800D425C(void) {}
 
-void func_800D4264() {}
+void func_800D4264(void) {}
 
 void func_800D426C(s_SubCharacter* chara) // 0x800D426C
 {
