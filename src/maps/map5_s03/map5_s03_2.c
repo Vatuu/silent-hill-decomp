@@ -47,7 +47,7 @@
 
 #include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800D10B4
 
-void func_800D1340(void) {}
+void func_800D1340(void) {} // 0x800D1340
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D1348
 

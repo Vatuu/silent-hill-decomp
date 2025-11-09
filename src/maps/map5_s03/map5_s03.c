@@ -5,10 +5,6 @@
 #include "maps/shared.h"
 #include "maps/map5/map5_s03.h"
 
-INCLUDE_RODATA("asm/maps/map5_s03/nonmatchings/map5_s03", D_800C9578);
-
-INCLUDE_RODATA("asm/maps/map5_s03/nonmatchings/map5_s03", g_MapOverlayHeader);
-
 #include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CB8F4
 
 #include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CBD8C
@@ -57,7 +53,7 @@ INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CF470
 
-s32 func_800CF648()
+s32 func_800CF648(void) // 0x800CF648
 {
     return 0;
 }
@@ -88,7 +84,7 @@ void func_800CF858(void) {}
 
 void func_800CF860(void) {}
 
-s32 func_800CF868()
+s32 func_800CF868(void)
 {
     return 0;
 }

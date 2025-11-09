@@ -47,7 +47,25 @@ extern s_800D6F68 D_800D6F68;
 
 extern VECTOR3 D_800D6F84;
 
+s32 func_800CF648(void);
+
+void func_800CF840(void);
+
+void func_800CF848(void);
+
+void func_800CF850(void);
+
+void func_800CF858(void);
+
+void func_800CF860(void);
+
+s32 func_800CF868(void);
+
+void func_800CF870(void);
+
 void func_800D1004(s32 arg0);
+
+void func_800D1340(void);
 
 /** @brief Handles a Health Drink or Shotgun Shells item pickup event. */
 void MapEvent_CommonItemTake(void);

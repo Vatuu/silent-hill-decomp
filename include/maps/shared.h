@@ -2632,6 +2632,13 @@ s32 sharedFunc_800D2FB4_0_s01(s_SubCharacter* chara, VECTOR3* playerPos, s32 pla
 void sharedFunc_800D72E8_0_s01(s_SubCharacter* chara, s32 field_34, s32 rotationSpeedY);
 
 void sharedFunc_800D6EC4_0_s01(s_SubCharacter* chara);
+
+void MapEvent_DoorJammed(void);
+
+void MapEvent_DoorLocked(void);
+
+void MapEvent_DoorUnlocked(void);
+
 /** @brief Gets the room index corresponding to the current 2D position.
  *
  * @param x X position in Q19.12.

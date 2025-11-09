@@ -389,7 +389,7 @@ class StructParser:
             # Check for bitfield flush condition
             bitwidth = decl.bitsize.value if decl.bitsize else None
 
-            is_last_field = (i == len(struct_decl.decls) - 1)
+            is_last_field = (i == len(struct_decl.decls))
             is_normal_field = bitwidth is None
             
             if bitfield_buffer and (is_normal_field or is_last_field):
@@ -500,7 +500,7 @@ class StructParser:
             num_bytes = (bitfield_bit_offset + 7) // 8
             
             if self.verbose:
-                print(f"\n  --- Flushing Bitfield Group ({bitfield_bit_offset} bits) ---", file=sys.stderr)
+                print(f"\n  --- Flushing Bitfield Group (final) ({bitfield_bit_offset} bits) ---", file=sys.stderr)
             
             field_alignment = min(num_bytes, self.alignment)
             padding_needed = self.calculate_padding(offset, field_alignment)
@@ -1252,7 +1252,7 @@ Examples:
         if is_basic_type or is_pointer_type:
             # Use pointer construct if specified, otherwise use resolved basic type
             if is_pointer_type:
-                construct_type = struct_parser.type_map['u64' if self.pointer_size == 8 else 'u32'] # Pointers are treated as u64/u32
+                construct_type = struct_parser.type_map['u64' if args.pointer_size == 8 else 'u32'] # Pointers are treated as u64/u32
                 array_base_type_for_format = 'pointer'
             else:
                 construct_type = struct_parser.type_map[resolved_type]
