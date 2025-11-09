@@ -452,7 +452,73 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DD3AC);
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DD688);
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DE624);
+void func_800DE624(void)
+{
+    s32 playerHp;
+
+    if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey) && g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+    {
+        func_80088FF4(Chara_GreyChild, 9, 3);
+        func_80088FF4(Chara_GreyChild, 10, 3);
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_M1S03_PickupLibraryReserveKey))
+    {
+        if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+        {
+            func_80088FF4(Chara_GreyChild, 12, 3);
+        }
+        if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+        {
+            func_80088FF4(Chara_GreyChild, 13, 3);
+            func_80088FF4(Chara_GreyChild, 11, 7);
+        }
+        func_80088FF4(Chara_GreyChild, 14, 11);
+        func_80088FF4(Chara_GreyChild, 15, 3);
+    }
+
+    playerHp = g_SysWork.player_4C.chara_0.health_B0;
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    {
+        playerHp -= Q12(50.0f);
+    }
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    {
+        playerHp -= Q12(25.0f);
+    }
+
+    if (playerHp > Q12(20.0f))
+    {
+        func_80088FF4(Chara_Creaper, 0, 3);
+    }
+    else
+    {
+        func_80088FF4(Chara_Creaper, 0, 0);
+    }
+
+    if (playerHp > Q12(60.0f))
+    {
+        func_80088FF4(Chara_Creaper, 1, 3);
+        func_80088FF4(Chara_Creaper, 2, 3);
+    }
+    else
+    {
+        func_80088FF4(Chara_Creaper, 1, 0);
+        func_80088FF4(Chara_Creaper, 2, 0);
+    }
+
+    if (playerHp > Q12(80.0f))
+    {
+        func_80088FF4(Chara_Creaper, 3, 3);
+        func_80088FF4(Chara_Creaper, 4, 3);
+    }
+    else
+    {
+        func_80088FF4(Chara_Creaper, 3, 0);
+        func_80088FF4(Chara_Creaper, 4, 0);
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBCAC);
 
