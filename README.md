@@ -373,6 +373,6 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
 </table>
 
 ## Contributing
-Contributions are welcome! Feel free to open a pull request. To help familiarize yourself with the setup and decompilation workflow for *Silent Hill*, refer to our [Wiki Page](https://github.com/IWILLCRAFT-M0d/silent-hill-decomp/wiki/Home.md).
+Contributions are welcome! Feel free to open a pull request. To help familiarize yourself with the setup and decompilation workflow for *Silent Hill*, refer to our [Wiki Page](/../../wiki/Home).
 
 You can also reach out to us by opening an issue or joining the `#silent-hill` channel on the [PS1/PS2 Decompilation](https://discord.gg/VwCPdfbxgm) Discord server.

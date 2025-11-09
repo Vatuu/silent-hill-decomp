@@ -1,2 +1,2 @@
 # Outdated Files
-This docs has been moved to the wiki as for november of 2025.
+As for November 2025 all this docs has been moved to the [Wiki Page](/../../wiki/Home).
