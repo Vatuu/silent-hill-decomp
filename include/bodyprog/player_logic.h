@@ -514,8 +514,11 @@ extern VECTOR3 g_Player_PrevPosition;
 /** Used for enemy target locking. */
 void func_8005CD38(s32*, s32*, s_PlayerCombat*, s32, s32, s32);
 
-/** Used for running displacement. */
-void func_80070CF0(s_SubCharacter* chara, q19_12 arg1, s32 arg2, q19_12 arg3, s32 arg4);
+/** Used for player run displacement.
+ *
+ * @param chara Player character.
+ */
+void func_80070CF0(s_SubCharacter* chara, q19_12 arg1, q19_12 moveDistMax, q19_12 moveDistForward, q19_12 modeDistBack);
 
 void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerBodyState currentState);
 

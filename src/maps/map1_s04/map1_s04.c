@@ -62,7 +62,7 @@ void func_800CC794(void) {}
 
 void func_800CC79C(void) {}
 
-s32 func_800CC7A4(void)
+s32 func_800CC7A4(void) // 0x800CC7A4
 {
     return 0;
 }

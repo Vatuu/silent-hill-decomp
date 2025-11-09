@@ -818,11 +818,11 @@ u8     D_800AF216                         = 0; // Left Y analog stick value.
 s8     g_Player_RockDrill_DirectionAttack = 0;
 u32    D_800AF218                         = 0;
 s32    g_Player_TargetNpcIdx              = NO_VALUE;
-u8     D_800AF220                         = 0;
+u8     D_800AF220                         = 0; // Keyframe index in map overlay header struct.
 // 3 bytes of padding.
 s32    g_Player_WeaponAttack1             = NO_VALUE;
 
-// TODO: First element is modified at runtime.
+// TODO: First element is modified at runtime. `func_8007E8C0` Suggests size is 76?
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] = {
     { Anim_Update2, ANIM_STATUS(HarryAnim_Still,                   false), false, ANIM_STATUS(HarryAnim_Still,                   true), { Q12(10.0f)    }, NO_VALUE, 0   },
     { Anim_Update1, ANIM_STATUS(HarryAnim_Still,                   true),  false, NO_VALUE,                                             { Q12(30.0f)    }, NO_VALUE, 1   },

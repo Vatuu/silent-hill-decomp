@@ -5,6 +5,7 @@
 #include "maps/characters/Chara_Dahlia.h"
 
 #define BLOOD_SPLAT_COUNT_MAX 150
+
 extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 
 extern s_AnimInfo HARRY_M2S01_ANIM_INFOS[];
@@ -19,7 +20,7 @@ void (*g_LoadScreenFuncs[])() =
     func_800CEB94
 };
 
-// TODO: Re-decode each point once type is found from `s_EventParam`s
+// TODO: Re-decode each point once type is found from `s_EventParam`s.
 s_MapPoint2d MAP_POINTS[] = {
   {
     .positionX_0 = Q12(20.0f),

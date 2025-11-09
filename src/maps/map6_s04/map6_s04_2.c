@@ -239,15 +239,15 @@ void func_800E1290(void) // 0x800E1290
 
 INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04_2", D_800CB728);
 
-void func_800E12D0(void)
+void func_800E12D0(void) // 0x800E12D0
 {
-    s32 dist0;
-    s32 flags;
-    s32 fArg1;
-    s32 soundCmd;
-    s32 distance;
-    u8* dataPtr;
-    s8 roomIdx;
+    q19_12 dist0;
+    s32    flags;
+    s32    fArg1;
+    s32    soundCmd;
+    q19_12 dist;
+    u8*    dataPtr;
+    s8     roomIdx;
 
     fArg1 = Q12(0.2f);
     soundCmd = g_GameWork.soundCmd_5B2;
@@ -272,6 +272,7 @@ void func_800E12D0(void)
     else if (soundCmd== 39)
     {
         dataPtr = D_800EB740;
+
         if (Savegame_EventFlagGet(EventFlag_445))
         {
             if (Savegame_EventFlagGet(EventFlag_448))
@@ -286,6 +287,7 @@ void func_800E12D0(void)
             {
                 D_800EB740[1] = 0x80;
                 fArg1 = Q12(0.5f);
+
                 if (!Savegame_EventFlagGet(EventFlag_447))
                 {
                     flags = 0x102;
@@ -315,6 +317,7 @@ void func_800E12D0(void)
         else
         {
             D_800EB740[1] = 0x60;
+
             if (Savegame_EventFlagGet(EventFlag_443))
             {
                 flags = 0x108;
@@ -333,6 +336,7 @@ void func_800E12D0(void)
             else 
             {
                 fArg1 = Q12(240.0f);
+
                 flags = 0x301;
                 if (Savegame_EventFlagGet(EventFlag_461))
                 {
@@ -343,39 +347,45 @@ void func_800E12D0(void)
     } 
     else 
     {
-        distance = 0;
+        dist = Q12(0.0f);
         dataPtr = &D_800EB748;
+
         roomIdx = g_SavegamePtr->mapRoomIdx_A5 - 1;
         switch (roomIdx)
         {
             case 2:
                 flags = 4;
-                distance = Math_Distance2dGet(&g_SysWork.player_4C.chara_0.position_18, &D_800EB750);
-                if (distance < Q12(10.0f))
+
+                dist = Math_Distance2dGet(&g_SysWork.player_4C.chara_0.position_18, &D_800EB750);
+                if (dist < Q12(10.0f))
                 {
-                    distance = Q12(0.03125f);
+                    dist = Q12(0.03125f);
                 } 
                 else 
                 {
-                    distance = Q12(0.03125f) - FP_MULTIPLY_PRECISE(distance - Q12(10.0f), Q12(0.004f), Q12_SHIFT);
-                    if (distance < 0) 
+                    dist = Q12(0.03125f) - FP_MULTIPLY_PRECISE(dist - Q12(10.0f), Q12(0.004f), Q12_SHIFT);
+                    if (dist < Q12(0.0f)) 
                     {
-                        distance = 0;
+                        dist = Q12(0.0f);
                     }
                 }
                 break;
+
             case 0:
             case 1:
             case 3:
             case 4:
                 flags = 2;
                 break;
+
             default:
                 flags = 1;
                 break;
         }
-        D_800EB74A = distance;
+
+        D_800EB74A = dist;
     }
+
     func_80035F4C(flags, fArg1, dataPtr);
 }
 

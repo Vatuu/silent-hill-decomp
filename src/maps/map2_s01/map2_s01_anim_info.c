@@ -25,11 +25,41 @@ s_UnkStruct3_Mo g_MapHeaderTable_38[] = {
 };
 
 u8 LOADABLE_INVENTORY_ITEMS[] = {
-    32, 33, 34, 128, 129, 132, 133, 135,
-    160, 161, 162, 163, 192, 193, 194, 224,
-    225, 65, 66, 67, 68, 71, 72, 83,
-    84, 100, 76, 101, 102, 110, 130, 226,
-    88, 134, 0
+    InventoryItemId_HealthDrink,
+    InventoryItemId_FirstAidKit,
+    InventoryItemId_Ampoule,
+    InventoryItemId_KitchenKnife,
+    InventoryItemId_SteelPipe,
+    InventoryItemId_Hammer,
+    InventoryItemId_Chainsaw,
+    InventoryItemId_Axe,
+    InventoryItemId_Handgun,
+    InventoryItemId_HuntingRifle,
+    InventoryItemId_Shotgun,
+    InventoryItemId_HyperBlaster,
+    InventoryItemId_HandgunBullets,
+    InventoryItemId_RifleShells,
+    InventoryItemId_ShotgunShells,
+    InventoryItemId_Flashlight,
+    InventoryItemId_PocketRadio,
+    InventoryItemId_HouseKey,
+    InventoryItemId_KeyOfLion,
+    InventoryItemId_KeyOfWoodman,
+    InventoryItemId_KeyOfScarecrow,
+    InventoryItemId_KGordonKey,
+    InventoryItemId_DrawbridgeKey,
+    InventoryItemId_NoteToSchool,
+    InventoryItemId_NoteDoghouse,
+    InventoryItemId_Flauros,
+    InventoryItemId_AntiqueShopKey,
+    InventoryItemId_PlasticBottle,
+    InventoryItemId_UnknownLiquid,
+    InventoryItemId_VideoTape,
+    InventoryItemId_RockDrill,
+    InventoryItemId_GasolineTank,
+    InventoryItemId_ChannelingStone,
+    InventoryItemId_Katana,
+    InventoryItemId_Unequipped
 };
 
 u8 sharedData_800DD584_0_s00 = 0;

@@ -56,36 +56,37 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
     while (false);
 }
 
-void func_80070CF0(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80070CF0
+void func_80070CF0(s_SubCharacter* chara, q19_12 arg1, q19_12 moveDistMax, q19_12 moveDistForward, q19_12 modeDistBack) // 0x80070CF0
 {
     s32  var_v0_2;
     s16* ptr;
 
     do
     {
-        if ((chara->model_0.anim_4.keyframeIdx_8 >= 0x28 && chara->model_0.anim_4.keyframeIdx_8 < 0x2E) ||
-            (chara->model_0.anim_4.keyframeIdx_8 >= 0x1E && chara->model_0.anim_4.keyframeIdx_8 < 0x24))
+        if ((chara->model_0.anim_4.keyframeIdx_8 >= 40 && chara->model_0.anim_4.keyframeIdx_8 < 46) ||
+            (chara->model_0.anim_4.keyframeIdx_8 >= 30 && chara->model_0.anim_4.keyframeIdx_8 < 36))
         {
             var_v0_2 = D_800AF216 ? D_800AF216 : ABS(g_Controller0->sticks_20.sticks_0.leftY);
-            arg2     = arg1 + ((arg2 - arg1) * (var_v0_2 - 0x40) / 64);
+            moveDistMax     = arg1 + ((moveDistMax - arg1) * (var_v0_2 - 0x40) / 64);
         }
-    } while (0); // @hack Required for match.
+    }
+    while (0); // @hack Required for match.
 
-    if (arg2 < g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126)
+    if (moveDistMax < g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126)
     {
-        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= arg4;
-        if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < arg2)
+        g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 -= modeDistBack;
+        if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < moveDistMax)
         {
-            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = arg2;
+            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = moveDistMax;
         }
     }
     else
     {
         ptr = &g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
-        if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < arg2)
+        if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 < moveDistMax)
         {
-            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += arg3;
-            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126  = CLAMP(*ptr, 0, arg2);
+            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 += moveDistForward;
+            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126  = CLAMP(*ptr, Q12(0.0f), moveDistMax);
         }
     }
 }
@@ -7818,33 +7819,33 @@ void func_8007E860() // 0x8007E860
 void func_8007E8C0() // 0x8007E8C0
 {
     s32             i;
-    s_AnimInfo*     ptr;
+    s_AnimInfo*     animInfos;
     s_SubCharacter* chara;
 
-    chara = &g_SysWork.player_4C.chara_0;
-    ptr   = g_MapOverlayHeader.animInfos_34;
+    chara     = &g_SysWork.player_4C.chara_0;
+    animInfos = g_MapOverlayHeader.animInfos_34;
 
-    for (i = 0x4C; ptr->updateFunc_0 != NULL; i++, ptr++)
+    for (i = 76; animInfos->updateFunc_0 != NULL; i++, animInfos++)
     {
-        HARRY_BASE_ANIM_INFOS[i] = g_MapOverlayHeader.animInfos_34[i - 0x4C];
+        HARRY_BASE_ANIM_INFOS[i] = g_MapOverlayHeader.animInfos_34[i - 76];
     }
 
-    if (g_SavegamePtr->mapOverlayId_A4 == 1)
+    if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S01)
     {
-        g_SysWork.field_2358 = 0;
+        g_SysWork.field_2358 = false;
     }
 
-    chara->properties_E4.player.exhaustionTimer_FC = 0;
-    g_SysWork.player_4C.chara_0.field_C8           = -0x1999;
-    g_SysWork.player_4C.chara_0.field_CA           = 0;
-    g_SysWork.player_4C.chara_0.field_CE           = -0x1199;
-    g_SysWork.player_4C.chara_0.field_D8.offsetZ_6 = 0;
-    g_SysWork.player_4C.chara_0.field_D8.offsetX_4 = 0;
-    g_SysWork.player_4C.chara_0.field_D8.offsetZ_2 = 0;
-    g_SysWork.player_4C.chara_0.field_D8.offsetX_0 = 0;
-    chara->field_D4                                = 0x4CC;
-    chara->field_D6                                = 0x3AE;
-    g_GameWork.mapAnimIdx_5B1                      = -1;
+    chara->properties_E4.player.exhaustionTimer_FC = Q12(0.0f);
+    g_SysWork.player_4C.chara_0.field_C8           = Q12(-1.6f);
+    g_SysWork.player_4C.chara_0.field_CA           = Q12(0.0f);
+    g_SysWork.player_4C.chara_0.field_CE           = Q12(-1.1f);
+    g_SysWork.player_4C.chara_0.field_D8.offsetZ_6 = Q12(0.0f);
+    g_SysWork.player_4C.chara_0.field_D8.offsetX_4 = Q12(0.0f);
+    g_SysWork.player_4C.chara_0.field_D8.offsetZ_2 = Q12(0.0f);
+    g_SysWork.player_4C.chara_0.field_D8.offsetX_0 = Q12(0.0f);
+    chara->field_D4                                = Q12(0.3f);
+    chara->field_D6                                = Q12(0.23f);
+    g_GameWork.mapAnimIdx_5B1                      = NO_VALUE;
 
     func_8007E9C4();
 }
@@ -8489,7 +8490,7 @@ void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animS
         }
 
         // Set active anim index.
-        extra->model_0.anim_4.status_0 = g_MapOverlayHeader.field_38[i].status_0 + 1;
+        extra->model_0.anim_4.status_0 = g_MapOverlayHeader.field_38[i].status_0 + 1; // TODO: There's a macro for anim status++.
         chara->model_0.anim_4.status_0 = g_MapOverlayHeader.field_38[i].status_0 + 1;
 
         // Increment state step.

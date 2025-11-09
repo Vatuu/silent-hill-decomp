@@ -110,6 +110,8 @@ void func_800E1258(s32 arg0);
 
 void func_800E1290(void);
 
+void func_800E12D0(void);
+
 void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, s32);
 
 void func_800E1CA0(void);
@@ -121,7 +123,5 @@ void func_800E2CA0(void);
 void func_800E3244(void);
 
 void func_800E5D44(void);
-
-void func_800E12D0(void);
 
 #endif

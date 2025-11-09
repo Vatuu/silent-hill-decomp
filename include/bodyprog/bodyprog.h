@@ -66,7 +66,7 @@ typedef enum _MapTypeFlags
 /** @brief Used as index into `MAP_TYPES` array.
  * TODO: Add descriptions for which areas are included in each type?
 */
-typedef enum _e_MapType // Conflict with _MapType
+typedef enum _e_MapType // TODO: Naming conflict with `_MapType`.
 {
     MapType_THR = 0,
     MapType_SC  = 1,
@@ -1487,13 +1487,13 @@ typedef struct
     s8  field_5;
 } s_Sfx;
 
-/** Contains loaded anim data? */
+/** Map-specific Harry anim data. */
 typedef struct
 {
-    s16 status_0; /** Packed anim status. See `s_ModelAnim::status_0`. */
-    s16 status_2; /** Packed anim status. See `s_ModelAnim::status_0`. */
-    s16 time_4;   /** Fixed-point anim time. */
-    s16 field_6;
+    s16 status_0;  /** Packed anim status. See `s_ModelAnim::status_0`. */
+    s16 status_2;  /** Packed anim status. See `s_ModelAnim::status_0`. */
+    s16 time_4;    /** Fixed-point anim time. */
+    s16 field_6;   // Keyframe index.
 } s_UnkStruct3_Mo; // Probable size: 8 bytes.
 
 /** Guessed based on in-debugger observation during gameplay.
@@ -3611,7 +3611,7 @@ void func_8008D5A0(VECTOR3* arg0, s16 arg1);
 
 s32 func_8008D8C0(s16 x0, s32 x1, s32 x2);
 
-void func_8008D990(s32, s32, VECTOR3*, s32, s32);
+void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4);
 
 /** @brief Gets the water zone at a given position.
  *
@@ -4571,6 +4571,8 @@ void Game_SavegameResetPlayer();
 void func_8007E5AC();
 
 void func_8007E860();
+
+void func_8007E8C0();
 
 /** Loads player animations for a given map. Maybe for cutscenes?
  *

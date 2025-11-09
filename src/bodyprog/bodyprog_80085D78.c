@@ -3005,8 +3005,6 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     s32       sp24;
     s32       sp28;
     s32       sp2C;
-    GsOT_TAG* temp_s2;
-    GsOT_TAG* temp_s7;
     s16       temp_v0_7;
     s32       temp_a0;
     s32       temp_a0_4;
@@ -3035,6 +3033,8 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     s16       var_s3;
     s32       i;
     POLY_FT4* poly;
+    GsOT_TAG* temp_s2;
+    GsOT_TAG* temp_s7;
 
     DVECTOR D_8002B2BC[] = {
         { 0x0000, 0xFFFC },
@@ -3043,8 +3043,9 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
         { 0x0000, 0x005A }
     };
 
-    if (arg2->vx < (-g_GameWork.gsScreenWidth_588 >> 1) - 0x200 || (g_GameWork.gsScreenWidth_588 >> 1) + 0x200 < arg2->vx ||
-        arg2->vy < (-g_GameWork.gsScreenHeight_58A >> 1) - 0x200 || (g_GameWork.gsScreenHeight_58A >> 1) + 0x200 < arg2->vy)
+    // TODO: 512 is probably a screen constant.
+    if (arg2->vx < ((-g_GameWork.gsScreenWidth_588  >> 1) - 512) || ((g_GameWork.gsScreenWidth_588  >> 1) + 512) < arg2->vx ||
+        arg2->vy < ((-g_GameWork.gsScreenHeight_58A >> 1) - 512) || ((g_GameWork.gsScreenHeight_58A >> 1) + 512) < arg2->vy)
     {
         return;
     }
@@ -3110,10 +3111,10 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     temp_v1_4 = arg2->vy;
 
     setXY4(poly,
-           temp_v0_3 - 0xB, temp_v1_4 - 0xB,
-           temp_v0_3 + 0xB, temp_v1_4 - 0xB,
-           temp_v0_3 - 0xB, temp_v1_4 + 0xB,
-           temp_v0_3 + 0xB, temp_v1_4 + 0xB);
+           temp_v0_3 - 11, temp_v1_4 - 11,
+           temp_v0_3 + 11, temp_v1_4 - 11,
+           temp_v0_3 - 11, temp_v1_4 + 11,
+           temp_v0_3 + 11, temp_v1_4 + 11);
 
     if (arg0)
     {
@@ -3163,14 +3164,14 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
         return;
     }
 
-    sp20 = (-arg4 >> 1) + (arg2->vx + arg2->vy) * 4 + 0x2AA;
-    sp24 = arg2->vz * 4 + (arg2->vx + arg2->vy) * 16;
+    sp20 = ((-arg4 >> 1) + ((arg2->vx + arg2->vy) * 4)) + 0x2AA;
+    sp24 = (arg2->vz * 4) + ((arg2->vx + arg2->vy) * 16);
 
     for (i = 0; i < 16; i++)
     {
         temp_v0_7 = D_800AFD7C[i] + sp20;
 
-        var_s3 = FP_MULTIPLY((Math_Cos(temp_v0_7 - arg3) + 0x1B33), (Math_Cos(temp_v0_7 * 0xC + sp24) + 0x1000) >> 1, Q12_SHIFT);
+        var_s3 = FP_MULTIPLY((Math_Cos(temp_v0_7 - arg3) + 0x1B33), (Math_Cos((temp_v0_7 * 0xC) + sp24) + 0x1000) >> 1, Q12_SHIFT);
         var_s3 = MIN(var_s3, 0x1800);
 
         temp_s1   = Math_Sin(temp_v0_7);
@@ -3257,7 +3258,7 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
 
     SetPolyFT4(poly);
 
-    setRGB0(poly, (u32)arg1 >> 6, temp_s0_6, ((u32)arg1 * 0x2F) >> 0xB);
+    setRGB0(poly, (u32)arg1 >> 6, temp_s0_6, ((u32)arg1 * 0x2F) >> 11);
 
     poly->tpage = 0x4C;
     poly->clut  = 0x18C;
@@ -3269,10 +3270,10 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     temp_v1_12 = arg2->vy;
 
     setXY4(poly,
-           temp_v0_13 - 0xA, temp_v1_12 - 0xA,
-           temp_v0_13 + 0xA, temp_v1_12 - 0xA,
-           temp_v0_13 - 0xA, temp_v1_12 + 0xA,
-           temp_v0_13 + 0xA, temp_v1_12 + 0xA);
+           temp_v0_13 - 10, temp_v1_12 - 10,
+           temp_v0_13 + 10, temp_v1_12 - 10,
+           temp_v0_13 - 10, temp_v1_12 + 10,
+           temp_v0_13 + 10, temp_v1_12 + 10);
 
     addPrim(temp_s7, poly);
     poly++;

@@ -4,6 +4,7 @@
 #include "maps/map2/map2_s04.h"
 
 #define BLOOD_SPLAT_COUNT_MAX 150
+
 extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 
 extern s_AnimInfo HARRY_M2S04_ANIM_INFOS[];
