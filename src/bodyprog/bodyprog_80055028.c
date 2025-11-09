@@ -3101,7 +3101,7 @@ void func_8005E414(s32 arg0) // 0x8005E414
     GsOUT_PACKET_P = offset;
 }
 
-void func_8005E650() // 0x8005E650
+void func_8005E650(s32 mapId) // 0x8005E650
 {
     s32 i;
     s16 count;
@@ -5871,7 +5871,7 @@ void GameState_MapScreen_Update() // 0x80066EB0
             D_800AE770 = 0;
             D_800C4448 = temp_a0;
 
-            func_80037188(temp_a0);
+            func_80037188();
             Sd_EngineCmd(Sfx_MenuMap);
             func_80066E40();
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4448], FS_BUFFER_2, &g_MapImg);

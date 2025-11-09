@@ -257,7 +257,7 @@ extern s8 g_SelectedFileIdx;
 // FUNCTIONS
 // ==========
 
-void Savegame_CardCleanInit();
+void Savegame_CardCleanInit(void);
 
 void Savegame_GameMemDataClear(s32 deviceId);
 
@@ -265,28 +265,28 @@ void Savegame_CardFileUsageClear(s32 deviceId);
 
 bool Savegame_CardFilesAreAllUnused(s32 deviceId);
 
-void func_8002E7BC();
+void func_8002E7BC(void);
 
-void func_8002E830();
+void func_8002E830(void);
 
-void func_8002E85C();
+void func_8002E85C(void);
 
-void func_8002E86C();
+void func_8002E86C(void);
 
-s32 func_8002E898();
+s32 func_8002E898(void);
 
-void func_8002E8D4();
+void func_8002E8D4(void);
 
-void func_8002E8E4();
+void func_8002E8E4(void);
 
-s32 func_8002E914();
+s32 func_8002E914(void);
 
 bool func_8002E94C(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx);
 
 /** @brief Related to formatting logic.
  * Used in: `SAVELOAD.BIN`
  */
-s32 func_8002E990();
+s32 func_8002E990(void);
 
 s32 Savegame_CardFilesGetUsageBits(s32 deviceId);
 
@@ -298,7 +298,7 @@ s32 Savegame_CardFileUsageFreeCount(s32 deviceId);
 
 bool func_8002EABC(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx);
 
-void func_8002EB88(); // Return type assumed.
+void func_8002EB88(void); // Return type assumed.
 
 void func_8002ECE0(s_800B55E8* arg0);
 
@@ -351,61 +351,61 @@ s32 Savegame_CardFileErase(s32 deviceId, char* fileName);
 
 s32 Savegame_CardFileRename(s32 deviceId, char* prevName, char* newName);
 
-void Savegame_CardInit();
+void Savegame_CardInit(void);
 
-void Savegame_CardEventsInit();
+void Savegame_CardEventsInit(void);
 
-void Savegame_CardStateInit();
+void Savegame_CardStateInit(void);
 
-void Savegame_CardSwEventsInit();
+void Savegame_CardSwEventsInit(void);
 
-void Savegame_CardHwEventsInit();
+void Savegame_CardHwEventsInit(void);
 
-void Savegame_CardEventsClose();
+void Savegame_CardEventsClose(void);
 
-void Savegame_CardSwEventsClose();
+void Savegame_CardSwEventsClose(void);
 
-void Savegame_CardHwEventsClose();
+void Savegame_CardHwEventsClose(void);
 
-s32 Savegame_CardSwEventsTest();
+s32 Savegame_CardSwEventsTest(void);
 
-void Savegame_CardSwEventsReset();
+void Savegame_CardSwEventsReset(void);
 
-s32 Savegame_CardHwEventsTest();
+s32 Savegame_CardHwEventsTest(void);
 
-void Savegame_CardHwEventsReset();
+void Savegame_CardHwEventsReset(void);
 
-void Savegame_CardHwEventSpIOE();
+void Savegame_CardHwEventSpIOE(void);
 
-void Savegame_CardHwEventSpERROR();
+void Savegame_CardHwEventSpERROR(void);
 
-void Savegame_CardHwEventSpNEW();
+void Savegame_CardHwEventSpNEW(void);
 
-void Savegame_CardHwEventSpTIMOUT();
+void Savegame_CardHwEventSpTIMOUT(void);
 
-void Savegame_CardHwEventSpUNKNOWN();
+void Savegame_CardHwEventSpUNKNOWN(void);
 
-s32 Savegame_CardResult(); /** `e_CardResult` */
+s32 Savegame_CardResult(void); /** `e_CardResult` */
 
 bool Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDir, char* filename, s32 createBlockCount, s32 fileOffset, void* outBuf, s32 bufSize);
 
-s32 Savegame_CardIsIdle();
+s32 Savegame_CardIsIdle(void);
 
-void Savegame_CardUpdate();
+void Savegame_CardUpdate(void);
 
-s32 Savegame_CardState_Init();
+s32 Savegame_CardState_Init(void);
 
-s32 Savegame_CardState_Check();
+s32 Savegame_CardState_Check(void);
 
-s32 Savegame_CardState_Load();
+s32 Savegame_CardState_Load(void);
 
-s32 Savegame_CardState_DirRead();
+s32 Savegame_CardState_DirRead(void);
 
-s32 Savegame_CardState_FileCreate();
+s32 Savegame_CardState_FileCreate(void);
 
-s32 Savegame_CardState_FileOpen();
+s32 Savegame_CardState_FileOpen(void);
 
-s32 Savegame_CardState_FileReadWrite();
+s32 Savegame_CardState_FileReadWrite(void);
 
 void Savegame_DevicePathGenerate(s32 deviceId, char* res);
 

@@ -316,22 +316,22 @@ static inline PORT* SmfGetPort(s32 voice)
 
 void tone_adsr_mem(s16 vab_id);
 void tone_adsr_back(s16 vab_id);
-void sd_alloc_sort();
+void sd_alloc_sort(void);
 s32  SdSpuMalloc(s32 size);
 u32  SdSpuMallocWithStartAddr(u32, s32);
 void SdSpuFree(u32 addr);
-void SdWorkInit();
-void SdInit();
-void SdStart();
-void SdStart2();
+void SdWorkInit(void);
+void SdInit(void);
+void SdStart(void);
+void SdStart2(void);
 void SdSetTickMode(s32 tick_mode);
-void SdSeqCalledTbyT();
-void SdSetStereo();
-void SdSetMono();
+void SdSeqCalledTbyT(void);
+void SdSetStereo(void);
+void SdSetMono(void);
 char SdSetReservedVoice(char voices);
-void SdSetTableSize();
-void SdEnd();
-void SdQuit();
+void SdSetTableSize(void* arg0, s32 arg1, s32 arg2);
+void SdEnd(void);
+void SdQuit(void);
 void SdSetSerialAttr(char s_num, char attr, char mode);
 void SdSetSerialVol(s16 s_num, s16 voll, s16 volr);
 void SdSetMVol(s16 voll, s16 volr);
@@ -344,7 +344,7 @@ s16  SdVabTransBodyPartly(u8* addr, u32 bufsize, s16 vabid);
 s16  SdVabTransCompleted(s16 immediateFlag);
 void SdVabClose(s16 vab_id);
 void SdSetAutoKeyOffMode(s16 mode);
-void SdAutoKeyOffCheck();
+void SdAutoKeyOffCheck(void);
 s16  SdSeqOpen(s32* addr, s16 vab_id);
 s16  SdSeqOpenWithAccNum(s32* addr, s16 vab_id, s16 seq_access_num);
 void SdSeqPlay(s16 seq_access_num, u8 play_mode, s16 l_count);
@@ -354,13 +354,13 @@ void SdSeqPause(s16 seq_access_num);
 void SdSeqReplay(s16 seq_access_num);
 void SdSeqSetVol(s16 seq_access_num, s16 voll, s16 volr);
 void SdSeqGetVol(s16 seq_access_num, s16* voll, s16* volr);
-void SdUtFlush();
-void SdUtReverbOn();
-void SdUtReverbOff();
+void SdUtFlush(void);
+void SdUtReverbOn(void);
+void SdUtReverbOff(void);
 s16  SdUtSetReverbType(s16 type);
 void SdUtSetReverbDepth(s16 ldepth, s16 rdepth);
 void SdSetRVol(s16 ldepth, s16 rdepth);
-void SdUtSEAllKeyOff();
+void SdUtSEAllKeyOff(void);
 void SdUtAllKeyOff(s16 mode);
 s32  SdUtGetVabHdr(s16 vabId, VabHdr* vabhdrptr);
 s32  SdVoKeyOn(s32 vab_pro, s32 pitch, u16 voll, u16 volr);
@@ -388,8 +388,8 @@ u8   SdGetMidiPan(s16 seq_access_num, s16 midi_ch);
 void SdSetMidiPan(s16 seq_access_num, s16 midi_ch, s32 pan);
 u8   SdGetMidiPitchBendFine(s16 seq_access_num, s16 midi_ch);
 s32  SdSetMidiPitchBendFine(s16 seq_access_num, s16 midi_ch, u8 pitchBendFine);
-s32  SdGetTrackTranspause();
-s32  SdSetTrackTranspause();
+s32  SdGetTrackTranspause(void);
+s32  SdSetTrackTranspause(void);
 s32  SdGetTrackMute(s16 seq_access_num, s32 midi_ch);
 s32  SdSetTrackMute(s16 seq_access_num, s32 midi_ch);
 s32  SdGetSeqControlStatus(s16 seq_access_num);
@@ -400,7 +400,7 @@ s32  SdGetSeqBeat2(s16 seq_access_num);
 // Wrappers for standard `PsyQ Ss*` funcs.
 
 void SsSetMVol(s16 voll, s16 volr);
-void SsEnd();
+void SsEnd(void);
 void SsSetSerialAttr(char s_num, char attr, char mode);
 void SsSetSerialVol(char s_num, s16 voll, s16 volr);
 void SsUtAllKeyOff(s16 mode);
@@ -415,17 +415,17 @@ void vib_calc(PORT* p);
 void random_calc(PORT* p);
 void volume_calc(PORT* p, MIDI* mp);
 void smf_vol_set(s32 ch, s32 vc, s32 l_vol, s32 r_vol);
-void master_vol_set();
+void master_vol_set(void);
 void seq_master_vol_set(s32 access_num);
-void toremoro_set();
+void toremoro_set(void);
 s32  pitch_bend_calc(PORT* p, u32 pit);
 void pitch_calc(PORT* p, s32 forceSpuUpdate);
 void midi_mod(MIDI* p);
 void midi_porta(MIDI* p);
 void replay_reverb_set(s16 acc);
-void midi_vsync();
+void midi_vsync(void);
 void sound_seq_off(s32 access_num);
-void sound_off();
+void sound_off(void);
 
 void    adsr_set(s32 vo, PORT* p);
 void    rr_off(s32 vo);
@@ -444,11 +444,11 @@ void control_code_set(s32 seq_access_num);
 
 // smf_main.c
 
-bool smf_timer();
-void smf_timer_set();
-void smf_timer_end();
-void smf_timer_stop();
-void smf_vsync();
+bool smf_timer(void);
+void smf_timer_set(void);
+void smf_timer_end(void);
+void smf_timer_stop(void);
+void smf_vsync(void);
 
 // smf_mid.c
 
@@ -474,7 +474,7 @@ u8   readtrack2(SMF* p);
 u8   track_head_read(SMF* p);
 void delta_time_conv(SMF* p);
 u8   midi_file_out(s32 file_no);
-u8   midi_smf_main();
+u8   midi_smf_main(void);
 void midi_smf_stop(s32 access_num);
 s16  midi_smf_stat(s32 access_no); /** Returns SMF_STAT. */
 

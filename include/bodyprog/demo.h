@@ -50,7 +50,7 @@ typedef struct _DemoFileInfo
 {
     s16 demoFileId_0;       /** `MISC/DEMO****.DAT`, initial gamestate for the demo and user config override. */
     s16 playFileId_2;       /** `MISC/PLAY****.DAT`, data of button presses/randseed for each frame. */
-    s32 (*canPlayDemo_4)(); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
+    s32 (*canPlayDemo_4)(void); /** Optional funcptr, returns whether this demo is eligible to be played (unused in retail demos). */
 } s_DemoFileInfo;
 STATIC_ASSERT_SIZEOF(s_DemoFileInfo, 8);
 
@@ -96,25 +96,25 @@ extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
 
 bool Demo_SequenceAdvance(s32 incrementAmt);
 
-void Demo_DemoDataRead();
+void Demo_DemoDataRead(void);
 
-void Demo_PlayDataRead();
+void Demo_PlayDataRead(void);
 
-s32 Demo_PlayFileBufferSetup();
+s32 Demo_PlayFileBufferSetup(void);
 
-void Demo_DemoFileSavegameUpdate();
+void Demo_DemoFileSavegameUpdate(void);
 
-void Demo_GameGlobalsUpdate();
+void Demo_GameGlobalsUpdate(void);
 
-void Demo_GameGlobalsRestore();
+void Demo_GameGlobalsRestore(void);
 
-void Demo_GameRandSeedUpdate();
+void Demo_GameRandSeedUpdate(void);
 
-void Demo_GameRandSeedRestore();
+void Demo_GameRandSeedRestore(void);
 
-void Demo_Start();
+void Demo_Start(void);
 
-void Demo_Stop();
+void Demo_Stop(void);
 
 bool func_8008F434(s32 arg0);
 
@@ -125,26 +125,26 @@ bool func_8008F434(s32 arg0);
  */
 s32 Demo_StateGet(s32 gameState);
 
-void Demo_ExitDemo();
+void Demo_ExitDemo(void);
 
-void func_8008F518();
+void func_8008F518(void);
 
-bool func_8008F520();
+bool func_8008F520(void);
 
 /** Generates the backup random demo seed and stores it in `Demo_RandSeedBackup`. */
-void Demo_DemoRandSeedBackup();
+void Demo_DemoRandSeedBackup(void);
 
-void Demo_DemoRandSeedRestore();
+void Demo_DemoRandSeedRestore(void);
 
-void Demo_DemoRandSeedAdvance();
+void Demo_DemoRandSeedAdvance(void);
 
-bool Demo_Update();
+bool Demo_Update(void);
 
-bool Demo_ControllerDataUpdate();
+bool Demo_ControllerDataUpdate(void);
 
-bool Demo_PresentIntervalUpdate();
+bool Demo_PresentIntervalUpdate(void);
 
-bool Demo_GameRandSeedSet();
+bool Demo_GameRandSeedSet(void);
 
 bool func_8008F914(s32 posX, s32 posZ);
 

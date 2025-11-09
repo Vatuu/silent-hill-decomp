@@ -32,7 +32,7 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara)
     
     if (g_Player_IsAiming)
     {
-        distProp8 = func_8007FD2C(invDist);
+        distProp8 = func_8007FD2C();
         if (distProp8 > Q12(2.0f))
         {
             dist += Q12(2.0f);

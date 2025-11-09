@@ -567,7 +567,7 @@ void Player_UpperBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 /** @brief Updates animations and status related to player attacks.
  * Returns `true` if animations where succefully finished and if performing a multitap attack.
  */
-bool Player_CombatAnimUpdate();
+bool Player_CombatAnimUpdate(void);
 
 /** @brief Main animation and state handler for the player's upper body.
  * Returns `true` if combat animations where completed or if the player's health is >60%.
@@ -602,14 +602,14 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra);
 // Removing this function makes it impossible to run.
 s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1);
 
-void func_8007EBBC();
+void func_8007EBBC(void);
 
-void Game_PlayerMovementsReset();
+void Game_PlayerMovementsReset(void);
 
-void Player_Controller();
+void Player_Controller(void);
 
 /** @brief Determines if the player can stomp or kick a knocked enemy. */
-bool func_8007F95C();
+bool func_8007F95C(void);
 
 static inline s32 Player_ExtraStateSet(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, s32 state)
 {

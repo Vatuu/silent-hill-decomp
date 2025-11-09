@@ -486,11 +486,11 @@ s32 vwOresenHokan(const s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x
  */
 void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list);
 
-void vcStartCameraSystem();
-void vcEndCameraSystem();
-s32 func_80080A10();
+void vcStartCameraSystem(void);
+void vcEndCameraSystem(void);
+s32 func_80080A10(void);
 void func_80080A30(s32 arg0);
-s32 func_80080A3C();
+s32 func_80080A3C(void);
 void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, bool use_through_door_cam_f);
 void func_80080B58(GsCOORDINATE2* arg0, SVECTOR* rot, VECTOR3* pos);
 void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable);
@@ -498,14 +498,14 @@ s32  Vc_LookAtOffsetYMaxSet(s32 lookAtOffsetYMax);
 void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, bool warp_watch_f);
 void vcUserCamTarget(VECTOR3* cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, bool warp_cam_f);
 void vcChangeProjectionValue(s16 scr_y);
-void func_80080D68();
+void func_80080D68(void);
 void vcGetNowWatchPos(VECTOR3* watch_pos);
 void vcGetNowCamPos(VECTOR3* cam_pos);
 void vcReturnPreAutoCamWork(bool warp_f);
 void vcSetSubjChara(VECTOR3* chara_pos, q19_12 chara_bottom_y, q19_12 chara_top_y, q19_12 chara_grnd_y, VECTOR3* chara_head_pos,
                     q3_12 chara_mv_spd, q19_12 chara_mv_ang_y, q3_12 chara_ang_spd_y, q3_12 chara_eye_ang_y, q3_12 chara_eye_ang_wy, q19_12 chara_watch_xz_r);
-s32  vcExecCamera();
-void vcSetAllNpcDeadTimer();
+s32  vcExecCamera(void);
+void vcSetAllNpcDeadTimer(void);
 s32  vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVECTOR* now_ang);
 VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p);
 bool func_8008150C(q19_12 posX, q19_12 posZ);

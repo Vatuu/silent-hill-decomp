@@ -2133,7 +2133,7 @@ extern s32 g_Demo_FrameCount;
 extern s32 g_UnknownFrameCounter;
 
 /** Function pointer array, maybe state funcs of some kind. */
-extern void (*g_GameStateUpdateFuncs[])();
+extern void (*g_GameStateUpdateFuncs[])(void);
 
 /** Related to sound commands. */
 extern u16 g_UnknownEngineCmdTable0[];
@@ -2185,7 +2185,7 @@ extern s32 D_800A9A10;
 
 extern s32 D_800A9A1C;
 
-extern void (*g_SysStateFuncs[])();
+extern void (*g_SysStateFuncs[])(void);
 
 extern s32 D_800A9A68;
 
@@ -2839,30 +2839,30 @@ bool Gfx_2dBackgroundMotionBlur(s32 vBlanks);
 /** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
  * Draws some string in display space.
  */
-void SaveLoad_NowLoadingStringDraw();
+void SaveLoad_NowLoadingStringDraw(void);
 
-void func_80032D1C();
+void func_80032D1C(void);
 
 /** Bodyprog entrypoint. Called by `main`. */
-void MainLoop();
+void MainLoop(void);
 
 void Chara_PositionUpdateFromParams(s_MapPoint2d* mapPoint);
 
-void func_8003943C();
+void func_8003943C(void);
 
 /** `SysState_Fmv` update function.
  * Movie to play is decided by `2072 - g_MapEventIdx`
  * After playback, savegame gets `D_800BCDD8->eventFlagNum_2` event flag set. */
-void SysState_Fmv_Update();
+void SysState_Fmv_Update(void);
 
-s32 Map_TypeGet();
+s32 Map_TypeGet(void);
 
 void CharaModel_Free(s_CharaModel* model);
 
 void func_8003C220(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ);
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
-s32 func_8003C850();
+s32 func_8003C850(void);
 
 void func_8003C878(s32 arg0);
 
@@ -2871,7 +2871,7 @@ void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr);
 void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
 
 /** Returns held item ID. */
-s32 func_8003CD5C();
+s32 func_8003CD5C(void);
 
 void func_8003CD6C(s_PlayerCombat* combat);
 
@@ -2884,10 +2884,10 @@ s32 WorldGfx_PlayerHeldItemSet(e_InventoryItemId itemId);
 
 void func_8003D01C(void);
 
-void func_8003D03C();
+void func_8003D03C(void);
 
 /** Loads the model of an item held by the player? */
-void func_8003D058();
+void func_8003D058(void);
 
 bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId);
 
@@ -2903,7 +2903,7 @@ void func_8003D468(s32 arg0, bool flag);
 
 void WorldGfx_CharaFree(s_CharaModel* model);
 
-void WorldGfx_HarryCharaLoad();
+void WorldGfx_HarryCharaLoad(void);
 
 s32 func_8003D21C(s_MapOverlayHeader* mapHdr);
 
@@ -2914,11 +2914,11 @@ s32 func_8003DD74(e_CharacterId charaId, s32 arg1);
 /** `arg1` is packed data. Each byte is a separate value. */
 void func_8003DD80(e_CharacterId charaId, s32 arg1); // Called by some chara init funcs.
 
-void func_8003E740();
+void func_8003E740(void);
 
 void func_8003ED74(s32 arg0, s32 arg1);
 
-void func_8003EDA8();
+void func_8003EDA8(void);
 
 void func_8003EF10(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
 
@@ -2953,7 +2953,7 @@ void func_8003FF2C(s_StructUnk3* arg0);
 
 void func_80040004(s_WorldGfx* worldGfx);
 
-void func_80040014();
+void func_80040014(void);
 
 /** @brief Computes the stereo sound balance based on the relative position to the camera.
  *
@@ -2965,7 +2965,7 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos);
 bool func_80040B74(e_CharacterId charaId);
 
 /** Related to the screen. */
-void func_80040BAC();
+void func_80040BAC(void);
 
 void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5);
 
@@ -2995,19 +2995,19 @@ void LmHeader_Init(s_LmHeader* lmHdr);
 /** @brief Clears `queueIdx_4` in array of `s_IpdChunk` */
 void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount);
 
-void Ipd_TexturesInit1();
+void Ipd_TexturesInit1(void);
 
-void Map_IpdCollisionDataInit();
+void Map_IpdCollisionDataInit(void);
 
 void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 chunkCoordX, s32 chunkCoordZ);
 
-void Ipd_ActiveChunksClear0();
+void Ipd_ActiveChunksClear0(void);
 
-void Ipd_TexturesInit0();
+void Ipd_TexturesInit0(void);
 
-void func_800420C0();
+void func_800420C0(void);
 
-void Map_GlobalLmFree();
+void Map_GlobalLmFree(void);
 
 s_Texture* func_80042178(char* texName);
 
@@ -3084,7 +3084,7 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior);
 
 s32 Ipd_LoadStart(s_IpdChunk* chunk, e_FsFile fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
-bool func_80043740();
+bool func_80043740(void);
 
 bool func_80043830(void);
 
@@ -3203,18 +3203,18 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
 void Sd_EngineCmd(u32 cmd);
 
 /** Sound func? */
-u8 func_80045B28();
+u8 func_80045B28(void);
 
-u16 func_80045BC8();
+u16 func_80045BC8(void);
 
 /** Sound func. */
 void func_80045BD8(u16 cmd);
 
 void func_80045D28(u8 isStereo);
 
-void sd_init();
+void sd_init(void);
 
-void sd_work_init();
+void sd_work_init(void);
 
 u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol);
 
@@ -3225,7 +3225,7 @@ void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch);
 void func_80046620(u16 sfx, s8 balance, u8 vol, s8 pitch);
 
 /** Sound command func. Unknown category. */
-void func_800468EC();
+void func_800468EC(void);
 
 /** SFX func. */
 void func_8004690C(u16 sfx);
@@ -3233,21 +3233,21 @@ void func_8004690C(u16 sfx);
 /** Sound command func. Unknown category. */
 void func_8004692C(u16 cmd);
 
-void func_800469AC();
+void func_800469AC(void);
 
-void func_800469E8();
+void func_800469E8(void);
 
 /** Sound command func. Unknown category. */
 void func_80046A24(u16 cmd);
 
-void func_80046A70();
+void func_80046A70(void);
 
-void func_80046AD8();
+void func_80046AD8(void);
 
-void func_80046B04();
+void func_80046B04(void);
 
 /** Sound command func. Unknown category. */
-void func_80046B78();
+void func_80046B78(void);
 
 u8 func_80046BB4(u8 arg0);
 
@@ -3258,15 +3258,15 @@ void func_80046D3C(u16 cmd);
 
 s32 func_80046DCC(s32 idx);
 
-void func_80046E00();
+void func_80046E00(void);
 
 void func_8004729C(u16 arg0);
 
 void func_800472BC(s32 arg0);
 
-void func_80047308();
+void func_80047308(void);
 
-void func_8004760C();
+void func_8004760C(void);
 
 /** Args are volume levels. */
 void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2);
@@ -3274,7 +3274,7 @@ void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2);
 /** Sound func. */
 void func_800478DC(u8 cmd);
 
-void func_80047A70();
+void func_80047A70(void);
 
 void Sd_SetVolBgm(s16 volLeft, s16 volRight);
 
@@ -3288,40 +3288,40 @@ void Sd_SetReverbEnable(s32 mode);
 
 void func_80047B24(s32 arg0);
 
-void func_80047B80();
+void func_80047B80(void);
 
-void func_80047D1C();
+void func_80047D1C(void);
 
-void func_80047D50();
+void func_80047D50(void);
 
-void func_80047DB0();
+void func_80047DB0(void);
 
-void func_80047E3C();
+void func_80047E3C(void);
 
-void func_80047F18();
+void func_80047F18(void);
 
-void func_80048000();
+void func_80048000(void);
 
-void func_8004807C();
+void func_8004807C(void);
 
-void func_800480FC();
+void func_800480FC(void);
 
-void func_800481F8();
+void func_800481F8(void);
 
 /** Sound func. */
 void func_80048244(u16 cmd);
 
-void func_800482D8();
+void func_800482D8(void);
 
-void Sd_StopSeq();
-
-/** CD function. */
-void func_800483D4();
+void Sd_StopSeq(void);
 
 /** CD function. */
-void func_80048424();
+void func_800483D4(void);
 
-void func_80048498();
+/** CD function. */
+void func_80048424(void);
+
+void func_80048498(void);
 
 /** Nullsub */
 void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
@@ -3331,7 +3331,7 @@ void func_800485B8(s32 arg0, u8 arg1, u32 arg2);
 
 void func_800485C0(s32 idx);
 
-void func_800485D8();
+void func_800485D8(void);
 
 /** @brief Executes a new primitive command and checks the status against the previous.
  * If the previous primitive commands haven't completed, it starts
@@ -3365,9 +3365,9 @@ bool Gfx_PickupItemAnimate(u8 itemId);
  */
 void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx); // 0x80054FC0
 
-void func_80055028();
+void func_80055028(void);
 
-void func_800550D0();
+void func_800550D0(void);
 
 /** Sets visual world parameters. */
 void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness);
@@ -3387,7 +3387,7 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
 
 void func_80055648(s32 arg0, SVECTOR* arg1);
 
-s32 func_800557DC();
+s32 func_800557DC(void);
 
 void func_80055814(s32 arg0);
 
@@ -3550,13 +3550,13 @@ void Map_EffectTexturesLoad(s32 mapIdx);
 
 void func_8005E414(s32 arg0);
 
-void func_8005E650();
+void func_8005E650(s32 mapId);
 
-void func_8005E70C();
+void func_8005E70C(void);
 
 s32 func_8005E7E0(s32 arg0);
 
-void func_8005E89C();
+void func_8005E89C(void);
 
 s32 func_8005F55C(s32 arg0);
 
@@ -3754,9 +3754,9 @@ void func_80087EA8(s32 cmd);
 
 void func_80087EDC(s32 arg0);
 
-void func_80088028();
+void func_80088028(void);
 
-void func_80088048();
+void func_80088048(void);
 
 void func_800880F0(s32 arg0);
 
@@ -3779,9 +3779,9 @@ bool func_8008F434(s32 arg0);
 /** Might retrun `bool`. */
 void func_80089090(s32 arg0);
 
-void func_800890B8();
+void func_800890B8(void);
 
-s32 func_80089128();
+s32 func_80089128(void);
 
 void func_800892A4(s32 idx);
 
@@ -3791,17 +3791,17 @@ void func_80089314(s32 arg0);
 
 void func_800893D0(q19_12 arg0);
 
-void func_8008944C();
+void func_8008944C(void);
 
-void func_80089470();
+void func_80089470(void);
 
-void func_80089494();
+void func_80089494(void);
 
 void func_800894B8(s32 arg0);
 
-void func_800894DC();
+void func_800894DC(void);
 
-void func_80089500();
+void func_80089500(void);
 
 bool func_80089524(s_SysWork_2514* arg0, s32 padInfoMode);
 
@@ -3827,7 +3827,7 @@ void func_800899BC(s_SysWork_2514* arg0, s32 arg1);
 
 bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3);
 
-s32 func_8008A0CC(); /** Returns 0. */
+s32 func_8008A0CC(void); /** Returns 0. */
 
 s64 func_8008A0D4(void); /** Returns 0. */
 
@@ -3847,7 +3847,7 @@ void func_8008B15C(s_SubCharacter* chara);
 
 void func_8008B1DC(s_SubCharacter*, s32, s32);
 
-void func_8008B398();
+void func_8008B398(void);
 
 void func_8008B3E4(s32 vol);
 
@@ -3858,37 +3858,37 @@ void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8008B664(VECTOR3* pos, u32 caseVar);
 
-s32 func_8008D850();
+s32 func_8008D850(void);
 
 void func_8008E4EC(s_LmHeader* lmHdr);
 
-void func_8008D78C();
+void func_8008D78C(void);
 
-void func_80091380();
+void func_80091380(void);
 
 // TODO: Arrange these in address order for better insight into the original interface. -- Sezz
 // ------------------------------------------------------------------
 
 /** Seeks for the English title screen background graphic. */
-void GameFs_TitleGfxSeek();
+void GameFs_TitleGfxSeek(void);
 
 /** Loads the English title screen background graphic. */
-void GameFs_TitleGfxLoad();
+void GameFs_TitleGfxLoad(void);
 
 /** Seeks for the stream overlay. */
-void GameFs_StreamBinSeek();
+void GameFs_StreamBinSeek(void);
 
 /** Loads the stream overlay. */
-void GameFs_StreamBinLoad();
+void GameFs_StreamBinLoad(void);
 
 /** Loads the options background graphic and overlay. */
-void GameFs_OptionBinLoad();
+void GameFs_OptionBinLoad(void);
 
 /** Loads the save/load background graphic and overlay. */
-void GameFs_SaveLoadBinLoad();
+void GameFs_SaveLoadBinLoad(void);
 
 /** Loads `Tim00` graphic. */
-void GameFs_Tim00TIMLoad();
+void GameFs_Tim00TIMLoad(void);
 
 void GameFs_MapItemsModelLoad(u32 mapId);
 
@@ -3940,13 +3940,13 @@ void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3);
 
 void func_80065B94(VECTOR3* arg0, s16 arg1);
 
-void func_80066184();
+void func_80066184(void);
 
-void func_80066D90();
+void func_80066D90(void);
 
-void func_80066E40();
+void func_80066E40(void);
 
-void func_80066E7C();
+void func_80066E7C(void);
 
 s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3);
 
@@ -3956,9 +3956,9 @@ bool func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u
 
 void func_800692A4(u16 arg0, u16 arg1, u16 arg2);
 
-void func_800697EC();
+void func_800697EC(void);
 
-u16 func_80069810();
+u16 func_80069810(void);
 
 void func_80069820(u16 arg0);
 
@@ -4124,7 +4124,7 @@ bool func_800700F8(s_SubCharacter* chara0, s_SubCharacter* chara1);
 
 bool func_80070184(s_SubCharacter* chara, s32 arg1, q3_12 rotY);
 
-bool func_80070320();
+bool func_80070320(void);
 
 /** TODO: Return type uncertain. */
 q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
@@ -4137,44 +4137,44 @@ s32 func_8007029C(s_SubCharacter* chara, q19_12 arg1, q3_12 angle);
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 scaleZ);
 
-void Player_FlexRotationYReset();
+void Player_FlexRotationYReset(void);
 
 void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2);
 
-void Settings_ScreenAndVolUpdate();
+void Settings_ScreenAndVolUpdate(void);
 
-void Settings_RestoreDefaults();
+void Settings_RestoreDefaults(void);
 
 void Settings_RestoreControlDefaults(s32 arg0);
 
-void nullsub_800334C8();
+void nullsub_800334C8(void);
 
 // Possibly related to save functionallity.
 s32 func_800334D8(s32 idx);
 
-bool func_80033548();
+bool func_80033548(void);
 
 /** Updates the savegame buffer with the current player SysWork info (position, rotation, health, event index). */
-void SysWork_SavegameUpdatePlayer();
+void SysWork_SavegameUpdatePlayer(void);
 
 /** Updates SysWork with player info from the savegame buffer (position, rotation, health). */
-void SysWork_SavegameReadPlayer();
+void SysWork_SavegameReadPlayer(void);
 
-s32 MainLoop_ShouldWarmReset();
+s32 MainLoop_ShouldWarmReset(void);
 
-void Game_WarmBoot();
+void Game_WarmBoot(void);
 
 /** Handles `g_GameWork.gameStateStep_598[0]`.
  * Used to handle map loading and room changes.
  */
-void GameFs_MapStartup(); // 0x80034964
+void GameFs_MapStartup(void); // 0x80034964
 
 /** Draws the loading screen with Harry running. */
-void Gfx_LoadingScreenDraw(); // 0x80034E58
+void Gfx_LoadingScreenDraw(void); // 0x80034E58
 
-void func_80034EC8(); // 0x80034EC8
+void func_80034EC8(void); // 0x80034EC8
 
-void func_80034F18(); // 0x80034F18
+void func_80034F18(void); // 0x80034F18
 
 /** Crucial for getting in-game.
  * Removing it breaks the camera, inventory's 3D elements, effects
@@ -4182,11 +4182,11 @@ void func_80034F18(); // 0x80034F18
  * doing any action unrelated to aiming a weapon or interacting
  * with the environment crashes the game.
  */
-void Game_InGameInit(); // 0x80034FB8
+void Game_InGameInit(void); // 0x80034FB8
 
 void Game_SavegameInitialize(s8 overlayId, s32 difficulty);
 
-void Game_PlayerInit(); // 0x80035178
+void Game_PlayerInit(void); // 0x80035178
 
 /** Loads a map file into `g_OvlDynamic`. */
 void GameFs_MapLoad(s32 mapIdx);
@@ -4202,9 +4202,9 @@ void func_80035338(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
 /** Called by `Fs_QueuePostLoadAnm`. */
 void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord);
 
-void func_8003569C();
+void func_8003569C(void);
 
-s32 func_80035780();
+s32 func_80035780(void);
 
 /** Sets sound command. */
 bool func_800358A8(s32 cmd);
@@ -4212,11 +4212,11 @@ bool func_800358A8(s32 cmd);
 void func_800358DC(s32 cmd);
 
 /** Executes sound command. */
-void func_80035924();
+void func_80035924(void);
 
-void func_8003596C();
+void func_8003596C(void);
 
-s32 func_8003599C();
+s32 func_8003599C(void);
 
 s32 func_80035AB0(s32 arg0);
 
@@ -4232,39 +4232,39 @@ void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
 
 void func_80035B58(s32 arg0);
 
-void func_80035B98();
+void func_80035B98(void);
 
 /** @unused and broken.
  * Intended to draw a background image when a loading screen with the string "STAGE X-X" appears.
  */
-void Gfx_LoadingScreen_BackgroundTexture();
+void Gfx_LoadingScreen_BackgroundTexture(void);
 
-void Gfx_LoadingScreen_PlayerRun();
+void Gfx_LoadingScreen_PlayerRun(void);
 
 void func_80035DB4(s32);
 
-void func_80035E1C();
+void func_80035E1C(void);
 
-bool func_80035E44();
+bool func_80035E44(void);
 
-void func_80035ED0();
+void func_80035ED0(void);
 
 void func_80035F4C(s32 flags, q19_12 arg1, u8* arg2);
 
-void func_800363D0();
+void func_800363D0(void);
 
 void func_8003640C(s32 arg0);
 
 /** `Savegame_MapRoomIdxSet` */
-void Savegame_MapRoomIdxSet();
+void Savegame_MapRoomIdxSet(void);
 
-s32 func_8003647C();
+s32 func_8003647C(void);
 
-s32 func_80036498();
+s32 func_80036498(void);
 
-u32 func_800364BC();
+u32 func_800364BC(void);
 
-void func_8003652C();
+void func_8003652C(void);
 
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx);
 
@@ -4274,16 +4274,16 @@ void func_80036E48(u16* arg0, s16* arg1);
 
 void func_8003708C(s16* ptr0, u16* ptr1);
 
-void func_80037124();
+void func_80037124(void);
 
-void func_80037154();
+void func_80037154(void);
 
-void func_80037188();
+void func_80037188(void);
 
 /** Finds the ground hight and warps the player to it? */
-void func_80037334();
+void func_80037334(void);
 
-void func_80037388();
+void func_80037388(void);
 
 bool func_800378D4(s_MapPoint2d* mapPoint);
 
@@ -4320,7 +4320,7 @@ q19_12 Math_Distance2dGet(const VECTOR3* posFrom, const VECTOR3* posTo);
 void func_800803FC(VECTOR3* pos, s32 idx);
 
 /** @brief Forces a clicked controller input status for `ControllerFlag_Select`. */
-void Input_SelectClickSet();
+void Input_SelectClickSet(void);
 
 /** @brief Performs a 2D distance check on the XZ plane between two positions.
  *
@@ -4340,77 +4340,77 @@ s32 Camera_Distance2dGet(const VECTOR3* pos);
 
 void func_80037F24(s32);
 
-void func_80038354();
+void func_80038354(void);
 
-void SysState_Gameplay_Update();
+void SysState_Gameplay_Update(void);
 
-void SysState_GamePaused_Update();
+void SysState_GamePaused_Update(void);
 
-void SysState_OptionsMenu_Update();
+void SysState_OptionsMenu_Update(void);
 
-void func_8003943C();
+void func_8003943C(void);
 
-void SysState_StatusMenu_Update();
+void SysState_StatusMenu_Update(void);
 
-void GameState_LoadStatusScreen_Update();
+void GameState_LoadStatusScreen_Update(void);
 
-void SysState_MapScreen_Update();
+void SysState_MapScreen_Update(void);
 
-void SysState_Fmv_Update();
+void SysState_Fmv_Update(void);
 
-void SysState_LoadArea_Update();
+void SysState_LoadArea_Update(void);
 
-void AreaLoad_UpdatePlayerPosition();
+void AreaLoad_UpdatePlayerPosition(void);
 
-void func_80039F54();
+void func_80039F54(void);
 
-s8 func_80039F90();
+s8 func_80039F90(void);
 
-void SysState_ReadMessage_Update(s32 arg0);
+void SysState_ReadMessage_Update(void);
 
-void func_8003A16C();
+void func_8003A16C(void);
 
-void SysState_SaveMenu_Update();
+void SysState_SaveMenu_Update(void);
 
-void SysState_EventCallFunc_Update();
+void SysState_EventCallFunc_Update(void);
 
-void SysState_EventSetFlag_Update();
+void SysState_EventSetFlag_Update(void);
 
-void SysState_EventPlaySound_Update();
+void SysState_EventPlaySound_Update(void);
 
-void SysState_GameOver_Update();
+void SysState_GameOver_Update(void);
 
 // ====================
 // Main menu functions - TODO: Maybe a split around here?
 // ====================
 
-void MainMenu_SelectedOptionIdxReset();
+void MainMenu_SelectedOptionIdxReset(void);
 
-void Gfx_MainMenu_MainTextDraw();
+void Gfx_MainMenu_MainTextDraw(void);
 
 void Gfx_MainMenu_DifficultyTextDraw(s32 arg0);
 
-void Gfx_MainMenu_BackgroundDraw();
+void Gfx_MainMenu_BackgroundDraw(void);
 
-void func_8003B7BC();
+void func_8003B7BC(void);
 
 u32 func_8003B7FC(s32 idx);
 
 PACKET* Gfx_MainMenu_FogPacketGet(GsOT* ot, PACKET* packet);
 
-void Gfx_MainMenu_FogDraw();
+void Gfx_MainMenu_FogDraw(void);
 
-void Gfx_MainMenu_FogRandomize();
+void Gfx_MainMenu_FogRandomize(void);
 
-void Gfx_MainMenu_FogScatter();
+void Gfx_MainMenu_FogScatter(void);
 
-void Gfx_MainMenu_FogUpdate();
-
-/** Related to main menu fog. */
-void func_8003BCF4();
+void Gfx_MainMenu_FogUpdate(void);
 
 /** Related to main menu fog. */
-void func_8003BE28();
+void func_8003BCF4(void);
+
+/** Related to main menu fog. */
+void func_8003BE28(void);
 
 // ====================
 
@@ -4421,11 +4421,11 @@ void func_8003BE28();
  */
 s_Bone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId);
 
-void GameFs_BgEtcGfxLoad();
+void GameFs_BgEtcGfxLoad(void);
 
-void GameFs_BgItemLoad();
+void GameFs_BgItemLoad(void);
 
-void func_8003BED0();
+void func_8003BED0(void);
 
 /** @brief Gets the speed zone type at a given position.
  *
@@ -4438,27 +4438,27 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ);
 /** Used in map loading. Something related to screen.
  * Removing it causes the game to get stuck at the loading screen.
  */
-void func_8003C048();
+void func_8003C048(void);
 
 /** Something related to player model loading. */
-void func_8003C0C0();
+void func_8003C0C0(void);
 
 /** Allocates player model? */
-void func_8003C110();
+void func_8003C110(void);
 
 void CharaModel_Free(s_CharaModel* model);
 
 /** @unused */
-void Ipd_ActiveChunksClear1();
+void Ipd_ActiveChunksClear1(void);
 
-void func_8003C30C();
+void func_8003C30C(void);
 
-void WorldGfx_IpdSamplePointStore();
+void WorldGfx_IpdSamplePointStore(void);
 
-void WorldGfx_IpdSamplePointReset();
+void WorldGfx_IpdSamplePointReset(void);
 
 /** Handles player movement. */
-void func_8003C3AC();
+void func_8003C3AC(void);
 
 void func_8003C878(s32);
 
@@ -4501,9 +4501,9 @@ void WorldGfx_CharaLoad(e_CharacterId charaId, s32 modeIdx, s_LmHeader* lmHdr, s
 s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** Something related to animations. */
-void func_8003D938();
+void func_8003D938(void);
 
-void func_8003D95C();
+void func_8003D95C(void);
 
 void func_8003D9C8(s_CharaModel* model);
 
@@ -4539,19 +4539,19 @@ void func_8003E544(s_Skeleton* skel, s32 arg1);
 void func_8003E5E8(s32 arg0);
 
 /** Loads a flame graphic. */
-void GameFs_FlameGfxLoad();
+void GameFs_FlameGfxLoad(void);
 
-void func_8003EB54();
+void func_8003EB54(void);
 
 void func_8003EBF4(s_MapOverlayHeader* mapHdr);
 
-void func_8003EBA0();
+void func_8003EBA0(void);
 
-void func_8003ECBC();
+void func_8003ECBC(void);
 
-void func_8003ECE4();
+void func_8003ECE4(void);
 
-void func_8003EDA8();
+void func_8003EDA8(void);
 
 void func_8003EDB8(CVECTOR* color0, CVECTOR* color1);
 
@@ -4563,16 +4563,16 @@ void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, e_PrimitiveTy
 
 void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1);
 
-void func_8003F170();
+void func_8003F170(void);
 
 /** Resets player info such as the inventory, health, and playtime in the savegame buffer. */
-void Game_SavegameResetPlayer();
+void Game_SavegameResetPlayer(void);
 
-void func_8007E5AC();
+void func_8007E5AC(void);
 
-void func_8007E860();
+void func_8007E860(void);
 
-void func_8007E8C0();
+void func_8007E8C0(void);
 
 /** Loads player animations for a given map. Maybe for cutscenes?
  *
@@ -4585,7 +4585,7 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
 void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weaponAttack, s32 animStatus);
 
 // Variable anim duration func for player. It's nearly completely matched https://decomp.me/scratch/PBvwU.
-s32 func_800706E4();
+s32 func_800706E4(void);
 
 /** Special player SFX handler for heavy breath and damage. */
 bool func_80071620(u8 animStatus, s_SubCharacter*, s32, e_SfxId sfx);
@@ -4597,7 +4597,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
 /** Player func. */
-void func_8007E9C4();
+void func_8007E9C4(void);
 
 /** Sound func. */
 void func_8007F14C(u8 arg0);
@@ -4605,18 +4605,18 @@ void func_8007F14C(u8 arg0);
 void func_8007FB94(s_SubCharacter*, s_MainCharacterExtra*, s32);
 
 /** Resets several global variables to 0. */
-void func_8007F1CC();
+void func_8007F1CC(void);
 
 void func_8007F250(u8* ptr, s8 disableDamage);
 
 /** Some kind of player anim state check. */
-bool func_8007F26C();
+bool func_8007F26C(void);
 
 /** Some kind of player anim state check. */
-bool func_8007F2AC();
+bool func_8007F2AC(void);
 
 /** Gets something from the player's current animation? */
-s16 Player_AnimGetSomething();
+s16 Player_AnimGetSomething(void);
 
 /** @brief Computes the shortest angle between `angleFrom` and `angleTo`, outputting the result to `shortestAngle`.
  *
@@ -4643,13 +4643,13 @@ void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animS
 void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus);
 
 /** Gets property 8 from player. */
-s32 func_8007FD2C();
+s32 func_8007FD2C(void);
 
 /** @unused Gets current value from the power timer for gas based weapons.
  *
  * @return Power timer.
  */
-q19_12 Game_GasWeaponPowerTimerValue();
+q19_12 Game_GasWeaponPowerTimerValue(void);
 
 void func_8007FD4C(bool cond);
 
@@ -4685,28 +4685,28 @@ s32 Math_MagnitudeShiftGet(s32 mag);
 
 u8 func_8008A2E0(s32 arg0);
 
-void func_800348C0();
+void func_800348C0(void);
 
 bool func_8008B474(s32 arg0, s32 vol, s32 soundType);
 
-void GameState_Boot_Update();
-void GameState_StartMovieIntro_Update();
-void GameState_DeathLoadScreen_Update();
-void GameState_MovieIntroAlternate_Update();
-void GameState_MovieIntro_Update();
-void GameState_MainMenu_Update();
-void GameState_MovieOpening_Update();
-void GameState_LoadScreen_Update();
-void GameState_InGame_Update();
-void GameState_MapEvent_Update();
-void GameState_ExitMovie_Update();
-void GameState_ItemScreens_Update();
-void GameState_MapScreen_Update();
-void GameState_SaveScreen_Update();
-void GameState_DebugMoviePlayer_Update();
-void GameState_Options_Update();
-void GameState_LoadMapScreen_Update();
-void GameState_Unk15_Update();
+void GameState_Boot_Update(void);
+void GameState_StartMovieIntro_Update(void);
+void GameState_DeathLoadScreen_Update(void);
+void GameState_MovieIntroAlternate_Update(void);
+void GameState_MovieIntro_Update(void);
+void GameState_MainMenu_Update(void);
+void GameState_MovieOpening_Update(void);
+void GameState_LoadScreen_Update(void);
+void GameState_InGame_Update(void);
+void GameState_MapEvent_Update(void);
+void GameState_ExitMovie_Update(void);
+void GameState_ItemScreens_Update(void);
+void GameState_MapScreen_Update(void);
+void GameState_SaveScreen_Update(void);
+void GameState_DebugMoviePlayer_Update(void);
+void GameState_Options_Update(void);
+void GameState_LoadMapScreen_Update(void);
+void GameState_Unk15_Update(void);
 
 /** @brief Toggles the player's flashlight on. */
 void Game_TurnFlashlightOn(void);

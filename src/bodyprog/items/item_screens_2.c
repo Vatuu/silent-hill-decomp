@@ -172,7 +172,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
                 s32 prevGameState;
                 prevGameState = g_GameWork.gameStateStep_598[2];
 
-                Inventory_Logic(g_SysWork.inventoryItemSelectedIdx_2351);
+                Inventory_Logic();
 
                 g_GameWork.gameStateStep_598[2] = prevGameState;
             }

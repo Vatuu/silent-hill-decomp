@@ -397,7 +397,7 @@ char SdSetReservedVoice(char voices) // 0x8009F584
     return voices;
 }
 
-void SdSetTableSize() {} // 0x8009F5B8
+void SdSetTableSize(void* arg0, s32 arg1, s32 arg2) {} // 0x8009F5B8
 
 void SdEnd() // 0x8009F5C0
 {

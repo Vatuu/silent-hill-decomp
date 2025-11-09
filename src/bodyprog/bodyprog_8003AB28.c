@@ -690,7 +690,7 @@ void Gfx_MainMenu_FogUpdate() // 0x8003BC8C
 
     if (FOG_COUNT == ((FOG_COUNT / 5) * 5))
     {
-        Gfx_MainMenu_FogScatter(FOG_COUNT);
+        Gfx_MainMenu_FogScatter();
     }
 
     FOG_COUNT++;

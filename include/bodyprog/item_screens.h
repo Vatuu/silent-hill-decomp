@@ -263,9 +263,9 @@ void Gfx_Items_ItemRotate(SVECTOR* arg0, GsCOORDINATE2* arg1); // 0x8004BCDC
 
 void func_8004BD74(s32 displayItemIdx, GsDOBJ2* arg1, s32 arg2); // 0x8004BD74
 
-void func_8004BFE8(); // 0x8004BFE8
+void func_8004BFE8(void); // 0x8004BFE8
 
-void func_8004C040(); // 0x8004C040
+void func_8004C040(void); // 0x8004C040
 
 /** @brief Used to correct aim animations when exiting the inventory screen.
  *
@@ -285,7 +285,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack); // 0x8004C088
  * ending requires the handgun to be out of ammo too. This function is also triggered
  * during the boss fight.
  */
-bool func_8004C328(); // 0x8004C328
+bool func_8004C328(void); // 0x8004C328
 
 /** @brief Used to check if the Hyper Blaster can be added to the inventory.
  *
@@ -293,7 +293,7 @@ bool func_8004C328(); // 0x8004C328
  *          1 if the Konami gun controller is connected or the savegame flag is set,
  *          0 otherwise.
  */
-s32 Inventory_HyperBlasterUnlockTest(); // 0x8004C45C
+s32 Inventory_HyperBlasterUnlockTest(void); // 0x8004C45C
 
 /** @brief Called by status screen to check if Hyper Blaster can be used?
  *
@@ -301,19 +301,19 @@ s32 Inventory_HyperBlasterUnlockTest(); // 0x8004C45C
  *         1 if the Konami gun controller is connected,
  *         0 otherwise.
  */
-s32 Inventory_HyperBlasterFunctionalTest(); // 0x8004C4F8
+s32 Inventory_HyperBlasterFunctionalTest(void); // 0x8004C4F8
 
 /** @note Rough name. */
-s32 Game_HyperBlasterBeamColorGet(); // 0x8004C54C
+s32 Game_HyperBlasterBeamColorGet(void); // 0x8004C54C
 
-void Game_TimerUpdate(); // 0x8004C8DC
+void Game_TimerUpdate(void); // 0x8004C8DC
 
-void GameState_ItemScreens_Update(); // 0x8004C9B0
+void GameState_ItemScreens_Update(void); // 0x8004C9B0
 
-void Gfx_Results_Save(); // 0x8004D1A0
+void Gfx_Results_Save(void); // 0x8004D1A0
 
 /** Function mainly responsible for handling the inventory screen. */
-void Inventory_Logic(); // 0x8004D518
+void Inventory_Logic(void); // 0x8004D518
 
 /** @brief Used for environmental item interactions such as keys, puzzle objects, or
  * events like the Cybil boss fight.
@@ -326,7 +326,7 @@ void Inventory_Logic(); // 0x8004D518
  */
 void Inventory_ItemUse(s32 arg0); // 0x8004E6D4
 
-void Gfx_Inventory_CmdOptionsDraw(); // 0x8004E864
+void Gfx_Inventory_CmdOptionsDraw(void); // 0x8004E864
 
 void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId); // 0x8004EC7C
 
@@ -341,22 +341,22 @@ void func_8004F10C(s32* arg0);
  */
 void Gfx_Inventory_UnavailableMapText(s32 strIdx); // 0x8004F57C
 
-void Inventory_DirectionalInputSet(); // 0x8004F5DC
+void Inventory_DirectionalInputSet(void); // 0x8004F5DC
 
 void Gfx_ItemScreens_RenderInit(u32* selectedItemId);
 
 /** Draws some rectangle. */
-void func_8004FB0C();
+void func_8004FB0C(void);
 
-void Gfx_Inventory_HealthStatusDraw();
+void Gfx_Inventory_HealthStatusDraw(void);
 
 void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId);
 
-void Gfx_Results_ItemsDisplay(); //  0x800521A8
+void Gfx_Results_ItemsDisplay(); // TODO: Might take s32 argument?
 
-void Gfx_Results_ItemsPosition();
+void Gfx_Results_ItemsPosition(); // TODO: Might take s32 argument?
 
-void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr); // 0x80052088
+void Gfx_Primitive2dTextureSet(s32 x, s32 y, s32 otIdx, s32 abr);
 
 /** @brief Toggles the visibility of object while the inventory scrolls.
  *
@@ -370,10 +370,10 @@ void func_800539A4(s32 arg0, s32 arg1);
 void func_800540A4(s8 arg0);
 
 /** Related to rendering items. */
-void Gfx_Items_Render(); // 0x80054200
+void Gfx_Items_Render(void); // 0x80054200
 
 /** Rough name. Part of this function resets values related to visual elements of the inventory. */
-void Gfx_Items_RenderInit(); // 0x80054558
+void Gfx_Items_RenderInit(void); // 0x80054558
 
 /** Used for correct reset of aiming animations when exiting the inventory screen.
  *
@@ -384,7 +384,7 @@ void Gfx_Items_RenderInit(); // 0x80054558
  * the user enters the inventory, unequips the weapon, and exits the inventory.
  * This results in Harry being unable to move and use wrong animations.
  */
-void Inventory_ExitAnimFixes(); // 0x80054634
+void Inventory_ExitAnimFixes(void); // 0x80054634
 
 /** Very rough param names. */
 void Gfx_Items_Display(s_TmdFile* tmd, s32 displayItemIdx, s32 loadableItemIdx); // 0x80054720
@@ -392,7 +392,7 @@ void Gfx_Items_Display(s_TmdFile* tmd, s32 displayItemIdx, s32 loadableItemIdx);
 /** Something related to items lighting. */
 void func_800548D8(s32 idx); // 0x800548D8
 
-void Gfx_Items_SetAmbientLighting(); // 0x80054928
+void Gfx_Items_SetAmbientLighting(void); // 0x80054928
 
 void Inventory_AddSpecialItem(u8 itemId, u8 itemCount); // 0x80054CAC
 

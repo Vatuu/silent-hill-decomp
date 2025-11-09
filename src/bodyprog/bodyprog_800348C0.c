@@ -2692,13 +2692,10 @@ s8 func_80039F90() // 0x80039F90
     return 0;
 }
 
-void SysState_ReadMessage_Update(s32 arg0) // 0x80039FB8
+void SysState_ReadMessage_Update(void) // 0x80039FB8
 {
     s32 i;
-    u32 charaId;
     void (**func)(s32);
-
-    i = arg0;
 
     if (!(g_MapEventParam->flags_8_13 & (1 << 0)) && !(g_SysWork.flags_22A4 & (1 << 5)))
     {

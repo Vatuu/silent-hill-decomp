@@ -57,12 +57,12 @@ typedef struct
 
 // Handlers for movie-related GameStates
 
-void GameState_StartMovieIntro_Update();
-void GameState_MovieIntro_Update();
-void GameState_MovieOpening_Update();
-void GameState_ExitMovie_Update();
-void GameState_DebugMoviePlayer_Update(); /** @unused debug movie player. Movie to play decided by `LStickLeft`/`LStickRight`. */
-void GameState_MovieIntroAlternate_Update();
+void GameState_StartMovieIntro_Update(void);
+void GameState_MovieIntro_Update(void);
+void GameState_MovieOpening_Update(void);
+void GameState_ExitMovie_Update(void);
+void GameState_DebugMoviePlayer_Update(void); /** @unused debug movie player. Movie to play decided by `LStickLeft`/`LStickRight`. */
+void GameState_MovieIntroAlternate_Update(void);
 
 // MOVIESYS code
 
@@ -70,7 +70,7 @@ void    open_main(s32 file_idx, s16 num_frames);
 void    movie_main(char* file_name, s32 f_size, s32 sector);
 void    strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1);
 void    strInit(CdlLOC* loc, void (*callback)());
-void    strCallback();
+void    strCallback(void);
 void    strKickCD(CdlLOC* loc);
 s32     strNextVlc(DECENV* dec);
 u_long* strNext(DECENV* dec);

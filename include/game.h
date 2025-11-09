@@ -1136,7 +1136,7 @@ typedef struct _AnimInfo
     union
     {
         q19_12 constant;          /** Constant duration at 30 FPS. */
-        q19_12 (*variableFunc)(); /** Variable duration at 30 FPS via a function. Allows animations to be sped up or slowed down. */
+        q19_12 (*variableFunc)(void); /** Variable duration at 30 FPS via a function. Allows animations to be sped up or slowed down. */
     } duration_8;
     s16 startKeyframeIdx_C;       /** Start keyframe index. Sometimes `NO_VALUE`, unknown why. */
     s16 endKeyframeIdx_E;         /** End keyframe index. */

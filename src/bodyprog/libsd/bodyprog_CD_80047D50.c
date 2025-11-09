@@ -483,7 +483,7 @@ void func_800485D8() // 0x800485D8
         if (D_800C1678.volumeBgm_8 <= 0)
         {
             D_800C1678.volumeBgm_8 = 0;
-            func_80046B78(&D_800C1678);
+            func_80046B78();
         }
         else
         {
@@ -492,7 +492,7 @@ void func_800485D8() // 0x800485D8
             if ((D_800C1678.volumeBgm_8 << 16) <= 0)
             {
                 D_800C1678.volumeBgm_8 = 0;
-                func_80046B78(&D_800C1678);
+                func_80046B78();
             }
         }
 

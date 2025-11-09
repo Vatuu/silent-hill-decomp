@@ -109,27 +109,27 @@ extern s_800C48E0 D_800C48E0;
 // ==========
 
 /** Processes and collects results data. */
-void func_8008F94C();
+void func_8008F94C(void);
 
-void func_800904F4();
+void func_800904F4(void);
 
 void Results_DisplayInfo(u32* arg0); // 0x80090664
 
-void func_80090664();
+void func_80090664(void);
 
 u32 func_8009134C(u32 n);
 
-void func_80091380();
+void func_80091380(void);
 
 void func_80091388(s32 arg0, s32 arg1, s32 arg2);
 
-void func_80091464();
+void func_80091464(void);
 
 u32 func_8009146C(s32 arg0);
 
 void func_800914C4(s32 arg0, u32 value);
 
-void GameFs_StfRollBinLoad();
+void GameFs_StfRollBinLoad(void);
 
 void func_800917C0(void* arg0, s32 arg1, s_FsImageDesc* img);
 

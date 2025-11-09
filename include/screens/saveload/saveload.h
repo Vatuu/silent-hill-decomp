@@ -188,13 +188,13 @@ extern s32 g_MemCardState; /** `s_MemCardState` */
  */
 extern s32 g_MemCardStateTextTimer;
 
-extern void (*g_GameState_SaveScreen_Funcs[])();
+extern void (*g_GameState_SaveScreen_Funcs[])(void);
 
 extern s32 g_SaveWriteOption; // `false` - Overwrite, `true` - Format.
 
 extern bool g_IsSaveSelected; // `false` - User has `New save` selected, `true` - User has a save selected.
 
-extern void (*g_GameState_DeathLoadScreen_Funcs[])();
+extern void (*g_GameState_DeathLoadScreen_Funcs[])(void);
 
 extern s32 D_801E7554;
 
@@ -273,7 +273,7 @@ extern u8 g_IsGameSaving;
 // ==========
 
 /** Clears all saves? */
-void Savegame_ScreenSubInit();
+void Savegame_ScreenSubInit(void);
 
 void Gfx_SaveSelectedDisplacement(s32 slotIdx, s32 unusedSaveCount);
 
@@ -291,7 +291,7 @@ void Gfx_SaveEntryBorder(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEn
 void Gfx_MemCardStateDraw(s32 memCardState, s32 arg1);
 
 /** @brief Draws a flash on the selected save menu entry after saving sucessfully. */
-void Savegame_SaveEntryFlashDraw();
+void Savegame_SaveEntryFlashDraw(void);
 
 /** @brief Derivative of `Gfx_SaveSlotMemCardMsgBoxDraw`
  * this draws a flash which appears during an unusual
@@ -315,40 +315,40 @@ void Gfx_RectSaveInfoDraw(s_Line2d* line); // 0x801E5898
 void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx); // 0x801E5E18
 
 /** Updates the save screen. */
-void GameState_SaveScreen_Update();
+void GameState_SaveScreen_Update(void);
 
-void Savegame_FormatLogic();
+void Savegame_FormatLogic(void);
 
-void Savegame_LoadLogic();
+void Savegame_LoadLogic(void);
 
-void Savegame_ContinueLogic();
+void Savegame_ContinueLogic(void);
 
-void Gfx_SaveBackgroundDraw();
+void Gfx_SaveBackgroundDraw(void);
 
 // `SaveLoad_SaveMenu_GraphicsDraw`
-void Gfx_SaveScreen(); // 0x801E70C8
+void Gfx_SaveScreen(void); // 0x801E70C8
 
 /** @brief Handles the text that shows when formatting, saving, or loading a file.
  *
  *  Used in: `GameState_SaveScreen_Update` and `GameState_DeathLoadScreen_Update`.
  */
-void Gfx_MemCardState();
+void Gfx_MemCardState(void);
 
 void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx);
 
-void Gfx_SavedFlashDraw(); // 0x801E3E78
+void Gfx_SavedFlashDraw(void); // 0x801E3E78
 
-void Gfx_SaveSlotBorderDraw(); // 0x801E4010
+void Gfx_SaveSlotBorderDraw(void); // 0x801E4010
 
 void Gfx_WriteOptionSave(s32 arg0, s32 optionIdx);
 
 /** Updates the death load screen. */
-void GameState_DeathLoadScreen_Update();
+void GameState_DeathLoadScreen_Update(void);
 
-void func_801E737C();
+void func_801E737C(void);
 
 /** Initialize save screen. */
-void Savegame_ScreenInit();
+void Savegame_ScreenInit(void);
 
 /** Crucial for working with the overlay.
  *
@@ -357,8 +357,8 @@ void Savegame_ScreenInit();
  * 1 - Triggers the overwrite save.
  * 2 - Player leaves the save screen.
  */
-void Savegame_ScreenLogic();
+void Savegame_ScreenLogic(void);
 
-void Savegame_SaveLogic();
+void Savegame_SaveLogic(void);
 
 #endif

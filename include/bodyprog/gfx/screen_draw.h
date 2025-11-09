@@ -22,12 +22,12 @@ void Screen_DisplayEnvXySet(DISPENV* displayEnv, s32 x, s32 y);
 
 void Screen_FadeDrawModeSet(DR_MODE* drMode);
 
-q19_12 Screen_FadeInProgressGet();
+q19_12 Screen_FadeInProgressGet(void);
 
-void Screen_FadeUpdate();
+void Screen_FadeUpdate(void);
 
-void Screen_CutsceneCameraStateUpdate();
+void Screen_CutsceneCameraStateUpdate(void);
 
-void Screen_VSyncCallback();
+void Screen_VSyncCallback(void);
 
 #endif

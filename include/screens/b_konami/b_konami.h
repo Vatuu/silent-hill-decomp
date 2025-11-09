@@ -30,27 +30,27 @@ extern u8* D_800CA50C;
 extern s32 D_800CA510;
 
 /** Displays the Konami logo and starts loading base hero animations. */
-void GameState_KonamiLogo_Update();
+void GameState_KonamiLogo_Update(void);
 
-s32 func_800C9874();
+s32 func_800C9874(void);
 
 /** Displays the KCET logo and starts loading various things. */
-void GameState_KcetLogo_Update();
+void GameState_KcetLogo_Update(void);
 
 /** Draws segments of Konami and KCET logos. */
 void Gfx_BootScreenImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y);
 
-void Gfx_KonamiScreenDraw();
+void Gfx_KonamiScreenDraw(void);
 
-void Gfx_KcetScreenDraw();
+void Gfx_KcetScreenDraw(void);
 
-void func_800CA234();
+void func_800CA234(void);
 
 s32 func_800CA240(s32* arg0);
 
 void func_800CA24C(s32 arg0, s32 arg1, s32 arg2);
 
-s32 func_800CA2B8();
+s32 func_800CA2B8(void);
 
 void func_800CA2C8(s32 arg0);
 
