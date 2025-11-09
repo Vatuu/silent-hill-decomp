@@ -21,16 +21,28 @@
 #define MAP_ROOM_MIN_Z Q12(-80.0f)
 #define MAP_ROOM_MAX_Z Q12(200.0f)
 
+extern s_WorldObjectPose  g_CommonWorldObjectPoses[10]; // 0x800E2020
+extern s_WorldObjectDesc g_WorldObject5; // 800E6130
 extern s_WorldObjectDesc g_WorldObject0; // 800E6180
 extern s_WorldObjectDesc g_WorldObject1; // 800E61B0
 extern s_WorldObjectDesc g_WorldObject2; // 800E61E0
 extern s_WorldObjectDescNoRot g_WorldObject3; // 800E6210
 extern s_WorldObjectDescNoRot g_WorldObject4; // 800E6240
+extern s_WorldObjectDescNoRot g_WorldObject6; // 800E6270
+extern s_WorldObjectDesc g_WorldObject7; // 800E62A0
 
 extern SVECTOR3 D_800CBC04;
 extern s32 D_800E20E8;
 extern s16 D_800E20EC;
 extern u8 D_800E20EE;
+
+extern u8 D_800E62D0;
+extern s_WorldObject_0 D_800E62E0;
+extern s_WorldObject_0 D_800E62FC;
+extern s_WorldObject_0 D_800E6334;
+extern s_WorldObject_0 D_800E636C;
+extern u8 D_800E6388;
+extern s32 D_800E638C;
 
 
 extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8];
@@ -44,5 +56,7 @@ void func_800DC9A0(void);
 void func_800DE828(void);
 
 void func_800DE624(void);
+
+void func_800DD688(void);
 
 #endif

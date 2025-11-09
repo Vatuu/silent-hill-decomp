@@ -56,6 +56,7 @@ typedef enum _EventFlag
     EventFlag_50 = 50,
     EventFlag_51 = 51,
     EventFlag_52 = 52,
+    EventFlag_53 = 53,
 
     EventFlag_M0S02_PickupKatana = 56,
 
