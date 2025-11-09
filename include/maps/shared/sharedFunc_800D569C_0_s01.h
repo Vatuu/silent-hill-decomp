@@ -16,8 +16,8 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 vecY, q19_12 dist)
     // @hack: Unions shouldn't be mixed (NPC vs. Larval Stalker).
     someY = chara->properties_E4.npc.field_124;
 
-    vec_x = chara->properties_E4.unk0.field_110.vx;
-    vec_z = chara->properties_E4.unk0.field_110.vz;
+    vec_x = chara->properties_E4.unk0.pos_110.vx;
+    vec_z = chara->properties_E4.unk0.pos_110.vz;
 
     if (someY < calcY)
     {

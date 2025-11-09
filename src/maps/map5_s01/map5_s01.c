@@ -157,13 +157,13 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", Chara_DamageTake); // 0x8
 
 #include "maps/shared/sharedFunc_800D2E04_0_s01.h" // 0x800D2EFC
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800D30AC);
+INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D2FB4_0_s01);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D31D0_0_s01); // 0x800D32C8
 
 #include "maps/shared/sharedFunc_800D3430_0_s01.h" // 0x800D3528
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D3508_0_s01); // 0x800D3600
+#include "maps/shared/sharedFunc_800D3508_0_s01.h" // 0x800D3600
 
 #include "maps/shared/sharedFunc_800D3630_0_s01.h" // 0x800D3728
 

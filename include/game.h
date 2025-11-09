@@ -1211,7 +1211,8 @@ typedef struct _SubCharaPropertiesPlayer
     q19_12        runTimer_108;
     u8            field_10C;    // Player SFX pitch?
     u8            field_10D;
-    s8            unk_10E[6];
+    s8            unk_10E[2];
+    s32           field_110;
     q19_12        gasWeaponPowerTimer_114; // Timer for the rock drill and chainsaw power.
     s16           field_118;
     s8            unk_11A[2];
@@ -1265,10 +1266,8 @@ typedef struct _SubCharPropertiesUnk0
     u_Property properties_F0;
     u_Property properties_F4;
     VECTOR3    field_F8; // Q19.12 | Position or offset.
-    u_Property properties_104;
-    u_Property properties_108;
-    u_Property properties_10C;
-    VECTOR3    field_110;
+    VECTOR3    pos_104;
+    VECTOR3    pos_110;
     s32        flags_11C; /** `e_CharaUnk0Flags` */
     u_Property properties_120;
     u_Property properties_124;

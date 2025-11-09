@@ -2627,6 +2627,8 @@ void sharedFunc_800DF22C_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DF24C_2_s00(s_SubCharacter* chara);
 
+s32 sharedFunc_800D2FB4_0_s01(s_SubCharacter* chara, VECTOR3* playerPos, s32 playerField10C);
+
 /** @brief Gets the room index corresponding to the current 2D position.
  *
  * @param x X position in Q19.12.

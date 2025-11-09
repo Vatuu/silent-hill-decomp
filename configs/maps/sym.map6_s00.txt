@@ -74,6 +74,7 @@ sharedFunc_800D2BE4_0_s01           = 0x800D2370; // type:func
 sharedFunc_800D2BF4_0_s01           = 0x800D2380; // type:func
 Chara_DamageTake                    = 0x800D2398; // type:func
 sharedFunc_800D2E04_0_s01           = 0x800D259C; // type:func
+sharedFunc_800D2FB4_0_s01           = 0x800D274C; // type:func
 sharedFunc_800D31D0_0_s01           = 0x800D2968; // type:func
 sharedFunc_800D3430_0_s01           = 0x800D2BC8; // type:func
 sharedFunc_800D3508_0_s01           = 0x800D2CA0; // type:func
