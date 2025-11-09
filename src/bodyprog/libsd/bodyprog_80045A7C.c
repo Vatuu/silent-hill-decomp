@@ -2067,14 +2067,14 @@ void func_80046E00(void) // 0x80046E00
     }
 }
 
-void func_8004729C(u16 arg0) // 0x8004729C
+void func_8004729C(u16 sfx) // 0x8004729C
 {
-    func_800472BC(arg0);
+    func_800472BC(sfx);
 }
 
-void func_800472BC(s32 arg0) // 0x800472BC
+void func_800472BC(s32 sfx) // 0x800472BC
 {
-    D_800C1658.field_2 = arg0 & 0xFFF;
+    D_800C1658.field_2 = sfx & 0xFFF;
     D_800C37DC = 1;
 
     if (D_800C1658.field_4 != 0)

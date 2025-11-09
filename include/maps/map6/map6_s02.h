@@ -13,7 +13,7 @@
 
 extern u16 D_800D3B40;
 
-extern s_FsImageDesc D_800D3B44[2];
+extern s_FsImageDesc D_800D3B44[5];
 
 extern u16 D_800D3B6C;
 
@@ -32,6 +32,14 @@ extern s32 D_800D3C90;
 
 extern s16 D_800D3C94;
 
+extern s32 D_800D3C98;
+
+extern u8 D_800D3C9C;
+
+extern s16 D_800D3C9E;
+
+extern s32 D_800D3CA0;
+
 extern u8 D_800D4E08;
 extern s8 D_800D4E09;
 
@@ -41,9 +49,17 @@ extern VECTOR3 D_800D4E1C;
 
 extern s32 D_800D4E28;
 
+extern s8 D_800D4E2C;
+
+extern s8 D_800D4E2D;
+
 void func_800CF0B8(void);
 
 /** Func related to the UFO ending cutscene? */
 void func_800CFC34(void);
+
+void func_800D0500(void);
+
+void func_800D1330(s16);
 
 #endif

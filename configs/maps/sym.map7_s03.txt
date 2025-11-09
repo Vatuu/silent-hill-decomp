@@ -122,14 +122,14 @@ Ai_Alessa_Init                      = 0x800D3660; // type:func
 //--- PA: 0x00A10C   VA: 0x800D3684   subsegment: c, Chara_BloodyIncubator
 //------------------------------------------------------------------------
 Ai_BloodyIncubator_Update           = 0x800D3684; // type:func
-Ai_BloodyIncubator_AnimUpdate = 0x800D36F8; // type:func
+Ai_BloodyIncubator_AnimUpdate       = 0x800D36F8; // type:func
 Ai_BloodyIncubator_Init             = 0x800D3BA4; // type:func
 
 //------------------------------------------------------------------
 //--- PA: 0x00A64C   VA: 0x800D3BC4   subsegment: c, Chara_Incubator
 //------------------------------------------------------------------
 Ai_Incubator_Update                 = 0x800D3BC4; // type:func
-Ai_Incubator_AnimUpdate = 0x800D3C38; // type:func
+Ai_Incubator_AnimUpdate             = 0x800D3C38; // type:func
 Ai_Incubator_Init                   = 0x800D3F38; // type:func
 
 //-----------------------------------------------------------------
