@@ -30,6 +30,7 @@ extern s_WorldObjectDescNoRot g_WorldObject3; // 800E6210
 extern s_WorldObjectDescNoRot g_WorldObject4; // 800E6240
 extern s_WorldObjectDescNoRot g_WorldObject6; // 800E6270
 extern s_WorldObjectDesc g_WorldObject7; // 800E62A0
+extern s_WorldObject_0   g_CommonWorldObjects[6]; // 800E62E0
 
 extern SVECTOR3 D_800CBC04;
 extern s32 D_800E20E8;
@@ -37,10 +38,6 @@ extern s16 D_800E20EC;
 extern u8 D_800E20EE;
 
 extern u8 D_800E62D0;
-extern s_WorldObject_0 D_800E62E0;
-extern s_WorldObject_0 D_800E62FC;
-extern s_WorldObject_0 D_800E6334;
-extern s_WorldObject_0 D_800E636C;
 extern u8 D_800E6388;
 extern s32 D_800E638C;
 
@@ -58,5 +55,7 @@ void func_800DE828(void);
 void func_800DE624(void);
 
 void func_800DD688(void);
+
+void func_800DD3AC(void);
 
 #endif

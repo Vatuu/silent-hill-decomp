@@ -184,3 +184,4 @@ g_WorldObject3                      = 0x800E6210; // type:WorldObjectDescNoRot s
 g_WorldObject4                      = 0x800E6240; // type:WorldObjectDescNoRot size:0x28
 g_WorldObject6                      = 0x800E6270; // type:WorldObjectDescNoRot size:0x28
 g_WorldObject7                      = 0x800E62A0; // type:WorldObjectDesc size:0x2E
+g_CommonWorldObjects                = 0x800E62E0; // type:WorldObject_0 size:0xA8
