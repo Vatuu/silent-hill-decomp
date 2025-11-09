@@ -1440,7 +1440,17 @@ void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) // 0x800
     mapPoint->data.spawnInfo.flags_6 = spawnFlags;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089034); // 0x80089034
+void func_80089034(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ) // 0x80089034
+{
+    s_MapPoint2d* ptr0;
+    s_MapPoint2d* ptr1;
+
+    ptr0              = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
+    ptr0->positionX_0 = posX;
+
+    ptr1              = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
+    ptr1->positionZ_8 = posZ;
+}
 
 void func_80089090(s32 arg0) // 0x80089090
 {
