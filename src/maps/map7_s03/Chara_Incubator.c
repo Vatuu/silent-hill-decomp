@@ -16,10 +16,20 @@ void Ai_Incubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINAT
 
     func_800D3E18(chara, coords);
     func_800D3C80(chara, coords);
-    func_800D3C38(chara, anmHdr, coords);
+    Ai_Incubator_AnimUpdate(chara, anmHdr, coords);
 }
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/Chara_Incubator", func_800D3C38);
+void Ai_Incubator_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3C38
+{
+    s_AnimInfo* animInfo;
+
+    // TODO: Wrong properties union.
+    if (chara->properties_E4.player.field_F0 == 0)
+    {
+        animInfo = &INCUBATOR_ANIM_INFOS[chara->model_0.anim_4.status_0];
+        animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    }
+}
 
 void func_800D3C80(s_SubCharacter* chara, GsCOORDINATE2* coord)
 {

@@ -91,7 +91,7 @@ extern q3_12 D_800EBB94;
 
 void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void func_800D8B64(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void Ai_GhostDoctor_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** @brief Updates the transform of the `coord` matrix to the character's position, converting
  * from world space to geometry space.

@@ -16,10 +16,20 @@ void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDIN
 
     func_800D8C00(chara, coords);
     Character_CoordTransformUpdate(chara, coords);
-    func_800D8B64(chara, anmHdr, coords);
+    Ai_GhostDoctor_AnimUpdate(chara, anmHdr, coords);
 }
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/Chara_GhostDoctor", func_800D8B64);
+void Ai_GhostDoctor_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8B64
+{
+    s_AnimInfo* animInfo;
+
+    // TODO: Wrong properties union.
+    if (chara->properties_E4.player.field_F0 == 0)
+    {
+        animInfo = &GHOST_DOCTOR_ANIM_INFOS[chara->model_0.anim_4.status_0];
+        animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    }
+}
 
 void Character_CoordTransformUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8BAC
 {

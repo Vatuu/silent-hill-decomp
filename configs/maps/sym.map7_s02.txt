@@ -158,6 +158,7 @@ Ai_Kaufmann_Init                    = 0x800D8AA8; // type:func
 //--- PA: 0x00F578   VA: 0x800D8AF0   subsegment: c, Chara_GhostDoctor
 //--------------------------------------------------------------------
 Ai_GhostDoctor_Update               = 0x800D8AF0; // type:func
+Ai_GhostDoctor_AnimUpdate           = 0x800D8B64; // type:func
 Character_CoordTransformUpdate      = 0x800D8BAC; // type:func
 Ai_GhostDoctor_Init                 = 0x800D8BE0; // type:func
 

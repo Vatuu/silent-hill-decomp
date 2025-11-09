@@ -67,13 +67,13 @@ extern s_AnimInfo INCUBUS_ANIM_INFOS[];
 extern s_AnimInfo UNKKOWN_23_ANIM_INFOS[];
 
 void Ai_BloodyIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void func_800D36F8(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void Ai_BloodyIncubator_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void func_800D3740(s_SubCharacter*, GsCOORDINATE2*);
 void func_800D38D8(s_SubCharacter*, GsCOORDINATE2*);
 void Ai_BloodyIncubator_Init(s_SubCharacter* chara);
 
 void Ai_Incubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void func_800D3C38(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void Ai_Incubator_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void func_800D3C80(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void func_800D3E18(s_SubCharacter*, GsCOORDINATE2*);
 void Ai_Incubator_Init(s_SubCharacter* chara);
