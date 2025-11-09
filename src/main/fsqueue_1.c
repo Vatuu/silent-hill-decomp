@@ -14,7 +14,7 @@ bool Fs_QueueIsEntryLoaded(s32 queueIdx)
     return queueIdx < g_FsQueue.postLoad.idx;
 }
 
-s32 Fs_QueueGetLength()
+s32 Fs_QueueGetLength(void)
 {
     return (g_FsQueue.last.idx + 1) - g_FsQueue.postLoad.idx;
 }
@@ -35,7 +35,7 @@ bool Fs_QueueDoThingWhenEmpty(void)
     return result;
 }
 
-void Fs_QueueWaitForEmpty()
+void Fs_QueueWaitForEmpty(void)
 {
     func_800892A4(0);
     func_80089128();
@@ -130,7 +130,7 @@ s32 Fs_QueueEnqueue(e_FsFile fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, 
     return g_FsQueue.last.idx;
 }
 
-void Fs_QueueInitialize()
+void Fs_QueueInitialize(void)
 {
     bzero(&g_FsQueue, sizeof(g_FsQueue));
     g_FsQueue.last.idx      = NO_VALUE;
@@ -146,7 +146,7 @@ void Fs_QueueInitialize()
     Fs_InitializeMem(FS_MEM_BASE, FS_MEM_SIZE);
 }
 
-void Fs_QueueReset()
+void Fs_QueueReset(void)
 {
     if (Fs_QueueGetLength() <= 0)
     {
@@ -165,7 +165,7 @@ void Fs_QueueReset()
     g_FsQueue.read.ptr->postLoad = 0;
 }
 
-void Fs_QueueUpdate()
+void Fs_QueueUpdate(void)
 {
     s_FsQueuePtr*   read;
     s_FsQueueEntry* tick;

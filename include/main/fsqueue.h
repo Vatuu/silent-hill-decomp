@@ -251,7 +251,7 @@ bool Fs_QueueIsEntryLoaded(s32 queueIdx);
 /** @brief Get number of operations currently in the queue.
  * @return Number of operations in the queue. Includes both pending reads and pending post-loads.
  */
-s32 Fs_QueueGetLength();
+s32 Fs_QueueGetLength(void);
 
 /** @brief TODO: Unknown. If queue is empty, call `func_8003C850`.
  * @return `true` when queue is empty and the call succeeds, `false` otherwise.
@@ -262,7 +262,7 @@ bool Fs_QueueDoThingWhenEmpty(void);
  * Calls some bodyprog functions before and after the wait, `VSync` during the waits and `DrawSync`
  * after the wait.
  */
-void Fs_QueueWaitForEmpty();
+void Fs_QueueWaitForEmpty(void);
 
 /** @brief Add a new seek operation to the queue.
  *
@@ -321,10 +321,10 @@ s32 Fs_QueueEnqueue(e_FsFile fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, 
 /** @brief Initialize FS queue and FS memory.
  * Initializes `g_FsQueue` and calls `Fs_InitializeMem`.
  */
-void Fs_QueueInitialize();
+void Fs_QueueInitialize(void);
 
 /** Seems to clear the queue. */
-void Fs_QueueReset();
+void Fs_QueueReset(void);
 
 /** @brief Ticks the FS queue once.
  *
@@ -334,7 +334,7 @@ void Fs_QueueReset();
  * Regardless of the outcome of the above, also ticks post-loading (`Fs_QueueUpdatePostLoad`) if there is an entry to post-load.
  * If that reports that the current post-load entry is done post-loading, advances `g_FsQueue.postLoad.idx` and `g_FsQueue.postLoad.ptr`.
  */
-void Fs_QueueUpdate();
+void Fs_QueueUpdate(void);
 
 /** @brief Ticks a seek operation once.
  *

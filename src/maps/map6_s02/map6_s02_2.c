@@ -65,7 +65,223 @@ const char* MAP_MESSAGES[] = {
     "~J0(2.5)\tThat_light!? ~E "
 };
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800CF0B8);
+void func_800CF0B8(void)
+{
+    bool hasSkippedEarly;
+
+    Savegame_EventFlagClear(EventFlag_412);
+
+    hasSkippedEarly = false;
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 && g_SysWork.sysStateStep_C[0] >= 2)
+    {
+        if (g_SysWork.sysStateStep_C[0] <= 19)
+        {
+            // Sets flag to true if player skipped before step 19.
+            hasSkippedEarly = g_SysWork.sysStateStep_C[0] < 19;
+            SysWork_StateStepSet(0, 20);
+        }
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+
+            g_SysWork.field_30 = 20;
+            ScreenFade_ResetTimestep();
+
+            func_8003D03C();
+            sharedFunc_800D2EB4_0_s00();
+
+            Savegame_EventFlagClear(EventFlag_405);
+
+            SysWork_StateStepIncrement(0);
+
+            Camera_PositionSet(NULL, Q12(57.09f), Q12(-3.23f), Q12(-20.41f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(60.07f), Q12(-0.94f), Q12(-19.06f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            Savegame_EventFlagSet(EventFlag_412);
+
+            g_SysWork.player_4C.chara_0.position_18.vx = FP_MULTIPLY_FLOAT(Math_Sin(FP_ANGLE(135.0f)), 0.9f, Q12_SHIFT) + Q12(60.0f);
+            g_SysWork.player_4C.chara_0.position_18.vy = Q12(1.64f);
+            g_SysWork.player_4C.chara_0.position_18.vz = FP_MULTIPLY_FLOAT(Math_Cos(FP_ANGLE(135.0f)), 0.9f, Q12_SHIFT) - Q12(20.0f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(45.0f);
+
+            D_800D4E09 = 1;
+            break;
+
+        case 1:
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 53, false);
+            Chara_Load(0, Chara_Alessa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            SysWork_StateStepIncrement(0);
+
+        case 2:
+            g_SysWork.field_28 += g_DeltaTime0;
+
+            g_SysWork.player_4C.chara_0.position_18.vx = FP_MULTIPLY_FLOAT(Math_Sin(FP_ANGLE(135.0f) - (g_SysWork.field_28 >> 2)), 0.9f, Q12_SHIFT) + Q12(60.0f);
+            g_SysWork.player_4C.chara_0.position_18.vz = FP_MULTIPLY_FLOAT(Math_Cos(FP_ANGLE(135.0f) - (g_SysWork.field_28 >> 2)), 0.9f, Q12_SHIFT) - Q12(20.0f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(45.0f) - (g_SysWork.field_28 >> 2);
+
+            if ((g_SysWork.field_28 >> 2) > FP_ANGLE(140.7f))
+            {
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 3:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 52, false);
+            SysWork_StateStepIncrement(0);
+
+        case 4:
+            MapMsg_DisplayAndHandleSelection(false, 15, 0, 0, 0, false);
+            break;
+
+        case 5:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 71, false);
+            SysWork_StateStepIncrement(0);
+
+        case 6:
+            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            break;
+
+        case 7:
+            func_80088D0C();
+            Chara_Spawn(Chara_Alessa, 0, Q12(60.0f), Q12(-23.0f), 0, 3);
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 8:
+            Camera_PositionSet(NULL, Q12(56.79f), Q12(-7.9f), Q12(-27.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(57.96f), Q12(-5.03f), Q12(-24.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(59.6f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-19.0f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(180.0f);
+
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 1, false);
+
+            Savegame_EventFlagSet(EventFlag_412);
+            D_800D4E09 = 0;
+            SysWork_StateStepIncrement(0);
+
+        case 9:
+            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            break;
+
+        case 10:
+            Camera_PositionSet(NULL, Q12(57.42f), Q12(-2.48f), Q12(-16.58f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(59.23f), Q12(-1.24f), Q12(-19.93f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(59.0f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-19.5f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = ratan2(
+                g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
+                g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz);
+
+            func_8003D468(34, true);
+            Savegame_EventFlagSet(EventFlag_412);
+            SysWork_StateStepIncrement(0);
+
+        case 11:
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            break;
+
+        case 12:
+            g_SysWork.npcs_1A0[0].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
+            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+            Map_MessageWithAudio(16, &D_800D4E08, &D_800D3B40);
+            break;
+
+        case 13:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 111, false);
+            SysWork_StateStepIncrement(0);
+
+        case 14:
+            Map_MessageWithAudio(16, &D_800D4E08, &D_800D3B40);
+            g_SysWork.npcs_1A0[0].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
+            if (g_SysWork.npcs_1A0[0].timer_C6 > Q12(1.0f))
+            {
+                g_SysWork.npcs_1A0[0].timer_C6 = Q12(1.0f);
+            }
+            break;
+
+        case 15:
+            g_SysWork.npcs_1A0[0].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
+            if (g_SysWork.npcs_1A0[0].timer_C6 > Q12(1.0f))
+            {
+                g_SysWork.npcs_1A0[0].timer_C6 = Q12(1.0f);
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 16:
+            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            SysWork_StateStepIncrement(0);
+
+        case 17:
+            func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
+            break;
+
+        case 18:
+            Camera_PositionSet(NULL, Q12(64.87f), Q12(-5.4f), Q12(-14.82f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(62.29f), Q12(-3.36f), Q12(-17.09f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_8003D01C();
+            sharedFunc_800D2EF4_0_s00();
+
+            Savegame_EventFlagSet(EventFlag_412);
+            SysWork_StateStepIncrement(0);
+
+        case 19:
+            Map_MessageWithAudio(17, &D_800D4E08, &D_800D3B40);
+            if (g_SysWork.sysStateStep_C[0] != 19)
+            {
+                SysWork_StateStepReset();
+            }
+            break;
+
+        case 20:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 21:
+            Fs_QueueWaitForEmpty();
+            vcReturnPreAutoCamWork(true);
+
+            if (!hasSkippedEarly)
+            {
+                func_8003D01C();
+                sharedFunc_800D2EF4_0_s00();
+            }
+
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(59.0f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-19.5f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(164.1f);
+
+            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            sharedFunc_800D2244_0_s00(true);
+
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrement(0);
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            Savegame_EventFlagSet(EventFlag_410);
+            Savegame_EventFlagClear(EventFlag_407);
+            Savegame_MapMarkingSet(MapMarkFlag_ResortTown_LighthouseCheck);
+
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            vcReturnPreAutoCamWork(false);
+            D_800D4E09 = 0;
+            break;
+    }
+}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800CFB9C
 

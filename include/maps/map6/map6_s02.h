@@ -11,6 +11,8 @@
 #define HAS_PlayerState_Unk175
 #define KEYFRAME_PlayerState_Unk111 915
 
+extern u16 D_800D3B40;
+
 extern s_FsImageDesc D_800D3B44[2];
 
 extern u16 D_800D3B6C;
@@ -30,11 +32,16 @@ extern s32 D_800D3C90;
 
 extern s16 D_800D3C94;
 
+extern u8 D_800D4E08;
+extern s8 D_800D4E09;
+
 extern VECTOR3 D_800D4E0C;
 
 extern VECTOR3 D_800D4E1C;
 
 extern s32 D_800D4E28;
+
+void func_800CF0B8(void);
 
 /** Func related to the UFO ending cutscene? */
 void func_800CFC34(void);

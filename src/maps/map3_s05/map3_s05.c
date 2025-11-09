@@ -401,7 +401,7 @@ void func_800D5FC4(void) // 0x800D5FC4
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Savegame_EventFlagSet(EventFlag_M3S05_AlcoholPouredOnVeins);
+            Savegame_EventFlagSet(EventFlag_M3S05_AlcoholPouredOnVines);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
             break;
