@@ -67,7 +67,7 @@ YAML_SCREENS = [
 YAML_MAPS_0 = [
     "maps/map0_s00.yaml",
     "maps/map0_s01.yaml",
-    "maps/map0_s02.yaml",
+    #"maps/map0_s02.yaml" # Broken
 ]
 YAML_MAPS_1 = [
     "maps/map1_s00.yaml",
@@ -148,7 +148,7 @@ elif sys.platform == "win32":
 
 # Tooling Paths
 if sys.platform == "win32":
-    PYTHON = "py"
+    PYTHON = "python"
 else:
     PYTHON = "python3"
 MASPSX = f"{PYTHON} tools/maspsx/maspsx.py"
