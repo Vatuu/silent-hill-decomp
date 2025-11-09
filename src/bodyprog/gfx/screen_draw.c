@@ -74,12 +74,12 @@ void Screen_FadeDrawModeSet(DR_MODE* drMode) // 0x800325A4
     }
 }
 
-q19_12 Screen_FadeInProgressGet() // 0x800325F8
+q19_12 Screen_FadeInProgressGet(void) // 0x800325F8
 {
     return Q12(1.0f) - g_PrevScreenFadeProgress;
 }
 
-void Screen_FadeUpdate() // 0x8003260C
+void Screen_FadeUpdate(void) // 0x8003260C
 {
     s32      queueLength;
     s32      timestep;
@@ -183,7 +183,7 @@ void Screen_FadeUpdate() // 0x8003260C
     AddPrim(ot, drMode);
 }
 
-void Screen_CutsceneCameraStateUpdate() // 0x80032904
+void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
 {
     void Screen_BlackBorderDraw(POLY_G4* poly, s32 color)
     {
@@ -290,7 +290,7 @@ void Screen_CutsceneCameraStateUpdate() // 0x80032904
     }
 }
 
-void Screen_VSyncCallback() // 0x80032B80
+void Screen_VSyncCallback(void) // 0x80032B80
 {
     g_Demo_FrameCount++;
     g_UnknownFrameCounter++;

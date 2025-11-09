@@ -2301,7 +2301,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
     s16 var_s0;
     s32 playerTurn;
 
-    bool Player_CombatAnimUpdate() // 0x80074350
+    bool Player_CombatAnimUpdate(void) // 0x80074350
     {
         s16 ssp20;
         s16 temp_a1;
@@ -7333,7 +7333,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     }
 }
 
-void Player_FlexRotationYReset() // 0x8007D6E0
+void Player_FlexRotationYReset(void) // 0x8007D6E0
 {
     g_Player_FlexRotationY = FP_ANGLE(0.1f);
 }
@@ -7688,7 +7688,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
     D_800C44E0.field_0 = g_SysWork.playerCombatInfo_38.field_0;
 }
 
-void Game_SavegameResetPlayer() // 0x8007E530
+void Game_SavegameResetPlayer(void) // 0x8007E530
 {
     #define DEFAULT_INV_SLOT_COUNT 8
 
@@ -7714,7 +7714,7 @@ void Game_SavegameResetPlayer() // 0x8007E530
     g_SavegamePtr->add290Hours_25C_1     = 0;
 }
 
-void func_8007E5AC() // 0x8007E5AC
+void func_8007E5AC(void) // 0x8007E5AC
 {
     s32      i;
     u32      temp_t0;
@@ -7804,7 +7804,7 @@ void func_8007E5AC() // 0x8007E5AC
     g_SysWork.player_4C.chara_0.health_B0 = CLAMP(g_SysWork.player_4C.chara_0.health_B0, 1, Q12(100.0f));
 }
 
-void func_8007E860() // 0x8007E860
+void func_8007E860(void) // 0x8007E860
 {
     s32 i;
     s32 startIdx;
@@ -7816,7 +7816,7 @@ void func_8007E860() // 0x8007E860
     }
 }
 
-void func_8007E8C0() // 0x8007E8C0
+void func_8007E8C0(void) // 0x8007E8C0
 {
     s32             i;
     s_AnimInfo*     animInfos;
@@ -7850,7 +7850,7 @@ void func_8007E8C0() // 0x8007E8C0
     func_8007E9C4();
 }
 
-void func_8007E9C4() // 0x8007E9C4
+void func_8007E9C4(void) // 0x8007E9C4
 {
     s_SubCharacter* chara;
 
@@ -7935,7 +7935,7 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
     }
 }
 
-void func_8007EBBC() // 0x8007EBBC
+void func_8007EBBC(void) // 0x8007EBBC
 {
     s32 relAnimInfoIdx;
     s32 relKeyframeIdx;
@@ -8137,7 +8137,7 @@ void func_8007F14C(u8 arg0) // 0x8007F14C
     }
 }
 
-void Game_PlayerMovementsReset() // 0x8007F1CC
+void Game_PlayerMovementsReset(void) // 0x8007F1CC
 {
     g_Player_HasActionInput          = false;
     g_Player_HasMoveInput            = false;
@@ -8163,7 +8163,7 @@ void func_8007F250(u8* ptr, s8 disableDamage) // 0x8007F250
     g_Player_DisableDamage = disableDamage;
 }
 
-bool func_8007F26C() // 0x8007F26C
+bool func_8007F26C(void) // 0x8007F26C
 {
     if (g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_Attack ||
         g_SysWork.player_4C.extra_128.state_1C == PlayerState_KickEnemy ||
@@ -8175,7 +8175,7 @@ bool func_8007F26C() // 0x8007F26C
     return false;
 }
 
-bool func_8007F2AC() // 0x8007F2AC
+bool func_8007F2AC(void) // 0x8007F2AC
 {
     if (g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f) ||
         g_SysWork.playerCombatInfo_38.isAiming_13 ||
@@ -8190,12 +8190,12 @@ bool func_8007F2AC() // 0x8007F2AC
     return false;
 }
 
-s16 Player_AnimGetSomething() // 0x8007F308
+s16 Player_AnimGetSomething(void) // 0x8007F308
 {
     return HARRY_BASE_ANIM_INFOS[g_SysWork.player_4C.chara_0.model_0.anim_4.status_0].startKeyframeIdx_C;
 }
 
-void Player_Controller() // 0x8007F32C
+void Player_Controller(void) // 0x8007F32C
 {
     s32 attackBtnInput;
 
@@ -8335,7 +8335,7 @@ void Player_Controller() // 0x8007F32C
     }
 }
 
-bool func_8007F95C() // 0x8007F95C
+bool func_8007F95C(void) // 0x8007F95C
 {
     VECTOR3         pos0;
     VECTOR3         pos1;
@@ -8508,12 +8508,12 @@ void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animS
     }
 }
 
-s32 func_8007FD2C() // 0x8007FD2C
+s32 func_8007FD2C(void) // 0x8007FD2C
 {
     return g_SysWork.player_4C.chara_0.properties_E4.player.field_104;
 }
 
-q19_12 Game_GasWeaponPowerTimerValue() // 0x8007FD3C
+q19_12 Game_GasWeaponPowerTimerValue(void) // 0x8007FD3C
 {
     return g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114;
 }
@@ -8590,7 +8590,7 @@ void func_800803FC(VECTOR3* pos, s32 idx) // 0x800803FC
     pos->vz = posZ;
 }
 
-void Input_SelectClickSet() // 0x80080458
+void Input_SelectClickSet(void) // 0x80080458
 {
     g_Controller1->btnsClicked_10 |= ControllerFlag_Select;
 }

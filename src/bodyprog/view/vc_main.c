@@ -81,7 +81,7 @@ void vcInitVCSystem(VC_ROAD_DATA* vc_road_ary_list) // 0x80080940
     vcWork.field_FC               = false;
 }
 
-void vcStartCameraSystem() // 0x800809DC
+void vcStartCameraSystem(void) // 0x800809DC
 {
     vcWork.view_cam_active_f_0 = true;
     vcWork.field_D8            = false;
@@ -89,12 +89,12 @@ void vcStartCameraSystem() // 0x800809DC
     vcWork.geom_screen_dist_30 = g_GameWork.gsScreenHeight_58A;
 }
 
-void vcEndCameraSystem() // 0x80080A04
+void vcEndCameraSystem(void) // 0x80080A04
 {
     vcWork.view_cam_active_f_0 = false;
 }
 
-s32 func_80080A10() // 0x80080A10
+s32 func_80080A10(void) // 0x80080A10
 {
     return vcWork.cur_near_road_2B8.road_p_0->field_15;
 }
@@ -104,7 +104,7 @@ void func_80080A30(s32 arg0) // 0x80080A30
     vcWork.field_2E4 = arg0;
 }
 
-s32 func_80080A3C() // 0x80080A3C
+s32 func_80080A3C(void) // 0x80080A3C
 {
     return vcWork.field_2E4;
 }
@@ -213,7 +213,7 @@ void vcChangeProjectionValue(s16 scr_y) // 0x80080D5C
     vcWork.geom_screen_dist_30 = scr_y;
 }
 
-void func_80080D68() // 0x80080D68
+void func_80080D68(void) // 0x80080D68
 {
     vcWork.field_D8 = true;
 }
@@ -274,7 +274,7 @@ void vcSetSubjChara(VECTOR3* chara_pos, q19_12 chara_bottom_y, q19_12 chara_top_
     vcWork.chara_watch_xz_r_148 = chara_watch_xz_r;
 }
 
-s32 vcExecCamera() // 0x80080FBC
+s32 vcExecCamera(void) // 0x80080FBC
 {
     VECTOR3            sv_old_cam_pos;
     SVECTOR            sv_old_cam_mat_ang;
@@ -345,7 +345,7 @@ s32 vcExecCamera() // 0x80080FBC
     return vcRetSmoothCamMvF(&sv_old_cam_pos, &vcWork.cam_pos_50, &sv_old_cam_mat_ang, &vcWork.cam_mat_ang_8E);
 }
 
-void vcSetAllNpcDeadTimer() // 0x8008123C
+void vcSetAllNpcDeadTimer(void) // 0x8008123C
 {
     #define DEATH_TIME_MAX Q12(10.0f)
 

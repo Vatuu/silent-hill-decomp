@@ -42,7 +42,7 @@ static const s8 D_80025EB0[] = {
     0,  0,  0,  0
 };
 
-void Game_TimerUpdate() // 0x8004C8DC
+void Game_TimerUpdate(void) // 0x8004C8DC
 {
     #define TIME_290_HOURS        Q12(290.0f * 60.0f * 60.0f)
     #define TIME_130_HOURS        Q12(130.0f * 60.0f * 60.0f)
@@ -69,7 +69,7 @@ void Game_TimerUpdate() // 0x8004C8DC
     }
 }
 
-void GameState_ItemScreens_Update() // 0x8004C9B0
+void GameState_ItemScreens_Update(void) // 0x8004C9B0
 {
     Gfx_StringSetColor(StringColorId_White);
     func_800363D0();
@@ -370,7 +370,7 @@ void GameState_ItemScreens_Update() // 0x8004C9B0
     }
 }
 
-void Gfx_Results_Save() // 0x8004D1A0
+void Gfx_Results_Save(void) // 0x8004D1A0
 {
     s32      i;
     s32      colorVar0;
@@ -481,7 +481,7 @@ void Gfx_Results_Save() // 0x8004D1A0
     }
 }
 
-void Inventory_Logic() // 0x8004D518
+void Inventory_Logic(void) // 0x8004D518
 {
     s32 step;
     s32 cmdCountMax = 0;
@@ -1169,7 +1169,7 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
     }
 }
 
-void Gfx_Inventory_CmdOptionsDraw() // 0x8004E864
+void Gfx_Inventory_CmdOptionsDraw(void) // 0x8004E864
 {
     GsOT*    ot;
     s32      i;

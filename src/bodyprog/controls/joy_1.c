@@ -5,13 +5,13 @@
 #include "bodyprog/joy.h"
 #include "bodyprog/math/math.h"
 
-void Joy_Init() // 0x8003441C
+void Joy_Init(void) // 0x8003441C
 {
     PadInitDirect(&g_GameWork.rawController_5B4, g_Controller1);
     PadStartCom();
 }
 
-void Joy_ReadP1() // 0x80034450
+void Joy_ReadP1(void) // 0x80034450
 {
     s_ControllerData* cont;
 
@@ -28,13 +28,13 @@ void Joy_ReadP1() // 0x80034450
     // ((s32*)&cont->analogController_0)[1] = ((s32*)&g_GameWork.rawController_5B4)[1];
 }
 
-void Joy_Update() // 0x8003446C
+void Joy_Update(void) // 0x8003446C
 {
     Joy_ReadP1();
     Joy_ControllerDataUpdate();
 }
 
-void Joy_ControllerDataUpdate() // 0x80034494
+void Joy_ControllerDataUpdate(void) // 0x80034494
 {
     #define CONTROLLER_COUNT             2
     #define PULSE_INITIAL_INTERVAL_TICKS (TICKS_PER_SECOND / 2)

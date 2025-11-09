@@ -1,7 +1,7 @@
 #include "game.h"
 #include "bodyprog/bodyprog.h"
 
-void (*g_SysStateFuncs[])() = {
+void (*g_SysStateFuncs[])(void) = {
     SysState_Gameplay_Update,
     SysState_OptionsMenu_Update,
     SysState_StatusMenu_Update,

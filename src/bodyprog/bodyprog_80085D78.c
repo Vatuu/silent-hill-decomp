@@ -1203,12 +1203,12 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
     }
 }
 
-void func_80088028() // 0x80088028
+void func_80088028(void) // 0x80088028
 {
     func_80087EDC(0);
 }
 
-void func_80088048() // 0x80088048
+void func_80088048(void) // 0x80088048
 {
     if (func_80045B28())
     {
@@ -1447,7 +1447,7 @@ void func_80089090(s32 arg0) // 0x80089090
     func_80089524(&g_SysWork.field_2514, arg0);
 }
 
-void func_800890B8() // 0x800890B8
+void func_800890B8(void) // 0x800890B8
 {
     func_8009E198(&g_SysWork.field_2514, 0);
     func_8009E310(&g_SysWork.field_2514, g_SysWork.field_2514.head_18.unk_8, 2);
@@ -1459,7 +1459,7 @@ void func_800890B8() // 0x800890B8
     func_8009E97C(g_SysWork.field_2510);
 }
 
-s32 func_80089128() // 0x80089128
+s32 func_80089128(void) // 0x80089128
 {
     s32              temp_s0;
     s32              var_s3;
@@ -1681,17 +1681,17 @@ void func_800893D0(q19_12 arg0) // 0x800893D0
     func_800892DC(10, var);
 }
 
-void func_8008944C() // 0x8008944C
+void func_8008944C(void) // 0x8008944C
 {
     func_800892DC(19, 0xA0);
 }
 
-void func_80089470() // 0x80089470
+void func_80089470(void) // 0x80089470
 {
     func_800892DC(19, 0xA0);
 }
 
-void func_80089494() // 0x80089494
+void func_80089494(void) // 0x80089494
 {
     func_800892DC(9, 0xA0);
 }
@@ -1701,12 +1701,12 @@ void func_800894B8(s32 arg0) // 0x800894B8
     func_800892DC(9, arg0);
 }
 
-void func_800894DC() // 0x800894DC
+void func_800894DC(void) // 0x800894DC
 {
     func_800892DC(9, 0xE0);
 }
 
-void func_80089500() // 0x80089500
+void func_80089500(void) // 0x80089500
 {
     func_800892DC(9, 0xA0);
 }
@@ -2051,7 +2051,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089DF0); // 0x
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A058); // 0x8008A058
 
-s32 func_8008A0CC() // 0x8008A0CC
+s32 func_8008A0CC(void) // 0x8008A0CC
 {
     return 0;
 }
@@ -2266,7 +2266,7 @@ void func_8008B15C(s_SubCharacter* chara) // 0x8008B15C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B1DC); // 0x8008B1DC
 
-void func_8008B398() // 0x8008B398
+void func_8008B398(void) // 0x8008B398
 {
     func_8008B3E4(0);
     func_8008B438(0, 0, 0);
@@ -2921,7 +2921,7 @@ void func_8008D78C()
     func_8008D990(var1, D_800C4818.field_A, &D_800C4818.field_C, D_800C4818.field_1C, D_800C4818.field_20);
 }
 
-s32 func_8008D850() // 0x8008D850
+s32 func_8008D850(void) // 0x8008D850
 {
     s16 rectX;
     RECT rect;

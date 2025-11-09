@@ -6,7 +6,7 @@
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 
-void func_8004BB10() // 0x8004BB10
+void func_8004BB10(void) // 0x8004BB10
 {
     GsFCALL4.g3[GsDivMODE_NDIV][GsLMODE_FOG]  = GsTMDfastG3LFG;
     GsFCALL4.tg3[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG3LFG;
@@ -145,7 +145,7 @@ void func_8004BD74(s32 displayItemIdx, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
 /** Removing this causes the models of items to appear farther from the camera.
  * `Gfx_Items_ViewPointAdjustment`?
  */
-void func_8004BFE8() // 0x8004BFE8
+void func_8004BFE8(void) // 0x8004BFE8
 {
     // Save constant rotation matrix in stack.
     PushMatrix();
@@ -174,7 +174,7 @@ void func_8004BFE8() // 0x8004BFE8
  * the game sets them at the start of every frame anyway, so it doesn't really
  * achieve anything."
  */
-void func_8004C040() // 0x8004C040
+void func_8004C040(void) // 0x8004C040
 {
     // Reset constant rotation matrix from stack.
     PopMatrix();

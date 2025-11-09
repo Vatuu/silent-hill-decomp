@@ -915,7 +915,7 @@ s_CollisionPoint D_800AFC78 = {
     .field_18 = NO_VALUE
 };
 
-void Inventory_DirectionalInputSet() // 0x8004F5DC
+void Inventory_DirectionalInputSet(void) // 0x8004F5DC
 {
     if (g_Controller0->sticks_20.sticks_0.leftY < -STICK_THRESHOLD || g_Controller0->sticks_20.sticks_0.leftY >= STICK_THRESHOLD ||
         g_Controller0->sticks_20.sticks_0.leftX < -STICK_THRESHOLD || g_Controller0->sticks_20.sticks_0.leftX >= STICK_THRESHOLD)
@@ -1050,7 +1050,7 @@ void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
     func_8004FB0C();
 }
 
-void func_8004FB0C() // 0x8004FB0C
+void func_8004FB0C(void) // 0x8004FB0C
 {
     GsOT*    ot;
     POLY_F4* poly;
@@ -2492,7 +2492,7 @@ void GameFs_UniqueItemModelLoad(u8 itemId) // 0x80053B08
     }
 }
 
-void GameFs_Tim00TIMLoad() // 0x80053dA0
+void GameFs_Tim00TIMLoad(void) // 0x80053dA0
 {
     if (g_SysWork.flags_2352 & (1 << 0))
     {
@@ -2706,7 +2706,7 @@ void func_800540A4(s8 arg0) // 0x800540A4
     Fs_QueueStartReadTim(FILE_ITEM_HEROPIC2_TIM, FS_BUFFER_1, &g_HealthPortraitImg);
 }
 
-void Gfx_Items_Render() // 0x80054200
+void Gfx_Items_Render(void) // 0x80054200
 {
     s32  temp_s5;
     s32  i;
@@ -2828,7 +2828,7 @@ void Gfx_Items_Render() // 0x80054200
     }
 }
 
-void Gfx_Items_RenderInit() // 0x80054558
+void Gfx_Items_RenderInit(void) // 0x80054558
 {
     s32 i;
 
@@ -2853,7 +2853,7 @@ void Gfx_Items_RenderInit() // 0x80054558
     Gfx_Items_SetAmbientLighting();
 }
 
-void Inventory_ExitAnimFixes() // 0x80054634
+void Inventory_ExitAnimFixes(void) // 0x80054634
 {
     u8 weaponAttack;
 
@@ -2972,7 +2972,7 @@ void func_800548D8(s32 idx) // 0x800548D8
     g_Items_Lights[idx][0].vz = g_Items_Coords[idx].coord.t[2] + 20000;
 }
 
-void Gfx_Items_SetAmbientLighting() // 0x80054928
+void Gfx_Items_SetAmbientLighting(void) // 0x80054928
 {
     s32 i;
 
@@ -2994,7 +2994,7 @@ void Gfx_Items_SetAmbientLighting() // 0x80054928
 }
 
 // Similar to `Gfx_Items_SetAmbientLighting`.
-void func_800549A0() // 0x800549A0
+void func_800549A0(void) // 0x800549A0
 {
     #define IDX 9
 

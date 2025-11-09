@@ -51,7 +51,7 @@ static s32 D_800A9FDC[166] = {
     0x14200003, 0x0000A410, 0x000061E6, 0x10200003, 0x000144C0, 0x000061FC
 };
 
-void func_80047D50() // 0x80047D50
+void func_80047D50(void) // 0x80047D50
 {
     CdlLOC sp10;
 
@@ -61,7 +61,7 @@ void func_80047D50() // 0x80047D50
     }
 }
 
-void func_80047DB0() // 0x80047DB0
+void func_80047DB0(void) // 0x80047DB0
 {
     if (CdSync(1, 0) == 2)
     {
@@ -86,7 +86,7 @@ void func_80047DB0() // 0x80047DB0
     D_800C1658.timer_0++;
 }
 
-void func_80047E3C() // 0x80047E3C
+void func_80047E3C(void) // 0x80047E3C
 {
     s32 i;
     u8* ptr0;
@@ -109,7 +109,7 @@ void func_80047E3C() // 0x80047E3C
     D_800C1658.timer_0++;
 }
 
-void func_80047F18() // 0x80047F18
+void func_80047F18(void) // 0x80047F18
 {
     s32 var;
     s32* ptr;
@@ -137,7 +137,7 @@ void func_80047F18() // 0x80047F18
     }
 }
 
-void func_80048000() // 0x80048000
+void func_80048000(void) // 0x80048000
 {
     s32 i;
     CdlLOC  cdLocArg;
@@ -155,7 +155,7 @@ void func_80048000() // 0x80048000
     }
 }
 
-void func_8004807C() // 0x8004807C
+void func_8004807C(void) // 0x8004807C
 {
     u32 var;
 
@@ -177,7 +177,7 @@ void func_8004807C() // 0x8004807C
     D_800C1670.field_0 = 8;
 }
 
-void func_800480FC() // 0x800480FC
+void func_800480FC(void) // 0x800480FC
 {
     s32 var0;
     u32 var1;
@@ -208,7 +208,7 @@ void func_800480FC() // 0x800480FC
     }
 }
 
-void func_800481F8() // 0x800481F8
+void func_800481F8(void) // 0x800481F8
 {
     if (SdVabTransCompleted(0) != 1)
     {
@@ -317,7 +317,7 @@ static s_800C37D4 D_800AA274[73] = {
     { 0, 0, 0,    11372,  30051 },
     {}
 };
-void func_800482D8() // 0x800482D8
+void func_800482D8(void) // 0x800482D8
 {
     switch (D_800C1670.field_0)
     {
@@ -348,7 +348,7 @@ void func_800482D8() // 0x800482D8
     }
 }
 
-void Sd_StopSeq() // 0x8004839C
+void Sd_StopSeq(void) // 0x8004839C
 {
     func_80046B78();
     SdSeqClose(D_800C37C8);
@@ -356,7 +356,7 @@ void Sd_StopSeq() // 0x8004839C
     D_800C1670.field_0 = 2;
 }
 
-void func_800483D4() // 0x800483D4
+void func_800483D4(void) // 0x800483D4
 {
     CdlLOC cdLoc;
 
@@ -366,7 +366,7 @@ void func_800483D4() // 0x800483D4
     }
 }
 
-void func_80048424() // 0x80048424
+void func_80048424(void) // 0x80048424
 {
     if (CdSync(1, 0) == 2)
     {
@@ -379,7 +379,7 @@ void func_80048424() // 0x80048424
     D_800C1658.timer_0++;
 }
 
-void func_80048498() // 0x80048498
+void func_80048498(void) // 0x80048498
 {
     s32 i;
     u8* ptr0;
@@ -427,7 +427,7 @@ void func_800485C0(s32 idx) // 0x800485C0
 
 const s32 g_rodataPad_80025D38 = 0;
 
-void func_800485D8() // 0x800485D8
+void func_800485D8(void) // 0x800485D8
 {
     D_800C37DD = D_800C16A8[0];
     switch (D_800C37DD)

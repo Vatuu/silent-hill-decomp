@@ -13,7 +13,7 @@
 
 extern s_800C4168 D_800C4168;
 
-void func_80055028() // 0x80055028
+void func_80055028(void) // 0x80055028
 {
     func_80040BAC();
     func_8008D41C();
@@ -43,7 +43,7 @@ void func_80055028() // 0x80055028
     func_80055840(0x20000, 0x22000);
 }
 
-void func_800550D0() // 0x800550D0
+void func_800550D0(void) // 0x800550D0
 {
     s32      color0;
     s32      color2;
@@ -282,7 +282,7 @@ void func_80055648(s32 arg0, SVECTOR* arg1) // 0x80055648
     }
 }
 
-s32 func_800557DC() // 0x800557DC
+s32 func_800557DC(void) // 0x800557DC
 {
     MATRIX mat;
 
@@ -3193,7 +3193,7 @@ s32 func_8005E7E0(s32 arg0) // 0x8005E7E0
     return idx;
 }
 
-void func_8005E89C() // 0x8005E89C
+void func_8005E89C(void) // 0x8005E89C
 {
     #define CLAMP_CUSTOM(a, b, min, max) \
         ((((a) >= (max)) ? (max) : (b)) < (min) ? (min) : (((b) >= (max)) ? (max) : (a)))
@@ -5673,7 +5673,7 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
     GsOUT_PACKET_P = (PACKET*)ptr->field_0;
 }
 
-void func_80066184() // 0x80066184
+void func_80066184(void) // 0x80066184
 {
     s32              i;
     s_func_80066184* ptr;
@@ -5799,7 +5799,7 @@ void func_80066184() // 0x80066184
     GsOUT_PACKET_P = (PACKET*)++ptr->field_0;
 }
 
-void func_80066D90() // 0x80066D90
+void func_80066D90(void) // 0x80066D90
 {
     s32       i;
     DR_TPAGE* var1; // Guessed type.
@@ -5826,14 +5826,14 @@ void func_80066D90() // 0x80066D90
     Fs_QueueWaitForEmpty();
 }
 
-void func_80066E40() // 0x80066E40
+void func_80066E40(void) // 0x80066E40
 {
     DrawSync(SyncMode_Wait);
     StoreImage(&D_80028A20, FS_BUFFER_3);
     DrawSync(SyncMode_Wait);
 }
 
-void func_80066E7C() // 0x80066E7C
+void func_80066E7C(void) // 0x80066E7C
 {
     LoadImage(&D_80028A20, FS_BUFFER_3);
     DrawSync(SyncMode_Wait);
@@ -5843,7 +5843,7 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", hack_D_80028A18_fi
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028A20);
 
-void GameState_MapScreen_Update() // 0x80066EB0
+void GameState_MapScreen_Update(void) // 0x80066EB0
 {
     s32 temp_s0_2;
     s32 temp_s4;
@@ -5865,11 +5865,10 @@ void GameState_MapScreen_Update() // 0x80066EB0
             Screen_Refresh(SCREEN_WIDTH, true);
 
             D_800C444A = g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9];
-            temp_a0    = g_SavegamePtr->current2dMapIdx_A9;
+            D_800C4448 = g_SavegamePtr->current2dMapIdx_A9;
             D_800C444C = NO_VALUE;
             D_800C4454 = Q12(1.0f);
             D_800AE770 = 0;
-            D_800C4448 = temp_a0;
 
             func_80037188();
             Sd_EngineCmd(Sfx_MenuMap);
@@ -6749,7 +6748,7 @@ void func_800697EC()
     D_800C447A = 0;
 }
 
-u16 func_80069810() // 0x80069810
+u16 func_80069810(void) // 0x80069810
 {
     return D_800C4478.field_0;
 }
@@ -10437,7 +10436,7 @@ s32 func_8007029C(s_SubCharacter* chara, q19_12 dist, q3_12 angle) // 0x8007029C
     return func_8006DB3C(&vars, &chara->position_18, &offset, chara);
 }
 
-bool func_80070320() // 0x80070320
+bool func_80070320(void) // 0x80070320
 {
     s32 i;
 

@@ -51,7 +51,7 @@ void tone_adsr_back(s16 vab_id) // 0x8009EE30
     }
 }
 
-void sd_alloc_sort() // 0x8009EEBC
+void sd_alloc_sort(void) // 0x8009EEBC
 {
     s32 lastSlotIdx;
     s32 frontIdx;
@@ -306,7 +306,7 @@ void SdSpuFree(u32 addr) // 0x8009F364
     }
 }
 
-void SdWorkInit() // 0x8009F400
+void SdWorkInit(void) // 0x8009F400
 {
     s32 i;
 
@@ -333,7 +333,7 @@ void SdWorkInit() // 0x8009F400
     sd_tick_mode = 4096;
 }
 
-void SdInit() // 0x8009F490
+void SdInit(void) // 0x8009F490
 {
     SpuInit();
     sound_off();
@@ -341,7 +341,7 @@ void SdInit() // 0x8009F490
     SpuInitMalloc(16, &sd_vb_malloc_rec);
 }
 
-void SdStart() // 0x8009F4D0
+void SdStart(void) // 0x8009F4D0
 {
     if (sd_tick_mode > 0)
     {
@@ -354,7 +354,7 @@ void SdStart() // 0x8009F4D0
     sd_interrupt_start_flag = true;
 }
 
-void SdStart2() // 0x8009F510
+void SdStart2(void) // 0x8009F510
 {
     SdStart();
 }
@@ -364,7 +364,7 @@ void SdSetTickMode(s32 tick_mode) // 0x8009F530
     sd_tick_mode = tick_mode;
 }
 
-void SdSeqCalledTbyT() // 0x8009F53C
+void SdSeqCalledTbyT(void) // 0x8009F53C
 {
     if (sd_interrupt_start_flag)
     {
@@ -372,12 +372,12 @@ void SdSeqCalledTbyT() // 0x8009F53C
     }
 }
 
-void SdSetStereo() // 0x8009F568
+void SdSetStereo(void) // 0x8009F568
 {
     sd_mono_st_flag = false;
 }
 
-void SdSetMono() // 0x8009F574
+void SdSetMono(void) // 0x8009F574
 {
     sd_mono_st_flag = true;
 }
@@ -399,7 +399,7 @@ char SdSetReservedVoice(char voices) // 0x8009F584
 
 void SdSetTableSize(void* arg0, s32 arg1, s32 arg2) {} // 0x8009F5B8
 
-void SdEnd() // 0x8009F5C0
+void SdEnd(void) // 0x8009F5C0
 {
     s32 i;
 
@@ -424,7 +424,7 @@ void SdEnd() // 0x8009F5C0
     SdWorkInit();
 }
 
-void SdQuit() // 0x8009F64C
+void SdQuit(void) // 0x8009F64C
 {
     sound_off();
     SdWorkInit();
@@ -826,7 +826,7 @@ void SdSetAutoKeyOffMode(s16 mode) // 0x8009FF64
     sd_keyoff_mode = mode;
 }
 
-void SdAutoKeyOffCheck() // 0x8009FF70
+void SdAutoKeyOffCheck(void) // 0x8009FF70
 {
     s32 stat;
     s32 vo;
@@ -1086,18 +1086,18 @@ void SdSeqGetVol(s16 seq_access_num, s16* voll, s16* volr) // 0x800A074C
     *volr = smf_song[seq_access_num].sd_seq_mvolr_50E;
 }
 
-void SdUtFlush() // 0x800A0794
+void SdUtFlush(void) // 0x800A0794
 {
     SdAutoKeyOffCheck();
 }
 
-void SdUtReverbOn() // 0x800A07B4
+void SdUtReverbOn(void) // 0x800A07B4
 {
     SpuReserveReverbWorkArea(SPU_ON);
     SpuSetReverb(SPU_ON);
 }
 
-void SdUtReverbOff() // 0x800A07DC
+void SdUtReverbOff(void) // 0x800A07DC
 {
     sd_reverb_mode = 0;
     SpuSetReverb(SPU_OFF);
@@ -1142,7 +1142,7 @@ void SdSetRVol(s16 ldepth, s16 rdepth) // 0x800A089C
     SpuSetReverbModeParam(&r_attr);
 }
 
-void SdUtSEAllKeyOff() // 0x800A08DC
+void SdUtSEAllKeyOff(void) // 0x800A08DC
 {
     s32 i;
     s32 stat   = SPU_OFF;
@@ -1830,12 +1830,12 @@ s32 SdSetMidiPitchBendFine(s16 seq_access_num, s16 midi_ch, u8 pitchBendFine) //
     return 0;
 }
 
-s32 SdGetTrackTranspause() // 0x800A2030
+s32 SdGetTrackTranspause(void) // 0x800A2030
 {
     return 0;
 }
 
-s32 SdSetTrackTranspause() // 0x800A2038
+s32 SdSetTrackTranspause(void) // 0x800A2038
 {
     return 0;
 }
@@ -1901,7 +1901,7 @@ void SsSetMVol(s16 voll, s16 volr) // 0x800A2294
     SdSetMVol(voll, volr);
 }
 
-void SsEnd() // 0x800A22C0
+void SsEnd(void) // 0x800A22C0
 {
     SdEnd();
 }

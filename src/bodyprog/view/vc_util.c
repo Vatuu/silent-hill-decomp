@@ -62,7 +62,7 @@ void vcSetEvCamRate(q3_12 ev_cam_rate) // 0x800401C0
     g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate = ev_cam_rate;
 }
 
-void func_800401CC() // 0x800401CC
+void func_800401CC(void) // 0x800401CC
 {
     func_80080D68();
 }

@@ -31,7 +31,7 @@ s32 D_800CA508 = 0;
 u8* D_800CA50C = 0;
 s32 D_800CA510 = 0;
 
-void GameState_KonamiLogo_Update() // 0x800C95AC
+void GameState_KonamiLogo_Update(void) // 0x800C95AC
 {
     s32 idx;
 
@@ -109,7 +109,7 @@ void GameState_KonamiLogo_Update() // 0x800C95AC
     }
 }
 
-s32 func_800C9874() // 0x800C9874
+s32 func_800C9874(void) // 0x800C9874
 {
     s32 saveEntryType0;
     s32 saveEntryType1;
@@ -150,7 +150,7 @@ s32 func_800C9874() // 0x800C9874
     return 4;
 }
 
-void GameState_KcetLogo_Update() // 0x800C99A4
+void GameState_KcetLogo_Update(void) // 0x800C99A4
 {
     while (g_GameWork.gameState_594 == GameState_KcetLogo)
     {
@@ -358,7 +358,7 @@ void Gfx_BootScreenImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s3
     GsOUT_PACKET_P = (u8*)prim + 28;
 }
 
-void Gfx_KonamiScreenDraw() // 0x800C9FB8
+void Gfx_KonamiScreenDraw(void) // 0x800C9FB8
 {
     s32* ptr;
 
@@ -377,7 +377,7 @@ void Gfx_KonamiScreenDraw() // 0x800C9FB8
     GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
 }
 
-void Gfx_KcetScreenDraw() // 0x800CA120
+void Gfx_KcetScreenDraw(void) // 0x800CA120
 {
     u32* ptr;
 
@@ -394,7 +394,7 @@ void Gfx_KcetScreenDraw() // 0x800CA120
     GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
 }
 
-void func_800CA234() // 0x800CA234
+void func_800CA234(void) // 0x800CA234
 {
     D_800CA4FC = 0;
 }
@@ -424,7 +424,7 @@ void func_800CA24C(s32 arg0, s32 arg1, s32 arg2) // 0x800CA24C
     D_800CA510 = 0;
 }
 
-s32 func_800CA2B8() // 0x800CA2B8
+s32 func_800CA2B8(void) // 0x800CA2B8
 {
     return D_800CA4FC;
 }

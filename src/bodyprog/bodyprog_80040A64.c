@@ -63,7 +63,7 @@ bool func_80040B74(e_CharacterId charaId) // 0x80040B74
     return false;
 }
 
-void func_80040BAC() // 0x80040BAC
+void func_80040BAC(void) // 0x80040BAC
 {
     DVECTOR   posTable[17];
     POLY_G4*  poly_g4;
@@ -570,7 +570,7 @@ void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount) // 0x8004
     }
 }
 
-void Ipd_TexturesInit1() // 0x80041D48
+void Ipd_TexturesInit1(void) // 0x80041D48
 {
     s32 i;
     s16 j;
@@ -603,7 +603,7 @@ void Ipd_TexturesInit1() // 0x80041D48
     ActiveTextures_PutTextures(&g_Map.ipdTextures_430.halfPage_2C, g_Map.ipdTextures_430.halfPageTextures_118, 2);
 }
 
-void Map_IpdCollisionDataInit() // 0x80041E98
+void Map_IpdCollisionDataInit(void) // 0x80041E98
 {
     bzero(&g_Map.field_0, sizeof(s_IpdCollisionData));
     g_Map.field_0.field_1C = 512;
@@ -636,12 +636,12 @@ void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 chunkCoordX, s32 chunkCoordZ) // 
     }
 }
 
-void Ipd_ActiveChunksClear0() // 0x80041FF0
+void Ipd_ActiveChunksClear0(void) // 0x80041FF0
 {
     Ipd_ActiveChunksClear(&g_Map, g_Map.ipdActiveSize_158);
 }
 
-void Ipd_TexturesInit0() // 0x8004201C
+void Ipd_TexturesInit0(void) // 0x8004201C
 {
     s_Texture* curTex;
 
@@ -669,14 +669,14 @@ void Ipd_TexturesInit0() // 0x8004201C
     }
 }
 
-void func_800420C0() // 0x800420C0
+void func_800420C0(void) // 0x800420C0
 {
     Map_GlobalLmFree();
     Ipd_ActiveChunksClear(&g_Map, g_Map.ipdActiveSize_158);
     Ipd_TexturesInit1();
 }
 
-void Map_GlobalLmFree() // 0x800420FC
+void Map_GlobalLmFree(void) // 0x800420FC
 {
     s_GlobalLm* globalLm;
 
@@ -1361,7 +1361,7 @@ s32 Ipd_LoadStart(s_IpdChunk* chunk, e_FsFile fileIdx, s32 chunkCoordX, s32 chun
     return chunk->queueIdx_4;
 }
 
-bool func_80043740() // 0x80043740
+bool func_80043740(void) // 0x80043740
 {
     s32         i;
     s_IpdChunk* curChunk;

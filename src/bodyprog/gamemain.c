@@ -26,7 +26,7 @@ s32 D_800BCD04 = 0; // @unused Might be padding.
 s32 D_800BCD08 = 0; // @unused Might be padding.
 s32 g_Screen_FadeStatus = SCREEN_FADE_STATUS(ScreenFadeState_Reset, false);
 
-void GameState_Boot_Update() // 0x80032D1C
+void GameState_Boot_Update(void) // 0x80032D1C
 {
     s32 gameState;
     s32 unkGameStateVar;
@@ -100,7 +100,7 @@ void GameState_Boot_Update() // 0x80032D1C
     func_80089090(1);
 }
 
-void MainLoop() // 0x80032EE0
+void MainLoop(void) // 0x80032EE0
 {
     #define TICKS_PER_SECOND_MIN (TICKS_PER_SECOND / 4)
     #define H_BLANKS_PER_TICK    263

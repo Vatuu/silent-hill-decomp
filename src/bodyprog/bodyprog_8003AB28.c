@@ -28,7 +28,7 @@
 
 const s32 rodataPad_8002547C = 0;
 
-void GameState_MainMenu_Update() // 0x8003AB28
+void GameState_MainMenu_Update(void) // 0x8003AB28
 {
     #define MAIN_MENU_GAME_STATE_COUNT 5
 
@@ -385,7 +385,7 @@ void GameState_MainMenu_Update() // 0x8003AB28
     Screen_Init(SCREEN_WIDTH, false);
 }
 
-void MainMenu_SelectedOptionIdxReset() // 0x8003B550
+void MainMenu_SelectedOptionIdxReset(void) // 0x8003B550
 {
     g_MainMenu_SelectedEntry = MainMenuEntry_Continue;
 }
@@ -400,7 +400,7 @@ static const char* MAIN_MENU_ENTRY_STRINGS[] = {
     "EXTRA" /** @unused See `e_MainMenuEntry`. */
 };
 
-void Gfx_MainMenu_MainTextDraw() // 0x8003B568
+void Gfx_MainMenu_MainTextDraw(void) // 0x8003B568
 {
     #define COLUMN_POS_X 158
     #define COLUMN_POS_Y 184
@@ -486,7 +486,7 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
     }
 }
 
-void Gfx_MainMenu_BackgroundDraw() // 0x8003B758
+void Gfx_MainMenu_BackgroundDraw(void) // 0x8003B758
 {
     if (g_SysWork.sysState_8 == SysState_Gameplay)
     {
@@ -498,7 +498,7 @@ void Gfx_MainMenu_BackgroundDraw() // 0x8003B758
     Gfx_MainMenu_FogUpdate();
 }
 
-void func_8003B7BC() // 0x8003B7BC
+void func_8003B7BC(void) // 0x8003B7BC
 {
     // Can't be `s32*` since 462 doesn't divide by 4, so I'm guessing it's `s8`.
     s8* s0 = 0x801E2432;
@@ -603,7 +603,7 @@ PACKET* Gfx_MainMenu_FogPacketGet(GsOT* ot, PACKET* packet) // 0x8003B838
     return packet;
 }
 
-void Gfx_MainMenu_FogDraw() // 0x8003BA08
+void Gfx_MainMenu_FogDraw(void) // 0x8003BA08
 {
     PACKET*   packet;
     GsOT_TAG* tag;
@@ -615,7 +615,7 @@ void Gfx_MainMenu_FogDraw() // 0x8003BA08
     GsOUT_PACKET_P = packet + sizeof(DR_MODE);
 }
 
-void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
+void Gfx_MainMenu_FogRandomize(void) // 0x8003BAC4
 {
     s32 idx;
     s32 i;
@@ -650,7 +650,7 @@ void Gfx_MainMenu_FogRandomize() // 0x8003BAC4
     }
 }
 
-void Gfx_MainMenu_FogScatter() // 0x8003BBF4
+void Gfx_MainMenu_FogScatter(void) // 0x8003BBF4
 {
     s32 i;
     s32 j;
@@ -684,7 +684,7 @@ void Gfx_MainMenu_FogScatter() // 0x8003BBF4
     }
 }
 
-void Gfx_MainMenu_FogUpdate() // 0x8003BC8C
+void Gfx_MainMenu_FogUpdate(void) // 0x8003BC8C
 {
     static s32 FOG_COUNT = 0;
 
@@ -697,7 +697,7 @@ void Gfx_MainMenu_FogUpdate() // 0x8003BC8C
     Gfx_MainMenu_FogDraw();
 }
 
-void func_8003BCF4() // 0x8003BCF4
+void func_8003BCF4(void) // 0x8003BCF4
 {
     s32 i;
 
@@ -713,7 +713,7 @@ void func_8003BCF4() // 0x8003BCF4
 // UNKNOWN - IN-GAME LOOP RELATED
 // ========================================
 
-s32 Map_TypeGet() // 0x8003BD2C
+s32 Map_TypeGet(void) // 0x8003BD2C
 {
     return g_WorldGfx.type_0 - MAP_TYPES;
 }
@@ -747,7 +747,7 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
     func_80069820(var_s0);
 }
 
-void func_8003BE28() // 0x8003BE28
+void func_8003BE28(void) // 0x8003BE28
 {
     func_80069820(D_800BCE14);
 }
@@ -761,19 +761,19 @@ s_Bone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId) // 0x8003BE50
 // BOOT LOADING FILES
 // ========================================
 
-void GameFs_BgEtcGfxLoad() // 0x8003BE6C
+void GameFs_BgEtcGfxLoad(void) // 0x8003BE6C
 {
     static s_FsImageDesc IMAGE = { .tPage = { 0, 12 }, .clutX = 192 };
 
     Fs_QueueStartReadTim(FILE_TIM_BG_ETC_TIM, FS_BUFFER_1, &IMAGE);
 }
 
-void GameFs_BgItemLoad() // 0x8003BE9C
+void GameFs_BgItemLoad(void) // 0x8003BE9C
 {
     g_WorldGfx.itemLmQueueIdx_2BE4 = Fs_QueueStartRead(FILE_BG_BG_ITEM_PLM, &g_WorldGfx.itemLmHdr_1BE4);
 }
 
-void func_8003BED0() // 0x8003BED0
+void func_8003BED0(void) // 0x8003BED0
 {
     static s_FsImageDesc IMAGE_TIM = {
         .tPage = { 0, 15 },
@@ -843,7 +843,7 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
     return zoneType;
 }
 
-void func_8003C048() // 0x8003C048
+void func_8003C048(void) // 0x8003C048
 {
     func_80055028();
 
@@ -859,7 +859,7 @@ void func_8003C048() // 0x8003C048
     func_8003CB3C(&g_WorldGfx);
 }
 
-void func_8003C0C0() // 0x8003C0C0
+void func_8003C0C0(void) // 0x8003C0C0
 {
     s_HeldItem* heldItem;
 
@@ -872,7 +872,7 @@ void func_8003C0C0() // 0x8003C0C0
     heldItem->bone_18.modelInfo_0.modelHdr_8 = NULL;
 }
 
-void func_8003C110() // 0x8003C110
+void func_8003C110(void) // 0x8003C110
 {
     s32           i;
     s_CharaModel* curModel;
@@ -937,12 +937,12 @@ void func_8003C220(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ) /
     func_80042C3C(playerPosX, playerPosZ, playerPosX, playerPosZ);
 }
 
-void Ipd_ActiveChunksClear1() // 0x8003C2EC
+void Ipd_ActiveChunksClear1(void) // 0x8003C2EC
 {
     Ipd_ActiveChunksClear0();
 }
 
-void func_8003C30C() // 0x8003C30C
+void func_8003C30C(void) // 0x8003C30C
 {
     u8 flags;
 
@@ -957,18 +957,18 @@ void func_8003C30C() // 0x8003C30C
     Ipd_TexturesInit0();
 }
 
-void WorldGfx_IpdSamplePointStore() // 0x8003C368
+void WorldGfx_IpdSamplePointStore(void) // 0x8003C368
 {
     g_WorldGfx.useStoredPoint_4 = true;
     g_WorldGfx.ipdSamplePoint_8 = g_SysWork.player_4C.chara_0.position_18;
 }
 
-void WorldGfx_IpdSamplePointReset() // 0x8003C3A0
+void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
 {
     g_WorldGfx.useStoredPoint_4 = false;
 }
 
-void func_8003C3AC() // 0x8003C3AC
+void func_8003C3AC(void) // 0x8003C3AC
 {
     VECTOR3         pos0;
     VECTOR3         pos1;
@@ -1076,7 +1076,7 @@ void func_8003C3AC() // 0x8003C3AC
     func_80042C3C(pos0.vx, pos0.vz, pos1.vx, pos1.vz);
 }
 
-s32 func_8003C850() // 0x8003C850
+s32 func_8003C850(void) // 0x8003C850
 {
     func_8003C3AC();
     return func_80043740();
@@ -1252,7 +1252,7 @@ void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003C
     func_80057090(&arg0->modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, arg1, arg2, 0);
 }
 
-s32 func_8003CD5C() // 0x8003CD5C
+s32 func_8003CD5C(void) // 0x8003CD5C
 {
     return g_WorldGfx.heldItem_1BAC.itemId_0;
 }
@@ -1477,12 +1477,12 @@ void func_8003D01C(void) // 0x8003D01C
     g_WorldGfx.heldItem_1BAC.bone_18.modelInfo_0.field_0 &= ~(1 << 31);
 }
 
-void func_8003D03C() // 0x8003D03C
+void func_8003D03C(void) // 0x8003D03C
 {
     g_WorldGfx.heldItem_1BAC.bone_18.modelInfo_0.field_0 |= 1 << 31;
 }
 
-void func_8003D058() // 0x8003D058
+void func_8003D058(void) // 0x8003D058
 {
     MATRIX         mat0;
     MATRIX         mat1;
@@ -1523,7 +1523,7 @@ void func_8003D058() // 0x8003D058
     }
 }
 
-void WorldGfx_HarryCharaLoad() // 0x8003D160
+void WorldGfx_HarryCharaLoad(void) // 0x8003D160
 {
     s_FsImageDesc image;
     s32           queueIdx;
@@ -1836,12 +1836,12 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
     return queueIdx;
 }
 
-void func_8003D938() // 0x8003D938
+void func_8003D938(void) // 0x8003D938
 {
     func_8003D9C8(&g_WorldGfx.harryModel_164C);
 }
 
-void func_8003D95C() // 0x8003D95C
+void func_8003D95C(void) // 0x8003D95C
 {
     s32           i;
     s_CharaModel* model;
@@ -2386,7 +2386,7 @@ static s_800A9F80 D_800A9F9C = { 6, 6  }; // @unused
 static s_800A9F80 D_800A9FA0 = { 3, 3  }; // @unused
 static s_800A9F80 D_800A9FA4 = { 5, 5  }; // @unused
 
-void GameFs_FlameGfxLoad() // 0x8003E710
+void GameFs_FlameGfxLoad(void) // 0x8003E710
 {
     static s_FsImageDesc IMG_FLAME = {
         .tPage = { 0, 12 },
@@ -2399,7 +2399,7 @@ void GameFs_FlameGfxLoad() // 0x8003E710
     Fs_QueueStartReadTim(FILE_TIM_FLAME_TIM, FS_BUFFER_1, &IMG_FLAME);
 }
 
-void func_8003E740() // 0x8003E740
+void func_8003E740(void) // 0x8003E740
 {
     DVECTOR   sp10;
     MATRIX    sp18;
@@ -2529,7 +2529,7 @@ void func_8003E740() // 0x8003E740
 /**
  * TODO: Please investigate me!
  */
-void func_8003EB54() // 0x8003EB54
+void func_8003EB54(void) // 0x8003EB54
 {
     g_SysWork.field_2378 = Q12(1.0f);
 
@@ -2540,7 +2540,7 @@ void func_8003EB54() // 0x8003EB54
     Math_SVectorSet(&g_SysWork.field_2370, FP_ANGLE(10.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
-void func_8003EBA0() // 0x8003EBA0
+void func_8003EBA0(void) // 0x8003EBA0
 {
     g_SysWork.field_2378 = Q12(1.0f);
 
@@ -2626,7 +2626,7 @@ void Game_FlashlightToggle(void) // 0x8003ED08
     }
 }
 
-bool Game_FlashlightIsOn() // 0x8003ED64
+bool Game_FlashlightIsOn(void) // 0x8003ED64
 {
     return g_SysWork.field_2388.isFlashlightOn_15;
 }
@@ -2637,7 +2637,7 @@ void func_8003ED74(s32 arg0, s32 arg1) // 0x8003ED74
     func_8003F170();
 }
 
-void func_8003EDA8() // 0x8003EDA8
+void func_8003EDA8(void) // 0x8003EDA8
 {
     g_SysWork.field_2388.field_14 = 1;
 }
@@ -2733,7 +2733,7 @@ void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1) // 0x8003F08C
     }
 }
 
-void func_8003F170() // 0x8003F170
+void func_8003F170(void) // 0x8003F170
 {
     MATRIX          mat;
     VECTOR          sp48;
@@ -3209,7 +3209,7 @@ void func_80040004(s_WorldGfx* worldGfx) // 0x80040004
     g_WorldGfx.heldItem_1BAC.bone_18.next_14 = &worldGfx->charaModels_CC[2].skeleton_14.bones_C[16];
 }
 
-void func_80040014() // 0x80040014
+void func_80040014(void) // 0x80040014
 {
     func_80069860(g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz, g_WorldGfx.heldItem_1BAC.bone_18.next_14);
 };

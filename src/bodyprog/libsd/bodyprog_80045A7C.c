@@ -64,7 +64,7 @@ void Sd_EngineCmd(u32 cmd) // 0x80045A7C
     }
 }
 
-u8 func_80045B28() // 0x80045B28
+u8 func_80045B28(void) // 0x80045B28
 {
     u8 var;
 
@@ -102,7 +102,7 @@ u8 func_80045B28() // 0x80045B28
     return var;
 }
 
-u16 func_80045BC8() // 0x80045BC8
+u16 func_80045BC8(void) // 0x80045BC8
 {
     return D_800C1666;
 }
@@ -216,7 +216,7 @@ void func_80045D28(u8 isStereo) // 0x80045D28
     }
 }
 
-void sd_init() // 0x80045DD4
+void sd_init(void) // 0x80045DD4
 {
     SdInit();
     SdSetTickMode(1);
@@ -232,7 +232,7 @@ void sd_init() // 0x80045DD4
     sd_work_init();
 }
 
-void sd_work_init() // 0x80045E44
+void sd_work_init(void) // 0x80045E44
 {
     SdSetAutoKeyOffMode(0);
     SdUtSetReverbType(1);
@@ -289,7 +289,7 @@ void sd_work_init() // 0x80045E44
     Sd_SetVolBgm(40, 40);
 }
 
-void func_80045FF8() // 0x80045FF8
+void func_80045FF8(void) // 0x80045FF8
 {
     s32 i;
 
@@ -549,7 +549,7 @@ void func_80046620(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x80046620
                                    Sd_GetVolSe(D_800C1698.volumeLeft_C), Sd_GetVolSe(D_800C1698.volumeRight_E));
 }
 
-void func_800468EC() // 0x800468EC
+void func_800468EC(void) // 0x800468EC
 {
     SdUtKeyOffV(23);
 }
@@ -572,7 +572,7 @@ void func_8004692C(u16 cmd) // 0x8004692C
     SdVoKeyOff(D_800C15C6, D_800C15C8);
 }
 
-void func_800469AC() // 0x800469AC
+void func_800469AC(void) // 0x800469AC
 {
     s32 i;
 
@@ -582,7 +582,7 @@ void func_800469AC() // 0x800469AC
     }
 }
 
-void func_800469E8() // 0x800469E8
+void func_800469E8(void) // 0x800469E8
 {
     s32 i;
 
@@ -602,7 +602,7 @@ void func_80046A24(u16 cmd) // 0x80046A24
 }
 
 // Triggered when a FMV have just play.
-void func_80046A70() // 0x80046A70
+void func_80046A70(void) // 0x80046A70
 {
     u16 prevVal;
 
@@ -620,13 +620,13 @@ void func_80046A70() // 0x80046A70
     func_80047A70();
 }
 
-void func_80046AD8() // 0x80046AD8
+void func_80046AD8(void) // 0x80046AD8
 {
     D_800C1666 = 0xFFFF;
     func_800478DC(8);
 }
 
-void func_80046B04() // 0x80046B04
+void func_80046B04(void) // 0x80046B04
 {
     if (D_800C1678.volumeBgm_8 > 0)
     {
@@ -644,7 +644,7 @@ void func_80046B04() // 0x80046B04
     Sd_SetVolBgm(D_800C1678.field_6, D_800C1678.field_6);
 }
 
-void func_80046B78() // 0x80046B78
+void func_80046B78(void) // 0x80046B78
 {
     Sd_SetVolBgm(0, 0);
     SdSeqStop(0);
@@ -1940,7 +1940,7 @@ s32 func_80046DCC(s32 idx) // 0x80046DCC
 }
 
 // Related to voicelines in cutscenes.
-void func_80046E00() // 0x80046E00
+void func_80046E00(void) // 0x80046E00
 {
     u32* temp_a1;
     u32* temp_v0;
@@ -2086,7 +2086,7 @@ void func_800472BC(s32 arg0) // 0x800472BC
 }
 
 // Possibly related to audio (Not voicelines) of cutscenes.
-void func_80047308() // 0x80047308
+void func_80047308(void) // 0x80047308
 {
     u32* temp_a1;
     u32* temp_v0;
@@ -2164,13 +2164,13 @@ void func_80047308() // 0x80047308
     }
 }
 
-void func_8004760C() // 0x8004760C
+void func_8004760C(void) // 0x8004760C
 {
     func_800478DC(2);
     D_800C166E = 1;
 }
 
-void func_80047634() // 0x80047634
+void func_80047634(void) // 0x80047634
 {
     D_800C1658.field_F.field_0[3] = 1;
 
@@ -2305,7 +2305,7 @@ void func_800478DC(u8 cmd) // 0x800478DC
     D_800C37DD = D_800C16A8[0];
 }
 
-void func_80047A70() // 0x80047A70
+void func_80047A70(void) // 0x80047A70
 {
     if (D_800C16A8[0] != 0)
     {
@@ -2345,7 +2345,7 @@ void func_80047B24(s32 arg0) // 0x80047B24
     D_800C1658.field_15 = 1;
 }
 
-void func_80047B80() // 0x80047B80
+void func_80047B80(void) // 0x80047B80
 {
     u8 depth;
     u8 var_a1;
@@ -2422,7 +2422,7 @@ void func_80047B80() // 0x80047B80
     }
 }
 
-void func_80047D1C() // 0x80047D1C
+void func_80047D1C(void) // 0x80047D1C
 {
     D_800C37CC = 0;
     SdVabClose(D_800C37C8);

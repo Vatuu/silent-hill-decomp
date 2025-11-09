@@ -123,7 +123,7 @@ u8 g_IsNextFearMode = 0;
 u8 g_IsGameSaving = 0;
 */
 
-void Savegame_ScreenSubInit() // 0x801E2D8C
+void Savegame_ScreenSubInit(void) // 0x801E2D8C
 {
     s32 i;
     s32 j;
@@ -156,7 +156,7 @@ void Savegame_ScreenSubInit() // 0x801E2D8C
     }
 }
 
-void Gfx_SaveScreenBaseDraw() // 0x801E2EBC
+void Gfx_SaveScreenBaseDraw(void) // 0x801E2EBC
 {
     s_Line2d line;
     s32      i;
@@ -685,7 +685,7 @@ void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
     }
 }
 
-void Gfx_SavedFlashDraw() // 0x801E3E78
+void Gfx_SavedFlashDraw(void) // 0x801E3E78
 {
     GsOT*    ot;
     s32      slotIdx;
@@ -721,7 +721,7 @@ void Gfx_SavedFlashDraw() // 0x801E3E78
     }
 }
 
-void Gfx_SaveSlotBorderDraw() // 0x801E4010
+void Gfx_SaveSlotBorderDraw(void) // 0x801E4010
 {
     #define BORDER_LINE_COUNT  5
     #define BORDER_PIXEL_WIDTH 2
@@ -1564,7 +1564,7 @@ void Gfx_SaveDataInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
     }
 }
 
-void GameState_SaveScreen_Update() // 0x801E6320
+void GameState_SaveScreen_Update(void) // 0x801E6320
 {
     g_DisplaySaveDataInfo = 1;
 
@@ -1585,7 +1585,7 @@ void GameState_SaveScreen_Update() // 0x801E6320
     }
 }
 
-void Savegame_ScreenInit() // 0x801E63C0
+void Savegame_ScreenInit(void) // 0x801E63C0
 {
     if (g_GameWork.gameStatePrev_590 == GameState_MainMenu)
     {
@@ -1619,7 +1619,7 @@ void Savegame_ScreenInit() // 0x801E63C0
     g_GameWork.gameStateStep_598[2] = 0;
 }
 
-void Savegame_ScreenLogic() // 0x801E649C
+void Savegame_ScreenLogic(void) // 0x801E649C
 {
     s32              gameStateStep = g_GameWork.gameStateStep_598[1];
     s_SavegameEntry* saveEntry;
@@ -1810,7 +1810,7 @@ void Savegame_ScreenLogic() // 0x801E649C
     }
 }
 
-void Savegame_FormatLogic() // 0x801E69E8
+void Savegame_FormatLogic(void) // 0x801E69E8
 {
     #define STR_TIMER_MAX (TICKS_PER_SECOND / 2)
 
@@ -1857,7 +1857,7 @@ void Savegame_FormatLogic() // 0x801E69E8
     }
 }
 
-void Savegame_SaveLogic() // 0x801E6B18
+void Savegame_SaveLogic(void) // 0x801E6B18
 {
     s_SavegameMetadata* saveEntry;
 
@@ -1934,7 +1934,7 @@ void Savegame_SaveLogic() // 0x801E6B18
     }
 }
 
-void Savegame_LoadLogic() // 0x801E6DB0
+void Savegame_LoadLogic(void) // 0x801E6DB0
 {
     s32 var0;
     s32 var1;
@@ -2001,7 +2001,7 @@ void Savegame_LoadLogic() // 0x801E6DB0
     }
 }
 
-void Savegame_ContinueLogic() // 0x801E6F38
+void Savegame_ContinueLogic(void) // 0x801E6F38
 {
     // Handle continue state.
     switch (g_GameWork.gameStateStep_598[1])
@@ -2037,7 +2037,7 @@ void Savegame_ContinueLogic() // 0x801E6F38
     }
 }
 
-void Gfx_SaveBackgroundDraw() // 0x801E709C
+void Gfx_SaveBackgroundDraw(void) // 0x801E709C
 {
     // Draw "SLOT 1"/"SLOT 2" strings and bottom transparent frame.
     Gfx_SaveScreenBaseDraw();
@@ -2046,7 +2046,7 @@ void Gfx_SaveBackgroundDraw() // 0x801E709C
     Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
 }
 
-void Gfx_SaveScreen() // 0x801E70C8
+void Gfx_SaveScreen(void) // 0x801E70C8
 {
     s32              i;
     s32              j;
@@ -2097,7 +2097,7 @@ void Gfx_SaveScreen() // 0x801E70C8
     }
 }
 
-void Gfx_MemCardState() // 0x801E7244
+void Gfx_MemCardState(void) // 0x801E7244
 {
     if (g_MemCardStateTextTimer <= 0)
     {
@@ -2125,7 +2125,7 @@ void Gfx_WriteOptionSave(s32 arg0, s32 optionIdx) // 0x801E72DC
     Gfx_WriteOptionSaveDraw(arg0, optionIdx);
 }
 
-void GameState_DeathLoadScreen_Update() // 0x801E72FC
+void GameState_DeathLoadScreen_Update(void) // 0x801E72FC
 {
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
@@ -2139,7 +2139,7 @@ void GameState_DeathLoadScreen_Update() // 0x801E72FC
     Gfx_SaveScreen();
 }
 
-void func_801E737C() // 0x801E737C
+void func_801E737C(void) // 0x801E737C
 {
     if (!func_80033548())
     {

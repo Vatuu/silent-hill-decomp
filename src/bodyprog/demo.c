@@ -63,7 +63,7 @@ bool Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
     return true;
 }
 
-void Demo_DemoDataRead() // 0x8008F048
+void Demo_DemoDataRead(void) // 0x8008F048
 {
     if (g_Demo_DemoFileIdx != NO_VALUE)
     {
@@ -71,7 +71,7 @@ void Demo_DemoDataRead() // 0x8008F048
     }
 }
 
-void Demo_PlayDataRead() // 0x8008F07C
+void Demo_PlayDataRead(void) // 0x8008F07C
 {
     Demo_SequenceAdvance(0);
 
@@ -81,7 +81,7 @@ void Demo_PlayDataRead() // 0x8008F07C
     }
 }
 
-s32 Demo_PlayFileBufferSetup() // 0x8008F0BC
+s32 Demo_PlayFileBufferSetup(void) // 0x8008F0BC
 {
     s32 mapOverlaySize;
     s32 playFileSize;
@@ -100,12 +100,12 @@ s32 Demo_PlayFileBufferSetup() // 0x8008F0BC
     return ((u32)g_Demo_PlayFileBufferPtr >= (u32)(g_OvlDynamic + mapOverlaySize));
 }
 
-void Demo_DemoFileSavegameUpdate() // 0x8008F13C
+void Demo_DemoFileSavegameUpdate(void) // 0x8008F13C
 {
     g_GameWork.savegame_30C = DEMO_WORK()->savegame_100;
 }
 
-void Demo_GameGlobalsUpdate() // 0x8008F1A0
+void Demo_GameGlobalsUpdate(void) // 0x8008F1A0
 {
     // Backup current user config.
     g_Demo_UserConfigBackup = g_GameWork.config_0;
@@ -128,27 +128,27 @@ void Demo_GameGlobalsUpdate() // 0x8008F1A0
     Sd_SetVolume(OPT_SOUND_VOLUME_MIN, OPT_SOUND_VOLUME_MIN, g_GameWork.config_0.optVolumeSe_20);
 }
 
-void Demo_GameGlobalsRestore() // 0x8008F2BC
+void Demo_GameGlobalsRestore(void) // 0x8008F2BC
 {
     g_GameWork.config_0 = g_Demo_UserConfigBackup;
 
     Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config_0.optVolumeBgm_1F, g_GameWork.config_0.optVolumeSe_20);
 }
 
-void Demo_GameRandSeedUpdate() // 0x8008F33C
+void Demo_GameRandSeedUpdate(void) // 0x8008F33C
 {
     g_Demo_PrevRandSeed = Rng_GetSeed();
     Rng_SetSeed(g_Demo_RandSeed);
 }
 
-void Demo_GameRandSeedRestore() // 0x8008F370
+void Demo_GameRandSeedRestore(void) // 0x8008F370
 {
     Rng_SetSeed(g_Demo_PrevRandSeed);
 }
 
 bool g_Demo_Play = false;
 
-void Demo_Start() // 0x8008F398
+void Demo_Start(void) // 0x8008F398
 {
     g_Demo_Play = true;
     g_SysWork.flags_22A4 |= 1 << 1;
@@ -160,7 +160,7 @@ void Demo_Start() // 0x8008F398
     g_GameWork.field_5AC = 1;
 }
 
-void Demo_Stop() // 0x8008f3f0
+void Demo_Stop(void) // 0x8008f3f0
 {
     g_Demo_Play = false;
     g_SysWork.flags_22A4 &= ~(1 << 1);
@@ -218,7 +218,7 @@ s32 Demo_StateGet(s32 gameState)
     return DemoState_None;
 }
 
-void Demo_ExitDemo() // 0x8008F4E4
+void Demo_ExitDemo(void) // 0x8008F4E4
 {
     g_Demo_FrameCount     = 999 * TICKS_PER_SECOND;
     g_Demo_CurFrameData   = NULL;
@@ -233,7 +233,7 @@ bool func_8008F520()
     return false;
 }
 
-void Demo_DemoRandSeedBackup() // 0x8008F528
+void Demo_DemoRandSeedBackup(void) // 0x8008F528
 {
     if (g_SysWork.flags_22A4 & (1 << 1))
     {
@@ -241,7 +241,7 @@ void Demo_DemoRandSeedBackup() // 0x8008F528
     }
 }
 
-void Demo_DemoRandSeedRestore() // 0x8008F560
+void Demo_DemoRandSeedRestore(void) // 0x8008F560
 {
     if (g_SysWork.flags_22A4 & (1 << 1))
     {
@@ -249,7 +249,7 @@ void Demo_DemoRandSeedRestore() // 0x8008F560
     }
 }
 
-void Demo_DemoRandSeedAdvance() // 0x8008F598
+void Demo_DemoRandSeedAdvance(void) // 0x8008F598
 {
     #define SEED_OFFSET 0x3C6EF35F
 
@@ -259,7 +259,7 @@ void Demo_DemoRandSeedAdvance() // 0x8008F598
     }
 }
 
-bool Demo_Update() // 0x8008F5D8
+bool Demo_Update(void) // 0x8008F5D8
 {
     s32         prevScreenFadeCpy;
     bool        cond;
@@ -340,7 +340,7 @@ bool Demo_Update() // 0x8008F5D8
 
 const s16 unkRodata_8002B2F2 = 0x8008;
 
-bool Demo_ControllerDataUpdate() // 0x8008F7CC
+bool Demo_ControllerDataUpdate(void) // 0x8008F7CC
 {
     u32 btns;
 
@@ -370,7 +370,7 @@ bool Demo_ControllerDataUpdate() // 0x8008F7CC
     return true;
 }
 
-bool Demo_PresentIntervalUpdate() // 0x8008F87C
+bool Demo_PresentIntervalUpdate(void) // 0x8008F87C
 {
     g_Demo_VideoPresentInterval = 1;
 
@@ -383,7 +383,7 @@ bool Demo_PresentIntervalUpdate() // 0x8008F87C
     return true;
 }
 
-bool Demo_GameRandSeedSet() // 0x8008F8A8
+bool Demo_GameRandSeedSet(void) // 0x8008F8A8
 {
     if (!(g_SysWork.flags_22A4 & (1 << 1)))
     {

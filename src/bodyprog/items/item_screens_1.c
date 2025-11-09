@@ -125,7 +125,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
     func_8004C040();
 }
 
-bool func_8004C328() // 0x8004C328
+bool func_8004C328(void) // 0x8004C328
 {
     u32 itemIdx;
     u8  itemId;
@@ -205,7 +205,7 @@ bool func_8004C328() // 0x8004C328
     return false;
 }
 
-s32 Inventory_HyperBlasterUnlockTest() // 0x8004C45C
+s32 Inventory_HyperBlasterUnlockTest(void) // 0x8004C45C
 {
     s32 i;
 
@@ -238,7 +238,7 @@ s32 Inventory_HyperBlasterUnlockTest() // 0x8004C45C
     return 0;
 }
 
-s32 Inventory_HyperBlasterFunctionalTest() // 0x8004C4F8
+s32 Inventory_HyperBlasterFunctionalTest(void) // 0x8004C4F8
 {
     if (g_SavegamePtr->mapOverlayId_A4 > MapOverlayId_MAP0_S00)
     {
@@ -258,7 +258,7 @@ s32 Inventory_HyperBlasterFunctionalTest() // 0x8004C4F8
     return 0;
 }
 
-s32 Game_HyperBlasterBeamColorGet() // 0x8004C54C
+s32 Game_HyperBlasterBeamColorGet(void) // 0x8004C54C
 {
     return g_SavegamePtr->pickedUpSpecialItemCount_25C_3 >> 3;
 }

@@ -46,7 +46,7 @@ DRAWENV g_MainDrawEnv = {
     .isbg = true
 };
 
-int main()
+int main(void)
 {
     s16 offsetY;
     s32 fbNext;

@@ -74,7 +74,7 @@ static inline void s_800B55E8_Init(s_800B55E8* p, s32 field_0, s32 deviceId, s32
  * is unused and Splat merge it.
  */
 
-void Savegame_CardCleanInit() // 0x8002E630
+void Savegame_CardCleanInit(void) // 0x8002E630
 {
     s32                          i;
     s_MemCardInfo_BasicSaveInfo* ptr;
@@ -152,7 +152,7 @@ bool Savegame_CardFilesAreAllUnused(s32 deviceId) // 0x8002E76C
     return result;
 }
 
-void func_8002E7BC() // 0x8002E7BC
+void func_8002E7BC(void) // 0x8002E7BC
 {
     if (D_800B5480 == true)
     {
@@ -167,7 +167,7 @@ void func_8002E7BC() // 0x8002E7BC
     s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, CardResult_NotConnected); // `D_800B5600`
 }
 
-void func_8002E830() // 0x8002E830
+void func_8002E830(void) // 0x8002E830
 {
     if (D_800B5480) 
     {
@@ -176,19 +176,19 @@ void func_8002E830() // 0x8002E830
     }
 }
 
-void func_8002E85C() // 0x8002E85C
+void func_8002E85C(void) // 0x8002E85C
 {
     D_800B5508.field_110 = 1;
 }
 
-void func_8002E86C() // 0x8002E86C
+void func_8002E86C(void) // 0x8002E86C
 {
     D_800B5508.field_110 = 0;
 
     s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, CardResult_NotConnected);
 }
 
-s32 func_8002E898() // 0x8002E898
+s32 func_8002E898(void) // 0x8002E898
 {
     s32 ret;
     s32 i;
@@ -202,19 +202,19 @@ s32 func_8002E898() // 0x8002E898
     return ret;
 }
 
-void func_8002E8D4() // 0x8002E8D4
+void func_8002E8D4(void) // 0x8002E8D4
 {
     D_800B5508.field_110 = 1;
 }
 
-void func_8002E8E4() // 0x8002E8E4
+void func_8002E8E4(void) // 0x8002E8E4
 {
     D_800B5508.field_110 = 0;
 
     s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, CardResult_Success);
 }
 
-s32 func_8002E914() // 0x8002E914
+s32 func_8002E914(void) // 0x8002E914
 {
     s32 ret;
     s32 i;
@@ -239,7 +239,7 @@ bool func_8002E94C(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx) // 0x8002E9
     return true;
 }
 
-s32 func_8002E990() // 0x8002E990
+s32 func_8002E990(void) // 0x8002E990
 {
     return D_800B5508.field_E0[0].lastCardResult_14;
 }
@@ -319,7 +319,7 @@ bool func_8002EABC(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx) // 0x8002
     return ret != 0;
 }
 
-void func_8002EB88() // 0x8002EB88
+void func_8002EB88(void) // 0x8002EB88
 {
     s_800B55E8* ptr;
 
@@ -1268,28 +1268,28 @@ s32 Savegame_CardFileRename(s32 deviceId, char* prevName, char* newName) // 0x80
     return rename(prevBuf, newBuf);
 }
 
-void Savegame_CardInit() // 0x800303E4
+void Savegame_CardInit(void) // 0x800303E4
 {
     InitCARD(0);
     StartCARD();
     g_CardWork.devicesPending_0 = UINT_MAX; // All bits set.
 }
 
-void Savegame_CardEventsInit() // 0x80030414
+void Savegame_CardEventsInit(void) // 0x80030414
 {
     Savegame_CardStateInit();
     Savegame_CardSwEventsInit();
     Savegame_CardHwEventsInit();
 }
 
-void Savegame_CardStateInit() // 0x80030444
+void Savegame_CardStateInit(void) // 0x80030444
 {
     g_CardWork.state_4       = CardState_Idle;
     g_CardWork.stateStep_8   = 0;
     g_CardWork.stateResult_C = 0;
 }
 
-void Savegame_CardSwEventsInit() // 0x8003045C
+void Savegame_CardSwEventsInit(void) // 0x8003045C
 {
     EnterCriticalSection();
     g_CardWork.eventSwSpIOE_10    = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
@@ -1306,7 +1306,7 @@ void Savegame_CardSwEventsInit() // 0x8003045C
     Savegame_CardSwEventsReset();
 }
 
-void Savegame_CardHwEventsInit() // 0x80030530
+void Savegame_CardHwEventsInit(void) // 0x80030530
 {
     EnterCriticalSection();
     g_CardWork.eventHwSpIOE_20     = OpenEvent(HwCARD, EvSpIOE, EvMdINTR, Savegame_CardHwEventSpIOE);
@@ -1325,13 +1325,13 @@ void Savegame_CardHwEventsInit() // 0x80030530
     Savegame_CardHwEventsReset();
 }
 
-void Savegame_CardEventsClose() // 0x80030640
+void Savegame_CardEventsClose(void) // 0x80030640
 {
     Savegame_CardSwEventsClose();
     Savegame_CardHwEventsClose();
 }
 
-void Savegame_CardSwEventsClose() // 0x80030668
+void Savegame_CardSwEventsClose(void) // 0x80030668
 {
     EnterCriticalSection();
     CloseEvent(g_CardWork.eventSwSpIOE_10);
@@ -1341,7 +1341,7 @@ void Savegame_CardSwEventsClose() // 0x80030668
     ExitCriticalSection();
 }
 
-void Savegame_CardHwEventsClose() // 0x800306C8
+void Savegame_CardHwEventsClose(void) // 0x800306C8
 {
     EnterCriticalSection();
     CloseEvent(g_CardWork.eventHwSpIOE_20);
@@ -1352,7 +1352,7 @@ void Savegame_CardHwEventsClose() // 0x800306C8
     ExitCriticalSection();
 }
 
-s32 Savegame_CardSwEventsTest() // 0x80030734
+s32 Savegame_CardSwEventsTest(void) // 0x80030734
 {
     if (TestEvent(g_CardWork.eventSwSpERROR_14) == 1)
     {
@@ -1377,7 +1377,7 @@ s32 Savegame_CardSwEventsTest() // 0x80030734
     return 0;
 }
 
-void Savegame_CardSwEventsReset() // 0x800307BC
+void Savegame_CardSwEventsReset(void) // 0x800307BC
 {
     TestEvent(g_CardWork.eventSwSpERROR_14);
     TestEvent(g_CardWork.eventSwSpTIMOUT_18);
@@ -1385,12 +1385,12 @@ void Savegame_CardSwEventsReset() // 0x800307BC
     TestEvent(g_CardWork.eventSwSpIOE_10);
 }
 
-s32 Savegame_CardHwEventsTest() // 0x80030810
+s32 Savegame_CardHwEventsTest(void) // 0x80030810
 {
     return g_CardWork.lastEventHw_34;
 }
 
-void Savegame_CardHwEventsReset() // 0x80030820
+void Savegame_CardHwEventsReset(void) // 0x80030820
 {
     TestEvent(g_CardWork.eventHwSpERROR_24);
     TestEvent(g_CardWork.eventHwSpTIMOUT_28);
@@ -1401,32 +1401,32 @@ void Savegame_CardHwEventsReset() // 0x80030820
     g_CardWork.lastEventHw_34 = 0;
 }
 
-void Savegame_CardHwEventSpIOE() // 0x80030884
+void Savegame_CardHwEventSpIOE(void) // 0x80030884
 {
     g_CardWork.lastEventHw_34 = EvSpIOE;
 }
 
-void Savegame_CardHwEventSpERROR() // 0x80030894
+void Savegame_CardHwEventSpERROR(void) // 0x80030894
 {
     g_CardWork.lastEventHw_34 = EvSpERROR;
 }
 
-void Savegame_CardHwEventSpNEW() // 0x800308A4
+void Savegame_CardHwEventSpNEW(void) // 0x800308A4
 {
     g_CardWork.lastEventHw_34 = EvSpNEW;
 }
 
-void Savegame_CardHwEventSpTIMOUT() // 0x800308B4
+void Savegame_CardHwEventSpTIMOUT(void) // 0x800308B4
 {
     g_CardWork.lastEventHw_34 = EvSpTIMOUT;
 }
 
-void Savegame_CardHwEventSpUNKNOWN() // 0x800308C4
+void Savegame_CardHwEventSpUNKNOWN(void) // 0x800308C4
 {
     g_CardWork.lastEventHw_34 = EvSpUNKNOWN;
 }
 
-s32 Savegame_CardResult() // 0x800308D4
+s32 Savegame_CardResult(void) // 0x800308D4
 {
     return g_CardWork.stateResult_C;
 }
@@ -1477,12 +1477,12 @@ bool Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outD
     return true;
 }
 
-s32 Savegame_CardIsIdle() // 0x800309FC
+s32 Savegame_CardIsIdle(void) // 0x800309FC
 {
     return g_CardWork.state_4 == CardState_Idle;
 }
 
-void Savegame_CardUpdate() // 0x80030A0C
+void Savegame_CardUpdate(void) // 0x80030A0C
 {
     switch (g_CardWork.state_4)
     {
@@ -1524,7 +1524,7 @@ void Savegame_CardUpdate() // 0x80030A0C
     }
 }
 
-s32 Savegame_CardState_Init() // 0x80030AD8
+s32 Savegame_CardState_Init(void) // 0x80030AD8
 {
     s32 channel;
     s32 result;
@@ -1606,7 +1606,7 @@ s32 Savegame_CardState_Init() // 0x80030AD8
     return result;
 }
 
-s32 Savegame_CardState_Check() // 0x80030C88
+s32 Savegame_CardState_Check(void) // 0x80030C88
 {
     s32 channel;
     s32 result;
@@ -1655,7 +1655,7 @@ s32 Savegame_CardState_Check() // 0x80030C88
     return result;
 }
 
-s32 Savegame_CardState_Load() // 0x80030DC8
+s32 Savegame_CardState_Load(void) // 0x80030DC8
 {
     s32 channel;
     s32 result;
@@ -1727,7 +1727,7 @@ s32 Savegame_CardState_Load() // 0x80030DC8
     return result;
 }
 
-s32 Savegame_CardState_DirRead() // 0x80030F7C
+s32 Savegame_CardState_DirRead(void) // 0x80030F7C
 {
     struct DIRENTRY  fileInfo;
     struct DIRENTRY* curFile;
@@ -1770,7 +1770,7 @@ s32 Savegame_CardState_DirRead() // 0x80030F7C
     return result;
 }
 
-s32 Savegame_CardState_FileCreate() // 0x800310B4
+s32 Savegame_CardState_FileCreate(void) // 0x800310B4
 {
     s32 result;
 
@@ -1807,7 +1807,7 @@ s32 Savegame_CardState_FileCreate() // 0x800310B4
     return result;
 }
 
-s32 Savegame_CardState_FileOpen() // 0x80031184
+s32 Savegame_CardState_FileOpen(void) // 0x80031184
 {
     s32 mode;
     s32 result;
@@ -1860,7 +1860,7 @@ s32 Savegame_CardState_FileOpen() // 0x80031184
     return result;
 }
 
-s32 Savegame_CardState_FileReadWrite() // 0x80031260
+s32 Savegame_CardState_FileReadWrite(void) // 0x80031260
 {
     s32 result;
     s32 ioResult;

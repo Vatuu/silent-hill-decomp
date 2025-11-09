@@ -376,7 +376,7 @@ void smf_vol_set(s32 ch, s32 vc, s32 l_vol, s32 r_vol) // 0x800A4150
     SpuSetVoiceAttr(&s_attr);
 }
 
-void master_vol_set() // 0x800A4260
+void master_vol_set(void) // 0x800A4260
 {
     s32 i;
 
@@ -404,7 +404,7 @@ void seq_master_vol_set(s32 access_num) // 0x800A4314
     }
 }
 
-void toremoro_set() // 0x800A439C
+void toremoro_set(void) // 0x800A439C
 {
     s16 tre_data;
     s32 vc;
@@ -571,7 +571,7 @@ void replay_reverb_set(s16 acc) // 0x800A4748
     }
 }
 
-void midi_vsync() // 0x800A4838
+void midi_vsync(void) // 0x800A4838
 {
     s32 i;
     s32 ch;
@@ -748,7 +748,7 @@ void sound_seq_off(s32 access_num) // 0x800A4A34
     SpuSetKey(SPU_OFF, voice);
 }
 
-void sound_off() // 0x800A4D20
+void sound_off(void) // 0x800A4D20
 {
     u32 voice;
     s32 stat;

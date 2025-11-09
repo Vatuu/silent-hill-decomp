@@ -78,7 +78,7 @@ void func_801E2E28(s32 idx) // 0x801E2E28
     D_801E5E80 = 0x10000 / var0;
 }
 
-bool func_801E2ED8() // 0x801E2ED8
+bool func_801E2ED8(void) // 0x801E2ED8
 {
     switch (D_801E5E88)
     {
@@ -111,7 +111,7 @@ bool func_801E2ED8() // 0x801E2ED8
     return false;
 }
 
-bool func_801E2FC0() // 0x801E2FC0
+bool func_801E2FC0(void) // 0x801E2FC0
 {
     switch (g_Screen_FadeStatus)
     {
@@ -142,7 +142,7 @@ bool func_801E2FC0() // 0x801E2FC0
     return false;
 }
 
-void GameState_Unk15_Update() // 0x801E3094
+void GameState_Unk15_Update(void) // 0x801E3094
 {
     s32* (*routines[3])() = { func_801E3124, func_801E342C, func_801E3304 };
 
@@ -156,7 +156,7 @@ void GameState_Unk15_Update() // 0x801E3094
     }
 }
 
-bool func_801E3124() // 0x801E3124
+bool func_801E3124(void) // 0x801E3124
 {
     switch (g_GameWork.gameStateStep_598[1])
     {
@@ -225,7 +225,7 @@ bool func_801E3124() // 0x801E3124
     return false;
 }
 
-s32 func_801E3304() // 0x801E3304
+s32 func_801E3304(void) // 0x801E3304
 {
     if (g_GameWork.gameStatePrev_590 == GameState_InGame)
     {
@@ -257,7 +257,7 @@ s32 func_801E3304() // 0x801E3304
     return 0;
 }
 
-bool func_801E342C() // 0x801E342C
+bool func_801E342C(void) // 0x801E342C
 {
     s32   temp;
     GsOT* ot;
@@ -406,7 +406,7 @@ u8 D_801E5FF8[20] = { 0 };
 
 u32 D_801E600C = 0;
 
-bool func_801E3684() // 0x801E3684
+bool func_801E3684(void) // 0x801E3684
 {
     s32  sp10;
     s32  sp14;
@@ -497,7 +497,7 @@ bool func_801E3684() // 0x801E3684
     return result;
 }
 
-void func_801E386C() // 0x801E386C
+void func_801E386C(void) // 0x801E386C
 {
     s_801E5558* ptr;
     s32         var0;
@@ -523,7 +523,7 @@ void func_801E386C() // 0x801E386C
     D_801E5E80 = 0x10000 / D_801E5E7C;
 }
 
-bool func_801E3970() // 0x801E3970
+bool func_801E3970(void) // 0x801E3970
 {
     bool   showKcet;
     bool   animateKcet;
@@ -679,7 +679,7 @@ bool func_801E3970() // 0x801E3970
     return isFinished;
 }
 
-void func_801E3DD0() // 0x801E3DD0
+void func_801E3DD0(void) // 0x801E3DD0
 {
     D_801E600C = Rng_Rand16();
 }

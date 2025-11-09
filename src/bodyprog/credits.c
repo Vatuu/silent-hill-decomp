@@ -40,7 +40,7 @@ s_800AFE24 D_800AFE24 = {
     .field_4C  = 4551
 };
 
-void func_8008F94C() // 0x8008F94C
+void func_8008F94C(void) // 0x8008F94C
 {
     s16 temp_s1;
     s32 var_a0;
@@ -364,7 +364,7 @@ void func_8008F94C() // 0x8008F94C
     D_800C48B5 = CLAMP(D_800C48B5, 0, 100);
 }
 
-void func_800904F4() // 0x800904F4
+void func_800904F4(void) // 0x800904F4
 {
     u8 extraOptions;
 
@@ -976,7 +976,7 @@ void func_8009151C(u32 arg0, s32 arg1, s32 arg2)
     }
 }
 
-void GameFs_StfRollBinLoad() // 0x80091778
+void GameFs_StfRollBinLoad(void) // 0x80091778
 {
     // Required for match.
     if (g_Font24AtlasImg.tPage != 0) {}

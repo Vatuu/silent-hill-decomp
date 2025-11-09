@@ -58,7 +58,7 @@ s32  chantype[18]   = { 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 0, 0, 0 };
 
 extern bool sd_timer_flag; // TODO: Only used in this file.
 
-bool smf_timer() // 0x800A6D18
+bool smf_timer(void) // 0x800A6D18
 {
     if (!sd_interrupt_start_flag || sd_int_flag)
     {
@@ -84,7 +84,7 @@ bool smf_timer() // 0x800A6D18
     return false;
 }
 
-void smf_timer_set() // 0x800A6DC0
+void smf_timer_set(void) // 0x800A6DC0
 {
     if (!sd_timer_flag)
     {
@@ -102,7 +102,7 @@ void smf_timer_set() // 0x800A6DC0
     }
 }
 
-void smf_timer_end() // 0x800A6E58
+void smf_timer_end(void) // 0x800A6E58
 {
     sd_timer_flag = true;
 
@@ -116,7 +116,7 @@ void smf_timer_end() // 0x800A6E58
     sd_int_flag   = false;
 }
 
-void smf_timer_stop() // 0x800A6EC8
+void smf_timer_stop(void) // 0x800A6EC8
 {
     sd_timer_flag = true;
 
@@ -128,7 +128,7 @@ void smf_timer_stop() // 0x800A6EC8
     sd_int_flag   = false;
 }
 
-void smf_vsync() // 0x800A6F14
+void smf_vsync(void) // 0x800A6F14
 {
     if (sd_int_flag2)
     {

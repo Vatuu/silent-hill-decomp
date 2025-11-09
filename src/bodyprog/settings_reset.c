@@ -3,14 +3,14 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/screen_draw.h"
 
-void Settings_ScreenAndVolUpdate() // 0x800333CC
+void Settings_ScreenAndVolUpdate(void) // 0x800333CC
 {
     Screen_XyPositionSet(g_GameWork.config_0.optScreenPosX_1C, g_GameWork.config_0.optScreenPosY_1D);
     Sd_EngineCmd((g_GameWork.config_0.optSoundType_1E != 0) ? 1 : 2);
     Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config_0.optVolumeBgm_1F, g_GameWork.config_0.optVolumeSe_20);
 }
 
-void Settings_RestoreDefaults() // 0x8003342C
+void Settings_RestoreDefaults(void) // 0x8003342C
 {
     g_GameWork.config_0.optExtraWeaponCtrl_23 = 1;
     g_GameWork.config_0.optBrightness_22      = 3;

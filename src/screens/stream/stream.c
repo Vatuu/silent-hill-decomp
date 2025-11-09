@@ -13,7 +13,7 @@
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 
-void GameState_StartMovieIntro_Update() // 0x801E2654
+void GameState_StartMovieIntro_Update(void) // 0x801E2654
 {
     switch (g_GameWork.gameStateStep_598[0])
     {
@@ -45,7 +45,7 @@ void GameState_StartMovieIntro_Update() // 0x801E2654
     Gfx_BackgroundSpriteDraw(D_800A900C);
 }
 
-void GameState_MovieIntro_Update() // 0x801E279C
+void GameState_MovieIntro_Update(void) // 0x801E279C
 {
     s32 fileIdx = FILE_XA_C1_20670;
 
@@ -60,18 +60,18 @@ void GameState_MovieIntro_Update() // 0x801E279C
     g_ScreenFadeTimestep = Q12(1.0f);
 }
 
-void GameState_MovieOpening_Update() // 0x801E2838
+void GameState_MovieOpening_Update(void) // 0x801E2838
 {
     open_main(FILE_XA_M1_03500, 0);
     Game_StateSetNext(GameState_MainLoadScreen);
 }
 
-void GameState_ExitMovie_Update() // 0x801E28B0
+void GameState_ExitMovie_Update(void) // 0x801E28B0
 {
     Game_StateSetNext(GameState_InGame);
 }
 
-void GameState_DebugMoviePlayer_Update() // 0x801E2908
+void GameState_DebugMoviePlayer_Update(void) // 0x801E2908
 {
     static s32 g_Debug_MoviePlayerIdx = 0; // 0x801E3F3C
 
@@ -104,7 +104,7 @@ void GameState_DebugMoviePlayer_Update() // 0x801E2908
     }
 }
 
-void GameState_MovieIntroAlternate_Update() // 0x801E2A24
+void GameState_MovieIntroAlternate_Update(void) // 0x801E2A24
 {
     open_main(FILE_XA_C1_20670, 2060); // Second param looks like file ID for `FILE_XA_M6_02112`, but is actually frame count?
     Game_StateSetNext(GameState_MainMenu);
@@ -266,7 +266,7 @@ void strInit(CdlLOC* loc, void (*callback)()) // 0x801E300C
     strKickCD(loc);
 }
 
-void strCallback() // 0x801E307C
+void strCallback(void) // 0x801E307C
 {
     RECT snap_rect;
     s32  id;

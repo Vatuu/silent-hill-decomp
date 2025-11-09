@@ -9,12 +9,12 @@
 #include "bodyprog/joy.h"
 #include "bodyprog/math/math.h"
 
-void SysWork_Clear() // 0x800340E0
+void SysWork_Clear(void) // 0x800340E0
 {
     bzero(&g_SysWork, sizeof(s_SysWork));
 }
 
-s32 MainLoop_ShouldWarmReset() // 0x80034108
+s32 MainLoop_ShouldWarmReset(void) // 0x80034108
 {
     #define RESET_BTN_FLAGS (ControllerFlag_Select | ControllerFlag_Start)
     #define UNK_BTN_FLAGS_0 (ControllerFlag_Select | ControllerFlag_Start | ControllerFlag_L2 | ControllerFlag_R2 | ControllerFlag_L1 | ControllerFlag_R1)
@@ -74,7 +74,7 @@ s32 MainLoop_ShouldWarmReset() // 0x80034108
     return (g_SysWork.flags_22A4 & (1 << 8)) ? 2 : 0;
 }
 
-void Game_WarmBoot() // 0x80034264
+void Game_WarmBoot(void) // 0x80034264
 {
     e_GameState prevState;
 

@@ -70,7 +70,7 @@ static inline s32 WrapIdx(s32 idx)
 }
 
 // One of it's purposes is check if the memory card is loaded.
-bool func_80033548() // 0x80033548
+bool func_80033548(void) // 0x80033548
 {
     u32                 sp10[2];
     s32                 sp18[8];

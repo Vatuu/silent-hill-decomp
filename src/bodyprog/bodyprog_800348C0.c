@@ -36,12 +36,12 @@ s32 g_SomeTimer0 = 0;
 u32 D_800BCD88 = 0; // @unused Padding?
 u32 D_800BCD8C = 0; // @unused Padding?
 
-void func_800348C0() // 0x800348C0
+void func_800348C0(void) // 0x800348C0
 {
     bzero(&D_800A992C[1], 0x48);
 }
 
-void GameState_LoadScreen_Update() // 0x800348E8
+void GameState_LoadScreen_Update(void) // 0x800348E8
 {
     Gfx_LoadingScreenDraw();
     GameFs_MapStartup();
@@ -71,7 +71,7 @@ static inline void Game_StateStepIncrement()
     g_GameWork.gameStateStep_598[0] = gameStateStep0 + 1;
 }
 
-void GameFs_MapStartup() // 0x80034964
+void GameFs_MapStartup(void) // 0x80034964
 {
     switch (g_GameWork.gameStateStep_598[0])
     {
@@ -260,7 +260,7 @@ void GameFs_MapStartup() // 0x80034964
     }
 }
 
-void Gfx_LoadingScreenDraw() // 0x80034E58
+void Gfx_LoadingScreenDraw(void) // 0x80034E58
 {
     if (g_SysWork.loadingScreenIdx_2281 != LoadingScreenId_None && g_GameWork.gameStateStep_598[0] < 10)
     {
@@ -272,7 +272,7 @@ void Gfx_LoadingScreenDraw() // 0x80034E58
     Gfx_2dBackgroundMotionBlur(SyncMode_Wait2);
 }
 
-void func_80034EC8() // 0x80034EC8
+void func_80034EC8(void) // 0x80034EC8
 {
     s32 i;
 
@@ -287,7 +287,7 @@ void func_80034EC8() // 0x80034EC8
     }
 }
 
-void func_80034F18() // 0x80034F18
+void func_80034F18(void) // 0x80034F18
 {
     vcSetCameraUseWarp(&g_SysWork.player_4C.chara_0.position_18, g_SysWork.cameraAngleY_237A);
     func_8005E70C();
@@ -303,7 +303,7 @@ void func_80034F18() // 0x80034F18
     func_80037334();
 }
 
-void Game_InGameInit() // 0x80034FB8
+void Game_InGameInit(void) // 0x80034FB8
 {
     s32 mapOvlId;
 
@@ -360,7 +360,7 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     Game_SavegameResetPlayer();
 }
 
-void Game_PlayerInit() // 0x80035178
+void Game_PlayerInit(void) // 0x80035178
 {
     func_8003C048();
     func_8003C110();
@@ -550,7 +550,7 @@ void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
     D_800A98FC[charaId] = idx;
 }
 
-void func_8003569C() // 0x8003569C
+void func_8003569C(void) // 0x8003569C
 {
     s32            i;
     GsCOORDINATE2* coord;
@@ -580,7 +580,7 @@ void func_8003569C() // 0x8003569C
 // AUDIO HANDLING?
 // ========================================
 
-s32 func_80035780() // 0x80035780
+s32 func_80035780(void) // 0x80035780
 {
     if (func_80045B28())
     {
@@ -658,7 +658,7 @@ void func_800358DC(s32 cmd) // 0x800358DC
     Sd_EngineCmd(g_UnknownEngineCmdTable0[cmd]);
 }
 
-void func_80035924() // 0x80035924
+void func_80035924(void) // 0x80035924
 {
     s8 cmd;
 
@@ -671,7 +671,7 @@ void func_80035924() // 0x80035924
     Sd_EngineCmd(g_UnknownEngineCmdTable1[cmd]);
 }
 
-void func_8003596C() // 0x8003596C
+void func_8003596C(void) // 0x8003596C
 {
     if (g_MapOverlayHeader.field_14 == 1)
     {
@@ -679,7 +679,7 @@ void func_8003596C() // 0x8003596C
     }
 }
 
-s32 func_8003599C() // 0x8003599C
+s32 func_8003599C(void) // 0x8003599C
 {
     if (func_80045B28() || Fs_QueueGetLength() > 0)
     {
@@ -752,17 +752,17 @@ void func_80035B58(s32 arg0) // 0x80035B58
     g_MapOverlayHeader.func_16C(g_MapOverlayHeader.field_17, g_MapOverlayHeader.field_16);
 }
 
-void func_80035B98() // 0x80035B98
+void func_80035B98(void) // 0x80035B98
 {
     Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
 }
 
-void Gfx_LoadingScreen_BackgroundTexture() // 0x80035BBC
+void Gfx_LoadingScreen_BackgroundTexture(void) // 0x80035BBC
 {
     Gfx_BackgroundSpriteDraw(&D_800A9034);
 }
 
-void Gfx_LoadingScreen_PlayerRun() // 0x80035BE0
+void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
 {
     VECTOR3        camLookAt;
     s32            temp;
@@ -833,7 +833,7 @@ void func_80035DB4(s32 arg0) // 0x80035DB4
     }
 }
 
-void func_80035E1C() // 0x80035E1C
+void func_80035E1C(void) // 0x80035E1C
 {
     s32 i;
 
@@ -877,7 +877,7 @@ bool func_80035E44()
     return true;
 }
 
-void func_80035ED0() // 0x80035ED0
+void func_80035ED0(void) // 0x80035ED0
 {
     s32 i;
 
@@ -1113,7 +1113,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, u8* arg2) // 0x80035F4C
     D_800BCD5C = 1;
 }
 
-void func_800363D0() // 0x800363D0
+void func_800363D0(void) // 0x800363D0
 {
     D_800A9A1C               = 0;
     g_SysWork.sysFlags_22A0 |= SysFlag_3;
@@ -1128,7 +1128,7 @@ void func_8003640C(s32 arg0) // 0x8003640C
     }
 }
 
-void Savegame_MapRoomIdxSet() // 0x80036420
+void Savegame_MapRoomIdxSet(void) // 0x80036420
 {
     s32 x;
     s32 z;
@@ -1149,17 +1149,17 @@ void Savegame_MapRoomIdxSet() // 0x80036420
     g_SavegamePtr->mapRoomIdx_A5 = newMapRoomIdx;
 }
 
-s32 func_8003647C() // 0x8003647C
+s32 func_8003647C(void) // 0x8003647C
 {
     return g_SavegamePtr->mapRoomIdx_A5 > g_MapOverlayHeader.field_8;
 }
 
-s32 func_80036498() // 80036498
+s32 func_80036498(void) // 80036498
 {
     return !(g_SavegamePtr->mapRoomIdx_A5 > g_MapOverlayHeader.field_8);
 }
 
-u32 func_800364BC() // 0x800364BC
+u32 func_800364BC(void) // 0x800364BC
 {
     u32 var0;
     u32 var1;
@@ -1175,7 +1175,7 @@ u32 func_800364BC() // 0x800364BC
 // `RECT`s?
 const char rodataPad_80025234[] = { 0, 177, 58, 204, 0, 0, 0, 0 }; // Could this indicate file split nearby?
 
-void func_8003652C() // 0x8003652C
+void func_8003652C(void) // 0x8003652C
 {
     RECT rect;
 
@@ -1688,14 +1688,14 @@ void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
     } 
 }
 
-void func_80037124() // 0x80037124
+void func_80037124(void) // 0x80037124
 {
     g_MapMsg_Select.maxIdx_0 = NO_VALUE;
     func_8003652C();
     DrawSync(SyncMode_Wait);
 }
 
-void func_80037154() // 0x80037154
+void func_80037154(void) // 0x80037154
 {
     s32 i;
 
@@ -1707,7 +1707,7 @@ void func_80037154() // 0x80037154
     }
 }
 
-void func_80037188() // 0x80037188
+void func_80037188(void) // 0x80037188
 {
     s32 i;
 
@@ -1756,7 +1756,7 @@ void Chara_PositionUpdateFromParams(s_MapPoint2d* mapPoint) // 0x800371E8
     Savegame_MapRoomIdxSet();
 }
 
-void func_80037334() // 0x80037334
+void func_80037334(void) // 0x80037334
 {
     s_Collision coll;
 
@@ -1769,7 +1769,7 @@ void func_80037334() // 0x80037334
     g_SysWork.player_4C.chara_0.position_18.vy = coll.groundHeight_0;
 }
 
-void func_80037388() // 0x80037388
+void func_80037388(void) // 0x80037388
 {
     volatile s32 v1;
     s32          v2;
@@ -2074,7 +2074,7 @@ s32 Camera_Distance2dGet(const VECTOR3* pos) // 0x80038B44
     return FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT);
 }
 
-void GameState_InGame_Update() // 0x80038BD4
+void GameState_InGame_Update(void) // 0x80038BD4
 {
     s_SubCharacter* player;
 
@@ -2186,7 +2186,7 @@ void GameState_InGame_Update() // 0x80038BD4
     }
 }
 
-void SysState_Gameplay_Update() // 0x80038BD4
+void SysState_Gameplay_Update(void) // 0x80038BD4
 {
     s_SubCharacter* playerChara;
 
@@ -2272,7 +2272,7 @@ void SysState_Gameplay_Update() // 0x80038BD4
     }
 }
 
-void SysState_GamePaused_Update() // 0x800391E8
+void SysState_GamePaused_Update(void) // 0x800391E8
 {
     D_800A9A68 += g_DeltaTime1;
     if (((D_800A9A68 >> 11) & (1 << 0)) == 0)
@@ -2316,7 +2316,7 @@ void SysState_GamePaused_Update() // 0x800391E8
     }
 }
 
-void SysState_OptionsMenu_Update() // 0x80039344
+void SysState_OptionsMenu_Update(void) // 0x80039344
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -2429,7 +2429,7 @@ void func_8003943C()
     }
 }
 
-void SysState_StatusMenu_Update() // 0x80039568
+void SysState_StatusMenu_Update(void) // 0x80039568
 {
     e_GameState gameState;
 
@@ -2450,7 +2450,7 @@ void SysState_StatusMenu_Update() // 0x80039568
     g_GameWork.gameStateStep_598[0] = 0;
 }
 
-void GameState_LoadStatusScreen_Update() // 0x800395C0
+void GameState_LoadStatusScreen_Update(void) // 0x800395C0
 {
     s_Savegame* save;
 
@@ -2482,7 +2482,7 @@ void GameState_LoadStatusScreen_Update() // 0x800395C0
     }
 }
 
-void SysState_MapScreen_Update() // 0x800396D4
+void SysState_MapScreen_Update(void) // 0x800396D4
 {
     if (!HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
     {
@@ -2525,7 +2525,7 @@ void SysState_MapScreen_Update() // 0x800396D4
     }
 }
 
-void GameState_LoadMapScreen_Update() // 0x8003991C
+void GameState_LoadMapScreen_Update(void) // 0x8003991C
 {
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
@@ -2552,7 +2552,7 @@ void GameState_LoadMapScreen_Update() // 0x8003991C
     }
 }
 
-void SysState_Fmv_Update() // 0x80039A58
+void SysState_Fmv_Update(void) // 0x80039A58
 {
     #define BASE_AUDIO_FILE_IDX FILE_XA_ZC_14392
 
@@ -2609,7 +2609,7 @@ void SysState_Fmv_Update() // 0x80039A58
     }
 }
 
-void SysState_LoadArea_Update() // 0x80039C40
+void SysState_LoadArea_Update(void) // 0x80039C40
 {
     u32           var1;
     s_MapPoint2d* mapPoint;
@@ -2672,17 +2672,17 @@ void SysState_LoadArea_Update() // 0x80039C40
     Gfx_2dBackgroundMotionBlur(SyncMode_Immediate);
 }
 
-void AreaLoad_UpdatePlayerPosition() // 0x80039F30
+void AreaLoad_UpdatePlayerPosition(void) // 0x80039F30
 {
     Chara_PositionUpdateFromParams(&D_800BCDB0);
 }
 
-void func_80039F54() // 0x80039F54
+void func_80039F54(void) // 0x80039F54
 {
     Sd_EngineCmd(SfxPairs[g_SysWork.field_2283].sfx_2);
 }
 
-s8 func_80039F90() // 0x80039F90
+s8 func_80039F90(void) // 0x80039F90
 {
     if (g_SysWork.processFlags_2298 & (SysWorkProcessFlag_RoomTransition | SysWorkProcessFlag_OverlayTransition))
     {
@@ -2743,7 +2743,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
     }
 }
 
-void SysWork_SavegameUpdatePlayer() // 0x8003A120
+void SysWork_SavegameUpdatePlayer(void) // 0x8003A120
 {
     s_Savegame* save;
 
@@ -2756,7 +2756,7 @@ void SysWork_SavegameUpdatePlayer() // 0x8003A120
     save->playerHealth_240    = g_SysWork.player_4C.chara_0.health_B0;
 }
 
-void func_8003A16C() // 0x8003A16C
+void func_8003A16C(void) // 0x8003A16C
 {
     if (!(g_SysWork.flags_22A4 & 2))
     {
@@ -2767,7 +2767,7 @@ void func_8003A16C() // 0x8003A16C
     }
 }
 
-void SysWork_SavegameReadPlayer() // 0x8003A1F4
+void SysWork_SavegameReadPlayer(void) // 0x8003A1F4
 {
     g_SysWork.player_4C.chara_0.position_18.vx = g_SavegamePtr->playerPositionX_244;
     g_SysWork.player_4C.chara_0.position_18.vz = g_SavegamePtr->playerPositionZ_24C;
@@ -2775,7 +2775,7 @@ void SysWork_SavegameReadPlayer() // 0x8003A1F4
     g_SysWork.player_4C.chara_0.health_B0      = g_SavegamePtr->playerHealth_240;
 }
 
-void SysState_SaveMenu_Update() // 0x8003A230
+void SysState_SaveMenu_Update(void) // 0x8003A230
 {
     s32 gameState;
 
@@ -2831,7 +2831,7 @@ void SysState_SaveMenu_Update() // 0x8003A230
     }
 }
 
-void SysState_EventCallFunc_Update() // 0x8003A3C8
+void SysState_EventCallFunc_Update(void) // 0x8003A3C8
 {
     if (g_MapEventParam->flags_8_13 != 0)
     {
@@ -2842,14 +2842,14 @@ void SysState_EventCallFunc_Update() // 0x8003A3C8
     g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
 }
 
-void SysState_EventSetFlag_Update() // 0x8003A460
+void SysState_EventSetFlag_Update(void) // 0x8003A460
 {
     g_DeltaTime0 = g_SomeTimer0;
     Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
     g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
-void SysState_EventPlaySound_Update() // 0x8003A4B4
+void SysState_EventPlaySound_Update(void) // 0x8003A4B4
 {
     g_DeltaTime0 = g_SomeTimer0;
 
@@ -2859,7 +2859,7 @@ void SysState_EventPlaySound_Update() // 0x8003A4B4
     g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
-void SysState_GameOver_Update() // 0x8003A52C
+void SysState_GameOver_Update(void) // 0x8003A52C
 {
     #define TIP_COUNT 15
 
@@ -3026,7 +3026,7 @@ void SysState_GameOver_Update() // 0x8003A52C
     }
 }
 
-void GameState_MapEvent_Update() // 0x8003AA4C
+void GameState_MapEvent_Update(void) // 0x8003AA4C
 {
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
