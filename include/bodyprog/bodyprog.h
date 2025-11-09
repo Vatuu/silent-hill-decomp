@@ -216,6 +216,17 @@ typedef struct _s_8002AC04
             u32 field_C_28 : 3;
             u32 field_C_31 : 1;
         } func_80089DF0_data;
+        struct
+        {
+            u8  funcIdx_4;
+            u8  field_5_0 : 5;
+            u32 field_5_5 : 1;
+            u32 field_5_6 : 1;
+            u32 field_5_7 : 1;
+            u16 field_6;
+            s32 field_8;
+            u32 field_C;
+        } func_80089A30_data;
     } field_4;
 } s_8002AC04;
 STATIC_ASSERT_SIZEOF(s_8002AC04, 16);

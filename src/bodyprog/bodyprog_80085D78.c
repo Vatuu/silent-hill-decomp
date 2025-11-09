@@ -1950,7 +1950,88 @@ void func_800899BC(s_SysWork_2514* arg0, s32 arg1) // 0x800899BC
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80089A30); // 0x80089A30
+bool func_80089A30(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089A30
+{
+    s32                temp_s3;
+    s_SysWork_2514_18* next;
+    s_SysWork_2514_18* head;
+    s_SysWork_2514_18* current;
+    s_func_8009ECCC*   ptr;
+
+    ptr = arg1;
+
+    if (arg0 == NULL)
+    {
+        return false;
+    }
+
+    if (arg2 == NULL)
+    {
+        return false;
+    }
+
+    if (arg2->field_4.funcIdx_4 != 0)
+    {
+        return false;
+    }
+
+    temp_s3 = arg2->field_4.func_80089A30_data.field_8;
+
+    if (arg2->field_4.func_80089A30_data.field_5_5 || arg2->field_4.func_80089A30_data.field_5_6)
+    {
+        current = arg0->head_18.next_0;
+        head    = &arg0->head_18;
+
+        if (arg2->field_4.func_80089A30_data.field_5_5)
+        {
+            while (current != head)
+            {
+                if (current->field_C == temp_s3)
+                {
+                    if (ptr != NULL)
+                    {
+                        ptr->field_10 = NULL;
+                    }
+                    return false;
+                }
+                current = current->next_0;
+            }
+        }
+        else
+        {
+            while (current != head)
+            {
+                next = current->next_0;
+                if ((ptr == NULL || current != ptr) && current->field_C == temp_s3)
+                {
+                    func_8009EC1C(arg0, current);
+                }
+                current = next;
+            }
+        }
+    }
+
+    if (ptr == NULL)
+    {
+        ptr = func_8009ECCC(arg0, arg2->field_4.func_80089A30_data.field_C);
+        if (ptr == NULL)
+        {
+            return false;
+        }
+        ptr->field_14_16 = *arg3;
+    }
+
+    ptr->field_10   = arg2->field_0;
+    ptr->field_14_0 = 0;
+    ptr->field_C    = temp_s3;
+
+    if (arg2->field_4.func_80089A30_data.field_5_7)
+    {
+        ptr->field_1C = arg2->field_4.func_80089A30_data.field_6;
+    }
+
+    return true;
+}
 
 bool func_80089BB8(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3) // 0x80089BB8
 {
