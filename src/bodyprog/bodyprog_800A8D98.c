@@ -584,7 +584,7 @@ u16 D_800A9774[] = {
    0
 };
 
-void (*g_GameStateUpdateFuncs[])() = {
+void (*g_GameStateUpdateFuncs[])(void) = {
     GameState_Boot_Update,
     (void (*)())0x800C95AC, // Konami Logo.
     (void (*)())0x800C99A4, // KCET Logo.
