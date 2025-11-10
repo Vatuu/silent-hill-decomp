@@ -356,8 +356,11 @@ void func_800D279C(void) // 0x800D279C
 
 void MapEvent_Generator0(void) // 0x800D27C8
 {
-    #define STATE_PRESS_SWITCH      3
-    #define STATE_DONT_PRESS_SWITCH NO_VALUE
+    typedef enum _EventState
+    {
+        EventState_PressSwitch     = 3,
+        EventState_DontPressSwitch = NO_VALUE
+    } e_EventState;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -371,10 +374,10 @@ void MapEvent_Generator0(void) // 0x800D27C8
 
         case 2:
             g_SysWork.silentYesSelection_2350_4 = true;
-            MapMsg_DisplayAndHandleSelection(true, 25, STATE_PRESS_SWITCH, STATE_DONT_PRESS_SWITCH, 0, false); // "Do you want to press the switch?"
+            MapMsg_DisplayAndHandleSelection(true, 25, EventState_PressSwitch, EventState_DontPressSwitch, 0, false); // "Do you want to press the switch?"
             break;
 
-        case STATE_PRESS_SWITCH:
+        case EventState_PressSwitch:
             func_8005DC1C(Sfx_Unk1494, &QVECTOR3(140.5f, -0.5f, -20.6f), Q8_CLAMPED(0.5f), 0);
             Sd_EngineCmd(Sfx_Unk1495);
             Savegame_EventFlagSet(EventFlag_M3S01_GeneratorOn);
@@ -392,7 +395,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
             g_GeneratorMakeNoise = true;
             SysWork_StateStepIncrement(0);
 
-        default: // `STATE_DONT_PRESS_SWITCH`
+        default: // `EventState_DontPressSwitch`
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -585,7 +588,7 @@ void func_800D2E54(void) // 0x800D2E54
             }
         }
 
-        for (i = 0; i < 6; i++)
+        for (i = 0; i < ARRAY_SIZE(g_WorldObject0); i++)
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject0[i].object_0, &g_WorldObject0[i].position_1C, &(SVECTOR3){});
         }

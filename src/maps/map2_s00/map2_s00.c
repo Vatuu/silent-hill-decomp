@@ -914,8 +914,11 @@ void MapEvent_MapTake(void) // 0x800E81C4
 
 void MapEvent_SteelPipeTake(void) // 0x800E81EC
 {
-    #define STATE_TAKE_STEEL_PIPE      5
-    #define STATE_DONT_TAKE_STEEL_PIPE 6
+    typedef enum _EventState
+    {
+        EventState_TakeSteelPipe     = 5,
+        EventState_DontTakeSteelPipe = 6
+    } e_EventState;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -941,16 +944,16 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
 
             if (Gfx_PickupItemAnimate(InventoryItemId_SteelPipe))
             {
-                MapMsg_DisplayAndHandleSelection(true, 15, STATE_TAKE_STEEL_PIPE, STATE_DONT_TAKE_STEEL_PIPE, 0, false);
+                MapMsg_DisplayAndHandleSelection(true, 15, EventState_TakeSteelPipe, EventState_DontTakeSteelPipe, 0, false);
             }
             break;
 
-        case STATE_TAKE_STEEL_PIPE:
+        case EventState_TakeSteelPipe:
             func_80086470(3, InventoryItemId_SteelPipe, 1, false);
             SysWork_StateStepSet(0, 7);
             break;
 
-        case STATE_DONT_TAKE_STEEL_PIPE:
+        case EventState_DontTakeSteelPipe:
             Savegame_EventFlagClear(EventFlag_M2S00_PickupSteelPipe);
             SysWork_StateStepIncrement(0);
 
@@ -1421,8 +1424,11 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
 
 void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
 {
-    #define STATE_TAKE_KEY      8
-    #define STATE_DONT_TAKE_KEY 9
+    typedef enum _EventState
+    {
+        EventState_TakeKey     = 8,
+        EventState_DontTakeKey = 9
+    } e_EventState;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -1457,16 +1463,16 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
 
         case 7:
             func_800862F8(2, 0, false);
-            MapMsg_DisplayAndHandleSelection(true, 27, STATE_TAKE_KEY, STATE_DONT_TAKE_KEY, 0, false); // "House Key in doghouse. Take it?"
+            MapMsg_DisplayAndHandleSelection(true, 27, EventState_TakeKey, EventState_DontTakeKey, 0, false); // "House Key in doghouse. Take it?"
             break;
 
-        case STATE_TAKE_KEY:
+        case EventState_TakeKey:
             func_80086470(3, InventoryItemId_HouseKey, 1, false);
             Savegame_EventFlagSet(EventFlag_M2S00_PickupDogHouseKey);
             Player_ItemRemove(InventoryItemId_NoteDoghouse, 1);
             SysWork_StateStepIncrement(0);
 
-        case STATE_DONT_TAKE_KEY:
+        case EventState_DontTakeKey:
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
@@ -1501,8 +1507,11 @@ void func_800E9A0C(void) // 0x800E9A0C
 
 void func_800E9A74(void) // 0x800E9A74
 {
-    #define STATE_TAKE_KEY      6
-    #define STATE_DONT_TAKE_KEY 7
+    typedef enum _EventState
+    {
+        EventState_TakeKey     = 6,
+        EventState_DontTakeKey = 7
+    } e_EventState;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -1530,13 +1539,13 @@ void func_800E9A74(void) // 0x800E9A74
         case 5:
             if (Gfx_PickupItemAnimate(InventoryItemId_KeyOfWoodman))
             {
-                MapMsg_DisplayAndHandleSelection(true, 29, STATE_TAKE_KEY, STATE_DONT_TAKE_KEY, 0, false); // "Key of Woodman. Take it?"
+                MapMsg_DisplayAndHandleSelection(true, 29, EventState_TakeKey, EventState_DontTakeKey, 0, false); // "Key of Woodman. Take it?"
             }
 
             Savegame_EventFlagSet(EventFlag_M2S00_PickupKeyOfWoodman);
             break;
 
-        case STATE_TAKE_KEY:
+        case EventState_TakeKey:
             func_80086470(3, InventoryItemId_KeyOfWoodman, 1, false);
 
             if (g_SavegamePtr->mapMarkingFlags_1D4[1] & 0x400000)
@@ -1547,7 +1556,7 @@ void func_800E9A74(void) // 0x800E9A74
             SysWork_StateStepSet(0, 8);
             break;
 
-        case STATE_DONT_TAKE_KEY:
+        case EventState_DontTakeKey:
             Savegame_EventFlagClear(EventFlag_M2S00_PickupKeyOfWoodman);
             SysWork_StateStepIncrement(0);
 
@@ -1729,8 +1738,11 @@ void MapEvent_KGordonKeyUse(void) // 0x800EA894
 
 void func_800EA960(void) // 0x800EA960
 {
-    #define STATE_PRESS_SWITCH      5
-    #define STATE_DONT_PRESS_SWITCH NO_VALUE
+    typedef enum _EventState
+    {
+        EventState_PressSwitch     = 5,
+        EventState_DontPressSwitch = NO_VALUE
+    } e_EventState;
 
     s32 vol;
     s32 balance;
@@ -1764,10 +1776,10 @@ void func_800EA960(void) // 0x800EA960
             g_SysWork.silentYesSelection_2350_4 = true;
 
             // "The machinery is running. Do you want to press the switch?"
-            MapMsg_DisplayAndHandleSelection(true, 44, STATE_PRESS_SWITCH, STATE_DONT_PRESS_SWITCH, 0, false);
+            MapMsg_DisplayAndHandleSelection(true, 44, EventState_PressSwitch, EventState_DontPressSwitch, 0, false);
             break;
 
-        case STATE_PRESS_SWITCH:
+        case EventState_PressSwitch:
             func_8005DC1C(Sfx_Unk1483, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
@@ -1843,8 +1855,11 @@ void func_800EA960(void) // 0x800EA960
 
 void func_800EAD2C(void) // 0x800EAD2C
 {
-    #define STATE_PRESS_SWITCH      3
-    #define STATE_DONT_PRESS_SWITCH NO_VALUE
+    typedef enum _EventState
+    {
+        EventState_PressSwitch     = 3,
+        EventState_DontPressSwitch = NO_VALUE
+    } e_EventState;
 
     s32 vol;
     s32 balance;
@@ -1862,10 +1877,10 @@ void func_800EAD2C(void) // 0x800EAD2C
             g_SysWork.silentYesSelection_2350_4 = true;
 
             // "The machinery is running. Do you want to press the switch?"
-            MapMsg_DisplayAndHandleSelection(true, 44, STATE_PRESS_SWITCH, STATE_DONT_PRESS_SWITCH, 0, false);
+            MapMsg_DisplayAndHandleSelection(true, 44, EventState_PressSwitch, EventState_DontPressSwitch, 0, false);
             break;
 
-        case STATE_PRESS_SWITCH:
+        case EventState_PressSwitch:
             SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
