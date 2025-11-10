@@ -2561,7 +2561,385 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 /** Main attack handling function. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714); // 0x8008B714
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008BF84); // 0x8008BF84
+s32 func_8008BF84(s_MainCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) // 0x8008BF84
+{
+    s_SubCharacter*  sp10;
+    s32              sp14;
+    s32              sp18;
+    s32              sp1C;
+    s32              sp20;
+    s32              sp24;
+    s32              sp28;
+    s32              sp2C;
+    s32              sp30;
+    s32              sp34;
+    s32              sp38;
+    s32              sp3C;
+    s32              sp40;
+    s32              sp44;
+    s32              sp48;
+    s32              sp4C;
+    s32              sp50;
+    s32              sp54;
+    s32              sp58;
+    s32              sp5C;
+    s32              temp_s5;
+    s32              temp_s6;
+    s32              temp_a0;
+    s32              temp_a0_2;
+    s32              temp_a0_3;
+    s32              temp_lo_5;
+    s32              temp_s0;
+    s32              temp_s1;
+    s32              temp_s2;
+    s32              temp_s3;
+    s32              temp_t2;
+    s32              temp_t3;
+    s32              temp_t4;
+    s32              temp_t4_2;
+    s32              temp_t5;
+    s32              temp_v0_5;
+    s32              temp_v0_6;
+    s32              temp_v0_7;
+    s32              temp_v0_8;
+    s32              var_a1_2;
+    s32              var_fp;
+    s32              var_s1;
+    s32              var_s7;
+    s32              var_t1;
+    s32              var_t2;
+    s32              var_v0;
+    s32              var_v0_3;
+    s32              var_v0_6;
+    s32              var_v1;
+    s_MainCharacter* var_a1;
+    s32              temp_a2;
+    u16              temp_v1;
+    s32              temp2;
+    s32              temp4;
+
+    sp28 = arg0->chara_0.characterCount_68.vx;
+    sp2C = arg0->chara_0.characterCount_68.vy;
+    sp30 = arg0->chara_0.characterCount_68.vz;
+
+    sp20 = Math_Sin(arg1);
+    sp24 = Math_Cos(arg1);
+
+    D_800C4788[0].vx = 0;
+    D_800C4788[0].vy = 0;
+    D_800C4788[0].vz = 0;
+
+    sp34   = arg0->chara_0.field_8C.vx;
+    var_fp = arg0->chara_0.field_8C.vz;
+
+    sp44 = 0;
+    sp38 = 0;
+    sp48 = 0;
+    sp3C = 0;
+    sp4C = 0;
+    sp40 = 0;
+
+    var_s7           = arg0->chara_0.field_8C.vy;
+    D_800C4788[1].vy = var_s7;
+
+    temp_t4          = FP_MULTIPLY_PRECISE(sp34, sp24, Q12_SHIFT) - FP_MULTIPLY_PRECISE(var_fp, sp20, Q12_SHIFT);
+    D_800C4788[1].vx = temp_t4;
+
+    temp_a0          = FP_MULTIPLY_PRECISE(sp34, sp20, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_fp, sp24, Q12_SHIFT);
+    D_800C4788[1].vz = temp_a0;
+
+    temp4 = var_s7;
+
+    if (temp_t4 > 0)
+    {
+        sp38 = temp_t4;
+    }
+    else if (temp_t4 < 0)
+    {
+        sp44 = temp_t4;
+    }
+
+    if (sp3C < temp4)
+    {
+        sp3C = temp4;
+    }
+    else if (temp4 < sp48)
+    {
+        sp48 = temp4;
+    }
+
+    if (sp40 < temp_a0)
+    {
+        sp40 = temp_a0;
+    }
+    else if (temp_a0 < sp4C)
+    {
+        sp4C = temp_a0;
+    }
+
+    temp_v1   = *(u16*)&arg2->field_6;
+    temp_a0_2 = *(u16*)&arg2->field_8;
+    temp_a2   = *(u16*)&arg2->unk_A;
+
+    var_v0    = (sp38 - sp44);
+    temp_v0_7 = (sp3C - sp48);
+    var_v0_6  = (sp40 - sp4C);
+
+    if (var_v0 < temp_v1)
+    {
+        sp38 += *(u16*)&arg2->field_6 >> 1;
+        sp44 -= *(u16*)&arg2->field_6 >> 1;
+    }
+
+    if (temp_v0_7 < temp_a0_2)
+    {
+        sp3C += *(u16*)&arg2->field_8 >> 1;
+        sp48 -= *(u16*)&arg2->field_8 >> 1;
+    }
+
+    if (var_v0_6 < temp_a2)
+    {
+        sp40 += *(u16*)&arg2->unk_A >> 1;
+        sp4C -= *(u16*)&arg2->unk_A >> 1;
+    }
+
+    if (arg0 == &g_SysWork.player_4C)
+    {
+        var_a1 = arg0 + 1;
+        var_v0 = 6;
+        var_v1 = 1;
+    }
+    else
+    {
+        var_a1 = &g_SysWork.player_4C;
+        var_v0 = 1;
+        var_v1 = -1;
+    }
+
+    sp18 = var_v1;
+    sp10 = &var_a1->chara_0;
+    sp14 = 0;
+
+    sp50 = arg0->chara_0.position_18.vx;
+    sp54 = arg0->chara_0.position_18.vz;
+
+    temp2  = arg0->chara_0.position_18.vy;
+    temp2 += arg0->chara_0.field_C8;
+
+    D_800C47C8[0].vx = sp50;
+    D_800C47C8[0].vy = temp2;
+    D_800C47C8[0].vz = sp54;
+
+    for (sp1C = var_v0; sp1C > 0; sp1C--, sp10++, sp18 *= 2)
+    {
+        if ((g_SysWork.sysState_8 == SysState_GameOver) || (g_SysWork.player_4C.chara_0.health_B0 <= 0) ||
+            (sp10 == arg0) || (sp10->model_0.charaId_0 == 0) || (sp10->health_B0 < 0) || !sp10->field_E1_0)
+        {
+            continue;
+        }
+
+        D_800C47E8.vx = sp10->position_18.vx + sp10->field_D8.offsetX_0;
+        D_800C47E8.vy = sp10->position_18.vy;
+        D_800C47E8.vz = sp10->position_18.vz + sp10->field_D8.offsetZ_2;
+
+        if (Math_Distance2dGet(&arg0->chara_0.position_18, &D_800C47E8) > 0x3000)
+        {
+            continue;
+        }
+
+        temp_s1 = sp10->position_18.vx;
+        var_v1  = sp10->position_18.vy;
+        temp_s2 = sp10->position_18.vz;
+
+        temp_s0 = sp10->field_D8.offsetX_0;
+        temp_s3 = sp10->field_D8.offsetZ_2;
+
+        temp_s1 += temp_s0;
+
+        var_v1  += sp10->field_C8;
+        temp_s2 += temp_s3;
+
+        D_800C47C8[1].vy = var_v1;
+        temp_s3          = sp10->field_D6;
+
+        temp_v0_5 = ratan2(temp_s1 - sp50, temp_s2 - sp54);
+        temp_v0_6 = Math_Sin(temp_v0_5);
+        temp_s0   = FP_MULTIPLY_PRECISE(temp_s3, temp_v0_6, Q12_SHIFT);
+
+        var_s1 = Math_Cos(temp_v0_5);
+
+        sp50 = temp_s1 - temp_s0;
+
+        D_800C47C8[1].vx = sp50;
+        sp54             = temp_s2 - FP_MULTIPLY_PRECISE(temp_s3, var_s1, Q12_SHIFT);
+
+        D_800C47C8[1].vz = sp54;
+        var_v1           = func_8006D90C(&D_800C47F8, &D_800C47C8[0], &D_800C47C8[1]);
+
+        if (var_v1 != false)
+        {
+            var_v1 = true;
+        }
+
+        if (var_v1 == true)
+        {
+            continue;
+        }
+
+        temp_t4_2  = sp10->position_18.vx;
+        temp_t4_2 += sp10->field_D8.offsetX_0;
+
+        var_v1   = temp_t4_2 - sp28;
+        temp_t5  = sp10->position_18.vz;
+        temp_t5 += sp10->field_D8.offsetZ_2;
+
+        temp_v0_8 = temp_t5 - sp30;
+
+        sp58    = sp10->position_18.vy;
+        temp_s6 = sp10->field_CC;
+        temp_s5 = sp10->field_C8;
+
+        temp_t3   = sp58 - sp2C;
+        temp_t2   = FP_MULTIPLY_PRECISE(var_v1, sp24, Q12_SHIFT) - FP_MULTIPLY_PRECISE(temp_v0_8, sp20, Q12_SHIFT);
+        temp_a0_3 = FP_MULTIPLY_PRECISE(var_v1, sp20, Q12_SHIFT) + FP_MULTIPLY_PRECISE(temp_v0_8, sp24, Q12_SHIFT);
+
+        if ((temp_t3 < (sp48 - temp_s6)) || ((sp3C - temp_s5) < temp_t3))
+        {
+            continue;
+        }
+
+        temp_s3  = sp10->field_D6;
+        var_a1_2 = 0;
+
+        if (temp_t2 < sp44)
+        {
+            var_a1_2 = sp44 - temp_t2;
+        }
+        else if (sp38 < temp_t2)
+        {
+            var_a1_2 = temp_t2 - sp38;
+        }
+
+        var_v1 = 0;
+
+        if (temp_a0_3 < sp4C)
+        {
+            var_v1 = sp4C - temp_a0_3;
+        }
+        else if (sp40 < temp_a0_3)
+        {
+            var_v1 = temp_a0_3 - sp40;
+        }
+
+        if (var_a1_2 | var_v1)
+        {
+            if (var_a1_2 == 0)
+            {
+                if (temp_s3 < var_v1)
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                if (var_v1 == 0)
+                {
+                    if (temp_s3 < var_a1_2)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    var_v0_3 = FP_MULTIPLY_PRECISE(var_a1_2, var_a1_2, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_v1, var_v1, Q12_SHIFT);
+                    if (FP_MULTIPLY_PRECISE(temp_s3, temp_s3, Q12_SHIFT) < var_v0_3)
+                    {
+                        continue;
+                    }
+                }
+            }
+        }
+
+        var_v0 = sp34;
+        if (var_v0 < 0)
+        {
+            var_v0 += 3;
+        }
+        sp34 -= var_v0 >> 2;
+
+        var_v0 = var_s7;
+        if (var_v0 < 0)
+        {
+            var_v0 += 3;
+        }
+        var_s7 -= var_v0 >> 2;
+
+        var_v0 = var_fp;
+        if (var_v0 < 0)
+        {
+            var_v0 += 3;
+        }
+        var_fp -= var_v0 >> 2;
+
+        sp34   += sp28;
+        var_s7 += sp2C;
+        var_fp += sp30;
+
+        sp5C = (temp_s5 + temp_s6) / 2;
+
+        temp_s2 = sp34 - temp_t4_2;
+        var_s1  = var_fp - temp_t5;
+        temp_s0 = var_s7 - (sp58 + sp5C);
+
+        var_t1 = func_8008A058(func_80080540(temp_s2, 0, var_s1));
+        var_t2 = (temp_s6 - temp_s5) / 2;
+
+        if (var_t2 < 0)
+        {
+            var_t2 = 0;
+        }
+
+        for (temp_t3 = 2; (var_t2 < temp_s0 || temp_s0 < -var_t2 || temp_s3 < var_t1) && temp_t3 > 0; temp_t3--)
+        {
+            if (temp_s3 < var_t1)
+            {
+                temp_lo_5 = FP_TO(temp_s3, Q12_SHIFT) / var_t1;
+                var_t1    = temp_s3;
+                temp_s2   = FP_MULTIPLY_PRECISE(temp_lo_5, temp_s2, Q12_SHIFT);
+                temp_s0   = FP_MULTIPLY_PRECISE(temp_lo_5, temp_s0, Q12_SHIFT);
+                var_s1    = FP_MULTIPLY_PRECISE(temp_lo_5, var_s1, Q12_SHIFT);
+            }
+            else if (var_t2 < temp_s0)
+            {
+                temp_lo_5 = FP_TO(var_t2, Q12_SHIFT) / temp_s0;
+                temp_s0   = var_t2;
+                var_t1    = FP_MULTIPLY_PRECISE(temp_lo_5, var_t1, Q12_SHIFT);
+                temp_s2   = FP_MULTIPLY_PRECISE(temp_lo_5, temp_s2, Q12_SHIFT);
+                var_s1    = FP_MULTIPLY_PRECISE(temp_lo_5, var_s1, Q12_SHIFT);
+            }
+            else if (temp_s0 < -var_t2)
+            {
+                temp_lo_5 = FP_TO(-var_t2, Q12_SHIFT) / temp_s0;
+                temp_s0   = -var_t2;
+                var_t1    = FP_MULTIPLY_PRECISE(temp_lo_5, var_t1, Q12_SHIFT);
+                temp_s2   = FP_MULTIPLY_PRECISE(temp_lo_5, temp_s2, Q12_SHIFT);
+                var_s1    = FP_MULTIPLY_PRECISE(temp_lo_5, var_s1, Q12_SHIFT);
+            }
+        }
+
+        D_800C47B8.vx = temp_t4_2 + temp_s2;
+        D_800C47B8.vy = (sp58 + sp5C) + temp_s0;
+        D_800C47B8.vz = temp_t5 + var_s1;
+
+        if (func_8008B714(&arg0->chara_0, sp10, &D_800C47B8, arg3))
+        {
+            sp14 |= sp18;
+        }
+    }
+
+    arg0->chara_0.field_4C |= sp14;
+    return sp14;
+}
 
 void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 {

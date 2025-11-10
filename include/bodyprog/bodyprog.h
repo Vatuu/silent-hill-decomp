@@ -979,11 +979,11 @@ typedef struct
 {
     u16  field_0;
     u8   unk_2[4];
-    s8   field_6;
+    s8   field_6;  // Accessed by `func_8008BF84` as `u16`
     s8   unk_7;
-    u8   field_8;
+    u8   field_8;  // Accessed by `func_8008BF84` as `u16`
     u8   field_9;
-    u8   unk_A[4];
+    u8   unk_A[4]; // Accessed by `func_8008BF84` as `u16`
     u8   field_E;
     u8   field_F;
     u8   field_10;
@@ -2799,6 +2799,16 @@ extern q3_12 D_800C4700[];
 
 extern s16 D_800C4702;
 
+extern VECTOR3 D_800C4788[];
+
+extern VECTOR3 D_800C47B8;
+
+extern VECTOR3 D_800C47C8[];
+
+extern VECTOR3 D_800C47E8;
+
+extern s_func_800700F8_2 D_800C47F8;
+
 extern s_800C4818 D_800C4818;
 
 /** Something for demo handling. Set in `Fs_QueueDoThingWhenEmpty`. */
@@ -3868,6 +3878,8 @@ void func_8008B40C(s32 vol, s32 soundType);
 void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8008B664(VECTOR3* pos, u32 caseVar);
+
+s32 func_8008BF84(s_MainCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3);
 
 s32 func_8008D850(void);
 
