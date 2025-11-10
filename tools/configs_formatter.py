@@ -21,7 +21,7 @@ def validate_input_path(input_path):
 
 def discover_and_validate_files():
     # Get input path
-    default_path = Path(__file__).parent.parent / 'configs'
+    default_path = Path(__file__).parent.parent / 'configs/USA'
     input_path = validate_input_path(sys.argv[1] if len(sys.argv) > 1 else default_path)
 
     # Find files

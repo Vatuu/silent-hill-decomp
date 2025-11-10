@@ -1,6 +1,6 @@
 # Silent Hill Decompilation Project
 
-![Silent Hill Decompilation Project Logo](/docs/SHDecompLogo.png)
+![Silent Hill Decompilation Project Logo](/docs/SHDecompLogoLQ.png)
 
 An in-progress decompilation of the 1.1 US release of *Silent Hill* on the Playstation 1.
 
