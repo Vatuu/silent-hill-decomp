@@ -31,7 +31,10 @@ from construct import *
 
 def trim_float(x, digits=7):
     """Format to fixed decimals, then drop trailing zeros/dot."""
-    return f"{x:.{digits}f}".rstrip('0').rstrip('.')
+    res = f"{x:.{digits}f}".rstrip('0').rstrip('.')
+    if "." not in res:
+        res += ".0"
+    return res
 
 def round_fp(val, scale):
     float_val = val / scale;

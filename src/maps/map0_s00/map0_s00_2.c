@@ -1404,7 +1404,7 @@ void func_800DC8D8(void) // 0x800DC8D8
             Savegame_EventFlagSet(EventFlag_11);
             g_SysWork.npcs_1A0[0].model_0.charaId_0 = Chara_None;
 
-            func_8005DC1C(Sfx_Unk1354, &D_800CB6A4, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1354, &QVECTOR3(-57.0f, -1.0f, 47.0f), Q8_CLAMPED(0.5f), 0);
         }
     }
 }
@@ -1601,5 +1601,3 @@ void func_800DD0CC(void) // 0x800DD0CC
 
     D_800DFB40 = MAX(Q12(0.0f), FP_MULTIPLY((FP_MULTIPLY(vecs[0], Q12(4.5f), 6) + Q12(2.5f)), Math_Sin(vecs[1]), Q12_SHIFT) + Q12(4.0f));
 }
-
-INCLUDE_RODATA("asm/maps/map0_s00/nonmatchings/map0_s00_2", D_800CB6A4);
