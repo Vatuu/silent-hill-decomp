@@ -32,16 +32,25 @@ from construct import *
 def round_fp(val, scale):
     float_val = val / scale;
 
-    # Try to find the shortest rounded representation that still matches
-    for digits in range(1, 12):  # up to 12 decimal places
+    # Find shortest decimal that round-trips correctly
+    found = False
+
+    for digits in range(1, 12):
         rounded = round(float_val, digits)
-        if float_val < 0:
-            reconverted = int(math.ceil(rounded * scale))
-        else:
-            reconverted = int(math.floor(rounded * scale))
-        if reconverted == val:
-            # Good enough – this rounded value still maps to the same fixed integer
-            float_val = rounded
+        increment = 10 ** (-digits)
+
+        # Test the rounded value and its nearest neighbor
+        candidates = [rounded, rounded + (increment if float_val >= 0 else -increment)]
+
+        for candidate in candidates:
+            scaled = candidate * scale
+            reconverted = int(math.floor(scaled)) if candidate >= 0 else int(math.ceil(scaled))
+            if reconverted == val:
+                float_val = candidate
+                found = True
+                break
+
+        if found:
             break
 
     return f"{float_val}f"
@@ -53,7 +62,10 @@ def process_fp(val, qval = 12):
     return f"Q{qval}({float_val})"
 
 def process_fp_angle_packed(val):
-    return round_fp(val, 0.711111);    
+    return f"FP_ANGLE_PACKED({round_fp(val, 0.711111)})"
+
+def process_fp_angle(val):
+    return f"FP_ANGLE({round_fp(val, 11.377778)})"
 
 class StructParser:
     def __init__(self, alignment=4, verbose=False, union_choices=None):
@@ -589,20 +601,9 @@ class StructParser:
     
     def parse_definitions(self, c_code):
         """Parse C code and build construct definitions."""
-        fake_includes = """
-        typedef unsigned char u8;
-        typedef unsigned short u16;
-        typedef unsigned int u32;
-        typedef unsigned long long u64;
-        typedef signed char s8;
-        typedef signed short s16;
-        typedef signed int s32;
-        typedef signed long long s64;
-        """
         
         cleaned_code = self.preprocess_code(c_code)
-        full_code = fake_includes + cleaned_code
-        ast = self.parser.parse(full_code)
+        ast = self.parser.parse(cleaned_code)
         
         for node in ast.ext:
             # Handle Typedefs
@@ -1070,7 +1071,7 @@ class StructParser:
                 elif value == -1 and (field_key == "s_AnimInfo.startKeyframeIdx_C" or field_key == "s_AnimInfo.endKeyframeIdx_E"):
                     return "NO_VALUE"
                 elif field_key == "VC_ROAD_DATA.fix_ang_x_16" or field_key == "VC_ROAD_DATA.fix_ang_y_17":
-                    return f"FP_ANGLE_PACKED({process_fp_angle_packed(value & 0xFF)})"
+                    return process_fp_angle_packed(value & 0xFF)
                 elif field_key == "VC_ROAD_DATA.mv_y_type_11":
                     enum_val = self.lookup_enum_name("VC_CAM_MV_TYPE", value)
                     if enum_val is not None:

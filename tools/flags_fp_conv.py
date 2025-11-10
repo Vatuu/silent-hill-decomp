@@ -10,6 +10,7 @@ import re
 import readline
 import math
 import os
+import sys
 import pyperclip
 
 # ---------- EventFlags converter ----------
@@ -161,6 +162,44 @@ def to_signed(val, bits=32):
         val -= 1 << bits
     return val
 
+def round_fp(val, scale):
+    float_val = val / scale;
+
+    # Find shortest decimal that round-trips correctly
+    found = False
+
+    for digits in range(1, 12):
+        rounded = round(float_val, digits)
+        increment = 10 ** (-digits)
+
+        # Test the rounded value and its nearest neighbor
+        candidates = [rounded, rounded + (increment if float_val >= 0 else -increment)]
+
+        for candidate in candidates:
+            scaled = candidate * scale
+            reconverted = int(math.floor(scaled)) if candidate >= 0 else int(math.ceil(scaled))
+            if reconverted == val:
+                float_val = candidate
+                found = True
+                break
+
+        if found:
+            break
+
+    return f"{float_val}f"
+
+def process_fp(val, qval = 12):
+    scale = (1 << qval)
+    float_val = round_fp(val, scale)
+
+    return f"Q{qval}({float_val})"
+
+def process_fp_angle_packed(val):
+    return f"FP_ANGLE_PACKED({round_fp(val, 0.711111)})"
+
+def process_fp_angle(val):
+    return f"FP_ANGLE({round_fp(val, 11.377778)})"
+
 def process_fp_text(text):
     qval = 12  # default Q-format is Q12
 
@@ -170,7 +209,14 @@ def process_fp_text(text):
         qval = int(match.group(1))
         text = re.sub(r'\bQ\d+\b', '', text, count=1)
 
-    scale = (1 << qval)
+    is_fp_angle_packed = False
+    is_fp_angle = False
+    if "FP_ANGLE_PACKED" in text:
+        is_fp_angle_packed = True
+        text = text.replace("FP_ANGLE_PACKED", "")
+    elif "FP_ANGLE" in text:
+        is_fp_angle = True
+        text = text.replace("FP_ANGLE", "")
 
     def convert_value(match):
         prefix = match.group(1) or ""   # may be None if start-of-string
@@ -187,21 +233,11 @@ def process_fp_text(text):
         else:
             val = int(value_str, 10)
 
-        float_val = val / scale;
-
-        # Try to find the shortest rounded representation that still matches
-        for digits in range(1, 12):  # up to 12 decimal places
-            rounded = round(float_val, digits)
-            if float_val < 0:
-                reconverted = int(math.ceil(rounded * scale))
-            else:
-                reconverted = int(math.floor(rounded * scale))
-            if reconverted == val:
-                # Good enough — this rounded value still maps to the same fixed integer
-                float_val = rounded
-                break
-
-        return f"{prefix}Q{qval}({float_val}f)"
+        if is_fp_angle:
+            return f"{prefix}{process_fp_angle(val)}"
+        if is_fp_angle_packed:
+            return f"{prefix}{process_fp_angle_packed(val)}"
+        return f"{prefix}{process_fp(val, qval)}"
 
     # prefix can be: start-of-string, space, or a punctuation
     pattern = re.compile(r'(^|[\s,(=:{\[])([-+]?0x[0-9A-Fa-f]+|[-+]?\d+)')
@@ -209,6 +245,19 @@ def process_fp_text(text):
 
 # ---------- Unified REPL ----------
 if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        # Join all arguments into a single input string
+        line = " ".join(sys.argv[1:]).strip()
+
+        result = convert_flag_expression(line)
+        if result is None:
+            result = process_fp_text(line)
+
+        if result is not None:
+            print(result)
+            pyperclip.copy(result)
+        sys.exit(0)
+
     print("Enter expressions like 'g_SavegamePtr->eventFlags_168[2] & 8' or 'g_SavegamePtr->eventFlags_168[2] |= (1 << 3))'.")
     print("Or enter a line containing decimal/hexadecimal Q12 numbers (0x7CCC, -0x1444, 4096, 0xFFFE0DDD) to convert to float")
     print("(change to other Q** formats by including Q format in the text, 'chara.field_48 = Q8(-0x1999)'")
