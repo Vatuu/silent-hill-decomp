@@ -575,7 +575,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E2724);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E2950);
 
-void func_800E2CA0(void) // 0x800E2CA0
+void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
 {
     // TODO: rodata used in a bunch of funcs, can't be inserted properly until they're all decomped.
     extern s8 D_800CC4C4; // "HERO"
@@ -587,7 +587,8 @@ void func_800E2CA0(void) // 0x800E2CA0
     SVECTOR3        unused;
     s_SubCharacter* player;
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 && g_SysWork.sysStateStep_C[0] == 7)
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        g_SysWork.sysStateStep_C[0] == 7)
     {
         SysWork_StateStepSet(0, 8);
     }
@@ -597,6 +598,7 @@ void func_800E2CA0(void) // 0x800E2CA0
         case 0:
             D_800EBA30 = 0;
             D_800ED5B6 = 0;
+
             Game_TurnFlashlightOn();
             func_8003D03C();
             func_8004690C(Sfx_Unk1617);
@@ -699,7 +701,7 @@ void func_800E2CA0(void) // 0x800E2CA0
         vcUserCamTarget(&D_800ED590, NULL, true);
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
 
-        // "LIGHT", cutscene light position? (TODO: rename g_SysWork.field_2360?)
+        // "LIGHT", cutscene light position? (TODO: Rename `g_SysWork.field_2360`?)
         Dms_CharacterGetPosRot(&g_SysWork.field_2360, &unused, &D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
 
         // "L_INT", interior light or intersection point?
@@ -708,7 +710,7 @@ void func_800E2CA0(void) // 0x800E2CA0
         // Light angle? (TODO: rename g_SysWork.field_2370?)
         g_SysWork.field_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz));
         g_SysWork.field_2370.vy = ratan2(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz);
-        g_SysWork.field_2370.vz = 0;
+        g_SysWork.field_2370.vz = FP_AGNLE(0.0f);
     }
 }
 

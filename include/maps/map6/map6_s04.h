@@ -118,7 +118,7 @@ void func_800E1CA0(void);
 
 void func_800E1D50(void);
 
-void func_800E2CA0(void);
+void MapEvent_CutsceneCybilDeath(void);
 
 void func_800E3244(void);
 

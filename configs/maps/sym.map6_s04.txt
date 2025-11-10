@@ -123,6 +123,7 @@ Ai_Flauros_Update                   = 0x800DE0C4; // type:func
 Ai_Parasite_Update                  = 0x800DE1CC; // type:func
 sharedFunc_800D929C_0_s00           = 0x800E1104; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800E1564; // type:func
+MapEvent_CutsceneCybilDeath         = 0x800E2CA0; // type:func
 
 
 
