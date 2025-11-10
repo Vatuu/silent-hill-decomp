@@ -112,6 +112,7 @@ typedef enum _EventFlag
 
     EventFlag_M1S02_PickupClassroomKey = 114,
 
+    EventFlag_120 = 120,
     EventFlag_121 = 121,
     EventFlag_122 = 122,
 

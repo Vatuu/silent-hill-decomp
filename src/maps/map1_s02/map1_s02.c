@@ -710,7 +710,66 @@ INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800CB94C);
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DC1E0);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DCF00);
+void func_800DCF00(void) // 0x800DCF00
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            D_800E1FE4 = 0;
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
+            break;
+
+        case 3:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 106, false);
+            SysWork_StateStepIncrement(0);
+
+        case 4:
+            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.03f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 5:
+            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+
+            g_ScreenFadeTimestep += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.1f, Q12_SHIFT);
+            g_ScreenFadeTimestep  = MIN(g_ScreenFadeTimestep, Q12(3.0f));
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_120);
+            func_8004690C(Sfx_Unk1451);
+            break;
+    }
+
+    if (g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 6)
+    {
+        s32 var_t0;
+
+        if (D_800E1FE4 == 0)
+        {
+            Sd_EngineCmd(Sfx_Unk1451);
+        }
+
+        func_8005DE0C(Sfx_Unk1451, &D_800E58C8.position_1C, (D_800E1FE4 + Q12(0.1f)) >> 4, Q12(32.0f), 0);
+
+        var_t0     = D_800E1FE4 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
+        var_t0     = MIN(var_t0, Q12(0.4f));
+        D_800E1FE4 = var_t0;
+
+        g_SysWork.player_4C.chara_0.position_18.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E1FE4, Q12_SHIFT);
+        D_800E58C8.position_1C.vy                  += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E1FE4, Q12_SHIFT);
+    }
+}
 
 void func_800DD208(void) // 0x800DD208
 {
