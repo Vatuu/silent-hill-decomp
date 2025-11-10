@@ -184,10 +184,6 @@ void MapEvent_CommonItemTake(void) // 0x800D12B4
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D1340
 
-// TODO: Move into funcs once all have been decomped.
-const static VECTOR3 D_800CB988   = { Q12(-21.3f), Q12(-1.2f), Q12(58.7f) };
-const static VECTOR3 D_800CB994   = { Q12(-19.95f), Q12(-1.2f), Q12(60.7f) };
-
 void func_800D13D8(void) // 0x800D13D8
 {
     s_FsImageDesc charaTex;
@@ -301,7 +297,7 @@ void func_800D13D8(void) // 0x800D13D8
             break;
 
         case 15:
-            func_8005DC1C(Sfx_Unk1604, &D_800CB988, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1604, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 16:
@@ -311,7 +307,7 @@ void func_800D13D8(void) // 0x800D13D8
         case 17:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 70, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 17, false);
-            func_8005DC1C(Sfx_Unk1605, &D_800CB988, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1605, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 18:
@@ -409,7 +405,7 @@ void func_800D13D8(void) // 0x800D13D8
 
         case 35:
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
-            func_8005DC1C(Sfx_Unk1609, &D_800CB994, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1609, &QVECTOR3(-19.95f, -1.2f, 60.7f), Q8_CLAMPED(0.5f), 0);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 113, false);
             SysWork_StateStepIncrement(0);
 
@@ -418,7 +414,7 @@ void func_800D13D8(void) // 0x800D13D8
 
             if (g_SysWork.sysStateStep_C[0] != 36)
             {
-                func_8005DC1C(Sfx_Unk1610, &D_800CB994, Q8_CLAMPED(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1610, &QVECTOR3(-19.95f, -1.2f, 60.7f), Q8_CLAMPED(0.5f), 0);
             }
 
         case 37:
@@ -469,7 +465,7 @@ void func_800D13D8(void) // 0x800D13D8
 
         case 46:
             func_80088F94(&g_SysWork.npcs_1A0[1], 0, 0);
-            func_8005DC1C(Sfx_Unk1604, &D_800CB988, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1604, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 47:
@@ -477,7 +473,7 @@ void func_800D13D8(void) // 0x800D13D8
             break;
 
         case 48:
-            func_8005DC1C(Sfx_Unk1605, &D_800CB988, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1605, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 49:
@@ -590,7 +586,7 @@ void func_800D236C(void) // 0x800D236C
             Camera_PositionSet(NULL, Q12(-18.7f), Q12(-5.59f), Q12(57.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-19.46f), Q12(-1.92f), Q12(58.62f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            func_8005DC1C(Sfx_Unk1604, &D_800CB988, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1604, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8_CLAMPED(0.5f), 0);
 
             Game_TurnFlashlightOn();
             SysWork_StateStepIncrement(0);
@@ -600,7 +596,7 @@ void func_800D236C(void) // 0x800D236C
             break;
 
         case 2:
-            func_8005DC1C(Sfx_Unk1605, &D_800CB988, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1605, &QVECTOR3(-21.3f, -1.2f, 58.7f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 3:
