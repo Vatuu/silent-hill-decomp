@@ -612,7 +612,7 @@ void func_800D72AC(void) // 0x800D72AC
 
             if (g_SysWork.sysStateStep_C[0] != 7)
             {
-                Savegame_EventFlagSet(EventFlag_M3S05_CabinedPushed);
+                Savegame_EventFlagSet(EventFlag_M3S05_CabinetPushed);
             }
             break;
 
@@ -653,7 +653,7 @@ void func_800D8424(void) // 0x800D8424
     WorldObjectPoseInit(&g_WorldObject0.position_1C, 60.0f, 0.0f, -21.6f, 0.0f, 180.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject0.object_0, "TANA_HID");
 
-    if (Savegame_EventFlagGet(EventFlag_M3S05_CabinedPushed))
+    if (Savegame_EventFlagGet(EventFlag_M3S05_CabinetPushed))
     {
         g_WorldObject0.position_1C.position_0.vx = Q12(61.25f);
     }
@@ -731,7 +731,7 @@ void func_800D87AC(void) // 0x800D87AC
 
     if (cx == 2 && cz == -1)
     {
-        if (!Savegame_EventFlagGet(EventFlag_M3S05_CabinedPushed))
+        if (!Savegame_EventFlagGet(EventFlag_M3S05_CabinetPushed))
         {
             flags |= 1 << 1;
             Savegame_EventFlagSet(EventFlag_288);

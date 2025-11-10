@@ -57,7 +57,7 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* chara)
     }
     else
     {
-        sharedFunc_800D72E8_0_s01(chara, 0, 0);
+        sharedFunc_800D72E8_0_s01(chara, 0, FP_ANGLE(0.0f));
     }
 
     tmp0 = sharedFunc_800D71F0_0_s01(chara->rotationSpeed_2C.vx, sharedData_800E21D0_0_s01.field_B4[2][1], sharedData_800E21D0_0_s01.field_B4[2][2], sharedData_800E21D0_0_s01.field_B4[2][3]);

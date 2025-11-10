@@ -5,6 +5,7 @@
 #include "maps/characters/Chara_Kaufmann.h"
 
 #define BLOOD_SPLAT_COUNT_MAX 50
+
 extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 
 extern s_AnimInfo HARRY_M5S03_ANIM_INFOS[];

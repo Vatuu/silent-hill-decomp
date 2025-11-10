@@ -6,7 +6,7 @@
 // Used by `func_801E2E28`.
 typedef struct
 {
-    s16 field_0;
+    s16 field_0; // SFX ID.
     s16 field_2;
     s16 field_4;
 } s_801E5558;

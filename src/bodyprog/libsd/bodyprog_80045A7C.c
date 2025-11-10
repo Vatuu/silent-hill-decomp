@@ -2067,9 +2067,9 @@ void func_80046E00(void) // 0x80046E00
     }
 }
 
-void func_8004729C(u16 sfx) // 0x8004729C
+void func_8004729C(u16 sfxId) // 0x8004729C
 {
-    func_800472BC(sfx);
+    func_800472BC(sfxId);
 }
 
 void func_800472BC(s32 sfx) // 0x800472BC

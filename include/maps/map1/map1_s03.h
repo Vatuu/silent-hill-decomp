@@ -33,25 +33,23 @@ extern s_WorldObjectDesc g_WorldObject7; // 800E62A0
 extern s_WorldObject_0   g_CommonWorldObjects[6]; // 800E62E0
 
 extern SVECTOR3 D_800CBC04;
-extern s32 D_800E20E8;
+extern s32 D_800E20E8; // Angle.
 extern s16 D_800E20EC;
 extern u8 D_800E20EE;
 
 extern u8 D_800E62D0;
 extern u8 D_800E6388;
-extern s32 D_800E638C;
+extern q19_12 D_800E638C; // Time?
 
 extern u16 D_800E2000[1]; // g_MapMsgSounds
 extern s_FsImageDesc D_800E2004;
 extern VECTOR3 D_800E200C;
 extern s16 D_800E2018;
-extern s32 D_800E201C;
+extern q19_12 D_800E201C; // Time.
 extern u8 D_800E2102; // g_MapMsgSoundIdx
 extern VECTOR3 D_800E6160;
 extern VECTOR3 D_800E6170;
 extern s32 D_800E617C;
-
-
 
 extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8];
 
@@ -61,12 +59,14 @@ void func_800DC2E4(void);
 
 void func_800DC9A0(void);
 
-void func_800DE828(void);
+void func_800DCDDC(void);
 
-void func_800DE624(void);
+void func_800DD3AC(void);
 
 void func_800DD688(void);
 
-void func_800DD3AC(void);
+void func_800DE624(void);
+
+void func_800DE828(void);
 
 #endif

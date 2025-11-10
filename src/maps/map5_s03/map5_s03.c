@@ -84,7 +84,7 @@ void func_800CF858(void) {}
 
 void func_800CF860(void) {}
 
-s32 func_800CF868(void)
+s32 func_800CF868(void) // 0x800CF868
 {
     return 0;
 }

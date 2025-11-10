@@ -1442,14 +1442,14 @@ void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) // 0x800
 
 void func_80089034(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ) // 0x80089034
 {
-    s_MapPoint2d* ptr0;
-    s_MapPoint2d* ptr1;
+    s_MapPoint2d* mapPoint0;
+    s_MapPoint2d* mapPoint1;
 
-    ptr0              = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
-    ptr0->positionX_0 = posX;
+    mapPoint0              = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
+    mapPoint0->positionX_0 = posX;
 
-    ptr1              = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
-    ptr1->positionZ_8 = posZ;
+    mapPoint1              = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
+    mapPoint1->positionZ_8 = posZ;
 }
 
 void func_80089090(s32 arg0) // 0x80089090
@@ -1992,8 +1992,10 @@ bool func_80089A30(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
                     {
                         ptr->field_10 = NULL;
                     }
+
                     return false;
                 }
+
                 current = current->next_0;
             }
         }

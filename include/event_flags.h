@@ -229,7 +229,7 @@ typedef enum _EventFlag
 
     EventFlag_260 = 260,
 
-    EventFlag_M3S05_CabinedPushed        = 282,
+    EventFlag_M3S05_CabinetPushed        = 282,
     EventFlag_M3S05_AlcoholPouredOnVines = 283,
     EventFlag_284                        = 284,
     EventFlag_285                        = 285,
