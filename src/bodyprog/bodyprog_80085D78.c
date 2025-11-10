@@ -754,7 +754,7 @@ void func_80086F44(q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x80086F44
     SysWork_StateStepIncrement(0);
 }
 
-void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfx, VECTOR3* sfxPos) // 0x80086FE8
+void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) // 0x80086FE8
 {
     s32 i;
 
@@ -781,7 +781,7 @@ void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfx, VECTOR3* sfxPos) // 0x80086F
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            func_8005DC1C(sfx, sfxPos, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(sfxId, sfxPos, Q8_CLAMPED(0.5f), 0);
 
             SysWork_StateStepIncrement(1);
 
@@ -2266,7 +2266,7 @@ u8 func_8008A270(s32 idx) // 0x8008A270
         case 15:
         case 22:
         case 25:
-            if (g_SysWork.field_275C > 0x100000)
+            if (g_SysWork.field_275C > Q12(256.0f))
             {
                 return 0;
             }
@@ -2281,7 +2281,7 @@ u8 func_8008A270(s32 idx) // 0x8008A270
 
 u8 func_8008A2E0(s32 arg0)
 {
-    if (g_SysWork.field_275C > 0x100000)
+    if (g_SysWork.field_275C > Q12(256.0f))
     {
         switch (arg0)
         {
@@ -2392,35 +2392,36 @@ bool func_8008B474(s32 arg0, s32 vol, s32 soundType) // 0x8008B474
 {
     s32 unkVol;
     s32 cond;
-    u16 sfx;
+    u16 sfxId;
 
     unkVol = 0;
-    sfx = 0;
+    sfxId = 0;
     switch (arg0)
     {
         case 0:
-            sfx = Sfx_Unk1300;
+            sfxId = Sfx_Unk1300;
             unkVol = g_SysWork.field_2760;
             soundType = 0;
             break;
 
         case 1:
-            sfx = Sfx_Unk1301;
+            sfxId = Sfx_Unk1301;
             unkVol = g_SysWork.field_275C;
             break;
 
         case 2:
-            sfx = Sfx_Unk1302;
+            sfxId = Sfx_Unk1302;
             unkVol = g_SysWork.field_275C;
             break;
 
         case 3:
-            sfx = Sfx_Unk1303;
+            sfxId = Sfx_Unk1303;
             unkVol = g_SysWork.field_2764;
             break;
     }
 
-    cond = !unkVol;
+    cond = unkVol == Q12(0.0f);
+
     if (g_DeltaTime0 == Q12(0.0f))
     {
         vol = 0;
@@ -2455,29 +2456,29 @@ bool func_8008B474(s32 arg0, s32 vol, s32 soundType) // 0x8008B474
 
     if (unkVol == 0)
     {
-        func_8004690C(sfx);
+        func_8004690C(sfxId);
     }
     else if (cond)
     {
         // NOTE: func_8005DC1C calls func_8005DC3C. `soundType` is `pitch` when calling `func_8005DC3C` directly.
         if (unkVol > Q12(256.0f))
         {
-            func_8005DC1C(sfx, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), soundType);
+            func_8005DC1C(sfxId, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), soundType);
         }
         else
         {
-            func_8005DC1C(sfx, &g_SysWork.player_4C.chara_0.position_18, Q8_CLAMPED(0.0f), soundType);
+            func_8005DC1C(sfxId, &g_SysWork.player_4C.chara_0.position_18, Q8_CLAMPED(0.0f), soundType);
         }
     }
     else
     {
         if (unkVol > Q12(256.0f))
         {
-            func_8005DC3C(sfx, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), 4, soundType);
+            func_8005DC3C(sfxId, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), 4, soundType);
         }
         else
         {
-            func_8005DC3C(sfx, &g_SysWork.player_4C.chara_0.position_18, 0, 4, soundType);
+            func_8005DC3C(sfxId, &g_SysWork.player_4C.chara_0.position_18, 0, 4, soundType);
         }
     }
 
@@ -2501,9 +2502,9 @@ bool func_8008B474(s32 arg0, s32 vol, s32 soundType) // 0x8008B474
 
 void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 {
-    s32 sfx;
+    s32 sfxId;
 
-    sfx = 0;
+    sfxId = 0;
     switch (caseVar)
     {
         case 0:
@@ -2512,7 +2513,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
         case 16:
         case 20:
         case 26:
-            sfx = Sfx_Unk1297;
+            sfxId = Sfx_Unk1297;
             break;
 
         case 1:
@@ -2524,20 +2525,20 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
         case 21:
         case 24:
         case 27:
-            sfx = Sfx_Unk1296;
+            sfxId = Sfx_Unk1296;
             break;
 
         case 32:
         case 33:
         case 34:
-            sfx = Sfx_Unk1286;
+            sfxId = Sfx_Unk1286;
             break;
 
         case 2:
         case 5:
         case 15:
         case 25:
-            if (g_SysWork.field_275C > 0x100000)
+            if (g_SysWork.field_275C > Q12(256.0f))
             {
                 func_8008B3E4(128);
                 break;
@@ -2545,15 +2546,15 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 
         case 8:
         case 9:
-            sfx = Sfx_Unk1316;
+            sfxId = Sfx_Unk1316;
             break;
 
         case 35:
     }
 
-    if (sfx != 0)
+    if (sfxId != 0)
     {
-        func_8005DC1C(sfx, pos, Q8_CLAMPED(0.75f), 0);
+        func_8005DC1C(sfxId, pos, Q8_CLAMPED(0.75f), 0);
     }
 }
 

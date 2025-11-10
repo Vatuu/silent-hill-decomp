@@ -179,35 +179,35 @@ bool Fs_QueueUpdatePostLoad(s_FsQueueEntry* entry)
 
     switch (state)
     {
-        case FSQS_POST_LOAD_INIT:
+        case FsQueuePostLoadState_Init:
             if (entry->allocate)
             {
-                g_FsQueue.postLoadState = FSQS_POST_LOAD_SKIP;
+                g_FsQueue.postLoadState = FsQueuePostLoadState_Skip;
             }
             else
             {
-                g_FsQueue.postLoadState = FSQS_POST_LOAD_EXEC;
+                g_FsQueue.postLoadState = FsQueuePostLoadState_Exec;
             }
             break;
 
         // Do nothing.
-        case FSQS_POST_LOAD_SKIP:
+        case FsQueuePostLoadState_Skip:
             break;
 
-        case FSQS_POST_LOAD_EXEC:
+        case FsQueuePostLoadState_Exec:
             postLoad = entry->postLoad;
 
             switch (postLoad)
             {
-                case FS_POST_LOAD_NONE:
+                case FsQueuePostLoadType_None:
                     result = true;
                     break;
 
-                case FS_POST_LOAD_TIM:
+                case FsQueuePostLoadType_Tim:
                     result = Fs_QueuePostLoadTim(entry);
                     break;
 
-                case FS_POST_LOAD_ANM:
+                case FsQueuePostLoadType_Anm:
                     result = Fs_QueuePostLoadAnm(entry);
                     break;
 

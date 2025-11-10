@@ -310,19 +310,19 @@ static inline void WriteVolume(s16* left, s16* right, s16 vol)
     *right = vol;
 }
 
-u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol) // 0x80046048
+u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol) // 0x80046048
 {
     SpuVoiceAttr attr;
     s16          convertedVol;
     s16          volCpy;
     s32          i;
 
-    if (sfx == Sfx_Base)
+    if (sfxId == Sfx_Base)
     {
         return NO_VALUE;
     }
 
-    D_800C15BC = sfx - Sfx_Base;
+    D_800C15BC = sfxId - Sfx_Base;
     volCpy     = vol;
 
     // Copy key SFX data.
@@ -358,14 +358,14 @@ u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol) // 0x80046048
         D_800C1698.volumeRight_E = 0;
     }
 
-    if (sfx == Sfx_RadioInterferenceLoop)
+    if (sfxId == Sfx_RadioInterferenceLoop)
     {
         D_800C1698.field_6 = g_Sfx_Table0[D_800C15BC].field_0;
         SdUtKeyOnV(22, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 0,
                    Sd_GetVolSe(D_800C1698.volumeLeft_C), Sd_GetVolSe(D_800C1698.volumeRight_E));
         D_800C1698.field_0 = 22;
     }
-    else if (sfx == Sfx_RadioStaticLoop)
+    else if (sfxId == Sfx_RadioStaticLoop)
     {
         D_800C1698.field_6 = g_Sfx_Table0[D_800C15BC].field_0;
         SdUtKeyOnV(23, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 120,
@@ -380,7 +380,7 @@ u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol) // 0x80046048
 
     for (i = 0; i < 24; i++)
     {
-        if (D_800C15F8[i] == sfx)
+        if (D_800C15F8[i] == sfxId)
         {
             D_800C15F8[i] = 0;
         }
@@ -388,7 +388,7 @@ u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol) // 0x80046048
 
     if (D_800C1698.field_0 < 24)
     {
-        D_800C15F8[D_800C1698.field_0] = sfx;
+        D_800C15F8[D_800C1698.field_0] = sfxId;
         attr.voice = 1 << D_800C1698.field_0;
 
         SpuGetVoiceAttr(&attr);
@@ -400,27 +400,27 @@ u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol) // 0x80046048
     return NO_VALUE;
 }
 
-void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x800463C0
+void func_800463C0(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x800463C0
 {
     SpuVoiceAttr attr;
     s16          convertedVol;
     s32          voiceIdx;
     s32          i;
 
-    if (sfx == Sfx_Base)
+    if (sfxId == Sfx_Base)
     {
         return;
     }
 
-    g_Sound_ActiveSfxIdx = sfx - Sfx_Base;
+    g_Sound_ActiveSfxIdx = sfxId - Sfx_Base;
     D_800C16A4 = D_800C167C + g_Sfx_Table0[g_Sound_ActiveSfxIdx].field_5;
 
-    if (sfx == Sfx_RadioInterferenceLoop)
+    if (sfxId == Sfx_RadioInterferenceLoop)
     {
         voiceIdx   = 22;
         attr.voice = 1 << 22;
     }
-    else if (sfx == Sfx_RadioStaticLoop)
+    else if (sfxId == Sfx_RadioStaticLoop)
     {
         voiceIdx   = 23;
         attr.voice = 1 << 23;
@@ -430,7 +430,7 @@ void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x800463C0
         voiceIdx = NO_VALUE;
         for (i = 0; i < SD_VOICE_COUNT; i++)
         {
-            if (D_800C15F8[i] == sfx)
+            if (D_800C15F8[i] == sfxId)
             {
                 voiceIdx = i;
             }
@@ -491,17 +491,17 @@ void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x800463C0
     SpuSetVoiceAttr(&attr);
 }
 
-void func_80046620(u16 sfx, s8 balance, u8 vol, s8 pitch) // 0x80046620
+void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x80046620
 {
     s16 temp;
     s16 convertedVol;
 
-    if (sfx == Sfx_Base)
+    if (sfxId == Sfx_Base)
     {
         return;
     }
 
-    D_800C15C2         = sfx - Sfx_Base;
+    D_800C15C2         = sfxId - Sfx_Base;
     D_800C1698.field_2 = g_Sfx_Table0[D_800C15C2].field_2 >> 8;
     D_800C1698.field_4 = g_Sfx_Table0[D_800C15C2].field_2 & 0xFF;
     D_800C1698.field_6 = g_Sfx_Table0[D_800C15C2].field_0;
@@ -554,9 +554,9 @@ void func_800468EC(void) // 0x800468EC
     SdUtKeyOffV(23);
 }
 
-void func_8004690C(u16 sfx) // 0x8004690C
+void func_8004690C(u16 sfxId) // 0x8004690C
 {
-    func_8004692C(sfx);
+    func_8004692C(sfxId);
 }
 
 void func_8004692C(u16 cmd) // 0x8004692C

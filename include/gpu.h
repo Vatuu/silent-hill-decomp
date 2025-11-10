@@ -11,6 +11,15 @@
 #define RECT_VERT_COUNT 4
 #define BOX_VERT_COUNT  8
 
+/** @brief Model primitive material flags. */
+typedef enum _MaterialFlags
+{
+    MaterialFlag_None = 0,
+    MaterialFlag_0    = 1 << 0,
+    MaterialFlag_1    = 1 << 1,
+    MaterialFlag_2    = 1 << 2
+} e_MaterialFlags;
+
 /** @brief Semi-transparency blend modes. */
 typedef enum _BlendMode
 {

@@ -40,7 +40,7 @@ void func_80055028(void) // 0x80055028
 
     gte_SetFarColor(0, 0, 0);
 
-    func_80055840(0x20000, 0x22000);
+    func_80055840(0x20000, Q12(34.0f));
 }
 
 void func_800550D0(void) // 0x800550D0
@@ -189,8 +189,8 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
     MATRIX   mat;
     SVECTOR  tempSvec;
     VECTOR   vec;
-    VECTOR3* ptr;
-    VECTOR3* ptr2; // Q19.12
+    VECTOR3* pos0; // Q19.12
+    VECTOR3* pos1; // Q19.12
 
     D_800C4168.field_54 = arg0;
     D_800C4168.field_50 = arg1;
@@ -208,10 +208,10 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
 
     if (coord1 == NULL)
     {
-        ptr     = &D_800C4168.field_60;
-        ptr->vx = x;
-        ptr->vy = y;
-        ptr->vz = z;
+        pos0     = &D_800C4168.field_60;
+        pos0->vx = x;
+        pos0->vy = y;
+        pos0->vz = z;
     }
     else
     {
@@ -223,10 +223,10 @@ void func_800554C4(s32 arg0, s16 arg1, GsCOORDINATE2* coord0, GsCOORDINATE2* coo
 
         ApplyMatrix(&mat, &tempSvec, &vec);
 
-        ptr2     = &D_800C4168.field_60;
-        ptr2->vx = Q8_TO_Q12(vec.vx + mat.t[0]);
-        ptr2->vy = Q8_TO_Q12(vec.vy + mat.t[1]);
-        ptr2->vz = Q8_TO_Q12(vec.vz + mat.t[2]);
+        pos1     = &D_800C4168.field_60;
+        pos1->vx = Q8_TO_Q12(vec.vx + mat.t[0]);
+        pos1->vy = Q8_TO_Q12(vec.vy + mat.t[1]);
+        pos1->vz = Q8_TO_Q12(vec.vz + mat.t[2]);
     }
 
     vwVectorToAngle(&D_800C4168.field_6C, &D_800C4168.field_58);
@@ -271,7 +271,7 @@ void func_80055648(s32 arg0, SVECTOR* arg1) // 0x80055648
         temp_v0 = 0x400000 / temp_t1;
         temp_lo = 0x400000 / temp_v1;
 
-        for (j = 0; j < 1; j++)
+        for (j = 0; j < ARRAY_SIZE(D_800AE1B4); j++)
         {
             ptr->field_0[0][j].vy = ptr->field_0[1][j].vy = FP_MULTIPLY(D_800AE1B4[j].vy, arg0, Q12_SHIFT);
             ptr->field_0[0][j].vx                         = FP_MULTIPLY(D_800AE1B4[j].vx, temp_t1, Q12_SHIFT);
@@ -295,7 +295,7 @@ void func_80055814(s32 arg0) // 0x80055814
     D_800C4168.fogRelated_18 = Q12(1.0f) - func_800559A8(arg0);
 }
 
-void func_80055840(s32 arg0, s32 arg1) // 0x80055840
+void func_80055840(q19_12 arg0, q19_12 drawDist) // 0x80055840
 {
     s32 temp_lo;
     s32 temp_s1;
@@ -308,9 +308,9 @@ void func_80055840(s32 arg0, s32 arg1) // 0x80055840
     s32 var_v1;
     s32 temp;
 
-    temp_s1                    = arg0 >> 4;
+    temp_s1                    = Q12_TO_Q8(arg0);
     D_800C4168.field_C         = temp_s1;
-    D_800C4168.drawDistance_10 = arg1 >> 4;
+    D_800C4168.drawDistance_10 = Q12_TO_Q8(drawDist);
 
     D_800C4168.fogRelated_14 = 0x20 - Lzc(temp_s1 - 1);
     temp                     = (0x10 << (D_800C4168.fogRelated_14 + 1)) / temp_s1;
@@ -417,6 +417,7 @@ void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3) // 0x80055A9
 {
     s32 var_v1;
 
+    // TODO: Maybe Q8 to Q12 and back again.
     arg3 = arg3 >> 4;
     if (arg3 < 0)
     {
@@ -525,9 +526,9 @@ void func_80055C3C(CVECTOR* result, CVECTOR* color, s32 arg2, s32 arg3, s32 arg4
     }
 }
 
-u8 func_80055D78(q19_12 x, q19_12 y, q19_12 z) // 0x80055D78
+u8 func_80055D78(q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80055D78
 {
-    q23_8    vec[3];
+    q23_8    pos[3];
     s32      temp_v1;
     q23_8    tempX;
     s32      var_a3;
@@ -535,18 +536,18 @@ u8 func_80055D78(q19_12 x, q19_12 y, q19_12 z) // 0x80055D78
     VECTOR3* ptr0;
     VECTOR3* ptr1;
 
-    vec[0] = Q12_TO_Q8(x) - Q12_TO_Q8(D_800C4168.field_60.vx);
-    vec[1] = Q12_TO_Q8(y) - Q12_TO_Q8(D_800C4168.field_60.vy);
-    vec[2] = Q12_TO_Q8(z) - Q12_TO_Q8(D_800C4168.field_60.vz);
+    pos[0] = Q12_TO_Q8(posX) - Q12_TO_Q8(D_800C4168.field_60.vx);
+    pos[1] = Q12_TO_Q8(posY) - Q12_TO_Q8(D_800C4168.field_60.vy);
+    pos[2] = Q12_TO_Q8(posZ) - Q12_TO_Q8(D_800C4168.field_60.vz);
 
     if (D_800C4168.field_0 != 0)
     {
         ptr1 = &D_800C4168.field_84;
         for (i = 0, ptr0 = ptr1, var_a3 = 0xFF;
-             i < ARRAY_SIZE(vec);
+             i < ARRAY_SIZE(pos);
              i++, ptr0 += 2)
         {
-            tempX = vec[i];
+            tempX = pos[i];
             ptr1  = ptr0;
             if (tempX < 0)
             {
@@ -574,8 +575,8 @@ u8 func_80055D78(q19_12 x, q19_12 y, q19_12 z) // 0x80055D78
 
 void func_80055E90(CVECTOR* color, u8 fadeAmount) // 0x80055E90
 {
-    s32 alpha;
-    u8  prev_cd;
+    q19_12 alpha;
+    u8     prev_cd;
 
     alpha = Q12(1.0f) - (fadeAmount * 32);
 
@@ -681,9 +682,9 @@ void LmHeader_FixOffsets(s_LmHeader* lmHdr) // 0x800560FC
     lmHdr->isLoaded_2 = true;
 
     // Add memory address of header to pointer fields.
-    lmHdr->materials_4    = (u8*)lmHdr->materials_4    + (u32)lmHdr;
-    lmHdr->modelHdrs_C = (u8*)lmHdr->modelHdrs_C + (u32)lmHdr;
-    lmHdr->modelOrder_10  = (u8*)lmHdr->modelOrder_10  + (u32)lmHdr;
+    lmHdr->materials_4   = (u8*)lmHdr->materials_4   + (u32)lmHdr;
+    lmHdr->modelHdrs_C   = (u8*)lmHdr->modelHdrs_C   + (u32)lmHdr;
+    lmHdr->modelOrder_10 = (u8*)lmHdr->modelOrder_10 + (u32)lmHdr;
 
     for (i = 0; i < lmHdr->modelCount_8; i++)
     {
@@ -731,7 +732,7 @@ void func_80056244(s_LmHeader* lmHdr, bool unkFlag) // 0x80056244
     }
 }
 
-s32 Lm_MaterialCount(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr) // 0x80056348
+s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr) // 0x80056348
 {
     s32         count;
     s_Material* curMat;
@@ -923,29 +924,29 @@ void Lm_MaterialFlagsApply(s_LmHeader* lmHdr) // 0x80056954
 {
     s32         i;
     s32         j;
-    s32         flags;
+    s32         matFlags;
     s_Material* curMat;
 
     for (i = 0, curMat = lmHdr->materials_4; i < lmHdr->materialCount_3; i++, curMat++)
     {
-        flags = (curMat->field_E != curMat->field_F) ? (1 << 0) : 0;
+        matFlags = (curMat->field_E != curMat->field_F) ? MaterialFlag_0 : MaterialFlag_None;
 
         if (curMat->field_10 != curMat->field_12)
         {
-            flags |= 1 << 1;
+            matFlags |= MaterialFlag_1;
         }
         if (curMat->field_14.u16 != curMat->field_16.u16)
         {
-            flags |= 1 << 2;
+            matFlags |= MaterialFlag_2;
         }
 
-        if (flags != 0)
+        if (matFlags != 0)
         {
             for (j = 0; j < lmHdr->modelCount_8; j++)
             {
                 if (lmHdr->magic_0 == LM_HEADER_MAGIC)
                 {
-                    Model_MaterialFlagsApply(&lmHdr->modelHdrs_C[j], i, curMat, flags);
+                    Model_MaterialFlagsApply(&lmHdr->modelHdrs_C[j], i, curMat, matFlags);
                 }
             }
 
@@ -957,33 +958,37 @@ void Lm_MaterialFlagsApply(s_LmHeader* lmHdr) // 0x80056954
     }
 }
 
-void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags) // 0x80056A88
+void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 matFlags) // 0x80056A88
 {
     u16           field_14;
     u16           field_16;
     s_MeshHeader* curMeshHdr;
     s_Primitive*  curPrim;
 
+    // Run through meshes.
     for (curMeshHdr = modelHdr->meshHdrs_C; curMeshHdr < &modelHdr->meshHdrs_C[modelHdr->meshCount_8]; curMeshHdr++)
     {
+        // Run through primitives.
         for (curPrim = curMeshHdr->primitives_4; curPrim < &curMeshHdr->primitives_4[curMeshHdr->primitiveCount_0]; curPrim++)
         {
+            // No material(?).
             if (curPrim->field_6_8 == NO_VALUE)
             {
                 curPrim->field_6_0 = 32;
             }
 
+            // Apply material flags.
             if (curPrim->field_6_8 == arg1)
             {
-                if (flags & (1 << 0))
+                if (matFlags & MaterialFlag_0)
                 {
                     curPrim->field_6_0 = mat->field_E;
                 }
-                if (flags & (1 << 1))
+                if (matFlags & MaterialFlag_1)
                 {
                     curPrim->field_2 = mat->field_10 + (curPrim->field_2 - mat->field_12);
                 }
-                if (flags & (1 << 2))
+                if (matFlags & MaterialFlag_2)
                 {
                     field_16      = mat->field_16.u16;
                     field_14      = mat->field_14.u16;
@@ -1002,6 +1007,7 @@ void Lm_MaterialRefCountDec(s_LmHeader* lmHdr) // 0x80056BF8
     s_Material* curMat;
     s_Texture*  tex;
 
+    // Run through materials.
     for (curMat = &lmHdr->materials_4[0]; curMat < &lmHdr->materials_4[lmHdr->materialCount_3]; curMat++)
     {
         tex = curMat->texture_8;
@@ -1240,9 +1246,9 @@ s32 func_800571D0(u32 arg0) // 0x800571D0
 
 void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80057228
 {
-    s32 x;
-    s32 y;
-    s32 z;
+    q23_8 posX;
+    q23_8 posY;
+    q23_8 posZ;
 
     gte_SetRotMatrix_custom(mat);
 
@@ -1252,15 +1258,13 @@ void func_80057228(MATRIX* mat, s32 alpha, SVECTOR* arg2, VECTOR3* arg3) // 0x80
     gte_gpf12();
     gte_stsv(&D_800C4168.field_74);
 
-    // Divide arg3 by 16 and subtract matrix translation
-    x = (arg3->vx >> 4) - mat->t[0];
-    y = (arg3->vy >> 4) - mat->t[1];
-    z = (arg3->vz >> 4) - mat->t[2];
+    // Divide `arg3` by 16 and subtract matrix translation.
+    posX = Q12_TO_Q8(arg3->vx) - mat->t[0];
+    posY = Q12_TO_Q8(arg3->vy) - mat->t[1];
+    posZ = Q12_TO_Q8(arg3->vz) - mat->t[2];
 
-    gte_LoadVector0_XYZ(x, y, z);
-
+    gte_LoadVector0_XYZ(posX, posY, posZ);
     gte_rtv0();
-
     gte_stsv(&D_800C4168.field_7C);
 }
 
@@ -2783,15 +2787,15 @@ s32 func_8005D9B8(VECTOR3* pos, q23_8 vol) // 0x8005D9B8
     return var_v0;
 }
 
-void func_8005DC1C(e_SfxId sfx, const VECTOR3* pos, q23_8 vol, s32 soundType)
+void func_8005DC1C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType)
 {
-    func_8005DC3C(sfx, pos, vol, soundType, 0);
+    func_8005DC3C(sfxId, pos, vol, soundType, 0);
 }
 
-void func_8005DC3C(e_SfxId sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch) // 0x8005DC3C
+void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch) // 0x8005DC3C
 {
     q23_8 volCpy;
-    s32   balance;
+    q23_8 balance;
 
     // Get stereo balance.
     if (soundType & (1 << 0) || g_GameWork.config_0.optSoundType_1E)
@@ -2829,15 +2833,15 @@ void func_8005DC3C(e_SfxId sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s3
 
     if (soundType & (1 << 2))
     {
-        func_800463C0(sfx, balance, ~volCpy, pitch);
+        func_800463C0(sfxId, balance, ~volCpy, pitch);
     }
     else
     {
-        Sd_PlaySfx(sfx, balance, ~volCpy);
+        Sd_PlaySfx(sfxId, balance, ~volCpy);
     }
 }
 
-void func_8005DD44(e_SfxId sfx, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
+void func_8005DD44(e_SfxId sfxId, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
 {
     q23_8 volCpy;
     s32   balance;
@@ -2868,7 +2872,7 @@ void func_8005DD44(e_SfxId sfx, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD44
         volCpy = Q8_CLAMPED(1.0f);
     }
 
-    func_80046620(sfx, balance, ~volCpy, pitch);
+    func_80046620(sfxId, balance, ~volCpy, pitch);
 }
 
 static inline s32 calc_atten(s32 volume, VECTOR3* pos, s32 falloff)
@@ -2882,15 +2886,13 @@ static inline s32 calc_atten(s32 volume, VECTOR3* pos, s32 falloff)
     return (volume * dist / falloff);
 }
 
-void func_8005DE0C(e_SfxId sfx, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch)
+void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch)
 {
     s32 balance;
-
     u16 finalVol;
-
     s32 s3;
     s32 att0;
-    u8 att1;
+    u8  att1;
     s32 att2;
 
     if (g_GameWork.config_0.optSoundType_1E != 0)
@@ -2930,7 +2932,7 @@ void func_8005DE0C(e_SfxId sfx, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitc
     }
 
 
-    func_800463C0(sfx, balance, finalVol, pitch);
+    func_800463C0(sfxId, balance, finalVol, pitch);
 }
 
 void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC

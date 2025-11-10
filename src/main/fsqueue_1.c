@@ -58,12 +58,12 @@ void Fs_QueueWaitForEmpty(void)
 
 s32 Fs_QueueStartSeek(e_FsFile fileIdx)
 {
-    return Fs_QueueEnqueue(fileIdx, FS_OP_SEEK, FS_POST_LOAD_NONE, false, NULL, 0, NULL);
+    return Fs_QueueEnqueue(fileIdx, FsQueueOp_Seek, FsQueuePostLoadType_None, false, NULL, 0, NULL);
 }
 
 s32 Fs_QueueStartRead(e_FsFile fileIdx, void* dest)
 {
-    return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_NONE, false, dest, 0, NULL);
+    return Fs_QueueEnqueue(fileIdx, FsQueueOp_Read, FsQueuePostLoadType_None, false, dest, 0, NULL);
 }
 
 s32 Fs_QueueStartReadTim(e_FsFile fileIdx, void* dest, const s_FsImageDesc* image)
@@ -82,7 +82,7 @@ s32 Fs_QueueStartReadTim(e_FsFile fileIdx, void* dest, const s_FsImageDesc* imag
         extra.image.clutY = NO_VALUE;
     }
 
-    return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_TIM, false, dest, 0, &extra);
+    return Fs_QueueEnqueue(fileIdx, FsQueueOp_Read, FsQueuePostLoadType_Tim, false, dest, 0, &extra);
 }
 
 s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, GsCOORDINATE2* coords)
@@ -94,7 +94,7 @@ s32 Fs_QueueStartReadAnm(s32 idx, s32 charaId, void* dest, GsCOORDINATE2* coords
     extra.anm.charaId_4 = charaId;
     extra.anm.field_0   = idx;
     extra.anm.coords_8  = coords;
-    return Fs_QueueEnqueue(fileIdx, FS_OP_READ, FS_POST_LOAD_ANM, false, dest, 0, &extra);
+    return Fs_QueueEnqueue(fileIdx, FsQueueOp_Read, FsQueuePostLoadType_Anm, false, dest, 0, &extra);
 }
 
 s32 Fs_QueueEnqueue(e_FsFile fileIdx, u8 op, u8 postLoad, u8 alloc, void* data, u32 unused0, s_FsQueueExtra* extra)
@@ -177,11 +177,11 @@ void Fs_QueueUpdate(void)
     {
         switch (tick->operation)
         {
-            case FS_OP_SEEK:
+            case FsQueueOp_Seek:
                 temp = Fs_QueueUpdateSeek(tick);
                 break;
 
-            case FS_OP_READ:
+            case FsQueueOp_Read:
                 temp = Fs_QueueUpdateRead(tick);
                 break;
         }
@@ -191,7 +191,7 @@ void Fs_QueueUpdate(void)
         if (temp == 1)
         {
             read                  = &g_FsQueue.read;
-            g_FsQueue.state       = 0; // `FSQS_READ_ALLOCATE` or `FSQS_SEEK_SETLOC`.
+            g_FsQueue.state       = 0; // `FsQueueReadState_Allocate` or `FSQS_SEEK_SETLOC`.
             g_FsQueue.resetTimer0 = 0;
             g_FsQueue.resetTimer1 = 0;
             temp                  = ++read->idx;
@@ -201,7 +201,7 @@ void Fs_QueueUpdate(void)
     // Nothing to read.
     else
     {
-        g_FsQueue.state = 0; // `FSQS_READ_ALLOCATE` or `FSQS_SEEK_SETLOC`.
+        g_FsQueue.state = 0; // `FsQueueReadState_Allocate` or `FSQS_SEEK_SETLOC`.
     }
 
     // Preparations to post-load in queue; tick them.
@@ -211,7 +211,7 @@ void Fs_QueueUpdate(void)
         temp = Fs_QueueUpdatePostLoad(tick);
         if (temp == 1)
         {
-            g_FsQueue.postLoadState = FSQS_POST_LOAD_INIT;
+            g_FsQueue.postLoadState = FsQueuePostLoadState_Init;
             temp                    = ++g_FsQueue.postLoad.idx;
             g_FsQueue.postLoad.ptr  = g_FsQueue.entries + (temp & (FS_QUEUE_LENGTH - 1));
         }
@@ -219,7 +219,7 @@ void Fs_QueueUpdate(void)
     // Nothing to post-load.
     else
     {
-        g_FsQueue.postLoadState = FSQS_POST_LOAD_INIT;
+        g_FsQueue.postLoadState = FsQueuePostLoadState_Init;
     }
 }
 
@@ -230,35 +230,35 @@ bool Fs_QueueUpdateSeek(s_FsQueueEntry* entry)
 
     switch (state)
     {
-        case FSQS_SEEK_SET_LOC:
+        case FsQueueSeekState_SetLoc:
             switch (Fs_QueueTickSetLoc(entry))
             {
                 // CdlSetloc failed, reset and retry.
                 case 0:
-                    g_FsQueue.state = FSQS_SEEK_RESET;
+                    g_FsQueue.state = FsQueueSeekState_Reset;
                     break;
 
                 case 1:
-                    g_FsQueue.state = FSQS_SEEK_SEEKL;
+                    g_FsQueue.state = FsQueueSeekState_SeekL;
                     break;
             }
             break;
 
-        case FSQS_SEEK_SEEKL:
+        case FsQueueSeekState_SeekL:
             switch (CdControl(CdlSeekL, NULL, NULL))
             {
                 // `CdlSeekL` failed, reset and retry.
                 case 0:
-                    g_FsQueue.state = FSQS_SEEK_RESET;
+                    g_FsQueue.state = FsQueueSeekState_Reset;
                     break;
 
                 case 1:
-                    g_FsQueue.state = FSQS_SEEK_SYNC;
+                    g_FsQueue.state = FsQueueSeekState_Sync;
                     break;
             }
             break;
 
-        case FSQS_SEEK_SYNC:
+        case FsQueueSeekState_Sync:
             switch (CdSync(1, NULL))
             {
                 // Keep waiting, operation in progress.
@@ -272,17 +272,17 @@ bool Fs_QueueUpdateSeek(s_FsQueueEntry* entry)
 
                 // Disk error; reset and retry.
                 case CdlDiskError:
-                    g_FsQueue.state = FSQS_SEEK_RESET;
+                    g_FsQueue.state = FsQueueSeekState_Reset;
                     break;
 
                 // Inknown error, reset and retry.
                 default:
-                    g_FsQueue.state = FSQS_SEEK_RESET;
+                    g_FsQueue.state = FsQueueSeekState_Reset;
                     break;
             }
             break;
 
-        case FSQS_SEEK_RESET:
+        case FsQueueSeekState_Reset:
             switch (Fs_QueueResetTick(entry))
             {
                 // Still resetting.
@@ -291,7 +291,7 @@ bool Fs_QueueUpdateSeek(s_FsQueueEntry* entry)
 
                 // Reset done, retry from beginning.
                 case 1:
-                    g_FsQueue.state = FSQS_SEEK_SET_LOC;
+                    g_FsQueue.state = FsQueueSeekState_SetLoc;
                     break;
             }
             break;

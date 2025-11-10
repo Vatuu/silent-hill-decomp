@@ -1596,7 +1596,7 @@ typedef struct _SysWork
     u8              unk_254C[508];
     s16             field_2748[9]; // `func_80035ED0` loops over this.
     u8              unk_275A[2];
-    s32             field_275C; // Q19.12?
+    q19_12          field_275C;
     s32             field_2760;
     s32             field_2764;
 } s_SysWork;

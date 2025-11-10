@@ -67,17 +67,17 @@
  * When `Fs_QueueUpdate` is called and the current op is a read, it will perform the corresponding action below.
  * Unless otherwise specified, success of that action will advance to the next state.
  *
- * `FSQS_READ_RESET` and `FSQS_READ_CHECK` perform one check/tick iteration every time `Fs_QueueUpdate` is called
+ * `FsQueueReadState_Reset` and `FsQueueReadState_Check` perform one check/tick iteration every time `Fs_QueueUpdate` is called
  * and only advance to the next state when they're done.
  */
 typedef enum _FsQueueReadState
 {
-    FSQS_READ_ALLOCATE = 0, /** Allocate memory for the current read operation (`fsQueueAllocData`), if needed. */
-    FSQS_READ_CHECK    = 1, /** Check if the current read operation can proceed (`Fs_QueueCanRead`). Goto next state if it can. */
-    FSQS_READ_SETLOC   = 2, /** Set start sector from `info` (`Fs_QueueTickSetLoc`). If failure, goto `FSQS_READ_RESET`. */
-    FSQS_READ_READ     = 3, /** Read from CD (`Fs_QueueTickRead`). If failure, goto `FSQS_READ_RESET`. */
-    FSQS_READ_SYNC     = 4, /** Wait for read to complete. If failure, goto `FSQS_READ_RESET`. */
-    FSQS_READ_RESET    = 5  /** Tick the reset timers (`Fs_QueueResetTick`). When done, reset CD driver and goto `FSQS_READ_SETLOC`. */
+    FsQueueReadState_Allocate = 0, /** Allocate memory for the current read operation (`fsQueueAllocData`), if needed. */
+    FsQueueReadState_Check    = 1, /** Check if the current read operation can proceed (`Fs_QueueCanRead`). Goto next state if it can. */
+    FsQueueReadState_SetLoc   = 2, /** Set start sector from `info` (`Fs_QueueTickSetLoc`). If failure, goto `FsQueueReadState_Reset`. */
+    FsQueueReadState_Read     = 3, /** Read from CD (`Fs_QueueTickRead`). If failure, goto `FsQueueReadState_Reset`. */
+    FsQueueReadState_Sync     = 4, /** Wait for read to complete. If failure, goto `FsQueueReadState_Reset`. */
+    FsQueueReadState_Reset    = 5  /** Tick the reset timers (`Fs_QueueResetTick`). When done, reset CD driver and goto `FsQueueReadState_SetLoc`. */
 } e_FsQueueReadState;
 
 /** @brief `FsQueue::state`s when processing a seek operation (`Fs_QueueUpdateSeek`).
@@ -87,10 +87,10 @@ typedef enum _FsQueueReadState
  */
 typedef enum _FsQueueSeekState
 {
-    FSQS_SEEK_SET_LOC = 0, /** Set seek sector from `info` (`Fs_QueueTickSetLoc`). */
-    FSQS_SEEK_SEEKL   = 1, /** Start seeking to above location (via `CdControl(CdlSeekL, ...)`). */
-    FSQS_SEEK_SYNC    = 2, /** Wait for seek to complete (`CdSync()`). If `CdlDiskError`, goto `FSQS_SEEK_RESET`. */
-    FSQS_SEEK_RESET   = 3  /** See `FSQS_READ_RESET`. When done, reset CD driver and go to `FSQS_SEEK_SET_LOC`. */
+    FsQueueSeekState_SetLoc = 0, /** Set seek sector from `info` (`Fs_QueueTickSetLoc`). */
+    FsQueueSeekState_SeekL  = 1, /** Start seeking to above location (via `CdControl(CdlSeekL, ...)`). */
+    FsQueueSeekState_Sync   = 2, /** Wait for seek to complete (`CdSync()`). If `CdlDiskError`, goto `FsQueueSeekState_Reset`. */
+    FsQueueSeekState_Reset  = 3  /** See `FsQueueReadState_Reset`. When done, reset CD driver and go to `FsQueueSeekState_SetLoc`. */
 } e_FsQueueSeekState;
 
 /** @brief Post-load states.
@@ -102,9 +102,9 @@ typedef enum _FsQueueSeekState
  */
 typedef enum _FsQueuePostLoadState
 {
-    FSQS_POST_LOAD_INIT = 0, /** Check for allocated memory and proceed to `SKIP` or `EXEC`. */
-    FSQS_POST_LOAD_SKIP = 1, /** Skip post-loading because this entry owns allocated memory. */
-    FSQS_POST_LOAD_EXEC = 2  /** Execute post-load operation. */
+    FsQueuePostLoadState_Init = 0, /** Check for allocated memory and proceed to `SKIP` or `EXEC`. */
+    FsQueuePostLoadState_Skip = 1, /** Skip post-loading because this entry owns allocated memory. */
+    FsQueuePostLoadState_Exec = 2  /** Execute post-load operation. */
  } e_FsQueuePostLoadState;
 
 /** @brief Post-load types.
@@ -116,9 +116,9 @@ typedef enum _FsQueuePostLoadState
  */
 typedef enum _FsQueuePostLoadType
 {
-    FS_POST_LOAD_NONE = 0, /** Do nothing. */
-    FS_POST_LOAD_TIM  = 1, /** Parse TIM file (`Fs_QueuePostLoadTim`). Can use `extra.image`. */
-    FS_POST_LOAD_ANM  = 2  /** Parse ANM file maybe (`Fs_QueuePostLoadAnm`). Always uses `extra.anm`. */
+    FsQueuePostLoadType_None = 0, /** Do nothing. */
+    FsQueuePostLoadType_Tim  = 1, /** Parse TIM file (`Fs_QueuePostLoadTim`). Can use `extra.image`. */
+    FsQueuePostLoadType_Anm  = 2  /** Parse ANM file maybe (`Fs_QueuePostLoadAnm`). Always uses `extra.anm`. */
 } e_FsQueuePostLoadType;
 
 /** @brief FS queue operation types.
@@ -128,9 +128,9 @@ typedef enum _FsQueuePostLoadType
  */
 typedef enum _FsQueueOperation
 {
-    FS_OP_NONE = 0, /** Uninitialized. */
-    FS_OP_SEEK = 1, /** Seek to file location on CD (`Fs_QueueUpdateSeek`). */
-    FS_OP_READ = 2  /** Read from CD (`Fs_QueueUpdateRead`). */
+    FsQueueOp_None = 0, /** Uninitialized. */
+    FsQueueOp_Seek = 1, /** Seek to file location on CD (`Fs_QueueUpdateSeek`). */
+    FsQueueOp_Read = 2  /** Read from CD (`Fs_QueueUpdateRead`). */
 } e_FsQueueOperation;
 
 /** @brief FS queue entry load statuses.
@@ -280,7 +280,7 @@ s32 Fs_QueueStartSeek(e_FsFile fileIdx);
 s32 Fs_QueueStartRead(e_FsFile fileIdx, void* dest);
 
 /** @brief Add a new TIM read operation to the queue.
- * Adds a read operation with `post-load = FS_POST_LOAD_TIM`.
+ * Adds a read operation with `post-load = FsQueuePostLoadType_Tim`.
  *
  * @param fileIdx File table index of the file to read.
  * @param dest Destination buffer. There are no size checks.
@@ -290,7 +290,7 @@ s32 Fs_QueueStartRead(e_FsFile fileIdx, void* dest);
 s32 Fs_QueueStartReadTim(e_FsFile fileIdx, void* dest, const s_FsImageDesc* image);
 
 /** @brief Add a new ANM read operation to the queue.
- * Adds a read operation with `postLoad = FS_POST_LOAD_ANM`.
+ * Adds a read operation with `postLoad = FsQueuePostLoadType_Anm`.
  *
  * @note Does not actually take a file number, but instead takes one from an array of structs at 0x800A90FC in bodyprog,
  * using `arg1` as an index. Does not seem to take a `s_FsAnmDesc` pointer either. Maybe by value?
@@ -381,7 +381,7 @@ bool Fs_QueueCanRead(s_FsQueueEntry* entry);
  */
 bool Fs_QueueDoBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1);
 
-/** @brief Process `FSQS_READ_SETLOC` or `FSQS_SEEK_SETLOC` state: set target sector.
+/** @brief Process `FsQueueReadState_SetLoc` or `FSQS_SEEK_SETLOC` state: set target sector.
  *
  * Calls `CdControl(CdlSetloc, ...)`.
  *
@@ -390,7 +390,7 @@ bool Fs_QueueDoBuffersOverlap(u8* data0, u32 size0, u8* data1, u32 size1);
  */
 bool Fs_QueueTickSetLoc(s_FsQueueEntry* entry);
 
-/** @brief Process `FSQS_READ_READ` state: read from CD.
+/** @brief Process `FsQueueReadState_Read` state: read from CD.
  *
  * Calls `CdRead()`.
  *
@@ -399,7 +399,7 @@ bool Fs_QueueTickSetLoc(s_FsQueueEntry* entry);
  */
 bool Fs_QueueTickRead(s_FsQueueEntry* entry);
 
-/** @brief Process `FSQS_READ_RESET` or `FSQS_SEEK_RESET` state: wait for a bit and reset CD driver.
+/** @brief Process `FsQueueReadState_Reset` or `FsQueueSeekState_Reset` state: wait for a bit and reset CD driver.
  *
  * Increments `g_FsQueue.resetTimer0` once. If it has reached 8, clears it and increments `g_FsQueue.resetTimer1`.
  * If `g_FsQueue.resetTimer1` has reached 9, clears it and calls `CdReset()`.

@@ -592,7 +592,7 @@ typedef struct _ModelHeader
     u8            vertexOffset_9;
     u8            normalOffset_A;
     u8            field_B_0 : 1;
-    u8            field_B_1 : 3;
+    u8            field_B_1 : 3; // Value used in `func_800571D0` switch.
     u8            field_B_4 : 2;
     u8            unk_B_6   : 2;
     s_MeshHeader* meshHdrs_C;
@@ -1288,7 +1288,7 @@ typedef struct
     s16           field_50;
     s32           field_54;
     SVECTOR       field_58; // Rotation.
-    VECTOR3       field_60; // Type assumed.
+    VECTOR3       field_60;
     SVECTOR       field_6C; // Player current angles?
     SVECTOR       field_74;
     SVECTOR       field_7C;
@@ -3227,19 +3227,19 @@ void sd_init(void);
 
 void sd_work_init(void);
 
-u8 Sd_PlaySfx(u16 sfx, s8 balance, u8 vol);
+u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol);
 
 /** SFX func. */
-void func_800463C0(u16 sfx, s8 balance, u8 vol, s8 pitch);
+void func_800463C0(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
 
 /** SFX func. */
-void func_80046620(u16 sfx, s8 balance, u8 vol, s8 pitch);
+void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
 
 /** Sound command func. Unknown category. */
 void func_800468EC(void);
 
 /** SFX func. */
-void func_8004690C(u16 sfx);
+void func_8004690C(u16 sfxId);
 
 /** Sound command func. Unknown category. */
 void func_8004692C(u16 cmd);
@@ -3402,7 +3402,7 @@ s32 func_800557DC(void);
 
 void func_80055814(s32 arg0);
 
-void func_80055840(s32 arg0, s32 arg1);
+void func_80055840(q19_12 arg0, q19_12 drawDist);
 
 s32 func_800559A8(s32 arg0);
 
@@ -3418,7 +3418,7 @@ void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2);
 
 void func_80055C3C(CVECTOR* result, CVECTOR* color, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 
-u8 func_80055D78(q19_12 x, q19_12 y, q19_12 z);
+u8 func_80055D78(q19_12 posX, q19_12 posY, q19_12 posZ);
 
 void func_80055E90(CVECTOR* color, u8 fadeAmount);
 
@@ -3432,7 +3432,7 @@ void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr);
 
 void func_80056244(s_LmHeader* lmHdr, bool unkFlag);
 
-s32 Lm_MaterialCount(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
+s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
 void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
@@ -3487,7 +3487,7 @@ bool LmHeader_IsTextureLoaded(s_LmHeader* lmHdr);
 
 void Lm_MaterialFlagsApply(s_LmHeader* lmHdr);
 
-void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 flags);
+void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat, s32 matFlags);
 
 void Lm_MaterialRefCountDec(s_LmHeader* lmHdr);
 
@@ -3541,13 +3541,13 @@ s32 func_8005D974(s32 arg0);
 s32 func_8005D9B8(VECTOR3* pos, q23_8 vol);
 
 /** Spatial SFX func? */
-void func_8005DC1C(e_SfxId sfx, const VECTOR3* pos, q23_8 vol, s32 soundType); // Types assumed.
+void func_8005DC1C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType); // Types assumed.
 
 /** Spatial SFX func? */
-void func_8005DC3C(e_SfxId sfx, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch);
+void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, s32 pitch);
 
 /** Spatial SFX func? */
-void func_8005DD44(e_SfxId sfx, VECTOR3* pos, q23_8 vol, s8 pitch); // Types assumed.
+void func_8005DD44(e_SfxId sfxId, VECTOR3* pos, q23_8 vol, s8 pitch); // Types assumed.
 
 /** Checks `field_8` in collision struct. */
 bool func_8005F680(s_Collision* coll);
@@ -3555,7 +3555,7 @@ bool func_8005F680(s_Collision* coll);
 void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3);
 
 /** Spatial SFX func? */
-void func_8005DE0C(e_SfxId sfx, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch);
+void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch);
 
 void Map_EffectTexturesLoad(s32 mapIdx);
 
@@ -3744,10 +3744,10 @@ void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
 /** @brief Displays a map message with SFX.
  *
  * @param mapMsgIdx Index of the message to display.
- * @param sfx SFX to play.
+ * @param sfxId ID of the SFX to play.
  * @param sfxPos SFX position.
  */
-void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfx, VECTOR3* sfxPos);
+void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos);
 
 void func_8008716C(e_InventoryItemId itemId, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 

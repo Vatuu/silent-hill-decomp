@@ -1552,7 +1552,7 @@ s32 Ipd_HalfPageMaterialCountGet(s_IpdHeader* ipdHdr) // 0x80043D00
         return 0;
     }
 
-    return Lm_MaterialCount(LmFilter_IsHalfPage, ipdHdr->lmHdr_4);
+    return Lm_MaterialCountGet(LmFilter_IsHalfPage, ipdHdr->lmHdr_4);
 }
 
 bool LmFilter_IsFullPage(s_Material* mat) // 0x80043D44

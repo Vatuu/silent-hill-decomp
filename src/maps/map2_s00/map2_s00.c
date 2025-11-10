@@ -1873,6 +1873,7 @@ void func_800EAD2C(void) // 0x800EAD2C
         case 1:
             func_80085DF0();
             break;
+
         case 2:
             g_SysWork.silentYesSelection_2350_4 = true;
 
@@ -1916,7 +1917,7 @@ void func_800EAD2C(void) // 0x800EAD2C
 
             func_800463C0(Sfx_Unk1484, balance, vol, 0);
 
-            D_800F5344.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x88, Q12_SHIFT);
+            D_800F5344.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.1f / 3.0f), Q12_SHIFT);
             if (D_800F5344.vz > 0)
             {
                 D_800F5344.vz = 0;

@@ -9,7 +9,7 @@ bool Fs_QueueUpdateRead(s_FsQueueEntry* entry)
     result = false;
     switch (g_FsQueue.state)
     {
-        case FSQS_READ_ALLOCATE:
+        case FsQueueReadState_Allocate:
             switch (Fs_QueueAllocEntryData(entry))
             {
                 // Retry until memory is allocated?
@@ -17,13 +17,13 @@ bool Fs_QueueUpdateRead(s_FsQueueEntry* entry)
                     break;
 
                 case 1:
-                    g_FsQueue.state = FSQS_READ_CHECK;
+                    g_FsQueue.state = FsQueueReadState_Check;
                     break;
             }
 
             break;
 
-        case FSQS_READ_CHECK:
+        case FsQueueReadState_Check:
             switch (Fs_QueueCanRead(entry))
             {
                 // Can't read yet, memory in use by another operation. Wait until next tick.
@@ -31,49 +31,49 @@ bool Fs_QueueUpdateRead(s_FsQueueEntry* entry)
                     break;
 
                 case 1:
-                    g_FsQueue.state = FSQS_READ_SETLOC;
+                    g_FsQueue.state = FsQueueReadState_SetLoc;
                     break;
             }
 
             break;
 
-        case FSQS_READ_SETLOC:
+        case FsQueueReadState_SetLoc:
             switch (Fs_QueueTickSetLoc(entry))
             {
                 // `CdlSetloc` failed, reset CD.
                 case 0:
-                    g_FsQueue.state = FSQS_READ_RESET;
+                    g_FsQueue.state = FsQueueReadState_Reset;
                     break;
 
                 case 1:
-                    g_FsQueue.state = FSQS_READ_READ;
+                    g_FsQueue.state = FsQueueReadState_Read;
                     break;
             }
 
             break;
 
-        case FSQS_READ_READ:
+        case FsQueueReadState_Read:
             switch (Fs_QueueTickRead(entry))
             {
                 // `CdRead` failed, reset CD and retry.
                 case 0:
-                    g_FsQueue.state = FSQS_READ_RESET;
+                    g_FsQueue.state = FsQueueReadState_Reset;
                     break;
 
                 case 1:
-                    g_FsQueue.state = FSQS_READ_SYNC;
+                    g_FsQueue.state = FsQueueReadState_Sync;
                     break;
             }
 
             break;
 
         // Check how read is going.
-        case FSQS_READ_SYNC:
+        case FsQueueReadState_Sync:
             switch (CdReadSync(1, NULL))
             {
                 // `CdReadSync` failed, reset CD.
                 case NO_VALUE:
-                    g_FsQueue.state = FSQS_READ_RESET;
+                    g_FsQueue.state = FsQueueReadState_Reset;
                     break;
 
                 // Done reading and no state transition, let caller know that it's done.
@@ -84,7 +84,7 @@ bool Fs_QueueUpdateRead(s_FsQueueEntry* entry)
 
             break;
 
-        case FSQS_READ_RESET:
+        case FsQueueReadState_Reset:
             switch (Fs_QueueResetTick(entry))
             {
                 // Still resetting.
@@ -93,7 +93,7 @@ bool Fs_QueueUpdateRead(s_FsQueueEntry* entry)
 
                 // Reset done, retry from `setloc`.
                 case 1:
-                    g_FsQueue.state = FSQS_READ_SETLOC;
+                    g_FsQueue.state = FsQueueReadState_SetLoc;
                     break;
             }
 
