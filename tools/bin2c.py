@@ -20,7 +20,6 @@ ctx.c
 
 # TODO:
 # - inner-structs might have issues with `self.struct_field_types`?
-# - multi-dimension arrays aren't emitted properly
 
 import sys
 import argparse
@@ -161,8 +160,12 @@ class StructParser:
         if type_info == 'pointer':
             return self.pointer_size
         elif isinstance(type_info, tuple) and type_info[0] == 'array':
-            _, base_type, count = type_info
-            return self.get_type_size(base_type) * count
+            # Handle multi-dimensional: ('array', base_type, dim1, dim2, ...)
+            _, base_type, *dimensions = type_info
+            total_elements = 1
+            for dim in dimensions:
+                total_elements *= dim
+            return self.get_type_size(base_type) * total_elements
         elif isinstance(type_info, tuple) and type_info[0] == 'union':
             _, union_name = type_info
             return self.union_sizes.get(union_name, 4)  # Default to 4 if unknown
@@ -182,7 +185,8 @@ class StructParser:
         if type_info == 'pointer':
             return self.pointer_size
         elif isinstance(type_info, tuple) and type_info[0] == 'array':
-            _, base_type, _ = type_info
+            # For arrays, alignment is based on the base type
+            _, base_type, *dimensions = type_info
             return self.get_type_alignment(base_type)
         elif isinstance(type_info, tuple) and type_info[0] == 'union':
             # Unions align to their largest member's alignment (typically 4 bytes)
@@ -224,15 +228,15 @@ class StructParser:
             # Return tuple to indicate this is a union
             return ('union', type_node.name)
         elif isinstance(type_node, c_ast.ArrayDecl):
-            # Handle multi-dimensional arrays
+            # Handle multi-dimensional arrays - preserve all dimensions
             base_type = self.parse_type(type_node.type)
             size = self.eval_array_size(type_node.dim)
             
-            # If base is already an array, this is multi-dimensional
+            # If base is already an array, collect all dimensions
             if isinstance(base_type, tuple) and base_type[0] == 'array':
-                _, inner_type, inner_size = base_type
-                # Flatten to single array with total element count
-                return ('array', inner_type, size * inner_size)
+                _, inner_type, *inner_dims = base_type
+                # Build tuple with all dimensions: ('array', base_type, dim1, dim2, ...)
+                return ('array', inner_type, size, *inner_dims)
             else:
                 return ('array', base_type, size)
         return None
@@ -468,7 +472,7 @@ class StructParser:
             # Get construct element
             element = None
             if isinstance(type_info, tuple) and type_info[0] == 'array':
-                _, base_type, size = type_info
+                _, base_type, *dimensions = type_info
                 resolved_base = self.resolve_type(base_type)
                 
                 if resolved_base == 'pointer':
@@ -480,7 +484,11 @@ class StructParser:
                 else:
                     element_type = Int32ul
                 
-                element = Array(size, element_type)
+                # Build nested arrays for multi-dimensional
+                for dim in reversed(dimensions):
+                    element_type = Array(dim, element_type)
+                
+                element = element_type
             elif type_info == 'pointer':
                 element = Int64ul if self.pointer_size == 8 else Int32ul
             elif resolved_type in self.type_map:
@@ -988,18 +996,47 @@ class StructParser:
             return str(parsed_data) # Should not happen for a top-level struct
     
     def format_array(self, array, base_type, indent=0):
-        """Format an array for C output."""
+        """Format an array for C output, handling multi-dimensional arrays."""
         indent_str = "  " * indent
         
+        # Convert to list if it's a ListContainer
+        if isinstance(array, ListContainer):
+            array = list(array)
+        
+        # Determine if this is a multi-dimensional array
+        dimensions = []
+        current_type = base_type
+        while isinstance(current_type, tuple) and current_type[0] == 'array':
+            _, inner_type, *dims = current_type
+            dimensions.extend(dims)
+            current_type = inner_type
+        
+        # Final base type after unwrapping all array dimensions
+        final_base_type = current_type
+        
+        # Check if we have nested arrays (multi-dimensional)
+        # Multi-dimensional means we have a list of lists
+        if array and isinstance(array[0], (list, ListContainer)):
+            lines = ["{"]
+            for item in array:
+                # Recursively format inner dimension
+                inner_type = ('array', final_base_type, *dimensions[1:]) if len(dimensions) > 1 else final_base_type
+                nested = self.format_array(item, inner_type, indent + 1)
+                self.append_line(lines, f"{indent_str}  {nested},")
+            self.append_line(lines, f"{indent_str}}}")
+            return "\n".join(lines)
+        
+        # Single-dimensional array with struct elements
         if array and isinstance(array[0], Container):
             lines = ["{"]
             for item in array:
-                nested = self.to_initializer(item, base_type, indent + 1)
+                nested = self.to_initializer(item, final_base_type, indent + 1)
                 self.append_line(lines, f"{indent_str}  {nested},")
             self.append_line(lines, f"{indent_str}}}")
             return "\n".join(lines)
         else:
-            values = [self.format_value(v, base_type, "") for v in array]
+            # Single-dimensional array with basic types
+            values = [self.format_value(v, final_base_type, "") for v in array]
             if len(values) <= 8:
                 return "{ " + ", ".join(values) + " }"
             lines = ["{"]
@@ -1082,8 +1119,12 @@ Examples:
   
   # Multiple union choices
   %(prog)s -s ctx.c -b data.bin -t MyStruct -u "MyStruct.field1=option1" -u "MyStruct.field2=option2"
+
+  # Read common arguments from a text file
+  %(prog)s @bin2c.txt -t MyStruct -b data.bin -o 0x100
   
-  Recommend using --use-cpp to handle preprocessing header before parsing.
+  --use-cpp can speed up & improve header parsing by using the C preprocessor.
+  Requires 'cpp' (typically from GCC) to be available in your PATH.
         """
     )
     
@@ -1126,6 +1167,10 @@ Examples:
     parser.add_argument('-sl', '--single-line', action='store_true',
                         help='Output array entries on a single line')
     args = parser.parse_args()
+
+    if len(sys.argv) <= 1:
+        parser.print_help()
+        exit()
     
     # Parse union choices
     union_choice_dict = {}
@@ -1310,8 +1355,4 @@ Examples:
     return 0
 
 if __name__ == "__main__":
-    if len(sys.argv) == 1:
-        print("Run with --help for usage information")
-        sys.exit(1)
-    else:
-        sys.exit(main())
+    sys.exit(main())
