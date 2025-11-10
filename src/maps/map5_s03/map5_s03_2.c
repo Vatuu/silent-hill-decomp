@@ -632,11 +632,11 @@ void func_800D2674(void) // 0x800D2674
         case 6:
             moveAmt                                     = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.14f, Q12_SHIFT);
             g_SysWork.player_4C.chara_0.position_18.vz += moveAmt;
-            D_800D6F68.field_24                        += moveAmt;
+            g_WorldObject_Movaches.position_1C.vz      += moveAmt;
 
             if (g_SysWork.sysStateStep_C[0] == 5)
             {
-                if (D_800D6F68.field_24 > Q12(60.35f))
+                if (g_WorldObject_Movaches.position_1C.vz > Q12(60.35f))
                 {
                     SysWork_StateStepSet(0, 6);
                 }
@@ -645,11 +645,12 @@ void func_800D2674(void) // 0x800D2674
             }
             else
             {
-                if (D_800D6F68.field_24 > Q12(60.44f))
+                if (g_WorldObject_Movaches.position_1C.vz > Q12(60.44f))
                 {
-                    moveAmt                                     = D_800D6F68.field_24 - Q12(60.44f);
+                    moveAmt = g_WorldObject_Movaches.position_1C.vz - Q12(60.44f);
+
                     g_SysWork.player_4C.chara_0.position_18.vz -= moveAmt;
-                    D_800D6F68.field_24                        -= moveAmt;
+                    g_WorldObject_Movaches.position_1C.vz      -= moveAmt;
                 }
 
                 // `D_800D3C44 = MAX(D_800D3C44 - (g_DeltaTime0 * 2), 0);`?
@@ -658,7 +659,7 @@ void func_800D2674(void) // 0x800D2674
                 SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             }
 
-            func_8005DE0C(Sfx_Unk1538, &D_800D6F84, D_800D3C44 >> 5, Q12(12.0f), 0);
+            func_8005DE0C(Sfx_Unk1538, &g_WorldObject_Movaches.position_1C, D_800D3C44 >> 5, Q12(12.0f), 0);
             break;
 
         default:
@@ -675,7 +676,26 @@ void func_800D2674(void) // 0x800D2674
     }
 }
 
-INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03_2", func_800D2A04);
+void Map_WorldObjectsInit(void) // 0x800D2A04
+{
+    Math_Vector3Set(&g_WorldObject_Movaches.position_1C, Q12(104.2225f), Q12(-0.1683f), Q12(60.0667f));
+    WorldObject_ModelNameSet(&g_WorldObject_Movaches.object_0, "MOVACHES");
+
+    WorldObject_ModelNameSet(&g_WorldObject_SavePad, D_800A99E4.savePadName_4);
+
+    WorldObjectPoseInit(&g_WorldObjectPose_SavePad[0], 58.1048f, -0.9f, 62.5574f, 0.0f, 17.41f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObjectPose_SavePad[1], 57.905f, -0.9f, 22.5574f, 0.0f, 17.41f, 0.0f);
+
+    WorldObjectPoseInit(&g_WorldObject_Mag.position_1C, 61.1727f, 0.43f, 18.6243f, 0.0f, 60.3f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject_Mag.object_0, "MAG_HIDE");
+
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map5_s03/nonmatchings/map5_s03_2", func_800D2B68);
 

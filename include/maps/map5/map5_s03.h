@@ -23,11 +23,11 @@
 #define MAP_ROOM_MIN_Z Q12(0.0f)
 #define MAP_ROOM_MAX_Z Q12(120.0f)
 
-typedef struct
-{
-    u8  unk_0[36];
-    s32 field_24;
-} s_800D6F68; // TODO: Likely an already known struct.
+extern s_WorldObjectDescNoRot g_WorldObject_Movaches;
+extern s_WorldObject_0        g_WorldObject_SavePad;
+extern s_WorldObject_0        g_CommonWorldObjects[6];
+extern s_WorldObjectDesc      g_WorldObject_Mag;
+extern s_WorldObjectPose      g_WorldObjectPose_SavePad[];
 
 extern u16 D_800D3BDC;
 
@@ -42,10 +42,6 @@ extern VECTOR3 D_800D6F48;
 extern u8 D_800D6F54;
 
 extern s32 D_800D6F58;
-
-extern s_800D6F68 D_800D6F68;
-
-extern VECTOR3 D_800D6F84;
 
 s32 func_800CF648(void);
 
@@ -83,5 +79,7 @@ void func_800D1AF8(void);
 void func_800D2640(void);
 
 void func_800D2674(void);
+
+void Map_WorldObjectsInit(void);
 
 #endif

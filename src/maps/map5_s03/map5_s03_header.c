@@ -319,7 +319,6 @@ void (*g_MapEventFuncs[])() =
   func_800D2674
 };
 
-#define func_800D2A04 (void(*)(void))0x800D2A04
 #define func_800D2B68 (void(*)(void))0x800D2B68
 
 const s_MapOverlayHeader g_MapOverlayHeader = {
@@ -342,7 +341,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapMessages_30           = MAP_MESSAGES,
     .animInfos_34             = HARRY_M5S03_ANIM_INFOS,
     .field_38                 = g_MapHeaderTable_38, // 0x800D3280,
-    .func_3C                  = func_800D2A04,
+    .func_3C                  = Map_WorldObjectsInit,
     .func_40                  = func_800D2B68,
     .func_44                  = NULL,
     .func_48                  = NULL,

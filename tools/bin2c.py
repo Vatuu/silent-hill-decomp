@@ -29,6 +29,10 @@ from io import StringIO
 from pycparser import c_parser, c_ast, parse_file
 from construct import *
 
+def trim_float(x, digits=7):
+    """Format to fixed decimals, then drop trailing zeros/dot."""
+    return f"{x:.{digits}f}".rstrip('0').rstrip('.')
+
 def round_fp(val, scale):
     float_val = val / scale;
 
@@ -46,7 +50,7 @@ def round_fp(val, scale):
             scaled = candidate * scale
             reconverted = int(math.floor(scaled)) if candidate >= 0 else int(math.ceil(scaled))
             if reconverted == val:
-                float_val = candidate
+                float_val = trim_float(candidate)
                 found = True
                 break
 
