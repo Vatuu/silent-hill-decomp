@@ -1,6 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
+#include "bodyprog/item_screens.h"
 #include "maps/map1/map1_s03.h"
 #include "main/rng.h"
 #include "maps/shared.h"
@@ -260,7 +261,13 @@ void func_800DA630(void) {}
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DA7F4);
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DA8B0);
+void func_800DA8B0(void)
+{
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+
+    Player_ItemRemove(InventoryItemId_ClassroomKey, 1);
+    Map_MessageWithSfx(38, Sfx_UseKey, &sfxPos); // "Used classroom key."
+}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
