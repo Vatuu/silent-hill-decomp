@@ -365,7 +365,113 @@ void func_800DA950(void) // 0x800DA950
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DAA28);
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DABC4);
+void func_800DABC4(void)
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            if (g_MapEventParam->field_5 == 17 || g_MapEventParam->field_5 == 18)
+            {
+                if (Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain))
+                {
+                    func_800862F8(false, FILE_TIM_HOLEKEY1_TIM, false);
+                }
+                else
+                {
+                    func_800862F8(false, FILE_TIM_HOLEKEY0_TIM, false);
+                    Savegame_EventFlagSet(EventFlag_112);
+                }
+            } 
+            else if (g_MapEventParam->field_5 == 19 || g_MapEventParam->field_5 == 20)
+            {
+                if ((g_MapEventParam->unk_4_4 == 3) || Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
+                {
+                    func_800862F8(false, FILE_TIM_BALLHOLE_TIM, false);
+                }
+                else
+                {
+                    func_800862F8(false, FILE_TIM_BALLHOL1_TIM, false);
+                }
+            }
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            return;
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            return;
+        case 3:
+            SysWork_StateStepIncrementAfterFade(false, true, 0, 0, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 4:
+            func_800862F8(true, 0, false);
+            return;
+        case 5:
+            SysWork_StateStepIncrementAfterFade(1, true, 0, 0, false);
+            return;
+        case 6:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            return;
+        case 7:
+            func_800862F8(2, 0, false);
+            if (g_MapEventParam->field_5 == 19 || g_MapEventParam->field_5 == 20)
+            {
+                if (g_MapEventParam->unk_4_4 == 3)
+                {
+                    Savegame_EventFlagSet(EventFlag_M1S02_UsedRubberBall);
+                    MapMsg_DisplayAndHandleSelection(false, 36, false, false, 0, false);
+                }
+                else
+                {
+                    if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
+                    {
+                        MapMsg_DisplayAndHandleSelection(false, 34, false, false, 0, false); // "The ball is stuffed inside the pipe."
+                    }
+                    else
+                    {
+                        MapMsg_DisplayAndHandleSelection(false, 35, false, false, 0, false); // "Nothing special."
+                    }
+                }
+            } 
+            else
+            {
+                if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
+                {
+                    MapMsg_DisplayAndHandleSelection(false, 35, false, false, 0, false); // "Nothing special."
+                }
+                else
+                {
+                    if (!Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain))
+                    {
+                        MapMsg_DisplayAndHandleSelection(false, 32, false, false, 0, false); // "There's a hanging key."
+                    }
+                    else
+                    {
+                        MapMsg_DisplayAndHandleSelection(false, 33, false, false, 0, false); // "The key went down the drain."
+                    }
+                }
+            }
+            return;
+        case 8:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            return;
+        case 9:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            return;
+        case 10:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            return;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            return;
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBAA4);
 

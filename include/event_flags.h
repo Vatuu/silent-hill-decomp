@@ -110,6 +110,8 @@ typedef enum _EventFlag
 
     EventFlag_M1S02_PickupRubberBall     = 110,
     EventFlag_M1S02_UsedRubberBall       = 111,
+    EventFlag_112                        = 112,
+    EventFlag_M1S03_KeyDownTheDrain      = 113,
     EventFlag_M1S02_PickupClassroomKey   = 114,
     EventFlag_115                        = 115,
     EventFlag_M1S03_MonsterLurksBookRead = 116,

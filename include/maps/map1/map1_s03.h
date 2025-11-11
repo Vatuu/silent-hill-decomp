@@ -79,4 +79,6 @@ void func_800DC0F8(void);
 
 void func_800DBEC8(void);
 
+void func_800DABC4(void);
+
 #endif
