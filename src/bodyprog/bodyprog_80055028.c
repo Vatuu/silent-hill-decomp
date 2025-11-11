@@ -10535,3 +10535,7 @@ void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 sc
 
     coord->flg = false;
 }
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028B94);
+
+INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_800294F4);

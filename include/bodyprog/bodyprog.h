@@ -4515,7 +4515,7 @@ void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
 void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weaponAttack, s32 animStatus);
 
 // Variable anim duration func for player. It's nearly completely matched https://decomp.me/scratch/PBvwU.
-s32 func_800706E4(void);
+s32 func_800706E4(s_Model* model);
 
 /** Special player SFX handler for heavy breath and damage. */
 bool func_80071620(u8 animStatus, s_SubCharacter*, s32, e_SfxId sfx);
