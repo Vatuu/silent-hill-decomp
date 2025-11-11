@@ -1257,7 +1257,7 @@ s32 func_8003CD5C(void) // 0x8003CD5C
     return g_WorldGfx.heldItem_1BAC.itemId_0;
 }
 
-void func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
+s32 func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
 {
     s32 itemId;
     s8  weaponAttack;
@@ -1269,7 +1269,7 @@ void func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
         itemId = weaponAttack + InventoryItemId_KitchenKnife;
     }
 
-    WorldGfx_PlayerHeldItemSet(itemId);
+    return WorldGfx_PlayerHeldItemSet(itemId);
 }
 
 s32 WorldGfx_PlayerHeldItemSet(e_InventoryItemId itemId) // 0x8003CDA0
