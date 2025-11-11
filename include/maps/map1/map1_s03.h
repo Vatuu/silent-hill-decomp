@@ -55,6 +55,22 @@ extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8];
 extern u8 D_800E14C8;
 extern u16 D_800E14D0[];
 
+typedef struct
+{
+    s32 vx_0;
+    s32 vz_4;
+    u16 field_8;
+    s16 field_A;
+    s16 field_C;
+    s16 field_E;
+    s16 field_10;
+    s16 field_12;
+    u8  idx_14;
+    u8  unk_15;
+    u8  unk_16;
+} s_800E3A40;
+extern s_800E3A40 D_800E3A40[];
+
 void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800DC2E4(void);
@@ -86,5 +102,9 @@ void func_800DABC4(void);
 void func_800DAA28(void);
 
 void func_800DA4D4(void);
+
+void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2);
+
+void func_800CE0CC(s32 arg0);
 
 #endif

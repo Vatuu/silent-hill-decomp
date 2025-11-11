@@ -20,9 +20,87 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CC03C);
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CD0F4);
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CDCE0);
+void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2)
+{
+    s16 tmp0;
+    s16 xOff;
+    s16 zOff;
+    s32 zOff2;
+    s32 i;
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CE0CC);
+    switch (D_800E3A40[arg1].idx_14)
+    {
+        case 0:
+            sharedData_800E1FF8_1_s02[arg0].vx_0 = D_800E3A40[arg1].vx_0;
+            sharedData_800E1FF8_1_s02[arg0].vz_4 = D_800E3A40[arg1].vz_4;
+            break;
+        case 1:
+            tmp0 = (Rng_Rand16() % D_800E3A40[arg1].field_C) - (D_800E3A40[arg1].field_C >> 1);
+            sharedData_800E1FF8_1_s02[arg0].vx_0 = D_800E3A40[arg1].vx_0 + FP_FROM((tmp0 * Math_Sin(D_800E3A40[arg1].field_A)), Q12_SHIFT);
+            zOff2 = FP_FROM((tmp0 * Math_Cos(D_800E3A40[arg1].field_A)), Q12_SHIFT);
+            sharedData_800E1FF8_1_s02[arg0].vz_4 = D_800E3A40[arg1].vz_4 + zOff2;
+            break;
+        case 2:
+            for (i = 0; i < 8; i++)
+            {
+                xOff = (Rng_Rand16() % (s32) (D_800E3A40[arg1].field_C * 2)) - (u16) D_800E3A40[arg1].field_C;
+                zOff = (Rng_Rand16() % (s32) (D_800E3A40[arg1].field_C * 2)) - (u16) D_800E3A40[arg1].field_C;
+                if (((xOff * xOff) + (zOff * zOff)) < (D_800E3A40[arg1].field_C * D_800E3A40[arg1].field_C))
+                {
+                    break;
+                }
+            }
+            if (i == 8)
+            {
+                zOff = 0;
+                xOff = 0;
+            }
+            sharedData_800E1FF8_1_s02[arg0].vx_0 = D_800E3A40[arg1].vx_0 + xOff;
+            sharedData_800E1FF8_1_s02[arg0].vz_4 = D_800E3A40[arg1].vz_4 + zOff;
+            break;
+        case 3:
+            xOff = Rng_Rand16() & 0xFFF;
+            sharedData_800E1FF8_1_s02[arg0].vx_0 = D_800E3A40[arg1].vx_0 + FP_FROM((D_800E3A40[arg1].field_C * Math_Sin(xOff)), Q12_SHIFT);
+            zOff2 = FP_FROM((D_800E3A40[arg1].field_C * Math_Cos(xOff)), Q12_SHIFT);
+            sharedData_800E1FF8_1_s02[arg0].vz_4 = D_800E3A40[arg1].vz_4 + zOff2;
+            break;
+        case 4:
+            xOff = (((Rng_Rand16() & 0x7FF) + (u16)D_800E3A40[arg1].field_A) - 0x400);
+            sharedData_800E1FF8_1_s02[arg0].vx_0 = D_800E3A40[arg1].vx_0 + FP_FROM((D_800E3A40[arg1].field_C * Math_Sin(xOff)), Q12_SHIFT);
+            zOff2 = FP_FROM((D_800E3A40[arg1].field_C * Math_Cos(xOff)), Q12_SHIFT);
+            sharedData_800E1FF8_1_s02[arg0].vz_4 = D_800E3A40[arg1].vz_4 + zOff2;
+            break;
+    }
+    sharedData_800E1FF8_1_s02[arg0].vy_8 = D_800E3A40[arg1].field_8;
+    if (arg2 == 0)
+    {
+        sharedData_800E1FF8_1_s02[arg0].field_C.field_0 = (Rng_Rand16() % D_800E3A40[arg1].field_10);
+    }
+    else
+    {
+        sharedData_800E1FF8_1_s02[arg0].field_C.field_0 = sharedData_800E1FF8_1_s02[arg0].field_C.field_0 - D_800E3A40[arg1].field_10;
+    }
+
+    sharedData_800E1FF8_1_s02[arg0].field_E.s_0.field_0 = Rng_Rand16() & 3;
+    sharedData_800E1FF8_1_s02[arg0].field_E.s_0.field_1 = (Rng_Rand16() & 0x3F) + 0x60;
+    sharedData_800E1FF8_1_s02[arg0].field_10.s_2.field_0 = arg1;
+}
+
+void func_800CE0CC(s32 arg0)
+{
+    s32 idx;
+    s32 i;
+
+    for (i = 0; i < D_800E3A40[arg0].field_12; i++)
+    {
+        idx = func_8005E7E0(28);
+        if (idx == NO_VALUE)
+        {
+            break;
+        }
+        func_800CDCE0(idx, arg0, 0);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CE164);
 

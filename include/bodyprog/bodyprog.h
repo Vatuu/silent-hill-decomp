@@ -307,6 +307,13 @@ typedef struct
             u8  field_2;
             u8  field_3;
         } s_1;
+        struct
+        {
+            s8 field_0;
+            s8 field_1;
+            s8 field_2;
+            s8 field_3;
+        } s_2;
     } field_10;
 } s_MapHdr_field_4C;
 STATIC_ASSERT_SIZEOF(s_MapHdr_field_4C, 20);
