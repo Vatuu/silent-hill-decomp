@@ -71,4 +71,8 @@ void func_800DE828(void);
 
 void func_800DCB54(void);
 
+void func_800DC780(void);
+
+void func_800DC310(void);
+
 #endif

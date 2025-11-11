@@ -101,7 +101,7 @@ typedef enum _EventFlag
     EventFlag_100                              = 100,
     EventFlag_101                              = 101,
     EventFlag_102                              = 102,
-    EventFlag_103                              = 103,
+    EventFlag_M1S03_LockerOpened               = 103,
     EventFlag_104                              = 104,
     EventFlag_105                              = 105,
     EventFlag_106                              = 106,
