@@ -61,7 +61,6 @@ segments:
 
       # .text section
       - [0x1778, c, map0_s02_header]
-      - [0x1778, c, map0_s02_anim_info]
       - [0x1778, c, map0_s02]
       - [0x5650, c, map0_s02_events]
 
