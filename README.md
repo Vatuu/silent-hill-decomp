@@ -1,6 +1,10 @@
 # Silent Hill Decompilation Project
 
-![Silent Hill Decompilation Project Logo](/docs/SHDecompLogoLQ.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Vatuu/silent-hill-decomp/blob/win-support/docs/SHDecompLogo.png?raw=true">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/Vatuu/silent-hill-decomp/blob/win-support/docs/SHDecompLogo-NTSC.png?raw=true">
+  <img alt="SILENT HILL DECOMPILATION PROJECT" src="https://github.com/Vatuu/silent-hill-decomp/blob/win-support/docs/SHDecompLogo-NTSC.png?raw=true">
+</picture>
 
 An in-progress decompilation of the 1.1 US release of *Silent Hill* on the Playstation 1.
 
