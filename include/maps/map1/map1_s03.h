@@ -69,4 +69,6 @@ void func_800DE624(void);
 
 void func_800DE828(void);
 
+void func_800DCB54(void);
+
 #endif

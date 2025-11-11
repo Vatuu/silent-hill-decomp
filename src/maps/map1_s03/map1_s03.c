@@ -436,9 +436,56 @@ void func_800DC9A0(void) // 0x800DC9A0
     }
 }
 
-INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBBCC);
-
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DCB54);
+void func_800DCB54(void)
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_800862F8(0, FILE_TIM_BALLHOLE_TIM, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            return;
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            return;
+        case 3:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            return;
+        case 4:
+            func_8005DC1C(Sfx_Unk1461, &QVECTOR3(-10.5f, 0.0f, -17.5f), Q8(0.5f), 0);
+            Savegame_EventFlagSet(EventFlag_M1S02_UsedRubberBall);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 5:
+            func_800862F8(1, 0, false);
+            return;
+        case 6:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            return;
+        case 7:
+            MapMsg_DisplayAndHandleSelection(false, 36, 0, 0, 0, false); // "Used the rubber ball"
+            func_800862F8(2, 0, false);
+            return;
+        case 8:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            return;
+        case 9:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            return;
+        case 10:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            return;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            return;
+    }
+}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800DCD44
 
