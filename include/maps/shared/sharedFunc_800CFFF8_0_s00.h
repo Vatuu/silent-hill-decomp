@@ -14,12 +14,15 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand)
     part->field_0.vz += ((g_Particle_PrevPosition.vz - g_Particle_Position.vz) - D_800F23D0);
 #endif
 
+#if !defined(MAP1_S03)
     if (pass == 0 && sharedData_800E0CAC_0_s00 == 3)
     {
         part->field_0.vx += FP_FROM(g_Particle_SpeedX, Q4_SHIFT);
         part->field_0.vz += FP_FROM(g_Particle_SpeedZ, Q4_SHIFT);
     }
-#if !defined(MAP7_S03)
+#endif
+
+#if !defined(MAP7_S03) && !defined(MAP1_S03)
     if (sharedData_800DD591_0_s00 != 0)
     {
         return;
