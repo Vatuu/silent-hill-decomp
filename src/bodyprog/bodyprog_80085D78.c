@@ -1321,12 +1321,6 @@ void func_80088D34(s32 idx) // 0x80088D34
 
 s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78
 {
-    #define HAS_FLAG(ptr, idx) \
-        ((((u32*)ptr)[(idx) >> 5] >> ((idx) & 0x1F)) & (1 << 0))
-
-    #define SET_FLAG(ptr, idx) \
-        ((((u32*)ptr)[(idx) >> 5] |= (1 << 0) << ((idx) & 0x1F)))
-
     s_Collision     coll;
     s32             i;
     s32             var_a0;

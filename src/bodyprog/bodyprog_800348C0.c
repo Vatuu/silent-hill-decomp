@@ -2000,7 +2000,84 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
 }
 
 /** Responsible for loading NPCs on the map. */
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800348C0", func_80037F24); // 0x80037F24
+void func_80037F24(s32 arg0) // 0x80037F24
+{
+    s_Collision     sp10;
+    s32             sp20;
+    s32             sp24;
+    s32             var_s2;
+    s32*            temp_a0;
+    s32             var_s4;
+    s_MapPoint2d*   var_s5;
+    s_SubCharacter* var_s6;
+    VECTOR3*        vec;
+
+    var_s2  = 0;
+    var_s5  = g_MapOverlayHeader.charaSpawns_24C[0];
+    temp_a0 = &g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4];
+
+    if (arg0 == 0)
+    {
+        func_80037154();
+        if (g_MapOverlayHeader.func_48 != NULL)
+        {
+            g_MapOverlayHeader.func_48();
+        }
+    }
+
+    sp20 = g_MapOverlayHeader.charaGroupIds_248[0];
+    sp24 = g_MapOverlayHeader.charaGroupIds_248[1];
+
+    for (var_s4 = 0; var_s4 < 32 && g_VBlanks < 4; var_s4++, var_s5++)
+    {
+        if (g_SysWork.field_2290 == (1 << g_SysWork.field_2280) - 1)
+        {
+            break;
+        }
+
+        vec = (VECTOR3*)var_s5;
+
+        if (!(g_SysWork.flags_22A4 & 0x10) && HAS_FLAG(temp_a0, var_s4) && !HAS_FLAG(&g_SysWork.field_228C, var_s4) &&
+            var_s5->data.spawnInfo.flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= var_s5->data.spawnInfo.field_7_0 &&
+            func_8008F914(var_s5->positionX_0, var_s5->positionZ_8) &&
+            !Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, vec, 0x16000) &&
+            (arg0 == 0 || Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, vec, 0x14000)))
+        {
+            while (HAS_FLAG(&g_SysWork.field_2290, var_s2))
+            {
+                var_s2++;
+            }
+
+            bzero(&g_SysWork.npcs_1A0[var_s2], 0x128);
+
+            if (var_s5->data.spawnInfo.charaId_4 > 0)
+            {
+                g_SysWork.npcs_1A0[var_s2].model_0.charaId_0 = var_s5->data.spawnInfo.charaId_4;
+            }
+            else
+            {
+                g_SysWork.npcs_1A0[var_s2].model_0.charaId_0 = var_s4 < 16 ? sp20 : sp24;
+            }
+
+            g_SysWork.npcs_1A0[var_s2].field_40            = var_s4;
+            g_SysWork.npcs_1A0[var_s2].model_0.state_2     = 0;
+            g_SysWork.npcs_1A0[var_s2].model_0.stateStep_3 = var_s5->data.spawnInfo.flags_6;
+            g_SysWork.npcs_1A0[var_s2].position_18.vx      = var_s5->positionX_0;
+            g_SysWork.npcs_1A0[var_s2].position_18.vz      = var_s5->positionZ_8;
+
+            Collision_Get(&sp10, var_s5->positionX_0, var_s5->positionZ_8);
+
+            g_SysWork.npcs_1A0[var_s2].position_18.vy = sp10.groundHeight_0;
+            g_SysWork.npcs_1A0[var_s2].rotation_24.vy = var_s5->data.spawnInfo.rotationY_5 * 16;
+
+            SET_FLAG(&g_SysWork.field_2290, var_s2);
+            SET_FLAG(&g_SysWork.field_228C, var_s4);
+
+            var_s6                          = &g_SysWork.npcs_1A0[var_s2];
+            var_s6->model_0.anim_4.flags_2 |= 2;
+        }
+    }
+}
 
 s32 func_800382B0(s32 arg0) // 0x800382B0
 {

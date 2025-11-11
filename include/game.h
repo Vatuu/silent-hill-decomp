@@ -207,6 +207,12 @@ struct _Model;
 #define PLAYER_NEAR_POS(comp, base, tol) \
     (((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) >= 0) ? ((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) < Q12(tol)) : ((Q12(base) - g_SysWork.player_4C.chara_0.position_18.comp) < Q12(tol)))
 
+#define HAS_FLAG(ptr, idx) \
+    ((((u32*)ptr)[(idx) >> 5] >> ((idx) & 0x1F)) & (1 << 0))
+
+#define SET_FLAG(ptr, idx) \
+    ((((u32*)ptr)[(idx) >> 5] |= (1 << 0) << ((idx) & 0x1F)))
+
 /** @brief Sync modes used by `DrawSync` and `VSync`. */
 typedef enum _SyncMode
 {
