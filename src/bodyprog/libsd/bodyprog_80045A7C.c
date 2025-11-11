@@ -49,7 +49,7 @@ void Sd_EngineCmd(u32 cmd) // 0x80045A7C
         // Unknown. Range [2816, 3327].
         case 11:
         case 12:
-            func_800468EC();
+            Sd_LastVoiceKeyOff();
             return;
 
         // Unknown. Range [4096, 5887].
@@ -77,7 +77,7 @@ u8 func_80045B28(void) // 0x80045B28
     var = 2;
     if (D_800C1658.field_15 == 0)
     {
-        if (D_800C1673 != 0)
+        if (D_800C1670.field_3 != 0)
         {
             D_800C1688.field_8 = VSync(SyncMode_Count);
             D_800C1688.field_4 = 0;
@@ -104,29 +104,29 @@ u8 func_80045B28(void) // 0x80045B28
 
 u16 func_80045BC8(void) // 0x80045BC8
 {
-    return D_800C1666;
+    return D_800C1658.field_E;
 }
 
 void func_80045BD8(u16 cmd) // 0x80045BD8
 {
     switch (cmd)
     {
-        case 1: // Mono.
-            func_80045D28(false);
+        case 1: // Set Audio to Mono.
+            Sd_AudioSystemSet(false);
             break;
 
-        case 2: // Stereo.
-            func_80045D28(true);
+        case 2: // Set Audio to Stereo.
+            Sd_AudioSystemSet(true);
             break;
 
         case 16:
-            func_800469AC();
-            func_800468EC();
+            Sd_AllVoicesKeyOff();
+            Sd_LastVoiceKeyOff();
             break;
 
         case 17:
-            func_800469E8();
-            func_800468EC();
+            Sd_AllVoicesKeyOffVWithRROff();
+            Sd_LastVoiceKeyOff();
             break;
 
         case 18:
@@ -134,11 +134,11 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
             break;
 
         case 21:
-            func_800469E8();
+            Sd_AllVoicesKeyOffVWithRROff();
 
         case 20:
-            func_800469AC();
-            func_800468EC();
+            Sd_AllVoicesKeyOff();
+            Sd_LastVoiceKeyOff();
             func_80046AD8();
 
         case 19:
@@ -146,21 +146,21 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
             break;
 
         case 22:
-            D_800C166C = 1;
+            D_800C1658.field_14 = 1;
 
         default:
             break;
 
         case 23:
-            D_800C166C = 2;
+            D_800C1658.field_14 = 2;
             break;
 
         case 3:
-            D_800C166F = 1;
+            D_800C1658.muteGame_17 = true;
             break;
 
         case 4:
-            D_800C166F = 0;
+            D_800C1658.muteGame_17 = false;
             break;
     }
 
@@ -175,7 +175,7 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
     }
 }
 
-void func_80045D28(u8 isStereo) // 0x80045D28
+void Sd_AudioSystemSet(u8 isStereo) // 0x80045D28
 {
     CdlATV vol;
 
@@ -186,15 +186,15 @@ void func_80045D28(u8 isStereo) // 0x80045D28
 
             // SPU (L).
             vol.val0 =
-            vol.val2 = 0x4F;
+            vol.val2 = 79;
 
             // SPU (R).
             vol.val1 =
-            vol.val3 = 0x4F;
+            vol.val3 = 79;
 
             CdMix(&vol);
 
-            D_800C167C = 0x7F;
+            D_800C1678.volumeSE_4 = 127;
             g_Sound_IsStereoEnabled = false;
             return;
 
@@ -203,14 +203,14 @@ void func_80045D28(u8 isStereo) // 0x80045D28
 
             // SPU (L).
             vol.val0 =
-            vol.val2 = 0x7F;
+            vol.val2 = 127;
 
             // SPU (R).
             vol.val1 =
             vol.val3 = 0;
             CdMix(&vol);
 
-            D_800C167C = 0x7F;
+            D_800C1678.volumeSE_4 = 127;
             g_Sound_IsStereoEnabled = true;
             return;
     }
@@ -220,14 +220,14 @@ void sd_init(void) // 0x80045DD4
 {
     SdInit();
     SdSetTickMode(1);
-    func_80045D28(true);
+    Sd_AudioSystemSet(true);
     SdSetReservedVoice(24);
     SdStart();
     SdSetTableSize(&D_800C16C8, 16, 3);
 
-    D_800C1678.field_C = OPT_SOUND_VOLUME_MAX - 1;
-    D_800C1678.field_D = OPT_SOUND_VOLUME_MAX - 1;
-    D_800C1678.field_E = OPT_SOUND_VOLUME_MAX - 1;
+    D_800C1678.globalVolumeSE_C  = OPT_SOUND_VOLUME_MAX - 1;
+    D_800C1678.globalVolumeBGM_D = OPT_SOUND_VOLUME_MAX - 1;
+    D_800C1678.globalVolumeXA_E  = OPT_SOUND_VOLUME_MAX - 1;
 
     sd_work_init();
 }
@@ -270,8 +270,8 @@ void sd_work_init(void) // 0x80045E44
     D_800C1658.field_14           = 0;
     D_800C1658.field_15           = 0;
     D_800C1658.field_16           = 0;
-    D_800C1658.field_17           = 0;
-    D_800C1678.field_A            = 127;
+    D_800C1658.muteGame_17        = 0;
+    D_800C1678.volumeGlobal_A     = 127;
 
     SdSetMVol(127, 127);
 
@@ -283,7 +283,7 @@ void sd_work_init(void) // 0x80045E44
     D_800C1670.field_2          = 0;
     D_800C1670.field_3          = 0;
     D_800C1678.volumeXa_0       = 84;
-    D_800C1678.volumeBgm_8      = 40;
+    D_800C1678.field_8          = 40;
     D_800C1678.field_6          = 40;
 
     Sd_SetVolBgm(40, 40);
@@ -549,7 +549,7 @@ void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x80046620
                                    Sd_GetVolSe(D_800C1698.volumeLeft_C), Sd_GetVolSe(D_800C1698.volumeRight_E));
 }
 
-void func_800468EC(void) // 0x800468EC
+void Sd_LastVoiceKeyOff(void) // 0x800468EC
 {
     SdUtKeyOffV(23);
 }
@@ -572,7 +572,7 @@ void func_8004692C(u16 cmd) // 0x8004692C
     SdVoKeyOff(D_800C15C6, D_800C15C8);
 }
 
-void func_800469AC(void) // 0x800469AC
+void Sd_AllVoicesKeyOff(void) // 0x800469AC
 {
     s32 i;
 
@@ -582,7 +582,7 @@ void func_800469AC(void) // 0x800469AC
     }
 }
 
-void func_800469E8(void) // 0x800469E8
+void Sd_AllVoicesKeyOffVWithRROff(void) // 0x800469E8
 {
     s32 i;
 
@@ -613,8 +613,8 @@ void func_80046A70(void) // 0x80046A70
 
     SdSeqPlay(0, 1, 0);
 
-    D_800C1678.field_6     = 40;
-    D_800C1678.volumeBgm_8 = 40;
+    D_800C1678.field_6 = 40;
+    D_800C1678.field_8 = 40;
 
     Sd_SetVolBgm(40, 40);
     func_80047A70();
@@ -622,25 +622,25 @@ void func_80046A70(void) // 0x80046A70
 
 void func_80046AD8(void) // 0x80046AD8
 {
-    D_800C1666 = 0xFFFF;
+    D_800C1658.field_E = NO_VALUE;
     func_800478DC(8);
 }
 
 void func_80046B04(void) // 0x80046B04
 {
-    if (D_800C1678.volumeBgm_8 > 0)
+    if (D_800C1678.field_8 > 0)
     {
-        D_800C1678.volumeBgm_8 -= 4;
+        D_800C1678.field_8 -= 4;
     }
 
-    if (D_800C1678.volumeBgm_8 <= 0)
+    if (D_800C1678.field_8 <= 0)
     {
-        D_800C1678.volumeBgm_8 = 0;
+        D_800C1678.field_8 = 0;
         func_80046B78();
         func_80047A70();
     }
 
-    D_800C1678.field_6 = D_800C1678.volumeBgm_8;
+    D_800C1678.field_6 = D_800C1678.field_8;
     Sd_SetVolBgm(D_800C1678.field_6, D_800C1678.field_6);
 }
 
@@ -650,7 +650,7 @@ void func_80046B78(void) // 0x80046B78
     SdSeqStop(0);
 
     D_800C1658.field_14 = 0;
-    D_800C1658.field_E = 0;
+    D_800C1658.field_E  = 0;
 }
 
 static u8 REVERB_DEPTHS[36] = {
@@ -1947,7 +1947,7 @@ void func_80046E00(void) // 0x80046E00
 
     D_800C1658.timer_0++;
 
-    switch (D_800C1671)
+    switch (D_800C1670.field_1)
     {
         case 0:
             if (D_800C1658.field_14 == 0)
@@ -1990,14 +1990,14 @@ void func_80046E00(void) // 0x80046E00
             D_800C1678.volumeXa_0 = D_800C1678.field_2;
             Sd_SetVolXa(D_800C1678.field_2, D_800C1678.field_2);
             D_800C15F0.field_0 = CdlModeSF | CdlModeRT | CdlModeSpeed;
-            D_800C1671         = 1;
+            D_800C1670.field_1 = 1;
             break;
 
         case 1:
             if (!Cd_TryCmd(CdlSetmode, &D_800C15F0.field_0, NULL))
             {
                 D_800C1658.timer_0 = 0;
-                D_800C1671         = 2;
+                D_800C1670.field_1 = 2;
             }
             break;
 
@@ -2007,14 +2007,14 @@ void func_80046E00(void) // 0x80046E00
         case 2:
             D_800C15F0.field_0 = D_800AA894[D_800C15CA].field_8_24;
             D_800C15F0.field_1 = D_800AA894[D_800C15CA].field_4_24;
-            D_800C1671         = 3;
+            D_800C1670.field_1 = 3;
             break;
 
         case 3:
             if (!Cd_TryCmd(CdlSetfilter, &D_800C15F0.field_0, NULL))
             {
                 D_800C1658.timer_0 = 0;
-                D_800C1671         = 4;
+                D_800C1670.field_1 = 4;
             }
             break;
 
@@ -2027,19 +2027,19 @@ void func_80046E00(void) // 0x80046E00
 
             D_800C1688.field_0 = D_800AA894[D_800C15CA].field_8 + 32;
 
-            D_800C1671        = 5;
-            D_800C15E8.sector = itob(D_800C15CC % 75);
-            D_800C15CC       /= 75;
-            D_800C15E8.second = itob(D_800C15CC % 60);
-            D_800C15CC       /= 60;
-            D_800C15E8.minute = itob(D_800C15CC);
+            D_800C1670.field_1 = 5;
+            D_800C15E8.sector  = itob(D_800C15CC % 75);
+            D_800C15CC        /= 75;
+            D_800C15E8.second  = itob(D_800C15CC % 60);
+            D_800C15CC        /= 60;
+            D_800C15E8.minute  = itob(D_800C15CC);
             break;
 
         case 5:
             if (!Cd_TryCmd(CdlSeekL, (u8*)&D_800C15E8, NULL))
             {
                 D_800C1658.timer_0 = 0;
-                D_800C1671         = 6;
+                D_800C1670.field_1 = 6;
             }
             break;
 
@@ -2048,7 +2048,7 @@ void func_80046E00(void) // 0x80046E00
             {
                 D_800C1658.timer_0 = 0;
                 D_800C37DC         = 0;
-                D_800C1671         = 7;
+                D_800C1670.field_1 = 7;
             }
             break;
 
@@ -2058,7 +2058,7 @@ void func_80046E00(void) // 0x80046E00
             SdSetSerialAttr(0, 0, 1);
             D_800C1688.field_8 = VSync(SyncMode_Count);
             D_800C1688.field_4 = 0;
-            D_800C1671         = 0;
+            D_800C1670.field_1 = 0;
 
             func_80047A70();
             D_800C1658.timer_0  = 0;
@@ -2093,34 +2093,34 @@ void func_80047308(void) // 0x80047308
 
     D_800C1658.timer_0++;
 
-    switch (D_800C1673)
+    switch (D_800C1670.field_3)
     {
         case 0:
             D_800C15D0 = D_800C1658.field_2;
             Sd_SetVolXa(0, 0);
             D_800C15F0.field_0 = CdlModeSF | CdlModeRT | CdlModeSpeed;
-            D_800C1673         = 1;
+            D_800C1670.field_3 = 1;
             break;
 
         case 1:
             if (!Cd_TryCmd(CdlSetmode, &D_800C15F0.field_0, NULL))
             {
                 D_800C1658.timer_0 = 0;
-                D_800C1673         = 2;
+                D_800C1670.field_3 = 2;
             }
             break;
 
         case 2:
             D_800C15F0.field_0 = D_800AA894[D_800C15D0].field_8_24;
             D_800C15F0.field_1 = D_800AA894[D_800C15D0].field_4_24;
-            D_800C1673         = 3;
+            D_800C1670.field_3 = 3;
             return;
 
         case 3:
             if (!Cd_TryCmd(CdlSetfilter, &D_800C15F0.field_0, NULL))
             {
                 D_800C1658.timer_0 = 0;
-                D_800C1673         = 4;
+                D_800C1670.field_3 = 4;
             }
             break;
 
@@ -2133,7 +2133,7 @@ void func_80047308(void) // 0x80047308
 
             D_800C1688.field_0 = D_800AA894[D_800C15D0].field_8 + 0x20;
 
-            D_800C1673        = 5;
+            D_800C1670.field_3        = 5;
             D_800C15E8.sector = itob(D_800C15D4 % 75);
             D_800C15D4       /= 75;
             D_800C15E8.second = itob(D_800C15D4 % 60);
@@ -2145,15 +2145,15 @@ void func_80047308(void) // 0x80047308
             if (!Cd_TryCmd(CdlSeekL, (u8*)&D_800C15E8, NULL))
             {
                 D_800C1658.timer_0 = 0;
-                D_800C1673         = 6;
+                D_800C1670.field_3 = 6;
             }
             break;
 
         case 6:
             if (!Cd_TryCmd(CdlPause, NULL, NULL))
             {
-                D_800C1673 = 0;
-                D_800C37DC = 0;
+                D_800C1670.field_3 = 0;
+                D_800C37DC         = 0;
                 func_80047A70();
                 D_800C1658.timer_0 = 0;
             }
@@ -2167,7 +2167,7 @@ void func_80047308(void) // 0x80047308
 void func_8004760C(void) // 0x8004760C
 {
     func_800478DC(2);
-    D_800C166E = 1;
+    D_800C1658.field_16 = 1;
 }
 
 void func_80047634(void) // 0x80047634
@@ -2226,15 +2226,15 @@ void func_80047634(void) // 0x80047634
     }
 }
 
-void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2) // 0x80047798
+void Sd_SetVolume(u8 xaVol, s16 bgmVol, u8 seVol) // 0x80047798
 {
-    D_800C1678.field_E = arg0;
-    D_800C1678.field_D = arg1;
-    D_800C1678.field_C = arg2;
+    D_800C1678.globalVolumeXA_E  = xaVol;
+    D_800C1678.globalVolumeBGM_D = bgmVol;
+    D_800C1678.globalVolumeSE_C  = seVol;
     
     if (D_800C1658.field_E != 0)
     {
-        Sd_SetVolBgm(D_800C1678.volumeBgm_8, D_800C1678.volumeBgm_8);
+        Sd_SetVolBgm(D_800C1678.field_8, D_800C1678.field_8);
     }
     
     if (D_800C1658.field_4 != 0)
@@ -2245,17 +2245,17 @@ void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2) // 0x80047798
 
 void Sd_SetVolBgm(s16 volLeft, s16 volRight) // 0x80047808
 {
-    SdSeqSetVol(0, (volLeft * g_Sound_VolumeBgm) >> 7, (volRight * g_Sound_VolumeBgm) >> 7);
+    SdSeqSetVol(0, (volLeft * D_800C1678.globalVolumeBGM_D) >> 7, (volRight * D_800C1678.globalVolumeBGM_D) >> 7);
 }
 
 void Sd_SetVolXa(s16 volLeft, s16 volRight) // 0x80047860
 {
-    SdSetSerialVol(0, (volLeft * g_Sound_VolumeXa) >> 7, (volRight * g_Sound_VolumeXa) >> 7);
+    SdSetSerialVol(0, (volLeft * D_800C1678.globalVolumeXA_E) >> 7, (volRight * D_800C1678.globalVolumeXA_E) >> 7);
 }
 
 s16 Sd_GetVolSe(s16 arg0) // 0x800478B8
 {
-    return (arg0 * g_Sound_VolumeSe) >> 7;
+    return (arg0 * D_800C1678.globalVolumeSE_C) >> 7;
 }
 
 void func_800478DC(u8 cmd) // 0x800478DC

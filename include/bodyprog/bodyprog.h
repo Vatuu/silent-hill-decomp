@@ -7,6 +7,8 @@
 #include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
 #include "types.h"
+// TODO: Asign `sound_system.h` correspondly to any *.c file calling any function located there.
+#include "bodyprog/sound_system.h"
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` that has not been identified to
@@ -1177,49 +1179,6 @@ typedef struct
     u8 field_0;
     u8 field_1;
 } s_800C15F0;
-
-typedef struct
-{
-    u16 timer_0; // A timer related to audio command processes.
-    u16 field_2;
-    u16 field_4;
-    u16 field_6;
-    u16 field_8[1]; // Unknown size.
-    s16 field_A;
-    s16 field_C;
-    u16 field_E;
-    union
-    {
-        s8  field_0[3];
-        u16 field_01;
-    } field_F;
-    u8  field_14;
-    u8  field_15; // Padding?
-    s8  field_16;
-    s8  field_17;
-} s_800C1658;
-
-typedef struct
-{
-    u8 field_0;
-    s8 field_1;
-    u8 field_2;
-    s8 field_3;
-} s_800C1670;
-
-// Sound data struct?
-typedef struct
-{
-    s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call. Could also be event timer? Most values are shared with `field_2`.
-    s16 field_2;    // `volumeVoice_2`?
-    u16 field_4;
-    s16 field_6;
-    s16 volumeBgm_8; // Might be wrong, but it's used in a `Sd_SetVolBgm` call.
-    s16 field_A;
-    s8  field_C; // (?) volume?
-    s8  field_D; // BGM volume?
-    s8  field_E; // SE volume?
-} s_800C1678;
 
 typedef struct
 {
@@ -2544,15 +2503,6 @@ extern u16 D_800C15D0;
 
 extern u32 D_800C15D4;
 
-// Only used in `func_800478DC` as iterator variable.
-extern s32 D_800C15D8;
-
-// Only used in `func_800478DC` as iterator variable.
-extern s32 D_800C15DC; // Index.
-
-// Only used in `func_80047A70` as iterator variable.
-extern s32 D_800C15E0;
-
 extern s_800C15F0 D_800C15F0;
 
 /** SFX IDs? */
@@ -2561,42 +2511,9 @@ extern u16 D_800C15F8[];
 /** Voices? */
 extern s16 D_800C1628[];
 
-extern s_800C1658 D_800C1658;
-
 extern u16 D_800C165A;
 
-extern u16 D_800C1666;
-
-/** `bool` */
-extern u8 g_Sound_IsStereoEnabled;
-
-extern s8 D_800C166C;
-
-extern s8 D_800C166D;
-
-extern u8 D_800C166E;
-
-extern u8 D_800C166F;
-
-extern u8 D_800C1671;
-
 extern s16 D_800C167C;
-
-extern s_800C1670 D_800C1670;
-
-extern s_800C1678 D_800C1678;
-
-extern s16 D_800C1680;
-
-extern u8 g_Sound_VolumeBgm; // 0x800C1685
-
-extern u8 g_Sound_VolumeXa; // 0x800C1686
-
-extern u8 g_Sound_VolumeSe; // 0x800C1684
-
-extern u8 g_Sound_ReverbDepth; // 0x800C1687;
-
-extern u8 D_800C1673;
 
 extern s_800C1688 D_800C1688;
 
@@ -3220,18 +3137,11 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
 void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images);
 
-/** Passes a command to the sound driver. Plays SFX among other things. */
-void Sd_EngineCmd(u32 cmd);
-
 /** Sound func? */
 u8 func_80045B28(void);
 
-u16 func_80045BC8(void);
-
 /** Sound func. */
 void func_80045BD8(u16 cmd);
-
-void func_80045D28(u8 isStereo);
 
 void sd_init(void);
 
@@ -3245,18 +3155,11 @@ void func_800463C0(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
 /** SFX func. */
 void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
 
-/** Sound command func. Unknown category. */
-void func_800468EC(void);
-
 /** SFX func. */
 void func_8004690C(u16 sfxId);
 
 /** Sound command func. Unknown category. */
 void func_8004692C(u16 cmd);
-
-void func_800469AC(void);
-
-void func_800469E8(void);
 
 /** Sound command func. Unknown category. */
 void func_80046A24(u16 cmd);
@@ -3288,9 +3191,6 @@ void func_800472BC(s32 sfxId);
 void func_80047308(void);
 
 void func_8004760C(void);
-
-/** Args are volume levels. */
-void Sd_SetVolume(u8 arg0, s16 arg1, u8 arg2);
 
 /** Sound func. */
 void func_800478DC(u8 cmd);

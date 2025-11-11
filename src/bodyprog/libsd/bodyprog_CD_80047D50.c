@@ -404,8 +404,8 @@ void func_80048498(void) // 0x80048498
         }
         else
         {
-            D_800C1670.field_0 = 0;
-            D_800C166D         = 0;
+            D_800C1670.field_0  = 0;
+            D_800C1658.field_15 = 0;
 
             func_80047A70();
         }
@@ -478,55 +478,55 @@ void func_800485D8(void) // 0x800485D8
 
     if (D_800C1658.field_14 != 0)
     {
-        D_800C1658.field_E = 0xFFFF;
+        D_800C1658.field_E = NO_VALUE;
 
-        if (D_800C1678.volumeBgm_8 <= 0)
+        if (D_800C1678.field_8 <= 0)
         {
-            D_800C1678.volumeBgm_8 = 0;
+            D_800C1678.field_8 = 0;
             func_80046B78();
         }
         else
         {
-            D_800C1678.volumeBgm_8 -= D_800C1658.field_14;
+            D_800C1678.field_8 -= D_800C1658.field_14;
 
-            if ((D_800C1678.volumeBgm_8 << 16) <= 0)
+            if ((D_800C1678.field_8 << 16) <= 0)
             {
-                D_800C1678.volumeBgm_8 = 0;
+                D_800C1678.field_8 = 0;
                 func_80046B78();
             }
         }
 
-        D_800C1678.field_6 = D_800C1678.volumeBgm_8;
+        D_800C1678.field_6 = D_800C1678.field_8;
         
-        Sd_SetVolBgm(D_800C1678.volumeBgm_8, D_800C1678.volumeBgm_8);
+        Sd_SetVolBgm(D_800C1678.field_8, D_800C1678.field_8);
     }
-    else if (D_800C1678.field_6 != D_800C1678.volumeBgm_8)
+    else if (D_800C1678.field_6 != D_800C1678.field_8)
     {
-        if (D_800C1678.volumeBgm_8 < D_800C1678.field_6)
+        if (D_800C1678.field_8 < D_800C1678.field_6)
         {
-            D_800C1678.volumeBgm_8++;
-            if (ABS(D_800C1678.volumeBgm_8 - D_800C1678.field_6) < 2) 
+            D_800C1678.field_8++;
+            if (ABS(D_800C1678.field_8 - D_800C1678.field_6) < 2) 
             {
-                D_800C1678.volumeBgm_8 = D_800C1678.field_6;
+                D_800C1678.field_8 = D_800C1678.field_6;
             }
         }
         else
         {
-            D_800C1678.volumeBgm_8--;
-            if (ABS(D_800C1678.volumeBgm_8 - D_800C1678.field_6) < 2) 
+            D_800C1678.field_8--;
+            if (ABS(D_800C1678.field_8 - D_800C1678.field_6) < 2) 
             {
-                D_800C1678.volumeBgm_8 = D_800C1678.field_6;
+                D_800C1678.field_8 = D_800C1678.field_6;
             }
         }
 
-        Sd_SetVolBgm(D_800C1680, D_800C1680);
+        Sd_SetVolBgm(D_800C1678.field_8, D_800C1678.field_8);
     }
 
     if ((u32)D_800C1688.field_4 > (u32)D_800C1688.field_0)
     {
         if (D_800C37DD == 0)
         {
-            if (D_800C166E == 0)
+            if (D_800C1658.field_16 == 0)
             {
                 func_800478DC(2);
             }
@@ -536,30 +536,30 @@ void func_800485D8(void) // 0x800485D8
         }
     }
 
-    if (D_800C166F == 1)
+    if (D_800C1658.muteGame_17 == true)
     {
-        if (D_800C1678.field_A > 0)
+        if (D_800C1678.volumeGlobal_A > 0)
         {
-            D_800C1678.field_A -= 8;
-            if ((D_800C1678.field_A << 16) <= 0)
+            D_800C1678.volumeGlobal_A -= 8;
+            if ((D_800C1678.volumeGlobal_A << 16) <= 0)
             {
-                D_800C1678.field_A = 0;
+                D_800C1678.volumeGlobal_A = 0;
             }
             
-            SdSetMVol(D_800C1678.field_A, D_800C1678.field_A);
+            SdSetMVol(D_800C1678.volumeGlobal_A, D_800C1678.volumeGlobal_A);
         }
     }
     else
     {
-        if (D_800C1678.field_A < (OPT_SOUND_VOLUME_MAX - 1))
+        if (D_800C1678.volumeGlobal_A < (OPT_SOUND_VOLUME_MAX - 1))
         {
-            D_800C1678.field_A += 4;
-            if (D_800C1678.field_A >= (OPT_SOUND_VOLUME_MAX - 1))
+            D_800C1678.volumeGlobal_A += 4;
+            if (D_800C1678.volumeGlobal_A >= (OPT_SOUND_VOLUME_MAX - 1))
             {
-                D_800C1678.field_A = OPT_SOUND_VOLUME_MAX - 1;
+                D_800C1678.volumeGlobal_A = OPT_SOUND_VOLUME_MAX - 1;
             }
             
-            SdSetMVol(D_800C1678.field_A, D_800C1678.field_A);
+            SdSetMVol(D_800C1678.volumeGlobal_A, D_800C1678.volumeGlobal_A);
         }
     }
 

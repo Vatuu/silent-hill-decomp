@@ -6,7 +6,7 @@
 void Settings_ScreenAndVolUpdate(void) // 0x800333CC
 {
     Screen_XyPositionSet(g_GameWork.config_0.optScreenPosX_1C, g_GameWork.config_0.optScreenPosY_1D);
-    Sd_EngineCmd((g_GameWork.config_0.optSoundType_1E != 0) ? 1 : 2);
+    Sd_EngineCmd((g_GameWork.config_0.optSoundType_1E != 0) ? SET_AUDIO_MONO : SET_AUDIO_STEREO);
     Sd_SetVolume(OPT_SOUND_VOLUME_MAX, g_GameWork.config_0.optVolumeBgm_1F, g_GameWork.config_0.optVolumeSe_20);
 }
 

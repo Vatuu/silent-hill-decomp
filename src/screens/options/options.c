@@ -444,7 +444,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
 {
     #define SOUND_VOL_STEP 8
 
-    s32 cmd;
+    s32 audioType;
     s32 vol;
 
     // Draw graphics.
@@ -597,13 +597,13 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                 Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
                 // Set config.
-                cmd                                 = 2;
+                audioType                           = SET_AUDIO_STEREO;
                 g_GameWork.config_0.optSoundType_1E = !g_GameWork.config_0.optSoundType_1E;
                 if (g_GameWork.config_0.optSoundType_1E)
                 {
-                    cmd = 1;
+                    audioType = SET_AUDIO_MONO;
                 }
-                Sd_EngineCmd(cmd);
+                Sd_EngineCmd(audioType);
             }
             break;
 
