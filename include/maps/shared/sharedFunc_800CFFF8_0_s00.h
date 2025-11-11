@@ -4,9 +4,23 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand)
     s32 threshold;
 #if defined(MAP7_S03)
     #define PASS_ADD 8
+#elif defined(MAP1_S06)
+    #define PASS_ADD 6
 #else
     #define PASS_ADD 5
 #endif
+
+    #if !defined(MAP1_S03) && !defined(MAP1_S02) && !defined(MAP4_S04) && \
+        !defined(MAP4_S02) && !defined(MAP4_S05) && !defined(MAP4_S03) && \
+        !defined(MAP5_S00) && !defined(MAP6_S03)
+        #define CODE_BLOCK1
+    #endif
+
+    #if !defined(MAP7_S03) && !defined(MAP1_S03) && !defined(MAP1_S00) && \
+        !defined(MAP1_S02) && !defined(MAP4_S04) && !defined(MAP4_S05) && \
+        !defined(MAP5_S00) && !defined(MAP6_S00) && !defined(MAP6_S03)
+        #define CODE_BLOCK2
+    #endif
 
     part->field_0.vx += g_Particle_PrevPosition.vx - g_Particle_Position.vx;
     part->field_0.vz += g_Particle_PrevPosition.vz - g_Particle_Position.vz;
@@ -14,7 +28,7 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand)
     part->field_0.vz += ((g_Particle_PrevPosition.vz - g_Particle_Position.vz) - D_800F23D0);
 #endif
 
-#if !defined(MAP1_S03)
+#if defined(CODE_BLOCK1)
     if (pass == 0 && sharedData_800E0CAC_0_s00 == 3)
     {
         part->field_0.vx += FP_FROM(g_Particle_SpeedX, Q4_SHIFT);
@@ -22,7 +36,7 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand)
     }
 #endif
 
-#if !defined(MAP7_S03) && !defined(MAP1_S03)
+#if defined(CODE_BLOCK2)
     if (sharedData_800DD591_0_s00 != 0)
     {
         return;
@@ -48,4 +62,7 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand)
         part->field_C.vx = part->field_0.vx;
         part->field_C.vz = part->field_0.vz;
     }
+    #undef CODE_BLOCK1
+    #undef CODE_BLOCK2
 }
+
