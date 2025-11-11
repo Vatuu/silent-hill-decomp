@@ -363,7 +363,55 @@ void func_800DA950(void) // 0x800DA950
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DAA28);
+void func_800DAA28(void)
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+        case 3:
+            if (g_MapEventParam->field_5 == 19 || g_MapEventParam->field_5 == 20)
+            {
+                if (g_MapEventParam->unk_4_4 == 3)
+                {
+                    Savegame_EventFlagSet(EventFlag_M1S02_UsedRubberBall);
+                    MapMsg_DisplayAndHandleSelection(false, 36, false, false, 0, false); // "Used rubber ball."
+                }
+                else
+                {
+                    MapMsg_DisplayAndHandleSelection(false, 35, false, false, 0, false); // "Nothing special."
+                }
+            } 
+            else if (g_MapEventParam->field_5 == 17 || g_MapEventParam->field_5 == 18)
+            {
+                if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
+                {
+                    MapMsg_DisplayAndHandleSelection(false, 35, false, false, 0, false); // "Nothing special."
+                }
+                else
+                {
+    
+                    MapMsg_DisplayAndHandleSelection(false, 33, false, false, 0, false); // "There's a hanging key."
+                }
+            }
+            break;
+        case 4:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 void func_800DABC4(void)
 {
