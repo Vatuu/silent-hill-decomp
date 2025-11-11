@@ -11,6 +11,7 @@ import re
 @dataclass
 class UnitMetadata:
     progress_categories: list[str]
+    source_path: str
 
 @dataclass
 class Unit:
@@ -38,11 +39,15 @@ class Config:
 def _create_config():
     parser = ArgumentParser()
     parser.add_argument("config", type = Path)
+    parser.add_argument("--ninja", action="store_true")
     args = parser.parse_args()
 
     if not args.config.exists() or args.config.is_dir() or args.config.suffix != ".yaml":
         raise ValueError(f"The given path {args.objects} is not pointing towards a valid config.")
 
+    global is_ninja
+    is_ninja = (args.ninja) or False
+    
     with open(args.config) as stream:
         try:
             return yaml.safe_load(stream)
@@ -91,16 +96,16 @@ def _collect_objects(path: Path, config) -> list[Path]:
 
 def _determine_categories(path: Path, config) -> tuple[UnitMetadata, str]:
     if path.name.endswith(".s.o"):
-        modified_path = path.relative_to(config["expected_paths"]["asm"])
+        modified_path = path.relative_to(config["expected_paths"]["asm"]).as_posix()
     else:
-        modified_path = path.relative_to(config["expected_paths"]["src"])
+        modified_path = path.relative_to(config["expected_paths"]["src"]).as_posix()
 
     categories = []
     for category in config["categories"]:
         for prefix in category["paths"]:
-            if re.sub(r"\\", r"/", str(modified_path)).startswith(prefix):
+            if str(modified_path).startswith(prefix):
                 categories.append(category["id"])
-    return (UnitMetadata(categories), str(modified_path))
+    return (UnitMetadata(categories, f"src/{re.sub( '.s.o', '.c', modified_path)}"), str(modified_path))
 
 def main():
     logging.basicConfig(level = logging.INFO)
@@ -110,21 +115,33 @@ def main():
     
     logging.info(f"Accounting for {len(expected_objects)} objects.")
     units = []
+    build_method = str
     for file in expected_objects:
         processed_path = _determine_categories(file, config)
-        base_path = "build/src/" + re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o") + ".c.o"
+        input_path = Path(processed_path[1].removesuffix(".s.o").removesuffix(".c.o")).as_posix()
+        base_path = "build/src/" + input_path + ".c.o"
         
         # Create mappings for clone/disambiguation symbol suffixes in base object
         # (disabled as objdiff report doesn't appear to support symbol mappings right now)
         #symbol_mappings = _normalize_suffixed_symbols(base_path) if Path(base_path).exists() else {}
         symbol_mappings = {}
 
-        unit = Unit(
-            re.sub(r"\\", r"/", processed_path[1]).removesuffix(".s.o").removesuffix(".c.o"),
-            base_path if Path(base_path).exists() else None,
-            re.sub(r"\\", r"/", str(file)),
-            processed_path[0],
-            symbol_mappings)
+        if is_ninja:
+            unit = Unit(
+                input_path,
+                base_path,
+                str(file.as_posix()),
+                processed_path[0],
+                symbol_mappings)
+            build_method = "ninja"
+        else:
+            unit = Unit(
+                input_path,
+                base_path if Path(base_path).exists() else None,
+                str(file),
+                processed_path[0],
+                symbol_mappings)
+            build_method = "make"
         units.append(unit)
     
     categories = []
@@ -132,7 +149,7 @@ def main():
         categories.append(ProgressCategory(category["id"], category["name"]))
     
     with (Path(config["output"])).open("w") as json_file:
-        json.dump(asdict(Config(False, False, "make", ["progress"], units, categories)), json_file, indent=2)
+        json.dump(asdict(Config(False, False, build_method, ["progress"] if build_method != "ninja" else None, units, categories)), json_file, indent=2)
 
 if __name__ == "__main__":
     main()

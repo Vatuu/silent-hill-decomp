@@ -17,7 +17,7 @@ elif [ "$1" == "bodyprog" ]; then
     sed -i 's/0x090A0D38/0x00000000/g' asm/bodyprog/data/bodyprog_800C702C.bss.s
     sed -i 's/0x2E090A0D/0x00000000/g' asm/bodyprog/data/bodyprog_800C7410.bss.s
     sed -i 's/0x61783009/0x00000000/g' asm/bodyprog/data/bodyprog_800C7410.bss.s
-elif [ "$1" == "screens/stream" ]; then
+elif [ "$1" == "screens/stream" ] || [ "$1" == "stream" ]; then
     sed -i 's/\.a:/\//g' linkers/screens/stream.ld
 
     # STREAM.BIN also includes 4 random bytes in .bss

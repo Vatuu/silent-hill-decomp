@@ -1,0 +1,72 @@
+name: Boot screen overlay (B_KONAMI)
+sha1: 14829c61f976b261e0b89ee9f967f1be70a54fc6
+options:
+  basename: B_KONAMI.BIN
+  target_path: assets/USA/1ST/B_KONAMI.BIN
+  base_path: ../../..
+  platform: psx
+  compiler: GCC
+
+  asm_path: asm/screens/b_konami
+  src_path: src/screens/b_konami
+  asset_path: asm/screens/b_konami
+  build_path: build
+
+  ld_script_path: linkers/screens/b_konami.ld
+
+  find_file_boundaries: False
+  gp_value: 0x80022BB0
+  global_vram_start: 0x80010000
+  global_vram_end: 0x80200000
+
+  o_as_suffix: False
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+
+  section_order: [".rodata", ".text", ".data", ".bss"]
+
+  symbol_addrs_path:
+    - configs/USA/screens/sym.b_konami.txt
+    - configs/USA/screens/sym.stream.txt
+    - configs/USA/sym.bodyprog.txt
+    - configs/USA/sym.main.txt
+  reloc_addrs_path:
+    - configs/USA/screens/rel.b_konami.txt
+
+  undefined_funcs_auto_path: linkers/screens/undefined_funcs_auto.b_konami.txt
+  undefined_syms_auto_path: linkers/screens/undefined_syms_auto.b_konami.txt
+
+  extensions_path: tools/splat_ext
+
+  subalign: 4
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+  - name: b_konami
+    type: code
+    start: 0
+    vram: 0x800C9578
+    align: 4
+    subalign: 4
+    subsegments:
+      # .rodata section
+      - [0x0, pad]
+      - [0x8, .rodata, b_konami]
+
+      # .text section
+      - [0x34, c, b_konami]
+
+      # .data section
+      - [0xF78, .data, b_konami]
+
+  # Random garbage data at end, define as bin file to make Splat ignore it.
+  - name: footer_data
+    type: bin
+    start: 0xF9C
+  - [0x1000]

@@ -1,9 +1,15 @@
 # Silent Hill Decompilation Project
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/SHDecompLogo.png?raw=true">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/SHDecompLogo-NTSC.png?raw=true">
+  <img alt="SILENT HILL DECOMPILATION PROJECT" src="https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/SHDecompLogo-NTSC.png?raw=true">
+</picture>
+
 An in-progress decompilation of the 1.1 US release of *Silent Hill* on the Playstation 1.
 
 ## Progress
-Due to the limited memory on the PlayStation 1, games often distribute their logic and functionality across different binary overlays. *Silent Hill* follows this approach by separating core engine code, screen-related code, and map stage event code into many distinct binaries. The main executable (`SLUS_007.07` on the 1.1 NTSC release) serves primarily as a memory handler.
+Due to the limited memory on the PlayStation 1, games often distribute their logic and functionality across different binary overlays. *Silent Hill* follows this approach by separating core engine code, some screen-related code, and map stage logic code into many distinct binaries. The main executable (`SLUS_007.07` on the 1.1 NTSC release) serves primarily as a memory handler.
 
 Progress bars powered by [decomp.dev](https://decomp.dev)
 
@@ -370,66 +376,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
     </tbody>
 </table>
 
-## Building (Linux/Windows)
-
-### Install build dependencies
-The build process has the following package requirements:
-- git
-- build-essential
-- binutils-mips-linux-gnu
-- cpp-mips-linux-gnu
-- python3
-- python3-venv
-- bchunk
-- 7z
-
-Under a Debian-based distribution (or Windows with a Debian-based WSL2 setup), you can install these with the following commands:
-```
-sudo apt update
-sudo apt install git build-essential binutils-mips-linux-gnu cpp-mips-linux-gnu python3 python3-venv bchunk p7zip-full
-```
-
-### Clone the repository
-Clone `https://github.com/Vatuu/silent-hill-decomp` to your desired directory. Make sure to clone recursively!
-```
-git clone --recursive https://github.com/Vatuu/silent-hill-decomp.git && cd silent-hill-decomp
-```
-
-### Place the ROM
-You will need to provide your own ROM dump of the NTSC-U 1.1 version of the game. If dumped correctly, you will have a `.BIN` file with the SHA1 hash `34278D31D9B9B12B3B5DB5E45BCBE548991ECBC7` (616,494,480 Bytes / 587 MiB).
-
-After dumping, the `.BIN` file must be placed as `rom/image/SLUS-00707.bin` in the repo.
-
-### Setup Python virtual environment and requirements
-Modern Linux distros require a virtual environment to be set up before installing requirements with pip.
-
-You can set up an environment in the repo folder with the following:
-```bash
-python3 -m venv .venv                      # Creates `.venv` folder with environment.
-source .venv/bin/activate                  # Activates environment (must be run in every new terminal session).
-python3 -m pip install -r requirements.txt # Installs project requirements from `requirements.txt`.
-```
-
-### Build the code
-Run `make setup` to extract needed assets and code from the binary.
-If the setup was successful, run `make` to build.
-Once the build has finished, a folder named `build` will be produced. The output will be inside this.
-
-Additional Make commands:
-* `build`: Builds the executable and overlays.
-* `check`: Builds the executable and overlays. After compilation, it compares checksums with the original files.
-* `clean-build`: Renegerates the project configuration and builds the executable and overlays.
-* `clean-check`: Renegerates the project configuration and builds the executable and overlays. After compilation, it compares checksums with the original files.
-* `objdiff-config`: Generates project configuration for [Objdiff.](https://github.com/encounter/objdiff)
-* `compilation-test`: Run progress and matching build processes for avoiding compilation errors.
-
-NOTE: `clean-build/clean-check/compilation-test` is obligatory if the decompilation configuration files inside the `config` folder or the `Makefile` have been modified when intending to work on different overlays.
-
 ## Contributing
-Contributions are welcome! Feel free to open a pull request. To help familiarize yourself with the decompilation workflow for *Silent Hill*, refer to our [Analysis Guide](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Analysis%20Guide.md). For contributions to the repository, please follow our [Coding Conventions](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Coding%20Conventions.md).
+Contributions are welcome! Feel free to open a pull request. To help familiarize yourself with the setup and decompilation workflow for *Silent Hill*, refer to our [Wiki Page](/../../wiki/Home).
 
 You can also reach out to us by opening an issue or joining the `#silent-hill` channel on the [PS1/PS2 Decompilation](https://discord.gg/VwCPdfbxgm) Discord server.
-
-## Misc. Docs
-* [Technical Game Information](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Game%20Information.md)
-* [Project File Organization](https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/Organization.md)

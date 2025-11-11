@@ -26,11 +26,18 @@ CPP_FLAGS = [
 
 def import_c_file(in_file) -> str:
     in_file = os.path.relpath(in_file, root_dir)
-
-    cpp_command = ["gcc", "-E", "-P", "-dD", *CPP_FLAGS, in_file]
-
-    with tempfile.NamedTemporaryFile(suffix=".c") as tmp:
-        stock_macros = subprocess.check_output(["gcc", "-E", "-P", "-dM", tmp.name], cwd=root_dir, encoding="utf-8")
+    
+    if sys.platform == "linux" or sys.platform == "linux2":
+        deleteFile = True
+        cpp = "gcc"
+    elif sys.platform == "win32":
+        deleteFile = False
+        cpp = "tools/win-build/gcc-win/bin/gcc.exe"
+    
+    cpp_command = [cpp, "-E", "-P", "-dD", *CPP_FLAGS, in_file]
+    
+    with tempfile.NamedTemporaryFile(suffix=".c", delete=deleteFile) as tmp:
+        stock_macros = subprocess.check_output([cpp, "-E", "-P", "-dM", tmp.name], cwd=root_dir, encoding="utf-8")
 
     try:
         out_text = subprocess.check_output(cpp_command, cwd=root_dir, encoding="utf-8")

@@ -8,3 +8,5 @@ clang-tidy
 pycparser
 pyelftools
 construct
+ninja
+ninja_syntax
