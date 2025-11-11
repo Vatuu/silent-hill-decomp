@@ -373,12 +373,67 @@ INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBAB0);
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DAF18);
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DBEC8);
+void func_800DBEC8(void)
+{
+    #define STATE_BOOK_FIRST_TIME 3
+    #define STATE_BOOK_AGAIN 6
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 1:
+            func_80085DF0();
+            break;
+        case 2:
+            func_8008605C(EventFlag_M1S03_MonsterLurksBookRead, STATE_BOOK_AGAIN, STATE_BOOK_FIRST_TIME, false);
+            break;
+        case 3:
+            MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false); // "What's this?"
+            break;
+        case 4:
+            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
+            break;
+        case 5:
+            MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false); // "The Monster Lurks is the book's title."
+            break;
+        case STATE_BOOK_AGAIN:
+            func_800862F8(0, FILE_TIM_LMONSTER_TIM, false);
+            SysWork_StateStepIncrementAfterFade(false, true, false, false, false);
+            SysWork_StateStepIncrement(0);
+            /* fallthrough */
+        case 7:
+            func_800862F8(1, 0, false);
+            break;
+        case 8:
+            SysWork_StateStepIncrementAfterFade(1, true, false, false, false);
+            break;
+        case 9:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, false, false, false);
+            break;
+        case 10:
+            func_800862F8(2, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 17, false, false, 0, false); // "Chapter3: ..."
+            break;
+        case 11:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
+            break;
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_M1S03_MonsterLurksBookRead);
+            SysWork_StateStepIncrementAfterFade(0, false, false, false, false);
+            break;
+    }
+}
 
 void func_800DC0F8(void)
 {
-    #define STATE_EVENTFLAG_117_FALSE NO_VALUE
-    #define STATE_EVENTFLAG_117_TRUE 8
+    #define STATE_EVENTFLAG_117_TRUE NO_VALUE
+    #define STATE_EVENTFLAG_117_FALSE 8
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
@@ -410,15 +465,15 @@ void func_800DC0F8(void)
             break;
         case 7:
             SysWork_StateStepIncrementAfterFade(false, false, 0, 0, false);
-            func_8008605C(EventFlag_117, STATE_EVENTFLAG_117_FALSE, STATE_EVENTFLAG_117_TRUE, false);
+            func_8008605C(EventFlag_117, STATE_EVENTFLAG_117_TRUE, STATE_EVENTFLAG_117_FALSE, false);
             break;
-        case STATE_EVENTFLAG_117_TRUE:
+        case STATE_EVENTFLAG_117_FALSE:
             SysWork_StateStepIncrementAfterFade(1, false, 0, 0, false);
             break;
         case 9:
             MapMsg_DisplayAndHandleSelection(false, 30, false, false, 0, false); // "This is from an old fairy tale."
             break;
-        //STATE_EVENTFLAG_117_FALSE:
+        //STATE_EVENTFLAG_117_TRUE:
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
