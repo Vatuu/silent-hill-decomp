@@ -38,4 +38,4 @@ jobs:
         run: make setup
 
       - name: Check Executables Match
-        run: make check
+        run: make CHECKSUM=1 build
