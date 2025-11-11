@@ -14,8 +14,9 @@
 // CONSTANTS
 // ==========
 
-#define SET_AUDIO_MONO   1
-#define SET_AUDIO_STEREO 2
+// TODO: Part of an enum?
+#define AUDIO_TYPE_MONO   1
+#define AUDIO_TYPE_STEREO 2
 
 // ========
 // STRUCTS
@@ -103,23 +104,23 @@ extern s_800C1678 D_800C1678;
 /** @brief Passes a command to the sound driver.
  * Plays SFX among other things.
  */
-void Sd_EngineCmd(u32 cmd); // 0x80045A7C
+void Sd_EngineCmd(u32 cmd);
 
-u16 func_80045BC8(void); // 0x80045BC8
+u16 func_80045BC8(void);
 
-/** @brief Set audio system to stereo or mono. */
+/** @brief Sets the audio system to stereo or mono. */
 void Sd_AudioSystemSet(u8 isStereo); // 0x80045D28
 
-/** @brief Execute `SdUtKeyOffV` and runs through the element 23 of `smf_port`*/
+/** @brief Executes `SdUtKeyOffV` and runs through the element 23 of `smf_port`. */
 void Sd_LastVoiceKeyOff(void); // 0x800468EC
 
-/** @brief Execute `SdUtKeyOffV` and runs through all elements of `smf_port`*/
+/** @brief Executes `SdUtKeyOffV` and runs through all elements of `smf_port`. */
 void Sd_AllVoicesKeyOff(void); // 0x800469AC
 
-/** @brief Execute `SdUtKeyOffVWithRROff` and runs through all elements of `smf_port`*/
+/** @brief Executes `SdUtKeyOffVWithRROff` and runs through all elements of `smf_port`. */
 void Sd_AllVoicesKeyOffVWithRROff(void); // 0x800469E8
 
-/** @brief Sets the volume for the global channels of the music, sound effects and voices. */
+/** @brief Sets the volume for the global channels of the music, sound effects, and voices. */
 void Sd_SetVolume(u8 xaVol, s16 bgmVol, u8 seVol); // 0x80047798
 
 #endif

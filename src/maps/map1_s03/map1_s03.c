@@ -20,11 +20,11 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CC03C);
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CD0F4);
 
-void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2)
+void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
 {
     s16 tmp0;
-    s16 xOff;
-    s16 zOff;
+    s16 offsetX; // } Implied Q8.
+    s16 offsetZ; // }
     s32 zOff2;
     s32 i;
 
@@ -34,44 +34,52 @@ void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2)
             sharedData_800E1FF8_1_s02[arg0].vx_0 = D_800E3A40[arg1].vx_0;
             sharedData_800E1FF8_1_s02[arg0].vz_4 = D_800E3A40[arg1].vz_4;
             break;
+
         case 1:
             tmp0 = (Rng_Rand16() % D_800E3A40[arg1].field_C) - (D_800E3A40[arg1].field_C >> 1);
             sharedData_800E1FF8_1_s02[arg0].vx_0 = D_800E3A40[arg1].vx_0 + FP_FROM((tmp0 * Math_Sin(D_800E3A40[arg1].field_A)), Q12_SHIFT);
             zOff2 = FP_FROM((tmp0 * Math_Cos(D_800E3A40[arg1].field_A)), Q12_SHIFT);
             sharedData_800E1FF8_1_s02[arg0].vz_4 = D_800E3A40[arg1].vz_4 + zOff2;
             break;
+
         case 2:
             for (i = 0; i < 8; i++)
             {
-                xOff = (Rng_Rand16() % (s32) (D_800E3A40[arg1].field_C * 2)) - (u16) D_800E3A40[arg1].field_C;
-                zOff = (Rng_Rand16() % (s32) (D_800E3A40[arg1].field_C * 2)) - (u16) D_800E3A40[arg1].field_C;
-                if (((xOff * xOff) + (zOff * zOff)) < (D_800E3A40[arg1].field_C * D_800E3A40[arg1].field_C))
+                offsetX = (Rng_Rand16() % (s32)(D_800E3A40[arg1].field_C * 2)) - (u16)D_800E3A40[arg1].field_C;
+                offsetZ = (Rng_Rand16() % (s32)(D_800E3A40[arg1].field_C * 2)) - (u16)D_800E3A40[arg1].field_C;
+                if ((SQUARE(offsetX) + SQUARE(offsetZ)) < (D_800E3A40[arg1].field_C * D_800E3A40[arg1].field_C))
                 {
                     break;
                 }
             }
+
             if (i == 8)
             {
-                zOff = 0;
-                xOff = 0;
+                offsetZ = 0;
+                offsetX = 0;
             }
-            sharedData_800E1FF8_1_s02[arg0].vx_0 = D_800E3A40[arg1].vx_0 + xOff;
-            sharedData_800E1FF8_1_s02[arg0].vz_4 = D_800E3A40[arg1].vz_4 + zOff;
+
+            sharedData_800E1FF8_1_s02[arg0].vx_0 = D_800E3A40[arg1].vx_0 + offsetX;
+            sharedData_800E1FF8_1_s02[arg0].vz_4 = D_800E3A40[arg1].vz_4 + offsetZ;
             break;
+
         case 3:
-            xOff = Rng_Rand16() & 0xFFF;
-            sharedData_800E1FF8_1_s02[arg0].vx_0 = D_800E3A40[arg1].vx_0 + FP_FROM((D_800E3A40[arg1].field_C * Math_Sin(xOff)), Q12_SHIFT);
-            zOff2 = FP_FROM((D_800E3A40[arg1].field_C * Math_Cos(xOff)), Q12_SHIFT);
+            offsetX = Rng_Rand16() & 0xFFF;
+            sharedData_800E1FF8_1_s02[arg0].vx_0 = D_800E3A40[arg1].vx_0 + FP_FROM((D_800E3A40[arg1].field_C * Math_Sin(offsetX)), Q12_SHIFT);
+            zOff2 = FP_FROM((D_800E3A40[arg1].field_C * Math_Cos(offsetX)), Q12_SHIFT);
             sharedData_800E1FF8_1_s02[arg0].vz_4 = D_800E3A40[arg1].vz_4 + zOff2;
             break;
+
         case 4:
-            xOff = (((Rng_Rand16() & 0x7FF) + (u16)D_800E3A40[arg1].field_A) - 0x400);
-            sharedData_800E1FF8_1_s02[arg0].vx_0 = D_800E3A40[arg1].vx_0 + FP_FROM((D_800E3A40[arg1].field_C * Math_Sin(xOff)), Q12_SHIFT);
-            zOff2 = FP_FROM((D_800E3A40[arg1].field_C * Math_Cos(xOff)), Q12_SHIFT);
+            offsetX = (((Rng_Rand16() & 0x7FF) + (u16)D_800E3A40[arg1].field_A) - 0x400);
+            sharedData_800E1FF8_1_s02[arg0].vx_0 = D_800E3A40[arg1].vx_0 + FP_FROM((D_800E3A40[arg1].field_C * Math_Sin(offsetX)), Q12_SHIFT);
+            zOff2 = FP_FROM((D_800E3A40[arg1].field_C * Math_Cos(offsetX)), Q12_SHIFT);
             sharedData_800E1FF8_1_s02[arg0].vz_4 = D_800E3A40[arg1].vz_4 + zOff2;
             break;
     }
+
     sharedData_800E1FF8_1_s02[arg0].vy_8 = D_800E3A40[arg1].field_8;
+
     if (arg2 == 0)
     {
         sharedData_800E1FF8_1_s02[arg0].field_C.field_0 = (Rng_Rand16() % D_800E3A40[arg1].field_10);
@@ -81,12 +89,12 @@ void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2)
         sharedData_800E1FF8_1_s02[arg0].field_C.field_0 = sharedData_800E1FF8_1_s02[arg0].field_C.field_0 - D_800E3A40[arg1].field_10;
     }
 
-    sharedData_800E1FF8_1_s02[arg0].field_E.s_0.field_0 = Rng_Rand16() & 3;
+    sharedData_800E1FF8_1_s02[arg0].field_E.s_0.field_0 = Rng_Rand16() & 0x3;
     sharedData_800E1FF8_1_s02[arg0].field_E.s_0.field_1 = (Rng_Rand16() & 0x3F) + 0x60;
     sharedData_800E1FF8_1_s02[arg0].field_10.s_2.field_0 = arg1;
 }
 
-void func_800CE0CC(s32 arg0)
+void func_800CE0CC(s32 arg0) // 0x800CE0CC
 {
     s32 idx;
     s32 i;
@@ -98,6 +106,7 @@ void func_800CE0CC(s32 arg0)
         {
             break;
         }
+
         func_800CDCE0(idx, arg0, 0);
     }
 }
@@ -327,7 +336,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800DA434
 
-void func_800DA4D4(void)
+void func_800DA4D4(void) // 0x800DA4D4
 {
     s32 fArg1;
     s32 roomIdx;
@@ -336,6 +345,7 @@ void func_800DA4D4(void)
     roomIdx = g_SavegamePtr->mapRoomIdx_A5;
     flags = D_800E14D0[roomIdx];
     fArg1 = Q12(0.1f);
+
     switch (roomIdx)
     {
         case 23:
@@ -349,6 +359,7 @@ void func_800DA4D4(void)
                 }
             }
             break;
+
         case 38:
             if (Savegame_EventFlagGet(EventFlag_100) && !Savegame_EventFlagGet(EventFlag_107))
             {
@@ -356,6 +367,7 @@ void func_800DA4D4(void)
                 fArg1 = Q12(0.3f);
             }
             break;
+
         case 5:
             if (Savegame_EventFlagGet(EventFlag_121))
             {
@@ -370,9 +382,11 @@ void func_800DA4D4(void)
                 }
             }
             break;
+
         case 11:
             Savegame_EventFlagClear(EventFlag_121);
             break;
+
         case 7:
             if (!Savegame_EventFlagGet(EventFlag_98) && Savegame_EventFlagGet(EventFlag_122))
             {
@@ -380,7 +394,8 @@ void func_800DA4D4(void)
                 flags = 1;
             }
             break;
-        }
+    }
+
     func_80035F4C(flags, fArg1, &D_800E14C8);
 }
 
@@ -392,16 +407,16 @@ void func_800DA630(void) {}
 
 #include "maps/shared/MapEvent_DoorUnlocked.h" // 0x800DA760
 
-void func_800DA7F4(void)
+void func_800DA7F4(void) // 0x800DA7F4
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_LibraryReserveKey, 1);
-    Map_MessageWithSfx(37, Sfx_UseKey, &sfxPos); // "Used the Library reverse key"
+    Map_MessageWithSfx(37, Sfx_UseKey, &sfxPos); // "Used the Library reverse key."
     Savegame_MapMarkingSet(MapMarkFlag_AltSchool2F_LibraryReserveArrows);
 }
 
-void func_800DA8B0(void)
+void func_800DA8B0(void) // 0x800DA8B0
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
@@ -510,20 +525,22 @@ void func_800DA950(void) // 0x800DA950
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-void func_800DAA28(void)
+void func_800DAA28(void) // 0x800DAA28
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
             break;
+
         case 2:
             func_80086C58(&g_SysWork.player_4C.chara_0, 59);
             break;
+
         case 3:
             if (g_MapEventParam->field_5 == 19 || g_MapEventParam->field_5 == 20)
             {
@@ -550,9 +567,11 @@ void func_800DAA28(void)
                 }
             }
             break;
+
         case 4:
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);
             break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -560,12 +579,13 @@ void func_800DAA28(void)
     }
 }
 
-void func_800DABC4(void)
+void func_800DABC4(void) // 0x800DABC4
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
+
             if (g_MapEventParam->field_5 == 17 || g_MapEventParam->field_5 == 18)
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain))
@@ -589,28 +609,34 @@ void func_800DABC4(void)
                     func_800862F8(false, FILE_TIM_BALLHOL1_TIM, false);
                 }
             }
+
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
-            return;
+            break;
+
         case 2:
             func_80086C58(&g_SysWork.player_4C.chara_0, 59);
-            return;
+            break;
+
         case 3:
             SysWork_StateStepIncrementAfterFade(false, true, 0, 0, false);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 4:
             func_800862F8(true, 0, false);
-            return;
+            break;
+
         case 5:
             SysWork_StateStepIncrementAfterFade(1, true, 0, 0, false);
-            return;
+            break;
+
         case 6:
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
-            return;
+            break;
+
         case 7:
             func_800862F8(2, 0, false);
             if (g_MapEventParam->field_5 == 19 || g_MapEventParam->field_5 == 20)
@@ -650,21 +676,25 @@ void func_800DABC4(void)
                     }
                 }
             }
-            return;
+            break;
+
         case 8:
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
-            return;
+            break;
+
         case 9:
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
-            return;
+            break;
+
         case 10:
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);
-            return;
+            break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            return;
+            break;
     }
 }
 
@@ -674,54 +704,68 @@ INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBAB0);
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DAF18);
 
-void func_800DBEC8(void)
+void func_800DBEC8(void) // 0x800DBEC8
 {
-    #define STATE_BOOK_FIRST_TIME 3
-    #define STATE_BOOK_AGAIN 6
+    typedef enum _EventState
+    {
+        EventState_BookFirstTime = 3,
+        EventState_BookAgain     = 6
+    } e_EventState;
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
             break;
+
         case 2:
-            func_8008605C(EventFlag_M1S03_MonsterLurksBookRead, STATE_BOOK_AGAIN, STATE_BOOK_FIRST_TIME, false);
+            func_8008605C(EventFlag_M1S03_MonsterLurksBookRead, EventState_BookAgain, EventState_BookFirstTime, false);
             break;
+
         case 3:
             MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false); // "What's this?"
             break;
+
         case 4:
             SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
             break;
+
         case 5:
             MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false); // "The Monster Lurks is the book's title."
             break;
-        case STATE_BOOK_AGAIN:
+
+        case EventState_BookAgain:
             func_800862F8(0, FILE_TIM_LMONSTER_TIM, false);
             SysWork_StateStepIncrementAfterFade(false, true, false, false, false);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 7:
             func_800862F8(1, 0, false);
             break;
+
         case 8:
             SysWork_StateStepIncrementAfterFade(1, true, false, false, false);
             break;
+
         case 9:
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, false, false, false, false);
             break;
+
         case 10:
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 17, false, false, 0, false); // "Chapter3: ..."
             break;
+
         case 11:
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
             break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -731,10 +775,14 @@ void func_800DBEC8(void)
     }
 }
 
-void func_800DC0F8(void)
+void func_800DC0F8(void) // 0x800DC0F8
 {
-    #define STATE_EVENTFLAG_117_TRUE NO_VALUE
-    #define STATE_EVENTFLAG_117_FALSE 8
+    typedef enum _EventState
+    {
+        EventState_Flag117True  = NO_VALUE,
+        EventState_Flag117False = 8,
+    } e_EventState;
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
@@ -742,40 +790,48 @@ void func_800DC0F8(void)
             func_800862F8(0, FILE_TIM_LIBRBOOK_TIM, false);
             SysWork_StateStepIncrementAfterFade(false, true, 0, 0, false);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
             break;
+
         case 2:
             SysWork_StateStepIncrementAfterFade(1, true, 0, 0, false);
             break;
+
         case 3:
             func_800862F8(1, 0, false);
             break;
+
         case 4:
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
+
         case 5:
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 23, false, false, 0, false); // "Hearing this, the hunter armed with bow..."
             break;
+
         case 6:
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
+
         case 7:
             SysWork_StateStepIncrementAfterFade(false, false, 0, 0, false);
-            func_8008605C(EventFlag_117, STATE_EVENTFLAG_117_TRUE, STATE_EVENTFLAG_117_FALSE, false);
+            func_8008605C(EventFlag_117, EventState_Flag117True, EventState_Flag117False, false);
             break;
-        case STATE_EVENTFLAG_117_FALSE:
+
+        case EventState_Flag117False:
             SysWork_StateStepIncrementAfterFade(1, false, 0, 0, false);
             break;
+
         case 9:
             MapMsg_DisplayAndHandleSelection(false, 30, false, false, 0, false); // "This is from an old fairy tale."
             break;
-        //STATE_EVENTFLAG_117_TRUE:
-        default:
+
+        default: // `EventState_Flag117True`
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_117);
@@ -788,11 +844,15 @@ void func_800DC2E4(void) // 0x800DC2E4
     MapMsg_DisplayWithTexture(FILE_TIM_LOCKER1_TIM, Q12(2.5f), Q12(2.5f), 43); // "Nothing inside."
 }
 
-void func_800DC310(void)
+void func_800DC310(void) // 0x800DC310
 {
-    #define STATE_SKIP 13
-    #define STATE_LOCKER_OPEN 10
-    #define STATE_LOCKER_OPEN_WAIT 9
+    typedef enum _EventState
+    {
+        EventState_LockerOpenWait = 9,
+        EventState_LockerOpen     = 10,
+        EventState_Skip           = 13
+    } e_EventState;
+
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 11)
     {
@@ -800,7 +860,7 @@ void func_800DC310(void)
         Savegame_EventFlagSet(EventFlag_101);
         Savegame_EventFlagSet(EventFlag_102);
         Savegame_EventFlagSet(EventFlag_M1S03_LockerOpened);
-        SysWork_StateStepSet(0, STATE_SKIP);
+        SysWork_StateStepSet(0, EventState_Skip);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -809,68 +869,86 @@ void func_800DC310(void)
             sharedFunc_800D20E4_0_s00();
             Savegame_EventFlagSet(EventFlag_100);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
             break;
+
         case 2:
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(-59.36f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(18.37f);
             g_SysWork.player_4C.chara_0.moveSpeed_38 = Q12(0.0f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
+
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(-60.16f), Q12(-2.7f), Q12(19.76f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-58.13f), Q12(-0.04f), Q12(17.57f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 3:
             SysWork_StateStepIncrementAfterFade(2, true, 2, 0, false);
             break;
+
         case 4:
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
+
         case 5:
             Savegame_EventFlagSet(EventFlag_101);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 6:
             func_80086C58(&g_SysWork.player_4C.chara_0, 85);
             break;
+
         case 7:
             Savegame_EventFlagSet(EventFlag_102);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 86, false);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 8:
             SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
             break;
-        case STATE_LOCKER_OPEN_WAIT:
-            func_8008605C(EventFlag_M1S03_LockerOpened, STATE_LOCKER_OPEN, STATE_LOCKER_OPEN_WAIT, false);
+
+        case EventState_LockerOpenWait:
+            func_8008605C(EventFlag_M1S03_LockerOpened, EventState_LockerOpen, EventState_LockerOpenWait, false);
             break;
-        case STATE_LOCKER_OPEN:
+
+        case EventState_LockerOpen:
             func_80086E50(FILE_TIM_LOCKER1_TIM, Q12(3.0f), Q12(1.5f));
             break;
+
         case 11:
             func_800862F8(2, 0, false);
             MapMsg_DisplayAndHandleSelection(false, 43, 0, 0, 0, false); // "Nothing inside."
             break;
+
         case 12:
             func_80086F44(Q12(1.5f), Q12(3.0f));
             break;
-        case STATE_SKIP:
+
+        case EventState_Skip:
             func_80085EB8(4, &g_SysWork.player_4C.chara_0, 0, false);
             Savegame_EventFlagSet(EventFlag_104);
+
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(-60.63f), Q12(-4.14f), Q12(17.42f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-60.0f), Q12(0.0f), Q12(18.5f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
             SysWork_StateStepIncrement(0);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
             break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             if (ScreenFade_IsFinished())
             {
                 SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
@@ -879,41 +957,51 @@ void func_800DC310(void)
     }
 }
 
-void func_800DC780(void)
+void func_800DC780(void) // 0x800DC780
 {
-    #define STATE_EVENTFLAG_106_TRUE 5
-    #define STATE_EVENTFLAG_106_FALSE 4
+    typedef enum _EventState
+    {
+        EventState_Flag106False = 4,
+        EventState_Flag106True  = 5
+    } e_EventState;
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+            
         case 1:
             Savegame_EventFlagSet(EventFlag_105);
+
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(-59.93f), Q12(0.0f), Q12(20.18f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-62.99f), Q12(-2.29f), Q12(21.37f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            g_SysWork.player_4C.chara_0.rotation_24.vy = ratan2(
-                Q12(-61.4f) - g_SysWork.player_4C.chara_0.position_18.vx,
-                Q12(20.8f) - g_SysWork.player_4C.chara_0.position_18.vz
-            );
+
+            // Warp player.
+            g_SysWork.player_4C.chara_0.rotation_24.vy = ratan2(Q12(-61.4f) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                                                Q12(20.8f)  - g_SysWork.player_4C.chara_0.position_18.vz);
+
             func_8008D438();
             Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 2:
             SysWork_StateStepIncrementDelayed(Q12(0.7f), false);
             break;
+
         case 3:
             func_8005DC1C(Sfx_Unk1466, &QVECTOR3(-60.3f, 0.0f, 20.2f), Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
-        case STATE_EVENTFLAG_106_FALSE:
-            func_8008605C(EventFlag_106, STATE_EVENTFLAG_106_TRUE, STATE_EVENTFLAG_106_FALSE, false);
+
+        case EventState_Flag106False:
+            func_8008605C(EventFlag_106, EventState_Flag106True, EventState_Flag106False, false);
             break;
-        case STATE_EVENTFLAG_106_TRUE:
+
+        case EventState_Flag106True:
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -972,7 +1060,7 @@ void func_800DC9A0(void) // 0x800DC9A0
     }
 }
 
-void func_800DCB54(void)
+void func_800DCB54(void) // 0x800DCB54
 {
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -980,46 +1068,55 @@ void func_800DCB54(void)
             sharedFunc_800D20E4_0_s00();
             func_800862F8(0, FILE_TIM_BALLHOLE_TIM, false);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
-            return;
+            break;
+
         case 2:
             func_80086C58(&g_SysWork.player_4C.chara_0, 59);
-            return;
+            break;
+
         case 3:
             SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
-            return;
+            break;
+
         case 4:
             func_8005DC1C(Sfx_Unk1461, &QVECTOR3(-10.5f, 0.0f, -17.5f), Q8(0.5f), 0);
             Savegame_EventFlagSet(EventFlag_M1S02_UsedRubberBall);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 5:
             func_800862F8(1, 0, false);
-            return;
+            break;
+
         case 6:
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
-            return;
+            break;
+
         case 7:
-            MapMsg_DisplayAndHandleSelection(false, 36, 0, 0, 0, false); // "Used the rubber ball"
+            MapMsg_DisplayAndHandleSelection(false, 36, 0, 0, 0, false); // "Used the rubber ball."
             func_800862F8(2, 0, false);
-            return;
+            break;
+
         case 8:
             func_800862F8(2, 0, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
-            return;
+            break;
+
         case 9:
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
-            return;
+            break;
+
         case 10:
             func_80086C58(&g_SysWork.player_4C.chara_0, 60);
-            return;
+            break;
+
         default:
             sharedFunc_800D2244_0_s00(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            return;
+            break;
     }
 }
 

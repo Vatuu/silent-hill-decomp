@@ -35,7 +35,7 @@ extern s32 D_800E1FD4;
 
 extern u8 D_800E1FD8;
 
-extern s16 D_800E1FE4;
+extern q3_12 D_800E1FE4;
 
 extern s_WorldObjectDesc D_800E57D8;      // "DOOR_HID", TODO: `g_WorldObject_Door`
 

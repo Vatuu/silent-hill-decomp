@@ -1011,7 +1011,9 @@ void func_800DCF00(void) // 0x800DCF00
         case 0:
             sharedFunc_800D20E4_0_s00();
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+
             D_800E1FE4 = 0;
+
             SysWork_StateStepIncrement(0);
 
         case 1:

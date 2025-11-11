@@ -7,13 +7,13 @@
 #include "bodyprog/vw_system.h"
 #include "main/fsqueue.h"
 #include "types.h"
-// TODO: Asign `sound_system.h` correspondly to any *.c file calling any function located there.
+// TODO: Assign `sound_system.h` corresponding to any *.c file calling functions located there.
 #include "bodyprog/sound_system.h"
 
 /** @brief This header is used to declare any variable, struct, or
- * function part of `BODYPROG.BIN` that has not been identified to
- * be related a to currently recognized and separated section of
- * the engine (like player logic, save game or item screens).
+ * function of `BODYPROG.BIN` that has not been identified to
+ * be related to a currently recognized and separated section of
+ * the engine (like player logic, save game, or item screens).
  */
 
 // ==========
@@ -3786,7 +3786,7 @@ void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8008B664(VECTOR3* pos, u32 caseVar);
 
-s32 func_8008BF84(s_MainCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3);
+s32 func_8008BF84(s_MainCharacter* mainChara, s32 arg1, s_800AD4C8* arg2, s32 arg3);
 
 s32 func_8008D850(void);
 

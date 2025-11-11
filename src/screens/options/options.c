@@ -597,11 +597,11 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                 Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
                 // Set config.
-                audioType                           = SET_AUDIO_STEREO;
+                audioType                           = AUDIO_TYPE_STEREO;
                 g_GameWork.config_0.optSoundType_1E = !g_GameWork.config_0.optSoundType_1E;
                 if (g_GameWork.config_0.optSoundType_1E)
                 {
-                    audioType = SET_AUDIO_MONO;
+                    audioType = AUDIO_TYPE_MONO;
                 }
                 Sd_EngineCmd(audioType);
             }

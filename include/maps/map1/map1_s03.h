@@ -73,11 +73,36 @@ extern s_800E3A40 D_800E3A40[];
 
 void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+void func_800DA4D4(void);
+
+void func_800DA7F4(void);
+
+void func_800DA8B0(void);
+
+void func_800DAA28(void);
+
+void func_800DABC4(void);
+
+// `MapEvent_TheMonsterLurksBookRead`
+void func_800DBEC8(void);
+
+void func_800DC0F8(void);
+
 void func_800DC2E4(void);
+
+void func_800DC310(void);
+
+void func_800DC780(void);
 
 void func_800DC9A0(void);
 
+void func_800DCB54(void);
+
 void func_800DCDDC(void);
+
+void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2);
+
+void func_800CE0CC(s32 arg0);
 
 void func_800DD3AC(void);
 
@@ -86,25 +111,5 @@ void func_800DD688(void);
 void func_800DE624(void);
 
 void func_800DE828(void);
-
-void func_800DCB54(void);
-
-void func_800DC780(void);
-
-void func_800DC310(void);
-
-void func_800DC0F8(void);
-
-void func_800DBEC8(void);
-
-void func_800DABC4(void);
-
-void func_800DAA28(void);
-
-void func_800DA4D4(void);
-
-void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2);
-
-void func_800CE0CC(s32 arg0);
 
 #endif
