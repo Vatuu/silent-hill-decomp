@@ -249,7 +249,62 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800DA434
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DA4D4);
+void func_800DA4D4(void)
+{
+    s32 fArg1;
+    s32 roomIdx;
+    s32 flags;
+
+    roomIdx = g_SavegamePtr->mapRoomIdx_A5;
+    flags = D_800E14D0[roomIdx];
+    fArg1 = Q12(0.1f);
+    switch (roomIdx)
+    {
+        case 23:
+            flags = 1;
+            if (Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CourtyardQuestion))
+            {
+                flags = 0x1FE;
+                if (Savegame_MapMarkingGet(MapMarkFlag_308) || Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CortyardTopArrows))
+                {
+                    flags = 0x10;
+                }
+            }
+            break;
+        case 38:
+            if (Savegame_EventFlagGet(EventFlag_100) && !Savegame_EventFlagGet(EventFlag_107))
+            {
+                flags = 1;
+                fArg1 = Q12(0.3f);
+            }
+            break;
+        case 5:
+            if (Savegame_EventFlagGet(EventFlag_121))
+            {
+                fArg1 = Q12(240.0f);
+                if (Savegame_EventFlagGet(EventFlag_96))
+                {
+                    flags |= 8;
+                }
+                else
+                {
+                    flags = 1;
+                }
+            }
+            break;
+        case 11:
+            Savegame_EventFlagClear(EventFlag_121);
+            break;
+        case 7:
+            if (!Savegame_EventFlagGet(EventFlag_98) && Savegame_EventFlagGet(EventFlag_122))
+            {
+                fArg1 = Q12(240.0f);
+                flags = 1;
+            }
+            break;
+        }
+    func_80035F4C(flags, fArg1, &D_800E14C8);
+}
 
 void func_800DA630(void) {}
 

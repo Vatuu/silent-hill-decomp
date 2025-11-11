@@ -52,6 +52,8 @@ extern VECTOR3 D_800E6170;
 extern s32 D_800E617C;
 
 extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8];
+extern u8 D_800E14C8;
+extern u16 D_800E14D0[];
 
 void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
@@ -82,5 +84,7 @@ void func_800DBEC8(void);
 void func_800DABC4(void);
 
 void func_800DAA28(void);
+
+void func_800DA4D4(void);
 
 #endif
