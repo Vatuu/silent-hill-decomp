@@ -24,15 +24,15 @@ void func_800CBE7C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800CBE
 
     if (i != NO_VALUE)
     {
-        g_MapHdr_Table_4C[i].vx_0 = ((arg0 + (Rng_Rand16() & 63)) - 32) * 16;
-        g_MapHdr_Table_4C[i].vy_8 = (arg1 + (Rng_Rand16() & 63)) * 16;
-        g_MapHdr_Table_4C[i].vz_4 = ((arg2 + (Rng_Rand16() & 63)) - 32) * 16;
-        g_MapHdr_Table_4C[i].field_B = 0;
-        g_MapHdr_Table_4C[i].field_C.field_0 = 0;
-        g_MapHdr_Table_4C[i].field_E.field_0 = arg3;
-        g_MapHdr_Table_4C[i].field_10.s_1.field_0 = arg4;
-        g_MapHdr_Table_4C[i].field_10.s_1.field_2 = (Rng_Rand16() & 31) + 16;
-        g_MapHdr_Table_4C[i].field_10.s_1.field_3 = Rng_Rand16() & 15;
+        sharedData_800E1FF8_1_s02[i].vx_0                 = ((arg0 + (Rng_Rand16() & 63)) - 32) * 16;
+        sharedData_800E1FF8_1_s02[i].vy_8                 = (arg1 + (Rng_Rand16() & 63)) * 16;
+        sharedData_800E1FF8_1_s02[i].vz_4                 = ((arg2 + (Rng_Rand16() & 63)) - 32) * 16;
+        sharedData_800E1FF8_1_s02[i].field_B              = 0;
+        sharedData_800E1FF8_1_s02[i].field_C.field_0      = 0;
+        sharedData_800E1FF8_1_s02[i].field_E.field_0      = arg3;
+        sharedData_800E1FF8_1_s02[i].field_10.s_1.field_0 = arg4;
+        sharedData_800E1FF8_1_s02[i].field_10.s_1.field_2 = (Rng_Rand16() & 31) + 16;
+        sharedData_800E1FF8_1_s02[i].field_10.s_1.field_3 = Rng_Rand16() & 15;
     }
 }
 
@@ -288,7 +288,93 @@ const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
 };
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D49AC);
+void func_800D49AC(void) // 0x800D49AC
+{
+    s32 i;
+
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    {
+        if (g_SysWork.sysStateStep_C[0] >= 3)
+        {
+            D_800D8568.field_1  = 0;
+            D_800D8568.field_10 = 0;
+
+            for (i = 0; i < ARRAY_SIZE(sharedData_800E1FF8_1_s02); i++)
+            {
+                s32 field_A = sharedData_800E1FF8_1_s02[i].field_A;
+                if (field_A < 12)
+                {
+                    if (field_A >= 8)
+                    {
+                        sharedData_800E1FF8_1_s02[i].field_A = 12;
+                    }
+                }
+            }
+
+            vcReturnPreAutoCamWork(true);
+            SysWork_StateStepReset();
+        }
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+
+            g_SysWork.field_30   = 20;
+            g_SysWork.field_2378 = 0;
+
+            Camera_PositionSet(NULL, Q12(19.72f), Q12(-5.2f), Q12(-27.6f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(19.72f), Q12(-3.3f), Q12(-24.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            break;
+
+        case 2:
+            D_800D8568.field_1 = 3;
+            SysWork_StateStepIncrement(0);
+
+        case 3:
+            SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
+            break;
+
+        case 4:
+            g_SysWork.field_2378 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.225f, Q12_SHIFT);
+            if (g_SysWork.field_2378 > Q12(2.25f))
+            {
+                g_SysWork.field_2378 = Q12(2.25f);
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 5:
+            g_SysWork.field_2378 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.45f, Q12_SHIFT);
+            if (g_SysWork.field_2378 < Q12(1.3843f))
+            {
+                Savegame_EventFlagSet(EventFlag_129);
+                SysWork_StateStepReset();
+            }
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            g_SysWork.field_2378 = Q12(1.3843f);
+
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            vcReturnPreAutoCamWork(false);
+
+            Savegame_EventFlagSet(EventFlag_130);
+            func_8003A16C();
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4D1C);
 

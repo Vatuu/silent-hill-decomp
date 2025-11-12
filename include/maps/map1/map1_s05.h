@@ -33,10 +33,12 @@ extern u16 D_800D86F8[2];
 extern u8 D_800D86FC[2];
 extern s_800D8568 D_800D8568;
 
-extern u8 D_800D5C3C;
+extern u8  D_800D5C3C;
+
 extern s16 D_800D5880;
-extern s8 D_800D86FE;
-extern s_MapHdr_field_4C g_MapHdr_Table_4C[500];
+
+extern s8  D_800D86FE;
+
 extern s_WorldObjectDesc g_WorldObject0; //800D8698
 extern s_WorldObjectDesc g_WorldObject1; //800D86C8
 
@@ -55,6 +57,8 @@ s32 func_800D4530(s_SubCharacter* chara);
 s32 func_800D4530(s_SubCharacter* chara);
 
 void func_800D494C(void);
+
+void func_800D49AC(void);
 
 void func_800D525C(void);
 
