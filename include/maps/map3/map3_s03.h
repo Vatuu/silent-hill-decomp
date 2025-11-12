@@ -51,6 +51,8 @@ void func_800D2C84(void);
 
 void func_800D2CB0(void);
 
+void func_800D2CDC(void);
+
 void func_800D30FC(void);
 
 void func_800D3128(void);
