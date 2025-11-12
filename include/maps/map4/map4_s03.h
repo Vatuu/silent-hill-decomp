@@ -48,7 +48,11 @@ void func_800D6704(void);
 
 void func_800D6774(void);
 
+void func_800D6F24(void);
+
 s32 func_800D7394(void);
+
+void func_800D960C(void);
 
 void func_800D9824(void);
 
