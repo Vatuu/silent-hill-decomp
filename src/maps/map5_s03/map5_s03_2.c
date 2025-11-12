@@ -287,12 +287,9 @@ void func_800D1AF8(void) // 0x800D1AF8
     VECTOR3  lightIntPos;
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        g_SysWork.sysStateStep_C[0] >= 14)
+        g_SysWork.sysStateStep_C[0] >= 14 && g_SysWork.sysStateStep_C[0] < 29)
     {
-        if (g_SysWork.sysStateStep_C[0] < 29)
-        {
-            SysWork_StateStepSet(0, 32);
-        }
+        SysWork_StateStepSet(0, 32);
     }
 
     switch (g_SysWork.sysStateStep_C[0])

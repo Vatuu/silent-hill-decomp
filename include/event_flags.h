@@ -290,8 +290,12 @@ typedef enum _EventFlag
     EventFlag_352                  = 352,
     EventFlag_M5S00_PickupSewerKey = 353,
 
-    EventFlag_355 = 355,
-
+    EventFlag_355             = 355,
+    EventFlag_356             = 356,
+    EventFlag_357             = 357,
+    EventFlag_358             = 358,
+    EventFlag_359             = 359,
+    EventFlag_360             = 360,
     EventFlag_M5S00_PickupMap = 361,
 
     EventFlag_M5S01_PickupMap = 370,

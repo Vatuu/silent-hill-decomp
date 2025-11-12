@@ -182,15 +182,10 @@ void func_800D725C(void) // 0x800D725C
 {
     s_FsImageDesc charaTex;
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        g_SysWork.sysStateStep_C[0] >= 4 && g_SysWork.sysStateStep_C[0] <= 20)
     {
-        if (g_SysWork.sysStateStep_C[0] >= 4)
-        {
-            if (g_SysWork.sysStateStep_C[0] <= 20)
-            {
-                SysWork_StateStepSet(0, 22);
-            }
-        }
+        SysWork_StateStepSet(0, 22);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -366,15 +361,10 @@ void func_800D7A60(void) // 0x800D7A60
     VECTOR3  pos;
     SVECTOR3 rot;
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] <= 15)
     {
-        if (g_SysWork.sysStateStep_C[0] >= 2)
-        {
-            if (g_SysWork.sysStateStep_C[0] <= 15)
-            {
-                SysWork_StateStepSet(0, 17);
-            }
-        }
+        SysWork_StateStepSet(0, 17);
     }
 
     switch (g_SysWork.sysStateStep_C[0])

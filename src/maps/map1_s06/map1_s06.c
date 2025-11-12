@@ -387,15 +387,10 @@ const char* MAP_MESSAGES[] = {
 
 void func_800D5614(void) // 0x800D5614
 {
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 13)
     {
-        if (g_SysWork.sysStateStep_C[0] >= 3)
-        {
-            if (g_SysWork.sysStateStep_C[0] < 13)
-            {
-                SysWork_StateStepSet(0, 14);
-            }
-        }
+        SysWork_StateStepSet(0, 14);
     }
 
     switch (g_SysWork.sysStateStep_C[0])

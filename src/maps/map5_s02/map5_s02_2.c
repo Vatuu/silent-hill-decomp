@@ -461,12 +461,9 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
     s32      i;
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        g_SysWork.sysStateStep_C[0] >= 3)
+        g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 41)
     {
-        if (g_SysWork.sysStateStep_C[0] < 41)
-        {
-            SysWork_StateStepSet(0, 43);
-        }
+        SysWork_StateStepSet(0, 43);
     }
 
     switch (g_SysWork.sysStateStep_C[0])

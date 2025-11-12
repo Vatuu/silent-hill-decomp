@@ -291,7 +291,7 @@ void func_800D2408(void) // 0x800D2408
     //static const VECTOR3 soundPos = VECTOR3(182.0f, -1.2f, 58.9f);
     #define soundPos D_800CBF88
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 41)
     {
         SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);

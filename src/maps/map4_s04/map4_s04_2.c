@@ -151,13 +151,9 @@ void func_800D23E4(void)
     SVECTOR3 unused;
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        (g_SysWork.sysStateStep_C[0] > 0) && (g_SysWork.sysStateStep_C[0] < 22))
+        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 22)
     {
-        g_SysWork.sysStateStep_C[0] = 26;
-        g_SysWork.field_28          = 0;
-        g_SysWork.sysStateStep_C[1] = 0;
-        g_SysWork.timer_2C          = 0;
-        g_SysWork.sysStateStep_C[2] = 0;
+        SysWork_StateStepSet(0, 26);
     }
 
     switch (g_SysWork.sysStateStep_C[0])

@@ -74,13 +74,11 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 {
     #define CUTSCENE_SKIP_STATE 52
 
-    const static VECTOR3 D_800CC8FC = {0x00000CCC, 0xFFFFECCD, 0x0010D800};
-
     u8              temp_s0_5;
     s_SubCharacter* chara0;
     s_SubCharacter* chara1;
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 5 && g_SysWork.sysStateStep_C[0] < 47)
     {
         SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
@@ -347,7 +345,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         case 47:
             D_800DE250 = 0;
 
-            func_8005DC1C(Sfx_Unk1357, &D_800CC8FC, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1357, &QVECTOR3(0.8f, -1.2f, 269.5f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 48:

@@ -73,14 +73,12 @@ void func_800CF0B8(void) // 0x800CF0B8
     Savegame_EventFlagClear(EventFlag_412);
 
     hasSkippedEarly = false;
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 && g_SysWork.sysStateStep_C[0] >= 2)
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) && 
+        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] <= 19)
     {
-        if (g_SysWork.sysStateStep_C[0] <= 19)
-        {
-            // Sets flag to `true` if player skipped before step 19.
-            hasSkippedEarly = g_SysWork.sysStateStep_C[0] < 19;
-            SysWork_StateStepSet(0, 20);
-        }
+        // Sets flag to `true` if player skipped before step 19.
+        hasSkippedEarly = g_SysWork.sysStateStep_C[0] < 19;
+        SysWork_StateStepSet(0, 20);
     }
 
     switch (g_SysWork.sysStateStep_C[0])

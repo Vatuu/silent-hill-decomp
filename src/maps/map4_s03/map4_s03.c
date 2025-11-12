@@ -665,7 +665,7 @@ void func_800D6774(void) // 0x800D6774
     s32         i;
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        (g_SysWork.sysStateStep_C[0] > 0) && (g_SysWork.sysStateStep_C[0] < 11))
+        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 11)
     {
         SysWork_StateStepSet(0, 12);
     }
@@ -844,7 +844,7 @@ void func_800D6F24(void) // 0x800D6F24
     void* var_s0;
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        (g_SysWork.sysStateStep_C[0] > 0) && (g_SysWork.sysStateStep_C[0] < 9))
+        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 9)
     {
         SysWork_StateStepSet(0, 9);
     }
@@ -1006,7 +1006,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D8FC0);
 void func_800D960C(void) // 0x800D960C
 {
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        (g_SysWork.sysStateStep_C[0] >= 2) && (g_SysWork.sysStateStep_C[0] < 4))
+        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 4)
     {
         SysWork_StateStepReset();
     }

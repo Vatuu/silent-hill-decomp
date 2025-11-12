@@ -249,15 +249,10 @@ void func_800DA248(void) // 0x800DA248
 {
     s_FsImageDesc charaTex;
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        g_SysWork.sysStateStep_C[0] >= 4 && g_SysWork.sysStateStep_C[0] <= 20)
     {
-        if (g_SysWork.sysStateStep_C[0] >= 4)
-        {
-            if (g_SysWork.sysStateStep_C[0] <= 20)
-            {
-                SysWork_StateStepSet(0, 22);
-            }
-        }
+        SysWork_StateStepSet(0, 22);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -434,15 +429,10 @@ void func_800DAA4C(void) // 0x800DAA4C
     VECTOR3  pos;
     SVECTOR3 rot;
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] <= 15)
     {
-        if (g_SysWork.sysStateStep_C[0] >= 2)
-        {
-            if (g_SysWork.sysStateStep_C[0] <= 15)
-            {
-                SysWork_StateStepSet(0, 17);
-            }
-        }
+        SysWork_StateStepSet(0, 17);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -1347,12 +1337,10 @@ void func_800DF21C(void) // 0x800DF21C
     VECTOR3       lightIntPos;
     SVECTOR3      unused;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) && g_SysWork.sysStateStep_C[0] >= 3)
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) && 
+        g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 11)
     {
-        if (g_SysWork.sysStateStep_C[0] < 11)
-        {
-            SysWork_StateStepSet(0, 11);
-        }
+        SysWork_StateStepSet(0, 11);
     }
 
     switch (g_SysWork.sysStateStep_C[0])

@@ -22,6 +22,12 @@ void MapEvent_SewerKeyTake(void);
 
 void func_800D732C(void);
 
+// Next 4 functions are all very similar to each other, only differ in Q12 position values and flag numbers.
+void func_800D75FC(void);
+void func_800D7940(void);
+void func_800D7C84(void);
+void func_800D7F88(void);
+
 /** @brief Handles the ? map pickup event. */
 void MapEvent_MapTake(void);
 

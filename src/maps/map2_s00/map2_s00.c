@@ -983,16 +983,10 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
         }
         else
         {
-            if (!D_800F228E)
+            if (!D_800F228E && g_SysWork.sysStateStep_C[0] > 5 && g_SysWork.sysStateStep_C[0] < 11)
             {
-                if (g_SysWork.sysStateStep_C[0] > 5)
-                {
-                    if (g_SysWork.sysStateStep_C[0] < 11)
-                    {
-                        SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
-                        D_800F228E = 1;
-                    }
-                }
+                SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+                D_800F228E = 1;
             }
         }
     }

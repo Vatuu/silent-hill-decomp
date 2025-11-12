@@ -411,7 +411,7 @@ void func_800E1D50(void) // 0x800E1D50
     q19_12   rotX;
     q19_12   rotZ;
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
     {
         SysWork_StateStepSet(0, EventState_Skip);
@@ -788,16 +788,13 @@ void func_800E3244(void) // 0x800E3244
     q19_12   rotZ;
 
     // Skip
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 27)
     {
-        if (g_SysWork.sysStateStep_C[0] >= 2)
+        if (g_SysWork.sysStateStep_C[0] != 20 &&
+            g_SysWork.sysStateStep_C[0] != 22)
         {
-            if (g_SysWork.sysStateStep_C[0] < 27 &&
-                g_SysWork.sysStateStep_C[0] != 20 &&
-                g_SysWork.sysStateStep_C[0] != 22)
-            {
-                SysWork_StateStepSet(0, EventState_Skip);
-            }
+            SysWork_StateStepSet(0, EventState_Skip);
         }
     }
 

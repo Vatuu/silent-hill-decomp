@@ -722,16 +722,13 @@ void func_800DB33C(void) // 0x800DB33C
 void func_800DB368(void) // 0x800DB368
 {
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        g_SysWork.sysStateStep_C[0] >= 2)
+        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 26)
     {
-        if (g_SysWork.sysStateStep_C[0] < 26)
+        if (g_SysWork.sysStateStep_C[0] < 5)
         {
-            if (g_SysWork.sysStateStep_C[0] < 5)
-            {
-                D_800E1FD8 = true;
-            }
-            SysWork_StateStepSet(0, 27);
+            D_800E1FD8 = true;
         }
+        SysWork_StateStepSet(0, 27);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
