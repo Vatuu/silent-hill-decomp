@@ -563,7 +563,7 @@ def ninja_setup_objdiff(split_entries):
 def ninja_append(split_entries, skip_checksum: bool, non_matching: bool, game_version_idx: int, build_matching_nall_mode: bool):
     """Horrid code - Will"""
     
-    ninjaMatchingPrefix = "ninja"
+    ninjaMatchingPrefix = "build"
     objdiff_mode = False
     
     if os.path.exists("objdiff.ninja") and build_matching_nall_mode == False:
@@ -606,7 +606,18 @@ def ninja_append(split_entries, skip_checksum: bool, non_matching: bool, game_ve
         if skip_checksum == False:
             checksumBuildRequirements = re.findall(r"build/out/.+\.BIN:", ninjaFileRead)
             for i in range(len(checksumBuildRequirements)):
-                checksumBuildRequirements[i] = re.sub(":", "", checksumBuildRequirements[i])
+                fixedStr = re.sub(":", "", checksumBuildRequirements[i])
+                if "BODYPROG.BIN" in fixedStr or "STREAM.BIN" in fixedStr:
+                    checksumBuildRequirements[i] = f"{fixedStr}.fix"
+                else:
+                    checksumBuildRequirements[i] = fixedStr
+                
+                if "SLUS" in fixedStr:
+                    os.system(f"{PREBUILD} main")
+                elif "BODYPROG.BIN" in fixedStr:
+                    os.system(f"{PREBUILD} bodyprog")
+                elif "STREAM.BIN" in fixedStr:
+                    os.system(f"{PREBUILD} stream")
     
     for split_config in split_entries:
         if objdiff_mode != True:
@@ -692,7 +703,10 @@ def ninja_append(split_entries, skip_checksum: bool, non_matching: bool, game_ve
             else:
                 output = f"{BUILD_DIR}/out/SLUS_007.07"
             
-            checksumBuildRequirements += [output]
+            if split_config.SPLIT_BASENAME == "1ST/BODYPROG.BIN" or split_config.SPLIT_BASENAME == "VIN/STREAM.BIN":
+                checksumBuildRequirements += [f"{output}.fix"]
+            else:
+                checksumBuildRequirements += [output]
             
             ninjaFileSyntax.build(
                 outputs=f"{output}.elf",
