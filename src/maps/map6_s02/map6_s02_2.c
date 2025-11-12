@@ -86,7 +86,7 @@ void func_800CF0B8(void) // 0x800CF0B8
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
 
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
@@ -150,7 +150,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             break;
 
         case 7:
-            func_80088D0C();
+            Chara_ProcessLoads();
             Chara_Spawn(Chara_Alessa, 0, Q12(60.0f), Q12(-23.0f), 0, 3);
             SysWork_StateStepIncrement(0);
             break;
@@ -273,14 +273,14 @@ void func_800CF0B8(void) // 0x800CF0B8
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(164.1f);
 
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
-            sharedFunc_800D2244_0_s00(true);
+            Player_ControlUnfreeze(true);
 
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
             Savegame_EventFlagSet(EventFlag_410);
@@ -333,7 +333,7 @@ void func_800CFC34(void) // 0x800CFC34
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_8004690C(Sfx_Unk1611);
 
             if (Savegame_EventFlagGet(EventFlag_456) && Savegame_EventFlagGet(EventFlag_457) &&
@@ -480,7 +480,7 @@ void func_800CFC34(void) // 0x800CFC34
             else
             {
                 SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-                sharedFunc_800D2244_0_s00(false);
+                Player_ControlUnfreeze(false);
 
                 SysWork_StateSetNext(SysState_Gameplay);
 

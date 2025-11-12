@@ -314,7 +314,7 @@ void Game_InGameInit(void) // 0x80034FB8
     vcSetCameraUseWarp(&g_SysWork.player_4C.chara_0.position_18, g_SysWork.cameraAngleY_237A);
     func_80040004(&g_MapOverlayHeader);
     func_80035B58(0);
-    func_8003D95C();
+    WorldGfx_CharaModelProcessAllLoads();
     func_8003EBA0();
 
     g_MapOverlayHeader.func_168(0, mapOvlId, NO_VALUE);

@@ -251,7 +251,7 @@ void func_800D02B4(void) // 0x800D02B4
     switch (g_SysWork.sysStateStep_C[0])
     {
         case EventState_0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             ScreenFade_ResetTimestep();
             SysWork_StateStepIncrement(0);
             break;
@@ -272,7 +272,7 @@ void func_800D02B4(void) // 0x800D02B4
             SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
 
         default: // `EventState_End`
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             return;
     }
@@ -283,7 +283,7 @@ void func_800D03FC(void) // 0x800D03FC
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
 
             D_800D1FBC = Q12(100.0f);
 
@@ -310,7 +310,7 @@ void func_800D03FC(void) // 0x800D03FC
             SysWork_StateStepIncrement(0);
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_236);
             break;

@@ -27,9 +27,9 @@
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CC240
 
-#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CC24C
+#include "maps/shared/Player_ControlFreeze.h" // 0x800CC24C
 
-#include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CC3AC
+#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CC3AC
 
 s32 func_800CC584(void) // 0x800CC584
 {
@@ -151,7 +151,7 @@ void func_800CCA2C(void) // 0x800CCA2C
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             g_SysWork.field_30 = 20;
             SysWork_StateStepIncrement(0);
 

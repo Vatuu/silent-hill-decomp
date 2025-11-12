@@ -53,9 +53,9 @@ INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CE874
 
-#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CE880
+#include "maps/shared/Player_ControlFreeze.h" // 0x800CE880
 
-#include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CE9E0
+#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CE9E0
 
 s32 func_800CEBB8(void) // 0x800CEBB8
 {
@@ -229,7 +229,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_800862F8(0, FILE_TIM_SHATVIAL_TIM, false);
             SysWork_StateStepIncrement(0);
 
@@ -277,7 +277,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_204);
             break;
@@ -299,7 +299,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
     switch (g_SysWork.sysStateStep_C[0])
     {
         case EventState_0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
         case EventState_1:
@@ -323,7 +323,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_M3S01_PickupUnknownLiquid);
 
@@ -365,7 +365,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -396,7 +396,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
             SysWork_StateStepIncrement(0);
 
         default: // `EventState_DontPressSwitch`
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -411,7 +411,7 @@ void func_800D29A4(void) // 0x800D29A4
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -423,7 +423,7 @@ void func_800D29A4(void) // 0x800D29A4
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }

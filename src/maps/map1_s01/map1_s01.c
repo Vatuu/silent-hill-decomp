@@ -40,9 +40,9 @@ INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CC3C0);
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CE070
 
-#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CE07C
+#include "maps/shared/Player_ControlFreeze.h" // 0x800CE07C
 
-#include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CE1DC
+#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CE1DC
 
 s32 func_800CE3B4(void) // 0x800CE3B4
 {
@@ -363,7 +363,7 @@ void func_800D7308(void)
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
@@ -433,7 +433,7 @@ void func_800D7308(void)
             SysWork_StateStepIncrement(0);
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -456,7 +456,7 @@ void func_800D76F4(void) // 0x800D76F4
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_80086470(0, InventoryItemId_GoldMedallion, 0, false);
 
         case 1:
@@ -481,13 +481,13 @@ void func_800D76F4(void) // 0x800D76F4
             func_80086470(3, InventoryItemId_GoldMedallion, 1, false);
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
 
         case DONT_PICK_UP_MEDALLION_STATE:
             Savegame_EventFlagClear(EventFlag_M1S01_PickupGoldMedallion);
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
     }
 }
@@ -524,7 +524,7 @@ void func_800D7864(void) // 0x800D7864
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -640,7 +640,7 @@ void func_800D7864(void) // 0x800D7864
 
         default:
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
             break;
@@ -878,7 +878,7 @@ void func_800D857C(void) // 0x800D857C
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_80086470(0, InventoryItemId_SilverMedallion, 0, false);
             SysWork_StateStepIncrement(0);
 
@@ -921,7 +921,7 @@ void func_800D857C(void) // 0x800D857C
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -958,7 +958,7 @@ void func_800D87C0(void) // 0x800D87C0
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
             Fs_QueueStartRead(FILE_ANIM_LOCKER_DMS, FS_BUFFER_16);
 
@@ -1001,7 +1001,7 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrement(0);
 
         case 6:
-            func_80088D0C();
+            Chara_ProcessLoads();
             Chara_Spawn(Chara_Cat, 0, Q12(-60.0f), Q12(18.0f), Q12(0.0f), 3);
             SysWork_StateStepIncrement(0);
 
@@ -1108,7 +1108,7 @@ void func_800D87C0(void) // 0x800D87C0
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
             Savegame_EventFlagSet(EventFlag_77);
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             func_80088D34(0);
 

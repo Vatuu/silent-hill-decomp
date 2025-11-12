@@ -65,9 +65,9 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CFCF4
 
-#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CFD00
+#include "maps/shared/Player_ControlFreeze.h" // 0x800CFD00
 
-#include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CFE60
+#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CFE60
 
 s32 func_800D0038(void) // 0x800D0038
 {
@@ -401,7 +401,7 @@ void func_800D5614(void) // 0x800D5614
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_8003ED74(19, 4);
 
             g_SysWork.field_30 = 20;
@@ -518,7 +518,7 @@ void func_800D5614(void) // 0x800D5614
             vcReturnPreAutoCamWork(false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -532,7 +532,7 @@ void func_800D5B98(void) // 0x800D5B98
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_80086470(0, InventoryItemId_KGordonKey, 0, false);
             SysWork_StateStepIncrement(0);
 
@@ -571,7 +571,7 @@ void func_800D5B98(void) // 0x800D5B98
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -614,7 +614,7 @@ void func_800D5DD8(void) // 0x800D5DD8
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             ScreenFade_ResetTimestep();
 
             g_SysWork.field_30 = 20;
@@ -726,7 +726,7 @@ void func_800D5DD8(void) // 0x800D5DD8
 
             g_SavegamePtr->current2dMapIdx_A9 = D_800D778E;
 
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             
             Savegame_EventFlagSet(EventFlag_M1S06_ChurchMarkedOnMap);

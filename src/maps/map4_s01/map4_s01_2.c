@@ -173,7 +173,7 @@ void func_800D1FF0(void) // 0x800D1FF0
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -253,7 +253,7 @@ void func_800D1FF0(void) // 0x800D1FF0
                 break;
             }
 
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -327,7 +327,7 @@ void func_800D2408(void) // 0x800D2408
             break;
 
         case 2:
-            func_80088D0C();
+            Chara_ProcessLoads();
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -555,7 +555,7 @@ void func_800D2408(void) // 0x800D2408
             SysWork_StateStepIncrement(0);
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
 
             g_Timer0 = NO_VALUE;
 
@@ -615,7 +615,7 @@ void func_800D2F74(void) // 0x800D2F74
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             Fs_QueueStartRead(FILE_ANIM_AQRM_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
@@ -689,7 +689,7 @@ void func_800D2F74(void) // 0x800D2F74
         default:
             g_Timer1 = NO_VALUE;
 
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
             Savegame_EventFlagSet(EventFlag_305);
@@ -732,7 +732,7 @@ void func_800D4410(void) // 0x800D4410
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
 
             g_SysWork.field_30 = 20;
 
@@ -832,7 +832,7 @@ void func_800D4410(void) // 0x800D4410
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(true);
+            Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_309);
             vcReturnPreAutoCamWork(true);

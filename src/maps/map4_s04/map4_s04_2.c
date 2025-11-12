@@ -163,7 +163,7 @@ void func_800D23E4(void)
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             Game_TurnFlashlightOn();
             D_800D6EF8 = 0;
 
@@ -174,7 +174,7 @@ void func_800D23E4(void)
             D_800D6EF4 = 0;
 
             Chara_Load(0, Chara_Lisa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
-            func_80088D0C();
+            Chara_ProcessLoads();
             Chara_Spawn(Chara_Lisa, 0, Q12(60.0f), Q12(140.0f), FP_ANGLE(0.0f), 3);
 
             func_8003D03C();
@@ -330,7 +330,7 @@ void func_800D23E4(void)
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
             Sd_EngineCmd(19);

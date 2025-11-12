@@ -39,9 +39,9 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CC9A0);
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CF04C
 
-#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CF058
+#include "maps/shared/Player_ControlFreeze.h" // 0x800CF058
 
-#include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CF1B8
+#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CF1B8
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CF390);
 
@@ -320,7 +320,7 @@ void func_800D5FC4(void) // 0x800D5FC4
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
 
             D_800DACE8 = Q12(-0.3f);
@@ -399,7 +399,7 @@ void func_800D5FC4(void) // 0x800D5FC4
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_M3S05_AlcoholPouredOnVines);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -413,7 +413,7 @@ void func_800D63C4(void) // 0x800D63C4
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -437,7 +437,7 @@ void func_800D63C4(void) // 0x800D63C4
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -459,7 +459,7 @@ void func_800D6BE0(void) // 0x800D6BE0
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -476,7 +476,7 @@ void func_800D6BE0(void) // 0x800D6BE0
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -494,7 +494,7 @@ void func_800D719C(void) // 0x800D719C
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
         case 1:
             func_80085DF0();
@@ -505,7 +505,7 @@ void func_800D719C(void) // 0x800D719C
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -532,7 +532,7 @@ void func_800D72AC(void) // 0x800D72AC
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             D_800DACF0 = 0;
             SysWork_StateStepIncrement(0);
 
@@ -545,7 +545,7 @@ void func_800D72AC(void) // 0x800D72AC
             break;
 
         case EventState_DontPushCabinet:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
 
@@ -617,7 +617,7 @@ void func_800D72AC(void) // 0x800D72AC
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(true);
+            Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);

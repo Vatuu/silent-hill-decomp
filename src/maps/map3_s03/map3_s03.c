@@ -31,9 +31,9 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CB460);
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CD0D8
 
-#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CD0E4
+#include "maps/shared/Player_ControlFreeze.h" // 0x800CD0E4
 
-#include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CD244
+#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CD244
 
 s32 func_800CD41C(void) // 0x800CD41C
 {
@@ -341,11 +341,11 @@ void func_800D2778(void) // 0x800D2778
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -356,7 +356,7 @@ void func_800D27F4(void) // 0x800D27F4
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_800862F8(0, FILE_TIM_LISAVTR2_TIM, false);
             D_800D6BDA = 0;
             SysWork_StateStepIncrement(0);
@@ -441,7 +441,7 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_254);
@@ -485,7 +485,7 @@ void func_800D2CDC(void) // 0x800D2CDC
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrementAfterFade(false, true, 2, false, false);
             ScreenFade_ResetTimestep();
 
@@ -563,7 +563,7 @@ void func_800D2CDC(void) // 0x800D2CDC
 
         default:
             Fs_QueueWaitForEmpty();
-            sharedFunc_800D2244_0_s00(true);
+            Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
             func_8003D01C();
             vcReturnPreAutoCamWork(true);

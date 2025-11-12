@@ -52,9 +52,9 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CFCE0
 
-#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CFCEC
+#include "maps/shared/Player_ControlFreeze.h" // 0x800CFCEC
 
-#include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CFE4C
+#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CFE4C
 
 s32 func_800D0024(void) // 0x800D0024
 {
@@ -920,7 +920,7 @@ void func_800E9EAC(void) // 0x800E9EAC
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             g_Screen_FadeStatus = 12; // TODO: Can't be created with `ScreenFade_Start` macro?
             func_8004690C(Sfx_Unk1522);
             SysWork_StateStepIncrement(0);
@@ -935,7 +935,7 @@ void func_800E9EAC(void) // 0x800E9EAC
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_191);
             Game_TurnFlashlightOff();
@@ -951,7 +951,7 @@ void func_800E9FDC(void) // 0xfunc_800E9FDC
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             ScreenFade_ResetTimestep();
             SysWork_StateStepIncrement(0);
 
@@ -964,7 +964,7 @@ void func_800E9FDC(void) // 0xfunc_800E9FDC
             SysWork_StateStepIncrement(0);
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_189);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);

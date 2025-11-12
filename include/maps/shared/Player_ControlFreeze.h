@@ -1,6 +1,6 @@
 #include <bodyprog/player_logic.h>
 
-void sharedFunc_800D20E4_0_s00(void)
+void Player_ControlFreeze(void)
 {
     // TODO: Pointers here are odd, might be full of inlines.
 
@@ -14,13 +14,13 @@ void sharedFunc_800D20E4_0_s00(void)
     g_Player_DisableControl          = true;
     g_Player_IsInWalkToRunTransition = false;
 
-    extra   = &g_SysWork.player_4C.extra_128;
-    chara   = &g_SysWork.player_4C.chara_0;
+    extra = &g_SysWork.player_4C.extra_128;
+    chara = &g_SysWork.player_4C.chara_0;
 
     D_800AF216 = 0;
 
-    chara->properties_E4.player.afkTimer_E8      = Q12(0.0f);
-    chara->properties_E4.player.runTimer_F8      = Q12(0.0f);
+    chara->properties_E4.player.afkTimer_E8        = Q12(0.0f);
+    chara->properties_E4.player.runTimer_F8        = Q12(0.0f);
     chara->properties_E4.player.exhaustionTimer_FC = Q12(0.0f);
 
     g_SysWork.player_4C.extra_128.state_1C = PlayerState_Unk52;

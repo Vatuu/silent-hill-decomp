@@ -148,7 +148,7 @@ void func_800D1628(void) // 0x800D1628
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_80086470(0, InventoryItemId_MotorcycleKey, 0, false);
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
 
@@ -201,7 +201,7 @@ void func_800D1628(void) // 0x800D1628
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
@@ -220,7 +220,7 @@ void func_800D1904(void) // 0x800D1904
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_800862F8(0, FILE_TIM_MOTELKEY_TIM, false);
             SysWork_StateStepIncrement(0);
 
@@ -264,7 +264,7 @@ void func_800D1904(void) // 0x800D1904
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -298,7 +298,7 @@ void func_800D1AF8(void) // 0x800D1AF8
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
 
             D_800D6F54 = 0;
             D_800D6F58 = NO_VALUE;
@@ -363,7 +363,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         case 9:
-            func_80088D0C();
+            Chara_ProcessLoads();
             DmsHeader_FixOffsets(FS_BUFFER_17);
             SysWork_StateStepIncrement(0);
 
@@ -536,7 +536,7 @@ void func_800D1AF8(void) // 0x800D1AF8
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -598,7 +598,7 @@ void func_800D2674(void) // 0x800D2674
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -610,7 +610,7 @@ void func_800D2674(void) // 0x800D2674
             break;
 
         case 3:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
 
@@ -667,7 +667,7 @@ void func_800D2674(void) // 0x800D2674
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            sharedFunc_800D2244_0_s00(true);
+            Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
 
             vcReturnPreAutoCamWork(true);

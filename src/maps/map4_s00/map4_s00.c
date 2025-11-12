@@ -30,9 +30,9 @@ INCLUDE_RODATA("asm/maps/map4_s00/nonmatchings/map4_s00", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CC1B8
 
-#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CC1C4
+#include "maps/shared/Player_ControlFreeze.h" // 0x800CC1C4
 
-#include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CC324
+#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CC324
 
 s32 func_800CC4FC(void) // 0x800CC4FC
 {

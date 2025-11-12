@@ -2178,9 +2178,9 @@ void sharedFunc_800D209C_0_s00(void);
 
 void sharedFunc_800D20D8_0_s00(void);
 
-void sharedFunc_800D20E4_0_s00(void);
+void Player_ControlFreeze(void);
 
-void sharedFunc_800D2244_0_s00(bool arg0);
+void Player_ControlUnfreeze(bool arg0);
 
 void sharedFunc_800D2C7C_0_s00(s32 arg0);
 

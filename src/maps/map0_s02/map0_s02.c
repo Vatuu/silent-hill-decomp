@@ -48,9 +48,9 @@ INCLUDE_ASM("asm/maps/map0_s02/nonmatchings/map0_s02", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CE204
 
-#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CE210
+#include "maps/shared/Player_ControlFreeze.h" // 0x800CE210
 
-#include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CE370
+#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CE370
 
 s32 func_800CE548(void) // 0x800CE548
 {

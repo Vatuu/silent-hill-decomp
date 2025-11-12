@@ -201,7 +201,7 @@ void func_800D13D8(void) // 0x800D13D8
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
 
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
@@ -209,7 +209,7 @@ void func_800D13D8(void) // 0x800D13D8
 
             Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Fs_QueueStartRead(FILE_ANIM_SIP_DMS, FS_BUFFER_15);
-            func_80088D0C();
+            Chara_ProcessLoads();
             Chara_Spawn(Chara_Cybil, 0, Q12(-19.0f), Q12(58.0f), FP_ANGLE(0.0f), 3);
 
             DmsHeader_FixOffsets(FS_BUFFER_15);
@@ -289,7 +289,7 @@ void func_800D13D8(void) // 0x800D13D8
             break;
 
         case 13:
-            func_80088D0C();
+            Chara_ProcessLoads();
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -511,7 +511,7 @@ void func_800D13D8(void) // 0x800D13D8
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(true);
+            Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
             Game_TurnFlashlightOn();
             func_8003ED74(7, 4);
@@ -574,7 +574,7 @@ void func_800D236C(void) // 0x800D236C
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             D_800D416E = 0;
             ScreenFade_ResetTimestep();
             g_SysWork.field_30 = 20;
@@ -624,7 +624,7 @@ void func_800D236C(void) // 0x800D236C
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
 
@@ -679,7 +679,7 @@ void func_800D2658(void) // 0x800D2658
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             D_800D5370 = 0;
 
             Fs_QueueStartReadTim(FILE_TIM_ENBAN_TIM, FS_BUFFER_1, &D_800D410C);
@@ -796,7 +796,7 @@ void func_800D2658(void) // 0x800D2658
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);

@@ -89,7 +89,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
@@ -104,7 +104,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets(FS_BUFFER_11);
             Chara_Load(0, Chara_Cybil, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
-            func_80088D0C();
+            Chara_ProcessLoads();
             Chara_Spawn(Chara_Cybil, 0, Q12(4.4f), Q12(269.9f), FP_ANGLE(0.0f), 2);
             
             g_Timer0 = 0;
@@ -379,7 +379,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
             vcReturnPreAutoCamWork(1);
@@ -417,7 +417,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -485,7 +485,7 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
 
@@ -537,7 +537,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_8003A16C();
 
             Savegame_EventFlagSet(EventFlag_50);
@@ -697,7 +697,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             vcReturnPreAutoCamWork(true);
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Player_FallBackward();
 
@@ -742,7 +742,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + D_800A99B5);
             SysWork_StateStepIncrement(0);
 
@@ -801,7 +801,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             SysWork_StateStepIncrement(0);
 
         case 9:
-            func_80088D0C();
+            Chara_ProcessLoads();
             SysWork_StateStepIncrement(0);
 
         case 10:
@@ -832,7 +832,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -875,7 +875,7 @@ void MapEvent_AirScreamerDeath(void) // 0x800DC8C8
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_8004690C(Sfx_RadioInterferenceLoop);
             func_8004690C(Sfx_RadioStaticLoop);
 
@@ -888,7 +888,7 @@ void MapEvent_AirScreamerDeath(void) // 0x800DC8C8
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
             Savegame_EventFlagSet(EventFlag_51);
@@ -929,7 +929,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
 
         if (Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
         {
-            func_80088D0C();
+            Chara_ProcessLoads();
             Chara_Spawn(Chara_AirScreamer, 0, Q12(1048566.0f), Q12(280.0f), FP_ANGLE(0.0f), 12);
             func_800D3A3C(&g_SysWork.npcs_1A0[0]);
 

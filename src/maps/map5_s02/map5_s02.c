@@ -31,9 +31,9 @@ INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800CB6CC);
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CD630
 
-#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CD63C
+#include "maps/shared/Player_ControlFreeze.h" // 0x800CD63C
 
-#include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CD79C
+#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CD79C
 
 s32 func_800CD974(void) // 0x800CD974
 {

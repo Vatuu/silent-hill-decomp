@@ -1838,10 +1838,10 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
 
 void func_8003D938(void) // 0x8003D938
 {
-    func_8003D9C8(&g_WorldGfx.harryModel_164C);
+    WorldGfx_CharaModelProcessLoad(&g_WorldGfx.harryModel_164C);
 }
 
-void func_8003D95C(void) // 0x8003D95C
+void WorldGfx_CharaModelProcessAllLoads(void) // 0x8003D95C
 {
     s32           i;
     s_CharaModel* model;
@@ -1853,13 +1853,13 @@ void func_8003D95C(void) // 0x8003D95C
             model = g_WorldGfx.registeredCharaModels_18[i];
             if (model != NULL) 
             {
-                func_8003D9C8(model);
+                WorldGfx_CharaModelProcessLoad(model);
             }
         }
     }
 }
 
-void func_8003D9C8(s_CharaModel* model) // 0x8003D9C8
+void WorldGfx_CharaModelProcessLoad(s_CharaModel* model) // 0x8003D9C8
 {
     s_Skeleton* skel;
 

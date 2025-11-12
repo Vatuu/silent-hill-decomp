@@ -1306,10 +1306,10 @@ bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s
     return true;
 }
 
-bool func_80088D0C(void) // 0x80088D0C
+bool Chara_ProcessLoads(void) // 0x80088D0C
 {
     Fs_QueueWaitForEmpty();
-    func_8003D95C();
+    WorldGfx_CharaModelProcessAllLoads();
     return true;
 }
 

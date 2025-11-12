@@ -53,9 +53,9 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800D1250
 
-#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800D125C
+#include "maps/shared/Player_ControlFreeze.h" // 0x800D125C
 
-#include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800D13BC
+#include "maps/shared/Player_ControlUnfreeze.h" // 0x800D13BC
 
 s32 func_800D1594(void) // 0x800D1594
 {
@@ -807,7 +807,7 @@ void func_800E7D54(void) // 0x800E7D54
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -827,7 +827,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
 
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(-255.78f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-107.46f);
@@ -886,7 +886,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -923,7 +923,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_80086470(0u, InventoryItemId_SteelPipe, 0, false);
             SysWork_StateStepIncrement(0);
 
@@ -962,7 +962,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -1009,7 +1009,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             g_SysWork.field_30 = 20;
             D_800F228C = 0;
             D_800F2290 = 0;
@@ -1136,7 +1136,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             SysWork_StateStepIncrement(0);
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_MapMarkingSet(MapMarkFlag_OldTown_CherylArrowAndSign);
             vcReturnPreAutoCamWork(false);
@@ -1190,7 +1190,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             Savegame_MapMarkingSet(MapMarkFlag_11);
             func_800862F8(0, FILE_TIM_TOSCHOOL_TIM, false);
 
@@ -1351,11 +1351,11 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             Savegame_EventFlagSet(EventFlag_147);
             Savegame_MapMarkingSet(MapMarkFlag_OldTown_SchoolCircle);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            sharedFunc_800D2244_0_s00(true);
+            Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             func_80086470(3, InventoryItemId_NoteToSchool, 1, false);
             func_8003A16C();
@@ -1368,7 +1368,7 @@ void func_800E9470(void) // 0x800E9470
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_800862F8(0, FILE_TIM_SKETCHBK_TIM, false);
             SysWork_StateStepIncrement(0);
 
@@ -1407,7 +1407,7 @@ void func_800E9470(void) // 0x800E9470
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -1418,7 +1418,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_800862F8(0, FILE_TIM_STKENNEL_TIM, false);
             SysWork_StateStepIncrement(0);
             
@@ -1463,7 +1463,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             func_80086470(3, InventoryItemId_NoteDoghouse, 1, false);
             break;
@@ -1481,7 +1481,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_800862F8(0, FILE_TIM_INKENNEL_TIM, false);
             SysWork_StateStepIncrement(0);
 
@@ -1534,7 +1534,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
         }
@@ -1564,7 +1564,7 @@ void func_800E9A74(void) // 0x800E9A74
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_80086470(0, InventoryItemId_KeyOfWoodman, 0, false);
             SysWork_StateStepIncrement(0);
 
@@ -1613,7 +1613,7 @@ void func_800E9A74(void) // 0x800E9A74
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
         }
@@ -1650,7 +1650,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_8003ED74(1, 1);
             func_8003EF10(6, 6, PrimitiveType_S32, &D_800F1A24, 0, Q12(100.0f));
 
@@ -1697,7 +1697,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_159);
@@ -1726,7 +1726,7 @@ void func_800EA6E0(void) // 0x800EA6E0
     switch (g_SysWork.sysStateStep_C[0])
     {
         case EventState_Setup:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_800862F8(0, FILE_TIM_KEYMAP_TIM, false);
             SysWork_StateStepIncrement(0);
 
@@ -1762,7 +1762,7 @@ void func_800EA6E0(void) // 0x800EA6E0
             break;
 
         default: // `EventState_Finish`
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
@@ -1799,7 +1799,7 @@ void func_800EA960(void) // 0x800EA960
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrementAfterFade(0, true, 3, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
@@ -1882,7 +1882,7 @@ void func_800EA960(void) // 0x800EA960
             SysWork_StateStepIncrement(0);
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             break;
@@ -1915,7 +1915,7 @@ void func_800EAD2C(void) // 0x800EAD2C
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1989,7 +1989,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             SysWork_StateStepIncrement(0);
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -2009,7 +2009,7 @@ void func_800EB090(void) // 0x800EB090
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -2021,7 +2021,7 @@ void func_800EB090(void) // 0x800EB090
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -2036,7 +2036,7 @@ void func_800EB174(void) // 0x800EB174
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             soundPos.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
             soundPos.vy = Q12(-1.2f);
             soundPos.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
@@ -2085,7 +2085,7 @@ void func_800EB174(void) // 0x800EB174
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
             func_8003D01C();
@@ -2105,7 +2105,7 @@ void func_800EB3F4(void) // 0x800EB3F4
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_8005DC1C(Sfx_Unk1393, &D_800CD45C, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
@@ -2156,7 +2156,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);

@@ -157,12 +157,12 @@ void func_800CED88(void) // 0x800CED88
     switch (step)
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             Fs_QueueStartRead(FILE_ANIM_CHRC_DMS, FS_BUFFER_15);
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_15);
             Chara_Load(0, Chara_Dahlia, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
-            func_80088D0C();
+            Chara_ProcessLoads();
             Chara_Spawn(Chara_Dahlia, 0, Q12(20.0f), Q12(23.5f), 0, 3);
             sharedFunc_800D88AC_0_s00(dahliaChara);
 
@@ -398,7 +398,7 @@ void func_800CED88(void) // 0x800CED88
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);

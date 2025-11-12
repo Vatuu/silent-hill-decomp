@@ -420,7 +420,7 @@ void func_800E1D50(void) // 0x800E1D50
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
 
             D_800ED5AC = 0;
             D_800ED5B0 = 0;
@@ -467,10 +467,10 @@ void func_800E1D50(void) // 0x800E1D50
         default:
             D_800ED5B0 = NO_VALUE;
 
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
-            func_80088D0C();
+            Chara_ProcessLoads();
             Chara_Spawn(Chara_MonsterCybil, 0, Q12(26.5f), Q12(108.5f), Q12(0.03125f), 3);
             func_800E15FC(&g_SysWork.player_4C.chara_0, &g_SysWork.npcs_1A0[0], 1);
             Savegame_EventFlagSet(EventFlag_441);
@@ -605,7 +605,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
             Game_TurnFlashlightOn();
             func_8003D03C();
             func_8004690C(Sfx_Unk1617);
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
 
             g_SysWork.npcs_1A0[0].health_B0 = NO_VALUE;
 
@@ -676,7 +676,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
 
         default:
             D_800ED5B0 = NO_VALUE;
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -752,7 +752,7 @@ void func_800E3244(void) // 0x800E3244
             D_800ED5B6 = 0;
 
             func_8004690C(Sfx_Unk1617);
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
 
             g_SysWork.npcs_1A0[0].health_B0 = NO_VALUE;
@@ -805,7 +805,7 @@ void func_800E3244(void) // 0x800E3244
         case 6:
             D_800ED5B0 = Q12(59.0f);
 
-            func_80088D0C();
+            Chara_ProcessLoads();
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 160, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
             Savegame_EventFlagSet(EventFlag_462);
@@ -957,7 +957,7 @@ void func_800E3244(void) // 0x800E3244
 
             sharedFunc_800D2EF4_0_s00();
             func_8003CD6C(&g_SysWork.playerCombatInfo_38);
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
             sharedFunc_800D88C0_0_s00(&g_SysWork.npcs_1A0[0], false);

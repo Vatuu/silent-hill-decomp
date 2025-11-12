@@ -150,7 +150,7 @@ void func_800D0B64(void) // 0x800D0B64
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             Savegame_EventFlagClear(EventFlag_476);
             func_8003A16C();
 
@@ -324,7 +324,7 @@ void func_800D0B64(void) // 0x800D0B64
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(true);
+            Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
     
             vcReturnPreAutoCamWork(true);

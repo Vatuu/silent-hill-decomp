@@ -63,9 +63,9 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", sharedFunc_800CEFF4_0_s00
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CFEE4
 
-#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CFEF0
+#include "maps/shared/Player_ControlFreeze.h" // 0x800CFEF0
 
-#include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800D0050
+#include "maps/shared/Player_ControlUnfreeze.h" // 0x800D0050
 
 s32 func_800D0228(void) // 0x800D0228
 {
@@ -712,7 +712,7 @@ void func_800D6774(void) // 0x800D6774
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_8008D448();
             func_8003EBA0();
 
@@ -776,8 +776,8 @@ void func_800D6774(void) // 0x800D6774
             break;
 
         case 9:
-            sharedFunc_800D2244_0_s00(true);
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlUnfreeze(true);
+            Player_ControlFreeze();
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 52, false);
 
             g_SysWork.player_4C.chara_0.position_18.vx += Q12(0.5f);
@@ -812,7 +812,7 @@ void func_800D6774(void) // 0x800D6774
 
             Savegame_EventFlagSet(EventFlag_329);
 
-            sharedFunc_800D2244_0_s00(true);
+            Player_ControlUnfreeze(true);
 
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -821,7 +821,7 @@ void func_800D6774(void) // 0x800D6774
             SysWork_StateStepIncrement(0);
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -852,7 +852,7 @@ void func_800D6F24(void) // 0x800D6F24
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
@@ -933,7 +933,7 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(false);
@@ -1042,7 +1042,7 @@ void func_800D960C(void) // 0x800D960C
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(false);
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -1054,7 +1054,7 @@ void func_800D9824(void) // 0x800D9824
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             ScreenFade_ResetTimestep();
 
             SysWork_StateStepIncrement(0);
@@ -1069,7 +1069,7 @@ void func_800D9824(void) // 0x800D9824
         default:
             Savegame_EventFlagClear(EventFlag_335);
 
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);

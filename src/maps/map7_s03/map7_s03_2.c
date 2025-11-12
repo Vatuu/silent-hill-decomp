@@ -979,7 +979,7 @@ void func_800E3B6C(void) // 0x800E3B6C
     switch (D_800F4805)
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
 
             g_SysWork.field_30          = 20;
             g_SysWork.sysStateStep_C[0] = 0;
@@ -1012,7 +1012,7 @@ void func_800E3D18(void) // 0x800E3D18
     switch (D_800F4805)
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
 
             g_SysWork.player_4C.chara_0.health_B0 = Q12(100.0f);
             g_SysWork.field_30                    = 20;
@@ -1091,7 +1091,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E9260);
 void func_800E941C(void) // 0x800E941C
 {
     Fs_QueueWaitForEmpty();
-    func_8003D95C();
+    WorldGfx_CharaModelProcessAllLoads();
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E9444);

@@ -138,7 +138,7 @@ void func_800D0CF8(void) // 0x800D0CF8
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            sharedFunc_800D20E4_0_s00();
+            Player_ControlFreeze();
             func_8005DC1C(Sfx_Unk1310, &QVECTOR3(94.6f, -1.2f, 101.5f), Q8_CLAMPED(0.5f), 0);
             Savegame_MapMarkingSet(MapMarkFlag_FogHospital1F_StairsLocked);
 
@@ -428,7 +428,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         default:
-            sharedFunc_800D2244_0_s00(false);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);

@@ -3683,7 +3683,7 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
 
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
-bool func_80088D0C(void);
+bool Chara_ProcessLoads(void);
 
 void func_80088D34(s32 idx);
 
@@ -4424,9 +4424,9 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
 /** Something related to animations. */
 void func_8003D938(void);
 
-void func_8003D95C(void);
+void WorldGfx_CharaModelProcessAllLoads(void);
 
-void func_8003D9C8(s_CharaModel* model);
+void WorldGfx_CharaModelProcessLoad(s_CharaModel* model);
 
 void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
 

@@ -1,6 +1,6 @@
 #include <bodyprog/player_logic.h>
 
-void sharedFunc_800D2244_0_s00(bool arg0)
+void Player_ControlUnfreeze(bool arg0)
 {
     s_SubCharacter*       player;
     s_MainCharacterExtra* extra;
@@ -28,19 +28,19 @@ void sharedFunc_800D2244_0_s00(bool arg0)
     }
     else
     {
-        g_SysWork.player_4C.extra_128.state_1C = PlayerState_None;
-        player->model_0.stateStep_3 = 0;
-        player->model_0.state_2     = 0;
-        extra->model_0.stateStep_3  = 0;
-        extra->model_0.state_2      = 0;
+        g_SysWork.player_4C.extra_128.state_1C          = PlayerState_None;
+        player->model_0.stateStep_3                     = 0;
+        player->model_0.state_2                         = 0;
+        extra->model_0.stateStep_3                      = 0;
+        extra->model_0.state_2                          = 0;
         g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
         g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
     }
 
     player->attackReceived_41 = NO_VALUE;
     player->field_40          = NO_VALUE;
-    g_SysWork.npcIdxs_2354[1]   = NO_VALUE;
-    g_SysWork.npcIdxs_2354[0]   = NO_VALUE;
+    g_SysWork.npcIdxs_2354[1] = NO_VALUE;
+    g_SysWork.npcIdxs_2354[0] = NO_VALUE;
 
 #if !defined(MAP0_S00) && !defined(MAP0_S01)
     func_8003D01C();
@@ -70,12 +70,12 @@ void sharedFunc_800D2244_0_s00(bool arg0)
     g_SysWork.player_4C.chara_0.field_D8.offsetX_4              = Q12(0.0f);
     g_SysWork.player_4C.chara_0.field_D8.offsetZ_2              = Q12(0.0f);
     g_SysWork.player_4C.chara_0.field_D8.offsetX_0              = Q12(0.0f);
-    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(PlayerFlag_Unk2           |
-                                                                    PlayerFlag_Unk13          |
+    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(PlayerFlag_Unk2 |
+                                                                    PlayerFlag_Unk13 |
                                                                     PlayerFlag_DamageReceived |
                                                                     PlayerFlag_Moving);
 
-    player->flags_3E &= ~CharaFlag_Unk4;
+    player->flags_3E  &= ~CharaFlag_Unk4;
     player->field_E1_0 = 3;
 
     Player_AnimFlagsSet(AnimFlag_Unlocked);

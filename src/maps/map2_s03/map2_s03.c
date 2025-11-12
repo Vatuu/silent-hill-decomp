@@ -26,9 +26,9 @@
 
 #include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CC1E8
 
-#include "maps/shared/sharedFunc_800D20E4_0_s00.h" // 0x800CC1F4
+#include "maps/shared/Player_ControlFreeze.h" // 0x800CC1F4
 
-#include "maps/shared/sharedFunc_800D2244_0_s00.h" // 0x800CC354
+#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CC354
 
 s32 func_800CC52C(void) // 0x800CC52C
 {
