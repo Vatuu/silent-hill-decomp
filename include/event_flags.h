@@ -224,12 +224,12 @@ typedef enum _EventFlag
     EventFlag_M3S03_PickupPlateOfHatter = 243,
     EventFlag_M3S03_PickupPlateOfCat    = 244,
 
-    EventFlag_M3S03_PickupBloodPack           = 249,
-    EventFlag_250                             = 250,
-    EventFlag_M3S03_PickupDisinfectingAlcohol = 251,
-    EventFlag_M3S03_PickupLighter             = 252,
-    EventFlag_M3S05_PickupVideoTape           = 253,
-
+    EventFlag_M3S03_PickupBloodPack            = 249,
+    EventFlag_250                              = 250,
+    EventFlag_M3S03_PickupDisinfectingAlcohol  = 251,
+    EventFlag_M3S03_PickupLighter              = 252,
+    EventFlag_M3S05_PickupVideoTape            = 253,
+    EventFlag_254                              = 254,
     EventFlag_M3S03_PickupBasementStoreroomKey = 255,
 
     EventFlag_M3S05_PickupExaminationRoomKey = 257,

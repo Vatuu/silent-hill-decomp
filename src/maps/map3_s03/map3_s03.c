@@ -351,9 +351,108 @@ void func_800D2778(void) // 0x800D2778
     }
 }
 
-INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800CB27C);
+void func_800D27F4(void) // 0x800D27F4
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            func_800862F8(0, FILE_TIM_LISAVTR2_TIM, false);
+            D_800D6BDA = 0;
+            SysWork_StateStepIncrement(0);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D27F4);
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 146, false);
+            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-62.38f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-59.66f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(320.9f);
+
+            Camera_PositionSet(NULL, Q12(-61.03f), Q12(-2.14f), Q12(-62.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-62.93f), Q12(-0.95f), Q12(-58.99f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            SysWork_StateStepIncrement(0);
+
+        case 3:
+            SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
+            break;
+
+        case 4:
+            func_8005DC1C(Sfx_Unk1526, &QVECTOR3(-62.6f, -0.5f, -59.0f), Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
+
+        case 5:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 6:
+            func_800862F8(1, FILE_1ST_2ZANKO80_TIM, false);
+            break;
+
+        case 7:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            break;
+
+        case 8:
+            SysWork_StateStepIncrement(0);
+
+        case 9:
+            Map_MessageWithAudio(27, &D_800D6BDA, &D_800D6B54);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+
+            if (g_SysWork.sysStateStep_C[0] == 9 &&
+                (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.skip_4 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
+            {
+                Sd_EngineCmd(19);
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 10:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            break;
+
+        case 11:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 147, false);
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 12:
+            func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 13:
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            break;
+
+        case 14:
+            func_8005DC1C(Sfx_Unk1526, &QVECTOR3(-62.6f, -0.5f, -59.0f), Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
+
+        case 15:
+            func_80086D04(&g_SysWork.player_4C.chara_0);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_254);
+
+            vcReturnPreAutoCamWork(false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+
+            func_80086470(3, InventoryItemId_VideoTape, 1, false);
+            break;
+    }
+}
 
 void func_800D2C2C(void) // 0x800D2C2C
 {
