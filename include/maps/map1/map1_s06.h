@@ -14,6 +14,10 @@
 
 extern u8 D_800D71E8[];
 
+extern u16 D_800D775C;
+
+extern u8 D_800D7760;
+
 extern u8 D_800D7761;
 
 /** Time. */
