@@ -132,6 +132,7 @@ MAP_MESSAGES                        = 0x800D34CC; // type:u32 size:0x148
 //----------------------------------------------------
 sharedData_800DFB4C_0_s00           = 0x800D37B8;
 sharedData_800DFB50_0_s00           = 0x800D37BC;
+D_800D37C0                          = 0x800D37C0; // size:1
 g_Particle_SpeedX                   = 0x800D37C4; // type:s32
 g_Particle_SpeedZ                   = 0x800D37C8; // type:s32
 sharedData_800DFB6C_0_s00           = 0x800D37CC; // type:s32

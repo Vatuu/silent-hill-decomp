@@ -335,14 +335,12 @@ LD_FILES     := $(addsuffix .ld,$(addprefix $(LINKER_DIR)/,$(TARGET_IN)))
 
 default: build
 
-build: $(TARGET_OUT)
-	$(MAKE) checksum
+build: $(TARGET_OUT) checksum
 
 reset-build:
 	rm -rf $(BUILD_DIR)/src
 	rm -rf $(OUT_DIR)
 	$(MAKE) build $(TARGET_OUT)
-	$(MAKE) checksum
 
 clean-build: reset
 	$(MAKE) generate
@@ -412,7 +410,7 @@ regenerate: reset
 compilation-test:
 	$(COMPTEST)
 
-checksum:
+checksum: $(TARGET_OUT)
 ifeq ($(CHECKSUM),1)
 ifeq ($(SKIP_ASM),0)
 	@sha256sum --ignore-missing --check "$(CONFIG_DIR)/checksum.sha"

@@ -141,9 +141,243 @@ INCLUDE_RODATA("asm/maps/map4_s04/nonmatchings/map4_s04_2", D_800CBB80);
 
 INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04_2", func_800D1910);
 
-INCLUDE_RODATA("asm/maps/map4_s04/nonmatchings/map4_s04_2", D_800CBBC4);
+// TODO: Move rodata into funcs once above is decomped.
+extern s8 D_800CBB78[];
+extern s8 D_800CBB80[];
 
-INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04_2", func_800D23E4);
+void func_800D23E4(void)
+{
+    VECTOR3  lightIntPos;
+    SVECTOR3 unused;
+
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        (g_SysWork.sysStateStep_C[0] > 0) && (g_SysWork.sysStateStep_C[0] < 22))
+    {
+        g_SysWork.sysStateStep_C[0] = 26;
+        g_SysWork.field_28          = 0;
+        g_SysWork.sysStateStep_C[1] = 0;
+        g_SysWork.timer_2C          = 0;
+        g_SysWork.sysStateStep_C[2] = 0;
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            Game_TurnFlashlightOn();
+            D_800D6EF8 = 0;
+
+            Fs_QueueStartRead(FILE_ANIM_HSPTL5_DMS, FS_BUFFER_15);
+            Fs_QueueWaitForEmpty();
+            DmsHeader_FixOffsets(FS_BUFFER_15);
+
+            D_800D6EF4 = 0;
+
+            Chara_Load(0, Chara_Lisa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            func_80088D0C();
+            Chara_Spawn(Chara_Lisa, 0, Q12(60.0f), Q12(140.0f), FP_ANGLE(0.0f), 3);
+
+            func_8003D03C();
+            sharedFunc_800D2EB4_0_s00();
+
+            D_800D6EF8 = 0;
+
+            g_SysWork.field_235C = NULL;
+            g_SysWork.field_236C = NULL;
+            g_SysWork.field_2378 = Q12(1.2f);
+
+            func_8008D438();
+
+            g_SysWork.field_30 = 20;
+            ScreenFade_ResetTimestep();
+
+            D_800D37C1            = 0;
+            g_SysWork.flags_22A4 |= 8;
+            func_8005DC1C(Sfx_Unk1310, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 1:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 11, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 2:
+            func_80085EB8(2, &g_SysWork.npcs_1A0[0], 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            break;
+
+        case 3:
+            func_80085EB8(3, &g_SysWork.npcs_1A0[0], 0, false);
+            SysWork_StateStepIncrement(0);
+
+        case 4:
+            Map_MessageWithAudio(48, &D_800D6EF8, &D_800D3778);
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(6.5f), Q12(0.0f), Q12(20.0f), true, false);
+            break;
+
+        case 5:
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(6.5f), Q12(0.0f), Q12(20.0f), true, true);
+            break;
+
+        case 6:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 12, false);
+            g_SysWork.field_2378 = Q12(1.0f);
+            SysWork_StateStepIncrement(0);
+
+        case 7:
+            Map_MessageWithAudio(49, &D_800D6EF8, &D_800D3778);
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(8.0f), Q12(21.0f), Q12(54.0f), true, false);
+
+            if (D_800D6EF4 >= Q12(32.0f) && D_800D37C1 == 0)
+            {
+                func_80085EB8(0, &g_SysWork.player_4C.chara_0, 134, false);
+                D_800D37C1++;
+            }
+            break;
+
+        case 8:
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(8.0f), Q12(21.0f), Q12(54.0f), true, true);
+
+            if (D_800D6EF4 >= Q12(32.0f) && D_800D37C1 == 0)
+            {
+                func_80085EB8(0, &g_SysWork.player_4C.chara_0, 134, false);
+                D_800D37C1++;
+            }
+            break;
+
+        case 9:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
+            g_SysWork.field_2378 = Q12(1.2f);
+            D_800D6EF4           = Q12(55.0f);
+            SysWork_StateStepIncrement(0);
+
+        case 10:
+            Map_MessageWithAudio(50, &D_800D6EF8, &D_800D3778);
+            break;
+
+        case 11:
+            D_800D6EF4 = Q12(56.0f);
+            SysWork_StateStepIncrement(0);
+
+        case 12:
+            Map_MessageWithAudio(53, &D_800D6EF8, &D_800D3778);
+            break;
+
+        case 13:
+            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            break;
+
+        case 14:
+            Map_MessageWithAudio(59, &D_800D6EF8, &D_800D3778);
+            break;
+
+        case 15:
+            Map_MessageWithAudio(65, &D_800D6EF8, &D_800D3778);
+            break;
+
+        case 16:
+            D_800D6EF4           = Q12(57.0f);
+            g_SysWork.field_2378 = Q12(1.0f);
+            Map_MessageWithAudio(70, &D_800D6EF8, &D_800D3778);
+            break;
+
+        case 17:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 13, false);
+            g_SysWork.field_2378 = Q12(1.2f);
+            SysWork_StateStepIncrement(0);
+
+        case 18:
+            Map_MessageWithAudio(79, &D_800D6EF8, &D_800D3778);
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(10.0f), Q12(58.0f), Q12(126.0f), true, false);
+            break;
+
+        case 19:
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(10.0f), Q12(58.0f), Q12(126.0f), true, true);
+            break;
+
+        case 20:
+            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 53, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 21, false);
+            SysWork_StateStepIncrement(0);
+
+        case 21:
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(10.0f), Q12(127.0f), Q12(151.0f), false, true);
+            break;
+
+        case 22:
+            func_8005DC1C(Sfx_Unk1309, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8_CLAMPED(0.5f), 0);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            SysWork_StateStepIncrement(0);
+
+        case 23:
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(10.0f), Q12(127.0f), Q12(160.0f), false, true);
+            break;
+
+        case 24:
+            func_8005DC1C(Sfx_Unk1310, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
+
+        case 25:
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(10.0f), Q12(127.0f), Q12(200.0f), true, true);
+            break;
+
+        case 26:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            Sd_EngineCmd(19);
+
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+
+            func_8003D01C();
+            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+
+            Savegame_MapMarkingSet(MapMarkFlag_AltHospital1F_RightEntranceBroken);
+            Savegame_EventFlagSet(EventFlag_340);
+
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+
+            func_8008D448();
+            func_8003EBA0();
+
+            g_SysWork.field_2378 = Q12(1.0f);
+            D_800D6EF4           = -1;
+
+            vcReturnPreAutoCamWork(false);
+            func_8003D01C();
+            sharedFunc_800D2EF4_0_s00();
+            break;
+    }
+
+    if (D_800D6EF4 >= 0)
+    {
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, D_800CBB78, D_800D6EF4, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, D_800CBB80, D_800D6EF4, FS_BUFFER_15);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D6ED8, &D_800D6EE8, NULL, D_800D6EF4, FS_BUFFER_15));
+        vcUserCamTarget(&D_800D6ED8, NULL, true);
+        vcUserWatchTarget(&D_800D6EE8, NULL, true);
+
+        // "LIGHT", cutscene light position? (TODO: Rename `g_SysWork.field_2360`?)
+        Dms_CharacterGetPosRot(&g_SysWork.field_2360, &unused, "LIGHT", D_800D6EF4, FS_BUFFER_15);
+
+        // "L_INT", interior light or intersection point?
+        Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800D6EF4, FS_BUFFER_15);
+
+        // Light angle? (TODO: Rename `g_SysWork.field_2370`?)
+        g_SysWork.field_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz));
+        g_SysWork.field_2370.vy = ratan2(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz);
+        g_SysWork.field_2370.vz = FP_ANGLE(0.0f);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04_2", func_800D2D6C);
 

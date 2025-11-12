@@ -18,8 +18,22 @@
 #define MAP_ROOM_MIN_Z Q12(-160.0f)
 #define MAP_ROOM_MAX_Z Q12(160.0f)
 
+extern u16 D_800D3778;
+
+extern u8 D_800D37C1;
+
+extern VECTOR3 D_800D6ED8;
+
+extern VECTOR3 D_800D6EE8;
+
+extern s32 D_800D6EF4;
+
+extern u8 D_800D6EF8;
+
 void func_800D143C(s32 arg0);
 
 void func_800D1470(void);
+
+void func_800D23E4(void);
 
 #endif
