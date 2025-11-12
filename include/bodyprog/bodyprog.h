@@ -2483,8 +2483,6 @@ extern s8* D_800C15B0;
 
 extern s8 D_800C15B4;
 
-extern s32 D_800C15B8;
-
 /** Absolute SFX index. */
 extern s16 D_800C15BC;
 
@@ -2518,18 +2516,11 @@ extern u16 D_800C15F8[];
 /** Voices? */
 extern s16 D_800C1628[];
 
-extern u16 D_800C165A;
-
-extern s16 D_800C167C;
-
 extern s_800C1688 D_800C1688;
 
 extern s_800C1698 D_800C1698;
 
 extern s16 D_800C16A4;
-
-// Command pool related to audio and streaming.
-extern u8 D_800C16A8[32];
 
 extern s32 D_800C16C8; // Type assumed.
 

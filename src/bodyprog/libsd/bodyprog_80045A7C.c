@@ -133,7 +133,7 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
             func_80046AD8();
             break;
 
-        case 21:
+        case 21: // @unused
             Sd_AllVoicesKeyOffVWithRROff();
 
         case 20:
@@ -146,13 +146,13 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
             break;
 
         case 22:
-            D_800C1658.field_14 = 1;
+            D_800C1658.bgmFadeSpeed_14 = 1;
 
         default:
             break;
 
         case 23:
-            D_800C1658.field_14 = 2;
+            D_800C1658.bgmFadeSpeed_14 = 2;
             break;
 
         case 3:
@@ -194,8 +194,8 @@ void Sd_AudioSystemSet(u8 isStereo) // 0x80045D28
 
             CdMix(&vol);
 
-            D_800C1678.volumeSE_4 = 127;
-            g_Sound_IsStereoEnabled = false;
+            D_800C1678.volumeSE_4         = 127;
+            D_800C1658.isStereoEnabled_12 = false;
             return;
 
         case true:
@@ -210,8 +210,8 @@ void Sd_AudioSystemSet(u8 isStereo) // 0x80045D28
             vol.val3 = 0;
             CdMix(&vol);
 
-            D_800C1678.volumeSE_4 = 127;
-            g_Sound_IsStereoEnabled = true;
+            D_800C1678.volumeSE_4         = 127;
+            D_800C1658.isStereoEnabled_12 = true;
             return;
     }
 }
@@ -260,31 +260,31 @@ void sd_work_init(void) // 0x80045E44
         D_800C15F8[D_800C15B8] = 0;
     }
 
-    D_800C1658.field_6            = 0;
-    D_800C1658.field_8[0]         = 0;
-    D_800C1658.field_A            = 0;
-    D_800C1658.field_C            = 0;
-    D_800C1658.field_4            = 0;
-    D_800C1658.field_F.field_0[3] = 0;
-    D_800C1658.timer_0            = 0;
-    D_800C1658.field_14           = 0;
-    D_800C1658.field_15           = 0;
-    D_800C1658.field_16           = 0;
-    D_800C1658.muteGame_17        = 0;
-    D_800C1678.volumeGlobal_A     = 127;
+    D_800C1658.field_6         = 0;
+    D_800C1658.field_8[0]      = 0;
+    D_800C1658.field_A         = 0;
+    D_800C1658.field_C         = 0;
+    D_800C1658.field_4         = 0;
+    D_800C1658.field_13        = 0;
+    D_800C1658.timer_0         = 0;
+    D_800C1658.bgmFadeSpeed_14 = 0;
+    D_800C1658.field_15        = 0;
+    D_800C1658.field_16        = false;
+    D_800C1658.muteGame_17     = 0;
+    D_800C1678.volumeGlobal_A  = 127;
 
     SdSetMVol(127, 127);
 
-    D_800C37DC                  = 0;
-    D_800C1658.field_E          = 0;
-    D_800C1658.field_F.field_01 = 0;
-    D_800C1670.field_0          = 0;
-    D_800C1670.field_1          = 0;
-    D_800C1670.field_2          = 0;
-    D_800C1670.field_3          = 0;
-    D_800C1678.volumeXa_0       = 84;
-    D_800C1678.field_8          = 40;
-    D_800C1678.field_6          = 40;
+    D_800C37DC            = 0;
+    D_800C1658.field_E    = 0;
+    D_800C1658.field_10   = 0;
+    D_800C1670.field_0    = 0;
+    D_800C1670.field_1    = 0;
+    D_800C1670.field_2    = 0;
+    D_800C1670.field_3    = 0;
+    D_800C1678.volumeXa_0 = 84;
+    D_800C1678.field_8    = 40;
+    D_800C1678.field_6    = 40;
 
     Sd_SetVolBgm(40, 40);
 }
@@ -330,13 +330,13 @@ u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol) // 0x80046048
     D_800C1698.field_4 = g_Sfx_Table0[D_800C15BC].field_2 & 0xFF;
     D_800C1698.field_8 = g_Sfx_Table0[D_800C15BC].field_4;
 
-    convertedVol = D_800C167C + g_Sfx_Table0[D_800C15BC].field_5;
+    convertedVol = D_800C1678.volumeSE_4 + g_Sfx_Table0[D_800C15BC].field_5;
     convertedVol = convertedVol - (convertedVol * volCpy) / 255;
 
     WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, convertedVol);
 
     // Apply stereo balance.
-    if (g_Sound_IsStereoEnabled == true)
+    if (D_800C1658.isStereoEnabled_12 == true)
     {
         if (balance < 0)
         {
@@ -413,7 +413,7 @@ void func_800463C0(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x800463C0
     }
 
     g_Sound_ActiveSfxIdx = sfxId - Sfx_Base;
-    D_800C16A4 = D_800C167C + g_Sfx_Table0[g_Sound_ActiveSfxIdx].field_5;
+    D_800C16A4           = D_800C1678.volumeSE_4 + g_Sfx_Table0[g_Sound_ActiveSfxIdx].field_5;
 
     if (sfxId == Sfx_RadioInterferenceLoop)
     {
@@ -454,7 +454,7 @@ void func_800463C0(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x800463C0
     WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, convertedVol);
 
     // Apply stereo balance.
-    if (g_Sound_IsStereoEnabled == true)
+    if (D_800C1658.isStereoEnabled_12 == true)
     {
         if (balance < 0)
         {
@@ -516,14 +516,14 @@ void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x80046620
         D_800C1698.field_A = 0x7F - ABS(pitch * 5) % 127;
     }
 
-    temp                    = D_800C167C + g_Sfx_Table0[D_800C15C2].field_5;
+    temp                    = D_800C1678.volumeSE_4 + g_Sfx_Table0[D_800C15C2].field_5;
     convertedVol            = vol;
     D_800C1698.volumeLeft_C = temp - (temp * convertedVol) / 255;
 
     WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, D_800C1698.volumeLeft_C);
 
     // Apply stereo balance.
-    if (g_Sound_IsStereoEnabled == true)
+    if (D_800C1658.isStereoEnabled_12 == true)
     {
         if (balance < 0)
         {
@@ -594,9 +594,9 @@ void Sd_AllVoicesKeyOffVWithRROff(void) // 0x800469E8
 
 void func_80046A24(u16 cmd) // 0x80046A24
 {
-    if (D_800C1658.field_F.field_01 != cmd && D_800C1658.field_E != cmd)
+    if (D_800C1658.field_10 != cmd && D_800C1658.field_E != cmd)
     {
-        D_800C1658.field_F.field_01 = cmd;
+        D_800C1658.field_10 = cmd;
         func_800478DC(7);
     }
 }
@@ -606,10 +606,10 @@ void func_80046A70(void) // 0x80046A70
 {
     u16 prevVal;
 
-    prevVal                     = D_800C1658.field_F.field_01;
-    D_800C1658.field_14         = 0;
-    D_800C1658.field_F.field_01 = 0;
-    D_800C1658.field_E          = prevVal;
+    prevVal                    = D_800C1658.field_10;
+    D_800C1658.bgmFadeSpeed_14 = 0;
+    D_800C1658.field_10        = 0;
+    D_800C1658.field_E         = prevVal;
 
     SdSeqPlay(0, 1, 0);
 
@@ -649,8 +649,8 @@ void func_80046B78(void) // 0x80046B78
     Sd_SetVolBgm(0, 0);
     SdSeqStop(0);
 
-    D_800C1658.field_14 = 0;
-    D_800C1658.field_E  = 0;
+    D_800C1658.bgmFadeSpeed_14 = 0;
+    D_800C1658.field_E         = 0;
 }
 
 static u8 REVERB_DEPTHS[36] = {
@@ -1950,7 +1950,7 @@ void func_80046E00(void) // 0x80046E00
     switch (D_800C1670.field_1)
     {
         case 0:
-            if (D_800C1658.field_14 == 0)
+            if (D_800C1658.bgmFadeSpeed_14 == 0)
             {
                 D_800C1678.field_6 = 24;
             }
@@ -2062,7 +2062,7 @@ void func_80046E00(void) // 0x80046E00
 
             func_80047A70();
             D_800C1658.timer_0  = 0;
-            D_800C1658.field_16 = 0;
+            D_800C1658.field_16 = false;
             break;
     }
 }
@@ -2133,12 +2133,12 @@ void func_80047308(void) // 0x80047308
 
             D_800C1688.field_0 = D_800AA894[D_800C15D0].field_8 + 0x20;
 
-            D_800C1670.field_3        = 5;
-            D_800C15E8.sector = itob(D_800C15D4 % 75);
-            D_800C15D4       /= 75;
-            D_800C15E8.second = itob(D_800C15D4 % 60);
-            D_800C15D4       /= 60;
-            D_800C15E8.minute = itob(D_800C15D4);
+            D_800C1670.field_3 = 5;
+            D_800C15E8.sector  = itob(D_800C15D4 % 75);
+            D_800C15D4        /= 75;
+            D_800C15E8.second  = itob(D_800C15D4 % 60);
+            D_800C15D4        /= 60;
+            D_800C15E8.minute  = itob(D_800C15D4);
             break;
 
         case 5:
@@ -2167,12 +2167,12 @@ void func_80047308(void) // 0x80047308
 void func_8004760C(void) // 0x8004760C
 {
     func_800478DC(2);
-    D_800C1658.field_16 = 1;
+    D_800C1658.field_16 = true;
 }
 
 void func_80047634(void) // 0x80047634
 {
-    D_800C1658.field_F.field_0[3] = 1;
+    D_800C1658.field_13 = 1;
 
     switch (D_800C1670.field_2)
     {
@@ -2208,11 +2208,11 @@ void func_80047634(void) // 0x80047634
             break;
 
         case 3:
-            D_800C1658.field_F.field_0[3] = 0;
-            D_800C1658.field_4            = 0;
-            D_800C1670.field_2            = 0;
+            D_800C1658.field_13 = 0;
+            D_800C1658.field_4  = 0;
+            D_800C1670.field_2  = 0;
 
-            if (D_800C1658.field_14 == 0)
+            if (D_800C1658.bgmFadeSpeed_14 == 0)
             {
                 D_800C1678.field_6 = 40;
             }

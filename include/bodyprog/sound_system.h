@@ -32,17 +32,20 @@ typedef struct
     s16 field_A;
     s16 field_C;
     u16 field_E;
-    union
-    {
-        s8  field_0[3];
-        u16 field_01;
-    } field_F;
-    u8  field_14;
+    u16 field_10;
+    u8  isStereoEnabled_12; // Boolean.
+    s8  field_13;
+    u8  bgmFadeSpeed_14; /** Value to get rested in order to speed the music fade.
+                          * Range: [0, 2], default: 0.
+                          */
     u8  field_15;
-    u8  field_16;
+    u8  field_16;    // Boolean. XA Streaming related.
+                     // If a voiceline audio is playing this get turn into 0
+                     // otherwise it keeps 1.
+
     u8  muteGame_17; // Boolean. Mutes the game.
 	                 // If the value is 1 the whole game audio will progressively start lowering
-				     // it's volume until it becomes mute. The sounds will still be playing, but muted.
+	                 // it's volume until it becomes mute. The sounds will still be playing, but muted.
 } s_800C1658;
 
 typedef struct
@@ -56,7 +59,7 @@ typedef struct
 // Game current volume configuration struct?
 typedef struct
 {
-    s16 volumeXa_0; // Might be wrong, but it's used in a `Sd_SetVolBXa` call. Could also be event timer? Most values are shared with `field_2`.
+    s16 volumeXa_0; // Could also be event timer? Most values are shared with `field_2`.
     s16 field_2;    // `volumeVoice_2`?
     u16 volumeSE_4;
     s16 field_6;     // Related to the Bgm volume
@@ -66,7 +69,7 @@ typedef struct
 	// As main difference with previous volume controlers, this seems to influenciate the behaviour of the game.
 	// For example: when reducing `globalVolumeXA_E` the current voice line will still play while at the same
 	// volume while the next will be play with the volume stablished here. The other volume controlers doesn't
-	// that and they instantly adjust the audio volume.
+	// do that and they instantly adjust the audio volume.
     u8  globalVolumeSE_C;  // Global SE volume channel
     u8  globalVolumeBGM_D; // Global BGM volume channel
     u8  globalVolumeXA_E;  // Global Voice volume channel (Not configurable)
@@ -76,16 +79,14 @@ typedef struct
 // GLOBALS
 // ========
 
-extern u8 g_Sound_ReverbDepth; // 0x800C1687;
-
-/** `bool` */
-extern u8 g_Sound_IsStereoEnabled; // 0x800C166A
+// Only used in `sd_work_init` as iterator variable.
+extern s32 D_800C15B8;
 
 // Only used in `func_800478DC` as iterator variable.
 extern s32 D_800C15D8;
 
 // Only used in `func_800478DC` as iterator variable.
-extern s32 D_800C15DC; // Index.
+extern s32 D_800C15DC;
 
 // Only used in `func_80047A70` as iterator variable.
 extern s32 D_800C15E0;
@@ -97,6 +98,11 @@ extern s_800C1670 D_800C1670;
 
 extern s_800C1678 D_800C1678;
 
+extern u8 g_Sound_ReverbDepth; // 0x800C1687;
+
+// Command pool related to audio and streaming.
+extern u8 D_800C16A8[32];
+
 // ==========
 // FUNCTIONS
 // ==========
@@ -104,9 +110,9 @@ extern s_800C1678 D_800C1678;
 /** @brief Passes a command to the sound driver.
  * Plays SFX among other things.
  */
-void Sd_EngineCmd(u32 cmd);
+void Sd_EngineCmd(u32 cmd); // 0x80045A7C
 
-u16 func_80045BC8(void);
+u16 func_80045BC8(void); // 0x80045BC8
 
 /** @brief Sets the audio system to stereo or mono. */
 void Sd_AudioSystemSet(u8 isStereo); // 0x80045D28

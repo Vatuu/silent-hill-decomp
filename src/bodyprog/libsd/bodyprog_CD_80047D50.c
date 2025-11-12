@@ -476,7 +476,7 @@ void func_800485D8(void) // 0x800485D8
         D_800C1688.field_4 = VSync(SyncMode_Count) - D_800C1688.field_8;
     }
 
-    if (D_800C1658.field_14 != 0)
+    if (D_800C1658.bgmFadeSpeed_14 != 0)
     {
         D_800C1658.field_E = NO_VALUE;
 
@@ -487,7 +487,7 @@ void func_800485D8(void) // 0x800485D8
         }
         else
         {
-            D_800C1678.field_8 -= D_800C1658.field_14;
+            D_800C1678.field_8 -= D_800C1658.bgmFadeSpeed_14;
 
             if ((D_800C1678.field_8 << 16) <= 0)
             {
@@ -526,7 +526,7 @@ void func_800485D8(void) // 0x800485D8
     {
         if (D_800C37DD == 0)
         {
-            if (D_800C1658.field_16 == 0)
+            if (D_800C1658.field_16 == false)
             {
                 func_800478DC(2);
             }
