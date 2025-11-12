@@ -1,12 +1,12 @@
-# Silent Hill Decompilation Project
-
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/SHDecompLogo.png?raw=true">
   <source media="(prefers-color-scheme: light)" srcset="https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/SHDecompLogo-NTSC.png?raw=true">
   <img alt="SILENT HILL DECOMPILATION PROJECT" src="https://github.com/Vatuu/silent-hill-decomp/blob/master/docs/SHDecompLogo-NTSC.png?raw=true">
 </picture>
-
-An in-progress decompilation of the 1.1 US release of *Silent Hill* on the Playstation 1.
+<div align="center">
+<br/>
+An in-progress decompilation of the 1.1 US release of <i>Silent Hill</i> on the Playstation 1.
+</div>
 
 ## Progress
 Due to the limited memory on the PlayStation 1, games often distribute their logic and functionality across different binary overlays. *Silent Hill* follows this approach by separating core engine code, some screen-related code, and map stage logic code into many distinct binaries. The main executable (`SLUS_007.07` on the 1.1 NTSC release) serves primarily as a memory handler.
