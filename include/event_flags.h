@@ -268,7 +268,17 @@ typedef enum _EventFlag
     EventFlag_312             = 312,
     EventFlag_313             = 313,
 
+    EventFlag_322 = 322,
+
+    EventFlag_324 = 324,
+
+    EventFlag_327                      = 327,
     EventFlag_M4S03_PickupHuntingRifle = 328,
+    EventFlag_329                      = 329,
+
+    EventFlag_332 = 332,
+
+    EventFlag_335 = 335,
 
     EventFlag_338 = 338,
     EventFlag_339 = 339,

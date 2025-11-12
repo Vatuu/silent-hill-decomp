@@ -12,6 +12,11 @@ extern s_AnimInfo TWINFEELER_ANIM_INFOS[];
 extern s32 D_800DB914; // } RNG related values?
 extern s32 D_800DB918; // }
 
+extern u16 D_800DB92C;
+
+extern u16 D_800DB9E0;
+extern u8  D_800DB9E2;
+
 void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 
 void Ai_Twinfeeler_TextureLoad(void);
@@ -41,6 +46,10 @@ void MapEvent_CommonItemTake(void);
 
 void func_800D6704(void);
 
+void func_800D6774(void);
+
 s32 func_800D7394(void);
+
+void func_800D9824(void);
 
 #endif
