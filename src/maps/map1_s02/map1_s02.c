@@ -486,7 +486,88 @@ void func_800DAA00(void) // 0x800DAA00
     MapMsg_DisplayWithTexture(FILE_TIM_SILVER2_TIM, Q12(3.0f), Q12(2.5f), 22);
 }
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DAA2C);
+void MapEvent_GameTrialOver(void) // 0x800DAA2C
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            sharedFunc_800D20E4_0_s00();
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            SysWork_StateStepIncrementAfterFade(0, true, 1, Q12(1.0f), false);
+            func_800862F8(0, FILE_TIM_CONTINUE_TIM, false);
+            SysWork_StateStepIncrement(0);
+
+        case 2:
+            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            break;
+
+        case 3:
+            func_800862F8(1, FILE_1ST_2ZANKO80_TIM, false);
+            break;
+
+        case 4:
+            SysWork_StateStepIncrementAfterFade(0, false, 1, Q12(1.0f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 5:
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            {
+                SysWork_StateStepIncrement(0);
+            }
+
+            SysWork_StateStepIncrementDelayed(Q12(4.0f), false);
+
+            if (g_SysWork.sysStateStep_C[0] == 7)
+            {
+                g_SysWork.sysStateStep_C[0] = 6;
+            }
+            break;
+
+        case 6:
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            break;
+
+        case 7:
+            func_800862F8(7, FILE_TIM_COMING2_TIM, false);
+            break;
+
+        case 8:
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 9:
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            {
+                SysWork_StateStepIncrement(0);
+            }
+
+            SysWork_StateStepIncrementDelayed(Q12(4.0f), false);
+
+            if (g_SysWork.sysStateStep_C[0] == 11)
+            {
+                g_SysWork.sysStateStep_C[0] = 10;
+                break;
+            }
+            break;
+
+        case 10:
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+            break;
+
+        default:
+            sharedFunc_800D2244_0_s00(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Game_WarmBoot();
+            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+            break;
+    }
+}
 
 extern s16 D_800E1FD0;
 

@@ -52,6 +52,9 @@ void func_800DA9D4(void);
 
 void func_800DAA00(void);
 
+/** @brief Game demo/trial end event, shows "coming soon" image. */
+void MapEvent_GameTrialOver(void);
+
 void func_800DAD2C(void);
 
 void func_800DB058(void);

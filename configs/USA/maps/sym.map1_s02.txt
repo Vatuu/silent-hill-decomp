@@ -98,6 +98,7 @@ MapEvent_DoorJammed       = 0x800DA020; // type:func
 MapEvent_DoorLocked       = 0x800DA0B4; // type:func
 MapEvent_DoorUnlocked     = 0x800DA16C; // type:func
 MapEvent_LobbyKeyUse      = 0x800DA2E4; // type:func
+MapEvent_GameTrialOver    = 0x800DAA2C; // type:func
 
 
 
