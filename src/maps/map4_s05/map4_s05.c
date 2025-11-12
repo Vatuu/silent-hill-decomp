@@ -279,7 +279,94 @@ INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800CABE4);
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D61AC);
 
-INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D6800);
+void func_800D6800(void) // 0x800D6800
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            g_SysWork.field_30 = 20;
+
+            MAP_POINTS[14].positionX_0 = g_SysWork.player_4C.chara_0.position_18.vx;
+            MAP_POINTS[14].positionZ_8 = g_SysWork.player_4C.chara_0.position_18.vz;
+            // TODO: Likely wrong union field.
+            MAP_POINTS[14].data.spawnInfo.flags_6 = ((u32)func_8005BF38(g_SysWork.player_4C.chara_0.rotation_24.vy) + Q12(1.0f)) >> 4;
+
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 52, false);
+
+            Camera_PositionSet(NULL, Q12(-118.22f), Q12(1.46f), Q12(105.67f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-119.97f), Q12(-1.4f), Q12(107.85f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            func_8005E70C();
+
+            D_800D7D80 = Q12(0.0f);
+            D_800D7D82 = 0;
+
+            SysWork_StateStepIncrement(0);
+
+        case 3:
+            func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
+            SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
+
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-120.0f);
+            g_SysWork.player_4C.chara_0.position_18.vy = Q12(2.0f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(104.0f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = 0;
+
+            g_SysWork.npcs_1A0[0].position_18.vx = Q12(-120.0f);
+            g_SysWork.npcs_1A0[0].position_18.vy = Q12(2.0f);
+            g_SysWork.npcs_1A0[0].position_18.vz = Q12(108.0f);
+            g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(180.0f);
+            break;
+
+        case 4:
+            Savegame_EventFlagSet(EventFlag_351);
+            SysWork_StateStepIncrementAfterFade(0, true, 1, Q12(0.2f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 5:
+            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            break;
+
+        case 6:
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 7:
+            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            break;
+
+        default:
+            func_80085EB8(3, &g_SysWork.player_4C.chara_0, 0, false);
+
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            Savegame_EventFlagSet(EventFlag_352);
+            break;
+    }
+
+    if (D_800D7D80 == 0)
+    {
+        Sd_EngineCmd(Sfx_Unk1522);
+        D_800D7D82++;
+    }
+
+    D_800D7D80 = MIN(D_800D7D80 + ((g_DeltaTime0 * 2) / 3), Q12(1.0f));
+    func_800463C0(Sfx_Unk1522, 0, -(D_800D7D80 >> 4) & 0xFF, 0);
+
+    if (D_800D7D80 == Q12(1.0f) && D_800D7D82 >= 0 && D_800D7D82 < 3)
+    {
+        D_800D7D80 = 0;
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800CAC40);
 

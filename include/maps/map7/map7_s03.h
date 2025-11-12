@@ -41,6 +41,8 @@
 extern s32 D_800ED73C; // } RNG related values?
 extern s32 D_800ED740; // }
 
+extern u16 D_800ED88C;
+
 extern s32 D_800EDA00;
 
 extern s16 D_800F23D0;
@@ -52,7 +54,17 @@ extern s32 D_800F2434;
 
 extern s32 D_800F3D8C;
 
+extern u8 D_800F3E58; // Unknown type, pointer passed to func_800DB154
+
+extern s32 D_800F47F0;
+
+extern u8 D_800F4804;
+
 extern u8 D_800F4805;
+
+extern s8 D_800F4806;
+
+extern s8 D_800F4809;
 
 extern s32 D_800F4820;
 
@@ -139,6 +151,8 @@ s32 func_800E28F4(void);
 void func_800E3B6C(void);
 
 void func_800E3D18(void);
+
+void func_800E70F0(void);
 
 void func_800E941C(void);
 

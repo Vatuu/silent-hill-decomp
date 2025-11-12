@@ -20,6 +20,8 @@ void MapEvent_CommonItemTake(void);
 /** @brief Handles the Sewer Key item pickup event. */
 void MapEvent_SewerKeyTake(void);
 
+void func_800D732C(void);
+
 /** @brief Handles the ? map pickup event. */
 void MapEvent_MapTake(void);
 

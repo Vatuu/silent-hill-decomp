@@ -574,7 +574,63 @@ INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04_2", D_800CC4DC);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E219C);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E2724);
+void func_800E2724(void) // 0x800E2724
+{
+    s32 curStateStep;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            ScreenFade_ResetTimestep();
+            g_SysWork.flags_22A4 |= 1 << 4;
+
+            func_800E1CA0();
+            func_8007E860();
+            Fs_QueueStartRead(FILE_ANIM_HBM6_S4B_ANM, FS_BUFFER_4);
+
+            D_800A9938 = 0x38630;
+
+            func_800348C0();
+
+            Chara_Load(0, Chara_MonsterCybil, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_ProcessLoads();
+            Chara_Spawn(Chara_MonsterCybil, 0, Q12(26.5f), Q12(108.5f), FP_ANGLE(11.3f), 3);
+
+            Camera_PositionSet(NULL, Q12(25.27f), Q12(-2.4f), Q12(98.43f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(23.78f), Q12(-1.04f), Q12(101.88f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(25.0f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(100.0f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(337.5f);
+
+            g_SysWork.npcs_1A0[0].position_18.vx = Q12(24.0f);
+            g_SysWork.npcs_1A0[0].position_18.vz = Q12(102.0f);
+            g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(157.5f);
+
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 1:
+            curStateStep = g_SysWork.sysStateStep_C[0];
+
+            // TODO: `Chara_MonsterCybil` properties
+            g_SysWork.npcs_1A0[0].properties_E4.player.afkTimer_E8                      = 0;
+            g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[1].val16[0] = curStateStep;
+            g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[1].val16[1] = curStateStep;
+            func_800D8A90(&g_SysWork.npcs_1A0[0]);
+
+            Savegame_EventFlagSet(EventFlag_467);
+
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            vcReturnPreAutoCamWork(true);
+            func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], 1);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E2950);
 

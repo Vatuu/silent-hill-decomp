@@ -1068,7 +1068,72 @@ INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03_2", D_800CC348);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E62CC);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E70F0);
+void func_800E70F0(void) // 0x800E70F0
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Fs_QueueWaitForEmpty();
+            DmsHeader_FixOffsets((s_DmsHeader*)0x80180600); // TODO: Make FS_BUFFER?
+
+            D_800F4806 = 1;
+            D_800F47F0 = Q12(0.0f);
+            D_800F4804 = 0;
+
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_800E1788(4);
+
+            Model_AnimFlagsSet(&g_SysWork.npcs_1A0[1].model_0, 2);
+            g_SysWork.field_2378 = Q12(0.8f);
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            Map_MessageWithAudio(74, &D_800F4804, &D_800ED88C);
+            break;
+
+        case 2:
+            Map_MessageWithAudio(76, &D_800F4804, &D_800ED88C);
+            D_800F47F0 = Q12(1.0f);
+            break;
+
+        case 3:
+            Map_MessageWithAudio(78, &D_800F4804, &D_800ED88C);
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(2.0f), Q12(33.0f), true, false);
+            break;
+
+        case 4:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[1], 17, false);
+            Map_MessageWithAudio(80, &D_800F4804, &D_800ED88C);
+            func_800E1788(5);
+            func_800DAD54();
+            func_800DB288();
+            SysWork_StateStepIncrement(0);
+
+        case 5:
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(2.0f), Q12(41.0f), true, true);
+            break;
+
+        case 6:
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(42.0f), Q12(68.0f), true, true);
+            break;
+
+        case 7:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        default:
+            g_SysWork.sysStateStep_C[0] = 0;
+            D_800F4805++;
+            func_800E9490(&g_SysWork.npcs_1A0[1]);
+            D_800F4809 = 0;
+            break;
+    }
+
+    if (g_SysWork.sysStateStep_C[0] >= 5 && g_SysWork.sysStateStep_C[0] < 8)
+    {
+        func_800DB154(&D_800F3E58);
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03_2", D_800CC5C8);
 

@@ -76,7 +76,6 @@ extern s8 D_800CC4DC;
 extern u16 D_800EBA34[23]; // `g_MapMsgSounds`
 extern s16 D_800ED5B4;
 extern s8 D_800ED5B8;
-extern s32 D_800A9938;
 extern s8 D_800CC4C4;
 extern s8 D_800CC4CC;
 extern s8 D_800CC4D4;
@@ -117,6 +116,8 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, s32);
 void func_800E1CA0(void);
 
 void func_800E1D50(void);
+
+void func_800E2724(void);
 
 void MapEvent_CutsceneCybilDeath(void);
 

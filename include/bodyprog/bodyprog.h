@@ -2125,6 +2125,8 @@ extern u16 g_UnknownEngineCmdTable2[];
  */
 extern s_800A992C D_800A992C[];
 
+extern s32 D_800A9938;
+
 extern u8 D_800A9944[];
 
 /** Player anim info? */

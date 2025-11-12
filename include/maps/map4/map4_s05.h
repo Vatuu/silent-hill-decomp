@@ -15,6 +15,10 @@ extern q3_12 D_800D785C;
 
 extern s_AnimInfo FLOATSTINGER_ANIM_INFOS[];
 
+extern s16 D_800D7D80;
+
+extern u8 D_800D7D82;
+
 extern s16 D_800DB898;
 
 extern s16 D_800DB89C;
@@ -30,5 +34,7 @@ void func_800D1B98(s_SubCharacter*);
 void func_800D35F0(s_SubCharacter*);
 void func_800D37E8(s_SubCharacter*, s_AnmHeader*);
 void func_800D3AD4(s_SubCharacter*);
+
+void func_800D6800(void);
 
 #endif
