@@ -309,7 +309,66 @@ void func_800D5934(void) // 0x800D5934
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D59D4);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D5A98);
+void func_800D5A98(void) // 0x800D5A98
+{
+    g_BackgroundColor = 0x50;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            func_800862F8(0, FILE_TIM_IVIES_TIM, false);
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+
+        case 3:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 4:
+            func_800862F8(1, FILE_1ST_2ZANKO80_TIM, false);
+            break;
+
+        case 5:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            break;
+
+        case 6:
+            Sd_EngineCmd(Sfx_Base);
+            SysWork_StateStepIncrement(0);
+
+        case 7:
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            MapMsg_DisplayAndHandleSelection(false, 22, 0, 0, 0, false);
+            break;
+
+        case 8:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            break;
+
+        case 9:
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 10:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB35C);
 
@@ -821,7 +880,7 @@ void func_800D87AC(void) // 0x800D87AC
 
         for (i = 0; i < ARRAY_SIZE(g_WorldObject1); i++)
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject1[i].object_0, &g_WorldObject1[i].position_1C, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&g_WorldObject1[i].object_0, &g_WorldObject1[i].position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 

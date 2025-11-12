@@ -803,7 +803,7 @@ void func_800D6578(void) // 0x800D6578
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
-        g_WorldGfx_ObjectAdd(&D_800DAF84.object_0, &D_800DAF84.position_1C.position_0, &(SVECTOR3){});
+        g_WorldGfx_ObjectAdd(&D_800DAF84.object_0, &D_800DAF84.position_1C.position_0, &(SVECTOR3){ 0, 0, 0 });
 
         if (!Savegame_EventFlagGet(EventFlag_M1S06_PickupKGordonKey))
         {

@@ -511,7 +511,7 @@ void func_800D2E54(void) // 0x800D2E54
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S01_PickupPlasticBottle))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 
@@ -590,16 +590,16 @@ void func_800D2E54(void) // 0x800D2E54
 
         for (i = 0; i < ARRAY_SIZE(g_WorldObject0); i++)
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject0[i].object_0, &g_WorldObject0[i].position_1C, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&g_WorldObject0[i].object_0, &g_WorldObject0[i].position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
 
         if (Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_OperatingPrepRoomArrow) && Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_CorridorMidArrows))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject3[1].object_0, &g_WorldObject3[1].position_1C, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&g_WorldObject3[1].object_0, &g_WorldObject3[1].position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
         else
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject3[0].object_0, &g_WorldObject3[0].position_1C, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&g_WorldObject3[0].object_0, &g_WorldObject3[0].position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 

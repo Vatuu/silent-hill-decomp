@@ -1210,13 +1210,13 @@ void func_800D9514(void) // 0x800D9514
         {
             if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupGoldMedallion))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObject6, &D_800DF080, &(SVECTOR3){});
+                g_WorldGfx_ObjectAdd(&g_WorldObject6, &D_800DF080, &(SVECTOR3){ 0, 0, 0 });
             } 
-            g_WorldGfx_ObjectAdd(&g_WorldObject5, &D_800DF080, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&g_WorldObject5, &D_800DF080, &(SVECTOR3){ 0, 0, 0 });
         }
         else
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject4, &D_800DF080, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&g_WorldObject4, &D_800DF080, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 
@@ -1224,7 +1224,7 @@ void func_800D9514(void) // 0x800D9514
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupChemical))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C.position_0, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C.position_0, &(SVECTOR3){ 0, 0, 0 });
         }       
     }
 
@@ -1237,11 +1237,11 @@ void func_800D9514(void) // 0x800D9514
     {
         if (Savegame_EventFlagGet(EventFlag_71))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position_1C.position_0, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position_1C.position_0, &(SVECTOR3){ 0, 0, 0 });
         }
         else
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C.position_0, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C.position_0, &(SVECTOR3){ 0, 0, 0 });
         }
 
         if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupSilverMedallion))
@@ -1389,7 +1389,7 @@ void func_800D9EC4(void) // 0x800D9EC4
     }
     else if (!Savegame_EventFlagGet(EventFlag_77))
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C.position_0, &(SVECTOR3){});
+        g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C.position_0, &(SVECTOR3){ 0, 0, 0 });
     }
     else
     {

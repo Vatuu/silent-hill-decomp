@@ -916,15 +916,15 @@ void func_800D4BA4(void) // 0x800D4BA4
             func_8006982C(2);
         }
 
-        g_WorldGfx_ObjectAdd(&WorldObject_D_800D7FF0.object_0, &WorldObject_D_800D7FF0.position_1C, &(SVECTOR3){});
+        g_WorldGfx_ObjectAdd(&WorldObject_D_800D7FF0.object_0, &WorldObject_D_800D7FF0.position_1C, &(SVECTOR3){ 0, 0, 0 });
         g_WorldGfx_ObjectAdd(&WorldObject_D_800D8050.object_0, &WorldObject_D_800D8070.position_0, &WorldObject_D_800D8070.rotation_C);
 
         if (Savegame_EventFlagGet(EventFlag_313))
         {
-            g_WorldGfx_ObjectAdd(&WorldObject_D_800D80B0.object_0, &WorldObject_D_800D80B0.position_1C.position_0, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&WorldObject_D_800D80B0.object_0, &WorldObject_D_800D80B0.position_1C.position_0, &(SVECTOR3){ 0, 0, 0 });
         }
 
-        g_WorldGfx_ObjectAdd(&WorldObject_D_800D80E0[D_800D8018].object_0, &WorldObject_D_800D80E0[D_800D8018].position_1C, &(SVECTOR3){});
+        g_WorldGfx_ObjectAdd(&WorldObject_D_800D80E0[D_800D8018].object_0, &WorldObject_D_800D80E0[D_800D8018].position_1C, &(SVECTOR3){ 0, 0, 0 });
     }
     else
     {
@@ -935,7 +935,7 @@ void func_800D4BA4(void) // 0x800D4BA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S01_PickupAxe))
         {
-            g_WorldGfx_ObjectAdd(&WorldObject_D_800D8020.object_0, &WorldObject_D_800D8020.position_1C.position_0, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&WorldObject_D_800D8020.object_0, &WorldObject_D_800D8020.position_1C.position_0, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 
