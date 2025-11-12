@@ -95,6 +95,8 @@ void MapEvent_CutsceneExitCafe(void);
 
 void MapEvent_CherylsSketchbook(void);
 
+void func_800E9470(void);
+
 void MapEvent_DoghouseNote(void);
 
 void MapEvent_DoghouseKeyTake(void);
