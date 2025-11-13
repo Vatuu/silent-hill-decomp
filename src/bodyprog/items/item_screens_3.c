@@ -1070,12 +1070,6 @@ void func_8004FB0C(void) // 0x8004FB0C
     GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_F4);
 }
 
-// TODO: RODATA migration.
-//
-// Function isn't fully matching.
-// `new_var  -= SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx` is mismatched
-// Scratch: https://decomp.me/scratch/pGIn2
-#ifdef NON_MATCHING
 /** Draws many 2D menu elements.
  * The background behind the text in the upper
  * and lower part of the inventory screen, the
@@ -1084,9 +1078,6 @@ void func_8004FB0C(void) // 0x8004FB0C
  */
 void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
 {
-    s16       ot0_7;
-    s16       temp_a2_2;
-    s16       temp_t2_3;
     s32       temp_t3;
     s32       temp_v1;
     s32       k;
@@ -1095,11 +1086,9 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
     s32       var_t5;
     s32       var_t6;
     s32       new_var;
-    s32       new_var3;
     s32       spA0;
     GsOT*     ot0;
     GsOT*     ot1;
-    GsOT*     new_var2;
     POLY_G4*  poly_g4;
     POLY_FT4* poly_ft4;
     LINE_G2*  line_g2;
@@ -1332,32 +1321,25 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
     }
     
     temp_t3   = (Math_Cos(g_Gfx_Inventory_SelectionBordersDraw << 7) * Math_Cos(g_Gfx_Inventory_SelectionBordersDraw << 7) * 0x10) >> 0x10;
-    new_var   = SelectionOuline_InnerLine[*arg0].field_0.vx;
-    new_var  -= SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx;
-    temp_a2_2 = SelectionOuline_InnerLine[*arg0].field_0.vx + FP_FROM((new_var) * temp_t3, Q12_SHIFT);
 
-    D_800C3B68[0][0].vx = temp_a2_2;
-
-    temp_t2_3 = SelectionOuline_InnerLine[*arg0].field_0.vy + 
-                FP_FROM((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vy - SelectionOuline_InnerLine[*arg0].field_0.vy) * temp_t3, Q12_SHIFT);
-
-    D_800C3B68[0][1].vx = temp_a2_2;
-    D_800C3B68[0][0].vy = temp_t2_3;
+    D_800C3B68[0][0].vx = SelectionOuline_InnerLine[*arg0].field_0.vx + 
+    FP_FROM((new_var = SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx - SelectionOuline_InnerLine[*arg0].field_0.vx) * temp_t3, Q12_SHIFT);
     
-    temp_a2_2 = SelectionOuline_InnerLine[*arg0].field_0.vy + SelectionOuline_InnerLine[*arg0].field_4.vy + 
-                FP_FROM(((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vy + SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_4.vy) - 
-                (SelectionOuline_InnerLine[*arg0].field_0.vy + SelectionOuline_InnerLine[*arg0].field_4.vy)) * temp_t3, Q12_SHIFT);
+    D_800C3B68[0][0].vy = SelectionOuline_InnerLine[*arg0].field_0.vy + 
+        FP_FROM((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vy - SelectionOuline_InnerLine[*arg0].field_0.vy) * temp_t3, Q12_SHIFT);
+    
+    D_800C3B68[0][1].vx = D_800C3B68[0][0].vx;
+    
+    D_800C3B68[0][1].vy = SelectionOuline_InnerLine[*arg0].field_0.vy + SelectionOuline_InnerLine[*arg0].field_4.vy + 
+        FP_FROM(((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vy + SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_4.vy) - 
+        (SelectionOuline_InnerLine[*arg0].field_0.vy + SelectionOuline_InnerLine[*arg0].field_4.vy)) * temp_t3, Q12_SHIFT);
 
-    D_800C3B68[0][1].vy = temp_a2_2;
-
-    ot0_7 = SelectionOuline_InnerLine[*arg0].field_0.vx + SelectionOuline_InnerLine[*arg0].field_4.vx + 
-            FP_FROM(((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx + SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_4.vx) - 
-            (SelectionOuline_InnerLine[*arg0].field_0.vx + SelectionOuline_InnerLine[*arg0].field_4.vx)) * temp_t3, Q12_SHIFT);
-
-    D_800C3B68[0][2].vy = temp_a2_2;
-    D_800C3B68[0][3].vy = temp_t2_3;
-    D_800C3B68[0][2].vx = ot0_7;
-    D_800C3B68[0][3].vx = ot0_7;
+    D_800C3B68[0][2].vx = SelectionOuline_InnerLine[*arg0].field_0.vx + SelectionOuline_InnerLine[*arg0].field_4.vx + 
+        FP_FROM(((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx + SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_4.vx) - 
+        (SelectionOuline_InnerLine[*arg0].field_0.vx + SelectionOuline_InnerLine[*arg0].field_4.vx)) * temp_t3, Q12_SHIFT);
+    D_800C3B68[0][3].vx = D_800C3B68[0][2].vx;
+    D_800C3B68[0][2].vy = D_800C3B68[0][1].vy;
+    D_800C3B68[0][3].vy = D_800C3B68[0][0].vy;
 
     if (*arg0 == 8 || g_GameWork.gameStateStep_598[1] == 0xF)
     {
@@ -1469,8 +1451,11 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
 
             setRGB0(line_g2, 0x60 - (0x20 * j), 0x60 - (0x20 * j), 0xFF);
             setRGB1(line_g2, 0x60 - (0x20 * j), 0x60 - (0x20 * j), 0xFF);
+
+            new_var = (u16)D_800C3B68[j][i].vx;
+
             setXY2(line_g2,
-                   D_800C3B68[j][i].vx, D_800C3B68[j][i].vy,
+                   new_var, D_800C3B68[j][i].vy,
                    D_800C3B68[j][(i + 1) & 0x3].vx, D_800C3B68[j][(i + 1) & 0x3].vy);
 
             addPrim(&ot0->org[7], line_g2);
@@ -1518,8 +1503,8 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         {
             setXY2(line_g2, SelectionOuline_ConerLines[*arg0].field_0.vx,
                    (i == 1) ? (SelectionOuline_ConerLines[*arg0].field_0.vy - 1) : SelectionOuline_ConerLines[*arg0].field_0.vy,
-                   (i != 2) ? (SelectionOuline_ConerLines[*arg0].field_0.vx + (SelectionOuline_InnerLine[*arg0].field_0.vx >> 1)) : SelectionOuline_ConerLines[*arg0].field_0.vx,
-                   (i == 2) ? (SelectionOuline_ConerLines[*arg0].field_0.vy + (SelectionOuline_InnerLine[*arg0].field_0.vy >> 1)) : 
+                   (i != 2) ? (SelectionOuline_ConerLines[*arg0].field_0.vx + (SelectionOuline_InnerLine[*arg0].field_4.vx >> 1)) : SelectionOuline_ConerLines[*arg0].field_0.vx,
+                   (i == 2) ? (SelectionOuline_ConerLines[*arg0].field_0.vy + (SelectionOuline_InnerLine[*arg0].field_4.vy >> 1)) : 
                    (i == 1) ? (SelectionOuline_ConerLines[*arg0].field_0.vy - 1) : SelectionOuline_ConerLines[*arg0].field_0.vy);
         }
 
@@ -1527,13 +1512,6 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         GsOUT_PACKET_P = (PACKET*)line_g2 + sizeof(LINE_G2);
     }  
 }
-#else
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/items/item_screens_3", D_80027E54);
-
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/items/item_screens_3", D_80027E9C);
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", Gfx_Inventory_2dBackgroundDraw); // 0x8004FBCC
-#endif
 
 static inline s16 GetUvOrRandom(void)
 {
