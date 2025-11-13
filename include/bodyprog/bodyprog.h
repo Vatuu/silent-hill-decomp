@@ -1482,17 +1482,25 @@ typedef struct
 
 typedef struct
 {
-    u8  unk_0[48];
-    u8  field_30[4];
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+    s16 field_10[4];
+    VECTOR vec_18;
+    s16 field_28[4];
+    u8 field_30[4];
     s16 field_34[4];
-    u8  unk_3C[24];
-    s16 field_54[4]; // Might be different size, max count in `field_78`.
+    s16 field_3C[4];
+    s16 field_44[4];
+    s16 field_4C[4];
+    s16 field_54[4];
     u16 field_5C[4];
     u16 field_64[4];
-    u8  unk_6C[8];
+    s16 field_6c[4];
     s16 field_74;
     s16 unk_76;
-    u8  field_78;
+    u8 field_78;
 } s_MapOverlayHeader_94;
 
 /** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 

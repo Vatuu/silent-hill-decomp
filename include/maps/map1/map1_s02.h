@@ -23,6 +23,27 @@
 #define MAP_ROOM_MIN_Z Q12(-80.0f)
 #define MAP_ROOM_MAX_Z Q12(200.0f)
 
+extern s_WorldObjectDescNoRot       g_WorldObject0;               // D_800E58C8
+extern s_WorldObjectDesc            g_WorldObject1;               // D_800E57D8
+extern s_WorldObjectDesc            g_WorldObject2;               // D_800E5A68
+extern s_WorldObjectDesc            g_WorldObject3;               // D_800E5948
+extern s_WorldObjectDesc            g_WorldObject4;               // D_800E5808
+extern s_WorldObjectDesc            g_WorldObject5;               // D_800E5838
+extern s_WorldObjectDesc            g_WorldObject6;               // D_800E5868
+extern s_WorldObjectDesc            g_WorldObject7;               // D_800E5898
+extern s_WorldObjectDesc            g_WorldObject8;               // D_800E59A8
+extern s_WorldObjectDesc            g_WorldObject9;               // D_800E59D8
+extern s_WorldObjectDesc            g_WorldObjectA;               // D_800E5A08
+extern s_WorldObjectDesc            g_WorldObjectB;               // D_800E5A38
+extern s_WorldObject_0              g_WorldObjectC;               // D_800E58F8
+extern s_WorldObjectDescNoRot       g_WorldObjectD;               // D_800E5978
+extern s_WorldObject_0              g_CommonWorldObjects[6];      // D_800E5AA8
+extern s_WorldObjectPose            g_CommonWorldObjectPoses[11]; // D_800E1EEC
+extern VECTOR3 g_ObjPosC[2]; // 800E5918
+extern SVECTOR g_ObjRotC[2]; // 800E5938
+extern s8 D_800E5A98;
+extern s8 D_800E5A99;
+
 extern u16 D_800E1EDC;
 
 extern u8 D_800E1EE2;
@@ -37,9 +58,9 @@ extern u8 D_800E1FD8;
 
 extern q3_12 D_800E1FE4;
 
-extern s_WorldObjectDesc D_800E57D8;      // "DOOR_HID", TODO: `g_WorldObject_Door`
+//extern s_WorldObjectDesc D_800E57D8;      // "DOOR_HID", TODO: `g_WorldObject_Door`
 
-extern s_WorldObjectDescNoRot D_800E58C8; // "BOX_HIDE", TODO: `g_WorldObject_Box`
+//extern s_WorldObjectDescNoRot D_800E58C8; // "BOX_HIDE", TODO: `g_WorldObject_Box`
 
 /** @brief Lobby key use event. */
 void MapEvent_LobbyKeyUse(void);
@@ -78,5 +99,7 @@ void func_800DD208(void);
 void func_800DD420(void);
 
 void func_800DEC88(void);
+
+void func_800DD494(void);
 
 #endif

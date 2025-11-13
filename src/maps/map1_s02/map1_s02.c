@@ -993,10 +993,10 @@ void func_800DBB7C(void) // 0x800DBB7C
                 SysWork_StateStepIncrement(0);
             }
 
-            D_800E57D8.position_1C.rotation_C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, angleAdd, Q12_SHIFT);
-            if (D_800E57D8.position_1C.rotation_C.vy < FP_ANGLE(-112.5f))
+            g_WorldObject1.position_1C.rotation_C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, angleAdd, Q12_SHIFT);
+            if (g_WorldObject1.position_1C.rotation_C.vy < FP_ANGLE(-112.5f))
             {
-                D_800E57D8.position_1C.rotation_C.vy = FP_ANGLE(-112.5f);
+                g_WorldObject1.position_1C.rotation_C.vy = FP_ANGLE(-112.5f);
             }
 
             break;
@@ -1137,14 +1137,14 @@ void func_800DCF00(void) // 0x800DCF00
             Sd_EngineCmd(Sfx_Unk1451);
         }
 
-        func_8005DE0C(Sfx_Unk1451, &D_800E58C8.position_1C, (D_800E1FE4 + Q12(0.1f)) >> 4, Q12(32.0f), 0);
+        func_8005DE0C(Sfx_Unk1451, &g_WorldObject0.position_1C, (D_800E1FE4 + Q12(0.1f)) >> 4, Q12(32.0f), 0);
 
         var_t0     = D_800E1FE4 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
         var_t0     = MIN(var_t0, Q12(0.4f));
         D_800E1FE4 = var_t0;
 
         g_SysWork.player_4C.chara_0.position_18.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E1FE4, Q12_SHIFT);
-        D_800E58C8.position_1C.vy                  += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E1FE4, Q12_SHIFT);
+        g_WorldObject0.position_1C.vy                  += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E1FE4, Q12_SHIFT);
     }
 }
 
@@ -1212,7 +1212,121 @@ void func_800DD420(void) // 0x800DD420
     SysWork_StateSetNext(SysState_Gameplay);
 }
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DD494);
+void func_800DD494(void)
+{
+    s32 idx;
+
+    WorldObject_ModelNameSet(&g_WorldObjectC, "FAN_HIDE");
+    
+    Math_Vector3Set(&g_ObjPosC[0], Q12(100.0f), Q12(-1.6f), Q12(142.9f));
+    Math_SetSVectorFast(&g_ObjRotC[0], 0, 0, 0);
+    Math_Vector3Set(&g_ObjPosC[1], Q12(100.0f), Q12(-1.6f), Q12(145.25f));
+    Math_SetSVectorFast(&g_ObjRotC[1], 0, 0, 0);
+    Math_Vector3Set(&g_ObjPosC[1], Q12(100.0f), Q12(-1.6f), Q12(145.25f)); // Set again ?
+
+    WorldObjectPoseInit(&g_WorldObject1.position_1C, 18.37f, -0.8f, 59.51f, 0.0f, 0.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject1.object_0, "DOOR_HID");
+
+    WorldObjectPoseInit(&g_WorldObject3.position_1C, 17.8643f, -0.04f, 59.5135f, 0.0f, -215.3f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject3.object_0, "GUN_HIDE");
+
+    WorldObjectPoseInit(&g_WorldObject4.position_1C, 60.5f, -1.04f, -61.0f, 0.0f, 0.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject4.object_0, "RING1_HI");
+
+    WorldObjectPoseInit(&g_WorldObject5.position_1C, 60.5f, -1.04f, -59.0f, 0.0f, 0.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject5.object_0, "RING2_HI");
+
+    WorldObjectPoseInit(&g_WorldObject6.position_1C, 58.4f, 0.0f, -60.4f, 0.0f, 0.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject6.object_0, "DOOR2_HI");
+
+    WorldObjectPoseInit(&g_WorldObject7.position_1C, 58.4f, 0.0f, -59.6f, 0.0f, 0.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject7.object_0, "DOOR1_HI");
+
+    Math_Vector3Set(&g_WorldObject0.position_1C, Q12(54.47f), Q12(0.0f), Q12(-60.0f));
+    WorldObject_ModelNameSet(&g_WorldObject0.object_0, "BOX_HIDE");
+
+    WorldObjectPoseInit(&g_WorldObject8.position_1C, 139.199f, -0.8753f, 99.3733f, 0.0f, 46.2f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject8.object_0, "KEY_HIDE");
+
+    WorldObjectPoseInit(&g_WorldObject9.position_1C, 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject9.object_0, "PHONE3_H");
+
+    WorldObjectPoseInit(&g_WorldObjectA.position_1C, 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObjectA.object_0, "PHONE2_H");
+
+    WorldObjectPoseInit(&g_WorldObject2.position_1C, -16.51f, -0.11f, -51.54f, 0.0f, -19.3f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObject2.object_0, "KEY_HIDE");
+
+    Math_Vector3Set(&g_WorldObjectD.position_1C, Q12(100.124f), Q12(-1.08f), Q12(101.166f));
+    WorldObject_ModelNameSet(&g_WorldObjectD.object_0, "BOLL_HID");
+
+    WorldObjectPoseInit(&g_WorldObjectB.position_1C, 60.14f, -0.902f, 141.763f, 0.0f, 92.4f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObjectB.object_0, D_800A99E4.savePadName_4);
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    {
+        func_80088FF4(Chara_GreyChild, 1, 0);
+        func_80088FF4(Chara_GreyChild, 3, 0);
+        func_80088FF4(Chara_GreyChild, 8, 0);
+        func_80088FF4(Chara_Creaper, 1, 0);
+    }
+    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    {
+        func_80088FF4(Chara_GreyChild, 11, 11);
+        func_80088FF4(Chara_GreyChild, 13, 11);
+        func_80088FF4(Chara_GreyChild, 14, 3);
+        func_80088FF4(Chara_GreyChild, 15, 3);
+        func_80088FF4(Chara_Creaper, 0, 13);
+        func_80088FF4(Chara_Creaper, 2, 13);
+        func_80088FF4(Chara_Creaper, 4, 13);
+        func_80088FF4(Chara_Creaper, 6, 13);
+        func_80088FF4(Chara_Creaper, 9, 3);
+    }
+
+    sharedData_800E30C8_1_s02.field_0 = -0x10666;
+    sharedData_800E30C8_1_s02.field_10[0] = 0x199;
+    sharedData_800E30C8_1_s02.vec_18.vx = -0x33333;
+    sharedData_800E30C8_1_s02.field_28[0] = 0x1999;
+    sharedData_800E30C8_1_s02.field_34[0] = 0x400;
+    sharedData_800E30C8_1_s02.field_30[0] = 0;
+    sharedData_800E30C8_1_s02.field_3C[0] = 0x666;
+    sharedData_800E30C8_1_s02.field_44[0] = 0x800;
+    sharedData_800E30C8_1_s02.field_4C[0] = 0xCC;
+    sharedData_800E30C8_1_s02.field_5C[0] = 0x666;
+    sharedData_800E30C8_1_s02.field_64[0] = 0x800;
+    sharedData_800E30C8_1_s02.field_6c[0] = 0xCC;
+
+    sharedData_800E30C8_1_s02.field_4 = -0xECCC;
+    sharedData_800E30C8_1_s02.field_10[1] = 0x199;
+    sharedData_800E30C8_1_s02.vec_18.vy = -0x33333;
+    sharedData_800E30C8_1_s02.field_34[1] = 0xC00;
+    sharedData_800E30C8_1_s02.field_28[1] = 0x1999;
+    sharedData_800E30C8_1_s02.field_30[1] = 0;
+    sharedData_800E30C8_1_s02.field_3C[1] = 0x666;
+    sharedData_800E30C8_1_s02.field_44[1] = 0x800;
+    sharedData_800E30C8_1_s02.field_4C[1] = 0xCC;
+    sharedData_800E30C8_1_s02.field_5C[1] = 0x666;
+    sharedData_800E30C8_1_s02.field_74 = 10;
+    sharedData_800E30C8_1_s02.field_64[1] = 0x800;
+    sharedData_800E30C8_1_s02.field_6c[1] = 0xCC;
+    sharedData_800E30C8_1_s02.field_78 = 2;
+
+    idx = 2;
+    sharedData_800E30C8_1_s02.field_28[idx] = 0;
+    sharedData_800E30C8_1_s02.field_10[idx] = 0x199;
+    sharedData_800E30C8_1_s02.field_3C[idx] = 0x666;
+    sharedData_800E30C8_1_s02.field_5C[idx] = 0x666;
+    sharedData_800E30C8_1_s02.field_64[idx] = 0x800;
+
+    D_800E5A98 = 0;
+    D_800E5A99 = 0;
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DDA84);
 
