@@ -1,0 +1,2 @@
+Built from https://github.com/encounter/objdiff/commit/0a85f540f2d784c4be5513926740d0c5b7b17638
+With GCC suffix changes from https://github.com/encounter/objdiff/pull/278
