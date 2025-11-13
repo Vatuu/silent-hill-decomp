@@ -2237,7 +2237,7 @@ void func_80038354(void)
 
                 new_var = temp_t3;
 
-                if (new_var > ((var_t5 == 0 && npc->health_B0 < 0) ? 0x240 : 0x640)) // TODO: Q12?
+                if (new_var > ((var_t5 == 0 && npc->health_B0 < 0) ? SQUARE(24) : SQUARE(40)))
                 {
                     npc->model_0.charaId_0 = 0;
                     SysWork_Flags2290Clear(var_s4);
@@ -2245,9 +2245,9 @@ void func_80038354(void)
                     continue;
                 }
 
-                if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2 && temp_t3 >= 0xE2) ||
+                if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2 && temp_t3 > SQUARE(15)) ||
                     (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2) &&
-                     Camera_Distance2dGet(&npc->position_18) >= 0xE2))
+                     Camera_Distance2dGet(&npc->position_18) > SQUARE(15)))
                 {
                     npc->model_0.anim_4.flags_2 &= ~(1 << 1);
                 }
