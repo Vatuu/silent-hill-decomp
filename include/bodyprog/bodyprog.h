@@ -1651,7 +1651,7 @@ typedef struct _MapOverlayHeader
     s32*                   windSpeedZ_188;
     s32*                   data_18C;
     s32*                   data_190;
-    void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, void*, s32); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
+    void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
     s8                     charaGroupIds_248[GROUP_CHARA_COUNT];                              /** `e_CharacterId` values where if `s_MapPoint2d::data.spawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_MapPoint2d           charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA           roadDataList_3CC[48];
@@ -4263,6 +4263,7 @@ s32 Camera_Distance2dGet(const VECTOR3* pos);
 
 void func_80037F24(s32);
 
+/** @brief Main NPC update function, loops through each NPC and calls `g_MapOverlayHeader.charaUpdateFuncs_194` for them. */
 void func_80038354(void);
 
 void SysState_Gameplay_Update(void);

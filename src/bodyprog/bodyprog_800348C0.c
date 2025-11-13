@@ -2079,30 +2079,309 @@ void func_80037F24(s32 arg0) // 0x80037F24
     }
 }
 
-s32 func_800382B0(s32 arg0) // 0x800382B0
+// TODO: Move define & inline to header.
+#define CLEAR_FLAG(ptr, idx) \
+    ((((u32*)ptr)[(idx) >> 5] &= ~((1 << 0) << ((idx) & 0x1F))))
+
+static inline void SysWork_Flags2290Clear(s32 var_s4)
 {
-    s32         i;
-    s_800382B0* ptr;
-    s_800382B0* stack[2];
+    CLEAR_FLAG(&g_SysWork.field_2290, var_s4);
+}
 
-    stack[0] = ptr;
-
-    for (i = 0; i < 2; ++i)
+void func_80038354(void)
+{
+    typedef struct
     {
-        if (arg0 == ptr[i].field_0)
+        s8      bitIdx_0;
+        u8      unk_1[3];
+        s32     field_4;
+        VECTOR3 field_8;
+    } s_func_800382EC_0;
+
+    s_func_800382EC_0  field_0[3];
+    u32                field_40;
+    s32                posZShift6;
+    s32                posXShift6;
+    GsCOORDINATE2*     temp_s3;
+    s32                temp_t1;
+    s32                var_a1;
+    u8                 var_a2_2;
+    s32                var_a3;
+    s32                var_s3;
+    s32                var_s4;
+    s32                var_t5;
+    s32                var_v0_4;
+    s32                var_v1_3;
+    s32                temp_s0_2;
+    s32                temp_s0_4;
+    s8                 temp_s1;
+    s32                temp_v0_4;
+    s32                var_v0_5;
+    s_SubCharacter*    npc;
+    u32                temp_t3;
+    u8                 temp_a2;
+    s_func_800382EC_0* temp_s0_3;
+    u32                new_var;
+    s32                var_s1;
+    s32                temp;
+    s32                temp2;
+
+    // GCC extension funcs
+    s32 func_800382B0(s32 arg0)
+    {
+        s32 i;
+
+        for (i = 0; i < 2; i++)
         {
-            return i;
+            if (arg0 == field_0[i].bitIdx_0)
+            {
+                return i;
+            }
+        }
+
+        return NO_VALUE;
+    }
+
+    s32 func_800382EC()
+    {
+        s32 i;
+
+        for (i = 0; i < 2; i++)
+        {
+            if (field_0[i].bitIdx_0 == NO_VALUE)
+            {
+                break;
+            }
+
+            if ((field_40 & (1 << field_0[i].bitIdx_0)) == 0)
+            {
+                field_40 |= (1 << field_0[i].bitIdx_0);
+                return i;
+            }
+        }
+
+        return NO_VALUE;
+    }
+
+    posXShift6 = g_SysWork.player_4C.chara_0.position_18.vx >> 6;
+    posZShift6 = g_SysWork.player_4C.chara_0.position_18.vz >> 6;
+
+    Demo_DemoRandSeedBackup();
+    Demo_DemoRandSeedRestore();
+
+    for (var_a3 = 0; var_a3 < 3; var_a3++)
+    {
+        field_0[var_a3].bitIdx_0   = NO_VALUE;
+        field_0[var_a3].field_4    = Q12(0.25f);
+        field_0[var_a3].field_8.vy = 0;
+    }
+
+    for (var_s4 = 0, npc = g_SysWork.npcs_1A0; var_s4 < 6; var_s4++, npc++)
+    {
+        if (npc->model_0.charaId_0 != 0 && npc->model_0.charaId_0 != Chara_Padlock)
+        {
+            if (npc->model_0.charaId_0 <= Chara_MonsterCybil)
+            {
+                temp_t3 = FP_SQUARE_PRECISE((npc->position_18.vx >> 6) - posXShift6, Q12_SHIFT) +
+                          FP_SQUARE_PRECISE((npc->position_18.vz >> 6) - posZShift6, Q12_SHIFT);
+                var_t5 = 0;
+
+                if (g_MapOverlayHeader.type_0->flags_6 & 4)
+                {
+                    var_t5 = (g_MapOverlayHeader.type_0->flags_6 & 3) > 0;
+                }
+
+                for (var_a3 = 0; var_a3 < 3; var_a3++)
+                {
+                    if (npc->health_B0 <= 0 || npc->flags_3E & (1 << 8) || temp_t3 >= field_0[var_a3].field_4)
+                    {
+                        continue;
+                    }
+
+                    if (var_t5 != 0)
+                    {
+                        s32 a = (g_SysWork.player_4C.chara_0.position_18.vx + Q12(160.0f)) / Q12(40.0f);
+                        s32 b = (npc->position_18.vx + Q12(160.0f)) / Q12(40.0f);
+
+                        if (b != a)
+                        {
+                            continue;
+                        }
+
+                        a = (g_SysWork.player_4C.chara_0.position_18.vz + Q12(160.0f)) / Q12(40.0f);
+                        b = (npc->position_18.vz + Q12(160.0f)) / Q12(40.0f);
+
+                        if (b != a)
+                        {
+                            continue;
+                        }
+                    }
+
+                    for (var_a1 = 2; var_a3 < var_a1; var_a1--)
+                    {
+                        field_0[var_a1].bitIdx_0   = field_0[var_a1 - 1].bitIdx_0;
+                        field_0[var_a1].field_4    = field_0[var_a1 - 1].field_4;
+                        field_0[var_a1].field_8.vx = field_0[var_a1 - 1].field_8.vx;
+                        field_0[var_a1].field_8.vz = field_0[var_a1 - 1].field_8.vz;
+                    }
+
+                    temp_t1 = (u32)npc - (u32)g_SysWork.npcs_1A0;
+                    temp2   = ((((temp_t1 * 0x7E8) - (temp_t1 * 0xFD)) * 4) + temp_t1) * -0x3FFFF;
+
+                    field_0[var_a3].bitIdx_0   = temp2 >> 3;
+                    field_0[var_a3].field_4    = temp_t3;
+                    field_0[var_a3].field_8.vx = npc->position_18.vx;
+                    field_0[var_a3].field_8.vz = npc->position_18.vz;
+                    break;
+                }
+
+                new_var = temp_t3;
+
+                if (new_var > ((var_t5 == 0 && npc->health_B0 < 0) ? 0x240 : 0x640)) // TODO: Q12?
+                {
+                    npc->model_0.charaId_0 = 0;
+                    SysWork_Flags2290Clear(var_s4);
+                    CLEAR_FLAG(&g_SysWork.field_228C, npc->field_40);
+                    continue;
+                }
+
+                if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2 && temp_t3 >= 0xE2) ||
+                    (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2) &&
+                     Camera_Distance2dGet(&npc->position_18) >= 0xE2))
+                {
+                    npc->model_0.anim_4.flags_2 &= ~(1 << 1);
+                }
+                else
+                {
+
+                    npc->model_0.anim_4.flags_2 |= (1 << 1);
+                }
+            }
+
+            npc->model_0.anim_4.flags_2 |= (1 << 0);
+
+            temp    = D_800A98FC[npc->model_0.charaId_0];
+            temp_s3 = D_800A992C[temp].npcCoords_14;
+
+            func_8008A384(npc);
+            func_80037E40(npc);
+            func_8003BD48(npc);
+
+            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model_0.charaId_0](npc, D_800A992C[temp].animFile1_8, temp_s3);
+
+            func_8003BE28();
+            func_80037E78(npc);
+            func_8008A3AC(npc);
+
+            if (npc->model_0.anim_4.flags_2 & (1 << 1))
+            {
+                func_8003DA9C(npc->model_0.charaId_0, temp_s3, 1, npc->timer_C6, (s8)npc->model_0.paletteIdx_1);
+            }
         }
     }
 
-    return NO_VALUE;
+    for (var_s4 = 2; var_s4 >= 0; var_s4--)
+    {
+        if (field_0[var_s4].bitIdx_0 != NO_VALUE)
+        {
+            break;
+        }
+    }
+
+    D_800A9A1C = var_s4 + 1;
+
+    if (!(g_SavegamePtr->itemToggleFlags_AC & 1))
+    {
+        return;
+    }
+
+    field_40 = 0;
+
+    for (var_s1 = 0; var_s1 < 2; var_s1++)
+    {
+        temp_s0_2 = D_800BCDA8[var_s1].field_1;
+
+        if (temp_s0_2 == NO_VALUE)
+        {
+            var_v0_4 = NO_VALUE;
+        }
+        else
+        {
+            var_v0_4 = func_800382B0(temp_s0_2);
+        }
+
+        if (var_v0_4 >= 0)
+        {
+            D_800BCDA8[var_s1].field_2 = var_v0_4;
+            field_40                  |= 1 << temp_s0_2;
+        }
+        else
+        {
+            D_800BCDA8[var_s1].field_1 = NO_VALUE;
+        }
+    }
+
+    for (var_s1 = 0; var_s1 < 2; var_s1++)
+    {
+        temp_s1 = D_800BCDA8[var_s1].field_1;
+        if (temp_s1 == NO_VALUE)
+        {
+            temp_v0_4 = func_800382EC();
+
+            if (temp_v0_4 != temp_s1)
+            {
+                var_v0_5 = field_0[temp_v0_4].bitIdx_0;
+            }
+            else
+            {
+                var_v0_5 = NO_VALUE;
+            }
+
+            D_800BCDA8[var_s1].field_2 = temp_v0_4;
+            D_800BCDA8[var_s1].field_1 = var_v0_5;
+        }
+    }
+
+    for (var_s1 = 0; var_s1 < 2; var_s1++)
+    {
+        if (D_800BCDA8[var_s1].field_0 == NO_VALUE)
+        {
+            if (D_800BCDA8[var_s1].field_1 >= 0)
+            {
+                Sd_EngineCmd((u16)(Sfx_RadioInterferenceLoop + var_s1));
+            }
+        }
+        else
+        {
+            var_s3 = 0;
+            if (!(g_MapOverlayHeader.type_0->flags_6 & 4) || !(g_MapOverlayHeader.type_0->flags_6 & 3))
+            {
+                var_s3 = 1;
+            }
+
+            if (D_800BCDA8[var_s1].field_1 >= 0)
+            {
+                temp_s0_3 = &field_0[D_800BCDA8[var_s1].field_2];
+                temp_s0_4 = Sound_StereoBalanceGet(&temp_s0_3->field_8);
+
+                var_v1_3 = SquareRoot12(temp_s0_3->field_4 << Q12_SHIFT) >> 8;
+                if (var_s3 != 0)
+                {
+                    var_v1_3 >>= 1;
+                }
+
+                var_a2_2 = CLAMP(var_v1_3, 0, 0xFF);
+
+                func_800463C0(Sfx_RadioInterferenceLoop + var_s1, temp_s0_4, var_a2_2, 0);
+            }
+            else
+            {
+                func_8004690C(Sfx_RadioInterferenceLoop + var_s1);
+            }
+        }
+        D_800BCDA8[var_s1].field_0 = D_800BCDA8[var_s1].field_1;
+    }
 }
-
-// TODO: GCC extension func, needs `func_80038354` matched.
-// Scratch: https://decomp.me/scratch/nlBHl
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800348C0", func_800382EC); // 0x800382EC
-
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800348C0", func_80038354); // 0x80038354
 
 bool Math_Distance2dCheck(const VECTOR3* posFrom, const VECTOR3* posTo, q19_12 radius) // 0x80038A6C
 {
