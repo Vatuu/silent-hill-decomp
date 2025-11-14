@@ -700,7 +700,7 @@ void func_800E2950(void) // 0x800E2950
             func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], 1);
             Player_ControlUnfreeze(false);
 
-            SysWork_StateSetNext(0);
+            SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             func_8008D448();

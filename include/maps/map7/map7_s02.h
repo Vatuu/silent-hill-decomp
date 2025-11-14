@@ -62,6 +62,7 @@ extern s8 D_800E9ECC;
 extern u8 D_800E9ECD;
 
 /** Time. */
+extern s16 D_800E9ED6;
 extern s16 D_800E9ED8;
 extern s16 D_800E9EDA;
 

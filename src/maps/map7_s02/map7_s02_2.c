@@ -982,7 +982,93 @@ void func_800DC778(void) // 0x800DC778
 
 void func_800DC94C(void) {}
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800DC954);
+void func_800DC954(void) // 0x800DC954
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            func_800862F8(0, FILE_TIM_CHAINRF1_TIM, false);
+            D_800E9ED6 = 0;
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 2:
+            func_800862F8(1, 0, false);
+            break;
+
+        case 3:
+            func_800862F8(3, 0, false);
+            SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 4:
+            func_800862F8(8, FILE_TIM_CHAINRF2_TIM, false);
+            func_800862F8(2, 0, false);
+            break;
+
+        case 5:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(true, false, 0, Q12(0.0f), false);
+            break;
+
+        case 6:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
+            break;
+
+        case 7:
+            Sd_PlaySfx(Sfx_Unk1669, 0, Q8_CLAMPED(0.5f));
+            SysWork_StateStepIncrement(0);
+
+        case 8:
+            Gfx_BackgroundSpritesTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
+
+            g_SysWork.field_28 += Q12(0.0625f);
+            if (g_SysWork.field_28 > Q12(1.0f))
+            {
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 9:
+            MapMsg_DisplayAndHandleSelection(false, 134, 0, 0, 0, false);
+            func_800862F8(5, 0, false);
+            break;
+
+        case 10:
+            func_800862F8(5, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        default:
+            func_800862F8(6, 0, false);
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_552);
+            SysWork_StateStepIncrementAfterFade(false, false, 0, Q12(0.0f), false);
+            break;
+    }
+
+    if (g_SysWork.sysStateStep_C[0] >= 4 && g_SysWork.sysStateStep_C[0] < 11)
+    {
+        if (D_800E9ED6 == 0 && !Savegame_EventFlagGet(EventFlag_555))
+        {
+            Sd_PlaySfx(Sfx_Unk1664, 0, Q8_CLAMPED(0.875f));
+            D_800E9ED6 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
+        }
+        else
+        {
+            D_800E9ED6 = MAX(0, D_800E9ED6 - g_DeltaTime0);
+        }
+        return;
+    }
+
+    func_8004690C(Sfx_Unk1664);
+}
 
 void func_800DCD00(void) // 0x800DCD00
 {
