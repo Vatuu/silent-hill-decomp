@@ -55,6 +55,52 @@ def get_flag_name(flagIdx, isMapMarking):
     enumName = "EventFlag_" if not isMapMarking else "MapMarkFlag_"
     return flags.get(flagIdx, f"{enumName}{flagIdx}")
 
+def convert_pose(line):
+    pattern = r"WorldObjectPoseSet\(([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^\,\)]+)\);"
+    m = re.search(pattern, line)
+    if not m:
+        return None
+
+    def convert_value(value_str, is_fp_angle):
+        if value_str.startswith(("0x", "-0x", "+0x")):
+            val = int(value_str, 16)
+            if value_str.startswith("-0x"):
+                val = -int(value_str[3:], 16)
+            elif value_str.startswith("+0x"):
+                val = int(value_str[3:], 16)
+            else:
+                val = to_signed(val, 32)
+        else:
+            val = int(value_str, 10)
+
+        if is_fp_angle:
+            if val >= 0x8000:
+                val = val - 0x10000
+            return f"{round_fp(val, 11.377778)}"
+        return f"{process_fp_raw(val, 12)}"
+
+
+    obj = m.group(1).strip()
+
+    # extract raw args
+    a1, a2, a3 = m.group(2), m.group(3), m.group(4)
+    a4, a5, a6 = m.group(5), m.group(6), m.group(7)
+
+    # convert values
+    f1 = convert_value(a1, False)
+    f2 = convert_value(a2, False)
+    f3 = convert_value(a3, False)
+
+    f4 = convert_value(a4, True)
+    f5 = convert_value(a5, True)
+    f6 = convert_value(a6, True)
+
+    return (
+        f"WorldObjectPoseInit({obj}, "
+        f"{f1}, {f2}, {f3}, {f4}, {f5}, {f6});"
+    )
+
+
 def convert_flag_expression(expr):
     """
     Convert eventFlags_168 bit ops into Savegame_EventFlag* calls.
@@ -195,11 +241,14 @@ def round_fp(val, scale):
 
     return f"{float_val}f"
 
-def process_fp(val, qval = 12):
+def process_fp_raw(val, qval = 12):
     scale = (1 << qval)
     float_val = round_fp(val, scale)
 
-    return f"Q{qval}({float_val})"
+    return f"{float_val}"
+
+def process_fp(val, qval = 12):
+    return f"Q{qval}({process_fp_raw(val, qval)})"
 
 def process_fp_angle_packed(val):
     return f"FP_ANGLE_PACKED({round_fp(val, 0.711111)})"
@@ -283,8 +332,10 @@ if __name__ == "__main__":
         # Try eventFlags conversion first
         result = convert_flag_expression(line)
         if result is None:
-            # fallback to FP converter
-            result = process_fp_text(line)
+            result = convert_pose(line)
+            if result is None:
+                # fallback to FP converter
+                result = process_fp_text(line)
 
         if result is not None:
             print(result)
