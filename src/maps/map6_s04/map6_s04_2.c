@@ -472,7 +472,7 @@ void func_800E1D50(void) // 0x800E1D50
             vcReturnPreAutoCamWork(true);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_MonsterCybil, 0, Q12(26.5f), Q12(108.5f), Q12(0.03125f), 3);
-            func_800E15FC(&g_SysWork.player_4C.chara_0, &g_SysWork.npcs_1A0[0], 1);
+            func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], 1);
             Savegame_EventFlagSet(EventFlag_441);
             break;
     }
@@ -632,7 +632,85 @@ void func_800E2724(void) // 0x800E2724
     }
 }
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E2950);
+void func_800E2950(void) // 0x800E2950
+{
+    VECTOR3 cameraPos;
+    VECTOR3 cameraLookAt;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+
+            func_8007FD4C(true);
+            sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
+
+            g_SysWork.field_30 = 20;
+
+            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Game_TurnFlashlightOn();
+
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(23.0f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(103.0f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(135.0f);
+
+            g_SysWork.npcs_1A0[0].position_18.vx = Q12(18.0f);
+            g_SysWork.npcs_1A0[0].position_18.vz = Q12(96.0f);
+            g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(135.0f);
+
+            Math_Vector3Set(&cameraPos, Q12(18.0f), Q12(-1.5f), Q12(94.5f));
+            Math_Vector3Set(&cameraLookAt, Q12(18.0f), Q12(-1.3f), Q12(96.0f));
+
+            Camera_PositionSet(&cameraPos, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(&cameraLookAt, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            func_8008D438();
+
+            g_SysWork.field_236C = NULL;
+
+            g_SysWork.field_2370.vx = -ratan2(cameraLookAt.vy - cameraPos.vy, Math_Vector2MagCalc(cameraLookAt.vx - cameraPos.vx, cameraLookAt.vz - cameraPos.vz));
+            g_SysWork.field_2370.vy = ratan2(cameraLookAt.vx - cameraPos.vx, cameraLookAt.vz - cameraPos.vz);
+            g_SysWork.field_2370.vz = 0;
+
+            g_SysWork.field_235C = NULL;
+
+            g_SysWork.field_2360.vx = cameraPos.vx;
+            g_SysWork.field_2360.vy = MAX(Q12(-1.5f), cameraPos.vy);
+            g_SysWork.field_2360.vz = cameraPos.vz;
+
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 4, false);
+
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085EB8(2, &g_SysWork.npcs_1A0[0], 0, false);
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            break;
+
+        case 2:
+            func_80085EB8(3, &g_SysWork.npcs_1A0[0], 0, false);
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 3:
+            func_80085EB8(1, &g_SysWork.npcs_1A0[0], 0, false);
+            break;
+
+        default:
+            vcReturnPreAutoCamWork(true);
+            func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], 1);
+            Player_ControlUnfreeze(false);
+
+            SysWork_StateSetNext(0);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+
+            func_8008D448();
+            func_8003EBA0();
+
+            g_SysWork.field_2378 = Q12(1.0f);
+            Savegame_EventFlagSet(EventFlag_445);
+            break;
+    }
+}
 
 void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
 {

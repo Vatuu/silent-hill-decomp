@@ -111,13 +111,15 @@ void func_800E1290(void);
 
 void func_800E12D0(void);
 
-void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, s32);
+void func_800E15FC(s_MainCharacter* player, s_SubCharacter* npc, s32);
 
 void func_800E1CA0(void);
 
 void func_800E1D50(void);
 
 void func_800E2724(void);
+
+void func_800E2950(void);
 
 void MapEvent_CutsceneCybilDeath(void);
 
