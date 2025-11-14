@@ -23,14 +23,27 @@
 #define MAP_ROOM_MAX_Z Q12(160.0f)
 
 extern u8 D_800DD528;
+
 extern s16 D_800DD52A; // Time.
+
+extern u16 D_800DAC70;
+
+extern u8 D_800DAC74;
+
 extern s16 D_800DACF0;
+
 extern s16 D_800DACE8;
+
 extern VECTOR3 D_800DD420;
+
 extern VECTOR3 D_800DD430;
+
 extern SVECTOR3 D_800DD440;
+
 extern SVECTOR3 D_800DD448;
+
 extern s16 D_800DD52A;
+
 extern s_WorldObjectDesc      g_WorldObject0;
 extern s_WorldObjectDescNoRot g_WorldObject1[6];
 extern s_WorldObjectDesc      g_WorldObject2;
@@ -66,6 +79,8 @@ void func_800D6BB4(void);
 void func_800D6BE0(void);
 
 void func_800D6CF0(void);
+
+void func_800D6D1C(void);
 
 void func_800D719C(void);
 

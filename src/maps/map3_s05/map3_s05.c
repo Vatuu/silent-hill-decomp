@@ -627,7 +627,113 @@ void func_800D6CF0(void) // 0x800D6CF0
     Event_ItemTake(InventoryItemId_ExaminationRoomKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S05_PickupExaminationRoomKey, 21);
 }
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D6D1C);
+void func_800D6D1C(void) // 0x800D6D1C
+{
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 11)
+    {
+        SysWork_StateStepSet(0, 15);
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            g_SysWork.field_30 = 20;
+
+            Camera_PositionSet(NULL, Q12(18.1f), Q12(-1.71f), Q12(-97.34f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(20.04f), Q12(-0.74f), Q12(-100.7f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            D_800DAC74 = 0;
+            func_8003D03C();
+            sharedFunc_800D2EB4_0_s00();
+            Game_TurnFlashlightOn();
+
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            Map_MessageWithAudio(18, &D_800DAC74, &D_800DAC70);
+            break;
+
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 116);
+            break;
+
+        case 3:
+            Map_MessageWithAudio(19, &D_800DAC74, &D_800DAC70);
+            break;
+
+        case 4:
+            func_800865FC(true, 0, 0, FP_ANGLE(0.0f), Q12(21.7f), Q12(-100.9f));
+            func_800865FC(true, 0, 1, FP_ANGLE(0.0f), Q12(21.9f), Q12(-100.3f));
+            func_800865FC(true, 0, 2, FP_ANGLE(0.0f), Q12(21.0f), Q12(-99.4f));
+            SysWork_StateStepIncrement(0);
+
+        case 5:
+            func_800866D4(53, 3, false);
+            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            break;
+
+        case 6:
+            Camera_PositionSet(NULL, Q12(18.44f), Q12(-4.54f), Q12(-100.98f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(20.54f), Q12(-1.58f), Q12(-99.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            SysWork_StateStepIncrement(0);
+
+        case 7:
+            func_800866D4(53, 3, false);
+            break;
+
+        case 8:
+            MapMsg_DisplayAndHandleSelection(false, 20, 0, 0, 0, false);
+            break;
+
+        case 9:
+            func_80086E50(FILE_TIM_ALESSA_TIM, 0, 0);
+            break;
+
+        case 10:
+            func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+            MapMsg_DisplayAndHandleSelection(false, 16, 0, 0, 0, false);
+            break;
+
+        case 11:
+            vcReturnPreAutoCamWork(true);
+            SysWork_StateStepIncrement(0);
+
+        case 12:
+            func_80086F44(0, 0);
+            break;
+
+        case 13:
+            MapMsg_DisplayAndHandleSelection(false, 17, 0, 0, 0, false);
+            break;
+
+        case 15:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 16:
+            vcReturnPreAutoCamWork(true);
+
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(21.0f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-99.4f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(0.0f);
+
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+
+        default:
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            func_8003D01C();
+            sharedFunc_800D2EF4_0_s00();
+
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+
+            Savegame_EventFlagSet(EventFlag_260);
+            break;
+    }
+}
 
 void func_800D719C(void) // 0x800D719C
 {
