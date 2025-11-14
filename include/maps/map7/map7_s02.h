@@ -72,6 +72,8 @@ extern u16 D_800EA492;
 
 extern s_800EA494 D_800EA494;
 
+extern u8 D_800EA4A9;
+
 extern s32 D_800EB68C;
 extern s32 D_800EB690;
 
@@ -192,5 +194,7 @@ void func_800E1DAC(void);
 void func_800E1FF4(void);
 
 void func_800E2DC0(void);
+
+void func_800E2DEC(void);
 
 #endif

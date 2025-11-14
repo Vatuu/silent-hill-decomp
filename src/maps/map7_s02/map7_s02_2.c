@@ -2431,9 +2431,155 @@ void func_800E2DC0(void) // 0x800E2DC0
     MapMsg_DisplayWithTexture(FILE_TIM_ALESSA_TIM, Q12(0.0f), Q12(0.0f), 124);
 }
 
-INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02_2", D_800CD998);
+void func_800E2DEC(void) // 0x800E2DEC
+{
+    VECTOR3 playerPosBackup;
+    s32     i;
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800E2DEC);
+    g_BackgroundColor = 0x68;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            for (i = 0; i < 5; i++)
+            {
+                if (Savegame_EventFlagGet(EventFlag_564 + i))
+                {
+                    break;
+                }
+            }
+
+            if (i != 5)
+            {
+                D_800EA4A9 = i;
+                Savegame_EventFlagSet(EventFlag_540 + D_800EA4A9);
+
+                for (i = 0; i < 5; i++)
+                {
+                    if (!Savegame_EventFlagGet(EventFlag_540 + i))
+                    {
+                        break;
+                    }
+                }
+
+                if (i == 5)
+                {
+                    Savegame_EventFlagSet(EventFlag_545);
+                }
+
+                playerPosBackup                            = g_SysWork.player_4C.chara_0.position_18;
+                g_SysWork.player_4C.chara_0.position_18.vx = Q12(101.0f);
+                g_SysWork.player_4C.chara_0.position_18.vz = Q12(-98.8f);
+                func_8003C3AC();
+                g_SysWork.player_4C.chara_0.position_18 = playerPosBackup;
+
+                SysWork_StateStepSet(0, 3);
+            }
+            else
+            {
+                SysWork_StateStepSet(0, 7);
+            }
+            break;
+
+        case 3:
+            MapMsg_DisplayAndHandleSelection(false, 125 + D_800EA4A9, 0, 0, 0, false);
+            break;
+
+        case 4:
+            func_8005DC1C(Sfx_Unk1663, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8_CLAMPED(0.5f), 0);
+            if (!Savegame_EventFlagGet(EventFlag_545))
+            {
+                Savegame_EventFlagClear(EventFlag_564 + D_800EA4A9);
+                Player_ControlUnfreeze(false);
+                SysWork_StateSetNext(SysState_Gameplay);
+            }
+            else
+            {
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 5:
+            SysWork_StateStepIncrementDelayed(Q12(0.7f), false);
+            break;
+
+        case 6:
+            func_8005DC1C(Sfx_Unk1343, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8_CLAMPED(0.5f), 0);
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+
+        case 7:
+            func_8005DC1C(Sfx_DoorLocked, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
+
+        case 8:
+            MapMsg_DisplayAndHandleSelection(false, 12, 0, 0, 0, false);
+            break;
+
+        case 9:
+            for (i = 0; i < 5; i++)
+            {
+                if (Savegame_EventFlagGet(EventFlag_540 + i))
+                {
+                    break;
+                }
+            }
+
+            if (i != 5)
+            {
+                Player_ControlUnfreeze(false);
+                SysWork_StateSetNext(SysState_Gameplay);
+            }
+            else
+            {
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 10:
+            func_800862F8(0, FILE_TIM_LASTDOOR_TIM, false);
+            SysWork_StateStepIncrement(0);
+
+        case 11:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 12:
+            func_800862F8(1, 0, false);
+            break;
+
+        case 13:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            break;
+
+        case 14:
+            MapMsg_DisplayAndHandleSelection(false, 130, 0, 0, 0, false);
+            func_800862F8(2, 0, false);
+            break;
+
+        case 15:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        default:
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800E32E0);
 

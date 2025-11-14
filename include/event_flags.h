@@ -441,6 +441,12 @@ typedef enum _EventFlag
     EventFlag_M7S02_PickupAnkh             = 537,
     EventFlag_M7S02_PickupDaggerOfMelchior = 538,
     EventFlag_M7S02_PickupDiskOfOuroboros  = 539,
+    EventFlag_540                          = 540, // } Used in `for (i < 5)` loop.
+    EventFlag_541                          = 541, // }
+    EventFlag_542                          = 542, // }
+    EventFlag_543                          = 543, // }
+    EventFlag_544                          = 544, // }
+    EventFlag_545                          = 545,
 
     EventFlag_548 = 548,
     EventFlag_549 = 549,
@@ -455,6 +461,11 @@ typedef enum _EventFlag
 
     EventFlag_562 = 562,
     EventFlag_563 = 563,
+    EventFlag_564 = 564, // } Used in `for (i < 5)` loop.
+    EventFlag_565 = 565, // }
+    EventFlag_566 = 566, // }
+    EventFlag_567 = 567, // }
+    EventFlag_568 = 568, // }
 
     EventFlag_570 = 570,
     EventFlag_571 = 571,
