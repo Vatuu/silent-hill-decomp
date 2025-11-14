@@ -105,4 +105,6 @@ void func_800CB7F4(void);
 
 void func_800CB8A0(s32 idx);
 
+bool func_800CBA38(s32 idx);
+
 #endif

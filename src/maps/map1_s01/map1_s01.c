@@ -41,7 +41,17 @@ void func_800CB8A0(s32 idx)
     D_800DD5B0[idx].field_B = rngB - (rngB/3)*3;
 }
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CBA38);
+bool func_800CBA38(s32 idx)
+{
+    D_800DD5B0[idx].field_C.field_0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, ((Rng_Rand16() % FP_ANGLE(144.0f)) + FP_ANGLE(288.0f)), Q12_SHIFT);
+    if ((FP_TO((D_800DEE50.field_6 - D_800DEE50.field_8), Q12_SHIFT) / D_800DEE50.field_C) < D_800DD5B0[idx].field_C.field_0)
+    {
+        func_800CB8A0(idx);
+        return true;
+    }
+
+    return false;
+}
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CBB30);
 
