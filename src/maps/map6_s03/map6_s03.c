@@ -374,7 +374,33 @@ void MapEvent_MapTake(void) // 0x800D87F0
     Event_MapTake(15, EventFlag_M6S03_PickupMap, 15);
 }
 
-INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D8818);
+void func_800D8818(void)
+{
+    D_800DFEF5 = 0;
+    D_800DFEF4 = 0;
+    D_800DFEF2 = 0;
+    D_800DFEF0 = 0;
+    WorldObject_ModelNameSet(&g_WorldObject0[0], "YUKABFO1");
+    WorldObject_ModelNameSet(&g_WorldObject0[1], "YUKAAFT1");
+    Math_Vector3Set(&g_WorldObjectPos0, -0x14000, 0, 0x22000);
+
+    WorldObjectPoseSet(&g_WorldObject1.position_1C, 0x4B000, 0x800, 0x13B33, 0, 0x800, 0);
+    WorldObject_ModelNameSet(&g_WorldObject1.object_0, "SITAI_NE");
+
+    Math_Vector3Set(&g_WorldObject2.position_1C, -0x16000, 0, 0x1A666);
+    WorldObject_ModelNameSet(&g_WorldObject2.object_0, "MP_DRNBK");
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    {
+        g_SysWork.field_2280 = 3;
+    }
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D89A0);
 
