@@ -115,6 +115,7 @@ void func_800E15FC(s_MainCharacter* player, s_SubCharacter* npc, s32);
 
 void func_800E1CA0(void);
 
+/** Cutscene. */
 void func_800E1D50(void);
 
 void func_800E2724(void);

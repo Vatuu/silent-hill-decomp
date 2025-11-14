@@ -1961,11 +1961,11 @@ extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
 
 // TODO: Might use different size in other maps too.
 #if defined(MAP1_S03)
-extern s_MapHdr_field_4C sharedData_800E1FF8_1_s02[300];
+    extern s_MapHdr_field_4C sharedData_800E1FF8_1_s02[300];
 #elif defined(MAP1_S05)
-extern s_MapHdr_field_4C sharedData_800E1FF8_1_s02[500];
+    extern s_MapHdr_field_4C sharedData_800E1FF8_1_s02[500];
 #else
-extern s_MapHdr_field_4C sharedData_800E1FF8_1_s02[200];
+    extern s_MapHdr_field_4C sharedData_800E1FF8_1_s02[200];
 #endif
 
 extern void (*sharedData_800DD7A0_0_s01[52])(s_SubCharacter*);

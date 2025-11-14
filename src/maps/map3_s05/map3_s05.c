@@ -311,7 +311,7 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D59D4);
 
 void func_800D5A98(void) // 0x800D5A98
 {
-    g_BackgroundColor = 0x50;
+    g_BackgroundColor = 80;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -388,11 +388,13 @@ void func_800D5C98(void) // 0x800D5C98
             break;
 
         case 2:
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(20.4f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-20.0f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
             g_SysWork.player_4C.chara_0.field_E1_0     = 5;
 
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(18.29f), Q12(-0.92f), Q12(-19.71f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(22.24f), Q12(-0.76f), Q12(-20.32f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
@@ -442,6 +444,7 @@ void func_800D5C98(void) // 0x800D5C98
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(20.6f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-20.0f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
@@ -641,6 +644,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             Player_ControlFreeze();
             g_SysWork.field_30 = 20;
 
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(18.1f), Q12(-1.71f), Q12(-97.34f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(20.04f), Q12(-0.74f), Q12(-100.7f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
@@ -675,6 +679,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             break;
 
         case 6:
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(18.44f), Q12(-4.54f), Q12(-100.98f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(20.54f), Q12(-1.58f), Q12(-99.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SysWork_StateStepIncrement(0);
@@ -715,6 +720,7 @@ void func_800D6D1C(void) // 0x800D6D1C
         case 16:
             vcReturnPreAutoCamWork(true);
 
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(21.0f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-99.4f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(0.0f);

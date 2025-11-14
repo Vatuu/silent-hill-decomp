@@ -4263,7 +4263,7 @@ s32 Camera_Distance2dGet(const VECTOR3* pos);
 
 void func_80037F24(s32);
 
-/** @brief Main NPC update function, loops through each NPC and calls `g_MapOverlayHeader.charaUpdateFuncs_194` for them. */
+/** @brief Main NPC update function. Runs through each NPC and calls `g_MapOverlayHeader.charaUpdateFuncs_194` for them. */
 void func_80038354(void);
 
 void SysState_Gameplay_Update(void);

@@ -301,6 +301,7 @@ void func_800D6800(void) // 0x800D6800
 
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 52, false);
 
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(-118.22f), Q12(1.46f), Q12(105.67f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-119.97f), Q12(-1.4f), Q12(107.85f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
@@ -315,11 +316,13 @@ void func_800D6800(void) // 0x800D6800
             func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
             SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
 
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(-120.0f);
             g_SysWork.player_4C.chara_0.position_18.vy = Q12(2.0f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(104.0f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = 0;
 
+            // Warp NPC.
             g_SysWork.npcs_1A0[0].position_18.vx = Q12(-120.0f);
             g_SysWork.npcs_1A0[0].position_18.vy = Q12(2.0f);
             g_SysWork.npcs_1A0[0].position_18.vz = Q12(108.0f);

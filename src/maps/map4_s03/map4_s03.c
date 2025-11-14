@@ -673,10 +673,14 @@ void func_800D6774(void) // 0x800D6774
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(120.5f), Q12(-9.5f), Q12(137.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(NULL, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vy, g_SysWork.player_4C.chara_0.position_18.vz, 0, 0, 0, 0, true);
-            D_800DB9E0 = 0;
+            Camera_LookAtSet(NULL, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vy, g_SysWork.player_4C.chara_0.position_18.vz,
+                             Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
+            D_800DB9E0 = Q12(0.0f);
             break;
+
         case 1:
         case 2:
             Camera_PositionSet(NULL, Q12(120.5f), Q12(-5.5f), Q12(138.0f), Q12(0.0f), Q12(0.0f), cam_mv_prm_user.max_spd_xz >> 3, cam_mv_prm_user.max_spd_y >> 1, false);
@@ -695,15 +699,17 @@ void func_800D6774(void) // 0x800D6774
                 vec.vz = Rng_GenerateInt(Rng_Rand16(), Q12(140.0f), Q12(143.0f) - 1);
                 func_800D19AC(&vec);
             }
-
             break;
+
         case 3:
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(119.48f), Q12(-0.5f), Q12(143.35f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(118.16f), Q12(-0.86f), Q12(139.59f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             break;
 
         case 9:
         case 10:
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(119.87f), Q12(-3.4f), Q12(138.71f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(119.13f), Q12(-1.49f), Q12(142.15f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             break;

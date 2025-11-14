@@ -117,6 +117,7 @@ void func_800D98E4(void);
 
 void func_800DA248(void);
 
+/** Cutscene. */
 void func_800DAA4C(void);
 
 /** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Shotgun Shells item pickup event. */

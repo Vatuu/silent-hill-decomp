@@ -1074,7 +1074,7 @@ void func_800E70F0(void) // 0x800E70F0
     {
         case 0:
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets((s_DmsHeader*)0x80180600); // TODO: Make FS_BUFFER?
+            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_18);
 
             D_800F4806 = 1;
             D_800F47F0 = Q12(0.0f);
@@ -1124,7 +1124,9 @@ void func_800E70F0(void) // 0x800E70F0
         default:
             g_SysWork.sysStateStep_C[0] = 0;
             D_800F4805++;
+
             func_800E9490(&g_SysWork.npcs_1A0[1]);
+
             D_800F4809 = 0;
             break;
     }

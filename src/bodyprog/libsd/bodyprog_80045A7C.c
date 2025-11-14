@@ -225,9 +225,9 @@ void sd_init(void) // 0x80045DD4
     SdStart();
     SdSetTableSize(&D_800C16C8, 16, 3);
 
-    D_800C1678.globalVolumeSE_C  = OPT_SOUND_VOLUME_MAX - 1;
-    D_800C1678.globalVolumeBGM_D = OPT_SOUND_VOLUME_MAX - 1;
-    D_800C1678.globalVolumeXA_E  = OPT_SOUND_VOLUME_MAX - 1;
+    D_800C1678.globalVolumeSe_C  = OPT_SOUND_VOLUME_MAX - 1;
+    D_800C1678.globalVolumeBgm_D = OPT_SOUND_VOLUME_MAX - 1;
+    D_800C1678.globalVolumeXa_E  = OPT_SOUND_VOLUME_MAX - 1;
 
     sd_work_init();
 }
@@ -2228,9 +2228,9 @@ void func_80047634(void) // 0x80047634
 
 void Sd_SetVolume(u8 xaVol, s16 bgmVol, u8 seVol) // 0x80047798
 {
-    D_800C1678.globalVolumeXA_E  = xaVol;
-    D_800C1678.globalVolumeBGM_D = bgmVol;
-    D_800C1678.globalVolumeSE_C  = seVol;
+    D_800C1678.globalVolumeXa_E  = xaVol;
+    D_800C1678.globalVolumeBgm_D = bgmVol;
+    D_800C1678.globalVolumeSe_C  = seVol;
     
     if (D_800C1658.field_E != 0)
     {
@@ -2245,17 +2245,17 @@ void Sd_SetVolume(u8 xaVol, s16 bgmVol, u8 seVol) // 0x80047798
 
 void Sd_SetVolBgm(s16 volLeft, s16 volRight) // 0x80047808
 {
-    SdSeqSetVol(0, (volLeft * D_800C1678.globalVolumeBGM_D) >> 7, (volRight * D_800C1678.globalVolumeBGM_D) >> 7);
+    SdSeqSetVol(0, (volLeft * D_800C1678.globalVolumeBgm_D) >> 7, (volRight * D_800C1678.globalVolumeBgm_D) >> 7);
 }
 
 void Sd_SetVolXa(s16 volLeft, s16 volRight) // 0x80047860
 {
-    SdSetSerialVol(0, (volLeft * D_800C1678.globalVolumeXA_E) >> 7, (volRight * D_800C1678.globalVolumeXA_E) >> 7);
+    SdSetSerialVol(0, (volLeft * D_800C1678.globalVolumeXa_E) >> 7, (volRight * D_800C1678.globalVolumeXa_E) >> 7);
 }
 
 s16 Sd_GetVolSe(s16 arg0) // 0x800478B8
 {
-    return (arg0 * D_800C1678.globalVolumeSE_C) >> 7;
+    return (arg0 * D_800C1678.globalVolumeSe_C) >> 7;
 }
 
 void func_800478DC(u8 cmd) // 0x800478DC

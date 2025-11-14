@@ -319,6 +319,7 @@ void func_800D732C(void) // 0x800D732C
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
+            // Warp player.
             Player_ControlFreeze();
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(56.789f);
             g_SysWork.player_4C.chara_0.position_18.vy = Q12(-2.02f);
@@ -327,10 +328,11 @@ void func_800D732C(void) // 0x800D732C
 
             Game_TurnFlashlightOn();
 
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(58.49f), Q12(1.18f), Q12(59.07f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(56.67f), Q12(-2.3f), Q12(59.86f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            func_80085EB8(0U, &g_SysWork.player_4C.chara_0, 88, false);
+            func_80085EB8(0u, &g_SysWork.player_4C.chara_0, 88, false);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
             SysWork_StateStepIncrement(0);
@@ -349,6 +351,7 @@ void func_800D732C(void) // 0x800D732C
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
 
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(16.7f);
             g_SysWork.player_4C.chara_0.position_18.vy = Q12(0.0f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(52.0f);
@@ -395,6 +398,7 @@ void func_800D75FC(void) // 0x800D75FC
             break;
 
         case 3:
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(56.773f);
             g_SysWork.player_4C.chara_0.position_18.vy = Q12(-1.444f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(60.036f);
@@ -402,6 +406,7 @@ void func_800D75FC(void) // 0x800D75FC
 
             Game_TurnFlashlightOn();
 
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(57.29f), Q12(-0.86f), Q12(59.36f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(55.07f), Q12(-4.0f), Q12(60.29f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 

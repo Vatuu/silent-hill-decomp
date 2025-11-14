@@ -361,6 +361,7 @@ void func_800D7A60(void) // 0x800D7A60
     VECTOR3  pos;
     SVECTOR3 rot;
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] <= 15)
     {

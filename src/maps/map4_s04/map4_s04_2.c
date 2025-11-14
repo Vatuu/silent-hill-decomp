@@ -145,7 +145,7 @@ INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04_2", func_800D1910);
 extern s8 D_800CBB78[];
 extern s8 D_800CBB80[];
 
-void func_800D23E4(void)
+void func_800D23E4(void) // 0x800D23E4
 {
     VECTOR3  lightIntPos;
     SVECTOR3 unused;
@@ -169,6 +169,7 @@ void func_800D23E4(void)
 
             D_800D6EF4 = 0;
 
+            // Load Lisa character.
             Chara_Load(0, Chara_Lisa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Lisa, 0, Q12(60.0f), Q12(140.0f), FP_ANGLE(0.0f), 3);
@@ -246,8 +247,10 @@ void func_800D23E4(void)
         case 9:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
+
             g_SysWork.field_2378 = Q12(1.2f);
             D_800D6EF4           = Q12(55.0f);
+
             SysWork_StateStepIncrement(0);
 
         case 10:
@@ -354,7 +357,7 @@ void func_800D23E4(void)
             break;
     }
 
-    if (D_800D6EF4 >= 0)
+    if (D_800D6EF4 >= Q12(0.0f))
     {
         Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, D_800CBB78, D_800D6EF4, FS_BUFFER_15);
         Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, D_800CBB80, D_800D6EF4, FS_BUFFER_15);

@@ -2002,17 +2002,17 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
 /** Responsible for loading NPCs on the map. */
 void func_80037F24(s32 arg0) // 0x80037F24
 {
-    s_Collision     sp10;
+    s_Collision     coll;
     s32             sp20;
     s32             sp24;
-    s32             var_s2;
+    s32             npcIdx;
     s32*            temp_a0;
     s32             var_s4;
     s_MapPoint2d*   var_s5;
     s_SubCharacter* var_s6;
     VECTOR3*        vec;
 
-    var_s2  = 0;
+    npcIdx  = 0;
     var_s5  = g_MapOverlayHeader.charaSpawns_24C[0];
     temp_a0 = &g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4];
 
@@ -2040,41 +2040,41 @@ void func_80037F24(s32 arg0) // 0x80037F24
         if (!(g_SysWork.flags_22A4 & 0x10) && HAS_FLAG(temp_a0, var_s4) && !HAS_FLAG(&g_SysWork.field_228C, var_s4) &&
             var_s5->data.spawnInfo.flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= var_s5->data.spawnInfo.field_7_0 &&
             func_8008F914(var_s5->positionX_0, var_s5->positionZ_8) &&
-            !Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, vec, 0x16000) &&
-            (arg0 == 0 || Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, vec, 0x14000)))
+            !Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, vec, Q12(22.0f)) &&
+            (arg0 == 0 || Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, vec, Q12(20.0f))))
         {
-            while (HAS_FLAG(&g_SysWork.field_2290, var_s2))
+            while (HAS_FLAG(&g_SysWork.field_2290, npcIdx))
             {
-                var_s2++;
+                npcIdx++;
             }
 
-            bzero(&g_SysWork.npcs_1A0[var_s2], 0x128);
+            bzero(&g_SysWork.npcs_1A0[npcIdx], 0x128);
 
-            if (var_s5->data.spawnInfo.charaId_4 > 0)
+            if (var_s5->data.spawnInfo.charaId_4 > Chara_None)
             {
-                g_SysWork.npcs_1A0[var_s2].model_0.charaId_0 = var_s5->data.spawnInfo.charaId_4;
+                g_SysWork.npcs_1A0[npcIdx].model_0.charaId_0 = var_s5->data.spawnInfo.charaId_4;
             }
             else
             {
-                g_SysWork.npcs_1A0[var_s2].model_0.charaId_0 = var_s4 < 16 ? sp20 : sp24;
+                g_SysWork.npcs_1A0[npcIdx].model_0.charaId_0 = (var_s4 < 16) ? sp20 : sp24;
             }
 
-            g_SysWork.npcs_1A0[var_s2].field_40            = var_s4;
-            g_SysWork.npcs_1A0[var_s2].model_0.state_2     = 0;
-            g_SysWork.npcs_1A0[var_s2].model_0.stateStep_3 = var_s5->data.spawnInfo.flags_6;
-            g_SysWork.npcs_1A0[var_s2].position_18.vx      = var_s5->positionX_0;
-            g_SysWork.npcs_1A0[var_s2].position_18.vz      = var_s5->positionZ_8;
+            g_SysWork.npcs_1A0[npcIdx].field_40            = var_s4;
+            g_SysWork.npcs_1A0[npcIdx].model_0.state_2     = 0;
+            g_SysWork.npcs_1A0[npcIdx].model_0.stateStep_3 = var_s5->data.spawnInfo.flags_6;
+            g_SysWork.npcs_1A0[npcIdx].position_18.vx      = var_s5->positionX_0;
+            g_SysWork.npcs_1A0[npcIdx].position_18.vz      = var_s5->positionZ_8;
 
-            Collision_Get(&sp10, var_s5->positionX_0, var_s5->positionZ_8);
+            Collision_Get(&coll, var_s5->positionX_0, var_s5->positionZ_8);
 
-            g_SysWork.npcs_1A0[var_s2].position_18.vy = sp10.groundHeight_0;
-            g_SysWork.npcs_1A0[var_s2].rotation_24.vy = var_s5->data.spawnInfo.rotationY_5 * 16;
+            g_SysWork.npcs_1A0[npcIdx].position_18.vy = coll.groundHeight_0;
+            g_SysWork.npcs_1A0[npcIdx].rotation_24.vy = var_s5->data.spawnInfo.rotationY_5 * 16;
 
-            SET_FLAG(&g_SysWork.field_2290, var_s2);
+            SET_FLAG(&g_SysWork.field_2290, npcIdx);
             SET_FLAG(&g_SysWork.field_228C, var_s4);
 
-            var_s6                          = &g_SysWork.npcs_1A0[var_s2];
-            var_s6->model_0.anim_4.flags_2 |= 2;
+            var_s6                          = &g_SysWork.npcs_1A0[npcIdx];
+            var_s6->model_0.anim_4.flags_2 |= AnimFlag_Visible;
         }
     }
 }
@@ -2088,13 +2088,14 @@ static inline void SysWork_Flags2290Clear(s32 var_s4)
     CLEAR_FLAG(&g_SysWork.field_2290, var_s4);
 }
 
-void func_80038354(void)
+void func_80038354(void) // 0x80038354
 {
     typedef struct
     {
         s8      bitIdx_0;
         u8      unk_1[3];
         s32     field_4;
+        s32 i;
         VECTOR3 field_8;
     } s_func_800382EC_0;
 
@@ -2102,13 +2103,12 @@ void func_80038354(void)
     u32                field_40;
     s32                posZShift6;
     s32                posXShift6;
-    GsCOORDINATE2*     temp_s3;
     s32                temp_t1;
     s32                var_a1;
     u8                 var_a2_2;
-    s32                var_a3;
+    s32                j;
     s32                var_s3;
-    s32                var_s4;
+    s32                k;
     s32                var_t5;
     s32                var_v0_4;
     s32                var_v1_3;
@@ -2117,20 +2117,19 @@ void func_80038354(void)
     s8                 temp_s1;
     s32                temp_v0_4;
     s32                var_v0_5;
-    s_SubCharacter*    npc;
     u32                temp_t3;
     u8                 temp_a2;
-    s_func_800382EC_0* temp_s0_3;
     u32                new_var;
-    s32                var_s1;
+    s32                l;
     s32                temp;
     s32                temp2;
+    GsCOORDINATE2*     coord;
+    s_SubCharacter*    npc;
+    s_func_800382EC_0* temp_s0_3;
 
-    // GCC extension funcs
+    // GCC extension funcs.
     s32 func_800382B0(s32 arg0)
     {
-        s32 i;
-
         for (i = 0; i < 2; i++)
         {
             if (arg0 == field_0[i].bitIdx_0)
@@ -2169,16 +2168,16 @@ void func_80038354(void)
     Demo_DemoRandSeedBackup();
     Demo_DemoRandSeedRestore();
 
-    for (var_a3 = 0; var_a3 < 3; var_a3++)
+    for (j = 0; j < ARRAY_SIZE(field_0); j++)
     {
-        field_0[var_a3].bitIdx_0   = NO_VALUE;
-        field_0[var_a3].field_4    = Q12(0.25f);
-        field_0[var_a3].field_8.vy = 0;
+        field_0[j].bitIdx_0   = NO_VALUE;
+        field_0[j].field_4    = Q12(0.25f);
+        field_0[j].field_8.vy = 0;
     }
 
-    for (var_s4 = 0, npc = g_SysWork.npcs_1A0; var_s4 < 6; var_s4++, npc++)
+    for (k = 0, npc = g_SysWork.npcs_1A0; k < ARRAY_SIZE(g_SysWork.npcs_1A0); k++, npc++)
     {
-        if (npc->model_0.charaId_0 != 0 && npc->model_0.charaId_0 != Chara_Padlock)
+        if (npc->model_0.charaId_0 != Chara_None && npc->model_0.charaId_0 != Chara_Padlock)
         {
             if (npc->model_0.charaId_0 <= Chara_MonsterCybil)
             {
@@ -2186,14 +2185,14 @@ void func_80038354(void)
                           FP_SQUARE_PRECISE((npc->position_18.vz >> 6) - posZShift6, Q12_SHIFT);
                 var_t5 = 0;
 
-                if (g_MapOverlayHeader.type_0->flags_6 & 4)
+                if (g_MapOverlayHeader.type_0->flags_6 & MapTypeFlag_Interior)
                 {
-                    var_t5 = (g_MapOverlayHeader.type_0->flags_6 & 3) > 0;
+                    var_t5 = (g_MapOverlayHeader.type_0->flags_6 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)) > 0;
                 }
 
-                for (var_a3 = 0; var_a3 < 3; var_a3++)
+                for (j = 0; j < 3; j++)
                 {
-                    if (npc->health_B0 <= 0 || npc->flags_3E & (1 << 8) || temp_t3 >= field_0[var_a3].field_4)
+                    if (npc->health_B0 <= Q12(0.0f) || npc->flags_3E & CharaFlag_Unk9 || temp_t3 >= field_0[j].field_4)
                     {
                         continue;
                     }
@@ -2217,7 +2216,7 @@ void func_80038354(void)
                         }
                     }
 
-                    for (var_a1 = 2; var_a3 < var_a1; var_a1--)
+                    for (var_a1 = 2; j < var_a1; var_a1--)
                     {
                         field_0[var_a1].bitIdx_0   = field_0[var_a1 - 1].bitIdx_0;
                         field_0[var_a1].field_4    = field_0[var_a1 - 1].field_4;
@@ -2228,78 +2227,78 @@ void func_80038354(void)
                     temp_t1 = (u32)npc - (u32)g_SysWork.npcs_1A0;
                     temp2   = ((((temp_t1 * 0x7E8) - (temp_t1 * 0xFD)) * 4) + temp_t1) * -0x3FFFF;
 
-                    field_0[var_a3].bitIdx_0   = temp2 >> 3;
-                    field_0[var_a3].field_4    = temp_t3;
-                    field_0[var_a3].field_8.vx = npc->position_18.vx;
-                    field_0[var_a3].field_8.vz = npc->position_18.vz;
+                    field_0[j].bitIdx_0   = temp2 >> 3;
+                    field_0[j].field_4    = temp_t3;
+                    field_0[j].field_8.vx = npc->position_18.vx;
+                    field_0[j].field_8.vz = npc->position_18.vz;
                     break;
                 }
 
                 new_var = temp_t3;
 
-                if (new_var > ((var_t5 == 0 && npc->health_B0 < 0) ? SQUARE(24) : SQUARE(40)))
+                if (new_var > ((var_t5 == 0 && npc->health_B0 < Q12(0.0f)) ? SQUARE(24) : SQUARE(40)))
                 {
                     npc->model_0.charaId_0 = 0;
-                    SysWork_Flags2290Clear(var_s4);
+                    SysWork_Flags2290Clear(k);
                     CLEAR_FLAG(&g_SysWork.field_228C, npc->field_40);
                     continue;
                 }
 
-                if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2 && temp_t3 > SQUARE(15)) ||
-                    (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2) &&
+                if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 0x2 && temp_t3 > SQUARE(15)) ||
+                    (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 0x2) &&
                      Camera_Distance2dGet(&npc->position_18) > SQUARE(15)))
                 {
-                    npc->model_0.anim_4.flags_2 &= ~(1 << 1);
+                    npc->model_0.anim_4.flags_2 &= ~AnimFlag_Visible;
                 }
                 else
                 {
 
-                    npc->model_0.anim_4.flags_2 |= (1 << 1);
+                    npc->model_0.anim_4.flags_2 |= AnimFlag_Visible;
                 }
             }
 
-            npc->model_0.anim_4.flags_2 |= (1 << 0);
+            npc->model_0.anim_4.flags_2 |= AnimFlag_Unlocked;
 
             temp    = D_800A98FC[npc->model_0.charaId_0];
-            temp_s3 = D_800A992C[temp].npcCoords_14;
+            coord = D_800A992C[temp].npcCoords_14;
 
             func_8008A384(npc);
             func_80037E40(npc);
             func_8003BD48(npc);
 
-            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model_0.charaId_0](npc, D_800A992C[temp].animFile1_8, temp_s3);
+            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model_0.charaId_0](npc, D_800A992C[temp].animFile1_8, coord);
 
             func_8003BE28();
             func_80037E78(npc);
             func_8008A3AC(npc);
 
-            if (npc->model_0.anim_4.flags_2 & (1 << 1))
+            if (npc->model_0.anim_4.flags_2 & AnimFlag_Visible)
             {
-                func_8003DA9C(npc->model_0.charaId_0, temp_s3, 1, npc->timer_C6, (s8)npc->model_0.paletteIdx_1);
+                func_8003DA9C(npc->model_0.charaId_0, coord, 1, npc->timer_C6, (s8)npc->model_0.paletteIdx_1);
             }
         }
     }
 
-    for (var_s4 = 2; var_s4 >= 0; var_s4--)
+    for (k = 2; k >= 0; k--)
     {
-        if (field_0[var_s4].bitIdx_0 != NO_VALUE)
+        if (field_0[k].bitIdx_0 != NO_VALUE)
         {
             break;
         }
     }
 
-    D_800A9A1C = var_s4 + 1;
+    D_800A9A1C = k + 1;
 
-    if (!(g_SavegamePtr->itemToggleFlags_AC & 1))
+    if (!(g_SavegamePtr->itemToggleFlags_AC & ItemToggleFlag_RadioOn))
     {
         return;
     }
 
     field_40 = 0;
 
-    for (var_s1 = 0; var_s1 < 2; var_s1++)
+    for (l = 0; l < ARRAY_SIZE(D_800BCDA8); l++)
     {
-        temp_s0_2 = D_800BCDA8[var_s1].field_1;
+        temp_s0_2 = D_800BCDA8[l].field_1;
 
         if (temp_s0_2 == NO_VALUE)
         {
@@ -2312,18 +2311,18 @@ void func_80038354(void)
 
         if (var_v0_4 >= 0)
         {
-            D_800BCDA8[var_s1].field_2 = var_v0_4;
-            field_40                  |= 1 << temp_s0_2;
+            D_800BCDA8[l].field_2 = var_v0_4;
+            field_40             |= 1 << temp_s0_2;
         }
         else
         {
-            D_800BCDA8[var_s1].field_1 = NO_VALUE;
+            D_800BCDA8[l].field_1 = NO_VALUE;
         }
     }
 
-    for (var_s1 = 0; var_s1 < 2; var_s1++)
+    for (l = 0; l < ARRAY_SIZE(D_800BCDA8); l++)
     {
-        temp_s1 = D_800BCDA8[var_s1].field_1;
+        temp_s1 = D_800BCDA8[l].field_1;
         if (temp_s1 == NO_VALUE)
         {
             temp_v0_4 = func_800382EC();
@@ -2337,31 +2336,32 @@ void func_80038354(void)
                 var_v0_5 = NO_VALUE;
             }
 
-            D_800BCDA8[var_s1].field_2 = temp_v0_4;
-            D_800BCDA8[var_s1].field_1 = var_v0_5;
+            D_800BCDA8[l].field_2 = temp_v0_4;
+            D_800BCDA8[l].field_1 = var_v0_5;
         }
     }
 
-    for (var_s1 = 0; var_s1 < 2; var_s1++)
+    for (l = 0; l < ARRAY_SIZE(D_800BCDA8); l++)
     {
-        if (D_800BCDA8[var_s1].field_0 == NO_VALUE)
+        if (D_800BCDA8[l].field_0 == NO_VALUE)
         {
-            if (D_800BCDA8[var_s1].field_1 >= 0)
+            if (D_800BCDA8[l].field_1 >= 0)
             {
-                Sd_EngineCmd((u16)(Sfx_RadioInterferenceLoop + var_s1));
+                Sd_EngineCmd((u16)(Sfx_RadioInterferenceLoop + l));
             }
         }
         else
         {
             var_s3 = 0;
-            if (!(g_MapOverlayHeader.type_0->flags_6 & 4) || !(g_MapOverlayHeader.type_0->flags_6 & 3))
+            if (!(g_MapOverlayHeader.type_0->flags_6 & MapTypeFlag_Interior) ||
+                !(g_MapOverlayHeader.type_0->flags_6 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
             {
                 var_s3 = 1;
             }
 
-            if (D_800BCDA8[var_s1].field_1 >= 0)
+            if (D_800BCDA8[l].field_1 >= 0)
             {
-                temp_s0_3 = &field_0[D_800BCDA8[var_s1].field_2];
+                temp_s0_3 = &field_0[D_800BCDA8[l].field_2];
                 temp_s0_4 = Sound_StereoBalanceGet(&temp_s0_3->field_8);
 
                 var_v1_3 = SquareRoot12(temp_s0_3->field_4 << Q12_SHIFT) >> 8;
@@ -2372,14 +2372,15 @@ void func_80038354(void)
 
                 var_a2_2 = CLAMP(var_v1_3, 0, 0xFF);
 
-                func_800463C0(Sfx_RadioInterferenceLoop + var_s1, temp_s0_4, var_a2_2, 0);
+                func_800463C0(Sfx_RadioInterferenceLoop + l, temp_s0_4, var_a2_2, 0);
             }
             else
             {
-                func_8004690C(Sfx_RadioInterferenceLoop + var_s1);
+                func_8004690C(Sfx_RadioInterferenceLoop + l);
             }
         }
-        D_800BCDA8[var_s1].field_0 = D_800BCDA8[var_s1].field_1;
+
+        D_800BCDA8[l].field_0 = D_800BCDA8[l].field_1;
     }
 }
 

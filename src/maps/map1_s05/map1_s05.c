@@ -325,6 +325,7 @@ void func_800D49AC(void) // 0x800D49AC
             g_SysWork.field_30   = 20;
             g_SysWork.field_2378 = 0;
 
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(19.72f), Q12(-5.2f), Q12(-27.6f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(19.72f), Q12(-3.3f), Q12(-24.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 

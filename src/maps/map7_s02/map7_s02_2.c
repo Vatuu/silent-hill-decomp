@@ -429,6 +429,7 @@ void func_800DAA4C(void) // 0x800DAA4C
     VECTOR3  pos;
     SVECTOR3 rot;
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] <= 15)
     {

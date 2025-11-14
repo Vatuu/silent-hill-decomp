@@ -411,6 +411,7 @@ void func_800E1D50(void) // 0x800E1D50
     q19_12   rotX;
     q19_12   rotZ;
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
     {
@@ -593,17 +594,21 @@ void func_800E2724(void) // 0x800E2724
 
             func_800348C0();
 
+            // Load Monster Cybil character.
             Chara_Load(0, Chara_MonsterCybil, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_MonsterCybil, 0, Q12(26.5f), Q12(108.5f), FP_ANGLE(11.3f), 3);
 
+            // Warp camera to start position.
             Camera_PositionSet(NULL, Q12(25.27f), Q12(-2.4f), Q12(98.43f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(23.78f), Q12(-1.04f), Q12(101.88f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
+            // Warp player to start position.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(25.0f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(100.0f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(337.5f);
 
+            // Warp Monster Cybil character to start position.
             g_SysWork.npcs_1A0[0].position_18.vx = Q12(24.0f);
             g_SysWork.npcs_1A0[0].position_18.vz = Q12(102.0f);
             g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(157.5f);
@@ -615,7 +620,7 @@ void func_800E2724(void) // 0x800E2724
             curStateStep = g_SysWork.sysStateStep_C[0];
 
             // TODO: `Chara_MonsterCybil` properties
-            g_SysWork.npcs_1A0[0].properties_E4.player.afkTimer_E8                      = 0;
+            g_SysWork.npcs_1A0[0].properties_E4.player.afkTimer_E8                      = Q12(0.0f);
             g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[1].val16[0] = curStateStep;
             g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[1].val16[1] = curStateStep;
             func_800D8A90(&g_SysWork.npcs_1A0[0]);
@@ -634,8 +639,8 @@ void func_800E2724(void) // 0x800E2724
 
 void func_800E2950(void) // 0x800E2950
 {
-    VECTOR3 cameraPos;
-    VECTOR3 cameraLookAt;
+    VECTOR3 camPos;
+    VECTOR3 camLookAt;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -650,32 +655,34 @@ void func_800E2950(void) // 0x800E2950
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             Game_TurnFlashlightOn();
 
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(23.0f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(103.0f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(135.0f);
 
+            // Warp NPC.
             g_SysWork.npcs_1A0[0].position_18.vx = Q12(18.0f);
             g_SysWork.npcs_1A0[0].position_18.vz = Q12(96.0f);
             g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(135.0f);
 
-            Math_Vector3Set(&cameraPos, Q12(18.0f), Q12(-1.5f), Q12(94.5f));
-            Math_Vector3Set(&cameraLookAt, Q12(18.0f), Q12(-1.3f), Q12(96.0f));
-
-            Camera_PositionSet(&cameraPos, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Camera_LookAtSet(&cameraLookAt, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            // Warp camera.
+            Math_Vector3Set(&camPos, Q12(18.0f), Q12(-1.5f), Q12(94.5f));
+            Math_Vector3Set(&camLookAt, Q12(18.0f), Q12(-1.3f), Q12(96.0f));
+            Camera_PositionSet(&camPos, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(&camLookAt, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             func_8008D438();
 
             g_SysWork.field_236C = NULL;
 
-            g_SysWork.field_2370.vx = -ratan2(cameraLookAt.vy - cameraPos.vy, Math_Vector2MagCalc(cameraLookAt.vx - cameraPos.vx, cameraLookAt.vz - cameraPos.vz));
-            g_SysWork.field_2370.vy = ratan2(cameraLookAt.vx - cameraPos.vx, cameraLookAt.vz - cameraPos.vz);
-            g_SysWork.field_2370.vz = 0;
+            g_SysWork.field_2370.vx = -ratan2(camLookAt.vy - camPos.vy, Math_Vector2MagCalc(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz));
+            g_SysWork.field_2370.vy = ratan2(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz);
+            g_SysWork.field_2370.vz = FP_ANGLE(0.0f);
 
             g_SysWork.field_235C = NULL;
 
-            g_SysWork.field_2360.vx = cameraPos.vx;
-            g_SysWork.field_2360.vy = MAX(Q12(-1.5f), cameraPos.vy);
-            g_SysWork.field_2360.vz = cameraPos.vz;
+            g_SysWork.field_2360.vx = camPos.vx;
+            g_SysWork.field_2360.vy = MAX(Q12(-1.5f), camPos.vy);
+            g_SysWork.field_2360.vz = camPos.vz;
 
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 4, false);
 
@@ -724,6 +731,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
     SVECTOR3        unused;
     s_SubCharacter* player;
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] == 7)
     {
@@ -865,7 +873,7 @@ void func_800E3244(void) // 0x800E3244
     q19_12   rotX;
     q19_12   rotZ;
 
-    // Skip
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 27)
     {

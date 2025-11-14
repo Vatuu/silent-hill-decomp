@@ -26,7 +26,8 @@ extern VECTOR3 D_800D6ED8;
 
 extern VECTOR3 D_800D6EE8;
 
-extern s32 D_800D6EF4;
+/** Time. */
+extern q19_12 D_800D6EF4;
 
 extern u8 D_800D6EF8;
 

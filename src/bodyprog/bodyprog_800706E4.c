@@ -33,25 +33,25 @@ s32 func_800706E4(s_Model* model) // 0x800706E4
                 case MapOverlayId_MAP5_S01:
                 case MapOverlayId_MAP6_S00:
                 case MapOverlayId_MAP6_S02:
-                    if (g_MapOverlayHeader.field_38[D_800AF220].status_2 == 0x100 || g_MapOverlayHeader.field_38[D_800AF220].status_2 == 0x102)
+                    if (g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(128, false) ||
+                        g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(129, false))
                     {
-                        if (g_SysWork.player_4C.chara_0.health_B0 <= 0)
+                        if (g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 -= g_DeltaTime0;
-
-                            if (g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 >= 0)
+                            if (g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 >= Q12(0.0f))
                             {
                                 g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 -= g_DeltaTime0;
-
                                 result = g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8;
                             }
                             else
                             {
-                                result = 0;
+                                result = Q12(0.0f);
                             }
                             break;
                         }
                     }
+
                     result = Q12(15.0f);
             }
             break;
@@ -60,12 +60,13 @@ s32 func_800706E4(s_Model* model) // 0x800706E4
         case 48:
             if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP6_S04)
             {
-                if (g_MapOverlayHeader.field_38[D_800AF220].status_2 == 0x109 || g_MapOverlayHeader.field_38[D_800AF220].status_2 == 0x10A)
+                if (g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(132, true) ||
+                    g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(133, false))
                 {
                     if (g_SysWork.player_4C.chara_0.health_B0 <= 0)
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 -= g_DeltaTime0 * 2;
-                        if (g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 >= 0)
+                        if (g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 >= Q12(0.0f))
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 -= g_DeltaTime0 * 2;
 
@@ -73,11 +74,12 @@ s32 func_800706E4(s_Model* model) // 0x800706E4
                         }
                         else
                         {
-                            result = 0;
+                            result = Q12(0.0f);
                         }
                         break;
                     }
                 }
+
                 result = Q12(10.0f);
             }
             break;

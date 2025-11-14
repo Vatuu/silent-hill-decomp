@@ -33,19 +33,13 @@ typedef struct
     s16 field_C;
     u16 field_E;
     u16 field_10;
-    u8  isStereoEnabled_12; // Boolean.
+    u8  isStereoEnabled_12; // `bool`
     s8  field_13;
-    u8  bgmFadeSpeed_14; /** Value to get rested in order to speed the music fade.
-                          * Range: [0, 2], default: 0.
-                          */
+    u8  bgmFadeSpeed_14; /** Value to get rested in order to speed the music fade. Range: [0, 2], default: 0. */
     u8  field_15;
-    u8  field_16;    // Boolean. XA Streaming related.
-                     // If a voiceline audio is playing this get turn into 0
-                     // otherwise it keeps 1.
-
-    u8  muteGame_17; // Boolean. Mutes the game.
-	                 // If the value is 1 the whole game audio will progressively start lowering
-	                 // it's volume until it becomes mute. The sounds will still be playing, but muted.
+    u8  field_16;    // `bool` | XA streaming related. If a voiceline audio is playing, this is set to `false`, otherwise `true`.
+    u8  muteGame_17; // `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively lower
+	                 // in volume until mute. The sounds will keep playing, but muted.
 } s_800C1658;
 
 typedef struct
@@ -62,17 +56,16 @@ typedef struct
     s16 volumeXa_0; // Could also be event timer? Most values are shared with `field_2`.
     s16 field_2;    // `volumeVoice_2`?
     u16 volumeSE_4;
-    s16 field_6;     // Related to the Bgm volume
-    s16 field_8;     // Related to the Bgm volume
+    s16 field_6;     // Related to the BGM volume.
+    s16 field_8;     // Related to the BGM volume.
     s16 volumeGlobal_A;
 	
-	// As main difference with previous volume controlers, this seems to influenciate the behaviour of the game.
-	// For example: when reducing `globalVolumeXA_E` the current voice line will still play while at the same
-	// volume while the next will be play with the volume stablished here. The other volume controlers doesn't
-	// do that and they instantly adjust the audio volume.
-    u8  globalVolumeSE_C;  // Global SE volume channel
-    u8  globalVolumeBGM_D; // Global BGM volume channel
-    u8  globalVolumeXA_E;  // Global Voice volume channel (Not configurable)
+	// As main difference with previous volume controlers, this seems to influence the behaviour of the game.
+	// When reducing `globalVolumeXa_E`, the current voice line will continue playing at the same
+	// volume while the next will be play at the volume set here. Other volume controllers don't do this and instantly adjust audio volume.
+    u8  globalVolumeSe_C;  // Global SE volume channel.
+    u8  globalVolumeBgm_D; // Global BGM volume channel.
+    u8  globalVolumeXa_E;  // Global Voice volume channel (not configurable).
 } s_800C1678;
 
 // ========
@@ -98,7 +91,7 @@ extern s_800C1670 D_800C1670;
 
 extern s_800C1678 D_800C1678;
 
-extern u8 g_Sound_ReverbDepth; // 0x800C1687;
+extern u8 g_Sound_ReverbDepth;
 
 // Command pool related to audio and streaming.
 extern u8 D_800C16A8[32];
@@ -110,23 +103,23 @@ extern u8 D_800C16A8[32];
 /** @brief Passes a command to the sound driver.
  * Plays SFX among other things.
  */
-void Sd_EngineCmd(u32 cmd); // 0x80045A7C
+void Sd_EngineCmd(u32 cmd);
 
-u16 func_80045BC8(void); // 0x80045BC8
+u16 func_80045BC8(void);
 
 /** @brief Sets the audio system to stereo or mono. */
-void Sd_AudioSystemSet(u8 isStereo); // 0x80045D28
+void Sd_AudioSystemSet(u8 isStereo);
 
 /** @brief Executes `SdUtKeyOffV` and runs through the element 23 of `smf_port`. */
-void Sd_LastVoiceKeyOff(void); // 0x800468EC
+void Sd_LastVoiceKeyOff(void);
 
 /** @brief Executes `SdUtKeyOffV` and runs through all elements of `smf_port`. */
-void Sd_AllVoicesKeyOff(void); // 0x800469AC
+void Sd_AllVoicesKeyOff(void);
 
 /** @brief Executes `SdUtKeyOffVWithRROff` and runs through all elements of `smf_port`. */
-void Sd_AllVoicesKeyOffVWithRROff(void); // 0x800469E8
+void Sd_AllVoicesKeyOffVWithRROff(void);
 
 /** @brief Sets the volume for the global channels of the music, sound effects, and voices. */
-void Sd_SetVolume(u8 xaVol, s16 bgmVol, u8 seVol); // 0x80047798
+void Sd_SetVolume(u8 xaVol, s16 bgmVol, u8 seVol);
 
 #endif

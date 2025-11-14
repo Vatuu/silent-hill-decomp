@@ -541,6 +541,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
 
         case 9:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
+
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 SysWork_StateStepIncrement(0);
@@ -564,6 +565,7 @@ void MapEvent_GameTrialOver(void) // 0x800DAA2C
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
+
             g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
             break;
     }
@@ -728,6 +730,7 @@ void func_800DB368(void) // 0x800DB368
         {
             D_800E1FD8 = true;
         }
+
         SysWork_StateStepSet(0, 27);
     }
 

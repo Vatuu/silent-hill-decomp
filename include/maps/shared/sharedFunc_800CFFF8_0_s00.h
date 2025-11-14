@@ -2,6 +2,7 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand)
 {
     s32 absX;
     s32 threshold;
+
 #if defined(MAP7_S03)
     #define PASS_ADD 8
 #elif defined(MAP1_S06)
@@ -65,4 +66,3 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand)
     #undef CODE_BLOCK1
     #undef CODE_BLOCK2
 }
-
