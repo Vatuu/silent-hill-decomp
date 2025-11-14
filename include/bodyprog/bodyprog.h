@@ -277,22 +277,20 @@ typedef struct
     u8  field_B;
     union
     {
-        q3_12 field_0; // Angle.
+        s32 field_0;
+        struct
+        {
+            q3_12 field_0; // Angle.
+            q3_12 field_2; // Angle.
+        } s_0;
         struct
         {
             u8 field_0;
             u8 field_1;
-        } s_0;
+            u8 field_2;
+            u8 field_3;
+        } s_1;
     } field_C;
-    union
-    {
-        q3_12 field_0; // Angle.
-        struct
-        {
-            u8 field_0;
-            u8 field_1;
-        } s_0;
-    } field_E;
     union
     {
         u32 field_0;

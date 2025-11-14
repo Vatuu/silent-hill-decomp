@@ -12,7 +12,34 @@ INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", g_MapOverlayHeader);
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CB7F4);
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CB8A0);
+void func_800CB8A0(s32 idx)
+{
+    s32 rngB;
+    s32 rngZ;
+    s16 rngX;
+
+    if (D_800DEE50.field_2 == 0)
+    {
+        D_800DD5B0[idx].field_A = 14;
+    }
+    if (D_800DEE50.field_0 == 0)
+    {
+        rngX = (Rng_Rand16() % D_800DEE50.field_A);
+        rngZ = Rng_Rand16() & 0xFFF;
+        D_800DD5B0[idx].vx_0 = (s32) (rngX * Math_Cos(rngZ)) >> 0xC;
+        D_800DD5B0[idx].vz_4 = (s32) (rngX * Math_Sin(rngZ)) >> 0xC;
+    }
+    else
+    {
+        D_800DD5B0[idx].vx_0 = (Rng_Rand16() % (D_800DEE50.field_A * 2)) - D_800DEE50.field_A;
+        D_800DD5B0[idx].vz_4 = (Rng_Rand16() % (D_800DEE50.field_A * 2)) - D_800DEE50.field_A;
+    }
+
+    D_800DD5B0[idx].vy_8 = D_800DEE58;
+    rngB = Rng_Rand16();
+    D_800DD5B0[idx].field_C.field_0 = 0;
+    D_800DD5B0[idx].field_B = rngB - (rngB/3)*3;
+}
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CBA38);
 

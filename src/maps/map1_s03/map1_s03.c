@@ -82,15 +82,15 @@ void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
 
     if (arg2 == 0)
     {
-        sharedData_800E1FF8_1_s02[arg0].field_C.field_0 = (Rng_Rand16() % D_800E3A40[arg1].field_10);
+        sharedData_800E1FF8_1_s02[arg0].field_C.s_0.field_0 = (Rng_Rand16() % D_800E3A40[arg1].field_10);
     }
     else
     {
-        sharedData_800E1FF8_1_s02[arg0].field_C.field_0 = sharedData_800E1FF8_1_s02[arg0].field_C.field_0 - D_800E3A40[arg1].field_10;
+        sharedData_800E1FF8_1_s02[arg0].field_C.s_0.field_0 = sharedData_800E1FF8_1_s02[arg0].field_C.field_0 - D_800E3A40[arg1].field_10;
     }
 
-    sharedData_800E1FF8_1_s02[arg0].field_E.s_0.field_0 = Rng_Rand16() & 0x3;
-    sharedData_800E1FF8_1_s02[arg0].field_E.s_0.field_1 = (Rng_Rand16() & 0x3F) + 0x60;
+    sharedData_800E1FF8_1_s02[arg0].field_C.s_1.field_2 = Rng_Rand16() & 0x3;
+    sharedData_800E1FF8_1_s02[arg0].field_C.s_1.field_3 = (Rng_Rand16() & 0x3F) + 0x60;
     sharedData_800E1FF8_1_s02[arg0].field_10.s_2.field_0 = arg1;
 }
 
