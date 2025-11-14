@@ -2095,7 +2095,6 @@ void func_80038354(void) // 0x80038354
         s8      bitIdx_0;
         u8      unk_1[3];
         s32     field_4;
-        s32 i;
         VECTOR3 field_8;
     } s_func_800382EC_0;
 
@@ -2130,6 +2129,8 @@ void func_80038354(void) // 0x80038354
     // GCC extension funcs.
     s32 func_800382B0(s32 arg0)
     {
+        s32 i;
+
         for (i = 0; i < 2; i++)
         {
             if (arg0 == field_0[i].bitIdx_0)
