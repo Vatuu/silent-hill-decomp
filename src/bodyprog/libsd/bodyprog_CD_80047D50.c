@@ -57,15 +57,15 @@ void func_80047D50(void) // 0x80047D50
 
     if (!Cd_TryCmd(CdlSetloc, (u8*)CdIntToPos(D_800C37D4->field_8 + (D_800C37CC >> 11), &sp10), 0))
     {
-        D_800C1670.field_0 = 3;
+        g_Sd_AudioLoadState.vabLoadState_0 = 3;
     }
 }
 
 void func_80047DB0(void) // 0x80047DB0
 {
-    if (CdSync(1, 0) == 2)
+    if (CdSync(1, 0) == CdlComplete)
     {
-        if (D_800C37D4->field_4 < 51200)
+        if (D_800C37D4->field_4 < 0xC800)
         {
             CdRead((D_800C37D4->field_4 + 2047) / 2048, CD_ADDR_0, 128);
         }
@@ -74,13 +74,14 @@ void func_80047DB0(void) // 0x80047DB0
             CdRead(25, CD_ADDR_0, 128);
         }
 
-        if (D_800C1670.field_0)
+		// @hack
+        if (g_Sd_AudioLoadState.vabLoadState_0)
         {
             char unk = -unk;
         }
 
-        D_800C1670.field_0 = 4;
-        D_800C1658.timer_0 = 0;
+        g_Sd_AudioLoadState.vabLoadState_0 = 4;
+        D_800C1658.timer_0                 = 0;
     }
 
     D_800C1658.timer_0++;
@@ -103,7 +104,7 @@ void func_80047E3C(void) // 0x80047E3C
         }
 
         SdVabOpenHeadSticky(D_800A9FC8[D_800C37C8], D_800C37C8, D_800A9FDC[D_800C37C8]);
-        D_800C1670.field_0 = 5;
+        g_Sd_AudioLoadState.vabLoadState_0 = 5;
     }
 
     D_800C1658.timer_0++;
@@ -114,26 +115,26 @@ void func_80047F18(void) // 0x80047F18
     s32 var;
     s32* ptr;
 
-    if (D_800C37D4->field_4 < 51200)
+    if (D_800C37D4->field_4 < 0xC800)
     {
         var = SdVabTransBody((u8*)CD_ADDR_0 + D_800C37D4->field_2, D_800C37C8);
         ptr = &D_800C37D4->field_4;
 
-        D_800C37CC = *ptr;
-        D_800C1670.field_0 = 9;
+        D_800C37CC                         = *ptr;
+        g_Sd_AudioLoadState.vabLoadState_0 = 9;
     }
     else
     {
         var = SdVabTransBodyPartly((u8*)CD_ADDR_0 + D_800C37D4->field_2, 0xC800 - D_800C37D4->field_2, D_800C37C8);
 
-        D_800C37CC = 0xC800;
-        D_800C1670.field_0 = 6;
+        D_800C37CC                         = 0xC800;
+        g_Sd_AudioLoadState.vabLoadState_0 = 6;
     }
     
     if (var == NO_VALUE && D_800C37D0 < 16)
     {
         D_800C37D0++;
-        D_800C1670.field_0 = 1;
+        g_Sd_AudioLoadState.vabLoadState_0 = 1;
     }
 }
 
@@ -145,12 +146,12 @@ void func_80048000(void) // 0x80048000
 
     if (SdVabTransCompleted(0) == 1)
     {
-        i = D_800C37D4->field_8 + ((D_800C37CC + 0x7FF) >> 11);
+        i        = D_800C37D4->field_8 + ((D_800C37CC + 0x7FF) >> 11);
         cdLocRes = CdIntToPos(i, &cdLocArg);
 
         if (!Cd_TryCmd(CdlSetloc, (u8*)cdLocRes, 0))
         {
-            D_800C1670.field_0 = 7;
+            g_Sd_AudioLoadState.vabLoadState_0 = 7;
         }
     }
 }
@@ -159,13 +160,13 @@ void func_8004807C(void) // 0x8004807C
 {
     u32 var;
 
-    if (CdSync(1, 0) != 2)
+    if (CdSync(1, 0) != CdlComplete)
     {
         return;
     }
     
     var = D_800C37D4->field_4 - D_800C37CC;
-    if (var < 51200)
+    if (var < 0xC800)
     {
         CdRead(((var + 2047) / 2048), CD_ADDR_0, 128);
     }
@@ -174,7 +175,7 @@ void func_8004807C(void) // 0x8004807C
         CdRead(25, CD_ADDR_0, 128);
     }
     
-    D_800C1670.field_0 = 8;
+    g_Sd_AudioLoadState.vabLoadState_0 = 8;
 }
 
 void func_800480FC(void) // 0x800480FC
@@ -190,21 +191,21 @@ void func_800480FC(void) // 0x800480FC
     var1 = D_800C37D4->field_4 - D_800C37CC;
     if (var1 < 51200)
     {
-        var0               = SdVabTransBodyPartly((u8*)CD_ADDR_0, var1, D_800C37C8);
-        D_800C37CC         = D_800C37D4->field_4;
-        D_800C1670.field_0 = 9;
+        var0                               = SdVabTransBodyPartly((u8*)CD_ADDR_0, var1, D_800C37C8);
+        D_800C37CC                         = D_800C37D4->field_4;
+        g_Sd_AudioLoadState.vabLoadState_0 = 9;
     }
     else
     {
-        var0               = SdVabTransBodyPartly((u8*)CD_ADDR_0, 0xC800u, D_800C37C8);
-        D_800C37CC        += 0xC800;
-        D_800C1670.field_0 = 6;
+        var0                               = SdVabTransBodyPartly((u8*)CD_ADDR_0, 0xC800u, D_800C37C8);
+        D_800C37CC                        += 0xC800;
+        g_Sd_AudioLoadState.vabLoadState_0 = 6;
     }
 
     if (var0 == NO_VALUE && D_800C37D0 < 16)
     {
         D_800C37D0++;
-        D_800C1670.field_0 = 1;
+        g_Sd_AudioLoadState.vabLoadState_0 = 1;
     }
 }
 
@@ -215,9 +216,9 @@ void func_800481F8(void) // 0x800481F8
         return;
     }
 
-    D_800C1670.field_0  = 0;
-    D_800C1658.timer_0  = 0;
-    D_800C1658.field_15 = 0;
+    g_Sd_AudioLoadState.vabLoadState_0 = 0;
+    D_800C1658.timer_0                 = 0;
+    D_800C1658.isVabLoading_15         = false;
     func_80047A70();
 }
 
@@ -228,7 +229,7 @@ void func_80048244(u16 cmd) // 0x80048244
         return;
     }
 
-    if (D_800C1658.field_4 != 0)
+    if (D_800C1658.xaAudioIdx_4 != 0)
     {
         func_800478DC(2);
     }
@@ -237,9 +238,9 @@ void func_80048244(u16 cmd) // 0x80048244
     Sd_EngineCmd((u16)(cmd + 173)); // 173 must be some base value for a command category.
     func_800478DC(cmd);
 
-    D_800C37D0          = 0;
-    D_800C1658.field_6  = cmd;
-    D_800C1658.field_15 = 1;
+    D_800C37D0                 = 0;
+    D_800C1658.field_6         = cmd;
+    D_800C1658.isVabLoading_15 = true;
 }
 
 static s_800C37D4 D_800AA274[73] = {
@@ -319,12 +320,12 @@ static s_800C37D4 D_800AA274[73] = {
 };
 void func_800482D8(void) // 0x800482D8
 {
-    switch (D_800C1670.field_0)
+    switch (g_Sd_AudioLoadState.vabLoadState_0)
     {
         case 0:
-            D_800C37D8 = &D_800AA274[D_800C16A8[0]];
-            D_800C37C8 = D_800C37D8->field_0;
-            D_800C1670.field_0 = 1;
+            D_800C37D8                         = &D_800AA274[D_800C16A8[0]];
+            D_800C37C8                         = D_800C37D8->field_0;
+            g_Sd_AudioLoadState.vabLoadState_0 = 1;
             break;
         
         case 1:
@@ -353,7 +354,7 @@ void Sd_StopSeq(void) // 0x8004839C
     func_80046B78();
     SdSeqClose(D_800C37C8);
 
-    D_800C1670.field_0 = 2;
+    g_Sd_AudioLoadState.vabLoadState_0 = 2;
 }
 
 void func_800483D4(void) // 0x800483D4
@@ -362,7 +363,7 @@ void func_800483D4(void) // 0x800483D4
 
     if (!Cd_TryCmd(CdlSetloc, (u8*)CdIntToPos(D_800C37D8->field_8, &cdLoc), 0))
     {
-        D_800C1670.field_0 = 3;
+        g_Sd_AudioLoadState.vabLoadState_0 = 3;
     }
 }
 
@@ -372,8 +373,8 @@ void func_80048424(void) // 0x80048424
     {
         CdRead((D_800C37D8->field_4 + 2047) / 2048, FS_BUFFER_1, 128);
         
-        D_800C1670.field_0 = 4;
-        D_800C1658.timer_0 = 0;
+        g_Sd_AudioLoadState.vabLoadState_0 = 4;
+        D_800C1658.timer_0                 = 0;
     }
 
     D_800C1658.timer_0++;
@@ -400,12 +401,12 @@ void func_80048498(void) // 0x80048498
         if (i == NO_VALUE && D_800C37D0 < 16)
         {
             D_800C37D0++;
-            D_800C1670.field_0 = 1;
+            g_Sd_AudioLoadState.vabLoadState_0 = 1;
         }
         else
         {
-            D_800C1670.field_0  = 0;
-            D_800C1658.field_15 = 0;
+            g_Sd_AudioLoadState.vabLoadState_0 = 0;
+            D_800C1658.isVabLoading_15         = false;
 
             func_80047A70();
         }
@@ -471,7 +472,7 @@ void func_800485D8(void) // 0x800485D8
             break;
     }
 
-    if (D_800C1658.field_4 != 0)
+    if (D_800C1658.xaAudioIdx_4 != 0)
     {
         D_800C1688.field_4 = VSync(SyncMode_Count) - D_800C1688.field_8;
     }
@@ -567,15 +568,15 @@ void func_800485D8(void) // 0x800485D8
     {
         CdReset(0);
         CdControlB(CdlNop, NULL, NULL);
-        if (D_800C1670.field_0 != 0)
+        if (g_Sd_AudioLoadState.vabLoadState_0 != 0)
         {
-            D_800C1670.field_0 = 1;
+            g_Sd_AudioLoadState.vabLoadState_0 = 1;
         }
         
-        D_800C1670.field_1 = 0;
-        D_800C1670.field_2 = 0;
-        D_800C1670.field_3 = 0;
-        D_800C1658.timer_0 = 0;
+        g_Sd_AudioLoadState.field_1 = 0;
+        g_Sd_AudioLoadState.field_2 = 0;
+        g_Sd_AudioLoadState.field_3 = 0;
+        D_800C1658.timer_0          = 0;
     }
 }
 
@@ -600,15 +601,15 @@ u8 Cd_TryCmd(s32 com, u8* param, u8* res) // 0x80048954
         CdControlB(CdlNop, NULL, NULL);
         VSync(SyncMode_Wait3);
         
-        if (D_800C1670.field_0 != 0)
+        if (g_Sd_AudioLoadState.vabLoadState_0 != 0)
         {
-            D_800C1670.field_0 = 1;
+            g_Sd_AudioLoadState.vabLoadState_0 = 1;
         }
         
-        D_800C1670.field_1 = 0;
-        D_800C1670.field_2 = 0;
-        D_800C1670.field_3 = 0;
-        D_800C1658.timer_0 = 0;
+        g_Sd_AudioLoadState.field_1 = 0;
+        g_Sd_AudioLoadState.field_2 = 0;
+        g_Sd_AudioLoadState.field_3 = 0;
+        D_800C1658.timer_0          = 0;
     }
 
     return true;

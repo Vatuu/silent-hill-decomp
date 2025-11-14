@@ -48,7 +48,7 @@
 #define IMAGE_BUFFER_3 (u_long*)0x801EB600
 
 #define TEMP_MEMORY_ADDR (s8*)0x801A2600
-#define CD_ADDR_0        (u_long*)0x801E2600
+#define CD_ADDR_0        (u_long*)0x801E2600 // Used to allocate temporarely VAB files.
 
 #define FONT24_BUFFER (u_long*)0x801F5600 // Loaded by `GameFs_StfRollBinLoad`.
 

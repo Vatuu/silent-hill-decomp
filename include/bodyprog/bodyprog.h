@@ -970,19 +970,6 @@ typedef struct
 } s_800A992C;
 STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 
-typedef struct
-{
-    u8  field_0;
-    u8  unk_1; // } Padding?
-    u8  unk_2; // }
-    u8  unk_3; // }
-    u32 field_4    : 24;
-    u8  field_4_24 : 8;
-    u32 field_8    : 24;
-    u8  field_8_24 : 8;
-} s_800AA894;
-STATIC_ASSERT_SIZEOF(s_800AA894, 12);
-
 /** Related to weapon attacks. */
 typedef struct
 {
@@ -1186,36 +1173,6 @@ typedef struct
     u8 field_0;
     u8 field_1;
 } s_800C15F0;
-
-typedef struct
-{
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-} s_800C1688;
-
-/** Sound struct for currently used SFX? */
-typedef struct
-{
-    u8  field_0;
-    u8  field_1;
-    s16 field_2;
-    s16 field_4;
-    s16 field_6;
-    s16 field_8;
-    s16 field_A; // Pitch?
-    s16 volumeLeft_C;
-    s16 volumeRight_E;
-} s_800C1698;
-
-typedef struct
-{
-    s8  field_0;
-    s8  unk_1;
-    u16 field_2;
-    u32 field_4;
-    s32 field_8;
-} s_800C37D4;
 
 // Used in string parsing.
 typedef struct
@@ -2085,8 +2042,6 @@ extern u16 D_800A9774[];
 
 extern u16 g_UnknownEngineCmdTable1[];
 
-extern s_800C37D4 D_800A986C[];
-
 extern s32 D_800A9A20;
 
 /** X. */
@@ -2288,11 +2243,7 @@ extern u32 D_800A9FB0;
 
 extern s32 D_800A9FB4[];
 
-extern u8 REVERB_DEPTHS[];
-
 extern u8 D_800AA604[][16];
-
-extern s_800AA894 D_800AA894[];
 
 extern u8 D_800AE185;
 
@@ -2520,10 +2471,6 @@ extern u16 D_800C15F8[];
 /** Voices? */
 extern s16 D_800C1628[];
 
-extern s_800C1688 D_800C1688;
-
-extern s_800C1698 D_800C1698;
-
 extern s16 D_800C16A4;
 
 extern s32 D_800C16C8; // Type assumed.
@@ -2553,8 +2500,6 @@ extern s32 D_800C3994;
 
 extern u8 D_800C37D0;
 
-extern s_800C37D4* D_800C37D8;
-
 extern s_800C38B0 D_800C38B0;
 
 extern s_800C38B4 D_800C38B4;
@@ -2562,15 +2507,7 @@ extern s_800C38B4 D_800C38B4;
 /** Times? */
 extern q19_12 D_800C4710[];
 
-extern u8 D_800C37C8;
-
-extern u32 D_800C37CC;
-
-extern s_800C37D4* D_800C37D4;
-
 extern u8 D_800C37DC;
-
-extern u8 D_800C37DD;
 
 /** String position. */
 extern DVECTOR g_StringPosition; // 0x800C38A8
@@ -3179,11 +3116,6 @@ u8 func_80046BB4(u8 arg0);
 
 void func_80046C54(u8 arg0, u8 vol);
 
-/** Sound command func. Unknown category. */
-void func_80046D3C(u16 cmd);
-
-s32 func_80046DCC(s32 idx);
-
 void func_80046E00(void);
 
 void func_8004729C(u16 sfxId);
@@ -3193,35 +3125,6 @@ void func_800472BC(s32 sfxId);
 void func_80047308(void);
 
 void func_8004760C(void);
-
-/** Sound func. */
-void func_800478DC(u8 cmd);
-
-void func_80047A70(void);
-
-void Sd_SetVolBgm(s16 volLeft, s16 volRight);
-
-void Sd_SetVolXa(s16 volLeft, s16 volRight);
-
-s16 Sd_GetVolSe(s16 arg0);
-
-void Sd_SetReverbDepth(u8 depth);
-
-void Sd_SetReverbEnable(s32 mode);
-
-void func_80047B24(s32 arg0);
-
-void func_80047B80(void);
-
-void func_80047D1C(void);
-
-void func_80047D50(void);
-
-void func_80047DB0(void);
-
-void func_80047E3C(void);
-
-void func_80047F18(void);
 
 void func_80048000(void);
 
@@ -3253,8 +3156,6 @@ void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
 void func_800485B8(s32 arg0, u8 arg1, u32 arg2);
 
 void func_800485C0(s32 idx);
-
-void func_800485D8(void);
 
 /** @brief Executes a new primitive command and checks the status against the previous.
  * If the previous primitive commands haven't completed, it starts

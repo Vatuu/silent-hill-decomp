@@ -8103,35 +8103,35 @@ void func_8007F14C(u8 arg0) // 0x8007F14C
 {
     switch (arg0)
     {
-        case 0:
-        case 1:
-        case 4:
-        case 6:
-        case 7:
+        case EquippedWeaponId_KitchenKnife:
+        case EquippedWeaponId_SteelPipe:
+        case EquippedWeaponId_Hammer:
+        case EquippedWeaponId_Katana:
+        case EquippedWeaponId_Axe:
             Sd_EngineCmd(164);
             break;
 
-        case 5:
+        case EquippedWeaponId_Chainsaw:
             Sd_EngineCmd(169);
             break;
 
-        case 2:
+        case EquippedWeaponId_RockDrill:
             Sd_EngineCmd(163);
             break;
 
-        case 32:
+        case EquippedWeaponId_Handgun:
             Sd_EngineCmd(166);
             break;
 
-        case 33:
+        case EquippedWeaponId_HuntingRifle:
             Sd_EngineCmd(167);
             break;
 
-        case 34:
+        case EquippedWeaponId_Shotgun:
             Sd_EngineCmd(168);
             break;
 
-        case 35:
+        case EquippedWeaponId_HyperBlaster:
             Sd_EngineCmd(165);
             break;
     }
