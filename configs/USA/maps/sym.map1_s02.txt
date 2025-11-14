@@ -190,3 +190,4 @@ g_WorldObjectA            = 0x800E5A08; // type:WorldObjectDesc size:0x2E
 g_WorldObjectB            = 0x800E5A38; // type:WorldObjectDesc size:0x2E
 g_WorldObject2            = 0x800E5A68; // type:WorldObjectDesc size:0x2E
 g_CommonWorldObjects      = 0x800E5AA8; // type:WorldObject_0 size:0xA8
+D_800E1210                = 0x800E1210; // type:u16 size:0x54
