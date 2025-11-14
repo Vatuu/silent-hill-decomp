@@ -2064,6 +2064,8 @@ extern s_FsImageDesc g_FirstAidKitItemTextureImg;  // 0x800A906C
 /** Some intentory item texture (`ITEM/TIM07.TIM`). */
 extern s_FsImageDesc D_800A9074;
 
+extern s_FsImageDesc D_800A907C;
+
 extern s_FsImageDesc D_800A9084;
 
 extern s_FsImageDesc D_800A908C;

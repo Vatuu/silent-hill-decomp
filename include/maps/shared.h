@@ -1955,6 +1955,12 @@ typedef struct
     s32 field_10;
 } s_sharedData_800E231C_0_s01;
 
+typedef struct
+{
+    u8 field_0;
+    u8 field_1;
+} s_800F0158; // Used by puzzle in M5S01 & M7S01.
+
 extern s_sharedData_800E231C_0_s01 sharedData_800E231C_0_s01;
 
 extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;

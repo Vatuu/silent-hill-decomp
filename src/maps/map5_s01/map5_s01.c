@@ -609,7 +609,132 @@ void MapEvent_CommonItemTake(void) // 0x800EB9A4
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EBA40);
+void func_800EBA40(void) // 0x800EBA40
+{
+    s32 i;
+    s32 j;
+
+    func_80037188();
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            D_800F0358 = 0;
+            D_800F0354 = 0;
+
+            for (i = 0; i < 4; i++)
+            {
+                D_800F0350[i] = 10;
+            }
+
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_800862F8(7, FILE_TIM_DORPANEL_TIM, false);
+            break;
+
+        case 2:
+            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            break;
+
+        case 3:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
+            break;
+
+        case 4:
+            Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
+
+            D_800F0354 += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
+            D_800F0354  = CLAMP_RANGE(D_800F0354, Q12(-160.0f), Q12(160.0f));
+
+            D_800F0358 += (g_Controller0->sticks_24.sticks_0.leftY * 16384) / 75;
+            D_800F0358  = CLAMP_RANGE(D_800F0358, Q12(-120.0f), Q12(120.0f));
+
+            Game_TimerUpdate();
+            func_800881B8((s16)(FP_FROM(D_800F0354, Q12_SHIFT) + 8), FP_FROM(D_800F0358, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
+
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            {
+                SysWork_StateStepSet(0, 7);
+                break;
+            }
+
+            if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0))
+            {
+                for (i = 0; i < ARRAY_SIZE(D_800F0158); i++)
+                {
+                    if ((D_800F0158[i].field_0 - 160) > FP_FROM(D_800F0354, Q12_SHIFT) ||
+                        (D_800F0158[i].field_0 - 114) < FP_FROM(D_800F0354, Q12_SHIFT))
+                    {
+                        continue;
+                    }
+
+                    if ((D_800F0158[i].field_1 - 120) > FP_FROM(D_800F0358, Q12_SHIFT) ||
+                        (D_800F0158[i].field_1 - 74) < FP_FROM(D_800F0358, Q12_SHIFT))
+                    {
+                        continue;
+                    }
+
+                    Sd_PlaySfx(Sfx_Unk1586, 0, Q8_CLAMPED(0.5f));
+
+                    if (i < 11)
+                    {
+                        for (j = 0; j < (ARRAY_SIZE(D_800F0350) - 1); j++)
+                        {
+                            D_800F0350[j] = D_800F0350[j + 1];
+                        }
+                        D_800F0350[3] = i;
+                        break;
+                    }
+
+                    for (j = 0; j < ARRAY_SIZE(D_800F0350); j++)
+                    {
+                        if (D_800F0170[j] != D_800F0350[j])
+                        {
+                            break;
+                        }
+                    }
+
+                    if (j == 4)
+                    {
+                        Savegame_EventFlagSet(EventFlag_387);
+                        SysWork_StateStepIncrement(0);
+                    }
+                    else
+                    {
+                        for (j = 0; j < ARRAY_SIZE(D_800F0350); j++)
+                        {
+                            D_800F0350[j] = 10;
+                        }
+                    }
+                    break;
+                }
+            }
+            break;
+        case 5:
+            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
+            Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
+            break;
+
+        case 6:
+            Sd_PlaySfx(Sfx_Unk1587, 0, Q8_CLAMPED(0.5f));
+            SysWork_StateStepIncrement(0);
+
+        case 7:
+            Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        default:
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            func_80037154();
+            break;
+    }
+}
 
 void MapEvent_MapTake(void) // 0x800EBF48
 {

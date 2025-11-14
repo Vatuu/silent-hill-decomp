@@ -33,12 +33,6 @@
 
 typedef struct
 {
-    u8 field_0;
-    u8 field_1;
-} s_800E1510;
-
-typedef struct
-{
     u8  field_0;
     u8  unk_1[1];
     s16 field_2;
@@ -54,7 +48,7 @@ extern u16 D_800E14E8;
 extern u16     D_800E1500;
 extern VECTOR3 D_800E1504;
 
-extern s_800E1510 D_800E1510[26];
+extern s_800F0158 D_800E1510[26];
 
 extern u8 D_800E1544[5];
 
@@ -170,6 +164,7 @@ void func_800D946C(void);
 
 void func_800D94A4(void);
 
+/** @brief Puzzle event? Similar to M5S01 `func_800EBA40` */
 void func_800D94DC(void);
 
 void func_800D99DC(void);

@@ -989,7 +989,6 @@ void func_800D94DC(void) // 0x800D94DC
 {
     s32         i;
     s32         j;
-    s_800E1510* var_s1;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -1041,42 +1040,47 @@ void func_800D94DC(void) // 0x800D94DC
             {
                 for (i = 0; i < ARRAY_SIZE(D_800E1510); i++)
                 {
-                    var_s1 = &D_800E1510[i];
-                    if ((var_s1->field_0 - 174) <= FP_FROM(D_800E2CA8, Q12_SHIFT) &&
-                        (var_s1->field_0 - 146) >= FP_FROM(D_800E2CA8, Q12_SHIFT))
+                    if (D_800E1510[i].field_0 - 174 > FP_FROM(D_800E2CA8, Q12_SHIFT) ||
+                        D_800E1510[i].field_0 - 146 < FP_FROM(D_800E2CA8, Q12_SHIFT))
                     {
-                        if ((var_s1->field_1 - 134) <= FP_FROM(D_800E2CAC, Q12_SHIFT) &&
-                            (var_s1->field_1 - 106) >= FP_FROM(D_800E2CAC, Q12_SHIFT))
+                        continue;
+                    }
+
+                    if (D_800E1510[i].field_1 - 134 > FP_FROM(D_800E2CAC, Q12_SHIFT) ||
+                        D_800E1510[i].field_1 - 106 < FP_FROM(D_800E2CAC, Q12_SHIFT))
+                    {
+                        continue;
+                    }
+
+                    if (SQUARE(D_800E1510[i].field_0 - 160 - FP_FROM(D_800E2CA8, Q12_SHIFT)) +
+                            SQUARE(D_800E1510[i].field_1 - 120 - FP_FROM(D_800E2CAC, Q12_SHIFT)) >=
+                        197)
+                    {
+                        continue;
+                    }
+
+                    Sd_EngineCmd(Sfx_Unk1650);
+
+                    for (j = 0; j < (ARRAY_SIZE(D_800E1688) - 1); j++)
+                    {
+                        D_800E1688[j] = D_800E1688[j + 1];
+                    }
+
+                    D_800E1688[4] = i;
+
+                    for (j = 0; j < ARRAY_SIZE(D_800E1688); j++)
+                    {
+                        if (D_800E1688[j] != D_800E1544[j])
                         {
-                            if (SQUARE((var_s1->field_0 - 160) - FP_FROM(D_800E2CA8, Q12_SHIFT)) +
-                                    SQUARE((var_s1->field_1 - 120) - FP_FROM(D_800E2CAC, Q12_SHIFT)) <
-                                197)
-                            {
-                                Sd_EngineCmd(Sfx_Unk1650);
-
-                                for (j = 0; j < (ARRAY_SIZE(D_800E1688) - 1); j++)
-                                {
-                                    D_800E1688[j] = D_800E1688[j + 1];
-                                }
-
-                                D_800E1688[4] = i;
-
-                                for (j = 0; j < ARRAY_SIZE(D_800E1688); j++)
-                                {
-                                    if (D_800E1688[j] != D_800E1544[j])
-                                    {
-                                        break;
-                                    }
-                                }
-
-                                if (j == ARRAY_SIZE(D_800E1688))
-                                {
-                                    Savegame_EventFlagSet(EventFlag_488);
-
-                                    SysWork_StateStepSet(0, 5);
-                                }
-                            }
+                            break;
                         }
+                    }
+
+                    if (j == ARRAY_SIZE(D_800E1688))
+                    {
+                        Savegame_EventFlagSet(EventFlag_488);
+
+                        SysWork_StateStepSet(0, 5);
                     }
                 }
             }
