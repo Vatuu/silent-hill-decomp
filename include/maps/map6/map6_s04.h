@@ -69,16 +69,9 @@ extern s8 D_800ED5B8;
 extern s8 D_800ED5F0;
 extern s8 D_800ED840;
 extern s8 D_800ED841;
-extern s8 D_800CC4C4;
-extern s8 D_800CC4CC;
-extern s8 D_800CC4D4;
-extern s8 D_800CC4DC;
 extern u16 D_800EBA34[23]; // `g_MapMsgSounds`
 extern s16 D_800ED5B4;
 extern s8 D_800ED5B8;
-extern s8 D_800CC4C4;
-extern s8 D_800CC4CC;
-extern s8 D_800CC4D4;
 extern u8 D_800EB740[2];
 extern u8 D_800EB738;
 extern u8 D_800EB748;
@@ -117,6 +110,8 @@ void func_800E1CA0(void);
 
 /** Cutscene. */
 void func_800E1D50(void);
+
+void func_800E219C(void);
 
 void func_800E2724(void);
 
