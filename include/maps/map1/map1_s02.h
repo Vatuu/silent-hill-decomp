@@ -41,8 +41,9 @@ extern s_WorldObject_0              g_CommonWorldObjects[6];      // D_800E5AA8
 extern s_WorldObjectPose            g_CommonWorldObjectPoses[11]; // D_800E1EEC
 extern VECTOR3 g_ObjPosC[2]; // 800E5918
 extern SVECTOR g_ObjRotC[2]; // 800E5938
-extern s8 D_800E5A98;
-extern s8 D_800E5A99;
+extern u8 D_800E5A98;
+extern u8 D_800E5A99;
+extern SVECTOR3 D_800CBA44;
 
 extern u16 D_800E1EDC;
 
@@ -101,5 +102,7 @@ void func_800DD420(void);
 void func_800DEC88(void);
 
 void func_800DD494(void);
+
+void func_800DDA84(void);
 
 #endif
