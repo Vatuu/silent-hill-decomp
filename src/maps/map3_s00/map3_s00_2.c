@@ -139,7 +139,7 @@ void func_800D0CF8(void) // 0x800D0CF8
     {
         case 0:
             Player_ControlFreeze();
-            func_8005DC1C(Sfx_Unk1310, &QVECTOR3(94.6f, -1.2f, 101.5f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_DoorClose0, &QVECTOR3(94.6f, -1.2f, 101.5f), Q8_CLAMPED(0.5f), 0);
             Savegame_MapMarkingSet(MapMarkFlag_FogHospital1F_StairsLocked);
 
             Fs_QueueStartRead(FILE_ANIM_HP1F03_DMS, FS_BUFFER_15);
@@ -402,7 +402,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case EventState_CutsceneEnd:
-            func_8005DC1C(Sfx_Unk1309, &D_800D2530, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_DoorOpen0, &D_800D2530, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 33:
@@ -410,7 +410,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             break;
 
         case 34:
-            func_8005DC1C(Sfx_Unk1310, &D_800D2530, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_DoorClose0, &D_800D2530, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 35:

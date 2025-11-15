@@ -4486,8 +4486,8 @@ q19_12 Game_GasWeaponPowerTimerValue(void);
 
 void func_8007FD4C(bool cond);
 
-/** Returns data in last 3 pointer args. Outputs? */
-void func_8007FDE0(s8, e_SfxId* sfx, s8* pitch0, s8* pitch1);
+/** Returns footstep sound effect ID and random pitches? `arg0` usually comes from `s_Collision` */
+void func_8007FDE0(s8 arg0, e_SfxId* sfx, s8* pitch0, s8* pitch1);
 
 /** Returns angle. */
 q19_12 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1);

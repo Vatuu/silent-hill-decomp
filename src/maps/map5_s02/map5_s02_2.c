@@ -415,7 +415,7 @@ void func_800D54D0(void) // 0x800D54D0
 
                 if (g_SysWork.sysStateStep_C[0] != 6)
                 {
-                    Sd_EngineCmd(Sfx_Unk1307);
+                    Sd_EngineCmd(Sfx_MenuConfirm);
                 }
             }
             break;
@@ -435,7 +435,7 @@ void func_800D54D0(void) // 0x800D54D0
 
                 if (g_SysWork.sysStateStep_C[0] != 9)
                 {
-                    Sd_EngineCmd(Sfx_Unk1307);
+                    Sd_EngineCmd(Sfx_MenuConfirm);
                 }
             }
             break;
@@ -676,7 +676,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 37:
-            func_8005DC1C(Sfx_Unk1309, &QVECTOR3(134.5f, -1.2f, 17.9f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_DoorOpen0, &QVECTOR3(134.5f, -1.2f, 17.9f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 38:
@@ -684,7 +684,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 39:
-            func_8005DC1C(Sfx_Unk1310, &QVECTOR3(134.5f, -1.2f, 17.9f), Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_DoorClose0, &QVECTOR3(134.5f, -1.2f, 17.9f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 40:

@@ -191,7 +191,7 @@ void func_800D1628(void) // 0x800D1628
 
                 if (g_SysWork.sysStateStep_C[0] != 6)
                 {
-                    Sd_EngineCmd(Sfx_Unk1307);
+                    Sd_EngineCmd(Sfx_MenuConfirm);
                 }
             }
             break;

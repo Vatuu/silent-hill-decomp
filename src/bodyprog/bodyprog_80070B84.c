@@ -8549,8 +8549,166 @@ void func_8007FD4C(bool cond) // 0x8007FD4C
     }
 }
 
-// Large function.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80070B84", func_8007FDE0); // 0x8007FDE0
+void func_8007FDE0(s8 arg0, e_SfxId* sfx, s8* pitch0, s8* pitch1) // 0x8007FDE0
+{
+    // `arg0` usually comes from `s_Collision::field_8`, maybe floor type?
+    s32 mapOverlayId;
+
+    switch (arg0)
+    {
+        case 8:
+            mapOverlayId = g_SavegamePtr->mapOverlayId_A4;
+            *sfx         = Sfx_Unk1330;
+
+            // @hack Odd redundant load of mapOverlayId_A4, likely there was some optimized-out code above that left side-effects?
+            // This just sets `mapOverlayId` to `g_SavegamePtr->mapOverlayId_A4` (again)
+            asm volatile(
+                "lui   $2, %%hi(g_SavegamePtr)\n"
+                "lw    $2, %%lo(g_SavegamePtr)($2)\n"
+                "nop\n"
+                "lb    $3, 164($2)\n"
+                :
+                :
+                : "memory");
+
+            if (mapOverlayId == MapOverlayId_MAP2_S00)
+            {
+                if (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(95.0f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(105.0f) &&
+                    g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-33.0f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-28.0f))
+                {
+                    *sfx = Sfx_Unk1389;
+                }
+            }
+            break;
+
+        case 3:
+            *sfx = Sfx_FootstepGrass;
+            break;
+
+        case 4:
+            *sfx = Sfx_Unk1313;
+            break;
+
+        case 5:
+            if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP4_S02)
+            {
+                *sfx = Sfx_Unk1543;
+            }
+            else
+            {
+                *sfx = Sfx_Unk1557;
+            }
+            break;
+
+        case 6:
+        case 10:
+        case 11:
+            *sfx = Sfx_FootstepMetal;
+            break;
+
+        case 9:
+            if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S02)
+            {
+                *sfx = Sfx_Unk1388;
+            }
+            else
+            {
+                *sfx = Sfx_Unk1331;
+            }
+            break;
+
+        case 2:
+            *sfx = Sfx_Unk1389;
+            break;
+
+        default:
+        case 0:
+        case 1:
+        case 7:
+            *sfx = Sfx_FootstepConcrete;
+            break;
+    }
+
+    switch (g_SavegamePtr->mapOverlayId_A4)
+    {
+        case MapOverlayId_MAP6_S02:
+            switch (g_SavegamePtr->mapRoomIdx_A5)
+            {
+                case 20:
+                    if (g_SysWork.player_4C.chara_0.position_18.vy > 0)
+                    {
+                        *sfx = Sfx_Unk1346;
+                    }
+                    break;
+
+                case 21:
+                    if (arg0 != 1)
+                    {
+                        *sfx = Sfx_Unk1346;
+                    }
+                    break;
+            }
+            break;
+
+        case MapOverlayId_MAP4_S03:
+            if ((g_SysWork.player_4C.chara_0.position_18.vx >= Q12(165.0f) &&
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(58.5f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(61.5f)) ||
+
+                (g_SysWork.player_4C.chara_0.position_18.vx <= Q12(112.1f) &&
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-101.45f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-98.5f)))
+            {
+                *sfx = Sfx_Unk1565;
+            }
+
+        case MapOverlayId_MAP6_S00:
+            if ((g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-160.1f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-158.5f) &&
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(26.8f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(27.4f)) ||
+
+                (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-160.1f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-158.5f) &&
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(16.8f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(17.5f)) ||
+
+                (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-170.0f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-165.8f) &&
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-16.4f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-14.35f)) ||
+
+                (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-172.7f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-170.9f) &&
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-24.9f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-21.25f)) ||
+
+                (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-170.28f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-165.85f) &&
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-35.4f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-34.35f)))
+            {
+                *sfx = Sfx_Unk1600;
+            }
+
+            break;
+
+        case MapOverlayId_MAP6_S01:
+            if (g_SavegamePtr->mapRoomIdx_A5 == 18)
+            {
+                *sfx = Sfx_Unk1608;
+            }
+            break;
+
+        case MapOverlayId_MAP6_S04:
+            *sfx = Sfx_FootstepMetal;
+            break;
+    }
+
+    switch (arg0)
+    {
+        case 5:
+        case 6:
+        case 10:
+        case 11:
+            *pitch0 = (Rng_Rand16() % 8) - 4;
+            *pitch1 = (Rng_Rand16() % 16) + 56;
+            break;
+
+        default:
+            *pitch0 = (Rng_Rand16() % 32) - 16;
+            *pitch1 = (Rng_Rand16() % 64) + 32;
+            break;
+    }
+}
 
 q19_12 Math_DistanceGet(const VECTOR3* posFrom, const VECTOR3* posTo) // 0x800802CC
 {

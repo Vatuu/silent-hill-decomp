@@ -17,51 +17,50 @@ typedef enum _SfxId
     Sfx_Unk1302 = Sfx_Base + 22,
     Sfx_Unk1303 = Sfx_Base + 23,
 
-    Sfx_MenuError        = Sfx_Base + 0x18, // `1ST/BASE.VAB` onward, but loaded out of order?
-    Sfx_MenuMove         = Sfx_Base + 0x19,
-    Sfx_MenuCancel       = Sfx_Base + 0x1A,
-    Sfx_MenuConfirm      = Sfx_Base + 0x1B,
-    Sfx_MenuMap          = Sfx_Base + 0x1C,
-    Sfx_DoorOpen0        = Sfx_Base + 0x1D,
-    Sfx_DoorClose0       = Sfx_Base + 0x1E,
-    Sfx_FootstepConcrete = Sfx_Base + 0x1F,
-    Sfx_FootstepGrass    = Sfx_Base + 0x20,
-
-    Sfx_Unk1307 = 1307,
-    Sfx_Unk1308 = 1308,
-    Sfx_Unk1309 = 1309,
-    Sfx_Unk1310 = 1310,
-
-    Sfx_Stumble0 = Sfx_Base + 0x22,
+    Sfx_MenuError        = Sfx_Base + 0x18, // 1304, `1ST/BASE.VAB` onward, but loaded out of order?
+    Sfx_MenuMove         = Sfx_Base + 0x19, // 1305
+    Sfx_MenuCancel       = Sfx_Base + 0x1A, // 1306
+    Sfx_MenuConfirm      = Sfx_Base + 0x1B, // 1307
+    Sfx_MenuMap          = Sfx_Base + 0x1C, // 1308
+    Sfx_DoorOpen0        = Sfx_Base + 0x1D, // 1309
+    Sfx_DoorClose0       = Sfx_Base + 0x1E, // 1310
+    Sfx_FootstepConcrete = Sfx_Base + 0x1F, // 1311
+    Sfx_FootstepGrass    = Sfx_Base + 0x20, // 1312
+    Sfx_Unk1313          = 1313,
+    Sfx_Stumble0         = Sfx_Base + 0x22, // 1314
 
     Sfx_Unk1316               = 1316,
     Sfx_Unk1317               = 1317,
     Sfx_Unk1318               = 1318,
     Sfx_Unk1319               = 1319,
-    Sfx_HarryHeavyBreath      = Sfx_Base + 0x28,
-    Sfx_RadioInterferenceLoop = Sfx_Base + 0x29,
-    Sfx_RadioStaticLoop       = Sfx_Base + 0x2A,
-    Sfx_Unk1323               = 1323, // } Pair.
-    Sfx_Unk1324               = 1324, // }
+    Sfx_HarryHeavyBreath      = Sfx_Base + 0x28, // 1320
+    Sfx_RadioInterferenceLoop = Sfx_Base + 0x29, // 1321
+    Sfx_RadioStaticLoop       = Sfx_Base + 0x2A, // 1322
+    Sfx_Unk1323               = 1323,            // } Pair.
+    Sfx_Unk1324               = 1324,            // }
 
     Sfx_Unk1326 = 1326,
     Sfx_Unk1327 = 1327,
     Sfx_Unk1328 = 1328,
     Sfx_Unk1329 = 1329,
 
-    Sfx_FootstepMetal = Sfx_Base + 0x34,
-    Sfx_Stumble1      = Sfx_Base + 0x35,
-    Sfx_DoorJammed    = Sfx_Base + 0x36,
-    Sfx_UseKey        = Sfx_Base + 0x37,
-    Sfx_Unk1336       = 1336, // } Pair.
-    Sfx_Unk1337       = 1337, // }
-    Sfx_Unk1338       = 1338, // } Pair.
-    Sfx_Unk1339       = 1339, // }
-    Sfx_Unk1340       = 1340, // } Pair.
-    Sfx_Unk1341       = 1341, // }
-    Sfx_DoorUnlocked  = Sfx_Base + 0x3E,
+    Sfx_Unk1330       = 1330,
+    Sfx_Unk1331       = 1331,
+    Sfx_FootstepMetal = Sfx_Base + 0x34, // 1332
+    Sfx_Stumble1      = Sfx_Base + 0x35, // 1333
+    Sfx_DoorJammed    = Sfx_Base + 0x36, // 1334
+    Sfx_UseKey        = Sfx_Base + 0x37, // 1335
+    Sfx_Unk1336       = 1336,            // } Pair.
+    Sfx_Unk1337       = 1337,            // }
+    Sfx_Unk1338       = 1338,            // } Pair.
+    Sfx_Unk1339       = 1339,            // }
+    Sfx_Unk1340       = 1340,            // } Pair.
+    Sfx_Unk1341       = 1341,            // }
+    Sfx_DoorUnlocked  = Sfx_Base + 0x3E, // 1342
     Sfx_Unk1343       = 1343,
-    Sfx_DoorLocked    = Sfx_Base + 0x40,
+    Sfx_DoorLocked    = Sfx_Base + 0x40, // 1344
+
+    Sfx_Unk1346 = 1346,
 
     Sfx_Unk1349 = 1349,
 
@@ -94,6 +93,8 @@ typedef enum _SfxId
     Sfx_Unk1385 = 1385,
     Sfx_Unk1386 = 1386,
     Sfx_Unk1387 = 1387,
+    Sfx_Unk1388 = 1388,
+    Sfx_Unk1389 = 1389,
 
     Sfx_Unk1390 = 1390,
     Sfx_Unk1391 = 1391,
@@ -205,9 +206,14 @@ typedef enum _SfxId
 
     Sfx_Unk1541 = 1541, // Door jammed alt.
 
+    Sfx_Unk1543 = 1543,
+
     Sfx_Unk1554 = 1554,
 
     Sfx_Unk1556 = 1556,
+    Sfx_Unk1557 = 1557,
+
+    Sfx_Unk1565 = 1565,
 
     Sfx_Unk1567 = 1567,
 
@@ -224,6 +230,7 @@ typedef enum _SfxId
     Sfx_Unk1597 = 1597,
     Sfx_Unk1598 = 1598,
 
+    Sfx_Unk1600 = 1600,
     Sfx_Unk1601 = 1601, // } Pair.
     Sfx_Unk1602 = 1602, // }
 
@@ -231,7 +238,7 @@ typedef enum _SfxId
     Sfx_Unk1605 = 1605, // }
     Sfx_Unk1606 = 1606,
     Sfx_Unk1607 = 1607,
-
+    Sfx_Unk1608 = 1608,
     Sfx_Unk1609 = 1609, // } Pair.
     Sfx_Unk1610 = 1610, // }
     Sfx_Unk1611 = 1611,
