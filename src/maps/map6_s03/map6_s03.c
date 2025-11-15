@@ -214,7 +214,39 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", sharedFunc_800D3300_5_s00
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D7F14
 
-INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D7F24);
+u8 Map_RoomIdxGet(s32 x, s32 z) // completely different impl. than what other maps use.
+{
+    s32 ret;
+
+    if (x < Q12(27.0f))
+    {
+        ret = 17;
+        if (x <= Q12(13.0f)) 
+        {
+            ret = 15;
+            if (x > Q12(-13.0f))
+            {
+                ret = 16;
+            }
+        }
+    } 
+    else if (x < Q12(56.0f))
+    {
+        ret = 18;
+    }
+    else
+    {
+        if (x < Q12(72.0f))
+        {
+            ret = 19;
+        }
+        else
+        {
+            ret = 20;
+        }
+    }
+    return ret;
+}
 
 void func_800D7F98(void) 
 {
