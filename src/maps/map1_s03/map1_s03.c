@@ -1167,7 +1167,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             Fs_QueueStartRead(FILE_ANIM_UFO1_DMS, FS_BUFFER_13);
 
             D_800E617C = NO_VALUE;
-            g_Screen_FadeStatus = 4;
+            ScreenFade_ResetTimestep();
 
             Sd_EngineCmd(Sfx_Unk1467);
             func_800463C0(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);

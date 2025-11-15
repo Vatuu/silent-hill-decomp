@@ -312,7 +312,7 @@ void func_800D732C(void) // 0x800D732C
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 3)
     {
-        g_Screen_FadeStatus = 4;
+        ScreenFade_ResetTimestep();
         SysWork_StateStepReset();
     }
 

@@ -153,7 +153,8 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             Fs_QueueStartRead(FILE_ANIM_OPEN_DMS, FS_BUFFER_16);
 
             g_SysWork.field_30 = 20;
-            g_Screen_FadeStatus = 4;
+            ScreenFade_ResetTimestep();
+            
             g_SysWork.flags_22A4 |= 1 << 3;
 
             Sd_PlaySfx(Sfx_Unk1361, 0, 0x90);

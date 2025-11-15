@@ -15,6 +15,28 @@ extern q3_12 D_800D785C;
 
 extern s_AnimInfo FLOATSTINGER_ANIM_INFOS[];
 
+extern VECTOR3 D_800DB938;
+
+extern VECTOR3 D_800DB948;
+
+extern s32 D_800DB954;
+
+extern s_FsImageDesc D_800D7D64;
+
+extern s32 D_800D7D6C;
+
+extern s16 D_800D7D70;
+
+extern u16 D_800D7D74;
+
+extern VECTOR3 D_800D7D88;
+
+extern u8 D_800D7D94;
+
+extern u8 D_800D7D95;
+
+extern s32 D_800D7D6C;
+
 extern s16 D_800D7D80;
 
 extern u8 D_800D7D82;
@@ -36,5 +58,7 @@ void func_800D37E8(s_SubCharacter*, s_AnmHeader*);
 void func_800D3AD4(s_SubCharacter*);
 
 void func_800D6800(void);
+
+void func_800D6BC0(void);
 
 #endif
