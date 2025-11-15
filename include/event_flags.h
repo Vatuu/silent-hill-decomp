@@ -343,12 +343,12 @@ typedef enum _EventFlag
     EventFlag_428 = 428,
 
     EventFlag_431 = 431,
-
+    EventFlag_432 = 432,
     EventFlag_433 = 433,
-
+    EventFlag_434 = 434,
+    EventFlag_435 = 435,
     EventFlag_M6S03_PickupMap = 436,
     EventFlag_437             = 437,
-
     EventFlag_438 = 438,
     EventFlag_439 = 439,
     EventFlag_440 = 440,

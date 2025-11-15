@@ -216,7 +216,102 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", sharedFunc_800D3300_5_s00
 
 INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D7F24);
 
-INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", func_800D7F98);
+void func_800D7F98(void) 
+{
+    s32 dist0;
+    s32 dist1;
+    s32 dist2;
+    s32 fArg1;
+    s32 roomIdx;
+    s32 flags;
+
+    roomIdx = g_SavegamePtr->mapRoomIdx_A5;
+    fArg1 = 0x400;
+    if (Savegame_EventFlagGet(EventFlag_435))
+    {
+        flags = 1;
+        if (Savegame_EventFlagGet(EventFlag_437)) 
+        {
+            fArg1 = 0x547;
+        }
+        else
+        {
+            flags = D_800DBCE4[roomIdx];
+            switch (roomIdx)
+            {
+                case 15:
+                case 16:
+                    D_800DBCDC[5] = 0;
+                    D_800DBCDC[6] = 0;
+                    D_800DBCDC[7] = 0;
+                    break;
+                case 17:
+                    // VECTOR3 D_800DBD10 = VECTOR3(23.0f, 0.0f, 20.0f); // in .data
+                    dist0 = Math_Distance2dGet(&g_SysWork.player_4C.chara_0.position_18, &D_800DBD10);
+                    if (dist0 < Q12(5.0f))
+                    {
+                        dist0 = Q8(0.313f);
+                    }
+                    else
+                    {
+                        dist0 = Q8(0.313f) - FP_MULTIPLY_PRECISE((dist0 - Q12(5.0f)), 3, Q12_SHIFT); 
+                        if (dist0 < 0) 
+                        {
+                            dist0 = 0;
+                        }
+                    }
+                    D_800DBCDC[5] = dist0;
+                    D_800DBCDC[6] = 0;
+                    D_800DBCDC[7] = 0;
+                    break;
+                case 18:
+                case 19:
+                case 20:
+                    D_800DBCDC[5] = Q8(0.313f);
+                    dist1 = Q12(64.0f) - g_SysWork.player_4C.chara_0.position_18.vx;
+                    if (dist1 < 0)
+                    {
+                        dist1 = Q8(0.313f);
+                    }
+                    else
+                    {
+                        dist1 = Q8(0.313f) - FP_MULTIPLY_PRECISE(dist1, 3, Q12_SHIFT);
+                        if (dist1 < 0)
+                        {
+                            dist1 = 0;
+                        }
+                    }
+                    D_800DBCDC[6] = dist1;
+
+                    dist2 = Q12(80.0f) - g_SysWork.player_4C.chara_0.position_18.vx;
+                    if (dist2 < 0)
+                    {
+                        dist2 = Q8(0.313f);
+                    }
+                    else
+                    {
+                        dist2 = Q8(0.313f) - FP_MULTIPLY_PRECISE(dist2, 5, Q12_SHIFT);
+                        if (dist2 < 0)
+                        {
+                            dist2 = 0;
+                        }
+                    }
+                    D_800DBCDC[7] = dist2;
+                    break;
+            }
+        }
+    } 
+    else
+    {
+        flags = 6;
+        if (!Savegame_EventFlagGet(EventFlag_431))
+        {
+            fArg1 = 0x547;
+            flags = 2;
+        }
+    }
+    func_80035F4C(flags, fArg1, &D_800DBCDC);
+}
 
 void func_800D81A4(void) {}
 

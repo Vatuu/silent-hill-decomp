@@ -15,6 +15,10 @@ extern s16 D_800DFEF0;
 extern s16 D_800DFEF2;
 extern s8 D_800DFEF4;
 extern s8 D_800DFEF5;
+extern VECTOR3 D_800DBD10;
+extern u16 D_800DBCE4[22];
+extern u8 D_800DBCDC[8];
+
 void func_800D4A5C(s_SubCharacter* chara);
 
 /** @brief Handles a Health Drink or Handgun Bullets item pickup event. */
@@ -28,5 +32,7 @@ void func_800D84EC(void);
 void MapEvent_MapTake(void);
 
 void func_800D8818(void);
+
+void func_800D7F98(void);
 
 #endif
