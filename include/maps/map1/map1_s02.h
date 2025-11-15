@@ -60,11 +60,13 @@ extern u8 D_800E1FD8;
 extern q3_12 D_800E1FE4;
 
 extern u8 D_800E1208[8];
-extern u16 D_800E1210[42];
+extern u16 D_800E1210[42]; // Flags.
 
 //extern s_WorldObjectDesc D_800E57D8;      // "DOOR_HID", TODO: `g_WorldObject_Door`
 
 //extern s_WorldObjectDescNoRot D_800E58C8; // "BOX_HIDE", TODO: `g_WorldObject_Box`
+
+void func_800D9EBC(void);
 
 /** @brief Lobby key use event. */
 void MapEvent_LobbyKeyUse(void);
@@ -102,12 +104,10 @@ void func_800DD208(void);
 
 void func_800DD420(void);
 
-void func_800DEC88(void);
-
 void func_800DD494(void);
 
 void func_800DDA84(void);
 
-void func_800D9EBC(void);
+void func_800DEC88(void);
 
 #endif

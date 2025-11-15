@@ -191,13 +191,13 @@ void func_800D9EBC(void) // same as `func_800DA4D4` in map1_s03
     switch (roomIdx)
     {
         case 23:
-            flags = 1;
+            flags = 1 << 0;
             if (Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CourtyardQuestion))
             {
-                flags = 0x1FE;
+                flags = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7) | (1 << 8);
                 if (Savegame_MapMarkingGet(MapMarkFlag_308) || Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_CortyardTopArrows))
                 {
-                    flags = 0x10;
+                    flags = 1 << 4;
                 }
             }
             break;
@@ -205,7 +205,7 @@ void func_800D9EBC(void) // same as `func_800DA4D4` in map1_s03
         case 38:
             if (Savegame_EventFlagGet(EventFlag_100) && !Savegame_EventFlagGet(EventFlag_107))
             {
-                flags = 1;
+                flags = 1 << 0;
                 fArg1 = Q12(0.3f);
             }
             break;
@@ -214,13 +214,14 @@ void func_800D9EBC(void) // same as `func_800DA4D4` in map1_s03
             if (Savegame_EventFlagGet(EventFlag_121))
             {
                 fArg1 = Q12(240.0f);
+
                 if (Savegame_EventFlagGet(EventFlag_96))
                 {
-                    flags |= 8;
+                    flags |= 1 << 3;
                 }
                 else
                 {
-                    flags = 1;
+                    flags = 1 << 0;
                 }
             }
             break;
@@ -233,7 +234,7 @@ void func_800D9EBC(void) // same as `func_800DA4D4` in map1_s03
             if (!Savegame_EventFlagGet(EventFlag_98) && Savegame_EventFlagGet(EventFlag_122))
             {
                 fArg1 = Q12(240.0f);
-                flags = 1;
+                flags = 1 << 0;
             }
             break;
     }
@@ -1273,17 +1274,17 @@ void func_800DD420(void) // 0x800DD420
     SysWork_StateSetNext(SysState_Gameplay);
 }
 
-void func_800DD494(void)
+void func_800DD494(void) // 0x800DD494
 {
     s32 idx;
 
     WorldObject_ModelNameSet(&g_WorldObjectC, "FAN_HIDE");
-    
+
     Math_Vector3Set(&g_ObjPosC[0], Q12(100.0f), Q12(-1.6f), Q12(142.9f));
     Math_SetSVectorFast(&g_ObjRotC[0], 0, 0, 0);
     Math_Vector3Set(&g_ObjPosC[1], Q12(100.0f), Q12(-1.6f), Q12(145.25f));
     Math_SetSVectorFast(&g_ObjRotC[1], 0, 0, 0);
-    Math_Vector3Set(&g_ObjPosC[1], Q12(100.0f), Q12(-1.6f), Q12(145.25f)); // Set again ?
+    Math_Vector3Set(&g_ObjPosC[1], Q12(100.0f), Q12(-1.6f), Q12(145.25f)); // Set again?
 
     WorldObjectPoseInit(&g_WorldObject1.position_1C, 18.37f, -0.8f, 59.51f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject1.object_0, "DOOR_HID");
@@ -1381,6 +1382,7 @@ void func_800DD494(void)
 
     D_800E5A98 = 0;
     D_800E5A99 = 0;
+
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
@@ -1389,7 +1391,7 @@ void func_800DD494(void)
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800DDA84(void)
+void func_800DDA84(void) // 0x800DDA84
 {
     s32 rng0;
     s32 rng1;
@@ -1397,6 +1399,7 @@ void func_800DDA84(void)
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     flags = 0;
+
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
         if (!D_800E5A99 && Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain))
@@ -1404,6 +1407,7 @@ void func_800DDA84(void)
             sharedFunc_800CBC98_1_s02();
             D_800E5A99 = 1;
         }
+
         if (Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain) && !Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C.position_0, &g_WorldObject2.position_1C.rotation_C);
@@ -1422,15 +1426,20 @@ void func_800DDA84(void)
     {
         rng0 = -0x800 - (Rng_Rand16() & 0x1FF);
         g_ObjRotC[0].vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, rng0, Q12_SHIFT);
+
         g_WorldGfx_ObjectAdd(&g_WorldObjectC, g_ObjPosC, (SVECTOR3* ) g_ObjRotC);
+
         rng1 = -0x91C - (Rng_Rand16() & 0x1FF);
         g_ObjRotC[1].vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, rng1, Q12_SHIFT);
+
         g_WorldGfx_ObjectAdd(&g_WorldObjectC, &g_ObjPosC[1], (SVECTOR3* ) &g_ObjRotC[1]);
+
         if (!D_800E5A98)
         {
             Sd_EngineCmd(Sfx_Unk1455);
             D_800E5A98 = 1;
         }
+
         func_8005DE0C(Sfx_Unk1455, &g_ObjPosC[0], Q8(0.766f), Q12(16.0f), Q8(-0.25f));
     } 
     else
@@ -1456,14 +1465,16 @@ void func_800DDA84(void)
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C.position_0, &g_WorldObject3.position_1C.rotation_C);
         }
+
         if (Savegame_EventFlagGet(EventFlag_96))
         {
             g_WorldObject1.position_1C.rotation_C.vy = FP_ANGLE(-112.5f);
         }
         else
         {
-            flags = 2;
+            flags = 1 << 1;
         }
+
         g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C.position_0, &g_WorldObject1.position_1C.rotation_C);
     }
 
@@ -1474,18 +1485,19 @@ void func_800DDA84(void)
         g_WorldGfx_ObjectAdd(&g_WorldObject6.object_0, &g_WorldObject6.position_1C.position_0, &g_WorldObject6.position_1C.rotation_C);
         g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C.position_0, &g_WorldObject7.position_1C.rotation_C);
         g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &D_800CBA44);
+
         if (g_WorldObject6.position_1C.rotation_C.vy != FP_ANGLE(180.0f) ||
             g_WorldObject7.position_1C.rotation_C.vy != g_WorldObject6.position_1C.rotation_C.vy)
         {
-            flags |= 4;
+            flags |= 1 << 2;
             Savegame_EventFlagClear(EventFlag_362);
         }
         else
         {
             Savegame_EventFlagSet(EventFlag_362);
         }
-        flags |= 2;
 
+        flags |= 1 << 1;
     }
     else
     {
@@ -1497,6 +1509,7 @@ void func_800DDA84(void)
         {
             g_WorldObject7.position_1C.rotation_C.vy = FP_ANGLE(90.0f);
         }
+
         g_WorldObject6.position_1C.rotation_C.vy = FP_ANGLE(180.0f);
     }
 
@@ -1521,8 +1534,10 @@ void func_800DDA84(void)
     {
         g_WorldGfx_ObjectAdd(&g_WorldObjectB.object_0, &g_WorldObjectB.position_1C.position_0, &g_WorldObjectB.position_1C.rotation_C);
     }
+
     func_80069844(0xFFFF);
-    if (flags)
+
+    if (flags != 0)
     {
         func_8006982C(flags);
     }
@@ -1616,7 +1631,7 @@ void func_800DDA84(void)
     }
 }
 
-void func_800DEC88(void)
+void func_800DEC88(void) // 0x800DEC88
 {
     if (Savegame_MapMarkingGet(MapMarkFlag_AltSchool1F_ReceptionArrows))
     {

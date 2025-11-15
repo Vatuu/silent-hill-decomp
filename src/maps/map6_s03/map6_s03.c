@@ -374,26 +374,28 @@ void MapEvent_MapTake(void) // 0x800D87F0
     Event_MapTake(15, EventFlag_M6S03_PickupMap, 15);
 }
 
-void func_800D8818(void)
+void func_800D8818(void) // 0x800D8818
 {
     D_800DFEF5 = 0;
     D_800DFEF4 = 0;
     D_800DFEF2 = 0;
     D_800DFEF0 = 0;
+
     WorldObject_ModelNameSet(&g_WorldObject0[0], "YUKABFO1");
     WorldObject_ModelNameSet(&g_WorldObject0[1], "YUKAAFT1");
-    Math_Vector3Set(&g_WorldObjectPos0, -0x14000, 0, 0x22000);
+    Math_Vector3Set(&g_WorldObjectPos0, Q12(-20.0f), Q12(0.0f), Q12(34.0f));
 
-    WorldObjectPoseSet(&g_WorldObject1.position_1C, 0x4B000, 0x800, 0x13B33, 0, 0x800, 0);
+    WorldObjectPoseSet(&g_WorldObject1.position_1C, Q12(75.0f), Q12(0.5f), Q12(19.7f), FP_ANGLE(0.0f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
     WorldObject_ModelNameSet(&g_WorldObject1.object_0, "SITAI_NE");
 
-    Math_Vector3Set(&g_WorldObject2.position_1C, -0x16000, 0, 0x1A666);
+    Math_Vector3Set(&g_WorldObject2.position_1C, Q12(-22.0f), Q12(0.0f), Q12(26.4f));
     WorldObject_ModelNameSet(&g_WorldObject2.object_0, "MP_DRNBK");
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
         g_SysWork.field_2280 = 3;
     }
+
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);

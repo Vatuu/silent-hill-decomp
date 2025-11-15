@@ -615,6 +615,7 @@ void func_800EBA40(void) // 0x800EBA40
     s32 j;
 
     func_80037188();
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
@@ -623,7 +624,7 @@ void func_800EBA40(void) // 0x800EBA40
             D_800F0358 = 0;
             D_800F0354 = 0;
 
-            for (i = 0; i < 4; i++)
+            for (i = 0; i < ARRAY_SIZE(D_800F0350); i++)
             {
                 D_800F0350[i] = 10;
             }
@@ -661,7 +662,7 @@ void func_800EBA40(void) // 0x800EBA40
                 break;
             }
 
-            if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0))
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 for (i = 0; i < ARRAY_SIZE(D_800F0158); i++)
                 {
@@ -685,6 +686,7 @@ void func_800EBA40(void) // 0x800EBA40
                         {
                             D_800F0350[j] = D_800F0350[j + 1];
                         }
+
                         D_800F0350[3] = i;
                         break;
                     }
@@ -713,6 +715,7 @@ void func_800EBA40(void) // 0x800EBA40
                 }
             }
             break;
+
         case 5:
             SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
             Gfx_BackgroundSpriteDraw(&g_ItemInspectionImg);

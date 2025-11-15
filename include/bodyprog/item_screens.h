@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_ITEM_SCREENS_H
-#define _BODYPROG_ITEM_SCREENS_H
+#ifndef _BODYPROG_ITEMSCREENS_H
+#define _BODYPROG_ITEMSCREENS_H
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` identified to be related

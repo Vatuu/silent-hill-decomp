@@ -75,7 +75,7 @@ u8 func_80045B28(void) // 0x80045B28
     }
 
     var = 2;
-    if (D_800C1658.isVabLoading_15 == false)
+    if (!D_800C1658.isVabLoading_15)
     {
         if (g_Sd_AudioLoadState.field_3 != 0)
         {
@@ -141,17 +141,17 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
             Sd_LastVoiceKeyOff();
             func_80046AD8();
 
-        case 19: // Executed when a XA audio is going to play.
+        case 19: // Executed when an XA audio is going to play.
             func_8004760C();
             break;
 
-        case 22: // Speed background music fade. Rarely used.
+        case 22: // Background music fade speed. Rarely used.
             D_800C1658.bgmFadeSpeed_14 = 1;
 
         default:
             break;
 
-        case 23: // Speed background music fade. Rarely used.
+        case 23: // Background music fade speed. Rarely used.
             D_800C1658.bgmFadeSpeed_14 = 2;
             break;
 
@@ -169,7 +169,7 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
         func_80047B24(cmd);
     }
 	
-	// Possibly unused
+	// Possibly unused.
     if (cmd >= 32 && cmd < 72)
     {
         func_80048244(cmd);
@@ -654,7 +654,7 @@ void func_80046B78(void) // 0x80046B78
     D_800C1658.field_E         = 0;
 }
 
-static u8 g_Sd_ReverbDepthsList[36] = {
+static u8 g_Sd_ReverbDepths[36] = {
     20, 10, 40, 40, 60,  60,  60, 20,
     20, 20, 40, 40, 60,  60,  60, 60,
     40, 20, 20, 60, 60,  120, 20, 10,
@@ -2372,7 +2372,7 @@ void func_80047B80(void) // 0x80047B80
 
             if (cmd >= 170 && cmd <= 204)
             {
-                depth = g_Sd_ReverbDepthsList[cmd - 170];
+                depth = g_Sd_ReverbDepths[cmd - 170];
                 if (depth != g_Sd_ReverbDepth)
                 {
                     Sd_SetReverbDepth(depth);

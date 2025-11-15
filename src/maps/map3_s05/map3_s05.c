@@ -748,6 +748,7 @@ void func_800D719C(void) // 0x800D719C
         case 0:
             Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
+
         case 1:
             func_80085DF0();
             break;

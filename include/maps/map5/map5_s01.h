@@ -19,7 +19,7 @@ void func_800CD818(void);
 /** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Rifle Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 
-/** @brief Puzzle event? Similar to M7S01 `func_800D94DC` */
+/** @brief Puzzle event? Similar to M7S01 `func_800D94DC`. */
 void func_800EBA40(void);
 
 /** @brief Handles the ? map pickup event. */

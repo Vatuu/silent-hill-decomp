@@ -1,5 +1,5 @@
-#ifndef _SOUND_SYSTEM_H
-#define _SOUND_SYSTEM_H
+#ifndef _BODYPROG_SOUNDSYSTEM_H
+#define _BODYPROG_SOUNDSYSTEM_H
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` that has been identified to be
@@ -51,7 +51,7 @@ typedef struct
     u8  bgmFadeSpeed_14; /** Value to get rested in order to speed the music fade. Range: [0, 2], default: 0. */
     u8  isVabLoading_15; /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
     u8  field_16;        /** `bool` | XA streaming related. If a voiceline audio is playing, this is set to `false`, otherwise `true`. */
-    u8  muteGame_17;     /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively lower
+    u8  muteGame_17;     /** `bool` | Mutes the game. If the value is `true`, main game audio will progressively decrease.
 	                      * in volume until mute. The sounds will keep playing, but muted.
 						  */
 } s_800C1658;
@@ -116,11 +116,11 @@ typedef struct
 // GLOBALS
 // ========
 
-extern u8 g_Sd_ReverbDepthsList[]; // 0x800AA5E0
+extern u8 g_Sd_ReverbDepths[];
 
 extern s_800C37D4 D_800A986C[];
 
-extern s_XaItemData g_XaItemData[]; // 0x800AA894
+extern s_XaItemData g_XaItemData[];
 
 // Only used in `sd_work_init` as iterator variable.
 extern s32 D_800C15B8;
@@ -136,11 +136,11 @@ extern s32 D_800C15E0;
 
 extern s_800C1658 D_800C1658;
 
-extern s_Sd_AudioLoadStates g_Sd_AudioLoadState; // 0x800C1670
+extern s_Sd_AudioLoadStates g_Sd_AudioLoadState;
 
 extern s_800C1678 D_800C1678;
 
-extern u8 g_Sd_ReverbDepth; // 0x800C1687;
+extern u8 g_Sd_ReverbDepth;
 
 extern s_800C1688 D_800C1688;
 
@@ -186,45 +186,44 @@ void Sd_AllVoicesKeyOff(void);
 void Sd_AllVoicesKeyOffVWithRROff(void);
 
 /** @brief Plays XA audios defined at `g_XaItemData`. */
-void Sd_XaAudioPlay(u16 sfx); // 0x80046D3C
+void Sd_XaAudioPlay(u16 sfx);
 
 /** @unused Gets the length of XA audios defined at `g_XaItemData`. */
-s32 Sd_XaAudioLengthGet(s32 idx); // 0x80046DCC
+s32 Sd_XaAudioLengthGet(s32 idx);
 
 /** @brief Sets the volume for the global channels of the music, sound effects, and voices. */
 void Sd_SetVolume(u8 xaVol, s16 bgmVol, u8 seVol);
 
-void Sd_SetVolBgm(s16 volLeft, s16 volRight); // 0x80047808
+void Sd_SetVolBgm(s16 volLeft, s16 volRight);
 
-void Sd_SetVolXa(s16 volLeft, s16 volRight); // 0x80047860
+void Sd_SetVolXa(s16 volLeft, s16 volRight);
 
-s16 Sd_GetVolSe(s16 arg0); // 0x800478B8
+s16 Sd_GetVolSe(s16 arg0);
 
 /** Updates and add commands to a command pool. */
-void func_800478DC(u8 cmd); // 0x800478DC
+void func_800478DC(u8 cmd);
 
 /** Updates a command pool by shifting a field. */
-void func_80047A70(void); // 0x80047A70
+void func_80047A70(void);
 
-void func_80047B80(void); // 0x80047B80
+void func_80047B80(void);
 
-void Sd_SetReverbDepth(u8 depth); // 0x80047AD0
+void Sd_SetReverbDepth(u8 depth);
 
-void Sd_SetReverbEnable(s32 mode); // 0x80047AFC
+void Sd_SetReverbEnable(s32 mode);
 
-void func_80047B24(s32 arg0); // 0x80047B24
+void func_80047B24(s32 arg0);
 
-void func_80047D1C(void); // 0x80047D1C
+void func_80047D1C(void);
 
-void func_80047D50(void); // 0x80047D50
+void func_80047D50(void);
 
-void func_80047DB0(void); // 0x80047DB0
+void func_80047DB0(void);
 
-void func_80047E3C(void); // 0x80047E3C
+void func_80047E3C(void);
 
-void func_80047F18(void); // 0x80047F18
+void func_80047F18(void);
 
-void func_800485D8(void); // 0x800485D8
-
+void func_800485D8(void);
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_PLAYER_LOGIC_H
-#define _BODYPROG_PLAYER_LOGIC_H
+#ifndef _BODYPROG_PLAYERLOGIC_H
+#define _BODYPROG_PLAYERLOGIC_H
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` identified to be related

@@ -2313,33 +2313,33 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
         switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
         {
-            case EquippedWeaponId_KitchenKnife:
+            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
                 keyframeIdx0 = 619;
                 keyframeIdx1 = 613;
                 break;
 
-            case EquippedWeaponId_Chainsaw:
+            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
                 keyframeIdx0 = 630;
                 keyframeIdx1 = 624;
                 break;
 
-            case EquippedWeaponId_RockDrill:
+            case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
                 keyframeIdx0 = 568;
                 keyframeIdx1 = 568;
                 break;
 
-            case EquippedWeaponId_Axe:
+            case WEAPON_ATTACK(EquippedWeaponId_Axe, AttackInputType_Tap):
                 keyframeIdx0 = 625;
                 keyframeIdx1 = 618;
                 break;
 
-            case EquippedWeaponId_SteelPipe:
-            case EquippedWeaponId_Hammer:
+            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Hammer,    AttackInputType_Tap):
                 keyframeIdx0 = 648;
                 keyframeIdx1 = 642;
                 break;
 
-            case EquippedWeaponId_Katana:
+            case WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Tap):
                 keyframeIdx0 = 619;
                 keyframeIdx1 = 612;
                 break;
@@ -4462,26 +4462,26 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 						// Determine speed if using certain weapons while moving?
                         switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
                         {
-                            case EquippedWeaponId_KitchenKnife:
+                            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
                                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = (u32)(D_800C454C * 0x465) >> 9;
                                 break;
 
-                            case EquippedWeaponId_Chainsaw:
-                            case EquippedWeaponId_Katana:
-                            case EquippedWeaponId_Axe:
+                            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
+                            case WEAPON_ATTACK(EquippedWeaponId_Katana,   AttackInputType_Tap):
+                            case WEAPON_ATTACK(EquippedWeaponId_Axe,      AttackInputType_Tap):
                                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = (u32)(D_800C454C * 0x15F9) >> 11;
                                 break;
 
-                            case EquippedWeaponId_SteelPipe:
-                            case EquippedWeaponId_Hammer:
+                            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
+                            case WEAPON_ATTACK(EquippedWeaponId_Hammer,    AttackInputType_Tap):
                                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = ((u32)(D_800C454C * 0xD2F) >> 10);
                                 break;
 
-                            case EquippedWeaponId_RockDrill:
-                            case EquippedWeaponId_Handgun:
-                            case EquippedWeaponId_HuntingRifle:
-                            case EquippedWeaponId_Shotgun:
-                            case EquippedWeaponId_HyperBlaster:
+                            case WEAPON_ATTACK(EquippedWeaponId_RockDrill,    AttackInputType_Tap):
+                            case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
+                            case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+                            case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
+                            case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
                                 g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = (-(D_800C454C * 0x87F0) >> 14);
                                 break;
                         }
@@ -8099,39 +8099,39 @@ void func_8007EBBC(void) // 0x8007EBBC
     }
 }
 
-void func_8007F14C(u8 arg0) // 0x8007F14C
+void func_8007F14C(u8 weaponAttack) // 0x8007F14C
 {
-    switch (arg0)
+    switch (weaponAttack)
     {
-        case EquippedWeaponId_KitchenKnife:
-        case EquippedWeaponId_SteelPipe:
-        case EquippedWeaponId_Hammer:
-        case EquippedWeaponId_Katana:
-        case EquippedWeaponId_Axe:
+        case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_SteelPipe,    AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Tap):
             Sd_EngineCmd(164);
             break;
 
-        case EquippedWeaponId_Chainsaw:
+        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
             Sd_EngineCmd(169);
             break;
 
-        case EquippedWeaponId_RockDrill:
+        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
             Sd_EngineCmd(163);
             break;
 
-        case EquippedWeaponId_Handgun:
+        case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
             Sd_EngineCmd(166);
             break;
 
-        case EquippedWeaponId_HuntingRifle:
+        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
             Sd_EngineCmd(167);
             break;
 
-        case EquippedWeaponId_Shotgun:
+        case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
             Sd_EngineCmd(168);
             break;
 
-        case EquippedWeaponId_HyperBlaster:
+        case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
             Sd_EngineCmd(165);
             break;
     }

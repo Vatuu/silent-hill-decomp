@@ -318,6 +318,7 @@ static s_800C37D4 D_800AA274[73] = {
     { 0, 0, 0,    11372,  30051 },
     {}
 };
+
 void func_800482D8(void) // 0x800482D8
 {
     switch (g_Sd_AudioLoadState.vabLoadState_0)

@@ -12,22 +12,23 @@ INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", g_MapOverlayHeader);
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CB7F4);
 
-void func_800CB8A0(s32 idx)
+void func_800CB8A0(s32 idx) // 0x800CB8A0
 {
-    s32 rngB;
-    s32 rngZ;
-    s16 rngX;
+    s32    rngB;
+    q19_12 angleZ;
+    s16    rngX;
 
     if (D_800DEE50.field_2 == 0)
     {
         D_800DD5B0[idx].field_A = 14;
     }
+
     if (D_800DEE50.field_0 == 0)
     {
         rngX = (Rng_Rand16() % D_800DEE50.field_A);
-        rngZ = Rng_Rand16() & 0xFFF;
-        D_800DD5B0[idx].vx_0 = (s32) (rngX * Math_Cos(rngZ)) >> 0xC;
-        D_800DD5B0[idx].vz_4 = (s32) (rngX * Math_Sin(rngZ)) >> 0xC;
+        angleZ = Q12_FRACT(Rng_Rand16());
+        D_800DD5B0[idx].vx_0 = (s32)(rngX * Math_Cos(angleZ)) >> Q12_SHIFT;
+        D_800DD5B0[idx].vz_4 = (s32)(rngX * Math_Sin(angleZ)) >> Q12_SHIFT;
     }
     else
     {
@@ -41,9 +42,10 @@ void func_800CB8A0(s32 idx)
     D_800DD5B0[idx].field_B = rngB - (rngB/3)*3;
 }
 
-bool func_800CBA38(s32 idx)
+bool func_800CBA38(s32 idx) // 0x800CBA38
 {
     D_800DD5B0[idx].field_C.field_0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, ((Rng_Rand16() % FP_ANGLE(144.0f)) + FP_ANGLE(288.0f)), Q12_SHIFT);
+
     if ((FP_TO((D_800DEE50.field_6 - D_800DEE50.field_8), Q12_SHIFT) / D_800DEE50.field_C) < D_800DD5B0[idx].field_C.field_0)
     {
         func_800CB8A0(idx);

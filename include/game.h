@@ -1559,11 +1559,11 @@ typedef struct _SysWork
     GsCOORDINATE2   playerBoneCoords_890[HarryBone_Count];
     GsCOORDINATE2   unkCoords_E30[5];  // Might be part of previous array for 5 extra coords which go unused.
     GsCOORDINATE2   npcCoords_FC0[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
-    s8              field_2280;        // Maybe NPC AI data past this point.
+    s8              field_2280;                        // NPC index for `flags_2290`.
     s8              loadingScreenIdx_2281;
     s8              field_2282; // Room process flags?
     s8              field_2283; // Index into `SfxPairs`.
-    u16             field_2284[3];
+    u16             field_2284[3]; // TODO: `func_80034EC8` indicates size of 4.
     u16             field_228A;
     s32             field_228C;
     s32             flags_2290; // Flags related to NPCs, each bit corresponds to `npcs_1A0` index.
@@ -1730,14 +1730,22 @@ static inline void SysWork_StateStepReset()
     g_SysWork.sysStateStep_C[2] = 0;
 }
 
-/** @brief Clears a flag from `g_SysWork.flags_2290` array. */
-static inline void SysWork_Flags2290Clear(s32 flagIdx)
-{
-    CLEAR_FLAG(&g_SysWork.flags_2290, flagIdx);
-}
+/** @brief Sets a flag from `g_SysWork.flags_2290` array.
+ *
+ * @param flagIdx Index of the flag to set.
+ */
 static inline void SysWork_Flags2290Set(s32 flagIdx)
 {
     g_SysWork.flags_2290 |= 1 << flagIdx;
+}
+
+/** @brief Clears a flag from `g_SysWork.flags_2290` array.
+ *
+ * @param flagIdx Index of the flag to clear.
+ */
+static inline void SysWork_Flags2290Clear(s32 flagIdx)
+{
+    CLEAR_FLAG(&g_SysWork.flags_2290, flagIdx);
 }
 
 /** @brief Clears state steps twice for some reason? Only used once below, others use regular `Game_StateSetNext`. */

@@ -479,7 +479,7 @@ void func_800E1D50(void) // 0x800E1D50
             vcReturnPreAutoCamWork(true);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_MonsterCybil, 0, Q12(26.5f), Q12(108.5f), Q12(0.03125f), 3);
-            func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], 1);
+            func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], true);
             Savegame_EventFlagSet(EventFlag_441);
             break;
     }
@@ -643,21 +643,25 @@ void func_800E219C(void) // 0x800E219C
             break;
 
         default:
-            D_800ED5B0                                 = -1;
+            D_800ED5B0 = NO_VALUE;
+
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(25.0f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(100.0f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(337.5f);
-            g_SysWork.npcs_1A0[0].position_18.vx       = Q12(24.0f);
-            g_SysWork.npcs_1A0[0].position_18.vz       = Q12(102.0f);
-            g_SysWork.npcs_1A0[0].rotation_24.vy       = FP_ANGLE(157.5f);
+
+            // Warp NPC.
+            g_SysWork.npcs_1A0[0].position_18.vx = Q12(24.0f);
+            g_SysWork.npcs_1A0[0].position_18.vz = Q12(102.0f);
+            g_SysWork.npcs_1A0[0].rotation_24.vy = FP_ANGLE(157.5f);
 
             // TODO: Wrong properties union field.
-            g_SysWork.npcs_1A0[0].properties_E4.player.afkTimer_E8                      = 0;
+            g_SysWork.npcs_1A0[0].properties_E4.player.afkTimer_E8                      = Q12(0.0f);
             g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[1].val16[0] = 1;
             g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[1].val16[1] = 1;
 
             vcReturnPreAutoCamWork(true);
-            func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], 1);
+            func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], true);
             Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
@@ -679,7 +683,7 @@ void func_800E219C(void) // 0x800E219C
             break;
     }
 
-    if (D_800ED5B0 >= 0)
+    if (D_800ED5B0 >= Q12(0.0f))
     {
         // Get "HERO" position.
         Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, D_800CC4C4, D_800ED5B0, FS_BUFFER_14);
@@ -760,7 +764,7 @@ void func_800E2724(void) // 0x800E2724
             SysWork_StateSetNext(SysState_Gameplay);
 
             vcReturnPreAutoCamWork(true);
-            func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], 1);
+            func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], true);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             break;
     }
@@ -833,7 +837,7 @@ void func_800E2950(void) // 0x800E2950
 
         default:
             vcReturnPreAutoCamWork(true);
-            func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], 1);
+            func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], true);
             Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
@@ -1167,6 +1171,7 @@ void func_800E3244(void) // 0x800E3244
         case 20:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.0f), false);
             break;
+
         case 21:
             D_800ED5B4 = -0x7A;
 

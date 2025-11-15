@@ -164,7 +164,7 @@ void func_800D946C(void);
 
 void func_800D94A4(void);
 
-/** @brief Puzzle event? Similar to M5S01 `func_800EBA40` */
+/** @brief Puzzle event? Similar to M5S01 `func_800EBA40`. */
 void func_800D94DC(void);
 
 void func_800D99DC(void);

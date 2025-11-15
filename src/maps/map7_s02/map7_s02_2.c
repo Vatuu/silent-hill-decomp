@@ -2436,7 +2436,7 @@ void func_800E2DEC(void) // 0x800E2DEC
     VECTOR3 playerPosBackup;
     s32     i;
 
-    g_BackgroundColor = 0x68;
+    g_BackgroundColor = 104;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -2495,6 +2495,7 @@ void func_800E2DEC(void) // 0x800E2DEC
 
         case 4:
             func_8005DC1C(Sfx_Unk1663, &QVECTOR3(60.0f, -1.2f, -96.0f), Q8_CLAMPED(0.5f), 0);
+
             if (!Savegame_EventFlagGet(EventFlag_545))
             {
                 Savegame_EventFlagClear(EventFlag_564 + D_800EA4A9);

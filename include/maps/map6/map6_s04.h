@@ -40,7 +40,8 @@ extern VECTOR3 D_800ED5A0;
 
 extern u8 D_800ED5AC; // g_MapMsgSoundIdx
 
-extern s32 D_800ED5B0;
+/** Time. */
+extern q19_12 D_800ED5B0;
 
 extern s16 D_800ED5B6;
 
@@ -104,7 +105,7 @@ void func_800E1290(void);
 
 void func_800E12D0(void);
 
-void func_800E15FC(s_MainCharacter* player, s_SubCharacter* npc, s32);
+void func_800E15FC(s_MainCharacter* player, s_SubCharacter* npc, bool);
 
 void func_800E1CA0(void);
 

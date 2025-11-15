@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_VW_SYSTEM_H
-#define _BODYPROG_VW_SYSTEM_H
+#ifndef _BODYPROG_VWSYSTEM_H
+#define _BODYPROG_VWSYSTEM_H
 
 #include <libgte.h>
 #include <libgpu.h>
