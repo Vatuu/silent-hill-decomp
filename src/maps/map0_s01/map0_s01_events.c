@@ -819,8 +819,8 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
 
             // Set flags.
-            g_SysWork.field_2290             |= 1 << 0;
-            g_SysWork.field_228C             |= 1 << 0;
+            SysWork_Flags2290Set(0);
+            g_SysWork.field_228C |= 1 << 0;
             Savegame_EventFlagSet(EventFlag_M0S01_PickupMap);
 
             SysWork_StateStepIncrement(0);

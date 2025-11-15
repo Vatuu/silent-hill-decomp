@@ -277,7 +277,7 @@ void func_80034EC8(void) // 0x80034EC8
     s32 i;
 
     g_SysWork.field_228C = 0;
-    g_SysWork.field_2290 = 0;
+    g_SysWork.flags_2290 = 0;
 
     bzero(g_SysWork.npcs_1A0, ARRAY_SIZE(g_SysWork.npcs_1A0) * sizeof(s_SubCharacter));
 
@@ -2030,7 +2030,7 @@ void func_80037F24(s32 arg0) // 0x80037F24
 
     for (var_s4 = 0; var_s4 < 32 && g_VBlanks < 4; var_s4++, var_s5++)
     {
-        if (g_SysWork.field_2290 == (1 << g_SysWork.field_2280) - 1)
+        if (g_SysWork.flags_2290 == (1 << g_SysWork.field_2280) - 1)
         {
             break;
         }
@@ -2043,7 +2043,7 @@ void func_80037F24(s32 arg0) // 0x80037F24
             !Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, vec, Q12(22.0f)) &&
             (arg0 == 0 || Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, vec, Q12(20.0f))))
         {
-            while (HAS_FLAG(&g_SysWork.field_2290, npcIdx))
+            while (HAS_FLAG(&g_SysWork.flags_2290, npcIdx))
             {
                 npcIdx++;
             }
@@ -2070,22 +2070,13 @@ void func_80037F24(s32 arg0) // 0x80037F24
             g_SysWork.npcs_1A0[npcIdx].position_18.vy = coll.groundHeight_0;
             g_SysWork.npcs_1A0[npcIdx].rotation_24.vy = var_s5->data.spawnInfo.rotationY_5 * 16;
 
-            SET_FLAG(&g_SysWork.field_2290, npcIdx);
+            SET_FLAG(&g_SysWork.flags_2290, npcIdx);
             SET_FLAG(&g_SysWork.field_228C, var_s4);
 
             var_s6                          = &g_SysWork.npcs_1A0[npcIdx];
             var_s6->model_0.anim_4.flags_2 |= AnimFlag_Visible;
         }
     }
-}
-
-// TODO: Move define & inline to header.
-#define CLEAR_FLAG(ptr, idx) \
-    ((((u32*)ptr)[(idx) >> 5] &= ~((1 << 0) << ((idx) & 0x1F))))
-
-static inline void SysWork_Flags2290Clear(s32 var_s4)
-{
-    CLEAR_FLAG(&g_SysWork.field_2290, var_s4);
 }
 
 void func_80038354(void) // 0x80038354

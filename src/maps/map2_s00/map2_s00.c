@@ -2332,7 +2332,7 @@ void func_800EB908(void) // 0x800EB908
     }
 
     g_SysWork.field_2280++;
-    g_SysWork.field_2290 |= 1 << (g_SysWork.field_2280 - 1);
+    SysWork_Flags2290Set(g_SysWork.field_2280 - 1);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);

@@ -1386,7 +1386,7 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
             SET_FLAG(&g_SysWork.field_228C, arg1_1);
         }
 
-        SET_FLAG(&g_SysWork.field_2290, i);
+        SET_FLAG(&g_SysWork.flags_2290, i);
 
         g_SysWork.npcs_1A0[i].model_0.state_2     = 0;
         g_SysWork.npcs_1A0[i].model_0.stateStep_3 = stateStep;

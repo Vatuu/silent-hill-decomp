@@ -213,6 +213,9 @@ struct _Model;
 #define SET_FLAG(ptr, idx) \
     ((((u32*)ptr)[(idx) >> 5] |= (1 << 0) << ((idx) & 0x1F)))
 
+#define CLEAR_FLAG(ptr, idx) \
+    ((((u32*)ptr)[(idx) >> 5] &= ~((1 << 0) << ((idx) & 0x1F))))
+
 /** @brief Sync modes used by `DrawSync` and `VSync`. */
 typedef enum _SyncMode
 {
@@ -1563,7 +1566,7 @@ typedef struct _SysWork
     u16             field_2284[3];
     u16             field_228A;
     s32             field_228C;
-    s32             field_2290;
+    s32             flags_2290; // Flags related to NPCs, each bit corresponds to `npcs_1A0` index.
     s8              unk_2294[4];
     e_SysWorkProcessFlags processFlags_2298;
     s32             field_229C;
@@ -1725,6 +1728,16 @@ static inline void SysWork_StateStepReset()
     g_SysWork.sysStateStep_C[1] = 0;
     g_SysWork.timer_2C          = 0;
     g_SysWork.sysStateStep_C[2] = 0;
+}
+
+/** @brief Clears a flag from `g_SysWork.flags_2290` array. */
+static inline void SysWork_Flags2290Clear(s32 flagIdx)
+{
+    CLEAR_FLAG(&g_SysWork.flags_2290, flagIdx);
+}
+static inline void SysWork_Flags2290Set(s32 flagIdx)
+{
+    g_SysWork.flags_2290 |= 1 << flagIdx;
 }
 
 /** @brief Clears state steps twice for some reason? Only used once below, others use regular `Game_StateSetNext`. */
