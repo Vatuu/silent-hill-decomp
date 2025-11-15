@@ -378,8 +378,29 @@ void func_800D23E4(void) // 0x800D23E4
     }
 }
 
-INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04_2", func_800D2D6C);
+void func_800D2D6C(void)
+{
+    WorldObjectPoseInit(&g_WorldObjectSavepad.position_1C, 106.687f, -1.02f, 144.601f, 0.0f, 163.0f, 0.0f);
+    WorldObject_ModelNameSet(&g_WorldObjectSavepad.object_0, D_800A99E4.savePadName_4);
 
-INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04_2", func_800D2DF4);
+    Math_Vector3Set(&g_WorldObject0.position_1C, Q12(57.8f), Q12(0.0f), Q12(0.0f));
+    WorldObject_ModelNameSet(&g_WorldObject0.object_0, "ISU_HIDE");
+}
 
-INCLUDE_RODATA("asm/maps/map4_s04/nonmatchings/map4_s04_2", D_800CBC58);
+void func_800D2DF4(void)
+{
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+    {
+        g_WorldGfx_ObjectAdd(&g_WorldObjectSavepad.object_0, &g_WorldObjectSavepad.position_1C.position_0, &g_WorldObjectSavepad.position_1C.rotation_C);
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
+    {
+        if (Savegame_EventFlagGet(EventFlag_337) && !Savegame_EventFlagGet(EventFlag_338))
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &(SVECTOR3){});
+        }
+    }
+}
