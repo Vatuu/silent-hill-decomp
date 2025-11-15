@@ -1944,6 +1944,9 @@ typedef struct
     VECTOR3        field_11C;
     VECTOR3        field_128;
     VECTOR3        field_134;
+    VECTOR3        unk_140;
+    u32            field_14C;
+    s32            field_150;
 } s_sharedData_800E21D0_0_s01;
 
 typedef struct 

@@ -142,4 +142,10 @@ void func_800EB174(void);
 
 void func_800DF710(s_SubCharacter* chara);
 
+s32 func_800DC30C(s_SubCharacter* chara);
+
+s32 func_800DC598(s_SubCharacter* chara);
+
+void func_800D5974(s_SubCharacter* chara);
+
 #endif
