@@ -59,12 +59,29 @@ extern u8 D_800F3E58; // Unknown type, pointer passed to func_800DB154
 extern s32 D_800F47F0;
 
 extern u8 D_800F4804;
-
 extern u8 D_800F4805;
-
 extern s8 D_800F4806;
-
+extern s8 D_800F4807;
+extern s8 D_800F4808;
 extern s8 D_800F4809;
+extern s8 D_800F480A;
+extern s8 D_800F480B;
+extern u8 D_800F480C;
+extern s8 D_800F480D;
+extern s8 D_800F480E;
+extern s8 D_800F480F;
+extern s8 D_800F4810;
+extern s8 D_800F4811;
+extern s8 D_800F4812;
+extern u8 D_800F4813;
+extern s8 D_800F4814;
+extern u8 D_800F4815;
+extern u8 D_800F4816;
+extern u8 D_800F4817;
+extern s8 D_800F4818;
+extern s8 D_800F4819;
+extern s8 D_800F481A;
+extern s8 D_800F481B;
 
 extern s32 D_800F4820;
 
@@ -111,10 +128,14 @@ void func_800D88C4();
 void func_800D88CC(void);
 void func_800D88D8(void);
 
+void func_800D9394(void);
+
 void func_800DB608();
 void func_800DD67C(VECTOR3*, s_SubCharacter*, GsCOORDINATE2*);
 u8   func_800DD964(void);
 void func_800DD98C(s32);
+void func_800DD9B0(s_SubCharacter*);
+void func_800DD9D4(s_SubCharacter*);
 bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DDBBC(s_SubCharacter*);
 void func_800DEC74(s_SubCharacter*, GsCOORDINATE2*);
@@ -128,6 +149,8 @@ void Ai_Incubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
 
 void func_800DFA14();
 void func_800DFB2C(s32);
+void func_800DFB50(s_SubCharacter*);
+void func_800DFB74(s_SubCharacter*);
 bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DFCE4(s_SubCharacter*);
 void func_800E05DC(s_SubCharacter*, GsCOORDINATE2*);
@@ -139,27 +162,47 @@ void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void func_800E0914(s_SubCharacter* chara);
 void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+void func_800E0A34(void);
 void func_800E0B28(s32 arg0);
 void func_800E0B5C(s32 arg0);
 
 void func_800E0B90(void);
 void func_800E0C10(void);
 
+void func_800E14DC(s_MainCharacter*, s_SubCharacter*, bool);
+
+void func_800E1788(s32);
+
 // Some kind of RNG? Constants don't seem well known?
 s32 func_800E28F4(void);
+
+void func_800E2E90(void);
+
+void func_800E3390(void);
 
 void func_800E3B6C(void);
 
 void func_800E3D18(void);
 
+void func_800E3F30(void);
+
+void func_800E4714(void);
+
+void func_800E514C(void);
+
 void func_800E70F0(void);
+
+void func_800E9260(e_CharacterId, s32);
 
 void func_800E941C(void);
 
-void func_800E9490(s8* arg0);
+void func_800E9444(e_CharacterId, s_SubCharacter*);
+
+void func_800E9490(s_SubCharacter* chara);
 
 void func_800E9498(void);
 void func_800E94AC(void);
+void func_800E94F4(void);
 
 void func_800E9874(void);
 

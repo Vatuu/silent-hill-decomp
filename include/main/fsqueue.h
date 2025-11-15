@@ -29,6 +29,8 @@
 #define FS_BUFFER_15     (void*)0x801F3600 // }
 #define FS_BUFFER_16     (void*)0x801EBE00 // }
 #define FS_BUFFER_19     (void*)0x801A1E00 // }
+#define FS_BUFFER_20     (void*)0x80180600 // }
+#define FS_BUFFER_21     (void*)0x80185600 // }
 #define GLOBAL_LM_BUFFER (s_LmHeader*)0x8016B600
 #define IPD_BUFFER       (s_IpdHeader*)0x80175600 // Used by map.
 #define FS_BUFFER_3      (void*)0x801B2600
