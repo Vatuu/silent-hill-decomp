@@ -140,4 +140,6 @@ void func_800EAD2C(void);
 
 void func_800EB174(void);
 
+void func_800DF710(s_SubCharacter* chara);
+
 #endif
