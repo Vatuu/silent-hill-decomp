@@ -317,6 +317,7 @@ typedef enum _SfxId
 
     Sfx_Unk4664 = 4664,
 
+    Sfx_Unk4696 = 4696,
     Sfx_Unk4699 = 4699,
 
     Sfx_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.

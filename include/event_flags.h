@@ -474,7 +474,7 @@ typedef enum _EventFlag
 
     EventFlag_573 = 573,
     EventFlag_574 = 574,
-
+    EventFlag_575 = 575,
     EventFlag_576 = 576,
     EventFlag_577 = 577,
 
@@ -486,6 +486,8 @@ typedef enum _EventFlag
     EventFlag_588 = 588,
 
     EventFlag_591 = 591,
+    EventFlag_592 = 592,
+    EventFlag_593 = 593,
 
     /** `MAP0_S01` common item pickups. */
 
