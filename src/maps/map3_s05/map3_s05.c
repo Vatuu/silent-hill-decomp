@@ -824,9 +824,9 @@ void func_800D72AC(void) // 0x800D72AC
             tmp0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.23f), Q12_SHIFT);
             distAdd = tmp0;
             g_SysWork.player_4C.chara_0.position_18.vx += distAdd;
-            g_WorldObject0.position_1C.position_0.vx += distAdd;
+            g_WorldObject0.position_1C.vx += distAdd;
 
-            if (g_WorldObject0.position_1C.position_0.vx > Q12(61.0f))
+            if (g_WorldObject0.position_1C.vx > Q12(61.0f))
             {
                 SysWork_StateStepIncrement(0);
 
@@ -838,20 +838,20 @@ void func_800D72AC(void) // 0x800D72AC
                 D_800DACF0 = Q12(1.0f);
             }
 
-            func_8005DE0C(Sfx_Unk1535, &g_WorldObject0.position_1C.position_0, D_800DACF0 >> 5, Q12(16.0f), 0);
+            func_8005DE0C(Sfx_Unk1535, &g_WorldObject0.position_1C, D_800DACF0 >> 5, Q12(16.0f), 0);
             break;
 
         case 7:
             tmp0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.23f), Q12_SHIFT);
             distAdd = tmp0;
             g_SysWork.player_4C.chara_0.position_18.vx += distAdd;
-            g_WorldObject0.position_1C.position_0.vx += distAdd;
+            g_WorldObject0.position_1C.vx += distAdd;
 
-            if (g_WorldObject0.position_1C.position_0.vx > Q12(61.25f))
+            if (g_WorldObject0.position_1C.vx > Q12(61.25f))
             {
-                tmp0 = g_WorldObject0.position_1C.position_0.vx - Q12(61.25f);
+                tmp0 = g_WorldObject0.position_1C.vx - Q12(61.25f);
                 g_SysWork.player_4C.chara_0.position_18.vx -= tmp0;
-                g_WorldObject0.position_1C.position_0.vx -= tmp0;
+                g_WorldObject0.position_1C.vx -= tmp0;
             }
 
             D_800DACF0 -= ((u16) g_DeltaTime0 * 2);
@@ -860,7 +860,7 @@ void func_800D72AC(void) // 0x800D72AC
                 D_800DACF0 = 0;
             }
 
-            func_8005DE0C(Sfx_Unk1535, &g_WorldObject0.position_1C.position_0, D_800DACF0 >> 5, Q12(16.0f), 0);
+            func_8005DE0C(Sfx_Unk1535, &g_WorldObject0.position_1C, D_800DACF0 >> 5, Q12(16.0f), 0);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
             if (g_SysWork.sysStateStep_C[0] != 7)
@@ -891,24 +891,24 @@ void func_800D8424(void) // 0x800D8424
     D_800DD528 = 0;
     D_800DD52A = 0;
 
-    WorldObjectPoseInit(&g_WorldObject7.position_1C, 140.4485f, -0.5f, -18.9f, -87.05f, -73.2f, 0.0f);
+    WorldObjectInit(&g_WorldObject7, 140.4485f, -0.5f, -18.9f, -87.05f, -73.2f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject7.object_0, "HAMMER_H");
  
-    WorldObjectPoseInit(&g_WorldObject2.position_1C, 59.64f, -0.85f, -100.27f, 0.0f, 7.5f, 0.0f);
+    WorldObjectInit(&g_WorldObject2, 59.64f, -0.85f, -100.27f, 0.0f, 7.5f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject2.object_0, "TAPE_HID");
 
-    WorldObjectPoseInit(&g_WorldObject3.position_1C, 19.6f, 0.0f, -99.6f, 0.0f, 90.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject3, 19.6f, 0.0f, -99.6f, 0.0f, 90.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject3.object_0, "BED3_HID");
 
-    WorldObjectPoseInit(&g_WorldObject4.position_1C, 20.6587f, -0.81055f, -98.93555f, 0.0f, -31.7f, 0.0f);
+    WorldObjectInit(&g_WorldObject4, 20.6587f, -0.81055f, -98.93555f, 0.0f, -31.7f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject4.object_0, "KEY_HIDE");
 
-    WorldObjectPoseInit(&g_WorldObject0.position_1C, 60.0f, 0.0f, -21.6f, 0.0f, 180.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject0, 60.0f, 0.0f, -21.6f, 0.0f, 180.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject0.object_0, "TANA_HID");
 
     if (Savegame_EventFlagGet(EventFlag_M3S05_CabinetPushed))
     {
-        g_WorldObject0.position_1C.position_0.vx = Q12(61.25f);
+        g_WorldObject0.position_1C.vx = Q12(61.25f);
     }
 
     WorldObject_ModelNameSet(&g_WorldObject5, "DOR1_HID");
@@ -969,16 +969,16 @@ void func_800D87AC(void) // 0x800D87AC
 
     if (cx == 2 && cz == -3 && !Savegame_EventFlagGet(EventFlag_M3S05_PickupVideoTape))
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C.position_0, &g_WorldObject2.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C, &g_WorldObject2.rotation_28);
     }
 
     if (cx == 1 && cz == -3)
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C.position_0, &g_WorldObject3.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &g_WorldObject3.rotation_28);
 
         if (!Savegame_EventFlagGet(EventFlag_M3S05_PickupExaminationRoomKey))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C.position_0, &g_WorldObject4.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C, &g_WorldObject4.rotation_28);
         }
     }
 
@@ -995,7 +995,7 @@ void func_800D87AC(void) // 0x800D87AC
             Savegame_EventFlagClear(EventFlag_288);
         }
 
-        g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C.position_0, &g_WorldObject0.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &g_WorldObject0.rotation_28);
     }
 
     if (cx == 1 && cz == -1)
@@ -1016,7 +1016,7 @@ void func_800D87AC(void) // 0x800D87AC
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S05_PickupHammer))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C.position_0, &g_WorldObject7.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C, &g_WorldObject7.rotation_28);
         }
 
         if (D_800DD528 == 0)

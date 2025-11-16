@@ -450,10 +450,10 @@ void func_800D2AF4(void) // 0x800D2AF4
     Math_Vector3Set(&g_WorldObject1.position_1C, Q12(20.3f), Q12(0.0f), Q12(59.25f));
     WorldObject_ModelNameSet(&g_WorldObject1.object_0, "BOT_HIDE");
 
-    WorldObjectPoseInit(&g_WorldObject2.position_1C, 60.0f, 0.0f, 60.0f, 0.0f, 9.7f, 0.0f);
+    WorldObjectInit(&g_WorldObject2, 60.0f, 0.0f, 60.0f, 0.0f, 9.7f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject2.object_0, "MAP_HIDE");
 
-    WorldObjectPoseInit(&g_WorldObject5.position_1C, 100.3f, 0.0f, 58.9f, 0.0f, 72.8f, 0.0f);
+    WorldObjectInit(&g_WorldObject5, 100.3f, 0.0f, 58.9f, 0.0f, 72.8f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject5.object_0, "KEY_HIDE");
 
     Math_Vector3Set(&g_WorldObject3[0].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
@@ -481,16 +481,16 @@ void func_800D2AF4(void) // 0x800D2AF4
     WorldObject_ModelNameSet(&g_WorldObject0[5].object_0, "DR2R_HID");
 
 
-    WorldObjectPoseInit(&g_WorldObject6.position_1C, 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
+    WorldObjectInit(&g_WorldObject6, 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject6.object_0, D_800A99E4.savePadName_4);
 
-    WorldObjectPoseInit(&g_WorldObject7.position_1C, 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject7, 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject7.object_0, "MAP_HIDE");
 
-    WorldObjectPoseInit(&g_WorldObject8.position_1C, 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject8, 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject8.object_0, "MAP2_HID");
 
-    WorldObjectPoseInit(&g_WorldObject9.position_1C, 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject9, 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject9.object_0, D_800A99E4.firstAidKitName_8);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
@@ -519,7 +519,7 @@ void func_800D2E54(void) // 0x800D2E54
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S01_PickupMap))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C.position_0, &g_WorldObject2.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C, &g_WorldObject2.rotation_28);
         }
     }
 
@@ -527,7 +527,7 @@ void func_800D2E54(void) // 0x800D2E54
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S01_PickupBasementKey))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position_1C.position_0, &g_WorldObject5.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position_1C, &g_WorldObject5.rotation_28);
         }
     }
 
@@ -649,20 +649,20 @@ void func_800D2E54(void) // 0x800D2E54
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObject6.object_0, &g_WorldObject6.position_1C.position_0, &g_WorldObject6.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject6.object_0, &g_WorldObject6.position_1C, &g_WorldObject6.rotation_28);
 
         if (!Savegame_EventFlagGet(EventFlag_M3S00_PickupMap))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C.position_0, &g_WorldObject7.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C, &g_WorldObject7.rotation_28);
         }
         else
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position_1C.position_0, &g_WorldObject8.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position_1C, &g_WorldObject8.rotation_28);
         }
 
         if (!Savegame_EventFlagGet(EventFlag_M3S00_FirstAidKit))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C.position_0, &g_WorldObject9.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C, &g_WorldObject9.rotation_28);
         }
     }
 

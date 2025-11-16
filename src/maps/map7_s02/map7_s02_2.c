@@ -925,11 +925,137 @@ void MapEvent_AnkhTake(void) // 0x800DC120
     Event_ItemTake(InventoryItemId_Ankh, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupAnkh, 81);
 }
 
-INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02_2", D_800CD5C0);
+void func_800DC14C(void)
+{
+    s32 i;
+    s32 floorHitCount;
 
-INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02_2", D_800CD5CC);
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            func_800862F8(0, FILE_TIM_JELYBEAN_TIM, false);
+            SysWork_StateStepIncrement(0);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800DC14C);
+        case 1:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 2:
+            func_800862F8(1, 0, false);
+            break;
+
+        case 3:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            break;
+
+        case 4:
+            func_800862F8(2, 0, false);
+            MapMsg_DisplayAndHandleSelection(true, 90, 7, 5, 0, false);
+            break;
+
+        case 5:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 6:
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+
+        case 7:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 8:
+            Savegame_EventFlagSet(EventFlag_556);
+            g_SysWork.field_30 = 20;
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 143, false);
+
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(61.9627f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-60.9957f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 9:
+            func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
+            Camera_PositionSet(NULL, Q12(59.74f), Q12(-1.22f), Q12(-60.36f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(63.67f), Q12(-1.02f), Q12(-61.05f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            SysWork_StateStepIncrement(0);
+
+        case 10:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            break;
+
+        case 11:
+            func_80085EB8(3, &g_SysWork.player_4C.chara_0, 0, false);
+            SysWork_StateStepIncrement(0);
+
+        case 12:
+            SysWork_StateStepIncrementDelayed(Q12(4.5f), false);
+            break;
+
+        case 13:
+            D_800E9ED4 = Q12(-1.294f);
+            D_800E9ED0 = 0;
+            func_8005DC1C(Sfx_Unk1662, &QVECTOR3(62.3f, -1.45f, -61.07f), Q8_CLAMPED(0.5f), 0);
+            SysWork_StateStepIncrement(0);
+
+        case 14:
+            D_800E9ED0 += g_DeltaTime2;
+            if (D_800E9ED0 > Q12(5.0f))
+            {
+                D_800E9ED0 = Q12(5.0f);
+            }
+
+            floorHitCount = 0;
+            for (i = 0; i < 16; i++)
+            {
+                D_800EB6F4[i].position_1C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E9ED0 + FP_FROM(D_800EBA14[i] * Math_Sin(D_800EB9F4[i]), Q12_SHIFT), Q12_SHIFT);
+                D_800EB6F4[i].position_1C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_FROM(D_800EBA14[i] * Math_Cos(D_800EB9F4[i]), Q12_SHIFT), Q12_SHIFT);
+
+                if (D_800EB6F4[i].position_1C.vy > 0)
+                {
+                    D_800EB6F4[i].position_1C.vy = 0;
+                    floorHitCount++;
+                }
+
+                g_WorldGfx_ObjectAdd(&D_800EB6F4[i].object_0, &D_800EB6F4[i].position_1C, &D_800EB6F4[i].rotation_28);
+            }
+
+            if (D_800E9ED4 < 0)
+            {
+                D_800E9ED4 += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E9ED0, Q12_SHIFT);
+                if (D_800E9ED4 > 0)
+                {
+                    func_8005DC1C(Sfx_Unk1651, &QVECTOR3(62.3f, 0.0f, -61.07f), Q8_CLAMPED(0.5f), 0);
+                }
+            }
+
+            if (floorHitCount == 16)
+            {
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 15:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        default:
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            vcReturnPreAutoCamWork(true);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            break;
+    }
+}
 
 void func_800DC778(void) // 0x800DC778
 {
@@ -1958,18 +2084,18 @@ void func_800DFDDC(void) // 0x800DFDDC
                         SysWork_StateStepIncrement(1);
                     }
 
-                    D_800EBB64.position_1C.position_0.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
+                    D_800EBB64.position_1C.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
                     break;
 
                 case 2:
                     D_800EA492 += g_DeltaTime2 >> 1;
 
-                    if (D_800EBB64.position_1C.position_0.vy < Q12(-1.05f))
+                    if (D_800EBB64.position_1C.vy < Q12(-1.05f))
                     {
-                        D_800EBB64.position_1C.position_0.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800EA492, 12);
-                        if (D_800EBB64.position_1C.position_0.vy > Q12(-1.05f))
+                        D_800EBB64.position_1C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800EA492, 12);
+                        if (D_800EBB64.position_1C.vy > Q12(-1.05f))
                         {
-                            D_800EBB64.position_1C.position_0.vy = Q12(-1.05f);
+                            D_800EBB64.position_1C.vy = Q12(-1.05f);
 
                             SysWork_StateStepIncrement(1);
                             g_SysWork.field_28 = 0;
@@ -1981,9 +2107,9 @@ void func_800DFDDC(void) // 0x800DFDDC
                     break;
 
                 case 3:
-                    D_800EBB64.position_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), 12);
-                    D_800EBB64.position_1C.position_0.vy  = FP_MULTIPLY(Math_Cos(D_800EBB64.position_1C.rotation_C.vz), Q12(0.15f), 0xC) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
-                    D_800EBB64.position_1C.position_0.vz  = FP_MULTIPLY(Math_Sin(D_800EBB64.position_1C.rotation_C.vz), -Q12(0.15f), 0xC) - Q12(140.5f);
+                    D_800EBB64.rotation_28.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), 12);
+                    D_800EBB64.position_1C.vy  = FP_MULTIPLY(Math_Cos(D_800EBB64.rotation_28.vz), Q12(0.15f), 0xC) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
+                    D_800EBB64.position_1C.vz  = FP_MULTIPLY(Math_Sin(D_800EBB64.rotation_28.vz), -Q12(0.15f), 0xC) - Q12(140.5f);
 
                     g_SysWork.field_28 += g_DeltaTime0;
                     if (g_SysWork.field_28 > Q12(0.5f))
@@ -1995,11 +2121,11 @@ void func_800DFDDC(void) // 0x800DFDDC
 
                 case 4:
                     D_800EA492                           += g_DeltaTime2;
-                    D_800EBB64.position_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), 12);
-                    D_800EBB64.position_1C.position_0.vy += FP_MULTIPLY_PRECISE(D_800EA492, g_DeltaTime0, 12);
-                    D_800EBB64.position_1C.position_0.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), 12);
+                    D_800EBB64.rotation_28.vz            += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), 12);
+                    D_800EBB64.position_1C.vy            += FP_MULTIPLY_PRECISE(D_800EA492, g_DeltaTime0, 12);
+                    D_800EBB64.position_1C.vz            += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), 12);
 
-                    if (D_800EBB64.position_1C.position_0.vy > 0)
+                    if (D_800EBB64.position_1C.vy > 0)
                     {
                         SysWork_StateStepIncrement(1);
                     }
@@ -2008,10 +2134,10 @@ void func_800DFDDC(void) // 0x800DFDDC
                 case 5:
                     Sd_EngineCmd(Sfx_Base);
 
-                    D_800EBB64.position_1C.position_0.vx = Q12(-139.5f);
-                    D_800EBB64.position_1C.position_0.vy = Q12(-0.05f);
-                    D_800EBB64.position_1C.position_0.vz = Q12(-140.0f);
-                    D_800EBB64.position_1C.rotation_C.vz = Q12(-0.25f);
+                    D_800EBB64.position_1C.vx = Q12(-139.5f);
+                    D_800EBB64.position_1C.vy = Q12(-0.05f);
+                    D_800EBB64.position_1C.vz = Q12(-140.0f);
+                    D_800EBB64.rotation_28.vz = Q12(-0.25f);
 
                     SysWork_StateStepIncrement(0);
                     break;

@@ -884,7 +884,7 @@ void Map_WorldObjectsInit(void)
 {
     D_800E1180 = 0;
     D_800E1182 = 0;
-    WorldObjectPoseInit(&g_WorldObject9.position_1C, 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
+    WorldObjectInit(&g_WorldObject9, 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject9.object_0, "PICT00_H");
 
     Math_Vector3Set(&g_WorldObject1[0].position_1C, Q12(133.63f), Q12(-0.816f), Q12(17.089f));
@@ -926,10 +926,10 @@ void Map_WorldObjectsInit(void)
     Math_Vector3Set(&g_WorldObject0.position_1C, Q12(19.5799f), Q12(0.0f), Q12(-18.3f));
     WorldObject_ModelNameSet(&g_WorldObject0.object_0, "G_HIDE_I");
 
-    WorldObjectPoseInit(&g_WorldObject7.position_1C, 61.8531f, -0.805f, 140.6099f, 0.0f, 92.9f, 0.0f);
+    WorldObjectInit(&g_WorldObject7, 61.8531f, -0.805f, 140.6099f, 0.0f, 92.9f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject7.object_0, D_800A99E4.savePadName_4);
 
-    WorldObjectPoseInit(&g_WorldObject8.position_1C, 96.9405f, -0.3365f, 21.0918f, 0.0f, 66.8f, 0.0f);
+    WorldObjectInit(&g_WorldObject8, 96.9405f, -0.3365f, 21.0918f, 0.0f, 66.8f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject8.object_0, "MAP_HIDE");
 
     Player_ItemRemove(InventoryItemId_NoteToSchool, 1);
@@ -1010,7 +1010,7 @@ void Map_WorldObjectsUpdate(void)
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C.position_0, &g_WorldObject7.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C, &g_WorldObject7.rotation_28);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
@@ -1086,7 +1086,7 @@ void Map_WorldObjectsUpdate(void)
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C.position_0, &g_WorldObject9.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C, &g_WorldObject9.rotation_28);
 
         for (i = 0; i < 6; i++)
         {
@@ -1098,7 +1098,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S00_PickupMap))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position_1C.position_0, &g_WorldObject8.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position_1C, &g_WorldObject8.rotation_28);
         }
     }
 

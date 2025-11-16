@@ -547,7 +547,7 @@ void func_800D23E4(void) // 0x800D23E4
 
 void func_800D2D6C(void)
 {
-    WorldObjectPoseInit(&g_WorldObjectSavepad.position_1C, 106.687f, -1.02f, 144.601f, 0.0f, 163.0f, 0.0f);
+    WorldObjectInit(&g_WorldObjectSavepad, 106.687f, -1.02f, 144.601f, 0.0f, 163.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObjectSavepad.object_0, D_800A99E4.savePadName_4);
 
     Math_Vector3Set(&g_WorldObject0.position_1C, Q12(57.8f), Q12(0.0f), Q12(0.0f));
@@ -560,7 +560,7 @@ void func_800D2DF4(void)
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObjectSavepad.object_0, &g_WorldObjectSavepad.position_1C.position_0, &g_WorldObjectSavepad.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObjectSavepad.object_0, &g_WorldObjectSavepad.position_1C, &g_WorldObjectSavepad.rotation_28);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))

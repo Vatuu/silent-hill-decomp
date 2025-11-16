@@ -1055,10 +1055,10 @@ void func_800DBB7C(void) // 0x800DBB7C
                 SysWork_StateStepIncrement(0);
             }
 
-            g_WorldObject1.position_1C.rotation_C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, angleAdd, Q12_SHIFT);
-            if (g_WorldObject1.position_1C.rotation_C.vy < FP_ANGLE(-112.5f))
+            g_WorldObject1.rotation_28.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, angleAdd, Q12_SHIFT);
+            if (g_WorldObject1.rotation_28.vy < FP_ANGLE(-112.5f))
             {
-                g_WorldObject1.position_1C.rotation_C.vy = FP_ANGLE(-112.5f);
+                g_WorldObject1.rotation_28.vy = FP_ANGLE(-112.5f);
             }
 
             break;
@@ -1286,43 +1286,43 @@ void func_800DD494(void) // 0x800DD494
     Math_SetSVectorFast(&g_ObjRotC[1], 0, 0, 0);
     Math_Vector3Set(&g_ObjPosC[1], Q12(100.0f), Q12(-1.6f), Q12(145.25f)); // Set again?
 
-    WorldObjectPoseInit(&g_WorldObject1.position_1C, 18.37f, -0.8f, 59.51f, 0.0f, 0.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject1, 18.37f, -0.8f, 59.51f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject1.object_0, "DOOR_HID");
 
-    WorldObjectPoseInit(&g_WorldObject3.position_1C, 17.8643f, -0.04f, 59.5135f, 0.0f, -215.3f, 0.0f);
+    WorldObjectInit(&g_WorldObject3, 17.8643f, -0.04f, 59.5135f, 0.0f, -215.3f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject3.object_0, "GUN_HIDE");
 
-    WorldObjectPoseInit(&g_WorldObject4.position_1C, 60.5f, -1.04f, -61.0f, 0.0f, 0.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject4, 60.5f, -1.04f, -61.0f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject4.object_0, "RING1_HI");
 
-    WorldObjectPoseInit(&g_WorldObject5.position_1C, 60.5f, -1.04f, -59.0f, 0.0f, 0.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject5, 60.5f, -1.04f, -59.0f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject5.object_0, "RING2_HI");
 
-    WorldObjectPoseInit(&g_WorldObject6.position_1C, 58.4f, 0.0f, -60.4f, 0.0f, 0.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject6, 58.4f, 0.0f, -60.4f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject6.object_0, "DOOR2_HI");
 
-    WorldObjectPoseInit(&g_WorldObject7.position_1C, 58.4f, 0.0f, -59.6f, 0.0f, 0.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject7, 58.4f, 0.0f, -59.6f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject7.object_0, "DOOR1_HI");
 
     Math_Vector3Set(&g_WorldObject0.position_1C, Q12(54.47f), Q12(0.0f), Q12(-60.0f));
     WorldObject_ModelNameSet(&g_WorldObject0.object_0, "BOX_HIDE");
 
-    WorldObjectPoseInit(&g_WorldObject8.position_1C, 139.199f, -0.8753f, 99.3733f, 0.0f, 46.2f, 0.0f);
+    WorldObjectInit(&g_WorldObject8, 139.199f, -0.8753f, 99.3733f, 0.0f, 46.2f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject8.object_0, "KEY_HIDE");
 
-    WorldObjectPoseInit(&g_WorldObject9.position_1C, 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
+    WorldObjectInit(&g_WorldObject9, 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject9.object_0, "PHONE3_H");
 
-    WorldObjectPoseInit(&g_WorldObjectA.position_1C, 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
+    WorldObjectInit(&g_WorldObjectA, 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObjectA.object_0, "PHONE2_H");
 
-    WorldObjectPoseInit(&g_WorldObject2.position_1C, -16.51f, -0.11f, -51.54f, 0.0f, -19.3f, 0.0f);
+    WorldObjectInit(&g_WorldObject2, -16.51f, -0.11f, -51.54f, 0.0f, -19.3f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject2.object_0, "KEY_HIDE");
 
     Math_Vector3Set(&g_WorldObjectD.position_1C, Q12(100.124f), Q12(-1.08f), Q12(101.166f));
     WorldObject_ModelNameSet(&g_WorldObjectD.object_0, "BOLL_HID");
 
-    WorldObjectPoseInit(&g_WorldObjectB.position_1C, 60.14f, -0.902f, 141.763f, 0.0f, 92.4f, 0.0f);
+    WorldObjectInit(&g_WorldObjectB, 60.14f, -0.902f, 141.763f, 0.0f, 92.4f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObjectB.object_0, D_800A99E4.savePadName_4);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
@@ -1410,7 +1410,7 @@ void func_800DDA84(void) // 0x800DDA84
 
         if (Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain) && !Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C.position_0, &g_WorldObject2.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C, &g_WorldObject2.rotation_28);
         }
     }
     else
@@ -1463,31 +1463,31 @@ void func_800DDA84(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupShotgun))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C.position_0, &g_WorldObject3.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &g_WorldObject3.rotation_28);
         }
 
         if (Savegame_EventFlagGet(EventFlag_96))
         {
-            g_WorldObject1.position_1C.rotation_C.vy = FP_ANGLE(-112.5f);
+            g_WorldObject1.rotation_28.vy = FP_ANGLE(-112.5f);
         }
         else
         {
             flags = 1 << 1;
         }
 
-        g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C.position_0, &g_WorldObject1.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C.position_0, &g_WorldObject4.position_1C.rotation_C);
-        g_WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position_1C.position_0, &g_WorldObject5.position_1C.rotation_C);
-        g_WorldGfx_ObjectAdd(&g_WorldObject6.object_0, &g_WorldObject6.position_1C.position_0, &g_WorldObject6.position_1C.rotation_C);
-        g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C.position_0, &g_WorldObject7.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C, &g_WorldObject4.rotation_28);
+        g_WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position_1C, &g_WorldObject5.rotation_28);
+        g_WorldGfx_ObjectAdd(&g_WorldObject6.object_0, &g_WorldObject6.position_1C, &g_WorldObject6.rotation_28);
+        g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C, &g_WorldObject7.rotation_28);
         g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &D_800CBA44);
 
-        if (g_WorldObject6.position_1C.rotation_C.vy != FP_ANGLE(180.0f) ||
-            g_WorldObject7.position_1C.rotation_C.vy != g_WorldObject6.position_1C.rotation_C.vy)
+        if (g_WorldObject6.rotation_28.vy != FP_ANGLE(180.0f) ||
+            g_WorldObject7.rotation_28.vy != g_WorldObject6.rotation_28.vy)
         {
             flags |= 1 << 2;
             Savegame_EventFlagClear(EventFlag_362);
@@ -1503,21 +1503,21 @@ void func_800DDA84(void) // 0x800DDA84
     {
         if (Savegame_EventFlagGet(EventFlag_362))
         {
-            g_WorldObject7.position_1C.rotation_C.vy = FP_ANGLE(180.0f);
+            g_WorldObject7.rotation_28.vy = FP_ANGLE(180.0f);
         }
         else
         {
-            g_WorldObject7.position_1C.rotation_C.vy = FP_ANGLE(90.0f);
+            g_WorldObject7.rotation_28.vy = FP_ANGLE(90.0f);
         }
 
-        g_WorldObject6.position_1C.rotation_C.vy = FP_ANGLE(180.0f);
+        g_WorldObject6.rotation_28.vy = FP_ANGLE(180.0f);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupPictureCard))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position_1C.position_0, &g_WorldObject8.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position_1C, &g_WorldObject8.rotation_28);
         }
     }
 
@@ -1525,14 +1525,14 @@ void func_800DDA84(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_99))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C.position_0, &g_WorldObject9.position_1C.rotation_C);
-            g_WorldGfx_ObjectAdd(&g_WorldObjectA.object_0, &g_WorldObjectA.position_1C.position_0, &g_WorldObjectA.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C, &g_WorldObject9.rotation_28);
+            g_WorldGfx_ObjectAdd(&g_WorldObjectA.object_0, &g_WorldObjectA.position_1C, &g_WorldObjectA.rotation_28);
         }
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObjectB.object_0, &g_WorldObjectB.position_1C.position_0, &g_WorldObjectB.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObjectB.object_0, &g_WorldObjectB.position_1C, &g_WorldObjectB.rotation_28);
     }
 
     func_80069844(0xFFFF);

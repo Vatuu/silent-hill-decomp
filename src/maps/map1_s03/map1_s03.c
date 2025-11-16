@@ -1276,16 +1276,16 @@ void func_800DD3AC(void) // 0x800DD3AC
     Math_Vector3Set(&g_WorldObject6.position_1C, Q12(-10.25f), Q12(0.2f), Q12(-17.75f));
     WorldObject_ModelNameSet(&g_WorldObject6.object_0, "BALL_HID");
 
-    WorldObjectPoseInit(&g_WorldObject5.position_1C, -10.49f, -0.7f, -12.92f, 0.0f, 0.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject5, -10.49f, -0.7f, -12.92f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject5.object_0, "VALVE_HI");
 
-    WorldObjectPoseInit(&g_WorldObject0.position_1C, -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject0, -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject0.object_0, "TOBIRA00");
 
-    WorldObjectPoseInit(&g_WorldObject1.position_1C, -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject1, -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject1.object_0, "TOBIRA01");
 
-    WorldObjectPoseInit(&g_WorldObject2.position_1C, -61.0f, -1.05f, 20.97f, 0.0f, 0.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject2, -61.0f, -1.05f, 20.97f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject2.object_0, "TOBIRA2_");
 
     Math_Vector3Set(&g_WorldObject3.position_1C, Q12(-58.81f), Q12(-1.4f), Q12(18.02f));
@@ -1294,7 +1294,7 @@ void func_800DD3AC(void) // 0x800DD3AC
     Math_Vector3Set(&g_WorldObject4.position_1C, Q12(-61.0f), Q12(-0.9f), Q12(20.97f));
     WorldObject_ModelNameSet(&g_WorldObject4.object_0, "HAKO2_HI");
 
-    WorldObjectPoseInit(&g_WorldObject7.position_1C, -60.3184f, -0.00732422f, 20.23f, 0.0f, 53.2f, 5.3f);
+    WorldObjectInit(&g_WorldObject7, -60.3184f, -0.00732422f, 20.23f, 0.0f, 53.2f, 5.3f);
     WorldObject_ModelNameSet(&g_WorldObject7.object_0, "KEY_HIDE");
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
@@ -1322,7 +1322,7 @@ void func_800DD688(void) // 0x800DD688
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position_1C.position_0, &g_WorldObject5.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position_1C, &g_WorldObject5.rotation_28);
 
         if (g_SavegamePtr->eventFlags_168[3] & 0x8000)
         {
@@ -1336,7 +1336,7 @@ void func_800DD688(void) // 0x800DD688
 
             if (Savegame_EventFlagGet(EventFlag_107) && !Savegame_EventFlagGet(EventFlag_M1S03_PickupLibraryReserveKey))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C.position_0, &g_WorldObject7.position_1C.rotation_C);
+                g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C, &g_WorldObject7.rotation_28);
             }
 
             if ((g_SysWork.player_4C.chara_0.position_18.vx < Q12(-57.5f)) && (g_SysWork.player_4C.chara_0.position_18.vz < Q12(21.6f)))
@@ -1616,9 +1616,9 @@ void func_800DE828(void) // 0x800DE828
             g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
 
-        g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C.position_0, &g_WorldObject0.position_1C.rotation_C);
-        g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C.position_0, &g_WorldObject1.position_1C.rotation_C);
-        g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C.position_0, &g_WorldObject2.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &g_WorldObject0.rotation_28);
+        g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
+        g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C, &g_WorldObject2.rotation_28);
     }
     else
     {
@@ -1627,27 +1627,27 @@ void func_800DE828(void) // 0x800DE828
             if (D_800E20EE == 6)
             {
                 func_800892A4(18);
-                func_8005DC1C(Sfx_Unk1460, &g_WorldObject2.position_1C.position_0, Q8_CLAMPED(1.0f), 2);
+                func_8005DC1C(Sfx_Unk1460, &g_WorldObject2.position_1C, Q8_CLAMPED(1.0f), 2);
 
                 D_800E20E8 = FP_ANGLE(-11.3f);
                 D_800E20EE = 7;
                 D_800E20EC = 0;
             }
 
-            g_WorldObject2.position_1C.rotation_C.vy += D_800E20E8;
+            g_WorldObject2.rotation_28.vy += D_800E20E8;
 
             if (D_800E20E8 == FP_ANGLE(-11.3f))
             {
-                if (g_WorldObject2.position_1C.rotation_C.vy < FP_ANGLE(-168.8f))
+                if (g_WorldObject2.rotation_28.vy < FP_ANGLE(-168.8f))
                 {
-                    g_WorldObject2.position_1C.rotation_C.vy = FP_ANGLE(-168.8f);
+                    g_WorldObject2.rotation_28.vy = FP_ANGLE(-168.8f);
                     D_800E20E8 = FP_ANGLE(2.9f);
 
-                    func_8005DC1C(Sfx_Unk1434, &g_WorldObject2.position_1C.position_0, Q8_CLAMPED(1.0f), 2);
+                    func_8005DC1C(Sfx_Unk1434, &g_WorldObject2.position_1C, Q8_CLAMPED(1.0f), 2);
                 }
             } 
-            else if ((g_WorldObject2.position_1C.rotation_C.vy < FP_ANGLE(-168.8f) && D_800E20E8 < 0) ||
-                     (g_WorldObject2.position_1C.rotation_C.vy >= FP_ANGLE(-157.45f) && D_800E20E8 > 0))
+            else if ((g_WorldObject2.rotation_28.vy < FP_ANGLE(-168.8f) && D_800E20E8 < 0) ||
+                     (g_WorldObject2.rotation_28.vy >= FP_ANGLE(-157.45f) && D_800E20E8 > 0))
             {
                 tmp1 = -D_800E20E8 >> 1;
                 D_800E20E8 = tmp1;
@@ -1666,7 +1666,7 @@ void func_800DE828(void) // 0x800DE828
         }
         else if (Savegame_EventFlagGet(EventFlag_106))
         {
-            g_WorldObject2.position_1C.rotation_C.vy = FP_ANGLE(-157.4f);
+            g_WorldObject2.rotation_28.vy = FP_ANGLE(-157.4f);
             g_WorldGfx_ObjectAdd(&g_WorldObject4.object_0, &g_WorldObject4.position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
 
@@ -1684,16 +1684,16 @@ void func_800DE828(void) // 0x800DE828
             {
                 if (ABS(D_800E20E8) == 1)
                 {
-                    g_WorldObject1.position_1C.rotation_C.vy += D_800E20E8;
+                    g_WorldObject1.rotation_28.vy += D_800E20E8;
                 }
-                g_WorldObject1.position_1C.rotation_C.vy += D_800E20E8;
+                g_WorldObject1.rotation_28.vy += D_800E20E8;
 
                 if (D_800E20E8 > 0)
                 {
-                    if (g_WorldObject1.position_1C.rotation_C.vy > 0)
+                    if (g_WorldObject1.rotation_28.vy > 0)
                     {
                         func_8005DC1C(Sfx_Unk1435, &sfxPos, Q8_CLAMPED(0.5f), 0);
-                        g_WorldObject1.position_1C.rotation_C.vy = 0;
+                        g_WorldObject1.rotation_28.vy = 0;
     
                         if (D_800E20E8 >= 8 && !(Rng_Rand16() & 0x3))
                         {
@@ -1706,7 +1706,7 @@ void func_800DE828(void) // 0x800DE828
                         D_800E20E8 = MIN(D_800E20E8, 0);
                     }
                 }
-                else if (g_WorldObject1.position_1C.rotation_C.vy < -FP_ANGLE(1.8f))
+                else if (g_WorldObject1.rotation_28.vy < -FP_ANGLE(1.8f))
                 {
                     func_8005DC1C(Sfx_Unk1435, &sfxPos, Q8_CLAMPED(0.5f), 0);
     
@@ -1725,13 +1725,13 @@ void func_800DE828(void) // 0x800DE828
                     D_800E20EE = 1;
 
                 case 1:
-                    g_WorldObject1.position_1C.rotation_C.vy += D_800E20E8;
-                    if (g_WorldObject1.position_1C.rotation_C.vy <  FP_ANGLE(-2.9f))
+                    g_WorldObject1.rotation_28.vy += D_800E20E8;
+                    if (g_WorldObject1.rotation_28.vy <  FP_ANGLE(-2.9f))
                     {
                         func_800892DC(18, 0x60);
                         func_8005DC1C(Sfx_Unk1434, &sfxPos, Q8(0.7657f), 2);
 
-                        g_WorldObject1.position_1C.rotation_C.vy = FP_ANGLE(-2.9f);
+                        g_WorldObject1.rotation_28.vy = FP_ANGLE(-2.9f);
                         D_800E20E8 = FP_ANGLE(1.45f);
                         D_800E20EE = 2;
                     }
@@ -1739,15 +1739,15 @@ void func_800DE828(void) // 0x800DE828
 
                 case 2:
                     D_800E20E8 -= 2;
-                    g_WorldObject1.position_1C.rotation_C.vy += D_800E20E8;
+                    g_WorldObject1.rotation_28.vy += D_800E20E8;
 
-                    if (g_WorldObject1.position_1C.rotation_C.vy > 0)
+                    if (g_WorldObject1.rotation_28.vy > 0)
                     {
                         func_8005DC1C(Sfx_Unk1434, &sfxPos, Q8(0.7657f), 2);
                         do
                         {
                             D_800E20E8 = Q12(-10.0f);
-                            g_WorldObject1.position_1C.rotation_C.vy = 0;
+                            g_WorldObject1.rotation_28.vy = 0;
                             D_800E20EE = 3;
                         }
                         while (0); // @hack permuter find.
@@ -1775,27 +1775,27 @@ void func_800DE828(void) // 0x800DE828
                     }
 
                     D_800E20E8 = tmp0;
-                    g_WorldObject1.position_1C.rotation_C.vy += FP_FROM(tmp0, Q12_SHIFT);
+                    g_WorldObject1.rotation_28.vy += FP_FROM(tmp0, Q12_SHIFT);
 
                     g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &(SVECTOR3){ 0, 0, 0 });
 
                     if (D_800E20EE == 4)
                     {
-                        if (g_WorldObject1.position_1C.rotation_C.vy < FP_ANGLE(-5.7f))
+                        if (g_WorldObject1.rotation_28.vy < FP_ANGLE(-5.7f))
                         {
-                            func_8005DC1C(Sfx_Unk1436, &g_WorldObject1.position_1C.position_0, 0x80, 0);
+                            func_8005DC1C(Sfx_Unk1436, &g_WorldObject1.position_1C, 0x80, 0);
                             D_800E20EE = 5;
                         }
                     }
 
-                    if (g_WorldObject1.position_1C.rotation_C.vy < FP_ANGLE(-39.4f))
+                    if (g_WorldObject1.rotation_28.vy < FP_ANGLE(-39.4f))
                     {
                         Savegame_EventFlagSet(EventFlag_M1S03_LockerOpened);
                     }
 
-                    if (Savegame_EventFlagGet(EventFlag_104) || ScreenFade_IsFinished() || g_WorldObject1.position_1C.rotation_C.vy < -0x300)
+                    if (Savegame_EventFlagGet(EventFlag_104) || ScreenFade_IsFinished() || g_WorldObject1.rotation_28.vy < -0x300)
                     {
-                        g_WorldObject1.position_1C.rotation_C.vy = FP_ANGLE(-67.5f);
+                        g_WorldObject1.rotation_28.vy = FP_ANGLE(-67.5f);
                         D_800E20EE = 6;
                     }
                     break;
@@ -1806,7 +1806,7 @@ void func_800DE828(void) // 0x800DE828
         } 
         else
         {
-            g_WorldObject1.position_1C.rotation_C.vy = FP_ANGLE(-157.5f);
+            g_WorldObject1.rotation_28.vy = FP_ANGLE(-157.5f);
             g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &(SVECTOR3){ 0, 0, 0 });
 
             if (!Savegame_EventFlagGet(EventFlag_105))
@@ -1815,9 +1815,9 @@ void func_800DE828(void) // 0x800DE828
             }
         }
 
-        g_WorldObject0.position_1C.rotation_C.vy = g_WorldObject1.position_1C.rotation_C.vy;
-        g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C.position_0, &g_WorldObject0.position_1C.rotation_C);
-        g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C.position_0, &g_WorldObject1.position_1C.rotation_C);
-        g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C.position_0, &g_WorldObject2.position_1C.rotation_C);
+        g_WorldObject0.rotation_28.vy = g_WorldObject1.rotation_28.vy;
+        g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &g_WorldObject0.rotation_28);
+        g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
+        g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C, &g_WorldObject2.rotation_28);
     }
 }

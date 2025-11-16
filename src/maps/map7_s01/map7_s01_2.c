@@ -1468,31 +1468,31 @@ void func_800D9C9C(void)
                         func_8004690C(Sfx_Unk1647);
                     }
 
-                    D_800E2CB8.position_1C.position_0.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
+                    D_800E2CB8.position_1C.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);
                     break;
 
                 case 2:
                     D_800E168E += g_DeltaTime2 >> 1;
-                    if (D_800E2CB8.position_1C.position_0.vy < Q12(-1.05f))
+                    if (D_800E2CB8.position_1C.vy < Q12(-1.05f))
                     {
-                        D_800E2CB8.position_1C.position_0.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E168E, 12);
-                        if (D_800E2CB8.position_1C.position_0.vy > Q12(-1.05f))
+                        D_800E2CB8.position_1C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E168E, 12);
+                        if (D_800E2CB8.position_1C.vy > Q12(-1.05f))
                         {
-                            D_800E2CB8.position_1C.position_0.vy = Q12(-1.05f);
+                            D_800E2CB8.position_1C.vy = Q12(-1.05f);
 
                             SysWork_StateStepIncrement(1);
                             g_SysWork.field_28 = 0;
                             D_800E168E         = 0;
 
-                            func_8005DC1C(Sfx_Unk1648, &D_800E2CB8.position_1C.position_0, Q8_CLAMPED(0.5f), 0);
+                            func_8005DC1C(Sfx_Unk1648, &D_800E2CB8.position_1C, Q8_CLAMPED(0.5f), 0);
                         }
                     }
                     break;
 
                 case 3:
-                    D_800E2CB8.position_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), 12);
-                    D_800E2CB8.position_1C.position_0.vy  = FP_MULTIPLY(Math_Cos(D_800E2CB8.position_1C.rotation_C.vz), Q12(0.15f), 0xC) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
-                    D_800E2CB8.position_1C.position_0.vz  = FP_MULTIPLY(Math_Sin(D_800E2CB8.position_1C.rotation_C.vz), -Q12(0.15f), 0xC) - Q12(140.5f);
+                    D_800E2CB8.rotation_28.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), 12);
+                    D_800E2CB8.position_1C.vy  = FP_MULTIPLY(Math_Cos(D_800E2CB8.rotation_28.vz), Q12(0.15f), 0xC) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
+                    D_800E2CB8.position_1C.vz  = FP_MULTIPLY(Math_Sin(D_800E2CB8.rotation_28.vz), -Q12(0.15f), 0xC) - Q12(140.5f);
 
                     g_SysWork.field_28                   += g_DeltaTime0;
                     if (g_SysWork.field_28 > Q12(0.5f))
@@ -1504,23 +1504,23 @@ void func_800D9C9C(void)
 
                 case 4:
                     D_800E168E                           += g_DeltaTime2;
-                    D_800E2CB8.position_1C.rotation_C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), 12);
-                    D_800E2CB8.position_1C.position_0.vy += FP_MULTIPLY_PRECISE(D_800E168E, g_DeltaTime0, 12);
-                    D_800E2CB8.position_1C.position_0.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), 12);
+                    D_800E2CB8.rotation_28.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), 12);
+                    D_800E2CB8.position_1C.vy += FP_MULTIPLY_PRECISE(D_800E168E, g_DeltaTime0, 12);
+                    D_800E2CB8.position_1C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), 12);
 
-                    if (D_800E2CB8.position_1C.position_0.vy > 0)
+                    if (D_800E2CB8.position_1C.vy > 0)
                     {
                         SysWork_StateStepIncrement(1);
                     }
                     break;
 
                 case 5:
-                    D_800E2CB8.position_1C.position_0.vx = Q12(-139.5f);
-                    D_800E2CB8.position_1C.position_0.vy = Q12(-0.05f);
-                    D_800E2CB8.position_1C.position_0.vz = Q12(-140.0f);
-                    D_800E2CB8.position_1C.rotation_C.vz = Q12(-0.25f);
+                    D_800E2CB8.position_1C.vx = Q12(-139.5f);
+                    D_800E2CB8.position_1C.vy = Q12(-0.05f);
+                    D_800E2CB8.position_1C.vz = Q12(-140.0f);
+                    D_800E2CB8.rotation_28.vz = Q12(-0.25f);
 
-                    func_8005DC1C(Sfx_Unk1649, &D_800E2CB8.position_1C.position_0, Q8_CLAMPED(0.5f), 0);
+                    func_8005DC1C(Sfx_Unk1649, &D_800E2CB8.position_1C, Q8_CLAMPED(0.5f), 0);
                     SysWork_StateStepIncrement(0);
                     break;
             }

@@ -410,10 +410,10 @@ void func_800D525C(void) // 0x800D525C
     }
 
     func_800CAAD0();
-    WorldObjectPoseInit(&g_WorldObject0.position_1C, 19.7f, 1.58f, -19.1f, 0.0f, 0.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject0, 19.7f, 1.58f, -19.1f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject0.object_0, "SPHERE_H");
 
-    WorldObjectPoseInit(&g_WorldObject1.position_1C, 19.7f, -0.06f, -19.1f, 0.0f, 0.0f, 0.0f);
+    WorldObjectInit(&g_WorldObject1, 19.7f, -0.06f, -19.1f, 0.0f, 0.0f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject1.object_0, "WHEEL_HI");
 
     g_SysWork.field_235C = NULL;

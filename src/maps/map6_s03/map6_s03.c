@@ -512,7 +512,7 @@ void func_800D8818(void) // 0x800D8818
     WorldObject_ModelNameSet(&g_WorldObject0[1], "YUKAAFT1");
     Math_Vector3Set(&g_WorldObjectPos0, Q12(-20.0f), Q12(0.0f), Q12(34.0f));
 
-    WorldObjectPoseSet(&g_WorldObject1.position_1C, Q12(75.0f), Q12(0.5f), Q12(19.7f), FP_ANGLE(0.0f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
+    WorldObjectSet(&g_WorldObject1, Q12(75.0f), Q12(0.5f), Q12(19.7f), FP_ANGLE(0.0f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
     WorldObject_ModelNameSet(&g_WorldObject1.object_0, "SITAI_NE");
 
     Math_Vector3Set(&g_WorldObject2.position_1C, Q12(-22.0f), Q12(0.0f), Q12(26.4f));

@@ -820,28 +820,28 @@ void func_800D2E6C(void) // 0x800D2E6C
 {
     D_800D5345 = 0;
 
-    WorldObjectPoseInit(&D_800D5374.position_1C, -19.237060546875f, -0.90576171875f, 60.532958984375f, 0.0f, 78.93f, 0.0f);
+    WorldObjectInit(&D_800D5374, -19.237060546875f, -0.90576171875f, 60.532958984375f, 0.0f, 78.93f, 0.0f);
     WorldObject_ModelNameSet(&D_800D5374.object_0, D_800A99E4.savePadName_4);
 
-    WorldObjectPoseInit(&D_800D53A4[0].position_1C, -21.3798828125f, -0.949951171875f, 58.699951171875f, 0.0, 180.0f, 0.0f);
+    WorldObjectInit(&D_800D53A4[0], -21.3798828125f, -0.949951171875f, 58.699951171875f, 0.0, 180.0f, 0.0f);
     WorldObject_ModelNameSet(&D_800D53A4[0].object_0, "DOOR2_HI");
 
-    WorldObjectPoseInit(&D_800D53A4[1].position_1C, -21.289794921875f, -1.434814453125f, 60.309814453125f, 0.0, 180.0f, 0.0f);
+    WorldObjectInit(&D_800D53A4[1], -21.289794921875f, -1.434814453125f, 60.309814453125f, 0.0, 180.0f, 0.0f);
     WorldObject_ModelNameSet(&D_800D53A4[1].object_0, "BRI3_HID");
 
-    WorldObjectPoseInit(&D_800D53A4[2].position_1C, -21.309814453125f, -1.7099609375f, 59.869873046875f, 0.0, 180.0f, 0.0f);
+    WorldObjectInit(&D_800D53A4[2], -21.309814453125f, -1.7099609375f, 59.869873046875f, 0.0, 180.0f, 0.0f);
     WorldObject_ModelNameSet(&D_800D53A4[2].object_0, "BAR1_HID");
 
-    WorldObjectPoseInit(&D_800D53A4[3].position_1C, -21.3798828125f, -0.949951171875f, 57.7998046875f, 0.0, 180.0f, 0.0f);
+    WorldObjectInit(&D_800D53A4[3], -21.3798828125f, -0.949951171875f, 57.7998046875f, 0.0, 180.0f, 0.0f);
     WorldObject_ModelNameSet(&D_800D53A4[3].object_0, "WID1_HID");
 
-    WorldObjectPoseInit(&D_800D53A4[4].position_1C, -21.3798828125f, -0.949951171875f, 60.0498046875f, 0.0, 180.0f, 0.0f);
+    WorldObjectInit(&D_800D53A4[4], -21.3798828125f, -0.949951171875f, 60.0498046875f, 0.0, 180.0f, 0.0f);
     WorldObject_ModelNameSet(&D_800D53A4[4].object_0, "WID2_HID");
 
-    WorldObjectPoseInit(&D_800D53A4[5].position_1C, -21.39990234375f, -1.4208984375f, 58.769775390625f, 0.0, 180.0f, 0.0f);
+    WorldObjectInit(&D_800D53A4[5], -21.39990234375f, -1.4208984375f, 58.769775390625f, 0.0, 180.0f, 0.0f);
     WorldObject_ModelNameSet(&D_800D53A4[5].object_0, "GLAS2_HI");
 
-    WorldObjectPoseInit(&D_800D53A4[6].position_1C, -19.599853515625f, -0.824951171875f, 59.39990234375f, 0.0, 180.0f, 0.0f);
+    WorldObjectInit(&D_800D53A4[6], -19.599853515625f, -0.824951171875f, 59.39990234375f, 0.0, 180.0f, 0.0f);
     WorldObject_ModelNameSet(&D_800D53A4[6].object_0, &D_800CBB54);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);

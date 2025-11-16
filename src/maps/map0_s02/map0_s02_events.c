@@ -117,13 +117,13 @@ void Map_WorldObjectsInit(void)
     WorldObjectPoseInit(&g_WorldObjectPose_SavePad2, -146.4248f, -0.911f, 21.325f, 0.0f, 8.0f, 0.0f);
 
 
-    WorldObjectPoseInit(&g_WorldObject_Gas.position_1C, -177.2998f, -1.2522f, 21.125f, 0.0f, -145.55f, 0.0f);
+    WorldObjectInit(&g_WorldObject_Gas, -177.2998f, -1.2522f, 21.125f, 0.0f, -145.55f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject_Gas.object_0, "GAS_HIDE");
 
-    Math_Vector3Set(&g_WorldObject_Katana.position_1C.position_0, Q12(-140.8628f), Q12(-0.5511f), Q12(62.3404f));
+    Math_Vector3Set(&g_WorldObject_Katana.position_1C, Q12(-140.8628f), Q12(-0.5511f), Q12(62.3404f));
     WorldObject_ModelNameSet(&g_WorldObject_Katana.object_0, "KATANA1_");
 
-    WorldObjectPoseInit(&g_WorldObject_Cosmo.position_1C, -145.75f, -0.92f, 18.3274f, 0.0f, -55.1f, 0.0f);
+    WorldObjectInit(&g_WorldObject_Cosmo, -145.75f, -0.92f, 18.3274f, 0.0f, -55.1f, 0.0f);
     WorldObject_ModelNameSet(&g_WorldObject_Cosmo.object_0, "COSMO_HI");
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
@@ -156,7 +156,7 @@ void Map_WorldObjectsUpdate(void)
         g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObjectPose_SavePad1.position_0, &g_WorldObjectPose_SavePad1.rotation_C);
         if (!Savegame_EventFlagGet(EventFlag_M0S02_PickupGasolineTank) && Savegame_EventFlagGet(EventFlag_62))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Gas.object_0, &g_WorldObject_Gas.position_1C.position_0, &g_WorldObject_Gas.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Gas.object_0, &g_WorldObject_Gas.position_1C, &g_WorldObject_Gas.rotation_28);
         }
     }
 
@@ -166,7 +166,7 @@ void Map_WorldObjectsUpdate(void)
         g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObjectPose_SavePad2.position_0, &g_WorldObjectPose_SavePad2.rotation_C);
         if (Savegame_EventFlagGet(EventFlag_58) && !Savegame_EventFlagGet(EventFlag_M0S02_PickupChannelingStone))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Cosmo.object_0, &g_WorldObject_Cosmo.position_1C.position_0, &g_WorldObject_Cosmo.position_1C.rotation_C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Cosmo.object_0, &g_WorldObject_Cosmo.position_1C, &g_WorldObject_Cosmo.rotation_28);
         }
     }
 
@@ -182,7 +182,7 @@ void Map_WorldObjectsUpdate(void)
         }
         if (!Savegame_EventFlagGet(EventFlag_M0S02_PickupKatana))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Katana.object_0, &g_WorldObject_Katana.position_1C.position_0, &(SVECTOR3){ 0, 0, 0 });
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Katana.object_0, &g_WorldObject_Katana.position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 

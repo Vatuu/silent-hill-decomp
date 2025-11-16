@@ -877,7 +877,7 @@ void func_800D49C4(void) // 0x800D49C4
     Math_Vector3Set(&WorldObject_D_800D7FF0.position_1C, Q12(178.2681f), Q12(-0.387f), Q12(63.6814f));
     WorldObject_ModelNameSet(&WorldObject_D_800D7FF0.object_0, "MOV1_HID");
 
-    Math_Vector3Set(&WorldObject_D_800D8020.position_1C.position_0, Q12(174.81f), Q12(-1.4197f), Q12(21.3344f));
+    Math_Vector3Set(&WorldObject_D_800D8020.position_1C, Q12(174.81f), Q12(-1.4197f), Q12(21.3344f));
     WorldObject_ModelNameSet(&WorldObject_D_800D8020.object_0, "MOV1_HID");
 
     if (!Savegame_EventFlagGet(EventFlag_302))
@@ -890,7 +890,7 @@ void func_800D49C4(void) // 0x800D49C4
     WorldObjectPoseInit(&WorldObject_D_800D8070, 183.3833f, -1.2673f, 60.951f, 0.0f, 66.01, 0.0f);
     WorldObjectPoseInit(&WorldObject_D_800D8090, 23.4f, -0.91f, 60.8f, 0.0f, 90.4f, 0.0f);
 
-    Math_Vector3Set(&WorldObject_D_800D80B0.position_1C.position_0, Q12(181.22f), 0, Q12(61.2015f));
+    Math_Vector3Set(&WorldObject_D_800D80B0.position_1C, Q12(181.22f), 0, Q12(61.2015f));
     WorldObject_ModelNameSet(&WorldObject_D_800D80B0.object_0, "WALLX_HI");
 
     Math_Vector3Set(&WorldObject_D_800D80E0[0].position_1C, Q12(180.5647f), Q12(-0.502f), Q12(63.8853f));
@@ -921,7 +921,7 @@ void func_800D4BA4(void) // 0x800D4BA4
 
         if (Savegame_EventFlagGet(EventFlag_313))
         {
-            g_WorldGfx_ObjectAdd(&WorldObject_D_800D80B0.object_0, &WorldObject_D_800D80B0.position_1C.position_0, &(SVECTOR3){ 0, 0, 0 });
+            g_WorldGfx_ObjectAdd(&WorldObject_D_800D80B0.object_0, &WorldObject_D_800D80B0.position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
 
         g_WorldGfx_ObjectAdd(&WorldObject_D_800D80E0[D_800D8018].object_0, &WorldObject_D_800D80E0[D_800D8018].position_1C, &(SVECTOR3){ 0, 0, 0 });
@@ -935,7 +935,7 @@ void func_800D4BA4(void) // 0x800D4BA4
     {
         if (!Savegame_EventFlagGet(EventFlag_M4S01_PickupAxe))
         {
-            g_WorldGfx_ObjectAdd(&WorldObject_D_800D8020.object_0, &WorldObject_D_800D8020.position_1C.position_0, &(SVECTOR3){ 0, 0, 0 });
+            g_WorldGfx_ObjectAdd(&WorldObject_D_800D8020.object_0, &WorldObject_D_800D8020.position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 

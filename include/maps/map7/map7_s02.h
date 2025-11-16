@@ -62,6 +62,8 @@ extern s8 D_800E9ECC;
 extern u8 D_800E9ECD;
 
 /** Time. */
+extern s32 D_800E9ED0;
+extern s16 D_800E9ED4;
 extern s16 D_800E9ED6;
 extern s16 D_800E9ED8;
 extern s16 D_800E9EDA;
@@ -84,6 +86,12 @@ extern u8  D_800EB6B0;
 extern s32 D_800EB6B4;
 
 extern s_WorldObjectPose D_800EB6E0; // Assumed type.
+
+extern s_WorldObjectDesc D_800EB6F4[];
+
+extern s16 D_800EB9F4[];
+
+extern s16 D_800EBA14[];
 
 extern s8 D_800EBAF4;
 

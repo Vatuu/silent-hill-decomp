@@ -771,7 +771,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
     if (g_SysWork.sysStateStep_C[0] < 27)
     {
-        g_WorldGfx_ObjectAdd(&D_800DA72C.object_0, &D_800DA72C.position_1C.position_0, &D_800DA72C.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&D_800DA72C.object_0, &D_800DA72C.position_1C, &D_800DA72C.rotation_28);
     }
 
     if (D_800DA6EC >= 0)
