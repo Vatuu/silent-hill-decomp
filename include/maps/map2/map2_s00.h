@@ -159,4 +159,6 @@ s32 func_800DC98C(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* 
 
 bool func_800DC67C(s_SubCharacter* chara);
 
+void func_800DE11C(s_SubCharacter* chara);
+
 #endif
