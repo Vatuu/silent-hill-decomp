@@ -406,7 +406,15 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC50C);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC598);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC67C);
+bool func_800DC67C(s_SubCharacter* chara)
+{
+    if (chara->properties_E4.unk0.field_E8_0 == 1)
+    {
+        func_800803FC(&D_800F217C, chara->field_40);
+        return Math_Distance2dGet(&chara->position_18, &D_800F217C) > Q12(40.0f);
+    }
+    return 0;
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC6E4);
 

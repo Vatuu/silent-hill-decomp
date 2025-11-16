@@ -74,6 +74,9 @@ extern s_WorldObjectDesc      g_WorldObject9;
 extern s_WorldObjectDesc      g_WorldObjectA;
 extern s_WorldObject_0        g_CommonWorldObjects[6];
 
+extern VECTOR3 D_800F217C;
+
+
 void func_800E5930(s_SubCharacter* chara);
 
 void func_800EE5D0(void);
@@ -153,5 +156,7 @@ void func_800D5974(s_SubCharacter* chara);
 s32 func_800DC200(s_SubCharacter* chara);
 
 s32 func_800DC98C(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
+
+bool func_800DC67C(s_SubCharacter* chara);
 
 #endif
