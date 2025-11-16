@@ -683,8 +683,7 @@ void Map_WorldObjectsInit(void) // 0x800D2A04
     WorldObjectPoseInit(&g_WorldObjectPose_SavePad[0], 58.1048f, -0.9f, 62.5574f, 0.0f, 17.41f, 0.0f);
     WorldObjectPoseInit(&g_WorldObjectPose_SavePad[1], 57.905f, -0.9f, 22.5574f, 0.0f, 17.41f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject_Mag, 61.1727f, 0.43f, 18.6243f, 0.0f, 60.3f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject_Mag.object_0, "MAG_HIDE");
+    WorldObjectInit(&g_WorldObject_Mag, "MAG_HIDE", 61.1727f, 0.43f, 18.6243f, 0.0f, 60.3f, 0.0f);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);

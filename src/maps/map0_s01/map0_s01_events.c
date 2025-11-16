@@ -907,17 +907,13 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
     WorldObject_ModelNameSet(&D_800E2450[0], "OUT1_HID");
     WorldObject_ModelNameSet(&D_800E2450[1], "OUT_BLD_");
 
-    WorldObjectInit(&g_EventThing_KitchenKnife, 5.09f, -1.01f, 274.12f, 0.0f, 32.0f, 0.0f); 
-    WorldObject_ModelNameSet(&g_EventThing_KitchenKnife.object_0, "KNIFE_HI");
+    WorldObjectInit(&g_EventThing_KitchenKnife, "KNIFE_HI", 5.09f, -1.01f, 274.12f, 0.0f, 32.0f, 0.0f);
 
-    WorldObjectInit(&g_EventThing_Flashlight, 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_EventThing_Flashlight.object_0, "FLASH_HI");
+    WorldObjectInit(&g_EventThing_Flashlight, "FLASH_HI", 5.18f, -1.0f, 267.28f, -3.0f, 111.0f, 0.0f);
 
-    WorldObjectInit(&g_EventThing_Map, 5.24f, -1.0f, 267.21f, 0.0f, 57.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_EventThing_Map.object_0, "MAP_HIDE");
+    WorldObjectInit(&g_EventThing_Map, "MAP_HIDE", 5.24f, -1.0f, 267.21f, 0.0f, 57.0f, 0.0f);
 
-    WorldObjectInit(&g_EventThing_PocketRadio, 2.31f, -0.6f, 273.95f, 0.0f, 147.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_EventThing_PocketRadio.object_0, "RADIO_HI");
+    WorldObjectInit(&g_EventThing_PocketRadio, "RADIO_HI", 2.31f, -0.6f, 273.95f, 0.0f, 147.0f, 0.0f);
 
     if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
     {

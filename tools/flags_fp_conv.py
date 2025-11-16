@@ -56,7 +56,7 @@ def get_flag_name(flagIdx, isMapMarking):
     return flags.get(flagIdx, f"{enumName}{flagIdx}")
 
 def convert_pose(line):
-    pattern = r"WorldObjectPoseSet\(([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^\,\)]+)\);"
+    pattern = r"WorldObjectSet\(([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^\,\)]+)\)"
     m = re.search(pattern, line)
     if not m:
         return None
@@ -83,8 +83,9 @@ def convert_pose(line):
     obj = m.group(1).strip()
 
     # extract raw args
-    a1, a2, a3 = m.group(2), m.group(3), m.group(4)
-    a4, a5, a6 = m.group(5), m.group(6), m.group(7)
+    name = m.group(2)
+    a1, a2, a3 = m.group(3), m.group(4), m.group(5)
+    a4, a5, a6 = m.group(6), m.group(7), m.group(8)
 
     # convert values
     f1 = convert_value(a1, False)
@@ -96,7 +97,7 @@ def convert_pose(line):
     f6 = convert_value(a6, True)
 
     return (
-        f"WorldObjectPoseInit({obj}, "
+        f"WorldObjectInit({obj}, {name}, "
         f"{f1}, {f2}, {f3}, {f4}, {f5}, {f6});"
     )
 

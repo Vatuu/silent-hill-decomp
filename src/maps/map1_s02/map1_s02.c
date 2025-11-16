@@ -1286,44 +1286,33 @@ void func_800DD494(void) // 0x800DD494
     Math_SetSVectorFast(&g_ObjRotC[1], 0, 0, 0);
     Math_Vector3Set(&g_ObjPosC[1], Q12(100.0f), Q12(-1.6f), Q12(145.25f)); // Set again?
 
-    WorldObjectInit(&g_WorldObject1, 18.37f, -0.8f, 59.51f, 0.0f, 0.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject1.object_0, "DOOR_HID");
+    WorldObjectInit(&g_WorldObject1, "DOOR_HID", 18.37f, -0.8f, 59.51f, 0.0f, 0.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject3, 17.8643f, -0.04f, 59.5135f, 0.0f, -215.3f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject3.object_0, "GUN_HIDE");
+    WorldObjectInit(&g_WorldObject3, "GUN_HIDE", 17.8643f, -0.04f, 59.5135f, 0.0f, -215.3f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject4, 60.5f, -1.04f, -61.0f, 0.0f, 0.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject4.object_0, "RING1_HI");
+    WorldObjectInit(&g_WorldObject4, "RING1_HI", 60.5f, -1.04f, -61.0f, 0.0f, 0.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject5, 60.5f, -1.04f, -59.0f, 0.0f, 0.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject5.object_0, "RING2_HI");
+    WorldObjectInit(&g_WorldObject5, "RING2_HI", 60.5f, -1.04f, -59.0f, 0.0f, 0.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject6, 58.4f, 0.0f, -60.4f, 0.0f, 0.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject6.object_0, "DOOR2_HI");
+    WorldObjectInit(&g_WorldObject6, "DOOR2_HI", 58.4f, 0.0f, -60.4f, 0.0f, 0.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject7, 58.4f, 0.0f, -59.6f, 0.0f, 0.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject7.object_0, "DOOR1_HI");
+    WorldObjectInit(&g_WorldObject7, "DOOR1_HI", 58.4f, 0.0f, -59.6f, 0.0f, 0.0f, 0.0f);
 
     Math_Vector3Set(&g_WorldObject0.position_1C, Q12(54.47f), Q12(0.0f), Q12(-60.0f));
     WorldObject_ModelNameSet(&g_WorldObject0.object_0, "BOX_HIDE");
 
-    WorldObjectInit(&g_WorldObject8, 139.199f, -0.8753f, 99.3733f, 0.0f, 46.2f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject8.object_0, "KEY_HIDE");
+    WorldObjectInit(&g_WorldObject8, "KEY_HIDE", 139.199f, -0.8753f, 99.3733f, 0.0f, 46.2f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject9, 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject9.object_0, "PHONE3_H");
+    WorldObjectInit(&g_WorldObject9, "PHONE3_H", 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
 
-    WorldObjectInit(&g_WorldObjectA, 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObjectA.object_0, "PHONE2_H");
+    WorldObjectInit(&g_WorldObjectA, "PHONE2_H", 18.974f, -0.9f, 143.515f, 0.0f, -78.3f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject2, -16.51f, -0.11f, -51.54f, 0.0f, -19.3f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject2.object_0, "KEY_HIDE");
+    WorldObjectInit(&g_WorldObject2, "KEY_HIDE", -16.51f, -0.11f, -51.54f, 0.0f, -19.3f, 0.0f);
 
     Math_Vector3Set(&g_WorldObjectD.position_1C, Q12(100.124f), Q12(-1.08f), Q12(101.166f));
     WorldObject_ModelNameSet(&g_WorldObjectD.object_0, "BOLL_HID");
 
-    WorldObjectInit(&g_WorldObjectB, 60.14f, -0.902f, 141.763f, 0.0f, 92.4f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObjectB.object_0, D_800A99E4.savePadName_4);
+    WorldObjectInit(&g_WorldObjectB, D_800A99E4.savePadName_4, 60.14f, -0.902f, 141.763f, 0.0f, 92.4f, 0.0f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {

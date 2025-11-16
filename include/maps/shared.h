@@ -2685,13 +2685,14 @@ typedef struct
     SVECTOR3        rotation_28; // Q19.12
 } s_WorldObjectDesc;
 
-#define WorldObjectInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
-    WorldObjectSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
+#define WorldObjectInit(eventPos, name, posX, posY, posZ, rotX, rotY, rotZ) \
+    WorldObjectSet(eventPos, name, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
 
-#define WorldObjectSet(eventPose, posX, posY, posZ, rotX, rotY, rotZ)     \
-    {                                                                     \
-        Math_Vector3Set(&(eventPose)->position_1C, posX, posY, posZ);     \
-        Math_SetSVectorFast(&(eventPose)->rotation_28, rotX, rotY, rotZ); \
+#define WorldObjectSet(eventPose, name, posX, posY, posZ, rotX, rotY, rotZ) \
+    {                                                                       \
+        Math_Vector3Set(&(eventPose)->position_1C, posX, posY, posZ);       \
+        Math_SetSVectorFast(&(eventPose)->rotation_28, rotX, rotY, rotZ);   \
+        WorldObject_ModelNameSet(&(eventPose)->object_0, (name));           \
     }
 
 #define WorldObjectPoseInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \

@@ -450,11 +450,9 @@ void func_800D2AF4(void) // 0x800D2AF4
     Math_Vector3Set(&g_WorldObject1.position_1C, Q12(20.3f), Q12(0.0f), Q12(59.25f));
     WorldObject_ModelNameSet(&g_WorldObject1.object_0, "BOT_HIDE");
 
-    WorldObjectInit(&g_WorldObject2, 60.0f, 0.0f, 60.0f, 0.0f, 9.7f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject2.object_0, "MAP_HIDE");
+    WorldObjectInit(&g_WorldObject2, "MAP_HIDE", 60.0f, 0.0f, 60.0f, 0.0f, 9.7f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject5, 100.3f, 0.0f, 58.9f, 0.0f, 72.8f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject5.object_0, "KEY_HIDE");
+    WorldObjectInit(&g_WorldObject5, "KEY_HIDE", 100.3f, 0.0f, 58.9f, 0.0f, 72.8f, 0.0f);
 
     Math_Vector3Set(&g_WorldObject3[0].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
     WorldObject_ModelNameSet(&g_WorldObject3[0].object_0, "BT3_HIDE");
@@ -480,18 +478,13 @@ void func_800D2AF4(void) // 0x800D2AF4
     Math_Vector3Set(&g_WorldObject0[5].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
     WorldObject_ModelNameSet(&g_WorldObject0[5].object_0, "DR2R_HID");
 
+    WorldObjectInit(&g_WorldObject6, D_800A99E4.savePadName_4, 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject6, 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject6.object_0, D_800A99E4.savePadName_4);
+    WorldObjectInit(&g_WorldObject7, "MAP_HIDE", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject7, 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject7.object_0, "MAP_HIDE");
+    WorldObjectInit(&g_WorldObject8, "MAP2_HID", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject8, 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject8.object_0, "MAP2_HID");
-
-    WorldObjectInit(&g_WorldObject9, 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject9.object_0, D_800A99E4.firstAidKitName_8);
+    WorldObjectInit(&g_WorldObject9, D_800A99E4.firstAidKitName_8, 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);

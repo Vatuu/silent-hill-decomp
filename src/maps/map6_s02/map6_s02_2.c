@@ -908,8 +908,7 @@ extern s_WorldObjectDesc g_WorldObject_SavePad;
 
 void Map_WorldObjectsInit(void) // 0x800D1658
 {
-    WorldObjectInit(&g_WorldObject_SavePad, -18.85f, 3.06f, -21.16f, 0.0f, 111.6f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject_SavePad.object_0, D_800A99E4.savePadName_4);
+    WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4.savePadName_4, -18.85f, 3.06f, -21.16f, 0.0f, 111.6f, 0.0f);
 
     D_800D4E09 = 0;
     D_800D4E6C = 0;

@@ -2458,23 +2458,17 @@ void func_800EB824(s32 arg0) // 0x800EB824
 void func_800EB908(void) // 0x800EB908
 {
     D_800F534C = 0;
-    WorldObjectInit(&g_WorldObject9, 236.7151f, -0.281f, 345.046f, 2.8f, 7.5f, -180.5f);
-    WorldObject_ModelNameSet(&g_WorldObject9.object_0, "DRILL_NE");
+    WorldObjectInit(&g_WorldObject9, "DRILL_NE", 236.7151f, -0.281f, 345.046f, 2.8f, 7.5f, -180.5f);
 
-    WorldObjectInit(&g_WorldObjectA, -82.3f, -0.7f, -91.6f, -17.0f, 18.1f, -7.22f);
-    WorldObject_ModelNameSet(&g_WorldObjectA.object_0, "CHAINSAW");
+    WorldObjectInit(&g_WorldObjectA, "CHAINSAW", -82.3f, -0.7f, -91.6f, -17.0f, 18.1f, -7.22f);
 
-    WorldObjectInit(&g_WorldObject0, -187.591f, -0.093f, 300.271f, 4.4f, 36.8f, 2.9f);
-    WorldObject_ModelNameSet(&g_WorldObject0.object_0, "IRONPIPE");
+    WorldObjectInit(&g_WorldObject0, "IRONPIPE", -187.591f, -0.093f, 300.271f, 4.4f, 36.8f, 2.9f);
 
-    WorldObjectInit(&g_WorldObject1, -186.68f, -0.483f, 300.829f, 4.1f, -74.05f, -9.5f);
-    WorldObject_ModelNameSet(&g_WorldObject1.object_0, "SKB2_NEA");
+    WorldObjectInit(&g_WorldObject1, "SKB2_NEA", -186.68f, -0.483f, 300.829f, 4.1f, -74.05f, -9.5f);
 
-    WorldObjectInit(&g_WorldObject2, -154.56f, 0.0f, 1.78f, 0.0f, -51.7f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject2.object_0, "PPR1_NEA");
+    WorldObjectInit(&g_WorldObject2, "PPR1_NEA", -154.56f, 0.0f, 1.78f, 0.0f, -51.7f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject3, -154.6f, 0.0f, 2.22f, 0.0f, 74.3f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject3.object_0, "PPR2_NEA");
+    WorldObjectInit(&g_WorldObject3, "PPR2_NEA", -154.6f, 0.0f, 2.22f, 0.0f, 74.3f, 0.0f);
 
     Math_Vector3Set(&g_WorldObjectB[0].position_1C, Q12(111.94f), Q12(-0.81f), Q12(216.25f));
     WorldObject_ModelNameSet(&g_WorldObjectB[0].object_0, "JO0A_HID");
@@ -2485,14 +2479,11 @@ void func_800EB908(void) // 0x800EB908
     Math_Vector3Set(&g_WorldObjectB[2].position_1C, Q12(111.94f), Q12(-0.32f), Q12(216.25f));
     WorldObject_ModelNameSet(&g_WorldObjectB[2].object_0, "JO0C_HID");
 
-    WorldObjectInit(&g_WorldObject4[0], 185.76f,-0.59f, 116.12f, 0.0f, 0.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject4[0].object_0, "KEY_HIDE");
+    WorldObjectInit(&g_WorldObject4[0], "KEY_HIDE", 185.76f, -0.59f, 116.12f, 0.0f, 0.0f, 0.0f);
 
-    WorldObjectSet(&g_WorldObject4[1], 0xFFF41948, 0, 0x178A14, 0, 0x299, 0);
-    WorldObject_ModelNameSet(&(g_WorldObject4 + 1)->object_0, "KEY_NEAR");
-    
-    WorldObjectSet(&g_WorldObject4[2], 0x63666, -0x599, 0xFFFDEBD8, 0x12, 0, 0xA);
-    WorldObject_ModelNameSet(&g_WorldObject4[2].object_0, "KEY_NEAR");
+    WorldObjectInit(&g_WorldObject4[1], "KEY_NEAR", -190.42f, 0.0f, 376.63f, 0.0f, 58.5f, 0.0f);
+
+    WorldObjectInit(&g_WorldObject4[2], "KEY_NEAR", 99.4f, -0.35f, -33.26f, 1.6f, 0.0f, 0.9f);
 
     WorldObject_ModelNameSet(&g_WorldObject5[0], "AXIS1_HI");
     WorldObject_ModelNameSet(&g_WorldObject5[1], "AXIS2_BA");
@@ -2525,8 +2516,7 @@ void func_800EB908(void) // 0x800EB908
     WorldObjectPoseInit(&D_800F572C, 116.3013f, -0.905f, 299.1139f, 0.0f, 84.56f, 0.0f);
     WorldObjectPoseInit(&D_800F574C, -44.234f, -3.453f, 345.2f, 0.0f, 180.0f, 0.0f);
 
-    WorldObjectSet(&g_WorldObject8, Q12(-43.694f), Q12(-3.1824f), Q12(345.764f), 0x4C, 0x45, 0);
-    WorldObject_ModelNameSet(&g_WorldObject8.object_0, "MAP_NEAR");
+    WorldObjectInit(&g_WorldObject8, "MAP_NEAR", -43.694f, -3.1824f, 345.764f, 6.7f, 6.1f, 0.0f);
 
     D_800F56E4 = 0;
 

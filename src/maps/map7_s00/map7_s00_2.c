@@ -406,8 +406,7 @@ void func_800D2700(void) // 0x800D2700
         D_800D4370[i] = z;
     }
 
-    WorldObjectSet(&g_WorldObject1, Q12(15.63f), Q12(-0.91f), Q12(-140.5498f), 0, 0xfc00, 0);
-    WorldObject_ModelNameSet(&g_WorldObject1.object_0, D_800A99E4.savePadName_4);
+    WorldObjectInit(&g_WorldObject1, D_800A99E4.savePadName_4, 15.63f, -0.91f, -140.55f, 0.0f, -90.0f, 0.0f);
 
     if (Savegame_EventFlagGet(EventFlag_471))
     {

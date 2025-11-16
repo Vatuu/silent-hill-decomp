@@ -1276,17 +1276,13 @@ void func_800DD3AC(void) // 0x800DD3AC
     Math_Vector3Set(&g_WorldObject6.position_1C, Q12(-10.25f), Q12(0.2f), Q12(-17.75f));
     WorldObject_ModelNameSet(&g_WorldObject6.object_0, "BALL_HID");
 
-    WorldObjectInit(&g_WorldObject5, -10.49f, -0.7f, -12.92f, 0.0f, 0.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject5.object_0, "VALVE_HI");
+    WorldObjectInit(&g_WorldObject5, "VALVE_HI", -10.49f, -0.7f, -12.92f, 0.0f, 0.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject0, -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject0.object_0, "TOBIRA00");
+    WorldObjectInit(&g_WorldObject0, "TOBIRA00", -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject1, -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject1.object_0, "TOBIRA01");
+    WorldObjectInit(&g_WorldObject1, "TOBIRA01", -58.81f, -1.4f, 18.02f, 0.0f, 0.0f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject2, -61.0f, -1.05f, 20.97f, 0.0f, 0.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject2.object_0, "TOBIRA2_");
+    WorldObjectInit(&g_WorldObject2, "TOBIRA2_", -61.0f, -1.05f, 20.97f, 0.0f, 0.0f, 0.0f);
 
     Math_Vector3Set(&g_WorldObject3.position_1C, Q12(-58.81f), Q12(-1.4f), Q12(18.02f));
     WorldObject_ModelNameSet(&g_WorldObject3.object_0, "HAKO1_HI");
@@ -1294,8 +1290,7 @@ void func_800DD3AC(void) // 0x800DD3AC
     Math_Vector3Set(&g_WorldObject4.position_1C, Q12(-61.0f), Q12(-0.9f), Q12(20.97f));
     WorldObject_ModelNameSet(&g_WorldObject4.object_0, "HAKO2_HI");
 
-    WorldObjectInit(&g_WorldObject7, -60.3184f, -0.00732422f, 20.23f, 0.0f, 53.2f, 5.3f);
-    WorldObject_ModelNameSet(&g_WorldObject7.object_0, "KEY_HIDE");
+    WorldObjectInit(&g_WorldObject7, "KEY_HIDE", -60.3184f, -0.00732422f, 20.23f, 0.0f, 53.2f, 5.3f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {

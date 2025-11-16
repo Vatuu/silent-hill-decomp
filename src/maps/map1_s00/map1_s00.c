@@ -884,8 +884,7 @@ void Map_WorldObjectsInit(void)
 {
     D_800E1180 = 0;
     D_800E1182 = 0;
-    WorldObjectInit(&g_WorldObject9, 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject9.object_0, "PICT00_H");
+    WorldObjectInit(&g_WorldObject9, "PICT00_H", 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
 
     Math_Vector3Set(&g_WorldObject1[0].position_1C, Q12(133.63f), Q12(-0.816f), Q12(17.089f));
     WorldObject_ModelNameSet(&g_WorldObject1[0].object_0, "PAPER1_H");
@@ -926,11 +925,9 @@ void Map_WorldObjectsInit(void)
     Math_Vector3Set(&g_WorldObject0.position_1C, Q12(19.5799f), Q12(0.0f), Q12(-18.3f));
     WorldObject_ModelNameSet(&g_WorldObject0.object_0, "G_HIDE_I");
 
-    WorldObjectInit(&g_WorldObject7, 61.8531f, -0.805f, 140.6099f, 0.0f, 92.9f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject7.object_0, D_800A99E4.savePadName_4);
+    WorldObjectInit(&g_WorldObject7, D_800A99E4.savePadName_4, 61.8531f, -0.805f, 140.6099f, 0.0f, 92.9f, 0.0f);
 
-    WorldObjectInit(&g_WorldObject8, 96.9405f, -0.3365f, 21.0918f, 0.0f, 66.8f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject8.object_0, "MAP_HIDE");
+    WorldObjectInit(&g_WorldObject8, "MAP_HIDE", 96.9405f, -0.3365f, 21.0918f, 0.0f, 66.8f, 0.0f);
 
     Player_ItemRemove(InventoryItemId_NoteToSchool, 1);
     Savegame_EventFlagSet(EventFlag_147);

@@ -1325,8 +1325,7 @@ void func_800E5D44(void) // 0x800E5D44
     WorldObject_ModelNameSet(&g_WorldObject7[1], "FWBOX2_B");
     WorldObject_ModelNameSet(&g_WorldObject8,    "WHEEL_BA");
 
-    WorldObjectInit(&g_WorldObject9, -13.6f, -1.0f, -28.3f, 0.0f, -165.0f, 0.0f);
-    WorldObject_ModelNameSet(&g_WorldObject9.object_0, D_800A99E4.savePadName_4);
+    WorldObjectInit(&g_WorldObject9, D_800A99E4.savePadName_4, -13.6f, -1.0f, -28.3f, 0.0f, -165.0f, 0.0f);
     func_800E02E0();
     func_800E10F8();
 
