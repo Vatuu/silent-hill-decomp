@@ -45,6 +45,8 @@ extern s32 D_800F1A24;
 /** Time. */
 extern q3_12 D_800F534E;
 
+extern VECTOR3 D_800F216C;
+
 /* TODO: Rename these, give them sequental namea (not really essential, but would be nice). */
 extern SVECTOR3               D_800F5344;
 extern s8                     D_800F534C;
@@ -147,5 +149,9 @@ s32 func_800DC30C(s_SubCharacter* chara);
 s32 func_800DC598(s_SubCharacter* chara);
 
 void func_800D5974(s_SubCharacter* chara);
+
+s32 func_800DC200(s_SubCharacter* chara);
+
+s32 func_800DC98C(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
 
 #endif

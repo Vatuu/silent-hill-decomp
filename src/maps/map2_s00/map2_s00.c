@@ -381,7 +381,20 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC0A8);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC0E4);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC200);
+s32 func_800DC200(s_SubCharacter* chara)
+{
+    if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1)&&
+        (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || chara->model_0.charaId_0 == Chara_AirScreamer))
+    {
+        return 0;
+    }
+
+    D_800F216C.vx = chara->position_18.vx + FP_MULTIPLY_PRECISE(Math_Sin(chara->rotation_24.vy), Q12(2.0f), Q12_SHIFT);
+    D_800F216C.vy = chara->position_18.vy + Q12(0.5f);
+    D_800F216C.vz = chara->position_18.vz + FP_MULTIPLY_PRECISE(Math_Cos(chara->rotation_24.vy), Q12(2.0f), Q12_SHIFT);
+
+    return func_800DC98C(chara, NULL, &D_800F216C, NULL) != 0;
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC30C);
 
