@@ -974,7 +974,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E2E90);
 
 void func_800E3390(void) // 0x800E3390
 {
-    s32 var_s1;
+    s32 i;
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         D_800F4805 > 0 && D_800F4805 < 4)
@@ -991,6 +991,7 @@ void func_800E3390(void) // 0x800E3390
             func_8003A16C();
             func_8003ED74(18, 18);
             func_8008D438();
+
             D_800F4808 = 0;
             D_800F4809 = 0;
             D_800F480A = 0;
@@ -1011,6 +1012,7 @@ void func_800E3390(void) // 0x800E3390
             D_800F4819 = 0;
             D_800F481A = 0;
             D_800F481B = 0;
+
             func_800348C0();
             WorldGfx_CharaLmBufferAssign(CHARA_FORCE_FREE_ALL);
 
@@ -1026,11 +1028,13 @@ void func_800E3390(void) // 0x800E3390
 
             D_800F4806 = 0;
             D_800F47F0 = 0;
+
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             func_800E94AC();
             func_800E94F4();
             func_800348C0();
+
             Savegame_EventFlagSet(EventFlag_576);
             Savegame_EventFlagSet(EventFlag_591);
             D_800F4805++;
@@ -1077,6 +1081,7 @@ void func_800E3390(void) // 0x800E3390
 
         case 6:
             func_80087EDC(40);
+
             if (g_SysWork.sysStateStep_C[0] != 0)
             {
                 D_800F4805++;
@@ -1091,9 +1096,9 @@ void func_800E3390(void) // 0x800E3390
             break;
 
         case 8:
-            for (var_s1 = 0; var_s1 < 6; var_s1++)
+            for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
             {
-                func_800E9490(&g_SysWork.npcs_1A0[var_s1]);
+                func_800E9490(&g_SysWork.npcs_1A0[i]);
             }
 
             if (Savegame_EventFlagGet(EventFlag_391))
@@ -1161,6 +1166,7 @@ void func_800E3390(void) // 0x800E3390
 
                 func_800E9444(Chara_Incubator, &g_SysWork.npcs_1A0[4]);
                 func_800E9498();
+
                 D_800F4812 = 0;
                 D_800F4811 = 0;
                 D_800F4810 = 0;
@@ -1173,6 +1179,7 @@ void func_800E3390(void) // 0x800E3390
                 D_800F4808 = 0;
                 D_800F480C = 1;
                 D_800F47F0 = Q12(68.0f);
+
                 func_800DFB50(&g_SysWork.npcs_1A0[4]);
             }
 
@@ -1226,6 +1233,7 @@ void func_800E3390(void) // 0x800E3390
     }
 
     func_800E2E90();
+
     if (D_800F480C && D_800F4805 == 3 && Savegame_EventFlagGet(EventFlag_391))
     {
         g_SysWork.npcs_1A0[4].rotation_24.vy += FP_ANGLE(180.0f);

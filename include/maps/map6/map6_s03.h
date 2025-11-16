@@ -11,15 +11,21 @@ extern VECTOR3                g_WorldObjectPos0;           // D_800DFEB0
 extern s_WorldObjectDesc      g_WorldObject1;              // D_800DFEC0
 extern s_WorldObjectDescNoRot g_WorldObject2;              // D_800DFF00
 extern s_WorldObject_0        g_CommonWorldObjects[6];     // D_800DFF30
+
 extern s16 D_800DFEF0;
 extern s16 D_800DFEF2;
 extern s8 D_800DFEF4;
 extern s8 D_800DFEF5;
 extern VECTOR3 D_800DBD10;
-extern u16 D_800DBCE4[22];
-extern u8 D_800DBCDC[8];
+extern u16 D_800DBCE4[22]; // Flags.
+extern u8 D_800DBCDC[8];   // Distances.
 
 void func_800D4A5C(s_SubCharacter* chara);
+
+// TODO: ifdefs? Completely different impl. than what other maps use.
+u8 Map_RoomIdxGet(s32 x, s32 z);
+
+void func_800D7F98(void);
 
 /** @brief Handles a Health Drink or Handgun Bullets item pickup event. */
 void MapEvent_CommonItemTake(void);
@@ -32,7 +38,5 @@ void func_800D84EC(void);
 void MapEvent_MapTake(void);
 
 void func_800D8818(void);
-
-void func_800D7F98(void);
 
 #endif

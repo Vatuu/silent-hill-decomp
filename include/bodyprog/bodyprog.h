@@ -4509,9 +4509,9 @@ bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8008076C(s32 posX, s32 posZ);
 
 /** Returns ground height? */
-q19_12 func_80080884(s32 posX, s32 posZ);
+q19_12 func_80080884(q19_12 posX, q19_12 posZ);
 
-s32 func_800808AC(s32 posX, s32 posZ);
+s32 func_800808AC(q19_12 posX, q19_12 posZ);
 
 /** Returns a Q shift based on a magnitude. */
 s32 Math_MagnitudeShiftGet(s32 mag);

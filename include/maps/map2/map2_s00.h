@@ -76,12 +76,29 @@ extern s_WorldObject_0        g_CommonWorldObjects[6];
 
 extern VECTOR3 D_800F217C;
 
+// TODO: Reorder these decls.
+
+bool func_800DC200(s_SubCharacter* chara);
+
+s32 func_800DC30C(s_SubCharacter* chara);
+
+void func_800D5974(s_SubCharacter* chara);
+
+s32 func_800DC598(s_SubCharacter* chara);
+
+bool func_800DC67C(s_SubCharacter* chara);
+
+s32 func_800DC98C(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
+
+void func_800DE11C(s_SubCharacter* chara);
+
+void func_800DF710(s_SubCharacter* chara);
+
+void func_800E7D54(void);
 
 void func_800E5930(s_SubCharacter* chara);
 
 void func_800EE5D0(void);
-
-void func_800E7D54(void);
 
 void MapEvent_AtWaterWorks(void);
 
@@ -144,21 +161,5 @@ void func_800EA960(void);
 void func_800EAD2C(void);
 
 void func_800EB174(void);
-
-void func_800DF710(s_SubCharacter* chara);
-
-s32 func_800DC30C(s_SubCharacter* chara);
-
-s32 func_800DC598(s_SubCharacter* chara);
-
-void func_800D5974(s_SubCharacter* chara);
-
-s32 func_800DC200(s_SubCharacter* chara);
-
-s32 func_800DC98C(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
-
-bool func_800DC67C(s_SubCharacter* chara);
-
-void func_800DE11C(s_SubCharacter* chara);
 
 #endif

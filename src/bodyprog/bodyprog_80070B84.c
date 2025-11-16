@@ -8560,8 +8560,8 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfx, s8* pitch0, s8* pitch1) // 0x8007FDE0
             mapOverlayId = g_SavegamePtr->mapOverlayId_A4;
             *sfx         = Sfx_Unk1330;
 
-            // @hack Odd redundant load of mapOverlayId_A4, likely there was some optimized-out code above that left side-effects?
-            // This just sets `mapOverlayId` to `g_SavegamePtr->mapOverlayId_A4` (again)
+            // @hack Odd redundant load of `mapOverlayId_A4`, likely there was some optimized-out code above that left side-effects?
+            // This just sets `mapOverlayId` to `g_SavegamePtr->mapOverlayId_A4` (again).
             asm volatile(
                 "lui   $2, %%hi(g_SavegamePtr)\n"
                 "lw    $2, %%lo(g_SavegamePtr)($2)\n"
@@ -8573,7 +8573,7 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfx, s8* pitch0, s8* pitch1) // 0x8007FDE0
 
             if (mapOverlayId == MapOverlayId_MAP2_S00)
             {
-                if (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(95.0f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(105.0f) &&
+                if (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(95.0f)  && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(105.0f) &&
                     g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-33.0f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-28.0f))
                 {
                     *sfx = Sfx_Unk1389;
@@ -8635,7 +8635,7 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfx, s8* pitch0, s8* pitch1) // 0x8007FDE0
             switch (g_SavegamePtr->mapRoomIdx_A5)
             {
                 case 20:
-                    if (g_SysWork.player_4C.chara_0.position_18.vy > 0)
+                    if (g_SysWork.player_4C.chara_0.position_18.vy > Q12(0.0f))
                     {
                         *sfx = Sfx_Unk1346;
                     }
@@ -8662,23 +8662,22 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfx, s8* pitch0, s8* pitch1) // 0x8007FDE0
 
         case MapOverlayId_MAP6_S00:
             if ((g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-160.1f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-158.5f) &&
-                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(26.8f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(27.4f)) ||
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(26.8f)   && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(27.4f)) ||
 
                 (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-160.1f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-158.5f) &&
-                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(16.8f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(17.5f)) ||
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(16.8f)   && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(17.5f)) ||
 
                 (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-170.0f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-165.8f) &&
-                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-16.4f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-14.35f)) ||
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-16.4f)   && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-14.35f)) ||
 
                 (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-172.7f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-170.9f) &&
-                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-24.9f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-21.25f)) ||
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-24.9f)  && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-21.25f)) ||
 
                 (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-170.28f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-165.85f) &&
-                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-35.4f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-34.35f)))
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-35.4f)   && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-34.35f)))
             {
                 *sfx = Sfx_Unk1600;
             }
-
             break;
 
         case MapOverlayId_MAP6_S01:
@@ -8927,13 +8926,13 @@ void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
     D_800AFC78.field_18      = caseVar;
 }
 
-q19_12 func_80080884(s32 posX, s32 posZ) // 0x80080884
+q19_12 func_80080884(q19_12 posX, q19_12 posZ) // 0x80080884
 {
     func_8008076C(posX, posZ);
     return D_800AFC78.position_0.vy;
 }
 
-s32 func_800808AC(s32 posX, s32 posZ) // 0x800808AC
+s32 func_800808AC(q19_12 posX, q19_12 posZ) // 0x800808AC
 {
     func_8008076C(posX, posZ);
     return D_800AFC78.field_18;

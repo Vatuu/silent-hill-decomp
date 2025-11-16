@@ -214,7 +214,7 @@ INCLUDE_ASM("asm/maps/map6_s03/nonmatchings/map6_s03", sharedFunc_800D3300_5_s00
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D7F14
 
-u8 Map_RoomIdxGet(s32 x, s32 z) // completely different impl. than what other maps use.
+u8 Map_RoomIdxGet(s32 x, s32 z) // 0x800D7F24
 {
     s32 ret;
 
@@ -245,23 +245,25 @@ u8 Map_RoomIdxGet(s32 x, s32 z) // completely different impl. than what other ma
             ret = 20;
         }
     }
+
     return ret;
 }
 
-void func_800D7F98(void) 
+void func_800D7F98(void) // 0x800D7F98
 {
-    s32 dist0;
-    s32 dist1;
-    s32 dist2;
-    s32 fArg1;
-    s32 roomIdx;
-    s32 flags;
+    q19_12 dist0;
+    q19_12 dist1;
+    q19_12 dist2;
+    s32    fArg1;
+    s32    roomIdx;
+    s32    flags;
 
     roomIdx = g_SavegamePtr->mapRoomIdx_A5;
     fArg1 = 0x400;
+
     if (Savegame_EventFlagGet(EventFlag_435))
     {
-        flags = 1;
+        flags = 1 << 0;
         if (Savegame_EventFlagGet(EventFlag_437)) 
         {
             fArg1 = 0x547;
@@ -269,6 +271,7 @@ void func_800D7F98(void)
         else
         {
             flags = D_800DBCE4[roomIdx];
+
             switch (roomIdx)
             {
                 case 15:
@@ -277,6 +280,7 @@ void func_800D7F98(void)
                     D_800DBCDC[6] = 0;
                     D_800DBCDC[7] = 0;
                     break;
+
                 case 17:
                     // VECTOR3 D_800DBD10 = VECTOR3(23.0f, 0.0f, 20.0f); // in .data
                     dist0 = Math_Distance2dGet(&g_SysWork.player_4C.chara_0.position_18, &D_800DBD10);
@@ -287,47 +291,52 @@ void func_800D7F98(void)
                     else
                     {
                         dist0 = Q8(0.313f) - FP_MULTIPLY_PRECISE((dist0 - Q12(5.0f)), 3, Q12_SHIFT); 
-                        if (dist0 < 0) 
+                        if (dist0 < Q12(0.0f)) 
                         {
-                            dist0 = 0;
+                            dist0 = Q12(0.0f);
                         }
                     }
+
                     D_800DBCDC[5] = dist0;
-                    D_800DBCDC[6] = 0;
-                    D_800DBCDC[7] = 0;
+                    D_800DBCDC[6] = Q12(0.0f);
+                    D_800DBCDC[7] = Q12(0.0f);
                     break;
+
                 case 18:
                 case 19:
                 case 20:
                     D_800DBCDC[5] = Q8(0.313f);
+
                     dist1 = Q12(64.0f) - g_SysWork.player_4C.chara_0.position_18.vx;
-                    if (dist1 < 0)
+                    if (dist1 < Q12(0.0f))
                     {
                         dist1 = Q8(0.313f);
                     }
                     else
                     {
                         dist1 = Q8(0.313f) - FP_MULTIPLY_PRECISE(dist1, 3, Q12_SHIFT);
-                        if (dist1 < 0)
+                        if (dist1 < Q12(0.0f))
                         {
-                            dist1 = 0;
+                            dist1 = Q12(0.0f);
                         }
                     }
+
                     D_800DBCDC[6] = dist1;
 
                     dist2 = Q12(80.0f) - g_SysWork.player_4C.chara_0.position_18.vx;
-                    if (dist2 < 0)
+                    if (dist2 < Q12(0.0f))
                     {
                         dist2 = Q8(0.313f);
                     }
                     else
                     {
                         dist2 = Q8(0.313f) - FP_MULTIPLY_PRECISE(dist2, 5, Q12_SHIFT);
-                        if (dist2 < 0)
+                        if (dist2 < Q12(0.0f))
                         {
-                            dist2 = 0;
+                            dist2 = Q12(0.0f);
                         }
                     }
+
                     D_800DBCDC[7] = dist2;
                     break;
             }
@@ -335,13 +344,14 @@ void func_800D7F98(void)
     } 
     else
     {
-        flags = 6;
+        flags = (1 << 1) | (1 << 2);
         if (!Savegame_EventFlagGet(EventFlag_431))
         {
             fArg1 = 0x547;
-            flags = 2;
+            flags = 1 << 1;
         }
     }
+
     func_80035F4C(flags, fArg1, &D_800DBCDC);
 }
 

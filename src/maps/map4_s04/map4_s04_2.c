@@ -50,11 +50,11 @@ void func_800D1470(void) // 0x800D1470
     func_8003640C(!Savegame_EventFlagGet(EventFlag_237) ? (1 << 3) : (1 << 1));
 }
 
-//const u8 D_800CA964[8] = {0x80, 0x70, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00};
+//const u8 D_800CA964[8] = { 0x80, 0x70, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00 };
 extern const u8 D_800CA964[];
 INCLUDE_RODATA("asm/maps/map4_s04/nonmatchings/map4_s04_2", D_800CA964);
 
-void func_800D14B0(void) // same as `func_800CFEEC` in map3_s02
+void func_800D14B0(void) // 0x800D14B0
 {
     u16    flags;
     q19_12 fArg1;
@@ -68,33 +68,33 @@ void func_800D14B0(void) // same as `func_800CFEEC` in map3_s02
     if (g_GameWork.soundCmd_5B2 == 8)
     {
         fArg1 = Q12(240.0f);
-        flags = 0xFE;
+        flags = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7);
     }
     else if (g_GameWork.soundCmd_5B2 == 32)
     {
         fArg1 = Q12(0.15f);
         if (Savegame_EventFlagGet(EventFlag_338))
         {
-            flags = 4;
+            flags = 1 << 2;
             if (!Savegame_EventFlagGet(EventFlag_340))
             {
-                flags = 2;
+                flags = 1 << 1;
                 if (Savegame_EventFlagGet(EventFlag_339))
                 {
-                    flags = 0xE;
+                    flags = (1 << 1) | (1 << 2) | (1 << 3);
                 }
             }
         }
         else
         {
-            flags = 1;
+            flags = 1 << 0;
         }
     }
     else
     {
         flags = D_800D3364[roomIdx];
         fArg1 = Q12(0.15f);
-    
+
         switch (roomIdx)
         {
             case 23:
@@ -103,14 +103,14 @@ void func_800D14B0(void) // same as `func_800CFEEC` in map3_s02
             case 45:
                 if (!(Savegame_EventFlagGet(EventFlag_285) || Savegame_EventFlagGet(EventFlag_286)))
                 {
-                    flags = 0x1E;
+                    flags = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4);
                 }
                 else if (Savegame_EventFlagGet(EventFlag_285))
                 {
                     Savegame_EventFlagSet(EventFlag_286);
                 }
                 break;
-    
+
             case 5:
             case 25:
             case 37:
@@ -119,18 +119,17 @@ void func_800D14B0(void) // same as `func_800CFEEC` in map3_s02
                     Savegame_EventFlagSet(EventFlag_285);
                     Savegame_EventFlagClear(EventFlag_286);
                 }
-    
+
                 if (!Savegame_EventFlagGet(EventFlag_285))
                 {
-                    flags = 0x1FE;
+                    flags = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6) | (1 << 7) | (1 << 8);
                 }
                 else if (!Savegame_EventFlagGet(EventFlag_286))
                 {
-                    flags = 0x13E;
+                    flags = (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 8);
                 }
-    
                 break;
-    
+
             case 4:
                 if (!Player_ItemRemove(InventoryItemId_ExaminationRoomKey, 0))
                 {
@@ -167,13 +166,13 @@ void func_800D14B0(void) // same as `func_800CFEEC` in map3_s02
             case 47:
                 Savegame_EventFlagSet(EventFlag_286);
                 break;
-    
+
             case 3:
                 if (g_GameWork.soundCmd_5B2 == 31)
                 {
                     memcpy(data, D_800CA964, 8);
                     dataPtr = data;
-    
+
                     if (!Savegame_EventFlagGet(EventFlag_293))
                     {
                         fArg1 = Q12(240.0f);
@@ -545,7 +544,7 @@ void func_800D23E4(void) // 0x800D23E4
     }
 }
 
-void func_800D2D6C(void)
+void func_800D2D6C(void) // 0x800D2D6C
 {
     WorldObjectInit(&g_WorldObjectSavepad, D_800A99E4.savePadName_4, 106.687f, -1.02f, 144.601f, 0.0f, 163.0f, 0.0f);
 
@@ -553,7 +552,7 @@ void func_800D2D6C(void)
     WorldObject_ModelNameSet(&g_WorldObject0.object_0, "ISU_HIDE");
 }
 
-void func_800D2DF4(void)
+void func_800D2DF4(void) // 0x800D2DF4
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 

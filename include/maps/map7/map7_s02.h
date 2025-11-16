@@ -150,6 +150,8 @@ void func_800DBB34(void);
 /** @brief Handles the Ankh item pickup event. */
 void MapEvent_AnkhTake(void);
 
+void func_800DC14C(void);
+
 void func_800DC778(void);
 
 void func_800DCD00(void);

@@ -925,7 +925,7 @@ void MapEvent_AnkhTake(void) // 0x800DC120
     Event_ItemTake(InventoryItemId_Ankh, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S02_PickupAnkh, 81);
 }
 
-void func_800DC14C(void)
+void func_800DC14C(void) // 0x800DC14C
 {
     s32 i;
     s32 floorHitCount;
@@ -976,6 +976,7 @@ void func_800DC14C(void)
             g_SysWork.field_30 = 20;
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 143, false);
 
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(61.9627f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-60.9957f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
@@ -984,8 +985,11 @@ void func_800DC14C(void)
 
         case 9:
             func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
+
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(59.74f), Q12(-1.22f), Q12(-60.36f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(63.67f), Q12(-1.02f), Q12(-61.05f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
             SysWork_StateStepIncrement(0);
 
         case 10:

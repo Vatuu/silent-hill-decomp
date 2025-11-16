@@ -1922,7 +1922,7 @@ typedef struct _SfxVolume
 typedef struct
 {
     s_AnimInfo  animInfo_0[56];
-    s32         unk_380[301][2]; // Unknown size, biggest constant index used is 35.
+    s32         unk_380[301][2]; // Unknown size, biggest constant index used is 35. Associated with anims.
     s_SfxVolume sfxVolumes_CE8[11];
     u_Property  properties_D14[4];
     s8          unk_D24[36];
@@ -1938,7 +1938,7 @@ typedef struct
     GsCOORDINATE2* coords_8;
     MATRIX*        matrices_C;
     s8             unk_10[164];
-    s32            field_B4[6][4];
+    s32            field_B4[6][4]; // [*][3] is angle.
     s32            field_114;
     s32            field_118;
     VECTOR3        field_11C;
@@ -2689,19 +2689,19 @@ typedef struct
     WorldObjectSet(eventPos, name, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
 
 #define WorldObjectSet(eventPose, name, posX, posY, posZ, rotX, rotY, rotZ) \
-    {                                                                       \
-        Math_Vector3Set(&(eventPose)->position_1C, posX, posY, posZ);       \
-        Math_SetSVectorFast(&(eventPose)->rotation_28, rotX, rotY, rotZ);   \
-        WorldObject_ModelNameSet(&(eventPose)->object_0, (name));           \
-    }
+{                                                                           \
+    Math_Vector3Set(&(eventPose)->position_1C, posX, posY, posZ);           \
+    Math_SetSVectorFast(&(eventPose)->rotation_28, rotX, rotY, rotZ);       \
+    WorldObject_ModelNameSet(&(eventPose)->object_0, (name));               \
+}
 
 #define WorldObjectPoseInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
     WorldObjectPoseSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
 
 #define WorldObjectPoseSet(eventPose, posX, posY, posZ, rotX, rotY, rotZ) \
-    {                                                                     \
-        Math_Vector3Set(&(eventPose)->position_0, posX, posY, posZ);      \
-        Math_SetSVectorFast(&(eventPose)->rotation_C, rotX, rotY, rotZ);  \
-    }
+{                                                                         \
+    Math_Vector3Set(&(eventPose)->position_0, posX, posY, posZ);          \
+    Math_SetSVectorFast(&(eventPose)->rotation_C, rotX, rotY, rotZ);      \
+}
 
 #endif

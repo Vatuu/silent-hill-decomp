@@ -184,7 +184,7 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D5268);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D5554);
 
-void func_800D5974(s_SubCharacter* chara)
+void func_800D5974(s_SubCharacter* chara) // 0x800D5974
 {
     s32 bit3;
     s32 f150;
@@ -197,10 +197,12 @@ void func_800D5974(s_SubCharacter* chara)
     animStatus = chara->model_0.anim_4.status_0;
     idx = sharedFunc_800D4A80_0_s01(chara);
     switch2Idx = 0;
+
     bit3 = (sharedData_800E21D0_0_s01.field_14C >> 2) & 1;
     stateStep = chara->model_0.stateStep_3;
     f150 = sharedData_800E21D0_0_s01.field_150;
     one = 1;
+
     switch (stateStep)
     {
         case 0:
@@ -214,74 +216,86 @@ void func_800D5974(s_SubCharacter* chara)
                 chara->model_0.stateStep_3 = 2;
             }
             break;
+
         case 1:
             if (func_800DC598(chara)) 
             {
                 chara->model_0.stateStep_3 = 2;
             }
             break;
+
         case 2:
-            if ((animStatus == ANIM_STATUS(25, true)) || (animStatus == ANIM_STATUS(23, true)))
+            if (animStatus == ANIM_STATUS(25, true) || animStatus == ANIM_STATUS(23, true))
             {
                 switch2Idx = 1;
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(22, false);
                 chara->model_0.stateStep_3 = 3;
             }
             break;
+
         case 3:
             switch2Idx = 1;
             break;
         }
+
         sharedFunc_800DE1F8_2_s00(chara);
         func_800DF710(chara);
+
         switch (Chara_DamageTake(chara, Q12(1.0f)))
         {
             case 0:
                 switch (switch2Idx)
                 {
                     case 0:
-                        if ((chara->properties_E4.larvalStalker.properties_E8[0xE].val32 == 0) || (f150 > 0x2000))
+                        if (chara->properties_E4.larvalStalker.properties_E8[0xE].val32 == 0 || f150 > 0x2000)
                         {
                             if (bit3 == 0)
                             {
-                                chara->model_0.state_2 = 0xD;
+                                chara->model_0.state_2 = 13;
                             }
                             else
                             {
                                 chara->model_0.state_2 = 10;
                             }
+
                             chara->model_0.stateStep_3 = 0;
                         }
                         break;
+
                     case 1:
                         if (idx == 2)
                         {
                             if (bit3 != 0)
                             {
-                                chara->model_0.state_2 = 0x18;
+                                chara->model_0.state_2 = 24;
                             }
                             else
                             {
-                                chara->model_0.state_2 = 0x1a;
+                                chara->model_0.state_2 = 26;
                             }
+
                             chara->model_0.stateStep_3 = 0;
                         }
                         break;
+
                     default:
                         return;
                     }
                 break;
+
             case 1:
             case 2:
-                chara->model_0.state_2 = 0x10;
+                chara->model_0.state_2 = 16;
                 chara->model_0.stateStep_3 = 0;
                 chara->properties_E4.player.flags_11C |= CharaUnk0Flag_Unk3;
                 return;
+
             case 3:
             case 4:
-                chara->model_0.state_2 = 0x11;
+                chara->model_0.state_2 = 17;
                 chara->model_0.stateStep_3 = 0;
-                if (chara->health_B0 <= 0)
+
+                if (chara->health_B0 <= Q12(0.0f))
                 {
                     chara->properties_E4.player.flags_11C |= CharaUnk0Flag_Unk6;
                 }
@@ -381,12 +395,12 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC0A8);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC0E4);
 
-s32 func_800DC200(s_SubCharacter* chara)
+bool func_800DC200(s_SubCharacter* chara) // 0x800DC200
 {
-    if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1)&&
+    if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 0x1)&&
         (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || chara->model_0.charaId_0 == Chara_AirScreamer))
     {
-        return 0;
+        return false;
     }
 
     D_800F216C.vx = chara->position_18.vx + FP_MULTIPLY_PRECISE(Math_Sin(chara->rotation_24.vy), Q12(2.0f), Q12_SHIFT);
@@ -404,14 +418,16 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC438);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC50C);
 
-s32 func_800DC598(s_SubCharacter* chara)
+s32 func_800DC598(s_SubCharacter* chara) // 0x800DC598
 {
     s32 ret;
-    u8 animStatus;
+    u8  animStatus;
 
     ret = 0;
     animStatus = chara->model_0.anim_4.status_0;
-    if (animStatus == ANIM_STATUS(25, true) || animStatus == ANIM_STATUS(23, true))
+
+    if (animStatus == ANIM_STATUS(25, true) ||
+        animStatus == ANIM_STATUS(23, true))
     {
         if (chara->position_18.vy < (func_80080884(chara->position_18.vx, chara->position_18.vz) - Q12(0.7f)))
         {
@@ -422,6 +438,7 @@ s32 func_800DC598(s_SubCharacter* chara)
             else
             {
                 func_8006F250(sharedData_800E2370_0_s01, chara->position_18.vx, chara->position_18.vz, 0, 0);
+
                 if (sharedData_800E2370_0_s01[1] < ((chara->position_18.vy + chara->field_C8) - Q12(2.0f)))
                 {
                     ret = 1;
@@ -429,17 +446,19 @@ s32 func_800DC598(s_SubCharacter* chara)
             }
         }
     }
+
     return ret;
 }
 
-bool func_800DC67C(s_SubCharacter* chara)
+bool func_800DC67C(s_SubCharacter* chara) // 0x800DC67C
 {
     if (chara->properties_E4.unk0.field_E8_0 == 1)
     {
         func_800803FC(&D_800F217C, chara->field_40);
         return Math_Distance2dGet(&chara->position_18, &D_800F217C) > Q12(40.0f);
     }
-    return 0;
+
+    return false;
 }
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC6E4);
@@ -474,24 +493,22 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DDF74);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DE034);
 
-void func_800DE11C(s_SubCharacter* chara)
+void func_800DE11C(s_SubCharacter* chara) // 0x800DE11C
 {
-    s32 pcX;
-    s32 pcZ;
-    s32 pcX_2;
-    s32 pcY_2;
-    s32 pcZ_2;
-    s32 angle0;
-    s32 field_D4;
+    s32    pcX;
+    s32    pcZ;
+    q19_12 pcX_2;
+    q19_12 pcY_2;
+    q19_12 pcZ_2;
+    q19_12 angle0;
+    s32    field_D4;
 
     pcX = g_SysWork.player_4C.chara_0.position_18.vx;
     pcZ = g_SysWork.player_4C.chara_0.position_18.vz;
     field_D4 = g_SysWork.player_4C.chara_0.field_D4;
-    angle0 = ratan2(
-        chara->position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
-        chara->position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz
-    );
 
+    angle0 = ratan2(chara->position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
+                    chara->position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz);
     pcX_2 = pcX + FP_MULTIPLY_PRECISE(field_D4, Math_Sin(angle0), Q12_SHIFT);
     pcZ_2 = pcZ + FP_MULTIPLY_PRECISE(field_D4, Math_Cos(angle0), Q12_SHIFT);
 
@@ -499,6 +516,7 @@ void func_800DE11C(s_SubCharacter* chara)
     chara->properties_E4.unk0.field_F8.vx = pcX_2;
     chara->properties_E4.unk0.field_F8.vy = pcY_2;
     chara->properties_E4.unk0.field_F8.vz = pcZ_2;
+
     sharedFunc_800D4E84_0_s01(chara);
 }
 
@@ -542,30 +560,31 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DF448);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DF60C);
 
-void func_800DF710(s_SubCharacter* chara)
+void func_800DF710(s_SubCharacter* chara) // 0x800DF710
 {
-    q19_12 angle0;
-    q19_12 angle1;
-    s32 idx;
-    s32 animStatus;
-    s32 animIndex;
-    s32 element0;
-    s32 element1;
-    s32 element4;
-    s32 element3;
-    s32 element2;
+    q19_12                       angle0;
+    q19_12                       angle1;
+    s32                          idx;
+    s32                          animStatus;
+    s32                          animIdx;
+    s32                          element0;
+    s32                          element1;
+    s32                          element4;
+    s32                          element3;
+    s32                          element2;
     s_sharedData_800E21D0_0_s01* base;
 
-    animStatus = chara->model_0.anim_4.status_0 | 1;
+    animStatus = chara->model_0.anim_4.status_0 | 1; // TODO: Use macro for this.
     angle0 = func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8);
     angle0 = FP_ANGLE_NORM_S(angle0 - chara->rotation_24.vy);
+
     if (animStatus == ANIM_STATUS(22, true))
     {
-        animIndex = 12;
+        animIdx = 12;
     }
     else
     {
-        animIndex = 11;
+        animIdx = 11;
     }
 
     element0 = sharedData_800CAA98_0_s01.unk_380[29][0];
@@ -584,24 +603,27 @@ void func_800DF710(s_SubCharacter* chara)
             element0 = 0;
         }
     }
-      element2 = sharedData_800CAA98_0_s01.unk_380[1][0];
-      base = &sharedData_800E21D0_0_s01;
-      idx = 0;
-      base->field_B4[idx][2] = element2;
-      base->field_B4[idx][1] = sharedData_800CAA98_0_s01.unk_380[1][1];
-      idx = 1;
-      element3 = sharedData_800CAA98_0_s01.unk_380[animIndex][0];
-      element4 = sharedData_800CAA98_0_s01.unk_380[animIndex][1];
-      base->field_B4[idx][2] = element3;
-      base->field_B4[idx][1] = element4;
 
-      idx = 3;
-      base->field_B4[idx][2] = element0;
-      base->field_B4[idx][1] = element1;
-      base->field_B4[idx][3] = angle0;
-      base->field_B4[idx][0] = 1;
-      sharedFunc_800D5E78_0_s01(chara, angle0 / 2);
+    element2 = sharedData_800CAA98_0_s01.unk_380[1][0];
+    base = &sharedData_800E21D0_0_s01;
 
+    idx = 0;
+    base->field_B4[idx][2] = element2;
+    base->field_B4[idx][1] = sharedData_800CAA98_0_s01.unk_380[1][1];
+
+    idx = 1;
+    element3 = sharedData_800CAA98_0_s01.unk_380[animIdx][0];
+    element4 = sharedData_800CAA98_0_s01.unk_380[animIdx][1];
+    base->field_B4[idx][2] = element3;
+    base->field_B4[idx][1] = element4;
+
+    idx = 3;
+    base->field_B4[idx][2] = element0;
+    base->field_B4[idx][1] = element1;
+    base->field_B4[idx][3] = angle0;
+    base->field_B4[idx][0] = 1;
+
+    sharedFunc_800D5E78_0_s01(chara, angle0 / 2);
 }
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DF80C);

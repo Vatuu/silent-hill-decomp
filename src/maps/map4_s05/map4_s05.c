@@ -378,19 +378,19 @@ INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800CAC48);
 extern SVECTOR3 D_800CAC40; // { 0, 0, 0 }
 extern VECTOR3  D_800CAC48; // { 154.31f, -15.5f, 24.07f }
 
-void func_800D6BC0(void)    // 0x800D6BC0
+void func_800D6BC0(void) // 0x800D6BC0
 {
-    s32 pitch;
-    s32 tmp0;
-    s32 tmp1;
-    s32 cos0;
-    s32 sin0;
+    s32    pitch;
+    s32    tmp0;
+    s32    tmp1;
+    q19_12 cos0;
+    q19_12 sin0;
 
-    tmp0        = D_800D7D6C;
-    tmp1        = tmp0 >> 1;
-    sin0        = Math_Sin(tmp1);
-    cos0        = Math_Cos(tmp0 >> 4);
-    pitch       = ((sin0 * 2) + cos0 + Math_Cos(Math_Cos(tmp1))) >> 9;
+    tmp0  = D_800D7D6C;
+    tmp1  = tmp0 >> 1;
+    sin0  = Math_Sin(tmp1);
+    cos0  = Math_Cos(tmp0 >> 4);
+    pitch = ((sin0 * 2) + cos0 + Math_Cos(Math_Cos(tmp1))) >> 9;
 
     D_800D7D6C += g_DeltaTime0;
 
