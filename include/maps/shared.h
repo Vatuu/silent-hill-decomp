@@ -2676,14 +2676,23 @@ typedef struct
 {
     s_WorldObject_0 object_0;
     VECTOR3         position_1C; // Q19.12
-} s_WorldObjectDescNoRot;
+    SVECTOR3        rotation_28; // Q19.12
+} s_WorldObjectDesc;
 
 typedef struct
 {
     s_WorldObject_0 object_0;
     VECTOR3         position_1C; // Q19.12
-    SVECTOR3        rotation_28; // Q19.12
-} s_WorldObjectDesc;
+} s_WorldObjectDescNoRot;
+
+#define WorldObjectPoseInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
+    WorldObjectPoseSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
+
+#define WorldObjectPoseSet(eventPose, posX, posY, posZ, rotX, rotY, rotZ) \
+{                                                                         \
+    Math_Vector3Set(&(eventPose)->position_0, posX, posY, posZ);          \
+    Math_SetSVectorFast(&(eventPose)->rotation_C, rotX, rotY, rotZ);      \
+}
 
 #define WorldObjectInit(eventPos, name, posX, posY, posZ, rotX, rotY, rotZ) \
     WorldObjectSet(eventPos, name, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
@@ -2695,13 +2704,13 @@ typedef struct
     WorldObject_ModelNameSet(&(eventPose)->object_0, (name));               \
 }
 
-#define WorldObjectPoseInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
-    WorldObjectPoseSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
+#define WorldObjectNoRotInit(eventPos, name, posX, posY, posZ) \
+    WorldObjectNoRotSet(eventPos, name, Q12(posX), Q12(posY), Q12(posZ))
 
-#define WorldObjectPoseSet(eventPose, posX, posY, posZ, rotX, rotY, rotZ) \
-{                                                                         \
-    Math_Vector3Set(&(eventPose)->position_0, posX, posY, posZ);          \
-    Math_SetSVectorFast(&(eventPose)->rotation_C, rotX, rotY, rotZ);      \
+#define WorldObjectNoRotSet(eventPose, name, posX, posY, posZ)    \
+{                                                                 \
+    Math_Vector3Set(&(eventPose)->position_1C, posX, posY, posZ); \
+    WorldObject_ModelNameSet(&(eventPose)->object_0, (name));     \
 }
 
 #endif

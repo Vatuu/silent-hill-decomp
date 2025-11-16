@@ -2492,14 +2492,11 @@ void func_800EB908(void) // 0x800EB908
 
     WorldObjectInit(&g_WorldObject3, "PPR2_NEA", -154.6f, 0.0f, 2.22f, 0.0f, 74.3f, 0.0f);
 
-    Math_Vector3Set(&g_WorldObjectB[0].position_1C, Q12(111.94f), Q12(-0.81f), Q12(216.25f));
-    WorldObject_ModelNameSet(&g_WorldObjectB[0].object_0, "JO0A_HID");
+    WorldObjectNoRotInit(&g_WorldObjectB[0], "JO0A_HID", 111.94f, -0.81f, 216.25f);
 
-    Math_Vector3Set(&g_WorldObjectB[1].position_1C, Q12(111.94f), Q12(-0.57f), Q12(216.25f));
-    WorldObject_ModelNameSet(&g_WorldObjectB[1].object_0, "JO0B_HID");
+    WorldObjectNoRotInit(&g_WorldObjectB[1], "JO0B_HID", 111.94f, -0.57f, 216.25f);
 
-    Math_Vector3Set(&g_WorldObjectB[2].position_1C, Q12(111.94f), Q12(-0.32f), Q12(216.25f));
-    WorldObject_ModelNameSet(&g_WorldObjectB[2].object_0, "JO0C_HID");
+    WorldObjectNoRotInit(&g_WorldObjectB[2], "JO0C_HID", 111.94f, -0.32f, 216.25f);
 
     WorldObjectInit(&g_WorldObject4[0], "KEY_HIDE", 185.76f, -0.59f, 116.12f, 0.0f, 0.0f, 0.0f);
 

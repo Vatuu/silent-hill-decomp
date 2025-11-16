@@ -118,8 +118,7 @@ void Map_WorldObjectsInit(void)
 
     WorldObjectInit(&g_WorldObject_Gas, "GAS_HIDE", -177.2998f, -1.2522f, 21.125f, 0.0f, -145.55f, 0.0f);
 
-    Math_Vector3Set(&g_WorldObject_Katana.position_1C, Q12(-140.8628f), Q12(-0.5511f), Q12(62.3404f));
-    WorldObject_ModelNameSet(&g_WorldObject_Katana.object_0, "KATANA1_");
+    WorldObjectNoRotInit(&g_WorldObject_Katana, "KATANA1_", -140.8628f, -0.5511f, 62.3404f);
 
     WorldObjectInit(&g_WorldObject_Cosmo, "COSMO_HI", -145.75f, -0.92f, 18.3274f, 0.0f, -55.1f, 0.0f);
 

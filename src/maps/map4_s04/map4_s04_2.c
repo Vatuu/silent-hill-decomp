@@ -548,8 +548,7 @@ void func_800D2D6C(void) // 0x800D2D6C
 {
     WorldObjectInit(&g_WorldObjectSavepad, D_800A99E4.savePadName_4, 106.687f, -1.02f, 144.601f, 0.0f, 163.0f, 0.0f);
 
-    Math_Vector3Set(&g_WorldObject0.position_1C, Q12(57.8f), Q12(0.0f), Q12(0.0f));
-    WorldObject_ModelNameSet(&g_WorldObject0.object_0, "ISU_HIDE");
+    WorldObjectNoRotInit(&g_WorldObject0, "ISU_HIDE", 57.8f, 0.0f, 0.0f);
 }
 
 void func_800D2DF4(void) // 0x800D2DF4

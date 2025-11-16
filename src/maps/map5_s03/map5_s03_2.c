@@ -675,8 +675,7 @@ void func_800D2674(void) // 0x800D2674
 
 void Map_WorldObjectsInit(void) // 0x800D2A04
 {
-    Math_Vector3Set(&g_WorldObject_Movaches.position_1C, Q12(104.2225f), Q12(-0.1683f), Q12(60.0667f));
-    WorldObject_ModelNameSet(&g_WorldObject_Movaches.object_0, "MOVACHES");
+    WorldObjectNoRotInit(&g_WorldObject_Movaches, "MOVACHES", 104.2225f, -0.1683f, 60.0667f);
 
     WorldObject_ModelNameSet(&g_WorldObject_SavePad, D_800A99E4.savePadName_4);
 

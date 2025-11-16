@@ -874,11 +874,9 @@ void func_800D4998(void) // 0x800D4998
 
 void func_800D49C4(void) // 0x800D49C4
 {
-    Math_Vector3Set(&WorldObject_D_800D7FF0.position_1C, Q12(178.2681f), Q12(-0.387f), Q12(63.6814f));
-    WorldObject_ModelNameSet(&WorldObject_D_800D7FF0.object_0, "MOV1_HID");
+    WorldObjectNoRotInit(&WorldObject_D_800D7FF0, "MOV1_HID", 178.2681f, -0.387f, 63.6814f);
 
-    Math_Vector3Set(&WorldObject_D_800D8020.position_1C, Q12(174.81f), Q12(-1.4197f), Q12(21.3344f));
-    WorldObject_ModelNameSet(&WorldObject_D_800D8020.object_0, "MOV1_HID");
+    WorldObjectNoRotInit(&WorldObject_D_800D8020, "MOV1_HID", 174.81f, -1.4197f, 21.3344f);
 
     if (!Savegame_EventFlagGet(EventFlag_302))
     {
@@ -890,14 +888,11 @@ void func_800D49C4(void) // 0x800D49C4
     WorldObjectPoseInit(&WorldObject_D_800D8070, 183.3833f, -1.2673f, 60.951f, 0.0f, 66.01, 0.0f);
     WorldObjectPoseInit(&WorldObject_D_800D8090, 23.4f, -0.91f, 60.8f, 0.0f, 90.4f, 0.0f);
 
-    Math_Vector3Set(&WorldObject_D_800D80B0.position_1C, Q12(181.22f), 0, Q12(61.2015f));
-    WorldObject_ModelNameSet(&WorldObject_D_800D80B0.object_0, "WALLX_HI");
+    WorldObjectNoRotInit(&WorldObject_D_800D80B0, "WALLX_HI", 181.22f, 0.0f, 61.2015f);
 
-    Math_Vector3Set(&WorldObject_D_800D80E0[0].position_1C, Q12(180.5647f), Q12(-0.502f), Q12(63.8853f));
-    WorldObject_ModelNameSet(&WorldObject_D_800D80E0[0].object_0, "CUBE90_H");
+    WorldObjectNoRotInit(&WorldObject_D_800D80E0[0], "CUBE90_H", 180.5647f, -0.502f, 63.8853f);
 
-    Math_Vector3Set(&WorldObject_D_800D80E0[1].position_1C, Q12(180.5647f), Q12(-0.502f), Q12(63.8853f));
-    WorldObject_ModelNameSet(&WorldObject_D_800D80E0[1].object_0, "CUBE9_HI");
+    WorldObjectNoRotInit(&WorldObject_D_800D80E0[1], "CUBE9_HI", 180.5647f, -0.502f, 63.8853f);
     D_800D8018 = 0;
 }
 

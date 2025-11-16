@@ -524,8 +524,7 @@ void func_800D8818(void) // 0x800D8818
 
     WorldObjectInit(&g_WorldObject1, "SITAI_NE", 75.0f, 0.5f, 19.7f, 0.0f, 180.0f, 0.0f);
 
-    Math_Vector3Set(&g_WorldObject2.position_1C, Q12(-22.0f), Q12(0.0f), Q12(26.4f));
-    WorldObject_ModelNameSet(&g_WorldObject2.object_0, "MP_DRNBK");
+    WorldObjectNoRotInit(&g_WorldObject2, "MP_DRNBK", -22.0f, 0.0f, 26.4f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {

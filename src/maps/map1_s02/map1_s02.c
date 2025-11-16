@@ -1298,8 +1298,7 @@ void func_800DD494(void) // 0x800DD494
 
     WorldObjectInit(&g_WorldObject7, "DOOR1_HI", 58.4f, 0.0f, -59.6f, 0.0f, 0.0f, 0.0f);
 
-    Math_Vector3Set(&g_WorldObject0.position_1C, Q12(54.47f), Q12(0.0f), Q12(-60.0f));
-    WorldObject_ModelNameSet(&g_WorldObject0.object_0, "BOX_HIDE");
+    WorldObjectNoRotInit(&g_WorldObject0, "BOX_HIDE", 54.47f, 0.0f, -60.0f);
 
     WorldObjectInit(&g_WorldObject8, "KEY_HIDE", 139.199f, -0.8753f, 99.3733f, 0.0f, 46.2f, 0.0f);
 
@@ -1309,8 +1308,7 @@ void func_800DD494(void) // 0x800DD494
 
     WorldObjectInit(&g_WorldObject2, "KEY_HIDE", -16.51f, -0.11f, -51.54f, 0.0f, -19.3f, 0.0f);
 
-    Math_Vector3Set(&g_WorldObjectD.position_1C, Q12(100.124f), Q12(-1.08f), Q12(101.166f));
-    WorldObject_ModelNameSet(&g_WorldObjectD.object_0, "BOLL_HID");
+    WorldObjectNoRotInit(&g_WorldObjectD, "BOLL_HID", 100.124f, -1.08f, 101.166f);
 
     WorldObjectInit(&g_WorldObjectB, D_800A99E4.savePadName_4, 60.14f, -0.902f, 141.763f, 0.0f, 92.4f, 0.0f);
 

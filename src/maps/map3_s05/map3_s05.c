@@ -914,23 +914,17 @@ void func_800D8424(void) // 0x800D8424
     Math_SetSVectorFast(&D_800DD440, FP_ANGLE(0.0f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
     Math_SetSVectorFast(&D_800DD448, FP_ANGLE(58.05f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
 
-    Math_Vector3Set(&g_WorldObject1[0].position_1C, Q12(19.1f), Q12(0.0f), Q12(59.1f));
-    WorldObject_ModelNameSet(&g_WorldObject1[0].object_0, "DR1L_HID");
+    WorldObjectNoRotInit(&g_WorldObject1[0], "DR1L_HID", 19.1f, 0.0f, 59.1f);
 
-    Math_Vector3Set(&g_WorldObject1[1].position_1C, Q12(19.1f), Q12(0.0f), Q12(59.1f));
-    WorldObject_ModelNameSet(&g_WorldObject1[1].object_0, "DR1R_HID");
+    WorldObjectNoRotInit(&g_WorldObject1[1], "DR1R_HID", 19.1f, 0.0f, 59.1f);
 
-    Math_Vector3Set(&g_WorldObject1[2].position_1C, Q12(19.1f), Q12(0.0f), Q12(59.1f));
-    WorldObject_ModelNameSet(&g_WorldObject1[2].object_0, "DR3L_HID");
+    WorldObjectNoRotInit(&g_WorldObject1[2], "DR3L_HID", 19.1f, 0.0f, 59.1f);
 
-    Math_Vector3Set(&g_WorldObject1[3].position_1C, Q12(19.1f), Q12(0.0f), Q12(59.1f));
-    WorldObject_ModelNameSet(&g_WorldObject1[3].object_0, "DR3R_HID");
+    WorldObjectNoRotInit(&g_WorldObject1[3], "DR3R_HID", 19.1f, 0.0f, 59.1f);
 
-    Math_Vector3Set(&g_WorldObject1[4].position_1C, Q12(19.1f), Q12(0.0f), Q12(59.1f));
-    WorldObject_ModelNameSet(&g_WorldObject1[4].object_0, "DR2L_HID");
+    WorldObjectNoRotInit(&g_WorldObject1[4], "DR2L_HID", 19.1f, 0.0f, 59.1f);
 
-    Math_Vector3Set(&g_WorldObject1[5].position_1C, Q12(19.1f), Q12(0.0f), Q12(59.1f));
-    WorldObject_ModelNameSet(&g_WorldObject1[5].object_0, "DR2R_HID");
+    WorldObjectNoRotInit(&g_WorldObject1[5], "DR2R_HID", 19.1f, 0.0f, 59.1f);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);

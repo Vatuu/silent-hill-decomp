@@ -457,14 +457,11 @@ void func_800D0CF8(void) // 0x800D0CF8
 
 void func_800D18DC(void) // 0x800D18DC
 {
-    Math_Vector3Set(&g_WorldObject0.position_1C, Q12(97.2496f), Q12(0.0f), Q12(100.3428f));
-    WorldObject_ModelNameSet(&g_WorldObject0.object_0, "TRUNK_HI");
+    WorldObjectNoRotInit(&g_WorldObject0, "TRUNK_HI", 97.2496f, 0.0f, 100.3428f);
 
-    Math_Vector3Set(&g_WorldObject1[0].position_1C, Q12(98.4512f), Q12(0.0f), Q12(101.087f));
-    WorldObject_ModelNameSet(&g_WorldObject1[0].object_0, "BIRD_HID");
+    WorldObjectNoRotInit(&g_WorldObject1[0], "BIRD_HID", 98.4512f, 0.0f, 101.087f);
 
-    Math_Vector3Set(&g_WorldObject1[1].position_1C, Q12(98.4512f), Q12(0.0f), Q12(101.087f));
-    WorldObject_ModelNameSet(&g_WorldObject1[1].object_0, "BIRD2_HI");
+    WorldObjectNoRotInit(&g_WorldObject1[1], "BIRD2_HI", 98.4512f, 0.0f, 101.087f);
 
     WorldObjectInit(&g_WorldObject2, D_800A99E4.savePadName_4, 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
 

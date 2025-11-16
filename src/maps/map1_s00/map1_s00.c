@@ -886,44 +886,31 @@ void Map_WorldObjectsInit(void)
     D_800E1182 = 0;
     WorldObjectInit(&g_WorldObject9, "PICT00_H", 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
 
-    Math_Vector3Set(&g_WorldObject1[0].position_1C, Q12(133.63f), Q12(-0.816f), Q12(17.089f));
-    WorldObject_ModelNameSet(&g_WorldObject1[0].object_0, "PAPER1_H");
+    WorldObjectNoRotInit(&g_WorldObject1[0], "PAPER1_H", 133.63f, -0.816f, 17.089f);
 
-    Math_Vector3Set(&g_WorldObject1[1].position_1C, Q12(133.991f), Q12(-0.8f), Q12(16.307f));
-    WorldObject_ModelNameSet(&g_WorldObject1[1].object_0, "NOTE_HID");
+    WorldObjectNoRotInit(&g_WorldObject1[1], "NOTE_HID", 133.991f, -0.8f, 16.307f);
 
-    Math_Vector3Set(&g_WorldObject1[2].position_1C, Q12(133.6f), Q12(-1.7f), Q12(16.0f));
-    WorldObject_ModelNameSet(&g_WorldObject1[2].object_0, "TINORI1_");
+    WorldObjectNoRotInit(&g_WorldObject1[2], "TINORI1_", 133.6f, -1.7f, 16.0f);
 
-    Math_Vector3Set(&g_WorldObject1[3].position_1C, Q12(133.6f), Q12(-1.19f), Q12(18.2f));
-    WorldObject_ModelNameSet(&g_WorldObject1[3].object_0, "TINORI2_");
+    WorldObjectNoRotInit(&g_WorldObject1[3], "TINORI2_", 133.6f, -1.19f, 18.2f);
 
-    Math_Vector3Set(&g_WorldObject1[4].position_1C, Q12(134.486f), Q12(-1.19f), Q12(18.2f));
-    WorldObject_ModelNameSet(&g_WorldObject1[4].object_0, "TINORI3_");
+    WorldObjectNoRotInit(&g_WorldObject1[4], "TINORI3_", 134.486f, -1.19f, 18.2f);
 
-    Math_Vector3Set(&g_WorldObject1[5].position_1C, Q12(134.4f), Q12(-0.91f), Q12(17.9568f));
-    WorldObject_ModelNameSet(&g_WorldObject1[5].object_0, "GRID2_HI");
+    WorldObjectNoRotInit(&g_WorldObject1[5], "GRID2_HI", 134.4f, -0.91f, 17.9568f);
 
-    Math_Vector3Set(&g_WorldObject2.position_1C, Q12(-12.2f), Q12(-1.0999f), Q12(-67.88f));
-    WorldObject_ModelNameSet(&g_WorldObject2.object_0, "GOLD_HID");
+    WorldObjectNoRotInit(&g_WorldObject2, "GOLD_HID", -12.2f, -1.0999f, -67.88f);
 
-    Math_Vector3Set(&g_WorldObject3.position_1C, Q12(-13.5198f), Q12(-1.0999f), Q12(-69.0999f));
-    WorldObject_ModelNameSet(&g_WorldObject3.object_0, "SILVER_H");
+    WorldObjectNoRotInit(&g_WorldObject3, "SILVER_H", -13.5198f, -1.0999f, -69.0999f);
 
-    Math_Vector3Set(&g_WorldObject4.position_1C, Q12(-12.72f), Q12(-1.0f), Q12(-68.5999f));
-    WorldObject_ModelNameSet(&g_WorldObject4.object_0, "ANA3_HID");
+    WorldObjectNoRotInit(&g_WorldObject4, "ANA3_HID", -12.72f, -1.0f, -68.5999f);
 
-    Math_Vector3Set(&g_WorldObject5.position_1C, Q12(-12.7898f), Q12(-1.0f), Q12(-69.6199f));
-    WorldObject_ModelNameSet(&g_WorldObject5.object_0, "ANA2_HID");
+    WorldObjectNoRotInit(&g_WorldObject5, "ANA2_HID", -12.7898f, -1.0f, -69.6199f);
 
-    Math_Vector3Set(&g_WorldObject6[0].position_1C, Q12(20.4568f), Q12(-0.8345f), Q12(-17.97f));
-    WorldObject_ModelNameSet(&g_WorldObject6[0].object_0, "REDX_HID");
+    WorldObjectNoRotInit(&g_WorldObject6[0], "REDX_HID", 20.4568f, -0.8345f, -17.97f);
 
-    Math_Vector3Set(&g_WorldObject6[1].position_1C, Q12(19.5799f), Q12(0.0f), Q12(-18.3f));
-    WorldObject_ModelNameSet(&g_WorldObject6[1].object_0, "R_HIDE_I");
+    WorldObjectNoRotInit(&g_WorldObject6[1], "R_HIDE_I", 19.5799f, 0.0f, -18.3f);
 
-    Math_Vector3Set(&g_WorldObject0.position_1C, Q12(19.5799f), Q12(0.0f), Q12(-18.3f));
-    WorldObject_ModelNameSet(&g_WorldObject0.object_0, "G_HIDE_I");
+    WorldObjectNoRotInit(&g_WorldObject0, "G_HIDE_I", 19.5799f, 0.0f, -18.3f);
 
     WorldObjectInit(&g_WorldObject7, D_800A99E4.savePadName_4, 61.8531f, -0.805f, 140.6099f, 0.0f, 92.9f, 0.0f);
 

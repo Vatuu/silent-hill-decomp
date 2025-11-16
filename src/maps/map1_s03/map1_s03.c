@@ -1273,8 +1273,7 @@ void func_800DD3AC(void) // 0x800DD3AC
     D_800E62D0 = 0;
     D_800E638C = 0;
 
-    Math_Vector3Set(&g_WorldObject6.position_1C, Q12(-10.25f), Q12(0.2f), Q12(-17.75f));
-    WorldObject_ModelNameSet(&g_WorldObject6.object_0, "BALL_HID");
+    WorldObjectNoRotInit(&g_WorldObject6, "BALL_HID", -10.25f, 0.2f, -17.75f);
 
     WorldObjectInit(&g_WorldObject5, "VALVE_HI", -10.49f, -0.7f, -12.92f, 0.0f, 0.0f, 0.0f);
 
@@ -1284,11 +1283,9 @@ void func_800DD3AC(void) // 0x800DD3AC
 
     WorldObjectInit(&g_WorldObject2, "TOBIRA2_", -61.0f, -1.05f, 20.97f, 0.0f, 0.0f, 0.0f);
 
-    Math_Vector3Set(&g_WorldObject3.position_1C, Q12(-58.81f), Q12(-1.4f), Q12(18.02f));
-    WorldObject_ModelNameSet(&g_WorldObject3.object_0, "HAKO1_HI");
+    WorldObjectNoRotInit(&g_WorldObject3, "HAKO1_HI", -58.81f, -1.4f, 18.02f);
 
-    Math_Vector3Set(&g_WorldObject4.position_1C, Q12(-61.0f), Q12(-0.9f), Q12(20.97f));
-    WorldObject_ModelNameSet(&g_WorldObject4.object_0, "HAKO2_HI");
+    WorldObjectNoRotInit(&g_WorldObject4, "HAKO2_HI", -61.0f, -0.9f, 20.97f);
 
     WorldObjectInit(&g_WorldObject7, "KEY_HIDE", -60.3184f, -0.00732422f, 20.23f, 0.0f, 53.2f, 5.3f);
 

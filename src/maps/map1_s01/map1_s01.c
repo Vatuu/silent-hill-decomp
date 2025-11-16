@@ -1191,22 +1191,18 @@ void func_800D91EC(void) // 0x800D91EC
 
     WorldObjectInit(&g_WorldObject2, "TOBIRA01", -58.81f, -1.3f, 18.0198f, 0.0f, 0.0f, 0.0f);
 
-    Math_Vector3Set(&g_WorldObject3.position_1C, Q12(-58.81f), -0x1666, Q12(18.0198f));
-    WorldObject_ModelNameSet(&g_WorldObject3.object_0, "HAKO_HID");
+    WorldObjectNoRotInit(&g_WorldObject3, "HAKO_HID", -58.81f, -1.4f, 18.0198f);
     WorldObject_ModelNameSet(&g_WorldObject4, "HAND_HID");
     WorldObject_ModelNameSet(&g_WorldObject5, "HAND2_HI");
     WorldObject_ModelNameSet(&g_WorldObject6, "PANELG_H");
 
     Math_Vector3Set(&D_800DF080, Q12(-59.2f), Q12(-1.0f), Q12(99.5f));
 
-    Math_Vector3Set(&g_WorldObject7.position_1C, Q12(-101.2f), Q12(-1.3f), Q12(100.3f));
-    WorldObject_ModelNameSet(&g_WorldObject7.object_0, "ACID_HID");
+    WorldObjectNoRotInit(&g_WorldObject7, "ACID_HID", -101.2f, -1.3f, 100.3f);
 
-    Math_Vector3Set(&g_WorldObject8.position_1C, Q12(-98.2798f), Q12(-0.58f), Q12(19.93f));
-    WorldObject_ModelNameSet(&g_WorldObject8.object_0, "FUTA1_HI");
+    WorldObjectNoRotInit(&g_WorldObject8, "FUTA1_HI", -98.2798f, -0.58f, 19.93f);
 
-    Math_Vector3Set(&g_WorldObject9.position_1C, Q12(-99.44f), Q12(-0.85f), Q12(19.93f));
-    WorldObject_ModelNameSet(&g_WorldObject9.object_0, "FUTA2_HI");
+    WorldObjectNoRotInit(&g_WorldObject9, "FUTA2_HI", -99.44f, -0.85f, 19.93f);
 
     if (!Savegame_EventFlagGet(EventFlag_M1S01_PianoPuzzleSolved))
     {

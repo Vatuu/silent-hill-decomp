@@ -447,36 +447,27 @@ void func_800D2AF4(void) // 0x800D2AF4
     D_800D8734 = 0;
     g_GeneratorMakeNoise = false;
 
-    Math_Vector3Set(&g_WorldObject1.position_1C, Q12(20.3f), Q12(0.0f), Q12(59.25f));
-    WorldObject_ModelNameSet(&g_WorldObject1.object_0, "BOT_HIDE");
+    WorldObjectNoRotInit(&g_WorldObject1, "BOT_HIDE", 20.3f, 0.0f, 59.25f);
 
     WorldObjectInit(&g_WorldObject2, "MAP_HIDE", 60.0f, 0.0f, 60.0f, 0.0f, 9.7f, 0.0f);
 
     WorldObjectInit(&g_WorldObject5, "KEY_HIDE", 100.3f, 0.0f, 58.9f, 0.0f, 72.8f, 0.0f);
 
-    Math_Vector3Set(&g_WorldObject3[0].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
-    WorldObject_ModelNameSet(&g_WorldObject3[0].object_0, "BT3_HIDE");
+    WorldObjectNoRotInit(&g_WorldObject3[0], "BT3_HIDE", 59.1f, 0.0f, 19.1f);
 
-    Math_Vector3Set(&g_WorldObject3[1].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
-    WorldObject_ModelNameSet(&g_WorldObject3[1].object_0, "BT4_HIDE");
+    WorldObjectNoRotInit(&g_WorldObject3[1], "BT4_HIDE", 59.1f, 0.0f, 19.1f);
 
-    Math_Vector3Set(&g_WorldObject0[0].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
-    WorldObject_ModelNameSet(&g_WorldObject0[0].object_0, "DR1L_HID");
+    WorldObjectNoRotInit(&g_WorldObject0[0], "DR1L_HID", 59.1f, 0.0f, 19.1f);
 
-    Math_Vector3Set(&g_WorldObject0[1].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
-    WorldObject_ModelNameSet(&g_WorldObject0[1].object_0, "DR1R_HID");
+    WorldObjectNoRotInit(&g_WorldObject0[1], "DR1R_HID", 59.1f, 0.0f, 19.1f);
 
-    Math_Vector3Set(&g_WorldObject0[2].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
-    WorldObject_ModelNameSet(&g_WorldObject0[2].object_0, "DR3L_HID");
+    WorldObjectNoRotInit(&g_WorldObject0[2], "DR3L_HID", 59.1f, 0.0f, 19.1f);
 
-    Math_Vector3Set(&g_WorldObject0[3].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
-    WorldObject_ModelNameSet(&g_WorldObject0[3].object_0, "DR3R_HID");
+    WorldObjectNoRotInit(&g_WorldObject0[3], "DR3R_HID", 59.1f, 0.0f, 19.1f);
 
-    Math_Vector3Set(&g_WorldObject0[4].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
-    WorldObject_ModelNameSet(&g_WorldObject0[4].object_0, "DR2L_HID");
+    WorldObjectNoRotInit(&g_WorldObject0[4], "DR2L_HID", 59.1f, 0.0f, 19.1f);
 
-    Math_Vector3Set(&g_WorldObject0[5].position_1C, Q12(59.1f), Q12(0.0f), Q12(19.1f));
-    WorldObject_ModelNameSet(&g_WorldObject0[5].object_0, "DR2R_HID");
+    WorldObjectNoRotInit(&g_WorldObject0[5], "DR2R_HID", 59.1f, 0.0f, 19.1f);
 
     WorldObjectInit(&g_WorldObject6, D_800A99E4.savePadName_4, 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
 
