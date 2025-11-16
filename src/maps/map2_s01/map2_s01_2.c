@@ -476,8 +476,7 @@ void Map_WorldObjectsInit(void)
 {
     func_8003ED74(1, 1);
 
-    Math_Vector3Set(&(g_WorldObject_Item.position_1C), Q12(19.8289f), Q12(-1.3633f), Q12(24.0735f));
-    WorldObject_ModelNameSet(&g_WorldObject_Item.object_0, "ITEM_HID");
+    WorldObjectNoRotInit(&g_WorldObject_Item, "ITEM_HID", 19.8289f, -1.3633f, 24.0735f);
 
     WorldObjectInit(&g_WorldObject_Key, "KEY_HIDE", 20.073f, -0.858f, 24.1469f, 0.0f, 23.0f, 0.0f);
 
