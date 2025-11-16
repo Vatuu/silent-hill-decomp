@@ -1591,7 +1591,7 @@ typedef struct _MapOverlayHeader
     s32                    (*func_12C)(s_SubCharacter*); // Assumed return type.
     void                   (*func_130)(); // func(?).
     s32                    (*func_134)(s_SubCharacter*); // Assumed return type.
-    s32                    (*func_138)(s_SubCharacter*); // Keyframe getter. Return value depends on the anim update function being used.
+    s32                    (*func_138)(s_SubCharacter*); // Keyframe state getter. Return value depends on the anim update function being used.
     s32                    (*func_13C)(s32, s32, void*, s16, s32); // `arg0` is `s_SubCharacter*`.
     void                   (*func_140)(); // func(?).
     void                   (*func_144)(); // func(?).
@@ -2510,7 +2510,7 @@ extern s_800C38B0 D_800C38B0;
 
 extern s_800C38B4 D_800C38B4;
 
-/** Times? */
+/** Times. */
 extern q19_12 D_800C4710[];
 
 extern u8 D_800C37DC;
@@ -3458,10 +3458,13 @@ void func_8008E794(VECTOR3* posXz, q3_12 angle, q19_12 posY);
 
 void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY);
 
+/** State step increment for some substate. */
 void func_80085D78(bool reset);
 
+/** State step setter for some substate. */
 void func_80085DC0(bool arg0, s32 sysStateStep);
 
+/** Calls `SysWork_StateStepIncrement(0)` with some preliminary safety check. */
 void func_80085DF0(void);
 
 void SysWork_StateStepIncrementDelayed(q19_12 delay, bool reset);
@@ -3500,14 +3503,15 @@ void func_80086470(u32 stateStep, e_InventoryItemId itemId, s32 itemCount, bool 
 
 void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ);
 
+/** State step increment. */
 void func_800866D4(s32 arg0, s32 arg1, bool reset);
 
 void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool reset);
 
 void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
-/** Background draw state handler? */
-void func_800867B4(s32 state, s32 idx);
+/** 2D map state handler. Rough name could be `Map_Map2dBackgroundStateUpdate`. */
+void func_800867B4(s32 state, s32 map2dFileIdx);
 
 void func_800868DC(s32 idx);
 
@@ -3549,13 +3553,16 @@ void Camera_PositionSet(VECTOR3* pos, q19_12 offsetOrPosX, q19_12 offsetOrPosY, 
 void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtOffsetOrPosY, q19_12 lookAtOffsetOrPosZ,
                       q19_12 angularAccelX, q19_12 angularAccelY, q19_12 angularSpeedXMax, q19_12 angularSpeedYMax, bool warp);
 
-/** Maybe `Chara_PlayAnim`. */
+/** Maybe `Chara_PlayAnim`. State handler. */
 void func_80086C58(s_SubCharacter* chara, s32 arg1);
 
+/** State handler. */
 void func_80086D04(s_SubCharacter* chara);
 
+/** State handler. */
 void func_80086DA8(e_FsFile fileIdx, q19_12 fadeTimestep);
 
+/** State handler. */
 void func_80086E50(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
 void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
@@ -3580,14 +3587,18 @@ void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx);
 
 void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 
+/** Sets sound command. */
 void func_80087EA8(s32 cmd);
 
 void func_80087EDC(s32 arg0);
 
+/** Calls a state handler. */
 void func_80088028(void);
 
+/** State handler. */
 void func_80088048(void);
 
+/** State handler. */
 void func_800880F0(s32 arg0);
 
 void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);

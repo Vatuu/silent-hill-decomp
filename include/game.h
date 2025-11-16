@@ -1351,7 +1351,7 @@ typedef struct _SubCharacter
     s8      field_40;          // In player: Index of the NPC attacking the player.
                                // In NPCs: Unknown.
     s8      attackReceived_41; // Indicates what attack has been performed to the character. For enemies is based on `e_EquippedWeaponId` enum.
-    s8      unk_42[2];
+    s8      unk_42[2];         // Most likely padding.
     s16     field_44;
     s8      field_46; // In player: packed weapon attack. See `WEAPON_ATTACK`.
                       // This is not the same as `attackReceived_41`, as this value only resets when player is aiming.
@@ -1393,8 +1393,8 @@ typedef struct _SubCharacter
 
     u8 field_E0; // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
 
-    s8 field_E1_0 : 4; // Flags?
-    u8 field_E1_4 : 4;
+    s8 field_E1_0 : 4; // State.
+    u8 field_E1_4 : 4; // Index for array of `s_func_8006CF18`.
 
     union
     {
@@ -1492,7 +1492,7 @@ typedef struct
     u8              field_14;
     u8              isFlashlightOn_15; /** `bool` */
     u8              field_16;          /** `bool` */
-    s8              unk_17;
+    s8              unk_17; // Most likely padding.
     q3_12           flashlightIntensity_18; // Alpha.
     u16             field_1A;
     s_StructUnk3    field_1C[2];
@@ -1654,7 +1654,7 @@ static inline s32 SysWork_StateSetNext(e_SysState sysState)
     g_SysWork.sysStateStep_C[0] = 0;
     g_SysWork.field_28          = 0;
     g_SysWork.sysStateStep_C[1] = 0;
-    g_SysWork.timer_2C          = 0;
+    g_SysWork.timer_2C          = Q12(0.0f);
     g_SysWork.sysStateStep_C[2] = 0;
     return state;
 }
@@ -1669,13 +1669,13 @@ static inline void SysWork_StateStepIncrement(s32 stepIdx)
     {
         g_SysWork.field_28          = 0;
         g_SysWork.sysStateStep_C[1] = 0;
-        g_SysWork.timer_2C          = 0;
+        g_SysWork.timer_2C          = Q12(0.0f);
         g_SysWork.sysStateStep_C[2] = 0;
         g_SysWork.sysStateStep_C[0]++;
     }
     else if (stepIdx == 1)
     {
-        g_SysWork.timer_2C          = 0;
+        g_SysWork.timer_2C          = Q12(0.0f);
         g_SysWork.sysStateStep_C[2] = 0;
         g_SysWork.sysStateStep_C[1]++;
     }
@@ -1701,14 +1701,14 @@ static inline s32 SysWork_StateStepSet(s32 stepIdx, s32 sysStateStep)
         g_SysWork.sysStateStep_C[0] = sysStateStep;
         g_SysWork.field_28          = 0;
         g_SysWork.sysStateStep_C[1] = 0;
-        g_SysWork.timer_2C          = 0;
+        g_SysWork.timer_2C          = Q12(0.0f);
         g_SysWork.sysStateStep_C[2] = 0;
     }
     else if (stepIdx == 1)
     {
         step                        = 
         g_SysWork.sysStateStep_C[1] = sysStateStep;
-        g_SysWork.timer_2C          = 0;
+        g_SysWork.timer_2C          = Q12(0.0f);
         g_SysWork.sysStateStep_C[2] = 0;
     }
     else
@@ -1726,7 +1726,7 @@ static inline void SysWork_StateStepReset()
     g_SysWork.sysStateStep_C[0] = NO_VALUE;
     g_SysWork.field_28          = 0;
     g_SysWork.sysStateStep_C[1] = 0;
-    g_SysWork.timer_2C          = 0;
+    g_SysWork.timer_2C          = Q12(0.0f);
     g_SysWork.sysStateStep_C[2] = 0;
 }
 

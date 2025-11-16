@@ -57,7 +57,6 @@ void func_80085DC0(bool arg0, s32 sysStateStep) // 0x80085DC0
 void func_80085DF0(void) // 0x80085DF0
 {
     g_SysWork.timer_2C += g_DeltaTime1;
-
     if (g_MapOverlayHeader.func_EC() != NULL || g_SysWork.timer_2C > Q12(1.0f))
     {
         SysWork_StateStepIncrement(0);
@@ -75,7 +74,7 @@ void SysWork_StateStepIncrementDelayed(q19_12 delay, bool reset) // 0x80085E6C
 
 void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x80085EB8
 {
-    s32 result;
+    s32 keyframeState; // TODO: Not final name, only an indication.
 
     switch (arg0)
     {
@@ -93,16 +92,16 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
         case 1:
             if (chara == &g_SysWork.player_4C.chara_0)
             {
-                result = g_MapOverlayHeader.func_E8(chara);
-                if (result == 1) 
+                keyframeState = g_MapOverlayHeader.func_E8(chara);
+                if (keyframeState == 1) 
                 {
                     func_80085D78(reset);
                 }
             }
             else
             {
-                result = g_MapOverlayHeader.func_138(chara);
-                if (result == 1)
+                keyframeState = g_MapOverlayHeader.func_138(chara);
+                if (keyframeState == 1)
                 {
                     func_80085D78(reset);
                 }
@@ -368,7 +367,6 @@ void func_80086470(u32 stateStep, e_InventoryItemId itemId, s32 itemCount, bool 
     }
 
     activeStateStep = stateStep;
-
     if (stateStep >= 2)
     {
         if (stateStep == 2)
@@ -466,7 +464,7 @@ void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x8008677C
     g_MapOverlayHeader.func_13C(chara, arg1, &D_800C46A0, D_800C4702, arg2);
 }
 
-void func_800867B4(s32 state, s32 idx) // 0x800867B4
+void func_800867B4(s32 state, s32 map2dFileIdx) // 0x800867B4
 {
     switch (state)
     {
@@ -475,8 +473,8 @@ void func_800867B4(s32 state, s32 idx) // 0x800867B4
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(SyncMode_Wait);
 
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[idx], FS_BUFFER_2, &g_MapImg);
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[idx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[map2dFileIdx], FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[map2dFileIdx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
 
             Screen_Init(SCREEN_WIDTH, true);
             GsSwapDispBuff();
@@ -668,7 +666,6 @@ void func_80086C58(s_SubCharacter* chara, s32 arg1) // 0x80086C58
     {
         case 0:
             func_80085EB8(0, chara, arg1, false);
-
             SysWork_StateStepIncrement(1);
             break;
 
@@ -782,7 +779,6 @@ void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) // 0x8008
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
             func_8005DC1C(sfxId, sfxPos, Q8_CLAMPED(0.5f), 0);
-
             SysWork_StateStepIncrement(1);
 
         case 1:
@@ -795,7 +791,6 @@ void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) // 0x8008
 
         default:
             g_MapOverlayHeader.unfreezePlayerControl_CC(0);
-
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -976,13 +971,12 @@ void Event_ItemTake(e_InventoryItemId itemId, s32 itemCount, e_EventFlag eventFl
 
             SysWork_StateStepIncrement(1);
 
-        case 1: // Loading model.
+        case 1: // Load model.
             func_80086470(1, itemId, 0, true);
             break;
 
         case 2:
-            // `Gfx_PickupItemAnimate` scales model up and returns `false`,
-            // then starts rotating it and returns `true`.
+            // `Gfx_PickupItemAnimate` increases model scale and returns `false`, then starts rotating it and returns `true`.
             if (Gfx_PickupItemAnimate(itemId))
             {
                 MapMsg_DisplayAndHandleSelection(true, mapMsgIdxCpy, 3, NO_VALUE, 0, true); // 3 is "Yes", `NO_VALUE` is "No".
@@ -1053,7 +1047,7 @@ void Event_CommonItemTake(u32 pickupType, e_EventFlag eventFlagIdx) // 0x800879F
 
 void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0x80087AF4
 {
-    static const RECT D_8002ABA4 = {
+    static const RECT RECT = {
         SCREEN_POSITION_X(100.0f), 256,
         SCREEN_WIDTH / 2, SCREEN_HEIGHT
     };
@@ -1076,7 +1070,7 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
 
         case 2:
             DrawSync(SyncMode_Wait);
-            StoreImage(&D_8002ABA4, IMAGE_BUFFER);
+            StoreImage(&RECT, IMAGE_BUFFER);
             DrawSync(SyncMode_Wait);
             Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
             Screen_Init(SCREEN_WIDTH, true);
@@ -1138,7 +1132,7 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
             break;
 
         default:
-            LoadImage(&D_8002ABA4, IMAGE_BUFFER);
+            LoadImage(&RECT, IMAGE_BUFFER);
             DrawSync(SyncMode_Wait);
             Screen_Init(SCREEN_WIDTH, false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
@@ -2726,8 +2720,12 @@ s32 func_8008BF84(s_MainCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) /
 
     for (sp1C = var_v0; sp1C > 0; sp1C--, sp10++, sp18 *= 2)
     {
-        if ((g_SysWork.sysState_8 == SysState_GameOver) || (g_SysWork.player_4C.chara_0.health_B0 <= 0) ||
-            (sp10 == arg0) || (sp10->model_0.charaId_0 == 0) || (sp10->health_B0 < 0) || !sp10->field_E1_0)
+        if (g_SysWork.sysState_8 == SysState_GameOver ||
+            g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f) ||
+            sp10 == arg0 ||
+            sp10->model_0.charaId_0 == Chara_None ||
+            sp10->health_B0 < Q12(0.0f) ||
+            !sp10->field_E1_0)
         {
             continue;
         }
@@ -2736,7 +2734,7 @@ s32 func_8008BF84(s_MainCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) /
         D_800C47E8.vy = sp10->position_18.vy;
         D_800C47E8.vz = sp10->position_18.vz + sp10->field_D8.offsetZ_2;
 
-        if (Math_Distance2dGet(&arg0->chara_0.position_18, &D_800C47E8) > 0x3000)
+        if (Math_Distance2dGet(&arg0->chara_0.position_18, &D_800C47E8) > Q12(3.0f))
         {
             continue;
         }
