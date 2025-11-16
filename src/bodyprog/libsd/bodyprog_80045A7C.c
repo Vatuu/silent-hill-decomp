@@ -2350,6 +2350,7 @@ void func_80047B80(void) // 0x80047B80
 {
     u8 depth;
     u8 cmd;
+
     switch (g_Sd_AudioLoadState.vabLoadState_0)
     {
         case 0:

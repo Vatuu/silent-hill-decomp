@@ -1654,7 +1654,7 @@ static inline s32 SysWork_StateSetNext(e_SysState sysState)
     g_SysWork.sysStateStep_C[0] = 0;
     g_SysWork.field_28          = 0;
     g_SysWork.sysStateStep_C[1] = 0;
-    g_SysWork.timer_2C          = Q12(0.0f);
+    g_SysWork.timer_2C          = 0;//Q12(0.0f);
     g_SysWork.sysStateStep_C[2] = 0;
     return state;
 }
@@ -1669,13 +1669,13 @@ static inline void SysWork_StateStepIncrement(s32 stepIdx)
     {
         g_SysWork.field_28          = 0;
         g_SysWork.sysStateStep_C[1] = 0;
-        g_SysWork.timer_2C          = Q12(0.0f);
+        g_SysWork.timer_2C          = 0;//Q12(0.0f);
         g_SysWork.sysStateStep_C[2] = 0;
         g_SysWork.sysStateStep_C[0]++;
     }
     else if (stepIdx == 1)
     {
-        g_SysWork.timer_2C          = Q12(0.0f);
+        g_SysWork.timer_2C          = 0;//Q12(0.0f);
         g_SysWork.sysStateStep_C[2] = 0;
         g_SysWork.sysStateStep_C[1]++;
     }
@@ -1701,14 +1701,14 @@ static inline s32 SysWork_StateStepSet(s32 stepIdx, s32 sysStateStep)
         g_SysWork.sysStateStep_C[0] = sysStateStep;
         g_SysWork.field_28          = 0;
         g_SysWork.sysStateStep_C[1] = 0;
-        g_SysWork.timer_2C          = Q12(0.0f);
+        g_SysWork.timer_2C          = 0;//Q12(0.0f);
         g_SysWork.sysStateStep_C[2] = 0;
     }
     else if (stepIdx == 1)
     {
         step                        = 
         g_SysWork.sysStateStep_C[1] = sysStateStep;
-        g_SysWork.timer_2C          = Q12(0.0f);
+        g_SysWork.timer_2C          = 0;//Q12(0.0f);
         g_SysWork.sysStateStep_C[2] = 0;
     }
     else
@@ -1726,7 +1726,7 @@ static inline void SysWork_StateStepReset()
     g_SysWork.sysStateStep_C[0] = NO_VALUE;
     g_SysWork.field_28          = 0;
     g_SysWork.sysStateStep_C[1] = 0;
-    g_SysWork.timer_2C          = Q12(0.0f);
+    g_SysWork.timer_2C          = 0;//Q12(0.0f);
     g_SysWork.sysStateStep_C[2] = 0;
 }
 
