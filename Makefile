@@ -340,7 +340,7 @@ build: $(TARGET_OUT) checksum
 reset-build:
 	rm -rf $(BUILD_DIR)/src
 	rm -rf $(OUT_DIR)
-	$(MAKE) build $(TARGET_OUT)
+	$(MAKE) build $(TARGET_OUT) checksum
 
 clean-build: reset
 	$(MAKE) generate

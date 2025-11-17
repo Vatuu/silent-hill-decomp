@@ -350,6 +350,8 @@ segments:
       - [0x981E8, data, bodyprog_800B5C40]
       - [0x98200, .data, bodyprog_800348C0]
       - [0x98230, data, bodyprog_800BCD80]
+      #- [0x9CA64, .bss, libsd/bodyprog_80045A7C]
+      #- [0x9CA78, bss, bodyprog_800C15D8]
       #- [0x910E0, data, bodyprog_800B5C40]
 
       # .bss section

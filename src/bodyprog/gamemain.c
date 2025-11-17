@@ -181,7 +181,7 @@ void MainLoop(void) // 0x80032EE0
 
         Screen_FadeUpdate();
         func_8002EB88();
-        func_800485D8();
+        Sd_CmdPoolExecute();
 
         if (!func_80045B28())
         {

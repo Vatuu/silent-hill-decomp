@@ -67,7 +67,7 @@ void func_801E2E28(s32 idx) // 0x801E2E28
 
     D_801E5E8C = idx;
 
-    func_8004729C(D_801E5558[idx].field_0);
+    Sd_XaPreLoadAudio(D_801E5558[idx].field_0);
     var1 = (D_801E5558[idx].field_4 * 2) - 0x1F8;
     var0 = var1 / D_801E5C20;
 

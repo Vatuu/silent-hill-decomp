@@ -894,6 +894,7 @@ void func_80035ED0(void) // 0x80035ED0
     g_SysWork.field_2748[ARRAY_SIZE(g_SysWork.field_2748) - 1] = 0;
 }
 
+// Main music trigger and handler.
 void func_80035F4C(s32 flags, q19_12 arg1, u8* arg2) // 0x80035F4C
 {
     s16  temp_v0;
@@ -1031,7 +1032,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, u8* arg2) // 0x80035F4C
             var_v1 = 127;
         }
 
-        D_800BCD50[i] = var_v1;
+        g_Sd_BgmLayers[i] = var_v1;
     }
 
     var_s4  = 0;
@@ -1100,7 +1101,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, u8* arg2) // 0x80035F4C
         {
             for (i = 0; i < 8; i++)
             {
-                func_80046C54(i, D_800BCD50[i]);
+                func_80046C54(i, g_Sd_BgmLayers[i]);
             }
         } 
         else 
@@ -1385,7 +1386,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
     if (g_MapMsg_StateMachineIdx2 != FINISH_MAP_MSG)
     {
-        return MapMsgState_Idle;;
+        return MapMsgState_Idle;
     }
 
     g_SysWork.field_18                   = 0;

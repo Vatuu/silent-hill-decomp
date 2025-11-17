@@ -623,14 +623,14 @@ void func_800D0500(void) // 0x800D0500
             Sd_EngineCmd(Sfx_Unk1612);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
-            func_8004729C(Sfx_Unk4661);
+            Sd_XaPreLoadAudio(Sfx_XaAudio661);
 
         case 5:
             SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
             break;
 
         case 6:
-            Sd_EngineCmd(Sfx_Unk4661);
+            Sd_EngineCmd(Sfx_XaAudio661);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -712,7 +712,7 @@ void func_800D0500(void) // 0x800D0500
             Fs_QueueWaitForEmpty();
             GameFs_StfRollBinLoad();
             Fs_QueueWaitForEmpty();
-            Sd_EngineCmd(Sfx_Unk4658);
+            Sd_EngineCmd(Sfx_XaAudio658);
             SysWork_StateStepIncrement(0);
 
         case 18:

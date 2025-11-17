@@ -17,6 +17,26 @@ elif [ "$1" == "bodyprog" ]; then
     sed -i 's/0x090A0D38/0x00000000/g' asm/bodyprog/data/bodyprog_800C702C.bss.s
     sed -i 's/0x2E090A0D/0x00000000/g' asm/bodyprog/data/bodyprog_800C7410.bss.s
     sed -i 's/0x61783009/0x00000000/g' asm/bodyprog/data/bodyprog_800C7410.bss.s
+	
+	# It is very possible that part of what is considered part of the data segment
+	# is actually part of the bss segment.
+    #sed -i 's/0x42/0x00/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x30/0x00/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x07/0x00/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x40/0x00/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x14/0x00/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x0F/0x00/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x80/0x00/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x02/0x00/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x3C/0x00/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x0C012661/0x00000000/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x27A40030/0x00000000/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x0010/0x0000/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x8FB0/0x0000/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x00000010/0x00000000/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x0021/0x0000/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x0080/0x0000/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
+    #sed -i 's/0x00020000/0x00000000/g' asm/bodyprog/data/bodyprog_800C15D8.bss.s
 elif [ "$1" == "screens/stream" ] || [ "$1" == "stream" ]; then
     sed -i 's/\.a:/\//g' linkers/screens/stream.ld
 

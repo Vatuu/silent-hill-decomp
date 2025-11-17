@@ -22,6 +22,14 @@
 // STRUCTS
 // ========
 
+// Used for loading XA files and `field_0` is also used to hold commands for `Sd_CdPrimitiveCmdTry`
+typedef struct
+{
+    u8 field_0;
+    u8 field_1;
+} s_800C15F0;
+
+// TODO: field with `_24` seems to be part of a thing related to how XA files works.
 typedef struct
 {
     u8  xaFileIdx_0;
@@ -37,41 +45,53 @@ STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
 
 typedef struct
 {
-    u16 timer_0; // A timer related to audio command processes.
-    u16 xaAudioIdxCheck_2; // XA Audio index. Used for check if the file exist.
-    u16 xaAudioIdx_4;      // XA Audio index. Used for playing the audio.
+    u16 cdErrorCount_0;    /** Counter for failed attempts at the moment of process a primite command. */
+    u16 xaAudioIdxCheck_2; /** XA Audio index. Used for check if the file exist. */
+    u16 xaAudioIdx_4;      /** XA Audio index. Used for playing the audio. */
     u16 field_6;
     u16 field_8[1]; // Unknown size.
     s16 field_A;
     s16 field_C;
-    u16 field_E;
+    u16 field_E; // Related to the handling of music layers.
     u16 field_10;
     u8  isStereoEnabled_12; // `bool`
-    s8  field_13;
+    s8  isXaStopping_13; /** `bool` | It stop any play from a XA file in memory from playing, when doing it this is
+                          * set to `true`, otherwise it keep in `false`. */
     u8  bgmFadeSpeed_14; /** Value to get rested in order to speed the music fade. Range: [0, 2], default: 0. */
     u8  isVabLoading_15; /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
-    u8  field_16;        /** `bool` | XA streaming related. If a voiceline audio is playing, this is set to `false`, otherwise `true`. */
-    u8  muteGame_17;     /** `bool` | Mutes the game. If the value is `true`, main game audio will progressively decrease.
+    u8  isXaLoading_16;  /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
+    u8  muteGame_17;     /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively lower
 	                      * in volume until mute. The sounds will keep playing, but muted.
 						  */
 } s_800C1658;
 
 typedef struct
 {
-    u8 vabLoadState_0; // States related to audio streaming. VAB Audio.
-    u8 field_1;        // States related to audio streaming.
-    u8 field_2;        // States related to audio streaming.
-    u8 field_3;
-} s_Sd_AudioLoadStates;
+    u8 vabLoadState_0;   /** Load VAB audio state. */
+    u8 xaLoadState_1;    /** Load XA audio state. */
+    u8 xaStopState_2;    /** Stop XA audio streaming state. */
+    u8 xaPreLoadState_3; /** Prepare Load XA audio state.
+                          * Positionate the current read point to the one where the XA audio meant to be loaded is.
+                          * This is arbitrary as `xaLoadState_1` is already used for that.
+                          */
+} s_AudioStreamingStates;
 
-// Game current volume configuration struct?
+// Game audio channels volume configuration struct.
+// @note Could the values of the fields be some sort of fractional value?
 typedef struct
 {
-    s16 volumeXa_0; // Could also be event timer? Most values are shared with `field_2`.
-    s16 field_2;    // `volumeVoice_2`?
-    u16 volumeSE_4;
-    s16 field_6;     // Related to the BGM volume.
-    s16 field_8;     // Related to the BGM volume.
+    s16 volumeXa_0; /** This and the second field are volume controller for XA audio files.
+                     * This field is used generally for most functions while
+                     * the second field is used by `Sd_XaAudioPlay` in order to set
+                     * the volume of audios.
+                     */
+    s16 volumeXa_2;
+    u16 volumeSe_4;
+    s16 volumeBgm_6; /** This and the fifth field are volume controler for the music.
+                      * This field is like the "parent" that ensures `volumeBgm_8` is on the same
+                      * volume.
+                      */
+    s16 volumeBgm_8;
     s16 volumeGlobal_A;
 	
 	// As main difference with previous volume controlers, this seems to influence the behaviour of the game.
@@ -80,13 +100,14 @@ typedef struct
     u8  globalVolumeSe_C;  // Global SE volume channel.
     u8  globalVolumeBgm_D; // Global BGM volume channel.
     u8  globalVolumeXa_E;  // Global Voice volume channel (not configurable).
-} s_800C1678;
+} s_ChannelsVolumeController;
 
+// Used for the load of XA audios and related to VSync values???
 typedef struct
 {
     s32 field_0;
     s32 field_4;
-    s32 field_8;
+    s32 field_8; // Somebody defined this as an individual global variable in the symbol file as `g_Game_VSyncTimeSinceBoot`.
 } s_800C1688;
 
 /** Sound struct for currently used SFX? */
@@ -116,29 +137,61 @@ typedef struct
 // GLOBALS
 // ========
 
-extern u8 g_Sd_ReverbDepths[];
-
 extern s_800C37D4 D_800A986C[];
 
+extern u8 g_Sd_ReverbDepths[];
+
 extern s_XaItemData g_XaItemData[];
+
+/** Values capped at 127. */
+extern s8 g_Sd_BgmLayers[8];
+
+// It is very likely to be a variable declared as `Static` as this is only used in `Sd_XaAudioPlay`
+// Another function `Sd_XaPreLoadAudioInit` (which is extreamly similar to `Sd_XaAudioPlay`) have a
+// variable that works the same and is only used there.
+extern u16 D_800C15CA;
+
+// Very likely to be a variable declared as `Static` as this is only used in `Sd_XaAudioPlay`
+extern u16 D_800C15D0;
+
+// Very likely to be a variable declared as `Static` inside the function that uses it.
+extern u32 D_800C15CC;
+
+// Very likely to be a variable declared as `Static` inside the function that uses it.
+extern u32 D_800C15D4;
+
+// Very likely to be a variable declared as `Static` inside the function that uses it.
+extern s16 D_800C15C4;
+
+// Very likely to be a variable declared as `Static` inside the function that uses it.
+extern s16 D_800C15C6;
+
+// Very likely to be a variable declared as `Static` inside the function that uses it.
+extern s16 D_800C15C8;
+
+// Very likely to be a variable declared as `Static` inside the function that uses it.
+extern u16 D_800C15D0;
 
 // Only used in `sd_work_init` as iterator variable.
 extern s32 D_800C15B8;
 
-// Only used in `func_800478DC` as iterator variable.
+// Only used in `Sd_CmdPoolAdd` as iterator variable.
 extern s32 D_800C15D8;
 
-// Only used in `func_800478DC` as iterator variable.
+// Only used in `Sd_CmdPoolAdd` as iterator variable.
 extern s32 D_800C15DC;
 
-// Only used in `func_80047A70` as iterator variable.
+// Only used in `Sd_CmdPoolUpdate` as iterator variable.
 extern s32 D_800C15E0;
+
+extern s_800C15F0 D_800C15F0;
 
 extern s_800C1658 D_800C1658;
 
-extern s_Sd_AudioLoadStates g_Sd_AudioLoadState;
+/** @brief Hold states for different audio types streaming. */
+extern s_AudioStreamingStates g_Sd_AudioStreamingStates;
 
-extern s_800C1678 D_800C1678;
+extern s_ChannelsVolumeController g_Sd_ChannelsVolume;
 
 extern u8 g_Sd_ReverbDepth;
 
@@ -146,21 +199,23 @@ extern s_800C1688 D_800C1688;
 
 extern s_800C1698 D_800C1698;
 
+/** Command pool related to audio and streaming.
+ * Seems like `Sd_CmdPoolExecute` is the main function on charge of executing commands,
+ * as this function is part of the mainloop function.
+ */
+extern u8 g_Sd_CmdPool[32];
+
 extern u8 D_800C37C8;
 
 extern u32 D_800C37CC;
-
-/** Command pool related to audio and streaming.
- * Seems like `func_800485D8` is the main function on charge of executing commands,
- * as this function is part of the mainloop function.
- */
-extern u8 D_800C16A8[32];
 
 extern s_800C37D4* D_800C37D4;
 
 extern s_800C37D4* D_800C37D8;
 
-extern u8 D_800C37DD;
+extern u8 D_800C37DC; // Boolean.
+
+extern u8 g_Sd_CurrentCmd;
 
 // ==========
 // FUNCTIONS
@@ -185,26 +240,47 @@ void Sd_AllVoicesKeyOff(void);
 /** @brief Executes `SdUtKeyOffVWithRROff` and runs through all elements of `smf_port`. */
 void Sd_AllVoicesKeyOffVWithRROff(void);
 
-/** @brief Plays XA audios defined at `g_XaItemData`. */
-void Sd_XaAudioPlay(u16 sfx);
+/** This function manipulate the BGM audio layers. Can't be termined if this function
+ * is fully on charge of that as `func_80035F4C` (not directly related to the SD audio system)
+ * triggers and handles in-game music.
+ */
+void func_80046C54(u8 arg0, u8 vol);
+
+/** @brief Loads and plays XA audio defined at `g_XaItemData`. */
+void Sd_XaAudioPlay(void);
+
+/** @brief Initializes the process to play an XA audios defined at `g_XaItemData`. */
+void Sd_XaAudioPlayCmdAdd(u16 sfx);
 
 /** @unused Gets the length of XA audios defined at `g_XaItemData`. */
 s32 Sd_XaAudioLengthGet(s32 idx);
 
+void Sd_XaAudioStopCmdAdd(void);
+
+void Sd_XaPreLoadAudio(u16 xaIdx);
+
+void Sd_XaPreLoadAudioCmdAdd(s32 xaIdx);
+
+/** @brief Stops the streaming of the currently loaded XA audio in memory. */
+void Sd_XaAudioStop(void);
+
 /** @brief Sets the volume for the global channels of the music, sound effects, and voices. */
 void Sd_SetVolume(u8 xaVol, s16 bgmVol, u8 seVol);
 
+/** @brief Sets the volume for the channels of music. */
 void Sd_SetVolBgm(s16 volLeft, s16 volRight);
 
+/** @brief Sets the volume for the channels of voices. */
 void Sd_SetVolXa(s16 volLeft, s16 volRight);
 
+/** @brief Sets the volume for the channels of sound effects. */
 s16 Sd_GetVolSe(s16 arg0);
 
 /** Updates and add commands to a command pool. */
-void func_800478DC(u8 cmd);
+void Sd_CmdPoolAdd(u8 cmd);
 
 /** Updates a command pool by shifting a field. */
-void func_80047A70(void);
+void Sd_CmdPoolUpdate(void);
 
 void func_80047B80(void);
 
@@ -224,6 +300,15 @@ void func_80047E3C(void);
 
 void func_80047F18(void);
 
-void func_800485D8(void);
+void Sd_StopSeq(void);
+
+void Sd_CmdPoolExecute(void);
+
+/** @brief Executes a new primitive command and checks the status against the previous.
+ * If the previous primitive commands haven't completed, it starts
+ * adding to `D_800C1658.cdErrorCount_0` each time the process fails. When it
+ * reaches 600 failed attemps, it restarts the CD-ROM system.
+ */
+u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res);
 
 #endif

@@ -801,7 +801,7 @@ void func_800DB368(void) // 0x800DB368
         case 0:
             Player_ControlFreeze();
             Savegame_EventFlagSet(EventFlag_122);
-            Sd_EngineCmd(Sfx_Unk4149);
+            Sd_EngineCmd(Sfx_XaAudio149);
             func_800865FC(true, 0, 0, FP_ANGLE(-90.0f), Q12(20.3f), Q12(143.5f));
 
             func_800868DC(0);
@@ -868,18 +868,18 @@ void func_800DB368(void) // 0x800DB368
             if (Fs_QueueIsEntryLoaded(D_800E1FD4))
             {
                 func_8003D01C();
-                func_8004729C(Sfx_Unk4150);
+                Sd_XaPreLoadAudio(Sfx_XaAudio150);
                 SysWork_StateStepIncrement(0);
             }
             break;
 
         case 13:
             func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
-            func_8004729C(Sfx_Unk4150);
+            Sd_XaPreLoadAudio(Sfx_XaAudio150);
             break;
 
         case 14:
-            Sd_EngineCmd(Sfx_Unk4150);
+            Sd_EngineCmd(Sfx_XaAudio150);
             SysWork_StateStepIncrement(0);
 
         case 15:
@@ -995,7 +995,7 @@ void func_800DBB7C(void) // 0x800DBB7C
         case 0:
             Player_ControlFreeze();
             Savegame_EventFlagSet(EventFlag_121);
-            Sd_EngineCmd(Sfx_Unk4152);
+            Sd_EngineCmd(Sfx_XaAudio152);
             SysWork_StateStepIncrement(0);
 
         case 1:

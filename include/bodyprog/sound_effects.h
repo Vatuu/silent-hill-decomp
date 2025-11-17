@@ -304,21 +304,30 @@ typedef enum _SfxId
 
     Sfx_Unk1916 = 1916,
 
-    Sfx_Unk4108 = 4108,
+	/** Values starting from `4096` are XA files defined at `g_XaItemData` struct.
+	 * In both `Sd_XaAudioPlayCmdAdd` (call through `Sd_EngineCmd`) and `Sd_XaPreLoadAudioCmdAdd`
+	 * (call through `Sd_XaPreLoadAudio`) when the command get assigned to
+	 * `D_800C1658.xaAudioIdxCheck_2` or `D_800C1658.xaAudioIdxCheck_4` it also pass through a
+	 * AND bitwise operator with the value of `0xFFF`. This make sense as `4096` in hexadecimal
+	 * is `0x1000` meaning that the fourth value (1) is getting ignored and is only considering
+	 * the other values which start from 0.
+	 */
+	
+    Sfx_XaAudio108 = 4108,
 
-    Sfx_Unk4149 = 4149,
-    Sfx_Unk4150 = 4150,
+    Sfx_XaAudio149 = 4149,
+    Sfx_XaAudio150 = 4150,
 
-    Sfx_Unk4152 = 4152,
+    Sfx_XaAudio152 = 4152,
 
-    Sfx_Unk4658 = 4658,
+    Sfx_XaAudio658 = 4658,
 
-    Sfx_Unk4661 = 4661,
+    Sfx_XaAudio661 = 4661,
 
-    Sfx_Unk4664 = 4664,
+    Sfx_XaAudio664 = 4664,
 
-    Sfx_Unk4696 = 4696,
-    Sfx_Unk4699 = 4699,
+    Sfx_XaAudio696 = 4696,
+    Sfx_XaAudio699 = 4699,
 
     Sfx_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
 } e_SfxId;

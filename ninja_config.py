@@ -364,7 +364,7 @@ def ninja_setup_main(ninja_file_prefix: str, game_version_idx: int, split_entrie
     )
     
     ninja.rule(
-        "elf", description="elf $out.elf",
+        "elf", description="elf $out",
         command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -Map $out.map -T $in -T $undef_sym_path -T $undef_fun_path -T {CONFIG_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}/lib_externs.ld -o $out",
     )
     

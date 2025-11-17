@@ -463,12 +463,20 @@ Sd_PlaySfx                                  = 0x80046048; // type:func
 Sd_LastVoiceKeyOff                          = 0x800468EC; // type:func
 Sd_AllVoicesKeyOff                          = 0x800469AC; // type:func
 Sd_AllVoicesKeyOffVWithRROff                = 0x800469E8; // type:func
-Sd_XaAudioPlay                              = 0x80046D3C;
+Sd_XaAudioPlayCmdAdd                        = 0x80046D3C;
 Sd_XaAudioLengthGet                         = 0x80046DCC;
+Sd_XaAudioPlay                              = 0x80046E00;
+Sd_XaPreLoadAudio                           = 0x8004729C;
+Sd_XaPreLoadAudioCmdAdd                     = 0x800472BC;
+Sd_XaPreLoadAudioInit                       = 0x80047308;
+Sd_XaAudioStopCmdAdd                        = 0x8004760C;
+Sd_XaAudioStop                              = 0x80047634;
 Sd_SetVolume                                = 0x80047798; // type:func
 Sd_SetVolBgm                                = 0x80047808; // type:func
 Sd_SetVolXa                                 = 0x80047860; // type:func
 Sd_GetVolSe                                 = 0x800478B8; // type:func
+Sd_CmdPoolAdd                               = 0x800478DC;
+Sd_CmdPoolUpdate                            = 0x80047A70;
 Sd_SetReverbDepth                           = 0x80047AD0; // type:func
 Sd_SetReverbEnable                          = 0x80047AFC; // type:func
 func_80047D1C                               = 0x80047D1C;
@@ -477,7 +485,8 @@ func_80047D1C                               = 0x80047D1C;
 //--- PA: 0x0231F0   VA: 0x80047D50   subsegment: c, libsd/bodyprog_CD_80047D50
 //-----------------------------------------------------------------------------
 Sd_StopSeq                                  = 0x8004839C; // type:func
-Cd_TryCmd                                   = 0x80048954; // type:func
+Sd_CmdPoolExecute                           = 0x800485D8;
+Sd_CdPrimitiveCmdTry                        = 0x80048954; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x023ED8   VA: 0x80048A38   subsegment: c, view/vw_main
@@ -2504,6 +2513,7 @@ g_SelectedFileIdx                           = 0x800BCD3F;
 //--- PA: 0x0981E8   VA: 0x800BCD48   subsegment: data, bodyprog_800B5C40
 //-----------------------------------------------------------------------
 g_DemoLoadAttempCount                       = 0x800BCD48;
+g_Sd_BgmLayers                              = 0x800BCD50;
 
 //------------------------------------------------------------------------
 //--- PA: 0x098200   VA: 0x800BCD60   subsegment: .data, bodyprog_800348C0
@@ -2527,10 +2537,11 @@ vcRefPosSt                                  = 0x800BCDF8; // type:VECTOR3 size:0
 g_WorldGfx                                  = 0x800BCE18; // type:u8 size:0x2DBC
 g_Map                                       = 0x800C1020; // type:u8 size:0x58C - size from bzero call
 g_Sound_ActiveSfxIdx                        = 0x800C15BE; // type:s16
-g_Sd_AudioLoadState                         = 0x800C1670;
+g_Sd_AudioStreamingStates                   = 0x800C1670;
+g_Sd_ChannelsVolume                         = 0x800C1678;
 g_Sd_ReverbDepth                            = 0x800C1687;
-g_Game_VSyncTimeSinceBoot                   = 0x800C1690;
-D_800C16A8                                  = 0x800C16A8; // type:u8 size:0x20
+g_Sd_CmdPool                                = 0x800C16A8; // type:u8 size:0x20
+g_Sd_CurrentCmd                             = 0x800C37DD;
 vwViewPointInfo                             = 0x800C37E0; // type:VW_VIEW_WORK size:0x84
 VbWvsMatrix                                 = 0x800C3888; // type:MATRIX size:0x20
 g_StringPosition                            = 0x800C38A8; // type:DVECTOR

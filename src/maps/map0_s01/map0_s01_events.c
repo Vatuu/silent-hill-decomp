@@ -224,12 +224,12 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
         case 21:
             SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(10.0f), Q12(141.0f), Q12(159.0f), true, true);
-            func_8004729C(Sfx_Unk4108);
+            Sd_XaPreLoadAudio(Sfx_XaAudio108);
             break;
 
         case 22:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 7, false);
-            Sd_EngineCmd(Sfx_Unk4108);
+            Sd_EngineCmd(Sfx_XaAudio108);
             SysWork_StateStepIncrement(0);
 
         case 23:

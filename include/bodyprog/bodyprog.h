@@ -1166,12 +1166,6 @@ typedef struct _Map
 } s_Map;
 STATIC_ASSERT_SIZEOF(s_Map, 1420);
 
-typedef struct
-{
-    u8 field_0;
-    u8 field_1;
-} s_800C15F0;
-
 // Used in string parsing.
 typedef struct
 {
@@ -2386,9 +2380,6 @@ extern s16 g_SavegameCount;
  */
 extern s32 g_DemoLoadAttempCount;
 
-/** Values capped at 127. */
-extern s8 D_800BCD50[8];
-
 extern u32 D_800BCD58;
 
 extern s32 D_800BCD5C;
@@ -2455,22 +2446,6 @@ extern u16 D_800C15C0;
 /** Base-0 SFX index. */
 extern s16 D_800C15C2;
 
-extern s16 D_800C15C4;
-
-extern s16 D_800C15C6;
-
-extern s16 D_800C15C8;
-
-extern u16 D_800C15CA;
-
-extern u32 D_800C15CC;
-
-extern u16 D_800C15D0;
-
-extern u32 D_800C15D4;
-
-extern s_800C15F0 D_800C15F0;
-
 /** SFX IDs? */
 extern u16 D_800C15F8[];
 
@@ -2512,8 +2487,6 @@ extern s_800C38B4 D_800C38B4;
 
 /** Times. */
 extern q19_12 D_800C4710[];
-
-extern u8 D_800C37DC;
 
 /** String position. */
 extern DVECTOR g_StringPosition; // 0x800C38A8
@@ -3120,17 +3093,7 @@ void func_80046B78(void);
 
 u8 func_80046BB4(u8 arg0);
 
-void func_80046C54(u8 arg0, u8 vol);
-
-void func_80046E00(void);
-
-void func_8004729C(u16 sfxId);
-
-void func_800472BC(s32 sfxId);
-
-void func_80047308(void);
-
-void func_8004760C(void);
+void Sd_XaPreLoadAudioInit(void);
 
 void func_80048000(void);
 
@@ -3144,8 +3107,6 @@ void func_800481F8(void);
 void func_80048244(u16 cmd);
 
 void func_800482D8(void);
-
-void Sd_StopSeq(void);
 
 /** CD function. */
 void func_800483D4(void);
@@ -3162,13 +3123,6 @@ void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
 void func_800485B8(s32 arg0, u8 arg1, u32 arg2);
 
 void func_800485C0(s32 idx);
-
-/** @brief Executes a new primitive command and checks the status against the previous.
- * If the previous primitive commands haven't completed, it starts
- * adding to `D_800C1658.timer_0` each time the process fails. When it
- * reaches 600 failed attemps, it restarts the CD-ROM system.
- */
-u8 Cd_TryCmd(s32 com, u8* param, u8* res);
 
 /** `arg0` is probably a bit flag. */
 void func_8004C564(u8 arg0, s32 weaponAttack);

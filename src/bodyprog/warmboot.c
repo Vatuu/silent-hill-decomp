@@ -86,7 +86,7 @@ void Game_WarmBoot(void) // 0x80034264
 
     while (func_80045B28())
     {
-        func_800485D8();
+        Sd_CmdPoolExecute();
         VSync(SyncMode_Wait);
     }
 
@@ -94,7 +94,7 @@ void Game_WarmBoot(void) // 0x80034264
 
     while (func_80045B28())
     {
-        func_800485D8();
+        Sd_CmdPoolExecute();
         VSync(SyncMode_Wait);
     }
 
@@ -105,7 +105,7 @@ void Game_WarmBoot(void) // 0x80034264
 
     while (func_80045B28())
     {
-        func_800485D8();
+        Sd_CmdPoolExecute();
         VSync(SyncMode_Wait);
     }
 

@@ -1448,7 +1448,7 @@ void func_800E4714(void) // 0x800E4714
             break;
 
         case 16:
-            Sd_EngineCmd(Sfx_Unk4696);
+            Sd_EngineCmd(Sfx_XaAudio696);
             SysWork_StateStepIncrement(0);
 
         case 17:
