@@ -8,14 +8,6 @@
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
-#define CD_ERROR_LIMIT 600 // Matches value used in beatmania `FSCD.C`.
-
-/**
-* Either this file contain more file to split
-* Or this file is related to audio load from CD.
-* It is more probable to be the second option.
-*/
-
 static u8* D_800A9FC8[4] = {
     (u8*)0x801FE460,
     (u8*)0x801FD840,
@@ -50,6 +42,179 @@ static s32 D_800A9FDC[166] = {
     0x00021740, 0x00006138, 0x10200003, 0x00021D80, 0x0000617C, 0x0C200003, 0x00009FE0, 0x000061C1,
     0x14200003, 0x0000A410, 0x000061E6, 0x10200003, 0x000144C0, 0x000061FC
 };
+
+static s_800C37D4 D_800AA274[73] = {
+    { 3, 0, 4640, 86848,  25126 },
+    { 3, 0, 6176, 133680, 25171 },
+    { 3, 0, 5664, 141408, 25318 },
+    { 3, 0, 4640, 122704, 25389 },
+    { 3, 0, 4128, 60192,  25450 },
+    { 3, 0, 3616, 37712,  25481 },
+    { 3, 0, 5664, 97392,  25513 },
+    { 3, 0, 5152, 114992, 25562 },
+    { 3, 0, 5664, 128256, 25621 },
+    { 3, 0, 4128, 73648,  25685 },
+    { 3, 0, 6176, 137600, 25722 },
+    { 3, 0, 4640, 139712, 25791 },
+    { 3, 0, 4640, 106288, 25863 },
+    { 3, 0, 5152, 140400, 29136 },
+    { 3, 0, 4128, 80144,  29207 },
+    { 3, 0, 4128, 54336,  29248 },
+    { 3, 0, 4640, 129968, 29285 },
+    { 3, 0, 3104, 15168,  29350 },
+    { 3, 0, 5152, 140672, 29373 },
+    { 3, 0, 5152, 61344,  29475 },
+    { 3, 0, 5152, 61344,  29507 },
+    { 3, 0, 4128, 90096,  29538 },
+    { 3, 0, 4128, 134656, 29583 },
+    { 3, 0, 4640, 63376,  29651 },
+    { 3, 0, 5152, 109056, 29683 },
+    { 3, 0, 5152, 97840,  29739 },
+    { 3, 0, 5152, 137568, 29788 },
+    { 3, 0, 5152, 147936, 29858 },
+    { 3, 0, 4640, 94400,  29934 },
+    { 3, 0, 5152, 137296, 29983 },
+    { 3, 0, 6688, 153152, 30057 },
+    {}, // Might be a new table but I don't see a reference to this address anywhere.
+    { 0, 0, 0,    3236,   24632 },
+    { 0, 0, 0,    19340,  24692 },
+    { 0, 0, 0,    9576,   24760 },
+    { 0, 0, 0,    4040,   24836 },
+    { 0, 0, 0,    1776,   24887 },
+    { 0, 0, 0,    1304,   24955 },
+    { 0, 0, 0,    596,    25024 },
+    { 0, 0, 0,    4500,   25059 },
+    { 0, 0, 0,    300,    25083 },
+    { 0, 0, 0,    532,    25125 },
+    { 0, 0, 0,    3728,   25169 },
+    { 0, 0, 0,    6492,   25314 },
+    { 0, 0, 0,    1344,   25388 },
+    { 0, 0, 0,    896,    25449 },
+    { 0, 0, 0,    196,    25480 },
+    { 0, 0, 0,    1256,   25512 },
+    { 0, 0, 0,    1892,   25561 },
+    { 0, 0, 0,    2560,   25619 },
+    { 0, 0, 0,    732,    25684 },
+    { 0, 0, 0,    1860,   25721 },
+    { 0, 0, 0,    1176,   25790 },
+    { 0, 0, 0,    6000,   25860 },
+    { 0, 0, 0,    5476,   29133 },
+    { 0, 0, 0,    3952,   29205 },
+    { 0, 0, 0,    808,    29247 },
+    { 0, 0, 0,    1820,   29284 },
+    { 0, 0, 0,    676,    29349 },
+    { 0, 0, 0,    716,    29372 },
+    { 0, 0, 0,    8220,   29470 },
+    { 0, 0, 0,    2448,   29505 },
+    { 0, 0, 0,    832,    29537 },
+    { 0, 0, 0,    172,    29582 },
+    { 0, 0, 0,    2720,   29649 },
+    { 0, 0, 0,    1688,   29682 },
+    { 0, 0, 0,    3128,   29737 },
+    { 0, 0, 0,    1348,   29787 },
+    { 0, 0, 0,    2324,   29856 },
+    { 0, 0, 0,    4436,   29931 },
+    { 0, 0, 0,    2496,   29981 },
+    { 0, 0, 0,    11372,  30051 },
+    {}
+};
+
+void func_80047B24(s32 arg0) // 0x80047B24
+{
+    if (D_800C1658.xaAudioIdx_4 != 0)
+    {
+        Sd_CmdPoolAdd(2);
+    }
+
+    D_800C37D0 = 0;
+    Sd_CmdPoolAdd(arg0);
+    D_800C1658.isVabLoading_15 = true;
+}
+
+void func_80047B80(void) // 0x80047B80
+{
+    u8 depth;
+    u8 cmd;
+	
+    switch (g_Sd_AudioStreamingStates.vabLoadState_0)
+    {
+        case 0:
+            cmd        = g_Sd_CmdPool[0];
+            D_800C37D4 = &D_800A986C[cmd];
+            D_800C37C8 = D_800C37D4->field_0;
+
+            if (D_800C37C8)
+            {
+                if (D_800C1658.field_8[D_800C37C8 - 1] == cmd)
+                {
+                    g_Sd_AudioStreamingStates.vabLoadState_0 = 0;
+                    D_800C1658.isVabLoading_15               = false;
+                    Sd_CmdPoolUpdate();
+                    break;
+                }
+
+                D_800C1658.field_8[D_800C37C8 - 1] = cmd;
+            }
+
+            if (cmd >= 170 && cmd <= 204)
+            {
+                depth = g_Sd_ReverbDepths[cmd - 170];
+                if (depth != g_Sd_ReverbDepth)
+                {
+                    Sd_SetReverbDepth(depth);
+                }
+            }
+
+            g_Sd_AudioStreamingStates.vabLoadState_0 = 1;
+            break;
+
+        case 1:
+            func_80047D1C();
+            break;
+
+        case 2:
+            func_80047D50();
+            break;
+
+        case 3:
+            func_80047DB0();
+            break;
+
+        case 4:
+            func_80047E3C();
+            break;
+
+        case 5:
+            func_80047F18();
+            break;
+
+        case 6:
+            func_80048000();
+            break;
+
+        case 7:
+            func_8004807C();
+            break;
+
+        case 8:
+            func_800480FC();
+            break;
+
+        case 9:
+            func_800481F8();
+            break;
+
+        default:
+            break;
+    }
+}
+
+void func_80047D1C(void) // 0x80047D1C
+{
+    D_800C37CC = 0;
+    SdVabClose(D_800C37C8);
+    g_Sd_AudioStreamingStates.vabLoadState_0 = 2;
+}
 
 void func_80047D50(void) // 0x80047D50
 {
@@ -243,82 +408,6 @@ void func_80048244(u16 cmd) // 0x80048244
     D_800C1658.isVabLoading_15 = true;
 }
 
-static s_800C37D4 D_800AA274[73] = {
-    { 3, 0, 4640, 86848,  25126 },
-    { 3, 0, 6176, 133680, 25171 },
-    { 3, 0, 5664, 141408, 25318 },
-    { 3, 0, 4640, 122704, 25389 },
-    { 3, 0, 4128, 60192,  25450 },
-    { 3, 0, 3616, 37712,  25481 },
-    { 3, 0, 5664, 97392,  25513 },
-    { 3, 0, 5152, 114992, 25562 },
-    { 3, 0, 5664, 128256, 25621 },
-    { 3, 0, 4128, 73648,  25685 },
-    { 3, 0, 6176, 137600, 25722 },
-    { 3, 0, 4640, 139712, 25791 },
-    { 3, 0, 4640, 106288, 25863 },
-    { 3, 0, 5152, 140400, 29136 },
-    { 3, 0, 4128, 80144,  29207 },
-    { 3, 0, 4128, 54336,  29248 },
-    { 3, 0, 4640, 129968, 29285 },
-    { 3, 0, 3104, 15168,  29350 },
-    { 3, 0, 5152, 140672, 29373 },
-    { 3, 0, 5152, 61344,  29475 },
-    { 3, 0, 5152, 61344,  29507 },
-    { 3, 0, 4128, 90096,  29538 },
-    { 3, 0, 4128, 134656, 29583 },
-    { 3, 0, 4640, 63376,  29651 },
-    { 3, 0, 5152, 109056, 29683 },
-    { 3, 0, 5152, 97840,  29739 },
-    { 3, 0, 5152, 137568, 29788 },
-    { 3, 0, 5152, 147936, 29858 },
-    { 3, 0, 4640, 94400,  29934 },
-    { 3, 0, 5152, 137296, 29983 },
-    { 3, 0, 6688, 153152, 30057 },
-    {}, // Might be a new table but I don't see a reference to this address anywhere.
-    { 0, 0, 0,    3236,   24632 },
-    { 0, 0, 0,    19340,  24692 },
-    { 0, 0, 0,    9576,   24760 },
-    { 0, 0, 0,    4040,   24836 },
-    { 0, 0, 0,    1776,   24887 },
-    { 0, 0, 0,    1304,   24955 },
-    { 0, 0, 0,    596,    25024 },
-    { 0, 0, 0,    4500,   25059 },
-    { 0, 0, 0,    300,    25083 },
-    { 0, 0, 0,    532,    25125 },
-    { 0, 0, 0,    3728,   25169 },
-    { 0, 0, 0,    6492,   25314 },
-    { 0, 0, 0,    1344,   25388 },
-    { 0, 0, 0,    896,    25449 },
-    { 0, 0, 0,    196,    25480 },
-    { 0, 0, 0,    1256,   25512 },
-    { 0, 0, 0,    1892,   25561 },
-    { 0, 0, 0,    2560,   25619 },
-    { 0, 0, 0,    732,    25684 },
-    { 0, 0, 0,    1860,   25721 },
-    { 0, 0, 0,    1176,   25790 },
-    { 0, 0, 0,    6000,   25860 },
-    { 0, 0, 0,    5476,   29133 },
-    { 0, 0, 0,    3952,   29205 },
-    { 0, 0, 0,    808,    29247 },
-    { 0, 0, 0,    1820,   29284 },
-    { 0, 0, 0,    676,    29349 },
-    { 0, 0, 0,    716,    29372 },
-    { 0, 0, 0,    8220,   29470 },
-    { 0, 0, 0,    2448,   29505 },
-    { 0, 0, 0,    832,    29537 },
-    { 0, 0, 0,    172,    29582 },
-    { 0, 0, 0,    2720,   29649 },
-    { 0, 0, 0,    1688,   29682 },
-    { 0, 0, 0,    3128,   29737 },
-    { 0, 0, 0,    1348,   29787 },
-    { 0, 0, 0,    2324,   29856 },
-    { 0, 0, 0,    4436,   29931 },
-    { 0, 0, 0,    2496,   29981 },
-    { 0, 0, 0,    11372,  30051 },
-    {}
-};
-
 void func_800482D8(void) // 0x800482D8
 {
     switch (g_Sd_AudioStreamingStates.vabLoadState_0)
@@ -407,7 +496,7 @@ void func_80048498(void) // 0x80048498
         else
         {
             g_Sd_AudioStreamingStates.vabLoadState_0 = 0;
-            D_800C1658.isVabLoading_15         = false;
+            D_800C1658.isVabLoading_15               = false;
 
             Sd_CmdPoolUpdate();
         }
@@ -428,192 +517,3 @@ void func_800485C0(s32 idx) // 0x800485C0
 }
 
 const s32 g_rodataPad_80025D38 = 0;
-
-void Sd_CmdPoolExecute(void) // 0x800485D8
-{
-    g_Sd_CurrentCmd = g_Sd_CmdPool[0];
-    switch (g_Sd_CurrentCmd)
-    {
-        case 0:
-            break;
-
-        case 1:
-            Sd_XaAudioPlay();
-            break;
-
-        case 2:
-            Sd_XaAudioStop();
-            break;
-
-        case 6:
-            Sd_XaPreLoadAudioInit();
-            break;
-
-        case 7:
-            func_80046A70();
-            break;
-
-        case 8:
-            func_80046B04();
-            break;
-
-        default:
-            if (g_Sd_CurrentCmd >= 160)
-            {
-                func_80047B80();
-            }
-            else if (g_Sd_CurrentCmd >= 32)
-            {
-                func_800482D8();
-            }
-            else
-            {
-                Sd_CmdPoolUpdate();
-            }
-            break;
-    }
-
-    if (D_800C1658.xaAudioIdx_4 != 0)
-    {
-        D_800C1688.field_4 = VSync(SyncMode_Count) - D_800C1688.field_8;
-    }
-
-    if (D_800C1658.bgmFadeSpeed_14 != 0)
-    {
-        D_800C1658.field_E = NO_VALUE;
-
-        if (g_Sd_ChannelsVolume.volumeBgm_8 <= 0)
-        {
-            g_Sd_ChannelsVolume.volumeBgm_8 = 0;
-            func_80046B78();
-        }
-        else
-        {
-            g_Sd_ChannelsVolume.volumeBgm_8 -= D_800C1658.bgmFadeSpeed_14;
-
-            if ((g_Sd_ChannelsVolume.volumeBgm_8 << 16) <= 0)
-            {
-                g_Sd_ChannelsVolume.volumeBgm_8 = 0;
-                func_80046B78();
-            }
-        }
-
-        g_Sd_ChannelsVolume.volumeBgm_6 = g_Sd_ChannelsVolume.volumeBgm_8;
-        
-        Sd_SetVolBgm(g_Sd_ChannelsVolume.volumeBgm_8, g_Sd_ChannelsVolume.volumeBgm_8);
-    }
-    else if (g_Sd_ChannelsVolume.volumeBgm_6 != g_Sd_ChannelsVolume.volumeBgm_8)
-    {
-        if (g_Sd_ChannelsVolume.volumeBgm_8 < g_Sd_ChannelsVolume.volumeBgm_6)
-        {
-            g_Sd_ChannelsVolume.volumeBgm_8++;
-            if (ABS(g_Sd_ChannelsVolume.volumeBgm_8 - g_Sd_ChannelsVolume.volumeBgm_6) < 2) 
-            {
-                g_Sd_ChannelsVolume.volumeBgm_8 = g_Sd_ChannelsVolume.volumeBgm_6;
-            }
-        }
-        else
-        {
-            g_Sd_ChannelsVolume.volumeBgm_8--;
-            if (ABS(g_Sd_ChannelsVolume.volumeBgm_8 - g_Sd_ChannelsVolume.volumeBgm_6) < 2) 
-            {
-                g_Sd_ChannelsVolume.volumeBgm_8 = g_Sd_ChannelsVolume.volumeBgm_6;
-            }
-        }
-
-        Sd_SetVolBgm(g_Sd_ChannelsVolume.volumeBgm_8, g_Sd_ChannelsVolume.volumeBgm_8);
-    }
-
-    if ((u32)D_800C1688.field_4 > (u32)D_800C1688.field_0)
-    {
-        if (g_Sd_CurrentCmd == 0)
-        {
-            if (D_800C1658.isXaLoading_16 == false)
-            {
-                Sd_CmdPoolAdd(2);
-            }
-
-            D_800C1688.field_8 = VSync(SyncMode_Count);
-            D_800C1688.field_4 = 0;
-        }
-    }
-
-    if (D_800C1658.muteGame_17 == true)
-    {
-        if (g_Sd_ChannelsVolume.volumeGlobal_A > 0)
-        {
-            g_Sd_ChannelsVolume.volumeGlobal_A -= 8;
-            if ((g_Sd_ChannelsVolume.volumeGlobal_A << 16) <= 0)
-            {
-                g_Sd_ChannelsVolume.volumeGlobal_A = 0;
-            }
-            
-            SdSetMVol(g_Sd_ChannelsVolume.volumeGlobal_A, g_Sd_ChannelsVolume.volumeGlobal_A);
-        }
-    }
-    else
-    {
-        if (g_Sd_ChannelsVolume.volumeGlobal_A < (OPT_SOUND_VOLUME_MAX - 1))
-        {
-            g_Sd_ChannelsVolume.volumeGlobal_A += 4;
-            if (g_Sd_ChannelsVolume.volumeGlobal_A >= (OPT_SOUND_VOLUME_MAX - 1))
-            {
-                g_Sd_ChannelsVolume.volumeGlobal_A = OPT_SOUND_VOLUME_MAX - 1;
-            }
-            
-            SdSetMVol(g_Sd_ChannelsVolume.volumeGlobal_A, g_Sd_ChannelsVolume.volumeGlobal_A);
-        }
-    }
-
-    if (D_800C1658.cdErrorCount_0 > CD_ERROR_LIMIT)
-    {
-        CdReset(0);
-        CdControlB(CdlNop, NULL, NULL);
-        if (g_Sd_AudioStreamingStates.vabLoadState_0 != 0)
-        {
-            g_Sd_AudioStreamingStates.vabLoadState_0 = 1;
-        }
-        
-        g_Sd_AudioStreamingStates.xaLoadState_1    = 0;
-        g_Sd_AudioStreamingStates.xaStopState_2    = 0;
-        g_Sd_AudioStreamingStates.xaPreLoadState_3 = 0;
-        D_800C1658.cdErrorCount_0                  = 0;
-    }
-}
-
-u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res) // 0x80048954
-{
-    u8 syncRes;
-    u8 comCopy;
-    
-    comCopy = com;
-
-    if (CdSync(1, &syncRes) == CdlComplete && CdControl(comCopy, param, res))
-    {
-        D_800C1658.cdErrorCount_0 = 0;
-        return false;
-    }
-
-    D_800C1658.cdErrorCount_0++;
-
-    if (D_800C1658.cdErrorCount_0 > CD_ERROR_LIMIT)
-    {
-        CdReset(0);
-        CdControlB(CdlNop, NULL, NULL);
-        VSync(SyncMode_Wait3);
-        
-        if (g_Sd_AudioStreamingStates.vabLoadState_0 != 0)
-        {
-            g_Sd_AudioStreamingStates.vabLoadState_0 = 1;
-        }
-        
-        g_Sd_AudioStreamingStates.xaLoadState_1    = 0;
-        g_Sd_AudioStreamingStates.xaStopState_2    = 0;
-        g_Sd_AudioStreamingStates.xaPreLoadState_3 = 0;
-        D_800C1658.cdErrorCount_0                  = 0;
-    }
-
-    return true;
-}
-
-const s32 unused_Rodata_80025D60[2] = { 0x6A375A00, 0x892FBD00 }; // Unused.

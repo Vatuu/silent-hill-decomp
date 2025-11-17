@@ -653,7 +653,7 @@ void func_80046B78(void) // 0x80046B78
     D_800C1658.field_E         = 0;
 }
 
-static u8 g_Sd_ReverbDepths[36] = {
+u8 g_Sd_ReverbDepths[36] = {
     20, 10, 40, 40, 60,  60,  60, 20,
     20, 20, 40, 40, 60,  60,  60, 60,
     40, 20, 20, 60, 60,  120, 20, 10,
@@ -662,7 +662,7 @@ static u8 g_Sd_ReverbDepths[36] = {
 };
 
 // Sound volumes?
-static u8 D_800AA604[41][16] = {
+u8 D_800AA604[41][16] = {
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 1, 2, 3, 4, 5, 5, 6, 0, 0, 0, 1, 1, 1, 0, 0 },
     { 0, 2, 2, 2, 0, 4, 3, 6, 6, 5, 6, 1, 1, 1, 0, 0 },
@@ -763,7 +763,7 @@ void func_80046C54(u8 arg0, u8 arg1) // 0x80046C54
     }
 }
 
-static s_XaItemData g_XaItemData[727] = {
+s_XaItemData g_XaItemData[727] = {
     { 0, 0, 0, 0, 0,     0, 0,     0 },
     { 1, 0, 0, 0, 0,     0, 362,   1 },
     { 1, 0, 0, 0, 1,     1, 295,   1 },
@@ -2331,99 +2331,4 @@ void Sd_SetReverbEnable(s32 mode) // 0x80047AFC
     SdSetSerialAttr(0, 1, mode);
 }
 
-void func_80047B24(s32 arg0) // 0x80047B24
-{
-    if (D_800C1658.xaAudioIdx_4 != 0)
-    {
-        Sd_CmdPoolAdd(2);
-    }
-
-    D_800C37D0 = 0;
-    Sd_CmdPoolAdd(arg0);
-    D_800C1658.isVabLoading_15 = true;
-}
-
-void func_80047B80(void) // 0x80047B80
-{
-    u8 depth;
-    u8 cmd;
-	
-    switch (g_Sd_AudioStreamingStates.vabLoadState_0)
-    {
-        case 0:
-            cmd        = g_Sd_CmdPool[0];
-            D_800C37D4 = &D_800A986C[cmd];
-            D_800C37C8 = D_800C37D4->field_0;
-
-            if (D_800C37C8)
-            {
-                if (D_800C1658.field_8[D_800C37C8 - 1] == cmd)
-                {
-                    g_Sd_AudioStreamingStates.vabLoadState_0 = 0;
-                    D_800C1658.isVabLoading_15               = false;
-                    Sd_CmdPoolUpdate();
-                    break;
-                }
-
-                D_800C1658.field_8[D_800C37C8 - 1] = cmd;
-            }
-
-            if (cmd >= 170 && cmd <= 204)
-            {
-                depth = g_Sd_ReverbDepths[cmd - 170];
-                if (depth != g_Sd_ReverbDepth)
-                {
-                    Sd_SetReverbDepth(depth);
-                }
-            }
-
-            g_Sd_AudioStreamingStates.vabLoadState_0 = 1;
-            break;
-
-        case 1:
-            func_80047D1C();
-            break;
-
-        case 2:
-            func_80047D50();
-            break;
-
-        case 3:
-            func_80047DB0();
-            break;
-
-        case 4:
-            func_80047E3C();
-            break;
-
-        case 5:
-            func_80047F18();
-            break;
-
-        case 6:
-            func_80048000();
-            break;
-
-        case 7:
-            func_8004807C();
-            break;
-
-        case 8:
-            func_800480FC();
-            break;
-
-        case 9:
-            func_800481F8();
-            break;
-
-        default:
-            break;
-    }
-}
-
-void func_80047D1C(void) // 0x80047D1C
-{
-    D_800C37CC = 0;
-    SdVabClose(D_800C37C8);
-    g_Sd_AudioStreamingStates.vabLoadState_0 = 2;
-}
+const s32 rodataPad_80025CF8 = 0;
