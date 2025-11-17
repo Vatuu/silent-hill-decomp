@@ -313,21 +313,21 @@ typedef enum _SfxId
 	 * the other values which start from 0.
 	 */
 	
-    Sfx_XaAudio108 = 4108,
+    Sfx_XaAudio12 = 4108,
 
-    Sfx_XaAudio149 = 4149,
-    Sfx_XaAudio150 = 4150,
+    Sfx_XaAudio53 = 4149,
+    Sfx_XaAudio54 = 4150,
 
-    Sfx_XaAudio152 = 4152,
+    Sfx_XaAudio56 = 4152,
 
-    Sfx_XaAudio658 = 4658,
+    Sfx_XaAudio562 = 4658,
 
-    Sfx_XaAudio661 = 4661,
+    Sfx_XaAudio565 = 4661,
 
-    Sfx_XaAudio664 = 4664,
+    Sfx_XaAudio568 = 4664,
 
-    Sfx_XaAudio696 = 4696,
-    Sfx_XaAudio699 = 4699,
+    Sfx_XaAudio600 = 4696,
+    Sfx_XaAudio603 = 4699,
 
     Sfx_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
 } e_SfxId;

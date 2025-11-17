@@ -349,7 +349,7 @@ void func_800DA248(void) // 0x800DA248
 
         case 15:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 155, false);
-            Sd_EngineCmd(Sfx_XaAudio664);
+            Sd_EngineCmd(Sfx_XaAudio568);
             SysWork_StateStepIncrement(0);
 
         case 16:
@@ -845,7 +845,7 @@ void func_800DBB34(void) // 0x800DBB34
 
         case 6:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 11, false);
-            Sd_EngineCmd(Sfx_XaAudio699);
+            Sd_EngineCmd(Sfx_XaAudio603);
             SysWork_StateStepIncrement(0);
 
         case 7:

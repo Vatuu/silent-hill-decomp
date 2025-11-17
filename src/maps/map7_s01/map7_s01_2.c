@@ -285,7 +285,7 @@ void func_800D725C(void) // 0x800D725C
 
         case 15:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 155, false);
-            Sd_EngineCmd(Sfx_XaAudio664);
+            Sd_EngineCmd(Sfx_XaAudio568);
             SysWork_StateStepIncrement(0);
 
         case 16:
