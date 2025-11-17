@@ -1024,9 +1024,9 @@ void func_800E3390(void) // 0x800E3390
 
             func_800E0A34();
 
-            Fs_QueueStartRead(FILE_ANIM_LAST12_DMS, FS_BUFFER_21);
+            Fs_QueueStartRead(FILE_ANIM_LAST12_DMS, FS_BUFFER_20);
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets(FS_BUFFER_21);
+            DmsHeader_FixOffsets(FS_BUFFER_20);
 
             D_800F4806 = 0;
             D_800F47F0 = 0;
@@ -1107,14 +1107,14 @@ void func_800E3390(void) // 0x800E3390
             {
                 if (!D_800F4815)
                 {
-                    Fs_QueueStartRead(FILE_ANIM_LAST3_DMS, FS_BUFFER_20);
+                    Fs_QueueStartRead(FILE_ANIM_LAST3_DMS, FS_BUFFER_18);
                 }
                 Fs_QueueWaitForEmpty();
-                DmsHeader_FixOffsets(FS_BUFFER_20);
+                DmsHeader_FixOffsets(FS_BUFFER_18);
 
                 if (!D_800F4816)
                 {
-                    Fs_QueueStartRead(FILE_ANIM_LAST4_DMS, FS_BUFFER_21);
+                    Fs_QueueStartRead(FILE_ANIM_LAST4_DMS, FS_BUFFER_20);
                     Fs_QueueWaitForEmpty();
                 }
 
@@ -1150,10 +1150,10 @@ void func_800E3390(void) // 0x800E3390
             {
                 if (!D_800F4817)
                 {
-                    Fs_QueueStartRead(FILE_ANIM_LAST5_DMS, FS_BUFFER_20);
+                    Fs_QueueStartRead(FILE_ANIM_LAST5_DMS, FS_BUFFER_18);
                 }
                 Fs_QueueWaitForEmpty();
-                DmsHeader_FixOffsets(FS_BUFFER_20);
+                DmsHeader_FixOffsets(FS_BUFFER_18);
 
                 D_800F4806 = 1;
                 if (D_800F4813 != 2)
@@ -1963,7 +1963,7 @@ void func_800E514C(void) // 0x800E514C
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[1], 28, false);
             g_SysWork.field_2378 = Q12(0.9f);
-            Fs_QueueStartRead(FILE_ANIM_LAST4_DMS, FS_BUFFER_21);
+            Fs_QueueStartRead(FILE_ANIM_LAST4_DMS, FS_BUFFER_20);
             D_800F4816 = 0;
             SysWork_StateStepIncrement(0);
 
@@ -2034,7 +2034,7 @@ void func_800E62CC(void) // 0x800E62CC
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            DmsHeader_FixOffsets(FS_BUFFER_21);
+            DmsHeader_FixOffsets(FS_BUFFER_20);
             D_800F4806 = 0;
             D_800F47F0 = 0;
             D_800F4804 = 0;
@@ -2503,7 +2503,7 @@ void func_800E787C(void) // 0x800E787C
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 176, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 2, false);
 
-            Fs_QueueStartRead(FILE_ANIM_ENDAB_DMS, FS_BUFFER_21);
+            Fs_QueueStartRead(FILE_ANIM_ENDAB_DMS, FS_BUFFER_20);
 
             func_800E9260(Chara_BloodyIncubator, 5);
             D_800F4819 = 1;
@@ -2613,7 +2613,7 @@ void func_800E787C(void) // 0x800E787C
             D_800F4806 = 0;
             D_800F47F0 = 0;
 
-            DmsHeader_FixOffsets(FS_BUFFER_21);
+            DmsHeader_FixOffsets(FS_BUFFER_20);
 
             D_800F480D = 1;
             D_800F4808 = 0;
@@ -2883,7 +2883,7 @@ void func_800E86BC(void) // 0x800E86BC
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 176, false);
 
             DmsHeader_FixOffsets(FS_BUFFER_18);
-            Fs_QueueStartRead(FILE_ANIM_ENDBB_DMS, FS_BUFFER_21);
+            Fs_QueueStartRead(FILE_ANIM_ENDBB_DMS, FS_BUFFER_20);
 
             D_800F4806 = 1;
             D_800F4807 = 1;
@@ -2912,7 +2912,7 @@ void func_800E86BC(void) // 0x800E86BC
 
         case 4:
             Fs_QueueWaitForEmpty();
-            DmsHeader_FixOffsets(FS_BUFFER_21);
+            DmsHeader_FixOffsets(FS_BUFFER_20);
 
             D_800F4806 = 0;
             D_800F47F0 = 0;
@@ -3013,7 +3013,7 @@ void func_800E86BC(void) // 0x800E86BC
                     func_800D7D74(0);
                 }
                 break;
-                
+
             case 1:
                 if (!(Rng_Rand16() & 0x70))
                 {
