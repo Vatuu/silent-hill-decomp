@@ -66,6 +66,12 @@ extern s32 D_800ED980;
 
 extern s_800ED7E0_ptr* D_800ED984[];
 
+extern u16 D_800ED9B4;
+
+extern s32 D_800ED9B8;
+
+extern s_800ED7E0_ptr* D_800ED9BC[];
+
 extern s32 D_800EDA00;
 
 extern u8 D_800EDA08;
@@ -261,6 +267,8 @@ void func_800E70F0(void);
 void func_800E787C(void);
 
 void func_800E86BC(void);
+
+void func_800E8D20(void);
 
 void func_800E9260(e_CharacterId, s32);
 
