@@ -333,6 +333,8 @@ typedef enum _SfxId
 
     Sfx_XaAudio600 = 4696,
 
+    Sfx_XaAudio602 = 4698,
+
     Sfx_XaAudio603 = 4699,
 
     Sfx_XaAudio606 = 4702,

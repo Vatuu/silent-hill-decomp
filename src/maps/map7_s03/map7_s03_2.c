@@ -2464,7 +2464,140 @@ void func_800E70F0(void) // 0x800E70F0
 
 INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03_2", D_800CC5C8);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E7380);
+void func_800E7380(void) // 0x800E7380
+{
+    s_800ED7E0_ptr* ptr;
+    s32             flags;
+
+    if (g_SysWork.sysStateStep_C[0] >= 6 && g_SysWork.sysStateStep_C[0] < 10)
+    {
+        func_80089500();
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            D_800F4806 = 1;
+            func_800E94AC();
+
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[4], 3, false);
+
+            D_800F4804 = 0;
+            D_800F47F0 = Q12(69.0f);
+
+            Sd_EngineCmd(Sfx_XaAudio602);
+
+            g_SysWork.field_2378 = Q12(0.8f);
+            func_800E1788(7);
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(6.8f), Q12(69.0f), Q12(143.0f), true, false);
+            func_80085EB8(1, &g_SysWork.npcs_1A0[4], 0, false);
+            break;
+
+        case 2:
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(6.8f), Q12(69.0f), Q12(143.0f), true, true);
+            if (g_SysWork.sysStateStep_C[0] != 2)
+            {
+                Sd_EngineCmd(19);
+            }
+            break;
+
+        case 3:
+            D_800F47F0 = Q12(144.0f);
+            Map_MessageWithAudio(82, &D_800F4804, &D_800ED898);
+            break;
+
+        case 4:
+            Map_MessageWithAudio(84, &D_800F4804, &D_800ED898);
+            break;
+
+        case 5:
+            func_800E9260(Chara_EndingCybil, 5);
+            func_800D7E50(&g_SysWork.player_4C.chara_0.position_18);
+            func_800D947C();
+            D_800F4824 = 0;
+            D_800F4820 = 1;
+            func_800E1788(8);
+            SysWork_StateStepIncrement(0);
+
+        case 6:
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(12.0f), Q12(145.0f), Q12(201.0f), true, true);
+            g_SysWork.npcs_1A0[4].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
+            if (g_SysWork.npcs_1A0[4].timer_C6 > Q12(1.0f))
+            {
+                g_SysWork.npcs_1A0[4].timer_C6 = Q12(1.0f);
+            }
+            break;
+
+        case 7:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 162, false);
+            g_SysWork.field_2378 = Q12(0.7f);
+            func_800E9490(&g_SysWork.npcs_1A0[4]);
+            D_800F480C = 0;
+            SysWork_StateStepIncrement(0);
+
+        case 8:
+            Map_MessageWithAudio(86, &D_800F4804, &D_800ED898);
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(6.5f), Q12(202.0f), Q12(301.0f), true, false);
+            break;
+
+        case 9:
+            Map_MessageWithAudio(87, &D_800F4804, &D_800ED898);
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(6.5f), Q12(202.0f), Q12(301.0f), true, false);
+            break;
+
+        case 10:
+            Map_MessageWithAudio(90, &D_800F4804, &D_800ED898);
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(6.5f), Q12(202.0f), Q12(301.0f), true, false);
+            break;
+
+        case 11:
+            if (Savegame_EventFlagGet(EventFlag_449))
+            {
+                Fs_QueueStartRead(FILE_ANIM_ENDC_DMS, FS_BUFFER_20);
+            }
+            SysWork_StateStepIncrement(0);
+
+        case 12:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(6.5f), Q12(202.0f), Q12(301.0f), true, false);
+            break;
+
+        default:
+            g_SysWork.sysStateStep_C[0] = 0;
+            D_800F4805++;
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            break;
+    }
+
+    if (D_800F4820 != 0)
+    {
+        func_800D7EF0();
+
+        if (D_800F4820)
+        {
+            ptr = D_800ED8B0[g_SysWork.sysStateStep_C[0]];
+            if (ptr)
+            {
+                do
+                {
+                    if (!(ptr->flags_38 & 2) || g_SysWork.sysStateStep_C[0] != D_800ED8AC)
+                    {
+                        func_800DA774(ptr);
+                    }
+
+                    flags = ptr->flags_38;
+                    ptr++;
+                } while (flags & 1);
+            }
+
+            D_800ED8AC = g_SysWork.sysStateStep_C[0];
+        }
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03_2", D_800CC63C);
 
@@ -3075,7 +3208,7 @@ void func_800E8D20(void) // 0x800E8D20
 
             D_800F4824 = 0;
             D_800F4820 = 1;
-            
+
             g_SysWork.field_2378 = Q12(0.7f);
             SysWork_StateStepIncrement(0);
             break;
