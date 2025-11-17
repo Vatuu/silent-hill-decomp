@@ -56,6 +56,10 @@ extern u16 D_800ED7B4;
 
 extern s_800ED7E0_ptr* D_800ED7E0[];
 
+extern s32 D_800ED8E8;
+
+extern s_800ED7E0_ptr* D_800ED8EC[];
+
 extern u16 D_800ED88C;
 
 extern s32 D_800EDA00;
@@ -103,6 +107,7 @@ extern s8 D_800F4818;
 extern s8 D_800F4819;
 extern s8 D_800F481A;
 extern u8 D_800F481B;
+extern u8 D_800F481C;
 
 extern s32 D_800F4820;
 
@@ -114,7 +119,11 @@ extern s16 D_800F482C;
 
 extern s32 D_800F4830;
 
+extern s32 D_800F4834;
+
 extern s32 D_800F4838;
+
+extern s32 D_800F483C;
 
 extern s16 D_800F23D0;
 
@@ -169,6 +178,8 @@ void func_800D88D8(void);
 void func_800D9394(void);
 
 void func_800D947C(void);
+
+void func_800DA774(s_800ED7E0_ptr*);
 
 void func_800DAD54(void);
 
@@ -242,6 +253,8 @@ void func_800E514C(void);
 void func_800E62CC(void);
 
 void func_800E70F0(void);
+
+void func_800E787C(void);
 
 void func_800E9260(e_CharacterId, s32);
 
