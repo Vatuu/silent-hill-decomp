@@ -38,16 +38,29 @@
 #define MAP_ROOM_MIN_Z    Q12(-160.0f)
 #define MAP_ROOM_MAX_Z    Q12(0.f)
 
+typedef struct
+{
+    VECTOR3 field_0;
+    u8      unk_C[4];
+    u8      unk_10[0x28];
+    s32     flags_38;
+} s_800ED7E0_ptr;
+STATIC_ASSERT_SIZEOF(s_800ED7E0_ptr, 0x3C);
+
 extern s32 D_800ED73C; // } RNG related values?
 extern s32 D_800ED740; // }
 
 extern u16 D_800ED77C;
+
+extern s_800ED7E0_ptr* D_800ED7E0[];
 
 extern u16 D_800ED88C;
 
 extern s32 D_800EDA00;
 
 extern u8 D_800EDA08;
+
+extern s32 D_800EDA0C;
 
 extern s16 D_800F23D0;
 
@@ -89,6 +102,8 @@ extern u8 D_800F481B;
 
 extern s32 D_800F4820;
 
+extern s32 D_800F4824;
+
 extern s32 D_800F4828;
 
 extern s32 D_800F4830;
@@ -121,6 +136,10 @@ void func_800D7CEC(void);
 
 void func_800D7CF8(void);
 
+void func_800D7D74(s32);
+
+void func_800D7E50(VECTOR3*);
+
 void func_800D7ED0(void);
 
 void func_800D7EF0(void);
@@ -129,12 +148,16 @@ PACKET* func_800D7F10(void);
 
 void func_800D7F20(u8* arg0);
 
+void func_800D8858(s32);
+
 void func_800D88C4(void);
 
 void func_800D88CC(void);
 void func_800D88D8(void);
 
 void func_800D9394(void);
+
+void func_800D947C(void);
 
 void func_800DB608(void);
 void func_800DD67C(VECTOR3*, s_SubCharacter*, GsCOORDINATE2*);
@@ -144,6 +167,7 @@ u8   func_800DD964(void);
 void func_800DD98C(s32);
 void func_800DD9B0(s_SubCharacter*);
 void func_800DD9D4(s_SubCharacter*);
+void func_800DD9F8(s_SubCharacter*);
 bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DDBBC(s_SubCharacter*);
 void func_800DEC74(s_SubCharacter*, GsCOORDINATE2*);
@@ -197,6 +221,8 @@ void func_800E3F30(void);
 void func_800E4714(void);
 
 void func_800E514C(void);
+
+void func_800E62CC(void);
 
 void func_800E70F0(void);
 
