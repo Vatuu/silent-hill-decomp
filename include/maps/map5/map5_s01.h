@@ -51,4 +51,6 @@ void func_800EC42C(void);
 
 void func_800EC2D8(void);
 
+void func_800E9F08(s_SubCharacter* chara);
+
 #endif
