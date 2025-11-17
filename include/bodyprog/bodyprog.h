@@ -2755,7 +2755,7 @@ bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId);
 void WorldGfx_CharaModelMaterialSet(e_CharacterId charaId, s32 blendMode);
 
 /** Called by some chara init funcs, similar to `func_8003DD80`? */
-void func_8003D468(s32 arg0, bool flag);
+void func_8003D468(e_CharacterId charaId, bool flag);
 
 void WorldGfx_CharaFree(s_CharaModel* model);
 

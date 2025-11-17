@@ -52,6 +52,8 @@ extern s32 D_800ED740; // }
 
 extern u16 D_800ED77C;
 
+extern u16 D_800ED7B4;
+
 extern s_800ED7E0_ptr* D_800ED7E0[];
 
 extern u16 D_800ED88C;
@@ -70,6 +72,8 @@ extern s32 D_800F2430;
 extern s32 D_800F2434;
 
 extern s32 D_800F3D8C;
+
+extern u8 D_800F3DE4; // Unknown type, pointer passed to func_800D7144
 
 extern u8 D_800F3E58; // Unknown type, pointer passed to func_800DB154
 
@@ -106,6 +110,8 @@ extern s32 D_800F4824;
 
 extern s32 D_800F4828;
 
+extern s16 D_800F482C;
+
 extern s32 D_800F4830;
 
 extern s32 D_800F4838;
@@ -130,6 +136,10 @@ void Ai_Incubator_Init(s_SubCharacter* chara);
 
 void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+void func_800D70EC(void);
+
+void func_800D7144(void*); // TODO: Unknown arg type.
+
 void func_800D71A4(s32 arg0);
 
 void func_800D7CEC(void);
@@ -153,11 +163,18 @@ void func_800D8858(s32);
 void func_800D88C4(void);
 
 void func_800D88CC(void);
+
 void func_800D88D8(void);
 
 void func_800D9394(void);
 
 void func_800D947C(void);
+
+void func_800DAD54(void);
+
+void func_800DB154(GsCOORDINATE2*);
+
+void func_800DB288(void);
 
 void func_800DB608(void);
 void func_800DD67C(VECTOR3*, s_SubCharacter*, GsCOORDINATE2*);

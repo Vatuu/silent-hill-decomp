@@ -185,7 +185,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             g_SysWork.player_4C.chara_0.rotation_24.vy = ratan2(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
                                                                 g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz);
 
-            func_8003D468(34, true);
+            func_8003D468(Chara_Alessa, true);
             Savegame_EventFlagSet(EventFlag_412);
             SysWork_StateStepIncrement(0);
 
