@@ -20,6 +20,17 @@ extern s_WorldObjectDesc g_WorldObject1; // D_800F3E40
 extern s_WorldObjectPose  g_CommonWorldObjectPoses[5]; // 0x800F018C
 extern u8 D_800CCA84[]; // "HOOK_HID" + garbage after null byte
 extern SVECTOR3 D_800CC938; // empty SVECTOR3, remove after all functions that use it are decompiled.
+extern u16 D_800F0174;
+extern s_FsImageDesc D_800F0178;
+extern VECTOR3 D_800F0180;
+extern u8 D_800F035C;
+extern u8 D_800F035D;
+extern s16 D_800F035E;
+extern q19_12 D_800F0360;
+extern VECTOR3 D_800F3DF0;
+extern VECTOR3 D_800F3E00;
+extern s32 D_800F3E0C;
+
 
 void func_800CD818(void);
 
@@ -35,5 +46,7 @@ void MapEvent_MapTake(void);
 void func_800ECB58(void);
 
 void func_800ECC8C(void);
+
+void func_800EC42C(void);
 
 #endif
