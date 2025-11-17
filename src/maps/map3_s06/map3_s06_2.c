@@ -113,7 +113,273 @@ void func_800D0B10(void) // 0x800D0B10
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D0B7C
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06_2", func_800D0C14);
+void func_800D0C14(void) // 0x800D0C14
+{
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+        g_SysWork.sysStateStep_C[0] >= 4 && g_SysWork.sysStateStep_C[0] < 30)
+    {
+        SysWork_StateStepSet(0, 30);
+        Savegame_EventFlagSet(EventFlag_297);
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            g_SysWork.field_30 = 20;
+            ScreenFade_ResetTimestep();
+            g_SysWork.flags_22A4 |= 1 << 3;
+
+            func_8004690C(Sfx_Unk1522);
+
+            Fs_QueueStartRead(FILE_ANIM_HSPTL2_DMS, FS_BUFFER_15);
+            Fs_QueueWaitForEmpty();
+            DmsHeader_FixOffsets(FS_BUFFER_15);
+
+            D_800D2704 = 0;
+            D_800D2736 = 0;
+            D_800D2737 = 0;
+
+            func_8003D03C();
+            sharedFunc_800D2EB4_0_s00();
+            D_800D2738 = 0;
+            D_800D2734 = 0;
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 1:
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+
+            Chara_Load(0, Chara_Dahlia, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 117, false);
+
+            SysWork_StateStepIncrement(0);
+
+        case 2:
+            SysWork_StateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
+            func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
+            break;
+
+        case 3:
+            Chara_ProcessLoads();
+            Chara_Spawn(Chara_Dahlia, 0, Q12(98.0f), Q12(100.0f), FP_ANGLE(0.0f), 3);
+            sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
+
+            D_800D2737 = 1;
+            SysWork_StateStepIncrement(0);
+
+        case 4:
+            Map_MessageWithAudio(15, &D_800D2736, &D_800D26D0);
+            SysWork_StateStepIncrementAfterTime(&D_800D2704, Q12(6.0f), Q12(0.0f), Q12(39.0f), true, false);
+            break;
+
+        case 5:
+            func_80085EB8(3, &g_SysWork.player_4C.chara_0, 0, false);
+            D_800D2738 = 0;
+            SysWork_StateStepIncrement(0);
+
+        case 6:
+            Map_MessageWithAudio(16, &D_800D2736, &D_800D26D0);
+            SysWork_StateStepIncrementAfterTime(&D_800D2704, Q12(6.0f), Q12(0.0f), Q12(39.0f), true, false);
+
+            if (D_800D2738 != 2)
+            {
+                g_SysWork.field_28 += g_DeltaTime0;
+
+                if (D_800D2738 == 0 && !(g_SysWork.field_28 <= Q12(0.3f)))
+                {
+                    func_8005DC1C(Sfx_DoorOpen0, &D_800D26F8, Q8_CLAMPED(0.5f), 0);
+                    D_800D2738++;
+                }
+                else if (D_800D2738 == 1 && !(g_SysWork.field_28 <= Q12(1.6f)))
+                {
+                    func_8005DC1C(Sfx_DoorClose0, &D_800D26F8, Q8_CLAMPED(0.5f), 0);
+                    D_800D2738++;
+                }
+            }
+            break;
+
+        case 7:
+            if (!func_8003599C())
+            {
+                SysWork_StateStepIncrement(0);
+            }
+
+        case 8:
+            D_800D2734 += g_DeltaTime0;
+            if (D_800D2734 > Q12(2.0f) && g_SysWork.sysStateStep_C[0] == 8)
+            {
+                SysWork_StateStepSet(0, 9);
+            }
+
+            SysWork_StateStepIncrementAfterTime(&D_800D2704, Q12(6.0f), Q12(0.0f), Q12(39.0f), true, false);
+            break;
+
+        case 9:
+            Map_MessageWithAudio(17, &D_800D2736, &D_800D26D0);
+            break;
+
+        case 10:
+            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            break;
+
+        case 11:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 11, false);
+            SysWork_StateStepIncrement(0);
+
+        case 12:
+            Map_MessageWithAudio(18, &D_800D2736, &D_800D26D0);
+            SysWork_StateStepIncrementAfterTime(&D_800D2704, Q12(6.5f), Q12(40.0f), Q12(60.0f), true, false);
+            break;
+
+        case 13:
+            SysWork_StateStepIncrementAfterTime(&D_800D2704, Q12(6.5f), Q12(40.0f), Q12(60.0f), true, true);
+            break;
+
+        case 14:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 15:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 0, false);
+            SysWork_StateStepIncrement(0);
+
+        case 16:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            D_800D2704 = Q12(61.0f);
+            break;
+
+        case 17:
+            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            break;
+
+        case 18:
+            Map_MessageWithAudio(19, &D_800D2736, &D_800D26D0);
+            SysWork_StateStepIncrementAfterTime(&D_800D2704, Q12(2.0f), Q12(61.0f), Q12(100.0f), true, false);
+            break;
+
+        case 19:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 9, false);
+            SysWork_StateStepIncrement(0);
+
+        case 20:
+            Map_MessageWithAudio(25, &D_800D2736, &D_800D26D0);
+            SysWork_StateStepIncrementAfterTime(&D_800D2704, Q12(2.0f), Q12(61.0f), Q12(126.0f), true, false);
+
+            if (D_800D2704 >= Q12(120.0f))
+            {
+                Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
+            }
+            break;
+
+        case 21:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 10, false);
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+            SysWork_StateStepIncrement(0);
+
+        case 22:
+            Map_MessageWithAudio(28, &D_800D2736, &D_800D26D0);
+            SysWork_StateStepIncrementAfterTime(&D_800D2704, Q12(10.0f), Q12(127.0f), Q12(177.0f), true, false);
+            SysWork_StateStepIncrementDelayed(Q12(9.8f), false);
+            break;
+
+        case 23:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 0, false);
+            SysWork_StateStepIncrement(0);
+
+        case 24:
+            Map_MessageWithAudio(28, &D_800D2736, &D_800D26D0);
+            SysWork_StateStepIncrementAfterTime(&D_800D2704, Q12(10.0f), Q12(127.0f), Q12(177.0f), true, false);
+            break;
+
+        case 25:
+            Savegame_EventFlagSet(EventFlag_297);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 11, false);
+            SysWork_StateStepIncrement(0);
+
+        case 26:
+            SysWork_StateStepIncrementAfterTime(&D_800D2704, Q12(13.5f), Q12(178.0f), Q12(194.0f), true, true);
+            break;
+
+        case 27:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 111, false);
+            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            D_800D2738 = 0;
+            SysWork_StateStepIncrement(0);
+
+        case 28:
+            Map_MessageWithAudio(33, &D_800D2736, &D_800D26D0);
+
+            if (D_800D2738 != 1)
+            {
+                g_SysWork.field_28 += g_DeltaTime0;
+
+                if (D_800D2738 == 0 && g_SysWork.field_28 > Q12(0.6f))
+                {
+                    func_8005DC1C(Sfx_DoorClose0, &D_800D26F8, Q8_CLAMPED(0.5f), 0);
+                    D_800D2738++;
+                }
+            }
+
+            SysWork_StateStepIncrementAfterTime(&D_800D2704, Q12(10.0f), Q12(199.0f), Q12(244.0f), true, false);
+            break;
+
+        case 29:
+            SysWork_StateStepIncrementAfterTime(&D_800D2704, Q12(10.0f), Q12(199.0f), Q12(244.0f), true, true);
+            break;
+
+        case 30:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 31:
+            D_800D2704 = Q12(244.0f);
+            D_800D2737 = 0;
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 32:
+            if (func_8003599C() == 0)
+            {
+                SysWork_StateStepIncrement(0);
+            }
+            else
+            {
+                break;
+            }
+
+        default:
+            func_80085EB8(3, &g_SysWork.player_4C.chara_0, 0, false);
+            Player_ControlUnfreeze(true);
+            SysWork_StateSetNext(SysState_Gameplay);
+            vcReturnPreAutoCamWork(true);
+            D_800D2704 = -1;
+            func_8003D01C();
+            sharedFunc_800D2EF4_0_s00();
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            Savegame_EventFlagSet(EventFlag_295);
+            Sd_EngineCmd(19);
+            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Game_TurnFlashlightOff();
+            break;
+    }
+
+    if (D_800D2704 >= 0)
+    {
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, "HERO", D_800D2704, FS_BUFFER_15);
+        if (D_800D2737 != 0)
+        {
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "DARIA", D_800D2704, FS_BUFFER_15);
+        }
+
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D2718, &D_800D2728, NULL, D_800D2704, FS_BUFFER_15));
+        vcUserCamTarget(&D_800D2718, NULL, true);
+        vcUserWatchTarget(&D_800D2728, NULL, true);
+    }
+}
 
 void MapEvent_MapTake(void) // 0x800D17B0
 {

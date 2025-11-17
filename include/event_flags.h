@@ -250,10 +250,10 @@ typedef enum _EventFlag
     EventFlag_294                        = 294,
     EventFlag_295                        = 295,
     EventFlag_M3S06_PickupAntiqueShopKey = 296,
-
-    EventFlag_298 = 298,
-    EventFlag_299 = 299,
-    EventFlag_300 = 300,
+    EventFlag_297                        = 297,
+    EventFlag_298                        = 298,
+    EventFlag_299                        = 299,
+    EventFlag_300                        = 300,
 
     EventFlag_302 = 302,
     EventFlag_303 = 303,
