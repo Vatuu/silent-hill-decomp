@@ -303,9 +303,166 @@ void MapEvent_SewerKeyTake(void) // 0x800D6AD4
     Event_ItemTake(InventoryItemId_SewerKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M5S00_PickupSewerKey, 17);
 }
 
-INCLUDE_RODATA("asm/maps/map5_s00/nonmatchings/map5_s00", D_800CB008);
+void func_800D6B00(void) // 0x800D6B00
+{
+    VECTOR3 vec;
+    s32     i;
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D6B00);
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            D_800DAB78 = Q12(-0.5f);
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            break;
+
+        case 3:
+            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 4:
+            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            break;
+
+        case 5:
+            g_SysWork.sysFlags_22A0 |= 1 << 0;
+            func_800862F8(7, FILE_TIM_DRAINKEY_TIM, false);
+            break;
+
+        case 6:
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 7:
+            SysWork_StateStepIncrement(0);
+
+        case 8:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(1, false, 0, Q12(0.0f), false);
+            break;
+
+        case 9:
+            func_800862F8(2, 0, false);
+            g_SysWork.silentYesSelection_2350_4 = true;
+            MapMsg_DisplayAndHandleSelection(true, 18, 10, 11, 0, false);
+            break;
+
+        case 10:
+            Savegame_EventFlagSet(EventFlag_354);
+
+            func_80086470(3U, InventoryItemId_SewerExitKey, 1, false);
+
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-92.0f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(7.7f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(0.0f);
+
+            for (i = 0; i < ARRAY_SIZE(D_800DAB7C); i++)
+            {
+                D_800DAB7C[i] = Chara_Spawn(Chara_HangedScratcher, i, Q12(-93.3f), Q12(7.1f), FP_ANGLE(180.0f), 18 + i);
+            }
+
+            if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+            {
+                Chara_Spawn(Chara_HangedScratcher, 14, Q12(-94.3f), Q12(-5.5f), FP_ANGLE(0.0f), 7U);
+            }
+
+            g_SysWork.field_30 = 20;
+
+            Sd_PlaySfx(Sfx_Unk1575, 0, Q8_CLAMPED(0.5f));
+
+            SysWork_StateStepIncrement(0);
+
+        case 11:
+            func_80086F44(0, 0);
+            break;
+
+        case 12:
+            func_8008605C(EventFlag_354, 13, 16, false);
+            break;
+
+        case 13:
+            Camera_PositionSet(NULL, Q12(-88.04f), Q12(-1.29f), Q12(6.26f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-91.77f), Q12(-0.89f), Q12(7.63f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            g_SysWork.field_2378 = Q12(2.0f);
+
+            SysWork_StateStepIncrement(0);
+
+            vec = QVECTOR3(-91.3f, 0.3f, 8.5f);
+            func_800D6490(&vec);
+
+        case 14:
+            if (D_800DAB78 < Q12(1.5f) && (D_800DAB78 + g_DeltaTime0) > Q12(1.5f))
+            {
+                func_80085EB8(0U, &g_SysWork.player_4C.chara_0, 114, false);
+            }
+
+            D_800DAB78 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.6f, 12);
+
+            if (D_800DAB78 > Q12(3.55f))
+            {
+                SysWork_StateStepIncrement(0);
+            }
+            else if (D_800DAB78 > Q12(2.5f))
+            {
+                g_SysWork.npcs_1A0[D_800DAB7C[2]].properties_E4.larvalStalker.properties_E8[0].val8[0] |= (1 << 7);
+            }
+            else if (D_800DAB78 > Q12(1.25f))
+            {
+                g_SysWork.npcs_1A0[D_800DAB7C[1]].properties_E4.larvalStalker.properties_E8[0].val8[0] |= (1 << 7);
+            }
+            else if (D_800DAB78 > Q12(-0.1f))
+            {
+                g_SysWork.npcs_1A0[D_800DAB7C[0]].properties_E4.larvalStalker.properties_E8[0].val8[0] |= (1 << 7);
+            }
+            func_800D6414();
+            break;
+
+        case 15:
+            vcReturnPreAutoCamWork(true);
+            g_SysWork.field_2378 = Q12(1.0f);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+
+            g_SysWork.npcs_1A0[D_800DAB7C[0]].model_0.state_2     = 0;
+            g_SysWork.npcs_1A0[D_800DAB7C[0]].model_0.stateStep_3 = 17;
+            g_SysWork.npcs_1A0[D_800DAB7C[0]].position_18.vx     += Q12(-0.1878f);
+            g_SysWork.npcs_1A0[D_800DAB7C[0]].position_18.vz     += Q12(0.245f);
+            g_SysWork.npcs_1A0[D_800DAB7C[0]].rotation_24.vy      = FP_ANGLE(112.5f);
+
+            g_SysWork.npcs_1A0[D_800DAB7C[1]].model_0.state_2     = 0;
+            g_SysWork.npcs_1A0[D_800DAB7C[1]].model_0.stateStep_3 = 17;
+            g_SysWork.npcs_1A0[D_800DAB7C[1]].position_18.vx     += Q12(1.8128f);
+            g_SysWork.npcs_1A0[D_800DAB7C[1]].position_18.vz     += Q12(0.799f);
+            g_SysWork.npcs_1A0[D_800DAB7C[1]].rotation_24.vy      = FP_ANGLE(180.0f);
+
+            g_SysWork.npcs_1A0[D_800DAB7C[2]].model_0.state_2     = 0;
+            g_SysWork.npcs_1A0[D_800DAB7C[2]].model_0.stateStep_3 = 17;
+            g_SysWork.npcs_1A0[D_800DAB7C[2]].position_18.vx     += Q12(0.6531f);
+            g_SysWork.npcs_1A0[D_800DAB7C[2]].position_18.vz     += Q12(-1.2493f);
+            g_SysWork.npcs_1A0[D_800DAB7C[2]].rotation_24.vy      = FP_ANGLE(0.0f);
+
+            g_SysWork.player_4C.chara_0.position_18.vz += Q12(-1.2f);
+
+            Player_ControlUnfreeze(true);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+
+        case 16:
+            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            break;
+
+        default:
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+    }
+}
 
 void func_800D732C(void) // 0x800D732C
 {

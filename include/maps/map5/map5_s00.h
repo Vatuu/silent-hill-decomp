@@ -12,13 +12,23 @@
 #define KEYFRAME_PlayerState_Unk87 857
 #define KEYFRAME_PlayerState_Unk88 894
 
+extern s32 D_800DAB78;
+
+extern u8 D_800DAB7C[3];
+
 void func_800D041C(s_SubCharacter* chara);
+
+void func_800D6414(void);
+
+void func_800D6490(VECTOR3*);
 
 /** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Shotgun Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 
 /** @brief Handles the Sewer Key item pickup event. */
 void MapEvent_SewerKeyTake(void);
+
+void func_800D6B00(void);
 
 void func_800D732C(void);
 
