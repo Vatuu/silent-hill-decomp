@@ -756,7 +756,32 @@ INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CC940);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EC42C);
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800ECB58);
+void func_800ECB58(void) 
+{
+    WorldObjectNoRotInit(&g_WorldObject0, "RSRMAP_H", -46.5f, 0.0f, 2.5f);
+    // @hack D_800CCA84 = "HOOK_HID" with some garbage after the null byte
+    WorldObjectInit(&g_WorldObject1, D_800CCA84, 52.15f, -1.359f, -57.925f, 0.0f, 0.0f, 5.8f);
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    {
+        g_SysWork.field_2280 = 3;
+    } 
+    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    {
+        g_SysWork.field_2280 = 4;
+    }
+    else
+    {
+        g_SysWork.field_2280 = 5;
+    }
+
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800ECC8C);
 

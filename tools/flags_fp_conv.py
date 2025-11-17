@@ -55,11 +55,20 @@ def get_flag_name(flagIdx, isMapMarking):
     enumName = "EventFlag_" if not isMapMarking else "MapMarkFlag_"
     return flags.get(flagIdx, f"{enumName}{flagIdx}")
 
+def pose_no_rot(line):
+    pattern = r"WorldObjectNoRotSet\(([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^\,\)]+)\)"
+    return re.search(pattern, line)
+    
+
 def convert_pose(line):
+    norot = False
     pattern = r"WorldObjectSet\(([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^,]+),\s*([^\,\)]+)\)"
     m = re.search(pattern, line)
     if not m:
-        return None
+        m = pose_no_rot(line)
+        norot = True
+        if not m:
+            return None
 
     def convert_value(value_str, is_fp_angle):
         if value_str.startswith(("0x", "-0x", "+0x")):
@@ -85,21 +94,27 @@ def convert_pose(line):
     # extract raw args
     name = m.group(2)
     a1, a2, a3 = m.group(3), m.group(4), m.group(5)
-    a4, a5, a6 = m.group(6), m.group(7), m.group(8)
+    if norot is False:
+        a4, a5, a6 = m.group(6), m.group(7), m.group(8)
 
     # convert values
     f1 = convert_value(a1, False)
     f2 = convert_value(a2, False)
     f3 = convert_value(a3, False)
 
-    f4 = convert_value(a4, True)
-    f5 = convert_value(a5, True)
-    f6 = convert_value(a6, True)
+    if norot is False:
+        f4 = convert_value(a4, True)
+        f5 = convert_value(a5, True)
+        f6 = convert_value(a6, True)
 
-    return (
-        f"WorldObjectInit({obj}, {name}, "
-        f"{f1}, {f2}, {f3}, {f4}, {f5}, {f6});"
-    )
+    if norot is False:
+        return (
+            f"WorldObjectInit({obj}, {name}, "
+            f"{f1}, {f2}, {f3}, {f4}, {f5}, {f6});"
+        )
+    else:
+        return f"WorldObjectNoRotInit({obj}, {name}, {f1}, {f2}, {f3});"
+
 
 
 def convert_flag_expression(expr):

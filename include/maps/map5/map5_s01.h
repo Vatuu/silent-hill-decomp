@@ -14,6 +14,11 @@ extern s32 D_800F0354;
 
 extern s32 D_800F0358;
 
+extern s_WorldObject_0   g_CommonWorldObjects[6]; // D_800F3E70
+extern s_WorldObjectDescNoRot g_WorldObject0; // D_800F3E10
+extern s_WorldObjectDesc g_WorldObject1; // D_800F3E40
+extern u8 D_800CCA84[];
+
 void func_800CD818(void);
 
 /** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Rifle Shells item pickup event. */
