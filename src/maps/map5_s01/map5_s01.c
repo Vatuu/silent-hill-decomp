@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
@@ -746,7 +747,14 @@ void MapEvent_MapTake(void) // 0x800EBF48
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EBF70);
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EC2D8);
+void func_800EC2D8(void)
+{
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+
+    Player_ItemRemove(InventoryItemId_KaufmannKey, 1);
+    Map_MessageWithSfx(17, Sfx_UseKey, &sfxPos); // "Used the Kaufmann key."
+    Savegame_EventFlagSet(EventFlag_M5S01_KaufmannKeyUsed);
+}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800EC394
 

@@ -49,4 +49,6 @@ void func_800ECC8C(void);
 
 void func_800EC42C(void);
 
+void func_800EC2D8(void);
+
 #endif
