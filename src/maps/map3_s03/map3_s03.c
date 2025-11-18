@@ -598,7 +598,49 @@ INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800CB310);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D3160);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D3EAC);
+void Map_WorldObjectsInit(void) // 0x800D3EAC
+{
+    D_800D8428 = 0;
+
+    WorldObjectNoRotInit(&g_WorldObject_Dr[0], "DR1L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[1], "DR1R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[2], "DR3L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[3], "DR3R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[4], "DR2L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[5], "DR2R_HID", 19.1f, 0.0f, 59.1f);
+
+    WorldObject_ModelNameSet(&g_WorldObject_Colors[0], "BLUE_HID");
+    WorldObject_ModelNameSet(&g_WorldObject_Colors[1], "GREEN_HI");
+    WorldObject_ModelNameSet(&g_WorldObject_Colors[2], "YELLOW_H");
+    WorldObject_ModelNameSet(&g_WorldObject_Colors[3], "RED_HIDE");
+
+    WorldObjectInit(&g_WorldObject_Plate0, "PLATE_HI", -140.15f, 0.0f, 59.75f, 0.0f, 180.0f, 0.0f);
+
+    WorldObjectNoRotInit(&g_WorldObject_Plate1, "PLATE_HI", -20.0f, 0.0f, -19.2f);
+
+    WorldObjectInit(&g_WorldObject_Panel, "PANEL_HI", -140.0f, 0.0f, -20.0f, 0.0f, 90.0f, 0.0f);
+
+    WorldObjectInit(&g_WorldObject_Blood0, "BLOOD_NE", -57.45f, -0.9f, -21.05f, 0.0f, 90.0f, 0.0f);
+
+    WorldObjectInit(&g_WorldObject_Lighter, "LIGHTER_", -100.7f, 0.0f, 57.95f, 0.0f, 180.0f, 0.0f);
+
+    WorldObjectNoRotInit(&g_WorldObject_Alcohol, "ALCOHOL_", -60.8f, 0.0f, 21.6f);
+
+    WorldObjectNoRotInit(&g_WorldObject_Key, "KEY_HIDE", -99.2f, 0.0f, 22.55f);
+
+    WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4.savePadName_4, -58.6104f, -1.0f, -59.1241f, 0.0f, 9.0f, 0.0f);
+
+    WorldObjectInit(&g_WorldObject_Blood1, "BLOOD_HI", -141.5f, 0.0f, 61.4f, 0.0f, -41.0f, 0.0f);
+
+    WorldObjectNoRotInit(&g_WorldObject_Blood2, "BLOOD_HI", -141.7f, -0.05f, 60.2f);
+
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D429C);
 

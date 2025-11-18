@@ -19,6 +19,21 @@ extern u16 D_800D6B54;
 
 extern u8 D_800D6BDA;
 
+extern s_WorldObjectDescNoRot g_WorldObject_Dr[6];
+extern s_WorldObjectDesc      g_WorldObject_Plate0;
+extern s_WorldObjectDescNoRot g_WorldObject_Plate1;
+extern s_WorldObjectDesc      g_WorldObject_Panel;
+extern s_WorldObjectDesc      g_WorldObject_Blood0;
+extern s_WorldObjectDesc      g_WorldObject_Lighter;
+extern s_WorldObjectDescNoRot g_WorldObject_Alcohol;
+extern s_WorldObjectDescNoRot g_WorldObject_Key;
+extern s_WorldObject_0        g_WorldObject_Colors[4];
+extern s_WorldObjectDesc      g_WorldObject_SavePad;
+extern s8                     D_800D8428;
+extern s_WorldObjectDesc      g_WorldObject_Blood1;
+extern s_WorldObjectDescNoRot g_WorldObject_Blood2;
+extern s_WorldObject_0        g_CommonWorldObjects[6];
+
 s32 func_800CE398(s32 arg0);
 
 void func_800D1210(s32 arg0);
@@ -56,5 +71,7 @@ void func_800D2CDC(void);
 void func_800D30FC(void);
 
 void func_800D3128(void);
+
+void Map_WorldObjectsInit(void);
 
 #endif
