@@ -68,6 +68,7 @@ sharedFunc_800D929C_0_s00 = 0x800D606C; // type:func
 MapEvent_DoorJammed       = 0x800D6554; // type:func
 MapEvent_DoorLocked       = 0x800D65E8; // type:func
 MapEvent_CommonItemTake   = 0x800D667C; // type:func
+Map_WorldObjectsInit      = 0x800D991C; // type:func
 
 
 
@@ -128,3 +129,10 @@ sharedData_800E32D0_0_s00 = 0x800DF544; // type:s32
 sharedData_800E32D4_0_s00 = 0x800DF548; // type:u16
 sharedData_800E39D8_0_s00 = 0x800DF54C; // type:s32
 sharedData_800D32A0_0_s02 = 0x800DF550; // type:s32
+g_WorldObject_Fence       = 0x800E04F0; // type:WorldObjectDesc size:0x2C
+g_WorldObject_Mal5_21     = 0x800E0520; // type:WorldObjectDesc size:0x2C
+g_WorldObject_Mal6        = 0x800E0550; // type:WorldObject_0 size:0x30
+g_WorldObject_UnkPos      = 0x800E0590; // type:VECTOR3 size:0xC
+g_WorldObject_UnkRot      = 0x800E05A0; // type:SVECTOR3 size:0x8
+g_WorldObject_SavePad     = 0x800E05B0; // type:WorldObjectDesc size:0x2C
+g_CommonWorldObjects      = 0x800E05F0; // type:WorldObject_0 size:0x90

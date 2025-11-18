@@ -1083,7 +1083,63 @@ void func_800D9824(void) // 0x800D9824
     }
 }
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D991C);
+void Map_WorldObjectsInit(void) // 0x800D991C
+{
+    D_800E05E2 = 0;
+    D_800E05E0 = 0;
+    D_800E05E1 = 0;
+    D_800E05A8 = 0;
+    D_800E05AC = 0;
+    D_800E05AE = 0;
+
+    if (!Savegame_EventFlagGet(EventFlag_324))
+    {
+        g_MapOverlayHeader.charaUpdateFuncs_194[Chara_Twinfeeler] = func_800D3694;
+        func_800D7408();
+        Fs_QueueWaitForEmpty();
+    }
+
+    WorldObjectInit(&g_WorldObject_Fence, "FENCE_HI", 130.5f, 0.0f, -93.0f, 0.0f, 0.0f, 0.0f);
+
+    WorldObjectInit(&g_WorldObject_Mal5_21, "MAL5_21_", 117.2464f, -0.685f, 145.896f, -36.0f, 243.0f, 60.21f);
+
+    WorldObject_ModelNameSet(&g_WorldObject_Mal6[0], "MAL6_27_");
+    WorldObject_ModelNameSet(&g_WorldObject_Mal6[1], "MAL6_28_");
+
+    Math_Vector3Set(&g_WorldObject_UnkPos, Q12(132.0f), Q12(-0.75f), Q12(140.0f));
+    Math_SetSVectorFast(&g_WorldObject_UnkRot, FP_ANGLE(90.0f), FP_ANGLE(90.0f), FP_ANGLE(0.0f));
+
+    WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4.savePadName_4, 217.15f, -1.25f, -22.9f, 0.0f, -173.0f, 0.0f);
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    {
+        D_800C4418.field_0 = Q12(5.0f);
+    }
+    else
+    {
+        D_800C4418.field_0 = Q12(3.5f);
+    }
+
+    D_800C4418.field_2 = Q12(0.2f);
+    D_800C4418.field_4 = Q12(0.1f);
+    D_800C4418.field_6 = Q12(0.45f);
+    D_800C4418.field_8 = Q12(6.0f);
+    D_800C4418.field_A = Q12(0.55f);
+    D_800C4418.field_C = 18;
+
+    if (Savegame_EventFlagGet(EventFlag_324) && !Savegame_EventFlagGet(EventFlag_327))
+    {
+        Savegame_EventFlagSet(EventFlag_335);
+        Savegame_EventFlagClear(EventFlag_325);
+    }
+
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D9BB0);
 

@@ -17,10 +17,27 @@ extern u16 D_800DB92C;
 extern u16 D_800DB9E0;
 extern u8  D_800DB9E2;
 
+extern s_WorldObjectDesc g_WorldObject_Fence;
+extern s_WorldObjectDesc g_WorldObject_Mal5_21;
+extern s_WorldObject_0   g_WorldObject_Mal6[2];
+extern VECTOR3           g_WorldObject_UnkPos;
+extern SVECTOR3          g_WorldObject_UnkRot;
+extern s_WorldObjectDesc g_WorldObject_SavePad;
+extern s_WorldObject_0   g_CommonWorldObjects[6];
+
+extern s32 D_800E05A8;
+extern s16 D_800E05AC;
+extern s16 D_800E05AE;
+
+extern s8 D_800E05E0;
+extern s8 D_800E05E1;
+extern s8 D_800E05E2;
+
 void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 
 void Ai_Twinfeeler_TextureLoad(void);
 void func_800D354C(VECTOR3*);
+void func_800D3694(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 u8   func_800D3B1C(void);
 void func_800D3B44(s32);
 void func_800D3B74(s_SubCharacter* chara);
@@ -55,5 +72,7 @@ s32 func_800D7394(void);
 void func_800D960C(void);
 
 void func_800D9824(void);
+
+void Map_WorldObjectsInit(void);
 
 #endif
