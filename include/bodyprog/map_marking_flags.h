@@ -31,6 +31,7 @@ typedef enum _MapMarkingFlag
     MapMarkFlag_OldTown_FineyStRightKeyArrow            = 52,
     MapMarkFlag_53                                      = 53,
     MapMarkFlag_OldTown_DogYardKeyLine                  = 54,
+    MapMarkFlag_55                                      = 55,
     MapMarkFlag_OldTown_EllroyStKeyCircle               = 56,
     MapMarkFlag_57                                      = 57,
     MapMarkFlag_OldTown_BotBridgeCross                  = 58,

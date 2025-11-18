@@ -1340,22 +1340,24 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter_D8, 8);
 
 typedef struct _SubCharacter
 {
-    s_Model model_0;           // In player: Manage the half lower part of Harry's body animations (legs and feet).
-    VECTOR3 position_18;       /** `Q19.12` */
-    SVECTOR rotation_24;       // Maybe `SVECTOR3` instead of `SVECTOR` because 4th field is copy of `.xy` field.
-    SVECTOR rotationSpeed_2C;  /** Q3.12 | Range: `[FP_ANGLE(-157.5f), FP_ANGLE(157.5f)]`. */
-    q19_12  field_34;          // Character Y position?
-    q19_12  moveSpeed_38;
-    q3_12   headingAngle_3C;
-    s16     flags_3E;          /** `e_CharaFlags` */
-    s8      field_40;          // In player: Index of the NPC attacking the player.
-                               // In NPCs: Unknown.
-    s8      attackReceived_41; // Indicates what attack has been performed to the character. For enemies is based on `e_EquippedWeaponId` enum.
-    s8      unk_42[2];         // Most likely padding.
-    s16     field_44;
-    s8      field_46; // In player: packed weapon attack. See `WEAPON_ATTACK`.
-                      // This is not the same as `attackReceived_41`, as this value only resets when player is aiming.
-                      // In NPCs: Indicates attack performed on player.
+    s_Model  model_0;          // In player: Manage the half lower part of Harry's body animations (legs and feet).
+    VECTOR3  position_18;      /** `Q19.12` */
+    SVECTOR3 rotation_24;
+    q3_12    field_2A;         // Related to `rotation_24`, unknown purpose.
+    SVECTOR3 rotationSpeed_2C; /** Q3.12 | Range: `[FP_ANGLE(-157.5f), FP_ANGLE(157.5f)]`. */
+    q3_12    field_32;         // Related to `rotationSpeed_2C`, unknown purpose.
+    q19_12   field_34;         // Character Y position?
+    q19_12   moveSpeed_38;
+    q3_12    headingAngle_3C;
+    s16      flags_3E;     /** `e_CharaFlags` */
+    s8       field_40;     // In player: Index of the NPC attacking the player.
+                           // In NPCs: Unknown.
+    s8  attackReceived_41; // Indicates what attack has been performed to the character. For enemies is based on `e_EquippedWeaponId` enum.
+    s8  unk_42[2];         // Most likely padding.
+    s16 field_44;
+    s8  field_46;          // In player: packed weapon attack. See `WEAPON_ATTACK`.
+                           // This is not the same as `attackReceived_41`, as this value only resets when player is aiming.
+                           // In NPCs: Indicates attack performed on player.
     s8      field_47;
     s8      unk_48[4];
     s32     field_4C; // } Fields used by `func_8008A3E0`. Types guessed for now.
@@ -1372,12 +1374,12 @@ typedef struct _SubCharacter
     VECTOR3 field_98;
     VECTOR3 field_A4;
     q19_12  health_B0;
-    s32     field_B4;          // X? } In player: Adds/subtracts if hurt by enemy. Related to heading angle?
-    s32     field_B8;          // Y? } Angle.
-    s32     field_BC;          // Z? }
+    s32     field_B4;      // X? } In player: Adds/subtracts if hurt by enemy. Related to heading angle?
+    s32     field_B8;      // Y? } Angle.
+    s32     field_BC;      // Z? }
     q19_12  damageReceived_C0;
-    u16     deathTimer_C4;     // Part of `shBattleInfo` struct in SH2, may use something similar here.
-    s16     timer_C6;          // Some sort of timer, value written by `Ai_LarvalStalker_Update`.
+    u16     deathTimer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
+    s16     timer_C6;      // Some sort of timer, value written by `Ai_LarvalStalker_Update`.
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
 

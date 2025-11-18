@@ -111,7 +111,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
     temp_a1 = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vx + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetX_0) - g_SysWork.playerCombatInfo_38.field_0.vx, 
                                  (g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vz + g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].field_D8.offsetZ_2) - g_SysWork.playerCombatInfo_38.field_0.vz) +
                           FP_ANGLE(360.0f));
-    chara->rotation_24.pad = temp_a1;
+    chara->field_2A = temp_a1;
     Math_ShortestAngleGet(chara->rotation_24.vy, temp_a1, &shortestAngle);
 
     if (ABS(shortestAngle) >= FP_ANGLE(8.5f)) 
@@ -2462,13 +2462,13 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
             if (enemyAttackedIdx == g_SysWork.targetNpcIdx_2353)
             {
-                chara->rotation_24.pad = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.player_4C.chara_0.position_18.vx,
-                                                           (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.player_4C.chara_0.position_18.vz) +
-                                                     FP_ANGLE(360.0f));
+                chara->field_2A = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                                   (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.player_4C.chara_0.position_18.vz) +
+                                            FP_ANGLE(360.0f));
             }
             else
             {
-                chara->rotation_24.pad = chara->rotation_24.vy;
+                chara->field_2A = chara->rotation_24.vy;
             }
 
             if (extra->model_0.stateStep_3 == 0)
@@ -2507,7 +2507,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     }
                     else
                     {
-                        chara->rotation_24.pad = chara->rotation_24.vy = temp_a1;
+                        chara->field_2A = chara->rotation_24.vy = temp_a1;
                         D_800C454C             = 0;
                     }
                 }
@@ -2516,7 +2516,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 enemyAttackedIdx                                           = NO_VALUE;
                 g_SysWork.player_4C.chara_0.properties_E4.player.field_122 = FP_ANGLE(90.0f);
-                chara->rotation_24.pad                                     = chara->rotation_24.vy;
+                chara->field_2A                                            = chara->rotation_24.vy;
             }
 
             if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
@@ -2859,7 +2859,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
             }
 
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
 
             if (g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_None)
             {
@@ -2897,7 +2897,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_WalkForward, 5, 0);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_RunForward:
@@ -2913,7 +2913,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunForward, 7, 2);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_RunWallStop:
@@ -2933,7 +2933,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunWallStop, 19, 0);
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunWallStop, 21, 0);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_SidestepRight:
@@ -2944,7 +2944,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_SidestepRight, 13, 0);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_SidestepLeft:
@@ -2955,7 +2955,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_SidestepLeft, 11, 0);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_RunRight:
@@ -2966,7 +2966,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunRight, 17, 0);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
 
             if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunRight, true))
             {
@@ -2982,7 +2982,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunLeft, 15, 0);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
 
             if (extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunLeft, true))
             {
@@ -2998,7 +2998,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_WalkBackward, 9, 0);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_QuickTurnRight:
@@ -3015,7 +3015,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
 
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_QuickTurnLeft:
@@ -3032,7 +3032,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 extra->model_0.anim_4.time_4 = chara->model_0.anim_4.time_4;
             }
 
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_TurnRight:
@@ -3043,7 +3043,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_TurnRight, 27, 3);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_TurnLeft:
@@ -3054,7 +3054,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_TurnLeft, 25, 4);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_RunJumpBackward:
@@ -3070,7 +3070,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunJumpBackward, 33, 0);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_LowerBodyStumble:
@@ -3086,7 +3086,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_LowerBodyStumble, 23, 0);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_RunLeftWallStop:
@@ -3097,7 +3097,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunLeftWallStop, 0x25, 0);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_RunRightWallStop:
@@ -3108,7 +3108,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunRightWallStop, 41, 0);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_RunLeftStumble:
@@ -3124,7 +3124,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_RunLeftStumble, 39, 0);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_SidestepRightStumble:
@@ -3140,7 +3140,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             Player_UpperBodyStateUpdate(extra, PlayerUpperBodyState_SidestepRightStumble, 43, 0);
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_Aim:
@@ -3171,7 +3171,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk6;
-            chara->rotation_24.pad                                      = chara->rotation_24.vy;
+            chara->field_2A                                             = chara->rotation_24.vy;
 
             if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
@@ -3301,9 +3301,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
                 if (enemyAttackedIdx == g_SysWork.targetNpcIdx_2353 && enemyAttackedIdx != NO_VALUE)
                 {
-                    chara->rotation_24.pad = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.player_4C.chara_0.position_18.vx,
-                                                               (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.player_4C.chara_0.position_18.vz) +
-                                                         FP_ANGLE(360.0f));
+                    chara->field_2A = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.player_4C.chara_0.position_18.vx,
+                                                       (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.player_4C.chara_0.position_18.vz) +
+                                                FP_ANGLE(360.0f));
                 }
                 else
                 {
@@ -3324,7 +3324,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             break;
 
         case PlayerUpperBodyState_AimStart:
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
 
             if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) ||
                 g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
@@ -3518,7 +3518,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 {
                     chara->rotation_24.vy  = temp_s1_2;
                     D_800C454C             = 0;
-                    chara->rotation_24.pad = temp_s1_2;
+                    chara->field_2A        = temp_s1_2;
 
                     if (g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStartTargetLock)
                     {
@@ -3555,7 +3555,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     }
                 }
 
-                chara->rotation_24.pad = chara->rotation_24.vy;
+                chara->field_2A = chara->rotation_24.vy;
                 break;
             }
 
@@ -3576,7 +3576,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             temp_v1_3 = CLAMP(temp_v1_3, 0, 0xFFF);
             var_s0    = temp_v1_3;
 
-            Math_ShortestAngleGet(chara->rotation_24.pad, temp_s1_2, &sp22);
+            Math_ShortestAngleGet(chara->field_2A, temp_s1_2, &sp22);
 
             if (ABS(sp22) > FP_ANGLE(11.25f))
             {
@@ -3585,11 +3585,11 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     var_s0 = -var_s0;
                 }
 
-                chara->rotation_24.pad = FP_ANGLE_NORM_U((chara->rotation_24.pad + (var_s0 >> 4)) + FP_ANGLE(360.0f));
+                chara->field_2A = FP_ANGLE_NORM_U((chara->field_2A + (var_s0 >> 4)) + FP_ANGLE(360.0f));
             }
             else
             {
-                chara->rotation_24.pad = chara->rotation_24.vy + sp20;
+                chara->field_2A = chara->rotation_24.vy + sp20;
 
                 if (g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStartTargetLock)
                 {
@@ -3666,7 +3666,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 g_SysWork.targetNpcIdx_2353 = NO_VALUE;
             }
 
-            chara->rotation_24.pad = chara->rotation_24.vy;
+            chara->field_2A = chara->rotation_24.vy;
             break;
 
         case PlayerUpperBodyState_Attack:
@@ -7141,20 +7141,20 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
             {
                 g_Player_FlexRotationX = g_SysWork.player_4C.chara_0.properties_E4.npc.field_122 - FP_ANGLE(90.0f);
 
-                if (ABS(chara->rotation_24.pad - chara->rotation_24.vy) > FP_ANGLE(180.0f))
+                if (ABS(chara->field_2A - chara->rotation_24.vy) > FP_ANGLE(180.0f))
                 {
-                    if (chara->rotation_24.pad > chara->rotation_24.vy)
+                    if (chara->field_2A > chara->rotation_24.vy)
                     {
-                        g_Player_FlexRotationY = -FP_ANGLE_NORM_U((chara->rotation_24.vy + FP_ANGLE(360.0f)) - chara->rotation_24.pad);
+                        g_Player_FlexRotationY = -FP_ANGLE_NORM_U((chara->rotation_24.vy + FP_ANGLE(360.0f)) - chara->field_2A);
                     }
                     else
                     {
-                        g_Player_FlexRotationY = FP_ANGLE_NORM_U((chara->rotation_24.pad + FP_ANGLE(360.0f)) - chara->rotation_24.vy);
+                        g_Player_FlexRotationY = FP_ANGLE_NORM_U((chara->field_2A + FP_ANGLE(360.0f)) - chara->rotation_24.vy);
                     }
                 }
                 else
                 {
-                    g_Player_FlexRotationY = chara->rotation_24.pad - chara->rotation_24.vy;
+                    g_Player_FlexRotationY = chara->field_2A - chara->rotation_24.vy;
                 }
 
                 if (chara->properties_E4.player.field_100 != 0 || g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStartTargetLock ||
@@ -7486,9 +7486,12 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             else
             {
                 // @hack Required for match.
-                do { chara->rotation_24.pad = chara->rotation_24.vy; } while (0);
+                do
+                {
+                    chara->field_2A = chara->rotation_24.vy;
+                } while (0);
 
-                sp98.vx = chara->rotation_24.pad;
+                sp98.vx = chara->field_2A;
             }
 
             sp98.vy  = g_SysWork.player_4C.chara_0.properties_E4.player.field_122;
@@ -7621,7 +7624,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 
                 if (g_GameWork.config_0.optExtraAutoAiming_2C)
                 {
-                    sp98.vx = chara->rotation_24.pad;
+                    sp98.vx = chara->field_2A;
                 }
 
                 g_MapOverlayHeader.func_178(&sp20, &sp98.vx, &sp98.vy);
@@ -7873,7 +7876,7 @@ void func_8007E9C4(void) // 0x8007E9C4
 
     func_8004C564(0, NO_VALUE);
 
-    chara->rotation_24.pad  = FP_ANGLE(90.0f);
+    chara->field_2A         = FP_ANGLE(90.0f);
     D_800C4561              = 0;
     g_Player_DisableDamage  = false;
     g_Player_HasActionInput = false;

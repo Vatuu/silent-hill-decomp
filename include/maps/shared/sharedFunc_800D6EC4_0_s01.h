@@ -69,8 +69,8 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* chara)
     chara->rotationSpeed_2C.vz = speed;
 
     chara->rotation_24.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT);
-    speed = sharedFunc_800D71F0_0_s01(chara->rotationSpeed_2C.pad, sharedData_800E21D0_0_s01.field_B4[5][1], sharedData_800E21D0_0_s01.field_B4[5][2], sharedData_800E21D0_0_s01.field_B4[5][3]);
+    speed                  = sharedFunc_800D71F0_0_s01(chara->field_32, sharedData_800E21D0_0_s01.field_B4[5][1], sharedData_800E21D0_0_s01.field_B4[5][2], sharedData_800E21D0_0_s01.field_B4[5][3]);
     tmp1 = speed;
-    chara->rotationSpeed_2C.pad = tmp1;
-    chara->rotation_24.pad += FP_MULTIPLY_PRECISE(g_DeltaTime0, tmp1, Q12_SHIFT);
+    chara->field_32        = tmp1;
+    chara->field_2A       += FP_MULTIPLY_PRECISE(g_DeltaTime0, tmp1, Q12_SHIFT);
 }

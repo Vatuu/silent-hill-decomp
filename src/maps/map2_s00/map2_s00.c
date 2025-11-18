@@ -1852,9 +1852,9 @@ void func_800E9A74(void) // 0x800E9A74
         case EventState_TakeKey:
             func_80086470(3, InventoryItemId_KeyOfWoodman, 1, false);
 
-            if (g_SavegamePtr->mapMarkingFlags_1D4[1] & 0x400000)
+            if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_DogYardKeyLine))
             {
-                g_SavegamePtr->mapMarkingFlags_1D4[1] |= 0x800000;
+                Savegame_MapMarkingSet(MapMarkFlag_55);
             }
 
             SysWork_StateStepSet(0, 8);
@@ -2037,7 +2037,7 @@ void MapEvent_KGordonKeyUse(void) // 0x800EA894
     Map_MessageWithSfx(39, Sfx_UseKey, &sfxPos); // "Used the K. Gordon key."
 
     Savegame_EventFlagSet(EventFlag_M2S00_KGordonDoorOpen);
-    g_SavegamePtr->mapMarkingFlags_1D4[1] |= 0x40000;
+    Savegame_MapMarkingSet(MapMarkFlag_OldTown_KGordonArrowsOnly);
 }
 
 void func_800EA960(void) // 0x800EA960

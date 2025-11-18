@@ -19,7 +19,7 @@ bool sharedFunc_800D2E04_0_s01(s_SubCharacter* chara, VECTOR3* inVec, s32* outDi
     temp_s4 = (u16)sharedData_800CAA98_0_s01.properties_D14[idx].val16[0];
     temp_s3 = (u16)sharedData_800CAA98_0_s01.properties_D14[idx].val16[1];
 
-    angle = FP_ANGLE_NORM_S(ratan2(deltaX, deltaZ) - (chara->rotation_24.vy + chara->rotation_24.pad));
+    angle = FP_ANGLE_NORM_S(ratan2(deltaX, deltaZ) - (chara->rotation_24.vy + chara->field_2A));
     dist  = SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, 12) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, 12));
 
     if (outDist != NULL)

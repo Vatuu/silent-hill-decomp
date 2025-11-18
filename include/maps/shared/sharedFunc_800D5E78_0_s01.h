@@ -17,7 +17,7 @@ void sharedFunc_800D5E78_0_s01(s_SubCharacter* chara, q19_12 angle) // 0x800D5E7
         angleCpy = FP_ANGLE(-60.0f);
     }
 
-    angleDelta = angleCpy - chara->rotation_24.pad;
+    angleDelta = angleCpy - chara->field_2A;
 
     if (angleDelta > FP_ANGLE(0.5f))
     {

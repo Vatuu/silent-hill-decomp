@@ -1233,7 +1233,9 @@ void func_800E3244(void) // 0x800E3244
             func_8003EBA0();
 
             g_SysWork.field_2378 = Q12(1.0f);
-            g_SavegamePtr->eventFlags_168[14] |= 0x6;
+
+            Savegame_EventFlagSet(EventFlag_449);
+            Savegame_EventFlagSet(EventFlag_450);
 
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             func_80088F94(&g_SysWork.npcs_1A0[1], 0, 0);

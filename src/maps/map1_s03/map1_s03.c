@@ -1316,7 +1316,7 @@ void func_800DD688(void) // 0x800DD688
     {
         g_WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position_1C, &g_WorldObject5.rotation_28);
 
-        if (g_SavegamePtr->eventFlags_168[3] & 0x8000)
+        if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject6.object_0, &g_WorldObject6.position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
@@ -1357,7 +1357,7 @@ void func_800DD688(void) // 0x800DD688
                         D_800E62D0 = 2;
                     }
                 }
-                else if (g_SavegamePtr->eventFlags_168[3] & 0x800)
+                else if (Savegame_EventFlagGet(EventFlag_107))
                 {
                     if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(18.6f))
                     {
