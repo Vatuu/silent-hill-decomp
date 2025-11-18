@@ -894,7 +894,6 @@ void func_80035ED0(void) // 0x80035ED0
     g_SysWork.field_2748[ARRAY_SIZE(g_SysWork.field_2748) - 1] = 0;
 }
 
-// Main music trigger and handler.
 void func_80035F4C(s32 flags, q19_12 arg1, u8* arg2) // 0x80035F4C
 {
     s16  temp_v0;

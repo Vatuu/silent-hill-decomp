@@ -22,14 +22,14 @@
 // STRUCTS
 // ========
 
-// Used for loading XA files and `field_0` is also used to hold commands for `Sd_CdPrimitiveCmdTry`
+// Used for loading XA files. `field_0` holds commands for `Sd_CdPrimitiveCmdTry`
 typedef struct
 {
     u8 field_0;
     u8 field_1;
 } s_800C15F0;
 
-// TODO: field with `_24` seems to be part of a thing related to how XA files works.
+// TODO: Field with `_24` seems to be part of a thing related to how XA files works.
 typedef struct
 {
     u8  xaFileIdx_0;
@@ -37,9 +37,9 @@ typedef struct
     u8  unk_2; // }
     u8  unk_3; // }
     u32 sector_4      : 24;
-    u8  field_4_24    : 8; // Index. This indicate the element of the group idx defined at `field_8_24`.
+    u8  field_4_24    : 8; // Index. Indicates the element of the group index defined at `field_8_24`.
     u32 audioLength_8 : 24;
-    u8  field_8_24    : 8; // Index. This indicate some sort of group.
+    u8  field_8_24    : 8; // Index. Indicate some sort of group.
 } s_XaItemData;
 STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
 
@@ -60,7 +60,7 @@ typedef struct
     u8  bgmFadeSpeed_14; /** Value to get rested in order to speed the music fade. Range: [0, 2], default: 0. */
     u8  isVabLoading_15; /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
     u8  isXaLoading_16;  /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
-    u8  muteGame_17;     /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively lower
+    u8  muteGame_17;     /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively get lower
 	                      * in volume until mute. The sounds will keep playing, but muted.
 						  */
 } s_800C1658;
@@ -70,8 +70,7 @@ typedef struct
     u8 vabLoadState_0;   /** Load VAB audio state. */
     u8 xaLoadState_1;    /** Load XA audio state. */
     u8 xaStopState_2;    /** Stop XA audio streaming state. */
-    u8 xaPreLoadState_3; /** Prepare Load XA audio state.
-                          * Positionate the current read point to the one where the XA audio meant to be loaded is.
+    u8 xaPreLoadState_3; /** Prepare Load XA audio state. Positions the current read point to the one where the XA audio to load resides.
                           * This is arbitrary as `xaLoadState_1` is already used for that.
                           */
 } s_AudioStreamingStates;
@@ -80,23 +79,20 @@ typedef struct
 // @note Could the values of the fields be some sort of fractional value?
 typedef struct
 {
-    s16 volumeXa_0; /** This and the second field are volume controller for XA audio files.
-                     * This field is used generally for most functions while
-                     * the second field is used by `Sd_XaAudioPlay` in order to set
-                     * the volume of audios.
+    s16 volumeXa_0; /** This and the second field are volume controllers for XA audio files. This field is used more generally while the
+                     * second field is used by `Sd_XaAudioPlay` in order to set the audio volume.
                      */
     s16 volumeXa_2;
     u16 volumeSe_4;
-    s16 volumeBgm_6; /** This and the fifth field are volume controler for the music.
-                      * This field is like the "parent" that ensures `volumeBgm_8` is on the same
-                      * volume.
+    s16 volumeBgm_6; /** This and the fifth field are volume controllers for music.
+                      * This field is like the "parent" that ensures `volumeBgm_8` is at the same volume.
                       */
     s16 volumeBgm_8;
     s16 volumeGlobal_A;
 	
-	// As main difference with previous volume controlers, this seems to influence the behaviour of the game.
-	// When reducing `globalVolumeXa_E`, the current voice line will continue playing at the same
-	// volume while the next will be play at the volume set here. Other volume controllers don't do this and instantly adjust audio volume.
+	// As main difference with previous volume controlers, this seems to influence the behavior of the game.
+	// When reducing `globalVolumeXa_E`, the current voice line continues playing at the same
+	// volume while the next plays at the volume set here. Other volume controllers don't do this and instantly adjust audio volume.
     u8  globalVolumeSe_C;  // Global SE volume channel.
     u8  globalVolumeBgm_D; // Global BGM volume channel.
     u8  globalVolumeXa_E;  // Global Voice volume channel (not configurable).
@@ -146,30 +142,30 @@ extern s_XaItemData g_XaItemData[];
 /** Values capped at 127. */
 extern s8 g_Sd_BgmLayers[8];
 
-// It is very likely to be a variable declared as `Static` as this is only used in `Sd_XaAudioPlay`
-// Another function `Sd_XaPreLoadAudioInit` (which is extreamly similar to `Sd_XaAudioPlay`) have a
+// Likely declared as `static` as this is only used in `Sd_XaAudioPlay`.
+// `Sd_XaPreLoadAudioInit` (similar to `Sd_XaAudioPlay`) has a
 // variable that works the same and is only used there.
 extern u16 D_800C15CA;
 
-// Very likely to be a variable declared as `Static` as this is only used in `Sd_XaAudioPlay`
+// Likely declared as `static` as this is only used in `Sd_XaAudioPlay`
 extern u16 D_800C15D0;
 
-// Very likely to be a variable declared as `Static` inside the function that uses it.
+// Likely declared as `static` inside the function that uses it.
 extern u32 D_800C15CC;
 
-// Very likely to be a variable declared as `Static` inside the function that uses it.
+// Likely declared as `static` inside the function that uses it.
 extern u32 D_800C15D4;
 
-// Very likely to be a variable declared as `Static` inside the function that uses it.
+// Likely declared as `static` inside the function that uses it.
 extern s16 D_800C15C4;
 
-// Very likely to be a variable declared as `Static` inside the function that uses it.
+// Likely declared as `static` inside the function that uses it.
 extern s16 D_800C15C6;
 
-// Very likely to be a variable declared as `Static` inside the function that uses it.
+// Likely declared as `static` inside the function that uses it.
 extern s16 D_800C15C8;
 
-// Very likely to be a variable declared as `Static` inside the function that uses it.
+// Likely declared as `static` inside the function that uses it.
 extern u16 D_800C15D0;
 
 // Only used in `sd_work_init` as iterator variable.
@@ -240,8 +236,8 @@ void Sd_AllVoicesKeyOff(void);
 /** @brief Executes `SdUtKeyOffVWithRROff` and runs through all elements of `smf_port`. */
 void Sd_AllVoicesKeyOffVWithRROff(void);
 
-/** This function manipulate the BGM audio layers. Can't be termined if this function
- * is fully on charge of that as `func_80035F4C` (not directly related to the SD audio system)
+/** Manipulate the BGM audio layers. Can't be determined if this function
+ * is fully in charge of that as `func_80035F4C` (not directly related to the SD audio system)
  * triggers and handles in-game music.
  */
 void func_80046C54(u8 arg0, u8 vol);

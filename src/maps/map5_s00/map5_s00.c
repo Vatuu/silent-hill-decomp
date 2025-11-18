@@ -376,7 +376,6 @@ void func_800D6B00(void) // 0x800D6B00
             g_SysWork.field_30 = 20;
 
             Sd_PlaySfx(Sfx_Unk1575, 0, Q8_CLAMPED(0.5f));
-
             SysWork_StateStepIncrement(0);
 
         case 11:
@@ -421,6 +420,7 @@ void func_800D6B00(void) // 0x800D6B00
             {
                 g_SysWork.npcs_1A0[D_800DAB7C[0]].properties_E4.larvalStalker.properties_E8[0].val8[0] |= (1 << 7);
             }
+
             func_800D6414();
             break;
 
@@ -466,6 +466,7 @@ void func_800D6B00(void) // 0x800D6B00
 
 void func_800D732C(void) // 0x800D732C
 {
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 3)
     {

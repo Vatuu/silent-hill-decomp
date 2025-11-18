@@ -530,9 +530,9 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E9B70);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E9C8C);
 
-void func_800E9F08(s_SubCharacter* chara)
+void func_800E9F08(s_SubCharacter* chara) // 0x800E9F08
 {
-    if (chara->health_B0 == 0)
+    if (chara->health_B0 == Q12(0.0f))
     {
         if (g_SysWork.targetNpcIdx_2353 != func_8005C7D0(chara))
         {
@@ -541,10 +541,10 @@ void func_800E9F08(s_SubCharacter* chara)
         }
     }
 
-    if (!chara->moveSpeed_38 && !(chara->properties_E4.player.afkTimer_E8 & 3))
+    if (chara->moveSpeed_38 == Q12(0.0f)&& !(chara->properties_E4.player.afkTimer_E8 & 0x3))
     {
         func_800622B8(3, chara, ANIM_STATUS(6, true), 9);
-        chara->properties_E4.player.afkTimer_E8 |= 2;
+        chara->properties_E4.player.afkTimer_E8 |= 0x2;
     }
 }
 
@@ -763,7 +763,7 @@ void MapEvent_MapTake(void) // 0x800EBF48
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EBF70);
 
-void func_800EC2D8(void)
+void func_800EC2D8(void) // 0x800EC2D8
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
@@ -774,21 +774,20 @@ void func_800EC2D8(void)
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800EC394
 
-void func_800EC42C(void)
+void func_800EC42C(void) // 0x800EC42C
 {
-    s32 mulZ;
-    s32 mulX;
-    s32 pitch;
-    s32 tmp0;
-    s32 tmp1;
-    s32 sin0;
-    s32 sin1;
-
+    s32    mulZ;
+    s32    mulX;
+    s32    pitch;
+    s32    tmp0;
+    s32    tmp1;
+    q19_12 sin0;
+    q19_12 sin1;
 
     tmp0 = D_800F0360;
     sin0 = Math_Sin(tmp0 >> 2);
     sin1 = Math_Sin(tmp0 >> 3);
-    tmp1 = (sin0*2) + sin1 + Math_Sin(Math_Cos(tmp0 >> 4));
+    tmp1 = ((sin0 * 2) + sin1) + Math_Sin(Math_Cos(tmp0 >> 4));
     pitch = tmp1 >> 8;
     D_800F0360 += g_DeltaTime0;
 
@@ -819,156 +818,179 @@ void func_800EC42C(void)
             Player_ControlFreeze();
             Fs_QueueStartReadTim(FILE_TIM_ENBAN_TIM, FS_BUFFER_1, &D_800F0178);
             Fs_QueueStartRead(FILE_ANIM_UFO3_DMS, FS_BUFFER_13);
+
             D_800F3E0C = NO_VALUE;
+
             ScreenFade_ResetTimestep();
             Sd_EngineCmd(Sfx_Unk1467);
             func_800463C0(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
+
             D_800F035E = 0;
             D_800F0360 = 0;
             D_800F035D = 0;
+
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             func_80085DF0();
             break;
+
         case 2:
             if (Fs_QueueDoThingWhenEmpty() != false)
             {
                 SysWork_StateStepIncrement(0);
             }
             break;
+
         case 3:
             D_800F3E0C = 0;
+
             SysWork_StateStepIncrementAfterFade(0, true, 3, 0, false);
             DmsHeader_FixOffsets((s_DmsHeader* )FS_BUFFER_13);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             Game_TurnFlashlightOn();
+
             D_800F035C = 0;
+
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 4:
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
+
         case 5:
             Map_MessageWithAudio(18, &D_800F035C, &D_800F0174);
             break;
+
         case 6:
             SysWork_StateStepIncrementAfterTime(&D_800F3E0C, Q12(40.0f), Q12(0.0f), Q12(30.0f), true, true);
     block_18:
             sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(0.5f), Q12(0.05f), 0);
             break;
+
         case 7:
             MapMsg_DisplayAndHandleSelection(false, 19, 0, 0, 0, false);
             sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(0.5f), Q12(0.05f), 0);
             break;
+
         case 8:
             func_80080B58(&g_SysWork.playerBoneCoords_890[2], &(SVECTOR3){}, &QVECTOR3(-196.53f, -14.25f, -9.73f));
             sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(1.0f), Q12(0.1f), 1);
             SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
             break;
+
         case 9:
             g_SysWork.field_28 += g_DeltaTime0;
+
             switch (g_SysWork.field_28 / Q12(0.1f))
             {
-                case 0x0:
-                case 0x1:
-                case 0x2:
-                case 0x3:
+                case 0:
+                case 1:
+                case 2:
+                case 3:
                     mulZ = Q12(0.0f);
                     mulX = Q12(0.0f);
                     break;
-                case 0x4:
-                case 0x5:
-                case 0x6:
-                case 0xB:
-                case 0xC:
-                case 0xD:
-                case 0x12:          
-                case 0x13:          
-                case 0x14:          
+
+                case 4:
+                case 5:
+                case 6:
+                case 11:
+                case 12:
+                case 13:
+                case 18:          
+                case 19:          
+                case 20:          
                     mulX = Q12(-0.9f);
                     mulZ = Q12(1.0f);
                     break;
-                case 0x7:
-                case 0x8:
-                case 0x9:
-                case 0xA:
-                case 0xE:
-                case 0xF:
-                case 0x10:          
-                case 0x11:          
-                case 0x15:          
-                case 0x16:          
-                case 0x17:          
-                case 0x18:          
+
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                case 14:
+                case 15:
+                case 16:          
+                case 17:          
+                case 21:          
+                case 22:          
+                case 23:          
+                case 24:          
                     mulX = Q12(1.2f);
                     mulZ = Q12(1.0f);
                     break;
-                case 0x19:          
+
+                case 25:          
                     if (D_800F035D == 0)
                     {
                         D_800F0180.vy = Q12(-13.0f);
                         D_800F0180.vz = Q12(2.5f);
                         D_800F035D++;
                     }
-                    /* fallthrough */
-                case 0x1A:          
-                case 0x1B:          
-                case 0x1F:          
-                case 0x20:          
-                case 0x21:          
-                case 0x25:          
-                case 0x26:          
-                case 0x27:          
-                case 0x2B:          
-                case 0x2C:          
-                case 0x2D:          
+
+                case 26:          
+                case 27:          
+                case 31:          
+                case 32:          
+                case 33:          
+                case 37:          
+                case 38:          
+                case 39:          
+                case 43:          
+                case 44:          
+                case 45:          
                     mulX = Q12(-1.2f);
                     mulZ = Q12(-1.2f);
                     break;
-                case 0x1C:          
-                case 0x1D:          
-                case 0x1E:          
-                case 0x22:          
-                case 0x23:          
-                case 0x24:          
-                case 0x28:          
-                case 0x29:          
-                case 0x2A:          
+
+                case 28:          
+                case 29:          
+                case 30:          
+                case 34:          
+                case 35:          
+                case 36:          
+                case 40:          
+                case 41:          
+                case 42:          
                     mulX = Q12(1.2f);
                     mulZ = Q12(-1.2f);
                     break;
-                case 0x2E:          
+
+                case 46:          
                     if (D_800F035D == 1) 
                     {
                         D_800F0180.vy = Q12(-15.75f);
                         D_800F0180.vz = Q12(-12.25f);
                         D_800F035D++;
                     }
-                    /* fallthrough */
-                case 0x3B:          
+
+                case 59:          
                     mulX = Q12(0.0f);
                     mulZ = Q12(-1.6f);
                     break;
-                case 0x2F:          
-                case 0x30:          
-                case 0x31:          
-                case 0x38:          
-                case 0x39:          
-                case 0x3A:          
+
+                case 47:          
+                case 48:          
+                case 49:          
+                case 56:          
+                case 57:          
+                case 58:          
                     mulX = Q12(0.6f);
                     mulZ = Q12(-1.6f);
                     break;
-                case 0x32:          
-                case 0x33:          
-                case 0x34:          
-                case 0x35:          
-                case 0x36:          
-                case 0x37:          
+
+                case 50:          
+                case 51:          
+                case 52:          
+                case 53:          
+                case 54:          
+                case 55:          
                     mulX = Q12(-0.6f);
                     mulZ = Q12(-1.6f);
                     break;
+
                 default: 
                     mulZ = Q12(0.0f);
                     mulX = Q12(0.0f);
@@ -976,45 +998,54 @@ void func_800EC42C(void)
                     break;
             }
 
-            D_800F0180.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, (mulX*4), Q12_SHIFT);
-            D_800F0180.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, (mulZ*4), Q12_SHIFT);
-            
+            D_800F0180.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, mulX * 4, Q12_SHIFT);
+            D_800F0180.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, mulZ * 4, Q12_SHIFT);
 
             sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(0.5f), Q12(0.05f), 0);
             break;
-        case 10:                                        /* switch 1 */
+
+        case 10:
             SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
             break;
-        default:                                        /* switch 1 */
+
+        default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+
             vcReturnPreAutoCamWork(true);
             Savegame_EventFlagSet(EventFlag_458);
             func_80086470(3, InventoryItemId_ChannelingStone, 1, false);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
-            D_800F3E0C = -1;
+
+            D_800F3E0C = NO_VALUE;
+
             func_8004690C(Sfx_Unk1467);
             break;
     }
 
-    if (D_800F3E0C >= 0)
+    if (D_800F3E0C >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, "HERO", D_800F3E0C, (s_DmsHeader* )FS_BUFFER_13);
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, "HERO", D_800F3E0C, (s_DmsHeader*)FS_BUFFER_13);
+
         g_SysWork.player_4C.chara_0.position_18.vx -= Q12(20.0f);
-        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800F3DF0, &D_800F3E00, NULL, D_800F3E0C, (s_DmsHeader* )FS_BUFFER_13));
+
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800F3DF0, &D_800F3E00, NULL, D_800F3E0C, (s_DmsHeader*)FS_BUFFER_13));
+
         D_800F3DF0.vx -= Q12(20.0f);
         D_800F3E00.vx -= Q12(20.0f);
+
         vcUserCamTarget(&D_800F3DF0, NULL, true);
         vcUserWatchTarget(&D_800F3E00, NULL, true);
     }
 }
 
-void func_800ECB58(void) 
+void func_800ECB58(void) // 0x800ECB58
 {
     WorldObjectNoRotInit(&g_WorldObject0, "RSRMAP_H", -46.5f, 0.0f, 2.5f);
-    // @hack D_800CCA84 = "HOOK_HID" with some garbage after the null byte
+
+    // @hack D_800CCA84 = "HOOK_HID" with some garbage after the null byte.
     WorldObjectInit(&g_WorldObject1, D_800CCA84, 52.15f, -1.359f, -57.925f, 0.0f, 0.0f, 5.8f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
@@ -1038,9 +1069,10 @@ void func_800ECB58(void)
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800ECC8C(void) 
+void func_800ECC8C(void) // 0x800ECC8C
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
+
     if ((PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1)) ||
         (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0)))
     {

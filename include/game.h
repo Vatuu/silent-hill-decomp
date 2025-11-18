@@ -1927,7 +1927,7 @@ static inline void Player_AnimFlagsSet(u32 flags)
     chara->model_0.anim_4.flags_2 |= flags;
 }
 
-/** @brief Sets the given animation flag on a model.
+/** @brief Sets given animation flags for a model.
  *
  * @param model `s_Model` to update.
  * @param flag Flags to set.
@@ -1935,7 +1935,7 @@ static inline void Player_AnimFlagsSet(u32 flags)
 #define Model_AnimFlagsSet(model, flags) \
     (model)->anim_4.flags_2 |= (flags)
 
-/** @brief Clears the given animation flag on a model.
+/** @brief Clears given animation flags for a model.
  *
  * @param model `s_Model` to update.
  * @param flag Flags to clear.

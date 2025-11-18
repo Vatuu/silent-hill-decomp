@@ -125,7 +125,7 @@ extern s8 D_800F481A;
 extern u8 D_800F481B;
 extern u8 D_800F481C;
 
-extern s32 D_800F4820;
+extern q19_12 D_800F4820; // Time.
 
 extern s32 D_800F4824;
 

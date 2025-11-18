@@ -115,6 +115,7 @@ void func_800D0B10(void) // 0x800D0B10
 
 void func_800D0C14(void) // 0x800D0C14
 {
+    // Skip.
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
         g_SysWork.sysStateStep_C[0] >= 4 && g_SysWork.sysStateStep_C[0] < 30)
     {
@@ -354,7 +355,9 @@ void func_800D0C14(void) // 0x800D0C14
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
-            D_800D2704 = -1;
+
+            D_800D2704 = NO_VALUE;
+
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -367,7 +370,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
     }
 
-    if (D_800D2704 >= 0)
+    if (D_800D2704 >= Q12(0.0f))
     {
         Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, "HERO", D_800D2704, FS_BUFFER_15);
         if (D_800D2737 != 0)

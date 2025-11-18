@@ -4057,6 +4057,7 @@ bool func_80035E44(void);
 
 void func_80035ED0(void);
 
+// Main music trigger and handler.
 void func_80035F4C(s32 flags, q19_12 arg1, u8* arg2);
 
 void func_800363D0(void);

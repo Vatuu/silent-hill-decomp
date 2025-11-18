@@ -22,7 +22,7 @@ extern u16 D_800D26D0;
 
 extern VECTOR3 D_800D26F8;
 
-extern s32 D_800D2704;
+extern q19_12 D_800D2704; // Time.
 
 extern VECTOR3 D_800D2718;
 

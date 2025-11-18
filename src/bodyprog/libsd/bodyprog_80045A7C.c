@@ -52,7 +52,7 @@ void Sd_EngineCmd(u32 cmd) // 0x80045A7C
             Sd_LastVoiceKeyOff();
             return;
 
-        // Play XA audio files (Voicelines). Range [4096, 5887].
+        // Play XA audio files (voice lines). Range [4096, 5887].
         case 16:
         case 17:
         case 18:
