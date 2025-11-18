@@ -194,18 +194,19 @@ struct _Model;
  * @bug Some maps appear to have a bug where the negative position check will never be true because they check
  * if the chunk index will be a positive number. Seems like they forgot to use `ABS`?
  */
-#define PLAYER_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                                  \
-    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.comp / Q12(40.0f),                       \
-     ((g_SysWork.player_4C.chara_0.position_18.comp > Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
+#define PLAYER_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                                   \
+    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.comp / Q12(40.0f),                        \
+     ((g_SysWork.player_4C.chara_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
       (g_SysWork.player_4C.chara_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 
-#define PLAYER_NOT_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                              \
-    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.comp / Q12(40.0f),                       \
-     ((g_SysWork.player_4C.chara_0.position_18.comp > Q12(0.0f) && (__chunkIdx + (x0)) != (x1)) || \
+#define PLAYER_NOT_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                               \
+    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.comp / Q12(40.0f),                        \
+     ((g_SysWork.player_4C.chara_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) != (x1)) || \
       (g_SysWork.player_4C.chara_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) != (x3))))
 
-#define PLAYER_NEAR_POS(comp, base, tol) \
-    (((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) >= 0) ? ((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) < Q12(tol)) : ((Q12(base) - g_SysWork.player_4C.chara_0.position_18.comp) < Q12(tol)))
+#define PLAYER_NEAR_POS(comp, base, tol)                                                                                                                   \
+    (((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) < Q12(tol)) : \
+                                                                                 ((Q12(base) - g_SysWork.player_4C.chara_0.position_18.comp) < Q12(tol)))
 
 #define HAS_FLAG(ptr, idx) \
     ((((u32*)ptr)[(idx) >> 5] >> ((idx) & 0x1F)) & (1 << 0))
@@ -892,7 +893,7 @@ typedef union
         s8 rightY;
         s8 leftX;
         s8 leftY;
-    } sticks_0; // Range is `[-128, 127]`?
+    } sticks_0; // Normalized range: `[-128, 127]`.
 } s_AnalogSticks;
 
 typedef struct _AnalogController

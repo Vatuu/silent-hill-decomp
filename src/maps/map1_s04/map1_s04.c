@@ -221,7 +221,7 @@ void func_800CCA2C(void) // 0x800CCA2C
 
             Gfx_DebugStringPosition(50, 50);
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+            if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
             {
                 SysWork_StateStepIncrement(0);
             }

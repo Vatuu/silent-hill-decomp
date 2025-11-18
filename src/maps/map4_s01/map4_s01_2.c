@@ -307,7 +307,7 @@ void func_800D2408(void) // 0x800D2408
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
 
-            g_Timer0 = 0;
+            g_Timer0 = Q12(0.0f);
 
             func_80085EB8(0, playerChara, 0x33, false);
 

@@ -22,25 +22,25 @@ extern u16 D_800D26D0;
 
 extern VECTOR3 D_800D26F8;
 
-extern q19_12 D_800D2704; // Time.
+extern q19_12 g_CutsceneTimer;
 
 extern VECTOR3 D_800D2718;
 
 extern VECTOR3 D_800D2728;
 
-extern s16 D_800D2734;
+extern q3_12 D_800D2734; // Timer. Only used for `func_800D0C14`, state 8.
 
-extern u8 D_800D2736;
+extern u8 D_800D2736; // Sound index.
 
-extern u8 D_800D2737;
+extern u8 D_800D2737; // `bool`
 
 extern u8 D_800D2738;
 
-extern s_WorldObjectDesc g_WorldObject_SavePad; //D_800D5ED8;
-extern s_WorldObjectDesc g_WorldObject_Map; //D_800D5F08;
-extern s_WorldObjectDesc g_WorldObject_Map2; //D_800D5F38;
-extern s_WorldObjectDesc g_WorldObject_Key; //D_800D5F68;
-extern s_WorldObjectDesc g_WorldObject_FirstAidKit; //D_800D5F98;
+extern s_WorldObjectDesc g_WorldObject_SavePad; // D_800D5ED8;
+extern s_WorldObjectDesc g_WorldObject_Map; // D_800D5F08;
+extern s_WorldObjectDesc g_WorldObject_Map2; // D_800D5F38;
+extern s_WorldObjectDesc g_WorldObject_Key; // D_800D5F68;
+extern s_WorldObjectDesc g_WorldObject_FirstAidKit; // D_800D5F98;
 
 void func_800D07A0(s32 arg0);
 

@@ -589,7 +589,7 @@ void func_800D5DD8(void) // 0x800D5DD8
 {
     #define CUTSCENE_SKIP_STATE 14
 
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
     {
         if (g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
         {

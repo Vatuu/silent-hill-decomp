@@ -394,7 +394,7 @@ void MapEvent_CommonItemTake(void) // 0x800D81AC
 
 void func_800D822C(void) // 0x800D822C
 {
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
     {
         if (g_SysWork.sysStateStep_C[0] == 3)
         {
@@ -452,7 +452,7 @@ void func_800D822C(void) // 0x800D822C
 
 void func_800D84EC(void) // 0x800D84EC
 {
-    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
     {
         if (g_SysWork.sysStateStep_C[0] == 4)
         {

@@ -144,6 +144,7 @@ MAP_MESSAGES                        = 0x800D23BC; // type:u32 size:0xBC
 //----------------------------------------------------
 //--- PA: 0x008F00   VA: 0x800D2478   subsegment: data
 //----------------------------------------------------
+g_CutsceneTimer                     = 0x800D2704; // type:s32
 sharedData_800DFB4C_0_s00           = 0x800D2708;
 sharedData_800DFB50_0_s00           = 0x800D270C;
 g_Particle_SpeedX                   = 0x800D273C; // type:s32

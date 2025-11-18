@@ -137,7 +137,10 @@ void func_800CED44(void) // 0x800CED44
 
 void func_800CED88(void) // 0x800CED88
 {
-    #define CUTSCENE_SKIP_STATE 31
+    typedef enum _EventState
+    {
+        EventState_Skip = 31
+    } e_EventState;
 
     s32             step;
     s_SubCharacter* dahlia;
@@ -146,9 +149,9 @@ void func_800CED88(void) // 0x800CED88
     #define playerChara (&g_SysWork.player_4C.chara_0)
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < CUTSCENE_SKIP_STATE)
+        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
     {
-        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, EventState_Skip);
     }
 
     step = g_SysWork.sysStateStep_C[0];
@@ -164,9 +167,9 @@ void func_800CED88(void) // 0x800CED88
             Chara_Spawn(Chara_Dahlia, 0, Q12(20.0f), Q12(23.5f), 0, 3);
             sharedFunc_800D88AC_0_s00(dahliaChara);
 
-            g_Timer0 = 0;
+            g_Timer0 = Q12(0.0f);
             g_SysWork.field_30 = 20;
-            g_SysWork.flags_22A4 |= 8;
+            g_SysWork.flags_22A4 |= 1 << 3;
 
             func_80085EB8(0, playerChara, 51, false);
             func_80085EB8(0, dahliaChara, 0, false);
@@ -386,10 +389,10 @@ void func_800CED88(void) // 0x800CED88
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
-        case CUTSCENE_SKIP_STATE:
+        case EventState_Skip:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
-            if (g_SysWork.sysStateStep_C[0] != CUTSCENE_SKIP_STATE)
+            if (g_SysWork.sysStateStep_C[0] != EventState_Skip)
             {
                 g_Timer0 = Q12(253.0f);
             }

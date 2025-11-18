@@ -1,23 +1,29 @@
 /** @brief Waits for an external timer to be above `timeMin`, incrementing the timer until it reaches
- * `timeMax`. After this time, it increments `StateStep`.
+ * `timeMax`. After this time, it increments the cutscene state step.
+ * 
+ * TODO: Specific to cutscene map events. Revised name could be `SysWork_CutsceneStateStepIncrement` or `Map_CutsceneStateStepIncrement`.
  *
  * @param timer External timer.
  * @param timeInc Time increment.
  * @param timeMin Minimum time before the external timer can be incremented.
  * @param timeMax Maximum time before the system state step can be incremented.
  * @param setTimerToMax Clamp the external timer to the max time when it is reached.
- * @param incStateStep Increment the system state step when max time is reached.
+ * @param incStateStep Increment the cutscene state step when max time is reached.
  */
-void SysWork_StateStepIncrementAfterTime(q19_12* timer, q19_12 inc, q19_12 timeMin, q19_12 timeMax, bool setTimerToMax, bool incStateStep) // 0x800DA8E8
+void SysWork_StateStepIncrementAfterTime(q19_12* timer, q19_12 timeInc, q19_12 timeMin, q19_12 timeMax, bool setTimerToMax, bool incStateStep) // 0x800DA8E8
 {
+    // Clamp timer to min.
     if (*timer < timeMin)
     {
         *timer = timeMin;
         return;
     }
 
-    *timer += FP_MULTIPLY_PRECISE(g_DeltaTime0, inc, Q12_SHIFT);
-    if (timeMax < *timer)
+    // Increment timer.
+    *timer += FP_MULTIPLY_PRECISE(g_DeltaTime0, timeInc, Q12_SHIFT);
+
+    // End timer and increment state step.
+    if (*timer > timeMax)
     {
         if (setTimerToMax)
         {

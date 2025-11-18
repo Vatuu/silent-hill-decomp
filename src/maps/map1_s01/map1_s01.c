@@ -971,7 +971,7 @@ void func_800D8794(void) // 0x800D8794
     MapMsg_DisplayWithTexture(FILE_TIM_LOCKER0_TIM, Q12(0.0f), Q12(0.0f), 32);
 }
 
-extern s32 g_Timer0;
+extern s32 g_Timer0; // Cutscene timer.
 extern u8 D_800DD598;
 extern VECTOR3 g_CameraPositionTarget;
 extern VECTOR3 g_CameraLookAtTarget;
