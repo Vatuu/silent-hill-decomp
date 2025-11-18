@@ -86,7 +86,7 @@ INSERT_OVLS_FLAGS   := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$
 TARGET_PREBUILD  := main bodyprog screens/stream
 
 # Targets that will run tools/postbuild.py after being linked & extracted from ELF.
-TARGET_POSTBUILD := bodyprog screens/stream maps/map3_s06 maps/map4_s05
+TARGET_POSTBUILD := bodyprog screens/stream maps/map3_s06 maps/map4_s05 maps/map5_s01
 
 # Adjusts compiler and assembler flags based on source file location.
 # - Files under main executable paths use -G8; overlay files use -G0.

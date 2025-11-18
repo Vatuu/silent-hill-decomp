@@ -62,6 +62,8 @@ segments:
       - [0x1468, .rodata, map5_s03_2]
 
       # .text section
+      - [0x237C, c, map5_s03_anim_info]
+      - [0x237C, c, map5_s03_header]
       - [0x237C, c, map5_s03]
       - [0x6364, c, Chara_Kaufmann]
       - [0x6FD4, c, map5_s03_2]

@@ -59,6 +59,8 @@ segments:
       - [0x1050, .rodata, map1_s04]
 
       # .text section
+      - [0x13E4, c, map1_s04_anim_info]
+      - [0x13E4, c, map1_s04_header]
       - [0x13E4, c, map1_s04]
 
       # .data section

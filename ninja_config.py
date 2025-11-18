@@ -202,6 +202,8 @@ CC_FLAGS      = f"{OPT_FLAGS} -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -f
 AS_FLAGS      = f"{ENDIAN} {INCLUDE_FLAGS} {OPT_FLAGS} -march=r3000 -mtune=r3000 -no-pad-sections"
 OBJDUMP_FLAGS = f"--disassemble-all --reloc --disassemble-zeroes -Mreg-names=32"
 
+TARGETS_POSTBUILD = ["1ST/BODYPROG.BIN", "VIN/STREAM.BIN", "VIN/MAP3_S06.BIN", "VIN/MAP4_S05.BIN", "VIN/MAP5_S01.BIN"]
+
 def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, objdiff_file, non_matching_enabled):
     
     skipAsm = ""
@@ -475,7 +477,7 @@ def ninja_setup_main(ninja_file_prefix: str, game_version_idx: int, split_entrie
             implicit=f"{output}.elf"
         )
         
-        if split_config.SPLIT_BASENAME == "1ST/BODYPROG.BIN" or split_config.SPLIT_BASENAME == "VIN/STREAM.BIN":
+        if split_config.SPLIT_BASENAME in TARGETS_POSTBUILD:
             ninja.build(
                 outputs=f"{output}.fix",
                 rule="postbuild",
@@ -804,7 +806,7 @@ def main():
     parser.add_argument(
         "-iso_e", "--iso_extract",
         help="Extract game files",
-        type=str
+        action="store_true"
     )
     parser.add_argument(
         "-set", "--setup",
@@ -863,7 +865,7 @@ def main():
         clean_working_files(False)
         return
     
-    if args.iso_extract != None:
+    if args.iso_extract:
         extract_files(gameVersionOption)
         return
     

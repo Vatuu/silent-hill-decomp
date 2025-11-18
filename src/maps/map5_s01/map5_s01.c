@@ -1045,8 +1045,7 @@ void func_800ECB58(void) // 0x800ECB58
 {
     WorldObjectNoRotInit(&g_WorldObject0, "RSRMAP_H", -46.5f, 0.0f, 2.5f);
 
-    // @hack D_800CCA84 = "HOOK_HID" with some garbage after the null byte.
-    WorldObjectInit(&g_WorldObject1, D_800CCA84, 52.15f, -1.359f, -57.925f, 0.0f, 0.0f, 5.8f);
+    WorldObjectInit(&g_WorldObject1, "FOOK_HID", 52.15f, -1.359f, -57.925f, 0.0f, 0.0f, 5.8f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
@@ -1130,5 +1129,3 @@ void func_800ECC8C(void) // 0x800ECC8C
         }
     }
 }
-
-INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CCA84);
