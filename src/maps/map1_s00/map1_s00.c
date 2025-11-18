@@ -884,6 +884,7 @@ void Map_WorldObjectsInit(void)
 {
     D_800E1180 = 0;
     D_800E1182 = 0;
+
     WorldObjectInit(&g_WorldObject9, "PICT00_H", 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
 
     WorldObjectNoRotInit(&g_WorldObject1[0], "PAPER1_H", 133.63f, -0.816f, 17.089f);

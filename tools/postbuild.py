@@ -25,3 +25,9 @@ if __name__ == "__main__":
         overlayFile.seek(0x1D65)
         overlayFile.write(b'\x65\x74\x5F')
         overlayFile.close()
+    elif sys.argv[1] == "maps/map4_s05" or sys.argv[1] == "build/out/VIN/MAP4_S05.BIN":
+        # Random bytes at end of rodata section, linker artifact?
+        overlayFile = open("build/out/VIN/MAP4_S05.BIN", "r+b")
+        overlayFile.seek(0x1729)
+        overlayFile.write(b'\x65\x5F\x77')
+        overlayFile.close()

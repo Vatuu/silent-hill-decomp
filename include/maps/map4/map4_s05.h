@@ -49,6 +49,11 @@ extern s16 D_800DB8A8[];
 
 extern GsCOORDINATE2* D_800DB928;
 
+extern s_WorldObjectDescNoRot g_WorldObject_Kidn04;
+extern s_WorldObjectDescNoRot g_WorldObject_Kidn05;
+
+extern s8 D_800DB9B0;
+
 void Ai_Floatstinger_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_Floatstinger_Init(s_SubCharacter* chara);
 void func_800D1968(s_SubCharacter*);
@@ -60,5 +65,7 @@ void func_800D3AD4(s_SubCharacter*);
 void func_800D6800(void);
 
 void func_800D6BC0(void);
+
+void Map_WorldObjectsInit(void);
 
 #endif

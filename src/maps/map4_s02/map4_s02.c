@@ -548,7 +548,27 @@ const char* MAP_MESSAGES[] = {
     "~C3\tAlchemilla_Hospital ~E "
 };
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800EA340);
+void Map_WorldObjectsInit(void) // 0x800EA340
+{
+    D_800F13AC = 0;
+
+    WorldObjectNoRotInit(&g_WorldObject_Kidn04, "KIDN04_H", -119.8019f, 5.0f, 107.861f);
+
+    WorldObject_ModelNameSet(&g_WorldObject_Fan0, "FAN0_HID");
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    {
+        g_SysWork.field_2280 = 3;
+    }
+    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
+    {
+        g_SysWork.field_2280 = 4;
+    }
+    else
+    {
+        g_SysWork.field_2280 = 5;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800EA3F0);
 

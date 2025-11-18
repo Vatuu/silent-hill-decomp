@@ -551,8 +551,34 @@ void func_800D6BC0(void) // 0x800D6BC0
     }
 }
 
-INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D723C);
+void Map_WorldObjectsInit(void) // 0x800D723C
+{
+    D_800DB9B0 = 0;
+
+    WorldObjectNoRotSet(&g_WorldObject_Kidn04, "KIDN04_H", Q12(-119.8019f), Q12(5.0f), Q12(107.861f));
+
+    WorldObjectNoRotSet(&g_WorldObject_Kidn05, "KIDN05_H", Q12(-114.89f), Q12(5.0f), Q12(108.36f));
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    {
+        D_800C4418.field_0 = Q12(5.5f);
+    }
+    else
+    {
+        D_800C4418.field_0 = Q12(3.75f);
+    }
+
+    D_800C4418.field_2 = Q12(0.2f);
+    D_800C4418.field_4 = Q12(0.1f);
+    D_800C4418.field_6 = Q12(0.45f);
+    D_800C4418.field_8 = Q12(6.0f);
+    D_800C4418.field_A = Q12(0.55f);
+    D_800C4418.field_C = 18;
+
+    if (Savegame_EventFlagGet(EventFlag_349) && !Savegame_EventFlagGet(EventFlag_350))
+    {
+        func_80088FF4(Chara_Floatstinger, 0, 4);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D7360);
-
-INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800CAC98);

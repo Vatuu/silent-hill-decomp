@@ -145,6 +145,7 @@ sharedFunc_800E8DFC_2_s02   = 0x800E91F8; // type:func
 sharedFunc_800D929C_0_s00   = 0x800E9D28; // type:func
 MapEvent_DoorJammed         = 0x800EA210; // type:func
 MapEvent_DoorLocked         = 0x800EA2A4; // type:func
+Map_WorldObjectsInit        = 0x800EA340; // type:func
 
 
 
@@ -217,3 +218,5 @@ sharedData_800E231C_0_s01   = 0x800F12FC; // size:0x14
 sharedData_800E2330_0_s01   = 0x800F1310; // type:s32 - unknown type
 sharedData_800E2350_0_s01   = 0x800F1330; // type:VECTOR3 size:0xC
 sharedData_800E2370_0_s01   = 0x800F1350; //type:s32 size:0x08
+g_WorldObject_Kidn04        = 0x800F1360; // type:WorldObjectDescNoRot size:0x24
+g_WorldObject_Fan0          = 0x800F1390; // type:WorldObject_0 size:0x18

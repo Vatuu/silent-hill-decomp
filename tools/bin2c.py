@@ -1138,7 +1138,7 @@ Examples:
     
     parser.add_argument('-s', '--structs', required=True,
                         help='Header file containing struct definitions')
-    parser.add_argument('-b', '--binary', required=True,
+    parser.add_argument('-b', '--binary',
                         help='Binary file to read')
     parser.add_argument('-t', '--type', required=True,
                         help='Struct type name to parse')
@@ -1264,6 +1264,10 @@ Examples:
     if args.show_size:
         size = struct_size
         print(f"{args.type}: {size} bytes (0x{size:X})")
+        return 0
+
+    if not args.binary:
+        print(f"Error: --binary/-b argument is required for parsing.")
         return 0
 
     # Read binary file

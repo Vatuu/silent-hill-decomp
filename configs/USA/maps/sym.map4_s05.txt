@@ -10,6 +10,10 @@
 //--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map4_s05
 //-----------------------------------------------------------------
 
+//------------------------------------------------------
+//--- PA: 0x001729   VA: 0x800CACA1   subsegment: rodata
+//------------------------------------------------------
+
 
 
 //================================================
@@ -64,6 +68,7 @@ sharedFunc_800D929C_0_s00           = 0x800D5AFC; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D5FE4; // type:func
 MapEvent_DoorJammed                 = 0x800D607C; // type:func
 MapEvent_DoorLocked                 = 0x800D6110; // type:func
+Map_WorldObjectsInit                = 0x800D723C; // type:func
 
 
 
@@ -122,3 +127,5 @@ sharedData_800E32D0_0_s00           = 0x800DB884; // type:s32
 sharedData_800E32D4_0_s00           = 0x800DB888; // type:u16
 sharedData_800E39D8_0_s00           = 0x800DB88C; // type:s32
 sharedData_800D32A0_0_s02           = 0x800DB890; // type:s32
+g_WorldObject_Kidn04                = 0x800DB958; // type:WorldObjectDescNoRot size:0x24
+g_WorldObject_Kidn05                = 0x800DB988; // type:WorldObjectDescNoRot size:0x24

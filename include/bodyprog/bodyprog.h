@@ -1797,6 +1797,17 @@ typedef struct
 
 typedef struct
 {
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+    s16 field_6;
+    s16 field_8;
+    s16 field_A;
+    s8  field_C;
+} s_800C4418;
+
+typedef struct
+{
     VECTOR3 field_0;
     MATRIX  field_C;
     s32     field_2C;
@@ -2542,7 +2553,7 @@ extern GsCOORDINATE2* D_800C4410;
 /** Flags. */
 extern s8 D_800C4414;
 
-extern u16 D_800C4420;
+extern s_800C4418 D_800C4418;
 
 /** Angles. */
 extern q3_12 D_800C4428[];

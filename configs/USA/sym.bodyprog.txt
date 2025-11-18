@@ -2578,6 +2578,7 @@ g_Inventory_EquippedItemIdx                 = 0x800C3E34;
 g_Items_Coords                              = 0x800C3E48;
 D_800C4168                                  = 0x800C4168; // type:u8 size:0xCD - size likely incomplete
 g_LoadedEffectTextureFlags                  = 0x800C42D8;
+D_800C4418                                  = 0x800C4418; // size:0x10
 D_800C4449                                  = 0x800C4449; // type:u8
 D_800C44F0                                  = 0x800C44F0; // size:0x50
 g_TargetEnemyPosition                       = 0x800C4540;
