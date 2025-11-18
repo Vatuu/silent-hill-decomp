@@ -391,8 +391,18 @@ void func_800D17D8(void) // 0x800D17D8
     Event_ItemTake(InventoryItemId_AntiqueShopKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S06_PickupAntiqueShopKey, 36);
 }
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06_2", func_800D1804);
+void Map_WorldObjectsInit(void) // 0x800D1804
+{
+    WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4.savePadName_4, 26.0f, -1.02f, 144.55f, 0.0f, 163.8f, 0.0f);
+
+    WorldObjectInit(&g_WorldObject_Map, "MAP_HIDE", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
+
+    WorldObjectInit(&g_WorldObject_Map2, "MAP2_HID", 24.6f, -1.56f, 143.16f, 0.0f, 180.0f, 0.0f);
+    
+    WorldObjectInit(&g_WorldObject_Key, "KEY_HIDE", 95.734f, -0.8062f, 99.8885f, 0.0f, -35.9f, 0.0f);
+    
+    WorldObjectInit(&g_WorldObject_FirstAidKit, D_800A99E4.firstAidKitName_8, 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
+}
 
 INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06_2", func_800D197C);
 
-INCLUDE_RODATA("asm/maps/map3_s06/nonmatchings/map3_s06_2", D_800CB2D4);

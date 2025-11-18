@@ -5,7 +5,6 @@
 //=== .rodata section
 //================================================
 
-D_800DAB7C = 0x800DAB7C; // size:3
 
 //-----------------------------------------------------------------
 //--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map5_s00
@@ -112,6 +111,7 @@ MAP_MESSAGES                = 0x800DA80C; // type:u32 size:0x54
 //----------------------------------------------------
 sharedData_800DFB4C_0_s00   = 0x800DAB70;
 sharedData_800DFB50_0_s00   = 0x800DAB74;
+D_800DAB7C                  = 0x800DAB7C; // size:3
 g_Particle_SpeedX           = 0x800DAB80; // type:s32
 g_Particle_SpeedZ           = 0x800DAB84; // type:s32
 sharedData_800DFB6C_0_s00   = 0x800DAB88; // type:s32

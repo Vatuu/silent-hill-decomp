@@ -64,7 +64,7 @@ SILENT_ASSETS   := $(PYTHON) $(TOOLS_DIR)/silentassets/extract.py
 INSERT_OVLS     := $(PYTHON) $(TOOLS_DIR)/silentassets/insertovl.py
 GET_YAML_TARGET := $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
 PREBUILD        := $(TOOLS_DIR)/prebuild.sh
-POSTBUILD       := $(TOOLS_DIR)/postbuild.sh
+POSTBUILD       := $(PYTHON) $(TOOLS_DIR)/postbuild.py
 COMPTEST        := $(TOOLS_DIR)/compilationTest.sh
 
 # Flags
@@ -86,7 +86,7 @@ INSERT_OVLS_FLAGS   := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$
 TARGET_PREBUILD  := main bodyprog screens/stream
 
 # Targets that will run tools/postbuild.sh after being linked & extracted from ELF.
-TARGET_POSTBUILD := bodyprog screens/stream
+TARGET_POSTBUILD := bodyprog screens/stream maps/map3_s06
 
 # Adjusts compiler and assembler flags based on source file location.
 # - Files under main executable paths use -G8; overlay files use -G0.

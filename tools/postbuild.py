@@ -1,13 +1,15 @@
 import sys
 
+# Patch random/uninitialized bytes in .bss section back into BODYPROG.BIN / STREAM.BIN
+
 if __name__ == "__main__":
-    if sys.argv[1] == "build/out/VIN/STREAM.BIN":
-        overlayFile = open(sys.argv[1], "r+b")
+    if sys.argv[1] == "screens/stream" or sys.argv[1] == "build/out/VIN/STREAM.BIN":
+        overlayFile = open("build/out/VIN/STREAM.BIN", "r+b")
         overlayFile.seek(0x12AE4)
         overlayFile.write(b'\xE4\x73\x40\xAC')
         overlayFile.close()
-    elif sys.argv[1] == "build/out/1ST/BODYPROG.BIN":
-        overlayFile = open(sys.argv[1], "r+b")
+    elif sys.argv[1] == "bodyprog" or sys.argv[1] == "build/out/1ST/BODYPROG.BIN":
+        overlayFile = open("build/out/1ST/BODYPROG.BIN", "r+b")
         overlayFile.seek(0xA23DC)
         overlayFile.write(b'\x0A\x09\x2E\x62')
         overlayFile.seek(0xA24CC)
@@ -16,4 +18,10 @@ if __name__ == "__main__":
         overlayFile.write(b'\x0D\x0A\x09\x2E')
         overlayFile.seek(0xA3F9C)
         overlayFile.write(b'\x09\x30\x78\x61')
+        overlayFile.close()
+    elif sys.argv[1] == "maps/map3_s06" or sys.argv[1] == "build/out/VIN/MAP3_S06.BIN":
+        # Random bytes at end of rodata section, linker artifact?
+        overlayFile = open("build/out/VIN/MAP3_S06.BIN", "r+b")
+        overlayFile.seek(0x1D65)
+        overlayFile.write(b'\x65\x74\x5F')
         overlayFile.close()

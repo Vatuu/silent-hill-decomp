@@ -36,6 +36,12 @@ extern u8 D_800D2737;
 
 extern u8 D_800D2738;
 
+extern s_WorldObjectDesc g_WorldObject_SavePad; //D_800D5ED8;
+extern s_WorldObjectDesc g_WorldObject_Map; //D_800D5F08;
+extern s_WorldObjectDesc g_WorldObject_Map2; //D_800D5F38;
+extern s_WorldObjectDesc g_WorldObject_Key; //D_800D5F68;
+extern s_WorldObjectDesc g_WorldObject_FirstAidKit; //D_800D5F98;
+
 void func_800D07A0(s32 arg0);
 
 /** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Shotgun Shells item pickup event. */
@@ -49,5 +55,7 @@ void func_800D0C14(void);
 void MapEvent_MapTake(void);
 
 void func_800D17D8(void);
+
+void Map_WorldObjectsInit(void);
 
 #endif

@@ -5,6 +5,7 @@
 //=== .rodata section
 //================================================
 
+Map_WorldObjectsInit = 0x800D1804; // type:func
 
 //-----------------------------------------------------------------
 //--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map3_s06
@@ -21,6 +22,10 @@
 //-------------------------------------------------------------------
 //--- PA: 0x0013A0   VA: 0x800CA918   subsegment: .rodata, map3_s06_2
 //-------------------------------------------------------------------
+
+//------------------------------------------------------
+//--- PA: 0x001D65   VA: 0x800CB2DD   subsegment: rodata
+//------------------------------------------------------
 
 
 
@@ -168,3 +173,8 @@ sharedData_800E39D8_0_s00           = 0x800D5EC4; // type:s32
 sharedData_800D32A0_0_s02           = 0x800D5EC8; // type:s32
 sharedData_800D16E0_2_s01           = 0x800D5ECC; // type:s32
 sharedData_800D16E4_2_s01           = 0x800D5ED0; // type:s8
+g_WorldObject_SavePad               = 0x800D5ED8; // type:WorldObjectDesc size:0x30
+g_WorldObject_Map                   = 0x800D5F08; // type:WorldObjectDesc size:0x30
+g_WorldObject_Map2                  = 0x800D5F38; // type:WorldObjectDesc size:0x30
+g_WorldObject_Key                   = 0x800D5F68; // type:WorldObjectDesc size:0x30
+g_WorldObject_FirstAidKit           = 0x800D5F98; // type:WorldObjectDesc size:0x30
