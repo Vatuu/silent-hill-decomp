@@ -114,6 +114,7 @@ sharedFunc_800D929C_0_s00           = 0x800D1D7C; // type:func
 Map_RoomIdxGet                      = 0x800D1D8C; // type:func
 MapEvent_DoorJammed                 = 0x800D2130; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D25D0; // type:func
+Map_WorldObjectsInit                = 0x800D3BD0; // type:func
 
 
 
@@ -155,3 +156,7 @@ sharedData_800E0CBA_0_s00           = 0x800D6BAE; // type:s8
 sharedData_800E39D8_0_s00           = 0x800D6BB0; // type:s32
 sharedData_800D32A0_0_s02           = 0x800D6BB4; // type:s32
 sharedData_800D6BB8_3_s04           = 0x800D6BB8; // type:s32
+g_WorldObject_Dr                    = 0x800D6BC0; // type:WorldObjectDescNoRot size:0xD8
+g_WorldObject_Plate                 = 0x800D6CB0; // type:WorldObjectDescNoRot size:0x24
+g_WorldObject_SavePad               = 0x800D6CE0; // type:WorldObjectDesc size:0x2C
+g_CommonWorldObjects                = 0x800D6D10; // type:WorldObject0 size:0x90

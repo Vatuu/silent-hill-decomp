@@ -162,7 +162,26 @@ INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04_2", D_800CB2B4);
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04_2", func_800D2E84);
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04_2", func_800D3BD0);
+void Map_WorldObjectsInit(void) // 0x800D3BD0
+{
+    WorldObjectNoRotInit(&g_WorldObject_Plate, "PLATE_NE", 100.0f, 0.0f, 60.0f);
+
+    WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4.savePadName_4, 102.5972f, -0.8191f, 58.7896f, 0.0f, 86.0f, 0.0f);
+
+    WorldObjectNoRotInit(&g_WorldObject_Dr[0], "DR1L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[1], "DR1R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[2], "DR3L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[3], "DR3R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[4], "DR2L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[5], "DR2R_HID", 19.1f, 0.0f, 59.1f);
+
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04_2", func_800D3DA4);
 
