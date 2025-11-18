@@ -38,9 +38,18 @@ extern u8 D_800DA6E8;
 
 extern s32 D_800DA6EC;
 
-extern s16 D_800DA726;
-
-extern s_WorldObjectDesc D_800DA72C;
+extern s_WorldObjectDesc g_WorldObject_BDoor1;
+extern s_WorldObjectDesc g_WorldObject_06LBag;
+extern s_WorldObject_0   g_WorldObject_SavePad;
+extern s_WorldObjectPose g_WorldObject_UnkPose0;
+extern s_WorldObject_0   g_WorldObject_Box[4];
+extern VECTOR3           g_WorldObject_UnkPos[2];
+extern s_WorldObjectDesc g_WorldObject_Key;
+extern s_WorldObjectDesc g_WorldObject_Daly;
+extern s_WorldObject_0   g_WorldObject_Drug;
+extern s_WorldObjectPose g_WorldObject_UnkPose1[3];
+extern s_WorldObjectDesc g_WorldObject_Obj00;
+extern s_WorldObject_0   g_CommonWorldObjects[6];
 
 void func_800D45B4(s32 arg0);
 
@@ -64,5 +73,7 @@ void func_800D54A4(void);
 void func_800D54D0(void);
 
 void MapEvent_KaufmannBarFightCutscene(void);
+
+void Map_WorldObjectsInit(void);
 
 #endif

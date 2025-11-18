@@ -249,7 +249,7 @@ void func_800D4E64(void) // 0x800D4E64
             Camera_PositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(133.36f), Q12(1.12f), Q12(58.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            D_800DA726 = -1618;
+            g_WorldObject_BDoor1.rotation_28.vy = FP_ANGLE(-142.21f);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -270,7 +270,7 @@ void func_800D4E64(void) // 0x800D4E64
 
         case 11:
             vcReturnPreAutoCamWork(true);
-            D_800DA726 = -85;
+            g_WorldObject_BDoor1.rotation_28.vy = FP_ANGLE(-7.5f);
             SysWork_StateStepIncrement(0);
 
         case 12:
@@ -320,7 +320,9 @@ void func_800D519C(void) // 0x800D519C
             func_8005DC1C(Sfx_Unk1591, &QVECTOR3(134.7f, -0.5f, 59.5f), Q8_CLAMPED(0.5f), 0);
             Camera_PositionSet(NULL, Q12(135.26f), Q12(-1.61f), Q12(60.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(133.36f), Q12(1.12f), Q12(58.01f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            D_800DA726                                 = -1618;
+
+            g_WorldObject_BDoor1.rotation_28.vy = FP_ANGLE(-142.21f);
+
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(135.05f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(59.75f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(180.f);
@@ -344,7 +346,7 @@ void func_800D519C(void) // 0x800D519C
 
         case 9:
             vcReturnPreAutoCamWork(true);
-            D_800DA726 = -85;
+            g_WorldObject_BDoor1.rotation_28.vy = FP_ANGLE(-7.5f);
             SysWork_StateStepIncrement(0);
 
         case 10:
@@ -771,7 +773,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
     if (g_SysWork.sysStateStep_C[0] < 27)
     {
-        g_WorldGfx_ObjectAdd(&D_800DA72C.object_0, &D_800DA72C.position_1C, &D_800DA72C.rotation_28);
+        g_WorldGfx_ObjectAdd(&g_WorldObject_06LBag.object_0, &g_WorldObject_06LBag.position_1C, &g_WorldObject_06LBag.rotation_28);
     }
 
     if (D_800DA6EC >= 0)
@@ -796,7 +798,50 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
     }
 }
 
-INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", func_800D6598);
+void Map_WorldObjectsInit(void) // 0x800D6598
+{
+    WorldObject_ModelNameSet(&g_WorldObject_SavePad, D_800A99E4.savePadName_4);
+
+    WorldObjectPoseInit(&g_WorldObject_UnkPose0, 135.5022f, -1.3f, 21.71f, 0.0f, 11.4f, 0.0f);
+
+    WorldObjectInit(&g_WorldObject_BDoor1, "BDOOR1_H", 134.5318f, 0.0f, 59.471f, 0.0f, 0.0f, 0.0f);
+
+    WorldObject_ModelNameSet(&g_WorldObject_Box[0], "BOX091_H");
+    WorldObject_ModelNameSet(&g_WorldObject_Box[1], "BOX191_H");
+
+    Math_Vector3Set(&g_WorldObject_UnkPos[0], Q12(134.3162f), Q12(-0.504f), Q12(62.472f));
+
+    WorldObject_ModelNameSet(&g_WorldObject_Box[2], "BOX092_H");
+    WorldObject_ModelNameSet(&g_WorldObject_Box[3], "BOX192_H");
+
+    Math_Vector3Set(&g_WorldObject_UnkPos[1], Q12(134.5752f), Q12(0.0f), Q12(62.4656f));
+
+    WorldObjectInit(&g_WorldObject_Key, "KEY_HIDE", 134.5752f, -0.1067f, 62.4656f, 0.0f, -27.51f, 0.0f);
+
+    WorldObjectInit(&g_WorldObject_Daly, "DALY_HID", 135.9241f, -1.1517f, 60.315f, 0.0f, 9.8f, 0.0f);
+
+    WorldObject_ModelNameSet(&g_WorldObject_Drug, "DRUG_HID");
+
+    WorldObjectPoseInit(&g_WorldObject_UnkPose1[0], 134.6792f, -0.1561f, 59.1995f, 0.0f, -6.4f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObject_UnkPose1[1], 134.8038f, -0.1561f, 59.29f, 0.0f, 170.7f, 0.0f);
+    WorldObjectPoseInit(&g_WorldObject_UnkPose1[2], 134.8704f, -0.2054f, 59.25f, 0.0f, -3.0f, 20.4f);
+
+    WorldObjectInit(&g_WorldObject_06LBag, "06LBAG_H", 138.8426f, 0.0f, 20.2635f, 0.0f, 180.0f, 0.0f);
+
+    WorldObjectInit(&g_WorldObject_Obj00, "OBJ00_HI", 139.2938f, 0.0f, 25.4083f, 0.0f, 33.5f, 0.0f);
+
+    if (Savegame_EventFlagGet(EventFlag_M5S02_UsedSafeKey))
+    {
+        g_WorldObject_BDoor1.rotation_28.vy = FP_ANGLE(-7.5f);
+    }
+
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02_2", func_800D68FC);
 

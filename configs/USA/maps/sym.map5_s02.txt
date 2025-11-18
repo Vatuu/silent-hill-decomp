@@ -115,6 +115,7 @@ MapEvent_DoorJammed                 = 0x800D4990; // type:func
 MapEvent_DoorLocked                 = 0x800D4A24; // type:func
 MapEvent_CommonItemTake             = 0x800D4AB8; // type:func
 MapEvent_KaufmannBarFightCutscene   = 0x800D5744; // type:func
+Map_WorldObjectsInit                = 0x800D6598; // type:func
 
 
 
@@ -178,3 +179,15 @@ sharedData_800E3A24_0_s00           = 0x800DA6B4; // type:s32
 sharedData_800E3A28_0_s00           = 0x800DA6B8; // type:s32
 sharedData_800E3A2C_0_s00           = 0x800DA6BC; // type:s32
 sharedData_800D5CF4_3_s00           = 0x800DA6C0; // type:s32
+g_WorldObject_BDoor1                = 0x800DA6FC; // type:WorldObjectDesc size:0x2C
+g_WorldObject_06LBag                = 0x800DA72C; // type:WorldObjectDesc size:0x2C
+g_WorldObject_SavePad               = 0x800DA75C; // type:WorldObject_0 size:0x1C
+g_WorldObject_UnkPose0              = 0x800DA77C; // type:WorldObjectPose size:0x14
+g_WorldObject_Box                   = 0x800DA79C; // type:WorldObject_0 size:0x70
+g_WorldObject_UnkPos                = 0x800DA80C; // type:VECTOR3 size:0x18
+g_WorldObject_Key                   = 0x800DA82C; // type:WorldObjectDesc size:0x2C
+g_WorldObject_Daly                  = 0x800DA85C; // type:WorldObjectDesc size:0x2C
+g_WorldObject_Drug                  = 0x800DA88C; // type:WorldObject_0 size:0x1C
+g_WorldObject_UnkPose1              = 0x800DA8AC; // type:WorldObjectPose size:0x3C
+g_WorldObject_Obj00                 = 0x800DA8EC; // type:WorldObjectDesc size:0x2C
+g_CommonWorldObjects                = 0x800DA91C; // type:WorldObject_0 size:0xA8
