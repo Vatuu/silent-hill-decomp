@@ -212,7 +212,7 @@ typedef struct _s_8002AC04
             u8  funcIdx_4;
             u8  field_5;
             u16 field_6;
-            s32 field_8;
+            u8* field_8;
             u32 field_C_0  : 16;
             u32 field_C_16 : 12;
             u32 field_C_28 : 3;
