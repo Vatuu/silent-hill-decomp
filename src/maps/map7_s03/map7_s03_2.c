@@ -1821,7 +1821,7 @@ void func_800E514C(void) // 0x800E514C
             SysWork_StateStepIncrement(0);
 
         case 33:
-            func_800D7144(&D_800F3DE4);
+            func_800D7144(&g_WorldObject_Bin.position_1C);
             func_800E1788(9);
             SysWork_StateStepIncrement(0);
 
@@ -3455,7 +3455,61 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E94C0);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E94F4);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E9528);
+void Map_WorldObjectsInit(void) // 0x800E9528
+{
+    D_800F4805 = 0;
+    D_800F48A4 = 0;
+
+    WorldObject_ModelNameSet(&g_WorldObject_Real, "REAL_HID");
+    WorldObject_ModelNameSet(&g_WorldObject_Ura, "URA_HIDE");
+    WorldObject_ModelNameSet(&g_WorldObject_Under, "UNDER_HI");
+
+    Math_Vector3Set(&g_WorldObject_UnkPos, Q12(100.0f), Q12(0.0f), Q12(-140.0f));
+
+    WorldObjectInit(&g_WorldObject_Bin, "BIN_HIDE", 140.0f, 0.0f, -100.0f, 0.0f, 0.0f, 0.0f);
+
+    WorldObjectInit(&g_WorldObject_Nu, "NU_HIDE", 139.7f, 0.0f, -99.1f, 0.0f, -90.0f, 0.0f);
+
+    WorldObjectInit(&g_WorldObject_Baby, "BABY_HID", 140.0f, 0.0f, -100.0f, 0.0f, 0.0f, 0.0f);
+
+    g_SysWork.field_235C = NULL;
+
+    // Set light position.
+    g_SysWork.field_2360.vx = Q12(139.7f);
+    g_SysWork.field_2360.vy = Q12(-4.5f);
+    g_SysWork.field_2360.vz = Q12(-98.1f);
+
+    g_SysWork.field_236C = NULL;
+
+    // Set light rotation.
+    g_SysWork.field_2370.vx = FP_ANGLE(-90.0f);
+    g_SysWork.field_2370.vy = FP_ANGLE(0.0f);
+    g_SysWork.field_2370.vz = FP_ANGLE(0.0f);
+
+    g_SysWork.field_2378 = Q12(2.0f);
+
+    D_800F4820 = 0;
+
+    func_800D5D24();
+    func_800E16FC();
+
+    D_800F4838 = 0;
+    D_800F4830 = 0;
+
+    if (Savegame_EventFlagGet(EventFlag_449))
+    {
+        D_800F481C = 1;
+    }
+    else
+    {
+        D_800F481C = 2;
+    }
+
+    if (!Savegame_EventFlagGet(EventFlag_391))
+    {
+        D_800F481C += 2;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E972C);
 

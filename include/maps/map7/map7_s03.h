@@ -93,11 +93,17 @@ extern s32 D_800F2434;
 
 extern s32 D_800F3D8C;
 
-extern u8 D_800F3DE4; // Unknown type, pointer passed to func_800D7144
+extern s_WorldObjectDesc g_WorldObject_Bin;
+
+extern s_WorldObjectDesc g_WorldObject_Nu;
+
+extern s_WorldObjectDesc g_WorldObject_Baby;
 
 extern u8 D_800F3E58; // Unknown type, pointer passed to func_800DB154
 
 extern s32 D_800F47F0;
+
+extern VECTOR3 g_WorldObject_UnkPos;
 
 extern u8 D_800F4804;
 extern u8 D_800F4805;
@@ -141,7 +147,11 @@ extern s32 D_800F4838;
 
 extern s32 D_800F483C;
 
-extern s16 D_800F23D0;
+extern s_WorldObject_0 g_WorldObject_Real;
+extern s_WorldObject_0 g_WorldObject_Ura;
+extern s_WorldObject_0 g_WorldObject_Under;
+
+extern s32 D_800F48A4;
 
 extern s_AnimInfo LITTLE_INCUBUS_ANIM_INFOS[];
 extern s_AnimInfo INCUBUS_ANIM_INFOS[];
@@ -163,7 +173,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORD
 
 void func_800D70EC(void);
 
-void func_800D7144(void*); // TODO: Unknown arg type.
+void func_800D7144(VECTOR3*);
 
 void func_800D71A4(s32 arg0);
 
@@ -289,6 +299,8 @@ void func_800E9490(s_SubCharacter* chara);
 void func_800E9498(void);
 void func_800E94AC(void);
 void func_800E94F4(void);
+
+void Map_WorldObjectsInit(void);
 
 void func_800E9874(void);
 
