@@ -9,7 +9,15 @@
 #define HAS_PlayerState_Unk133
 #define KEYFRAME_PlayerState_Unk114 956
 
+extern s_WorldObjectDescNoRot g_WorldObject_Window;
+extern s_WorldObjectDescNoRot g_WorldObject_DrOpen1;
+extern s_WorldObjectDescNoRot g_WorldObject_DrOpen2;
+extern s_WorldObjectDescNoRot g_WorldObject_DrClose;
+extern s_WorldObject_0        g_CommonWorldObjects[6];
+
 /** @brief Handles a First Aid Kit, Health Drink, or Shotgun Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
+
+void Map_WorldObjectsInit(void);
 
 #endif

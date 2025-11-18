@@ -586,7 +586,52 @@ void MapEvent_CommonItemTake(void) // 0x800EB090
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EB11C);
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EBCE8);
+void Map_WorldObjectsInit(void) // 0x800EBCE8
+{
+    if (!Savegame_EventFlagGet(EventFlag_402))
+    {
+        D_800A9034.v = 0;
+        Fs_QueueStartReadTim(FILE_TIM_GROUND_TIM, IMAGE_BUFFER_4, &D_800A9034);
+    }
+
+    WorldObjectNoRotInit(&g_WorldObject_Window, "WINDOW_H", -155.0f, 3.0f, 20.0f);
+    WorldObjectNoRotInit(&g_WorldObject_DrOpen1, "DROPEN1_", -190.5f, 0.0f, 132.5f);
+    WorldObjectNoRotInit(&g_WorldObject_DrOpen2, "DROPEN2_", -190.5f, -0.05f, 132.214f);
+    WorldObjectNoRotInit(&g_WorldObject_DrClose, "DRCLOSE_", -189.5f, 0.0f, 132.5f);
+
+    func_8008D448();
+    func_8003EBA0();
+
+    g_SysWork.field_2378 = Q12(1.0f);
+
+    switch (g_SavegamePtr->gameDifficulty_260)
+    {
+        case GameDifficulty_Normal:
+            g_SysWork.field_2280 = 4;
+            break;
+
+        case GameDifficulty_Easy:
+            g_SysWork.field_2280 = 3;
+            break;
+
+        default:
+            g_SysWork.field_2280 = 5;
+            break;
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_428))
+    {
+        Savegame_EventFlagClear(EventFlag_428);
+        Game_TurnFlashlightOn();
+    }
+
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EBEE0);
 
