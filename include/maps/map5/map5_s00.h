@@ -16,6 +16,13 @@ extern s32 D_800DAB78;
 
 extern u8 D_800DAB7C[3];
 
+extern s_WorldObjectDesc g_WorldObject_Map;
+extern s_WorldObjectDesc g_WorldObject_SavePad0;
+extern s_WorldObjectDesc g_WorldObject_SavePad1;
+extern s_WorldObject_0   g_CommonWorldObjects[6];
+
+void func_800CB0D8(void);
+
 void func_800D041C(s_SubCharacter* chara);
 
 void func_800D6414(void);
@@ -40,5 +47,7 @@ void func_800D7F88(void);
 
 /** @brief Handles the ? map pickup event. */
 void MapEvent_MapTake(void);
+
+void Map_WorldObjectsInit(void);
 
 #endif

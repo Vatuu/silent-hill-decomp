@@ -798,7 +798,46 @@ void MapEvent_MapTake(void) // 0x800D8280
     Event_MapTake(13, EventFlag_M5S00_PickupMap, 20);
 }
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D82A8);
+void Map_WorldObjectsInit(void) // 0x800D82A8
+{
+    WorldObjectInit(&g_WorldObject_Map, "MAP_NEAR", 41.2f, -0.7f, -48.7f, 0.0f, -100.1f, 0.0f);
+
+    func_800CB0D8();
+
+    WorldObjectInit(&g_WorldObject_SavePad0, D_800A99E4.savePadName_4, 40.503f, -0.709f, -48.7925f, 0.0f, 5.7f, 0.0f);
+
+    WorldObjectInit(&g_WorldObject_SavePad1, D_800A99E4.savePadName_4, -86.469f, -1.041f, -103.4905f, 0.0f, 206.3f, 0.0f);
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
+    {
+        func_80088FF4(Chara_Creaper, 0, 0);
+        func_80088FF4(Chara_Creaper, 1, 0);
+        func_80088FF4(Chara_Creaper, 4, 0);
+        func_80088FF4(Chara_Creaper, 7, 0);
+        func_80088FF4(Chara_Creaper, 12, 0);
+        g_SysWork.field_2280 = 3;
+    }
+    else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    {
+        func_80088FF4(Chara_Creaper, 5, 12);
+        func_80088FF4(Chara_Creaper, 6, 12);
+        func_80088FF4(Chara_Creaper, 7, 0);
+        func_80088FF4(Chara_Creaper, 8, 13);
+        func_80088FF4(Chara_Creaper, 9, 13);
+        g_SysWork.field_2280 = 4;
+    }
+    else
+    {
+        g_SysWork.field_2280 = 4;
+    }
+
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[3], D_800A99E4.handgunBulletsName_14);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
+    WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
+}
 
 INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D84D8);
 
