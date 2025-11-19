@@ -7,10 +7,20 @@
 #define HAS_PlayerState_Unk129
 #define KEYFRAME_PlayerState_Unk123 877
 
+typedef struct
+{
+    s32             field_0;
+    s32             field_4;
+    u8              unk_8[0x230];
+    s_WorldObject_0 objRef_238;
+} s_800E0698;
+
 extern s_AnimInfo TWINFEELER_ANIM_INFOS[];
 
 extern s32 D_800DB914; // } RNG related values?
 extern s32 D_800DB918; // }
+
+extern s_FsImageDesc D_800DB91C;
 
 extern u16 D_800DB92C;
 
@@ -32,6 +42,8 @@ extern s16 D_800E05AE;
 extern s8 D_800E05E0;
 extern s8 D_800E05E1;
 extern s8 D_800E05E2;
+
+extern s_800E0698 D_800E0698;
 
 void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 
@@ -68,6 +80,10 @@ void func_800D6774(void);
 void func_800D6F24(void);
 
 s32 func_800D7394(void);
+
+void func_800D7408(void);
+
+void func_800D7450(void);
 
 void func_800D960C(void);
 

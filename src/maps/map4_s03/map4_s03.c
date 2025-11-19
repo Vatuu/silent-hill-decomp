@@ -961,9 +961,54 @@ s32 func_800D7394(void) // 0x800D7394
     return (u16)D_800DB914 & 0x7FFF;
 }
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7408);
+void func_800D7408(void) // 0x800D7408
+{
+    D_800E0698.field_0 = 0;
+    D_800E0698.field_4 = 0;
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7450);
+    func_800D7450();
+    func_800D7548();
+
+    WorldObject_ModelNameSet(&D_800E0698.objRef_238, "REF_NEAR");
+}
+
+void func_800D7450(void) // 0x800D7450
+{
+    e_FsFile texFileIdx;
+    s32      i;
+
+    texFileIdx = -1;
+
+    for (i = 0; i < 3; i++)
+    {
+        switch (i)
+        {
+            case 0:
+                texFileIdx          = FILE_TIM_TV1_TIM;
+                D_800DB91C.tPage[1] = 29;
+                D_800DB91C.u        = 0;
+                D_800DB91C.v        = 0;
+                D_800DB91C.clutY    = 0;
+                break;
+            case 1:
+                texFileIdx          = FILE_TIM_TV2_TIM;
+                D_800DB91C.tPage[1] = 12;
+                D_800DB91C.u        = 32;
+                D_800DB91C.v        = 0;
+                D_800DB91C.clutY    = 5;
+                break;
+            case 2:
+                texFileIdx          = FILE_TIM_TV3_TIM;
+                D_800DB91C.tPage[1] = 28;
+                D_800DB91C.v        = 128;
+                D_800DB91C.u        = 0;
+                D_800DB91C.clutY    = 10;
+                break;
+        }
+
+        Fs_QueueStartReadTim(texFileIdx, FS_BUFFER_1, &D_800DB91C);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7548);
 
