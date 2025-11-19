@@ -85,20 +85,55 @@ extern VECTOR3 D_800EB6A4;
 extern u8  D_800EB6B0;
 extern s32 D_800EB6B4;
 
-extern s_WorldObjectPose D_800EB6E0; // Assumed type.
-
-extern s_WorldObjectDesc D_800EB6F4[];
-
-extern s16 D_800EB9F4[];
-
-extern s16 D_800EBA14[];
-
-extern s8 D_800EBAF4;
-
-extern s_WorldObjectDesc D_800EBB64;
+extern s_WorldObjectDesc      g_WorldObject_Door;
+extern s_WorldObjectDesc      g_WorldObject_Bean[16];
+extern s16                    D_800EB9F4[16];
+extern s16                    D_800EBA14[16];
+extern s_WorldObjectDesc      g_WorldObject_Dor[4];
+extern s8                     D_800EBAF4;
+extern s_WorldObjectDesc      g_WorldObject_Bed3;
+extern s_WorldObjectDescNoRot g_WorldObject_Cover;
+extern s_WorldObjectDesc      D_800EBB64;
 
 /** Timer. */
 extern q3_12 D_800EBB94;
+
+extern s_WorldObjectDescNoRot g_WorldObject_Dr[6];
+extern s_WorldObjectDescNoRot g_WorldObject_Ank;
+extern s_WorldObjectDescNoRot g_WorldObject_Ref[2];
+extern s_WorldObjectDescNoRot g_WorldObject_Chain1[2];
+extern s_WorldObjectDescNoRot g_WorldObject_Sword;
+extern s_WorldObjectDesc      g_WorldObject_Jelly;
+extern s_WorldObjectDesc      g_WorldObject_Key0;
+extern s_WorldObjectDescNoRot g_WorldObject_Door9;
+extern s_WorldObjectDescNoRot g_WorldObject_Wall9;
+extern s_WorldObjectDescNoRot g_WorldObject_Gofu;
+extern s_WorldObjectDescNoRot g_WorldObject_Driver;
+extern s_WorldObjectDescNoRot g_WorldObject_Zukan;
+extern s_WorldObjectDescNoRot g_WorldObject_Scrap;
+extern s_WorldObject_0        g_WorldObject_Key1;
+extern s_WorldObject_0        g_WorldObject_Futa[2];
+extern s_WorldObjectPose      g_WorldObject_UnkPose2;
+extern s_WorldObjectDesc      g_WorldObject_Camera;
+extern s_WorldObjectDesc      g_WorldObject_Ring;
+extern s_WorldObjectDesc      g_WorldObject_Gofu_B;
+extern s_WorldObjectDescNoRot g_WorldObject_Mov1;
+extern s_WorldObjectDescNoRot g_WorldObject_Key2;
+extern s_WorldObjectDesc      g_WorldObject_GofuA[5];
+extern s_WorldObjectDesc      g_WorldObject_KeyX2;
+extern s_WorldObjectDesc      g_WorldObject_Stone;
+extern s_WorldObjectDesc      g_WorldObject_Window;
+extern s_WorldObject_0        g_WorldObject_KaigaR[2];
+extern VECTOR3                g_WorldObject_UnkPos0;
+extern s_WorldObject_0        g_WorldObject_KaigaL[2];
+extern VECTOR3                g_WorldObject_UnkPos1;
+extern SVECTOR3               g_WorldObject_UnkRot0;
+extern s_WorldObject_0        g_WorldObject_SavePad;
+extern s_WorldObjectPose      g_WorldObject_UnkPose0;
+extern s_WorldObjectPose      g_WorldObject_UnkPose1;
+extern s_WorldObjectDesc      g_WorldObject_Diary;
+extern s_WorldObjectDescNoRot g_WorldObject_Kubomi;
+extern s_WorldObject_0        g_CommonWorldObjects[6];
 
 void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
