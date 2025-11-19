@@ -82,17 +82,57 @@ extern VECTOR3 D_800E2C58;
 extern u8  D_800E2C64;
 extern s32 D_800E2C68;
 
-extern s_WorldObjectPose D_800E2C94; // Assumed type.
+extern s_WorldObjectDesc g_WorldObject_Door;
 
 extern s32 D_800E2CA8;
 extern s32 D_800E2CAC;
 
-extern VECTOR3 D_800E2CD4;
+extern s_WorldObjectDesc g_WorldObject_Stone0;
 
-extern s_WorldObjectDesc D_800E2CB8;
+extern VECTOR3 D_800E2CD4;
 
 /** Decrementing timer. */
 extern q3_12 D_800E2CE8;
+
+extern s_WorldObjectDescNoRot g_WorldObject_Dr[6];
+extern s_WorldObjectDesc      g_WorldObject_Key0;
+extern s_WorldObjectDescNoRot g_WorldObject_Gofu;
+extern s_WorldObjectDescNoRot g_WorldObject_Key1;
+extern s_WorldObjectDescNoRot g_WorldObject_Penchi;
+extern s_WorldObjectDescNoRot g_WorldObject_Driver;
+extern s_WorldObjectDescNoRot g_WorldObject_Zukan;
+extern s_WorldObjectDescNoRot g_WorldObject_Scrap;
+extern s_WorldObject_0        g_WorldObject_Key2;
+extern s_WorldObject_0        g_WorldObject_Futa[2];
+extern s_WorldObjectPose      g_WorldObject_UnkPose1;
+extern s_WorldObject_0        g_WorldObject_Key1_2[2];
+extern s_WorldObjectPose      g_WorldObject_UnkPose2;
+extern s_WorldObjectDesc      g_WorldObject_Camera;
+extern s_WorldObjectDesc      g_WorldObject_Ring;
+extern s_WorldObjectDesc      g_WorldObject_Gofu_B;
+extern s_WorldObject_0        g_WorldObject_KeyX1;
+extern s_WorldObject_0        g_WorldObject_KeyX2;
+extern VECTOR3                g_WorldObject_UnkPos2;
+extern SVECTOR3               g_WorldObject_UnkRot1;
+extern SVECTOR3               g_WorldObject_UnkRot2;
+extern SVECTOR3               g_WorldObject_UnkRot3;
+extern SVECTOR3               g_WorldObject_UnkRot4;
+extern s_WorldObjectDesc      g_WorldObject_Ana;
+extern s_WorldObjectDesc      g_WorldObject_Stone1;
+extern s_WorldObjectDesc      g_WorldObject_Window;
+extern s_WorldObjectDescNoRot g_WorldObject_Kubomi;
+extern s_WorldObject_0        g_WorldObject_KaigaR[2];
+extern VECTOR3                g_WorldObject_UnkPos0;
+extern s_WorldObject_0        g_WorldObject_KaigaL[2];
+extern VECTOR3                g_WorldObject_UnkPos1;
+extern SVECTOR3               g_WorldObject_UnkRot0;
+extern s_WorldObject_0        g_WorldObject_SavePad;
+extern s_WorldObjectPose      g_WorldObject_UnkPose0;
+extern s_WorldObjectDesc      g_WorldObject_Diary;
+extern s_WorldObject_0        g_CommonWorldObjects[6];
+
+extern s32 D_800E33A0;
+extern s16 D_800E33A4;
 
 s32 func_800D1630();
 
@@ -196,6 +236,8 @@ void func_800DBDE0(void);
 void func_800DC028(void);
 
 void func_800DC080(void);
+
+void Map_WorldObjectsInit(void);
 
 void func_800DEDA4(void);
 
