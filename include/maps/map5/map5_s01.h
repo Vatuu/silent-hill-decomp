@@ -53,4 +53,7 @@ void func_800ECC8C(void);
 
 void func_800E828C(s_SubCharacter* chara); // same as `func_800E6758` in MAP2_S02
 
+void func_800D6CBC(s_SubCharacter* chara);
+
+void func_800DFBBC(s_SubCharacter* chara);
 #endif
