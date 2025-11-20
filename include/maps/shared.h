@@ -2138,6 +2138,11 @@ extern VECTOR3 sharedData_800E2350_0_s01;
 
 extern s_800C4590 sharedData_800E39BC_0_s00;
 
+extern s32 sharedData_800DD5A0_0_s00;
+extern s16 sharedData_800DD5A4_0_s00;
+extern s16 sharedData_800E39E0_0_s00;
+extern s16 sharedData_800E39E2_0_s00;
+
 typedef struct
 {
     VECTOR3 field_0; // Rotation?
@@ -2191,6 +2196,8 @@ void sharedFunc_800D20D8_0_s00(void);
 void Player_ControlFreeze(void);
 
 void Player_ControlUnfreeze(bool arg0);
+
+s32 sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount);
 
 void sharedFunc_800D2C7C_0_s00(s32 arg0);
 

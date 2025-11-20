@@ -71,7 +71,7 @@ INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", sharedFunc_800D0690_1_s03
 
 #include "maps/shared/Player_ControlUnfreeze.h" // 0x800D0A08
 
-INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800D0BE0);
+#include "maps/shared/sharedFunc_800D23EC_0_s00.h" // 0x800D0BE0
 
 #include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800D1470
 

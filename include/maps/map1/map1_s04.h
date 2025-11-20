@@ -23,9 +23,6 @@ extern u8 D_800CCF54;
 
 extern u16 D_800CCF5C[];
 
-// TODO: Likely sharedFuncs with code removed with ifdef.
-s32 func_800CC584(void);
-
 void func_800CC77C(void);
 
 void func_800CC784(void);

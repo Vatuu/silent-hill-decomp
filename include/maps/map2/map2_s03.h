@@ -11,8 +11,6 @@ extern u8 D_800CCCAC;
 
 extern s8 D_800CCCAF;
 
-s32 func_800CC52C(void);
-
 void func_800CC724(void);
 
 void func_800CC72C(void);

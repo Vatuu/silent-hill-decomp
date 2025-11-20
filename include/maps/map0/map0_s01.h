@@ -126,8 +126,6 @@ void Map_WorldObjectsUpdate(void);
 
 void CutsceneObjects_Add(s32 arg0);
 
-s32 func_800D1E5C(void);
-
 void func_800D2054(void);
 
 void Player_FallBackward(void);

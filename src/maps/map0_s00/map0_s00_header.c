@@ -7,7 +7,6 @@
 #define BLOOD_SPLAT_COUNT_MAX 150
 
 // Undefined functions, unknown signature.
-#define func_800D23EC (void(*)(void))0x800D23EC
 #define func_800D8A00 (void(*)(void))0x800D8A00
 
 extern u8 D_800DF754[];
@@ -109,7 +108,7 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .func_C4                  = sharedFunc_800D20D8_0_s00,
     .freezePlayerControl_C8   = Player_ControlFreeze,
     .unfreezePlayerControl_CC = Player_ControlUnfreeze,
-    .func_D0                  = func_800D23EC,
+    .func_D0                  = sharedFunc_800D23EC_0_s00,
     .func_D4                  = sharedFunc_800D2C7C_0_s00,
     .func_D8                  = sharedFunc_800D2D2C_0_s00,
     .func_DC                  = sharedFunc_800D2D44_0_s00,

@@ -1559,7 +1559,7 @@ typedef struct _MapOverlayHeader
     void                   (*func_C4)(); // func(?).
     void                   (*freezePlayerControl_C8)();
     void                   (*unfreezePlayerControl_CC)(s32);
-    s32                    (*func_D0)(s32, void*, s16, s32); // 0x800C964C
+    s32                    (*func_D0)(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount); // 0x800C964C
     s32                    (*func_D4)(s32);                  // Assumed return type.
     void                   (*func_D8)();                     // Assumed return type.
     void                   (*func_DC)();                     // Assumed return type.
@@ -2612,7 +2612,7 @@ extern s16 D_800AF070[]; // Type assumed.
 
 extern s16 D_800AF1FC[]; // Type assumed.
 
-extern s8 D_800C4588;
+extern u8 D_800C4588;
 
 /** Player instance of this struct. */
 extern s_800C4590 D_800C4590;

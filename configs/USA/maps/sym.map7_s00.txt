@@ -10,6 +10,10 @@
 //--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map7_s00
 //-----------------------------------------------------------------
 
+//------------------------------------------------------
+//--- PA: 0x0014F4   VA: 0x800CAA6C   subsegment: rodata
+//------------------------------------------------------
+
 //-------------------------------------------------------------------
 //--- PA: 0x0014F8   VA: 0x800CAA70   subsegment: .rodata, Chara_Lisa
 //-------------------------------------------------------------------
@@ -40,6 +44,7 @@ sharedFunc_800D209C_0_s00           = 0x800CDB9C; // type:func
 sharedFunc_800D20D8_0_s00           = 0x800CDBD8; // type:func
 Player_ControlFreeze                = 0x800CDBE4; // type:func
 Player_ControlUnfreeze              = 0x800CDD44; // type:func
+sharedFunc_800D23EC_0_s00           = 0x800CDF1C; // type:func
 sharedFunc_800D2C7C_0_s00           = 0x800CE7AC; // type:func
 sharedFunc_800D2D2C_0_s00           = 0x800CE85C; // type:func
 sharedFunc_800D2D44_0_s00           = 0x800CE874; // type:func
@@ -97,6 +102,8 @@ SysWork_StateStepIncrementAfterTime = 0x800D0ACC; // type:func
 //----------------------------------------------------
 HARRY_M7S00_ANIM_INFOS              = 0x800D2B14;
 sharedData_800DD59C_0_s00           = 0x800D2C9C; // type:u8
+sharedData_800DD5A0_0_s00           = 0x800D2CA0; // type:s32 size:4
+sharedData_800DD5A4_0_s00           = 0x800D2CA4; // type:s16 size:2
 LISA_ANIM_INFOS                     = 0x800D2CA8; // type:AnimInfo
 sharedData_800DF1F4_0_s00           = 0x800D2EE8; // type:s32
 sharedData_800DF1F8_0_s00           = 0x800D2EEC; // type:s16
@@ -124,6 +131,8 @@ sharedData_800E0CB8_0_s00           = 0x800D432C; // type:u16
 sharedData_800E0CBA_0_s00           = 0x800D432E; // type:s8
 sharedData_800E39D8_0_s00           = 0x800D4330; // type:s32
 sharedData_800D32A0_0_s02           = 0x800D4334; // type:s32
+sharedData_800E39E0_0_s00           = 0x800D4338; // type:s16 size:2
+sharedData_800E39E2_0_s00           = 0x800D433A; // type:s16 size:2
 sharedData_800D6BB8_3_s04           = 0x800D433C; // type:s32
 g_CutsceneCameraPosition            = 0x800D4340; // type:VECTOR3
 g_CutsceneCameraLookAt              = 0x800D4350; // type:VECTOR3

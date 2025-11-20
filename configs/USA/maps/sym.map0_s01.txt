@@ -70,6 +70,7 @@ sharedFunc_800D209C_0_s00           = 0x800D1B00; // type:func
 sharedFunc_800D20D8_0_s00           = 0x800D1B3C; // type:func
 Player_ControlFreeze                = 0x800D1B48; // type:func
 Player_ControlUnfreeze              = 0x800D1CA8; // type:func
+sharedFunc_800D23EC_0_s00           = 0x800D1E5C; // type:func
 sharedFunc_800D2C7C_0_s00           = 0x800D1E64; // type:func
 sharedFunc_800D2D2C_0_s00           = 0x800D1F14; // type:func
 sharedFunc_800D2D44_0_s00           = 0x800D1F2C; // type:func

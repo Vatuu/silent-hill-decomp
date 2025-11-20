@@ -115,9 +115,9 @@
  * @param to Second position.
  * @param return 2D distance between two positions.
  */
-#define FP_2D_DISTANCE_SQR(from, to)                                     \
-    ((Q12_TO_Q8((to).vx - (from).vx) * Q12_TO_Q8((to).vx - (from).vx)) + \
-     (Q12_TO_Q8((to).vz - (from).vz) * Q12_TO_Q8((to).vz - (from).vz)))
+#define FP_2D_DISTANCE_SQR(from, to)          \
+    (SQUARE(Q12_TO_Q8((to).vx - (from).vx)) + \
+     SQUARE(Q12_TO_Q8((to).vz - (from).vz)))
 
 // ==================================
 // RAW Q FORMAT CONVERSION AND UTILS

@@ -32,10 +32,7 @@
 
 #include "maps/shared/Player_ControlUnfreeze.h" // 0x800CCDA0
 
-s32 func_800CCF78(void) // 0x800CCF78
-{
-    return 0;
-}
+#include "maps/shared/sharedFunc_800D23EC_0_s00.h" // 0x800CCF78
 
 #include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800CCF80
 

@@ -43,8 +43,6 @@ extern u8 D_800D6F54;
 
 extern s32 D_800D6F58;
 
-s32 func_800CF648(void);
-
 void func_800CF840(void);
 
 void func_800CF848(void);

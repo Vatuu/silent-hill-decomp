@@ -55,6 +55,7 @@ segments:
     subsegments:
       # .rodata section
       - [0x0, .rodata, map7_s00]
+      - [0x14F4, rodata]
       - [0x14F8, .rodata, Chara_Lisa]
       - [0x1598, .rodata, map7_s00_2]
 

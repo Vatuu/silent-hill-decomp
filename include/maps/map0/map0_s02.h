@@ -12,8 +12,6 @@
 #define MAP_ROOM_MIN_Z Q12(0.0f)
 #define MAP_ROOM_MAX_Z Q12(120.0f)
 
-s32 func_800CE548(void);
-
 void func_800CE740(void);
 
 void func_800CE748(void);

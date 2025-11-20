@@ -35,10 +35,7 @@ INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", g_MapOverlayHeader);
 
 #include "maps/shared/Player_ControlUnfreeze.h" // 0x800D028C
 
-s32 func_800D0464(void) // 0x800D0464
-{
-    return 0;
-}
+#include "maps/shared/sharedFunc_800D23EC_0_s00.h" // 0x800D0464
 
 #include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800D046C
 

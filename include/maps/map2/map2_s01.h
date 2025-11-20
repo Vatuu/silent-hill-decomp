@@ -25,8 +25,6 @@ extern u8 g_MapMsgSoundIdx;
 
 void func_800CB010(s32 arg0, s32 arg1, s32 arg2);
 
-s32 func_800CCF78(void);
-
 void func_800CD170(void);
 
 void func_800CD178(void);

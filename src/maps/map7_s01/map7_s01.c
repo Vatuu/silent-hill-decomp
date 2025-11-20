@@ -42,7 +42,7 @@ INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CA5C8);
 
 #include "maps/shared/Player_ControlUnfreeze.h" // 0x800D09B0
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D0B88);
+#include "maps/shared/sharedFunc_800D23EC_0_s00.h" // 0x800D0B88
 
 #include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800D1418
 
@@ -132,7 +132,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CEB90_3_s03
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CEC88_3_s03); // 0x800D2C7C
 
-s32 func_800D2EA0(void) // 0x800D2EA0 // 0x800D2EA0
+s32 func_800D2EA0(void) // 0x800D2EA0
 {
     s32 temp_a0;
 

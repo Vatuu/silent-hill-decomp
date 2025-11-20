@@ -1,15 +1,13 @@
 // Seems like this function is intended to be called repeatedly, swapping between states
 // Might be called many times in a single logic update, or over multiple updates
+// Very similar to `sharedFunc_800D23EC_0_s00`, but that func is for player chara.
 bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, s32 angleIn, s32 arg4)
 {
     #define ANGLE_THRESHOLD (FP_ANGLE(360.0) >> 6) // 360 / 64 = 5.625 degrees.
 
     q7_8     shortestAngle;
     s32      angleStep;
-    s32      tmpIdx;
-    s32      rotY;
-    s16      tmpAngle;
-    s32      dist;
+    int      dist; // @hack Needs to be `int` for `ABS` to match?
     VECTOR3* arg2; // Q19.12
 
     // TODO: This data is hard to keep track of and may not point to the right `properties_E4` struct.
@@ -37,11 +35,9 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             }
             else
             {
-                tmpAngle = FP_ANGLE_ABS(ratan2(arg2[0].vx - chara->position_18.vx, arg2[0].vz - chara->position_18.vz));
-                rotY = chara->rotation_24.vy;
-                sharedData_800DF1FA_0_s00 = tmpAngle;
-                Math_ShortestAngleGet(rotY, tmpAngle, &shortestAngle);
-                
+                sharedData_800DF1FA_0_s00 = FP_ANGLE_ABS(ratan2(arg2[0].vx - chara->position_18.vx, arg2[0].vz - chara->position_18.vz));
+                Math_ShortestAngleGet(chara->rotation_24.vy, sharedData_800DF1FA_0_s00, &shortestAngle);
+
                 if (ABS(shortestAngle) < ANGLE_THRESHOLD)
                 {
                     chara->rotation_24.vy = sharedData_800DF1FA_0_s00;
@@ -77,10 +73,9 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             break;
         
         case 3:
-            dist = FP_2D_DISTANCE_SQR(arg2[0], chara->position_18);
-            dist = SquareRoot0(dist);
+            dist = SquareRoot0(FP_2D_DISTANCE_SQR(arg2[0], chara->position_18));
 
-            if (Q12(0.00925f) >= ABS(dist))
+            if (ABS(dist) < Q8(0.15f))
             {
                 charaStateE8 = 0;
                 charaState3 = 0;
@@ -96,11 +91,8 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             break;
         
         case 4:
-            // Awkward interleaving.
-            tmpAngle = ratan2(arg2[sharedData_800DF1F8_0_s00].vx - chara->position_18.vx, arg2[sharedData_800DF1F8_0_s00].vz - chara->position_18.vz);
-            dist = FP_2D_DISTANCE_SQR(arg2[sharedData_800DF1F8_0_s00], chara->position_18);
-            sharedData_800DF1FA_0_s00 = FP_ANGLE_ABS(tmpAngle);
-            sharedData_800DF1F4_0_s00 = SquareRoot0(dist);
+            sharedData_800DF1FA_0_s00 = FP_ANGLE_ABS(ratan2(arg2[sharedData_800DF1F8_0_s00].vx - chara->position_18.vx, arg2[sharedData_800DF1F8_0_s00].vz - chara->position_18.vz));
+            sharedData_800DF1F4_0_s00 = SquareRoot0(FP_2D_DISTANCE_SQR(arg2[sharedData_800DF1F8_0_s00], chara->position_18));
 
             charaStateEC = 5;
             break;
@@ -118,10 +110,9 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                                                    arg2[sharedData_800DF1F8_0_s00].vz - chara->position_18.vz);
             }
 
-            rotY = chara->rotation_24.vy;
             sharedData_800DF1FA_0_s00 = FP_ANGLE_ABS(sharedData_800DF1FA_0_s00);
 
-            Math_ShortestAngleGet(rotY, sharedData_800DF1FA_0_s00, &shortestAngle);
+            Math_ShortestAngleGet(chara->rotation_24.vy, sharedData_800DF1FA_0_s00, &shortestAngle);
 
             // Turn toward.
             angleStep = TIMESTEP_SCALE(g_DeltaTime0, (shortestAngle < FP_ANGLE(45.0f)) ? FP_ANGLE(2.9f) : FP_ANGLE(22.5f));
@@ -130,22 +121,18 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             {
                 chara->rotation_24.vy = sharedData_800DF1FA_0_s00;
             }
+            else if (shortestAngle < FP_ANGLE(0.0f))
+            {
+                chara->rotation_24.vy -= angleStep;
+            }
             else
             {
-                if (shortestAngle < FP_ANGLE(0.0f))
-                {
-                    chara->rotation_24.vy -= angleStep;
-                }
-                else
-                {
-                    chara->rotation_24.vy += angleStep;
-                }
+                chara->rotation_24.vy += angleStep;
             }
 
             chara->rotation_24.vy = FP_ANGLE_ABS(chara->rotation_24.vy);
-            tmpIdx = sharedData_800DF1F8_0_s00;
 
-            dist = SquareRoot0(FP_2D_DISTANCE_SQR(arg2[tmpIdx], chara->position_18));
+            dist = SquareRoot0(FP_2D_DISTANCE_SQR(arg2[sharedData_800DF1F8_0_s00], chara->position_18));
 
             // TODO: Should be `arg1 * Q12(0.15f)`, but compiler splits out one distance for some reason.
             if (dist < (((arg1 - 1) * Q12(0.15f)) + Q12(0.15f)) >> 4 ||
