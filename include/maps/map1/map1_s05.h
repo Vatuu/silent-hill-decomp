@@ -35,6 +35,8 @@ extern s_800D8568 D_800D8568;
 
 extern u8  D_800D5C3C;
 
+extern s32 D_800D587C;
+
 extern s16 D_800D5880;
 
 extern s8  D_800D86FE;
@@ -43,6 +45,8 @@ extern s_WorldObjectDesc g_WorldObject0; //800D8698
 extern s_WorldObjectDesc g_WorldObject1; //800D86C8
 
 void func_800CAAD0(void);
+
+void func_800CF42C(s32 posX, s32 posZ, VECTOR3* vec);
 
 s32 func_800CF7A4(void);
 
