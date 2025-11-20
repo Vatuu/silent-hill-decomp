@@ -1562,7 +1562,7 @@ typedef struct _MapOverlayHeader
     s32                    (*func_D0)(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount); // 0x800C964C
     s32                    (*func_D4)(s32);                  // Assumed return type.
     void                   (*func_D8)();                     // Assumed return type.
-    void                   (*func_DC)();                     // Assumed return type.
+    void                   (*func_DC)(void);
     void                   (*func_E0)(); // func(?).
     s32                    (*func_E4)(s_SubCharacter*, s32); // Assumed return type.
     s64                    (*func_E8)(s_SubCharacter*);      // Is it really `s64`???
@@ -2626,9 +2626,7 @@ extern s32 D_800C45EC;
 
 extern u8 D_800C4606;
 
-extern s32 D_800C4610;
-
-extern s32 D_800C4618;
+extern VECTOR3 D_800C4610;
 
 extern s8 D_800C4560;
 

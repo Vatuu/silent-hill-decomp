@@ -78,6 +78,8 @@ extern VECTOR3 D_800F217C;
 
 // TODO: Reorder these decls.
 
+s32 func_800D17B4(void);
+
 bool func_800DC200(s_SubCharacter* chara);
 
 s32 func_800DC30C(s_SubCharacter* chara);

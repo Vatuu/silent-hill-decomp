@@ -473,6 +473,7 @@ typedef enum _ControllerFlags
 typedef enum _CharaFlags
 {
     CharaFlag_None = 0,
+    CharaFlag_Unk1 = 1 << 0,
     CharaFlag_Unk2 = 1 << 1,
     CharaFlag_Unk3 = 1 << 2,
     CharaFlag_Unk4 = 1 << 3,

@@ -1053,35 +1053,35 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 }
             }
 
-            if (ABS(chara->position_18.vx - D_800C4610) < 0xCD)
+            if (ABS(chara->position_18.vx - D_800C4610.vx) <= Q12(0.05f))
             {
-                chara->position_18.vx = D_800C4610;
+                chara->position_18.vx = D_800C4610.vx;
             }
             else
             {
-                if (chara->position_18.vx >= D_800C4610)
+                if (chara->position_18.vx >= D_800C4610.vx)
                 {
-                    chara->position_18.vx -= 0xCD;
+                    chara->position_18.vx -= (Q12(0.05f) + 1);
                 }
                 else
                 {
-                    chara->position_18.vx += 0xCD;
+                    chara->position_18.vx += (Q12(0.05f) + 1);
                 }
             }
 
-            if (ABS(chara->position_18.vz - D_800C4618) < 0xCD)
+            if (ABS(chara->position_18.vz - D_800C4610.vz) <= Q12(0.05f))
             {
-                chara->position_18.vz = D_800C4618;
+                chara->position_18.vz = D_800C4610.vz;
             }
             else
             {
-                if (chara->position_18.vz < D_800C4618)
+                if (chara->position_18.vz < D_800C4610.vz)
                 {
-                    chara->position_18.vz += 0xCD;
+                    chara->position_18.vz += (Q12(0.05f) + 1);
                 }
                 else
                 {
-                    chara->position_18.vz -= 0xCD;
+                    chara->position_18.vz -= (Q12(0.05f) + 1);
                 }
             }
             break;
@@ -1201,35 +1201,35 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     g_SysWork.player_4C.chara_0.field_D8.offsetZ_2 = Q12(0.0f);
                     g_SysWork.player_4C.chara_0.field_D8.offsetX_0 = Q12(0.0f);
 
-                    if (ABS(chara->position_18.vx - D_800C4610) < 0xCD)
+                    if (ABS(chara->position_18.vx - D_800C4610.vx) <= Q12(0.05f))
                     {
-                        chara->position_18.vx = D_800C4610;
+                        chara->position_18.vx = D_800C4610.vx;
                     }
                     else
                     {
-                        if (chara->position_18.vx >= D_800C4610)
+                        if (chara->position_18.vx >= D_800C4610.vx)
                         {
-                            chara->position_18.vx -= 0xCD;
+                            chara->position_18.vx -= (Q12(0.05f) + 1);
                         }
                         else
                         {
-                            chara->position_18.vx += 0xCD;
+                            chara->position_18.vx += (Q12(0.05f) + 1);
                         }
                     }
 
-                    if (ABS(chara->position_18.vz - D_800C4618) < 0xCD)
+                    if (ABS(chara->position_18.vz - D_800C4610.vz) <= Q12(0.05f))
                     {
-                        chara->position_18.vz = D_800C4618;
+                        chara->position_18.vz = D_800C4610.vz;
                     }
                     else
                     {
-                        if (chara->position_18.vz >= D_800C4618)
+                        if (chara->position_18.vz >= D_800C4610.vz)
                         {
-                            chara->position_18.vz -= 0xCD;
+                            chara->position_18.vz -= (Q12(0.05f) + 1);
                         }
                         else
                         {
-                            chara->position_18.vz += 0xCD;
+                            chara->position_18.vz += (Q12(0.05f) + 1);
                         }
                     }
 

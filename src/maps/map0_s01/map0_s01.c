@@ -77,6 +77,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D2048
 
+// TODO: Change to sharedFunc, but only M0S01 includes code, all other maps have it ifdefed out.
 void func_800D2054(void) // 0x800D2054
 {
     g_SysWork.playerCombatInfo_38.weaponAttack_F = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap);
@@ -87,6 +88,7 @@ void func_800D2054(void) // 0x800D2054
     func_8003D03C();
 }
 
+// TODO: Change to sharedFunc, but only M0S01 includes code, all other maps have it ifdefed out.
 void Player_FallBackward(void) // 0x800D2094
 {
     s_MainCharacter*      player;

@@ -67,7 +67,19 @@ void func_800CFFCC(void) {}
 
 void func_800CFFD4(void) {}
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CFFDC);
+// TODO: Change to sharedFunc, but only M6S04 includes code, all other maps have it ifdefed out.
+void func_800CFFDC(void) // 0x800CFFDC
+{
+    s_MainCharacterExtra* playerExtra;
+    s_SubCharacter*       playerChara;
+
+    playerChara = &g_SysWork.player_4C.chara_0;
+    playerExtra = &g_SysWork.player_4C.extra_128;
+
+    func_8005DC1C(Sfx_Unk1317, &playerChara->position_18, Q8_CLAMPED(0.125f), 0);
+
+    Player_ExtraStateSet(playerChara, playerExtra, PlayerState_DamageFeetFront);
+}
 
 void func_800D003C(void) {}
 
