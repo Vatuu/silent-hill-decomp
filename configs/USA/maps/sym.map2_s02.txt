@@ -1,4 +1,4 @@
-sharedFunc_800D23EC_0_s00 = 0x800D0024; // type:func
+
 
 
 //================================================
@@ -45,6 +45,7 @@ sharedFunc_800D209C_0_s00   = 0x800CFCA4; // type:func
 sharedFunc_800D20D8_0_s00   = 0x800CFCE0; // type:func
 Player_ControlFreeze        = 0x800CFCEC; // type:func
 Player_ControlUnfreeze      = 0x800CFE4C; // type:func
+sharedFunc_800D23EC_0_s00   = 0x800D0024; // type:func
 sharedFunc_800D2C7C_0_s00   = 0x800D002C; // type:func
 sharedFunc_800D2D2C_0_s00   = 0x800D00DC; // type:func
 sharedFunc_800D2D44_0_s00   = 0x800D00F4; // type:func
@@ -124,6 +125,7 @@ sharedFunc_800D8244_0_s01   = 0x800E1190; // type:func
 sharedFunc_800D82B8_0_s01   = 0x800E1204; // type:func
 sharedFunc_800D8714_0_s01   = 0x800E1660; // type:func
 sharedFunc_800D87FC_0_s01   = 0x800E1748; // type:func
+sharedFunc_800D8804_0_s01   = 0x800E1750; // type:func
 Ai_Groaner_Update           = 0x800E1760; // type:func
 Ai_Groaner_Init             = 0x800E185C; // type:func
 sharedFunc_800E33DC_2_s00   = 0x800E1A5C; // type:func

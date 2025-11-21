@@ -1,4 +1,4 @@
-sharedFunc_800D23EC_0_s00           = 0x800CF214; // type:func
+
 
 
 //================================================
@@ -32,6 +32,7 @@ sharedFunc_800D209C_0_s00 = 0x800CEE94; // type:func
 sharedFunc_800D20D8_0_s00 = 0x800CEED0; // type:func
 Player_ControlFreeze      = 0x800CEEDC; // type:func
 Player_ControlUnfreeze    = 0x800CF03C; // type:func
+sharedFunc_800D23EC_0_s00 = 0x800CF214; // type:func
 sharedFunc_800D2C7C_0_s00 = 0x800CF21C; // type:func
 sharedFunc_800D2D2C_0_s00 = 0x800CF2CC; // type:func
 sharedFunc_800D2D44_0_s00 = 0x800CF2E4; // type:func

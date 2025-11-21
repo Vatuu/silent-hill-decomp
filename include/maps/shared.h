@@ -2559,6 +2559,8 @@ void sharedFunc_800D8714_0_s01(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
 void sharedFunc_800D87FC_0_s01(s_SubCharacter* chara);
 
+void sharedFunc_800D8804_0_s01(void);
+
 s32 sharedFunc_800D929C_0_s00(void);
 s32 sharedFunc_800D2DAC_0_s00(void); // Player anim func. Checks if the active keyframe is at the start or end of the anim's range.
 s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara); // NPC anim func. Checks if the active keyframe is at the start or end of the anim's range.

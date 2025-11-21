@@ -674,9 +674,21 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFE10);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFEF0);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFF28);
+void func_800DFF28(s_SubCharacter* chara) // 0x800DFF28
+{
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        chara->model_0.stateStep_3++;
+    }
+}
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFF44);
+void func_800DFF44(s_SubCharacter* chara) // 0x800DFF44
+{
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        chara->model_0.stateStep_3++;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFF60);
 

@@ -448,7 +448,7 @@ INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800D82B8_0_s01
 
 #include "maps/shared/sharedFunc_800D87FC_0_s01.h" // 0x800E291C
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800E2924);
+#include "maps/shared/sharedFunc_800D8804_0_s01.h" // 0x800E2924
 
 #include "maps/shared/Ai_Groaner_Update.h" // 0x800E2934
 

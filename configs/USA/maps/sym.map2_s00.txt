@@ -1,4 +1,4 @@
-sharedFunc_800D23EC_0_s00           = 0x800D1594; // type:func
+
 
 
 //================================================
@@ -45,6 +45,7 @@ sharedFunc_800D209C_0_s00   = 0x800D1214; // type:func
 sharedFunc_800D20D8_0_s00   = 0x800D1250; // type:func
 Player_ControlFreeze        = 0x800D125C; // type:func
 Player_ControlUnfreeze      = 0x800D13BC; // type:func
+sharedFunc_800D23EC_0_s00   = 0x800D1594; // type:func
 sharedFunc_800D2C7C_0_s00   = 0x800D159C; // type:func
 sharedFunc_800D2D2C_0_s00   = 0x800D164C; // type:func
 sharedFunc_800D2D44_0_s00   = 0x800D1664; // type:func
@@ -124,6 +125,7 @@ sharedFunc_800D8244_0_s01   = 0x800E29A8; // type:func
 sharedFunc_800D82B8_0_s01   = 0x800E2A1C; // type:func
 sharedFunc_800D8714_0_s01   = 0x800E2E78; // type:func
 sharedFunc_800D87FC_0_s01   = 0x800E2F60; // type:func
+sharedFunc_800D8804_0_s01   = 0x800E2F68; // type:func
 Ai_Groaner_Update           = 0x800E2F78; // type:func
 Ai_Groaner_Init             = 0x800E3074; // type:func - `map2_s00` includes extra block at end of function compared to other maps.
 sharedFunc_800E33DC_2_s00   = 0x800E33DC; // type:func

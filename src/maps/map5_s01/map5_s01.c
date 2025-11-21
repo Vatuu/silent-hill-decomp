@@ -512,7 +512,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D82B8_0_s01
 
 #include "maps/shared/sharedFunc_800D87FC_0_s01.h" // 0x800E327C
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E3284);
+#include "maps/shared/sharedFunc_800D8804_0_s01.h" // 0x800E3284
 
 #include "maps/shared/Ai_Groaner_Update.h" // 0x800E3294
 

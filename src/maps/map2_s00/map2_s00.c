@@ -802,7 +802,7 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800D82B8_0_s01
 
 #include "maps/shared/sharedFunc_800D87FC_0_s01.h" // 0x800E2F60
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E2F68);
+#include "maps/shared/sharedFunc_800D8804_0_s01.h" // 0x800E2F68
 
 #include "maps/shared/Ai_Groaner_Update.h" // 0x800E2F78
 

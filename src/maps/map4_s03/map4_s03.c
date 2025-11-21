@@ -154,7 +154,10 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D185C);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D1900);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D19AC);
+void func_800D19AC(VECTOR3* vec) // 0x800D19AC
+{
+    func_800D1900(vec, 3);
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D19CC);
 
@@ -232,7 +235,10 @@ u8 func_800D3B1C(void) // 0x800D3B1C
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3B44);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3B68);
+void func_800D3B68(s_SubCharacter* chara) // 0x800D3B68
+{
+    chara->health_B0 = chara->properties_E4.npc.field_11C;
+}
 
 void func_800D3B74(s_SubCharacter* chara) // 0x800D3B74
 {
@@ -1019,7 +1025,10 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7718);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7808);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D78D4);
+void func_800D78D4(void* arg0) // 0x800D78D4
+{
+    func_800D81FC(arg0, 0);
+}
 
 INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CACA8);
 

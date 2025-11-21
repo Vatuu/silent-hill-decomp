@@ -47,11 +47,14 @@ extern s_800E0698 D_800E0698;
 
 void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 
+void func_800D19AC(VECTOR3* vec);
+
 void Ai_Twinfeeler_TextureLoad(void);
 void func_800D354C(VECTOR3*);
 void func_800D3694(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 u8   func_800D3B1C(void);
 void func_800D3B44(s32);
+void func_800D3B68(s_SubCharacter* chara);
 void func_800D3B74(s_SubCharacter* chara);
 void func_800D3CBC(s_SubCharacter* chara);
 bool Ai_Twinfeeler_Init(s_SubCharacter* chara);
@@ -84,6 +87,8 @@ s32 func_800D7394(void);
 void func_800D7408(void);
 
 void func_800D7450(void);
+
+void func_800D78D4(void* arg0); // Unknown arg type.
 
 void func_800D960C(void);
 

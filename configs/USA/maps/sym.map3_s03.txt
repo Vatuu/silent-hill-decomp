@@ -1,5 +1,5 @@
 
-sharedFunc_800D23EC_0_s00 = 0x800CD41C; // type:func
+
 
 //================================================
 //=== .rodata section
@@ -32,6 +32,7 @@ sharedFunc_800D209C_0_s00   = 0x800CD09C; // type:func
 sharedFunc_800D20D8_0_s00   = 0x800CD0D8; // type:func
 Player_ControlFreeze        = 0x800CD0E4; // type:func
 Player_ControlUnfreeze      = 0x800CD244; // type:func
+sharedFunc_800D23EC_0_s00   = 0x800CD41C; // type:func
 sharedFunc_800D2C7C_0_s00   = 0x800CD424; // type:func
 sharedFunc_800D2D2C_0_s00   = 0x800CD4D4; // type:func
 sharedFunc_800D2D44_0_s00   = 0x800CD4EC; // type:func

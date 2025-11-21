@@ -239,6 +239,8 @@ void func_800DFB50(s_SubCharacter*);
 void func_800DFB74(s_SubCharacter*);
 bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DFCE4(s_SubCharacter*);
+void func_800DFF28(s_SubCharacter* chara);
+void func_800DFF44(s_SubCharacter* chara);
 void func_800E05DC(s_SubCharacter*, GsCOORDINATE2*);
 void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void func_800E0728(s_SubCharacter* chara);

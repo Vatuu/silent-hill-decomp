@@ -1331,4 +1331,4 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D82B8_0_s01
 
 #include "maps/shared/sharedFunc_800D87FC_0_s01.h" // 0x800D87FC
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D8804);
+#include "maps/shared/sharedFunc_800D8804_0_s01.h" // 0x800D8804
