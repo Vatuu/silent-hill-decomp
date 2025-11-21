@@ -47,7 +47,7 @@ extern q3_12 D_800F534E;
 
 extern VECTOR3 D_800F216C;
 
-/* TODO: Rename these, give them sequental namea (not really essential, but would be nice). */
+/* TODO: Rename these with sequental names (not really essential, but would be nice). */
 extern SVECTOR3               D_800F5344;
 extern s8                     D_800F534C;
 extern s_WorldObject_0        D_800F535C;
@@ -76,15 +76,13 @@ extern s_WorldObject_0        g_CommonWorldObjects[6];
 
 extern VECTOR3 D_800F217C;
 
-// TODO: Reorder these decls.
+bool func_800D17B4(void);
 
-s32 func_800D17B4(void);
+void func_800D5974(s_SubCharacter* chara);
 
 bool func_800DC200(s_SubCharacter* chara);
 
 s32 func_800DC30C(s_SubCharacter* chara);
-
-void func_800D5974(s_SubCharacter* chara);
 
 s32 func_800DC598(s_SubCharacter* chara);
 
@@ -96,15 +94,11 @@ void func_800DE11C(s_SubCharacter* chara);
 
 void func_800DF710(s_SubCharacter* chara);
 
-void func_800E7D54(void);
-
 void func_800E5930(s_SubCharacter* chara);
 
-void func_800EE5D0(void);
+void func_800E7D54(void);
 
 void MapEvent_AtWaterWorks(void);
-
-void MapEvent_CherylsSketchbook(void);
 
 void func_800E816C(void);
 
@@ -119,8 +113,6 @@ void MapEvent_CutsceneExitCafe(void);
 
 void MapEvent_CherylsSketchbook(void);
 
-void func_800E9470(void);
-
 void MapEvent_DoghouseNote(void);
 
 void MapEvent_DoghouseKeyTake(void);
@@ -131,11 +123,24 @@ void func_800E9A74(void);
 
 void func_800E9CB4(void);
 
-void func_800EB3F4(void);
+/** @brief Handles the House Key use event. */
+void MapEvent_HouseKeyUse(void);
+
+void MapEvent_DoorOfEclipseEnter(void);
+
+void func_800EA6E0(void);
 
 void MapEvent_KGordonKeyUse(void);
 
+void func_800EA960(void);
+
+void func_800EAD2C(void);
+
 void func_800EB090(void);
+
+void func_800EB174(void);
+
+void func_800EB3F4(void);
 
 void func_800EB758(void);
 
@@ -149,19 +154,6 @@ s32 func_800EE518(void);
 
 u8 func_800EE5A8(u32 arg0);
 
-void func_800E8C0C(void);
-
-/** @brief Handles the House Key use event. */
-void MapEvent_HouseKeyUse(void);
-
-void MapEvent_DoorOfEclipseEnter(void);
-
-void func_800EA6E0(void);
-
-void func_800EA960(void);
-
-void func_800EAD2C(void);
-
-void func_800EB174(void);
+void func_800EE5D0(void);
 
 #endif

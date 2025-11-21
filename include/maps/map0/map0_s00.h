@@ -44,8 +44,10 @@ extern char D_800CAE7C[];
 
 extern VECTOR3 D_800CB6A4;
 
+/** `bool` */
 extern u8 D_800DD593;
 
+/** `bool` */
 extern u8 D_800DD594;
 
 /** Distance. */

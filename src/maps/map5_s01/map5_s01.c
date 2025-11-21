@@ -20,7 +20,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800CD51C);
 void func_800CD818(void) // 0x800CD818
 {
     Fs_QueueStartReadTim(FILE_ITEM_FOOK_TIM, FS_BUFFER_1, &D_800A907C);
-    Fs_QueueStartRead(FILE_ITEM_FOOK_TMD, (void*)0x801E5600);
+    Fs_QueueStartRead(FILE_ITEM_FOOK_TMD, FS_BUFFER_21);
     Fs_QueueWaitForEmpty();
 }
 
@@ -221,13 +221,14 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800D671C);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800D6820);
 
-void func_800D6CBC(s_SubCharacter* chara) 
+void func_800D6CBC(s_SubCharacter* chara) // 0x800D6CBC
 {
     bool cond;
-    s32 animStatus;
-    u32 modelStep;
+    s32  animStatus;
+    u32  modelStep;
 
     cond = false;
+
     modelStep = chara->model_0.stateStep_3;
     animStatus = chara->model_0.anim_4.status_0;
     chara->flags_3E |= CharaFlag_Unk3;
@@ -241,6 +242,7 @@ void func_800D6CBC(s_SubCharacter* chara)
                 chara->model_0.stateStep_3 = 1;
             }
             break;
+
         case 1:
             if (animStatus != ANIM_STATUS(4, false))
             {
@@ -248,6 +250,7 @@ void func_800D6CBC(s_SubCharacter* chara)
                 chara->properties_E4.player.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
+
         case 2:
             if (animStatus != 9)
             {
@@ -258,6 +261,7 @@ void func_800D6CBC(s_SubCharacter* chara)
 
     func_800DFBBC(chara);
     Chara_DamageTake(chara, Q12(0.6f));
+
     if (cond)
     {
         chara->model_0.state_2 = 2;
@@ -556,7 +560,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800E6420_2_s02
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800E66E8_2_s02); // 0x800E821C
 
-void func_800E828C(s_SubCharacter* chara) // same as `func_800E6758` in MAP2_S02
+void func_800E828C(s_SubCharacter* chara)
 {
     s32    tmp0;
     q19_12 speed;

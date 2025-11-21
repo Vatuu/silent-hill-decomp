@@ -45,13 +45,13 @@ void func_800D94F8(void) // 0x800D94F8
 {
     s32    i;
     q19_12 var1;
-    s32    flags0;
+    s32    flags;
     u32    saveByte;
 
     // @hack Not used directly, but gets merged with  `Savegame_EventFlagGet` macros below.
     saveByte = g_SavegamePtr->eventFlags_168[0];
     var1     = Q12(0.1f);
-    flags0   = 0x100;
+    flags    = 1 << 8;
 
     if (g_SysWork.player_4C.chara_0.health_B0 > 0 && (!(Savegame_EventFlagGet(EventFlag_23) && !Savegame_EventFlagGet(EventFlag_20))))
     {
@@ -59,7 +59,7 @@ void func_800D94F8(void) // 0x800D94F8
         {
             if (Savegame_EventFlagGet(D_800DF300[i]))
             {
-                flags0 |= 1 << i;
+                flags |= 1 << i;
             }
         }
     }
@@ -69,7 +69,7 @@ void func_800D94F8(void) // 0x800D94F8
         var1 = Q12(0.3f);
     }
 
-    func_80035F4C(flags0, var1, &D_800DF2F8);
+    func_80035F4C(flags, var1, &D_800DF2F8);
 }
 
 void Gfx_LoadingScreen_StageString(void) // 0x800D95D4

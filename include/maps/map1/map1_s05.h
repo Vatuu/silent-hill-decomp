@@ -46,12 +46,13 @@ extern s_WorldObjectDesc g_WorldObject1; //800D86C8
 
 void func_800CAAD0(void);
 
-void func_800CF42C(s32 posX, s32 posZ, VECTOR3* vec);
+void func_800CF42C(q19_12 posX, q19_12 posZ, VECTOR3* vec);
 
 s32 func_800CF7A4(void);
 
 void func_800D263C(s_SubCharacter* chara);
 
+/** Probably takes X and Z position values. */
 void func_800D450C(s32 arg0, s32 arg1);
 
 void func_800D17BC(s_SubCharacter* chara);

@@ -21,8 +21,8 @@ void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CBFB0
     };
 
     GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
-    D_800DD594 = 1;
-    D_800DD593 = 1;
+    D_800DD594 = true;
+    D_800DD593 = true;
     D_800E34EC = ARRAY_SIZE(sharedData_800E330C_0_s00);
     D_800E39AC = ARRAY_SIZE(sharedData_800E34FC_0_s00);
     func_800D0394(2, vecs);
@@ -67,22 +67,21 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
     g_SysWork.coord_22F8.coord.t[2] = Q8(0.0f);
     g_SysWork.coord_22F8.coord.t[1] = Q8(0.0f);
     g_SysWork.coord_22F8.coord.t[0] = Q8(0.0f);
-    g_SysWork.coord_22F8.flg = false;
+    g_SysWork.coord_22F8.flg        = false;
 
     func_80049B6C(&g_SysWork.coord_22F8, &sp10, &sp30);
     gte_SetRotMatrix(&sp30);
     gte_SetTransMatrix(&sp30);
 
-    if (D_800DD593 != 0)
+    if (D_800DD593)
     {
         for (i = 0; i < D_800E39AC; i++, curArg0++)
         {
             func_800CE02C(i, func_800D012C(&curArg0->field_0, &sp50, temp_s4), curArg0, mapId);
         }
-
     }
 
-    if (D_800DD594 != 0)
+    if (D_800DD594)
     {
         for (i = 0; i < D_800E34EC; i++, curArg1++)
         {
@@ -274,8 +273,8 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFD0_1_s02
 
 bool func_800D012C(VECTOR3* pos, MATRIX* unused0, s32* unused1) // 0x800D012C
 {
-    s32 deltaX;
-    s32 deltaZ;
+    q19_12 deltaX;
+    q19_12 deltaZ;
 
     switch (g_SysWork.field_234B_4)
     {

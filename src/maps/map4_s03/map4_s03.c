@@ -980,7 +980,7 @@ void func_800D7450(void) // 0x800D7450
     e_FsFile texFileIdx;
     s32      i;
 
-    texFileIdx = -1;
+    texFileIdx = NO_VALUE;
 
     for (i = 0; i < 3; i++)
     {
@@ -993,6 +993,7 @@ void func_800D7450(void) // 0x800D7450
                 D_800DB91C.v        = 0;
                 D_800DB91C.clutY    = 0;
                 break;
+
             case 1:
                 texFileIdx          = FILE_TIM_TV2_TIM;
                 D_800DB91C.tPage[1] = 12;
@@ -1000,6 +1001,7 @@ void func_800D7450(void) // 0x800D7450
                 D_800DB91C.v        = 0;
                 D_800DB91C.clutY    = 5;
                 break;
+
             case 2:
                 texFileIdx          = FILE_TIM_TV3_TIM;
                 D_800DB91C.tPage[1] = 28;

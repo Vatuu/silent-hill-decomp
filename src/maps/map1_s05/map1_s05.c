@@ -99,9 +99,9 @@ void func_800CF41C(void) {}
 void func_800CF424(void) {}
 
 // TODO: Change to sharedFunc, but only M1S05 includes code, all other maps have it ifdefed out.
-void func_800CF42C(s32 posX, s32 posZ, VECTOR3* vec)
+void func_800CF42C(q19_12 posX, q19_12 posZ, VECTOR3* vec)
 {
-    s32                   angle;
+    q19_12                angle;
     s32                   vecSqr;
     s32                   playerExtraState;
     s_SubCharacter*       playerChara;
@@ -130,7 +130,7 @@ void func_800CF42C(s32 posX, s32 posZ, VECTOR3* vec)
     D_800C45B0.vx = posX;
     D_800C45B0.vz = posZ;
 
-    if (g_SysWork.npcs_1A0[0].health_B0 <= 0 || g_Player_IsInWalkToRunTransition != 0 || playerChara->health_B0 <= 0)
+    if (g_SysWork.npcs_1A0[0].health_B0 <= Q12(0.0f) || g_Player_IsInWalkToRunTransition || playerChara->health_B0 <= Q12(0.0f))
     {
         return;
     }
@@ -186,14 +186,15 @@ void func_800CF42C(s32 posX, s32 posZ, VECTOR3* vec)
                 {
                     playerExtraState = PlayerState_DamageTorsoBack;
                 }
+
                 Player_ExtraStateSet(playerChara, playerExtra, playerExtraState);
             }
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
 
-            playerChara->properties_E4.player.afkTimer_E8 = 0;
+            playerChara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
             playerChara->properties_E4.player.field_F4    = 0;
-            g_SysWork.playerCombatInfo_38.isAiming_13     = 0;
+            g_SysWork.playerCombatInfo_38.isAiming_13     = false;
             playerChara->field_44                         = NO_VALUE;
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
@@ -220,13 +221,13 @@ void func_800CF42C(s32 posX, s32 posZ, VECTOR3* vec)
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
     }
 
-    if (playerChara->damageReceived_C0 != 0)
+    if (playerChara->damageReceived_C0 != Q12(0.0f))
     {
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
 
         playerChara->health_B0 -= playerChara->damageReceived_C0;
         func_800893D0(playerChara->damageReceived_C0);
-        playerChara->damageReceived_C0 = 0;
+        playerChara->damageReceived_C0 = Q12(0.0f);
     }
 }
 

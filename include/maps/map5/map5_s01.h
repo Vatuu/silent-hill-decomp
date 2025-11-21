@@ -30,7 +30,11 @@ extern VECTOR3 D_800F3DF0;
 extern VECTOR3 D_800F3E00;
 extern q19_12 D_800F3E0C; // Time.
 
+void func_800D6CBC(s_SubCharacter* chara);
+
 void func_800CD818(void);
+
+void func_800DFBBC(s_SubCharacter* chara);
 
 void func_800E9F08(s_SubCharacter* chara);
 
@@ -51,9 +55,7 @@ void func_800ECB58(void);
 
 void func_800ECC8C(void);
 
-void func_800E828C(s_SubCharacter* chara); // same as `func_800E6758` in MAP2_S02
+// Same as `func_800E6758` in MAP2_S02.
+void func_800E828C(s_SubCharacter* chara);
 
-void func_800D6CBC(s_SubCharacter* chara);
-
-void func_800DFBBC(s_SubCharacter* chara);
 #endif

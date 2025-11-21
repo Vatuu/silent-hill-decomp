@@ -86,7 +86,7 @@ void func_800D17A4(void) {}
 void func_800D17AC(void) {}
 
 // TODO: Change to sharedFunc, but only M2S00 includes code, all other maps have it ifdefed out.
-s32 func_800D17B4(void) // 0x800D17B4
+bool func_800D17B4(void) // 0x800D17B4
 {
     s_SubCharacter* npcChara;
     s32             playerDist;
@@ -124,18 +124,18 @@ s32 func_800D17B4(void) // 0x800D17B4
             npcChara->model_0.anim_4.flags_2 &= ~(AnimFlag_Visible | AnimFlag_Unlocked);
         }
 
-        // TODO: `else` branch is duplicated here, is there some way to merge them? (decompiler used `goto`)
-        if (npcChara->health_B0 > 0)
+        // TODO: `else` branch is duplicated here, is there some way to merge them? Decompiler used `goto`.
+        if (npcChara->health_B0 > Q12(0.0f))
         {
             if (playerDist < Q12(2.0f) &&
                 Savegame_EventFlagGet(EventFlag_167) && !Savegame_EventFlagGet(EventFlag_168) &&
-                g_SysWork.playerCombatInfo_38.weaponAttack_F >= 0)
+                g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
             {
                 npcChara->model_0.charaId_0 = Chara_Padlock;
             }
             else
             {
-                if (npcChara->health_B0 <= 0)
+                if (npcChara->health_B0 <= Q12(0.0f))
                 {
                     if (Savegame_EventFlagGet(EventFlag_167) && npcChara->model_0.charaId_0 == Chara_Padlock)
                     {
@@ -143,6 +143,7 @@ s32 func_800D17B4(void) // 0x800D17B4
                         Savegame_EventFlagSet(EventFlag_168);
                     }
                 }
+
                 npcChara->model_0.charaId_0 = Chara_None;
             }
         }
@@ -156,15 +157,15 @@ s32 func_800D17B4(void) // 0x800D17B4
             npcChara->model_0.charaId_0 = Chara_None;
         }
 
-        if (npcChara->damageReceived_C0 != 0)
+        if (npcChara->damageReceived_C0 != Q12(0.0f))
         {
-            if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == 0)
+            if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_KitchenKnife)
             {
                 npcChara->damageReceived_C0 >>= 1;
             }
 
-            // Apply damageReceived to character health
-            if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= 32)
+            // Apply `damageReceived` to character health.
+            if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 npcChara->health_B0 = NO_VALUE;
             }
@@ -173,17 +174,17 @@ s32 func_800D17B4(void) // 0x800D17B4
                 npcChara->health_B0 -= npcChara->damageReceived_C0;
             }
 
-            npcChara->damageReceived_C0 = 0;
+            npcChara->damageReceived_C0 = Q12(0.0f);
         }
 
-        return 1;
+        return true;
     }
 
     npcChara->model_0.state_2     = 0;
     npcChara->model_0.stateStep_3 = 0;
-    npcChara->model_0.charaId_0   = 0;
-    npcChara->health_B0           = 0;
-    return 0;
+    npcChara->model_0.charaId_0   = Chara_None;
+    npcChara->health_B0           = Q12(0.0f);
+    return false;
 }
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D1A64);

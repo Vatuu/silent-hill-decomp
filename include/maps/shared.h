@@ -2197,7 +2197,7 @@ void Player_ControlFreeze(void);
 
 void Player_ControlUnfreeze(bool arg0);
 
-s32 sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount);
+bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount);
 
 void sharedFunc_800D2C7C_0_s00(s32 arg0);
 

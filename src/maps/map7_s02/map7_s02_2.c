@@ -1020,16 +1020,16 @@ void func_800DC14C(void) // 0x800DC14C
             floorHitCount = 0;
             for (i = 0; i < 16; i++)
             {
-                g_WorldObject_Bean[i].position_1C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E9ED0 + FP_FROM(D_800EBA14[i] * Math_Sin(D_800EB9F4[i]), Q12_SHIFT), Q12_SHIFT);
-                g_WorldObject_Bean[i].position_1C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_FROM(D_800EBA14[i] * Math_Cos(D_800EB9F4[i]), Q12_SHIFT), Q12_SHIFT);
+                g_WorldObject_Beans[i].position_1C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E9ED0 + FP_FROM(D_800EBA14[i] * Math_Sin(D_800EB9F4[i]), Q12_SHIFT), Q12_SHIFT);
+                g_WorldObject_Beans[i].position_1C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_FROM(D_800EBA14[i] * Math_Cos(D_800EB9F4[i]), Q12_SHIFT), Q12_SHIFT);
 
-                if (g_WorldObject_Bean[i].position_1C.vy > 0)
+                if (g_WorldObject_Beans[i].position_1C.vy > 0)
                 {
-                    g_WorldObject_Bean[i].position_1C.vy = 0;
+                    g_WorldObject_Beans[i].position_1C.vy = 0;
                     floorHitCount++;
                 }
 
-                g_WorldGfx_ObjectAdd(&g_WorldObject_Bean[i].object_0, &g_WorldObject_Bean[i].position_1C, &g_WorldObject_Bean[i].rotation_28);
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Beans[i].object_0, &g_WorldObject_Beans[i].position_1C, &g_WorldObject_Beans[i].rotation_28);
             }
 
             if (D_800E9ED4 < 0)
@@ -2762,16 +2762,16 @@ void Map_WorldObjectsInit(void) // 0x800E3804
 
     WorldObjectInit(&g_WorldObject_Jelly, "JELLY_NE", 62.55f, -0.9f, -61.05f, 0.0f, 90.0f, 0.0f);
 
-    for (i = 0; i < 16; i++)
+    for (i = 0; i < ARRAY_SIZE(g_WorldObject_Beans); i++)
     {
         beanObjName[4] = (i >> 1) + '1';
-        WorldObject_ModelNameSet(&g_WorldObject_Bean[i], beanObjName);
-        g_WorldObject_Bean[i].position_1C.vx = Q12(62.3f);
-        g_WorldObject_Bean[i].position_1C.vy = (Rng_Rand16() % 409) - Q12(1.45f);
-        g_WorldObject_Bean[i].position_1C.vz = (Rng_Rand16() % 573) - Q12(61.07f);
-        g_WorldObject_Bean[i].rotation_28.vx = Q12_FRACT(Rng_Rand16());
-        g_WorldObject_Bean[i].rotation_28.vy = Q12_FRACT(Rng_Rand16());
-        g_WorldObject_Bean[i].rotation_28.vz = Q12_FRACT(Rng_Rand16());
+        WorldObject_ModelNameSet(&g_WorldObject_Beans[i], beanObjName);
+        g_WorldObject_Beans[i].position_1C.vx = Q12(62.3f);
+        g_WorldObject_Beans[i].position_1C.vy = (Rng_Rand16() % 409) - Q12(1.45f);
+        g_WorldObject_Beans[i].position_1C.vz = (Rng_Rand16() % 573) - Q12(61.07f);
+        g_WorldObject_Beans[i].rotation_28.vx = Q12_FRACT(Rng_Rand16());
+        g_WorldObject_Beans[i].rotation_28.vy = Q12_FRACT(Rng_Rand16());
+        g_WorldObject_Beans[i].rotation_28.vz = Q12_FRACT(Rng_Rand16());
         D_800EB9F4[i]                        = Q12_FRACT(Rng_Rand16());
         D_800EBA14[i]                        = FP_FROM(Math_Sin((Rng_Rand16() & 0x1FF) | 0x200) * Q12(2.2f), Q12_SHIFT);
     }

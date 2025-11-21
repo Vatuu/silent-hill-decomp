@@ -701,7 +701,7 @@ void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
         g_PianoKeyCounter = 0;
         g_PianoCursorY    = 0;
         g_PianoCursorX    = 0;
-        D_800DD594        = 0;
+        D_800DD594        = false;
         return;
     }
 

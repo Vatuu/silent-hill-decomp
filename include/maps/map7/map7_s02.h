@@ -86,7 +86,7 @@ extern u8  D_800EB6B0;
 extern s32 D_800EB6B4;
 
 extern s_WorldObjectDesc      g_WorldObject_Door;
-extern s_WorldObjectDesc      g_WorldObject_Bean[16];
+extern s_WorldObjectDesc      g_WorldObject_Beans[16];
 extern s16                    D_800EB9F4[16];
 extern s16                    D_800EBA14[16];
 extern s_WorldObjectDesc      g_WorldObject_Dor[4];
