@@ -89,7 +89,7 @@ s32 func_800D0244(void) // 0x800D0244
     return 0;
 }
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800D024C);
+#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800D024C
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D06C4
 

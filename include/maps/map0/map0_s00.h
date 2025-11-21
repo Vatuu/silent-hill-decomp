@@ -148,8 +148,6 @@ void func_800D2E8C(void);
 
 s32 func_800D2E94(void);
 
-void func_800D2E9C(void);
-
 void func_800D94F8(void);
 
 /** Debug function? */

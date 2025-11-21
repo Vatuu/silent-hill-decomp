@@ -115,7 +115,7 @@ s32 func_800D1D78(void) // 0x800D1D78
     return 0;
 }
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800D1D80);
+#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800D1D80
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D21F8
 

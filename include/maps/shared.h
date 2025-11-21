@@ -2214,6 +2214,8 @@ s32 sharedFunc_800D2E50_0_s00(void);
 
 void sharedFunc_800D2E60_0_s00(void);
 
+void sharedFunc_800D2E9C_0_s00(s32* arg0, s32* arg1, s16* arg2);
+
 u8 sharedFunc_800D2EA4_0_s00(void);
 
 void sharedFunc_800D2EB4_0_s00(void);

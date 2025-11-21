@@ -455,7 +455,7 @@ s32 func_800D2E94(void) // 0x800D2E94
     return 0;
 }
 
-void func_800D2E9C(void) {}
+#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800D2E9C
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D2EA4
 
