@@ -146,6 +146,7 @@ sharedFunc_800E6338_2_s00           = 0x800E5B8C; // type:func
 sharedFunc_800E71E8_2_s00           = 0x800E6A3C; // type:func
 Ai_Romper_Update                    = 0x800E6F0C; // type:func
 Ai_Romper_Init                      = 0x800E6FAC; // type:func
+sharedFunc_800E5FC8_2_s02           = 0x800E719C; // type:func
 sharedFunc_800E60FC_2_s02           = 0x800E72D0; // type:func
 sharedFunc_800E6420_2_s02           = 0x800E75F4; // type:func
 sharedFunc_800E66E8_2_s02           = 0x800E78BC; // type:func

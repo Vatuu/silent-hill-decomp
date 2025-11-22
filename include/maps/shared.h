@@ -2454,6 +2454,8 @@ void Ai_Romper_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2*
 
 void Ai_Romper_Init(s_SubCharacter* chara);
 
+void sharedFunc_800E5FC8_2_s02(s_SubCharacter* chara, s16 arg1, s16 arg2, u8* arg3);
+
 void sharedFunc_800E60FC_2_s02(s_SubCharacter*);
 
 void sharedFunc_800E6420_2_s02(s_SubCharacter*);
