@@ -40,15 +40,15 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CBF74);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CC618);
 
-void func_800CCDD4(s_SubCharacter* arg0, s32 arg1, s32 arg2) // 0x800CCDD4
+void func_800CCDD4(void* arg0, s32 arg1) // 0x800CCDD4
 {
     if (sharedData_800E1FF8_1_s02[arg1].field_B == 0)
     {
-        func_800CBF74();
+        func_800CBF74(arg0, arg1);
     }
     else
     {
-        func_800CC618();
+        func_800CC618(arg0, arg1);
     }
 }
 

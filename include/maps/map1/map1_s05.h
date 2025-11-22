@@ -48,7 +48,7 @@ void func_800CAAD0(void);
 
 void func_800CBE7C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
-void func_800CCDD4(s_SubCharacter* arg0, s32 arg1, s32 arg2);
+void func_800CCDD4(void* arg0, s32 arg1); // Unknown arg type.
 
 void func_800D263C(s_SubCharacter* chara);
 
