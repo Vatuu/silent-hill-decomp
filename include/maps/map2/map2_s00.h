@@ -154,4 +154,6 @@ u8 func_800EE5A8(u32 arg0);
 
 void func_800EE5D0(void);
 
+void func_800DF80C(s_SubCharacter* chara);
+
 #endif
