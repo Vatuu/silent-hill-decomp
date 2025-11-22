@@ -23,8 +23,6 @@ extern s_WorldObject_0   g_CommonWorldObjects[6];
 
 void func_800CB0D8(void);
 
-void func_800D041C(s_SubCharacter* chara);
-
 void func_800D6414(void);
 
 void func_800D6490(VECTOR3*);

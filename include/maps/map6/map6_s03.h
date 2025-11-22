@@ -20,11 +20,6 @@ extern VECTOR3 D_800DBD10;
 extern u16 D_800DBCE4[22]; // Flags.
 extern u8 D_800DBCDC[8];   // Distances.
 
-void func_800D4A5C(s_SubCharacter* chara);
-
-// TODO: ifdefs? Completely different impl. than what other maps use.
-u8 Map_RoomIdxGet(s32 x, s32 z);
-
 void func_800D7F98(void);
 
 /** @brief Handles a Health Drink or Handgun Bullets item pickup event. */
