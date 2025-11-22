@@ -156,4 +156,6 @@ void func_800EE5D0(void);
 
 void func_800DF80C(s_SubCharacter* chara);
 
+void func_800DDF74(s_SubCharacter* chara, s32 xMul, s32 angle0);
+
 #endif

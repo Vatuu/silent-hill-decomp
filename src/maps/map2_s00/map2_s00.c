@@ -426,7 +426,24 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DDA80);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DDE14);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DDF74);
+void func_800DDF74(s_SubCharacter* chara, s32 xMul, s32 angle0)
+{
+    s32 posX;
+    s32 posZ;
+    s32 calcY;
+
+    posX = chara->position_18.vx;
+    posZ = chara->position_18.vz;
+
+    posX += FP_MULTIPLY_PRECISE(xMul, Math_Sin(angle0), Q12_SHIFT);
+    posZ += FP_MULTIPLY_PRECISE(xMul, Math_Cos(angle0), Q12_SHIFT);
+
+    calcY = func_80080884(posX, posZ);
+    chara->properties_E4.unk0.field_F8.vx = posX;
+    chara->properties_E4.unk0.field_F8.vy = calcY;
+    chara->properties_E4.unk0.field_F8.vz = posZ;
+    sharedFunc_800D4E84_0_s01(chara);
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DE034);
 
