@@ -2614,7 +2614,7 @@ s32 func_800EE518(void) // 0x800EE518
     return ret;
 }
 
-u8 func_800EE5A8(u32 arg0) // 0x800EE5A8
+s32 func_800EE5A8(u32 arg0) // 0x800EE5A8
 {
     if (arg0 < 3) 
     {
@@ -2626,7 +2626,15 @@ u8 func_800EE5A8(u32 arg0) // 0x800EE5A8
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EE5D0);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EE660);
+void func_800EE660(void)
+{
+    s32 val;
+    s32 idx;
+
+    idx = func_800EE518();
+    val = g_SavegamePtr->field_B0[10];
+    g_SavegamePtr->field_B0[func_800EE5A8(idx)] = val;
+}
 
 INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CD5A0);
 

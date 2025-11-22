@@ -156,8 +156,14 @@ void func_800EB824(s32);
 
 s32 func_800EE518(void);
 
-u8 func_800EE5A8(u32 arg0);
+s32 func_800EE5A8(u32 arg0);
 
 void func_800EE5D0(void);
+
+void func_800DF80C(s_SubCharacter* chara);
+
+void func_800DDF74(s_SubCharacter* chara, s32 xMul, s32 angle0);
+
+void func_800EE660(void);
 
 #endif
