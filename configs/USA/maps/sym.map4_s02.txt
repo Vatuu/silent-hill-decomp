@@ -1,5 +1,5 @@
-sharedFunc_800E554C_2_s00 = 0x800E3FC8; // type:func
-sharedFunc_800E86C0_2_s02 = 0x800E8ABC; // type:func
+
+
 
 //================================================
 //=== .rodata section
@@ -139,6 +139,7 @@ Ai_Groaner_Update           = 0x800E1B5C; // type:func
 Ai_Groaner_Init             = 0x800E1C58; // type:func
 sharedFunc_800E33DC_2_s00   = 0x800E1E58; // type:func
 sharedFunc_800E384C_2_s00   = 0x800E22C8; // type:func
+sharedFunc_800E554C_2_s00   = 0x800E3FC8; // type:func
 sharedFunc_800E5AA4_2_s00   = 0x800E4520; // type:func
 sharedFunc_800E5EC4_2_s00   = 0x800E4940; // type:func
 sharedFunc_800E6338_2_s00   = 0x800E4DB4; // type:func
@@ -148,6 +149,7 @@ Ai_Romper_Init              = 0x800E61D4; // type:func
 sharedFunc_800E60FC_2_s02   = 0x800E64F8; // type:func
 sharedFunc_800E6420_2_s02   = 0x800E681C; // type:func
 sharedFunc_800E66E8_2_s02   = 0x800E6AE4; // type:func
+sharedFunc_800E86C0_2_s02   = 0x800E8ABC; // type:func
 sharedFunc_800E8730_2_s02   = 0x800E8B2C; // type:func
 sharedFunc_800E8A40_2_s02   = 0x800E8E3C; // type:func
 sharedFunc_800E8DFC_2_s02   = 0x800E91F8; // type:func

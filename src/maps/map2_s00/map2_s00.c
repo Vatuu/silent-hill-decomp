@@ -1254,7 +1254,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             Player_ControlFreeze();
             g_SysWork.field_30 = 20;
             D_800F228C = 0;
-            D_800F2290 = 0;
+            g_Gfx_Map2dMarkingFade = 0;
 
             Savegame_MapMarkingSet(MapMarkFlag_OldTown_CofeArrowOnly);
             Savegame_MapMarkingSet(MapMarkFlag_OldTown_CofeSignOnly);
@@ -1329,19 +1329,21 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
 
         case 9:
             func_800692A4(0x48, 0x10, Q12(0.5f));
-            func_80068E0C(1, 1, 0, 0, 0x48, 0x10, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 72, 0x10, Q12(0.5f));
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 10:
             func_800692A4(0x48, 0x10, Q12(0.5f));
-            func_80068E0C(1, 1, 0, 0, 0x48, 0x10, Q12(0.5f));
-            func_80068E0C(2, 1, 0x36A, D_800F2290, 0x48, 0x10, Q12(0.5f));
-            D_800F2290++;
+            func_80068E0C(1, 1, 0, 0, 72, 0x10, Q12(0.5f));
+            func_80068E0C(2, 1, 0x36A, g_Gfx_Map2dMarkingFade, 0x48, 0x10, Q12(0.5f));
 
-            if (D_800F2290 >= 0x80)
+            // Fade in map marking to half opacity.
+            g_Gfx_Map2dMarkingFade++;
+            if (g_Gfx_Map2dMarkingFade >= 128)
             {
-                if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+                if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                     g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
                 {
                     SysWork_StateStepIncrement(0);
                 }
@@ -1353,14 +1355,15 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
                     g_SysWork.sysStateStep_C[0] = 11;
                 }
 
-                D_800F2290 = 0x80;
+                // Clamp map marking fade.
+                g_Gfx_Map2dMarkingFade = 128;
             }
             break;
 
         case 11:
             func_800692A4(0x48, 0x10, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 0x48, 0x10, Q12(0.5f));
-            func_80068E0C(2, 1, 0x36A, 0x80, 0x48, 0x10, Q12(0.5f));
+            func_80068E0C(2, 1, 0x36A, 128, 0x48, 0x10, Q12(0.5f));
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
@@ -1565,7 +1568,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         case 16:
             func_800692A4(0, 0x74, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
-            func_80068E0C(2, 1, 0x3A2, 0x80, 0, 0x74, Q12(0.5f));
+            func_80068E0C(2, 1, 0x3A2, 128, 0, 0x74, Q12(0.5f));
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 

@@ -828,7 +828,7 @@ typedef struct
 
 typedef struct
 {
-    s_IpdCollisionData*   field_0;
+    s_IpdCollisionData*   ipdCollisionData_0;
     u8                    field_4; // Index.
     u8                    field_5;
     SVECTOR3              field_6;
@@ -1158,10 +1158,10 @@ typedef struct _Map
     s8                 unk_40C[32];     // Could be one extra row in table above.
     s_IpdColumn*       ipdGridCenter_42C;
     s_IpdTextures      ipdTextures_430;
-    s32                field_578;
-    s32                field_57C;
-    s32                field_580; // File chunk coord X.
-    s32                field_584; // File chunk coord Z.
+    q19_12             positionX_578;
+    q19_12             positionX_57C;
+    s32                chunkCoordX_580;
+    s32                chunkCoordZ_584;
     bool               isExterior;
 } s_Map;
 STATIC_ASSERT_SIZEOF(s_Map, 1420);
@@ -1733,7 +1733,7 @@ typedef struct
     u8 field_0;
     u8 field_1;
     u8 field_2;
-    u8 field_3;
+    u8 field_3; // Map marking sprite height?
 } s_800AE8A0_0;
 
 typedef struct
@@ -1744,12 +1744,13 @@ typedef struct
     u8 field_3;
 } s_800AE8A0_4;
 
+/** 2D map marking graphic data? */
 typedef struct
 {
     POLY_FT4*    field_0;
     s_800AE8A0_0 field_4;
     s_800AE8A0_4 field_8;
-    s32          field_C;
+    s32          field_C; // Count.
 } s_func_80068E0C;
 
 typedef struct
@@ -2953,6 +2954,7 @@ bool func_80043740(void);
 
 bool func_80043830(void);
 
+/** Checks if a position is within the current map chunk. */
 bool func_8004393C(q19_12 posX, q19_12 posZ);
 
 void func_80043A24(GsOT* ot, s32 arg1);
@@ -3758,7 +3760,8 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3);
 
 bool func_80068CC0(s32 arg0);
 
-bool func_80068E0C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6);
+/** 2D map func. Seems to draw map marking sprites. */
+bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u16 arg6);
 
 void func_800692A4(u16 arg0, u16 arg1, u16 arg2);
 

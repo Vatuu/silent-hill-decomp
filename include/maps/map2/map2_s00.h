@@ -28,8 +28,8 @@ extern q3_12 D_800F228C;
 
 extern u8 D_800F228E;
 
-/** Related to 2D map. */
-extern s32 D_800F2290;
+/** 2D map marking color shade. Used to fade in the sprite to half opacity. */
+extern s32 g_Gfx_Map2dMarkingFade;
 
 extern u16 g_MapMsgSounds[2];
 

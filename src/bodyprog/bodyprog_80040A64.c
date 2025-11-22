@@ -1043,8 +1043,8 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
     s32         fullPageTexCount;
     s_IpdChunk* curChunk;
 
-    g_Map.field_578 = posX1;
-    g_Map.field_57C = posZ1;
+    g_Map.positionX_578 = posX1;
+    g_Map.positionX_57C = posZ1;
 
     if (g_Map.globalLm_138.queueIdx_8 == NO_VALUE) 
     {
@@ -1136,8 +1136,8 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
     chunkCoordX1 = FLOOR_TO_STEP(Q12_TO_Q8(posX1), Q8(40.0f));
     chunkCoordZ1 = FLOOR_TO_STEP(Q12_TO_Q8(posZ1), Q8(40.0f));
 
-    map->field_580 = chunkCoordX1;
-    map->field_584 = chunkCoordZ1;
+    map->chunkCoordX_580 = chunkCoordX1;
+    map->chunkCoordZ_584 = chunkCoordZ1;
 
     Ipd_ActiveChunksSample(map, posX0, posZ0, posX1, posZ1, map->isExterior);
     func_800433B8(map);
@@ -1417,9 +1417,7 @@ bool func_80043830(void) // 0x80043830
             continue;
         }
 
-        if (Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.field_578), 
-                          Q12_TO_Q8(g_Map.field_57C),
-                          curChunk->coordX_8, curChunk->coordZ_A) <= Q8(4.5f))
+        if (Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.positionX_578), Q12_TO_Q8(g_Map.positionX_57C), curChunk->coordX_8, curChunk->coordZ_A) <= Q8(4.5f))
         {
             return true;
         }
@@ -1438,11 +1436,11 @@ bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
     
     if (g_Map.isExterior)
     {
-        return Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.field_578), Q12_TO_Q8(g_Map.field_57C), fileChunkCoordX, fileChunkCoordZ) <= Q8(4.5f);
+        return Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.positionX_578), Q12_TO_Q8(g_Map.positionX_57C), fileChunkCoordX, fileChunkCoordZ) <= Q8(4.5f);
     }
 
-    if (fileChunkCoordX == g_Map.field_580 &&
-        fileChunkCoordZ == g_Map.field_584)
+    if (fileChunkCoordX == g_Map.chunkCoordX_580 &&
+        fileChunkCoordZ == g_Map.chunkCoordZ_584)
     {
         return true;
     }
@@ -1473,15 +1471,15 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     {
         if (IpdHeader_LoadStateGet(curChunk) >= StaticModelLoadState_Loaded && func_80043B34(curChunk, &g_Map))
         {
-            func_80044090(curChunk->ipdHdr_0, g_Map.field_578, g_Map.field_57C, ot, arg1);
+            func_80044090(curChunk->ipdHdr_0, g_Map.positionX_578, g_Map.positionX_57C, ot, arg1);
         }
     }
 }
 
 bool func_80043B34(s_IpdChunk* chunk, s_Map* map)
 {
-    if (map->field_580 == chunk->coordX_8 &&
-        map->field_584 == chunk->coordZ_A)
+    if (map->chunkCoordX_580 == chunk->coordX_8 &&
+        map->chunkCoordZ_584 == chunk->coordZ_A)
     {
         return true;
     }
