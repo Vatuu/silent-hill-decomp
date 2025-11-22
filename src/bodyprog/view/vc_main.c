@@ -856,11 +856,11 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
     s_SubCharacter* all_min_sc_p;
     s_SubCharacter* active_min_sc_p;
 
-    s_SubCharacter* sc_p            = NULL;
-    s_SubCharacter* all_min_sc_p    = NULL;
-    s_SubCharacter* active_min_sc_p = NULL;
-    q19_12          all_min_dist    = ENEMY_DIST_MAX;
-    q19_12          active_min_dist = ENEMY_DIST_MAX;
+    sc_p            = NULL;
+    all_min_sc_p    = NULL;
+    active_min_sc_p = NULL;
+    all_min_dist    = ENEMY_DIST_MAX;
+    active_min_dist = ENEMY_DIST_MAX;
 
     if (g_SysWork.flags_22A4 & SysFlag2_5) // `sh2jms->player.battle(ShBattleInfo).status & (1 << 4)` in SH2.
     {
