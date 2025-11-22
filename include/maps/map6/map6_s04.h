@@ -29,10 +29,29 @@
 #define HAS_Chara_Alessa
 #define MAP_CHARA_COUNT 3
 
+typedef struct
+{
+    u8  field_0;
+    u8  unk_1[1];
+    u8  field_2;
+    u8  unk_3[1];
+    s16 field_4;
+    s16 field_6;
+    s16 field_8;
+    s16 field_A;
+    s16 field_C;
+} s_800ED430;
+
 extern s_AnimInfo FLAUROS_ANIM_INFOS[];
 extern s_AnimInfo PARASITE_ANIM_INFOS[];
 
 extern s32 D_800EBA30;
+
+extern s_MapHdr_field_4C D_800EBB90[300]; // TODO: `sharedData_800E1FF8_1_s02`?
+
+extern s_800ED430 D_800ED430;
+
+extern s16 D_800ED440;
 
 extern VECTOR3 D_800ED590;
 
@@ -78,6 +97,12 @@ extern u8 D_800EB738;
 extern u8 D_800EB748;
 extern s8 D_800EB74A;
 extern VECTOR3 D_800EB750;
+
+void func_800CC7E0(void);
+
+void func_800CC88C(s32 arg0);
+
+s32 func_800CCA24(s32 arg0);
 
 void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_MonsterCybil_Init(s_SubCharacter*, s_Model*);

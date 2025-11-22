@@ -9,15 +9,79 @@ INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04", g_MapOverlayHeader);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CC7E0);
+void func_800CC7E0(void) // 0x800CC7E0
+{
+    s32 var_a1;
+    s32 i;
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CC88C);
+    var_a1 = D_800ED430.field_4;
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CCA24);
+    for (i = 0; i < ARRAY_SIZE(D_800EBB90); i++)
+    {
+        if (D_800EBB90[i].field_A != 0)
+        {
+            continue;
+        }
+
+        D_800EBB90[i].field_A         = 13;
+        D_800EBB90[i].field_C.field_0 = ((FP_TO(D_800ED430.field_6 - D_800ED430.field_8, Q12_SHIFT) / D_800ED430.field_C) * var_a1) / D_800ED430.field_4;
+
+        var_a1--;
+
+        if (var_a1 == 0)
+        {
+            break;
+        }
+    }
+
+    D_800ED440  = 0;
+    D_800C4414 |= 2;
+}
+
+void func_800CC88C(s32 arg0) // 0x800CC88C
+{
+    s32 temp_s0;
+    s16 temp_s1;
+
+    if (D_800ED430.field_2 == 0)
+    {
+        D_800EBB90[arg0].field_A = 14;
+    }
+
+    if (D_800ED430.field_0 == 0)
+    {
+        temp_s1               = Rng_Rand16() % D_800ED430.field_A;
+        temp_s0               = Q12_FRACT(Rng_Rand16());
+        D_800EBB90[arg0].vx_0 = FP_FROM(temp_s1 * Math_Cos(temp_s0), Q12_SHIFT);
+        D_800EBB90[arg0].vz_4 = FP_FROM(temp_s1 * Math_Sin(temp_s0), Q12_SHIFT);
+    }
+    else
+    {
+        D_800EBB90[arg0].vx_0 = (Rng_Rand16() % (D_800ED430.field_A * 2)) - D_800ED430.field_A;
+        D_800EBB90[arg0].vz_4 = (Rng_Rand16() % (D_800ED430.field_A * 2)) - D_800ED430.field_A;
+    }
+
+    D_800EBB90[arg0].vy_8            = D_800ED430.field_8;
+    D_800EBB90[arg0].field_B         = Rng_Rand16() % 3;
+    D_800EBB90[arg0].field_C.field_0 = 0;
+}
+
+s32 func_800CCA24(s32 arg0) // 0x800CCA24
+{
+    D_800EBB90[arg0].field_C.field_0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Rng_GenerateInt(Rng_Rand16(), Q12(0.8f), Q12(1.1998f) - 1), Q12_SHIFT);
+
+    if (FP_TO(D_800ED430.field_6 - D_800ED430.field_8, Q12_SHIFT) / D_800ED430.field_C < D_800EBB90[arg0].field_C.field_0)
+    {
+        func_800CC88C(arg0);
+        return 1;
+    }
+
+    return 0;
+}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CCB1C);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CD3AC);
+#include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CD3AC
 
 #include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CD514
 

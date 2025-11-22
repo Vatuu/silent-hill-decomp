@@ -33,6 +33,7 @@ sharedData_800CAB70_0_s00           = 0x800CAE48; // type:VECTOR
 //-----------------------------------------------------------
 //--- PA: 0x003268   VA: 0x800CC7E0   subsegment: c, map6_s04
 //-----------------------------------------------------------
+sharedFunc_800CB6B0_0_s00           = 0x800CD3AC; // type:func
 sharedFunc_800D08B8_0_s00           = 0x800CD514; // type:func
 sharedFunc_800D0A60_0_s00           = 0x800CD694; // type:func
 sharedFunc_800D0B18_0_s00           = 0x800CD74C; // type:func
@@ -144,6 +145,8 @@ MapEvent_CutsceneCybilDeath         = 0x800E2CA0; // type:func
 //--- PA: 0x01E620   VA: 0x800E7B98   subsegment: data
 //----------------------------------------------------
 HARRY_M6S04_ANIM_INFOS              = 0x800E7B98;
+sharedData_800DD584_0_s00           = 0x800E81C1; // type:u8
+sharedData_800DD598_0_s00           = 0x800E81C4;
 sharedData_800DD59C_0_s00           = 0x800E81C8; // type:u8
 LARVAL_STALKER_ANIM_INFOS           = 0x800E81CC;
 sharedData_800DD5A6_0_s00           = 0x800E8B48; // type:u8
@@ -165,8 +168,13 @@ MAP_MESSAGES                        = 0x800EB81C; // type:u32 size:0x130
 //----------------------------------------------------
 //--- PA: 0x0223D4   VA: 0x800EB94C   subsegment: data
 //----------------------------------------------------
+sharedData_800DFB4C_0_s00           = 0x800EBB40;
+sharedData_800CD77C_1_s04           = 0x800EBB44; // type:s32
 sharedData_800DFB6C_0_s00           = 0x800EBB88; // type:s32
 sharedData_800DFB70_0_s00           = 0x800EBB8C; // type:s32
+D_800ED430                          = 0x800ED430; // size:0x10
+g_ParticleVectors0                  = 0x800ED450; // type:ParticleVectors
+g_ParticleVectors1                  = 0x800ED480; // type:ParticleVectors
 sharedData_800E0CA8_0_s00           = 0x800ED4AC; // type:s32
 sharedData_800E0CAC_0_s00           = 0x800ED4B0; // type:s32
 sharedData_800E0CB0_0_s00           = 0x800ED4B4; // type:u32

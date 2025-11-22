@@ -1,6 +1,6 @@
 /** Barebones version of `sharedFunc_800CB6B0_0_s00`, missing calls to `Particle_Update` and other particle-related code.
  * Used in:
- * MAP1_S04 MAP2_S01 MAP2_S03 MAP2_S04 MAP3_S02 MAP4_S00 MAP4_S06 MAP6_S05 MAP4_S01
+ * MAP1_S04 MAP2_S01 MAP2_S03 MAP2_S04 MAP3_S02 MAP4_S00 MAP4_S06 MAP6_S04 MAP6_S05 MAP4_S01
  * Changes to this file should be reflected inside `sharedFunc_800CB6B0_0_s00.h`
  */
 
