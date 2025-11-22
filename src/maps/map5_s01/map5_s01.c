@@ -531,7 +531,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E49E4);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E5038);
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E5700);
+#include "maps/shared/sharedFunc_800E554C_2_s00.h" // 0x800E5700
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E5764);
 
@@ -626,7 +626,7 @@ void func_800E9FAC(void) {}
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E9FB4);
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800EA1F4);
+#include "maps/shared/sharedFunc_800E86C0_2_s02.h" // 0x800EA1F4
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800E8730_2_s02); // 0x800EA264
 
@@ -949,7 +949,7 @@ void func_800EC42C(void) // 0x800EC42C
             break;
 
         case 8:
-            func_80080B58(&g_SysWork.playerBoneCoords_890[2], &(SVECTOR3){}, &QVECTOR3(-196.53f, -14.25f, -9.73f));
+            func_80080B58(&g_SysWork.playerBoneCoords_890[2], &(SVECTOR3){ 0, 0, 0 }, &QVECTOR3(-196.53f, -14.25f, -9.73f));
             sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(1.0f), Q12(0.1f), 1);
             SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
             break;
@@ -1151,7 +1151,7 @@ void func_800ECC8C(void) // 0x800ECC8C
     {
             if (!Savegame_EventFlagGet(EventFlag_M5S01_PickupMap))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &(SVECTOR3){});
+                g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &(SVECTOR3){ 0, 0, 0 });
             }
     }
 

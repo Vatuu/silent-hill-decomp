@@ -2460,6 +2460,8 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter*);
 
 void sharedFunc_800E66E8_2_s02(s_SubCharacter*);
 
+void sharedFunc_800E86C0_2_s02(s_SubCharacter* chara);
+
 void sharedFunc_800E8730_2_s02(s_SubCharacter*);
 
 void sharedFunc_800E8A40_2_s02(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
@@ -2469,6 +2471,8 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter*);
 void Ai_Groaner_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void Ai_Groaner_Init(s_SubCharacter* chara); // `map2_s00` has extra block at end of func compared to other maps.
+
+void sharedFunc_800E554C_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800E33DC_2_s00(s_SubCharacter*);
 

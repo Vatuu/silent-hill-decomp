@@ -180,7 +180,7 @@ def check_injected_code(func) -> InjectRes:
         # good news, the code was compilable
         # now checking for the checksum...
         check_result = subprocess.run(
-            f"make build {make_defines}", cwd=root_dir, shell=True, check=False, capture_output=True
+            f"make build -j6 {make_defines}", cwd=root_dir, shell=True, check=False, capture_output=True
         )
         if check_result.returncode == 0:
             # decompilation successful! There is nothing else to do
@@ -194,6 +194,9 @@ def check_injected_code(func) -> InjectRes:
 def inject_decompiled_function_into_file(func: NonMatchingFunc, dec: str) -> InjectRes:
     with open(func.src_path) as file:
         lines = [line.rstrip() for line in file]
+
+    if "Decompilation failure:" in dec:
+        print(" !!! M2C reported Decompilation failure - context issue? !!!")
 
     # this portion of code NEEDS to be resiliant; if there is an exception
     # while writing the file content, the original source code where the

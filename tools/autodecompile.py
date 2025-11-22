@@ -34,9 +34,10 @@ SUCCESS_LOG = Path("build/autodecompile.log")
 def find_functions(filters):
     """
     Recursively find all func_* and sharedFunc_* files under ASM_PATH that match all filters.
+    Sorted so smaller files come first.
     """
     funcs = []
-    for path in ASM_PATH.rglob("*"):  # check all files
+    for path in ASM_PATH.rglob("*"):
         if path.is_file() and path.suffix in (".s", ".asm"):
             path_str = str(path)
             if any(prefix in path_str for prefix in ("func_", "sharedFunc_")):
@@ -44,6 +45,10 @@ def find_functions(filters):
                     if all(f in path_str for f in filters):
                         func_name = path.stem
                         funcs.append((func_name, path))
+
+    # sort by filesize (ascending)
+    funcs.sort(key=lambda item: item[1].stat().st_size)
+
     return funcs
 
 def try_decompile(func_name: str, func_path: Path = None):
@@ -110,7 +115,7 @@ def main():
 
     print("\nRunning `make build`...")
     check_result = subprocess.run(
-        "make build", shell=True, check=False, capture_output=True
+        "make build -j6", shell=True, check=False, capture_output=True
     )
     if check_result.returncode != 0:
         print("\nerror: `make build` failed, repo not clean? exiting")

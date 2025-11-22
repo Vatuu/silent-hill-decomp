@@ -1,5 +1,5 @@
-
-
+sharedFunc_800E554C_2_s00 = 0x800E3FC8; // type:func
+sharedFunc_800E86C0_2_s02 = 0x800E8ABC; // type:func
 
 //================================================
 //=== .rodata section

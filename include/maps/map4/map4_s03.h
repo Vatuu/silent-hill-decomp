@@ -9,7 +9,7 @@
 
 typedef struct
 {
-    s32             field_0;
+    s_SubCharacter* chara_0;
     s32             field_4;
     u8              unk_8[0x230];
     s_WorldObject_0 objRef_238;
@@ -59,6 +59,9 @@ void func_800D3B74(s_SubCharacter* chara);
 void func_800D3CBC(s_SubCharacter* chara);
 bool Ai_Twinfeeler_Init(s_SubCharacter* chara);
 void func_800D3E58(s_SubCharacter*);
+void func_800D3FB0(s_SubCharacter* chara);
+void func_800D3FD8(s_SubCharacter* chara);
+void func_800D4000(s_SubCharacter* chara);
 void func_800D4028(s_SubCharacter* chara);
 void func_800D46E0(VECTOR3* vec0, VECTOR3* vec1);
 u32  func_800D4DD8(void);
@@ -87,6 +90,8 @@ s32 func_800D7394(void);
 void func_800D7408(void);
 
 void func_800D7450(void);
+
+void func_800D76BC(s_SubCharacter* chara);
 
 void func_800D78D4(void* arg0); // Unknown arg type.
 

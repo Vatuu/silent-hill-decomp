@@ -15,10 +15,6 @@ extern s_WorldObjectDescNoRot g_WorldObject_DrOpen2;
 extern s_WorldObjectDescNoRot g_WorldObject_DrClose;
 extern s_WorldObject_0        g_CommonWorldObjects[6];
 
-void func_800E4DA0(s_SubCharacter* chara);
-
-void func_800E9894(s_SubCharacter* chara);
-
 /** @brief Handles a First Aid Kit, Health Drink, or Shotgun Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 

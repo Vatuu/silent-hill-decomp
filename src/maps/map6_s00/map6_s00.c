@@ -463,16 +463,7 @@ INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800E4084);
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800E46D8);
 
-void func_800E4DA0(s_SubCharacter* chara) // 0x800E4DA0
-{
-    if (!((u16)chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & 0x2) &&
-        chara->model_0.anim_4.status_0 == ANIM_STATUS(9, true) &&
-        (Rng_Rand16() % 8) == 0)
-    {
-        chara->model_0.state_2         = 1;
-        chara->model_0.anim_4.status_0 = ANIM_STATUS(17, false);
-    }
-}
+#include "maps/shared/sharedFunc_800E554C_2_s00.h" // 0x800E4DA0
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800E4E04);
 
@@ -518,15 +509,7 @@ void func_800E964C(void) {}
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800E9654);
 
-void func_800E9894(s_SubCharacter* chara) // 0x800E9894
-{
-    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(12, true) && (Rng_Rand16() % 8) == 0)
-    {
-        g_SysWork.field_228A                    &= ~((1 << 0) | (1 << 1));
-        chara->model_0.state_2                   = 1;
-        chara->properties_E4.player.afkTimer_E8 &= ~(1 << 11);
-    }
-}
+#include "maps/shared/sharedFunc_800E86C0_2_s02.h" // 0x800E9894
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800E8730_2_s02); // 0x800E9904
 
