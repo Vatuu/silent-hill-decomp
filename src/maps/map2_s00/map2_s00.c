@@ -2624,7 +2624,14 @@ s32 func_800EE5A8(u32 arg0) // 0x800EE5A8
     return 10;
 }
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EE5D0);
+void func_800EE5D0(void)
+{
+    s32 idx0;
+
+    idx0 = func_800EE518();
+    memcpy(g_MapOverlayHeader.charaSpawns_24C, D_800F1CAC[idx0], sizeof(D_800F1CAC[idx0]));
+    g_SavegamePtr->field_B0[10] = g_SavegamePtr->field_B0[idx0];
+}
 
 void func_800EE660(void) // 0x800EE660
 {

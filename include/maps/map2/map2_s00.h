@@ -78,6 +78,8 @@ extern s_WorldObject_0        g_CommonWorldObjects[6];
 
 extern VECTOR3 D_800F217C;
 
+extern s_MapPoint2d D_800F1CAC[3][32];
+
 void func_800D5974(s_SubCharacter* chara);
 
 bool func_800DC200(s_SubCharacter* chara);
@@ -162,5 +164,7 @@ s32 func_800EE5A8(u32 arg0);
 void func_800EE5D0(void);
 
 void func_800EE660(void);
+
+void func_800EE5D0(void);
 
 #endif
