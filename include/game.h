@@ -425,6 +425,23 @@ typedef enum _SysFlags
     SysFlag_7      = 1 << 7
 } e_SysFlags;
 
+// Temp name.
+typedef enum _SysFlags2
+{
+    SysFlag2_None = 0,
+    SysFlag2_0    = 1 << 0,
+    SysFlag2_1    = 1 << 1,
+
+    SysFlag2_3    = 1 << 3,
+    SysFlag2_4    = 1 << 4,
+    SysFlag2_5    = 1 << 5,
+    SysFlag2_6    = 1 << 6,
+    SysFlag2_7    = 1 << 7,
+    SysFlag2_8    = 1 << 8,
+    SysFlag2_9    = 1 << 9,
+    SysFlag2_10   = 1 << 10,
+} e_SysFlags2;
+
 typedef enum _SysWorkProcessFlags
 {
     SysWorkProcessFlag_None              = 0,
@@ -1575,7 +1592,7 @@ typedef struct _SysWork
     e_SysWorkProcessFlags processFlags_2298;
     s32             field_229C;
     e_SysFlags      sysFlags_22A0;
-    s32             flags_22A4; // (1 << 6) passed as "use through door cam" flag in `vcSetFirstCamWork`. Also `e_SysFlags` or different?
+    e_SysFlags2     flags_22A4; // `e_SysFlags2` | `SysFlag2_6` passed as "use through door cam" flag in `vcSetFirstCamWork`. Also `e_SysFlags` or different?
     GsCOORDINATE2   coord_22A8; // For particles only?
     GsCOORDINATE2   coord_22F8; // Likely related to above.
     s8              field_2348   : 8;

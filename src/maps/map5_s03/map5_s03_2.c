@@ -370,7 +370,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
         case 11:
             g_SysWork.field_30    = 20;
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
 
             func_8008D438();
 

@@ -129,7 +129,7 @@ void func_800D0C14(void) // 0x800D0C14
             Player_ControlFreeze();
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
 
             func_8004690C(Sfx_Unk1522);
 

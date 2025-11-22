@@ -850,13 +850,19 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
     q19_12          xz_dist;
     q19_12          ofs_x;
     q19_12          ofs_z;
+    q19_12          all_min_dist;
+    q19_12          active_min_dist;
+    s_SubCharacter* sc_p;
+    s_SubCharacter* all_min_sc_p;
+    s_SubCharacter* active_min_sc_p;
+
     s_SubCharacter* sc_p            = NULL;
     s_SubCharacter* all_min_sc_p    = NULL;
     s_SubCharacter* active_min_sc_p = NULL;
     q19_12          all_min_dist    = ENEMY_DIST_MAX;
     q19_12          active_min_dist = ENEMY_DIST_MAX;
 
-    if (g_SysWork.flags_22A4 & (1 << 5)) // `sh2jms->player.battle(ShBattleInfo).status & 0x10` in SH2.
+    if (g_SysWork.flags_22A4 & SysFlag2_5) // `sh2jms->player.battle(ShBattleInfo).status & (1 << 4)` in SH2.
     {
         w_p->nearest_enemy_2DC         = NULL;
         w_p->nearest_enemy_xz_dist_2E0 = ENEMY_DIST_MAX;
@@ -881,7 +887,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
             }
 
             xz_dist = Vc_VectorMagnitudeCalc(ofs_x, 0, ofs_z);
-            ratan2(ofs_x, ofs_z); // Result unused?
+            ratan2(ofs_x, ofs_z); // @unused Result unused?
 
             if (xz_dist < all_min_dist)
             {

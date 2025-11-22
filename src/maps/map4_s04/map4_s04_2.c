@@ -355,7 +355,7 @@ void func_800D23E4(void) // 0x800D23E4
             ScreenFade_ResetTimestep();
 
             D_800D37C1            = 0;
-            g_SysWork.flags_22A4 |= 8;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
             func_8005DC1C(Sfx_DoorClose0, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
             break;

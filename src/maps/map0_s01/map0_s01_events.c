@@ -91,9 +91,9 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
             g_SavegamePtr->itemToggleFlags_AC &= ~ItemToggleFlag_RadioOn;
-            g_SysWork.flags_22A4 |= (1 << 5) | (1 << 9);
+            g_SysWork.flags_22A4 |= SysFlag2_5 | SysFlag2_9;
             g_MapMsgSoundIdx = 0;
             D_800DE250 = 0;
             D_800DE251 = 0;
@@ -699,8 +699,8 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             SysWork_StateSetNext(SysState_Gameplay);
             Player_FallBackward();
 
-            g_SysWork.flags_22A4 &= ~(1 << 5);
-            g_SysWork.flags_22A4 &= ~(1 << 9);
+            g_SysWork.flags_22A4 &= ~SysFlag2_5;
+            g_SysWork.flags_22A4 &= ~SysFlag2_9;
             break;
     }
 
@@ -914,7 +914,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
 
     if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
     {
-        g_SysWork.flags_22A4 |= (1 << 5) | (1 << 9);
+        g_SysWork.flags_22A4 |= SysFlag2_5 | SysFlag2_9;
 
         Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
 

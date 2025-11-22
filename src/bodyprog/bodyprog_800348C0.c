@@ -46,14 +46,14 @@ void GameState_LoadScreen_Update(void) // 0x800348E8
     Gfx_LoadingScreenDraw();
     GameFs_MapStartup();
 
-    if (g_SysWork.flags_22A4 & (1 << 10))
+    if (g_SysWork.flags_22A4 & SysFlag2_10)
     {
         D_800BCDD4++;
 
         // Doesn't trigger audio.
         if (D_800BCDD4 >= 21)
         {
-            g_SysWork.flags_22A4 &= ~(1 << 10);
+            g_SysWork.flags_22A4 &= ~SysFlag2_10;
 
             Sd_EngineCmd(Sfx_Unk1502);
             Sd_EngineCmd(Sfx_Unk1501);
@@ -208,10 +208,10 @@ void GameFs_MapStartup(void) // 0x80034964
             break;
 
         case 10:
-            if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_BootDemo && !(g_SysWork.flags_22A4 & (1 << 1)))
+            if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_BootDemo && !(g_SysWork.flags_22A4 & SysFlag2_1))
             {
                 Demo_Start();
-                g_SysWork.flags_22A4 |= 1 << 1;
+                g_SysWork.flags_22A4 |= SysFlag2_1;
             }
 
             if (func_80039F90() & (1 << 2) || func_8003599C() == 0)
@@ -2037,7 +2037,7 @@ void func_80037F24(s32 arg0) // 0x80037F24
 
         vec = (VECTOR3*)var_s5;
 
-        if (!(g_SysWork.flags_22A4 & 0x10) && HAS_FLAG(temp_a0, var_s4) && !HAS_FLAG(&g_SysWork.field_228C, var_s4) &&
+        if (!(g_SysWork.flags_22A4 & SysFlag2_4) && HAS_FLAG(temp_a0, var_s4) && !HAS_FLAG(&g_SysWork.field_228C, var_s4) &&
             var_s5->data.spawnInfo.flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= var_s5->data.spawnInfo.field_7_0 &&
             func_8008F914(var_s5->positionX_0, var_s5->positionZ_8) &&
             !Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, vec, Q12(22.0f)) &&
@@ -2613,11 +2613,11 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
         g_SysWork.sysState_8 == SysState_StatusMenu ||
         g_SysWork.sysState_8 == SysState_MapScreen)
     {
-        g_SysWork.flags_22A4 |= 1 << 7;
+        g_SysWork.flags_22A4 |= SysFlag2_7;
     }
     else if (ScreenFade_IsNone())
     {
-        g_SysWork.flags_22A4 &= ~(1 << 7);
+        g_SysWork.flags_22A4 &= ~SysFlag2_7;
     }
 }
 
@@ -2973,7 +2973,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     if (g_SysWork.field_2283 == 7)
     {
         D_800BCDD4            = 0;
-        g_SysWork.flags_22A4 |= 1 << 10;
+        g_SysWork.flags_22A4 |= SysFlag2_10;
     }
 
     D_800BCDB0 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->pointOfInterestIdx_8_5];
@@ -3009,11 +3009,11 @@ void SysState_LoadArea_Update(void) // 0x80039C40
 
     if (g_MapEventParam->field_8_24)
     {
-        g_SysWork.flags_22A4 |= 1 << 6;
+        g_SysWork.flags_22A4 |= SysFlag2_6;
     }
     else
     {
-        g_SysWork.flags_22A4 &= ~(1 << 6);
+        g_SysWork.flags_22A4 &= ~SysFlag2_6;
     }
 
     g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
@@ -3046,7 +3046,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
     s32 i;
     void (**func)(s32);
 
-    if (!(g_MapEventParam->flags_8_13 & (1 << 0)) && !(g_SysWork.flags_22A4 & (1 << 5)))
+    if (!(g_MapEventParam->flags_8_13 & (1 << 0)) && !(g_SysWork.flags_22A4 & SysFlag2_5))
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
@@ -3107,7 +3107,7 @@ void SysWork_SavegameUpdatePlayer(void) // 0x8003A120
 
 void func_8003A16C(void) // 0x8003A16C
 {
-    if (!(g_SysWork.flags_22A4 & 2))
+    if (!(g_SysWork.flags_22A4 & SysFlag2_1))
     {
         // Update `savegame_30C` with player info.
         SysWork_SavegameUpdatePlayer();

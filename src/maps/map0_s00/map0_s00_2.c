@@ -155,7 +155,7 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
             
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
 
             Sd_PlaySfx(Sfx_Unk1361, 0, 0x90);
             SysWork_StateStepIncrement(0);
@@ -1227,7 +1227,7 @@ void func_800DC33C(void) // 0x800DC33C
                             g_SysWork.npcs_1A0[0].position_18.vz - camPos.vz) <= Q12(16.5f) &&
         g_SysWork.npcs_1A0[0].position_18.vx >= Q12(-58.0f))
     {
-        if (!(g_SysWork.flags_22A4 & 0x80))
+        if (!(g_SysWork.flags_22A4 & SysFlag2_7))
         {
             if (!Vw_AabbVisibleInScreenCheck(g_SysWork.npcs_1A0[0].position_18.vx - Q12(1.0f),
                                              g_SysWork.npcs_1A0[0].position_18.vx + Q12(1.0f),
@@ -1316,7 +1316,7 @@ void func_800DC694(void) // 0x800DC694
 
     if (mag <= Q12(14.5f) && g_SysWork.npcs_1A0[0].position_18.vz >= Q12(49.0f))
     {
-        if (!(g_SysWork.flags_22A4 & 0x80))
+        if (!(g_SysWork.flags_22A4 & SysFlag2_7))
         {
             if (!Vw_AabbVisibleInScreenCheck(g_SysWork.npcs_1A0[0].position_18.vx - Q12(1.0f),
                                              g_SysWork.npcs_1A0[0].position_18.vx + Q12(1.0f),

@@ -35,7 +35,7 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
         return 0;
     }
 
-    if (g_SysWork.flags_22A4 & (1 << 1))
+    if (g_SysWork.flags_22A4 & SysFlag2_1)
     {
         if (g_Demo_FrameCount > (TICKS_PER_SECOND * 30))
         {
@@ -71,7 +71,7 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
         return 2; 
     }
 
-    return (g_SysWork.flags_22A4 & (1 << 8)) ? 2 : 0;
+    return (g_SysWork.flags_22A4 & SysFlag2_8) ? 2 : 0;
 }
 
 void Game_WarmBoot(void) // 0x80034264
@@ -109,7 +109,7 @@ void Game_WarmBoot(void) // 0x80034264
         VSync(SyncMode_Wait);
     }
 
-    if (g_SysWork.flags_22A4 & (1 << 1))
+    if (g_SysWork.flags_22A4 & SysFlag2_1)
     {
         Demo_Stop();
     }

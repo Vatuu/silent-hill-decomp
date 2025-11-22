@@ -1199,7 +1199,7 @@ void func_800E3390(void) // 0x800E3390
 
             ScreenFade_ResetTimestep();
             g_SysWork.field_30    = 20;
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
 
             func_800E0A34();
 
@@ -1430,7 +1430,7 @@ void func_800E3B6C(void) // 0x800E3B6C
 
             g_SysWork.field_30          = 20;
             g_SysWork.sysStateStep_C[0] = 0;
-            g_SysWork.flags_22A4       |= 1 << 3;
+            g_SysWork.flags_22A4       |= SysFlag2_3;
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -1464,7 +1464,7 @@ void func_800E3D18(void) // 0x800E3D18
             g_SysWork.player_4C.chara_0.health_B0 = Q12(100.0f);
             g_SysWork.field_30                    = 20;
             g_SysWork.sysStateStep_C[0]           = 0;
-            g_SysWork.flags_22A4                 |= 1 << 3;
+            g_SysWork.flags_22A4                 |= SysFlag2_3;
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -1511,7 +1511,7 @@ void func_800E3E84(void) // 0x800E3E84
             g_SysWork.field_30          = 20;
             g_SysWork.sysStateStep_C[0] = 0;
             D_800F4805                  = 1;
-            g_SysWork.flags_22A4       |= 1 << 3;
+            g_SysWork.flags_22A4       |= SysFlag2_3;
 
         case 1:
             func_800E8D20();

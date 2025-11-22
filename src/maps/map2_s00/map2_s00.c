@@ -1140,7 +1140,7 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_M2S00_WaterWorksCutscene);
 
-            g_SysWork.flags_22A4 &= ~(1 << 4);
+            g_SysWork.flags_22A4 &= ~SysFlag2_4;
             break;
     }
 }
@@ -1387,7 +1387,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             vcReturnPreAutoCamWork(false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            g_SysWork.flags_22A4 &= ~(1 << 4);
+            g_SysWork.flags_22A4 &= ~SysFlag2_4;
 
             func_8003A16C();
             break;
@@ -1902,7 +1902,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(376.5f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = Q12(-0.25f);
             g_SysWork.field_30 = 20;
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
@@ -2530,7 +2530,7 @@ void func_800EB908(void) // 0x800EB908
     if (!Savegame_EventFlagGet(EventFlag_146) || 
         (Savegame_EventFlagGet(EventFlag_193) &&  !Savegame_EventFlagGet(EventFlag_M2S00_WaterWorksCutscene))) 
     {
-        g_SysWork.flags_22A4 |= 1 << 4;
+        g_SysWork.flags_22A4 |= SysFlag2_4;
     }
 
     if (Savegame_EventFlagGet(EventFlag_159))
@@ -2626,7 +2626,7 @@ s32 func_800EE5A8(u32 arg0) // 0x800EE5A8
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800EE5D0);
 
-void func_800EE660(void)
+void func_800EE660(void) // 0x800EE660
 {
     s32 val;
     s32 idx;

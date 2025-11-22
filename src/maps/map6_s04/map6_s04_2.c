@@ -431,7 +431,7 @@ void func_800E1D50(void) // 0x800E1D50
 
             D_800ED5AC = 0;
             D_800ED5B0 = 0;
-            g_SysWork.flags_22A4 |= 1 << 4;
+            g_SysWork.flags_22A4 |= SysFlag2_4;
 
             Game_TurnFlashlightOn();
             func_800E1CA0();
@@ -452,7 +452,7 @@ void func_800E1D50(void) // 0x800E1D50
             Chara_Load(0, Chara_MonsterCybil, g_SysWork.npcCoords_FC0, -1, NULL, NULL);
 
             g_SysWork.field_30 = 20;
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
 
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
@@ -717,7 +717,7 @@ void func_800E2724(void) // 0x800E2724
         case 0:
             Player_ControlFreeze();
             ScreenFade_ResetTimestep();
-            g_SysWork.flags_22A4 |= 1 << 4;
+            g_SysWork.flags_22A4 |= SysFlag2_4;
 
             func_800E1CA0();
             func_8007E860();
@@ -1039,7 +1039,7 @@ void func_800E3244(void) // 0x800E3244
             Chara_Load(1, Chara_Parasite, &g_SysWork.npcCoords_FC0[30], 0, NULL, NULL);
 
             g_SysWork.field_30 = 20;
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();

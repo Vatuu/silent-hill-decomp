@@ -36,8 +36,8 @@ void vcSetCameraUseWarp(const VECTOR3* chr_pos, q3_12 chr_ang_y) // 0x800400D4
     cam_pos.vy = chr_pos->vy - Q12(1.7f);
     cam_pos.vz = chr_pos->vz - FP_MULTIPLY_FLOAT(Math_Cos(chr_ang_y), 1.5f, Q12_SHIFT);
 
-    vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & (1 << 6));
-    g_SysWork.flags_22A4 &= ~(1 << 6);
+    vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & SysFlag2_6);
+    g_SysWork.flags_22A4 &= ~SysFlag2_6;
 }
 
 s32 vcRetCamMvSmoothF(void) // 0x80040190

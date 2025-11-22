@@ -272,7 +272,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
         case 0:
             D_800A8F40            = 0;
             g_SysWork.field_30    = 1;
-            g_SysWork.flags_22A4 &= ~(1 << 3);
+            g_SysWork.flags_22A4 &= ~SysFlag2_3;
             return;
 
         case 1:
@@ -284,7 +284,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
     AddPrim(ot, &poly[2]);
     AddPrim(ot, drMode);
 
-    if (!(g_SysWork.flags_22A4 & (1 << 3)))
+    if (!(g_SysWork.flags_22A4 & SysFlag2_3))
     {
         vcChangeProjectionValue(g_GameWork.gsScreenHeight_58A + FP_MULTIPLY(377 - g_GameWork.gsScreenHeight_58A, D_800A8F40, Q12_SHIFT));
     }

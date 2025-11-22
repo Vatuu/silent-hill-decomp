@@ -312,7 +312,7 @@ void func_800D2408(void) // 0x800D2408
             func_80085EB8(0, playerChara, 0x33, false);
 
             g_SysWork.field_30 = 20;
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
 
             func_8008D438();
 
@@ -626,7 +626,7 @@ void func_800D2F74(void) // 0x800D2F74
 
             g_MapMsgSoundIdx1 = 0;
             g_Timer1 = Q12(0.0f);
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
 
             func_80085EB8(0, playerChara, 0x79, false);
             Game_TurnFlashlightOn();
@@ -635,7 +635,7 @@ void func_800D2F74(void) // 0x800D2F74
             SysWork_StateStepIncrement(0);
 
             g_SysWork.field_30 = 20;
-            g_SysWork.flags_22A4 |= (1<<3);
+            g_SysWork.flags_22A4 |= SysFlag2_3;
             break;
 
         case 1:
@@ -738,7 +738,7 @@ void func_800D4410(void) // 0x800D4410
 
             ScreenFade_ResetTimestep();
 
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
 
             Fs_QueueStartRead(FILE_ANIM_SQSU_DMS, FS_BUFFER_11);
             Fs_QueueWaitForEmpty();

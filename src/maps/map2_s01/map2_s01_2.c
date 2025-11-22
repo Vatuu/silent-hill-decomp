@@ -169,7 +169,7 @@ void func_800CED88(void) // 0x800CED88
 
             g_Timer0 = Q12(0.0f);
             g_SysWork.field_30 = 20;
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
 
             func_80085EB8(0, playerChara, 51, false);
             func_80085EB8(0, dahliaChara, 0, false);

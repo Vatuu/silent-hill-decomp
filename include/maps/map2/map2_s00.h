@@ -154,15 +154,12 @@ void func_800EB7E0(void);
 
 void func_800EB824(s32);
 
+/** Index getter. */
 s32 func_800EE518(void);
 
 s32 func_800EE5A8(u32 arg0);
 
 void func_800EE5D0(void);
-
-void func_800DF80C(s_SubCharacter* chara);
-
-void func_800DDF74(s_SubCharacter* chara, s32 xMul, s32 angle0);
 
 void func_800EE660(void);
 

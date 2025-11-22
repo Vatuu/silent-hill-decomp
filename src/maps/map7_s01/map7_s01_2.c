@@ -208,7 +208,7 @@ void func_800D725C(void) // 0x800D725C
 
             g_SysWork.field_30    = 20;
             g_SysWork.field_2378  = Q12(0.8f);
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
 
             Game_TurnFlashlightOn();
             D_800E1670 = 0;
@@ -1632,7 +1632,7 @@ void func_800DAE00(void) // 0x800DAE00
             Player_ControlFreeze();
 
             g_SysWork.field_30    = 20;
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
 
             Fs_QueueStartRead(FILE_ANIM_DRIVR_DMS, (void*)FS_BUFFER_11);
             Fs_QueueWaitForEmpty();
