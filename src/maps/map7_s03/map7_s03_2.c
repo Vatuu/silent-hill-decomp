@@ -390,11 +390,44 @@ u8 func_800DD964(void) // 0x8007F250
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD98C);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD9B0);
+void func_800DD9B0(s_SubCharacter* chara) // 0x800DD9B0
+{
+    if (chara->model_0.state_2 != 0)
+    {
+        chara->model_0.state_2     = 2;
+        chara->model_0.stateStep_3 = 0;
+    }
+    else
+    {
+        chara->model_0.stateStep_3 = 2;
+    }
+}
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD9D4);
+void func_800DD9D4(s_SubCharacter* chara) // 0x800DD9D4
+{
+    if (chara->model_0.state_2 != 0)
+    {
+        chara->model_0.state_2     = 10;
+        chara->model_0.stateStep_3 = 0;
+    }
+    else
+    {
+        chara->model_0.stateStep_3 = 10;
+    }
+}
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD9F8);
+void func_800DD9F8(s_SubCharacter* chara) // 0x800DD9F8
+{
+    if (chara->model_0.state_2 != 0)
+    {
+        chara->model_0.state_2     = 3;
+        chara->model_0.stateStep_3 = 0;
+    }
+    else
+    {
+        chara->model_0.stateStep_3 = 3;
+    }
+}
 
 bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 {
@@ -468,13 +501,34 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDBBC);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDCC4);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDDB0);
+void func_800DDDB0(s_SubCharacter* chara) // 0x800DDDB0
+{
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
+        chara->model_0.stateStep_3++;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDDD8);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDEEC);
+void func_800DDEEC(s_SubCharacter* chara) // 0x800DDEEC
+{
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(4, false);
+        chara->model_0.stateStep_3++;
+    }
+}
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDF14);
+void func_800DDF14(s_SubCharacter* chara) // 0x800DDF14
+{
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(4, false);
+        chara->model_0.stateStep_3++;
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map7_s03/nonmatchings/map7_s03_2", D_800CAEAC);
 
@@ -484,15 +538,62 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DE2A4);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DE68C);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DEA54);
+void func_800DEA54(s_SubCharacter* chara) // 0x800DEA54
+{
+    func_800DDB3C();
+
+    chara->model_0.state_2     = ANIM_STATUS(5, true);
+    chara->model_0.stateStep_3 = 0;
+
+    // TODO: Wrong union member used here.
+    chara->properties_E4.player.positionY_EC |= 4;
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DEA90);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DEAF4);
+void func_800DEAF4(s_SubCharacter* chara) // 0x800DEAF4
+{
+    // TODO: Wrong union members used here.
+
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        chara->properties_E4.player.afkTimer_E8 = func_800DEA90();
+        chara->model_0.stateStep_3++;
+        return;
+    }
+
+    func_800DDCC4(chara);
+
+    switch (chara->model_0.stateStep_3)
+    {
+        case 1:
+            if (chara->properties_E4.player.afkTimer_E8 <= 0)
+            {
+                chara->model_0.stateStep_3 = 2;
+            }
+            break;
+        case 2:
+            chara->model_0.state_2     = 7;
+            chara->model_0.stateStep_3 = 0;
+            break;
+    }
+
+    chara->properties_E4.player.afkTimer_E8 -= g_DeltaTime0;
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DEBA8);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DEC38);
+void func_800DEC38(s_SubCharacter* chara) // 0x800DEC38
+{
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        if (chara->model_0.anim_4.status_0 != 7)
+        {
+            chara->model_0.anim_4.status_0 = 6;
+        }
+        chara->model_0.stateStep_3++;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DEC74);
 
@@ -602,9 +703,31 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFB04);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFB2C);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFB50);
+void func_800DFB50(s_SubCharacter* chara) // 0x800DFB50
+{
+    if (chara->model_0.state_2 != 0)
+    {
+        chara->model_0.state_2     = 4;
+        chara->model_0.stateStep_3 = 0;
+    }
+    else
+    {
+        chara->model_0.stateStep_3 = 4;
+    }
+}
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFB74);
+void func_800DFB74(s_SubCharacter* chara) // 0x800DFB74
+{
+    if (chara->model_0.state_2 != 0)
+    {
+        chara->model_0.state_2     = 2;
+        chara->model_0.stateStep_3 = 0;
+    }
+    else
+    {
+        chara->model_0.stateStep_3 = 2;
+    }
+}
 
 bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB98
 {
@@ -672,7 +795,20 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFCE4);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFE10);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFEF0);
+void func_800DFEF0(s_SubCharacter* chara) // 0x800DFEF0
+{
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        chara->model_0.stateStep_3++;
+        return;
+    }
+
+    if (chara->model_0.anim_4.status_0 == 8)
+    {
+        chara->model_0.state_2     = 2;
+        chara->model_0.stateStep_3 = 0;
+    }
+}
 
 void func_800DFF28(s_SubCharacter* chara) // 0x800DFF28
 {
@@ -694,7 +830,35 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFF60);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E04C4);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E0528);
+void func_800E0528(s_SubCharacter* chara) // 0x800E0528
+{
+    // TODO: Wrong union members used here.
+
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        chara->properties_E4.player.afkTimer_E8 = func_800E04C4();
+        chara->model_0.stateStep_3++;
+        return;
+    }
+
+    func_800DFE10(chara);
+
+    switch (chara->model_0.stateStep_3)
+    {
+        case 1:
+            if (chara->properties_E4.player.afkTimer_E8 <= 0)
+            {
+                chara->model_0.stateStep_3 = 2;
+            }
+            break;
+        case 2:
+            chara->model_0.state_2     = 3;
+            chara->model_0.stateStep_3 = 0;
+            break;
+    }
+
+    chara->properties_E4.player.afkTimer_E8 -= g_DeltaTime0;
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E05DC);
 
@@ -1336,7 +1500,28 @@ void func_800E3D18(void) // 0x800E3D18
     func_800E2E90();
 }
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E3E84);
+void func_800E3E84(void) // 0x800E3E84
+{
+    switch (D_800F4805)
+    {
+        case 0:
+            g_SysWork.field_30          = 20;
+            g_SysWork.sysStateStep_C[0] = 0;
+            D_800F4805                  = 1;
+            g_SysWork.flags_22A4       |= 1 << 3;
+
+        case 1:
+            func_800E8D20();
+            break;
+
+        default:
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_590);
+            break;
+    }
+
+    func_800E2E90();
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E3F30);
 
@@ -3548,7 +3733,47 @@ void func_800E9874(void) // 0x800E9874
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E98EC);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E9AC8);
+void func_800E9AC8(void) // 0x800E9AC8
+{
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
+
+            if (D_800F481C >= 1 && D_800F481C < 3)
+            {
+                g_SysWork.sysStateStep_C[0] = 3;
+                break;
+            }
+
+            GameFs_StfRollBinLoad();
+            g_SysWork.sysStateStep_C[0]++;
+
+        case 1:
+            if (Fs_QueueGetLength() == 0)
+            {
+                func_801E2E28(D_800F481C);
+                g_SysWork.sysStateStep_C[0]++;
+            }
+            break;
+
+        case 2:
+            if (func_801E2ED8())
+            {
+                g_SysWork.sysStateStep_C[0]++;
+            }
+            break;
+
+        case 3:
+            if (func_801E2FC0())
+            {
+                Savegame_EventFlagSet(EventFlag_588);
+                SysWork_StateSetNext(SysState_Gameplay);
+            }
+            break;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E9C28);
 

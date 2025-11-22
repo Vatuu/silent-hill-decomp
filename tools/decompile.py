@@ -180,7 +180,7 @@ def check_injected_code(func) -> InjectRes:
         # good news, the code was compilable
         # now checking for the checksum...
         check_result = subprocess.run(
-            f"make check {make_defines}", cwd=root_dir, shell=True, check=False, capture_output=True
+            f"make build {make_defines}", cwd=root_dir, shell=True, check=False, capture_output=True
         )
         if check_result.returncode == 0:
             # decompilation successful! There is nothing else to do
@@ -326,6 +326,10 @@ def decompile(func_name: str, number_occurrence: int = None, force: bool = False
         resolve_jumptables(func)
 
     ctx = get_c_context(func.src_path)
+
+    # silent-hill-decomp chara func hack
+    #ctx = ctx + f"\r\nvoid {func.name}(s_SubCharacter*);\r\n"
+
     dec = run_m2c(func, ctx)
     dec_res = guess_unknown_type(dec)
     inject_res = inject_decompiled_function_into_file(func, dec_res)
