@@ -52,7 +52,7 @@
 
 #include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CD170
 
-#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800CD178
+#include "maps/shared/Player_FallBackward.h" // 0x800CD178
 
 #include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CD180
 

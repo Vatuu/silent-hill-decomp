@@ -54,7 +54,7 @@ INCLUDE_RODATA("asm/maps/map4_s06/nonmatchings/map4_s06", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CC6F4
 
-#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800CC6FC
+#include "maps/shared/Player_FallBackward.h" // 0x800CC6FC
 
 #include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CC704
 

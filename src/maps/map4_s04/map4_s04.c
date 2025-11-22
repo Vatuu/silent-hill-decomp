@@ -79,7 +79,7 @@ INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", sharedFunc_800D0690_1_s03
 
 #include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CFE04
 
-#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800CFE0C
+#include "maps/shared/Player_FallBackward.h" // 0x800CFE0C
 
 #include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CFE14
 

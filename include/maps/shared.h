@@ -2218,7 +2218,7 @@ void sharedFunc_800D2E9C_0_s00(s32* arg0, s32* arg1, s16* arg2);
 
 void sharedFunc_800D2E6C_0_s00(void);
 
-void sharedFunc_800D2E74_0_s00(void);
+void Player_FallBackward(void);
 
 void sharedFunc_800D2E7C_0_s00(void);
 

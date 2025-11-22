@@ -697,7 +697,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            sharedFunc_800D2E74_0_s00();
+            Player_FallBackward();
 
             g_SysWork.flags_22A4 &= ~(1 << 5);
             g_SysWork.flags_22A4 &= ~(1 << 9);

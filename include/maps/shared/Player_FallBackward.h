@@ -1,4 +1,4 @@
-void sharedFunc_800D2E74_0_s00(void)
+void Player_FallBackward(void)
 {
 #if defined(MAP0_S01)
     s_SubCharacter*       playerChara;

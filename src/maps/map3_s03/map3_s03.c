@@ -55,7 +55,7 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CB460);
 
 #include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CD614
 
-#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800CD61C
+#include "maps/shared/Player_FallBackward.h" // 0x800CD61C
 
 #include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CD624
 

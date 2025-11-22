@@ -62,7 +62,7 @@ INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CA5C8);
 
 #include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800D1608
 
-#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800D1610
+#include "maps/shared/Player_FallBackward.h" // 0x800D1610
 
 #include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800D1618
 

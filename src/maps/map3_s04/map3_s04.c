@@ -55,7 +55,7 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CB37C);
 
 #include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CD4D8
 
-#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800CD4E0
+#include "maps/shared/Player_FallBackward.h" // 0x800CD4E0
 
 #include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CD4E8
 

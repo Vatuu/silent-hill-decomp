@@ -87,7 +87,7 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800CEFF4_0_s00
 
 #include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800D28AC
 
-#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800D28B4
+#include "maps/shared/Player_FallBackward.h" // 0x800D28B4
 
 #include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800D28BC
 
