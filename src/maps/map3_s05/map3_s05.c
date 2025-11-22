@@ -19,67 +19,7 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CC3A8);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CC9A0);
 
-#include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CCB08
-
-#include "maps/shared/sharedFunc_800D0A60_0_s00.h" // 0x800CCC88
-
-#include "maps/shared/sharedFunc_800D0B18_0_s00.h" // 0x800CCD40
-
-#include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800CCEA4
-
-#include "maps/shared/sharedFunc_800CFFD8_0_s01.h" // 0x800CCEC4
-
-#include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800CD73C
-
-#include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CDB28
-
-#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CEBB4
-
-#include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CF010
-
-#include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CF04C
-
-#include "maps/shared/Player_ControlFreeze.h" // 0x800CF058
-
-#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CF1B8
-
-#include "maps/shared/sharedFunc_800D23EC_0_s00.h" // 0x800CF390
-
-#include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800CFC20
-
-#include "maps/shared/sharedFunc_800D2D2C_0_s00.h" // 0x800CFCD0
-
-#include "maps/shared/sharedFunc_800D2D44_0_s00.h" // 0x800CFCE8
-
-#include "maps/shared/sharedFunc_800D2D6C_0_s00.h" // 0x800CFD10
-
-#include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CFD28
-
-#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800CFD50
-
-#include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CFDF4
-
-#include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CFE04
-
-#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CFE10
-
-#include "maps/shared/Player_FallBackward.h" // 0x800CFE18
-
-#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CFE20
-
-#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800CFE28
-
-#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800CFE30
-
-#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800CFE38
-
-#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800CFE40
-
-#include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CFE48
-
-#include "maps/shared/sharedFunc_800D2EB4_0_s00.h" // 0x800CFE58
-
-#include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CFE98
+#include "maps/shared/Player.h"
 
 #include "maps/shared/Ai_Creaper_Update.h" // 0x800CFEAC
 

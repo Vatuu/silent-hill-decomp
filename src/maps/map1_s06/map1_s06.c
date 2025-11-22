@@ -45,67 +45,7 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800CE25C
 
-#include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CE414
-
-#include "maps/shared/sharedFunc_800D0A60_0_s00.h" // 0x800CE594
-
-#include "maps/shared/sharedFunc_800D0B18_0_s00.h" // 0x800CE64C
-
-#include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800CE7E4
-
-#include "maps/shared/sharedFunc_800CFFD8_0_s01.h" // 0x800CE804
-
-#include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800CF07C
-
-#include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CF468
-
-#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CF868
-
-#include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CFCB8
-
-#include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CFCF4
-
-#include "maps/shared/Player_ControlFreeze.h" // 0x800CFD00
-
-#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CFE60
-
-#include "maps/shared/sharedFunc_800D23EC_0_s00.h" // 0x800D0038
-
-#include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800D0040
-
-#include "maps/shared/sharedFunc_800D2D2C_0_s00.h" // 0x800D00F0
-
-#include "maps/shared/sharedFunc_800D2D44_0_s00.h" // 0x800D0108
-
-#include "maps/shared/sharedFunc_800D2D6C_0_s00.h" // 0x800D0130
-
-#include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800D0148
-
-#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800D0170
-
-#include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800D0214
-
-#include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D0224
-
-#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800D0230
-
-#include "maps/shared/Player_FallBackward.h" // 0x800D0238
-
-#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800D0240
-
-#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800D0248
-
-#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800D0250
-
-#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800D0258
-
-#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800D0260
-
-#include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D0268
-
-#include "maps/shared/sharedFunc_800D2EB4_0_s00.h" // 0x800D0278
-
-#include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800D02B8
+#include "maps/shared/Player.h"
 
 #include "maps/shared/Ai_Splithead_Update.h" // 0x800D02CC
 

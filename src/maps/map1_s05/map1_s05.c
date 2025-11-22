@@ -48,67 +48,7 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CCF30);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CD5EC);
 
-#include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CD754
-
-#include "maps/shared/sharedFunc_800D0A60_0_s00.h" // 0x800CD8D4
-
-#include "maps/shared/sharedFunc_800D0B18_0_s00.h" // 0x800CD98C
-
-#include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800CDAF0
-
-#include "maps/shared/sharedFunc_800CFFD8_0_s01.h" // 0x800CDB10
-
-#include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800CE388
-
-#include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CE774
-
-#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CEA68
-
-#include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CEE94
-
-#include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CEED0
-
-#include "maps/shared/Player_ControlFreeze.h" // 0x800CEEDC
-
-#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CF03C
-
-#include "maps/shared/sharedFunc_800D23EC_0_s00.h" // 0x800CF214
-
-#include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800CF21C
-
-#include "maps/shared/sharedFunc_800D2D2C_0_s00.h" // 0x800CF2CC
-
-#include "maps/shared/sharedFunc_800D2D44_0_s00.h" // 0x800CF2E4
-
-#include "maps/shared/sharedFunc_800D2D6C_0_s00.h" // 0x800CF30C
-
-#include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CF324
-
-#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800CF34C
-
-#include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CF3F0
-
-#include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CF400
-
-#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CF40C
-
-#include "maps/shared/Player_FallBackward.h" // 0x800CF414
-
-#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CF41C
-
-#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800CF424
-
-#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800CF42C
-
-#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800CF7A4
-
-#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800CF7AC
-
-#include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CF7B4
-
-#include "maps/shared/sharedFunc_800D2EB4_0_s00.h" // 0x800CF7C4
-
-#include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CF804
+#include "maps/shared/Player.h"
 
 #include "maps/shared/Ai_Splithead_Update.h" // 0x800CF818
 

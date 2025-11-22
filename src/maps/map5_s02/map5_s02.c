@@ -11,67 +11,7 @@ INCLUDE_RODATA("asm/maps/map5_s02/nonmatchings/map5_s02", g_MapOverlayHeader);
 
 INCLUDE_ASM("asm/maps/map5_s02/nonmatchings/map5_s02", func_800CB6CC);
 
-#include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CB834
-
-#include "maps/shared/sharedFunc_800D0A60_0_s00.h" // 0x800CB9B4
-
-#include "maps/shared/sharedFunc_800D0B18_0_s00.h" // 0x800CBA6C
-
-#include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800CBBD0
-
-#include "maps/shared/sharedFunc_800CFFD8_0_s01.h" // 0x800CBBF0
-
-#include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800CC468
-
-#include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CC854
-
-#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CD1A4
-
-#include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CD5F4
-
-#include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CD630
-
-#include "maps/shared/Player_ControlFreeze.h" // 0x800CD63C
-
-#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CD79C
-
-#include "maps/shared/sharedFunc_800D23EC_0_s00.h" // 0x800CD974
-
-#include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800CD97C
-
-#include "maps/shared/sharedFunc_800D2D2C_0_s00.h" // 0x800CDA2C
-
-#include "maps/shared/sharedFunc_800D2D44_0_s00.h" // 0x800CDA44
-
-#include "maps/shared/sharedFunc_800D2D6C_0_s00.h" // 0x800CDA6C
-
-#include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CDA84
-
-#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800CDAAC
-
-#include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CDB50
-
-#include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CDB60
-
-#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CDB6C
-
-#include "maps/shared/Player_FallBackward.h" // 0x800CDB74
-
-#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CDB7C
-
-#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800CDB84
-
-#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800CDB8C
-
-#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800CDB94
-
-#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800CDB9C
-
-#include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CDBA4
-
-#include "maps/shared/sharedFunc_800D2EB4_0_s00.h" // 0x800CDBB4
-
-#include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CDBF4
+#include "maps/shared/Player.h"
 
 #include "maps/shared/Ai_Stalker_Update.h" // 0x800CDC08
 

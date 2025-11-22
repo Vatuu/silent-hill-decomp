@@ -6,67 +6,7 @@
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CABCC
 
-#include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CAD34
-
-#include "maps/shared/sharedFunc_800D0A60_0_s00.h" // 0x800CAEB4
-
-#include "maps/shared/sharedFunc_800D0B18_0_s00.h" // 0x800CAF6C
-
-#include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800CB0D0
-
-#include "maps/shared/sharedFunc_800CFFD8_0_s01.h" // 0x800CB0F0
-
-#include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800CB968
-
-#include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CBD54
-
-#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CC048
-
-#include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CC474
-
-#include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CC4B0
-
-#include "maps/shared/Player_ControlFreeze.h" // 0x800CC4BC
-
-#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CC61C
-
-#include "maps/shared/sharedFunc_800D23EC_0_s00.h" // 0x800CC7F4
-
-#include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800CC7FC
-
-#include "maps/shared/sharedFunc_800D2D2C_0_s00.h" // 0x800CC8AC
-
-#include "maps/shared/sharedFunc_800D2D44_0_s00.h" // 0x800CC8C4
-
-#include "maps/shared/sharedFunc_800D2D6C_0_s00.h" // 0x800CC8EC
-
-#include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CC904
-
-#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800CC92C
-
-#include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CC9D0
-
-#include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CC9E0
-
-#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CC9EC
-
-#include "maps/shared/Player_FallBackward.h" // 0x800CC9F4
-
-#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CC9FC
-
-#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800CCA04
-
-#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800CCA0C
-
-#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800CCA14
-
-#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800CCA1C
-
-#include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CCA24
-
-#include "maps/shared/sharedFunc_800D2EB4_0_s00.h" // 0x800CCA34
-
-#include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800CCA74
+#include "maps/shared/Player.h"
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CCA88
 

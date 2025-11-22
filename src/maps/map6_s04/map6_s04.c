@@ -83,67 +83,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CCB1C);
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CD3AC
 
-#include "maps/shared/sharedFunc_800D08B8_0_s00.h" // 0x800CD514
-
-#include "maps/shared/sharedFunc_800D0A60_0_s00.h" // 0x800CD694
-
-#include "maps/shared/sharedFunc_800D0B18_0_s00.h" // 0x800CD74C
-
-#include "maps/shared/sharedFunc_800D0E04_0_s00.h" // 0x800CD8B0
-
-#include "maps/shared/sharedFunc_800CFFD8_0_s01.h" // 0x800CD8D0
-
-#include "maps/shared/sharedFunc_800D0850_0_s01.h" // 0x800CE148
-
-#include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CE534
-
-#include "maps/shared/sharedFunc_800D1C38_0_s00.h" // 0x800CF620
-
-#include "maps/shared/sharedFunc_800D209C_0_s00.h" // 0x800CFA4C
-
-#include "maps/shared/sharedFunc_800D20D8_0_s00.h" // 0x800CFA88
-
-#include "maps/shared/Player_ControlFreeze.h" // 0x800CFA94
-
-#include "maps/shared/Player_ControlUnfreeze.h" // 0x800CFBF4
-
-#include "maps/shared/sharedFunc_800D23EC_0_s00.h" // 0x800CFDCC
-
-#include "maps/shared/sharedFunc_800D2C7C_0_s00.h" // 0x800CFDD4
-
-#include "maps/shared/sharedFunc_800D2D2C_0_s00.h" // 0x800CFE84
-
-#include "maps/shared/sharedFunc_800D2D44_0_s00.h" // 0x800CFE9C
-
-#include "maps/shared/sharedFunc_800D2D6C_0_s00.h" // 0x800CFEC4
-
-#include "maps/shared/sharedFunc_800D2D84_0_s00.h" // 0x800CFEDC
-
-#include "maps/shared/sharedFunc_800D2DAC_0_s00.h" // 0x800CFF04
-
-#include "maps/shared/sharedFunc_800D2E50_0_s00.h" // 0x800CFFA8
-
-#include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CFFB8
-
-#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CFFC4
-
-#include "maps/shared/Player_FallBackward.h" // 0x800CFFCC
-
-#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CFFD4
-
-#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800CFFDC
-
-#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800D003C
-
-#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800D0044
-
-#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800D004C
-
-#include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D0054
-
-#include "maps/shared/sharedFunc_800D2EB4_0_s00.h" // 0x800D0064
-
-#include "maps/shared/sharedFunc_800D2EF4_0_s00.h" // 0x800D00A4
+#include "maps/shared/Player.h"
 
 #include "maps/shared/Ai_LarvalStalker_Update.h" // 0x800D00B8
 
