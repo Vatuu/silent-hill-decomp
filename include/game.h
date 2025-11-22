@@ -1915,20 +1915,6 @@ static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 
     chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
 }
 
-/** @brief Sets the given animation flag on both player character and player extra data. */
-// TODO: Move to separate character/player header.
-static inline void Player_AnimFlagsSet(u32 flags)
-{
-    s_SubCharacter*       chara;
-    s_MainCharacterExtra* extra;
-
-    extra = &g_SysWork.player_4C.extra_128;
-    chara = &g_SysWork.player_4C.chara_0;
-
-    extra->model_0.anim_4.flags_2 |= flags;
-    chara->model_0.anim_4.flags_2 |= flags;
-}
-
 /** @brief Sets given animation flags for a model.
  *
  * @param model `s_Model` to update.

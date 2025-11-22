@@ -907,10 +907,11 @@ void sharedFunc_800D20D8_0_s00(void)
 
 void Player_ControlFreeze(void)
 {
-    // TODO: Pointers here are odd, might be full of inlines.
+    s_MainCharacterExtra* playerExtra;
+    s_SubCharacter*       playerChara;
 
-    s_MainCharacterExtra* extra;
-    s_SubCharacter*       chara;
+    playerExtra = &g_SysWork.player_4C.extra_128;
+    playerChara = &g_SysWork.player_4C.chara_0;
 
     sharedData_800DD59C_0_s00 = NO_VALUE;
 
@@ -919,20 +920,13 @@ void Player_ControlFreeze(void)
     g_Player_DisableControl          = true;
     g_Player_IsInWalkToRunTransition = false;
 
-    extra = &g_SysWork.player_4C.extra_128;
-    chara = &g_SysWork.player_4C.chara_0;
-
     D_800AF216 = 0;
 
-    chara->properties_E4.player.afkTimer_E8        = Q12(0.0f);
-    chara->properties_E4.player.runTimer_F8        = Q12(0.0f);
-    chara->properties_E4.player.exhaustionTimer_FC = Q12(0.0f);
+    playerChara->properties_E4.player.afkTimer_E8        = Q12(0.0f);
+    playerChara->properties_E4.player.runTimer_F8        = Q12(0.0f);
+    playerChara->properties_E4.player.exhaustionTimer_FC = Q12(0.0f);
 
-    g_SysWork.player_4C.extra_128.state_1C = PlayerState_Unk52;
-    chara->model_0.stateStep_3             = 0;
-    chara->model_0.state_2                 = 0;
-    extra->model_0.stateStep_3             = 0;
-    extra->model_0.state_2                 = 0;
+    Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk52);
 
     g_Player_IsShooting          = false;
     g_Player_IsAttacking         = false;
@@ -948,15 +942,12 @@ void Player_ControlFreeze(void)
     g_Player_IsSteppingLeftHold  = false;
     g_Player_IsTurningLeft       = false;
 
-    g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-    g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
-
     sharedData_800E39D8_0_s00 = 0;
 
-    chara->field_D6                                             = Q12(0.0f);
+    playerChara->field_D6                                       = Q12(0.0f);
     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
-    chara->flags_3E                                            |= CharaFlag_Unk4;
-    chara->field_E1_0                                           = 4;
+    playerChara->flags_3E                                      |= CharaFlag_Unk4;
+    playerChara->field_E1_0                                     = 4;
 
     if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
     {
@@ -992,13 +983,7 @@ void Player_ControlUnfreeze(bool arg0)
     }
     else
     {
-        g_SysWork.player_4C.extra_128.state_1C          = PlayerState_None;
-        player->model_0.stateStep_3                     = 0;
-        player->model_0.state_2                         = 0;
-        extra->model_0.stateStep_3                      = 0;
-        extra->model_0.state_2                          = 0;
-        g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-        g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+        Player_ExtraStateSet(player, extra, PlayerState_None);
     }
 
     player->attackReceived_41 = NO_VALUE;
@@ -1286,9 +1271,6 @@ void sharedFunc_800D2C7C_0_s00(s32 playerState)
     extra = &g_SysWork.player_4C.extra_128;
     chara = &g_SysWork.player_4C.chara_0;
 
-    extra = &g_SysWork.player_4C.extra_128;
-    chara = &g_SysWork.player_4C.chara_0;
-
     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
 
     D_800C4606 = 0;
@@ -1312,16 +1294,7 @@ void sharedFunc_800D2C7C_0_s00(s32 playerState)
             break;
     }
 
-    g_SysWork.player_4C.extra_128.state_1C = playerState;
-
-    chara->model_0.stateStep_3 = 0;
-    chara->model_0.state_2     = 0;
-
-    extra->model_0.stateStep_3 = 0;
-    extra->model_0.state_2     = 0;
-
-    g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-    g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+    Player_ExtraStateSet(chara, extra, playerState);
 }
 
 void sharedFunc_800D2D2C_0_s00(void)
@@ -1331,14 +1304,7 @@ void sharedFunc_800D2D2C_0_s00(void)
 
 void sharedFunc_800D2D44_0_s00(void)
 {
-    s_MainCharacterExtra* playerExtra;
-    s_SubCharacter*       playerChara;
-
-    playerExtra = &g_SysWork.player_4C.extra_128;
-    playerChara = &g_SysWork.player_4C.chara_0;
-
-    playerExtra->model_0.anim_4.flags_2 &= ~AnimFlag_Unlocked;
-    playerChara->model_0.anim_4.flags_2 &= ~AnimFlag_Unlocked;
+    Player_AnimFlagsClear(AnimFlag_Unlocked);
 }
 
 s32 sharedFunc_800D2D6C_0_s00(void)

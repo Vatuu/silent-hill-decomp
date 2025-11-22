@@ -611,19 +611,37 @@ void Player_Controller(void);
 /** @brief Determines if the player can stomp or kick a knocked enemy. */
 bool func_8007F95C(void);
 
-static inline s32 Player_ExtraStateSet(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, s32 state)
-{
-    s32 activeState;
+#define Player_ExtraStateSet(playerChara, extra, state)                          \
+{                                                                                \
+    g_SysWork.player_4C.extra_128.state_1C          = (state);                   \
+    (playerChara)->model_0.stateStep_3              = 0;                         \
+    (playerChara)->model_0.state_2                  = 0;                         \
+    (extra)->model_0.stateStep_3                    = 0;                         \
+    (extra)->model_0.state_2                        = 0;                         \
+    g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None; \
+    g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None; \
+}
 
-    activeState                                     =
-    g_SysWork.player_4C.extra_128.state_1C          = state;
-    playerChara->model_0.stateStep_3                = 0;
-    playerChara->model_0.state_2                    = 0;
-    extra->model_0.stateStep_3                      = 0;
-    extra->model_0.state_2                          = 0;
-    g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-    g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
-    return activeState;
+/** @brief Sets the given animation flag on both player character and player extra data. */
+static inline void Player_AnimFlagsSet(u32 flags)
+{
+    s_SubCharacter*       chara;
+    s_MainCharacterExtra* extra;
+
+    extra = &g_SysWork.player_4C.extra_128;
+    chara = &g_SysWork.player_4C.chara_0;
+
+    extra->model_0.anim_4.flags_2 |= flags;
+    chara->model_0.anim_4.flags_2 |= flags;
+}
+
+/** @brief Clears the given animation flag on both player character and player extra data. */
+#define Player_AnimFlagsClear(flags)                                       \
+{                                                                          \
+    s_MainCharacterExtra* playerExtra    = &g_SysWork.player_4C.extra_128; \
+    s_SubCharacter*       playerChara    = &g_SysWork.player_4C.chara_0;   \
+    playerExtra->model_0.anim_4.flags_2 &= ~(flags);                       \
+    playerChara->model_0.anim_4.flags_2 &= ~(flags);                       \
 }
 
 #endif
