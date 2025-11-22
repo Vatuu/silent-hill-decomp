@@ -1,6 +1,4 @@
 // NOTE: Function body is only included in M2S00/M2S02/M4S02/M5S01/M6S00, all other maps include the function without any body.
-//
-// TODO: This is only shared with the maps that include code atm, but all other maps should eventually share/#include it too.
 
 /** @brief Returns `true` if angle `a` is generally in front of angle `b`.
  * Checks the angle difference and reports if it falls within the forward arc.

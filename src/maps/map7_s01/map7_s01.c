@@ -60,22 +60,19 @@ INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CA5C8);
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D15FC
 
-void func_800D1608(void) {}
+#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800D1608
 
-void func_800D1610(void) {}
+#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800D1610
 
-void func_800D1618(void) {}
+#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800D1618
 
-void func_800D1620(void) {}
+#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800D1620
 
-void func_800D1628(void) {}
+#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800D1628
 
-s32 func_800D1630(void) // 0x800D1630
-{
-    return 0;
-}
+#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800D1630
 
-void func_800D1638(void) {}
+#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800D1638
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D1640
 

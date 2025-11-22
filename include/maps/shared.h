@@ -2216,6 +2216,18 @@ void sharedFunc_800D2E60_0_s00(void);
 
 void sharedFunc_800D2E9C_0_s00(s32* arg0, s32* arg1, s16* arg2);
 
+void sharedFunc_800D2E6C_0_s00(void);
+
+void sharedFunc_800D2E74_0_s00(void);
+
+void sharedFunc_800D2E7C_0_s00(void);
+
+void sharedFunc_800D2E84_0_s00(void);
+
+void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec);
+
+bool sharedFunc_800D2E94_0_s00(void);
+
 u8 sharedFunc_800D2EA4_0_s00(void);
 
 void sharedFunc_800D2EB4_0_s00(void);

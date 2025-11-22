@@ -8,10 +8,6 @@
 
 #define func_800CD1F8 ((void(*)())0x800CD1F8)
 #define func_800D0C3C ((void(*)())0x800D0C3C)
-#define func_800D20E4 ((void(*)())0x800D20E4)
-#define func_800D20EC ((void(*)())0x800D20EC)
-#define func_800D20F4 ((void(*)())0x800D20F4)
-#define func_800D2054 ((void(*)())0x800D2054)
 #define func_800D2104 ((void(*)())0x800D2104)
 #define func_800D9C60 ((void(*)())0x800D9C60)
 
@@ -116,12 +112,12 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .func_E8                  = sharedFunc_800D2DAC_0_s00,
     .func_EC                  = sharedFunc_800D2E50_0_s00,
     .func_F0                  = sharedFunc_800D2E60_0_s00,
-    .func_F4                  = Player_FallBackward,
-    .func_F8                  = func_800D20E4,
-    .func_FC                  = func_800D20EC,
-    .func_100                 = func_800D20F4,
-    .func_104                 = func_800D2054,
-    .func_108                 = func_800D20FC,
+    .func_F4                  = sharedFunc_800D2E74_0_s00,
+    .func_F8                  = sharedFunc_800D2E7C_0_s00,
+    .func_FC                  = sharedFunc_800D2E84_0_s00,
+    .func_100                 = sharedFunc_800D2E8C_0_s00,
+    .func_104                 = sharedFunc_800D2E6C_0_s00,
+    .func_108                 = sharedFunc_800D2E94_0_s00,
     .func_10C                 = sharedFunc_800D2EB4_0_s00,
     .func_110                 = sharedFunc_800D2EF4_0_s00,
     .func_114                 = sharedFunc_800D2EA4_0_s00,

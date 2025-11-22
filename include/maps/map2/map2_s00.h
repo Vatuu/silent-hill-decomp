@@ -76,8 +76,6 @@ extern s_WorldObject_0        g_CommonWorldObjects[6];
 
 extern VECTOR3 D_800F217C;
 
-bool func_800D17B4(void);
-
 void func_800D5974(s_SubCharacter* chara);
 
 bool func_800DC200(s_SubCharacter* chara);

@@ -23,22 +23,6 @@ extern u8 D_800CCF54;
 
 extern u16 D_800CCF5C[];
 
-void func_800CC77C(void);
-
-void func_800CC784(void);
-
-void func_800CC78C(void);
-
-void func_800CC794(void);
-
-void func_800CC79C(void);
-
-s32 func_800CC7A4(void);
-
-void func_800CC7AC(void);
-
-// Non-shared funcs follow?
-
 void func_800CC8C8(void);
 
 void func_800CCA24(void);

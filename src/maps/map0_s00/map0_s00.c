@@ -440,20 +440,17 @@ bool func_800D0600(void) // 0x800D0600
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D2E60
 
-void func_800D2E6C(void) {}
+#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800D2E6C
 
-void func_800D2E74(void) {}
+#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800D2E74
 
-void func_800D2E7C(void) {}
+#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800D2E7C
 
-void func_800D2E84(void) {}
+#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800D2E84
 
-void func_800D2E8C(void) {}
+#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800D2E8C
 
-s32 func_800D2E94(void) // 0x800D2E94
-{
-    return 0;
-}
+#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800D2E94
 
 #include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800D2E9C
 

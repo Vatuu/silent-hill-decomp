@@ -75,22 +75,19 @@ INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CF050
 
-void func_800CF05C(void) {}
+#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CF05C
 
-void func_800CF064(void) {}
+#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800CF064
 
-void func_800CF06C(void) {}
+#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CF06C
 
-void func_800CF074(void) {}
+#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800CF074
 
-void func_800CF07C(void) {}
+#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800CF07C
 
-s32 func_800CF084(void) // 0x800CF084
-{
-    return 0;
-}
+#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800CF084
 
-void func_800CF08C(void) {}
+#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800CF08C
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CF094
 

@@ -79,8 +79,6 @@ extern u8 D_800EB748;
 extern s8 D_800EB74A;
 extern VECTOR3 D_800EB750;
 
-void func_800CFFDC(void);
-
 void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_MonsterCybil_Init(s_SubCharacter*, s_Model*);
 void func_800D8B14(s_SubCharacter*, s_Model*);

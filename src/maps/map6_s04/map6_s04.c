@@ -61,34 +61,19 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CD3AC);
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CFFB8
 
-void func_800CFFC4(void) {}
+#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CFFC4
 
-void func_800CFFCC(void) {}
+#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800CFFCC
 
-void func_800CFFD4(void) {}
+#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CFFD4
 
-// TODO: Change to sharedFunc, but only M6S04 includes code, all other maps have it ifdefed out.
-void func_800CFFDC(void) // 0x800CFFDC
-{
-    s_MainCharacterExtra* playerExtra;
-    s_SubCharacter*       playerChara;
+#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800CFFDC
 
-    playerChara = &g_SysWork.player_4C.chara_0;
-    playerExtra = &g_SysWork.player_4C.extra_128;
+#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800D003C
 
-    func_8005DC1C(Sfx_Unk1317, &playerChara->position_18, Q8_CLAMPED(0.125f), 0);
+#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800D0044
 
-    Player_ExtraStateSet(playerChara, playerExtra, PlayerState_DamageFeetFront);
-}
-
-void func_800D003C(void) {}
-
-s32 func_800D0044(void) // 0x800D0044
-{
-    return 0;
-}
-
-void func_800D004C(void) {}
+#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800D004C
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D0054
 

@@ -48,22 +48,19 @@
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CC9E0
 
-void func_800CC9EC(void) {}
+#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CC9EC
 
-void func_800CC9F4(void) {}
+#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800CC9F4
 
-void func_800CC9FC(void) {}
+#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CC9FC
 
-void func_800CCA04(void) {}
+#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800CCA04
 
-void func_800CCA0C(void) {}
+#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800CCA0C
 
-s32 func_800CCA14(void) // 0x800CCA14
-{
-    return 0;
-}
+#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800CCA14
 
-void func_800CCA1C(void) {}
+#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800CCA1C
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CCA24
 

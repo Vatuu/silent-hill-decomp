@@ -115,7 +115,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
         case 2:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 77, false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            func_800D2054();
+            sharedFunc_800D2E6C_0_s00();
             SysWork_StateStepIncrement(0);
             break;
         
@@ -697,7 +697,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            Player_FallBackward();
+            sharedFunc_800D2E74_0_s00();
 
             g_SysWork.flags_22A4 &= ~(1 << 5);
             g_SysWork.flags_22A4 &= ~(1 << 9);

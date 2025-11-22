@@ -50,22 +50,19 @@
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800CD164
 
-void func_800CD170(void) {} // 0x800CD170
+#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800CD170
 
-void func_800CD178(void) {} // 0x800CD178
+#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800CD178
 
-void func_800CD180(void) {} // 0x800CD180
+#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800CD180
 
-void func_800CD188(void) {} // 0x800CD188
+#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800CD188
 
-void func_800CD190(void) {} // 0x800CD190
+#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800CD190
 
-s32 func_800CD198(void) // 0x800CD198
-{
-    return 0;
-}
+#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800CD198
 
-void func_800CD1A0(void) {} // 0x800CD1A0
+#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800CD1A0
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800CD1A8
 

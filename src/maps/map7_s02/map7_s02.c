@@ -53,22 +53,19 @@ INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D0650
 
-void func_800D065C(void) {}
+#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800D065C
 
-void func_800D0664(void) {}
+#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800D0664
 
-void func_800D066C(void) {}
+#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800D066C
 
-void func_800D0674(void) {}
+#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800D0674
 
-void func_800D067C(void) {}
+#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800D067C
 
-s32 func_800D0684(void) // 0x800D0684
-{
-    return 0;
-}
+#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800D0684
 
-void func_800D068C(void) {}
+#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800D068C
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D0694
 

@@ -134,8 +134,6 @@ extern s_WorldObject_0        g_CommonWorldObjects[6];
 extern s32 D_800E33A0;
 extern s16 D_800E33A4;
 
-s32 func_800D1630();
-
 bool func_800D238C(s32 arg0);
 
 s32 func_800D2EA0(void);

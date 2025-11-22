@@ -136,18 +136,6 @@ void func_800D0274(s32 arg0, s_Particle* part, u16* arg2);
  */
 bool func_800D0600(void);
 
-void func_800D2E6C(void);
-
-void func_800D2E74(void);
-
-void func_800D2E7C(void);
-
-void func_800D2E84(void);
-
-void func_800D2E8C(void);
-
-s32 func_800D2E94(void);
-
 void func_800D94F8(void);
 
 /** Debug function? */

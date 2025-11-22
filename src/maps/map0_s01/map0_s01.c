@@ -77,53 +77,19 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800CEFD0_1_s02
 
 #include "maps/shared/sharedFunc_800D2E60_0_s00.h" // 0x800D2048
 
-// TODO: Change to sharedFunc, but only M0S01 includes code, all other maps have it ifdefed out.
-void func_800D2054(void) // 0x800D2054
-{
-    g_SysWork.playerCombatInfo_38.weaponAttack_F = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap);
-    func_8003CD6C(&g_SysWork.playerCombatInfo_38);
+#include "maps/shared/sharedFunc_800D2E6C_0_s00.h" // 0x800D2054
 
-    g_SysWork.playerCombatInfo_38.weaponAttack_F = NO_VALUE;
+#include "maps/shared/sharedFunc_800D2E74_0_s00.h" // 0x800D2094
 
-    func_8003D03C();
-}
+#include "maps/shared/sharedFunc_800D2E7C_0_s00.h" // 0x800D20E4
 
-// TODO: Change to sharedFunc, but only M0S01 includes code, all other maps have it ifdefed out.
-void Player_FallBackward(void) // 0x800D2094
-{
-    s_MainCharacter*      player;
-    s_MainCharacterExtra* extra;
+#include "maps/shared/sharedFunc_800D2E84_0_s00.h" // 0x800D20EC
 
-    player = &g_SysWork.player_4C;
+#include "maps/shared/sharedFunc_800D2E8C_0_s00.h" // 0x800D20F4
 
-    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(2.3f);
-    g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124       = FP_ANGLE(180.0f);
-    g_Player_HeadingAngle                                                   = FP_ANGLE(180.0f);
+#include "maps/shared/sharedFunc_800D2E94_0_s00.h" // 0x800D20FC
 
-    g_SysWork.player_4C.extra_128.state_1C = PlayerState_FallBackward;
-    player->chara_0.model_0.stateStep_3 = 0;
-    player->chara_0.model_0.state_2 = 0;
-
-    extra = &g_SysWork.player_4C.extra_128;
-    extra->model_0.stateStep_3 = 0;
-    extra->model_0.state_2 = 0;
-
-    g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-    g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
-}
-
-void func_800D20E4(void) {}
-
-void func_800D20EC(void) {}
-
-void func_800D20F4(void) {}
-
-s32 func_800D20FC(void) // 0x800D20FC
-{
-    return 0;
-}
-
-void func_800D2104(void) {}
+#include "maps/shared/sharedFunc_800D2E9C_0_s00.h" // 0x800D2104
 
 #include "maps/shared/sharedFunc_800D2EA4_0_s00.h" // 0x800D210C
 
