@@ -35,10 +35,10 @@ typedef struct
     u8  unk_1[1];
     u8  field_2;
     u8  unk_3[1];
-    s16 field_4;
+    s16 field_4; // Count.
     s16 field_6;
     s16 field_8;
-    s16 field_A;
+    s16 field_A; // Related to distance.
     s16 field_C;
 } s_800ED430;
 
@@ -68,7 +68,7 @@ extern q19_12 D_800ED5B0;
 
 extern s16 D_800ED5B6;
 
-extern s_Model    g_Ai_MonsterCybil_ExtraModel; // Some kind of attachment or another `s_SubCharacter` instance?
+extern s_Model g_Ai_MonsterCybil_ExtraModel; // Some kind of attachment or another `s_SubCharacter` instance?
 
 extern s32 D_800ED588;
 extern s32 D_800ED58C;
@@ -104,14 +104,14 @@ extern VECTOR3 D_800EB750;
 
 void func_800CC7E0(void);
 
-void func_800CC88C(s32 arg0);
+void func_800CC88C(s32 idx);
 
-s32 func_800CCA24(s32 arg0);
+bool func_800CCA24(s32 idx);
 
 void func_800D8848(s_SubCharacter* chara); // 0x800D8848
 
 void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void Ai_MonsterCybil_Init(s_SubCharacter*, s_Model*);
+void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel);
 void func_800D8A90(s_SubCharacter* chara);
 void func_800D8B14(s_SubCharacter*, s_Model*);
 void func_800D8D7C(s_SubCharacter*, s_Model*, GsCOORDINATE2*);

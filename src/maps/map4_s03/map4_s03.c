@@ -343,18 +343,19 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D4924);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D49C0);
 
-void func_800D4A34(s_SubCharacter* arg0)
+void func_800D4A34(s_SubCharacter* chara) // 0x800D4A34
 {
-    if (arg0->model_0.stateStep_3 == 0)
+    if (chara->model_0.stateStep_3 == 0)
     {
-        arg0->model_0.anim_4.status_0 = 0x22;
-        arg0->moveSpeed_38            = 0;
-        arg0->model_0.stateStep_3    += 1;
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(17, false);
+        chara->moveSpeed_38            = 0;
+        chara->model_0.stateStep_3++;
     }
-    if (arg0->model_0.anim_4.status_0 == 0x24)
+
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
     {
-        arg0->model_0.state_2     = 8;
-        arg0->model_0.stateStep_3 = 0;
+        chara->model_0.state_2     = 8;
+        chara->model_0.stateStep_3 = 0;
     }
 }
 
@@ -386,18 +387,19 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D4E78);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D4FC0);
 
-void func_800D50D8(s_SubCharacter* arg0)
+void func_800D50D8(s_SubCharacter* chara) // 0x800D50D8
 {
-    if (arg0->model_0.stateStep_3 == 0)
+    if (chara->model_0.stateStep_3 == 0)
     {
-        arg0->model_0.anim_4.status_0 = 0x1A;
-        arg0->model_0.stateStep_3    += 1;
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(13, false);
+        chara->model_0.stateStep_3++;
     }
-    if (arg0->model_0.anim_4.status_0 == 0x24)
+
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
     {
-        arg0->model_0.state_2     = 4;
-        arg0->model_0.stateStep_3 = 0;
-        arg0->moveSpeed_38        = 0;
+        chara->model_0.state_2     = 4;
+        chara->model_0.stateStep_3 = 0;
+        chara->moveSpeed_38        = 0;
     }
 }
 

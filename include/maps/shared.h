@@ -1951,11 +1951,11 @@ typedef struct
 
 typedef struct 
 {
-    s32 result_0;
-    s32 dist_4;
-    s32 angle_8;
-    s32 field_C;
-    s32 field_10;
+    s32    result_0;
+    q19_12 dist_4;
+    q19_12 angle_8;
+    q19_12 field_C; // Displacement distance.
+    s32    field_10;
 } s_sharedData_800E231C_0_s01;
 
 // Used by puzzle in M5S01 and M7S01.
@@ -2139,7 +2139,7 @@ extern VECTOR3 sharedData_800E2350_0_s01;
 extern s_800C4590 sharedData_800E39BC_0_s00;
 
 extern s32 sharedData_800DD5A0_0_s00;
-extern s16 sharedData_800DD5A4_0_s00;
+extern s16 sharedData_800DD5A4_0_s00; // Used as index into array of vectors.
 extern s16 sharedData_800E39E0_0_s00;
 extern s16 sharedData_800E39E2_0_s00;
 
@@ -2444,11 +2444,11 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter*);
 
 void sharedFunc_800D3300_5_s00(s_SubCharacter*);
 
-s32 sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1);
+bool sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1);
 
-s32 sharedFunc_800D3630_0_s01(s_SubCharacter* chara, s32* arg1);
+bool sharedFunc_800D3630_0_s01(s_SubCharacter* chara, q19_12* dist);
 
-s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, s32* outDist, s32* outAngle, s32 arg3, s32 arg4);
+s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, q19_12* outDist, q19_12* outAngle, q19_12 dist, s32* arg4);
 
 void Ai_Romper_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
@@ -2542,7 +2542,7 @@ void sharedFunc_800D2BF4_0_s01(s_SubCharacter* chara);
 
 bool sharedFunc_800D2E04_0_s01(s_SubCharacter* chara, VECTOR3* inVec, s32* outDist, s32* outAngle);
 
-s32 sharedFunc_800D3430_0_s01(s_SubCharacter* chara, s32* arg1, s32* arg2);
+bool sharedFunc_800D3430_0_s01(s_SubCharacter* chara, s32* arg1, s32* arg2);
 
 s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara);
 
@@ -2550,7 +2550,7 @@ s32 sharedFunc_800D31D0_0_s01(s_SubCharacter* chara, VECTOR3* arg1, s32 arg2);
 
 bool sharedFunc_800D3928_0_s01(s_SubCharacter* chara);
 
-void sharedSymbol_800D3B0C_0_s01(s_SubCharacter*);
+void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara);
 
 bool sharedFunc_800D62D8_0_s01(s_SubCharacter* chara);
 

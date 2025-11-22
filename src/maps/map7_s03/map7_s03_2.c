@@ -567,11 +567,12 @@ void func_800DEAF4(s_SubCharacter* chara) // 0x800DEAF4
     switch (chara->model_0.stateStep_3)
     {
         case 1:
-            if (chara->properties_E4.player.afkTimer_E8 <= 0)
+            if (chara->properties_E4.player.afkTimer_E8 <= Q12(0.0f))
             {
                 chara->model_0.stateStep_3 = 2;
             }
             break;
+
         case 2:
             chara->model_0.state_2     = 7;
             chara->model_0.stateStep_3 = 0;
@@ -591,6 +592,7 @@ void func_800DEC38(s_SubCharacter* chara) // 0x800DEC38
         {
             chara->model_0.anim_4.status_0 = 6;
         }
+
         chara->model_0.stateStep_3++;
     }
 }
@@ -846,11 +848,12 @@ void func_800E0528(s_SubCharacter* chara) // 0x800E0528
     switch (chara->model_0.stateStep_3)
     {
         case 1:
-            if (chara->properties_E4.player.afkTimer_E8 <= 0)
+            if (chara->properties_E4.player.afkTimer_E8 <= Q12(0.0f))
             {
                 chara->model_0.stateStep_3 = 2;
             }
             break;
+
         case 2:
             chara->model_0.state_2     = 3;
             chara->model_0.stateStep_3 = 0;

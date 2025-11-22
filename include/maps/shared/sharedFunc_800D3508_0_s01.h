@@ -1,20 +1,20 @@
-s32 sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1)
+bool sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1)
 {
     s32    temp_hi;
     q19_12 angle;
     s32    temp_s2;
     u32    temp_lo;
-    s32    ret;
+    bool   cond;
     q19_12 tmpAngle;
 
     temp_s2 = g_SysWork.player_4C.chara_0.properties_E4.player.field_10C << 8;
-    if (arg1)
+    if (arg1 != NULL)
     {
         *arg1 = temp_s2;
     }
 
-    ret = sharedFunc_800D2FB4_0_s01(chara, &g_SysWork.player_4C.chara_0.position_18, temp_s2);
-    if (ret != 0)
+    cond = sharedFunc_800D2FB4_0_s01(chara, &g_SysWork.player_4C.chara_0.position_18, temp_s2);
+    if (cond)
     {
         tmpAngle = ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
         angle = tmpAngle;
@@ -30,7 +30,7 @@ s32 sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1)
             {
                 sharedFunc_800D4A80_0_s01(chara);
             }
-            while (0);
+            while (false);
         }
 
         tmpAngle = FP_MULTIPLY_PRECISE(temp_s2, Math_Sin(angle), Q12_SHIFT);
@@ -43,6 +43,6 @@ s32 sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1)
         chara->properties_E4.unk0.pos_104.vz = chara->position_18.vz + temp_lo;
     }
 
-    return ret;
+    return cond;
 }
 

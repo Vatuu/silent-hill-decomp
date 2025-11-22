@@ -1,17 +1,17 @@
 void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
 {
-    s32 animTime;
-    s32 var0;
-    s32 var1;
-    s32 var2;
-    u32 var3;
-    u32 stateStep;
-    s32 field40;
-    u32 modelState;
-    u32 animStatus;
+    q19_12 animTime;
+    s32    var0;
+    s32    var1;
+    s32    var2;
+    u32    var3;
+    u32    stateStep;
+    s32    field40;
+    u32    modelState;
+    u32    animStatus;
 
     field40 = chara->field_40;
-    switch (field40 % 3)
+    switch (field40 % 0x3)
     {
         case 0:
         default:
@@ -98,6 +98,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
             var3 = 4;
             stateStep = 64;
             break;
+
         case 5:
             var0 = 0;
             animStatus = ANIM_STATUS(19, true);
@@ -167,12 +168,12 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
         chara->properties_E4.unk0.flags_11C = CharaUnk0Flag_Unk16;
     }
 
-    if ((animStatus != NO_VALUE) && (animStatus != chara->model_0.anim_4.status_0))
+    if (animStatus != NO_VALUE && animStatus != chara->model_0.anim_4.status_0)
     {
-        chara->model_0.anim_4.status_0 = animStatus;
-        animTime = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
-        chara->model_0.anim_4.alpha_A = 0;
+        chara->model_0.anim_4.status_0      = animStatus;
+        animTime                            = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
+        chara->model_0.anim_4.alpha_A       = Q12(0.0f);
         chara->model_0.anim_4.keyframeIdx_8 = animTime;
-        chara->model_0.anim_4.time_4 = FP_TO(animTime, Q12_SHIFT);
+        chara->model_0.anim_4.time_4        = FP_TO(animTime, Q12_SHIFT);
     }
 }

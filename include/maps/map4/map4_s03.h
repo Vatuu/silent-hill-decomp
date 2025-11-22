@@ -50,30 +50,59 @@ void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 void func_800D19AC(VECTOR3* vec);
 
 void Ai_Twinfeeler_TextureLoad(void);
+
 void func_800D354C(VECTOR3*);
+
 void func_800D3694(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
-u8   func_800D3B1C(void);
+
+u8 func_800D3B1C(void);
+
 void func_800D3B44(s32);
+
 void func_800D3B68(s_SubCharacter* chara);
+
 void func_800D3B74(s_SubCharacter* chara);
+
 void func_800D3CBC(s_SubCharacter* chara);
+
 bool Ai_Twinfeeler_Init(s_SubCharacter* chara);
+
 void func_800D3E58(s_SubCharacter*);
+
 void func_800D3FB0(s_SubCharacter* chara);
+
 void func_800D3FD8(s_SubCharacter* chara);
+
 void func_800D4000(s_SubCharacter* chara);
+
 void func_800D4028(s_SubCharacter* chara);
+
 void func_800D46E0(VECTOR3* vec0, VECTOR3* vec1);
-u32  func_800D4DD8(void);
+
+void func_800D4A34(s_SubCharacter* chara);
+
+u32 func_800D4DD8(void);
+
+void func_800D50D8(s_SubCharacter* chara);
+
 void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords);
+
 void func_800D54B4(s_SubCharacter*, GsCOORDINATE2*);
+
 void func_800D55C8(s_SubCharacter*);
+
 void func_800D5888(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
 void func_800D59EC(s_SubCharacter*, GsCOORDINATE2*);
+
 void func_800D5B6C(s_SubCharacter* chara, GsCOORDINATE2* coords);
+
 void func_800D5BC8(s_SubCharacter* chara, GsCOORDINATE2* coords);
+
 void func_800D5DF4(s_SubCharacter* chara, GsCOORDINATE2* coords);
+
 void func_800D5E30(s_SubCharacter*, GsCOORDINATE2*);
+
 void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** @brief Handles a First Aid Kit or Rifle Shells item pickup event. */

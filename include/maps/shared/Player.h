@@ -2,8 +2,8 @@
 //
 // TODO:
 //  - This should be a separate .c file/split in each map overlay, but for now keeping in single .h works.
-//  - The first few funcs here (up until sharedFunc_800CDAA8_0_s02) don't appear player related, might be a separate split that all maps included.
-//  - Declarations of these funcs should be moved out of `shared.h` and into actual `Player.h` header, this file could be moved to `Player_Impl.h`
+//  - The first few funcs here (up until `sharedFunc_800CDAA8_0_s02`) don't appear to be player-related, might be a separate split that all maps included.
+//  - Declarations of these funcs should be moved out of `shared.h` and into actual `Player.h` header. This file could be moved to `Player_Impl.h`
 //
 // NOTES:
 //  - All functions are declared in every map, but some function bodies are only included in specific maps.
@@ -52,18 +52,21 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
             sharedData_800DFB6C_0_s00 = 0;
             sharedData_800DFB70_0_s00 = 0;
             break;
+
         case 1:
             var_s1                    = 1;
             var_s0                    = 0;
             sharedData_800DFB6C_0_s00 = 1;
             sharedData_800DFB70_0_s00 = 0;
             break;
+
         case 2:
             var_s1                    = 1;
             var_s0                    = 1;
             sharedData_800DFB6C_0_s00 = 1;
             sharedData_800DFB70_0_s00 = 0;
             break;
+
         case 5:
             var_s1                    = 2;
             var_s0                    = 0;
@@ -73,6 +76,7 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
             sharedData_800E32D0_0_s00 = 135000;
 #endif
             break;
+
         case 6:
             var_s1                    = 2;
             var_s0                    = 1;
@@ -82,6 +86,7 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
             sharedData_800E32D0_0_s00 = 135000;
 #endif
             break;
+
         default:
             var_s0                    = 0;
             var_s1                    = 0;
@@ -1640,12 +1645,15 @@ bool sharedFunc_800D2E94_0_s00(void)
     return false;
 }
 
-/** @brief Returns `true` if angle `a` is generally in front of angle `b`.
- * Checks the angle difference and reports if it falls within the forward arc.
+/** @brief Checks if two angles are within the forward arc.
+ *
+ * @param angle0 First angle.
+ * @param angle1 Second angle.
+ * @return `true` if the angles are within the forward arc, `false` otherwise.
  */
-static inline bool Math_AngleFrontCheck(u16 a, u16 b)
+static inline bool Math_AngleFrontCheck(q4_12 angle0, q4_12 angle1)
 {
-    s32 diff = FP_ANGLE_ABS(a - b);
+    q19_12 diff = FP_ANGLE_ABS(angle0 - angle1);
     return diff < FP_ANGLE(90.0f) || diff >= FP_ANGLE(270.0f);
 }
 
@@ -1653,18 +1661,18 @@ void sharedFunc_800D2E9C_0_s00(s32* arg0, s32* arg1, s16* arg2)
 {
 #if defined(MAP2_S00) || defined(MAP2_S02) || defined(MAP4_S02) || defined(MAP5_S01) || defined(MAP6_S00)
     VECTOR3 vec;
-    s16     charaHeading;
+    q3_12   headingAngle;
     s16     temp_s1;
-    s32     angleFrontOfChara;
+    bool    isInFont;
 
-    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
-    g_SysWork.player_4C.chara_0.headingAngle_3C                             = 0;
-    angleFrontOfChara                                                       = Math_AngleFrontCheck(*arg2, g_SysWork.player_4C.chara_0.rotation_24.vy);
+    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
+    g_SysWork.player_4C.chara_0.headingAngle_3C                             = FP_ANGLE(0.0f);
+    isInFont                                                                = Math_AngleFrontCheck(*arg2, g_SysWork.player_4C.chara_0.rotation_24.vy);
 
-    arg2--; // @hack Permuter find, needed for match
+    arg2--; // @hack Permuter find, needed for match.
     arg2++;
 
-    if (!angleFrontOfChara)
+    if (!isInFont)
     {
         D_800C4610.vx = *arg0 + FP_FROM((Math_Cos(*arg2) * -0x16C) + (Math_Sin(*arg2) * -0x6B0), Q12_SHIFT);
         D_800C4610.vz = *arg1 + FP_FROM((-Math_Sin(*arg2) * -0x16C) + (Math_Cos(*arg2) * -0x6B0), Q12_SHIFT);
@@ -1675,10 +1683,10 @@ void sharedFunc_800D2E9C_0_s00(s32* arg0, s32* arg1, s16* arg2)
         D_800C4610.vz = *arg1 + FP_FROM((-Math_Sin(*arg2) * -0xCB) + (Math_Cos(*arg2) * 0x3C6), Q12_SHIFT);
     }
 
-    charaHeading = g_SysWork.player_4C.chara_0.headingAngle_3C;
-    vec.vx       = Math_Sin(charaHeading); // @unused
+    headingAngle = g_SysWork.player_4C.chara_0.headingAngle_3C;
+    vec.vx       = Math_Sin(headingAngle); // @unused
     vec.vx       = 0;
-    vec.vz       = Math_Cos(charaHeading); // @unused
+    vec.vz       = Math_Cos(headingAngle); // @unused
     vec.vz       = 0;
 
     vec.vx = D_800C4610.vx - g_SysWork.player_4C.chara_0.position_18.vx;
@@ -1690,7 +1698,7 @@ void sharedFunc_800D2E9C_0_s00(s32* arg0, s32* arg1, s16* arg2)
     D_800C4610.vx = g_SysWork.player_4C.chara_0.position_18.vx + D_800C4590.offset_0.vx;
     D_800C4610.vz = g_SysWork.player_4C.chara_0.position_18.vz + D_800C4590.offset_0.vz;
 
-    if (!angleFrontOfChara)
+    if (!isInFont)
     {
         temp_s1 = *arg2 + FP_ANGLE(180.0f);
         *arg0   = D_800C4610.vx + FP_FROM((Math_Cos(temp_s1) * 0x16C) + (Math_Sin(temp_s1) * 0x6B0), Q12_SHIFT);

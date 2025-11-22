@@ -8552,7 +8552,7 @@ void func_8007FD4C(bool cond) // 0x8007FD4C
     }
 }
 
-void func_8007FDE0(s8 arg0, e_SfxId* sfx, s8* pitch0, s8* pitch1) // 0x8007FDE0
+void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE0
 {
     // `arg0` usually comes from `s_Collision::field_8`, maybe floor type?
     s32 mapOverlayId;
@@ -8561,7 +8561,7 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfx, s8* pitch0, s8* pitch1) // 0x8007FDE0
     {
         case 8:
             mapOverlayId = g_SavegamePtr->mapOverlayId_A4;
-            *sfx         = Sfx_Unk1330;
+            *sfxId       = Sfx_Unk1330;
 
             // @hack Odd redundant load of `mapOverlayId_A4`, likely there was some optimized-out code above that left side-effects?
             // This just sets `mapOverlayId` to `g_SavegamePtr->mapOverlayId_A4` (again).
@@ -8579,56 +8579,56 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfx, s8* pitch0, s8* pitch1) // 0x8007FDE0
                 if (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(95.0f)  && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(105.0f) &&
                     g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-33.0f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-28.0f))
                 {
-                    *sfx = Sfx_Unk1389;
+                    *sfxId = Sfx_Unk1389;
                 }
             }
             break;
 
         case 3:
-            *sfx = Sfx_FootstepGrass;
+            *sfxId = Sfx_FootstepGrass;
             break;
 
         case 4:
-            *sfx = Sfx_Unk1313;
+            *sfxId = Sfx_Unk1313;
             break;
 
         case 5:
             if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP4_S02)
             {
-                *sfx = Sfx_Unk1543;
+                *sfxId = Sfx_Unk1543;
             }
             else
             {
-                *sfx = Sfx_Unk1557;
+                *sfxId = Sfx_Unk1557;
             }
             break;
 
         case 6:
         case 10:
         case 11:
-            *sfx = Sfx_FootstepMetal;
+            *sfxId = Sfx_FootstepMetal;
             break;
 
         case 9:
             if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S02)
             {
-                *sfx = Sfx_Unk1388;
+                *sfxId = Sfx_Unk1388;
             }
             else
             {
-                *sfx = Sfx_Unk1331;
+                *sfxId = Sfx_Unk1331;
             }
             break;
 
         case 2:
-            *sfx = Sfx_Unk1389;
+            *sfxId = Sfx_Unk1389;
             break;
 
         default:
         case 0:
         case 1:
         case 7:
-            *sfx = Sfx_FootstepConcrete;
+            *sfxId = Sfx_FootstepConcrete;
             break;
     }
 
@@ -8640,58 +8640,53 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfx, s8* pitch0, s8* pitch1) // 0x8007FDE0
                 case 20:
                     if (g_SysWork.player_4C.chara_0.position_18.vy > Q12(0.0f))
                     {
-                        *sfx = Sfx_Unk1346;
+                        *sfxId = Sfx_Unk1346;
                     }
                     break;
 
                 case 21:
                     if (arg0 != 1)
                     {
-                        *sfx = Sfx_Unk1346;
+                        *sfxId = Sfx_Unk1346;
                     }
                     break;
             }
             break;
 
         case MapOverlayId_MAP4_S03:
-            if ((g_SysWork.player_4C.chara_0.position_18.vx >= Q12(165.0f) &&
-                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(58.5f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(61.5f)) ||
-
-                (g_SysWork.player_4C.chara_0.position_18.vx <= Q12(112.1f) &&
+            if ((g_SysWork.player_4C.chara_0.position_18.vx >= Q12(165.0f)   &&
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(58.5f)    && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(61.5f)) ||
+                (g_SysWork.player_4C.chara_0.position_18.vx <= Q12(112.1f)   &&
                  g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-101.45f) && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-98.5f)))
             {
-                *sfx = Sfx_Unk1565;
+                *sfxId = Sfx_Unk1565;
             }
 
         case MapOverlayId_MAP6_S00:
-            if ((g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-160.1f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-158.5f) &&
-                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(26.8f)   && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(27.4f)) ||
-
-                (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-160.1f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-158.5f) &&
-                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(16.8f)   && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(17.5f)) ||
-
-                (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-170.0f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-165.8f) &&
+            if ((g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-160.1f)  && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-158.5f)  &&
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(26.8f)    && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(27.4f))   ||
+                (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-160.1f)  && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-158.5f)  &&
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(16.8f)    && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(17.5f))   ||
+                (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-170.0f)  && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-165.8f)  &&
                  g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-16.4f)   && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-14.35f)) ||
-
-                (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-172.7f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-170.9f) &&
-                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-24.9f)  && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-21.25f)) ||
-
+                (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-172.7f)  && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-170.9f)  &&
+                 g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-24.9f)   && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-21.25f)) ||
                 (g_SysWork.player_4C.chara_0.position_18.vx >= Q12(-170.28f) && g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-165.85f) &&
                  g_SysWork.player_4C.chara_0.position_18.vz >= Q12(-35.4f)   && g_SysWork.player_4C.chara_0.position_18.vz <= Q12(-34.35f)))
             {
-                *sfx = Sfx_Unk1600;
+                *sfxId = Sfx_Unk1600;
             }
             break;
 
         case MapOverlayId_MAP6_S01:
             if (g_SavegamePtr->mapRoomIdx_A5 == 18)
             {
-                *sfx = Sfx_Unk1608;
+                *sfxId = Sfx_Unk1608;
             }
             break;
 
         case MapOverlayId_MAP6_S04:
-            *sfx = Sfx_FootstepMetal;
+            *sfxId = Sfx_FootstepMetal;
             break;
     }
 
@@ -8757,16 +8752,16 @@ void Input_SelectClickSet(void) // 0x80080458
 
 q19_12 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1) // 0x80080478
 {
-    s32 x0;
-    s32 x1;
-    s32 y1;
-    s32 y0;
-    s32 z0;
-    s32 z1;
-    s32 deltaX;
-    s32 deltaZ;
-    u16 atan2Delta;
-    s32 unk;
+    q19_12 x0;
+    q19_12 x1;
+    q19_12 y1;
+    q19_12 y0;
+    q19_12 z0;
+    q19_12 z1;
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    u16    atan2Delta;
+    s32    unk;
 
     x0 = pos0->vx;
     x1 = pos1->vx;
@@ -8779,7 +8774,7 @@ q19_12 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1) // 0x80080478
     deltaZ     = z1 - z0;
     atan2Delta = ratan2(deltaX, deltaZ);
 
-    unk = func_8008A058(func_80080540(deltaX, 0, deltaZ));
+    unk = func_8008A058(func_80080540(deltaX, Q12(0.0f), deltaZ));
     return (ratan2(unk, y1 - y0) << 16) | atan2Delta;
 }
 

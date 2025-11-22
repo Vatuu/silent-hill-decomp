@@ -94,7 +94,7 @@ void func_800D2270(s_SubCharacter* chara) // 0x800D2270
     {
         case ANIM_STATUS(11, false):
         case ANIM_STATUS(11, true):
-            chara->properties_E4.splitHead.flags_E8 |= 8;
+            chara->properties_E4.splitHead.flags_E8 |= 1 << 3;
             if (!func_800D4FE4(chara, moveSpeed))
             {
                 break;
@@ -279,12 +279,11 @@ void func_800D4FC0(s32 arg0, s32 arg1) // 0x800D4FC0
 bool func_800D4FE4(s_SubCharacter* chara, s32 moveSpeed) // 0x800D4FE4
 {
     // TODO: Using wrong `properties_E4` union member?
-    s32 runTimer;
+    q19_12 runTimer;
 
     runTimer = chara->properties_E4.player.runTimer_F8;
-    
-    return ((runTimer < 0  || runTimer > Q12(198.0f)) && (chara->model_0.anim_4.time_4 < Q12(175.0f))) ||
-           ((runTimer >= 0 && runTimer < Q12(175.0f)) && (chara->model_0.anim_4.time_4 > Q12(198.0f)));
+    return ((runTimer <  Q12(0.0f) || runTimer > Q12(198.0f)) && chara->model_0.anim_4.time_4 < Q12(175.0f)) ||
+           ((runTimer >= Q12(0.0f) && runTimer < Q12(175.0f)) && chara->model_0.anim_4.time_4 > Q12(198.0f));
 }
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5048);
@@ -532,7 +531,7 @@ void func_800D5DD8(void) // 0x800D5DD8
 {
     #define CUTSCENE_SKIP_STATE 14
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
     {
         if (g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
         {

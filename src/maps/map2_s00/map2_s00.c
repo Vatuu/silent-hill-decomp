@@ -426,21 +426,21 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DDA80);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DDE14);
 
-void func_800DDF74(s_SubCharacter* chara, s32 xMul, s32 angle0)
+void func_800DDF74(s_SubCharacter* chara, s32 mulX, q19_12 angle0) // 0x800DDF74
 {
-    s32 posX;
-    s32 posZ;
-    s32 calcY;
+    q19_12 posX;
+    q19_12 posZ;
+    q19_12 groundHeight;
 
     posX = chara->position_18.vx;
     posZ = chara->position_18.vz;
 
-    posX += FP_MULTIPLY_PRECISE(xMul, Math_Sin(angle0), Q12_SHIFT);
-    posZ += FP_MULTIPLY_PRECISE(xMul, Math_Cos(angle0), Q12_SHIFT);
+    posX += FP_MULTIPLY_PRECISE(mulX, Math_Sin(angle0), Q12_SHIFT);
+    posZ += FP_MULTIPLY_PRECISE(mulX, Math_Cos(angle0), Q12_SHIFT);
+    groundHeight = func_80080884(posX, posZ);
 
-    calcY = func_80080884(posX, posZ);
     chara->properties_E4.unk0.field_F8.vx = posX;
-    chara->properties_E4.unk0.field_F8.vy = calcY;
+    chara->properties_E4.unk0.field_F8.vy = groundHeight;
     chara->properties_E4.unk0.field_F8.vz = posZ;
     sharedFunc_800D4E84_0_s01(chara);
 }
@@ -580,7 +580,7 @@ void func_800DF710(s_SubCharacter* chara) // 0x800DF710
     sharedFunc_800D5E78_0_s01(chara, angle0 / 2);
 }
 
-void func_800DF80C(s_SubCharacter* chara)
+void func_800DF80C(s_SubCharacter* chara) // 0x800DF80C
 {
     q19_12           angle0;
     q19_12           angle1;
@@ -608,11 +608,10 @@ void func_800DF80C(s_SubCharacter* chara)
 
     if (angle1 < FP_ANGLE(0.0f))
     {
-        angle1 += 3;
+        angle1 += FP_ANGLE(0.3f);
     }
 
     sharedFunc_800D5E78_0_s01(chara, angle1 >> 2);
-
 }
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DF8A0);
@@ -1224,7 +1223,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
     s32 zoomHuh;
     s16 curve;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
     {
         if (g_SysWork.sysStateStep_C[0] == 2)
         {
@@ -1299,7 +1298,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
 
             func_80088370(D_800F228C, -0xA0, -0xE0, 0x13F, 0x1BF, -0x58, -0xC0, 0x9F, 0xDF);
 
-            if (D_800F228C == 0x1000)
+            if (D_800F228C == Q12(1.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -1311,12 +1310,12 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
                  
             func_800692A4(0x48 - FP_MULTIPLY_PRECISE(D_800F228C, 0x48, Q12_SHIFT),
                           0x10 - FP_MULTIPLY_PRECISE(D_800F228C, 0x10, Q12_SHIFT),
-                          ((D_800F228C >> 1) + 0x800));
+                          (D_800F228C >> 1) + Q12(0.5f));
 
             func_80068E0C(1, 1, 0, 0,
                           0x48 - FP_MULTIPLY_PRECISE(D_800F228C, 0x48, Q12_SHIFT),
                           0x10 - FP_MULTIPLY_PRECISE(D_800F228C, 0x10, Q12_SHIFT),
-                          ((D_800F228C >> 1) + 0x800));
+                          (D_800F228C >> 1) + Q12(0.5f));
 
             curve = (FP_TO(D_800F228C, 12) / (D_800F228C + Q12(1.0f))) * -1;
 
@@ -1329,15 +1328,15 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             break;
 
         case 9:
-            func_800692A4(0x48, 0x10, 0x800);
-            func_80068E0C(1, 1, 0, 0, 0x48, 0x10, 0x800);
+            func_800692A4(0x48, 0x10, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 0x48, 0x10, Q12(0.5f));
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 10:
-            func_800692A4(0x48, 0x10, 0x800);
-            func_80068E0C(1, 1, 0, 0, 0x48, 0x10, 0x800);
-            func_80068E0C(2, 1, 0x36A, D_800F2290, 0x48, 0x10, 0x800);
+            func_800692A4(0x48, 0x10, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 0x48, 0x10, Q12(0.5f));
+            func_80068E0C(2, 1, 0x36A, D_800F2290, 0x48, 0x10, Q12(0.5f));
             D_800F2290++;
 
             if (D_800F2290 >= 0x80)
@@ -1359,9 +1358,9 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             break;
 
         case 11:
-            func_800692A4(0x48, 0x10, 0x800);
-            func_80068E0C(1, 1, 0, 0, 0x48, 0x10, 0x800);
-            func_80068E0C(2, 1, 0x36A, 0x80, 0x48, 0x10, 0x800);
+            func_800692A4(0x48, 0x10, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 0x48, 0x10, Q12(0.5f));
+            func_80068E0C(2, 1, 0x36A, 0x80, 0x48, 0x10, Q12(0.5f));
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
@@ -1396,7 +1395,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
 {
     s16 curve;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
     {
         if (!D_800F2295)
         {
@@ -1516,11 +1515,11 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
                  
             func_800692A4(0,
                           0x74 - FP_MULTIPLY_PRECISE(D_800F229C, 0x74, 12),
-                          ((D_800F229C >> 1) + 0x800));
+                          (D_800F229C >> 1) + Q12(0.5f));
 
             func_80068E0C(1, 1, 0, 0, 0,
                           0x74 - FP_MULTIPLY_PRECISE(D_800F229C, 0x74, 12),
-                          ((D_800F229C >> 1) + 0x800));
+                          (D_800F229C >> 1) + Q12(0.5f));
 
             curve = (FP_TO(D_800F229C, 12) / (D_800F229C + Q12(1.0f))) * -1;
 
@@ -1534,18 +1533,17 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 14:
-            func_800692A4(0, 0x74, 0x800);
-            func_80068E0C(1, 1, 0, 0, 0, 0x74, 0x800);
+            func_800692A4(0, 0x74, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
 
             break;
         case 15:
-            func_800692A4(0, 0x74, 0x800);
-            func_80068E0C(1, 1, 0, 0, 0, 0x74, 0x800);
-            func_80068E0C(2, 1, 0x3A2, D_800F2298, 0, 0x74, 0x800);
+            func_800692A4(0, 0x74, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
+            func_80068E0C(2, 1, 0x3A2, D_800F2298, 0, 0x74, Q12(0.5f));
 
             D_800F2298++;
-
             if (D_800F2298 >= 0x80)
             {
                 if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
@@ -1565,9 +1563,9 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 16:
-            func_800692A4(0, 0x74, 0x800);
-            func_80068E0C(1, 1, 0, 0, 0, 0x74, 0x800);
-            func_80068E0C(2, 1, 0x3A2, 0x80, 0, 0x74, 0x800);
+            func_800692A4(0, 0x74, Q12(0.5f));
+            func_80068E0C(1, 1, 0, 0, 0, 0x74, Q12(0.5f));
+            func_80068E0C(2, 1, 0x3A2, 0x80, 0, 0x74, Q12(0.5f));
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 

@@ -11,11 +11,10 @@ INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04", g_MapOverlayHeader);
 
 void func_800CC7E0(void) // 0x800CC7E0
 {
-    s32 var_a1;
+    s32 count;
     s32 i;
 
-    var_a1 = D_800ED430.field_4;
-
+    count = D_800ED430.field_4;
     for (i = 0; i < ARRAY_SIZE(D_800EBB90); i++)
     {
         if (D_800EBB90[i].field_A != 0)
@@ -24,59 +23,58 @@ void func_800CC7E0(void) // 0x800CC7E0
         }
 
         D_800EBB90[i].field_A         = 13;
-        D_800EBB90[i].field_C.field_0 = ((FP_TO(D_800ED430.field_6 - D_800ED430.field_8, Q12_SHIFT) / D_800ED430.field_C) * var_a1) / D_800ED430.field_4;
+        D_800EBB90[i].field_C.field_0 = ((FP_TO(D_800ED430.field_6 - D_800ED430.field_8, Q12_SHIFT) / D_800ED430.field_C) * count) / D_800ED430.field_4;
 
-        var_a1--;
-
-        if (var_a1 == 0)
+        count--;
+        if (count == 0)
         {
             break;
         }
     }
 
     D_800ED440  = 0;
-    D_800C4414 |= 2;
+    D_800C4414 |= 1 << 1;
 }
 
-void func_800CC88C(s32 arg0) // 0x800CC88C
+void func_800CC88C(s32 idx) // 0x800CC88C
 {
-    s32 temp_s0;
-    s16 temp_s1;
+    q19_12 randAngle;
+    q3_12  dist;
 
     if (D_800ED430.field_2 == 0)
     {
-        D_800EBB90[arg0].field_A = 14;
+        D_800EBB90[idx].field_A = 14;
     }
 
     if (D_800ED430.field_0 == 0)
     {
-        temp_s1               = Rng_Rand16() % D_800ED430.field_A;
-        temp_s0               = Q12_FRACT(Rng_Rand16());
-        D_800EBB90[arg0].vx_0 = FP_FROM(temp_s1 * Math_Cos(temp_s0), Q12_SHIFT);
-        D_800EBB90[arg0].vz_4 = FP_FROM(temp_s1 * Math_Sin(temp_s0), Q12_SHIFT);
+        dist                 = Rng_Rand16() % D_800ED430.field_A;
+        randAngle            = Q12_FRACT(Rng_Rand16());
+        D_800EBB90[idx].vx_0 = FP_FROM(dist * Math_Cos(randAngle), Q12_SHIFT);
+        D_800EBB90[idx].vz_4 = FP_FROM(dist * Math_Sin(randAngle), Q12_SHIFT);
     }
     else
     {
-        D_800EBB90[arg0].vx_0 = (Rng_Rand16() % (D_800ED430.field_A * 2)) - D_800ED430.field_A;
-        D_800EBB90[arg0].vz_4 = (Rng_Rand16() % (D_800ED430.field_A * 2)) - D_800ED430.field_A;
+        D_800EBB90[idx].vx_0 = (Rng_Rand16() % (D_800ED430.field_A * 2)) - D_800ED430.field_A;
+        D_800EBB90[idx].vz_4 = (Rng_Rand16() % (D_800ED430.field_A * 2)) - D_800ED430.field_A;
     }
 
-    D_800EBB90[arg0].vy_8            = D_800ED430.field_8;
-    D_800EBB90[arg0].field_B         = Rng_Rand16() % 3;
-    D_800EBB90[arg0].field_C.field_0 = 0;
+    D_800EBB90[idx].vy_8            = D_800ED430.field_8;
+    D_800EBB90[idx].field_B         = Rng_Rand16() % 0x3;
+    D_800EBB90[idx].field_C.field_0 = 0;
 }
 
-s32 func_800CCA24(s32 arg0) // 0x800CCA24
+bool func_800CCA24(s32 idx) // 0x800CCA24
 {
-    D_800EBB90[arg0].field_C.field_0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Rng_GenerateInt(Rng_Rand16(), Q12(0.8f), Q12(1.1998f) - 1), Q12_SHIFT);
+    D_800EBB90[idx].field_C.field_0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Rng_GenerateInt(Rng_Rand16(), Q12(0.8f), Q12(1.2f) - 2), Q12_SHIFT);
 
-    if (FP_TO(D_800ED430.field_6 - D_800ED430.field_8, Q12_SHIFT) / D_800ED430.field_C < D_800EBB90[arg0].field_C.field_0)
+    if (FP_TO(D_800ED430.field_6 - D_800ED430.field_8, Q12_SHIFT) / D_800ED430.field_C < D_800EBB90[idx].field_C.field_0)
     {
-        func_800CC88C(arg0);
-        return 1;
+        func_800CC88C(idx);
+        return true;
     }
 
-    return 0;
+    return false;
 }
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CCB1C);
@@ -162,21 +160,23 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800D8898);
 
 void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D8908
 {
-    s_Model* extraModelPtr = &g_Ai_MonsterCybil_ExtraModel;
+    s_Model* extraModel;
+
+    extraModel = &g_Ai_MonsterCybil_ExtraModel;
 
     if (chara->model_0.state_2 == 0)
     {
-        Ai_MonsterCybil_Init(chara, extraModelPtr);
+        Ai_MonsterCybil_Init(chara, extraModel);
     }
 
     if (g_DeltaTime0 != Q12(0.0))
     {
-        func_800D8B14(chara, extraModelPtr);
-        func_800D8D7C(chara, extraModelPtr, coords);
-        func_800D9790(chara, extraModelPtr);
-        func_800D99E4(chara, extraModelPtr, anmHdr, coords);
-        func_800DB4CC(chara, extraModelPtr, coords);
-        func_800D9AAC(chara, extraModelPtr);
+        func_800D8B14(chara, extraModel);
+        func_800D8D7C(chara, extraModel, coords);
+        func_800D9790(chara, extraModel);
+        func_800D99E4(chara, extraModel, anmHdr, coords);
+        func_800DB4CC(chara, extraModel, coords);
+        func_800D9AAC(chara, extraModel);
     }
 }
 

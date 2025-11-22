@@ -622,7 +622,10 @@ bool func_8007F95C(void);
     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None; \
 }
 
-/** @brief Sets the given animation flag on both player character and player extra data. */
+/** @brief Sets the given animation flag for both the player character data and extra player data.
+ *
+ * @param flags Animation flags to set.
+ */
 static inline void Player_AnimFlagsSet(u32 flags)
 {
     s_SubCharacter*       chara;
@@ -635,7 +638,10 @@ static inline void Player_AnimFlagsSet(u32 flags)
     chara->model_0.anim_4.flags_2 |= flags;
 }
 
-/** @brief Clears the given animation flag on both player character and player extra data. */
+/** @brief Clears the given animation flags for both the player character data and extra player data.
+ *
+ * @param flags Animation flags to clear.
+ */
 #define Player_AnimFlagsClear(flags)                                       \
 {                                                                          \
     s_MainCharacterExtra* playerExtra    = &g_SysWork.player_4C.extra_128; \

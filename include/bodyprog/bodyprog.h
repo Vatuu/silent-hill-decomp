@@ -270,8 +270,8 @@ typedef struct
 
 typedef struct
 {
-    s32 vx_0; // Q23.8
-    s32 vz_4; // Q23.8
+    s32 vx_0; // Q23.8 } Displacement offset.
+    s32 vz_4; // Q23.8 }
     s16 vy_8; // Q7.8
     u8  field_A;
     u8  field_B;
@@ -4396,7 +4396,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
 s32 func_800706E4(s_Model* model);
 
 /** Special player SFX handler for heavy breath and damage. */
-bool func_80071620(u8 animStatus, s_SubCharacter*, s32, e_SfxId sfx);
+bool func_80071620(u8 animStatus, s_SubCharacter*, s32, e_SfxId sfxId);
 
 void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
 
@@ -4462,10 +4462,10 @@ q19_12 Game_GasWeaponPowerTimerValue(void);
 void func_8007FD4C(bool cond);
 
 /** Returns footstep sound effect ID and random pitches? `arg0` usually comes from `s_Collision` */
-void func_8007FDE0(s8 arg0, e_SfxId* sfx, s8* pitch0, s8* pitch1);
+void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1);
 
-/** Returns angle. */
-q19_12 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1);
+/** Presumably, returns a heading angle from `posFrom` to `posTo`. If so, rename to `Math_AngleBetweenPositionsGet`. */
+q19_12 func_80080478(const VECTOR3* posFrom, const VECTOR3* posTo);
 
 /** Generates a random angle? */
 s32 func_80080514(void);

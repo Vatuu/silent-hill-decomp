@@ -23,11 +23,12 @@ extern u8 D_800F1CA8[3]; // = { 0, 1, 2 }
 
 extern s16 D_800F22AE;
 
-
-extern s16 D_800F228C;
+/** Alpha value? */
+extern q3_12 D_800F228C;
 
 extern u8 D_800F228E;
 
+/** Related to 2D map. */
 extern s32 D_800F2290;
 
 extern u16 g_MapMsgSounds[2];
@@ -38,6 +39,7 @@ extern u8 D_800F2295;
 
 extern s32 D_800F2298;
 
+/** 2D map zoom counter or timer. */
 extern s32 D_800F229C;
 
 extern s32 D_800F1A24;
@@ -88,9 +90,13 @@ bool func_800DC67C(s_SubCharacter* chara);
 
 s32 func_800DC98C(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
 
+void func_800DDF74(s_SubCharacter* chara, s32 mulX, q19_12 angle0);
+
 void func_800DE11C(s_SubCharacter* chara);
 
 void func_800DF710(s_SubCharacter* chara);
+
+void func_800DF80C(s_SubCharacter* chara);
 
 void func_800E5930(s_SubCharacter* chara);
 
@@ -153,9 +159,5 @@ s32 func_800EE518(void);
 u8 func_800EE5A8(u32 arg0);
 
 void func_800EE5D0(void);
-
-void func_800DF80C(s_SubCharacter* chara);
-
-void func_800DDF74(s_SubCharacter* chara, s32 xMul, s32 angle0);
 
 #endif
