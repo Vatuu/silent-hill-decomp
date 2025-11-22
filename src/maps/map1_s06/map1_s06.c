@@ -276,7 +276,16 @@ void func_800D4FC0(s32 arg0, s32 arg1) // 0x800D4FC0
     sharedData_800D8616_1_s05 += arg1;
 }
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D4FE4);
+bool func_800D4FE4(s_SubCharacter* chara, s32 moveSpeed) // 0x800D4FE4
+{
+    // TODO: Using wrong `properties_E4` union member?
+    s32 runTimer;
+
+    runTimer = chara->properties_E4.player.runTimer_F8;
+    
+    return ((runTimer < 0  || runTimer > Q12(198.0f)) && (chara->model_0.anim_4.time_4 < Q12(175.0f))) ||
+           ((runTimer >= 0 && runTimer < Q12(175.0f)) && (chara->model_0.anim_4.time_4 > Q12(198.0f)));
+}
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5048);
 

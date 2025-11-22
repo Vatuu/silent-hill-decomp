@@ -59,6 +59,8 @@ void func_800D30F0(s_SubCharacter* chara);
 
 void func_800D4FC0(s32 arg0, s32 arg1);
 
+bool func_800D4FE4(s_SubCharacter* chara, s32 moveSpeed);
+
 void func_800D5400(void);
 
 void func_800D5B98(void);
@@ -77,7 +79,5 @@ void Map_WorldObjectsInit(void);
 void func_800D6578(void);
 
 void func_800D6C88(void);
-
-s32 func_800D4FE4(s_SubCharacter* chara, s32 moveSpeed);
 
 #endif
