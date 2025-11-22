@@ -45,6 +45,8 @@ typedef struct
 extern s_AnimInfo FLAUROS_ANIM_INFOS[];
 extern s_AnimInfo PARASITE_ANIM_INFOS[];
 
+extern s16 D_800EA856;
+
 extern s32 D_800EBA30;
 
 extern s_MapHdr_field_4C D_800EBB90[300]; // TODO: `sharedData_800E1FF8_1_s02`?
@@ -52,6 +54,8 @@ extern s_MapHdr_field_4C D_800EBB90[300]; // TODO: `sharedData_800E1FF8_1_s02`?
 extern s_800ED430 D_800ED430;
 
 extern s16 D_800ED440;
+
+extern s8 D_800ED543;
 
 extern VECTOR3 D_800ED590;
 
@@ -104,8 +108,11 @@ void func_800CC88C(s32 arg0);
 
 s32 func_800CCA24(s32 arg0);
 
+void func_800D8848(s_SubCharacter* chara); // 0x800D8848
+
 void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_MonsterCybil_Init(s_SubCharacter*, s_Model*);
+void func_800D8A90(s_SubCharacter* chara);
 void func_800D8B14(s_SubCharacter*, s_Model*);
 void func_800D8D7C(s_SubCharacter*, s_Model*, GsCOORDINATE2*);
 void func_800D9790(s_SubCharacter*, s_Model*);

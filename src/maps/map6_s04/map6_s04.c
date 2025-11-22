@@ -203,7 +203,20 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D70C4_0_s00
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800D87B0);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800D8848);
+void func_800D8848(s_SubCharacter* chara) // 0x800D8848
+{
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(9, false);
+        chara->model_0.stateStep_3++;
+    }
+
+    if (chara->model_0.anim_4.keyframeIdx_8 == D_800EA856)
+    {
+        g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[1].val16[1] = 1;
+        chara->model_0.stateStep_3                                                  = 0;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800D8898);
 
@@ -262,7 +275,36 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
     func_8003DD80(Chara_MonsterCybil, UNK_PACKED_DATA(1, 1));
 }
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800D8A90);
+void func_800D8A90(s_SubCharacter* chara) // 0x800D8A90
+{
+    chara->field_D4  = Q12(0.3f);
+    chara->field_D6  = Q12(0.23f);
+    chara->field_C8  = Q12(-1.6f);
+    chara->field_CE  = Q12(-1.05f);
+    chara->field_D0  = Q12(-1.45f);
+    chara->health_B0 = Q12(4000.0f);
+    chara->field_CA  = 0;
+    chara->field_CC  = 0;
+
+    chara->field_D8.offsetZ_6 = 0;
+    chara->field_D8.offsetX_4 = 0;
+    chara->field_D8.offsetZ_2 = 0;
+    chara->field_D8.offsetX_0 = 0;
+
+    chara->model_0.stateStep_3 = 0;
+
+    // TODO: Wrong union member used here.
+
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[0xB].val8[1] = 0;
+    D_800ED543                                                                   = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[7].val16[0]  = 10;
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[5].val16[1]  = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[7].val16[1]  = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.player.field_F0                          = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.player.runTimer_108                      = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.npc.field_10C                            = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.player.runTimer_F8                       = 0;
+}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800D8B14);
 
