@@ -165,6 +165,4 @@ void func_800EE5D0(void);
 
 void func_800EE660(void);
 
-void func_800EE5D0(void);
-
 #endif

@@ -873,8 +873,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
     {
         if (sc_p->model_0.charaId_0 >= Chara_AirScreamer &&
             sc_p->model_0.charaId_0 <= Chara_MonsterCybil &&
-            (sc_p->deathTimer_C4 <= ENEMY_DEATH_TIME_MAX ||
-             sc_p->health_B0 >= Q12(0.0f)) &&
+            (sc_p->deathTimer_C4 <= ENEMY_DEATH_TIME_MAX || sc_p->health_B0 >= Q12(0.0f)) &&
             !(sc_p->flags_3E & CharaFlag_Unk5)) // `sc_p->battle(ShBattleInfo).status & (1 << 5)` in SH2.
         {
             ofs_x = sc_p->position_18.vx - w_p->chara_pos_114.vx;
@@ -895,7 +894,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
                 all_min_sc_p = sc_p;
             }
 
-            // TODO: Not sure how to move the `set_active_data_f = 1` part out of this if.
+            // TODO: Not sure how to move the `set_active_data_f = true` part out of this if.
             if (sc_p->model_0.charaId_0 >= Chara_HangedScratcher ||
                 (set_active_data_f = true, (sc_p->model_0.charaId_0 < Chara_Stalker)))
             {

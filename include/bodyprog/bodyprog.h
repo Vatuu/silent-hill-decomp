@@ -2730,6 +2730,7 @@ void func_8003C220(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ);
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
 s32 func_8003C850(void);
 
+/** `arg0` should be `void*`? */
 void func_8003C878(s32 arg0);
 
 void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr);
@@ -4148,7 +4149,8 @@ bool Math_Distance2dCheck(const VECTOR3* posFrom, const VECTOR3* posTo, q19_12 r
  */
 s32 Camera_Distance2dGet(const VECTOR3* pos);
 
-void func_80037F24(s32);
+/** Responsible for loading NPCs on the map. */
+void func_80037F24(bool cond);
 
 /** @brief Main NPC update function. Runs through each NPC and calls `g_MapOverlayHeader.charaUpdateFuncs_194` for them. */
 void func_80038354(void);

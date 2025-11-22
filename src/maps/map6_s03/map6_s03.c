@@ -443,7 +443,7 @@ void func_800D8818(void) // 0x800D8818
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        g_SysWork.field_2280 = 3;
+        g_SysWork.npcId_2280 = 3;
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);

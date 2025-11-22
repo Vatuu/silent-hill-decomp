@@ -917,15 +917,15 @@ void func_800EA0E0(void) // 0x800EA0E0
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        g_SysWork.field_2280 = 2;
+        g_SysWork.npcId_2280 = 2;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
-        g_SysWork.field_2280 = 3;
+        g_SysWork.npcId_2280 = 3;
     }
     else
     {
-        g_SysWork.field_2280 = 4;
+        g_SysWork.npcId_2280 = 4;
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);

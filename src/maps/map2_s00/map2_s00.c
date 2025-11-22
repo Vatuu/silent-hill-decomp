@@ -2557,19 +2557,19 @@ void func_800EB908(void) // 0x800EB908
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        g_SysWork.field_2280 = 2;
+        g_SysWork.npcId_2280 = 2;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
-        g_SysWork.field_2280 = 3;
+        g_SysWork.npcId_2280 = 3;
     }
     else
     {
-        g_SysWork.field_2280 = 4;
+        g_SysWork.npcId_2280 = 4;
     }
 
-    g_SysWork.field_2280++;
-    SysWork_Flags2290Set(g_SysWork.field_2280 - 1);
+    g_SysWork.npcId_2280++;
+    SysWork_NpcFlagSet(g_SysWork.npcId_2280 - 1);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
@@ -2624,13 +2624,13 @@ s32 func_800EE5A8(u32 arg0) // 0x800EE5A8
     return 10;
 }
 
-void func_800EE5D0(void)
+void func_800EE5D0(void) // 0x800EE5D0
 {
-    s32 idx0;
+    s32 idx;
 
-    idx0 = func_800EE518();
-    memcpy(g_MapOverlayHeader.charaSpawns_24C, D_800F1CAC[idx0], sizeof(D_800F1CAC[idx0]));
-    g_SavegamePtr->field_B0[10] = g_SavegamePtr->field_B0[idx0];
+    idx = func_800EE518();
+    memcpy(g_MapOverlayHeader.charaSpawns_24C, D_800F1CAC[idx], sizeof(D_800F1CAC[idx]));
+    g_SavegamePtr->field_B0[10] = g_SavegamePtr->field_B0[idx];
 }
 
 void func_800EE660(void) // 0x800EE660

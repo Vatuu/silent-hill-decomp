@@ -993,7 +993,7 @@ typedef struct _Savegame
     u8              equippedWeapon_AA;        /** `e_InventoryItemId` Affects only the visible player weapon model. */
     u8              inventorySlotCount_AB;    /** Item slots. */
     u32             itemToggleFlags_AC;       /** `e_ItemToggleFlags` */
-    s32             field_B0[45];
+    s32             field_B0[45];             // Related to map points?
     s32             hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.
     u32             eventFlags_168[27];       // Can be accessed through `Savegame_EventFlagGet` / `Savegame_EventFlagSet`, only tested a few, but seems all are related to events and pick-up flags, grouped by location and not item types.
     s32             mapMarkingFlags_1D4[25];  // See Sparagas' `MapMarkingsFlags` struct for details of every bit.
@@ -1573,22 +1573,22 @@ typedef struct _SysWork
     s32             field_28;
     q19_12          timer_2C; // Cutscene message timer?
     s32             field_30;
-    s8              unk_34[4];
+    s8              unk_34[4]; // Padding?
     s_PlayerCombat  playerCombatInfo_38; // Something related to weapons and attack. This is a struct as `func_8003CD6C` requires one and `GameFs_MapLoad` input is pointing here.
     s_MainCharacter player_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   playerBoneCoords_890[HarryBone_Count];
     GsCOORDINATE2   unkCoords_E30[5];  // Might be part of previous array for 5 extra coords which go unused.
     GsCOORDINATE2   npcCoords_FC0[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
-    s8              field_2280;                        // NPC index for `flags_2290`.
+    s8              npcId_2280;                        // NPC ID for `npcFlags_2290`. Not an index, starts at 1.
     s8              loadingScreenIdx_2281;
-    s8              field_2282; // Room process flags?
-    s8              field_2283; // Index into `SfxPairs`.
+    s8              field_2282;    // Room process flags?
+    s8              field_2283;    // Index into `SfxPairs`.
     u16             field_2284[3]; // TODO: `func_80034EC8` indicates size of 4.
     u16             field_228A;
     s32             field_228C;
-    s32             flags_2290; // Flags related to NPCs, each bit corresponds to `npcs_1A0` index.
-    s8              unk_2294[4];
+    s32             npcFlags_2290; // Flags related to NPCs. Each bit corresponds to `npcs_1A0` index.
+    s8              unk_2294[4];   // Padding?
     e_SysWorkProcessFlags processFlags_2298;
     s32             field_229C;
     e_SysFlags      sysFlags_22A0;
@@ -1751,22 +1751,22 @@ static inline void SysWork_StateStepReset()
     g_SysWork.sysStateStep_C[2] = 0;
 }
 
-/** @brief Sets a flag from `g_SysWork.flags_2290` array.
+/** @brief Sets an NPC flag in `g_SysWork.npcFlags_2290` array.
  *
- * @param flagIdx Index of the flag to set.
+ * @param flagIdx Index of the NPC flag to set.
  */
-static inline void SysWork_Flags2290Set(s32 flagIdx)
+static inline void SysWork_NpcFlagSet(s32 flagIdx)
 {
-    g_SysWork.flags_2290 |= 1 << flagIdx;
+    g_SysWork.npcFlags_2290 |= 1 << flagIdx;
 }
 
-/** @brief Clears a flag from `g_SysWork.flags_2290` array.
+/** @brief Clears an NPC flag in the `g_SysWork.npcFlags_2290` array.
  *
- * @param flagIdx Index of the flag to clear.
+ * @param flagIdx Index of the NPC flag to clear.
  */
-static inline void SysWork_Flags2290Clear(s32 flagIdx)
+static inline void SysWork_NpcFlagClear(s32 flagIdx)
 {
-    CLEAR_FLAG(&g_SysWork.flags_2290, flagIdx);
+    CLEAR_FLAG(&g_SysWork.npcFlags_2290, flagIdx);
 }
 
 /** @brief Clears state steps twice for some reason? Only used once below, others use regular `Game_StateSetNext`. */

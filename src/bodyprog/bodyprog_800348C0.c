@@ -277,7 +277,7 @@ void func_80034EC8(void) // 0x80034EC8
     s32 i;
 
     g_SysWork.field_228C = 0;
-    g_SysWork.flags_2290 = 0;
+    g_SysWork.npcFlags_2290 = 0;
 
     bzero(g_SysWork.npcs_1A0, ARRAY_SIZE(g_SysWork.npcs_1A0) * sizeof(s_SubCharacter));
 
@@ -299,7 +299,7 @@ void func_80034F18(void) // 0x80034F18
     }
 
     func_80034EC8();
-    func_80037F24(0);
+    func_80037F24(false);
     func_80037334();
 }
 
@@ -321,12 +321,12 @@ void Game_InGameInit(void) // 0x80034FB8
 
     func_80034EC8();
 
-    g_SysWork.field_2280 = 5;
+    g_SysWork.npcId_2280 = 5;
 
     func_8005E650(mapOvlId);
     func_80037124();
     func_8007E8C0();
-    func_80037F24(0);
+    func_80037F24(false);
     func_80037334();
     func_8003569C();
     func_8007EBBC();
@@ -1999,82 +1999,82 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
     }
 }
 
-/** Responsible for loading NPCs on the map. */
-void func_80037F24(s32 arg0) // 0x80037F24
+void func_80037F24(bool cond) // 0x80037F24
 {
     s_Collision     coll;
-    s32             sp20;
-    s32             sp24;
+    s32             charaId0;
+    s32             charaId1;
     s32             npcIdx;
+    s32             i;
     s32*            temp_a0;
-    s32             var_s4;
-    s_MapPoint2d*   var_s5;
-    s_SubCharacter* var_s6;
-    VECTOR3*        vec;
+    s_MapPoint2d*   curCharaSpawn;
+    s_SubCharacter* chara;
+    VECTOR3*        pos;
 
-    npcIdx  = 0;
-    var_s5  = g_MapOverlayHeader.charaSpawns_24C[0];
-    temp_a0 = &g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4];
+    npcIdx        = 0;
+    curCharaSpawn = g_MapOverlayHeader.charaSpawns_24C[0];
+    temp_a0       = &g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4];
 
-    if (arg0 == 0)
+    if (!cond)
     {
         func_80037154();
+
         if (g_MapOverlayHeader.func_48 != NULL)
         {
             g_MapOverlayHeader.func_48();
         }
     }
 
-    sp20 = g_MapOverlayHeader.charaGroupIds_248[0];
-    sp24 = g_MapOverlayHeader.charaGroupIds_248[1];
+    charaId0 = g_MapOverlayHeader.charaGroupIds_248[0];
+    charaId1 = g_MapOverlayHeader.charaGroupIds_248[1];
 
-    for (var_s4 = 0; var_s4 < 32 && g_VBlanks < 4; var_s4++, var_s5++)
+    for (i = 0; i < 32 && g_VBlanks < 4; i++, curCharaSpawn++)
     {
-        if (g_SysWork.flags_2290 == (1 << g_SysWork.field_2280) - 1)
+        if (g_SysWork.npcFlags_2290 == (1 << g_SysWork.npcId_2280) - 1) // TODO: Macro for this check?
         {
             break;
         }
 
-        vec = (VECTOR3*)var_s5;
+        pos = (VECTOR3*)curCharaSpawn;
 
-        if (!(g_SysWork.flags_22A4 & SysFlag2_4) && HAS_FLAG(temp_a0, var_s4) && !HAS_FLAG(&g_SysWork.field_228C, var_s4) &&
-            var_s5->data.spawnInfo.flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= var_s5->data.spawnInfo.field_7_0 &&
-            func_8008F914(var_s5->positionX_0, var_s5->positionZ_8) &&
-            !Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, vec, Q12(22.0f)) &&
-            (arg0 == 0 || Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, vec, Q12(20.0f))))
+        if (!(g_SysWork.flags_22A4 & SysFlag2_4) && HAS_FLAG(temp_a0, i) && !HAS_FLAG(&g_SysWork.field_228C, i) &&
+            curCharaSpawn->data.spawnInfo.flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= curCharaSpawn->data.spawnInfo.field_7_0 &&
+            func_8008F914(curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8) &&
+            !Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, pos, Q12(22.0f)) &&
+            (!cond || Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, pos, Q12(20.0f))))
         {
-            while (HAS_FLAG(&g_SysWork.flags_2290, npcIdx))
+            while (HAS_FLAG(&g_SysWork.npcFlags_2290, npcIdx))
             {
                 npcIdx++;
             }
 
-            bzero(&g_SysWork.npcs_1A0[npcIdx], 0x128);
+            bzero(&g_SysWork.npcs_1A0[npcIdx], sizeof(s_SubCharacter));
 
-            if (var_s5->data.spawnInfo.charaId_4 > Chara_None)
+            if (curCharaSpawn->data.spawnInfo.charaId_4 > Chara_None)
             {
-                g_SysWork.npcs_1A0[npcIdx].model_0.charaId_0 = var_s5->data.spawnInfo.charaId_4;
+                g_SysWork.npcs_1A0[npcIdx].model_0.charaId_0 = curCharaSpawn->data.spawnInfo.charaId_4;
             }
             else
             {
-                g_SysWork.npcs_1A0[npcIdx].model_0.charaId_0 = (var_s4 < 16) ? sp20 : sp24;
+                g_SysWork.npcs_1A0[npcIdx].model_0.charaId_0 = (i < 16) ? charaId0 : charaId1;
             }
 
-            g_SysWork.npcs_1A0[npcIdx].field_40            = var_s4;
+            g_SysWork.npcs_1A0[npcIdx].field_40            = i;
             g_SysWork.npcs_1A0[npcIdx].model_0.state_2     = 0;
-            g_SysWork.npcs_1A0[npcIdx].model_0.stateStep_3 = var_s5->data.spawnInfo.flags_6;
-            g_SysWork.npcs_1A0[npcIdx].position_18.vx      = var_s5->positionX_0;
-            g_SysWork.npcs_1A0[npcIdx].position_18.vz      = var_s5->positionZ_8;
+            g_SysWork.npcs_1A0[npcIdx].model_0.stateStep_3 = curCharaSpawn->data.spawnInfo.flags_6;
+            g_SysWork.npcs_1A0[npcIdx].position_18.vx      = curCharaSpawn->positionX_0;
+            g_SysWork.npcs_1A0[npcIdx].position_18.vz      = curCharaSpawn->positionZ_8;
 
-            Collision_Get(&coll, var_s5->positionX_0, var_s5->positionZ_8);
+            Collision_Get(&coll, curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8);
 
             g_SysWork.npcs_1A0[npcIdx].position_18.vy = coll.groundHeight_0;
-            g_SysWork.npcs_1A0[npcIdx].rotation_24.vy = var_s5->data.spawnInfo.rotationY_5 * 16;
+            g_SysWork.npcs_1A0[npcIdx].rotation_24.vy = curCharaSpawn->data.spawnInfo.rotationY_5 * 16;
 
-            SET_FLAG(&g_SysWork.flags_2290, npcIdx);
-            SET_FLAG(&g_SysWork.field_228C, var_s4);
+            SET_FLAG(&g_SysWork.npcFlags_2290, npcIdx);
+            SET_FLAG(&g_SysWork.field_228C, i);
 
-            var_s6                          = &g_SysWork.npcs_1A0[npcIdx];
-            var_s6->model_0.anim_4.flags_2 |= AnimFlag_Visible;
+            chara                          = &g_SysWork.npcs_1A0[npcIdx];
+            chara->model_0.anim_4.flags_2 |= AnimFlag_Visible;
         }
     }
 }
@@ -2094,7 +2094,7 @@ void func_80038354(void) // 0x80038354
     s32                posZShift6;
     s32                posXShift6;
     s32                temp_t1;
-    s32                var_a1;
+    s32                m;
     u8                 var_a2_2;
     s32                j;
     s32                var_s3;
@@ -2208,12 +2208,12 @@ void func_80038354(void) // 0x80038354
                         }
                     }
 
-                    for (var_a1 = 2; j < var_a1; var_a1--)
+                    for (m = 2; j < m; m--)
                     {
-                        field_0[var_a1].bitIdx_0   = field_0[var_a1 - 1].bitIdx_0;
-                        field_0[var_a1].field_4    = field_0[var_a1 - 1].field_4;
-                        field_0[var_a1].field_8.vx = field_0[var_a1 - 1].field_8.vx;
-                        field_0[var_a1].field_8.vz = field_0[var_a1 - 1].field_8.vz;
+                        field_0[m].bitIdx_0   = field_0[m - 1].bitIdx_0;
+                        field_0[m].field_4    = field_0[m - 1].field_4;
+                        field_0[m].field_8.vx = field_0[m - 1].field_8.vx;
+                        field_0[m].field_8.vz = field_0[m - 1].field_8.vz;
                     }
 
                     temp_t1 = (u32)npc - (u32)g_SysWork.npcs_1A0;
@@ -2230,8 +2230,8 @@ void func_80038354(void) // 0x80038354
 
                 if (new_var > ((var_t5 == 0 && npc->health_B0 < Q12(0.0f)) ? SQUARE(24) : SQUARE(40)))
                 {
-                    npc->model_0.charaId_0 = 0;
-                    SysWork_Flags2290Clear(k);
+                    npc->model_0.charaId_0 = Chara_None;
+                    SysWork_NpcFlagClear(k);
                     CLEAR_FLAG(&g_SysWork.field_228C, npc->field_40);
                     continue;
                 }
@@ -2526,7 +2526,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
         }
 
         Demo_DemoRandSeedRestore();
-        func_80037F24(1);
+        func_80037F24(true);
         func_80038354();
         func_8005E89C();
         func_8003C3AC();

@@ -730,7 +730,7 @@ void Map_WorldObjectsInit(void) // 0x800D82A8
         func_80088FF4(Chara_Creaper, 4, 0);
         func_80088FF4(Chara_Creaper, 7, 0);
         func_80088FF4(Chara_Creaper, 12, 0);
-        g_SysWork.field_2280 = 3;
+        g_SysWork.npcId_2280 = 3;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
@@ -739,11 +739,11 @@ void Map_WorldObjectsInit(void) // 0x800D82A8
         func_80088FF4(Chara_Creaper, 7, 0);
         func_80088FF4(Chara_Creaper, 8, 13);
         func_80088FF4(Chara_Creaper, 9, 13);
-        g_SysWork.field_2280 = 4;
+        g_SysWork.npcId_2280 = 4;
     }
     else
     {
-        g_SysWork.field_2280 = 4;
+        g_SysWork.npcId_2280 = 4;
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);

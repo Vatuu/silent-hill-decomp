@@ -1331,7 +1331,7 @@ void func_800E5D44(void) // 0x800E5D44
     func_800E02E0();
     func_800E10F8();
 
-    g_SysWork.field_2280 = 3;
+    g_SysWork.npcId_2280 = 3;
 }
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E5F54);
