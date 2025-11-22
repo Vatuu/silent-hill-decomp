@@ -2143,6 +2143,9 @@ extern s16 sharedData_800DD5A4_0_s00;
 extern s16 sharedData_800E39E0_0_s00;
 extern s16 sharedData_800E39E2_0_s00;
 
+extern s32 sharedData_800D8684_1_s05;
+extern s32 sharedData_800D8688_1_s05;
+
 typedef struct
 {
     VECTOR3 field_0; // Rotation?
@@ -2429,6 +2432,8 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter*);
 
 void sharedFunc_800D029C_5_s00(s_SubCharacter*);
 
+void sharedFunc_800D03F8_5_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D041C_5_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D26D8_5_s00(s_SubCharacter*);
@@ -2493,7 +2498,9 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter*, s_AnmHeader*);
 
 void sharedFunc_800D2D74_1_s05(s_SubCharacter*);
 
-void sharedFunc_800D3AFC_1_s05(s_SubCharacter*);
+void sharedFunc_800D3388_1_s05(s_SubCharacter*, s32*, s32*);
+
+void sharedFunc_800D3AFC_1_s05(s_SubCharacter* chara);
 
 void sharedFunc_800D3B30_1_s05(s_SubCharacter*);
 

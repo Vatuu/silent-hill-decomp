@@ -5,8 +5,7 @@
 //=== .rodata section
 //================================================
 
-sharedFunc_800D03F8_5_s00 = 0x800D03F8; // type:func
-sharedFunc_800D041C_5_s00 = 0x800D041C; // type:func
+
 //-----------------------------------------------------------------
 //--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map5_s00
 //-----------------------------------------------------------------
@@ -69,6 +68,8 @@ Ai_HangedScratcher_Update   = 0x800CFC24; // type:func
 Ai_HangedScratcher_Init     = 0x800CFCA8; // type:func
 sharedFunc_800CFF74_5_s00   = 0x800CFF74; // type:func
 sharedFunc_800D029C_5_s00   = 0x800D029C; // type:func
+sharedFunc_800D03F8_5_s00   = 0x800D03F8; // type:func
+sharedFunc_800D041C_5_s00   = 0x800D041C; // type:func
 sharedFunc_800D26D8_5_s00   = 0x800D26D8; // type:func
 sharedFunc_800D2844_5_s00   = 0x800D2844; // type:func
 sharedFunc_800D2C18_5_s00   = 0x800D2C18; // type:func
