@@ -36,8 +36,6 @@ void func_800CD818(void);
 
 void func_800DFBBC(s_SubCharacter* chara);
 
-void func_800E9F08(s_SubCharacter* chara);
-
 /** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Rifle Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 

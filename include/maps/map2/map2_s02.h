@@ -21,8 +21,6 @@ u32 func_800DEE80(s_SubCharacter* chara);
 
 void func_800E3FB0(s_SubCharacter* chara);
 
-void func_800E6758(s_SubCharacter* chara);
-
 void func_800E9B38(void);
 
 void func_800E9D54(void);

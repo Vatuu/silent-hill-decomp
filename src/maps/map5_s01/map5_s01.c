@@ -497,40 +497,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800E6420_2_s02
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800E66E8_2_s02); // 0x800E821C
 
-void func_800E828C(s_SubCharacter* chara)
-{
-    s32    tmp0;
-    q19_12 speed;
-    s32    var;
-
-    tmp0 = g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3;
-    if (tmp0 == 0)
-    {
-        var = func_8006FD90(chara, 1, Q12(1.8f), Q12(4.0f));
-    }
-    else if (tmp0 == 2)
-    {
-        var = func_8006FD90(chara, 1, Q12(3.0f), Q12(7.0f));
-    }
-    else
-    {
-        var = func_8006FD90(chara, 1, Q12(1.0f), Q12(1.0f));
-    }
-
-    if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
-    {
-        var += func_80070360(chara, Q12(0.0f), Q12(0.4f));
-    }
-
-    speed = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(15.0f), Q12_SHIFT);
-    chara->moveSpeed_38 = MAX(speed, 0);
-
-    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(12, true) && (!(Rng_Rand16() & 0xFFF) || var))
-    {
-        chara->model_0.state_2 = 2;
-        chara->model_0.anim_4.status_0 = ANIM_STATUS(15, false);
-    }
-}
+#include "maps/shared/sharedFunc_800E6758_2_s02.h" // 0x800E828C
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E83AC);
 
@@ -544,25 +511,9 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E9B70);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E9C8C);
 
-void func_800E9F08(s_SubCharacter* chara) // 0x800E9F08
-{
-    if (chara->health_B0 == Q12(0.0f))
-    {
-        if (g_SysWork.targetNpcIdx_2353 != func_8005C7D0(chara))
-        {
-            chara->health_B0 = NO_VALUE;
-            chara->field_E1_0 = 0;
-        }
-    }
+#include "maps/shared/sharedFunc_800E83D4_2_s02.h" // 0x800E9F08
 
-    if (chara->moveSpeed_38 == Q12(0.0f)&& !(chara->properties_E4.player.afkTimer_E8 & 0x3))
-    {
-        func_800622B8(3, chara, ANIM_STATUS(6, true), 9);
-        chara->properties_E4.player.afkTimer_E8 |= 0x2;
-    }
-}
-
-void func_800E9FAC(void) {}
+#include "maps/shared/sharedFunc_800E8478_2_s02.h" // 0x800E9FAC
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800E9FB4);
 

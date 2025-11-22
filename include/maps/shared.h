@@ -2462,6 +2462,12 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter*);
 
 void sharedFunc_800E66E8_2_s02(s_SubCharacter*);
 
+void sharedFunc_800E6758_2_s02(s_SubCharacter* chara);
+
+void sharedFunc_800E83D4_2_s02(s_SubCharacter* chara);
+
+void sharedFunc_800E8478_2_s02(); // Unknown args.
+
 void sharedFunc_800E86C0_2_s02(s_SubCharacter* chara);
 
 void sharedFunc_800E8730_2_s02(s_SubCharacter*);
