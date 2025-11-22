@@ -713,57 +713,71 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_MainCharacterExtra* extr
     {
         cond = true;
     }
+
 #if defined(MAP0_S00)
     else if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Unk74)
     {
         cond = g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S02;
     }
+
 #elif defined(MAP1_S01) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP1_S06) || \
-    defined(MAP2_S00) || defined(MAP3_S01) || defined(MAP3_S03) || defined(MAP3_S04) ||   \
-    defined(MAP3_S05) || defined(MAP4_S03) || defined(MAP4_S05) || defined(MAP5_S00) ||   \
-    defined(MAP5_S02) || defined(MAP5_S03) || defined(MAP7_S01) || defined(MAP7_S02) ||   \
-    defined(MAP7_S03)
+      defined(MAP2_S00) || defined(MAP3_S01) || defined(MAP3_S03) || defined(MAP3_S04) || \
+      defined(MAP3_S05) || defined(MAP4_S03) || defined(MAP4_S05) || defined(MAP5_S00) || \
+      defined(MAP5_S02) || defined(MAP5_S03) || defined(MAP7_S01) || defined(MAP7_S02) || \
+      defined(MAP7_S03)
+
     else
     {
         switch (g_SysWork.player_4C.extra_128.state_1C)
         {
-#if defined(MAP4_S03)
-            case 128:
-                cond = 1;
-                break;
-
-            case 129:
-                cond = 1;
-                break;
-#elif defined(MAP4_S05)
-            case 109:
-                cond = 1;
-                break;
-#elif defined(MAP7_S03)
-            case 176:
-                cond = 1;
-                break;
-#else
-            case 59:
-                cond = 1;
-                break;
-
-            case 60:
+#ifdef HAS_PlayerState_Unk128
+            case PlayerState_Unk128:
                 cond = 1;
                 break;
 #endif
 
-#if defined(MAP3_S05)
-            case 81:
+#ifdef HAS_PlayerState_Unk129
+            case PlayerState_Unk129:
                 cond = 1;
                 break;
 #endif
 
-#if defined(MAP1_S02)
-            case 74:
+#ifdef HAS_PlayerState_Unk109
+            case PlayerState_Unk109:
+                cond = 1;
+                break;
+#endif
+
+#ifdef HAS_PlayerState_Unk176
+            case PlayerState_Unk176:
+                cond = 1;
+                break;
+#endif
+
+#ifdef HAS_PlayerState_Unk59
+            case PlayerState_Unk59:
+                cond = 1;
+                break;
+#endif
+
+#ifdef HAS_PlayerState_Unk60
+            case PlayerState_Unk60:
+                cond = 1;
+                break;
+#endif
+
+#ifdef HAS_PlayerState_Unk81
+            case PlayerState_Unk81:
+                cond = 1;
+                break;
+#endif
+
+#ifdef HAS_PlayerState_Unk74
+            case PlayerState_Unk74:
                 cond = (g_SavegamePtr->mapOverlayId_A4 == 5);
                 break;
 #endif
+
             default:
                 cond = 0;
                 break;
@@ -822,27 +836,9 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_MainCharacterExtra* extr
     if (cond)
     {
         // Most maps use `D_800C4590` from bodyprog, but some use struct from inside map overlay.
-        // TODO: This ifdef block was updated to all use `sharedData_800E39BC_0_s00` except final else case.
-        // Need to find which maps match that case and change the block to just change to that.
-#if defined(MAP0_S00)
-    #define UnkStruct sharedData_800E39BC_0_s00
-#elif defined(MAP2_S01)
-    #define UnkStruct sharedData_800E39BC_0_s00
-#elif defined(MAP3_S00)
-    #define UnkStruct sharedData_800E39BC_0_s00
-#elif defined(MAP3_S06)
-    #define UnkStruct sharedData_800E39BC_0_s00
-#elif defined(MAP5_S02)
-    #define UnkStruct sharedData_800E39BC_0_s00
-#elif defined(MAP5_S03)
-    #define UnkStruct sharedData_800E39BC_0_s00
-#elif defined(MAP6_S01)
-    #define UnkStruct sharedData_800E39BC_0_s00
-#elif defined(MAP6_S04)
-    #define UnkStruct sharedData_800E39BC_0_s00
-#elif defined(MAP7_S02)
-    #define UnkStruct sharedData_800E39BC_0_s00
-#elif defined(MAP7_S03)
+#if defined(MAP0_S00) || defined(MAP2_S01) || defined(MAP3_S00) || defined(MAP3_S06) || \
+    defined(MAP5_S02) || defined(MAP5_S03) || defined(MAP6_S01) || defined(MAP6_S04) || \
+    defined(MAP7_S02) || defined(MAP7_S03)
     #define UnkStruct sharedData_800E39BC_0_s00
 #else
     #define UnkStruct D_800C4590
@@ -883,7 +879,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_MainCharacterExtra* extr
     }
     else
     {
-        chara->rotationSpeed_2C.vy = (sharedData_800E39D8_0_s00 << 8) / g_DeltaTime0;
+        chara->rotationSpeed_2C.vy = FP_TO(sharedData_800E39D8_0_s00, 8) / g_DeltaTime0;
     }
 
     coord->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
