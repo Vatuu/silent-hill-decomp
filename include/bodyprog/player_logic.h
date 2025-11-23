@@ -26,6 +26,13 @@
 // ENUMS
 // ======
 
+typedef enum _PlayerStopFlags
+{
+    PlayerStopFlag_None        = 0,
+    PlayerStopFlag_StopWalking = 1 << 0,
+    PlayerStopFlag_StopRunning = 1 << 1
+} e_PlayerStopFlags;
+
 /** @brief Player states. */
 typedef enum _PlayerState
 {
@@ -468,32 +475,43 @@ extern u8 D_800C457C;
 /** @brief Defines if the player is triggering the aiming action. */
 extern u16 g_Player_IsAiming;
 
+/** `bool` */
 extern u16 g_Player_IsSteppingLeftTap;
 
+/** `bool` */
 extern u16 g_Player_IsSteppingRightTap;
 
+/** `bool` */
 extern u16 g_Player_IsTurningLeft;
 
+/** `bool` */
 extern u16 g_Player_IsTurningRight;
 
+/** `bool` */
 extern u16 g_Player_IsSteppingLeftHold;
 
+/** `bool` */
 extern u16 g_Player_IsSteppingRightHold;
 
+/** `bool` */
 extern u16 g_Player_IsHoldAttack;
 
+/** `bool` */
 extern u16 g_Player_IsAttacking;
 
+/** `bool` */
 extern u16 g_Player_IsShooting;
 
+/** `bool` */
 extern u16 g_Player_IsMovingForward;
 
+/** `bool` */
 extern u16 g_Player_IsMovingBackward;
 
 /** @brief Defines if the player is triggering the running action. */
 extern u16 g_Player_IsRunning;
 
-extern s32 g_Player_HeadingAngle;
+extern q19_12 g_Player_HeadingAngle;
 
 /** `bool`
  *

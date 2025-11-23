@@ -260,7 +260,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 25:
             Model_AnimStatusSet(&chara->model_0, 21, false);
             Character_AnimStateReset(chara);
-            func_8003DD80(Chara_EndingKaufmann, 51);
+            func_8003DD80(Chara_EndingKaufmann, UNK_PACKED_DATA(3, 3));
             break;
 
         case 17:
@@ -276,11 +276,11 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             // TODO: Invert like case 15? can't find how to match.
             if (chara->model_0.anim_4.keyframeIdx_8 < 78 || !ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
             {
-                func_8003DD80(Chara_EndingKaufmann, 49);
+                func_8003DD80(Chara_EndingKaufmann, UNK_PACKED_DATA(1, 3));
             }
             else
             {
-                func_8003DD80(Chara_EndingKaufmann, 52);
+                func_8003DD80(Chara_EndingKaufmann, UNK_PACKED_DATA(4, 3));
             }
 #endif
             break;
@@ -289,7 +289,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusSet(&chara->model_0, 17, false);
             Character_AnimStateReset(chara);
 #if defined(MAP7_S03)
-            func_8003DD80(Chara_EndingKaufmann, 52);
+            func_8003DD80(Chara_EndingKaufmann, UNK_PACKED_DATA(4, 3));
 #endif
             break;
 
@@ -300,11 +300,11 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 #if defined(MAP7_S03)
             if (chara->model_0.anim_4.keyframeIdx_8 < 141)
             {
-                func_8003DD80(Chara_EndingKaufmann, 52);
+                func_8003DD80(Chara_EndingKaufmann, UNK_PACKED_DATA(4, 3));
             }
             else
             {
-                func_8003DD80(Chara_EndingKaufmann, 49);
+                func_8003DD80(Chara_EndingKaufmann, UNK_PACKED_DATA(1, 3));
             }
 #endif
             break;
@@ -322,7 +322,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusKeyframeSet(chara->model_0, 19, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 #if defined(MAP7_S03)
-            func_8003DD80(Chara_EndingKaufmann, 49);
+            func_8003DD80(Chara_EndingKaufmann, UNK_PACKED_DATA(1, 3));
 #endif
             break;
 

@@ -1362,7 +1362,7 @@ typedef struct _SubCharacter
     s_Model  model_0;          // In player: Manage the half lower part of Harry's body animations (legs and feet).
     VECTOR3  position_18;      /** `Q19.12` */
     SVECTOR3 rotation_24;
-    q3_12    field_2A;         // Related to `rotation_24`, unknown purpose.
+    q3_12    field_2A;         // Angle related to `rotation_24`, unknown purpose.
     SVECTOR3 rotationSpeed_2C; /** Q3.12 | Range: `[FP_ANGLE(-157.5f), FP_ANGLE(157.5f)]`. */
     q3_12    field_32;         // Related to `rotationSpeed_2C`, unknown purpose.
     q19_12   field_34;         // Character Y position?
@@ -1465,7 +1465,7 @@ typedef union
     s32 field_0;
     struct
     {
-        u8 field_0;
+        u8 field_0; // Flags.
         u8 field_1;
         u8 field_2;
         u8 unk_3;
@@ -1609,7 +1609,7 @@ typedef struct _SysWork
     s8              npcIdxs_2354[4];
     u8              field_2358;          /** `bool` */
     s8              unk_2359[1];
-    u8              field_235A; // If the player stops walking or running forward, the value changes to 1. If the player stops walking backward, the value changes to 2.
+    u8              playerStopFlags_235A; /** `e_PlayerStopFlags` */
     s8              unk_235B[1];
     GsCOORDINATE2*  field_235C;
     VECTOR3         field_2360; // Position?

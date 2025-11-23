@@ -1977,7 +1977,7 @@ void func_8003DD80(e_CharacterId charaId, s32 arg1) // 0x8003DD80
 
 void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 {
-    s32 temp_s0;
+    s32 maskedVal;
 
     static s32 D_800A9ECC = 0xFE16FD13;
     static s32 D_800A9ED0 = 0x0000FE13;
@@ -1989,12 +1989,13 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
     static s32 D_800A9EE8 = 0x0000FE11;
     static s32 D_800A9EEC = 0x0000FE12;
 
-    temp_s0 = arg1 & 0xF;
-    if (temp_s0 != 0)
+    // Process first masked value.
+    maskedVal = arg1 & 0xF;
+    if (maskedVal != 0)
     {
         func_80045468(skel, &D_800A9ECC, false);
 
-        switch (temp_s0)
+        switch (maskedVal)
         {
             case 1:
                 func_80045468(skel, &D_800A9ED0, true);
@@ -2018,12 +2019,13 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
         }
     }
 
-    temp_s0 = arg1 & 0xF0;
-    if (temp_s0 != 0)
+    // Process second masked value.
+    maskedVal = arg1 & 0xF0;
+    if (maskedVal != 0)
     {
         func_80045468(skel, &D_800A9EE4, false);
 
-        switch (temp_s0)
+        switch (maskedVal)
         {
             case 16:
                 func_80045468(skel, &D_800A9EE8, true);
@@ -2038,17 +2040,17 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 
 void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 {
-    s32 temp_v1;
+    s32 maskedVal;
 
     static s32 D_800A9EF0 = 0x0000FE14;
     static s32 D_800A9EF4 = 0x00FE1514;
     static s32 D_800A9EF8 = 0x0000FE12;
     static s32 D_800A9EFC = 0x00FE1312;
 
-    temp_v1 = arg1 & 0xF;
-    if (temp_v1 != 0)
+    maskedVal = arg1 & 0xF;
+    if (maskedVal != 0)
     {
-        switch (temp_v1)
+        switch (maskedVal)
         {
             case 1:
                 func_80045468(skel, &D_800A9EF4, false);
@@ -2062,10 +2064,10 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
         }
     }
 
-    temp_v1 = arg1 & 0xF0;
-    if (temp_v1 != 0)
+    maskedVal = arg1 & 0xF0;
+    if (maskedVal != 0)
     {
-        switch (temp_v1)
+        switch (maskedVal)
         {
             case 16:
                 func_80045468(skel, &D_800A9EFC, false);
@@ -2082,17 +2084,17 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 
 void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
 {
-    s32 temp_v1;
+    s32 maskedVal;
 
     static s32 D_800A9F00 = 0x0000FE02;
     static s32 D_800A9F04 = 0x0000FE03;
     static s32 D_800A9F08 = 0x0000FE00;
     static s32 D_800A9F0C = 0x00FE0100;
 
-    temp_v1 = arg1 & 0xF;
-    if (temp_v1 != 0)
+    maskedVal = arg1 & 0xF;
+    if (maskedVal != 0)
     {
-        switch (temp_v1)
+        switch (maskedVal)
         {
             case 1:
                 func_80045468(skel, &D_800A9F04, false);
@@ -2106,10 +2108,10 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
         }
     }
 
-    temp_v1 = arg1 & 0xF0;
-    if (temp_v1 != 0)
+    maskedVal = arg1 & 0xF0;
+    if (maskedVal != 0)
     {
-        switch (temp_v1)
+        switch (maskedVal)
         {
             case 16:
                 func_80045468(skel, &D_800A9F0C, false);
@@ -2126,19 +2128,19 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
 
 void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
 {
-    s32 temp_s0;
+    s32 maskedVal;
 
     static s32 D_800A9F10 = 0xFE03FD00;
     static s32 D_800A9F14 = 0x0000FE00;
     static s32 D_800A9F18 = 0x00FE0201;
     static s32 D_800A9F1C = 0x0000FE03;
 
-    temp_s0 = arg1 & 0xF;
-    if (temp_s0 != 0)
+    maskedVal = arg1 & 0xF;
+    if (maskedVal != 0)
     {
         func_80045468(skel, &D_800A9F10, false);
 
-        switch (temp_s0)
+        switch (maskedVal)
         {
             case 1:
                 func_80045468(skel, &D_800A9F14, true);
@@ -2157,7 +2159,7 @@ void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
 
 void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
 {
-    s32 var_s0;
+    s32 maskedVal;
 
     static s32 D_800A9F20 = 0x06050403;
     static s32 D_800A9F24 = 0x000000FE; // @unused
@@ -2170,12 +2172,12 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
     static s32 D_800A9F40 = 0x0000FE01;
     static s32 D_800A9F44 = 0x00FE0201;
 
-    var_s0 = arg1 & 0xF;
-    if (var_s0 != 0)
+    maskedVal = arg1 & 0xF;
+    if (maskedVal != 0)
     {
         func_80045468(skel, &D_800A9F20, false);
 
-        switch (var_s0)
+        switch (maskedVal)
         {
             case 1:
                 func_80045468(skel, &D_800A9F28, true);
@@ -2196,12 +2198,12 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
     }
 
 
-    var_s0 = arg1 & 0xF0;
-    if (var_s0 != 0)
+    maskedVal = arg1 & 0xF0;
+    if (maskedVal != 0)
     {
         func_80045468(skel, &D_800A9F38, false);
 
-        switch (var_s0)
+        switch (maskedVal)
         {
             case 16:
                 func_80045468(skel, &D_800A9F3C, true);
@@ -2220,15 +2222,15 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
 
 void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
 {
-    s32 val;
+    s32 maskedVal;
 
     static s32 D_800A9F48 = 0x0000FE05;
     static s32 D_800A9F4C = 0x0000FE06;
 
-    val = arg1 & 0xF;
-    if (val != 0)
+    maskedVal = arg1 & 0xF;
+    if (maskedVal != 0)
     {
-        switch (val)
+        switch (maskedVal)
         {
             case 1:
                 func_80045468(skel, &D_800A9F4C, false);
@@ -2245,18 +2247,18 @@ void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
 
 void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
 {
-    s32 val;
+    s32 maskedVal;
 
     static s32 D_800A9F50 = 0xFE19FD11;
     static s32 D_800A9F54 = 0xFE22FD1A;
 
-    val = arg1 & 0x3;
-    if (val == 0)
+    maskedVal = arg1 & 0x3;
+    if (maskedVal == 0)
     {
         return;
     }
 
-    switch (val)
+    switch (maskedVal)
     {
         case 1:
             func_80045468(skel, &D_800A9F50, false);
@@ -2272,7 +2274,7 @@ void func_8003E414(s_Skeleton* skel, s32 arg1) // 0x8003E414
 
 void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
 {
-    s32 temp_s0;
+    s32 maskedVal;
 
     static s32 D_800A9F58 = 0x05040302;
     static s32 D_800A9F5C = 0x00FE0706; // @unused
@@ -2280,12 +2282,12 @@ void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
     static s32 D_800A9F64 = 0x00FE0603;
     static s32 D_800A9F68 = 0x00FE0704;
 
-    temp_s0 = arg1 & 0xF;
-    if (temp_s0 != 0)
+    maskedVal = arg1 & 0xF;
+    if (maskedVal != 0)
     {
         func_80045468(skel, &D_800A9F58, false);
 
-        switch (temp_s0)
+        switch (maskedVal)
         {
             case 1:
                 func_80045468(skel, &D_800A9F60, true);
@@ -2304,7 +2306,7 @@ void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
 
 void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
 {
-    s32 temp_s0;
+    s32 maskedVal;
 
     static s32 D_800A9F6C = 0x05040302;
     static s32 D_800A9F70 = 0x00FE0706; // @unused
@@ -2312,15 +2314,15 @@ void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
     static s32 D_800A9F78 = 0x00FE0603;
     static s32 D_800A9F7C = 0x00FE0704;
 
-    temp_s0 = arg1 & 0xF;
-    if (temp_s0 == 0)
+    maskedVal = arg1 & 0xF;
+    if (maskedVal == 0)
     {
         return;
     }
 
     func_80045468(skel, &D_800A9F6C, false);
 
-    switch (temp_s0)
+    switch (maskedVal)
     {
         case 1:
             func_80045468(skel, &D_800A9F74, true);
@@ -2410,15 +2412,15 @@ void func_8003E740(void) // 0x8003E740
     s32       sp60;
     s32       temp_a0;
     s32       temp_s6;
-    s16*      var_a0;
     s32       i;
     s32       var_s5;
+    s16*      var_a0;
     POLY_FT4* poly;
-    s32       temp_s2 = 0;
+    s32       idx = 0;
 
     static u32 D_800A9FB0 = 0;
 
-    if (g_DeltaTime0 != Q12(0.0))
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         D_800A9FB0 += 8;
         for (i = 0; i < 8; i++)
@@ -2430,8 +2432,8 @@ void func_8003E740(void) // 0x8003E740
     sp38.vx = 1;
     sp38.vy = -7;
     sp38.vz = 33;
-    sp38.vx = FP_MULTIPLY(Math_AngleNormalize(D_800BCDE8[temp_s2++]), 5, Q12_SHIFT) + 1;
-    sp38.vz = FP_MULTIPLY(Math_AngleNormalize(D_800BCDE8[temp_s2++]), 5, Q12_SHIFT) + 33;
+    sp38.vx = FP_MULTIPLY(Math_AngleNormalize(D_800BCDE8[idx++]), 5, Q12_SHIFT) + 1;
+    sp38.vz = FP_MULTIPLY(Math_AngleNormalize(D_800BCDE8[idx++]), 5, Q12_SHIFT) + 33;
 
     poly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -2455,7 +2457,7 @@ void func_8003E740(void) // 0x8003E740
         SetPolyFT4(poly);
         setSemiTrans(poly, true);
 
-        temp_a0 = D_800BCDE8[temp_s2++];
+        temp_a0 = D_800BCDE8[idx++];
 
         if ((temp_a0 & 0xFFF) >= 3482)
         {
@@ -2471,7 +2473,7 @@ void func_8003E740(void) // 0x8003E740
         poly->tpage = 44;
         poly->clut  = 4146;
 
-        var_a0 = &D_800BCDE8[temp_s2++];
+        var_a0 = &D_800BCDE8[idx++];
 
         for (i = 0; i < 4; i++)
         {
@@ -2739,9 +2741,9 @@ void func_8003F170(void) // 0x8003F170
     VECTOR          sp48;
     SVECTOR         rot;
     s32             temp_v0;
-    u8              temp_v1;
+    u8              flags;
     s32             temp;
-    GsCOORDINATE2*  sp60;
+    GsCOORDINATE2*  coord;
     s_StructUnk3*   ptr2;
     s_SysWork_2288* ptr;
 
@@ -2789,14 +2791,14 @@ void func_8003F170(void) // 0x8003F170
 
     if (ptr->field_14 != 0)
     {
-        temp_v1       = ptr->field_154.field_0.field_0.s_field_0.field_0;
+        flags         = ptr->field_154.field_0.field_0.s_field_0.field_0;
         ptr->field_14 = 0;
 
-        if (temp_v1 & (1 << 0))
+        if (flags & (1 << 0))
         {
             func_8003F08C(ptr2, &D_800A952C.field_0);
         }
-        else if (temp_v1 & 2)
+        else if (flags & (1 << 1))
         {
             ptr2->field_0.field_4 += Q12(0.3f);
         }
@@ -2805,9 +2807,9 @@ void func_8003F170(void) // 0x8003F170
     ptr->field_10 = func_8003FEC0(&ptr2->field_0);
     func_8003FF2C(ptr2);
 
-    temp = FP_MULTIPLY(func_8003F4DC(&sp60, &rot, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.field_2378, Q12_SHIFT);
+    temp = FP_MULTIPLY(func_8003F4DC(&coord, &rot, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.field_2378, Q12_SHIFT);
 
-    func_800554C4(temp, ptr2->field_2C, sp60, g_SysWork.field_235C, &rot, 
+    func_800554C4(temp, ptr2->field_2C, coord, g_SysWork.field_235C, &rot, 
                   g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz,
                   g_WorldGfx.type_0->waterZones_8);
     func_80055814(ptr2->field_30);
@@ -2818,7 +2820,7 @@ void func_8003F170(void) // 0x8003F170
     }
 }
 
-q19_12 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 arg4, s_SysWork* sysWork) // 0x8003F4DC
+q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 arg4, s_SysWork* sysWork) // 0x8003F4DC
 {
     s32     temp;
     q19_12  alphaCpy;
@@ -2839,7 +2841,7 @@ q19_12 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, q19_12 alpha, s32 arg3,
     {
         default:
         case 1:
-            *arg0 = sysWork->field_236C;
+            *coords = sysWork->field_236C;
             break;
 
         case 0:
@@ -2847,7 +2849,7 @@ q19_12 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, q19_12 alpha, s32 arg3,
         case 3:
         case 4:
         case 5:
-            *arg0 = NULL;
+            *coords = NULL;
             break;
     }
 

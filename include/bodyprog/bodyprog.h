@@ -2789,7 +2789,7 @@ void func_8003EDA8(void);
 
 void func_8003EF10(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
 
-q19_12 func_8003F4DC(GsCOORDINATE2** arg0, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 arg4, s_SysWork* sysWork);
+q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 arg4, s_SysWork* sysWork);
 
 u32 func_8003F654(s_SysWork_2288* arg0);
 
@@ -4322,7 +4322,7 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model);
 
 void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
 
-/** Something for Harry. */
+/** Something for Harry. `arg` is a packed value. */
 void func_8003DE60(s_Skeleton* skel, s32 arg1);
 
 /** Something for Cybil. */
@@ -4393,7 +4393,7 @@ void func_8007E8C0(void);
  */
 void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
-void func_80070B84(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
+void func_80070B84(s_SubCharacter* chara, q19_12 moveDistMax, q19_12 arg2, s32 keyframeIdx);
 
 void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weaponAttack, s32 animStatus);
 
