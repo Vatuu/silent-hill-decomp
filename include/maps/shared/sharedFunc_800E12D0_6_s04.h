@@ -6,7 +6,6 @@ void sharedFunc_800E12D0_6_s04(void)
     s32    soundCmd;
     q19_12 dist;
     u8*    dataPtr;
-    s8     roomIdx;
 
     fArg1    = Q12(0.2f);
     soundCmd = g_GameWork.soundCmd_5B2;
@@ -109,10 +108,9 @@ void sharedFunc_800E12D0_6_s04(void)
         dist    = Q12(0.0f);
         dataPtr = &sharedData_800EB748_6_s04;
 
-        roomIdx = g_SavegamePtr->mapRoomIdx_A5 - 1;
-        switch (roomIdx)
+        switch (g_SavegamePtr->mapRoomIdx_A5)
         {
-            case 2:
+            case 3:
                 flags = 4;
 
                 dist = Math_Distance2dGet(&g_SysWork.player_4C.chara_0.position_18, &sharedData_800EB750_6_s04);
@@ -130,10 +128,10 @@ void sharedFunc_800E12D0_6_s04(void)
                 }
                 break;
 
-            case 0:
             case 1:
-            case 3:
+            case 2:
             case 4:
+            case 5:
                 flags = 2;
                 break;
 
