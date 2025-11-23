@@ -80,16 +80,18 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
     q19_12          hero_bottom_y; // Player bottom height.
     q19_12          hero_top_y;    // Player top height.
     q19_12          grnd_y;        // Absolute ground height.
-    s_SubCharacter* hr_p;          // Player position.
+    s_SubCharacter* hr_p;          // Player character.
 
+    // Step to next debug mode.
     if (change_debug_mode)
     {
         g_WorldGfx.vcCameraInternalInfo_1BDC.mode++;
     }
 
+    // Handle debug mode.
     switch (g_WorldGfx.vcCameraInternalInfo_1BDC.mode)
     {
-        default:
+        default: // `DebugCameraMode_Init`
             g_WorldGfx.vcCameraInternalInfo_1BDC.mode = 0;
 
             first_cam_pos.vy = Q12(-2.2f);
@@ -98,7 +100,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
 
             vcSetFirstCamWork(&first_cam_pos, g_SysWork.player_4C.chara_0.rotation_24.vy, false);
 
-        case 0:
+        case DebugCameraMode_Collision:
             hr_p = &g_SysWork.player_4C.chara_0;
 
             if (in_connect_f)
@@ -136,18 +138,18 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
             g_WorldGfx.vcCameraInternalInfo_1BDC.mv_smooth = vcExecCamera();
             break;
 
-        case 1:
+        case DebugCameraMode_SetReference:
             vcSetRefPosAndSysRef2CamParam(&vcRefPosSt, &g_SysWork, for_f, back_f, right_f, left_f, up_f, down_f);
             vwSetCoordRefAndEntou(NULL,
                                   vcRefPosSt.vx, vcRefPosSt.vy, vcRefPosSt.vz,
                                   g_SysWork.cameraAngleY_237A, g_SysWork.cameraAngleZ_237C, g_SysWork.cameraY_2384, g_SysWork.cameraRadiusXz_2380);
             break;
 
-        case 2:
+        case DebugCameraMode_AnalogStickControl:
             vcSetRefPosAndCamPosAngByPad(&vcRefPosSt, &g_SysWork);
             break;
 
-        case 3:
+        case DebugCameraMode_ResetReference:
             vcSetRefPosAndSysRef2CamParam(&vcRefPosSt, &g_SysWork, for_f, back_f, right_f, left_f, up_f, down_f);
             vwSetCoordRefAndEntou(&g_SysWork.playerBoneCoords_890[HarryBone_Head],
                                   Q12(0.0f), Q12(-0.15f), Q12(1.0f),

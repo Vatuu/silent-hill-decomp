@@ -71,13 +71,6 @@ struct _MapOverlayHeader;
 
 #define CAMERA_PATH_COLL_COUNT_MAX 10
 
-typedef enum _CameraAnchor
-{
-    CameraAnchor_Character = 0,
-    CameraAnchor_Ground    = 1,
-    CameraAnchor_Camera    = 2 // TODO: Name uncertain. Relies on some backup camera Y value? -- Sezz
-} e_CameraAnchor;
-
 typedef enum _VC_ROAD_FLAGS
 {
     VC_RD_NOFLAG            = 0,
@@ -109,9 +102,27 @@ typedef enum _VC_FLAGS
 } VC_FLAGS;
 STATIC_ASSERT_SIZEOF(VC_FLAGS, 4);
 
+/** @brief Camera anchor types. */
+typedef enum _CameraAnchor
+{
+    CameraAnchor_Character = 0,
+    CameraAnchor_Ground    = 1,
+    CameraAnchor_Camera    = 2 // TODO: Name uncertain. Relies on some backup camera Y value? -- Sezz
+} e_CameraAnchor;
+
+/** @brief Debug camera mode state steps. */
+typedef enum _DebugCameraMode
+{
+    DebugCameraMode_Collision          = 0,
+    DebugCameraMode_SetReference       = 1,
+    DebugCameraMode_AnalogStickControl = 2,
+    DebugCameraMode_ResetReference     = 3, // TODO: Name uncertain.
+    DebugCameraMode_Init               = 4  // TODO: Name uncertain.
+} e_DebugCameraMode;
+
 typedef enum _VC_CAM_MV_TYPE
 {
-    VC_MV_CHASE        = 0, /** Chase. */
+    VC_MV_CHASE        = 0, /** Chase player. */
     VC_MV_SETTLE       = 1,
     VC_MV_FIX_ANG      = 2, /** Fixed angle. */
     VC_MV_SELF_VIEW    = 3,
@@ -181,7 +192,7 @@ STATIC_ASSERT_SIZEOF(VC_LIMIT_AREA, 8);
 /** @brief Camera internal info. */
 typedef struct _VC_CAMERA_INTINFO
 {
-    u32   mode;
+    u32   mode;      /** Mode state step. */
     u8    mv_smooth; /** `VC_CAM_MV_TYPE` */
     // 1 byte of padding.
     q3_12 ev_cam_rate;
@@ -430,9 +441,9 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
  */
 void vcMakeHeroHeadPos(VECTOR3* head_pos);
 
-/** @brief Translates a position by a horizontal and vertical offset in the direction of a given angle.
+/** @brief Translates a camera position by a horizontal and vertical offset in the direction of a given angle.
  *
- * @param out_pos Translated output position (Q19.12).
+ * @param out_pos Output translated position (Q19.12).
  * @param in_pos Position to translate (Q19.12).
  * @param ofs_xz_r Horizontal offset.
  * @param ang_y Offset angle defining the direction of translation.
@@ -614,27 +625,59 @@ void vcUserWatchTarget(VECTOR3* watch_tgt_pos, VC_WATCH_MV_PARAM* watch_prm_p, b
 void vcUserCamTarget(VECTOR3* cam_tgt_pos, VC_CAM_MV_PARAM* cam_prm_p, bool warp_cam_f);
 void vcChangeProjectionValue(s16 scr_y);
 void func_80080D68(void);
+
+/** @brief Gets the current camera look-at position.
+ *
+ * @param watch_pos Output look-at position (Q19.12).
+ */
 void vcGetNowWatchPos(VECTOR3* watch_pos);
+
+/** @brief Gets the current camera position.
+ *
+ * @param cam_pos Output camera position (Q19.12).
+ */
 void vcGetNowCamPos(VECTOR3* cam_pos);
+
+/** @brief Sets camera flags to set up a warp? TODO: Unsure.
+ *
+ * @param warp_f Warp.
+ */
 void vcReturnPreAutoCamWork(bool warp_f);
+
 void vcSetSubjChara(VECTOR3* chara_pos, q19_12 chara_bottom_y, q19_12 chara_top_y, q19_12 chara_grnd_y, VECTOR3* chara_head_pos,
                     q3_12 chara_mv_spd, q19_12 chara_mv_ang_y, q3_12 chara_ang_spd_y, q3_12 chara_eye_ang_y, q3_12 chara_eye_ang_wy, q19_12 chara_watch_xz_r);
-s32  vcExecCamera(void);
+
+s32 vcExecCamera(void);
+
 void vcSetAllNpcDeadTimer(void);
-s32  vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVECTOR* now_ang);
+
+s32 vcRetSmoothCamMvF(VECTOR3* old_pos, VECTOR3* now_pos, SVECTOR* old_ang, SVECTOR* now_ang);
+
 VC_CAM_MV_TYPE vcRetCurCamMvType(VC_WORK* w_p);
+
 bool func_8008150C(q19_12 posX, q19_12 posZ);
+
 bool vcRetThroughDoorCamEndF(VC_WORK* w_p);
+
 q19_12 vcRetFarWatchRate(s32 far_watch_button_prs_f, VC_CAM_MV_TYPE cur_cam_mv_type, VC_WORK* w_p);
-s32  vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, VC_WORK* w_p);
+
+s32 vcRetSelfViewEffectRate(VC_CAM_MV_TYPE cur_cam_mv_type, s32 far_watch_rate, VC_WORK* w_p);
+
 void vcSetFlagsByCamMvType(VC_CAM_MV_TYPE cam_mv_type, s32 far_watch_rate, bool all_warp_f);
+
 void vcPreSetDataInVC_WORK(VC_WORK* w_p, VC_ROAD_DATA* vc_road_ary_list);
+
 void vcSetTHROUGH_DOOR_CAM_PARAM_in_VC_WORK(VC_WORK* w_p, THROUGH_DOOR_SET_CMD_TYPE set_cmd_type);
+
 void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p);
+
 void vcSetNearRoadAryByCharaPos(VC_WORK* w_p, VC_ROAD_DATA* road_ary_list, s32 half_w, s32 unused, bool near_enemy_f);
+
 s32  vcRetRoadUsePriority(VC_ROAD_TYPE rd_type, s32 unused);
+
 bool vcSetCurNearRoadInVC_WORK(VC_WORK* w_p);
-s32  vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_type, VECTOR3* pos, VC_WORK* w_p);
+
+s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_type, VECTOR3* pos, VC_WORK* w_p);
 
 /** @brief Gets the closest camera path collision, outputting the result to `out_nearest_p_addr` and returning the distance to it.
  * TODO

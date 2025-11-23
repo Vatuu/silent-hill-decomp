@@ -380,7 +380,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            vcReturnPreAutoCamWork(1);
+            vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Sd_EngineCmd(23);
@@ -1020,7 +1020,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
                 ABS(g_SysWork.player_4C.chara_0.position_18.vz - Q12(267.2852f)) > Q12(0.7f))
             {
                 Savegame_EventFlagSet(EventFlag_42);
-                vcReturnPreAutoCamWork(1);
+                vcReturnPreAutoCamWork(true);
 
                 g_SysWork.npcs_1A0[0].position_18.vy = Q12(-10.0f);
                 g_SysWork.npcs_1A0[0].position_18.vz = Q12(280.0f);
