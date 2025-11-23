@@ -35,6 +35,8 @@ struct _Model;
 #define MAP_MESSAGE_DISPLAY_ALL_LENGTH 400  /** Long string length is used to display a whole message instantly without a rollout. */
 #define GLYPH_TABLE_ASCII_OFFSET       '\'' /** Subtracted from ASCII bytes to get index to some string-related table. */
 
+#define CHUNK_CELL_SIZE Q12(40.0f)
+
 /** @brief Unknown packed data used for something to do with character model bones.
  *
  * @param a First value.
@@ -194,11 +196,13 @@ struct _Model;
  * @bug Some maps appear to have a bug where the negative position check will never be true because they check
  * if the chunk index will be a positive number. Seems like they forgot to use `ABS`?
  */
+//(__chunkIdx = FLOOR_TO_STEP(g_SysWork.player_4C.chara_0.position_18.comp, CHUNK_CELL_SIZE), TODO: Doesn't match.
 #define PLAYER_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                                   \
     (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.comp / Q12(40.0f),                        \
      ((g_SysWork.player_4C.chara_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
       (g_SysWork.player_4C.chara_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 
+//(__chunkIdx = FLOOR_TO_STEP(g_SysWork.player_4C.chara_0.position_18.comp, CHUNK_CELL_SIZE), TODO: Doesn't match.
 #define PLAYER_NOT_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                               \
     (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.comp / Q12(40.0f),                        \
      ((g_SysWork.player_4C.chara_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) != (x1)) || \

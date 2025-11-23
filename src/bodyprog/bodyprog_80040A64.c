@@ -609,16 +609,16 @@ void Map_IpdCollisionDataInit(void) // 0x80041E98
     g_Map.field_0.field_1C = 512;
 }
 
-void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 chunkCoordX, s32 chunkCoordZ) // 0x80041ED0
+void Map_PlaceIpdAtCell(s16 ipdFileIdx, s32 cellX, s32 cellZ) // 0x80041ED0
 {
     s_IpdChunk*  curChunk;
     s_IpdHeader* ipdHdr;
 
-    ((s16*)&g_Map.ipdGridCenter_42C[chunkCoordZ])[chunkCoordX] = ipdFileIdx;
+    ((s16*)&g_Map.ipdGridCenter_42C[cellZ])[cellX] = ipdFileIdx;
 
     for (curChunk = g_Map.ipdActive_15C; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++)
     {
-        if (curChunk->coordX_8 != chunkCoordX || curChunk->coordZ_A != chunkCoordZ)
+        if (curChunk->cellX_8 != cellX || curChunk->cellZ_A != cellZ)
         {
             continue;
         }
@@ -901,8 +901,8 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
 {
     s32          collX;
     s32          collZ;
-    s32          chunkCoordX;
-    s32          chunkCoordZ;
+    s32          cellX;
+    s32          cellZ;
     s_IpdHeader* ipdHdr;
     s_IpdChunk*  curChunk;
 
@@ -911,8 +911,8 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     collZ = Q12_TO_Q8(posZ);
 
     // Compute chunk coords.
-    chunkCoordX = FLOOR_TO_STEP(collX, Q8(40.0f));
-    chunkCoordZ = FLOOR_TO_STEP(collZ, Q8(40.0f));
+    cellX = FLOOR_TO_STEP(collX, Q8(40.0f));
+    cellZ = FLOOR_TO_STEP(collZ, Q8(40.0f));
 
     for (curChunk = g_Map.ipdActive_15C; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++)
     {
@@ -923,13 +923,13 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
 
         ipdHdr = curChunk->ipdHdr_0;
         if (ipdHdr->isLoaded_1 &&
-            curChunk->coordX_8 == chunkCoordX && curChunk->coordZ_A == chunkCoordZ)
+            curChunk->cellX_8 == cellX && curChunk->cellZ_A == cellZ)
         {
             return &ipdHdr->collisionData_54;
         }
     }
 
-    if (((s16*)(&g_Map.ipdGridCenter_42C[chunkCoordZ]))[chunkCoordX] != NO_VALUE)
+    if (((s16*)(&g_Map.ipdGridCenter_42C[cellZ]))[cellX] != NO_VALUE)
     {
         return NULL;
     }
@@ -944,8 +944,8 @@ s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32
     s_IpdChunk* chunks[4];
     s32         sp20[4];
     s32         collX;
-    s32         chunkCoordZ;
-    s32         chunkCoordX;
+    s32         cellZ;
+    s32         cellX;
     s32         collZ;
     s32         temp_t0;
     s32         i;
@@ -968,8 +968,8 @@ s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32
         return 2;
     }
 
-    chunkCoordX = FLOOR_TO_STEP(collX, Q8(40.0f));
-    chunkCoordZ = FLOOR_TO_STEP(collZ, Q8(40.0f));
+    cellX = FLOOR_TO_STEP(collX, Q8(40.0f));
+    cellZ = FLOOR_TO_STEP(collZ, Q8(40.0f));
 
     for (curChunk = g_Map.ipdActive_15C, idx = 0;
          curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158];
@@ -987,7 +987,7 @@ s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32
 
         if (!g_Map.isExterior)
         {
-            if (curChunk->coordX_8 == chunkCoordX && curChunk->coordZ_A == chunkCoordZ)
+            if (curChunk->cellX_8 == cellX && curChunk->cellZ_A == cellZ)
             {
                 chunks[idx] = curChunk;
                 idx++;
@@ -996,10 +996,10 @@ s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32
         }
         else
         {
-            if (curChunk->coordX_8 >= (chunkCoordX - 1) && (chunkCoordX + 1) >= curChunk->coordX_8 &&
-                curChunk->coordZ_A >= (chunkCoordZ - 1) && (chunkCoordZ + 1) >= curChunk->coordZ_A)
+            if (curChunk->cellX_8 >= (cellX - 1) && (cellX + 1) >= curChunk->cellX_8 &&
+                curChunk->cellZ_A >= (cellZ - 1) && (cellZ + 1) >= curChunk->cellZ_A)
             {
-                temp_t0 = Ipd_DistanceToEdgeGet(collX, collZ, curChunk->coordX_8, curChunk->coordZ_A);
+                temp_t0 = Ipd_DistanceToEdgeGet(collX, collZ, curChunk->cellX_8, curChunk->cellZ_A);
                 for (i = 0; i < idx; i++)
                 {
                     if (temp_t0 < sp20[i])
@@ -1071,12 +1071,12 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
             IpdHeader_FixOffsets(curChunk->ipdHdr_0, &g_Map.globalLm_138.lmHdr_0, 1, &g_Map.ipdTextures_430.fullPage_0, &g_Map.ipdTextures_430.halfPage_2C, g_Map.texFileIdx_134);
-            func_80044044(curChunk->ipdHdr_0, curChunk->coordX_8, curChunk->coordZ_A);
+            func_80044044(curChunk->ipdHdr_0, curChunk->cellX_8, curChunk->cellZ_A);
         }
     }
 }
 
-q19_12 Ipd_DistanceToEdgeWithPaddingGet(q19_12 posX, q19_12 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool isExterior) // 0x80042DE8
+q19_12 Ipd_PaddedDistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 fileChunkCoordX, s32 fileChunkCoordZ, bool isExterior) // 0x80042DE8
 {
     q19_12 dist;
 
@@ -1115,10 +1115,10 @@ q19_12 Ipd_DistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 i
 
 s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x80042EBC
 {
-    s32          chunkCoordX0;
-    s32          chunkCoordZ0;
-    s32          chunkCoordZ1;
-    s32          chunkCoordX1;
+    s32          cellX0;
+    s32          cellZ0;
+    s32          cellZ1;
+    s32          cellX1;
     s32          queueIdx;
     s32          gridX;
     s32          gridZ;
@@ -1131,13 +1131,13 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
 
     queueIdx = NO_VALUE;
 
-    chunkCoordX0 = FLOOR_TO_STEP(Q12_TO_Q8(posX0), Q8(40.0f));
-    chunkCoordZ0 = FLOOR_TO_STEP(Q12_TO_Q8(posZ0), Q8(40.0f));
-    chunkCoordX1 = FLOOR_TO_STEP(Q12_TO_Q8(posX1), Q8(40.0f));
-    chunkCoordZ1 = FLOOR_TO_STEP(Q12_TO_Q8(posZ1), Q8(40.0f));
+    cellX0 = FLOOR_TO_STEP(Q12_TO_Q8(posX0), Q8(40.0f));
+    cellZ0 = FLOOR_TO_STEP(Q12_TO_Q8(posZ0), Q8(40.0f));
+    cellX1 = FLOOR_TO_STEP(Q12_TO_Q8(posX1), Q8(40.0f));
+    cellZ1 = FLOOR_TO_STEP(Q12_TO_Q8(posZ1), Q8(40.0f));
 
-    map->chunkCoordX_580 = chunkCoordX1;
-    map->chunkCoordZ_584 = chunkCoordZ1;
+    map->cellX_580 = cellX1;
+    map->cellZ_584 = cellZ1;
 
     Ipd_ActiveChunksSample(map, posX0, posZ0, posX1, posZ1, map->isExterior);
     func_800433B8(map);
@@ -1148,12 +1148,12 @@ s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
         {
             if (map->isExterior || (x == 0 && z == 0))
             {
-                gridZ = chunkCoordZ0 + z;
-                gridX = chunkCoordX0 + x;
+                gridZ = cellZ0 + z;
+                gridX = cellX0 + x;
 
                 chunkIdx = Map_IpdIdxGet(gridX, gridZ);
                 if (chunkIdx != NO_VALUE &&
-                    Ipd_DistanceToEdgeWithPaddingGet(posX0, posZ0, gridX, gridZ, map->isExterior) <= Q12(0.0f) &&
+                    Ipd_PaddedDistanceToEdgeGet(posX0, posZ0, gridX, gridZ, map->isExterior) <= Q12(0.0f) &&
                     !Map_IsIpdPresent(map->ipdActive_15C, gridX, gridZ))
                 {
                     chunk = Ipd_FreeChunkFind(map->ipdActive_15C, map->isExterior);
@@ -1218,8 +1218,8 @@ void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1
 
 void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior) // 0x80043338
 {
-    chunk->distance0_C  = Ipd_DistanceToEdgeWithPaddingGet(posX0, posZ0, chunk->coordX_8, chunk->coordZ_A, isExterior);
-    chunk->distance1_10 = Ipd_DistanceToEdgeWithPaddingGet(posX1, posZ1, chunk->coordX_8, chunk->coordZ_A, isExterior);
+    chunk->distance0_C  = Ipd_PaddedDistanceToEdgeGet(posX0, posZ0, chunk->cellX_8, chunk->cellZ_A, isExterior);
+    chunk->distance1_10 = Ipd_PaddedDistanceToEdgeGet(posX1, posZ1, chunk->cellX_8, chunk->cellZ_A, isExterior);
 }
 
 void func_800433B8(s_Map* map) // 0x800433B8
@@ -1258,14 +1258,14 @@ s32 Map_IpdIdxGet(s32 gridX, s32 gridZ) // 0x80043554
     return ((s16*)&g_Map.ipdGridCenter_42C[gridZ])[gridX];
 }
 
-bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ) // 0x80043578
+bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 cellX, s32 cellZ) // 0x80043578
 {
     s32 i;
 
     for (i = 0; i < g_Map.ipdActiveSize_158; i++)
     {
         if (chunks[i].queueIdx_4 != NO_VALUE &&
-            chunkCoordX == chunks[i].coordX_8 && chunkCoordZ == chunks[i].coordZ_A)
+            cellX == chunks[i].cellX_8 && cellZ == chunks[i].cellZ_A)
         {
             return true;
         }
@@ -1345,15 +1345,15 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior)
     return activeChunk;
 }
 
-s32 Ipd_LoadStart(s_IpdChunk* chunk, e_FsFile fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior) // 0x800436D8
+s32 Ipd_LoadStart(s_IpdChunk* chunk, e_FsFile fileIdx, s32 cellX, s32 cellZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior) // 0x800436D8
 {
     if (fileIdx == NO_VALUE)
     {
         return fileIdx;
     }
 
-    chunk->coordX_8   = chunkCoordX;
-    chunk->coordZ_A   = chunkCoordZ;
+    chunk->cellX_8   = cellX;
+    chunk->cellZ_A   = cellZ;
     chunk->queueIdx_4 = Fs_QueueStartRead(fileIdx, chunk->ipdHdr_0);
 
     Ipd_DistanceToEdgeCalc(chunk, posX0, posZ0, posX1, posZ1, isExterior);
@@ -1417,7 +1417,7 @@ bool func_80043830(void) // 0x80043830
             continue;
         }
 
-        if (Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.positionX_578), Q12_TO_Q8(g_Map.positionX_57C), curChunk->coordX_8, curChunk->coordZ_A) <= Q8(4.5f))
+        if (Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.positionX_578), Q12_TO_Q8(g_Map.positionX_57C), curChunk->cellX_8, curChunk->cellZ_A) <= Q8(4.5f))
         {
             return true;
         }
@@ -1439,8 +1439,8 @@ bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
         return Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.positionX_578), Q12_TO_Q8(g_Map.positionX_57C), fileChunkCoordX, fileChunkCoordZ) <= Q8(4.5f);
     }
 
-    if (fileChunkCoordX == g_Map.chunkCoordX_580 &&
-        fileChunkCoordZ == g_Map.chunkCoordZ_584)
+    if (fileChunkCoordX == g_Map.cellX_580 &&
+        fileChunkCoordZ == g_Map.cellZ_584)
     {
         return true;
     }
@@ -1478,8 +1478,8 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
 
 bool func_80043B34(s_IpdChunk* chunk, s_Map* map)
 {
-    if (map->chunkCoordX_580 == chunk->coordX_8 &&
-        map->chunkCoordZ_584 == chunk->coordZ_A)
+    if (map->cellX_580 == chunk->cellX_8 &&
+        map->cellZ_584 == chunk->cellZ_A)
     {
         return true;
     }
