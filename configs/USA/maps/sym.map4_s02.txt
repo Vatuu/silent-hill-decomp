@@ -140,6 +140,7 @@ Ai_Groaner_Init             = 0x800E1C58; // type:func
 sharedFunc_800E33DC_2_s00   = 0x800E1E58; // type:func
 sharedFunc_800E384C_2_s00   = 0x800E22C8; // type:func
 sharedFunc_800E554C_2_s00   = 0x800E3FC8; // type:func
+sharedFunc_800E5930_2_s00   = 0x800E43AC; // type:func
 sharedFunc_800E5AA4_2_s00   = 0x800E4520; // type:func
 sharedFunc_800E5EC4_2_s00   = 0x800E4940; // type:func
 sharedFunc_800E6338_2_s00   = 0x800E4DB4; // type:func

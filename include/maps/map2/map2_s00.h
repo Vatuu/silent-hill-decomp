@@ -100,8 +100,6 @@ void func_800DF710(s_SubCharacter* chara);
 
 void func_800DF80C(s_SubCharacter* chara);
 
-void func_800E5930(s_SubCharacter* chara);
-
 void func_800E7D54(void);
 
 void MapEvent_AtWaterWorks(void);
