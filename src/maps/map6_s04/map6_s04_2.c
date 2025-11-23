@@ -216,6 +216,8 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E0DC4);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E0F28);
 
+INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04_2", D_800CB728);
+
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E0FAC);
 
 void func_800E10F8(void) // 0x800E10F8
@@ -227,168 +229,13 @@ void func_800E10F8(void) // 0x800E10F8
 
 #include "maps/shared/sharedFunc_800E1114_6_s04.h" // 0x800E1114
 
-void func_800E1258(s32 arg0) // 0x800E1258
-{
-    (arg0 == 1) ? func_800E1290() : func_800E12D0();
-}
+#include "maps/shared/sharedFunc_800E1258_6_s04.h" // 0x800E1258
 
-void func_800E1290(void) // 0x800E1290
-{
-    func_8003640C(Savegame_EventFlagGet(EventFlag_440) ? 39 : 37);
-}
+#include "maps/shared/sharedFunc_800E1290_6_s04.h" // 0x800E1290
 
-INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04_2", D_800CB728);
+#include "maps/shared/sharedFunc_800E12D0_6_s04.h" // 0x800E12D0
 
-void func_800E12D0(void) // 0x800E12D0
-{
-    q19_12 dist0;
-    s32    flags;
-    s32    fArg1;
-    s32    soundCmd;
-    q19_12 dist;
-    u8*    dataPtr;
-    s8     roomIdx;
-
-    fArg1 = Q12(0.2f);
-    soundCmd = g_GameWork.soundCmd_5B2;
-    if (soundCmd == 36)
-    {
-        dataPtr = &D_800EB738;
-        fArg1 = Q12(0.1f);
-        if (Savegame_EventFlagGet(EventFlag_465))
-        {
-            flags = 0x20;
-        }
-        else if (!Savegame_EventFlagGet(EventFlag_464))
-        {
-            fArg1 = Q12(240.0f);
-            flags = 2;
-        }
-        else
-        {
-            flags = 0x10;
-        }
-    }
-    else if (soundCmd== 39)
-    {
-        dataPtr = D_800EB740;
-
-        if (Savegame_EventFlagGet(EventFlag_445))
-        {
-            if (Savegame_EventFlagGet(EventFlag_448))
-            {
-                flags = 0x100;
-                if (Savegame_EventFlagGet(EventFlag_462))
-                {
-                    flags = 0x110;
-                }
-            }
-            else if (Savegame_EventFlagGet(EventFlag_470))
-            {
-                D_800EB740[1] = 0x80;
-                fArg1 = Q12(0.5f);
-
-                if (!Savegame_EventFlagGet(EventFlag_447))
-                {
-                    flags = 0x102;
-                    if (Savegame_EventFlagGet(EventFlag_463))
-                    {
-                        flags = 0x101;
-                    }
-                }
-                else
-                {
-                    fArg1 = Q12(240.0f);
-                    flags = 0x101;
-                }
-            }
-            else if (Savegame_EventFlagGet(EventFlag_446))
-            {
-                D_800EB740[1] = 0;
-                fArg1 = Q12(240.0f);
-                flags = 0x101;
-            } 
-            else 
-            {
-                D_800EB740[1] = 0x60;
-                flags = 0x10A;
-            }
-        }
-        else
-        {
-            D_800EB740[1] = 0x60;
-
-            if (Savegame_EventFlagGet(EventFlag_443))
-            {
-                flags = 0x108;
-                if (!Savegame_EventFlagGet(EventFlag_444))
-                {
-                    if (Savegame_EventFlagGet(EventFlag_455))
-                    {
-                        flags = 0x10A;
-                    }
-                } 
-                else 
-                {
-                    flags = 0x10A;
-                }
-            } 
-            else 
-            {
-                fArg1 = Q12(240.0f);
-
-                flags = 0x301;
-                if (Savegame_EventFlagGet(EventFlag_461))
-                {
-                    flags = 0x104;
-                }
-            }
-        }
-    } 
-    else 
-    {
-        dist = Q12(0.0f);
-        dataPtr = &D_800EB748;
-
-        roomIdx = g_SavegamePtr->mapRoomIdx_A5 - 1;
-        switch (roomIdx)
-        {
-            case 2:
-                flags = 4;
-
-                dist = Math_Distance2dGet(&g_SysWork.player_4C.chara_0.position_18, &D_800EB750);
-                if (dist < Q12(10.0f))
-                {
-                    dist = Q12(0.03125f);
-                } 
-                else 
-                {
-                    dist = Q12(0.03125f) - FP_MULTIPLY_PRECISE(dist - Q12(10.0f), Q12(0.004f), Q12_SHIFT);
-                    if (dist < Q12(0.0f)) 
-                    {
-                        dist = Q12(0.0f);
-                    }
-                }
-                break;
-
-            case 0:
-            case 1:
-            case 3:
-            case 4:
-                flags = 2;
-                break;
-
-            default:
-                flags = 1;
-                break;
-        }
-
-        D_800EB74A = dist;
-    }
-
-    func_80035F4C(flags, fArg1, dataPtr);
-}
-
+// TODO: Might be part of shared block above with `map6_s05::func_800CCBFC`
 void func_800E155C(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800E1564

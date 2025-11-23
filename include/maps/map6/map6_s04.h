@@ -95,12 +95,7 @@ extern s8 D_800ED840;
 extern s8 D_800ED841;
 extern u16 D_800EBA34[23]; // `g_MapMsgSounds`
 extern s16 D_800ED5B4;
-extern s8 D_800ED5B8;
-extern u8 D_800EB740[2];
-extern u8 D_800EB738;
-extern u8 D_800EB748;
-extern s8 D_800EB74A;
-extern VECTOR3 D_800EB750;
+extern s8  D_800ED5B8;
 
 void func_800CC7E0(void);
 
@@ -130,12 +125,6 @@ void func_800E01F4(void);
 void func_800E02E0(void);
 
 void func_800E10F8(void);
-
-void func_800E1258(s32 arg0);
-
-void func_800E1290(void);
-
-void func_800E12D0(void);
 
 void func_800E15FC(s_MainCharacter* player, s_SubCharacter* npc, bool);
 

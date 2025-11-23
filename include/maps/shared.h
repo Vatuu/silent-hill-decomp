@@ -2146,6 +2146,12 @@ extern s16 sharedData_800E39E2_0_s00;
 extern s32 sharedData_800D8684_1_s05;
 extern s32 sharedData_800D8688_1_s05;
 
+extern u8      sharedData_800EB738_6_s04;
+extern u8      sharedData_800EB740_6_s04[2];
+extern u8      sharedData_800EB748_6_s04;
+extern s8      sharedData_800EB74A_6_s04;
+extern VECTOR3 sharedData_800EB750_6_s04;
+
 typedef struct
 {
     VECTOR3 field_0; // Rotation?
@@ -2605,6 +2611,12 @@ void sharedFunc_800D8804_0_s01(void);
 s32 sharedFunc_800D929C_0_s00(void);
 
 s32 sharedFunc_800E1114_6_s04(s32 arg0, s32 arg1);
+
+void sharedFunc_800E1258_6_s04(s32 arg0);
+
+void sharedFunc_800E1290_6_s04(void);
+
+void sharedFunc_800E12D0_6_s04(void);
 
 s32 sharedFunc_800D2DAC_0_s00(void); // Player anim func. Checks if the active keyframe is at the start or end of the anim's range.
 s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara); // NPC anim func. Checks if the active keyframe is at the start or end of the anim's range.
