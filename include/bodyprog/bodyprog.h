@@ -4,7 +4,7 @@
 #include "game.h"
 #include "bodyprog/sound_effects.h"
 #include "bodyprog/map_marking_flags.h"
-#include "bodyprog/vw_system.h"
+#include "bodyprog/view/vw_system.h"
 #include "main/fsqueue.h"
 #include "types.h"
 // TODO: Assign `sound_system.h` corresponding to any *.c file calling functions located there.

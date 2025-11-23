@@ -1,7 +1,8 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/vw_system.h"
+#include "bodyprog/view/vc_util.h"
+#include "bodyprog/view/vw_system.h"
 #include "bodyprog/math/math.h"
 
 extern s32 g_VBlanks;
