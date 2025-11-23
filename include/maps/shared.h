@@ -1978,6 +1978,9 @@ extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
     extern s_MapHdr_field_4C sharedData_800E1FF8_1_s02[200];
 #endif
 
+// TODO: Merge with above.
+extern s_MapHdr_field_4C sharedData_800DD5B0_1_s01[300];
+
 extern void (*sharedData_800DD7A0_0_s01[52])(s_SubCharacter*);
 
 extern s_MapPoint2d MAP_POINTS[];
@@ -2182,6 +2185,8 @@ extern s_800E34FC sharedData_800E34FC_0_s00[60];
 
 extern const char* MAP_MESSAGES[]; // 0x800DF6B8
 
+extern s_MapOverlayHeader_7C sharedData_800DEE50_1_s01;
+
 void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3);
 
 bool sharedFunc_800CBBBC_0_s00(void);
@@ -2334,6 +2339,12 @@ void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, s32* delta
 void SysWork_StateStepIncrementAfterTime(s32* timer, s32 inc, s32 timeMin, s32 timeMax, bool setTimerToMax, bool incStateStep);
 
 void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
+
+void sharedFunc_800CB7F4_1_s01(void);
+
+void sharedFunc_800CB8A0_1_s01(s32 idx);
+
+bool sharedFunc_800CBA38_1_s01(s32 idx);
 
 // MAP1_S00 LarvalStalker funcs
 void Ai_LarvalStalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);

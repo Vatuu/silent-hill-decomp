@@ -10,50 +10,11 @@ INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", g_MapOverlayHeader);
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CB7F4);
+#include "maps/shared/sharedFunc_800CB7F4_1_s01.h" // 0x800CB7F4
 
-void func_800CB8A0(s32 idx) // 0x800CB8A0
-{
-    s32    rngB;
-    q19_12 angleZ;
-    s16    rngX;
+#include "maps/shared/sharedFunc_800CB8A0_1_s01.h" // 0x800CB8A0
 
-    if (D_800DEE50.field_2 == 0)
-    {
-        D_800DD5B0[idx].field_A = 14;
-    }
-
-    if (D_800DEE50.field_0 == 0)
-    {
-        rngX = (Rng_Rand16() % D_800DEE50.field_A);
-        angleZ = Q12_FRACT(Rng_Rand16());
-        D_800DD5B0[idx].vx_0 = (s32)(rngX * Math_Cos(angleZ)) >> Q12_SHIFT;
-        D_800DD5B0[idx].vz_4 = (s32)(rngX * Math_Sin(angleZ)) >> Q12_SHIFT;
-    }
-    else
-    {
-        D_800DD5B0[idx].vx_0 = (Rng_Rand16() % (D_800DEE50.field_A * 2)) - D_800DEE50.field_A;
-        D_800DD5B0[idx].vz_4 = (Rng_Rand16() % (D_800DEE50.field_A * 2)) - D_800DEE50.field_A;
-    }
-
-    D_800DD5B0[idx].vy_8 = D_800DEE58;
-    rngB = Rng_Rand16();
-    D_800DD5B0[idx].field_C.field_0 = 0;
-    D_800DD5B0[idx].field_B = rngB - (rngB/3)*3;
-}
-
-bool func_800CBA38(s32 idx) // 0x800CBA38
-{
-    D_800DD5B0[idx].field_C.field_0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, ((Rng_Rand16() % FP_ANGLE(144.0f)) + FP_ANGLE(288.0f)), Q12_SHIFT);
-
-    if ((FP_TO((D_800DEE50.field_6 - D_800DEE50.field_8), Q12_SHIFT) / D_800DEE50.field_C) < D_800DD5B0[idx].field_C.field_0)
-    {
-        func_800CB8A0(idx);
-        return true;
-    }
-
-    return false;
-}
+#include "maps/shared/sharedFunc_800CBA38_1_s01.h" // 0x800CBA38
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CBB30);
 
@@ -368,21 +329,21 @@ void func_800D7308(void)
         case 6:
             func_8005DC1C(Sfx_Unk1433, &QVECTOR3(-59.2f, -1.0f, 99.5f), Q8_CLAMPED(0.5f), 0);
 
-            D_800DEE50.field_0 = 0;
-            D_800DEE50.field_4 = 0x96;
-            D_800DEE50.field_A = 0x2E1;
-            D_800DEE50.field_6 = Q12(-1.5f);
-            D_800DEE50.field_8 = Q12(-1.0f);
-            D_800DEE50.field_C = Q12(-0.4f);
-            D_800DEE50.field_E = 0x51;
-            D_800DEE50.field_1 = 0x20;
-            D_800DEE50.field_2 = 0;
-            D_800DEE50.field_14 = Q12(-59.2f);
-            D_800DEE50.field_18 = Q12(99.5f);
-            D_800DEE50.field_1C = Q12(3.0f);
-            D_800DEE50.field_12 = 0;
+            sharedData_800DEE50_1_s01.field_0  = 0;
+            sharedData_800DEE50_1_s01.field_4  = 0x96;
+            sharedData_800DEE50_1_s01.field_A  = 0x2E1;
+            sharedData_800DEE50_1_s01.field_6  = Q12(-1.5f);
+            sharedData_800DEE50_1_s01.field_8  = Q12(-1.0f);
+            sharedData_800DEE50_1_s01.field_C  = Q12(-0.4f);
+            sharedData_800DEE50_1_s01.field_E  = 0x51;
+            sharedData_800DEE50_1_s01.field_1  = 0x20;
+            sharedData_800DEE50_1_s01.field_2  = 0;
+            sharedData_800DEE50_1_s01.field_14 = Q12(-59.2f);
+            sharedData_800DEE50_1_s01.field_18 = Q12(99.5f);
+            sharedData_800DEE50_1_s01.field_1C = Q12(3.0f);
+            sharedData_800DEE50_1_s01.field_12 = 0;
 
-            func_800CB7F4();
+            sharedFunc_800CB7F4_1_s01();
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -395,11 +356,11 @@ void func_800D7308(void)
             break;
 
         case 9:
-            for (i = 0; i < ARRAY_SIZE(D_800DD5B0); i++)
+            for (i = 0; i < ARRAY_SIZE(sharedData_800DD5B0_1_s01); i++)
             {
-                if (D_800DD5B0[i].field_A == 13 || D_800DD5B0[i].field_A == 14)
+                if (sharedData_800DD5B0_1_s01[i].field_A == 13 || sharedData_800DD5B0_1_s01[i].field_A == 14)
                 {
-                    D_800DD5B0[i].field_A = 0;
+                    sharedData_800DD5B0_1_s01[i].field_A = 0;
                 }
             }
 

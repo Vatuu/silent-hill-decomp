@@ -33,6 +33,9 @@ sharedData_800CAB70_0_s00           = 0x800CAE48; // type:VECTOR
 //-----------------------------------------------------------
 //--- PA: 0x003268   VA: 0x800CC7E0   subsegment: c, map6_s04
 //-----------------------------------------------------------
+sharedFunc_800CB7F4_1_s01           = 0x800CC7E0; // type:func
+sharedFunc_800CB8A0_1_s01           = 0x800CC88C; // type:func
+sharedFunc_800CBA38_1_s01           = 0x800CCA24; // type:func
 sharedFunc_800CB6B0_0_s00           = 0x800CD3AC; // type:func
 sharedFunc_800D08B8_0_s00           = 0x800CD514; // type:func
 sharedFunc_800D0A60_0_s00           = 0x800CD694; // type:func
@@ -181,7 +184,8 @@ sharedData_800DFB4C_0_s00           = 0x800EBB40;
 sharedData_800CD77C_1_s04           = 0x800EBB44; // type:s32
 sharedData_800DFB6C_0_s00           = 0x800EBB88; // type:s32
 sharedData_800DFB70_0_s00           = 0x800EBB8C; // type:s32
-D_800ED430                          = 0x800ED430; // size:0x10
+sharedData_800DD5B0_1_s01           = 0x800EBB90; // type:MapHdr_field_4C
+sharedData_800DEE50_1_s01           = 0x800ED430; // type:MapOverlayHeader_7C size:0x20
 g_ParticleVectors0                  = 0x800ED450; // type:ParticleVectors
 g_ParticleVectors1                  = 0x800ED480; // type:ParticleVectors
 sharedData_800E0CA8_0_s00           = 0x800ED4AC; // type:s32

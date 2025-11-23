@@ -1471,6 +1471,7 @@ typedef struct
     s32 field_18;
     s32 field_1C;
 } s_MapOverlayHeader_7C;
+STATIC_ASSERT_SIZEOF(s_MapOverlayHeader_7C, 0x20);
 
 typedef struct
 {

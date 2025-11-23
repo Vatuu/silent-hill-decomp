@@ -29,31 +29,12 @@
 #define HAS_Chara_Alessa
 #define MAP_CHARA_COUNT 3
 
-typedef struct
-{
-    u8  field_0;
-    u8  unk_1[1];
-    u8  field_2;
-    u8  unk_3[1];
-    s16 field_4; // Count.
-    s16 field_6;
-    s16 field_8;
-    s16 field_A; // Related to distance.
-    s16 field_C;
-} s_800ED430;
-
 extern s_AnimInfo FLAUROS_ANIM_INFOS[];
 extern s_AnimInfo PARASITE_ANIM_INFOS[];
 
 extern s16 D_800EA856;
 
 extern s32 D_800EBA30;
-
-extern s_MapHdr_field_4C D_800EBB90[300]; // TODO: `sharedData_800E1FF8_1_s02`?
-
-extern s_800ED430 D_800ED430;
-
-extern s16 D_800ED440;
 
 extern s8 D_800ED543;
 
@@ -96,12 +77,6 @@ extern s8 D_800ED841;
 extern u16 D_800EBA34[23]; // `g_MapMsgSounds`
 extern s16 D_800ED5B4;
 extern s8  D_800ED5B8;
-
-void func_800CC7E0(void);
-
-void func_800CC88C(s32 idx);
-
-bool func_800CCA24(s32 idx);
 
 void func_800D8848(s_SubCharacter* chara); // 0x800D8848
 
