@@ -126,12 +126,13 @@ void func_800D0274(s32 arg0, s_Particle* part, u16* arg2);
 
 /** @brief 2D player distance check on XZ plane.
  *
- * Checks against a constant 2D distance of `CHUNK_CELL_SIZE` between the player and two positions.
+ * Checks against a constant 2D distance of `Q12(40.0f)` between the player and two positions.
  * This is a lazy check, i.e.
  * instead of: `(SQUARE(x1 - x2) + SQUARE(z1 - z2)) < SQUARE(d)`
  * it does:    `(ABS(x1 - x2) + ABS(z1 - z2)) < d`.
  *
- * @return `true` if the player distance from either position is `< CHUNK_CELL_SIZE`, otherwise `false`.
+ * @return `true` if the player distance from either position is `< Q12(40.0f)`,
+ *          otherwise `false`.
  */
 bool func_800D0600(void);
 

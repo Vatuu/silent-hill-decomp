@@ -931,7 +931,7 @@ void func_8003C220(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ) /
 
     if (mapHdr->type_0 == &MAP_TYPES[MapType_THR])
     {
-        Map_PlaceIpdAtCell(FILE_BG_THR05FD_IPD, -1, 8);
+        Map_PlaceIpdAtGridPos(FILE_BG_THR05FD_IPD, -1, 8);
     }
 
     func_80042C3C(playerPosX, playerPosZ, playerPosX, playerPosZ);

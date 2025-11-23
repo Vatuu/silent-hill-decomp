@@ -1111,8 +1111,8 @@ typedef struct
 {
     s_IpdHeader* ipdHdr_0;
     s32          queueIdx_4;
-    s16          cellX_8;
-    s16          cellZ_A;
+    s16          coordX_8;
+    s16          coordZ_A;
     q19_12       distance0_C;
     q19_12       distance1_10;
     u8           materialCount_14;
@@ -1160,8 +1160,8 @@ typedef struct _Map
     s_IpdTextures      ipdTextures_430;
     q19_12             positionX_578;
     q19_12             positionX_57C;
-    s32                cellX_580;
-    s32                cellZ_584;
+    s32                chunkCoordX_580;
+    s32                chunkCoordZ_584;
     bool               isExterior;
 } s_Map;
 STATIC_ASSERT_SIZEOF(s_Map, 1420);
@@ -2867,13 +2867,7 @@ void Ipd_TexturesInit1(void);
 
 void Map_IpdCollisionDataInit(void);
 
-/** @brief Places an IPD chunk at given XZ chunk cell coordinates.
- *
- * @param ipdFileIdx Index of the IPD chunk file to place.
- * @param cellX X chunk coordinate.
- * @param cellZ Z chunk coordinate.
- */
-void Map_PlaceIpdAtCell(s16 ipdFileIdx, s32 cellX, s32 cellZ);
+void Map_PlaceIpdAtGridPos(s16 ipdFileIdx, s32 chunkCoordX, s32 chunkCoordZ);
 
 void Ipd_ActiveChunksClear0(void);
 
@@ -2934,28 +2928,10 @@ bool IpdHeader_IsLoaded(s32 ipdIdx);
 
 void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
-/** @brief Computes the distance from an XZ position to the edge of an XZ chunk cell boundary.
- * For exteriors, the cell boundary is expanded by `Q12(1.0f)`.
- * If the position resides inside the chunk, the distance is `Q12(0.0f)`.
- *
- * @param posX X position.
- * @param posZ Z position.
- * @param cellX X chunk cell.
- * @param cellZ Z chunk cell.
- * @param isExterior `true` for padded exterior, `false` for non-padded interior.
- * @return Padded distance from the XZ position to the XZ chunk cell.
- */
-q19_12 Ipd_PaddedDistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool isExterior);
+/** @brief When `isExterior` is `true`, chunks are treated as if they were 1 meter larger in both axes. Then calls `Ipd_DistanceToEdgeGet`. */
+q19_12 Ipd_DistanceToEdgeWithPaddingGet(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool isExterior);
 
-/** @brief Computes the distance from an XZ position to the edge of an XZ chunk cell boundary.
- * If the position resides inside the chunk, the distance is `Q12(0.0f)`.
- *
- * @param posX X position.
- * @param posZ Z position.
- * @param cellX X chunk cell.
- * @param cellZ Z chunk cell.
- * @return Distance from the XZ position to the XZ chunk cell.
- */
+/** @brief Returns `Q12(0.0f)` if inside the chunk, distance to closest edge otherwise. */
 q19_12 Ipd_DistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
 
 s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
@@ -2970,11 +2946,11 @@ void func_800433B8(s_Map* map);
 
 s32 Map_IpdIdxGet(s32 gridX, s32 gridZ);
 
-bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 cellX, s32 cellZ);
+bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 chunkCoordX, s32 chunkCoordZ);
 
 s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior);
 
-s32 Ipd_LoadStart(s_IpdChunk* chunk, e_FsFile fileIdx, s32 cellX, s32 cellZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
+s32 Ipd_LoadStart(s_IpdChunk* chunk, e_FsFile fileIdx, s32 chunkCoordX, s32 chunkCoordZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 bool func_80043740(void);
 
