@@ -34,8 +34,6 @@ extern s_WorldObjectDesc      g_WorldObject_Blood1;
 extern s_WorldObjectDescNoRot g_WorldObject_Blood2;
 extern s_WorldObject_0        g_CommonWorldObjects[6];
 
-s32 func_800CE398(s32 arg0);
-
 void func_800D1210(s32 arg0);
 
 void func_800D1244(void);

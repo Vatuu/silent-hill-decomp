@@ -50,10 +50,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CDF24_3_s03
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D20D8);
 
-bool func_800D238C(s32 arg0) // 0x800D238C
-{
-    return arg0 == 36 || arg0 == 34 || arg0 == 37 || arg0 == 35;
-}
+#include "maps/shared/sharedFunc_800CE398_3_s03.h" // 0x800D238C
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CE3CC_3_s03); // 0x800D23C0
 
@@ -69,24 +66,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CEB90_3_s03
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CEC88_3_s03); // 0x800D2C7C
 
-s32 func_800D2EA0(void) // 0x800D2EA0
-{
-    s32 temp_a0;
-
-    temp_a0 = g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3;
-    if (temp_a0 == 0)
-    {
-        return 0;
-    }
-    else if (temp_a0 == 2)
-    {
-        return 1;
-    }
-    else
-    {
-        return 2;
-    }
-}
+#include "maps/shared/sharedFunc_800CEEAC_3_s03.h" // 0x800D2EA0
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D2ED4);
 

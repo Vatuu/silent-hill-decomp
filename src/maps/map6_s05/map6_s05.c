@@ -14,33 +14,7 @@ INCLUDE_RODATA("asm/maps/map6_s05/nonmatchings/map6_s05", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CC7A4
 
-s32 func_800CC7B4(s32 arg0, s32 arg1) // 0x800CC7B4
-{
-    s32 result;
-
-    if (arg1 > Q12(80.0f))
-    {
-        result = 5;
-    }
-    else if (FP_SQUARE_PRECISE(arg0 + Q12(16.0f), Q12_SHIFT) + FP_SQUARE_PRECISE(arg1 + Q12(64.0f), Q12_SHIFT) < Q12(324.0f))
-    {
-        result = 3;
-    }
-    else if (FP_SQUARE_PRECISE(arg0 + Q12(-14.0f), Q12_SHIFT) + FP_SQUARE_PRECISE(arg1 + Q12(28.0f), Q12_SHIFT) < Q12(324.0f))
-    {
-        result = 2;
-    }
-    else if (FP_SQUARE_PRECISE(arg0 + Q12(14.0f), Q12_SHIFT) + FP_SQUARE_PRECISE(arg1 + Q12(28.0f), Q12_SHIFT) < Q12(25.0f))
-    {
-        result = 4;
-    }
-    else
-    {
-        result = 1;
-    }
-
-    return result;
-}
+#include "maps/shared/sharedFunc_800E1114_6_s04.h" // 0x800CC7B4
 
 void func_800CC8F8(s32 arg0)
 {

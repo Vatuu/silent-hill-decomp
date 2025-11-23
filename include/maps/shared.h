@@ -2366,6 +2366,8 @@ void Ai_PuppetDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
 
 void sharedFunc_800CDF24_3_s03(s_SubCharacter*);
 
+bool sharedFunc_800CE398_3_s03(s32 arg0);
+
 void sharedFunc_800CE3CC_3_s03(s_SubCharacter*);
 
 void sharedFunc_800CE500_3_s03(s_SubCharacter*);
@@ -2377,6 +2379,8 @@ void sharedFunc_800CEA64_3_s03(s_SubCharacter*);
 void sharedFunc_800CEB90_3_s03(s_SubCharacter*, s32);
 
 void sharedFunc_800CEC88_3_s03(s_SubCharacter*);
+
+s32 sharedFunc_800CEEAC_3_s03(void);
 
 void sharedFunc_800CF3AC_3_s03(s_SubCharacter*);
 
@@ -2599,6 +2603,9 @@ void sharedFunc_800D87FC_0_s01(s_SubCharacter* chara);
 void sharedFunc_800D8804_0_s01(void);
 
 s32 sharedFunc_800D929C_0_s00(void);
+
+s32 sharedFunc_800E1114_6_s04(s32 arg0, s32 arg1);
+
 s32 sharedFunc_800D2DAC_0_s00(void); // Player anim func. Checks if the active keyframe is at the start or end of the anim's range.
 s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara); // NPC anim func. Checks if the active keyframe is at the start or end of the anim's range.
 bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfx);

@@ -55,8 +55,6 @@ extern s_WorldObjectDesc      g_WorldObject7;
 extern s_WorldObject_0   g_CommonWorldObjects[6];
 extern s_WorldObjectPose g_CommonWorldObjectPoses[5];
 
-s32 func_800D2E08(s32 arg0);
-
 /** Puppet Nurse/Doctor related. */
 bool func_800D437C(s_SubCharacter* chara);
 

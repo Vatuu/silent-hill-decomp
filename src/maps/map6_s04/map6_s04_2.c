@@ -225,7 +225,7 @@ void func_800E10F8(void) // 0x800E10F8
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800E1104
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E1114);
+#include "maps/shared/sharedFunc_800E1114_6_s04.h" // 0x800E1114
 
 void func_800E1258(s32 arg0) // 0x800E1258
 {
