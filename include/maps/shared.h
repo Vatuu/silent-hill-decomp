@@ -2191,6 +2191,25 @@ extern VECTOR3 sharedData_800F216C_2_s00;
 
 extern VECTOR3 sharedData_800F217C_2_s00;
 
+q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
+
+/* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
+ * Both are used in map0_s01 so ifdefs cannot be used based on the map name.
+ * Sections under `#if 0` are what is missing compared to `sharedFunc_800D57C8_0_s01`.
+ */
+void sharedFunc_800D598C_0_s01(s_SubCharacter* chara);
+
+/* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
+ * Also look at `sharedFunc_800D598C_0_s01`.
+ */
+void sharedFunc_800D5B10_0_s01(s_SubCharacter* chara);
+
+void sharedFunc_800D5C90_0_s01(s_SubCharacter* chara);
+
+void sharedFunc_800D5D80_0_s01(s_SubCharacter* chara);
+
+void sharedFunc_800D5E14_0_s01(s_SubCharacter* chara);
+
 void sharedFunc_800D3C24_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D5974_2_s00(s_SubCharacter* chara);

@@ -142,31 +142,14 @@ void func_800D4E84(s_SubCharacter*);
 
 void func_800D529C(s_SubCharacter* chara, q19_12 arg1, q19_12 angle);
 
-/* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
- * Both are used in map0_s01 so ifdefs cannot be used based on the map name.
- * Sections under `#if 0` are what is missing compared to `sharedFunc_800D57C8_0_s01`.
- */
-void func_800D598C(s_SubCharacter* chara);
-
 void func_800D39F4(s_SubCharacter* chara);
-
-/* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
- * Also look at `func_800D598C`.
- */
-void func_800D5B10(s_SubCharacter* chara);
-
-void func_800D5C90(s_SubCharacter*);
 
 void MapEvent_CafeCutscene(void);
 
 /** @brief @unused Handles the demo end screen event after the Air Screamer breaks through the cafe window. Seen in demo builds. */
 void MapEvent_ToBeContinued(void);
 
-void func_800D5E14(s_SubCharacter* chara);
-
 void func_800D49B0(s_SubCharacter* chara);
-
-void func_800D5D80(s_SubCharacter* chara);
 
 void func_800D4894(s_SubCharacter* chara);
 
@@ -175,7 +158,5 @@ void func_800D3A3C(s_SubCharacter* chara);
 void func_800D3AC0(s_SubCharacter* chara);
 
 void func_800D598C(s_SubCharacter* chara);
-
-q19_12 func_800D7714(s_SubCharacter* chara);
 
 #endif
