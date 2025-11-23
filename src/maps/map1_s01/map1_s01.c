@@ -57,7 +57,7 @@ bool func_800CBA38(s32 idx) // 0x800CBA38
 
 INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CBB30);
 
-INCLUDE_ASM("asm/maps/map1_s01/nonmatchings/map1_s01", func_800CC3C0);
+#include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CC3C0
 
 #include "maps/shared/Player.h"
 

@@ -31,7 +31,36 @@ void Ai_BloodyIncubator_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, G
     }
 }
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/Chara_BloodyIncubator", func_800D3740);
+void func_800D3740(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D3740
+{
+    VECTOR3 unused;
+    VECTOR3 offset;
+    q19_12  moveSpeed;
+    q3_12   headingAngle;
+    q19_12  moveAmt;
+    s32     scaleRestoreShift;
+    u32     scaleReduceShift;
+
+    unused       = chara->position_18;
+    moveSpeed    = chara->moveSpeed_38;
+    headingAngle = chara->headingAngle_3C;
+    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+
+    scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
+    scaleReduceShift  = scaleRestoreShift >> 1;
+
+    offset.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    offset.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
+    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+
+    chara->position_18.vx += offset.vx;
+    chara->position_18.vy  = Q12(0.0f);
+    chara->position_18.vz += offset.vz;
+
+    coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/Chara_BloodyIncubator", func_800D38D8);
 

@@ -10,6 +10,6 @@ INCLUDE_RODATA("asm/maps/map7_s00/nonmatchings/map7_s00", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map7_s00/nonmatchings/map7_s00", g_MapOverlayHeader);
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00", func_800CB624);
+#include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CB624
 
 #include "maps/shared/Player.h"

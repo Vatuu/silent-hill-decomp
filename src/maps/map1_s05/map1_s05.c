@@ -56,7 +56,7 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CCE2C);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CCF30);
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CD5EC);
+#include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CD5EC
 
 #include "maps/shared/Player.h"
 
