@@ -105,7 +105,7 @@ INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", sharedData_800CAA98_0_
 
 #include "maps/shared/sharedFunc_800D3C24_2_s00.h" // 0x800D3C24
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D3E44);
+#include "maps/shared/sharedFunc_800D3E44_2_s00.h" // 0x800D3E44
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D3FA4);
 
@@ -207,7 +207,7 @@ void func_800DBF14(void) {}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DBF88);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC0A8);
+#include "maps/shared/sharedFunc_800DC0A8_2_s00.h" // 0x800DC0A8
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DC0E4);
 
@@ -237,11 +237,11 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800D4E84_0_s01
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DD13C);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DD2C4);
+INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800DD2C4_2_s00);
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DD4A4);
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DD4EC);
+#include "maps/shared/sharedFunc_800DD4EC_2_s00.h" // 0x800DD4EC
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DD534);
 
@@ -291,7 +291,7 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DEE24);
 
 #include "maps/shared/sharedFunc_800D5638_0_s01.h" // 0x800DF26C
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DF2D0);
+INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800DF2D0_2_s00); // 0x800DF2D0
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DF358);
 
@@ -941,7 +941,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
         case 8:
             // Decrement zoom counter.
             D_800F228C -= 0x40;
-                 
+
             func_800692A4(0x48 - FP_MULTIPLY_PRECISE(D_800F228C, 0x48, Q12_SHIFT),
                           0x10 - FP_MULTIPLY_PRECISE(D_800F228C, 0x10, Q12_SHIFT),
                           (D_800F228C >> 1) + Q12(0.5f));
@@ -1149,7 +1149,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
         case 13:
             // Decrement zoom counter.
             D_800F229C -= 0x40;
-                 
+
             func_800692A4(0,
                           0x74 - FP_MULTIPLY_PRECISE(D_800F229C, 0x74, 12),
                           (D_800F229C >> 1) + Q12(0.5f));
@@ -1299,7 +1299,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
             Player_ControlFreeze();
             func_800862F8(0, FILE_TIM_STKENNEL_TIM, false);
             SysWork_StateStepIncrement(0);
-            
+
         case 1:
             func_80085DF0();
             break;
@@ -1856,7 +1856,7 @@ void func_800EAD2C(void) // 0x800EAD2C
         case 8:
             Savegame_EventFlagSet(EventFlag_165);
             Savegame_EventFlagSet(EventFlag_166);
-            
+
             if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BotBridgeCross))
             {
                 Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotBridgeCorrection);
@@ -1918,7 +1918,7 @@ void func_800EB174(void) // 0x800EB174
             soundPos.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
             soundPos.vy = Q12(-1.2f);
             soundPos.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
-    
+
             func_8005DC1C(Sfx_Unk1349, &soundPos, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
@@ -2161,8 +2161,8 @@ void func_800EB908(void) // 0x800EB908
 
     D_800F56E4 = 0;
 
-    if (!Savegame_EventFlagGet(EventFlag_146) || 
-        (Savegame_EventFlagGet(EventFlag_193) &&  !Savegame_EventFlagGet(EventFlag_M2S00_WaterWorksCutscene))) 
+    if (!Savegame_EventFlagGet(EventFlag_146) ||
+        (Savegame_EventFlagGet(EventFlag_193) &&  !Savegame_EventFlagGet(EventFlag_M2S00_WaterWorksCutscene)))
     {
         g_SysWork.flags_22A4 |= SysFlag2_4;
     }
@@ -2290,7 +2290,7 @@ void func_800EC080(void) // 0x800EC080
             break;
 
         case CELL_ZX(13, 21):
-            if (Savegame_EventFlagGet(EventFlag_163)) 
+            if (Savegame_EventFlagGet(EventFlag_163))
             {
                 flags0 |= 1 << 2;
                 if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(198.0f))
@@ -2327,20 +2327,20 @@ void func_800EC080(void) // 0x800EC080
         case CELL_ZX(13, 9):
             g_WorldGfx_ObjectAdd(&D_800F535C, &D_800F537C, &D_800F538C);
 
-            if (!Savegame_EventFlagGet(EventFlag_170)) 
+            if (!Savegame_EventFlagGet(EventFlag_170))
             {
-                if (!Savegame_EventFlagGet(EventFlag_169)) 
+                if (!Savegame_EventFlagGet(EventFlag_169))
                 {
-                    g_WorldGfx_ObjectAdd(&g_WorldObject6[0], &D_800F56CC[0], &(SVECTOR3){});
-                    g_WorldGfx_ObjectAdd(&g_WorldObject6[1], &D_800F56CC[0], &(SVECTOR3){});
-                    g_WorldGfx_ObjectAdd(&g_WorldObject6[2], &D_800F56CC[0], &(SVECTOR3){});
+                    g_WorldGfx_ObjectAdd(&g_WorldObject6[0], &D_800F56CC[0], &(SVECTOR3){ 0, 0, 0 });
+                    g_WorldGfx_ObjectAdd(&g_WorldObject6[1], &D_800F56CC[0], &(SVECTOR3){ 0, 0, 0 });
+                    g_WorldGfx_ObjectAdd(&g_WorldObject6[2], &D_800F56CC[0], &(SVECTOR3){ 0, 0, 0 });
                 }
                 else
                 {
                     g_WorldGfx_ObjectAdd(&g_WorldObject7[0], &D_800F56CC[1], &D_800F538C);
                     g_WorldGfx_ObjectAdd(&g_WorldObject7[1], &D_800F56CC[1], &D_800F538C);
-                    g_WorldGfx_ObjectAdd(&g_WorldObject7[2], &D_800F56CC[0], &(SVECTOR3){});
-                    g_WorldGfx_ObjectAdd(&g_WorldObject7[3], &D_800F56CC[0], &(SVECTOR3){});
+                    g_WorldGfx_ObjectAdd(&g_WorldObject7[2], &D_800F56CC[0], &(SVECTOR3){ 0, 0, 0 });
+                    g_WorldGfx_ObjectAdd(&g_WorldObject7[3], &D_800F56CC[0], &(SVECTOR3){ 0, 0, 0 });
                 }
             }
             break;
@@ -2349,17 +2349,17 @@ void func_800EC080(void) // 0x800EC080
         case CELL_ZX(22, 20):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObjectB->object_0, &g_WorldObjectB->position_1C, &(SVECTOR3){});
+                g_WorldGfx_ObjectAdd(&g_WorldObjectB->object_0, &g_WorldObjectB->position_1C, &(SVECTOR3){ 0, 0, 0 });
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfWoodmanOpen))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObjectB[1].object_0, &g_WorldObjectB[1].position_1C, &(SVECTOR3){});
+                g_WorldGfx_ObjectAdd(&g_WorldObjectB[1].object_0, &g_WorldObjectB[1].position_1C, &(SVECTOR3){ 0, 0, 0 });
             }
 
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfScarecrowOpen))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObjectB[2].object_0, &g_WorldObjectB[2].position_1C, &(SVECTOR3){});
+                g_WorldGfx_ObjectAdd(&g_WorldObjectB[2].object_0, &g_WorldObjectB[2].position_1C, &(SVECTOR3){ 0, 0, 0 });
             }
 
             g_WorldGfx_ObjectAdd(&D_800F56EC, &D_800F570C.position_0, &D_800F570C.rotation_C);
@@ -2393,12 +2393,12 @@ void func_800EC080(void) // 0x800EC080
 
         default:
             break;
-    } 
+    }
 
     z1 = g_SysWork.player_4C.chara_0.position_18.vz / Q12(40.0f);
     x1 = g_SysWork.player_4C.chara_0.position_18.vx / Q12(40.0f);
 
-    if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f)) 
+    if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f))
     {
         xx1 = x1 + 17;
     }
@@ -2407,7 +2407,7 @@ void func_800EC080(void) // 0x800EC080
         xx1 = x1 + 15;
     }
 
-    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f)) 
+    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f))
     {
         zz1 = z1 + 17;
     }
@@ -2452,8 +2452,8 @@ void func_800EC080(void) // 0x800EC080
 
                 func_8005DE0C(Sfx_Unk1482, &QVECTOR3(237.0f, -1.0f, 346.0f), Q8(0.5f), Q12(16.0f), 0);
             }
-    
-            if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupRockDrill)) 
+
+            if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupRockDrill))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C, &g_WorldObject9.rotation_28);
                 Savegame_EventFlagSet(EventFlag_66);
@@ -2484,7 +2484,7 @@ void func_800EC080(void) // 0x800EC080
     {
         xx2 = x2 + 15;
     }
-    
+
     if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f))
     {
         zz2 = z2 + 17;
@@ -2566,7 +2566,7 @@ void func_800EC080(void) // 0x800EC080
 
     }
 
-    if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BradburyStLeftCross) && 
+    if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BradburyStLeftCross) &&
         Savegame_MapMarkingGet(MapMarkFlag_OldTown_BachmanRdBotCross) &&
         Savegame_MapMarkingGet(MapMarkFlag_OldTown_ElroyStBotCross))
     {
@@ -2603,7 +2603,7 @@ void func_800EC080(void) // 0x800EC080
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
-        if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets1)) 
+        if (!Savegame_EventFlagGet(EventFlag_M2S00_HandgunBullets1))
         {
             g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[2].position_0, &g_CommonWorldObjectPoses[2].rotation_C);
         }
@@ -2877,7 +2877,7 @@ s32 func_800EE518(void) // 0x800EE518
 
 s32 func_800EE5A8(u32 arg0) // 0x800EE5A8
 {
-    if (arg0 < 3) 
+    if (arg0 < 3)
     {
         return D_800F1CA8[arg0];
     }

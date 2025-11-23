@@ -37,8 +37,8 @@ void func_800CC19C(void) // 0x800CC19C
     }
 
     counterC = D_800D7F20.field_C;
-    i = ARRAY_SIZE(D_800D5B20) - 1;
-    do
+    
+    for (i = ARRAY_SIZE(D_800D5B20) - 1; i >= 0; i--)
     {
         if (D_800D5B20[i].field_A == 0)
         {
@@ -57,10 +57,7 @@ void func_800CC19C(void) // 0x800CC19C
                 break;
             }
         }
-
-        i--;
     }
-    while (i >= 0);
 
     D_800C4414 |= 1;
 }

@@ -130,7 +130,7 @@ INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", sharedData_800CAA98_0_
 
 #include "maps/shared/sharedFunc_800D3C24_2_s00.h" // 0x800D3F40
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800D4160);
+#include "maps/shared/sharedFunc_800D3E44_2_s00.h" // 0x800D4160
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800D42C0);
 
@@ -232,7 +232,7 @@ void func_800DC230(void) {}
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DC2A4);
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DC3C4);
+#include "maps/shared/sharedFunc_800DC0A8_2_s00.h" // 0x800DC3C4
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DC400);
 
@@ -262,11 +262,11 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D4E84_0_s01
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DD458);
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DD5E0);
+INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800DD2C4_2_s00); // 0x800DD5E0
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DD7C0);
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DD808);
+#include "maps/shared/sharedFunc_800DD4EC_2_s00.h" // 0x800DD808
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DD850);
 
@@ -316,7 +316,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DF140);
 
 #include "maps/shared/sharedFunc_800D5638_0_s01.h" // 0x800DF588
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DF5EC);
+INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800DF2D0_2_s00); // 0x800DF5EC
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DF674);
 
@@ -817,9 +817,9 @@ void func_800EC42C(void) // 0x800EC42C
                 case 11:
                 case 12:
                 case 13:
-                case 18:          
-                case 19:          
-                case 20:          
+                case 18:
+                case 19:
+                case 20:
                     mulX = Q12(-0.9f);
                     mulZ = Q12(1.0f);
                     break;
@@ -830,17 +830,17 @@ void func_800EC42C(void) // 0x800EC42C
                 case 10:
                 case 14:
                 case 15:
-                case 16:          
-                case 17:          
-                case 21:          
-                case 22:          
-                case 23:          
-                case 24:          
+                case 16:
+                case 17:
+                case 21:
+                case 22:
+                case 23:
+                case 24:
                     mulX = Q12(1.2f);
                     mulZ = Q12(1.0f);
                     break;
 
-                case 25:          
+                case 25:
                     if (D_800F035D == 0)
                     {
                         D_800F0180.vy = Q12(-13.0f);
@@ -848,68 +848,68 @@ void func_800EC42C(void) // 0x800EC42C
                         D_800F035D++;
                     }
 
-                case 26:          
-                case 27:          
-                case 31:          
-                case 32:          
-                case 33:          
-                case 37:          
-                case 38:          
-                case 39:          
-                case 43:          
-                case 44:          
-                case 45:          
+                case 26:
+                case 27:
+                case 31:
+                case 32:
+                case 33:
+                case 37:
+                case 38:
+                case 39:
+                case 43:
+                case 44:
+                case 45:
                     mulX = Q12(-1.2f);
                     mulZ = Q12(-1.2f);
                     break;
 
-                case 28:          
-                case 29:          
-                case 30:          
-                case 34:          
-                case 35:          
-                case 36:          
-                case 40:          
-                case 41:          
-                case 42:          
+                case 28:
+                case 29:
+                case 30:
+                case 34:
+                case 35:
+                case 36:
+                case 40:
+                case 41:
+                case 42:
                     mulX = Q12(1.2f);
                     mulZ = Q12(-1.2f);
                     break;
 
-                case 46:          
-                    if (D_800F035D == 1) 
+                case 46:
+                    if (D_800F035D == 1)
                     {
                         D_800F0180.vy = Q12(-15.75f);
                         D_800F0180.vz = Q12(-12.25f);
                         D_800F035D++;
                     }
 
-                case 59:          
+                case 59:
                     mulX = Q12(0.0f);
                     mulZ = Q12(-1.6f);
                     break;
 
-                case 47:          
-                case 48:          
-                case 49:          
-                case 56:          
-                case 57:          
-                case 58:          
+                case 47:
+                case 48:
+                case 49:
+                case 56:
+                case 57:
+                case 58:
                     mulX = Q12(0.6f);
                     mulZ = Q12(-1.6f);
                     break;
 
-                case 50:          
-                case 51:          
-                case 52:          
-                case 53:          
-                case 54:          
-                case 55:          
+                case 50:
+                case 51:
+                case 52:
+                case 53:
+                case 54:
+                case 55:
                     mulX = Q12(-0.6f);
                     mulZ = Q12(-1.6f);
                     break;
 
-                default: 
+                default:
                     mulZ = Q12(0.0f);
                     mulX = Q12(0.0f);
                     SysWork_StateStepIncrement(0);
@@ -968,7 +968,7 @@ void func_800ECB58(void) // 0x800ECB58
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
         g_SysWork.npcId_2280 = 3;
-    } 
+    }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
         g_SysWork.npcId_2280 = 4;
