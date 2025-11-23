@@ -30,11 +30,7 @@ extern VECTOR3 D_800F3DF0;
 extern VECTOR3 D_800F3E00;
 extern q19_12 D_800F3E0C; // Time.
 
-void func_800D6CBC(s_SubCharacter* chara);
-
 void func_800CD818(void);
-
-void func_800DFBBC(s_SubCharacter* chara);
 
 /** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Rifle Shells item pickup event. */
 void MapEvent_CommonItemTake(void);

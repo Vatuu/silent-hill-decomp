@@ -2214,6 +2214,8 @@ void sharedFunc_800D3C24_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D5974_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D69A0_2_s00(s_SubCharacter* chara);
+
 bool sharedFunc_800DC200_2_s00(s_SubCharacter* chara);
 
 s32 sharedFunc_800DC30C_2_s00(s_SubCharacter*);
@@ -2231,6 +2233,8 @@ void sharedFunc_800DE11C_2_s00(s_SubCharacter* chara);
 void sharedFunc_800DF710_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DF80C_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800DF8A0_2_s00(s_SubCharacter*);
 
 void sharedFunc_800E041C_2_s00(s_SubCharacter* chara);
 
@@ -2451,6 +2455,8 @@ void sharedFunc_800CEC88_3_s03(s_SubCharacter*);
 s32 sharedFunc_800CEEAC_3_s03(void);
 
 void sharedFunc_800CF3AC_3_s03(s_SubCharacter*);
+
+bool sharedFunc_800CF90C_3_s03(s_SubCharacter* chara);
 
 void sharedFunc_800CF9F8_3_s03(s_SubCharacter*);
 

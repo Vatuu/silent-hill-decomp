@@ -71,6 +71,7 @@ sharedFunc_800CEB90_3_s03   = 0x800CEB90; // type:func
 sharedFunc_800CEC88_3_s03   = 0x800CEC88; // type:func
 sharedFunc_800CEEAC_3_s03   = 0x800CEEAC; // type:func
 sharedFunc_800CF3AC_3_s03   = 0x800CF3AC; // type:func
+sharedFunc_800CF90C_3_s03   = 0x800CF90C; // type:func
 sharedFunc_800CF9F8_3_s03   = 0x800CF9F8; // type:func
 sharedFunc_800CFD18_3_s03   = 0x800CFD18; // type:func
 sharedFunc_800CFDD4_3_s03   = 0x800CFDD4; // type:func

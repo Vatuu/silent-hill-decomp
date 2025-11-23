@@ -158,54 +158,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800D671C);
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800D6820);
 
-void func_800D6CBC(s_SubCharacter* chara) // 0x800D6CBC
-{
-    bool cond;
-    s32  animStatus;
-    u32  modelStep;
-
-    cond = false;
-
-    modelStep = chara->model_0.stateStep_3;
-    animStatus = chara->model_0.anim_4.status_0;
-    chara->flags_3E |= CharaFlag_Unk3;
-
-    switch (modelStep)
-    {
-        case 0:
-            if (ANIM_STATUS_IS_ACTIVE(animStatus))
-            {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(4, false);
-                chara->model_0.stateStep_3 = 1;
-            }
-            break;
-
-        case 1:
-            if (animStatus != ANIM_STATUS(4, false))
-            {
-                chara->model_0.stateStep_3 = 2;
-                chara->properties_E4.player.flags_11C |= CharaUnk0Flag_Unk3;
-            }
-            break;
-
-        case 2:
-            if (animStatus != 9)
-            {
-                cond = true;
-            }
-            break;
-    }
-
-    func_800DFBBC(chara);
-    Chara_DamageTake(chara, Q12(0.6f));
-
-    if (cond)
-    {
-        chara->model_0.state_2 = 2;
-        chara->model_0.stateStep_3 = 0;
-        chara->properties_E4.unk0.field_E8_8 = 1;
-    }
-}
+#include "maps/shared/sharedFunc_800D69A0_2_s00.h" // 0x800D6CBC
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800D6D98);
 
@@ -375,7 +328,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DF928);
 
 #include "maps/shared/sharedFunc_800DF80C_2_s00.h" // 0x800DFB28
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DFBBC);
+INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800DF8A0_2_s00); // 0x800DFBBC
 
 #include "maps/shared/sharedFunc_800D569C_0_s01.h" // 0x800DFC6C
 
