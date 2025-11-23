@@ -104,7 +104,7 @@ INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", sharedData_800CAA98_0_
 
 #include "maps/shared/sharedFunc_800D3DFC_0_s01.h" // 0x800D274C
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800D2808);
+#include "maps/shared/sharedFunc_800D3C24_2_s00.h" // 0x800D2808
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800D2A28);
 
@@ -122,7 +122,7 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800D3E4C);
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800D4138);
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800D4558);
+#include "maps/shared/sharedFunc_800D5974_2_s00.h" // 0x800D4558
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800D476C);
 
@@ -212,9 +212,9 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DAC8C);
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DACC8);
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DADE4);
+#include "maps/shared/sharedFunc_800DC200_2_s00.h" // 0x800DADE4
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DAEF0);
+INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800DC30C_2_s00); // 0x800DAEF0
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DAFA0);
 
@@ -222,15 +222,15 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DB01C);
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DB0F0);
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DB17C);
+#include "maps/shared/sharedFunc_800DC598_2_s00.h" // 0x800DB17C
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DB260);
+#include "maps/shared/sharedFunc_800DC67C_2_s00.h" // 0x800DB260
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DB2C8);
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DB478);
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DB570);
+INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800DC98C_2_s00); // 0x800DB570
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800D4E84_0_s01); // 0x800DB908
 
@@ -254,11 +254,11 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DC664);
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DC9F8);
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DCB58);
+#include "maps/shared/sharedFunc_800DDF74_2_s00.h" // 0x800DCB58
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DCC18);
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DCD00);
+#include "maps/shared/sharedFunc_800DE11C_2_s00.h" // 0x800DCD00
 
 #include "maps/shared/sharedFunc_800DE1F8_2_s00.h" // 0x800DCDDC
 
@@ -300,9 +300,9 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DE02C);
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DE1F0);
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DE2F4);
+#include "maps/shared/sharedFunc_800DF710_2_s00.h" // 0x800DE2F4
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DE3F0);
+#include "maps/shared/sharedFunc_800DF80C_2_s00.h" // 0x800DE3F0
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DE484);
 
@@ -324,15 +324,15 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DED10);
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DEE00);
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DF000);
+#include "maps/shared/sharedFunc_800E041C_2_s00.h" // 0x800DF000
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DF094);
+#include "maps/shared/sharedFunc_800E04B0_2_s00.h" // 0x800DF094
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DF0F8);
 
 #include "maps/shared/sharedFunc_800D5E78_0_s01.h" // 0x800DF1F4
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DF27C);
+INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800E0698_2_s00); // 0x800DF27C
 
 #include "maps/shared/sharedFunc_800D62D8_0_s01.h" // 0x800DF654
 

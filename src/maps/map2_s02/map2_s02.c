@@ -102,105 +102,7 @@ INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", sharedData_800CAA98_0_
 
 #include "maps/shared/sharedFunc_800D3DFC_0_s01.h" // 0x800D2350
 
-void func_800D240C(s_SubCharacter* chara) // 0x800D240C
-{
-    bool cond0;
-    bool cond1;
-    s32  newStep;
-    s32  animStatus;
-    s32  animState;
-    s32  animStatusCheck;
-    u32  tmp0;
-    u32  step;
-
-    animStatus = chara->model_0.anim_4.status_0;
-    sharedFunc_800D5638_0_s01(chara);
-    step = chara->model_0.stateStep_3;
-    animState = ANIM_STATUS(12, true);
-
-    animStatusCheck = animStatus | 1; // TODO: Use macro.
-
-    switch (step)
-    {
-        case 0:
-            newStep = func_800DEE80(chara);
-            cond1 = false;
-            cond0 = chara->position_18.vy >= Q12(8.0f);
-
-            if (func_800808AC(chara->position_18.vx, chara->position_18.vz) == 7)
-            {
-                cond1 = (chara->position_18.vy < func_80080884(chara->position_18.vx, chara->position_18.vz)) ^ 1;
-            }
-
-            if (cond0)
-            {
-                Chara_DamageTake(chara, 0);
-
-                chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
-                chara->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
-
-                sharedFunc_800D3DFC_0_s01(chara);
-                break;
-            }
-
-            if (cond1)
-            {
-                Chara_DamageTake(chara, 0);
-                sharedFunc_800D2364_0_s01(chara);
-
-                chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
-                chara->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
-
-                sharedFunc_800D3DFC_0_s01(chara);
-                break;
-            }
-
-            if (chara->health_B0 <= Q12(0.0f))
-            {
-                Chara_DamageTake(chara, 0);
-
-                if (animStatus == ANIM_STATUS(26, true) && newStep == 1)
-                {
-                    chara->health_B0 = NO_VALUE;
-                    func_800622B8(3, chara, ANIM_STATUS(4, true), 2);
-                    chara->model_0.stateStep_3 = newStep;
-                    sharedFunc_800D3DFC_0_s01(chara);
-                }
-            } 
-            else
-            {
-                chara->flags_3E |= CharaFlag_Unk2;
-
-                if (Chara_DamageTake(chara, Q12(1.0f)) == 4) 
-                {
-                    if (chara->health_B0 <= Q12(0.0f)) 
-                    {
-                        chara->model_0.anim_4.status_0 = ANIM_STATUS(5, false);
-                        chara->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
-                        break;
-                    }
-
-                    chara->model_0.anim_4.status_0 = ANIM_STATUS(12, false);
-                    chara->model_0.stateStep_3 = 2;
-                    chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
-                }
-            }
-            break;
-
-        case 1:
-            Chara_DamageTake(chara, 0);
-            break;
-
-        case 2:
-            Chara_DamageTake(chara, Q12(0.5f));
-
-            if (animStatusCheck != animState)
-            {
-                chara->model_0.stateStep_3 = 0;
-            }
-            break;
-    }
-}
+#include "maps/shared/sharedFunc_800D3C24_2_s00.h" // 0x800D240C
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800D262C);
 
@@ -218,7 +120,7 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800D3A50);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800D3D3C);
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800D415C);
+#include "maps/shared/sharedFunc_800D5974_2_s00.h" // 0x800D415C
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800D4370);
 
@@ -308,9 +210,9 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DA890);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DA8CC);
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DA9E8);
+#include "maps/shared/sharedFunc_800DC200_2_s00.h" // 0x800DA9E8
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DAAF4);
+INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800DC30C_2_s00); // 0x800DAAF4
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DABA4);
 
@@ -318,15 +220,15 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DAC20);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DACF4);
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DAD80);
+#include "maps/shared/sharedFunc_800DC598_2_s00.h" // 0x800DAD80
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DAE64);
+#include "maps/shared/sharedFunc_800DC67C_2_s00.h" // 0x800DAE64
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DAECC);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DB07C);
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DB174);
+INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800DC98C_2_s00); // 0x800DB174
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800D4E84_0_s01); // 0x800DB50C
 
@@ -350,11 +252,11 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DC268);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DC5FC);
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DC75C);
+#include "maps/shared/sharedFunc_800DDF74_2_s00.h" // 0x800DC75C
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DC81C);
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DC904);
+#include "maps/shared/sharedFunc_800DE11C_2_s00.h" // 0x800DC904
 
 #include "maps/shared/sharedFunc_800DE1F8_2_s00.h" // 0x800DC9E0
 
@@ -396,9 +298,9 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DDC30);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DDDF4);
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DDEF8);
+#include "maps/shared/sharedFunc_800DF710_2_s00.h" // 0x800DDEF8
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DDFF4);
+#include "maps/shared/sharedFunc_800DF80C_2_s00.h" // 0x800DDFF4
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DE088);
 
@@ -420,69 +322,15 @@ INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DE914);
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DEA04);
 
-void func_800DEC04(s_SubCharacter* chara)
-{
-    q19_12           angle0;
-    q19_12           angle1;
-    s32              idx;
-    s_func_800D2E04* src;
+#include "maps/shared/sharedFunc_800E041C_2_s00.h" // 0x800DEC04
 
-    angle0 = func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8);
-    angle1 = FP_ANGLE_NORM_S(angle0 - chara->rotation_24.vy);
-
-    src = &sharedData_800CAA98_0_s01;
-
-    idx = 3;
-    sharedData_800E21D0_0_s01.field_B4[idx][2] = 0;
-
-    idx = 0;
-    sharedData_800E21D0_0_s01.field_B4[0][2] = src->unk_380[9][0];
-    sharedData_800E21D0_0_s01.field_B4[0][1] = src->unk_380[9][1];
-
-    idx = 1;
-    sharedData_800E21D0_0_s01.field_B4[idx][2] = src->unk_380[27][0];
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->unk_380[27][1];
-
-    idx = 3;
-    sharedData_800E21D0_0_s01.field_B4[idx][1] =src->unk_380[37][1];
-
-    if (angle1 < FP_ANGLE(0.0f))
-    {
-        angle1 += 3;
-    }
-
-    sharedFunc_800D5E78_0_s01(chara, angle1 >> 2);
-}
-
-void func_800DEC98(s_SubCharacter* chara) // 0x800DEC98
-{
-    s32              idx;
-    s_func_800D2E04* src;
-
-    src = &sharedData_800CAA98_0_s01;
-
-    idx = 0;
-    sharedData_800E21D0_0_s01.field_B4[0][2] = src->unk_380[9][0];
-    sharedData_800E21D0_0_s01.field_B4[0][1] = src->unk_380[9][1];
-
-    idx = 3;
-    sharedData_800E21D0_0_s01.field_B4[idx][2] = 0;
-
-    idx = 1;
-    sharedData_800E21D0_0_s01.field_B4[idx][2] = src->unk_380[26][0];
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = src->unk_380[26][1];
-
-    idx = 3;
-    sharedData_800E21D0_0_s01.field_B4[idx][1] =src->unk_380[37][1];
-
-    sharedFunc_800D5E78_0_s01(chara, 0);
-}
+#include "maps/shared/sharedFunc_800E04B0_2_s00.h" // 0x800DEC98
 
 INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DECFC);
 
 #include "maps/shared/sharedFunc_800D5E78_0_s01.h" // 0x800DEDF8
 
-INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", func_800DEE80);
+INCLUDE_ASM("asm/maps/map2_s02/nonmatchings/map2_s02", sharedFunc_800E0698_2_s00); // 0x800DEE80
 
 #include "maps/shared/sharedFunc_800D62D8_0_s01.h" // 0x800DF258
 

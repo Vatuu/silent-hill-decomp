@@ -47,8 +47,6 @@ extern s32 D_800F1A24;
 /** Time. */
 extern q3_12 D_800F534E;
 
-extern VECTOR3 D_800F216C;
-
 extern s_WorldObjectPose  g_CommonWorldObjectPoses[32];
 
 extern s16 D_800F5350;
@@ -80,29 +78,7 @@ extern s_WorldObjectDesc      g_WorldObject9;
 extern s_WorldObjectDesc      g_WorldObjectA;
 extern s_WorldObject_0        g_CommonWorldObjects[6];
 
-extern VECTOR3 D_800F217C;
-
 extern s_MapPoint2d D_800F1CAC[3][32];
-
-void func_800D5974(s_SubCharacter* chara);
-
-bool func_800DC200(s_SubCharacter* chara);
-
-s32 func_800DC30C(s_SubCharacter* chara);
-
-s32 func_800DC598(s_SubCharacter* chara);
-
-bool func_800DC67C(s_SubCharacter* chara);
-
-s32 func_800DC98C(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
-
-void func_800DDF74(s_SubCharacter* chara, s32 mulX, q19_12 angle0);
-
-void func_800DE11C(s_SubCharacter* chara);
-
-void func_800DF710(s_SubCharacter* chara);
-
-void func_800DF80C(s_SubCharacter* chara);
 
 void func_800E7D54(void);
 

@@ -2187,6 +2187,38 @@ extern const char* MAP_MESSAGES[]; // 0x800DF6B8
 
 extern s_MapOverlayHeader_7C sharedData_800DEE50_1_s01;
 
+extern VECTOR3 sharedData_800F216C_2_s00;
+
+extern VECTOR3 sharedData_800F217C_2_s00;
+
+void sharedFunc_800D3C24_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D5974_2_s00(s_SubCharacter* chara);
+
+bool sharedFunc_800DC200_2_s00(s_SubCharacter* chara);
+
+s32 sharedFunc_800DC30C_2_s00(s_SubCharacter*);
+
+s32 sharedFunc_800DC598_2_s00(s_SubCharacter* chara);
+
+bool sharedFunc_800DC67C_2_s00(s_SubCharacter* chara);
+
+s32 sharedFunc_800DC98C_2_s00(s_SubCharacter*, VECTOR3*, VECTOR3*, VECTOR3*);
+
+void sharedFunc_800DDF74_2_s00(s_SubCharacter* chara, s32 mulX, q19_12 angle0);
+
+void sharedFunc_800DE11C_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800DF710_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800DF80C_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800E041C_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800E04B0_2_s00(s_SubCharacter* chara);
+
+u32 sharedFunc_800E0698_2_s00(s_SubCharacter*);
+
 void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3);
 
 bool sharedFunc_800CBBBC_0_s00(void);
