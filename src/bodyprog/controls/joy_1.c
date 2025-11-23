@@ -1,6 +1,6 @@
 #include "game.h"
 
-#include <libpad.h>
+#include <psyq/libpad.h>
 
 #include "bodyprog/joy.h"
 #include "bodyprog/math/math.h"

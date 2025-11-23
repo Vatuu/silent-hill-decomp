@@ -2524,8 +2524,11 @@ void func_800EB908(void) // 0x800EB908
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800EC080(void)
+void func_800EC080(void) // 0x800EC080
 {
+    #define CELL_ZX(z, x) \
+        ((x) + ((z) << 8))
+
     s32 z0;
     s32 z1;
     s32 z2;
@@ -2540,8 +2543,7 @@ void func_800EC080(void)
     s32 xx2;
     s32 flags0;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
-#define CELL_ZX(z, x) ((x) + ((z) << 8))
-    
+
     flags0 = 0;
 
     z0 = g_SysWork.player_4C.chara_0.position_18.vz / Q12(40.0f);
@@ -2570,11 +2572,13 @@ void func_800EC080(void)
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
             }
+
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupSteelPipe))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &g_WorldObject0.rotation_28);
             }
             break;
+
         case CELL_ZX(17, 12):
         case CELL_ZX(15, 12):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_DogHouseNoteFound))
@@ -2583,19 +2587,23 @@ void func_800EC080(void)
                 g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &g_WorldObject3.rotation_28);
             }
             break;
+
         case CELL_ZX(25, 14):
             g_WorldGfx_ObjectAdd(&g_WorldObject5[2], &D_800F55DC[1], &D_800F5344);
             g_WorldGfx_ObjectAdd(&g_WorldObject5[3], &D_800F55DC[1], &D_800F5344);
+
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupMap))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject8.object_0, &g_WorldObject8.position_1C, &g_WorldObject8.rotation_28);
             }
+
             g_WorldGfx_ObjectAdd(&D_800F56EC, &D_800F574C.position_0, &D_800F574C.rotation_C);
             break;
+
         case CELL_ZX(13, 21):
             if (Savegame_EventFlagGet(EventFlag_163)) 
             {
-                flags0 |= 4;
+                flags0 |= 1 << 2;
                 if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(198.0f))
                 {
                     Savegame_EventFlagClear(EventFlag_163);
@@ -2603,18 +2611,20 @@ void func_800EC080(void)
             }
             else
             {
-                flags0 |= 2;
+                flags0 |= 1 << 1;
             }
-            /* fallthrough */
+
         case CELL_ZX(14, 21):
         case CELL_ZX(14, 22):
         case CELL_ZX(13, 22):
             g_WorldGfx_ObjectAdd(&g_WorldObject5[0], &D_800F55DC[0], &D_800F5344);
             g_WorldGfx_ObjectAdd(&g_WorldObject5[1], &D_800F55DC[0], &D_800F5344);
+
             if (!Savegame_EventFlagGet(EventFlag_166))
             {
-                flags0 |= 8;
+                flags0 |= 1 << 3;
             }
+
             if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BotBridgeCorrection))
             {
                 Savegame_MapMarkingClear(MapMarkFlag_61);
@@ -2624,8 +2634,10 @@ void func_800EC080(void)
                 Savegame_MapMarkingSet(MapMarkFlag_61);
             }
             break;
+
         case CELL_ZX(13, 9):
             g_WorldGfx_ObjectAdd(&D_800F535C, &D_800F537C, &D_800F538C);
+
             if (!Savegame_EventFlagGet(EventFlag_170)) 
             {
                 if (!Savegame_EventFlagGet(EventFlag_169)) 
@@ -2643,51 +2655,61 @@ void func_800EC080(void)
                 }
             }
             break;
+
         case CELL_ZX(22, 19):
         case CELL_ZX(22, 20):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObjectB->object_0, &g_WorldObjectB->position_1C, &(SVECTOR3){});
             }
+
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfWoodmanOpen))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObjectB[1].object_0, &g_WorldObjectB[1].position_1C, &(SVECTOR3){});
             }
+
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfScarecrowOpen))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObjectB[2].object_0, &g_WorldObjectB[2].position_1C, &(SVECTOR3){});
             }
+
             g_WorldGfx_ObjectAdd(&D_800F56EC, &D_800F570C.position_0, &D_800F570C.rotation_C);
             break;
+
         case CELL_ZX(19, 21):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfLion))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject4[0].object_0, &g_WorldObject4[0].position_1C, &g_WorldObject4[0].rotation_28);
             }
             break;
+
         case CELL_ZX(26, 11):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfWoodman))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject4[1].object_0, &g_WorldObject4[1].position_1C, &g_WorldObject4[1].rotation_28);
             }
             break;
+
         case CELL_ZX(15, 19):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfScarecrow))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject4[2].object_0, &g_WorldObject4[2].position_1C, &g_WorldObject4[2].rotation_28);
             }
+
             break;
         case CELL_ZX(24, 19):
         case CELL_ZX(24, 20):
             g_WorldGfx_ObjectAdd(&D_800F56EC, &D_800F572C.position_0, &D_800F572C.rotation_C);
             break;
+
         default:
             break;
     } 
 
     z1 = g_SysWork.player_4C.chara_0.position_18.vz / Q12(40.0f);
     x1 = g_SysWork.player_4C.chara_0.position_18.vx / Q12(40.0f);
-    if (g_SysWork.player_4C.chara_0.position_18.vx > 0) 
+
+    if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f)) 
     {
         xx1 = x1 + 17;
     }
@@ -2695,7 +2717,8 @@ void func_800EC080(void)
     {
         xx1 = x1 + 15;
     }
-    if (g_SysWork.player_4C.chara_0.position_18.vz > 0) 
+
+    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f)) 
     {
         zz1 = z1 + 17;
     }
@@ -2715,7 +2738,7 @@ void func_800EC080(void)
                     Sd_EngineCmd(0x5CAU);
                     D_800F5350 = Q12(0.75f);
                 }
-                else if (D_800F534C == -1)
+                else if (D_800F534C == NO_VALUE)
                 {
                     D_800F5350 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.25f), Q12_SHIFT);
                     if (D_800F5350 > Q12(0.75f))
@@ -2724,17 +2747,20 @@ void func_800EC080(void)
                         D_800F534C = 1;
                     }
                 }
+
                 func_8005DE0C(Sfx_Unk1482, &QVECTOR3(-43.0f, -1.0f, 346.0f), D_800F5350 >> 5, Q12(32.0f), 0);
             }
             break;
+
         case CELL_ZX(25, 22):
             if (Savegame_EventFlagGet(EventFlag_164))
             {
                 if (D_800F534C == 0)
                 {
                     D_800F534C++;
-                    Sd_EngineCmd(0x5CAU);
+                    Sd_EngineCmd(1482);
                 }
+
                 func_8005DE0C(Sfx_Unk1482, &QVECTOR3(237.0f, -1.0f, 346.0f), Q8(0.5f), Q12(16.0f), 0);
             }
     
@@ -2748,17 +2774,20 @@ void func_800EC080(void)
                 Savegame_EventFlagClear(EventFlag_66);
             }
             break;
+
         default:
             if (D_800F534C != 0)
             {
                 D_800F534C = 0;
-                func_8004690C(0x5CAU);
+                func_8004690C(1482);
             }
             break;
     }
+
     z2 = g_SysWork.player_4C.chara_0.position_18.vz / Q12(40.0f);
     x2 = g_SysWork.player_4C.chara_0.position_18.vx / Q12(40.0f);
-    if (g_SysWork.player_4C.chara_0.position_18.vx > 0)
+
+    if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f))
     {
         xx2 = x2 + 17;
     }
@@ -2767,7 +2796,7 @@ void func_800EC080(void)
         xx2 = x2 + 15;
     }
     
-    if (g_SysWork.player_4C.chara_0.position_18.vz > 0)
+    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f))
     {
         zz2 = z2 + 17;
     }
@@ -2786,6 +2815,7 @@ void func_800EC080(void)
                 Game_TurnFlashlightOff();
             }
             break;
+
         case CELL_ZX(22, 19):
         case CELL_ZX(22, 20):
             if (!Savegame_EventFlagGet(EventFlag_134) && Savegame_EventFlagGet(EventFlag_159))
@@ -2805,6 +2835,7 @@ void func_800EC080(void)
                 }
             }
             break;
+
         case CELL_ZX(24, 19):
         case CELL_ZX(24, 20):
             if (D_800F56E4 != 3)
@@ -2813,6 +2844,7 @@ void func_800EC080(void)
                 D_800F56E4 = 3;
             }
             break;
+
         case CELL_ZX(13, 13):
         case CELL_ZX(13, 14):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupChainsaw))
@@ -2838,6 +2870,7 @@ void func_800EC080(void)
                 {
                     func_8003ED74(6, 3);
                 }
+
                 D_800F56E4 = 1;
             }
             break;
@@ -2850,6 +2883,7 @@ void func_800EC080(void)
     {
         Savegame_MapMarkingSet(MapMarkFlag_OldTown_BotRightHugeComboCross);
     }
+
     if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BlochStLeftCross) &&
         Savegame_MapMarkingGet(MapMarkFlag_OldTown_LevinStTopCross) &&
         Savegame_MapMarkingGet(MapMarkFlag_OldTown_BlochStRightCross) &&
@@ -2857,9 +2891,11 @@ void func_800EC080(void)
     {
         Savegame_MapMarkingSet(MapMarkFlag_OldTown_LevinBlochBigCombo);
     }
+
     func_800EE660();
     func_80069844(0xFFFF);
     func_8006982C(flags0);
+
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_M2S00_FirstAidKit0))

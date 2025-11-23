@@ -1,6 +1,6 @@
 #include "game.h"
 
-#include <libspu.h>
+#include <psyq/libspu.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/libsd.h"

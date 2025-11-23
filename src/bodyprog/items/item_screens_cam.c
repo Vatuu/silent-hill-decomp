@@ -1,6 +1,7 @@
 #include "game.h"
 #include "inline_no_dmpsx.h"
-#include "gtemac.h"
+
+#include <psyq/gtemac.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/item_screens.h"

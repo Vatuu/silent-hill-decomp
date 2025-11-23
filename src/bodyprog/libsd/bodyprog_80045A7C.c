@@ -1,8 +1,8 @@
 #include "game.h"
 
-#include <libcd.h>
-#include <libetc.h>
-#include <libspu.h>
+#include <psyq/libcd.h>
+#include <psyq/libetc.h>
+#include <psyq/libspu.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/libsd.h"

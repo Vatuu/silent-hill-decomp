@@ -1,6 +1,6 @@
 #include "game.h"
 
-#include <libetc.h>
+#include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"

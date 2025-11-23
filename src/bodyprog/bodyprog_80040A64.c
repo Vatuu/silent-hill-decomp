@@ -1,7 +1,7 @@
 #include "game.h"
 #include "inline_no_dmpsx.h"
 
-#include <strings.h>
+#include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"

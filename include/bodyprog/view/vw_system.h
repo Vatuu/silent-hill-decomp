@@ -1,9 +1,7 @@
 #ifndef _BODYPROG_VIEW_VWSYSTEM_H
 #define _BODYPROG_VIEW_VWSYSTEM_H
 
-#include <libgte.h>
-#include <libgpu.h>
-#include <libgs.h>
+#include "gpu.h"
 
 #include "bodyprog/view/enums.h"
 #include "bodyprog/view/structs.h"

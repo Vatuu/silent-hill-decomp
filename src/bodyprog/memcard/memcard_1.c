@@ -3,10 +3,10 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/memcard.h"
 
-#include <libapi.h>
-#include <limits.h>
-#include <strings.h>
-#include <sys/file.h>
+#include <psyq/libapi.h>
+#include <psyq/limits.h>
+#include <psyq/strings.h>
+#include <psyq/sys/file.h>
 
 u32 D_800B2610[2] = { 0xFFFF0100, 0x1800FFFF };
 s32 D_800B2618 = 0;

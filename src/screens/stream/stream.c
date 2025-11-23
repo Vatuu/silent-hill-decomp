@@ -1,8 +1,8 @@
 #include "game.h"
 
-#include <libetc.h>
-#include <libds.h>
-#include <libpress.h>
+#include <psyq/libetc.h>
+#include <psyq/libds.h>
+#include <psyq/libpress.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/screen_draw.h"

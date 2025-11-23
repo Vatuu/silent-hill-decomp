@@ -1,9 +1,7 @@
 #ifndef _BODYPROG_VIEW_VCUTIL_H
 #define _BODYPROG_VIEW_VCUTIL_H
 
-#include <libgte.h>
-#include <libgpu.h>
-#include <libgs.h>
+#include "gpu.h"
 
 struct _MapOverlayHeader;
 

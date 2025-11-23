@@ -3,8 +3,8 @@
 
 #include "common.h"
 
-#include <libcd.h>
-#include <libgpu.h>
+#include <psyq/libcd.h>
+#include <psyq/libgpu.h>
 
 extern int StCdIntrFlag; // Not included in SDK docs/headers, but movie player sample code (and moviesys) uses it?
 

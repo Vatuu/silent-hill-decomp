@@ -1,7 +1,7 @@
 #include "game.h"
 
-#include <libcd.h>
-#include <libetc.h>
+#include <psyq/libcd.h>
+#include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/demo.h"

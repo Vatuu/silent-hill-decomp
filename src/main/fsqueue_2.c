@@ -1,6 +1,6 @@
 #include "main/fsqueue.h"
 
-#include <libcd.h>
+#include <psyq/libcd.h>
 
 bool Fs_QueueUpdateRead(s_FsQueueEntry* entry)
 {

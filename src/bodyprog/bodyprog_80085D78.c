@@ -1,7 +1,7 @@
 #include "game.h"
 
-#include <libpad.h>
-#include <strings.h>
+#include <psyq/libpad.h>
+#include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/screen_draw.h"

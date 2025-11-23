@@ -3,9 +3,9 @@
 
 #include "common.h"
 
-#include <libgte.h>
-#include <libgpu.h>
-#include <libgs.h>
+#include <psyq/libgte.h>
+#include <psyq/libgpu.h>
+#include <psyq/libgs.h>
 
 #define LINE_VERT_COUNT 2
 #define RECT_VERT_COUNT 4

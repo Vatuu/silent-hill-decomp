@@ -1,6 +1,6 @@
 #include "common.h"
 
-#include <libapi.h>
+#include <psyq/libapi.h>
 
 #include "bodyprog/libsd.h"
 

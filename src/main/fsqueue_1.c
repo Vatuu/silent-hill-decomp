@@ -4,8 +4,8 @@
 #include "main/fsmem.h"
 
 #include <memory.h>
-#include <libetc.h>
-#include <libcd.h>
+#include <psyq/libetc.h>
+#include <psyq/libcd.h>
 
 s_FsQueue g_FsQueue;
 

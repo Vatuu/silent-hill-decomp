@@ -1,9 +1,7 @@
 #ifndef _BODYPROG_VIEW_VW_CALC_H
 #define _BODYPROG_VIEW_VW_CALC_H
 
-#include <libgte.h>
-#include <libgpu.h>
-#include <libgs.h>
+#include "gpu.h"
 
 void vwRenewalXZVelocityToTargetPos(q19_12* velo_x, q19_12* velo_z, const VECTOR3* now_pos, const VECTOR3* tgt_pos, q19_12 tgt_r,
                                     q19_12 accel, q19_12 total_max_spd, q19_12 dec_forwd_lim_spd, q19_12 dec_accel_side);

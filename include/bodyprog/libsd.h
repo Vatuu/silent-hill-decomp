@@ -1,7 +1,7 @@
 #ifndef _BODYPROG_LIBSD_H
 #define _BODYPROG_LIBSD_H
 
-#include <libsnd.h>
+#include <psyq/libsnd.h>
 
 /**
  * libsd: konami-customized version of libsnd?

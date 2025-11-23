@@ -1,11 +1,11 @@
 #include "common.h"
 #include "game.h"
 
-#include <libapi.h>
-#include <libetc.h>
-#include <libcd.h>
-#include <libsnd.h>
-#include <libspu.h>
+#include <psyq/libapi.h>
+#include <psyq/libetc.h>
+#include <psyq/libcd.h>
+#include <psyq/libsnd.h>
+#include <psyq/libspu.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"

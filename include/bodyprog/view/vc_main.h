@@ -1,9 +1,7 @@
 #ifndef _BODYPROG_VIEW_VCMAIN_H
 #define _BODYPROG_VIEW_VCMAIN_H
 
-#include <libgte.h>
-#include <libgpu.h>
-#include <libgs.h>
+#include "gpu.h"
 
 /** @brief Initializes the camera paths used in the active map.
  *
