@@ -49,6 +49,10 @@ extern q3_12 D_800F534E;
 
 extern VECTOR3 D_800F216C;
 
+extern s_WorldObjectPose  g_CommonWorldObjectPoses[32];
+
+extern s16 D_800F5350;
+
 /* TODO: Rename these with sequental names (not really essential, but would be nice). */
 extern SVECTOR3               D_800F5344;
 extern s8                     D_800F534C;
@@ -66,7 +70,7 @@ extern VECTOR3                D_800F55DC[2];
 extern s_WorldObject_0        g_WorldObject6[3];
 extern s_WorldObject_0        g_WorldObject7[4];
 extern VECTOR3                D_800F56CC[2];
-extern s8                     D_800F56E4;
+extern u8                     D_800F56E4;
 extern s_WorldObject_0        D_800F56EC;
 extern s_WorldObjectPose      D_800F570C;
 extern s_WorldObjectPose      D_800F572C;
@@ -162,5 +166,7 @@ s32 func_800EE5A8(u32 arg0);
 void func_800EE5D0(void);
 
 void func_800EE660(void);
+
+void func_800EC080(void);
 
 #endif

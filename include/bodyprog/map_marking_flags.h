@@ -37,6 +37,7 @@ typedef enum _MapMarkingFlag
     MapMarkFlag_OldTown_BotBridgeCross                  = 58,
     MapMarkFlag_OldTown_BotBridgeCorrection             = 59,
     MapMarkFlag_OldTown_BotBridgeArrow                  = 60,
+    MapMarkFlag_61                                      = 61,
     MapMarkFlag_OldTown_BalkanChurchCircle              = 62,
     MapMarkFlag_OldTown_BalkanChurchCheck               = 63,
     MapMarkFlag_OldTown_SchoolCircle                    = 66,
