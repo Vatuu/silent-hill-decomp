@@ -7,6 +7,11 @@
 
 struct _MapOverlayHeader;
 
+// TODO:
+// - Split into 4 separate headers.
+// - Add doc comments above func declarations.
+// - Flags below are from SH2, most seem to match with SH but there might be some differences.
+
 /** @brief GLOSSARY OF ABBREVIATIONS
  *
  * ACCEL: Acceleration
@@ -64,11 +69,6 @@ struct _MapOverlayHeader;
  * Watch:        Camera look-at.
  */
 
-// TODO:
-// - Split into 4 separate headers.
-// - Add doc comments above func declarations.
-// - Flags below are from SH2, most seem to match with SH but there might be some differences.
-
 #define CAMERA_PATH_COLL_COUNT_MAX 10
 
 typedef enum _CameraAnchor
@@ -95,11 +95,11 @@ STATIC_ASSERT_SIZEOF(VC_ROAD_FLAGS, 4);
 
 typedef enum _VC_FLAGS
 {
-    VC_USER_CAM_F            = 1 << 0,
-    VC_USER_WATCH_F          = 1 << 1,
+    VC_USER_CAM_F            = 1 << 0, /** User in control? */
+    VC_USER_WATCH_F          = 1 << 1, /** Lock look-at on player? */
     VC_WARP_CAM_F            = 1 << 2, /** Warp position. */
     VC_WARP_WATCH_F          = 1 << 3, /** Warp look-at. */
-    VC_WARP_CAM_TGT_F        = 1 << 4,
+    VC_WARP_CAM_TGT_F        = 1 << 4, /** Warp target position? */
     VC_SWITCH_NEAR_RD_DATA_F = 1 << 5,
     VC_PROJ_MOMENT_CHANGE_F  = 1 << 6,
     VC_VISIBLE_CHARA_F       = 1 << 7,
@@ -111,12 +111,13 @@ STATIC_ASSERT_SIZEOF(VC_FLAGS, 4);
 
 typedef enum _VC_CAM_MV_TYPE
 {
-    VC_MV_CHASE        = 0,
+    VC_MV_CHASE        = 0, /** Chase. */
     VC_MV_SETTLE       = 1,
-    VC_MV_FIX_ANG      = 2,
+    VC_MV_FIX_ANG      = 2, /** Fixed angle. */
     VC_MV_SELF_VIEW    = 3,
     VC_MV_THROUGH_DOOR = 4,
-    VC_MV_SUU          = 5
+
+    VC_MV_SUU          = 5  /** Count. */
 } VC_CAM_MV_TYPE;
 STATIC_ASSERT_SIZEOF(VC_CAM_MV_TYPE, 4);
 
@@ -136,7 +137,8 @@ typedef enum _VC_ROAD_TYPE
     VC_RD_TYPE_ROAD_PRIO_LOW  = 3,
     VC_RD_TYPE_ROAD_PRIO_HIGH = 4,
     VC_RD_TYPE_SV_ONLY        = 5,
-    VC_RD_TYPE_SUU            = 6
+
+    VC_RD_TYPE_SUU            = 6  /** Count. */
 } VC_ROAD_TYPE;
 STATIC_ASSERT_SIZEOF(VC_ROAD_TYPE, 4);
 
@@ -153,7 +155,8 @@ typedef enum _VC_AREA_SIZE_TYPE
     VC_AREA_SMALL   = 1,
     VC_AREA_WIDE    = 2,
     VC_AREA_OUTDOOR = 3,
-//    VC_AREA_SUU     = 4 // Count. Disabled to remove size warning since it's unused.
+
+//    VC_AREA_SUU     = 4 /**Count. Disabled to remove size warning since it's unused. */ 
 } VC_AREA_SIZE_TYPE;
 STATIC_ASSERT_SIZEOF(VC_AREA_SIZE_TYPE, 4);
 
@@ -264,15 +267,15 @@ typedef struct _VC_WORK
     u32                       flags_8;                        /** `VC_FLAGS` */
     u8                        through_door_activate_init_f_C; /** `bool` */
     // 3 bytes of padding.
-    VC_THROUGH_DOOR_CAM_PARAM through_door_10;
+    VC_THROUGH_DOOR_CAM_PARAM through_door_10;                /** Active rail camera data? */
     q3_12                     scr_half_ang_wy_2C;
     q3_12                     scr_half_ang_wx_2E;
     s16                       geom_screen_dist_30;            /** Related to `GsSetProjection`/`g_GameSys.gs_y_res_58A`. */
-    s16                       field_32;
+    s16                       field_32; // Padding? Not used.
     VC_CAM_MV_PARAM           user_cam_mv_prm_34;             /** Look parameters? */
     VECTOR3                   cam_tgt_pos_44;                 /** Target camera position. */
     VECTOR3                   cam_pos_50;                     /** Q19.12 | Camera position. */
-    s16                       cam_mv_ang_y_5C;                /** Angular velocity on the Y axis. */
+    q3_12                     cam_mv_ang_y_5C;                /** Angular velocity on the Y axis. */
     // 2 bytes of padding.
     VECTOR3                   cam_velo_60;                    /** Q19.12 | Camera velocity. */
     s32                       old_cam_excl_area_r_6C;         /** Previous exclusion area radius. */
@@ -291,7 +294,7 @@ typedef struct _VC_WORK
     // 3 bytes of padding.
     MATRIX                    field_DC;
     u8                        field_FC;                       /** `bool` */
-    u8                        field_FD;
+    u8                        field_FD; // Padding?
     q3_12                     cam_chara2ideal_ang_y_FE;  
     VECTOR3                   cam_tgt_velo_100;               /** Target velocity. */
     q3_12                     cam_tgt_mv_ang_y_10C;           /** Target Y angles. */
@@ -318,6 +321,7 @@ typedef struct _VC_WORK
 } VC_WORK;
 STATIC_ASSERT_SIZEOF(VC_WORK, 744);
 
+/** @brief Camera view matrix. */
 typedef struct _VbRVIEW
 {
     VECTOR3        vp;
@@ -362,7 +366,7 @@ extern VC_WATCH_MV_PARAM self_view_watch_mv_prm;
 extern VC_CAM_MV_PARAM   cam_mv_prm_user;
 extern q19_12            excl_r_ary[9];
 extern VC_WORK           vcWork;
-extern VECTOR3           vcRefPosSt;
+extern VECTOR3           vcRefPosSt; /** Q19.12 */
 extern VW_VIEW_WORK      vwViewPointInfo;
 extern MATRIX            VbWvsMatrix;
 extern VC_WATCH_MV_PARAM vcWatchMvPrmSt;
@@ -379,25 +383,54 @@ extern q19_12            vcSelfViewTimer;
  */
 void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, const VECTOR3* chr_pos);
 
-/** @brief Warps the camera to a specified Y rotation.
+/** @brief Warps the camera in relation to a character position.
  *
- * @param chr_pos Character position (Q12.12).
- * @param chr_ang_y Y rotation to warp the camera to.
+ * @param chr_pos Reference character position (Q12.12).
+ * @param chr_ang_y Y rotation.
  */
 void vcSetCameraUseWarp(const VECTOR3* chr_pos, q3_12 chr_ang_y);
 
+/** @brief Gets the camera's active smooth move type?
+ * TODO: Figure out what a "smooth move" is.
+ *
+ * @return Smooth move type (`VC_CAM_MV_TYPE`).
+ */
 s32 vcRetCamMvSmoothF(void);
-void func_800401A0(bool arg0);
+
+/** @brief Sets the camera's elevation(?) rate to normal or locked. So far @unused.
+ * TODO: Is it elevation or something else?
+ *
+ * @param isUnlocked `true` to set the elevation(?) rate to normal, `false` to lock.
+ */
+void Vc_CameraElevationRateLockSet(bool isUnlocked);
+
+/** @brief Sets the camera's active elevation(?) rate.
+ * TODO: Is it elevation or something else?
+ *
+ * @param ev_cam_rate New elevation(?) rate.
+ */
 void vcSetEvCamRate(q3_12 ev_cam_rate);
+
+/** @brief Moves the camera in relation to the player.
+ *
+ * @param in_connect_f `true` to lock on player position, `false` to lock on player head position.
+ * @param change_debug_mode Increment camera state step?
+ * @param for_f Contract the XZ radius.
+ * @param back_f Expand the XZ radius.
+ * @param right_f Rotate counter-clockwise on the Y axis.
+ * @param left_f Rotate clockwise on the Y axis.
+ * @param up_f Move up.
+ * @param down_f Move down.
+ */
 void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f);
 
-/** @brief Gets the head position of the player, outputting the result to `head_pos`.
+/** @brief Gets the head position of the player.
  *
  * @param head_pos Output player head position (Q19.12).
  */
 void vcMakeHeroHeadPos(VECTOR3* head_pos);
 
-/** @brief Translates a position by a horizontal and vertical offset in the direction of a given angle, outputting the result to `out_pos`.
+/** @brief Translates a position by a horizontal and vertical offset in the direction of a given angle.
  *
  * @param out_pos Translated output position (Q19.12).
  * @param in_pos Position to translate (Q19.12).
@@ -407,7 +440,24 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos);
  */
 void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, q3_12 ofs_xz_r, q3_12 ang_y, q19_12 ofs_y);
 
+/** @brief TODO
+ *
+ * @param ref_pos Reference position.
+ * @param sys_p System work.
+ * @param for_f Contract the XZ radius.
+ * @param back_f Expand the XZ radius.
+ * @param right_f Rotate counter-clockwise on the Y axis.
+ * @param left_f Rotate clockwise on the Y axis.
+ * @param up_f Move up.
+ * @param down_f Move down.
+ */
 void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, bool for_f, bool back_f, bool right_f, bool left_f, bool up_f, bool down_f);
+
+/** @brief Sets a reference position according to analog stick input.
+ *
+ * @param ref_pos Reference position.
+ * @param sys_p System work.
+ */
 void vcSetRefPosAndCamPosAngByPad(VECTOR3* ref_pos, s_SysWork* sys_p);
 
 // ==========
@@ -422,20 +472,21 @@ void vwInitViewInfo(void);
  */
 GsCOORDINATE2* vwGetViewCoord(void);
 
-/** @brief Gets the camera position, outputting the result to `pos`.
+/** @brief Gets the camera position.
  *
  * @param pos Output camera position (Q19.12).
  */
 void vwGetViewPosition(VECTOR3* pos);
 
-/** @brief Gets the camera rotation, outputting the result to `ang`.
+/** @brief Gets the camera rotation.
  *
  * @param ang Output camera rotation (Q19.12).
  */
 void vwGetViewAngle(SVECTOR* ang);
 
-void           Vw_SetLookAtMatrix(const VECTOR3* pos, const VECTOR3* lookAt);
-void           vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, q19_12 ref_x, q19_12 ref_y, q19_12 ref_z, q3_12 cam_ang_y, q3_12 cam_ang_z, q19_12 cam_y, q19_12 cam_xz_r);
+void Vw_SetLookAtMatrix(const VECTOR3* pos, const VECTOR3* lookAt);
+
+void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, q19_12 ref_x, q19_12 ref_y, q19_12 ref_z, q3_12 cam_ang_y, q3_12 cam_ang_z, q19_12 cam_y, q19_12 cam_xz_r);
 
 /** @brief Sets the camera look-at direction matrix.
  *
@@ -444,9 +495,18 @@ void           vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, q19_12 ref_x, q19_
  */
 void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, const MATRIX* cammat);
 
-void           vwSetViewInfo(void);
-void           Vw_ClampAngleRange(q3_12* angleMin, q3_12* angleMax, q3_12 angleConstraintMin, q3_12 angleConstraintMax);
-s16            func_80048E3C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
+void vwSetViewInfo(void);
+
+/** @brief Clamps an angle range to be within a given set of constraints.
+ *
+ * @param angleMin Output minimum angle to clamp.
+ * @param angleMax Output maximum angle to clamp.
+ * @param angleConstrainMin Minimum angle constraint.
+ * @param angleConstraintMax Maximum angle constraint.
+ */
+void Vw_ClampAngleRange(q3_12* angleMin, q3_12* angleMax, q3_12 angleConstraintMin, q3_12 angleConstraintMax);
+
+s16 func_80048E3C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 
 // ==========
 // vw_calc.c
@@ -458,7 +518,19 @@ void vwRenewalXZVelocityToTargetPos(q19_12* velo_x, q19_12* velo_z, const VECTOR
 void vwLimitOverLimVector(q19_12* vec_x, q19_12* vec_z, q19_12 lim_vec_len, q3_12 lim_vec_ang_y);
 void vwDecreaseSideOfVector(q19_12* vec_x, q19_12* vec_z, q19_12 dec_val, q19_12 max_side_vec_len, q3_12 dir_ang_y);
 q19_12 vwRetNewVelocityToTargetVal(q19_12 now_spd, q19_12 mv_pos, q19_12 tgt_pos, q19_12 accel, q19_12 total_max_spd, q19_12 dec_val_lim_spd);
+
+/** @brief
+ *
+ * @param now_ang_spd Current angular speed.
+ * @param now_ang Current angle.
+ * @param tgt_ang Target angle.
+ * @param accel_spd Acceleration speed.
+ * @param total_max_ang_spd Max angular speed.
+ * @param dec_val_lim_spd Deceleration speed.
+ * @return New angular speed.
+ */
 q19_12 vwRetNewAngSpdToTargetAng(q19_12 now_ang_spd, q3_12 now_ang, q3_12 tgt_ang, q19_12 accel_spd, q19_12 total_max_ang_spd, q19_12 dec_val_lim_spd);
+
 void vwMatrixToAngleYXZ(SVECTOR* ang, const MATRIX* mat);
 void Vw_MultiplyAndTransformMatrix(MATRIX* transformMat, MATRIX* inMat, MATRIX* outMat);
 void vbSetWorldScreenMatrix(GsCOORDINATE2* coord);
@@ -467,13 +539,56 @@ void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat);
 void func_80049AF8(GsCOORDINATE2* rootCoord, MATRIX* outMat);
 void func_80049B6C(GsCOORDINATE2* rootCoord, MATRIX* outMat0, MATRIX* outMat1);
 void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z);
+
+/** @brief Checks if an AABB is visible in the screen.
+ *
+ * @param minX AABB X minimum point.
+ * @param minY AABB Y minimum point.
+ * @param minZ AABB Z minimum point.
+ * @param maxX AABB X maxiumum point.
+ * @param maxY AABB Y maxiumum point.
+ * @param maxZ AABB Z maxiumum point.
+ * @return `true` if the AABB is visible, `false` otherwise.
+ */
 bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax);
+
+/** @brief Checks if an AABB is visible in a frustum.
+ *
+ * @param modelMat Model matrix. TODO: What for?
+ * @param minX AABB X minimum point.
+ * @param minY AABB Y minimum point.
+ * @param minZ AABB Z minimum point.
+ * @param maxX AABB X maxiumum point.
+ * @param maxY AABB Y maxiumum point.
+ * @param maxZ AABB Z maxiumum point.
+ * @param nearPlane Frustum near plane.
+ * @param farPlane Frustum far plane.
+ * @return `true` if the AABB is visible, `false` otherwise.
+ */
 bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ, s32 maxX, s32 maxY, s32 maxZ, u16 nearPlane, u16 farPlane);
+
 bool func_8004A54C(s_func_8004A54C* arg0);
+
+/** @brief Converts a rotation to a direction vector with a given length.
+ *
+ * @param vec Output direction vector.
+ * @param ang Rotation to convert.
+ * @param r Radius representing the direction vector's length.
+ */
 void vwAngleToVector(SVECTOR* vec, const SVECTOR* ang, s32 r);
+
+/** @brief Converts a direction vector to a rotation.
+ *
+ * @param ang Output rotation.
+ * @param vec Direction vector to convert.
+ * @return Direction vector length.
+ */
 q19_12 vwVectorToAngle(SVECTOR* ang, const SVECTOR* vec);
 
-/** Performs linear interpolation between Y values based on an input X within the given range. */
+/** Performs linear interpolation between Y values based on an input X within the given range.
+ *
+ * TODO
+ */
 s32 vwOresenHokan(const s32* y_ary, s32 y_suu, s32 input_x, s32 min_x, s32 max_x);
 
 // ==========
@@ -522,6 +637,7 @@ bool vcSetCurNearRoadInVC_WORK(VC_WORK* w_p);
 s32  vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_type, VECTOR3* pos, VC_WORK* w_p);
 
 /** @brief Gets the closest camera path collision, outputting the result to `out_nearest_p_addr` and returning the distance to it.
+ * TODO
  *
  * @param out_nearest_p_addr Output for the closest camera path collision.
  * @param chk_type 
@@ -546,7 +662,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
  * @param center_pos Center reference position (Q19.12).
  * @param cam_pos Current position (Q19.12).
  * @param tgt_chara2watch_cir_dist Look-at offset radius.
- * @param tgt_watch_cir_r Camera position radius???
+ * @param tgt_watch_cir_r Camera position radius??? TODO
  * @param watch_cir_ang_y Y angle from the center to the look-at.
  */
 void vcSetWatchTgtXzPos(VECTOR3* watch_pos, const VECTOR3* center_pos, const VECTOR3* cam_pos, q19_12 tgt_chara2watch_cir_dist, q19_12 tgt_watch_cir_r, q3_12 watch_cir_ang_y);

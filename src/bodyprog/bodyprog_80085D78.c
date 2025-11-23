@@ -3518,7 +3518,7 @@ void func_8008D78C(void) // 0x8008D78C
 
     D_800C4818.field_A += var0 >> 1;
 
-    if (vcRetCamMvSmoothF() == 0)
+    if (vcRetCamMvSmoothF() == VC_MV_CHASE)
     {
         D_800C4818.field_A = 0;
         var1               = 0;

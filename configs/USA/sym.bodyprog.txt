@@ -398,6 +398,7 @@ Math_WeightedAverageGet                     = 0x8003F7E4; // type:func
 vcInitCamera                                = 0x8004004C; // type:func
 vcSetCameraUseWarp                          = 0x800400D4; // type:func
 vcRetCamMvSmoothF                           = 0x80040190; // type:func
+Vc_CameraElevationRateLockSet               = 0x800401A0; // type:func
 vcSetEvCamRate                              = 0x800401C0; // type:func Guessed name.
 vcMoveAndSetCamera                          = 0x800401EC; // type:func
 vcMakeHeroHeadPos                           = 0x8004047C; // type:func

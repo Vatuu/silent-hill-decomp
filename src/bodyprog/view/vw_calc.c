@@ -327,7 +327,7 @@ void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat) //
     GsCOORDINATE2* parentCoord;
     GsCOORDINATE2* curCoord;
 
-    // If no root coord, set output matrix to identity.
+    // If no root coord provided, set output matrix to identity.
     if (rootCoord == NULL)
     {
         *outMat = GsIDMATRIX;
@@ -832,7 +832,7 @@ bool func_8004A54C(s_func_8004A54C* arg0) // 0x8004A54C
 
 void vwAngleToVector(SVECTOR* vec, const SVECTOR* ang, s32 r) // 0x8004A66C
 {
-    s32 entou_r; // "Entou" means "cylinder" in Japanese. Refers to 2D radius on XZ plane.
+    s32 entou_r; // 2D radius on XZ plane.
     
     entou_r = FP_MULTIPLY(r, Math_Cos(ang->vx), Q12_SHIFT);
     vec->vy = FP_MULTIPLY(-r, Math_Sin(ang->vx), Q12_SHIFT);
@@ -843,7 +843,7 @@ void vwAngleToVector(SVECTOR* vec, const SVECTOR* ang, s32 r) // 0x8004A66C
 q19_12 vwVectorToAngle(SVECTOR* ang, const SVECTOR* vec) // 0x8004A714
 {
     VECTOR localVec;
-    q19_12 ret_r;
+    q19_12 ret_r; // Return radius representing the direction vector's length.
 
     localVec.vx = vec->vx;
     localVec.vy = vec->vy;

@@ -1221,7 +1221,7 @@ void func_800D9514(void) // 0x800D9514
         {
             if (g_SysWork.player_4C.chara_0.position_18.vx < Q12(-138.5999f))
             {
-                if (vcRetCamMvSmoothF() == 0)
+                if (vcRetCamMvSmoothF() == VC_MV_CHASE)
                 {
                     func_8005DC1C(0x5AA, &QVECTOR3(142.6f, -0.4f, 58.8f), Q8_CLAMPED(1.0f), 2);
                     Savegame_EventFlagSet(EventFlag_240);

@@ -13,6 +13,7 @@ void vwInitViewInfo(void) // 0x80048A38
     vwViewPointInfo.rview.vr.vz = Q12(1.0f);
     vwViewPointInfo.rview.rz    = Q12(0.0f);
     vwViewPointInfo.rview.super = &vwViewPointInfo.vwcoord;
+
     GsInitCoordinate2(NULL, &vwViewPointInfo.vwcoord);
     vwSetViewInfo();
 }

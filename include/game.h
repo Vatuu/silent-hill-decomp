@@ -1751,7 +1751,7 @@ static inline void SysWork_StateStepReset()
     g_SysWork.sysStateStep_C[2] = 0;
 }
 
-/** @brief Sets an NPC flag in `g_SysWork.npcFlags_2290` array.
+/** @brief Sets an NPC flag in the `g_SysWork.npcFlags_2290` bitfield.
  *
  * @param flagIdx Index of the NPC flag to set.
  */
@@ -1760,7 +1760,7 @@ static inline void SysWork_NpcFlagSet(s32 flagIdx)
     g_SysWork.npcFlags_2290 |= 1 << flagIdx;
 }
 
-/** @brief Clears an NPC flag in the `g_SysWork.npcFlags_2290` array.
+/** @brief Clears an NPC flag in the `g_SysWork.npcFlags_2290` bitfield.
  *
  * @param flagIdx Index of the NPC flag to clear.
  */

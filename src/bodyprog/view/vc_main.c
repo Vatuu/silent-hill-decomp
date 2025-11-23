@@ -116,7 +116,7 @@ void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, bool use_through_d
     vcWork.flags_8 = VC_WARP_CAM_F | VC_WARP_WATCH_F | VC_WARP_CAM_TGT_F;
 
     vcWork.cam_pos_50      = *cam_pos;
-    vcWork.cam_mv_ang_y_5C = 0;
+    vcWork.cam_mv_ang_y_5C = FP_ANGLE(0.0f);
 
     Math_Vector3Zero(&vcWork.cam_velo_60);
 
@@ -124,8 +124,8 @@ void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, bool use_through_d
 
     Math_Vector3Zero(&vcWork.cam_tgt_velo_100);
 
-    vcWork.cam_mv_ang_y_5C = 0;
-    vcWork.cam_tgt_spd_110 = 0;
+    vcWork.cam_mv_ang_y_5C = FP_ANGLE(0.0f);
+    vcWork.cam_tgt_spd_110 = Q12(0.0f);
 
     vcWork.cam_chara2ideal_ang_y_FE = Math_AngleNormalize(chara_eye_ang_y + FP_ANGLE(180.0f));
 

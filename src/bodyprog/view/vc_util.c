@@ -25,16 +25,21 @@ void vcInitCamera(struct _MapOverlayHeader* map_overlay_ptr, const VECTOR3* chr_
 
 void vcSetCameraUseWarp(const VECTOR3* chr_pos, q3_12 chr_ang_y) // 0x800400D4
 {
+    #define RADIUS Q12(1.5f)
+    #define HEIGHT Q12(1.7f)
+
     VECTOR3 cam_pos; // Q19.12
     SVECTOR cam_ang; // Q3.12
 
+    // Set rotation.
     cam_ang.vx = FP_ANGLE(0.0f);
     cam_ang.vy = chr_ang_y;
     cam_ang.vz = FP_ANGLE(0.0f);
 
-    cam_pos.vx = chr_pos->vx - FP_MULTIPLY_FLOAT(Math_Sin(chr_ang_y), 1.5f, Q12_SHIFT);
-    cam_pos.vy = chr_pos->vy - Q12(1.7f);
-    cam_pos.vz = chr_pos->vz - FP_MULTIPLY_FLOAT(Math_Cos(chr_ang_y), 1.5f, Q12_SHIFT);
+    // Set position.
+    cam_pos.vx = chr_pos->vx - FP_MULTIPLY(Math_Sin(chr_ang_y), RADIUS, Q12_SHIFT);
+    cam_pos.vy = chr_pos->vy - HEIGHT;
+    cam_pos.vz = chr_pos->vz - FP_MULTIPLY(Math_Cos(chr_ang_y), RADIUS, Q12_SHIFT);
 
     vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & SysFlag2_6);
     g_SysWork.flags_22A4 &= ~SysFlag2_6;
@@ -45,9 +50,9 @@ s32 vcRetCamMvSmoothF(void) // 0x80040190
     return g_WorldGfx.vcCameraInternalInfo_1BDC.mv_smooth;
 }
 
-void func_800401A0(bool arg0) // 0x800401A0
+void Vc_CameraElevationRateLockSet(bool isUnlocked) // 0x800401A0
 {
-    if (arg0)
+    if (isUnlocked)
     {
         g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate = Q12(1.0f);
     }
@@ -72,10 +77,10 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
     VECTOR3         first_cam_pos; // Q19.12
     VECTOR3         hr_head_pos;   // Q19.12
     s_Collision     coll;
-    q19_12          hero_bottom_y;
-    q19_12          hero_top_y;
-    q19_12          grnd_y;
-    s_SubCharacter* hr_p;
+    q19_12          hero_bottom_y; // Player bottom height.
+    q19_12          hero_top_y;    // Player top height.
+    q19_12          grnd_y;        // Absolute ground height.
+    s_SubCharacter* hr_p;          // Player position.
 
     if (change_debug_mode)
     {
@@ -197,12 +202,12 @@ void vcSetRefPosAndSysRef2CamParam(VECTOR3* ref_pos, s_SysWork* sys_p, bool for_
 
     if (right_f)
     {
-        sys_p->cameraAngleY_237A = sys_p->cameraAngleY_237A - (g_VBlanks * 11);
+        sys_p->cameraAngleY_237A -= (g_VBlanks * 11);
     }
 
     if (left_f)
     {
-        sys_p->cameraAngleY_237A = sys_p->cameraAngleY_237A + (g_VBlanks * 11);
+        sys_p->cameraAngleY_237A += (g_VBlanks * 11);
     }
 
     if (up_f)
