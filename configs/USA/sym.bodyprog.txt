@@ -1308,8 +1308,13 @@ GsSortObject4J                              = 0x80095FEC; // type:func
 Math_Sin                                    = 0x8009687C; // type:func
 Math_Cos                                    = 0x8009689C; // type:func
 Math_RotMatrixZ                             = 0x800968BC; // type:func
-Math_RotMatrixXyz						    = 0x80096A5C; // type:func
+Math_RotMatrixXyz                           = 0x80096A5C; // type:func
+Math_RotMatrix0                             = 0x80096AA4; // type:func
+Math_RotMatrix1                             = 0x80096BA0; // type:func
+Math_RotMatrixZxy                           = 0x80096C4C; // type:func
 Math_RotMatrixZxyNeg                        = 0x80096C94; // type:func
+Math_RotMatrixXyxGte                        = 0x80096CE8; // type:func
+Math_RotMatrixGte                           = 0x80096D2C; // type:func
 Math_RotMatrixZxyNegGte                     = 0x80096E78; // type:func
 
 //------------------------------------------------------------------
