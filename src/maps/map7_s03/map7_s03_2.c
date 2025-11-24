@@ -1142,7 +1142,7 @@ s32 func_800E28F4(void) // 0x800E28F4
         D_800ED73C = ((s32)(D_800ED740 * 0x7169AC35) >> 3) ^ 0xA547B39E;
         D_800ED740 = ((u32)(D_800ED73C * 0x892D719C) >> 3) ^ 0xC65A4B97;
     }
-    return (u16)D_800ED73C & 0x7FFF;
+    return (u16)D_800ED73C & SHRT_MAX;
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E2968);

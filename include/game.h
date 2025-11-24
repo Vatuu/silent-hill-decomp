@@ -1004,7 +1004,7 @@ typedef struct _Savegame
     u8              equippedWeapon_AA;        /** `e_InventoryItemId` Affects only the visible player weapon model. */
     u8              inventorySlotCount_AB;    /** Item slots. */
     u32             itemToggleFlags_AC;       /** `e_ItemToggleFlags` */
-    s32             field_B0[45];             // Related to map points?
+    s32             field_B0[45];             // Flags related to map points?
     s32             hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.
     u32             eventFlags_168[27];       // Can be accessed through `Savegame_EventFlagGet` / `Savegame_EventFlagSet`, only tested a few, but seems all are related to events and pick-up flags, grouped by location and not item types.
     s32             mapMarkingFlags_1D4[25];  // See Sparagas' `MapMarkingsFlags` struct for details of every bit.

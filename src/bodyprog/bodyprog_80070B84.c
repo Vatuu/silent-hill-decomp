@@ -6441,8 +6441,8 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     temp_s0_2 = FP_MULTIPLY_PRECISE(chara->moveSpeed_38, g_DeltaTime0, Q12_SHIFT);
 
     temp_v0_3 = chara->headingAngle_3C;
-    temp      = temp_s0_2 + 0x7FFF;
-    temp_s2_2 = (temp > 0xFFFE) * 4;
+    temp      = temp_s0_2 + SHRT_MAX;
+    temp_s2_2 = (temp > (SHRT_MAX * 2)) * 4;
     temp_s3_2 = temp_s2_2 >> 1;
 
     offset.vx = FP_MULTIPLY_PRECISE((temp_s0_2 >> temp_s3_2), Math_Sin(temp_v0_3) >> temp_s3_2, Q12_SHIFT);

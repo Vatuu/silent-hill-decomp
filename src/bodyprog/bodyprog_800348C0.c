@@ -3230,7 +3230,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             MainMenu_SelectedOptionIdxReset();
 
             // If every game over tip has been seen, reset flag bits.
-            if (g_GameWork.config_0.seenGameOverTips_2E[0] == 0x7FFF)
+            if (g_GameWork.config_0.seenGameOverTips_2E[0] == SHRT_MAX)
             {
                 g_GameWork.config_0.seenGameOverTips_2E[0] = 0;
             }
@@ -3243,7 +3243,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
                     if ((!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) >= 2u) ||
-                        ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) < 2u))
+                        ( (g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) <  2u))
                     {
                         randTipVal += 3;
                     }

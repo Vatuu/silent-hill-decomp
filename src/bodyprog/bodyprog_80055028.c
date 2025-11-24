@@ -3606,7 +3606,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0
     s32            j;
     s32            var_s5;
     s32            i;
-    s32            var_s7;
+    s32            count;
     s32            var_v0;
     s32            temp_a0_2;
 
@@ -3623,69 +3623,69 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0
     {
         case 1:
             var_s5 = 1;
-            var_s7 = 0;
+            count = 0;
             var_s3 = 6;
             break;
 
         case 2:
             var_s5 = 2;
-            var_s7 = 1;
+            count = 1;
             var_s3 = 12;
             break;
 
         case 3:
             var_s5 = 3;
-            var_s7 = Rng_TestProbabilityBits(1) + 1;
+            count = Rng_TestProbabilityBits(1) + 1;
             var_s3 = 18;
             break;
 
         case 4:
             var_s5 = 3;
-            var_s7 = Rng_TestProbabilityBits(2) + 1;
+            count = Rng_TestProbabilityBits(2) + 1;
             var_s3 = 24;
             break;
 
         case 5:
             var_s5 = 4;
-            var_s7 = Rng_TestProbabilityBits(2) + 2;
+            count = Rng_TestProbabilityBits(2) + 2;
             var_s3 = 0x1E;
             break;
 
         case 6:
             var_s5 = 4;
-            var_s7 = Rng_TestProbabilityBits(3) + 1;
+            count = Rng_TestProbabilityBits(3) + 1;
             var_s3 = 36;
             break;
 
         case 7:
             var_s5 = 5;
-            var_s7 = Rng_TestProbabilityBits(3) + 2;
+            count = Rng_TestProbabilityBits(3) + 2;
             var_s3 = 42;
             break;
 
         case 0:
         default:
             var_s5 = 0;
-            var_s7 = 0;
+            count = 0;
             var_s3 = 0;
             break;
 
         case 8:
             var_s5 = 3;
-            var_s7 = 0;
+            count = 0;
             var_s3 = 16;
             break;
 
         case 9:
             var_s5 = 1;
-            var_s7 = 0;
+            count = 0;
             var_s3 = 16;
             break;
     }
 
     if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
     {
-        var_s7 = 0;
+        count = 0;
     }
 
     if (arg2 != 8)
@@ -3770,7 +3770,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0
         }
     }
 
-    if (var_s7 == 0)
+    if (count == 0)
     {
         return;
     }
@@ -3785,7 +3785,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0
     {
         if (g_MapOverlayHeader.bloodSplats_54[j].field_0 == NO_VALUE)
         {
-            sp30[j] = 0x7FFFFFFF;
+            sp30[j] = INT_MAX;
         }
         else
         {
@@ -3805,7 +3805,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0
                 {
                     g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_A = 0;
                     g_MapOverlayHeader.bloodSplats_54[j].field_0                                          = NO_VALUE;
-                    sp30[j]                                                                               = 0x7FFFFFFF;
+                    sp30[j]                                                                               = INT_MAX;
                 }
                 else
                 {
@@ -3815,9 +3815,9 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0
         }
     }
 
-    for (j = 0; j < var_s7; j++)
+    for (j = 0; j < count; j++)
     {
-        if (sp30[j] != 0x7FFFFFFF)
+        if (sp30[j] != INT_MAX)
         {
             for (var_a1_2 = j + 1; var_a1_2 < g_MapOverlayHeader.bloodSplatCount_58; var_a1_2++)
             {
@@ -3835,7 +3835,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0
                 g_MapOverlayHeader.bloodSplats_54[j].field_0   = g_MapOverlayHeader.bloodSplats_54[var_a1_2].field_0;
                 g_MapOverlayHeader.bloodSplats_54[var_a1_2].field_0 = var_s3;
 
-                if (sp30[j] == 0x7FFFFFFF)
+                if (sp30[j] == INT_MAX)
                 {
                     break;
                 }
@@ -3843,7 +3843,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0
 
             if (sp30[j] == 0)
             {
-                var_s7 = j;
+                count = j;
                 break;
             }
         }
@@ -3851,7 +3851,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0
 
     var_s3 = 0;
 
-    for (j = 0; j < var_s7; j++)
+    for (j = 0; j < count; j++)
     {
         if (g_MapOverlayHeader.bloodSplats_54[j].field_0 != NO_VALUE)
         {
@@ -6145,9 +6145,9 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
         cellZ = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
     }
 
-    mapCoordIdxX = 0x7FFF;
+    mapCoordIdxX = SHRT_MAX;
     angle = g_SysWork.player_4C.chara_0.rotation_24.vy;
-    mapCoordIdxZ = 0x7FFF;
+    mapCoordIdxZ = SHRT_MAX;
 
     switch (map2dIdx)
     {
@@ -6527,7 +6527,7 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
 
     var_a3 = mapCoordIdxX;
 
-    if (var_a3 == 0x7FFF)
+    if (var_a3 == SHRT_MAX)
     {
         return 0;
     }
@@ -9203,7 +9203,7 @@ bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos, VECT
     arg0->field_0  = arg1;
     arg0->field_4  = D_800C4478.field_0; // Struct could begin some point earlier.
     arg0->field_6  = arg2;
-    arg0->field_8  = 0x7FFF;
+    arg0->field_8  = SHRT_MAX;
     arg0->field_20 = 0;
 
     arg0->field_2C.vx = Q12_TO_Q8(pos->vx);
@@ -9286,7 +9286,7 @@ bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1) // 0x8006DEB0
     }
 
     // TODO: `* 16`s are Q8 to Q12?
-    if (arg1->field_8 != 0x7FFF)
+    if (arg1->field_8 != SHRT_MAX)
     {
         arg0->field_4.vx = arg1->field_C * 16;
         arg0->field_4.vy = arg1->field_10 * 16;

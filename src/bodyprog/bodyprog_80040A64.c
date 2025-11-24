@@ -748,22 +748,22 @@ void Ipd_ActiveChunksClear(s_Map* map, s32 arg1) // 0x80042300
     s32          step;
     s32          i;
     s_IpdChunk*  curChunk;
-    s_IpdHeader* ipd0;
-    s_IpdHeader* ipd1;
+    s_IpdHeader* ipdHdr0;
+    s_IpdHeader* ipdHdr1;
 
-    ipd0  = map->ipdBuffer_150;
+    ipdHdr0  = map->ipdBuffer_150;
     step = (map->ipdBufferSize_154 / arg1) & ~0x3;
 
-    for (i = 0; i < 4; i++, *(u8**)&ipd0 += step)
+    for (i = 0; i < 4; i++, *(u8**)&ipdHdr0 += step)
     {
         curChunk = &map->ipdActive_15C[i];
 
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
-            ipd1 = curChunk->ipdHdr_0;
-            if (ipd1->isLoaded_1)
+            ipdHdr1 = curChunk->ipdHdr_0;
+            if (ipdHdr1->isLoaded_1)
             {
-                Lm_MaterialRefCountDec(ipd1->lmHdr_4);
+                Lm_MaterialRefCountDec(ipdHdr1->lmHdr_4);
             }
         }
 
@@ -773,7 +773,7 @@ void Ipd_ActiveChunksClear(s_Map* map, s32 arg1) // 0x80042300
 
         if (i < arg1)
         {
-            curChunk->ipdHdr_0 = ipd0;
+            curChunk->ipdHdr_0 = ipdHdr0;
         }
         else
         {

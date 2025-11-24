@@ -957,7 +957,7 @@ s32 func_800D7394(void) // 0x800D7394
         D_800DB918 = ((u32)(D_800DB914 * 0x892D719C) >> 3) ^ 0xC65A4B97;
     }
 
-    return (u16)D_800DB914 & 0x7FFF;
+    return (u16)D_800DB914 & SHRT_MAX;
 }
 
 void func_800D7408(void) // 0x800D7408

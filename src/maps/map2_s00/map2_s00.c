@@ -2023,8 +2023,8 @@ void func_800EB3F4(void) // 0x800EB3F4
             SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
 
             // TODO: Odd float values, maybe using different Q format for `s16`?
-            D_800F22AE    += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0277f), Q12_SHIFT);
-            D_800F22AE     = MAX(Q12(-0.0137f), D_800F22AE);
+            D_800F22AE += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0277f), Q12_SHIFT);
+            D_800F22AE  = MAX(Q12(-0.0137f), D_800F22AE);
 
             D_800F538C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800F22AE, Q12_SHIFT);
             if (D_800F538C.vy < Q12(-0.02222f)) // TODO: `MAX`? Currently doesn't match.

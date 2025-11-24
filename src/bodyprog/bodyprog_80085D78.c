@@ -3548,7 +3548,7 @@ s32 func_8008D850(void) // 0x8008D850
     StoreImage2(&rect, &unk.field_0);
     DrawSync(SyncMode_Wait);
 
-    return (unk.field_0 & 0x7FFF) == 0x7FFF;
+    return (unk.field_0 & SHRT_MAX) == SHRT_MAX;
 }
 
 s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0

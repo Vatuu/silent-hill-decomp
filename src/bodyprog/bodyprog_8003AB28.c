@@ -1690,7 +1690,7 @@ void func_8003D468(e_CharacterId charaId, bool flag) // 0x8003D468
         {
             if (!flag)
             {
-                data[i] &= 0x7FFF;
+                data[i] &= SHRT_MAX;
             }
             else
             {
