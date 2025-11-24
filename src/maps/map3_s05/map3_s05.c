@@ -847,32 +847,32 @@ void func_800D8424(void) // 0x800D8424
 void func_800D87AC(void) // 0x800D87AC
 {
     VECTOR3 soundPos;
-    s32     cz;
-    s32     cx;
+    s32     cellX;
+    s32     cellZ;
+    s32     projCellX;
+    s32     projCellZ;
     s32     flags;
     s32     i;
     s32     newZ;
-    s32     chunkX;
-    s32     chunkZ;
     s32     rng0;
     s32     rng1;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    chunkX = g_SysWork.player_4C.chara_0.position_18.vx / Q12(40.0f);
-    cx = (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f)) ? (chunkX + 1) : (chunkX - 1);
+    cellX = g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE;
+    projCellX = (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f)) ? (cellX + 1) : (cellX - 1);
 
-    chunkZ = g_SysWork.player_4C.chara_0.position_18.vz / Q12(40.0f);
-    cz = (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f)) ? (chunkZ + 1) : (chunkZ - 1);
+    cellZ = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
+    projCellZ = (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f)) ? (cellZ + 1) : (cellZ - 1);
 
     flags = 0;
     func_80069844(0xFFFF);
 
-    if (cx == 2 && cz == -3 && !Savegame_EventFlagGet(EventFlag_M3S05_PickupVideoTape))
+    if (projCellX == 2 && projCellZ == -3 && !Savegame_EventFlagGet(EventFlag_M3S05_PickupVideoTape))
     {
         g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C, &g_WorldObject2.rotation_28);
     }
 
-    if (cx == 1 && cz == -3)
+    if (projCellX == 1 && projCellZ == -3)
     {
         g_WorldGfx_ObjectAdd(&g_WorldObject3.object_0, &g_WorldObject3.position_1C, &g_WorldObject3.rotation_28);
 
@@ -882,7 +882,7 @@ void func_800D87AC(void) // 0x800D87AC
         }
     }
 
-    if (cx == 2 && cz == -1)
+    if (projCellX == 2 && projCellZ == -1)
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S05_CabinetPushed))
         {
@@ -898,7 +898,7 @@ void func_800D87AC(void) // 0x800D87AC
         g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &g_WorldObject0.rotation_28);
     }
 
-    if (cx == 1 && cz == -1)
+    if (projCellX == 1 && projCellZ == -1)
     {
         if (!Savegame_EventFlagGet(EventFlag_284))
         {
@@ -909,10 +909,9 @@ void func_800D87AC(void) // 0x800D87AC
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject6, &D_800DD430, &D_800DD448);
         }
-        
     }
 
-    if (cx == 4 && cz == -1)
+    if (projCellX == 4 && projCellZ == -1)
     {
         if (!Savegame_EventFlagGet(EventFlag_M3S05_PickupHammer))
         {
@@ -935,7 +934,7 @@ void func_800D87AC(void) // 0x800D87AC
 
     func_8006982C(flags);
 
-    if (cx == 4 && cz == -2)
+    if (projCellX == 4 && projCellZ == -2)
     {
         if (D_800DD52A > Q12(0.0f))
         {
@@ -961,7 +960,7 @@ void func_800D87AC(void) // 0x800D87AC
         }
     }
 
-    if (cx == 1 && cz == 2)
+    if (projCellX == 1 && projCellZ == 2)
     {
         if (g_SysWork.sysState_8 == SysState_Gameplay && g_WorldObject1->position_1C.vz != Q12(59.1f))
         {

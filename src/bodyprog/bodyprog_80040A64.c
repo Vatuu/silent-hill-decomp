@@ -1689,8 +1689,8 @@ void func_80044090(s_IpdHeader* ipdHdr, s32 posX, s32 posZ, GsOT* ot, void* arg4
     s32                 geomY;
     s32                 cellBoundZ;
     s32                 cellBoundX;
-    s32                 unkStepZ;
-    s32                 unkStepX;
+    s32                 subcellZ;
+    s32                 subcellX;
     s32                 i;
     s_IpdModelBuffer*   ipdModelBuf;
     s_IpdModelBuffer_C* var_s0;
@@ -1705,21 +1705,20 @@ void func_80044090(s_IpdHeader* ipdHdr, s32 posX, s32 posZ, GsOT* ot, void* arg4
     cellBoundX = ipdHdr->cellX_2 * Q8(40.0f);
     cellBoundZ = ipdHdr->cellZ_3 * Q8(40.0f);
 
-    // TODO: Subcells?
-    unkStepX = FLOOR_TO_STEP(geomX - cellBoundX, Q8(8.0f));
-    unkStepZ = FLOOR_TO_STEP(geomY - cellBoundZ, Q8(8.0f));
-    unkStepX = MAX(unkStepX, 0);
-    unkStepZ = MAX(unkStepZ, 0);
-    unkStepX = MIN(unkStepX, 4);
-    unkStepZ = MIN(unkStepZ, 4);
+    // Compute subcells.
+    subcellX = FLOOR_TO_STEP(geomX - cellBoundX, Q8(8.0f));
+    subcellZ = FLOOR_TO_STEP(geomY - cellBoundZ, Q8(8.0f));
+    subcellX = MAX(subcellX, 0);
+    subcellZ = MAX(subcellZ, 0);
+    subcellX = MIN(subcellX, 4);
+    subcellZ = MIN(subcellZ, 4);
 
     modelInfo.field_4 = &coord;
-    coord.flg     = true;
+    coord.flg         = true;
     modelInfo.field_0 = 0;
-    coord.super   = NULL;
+    coord.super       = NULL;
 
-    temp_fp = &ipdHdr->textureCount_1C + (unkStepZ * 10) + (unkStepX * 2);
-
+    temp_fp = &ipdHdr->textureCount_1C + (subcellZ * 10) + (subcellX * 2);
     for (i = temp_fp[0]; i < temp_fp[1] + temp_fp[0]; i++)
     {
         ipdModelBuf = &ipdHdr->modelBuffers_18[ipdHdr->modelOrderList_50[i]];
