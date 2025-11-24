@@ -2218,6 +2218,8 @@ void sharedFunc_800D5974_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D69A0_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D93E8_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DBDEC_2_s00(s_SubCharacter* chara);
@@ -2263,6 +2265,8 @@ void sharedFunc_800DF710_2_s00(s_SubCharacter* chara);
 void sharedFunc_800DF80C_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DF8A0_2_s00(s_SubCharacter*);
+
+void sharedFunc_800E012C_2_s00(s_SubCharacter*); // Assumed return type.
 
 void sharedFunc_800E041C_2_s00(s_SubCharacter* chara);
 
@@ -2759,7 +2763,7 @@ void sharedFunc_800DF2D0_2_s00(s_SubCharacter*);
 
 void sharedFunc_800D4E84_0_s01(s_SubCharacter* chara);
 
-void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 arg1, s32 angle);
+void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 radius, s32 angle);
 
 void sharedFunc_800CE934_0_s02(void);
 
@@ -2795,7 +2799,7 @@ void sharedFunc_800DE1F8_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DEC64_2_s00(s_SubCharacter* chara);
 
-void sharedFunc_800DEC84_2_s00(s_SubCharacter* chara, s32 arg1, s32 angle);
+void sharedFunc_800DEC84_2_s00(s_SubCharacter* chara, s32 radius, s32 angle);
 
 void sharedFunc_800DECA4_2_s00(s_SubCharacter* chara, VECTOR3* vec, s32 distance);
 
