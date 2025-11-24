@@ -2222,7 +2222,7 @@ bool sharedFunc_800DC0A8_2_s00(s_SubCharacter* chara);
 
 bool sharedFunc_800DC200_2_s00(s_SubCharacter* chara);
 
-s32 sharedFunc_800DC30C_2_s00(s_SubCharacter*);
+bool sharedFunc_800DC30C_2_s00(s_SubCharacter* chara);
 
 bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* chara);
 
