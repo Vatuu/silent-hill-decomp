@@ -238,3 +238,4 @@ g_WorldObject_DrOpen1               = 0x800F3F78; // type:WorldObjectDescNoRot s
 g_WorldObject_DrOpen2               = 0x800F3FA8; // type:WorldObjectDescNoRot size:0x24
 g_WorldObject_DrClose               = 0x800F3FD8; // type:WorldObjectDescNoRot size:0x24
 g_CommonWorldObjects                = 0x800F4008; // type:WorldObject_0 size:0xA8
+g_CommonWorldObjectPoses            = 0x800F0048; // type:WorldObjectPos size:0x3C
