@@ -110,6 +110,7 @@ sharedFunc_800DC3BC_2_s00           = 0x800DBD78; // type:func
 sharedFunc_800DC438_2_s00           = 0x800DBDF4; // type:func
 sharedFunc_800DC598_2_s00           = 0x800DBF54; // type:func
 sharedFunc_800DC67C_2_s00           = 0x800DC038; // type:func
+sharedFunc_800DC6E4_2_s00           = 0x800DC0A0; // type:func
 sharedFunc_800DC98C_2_s00           = 0x800DC348; // type:func
 sharedFunc_800D4E84_0_s01           = 0x800DC6E0; // type:func
 sharedFunc_800D5274_0_s01           = 0x800DCAD0; // type:func
@@ -235,6 +236,7 @@ MAP_MESSAGES                        = 0x800EFEAC; // type:u32 size:0x6C
 //----------------------------------------------------
 //--- PA: 0x0269A0   VA: 0x800EFF18   subsegment: data
 //----------------------------------------------------
+g_CommonWorldObjectPoses            = 0x800F0048; // type:WorldObjectPos size:0x3C
 sharedData_800DFB4C_0_s00           = 0x800F0508;
 sharedData_800DFB50_0_s00           = 0x800F050C;
 sharedData_800DE170_0_s01           = 0x800F0518; // type:VECTOR3 size:0xC
@@ -283,4 +285,3 @@ g_WorldObject_DrOpen1               = 0x800F3F78; // type:WorldObjectDescNoRot s
 g_WorldObject_DrOpen2               = 0x800F3FA8; // type:WorldObjectDescNoRot size:0x24
 g_WorldObject_DrClose               = 0x800F3FD8; // type:WorldObjectDescNoRot size:0x24
 g_CommonWorldObjects                = 0x800F4008; // type:WorldObject_0 size:0xA8
-g_CommonWorldObjectPoses            = 0x800F0048; // type:WorldObjectPos size:0x3C
