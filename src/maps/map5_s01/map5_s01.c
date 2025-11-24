@@ -230,7 +230,7 @@ void func_800DC230(void) {}
 
 #include "maps/shared/sharedFunc_800D4A80_0_s01.h" // 0x800DC238
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800DBF88_2_s00); // 0x800DC2A4
+#include "maps/shared/sharedFunc_800DBF88_2_s00.h" // 0x800DC2A4
 
 #include "maps/shared/sharedFunc_800DC0A8_2_s00.h" // 0x800DC3C4
 
