@@ -2218,6 +2218,10 @@ void sharedFunc_800D5974_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D69A0_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D93E8_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800DBDEC_2_s00(s_SubCharacter* chara);
+
 s32 sharedFunc_800DBF88_2_s00(s_SubCharacter*, s32); // Assumed return type
 
 bool sharedFunc_800DC0A8_2_s00(s_SubCharacter* chara);
