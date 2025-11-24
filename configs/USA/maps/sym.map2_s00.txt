@@ -5,6 +5,9 @@
 //=== .rodata section
 //================================================
 
+sharedData_800F21EC_2_s00 = 0x800F21EC; // type:VECTOR3 size:0xC
+
+sharedFunc_800DECC4_2_s00 = 0x800DECC4; // type:func
 
 //-----------------------------------------------------------------
 //--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map2_s00

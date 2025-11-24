@@ -2191,6 +2191,8 @@ extern VECTOR3 sharedData_800F216C_2_s00;
 
 extern VECTOR3 sharedData_800F217C_2_s00;
 
+extern VECTOR3 sharedData_800F21EC_2_s00;
+
 q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
 
 /* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
@@ -2259,6 +2261,8 @@ void sharedFunc_800DE11C_2_s00(s_SubCharacter* chara);
 void sharedFunc_800DE6A8_2_s00(s_SubCharacter* chara, VECTOR3* vec, s32 distance);
 
 void sharedFunc_800DEBCC_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800DECC4_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DF710_2_s00(s_SubCharacter* chara);
 
