@@ -1,4 +1,26 @@
+
+
+
+//================================================
+//=== .rodata section
+//================================================
+
+
+//-----------------------------------------------------------------
+//--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map6_s00
+//-----------------------------------------------------------------
 sharedData_800CAA98_0_s01           = 0x800CA8FC; // type:s32 size:0xD6C
+
+
+
+//================================================
+//=== .text section
+//================================================
+
+
+//-----------------------------------------------------------
+//--- PA: 0x0035B8   VA: 0x800CCB30   subsegment: c, map6_s00
+//-----------------------------------------------------------
 sharedFunc_800CB6B0_0_s00           = 0x800CCB30; // type:func
 sharedFunc_800CBBBC_0_s00           = 0x800CCFCC; // type:func
 sharedFunc_800CBC94_0_s00           = 0x800CD0A4; // type:func
@@ -94,6 +116,7 @@ sharedFunc_800D5274_0_s01           = 0x800DCAD0; // type:func
 sharedFunc_800DD2C4_2_s00           = 0x800DCC80; // type:func
 sharedFunc_800DD4A4_2_s00           = 0x800DCE60; // type:func
 sharedFunc_800DD4EC_2_s00           = 0x800DCEA8; // type:func
+sharedFunc_800DDE14_2_s00           = 0x800DD7D0; // type:func
 sharedFunc_800DDF74_2_s00           = 0x800DD930; // type:func
 sharedFunc_800DE034_2_s00           = 0x800DD9F0; // type:func
 sharedFunc_800DE11C_2_s00           = 0x800DDAD8; // type:func
@@ -102,11 +125,12 @@ sharedFunc_800DE250_2_s00           = 0x800DDC0C; // type:func
 sharedFunc_800DE578_2_s00           = 0x800DDF34; // type:func
 sharedFunc_800D529C_0_s01           = 0x800DDF54; // type:func
 sharedFunc_800DE6A8_2_s00           = 0x800DE064; // type:func
+sharedFunc_800DE7E0_2_s00           = 0x800DE19C; // type:func
 sharedFunc_800DEBCC_2_s00           = 0x800DE588; // type:func
 sharedFunc_800DEC64_2_s00           = 0x800DE620; // type:func
 sharedFunc_800DEC84_2_s00           = 0x800DE640; // type:func
 sharedFunc_800DECA4_2_s00           = 0x800DE660; // type:func
-sharedFunc_800DECC4_2_s00 = 0x800DE680; // type:func
+sharedFunc_800DECC4_2_s00           = 0x800DE680; // type:func
 sharedFunc_800DF22C_2_s00           = 0x800DEBE8; // type:func
 sharedFunc_800DF24C_2_s00           = 0x800DEC08; // type:func
 sharedFunc_800D5638_0_s01           = 0x800DEC28; // type:func
@@ -178,6 +202,17 @@ sharedFunc_800D929C_0_s00           = 0x800EAB00; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800EAFF8; // type:func
 MapEvent_CommonItemTake             = 0x800EB090; // type:func
 Map_WorldObjectsInit                = 0x800EBCE8; // type:func
+
+
+
+//================================================
+//=== .data section
+//================================================
+
+
+//----------------------------------------------------
+//--- PA: 0x023D54   VA: 0x800ED2CC   subsegment: data
+//----------------------------------------------------
 HARRY_M6S00_ANIM_INFOS              = 0x800ED2CC;
 sharedData_800DD584_0_s00           = 0x800ED64D; // type:u8
 sharedData_800DD588_0_s00           = 0x800ED650; // type:s32
@@ -191,7 +226,15 @@ sharedData_800DD870_0_s01           = 0x800ED764; // type:VECTOR3 size:0xC
 sharedData_800DD880_0_s01           = 0x800ED774; // type:VECTOR3 size:0xC
 GROANER_ANIM_INFOS                  = 0x800ED784; // type:s32 unknown type
 ROPMER_ANIM_INFOS                   = 0x800EF24C; // type:s32 unknown type
+
+//---------------------------------------------------------------
+//--- PA: 0x026934   VA: 0x800EFEAC   subsegment: .data, map6_s00
+//---------------------------------------------------------------
 MAP_MESSAGES                        = 0x800EFEAC; // type:u32 size:0x6C
+
+//----------------------------------------------------
+//--- PA: 0x0269A0   VA: 0x800EFF18   subsegment: data
+//----------------------------------------------------
 sharedData_800DFB4C_0_s00           = 0x800F0508;
 sharedData_800DFB50_0_s00           = 0x800F050C;
 sharedData_800DE170_0_s01           = 0x800F0518; // type:VECTOR3 size:0xC
@@ -199,7 +242,9 @@ sharedData_800DE180_0_s01           = 0x800F0528; // type:VECTOR3 size:0xC
 sharedData_800DE190_0_s01           = 0x800F0538; // type:VECTOR3 size:0xC
 sharedData_800F216C_2_s00           = 0x800F0548; // type:VECTOR3 size:0xC
 sharedData_800F217C_2_s00           = 0x800F0558; // type:VECTOR3 size:0xC
-sharedData_800F21EC_2_s00 = 0x800F05C8; // type:VECTOR3 size:0xC
+sharedData_800F21BC_2_s00           = 0x800F0598; // type:VECTOR3 size:0xC
+sharedData_800F21DC_2_s00           = 0x800F05B8; // type:VECTOR3 size:0xC
+sharedData_800F21EC_2_s00           = 0x800F05C8; // type:VECTOR3 size:0xC
 sharedData_800DE1E0_0_s01           = 0x800F05F8; // type:VECTOR3 size:0xC
 sharedData_800DE1F0_0_s01           = 0x800F0608; // type:VECTOR3 size:0xC
 g_Particle_SpeedX                   = 0x800F0688; // type:s32
