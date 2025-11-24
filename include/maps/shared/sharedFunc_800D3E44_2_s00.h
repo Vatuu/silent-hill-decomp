@@ -13,7 +13,7 @@ void sharedFunc_800D3E44_2_s00(s_SubCharacter* chara)
     switch (Chara_DamageTake(chara, Q12(1.0f)))
     {
         case 0:
-            if (sharedData_800E231C_0_s01.result_0 & 4)
+            if (sharedData_800E231C_0_s01.result_0 & (1 << 2))
             {
                 if (!chara->properties_E4.unk0.field_E8_8)
                 {
@@ -28,7 +28,7 @@ void sharedFunc_800D3E44_2_s00(s_SubCharacter* chara)
                 {
                     chara->model_0.state_2               = 10;
                     chara->model_0.stateStep_3           = 0;
-                    chara->flags_3E                     |= 4;
+                    chara->flags_3E                     |= 1 << 2;
                     chara->properties_E4.unk0.flags_11C |= 1 << 4;
                 }
             }
@@ -54,7 +54,7 @@ void sharedFunc_800D3E44_2_s00(s_SubCharacter* chara)
             chara->model_0.state_2     = 17;
             chara->model_0.stateStep_3 = 0;
 
-            if (chara->health_B0 <= 0)
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= 1 << 6;
             }

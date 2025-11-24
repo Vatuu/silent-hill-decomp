@@ -25,7 +25,7 @@ void sharedFunc_800D598C_0_s01(s_SubCharacter* chara)
     pos0   = &chara->properties_E4.unk0.field_F8; // `sharedFunc_800D57C8_0_s01` uses `field_110`.
     dist   = Math_Distance2dGet(pos, pos0);
     angle  = FP_ANGLE_NORM_S(func_80080478(pos, pos0) - chara->rotation_24.vy);
-    tmp    = sharedFunc_800D569C_0_s01(chara, chara->properties_E4.unk0.field_F8.vy, dist); // `sharedFunc_800D57C8_0_s01` uses `pos0->vy`. Here we access it from chara (full offset).
+    tmp    = sharedFunc_800D569C_0_s01(chara, chara->properties_E4.unk0.field_F8.vy, dist); // `sharedFunc_800D57C8_0_s01` uses `pos0->vy`. Here it's accessed from chara (full offset).
     var_t4 = 0;
     posY   = tmp - chara->position_18.vy;
 
@@ -85,7 +85,7 @@ void sharedFunc_800D598C_0_s01(s_SubCharacter* chara)
         }
     }
 
-    element2 = sharedData_800CAA98_0_s01.unk_380[7][0]; // Hardcoded 7 instead of idx0.
+    element2 = sharedData_800CAA98_0_s01.unk_380[7][0]; // Hardcoded 7 instead of `idx0`.
     element3 = sharedData_800CAA98_0_s01.unk_380[7][1];
     base     = &sharedData_800E21D0_0_s01;
 

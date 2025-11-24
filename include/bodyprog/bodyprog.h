@@ -759,8 +759,8 @@ typedef struct _IpdHeader
 {
     u8                 magic_0;
     u8                 isLoaded_1; /** `bool` */
-    s8                 levelGridX_2;
-    s8                 levelGridY_3;
+    s8                 cellX_2;
+    s8                 cellZ_3;
     s_LmHeader*        lmHdr_4;
     u8                 modelCount_8;
     u8                 modelBufferCount_9;
@@ -1151,7 +1151,7 @@ typedef struct _Map
     s32                mapTagSize_148;
     s32                ipdFileIdx_14C;
     s_IpdHeader*       ipdBuffer_150;
-    s32                ipdBufSize_154;
+    s32                ipdBufferSize_154;
     s32                ipdActiveSize_158;
     s_IpdChunk         ipdActive_15C[4];
     s_IpdColumn        ipdGrid_1CC[18];
@@ -2870,8 +2870,8 @@ void Map_IpdCollisionDataInit(void);
 /** @brief Places an IPD chunk at given XZ chunk cell coordinates.
  *
  * @param ipdFileIdx Index of the IPD chunk file to place.
- * @param cellX X chunk coordinate.
- * @param cellZ Z chunk coordinate.
+ * @param cellX X chunk cell.
+ * @param cellZ Z chunk cell.
  */
 void Map_PlaceIpdAtCell(s16 ipdFileIdx, s32 cellX, s32 cellZ);
 
@@ -2945,7 +2945,7 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
  * @param isExterior `true` for padded exterior, `false` for non-padded interior.
  * @return Padded distance from the XZ position to the XZ chunk cell.
  */
-q19_12 Ipd_PaddedDistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ, bool isExterior);
+q19_12 Ipd_PaddedDistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ, bool isExterior);
 
 /** @brief Computes the distance from an XZ position to the edge of an XZ chunk cell boundary.
  * If the position resides inside the chunk, the distance is `Q12(0.0f)`.
@@ -2956,7 +2956,7 @@ q19_12 Ipd_PaddedDistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX,
  * @param cellZ Z chunk cell.
  * @return Distance from the XZ position to the XZ chunk cell.
  */
-q19_12 Ipd_DistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 ipdChunkCoordX, s32 ipdChunkCoordZ);
+q19_12 Ipd_DistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ);
 
 s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
@@ -2968,7 +2968,7 @@ void func_800433B8(s_Map* map);
 
 void func_800433B8(s_Map* map);
 
-s32 Map_IpdIdxGet(s32 gridX, s32 gridZ);
+s32 Map_IpdIdxGet(s32 cellX, s32 cellZ);
 
 bool Map_IsIpdPresent(s_IpdChunk* chunks, s32 cellX, s32 cellZ);
 
@@ -3015,10 +3015,10 @@ s_ModelHeader* LmHeader_ModelHeaderSearch(u_Filename* modelName, s_LmHeader* lmH
 /** @brief Assigns `s_ModelHeader` pointers to each `s_IpdModelBuffer` in `s_IpdHeader`. */
 void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* ipdModels);
 
-/** Sets IPD collision data grid coords? */
-void func_80044044(s_IpdHeader* ipd, s32 gridX, s32 gridZ);
+/** Sets IPD collision data chunk cells? */
+void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ);
 
-void func_80044090(s_IpdHeader* ipdHdr, s32 arg1, s32 arg2, GsOT* ot, void* arg4);
+void func_80044090(s_IpdHeader* ipdHdr, s32 posX, s32 posZ, GsOT* ot, void* arg4);
 
 bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_8 z);
 

@@ -2191,18 +2191,17 @@ void func_80038354(void) // 0x80038354
 
                     if (var_t5 != 0)
                     {
-                        s32 a = (g_SysWork.player_4C.chara_0.position_18.vx + Q12(160.0f)) / Q12(40.0f);
-                        s32 b = (npc->position_18.vx + Q12(160.0f)) / Q12(40.0f);
-
-                        if (b != a)
+                        s32 playerCell = (g_SysWork.player_4C.chara_0.position_18.vx + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                        s32 npcCell    = (npc->position_18.vx                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                        if (npcCell != playerCell)
                         {
                             continue;
                         }
 
-                        a = (g_SysWork.player_4C.chara_0.position_18.vz + Q12(160.0f)) / Q12(40.0f);
-                        b = (npc->position_18.vz + Q12(160.0f)) / Q12(40.0f);
-
-                        if (b != a)
+                        // TODO: Unique vars for these.
+                        playerCell = (g_SysWork.player_4C.chara_0.position_18.vz + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                        npcCell    = (npc->position_18.vz                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                        if (npcCell != playerCell)
                         {
                             continue;
                         }

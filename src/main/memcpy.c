@@ -6,16 +6,16 @@
  */
 char* memcpy(void* dest0, void* src0, unsigned int count)
 {
-    u8*           ret;
     s32           i;
-    s32*          dest32;
-    s32           src_offset;
-    u32           src_data;
+    s32           srcOffset;
+    u32           srcData;
     s32           part;
     s32           mask;
     s32           mask2;
     s32           comb;
     s32           v0;
+    u8*           ret;
+    s32*          dest32;
     u8*           dest;
     u8*           src;
     register s32* src32 asm("a2");
@@ -38,12 +38,12 @@ char* memcpy(void* dest0, void* src0, unsigned int count)
         *dest++ = *src++;
     }
 
-    src_offset = (u32)src % 4;
+    srcOffset = (u32)src % 4;
     if (v1 > 0)
     {
         dest32 = (s32*)dest;
 
-        if (src_offset == 0)
+        if (srcOffset == 0)
         {
             v1   -= 4;
             src32 = (s32*)src;
@@ -69,30 +69,28 @@ char* memcpy(void* dest0, void* src0, unsigned int count)
         }
         else
         {
-            src32 = (s32*)(src - src_offset);
+            src32 = (s32*)(src - srcOffset);
 
-            src_offset *= 8;
-            i           = 32 - src_offset;
+            srcOffset *= 8;
+            i           = 32 - srcOffset;
 
-            src_data = *src32++;
-            part     = src_data >> src_offset;
+            srcData = *src32++;
+            part     = srcData >> srcOffset;
 
             v1 -= 4;
-
             for (; v1 >= 0; v1 -= 4)
             {
-                src_data  = *src32++;
-                part     |= (src_data << i);
+                srcData  = *src32++;
+                part     |= (srcData << i);
                 *dest32++ = part;
-                part      = src_data >> src_offset;
+                part      = srcData >> srcOffset;
             }
-
             v1 += 4;
 
             if (v1 > 0)
             {
                 v0      = 32 - (v1 * 8);
-                v1      = -1U >> v0;
+                v1      = -1u >> v0;
                 a0      = *src32;
                 v0      = a0 << i;
                 part   |= v0;
