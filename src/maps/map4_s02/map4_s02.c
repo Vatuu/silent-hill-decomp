@@ -206,11 +206,11 @@ void func_800DAAF8(void) {}
 
 #include "maps/shared/sharedFunc_800D4A80_0_s01.h" // 0x800DAB00
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DAB6C);
+INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800DBF88_2_s00); // 0x800DAB6C
 
 #include "maps/shared/sharedFunc_800DC0A8_2_s00.h" // 0x800DAC8C
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DACC8);
+INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800DC0E4_2_s00); // 0x800DACC8
 
 #include "maps/shared/sharedFunc_800DC200_2_s00.h" // 0x800DADE4
 
@@ -218,7 +218,7 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DACC8);
 
 #include "maps/shared/sharedFunc_800DC3BC_2_s00.h" // 0x800DAFA0
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DB01C);
+#include "maps/shared/sharedFunc_800DC438_2_s00.h" // 0x800DB01C
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800DB0F0);
 

@@ -230,11 +230,11 @@ void func_800DC230(void) {}
 
 #include "maps/shared/sharedFunc_800D4A80_0_s01.h" // 0x800DC238
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DC2A4);
+INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800DBF88_2_s00); // 0x800DC2A4
 
 #include "maps/shared/sharedFunc_800DC0A8_2_s00.h" // 0x800DC3C4
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DC400);
+INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800DC0E4_2_s00); // 0x800DC400
 
 #include "maps/shared/sharedFunc_800DC200_2_s00.h" // 0x800DC51C
 
@@ -242,7 +242,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DC400);
 
 #include "maps/shared/sharedFunc_800DC3BC_2_s00.h" // 0x800DC6D8
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DC754);
+#include "maps/shared/sharedFunc_800DC438_2_s00.h" // 0x800DC754
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800DC828);
 

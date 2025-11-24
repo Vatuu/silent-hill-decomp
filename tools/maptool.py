@@ -15,9 +15,8 @@
 #   --matchings              Only compare map1 'matchings' against map2 'nonmatchings'
 #   --nonmatchings           Only compare map1 'nonmatchings' against map2 'nonmatchings'
 #   If none of above are set, will compare both against map2 'nonmatchings'
-#   --replace                Replace INCLUDE_ASM for 'sharedFunc' funcs in map2 .c with #include
-#   --updsyms                Update and reorder map2 sym.txt with shared functions
-#   --when [funcName]        Only apply --replace / --updsyms if funcName has been matched in this map (to help with sub-function false-positives)
+#   --update                 Replace INCLUDE_ASM for 'sharedFunc' funcs in map2 .c with #include, update and reorder map2 sym.txt with shared functions
+#   --when [funcName]        Only apply --update if funcName has been matched in this map (to help with sub-function false-positives)
 #
 # Map header options:
 #   --list [MAP_NAME]        List character spawns from MAP_NAME map headers
@@ -581,7 +580,7 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
             if funcToMatchBeforeUpdating is not None:
                 present = funcToMatchBeforeUpdating in sharedFuncSymbols.values() or funcToMatchBeforeUpdating in file2_syms.keys()
                 if not present:
-                    print(f"\n{funcToMatchBeforeUpdating} not found in this map, skipping --replace/--updsyms");
+                    print(f"\n{funcToMatchBeforeUpdating} not found in this map, skipping --update");
                     return
 
         # Optional replacement in .c file
@@ -824,9 +823,8 @@ def print_usage():
     print("  --matchings                 Only compare map1 'matchings' against map2 'nonmatchings'")
     print("  --nonmatchings              Only compare map1 'nonmatchings' against map2 'nonmatchings'")
     print("  If none of above are set, will compare both against map2 'nonmatchings'")
-    print("  --replace                   Replace INCLUDE_ASM for 'sharedFunc' funcs in map2 .c with #include")
-    print("  --updsyms                   Update and reorder map2 sym.txt with shared functions")
-    print("  --when [funcName]           Only apply --replace / --updsyms if funcName has been matched in this map (to help with sub-function false-positives)")
+    print("  --update                    Replace INCLUDE_ASM for 'sharedFunc' funcs in map2 .c with #include, update and reorder map2 sym.txt with shared functions")
+    print("  --when [funcName]           Only apply --update if funcName has been matched in this map (to help with sub-function false-positives)")
     print()
     print("Map header options:")
     print("  --list [MAP_NAME]           List character spawns from MAP_NAME map headers")
@@ -851,9 +849,8 @@ def main():
     parser.add_argument("-h", "--help", action="store_true", help="Show this help message and exit")
     parser.add_argument("--matchings", action="store_true", help="Only compare map1 `matchings` against map2 `nonmatchings`")
     parser.add_argument("--nonmatchings", action="store_true", help="Only compare map1 `nonmatchings` against map2 `nonmatchings`")
-    parser.add_argument("--replace", action="store_true", help="Replace INCLUDE_ASM with #include for shared funcs")
-    parser.add_argument("--updsyms", action="store_true", help="Update and reorder sym.txt with shared functions")
-    parser.add_argument("--when", type=str, help="Only apply --replace / --updsyms if funcName has been matched in this map")
+    parser.add_argument("--update", action="store_true", help="Replace INCLUDE_ASM with #include for shared func, update and reorder sym.txt with shared functions")
+    parser.add_argument("--when", type=str, help="Only apply --update if funcName has been matched in this map")
     
     parser.add_argument("--list", action="store_true", help="List character spawns from map headers")
     parser.add_argument("--searchChara", type=int, help="Search all maps for character ID")
@@ -956,9 +953,9 @@ def main():
         if args.map2 == "all":
             for map_name in MapFileNames:
                 if map_name != args.map1:
-                    find_equal_asm_files(searchType, args.map1, map_name, 0, args.replace, args.updsyms, args.when)
+                    find_equal_asm_files(searchType, args.map1, map_name, 0, args.update, args.update, args.when)
         else:
-            find_equal_asm_files(searchType, args.map1, args.map2, 0, args.replace, args.updsyms, args.when)
+            find_equal_asm_files(searchType, args.map1, args.map2, 0, args.update, args.update, args.when)
             
 if __name__ == "__main__":
     main()
