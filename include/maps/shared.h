@@ -2242,6 +2242,8 @@ void sharedFunc_800DDF74_2_s00(s_SubCharacter* chara, s32 mulX, q19_12 angle0);
 
 void sharedFunc_800DE11C_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800DEBCC_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800DF710_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DF80C_2_s00(s_SubCharacter* chara);
