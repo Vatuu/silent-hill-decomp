@@ -2254,6 +2254,8 @@ void sharedFunc_800DE034_2_s00(s_SubCharacter* chara, VECTOR3* vec, s32 distance
 
 void sharedFunc_800DE11C_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800DE6A8_2_s00(s_SubCharacter* chara, VECTOR3* vec, s32 distance);
+
 void sharedFunc_800DEBCC_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DF710_2_s00(s_SubCharacter* chara);
@@ -2795,7 +2797,7 @@ void sharedFunc_800DEC64_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DEC84_2_s00(s_SubCharacter* chara, s32 arg1, s32 angle);
 
-void sharedFunc_800DECA4_2_s00(s_SubCharacter* chara, VECTOR3* arg1, s32 arg2);
+void sharedFunc_800DECA4_2_s00(s_SubCharacter* chara, VECTOR3* vec, s32 distance);
 
 void sharedFunc_800DF22C_2_s00(s_SubCharacter* chara);
 
