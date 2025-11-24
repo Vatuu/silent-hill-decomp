@@ -605,8 +605,8 @@ void Ipd_TexturesInit1(void) // 0x80041D48
 
 void Map_IpdCollisionDataInit(void) // 0x80041E98
 {
-    bzero(&g_Map.field_0, sizeof(s_IpdCollisionData));
-    g_Map.field_0.field_1C = 512;
+    bzero(&g_Map.collisionData_0, sizeof(s_IpdCollisionData));
+    g_Map.collisionData_0.field_1C = 512;
 }
 
 void Map_PlaceIpdAtCell(s16 ipdFileIdx, s32 cellX, s32 cellZ) // 0x80041ED0
@@ -910,17 +910,20 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     geomX = Q12_TO_Q8(posX);
     geomZ = Q12_TO_Q8(posZ);
 
-    // Compute chunk cells.
+    // Compute cell coordinates.
     cellX = FLOOR_TO_STEP(geomX, Q8(40.0f));
     cellZ = FLOOR_TO_STEP(geomZ, Q8(40.0f));
 
+    // Run through active chunks.
     for (curChunk = g_Map.ipdActive_15C; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++)
     {
+        // Check if chunk is loaded.
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) < FsQueueEntryLoadStatus_Loaded)
         {
             continue;
         }
 
+        // Check if chunk matches cell coordinates.
         ipdHdr = curChunk->ipdHdr_0;
         if (ipdHdr->isLoaded_1 &&
             curChunk->cellX_8 == cellX && curChunk->cellZ_A == cellZ)
@@ -929,13 +932,14 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
         }
     }
 
+    // Fallback.
     if (((s16*)(&g_Map.ipdGridCenter_42C[cellZ]))[cellX] != NO_VALUE)
     {
         return NULL;
     }
     else
     {
-        return &g_Map.field_0;
+        return &g_Map.collisionData_0;
     }
 }
 

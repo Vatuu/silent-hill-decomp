@@ -1144,7 +1144,7 @@ STATIC_ASSERT_SIZEOF(s_IpdTextures, 328);
 
 typedef struct _Map
 {
-    s_IpdCollisionData field_0;
+    s_IpdCollisionData collisionData_0; // Default chunk collision data?
     s32                texFileIdx_134;
     s_GlobalLm         globalLm_138;
     char               mapTag_144[4];
@@ -2870,8 +2870,8 @@ void Map_IpdCollisionDataInit(void);
 /** @brief Places an IPD chunk at given XZ chunk cell coordinates.
  *
  * @param ipdFileIdx Index of the IPD chunk file to place.
- * @param cellX X chunk cell.
- * @param cellZ Z chunk cell.
+ * @param cellX X cell coordinate.
+ * @param cellZ Z cell coordinate.
  */
 void Map_PlaceIpdAtCell(s16 ipdFileIdx, s32 cellX, s32 cellZ);
 
@@ -2940,21 +2940,21 @@ void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
  *
  * @param posX X position.
  * @param posZ Z position.
- * @param cellX X chunk cell.
- * @param cellZ Z chunk cell.
+ * @param cellX X cell coordinate.
+ * @param cellZ Z cell coordinate.
  * @param isExterior `true` for padded exterior, `false` for non-padded interior.
  * @return Padded distance from the XZ position to the XZ chunk cell.
  */
 q19_12 Ipd_PaddedDistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ, bool isExterior);
 
 /** @brief Computes the distance from an XZ position to the edge of an XZ chunk cell boundary.
- * If the position resides inside the chunk, the distance is `Q12(0.0f)`.
+ * If the position resides inside the chunk cell, the distance is `Q12(0.0f)`.
  *
  * @param posX X position.
  * @param posZ Z position.
- * @param cellX X chunk cell.
- * @param cellZ Z chunk cell.
- * @return Distance from the XZ position to the XZ chunk cell.
+ * @param cellX X cell coordinate.
+ * @param cellZ Z cell coordinate.
+ * @return Distance from the XZ position to the XZ chunk cell boundary.
  */
 q19_12 Ipd_DistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ);
 
