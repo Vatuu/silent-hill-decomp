@@ -1308,6 +1308,7 @@ GsSortObject4J                              = 0x80095FEC; // type:func
 Math_Sin                                    = 0x8009687C; // type:func
 Math_Cos                                    = 0x8009689C; // type:func
 Math_RotMatrixZ                             = 0x800968BC; // type:func
+Math_RotMatrixXyz						    = 0x80096A5C; // type:func
 Math_RotMatrixZxyNeg                        = 0x80096C94; // type:func
 Math_RotMatrixZxyNegGte                     = 0x80096E78; // type:func
 
