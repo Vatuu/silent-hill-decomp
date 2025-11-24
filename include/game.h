@@ -196,13 +196,11 @@ struct _Model;
  * @bug Some maps appear to have a bug where the negative position check will never be true because they check
  * if the chunk index will be a positive number. Seems like they forgot to use `ABS`?
  */
-//(__chunkIdx = FLOOR_TO_STEP(g_SysWork.player_4C.chara_0.position_18.comp, CHUNK_CELL_SIZE), TODO: Doesn't match.
 #define PLAYER_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                                   \
     (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.comp / Q12(40.0f),                        \
      ((g_SysWork.player_4C.chara_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
       (g_SysWork.player_4C.chara_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 
-//(__chunkIdx = FLOOR_TO_STEP(g_SysWork.player_4C.chara_0.position_18.comp, CHUNK_CELL_SIZE), TODO: Doesn't match.
 #define PLAYER_NOT_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                               \
     (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.comp / Q12(40.0f),                        \
      ((g_SysWork.player_4C.chara_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) != (x1)) || \
@@ -211,6 +209,15 @@ struct _Model;
 #define PLAYER_NEAR_POS(comp, base, tol)                                                                                                                   \
     (((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) < Q12(tol)) : \
                                                                                  ((Q12(base) - g_SysWork.player_4C.chara_0.position_18.comp) < Q12(tol)))
+
+/** @brief Packs XZ cell coordinates in a single value.
+ *
+ * @param x X cell coordinate.
+ * @param z Z cell coordinate.
+ * @return Packed XZ cell coordinates.
+ */
+#define PACKED_CELL_XZ(x, z) \
+    ((x) + ((z) << 8))
 
 #define HAS_FLAG(ptr, idx) \
     ((((u32*)ptr)[(idx) >> 5] >> ((idx) & 0x1F)) & (1 << 0))

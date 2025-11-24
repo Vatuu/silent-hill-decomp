@@ -2215,48 +2215,47 @@ void func_800EB908(void) // 0x800EB908
 
 void func_800EC080(void) // 0x800EC080
 {
-    #define CELL_ZX(z, x) \
-        ((x) + ((z) << 8))
-
-    s32 z0;
-    s32 z1;
-    s32 z2;
-    s32 x0;
-    s32 x1;
-    s32 x2;
-    s32 zz0;
-    s32 zz1;
-    s32 zz2;
-    s32 xx0;
-    s32 xx1;
-    s32 xx2;
-    s32 flags0;
+    s32 cellX0;
+    s32 cellX1;
+    s32 cellX2;
+    s32 cellZ0;
+    s32 cellZ1;
+    s32 cellZ2;
+    s32 projCellX0;
+    s32 projCellX1;
+    s32 projCellX2;
+    s32 projCellZ0;
+    s32 projCellZ1;
+    s32 projCellZ2;
+    s32 flags;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    flags0 = 0;
+    flags = 0;
 
-    z0 = g_SysWork.player_4C.chara_0.position_18.vz / Q12(40.0f);
-    x0 = g_SysWork.player_4C.chara_0.position_18.vx / Q12(40.0f);
-    if (g_SysWork.player_4C.chara_0.position_18.vx > 0)
+    cellZ0 = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
+    cellX0 = g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE;
+
+    if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f))
     {
-        xx0 = x0 + 17;
+        projCellX0 = cellX0 + 17;
     }
     else
     {
-        xx0 = x0 + 15;
-    }
-    if (g_SysWork.player_4C.chara_0.position_18.vz > 0)
+        projCellX0 = cellX0 + 15;
+    } 
+
+    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f))
     {
-        zz0 = z0 + 17;
+        projCellZ0 = cellZ0 + 17;
     }
     else
     {
-        zz0 = z0 + 15;
+        projCellZ0 = cellZ0 + 15;
     }
 
-    switch (CELL_ZX(zz0, xx0))
+    switch (PACKED_CELL_XZ(projCellX0, projCellZ0))
     {
-        case CELL_ZX(24, 11):
+        case PACKED_CELL_XZ(11, 24):
             if (!Savegame_EventFlagGet(EventFlag_147))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
@@ -2268,8 +2267,8 @@ void func_800EC080(void) // 0x800EC080
             }
             break;
 
-        case CELL_ZX(17, 12):
-        case CELL_ZX(15, 12):
+        case PACKED_CELL_XZ(12, 17):
+        case PACKED_CELL_XZ(12, 15):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_DogHouseNoteFound))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C, &g_WorldObject2.rotation_28);
@@ -2277,7 +2276,7 @@ void func_800EC080(void) // 0x800EC080
             }
             break;
 
-        case CELL_ZX(25, 14):
+        case PACKED_CELL_XZ(14, 25):
             g_WorldGfx_ObjectAdd(&g_WorldObject5[2], &D_800F55DC[1], &D_800F5344);
             g_WorldGfx_ObjectAdd(&g_WorldObject5[3], &D_800F55DC[1], &D_800F5344);
 
@@ -2289,10 +2288,10 @@ void func_800EC080(void) // 0x800EC080
             g_WorldGfx_ObjectAdd(&D_800F56EC, &D_800F574C.position_0, &D_800F574C.rotation_C);
             break;
 
-        case CELL_ZX(13, 21):
-            if (Savegame_EventFlagGet(EventFlag_163))
+        case PACKED_CELL_XZ(21, 13):
+            if (Savegame_EventFlagGet(EventFlag_163)) 
             {
-                flags0 |= 1 << 2;
+                flags |= 1 << 2;
                 if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(198.0f))
                 {
                     Savegame_EventFlagClear(EventFlag_163);
@@ -2300,18 +2299,18 @@ void func_800EC080(void) // 0x800EC080
             }
             else
             {
-                flags0 |= 1 << 1;
+                flags |= 1 << 1;
             }
 
-        case CELL_ZX(14, 21):
-        case CELL_ZX(14, 22):
-        case CELL_ZX(13, 22):
+        case PACKED_CELL_XZ(21, 14):
+        case PACKED_CELL_XZ(22, 14):
+        case PACKED_CELL_XZ(22, 13):
             g_WorldGfx_ObjectAdd(&g_WorldObject5[0], &D_800F55DC[0], &D_800F5344);
             g_WorldGfx_ObjectAdd(&g_WorldObject5[1], &D_800F55DC[0], &D_800F5344);
 
             if (!Savegame_EventFlagGet(EventFlag_166))
             {
-                flags0 |= 1 << 3;
+                flags |= 1 << 3;
             }
 
             if (Savegame_MapMarkingGet(MapMarkFlag_OldTown_BotBridgeCorrection))
@@ -2324,7 +2323,7 @@ void func_800EC080(void) // 0x800EC080
             }
             break;
 
-        case CELL_ZX(13, 9):
+        case PACKED_CELL_XZ(9, 13):
             g_WorldGfx_ObjectAdd(&D_800F535C, &D_800F537C, &D_800F538C);
 
             if (!Savegame_EventFlagGet(EventFlag_170))
@@ -2345,8 +2344,8 @@ void func_800EC080(void) // 0x800EC080
             }
             break;
 
-        case CELL_ZX(22, 19):
-        case CELL_ZX(22, 20):
+        case PACKED_CELL_XZ(19, 22):
+        case PACKED_CELL_XZ(20, 22):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObjectB->object_0, &g_WorldObjectB->position_1C, &(SVECTOR3){ 0, 0, 0 });
@@ -2365,29 +2364,29 @@ void func_800EC080(void) // 0x800EC080
             g_WorldGfx_ObjectAdd(&D_800F56EC, &D_800F570C.position_0, &D_800F570C.rotation_C);
             break;
 
-        case CELL_ZX(19, 21):
+        case PACKED_CELL_XZ(21, 19):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfLion))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject4[0].object_0, &g_WorldObject4[0].position_1C, &g_WorldObject4[0].rotation_28);
             }
             break;
 
-        case CELL_ZX(26, 11):
+        case PACKED_CELL_XZ(11, 26):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfWoodman))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject4[1].object_0, &g_WorldObject4[1].position_1C, &g_WorldObject4[1].rotation_28);
             }
             break;
 
-        case CELL_ZX(15, 19):
+        case PACKED_CELL_XZ(19, 15):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfScarecrow))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject4[2].object_0, &g_WorldObject4[2].position_1C, &g_WorldObject4[2].rotation_28);
             }
-
             break;
-        case CELL_ZX(24, 19):
-        case CELL_ZX(24, 20):
+
+        case PACKED_CELL_XZ(19, 24):
+        case PACKED_CELL_XZ(20, 24):
             g_WorldGfx_ObjectAdd(&D_800F56EC, &D_800F572C.position_0, &D_800F572C.rotation_C);
             break;
 
@@ -2395,36 +2394,36 @@ void func_800EC080(void) // 0x800EC080
             break;
     }
 
-    z1 = g_SysWork.player_4C.chara_0.position_18.vz / Q12(40.0f);
-    x1 = g_SysWork.player_4C.chara_0.position_18.vx / Q12(40.0f);
+    cellZ1 = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
+    cellX1 = g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE;
 
-    if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f))
+    if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f)) 
     {
-        xx1 = x1 + 17;
+        projCellX1 = cellX1 + 17;
     }
     else
     {
-        xx1 = x1 + 15;
+        projCellX1 = cellX1 + 15;
     }
 
-    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f))
+    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f)) 
     {
-        zz1 = z1 + 17;
+        projCellZ1 = cellZ1 + 17;
     }
     else
     {
-        zz1 = z1 + 15;
+        projCellZ1 = cellZ1 + 15;
     }
 
-    switch (CELL_ZX(zz1, xx1))
+    switch (PACKED_CELL_XZ(projCellX1, projCellZ1))
     {
-        case CELL_ZX(25, 14):
+        case PACKED_CELL_XZ(14, 25):
             if (Savegame_EventFlagGet(EventFlag_164))
             {
                 if (D_800F534C == 0)
                 {
                     D_800F534C = 1;
-                    Sd_EngineCmd(0x5CAU);
+                    Sd_EngineCmd(Sfx_Unk1482);
                     D_800F5350 = Q12(0.75f);
                 }
                 else if (D_800F534C == NO_VALUE)
@@ -2441,13 +2440,13 @@ void func_800EC080(void) // 0x800EC080
             }
             break;
 
-        case CELL_ZX(25, 22):
+        case PACKED_CELL_XZ(22, 25):
             if (Savegame_EventFlagGet(EventFlag_164))
             {
                 if (D_800F534C == 0)
                 {
                     D_800F534C++;
-                    Sd_EngineCmd(1482);
+                    Sd_EngineCmd(Sfx_Unk1482);
                 }
 
                 func_8005DE0C(Sfx_Unk1482, &QVECTOR3(237.0f, -1.0f, 346.0f), Q8(0.5f), Q12(16.0f), 0);
@@ -2468,35 +2467,35 @@ void func_800EC080(void) // 0x800EC080
             if (D_800F534C != 0)
             {
                 D_800F534C = 0;
-                func_8004690C(1482);
+                func_8004690C(Sfx_Unk1482);
             }
             break;
     }
 
-    z2 = g_SysWork.player_4C.chara_0.position_18.vz / Q12(40.0f);
-    x2 = g_SysWork.player_4C.chara_0.position_18.vx / Q12(40.0f);
+    cellZ2 = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
+    cellX2 = g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE;
 
     if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f))
     {
-        xx2 = x2 + 17;
+        projCellX2 = cellX2 + 17;
     }
     else
     {
-        xx2 = x2 + 15;
+        projCellX2 = cellX2 + 15;
     }
 
     if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f))
     {
-        zz2 = z2 + 17;
+        projCellZ2 = cellZ2 + 17;
     }
     else
     {
-        zz2 = z2 + 15;
+        projCellZ2 = cellZ2 + 15;
     }
 
-    switch (CELL_ZX(zz2, xx2))
+    switch (PACKED_CELL_XZ(projCellX2, projCellZ2))
     {
-        case CELL_ZX(25, 22):
+        case PACKED_CELL_XZ(22, 25):
             if (D_800F56E4 != 2)
             {
                 func_8003ED74(6, 3);
@@ -2505,8 +2504,8 @@ void func_800EC080(void) // 0x800EC080
             }
             break;
 
-        case CELL_ZX(22, 19):
-        case CELL_ZX(22, 20):
+        case PACKED_CELL_XZ(19, 22):
+        case PACKED_CELL_XZ(20, 22):
             if (!Savegame_EventFlagGet(EventFlag_134) && Savegame_EventFlagGet(EventFlag_159))
             {
                 if (D_800F56E4 != 1)
@@ -2525,8 +2524,8 @@ void func_800EC080(void) // 0x800EC080
             }
             break;
 
-        case CELL_ZX(24, 19):
-        case CELL_ZX(24, 20):
+        case PACKED_CELL_XZ(19, 24):
+        case PACKED_CELL_XZ(20, 24):
             if (D_800F56E4 != 3)
             {
                 func_8003ED74(13, 13);
@@ -2534,8 +2533,8 @@ void func_800EC080(void) // 0x800EC080
             }
             break;
 
-        case CELL_ZX(13, 13):
-        case CELL_ZX(13, 14):
+        case PACKED_CELL_XZ(13, 13):
+        case PACKED_CELL_XZ(14, 13):
             if (!Savegame_EventFlagGet(EventFlag_M2S00_PickupChainsaw))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObjectA.object_0, &g_WorldObjectA.position_1C, &g_WorldObjectA.rotation_28);
@@ -2583,7 +2582,7 @@ void func_800EC080(void) // 0x800EC080
 
     func_800EE660();
     func_80069844(0xFFFF);
-    func_8006982C(flags0);
+    func_8006982C(flags);
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {

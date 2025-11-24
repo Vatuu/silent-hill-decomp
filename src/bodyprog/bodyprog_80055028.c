@@ -6080,9 +6080,9 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
     }
 }
 
-static inline s32 MapCoordIndex(s32 coord, s32 bias, s32 shift, s32 offset)
+static inline s32 MapCoordIdxGet(q19_12 coord, s32 bias, s32 shift, s32 offset)
 {
-    if (coord < 0)
+    if (coord < Q12(0.0f))
     {
         coord += bias;
     }
@@ -6096,7 +6096,7 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
         ((coord) + (((coord) < 0) ? 20 : 21))
 
     #define MAP_IDX(x, z) \
-        ((MAP_OFFSET(x) * 0x64) + MAP_OFFSET(z))
+        ((MAP_OFFSET(x) * 100) + MAP_OFFSET(z))
 
     s32      sp10[6];
     s16      temp_s1;
@@ -6157,56 +6157,56 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                 case 10:
                     if (cellZ < 4 || (cellZ < 6 && (cellX >= -1 && cellX < 1)))
                     {
-                        mapCoordIdxX = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 13, 19);
-                        mapCoordIdxZ = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 13, 1);
+                        mapCoordIdxX = MapCoordIdxGet(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 13, 19);
+                        mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 13, 1);
                         break;
                     }
 
                     switch (MAP_IDX(cellX, cellZ))
                     {
                         case 0x5FA:
-                            mapCoordIdxX = 0x2B;
-                            mapCoordIdxZ = -0x22;
+                            mapCoordIdxX = 43;
+                            mapCoordIdxZ = -34;
                             break;
 
                         case 0x5F8:
                         case 0x6BE:
                         case 0x6BF:
-                            mapCoordIdxX = -0xB;
-                            mapCoordIdxZ = -0x13;
+                            mapCoordIdxX = -11;
+                            mapCoordIdxZ = -19;
                             break;
 
                         case 0x8B6:
-                            mapCoordIdxX = -0x3F;
-                            mapCoordIdxZ = 0x49;
+                            mapCoordIdxX = -63;
+                            mapCoordIdxZ = 73;
                             break;
 
                         case 0x97E:
-                            mapCoordIdxX = -0x3F;
-                            mapCoordIdxZ = -0x1C;
+                            mapCoordIdxX = -63;
+                            mapCoordIdxZ = -28;
                             break;
 
                         case 0x918:
                         case 0x97C:
-                            mapCoordIdxX = -0x3A;
-                            mapCoordIdxZ = 0x49;
+                            mapCoordIdxX = -58;
+                            mapCoordIdxZ = 73;
                             break;
 
                         case 0x916:
                         case 0x97A:
-                            mapCoordIdxX = -0x3A;
-                            mapCoordIdxZ = -0x1C;
+                            mapCoordIdxX = -58;
+                            mapCoordIdxZ = -28;
                             break;
 
                         case 0xA42:
-                            mapCoordIdxX = -0x70;
-                            mapCoordIdxZ = 0x33;
+                            mapCoordIdxX = -112;
+                            mapCoordIdxZ = 51;
                             break;
 
                         case 0x725:
                         case 0xA45:
-                            mapCoordIdxX = 0x74;
-                            mapCoordIdxZ = 0x2F;
+                            mapCoordIdxX = 116;
+                            mapCoordIdxZ = 47;
                             break;
                     }
                     break;
@@ -6215,39 +6215,39 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                     switch (MAP_IDX(cellX, cellZ))
                     {
                         case 0x6B9:
-                            mapCoordIdxX = -0x67;
-                            mapCoordIdxZ = 0x67;
+                            mapCoordIdxX = -103;
+                            mapCoordIdxZ = 103;
                             break;
 
                         case 0x655:
-                            mapCoordIdxX  = 0x24;
-                            mapCoordIdxZ  = -0x4C;
-                            angle += FP_ANGLE(90.0f);
+                            mapCoordIdxX = 36;
+                            mapCoordIdxZ = -76;
+                            angle       += FP_ANGLE(90.0f);
                             break;
 
                         case 0x5F1:
-                            mapCoordIdxX  = 0x3E;
-                            mapCoordIdxZ  = 0x32;
-                            angle += FP_ANGLE(180.0f);
+                            mapCoordIdxX = 62;
+                            mapCoordIdxZ = 50;
+                            angle       += FP_ANGLE(180.0f);
                             break;
                     }
                     break;
 
                 case 11:
-                    mapCoordIdxX  = 0x26;
-                    mapCoordIdxZ  = 0x32;
-                    angle += FP_ANGLE(180.0f);
+                    mapCoordIdxX = 38;
+                    mapCoordIdxZ = 50;
+                    angle       += FP_ANGLE(180.0f);
                     break;
 
                 case 1:
-                    mapCoordIdxX = 0x21;
-                    mapCoordIdxZ = -0x1C;
+                    mapCoordIdxX = 33;
+                    mapCoordIdxZ = -28;
                     break;
 
                 case 9:
-                    mapCoordIdxX  = -0x7B;
-                    mapCoordIdxZ  = 0x51;
-                    angle -= FP_ANGLE(90.0f);
+                    mapCoordIdxX = -123;
+                    mapCoordIdxZ = 81;
+                    angle       -= FP_ANGLE(90.0f);
                     break;
             }
             break;
@@ -6262,9 +6262,9 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
         case 12:
             if (cellX == -2 && cellZ == 0)
             {
-                angle += FP_ANGLE(180.0f);
-                mapCoordIdxX  = D_800AE774[2][2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(-0.2f));
-                mapCoordIdxZ  = D_800AE774[2][2][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(0.2f));
+                angle       += FP_ANGLE(180.0f);
+                mapCoordIdxX = D_800AE774[2][2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(-0.2f));
+                mapCoordIdxZ = D_800AE774[2][2][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(0.2f));
             }
             else
             {
@@ -6293,8 +6293,8 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
             switch (g_SavegamePtr->mapOverlayId_A4)
             {
                 case 30:
-                    mapCoordIdxX = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 13, 0x3C);
-                    mapCoordIdxZ = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 13, -0x55);
+                    mapCoordIdxX = MapCoordIdxGet(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 13, 0x3C);
+                    mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 13, -0x55);
 
                     temp_v1_7 = g_SysWork.player_4C.chara_0.position_18.vx / 163840;
                     if ((g_SysWork.player_4C.chara_0.position_18.vx > 0 && (temp_v1_7 + 1) == -4) ||
@@ -6303,16 +6303,16 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                     {
                         if (PLAYER_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
                         {
-                            mapCoordIdxX += 0x57;
-                            mapCoordIdxZ += 0x3D;
+                            mapCoordIdxX += 87;
+                            mapCoordIdxZ += 61;
                             break;
                         }
                     }
 
                     if (PLAYER_IN_MAP_CHUNK(vx, 1, -5, -1, -5) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
                     {
-                        mapCoordIdxX += 0x57;
-                        mapCoordIdxZ += 0x3D;
+                        mapCoordIdxX += 87;
+                        mapCoordIdxZ += 61;
                         break;
                     }
                     break;
@@ -6320,15 +6320,15 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                 case 31:
                     if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
                     {
-                        mapCoordIdxX  = 0x57;
-                        mapCoordIdxZ  = -0x38;
-                        angle += FP_ANGLE(90.0f);
+                        mapCoordIdxX = 87;
+                        mapCoordIdxZ = -56;
+                        angle       += FP_ANGLE(90.0f);
                     }
                     else if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 1, -1, 1))
                     {
-                        mapCoordIdxX  = 0x36;
-                        mapCoordIdxZ  = -0x35;
-                        angle += FP_ANGLE(90.0f);
+                        mapCoordIdxX = 54;
+                        mapCoordIdxZ = -53;
+                        angle       += FP_ANGLE(90.0f);
                     }
                     break;
 
@@ -6336,48 +6336,48 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                     switch (MAP_IDX(cellX, cellZ))
                     {
                         case 0x912:
-                            mapCoordIdxX = 0x45;
-                            mapCoordIdxZ = -0x13;
+                            mapCoordIdxX = 69;
+                            mapCoordIdxZ = -19;
                             break;
 
                         case 0x911:
-                            mapCoordIdxX  = 0x4A;
-                            mapCoordIdxZ  = -0xC;
-                            angle -= FP_ANGLE(90.0f);
+                            mapCoordIdxX = 74;
+                            mapCoordIdxZ = -12;
+                            angle       -= FP_ANGLE(90.0f);
                             break;
 
                         case 0x8AD:
-                            mapCoordIdxX = 0x4A;
-                            mapCoordIdxZ = -0xE;
+                            mapCoordIdxX = 74;
+                            mapCoordIdxZ = -14;
                             break;
 
                         case 0x8AE:
-                            mapCoordIdxX = 0x49;
-                            mapCoordIdxZ = -0xE;
+                            mapCoordIdxX = 73;
+                            mapCoordIdxZ = -14;
                             break;
                     }
                     break;
 
                 case 33:
-                    mapCoordIdxX = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 13, 0);
-                    mapCoordIdxZ = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 13, 0x37);
+                    mapCoordIdxX = MapCoordIdxGet(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 13, 0);
+                    mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 13, 55);
                     break;
 
                 case 34:
                     if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
                     {
-                        mapCoordIdxZ = 0x2B;
+                        mapCoordIdxZ = 43;
                     }
                     else
                     {
-                        mapCoordIdxZ = 0x2E;
+                        mapCoordIdxZ = 46;
                     }
-                    mapCoordIdxX = -0x4D;
+                    mapCoordIdxX = -77;
                     break;
 
                 case 35:
-                    mapCoordIdxX = -0x37;
-                    mapCoordIdxZ = 0x54;
+                    mapCoordIdxX = -55;
+                    mapCoordIdxZ = 84;
 
                     if (!PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2))
                     {
@@ -6401,38 +6401,38 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                     switch (MAP_IDX(cellX, cellZ))
                     {
                         case 0x58F:
-                            mapCoordIdxX = 0x5E;
-                            mapCoordIdxZ = -0x67;
+                            mapCoordIdxX = 94;
+                            mapCoordIdxZ = -103;
                             break;
 
                         case 0x6BB:
                         case 0x657:
-                            mapCoordIdxX  = -0xC;
-                            mapCoordIdxZ  = 0x3F;
-                            angle += FP_ANGLE(180.0f);
+                            mapCoordIdxX = -12;
+                            mapCoordIdxZ = 63;
+                            angle       += FP_ANGLE(180.0f);
                             break;
 
                         case 0x973:
-                            mapCoordIdxX = -0x10;
-                            mapCoordIdxZ = 0x5B;
+                            mapCoordIdxX = -16;
+                            mapCoordIdxZ = 91;
                             break;
 
                         case 0x6BD:
                         case 0x6BE:
-                            mapCoordIdxX = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vx, 0xFFF, 12, 0x50);
-                            mapCoordIdxZ = MapCoordIndex(Q12(280.0f) - g_SysWork.player_4C.chara_0.position_18.vz, 0xFFF, 12, 0);
+                            mapCoordIdxX = MapCoordIdxGet(g_SysWork.player_4C.chara_0.position_18.vx, 0xFFF, 12, 80);
+                            mapCoordIdxZ = MapCoordIdxGet(Q12(280.0f) - g_SysWork.player_4C.chara_0.position_18.vz, 0xFFF, 12, 0);
                             break;
 
                         default:
-                            mapCoordIdxX = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vx, 0xFFF, 12, 0x50);
-                            mapCoordIdxZ = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0xFFF, 12, 0);
+                            mapCoordIdxX = MapCoordIdxGet(g_SysWork.player_4C.chara_0.position_18.vx, 0xFFF, 12, 80);
+                            mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vz, 0xFFF, 12, 0);
                             break;
                     }
                     break;
 
                 case 23:
-                    mapCoordIdxX = 0x5F;
-                    mapCoordIdxZ = -0x67;
+                    mapCoordIdxX = 95;
+                    mapCoordIdxZ = -103;
                     break;
 
                 case 25:
@@ -6440,26 +6440,26 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                     {
                         case 0x976:
                         case 0x9DA:
-                            mapCoordIdxX = 0x64;
-                            mapCoordIdxZ = -0x3D;
+                            mapCoordIdxX = 100;
+                            mapCoordIdxZ = -61;
                             break;
 
                         case 0x90D:
                         case 0x971:
-                            mapCoordIdxX = 0x73;
-                            mapCoordIdxZ = -0x3D;
+                            mapCoordIdxX = 115;
+                            mapCoordIdxZ = -61;
                             break;
 
                         case 0xA3B:
-                            mapCoordIdxX  = 0x73;
-                            mapCoordIdxZ  = -0x3F;
+                            mapCoordIdxX  = 115;
+                            mapCoordIdxZ  = -63;
                             angle += FP_ANGLE(90.0f);
                             break;
 
                         case 0x914:
                         case 0x978:
-                            mapCoordIdxX = 0x7D;
-                            mapCoordIdxZ = -0x3C;
+                            mapCoordIdxX = 125;
+                            mapCoordIdxZ = -60;
                             break;
                     }
                     break;
@@ -6504,20 +6504,20 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
             break;
 
         case 13:
-            mapCoordIdxX  = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0x7FF, 11, 0);
-            mapCoordIdxZ  = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vx, 0x7FF, 11, 0x28);
+            mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vz, 0x7FF, 11, 0);
+            mapCoordIdxZ  = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vx, 0x7FF, 11, 40);
             angle -= FP_ANGLE(90.0f);
             break;
 
         case 14:
-            mapCoordIdxX  = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vz, 0x7FF, 11, -0x50);
-            mapCoordIdxZ  = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vx, 0x7FF, 11, -0x8C);
+            mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vz, 0x7FF, 11, -80);
+            mapCoordIdxZ  = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vx, 0x7FF, 11, -140);
             angle -= FP_ANGLE(90.0f);
             break;
 
         case 15:
-            mapCoordIdxX  = MapCoordIndex(-g_SysWork.player_4C.chara_0.position_18.vx, 0x7FF, 11, 0x37);
-            mapCoordIdxZ  = MapCoordIndex(g_SysWork.player_4C.chara_0.position_18.vz, 0x7FF, 11, -0x50);
+            mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vx, 0x7FF, 11, 55);
+            mapCoordIdxZ  = MapCoordIdxGet(g_SysWork.player_4C.chara_0.position_18.vz, 0x7FF, 11, -80);
             angle += FP_ANGLE(180.0f);
             break;
 
@@ -6532,22 +6532,22 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
         return 0;
     }
 
-    temp_s4 = (mapCoordIdxZ << 0x10) + var_a3;
+    temp_s4 = (mapCoordIdxZ << 16) + var_a3;
 
     if (g_Controller0->btnsHeld_C & (ControllerFlag_L1 | ControllerFlag_R1))
     {
         return temp_s4;
     }
 
-    temp_a0 = 0xA0;
-    temp3   = ((var_a3 - (arg1 - temp_a0)) * 0x140);
-    temp    = FP_MULTIPLY_PRECISE(arg3, 0x140, Q12_SHIFT);
-    temp_s2 = (temp3 / temp) - 0xA0;
+    temp_a0 = SCREEN_WIDTH / 2;
+    temp3   = ((var_a3 - (arg1 - temp_a0)) * SCREEN_WIDTH);
+    temp    = FP_MULTIPLY_PRECISE(arg3, SCREEN_WIDTH, Q12_SHIFT);
+    temp_s2 = (temp3 / temp) - (SCREEN_WIDTH / 2);
 
-    temp_a0 = 0x78;
-    temp4   = ((mapCoordIdxZ - (arg2 - temp_a0)) * 0xF0);
-    temp2   = FP_MULTIPLY_PRECISE(arg3, 0xF0, Q12_SHIFT);
-    temp_s1 = (temp4 / temp2) - 0x78;
+    temp_a0 = SCREEN_HEIGHT / 2;
+    temp4   = ((mapCoordIdxZ - (arg2 - temp_a0)) * SCREEN_HEIGHT);
+    temp2   = FP_MULTIPLY_PRECISE(arg3, SCREEN_HEIGHT, Q12_SHIFT);
+    temp_s1 = (temp4 / temp2) - (SCREEN_HEIGHT / 2);
 
     temp_v0_7 = func_8005BF38(angle);
 
