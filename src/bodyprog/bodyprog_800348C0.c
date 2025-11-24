@@ -743,7 +743,7 @@ void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0
     coord->coord.t[1] = Q12_TO_Q8(pos->vy);
     coord->coord.t[2] = Q12_TO_Q8(pos->vz);
 
-    Math_MatrixRotate1(rot, (MATRIX*)&coord->coord);
+    Math_RotMatrixZxyNegGte(rot, (MATRIX*)&coord->coord);
 }
 
 void func_80035B58(s32 arg0) // 0x80035B58

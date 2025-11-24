@@ -190,8 +190,9 @@ static inline q3_12 Math_AngleNormalize(q19_12 angle)
     (vec)->vz = (z);                  \
 }
 
-void Math_MatrixRotate0(SVECTOR* rot, MATRIX* mat); // Custom `vwRotMatrix[...]`?
-void Math_MatrixRotate1(SVECTOR* rot, MATRIX* mat); // Another custom `vwRotMatrix[...]`?
+void Math_RotMatrixZxyNeg(SVECTOR* rot, MATRIX* mat); // Previous name: `Math_MatrixRotate0`
+
+void Math_RotMatrixZxyNegGte(SVECTOR* rot, MATRIX* mat); // Previous name: `Math_MatrixRotate1`
 
 /** @brief Multiplies two integers in a fixed-point Q format.
  *
@@ -222,6 +223,8 @@ q19_12 Math_Sin(q19_12 angle);
  */
 q19_12 Math_Cos(q19_12 angle);
 
-MATRIX* shRotMatrixZ(s32, MATRIX*);
+MATRIX* Math_RotMatrixZ(s32, MATRIX*); // Previous name: `shRotMatrixZ`
+
+void Math_RotMatrixXyz(SVECTOR* rot, MATRIX* mat); // 0x80096A5C
 
 #endif

@@ -220,7 +220,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
     chara->field_34       += g_DeltaTime2;
 
     coords->flg = false;
-    Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
+    Math_RotMatrixZxyNegGte(&chara->rotation_24, &coords->coord);
 }
 
 bool Ai_Cheryl_FootstepTrigger(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 distSqr, s32 pitch) // 0x800D8748

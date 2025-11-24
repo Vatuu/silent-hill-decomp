@@ -527,7 +527,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     chara->field_34       += g_DeltaTime2;
 
     coords->flg = false;
-    Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
+    Math_RotMatrixZxyNegGte(&chara->rotation_24, &coords->coord);
 }
 
 /** Addresses

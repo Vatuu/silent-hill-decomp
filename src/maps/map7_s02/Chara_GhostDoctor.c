@@ -62,5 +62,5 @@ void func_800D8C00(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800D8C00
     }
 
     coord->flg = false;
-    Math_MatrixRotate1(&chara->rotation_24, &coord->coord);
+    Math_RotMatrixZxyNegGte(&chara->rotation_24, &coord->coord);
 }

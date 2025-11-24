@@ -5158,7 +5158,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
 
         ptr->field_14C[0].vz = ptr->field_1D0;
 
-        Math_MatrixRotate1(&ptr->field_14C, &ptr->field_12C);
+        Math_RotMatrixZxyNegGte(&ptr->field_14C, &ptr->field_12C);
 
         // `Q8(0.0f)`?
         ptr->field_16C[0].vx = 0;

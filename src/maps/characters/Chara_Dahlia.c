@@ -427,7 +427,7 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* coords)
     dahlia->field_34       += g_DeltaTime2;
 
     coords->flg = false;
-    Math_MatrixRotate1(&dahlia->rotation_24, &coords->coord);
+    Math_RotMatrixZxyNegGte(&dahlia->rotation_24, &coords->coord);
 }
 
 /** Addresses

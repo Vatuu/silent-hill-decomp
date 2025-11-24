@@ -61,7 +61,7 @@ void func_800D0C50(SVECTOR* rot, MATRIX* mat) // 0x800D0C50
 
     SetRotMatrix(mat);
     SetTransMatrix(mat);
-    func_80096A5C(rot, &sp10);
+    Math_RotMatrixXyz(rot, &sp10);
     SetMulRotMatrix(&sp10);
 }
 

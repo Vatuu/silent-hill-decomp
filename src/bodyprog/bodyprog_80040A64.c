@@ -2244,7 +2244,7 @@ void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q3_12 rotY) // 
 
     // TODO: Make FS buffer constant for this.
     
-    Math_MatrixRotate1((SVECTOR*)0x1F800000, (MATRIX*)0x1F800008);
+    Math_RotMatrixZxyNegGte((SVECTOR*)0x1F800000, (MATRIX*)0x1F800008);
     MulMatrix(&coord->coord, (MATRIX*)0x1F800008);
 }
 

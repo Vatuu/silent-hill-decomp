@@ -53,7 +53,7 @@ void Vw_SetLookAtMatrix(const VECTOR3* pos, const VECTOR3* lookAt) // 0x80048AF4
     rot.vx = ratan2(-deltaY, SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
     // Compute view transform matrix and set global info.
-    Math_MatrixRotate0(&rot, &viewMat);
+    Math_RotMatrixZxyNeg(&rot, &viewMat);
     viewMat.t[0] = Q12_TO_Q8(pos->vx);
     viewMat.t[1] = Q12_TO_Q8(pos->vy);
     viewMat.t[2] = Q12_TO_Q8(pos->vz);
@@ -75,7 +75,7 @@ void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, q19_12 ref_x, q19_12 ref_y, 
     view_ang.vx = -ratan2(-cam_y, cam_xz_r);
     view_ang.vy = FP_ANGLE_NORM_U(view_ang.vy + FP_ANGLE(180.0f));
 
-    Math_MatrixRotate1(&view_ang, view_mtx);
+    Math_RotMatrixZxyNegGte(&view_ang, view_mtx);
 
     view_mtx->t[0] = Q12_TO_Q8(ref_x) + FP_MULTIPLY(Q12_TO_Q8(cam_xz_r), Math_Sin(cam_ang_y), Q12_SHIFT);
     view_mtx->t[1] = Q12_TO_Q8(ref_y) + Q12_TO_Q8(cam_y);

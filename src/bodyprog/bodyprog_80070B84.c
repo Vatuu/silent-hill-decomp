@@ -2084,7 +2084,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     chara->rotationSpeed_2C.vy = (D_800C454C << 8) / g_DeltaTime0;
     coords->flg                 = false;
 
-    Math_MatrixRotate1(&chara->rotation_24, &coords->coord);
+    Math_RotMatrixZxyNegGte(&chara->rotation_24, &coords->coord);
 }
 
 void Player_UpperBodyStateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3) // 0x80073FC0
@@ -7249,8 +7249,8 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
                 // Apply flex rotation to torso and arms.
                 func_80044F14(&coords[HarryBone_Torso], FP_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
-                shRotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_LeftUpperArm].coord);
-                shRotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_RightUpperArm].coord);
+                Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_LeftUpperArm].coord);
+                Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_RightUpperArm].coord);
             }
             break;
 
@@ -7305,8 +7305,8 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
 
             // Apply flex rotation to torso and arms.
             func_80044F14(&coords[HarryBone_Torso], FP_ANGLE(0.0f), g_Player_FlexRotationX >> 1, g_Player_FlexRotationY);
-            shRotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_LeftUpperArm].coord);
-            shRotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_RightUpperArm].coord);
+            Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_LeftUpperArm].coord);
+            Math_RotMatrixZ(g_Player_FlexRotationX >> 1, &coords[HarryBone_RightUpperArm].coord);
             break;
 
         case PlayerState_Unk180:
