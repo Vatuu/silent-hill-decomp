@@ -45,10 +45,9 @@ char* memcpy(void* dest0, void* src0, unsigned int count)
 
         if (srcOffset == 0)
         {
-            v1   -= 4;
             src32 = (s32*)src;
 
-            for (; v1 >= 0; v1 -= 4)
+            for (v1 = v1 - 4; v1 >= 0; v1 -= 4)
             {
                 a0        = *src32++;
                 *dest32++ = a0;
@@ -72,15 +71,14 @@ char* memcpy(void* dest0, void* src0, unsigned int count)
             src32 = (s32*)(src - srcOffset);
 
             srcOffset *= 8;
-            i           = 32 - srcOffset;
+            i          = 32 - srcOffset;
 
             srcData = *src32++;
-            part     = srcData >> srcOffset;
+            part    = srcData >> srcOffset;
 
-            v1 -= 4;
-            for (; v1 >= 0; v1 -= 4)
+            for (v1 = v1 - 4; v1 >= 0; v1 -= 4)
             {
-                srcData  = *src32++;
+                srcData   = *src32++;
                 part     |= (srcData << i);
                 *dest32++ = part;
                 part      = srcData >> srcOffset;

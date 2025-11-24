@@ -29,7 +29,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Purpose</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=main"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&category=main&measure=fuzzy_match_percent"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=main"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&category=main&measure=fuzzy_match_percent&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Main executable.</td>
         </tr>
         <tr>
