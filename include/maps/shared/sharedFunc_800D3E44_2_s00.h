@@ -28,8 +28,8 @@ void sharedFunc_800D3E44_2_s00(s_SubCharacter* chara)
                 {
                     chara->model_0.state_2               = 10;
                     chara->model_0.stateStep_3           = 0;
-                    chara->flags_3E                     |= 1 << 2;
-                    chara->properties_E4.unk0.flags_11C |= 1 << 4;
+                    chara->flags_3E                     |= CharaFlag_Unk3;
+                    chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
                 }
             }
             else
@@ -46,7 +46,7 @@ void sharedFunc_800D3E44_2_s00(s_SubCharacter* chara)
         case 2:
             chara->model_0.state_2               = 16;
             chara->model_0.stateStep_3           = 0;
-            chara->properties_E4.unk0.flags_11C |= 1 << 3;
+            chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 3:
@@ -56,11 +56,11 @@ void sharedFunc_800D3E44_2_s00(s_SubCharacter* chara)
 
             if (chara->health_B0 <= Q12(0.0f))
             {
-                chara->properties_E4.unk0.flags_11C |= 1 << 6;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }
             else
             {
-                chara->properties_E4.unk0.flags_11C |= 1 << 3;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
     }

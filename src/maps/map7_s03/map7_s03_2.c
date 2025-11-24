@@ -3638,7 +3638,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E9444);
 
 void func_800E9490(s_SubCharacter* chara) // 0x800E9490
 {
-    chara->model_0.charaId_0 = 0;
+    chara->model_0.charaId_0 = Chara_None;
 }
 
 void func_800E9498(void) // 0x800E9498

@@ -3,7 +3,7 @@ s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, q19_12* outDist, q19_12* ou
     s32  cond1;
     s32  cond0;
     bool cond;
-    s32  var_v1;
+    s32  flags;
 
     cond = sharedFunc_800D3430_0_s01(chara, outDist, outAngle);
     if (cond)
@@ -19,12 +19,12 @@ s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, q19_12* outDist, q19_12* ou
         *((VECTOR3*)&chara->properties_E4.npc.field_104) = sharedData_800DE190_0_s01;
     }
 
-    var_v1 = (cond != false) * 4;
+    flags = (cond != false) * 4;
     if (cond0)
     {
-        var_v1 |= 1 << 1;
+        flags |= 1 << 1;
     }
 
-    return var_v1 | (cond1 != false);
+    return flags | (cond1 != false);
 }
 

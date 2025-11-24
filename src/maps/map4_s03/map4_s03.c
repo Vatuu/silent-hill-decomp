@@ -57,12 +57,12 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D0840);
 
 void func_800D0C50(SVECTOR* rot, MATRIX* mat) // 0x800D0C50
 {
-    MATRIX sp10;
+    MATRIX outMat;
 
     SetRotMatrix(mat);
     SetTransMatrix(mat);
-    Math_RotMatrixXyz(rot, &sp10);
-    SetMulRotMatrix(&sp10);
+    Math_RotMatrixXyz(rot, &outMat);
+    SetMulRotMatrix(&outMat);
 }
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D0CA0);
@@ -189,28 +189,28 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3B98);
 void func_800D3CBC(s_SubCharacter* chara) // 0x800D3CBC
 {
     chara->position_18.vy               = Q12(10.0f);
-    chara->properties_E4.npc.field_114 |= 4;
+    chara->properties_E4.npc.field_114 |= 1 << 2;
 }
 
 bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 {
-    s32             charaPosX;
-    s32             charaPosZ;
-    s_SubCharacter* chara2; // TODO: Not sure why this is needed here, could be an inline in this func.
+    q19_12          posX;
+    q19_12          posZ;
+    s_SubCharacter* localChara; // TODO: Not sure why this is needed here, could be an inline in this func.
 
-    chara2 = chara;
+    localChara = chara;
 
     if (!Fs_QueueDoThingWhenEmpty())
     {
         return false;
     }
 
-    charaPosX = chara->position_18.vx;
-    charaPosZ = chara->position_18.vz;
+    posX = chara->position_18.vx;
+    posZ = chara->position_18.vz;
 
     chara->health_B0 = Q12(3000.0f);
 
-    chara2->properties_E4.larvalStalker.properties_E8[13].val32 = -1;
+    localChara->properties_E4.larvalStalker.properties_E8[13].val32 = -1;
 
     chara->field_D4 = Q12(0.3f);
 
@@ -220,14 +220,14 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->field_E1_0      = 4;
 
-    chara2->properties_E4.larvalStalker.properties_E8[1].val32     = 0;
-    chara2->properties_E4.larvalStalker.properties_E8[2].val32     = 0;
-    chara2->properties_E4.larvalStalker.properties_E8[3].val32     = 0;
-    chara2->properties_E4.larvalStalker.properties_E8[9].val32     = 0;
-    chara2->properties_E4.larvalStalker.properties_E8[10].val16[0] = 0;
-    chara2->properties_E4.larvalStalker.properties_E8[11].val32    = 0;
-    chara2->properties_E4.larvalStalker.properties_E8[6].val32     = charaPosX;
-    chara2->properties_E4.larvalStalker.properties_E8[7].val32     = charaPosZ;
+    localChara->properties_E4.larvalStalker.properties_E8[1].val32     = 0;
+    localChara->properties_E4.larvalStalker.properties_E8[2].val32     = 0;
+    localChara->properties_E4.larvalStalker.properties_E8[3].val32     = 0;
+    localChara->properties_E4.larvalStalker.properties_E8[9].val32     = 0;
+    localChara->properties_E4.larvalStalker.properties_E8[10].val16[0] = 0;
+    localChara->properties_E4.larvalStalker.properties_E8[11].val32    = 0;
+    localChara->properties_E4.larvalStalker.properties_E8[6].val32     = posX;
+    localChara->properties_E4.larvalStalker.properties_E8[7].val32     = posZ;
 
     func_800D3CBC(chara);
 
@@ -246,7 +246,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
         chara->model_0.stateStep_3 = 0;
     }
 
-    *(u16*)&chara2->properties_E4.larvalStalker.properties_E8[0].val16[1] = -1;
+    *(u16*)&localChara->properties_E4.larvalStalker.properties_E8[0].val16[1] = -1;
 
     func_800D3B74(chara);
 

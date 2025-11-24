@@ -2590,74 +2590,73 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028544);
 // Important for combat.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005CD38); // 0x8005CD38
 
-bool func_8005D50C(s32* arg0, s16* arg1, s16* arg2, VECTOR3* arg3, u32 arg4, s32 arg5) // 0x8005D50C
+bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* unkOffset, u32 npxIdx, q19_12 angleConstraint) // 0x8005D50C
 {
     s_func_800700F8_2 sp10;
-    VECTOR3           sp30;
-    s16               sp40;
-    s16               sp48;
-    s32               temp_s2;
-    s16               temp_v0_6;
-    s16               temp_v0_9;
-    s32               var_fp;
+    VECTOR3           unkPos;
+    q3_12             angle1;
+    q3_12             angle0;
+    q3_12             angle2;
+    q3_12             angle3;
+    q19_12            mag0;
+    q19_12            mag1;
     s32               i;
 
-    if (arg4 >= 6)
+    // Check if NPC index is valid.
+    if (npxIdx >= ARRAY_SIZE(g_SysWork.npcs_1A0))
     {
         return false;
     }
 
-    sp30.vx = (g_SysWork.npcs_1A0[arg4].position_18.vx + g_SysWork.npcs_1A0[arg4].field_D8.offsetX_0) - arg3->vx;
-    sp30.vy = (g_SysWork.npcs_1A0[arg4].position_18.vy + g_SysWork.npcs_1A0[arg4].field_CE) - arg3->vy;
-    sp30.vz = (g_SysWork.npcs_1A0[arg4].position_18.vz + g_SysWork.npcs_1A0[arg4].field_D8.offsetZ_2) - arg3->vz;
+    unkPos.vx = (g_SysWork.npcs_1A0[npxIdx].position_18.vx + g_SysWork.npcs_1A0[npxIdx].field_D8.offsetX_0) - unkOffset->vx;
+    unkPos.vy = (g_SysWork.npcs_1A0[npxIdx].position_18.vy + g_SysWork.npcs_1A0[npxIdx].field_CE)           - unkOffset->vy;
+    unkPos.vz = (g_SysWork.npcs_1A0[npxIdx].position_18.vz + g_SysWork.npcs_1A0[npxIdx].field_D8.offsetZ_2) - unkOffset->vz;
 
-    var_fp = SquareRoot0(SQUARE(sp30.vx >> 6) + SQUARE(sp30.vz >> 6)) << 6;
+    mag0 = Math_Vector2MagCalc(unkPos.vx, unkPos.vz);
+    angle0 = ratan2(unkPos.vx, unkPos.vz);
+    angle1 = ratan2(mag0, unkPos.vy);
 
-    sp48 = ratan2(sp30.vx, sp30.vz);
-    sp40 = ratan2(var_fp, sp30.vy);
+    *targetNpcIdx = npxIdx;
+    *outAngle0 = angle1;
+    *outAngle1 = angle0;
 
-    *arg0 = arg4;
-    *arg1 = sp40;
-    *arg2 = sp48;
-
-    for (i = 0; i < 6; i++)
+    // Run through NPCs.
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
     {
-        if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == 0 || g_SysWork.npcs_1A0[i].health_B0 < 0 || i == arg4)
+        // Check if NPC is valid.
+        if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == Chara_None || g_SysWork.npcs_1A0[i].health_B0 < Q12(0.0f) || i == npxIdx)
         {
             continue;
         }
 
-        sp30.vx = (g_SysWork.npcs_1A0[i].position_18.vx + g_SysWork.npcs_1A0[i].field_D8.offsetX_0) - arg3->vx;
-        sp30.vy = (g_SysWork.npcs_1A0[i].position_18.vy + g_SysWork.npcs_1A0[i].field_CE) - arg3->vy;
-        sp30.vz = (g_SysWork.npcs_1A0[i].position_18.vz + g_SysWork.npcs_1A0[i].field_D8.offsetZ_2) - arg3->vz;
+        unkPos.vx = (g_SysWork.npcs_1A0[i].position_18.vx + g_SysWork.npcs_1A0[i].field_D8.offsetX_0) - unkOffset->vx;
+        unkPos.vy = (g_SysWork.npcs_1A0[i].position_18.vy + g_SysWork.npcs_1A0[i].field_CE)           - unkOffset->vy;
+        unkPos.vz = (g_SysWork.npcs_1A0[i].position_18.vz + g_SysWork.npcs_1A0[i].field_D8.offsetZ_2) - unkOffset->vz;
 
-        temp_v0_6 = ratan2(sp30.vx, sp30.vz);
-
-        if (arg5 < ABS(func_8005BF38(sp48 - temp_v0_6)))
+        angle2 = ratan2(unkPos.vx, unkPos.vz);
+        if (angleConstraint < ABS(func_8005BF38(angle0 - angle2)))
         {
             continue;
         }
 
-        temp_s2 = SquareRoot0(SQUARE(sp30.vx >> 6) + SQUARE(sp30.vz >> 6)) << 6;
-
-        if (var_fp < temp_s2)
+        mag1 = Math_Vector2MagCalc(unkPos.vx, unkPos.vz);
+        if (mag0 < mag1)
         {
             continue;
         }
 
-        temp_v0_9 = ratan2(temp_s2, sp30.vy);
-
-        if (arg5 < ABS(func_8005BF38(sp40 - temp_v0_9)))
+        angle3 = ratan2(mag1, unkPos.vy);
+        if (angleConstraint < ABS(func_8005BF38(angle1 - angle3)))
         {
             continue;
         }
 
-        if (func_8006DA08(&sp10, arg3, &sp30, &g_SysWork.player_4C.chara_0) && sp10.field_10 == &g_SysWork.npcs_1A0[i])
+        if (func_8006DA08(&sp10, unkOffset, &unkPos, &g_SysWork.player_4C.chara_0) && sp10.field_10 == &g_SysWork.npcs_1A0[i])
         {
-            *arg0  = i;
-            *arg1  = temp_v0_9;
-            var_fp = temp_s2;
-            *arg2  = temp_v0_6;
+            *targetNpcIdx  = i;
+            *outAngle0  = angle3;
+            mag0 = mag1;
+            *outAngle1  = angle2;
         }
     }
 
@@ -4676,7 +4675,7 @@ bool func_80062708(POLY_FT4** poly, s32 arg1) // 0x80062708
     if (g_MapOverlayHeader.unkTable1_4C[arg1].field_A == 3)
     {
         var_s7 = 0xC;
-        if (g_SysWork.npcs_1A0[g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_1.field_0].model_0.charaId_0 == 0)
+        if (g_SysWork.npcs_1A0[g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_1.field_0].model_0.charaId_0 == Chara_None)
         {
             g_MapOverlayHeader.unkTable1_4C[arg1].field_A = 0;
             return false;

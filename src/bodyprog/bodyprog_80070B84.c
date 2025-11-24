@@ -2444,12 +2444,12 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
                 {
                     func_8005CD38(&enemyAttackedIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, Q12(10.0f), 0);
-                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombatInfo_38, enemyAttackedIdx, 0xE3);
+                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombatInfo_38, enemyAttackedIdx, FP_ANGLE(20.0f));
                 }
                 else
                 {
                     func_8005CD38(&enemyAttackedIdx, &g_SysWork.player_4C.chara_0.properties_E4.player.field_122, &g_SysWork.playerCombatInfo_38, 0x238, Q12(3.0f), 0);
-                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombatInfo_38, enemyAttackedIdx, 0xE3);
+                    func_8005D50C(&g_Player_TargetNpcIdx, &D_800C4554, &D_800C4556, &g_SysWork.playerCombatInfo_38, enemyAttackedIdx, FP_ANGLE(20.0f));
                 }
             }
             else

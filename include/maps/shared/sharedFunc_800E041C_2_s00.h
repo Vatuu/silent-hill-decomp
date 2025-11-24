@@ -26,7 +26,7 @@ void sharedFunc_800E041C_2_s00(s_SubCharacter* chara)
 
     if (angle1 < FP_ANGLE(0.0f))
     {
-        angle1 += 3;
+        angle1 += FP_ANGLE(0.3f);
     }
 
     sharedFunc_800D5E78_0_s01(chara, angle1 >> 2);

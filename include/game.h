@@ -1416,7 +1416,7 @@ typedef struct _SubCharacter
     q3_12             field_C8; // } Anim root offset? Set to player head position in `sharedFunc_800D0828_3_s03`.
     q3_12             field_CA; // } } Computed as Y offsets in `sharedFunc_800D0828_3_s03`.
     q3_12             field_CC; // } }
-    q3_12             field_CE;
+    q3_12             field_CE; // Some kind of Y offset.
     s16               field_D0; // Q3.12? Maybe weapon range?
     s16               field_D2;
     q3_12             field_D4;

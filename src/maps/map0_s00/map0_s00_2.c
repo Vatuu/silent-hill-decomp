@@ -852,7 +852,7 @@ void func_800DB26C(void) // 0x800DB26C
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_7);
             func_800865FC(1, 1, 0, FP_ANGLE(180.0f), Q12(-62.0f), Q12(49.0f));
-            Player_ControlUnfreeze(0);
+            Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }

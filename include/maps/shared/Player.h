@@ -284,7 +284,7 @@ void sharedFunc_800D0CB8_0_s00(void)
         case MapOverlayId_MAP4_S02:
             unkValDiv4 = sharedData_800E32CC_0_s00 >> 2; // `sharedData_800E32CC_0_s00 / 4`
 
-            // TODO: Could be compiler-optimized range checks, something like `if (x >= y && x <= (y + 0xf))`?
+            // TODO: Could be compiler-optimized range checks, something like `if (x >= y && x <= (y + 0xF))`?
             // (https://wiki.decomp.dev/en/resources/guides/assembly-patterns#range-check)
             if ((sharedData_800E32CC_0_s00 - sharedData_800DD58C_0_s00) > 15)
             {
@@ -386,9 +386,9 @@ void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
 
         polyGt4 = (POLY_GT4*)GsOUT_PACKET_P;
 
-        beamOffset.vx = vec0->vx + FP_MULTIPLY(beamDirX, (i + 1), 4);
-        beamOffset.vy = vec0->vy + FP_MULTIPLY(beamDirY, (i + 1), 4);
-        beamOffset.vz = vec0->vz + FP_MULTIPLY(beamDirZ, (i + 1), 4);
+        beamOffset.vx = vec0->vx + FP_MULTIPLY(beamDirX, i + 1, 4);
+        beamOffset.vy = vec0->vy + FP_MULTIPLY(beamDirY, i + 1, 4);
+        beamOffset.vz = vec0->vz + FP_MULTIPLY(beamDirZ, i + 1, 4);
         endRelPos.vx  = Q12_TO_Q8(beamOffset.vx - g_SysWork.player_4C.chara_0.position_18.vx);
         endRelPos.vy  = Q12_TO_Q8(beamOffset.vy - g_SysWork.player_4C.chara_0.position_18.vy);
         endRelPos.vz  = Q12_TO_Q8(beamOffset.vz - g_SysWork.player_4C.chara_0.position_18.vz);
@@ -620,7 +620,7 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
             break;
 
         case 2:
-            if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 0x2))
+            if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)))
             {
                 prim->r0 = 0xFF;
                 prim->g0 = 0xFF;
@@ -638,7 +638,7 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
                 prim->g0 = 0x30;
                 prim->b0 = 0x30;
             }
-            else if (!(g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & 0x1))
+            else if (!(g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0)))
             {
                 prim->r0 = 0xFF;
                 prim->g0 = 0xFF;
@@ -956,7 +956,7 @@ void Player_ControlFreeze(void)
     }
 }
 
-void Player_ControlUnfreeze(bool arg0)
+void Player_ControlUnfreeze(bool setIdle)
 {
     s_SubCharacter*       player;
     s_MainCharacterExtra* extra;
@@ -966,16 +966,16 @@ void Player_ControlUnfreeze(bool arg0)
     extra  = &g_SysWork.player_4C.extra_128;
     player = &g_SysWork.player_4C.chara_0;
 
-    if (arg0)
+    if (setIdle)
     {
         g_SysWork.player_4C.extra_128.state_1C          = PlayerState_None;
         g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
         g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
 
         // TODO: Will `Character_AnimSet` work here?
-        player->model_0.anim_4.status_0      = ANIM_STATUS(26, true);
+        player->model_0.anim_4.status_0      = ANIM_STATUS(HarryAnim_Idle, true);
         player->model_0.anim_4.keyframeIdx_8 = 503;
-        extra->model_0.anim_4.status_0       = ANIM_STATUS(26, true);
+        extra->model_0.anim_4.status_0       = ANIM_STATUS(HarryAnim_Idle, true);
         extra->model_0.anim_4.keyframeIdx_8  = 503;
         player->model_0.anim_4.time_4        = Q12(503);
         player->model_0.anim_4.alpha_A       = Q12(1.0f);
@@ -1568,10 +1568,10 @@ bool sharedFunc_800D2E94_0_s00(void)
             npcChara->field_40           = 0;
             npcChara->field_CE           = 0;
             npcChara->field_D0           = 0;
-            npcChara->field_D8.offsetZ_6 = 0;
-            npcChara->field_D8.offsetX_4 = 0;
-            npcChara->field_D8.offsetZ_2 = 0;
-            npcChara->field_D8.offsetX_0 = 0;
+            npcChara->field_D8.offsetZ_6 = Q12(0.0f);
+            npcChara->field_D8.offsetX_4 = Q12(0.0f);
+            npcChara->field_D8.offsetZ_2 = Q12(0.0f);
+            npcChara->field_D8.offsetX_0 = Q12(0.0f);
             npcChara->position_18.vx     = Q12(-262.0f);
             npcChara->position_18.vy     = Q12(-1.1f);
             npcChara->position_18.vz     = Q12(-104.0f);
@@ -1653,41 +1653,41 @@ bool sharedFunc_800D2E94_0_s00(void)
  */
 static inline bool Math_AngleFrontCheck(q4_12 angle0, q4_12 angle1)
 {
-    q19_12 diff = FP_ANGLE_ABS(angle0 - angle1);
-    return diff < FP_ANGLE(90.0f) || diff >= FP_ANGLE(270.0f);
+    q19_12 angleDelta = FP_ANGLE_ABS(angle0 - angle1);
+    return angleDelta < FP_ANGLE(90.0f) || angleDelta >= FP_ANGLE(270.0f);
 }
 
-void sharedFunc_800D2E9C_0_s00(s32* arg0, s32* arg1, s16* arg2)
+void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
 {
 #if defined(MAP2_S00) || defined(MAP2_S02) || defined(MAP4_S02) || defined(MAP5_S01) || defined(MAP6_S00)
-    VECTOR3 vec;
+    VECTOR3 vec; // Q19.12
     q3_12   headingAngle;
-    s16     temp_s1;
+    q3_12   angle0;
     bool    isInFont;
 
     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
     g_SysWork.player_4C.chara_0.headingAngle_3C                             = FP_ANGLE(0.0f);
-    isInFont                                                                = Math_AngleFrontCheck(*arg2, g_SysWork.player_4C.chara_0.rotation_24.vy);
+    isInFont                                                                = Math_AngleFrontCheck(*angle, g_SysWork.player_4C.chara_0.rotation_24.vy);
 
-    arg2--; // @hack Permuter find, needed for match.
-    arg2++;
+    angle--; // @hack Permuter find, needed for match.
+    angle++;
 
     if (!isInFont)
     {
-        D_800C4610.vx = *arg0 + FP_FROM((Math_Cos(*arg2) * -0x16C) + (Math_Sin(*arg2) * -0x6B0), Q12_SHIFT);
-        D_800C4610.vz = *arg1 + FP_FROM((-Math_Sin(*arg2) * -0x16C) + (Math_Cos(*arg2) * -0x6B0), Q12_SHIFT);
+        D_800C4610.vx = *offsetX + FP_FROM(( Math_Cos(*angle) * -0x16C) + (Math_Sin(*angle) * -0x6B0), Q12_SHIFT);
+        D_800C4610.vz = *offsetZ + FP_FROM((-Math_Sin(*angle) * -0x16C) + (Math_Cos(*angle) * -0x6B0), Q12_SHIFT);
     }
     else
     {
-        D_800C4610.vx = *arg0 + FP_FROM((Math_Cos(*arg2) * -0xCB) + (Math_Sin(*arg2) * 0x3C6), Q12_SHIFT);
-        D_800C4610.vz = *arg1 + FP_FROM((-Math_Sin(*arg2) * -0xCB) + (Math_Cos(*arg2) * 0x3C6), Q12_SHIFT);
+        D_800C4610.vx = *offsetX + FP_FROM(( Math_Cos(*angle) * -0xCB) + (Math_Sin(*angle) * 0x3C6), Q12_SHIFT);
+        D_800C4610.vz = *offsetZ + FP_FROM((-Math_Sin(*angle) * -0xCB) + (Math_Cos(*angle) * 0x3C6), Q12_SHIFT);
     }
 
     headingAngle = g_SysWork.player_4C.chara_0.headingAngle_3C;
     vec.vx       = Math_Sin(headingAngle); // @unused
-    vec.vx       = 0;
+    vec.vx       = Q12(0.0f);
     vec.vz       = Math_Cos(headingAngle); // @unused
-    vec.vz       = 0;
+    vec.vz       = Q12(0.0f);
 
     vec.vx = D_800C4610.vx - g_SysWork.player_4C.chara_0.position_18.vx;
     vec.vz = D_800C4610.vz - g_SysWork.player_4C.chara_0.position_18.vz;
@@ -1698,17 +1698,18 @@ void sharedFunc_800D2E9C_0_s00(s32* arg0, s32* arg1, s16* arg2)
     D_800C4610.vx = g_SysWork.player_4C.chara_0.position_18.vx + D_800C4590.offset_0.vx;
     D_800C4610.vz = g_SysWork.player_4C.chara_0.position_18.vz + D_800C4590.offset_0.vz;
 
+    // TODO: Convert hex to float or fraction.
     if (!isInFont)
     {
-        temp_s1 = *arg2 + FP_ANGLE(180.0f);
-        *arg0   = D_800C4610.vx + FP_FROM((Math_Cos(temp_s1) * 0x16C) + (Math_Sin(temp_s1) * 0x6B0), Q12_SHIFT);
-        *arg1   = D_800C4610.vz + FP_FROM((-Math_Sin(temp_s1) * 0x16C) + (Math_Cos(temp_s1) * 0x6B0), Q12_SHIFT);
+        angle0   = *angle + FP_ANGLE(180.0f);
+        *offsetX = D_800C4610.vx + FP_FROM(( Math_Cos(angle0) * 0x16C) + (Math_Sin(angle0) * 0x6B0), Q12_SHIFT);
+        *offsetZ = D_800C4610.vz + FP_FROM((-Math_Sin(angle0) * 0x16C) + (Math_Cos(angle0) * 0x6B0), Q12_SHIFT);
     }
     else
     {
-        temp_s1 = *arg2;
-        *arg0   = D_800C4610.vx + FP_FROM((Math_Cos(temp_s1) * 0xCB) + (Math_Sin(temp_s1) * -0x3C6), Q12_SHIFT);
-        *arg1   = D_800C4610.vz + FP_FROM((-Math_Sin(temp_s1) * 0xCB) + (Math_Cos(temp_s1) * -0x3C6), Q12_SHIFT);
+        angle0   = *angle;
+        *offsetX = D_800C4610.vx + FP_FROM(( Math_Cos(angle0) * 0xCB) + (Math_Sin(angle0) * -0x3C6), Q12_SHIFT);
+        *offsetZ = D_800C4610.vz + FP_FROM((-Math_Sin(angle0) * 0xCB) + (Math_Cos(angle0) * -0x3C6), Q12_SHIFT);
     }
 #endif
 }

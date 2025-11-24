@@ -2628,6 +2628,7 @@ extern s32 D_800C45EC;
 
 extern u8 D_800C4606;
 
+/** Displacement offset. */
 extern VECTOR3 D_800C4610;
 
 extern s8 D_800C4560;
@@ -3758,7 +3759,8 @@ void func_8006342C(s32 weaponAttack, q3_12 angle, s16 arg2, GsCOORDINATE2* coord
 
 s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 
-bool func_8005D50C(s32* arg0, s16* arg1, s16* arg2, VECTOR3* arg3, u32 arg4, s32 arg5);
+/** Computes something for a targeted NPC. */
+bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* unkOffset, u32 npxIdx, q19_12 angleConstraint);
 
 bool func_80060044(POLY_FT4** poly, s32 arg1);
 

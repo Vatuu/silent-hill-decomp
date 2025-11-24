@@ -1951,7 +1951,7 @@ typedef struct
 
 typedef struct 
 {
-    s32    result_0;
+    s32    result_0; // Flags?
     q19_12 dist_4;
     q19_12 angle_8;
     q19_12 field_C; // Displacement distance.
@@ -2276,7 +2276,7 @@ void sharedFunc_800D20D8_0_s00(void);
 
 void Player_ControlFreeze(void);
 
-void Player_ControlUnfreeze(bool arg0);
+void Player_ControlUnfreeze(bool setIdle);
 
 bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount);
 
@@ -2295,7 +2295,7 @@ s32 sharedFunc_800D2E50_0_s00(void);
 
 void sharedFunc_800D2E60_0_s00(void);
 
-void sharedFunc_800D2E9C_0_s00(s32* arg0, s32* arg1, s16* arg2);
+void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle);
 
 void sharedFunc_800D2E6C_0_s00(void);
 
@@ -2538,6 +2538,7 @@ bool sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1);
 
 bool sharedFunc_800D3630_0_s01(s_SubCharacter* chara, q19_12* dist);
 
+/** Returns flags? */
 s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, q19_12* outDist, q19_12* outAngle, q19_12 dist, s32* arg4);
 
 void Ai_Romper_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
