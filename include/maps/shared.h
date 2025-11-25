@@ -2222,7 +2222,11 @@ void sharedFunc_800D3E44_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D5974_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D69A0_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D83F8_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara);
 
@@ -2272,11 +2276,15 @@ void sharedFunc_800DE6A8_2_s00(s_SubCharacter* chara, VECTOR3* vec, s32 distance
 
 void sharedFunc_800DE7E0_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800DE940_2_s00(s_SubCharacter*); // Assumed return type.
+
 void sharedFunc_800DEBCC_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DECC4_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DEE24_2_s00(s_SubCharacter*); // Assumed return type.
+
+void sharedFunc_800DF358_2_s00(s_SubCharacter*); // Assumed return type.
 
 void sharedFunc_800DF710_2_s00(s_SubCharacter* chara);
 

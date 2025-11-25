@@ -1,26 +1,4 @@
-
-
-
-//================================================
-//=== .rodata section
-//================================================
-
-
-//-----------------------------------------------------------------
-//--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map6_s00
-//-----------------------------------------------------------------
 sharedData_800CAA98_0_s01           = 0x800CA8FC; // type:s32 size:0xD6C
-
-
-
-//================================================
-//=== .text section
-//================================================
-
-
-//-----------------------------------------------------------
-//--- PA: 0x0035B8   VA: 0x800CCB30   subsegment: c, map6_s00
-//-----------------------------------------------------------
 sharedFunc_800CB6B0_0_s00           = 0x800CCB30; // type:func
 sharedFunc_800CBBBC_0_s00           = 0x800CCFCC; // type:func
 sharedFunc_800CBC94_0_s00           = 0x800CD0A4; // type:func
@@ -96,7 +74,9 @@ sharedFunc_800D3DFC_0_s01           = 0x800D3524; // type:func
 sharedFunc_800D3C24_2_s00           = 0x800D35E0; // type:func
 sharedFunc_800D3E44_2_s00           = 0x800D3800; // type:func
 sharedFunc_800D5974_2_s00           = 0x800D5330; // type:func
+sharedFunc_800D5B88_2_s00 = 0x800D5544; // type:func
 sharedFunc_800D69A0_2_s00           = 0x800D635C; // type:func
+sharedFunc_800D83F8_2_s00 = 0x800D7DB4; // type:func
 sharedFunc_800D92B4_2_s00           = 0x800D8C70; // type:func
 sharedFunc_800D93E8_2_s00           = 0x800D8DA4; // type:func
 sharedFunc_800DB038_2_s00           = 0x800DA9F4; // type:func
@@ -128,6 +108,7 @@ sharedFunc_800DE578_2_s00           = 0x800DDF34; // type:func
 sharedFunc_800D529C_0_s01           = 0x800DDF54; // type:func
 sharedFunc_800DE6A8_2_s00           = 0x800DE064; // type:func
 sharedFunc_800DE7E0_2_s00           = 0x800DE19C; // type:func
+sharedFunc_800DE940_2_s00 = 0x800DE2FC; // type:func
 sharedFunc_800DEBCC_2_s00           = 0x800DE588; // type:func
 sharedFunc_800DEC64_2_s00           = 0x800DE620; // type:func
 sharedFunc_800DEC84_2_s00           = 0x800DE640; // type:func
@@ -138,6 +119,7 @@ sharedFunc_800DF22C_2_s00           = 0x800DEBE8; // type:func
 sharedFunc_800DF24C_2_s00           = 0x800DEC08; // type:func
 sharedFunc_800D5638_0_s01           = 0x800DEC28; // type:func
 sharedFunc_800DF2D0_2_s00           = 0x800DEC8C; // type:func
+sharedFunc_800DF358_2_s00 = 0x800DED14; // type:func
 sharedFunc_800DF710_2_s00           = 0x800DF0CC; // type:func
 sharedFunc_800DF80C_2_s00           = 0x800DF1C8; // type:func
 sharedFunc_800DF8A0_2_s00           = 0x800DF25C; // type:func
@@ -206,17 +188,6 @@ sharedFunc_800D929C_0_s00           = 0x800EAB00; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800EAFF8; // type:func
 MapEvent_CommonItemTake             = 0x800EB090; // type:func
 Map_WorldObjectsInit                = 0x800EBCE8; // type:func
-
-
-
-//================================================
-//=== .data section
-//================================================
-
-
-//----------------------------------------------------
-//--- PA: 0x023D54   VA: 0x800ED2CC   subsegment: data
-//----------------------------------------------------
 HARRY_M6S00_ANIM_INFOS              = 0x800ED2CC;
 sharedData_800DD584_0_s00           = 0x800ED64D; // type:u8
 sharedData_800DD588_0_s00           = 0x800ED650; // type:s32
@@ -230,15 +201,7 @@ sharedData_800DD870_0_s01           = 0x800ED764; // type:VECTOR3 size:0xC
 sharedData_800DD880_0_s01           = 0x800ED774; // type:VECTOR3 size:0xC
 GROANER_ANIM_INFOS                  = 0x800ED784; // type:s32 unknown type
 ROPMER_ANIM_INFOS                   = 0x800EF24C; // type:s32 unknown type
-
-//---------------------------------------------------------------
-//--- PA: 0x026934   VA: 0x800EFEAC   subsegment: .data, map6_s00
-//---------------------------------------------------------------
 MAP_MESSAGES                        = 0x800EFEAC; // type:u32 size:0x6C
-
-//----------------------------------------------------
-//--- PA: 0x0269A0   VA: 0x800EFF18   subsegment: data
-//----------------------------------------------------
 g_CommonWorldObjectPoses            = 0x800F0048; // type:WorldObjectPos size:0x3C
 sharedData_800DFB4C_0_s00           = 0x800F0508;
 sharedData_800DFB50_0_s00           = 0x800F050C;
