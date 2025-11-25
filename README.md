@@ -341,8 +341,9 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Cybil boss fight and cutscene of Dahlia kidnapping Alessa.</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map6_s05"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map6_s05&label=MAP6_S05"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map6_s05"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map6_s05&label=MAP6_S05&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Unused <a href="https://github.com/Vatuu/silent-hill-decomp/issues/335#issuecomment-3393749791">(Click here for more information)</a></td>
+            <td><a href="https://github.com/Vatuu/silent-hill-decomp/commit/376dc449e5834bddd93a915529a59fcac7bda6b6">Fifth fully decompiled and matching overlay!</a></td>
         </tr>
         <tr>
           <th colspan=3>❔🏥 MAP7 🏥❔</th>

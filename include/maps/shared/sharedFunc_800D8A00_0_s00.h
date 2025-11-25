@@ -7,7 +7,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
 
     q7_8     shortestAngle;
     s32      angleStep;
-    int      dist; // @hack Needs to be `int` for `ABS` to match?
+    s32      dist;
     VECTOR3* arg2; // Q19.12
 
     // TODO: This data is hard to keep track of and may not point to the right `properties_E4` struct.
@@ -75,7 +75,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
         case 3:
             dist = SquareRoot0(FP_2D_DISTANCE_SQR(arg2[0], chara->position_18));
 
-            if (ABS(dist) < Q8(0.15f))
+            if (ABS((int)dist) < Q8(0.15f)) // @hack Needs to be `int` for `ABS` to match?
             {
                 charaStateE8 = 0;
                 charaState3 = 0;

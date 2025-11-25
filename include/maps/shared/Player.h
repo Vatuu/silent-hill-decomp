@@ -1048,7 +1048,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
     #define ANGLE_THRESHOLD (FP_ANGLE(360.0) >> 6) // 360 / 64 = 5.625 degrees.
 
     VECTOR3*              localVec;
-    int                   playerVecDist; // @hack Needs to be `int` for `ABS` to match?
+    s32                   playerVecDist;
     s16                   playerRotDelta;
     s32                   angleStep;
     s_MainCharacterExtra* playerExtra;
@@ -1111,7 +1111,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
 
         case 3:
             playerVecDist = SquareRoot0(FP_2D_DISTANCE_SQR(localVec[0], playerChara->position_18));
-            if (ABS(playerVecDist) < Q8(0.15f))
+            if (ABS((int)playerVecDist) < Q8(0.15f)) // @hack Needs to be `int` for `ABS` to match?
             {
                 Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk52);
                 D_800C4588 = 8;
