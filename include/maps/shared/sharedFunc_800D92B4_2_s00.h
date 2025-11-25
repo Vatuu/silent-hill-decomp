@@ -5,7 +5,8 @@ void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara)
         case 0:
             chara->properties_E4.unk0.properties_120.val32 = (func_80080514() * 2) + Q12(0.5f);
 
-            sharedFunc_800D529C_0_s01(chara, Q12(4.0f),
+            sharedFunc_800D529C_0_s01(chara,
+                                      Q12(4.0f),
                                       chara->rotation_24.vy + FP_MULTIPLY_PRECISE(func_80080514() - FP_ANGLE(180.0f), FP_ANGLE(45.0f), Q12_SHIFT));
 
             chara->model_0.stateStep_3 = 1;
@@ -29,7 +30,7 @@ void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara)
 
         case 1:
         case 2:
-            chara->properties_E4.unk0.flags_11C |= 1 << 3;
+            chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 3:
@@ -38,11 +39,11 @@ void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara)
             chara->model_0.stateStep_3 = 0;
             if (chara->health_B0 <= 0)
             {
-                chara->properties_E4.unk0.flags_11C |= 1 << 6;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }
             else
             {
-                chara->properties_E4.unk0.flags_11C |= 1 << 3;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
     }

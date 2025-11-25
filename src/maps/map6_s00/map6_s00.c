@@ -565,11 +565,10 @@ void Map_WorldObjectsInit(void) // 0x800EBCE8
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800EBEE0(void)
+void func_800EBEE0(void) // 0x800EBEE0
 {
     s32 flags;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
-    s32 __chunkIdx2;
 
     flags = 0;
 
@@ -604,7 +603,7 @@ void func_800EBEE0(void)
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject_DrOpen1.object_0, &g_WorldObject_DrOpen1.position_1C, &(SVECTOR3){});
                 g_WorldGfx_ObjectAdd(&g_WorldObject_DrOpen2.object_0, &g_WorldObject_DrOpen2.position_1C, &(SVECTOR3){});
-                flags |= 2;
+                flags |= 1 << 1;
             }
             else
             {
@@ -642,4 +641,3 @@ void func_800EBEE0(void)
 }
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800EC4B4);
-

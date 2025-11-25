@@ -1,19 +1,19 @@
 void sharedFunc_800DECC4_2_s00(s_SubCharacter* chara)
 {
-    s32 angle;
-    s32 radius;
-    s32 var_s4;
-    s32 var_s6;
+    q19_12 angle;
+    q19_12 radius;
+    q19_12 distMin;
+    q19_12 distMax;
 
     if (chara->properties_E4.unk0.field_E8_4 != 0)
     {
-        var_s6 = Q12(8.0f);
-        var_s4 = Q12(5.0f);
+        distMax = Q12(8.0f);
+        distMin = Q12(5.0f);
     }
     else
     {
-        var_s6 = Q12(6.0f);
-        var_s4 = Q12(4.0f);
+        distMax = Q12(6.0f);
+        distMin = Q12(4.0f);
     }
 
     func_800803FC(&sharedData_800F21EC_2_s00, chara->field_40);
@@ -23,11 +23,11 @@ void sharedFunc_800DECC4_2_s00(s_SubCharacter* chara)
     angle  = func_80080478(&sharedData_800F21EC_2_s00, &chara->position_18);
     angle += FP_MULTIPLY_PRECISE(func_80080514() - FP_ANGLE(180.0f), FP_ANGLE(120.0f), Q12_SHIFT);
 
-    radius = (radius - var_s4) / 2;
+    radius = (radius - distMin) / 2;
 
     sharedData_800F21EC_2_s00.vx += FP_MULTIPLY_PRECISE(radius, Math_Sin(angle), Q12_SHIFT);
     sharedData_800F21EC_2_s00.vz += FP_MULTIPLY_PRECISE(radius, Math_Cos(angle), Q12_SHIFT);
 
-    sharedFunc_800DECA4_2_s00(chara, &sharedData_800F21EC_2_s00, var_s6);
+    sharedFunc_800DECA4_2_s00(chara, &sharedData_800F21EC_2_s00, distMax);
     sharedFunc_800D4E84_0_s01(chara);
 }

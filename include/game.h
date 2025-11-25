@@ -1042,7 +1042,7 @@ typedef struct _Savegame
     u8              meleeKillCountB_25E; // Can't be packed if used as `u16`.
     u8              rangedKillCount_25F;
     u32             field_260          : 28;
-    s32             gameDifficulty_260 : 4;  /** `e_GameDifficulty`. */
+    s32             gameDifficulty_260 : 4;  /** `e_GameDifficulty` */
     u16             firedShotCount_264;      /** Missed shot count = firedShotCount - (closeRangeShotCount + midRangeShotCount + longRangeShotCount). */
     u16             closeRangeShotCount_266; /** Only hits counted. */
     u16             midRangeShotCount_268;   /** Only hits counted. */
@@ -1306,7 +1306,7 @@ typedef struct _SubCharPropertiesUnk0
     u_Property properties_F0;
     u_Property properties_F4;
     VECTOR3    field_F8; // Q19.12 | Position or offset.
-    VECTOR3    pos_104;
+    VECTOR3    pos_104;  /** Q19.12 */
     VECTOR3    pos_110;
     s32        flags_11C; /** `e_CharaUnk0Flags` */
     u_Property properties_120;
@@ -1413,7 +1413,7 @@ typedef struct _SubCharacter
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
 
-    q3_12             field_C8; // } Anim root offset? Set to player head position in `sharedFunc_800D0828_3_s03`.
+    q3_12             field_C8; // } Y anim root offset? Set to player head position in `sharedFunc_800D0828_3_s03`.
     q3_12             field_CA; // } } Computed as Y offsets in `sharedFunc_800D0828_3_s03`.
     q3_12             field_CC; // } }
     q3_12             field_CE; // Some kind of Y offset.

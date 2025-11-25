@@ -1,8 +1,8 @@
 void sharedFunc_800DEBCC_2_s00(s_SubCharacter* chara)
 {
-    s32 posX;
-    s32 posZ;
-    s32 posY;
+    q19_12 posX;
+    q19_12 posZ;
+    q19_12 posY;
 
     posX = chara->properties_E4.unk0.pos_104.vx;
     posZ = chara->properties_E4.unk0.pos_104.vz;

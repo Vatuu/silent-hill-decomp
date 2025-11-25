@@ -471,8 +471,8 @@ typedef struct _func_8009ECCC
 
 typedef struct
 {
-    s32    field_0;
-    s32    field_4;
+    q19_12 field_0; // X position.
+    q19_12 field_4; // Z position.
     s32    field_8;
     s32    field_C;
     q19_12 field_10; // X
@@ -3795,11 +3795,14 @@ void func_800692A4(u16 arg0, u16 arg1, u16 arg2);
 
 void func_800697EC(void);
 
+/** Flags getter. */
 u16 func_80069810(void);
 
-void func_80069820(u16 arg0);
+/** Flags sette. */
+void func_80069820(u16 flags);
 
-void func_8006982C(u16 arg0);
+/** Flags setter. */
+void func_8006982C(u16 flags);
 
 void func_80069844(s32 arg0);
 
@@ -3935,9 +3938,9 @@ void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* chara);
 
 void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara);
 
-void func_8006F250(s32* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_8006F250(s32* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ);
 
-void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ);
 
 bool func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1);
 

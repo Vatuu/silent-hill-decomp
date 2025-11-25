@@ -6761,14 +6761,14 @@ u16 func_80069810(void) // 0x80069810
     return D_800C4478.field_0;
 }
 
-void func_80069820(u16 arg0) // 0x80069820
+void func_80069820(u16 flags) // 0x80069820
 {
-    D_800C4478.field_0 = arg0;
+    D_800C4478.field_0 = flags;
 }
 
-void func_8006982C(u16 arg0) // 0x8006982C
+void func_8006982C(u16 flags) // 0x8006982C
 {
-    D_800C4478.field_0 |= arg0;
+    D_800C4478.field_0 |= flags;
 }
 
 void func_80069844(s32 arg0) // 0x80069844
@@ -6793,10 +6793,10 @@ void func_80069860(s32 arg0, s32 arg1, s_func_8006F8FC* arg2) // 0x80069860
         minZ = FP_TO(ptr->field_0_11, Q12_SHIFT);
         maxZ = FP_TO(ptr->field_0_11 + ptr->field_0_25, Q12_SHIFT);
 
-        minX -= 0x10000;
-        maxX += 0x10000;
-        minZ -= 0x10000;
-        maxZ += 0x10000;
+        minX -= Q12(16.0f);
+        maxX += Q12(16.0f);
+        minZ -= Q12(16.0f);
+        maxZ += Q12(16.0f);
 
         if (arg0 >= minX && maxX >= arg0 &&
             arg1 >= minZ && maxZ >= arg1)
@@ -9867,14 +9867,14 @@ void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara) // 0x8006EEB8
     arg0->field_28 = 0;
 }
 
-void func_8006F250(s32* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F250
+void func_8006F250(s32* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ) // 0x8006F250
 {
     s32              i;
     s_func_8006F338* scratch;
 
     scratch = PSX_SCRATCH;
 
-    func_8006F338(scratch, arg1, arg2, arg3, arg4);
+    func_8006F338(scratch, posX, posZ, posDeltaX, posDeltaZ);
 
     for (i = 0; i < D_800C4478.field_2; i++)
     {
@@ -9896,30 +9896,30 @@ void func_8006F250(s32* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F
     }
 }
 
-void func_8006F338(s_func_8006F338* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006F338
+void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ) // 0x8006F338
 {
-    s32 temp_a1;
-    s32 field_4;
+    q19_12 newPosX;
+    q19_12 field_4;
 
-    temp_a1 = arg1 + arg3;
+    newPosX = posX + posDeltaX;
 
-    arg0->field_0  = arg1;
-    arg0->field_4  = arg2;
-    arg0->field_10 = arg3;
-    arg0->field_8  = arg1 + arg3;
+    arg0->field_0  = posX;
+    arg0->field_4  = posZ;
+    arg0->field_10 = posDeltaX;
+    arg0->field_8  = posX + posDeltaX;
     arg0->field_28 = Q12(1.0f);
     arg0->field_2C = Q12(1048560.0f);
-    arg0->field_14 = arg4;
+    arg0->field_14 = posDeltaZ;
 
-    arg0->field_C = arg2 + arg4;
-    if (temp_a1 >= arg0->field_0)
+    arg0->field_C = posZ + posDeltaZ;
+    if (newPosX >= arg0->field_0)
     {
         arg0->field_18 = arg0->field_0;
         arg0->field_1C = arg0->field_8;
     }
     else
     {
-        arg0->field_18 = arg1 + arg3;
+        arg0->field_18 = posX + posDeltaX;
         arg0->field_1C = arg0->field_0;
     }
 

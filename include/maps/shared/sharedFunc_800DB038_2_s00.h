@@ -1,11 +1,11 @@
 void sharedFunc_800DB038_2_s00(s_SubCharacter* chara)
 {
-    bool var_s1;
-    bool var_s2;
+    bool cond0;
+    bool cond1;
     s32  animStatus;
 
-    var_s1 = false;
-    var_s2 = false;
+    cond0 = false;
+    cond1 = false;
 
     animStatus = chara->model_0.anim_4.status_0;
     switch (chara->model_0.stateStep_3)
@@ -25,19 +25,19 @@ void sharedFunc_800DB038_2_s00(s_SubCharacter* chara)
             if (animStatus == ANIM_STATUS(3, true) && chara->model_0.anim_4.keyframeIdx_8 < 8192)
             {
                 chara->model_0.stateStep_3           = 3;
-                chara->properties_E4.unk0.flags_11C |= 1 << 5;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk5;
             }
             break;
 
         case 3:
             if (animStatus == ANIM_STATUS(17, true))
             {
-                var_s1 = 1;
+                cond0 = true;
             }
             else if (chara->field_4C == NO_VALUE)
             {
-                var_s1                     = 1;
-                var_s2                     = 1;
+                cond0                      = true;
+                cond1                      = true;
                 chara->model_0.stateStep_3 = 4;
             }
             break;
@@ -45,8 +45,8 @@ void sharedFunc_800DB038_2_s00(s_SubCharacter* chara)
         case 4:
             if (animStatus == ANIM_STATUS(17, true))
             {
-                var_s1 = 1;
-                var_s2 = 1;
+                cond0 = true;
+                cond1 = true;
             }
             break;
     }
@@ -57,9 +57,9 @@ void sharedFunc_800DB038_2_s00(s_SubCharacter* chara)
     switch (Chara_DamageTake(chara, Q12(1.2f)))
     {
         case 0:
-            if (var_s1)
+            if (cond0)
             {
-                if (chara->properties_E4.unk0.field_E8_8 == 5 && var_s2)
+                if (chara->properties_E4.unk0.field_E8_8 == 5 && cond1)
                 {
                     chara->properties_E4.unk0.field_E8_8 = 1;
                     chara->model_0.state_2               = 42;
@@ -68,26 +68,30 @@ void sharedFunc_800DB038_2_s00(s_SubCharacter* chara)
                 {
                     chara->model_0.state_2 = 39;
                 }
+
                 chara->model_0.stateStep_3 = 0;
             }
             break;
+
         case 1:
         case 2:
             chara->model_0.state_2               = 44;
             chara->model_0.stateStep_3           = 0;
-            chara->properties_E4.unk0.flags_11C |= 1 << 3;
+            chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
+
         case 3:
         case 4:
             chara->model_0.state_2     = 45;
             chara->model_0.stateStep_3 = 0;
+
             if (chara->health_B0 <= 0)
             {
-                chara->properties_E4.unk0.flags_11C |= 1 << 6;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }
             else
             {
-                chara->properties_E4.unk0.flags_11C |= 1 << 3;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
     }

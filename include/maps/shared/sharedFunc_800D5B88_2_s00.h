@@ -1,11 +1,11 @@
 void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara)
 {
-    bool var_s1;
-    bool var_s2;
+    bool cond0;
+    bool cond1;
     s32  animStatus;
 
-    var_s1     = false;
-    var_s2     = false;
+    cond0     = false;
+    cond1     = false;
     animStatus = chara->model_0.anim_4.status_0;
 
     switch (chara->model_0.stateStep_3)
@@ -17,27 +17,27 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara)
             if (animStatus == ANIM_STATUS(25, true) || animStatus == ANIM_STATUS(23, true))
             {
                 chara->model_0.stateStep_3     = 2;
-                chara->model_0.anim_4.status_0 = 2;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
             }
             break;
 
         case 2:
-            if (animStatus == 3 && chara->model_0.anim_4.keyframeIdx_8 < 8192)
+            if (animStatus == ANIM_STATUS(1, true) && chara->model_0.anim_4.keyframeIdx_8 < 8192)
             {
                 chara->model_0.stateStep_3             = 3;
-                chara->properties_E4.player.flags_11C |= 1 << 5;
+                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk5;
             }
             break;
 
         case 3:
             if (animStatus == ANIM_STATUS(25, true) || animStatus == ANIM_STATUS(23, true))
             {
-                var_s1 = true;
+                cond0 = true;
             }
             else if (chara->field_4C == NO_VALUE)
             {
-                var_s1                     = true;
-                var_s2                     = true;
+                cond0                      = true;
+                cond1                      = true;
                 chara->model_0.stateStep_3 = 4;
             }
             break;
@@ -45,8 +45,8 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara)
         case 4:
             if (animStatus == ANIM_STATUS(25, true) || animStatus == ANIM_STATUS(23, true))
             {
-                var_s1 = true;
-                var_s2 = true;
+                cond0 = true;
+                cond1 = true;
             }
             break;
     }
@@ -56,13 +56,13 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara)
     switch (Chara_DamageTake(chara, Q12(1.2f)))
     {
         case 0:
-            if (var_s1)
+            if (cond0)
             {
                 if (chara->properties_E4.unk0.field_E8_8 == 3)
                 {
                     chara->properties_E4.unk0.field_E8_8 = 2;
 
-                    if (var_s2 && func_80080514() < FP_ANGLE(180.0f))
+                    if (cond1 && func_80080514() < FP_ANGLE(180.0f))
                     {
                         chara->model_0.state_2 = 11;
                     }
@@ -73,7 +73,7 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara)
                 }
                 else
                 {
-                    if (var_s2)
+                    if (cond1)
                     {
                         chara->model_0.state_2 = 11;
                     }
@@ -86,6 +86,7 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara)
                         chara->model_0.state_2 = 10;
                     }
                 }
+
                 chara->model_0.stateStep_3 = 0;
             }
             break;
@@ -94,20 +95,21 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara)
         case 2:
             chara->model_0.state_2                 = 16;
             chara->model_0.stateStep_3             = 0;
-            chara->properties_E4.player.flags_11C |= 1 << 3;
+            chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
             break;
 
         case 3:
         case 4:
             chara->model_0.state_2     = 17;
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
-                chara->properties_E4.player.flags_11C |= 1 << 6;
+                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
             }
             else
             {
-                chara->properties_E4.player.flags_11C |= 1 << 3;
+                chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
             }
             break;
     }

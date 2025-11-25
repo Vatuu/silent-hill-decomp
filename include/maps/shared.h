@@ -2230,17 +2230,19 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara);
 
+/** Player func. */
 void sharedFunc_800D93E8_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DB038_2_s00(s_SubCharacter* chara);
 
+/** Player func. */
 void sharedFunc_800DBDEC_2_s00(s_SubCharacter* chara);
 
 bool sharedFunc_800DBF88_2_s00(s_SubCharacter* chara, s32 arg1);
 
 bool sharedFunc_800DC0A8_2_s00(s_SubCharacter* chara);
 
-s32 sharedFunc_800DC0E4_2_s00(s_SubCharacter*, s32); // Assumed return type
+s32 sharedFunc_800DC0E4_2_s00(s_SubCharacter*, s32); // Assumed return type.
 
 bool sharedFunc_800DC200_2_s00(s_SubCharacter* chara);
 
@@ -2254,7 +2256,7 @@ s32 sharedFunc_800DC598_2_s00(s_SubCharacter* chara);
 
 bool sharedFunc_800DC67C_2_s00(s_SubCharacter* chara);
 
-s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* chara, s32 arg1);
+s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* chara, q19_12 arg1);
 
 s32 sharedFunc_800DC98C_2_s00(s_SubCharacter*, VECTOR3*, VECTOR3*, VECTOR3*);
 
@@ -2268,11 +2270,11 @@ void sharedFunc_800DDE14_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DDF74_2_s00(s_SubCharacter* chara, s32 mulX, q19_12 angle0);
 
-void sharedFunc_800DE034_2_s00(s_SubCharacter* chara, VECTOR3* vec, s32 distance);
+void sharedFunc_800DE034_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist);
 
 void sharedFunc_800DE11C_2_s00(s_SubCharacter* chara);
 
-void sharedFunc_800DE6A8_2_s00(s_SubCharacter* chara, VECTOR3* vec, s32 distance);
+void sharedFunc_800DE6A8_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist);
 
 void sharedFunc_800DE7E0_2_s00(s_SubCharacter* chara);
 
@@ -2827,9 +2829,9 @@ void sharedFunc_800DE1F8_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DEC64_2_s00(s_SubCharacter* chara);
 
-void sharedFunc_800DEC84_2_s00(s_SubCharacter* chara, s32 radius, s32 angle);
+void sharedFunc_800DEC84_2_s00(s_SubCharacter* chara, q19_12 radius, q19_12 angle);
 
-void sharedFunc_800DECA4_2_s00(s_SubCharacter* chara, VECTOR3* vec, s32 distance);
+void sharedFunc_800DECA4_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist);
 
 void sharedFunc_800DF22C_2_s00(s_SubCharacter* chara);
 

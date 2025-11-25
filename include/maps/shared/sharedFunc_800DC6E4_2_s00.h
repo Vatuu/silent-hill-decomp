@@ -1,13 +1,12 @@
-s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* chara, s32 arg1)
+s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* chara, q19_12 arg1)
 {
-    s32 result;
-    s32 multiplier;
+    s32    result;
+    q19_12 mult;
 
-    multiplier = 0;
-
-    if (chara->properties_E4.unk0.field_E8_4)
+    mult = Q12(0.0f);
+    if (chara->properties_E4.unk0.field_E8_4 != 0)
     {
-        multiplier = Q12(0.1f);
+        mult = Q12(0.1f);
     }
 
     result = 0;
@@ -23,7 +22,7 @@ s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* chara, s32 arg1)
 
         case 5:
             result  = MAX((Q12(10.0f) - arg1) / 128, 0);
-            result += (sharedFunc_800D3814_0_s01(chara) / 5) - (multiplier * 2);
+            result += (sharedFunc_800D3814_0_s01(chara) / 5) - (mult * 2);
             break;
     }
 
