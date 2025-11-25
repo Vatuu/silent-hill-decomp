@@ -2228,6 +2228,8 @@ void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D93E8_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800DB038_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800DBDEC_2_s00(s_SubCharacter* chara);
 
 bool sharedFunc_800DBF88_2_s00(s_SubCharacter* chara, s32 arg1);
@@ -2274,6 +2276,8 @@ void sharedFunc_800DEBCC_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DECC4_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800DEE24_2_s00(s_SubCharacter*); // Assumed return type.
+
 void sharedFunc_800DF710_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DF80C_2_s00(s_SubCharacter* chara);
@@ -2285,6 +2289,8 @@ void sharedFunc_800E012C_2_s00(s_SubCharacter*); // Assumed return type.
 void sharedFunc_800E041C_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800E04B0_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800E0514_2_s00(s_SubCharacter*); // Assumed return type.
 
 u32 sharedFunc_800E0698_2_s00(s_SubCharacter*);
 
