@@ -345,7 +345,68 @@ bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 key
     return false;  
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80070B84", func_80071620);
+bool func_80071620(u32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, e_SfxId sfxId) // 0x80071620
+{
+    if (chara->model_0.anim_4.status_0 != animStatus)
+    {
+        return 0;
+    }
+
+    if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx)
+    {
+        if (g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & 0x2000)
+        {
+            return false;
+        }
+
+        switch (sfxId)
+        {
+            case Sfx_Stumble0:
+            case Sfx_Unk1316:
+            case Sfx_Unk1318:
+            case Sfx_Unk1319:
+            case Sfx_Stumble1:
+                func_8005DC1C(sfxId, &chara->position_18, 0x80, 0);
+                chara->properties_E4.player.field_10C = 0x40;
+                break;
+
+            case Sfx_Unk1283:
+                func_8005DC1C(sfxId, &chara->position_18, 0xC8, 2);
+                chara->properties_E4.player.field_10C = 0;
+                break;
+
+            case Sfx_Unk1628:
+                func_8005DC1C(sfxId, &chara->position_18, 0x40, 1);
+                break;
+
+            case Sfx_Unk1626:
+                func_8005DC1C(sfxId, &chara->position_18, 0xFF, 1);
+                break;
+
+            case Sfx_Unk1638:
+                func_8005DC1C(sfxId, &chara->position_18, 0xFF, 2);
+                break;
+
+            default:
+            case Sfx_HarryHeavyBreath:
+            case Sfx_DoorJammed:
+                func_8005DC1C(sfxId, &chara->position_18, 0x40, 2);
+                chara->properties_E4.player.field_10C = 0;
+                break;
+        }
+
+        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= 0x2000;
+        return true;
+    }
+    else
+    {
+        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~0x2000;
+        do
+        {
+        } while (0); // @hack
+        return false;
+    }
+}
 
 void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800717D0
 {
@@ -6571,7 +6632,6 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
     s32 i;
     s32 sfx;
     s32 angleState;
-    s8  temp_v0_3;
 
     // Set damage SFX according to something.
     sfx = Sfx_Unk1326;
@@ -6739,10 +6799,10 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             }
 
             enemyRotY = FP_ANGLE_NORM_U((enemyRotY - chara->rotation_24.vy) + FP_ANGLE(360.0f));
-            temp_v0_3 = chara->attackReceived_41 - 40;
-            switch (temp_v0_3)
+            // temp_v0_3 = chara->attackReceived_41 - 40;
+            switch (chara->attackReceived_41)
             {
-                case 27:
+                case 67:
                     g_SysWork.player_4C.extra_128.state_1C          = PlayerState_Unk7;
                     chara->model_0.stateStep_3                      = 0;
                     chara->model_0.state_2                          = 0;
@@ -6752,7 +6812,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     break;
 
-                case 23:
+                case 63:
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(1.5f);
                     Math_ShortestAngleGet(chara->rotation_24.vy, g_SysWork.npcs_1A0[0].rotation_24.vy, &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
@@ -6779,8 +6839,8 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     }
                     break;
 
-                case 20:
-                case 22:
+                case 60:
+                case 62:
                     chara->damageReceived_C0                        = Q12(10.0f);
                     g_SysWork.player_4C.extra_128.state_1C          = PlayerState_DamageHead;
                     chara->model_0.stateStep_3                      = 0;
@@ -6791,8 +6851,8 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     break;
 
-                case 1:
-                case 2:
+                case 41:
+                case 42:
                     g_SysWork.player_4C.extra_128.state_1C          = PlayerState_DamageHead;
                     chara->model_0.stateStep_3                      = 0;
                     chara->model_0.state_2                          = 0;
@@ -6802,57 +6862,56 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     break;
 
-                case 9:  // Leg grab.
-                case 14: // Romper grab.
-                case 16: // Torso grab.
-                case 26:
+                case 49: // Leg grab.
+                case 54: // Romper grab.
+                case 56: // Torso grab.
+                case 66:
                     if (enemyRotY >= FP_ANGLE(90.0f) &&
                         enemyRotY <  FP_ANGLE(270.0f))
                     {
                         g_SysWork.npcIdxs_2354[0] = chara->field_40;
 
-                        temp_v0_3 = chara->attackReceived_41 - 45;
-                        switch (temp_v0_3)
+                        switch (chara->attackReceived_41)
                         {
-                            case 9:
-								g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabPinnedFrontStart;
-								chara->model_0.stateStep_3                      = 0;
-								chara->model_0.state_2                          = 0;
-								extra->model_0.stateStep_3                      = 0;
-								extra->model_0.state_2                          = 0;
-								g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-								g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                            case 54:
+                                g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabPinnedFrontStart;
+                                chara->model_0.stateStep_3                      = 0;
+                                chara->model_0.state_2                          = 0;
+                                extra->model_0.stateStep_3                      = 0;
+                                extra->model_0.state_2                          = 0;
+                                g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                                g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
 
-                            case 0:
-                            case 11:
-								g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabTorsoFront;
-								chara->model_0.stateStep_3                      = 0;
-								chara->model_0.state_2                          = 0;
-								extra->model_0.stateStep_3                      = 0;
-								extra->model_0.state_2                          = 0;
-								g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-								g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                            case 45:
+                            case 56:
+                                g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabTorsoFront;
+                                chara->model_0.stateStep_3                      = 0;
+                                chara->model_0.state_2                          = 0;
+                                extra->model_0.stateStep_3                      = 0;
+                                extra->model_0.state_2                          = 0;
+                                g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                                g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
 
-                            case 4:
-								g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabLegsFront;
-								chara->model_0.stateStep_3                      = 0;
-								chara->model_0.state_2                          = 0;
-								extra->model_0.stateStep_3                      = 0;
-								extra->model_0.state_2                          = 0;
-								g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-								g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                            case 49:
+                                g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabLegsFront;
+                                chara->model_0.stateStep_3                      = 0;
+                                chara->model_0.state_2                          = 0;
+                                extra->model_0.stateStep_3                      = 0;
+                                extra->model_0.state_2                          = 0;
+                                g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                                g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
 
-                            case 21:
-								g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabNeckFront;
-								chara->model_0.stateStep_3                      = 0;
-								chara->model_0.state_2                          = 0;
-								extra->model_0.stateStep_3                      = 0;
-								extra->model_0.state_2                          = 0;
-								g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-								g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                            case 66:
+                                g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabNeckFront;
+                                chara->model_0.stateStep_3                      = 0;
+                                chara->model_0.state_2                          = 0;
+                                extra->model_0.stateStep_3                      = 0;
+                                extra->model_0.state_2                          = 0;
+                                g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                                g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
 
                         }
@@ -6861,54 +6920,53 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     {
                         g_SysWork.npcIdxs_2354[1] = chara->field_40;
 
-                        temp_v0_3 = chara->attackReceived_41 - 45;
-                        switch (temp_v0_3)
+                        switch (chara->attackReceived_41)
                         {
-                            case 9:
-								g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabPinnedBackStart;
-								chara->model_0.stateStep_3                      = 0;
-								chara->model_0.state_2                          = 0;
-								extra->model_0.stateStep_3                      = 0;
-								extra->model_0.state_2                          = 0;
-								g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-								g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                            case 54:
+                                g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabPinnedBackStart;
+                                chara->model_0.stateStep_3                      = 0;
+                                chara->model_0.state_2                          = 0;
+                                extra->model_0.stateStep_3                      = 0;
+                                extra->model_0.state_2                          = 0;
+                                g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                                g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
 
-                            case 0:
-                            case 11:
-								g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabTorsoBack;
-								chara->model_0.stateStep_3                      = 0;
-								chara->model_0.state_2                          = 0;
-								extra->model_0.stateStep_3                      = 0;
-								extra->model_0.state_2                          = 0;
-								g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-								g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                            case 45:
+                            case 56:
+                                g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabTorsoBack;
+                                chara->model_0.stateStep_3                      = 0;
+                                chara->model_0.state_2                          = 0;
+                                extra->model_0.stateStep_3                      = 0;
+                                extra->model_0.state_2                          = 0;
+                                g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                                g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
 
-                            case 4:
-								g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabLegsBack;
-								chara->model_0.stateStep_3                      = 0;
-								chara->model_0.state_2                          = 0;
-								extra->model_0.stateStep_3                      = 0;
-								extra->model_0.state_2                          = 0;
-								g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-								g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                            case 49:
+                                g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabLegsBack;
+                                chara->model_0.stateStep_3                      = 0;
+                                chara->model_0.state_2                          = 0;
+                                extra->model_0.stateStep_3                      = 0;
+                                extra->model_0.state_2                          = 0;
+                                g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                                g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
 
-                            case 21:
-								g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabNeckBack;
-								chara->model_0.stateStep_3                      = 0;
-								chara->model_0.state_2                          = 0;
-								extra->model_0.stateStep_3                      = 0;
-								extra->model_0.state_2                          = 0;
-								g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-								g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+                            case 66:
+                                g_SysWork.player_4C.extra_128.state_1C          = PlayerState_EnemyGrabNeckBack;
+                                chara->model_0.stateStep_3                      = 0;
+                                chara->model_0.state_2                          = 0;
+                                extra->model_0.stateStep_3                      = 0;
+                                extra->model_0.state_2                          = 0;
+                                g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+                                g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
                         }
                     }
                     break;
 
-                case 7:
+                case 47:
                     chara->health_B0                                = NO_VALUE;
                     chara->field_D6                                 = Q12(0.0f);
                     g_SysWork.player_4C.extra_128.state_1C          = PlayerState_InstantDeath;
@@ -6920,12 +6978,12 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     return;
 
-                case 29:
+                case 69:
                     g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(1.6f);
                     Math_ShortestAngleGet(chara->rotation_24.vy, FP_ANGLE(90.0f), &headingAngle);
                     g_Player_HeadingAngle = headingAngle;
 
-                case 28:
+                case 68:
                     if (chara->attackReceived_41 != 69)
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(4.0f);
@@ -6933,20 +6991,20 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                         g_Player_HeadingAngle = headingAngle;
                     }
 
-                case 0:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 8:
-                case 10:
-                case 12:
-                case 17:
-                case 18:
-                case 19:
-                case 21:
-                case 24:
-                case 25:
+                case 40:
+                case 43:
+                case 44:
+                case 45:
+                case 46:
+                case 48:
+                case 50:
+                case 52:
+                case 57:
+                case 58:
+                case 59:
+                case 61:
+                case 64:
+                case 65:
                     // Left harm animation.
                     if (enemyRotY >= FP_ANGLE(45.0f) && enemyRotY < FP_ANGLE(135.0f))
                     {
@@ -6977,7 +7035,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     break;
 
-                case 13:
+                case 53:
                     if (enemyRotY < FP_ANGLE(179.95f))
                     {
                         angleState = PlayerState_DamageFeetFront;

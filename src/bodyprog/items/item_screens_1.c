@@ -263,15 +263,13 @@ s32 Game_HyperBlasterBeamColorGet(void) // 0x8004C54C
     return g_SavegamePtr->pickedUpSpecialItemCount_25C_3 >> 3;
 }
 
-void func_8004C564(u8 arg0, s32 weaponAttack) // 0x8004C564
+void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
 {
     s32 temp_v1;
-    s8  temp_a1;
 
-    temp_a1 = weaponAttack + 1;
-    switch (temp_a1)
+    switch (weaponAttack)
     {
-        case 0:
+        case -1:
             D_800C3960 = g_SavegamePtr->mapOverlayId_A4;
             D_800C3962 = 0;
             D_800C3963 = 0;
@@ -282,7 +280,7 @@ void func_8004C564(u8 arg0, s32 weaponAttack) // 0x8004C564
             g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
             break;
 
-        case 1:
+        case 0:
             D_800C3960 = g_SavegamePtr->mapOverlayId_A4;
             D_800C3962 = 0;
             D_800C3961 = 32;
@@ -300,7 +298,7 @@ void func_8004C564(u8 arg0, s32 weaponAttack) // 0x8004C564
             }
             break;
 
-        case 2:
+        case 1:
             if (arg0 == (1 << 1))
             {
                 func_8008B40C((u8)D_800C3961, D_800C3962);
@@ -308,7 +306,7 @@ void func_8004C564(u8 arg0, s32 weaponAttack) // 0x8004C564
             }
             break;
 
-        case 3:
+        case 2:
             if (D_800C3961 != 0)
             {
                 D_800C3961 -= ((g_DeltaTime0 / 68) == 0) ? 1 : (g_DeltaTime0 / 68);
@@ -334,7 +332,7 @@ void func_8004C564(u8 arg0, s32 weaponAttack) // 0x8004C564
             }
             break;
 
-        case 4:
+        case 3:
             if (D_800C3963 & (1 << 1))
             {
                 if (!(D_800C3963 & (1 << 2)))
@@ -348,7 +346,7 @@ void func_8004C564(u8 arg0, s32 weaponAttack) // 0x8004C564
             }
             break;
 
-        case 5:
+        case 4:
             if (g_SavegamePtr->mapOverlayId_A4 != D_800C3960)
             {
                 D_800C3960 = g_SavegamePtr->mapOverlayId_A4;

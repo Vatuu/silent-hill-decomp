@@ -3163,7 +3163,7 @@ void func_800485B8(s32 arg0, u8 arg1, u32 arg2);
 void func_800485C0(s32 idx);
 
 /** `arg0` is probably a bit flag. */
-void func_8004C564(u8 arg0, s32 weaponAttack);
+void func_8004C564(u8 arg0, s8 weaponAttack);
 
 // TODO: Can probably create status enums for the below funcs' return values to avoid magic,
 // but other funcs using similar return patterns should be identified first if they exist.
@@ -4431,7 +4431,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
 s32 func_800706E4(s_Model* model);
 
 /** Special player SFX handler for heavy breath and damage. */
-bool func_80071620(u8 animStatus, s_SubCharacter*, s32, e_SfxId sfxId);
+bool func_80071620(u32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, e_SfxId sfxId);
 
 void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
 
