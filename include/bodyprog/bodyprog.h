@@ -972,17 +972,21 @@ STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 typedef struct
 {
     u16  field_0;
-    u8   unk_2[4];
+    u8   unk_2[2];
+    u16  field_4;
     s8   field_6;  // Accessed by `func_8008BF84` as `u16`
     s8   unk_7;
     u8   field_8;  // Accessed by `func_8008BF84` as `u16`
     u8   field_9;
-    u8   unk_A[4]; // Accessed by `func_8008BF84` as `u16`
+    u8   field_A;  // Accessed by `func_8008BF84` as `u16`
+    u8   field_B;
+    u16  field_C;
     u8   field_E;
     u8   field_F;
     u8   field_10;
     u8   field_11;
-    u16  unk_12; // Guessed.
+    u8   field_12;
+    u8   unk_13;
     u32* unk_14; // Some pointer. All entries have the same value `D_800AD4C4`.
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
@@ -3690,6 +3694,8 @@ void func_8008B40C(s32 vol, s32 soundType);
 void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8008B664(VECTOR3* pos, u32 caseVar);
+
+s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg2, s32 arg3);
 
 s32 func_8008BF84(s_SubCharacter* chara, s32 arg1, s_800AD4C8* arg2, s32 arg3);
 

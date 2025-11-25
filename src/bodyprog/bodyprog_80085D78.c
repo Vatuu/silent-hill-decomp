@@ -2689,7 +2689,378 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 }
 
 /** Main attack handling function. */
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714); // 0x8008B714
+s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg2, s32 arg3) // 0x8008B714
+{
+    s32         sp10;
+    s32         sp14;
+    s32         var_a3;
+    s_800AD4C8* temp_fp;
+    u32         var_s0;
+    s32         var_s0_2;
+    s32         var_s1;
+    s32         var_s2;
+    u32         var_s4;
+    s32         var_v1;
+    u32         var_s7;
+    s32         var_v0;
+    s32         var_s3;
+    s32         var_a2;
+    s32         temp;
+    s64         new_var;
+    s32         temp2;
+    s32         x0, y0, z0;
+    s32         x1, y1, z1;
+    s32         x2, y2, z2;
+
+    var_s3  = (u8)attacker->field_46;
+    temp_fp = &D_800AD4C8[var_s3];
+    var_s1  = temp_fp->field_10;
+    sp14    = attacker->field_4C;
+    var_s2  = arg3;
+
+    if (target == &g_SysWork.player_4C.chara_0)
+    {
+        sp10             = NO_VALUE;
+        target->field_40 = (((s32)((u32)((u8*)attacker - sizeof(s_MainCharacter)) - (u32)target) * -0x6EB3E453) >> 3);
+    }
+    else
+    {
+        sp10 = 1 << (((s32)((u32)((u8*)target - sizeof(s_MainCharacter)) - (u32)&g_SysWork.player_4C) * -0x6EB3E453) >> 3);
+
+        if (sp14 & sp10)
+        {
+            switch (var_s3)
+            {
+                case 5:
+                case 15:
+                case 25:
+                case 2:
+                    if (g_SysWork.field_275C > 0x100000)
+                    {
+                        func_8008B3E4(0x80);
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            switch (var_s1)
+            {
+                case 2:
+                    func_800892A4(6);
+                    break;
+
+                case 1:
+                    func_800892A4(7);
+                    break;
+
+                case 3:
+                    break;
+            }
+
+            if (target->model_0.charaId_0 == Chara_Padlock)
+            {
+                func_8005DC1C(0x570, arg2, 0x80, 0);
+            }
+            else
+            {
+                func_8008B664(arg2, var_s3);
+            }
+        }
+    }
+
+    var_s0 = FP_TO(temp_fp->field_4, Q12_SHIFT);
+
+    switch (var_s3)
+    {
+        case EquippedWeaponId_RockDrill:
+        case EquippedWeaponId_Chainsaw:
+        case 12:
+        case 15:
+        case 22:
+        case 25:
+            if (func_8008A35C(temp_fp, attacker->field_58) == 0)
+            {
+                var_s0 = 0;
+            }
+            if (g_SysWork.field_275C > 0x100000)
+            {
+                var_s0 += 0xC8000;
+            }
+            break;
+
+        case EquippedWeaponId_HyperBlaster:
+            switch (Game_HyperBlasterBeamColorGet())
+            {
+                case 0:
+                    break;
+                case 1:
+                    var_s0 += var_s0 * 2;
+                    break;
+                case 2:
+                    var_s0 += func_80080514() * 0x32;
+                    var_s0 *= 5;
+                    break;
+            }
+            break;
+
+        case 8:
+        case 9:
+            if (target->flags_3E & 2)
+            {
+                var_s0 = 0x3E8000;
+            }
+            break;
+    }
+
+    var_s7  = temp_fp->field_C;
+    temp2   = func_80080514();
+    new_var = var_s0;
+    var_v1  = 0x4800;
+    var_v1  = var_v1 - temp2;
+
+    if (var_v1 < 0)
+    {
+        var_v1 += 3;
+    }
+
+    var_s4 = FP_MULTIPLY_PRECISE(new_var, var_v1 >> 2, Q12_SHIFT);
+
+    switch (var_s3)
+    {
+        case 0x20:
+        case 0x21:
+        case 0x22:
+        case 0x23:
+        case -1:
+            var_s0_2 = attacker->field_98.vx;
+            var_s1   = attacker->field_98.vy;
+            var_s2   = attacker->field_98.vz;
+
+            if (var_s3 == 0x22)
+            {
+                if (sp14 & sp10)
+                {
+                    var_s7 = 0;
+                }
+
+                var_s2   = 0;
+                var_s1   = 0;
+                var_s0_2 = 0;
+            }
+            break;
+
+        default:
+            if ((target != &g_SysWork.player_4C) && !(target->flags_3E & 4))
+            {
+                var_s4 *= 4;
+            }
+
+            if (var_s1 == 1)
+            {
+                var_s4 = FP_MULTIPLY_PRECISE(var_s4, var_s2, Q12_SHIFT);
+                var_s7 = FP_MULTIPLY_PRECISE(var_s7, var_s2, Q12_SHIFT);
+            }
+
+            if (var_s3 > 7 && var_s3 < 10)
+            {
+                var_s0_2 = attacker->field_8C.vx;
+                var_s1   = 0;
+                var_s2   = attacker->field_8C.vz;
+            }
+            else
+            {
+                x0 = attacker->field_80.vx;
+                y0 = attacker->field_80.vy;
+                z0 = attacker->field_80.vz;
+
+                x1 = attacker->field_A4.vx;
+                y1 = attacker->field_A4.vy;
+                z1 = attacker->field_A4.vz;
+
+                x2 = attacker->field_8C.vx;
+                y2 = attacker->field_8C.vy;
+                z2 = attacker->field_8C.vz;
+
+                x1 += x0;
+                y1 += y0;
+                z1 += z0;
+
+                x0 = attacker->characterCount_68.vx;
+                y0 = attacker->characterCount_68.vy;
+                z0 = attacker->characterCount_68.vz;
+
+                x2 += x0;
+                y2 += y0;
+                z2 += z0;
+
+                var_s0_2 = x2 - x1;
+                var_s1   = y2 - y1;
+                var_s2   = z2 - z1;
+            }
+
+            var_v1 = func_8008A058(func_80080540(var_s0_2, var_s1, var_s2));
+
+            if (var_v1 >= 0x40)
+            {
+                if (var_v1 > 0xFFFFFF)
+                {
+                    var_v0 = var_v1;
+                    if (var_v1 < 0)
+                    {
+                        var_v0 = var_v1 + 0xFFF;
+                    }
+                    var_v1 = FP_FROM(var_v0, Q12_SHIFT);
+
+                    var_v0 = var_s0_2;
+                    if (var_s0_2 < 0)
+                    {
+                        var_v0 = var_s0_2 + 0xFFF;
+                    }
+                    var_s0_2 = FP_FROM(var_v0, Q12_SHIFT);
+
+                    var_v0 = var_s1;
+                    if (var_s1 < 0)
+                    {
+                        var_v0 = var_s1 + 0xFFF;
+                    }
+                    var_s1 = FP_FROM(var_v0, Q12_SHIFT);
+
+                    var_v0 = var_s2;
+                    if (var_s2 < 0)
+                    {
+                        var_v0 = var_s2 + 0xFFF;
+                    }
+                    var_s2 = FP_FROM(var_v0, Q12_SHIFT);
+                }
+
+                var_v1   = 0x01000000 / var_v1;
+                var_s0_2 = FP_MULTIPLY_PRECISE(var_s0_2, var_v1, Q12_SHIFT);
+                var_s1   = FP_MULTIPLY_PRECISE(var_s1, var_v1, Q12_SHIFT);
+                var_s2   = FP_MULTIPLY_PRECISE(var_s2, var_v1, Q12_SHIFT);
+            }
+            break;
+    }
+
+    if (var_s4 != 0)
+    {
+        target->damageReceived_C0 += var_s4;
+    }
+
+    if (var_s7 != 0)
+    {
+        temp              = FP_MULTIPLY_PRECISE(var_s7, var_s0_2, Q12_SHIFT);
+        target->field_B4 += temp;
+        temp              = FP_MULTIPLY_PRECISE(var_s7, var_s1, Q12_SHIFT);
+        target->field_B8 += temp;
+        temp              = FP_MULTIPLY_PRECISE(var_s7, var_s2, Q12_SHIFT);
+        target->field_BC += temp;
+    }
+
+    target->attackReceived_41 = var_s3;
+    sp14                     |= sp10;
+    attacker->field_4C        = sp14;
+
+    if (var_s4 | var_s7)
+    {
+        var_a2 = temp_fp->field_12;
+
+        if (var_a2 > 0 && var_a2 < 8)
+        {
+            var_a3 = NO_VALUE;
+
+            switch (target->model_0.charaId_0)
+            {
+                case 1:
+                    if (target->health_B0 >= 0)
+                    {
+                        var_a3 = 1;
+                    }
+                    break;
+
+                case 2:
+                case 3:
+                    var_a3 = 2;
+                    break;
+
+                case 7:
+                    var_a3 = 4;
+                    break;
+
+                case 6:
+                case 8:
+                case 9:
+                    var_a3 = 3;
+                    break;
+
+                case 11:
+                    var_a3 = 5;
+                    break;
+
+                case 4:
+                case 5:
+                    var_a3 = 6;
+                    break;
+
+                case 14:
+                    var_a3 = 7;
+                    break;
+
+                case 10:
+                    var_a3 = 8;
+                    break;
+
+                case 15:
+                case 20:
+                    var_a3 = 0xA;
+                    break;
+
+                case 12:
+                    var_a3 = 9;
+                    break;
+
+                case 16:
+                case 18:
+                    var_a3 = 0xB;
+                    break;
+
+                case 21:
+                    var_a3 = 0xC;
+                    var_a2 = 1;
+                    break;
+
+                case 22:
+                case 23:
+                case 36:
+                    if (!(target->flags_3E & 4))
+                    {
+                        if (var_s3 == 0x22)
+                        {
+                            var_a2 = 4;
+                        }
+                        else
+                        {
+                            var_a2 = 7;
+                        }
+                    }
+
+                default:
+                    var_a3 = 0x10;
+                    break;
+
+                case 44:
+                    var_a3 = -1;
+                    break;
+            }
+
+            if (var_a3 >= 0)
+            {
+                func_8005F6B0(target, arg2, var_a2, var_a3);
+            }
+        }
+    }
+    return sp10;
+}
 
 s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) // 0x8008BF84
 {
@@ -2809,7 +3180,7 @@ s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) //
 
     temp_v1   = *(u16*)&arg2->field_6;
     temp_a0_2 = *(u16*)&arg2->field_8;
-    temp_a2   = *(u16*)&arg2->unk_A;
+    temp_a2   = *(u16*)&arg2->field_A;
 
     var_v0    = (sp38 - sp44);
     temp_v0_7 = (sp3C - sp48);
@@ -2829,8 +3200,8 @@ s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) //
 
     if (var_v0_6 < temp_a2)
     {
-        sp40 += *(u16*)&arg2->unk_A >> 1;
-        sp4C -= *(u16*)&arg2->unk_A >> 1;
+        sp40 += *(u16*)&arg2->field_A >> 1;
+        sp4C -= *(u16*)&arg2->field_A >> 1;
     }
 
     if (arg0 == &g_SysWork.player_4C.chara_0)
