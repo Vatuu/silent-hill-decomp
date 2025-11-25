@@ -3691,7 +3691,7 @@ void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8008B664(VECTOR3* pos, u32 caseVar);
 
-s32 func_8008BF84(s_MainCharacter* mainChara, s32 arg1, s_800AD4C8* arg2, s32 arg3);
+s32 func_8008BF84(s_SubCharacter* chara, s32 arg1, s_800AD4C8* arg2, s32 arg3);
 
 s32 func_8008D850(void);
 

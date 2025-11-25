@@ -2691,7 +2691,7 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
 /** Main attack handling function. */
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B714); // 0x8008B714
 
-s32 func_8008BF84(s_MainCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) // 0x8008BF84
+s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) // 0x8008BF84
 {
     s_SubCharacter*  sp10;
     s32              sp14;
@@ -2742,15 +2742,15 @@ s32 func_8008BF84(s_MainCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) /
     s32              var_v0_3;
     s32              var_v0_6;
     s32              var_v1;
-    s_MainCharacter* var_a1;
+    s_SubCharacter*  var_a1;
     s32              temp_a2;
     u16              temp_v1;
     s32              temp2;
     s32              temp4;
 
-    sp28 = arg0->chara_0.characterCount_68.vx;
-    sp2C = arg0->chara_0.characterCount_68.vy;
-    sp30 = arg0->chara_0.characterCount_68.vz;
+    sp28 = arg0->characterCount_68.vx;
+    sp2C = arg0->characterCount_68.vy;
+    sp30 = arg0->characterCount_68.vz;
 
     sp20 = Math_Sin(arg1);
     sp24 = Math_Cos(arg1);
@@ -2759,8 +2759,8 @@ s32 func_8008BF84(s_MainCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) /
     D_800C4788[0].vy = 0;
     D_800C4788[0].vz = 0;
 
-    sp34   = arg0->chara_0.field_8C.vx;
-    var_fp = arg0->chara_0.field_8C.vz;
+    sp34   = arg0->field_8C.vx;
+    var_fp = arg0->field_8C.vz;
 
     sp44 = 0;
     sp38 = 0;
@@ -2769,7 +2769,7 @@ s32 func_8008BF84(s_MainCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) /
     sp4C = 0;
     sp40 = 0;
 
-    var_s7           = arg0->chara_0.field_8C.vy;
+    var_s7           = arg0->field_8C.vy;
     D_800C4788[1].vy = var_s7;
 
     temp_t4          = FP_MULTIPLY_PRECISE(sp34, sp24, Q12_SHIFT) - FP_MULTIPLY_PRECISE(var_fp, sp20, Q12_SHIFT);
@@ -2833,28 +2833,28 @@ s32 func_8008BF84(s_MainCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) /
         sp4C -= *(u16*)&arg2->unk_A >> 1;
     }
 
-    if (arg0 == &g_SysWork.player_4C)
+    if (arg0 == &g_SysWork.player_4C.chara_0)
     {
-        var_a1 = arg0 + 1;
+        var_a1 = (u8*)arg0 + sizeof(s_MainCharacter);
         var_v0 = 6;
         var_v1 = 1;
     }
     else
     {
-        var_a1 = &g_SysWork.player_4C;
+        var_a1 = &g_SysWork.player_4C.chara_0;
         var_v0 = 1;
         var_v1 = -1;
     }
 
     sp18 = var_v1;
-    sp10 = &var_a1->chara_0;
+    sp10 = var_a1;
     sp14 = 0;
 
-    sp50 = arg0->chara_0.position_18.vx;
-    sp54 = arg0->chara_0.position_18.vz;
+    sp50 = arg0->position_18.vx;
+    sp54 = arg0->position_18.vz;
 
-    temp2  = arg0->chara_0.position_18.vy;
-    temp2 += arg0->chara_0.field_C8;
+    temp2  = arg0->position_18.vy;
+    temp2 += arg0->field_C8;
 
     D_800C47C8[0].vx = sp50;
     D_800C47C8[0].vy = temp2;
@@ -2876,7 +2876,7 @@ s32 func_8008BF84(s_MainCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) /
         D_800C47E8.vy = sp10->position_18.vy;
         D_800C47E8.vz = sp10->position_18.vz + sp10->field_D8.offsetZ_2;
 
-        if (Math_Distance2dGet(&arg0->chara_0.position_18, &D_800C47E8) > Q12(3.0f))
+        if (Math_Distance2dGet(&arg0->position_18, &D_800C47E8) > Q12(3.0f))
         {
             continue;
         }
@@ -3065,13 +3065,13 @@ s32 func_8008BF84(s_MainCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) /
         D_800C47B8.vy = (sp58 + sp5C) + temp_s0;
         D_800C47B8.vz = temp_t5 + var_s1;
 
-        if (func_8008B714(&arg0->chara_0, sp10, &D_800C47B8, arg3))
+        if (func_8008B714(arg0, sp10, &D_800C47B8, arg3))
         {
             sp14 |= sp18;
         }
     }
 
-    arg0->chara_0.field_4C |= sp14;
+    arg0->field_4C |= sp14;
     return sp14;
 }
 

@@ -349,7 +349,7 @@ bool func_80071620(u32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, e_Sfx
 {
     if (chara->model_0.anim_4.status_0 != animStatus)
     {
-        return 0;
+        return false;
     }
 
     if (chara->model_0.anim_4.keyframeIdx_8 >= keyframeIdx)
@@ -6799,7 +6799,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             }
 
             enemyRotY = FP_ANGLE_NORM_U((enemyRotY - chara->rotation_24.vy) + FP_ANGLE(360.0f));
-            // temp_v0_3 = chara->attackReceived_41 - 40;
+
             switch (chara->attackReceived_41)
             {
                 case 67:
