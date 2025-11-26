@@ -127,7 +127,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
     }
 
     if (extra->model_0.anim_4.keyframeIdx_8 >= (HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx_C + D_800AD4C8[weaponAttack].field_E) && 
-        HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx_C + D_800AD4C8[weaponAttack].field_E + D_800AD4C8[weaponAttack].field_F >= extra->model_0.anim_4.keyframeIdx_8)
+        ((HARRY_BASE_ANIM_INFOS[animStatus].startKeyframeIdx_C + D_800AD4C8[weaponAttack].field_E) + D_800AD4C8[weaponAttack].field_F) >= extra->model_0.anim_4.keyframeIdx_8)
     {
         g_SysWork.playerCombatInfo_38.weaponAttack_F = weaponAttack;
 

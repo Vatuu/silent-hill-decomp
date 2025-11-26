@@ -968,26 +968,26 @@ typedef struct
 } s_800A992C;
 STATIC_ASSERT_SIZEOF(s_800A992C, 24);
 
-/** Related to weapon attacks. */
+/** Related to weapon attacks. Stats, SFX IDs, damange values, etc.? */
 typedef struct
 {
-    u16  field_0;
-    u8   unk_2[2];
-    u16  field_4;
-    s8   field_6;  // Accessed by `func_8008BF84` as `u16`
-    s8   unk_7;
-    u8   field_8;  // Accessed by `func_8008BF84` as `u16`
-    u8   field_9;
-    u8   field_A;  // Accessed by `func_8008BF84` as `u16`
-    u8   field_B;
-    u16  field_C;
-    u8   field_E;
-    u8   field_F;
-    u8   field_10; // State.
-    u8   field_11;
-    u8   field_12;
-    u8   unk_13;
-    u32* unk_14; // Some pointer. All entries have the same value `D_800AD4C4`.
+    q4_12 field_0;
+    u8    field_2[2];
+    u16   field_4;
+    s8    field_6;  // Accessed by `func_8008BF84` as `u16`
+    s8    unk_7;
+    u8    field_8;  // Accessed by `func_8008BF84` as `u16`
+    u8    field_9;
+    u8    field_A;  // Accessed by `func_8008BF84` as `u16`
+    u8    field_B;
+    u16   field_C;
+    u8    field_E;  // Keyframe index offset?
+    u8    field_F;  // Keyframe index offset?
+    u8    field_10; // State.
+    u8    field_11;
+    u8    field_12;
+    u8    unk_13;
+    u32*  unk_14; // Some pointer. All entries have the same value `D_800AD4C4`.
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
