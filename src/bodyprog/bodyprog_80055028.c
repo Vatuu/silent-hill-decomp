@@ -3,6 +3,7 @@
 
 #include <psyq/libapi.h>
 #include <psyq/strings.h>
+#include <gtemac.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
@@ -1402,9 +1403,9 @@ void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 
     scratchData->field_3AC = *arg4; // 3AC changed to `SVECTOR`.
 
-    scratchData->field_380.m[0][0] = arg3->vx;
-    scratchData->field_380.m[0][1] = arg3->vy;
-    scratchData->field_380.m[0][2] = arg3->vz;
+    scratchData->field_380.field_0.m[0][0] = arg3->vx;
+    scratchData->field_380.field_0.m[0][1] = arg3->vy;
+    scratchData->field_380.field_0.m[0][2] = arg3->vz;
 
     gte_ldtr_0();
 
@@ -1417,11 +1418,11 @@ void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     temp_v1 = D_800C4168.field_3;
 
     var_t0 = &scratchData->field_2B8[offset];
-    mat    = &scratchData->field_380;
+    mat    = &scratchData->field_380.field_0;
 
     for (curNormal = meshHdr->normals_10; curNormal < &meshHdr->normals_10[meshHdr->normalCount_2]; curNormal++)
     {
-        temp_t8   = &scratchData->field_380.m[2][0];
+        temp_t8   = &scratchData->field_380.field_0.m[2][0];
         screenPos = &scratchData->screenPos_3A4;
         depthP    = &scratchData->depthP_3A8;
         temp_t2   = temp_v1;
@@ -1524,10 +1525,10 @@ void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     void*     endPtr;
     s_Normal* normal;
 
-    scratchData->field_380.m[0][0] = lightVec->vx;
-    scratchData->field_380.m[0][1] = lightVec->vy;
-    scratchData->field_380.m[0][2] = lightVec->vz;
-    gte_SetLightMatrix(&scratchData->field_380);
+    scratchData->field_380.field_0.m[0][0] = lightVec->vx;
+    scratchData->field_380.field_0.m[0][1] = lightVec->vy;
+    scratchData->field_380.field_0.m[0][2] = lightVec->vz;
+    gte_SetLightMatrix(&scratchData->field_380.field_0);
 
     var_a3  = &scratchData->field_2B8[offset];
     temp_t2 = D_800C4168.field_20;
@@ -1574,26 +1575,26 @@ void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 
     screenXy = &scratchData->screenXy_0[offset];
 
-    *(s32*)&scratchData->field_380.m[0][0] = *(s32*)&screenXy[0];
-    *(s32*)&scratchData->field_380.m[1][1] = *(s32*)&screenXy[1];
-    *(s32*)&scratchData->field_380.m[2][2] = *(s32*)&screenXy[2];
+    *(s32*)&scratchData->field_380.field_0.m[0][0] = *(s32*)&screenXy[0];
+    *(s32*)&scratchData->field_380.field_0.m[1][1] = *(s32*)&screenXy[1];
+    *(s32*)&scratchData->field_380.field_0.m[2][2] = *(s32*)&screenXy[2];
 
     temp_a2 = &scratchData->field_18C[offset];
 
-    scratchData->field_380.m[0][2]      = temp_a2[0];
-    scratchData->field_380.m[2][0]      = temp_a2[1];
-    *(s16*)&scratchData->field_380.t[0] = temp_a2[2];
+    scratchData->field_380.field_0.m[0][2]      = temp_a2[0];
+    scratchData->field_380.field_0.m[2][0]      = temp_a2[1];
+    *(s16*)&scratchData->field_380.field_0.t[0] = temp_a2[2];
 
     var_t1 = &scratchData->field_252[offset];
 
-    gte_ldv3c(&scratchData->field_380);
+    gte_ldv3c(&scratchData->field_380.field_0);
     gte_rtpt();
     gte_stsxy3c(screenXy);
-    gte_stsz3(&scratchData->field_380.m[0][2], &scratchData->field_380.m[2][0], &scratchData->field_380.t[0]);
+    gte_stsz3(&scratchData->field_380.field_0.m[0][2], &scratchData->field_380.field_0.m[2][0], &scratchData->field_380.field_0.t[0]);
 
-    temp_a2[0] = scratchData->field_380.m[0][2];
-    temp_a2[1] = scratchData->field_380.m[2][0];
-    temp_a2[2] = scratchData->field_380.t[0];
+    temp_a2[0] = scratchData->field_380.field_0.m[0][2];
+    temp_a2[1] = scratchData->field_380.field_0.m[2][0];
+    temp_a2[2] = scratchData->field_380.field_0.t[0];
 
     screenXy += 3;
     var_t1  += 3;
@@ -1605,15 +1606,15 @@ void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
              screenXy < &scratchData->screenXy_0[meshHdr->vertexCount_1 + offset];
              screenXy += 3, temp_a2 += 3, var_t1 += 3)
         {
-            *(s32*)&scratchData->field_380.m[0][0] = *(s32*)&screenXy[0];
-            *(s32*)&scratchData->field_380.m[1][1] = *(s32*)&screenXy[1];
-            *(s32*)&scratchData->field_380.m[2][2] = *(s32*)&screenXy[2];
+            *(s32*)&scratchData->field_380.field_0.m[0][0] = *(s32*)&screenXy[0];
+            *(s32*)&scratchData->field_380.field_0.m[1][1] = *(s32*)&screenXy[1];
+            *(s32*)&scratchData->field_380.field_0.m[2][2] = *(s32*)&screenXy[2];
 
-            scratchData->field_380.m[0][2]      = temp_a2[0];
-            scratchData->field_380.m[2][0]      = temp_a2[1];
-            *(s16*)&scratchData->field_380.t[0] = temp_a2[2];
+            scratchData->field_380.field_0.m[0][2]      = temp_a2[0];
+            scratchData->field_380.field_0.m[2][0]      = temp_a2[1];
+            *(s16*)&scratchData->field_380.field_0.t[0] = temp_a2[2];
 
-            gte_ldv3c(&scratchData->field_380);
+            gte_ldv3c(&scratchData->field_380.field_0);
             gte_rtpt();
 
             var_t1[-3] = temp_a2[-3] < (1 << temp_s2) ? D_800C4168.field_CC[(temp_a2[-3] << 7) >> temp_s2] : 0xFF;
@@ -1621,11 +1622,11 @@ void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
             var_t1[-1] = temp_a2[-1] < (1 << temp_s2) ? D_800C4168.field_CC[(temp_a2[-1] << 7) >> temp_s2] : 0xFF;
 
             gte_stsxy3c(screenXy);
-            gte_stsz3(&scratchData->field_380.m[0][2], &scratchData->field_380.m[2][0], &scratchData->field_380.t[0]);
+            gte_stsz3(&scratchData->field_380.field_0.m[0][2], &scratchData->field_380.field_0.m[2][0], &scratchData->field_380.field_0.t[0]);
 
-            temp_a2[0] = scratchData->field_380.m[0][2];
-            temp_a2[1] = scratchData->field_380.m[2][0];
-            temp_a2[2] = scratchData->field_380.t[0];
+            temp_a2[0] = scratchData->field_380.field_0.m[0][2];
+            temp_a2[1] = scratchData->field_380.field_0.m[2][0];
+            temp_a2[2] = scratchData->field_380.field_0.t[0];
         }
 
         var_t1[-3] = temp_a2[-3] < (1 << temp_s2) ? D_800C4168.field_CC[(temp_a2[-3] << 7) >> temp_s2] : 0xFF;
@@ -1636,22 +1637,22 @@ void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     {
         for (; screenXy < &scratchData->screenXy_0[meshHdr->vertexCount_1 + offset]; screenXy += 3, temp_a2 += 3)
         {
-            *(s32*)&scratchData->field_380.m[0][0] = *(s32*)&screenXy[0];
-            *(s32*)&scratchData->field_380.m[1][1] = *(s32*)&screenXy[1];
-            *(s32*)&scratchData->field_380.m[2][2] = *(s32*)&screenXy[2];
+            *(s32*)&scratchData->field_380.field_0.m[0][0] = *(s32*)&screenXy[0];
+            *(s32*)&scratchData->field_380.field_0.m[1][1] = *(s32*)&screenXy[1];
+            *(s32*)&scratchData->field_380.field_0.m[2][2] = *(s32*)&screenXy[2];
 
-            scratchData->field_380.m[0][2]      = temp_a2[0];
-            scratchData->field_380.m[2][0]      = temp_a2[1];
-            *(s16*)&scratchData->field_380.t[0] = temp_a2[2];
+            scratchData->field_380.field_0.m[0][2]      = temp_a2[0];
+            scratchData->field_380.field_0.m[2][0]      = temp_a2[1];
+            *(s16*)&scratchData->field_380.field_0.t[0] = temp_a2[2];
 
-            gte_ldv3c(&scratchData->field_380);
+            gte_ldv3c(&scratchData->field_380.field_0);
             gte_rtpt();
             gte_stsxy3c(screenXy);
-            gte_stsz3(&scratchData->field_380.m[0][2], &scratchData->field_380.m[2][0], &scratchData->field_380.t[0]);
+            gte_stsz3(&scratchData->field_380.field_0.m[0][2], &scratchData->field_380.field_0.m[2][0], &scratchData->field_380.field_0.t[0]);
 
-            temp_a2[0] = scratchData->field_380.m[0][2];
-            temp_a2[1] = scratchData->field_380.m[2][0];
-            temp_a2[2] = scratchData->field_380.t[0];
+            temp_a2[0] = scratchData->field_380.field_0.m[0][2];
+            temp_a2[1] = scratchData->field_380.field_0.m[2][0];
+            temp_a2[2] = scratchData->field_380.field_0.t[0];
         }
     }
 }
@@ -1676,7 +1677,138 @@ void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, Gs
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_80059E34); // 0x80059E34
+void func_80059E34(u32 arg0, s_MeshHeader* arg1, s_GteScratchData* arg2, s32 arg3, GsOT_TAG* arg4) // 0x80059E34
+{
+    s32          sp0;
+    GsOT_TAG*    var_a0;
+    s32          var_t2;
+    s32          temp_a0;
+    s32          temp_a1_4;
+    s32          temp_v1;
+    s32          temp_v1_2;
+    u16          var_a2;
+    s32          var_a3;
+    s32          var_t9;
+    u32          temp_t0;
+    u32          temp_t1;
+    s_Primitive* ptr;
+    POLY_FT4*    poly;
+    GsOT_TAG*    tag;
+    s32          temp;
+    s32          new_var;
+
+    tag = &g_OrderingTable0[g_ActiveBufferIdx].org[640];
+
+    switch (arg0)
+    {
+        case 0:
+        default:
+            return;
+
+        case 1:
+        case 3:
+            var_a3 = 0x2E383838;
+            var_a2 = 0x140;
+            break;
+
+        case 2:
+            var_a3 = 0x2E808080;
+            var_a2 = 0x20;
+            break;
+    }
+
+    temp_v1 = 0x79C << (arg3 + 2);
+    var_t9  = D_800C4168.isFogEnabled_1 ? MIN(temp_v1, D_800C4168.drawDistance_10) : temp_v1;
+
+    poly                        = (POLY_FT4*)GsOUT_PACKET_P;
+    arg2->field_380.s_0.field_0 = g_GameWork.gsScreenWidth_588 >> 1;
+
+    for (ptr = arg1->primitives_4; ptr < &arg1->primitives_4[arg1->primitiveCount_0]; ptr++)
+    {
+        *(s32*)&arg2->field_380.s_0.field_10 = *(s32*)&ptr->field_C;
+
+        var_t2 = arg2->field_18C[arg2->field_380.s_0.field_10];
+        var_t2 = MAX(arg2->field_18C[arg2->field_380.s_0.field_11], var_t2);
+        var_t2 = MAX(arg2->field_18C[arg2->field_380.s_0.field_12], var_t2);
+        var_t2 = MAX(arg2->field_18C[arg2->field_380.s_0.field_13], var_t2);
+
+        if (var_t2 <= 0)
+        {
+            continue;
+        }
+
+        if (var_t2 <= 0x20)
+        {
+            var_t2 = 0x20;
+        }
+
+        if (var_t9 < var_t2)
+        {
+            continue;
+        }
+
+        gte_NormalClip(*(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_10],
+                       *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_11],
+                       *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_12],
+                       &sp0);
+
+        if (sp0 <= 0)
+        {
+            gte_ldsxy0(*(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_13]);
+            gte_nclip();
+            gte_stopz(&sp0);
+
+            if (sp0 >= 0)
+            {
+                continue;
+            }
+        }
+
+        temp      = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_10];
+        temp_a1_4 = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_11];
+        temp_a0   = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_12];
+        temp_v1_2 = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_13];
+
+        temp_t0 = arg2->field_380.s_0.field_0;
+        temp_t1 = temp_t0 * 2;
+        new_var = temp;
+
+        if (arg2->screenXy_0[arg2->field_380.s_0.field_10].vx + temp_t0 >= temp_t1 &&
+            (s16)temp_a1_4 + temp_t0 >= temp_t1 &&
+            (s16)temp_a0 + temp_t0 >= temp_t1 &&
+            (s16)temp_v1_2 + temp_t0 >= temp_t1)
+        {
+            continue;
+        }
+
+        *(s32*)&poly->x0 = new_var;
+        *(s32*)&poly->x1 = temp_a1_4;
+        *(s32*)&poly->x2 = temp_a0;
+        *(s32*)&poly->x3 = temp_v1_2;
+
+        *(s32*)&poly->r0 = var_a3;
+        *(s32*)&poly->u0 = *(s32*)&ptr->field_0;
+        *(s32*)&poly->u1 = ((*(u32*)&ptr->field_4 & 0x1FFFFF) | (var_a2 << 16)); // Maybe `field_4` is bitfield
+        *(u16*)&poly->u2 = ptr->field_8;
+        *(u16*)&poly->u3 = ptr->field_A;
+
+        setlen(poly, 9);
+
+        if (arg0 == 1)
+        {
+            var_a0 = tag;
+        }
+        else
+        {
+            var_a0 = &arg4[var_t2 >> (arg3 + 2)];
+        }
+
+        addPrim(var_a0, poly);
+        poly++;
+    }
+
+    GsOUT_PACKET_P = (PACKET*)poly;
+}
 
 void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* mat) // 0x8005A21C
 {

@@ -549,7 +549,20 @@ typedef struct _GteScratchData
     u8  field_252[102];
 
     u8      field_2B8[200]; // Size likely incorrect.
-    MATRIX  field_380;
+
+    union
+    {
+        MATRIX field_0;
+        struct
+        {
+            s32 field_0;
+            u8  unk_4[12];
+            u8  field_10;
+            u8  field_11;
+            u8  field_12;
+            u8  field_13;
+        } s_0;
+    } field_380;
 
     s_Normal field_3A0;
 
@@ -573,7 +586,8 @@ typedef struct _Primitive
     u8  field_6_15 : 1; // `bool`
     u16 field_8;
     u16 field_A;
-    u8  unk_C[8];
+    u8  field_C[4];
+    u8  unk_10[4];
 } s_Primitive;
 STATIC_ASSERT_SIZEOF(s_Primitive, 20);
 
