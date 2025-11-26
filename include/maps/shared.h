@@ -1947,6 +1947,8 @@ typedef struct
     VECTOR3        unk_140;
     u32            field_14C;
     s32            field_150;
+    u8             unk_154[8];
+    s32            field_15C;
 } s_sharedData_800E21D0_0_s01;
 
 typedef struct 
@@ -2219,6 +2221,8 @@ void sharedFunc_800D5E14_0_s01(s_SubCharacter* chara);
 void sharedFunc_800D3C24_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D3E44_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D5268_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D5974_2_s00(s_SubCharacter* chara);
 
