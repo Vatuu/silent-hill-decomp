@@ -1118,7 +1118,7 @@ void Inventory_Logic(void) // 0x8004D518
                 Sd_PlaySfx(Sfx_MenuCancel, 0, 64);
             }
 
-            do {} while (0); // @hack Required for match.
+            do {} while (false); // @hack Required for match.
             break;
 
         case InventorySelectionId_Examine:

@@ -6,8 +6,8 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
     #define ANGLE_THRESHOLD (FP_ANGLE(360.0) >> 6) // 360 / 64 = 5.625 degrees.
 
     q7_8     shortestAngle;
-    s32      angleStep;
-    s32      dist;
+    q19_12   angleStep;
+    q23_8    dist;
     VECTOR3* arg2; // Q19.12
 
     // TODO: This data is hard to keep track of and may not point to the right `properties_E4` struct.

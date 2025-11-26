@@ -32,12 +32,13 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* chara)
             {
                 chara->model_0.anim_4.status_0       = ANIM_STATUS(13, false);
                 chara->model_0.stateStep_3           = 8;
-                chara->properties_E4.unk0.flags_11C |= 1 << 2;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk2;
             }
             break;
 
         case 8:
             chara->properties_E4.unk0.properties_120.val32 += g_DeltaTime0;
+
             if (animStatus == ANIM_STATUS(14, true))
             {
                 temp_v1 = func_80080514() * 12;
@@ -49,6 +50,7 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* chara)
                 {
                     chara->properties_E4.unk0.properties_120.val32 = 0;
                 }
+
                 chara->model_0.stateStep_3 = ((u32)chara->properties_E4.unk0.properties_120.val32 / Q12(8.0f)) + 1;
             }
             break;
@@ -64,7 +66,7 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* chara)
                 case 0:
                     if (ANIM_STATUS_IS_ACTIVE(animStatus))
                     {
-                        if (sharedData_800E21D0_0_s01.field_14C & 1 << 2)
+                        if (sharedData_800E21D0_0_s01.field_14C & (1 << 2))
                         {
                             if (!chara->properties_E4.unk0.field_E8_8)
                             {
@@ -81,11 +83,12 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* chara)
                                 chara->model_0.state_2               = 10;
                                 chara->model_0.stateStep_3           = 0;
                                 chara->flags_3E                     |= CharaFlag_Unk3;
-                                chara->properties_E4.unk0.flags_11C |= 1 << 4;
+                                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
                                 chara->properties_E4.unk0.field_E8_8 = 3;
                             }
                         }
-                        else if (chara->properties_E4.unk0.flags_11C < 0 || (sharedData_800E21D0_0_s01.field_14C & 2) ||
+                        else if (chara->properties_E4.unk0.flags_11C < CharaUnk0Flag_None ||
+                                 (sharedData_800E21D0_0_s01.field_14C & (1 << 1)) ||
                                  sharedData_800E21D0_0_s01.field_15C > Q12(10.0f))
                         {
                             chara->model_0.anim_4.status_0       = ANIM_STATUS(23, false);
@@ -109,20 +112,21 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* chara)
         case 2:
             chara->model_0.state_2               = 16;
             chara->model_0.stateStep_3           = 0;
-            chara->properties_E4.unk0.flags_11C |= 1 << 3;
+            chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             return;
 
         case 3:
         case 4:
             chara->model_0.state_2     = 17;
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
-                chara->properties_E4.unk0.flags_11C |= 1 << 6;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }
             else
             {
-                chara->properties_E4.unk0.flags_11C |= 1 << 3;
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
     }

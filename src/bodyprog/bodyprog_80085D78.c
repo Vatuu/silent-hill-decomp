@@ -2688,7 +2688,6 @@ void func_8008B664(VECTOR3* pos, u32 caseVar) // 0x8008B664
     }
 }
 
-/** Main attack handling function. */
 s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg2, s32 arg3) // 0x8008B714
 {
     s32         sp10;
@@ -2703,7 +2702,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
     s32         var_v1;
     u32         var_s7;
     s32         var_v0;
-    s32         var_s3;
+    s32         weaponAttack;
     s32         var_a2;
     s32         temp;
     s64         new_var;
@@ -2712,11 +2711,11 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
     s32         x1, y1, z1;
     s32         x2, y2, z2;
 
-    var_s3  = (u8)attacker->field_46;
-    temp_fp = &D_800AD4C8[var_s3];
-    var_s1  = temp_fp->field_10;
-    sp14    = attacker->field_4C;
-    var_s2  = arg3;
+    weaponAttack = (u8)attacker->field_46;
+    temp_fp      = &D_800AD4C8[weaponAttack];
+    var_s1       = temp_fp->field_10;
+    sp14         = attacker->field_4C;
+    var_s2       = arg3;
 
     if (target == &g_SysWork.player_4C.chara_0)
     {
@@ -2729,12 +2728,12 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
         if (sp14 & sp10)
         {
-            switch (var_s3)
+            switch (weaponAttack)
             {
-                case 5:
-                case 15:
-                case 25:
-                case 2:
+                case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap):
+                case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Hold):
+                case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Multitap):
+                case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
                     if (g_SysWork.field_275C > 0x100000)
                     {
                         func_8008B3E4(0x80);
@@ -2760,43 +2759,46 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
             if (target->model_0.charaId_0 == Chara_Padlock)
             {
-                func_8005DC1C(0x570, arg2, 0x80, 0);
+                func_8005DC1C(Sfx_Unk1392, arg2, 0x80, 0);
             }
             else
             {
-                func_8008B664(arg2, var_s3);
+                func_8008B664(arg2, weaponAttack);
             }
         }
     }
 
     var_s0 = FP_TO(temp_fp->field_4, Q12_SHIFT);
 
-    switch (var_s3)
+    switch (weaponAttack)
     {
-        case EquippedWeaponId_RockDrill:
-        case EquippedWeaponId_Chainsaw:
-        case 12:
-        case 15:
-        case 22:
-        case 25:
+        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Hold):
+        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Hold):
+        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Multitap):
+        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Multitap):
             if (func_8008A35C(temp_fp, attacker->field_58) == 0)
             {
                 var_s0 = 0;
             }
+
             if (g_SysWork.field_275C > 0x100000)
             {
                 var_s0 += 0xC8000;
             }
             break;
 
-        case EquippedWeaponId_HyperBlaster:
+        case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
             switch (Game_HyperBlasterBeamColorGet())
             {
                 case 0:
                     break;
+
                 case 1:
                     var_s0 += var_s0 * 2;
                     break;
+
                 case 2:
                     var_s0 += func_80080514() * 0x32;
                     var_s0 *= 5;
@@ -2804,9 +2806,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
             }
             break;
 
-        case 8:
-        case 9:
-            if (target->flags_3E & 2)
+        case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Tap):
+            if (target->flags_3E & CharaFlag_Unk2)
             {
                 var_s0 = 0x3E8000;
             }
@@ -2826,18 +2828,18 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
     var_s4 = FP_MULTIPLY_PRECISE(new_var, var_v1 >> 2, Q12_SHIFT);
 
-    switch (var_s3)
+    switch (weaponAttack)
     {
-        case 0x20:
-        case 0x21:
-        case 0x22:
-        case 0x23:
-        case -1:
+        case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
+        case NO_VALUE:
             var_s0_2 = attacker->field_98.vx;
             var_s1   = attacker->field_98.vy;
             var_s2   = attacker->field_98.vz;
 
-            if (var_s3 == 0x22)
+            if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
             {
                 if (sp14 & sp10)
                 {
@@ -2851,7 +2853,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
             break;
 
         default:
-            if ((target != &g_SysWork.player_4C) && !(target->flags_3E & 4))
+            if (target != &g_SysWork.player_4C && !(target->flags_3E & CharaFlag_Unk3))
             {
                 var_s4 *= 4;
             }
@@ -2862,7 +2864,8 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                 var_s7 = FP_MULTIPLY_PRECISE(var_s7, var_s2, Q12_SHIFT);
             }
 
-            if (var_s3 > 7 && var_s3 < 10)
+            if (weaponAttack > WEAPON_ATTACK(EquippedWeaponId_Axe,       AttackInputType_Tap) &&
+                weaponAttack < WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Hold))
             {
                 var_s0_2 = attacker->field_8C.vx;
                 var_s1   = 0;
@@ -2900,7 +2903,6 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
             }
 
             var_v1 = func_8008A058(func_80080540(var_s0_2, var_s1, var_s2));
-
             if (var_v1 >= 0x40)
             {
                 if (var_v1 > 0xFFFFFF)
@@ -2957,7 +2959,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
         target->field_BC += temp;
     }
 
-    target->attackReceived_41 = var_s3;
+    target->attackReceived_41 = weaponAttack;
     sp14                     |= sp10;
     attacker->field_4C        = sp14;
 
@@ -2971,70 +2973,70 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
             switch (target->model_0.charaId_0)
             {
-                case 1:
-                    if (target->health_B0 >= 0)
+                case Chara_Harry:
+                    if (target->health_B0 >= Q12(0.0f))
                     {
                         var_a3 = 1;
                     }
                     break;
 
-                case 2:
-                case 3:
+                case Chara_AirScreamer:
+                case Chara_NightFlutter:
                     var_a3 = 2;
                     break;
 
-                case 7:
+                case Chara_Stalker:
                     var_a3 = 4;
                     break;
 
-                case 6:
-                case 8:
-                case 9:
+                case Chara_LarvalStalker:
+                case Chara_GreyChild:
+                case Chara_Mumbler:
                     var_a3 = 3;
                     break;
 
-                case 11:
+                case Chara_Creaper:
                     var_a3 = 5;
                     break;
 
-                case 4:
-                case 5:
+                case Chara_Groaner:
+                case Chara_Wormhead:
                     var_a3 = 6;
                     break;
 
-                case 14:
+                case Chara_Splithead:
                     var_a3 = 7;
                     break;
 
-                case 10:
+                case Chara_HangedScratcher:
                     var_a3 = 8;
                     break;
 
-                case 15:
-                case 20:
-                    var_a3 = 0xA;
+                case Chara_Floatstinger:
+                case Chara_Twinfeeler:
+                    var_a3 = 10;
                     break;
 
-                case 12:
+                case Chara_Romper:
                     var_a3 = 9;
                     break;
 
-                case 16:
-                case 18:
-                    var_a3 = 0xB;
+                case Chara_PuppetNurse:
+                case Chara_PuppetDoctor:
+                    var_a3 = 11;
                     break;
 
-                case 21:
-                    var_a3 = 0xC;
+                case Chara_Bloodsucker:
+                    var_a3 = 12;
                     var_a2 = 1;
                     break;
 
-                case 22:
-                case 23:
-                case 36:
-                    if (!(target->flags_3E & 4))
+                case Chara_Incubus:
+                case Chara_Unknown23:
+                case Chara_Incubator:
+                    if (!(target->flags_3E & CharaFlag_Unk3))
                     {
-                        if (var_s3 == 0x22)
+                        if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
                         {
                             var_a2 = 4;
                         }
@@ -3045,11 +3047,11 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                     }
 
                 default:
-                    var_a3 = 0x10;
+                    var_a3 = 16;
                     break;
 
-                case 44:
-                    var_a3 = -1;
+                case Chara_Padlock:
+                    var_a3 = NO_VALUE;
                     break;
             }
 
@@ -3059,20 +3061,21 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
             }
         }
     }
+
     return sp10;
 }
 
-s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) // 0x8008BF84
+s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg3) // 0x8008BF84
 {
-    s_SubCharacter*  sp10;
+    s_SubCharacter*  chara1;
     s32              sp14;
     s32              sp18;
-    s32              sp1C;
-    s32              sp20;
-    s32              sp24;
-    s32              sp28;
-    s32              sp2C;
-    s32              sp30;
+    s32              i;
+    q19_12           sinAngle;
+    q19_12           cosAngle;
+    s32              countX;
+    s32              countY;
+    s32              coundZ;
     s32              sp34;
     s32              sp38;
     s32              sp3C;
@@ -3080,13 +3083,13 @@ s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) //
     s32              sp44;
     s32              sp48;
     s32              sp4C;
-    s32              sp50;
-    s32              sp54;
+    q19_12           posX;
+    q19_12           posZ;
     s32              sp58;
     s32              sp5C;
     s32              temp_s5;
     s32              temp_s6;
-    s32              temp_a0;
+    q19_12           temp_a0;
     s32              temp_a0_2;
     s32              temp_a0_3;
     s32              temp_lo_5;
@@ -3095,8 +3098,8 @@ s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) //
     s32              temp_s2;
     s32              temp_s3;
     s32              temp_t2;
-    s32              temp_t3;
-    s32              temp_t4;
+    s32              j;
+    q19_12           temp_t4;
     s32              temp_t4_2;
     s32              temp_t5;
     s32              temp_v0_5;
@@ -3106,32 +3109,32 @@ s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) //
     s32              var_a1_2;
     s32              var_fp;
     s32              var_s1;
-    s32              var_s7;
+    q19_12           var_s7;
     s32              var_t1;
     s32              var_t2;
     s32              var_v0;
     s32              var_v0_3;
     s32              var_v0_6;
     s32              var_v1;
-    s_SubCharacter*  var_a1;
     s32              temp_a2;
     u16              temp_v1;
-    s32              temp2;
+    q19_12           posY;
     s32              temp4;
+    s_SubCharacter*  chara0;
 
-    sp28 = arg0->characterCount_68.vx;
-    sp2C = arg0->characterCount_68.vy;
-    sp30 = arg0->characterCount_68.vz;
+    countX = chara->characterCount_68.vx;
+    countY = chara->characterCount_68.vy;
+    coundZ = chara->characterCount_68.vz;
 
-    sp20 = Math_Sin(arg1);
-    sp24 = Math_Cos(arg1);
+    sinAngle = Math_Sin(angle);
+    cosAngle = Math_Cos(angle);
 
-    D_800C4788[0].vx = 0;
-    D_800C4788[0].vy = 0;
-    D_800C4788[0].vz = 0;
+    D_800C4788[0].vx = Q12(0.0f);
+    D_800C4788[0].vy = Q12(0.0f);
+    D_800C4788[0].vz = Q12(0.0f);
 
-    sp34   = arg0->field_8C.vx;
-    var_fp = arg0->field_8C.vz;
+    sp34   = chara->field_8C.vx;
+    var_fp = chara->field_8C.vz;
 
     sp44 = 0;
     sp38 = 0;
@@ -3140,13 +3143,13 @@ s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) //
     sp4C = 0;
     sp40 = 0;
 
-    var_s7           = arg0->field_8C.vy;
+    var_s7           = chara->field_8C.vy;
     D_800C4788[1].vy = var_s7;
 
-    temp_t4          = FP_MULTIPLY_PRECISE(sp34, sp24, Q12_SHIFT) - FP_MULTIPLY_PRECISE(var_fp, sp20, Q12_SHIFT);
+    temp_t4          = FP_MULTIPLY_PRECISE(sp34, cosAngle, Q12_SHIFT) - FP_MULTIPLY_PRECISE(var_fp, sinAngle, Q12_SHIFT);
     D_800C4788[1].vx = temp_t4;
 
-    temp_a0          = FP_MULTIPLY_PRECISE(sp34, sp20, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_fp, sp24, Q12_SHIFT);
+    temp_a0          = FP_MULTIPLY_PRECISE(sp34, sinAngle, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_fp, cosAngle, Q12_SHIFT);
     D_800C4788[1].vz = temp_a0;
 
     temp4 = var_s7;
@@ -3204,81 +3207,80 @@ s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) //
         sp4C -= *(u16*)&arg2->field_A >> 1;
     }
 
-    if (arg0 == &g_SysWork.player_4C.chara_0)
+    if (chara == &g_SysWork.player_4C.chara_0)
     {
-        var_a1 = (u8*)arg0 + sizeof(s_MainCharacter);
+        chara0 = (u8*)chara + sizeof(s_MainCharacter);
         var_v0 = 6;
         var_v1 = 1;
     }
     else
     {
-        var_a1 = &g_SysWork.player_4C.chara_0;
+        chara0 = &g_SysWork.player_4C.chara_0;
         var_v0 = 1;
         var_v1 = -1;
     }
 
     sp18 = var_v1;
-    sp10 = var_a1;
+    chara1 = chara0;
     sp14 = 0;
 
-    sp50 = arg0->position_18.vx;
-    sp54 = arg0->position_18.vz;
+    posX = chara->position_18.vx;
+    posZ = chara->position_18.vz;
 
-    temp2  = arg0->position_18.vy;
-    temp2 += arg0->field_C8;
+    posY  = chara->position_18.vy;
+    posY += chara->field_C8;
 
-    D_800C47C8[0].vx = sp50;
-    D_800C47C8[0].vy = temp2;
-    D_800C47C8[0].vz = sp54;
+    D_800C47C8[0].vx = posX;
+    D_800C47C8[0].vy = posY;
+    D_800C47C8[0].vz = posZ;
 
-    for (sp1C = var_v0; sp1C > 0; sp1C--, sp10++, sp18 *= 2)
+    for (i = var_v0; i > 0; i--, chara1++, sp18 *= 2)
     {
         if (g_SysWork.sysState_8 == SysState_GameOver ||
             g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f) ||
-            sp10 == arg0 ||
-            sp10->model_0.charaId_0 == Chara_None ||
-            sp10->health_B0 < Q12(0.0f) ||
-            !sp10->field_E1_0)
+            chara1 == chara ||
+            chara1->model_0.charaId_0 == Chara_None ||
+            chara1->health_B0 < Q12(0.0f) ||
+            !chara1->field_E1_0)
         {
             continue;
         }
 
-        D_800C47E8.vx = sp10->position_18.vx + sp10->field_D8.offsetX_0;
-        D_800C47E8.vy = sp10->position_18.vy;
-        D_800C47E8.vz = sp10->position_18.vz + sp10->field_D8.offsetZ_2;
-
-        if (Math_Distance2dGet(&arg0->position_18, &D_800C47E8) > Q12(3.0f))
+        D_800C47E8.vx = chara1->position_18.vx + chara1->field_D8.offsetX_0;
+        D_800C47E8.vy = chara1->position_18.vy;
+        D_800C47E8.vz = chara1->position_18.vz + chara1->field_D8.offsetZ_2;
+        if (Math_Distance2dGet(&chara->position_18, &D_800C47E8) > Q12(3.0f))
         {
             continue;
         }
 
-        temp_s1 = sp10->position_18.vx;
-        var_v1  = sp10->position_18.vy;
-        temp_s2 = sp10->position_18.vz;
+        temp_s1 = chara1->position_18.vx;
+        var_v1  = chara1->position_18.vy;
+        temp_s2 = chara1->position_18.vz;
 
-        temp_s0 = sp10->field_D8.offsetX_0;
-        temp_s3 = sp10->field_D8.offsetZ_2;
+        temp_s0 = chara1->field_D8.offsetX_0;
+        temp_s3 = chara1->field_D8.offsetZ_2;
 
         temp_s1 += temp_s0;
 
-        var_v1  += sp10->field_C8;
+        var_v1  += chara1->field_C8;
         temp_s2 += temp_s3;
 
         D_800C47C8[1].vy = var_v1;
-        temp_s3          = sp10->field_D6;
+        temp_s3          = chara1->field_D6;
 
-        temp_v0_5 = ratan2(temp_s1 - sp50, temp_s2 - sp54);
+        temp_v0_5 = ratan2(temp_s1 - posX, temp_s2 - posZ);
         temp_v0_6 = Math_Sin(temp_v0_5);
         temp_s0   = FP_MULTIPLY_PRECISE(temp_s3, temp_v0_6, Q12_SHIFT);
 
         var_s1 = Math_Cos(temp_v0_5);
 
-        sp50 = temp_s1 - temp_s0;
+        posX = temp_s1 - temp_s0;
 
-        D_800C47C8[1].vx = sp50;
-        sp54             = temp_s2 - FP_MULTIPLY_PRECISE(temp_s3, var_s1, Q12_SHIFT);
+        D_800C47C8[1].vx = posX;
+        posZ             = temp_s2 - FP_MULTIPLY_PRECISE(temp_s3, var_s1, Q12_SHIFT);
 
-        D_800C47C8[1].vz = sp54;
+        D_800C47C8[1].vz = posZ;
         var_v1           = func_8006D90C(&D_800C47F8, &D_800C47C8[0], &D_800C47C8[1]);
 
         if (var_v1 != false)
@@ -3291,29 +3293,29 @@ s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) //
             continue;
         }
 
-        temp_t4_2  = sp10->position_18.vx;
-        temp_t4_2 += sp10->field_D8.offsetX_0;
+        temp_t4_2  = chara1->position_18.vx;
+        temp_t4_2 += chara1->field_D8.offsetX_0;
 
-        var_v1   = temp_t4_2 - sp28;
-        temp_t5  = sp10->position_18.vz;
-        temp_t5 += sp10->field_D8.offsetZ_2;
+        var_v1   = temp_t4_2 - countX;
+        temp_t5  = chara1->position_18.vz;
+        temp_t5 += chara1->field_D8.offsetZ_2;
 
-        temp_v0_8 = temp_t5 - sp30;
+        temp_v0_8 = temp_t5 - coundZ;
 
-        sp58    = sp10->position_18.vy;
-        temp_s6 = sp10->field_CC;
-        temp_s5 = sp10->field_C8;
+        sp58    = chara1->position_18.vy;
+        temp_s6 = chara1->field_CC;
+        temp_s5 = chara1->field_C8;
 
-        temp_t3   = sp58 - sp2C;
-        temp_t2   = FP_MULTIPLY_PRECISE(var_v1, sp24, Q12_SHIFT) - FP_MULTIPLY_PRECISE(temp_v0_8, sp20, Q12_SHIFT);
-        temp_a0_3 = FP_MULTIPLY_PRECISE(var_v1, sp20, Q12_SHIFT) + FP_MULTIPLY_PRECISE(temp_v0_8, sp24, Q12_SHIFT);
+        j   = sp58 - countY;
+        temp_t2   = FP_MULTIPLY_PRECISE(var_v1, cosAngle, Q12_SHIFT) - FP_MULTIPLY_PRECISE(temp_v0_8, sinAngle, Q12_SHIFT);
+        temp_a0_3 = FP_MULTIPLY_PRECISE(var_v1, sinAngle, Q12_SHIFT) + FP_MULTIPLY_PRECISE(temp_v0_8, cosAngle, Q12_SHIFT);
 
-        if ((temp_t3 < (sp48 - temp_s6)) || ((sp3C - temp_s5) < temp_t3))
+        if ((j < (sp48 - temp_s6)) || ((sp3C - temp_s5) < j))
         {
             continue;
         }
 
-        temp_s3  = sp10->field_D6;
+        temp_s3  = chara1->field_D6;
         var_a1_2 = 0;
 
         if (temp_t2 < sp44)
@@ -3386,9 +3388,9 @@ s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) //
         }
         var_fp -= var_v0 >> 2;
 
-        sp34   += sp28;
-        var_s7 += sp2C;
-        var_fp += sp30;
+        sp34   += countX;
+        var_s7 += countY;
+        var_fp += coundZ;
 
         sp5C = (temp_s5 + temp_s6) / 2;
 
@@ -3404,7 +3406,7 @@ s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) //
             var_t2 = 0;
         }
 
-        for (temp_t3 = 2; (var_t2 < temp_s0 || temp_s0 < -var_t2 || temp_s3 < var_t1) && temp_t3 > 0; temp_t3--)
+        for (j = 2; (var_t2 < temp_s0 || temp_s0 < -var_t2 || temp_s3 < var_t1) && j > 0; j--)
         {
             if (temp_s3 < var_t1)
             {
@@ -3436,13 +3438,13 @@ s32 func_8008BF84(s_SubCharacter* arg0, s32 arg1, s_800AD4C8* arg2, s32 arg3) //
         D_800C47B8.vy = (sp58 + sp5C) + temp_s0;
         D_800C47B8.vz = temp_t5 + var_s1;
 
-        if (func_8008B714(arg0, sp10, &D_800C47B8, arg3))
+        if (func_8008B714(chara, chara1, &D_800C47B8, arg3))
         {
             sp14 |= sp18;
         }
     }
 
-    arg0->field_4C |= sp14;
+    chara->field_4C |= sp14;
     return sp14;
 }
 

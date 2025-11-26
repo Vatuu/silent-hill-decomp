@@ -983,7 +983,7 @@ typedef struct
     u16  field_C;
     u8   field_E;
     u8   field_F;
-    u8   field_10;
+    u8   field_10; // State.
     u8   field_11;
     u8   field_12;
     u8   unk_13;
@@ -2650,6 +2650,7 @@ extern q3_12 D_800C4700[];
 
 extern s16 D_800C4702;
 
+/** Q19.12 */
 extern VECTOR3 D_800C4788[];
 
 extern VECTOR3 D_800C47B8;
@@ -3695,9 +3696,10 @@ void func_8008B438(s32 arg0, s32 arg1, s32 arg2);
 
 void func_8008B664(VECTOR3* pos, u32 caseVar);
 
+/** Main attack handling function. */
 s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg2, s32 arg3);
 
-s32 func_8008BF84(s_SubCharacter* chara, s32 arg1, s_800AD4C8* arg2, s32 arg3);
+s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg3);
 
 s32 func_8008D850(void);
 
