@@ -12,9 +12,9 @@ void sharedFunc_800D5974_2_s00(s_SubCharacter* chara)
     idx        = sharedFunc_800D4A80_0_s01(chara);
     switch2Idx = 0;
 
-    bit3      = (sharedData_800E21D0_0_s01.field_14C >> 2) & 1;
+    bit3      = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
     stateStep = chara->model_0.stateStep_3;
-    f150      = sharedData_800E21D0_0_s01.field_150;
+    f150      = sharedData_800E21D0_0_s01.dist_150;
     one       = 1;
 
     switch (stateStep)

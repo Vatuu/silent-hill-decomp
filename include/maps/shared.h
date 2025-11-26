@@ -1945,20 +1945,23 @@ typedef struct
     VECTOR3        field_128;
     VECTOR3        field_134;
     VECTOR3        unk_140;
-    u32            field_14C;
-    s32            field_150;
-    u8             unk_154[8];
-    s32            field_15C;
+    union
+    {
+        struct
+        {
+            u8             field_14C_0 : 1;
+            u8             field_14C_1 : 1;
+            u8             field_14C_2 : 1;
+            u8             field_14C_3 : 1;
+            u32            field_14C_4 : 28; // Unsure if used.
+        } bits;
+        u32 flags;
+    } field_14C;
+    q19_12 dist_150;
+    q19_12 angle_154;
+    q19_12 field_158; // Displacement distance.
+    s32    field_15C;
 } s_sharedData_800E21D0_0_s01;
-
-typedef struct 
-{
-    s32    result_0; // Flags?
-    q19_12 dist_4;
-    q19_12 angle_8;
-    q19_12 field_C; // Displacement distance.
-    s32    field_10;
-} s_sharedData_800E231C_0_s01;
 
 // Used by puzzle in M5S01 and M7S01.
 typedef struct
@@ -1966,8 +1969,6 @@ typedef struct
     u8 field_0;
     u8 field_1;
 } s_800F0158;
-
-extern s_sharedData_800E231C_0_s01 sharedData_800E231C_0_s01;
 
 extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
 
@@ -2230,6 +2231,8 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D69A0_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D80EC_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D83F8_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara);
@@ -2252,9 +2255,11 @@ bool sharedFunc_800DC200_2_s00(s_SubCharacter* chara);
 
 bool sharedFunc_800DC30C_2_s00(s_SubCharacter* chara);
 
+bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* chara);
+
 s32 sharedFunc_800DC438_2_s00(s_SubCharacter* chara);
 
-bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* chara);
+s32 sharedFunc_800DC50C_2_s00(s_SubCharacter*); // Assumed return type.
 
 s32 sharedFunc_800DC598_2_s00(s_SubCharacter* chara);
 

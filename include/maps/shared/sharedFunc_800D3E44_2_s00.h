@@ -13,7 +13,7 @@ void sharedFunc_800D3E44_2_s00(s_SubCharacter* chara)
     switch (Chara_DamageTake(chara, Q12(1.0f)))
     {
         case 0:
-            if (sharedData_800E231C_0_s01.result_0 & (1 << 2))
+            if (sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2)
             {
                 if (!chara->properties_E4.unk0.field_E8_8)
                 {

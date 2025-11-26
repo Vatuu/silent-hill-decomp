@@ -149,7 +149,7 @@ INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800D7308);
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800D76C8);
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800D7AA8);
+#include "maps/shared/sharedFunc_800D80EC_2_s00.h" // 0x800D7AA8
 
 #include "maps/shared/sharedFunc_800D83F8_2_s00.h" // 0x800D7DB4
 
@@ -221,7 +221,7 @@ INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800DC0E4_2_s00
 
 #include "maps/shared/sharedFunc_800DC438_2_s00.h" // 0x800DBDF4
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", func_800DBEC8);
+INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800DC50C_2_s00); // 0x800DBEC8
 
 #include "maps/shared/sharedFunc_800DC598_2_s00.h" // 0x800DBF54
 

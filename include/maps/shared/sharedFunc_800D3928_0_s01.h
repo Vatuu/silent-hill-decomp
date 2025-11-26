@@ -20,11 +20,11 @@ bool sharedFunc_800D3928_0_s01(s_SubCharacter* chara)
         chara->properties_E4.unk0.properties_120.val32 = someTime - deltaTime;
     }
 
-    sharedData_800E231C_0_s01.result_0 = sharedFunc_800D3758_0_s01(chara,
-                                                                   &sharedData_800E231C_0_s01.dist_4,
-                                                                   &sharedData_800E231C_0_s01.angle_8,
-                                                                   &sharedData_800E231C_0_s01.field_C,
-                                                                   &sharedData_800E231C_0_s01.field_10);
+    sharedData_800E21D0_0_s01.field_14C.flags = sharedFunc_800D3758_0_s01(chara,
+                                                                   &sharedData_800E21D0_0_s01.dist_150,
+                                                                   &sharedData_800E21D0_0_s01.angle_154,
+                                                                   &sharedData_800E21D0_0_s01.field_158,
+                                                                   &sharedData_800E21D0_0_s01.field_15C);
 
     if (chara->properties_E4.unk0.field_E8_0 == 3)
     {
