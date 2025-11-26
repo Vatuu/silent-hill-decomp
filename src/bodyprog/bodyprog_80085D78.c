@@ -2864,8 +2864,11 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                 var_s7 = FP_MULTIPLY_PRECISE(var_s7, var_s2, Q12_SHIFT);
             }
 
-            if (weaponAttack > WEAPON_ATTACK(EquippedWeaponId_Axe,       AttackInputType_Tap) &&
-                weaponAttack < WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Hold))
+            // TODO: Doesn't match.
+            //if (weaponAttack > WEAPON_ATTACK(EquippedWeaponId_Axe,       AttackInputType_Tap) &&
+            //    weaponAttack < WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Hold))
+            if (weaponAttack > 7 &&
+                weaponAttack < 10)
             {
                 var_s0_2 = attacker->field_8C.vx;
                 var_s1   = 0;
