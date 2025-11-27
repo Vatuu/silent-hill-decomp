@@ -4594,4 +4594,6 @@ void func_80089034(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ
 /* Does the map zoom in, red lines? Argument types guessed based on f`unc_800E83C0` in MAP2_S00. */
 void func_80088370(s16, s16, s16, s16, s32, s32, s32, s32, s32);
 
+void func_8004EF48();
+
 #endif
