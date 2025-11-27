@@ -2200,6 +2200,10 @@ extern VECTOR3 sharedData_800F21DC_2_s00;
 
 extern VECTOR3 sharedData_800F21EC_2_s00;
 
+extern SVECTOR sharedData_800DE220_0_s01;
+
+extern MATRIX sharedData_800DE230_0_s01;
+
 q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
 
 /* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
@@ -2735,6 +2739,13 @@ void sharedFunc_800D76A0_0_s01(s_SubCharacter* chara);
 s32 sharedFunc_800D77D0_0_s01(s_SubCharacter*); // Assumed return type.
 
 bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* chara);
+
+/** @brief Applies a multi-stage bend deformation to several model coordinates.
+ * Builds three rotation matrices using scaled fractions of `chara->field_2A` and
+ * multiplies them into coords[10], coords[9], coords[1], and coords[2].
+ * Used when the animation flag bit 0 is active to drive a chained bending motion.
+ */
+void sharedFunc_800D7B14_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void sharedFunc_800D7EBC_0_s01(s_SubCharacter*);
 

@@ -823,7 +823,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D77D0_0_s01
 
 #include "maps/shared/sharedFunc_800D7AB0_0_s01.h" // 0x800D7AB0
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D7B14_0_s01);
+#include "maps/shared/sharedFunc_800D7B14_0_s01.h" // 0x800D7B14
 
 q19_12 Model_AnimDurationGet(s_Model* model) // 0x800D7E88
 {
