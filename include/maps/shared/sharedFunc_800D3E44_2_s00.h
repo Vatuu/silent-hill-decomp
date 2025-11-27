@@ -34,7 +34,7 @@ void sharedFunc_800D3E44_2_s00(s_SubCharacter* chara)
             }
             else
             {
-                if (chara->properties_E4.unk0.flags_11C < 0)
+                if (chara->properties_E4.unk0.flags_11C & CharaUnk0Flag_Unk31)
                 {
                     chara->model_0.state_2     = 7;
                     chara->model_0.stateStep_3 = 0;

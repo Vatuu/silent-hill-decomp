@@ -87,8 +87,8 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* chara)
                                 chara->properties_E4.unk0.field_E8_8 = 3;
                             }
                         }
-                        else if (chara->properties_E4.unk0.flags_11C < CharaUnk0Flag_None ||
-                                 (sharedData_800E21D0_0_s01.field_14C.bits.field_14C_1) ||
+                        else if (chara->properties_E4.unk0.flags_11C & CharaUnk0Flag_Unk31 ||
+                                 sharedData_800E21D0_0_s01.field_14C.bits.field_14C_1 ||
                                  sharedData_800E21D0_0_s01.field_15C > Q12(10.0f))
                         {
                             chara->model_0.anim_4.status_0       = ANIM_STATUS(23, false);
