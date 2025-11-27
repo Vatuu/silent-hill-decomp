@@ -402,7 +402,7 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800E3900);
 
 #include "maps/shared/sharedFunc_800E554C_2_s00.h" // 0x800E3FC8
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800E402C);
+#include "maps/shared/sharedFunc_800E55B0_2_s00.h" // 0x800E402C
 
 #include "maps/shared/sharedFunc_800E5930_2_s00.h" // 0x800E43AC
 

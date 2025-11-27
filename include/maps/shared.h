@@ -2636,6 +2636,8 @@ void Ai_Groaner_Init(s_SubCharacter* chara); // `map2_s00` has extra block at en
 
 void sharedFunc_800E554C_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800E33DC_2_s00(s_SubCharacter*);
 
 void sharedFunc_800E384C_2_s00(s_SubCharacter*); // `map2_s00` has different version to the other 4 maps which share this, shared sym is needed to share `Ai_Groaner_Update`.
