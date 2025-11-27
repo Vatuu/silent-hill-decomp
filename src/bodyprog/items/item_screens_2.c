@@ -1412,8 +1412,6 @@ bool Player_ItemRemove(u8 itemId, u8 count) // 0x8004EE94
 }
 
 /** Sets the possible interaction commands for all items in the inventory. */
-//#define TRY_EQUIP_20
-
 void func_8004EF48()
 {
     u8 itemIdGroup;
@@ -1455,7 +1453,7 @@ void func_8004EF48()
                 if (itemIdGroup == 6) 
                 {
                     g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Reload;
-                    if(equippedItemId + 0x20)
+                    if (equippedItemId + 0x20)
                     {
                         g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Reload;
                     }
@@ -1477,11 +1475,11 @@ void func_8004EF48()
                 case InventoryItemId_Flashlight:
                     g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_OnOff;
                     break;
+
                 case InventoryItemId_PocketRadio:
                     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP5_S00 ||
                         g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP6_S03)
                     {
-                        //cmd = InventoryCmdId_Unk10;
                         g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Unk10;
                     }
                     else
@@ -1489,11 +1487,13 @@ void func_8004EF48()
                         g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_OnOff;
                     }
                     break;
+
                 case InventoryItemId_NoteToSchool:
                 case InventoryItemId_NoteDoghouse:
                 case InventoryItemId_Receipt:
                     g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Look;
                     break;
+
                 case InventoryItemId_KeyOfLion:
                 case InventoryItemId_KeyOfWoodman:
                 case InventoryItemId_KeyOfScarecrow:
@@ -1508,10 +1508,11 @@ void func_8004EF48()
                 case InventoryItemId_KaufmannKey:
                     g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_UseLook;
                     break;
+
                 case InventoryItemId_Flauros:
-                    //cmd = InventoryCmdId_Unk10;
                     g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Unk10;
                     break;
+
                 case InventoryItemId_GasolineTank:
                 default:
                     g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Use;

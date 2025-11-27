@@ -2244,6 +2244,8 @@ void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara);
 /** Player func. */
 void sharedFunc_800D93E8_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800DA598_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800DB038_2_s00(s_SubCharacter* chara);
 
 /** Player func. */
@@ -2271,9 +2273,13 @@ bool sharedFunc_800DC67C_2_s00(s_SubCharacter* chara);
 
 s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* chara, q19_12 arg1);
 
+q19_12 sharedFunc_800DC894_2_s00(s_SubCharacter*, s32);
+
 s32 sharedFunc_800DC98C_2_s00(s_SubCharacter*, VECTOR3*, VECTOR3*, VECTOR3*);
 
 void sharedFunc_800DD2C4_2_s00(s_SubCharacter*, s32, s32); // Assumed void return type.
+
+void sharedFunc_800DD13C_2_s00(s_SubCharacter*, s32, q19_12); // Assumed void return type.
 
 void sharedFunc_800DD4A4_2_s00(s_SubCharacter* chara);
 
@@ -2308,6 +2314,8 @@ void sharedFunc_800DF80C_2_s00(s_SubCharacter* chara);
 void sharedFunc_800DF8A0_2_s00(s_SubCharacter*);
 
 void sharedFunc_800E012C_2_s00(s_SubCharacter*); // Assumed return type.
+
+void sharedFunc_800E021C_2_s00(s_SubCharacter*, s32, s32); // Assumed void return type.
 
 void sharedFunc_800E041C_2_s00(s_SubCharacter* chara);
 
