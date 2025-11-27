@@ -1411,12 +1411,125 @@ bool Player_ItemRemove(u8 itemId, u8 count) // 0x8004EE94
     return false;
 }
 
-/** Used for equipping or interacting items in the inventory.
- * Used in:
- * `GameState_ItemScreens_Update`
- * `Inventory_PlayerItemScroll`
+/** Sets the possible interaction commands for all items in the inventory.
+ * @note Match problem: Original code has an additional addiu t4, a3, 0x20
+ * which is not used. `t4 = equippedItemId + 0x20` which is not used but was
+ * not fully optimised away ?
  */
+#ifdef NON_MATCHING
+void func_8004EF48()
+{
+    u8 itemIdGroup;
+    u8 inventoryItemId;
+    s32 i;
+    s16 equippedItemId;
+    s32 weaponsGroup;
+    s32 ammoGroup;
+    s32 reloadCmd;
+    s32 hyperBlaster;
+    s32 cmd;
+
+    hyperBlaster = InventoryItemId_HyperBlaster;
+    reloadCmd = InventoryCmdId_Reload;
+    equippedItemId = g_Inventory_EquippedItem;
+
+    for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
+    {
+        inventoryItemId = g_SavegamePtr->items_0[i].id_0;
+
+        if (inventoryItemId == 0xFF)
+        {
+            g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Unk11;
+        }
+        else if (inventoryItemId >= InventoryItemId_HealthDrink && inventoryItemId < InventoryItemId_LobbyKey)
+        {
+            g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_UseHealth;
+        } 
+        else if (inventoryItemId >= InventoryItemId_KitchenKnife && inventoryItemId < InventoryItemId_Flashlight)
+        {
+            if (inventoryItemId == equippedItemId)
+            {
+                itemIdGroup = inventoryItemId / 32;
+                if (itemIdGroup == 4 || inventoryItemId == InventoryItemId_HyperBlaster)
+                {
+                    g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Unequip;
+                }
+                else
+                {
+                    g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_UnequipReload;
+                }
+            }
+            else if (inventoryItemId != equippedItemId)
+            {
+                itemIdGroup = inventoryItemId / 32;
+                if (itemIdGroup == 6) 
+                {
+                    g_SavegamePtr->items_0[i].command_2 = reloadCmd;
+                } 
+                else if (itemIdGroup == 5 && inventoryItemId != InventoryItemId_HyperBlaster) 
+                {
+                    g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_EquipReload;
+                } 
+                else 
+                {
+                    g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Equip;
+                }
+            }
+        }
+        else
+        {
+            switch (inventoryItemId)
+            {
+                case InventoryItemId_Flashlight:
+                    g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_OnOff;
+                    break;
+                case InventoryItemId_PocketRadio:
+                    if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP5_S00 ||
+                        g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP6_S03)
+                    {
+                        cmd = InventoryCmdId_Unk10;
+                        g_SavegamePtr->items_0[i].command_2 = cmd;
+                    }
+                    else
+                    {
+                        g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_OnOff;
+                    }
+                    break;
+                case InventoryItemId_NoteToSchool:
+                case InventoryItemId_NoteDoghouse:
+                case InventoryItemId_Receipt:
+                    g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Look;
+                    break;
+                case InventoryItemId_KeyOfLion:
+                case InventoryItemId_KeyOfWoodman:
+                case InventoryItemId_KeyOfScarecrow:
+                case InventoryItemId_ClassroomKey:
+                case InventoryItemId_KGordonKey:
+                case InventoryItemId_AntiqueShopKey:
+                case InventoryItemId_KeyOfOphiel:
+                case InventoryItemId_KeyOfHagith:
+                case InventoryItemId_KeyOfPhaleg:
+                case InventoryItemId_KeyOfBethor:
+                case InventoryItemId_KeyOfAratron:
+                case InventoryItemId_KaufmannKey:
+                    g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_UseLook;
+                    break;
+                case InventoryItemId_Flauros:
+                    cmd = InventoryCmdId_Unk10;
+                    g_SavegamePtr->items_0[i].command_2 = cmd;
+                    break;
+                case InventoryItemId_GasolineTank:
+                default:
+                    g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Use;
+                    break;
+
+            }
+        }
+    }
+}
+#else
 INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_2", func_8004EF48); // 0x8004EF48
+#endif
 
 void func_8004F10C(s32* arg0) // 0x8004F10C
 {
