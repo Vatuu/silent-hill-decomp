@@ -2248,6 +2248,8 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DB038_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800DB54C_2_s00(s_SubCharacter* chara);
+
 /** Player func. */
 void sharedFunc_800DBDEC_2_s00(s_SubCharacter* chara);
 
@@ -2292,6 +2294,10 @@ void sharedFunc_800DDF74_2_s00(s_SubCharacter* chara, s32 mulX, q19_12 angle0);
 void sharedFunc_800DE034_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist);
 
 void sharedFunc_800DE11C_2_s00(s_SubCharacter* chara);
+
+s32 sharedFunc_800DE250_2_s00(s_SubCharacter*); // Assumed return type.
+
+s32 sharedFunc_800DE578_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DE6A8_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist);
 
@@ -2865,7 +2871,7 @@ void sharedFunc_800DECA4_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist)
 
 void sharedFunc_800DF22C_2_s00(s_SubCharacter* chara);
 
-void sharedFunc_800DF24C_2_s00(s_SubCharacter* chara);
+s32 sharedFunc_800DF24C_2_s00(s_SubCharacter* chara);
 
 s32 sharedFunc_800D2FB4_0_s01(s_SubCharacter* chara, VECTOR3* playerPos, s32 playerField10C);
 
