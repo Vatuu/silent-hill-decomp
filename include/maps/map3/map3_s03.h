@@ -29,10 +29,12 @@ extern s_WorldObjectDescNoRot g_WorldObject_Alcohol;
 extern s_WorldObjectDescNoRot g_WorldObject_Key;
 extern s_WorldObject_0        g_WorldObject_Colors[4];
 extern s_WorldObjectDesc      g_WorldObject_SavePad;
-extern s8                     D_800D8428;
+extern u8                     D_800D8428;
+extern u8                     D_800D8490;
 extern s_WorldObjectDesc      g_WorldObject_Blood1;
 extern s_WorldObjectDescNoRot g_WorldObject_Blood2;
 extern s_WorldObject_0        g_CommonWorldObjects[6];
+extern s_WorldObjectPose      g_CommonWorldObjectPoses[5];
 
 void func_800D1210(s32 arg0);
 
@@ -73,5 +75,7 @@ void func_800D3128(void);
 void Map_WorldObjectsInit(void);
 
 void func_800CF7F4(s_SubCharacter* chara);
+
+void func_800D429C(void);
 
 #endif
