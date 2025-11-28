@@ -90,4 +90,6 @@ void func_800CD9F4(s_SubCharacter*, s32);
 
 s32 func_800CD980(s_SubCharacter* chara);
 
+bool func_800CDDE8(s_SubCharacter* chara);
+
 #endif
