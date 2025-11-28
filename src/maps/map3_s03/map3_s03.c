@@ -21,7 +21,19 @@ INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CD940_3_s03.h" // 0x800CD940
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CD980);
+s32 func_800CD980(s_SubCharacter* chara)
+{
+    s32 attack;
+    s32 idx;
+
+    attack = chara->attackReceived_41;
+    if (attack != 5 && attack != 15 && attack != 25 && attack != 2 && attack != 12 && attack != 22)
+    {
+        idx = D_800AD4C8[attack].field_10;
+        return D_800D57E0[idx];
+    }
+    return -1;
+}
 
 void func_800CD9F4(s_SubCharacter* arg0, s32 arg1)
 {
