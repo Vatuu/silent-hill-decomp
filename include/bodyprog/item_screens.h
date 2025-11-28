@@ -332,6 +332,9 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId); // 0x8004EC7C
 
 bool Player_ItemRemove(u8 itemId, u8 count);
 
+/** Sets the possible interaction commands for all items in the inventory. */
+void func_8004EF48();
+
 s32 func_8004F190(s_Savegame* save);
 
 void func_8004F10C(s32* arg0);

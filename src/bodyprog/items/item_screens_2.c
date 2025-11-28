@@ -1411,14 +1411,20 @@ bool Player_ItemRemove(u8 itemId, u8 count) // 0x8004EE94
     return false;
 }
 
-/** Sets the possible interaction commands for all items in the inventory. */
-void func_8004EF48()
+void func_8004EF48() // 0x8004EF48
 {
-    u8 itemIdGroup;
-    u8 inventoryItemId;
-    u8 equippedItemId;
+    u8  itemIdGroup;
+    u8  inventoryItemId;
     s32 i;
+    s16 equippedItemId;
+    s32 weaponsGroup;
+    s32 ammoGroup;
+    s32 reloadCmd;
+    s32 hyperBlaster;
+    s32 cmd;
 
+    hyperBlaster   = InventoryItemId_HyperBlaster;
+    reloadCmd      = InventoryCmdId_Reload;
     equippedItemId = g_Inventory_EquippedItem;
 
     for (i = 0; i < INVENTORY_ITEM_COUNT_MAX; i++)
@@ -1517,7 +1523,6 @@ void func_8004EF48()
                 default:
                     g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Use;
                     break;
-
             }
         }
     }

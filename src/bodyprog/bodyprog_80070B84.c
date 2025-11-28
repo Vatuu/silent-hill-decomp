@@ -140,7 +140,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
 
     if (animStatus == ANIM_STATUS(HarryAnim_Kick, true) && ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
     {
-        g_SysWork.player_4C.chara_0.field_D8.offsetX_0 = FP_MULTIPLY(D_800AF014[chara->model_0.anim_4.keyframeIdx_8 - 457], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.field_D8.offsetX_0 =  FP_MULTIPLY(D_800AF014[chara->model_0.anim_4.keyframeIdx_8 - 457], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
         g_SysWork.player_4C.chara_0.field_D8.offsetZ_2 = -FP_MULTIPLY(D_800AF014[chara->model_0.anim_4.keyframeIdx_8 - 457], Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
         g_SysWork.player_4C.chara_0.field_D8.offsetX_4 = Q12(0.0f);
         g_SysWork.player_4C.chara_0.field_D8.offsetZ_6 = Q12(0.0f);
@@ -148,7 +148,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
 
     if (animStatus == ANIM_STATUS(HarryAnim_Stomp, true) && ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0)) 
     {
-        g_SysWork.player_4C.chara_0.field_D8.offsetX_0 = FP_MULTIPLY(D_800AF04C[chara->model_0.anim_4.keyframeIdx_8 - 485], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
+        g_SysWork.player_4C.chara_0.field_D8.offsetX_0 =  FP_MULTIPLY(D_800AF04C[chara->model_0.anim_4.keyframeIdx_8 - 485], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
         g_SysWork.player_4C.chara_0.field_D8.offsetZ_2 = -FP_MULTIPLY(D_800AF04C[chara->model_0.anim_4.keyframeIdx_8 - 485], Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
         g_SysWork.player_4C.chara_0.field_D8.offsetX_4 = Q12(0.0f);
         g_SysWork.player_4C.chara_0.field_D8.offsetZ_6 = Q12(0.0f);
@@ -175,7 +175,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
     }
 }
 
-void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerBodyState currentState) // 0x800711C4
+void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerBodyState curState) // 0x800711C4
 {
     if (g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_Attack ||
         !g_Player_IsSteppingLeftTap || !g_Player_IsSteppingRightTap)
@@ -185,15 +185,15 @@ void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerBodyState currentSta
 
     if (g_Player_IsTurningLeft)
     {
-        g_SysWork.player_4C.extra_128.lowerBodyState_24 = currentState + PlayerLowerBodyState_QuickTurnLeft;
+        g_SysWork.player_4C.extra_128.lowerBodyState_24 = curState + PlayerLowerBodyState_QuickTurnLeft;
     }
     else
     {
-        g_SysWork.player_4C.extra_128.lowerBodyState_24 = currentState + PlayerLowerBodyState_QuickTurnRight;
+        g_SysWork.player_4C.extra_128.lowerBodyState_24 = curState + PlayerLowerBodyState_QuickTurnRight;
     }
 }
 
-void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerLowerBodyState currentState) // 0x80071224
+void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerLowerBodyState curState) // 0x80071224
 {
     if (g_SysWork.player_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_Attack ||
         !g_Player_IsSteppingLeftTap || !g_Player_IsSteppingRightTap)
@@ -203,11 +203,11 @@ void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerLowerBodyState currentSta
 
     if (g_Player_IsTurningRight)
     {
-        g_SysWork.player_4C.extra_128.lowerBodyState_24 = currentState + PlayerLowerBodyState_QuickTurnRight;
+        g_SysWork.player_4C.extra_128.lowerBodyState_24 = curState + PlayerLowerBodyState_QuickTurnRight;
     }
     else
     {
-        g_SysWork.player_4C.extra_128.lowerBodyState_24 = currentState + PlayerLowerBodyState_QuickTurnLeft;
+        g_SysWork.player_4C.extra_128.lowerBodyState_24 = curState + PlayerLowerBodyState_QuickTurnLeft;
     }
 }
 
@@ -4521,6 +4521,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     if (D_800C454C != Q12(0.0f))
                     {
+                        // TODO: Convert hex to clean floats.
 						// Determine speed if using certain weapons while moving?
                         switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
                         {

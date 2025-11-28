@@ -1957,7 +1957,7 @@ typedef struct
         } bits;
         u32 flags;
     } field_14C;
-    q19_12 dist_150;
+    q19_12 distance_150;
     q19_12 angle_154;
     q19_12 field_158; // Displacement distance.
     s32    field_15C;
@@ -2758,7 +2758,7 @@ bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* chara);
 
 /** @brief Applies a multi-stage bend deformation to several model coordinates.
  * Builds three rotation matrices using scaled fractions of `chara->field_2A` and
- * multiplies them into coords[10], coords[9], coords[1], and coords[2].
+ * multiplies them into `coords[10]`, `coords[9]`, `coords[1]`, and `coords[2]`.
  * Used when the animation flag bit 0 is active to drive a chained bending motion.
  */
 void sharedFunc_800D7B14_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);

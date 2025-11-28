@@ -538,9 +538,9 @@ void func_8005CD38(s32*, s32*, s_PlayerCombat*, s32, s32, s32);
  */
 void func_80070CF0(s_SubCharacter* chara, q19_12 arg1, q19_12 moveDistMax, q19_12 moveDistForward, q19_12 modeDistBack);
 
-void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerBodyState currentState);
+void Player_CharaTurn_0(s_SubCharacter* chara, e_PlayerLowerBodyState curState);
 
-void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerLowerBodyState currentState);
+void Player_CharaTurn_1(s_SubCharacter* chara, e_PlayerLowerBodyState curState);
 
 void Player_CharaRotate(s32 speed);
 

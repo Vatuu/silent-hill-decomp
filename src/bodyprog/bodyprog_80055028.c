@@ -1,9 +1,9 @@
 #include "game.h"
 #include "inline_no_dmpsx.h"
 
+#include <psyq/gtemac.h>
 #include <psyq/libapi.h>
 #include <psyq/strings.h>
-#include <gtemac.h>
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
@@ -1659,7 +1659,7 @@ void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005801C); // 0x8005801C
 
-void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, GsOT_TAG* arg4) // 0x80059D50
+void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, GsOT_TAG* tag) // 0x80059D50
 {
     s_GteScratchData* scratchData;
     s_MeshHeader*     curMeshHdr;
@@ -1673,31 +1673,31 @@ void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, Gs
     {
         func_800574D4(curMeshHdr, scratchData);
         func_80057B7C(curMeshHdr, 0, scratchData, mat);
-        func_80059E34(arg0, curMeshHdr, scratchData, arg3, arg4);
+        func_80059E34(arg0, curMeshHdr, scratchData, arg3, tag);
     }
 }
 
-void func_80059E34(u32 arg0, s_MeshHeader* arg1, s_GteScratchData* arg2, s32 arg3, GsOT_TAG* arg4) // 0x80059E34
+void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* arg2, s32 arg3, GsOT_TAG* tag) // 0x80059E34
 {
     s32          sp0;
-    GsOT_TAG*    var_a0;
     s32          var_t2;
-    s32          temp_a0;
-    s32          temp_a1_4;
+    s32          x2;
+    s32          x1;
     s32          temp_v1;
-    s32          temp_v1_2;
+    s32          x3;
     u16          var_a2;
-    s32          var_a3;
+    s32          packedColor;
     s32          var_t9;
     u32          temp_t0;
     u32          temp_t1;
-    s_Primitive* ptr;
-    POLY_FT4*    poly;
-    GsOT_TAG*    tag;
     s32          temp;
-    s32          new_var;
+    s32          x0;
+    GsOT_TAG*    tag0;
+    GsOT_TAG*    tag1;
+    s_Primitive* prim;
+    POLY_FT4*    poly;
 
-    tag = &g_OrderingTable0[g_ActiveBufferIdx].org[640];
+    tag1 = &g_OrderingTable0[g_ActiveBufferIdx].org[640];
 
     switch (arg0)
     {
@@ -1707,12 +1707,12 @@ void func_80059E34(u32 arg0, s_MeshHeader* arg1, s_GteScratchData* arg2, s32 arg
 
         case 1:
         case 3:
-            var_a3 = 0x2E383838;
+            packedColor = 0x2E383838;
             var_a2 = 0x140;
             break;
 
         case 2:
-            var_a3 = 0x2E808080;
+            packedColor = 0x2E808080;
             var_a2 = 0x20;
             break;
     }
@@ -1723,9 +1723,9 @@ void func_80059E34(u32 arg0, s_MeshHeader* arg1, s_GteScratchData* arg2, s32 arg
     poly                        = (POLY_FT4*)GsOUT_PACKET_P;
     arg2->field_380.s_0.field_0 = g_GameWork.gsScreenWidth_588 >> 1;
 
-    for (ptr = arg1->primitives_4; ptr < &arg1->primitives_4[arg1->primitiveCount_0]; ptr++)
+    for (prim = meshHdr->primitives_4; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
     {
-        *(s32*)&arg2->field_380.s_0.field_10 = *(s32*)&ptr->field_C;
+        *(s32*)&arg2->field_380.s_0.field_10 = *(s32*)&prim->field_C;
 
         var_t2 = arg2->field_18C[arg2->field_380.s_0.field_10];
         var_t2 = MAX(arg2->field_18C[arg2->field_380.s_0.field_11], var_t2);
@@ -1737,9 +1737,9 @@ void func_80059E34(u32 arg0, s_MeshHeader* arg1, s_GteScratchData* arg2, s32 arg
             continue;
         }
 
-        if (var_t2 <= 0x20)
+        if (var_t2 <= 32)
         {
-            var_t2 = 0x20;
+            var_t2 = 32;
         }
 
         if (var_t9 < var_t2)
@@ -1764,46 +1764,46 @@ void func_80059E34(u32 arg0, s_MeshHeader* arg1, s_GteScratchData* arg2, s32 arg
             }
         }
 
-        temp      = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_10];
-        temp_a1_4 = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_11];
-        temp_a0   = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_12];
-        temp_v1_2 = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_13];
+        temp = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_10];
+        x1 = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_11];
+        x2 = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_12];
+        x3 = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_13];
 
         temp_t0 = arg2->field_380.s_0.field_0;
         temp_t1 = temp_t0 * 2;
-        new_var = temp;
+        x0 = temp;
 
         if (arg2->screenXy_0[arg2->field_380.s_0.field_10].vx + temp_t0 >= temp_t1 &&
-            (s16)temp_a1_4 + temp_t0 >= temp_t1 &&
-            (s16)temp_a0 + temp_t0 >= temp_t1 &&
-            (s16)temp_v1_2 + temp_t0 >= temp_t1)
+            (s16)x1 + temp_t0 >= temp_t1 &&
+            (s16)x2 + temp_t0 >= temp_t1 &&
+            (s16)x3 + temp_t0 >= temp_t1)
         {
             continue;
         }
 
-        *(s32*)&poly->x0 = new_var;
-        *(s32*)&poly->x1 = temp_a1_4;
-        *(s32*)&poly->x2 = temp_a0;
-        *(s32*)&poly->x3 = temp_v1_2;
+        *(s32*)&poly->x0 = x0;
+        *(s32*)&poly->x1 = x1;
+        *(s32*)&poly->x2 = x2;
+        *(s32*)&poly->x3 = x3;
 
-        *(s32*)&poly->r0 = var_a3;
-        *(s32*)&poly->u0 = *(s32*)&ptr->field_0;
-        *(s32*)&poly->u1 = ((*(u32*)&ptr->field_4 & 0x1FFFFF) | (var_a2 << 16)); // Maybe `field_4` is bitfield
-        *(u16*)&poly->u2 = ptr->field_8;
-        *(u16*)&poly->u3 = ptr->field_A;
+        *(s32*)&poly->r0 = packedColor;
+        *(s32*)&poly->u0 = *(s32*)&prim->field_0;
+        *(s32*)&poly->u1 = ((*(u32*)&prim->field_4 & 0x1FFFFF) | (var_a2 << 16)); // Maybe `field_4` is bitfield
+        *(u16*)&poly->u2 = prim->field_8;
+        *(u16*)&poly->u3 = prim->field_A;
 
         setlen(poly, 9);
 
         if (arg0 == 1)
         {
-            var_a0 = tag;
+            tag0 = tag1;
         }
         else
         {
-            var_a0 = &arg4[var_t2 >> (arg3 + 2)];
+            tag0 = &tag[var_t2 >> (arg3 + 2)];
         }
 
-        addPrim(var_a0, poly);
+        addPrim(tag0, poly);
         poly++;
     }
 

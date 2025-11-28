@@ -21,10 +21,10 @@ bool sharedFunc_800D3928_0_s01(s_SubCharacter* chara)
     }
 
     sharedData_800E21D0_0_s01.field_14C.flags = sharedFunc_800D3758_0_s01(chara,
-                                                                   &sharedData_800E21D0_0_s01.dist_150,
-                                                                   &sharedData_800E21D0_0_s01.angle_154,
-                                                                   &sharedData_800E21D0_0_s01.field_158,
-                                                                   &sharedData_800E21D0_0_s01.field_15C);
+                                                                          &sharedData_800E21D0_0_s01.distance_150,
+                                                                          &sharedData_800E21D0_0_s01.angle_154,
+                                                                          &sharedData_800E21D0_0_s01.field_158,
+                                                                          &sharedData_800E21D0_0_s01.field_15C);
 
     if (chara->properties_E4.unk0.field_E8_0 == 3)
     {

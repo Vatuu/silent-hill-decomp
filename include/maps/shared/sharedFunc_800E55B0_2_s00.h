@@ -1,37 +1,37 @@
 void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara)
 {
-    s16 timeScaled;
-    s32 moveSpeed;
-    s32 animTime;
-    s32 newMoveSpeed;
-    u32 animStatusIdx;
-    u8  newAnimStatus;
+    q3_12  timeScaled;
+    q19_12 moveSpeed;
+    s32    animTime;
+    q19_12 newMoveSpeed;
+    u32    animStatusIdx;
+    u8     newAnimStatus;
 
     // TODO: Wrong `properties_E4` union member used.
 
-    if (!(chara->properties_E4.splitHead.flags_E8 & 2))
+    if (!(chara->properties_E4.splitHead.flags_E8 & (1 << 1)))
     {
         moveSpeed = chara->moveSpeed_38;
-        if (moveSpeed > 0)
+        if (moveSpeed > Q12(0.0f))
         {
             newMoveSpeed = moveSpeed - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.8f, Q12_SHIFT);
-            if (newMoveSpeed < 0)
+            if (newMoveSpeed < Q12(0.0f))
             {
-                newMoveSpeed = 0;
+                newMoveSpeed = Q12(0.0f);
             }
         }
         else
         {
             newMoveSpeed = moveSpeed + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.8f, Q12_SHIFT);
-            if (newMoveSpeed > 0)
+            if (newMoveSpeed > Q12(0.0f))
             {
-                newMoveSpeed = 0;
+                newMoveSpeed = Q12(0.0f);
             }
         }
         chara->moveSpeed_38 = newMoveSpeed;
     }
 
-    if (!(chara->properties_E4.splitHead.flags_E8 & 4))
+    if (!(chara->properties_E4.splitHead.flags_E8 & (1 << 2)))
     {
         chara->properties_E4.splitHead.flags_E8 &= ~(1 << 4);
     }
@@ -105,11 +105,11 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara)
         }
     }
 
-    if (!(chara->properties_E4.splitHead.flags_E8 & 4) && chara->health_B0 == 0)
+    if (!(chara->properties_E4.splitHead.flags_E8 & 4) && chara->health_B0 == Q12(0.0f))
     {
         animStatusIdx    = ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0);
-        newAnimStatus    = ANIM_STATUS(animStatusIdx == 4 ? 1 : 0, false);
-        chara->flags_3E &= ~2;
+        newAnimStatus    = ANIM_STATUS((animStatusIdx == 4) ? 1 : 0, false);
+        chara->flags_3E &= ~CharaFlag_Unk2;
 
         if (animStatusIdx == 8)
         {

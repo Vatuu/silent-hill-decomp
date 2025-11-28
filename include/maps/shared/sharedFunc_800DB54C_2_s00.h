@@ -15,7 +15,7 @@ void sharedFunc_800DB54C_2_s00(s_SubCharacter* chara)
     animStatus = chara->model_0.anim_4.status_0;
     switchCond = 0;
     new_var    = sharedFunc_800D4A80_0_s01(chara);
-    dist       = sharedData_800E21D0_0_s01.dist_150;
+    dist       = sharedData_800E21D0_0_s01.distance_150;
     angle      = sharedData_800E21D0_0_s01.angle_154;
     field14C   = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
     temp_s7    = new_var;
@@ -107,6 +107,7 @@ void sharedFunc_800DB54C_2_s00(s_SubCharacter* chara)
                         chara->model_0.stateStep_3 = 0;
                     }
                     return;
+
                 case 1:
                     if (temp_s7 == 1)
                     {
@@ -114,6 +115,7 @@ void sharedFunc_800DB54C_2_s00(s_SubCharacter* chara)
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
+
                 case 2:
                     if (temp_s7 == 2)
                     {
@@ -135,7 +137,8 @@ void sharedFunc_800DB54C_2_s00(s_SubCharacter* chara)
         case 4:
             chara->model_0.state_2     = 45;
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }

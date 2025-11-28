@@ -3265,7 +3265,9 @@ void func_80056244(s_LmHeader* lmHdr, bool unkFlag);
 s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
-void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, GsOT_TAG* arg4);
+void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, GsOT_TAG* tag);
+
+void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* arg2, s32 arg3, GsOT_TAG* tag);
 
 /** TODO: Unknown `arg2` type. */
 void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
@@ -4593,7 +4595,5 @@ void func_80089034(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ
 
 /* Does the map zoom in, red lines? Argument types guessed based on f`unc_800E83C0` in MAP2_S00. */
 void func_80088370(s16, s16, s16, s16, s32, s32, s32, s32, s32);
-
-void func_8004EF48();
 
 #endif
