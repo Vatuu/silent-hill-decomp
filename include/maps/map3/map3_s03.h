@@ -72,4 +72,6 @@ void func_800D3128(void);
 
 void Map_WorldObjectsInit(void);
 
+void func_800CF7F4(s_SubCharacter* chara);
+
 #endif
