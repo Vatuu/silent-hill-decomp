@@ -36,6 +36,13 @@ extern s_WorldObjectDescNoRot g_WorldObject_Blood2;
 extern s_WorldObject_0        g_CommonWorldObjects[6];
 extern s_WorldObjectPose      g_CommonWorldObjectPoses[5];
 
+typedef struct {
+    u16 sfxId;
+    u16 vol;
+} s_SfxPair;
+
+extern s_SfxPair D_800D57F0[18];
+
 void func_800D1210(s32 arg0);
 
 void func_800D1244(void);
@@ -77,5 +84,7 @@ void Map_WorldObjectsInit(void);
 void func_800CF7F4(s_SubCharacter* chara);
 
 void func_800D429C(void);
+
+void func_800CD9F4(s_SubCharacter*, s32);
 
 #endif

@@ -1219,10 +1219,12 @@ typedef union
 // TODO: Unsure if this struct is puppet doctor specific or shared with all characterss. Pointer gets set at puppetDoc+0x124.
 typedef struct
 {
-    q19_12      health_0;
-    s8          unk_4[32];
+    q19_12 health_0;
+    s8 unk_4[24];
+    s32 idx_1C;
+    s8 unk_20[4];
     s_AnimInfo* animInfo_24;
-    s8          unk_28[12];
+    s8 unk_28[12];
 } s_800D5710;
 STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 

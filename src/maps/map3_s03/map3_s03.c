@@ -23,7 +23,15 @@ INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", g_MapOverlayHeader);
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CD980);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CD9F4);
+void func_800CD9F4(s_SubCharacter* arg0, s32 arg1)
+{
+    s_SfxPair* sfx;
+    s32 idx;
+
+    sfx = D_800D57F0;
+    idx = (arg0->properties_E4.npc.field_124->idx_1C * 9) + arg1;
+    func_8005DC1C(sfx[idx].sfxId, &arg0->position_18, sfx[idx].vol, 0);
+}
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDA44);
 
