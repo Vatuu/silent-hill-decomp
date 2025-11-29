@@ -121,10 +121,10 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, FLOATSTINGER_ANIM_INFOS);
 
-    chara->damageReceived_C0 = Q12(0.0f);
-    chara->field_BC          = 0;
-    chara->field_B8          = 0;
-    chara->field_B4          = 0;
+    chara->dmg_B4.damageReceived_C = Q12(0.0f);
+    chara->dmg_B4.field_8          = 0;
+    chara->dmg_B4.field_4          = 0;
+    chara->dmg_B4.field_0          = 0;
 
     D_800DB89C = 0;
     D_800DB898 = 0;

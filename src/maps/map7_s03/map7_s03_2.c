@@ -481,10 +481,10 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
     Character_AnimSet(chara, ANIM_STATUS(3, false), 338);
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, INCUBUS_ANIM_INFOS);
 
-    chara->damageReceived_C0 = Q12(0.0f);
-    chara->field_BC          = 0;
-    chara->field_B8          = 0;
-    chara->field_B4          = 0;
+    chara->dmg_B4.damageReceived_C = Q12(0.0f);
+    chara->dmg_B4.field_8          = 0;
+    chara->dmg_B4.field_4          = 0;
+    chara->dmg_B4.field_0          = 0;
 
     chara->flags_3E |= CharaFlag_Unk9;
 
@@ -772,10 +772,10 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     Character_AnimSet(chara, ANIM_STATUS(2, false), 115);
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, UNKKOWN_23_ANIM_INFOS);
 
-    chara->damageReceived_C0 = Q12(0.0f);
-    chara->field_BC          = 0;
-    chara->field_B8          = 0;
-    chara->field_B4          = 0;
+    chara->dmg_B4.damageReceived_C = Q12(0.0f);
+    chara->dmg_B4.field_8          = 0;
+    chara->dmg_B4.field_4          = 0;
+    chara->dmg_B4.field_0          = 0;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {

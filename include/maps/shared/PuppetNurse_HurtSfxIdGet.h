@@ -1,9 +1,9 @@
-s32 sharedFunc_800CD980_3_s03(s_SubCharacter* chara)
+s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse)
 {
     s32 weaponAttack;
     s32 idx;
 
-    weaponAttack = chara->attackReceived_41;
+    weaponAttack = nurse->attackReceived_41;
     if (weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap)      &&
         weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Hold)     &&
         weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Multitap) &&
@@ -12,7 +12,7 @@ s32 sharedFunc_800CD980_3_s03(s_SubCharacter* chara)
         weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Multitap))
     {
         idx = D_800AD4C8[weaponAttack].field_10;
-        return sharedData_800D57E0_3_s03[idx];
+        return g_PuppetNurseHurtSfxIdx[idx];
     }
 
     return NO_VALUE;

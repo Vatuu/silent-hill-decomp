@@ -2003,9 +2003,6 @@ extern void (*sharedData_800DD7A0_0_s01[52])(s_SubCharacter*);
 
 extern s_MapPoint2d MAP_POINTS[];
 
-extern s32       sharedData_800D57E0_3_s03[4];
-extern s_SfxPair sharedData_800D57F0_3_s03[18];
-
 /** Scale. */
 extern VECTOR sharedData_800DD870_0_s01;
 
@@ -2221,6 +2218,10 @@ extern VECTOR3 sharedData_800F21EC_2_s00;
 extern SVECTOR sharedData_800DE220_0_s01;
 
 extern MATRIX sharedData_800DE230_0_s01;
+
+extern s32 g_PuppetNurseHurtSfxIdx[4];
+
+extern s_SfxPair g_NursePuppetSfxs[18];
 
 q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
 
@@ -2557,13 +2558,17 @@ void Ai_PuppetNurse_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDIN
 
 void Ai_PuppetDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-bool sharedFunc_800CDDE8_3_s03(s_SubCharacter* chara);
+void Ai_PuppetNurse_DamageHandle(s_SubCharacter*);
 
-void sharedFunc_800CDF24_3_s03(s_SubCharacter*);
+s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse);
+
+bool Ai_PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse);
+
+void Ai_NursePuppet_Move(s_SubCharacter* nurse);
 
 bool sharedFunc_800CE398_3_s03(s32 arg0);
 
-void sharedFunc_800CE3CC_3_s03(s_SubCharacter*);
+void Ai_PuppetNurse_Control1(s_SubCharacter*);
 
 void sharedFunc_800CE500_3_s03(s_SubCharacter*);
 
@@ -2881,8 +2886,6 @@ q19_12 sharedFunc_800CD940_3_s03(q19_12 pos0, q19_12 pos1);
 
 s32 sharedFunc_800CD980_3_s03(s_SubCharacter* chara);
 
-void sharedFunc_800CD9F4_3_s03(s_SubCharacter* chara, s32 arg1);
-
 q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center);
 
 void sharedFunc_800D6EC4_0_s01(s_SubCharacter* chara);
@@ -2932,6 +2935,7 @@ void MapEvent_DoorUnlocked(void);
  * @return Room index.
  */
 u8 Map_RoomIdxGet(s32 x, s32 z);
+
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {

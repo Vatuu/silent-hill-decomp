@@ -253,10 +253,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
     Character_AnimSet(chara, ANIM_STATUS(8, false), 258);
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, TWINFEELER_ANIM_INFOS);
 
-    chara->damageReceived_C0 = Q12(0.0f);
-    chara->field_BC          = 0;
-    chara->field_B8          = 0;
-    chara->field_B4          = 0;
+    Chara_DamageClear(chara);
 
     func_800D354C(&chara->position_18);
     chara->flags_3E |= CharaFlag_Unk9;

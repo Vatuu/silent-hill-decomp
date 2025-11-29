@@ -21,9 +21,9 @@ INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CD940_3_s03.h" // 0x800CD940
 
-#include "maps/shared/sharedFunc_800CD980_3_s03.h" // 0x800CD980
+#include "maps/shared/PuppetNurse_HurtSfxIdGet.h" // 0x800CD980
 
-#include "maps/shared/sharedFunc_800CD9F4_3_s03.h" // 0x800CD9F4
+#include "maps/shared/Ai_PuppetNurse_SfxPlay.h"
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDA44);
 
@@ -37,15 +37,15 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDA44);
 
 #include "maps/shared/Ai_PuppetDoctor_Update.h" // 0x800CDD8C
 
-#include "maps/shared/sharedFunc_800CDDE8_3_s03.h" // 0x800CDDE8
+#include "maps/shared/Ai_PuppetNurse_SomeAngleCheck.h"
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CDF24_3_s03);
+#include "maps/shared/Ai_PuppetNurse_DamageHandle.h" // 0x800CDF24
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CE0E4);
+#include "maps/shared/Ai_NursePuppet_Move.h" // 0x800CDF24
 
 #include "maps/shared/sharedFunc_800CE398_3_s03.h" // 0x800CE398
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CE3CC_3_s03);
+#include "maps/shared/Ai_PuppetNurse_Control1.h"
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CE500_3_s03);
 

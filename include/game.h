@@ -1220,7 +1220,8 @@ typedef union
 typedef struct
 {
     q19_12 health_0;
-    s8 unk_4[24];
+    s32 field_4;
+    s8 unk_4[20];
     s32 idx_1C;
     s8 unk_20[4];
     s_AnimInfo* animInfo_24;
@@ -1237,6 +1238,14 @@ typedef struct
     s8      field_12;
     u8      field_13;
 } s_func_8006CF18;
+
+typedef struct _SubCharacter_B4
+{
+    s32    field_0; // X? } In player: Adds/subtracts if hurt by enemy. Related to heading angle?
+    s32    field_4; // Y? } Angle.
+    s32    field_8; // Z? }
+    q19_12 damageReceived_C;
+} s_CharaDamageStuff;
 
 // TODO: Re-offset `s_SubCharaPropertiesPlayer` / `s_SubCharaPropertiesNpc`.
 // Probably easier to do that after it's merged with rest of code.
@@ -1316,6 +1325,27 @@ typedef struct _SubCharPropertiesUnk0
     u_Property properties_124;
 } s_SubCharaPropertiesUnk0;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesUnk0, 68);
+
+typedef struct _SubCharaPropertiesUnk1
+{
+    s_func_8006CF18* unk_E4;
+    VECTOR3 field_E8;
+    s_CharaDamageStuff dmg_F4;
+    s32 field_104;
+    s32 field_108;
+    s32 field_10C;
+    s8 unk_110[4];
+    s32 field_114;
+    u8 field_118;
+    s8 modelVariation_119;
+    s16 field_11A;
+    s16 field_11C;
+    s16 field_11E;
+    s16 field_120;
+    u16 flags_122;
+    s_800D5710* field_124;
+} s_SubCharaPropertiesUnk1;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesUnk1, 68);
 
 typedef struct _SubCharPropertiesDahlia
 {
@@ -1407,10 +1437,7 @@ typedef struct _SubCharacter
     VECTOR3 field_98;
     VECTOR3 field_A4;
     q19_12  health_B0;
-    s32     field_B4;      // X? } In player: Adds/subtracts if hurt by enemy. Related to heading angle?
-    s32     field_B8;      // Y? } Angle.
-    s32     field_BC;      // Z? }
-    q19_12  damageReceived_C0;
+    s_CharaDamageStuff dmg_B4;
     u16     deathTimer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
     s16     timer_C6;      // Some sort of timer, value written by `Ai_LarvalStalker_Update`.
 
@@ -1437,6 +1464,7 @@ typedef struct _SubCharacter
         s_SubCharaPropertiesNpc           npc;
         s_SubCharaPropertiesLarvalStalker larvalStalker;
         s_SubCharaPropertiesUnk0          unk0;
+        s_SubCharaPropertiesUnk1          unk1;
         s_SubCharaPropertiesDahlia        dahlia;
         s_SubCharaPropertiesSplitHead     splitHead;
     } properties_E4;
@@ -2028,5 +2056,15 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
         chara->properties_E4.dahlia.resetStateIdx0_F8 = 0;
     }
 }
+
+/** @brief Clears s_CharaDamageStuff structure.
+ *
+ * @param chara Character pointer
+ */
+#define Chara_DamageClear(chara)                  \
+    (chara)->dmg_B4.damageReceived_C = Q12(0.0);  \
+    (chara)->dmg_B4.field_8 = 0;                  \
+    (chara)->dmg_B4.field_4 = 0;                  \
+    (chara)->dmg_B4.field_0 = 0
 
 #endif

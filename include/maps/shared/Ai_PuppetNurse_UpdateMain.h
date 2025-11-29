@@ -2,7 +2,7 @@ void Ai_PuppetNurse_UpdateMain(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOO
 {
     if (g_DeltaTime0 != Q12(0.0))
     {
-        sharedFunc_800CDF24_3_s03(chara);
+        Ai_PuppetNurse_DamageHandle(chara);
         Ai_PuppetNurse_Control(chara);
         sharedFunc_800CDA88_3_s03(chara);
         sharedFunc_800D03E4_3_s03(chara);

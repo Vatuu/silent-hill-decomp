@@ -3,7 +3,7 @@ void Ai_PuppetNurse_Control(s_SubCharacter* arg0)
     switch (arg0->model_0.state_2)
     {
         case 1:
-            sharedFunc_800CE3CC_3_s03(arg0);
+            Ai_PuppetNurse_Control1(arg0);
             break;
 
         case 2:

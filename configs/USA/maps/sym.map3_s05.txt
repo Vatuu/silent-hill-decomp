@@ -71,17 +71,17 @@ sharedFunc_800CD6B0_3_s03 = 0x800D2120; // type:func
 sharedFunc_800CD7F8_3_s03 = 0x800D2268; // type:func
 sharedFunc_800CD920_3_s03 = 0x800D2390; // type:func
 sharedFunc_800CD940_3_s03 = 0x800D23B0; // type:func
-sharedFunc_800CD980_3_s03 = 0x800D23F0; // type:func
-sharedFunc_800CD9F4_3_s03 = 0x800D2464; // type:func
+
+
 sharedFunc_800CDA88_3_s03 = 0x800D24F8; // type:func
 Ai_PuppetNurse_UpdateMain = 0x800D2528; // type:func
 Ai_PuppetNurse_Init       = 0x800D25CC; // type:func
 Ai_PuppetNurse_Update     = 0x800D27A0; // type:func
 Ai_PuppetDoctor_Update    = 0x800D27FC; // type:func
-sharedFunc_800CDDE8_3_s03 = 0x800D2858; // type:func
-sharedFunc_800CDF24_3_s03 = 0x800D2994; // type:func
+
+Ai_PuppetNurse_DamageHandle = 0x800D2994; // type:func
 sharedFunc_800CE398_3_s03 = 0x800D2E08; // type:func
-sharedFunc_800CE3CC_3_s03 = 0x800D2E3C; // type:func
+Ai_PuppetNurse_Control1 = 0x800D2E3C; // type:func
 sharedFunc_800CE500_3_s03 = 0x800D2F70; // type:func
 sharedFunc_800CE5E4_3_s03 = 0x800D3054; // type:func
 sharedFunc_800CEA64_3_s03 = 0x800D34D4; // type:func
@@ -121,8 +121,6 @@ sharedData_800DD5A0_0_s00 = 0x800D9320; // type:s32 size:4
 sharedData_800DD5A4_0_s00 = 0x800D9324; // type:s16 size:2
 CREAPER_ANIM_INFOS        = 0x800D9328; // type:s32 unknown type
 sharedData_800D5710_3_s03 = 0x800D9D80; // size:0xD0 - s_800D5710
-sharedData_800D57E0_3_s03 = 0x800D9E50; // type:s32 size:0x10
-sharedData_800D57F0_3_s03 = 0x800D9E60;
 MAP_ROOM_IDXS             = 0x800DA12C; // type:u8
 MAP_POINTS                = 0x800DA1FC; // type:MapPoint2d
 
@@ -158,3 +156,9 @@ g_WorldObject5            = 0x800DD3E0; // type:WorldObject_0 size:0x1C
 g_WorldObject6            = 0x800DD400; // type:WorldObject_0 size:0x1C
 g_WorldObject7            = 0x800DD450; // type:WorldObjectDesc size:0x2E
 g_CommonWorldObjects      = 0x800DD480; // type:WorldObject_0 size:0xA8
+PuppetNurse_HurtSfxIdGet = 0x800D23F0; // type:func
+Ai_PuppetNurse_SomeAngleCheck = 0x800D2858; // type:func
+Ai_PuppetNurse_SfxPlay = 0x800D2464; // type:func
+g_NursePuppetSfxs = 0x800D9E60; // type:SfxPair size:0x24
+g_PuppetNurseHurtSfxIdx = 0x800D9E50; // type:s32 size:0x10
+Ai_NursePuppet_Move = 0x800D2B54; // type:func

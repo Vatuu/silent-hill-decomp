@@ -18,10 +18,7 @@ void Ai_LarvalStalker_Init(s_SubCharacter* arg0)
     arg0->health_B0         = Q12(300.0f);
     arg0->field_34          = 0;
     arg0->moveSpeed_38      = 0;
-    arg0->damageReceived_C0 = Q12(0.0f);
-    arg0->field_BC          = 0;
-    arg0->field_B8          = 0;
-    arg0->field_B4          = 0;
+    Chara_DamageClear(arg0);
     arg0->field_E1_0        = 0;
     arg0->headingAngle_3C   = arg0->rotation_24.vy;
 
