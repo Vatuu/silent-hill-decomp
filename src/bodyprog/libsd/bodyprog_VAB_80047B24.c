@@ -19,28 +19,86 @@ static u8* D_800A9FD8[1] = {
     (u8*)0x801F5600,
 };
 
-static s32 D_800A9FDC[166] = {
-    0x00001010, 0x00021490, 0x00027630, 0x00058F50, 0x10200000, 0x00021410, 0x0000008C, 0x0C200002,
-    0x00035B80, 0x0000021B, 0x0C200002, 0x00020FA0, 0x00006295, 0x0C200001, 0x00006BF0, 0x000061D5,
-    0x0C200001, 0x00005690, 0x000062D7, 0x0C200001, 0x00005ED0, 0x0000639C, 0x0C200001, 0x00004450,
-    0x0000725B, 0x0C200001, 0x00006A20, 0x000072AE, 0x0C200001, 0x00006B20, 0x00007310, 0x0C200001,
-    0x00006860, 0x00007302, 0x12200002, 0x00021EB0, 0x00006FB1, 0x10200002, 0x00031910, 0x00006584,
-    0x14200002, 0x00029290, 0x00006FF5, 0x14200002, 0x0002F370, 0x00007048, 0x16200002, 0x00029860,
-    0x000070A7, 0x16200002, 0x0002DD80, 0x000070FB, 0x0C200002, 0x0002D060, 0x000067BF, 0x12200002,
-    0x0001C430, 0x0000681A, 0x12200002, 0x00032970, 0x00006853, 0x12200002, 0x0002DF90, 0x000068B9,
-    0x0C200002, 0x000031C0, 0x00006915, 0x14200002, 0x0002E9E0, 0x0000691C, 0x14200002, 0x00032310,
-    0x0000697A, 0x14200002, 0x000303B0, 0x000069DF, 0x14200002, 0x000325E0, 0x00006A40, 0x14200002,
-    0x00032CF0, 0x00006AA5, 0x0C200002, 0x00017750, 0x00006B0B, 0x0C200002, 0x00016750, 0x00006B3A,
-    0x12200002, 0x000259C0, 0x00006B67, 0x0C200002, 0x000284A0, 0x00006BB3, 0x12200002, 0x00032B40,
-    0x00006C04, 0x14200002, 0x000254C0, 0x00006C6A, 0x12200002, 0x00021340, 0x00006CB5, 0x12200002,
-    0x0000A510, 0x00007157, 0x0C200002, 0x00007BB0, 0x00006D12, 0x12200002, 0x00032510, 0x00006D22,
-    0x0E200002, 0x0000C640, 0x00006D87, 0x0E200002, 0x00010760, 0x00006DA0, 0x12200002, 0x00027580,
-    0x00006DC1, 0x14200002, 0x000305F0, 0x0000716C, 0x0C200002, 0x00006230, 0x00006E76, 0x12200002,
-    0x000328B0, 0x00006E83, 0x14200002, 0x00032420, 0x00006EE9, 0x10200002, 0x00031030, 0x00006F4E,
-    0x12200002, 0x000311F0, 0x000065E8, 0x18200003, 0x0001CC20, 0x0000603A, 0x1C200003, 0x0001CB90,
-    0x0000607E, 0x18200003, 0x00023060, 0x000060BD, 0x14200003, 0x00018090, 0x00006106, 0x16200003,
-    0x00021740, 0x00006138, 0x10200003, 0x00021D80, 0x0000617C, 0x0C200003, 0x00009FE0, 0x000061C1,
-    0x14200003, 0x0000A410, 0x000061E6, 0x10200003, 0x000144C0, 0x000061FC
+/** @note Strange data access.
+ * Splat's generated assembly points to data from 0x800A9FDC to 0x800AA274 to be all from the same 
+ * array, however, `func_80047B80` access to this data in a rather bizarre way.
+ *
+ * `func_80047B80` is used to switch the audio bank of the currently selected weapon.
+ * (change the weapon in the inventory and then leave it, this way the function get triggered)
+ * the way this function triggers is by adding a command to `g_Sd_CmdPool` which goes from 164 to 168
+ * depending on the weapon (the code let it be able to go down to 160, but it's impossible to get a
+ * command with that value naturally), the value of this command goes through many functions until reaching
+ * `func_8007F14C` where it is used to get the index of the audio bank that will be loaded, the bizarre
+ * thing start here, the same value of the command assigned is used to get inside an specific element from
+ * a variable that uses struct `s_800C37D4` which is `D_800A986C` who only have 5 elements, but the
+ * elements being accessed have the index of 164 to 168... So instead the code `D_800A986C` as a pointer
+ * to jump all the way up to 0x800A9FEC where the table actually used for switching the audio bank of the
+ * currently selected weapon is... WHO CODED THIS AND HOW DOES THIS EVEN WORK IN OTHER VERSIONS???????
+ *
+ * With the previously said this means that this data is actually a `s_800C37D4` struct array that begins
+ * at 0x800A9FEC and since it's not being directly or (in a normal way) indirectly called by a function
+ * Splat mixes it with `D_800A9FDC` which actually being call directly by `func_80047E3C`. Looking at
+ * the code indicates that the data between 0x800A9FDC to 0x800A9FEC are actually 4 ints values.
+ */
+static s32 D_800A9FDC[4] = {
+    0x00001010, 0x00021490, 0x00027630, 0x00058F50
+};
+
+static s_800C37D4 D_800A9FEC[54] = {
+	{ 0, 0, 4128, 136208, 140   },
+	{ 2, 0, 3104, 220032, 539   },
+	{ 2, 0, 3104, 135072, 25237 },
+	{ 1, 0, 3104,  27632, 25045 },
+	{ 1, 0, 3104,  22160, 25303 },
+	{ 1, 0, 3104,  24272, 25500 },
+	{ 1, 0, 3104,  17488, 29275 },
+	{ 1, 0, 3104,  27168, 29358 },
+	{ 1, 0, 3104,  27424, 29456 },
+	{ 1, 0, 3104,  26720, 29442 },
+	{ 2, 0, 4640, 138928, 28593 },
+	{ 2, 0, 4128, 203024, 25988 },
+	{ 2, 0, 5152, 168592, 28661 },
+	{ 2, 0, 5152, 193392, 28744 },
+	{ 2, 0, 5664, 170080, 28839 },
+	{ 2, 0, 5664, 187776, 28923 },
+	{ 2, 0, 3104, 184416, 26559 },
+	{ 2, 0, 4640, 115760, 26650 },
+	{ 2, 0, 4640, 207216, 26707 },
+	{ 2, 0, 4640, 188304, 26809 },
+	{ 2, 0, 3104,  12736, 26901 },
+	{ 2, 0, 5152, 190944, 26908 },
+	{ 2, 0, 5152, 205584, 27002 },
+	{ 2, 0, 5152, 197552, 27103 },
+	{ 2, 0, 5152, 206304, 27200 },
+	{ 2, 0, 5152, 208112, 27301 },
+	{ 2, 0, 3104,  96080, 27403 },
+	{ 2, 0, 3104,  91984, 27450 },
+	{ 2, 0, 4640, 154048, 27495 },
+	{ 2, 0, 3104, 165024, 27571 },
+	{ 2, 0, 4640, 207680, 27652 },
+	{ 2, 0, 5152, 152768, 27754 },
+	{ 2, 0, 4640, 136000, 27829 },
+	{ 2, 0, 4640,  42256, 29015 },
+	{ 2, 0, 3104,  31664, 27922 },
+	{ 2, 0, 4640, 206096, 27938 },
+	{ 2, 0, 3616,  50752, 28039 },
+	{ 2, 0, 3616,  67424, 28064 },
+	{ 2, 0, 4640, 161152, 28097 },
+	{ 2, 0, 5152, 198128, 29036 },
+	{ 2, 0, 3104,  25136, 28278 },
+	{ 2, 0, 4640, 207024, 28291 },
+	{ 2, 0, 5152, 205856, 28393 },
+	{ 2, 0, 4128, 200752, 28494 },
+	{ 2, 0, 4640, 201200, 26088 },
+	{ 3, 0, 6176, 117792, 24634 },
+	{ 3, 0, 7200, 117648, 24702 },
+	{ 3, 0, 6176, 143456, 24765 },
+	{ 3, 0, 5152,  98448, 24838 },
+	{ 3, 0, 5664, 137024, 24888 },
+	{ 3, 0, 4128, 138624, 24956 },
+	{ 3, 0, 3104,  40928, 25025 },
+	{ 3, 0, 5152,  42000, 25062 },
+	{ 3, 0, 4128,  83136, 25084 }
 };
 
 static s_800C37D4 D_800AA274[73] = {
@@ -139,6 +197,7 @@ void func_80047B80(void) // 0x80047B80
     switch (g_Sd_AudioStreamingStates.vabLoadState_0)
     {
         case 0:
+            // Strange access of data. See `D_800A9FDC`.
             cmd        = g_Sd_CmdPool[0];
             D_800C37D4 = &D_800A986C[cmd];
             D_800C37C8 = D_800C37D4->field_0;
