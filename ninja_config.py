@@ -67,7 +67,7 @@ YAML_SCREENS = [
 YAML_MAPS_0 = [
     "maps/map0_s00.yaml",
     "maps/map0_s01.yaml",
-    #"maps/map0_s02.yaml" # Broken
+    "maps/map0_s02.yaml"
 ]
 YAML_MAPS_1 = [
     "maps/map1_s00.yaml",
@@ -163,7 +163,7 @@ if sys.platform == "linux" or sys.platform == "linux2":
     OBJDIFF           = f"{OBJDIFF_DIR}/objdiff"
     OBJDIFF_GENSCRIPT = f"{OBJDIFF_DIR}/objdiff_generate.py"
     PREBUILD          = f"{TOOLS_DIR}/prebuild.sh"
-    POSTBUILD         = f"{TOOLS_DIR}/postbuild.sh"
+    POSTBUILD         = f"{PYTHON} {TOOLS_DIR}/postbuild.py"
     DUMPSXISO         = f"{PSXISO_DIR}/dumpsxiso"
     ICONV             = f"iconv"
 elif sys.platform == "win32":
