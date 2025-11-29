@@ -2949,17 +2949,17 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
     if (var_s4 != 0)
     {
-        target->dmg_B4.damageReceived_C += var_s4;
+        target->dmg_B4.amount_C += var_s4;
     }
 
     if (var_s7 != 0)
     {
         temp              = FP_MULTIPLY_PRECISE(var_s7, var_s0_2, Q12_SHIFT);
-        target->dmg_B4.field_0 += temp;
+        target->dmg_B4.position_0.vx += temp;
         temp              = FP_MULTIPLY_PRECISE(var_s7, var_s1, Q12_SHIFT);
-        target->dmg_B4.field_4 += temp;
+        target->dmg_B4.position_0.vy += temp;
         temp              = FP_MULTIPLY_PRECISE(var_s7, var_s2, Q12_SHIFT);
-        target->dmg_B4.field_8 += temp;
+        target->dmg_B4.position_0.vz += temp;
     }
 
     target->attackReceived_41 = weaponAttack;

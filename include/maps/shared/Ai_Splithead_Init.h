@@ -21,10 +21,7 @@ void Ai_Splithead_Init(s_SubCharacter* chara)
     sharedData_800D8614_1_s05 = 0;
     sharedData_800D8616_1_s05 = 0;
 
-    chara->dmg_B4.damageReceived_C = Q12(0.0f);
-    chara->dmg_B4.field_8          = 0;
-    chara->dmg_B4.field_4          = 0;
-    chara->dmg_B4.field_0          = 0;
+    Chara_DamageClear(chara);
 
     *(u8*)&chara->properties_E4.larvalStalker.properties_E8[0].val8[2] = 196;
 
