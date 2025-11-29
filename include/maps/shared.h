@@ -2248,6 +2248,8 @@ void sharedFunc_800D80EC_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D83F8_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D8C34_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara);
 
 /** Player func. */
@@ -2258,6 +2260,8 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* chara);
 void sharedFunc_800DB038_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DB54C_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800DB8AC_2_s00(s_SubCharacter* chara);
 
 /** Player func. */
 void sharedFunc_800DBDEC_2_s00(s_SubCharacter* chara);
