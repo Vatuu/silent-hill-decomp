@@ -7,7 +7,7 @@ void Ai_PuppetNurse_Control(s_SubCharacter* arg0)
             break;
 
         case 2:
-            sharedFunc_800CE500_3_s03(arg0);
+            Ai_PuppetNurse_Control2(arg0);
             break;
 
         case 3:

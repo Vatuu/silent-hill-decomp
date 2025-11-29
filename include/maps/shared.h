@@ -2579,7 +2579,7 @@ bool sharedFunc_800CE398_3_s03(s32 arg0);
 
 void Ai_PuppetNurse_Control1(s_SubCharacter*);
 
-void sharedFunc_800CE500_3_s03(s_SubCharacter*);
+void Ai_PuppetNurse_Control2(s_SubCharacter*);
 
 void sharedFunc_800CE5E4_3_s03(s_SubCharacter*, s32);
 
