@@ -1327,7 +1327,7 @@ typedef struct _SubCharPropertiesUnk0
 } s_SubCharaPropertiesUnk0;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesUnk0, 68);
 
-typedef struct _SubCharaPropertiesUnk1
+typedef struct _SubCharaPropertiesPuppetNurse
 {
     s_func_8006CF18* unk_E4;
     VECTOR3 field_E8;
@@ -1345,8 +1345,8 @@ typedef struct _SubCharaPropertiesUnk1
     s16 field_120;
     u16 flags_122;
     s_800D5710* field_124;
-} s_SubCharaPropertiesUnk1;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesUnk1, 68);
+} s_SubCharaPropertiesPuppetNurse;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPuppetNurse, 68);
 
 typedef struct _SubCharPropertiesDahlia
 {
@@ -1466,7 +1466,7 @@ typedef struct _SubCharacter
         s_SubCharaPropertiesNpc           npc;
         s_SubCharaPropertiesLarvalStalker larvalStalker;
         s_SubCharaPropertiesUnk0          unk0;
-        s_SubCharaPropertiesUnk1          unk1;
+        s_SubCharaPropertiesPuppetNurse   puppetNurse;
         s_SubCharaPropertiesDahlia        dahlia;
         s_SubCharaPropertiesSplitHead     splitHead;
     } properties_E4;
