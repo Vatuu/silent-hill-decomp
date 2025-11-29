@@ -14,42 +14,42 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
     chara->moveSpeed_38                = 0;
     chara->field_E1_0                  = 3;
     chara->headingAngle_3C             = chara->rotation_24.vy;
-    chara->properties_E4.npc.field_E8  = chara->position_18;
+    chara->properties_E4.puppetNurse.field_E8  = chara->position_18;
     chara->field_D4                    = Q12(0.3f);
-    chara->properties_E4.npc.field_F4  = 0;
-    chara->properties_E4.npc.field_F8  = 0;
-    chara->properties_E4.npc.field_FC  = 0;
-    chara->properties_E4.npc.field_114 = 0;
-    chara->properties_E4.npc.field_118 = 0;
+    chara->properties_E4.puppetNurse.dmg_F4.position_0.vx  = 0;
+    chara->properties_E4.puppetNurse.dmg_F4.position_0.vy  = 0;
+    chara->properties_E4.puppetNurse.dmg_F4.position_0.vz  = 0;
+    chara->properties_E4.puppetNurse.field_114 = 0;
+    chara->properties_E4.puppetNurse.field_118 = 0;
     Chara_DamageClear(chara);
-    chara->properties_E4.npc.field_122 = 0;
-    chara->properties_E4.npc.field_108 = chara->position_18.vx;
-    chara->properties_E4.npc.field_10C = chara->position_18.vz;
+    chara->properties_E4.puppetNurse.flags_122 = 0;
+    chara->properties_E4.puppetNurse.field_108 = chara->position_18.vx;
+    chara->properties_E4.puppetNurse.field_10C = chara->position_18.vz;
 
     charPalette    = (chara->model_0.stateStep_3 - 1) % 3;
     stateStepDiv3  = (chara->model_0.stateStep_3 - 1) / 3;
     modelVariation = stateStepDiv3 % 3;
     charaState     = stateStepDiv3 / 3;
 
-    chara->properties_E4.npc.field_11A = 0;
+    chara->properties_E4.puppetNurse.field_11A = 0;
 
     chara->flags_3E |= CharaFlag_Unk3;
 
     if (!isPuppetDoctor)
     {
         charStatIdx                                 = charPalette + 1; // Skip doctor stat at beginning.
-        chara->properties_E4.npc.modelVariation_119 = modelVariation + 1;
+        chara->properties_E4.puppetNurse.modelVariation_119 = modelVariation + 1;
     }
     else
     {
-        chara->properties_E4.npc.modelVariation_119 = 1;
+        chara->properties_E4.puppetNurse.modelVariation_119 = 1;
         charPalette                                 = 0;
         charStatIdx                                 = 0;
     }
 
-    chara2->properties_E4.npc.field_124 = &sharedData_800D5710_3_s03[charStatIdx];
+    chara2->properties_E4.puppetNurse.field_124 = &sharedData_800D5710_3_s03[charStatIdx];
 
-    chara->health_B0 = chara2->properties_E4.npc.field_124->health_0;
+    chara->health_B0 = chara2->properties_E4.puppetNurse.field_124->health_0;
 
     chara->model_0.paletteIdx_1 = charPalette;
 
@@ -77,10 +77,10 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
             break;
     }
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, chara2->properties_E4.npc.field_124->animInfo_24);
+    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, chara2->properties_E4.puppetNurse.field_124->animInfo_24);
 
     chara->model_0.anim_4.status_0 = ANIM_STATUS(17, false);
     chara->model_0.anim_4.alpha_A  = Q12(0.0f);
 
-    chara2->properties_E4.npc.field_120 = Q12(1.0f);
+    chara2->properties_E4.puppetNurse.field_120 = Q12(1.0f);
 }
