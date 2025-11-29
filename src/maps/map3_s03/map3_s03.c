@@ -570,16 +570,16 @@ void Map_WorldObjectsInit(void) // 0x800D3EAC
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800D429C(void)
+void func_800D429C(void) // 0x800D429C
 {
     VECTOR3 colorsPos;
-    s32 cellZ0;
-    s32 cellX0;
-    s32 flags;
-    s32 projCellZ0;
-    s32 projCellX0;
-    s32 drZ;
-    s32 i;
+    s32     cellZ0;
+    s32     cellX0;
+    s32     flags;
+    s32     projCellZ0;
+    s32     projCellX0;
+    q19_12  drZ;
+    s32     i;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     flags = 0;
@@ -612,194 +612,224 @@ void func_800D429C(void)
 
     switch (PACKED_CELL_XZ(projCellX0, projCellZ0))
     {
-    case PACKED_CELL_XZ(17, 18):
-        if ((g_SysWork.sysState_8 == SysState_Gameplay) && (g_WorldObject_Dr->position_1C.vz != Q12(59.1f)))
-        {
-            drZ = Q12(59.1f);
-            for (i = 5; i >= 0; i--)
+        case PACKED_CELL_XZ(17, 18):
+            if (g_SysWork.sysState_8 == SysState_Gameplay && (g_WorldObject_Dr->position_1C.vz != Q12(59.1f)))
             {
-                g_WorldObject_Dr[i].position_1C.vz = drZ;
+                drZ = Q12(59.1f);
+
+                for (i = ARRAY_SIZE(g_WorldObject_Dr) - 1; i >= 0; i--)
+                {
+                    g_WorldObject_Dr[i].position_1C.vz = drZ;
+                }
             }
-        }
-        for (i = 0; i < 6; i++)
-        {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position_1C, &(SVECTOR3){});
-        }
-        break;
-    case PACKED_CELL_XZ(15, 20):
-        colorsPos.vz = Q12(140.0f);
-        if (Savegame_EventFlagGet(EventFlag_265) ||
-            Savegame_EventFlagGet(EventFlag_266) ||
-            Savegame_EventFlagGet(EventFlag_267) ||
-            Savegame_EventFlagGet(EventFlag_268))
-        {
-            if (Savegame_EventFlagGet(EventFlag_265) || Savegame_EventFlagGet(EventFlag_266))
+
+            for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
             {
-                colorsPos.vx = Q12(-20.0f);
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position_1C, &(SVECTOR3){});
             }
-            else
+            break;
+
+        case PACKED_CELL_XZ(15, 20):
+            colorsPos.vz = Q12(140.0f);
+
+            if (Savegame_EventFlagGet(EventFlag_265) ||
+                Savegame_EventFlagGet(EventFlag_266) ||
+                Savegame_EventFlagGet(EventFlag_267) ||
+                Savegame_EventFlagGet(EventFlag_268))
             {
-                colorsPos.vx = Q12(-19.6f);
+                if (Savegame_EventFlagGet(EventFlag_265) || Savegame_EventFlagGet(EventFlag_266))
+                {
+                    colorsPos.vx = Q12(-20.0f);
+                }
+                else
+                {
+                    colorsPos.vx = Q12(-19.6f);
+                }
+
+                if (Savegame_EventFlagGet(EventFlag_265) || Savegame_EventFlagGet(EventFlag_268))
+                {
+                    colorsPos.vy = Q12(0.0f);
+                }
+                else
+                {
+                    colorsPos.vy = Q12(0.4f);
+                }
+
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Colors[0], &colorsPos, &(SVECTOR3){});
             }
-            if (Savegame_EventFlagGet(EventFlag_265) || Savegame_EventFlagGet(EventFlag_268))
+
+            if (Savegame_EventFlagGet(EventFlag_269) ||
+                Savegame_EventFlagGet(EventFlag_270) ||
+                Savegame_EventFlagGet(EventFlag_271) ||
+                Savegame_EventFlagGet(EventFlag_272))
             {
-                colorsPos.vy = Q12(0.0f);
+                if (Savegame_EventFlagGet(EventFlag_269) || Savegame_EventFlagGet(EventFlag_270))
+                {
+                    colorsPos.vx = Q12(-20.0f);
+                }
+                else
+                {
+                    colorsPos.vx = Q12(-19.6f);
+                }
+
+                if (Savegame_EventFlagGet(EventFlag_270) || Savegame_EventFlagGet(EventFlag_271))
+                {
+                    colorsPos.vy = Q12(0.0f);
+                }
+                else
+                {
+                    colorsPos.vy = Q12(-0.4f);
+                }
+
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Colors[1], &colorsPos, &(SVECTOR3){});
             }
-            else
+
+            if (Savegame_EventFlagGet(EventFlag_273) ||
+                Savegame_EventFlagGet(EventFlag_274) ||
+                Savegame_EventFlagGet(EventFlag_275) ||
+                Savegame_EventFlagGet(EventFlag_276))
             {
-                colorsPos.vy = Q12(0.4f);
+                if (Savegame_EventFlagGet(EventFlag_275) || Savegame_EventFlagGet(EventFlag_276))
+                {
+                    colorsPos.vx = Q12(-20.0f);
+                }
+                else
+                {
+                    colorsPos.vx = Q12(-20.4f);
+                }
+
+                if (Savegame_EventFlagGet(EventFlag_274) || Savegame_EventFlagGet(EventFlag_275))
+                {
+                    colorsPos.vy = Q12(0.0f);
+                }
+                else
+                {
+                    colorsPos.vy = Q12(-0.4f);
+                }
+
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Colors[2], &colorsPos, &(SVECTOR3){});
             }
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Colors[0], &colorsPos, &(SVECTOR3){});
-        }
-        if (Savegame_EventFlagGet(EventFlag_269) ||
-            Savegame_EventFlagGet(EventFlag_270) ||
-            Savegame_EventFlagGet(EventFlag_271) ||
-            Savegame_EventFlagGet(EventFlag_272))
-        {
-            if (Savegame_EventFlagGet(EventFlag_269) || Savegame_EventFlagGet(EventFlag_270))
+
+            if (Savegame_EventFlagGet(EventFlag_277) ||
+                Savegame_EventFlagGet(EventFlag_278) ||
+                Savegame_EventFlagGet(EventFlag_279) ||
+                Savegame_EventFlagGet(EventFlag_280))
             {
-                colorsPos.vx = Q12(-20.0f);
+                if (Savegame_EventFlagGet(EventFlag_279) || Savegame_EventFlagGet(EventFlag_280))
+                {
+                    colorsPos.vx = Q12(-20.0f);
+                }
+                else
+                {
+                    colorsPos.vx = Q12(-20.4f);
+                }
+
+                if (Savegame_EventFlagGet(EventFlag_277) || Savegame_EventFlagGet(EventFlag_280))
+                {
+                    colorsPos.vy = Q12(0.0f);
+                }
+                else
+                {
+                    colorsPos.vy = Q12(0.4f);
+                }
+
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Colors[3], &colorsPos, &(SVECTOR3){});
             }
-            else
-            {
-                colorsPos.vx = Q12(-19.6f);
-            }
-            if (Savegame_EventFlagGet(EventFlag_270) || Savegame_EventFlagGet(EventFlag_271))
-            {
-                colorsPos.vy = Q12(0.0f);
-            }
-            else
-            {
-                colorsPos.vy = Q12(-0.4f);
-            }
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Colors[1], &colorsPos, &(SVECTOR3){});
-        }
-        if (Savegame_EventFlagGet(EventFlag_273) ||
-            Savegame_EventFlagGet(EventFlag_274) ||
-            Savegame_EventFlagGet(EventFlag_275) ||
-            Savegame_EventFlagGet(EventFlag_276))
-        {
-            if (Savegame_EventFlagGet(EventFlag_275) || Savegame_EventFlagGet(EventFlag_276))
-            {
-                colorsPos.vx = Q12(-20.0f);
-            }
-            else
-            {
-                colorsPos.vx = Q12(-20.4f);
-            }
-            if (Savegame_EventFlagGet(EventFlag_274) || Savegame_EventFlagGet(EventFlag_275))
-            {
-                colorsPos.vy = Q12(0.0f);
-            }
-            else
-            {
-                colorsPos.vy = Q12(-0.4f);
-            }
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Colors[2], &colorsPos, &(SVECTOR3){});
-        }
-        if (Savegame_EventFlagGet(EventFlag_277) ||
-            Savegame_EventFlagGet(EventFlag_278) ||
-            Savegame_EventFlagGet(EventFlag_279) ||
-            Savegame_EventFlagGet(EventFlag_280))
-        {
-            if (Savegame_EventFlagGet(EventFlag_279) || Savegame_EventFlagGet(EventFlag_280))
-            {
-                colorsPos.vx = Q12(-20.0f);
-            }
-            else
-            {
-                colorsPos.vx = Q12(-20.4f);
-            }
-            if (Savegame_EventFlagGet(EventFlag_277) || Savegame_EventFlagGet(EventFlag_280))
-            {
-                colorsPos.vy = Q12(0.0f);
-            }
-            else
-            {
-                colorsPos.vy = Q12(0.4f);
-            }
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Colors[3], &colorsPos, &(SVECTOR3){});
-        }
-        break;
-    case PACKED_CELL_XZ(12, 18):
-        if (Savegame_EventFlagGet(EventFlag_250))
-        {
-            flags |= (1<<2);
-        }
-        else
-        {
-            flags |= (1<<1);
-        }
-        if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfHatter))
-        {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Plate0.object_0, &g_WorldObject_Plate0.position_1C, &g_WorldObject_Plate0.rotation_28);
-        }
-        if (Savegame_EventFlagGet(EventFlag_250))
-        {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Blood2.object_0, &g_WorldObject_Blood2.position_1C, &(SVECTOR3){});
-        }
-        if (!D_800D8428)
-        {
-            D_800D8428++;
-            func_800625F4(&QVECTOR3(-141.5f, 0.0f, 61.4f), 0x48, 15, 1);
-            func_800625F4(&QVECTOR3(-141.5f, 0.0f, 61.35f), 0x28, 15, 1);
+            break;
+
+        case PACKED_CELL_XZ(12, 18):
             if (Savegame_EventFlagGet(EventFlag_250))
             {
-                func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 0x6E, 15, 1);
-                func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 0x64, 15, 1);
+                flags |= 1 << 2;
             }
-        }
-        break;
-    case PACKED_CELL_XZ(15, 15):
-        if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfCat))
-        {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Plate1.object_0, &g_WorldObject_Plate1.position_1C, &(SVECTOR3){});
-        }
-        break;
-    case PACKED_CELL_XZ(12, 15):
-        if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfTurtle))
-        {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Panel.object_0, &g_WorldObject_Panel.position_1C, &g_WorldObject_Panel.rotation_28);
-        }
-        if (!Savegame_EventFlagGet(EventFlag_239) &&
-             Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfTurtle) &&
-             g_SysWork.player_4C.chara_0.position_18.vz > Q12(-18.2f))
-        {
-            func_8005DC1C(Sfx_Unk1528, &QVECTOR3(-140.0f, -1.2f, -23.5f), Q8_CLAMPED(1.0f), 2);
-            Savegame_EventFlagSet(EventFlag_239);
-        }
-        break;
-    case PACKED_CELL_XZ(13, 18):
-        if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupLighter))
-        {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Lighter.object_0, &g_WorldObject_Lighter.position_1C, &g_WorldObject_Lighter.rotation_28);
-        }
-        break;
-    case PACKED_CELL_XZ(14, 17):
-        if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupDisinfectingAlcohol))
-        {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Alcohol.object_0, &g_WorldObject_Alcohol.position_1C, &(SVECTOR3){});
-        }
-        break;
-    case PACKED_CELL_XZ(13, 17):
-        if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupBasementStoreroomKey))
-        {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Key.object_0, &g_WorldObject_Key.position_1C, &(SVECTOR3){});
-        }
-        break;
-    case PACKED_CELL_XZ(14, 15):
-        if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupBloodPack))
-        {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Blood0.object_0, &g_WorldObject_Blood0.position_1C, &g_WorldObject_Blood0.rotation_28);
-        }
-        break;
-    case PACKED_CELL_XZ(14, 14):
-        g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);
-        break;
+            else
+            {
+                flags |= 1 << 1;
+            }
+
+            if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfHatter))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Plate0.object_0, &g_WorldObject_Plate0.position_1C, &g_WorldObject_Plate0.rotation_28);
+            }
+
+            if (Savegame_EventFlagGet(EventFlag_250))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Blood2.object_0, &g_WorldObject_Blood2.position_1C, &(SVECTOR3){});
+            }
+
+            if (!D_800D8428)
+            {
+                D_800D8428++;
+
+                func_800625F4(&QVECTOR3(-141.5f, 0.0f, 61.4f), 0x48, 15, 1);
+                func_800625F4(&QVECTOR3(-141.5f, 0.0f, 61.35f), 0x28, 15, 1);
+
+                if (Savegame_EventFlagGet(EventFlag_250))
+                {
+                    func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 0x6E, 15, 1);
+                    func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 0x64, 15, 1);
+                }
+            }
+            break;
+
+        case PACKED_CELL_XZ(15, 15):
+            if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfCat))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Plate1.object_0, &g_WorldObject_Plate1.position_1C, &(SVECTOR3){});
+            }
+            break;
+
+        case PACKED_CELL_XZ(12, 15):
+            if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfTurtle))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Panel.object_0, &g_WorldObject_Panel.position_1C, &g_WorldObject_Panel.rotation_28);
+            }
+
+            if (!Savegame_EventFlagGet(EventFlag_239) &&
+                Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfTurtle) &&
+                g_SysWork.player_4C.chara_0.position_18.vz > Q12(-18.2f))
+            {
+                func_8005DC1C(Sfx_Unk1528, &QVECTOR3(-140.0f, -1.2f, -23.5f), Q8_CLAMPED(1.0f), 2);
+                Savegame_EventFlagSet(EventFlag_239);
+            }
+            break;
+
+        case PACKED_CELL_XZ(13, 18):
+            if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupLighter))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Lighter.object_0, &g_WorldObject_Lighter.position_1C, &g_WorldObject_Lighter.rotation_28);
+            }
+            break;
+
+        case PACKED_CELL_XZ(14, 17):
+            if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupDisinfectingAlcohol))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Alcohol.object_0, &g_WorldObject_Alcohol.position_1C, &(SVECTOR3){});
+            }
+            break;
+
+        case PACKED_CELL_XZ(13, 17):
+            if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupBasementStoreroomKey))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Key.object_0, &g_WorldObject_Key.position_1C, &(SVECTOR3){});
+            }
+            break;
+
+        case PACKED_CELL_XZ(14, 15):
+            if (!Savegame_EventFlagGet(EventFlag_M3S03_PickupBloodPack))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Blood0.object_0, &g_WorldObject_Blood0.position_1C, &g_WorldObject_Blood0.rotation_28);
+            }
+            break;
+
+        case PACKED_CELL_XZ(14, 14):
+            g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);
+            break;
     }
 
     func_80069844(0xFFFF);
     func_8006982C(flags);
+
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
     {
         D_800D8490 = 1;

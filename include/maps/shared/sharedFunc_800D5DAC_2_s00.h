@@ -109,6 +109,7 @@ void sharedFunc_800D5DAC_2_s00(s_SubCharacter* chara)
                         {
                             chara->model_0.state_2 = 26;
                         }
+
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
@@ -127,7 +128,7 @@ void sharedFunc_800D5DAC_2_s00(s_SubCharacter* chara)
             chara->model_0.state_2     = 17;
             chara->model_0.stateStep_3 = 0;
 
-            if (chara->health_B0 <= 0)
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }

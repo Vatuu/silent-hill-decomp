@@ -1,19 +1,19 @@
 void sharedFunc_800D6E28_2_s00(s_SubCharacter* chara)
 {
-    s32  animStatus;
-    bool field14C_0;
-    bool field14C_1;
-    bool field14C_2;
-    bool new_var4;
-    bool new_var2;
-    bool new_var3;
-    s32  distFieldF8;
-    s32  angFieldF8;
-    s32  switchCond;
-    s32  sp10;    // Possibly `bool`.
-    s32  sp10_temp;
-    bool cond;
-    s32  temp_s5; // Possibly `bool`.
+    s32    animStatus;
+    bool   field14C_0;
+    bool   field14C_1;
+    bool   field14C_2;
+    bool   new_var4;
+    bool   new_var2;
+    bool   new_var3;
+    q19_12 distFieldF8;
+    q19_12 angFieldF8;
+    s32    switchCond;
+    s32    sp10;    // Possibly `bool`.
+    s32    sp10_temp;
+    bool   cond;
+    s32    temp_s5; // Possibly `bool`.
 
     animStatus = chara->model_0.anim_4.status_0;
     switchCond = 0;
@@ -39,11 +39,9 @@ void sharedFunc_800D6E28_2_s00(s_SubCharacter* chara)
             break;
 
         case 1:
-            cond = true;
-
+            cond                                           = true;
             chara->properties_E4.unk0.properties_120.val32 = Q12(6.0f);
-
-            chara->model_0.stateStep_3 = 2;
+            chara->model_0.stateStep_3                     = 2;
 
         case 2:
             distFieldF8 = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
@@ -175,7 +173,7 @@ void sharedFunc_800D6E28_2_s00(s_SubCharacter* chara)
             chara->model_0.state_2     = 32;
             chara->model_0.stateStep_3 = 0;
 
-            if (chara->health_B0 <= 0)
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }

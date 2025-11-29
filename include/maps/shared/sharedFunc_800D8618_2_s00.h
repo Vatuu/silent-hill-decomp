@@ -25,8 +25,7 @@ void sharedFunc_800D8618_2_s00(s_SubCharacter* chara)
 
         case 1:
             chara->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
-
-            chara->model_0.stateStep_3 = 2;
+            chara->model_0.stateStep_3                     = 2;
             break;
 
         case 2:
@@ -112,6 +111,7 @@ void sharedFunc_800D8618_2_s00(s_SubCharacter* chara)
                     break;
             }
             break;
+
         case 1:
             chara->model_0.state_2               = 29;
             chara->model_0.stateStep_3           = 0;
@@ -129,7 +129,7 @@ void sharedFunc_800D8618_2_s00(s_SubCharacter* chara)
             chara->model_0.state_2     = 32;
             chara->model_0.stateStep_3 = 0;
 
-            if (chara->health_B0 <= 0)
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }

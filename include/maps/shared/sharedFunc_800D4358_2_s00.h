@@ -1,20 +1,20 @@
 void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
 {
-    s32  animStatus;
-    bool field14C_0;
-    bool field14C_1;
-    bool field14C_2;
-    bool new_var1;
-    bool new_var2;
-    bool new_var3;
-    s32  switchCond;
-    bool cond;
-    s32  temp_fp;
-    s32  new_var;
-    s32  angFieldF8;
-    s32  distFieldF8;
-    s32  temp_v0;
-    u32  maxHack = Q12(2.0f);
+    s32     animStatus;
+    bool    field14C_0;
+    bool    field14C_1;
+    bool    field14C_2;
+    bool    new_var1;
+    bool    new_var2;
+    bool    new_var3;
+    s32     switchCond;
+    bool    cond;
+    s32     temp_fp;
+    s32     new_var;
+    q19_12 angFieldF8;
+    q19_12 distFieldF8;
+    s32    temp_v0;
+    u32    maxHack = Q12(2.0f);
 
     animStatus = chara->model_0.anim_4.status_0;
     switchCond = 0;
@@ -37,15 +37,14 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
             break;
 
         case 1:
-            cond = true;
-
+            cond                                           = true;
             chara->properties_E4.unk0.properties_120.val32 = Q12(6.0f);
-
-            chara->model_0.stateStep_3 = 2;
+            chara->model_0.stateStep_3                     = 2;
 
         case 2:
             distFieldF8 = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
             angFieldF8  = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8) - chara->rotation_24.vy);
+
             temp_v0     = sharedFunc_800DC598_2_s00(chara);
             if (temp_v0 == 1)
             {
@@ -172,7 +171,7 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
             chara->model_0.state_2     = 17;
             chara->model_0.stateStep_3 = 0;
 
-            if (chara->health_B0 <= 0)
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }
