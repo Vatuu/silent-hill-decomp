@@ -21,10 +21,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
     chara->properties_E4.npc.field_FC  = 0;
     chara->properties_E4.npc.field_114 = 0;
     chara->properties_E4.npc.field_118 = 0;
-    chara->dmg_B4.damageReceived_C           = Q12(0.0f);
-    chara->dmg_B4.field_8                    = 0;
-    chara->dmg_B4.field_4                    = 0;
-    chara->dmg_B4.field_0                    = 0;
+    Chara_DamageClear(chara);
     chara->properties_E4.npc.field_122 = 0;
     chara->properties_E4.npc.field_108 = chara->position_18.vx;
     chara->properties_E4.npc.field_10C = chara->position_18.vz;

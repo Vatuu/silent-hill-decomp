@@ -1240,13 +1240,11 @@ typedef struct
     u8      field_13;
 } s_func_8006CF18;
 
-typedef struct _SubCharacter_B4
+typedef struct _CharaDamage
 {
-    s32    field_0; // X? } In player: Adds/subtracts if hurt by enemy. Related to heading angle?
-    s32    field_4; // Y? } Angle.
-    s32    field_8; // Z? }
-    q19_12 damageReceived_C;
-} s_CharaDamageStuff;
+    VECTOR3 position_0;
+    q19_12 amount_C;
+} s_CharaDamage;
 
 // TODO: Re-offset `s_SubCharaPropertiesPlayer` / `s_SubCharaPropertiesNpc`.
 // Probably easier to do that after it's merged with rest of code.
@@ -1331,7 +1329,7 @@ typedef struct _SubCharaPropertiesPuppetNurse
 {
     s_func_8006CF18* unk_E4;
     VECTOR3 field_E8;
-    s_CharaDamageStuff dmg_F4;
+    s_CharaDamage dmg_F4;
     s32 field_104;
     s32 field_108;
     s32 field_10C;
@@ -1439,7 +1437,7 @@ typedef struct _SubCharacter
     s8  unk_42[2];         // Most likely padding.
     s_SubCharacter_44  field_44;
     q19_12  health_B0;
-    s_CharaDamageStuff dmg_B4;
+    s_CharaDamage dmg_B4;
     u16     deathTimer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
     s16     timer_C6;      // Some sort of timer, value written by `Ai_LarvalStalker_Update`.
 
@@ -2059,14 +2057,14 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
     }
 }
 
-/** @brief Clears s_CharaDamageStuff structure.
+/** @brief Clears s_CharaDamage structure.
  *
  * @param chara Character pointer
  */
-#define Chara_DamageClear(chara)                  \
-    (chara)->dmg_B4.damageReceived_C = Q12(0.0);  \
-    (chara)->dmg_B4.field_8 = 0;                  \
-    (chara)->dmg_B4.field_4 = 0;                  \
-    (chara)->dmg_B4.field_0 = 0
+#define Chara_DamageClear(chara)          \
+    (chara)->dmg_B4.amount_C = Q12(0.0);  \
+    (chara)->dmg_B4.position_0.vz = 0;    \
+    (chara)->dmg_B4.position_0.vy = 0;    \
+    (chara)->dmg_B4.position_0.vx = 0
 
 #endif

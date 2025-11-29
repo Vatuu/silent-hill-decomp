@@ -5,7 +5,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
     s_SubCharacter* nurseCpy;
 
     nurseCpy = nurse;
-    if (nurse->dmg_B4.damageReceived_C > 0)
+    if (nurse->dmg_B4.amount_C > 0)
     {
         sfxIdx = PuppetNurse_HurtSfxIdGet(nurse);
         if (sfxIdx != NO_VALUE)
@@ -16,8 +16,8 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
         {
             case 0:
                 nurse->properties_E4.puppetNurse.dmg_F4 = nurse->dmg_B4;
-                nurse->properties_E4.puppetNurse.field_114 += nurse->dmg_B4.damageReceived_C;
-                hpLeft = nurse->health_B0 - nurse->dmg_B4.damageReceived_C;
+                nurse->properties_E4.puppetNurse.field_114 += nurse->dmg_B4.amount_C;
+                hpLeft = nurse->health_B0 - nurse->dmg_B4.amount_C;
                 
                 if (hpLeft < 0)
                 {
@@ -47,7 +47,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                 else
                 {
                     if (nurse->model_0.state_2 != 2 && 
-                        ((nurse->properties_E4.puppetNurse.field_124->field_4 < nurse->properties_E4.puppetNurse.field_114) || (nurse->dmg_B4.damageReceived_C > Q12(320.0f))))
+                        ((nurse->properties_E4.puppetNurse.field_124->field_4 < nurse->properties_E4.puppetNurse.field_114) || (nurse->dmg_B4.amount_C > Q12(320.0f))))
                     {
                         nurse->properties_E4.puppetNurse.field_114 = 0;
                         nurse->model_0.state_2 = 2;

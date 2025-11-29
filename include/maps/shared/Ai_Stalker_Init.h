@@ -102,10 +102,7 @@ void Ai_Stalker_Init(s_SubCharacter* chara)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, STALKER_ANIM_INFOS);
 
-    chara->dmg_B4.damageReceived_C = Q12(0.0f);
-    chara->dmg_B4.field_8          = 0;
-    chara->dmg_B4.field_4          = 0;
-    chara->dmg_B4.field_0          = 0;
+    Chara_DamageClear(chara);
 
 #ifdef MAP6_S03
     chara->flags_3E |= CharaFlag_Unk9;
