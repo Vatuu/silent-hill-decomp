@@ -21,29 +21,9 @@ INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CD940_3_s03.h" // 0x800CD940
 
-s32 func_800CD980(s_SubCharacter* chara)
-{
-    s32 attack;
-    s32 idx;
+#include "maps/shared/sharedFunc_800CD980_3_s03.h" // 0x800CD980
 
-    attack = chara->attackReceived_41;
-    if (attack != 5 && attack != 15 && attack != 25 && attack != 2 && attack != 12 && attack != 22)
-    {
-        idx = D_800AD4C8[attack].field_10;
-        return D_800D57E0[idx];
-    }
-    return -1;
-}
-
-void func_800CD9F4(s_SubCharacter* arg0, s32 arg1)
-{
-    s_SfxPair* sfx;
-    s32 idx;
-
-    sfx = D_800D57F0;
-    idx = (arg0->properties_E4.npc.field_124->idx_1C * 9) + arg1;
-    func_8005DC1C(sfx[idx].sfxId, &arg0->position_18, sfx[idx].vol, 0);
-}
+#include "maps/shared/sharedFunc_800CD9F4_3_s03.h" // 0x800CD9F4
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDA44);
 
@@ -57,24 +37,7 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CDA44);
 
 #include "maps/shared/Ai_PuppetDoctor_Update.h" // 0x800CDD8C
 
-bool func_800CDDE8(s_SubCharacter* chara)
-{
-    s32 squareSum;
-    s32 angle;
-
-    squareSum = FP_SQUARE_PRECISE(chara->field_B4, Q12_SHIFT) +
-                FP_SQUARE_PRECISE(chara->field_B8, Q12_SHIFT) +
-                FP_SQUARE_PRECISE(chara->field_BC, Q12_SHIFT);
-    
-    angle = ratan2(chara->field_B4, chara->field_BC);
-    angle = ABS(func_8005BF38(angle - chara->rotation_24.vy));
-
-    if (squareSum > FP_ANGLE(360.0f) && angle > FP_ANGLE(10.0f))
-    {
-        return true;
-    }
-    return false;
-}
+#include "maps/shared/sharedFunc_800CDDE8_3_s03.h" // 0x800CDDE8
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CDF24_3_s03);
 
@@ -108,29 +71,7 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CF3AC_3_s03
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CF600);
 
-void func_800CF7F4(s_SubCharacter* chara)
-{
-    int angle;
-    if ((Rng_Rand16() & Q8_CLAMPED(1.0f)) >= Q8(0.5f))
-    {
-        chara->properties_E4.larvalStalker.properties_E8[0xD].val16[0] = 
-            func_8006FAFC(chara, Q12(1.0f), 
-                          g_SysWork.player_4C.chara_0.position_18.vx,
-                          g_SysWork.player_4C.chara_0.position_18.vz, FP_ANGLE(360.0f), 1);
-    }
-    angle = func_8005BF38(chara->properties_E4.larvalStalker.properties_E8[13].val16[0] - chara->rotation_24.vy);
-    if (ABS(angle) > FP_ANGLE(5.0f))
-    {
-        if (angle > 0)
-        {
-            chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f), Q12_SHIFT);
-        }
-        else
-        {
-            chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f), Q12_SHIFT); 
-        }
-    }
-}
+#include "maps/shared/sharedFunc_800CF7F4_3_s03.h" // 0x800CF7F4
 
 #include "maps/shared/sharedFunc_800CF90C_3_s03.h" // 0x800CF90C
 

@@ -1970,6 +1970,12 @@ typedef struct
     u8 field_1;
 } s_800F0158;
 
+typedef struct
+{
+    u16 sfxId;
+    u16 vol;
+} s_SfxPair;
+
 extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
 
 // TODO: Might use different size in other maps too.
@@ -1987,6 +1993,9 @@ extern s_MapHdr_field_4C sharedData_800DD5B0_1_s01[300];
 extern void (*sharedData_800DD7A0_0_s01[52])(s_SubCharacter*);
 
 extern s_MapPoint2d MAP_POINTS[];
+
+extern s32       sharedData_800D57E0_3_s03[4];
+extern s_SfxPair sharedData_800D57F0_3_s03[18];
 
 /** Scale. */
 extern VECTOR sharedData_800DD870_0_s01;
@@ -2525,6 +2534,8 @@ void Ai_PuppetNurse_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDIN
 
 void Ai_PuppetDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+bool sharedFunc_800CDDE8_3_s03(s_SubCharacter* chara);
+
 void sharedFunc_800CDF24_3_s03(s_SubCharacter*);
 
 bool sharedFunc_800CE398_3_s03(s32 arg0);
@@ -2544,6 +2555,8 @@ void sharedFunc_800CEC88_3_s03(s_SubCharacter*);
 s32 sharedFunc_800CEEAC_3_s03(void);
 
 void sharedFunc_800CF3AC_3_s03(s_SubCharacter*);
+
+void sharedFunc_800CF7F4_3_s03(s_SubCharacter* chara);
 
 bool sharedFunc_800CF90C_3_s03(s_SubCharacter* chara);
 
@@ -2842,6 +2855,10 @@ void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ, 
 void sharedFunc_800CD920_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ);
 
 q19_12 sharedFunc_800CD940_3_s03(q19_12 pos0, q19_12 pos1);
+
+s32 sharedFunc_800CD980_3_s03(s_SubCharacter* chara);
+
+void sharedFunc_800CD9F4_3_s03(s_SubCharacter* chara, s32 arg1);
 
 q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center);
 

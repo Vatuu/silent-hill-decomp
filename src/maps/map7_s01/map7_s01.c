@@ -28,9 +28,9 @@ INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CA5C8);
 
 #include "maps/shared/sharedFunc_800CD940_3_s03.h" // 0x800D1934
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1974);
+#include "maps/shared/sharedFunc_800CD980_3_s03.h" // 0x800D1974
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D19E8);
+#include "maps/shared/sharedFunc_800CD9F4_3_s03.h" // 0x800D19E8
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1A38);
 
@@ -44,7 +44,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1A38);
 
 #include "maps/shared/Ai_PuppetDoctor_Update.h" // 0x800D1D80
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1DDC);
+#include "maps/shared/sharedFunc_800CDDE8_3_s03.h" // 0x800D1DDC
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CDF24_3_s03); // 0x800D1F18
 
@@ -78,7 +78,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CF3AC_3_s03
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D35F4);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D37E8);
+#include "maps/shared/sharedFunc_800CF7F4_3_s03.h" // 0x800D37E8
 
 #include "maps/shared/sharedFunc_800CF90C_3_s03.h" // 0x800D3900
 
