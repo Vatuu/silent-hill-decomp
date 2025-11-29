@@ -93,7 +93,7 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D02E4_3_s03
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D03E4_3_s03);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D06AC_3_s03);
+#include "maps/shared/sharedFunc_800D06AC_3_s03.h"
 
 #include "maps/shared/sharedFunc_800D0828_3_s03.h" // 0x800D0828
 

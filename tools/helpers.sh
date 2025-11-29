@@ -17,7 +17,7 @@ makej() { ../good-decomp/run bash -c "make build -j20"; }
 asym() { local addr="$1"; local name="$2"; sym="configs/sym.bodyprog.txt"; echo "${name} = 0x${addr}; // type:func" >> "$sym"; }
 ggg(){ git add -u; git commit -m "$1 => $2"; }
 remm() { agsd "$1" "$2"; asym "$1" "$2"; ggg "$1" "$2"; }
-repsha() { v1=$(printf 'INCLUDE_ASM("asm/maps/%s/nonmatchings/%s", %s);' $1 $1 $2); v2=$(printf '#include "maps/shared/%s.h"' $2); agsd "$v1" "$v2";}
+repsha() { v1=$(printf 'INCLUDE_ASM("asm/maps/%s/nonmatchings/%s", %s);' $2 $2 $1); v2=$(printf '#include "maps/shared/%s.h"' $1); agsd "$v1" "$v2";}
 finsym(){ find ./ -name "$1" | xargs -I {} bash -c "echo {}; sed -n '${2}p' {}"; }
 
 addsym() {
