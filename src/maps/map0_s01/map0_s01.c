@@ -572,7 +572,7 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
             {
                 cond0 = true;
             }
-            else if (chara->field_4C == NO_VALUE)
+            else if (chara->field_44.field_8 == NO_VALUE)
             {
                 cond0 = true;
                 cond1 = true;

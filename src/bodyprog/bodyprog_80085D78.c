@@ -2296,7 +2296,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
     s_AnimInfo*  anim1;
     s_ModelAnim* modelAnim;
 
-    var_t1    = chara->field_44;
+    var_t1    = chara->field_44.field_0;
     modelAnim = &chara->model_0.anim_4;
 
     if (g_DeltaTime0 == Q12(0.0f) || g_SysWork.sysState_8 != SysState_Gameplay)
@@ -2320,25 +2320,25 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
     if (arg0 <= 0)
     {
         var_t1          = 0;
-        chara->field_44 = 0;
+        chara->field_44.field_0 = 0;
     }
 
-    chara->field_46 = weaponAttack;
+    chara->field_44.field_2 = weaponAttack;
     if (!(modelAnim->status_0 & (1 << 0)))
     {
-        chara->field_44 = 0;
-        chara->field_4C = 0;
+        chara->field_44.field_0 = 0;
+        chara->field_44.field_8 = 0;
     }
     else if (!var_t1 && arg0 > 0)
     {
-        chara->field_44 = 1;
-        chara->field_4C = 0;
+        chara->field_44.field_0 = 1;
+        chara->field_44.field_8 = 0;
     }
 
-    chara->field_47 = 100;
-    chara->field_50 = arg5;
-    chara->field_52 = arg6;
-    chara->field_5C = *pos;
+    chara->field_44.field_3  = 100;
+    chara->field_44.field_C  = arg5;
+    chara->field_44.field_E  = arg6;
+    chara->field_44.field_18 = *pos;
     temp_a1         = func_8008A3E0(chara);
     ret             = NO_VALUE;
 
@@ -2461,7 +2461,7 @@ void func_8008A3AC(s_SubCharacter* chara) // 0x8008A3AC
 {
     if (!(chara->flags_3E & CharaFlag_Unk8))
     {
-        chara->field_44 = 0;
+        chara->field_44.field_0 = 0;
         func_8008A3E0();
     }
 }
@@ -2474,20 +2474,96 @@ void func_8008B15C(s_SubCharacter* chara) // 0x8008B15C
     s32 temp_s3;
     s32 i;
 
-    temp_s3 = chara->field_50;
-    temp_s2 = chara->field_52;
+    temp_s3 = chara->field_44.field_C;
+    temp_s2 = chara->field_44.field_E;
 
-    chara->field_54 = temp_s3; 
-    chara->field_56 = temp_s2;
+    chara->field_44.field_10 = temp_s3;
+    chara->field_44.field_12 = temp_s2;
 
     for (i = 1; i > 0; i--)
     {
-        func_8008B1DC(chara, temp_s3, temp_s2); 
-        chara->field_80 = chara->field_5C;
+        func_8008B1DC(chara, temp_s3, temp_s2);
+        chara->field_44.field_24[2] = chara->field_44.field_18;
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008B1DC); // 0x8008B1DC
+void func_8008B1DC(s_SubCharacter* arg0, s32 arg1, s32 arg2) // 0x8008B1DC
+{
+    s32                temp_s0;
+    s32                temp_s1;
+    s32                temp_s3;
+    s32                temp_s4;
+    s32                temp_v1_2;
+    s32                i;
+    s_800AD4C8*        temp_v1;
+    s32                temp_s2;
+    s32                idx46;
+    s_SubCharacter_44* base;
+    s32                vx, vy, vz;
+    s32                vx2, vy2, vz2;
+    s32                vx3, vy3, vz3;
+
+    base  = &arg0->field_44;
+    idx46 = arg0->field_44.field_2;
+
+    for (i = 0; i >= 0; i--)
+    {
+        vx = base->field_48[i].vx;
+        vy = base->field_48[i].vy;
+        vz = base->field_48[i].vz;
+
+        base->field_48[i + 1].vx = vx;
+        base->field_48[i + 1].vy = vy;
+        base->field_48[i + 1].vz = vz;
+
+        vx2 = base->field_24[i].vx;
+        vy2 = base->field_24[i].vy;
+        vz2 = base->field_24[i].vz;
+
+        base->field_24[i + 1].vx = vx2;
+        base->field_24[i + 1].vy = vy2;
+        base->field_24[i + 1].vz = vz2;
+    }
+
+    temp_v1 = &D_800AD4C8[idx46];
+
+    temp_s2 = temp_v1->field_0;
+    temp_s0 = temp_v1->field_2;
+
+    vx3 = arg0->field_44.field_18.vx;
+    vy3 = arg0->field_44.field_18.vy;
+    vz3 = arg0->field_44.field_18.vz;
+
+    vx2 = vx3;
+    vy2 = vy3;
+    vz2 = vz3;
+
+    temp_s4 = Math_Cos(arg2);
+    temp_s1 = Math_Sin(arg2);
+
+    temp_s3   = FP_MULTIPLY(temp_s1, Math_Sin(arg1), Q12_SHIFT);
+    temp_v1_2 = FP_MULTIPLY(temp_s1, Math_Cos(arg1), Q12_SHIFT);
+
+    temp_s2 -= temp_s0;
+
+    vx2                          += FP_MULTIPLY(temp_s0, temp_s3, Q12_SHIFT);
+    arg0->field_44.field_24[0].vx = vx2;
+
+    vy2                          += FP_MULTIPLY(temp_s0, temp_s4, Q12_SHIFT);
+    arg0->field_44.field_24[0].vy = vy2;
+
+    vz2                          += FP_MULTIPLY(temp_s0, temp_v1_2, Q12_SHIFT);
+    arg0->field_44.field_24[0].vz = vz2;
+
+    vx                            = FP_MULTIPLY(temp_s2, temp_s3, Q12_SHIFT);
+    arg0->field_44.field_48[0].vx = vx;
+
+    vy                            = FP_MULTIPLY(temp_s2, temp_s4, Q12_SHIFT);
+    arg0->field_44.field_48[0].vy = vy;
+
+    vz                            = FP_MULTIPLY(temp_s2, temp_v1_2, Q12_SHIFT);
+    arg0->field_44.field_48[0].vz = vz;
+}
 
 void func_8008B398(void) // 0x8008B398
 {
@@ -2711,10 +2787,10 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
     s32         x1, y1, z1;
     s32         x2, y2, z2;
 
-    weaponAttack = (u8)attacker->field_46;
+    weaponAttack = (u8)attacker->field_44.field_2;
     temp_fp      = &D_800AD4C8[weaponAttack];
     var_s1       = temp_fp->field_10;
-    sp14         = attacker->field_4C;
+    sp14         = attacker->field_44.field_8;
     var_s2       = arg3;
 
     if (target == &g_SysWork.player_4C.chara_0)
@@ -2778,7 +2854,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
         case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Hold):
         case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Multitap):
         case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Multitap):
-            if (func_8008A35C(temp_fp, attacker->field_58) == 0)
+            if (func_8008A35C(temp_fp, attacker->field_44.field_14) == 0)
             {
                 var_s0 = 0;
             }
@@ -2835,9 +2911,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
         case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
         case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
         case NO_VALUE:
-            var_s0_2 = attacker->field_98.vx;
-            var_s1   = attacker->field_98.vy;
-            var_s2   = attacker->field_98.vz;
+            var_s0_2 = attacker->field_44.field_48[1].vx;
+            var_s1   = attacker->field_44.field_48[1].vy;
+            var_s2   = attacker->field_44.field_48[1].vz;
 
             if (weaponAttack == WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap))
             {
@@ -2870,31 +2946,31 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
             if (weaponAttack > 7 &&
                 weaponAttack < 10)
             {
-                var_s0_2 = attacker->field_8C.vx;
+                var_s0_2 = attacker->field_44.field_48[0].vx;
                 var_s1   = 0;
-                var_s2   = attacker->field_8C.vz;
+                var_s2   = attacker->field_44.field_48[0].vz;
             }
             else
             {
-                x0 = attacker->field_80.vx;
-                y0 = attacker->field_80.vy;
-                z0 = attacker->field_80.vz;
+                x0 = attacker->field_44.field_24[2].vx;
+                y0 = attacker->field_44.field_24[2].vy;
+                z0 = attacker->field_44.field_24[2].vz;
 
-                x1 = attacker->field_A4.vx;
-                y1 = attacker->field_A4.vy;
-                z1 = attacker->field_A4.vz;
+                x1 = attacker->field_44.field_48[2].vx;
+                y1 = attacker->field_44.field_48[2].vy;
+                z1 = attacker->field_44.field_48[2].vz;
 
-                x2 = attacker->field_8C.vx;
-                y2 = attacker->field_8C.vy;
-                z2 = attacker->field_8C.vz;
+                x2 = attacker->field_44.field_48[0].vx;
+                y2 = attacker->field_44.field_48[0].vy;
+                z2 = attacker->field_44.field_48[0].vz;
 
                 x1 += x0;
                 y1 += y0;
                 z1 += z0;
 
-                x0 = attacker->characterCount_68.vx;
-                y0 = attacker->characterCount_68.vy;
-                z0 = attacker->characterCount_68.vz;
+                x0 = attacker->field_44.field_24[0].vx;
+                y0 = attacker->field_44.field_24[0].vy;
+                z0 = attacker->field_44.field_24[0].vz;
 
                 x2 += x0;
                 y2 += y0;
@@ -2964,7 +3040,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
     target->attackReceived_41 = weaponAttack;
     sp14                     |= sp10;
-    attacker->field_4C        = sp14;
+    attacker->field_44.field_8 = sp14;
 
     if (var_s4 | var_s7)
     {
@@ -3125,9 +3201,9 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     s32              temp4;
     s_SubCharacter*  chara0;
 
-    countX = chara->characterCount_68.vx;
-    countY = chara->characterCount_68.vy;
-    coundZ = chara->characterCount_68.vz;
+    countX = chara->field_44.field_24[0].vx;
+    countY = chara->field_44.field_24[0].vy;
+    coundZ = chara->field_44.field_24[0].vz;
 
     sinAngle = Math_Sin(angle);
     cosAngle = Math_Cos(angle);
@@ -3136,8 +3212,8 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     D_800C4788[0].vy = Q12(0.0f);
     D_800C4788[0].vz = Q12(0.0f);
 
-    sp34   = chara->field_8C.vx;
-    var_fp = chara->field_8C.vz;
+    sp34   = chara->field_44.field_48[0].vx;
+    var_fp = chara->field_44.field_48[0].vz;
 
     sp44 = 0;
     sp38 = 0;
@@ -3146,7 +3222,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     sp4C = 0;
     sp40 = 0;
 
-    var_s7           = chara->field_8C.vy;
+    var_s7           = chara->field_44.field_48[0].vy;
     D_800C4788[1].vy = var_s7;
 
     temp_t4          = FP_MULTIPLY_PRECISE(sp34, cosAngle, Q12_SHIFT) - FP_MULTIPLY_PRECISE(var_fp, sinAngle, Q12_SHIFT);
@@ -3447,7 +3523,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         }
     }
 
-    chara->field_4C |= sp14;
+    chara->field_44.field_8 |= sp14;
     return sp14;
 }
 

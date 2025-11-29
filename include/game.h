@@ -1402,6 +1402,25 @@ typedef struct
 } s_SubCharacter_D8;
 STATIC_ASSERT_SIZEOF(s_SubCharacter_D8, 8);
 
+typedef struct
+{
+    s16 field_0;
+    u8  field_2; // In player: packed weapon attack. See `WEAPON_ATTACK`.
+                 // This is not the same as `attackReceived_41`, as this value only resets when player is aiming.
+                 // In NPCs: Indicates attack performed on player.
+    s8      field_3;
+    s8      unk_4[4];
+    s32     field_8;  // } Fields used by `func_8008A3E0`. Types guessed for now.
+    s16     field_C;  // } Angle?
+    s16     field_E;  // } Angle?
+    s16     field_10; // }
+    s16     field_12; // }
+    s32     field_14; // }
+    VECTOR3 field_18;
+    VECTOR3 field_24[3];
+    VECTOR3 field_48[3];
+} s_SubCharacter_44;
+
 typedef struct _SubCharacter
 {
     s_Model  model_0;          // In player: Manage the half lower part of Harry's body animations (legs and feet).
@@ -1418,25 +1437,7 @@ typedef struct _SubCharacter
                            // In NPCs: Unknown.
     s8  attackReceived_41; // Indicates what attack has been performed to the character. For enemies is based on `e_EquippedWeaponId` enum.
     s8  unk_42[2];         // Most likely padding.
-    s16 field_44;
-    s8  field_46;          // In player: packed weapon attack. See `WEAPON_ATTACK`.
-                           // This is not the same as `attackReceived_41`, as this value only resets when player is aiming.
-                           // In NPCs: Indicates attack performed on player.
-    s8      field_47;
-    s8      unk_48[4];
-    s32     field_4C; // } Fields used by `func_8008A3E0`. Types guessed for now.
-    s16     field_50; // } Angle?
-    s16     field_52; // } Angle?
-    s16     field_54; // }
-    s16     field_56; // }
-    s32     field_58; // }
-    VECTOR3 field_5C;
-    VECTOR3 characterCount_68;
-    VECTOR3 field_74;
-    VECTOR3 field_80;
-    VECTOR3 field_8C;
-    VECTOR3 field_98;
-    VECTOR3 field_A4;
+    s_SubCharacter_44  field_44;
     q19_12  health_B0;
     s_CharaDamageStuff dmg_B4;
     u16     deathTimer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.

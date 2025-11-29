@@ -1505,11 +1505,11 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
             playerChara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
             playerChara->properties_E4.player.field_F4    = 0;
             g_SysWork.playerCombatInfo_38.isAiming_13     = false;
-            playerChara->field_44                         = NO_VALUE;
+            playerChara->field_44.field_0                 = NO_VALUE;
 
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
 
-            playerChara->field_44 = NO_VALUE; // Redundant set needed for match.
+            playerChara->field_44.field_0 = NO_VALUE; // Redundant set needed for match.
         }
     }
 

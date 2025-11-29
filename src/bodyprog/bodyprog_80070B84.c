@@ -133,7 +133,7 @@ void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weapo
 
         if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk2)) 
         {
-            chara->field_44                                             = 1;
+            chara->field_44.field_0                                     = 1;
             g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk2;
         }
     }
@@ -2648,7 +2648,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 {
                     if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk2))
                     {
-                        chara->field_44 = 1;
+                        chara->field_44.field_0 = 1;
 
                         func_8005DC1C(g_Player_EquippedWeaponInfo.attackSfx_0, &chara->position_18, Q8_CLAMPED(0.5f), 0);
 
@@ -2666,15 +2666,15 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 if (extra->model_0.anim_4.keyframeIdx_8 >= D_800C44D0 && D_800C44D4 >= extra->model_0.anim_4.keyframeIdx_8 &&
                     !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_Unk2))
                 {
-                    chara->field_44                                             = 1;
+                    chara->field_44.field_0                                     = 1;
                     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk2;
                 }
             }
             else
             {
-                if (chara->field_44 <= 0)
+                if (chara->field_44.field_0 <= 0)
                 {
-                    chara->field_44 = 1;
+                    chara->field_44.field_0 = 1;
                 }
 
                 chara->properties_E4.player.field_10C = 0x40;
@@ -2689,7 +2689,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
                 if (g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 != 0)
                 {
-                    chara->field_44 = 1;
+                    chara->field_44.field_0 = 1;
 
                     if (g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap))
                     {
@@ -3215,9 +3215,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != Q12(0.0f))
                 {
-                    if (chara->field_44 <= 0)
+                    if (chara->field_44.field_0 <= 0)
                     {
-                        chara->field_44 = 1;
+                        chara->field_44.field_0 = 1;
                     }
 
                     if (extra->model_0.stateStep_3 == 0)
@@ -3457,7 +3457,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
                     if (g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 != Q12(0.0f))
                     {
-                        chara->field_44 = 1;
+                        chara->field_44.field_0 = 1;
                     }
                 }
             }
@@ -7063,7 +7063,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
                 g_SysWork.playerCombatInfo_38.isAiming_13                   = false;
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
-                chara->field_44                                             = NO_VALUE;
+                chara->field_44.field_0                                     = NO_VALUE;
             }
             break;
     }
@@ -7573,7 +7573,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                 unkAngle = FP_ANGLE(33.75f);
             }
 
-            if (chara->field_44 > 0)
+            if (chara->field_44.field_0 > 0)
             {
                 func_8006342C(g_SysWork.playerCombatInfo_38.weaponAttack_F, unkAngle, sp98.vx, coord);
             }
@@ -7736,16 +7736,16 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             {
                 if (D_800C4554 != NO_VALUE || D_800C4556 != D_800C4554)
                 {
-                    func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &D_800C44E0.field_0, g_SysWork.npcs_1A0, D_800C4556, D_800C4554);
+                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &D_800C44E0.field_0, g_SysWork.npcs_1A0, D_800C4556, D_800C4554);
                 }
                 else
                 {
-                    func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &D_800C44E0.field_0, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
+                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &D_800C44E0.field_0, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
                 }
             }
             else
             {
-                func_8008A0E4(chara->field_44, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &g_SysWork.playerCombatInfo_38.field_0, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
+                func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &g_SysWork.playerCombatInfo_38.field_0, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
             }
 
             D_800C42D2 = sp98.vx;

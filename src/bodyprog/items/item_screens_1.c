@@ -41,7 +41,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
             g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(weaponId, AttackInputType_Tap))
         {
         Inventory_ExitAnimEquippedItemUpdate_block:
-            g_SysWork.player_4C.chara_0.field_44                                     = 0;
+            g_SysWork.player_4C.chara_0.field_44.field_0                             = 0;
             g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
         }
 
@@ -327,7 +327,7 @@ void func_8004C564(u8 arg0, s8 weaponAttack) // 0x8004C564
                     D_800C3963                                                               = 0;
                     D_800C3962                                                               = 0;
                     g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
-                    g_SysWork.player_4C.chara_0.field_44                                     = 0;
+                    g_SysWork.player_4C.chara_0.field_44.field_0                             = 0;
                 }
             }
             break;

@@ -31,7 +31,7 @@ void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara)
 
         if (temp_v1 != var_v0)
         {
-            chara->field_44 = 0;
+            chara->field_44.field_0 = 0;
         }
     }
 

@@ -34,7 +34,7 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara)
             {
                 cond0 = true;
             }
-            else if (chara->field_4C == NO_VALUE)
+            else if (chara->field_44.field_8 == NO_VALUE)
             {
                 cond0                      = true;
                 cond1                      = true;
