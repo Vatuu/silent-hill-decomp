@@ -58,7 +58,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", Ai_PuppetNurse_Control1);
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", Ai_PuppetNurse_Control3_4); // 0x800D25D8
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D27BC);
+INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CE7C8_3_s03); // 0x800D27BC
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CEA64_3_s03); // 0x800D2A58
 
