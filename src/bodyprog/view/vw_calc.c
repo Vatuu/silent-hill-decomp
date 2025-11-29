@@ -538,7 +538,7 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
     s32                             pointsOutsideNearPlaneCount;
     s32                             i;
     s32                             pointsOutsideFarClipCount;
-    s32                             var_v1;
+    bool                            cond;
     DVECTOR*                        screenPoints;
     u8*                             var_t1_2;
     SVECTOR*                        temp_a1_3;
@@ -689,20 +689,20 @@ bool Vw_AabbVisibleInFrustumCheck(MATRIX* modelMat, s16 minX, s16 minY, s16 minZ
             distToFarPlane  = cullData->field_60[*var_t1_2].vz;
             distToNearPlane = cullData->field_60[*(var_t1_2 + 1)].vz;
 
-            var_v1 = 0;
+            cond = false;
 
             if (distToFarPlane != distToNearPlane)
             {
                 if (farPlane < distToFarPlane)
                 {
-                    var_v1 = (farPlane < distToNearPlane) ^ 1;
+                    cond = farPlane >= distToNearPlane;
                 }
                 else if (farPlane < distToNearPlane)
                 {
-                    var_v1 = 1;
+                    cond = true;
                 }
 
-                if (var_v1 == 1)
+                if (cond == true)
                 {
                     interpAlpha = FP_TO(farPlane - distToFarPlane, Q8_SHIFT) / (distToNearPlane - distToFarPlane);
 
