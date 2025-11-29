@@ -23,11 +23,11 @@ void Ai_PuppetNurse_Control(s_SubCharacter* arg0)
             break;
 
         case 6:
-            sharedFunc_800CEB90_3_s03(arg0, 0);
+            Ai_PuppetNurse_Control6_7(arg0, 0);
             break;
 
         case 7:
-            sharedFunc_800CEB90_3_s03(arg0, 1);
+            Ai_PuppetNurse_Control6_7(arg0, 1);
             break;
 
         case 8:

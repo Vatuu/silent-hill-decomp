@@ -2591,7 +2591,7 @@ void Ai_PuppetNurse_Control3_4(s_SubCharacter*, s32);
 
 void Ai_PuppetNurse_Control5(s_SubCharacter*);
 
-void sharedFunc_800CEB90_3_s03(s_SubCharacter*, s32);
+void Ai_PuppetNurse_Control6_7(s_SubCharacter*, s32);
 
 void sharedFunc_800CEC88_3_s03(s_SubCharacter*);
 
