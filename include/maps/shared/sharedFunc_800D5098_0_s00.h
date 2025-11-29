@@ -6,7 +6,6 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
     s32 temp_v1_2;
     s32 newMoveSpeed0;
     s32 i;
-    s32 newMoveSpeed1;
     s32 var_v1;
 
     #define SPEED_0_9 Q12(0.9f)
@@ -103,45 +102,11 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
             }
 
             // TODO: This code is duplicated in block below, can it be shared somehow?
-            if (chara->moveSpeed_38 > 0)
-            {
-                newMoveSpeed1 = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 6.0f, Q12_SHIFT);
-                if (newMoveSpeed1 < 0)
-                {
-                    newMoveSpeed1 = 0;
-                }
-            }
-            else
-            {
-                newMoveSpeed1 = chara->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 6.0f, Q12_SHIFT);
-                if (newMoveSpeed1 > 0)
-                {
-                    newMoveSpeed1 = 0;
-                }
-            }
-
-            chara->moveSpeed_38 = newMoveSpeed1;
+            Chara_MoveSpeedUpdate(chara, Q12(6.0f));
         }
     }
     else
     {
-        if (chara->moveSpeed_38 > 0)
-        {
-            newMoveSpeed1 = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 6.0f, Q12_SHIFT);
-            if (newMoveSpeed1 < 0)
-            {
-                newMoveSpeed1 = 0;
-            }
-        }
-        else
-        {
-            newMoveSpeed1 = chara->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 6.0f, Q12_SHIFT);
-            if (newMoveSpeed1 > 0)
-            {
-                newMoveSpeed1 = 0;
-            }
-        }
-
-        chara->moveSpeed_38 = newMoveSpeed1;
+        Chara_MoveSpeedUpdate(chara, Q12(6.0f));
     }
 }

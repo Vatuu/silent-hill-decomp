@@ -28,26 +28,7 @@ static void inline calcNewSpeed2(s_SubCharacter* nurse, s32 dist, s32 distAbs)
             limit = 0;
         }
     }
-    moveSpeed = nurse->moveSpeed_38;
-    if (moveSpeed > limit)
-    {
-        newMoveSpeed = limit;
-        tmpSpeed = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(2.0f), Q12_SHIFT);
-        if (newMoveSpeed < tmpSpeed)
-        {
-            newMoveSpeed = tmpSpeed;
-        }
-    }
-    else
-    {
-        newMoveSpeed = limit;
-        tmpSpeed = moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(2.0f), Q12_SHIFT);
-        if (newMoveSpeed >= tmpSpeed)
-        {
-            newMoveSpeed = tmpSpeed;
-        }
-    }
-    nurse->moveSpeed_38 = newMoveSpeed;
+    Chara_MoveSpeedUpdate2(nurse, Q12(2.0f), limit);
 }
 
 bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)

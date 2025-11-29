@@ -68,27 +68,10 @@ void func_800D2270(s_SubCharacter* chara) // 0x800D2270
     s16    timerDiv6;
     s32    vol;
     u16    timer;
-    q19_12 newMoveSpeed;
     q19_12 moveSpeed;
 
     moveSpeed = chara->moveSpeed_38;
-    if (moveSpeed > Q12(0.0f))
-    {
-        newMoveSpeed = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.59961f), Q12_SHIFT);
-        if (newMoveSpeed < Q12(0.0f))
-        {
-            newMoveSpeed = Q12(0.0f);
-        }
-    }
-    else
-    {
-        newMoveSpeed = moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.59961f), Q12_SHIFT);
-        if (newMoveSpeed > Q12(0.0f))
-        {
-            newMoveSpeed = Q12(0.0f);
-        }
-    }
-    chara->moveSpeed_38 = newMoveSpeed;
+    Chara_MoveSpeedUpdate(chara, Q12(1.59961f));
 
     switch (chara->model_0.anim_4.status_0)
     {
@@ -146,7 +129,6 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D246C);
 void func_800D2CC8(s_SubCharacter* chara) // 0x800D2CC8
 {
     q19_12 newMoveSpeed0;
-    q19_12 newMoveSpeed1;
     q19_12 moveSpeed;
 
     switch (chara->model_0.anim_4.status_0)
@@ -182,25 +164,7 @@ void func_800D2CC8(s_SubCharacter* chara) // 0x800D2CC8
         case 21:
         case 22:
             chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
-
-            moveSpeed = chara->moveSpeed_38;
-            if (moveSpeed > Q12(0.0f))
-            {
-                newMoveSpeed0 = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
-                if (newMoveSpeed0 < Q12(0.0f))
-                {
-                    newMoveSpeed0 = Q12(0.0f);
-                }
-            }
-            else
-            {
-                newMoveSpeed0 = moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
-                if (newMoveSpeed0 > Q12(0.0f))
-                {
-                    newMoveSpeed0 = Q12(0.0f);
-                }
-            }
-            chara->moveSpeed_38 = newMoveSpeed0;
+            Chara_MoveSpeedUpdate(chara, Q12(1.0f));
             break;
 
         default:
@@ -214,24 +178,7 @@ void func_800D2CC8(s_SubCharacter* chara) // 0x800D2CC8
         case 25:
         case 26:
         case 27:
-            if (chara->moveSpeed_38 > Q12(0.0f))
-            {
-                newMoveSpeed1 = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
-                if (newMoveSpeed1 < Q12(0.0f))
-                {
-                    newMoveSpeed1 = Q12(0.0f);
-                }
-            }
-            else
-            {
-                newMoveSpeed1 = chara->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
-                if (newMoveSpeed1 > Q12(0.0f))
-                {
-                    newMoveSpeed1 = Q12(0.0f);
-                }
-            }
-            chara->moveSpeed_38 = newMoveSpeed1;
-
+            Chara_MoveSpeedUpdate(chara, Q12(1.0f));
             if (!Savegame_EventFlagGet(EventFlag_131))
             {
                 func_8005DC1C(Sfx_Unk1479, &chara->position_18, Q8_CLAMPED(0.5f), 0);

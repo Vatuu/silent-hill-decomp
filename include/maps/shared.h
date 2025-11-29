@@ -3006,4 +3006,46 @@ typedef struct
     WorldObject_ModelNameSet(&(eventPose)->object_0, (name));     \
 }
 
+#define Chara_MoveSpeedUpdate(chara, speed)                                                          \
+{                                                                                                    \
+    q19_12 moveSpeed;                                                                                \
+    q19_12 newSpeed;                                                                                 \
+    moveSpeed = chara->moveSpeed_38;                                                                 \
+    if (chara->moveSpeed_38 > Q12(0.0f))                                                             \
+    {                                                                                                \
+        newSpeed = MAX(moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT), Q12(0.0f));  \
+    }                                                                                                \
+    else                                                                                             \
+    {                                                                                                \
+        newSpeed = MIN(moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT), Q12(0.0f));  \
+    }                                                                                                \
+    chara->moveSpeed_38 = newSpeed;                                                                  \
+}
+
+#define Chara_MoveSpeedUpdate2(chara, speed, limit)                                                  \
+{                                                                                                    \
+    q19_12 moveSpeed;                                                                                \
+    q19_12 newSpeed;                                                                                 \
+    moveSpeed = nurse->moveSpeed_38;                                                                 \
+    if (moveSpeed > limit)                                                                           \
+    {                                                                                                \
+        newMoveSpeed = limit;                                                                        \
+        newSpeed = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT);                  \
+        if (newMoveSpeed < newSpeed)                                                                 \
+        {                                                                                            \
+            newMoveSpeed = newSpeed;                                                                 \
+        }                                                                                            \
+    }                                                                                                \
+    else                                                                                             \
+    {                                                                                                \
+        newMoveSpeed = limit;                                                                        \
+        newSpeed = moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT);                  \
+        if (newMoveSpeed >= newSpeed)                                                                \
+        {                                                                                            \
+            newMoveSpeed = newSpeed;                                                                 \
+        }                                                                                            \
+    }                                                                                                \
+    nurse->moveSpeed_38 = newMoveSpeed;                                                              \
+}
+
 #endif

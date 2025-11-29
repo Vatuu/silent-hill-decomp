@@ -78,24 +78,12 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D11A0);
 
 void func_800D17BC(s_SubCharacter* chara) // 0x800D17BC
 {
-    q19_12 moveSpeed;
-    q19_12 newSpeed;
     s32    vol;
     s32    timer0;
     s16    timer1;
     s16    timer1_div6;
 
-    moveSpeed = chara->moveSpeed_38;
-    if (moveSpeed > Q12(0.0f))
-    {
-        newSpeed = MAX(moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5997f), Q12_SHIFT), Q12(0.0f));
-    }
-    else
-    {
-        newSpeed = MIN(moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5997f), Q12_SHIFT), Q12(0.0f));
-    }
-    chara->moveSpeed_38 = newSpeed;
-
+    Chara_MoveSpeedUpdate(chara, Q12(1.5997f));
     switch (chara->model_0.anim_4.status_0)
     {
         case ANIM_STATUS(11, false):

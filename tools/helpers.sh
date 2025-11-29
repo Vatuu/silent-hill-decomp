@@ -14,6 +14,7 @@ perm() {
 ovdiff(){ vimdiff <(hexdump -C assets/$1) <(hexdump -C build/out/$1); }
 makef() { ../good-decomp/run bash -c "make clean-build -j20"; }
 makej() { ../good-decomp/run bash -c "make build -j20"; }
+maked() { ../good-decomp/run bash -c "make NON_MATCHING=1 SKIP_ASM=1 build -j20"; }
 asym() { local addr="$1"; local name="$2"; sym="configs/sym.bodyprog.txt"; echo "${name} = 0x${addr}; // type:func" >> "$sym"; }
 ggg(){ git add -u; git commit -m "$1 => $2"; }
 remm() { agsd "$1" "$2"; asym "$1" "$2"; ggg "$1" "$2"; }

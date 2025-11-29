@@ -17,27 +17,10 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* chara)
     chara->flags_3E &= ~CharaFlag_Unk2;
     if (!(larvalStalkerProps.properties_E8[0].val16[0] & (1 << 13)))
     {
-        moveSpeed0 = chara->moveSpeed_38;
-        if (moveSpeed0 > Q12(0.0f))
-        {
-            chara->moveSpeed_38 = MAX(Q12(0.0f), moveSpeed0 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5f), Q12_SHIFT));
-        }
-        else
-        {
-            chara->moveSpeed_38 = MIN(Q12(0.0f), moveSpeed0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5f), Q12_SHIFT));
-        }
+        Chara_MoveSpeedUpdate(chara, Q12(1.5f));
     }
 
-    moveSpeed0 = chara->moveSpeed_38;
-    if (moveSpeed0 > Q12(0.0f))
-    {
-        moveSpeed1 = MAX(Q12(0.0f), moveSpeed0 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5f), Q12_SHIFT));
-    }
-    else
-    {
-        moveSpeed1 = MIN(Q12(0.0f), moveSpeed0 +  FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.5f), Q12_SHIFT));
-    }
-    chara->moveSpeed_38 = moveSpeed1;
+    Chara_MoveSpeedUpdate(chara, Q12(1.5f));
 
     animFrameIdx = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
     animDivTmp = 0;

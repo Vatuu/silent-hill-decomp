@@ -5,7 +5,6 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* chara)
     q19_12 dist;
     s32    distDiv;
     q19_12 angleOffset;
-    q19_12 moveSpeed;
 
     if (chara->health_B0 < sharedData_800E3A24_0_s00)
     {
@@ -16,24 +15,7 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* chara)
 
     if (!(chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 13)))
     {
-        // TODO: Common pattern. Maybe an inline.
-        if (chara->moveSpeed_38 > Q12(0.0f))
-        {
-            moveSpeed = chara->moveSpeed_38 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, FRICTION_PER_FRAME, Q12_SHIFT);
-            if (moveSpeed < Q12(0.0f))
-            {
-                moveSpeed = Q12(0.0f);
-            }
-        }
-        else
-        {
-            moveSpeed = chara->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, FRICTION_PER_FRAME, Q12_SHIFT);
-            if (moveSpeed > Q12(0.0f))
-            {
-                moveSpeed = Q12(0.0f);
-            }
-        }
-        chara->moveSpeed_38 = moveSpeed;
+        Chara_MoveSpeedUpdate(chara, Q12(FRICTION_PER_FRAME));
     }
 
     distDiv = 0;

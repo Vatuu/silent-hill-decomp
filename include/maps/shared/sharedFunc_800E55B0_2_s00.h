@@ -11,24 +11,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara)
 
     if (!(chara->properties_E4.splitHead.flags_E8 & (1 << 1)))
     {
-        moveSpeed = chara->moveSpeed_38;
-        if (moveSpeed > Q12(0.0f))
-        {
-            newMoveSpeed = moveSpeed - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.8f, Q12_SHIFT);
-            if (newMoveSpeed < Q12(0.0f))
-            {
-                newMoveSpeed = Q12(0.0f);
-            }
-        }
-        else
-        {
-            newMoveSpeed = moveSpeed + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.8f, Q12_SHIFT);
-            if (newMoveSpeed > Q12(0.0f))
-            {
-                newMoveSpeed = Q12(0.0f);
-            }
-        }
-        chara->moveSpeed_38 = newMoveSpeed;
+        Chara_MoveSpeedUpdate(chara, Q12(1.8f));
     }
 
     if (!(chara->properties_E4.splitHead.flags_E8 & (1 << 2)))

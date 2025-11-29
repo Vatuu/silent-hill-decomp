@@ -7,17 +7,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* chara)
     // NOTE: This code reads `chara->field_E8` both as word and a half... (half here).
     if (!(chara->properties_E4.splitHead.flags_E8 & CharaUnk0Flag_Unk1))
     {
-        if (chara->moveSpeed_38 > Q12(0.0f))
-        {
-            newMoveSpeed = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.8f), Q12_SHIFT);
-            newMoveSpeed = MAX(newMoveSpeed, Q12(0.0f));
-        }
-        else
-        {
-            newMoveSpeed = chara->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.8f), Q12_SHIFT);
-            newMoveSpeed = MIN(newMoveSpeed, Q12(0.0f));
-        }
-        chara->moveSpeed_38 = newMoveSpeed;
+        Chara_MoveSpeedUpdate(chara, Q12(1.8f));
     }
 
     if (chara->health_B0 == Q12(0.0f))

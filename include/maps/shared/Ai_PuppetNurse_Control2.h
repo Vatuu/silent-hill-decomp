@@ -14,22 +14,6 @@ void Ai_PuppetNurse_Control2(s_SubCharacter* nurse)
         nurse->model_0.stateStep_3 = 0;
     }
 
-    if (nurse->moveSpeed_38 > Q12(0.0f))
-    {
-        moveSpeed = nurse->moveSpeed_38 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 4.0f, Q12_SHIFT);
-        if (moveSpeed < Q12(0.0f))
-        {
-            moveSpeed = Q12(0.0f);
-        }
-    }
-    else
-    {
-        moveSpeed = nurse->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 4.0f, Q12_SHIFT);
-        if (moveSpeed > Q12(0.0f))
-        {
-            moveSpeed = Q12(0.0f);
-        }
-    }
-    nurse->moveSpeed_38 = moveSpeed;
+    Chara_MoveSpeedUpdate(nurse, Q12(4.0f));
 }
 
