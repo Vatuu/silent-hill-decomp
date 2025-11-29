@@ -1949,12 +1949,21 @@ typedef struct
     {
         struct
         {
-            u8             field_14C_0 : 1;
-            u8             field_14C_1 : 1;
-            u8             field_14C_2 : 1;
-            u8             field_14C_3 : 1;
-            u32            field_14C_4 : 28; // Unsure if used.
+            u8  field_14C_0 : 1;
+            u8  field_14C_1 : 1;
+            u8  field_14C_2 : 1;
+            u8  field_14C_3 : 1;
+            u32 field_14C_4 : 28; // Unsure if used.
         } bits;
+        // @hack Some functions only match when bits are defined as `u32`, but that breaks other functions.
+        struct
+        {
+            u32 field_14C_0 : 1;
+            u32 field_14C_1 : 1;
+            u32 field_14C_2 : 1;
+            u32 field_14C_3 : 1;
+            u32 field_14C_4 : 28;
+        } bits32;
         u32 flags;
     } field_14C;
     q19_12 distance_150;
@@ -2242,6 +2251,8 @@ void sharedFunc_800D5974_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D5DAC_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D69A0_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D80EC_2_s00(s_SubCharacter* chara);
@@ -2325,6 +2336,8 @@ void sharedFunc_800DECC4_2_s00(s_SubCharacter* chara);
 void sharedFunc_800DEE24_2_s00(s_SubCharacter*); // Assumed return type.
 
 void sharedFunc_800DF358_2_s00(s_SubCharacter*); // Assumed return type.
+
+void sharedFunc_800DF448_2_s00(s_SubCharacter*, s32); // Assumed return type.
 
 void sharedFunc_800DF710_2_s00(s_SubCharacter* chara);
 
