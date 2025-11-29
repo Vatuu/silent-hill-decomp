@@ -19,3 +19,27 @@ ggg(){ git add -u; git commit -m "$1 => $2"; }
 remm() { agsd "$1" "$2"; asym "$1" "$2"; ggg "$1" "$2"; }
 repsha() { v1=$(printf 'INCLUDE_ASM("asm/maps/%s/nonmatchings/%s", %s);' $1 $1 $2); v2=$(printf '#include "maps/shared/%s.h"' $2); agsd "$v1" "$v2";}
 finsym(){ find ./ -name "$1" | xargs -I {} bash -c "echo {}; sed -n '${2}p' {}"; }
+
+addsym() {
+    local isfunc=1
+    local info="${1}"
+    local sym="${2}"
+    local addr="${3}"
+    local map="${4}"
+
+    if [[ "${addr}" == D_* ]]; then
+        isfunc=0
+        addr="${addr#D_}"
+    elif [[ "${addr}" == func_* ]]; then
+        isfunc=1
+        addr="${addr#func_}"
+    fi
+
+    if [ -z "${info}" ]; then
+        if [[ "${isfunc}" == 1 ]]; then
+            info="type:func"
+        fi
+    fi
+
+    echo "${sym} = 0x${addr}; // ${info}" >> "configs/USA/maps/sym.${map}.txt"
+}

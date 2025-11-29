@@ -32,7 +32,7 @@ INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CA5C8);
 
 #include "maps/shared/Ai_PuppetNurse_SfxPlay.h"
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D1A38);
+#include "maps/shared/sharedFunc_800CDA44_3_s03.h" // 0x800D1A38
 
 #include "maps/shared/sharedFunc_800CDA88_3_s03.h" // 0x800D1A7C
 
@@ -90,7 +90,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CFDD4_3_s03
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D0110_3_s03); // 0x800D4104
 
-INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CAD54);
+INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", g_NursePuppet_SfxOffsets);
 
 INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CAD58);
 

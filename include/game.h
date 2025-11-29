@@ -1221,7 +1221,8 @@ typedef struct
 {
     q19_12 health_0;
     s32 field_4;
-    s8 unk_4[20];
+    s8 unk_4[16];
+    s32 field_18;
     s32 idx_1C;
     s8 unk_20[4];
     s_AnimInfo* animInfo_24;
@@ -1291,7 +1292,7 @@ typedef struct _SubCharaPropertiesNpc
     s8               unk_110[4];
     s32              field_114;
     s8               field_118;
-    s8               modelVariation_119;
+    u8               modelVariation_119;
     s16              field_11A;
     s32              field_11C;
     s16              field_120;
@@ -1337,7 +1338,7 @@ typedef struct _SubCharaPropertiesUnk1
     s8 unk_110[4];
     s32 field_114;
     u8 field_118;
-    s8 modelVariation_119;
+    u8 modelVariation_119;
     s16 field_11A;
     s16 field_11C;
     s16 field_11E;
