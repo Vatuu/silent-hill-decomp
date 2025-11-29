@@ -49,7 +49,7 @@ INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", g_MapOverlayHeader);
 
 #include "maps/shared/Ai_PuppetNurse_Control2.h"
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CE5E4_3_s03);
+#include "maps/shared/Ai_PuppetNurse_Control3_4.h"
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CE7C8);
 
