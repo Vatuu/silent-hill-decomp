@@ -2228,6 +2228,10 @@ extern u8 g_NursePuppet_SfxOffsets[4]; // = {9, 6, 7, 8};
 
 extern u8 g_NursePuppet_AnimSfxs[580];
 
+extern s32 g_PuppetNurse_AnimStatus0[2];
+
+extern s32 g_PuppetNurse_AnimStatus1[2];
+
 q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
 
 /* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
@@ -2581,7 +2585,7 @@ void Ai_PuppetNurse_Control1(s_SubCharacter*);
 
 void Ai_PuppetNurse_Control2(s_SubCharacter*);
 
-void sharedFunc_800CE5E4_3_s03(s_SubCharacter*, s32);
+void Ai_PuppetNurse_Control3_4(s_SubCharacter*, s32);
 
 void sharedFunc_800CEA64_3_s03(s_SubCharacter*);
 

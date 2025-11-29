@@ -49,7 +49,7 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", Ai_PuppetNurse_Control1);
 
 #include "maps/shared/Ai_PuppetNurse_Control2.h" // 0x800CE3C4
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", sharedFunc_800CE5E4_3_s03); // 0x800CE4A8
+INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", Ai_PuppetNurse_Control3_4); // 0x800CE4A8
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CE68C);
 
