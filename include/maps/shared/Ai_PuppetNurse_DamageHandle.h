@@ -12,11 +12,11 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
         {
             Ai_PuppetNurse_SfxPlay(nurse, sfxIdx);
         }
-        switch (nurse->properties_E4.unk1.field_118) 
+        switch (nurse->properties_E4.puppetNurse.field_118) 
         {
             case 0:
-                nurse->properties_E4.unk1.dmg_F4 = nurse->dmg_B4;
-                nurse->properties_E4.unk1.field_114 += nurse->dmg_B4.damageReceived_C;
+                nurse->properties_E4.puppetNurse.dmg_F4 = nurse->dmg_B4;
+                nurse->properties_E4.puppetNurse.field_114 += nurse->dmg_B4.damageReceived_C;
                 hpLeft = nurse->health_B0 - nurse->dmg_B4.damageReceived_C;
                 
                 if (hpLeft < 0)
@@ -26,7 +26,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                 nurse->health_B0 = hpLeft;
                 if (hpLeft <= Q12(120.0f))
                 {
-                    nurse->properties_E4.unk1.field_118++;
+                    nurse->properties_E4.puppetNurse.field_118++;
                     
                     if (!Ai_PuppetNurse_SomeAngleCheck(nurse))
                     {
@@ -47,9 +47,9 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                 else
                 {
                     if (nurse->model_0.state_2 != 2 && 
-                        ((nurse->properties_E4.unk1.field_124->field_4 < nurse->properties_E4.unk1.field_114) || (nurse->dmg_B4.damageReceived_C > Q12(320.0f))))
+                        ((nurse->properties_E4.puppetNurse.field_124->field_4 < nurse->properties_E4.puppetNurse.field_114) || (nurse->dmg_B4.damageReceived_C > Q12(320.0f))))
                     {
-                        nurse->properties_E4.unk1.field_114 = 0;
+                        nurse->properties_E4.puppetNurse.field_114 = 0;
                         nurse->model_0.state_2 = 2;
                         nurse->model_0.stateStep_3 = 0;
                     }

@@ -8,9 +8,9 @@ void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
     s32 i;
     s32 j;
 
-    animInfoBase = nurse->properties_E4.unk1.field_124->animInfo_24;
+    animInfoBase = nurse->properties_E4.puppetNurse.field_124->animInfo_24;
     sfxIdx0 = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model_0.anim_4.time_4, Q12_SHIFT));
-    func_8003DD80(nurse->model_0.charaId_0, nurse->properties_E4.unk1.modelVariation_119);
+    func_8003DD80(nurse->model_0.charaId_0, nurse->properties_E4.puppetNurse.modelVariation_119);
     Math_MatrixTransform(&nurse->position_18, &nurse->rotation_24, coord);
     if (nurse->model_0.anim_4.status_0)
     {
