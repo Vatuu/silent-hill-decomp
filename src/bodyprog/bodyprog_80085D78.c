@@ -4045,6 +4045,9 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
     return (res > Q8(24.0f)) ? Q8(24.0f) : res;
 }
 
+// TODO: Random data we've seen between sections, likely should be a split here.
+const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x35, 0x08, 0x80, 0x00, 0x00, 0x00, 0x00 };
+
 // Used by `func_8008D990`.
 s16 D_800AFD7C[] = {
     0xF839, 0xF889, 0xFA39, 0xFAE4,
@@ -4055,8 +4058,6 @@ s16 D_800AFD7C[] = {
 
 s_FsImageDesc img0 = { .tPage = { 0, 13 } }; // 0x800AFD9C
 
-// TODO: Fix problem with `hack_vcSetWatchTgtXzPos_fix`.
-#ifdef NON_MATCHING
 void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8008D990
 {
     s32       sp20;
@@ -4095,10 +4096,10 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     GsOT_TAG* temp_s7;
 
     DVECTOR D_8002B2BC[] = {
-        { 0x0000, 0xFFFC },
-        { 0xFFD1, 0x002B },
-        { 0x002F, 0x002B },
-        { 0x0000, 0x005A }
+        { -4, 0 },
+        { 43, -47 },
+        { 43, 47 },
+        { 90, 0 }
     };
 
     // TODO: 512 is probably a screen constant.
@@ -4337,9 +4338,6 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     poly++;
     GsOUT_PACKET_P = (PACKET*)poly;
 }
-#else
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008D990); // 0x8008D990
-#endif
 
 void func_8008E4EC(s_LmHeader* lmHdr) // 0x8008E4EC
 {
@@ -4670,9 +4668,5 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
 }
 
 void func_8008EF18(void) {} // 0x8008EF18
-
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", hack_vcSetWatchTgtXzPos_fix);
-
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", D_8002B2BC);
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", D_8002B2CC);
