@@ -2223,7 +2223,7 @@ extern s32 g_PuppetNurseHurtSfxIdx[4];
 
 extern s_SfxPair g_NursePuppetSfxs[18];
 
-// Only used by `sharedFunc_800CDA44_3_s03`. Currently causes a mismatch. Try to move it when more code gets decompiled
+// Only used by `Ai_PuppetNurse_AnimSfxGet`. Currently causes a mismatch. Try to move it when more code gets decompiled
 extern u8 g_NursePuppet_SfxOffsets[4]; // = {9, 6, 7, 8};
 
 extern u8 g_NursePuppet_AnimSfxs[580];
@@ -2569,7 +2569,7 @@ s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_SfxPlay(s_SubCharacter* nurse, s32 idx);
 
-s32 sharedFunc_800CDA44_3_s03(s32 idx);
+s32 Ai_PuppetNurse_AnimSfxGet(s32 idx);
 
 bool Ai_PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse);
 
@@ -2611,7 +2611,7 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter*, GsCOORDINATE2*);
 
 void sharedFunc_800D03E4_3_s03(s_SubCharacter*);
 
-void sharedFunc_800D06AC_3_s03(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void Ai_PuppetNurse_AnimUpdate(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 void sharedFunc_800D0828_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords);
 

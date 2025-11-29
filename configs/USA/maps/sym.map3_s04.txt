@@ -9,6 +9,7 @@
 //-----------------------------------------------------------------
 //--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map3_s04
 //-----------------------------------------------------------------
+g_NursePuppet_SfxOffsets            = 0x800CA618; // type:u8 size:0x04
 
 //------------------------------------------------------
 //--- PA: 0x0010EC   VA: 0x800CA664   subsegment: rodata
@@ -70,7 +71,7 @@ sharedFunc_800CD920_3_s03           = 0x800CD7E4; // type:func
 sharedFunc_800CD940_3_s03           = 0x800CD804; // type:func
 PuppetNurse_HurtSfxIdGet            = 0x800CD844; // type:func
 Ai_PuppetNurse_SfxPlay              = 0x800CD8B8; // type:func
-sharedFunc_800CDA44_3_s03           = 0x800CD908; // type:func
+Ai_PuppetNurse_AnimSfxGet           = 0x800CD908; // type:func
 sharedFunc_800CDA88_3_s03           = 0x800CD94C; // type:func
 Ai_PuppetNurse_UpdateMain           = 0x800CD97C; // type:func
 Ai_PuppetNurse_Init                 = 0x800CDA20; // type:func
@@ -97,7 +98,7 @@ sharedFunc_800D0110_3_s03           = 0x800CFFD4; // type:func
 Ai_PuppetNurse_Control              = 0x800D0094; // type:func
 sharedFunc_800D02E4_3_s03           = 0x800D01A8; // type:func
 sharedFunc_800D03E4_3_s03           = 0x800D02A8; // type:func
-sharedFunc_800D06AC_3_s03           = 0x800D0570; // type:func
+Ai_PuppetNurse_AnimUpdate           = 0x800D0570; // type:func
 sharedFunc_800D0828_3_s03           = 0x800D06EC; // type:func
 sharedFunc_800D0968_3_s03           = 0x800D082C; // type:func
 
@@ -151,6 +152,7 @@ sharedData_800DD59C_0_s00           = 0x800D46F4; // type:u8
 sharedData_800D5710_3_s03           = 0x800D4CB8; // size:0xD0 - s_800D5710
 g_PuppetNurseHurtSfxIdx             = 0x800D4D88; // type:s32 size:0x10
 g_NursePuppetSfxs                   = 0x800D4D98; // type:SfxPair size:0x24
+g_NursePuppet_AnimSfxs              = 0x800D4DE0; // type:u8 size:0x244
 LISA_ANIM_INFOS                     = 0x800D5064; // type:AnimInfo
 sharedData_800DF1F4_0_s00           = 0x800D52A4; // type:s32
 sharedData_800DF1F8_0_s00           = 0x800D52A8; // type:s16
@@ -186,5 +188,3 @@ g_WorldObject_Dr                    = 0x800D6BC0; // type:WorldObjectDescNoRot s
 g_WorldObject_Plate                 = 0x800D6CB0; // type:WorldObjectDescNoRot size:0x24
 g_WorldObject_SavePad               = 0x800D6CE0; // type:WorldObjectDesc size:0x2C
 g_CommonWorldObjects                = 0x800D6D10; // type:WorldObject0 size:0x90
-g_NursePuppet_SfxOffsets = 0x800CA618; // type:u8 size:0x04
-g_NursePuppet_AnimSfxs = 0x800D4DE0; // type:u8 size:0x244

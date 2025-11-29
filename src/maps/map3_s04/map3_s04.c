@@ -25,7 +25,7 @@ INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04", g_MapOverlayHeader);
 
 #include "maps/shared/Ai_PuppetNurse_SfxPlay.h"
 
-#include "maps/shared/sharedFunc_800CDA44_3_s03.h" // 0x800CD908
+#include "maps/shared/Ai_PuppetNurse_AnimSfxGet.h" // 0x800CD908
 
 #include "maps/shared/sharedFunc_800CDA88_3_s03.h" // 0x800CD94C
 
@@ -93,7 +93,7 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", sharedFunc_800D02E4_3_s03
 
 INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", sharedFunc_800D03E4_3_s03); // 0x800D02A8
 
-#include "maps/shared/sharedFunc_800D06AC_3_s03.h" // 0x800D0570
+#include "maps/shared/Ai_PuppetNurse_AnimUpdate.h" // 0x800D0570
 
 #include "maps/shared/sharedFunc_800D0828_3_s03.h" // 0x800D06EC
 

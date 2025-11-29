@@ -1,4 +1,4 @@
-void sharedFunc_800D06AC_3_s03(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
+void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
 {
     s_AnimInfo* animInfo;
     s_AnimInfo* animInfoBase;
@@ -9,7 +9,7 @@ void sharedFunc_800D06AC_3_s03(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
     s32 j;
 
     animInfoBase = nurse->properties_E4.unk1.field_124->animInfo_24;
-    sfxIdx0 = sharedFunc_800CDA44_3_s03(FP_FROM(nurse->model_0.anim_4.time_4, Q12_SHIFT));
+    sfxIdx0 = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model_0.anim_4.time_4, Q12_SHIFT));
     func_8003DD80(nurse->model_0.charaId_0, nurse->properties_E4.unk1.modelVariation_119);
     Math_MatrixTransform(&nurse->position_18, &nurse->rotation_24, coord);
     if (nurse->model_0.anim_4.status_0)
@@ -27,7 +27,7 @@ void sharedFunc_800D06AC_3_s03(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
         }
     }
     
-    sfxIdx1 = sharedFunc_800CDA44_3_s03(FP_FROM(nurse->model_0.anim_4.time_4, Q12_SHIFT));
+    sfxIdx1 = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model_0.anim_4.time_4, Q12_SHIFT));
     if (sfxIdx1 != sfxIdx0 && sfxIdx1 != 9)
     {
         Ai_PuppetNurse_SfxPlay(nurse, sfxIdx1);
