@@ -1,6 +1,6 @@
 void sharedFunc_800D0968_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
-    s32 posY;
+    q19_12 posY;
 
     if (chara->model_0.anim_4.flags_2 & AnimFlag_Visible)
     {

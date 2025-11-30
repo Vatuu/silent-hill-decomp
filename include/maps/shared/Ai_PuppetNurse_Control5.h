@@ -14,7 +14,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
     modelState = nurse->model_0.stateStep_3;
     if (modelState == 1)
     {
-        if (nurse->properties_E4.puppetNurse.flags_122 & (1 << 0))
+        if (nurse->properties_E4.puppetNurse.flags_122 & PuppetNurseFlag_0)
         {
             nurse->model_0.stateStep_3 = 2;
         }

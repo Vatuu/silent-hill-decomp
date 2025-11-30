@@ -11,9 +11,9 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
     #define SNOW_XZ_SPAWN_RANGE 5
 #endif
 
-    s_Particle* partCpy;
+    s_Particle* localPart;
 
-    partCpy = part;
+    localPart = part;
 
     switch (arg0)
     {
@@ -31,20 +31,20 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
             }
 
             // Set start position.
-            partCpy->position0_0.vy = g_Particle_Position.vy;
+            localPart->position0_0.vy = g_Particle_Position.vy;
 
             // Set downward movement.
-            partCpy->movement_18.vz = Q12(0.0f);
-            partCpy->movement_18.vx = Q12(0.0f);
-            partCpy->movement_18.vy = SNOW_Y_START_SPEED;
+            localPart->movement_18.vz = Q12(0.0f);
+            localPart->movement_18.vx = Q12(0.0f);
+            localPart->movement_18.vy = SNOW_Y_START_SPEED;
 
             // Set random start XZ position.
             sharedFunc_800D01BC_0_s00(rand, part, SNOW_XZ_SPAWN_RANGE);
 
             // Second position unused for snow.
-            partCpy->position1_C.vz = Q12(0.0f);
-            partCpy->position1_C.vy = Q12(0.0f);
-            partCpy->position1_C.vx = Q12(0.0f);
+            localPart->position1_C.vz = Q12(0.0f);
+            localPart->position1_C.vy = Q12(0.0f);
+            localPart->position1_C.vx = Q12(0.0f);
 #endif
             break;
 
@@ -52,29 +52,29 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
 #if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
     defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || defined(MAP5_S00) || \
     defined(MAP6_S00) || defined(MAP6_S03)
-            partCpy->type_1F = ParticleType_Rain;
+            localPart->type_1F = ParticleType_Rain;
             
             // Set start position.
-            partCpy->position0_0.vy = g_Particle_Position.vy + Q12(Rng_GenerateInt(Rng_Rand16(), 0, 2));
+            localPart->position0_0.vy = g_Particle_Position.vy + Q12(Rng_GenerateInt(Rng_Rand16(), 0, 2));
 
 #if defined(MAP5_S00) || defined(MAP6_S03)
-            partCpy->position1_C.vy = partCpy->position0_0.vy - Q12(0.125f);
-            partCpy->movement_18.vy = Q12(0.0091f);
+            localPart->position1_C.vy = localPart->position0_0.vy - Q12(0.125f);
+            localPart->movement_18.vy = Q12(0.0091f);
 #else
-            partCpy->position1_C.vy = g_Particle_Position.vy;
-            partCpy->movement_18.vy = Q12(0.03675f);
+            localPart->position1_C.vy = g_Particle_Position.vy;
+            localPart->movement_18.vy = Q12(0.03675f);
 #endif
 
             // Set random start XZ position.
             sharedFunc_800D01BC_0_s00(rand, part, RAIN_XZ_SPAWN_RANGE);
 
             // Copy random XZ to second position.
-            partCpy->position1_C.vx = partCpy->position0_0.vx;
-            partCpy->position1_C.vz = partCpy->position0_0.vz;
+            localPart->position1_C.vx = localPart->position0_0.vx;
+            localPart->position1_C.vz = localPart->position0_0.vz;
 #endif
             break;
     }
 
     // Step to active state.
-    partCpy->stateStep_1E++;
+    localPart->stateStep_1E++;
 }

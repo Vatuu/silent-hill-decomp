@@ -1330,7 +1330,7 @@ typedef struct _SubCharaPropertiesPuppetNurse
     s_func_8006CF18* unk_E4;
     VECTOR3          position_E8; /** Q19.12 */
     s_CharaDamage    damage_F4;
-    s32              field_104;
+    q19_12           field_104;
     s32              field_108;
     s32              field_10C;
     s8               unk_110[4];
@@ -1341,7 +1341,7 @@ typedef struct _SubCharaPropertiesPuppetNurse
     s16              field_11C;
     s16              field_11E;
     s16              field_120;
-    u16              flags_122;
+    u16              flags_122; /** `e_PuppetNurseFlags` */
     s_800D5710*      field_124;
 } s_SubCharaPropertiesPuppetNurse;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPuppetNurse, 68);

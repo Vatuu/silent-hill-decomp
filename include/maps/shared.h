@@ -2589,7 +2589,7 @@ void Ai_PuppetNurse_Control1(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_Control2(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, s32 arg1);
+void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, s32 idx);
 
 void Ai_PuppetNurse_Control5(s_SubCharacter* nurse);
 
@@ -2621,7 +2621,7 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter*);
 
 void Ai_PuppetNurse_AnimUpdate(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
-void sharedFunc_800D0828_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void sharedFunc_800D0828_3_s03(s_SubCharacter* harry, GsCOORDINATE2* coords);
 
 void sharedFunc_800D0968_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
