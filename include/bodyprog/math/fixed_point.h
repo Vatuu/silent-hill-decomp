@@ -258,44 +258,44 @@
 #define FP_COLOR(comp) \
     (u8)Q8_CLAMPED(comp)
 
-/** @brief Converts floating-point degrees to signed Q3.12 fixed-point, integer range `[0, 4096]`.
+/** @brief Converts floating-point degrees to signed Q3.12 fixed-point, full rotation integer range `[0, 4096]`.
  *
  * This angle format is used in world space.
  *
  * @note 1 degree = 11.377778 units.
  *
  * @param deg Degrees (`float`).
- * @return Unsigned Q3.12 fixed-point angle, integer range `[0, 4096]` (`s16`).
+ * @return Unsigned Q3.12 fixed-point angle, full rotation integer range `[0, 4096]` (`s16`).
  */
 #define FP_ANGLE(deg) \
     (s16)((deg) * ((float)Q12(1.0f) / 360.0f))
 
-/** @brief Converts floating-point degrees to unsigned Q0.8 fixed-point, clamped integer range `[0, 255]`.
+/** @brief Converts floating-point degrees to unsigned Q0.8 fixed-point, clamped full rotation integer range `[0, 255]`.
  *
  * This angle format is used in map data.
  *
  * @note 1 degree = 0.711111 units.
  *
  * @param deg Degrees (`float`).
- * @return Unsigned Q0.8 fixed-point packed angle, clamped integer range `[0, 255]` (`u8`).
+ * @return Unsigned Q0.8 fixed-point packed angle, clamped full rotation integer range `[0, 255]` (`u8`).
  */
 #define FP_ANGLE_PACKED(deg) \
     (u8)Q8_CLAMPED((deg) / 360.0f)
 
-/** @brief Converts a signed Q3.12 fixed-point angle, integer range `[0, 4096]` to
+/** @brief Converts a signed Q3.12 fixed-point angle, full rotation integer range `[0, 4096]` to
  * unsigned Q0.8 fixed-point, integer range `[0, 255]`.
  *
- * @param angle Unsigned Q3.12 fixed-point angle, integer range `[0, 4096]`.
- * @return Unsigned Q0.8 fixed-point packed angle, integer range `[0, 255]` (`s16`).
+ * @param angle Unsigned Q3.12 fixed-point angle, full rotation integer range `[0, 4096]`.
+ * @return Unsigned Q0.8 fixed-point packed angle, full rotation integer range `[0, 255]` (`s16`).
  */
 #define FP_ANGLE_TO_PACKED(angle) \
     Q12_TO_Q8(deg);
 
-/** @brief Converts an unsigned Q0.8 fixed-point packed angle, integer range `[0, 255]` to
- * unsigned Q3.12 fixed-point, integer range `[0, 4096]`.
+/** @brief Converts an unsigned Q0.8 fixed-point packed angle, full rotation integer range `[0, 255]` to
+ * unsigned Q3.12 fixed-point, full rotation integer range `[0, 4096]`.
  *
- * @param packedAngle Unsigned Q0.8 fixed-point packed angle, integer range `[0, 255]`.
- * @return Unsigned Q3.12 fixed-point angle, integer range `[0, 4096]` (`s16`).
+ * @param packedAngle Unsigned Q0.8 fixed-point packed angle, full rotation integer range `[0, 255]`.
+ * @return Unsigned Q3.12 fixed-point angle, full rotation integer range `[0, 4096]` (`s16`).
  */
 #define FP_ANGLE_FROM_PACKED(packedAngle) \
     (s16)Q8_TO_Q12(packedAngle)
@@ -304,7 +304,7 @@
  *
  * @note Has the same effect as `FP_ANGLE_NORM_U`. Could they somehow be combined?
  *
- * @param angle Signed Q3.12 fixed-point angle, clamped integer range `[-2048, 2047]`.
+ * @param angle Signed Q3.12 fixed-point angle, full rotation integer range `[-2048, 2047]`.
  * @return Unsigned Q3.12 fixed-point angle, wrapped to the clamped integer range `[0, 4095]` (`s16`).
  */
 #define FP_ANGLE_ABS(angle) \
@@ -312,7 +312,7 @@
 
 /** @brief Normalizes an unsigned Q3.12 fixed-point angle to the clamped signed integer range `[-2048, 2047]`.
  *
- * @param angle Unsigned Q3.12 fixed-point angle, full integer range `[0, 4095]`.
+ * @param angle Unsigned Q3.12 fixed-point angle, full rotation integer range `[0, 4095]`.
  * @return Signed Q3.12 fixed-point angle wrapped to the clamped integer range `[-2048, 2047]` (`s16`).
  */
 #define FP_ANGLE_NORM_S(angle) \
@@ -320,20 +320,20 @@
 
 /** @brief Normalizes a signed Q3.12 fixed-point angle to the clamped unsigned range `[0, 4095]`.
  *
- * @param angle Signed Q3.12 fixed-point angle, full integer range `[-2048, 2047]`.
+ * @param angle Signed Q3.12 fixed-point angle, full rotation integer range `[-2048, 2047]`.
  * @return Unsigned Q3.12 fixed-point angle, wrapped to the clamped integer range `[0, 4095]` (`s16`).
  */
 #define FP_ANGLE_NORM_U(angle) \
     ((angle) & (FP_ANGLE(360.0f) - 1))
 
-/** @brief Converts floating-point radians in the range `[-PI, PI]` to the fixed-point integer range `[0, 20480]`.
+/** @brief Converts floating-point radians in the range `[-PI, PI]` to the fixed-point full rotation integer range `[0, 20480]`.
  *
  * This angle format is only used in `vcSetDataToVwSystem`.
  *
  * @note π = 10240 units.
  *
  * @param rad Radians (`float`).
- * @return Fixed-point radian representation, integer range `[0, 20480]` (`s32`).
+ * @return Fixed-point radian representation, full rotation integer range `[0, 20480]` (`s32`).
  */
 #define FP_RADIAN(rad)                                                                \
     (s32)(((((rad) < 0.0f) ? (PI + (PI - ABS(rad))) : (rad)) * ((float)FP_PI / PI)) * \
