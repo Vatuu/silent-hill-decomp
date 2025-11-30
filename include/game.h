@@ -1221,7 +1221,9 @@ typedef struct
 {
     q19_12 health_0;
     s32 field_4;
-    s8 unk_4[16];
+    s8 unk_8[4];
+    s32 field_C;
+    s8 unk_10[8];
     s32 field_18;
     s32 idx_1C;
     s8 unk_20[4];
