@@ -408,5 +408,35 @@ void Map_WorldObjectsInit(void) // 0x800D1804
     WorldObjectInit(&g_WorldObject_FirstAidKit, D_800A99E4.firstAidKitName_8, 27.6f, -0.45f, 143.6f, 0.0f, -90.0f, 0.0f);
 }
 
-INCLUDE_ASM("asm/maps/map3_s06/nonmatchings/map3_s06_2", func_800D197C);
+void func_800D197C(void) {
+    s32 temp_a0;
+
+    temp_a0 = g_SysWork.player_4C.chara_0.position_18.vx / 163840;
+    if ((g_SysWork.player_4C.chara_0.position_18.vx > 0 && (temp_a0 + 1) == 1) || (g_SysWork.player_4C.chara_0.position_18.vx <= 0 && (temp_a0 - 1) == 1)) {
+        temp_a0 = g_SysWork.player_4C.chara_0.position_18.vz / 163840;
+        if ((g_SysWork.player_4C.chara_0.position_18.vz > 0 && (temp_a0 + 1) == 4) || (g_SysWork.player_4C.chara_0.position_18.vz <= 0 && (temp_a0 - 1) == 4)) {
+            g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);
+            if (!(g_SavegamePtr->eventFlags_168[6] & 0x8000)) {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Map.object_0, &g_WorldObject_Map.position_1C, &g_WorldObject_Map.rotation_28);
+            } else {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Map2.object_0, &g_WorldObject_Map2.position_1C, &g_WorldObject_Map2.rotation_28);
+            }
+            if (!(g_SavegamePtr->eventFlags_168[6] & 0x80)) {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_FirstAidKit.object_0, &g_WorldObject_FirstAidKit.position_1C, &g_WorldObject_FirstAidKit.rotation_28);
+            }
+        }
+    }
+    temp_a0 = g_SysWork.player_4C.chara_0.position_18.vx / 163840;
+    if ((g_SysWork.player_4C.chara_0.position_18.vx > 0 && (temp_a0 + 1) == 3) || (g_SysWork.player_4C.chara_0.position_18.vx <= 0 && (temp_a0 - 1) == 3)) {
+        temp_a0 = g_SysWork.player_4C.chara_0.position_18.vz / 163840;
+        if ((g_SysWork.player_4C.chara_0.position_18.vz > 0 && (temp_a0 + 1) == 3) || (g_SysWork.player_4C.chara_0.position_18.vz <= 0 && (temp_a0 - 1) == 3)) {
+            if ((g_SavegamePtr->eventFlags_168[9] & 0x300) == 0x200) {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Key.object_0, &g_WorldObject_Key.position_1C, &g_WorldObject_Key.rotation_28);
+            }
+        }
+    }
+    if ((g_SavegamePtr->eventFlags_168[9] & 0x100) && (g_SavegamePtr->eventFlags_168[5] & 0x800)) {
+        g_SavegamePtr->eventFlags_168[9] |= 0x20000000;
+    }
+}
 
