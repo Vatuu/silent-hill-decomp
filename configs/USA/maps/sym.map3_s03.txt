@@ -78,6 +78,7 @@ Ai_PuppetNurse_Control6_7     = 0x800CEB90; // type:func
 sharedFunc_800CEC88_3_s03     = 0x800CEC88; // type:func
 sharedFunc_800CEEAC_3_s03     = 0x800CEEAC; // type:func
 sharedFunc_800CEEE0_3_s03     = 0x800CEEE0; // type:func
+sharedFunc_800CF0B4_3_s03     = 0x800CF0B4; // type:func
 sharedFunc_800CF3AC_3_s03     = 0x800CF3AC; // type:func
 sharedFunc_800CF7F4_3_s03     = 0x800CF7F4; // type:func
 sharedFunc_800CF90C_3_s03     = 0x800CF90C; // type:func

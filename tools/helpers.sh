@@ -44,3 +44,12 @@ addsym() {
 
     echo "${sym} = 0x${addr}; // ${info}" >> "configs/USA/maps/sym.${map}.txt"
 }
+
+mshare() {
+    local org="${1}"
+    local map="${2}"
+    local addr="${org#func_}"
+    local shared="sharedFunc_${addr}_${map}"
+    addsym "" "${shared}" "${org}" "map${map}"
+    agsd "${org}" "${shared}"
+}
