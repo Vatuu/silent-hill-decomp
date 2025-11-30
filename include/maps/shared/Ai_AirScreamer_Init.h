@@ -1,4 +1,4 @@
-bool Ai_AirScreamer_Init(s_SubCharacter* chara)
+bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
 {
     #define AIR_SCREAMER_BASE_HEALTH Q12(380.0f)
     #define AIR_SCREAMER_RAND_MAX    100
@@ -7,44 +7,44 @@ bool Ai_AirScreamer_Init(s_SubCharacter* chara)
     #define AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_EASY -100
     #define AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_HARD  100
 
-    if (chara->model_0.state_2 != 0)
+    if (airScreamer->model_0.state_2 != 0)
     {
         return false;
     }
 
-    if (chara->model_0.charaId_0 == Chara_NightFlutter)
+    if (airScreamer->model_0.charaId_0 == Chara_NightFlutter)
     {
-        chara->health_B0 = AIR_SCREAMER_BASE_HEALTH + (func_80080514() * NIGHT_FLUTTER_RAND_MAX);
+        airScreamer->health_B0 = AIR_SCREAMER_BASE_HEALTH + (func_80080514() * NIGHT_FLUTTER_RAND_MAX);
     }
     else
     {
-        chara->health_B0 = AIR_SCREAMER_BASE_HEALTH + (func_80080514() * AIR_SCREAMER_RAND_MAX);
+        airScreamer->health_B0 = AIR_SCREAMER_BASE_HEALTH + (func_80080514() * AIR_SCREAMER_RAND_MAX);
     }
 
     switch (g_SavegamePtr->gameDifficulty_260)
     {
         case GameDifficulty_Easy:
-            chara->health_B0 += func_80080514() * AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_EASY;
+            airScreamer->health_B0 += func_80080514() * AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_EASY;
             break;
 
         case GameDifficulty_Normal:
             break;
 
         case GameDifficulty_Hard:
-            chara->health_B0 += func_80080514() * AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_HARD;
+            airScreamer->health_B0 += func_80080514() * AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_HARD;
             break;
     }
 
-    sharedFunc_800D2BF4_0_s01(chara);
-    sharedSymbol_800D3B0C_0_s01(chara);
-    sharedFunc_800D2390_0_s01(chara);
-    sharedFunc_800D2390_0_s01(chara);
-    sharedFunc_800D2B00_0_s01(chara);
-    sharedFunc_800D2B10_0_s01(chara);
-    sharedFunc_800D2B28_0_s01(chara);
-    sharedFunc_800D2B4C_0_s01(chara);
-    sharedFunc_800D2BB0_0_s01(chara);
-    sharedFunc_800D2BE4_0_s01(chara);
+    sharedFunc_800D2BF4_0_s01(airScreamer);
+    sharedSymbol_800D3B0C_0_s01(airScreamer);
+    sharedFunc_800D2390_0_s01(airScreamer);
+    sharedFunc_800D2390_0_s01(airScreamer);
+    sharedFunc_800D2B00_0_s01(airScreamer);
+    sharedFunc_800D2B10_0_s01(airScreamer);
+    sharedFunc_800D2B28_0_s01(airScreamer);
+    sharedFunc_800D2B4C_0_s01(airScreamer);
+    sharedFunc_800D2BB0_0_s01(airScreamer);
+    sharedFunc_800D2BE4_0_s01(airScreamer);
 
     return true;
 }

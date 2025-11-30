@@ -312,7 +312,7 @@
 
 /** @brief Normalizes an unsigned Q3.12 fixed-point angle to the clamped signed integer range `[-2048, 2047]`.
  *
- * @param angle Unsigned Q3.12 fixed-point angle, integer range `[0, 4095]`.
+ * @param angle Unsigned Q3.12 fixed-point angle, full integer range `[0, 4095]`.
  * @return Signed Q3.12 fixed-point angle wrapped to the clamped integer range `[-2048, 2047]` (`s16`).
  */
 #define FP_ANGLE_NORM_S(angle) \
@@ -320,7 +320,7 @@
 
 /** @brief Normalizes a signed Q3.12 fixed-point angle to the clamped unsigned range `[0, 4095]`.
  *
- * @param angle Signed Q3.12 fixed-point angle, integer range `[-2048, 2047]`.
+ * @param angle Signed Q3.12 fixed-point angle, full integer range `[-2048, 2047]`.
  * @return Unsigned Q3.12 fixed-point angle, wrapped to the clamped integer range `[0, 4095]` (`s16`).
  */
 #define FP_ANGLE_NORM_U(angle) \

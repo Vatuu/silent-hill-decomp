@@ -49,21 +49,21 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
 #endif
 }
 
-void Ai_Bloodsucker_Init(s_SubCharacter* chara)
+void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker)
 {
     s32 i;
 
     for (i = 0; i < 16; i++)
     {
-        chara->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
+        bloodsucker->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
     }
 
-    chara->field_E1_0      = 4;
-    chara->headingAngle_3C = chara->rotation_24.vy;
+    bloodsucker->field_E1_0      = 4;
+    bloodsucker->headingAngle_3C = bloodsucker->rotation_24.vy;
 
-    Ai_Bloodsucker_AnimUpdateFromStep(chara);
+    Ai_Bloodsucker_AnimUpdateFromStep(bloodsucker);
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, BLOODSUCKER_ANIM_INFOS);
+    ModelAnim_AnimInfoSet(&bloodsucker->model_0.anim_4, BLOODSUCKER_ANIM_INFOS);
 
-    Chara_DamageClear(chara);
+    Chara_DamageClear(bloodsucker);
 }

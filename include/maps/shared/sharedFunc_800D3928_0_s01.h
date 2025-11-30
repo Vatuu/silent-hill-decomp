@@ -1,4 +1,4 @@
-bool sharedFunc_800D3928_0_s01(s_SubCharacter* chara)
+bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer)
 {
     q20_12 someTime;
     q19_12 deltaTime;
@@ -10,31 +10,31 @@ bool sharedFunc_800D3928_0_s01(s_SubCharacter* chara)
         deltaTime = Q12(0.0f);
     }
 
-    someTime = chara->properties_E4.unk0.properties_120.val32;
+    someTime = airScreamer->properties_E4.unk0.properties_120.val32;
     if (someTime < deltaTime)
     {
-        chara->properties_E4.unk0.properties_120.val32 = 0;
+        airScreamer->properties_E4.unk0.properties_120.val32 = 0;
     }
     else
     {
-        chara->properties_E4.unk0.properties_120.val32 = someTime - deltaTime;
+        airScreamer->properties_E4.unk0.properties_120.val32 = someTime - deltaTime;
     }
 
-    sharedData_800E21D0_0_s01.field_14C.flags = sharedFunc_800D3758_0_s01(chara,
+    sharedData_800E21D0_0_s01.field_14C.flags = sharedFunc_800D3758_0_s01(airScreamer,
                                                                           &sharedData_800E21D0_0_s01.distance_150,
                                                                           &sharedData_800E21D0_0_s01.angle_154,
                                                                           &sharedData_800E21D0_0_s01.field_158,
                                                                           &sharedData_800E21D0_0_s01.field_15C);
 
-    if (chara->properties_E4.unk0.field_E8_0 == 3)
+    if (airScreamer->properties_E4.unk0.field_E8_0 == 3)
     {
-        chara->properties_E4.unk0.field_E8_8 = 0;
+        airScreamer->properties_E4.unk0.field_E8_8 = 0;
     }
 
-    func = sharedData_800DD7A0_0_s01[chara->model_0.state_2];
+    func = sharedData_800DD7A0_0_s01[airScreamer->model_0.state_2];
     if (func)
     {
-        func(chara);
+        func(airScreamer);
     }
 
     return true;

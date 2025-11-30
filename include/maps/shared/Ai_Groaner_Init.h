@@ -1,4 +1,4 @@
-void Ai_Groaner_Init(s_SubCharacter* chara)
+void Ai_Groaner_Init(s_SubCharacter* groaner)
 {
     #define GROANER_HEALTH_BASE      Q12(210.0f)
     #define GROANER_HEALTH_BONUS_MAX Q12(70.0f)
@@ -7,66 +7,64 @@ void Ai_Groaner_Init(s_SubCharacter* chara)
 
     for (i = 0; i < 16; i++)
     {
-        chara->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
+        groaner->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
     }
 
-    chara->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
+    groaner->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
+    groaner->model_0.anim_4.alpha_A = Q12(0.0f);
 
-    chara->model_0.anim_4.alpha_A = Q12(0.0f);
-
-    chara->health_B0 = GROANER_HEALTH_BASE + (Rng_Rand16() % GROANER_HEALTH_BONUS_MAX);
-
+    groaner->health_B0 = GROANER_HEALTH_BASE + (Rng_Rand16() % GROANER_HEALTH_BONUS_MAX);
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal && !Rng_TestProbabilityBits(3))
     {
-        chara->health_B0 *= 2;
+        groaner->health_B0 *= 2;
     }
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard && !Rng_TestProbabilityBits(2))
     {
-        chara->health_B0 *= 2;
+        groaner->health_B0 *= 2;
     }
 
-    chara->moveSpeed_38    = 0;
-    chara->field_E1_0      = 3;
-    chara->headingAngle_3C = chara->rotation_24.vy;
+    groaner->moveSpeed_38    = Q12(0.0f);
+    groaner->field_E1_0      = 3;
+    groaner->headingAngle_3C = groaner->rotation_24.vy;
 
-    chara->properties_E4.larvalStalker.properties_E8[11].val16[0] = Rng_TestProbabilityBits(9) + 0xF00;
+    groaner->properties_E4.larvalStalker.properties_E8[11].val16[0] = Rng_TestProbabilityBits(9) + 0xF00;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        chara->properties_E4.larvalStalker.properties_E8[11].val16[0] += (u32)chara->properties_E4.larvalStalker.properties_E8[11].val16[0] / 8;
+        groaner->properties_E4.larvalStalker.properties_E8[11].val16[0] += (u32)groaner->properties_E4.larvalStalker.properties_E8[11].val16[0] / 8;
     }
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        chara->properties_E4.larvalStalker.properties_E8[11].val16[0] -= ((s32)((u16)chara->properties_E4.larvalStalker.properties_E8[11].val16[0] << 16) >> 20); // (value * 0x10000) / 0x100000
+        groaner->properties_E4.larvalStalker.properties_E8[11].val16[0] -= ((s32)((u16)groaner->properties_E4.larvalStalker.properties_E8[11].val16[0] << 16) >> 20); // (value * 0x10000) / 0x100000
     }
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, GROANER_ANIM_INFOS);
-    Chara_DamageClear(chara);
+    ModelAnim_AnimInfoSet(&groaner->model_0.anim_4, GROANER_ANIM_INFOS);
+    Chara_DamageClear(groaner);
 
-    if (chara->model_0.stateStep_3 == 3)
+    if (groaner->model_0.stateStep_3 == 3)
     {
-        chara->model_0.state_2 = 1;
-        Character_AnimSet(chara, ANIM_STATUS(GroanerAnim_Unk17, true), 371);
-        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 5;
+        groaner->model_0.state_2 = 1;
+        Character_AnimSet(groaner, ANIM_STATUS(GroanerAnim_Unk17, true), 371);
+        groaner->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 5;
     }
 
-    chara->model_0.stateStep_3 = 0;
+    groaner->model_0.stateStep_3 = 0;
 
-    chara->properties_E4.larvalStalker.properties_E8[3].val32 = chara->position_18.vx;
-    chara->properties_E4.larvalStalker.properties_E8[4].val32 = chara->position_18.vz;
+    groaner->properties_E4.larvalStalker.properties_E8[3].val32 = groaner->position_18.vx;
+    groaner->properties_E4.larvalStalker.properties_E8[4].val32 = groaner->position_18.vz;
 
 #ifdef MAP2_S00
     if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard)
     {
         if (!Savegame_EventFlagGet(EventFlag_134))
         {
-            chara->properties_E4.larvalStalker.properties_E8[11].val16[0] = FP_MULTIPLY_FLOAT_PRECISE(chara->properties_E4.larvalStalker.properties_E8[11].val16[0], 0.8f, Q12_SHIFT);
+            groaner->properties_E4.larvalStalker.properties_E8[11].val16[0] = FP_MULTIPLY_FLOAT_PRECISE(groaner->properties_E4.larvalStalker.properties_E8[11].val16[0], 0.8f, Q12_SHIFT);
         }
         else
         {
-            chara->properties_E4.larvalStalker.properties_E8[11].val16[0] = FP_MULTIPLY_FLOAT_PRECISE(chara->properties_E4.larvalStalker.properties_E8[11].val16[0], 0.9f, Q12_SHIFT);
+            groaner->properties_E4.larvalStalker.properties_E8[11].val16[0] = FP_MULTIPLY_FLOAT_PRECISE(groaner->properties_E4.larvalStalker.properties_E8[11].val16[0], 0.9f, Q12_SHIFT);
         }
     }
 #endif

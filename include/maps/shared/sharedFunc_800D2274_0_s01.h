@@ -1,16 +1,16 @@
-bool sharedFunc_800D2274_0_s01(s_SubCharacter* chara)
+bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
 {
     s32              i;
     u32              flags;
     s_func_800D2E04* data;
 
-    flags = chara->properties_E4.player.flags_11C;
+    flags = airScreamer->properties_E4.player.flags_11C;
     if (!(flags & (1 << 16)))
     {
         if (flags & ((1 << 3) | (1 << 6)))
         {
             flags &= ~(( 1 << 3) | (1 << 6));
-            if (chara->health_B0 <= Q12(0.0f))
+            if (airScreamer->health_B0 <= Q12(0.0f))
             {
                 flags |= 1 << 6;
             }
@@ -35,7 +35,7 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* chara)
         {
             if (flags & (1 << i))
             {
-                func_8005DC1C(data->sfxVolumes_CE8[i].id_0, &chara->position_18, data->sfxVolumes_CE8[i].volume_2, 0);
+                func_8005DC1C(data->sfxVolumes_CE8[i].id_0, &airScreamer->position_18, data->sfxVolumes_CE8[i].volume_2, 0);
             }
         }
     }

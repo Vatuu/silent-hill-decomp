@@ -1,4 +1,4 @@
-void Ai_Romper_Init(s_SubCharacter* chara)
+void Ai_Romper_Init(s_SubCharacter* romper)
 {
     #define ROMPER_HEALTH_BASE      Q12(450.0f)
     #define ROMPER_HEALTH_BONUS_MAX Q12(112.5f)
@@ -7,55 +7,55 @@ void Ai_Romper_Init(s_SubCharacter* chara)
     s32 temp_a0;
     s32 var_v0;
 
-    chara->properties_E4.larvalStalker.properties_E8[0].val32 = 0;
-    chara->model_0.anim_4.alpha_A                             = Q12(0.0f);
+    romper->properties_E4.larvalStalker.properties_E8[0].val32 = 0;
+    romper->model_0.anim_4.alpha_A                             = Q12(0.0f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        chara->health_B0 = ROMPER_HEALTH_BASE - ((s32)Rng_Rand16() % ROMPER_HEALTH_BONUS_MAX);
+        romper->health_B0 = ROMPER_HEALTH_BASE - ((s32)Rng_Rand16() % ROMPER_HEALTH_BONUS_MAX);
     }
     else
     {
         if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
         {
-            chara->health_B0 = ROMPER_HEALTH_BASE + ((s32)Rng_Rand16() % ROMPER_HEALTH_BONUS_MAX);
+            romper->health_B0 = ROMPER_HEALTH_BASE + ((s32)Rng_Rand16() % ROMPER_HEALTH_BONUS_MAX);
         }
         else
         {
             var_v0 = (s32)Rng_Rand16();
 
             temp_a0 = var_v0;
-            if (temp_a0 < 0)
+            if (temp_a0 < Q12(0.0f))
             {
                 var_v0 = temp_a0 + (Q12(0.5f) - 1);
             }
 
             // Shifts are equivalent to `var_v0_2 % Q12(0.5f)`.
-            chara->health_B0 = FP_MULTIPLY_PRECISE(((temp_a0 - ((var_v0 >> 11) << 11)) + Q12(1.5f)), ROMPER_HEALTH_BASE, Q12_SHIFT);
+            romper->health_B0 = FP_MULTIPLY_PRECISE(((temp_a0 - ((var_v0 >> 11) << 11)) + Q12(1.5f)), ROMPER_HEALTH_BASE, Q12_SHIFT);
         }
     }
 
-    chara->moveSpeed_38    = 0;
-    chara->field_E1_0      = 3;
-    chara->headingAngle_3C = chara->rotation_24.vy;
+    romper->moveSpeed_38    = Q12(0.0f);
+    romper->field_E1_0      = 3;
+    romper->headingAngle_3C = romper->rotation_24.vy;
 
     for (i = 0; i < 16; i++)
     {
-        chara->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
+        romper->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
     }
 
-    chara->model_0.state_2  = 2;
-    Character_AnimSet(chara, ANIM_STATUS(RomperAnim_Unk15, true), 147);
+    romper->model_0.state_2 = 2;
+    Character_AnimSet(romper, ANIM_STATUS(RomperAnim_Unk15, true), 147);
 
-    chara->properties_E4.larvalStalker.properties_E8[2].val16[0] = 6;
-    chara->properties_E4.larvalStalker.properties_E8[2].val16[1] = chara->rotation_24.vy;
+    romper->properties_E4.larvalStalker.properties_E8[2].val16[0] = 6;
+    romper->properties_E4.larvalStalker.properties_E8[2].val16[1] = romper->rotation_24.vy;
 
-    chara->moveSpeed_38 = 89;
+    romper->moveSpeed_38 = Q12(0.02175f);
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, ROPMER_ANIM_INFOS);
+    ModelAnim_AnimInfoSet(&romper->model_0.anim_4, ROPMER_ANIM_INFOS);
 
-    Chara_DamageClear(chara);
+    Chara_DamageClear(romper);
 
-    chara->properties_E4.larvalStalker.properties_E8[5].val32 = chara->properties_E4.larvalStalker.properties_E8[10].val32 = chara->position_18.vx;
-    chara->properties_E4.larvalStalker.properties_E8[6].val32 = chara->properties_E4.larvalStalker.properties_E8[8].val32 = chara->position_18.vz;
+    romper->properties_E4.larvalStalker.properties_E8[5].val32 = romper->properties_E4.larvalStalker.properties_E8[10].val32 = romper->position_18.vx;
+    romper->properties_E4.larvalStalker.properties_E8[6].val32 = romper->properties_E4.larvalStalker.properties_E8[8].val32 = romper->position_18.vz;
 }

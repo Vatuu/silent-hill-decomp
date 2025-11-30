@@ -1,36 +1,36 @@
-void Ai_Groaner_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     u8 var;
 
-    if (chara->model_0.state_2 == 0)
+    if (groaner->model_0.state_2 == 0)
     {
-        Ai_Groaner_Init(chara);
+        Ai_Groaner_Init(groaner);
     }
 
-    var = chara->model_0.state_2;
+    var = groaner->model_0.state_2;
 
     if (g_DeltaTime0 != Q12(0.0))
     {
-        sharedFunc_800E33DC_2_s00(chara);
-        sharedFunc_800E384C_2_s00(chara);
-        sharedFunc_800E5AA4_2_s00(chara);
+        sharedFunc_800E33DC_2_s00(groaner);
+        sharedFunc_800E384C_2_s00(groaner);
+        sharedFunc_800E5AA4_2_s00(groaner);
     }
 
-    sharedFunc_800E5EC4_2_s00(chara, anmHdr, coords);
+    sharedFunc_800E5EC4_2_s00(groaner, anmHdr, coords);
 
     if (g_DeltaTime0 != Q12(0.0))
     {
-        sharedFunc_800E6338_2_s00(chara); // Control func with state machine?
-        sharedFunc_800E71E8_2_s00(chara);
+        sharedFunc_800E6338_2_s00(groaner); // Control func with state machine?
+        sharedFunc_800E71E8_2_s00(groaner);
 
-        if (chara->model_0.state_2 != var)
+        if (groaner->model_0.state_2 != var)
         {
-            *(u16*)&chara->properties_E4.player.afkTimer_E8 &= ~(1 << 8);
+            *(u16*)&groaner->properties_E4.player.afkTimer_E8 &= ~(1 << 8);
         }
 
-        if ((u16)chara->properties_E4.player.afkTimer_E8 & (1 << 7))
+        if ((u16)groaner->properties_E4.player.afkTimer_E8 & (1 << 7))
         {
-            chara->flags_3E |= CharaFlag_Unk3;
+            groaner->flags_3E |= CharaFlag_Unk3;
         }
     }
 }

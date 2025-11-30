@@ -2625,49 +2625,49 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* harry, GsCOORDINATE2* coords);
 
 void sharedFunc_800D0968_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
-void Ai_Creaper_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_Creaper_Update(s_SubCharacter* creaper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_Creaper_Init(s_SubCharacter* chara); // `map5_s00` version has extra code at end of func.
+void Ai_Creaper_Init(s_SubCharacter* creaper); // `map5_s00` version has extra code at end of func.
 
-void sharedFunc_800D7EE8_1_s02(s_SubCharacter*);
+void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creaper);
 
-void sharedFunc_800D8244_1_s02(s_SubCharacter* chara);
+void sharedFunc_800D8244_1_s02(s_SubCharacter* creaper);
 
-void sharedFunc_800D82F0_1_s02(s_SubCharacter*);
+void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper);
 
-void sharedFunc_800D8684_1_s02(s_SubCharacter*);
+void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper);
 
-void sharedFunc_800D8F30_1_s02(s_SubCharacter*);
+void sharedFunc_800D8F30_1_s02(s_SubCharacter* creaper);
 
-void sharedFunc_800D9528_1_s02(s_SubCharacter*);
+void sharedFunc_800D9528_1_s02(s_SubCharacter* creaper);
 
-void sharedFunc_800D9774_1_s02(s_SubCharacter*);
+void sharedFunc_800D9774_1_s02(s_SubCharacter* creaper);
 
-void sharedFunc_800D983C_1_s02(s_SubCharacter*);
+void sharedFunc_800D983C_1_s02(s_SubCharacter* creaper);
 
 void sharedFunc_800D9960_1_s02(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void sharedFunc_800D99D0_1_s02(s_SubCharacter*);
+void sharedFunc_800D99D0_1_s02(s_SubCharacter* creaper);
 
-void Ai_HangedScratcher_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_HangedScratcher_Init(s_SubCharacter* chara);
+void Ai_HangedScratcher_Init(s_SubCharacter* scratcher);
 
-void sharedFunc_800CFF74_5_s00(s_SubCharacter*);
+void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher);
 
-void sharedFunc_800D029C_5_s00(s_SubCharacter*);
+void sharedFunc_800D029C_5_s00(s_SubCharacter* scratcher);
 
 void sharedFunc_800D03F8_5_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D041C_5_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D26D8_5_s00(s_SubCharacter*);
+void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher);
 
-void sharedFunc_800D2844_5_s00(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader*, GsCOORDINATE2*);
 
-void sharedFunc_800D2C18_5_s00(s_SubCharacter*);
+void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher);
 
-void sharedFunc_800D3300_5_s00(s_SubCharacter*);
+void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher);
 
 bool sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1);
 
@@ -2676,19 +2676,20 @@ bool sharedFunc_800D3630_0_s01(s_SubCharacter* chara, q19_12* dist);
 /** Returns flags? */
 s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, q19_12* outDist, q19_12* outAngle, q19_12 dist, s32* arg4);
 
-void Ai_Romper_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_Romper_Init(s_SubCharacter* chara);
+void Ai_Romper_Init(s_SubCharacter* romper);
 
+/** Probably Romper func given the placement.. */
 void sharedFunc_800E5FC8_2_s02(s_SubCharacter* chara, s16 arg1, s16 arg2, u8* arg3);
 
-void sharedFunc_800E60FC_2_s02(s_SubCharacter*);
+void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper);
 
-void sharedFunc_800E6420_2_s02(s_SubCharacter*);
+void sharedFunc_800E6420_2_s02(s_SubCharacter* romper);
 
-void sharedFunc_800E66E8_2_s02(s_SubCharacter*);
+void sharedFunc_800E66E8_2_s02(s_SubCharacter* romper);
 
-void sharedFunc_800E6758_2_s02(s_SubCharacter* chara);
+void sharedFunc_800E6758_2_s02(s_SubCharacter* groaner);
 
 void sharedFunc_800E83D4_2_s02(s_SubCharacter* chara);
 
@@ -2696,15 +2697,15 @@ void sharedFunc_800E8478_2_s02(s_SubCharacter* chara);
 
 void sharedFunc_800E86C0_2_s02(s_SubCharacter* chara);
 
-void sharedFunc_800E8730_2_s02(s_SubCharacter*);
+void sharedFunc_800E8730_2_s02(s_SubCharacter* romper);
 
-void sharedFunc_800E8A40_2_s02(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader*, GsCOORDINATE2*);
 
-void sharedFunc_800E8DFC_2_s02(s_SubCharacter*);
+void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper);
 
-void Ai_Groaner_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_Groaner_Init(s_SubCharacter* chara); // `map2_s00` has extra block at end of func compared to other maps.
+void Ai_Groaner_Init(s_SubCharacter* groaner); // `map2_s00` has extra block at end of func compared to other maps.
 
 void sharedFunc_800E554C_2_s00(s_SubCharacter* chara);
 
@@ -2712,57 +2713,57 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800E33DC_2_s00(s_SubCharacter*);
 
-void sharedFunc_800E384C_2_s00(s_SubCharacter*); // `map2_s00` has different version to the other 4 maps which share this, shared sym is needed to share `Ai_Groaner_Update`.
+void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner); // `map2_s00` has different version to the other 4 maps which share this, shared sym is needed to share `Ai_Groaner_Update`.
 
 void sharedFunc_800E5930_2_s00(s_SubCharacter* chara);
 
-void sharedFunc_800E5AA4_2_s00(s_SubCharacter*);
+void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner);
 
-void sharedFunc_800E5EC4_2_s00(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader*, GsCOORDINATE2*);
 
-void sharedFunc_800E6338_2_s00(s_SubCharacter*);
+void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner);
 
-void sharedFunc_800E71E8_2_s00(s_SubCharacter*);
+void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner);
 
-void Ai_Splithead_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_Splithead_Update(s_SubCharacter* splithead, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_Splithead_Init(s_SubCharacter* chara);
+void Ai_Splithead_Init(s_SubCharacter* splithead);
 
-void sharedFunc_800CF990_1_s05(s_SubCharacter*);
+void sharedFunc_800CF990_1_s05(s_SubCharacter* splithead);
 
-void sharedFunc_800CFE94_1_s05(s_SubCharacter*);
+void sharedFunc_800CFE94_1_s05(s_SubCharacter* splithead);
 
 void sharedFunc_800D0054_1_s05(s_SubCharacter* splithead);
 
-void sharedFunc_800D267C_1_s05(s_SubCharacter*);
+void sharedFunc_800D267C_1_s05(s_SubCharacter* splithead);
 
-void sharedFunc_800D274C_1_s05(s_SubCharacter*, s_AnmHeader*);
+void sharedFunc_800D274C_1_s05(s_SubCharacter* splithead, s_AnmHeader*);
 
-void sharedFunc_800D2D74_1_s05(s_SubCharacter*);
+void sharedFunc_800D2D74_1_s05(s_SubCharacter* splithead);
 
-void sharedFunc_800D3388_1_s05(s_SubCharacter*, s32*, s32*);
+void sharedFunc_800D3388_1_s05(s_SubCharacter* splithead, s32*, s32*);
 
-void sharedFunc_800D3AFC_1_s05(s_SubCharacter* chara);
+void sharedFunc_800D3AFC_1_s05(s_SubCharacter* splithead);
 
-void sharedFunc_800D3B30_1_s05(s_SubCharacter*);
+void sharedFunc_800D3B30_1_s05(s_SubCharacter* splithead);
 
-void sharedFunc_800D4070_1_s05(s_SubCharacter*);
+void sharedFunc_800D4070_1_s05(s_SubCharacter* splithead);
 
 extern GsCOORDINATE2* sharedData_800D8610_1_s05;
 
-void Ai_AirScreamer_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void sharedFunc_800D2200_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D2200_0_s01(s_SubCharacter* airScreamer);
 
-bool sharedFunc_800D2274_0_s01(s_SubCharacter* chara);
+bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2364_0_s01(s_SubCharacter* chara);
 
-void sharedFunc_800D2390_0_s01(s_SubCharacter*);
+void sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer);
 
-bool Ai_AirScreamer_Init(s_SubCharacter* chara);
+bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2B00_0_s01(s_SubCharacter* chara);
 
@@ -2786,11 +2787,11 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara);
 
 s32 sharedFunc_800D31D0_0_s01(s_SubCharacter* chara, VECTOR3* arg1, s32 arg2);
 
-bool sharedFunc_800D3928_0_s01(s_SubCharacter* chara);
+bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer);
 
 void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara);
 
-bool sharedFunc_800D62D8_0_s01(s_SubCharacter* chara);
+bool sharedFunc_800D62D8_0_s01(s_SubCharacter* airScreamer);
 
 /** Returns anim-related index. */
 s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* chara);
@@ -2812,20 +2813,20 @@ void sharedFunc_800D76A0_0_s01(s_SubCharacter* chara);
 
 s32 sharedFunc_800D77D0_0_s01(s_SubCharacter*); // Assumed return type.
 
-bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* chara);
+bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* airScreamer);
 
 /** @brief Applies a multi-stage bend deformation to several model coordinates.
  * Builds three rotation matrices using scaled fractions of `chara->field_2A` and
  * multiplies them into `coords[10]`, `coords[9]`, `coords[1]`, and `coords[2]`.
  * Used when the animation flag bit 0 is active to drive a chained bending motion.
  */
-void sharedFunc_800D7B14_0_s01(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void sharedFunc_800D7B14_0_s01(s_SubCharacter* airScreamer, GsCOORDINATE2* coords);
 
-void sharedFunc_800D7EBC_0_s01(s_SubCharacter*);
+void sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer);
 
-bool sharedFunc_800D81B0_0_s01(s_SubCharacter* chara);
+bool sharedFunc_800D81B0_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D82B8_0_s01(s_SubCharacter*);
+void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D8714_0_s01(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
@@ -2854,13 +2855,13 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfx, s32 pitch);
 
 // `Ai_Bloodsucker` related
-void Ai_Bloodsucker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void Ai_Bloodsucker_Init(s_SubCharacter*);
-void sharedFunc_800D0E20_3_s03(s_SubCharacter*);
-void sharedSymbol_800D0E38_3_s03(s_SubCharacter*);
-void sharedFunc_800D0E80_3_s03(s_SubCharacter*);
-void sharedSymbol_800D0ECC_3_s03(s_SubCharacter*);
-void sharedFunc_800D0F28_3_s03(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker);
+void sharedFunc_800D0E20_3_s03(s_SubCharacter* bloodsucker);
+void sharedSymbol_800D0E38_3_s03(s_SubCharacter* bloodsucker);
+void sharedFunc_800D0E80_3_s03(s_SubCharacter* bloodsucker);
+void sharedSymbol_800D0ECC_3_s03(s_SubCharacter* bloodsucker);
+void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader*, GsCOORDINATE2*);
 
 /** `arg1` is a multiplier? */
 q20_12 Chara_DamageTake(s_SubCharacter*, s32 mult);
