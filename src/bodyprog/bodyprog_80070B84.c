@@ -8845,8 +8845,36 @@ s32 func_80080514(void) // 0x80080514
     return FP_ANGLE_NORM_U(((rand16 * 2) ^ rand16) >> 3);
 }
 
-// TODO: Try decomping by hand. -- Sezz
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80070B84", func_80080540); // 0x80080540
+s32 func_80080540(s32 arg0, s32 arg1, s32 arg2) // 0x80080540
+{
+    s32 v0;
+    __asm__ volatile(
+        "mult %0, %0\n"
+        "mflo $4\n"
+        "mfhi $3\n"
+        "srl  $4, $4, 0xc\n"
+        "sll  $3, $3, 0x14\n"
+
+        "mult %1, %1\n"
+        "or   %3, $3, %0\n"
+        "mflo $4\n"
+        "mfhi $3\n"
+        "srl  $4, $4, 0xc\n"
+        "sll  $3, $3, 0x14\n"
+
+        "mult %2, %2\n"
+        "or   %1, $3, %0\n"
+        "mflo $4\n"
+        "mfhi $3\n"
+        "srl  $4, $4, 0xc\n"
+        "sll  $3, $3, 0x14\n"
+        "or   %2, $3, $4\n"
+
+        : "r="(arg0), "r="(arg1), "r="(arg2), "r="(v0)
+        : "r"(arg0), "r"(arg1), "r"(arg2));
+
+    return v0 + arg1 + arg2;
+}
 
 s32 Math_PreservedSignSubtract(s32 val, s32 subtractor) // 0x80080594
 {

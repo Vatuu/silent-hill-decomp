@@ -4541,6 +4541,8 @@ q19_12 func_80080478(const VECTOR3* posFrom, const VECTOR3* posTo);
 /** Generates a random angle? */
 s32 func_80080514(void);
 
+s32 func_80080540(s32 arg0, s32 arg1, s32 arg2);
+
 /** Computes (abs(value) - subtractor) * copysign(value). */
 s32 Math_PreservedSignSubtract(s32 val, s32 subtractor);
 
