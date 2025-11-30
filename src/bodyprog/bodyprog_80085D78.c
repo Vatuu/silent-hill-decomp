@@ -1,4 +1,5 @@
 #include "game.h"
+#include "inline_no_dmpsx.h"
 
 #include <psyq/libpad.h>
 #include <psyq/strings.h>
@@ -2272,7 +2273,66 @@ bool func_80089DF0(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
     return false;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A058); // 0x8008A058
+u32 func_8008A058(s32 arg0) // 0x8008A058
+{
+    register s32  temp_t0 asm("t0");
+    register u32  var_t1 asm("t1");
+    register u32  var_t2 asm("t2");
+    register s16* pointer asm("t3");
+
+    var_t1 = 0;
+
+    if (arg0)
+    {
+        gte_ldlzc(arg0);
+
+        var_t2  = var_t1;
+        pointer = SQRT;
+
+        if (arg0 > 0)
+        {
+            gte_stlzcr(var_t2);
+        }
+
+        var_t1 = arg0;
+
+        var_t2 &= 0x1E;
+        temp_t0 = var_t2 - 0x18;
+
+        var_t2 = -temp_t0;
+
+        if (temp_t0 >= 0)
+        {
+            var_t2 = var_t1 << temp_t0;
+        }
+        else
+        {
+            var_t2 = var_t1 >> var_t2;
+        }
+
+        var_t2 -= 0x40;
+
+        pointer += var_t2;
+
+        var_t2 = *pointer;
+
+        temp_t0  += 6;
+        temp_t0 >>= 1;
+
+        var_t1 = -temp_t0;
+
+        if (temp_t0 >= 0)
+        {
+            var_t1 = var_t2 >> temp_t0;
+        }
+        else
+        {
+            var_t1 = var_t2 << var_t1;
+        }
+    }
+
+    return var_t1;
+}
 
 s32 func_8008A0CC(void) // 0x8008A0CC
 {

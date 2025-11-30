@@ -2701,6 +2701,8 @@ extern s_800AD4C8 D_800AD4C8[70];
 
 extern const s_MapOverlayHeader g_MapOverlayHeader; // 0x800C957C
 
+extern s16 SQRT[100];
+
 // ==========
 // FUNCTIONS
 // ==========
@@ -3680,6 +3682,8 @@ void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32));
 void func_800899BC(s_SysWork_2514* arg0, s32 arg1);
 
 bool func_80089D0C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2, u32* arg3);
+
+u32 func_8008A058(s32 arg0);
 
 s32 func_8008A0CC(void); /** Returns 0. */
 

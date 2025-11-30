@@ -418,4 +418,8 @@ void SetPriority(PACKET*, s32, s32);
         __r;                                            \
     })
 
+#define gte_stlzcr(dst) __asm__ volatile( \
+    "mfc2  %0, $31"                       \
+    : "=r"(dst))
+
 #endif
