@@ -4,7 +4,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
 
     if (!nurse->model_0.stateStep_3)
     {
-        nurse->model_0.anim_4.status_0 = ANIM_STATUS(6, false);
+        nurse->model_0.anim_4.status_0 = ANIM_STATUS(PuppetNurseAnim_6, false);
         nurse->properties_E4.player.field_104 = 0;
         nurse->model_0.stateStep_3++;
     }
@@ -26,7 +26,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
                 {
                     nurse->model_0.state_2 = modelState;
                     nurse->model_0.stateStep_3 = 0;
-                    nurse->model_0.anim_4.status_0 = ANIM_STATUS(18, false);
+                    nurse->model_0.anim_4.status_0 = ANIM_STATUS(PuppetNurseAnim_18, false);
                     return;
                 }
             }

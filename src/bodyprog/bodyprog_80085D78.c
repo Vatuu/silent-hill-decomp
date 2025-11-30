@@ -2487,7 +2487,7 @@ void func_8008B15C(s_SubCharacter* chara) // 0x8008B15C
     }
 }
 
-void func_8008B1DC(s_SubCharacter* chara, s32 angle0, s32 angle1) // 0x8008B1DC
+void func_8008B1DC(s_SubCharacter* chara, q19_12 angle0, q19_12 angle1) // 0x8008B1DC
 {
     s32                temp_s0;
     q19_12             sinAngle1;

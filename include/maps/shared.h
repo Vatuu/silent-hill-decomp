@@ -2558,7 +2558,8 @@ void sharedFunc_800D0994_3_s00(void);
 void sharedFunc_800D09D4_3_s00(void);
 
 // MAP3_S03 puppet nurse/doctor funcs
-void sharedFunc_800CDA88_3_s03(s_SubCharacter*);
+
+void sharedFunc_800CDA88_3_s03(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_UpdateMain(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 

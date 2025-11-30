@@ -1279,7 +1279,7 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
 typedef struct _SubCharaPropertiesNpc
 {
     s_func_8006CF18* unk_E4; // TODO: Not sure if this is meant to be in player or NPC properties, has to be at 0x0.
-    VECTOR3          field_E8; // Q19.12 | Character position copy.
+    VECTOR3          position_E8; /** Q19.12 */
     s32              field_F4;
     s32              field_F8;
     s32              field_FC;

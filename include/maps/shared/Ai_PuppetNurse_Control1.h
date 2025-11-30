@@ -14,11 +14,11 @@ void Ai_PuppetNurse_Control1(s_SubCharacter* nurse)
         {
             if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
             {
-                nurse->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
+                nurse->model_0.anim_4.status_0 = ANIM_STATUS(PuppetNurseAnim_1, false);
             }
             else
             {
-                nurse->model_0.anim_4.status_0 = ANIM_STATUS(21, false);
+                nurse->model_0.anim_4.status_0 = ANIM_STATUS(PuppetNurseAnim_21, false);
             }
         }
         
@@ -34,7 +34,7 @@ void Ai_PuppetNurse_Control1(s_SubCharacter* nurse)
         Ai_PuppetNurse_SfxPlay(nurse, 0);
     }
 
-    if (nurseCpy->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
+    if (nurseCpy->model_0.anim_4.status_0 == ANIM_STATUS(PuppetNurseAnim_18, false))
     {
         nurseCpy->model_0.state_2 = 9;
         nurseCpy->model_0.stateStep_3 = 0;

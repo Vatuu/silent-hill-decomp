@@ -65,7 +65,7 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords)
     sharedFunc_800CD920_3_s03(chara, deltaX, deltaY);
 
     tempPosComp                             = chara->position_18.vx;
-    charaCpy->properties_E4.npc.field_E8.vx = tempPosComp;
+    charaCpy->properties_E4.npc.position_E8.vx = tempPosComp;
     tempPosComp                             = chara->position_18.vz;
-    charaCpy->properties_E4.npc.field_E8.vz = tempPosComp;
+    charaCpy->properties_E4.npc.position_E8.vz = tempPosComp;
 }

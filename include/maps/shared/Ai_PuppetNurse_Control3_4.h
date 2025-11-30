@@ -7,7 +7,7 @@ void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, s32 arg1)
 
     if (!nurse->model_0.stateStep_3)
     {
-        if (nurse->model_0.anim_4.status_0 == ANIM_STATUS(2, true)) 
+        if (nurse->model_0.anim_4.status_0 == ANIM_STATUS(PuppetNurseAnim_2, true)) 
         {
             return;
         }
@@ -21,8 +21,8 @@ void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, s32 arg1)
     }
 
     animStatus = nurse->model_0.anim_4.status_0;
-    if (animStatus == ANIM_STATUS(14, true) || animStatus == ANIM_STATUS(5, true) ||
-        animStatus == ANIM_STATUS(5, false) || animStatus == ANIM_STATUS(15, true))
+    if (animStatus == ANIM_STATUS(PuppetNurseAnim_14, true) || animStatus == ANIM_STATUS(PuppetNurseAnim_5, true) ||
+        animStatus == ANIM_STATUS(PuppetNurseAnim_5, false) || animStatus == ANIM_STATUS(PuppetNurseAnim_15, true))
     {
         if ((func_8005C7D0(nurse) != g_SysWork.targetNpcIdx_2353) && (nurse->health_B0 == 0))
         {
@@ -32,9 +32,9 @@ void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, s32 arg1)
 
             nurseCpy->properties_E4.puppetNurse.flags_122 |= 1 << 1;
         } 
-        else if (nurse->model_0.anim_4.status_0 == ANIM_STATUS(15, true) && nurse->health_B0 > Q12(0.0f))
+        else if (nurse->model_0.anim_4.status_0 == ANIM_STATUS(PuppetNurseAnim_15, true) && nurse->health_B0 > Q12(0.0f))
         {
-            nurse->model_0.anim_4.status_0 = ANIM_STATUS(5, false);
+            nurse->model_0.anim_4.status_0 = ANIM_STATUS(PuppetNurseAnim_5, false);
         }
     }
 

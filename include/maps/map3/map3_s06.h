@@ -58,4 +58,6 @@ void func_800D17D8(void);
 
 void Map_WorldObjectsInit(void);
 
+void func_800D197C(void);
+
 #endif
