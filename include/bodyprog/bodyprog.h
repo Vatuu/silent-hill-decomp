@@ -2664,6 +2664,12 @@ extern q3_12 D_800C4700[];
 
 extern s16 D_800C4702;
 
+extern s_func_800700F8_2 D_800C4728;
+
+extern DVECTOR D_800C4748[];
+
+extern VECTOR3 D_800C4758[];
+
 /** Q19.12 */
 extern VECTOR3 D_800C4788[];
 
@@ -3691,7 +3697,7 @@ s64 func_8008A0D4(void); /** Returns 0. */
 
 s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6);
 
-u8 func_8008A270(s32 idx);
+u32 func_8008A270(s32 idx);
 
 s32 func_8008A35C(s_800AD4C8* arg0, s32 arg1);
 
@@ -3700,6 +3706,8 @@ void func_8008A384(s_SubCharacter* chara);
 void func_8008A398(s_SubCharacter* chara);
 
 void func_8008A3AC(s_SubCharacter* chara);
+
+s32 func_8008A3E0(s_SubCharacter* arg0);
 
 void func_8008B15C(s_SubCharacter* chara);
 
@@ -4554,7 +4562,7 @@ s32 func_800808AC(q19_12 posX, q19_12 posZ);
 /** Returns a Q shift based on a magnitude. */
 s32 Math_MagnitudeShiftGet(s32 mag);
 
-u8 func_8008A2E0(s32 arg0);
+u32 func_8008A2E0(s32 arg0);
 
 void func_800348C0(void);
 

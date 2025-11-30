@@ -2446,7 +2446,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
 
 const s32 g_rodataPad_8002AF9C[2] = { 0, 0 }; // TODO: Might indicate split nearby?
 
-u8 func_8008A270(s32 idx) // 0x8008A270
+u32 func_8008A270(s32 idx)                    // 0x8008A270
 {
     switch (idx)
     {
@@ -2469,7 +2469,7 @@ u8 func_8008A270(s32 idx) // 0x8008A270
     return D_800AD4C8[idx].field_E;
 }
 
-u8 func_8008A2E0(s32 arg0)
+u32 func_8008A2E0(s32 arg0)
 {
     if (g_SysWork.field_275C > Q12(256.0f))
     {
@@ -2522,11 +2522,625 @@ void func_8008A3AC(s_SubCharacter* chara) // 0x8008A3AC
     if (!(chara->flags_3E & CharaFlag_Unk8))
     {
         chara->field_44.field_0 = 0;
-        func_8008A3E0();
+        func_8008A3E0(chara);
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_8008A3E0); // 0x8008A3E0
+s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
+{
+    s32                sp10;
+    s32                sp14;
+    s32                sp18;
+    s_800AD4C8*        sp1C;
+    s32                sp20;
+    s32                sp24;
+    s32                sp28;
+    s32                sp2C;
+    s32                sp30;
+    s32                sp34;
+    u32                sp38;
+    s32                sp3C;
+    u32                sp40;
+    s32                sp44;
+    s32                sp48;
+    s32                sp4C;
+    s32                sp50;
+    s32                sp54;
+    s32                sp58;
+    s32                sp5C;
+    s32                sp60;
+    s32                sp64;
+    s32                sp68;
+    s32                sp6C;
+    s32                sp70;
+    s32                sp74;
+    s32                sp78;
+    s32                sp7C;
+    s32                sp80;
+    s32                sp84;
+    s32                sp88;
+    s32                sp8C;
+    s32                sp90;
+    s32                sp94;
+    DVECTOR*           temp_s0_14;
+    VECTOR3*           temp_a0;
+    VECTOR3*           temp_v0_11;
+    s_SubCharacter_44* temp_v0_12;
+    s32                temp_s0;
+    s32                temp_s0_11;
+    s32                temp_s0_6;
+    s32                temp_s0_7;
+    s32                temp_s0_8;
+    s32                temp_s0_9;
+    s32                temp_s0_10;
+    s32                var_s0_2;
+    s32                temp_s1_3;
+    s32                temp_s1_4;
+    s32                temp_s1_5;
+    s32                temp_s2_2;
+    s32                var_s2;
+    s32                temp_v0_10;
+    s32                temp_v0_4;
+    s32                temp_v0_5;
+    s32                temp_v0_6;
+    s32                temp_v1;
+    s32                var_a0_2;
+    s32                var_a0_3;
+    s32                temp_a1;
+    s32                var_a1;
+    s32                var_fp;
+    s32                var_s3;
+    s32                var_s4;
+    s32                var_s6;
+    s32                var_s7;
+    s32                var_v1;
+    s_ModelAnim*       var_s0;
+    s_SubCharacter*    temp_s1_2;
+    u32                temp_s1;
+    s32                var_a0;
+    s_AnimInfo*        anim;
+    s_SubCharacter*    ptr;
+    s32                temp;
+    s32                temp_t3_2;
+    s32                temp2;
+    s32                temp3;
+    s32                temp4;
+    s32                temp5;
+    s32                temp6;
+
+    sp30 = -1;
+    func_8008A398(arg0);
+
+    sp10 = arg0->field_44.field_0;
+    sp14 = (u8)arg0->field_44.field_2;
+
+    if (sp10 == 0)
+    {
+        arg0->field_44.field_4  = 0;
+        arg0->field_44.field_8  = 0;
+        arg0->field_44.field_14 = 0;
+        return 0;
+    }
+
+    if (sp10 == sp30)
+    {
+        arg0->field_44.field_8  = 0;
+        arg0->field_44.field_14 = 0;
+        return 0;
+    }
+
+    sp18 = 0;
+
+    sp1C = &D_800AD4C8[sp14];
+
+    temp_s1 = sp1C->field_10;
+
+    if (arg0 == &g_SysWork.player_4C.chara_0)
+    {
+        var_s0 = &((s_MainCharacter*)arg0)->extra_128.model_0.anim_4;
+    }
+    else
+    {
+        var_s0 = &arg0->model_0.anim_4;
+    }
+
+    anim  = func_80044918(var_s0);
+    sp28  = var_s0->time_4;
+    sp28 -= FP_TO(anim->startKeyframeIdx_C, Q12_SHIFT);
+
+    var_s0_2 = func_8008A270(sp14);
+    var_a0   = func_8008A2E0(sp14);
+
+    var_s7   = arg0->field_44.field_14;
+    sp2C     = FP_TO(var_s0_2 + var_a0, Q12_SHIFT);
+    var_s0_2 = FP_TO(var_s0_2, Q12_SHIFT);
+
+    if (sp28 < var_s7)
+    {
+        sp10                   = 1;
+        arg0->field_44.field_0 = sp10;
+    }
+
+    if (sp10 == 1)
+    {
+        arg0->field_44.field_4 = 0;
+        sp10                   = 2;
+    }
+
+    if (var_s7 < var_s0_2)
+    {
+        var_s7                  = var_s0_2;
+        arg0->field_44.field_14 = var_s7;
+    }
+    else if (sp2C < var_s7)
+    {
+        var_s7                  = sp2C;
+        arg0->field_44.field_14 = var_s7;
+    }
+
+    if (sp28 < var_s0_2)
+    {
+        return 0;
+    }
+
+    if (g_DeltaTime0 != 0)
+    {
+        if (sp28 >= sp2C)
+        {
+            sp28 = sp2C;
+            sp18 = 1;
+        }
+
+        sp20 = arg0->field_44.field_C;
+        sp24 = arg0->field_44.field_E;
+
+        if (temp_s1 == 3)
+        {
+            sp3C = arg0->field_44.field_3;
+            sp40 = arg0->field_44.field_4;
+            sp34 = *(u16*)&sp1C->field_6;
+
+            sp54 = sp1C->field_0;
+
+            if (sp34 != 0)
+            {
+                sp38 = sp1C->field_8;
+                if (sp38 == 0)
+                {
+                    sp38 = 1;
+                }
+            }
+            else
+            {
+                sp38 = 1;
+            }
+
+            sp50 = sp1C->field_B;
+            sp4C = sp50 >> 4;
+            sp48 = sp1C->field_A;
+            sp4C--;
+            sp4C &= 0xF;
+            sp50  = D_800AFD1C[sp50 & 0xF];
+            sp4C++;
+            sp44 = sp1C->field_9;
+            sp4C = sp4C * sp50;
+
+            if (sp34 == 0 && sp44 == 1)
+            {
+                if (arg0->model_0.charaId_0 == sp44)
+                {
+                    var_a0_2 = func_8007FD2C();
+                }
+                else
+                {
+                    var_a0_2 = 0x2000;
+                }
+
+                if (var_a0_2 < 0x800)
+                {
+                    var_a0_2 = 0x800;
+                }
+                else if (var_a0_2 > 0x2000)
+                {
+                    var_a0_2 = 0x2000;
+                }
+
+                temp_v1 = FP_TO(var_a0_2 - 0x800, Q12_SHIFT) / 6144;
+                var_s2  = FP_MULTIPLY_PRECISE(temp_v1, -0x1800, Q12_SHIFT) + 0x1C00;
+                var_s2  = FP_MULTIPLY_PRECISE(var_s2, sp48, Q12_SHIFT);
+
+                if (var_s2 < 0xAA)
+                {
+                    if (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1)
+                    {
+                        var_s2 = (var_s2 + 0xAA) / 2;
+                    }
+
+                    // @hack
+                    goto j_3d8;
+                j_3a8:
+                    sp30 = 3;
+                    goto j_584;
+                j_3b0:
+                    sp30 = 2;
+                    goto j_584;
+                j_3bc:
+                    sp30    = 1;
+                    var_s2 -= var_s2 / 2;
+                    goto j_584;
+                }
+                else
+                {
+                    var_s2 = 0xAA;
+                }
+
+            j_3d8:
+                temp_t3_2 = sp54 / 3;
+                sp30      = -1;
+
+                if (g_SysWork.targetNpcIdx_2353 >= 0)
+                {
+                    temp_s1_2 = &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353];
+
+                    if (temp_s1_2->model_0.charaId_0 >= 2)
+                    {
+                        do
+                        {
+                            if (temp_s1_2->model_0.charaId_0 < 0x19)
+                            {
+                                temp_v0_4 = arg0->position_18.vx - temp_s1_2->position_18.vx;
+                                temp_v0_5 = arg0->position_18.vy - temp_s1_2->position_18.vy;
+                                temp_v0_6 = arg0->position_18.vz - temp_s1_2->position_18.vz;
+
+                                temp6   = FP_MULTIPLY_PRECISE(temp_v0_4, temp_v0_4, Q12_SHIFT) + FP_MULTIPLY_PRECISE(temp_v0_5, temp_v0_5, Q12_SHIFT);
+                                temp_s0 = FP_MULTIPLY_PRECISE(temp_v0_6, temp_v0_6, Q12_SHIFT) + temp6;
+
+                                sp30 = SquareRoot12(temp_s0);
+
+                                if (temp_s1_2->flags_3E & 2)
+                                {
+                                    temp_s0 = temp_s0 - 0x800;
+                                    if (temp_s0 < 0)
+                                    {
+                                        var_s2 = 0;
+                                    }
+                                    else if (temp_s0 <= 0xFFFF)
+                                    {
+                                        temp_v0_10 = FP_TO(temp_s0, Q12_SHIFT);
+                                        if (temp_v0_10 < 0)
+                                        {
+                                            temp_v0_10 += 0xFFFF;
+                                        }
+                                        var_s2 = FP_MULTIPLY_PRECISE(var_s2, temp_v0_10 >> 0x10, Q12_SHIFT);
+                                    }
+                                }
+
+                                if (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1))
+                                {
+                                    if (temp_t3_2 >= sp30)
+                                    {
+                                        if (sp30 <= 0x2000)
+                                        {
+                                            sp30   = 0;
+                                            var_s2 = 0;
+                                        }
+                                        else
+                                        {
+                                            goto j_3bc;
+                                            // sp30 = 1;
+                                            // var_s2 -= var_s2 / 2;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        goto j_3b0;
+                                        // sp30 = 2;
+                                    }
+                                }
+                                else
+                                {
+                                    goto j_3a8;
+                                    // sp30 = 3;
+                                }
+                            }
+                        } while (0); // @hack
+                    }
+                }
+
+            j_584:
+                sp48 = FP_MULTIPLY_PRECISE(var_s2, func_80080514(), Q12_SHIFT);
+            }
+
+            var_s6 = FP_MULTIPLY(sp4C, sp10 - 2, Q12_SHIFT);
+
+            for (var_s7  = var_s7 + sp34; sp3C != 0 && sp40 < sp38 && sp28 >= var_s7;
+                 var_s7 += sp34, sp40++, sp3C--)
+            {
+                for (var_s4 = sp44; var_s4 > 0; var_s4--)
+                {
+                    temp_v0_10 = func_80080514();
+                    temp_s2_2  = FP_MULTIPLY_PRECISE(sp48, temp_v0_10, Q12_SHIFT);
+
+                    temp_v0_10 = func_80080514() - 0x800;
+                    temp_s0_6  = var_s6 + FP_MULTIPLY_PRECISE(sp50, temp_v0_10, Q12_SHIFT);
+
+                    temp3     = sp20 + FP_MULTIPLY(temp_s2_2, Math_Sin(temp_s0_6), Q12_SHIFT);
+                    temp_s0_7 = sp24 + FP_MULTIPLY(temp_s2_2, Math_Cos(temp_s0_6), Q12_SHIFT);
+                    temp2     = Math_Cos(temp_s0_7);
+                    temp_s0_8 = Math_Sin(temp_s0_7);
+                    temp_s1_4 = FP_MULTIPLY(temp_s0_8, Math_Sin(temp3), Q12_SHIFT);
+                    temp_s0_9 = FP_MULTIPLY(temp_s0_8, Math_Cos(temp3), Q12_SHIFT);
+
+                    arg0->field_44.field_48[0].vx = FP_MULTIPLY(sp54, temp_s1_4, Q12_SHIFT);
+                    arg0->field_44.field_48[0].vy = FP_MULTIPLY(sp54, temp2, Q12_SHIFT);
+                    arg0->field_44.field_48[0].vz = FP_MULTIPLY(sp54, temp_s0_9, Q12_SHIFT);
+
+                    var_s6 += sp4C;
+
+                    if (arg0->model_0.charaId_0 == 1)
+                    {
+                        func_800892A4(5);
+                    }
+
+                    temp = func_8006DA08(&D_800C4728, &arg0->field_44.field_18, &arg0->field_44.field_48[0], arg0);
+                    ptr  = D_800C4728.field_10;
+
+                    if (temp && ptr != NULL)
+                    {
+                        arg0->field_44.field_48[1].vx = temp_s1_4;
+                        arg0->field_44.field_48[1].vy = temp2;
+                        arg0->field_44.field_48[1].vz = temp_s0_9;
+                        func_8008B714(arg0, ptr, &D_800C4728.field_4, 0);
+                    }
+                }
+            }
+
+            if (var_s7 >= sp2C)
+            {
+                sp18 = 1;
+            }
+            else
+            {
+                var_s7 -= sp34;
+            }
+
+            if (sp3C == 0)
+            {
+                var_s7 = sp28;
+                sp18   = 1;
+            }
+
+            if (sp40 >= sp38)
+            {
+                var_s7 = sp28;
+                sp18   = 1;
+            }
+
+            arg0->field_44.field_14 = var_s7;
+            arg0->field_44.field_4  = sp40;
+            arg0->field_44.field_3  = sp3C;
+        }
+        else
+        {
+            if (var_a0 <= 0)
+            {
+                var_a0 = 1;
+            }
+
+            if (temp_s1 == 1)
+            {
+                sp58 = 0;
+                if (var_s7 < sp28)
+                {
+                    sp5C = (sp28 - var_s7) / (var_a0 * 4);
+                }
+                else
+                {
+                    sp5C = 0;
+                }
+            }
+            else
+            {
+                sp58 = 1;
+                sp5C = 0x1000;
+            }
+
+            if (sp10 == 2)
+            {
+                func_8008B15C(arg0);
+                sp10 = 3;
+            }
+
+            temp_s0_10 = arg0->field_44.field_12;
+            temp_s1_5  = arg0->field_44.field_10;
+
+            sp60 = arg0->field_44.field_24[2].vx;
+            sp64 = arg0->field_44.field_24[2].vy;
+            sp68 = arg0->field_44.field_24[2].vz;
+
+            sp6C = arg0->field_44.field_18.vx;
+            sp70 = arg0->field_44.field_18.vy;
+            sp74 = arg0->field_44.field_18.vz;
+
+            sp7C = Math_Cos(temp_s0_10);
+            sp80 = Math_Sin(temp_s0_10);
+
+            sp78 = FP_MULTIPLY(sp80, Math_Sin(temp_s1_5), Q12_SHIFT);
+            sp80 = FP_MULTIPLY(sp80, Math_Cos(temp_s1_5), Q12_SHIFT);
+
+            sp88 = Math_Cos(sp24);
+            sp8C = Math_Sin(sp24);
+
+            sp84 = FP_MULTIPLY(sp8C, Math_Sin(sp20), Q12_SHIFT);
+            sp8C = FP_MULTIPLY(sp8C, Math_Cos(sp20), Q12_SHIFT);
+            sp90 = 0;
+            sp94 = 0;
+
+            for (var_s2 = 4, var_fp = 0, var_s3 = 0, var_s7 = 0, var_s6 = 0;
+                 var_s2 > 0;
+                 sp90  += sp68,
+                sp94   += sp64,
+                var_fp += sp60,
+                var_s3 += sp80,
+                var_s7 += sp7C,
+                var_s6 += sp78,
+                var_s2--)
+            {
+                var_a0_3 = (sp84 * var_s2) + var_s6;
+                if (var_a0_3 < 0)
+                {
+                    var_a0_3 += 3;
+                }
+                temp5 = var_a0_3 >> 2;
+
+                var_a1 = (sp88 * var_s2) + var_s7;
+                if (var_a1 < 0)
+                {
+                    var_a1 += 3;
+                }
+                temp4 = var_a1 >> 2;
+
+                var_s0_2 = (sp8C * var_s2) + var_s3;
+                if (var_s0_2 < 0)
+                {
+                    var_s0_2 += 3;
+                }
+                temp_s0_11 = var_s0_2 >> 2;
+
+                temp_s0 = ratan2(temp5, temp_s0_11);
+
+                D_800C4748[var_s2 - 1].vy = ratan2(SquareRoot0(SQUARE(temp5) + SQUARE(temp_s0_11)), temp4);
+                D_800C4748[var_s2 - 1].vx = temp_s0;
+
+                temp_a1 = var_s2 - 1;
+                temp_a0 = &D_800C4758[temp_a1];
+
+                var_v1 = (sp6C * var_s2) + var_fp;
+                if (var_v1 < 0)
+                {
+                    var_v1 += 3;
+                }
+                temp_a0->vx = var_v1 >> 2;
+
+                temp_v0_10 = (sp70 * var_s2) + sp94;
+                if (temp_v0_10 < 0)
+                {
+                    temp_v0_10 += 3;
+                }
+                temp_a0->vy = temp_v0_10 >> 2;
+
+                temp_v0_10 = (sp74 * var_s2) + sp90;
+                if (temp_v0_10 < 0)
+                {
+                    temp_v0_10 += 3;
+                }
+                temp_a0->vz = temp_v0_10 >> 2;
+            }
+
+            arg0->field_44.field_10 = arg0->field_44.field_C;
+            arg0->field_44.field_12 = arg0->field_44.field_E;
+
+            for (var_s2 = 0, temp_s1_3 = 4; (temp_s1_3 > 0) && (var_s2 == 0); temp_s1_3--)
+            {
+                temp_v0_11                 = &D_800C4758[4 - temp_s1_3];
+                arg0->field_44.field_18.vx = temp_v0_11->vx;
+                arg0->field_44.field_18.vy = temp_v0_11->vy;
+
+                temp_s0_14                 = &D_800C4748[4 - temp_s1_3];
+                arg0->field_44.field_18.vz = temp_v0_11->vz;
+
+                func_8008B1DC(arg0, temp_s0_14->vx, temp_s0_14->vy);
+
+                if (func_8008BF84(arg0, temp_s0_14->vx, sp1C, sp5C) != 0)
+                {
+                    var_s2 = sp58;
+                    sp18  |= var_s2;
+                }
+            }
+
+            var_s7     = sp28;
+            temp_v0_12 = &arg0->field_44;
+
+            temp_v0_12->field_18.vx       = sp6C;
+            arg0->field_44.field_24[2].vx = sp6C;
+            temp_v0_12->field_18.vy       = sp70;
+            arg0->field_44.field_24[2].vy = sp70;
+            temp_v0_12->field_18.vz       = sp74;
+            arg0->field_44.field_24[2].vz = sp74;
+        }
+
+        if (sp18 != 0)
+        {
+            arg0->field_44.field_0 = -1;
+
+            if (arg0->model_0.charaId_0 == 1)
+            {
+                switch (sp14)
+                {
+                    case 32:
+                    case 33:
+                        if (sp30 != -1)
+                        {
+                            if (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 1)
+                            {
+                                var_s0_2 = 3;
+                            }
+                            else
+                            {
+                                var_s0_2 = sp30;
+                            }
+                        }
+                        else
+                        {
+                            var_s0_2 = 5;
+                        }
+                        break;
+
+                    case 34:
+                        var_s0_2 = 5;
+                        break;
+
+                    case 35:
+                        var_s0_2 = 4;
+                        break;
+
+                    case 2:
+                    case 5:
+                    case 6:
+                    case 12:
+                    case 15:
+                    case 16:
+                    case 22:
+                    case 25:
+                    case 26:
+                        var_s0_2 = 7;
+                        break;
+
+                    case 8:
+                    case 9:
+                        var_s0_2 = -1;
+                        break;
+
+                    default:
+                        var_s0_2 = 6;
+                        break;
+                }
+
+                if (var_s0_2 != -1)
+                {
+                    func_8009151C(var_s0_2, arg0->field_44.field_8 != 0, func_8007FD2C());
+                }
+            }
+        }
+        else
+        {
+            arg0->field_44.field_0  = sp10;
+            arg0->field_44.field_14 = var_s7;
+        }
+    }
+
+    return arg0->field_44.field_8;
+}
 
 void func_8008B15C(s_SubCharacter* chara) // 0x8008B15C
 {

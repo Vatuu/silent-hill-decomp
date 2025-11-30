@@ -1406,8 +1406,9 @@ typedef struct
     u8  field_2; // In player: packed weapon attack. See `WEAPON_ATTACK`.
                  // This is not the same as `attackReceived_41`, as this value only resets when player is aiming.
                  // In NPCs: Indicates attack performed on player.
-    s8      field_3;
-    s8      unk_4[4];
+    u8      field_3;
+    u8      field_4;
+    s8      unk_5[3];
     s32     field_8;  // } Fields used by `func_8008A3E0`. Types guessed for now.
     s16     field_C;  // } Angle?
     s16     field_E;  // } Angle?
