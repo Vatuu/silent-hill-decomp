@@ -2197,6 +2197,14 @@ typedef struct
 } s_800E330C;
 STATIC_ASSERT_SIZEOF(s_800E330C, 24);
 
+typedef struct {
+    s32 field_0;
+    s32 field_4;
+    s16 field_8;
+    s16 field_A;
+} s_D_800D5A8C;
+STATIC_ASSERT_SIZEOF(s_D_800D5A8C, 12);
+
 extern s_800E330C sharedData_800E330C_0_s00[20];
 
 extern s_800E34FC sharedData_800E34FC_0_s00[60];
@@ -2234,6 +2242,8 @@ extern s32 g_PuppetNurse_AnimStatus1[2];
 
 // Bodyprog variable?
 extern u16 D_800ADA0C;
+
+extern s_D_800D5A8C sharedData_800D5A8C_3_s03[3];
 
 q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
 
@@ -2945,6 +2955,8 @@ void MapEvent_DoorJammed(void);
 void MapEvent_DoorLocked(void);
 
 void MapEvent_DoorUnlocked(void);
+
+bool sharedFunc_800CF294_3_s03(s_SubCharacter* nurse, q19_12 dist);
 
 /** @brief Gets the room index corresponding to the current 2D position.
  *

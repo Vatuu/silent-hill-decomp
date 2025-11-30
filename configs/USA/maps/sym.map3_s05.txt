@@ -94,6 +94,7 @@ sharedFunc_800CEC88_3_s03     = 0x800D36F8; // type:func
 sharedFunc_800CEEAC_3_s03     = 0x800D391C; // type:func
 sharedFunc_800CEEE0_3_s03     = 0x800D3950; // type:func
 sharedFunc_800CF0B4_3_s03     = 0x800D3B24; // type:func
+sharedFunc_800CF294_3_s03     = 0x800D3D04; // type:func
 sharedFunc_800CF3AC_3_s03     = 0x800D3E1C; // type:func
 sharedFunc_800CF7F4_3_s03     = 0x800D4264; // type:func
 sharedFunc_800CF90C_3_s03     = 0x800D437C; // type:func
@@ -132,6 +133,7 @@ g_NursePuppetSfxs             = 0x800D9E60; // type:SfxPair size:0x24
 g_NursePuppet_AnimSfxs        = 0x800D9EA8; // type:u8 size:0x244
 g_PuppetNurse_AnimStatus1     = 0x800DA0EC; // type:s32 size:0x8
 g_PuppetNurse_AnimStatus0     = 0x800DA0F4; // type:s32 size:0x8
+sharedData_800D5A8C_3_s03     = 0x800DA0FC; // type:D_800D5A8C size:0x24
 MAP_ROOM_IDXS                 = 0x800DA12C; // type:u8
 MAP_POINTS                    = 0x800DA1FC; // type:MapPoint2d
 

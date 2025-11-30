@@ -1221,7 +1221,7 @@ typedef struct
 {
     q19_12 health_0;
     s32 field_4;
-    s8 unk_8[4];
+    s32 field_8;
     s32 field_C;
     s8 unk_10[8];
     s32 field_18;
@@ -1339,7 +1339,7 @@ typedef struct _SubCharaPropertiesPuppetNurse
     s32              field_114;
     u8               field_118;
     u8               modelVariation_119;
-    s16              field_11A;
+    u16              field_11A;
     s16              field_11C;
     s16              field_11E;
     s16              field_120;
