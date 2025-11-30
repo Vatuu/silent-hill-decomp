@@ -1,8 +1,5 @@
 static void inline GetNewSpeed(s_SubCharacter* nurse, q19_12 dist)
 {
-    q19_12 moveSpeed;
-    q19_12 newMoveSpeed;
-    q19_12 tmpSpeed;
     q19_12 limit;
 
     if (dist > Q12(0.0f))

@@ -3029,11 +3029,13 @@ typedef struct
 {                                                                                                    \
     q19_12 moveSpeed;                                                                                \
     q19_12 newSpeed;                                                                                 \
+    q19_12 newMoveSpeed;                                                                             \
                                                                                                      \
     moveSpeed = chara->moveSpeed_38;                                                                 \
     if (moveSpeed > limit)                                                                           \
     {                                                                                                \
         newMoveSpeed = limit;                                                                        \
+        limit = 0; \
         newSpeed     = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT);              \
         if (newMoveSpeed < newSpeed)                                                                 \
         {                                                                                            \
