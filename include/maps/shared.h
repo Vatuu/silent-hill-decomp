@@ -2621,7 +2621,7 @@ bool sharedFunc_800CF90C_3_s03(s_SubCharacter* chara);
 
 void sharedFunc_800CF9F8_3_s03(s_SubCharacter*);
 
-void sharedFunc_800CFD18_3_s03(s_SubCharacter*);
+void Ai_PuppetNurse_Control10(s_SubCharacter*);
 
 void sharedFunc_800CFDD4_3_s03(s_SubCharacter*);
 
