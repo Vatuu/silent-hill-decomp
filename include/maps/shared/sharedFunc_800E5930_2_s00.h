@@ -1,8 +1,7 @@
 void sharedFunc_800E5930_2_s00(s_SubCharacter* chara)
 {
-    q19_12 newMoveSpeed;
-    s32    newAnimStatus;
-    u32    animStatus;
+    s32 newAnimStatus;
+    u32 animStatus;
 
     // NOTE: This code reads `chara->field_E8` both as word and a half... (half here).
     if (!(chara->properties_E4.splitHead.flags_E8 & CharaUnk0Flag_Unk1))

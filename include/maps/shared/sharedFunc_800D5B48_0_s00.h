@@ -1,6 +1,5 @@
 void sharedFunc_800D5B48_0_s00(s_SubCharacter* chara)
 {
-    s32 moveSpeed;
     u16 flags;
 
     if (!(chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 13)))

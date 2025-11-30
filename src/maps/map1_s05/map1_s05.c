@@ -78,10 +78,10 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D11A0);
 
 void func_800D17BC(s_SubCharacter* chara) // 0x800D17BC
 {
-    s32    vol;
-    s32    timer0;
-    s16    timer1;
-    s16    timer1_div6;
+    s32 vol;
+    s32 timer0;
+    s16 timer1;
+    s16 timer1_div6;
 
     Chara_MoveSpeedUpdate(chara, Q12(1.5997f));
     switch (chara->model_0.anim_4.status_0)

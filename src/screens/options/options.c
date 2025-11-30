@@ -1054,13 +1054,15 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
 
 void Options_Menu_VignetteDraw(void) // 0x801E49F0
 {
-    GsOT*    ot = &g_OrderingTable0[g_ActiveBufferIdx];
     s32      y0;
     s32      y1;
     s32      xy2;
     s32      xy3;
     s32      i;
+    GsOT*    ot;
     POLY_G4* poly;
+    
+    ot = &g_OrderingTable0[g_ActiveBufferIdx];
 
     xy3 = 160 + (0xFFA0 << 16); // TODO: -96
     xy2 = 160 + (0xFF90 << 16); // TODO: -112
@@ -1289,7 +1291,7 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
         { { 132, 78 }, { 122, 68 }, { 122, 88 } }
     };
 
-    const char* OPTIONS_MENU_SOUND_ENTRY_CONFIG_STRINGS[] = // 0x801E2BDC
+    const char* CONFIG_STRS[] =
     {
         "On",
         "Off",
@@ -1328,27 +1330,27 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
         switch (i)
         {
             case 0:
-                strPosX = (g_GameWork.config_0.optVibrationEnabled_21 == 0) ? 214 : 216;
+                strPosX = !g_GameWork.config_0.optVibrationEnabled_21 ? 214 : 216;
                 Gfx_StringSetPosition(strPosX, 120);
 
-                strIdx = g_GameWork.config_0.optVibrationEnabled_21 == 0;
-                Gfx_StringDraw(OPTIONS_MENU_SOUND_ENTRY_CONFIG_STRINGS[strIdx], 10);
+                strIdx = !g_GameWork.config_0.optVibrationEnabled_21;
+                Gfx_StringDraw(CONFIG_STRS[strIdx], 10);
                 break;
 
             case 1:
-                strPosX = (g_GameWork.config_0.optAutoLoad_25 == 0) ? 214 : 216;
+                strPosX = !g_GameWork.config_0.optAutoLoad_25 ? 214 : 216;
                 Gfx_StringSetPosition(strPosX, 136);
 
-                strIdx = g_GameWork.config_0.optAutoLoad_25 == 0;
-                Gfx_StringDraw(OPTIONS_MENU_SOUND_ENTRY_CONFIG_STRINGS[strIdx], 10);
+                strIdx = !g_GameWork.config_0.optAutoLoad_25;
+                Gfx_StringDraw(CONFIG_STRS[strIdx], 10);
                 break;
 
             case 2:
-                strPosX = (g_GameWork.config_0.optSoundType_1E != 0) ? 194 : 206;
+                strPosX = g_GameWork.config_0.optSoundType_1E ? 194 : 206;
                 Gfx_StringSetPosition(strPosX, 152);
 
                 strIdx = g_GameWork.config_0.optSoundType_1E + 2;
-                Gfx_StringDraw(OPTIONS_MENU_SOUND_ENTRY_CONFIG_STRINGS[strIdx], 10);
+                Gfx_StringDraw(CONFIG_STRS[strIdx], 10);
                 break;
         }
     }

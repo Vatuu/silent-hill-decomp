@@ -1,9 +1,7 @@
 void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara)
 {
     q3_12  timeScaled;
-    q19_12 moveSpeed;
     s32    animTime;
-    q19_12 newMoveSpeed;
     u32    animStatusIdx;
     u8     newAnimStatus;
 

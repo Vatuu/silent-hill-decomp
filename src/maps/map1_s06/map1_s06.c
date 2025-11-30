@@ -179,6 +179,7 @@ void func_800D2CC8(s_SubCharacter* chara) // 0x800D2CC8
         case 26:
         case 27:
             Chara_MoveSpeedUpdate(chara, Q12(1.0f));
+
             if (!Savegame_EventFlagGet(EventFlag_131))
             {
                 func_8005DC1C(Sfx_Unk1479, &chara->position_18, Q8_CLAMPED(0.5f), 0);

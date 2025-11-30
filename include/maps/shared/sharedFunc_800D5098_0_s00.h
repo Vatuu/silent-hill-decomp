@@ -101,7 +101,6 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
                 return;
             }
 
-            // TODO: This code is duplicated in block below, can it be shared somehow?
             Chara_MoveSpeedUpdate(chara, Q12(6.0f));
         }
     }

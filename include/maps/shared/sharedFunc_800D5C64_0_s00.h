@@ -8,8 +8,6 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* chara)
     s32    frameIdx;
     s32    flags;
     s32    var;
-    q19_12 moveSpeed0;
-    q19_12 moveSpeed1;
     q19_12 duration;
 
     #define larvalStalkerProps chara->properties_E4.larvalStalker

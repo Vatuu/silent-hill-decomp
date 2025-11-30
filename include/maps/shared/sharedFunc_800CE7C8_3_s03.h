@@ -1,73 +1,74 @@
-static void inline calcNewSpeed2(s_SubCharacter* nurse, s32 dist, s32 distAbs)
+static void inline GetNewSpeed2(s_SubCharacter* nurse, q19_12 dist, q19_12 distAbs)
 {
-    s32 moveSpeed;
-    s32 newMoveSpeed;
-    s32 tmpSpeed;
-    s32 limit;
+    q19_12 moveSpeed;
+    q19_12 newMoveSpeed;
+    q19_12 tmpSpeed;
+    q19_12 limit;
 
-    if (distAbs > 0x333)
+    if (distAbs > Q12(0.2f))
     {
-        limit = 0x333;
+        limit = Q12(0.2f);
     }
     else
     {
-        
-        if (distAbs > 0xCC)
+        if (distAbs > Q12(0.05f))
         {
-            if (dist > 0)
+            if (dist > Q12(0.0f))
             {
-                limit = 0x999;
+                limit = Q12(0.6f);
             }
             else
             {
-                limit = -0x999;
+                limit = Q12(-0.6f);
             }
         }
         else
         {
-            limit = 0;
+            limit = Q12(0.0f);
         }
     }
+
     Chara_MoveSpeedUpdate2(nurse, Q12(2.0f), limit);
 }
 
 bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse)
 {
-    s32 deltaX;
-    s32 deltaZ;
-    s32 dist;
-    s32 distAbs;
-    s32 distSubtract;
-    s32 moveSpeed;
-
-    s16 angle;
-    s16 angle2;
-    s16 tmpAngle;
-    s16 addAngle;
-    s16 absAngle;
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    q19_12 dist;
+    q19_12 distAbs;
+    q19_12 distSubtract;
+    q19_12 moveSpeed;
+    q3_12  angle;
+    q3_12  angle2;
+    q3_12  tmpAngle;
+    q3_12  addAngle;
+    q3_12  absAngle;
 
     distSubtract = Q12(0.78f);
-    angle = func_8005BF38(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - nurse->position_18.vx,
-                                   g_SysWork.player_4C.chara_0.position_18.vz - nurse->position_18.vz) - nurse->rotation_24.vy);
+    angle        = func_8005BF38(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - nurse->position_18.vx,
+                                        g_SysWork.player_4C.chara_0.position_18.vz - nurse->position_18.vz) - nurse->rotation_24.vy);
     absAngle = ABS(angle);
 
     angle2 = func_8005BF38(g_SysWork.player_4C.chara_0.rotation_24.vy - nurse->rotation_24.vy);
     angle2 = ABS(angle2);
 
-    if (angle2 > Q12(0.25f))
+    if (angle2 > FP_ANGLE(90.0f))
     {
         distSubtract = Q12(0.85f);
     }
-    deltaX = Q12_TO_Q6(g_SysWork.player_4C.chara_0.position_18.vx - nurse->position_18.vx);
-    deltaZ = Q12_TO_Q6(g_SysWork.player_4C.chara_0.position_18.vz - nurse->position_18.vz);
-    dist = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ))) - distSubtract;
+
+    deltaX  = Q12_TO_Q6(g_SysWork.player_4C.chara_0.position_18.vx - nurse->position_18.vx);
+    deltaZ  = Q12_TO_Q6(g_SysWork.player_4C.chara_0.position_18.vz - nurse->position_18.vz);
+    dist    = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ))) - distSubtract;
     distAbs = ABS(dist);
 
     if (dist > Q12(0.5f))
     {
         return false;
     }
-    calcNewSpeed2(nurse, dist, distAbs);
+
+    GetNewSpeed2(nurse, dist, distAbs);
 
     if (absAngle > FP_ANGLE(4.0f))
     {

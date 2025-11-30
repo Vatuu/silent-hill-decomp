@@ -951,8 +951,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
             if (!(chara->attackReceived_41 >= 68 && chara->attackReceived_41 < 70))
             {
-                g_Player_HeadingAngle                                                   = ratan2(chara->dmg_B4.position_0.vx, chara->dmg_B4.position_0.vz) - chara->rotation_24.vy;
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = SQUARE(chara->dmg_B4.position_0.vx) + SQUARE(chara->dmg_B4.position_0.vz) + SQUARE(chara->dmg_B4.position_0.vy);
+                g_Player_HeadingAngle                                                   = ratan2(chara->damage_B4.position_0.vx, chara->damage_B4.position_0.vz) - chara->rotation_24.vy;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = SQUARE(chara->damage_B4.position_0.vx) + SQUARE(chara->damage_B4.position_0.vz) + SQUARE(chara->damage_B4.position_0.vy);
             }
 
             if (extra->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
@@ -1642,7 +1642,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             {
                 case PlayerState_GetUpFront:
                 case PlayerState_GetUpBack:
-                    chara->dmg_B4.amount_C                  = Q12(0.0f);
+                    chara->damage_B4.amount_C                  = Q12(0.0f);
                     chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
 
                     if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
@@ -2105,8 +2105,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
             if (!(chara->attackReceived_41 >= 68 && chara->attackReceived_41 < 70))
             {
-                g_Player_HeadingAngle                                                   = ratan2(chara->dmg_B4.position_0.vx, chara->dmg_B4.position_0.vz) - chara->rotation_24.vy;
-                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = SQUARE(chara->dmg_B4.position_0.vx) + SQUARE(chara->dmg_B4.position_0.vz) + SQUARE(chara->dmg_B4.position_0.vy);
+                g_Player_HeadingAngle                                                   = ratan2(chara->damage_B4.position_0.vx, chara->damage_B4.position_0.vz) - chara->rotation_24.vy;
+                g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = SQUARE(chara->damage_B4.position_0.vx) + SQUARE(chara->damage_B4.position_0.vz) + SQUARE(chara->damage_B4.position_0.vy);
             }
 
             if (extra->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
@@ -6659,7 +6659,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
     if (g_Player_DisableControl || g_Player_DisableDamage)
     {
-        chara->dmg_B4.amount_C = Q12(0.0f);
+        chara->damage_B4.amount_C = Q12(0.0f);
         return;
     }
 
@@ -6691,14 +6691,14 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
         case PlayerState_OnFloorFront:
         case PlayerState_OnFloorBehind:
             // Related to enemy grabbing.
-            if (chara->dmg_B4.amount_C != Q12(0.0f) && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
+            if (chara->damage_B4.amount_C != Q12(0.0f) && !(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
                 func_8005DC1C(sfx, &chara->position_18, Q8_CLAMPED(0.125f), 0);
                 chara->properties_E4.player.field_10C = 64;
             }
 
-            if (chara->dmg_B4.amount_C == Q12(0.0f))
+            if (chara->damage_B4.amount_C == Q12(0.0f))
             {
                 g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
             }
@@ -6723,9 +6723,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
         case PlayerState_Unk35:
         case PlayerState_EnemyGrabPinnedFrontStart:
         case PlayerState_EnemyGrabPinnedBackStart:
-            chara->dmg_B4.position_0.vz = 0;
-            chara->dmg_B4.position_0.vy = 0;
-            chara->dmg_B4.position_0.vx = 0;
+            chara->damage_B4.position_0.vz = Q12(0.0f);
+            chara->damage_B4.position_0.vy = Q12(0.0f);
+            chara->damage_B4.position_0.vx = Q12(0.0f);
 
             if (chara->attackReceived_41 == 47)
             {
@@ -6743,7 +6743,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             if (chara->attackReceived_41 >= 68 &&
                 chara->attackReceived_41 <  70)
             {
-                chara->dmg_B4.amount_C = Q12(0.0f);
+                chara->damage_B4.amount_C = Q12(0.0f);
             }
             break;
 
@@ -6796,7 +6796,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             }
             else if (chara->attackReceived_41 == 68)
             {
-                enemyRotY = chara->dmg_B4.position_0.vy;
+                enemyRotY = chara->damage_B4.position_0.vy;
             }
 
             enemyRotY = FP_ANGLE_NORM_U((enemyRotY - chara->rotation_24.vy) + FP_ANGLE(360.0f));
@@ -6842,7 +6842,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
                 case 60:
                 case 62:
-                    chara->dmg_B4.amount_C                        = Q12(10.0f);
+                    chara->damage_B4.amount_C                       = Q12(10.0f);
                     g_SysWork.player_4C.extra_128.state_1C          = PlayerState_DamageHead;
                     chara->model_0.stateStep_3                      = 0;
                     chara->model_0.state_2                          = 0;
@@ -6988,7 +6988,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
                     if (chara->attackReceived_41 != 69)
                     {
                         g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(4.0f);
-                        Math_ShortestAngleGet(chara->rotation_24.vy, (s16)chara->dmg_B4.position_0.vy, &headingAngle);
+                        Math_ShortestAngleGet(chara->rotation_24.vy, (s16)chara->damage_B4.position_0.vy, &headingAngle);
                         g_Player_HeadingAngle = headingAngle;
                     }
 
@@ -7074,7 +7074,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
         return;
     }
 
-    if (chara->dmg_B4.amount_C != Q12(0.0f))
+    if (chara->damage_B4.amount_C != Q12(0.0f))
     {
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
         if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived))
@@ -7086,22 +7086,22 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
 
         if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
         {
-            chara->health_B0 -= chara->dmg_B4.amount_C * 2;
+            chara->health_B0 -= chara->damage_B4.amount_C * 2;
         }
         else
         {
             switch (g_SavegamePtr->gameDifficulty_260)
             {
                 case GameDifficulty_Easy:
-                    chara->dmg_B4.amount_C = (chara->dmg_B4.amount_C * 3) >> 2; // `/ 4`.
+                    chara->damage_B4.amount_C = (chara->damage_B4.amount_C * 3) >> 2; // `/ 4`.
                     break;
 
                 case GameDifficulty_Hard:
-                    chara->dmg_B4.amount_C = (chara->dmg_B4.amount_C * 6) >> 2; // `/ 4`.
+                    chara->damage_B4.amount_C = (chara->damage_B4.amount_C * 6) >> 2; // `/ 4`.
                     break;
             }
 
-            chara->health_B0 -= chara->dmg_B4.amount_C;
+            chara->health_B0 -= chara->damage_B4.amount_C;
         }
 
         if (chara->health_B0 < Q12(0.0f))
@@ -7110,8 +7110,8 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
             D_800C4561       = 1;
         }
 
-        func_800893D0(chara->dmg_B4.amount_C);
-        chara->dmg_B4.amount_C = Q12(0.0f);
+        func_800893D0(chara->damage_B4.amount_C);
+        chara->damage_B4.amount_C = Q12(0.0f);
     }
 
     if (chara->health_B0 <= Q12(0.0f) && g_SysWork.player_4C.extra_128.state_1C != PlayerState_Death &&

@@ -1279,7 +1279,7 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
 typedef struct _SubCharaPropertiesNpc
 {
     s_func_8006CF18* unk_E4; // TODO: Not sure if this is meant to be in player or NPC properties, has to be at 0x0.
-    VECTOR3          field_E8;
+    VECTOR3          field_E8; // Q19.12 | Character position copy.
     s32              field_F4;
     s32              field_F8;
     s32              field_FC;
@@ -1328,21 +1328,21 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesUnk0, 68);
 typedef struct _SubCharaPropertiesPuppetNurse
 {
     s_func_8006CF18* unk_E4;
-    VECTOR3 field_E8;
-    s_CharaDamage dmg_F4;
-    s32 field_104;
-    s32 field_108;
-    s32 field_10C;
-    s8 unk_110[4];
-    s32 field_114;
-    u8 field_118;
-    u8 modelVariation_119;
-    s16 field_11A;
-    s16 field_11C;
-    s16 field_11E;
-    s16 field_120;
-    u16 flags_122;
-    s_800D5710* field_124;
+    VECTOR3          position_E8; /** Q19.12 */
+    s_CharaDamage    damage_F4;
+    s32              field_104;
+    s32              field_108;
+    s32              field_10C;
+    s8               unk_110[4];
+    s32              field_114;
+    u8               field_118;
+    u8               modelVariation_119;
+    s16              field_11A;
+    s16              field_11C;
+    s16              field_11E;
+    s16              field_120;
+    u16              flags_122;
+    s_800D5710*      field_124;
 } s_SubCharaPropertiesPuppetNurse;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPuppetNurse, 68);
 
@@ -1437,7 +1437,7 @@ typedef struct _SubCharacter
     s8  unk_42[2];         // Most likely padding.
     s_SubCharacter_44  field_44;
     q19_12  health_B0;
-    s_CharaDamage dmg_B4;
+    s_CharaDamage damage_B4;
     u16     deathTimer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
     s16     timer_C6;      // Some sort of timer, value written by `Ai_LarvalStalker_Update`.
 
@@ -2057,14 +2057,14 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
     }
 }
 
-/** @brief Clears s_CharaDamage structure.
+/** @brief Clears a character's damage field.
  *
- * @param chara Character pointer
+ * @param chara Character to update.
  */
-#define Chara_DamageClear(chara)          \
-    (chara)->dmg_B4.amount_C = Q12(0.0);  \
-    (chara)->dmg_B4.position_0.vz = 0;    \
-    (chara)->dmg_B4.position_0.vy = 0;    \
-    (chara)->dmg_B4.position_0.vx = 0
+#define Chara_DamageClear(chara)                  \
+    (chara)->damage_B4.amount_C      = Q12(0.0f); \
+    (chara)->damage_B4.position_0.vz = Q12(0.0f); \
+    (chara)->damage_B4.position_0.vy = Q12(0.0f); \
+    (chara)->damage_B4.position_0.vx = Q12(0.0f)
 
 #endif

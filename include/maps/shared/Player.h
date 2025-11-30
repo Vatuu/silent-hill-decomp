@@ -1515,11 +1515,11 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
 
     if (vecSqr > Q12(1.75f))
     {
-        playerChara->dmg_B4.amount_C = SquareRoot0(vecSqr) * 4;
+        playerChara->damage_B4.amount_C = SquareRoot0(vecSqr) * 4;
     }
     else
     {
-        playerChara->dmg_B4.amount_C = SquareRoot0(vecSqr) * 64;
+        playerChara->damage_B4.amount_C = SquareRoot0(vecSqr) * 64;
     }
 
     if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived) &&
@@ -1531,13 +1531,13 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
     }
 
-    if (playerChara->dmg_B4.amount_C != Q12(0.0f))
+    if (playerChara->damage_B4.amount_C != Q12(0.0f))
     {
         g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
 
-        playerChara->health_B0 -= playerChara->dmg_B4.amount_C;
-        func_800893D0(playerChara->dmg_B4.amount_C);
-        playerChara->dmg_B4.amount_C = Q12(0.0f);
+        playerChara->health_B0 -= playerChara->damage_B4.amount_C;
+        func_800893D0(playerChara->damage_B4.amount_C);
+        playerChara->damage_B4.amount_C = Q12(0.0f);
     }
 #endif
 }
@@ -1614,11 +1614,11 @@ bool sharedFunc_800D2E94_0_s00(void)
             npcChara->model_0.charaId_0 = Chara_None;
         }
 
-        if (npcChara->dmg_B4.amount_C != Q12(0.0f))
+        if (npcChara->damage_B4.amount_C != Q12(0.0f))
         {
             if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_KitchenKnife)
             {
-                npcChara->dmg_B4.amount_C >>= 1;
+                npcChara->damage_B4.amount_C >>= 1;
             }
 
             // Apply `damageReceived` to character health.
@@ -1628,10 +1628,10 @@ bool sharedFunc_800D2E94_0_s00(void)
             }
             else
             {
-                npcChara->health_B0 -= npcChara->dmg_B4.amount_C;
+                npcChara->health_B0 -= npcChara->damage_B4.amount_C;
             }
 
-            npcChara->dmg_B4.amount_C = Q12(0.0f);
+            npcChara->damage_B4.amount_C = Q12(0.0f);
         }
 
         return true;

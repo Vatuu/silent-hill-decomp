@@ -2487,24 +2487,30 @@ void func_8008B15C(s_SubCharacter* chara) // 0x8008B15C
     }
 }
 
-void func_8008B1DC(s_SubCharacter* arg0, s32 arg1, s32 arg2) // 0x8008B1DC
+void func_8008B1DC(s_SubCharacter* chara, s32 angle0, s32 angle1) // 0x8008B1DC
 {
     s32                temp_s0;
-    s32                temp_s1;
+    q19_12             sinAngle1;
+    q19_12             cosAngle1;
     s32                temp_s3;
-    s32                temp_s4;
     s32                temp_v1_2;
     s32                i;
-    s_800AD4C8*        temp_v1;
     s32                temp_s2;
     s32                idx46;
+    s32                vx;
+    s32                vy;
+    s32                vz;
+    s32                vx2;
+    s32                vy2;
+    s32                vz2;
+    s32                vx3;
+    s32                vy3;
+    s32                vz3;
+    s_800AD4C8*        ptr;
     s_SubCharacter_44* base;
-    s32                vx, vy, vz;
-    s32                vx2, vy2, vz2;
-    s32                vx3, vy3, vz3;
 
-    base  = &arg0->field_44;
-    idx46 = arg0->field_44.field_2;
+    base  = &chara->field_44;
+    idx46 = chara->field_44.field_2;
 
     for (i = 0; i >= 0; i--)
     {
@@ -2525,44 +2531,44 @@ void func_8008B1DC(s_SubCharacter* arg0, s32 arg1, s32 arg2) // 0x8008B1DC
         base->field_24[i + 1].vz = vz2;
     }
 
-    temp_v1 = &D_800AD4C8[idx46];
+    ptr = &D_800AD4C8[idx46];
 
-    temp_s2 = temp_v1->field_0;
-    temp_s0 = temp_v1->field_2;
+    temp_s2 = ptr->field_0;
+    temp_s0 = ptr->field_2;
 
-    vx3 = arg0->field_44.field_18.vx;
-    vy3 = arg0->field_44.field_18.vy;
-    vz3 = arg0->field_44.field_18.vz;
+    vx3 = chara->field_44.field_18.vx;
+    vy3 = chara->field_44.field_18.vy;
+    vz3 = chara->field_44.field_18.vz;
 
     vx2 = vx3;
     vy2 = vy3;
     vz2 = vz3;
 
-    temp_s4 = Math_Cos(arg2);
-    temp_s1 = Math_Sin(arg2);
+    cosAngle1 = Math_Cos(angle1);
+    sinAngle1 = Math_Sin(angle1);
 
-    temp_s3   = FP_MULTIPLY(temp_s1, Math_Sin(arg1), Q12_SHIFT);
-    temp_v1_2 = FP_MULTIPLY(temp_s1, Math_Cos(arg1), Q12_SHIFT);
+    temp_s3   = FP_MULTIPLY(sinAngle1, Math_Sin(angle0), Q12_SHIFT);
+    temp_v1_2 = FP_MULTIPLY(sinAngle1, Math_Cos(angle0), Q12_SHIFT);
 
     temp_s2 -= temp_s0;
 
     vx2                          += FP_MULTIPLY(temp_s0, temp_s3, Q12_SHIFT);
-    arg0->field_44.field_24[0].vx = vx2;
+    chara->field_44.field_24[0].vx = vx2;
 
-    vy2                          += FP_MULTIPLY(temp_s0, temp_s4, Q12_SHIFT);
-    arg0->field_44.field_24[0].vy = vy2;
+    vy2                          += FP_MULTIPLY(temp_s0, cosAngle1, Q12_SHIFT);
+    chara->field_44.field_24[0].vy = vy2;
 
     vz2                          += FP_MULTIPLY(temp_s0, temp_v1_2, Q12_SHIFT);
-    arg0->field_44.field_24[0].vz = vz2;
+    chara->field_44.field_24[0].vz = vz2;
 
     vx                            = FP_MULTIPLY(temp_s2, temp_s3, Q12_SHIFT);
-    arg0->field_44.field_48[0].vx = vx;
+    chara->field_44.field_48[0].vx = vx;
 
-    vy                            = FP_MULTIPLY(temp_s2, temp_s4, Q12_SHIFT);
-    arg0->field_44.field_48[0].vy = vy;
+    vy                            = FP_MULTIPLY(temp_s2, cosAngle1, Q12_SHIFT);
+    chara->field_44.field_48[0].vy = vy;
 
     vz                            = FP_MULTIPLY(temp_s2, temp_v1_2, Q12_SHIFT);
-    arg0->field_44.field_48[0].vz = vz;
+    chara->field_44.field_48[0].vz = vz;
 }
 
 void func_8008B398(void) // 0x8008B398
@@ -3025,17 +3031,17 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
     if (var_s4 != 0)
     {
-        target->dmg_B4.amount_C += var_s4;
+        target->damage_B4.amount_C += var_s4;
     }
 
     if (var_s7 != 0)
     {
         temp              = FP_MULTIPLY_PRECISE(var_s7, var_s0_2, Q12_SHIFT);
-        target->dmg_B4.position_0.vx += temp;
+        target->damage_B4.position_0.vx += temp;
         temp              = FP_MULTIPLY_PRECISE(var_s7, var_s1, Q12_SHIFT);
-        target->dmg_B4.position_0.vy += temp;
+        target->damage_B4.position_0.vy += temp;
         temp              = FP_MULTIPLY_PRECISE(var_s7, var_s2, Q12_SHIFT);
-        target->dmg_B4.position_0.vz += temp;
+        target->damage_B4.position_0.vz += temp;
     }
 
     target->attackReceived_41 = weaponAttack;
@@ -4045,7 +4051,7 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
     return (res > Q8(24.0f)) ? Q8(24.0f) : res;
 }
 
-// TODO: Random data we've seen between sections, likely should be a split here.
+// TODO: Random data previously seen between sections. Likely should be a split here.
 const u8 hack_vcSetWatchTgtXzPos_fix[] = { 0x00, 0x35, 0x08, 0x80, 0x00, 0x00, 0x00, 0x00 };
 
 // Used by `func_8008D990`.

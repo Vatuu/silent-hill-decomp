@@ -73,7 +73,7 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
                 {
                     // @hack This check should be
                     // `if (diff >= Q12(-1.0f) && diff < Q12(1.0f))`
-                    // But that results in `sltiu 0x2000` instead of the `li 0x2000/sltu` that we need.
+                    // But that results in `sltiu 0x2000` instead of the `li 0x2000/sltu` needed.
 
                     int diff = (chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy);
                     if (diff + Q12(1.0f) > maxHack)

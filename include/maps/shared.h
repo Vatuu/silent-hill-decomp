@@ -2223,8 +2223,8 @@ extern s32 g_PuppetNurseHurtSfxIdx[4];
 
 extern s_SfxPair g_NursePuppetSfxs[18];
 
-// Only used by `Ai_PuppetNurse_AnimSfxGet`. Currently causes a mismatch. Try to move it when more code gets decompiled
-extern u8 g_NursePuppet_SfxOffsets[4]; // = {9, 6, 7, 8};
+// Only used by `Ai_PuppetNurse_AnimSfxGet`. Currently causes a mismatch. Try to move it when more code gets decompiled.
+extern u8 g_NursePuppet_SfxOffsets[4]; // = { 9, 6, 7, 8 };
 
 extern u8 g_NursePuppet_AnimSfxs[580];
 
@@ -2232,7 +2232,8 @@ extern s32 g_PuppetNurse_AnimStatus0[2];
 
 extern s32 g_PuppetNurse_AnimStatus1[2];
 
-extern u16 D_800ADA0C; // bodyprog variable ?
+// Bodyprog variable?
+extern u16 D_800ADA0C;
 
 q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
 
@@ -2583,15 +2584,15 @@ void Ai_NursePuppet_Move(s_SubCharacter* nurse);
 
 bool sharedFunc_800CE398_3_s03(s32 arg0);
 
-void Ai_PuppetNurse_Control1(s_SubCharacter*);
+void Ai_PuppetNurse_Control1(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control2(s_SubCharacter*);
+void Ai_PuppetNurse_Control2(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control3_4(s_SubCharacter*, s32);
+void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, s32 arg1);
 
-void Ai_PuppetNurse_Control5(s_SubCharacter*);
+void Ai_PuppetNurse_Control5(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control6_7(s_SubCharacter*, s32);
+void Ai_PuppetNurse_Control6_7(s_SubCharacter* nurse, s32 arg1);
 
 void sharedFunc_800CEC88_3_s03(s_SubCharacter*);
 
@@ -2611,7 +2612,7 @@ void sharedFunc_800CFDD4_3_s03(s_SubCharacter*);
 
 void sharedFunc_800D0110_3_s03(s_SubCharacter*);
 
-void Ai_PuppetNurse_Control(s_SubCharacter* chara);
+void Ai_PuppetNurse_Control(s_SubCharacter* nurse);
 
 void sharedFunc_800D02E4_3_s03(s_SubCharacter*, GsCOORDINATE2*);
 
@@ -2951,7 +2952,6 @@ void MapEvent_DoorUnlocked(void);
  */
 u8 Map_RoomIdxGet(s32 x, s32 z);
 
-
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
     anim->animInfo_C  = animInfo;
@@ -3010,6 +3010,7 @@ typedef struct
 {                                                                                                    \
     q19_12 moveSpeed;                                                                                \
     q19_12 newSpeed;                                                                                 \
+                                                                                                     \
     moveSpeed = chara->moveSpeed_38;                                                                 \
     if (chara->moveSpeed_38 > Q12(0.0f))                                                             \
     {                                                                                                \
@@ -3026,11 +3027,12 @@ typedef struct
 {                                                                                                    \
     q19_12 moveSpeed;                                                                                \
     q19_12 newSpeed;                                                                                 \
-    moveSpeed = nurse->moveSpeed_38;                                                                 \
+                                                                                                     \
+    moveSpeed = chara->moveSpeed_38;                                                                 \
     if (moveSpeed > limit)                                                                           \
     {                                                                                                \
         newMoveSpeed = limit;                                                                        \
-        newSpeed = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT);                  \
+        newSpeed     = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT);              \
         if (newMoveSpeed < newSpeed)                                                                 \
         {                                                                                            \
             newMoveSpeed = newSpeed;                                                                 \
@@ -3039,13 +3041,13 @@ typedef struct
     else                                                                                             \
     {                                                                                                \
         newMoveSpeed = limit;                                                                        \
-        newSpeed = moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT);                  \
+        newSpeed     = moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT);              \
         if (newMoveSpeed >= newSpeed)                                                                \
         {                                                                                            \
             newMoveSpeed = newSpeed;                                                                 \
         }                                                                                            \
     }                                                                                                \
-    nurse->moveSpeed_38 = newMoveSpeed;                                                              \
+    chara->moveSpeed_38 = newMoveSpeed;                                                              \
 }
 
 #endif

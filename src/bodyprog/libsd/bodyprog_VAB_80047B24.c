@@ -21,24 +21,25 @@ static u8* D_800A9FD8[1] = {
 
 /** @note Strange data access.
  * Splat's generated assembly points to data from 0x800A9FDC to 0x800AA274 to be all from the same 
- * array, however, `func_80047B80` access to this data in a rather bizarre way.
+ * array, however, `func_80047B80` accesses this data in a strange way.
  *
- * `func_80047B80` is used to switch the audio bank of the currently selected weapon.
- * (change the weapon in the inventory and then leave it, this way the function get triggered)
- * the way this function triggers is by adding a command to `g_Sd_CmdPool` which goes from 164 to 168
- * depending on the weapon (the code let it be able to go down to 160, but it's impossible to get a
- * command with that value naturally), the value of this command goes through many functions until reaching
- * `func_8007F14C` where it is used to get the index of the audio bank that will be loaded, the bizarre
- * thing start here, the same value of the command assigned is used to get inside an specific element from
- * a variable that uses struct `s_800C37D4` which is `D_800A986C` who only have 5 elements, but the
- * elements being accessed have the index of 164 to 168... So instead the code `D_800A986C` as a pointer
- * to jump all the way up to 0x800A9FEC where the table actually used for switching the audio bank of the
- * currently selected weapon is... WHO CODED THIS AND HOW DOES THIS EVEN WORK IN OTHER VERSIONS???????
+ * `func_80047B80` is used to switch the audio bank of the currently selected weapon
+ * (change the weapon in the inventory and then leave it to triger this function).
+ * The way this function triggers is by adding a command to `g_Sd_CmdPool` which goes from 164 to 168
+ * depending on the weapon (the code allows it to go down to 160, but it's impossible to get a
+ * command with that value naturally). The value of this command goes through many functions until it reaches
+ * `func_8007F14C`, where it's used to get the index of the audio bank to beloaded. The strange
+ * thing starts here, as the same value of the command assigned is used to get inside a specific element from
+ * a variable that uses struct `s_800C37D4`: `D_800A986C`, which only has 5 elements. However, the
+ * elements being accessed have index 164 to 168. So instead the code uses `D_800A986C` as a pointer
+ * to jump all the way up to 0x800A9FEC where the table is actually used for switching the audio bank of the
+ * currently selected weapon. This seems over-engineered and it would be interesting to investigate how this
+ * works in other versions.
  *
  * With the previously said this means that this data is actually a `s_800C37D4` struct array that begins
- * at 0x800A9FEC and since it's not being directly or (in a normal way) indirectly called by a function
- * Splat mixes it with `D_800A9FDC` which actually being call directly by `func_80047E3C`. Looking at
- * the code indicates that the data between 0x800A9FDC to 0x800A9FEC are actually 4 ints values.
+ * at 0x800A9FEC, and since it's not being directly or (in a normal way) indirectly called by a function,
+ * Splat mixes it up with `D_800A9FDC`, which is actually being called directly by `func_80047E3C`. Looking at
+ * the code indicates that the data between 0x800A9FDC to 0x800A9FEC is actually 4 `int` values.
  */
 static s32 D_800A9FDC[4] = {
     0x00001010, 0x00021490, 0x00027630, 0x00058F50

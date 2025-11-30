@@ -94,7 +94,7 @@ typedef struct
 	 * When reducing `globalVolumeXa_E`, the current voice line continues playing at the same
 	 * volume while the next plays at the volume set here. Other volume controllers don't do this and instantly adjust audio volume.
 	 *
-	 * This are also the values modified by the game configuration menu.
+	 * These are also the values modified in the configuration menu.
 	 */
     u8  globalVolumeSe_C;  // Global SE volume channel.
     u8  globalVolumeBgm_D; // Global BGM volume channel.

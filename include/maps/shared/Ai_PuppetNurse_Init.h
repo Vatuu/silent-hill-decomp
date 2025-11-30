@@ -11,17 +11,19 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
 
     chara2 = chara; // TODO: Not sure why this is needed, possibly an inline here somewhere?
 
-    chara->moveSpeed_38                = 0;
+    chara->moveSpeed_38                = Q12(0.0f);
     chara->field_E1_0                  = 3;
     chara->headingAngle_3C             = chara->rotation_24.vy;
-    chara->properties_E4.puppetNurse.field_E8  = chara->position_18;
+    chara->properties_E4.puppetNurse.position_E8 = chara->position_18;
     chara->field_D4                    = Q12(0.3f);
-    chara->properties_E4.puppetNurse.dmg_F4.position_0.vx  = 0;
-    chara->properties_E4.puppetNurse.dmg_F4.position_0.vy  = 0;
-    chara->properties_E4.puppetNurse.dmg_F4.position_0.vz  = 0;
+    chara->properties_E4.puppetNurse.damage_F4.position_0.vx = Q12(0.0f);
+    chara->properties_E4.puppetNurse.damage_F4.position_0.vy = Q12(0.0f);
+    chara->properties_E4.puppetNurse.damage_F4.position_0.vz = Q12(0.0f);
     chara->properties_E4.puppetNurse.field_114 = 0;
     chara->properties_E4.puppetNurse.field_118 = 0;
+
     Chara_DamageClear(chara);
+
     chara->properties_E4.puppetNurse.flags_122 = 0;
     chara->properties_E4.puppetNurse.field_108 = chara->position_18.vx;
     chara->properties_E4.puppetNurse.field_10C = chara->position_18.vz;

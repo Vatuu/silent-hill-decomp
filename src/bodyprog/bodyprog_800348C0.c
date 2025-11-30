@@ -1970,7 +1970,7 @@ void func_80037DC4(s_SubCharacter* chara) // 0x80037DC4
 
 void func_80037E40(s_SubCharacter* chara) // 0x80037E40
 {
-    if (chara->dmg_B4.amount_C > Q12(0.0f))
+    if (chara->damage_B4.amount_C > Q12(0.0f))
     {
         chara->flags_3E |= CharaFlag_Unk6;
     }

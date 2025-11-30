@@ -120,7 +120,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
         }
     }
 
-	// Slowly fade in or out the game audio based if `D_800C1658.muteGame_17` enabled or not
+	// Slowly fade in/out game audio based if `D_800C1658.muteGame_17` enabled.
     if (D_800C1658.muteGame_17 == true)
     {
         if (g_Sd_ChannelsVolume.volumeGlobal_A > 0)
@@ -148,7 +148,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
         }
     }
 
-	// Reset audio streaming system in case of failing.
+	// Reset audio streaming system if failed.
     if (D_800C1658.cdErrorCount_0 > CD_ERROR_LIMIT)
     {
         CdReset(0);

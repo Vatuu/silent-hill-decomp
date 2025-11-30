@@ -7,7 +7,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* chara)
     s32 keyframe2;
     s16 keyframeOffset;
 
-    if (chara->dmg_B4.amount_C <= Q12(0.0f) || chara->health_B0 <= Q12(0.0f))
+    if (chara->damage_B4.amount_C <= Q12(0.0f) || chara->health_B0 <= Q12(0.0f))
     {
         return;
     }
@@ -16,12 +16,12 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* chara)
 
     chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 7;
 
-    chara->health_B0           = MAX(chara->health_B0 - chara->dmg_B4.amount_C, Q12(0.0f));
-    chara->dmg_B4.position_0.vx += FP_FROM(chara->moveSpeed_38 * Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
-    chara->dmg_B4.position_0.vz += FP_FROM(chara->moveSpeed_38 * Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
-    chara->moveSpeed_38        = FP_TO(Math_Vector2MagCalc(chara->dmg_B4.position_0.vx, chara->dmg_B4.position_0.vz), Q12_SHIFT) / Q12(2.4f);
-    chara->field_34            = FP_TO(chara->dmg_B4.position_0.vy, Q12_SHIFT) / Q12(2.4f);
-    chara->headingAngle_3C     = ratan2(chara->dmg_B4.position_0.vx, chara->dmg_B4.position_0.vz);
+    chara->health_B0           = MAX(chara->health_B0 - chara->damage_B4.amount_C, Q12(0.0f));
+    chara->damage_B4.position_0.vx += FP_FROM(chara->moveSpeed_38 * Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
+    chara->damage_B4.position_0.vz += FP_FROM(chara->moveSpeed_38 * Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
+    chara->moveSpeed_38        = FP_TO(Math_Vector2MagCalc(chara->damage_B4.position_0.vx, chara->damage_B4.position_0.vz), Q12_SHIFT) / Q12(2.4f);
+    chara->field_34            = FP_TO(chara->damage_B4.position_0.vy, Q12_SHIFT) / Q12(2.4f);
+    chara->headingAngle_3C     = ratan2(chara->damage_B4.position_0.vx, chara->damage_B4.position_0.vz);
 
     chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 1;
     chara->properties_E4.larvalStalker.properties_E8[4].val32     = g_SysWork.player_4C.chara_0.position_18.vx;

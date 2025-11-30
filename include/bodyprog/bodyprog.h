@@ -3699,7 +3699,7 @@ void func_8008A3AC(s_SubCharacter* chara);
 
 void func_8008B15C(s_SubCharacter* chara);
 
-void func_8008B1DC(s_SubCharacter*, s32, s32);
+void func_8008B1DC(s_SubCharacter* chara, s32 angle0, s32 angle1);
 
 void func_8008B398(void);
 

@@ -10,10 +10,11 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
     }
 
     sharedFunc_800CE7C8_3_s03(nurse);
+
     modelState = nurse->model_0.stateStep_3;
     if (modelState == 1)
     {
-        if (nurse->properties_E4.puppetNurse.flags_122 & (1<<0))
+        if (nurse->properties_E4.puppetNurse.flags_122 & (1 << 0))
         {
             nurse->model_0.stateStep_3 = 2;
         }
@@ -45,9 +46,10 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
             nurse->model_0.stateStep_3 = 0;
             return;
         }
+
         if (nurse->properties_E4.puppetNurse.field_104 >= Q12(1.5f))
         {
-            g_SysWork.player_4C.chara_0.dmg_B4.amount_C += FP_TO(D_800ADA0C, Q12_SHIFT);
+            g_SysWork.player_4C.chara_0.damage_B4.amount_C += FP_TO(D_800ADA0C, Q12_SHIFT);
             nurse->properties_E4.puppetNurse.field_104 = 0;
         }
     }
