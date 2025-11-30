@@ -35,7 +35,7 @@ void Ai_PuppetNurse_Control(s_SubCharacter* nurse)
             break;
 
         case 9:
-            sharedFunc_800CF3AC_3_s03(nurse);
+            Ai_PuppetNurse_Control9(nurse);
             break;
 
         case 10:

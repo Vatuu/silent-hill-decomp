@@ -100,7 +100,7 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800CEC88_3_s03
 
 #include "maps/shared/sharedFunc_800CF294_3_s03.h" // 0x800D3D04
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800CF3AC_3_s03); // 0x800D3E1C
+#include "maps/shared/Ai_PuppetNurse_Control9.h" // 0x800D3E1C
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D4070);
 

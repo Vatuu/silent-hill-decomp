@@ -2240,6 +2240,10 @@ extern s32 g_PuppetNurse_AnimStatus0[2];
 
 extern s32 g_PuppetNurse_AnimStatus1[2];
 
+extern u8  g_PuppetNurse_AnimStatus2[2];
+
+extern u8  g_PuppetNurse_AnimStatus3[4];
+
 // Bodyprog variable?
 extern u16 D_800ADA0C;
 
@@ -2609,7 +2613,7 @@ void sharedFunc_800CEC88_3_s03(s_SubCharacter*);
 
 s32 sharedFunc_800CEEAC_3_s03(void);
 
-void sharedFunc_800CF3AC_3_s03(s_SubCharacter*);
+void Ai_PuppetNurse_Control9(s_SubCharacter*);
 
 void sharedFunc_800CF7F4_3_s03(s_SubCharacter* chara);
 
@@ -2955,6 +2959,10 @@ void MapEvent_DoorJammed(void);
 void MapEvent_DoorLocked(void);
 
 void MapEvent_DoorUnlocked(void);
+
+void sharedFunc_800CEEE0_3_s03(s_SubCharacter* nurse);
+
+void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse);
 
 bool sharedFunc_800CF294_3_s03(s_SubCharacter* nurse, q19_12 dist);
 
