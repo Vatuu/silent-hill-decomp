@@ -410,16 +410,11 @@ void Map_WorldObjectsInit(void) // 0x800D1804
 
 void func_800D197C(void) // 0x800D197C
 {
-    s32 cellX;
-    s32 cellZ;
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    cellX = g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE;
-    if (g_SysWork.player_4C.chara_0.position_18.vx >  Q12(0.0f) && (cellX + 1) == 1 ||
-        g_SysWork.player_4C.chara_0.position_18.vx <= Q12(0.0f) && (cellX - 1) == 1)
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 1, -1, 1))
     {
-        cellZ = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
-        if (g_SysWork.player_4C.chara_0.position_18.vz >  Q12(0.0f) && (cellZ + 1) == 4 ||
-            g_SysWork.player_4C.chara_0.position_18.vz <= Q12(0.0f) && (cellZ - 1) == 4)
+        if (PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);
 
@@ -439,13 +434,9 @@ void func_800D197C(void) // 0x800D197C
         }
     }
 
-    cellX = g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE;
-    if (g_SysWork.player_4C.chara_0.position_18.vx >  Q12(0.0f) && (cellX + 1) == 3 ||
-        g_SysWork.player_4C.chara_0.position_18.vx <= Q12(0.0f) && (cellX - 1) == 3)
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3))
     {
-        cellZ = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
-        if (g_SysWork.player_4C.chara_0.position_18.vz >  Q12(0.0f) && (cellZ + 1) == 3 ||
-            g_SysWork.player_4C.chara_0.position_18.vz <= Q12(0.0f) && (cellZ - 1) == 3)
+        if (PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
         {
             if ((g_SavegamePtr->eventFlags_168[9] & 0x300) == 0x200)
             {

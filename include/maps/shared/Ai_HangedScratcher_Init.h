@@ -1,9 +1,9 @@
 void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
 {
-    s32 i;
-    s64 healthbaseHard;
-    s32 radiusMax;
-    s32 radiusMin;
+    s32    i;
+    q51_12 healthbaseHard;
+    q19_12 radiusMax;
+    q19_12 radiusMin;
 
     scratcher->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
 

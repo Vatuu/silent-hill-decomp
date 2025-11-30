@@ -2278,7 +2278,7 @@ u32 func_8008A058(s32 arg0) // 0x8008A058
     register s32  temp_t0 asm("t0");
     register u32  var_t1 asm("t1");
     register u32  var_t2 asm("t2");
-    register s16* pointer asm("t3");
+    register s16* ptr asm("t3");
 
     var_t1 = 0;
 
@@ -2287,7 +2287,7 @@ u32 func_8008A058(s32 arg0) // 0x8008A058
         gte_ldlzc(arg0);
 
         var_t2  = var_t1;
-        pointer = SQRT;
+        ptr = SQRT;
 
         if (arg0 > 0)
         {
@@ -2312,9 +2312,9 @@ u32 func_8008A058(s32 arg0) // 0x8008A058
 
         var_t2 -= 0x40;
 
-        pointer += var_t2;
+        ptr += var_t2;
 
-        var_t2 = *pointer;
+        var_t2 = *ptr;
 
         temp_t0  += 6;
         temp_t0 >>= 1;
