@@ -2236,6 +2236,9 @@ extern s_SfxPair g_NursePuppetSfxs[18];
 // Only used by `Ai_PuppetNurse_AnimSfxGet`. Currently causes a mismatch. Try to move it when more code gets decompiled.
 extern u8 g_NursePuppet_SfxOffsets[4]; // = { 9, 6, 7, 8 };
 
+// Only used by `Ai_PuppetNurse_Control8`. Currently causes a mismatch. Try to move it when more code gets decompiled.
+extern u16 g_PuppetNurse_ModelStates0[8]; // = { 9, 9, 9, 6, 6, 9, 7, 7 }; // + 2 bytes of padding
+
 extern u8 g_NursePuppet_AnimSfxs[580];
 
 extern s32 g_PuppetNurse_AnimStatus0[2];
@@ -2249,6 +2252,7 @@ extern u8  g_PuppetNurse_AnimStatus3[4];
 extern u8  g_PuppetNurse_AnimStatus4[4];
 
 extern s_D_800D5A8C sharedData_800D5A8C_3_s03[3];
+
 
 void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
@@ -2614,7 +2618,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_Control6_7(s_SubCharacter* nurse, s32 arg1);
 
-void sharedFunc_800CEC88_3_s03(s_SubCharacter*);
+void Ai_PuppetNurse_Control8(s_SubCharacter*);
 
 s32 sharedFunc_800CEEAC_3_s03(void);
 

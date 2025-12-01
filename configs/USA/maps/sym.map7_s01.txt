@@ -10,6 +10,7 @@
 //--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map7_s01
 //-----------------------------------------------------------------
 g_NursePuppet_SfxOffsets            = 0x800CAD54; // type:u8 size:0x04
+g_PuppetNurse_ModelStates0          = 0x800CAD58; // type:u16 size:0x10
 
 //------------------------------------------------------
 //--- PA: 0x001824   VA: 0x800CAD9C   subsegment: rodata
@@ -91,7 +92,7 @@ Ai_PuppetNurse_Control3_4           = 0x800D25D8; // type:func
 sharedFunc_800CE7C8_3_s03           = 0x800D27BC; // type:func
 Ai_PuppetNurse_Control5             = 0x800D2A58; // type:func
 Ai_PuppetNurse_Control6_7           = 0x800D2B84; // type:func
-sharedFunc_800CEC88_3_s03           = 0x800D2C7C; // type:func
+Ai_PuppetNurse_Control8             = 0x800D2C7C; // type:func
 sharedFunc_800CEEAC_3_s03           = 0x800D2EA0; // type:func
 sharedFunc_800CEEE0_3_s03           = 0x800D2ED4; // type:func
 sharedFunc_800CF0B4_3_s03           = 0x800D30A8; // type:func
@@ -101,7 +102,7 @@ sharedFunc_800CF7F4_3_s03           = 0x800D37E8; // type:func
 sharedFunc_800CF90C_3_s03           = 0x800D3900; // type:func
 sharedFunc_800CF9F8_3_s03           = 0x800D39EC; // type:func
 Ai_PuppetNurse_Control10            = 0x800D3D0C; // type:func
-Ai_PuppetNurse_Control11           = 0x800D3DC8; // type:func
+Ai_PuppetNurse_Control11            = 0x800D3DC8; // type:func
 sharedFunc_800D0110_3_s03           = 0x800D4104; // type:func
 Ai_PuppetNurse_Control              = 0x800D41C4; // type:func
 sharedFunc_800D02E4_3_s03           = 0x800D42D8; // type:func
