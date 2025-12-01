@@ -63,144 +63,15 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D13FC);
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D1C54);
 
-void func_800D2270(s_SubCharacter* chara) // 0x800D2270
-{
-    s16    timerDiv6;
-    s32    vol;
-    u16    timer;
-    q19_12 moveSpeed;
-
-    moveSpeed = chara->moveSpeed_38;
-    Chara_MoveSpeedUpdate(chara, Q12(1.59961f));
-
-    switch (chara->model_0.anim_4.status_0)
-    {
-        case ANIM_STATUS(11, false):
-        case ANIM_STATUS(11, true):
-            chara->properties_E4.splitHead.flags_E8 |= 1 << 3;
-            if (!func_800D4FE4(chara, moveSpeed))
-            {
-                break;
-            }
-
-        case ANIM_STATUS(10, true):
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
-            Sd_EngineCmd(Sfx_Unk1477);
-            break;
-
-        case ANIM_STATUS(1, false):
-        case ANIM_STATUS(1, true):
-            timer = chara->properties_E4.splitHead.timer_F4;
-            timerDiv6 = D_800D6E2E / 6;
-            if (timer < timerDiv6)
-            {
-                vol = (timer << 7) / timerDiv6;
-            }
-            else if ((D_800D6E2E * 5) / 6 < timer) 
-            {
-                vol = ((D_800D6E2E - timer) << 7) / timerDiv6;
-            }
-            else
-            {
-                vol = 0x80;
-            }
-
-            func_8005DE0C(Sfx_Unk1477, &chara->position_18, vol, Q12(16.0f), 0);
-
-            timer = chara->properties_E4.splitHead.timer_F4;
-            if (D_800D6E2E < timer)
-            {
-                D_800D6E2E = 0x3CCC;
-                chara->model_0.state_2 = 5;
-                chara->properties_E4.splitHead.timer_F4 = 0;
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(11, false);
-
-                func_8004690C(Sfx_Unk1477);
-                break;
-            }
-
-            chara->properties_E4.splitHead.timer_F4 += g_DeltaTime0;
-            break;
-    }
-}
+#include "maps/shared/sharedFunc_800D17BC_1_s05.h" // 0x800D2270
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D246C);
 
-void func_800D2CC8(s_SubCharacter* chara) // 0x800D2CC8
-{
-    q19_12 newMoveSpeed0;
-    q19_12 moveSpeed;
-
-    switch (chara->model_0.anim_4.status_0)
-    {
-        case 23:
-            moveSpeed = chara->moveSpeed_38;
-            if (moveSpeed > Q12(0.0f))
-            {
-                newMoveSpeed0 = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
-                if (newMoveSpeed0 < Q12(0.0f))
-                {
-                    newMoveSpeed0 = Q12(0.0f);
-                }
-            }
-            else
-            {
-                newMoveSpeed0 = moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
-                if (newMoveSpeed0 > Q12(0.0f))
-                {
-                    newMoveSpeed0 = Q12(0.0f);
-                }
-            }
-            chara->moveSpeed_38 = newMoveSpeed0;
-
-            if (!func_800D4FE4(chara, moveSpeed))
-            {
-                break;
-            }
-
-        case 2:
-        case 3:
-        case 20:
-        case 21:
-        case 22:
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
-            Chara_MoveSpeedUpdate(chara, Q12(1.0f));
-            break;
-
-        default:
-            break;
-
-        case 14:
-        case 15:
-        case 16:
-        case 17:
-        case 24:
-        case 25:
-        case 26:
-        case 27:
-            Chara_MoveSpeedUpdate(chara, Q12(1.0f));
-
-            if (!Savegame_EventFlagGet(EventFlag_131))
-            {
-                func_8005DC1C(Sfx_Unk1479, &chara->position_18, Q8_CLAMPED(0.5f), 0);
-            }
-
-            Savegame_EventFlagSet(EventFlag_131);
-            break;
-    }
-}
+#include "maps/shared/sharedFunc_800D2214_1_s05.h" // 0x800D2CC8
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D2EF8);
 
-void func_800D30F0(s_SubCharacter* chara) // 0x800D30F0
-{
-    if (Savegame_EventFlagGet(EventFlag_130))
-    {
-        chara->model_0.state_2 = 2;
-        chara->model_0.anim_4.status_0 = ANIM_STATUS(11, false);
-        chara->properties_E4.splitHead.flags_E8 |= CharaUnk0Flag_Unk8;
-    }
-}
+#include "maps/shared/sharedFunc_800D263C_1_s05.h" // 0x800D30F0
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", sharedFunc_800D267C_1_s05); // 0x800D3130
 
@@ -218,21 +89,9 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", sharedFunc_800D4070_1_s05
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D4EBC);
 
-void func_800D4FC0(s32 arg0, s32 arg1) // 0x800D4FC0
-{
-    sharedData_800D8614_1_s05 += arg0;
-    sharedData_800D8616_1_s05 += arg1;
-}
+#include "maps/shared/sharedFunc_800D450C_1_s05.h" // 0x800D4FC0
 
-bool func_800D4FE4(s_SubCharacter* chara, s32 moveSpeed) // 0x800D4FE4
-{
-    // TODO: Using wrong `properties_E4` union member?
-    q19_12 runTimer;
-
-    runTimer = chara->properties_E4.player.runTimer_F8;
-    return ((runTimer <  Q12(0.0f) || runTimer > Q12(198.0f)) && chara->model_0.anim_4.time_4 < Q12(175.0f)) ||
-           ((runTimer >= Q12(0.0f) && runTimer < Q12(175.0f)) && chara->model_0.anim_4.time_4 > Q12(198.0f));
-}
+#include "maps/shared/sharedFunc_800D4530_1_s05.h" // 0x800D4FE4
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D5048);
 

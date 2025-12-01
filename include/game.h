@@ -1378,7 +1378,7 @@ typedef struct _SubCharaPropertiesSplitHead
     u_Property field_F0;
     u16        timer_F4;
     u16        unk_F8;
-    s32        resetStateIdx0_F8;
+    q19_12     timer_F8;
     s32        field_FC;
     s32        field_100;
     u_Property field_104;

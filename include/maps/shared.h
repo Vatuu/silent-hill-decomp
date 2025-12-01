@@ -2173,6 +2173,8 @@ extern u8      sharedData_800EB748_6_s04;
 extern s8      sharedData_800EB74A_6_s04;
 extern VECTOR3 sharedData_800EB750_6_s04;
 
+extern s16 sharedData_800D5880_1_s05;
+
 typedef struct
 {
     VECTOR3 field_0; // Rotation?
@@ -2758,11 +2760,22 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splithead);
 
 void sharedFunc_800D3388_1_s05(s_SubCharacter* splithead, s32*, s32*);
 
+void sharedFunc_800D17BC_1_s05(s_SubCharacter* splithead);
+
+void sharedFunc_800D2214_1_s05(s_SubCharacter* splithead);
+
+void sharedFunc_800D263C_1_s05(s_SubCharacter* splithead);
+
 void sharedFunc_800D3AFC_1_s05(s_SubCharacter* splithead);
 
 void sharedFunc_800D3B30_1_s05(s_SubCharacter* splithead);
 
 void sharedFunc_800D4070_1_s05(s_SubCharacter* splithead);
+
+/** Probably takes X and Z position values. */
+void sharedFunc_800D450C_1_s05(s32 arg0, s32 arg1);
+
+bool sharedFunc_800D4530_1_s05(s_SubCharacter* splithead);
 
 extern GsCOORDINATE2* sharedData_800D8610_1_s05;
 

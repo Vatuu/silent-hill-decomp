@@ -37,23 +37,12 @@ extern u8  D_800D5C3C;
 
 extern s32 D_800D587C;
 
-extern s16 D_800D5880;
-
 extern s8  D_800D86FE;
 
 extern s_WorldObjectDesc g_WorldObject0; //800D8698
 extern s_WorldObjectDesc g_WorldObject1; //800D86C8
 
 void func_800CAAD0(void);
-
-void func_800D263C(s_SubCharacter* chara);
-
-/** Probably takes X and Z position values. */
-void func_800D450C(s32 arg0, s32 arg1);
-
-void func_800D17BC(s_SubCharacter* chara);
-
-s32 func_800D4530(s_SubCharacter* chara);
 
 void func_800D494C(void);
 

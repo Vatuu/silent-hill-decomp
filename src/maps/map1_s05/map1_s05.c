@@ -48,82 +48,15 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D0948);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D11A0);
 
-void func_800D17BC(s_SubCharacter* chara) // 0x800D17BC
-{
-    s32 vol;
-    s32 timer0;
-    s16 timer1;
-    s16 timer1_div6;
-
-    Chara_MoveSpeedUpdate(chara, Q12(1.5997f));
-    switch (chara->model_0.anim_4.status_0)
-    {
-        case ANIM_STATUS(11, false):
-        case ANIM_STATUS(11, true):
-            chara->properties_E4.splitHead.flags_E8 |= 1 << 3;
-
-            if (!func_800D4530(chara))
-            {
-                break;
-            }
-
-        case ANIM_STATUS(10, true):
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
-            Sd_EngineCmd(Sfx_Unk1477);
-            break;
-
-        case ANIM_STATUS(1, false):
-        case ANIM_STATUS(1, true):
-            timer0 = chara->properties_E4.splitHead.timer_F4;
-            timer1 = D_800D5880;
-            timer1_div6 = timer1 / 6;
-
-            if (timer0 < timer1_div6)
-            {
-                vol = (timer0 << 7) / timer1_div6;
-            }
-            else if (((timer1 * 5) / 6) < timer0)
-            {
-                vol = ((D_800D5880 - timer0) << 7) / timer1_div6;
-            }
-            else
-            {
-                vol = 0x80;
-            }
-
-            func_8005DE0C(Sfx_Unk1477, &chara->position_18, vol, Q12(16.0f), 0);
-
-            if (chara->properties_E4.splitHead.timer_F4 > D_800D5880)
-            {
-                D_800D5880 = Q12(3.8f);
-                chara->model_0.state_2 = 5;
-                chara->properties_E4.splitHead.timer_F4 = Q12(0.0f);
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(11, false);
-
-                func_8004690C(Sfx_Unk1477);
-                break;
-            }
-
-            chara->properties_E4.splitHead.timer_F4 += g_DeltaTime0;
-            break;
-    }
-}
+#include "maps/shared/sharedFunc_800D17BC_1_s05.h" // 0x800D17BC
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D19B8);
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D2214);
+#include "maps/shared/sharedFunc_800D2214_1_s05.h" // 0x800D2214
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D2444);
 
-void func_800D263C(s_SubCharacter* chara) // 0x800D263C
-{
-    if (Savegame_EventFlagGet(EventFlag_130))
-    {
-        chara->model_0.state_2 = 2;
-        chara->model_0.anim_4.status_0 = ANIM_STATUS(11, false);
-        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 0x100;
-    }
-}
+#include "maps/shared/sharedFunc_800D263C_1_s05.h" // 0x800D263C
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800D267C_1_s05); // 0x800D267C
 
@@ -141,27 +74,9 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800D4070_1_s05
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4408);
 
-void func_800D450C(s32 arg0, s32 arg1) // 0x800D450C
-{
-    sharedData_800D8614_1_s05 += arg0;
-    sharedData_800D8616_1_s05 += arg1;
-}
+#include "maps/shared/sharedFunc_800D450C_1_s05.h" // 0x800D450C
 
-s32 func_800D4530(s_SubCharacter* chara) // 0x800D4530
-{
-    q20_12 timer;
-    s32    ret;
-
-    timer = chara->properties_E4.player.runTimer_F8;
-
-    ret = 0;
-    if ((timer > Q12(198.0f) && chara->model_0.anim_4.time_4 < Q12(175.0f)) ||
-        (timer < Q12(175.0f) && chara->model_0.anim_4.time_4 > Q12(198.0f)))
-    {
-        ret = 1;
-    }
-    return ret;
-}
+#include "maps/shared/sharedFunc_800D4530_1_s05.h" // 0x800D4530
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4594);
 
