@@ -7,12 +7,6 @@
 #define MAP_ROOM_MAX_Z Q12(400.0f)
 #define MAP_HAS_SECONDARY_GRID
 
-extern u8 D_800CCCAC;
-
-extern s8 D_800CCCAF;
-
-void func_800CCA1C(void);
-
 void func_800CCB24(void);
 
 void func_800CCB2C(void);

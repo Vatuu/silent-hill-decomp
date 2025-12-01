@@ -2771,6 +2771,8 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
 
 void Ai_Groaner_Init(s_SubCharacter* groaner); // `map2_s00` has extra block at end of func compared to other maps.
 
+void sharedFunc_800E7914_2_s00(void);
+
 void sharedFunc_800E554C_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara);

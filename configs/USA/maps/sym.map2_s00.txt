@@ -209,6 +209,7 @@ sharedFunc_800E6338_2_s00   = 0x800E6338; // type:func
 sharedFunc_800E71E8_2_s00   = 0x800E71E8; // type:func
 sharedFunc_800D929C_0_s00   = 0x800E76B8; // type:func
 Map_RoomIdxGet              = 0x800E76C8; // type:func
+sharedFunc_800E7914_2_s00   = 0x800E7914; // type:func
 MapEvent_DoorJammed         = 0x800E7A24; // type:func
 MapEvent_DoorLocked         = 0x800E7AB8; // type:func
 MapEvent_AtWaterWorks       = 0x800E7E60; // type:func
@@ -246,6 +247,7 @@ sharedData_800DD880_0_s01   = 0x800EEB04; // type:VECTOR3 size:0xC
 GROANER_ANIM_INFOS          = 0x800EEB14; // type:s32 unknown type
 MAP_ROOM_IDXS               = 0x800F05D8; // type:u8 unknown type
 sharedData_800DF2DC_0_s00   = 0x800F06B8; // type:s32 unknown type
+sharedData_800F06D4_2_s00   = 0x800F06D4; // size:8
 MAP_POINTS                  = 0x800F06EC; // type:MapPoint2d
 
 //---------------------------------------------------------------

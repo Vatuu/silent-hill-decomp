@@ -417,7 +417,7 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800E71E8_2_s00
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800E76C8
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800E7914);
+#include "maps/shared/sharedFunc_800E7914_2_s00.h" // 0x800E7914
 
 void func_800E7A1C(void) {}
 
