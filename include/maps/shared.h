@@ -2244,9 +2244,6 @@ extern u8  g_PuppetNurse_AnimStatus2[2];
 
 extern u8  g_PuppetNurse_AnimStatus3[4];
 
-// Bodyprog variable?
-extern u16 D_800ADA0C;
-
 extern s_D_800D5A8C sharedData_800D5A8C_3_s03[3];
 
 q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
