@@ -16,41 +16,13 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CB040);
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CB884);
 
-void func_800CBE7C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800CBE7C
-{
-    s32 i;
+#include "maps/shared/sharedFunc_800CBE7C_1_s05.h" // 0x800CBE7C
 
-    i = func_8005E7E0(7);
+INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800CBF74_1_s05); // 0x800CBF74
 
-    if (i != NO_VALUE)
-    {
-        sharedData_800E1FF8_1_s02[i].vx_0                 = ((arg0 + (Rng_Rand16() & 63)) - 32) * 16;
-        sharedData_800E1FF8_1_s02[i].vy_8                 = (arg1 + (Rng_Rand16() & 63)) * 16;
-        sharedData_800E1FF8_1_s02[i].vz_4                 = ((arg2 + (Rng_Rand16() & 63)) - 32) * 16;
-        sharedData_800E1FF8_1_s02[i].field_B              = 0;
-        sharedData_800E1FF8_1_s02[i].field_C.s_0.field_0  = 0;
-        sharedData_800E1FF8_1_s02[i].field_C.s_0.field_2  = arg3;
-        sharedData_800E1FF8_1_s02[i].field_10.s_1.field_0 = arg4;
-        sharedData_800E1FF8_1_s02[i].field_10.s_1.field_2 = (Rng_Rand16() & 31) + 16;
-        sharedData_800E1FF8_1_s02[i].field_10.s_1.field_3 = Rng_Rand16() & 15;
-    }
-}
+INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800CC618_1_s05); // 0x800CC618
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CBF74);
-
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CC618);
-
-void func_800CCDD4(void* arg0, s32 arg1) // 0x800CCDD4
-{
-    if (sharedData_800E1FF8_1_s02[arg1].field_B == 0)
-    {
-        func_800CBF74(arg0, arg1);
-    }
-    else
-    {
-        func_800CC618(arg0, arg1);
-    }
-}
+#include "maps/shared/sharedFunc_800CCDD4_1_s05.h" // 0x800CCDD4
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CCE2C);
 

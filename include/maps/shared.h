@@ -2246,6 +2246,10 @@ extern u8  g_PuppetNurse_AnimStatus3[4];
 
 extern s_D_800D5A8C sharedData_800D5A8C_3_s03[3];
 
+void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+
+void sharedFunc_800CCDD4_1_s05(void* arg0, s32 arg1); // Unknown arg types.
+
 q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
 
 /* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
