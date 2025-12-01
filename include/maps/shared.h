@@ -1998,6 +1998,7 @@ extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
 
 // TODO: Merge with above.
 extern s_MapHdr_field_4C sharedData_800DD5B0_1_s01[300];
+extern s_MapHdr_field_4C sharedData_800DAD20_3_s05[450];
 
 extern void (*sharedData_800DD7A0_0_s01[52])(s_SubCharacter*);
 
@@ -2207,6 +2208,34 @@ typedef struct {
 } s_D_800D5A8C;
 STATIC_ASSERT_SIZEOF(s_D_800D5A8C, 12);
 
+typedef struct _MapHeader_field_5C
+{
+    u8  field_0;
+    u8  field_1;
+    u8  field_2;
+    u8  field_3;
+    u8  field_4;
+    u8  field_5;
+    u8  field_6;
+    u8  field_7;
+    s16 field_8;
+    s16 field_A;
+    u16 field_C;
+    s16 field_E;
+    s16 field_10;
+    s16 field_12;
+    s16 field_14;
+    s16 field_16;
+    s16 field_18;
+    s16 field_1A;
+    u16 field_1C;
+    s16 field_1E;
+    s32 field_20;
+    s32 field_24;
+} s_MapHeader_field_5C;
+
+extern s_MapHeader_field_5C sharedData_800DD180_3_s05;
+
 extern s_800E330C sharedData_800E330C_0_s00[20];
 
 extern s_800E34FC sharedData_800E34FC_0_s00[60];
@@ -2263,6 +2292,8 @@ void sharedFunc_800CFE78_3_s02(s32 arg0);
 void sharedFunc_800CFEAC_3_s02(void);
 
 void sharedFunc_800CFEEC_3_s02(void);
+
+void sharedFunc_800CB5F4_3_s05(void);
 
 void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 

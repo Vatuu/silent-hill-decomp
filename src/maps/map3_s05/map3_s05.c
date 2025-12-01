@@ -10,9 +10,9 @@ INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", g_MapOverlayHeader);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CB5F4);
+#include "maps/shared/sharedFunc_800CB5F4_3_s05.h" // 0x800CB5F4
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CB71C);
+INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800CB71C_3_s05);
 
 INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CBB64);
 

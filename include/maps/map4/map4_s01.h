@@ -30,35 +30,6 @@
 #define MAP_ROOM_MIN_Z Q12(0.0f)
 #define MAP_ROOM_MAX_Z Q12(120.0f)
 
-typedef struct _MapHeader_field_5C
-{
-    u8  field_0;
-    u8  field_1;
-    u8  field_2;
-    u8  field_3;
-    u8  field_4;
-    u8  field_5;
-    u8  field_6;
-    u8  field_7;
-    s16 field_8;
-    s16 field_A;
-    u16 field_C;
-    s16 field_E;
-    s16 field_10;
-    s16 field_12;
-    s16 field_14;
-    s16 field_16;
-    s16 field_18;
-    s16 field_1A;
-    u16 field_1C;
-    s16 field_1E;
-    s32 field_20;
-    s32 field_24;
-} s_MapHeader_field_5C;
-
-extern s_MapHdr_field_4C D_800D5B20[450];
-extern s_MapHeader_field_5C D_800D7F20;
-
 extern u16 g_MapMsgSounds[84];
 extern u16 g_MapMsgSounds1[4];
 extern u16 g_MapMsgSounds2[2];

@@ -26,6 +26,8 @@ g_PuppetNurse_ModelStates0    = 0x800CAAD4; // type:u16 size:0x10
 //-----------------------------------------------------------
 //--- PA: 0x00207C   VA: 0x800CB5F4   subsegment: c, map3_s05
 //-----------------------------------------------------------
+sharedFunc_800CB5F4_3_s05     = 0x800CB5F4; // type:func
+sharedFunc_800CB71C_3_s05     = 0x800CB71C; // type:func
 sharedFunc_800D08B8_0_s00     = 0x800CCB08; // type:func
 sharedFunc_800D0A60_0_s00     = 0x800CCC88; // type:func
 sharedFunc_800D0B18_0_s00     = 0x800CCD40; // type:func
@@ -157,6 +159,8 @@ MAP_MESSAGES                  = 0x800DA6F0; // type:u32 size:0xA0
 g_CommonWorldObjectPoses      = 0x800DAC84; // type:WorldObjectPos size:0x64
 sharedData_800DFB6C_0_s00     = 0x800DAD0C; // type:s32
 sharedData_800DFB70_0_s00     = 0x800DAD10; // type:s32
+sharedData_800DAD20_3_s05     = 0x800DAD20;
+sharedData_800DD180_3_s05     = 0x800DD180;
 sharedData_800E0CA8_0_s00     = 0x800DD20C; // type:s32
 sharedData_800E0CAC_0_s00     = 0x800DD210; // type:s32
 sharedData_800E0CB0_0_s00     = 0x800DD214; // type:u32
