@@ -53,11 +53,11 @@ INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800CA5C8);
 
 #include "maps/shared/sharedFunc_800CE398_3_s03.h" // 0x800D238C
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", Ai_PuppetNurse_Control1); // 0x800D23C0
+#include "maps/shared/Ai_PuppetNurse_Control1.h" // 0x800D23C0
 
 #include "maps/shared/Ai_PuppetNurse_Control2.h" // 0x800D24F4
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", Ai_PuppetNurse_Control3_4); // 0x800D25D8
+#include "maps/shared/Ai_PuppetNurse_Control3_4.h" // 0x800D25D8
 
 #include "maps/shared/sharedFunc_800CE7C8_3_s03.h" // 0x800D27BC
 
