@@ -40,19 +40,11 @@
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D1D8C
 
-void func_800D1E24(s32 arg0) // 0x800D1E24
-{
-    (arg0 != 0) ? func_800D1E58() : func_800D1E98();
-}
+#include "maps/shared/sharedFunc_800CFE78_3_s02.h" // 0x800D1E24
 
-void func_800D1E58(void) // 0x800D1E58
-{
-    func_8003640C(!Savegame_EventFlagGet(EventFlag_237) ? 8 : 2);
-}
+#include "maps/shared/sharedFunc_800CFEAC_3_s02.h" // 0x800D1E58
 
-INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04_2", D_800CA72C);
-
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04_2", func_800D1E98);
+#include "maps/shared/sharedFunc_800CFEEC_3_s02.h" // 0x800D1E98
 
 void func_800D2128(void) {}
 

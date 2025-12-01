@@ -118,19 +118,11 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D0F28_3_s03
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D1178
 
-void func_800D1210(s32 arg0) // 0x800D1210
-{
-    (arg0 != 0) ? func_800D1244() : func_800D1284();
-}
+#include "maps/shared/sharedFunc_800CFE78_3_s02.h" // 0x800D1210
 
-void func_800D1244(void) // 0x800D1244
-{
-    func_8003640C(!Savegame_EventFlagGet(EventFlag_237) ? 8 : 2);
-}
+#include "maps/shared/sharedFunc_800CFEAC_3_s02.h" // 0x800D1244
 
-INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800CA6F4);
-
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D1284);
+#include "maps/shared/sharedFunc_800CFEEC_3_s02.h" // 0x800D1284
 
 void func_800D1514(void) {}
 

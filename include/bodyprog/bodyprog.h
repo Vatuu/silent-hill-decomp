@@ -1828,6 +1828,11 @@ typedef struct
 
 typedef struct
 {
+    u8 field_0[8]; // TODO: Might be split into 8 different fields for specific things?
+} s_func_80035F4C;
+
+typedef struct
+{
     VECTOR3 field_0;
     MATRIX  field_C;
     s32     field_2C;
@@ -4126,7 +4131,7 @@ bool func_80035E44(void);
 void func_80035ED0(void);
 
 // Main music trigger and handler.
-void func_80035F4C(s32 flags, q19_12 arg1, u8* arg2);
+void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* arg2);
 
 void func_800363D0(void);
 

@@ -111,6 +111,9 @@ sharedFunc_800D0828_3_s03     = 0x800D5298; // type:func
 sharedFunc_800D0968_3_s03     = 0x800D53D8; // type:func
 sharedFunc_800D929C_0_s00     = 0x800D5434; // type:func
 Map_RoomIdxGet                = 0x800D5444; // type:func
+sharedFunc_800CFE78_3_s02     = 0x800D54DC; // type:func
+sharedFunc_800CFEAC_3_s02     = 0x800D5510; // type:func
+sharedFunc_800CFEEC_3_s02     = 0x800D5550; // type:func
 MapEvent_DoorLocked           = 0x800D58A0; // type:func
 
 
@@ -139,6 +142,8 @@ g_PuppetNurse_AnimStatus3     = 0x800DA120; // type:u8 size:0x4
 g_PuppetNurse_AnimStatus2     = 0x800DA124; // type:u8 size:0x2
 g_PuppetNurse_AnimStatus4     = 0x800DA128; // type:u8 size:0x4
 MAP_ROOM_IDXS                 = 0x800DA12C; // type:u8
+sharedData_800D1D14_3_s02     = 0x800DA16C; // type:u8 size:8
+sharedData_800D1D1C_3_s02     = 0x800DA174; // type:u16 size:0x78
 MAP_POINTS                    = 0x800DA1FC; // type:MapPoint2d
 
 //---------------------------------------------------------------

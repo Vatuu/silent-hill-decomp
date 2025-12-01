@@ -6,20 +6,9 @@
 #define MAP_ROOM_MIN_Z Q12(-160.0f)
 #define MAP_ROOM_MAX_Z Q12(160.0f)
 
-extern u8 D_800D1D14[8];
-
-/** Room flags? */
-extern u16 D_800D1D1C[60];
-
 extern s32 D_800D1FBC;
 
 extern s8 D_800D3154;
-
-void func_800CFE78(s32 arg0);
-
-void func_800CFEAC(void);
-
-void func_800CFEEC(void);
 
 void func_800D02B4(void);
 

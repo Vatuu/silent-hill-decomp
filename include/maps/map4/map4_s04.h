@@ -34,16 +34,6 @@ extern u8 D_800D6EF8;
 extern s_WorldObjectDesc      g_WorldObjectSavepad; // 0x800D6F38
 extern s_WorldObjectDescNoRot g_WorldObject0;       // 0x800D6F08
 
-extern u8 D_800D335C[8];
-extern u16 D_800D3364[60]; // Flags.
-
-void func_800D143C(s32 arg0);
-
-void func_800D1470(void);
-
-/* Same as `func_800CFEEC` in map3_s02. */
-void func_800D14B0(void);
-
 void func_800D23E4(void);
 
 void func_800D2D6C(void);

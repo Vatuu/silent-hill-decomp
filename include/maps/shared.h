@@ -2253,6 +2253,16 @@ extern u8  g_PuppetNurse_AnimStatus4[4];
 
 extern s_D_800D5A8C sharedData_800D5A8C_3_s03[3];
 
+extern u8 sharedData_800D1D14_3_s02[8];
+
+/** Room flags? */
+extern u16 sharedData_800D1D1C_3_s02[60];
+
+void sharedFunc_800CFE78_3_s02(s32 arg0);
+
+void sharedFunc_800CFEAC_3_s02(void);
+
+void sharedFunc_800CFEEC_3_s02(void);
 
 void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 

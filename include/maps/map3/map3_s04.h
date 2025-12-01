@@ -23,10 +23,6 @@ extern s_WorldObjectDescNoRot g_WorldObject_Plate;
 extern s_WorldObjectDesc      g_WorldObject_SavePad;
 extern s_WorldObject_0        g_CommonWorldObjects[6];
 
-void func_800D1E24(s32 arg0);
-
-void func_800D1E58(void);
-
 void func_800D2470(void);
 
 void func_800D2E58(void);
