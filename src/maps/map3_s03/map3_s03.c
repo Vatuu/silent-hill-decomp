@@ -80,7 +80,7 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CF9F8_3_s03
 
 #include "maps/shared/Ai_PuppetNurse_Control10.h"
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CFDD4_3_s03);
+#include "maps/shared/Ai_PuppetNurse_Control11.h"
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D0110_3_s03);
 

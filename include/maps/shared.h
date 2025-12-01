@@ -2246,6 +2246,8 @@ extern u8  g_PuppetNurse_AnimStatus2[2];
 
 extern u8  g_PuppetNurse_AnimStatus3[4];
 
+extern u8  g_PuppetNurse_AnimStatus4[4];
+
 extern s_D_800D5A8C sharedData_800D5A8C_3_s03[3];
 
 void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
@@ -2626,7 +2628,7 @@ void sharedFunc_800CF9F8_3_s03(s_SubCharacter*);
 
 void Ai_PuppetNurse_Control10(s_SubCharacter*);
 
-void sharedFunc_800CFDD4_3_s03(s_SubCharacter*);
+void Ai_PuppetNurse_Control11(s_SubCharacter*);
 
 void sharedFunc_800D0110_3_s03(s_SubCharacter*);
 
@@ -3086,6 +3088,24 @@ typedef struct
         }                                                                                            \
     }                                                                                                \
     chara->moveSpeed_38 = newMoveSpeed;                                                              \
+}
+
+// Is it possible to merge these macros ?
+#define Chara_MoveSpeedUpdate3(chara, speed, limit)                                                  \
+{                                                                                                    \
+    q19_12 moveSpeed;                                                                                \
+    q19_12 newSpeed;                                                                                 \
+                                                                                                     \
+    moveSpeed = chara->moveSpeed_38;                                                                 \
+    if (chara->moveSpeed_38 > limit)                                                                 \
+    {                                                                                                \
+        newSpeed = MAX(moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT), limit);      \
+    }                                                                                                \
+    else                                                                                             \
+    {                                                                                                \
+        newSpeed = MIN(limit, moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT));      \
+    }                                                                                                \
+    chara->moveSpeed_38 = newSpeed;                                                                  \
 }
 
 #endif
