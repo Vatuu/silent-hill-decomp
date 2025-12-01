@@ -1,29 +1,9 @@
 void sharedFunc_800D2214_1_s05(s_SubCharacter* splithead)
 {
-    q19_12 newMoveSpeed0;
-    q19_12 moveSpeed;
-
     switch (splithead->model_0.anim_4.status_0)
     {
         case 23:
-            moveSpeed = splithead->moveSpeed_38;
-            if (moveSpeed > Q12(0.0f))
-            {
-                newMoveSpeed0 = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
-                if (newMoveSpeed0 < Q12(0.0f))
-                {
-                    newMoveSpeed0 = Q12(0.0f);
-                }
-            }
-            else
-            {
-                newMoveSpeed0 = moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
-                if (newMoveSpeed0 > Q12(0.0f))
-                {
-                    newMoveSpeed0 = Q12(0.0f);
-                }
-            }
-            splithead->moveSpeed_38 = newMoveSpeed0;
+            Chara_MoveSpeedUpdate(splithead, Q12(0.5f));
 
             if (!sharedFunc_800D4530_1_s05(splithead))
             {
