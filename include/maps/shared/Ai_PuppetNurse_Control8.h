@@ -1,15 +1,15 @@
 void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
 {
-    u16 modelStates[8];
-    s32 modelState;
-    s32 speed;
+    u16          modelStates[8];
+    s32          modelState;
+    q19_12       speed;
     register s32 angle asm("v1"); // @hack forced register for a match. Doesn't affect code logic.
 
     switch (nurse->model_0.stateStep_3)
     {
         case 0:
             angle = func_8005BF38((g_SysWork.player_4C.chara_0.rotation_24.vy - nurse->rotation_24.vy) - FP_ANGLE(90.0f));
-            if (angle < 0)
+            if (angle < FP_ANGLE(0.0f))
             {
                 nurse->properties_E4.puppetNurse.field_104 = -angle;
             }
@@ -17,8 +17,10 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
             {
                 nurse->properties_E4.puppetNurse.field_104 = angle;
             }
+
             nurse->model_0.stateStep_3++;
             break;
+
         case 1:
             if (nurse->properties_E4.puppetNurse.field_104 < 0)
             {
@@ -28,8 +30,10 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
             }
             nurse->properties_E4.puppetNurse.field_104 -= g_DeltaTime0;
             break;
+
         case 2:
             memcpy(modelStates, g_PuppetNurse_ModelStates0, sizeof(g_PuppetNurse_ModelStates0));
+
             if (nurse->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
             {
                 if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
@@ -41,6 +45,7 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
                 {
                     modelState = modelStates[(Rng_Rand16() >> 4) & 7];
                 }
+
                 nurse->model_0.state_2 = modelState;
                 nurse->model_0.stateStep_3 = 0;
             }

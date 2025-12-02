@@ -2541,7 +2541,7 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
     u32                sp38;
     s32                sp3C;
     u32                sp40;
-    s32                sp44;
+    s32                charaId;
     s32                sp48;
     s32                sp4C;
     s32                sp50;
@@ -2722,12 +2722,12 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
             sp4C &= 0xF;
             sp50  = D_800AFD1C[sp50 & 0xF];
             sp4C++;
-            sp44 = sp1C->field_9;
+            charaId = sp1C->field_9;
             sp4C = sp4C * sp50;
 
-            if (sp34 == 0 && sp44 == 1)
+            if (sp34 == 0 && charaId == Chara_Harry)
             {
-                if (arg0->model_0.charaId_0 == sp44)
+                if (arg0->model_0.charaId_0 == charaId)
                 {
                     var_a0_2 = func_8007FD2C();
                 }
@@ -2782,11 +2782,11 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
                 {
                     temp_s1_2 = &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353];
 
-                    if (temp_s1_2->model_0.charaId_0 >= 2)
+                    if (temp_s1_2->model_0.charaId_0 >= Chara_AirScreamer)
                     {
                         do
                         {
-                            if (temp_s1_2->model_0.charaId_0 < 0x19)
+                            if (temp_s1_2->model_0.charaId_0 < Chara_LockerDeadBody)
                             {
                                 temp_v0_4 = arg0->position_18.vx - temp_s1_2->position_18.vx;
                                 temp_v0_5 = arg0->position_18.vy - temp_s1_2->position_18.vy;
@@ -2856,7 +2856,7 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
             for (var_s7  = var_s7 + sp34; sp3C != 0 && sp40 < sp38 && sp28 >= var_s7;
                  var_s7 += sp34, sp40++, sp3C--)
             {
-                for (var_s4 = sp44; var_s4 > 0; var_s4--)
+                for (var_s4 = charaId; var_s4 > 0; var_s4--)
                 {
                     temp_v0_10 = func_80080514();
                     temp_s2_2  = FP_MULTIPLY_PRECISE(sp48, temp_v0_10, Q12_SHIFT);
@@ -2877,7 +2877,7 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
 
                     var_s6 += sp4C;
 
-                    if (arg0->model_0.charaId_0 == 1)
+                    if (arg0->model_0.charaId_0 == Chara_Harry)
                     {
                         func_800892A4(5);
                     }
@@ -2979,12 +2979,12 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
             for (var_s2 = 4, var_fp = 0, var_s3 = 0, var_s7 = 0, var_s6 = 0;
                  var_s2 > 0;
                  sp90  += sp68,
-                sp94   += sp64,
-                var_fp += sp60,
-                var_s3 += sp80,
-                var_s7 += sp7C,
-                var_s6 += sp78,
-                var_s2--)
+                 sp94   += sp64,
+                 var_fp += sp60,
+                 var_s3 += sp80,
+                 var_s7 += sp7C,
+                 var_s6 += sp78,
+                 var_s2--)
             {
                 var_a0_3 = (sp84 * var_s2) + var_s6;
                 if (var_a0_3 < 0)
@@ -3073,7 +3073,7 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
         {
             arg0->field_44.field_0 = -1;
 
-            if (arg0->model_0.charaId_0 == 1)
+            if (arg0->model_0.charaId_0 == Chara_Harry)
             {
                 switch (sp14)
                 {

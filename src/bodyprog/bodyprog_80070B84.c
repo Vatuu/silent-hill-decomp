@@ -8848,6 +8848,7 @@ s32 func_80080514(void) // 0x80080514
 s32 func_80080540(s32 arg0, s32 arg1, s32 arg2) // 0x80080540
 {
     s32 v0;
+
     __asm__ volatile(
         "mult %0, %0\n"
         "mflo $4\n"

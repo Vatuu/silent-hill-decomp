@@ -16,11 +16,11 @@ void sharedFunc_800CB5F4_3_s05(void) // 0x800CC19C
     sharedData_800DD180_3_s05.field_16 = sharedData_800DD180_3_s05.field_12 - sharedData_800DD180_3_s05.field_14;
     if (sharedData_800DD180_3_s05.field_1)
     {
-        sharedData_800DD180_3_s05.field_10 = 0x1000;
+        sharedData_800DD180_3_s05.field_10 = Q12(1.0f);
     }
     else
     {
-        sharedData_800DD180_3_s05.field_10 = 0;
+        sharedData_800DD180_3_s05.field_10 = Q12(0.0f);
     }
 
     counterC = sharedData_800DD180_3_s05.field_C;
@@ -39,12 +39,12 @@ void sharedFunc_800CB5F4_3_s05(void) // 0x800CC19C
             }
 
             counterC--;
-            if (!counterC)
+            if (counterC == 0)
             {
                 break;
             }
         }
     }
 
-    D_800C4414 |= 1;
+    D_800C4414 |= 1 << 0;
 }

@@ -2200,7 +2200,8 @@ typedef struct
 } s_800E330C;
 STATIC_ASSERT_SIZEOF(s_800E330C, 24);
 
-typedef struct {
+typedef struct
+{
     s32 field_0;
     s32 field_4;
     s16 field_8;
@@ -2266,7 +2267,7 @@ extern s_SfxPair g_NursePuppetSfxs[18];
 extern u8 g_NursePuppet_SfxOffsets[4]; // = { 9, 6, 7, 8 };
 
 // Only used by `Ai_PuppetNurse_Control8`. Currently causes a mismatch. Try to move it when more code gets decompiled.
-extern u16 g_PuppetNurse_ModelStates0[8]; // = { 9, 9, 9, 6, 6, 9, 7, 7 }; // + 2 bytes of padding
+extern u16 g_PuppetNurse_ModelStates0[8]; // = { 9, 9, 9, 6, 6, 9, 7, 7 }; // + 2 bytes of padding.
 
 extern u8 g_NursePuppet_AnimSfxs[580];
 
@@ -2659,7 +2660,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_Control6_7(s_SubCharacter* nurse, s32 arg1);
 
-void Ai_PuppetNurse_Control8(s_SubCharacter*);
+void Ai_PuppetNurse_Control8(s_SubCharacter* nurse);
 
 s32 sharedFunc_800CEEAC_3_s03(void);
 
@@ -3118,7 +3119,7 @@ typedef struct
     if (moveSpeed > limit)                                                                           \
     {                                                                                                \
         newMoveSpeed = limit;                                                                        \
-        limit = 0; \
+        limit        = Q12(0.0f);                                                                    \
         newSpeed     = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT);              \
         if (newMoveSpeed < newSpeed)                                                                 \
         {                                                                                            \
@@ -3137,7 +3138,7 @@ typedef struct
     chara->moveSpeed_38 = newMoveSpeed;                                                              \
 }
 
-// Is it possible to merge these macros ?
+// TODO: Is it possible to merge these macros?
 #define Chara_MoveSpeedUpdate3(chara, speed, limit)                                                  \
 {                                                                                                    \
     q19_12 moveSpeed;                                                                                \

@@ -991,7 +991,7 @@ typedef struct
     s8    field_6;  // Accessed by `func_8008BF84` as `u16`
     s8    unk_7;
     u8    field_8;  // Accessed by `func_8008BF84` as `u16`
-    u8    field_9;
+    u8    field_9;  /** `e_CharacterId` */
     u8    field_A;  // Accessed by `func_8008BF84` as `u16`
     u8    field_B;
     u16   field_C;
@@ -3712,7 +3712,7 @@ void func_8008A398(s_SubCharacter* chara);
 
 void func_8008A3AC(s_SubCharacter* chara);
 
-s32 func_8008A3E0(s_SubCharacter* arg0);
+s32 func_8008A3E0(s_SubCharacter* chara);
 
 void func_8008B15C(s_SubCharacter* chara);
 
