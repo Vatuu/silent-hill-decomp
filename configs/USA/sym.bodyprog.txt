@@ -461,6 +461,7 @@ Skeleton_BoneModelAssign                    = 0x800451B0; // type:func
 //--- PA: 0x020F1C   VA: 0x80045A7C   subsegment: c, libsd/bodyprog_80045A7C
 //--------------------------------------------------------------------------
 Sd_EngineCmd                                = 0x80045A7C; // type:func
+Sd_AudioStreamingCheck                      = 0x80045B28;
 Sd_AudioSystemSet                           = 0x80045D28; // type:func
 sd_init                                     = 0x80045DD4; // type:func
 sd_work_init                                = 0x80045E44; // type:func
@@ -468,6 +469,9 @@ Sd_PlaySfx                                  = 0x80046048; // type:func
 Sd_LastVoiceKeyOff                          = 0x800468EC; // type:func
 Sd_AllVoicesKeyOff                          = 0x800469AC; // type:func
 Sd_AllVoicesKeyOffVWithRROff                = 0x800469E8; // type:func
+Sd_StopBgmCmd                               = 0x80046AD8;
+Sd_StopBgm                                  = 0x80046B04;
+Sd_StopBgmStep                              = 0x80046B78;
 Sd_XaAudioPlayCmdAdd                        = 0x80046D3C;
 Sd_XaAudioLengthGet                         = 0x80046DCC;
 Sd_XaAudioPlay                              = 0x80046E00;
@@ -2096,6 +2100,7 @@ g_UnknownEngineCmdTable0                    = 0x800A9804;
 g_UnknownEngineCmdTable1                    = 0x800A9858; // type:u16
 g_UnknownEngineCmdTable2                    = 0x800A98AC;
 D_800A998C                                  = 0x800A998C; // type:AnimInfo size:0x10
+g_Sd_BgmLayersLimit                         = 0x800A99A4;
 g_MapMsg_CurrentIdx                         = 0x800A99AC; // type:s32
 g_MapMsg_SelectFlashTimer                   = 0x800A99B0; // type:s16
 g_FullscreenMapTimFileIdxs                  = 0x800A99B4;

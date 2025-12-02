@@ -580,8 +580,8 @@ typedef enum _SysState
     SysState_StatusMenu     = 2,
     SysState_MapScreen      = 3,
     SysState_Fmv            = 4,
-    SysState_LoadArea0      = 5,
-    SysState_LoadArea1      = 6,
+    SysState_LoadOverlay    = 5,
+    SysState_LoadRoom       = 6, // Alternative: SysState_LoadArea
     SysState_ReadMessage    = 7,
     SysState_SaveMenu0      = 8,
     SysState_SaveMenu1      = 9,

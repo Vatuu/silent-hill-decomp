@@ -528,7 +528,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             break;
 
         case 14:
-            if (func_80045B28())
+            if (Sd_AudioStreamingCheck())
             {
                 break;
             }

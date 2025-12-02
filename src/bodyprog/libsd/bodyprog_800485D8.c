@@ -35,7 +35,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
             break;
 
         case 8:
-            func_80046B04();
+            Sd_StopBgm();
             break;
 
         default:
@@ -67,7 +67,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
         if (g_Sd_ChannelsVolume.volumeBgm_8 <= 0)
         {
             g_Sd_ChannelsVolume.volumeBgm_8 = 0;
-            func_80046B78();
+            Sd_StopBgmStep();
         }
         else
         {
@@ -76,7 +76,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
             if ((g_Sd_ChannelsVolume.volumeBgm_8 << 16) <= 0)
             {
                 g_Sd_ChannelsVolume.volumeBgm_8 = 0;
-                func_80046B78();
+                Sd_StopBgmStep();
             }
         }
 

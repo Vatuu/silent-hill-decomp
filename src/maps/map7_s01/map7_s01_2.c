@@ -459,7 +459,7 @@ void func_800D7A60(void) // 0x800D7A60
             break;
 
         case 14:
-            if (func_80045B28())
+            if (Sd_AudioStreamingCheck())
             {
                 break;
             }

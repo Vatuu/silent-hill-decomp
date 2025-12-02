@@ -101,7 +101,7 @@ void GameFs_MapStartup(void) // 0x80034964
             break;
 
         case 1:
-            if (g_SysWork.timer_20 > 1200 && Fs_QueueGetLength() == 0 && !func_80045B28())
+            if (g_SysWork.timer_20 > 1200 && Fs_QueueGetLength() == 0 && !Sd_AudioStreamingCheck())
             {
                 Demo_DemoFileSavegameUpdate();
                 Game_PlayerInit();
@@ -131,7 +131,7 @@ void GameFs_MapStartup(void) // 0x80034964
             break;
 
         case 2:
-            if (Fs_QueueGetLength() == 0 && !func_80045B28())
+            if (Fs_QueueGetLength() == 0 && !Sd_AudioStreamingCheck())
             {
                 Demo_PlayDataRead();
 
@@ -243,7 +243,7 @@ void GameFs_MapStartup(void) // 0x80034964
             break;
 
         case 12:
-            if (!func_80045B28())
+            if (!Sd_AudioStreamingCheck())
             {
                 Game_StateSetNext(GameState_InGame);
 
@@ -582,7 +582,7 @@ void func_8003569C(void) // 0x8003569C
 
 s32 func_80035780(void) // 0x80035780
 {
-    if (func_80045B28())
+    if (Sd_AudioStreamingCheck())
     {
         return NO_VALUE;
     }
@@ -681,7 +681,7 @@ void func_8003596C(void) // 0x8003596C
 
 s32 func_8003599C(void) // 0x8003599C
 {
-    if (func_80045B28() || Fs_QueueGetLength() > 0)
+    if (Sd_AudioStreamingCheck() || Fs_QueueGetLength() > 0)
     {
         return NO_VALUE;
     }
@@ -815,17 +815,13 @@ void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
     func_8003DA9C(Chara_Harry, boneCoords, 1, g_SysWork.player_4C.chara_0.timer_C6, 0);
 }
 
-// ========================================
-// UNKNOWN
-// ========================================
-
 void func_80035DB4(s32 arg0) // 0x80035DB4
 {
     D_800BCD5C = 0;
 
     if (g_MapOverlayHeader.func_10)
     {
-        g_MapOverlayHeader.func_10();
+        g_MapOverlayHeader.func_10(arg0);
         if (arg0 == 0 && D_800BCD5C == 0)
         {
             func_80035F4C(1 << 0, Q12(240.0f), 0);
@@ -894,7 +890,7 @@ void func_80035ED0(void) // 0x80035ED0
     g_SysWork.field_2748[ARRAY_SIZE(g_SysWork.field_2748) - 1] = 0;
 }
 
-void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* arg2) // 0x80035F4C
+void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) // 0x80035F4C
 {
     s16  temp_v0;
     s32  var_a0;
@@ -910,15 +906,15 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* arg2) // 0x80035F4C
     bool cond;
     s32  temp_s7;
     s16* ptr;
-    u8*  var_t4;
+    u8*  bgmLayerLimitCpy;
 
-    flagsCpy = flags;
-    var_t4   = arg2;
-    ptr      = g_SysWork.field_2748;
+    flagsCpy         = flags;
+    bgmLayerLimitCpy = bgmLayerLimitPtr;
+    ptr              = g_SysWork.field_2748;
 
-    if (var_t4 == NULL)
+    if (bgmLayerLimitCpy == NULL)
     {
-        var_t4 = D_800A99A4;
+        bgmLayerLimitCpy = g_Sd_BgmLayersLimit;
     }
 
     if (g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
@@ -968,7 +964,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* arg2) // 0x80035F4C
             } 
             else 
             {
-                var_a0 = (g_SysWork.sysFlags_22A0 << 8) & 0x800; // TODO: Werid `SysFlag_3` check.
+                var_a0 = (g_SysWork.sysFlags_22A0 << 8) & 0x800; // TODO: Weird `SysFlag_3` check.
             }
         } 
         else 
@@ -1025,7 +1021,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* arg2) // 0x80035F4C
             var_v1 = 127;
         }
 
-        var_v1 = (var_v1 * var_t4[i]) >> 7;
+        var_v1 = (var_v1 * bgmLayerLimitCpy[i]) >> 7;
         if (var_v1 > 127) 
         {
             var_v1 = 127;
@@ -1127,6 +1123,10 @@ void func_8003640C(s32 arg0) // 0x8003640C
         g_MapOverlayHeader.field_14 = arg0;
     }
 }
+
+// ========================================
+// UNKNOWN
+// ========================================
 
 void Savegame_MapRoomIdxSet(void) // 0x80036420
 {
@@ -1243,7 +1243,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
         case 1:
             if (g_SysWork.sysFlags_22A0 & SysFlag_5)
             {
-                if (func_80045B28() == 4)
+                if (Sd_AudioStreamingCheck() == 4)
                 {
                     D_800BCD74 = 0;
                     break;
@@ -2810,7 +2810,7 @@ void GameState_LoadStatusScreen_Update(void) // 0x800395C0
 
         func_8003943C();
 
-        if (func_80045B28())
+        if (Sd_AudioStreamingCheck())
         {
             Sd_EngineCmd(19);
         }
@@ -2944,7 +2944,7 @@ void SysState_Fmv_Update(void) // 0x80039A58
     LoadImage(&D_800A9A6C, (u32*)IMAGE_BUFFER_0);
     DrawSync(SyncMode_Wait);
 
-    // Set savegame flag based on `D_800BCDD8->eventFlagNum_2` flag ID.
+    // Set savegame flag based on `g_MapEventParam->eventFlagId_2` flag ID.
     Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
 
     // Return to game.
@@ -2985,9 +2985,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
         D_800BCDB0.positionZ_8 += var1;
     }
 
-    // Handle `SysState_LoadArea0` and `SysState_LoadArea1`.
-    // TODO: Document what the difference here is.
-    if (g_SysWork.sysState_8 == SysState_LoadArea0)
+    if (g_SysWork.sysState_8 == SysState_LoadOverlay)
     {
         g_SysWork.processFlags_2298    = SysWorkProcessFlag_OverlayTransition;
         g_SavegamePtr->mapOverlayId_A4 = g_MapEventParam->mapOverlayIdx_8_25;

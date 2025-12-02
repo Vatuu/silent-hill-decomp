@@ -91,7 +91,7 @@ bool func_801E2ED8(void) // 0x801E2ED8
             break;
 
         case 2:
-            switch (func_80045B28())
+            switch (Sd_AudioStreamingCheck())
             {
                 case 0:
                     return false;
@@ -211,7 +211,7 @@ bool func_801E3124(void) // 0x801E3124
         case 3:
             D_801E5E74--;
 
-            if (D_801E5E74 <= 0 && func_80045B28() < 2)
+            if (D_801E5E74 <= 0 && Sd_AudioStreamingCheck() < 2)
             {
                 g_GameWork.background2dColor_R_58C = 0;
                 g_GameWork.background2dColor_G_58D = 0;
@@ -307,7 +307,7 @@ bool func_801E342C(void) // 0x801E342C
             }
 
             D_801E5E78--;
-            if (!func_80045B28())
+            if (!Sd_AudioStreamingCheck())
             {
                 g_GameWork.gameStateStep_598[1]++;
             }

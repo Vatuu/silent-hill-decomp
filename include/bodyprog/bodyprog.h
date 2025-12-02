@@ -2133,7 +2133,7 @@ extern s32 D_800A999C;
 
 extern s32 D_800A99A0;
 
-extern u8 D_800A99A4[8];
+extern u8 g_Sd_BgmLayersLimit[8];
 
 /** Relative file offset for map texture? */
 extern s8 D_800A99B5;
@@ -2155,6 +2155,7 @@ extern s32 D_800A9A0C; // Old IDB name `FS_AllFilesLoaded`, though FS code doesn
 /** `e_SysState` */
 extern s32 D_800A9A10;
 
+// Enemies following Harry count?
 extern s32 D_800A9A1C;
 
 extern void (*g_SysStateFuncs[])(void);
@@ -3125,9 +3126,6 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
 void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images);
 
-/** Sound func? */
-u8 func_80045B28(void);
-
 /** Sound func. */
 void func_80045BD8(u16 cmd);
 
@@ -3153,13 +3151,6 @@ void func_8004692C(u16 cmd);
 void func_80046A24(u16 cmd);
 
 void func_80046A70(void);
-
-void func_80046AD8(void);
-
-void func_80046B04(void);
-
-/** Sound command func. Unknown category. */
-void func_80046B78(void);
 
 u8 func_80046BB4(u8 arg0);
 
@@ -4131,7 +4122,7 @@ bool func_80035E44(void);
 void func_80035ED0(void);
 
 // Main music trigger and handler.
-void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* arg2);
+void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr);
 
 void func_800363D0(void);
 

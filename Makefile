@@ -420,6 +420,9 @@ ifeq ($(SKIP_ASM),0)
 endif
 endif
 
+config-formatter:
+	$(PYTHON) $(TOOLS_DIR)/configs_formatter.py
+
 # Recipes
 
 # .elf targets

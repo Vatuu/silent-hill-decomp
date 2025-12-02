@@ -1655,7 +1655,7 @@ void func_800E4714(void) // 0x800E4714
         case 17:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(8.5f), Q12(143.0f), Q12(207.0f), true, false);
 
-            if (func_80045B28() == 1)
+            if (Sd_AudioStreamingCheck() == 1)
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -1664,7 +1664,7 @@ void func_800E4714(void) // 0x800E4714
         case 18:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(8.5f), Q12(143.0f), Q12(207.0f), true, false);
 
-            if (func_80045B28() == 1)
+            if (Sd_AudioStreamingCheck() == 1)
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -1999,14 +1999,14 @@ void func_800E514C(void) // 0x800E514C
 
         case 31:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(281.0f), Q12(320.0f), true, false);
-            if (func_80045B28() != 1)
+            if (Sd_AudioStreamingCheck() != 1)
             {
                 SysWork_StateStepIncrement(0);
             }
             break;
 
         case 32:
-            if (func_80045B28() != 1)
+            if (Sd_AudioStreamingCheck() != 1)
             {
                 SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(281.0f), Q12(320.0f), true, false);
                 break;
@@ -2038,7 +2038,7 @@ void func_800E514C(void) // 0x800E514C
             SysWork_StateStepIncrement(0);
 
         case 36:
-            if (!func_80045B28())
+            if (!Sd_AudioStreamingCheck())
             {
                 func_800E9260(Chara_EndingDahlia, 3);
                 SysWork_StateStepIncrement(0);
@@ -2996,7 +2996,7 @@ void func_800E787C(void) // 0x800E787C
         case 13:
             Savegame_EventFlagSet(EventFlag_575);
 
-            if (!func_80045B28())
+            if (!Sd_AudioStreamingCheck())
             {
                 func_800E941C();
                 func_800E9444(Chara_BloodyIncubator, &g_SysWork.npcs_1A0[5]);

@@ -48,21 +48,19 @@ typedef struct
     u16 cdErrorCount_0;    /** Counter for failed attempts at the moment of process a primite command. */
     u16 xaAudioIdxCheck_2; /** XA Audio index. Used for check if the file exist. */
     u16 xaAudioIdx_4;      /** XA Audio index. Used for playing the audio. */
-    u16 field_6;
-    u16 field_8[1]; // Unknown size.
-    s16 field_A;
-    s16 field_C;
-    u16 field_E; // Related to the handling of music layers.
+    u16 field_6;           // Current state of the music state?
+    u16 field_8[3];
+    u16 field_E;           // Related to the handling of music layers.
     u16 field_10;
     u8  isStereoEnabled_12; // `bool`
-    s8  isXaStopping_13; /** `bool` | It stop any play from a XA file in memory from playing, when doing it this is
-                          * set to `true`, otherwise it keep in `false`. */
-    u8  bgmFadeSpeed_14; /** Value to get rested in order to speed the music fade. Range: [0, 2], default: 0. */
-    u8  isVabLoading_15; /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
-    u8  isXaLoading_16;  /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
-    u8  muteGame_17;     /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively get lower
-	                      * in volume until mute. The sounds will keep playing, but muted.
-						  */
+    s8  isXaStopping_13;    /** `bool` | It stop any play from a XA file in memory from playing, when doing it this is
+                             * set to `true`, otherwise it keep in `false`. */
+    u8  bgmFadeSpeed_14;    /** Value to get rested in order to speed the music fade. Range: [0, 2], default: 0. */
+    u8  isVabLoading_15;    /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
+    u8  isXaLoading_16;     /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
+    u8  muteGame_17;        /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively get lower
+	                         * in volume until mute. The sounds will keep playing, but muted.
+						     */
 } s_800C1658;
 
 typedef struct
@@ -225,6 +223,17 @@ extern u8 g_Sd_CurrentCmd;
  */
 void Sd_EngineCmd(u32 cmd);
 
+/** @brief Checks if an audio file is loading, is going to be loaded or a XA file is playing.
+ * Depending of the audio file it marks different numbers.
+ *
+ * 0 = Nothing is currently loading.
+ * 1 = XA file playing.
+ * 2 = VAB file loading.
+ * 3 = XA file loading.
+ * 4 & 5 = Unknown. Requires further investigation about `D_800C37DC` functionallity.
+ */
+u8 Sd_AudioStreamingCheck(void);
+
 u16 func_80045BC8(void);
 
 /** @brief Sets the audio system to stereo or mono. */
@@ -238,6 +247,12 @@ void Sd_AllVoicesKeyOff(void);
 
 /** @brief Executes `SdUtKeyOffVWithRROff` and runs through all elements of `smf_port`. */
 void Sd_AllVoicesKeyOffVWithRROff(void);
+
+void Sd_StopBgmCmd(void);
+
+void Sd_StopBgm(void);
+
+void Sd_StopBgmStep(void);
 
 /** Manipulate the BGM audio layers. Can't be determined if this function
  * is fully in charge of that as `func_80035F4C` (not directly related to the SD audio system)
@@ -287,7 +302,7 @@ void Sd_SetReverbDepth(u8 depth);
 
 void Sd_SetReverbEnable(s32 mode);
 
-void func_80047B24(s32 arg0);
+void func_80047B24(s32 cmd);
 
 void func_80047D1C(void);
 

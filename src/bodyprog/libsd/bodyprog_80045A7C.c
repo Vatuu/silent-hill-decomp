@@ -34,7 +34,7 @@ void Sd_EngineCmd(u32 cmd) // 0x80045A7C
             func_80046A24(cmd);
             return;
 
-        // Play SFX. Range [1280, 1791]. 511 possible values.
+        // Play SFX. Range [1280, 1791].
         case 5:
         case 6:
             Sd_PlaySfx(cmd, 0, 0);
@@ -64,7 +64,7 @@ void Sd_EngineCmd(u32 cmd) // 0x80045A7C
     }
 }
 
-u8 func_80045B28(void) // 0x80045B28
+u8 Sd_AudioStreamingCheck(void) // 0x80045B28
 {
     u8 var;
 
@@ -130,7 +130,7 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
             break;
 
         case 18:
-            func_80046AD8();
+            Sd_StopBgmCmd();
             break;
 
         case 21:
@@ -139,7 +139,7 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
         case 20:
             Sd_AllVoicesKeyOff();
             Sd_LastVoiceKeyOff();
-            func_80046AD8();
+            Sd_StopBgmCmd();
 
         case 19:
             Sd_XaAudioStopCmdAdd();
@@ -164,11 +164,16 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
             break;
     }
 
+	// VAB audios.
+	
+	// Play/load VAB audio.
     if (cmd >= 160 && cmd < 245)
     {
         func_80047B24(cmd);
     }
 	
+	// (Unsure) Play/load song.
+	// This passes a command to the previous conditional.
     if (cmd >= 32 && cmd < 72)
     {
         func_80048244(cmd);
@@ -262,8 +267,8 @@ void sd_work_init(void) // 0x80045E44
 
     D_800C1658.field_6                  = 0;
     D_800C1658.field_8[0]               = 0;
-    D_800C1658.field_A                  = 0;
-    D_800C1658.field_C                  = 0;
+    D_800C1658.field_8[1]               = 0;
+    D_800C1658.field_8[2]               = 0;
     D_800C1658.xaAudioIdx_4             = 0;
     D_800C1658.isXaStopping_13          = 0;
     D_800C1658.cdErrorCount_0           = 0;
@@ -601,7 +606,6 @@ void func_80046A24(u16 cmd) // 0x80046A24
     }
 }
 
-// Triggered when a FMV have just play.
 void func_80046A70(void) // 0x80046A70
 {
     u16 prevVal;
@@ -620,13 +624,13 @@ void func_80046A70(void) // 0x80046A70
     Sd_CmdPoolUpdate();
 }
 
-void func_80046AD8(void) // 0x80046AD8
+void Sd_StopBgmCmd(void) // 0x80046AD8
 {
     D_800C1658.field_E = NO_VALUE;
     Sd_CmdPoolAdd(8);
 }
 
-void func_80046B04(void) // 0x80046B04
+void Sd_StopBgm(void) // 0x80046B04
 {
     if (g_Sd_ChannelsVolume.volumeBgm_8 > 0)
     {
@@ -636,7 +640,7 @@ void func_80046B04(void) // 0x80046B04
     if (g_Sd_ChannelsVolume.volumeBgm_8 <= 0)
     {
         g_Sd_ChannelsVolume.volumeBgm_8 = 0;
-        func_80046B78();
+        Sd_StopBgmStep();
         Sd_CmdPoolUpdate();
     }
 
@@ -644,7 +648,7 @@ void func_80046B04(void) // 0x80046B04
     Sd_SetVolBgm(g_Sd_ChannelsVolume.volumeBgm_6, g_Sd_ChannelsVolume.volumeBgm_6);
 }
 
-void func_80046B78(void) // 0x80046B78
+void Sd_StopBgmStep(void) // 0x80046B78
 {
     Sd_SetVolBgm(0, 0);
     SdSeqStop(0);

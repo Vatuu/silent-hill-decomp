@@ -1156,7 +1156,7 @@ void func_80087EA8(s32 cmd) // 0x80087EA8
 
 void func_80087EDC(s32 arg0) // 0x80087EDC
 {
-    if (func_80045B28() || !Fs_QueueDoThingWhenEmpty())
+    if (Sd_AudioStreamingCheck() || !Fs_QueueDoThingWhenEmpty())
     {
         return;
     }
@@ -1205,7 +1205,7 @@ void func_80088028(void) // 0x80088028
 
 void func_80088048(void) // 0x80088048
 {
-    if (func_80045B28())
+    if (Sd_AudioStreamingCheck())
     {
         return;
     }
@@ -1232,7 +1232,7 @@ void func_80088048(void) // 0x80088048
 
 void func_800880F0(s32 arg0) // 0x800880F0
 {
-    if (func_80045B28())
+    if (Sd_AudioStreamingCheck())
     {
         return;
     }

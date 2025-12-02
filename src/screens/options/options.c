@@ -498,14 +498,14 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
         Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
         g_Options_SelectionHighlightTimer = 0;
-        g_MainOptionsMenu_SelectedEntry        = (g_MainOptionsMenu_SelectedEntry + (MainOptionsMenuEntry_Count - 1)) % MainOptionsMenuEntry_Count;
+        g_MainOptionsMenu_SelectedEntry   = (g_MainOptionsMenu_SelectedEntry + (MainOptionsMenuEntry_Count - 1)) % MainOptionsMenuEntry_Count;
     }
     if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
     {
         Sd_PlaySfx(Sfx_MenuMove, 0, 64);
 
         g_Options_SelectionHighlightTimer = 0;
-        g_MainOptionsMenu_SelectedEntry         = (g_MainOptionsMenu_SelectedEntry + 1) % MainOptionsMenuEntry_Count;
+        g_MainOptionsMenu_SelectedEntry   = (g_MainOptionsMenu_SelectedEntry + 1) % MainOptionsMenuEntry_Count;
     }
 
     // Handle config change.

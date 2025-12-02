@@ -204,7 +204,7 @@ OBJDUMP_FLAGS = f"--disassemble-all --reloc --disassemble-zeroes -Mreg-names=32"
 
 TARGETS_POSTBUILD = ["1ST/BODYPROG.BIN", "VIN/STREAM.BIN", "VIN/MAP3_S06.BIN", "VIN/MAP4_S05.BIN", "VIN/MAP5_S01.BIN"]
 
-def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, objdiff_file, non_matching_enabled):
+def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, objdiff_file, non_matching_enabled):
     
     skipAsm = ""
     nonMatching = ""
@@ -234,7 +234,8 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
                 )
         else:
             return
-    elif non_matching_enabled != False:
+    
+    if non_matching_enabled:
         nonMatching = "-DNON_MATCHING"
     
     
@@ -246,7 +247,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
     # in order to asign map flag
     if re.search("^src.maps.*", source_path):
         mapId = (re.search("map\d_s\d\d", source_path)[0]).upper()
-        ninja_file.build(
+        ninjaFile.build(
             outputs=f"{target_path}.i", rule="cpp", inputs=source_path,
             variables={
                 "MAPIDFLAG": f"-D{mapId}",
@@ -256,7 +257,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
         )
     else:
         mapId = ""
-        ninja_file.build(
+        ninjaFile.build(
             outputs=f"{target_path}.i", rule="cpp", inputs=source_path,
             variables={
                 "MAPIDFLAG": "",
@@ -269,24 +270,24 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
     # to enable iconv conversion, otherwise checks if the files is from
     # the executable or an overlay in order to asign the intended DL flag
     if re.search("^src.bodyprog.memcard*", source_path):
-        ninja_file.build(
+        ninjaFile.build(
             outputs=f"{target_path}.sjis.i", rule="iconv", inputs=f"{target_path}.i", implicit=f"{target_path}.i"
         )
-        ninja_file.build(
+        ninjaFile.build(
             outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.sjis.i", implicit=f"{target_path}.sjis.i",
             variables={
                 "DLFLAG": DL_OVL_FLAGS
             }
         )
     elif re.search("^src.main.*", source_path):
-        ninja_file.build(
+        ninjaFile.build(
             outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i",
             variables={
                 "DLFLAG": DL_EXE_FLAGS
             }
         )
     else:
-        ninja_file.build(
+        ninjaFile.build(
             outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i",
             variables={
                 "DLFLAG": DL_OVL_FLAGS
@@ -297,7 +298,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
     # to enable `--expand-div` parameter, otherwise checks if the files is
     # from the executable or an overlay in order to asign the intended DL flag
     if re.search("smf_io", source_path) or re.search("smf_mid", source_path):
-        ninja_file.build(
+        ninjaFile.build(
             outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s",
             variables={
                 "EXPANDIVFLAG": "--expand-div",
@@ -305,7 +306,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
             }
         )
     elif re.search("^src.main.*", source_path):
-        ninja_file.build(
+        ninjaFile.build(
             outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s",
             variables={
                 "EXPANDIVFLAG": "",
@@ -313,7 +314,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
             }
         )
     else:
-        ninja_file.build(
+        ninjaFile.build(
             outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s",
             variables={
                 "EXPANDIVFLAG": "",
@@ -325,75 +326,92 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninja_file, 
     if objdiff_file != None:
         return f"{expected_path}.s.o"
 
-def ninja_setup_main(ninja_file_prefix: str, game_version_idx: int, split_entries, skip_checksum: bool, non_matching: bool):
+def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_checksum: bool, non_matching: bool):
 
-    ninja = ninja_syntax.Writer(open(str(f"{ninja_file_prefix}.ninja"), "w", encoding="utf-8"), width=9999)
+    if objdiff_mode:
+        ninjaFile            = ninja_syntax.Writer(open("matching.ninja", "w", encoding="utf-8"), width=9999)
+        ninjaDiffFile        = ninja_syntax.Writer(open("objdiff.ninja", "w", encoding="utf-8"), width=9999)
+        ninjaDiffFile.include("rules.ninja")
+        ninjaNonmatchingFile = ninja_syntax.Writer(open("build.ninja", "w", encoding="utf-8"), width=9999)
+        ninjaNonmatchingFile.include("rules.ninja")
+    else:
+        ninjaFile = ninja_syntax.Writer(open("build.ninja", "w", encoding="utf-8"), width=9999)
     
-    ninja.rule(
+    ninjaFile.include("rules.ninja")
+    
+    ninjaRulesFile = ninja_syntax.Writer(open("rules.ninja", "w", encoding="utf-8"), width=9999)
+    
+    ninjaRulesFile.rule(
         "as", description="as $in",
         command=f"{AS} {AS_FLAGS} $DLFLAG -o $out $in"
     )
 
-    ninja.rule(
+    ninjaRulesFile.rule(
         "cc", description="cc $in",
         command=f"{CC} {CC_FLAGS} $DLFLAG -o $out $in",
     )
     
-    ninja.rule(
+    ninjaRulesFile.rule(
         "cpp", description="cpp $in",
         command=f"{CPP} -P -MMD -MP -MT $out -MF $out.d {CPP_FLAGS} $MAPIDFLAG $SKIPASMFLAG $NONMATCHINGFLAG -o $out $in",
         depfile="$out.d"
     )
 
-    ninja.rule(
+    ninjaRulesFile.rule(
         "iconv", description="iconv $in",
         command=f"{ICONV} {ICONV_FLAGS}",
     )
 
-    ninja.rule(
+    ninjaRulesFile.rule(
         "objdump", description="objdump $in",
         command=f"{OBJDUMP} {OBJDUMP_FLAGS} $in > $out",
     )
 
-    ninja.rule(
+    ninjaRulesFile.rule(
         "maspsx", description="maspsx $in",
         command=f"{MASPSX} {MASPSX_FLAGS} $EXPANDIVFLAG {AS_FLAGS} $DLFLAG -o $out $in",
     )
     
-    ninja.rule(
+    ninjaRulesFile.rule(
         "ld", description="link $out",
         command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -r -b binary -o $out $in",
     )
     
-    ninja.rule(
+    ninjaRulesFile.rule(
         "elf", description="elf $out",
         command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -Map $out.map -T $in -T $undef_sym_path -T $undef_fun_path -T {CONFIG_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}/lib_externs.ld -o $out",
     )
     
-    ninja.rule(
+    ninjaRulesFile.rule(
         "objcopy", description="objcopy $out",
         command=f"{OBJCOPY} -O binary $in $out",
     )
     
     if sys.platform == "linux" or sys.platform == "linux2":
-        ninja.rule(
+        ninjaRulesFile.rule(
             "sha256sum", description="checksum",
             command=f"sha256sum --ignore-missing --check $in",
         )
     elif sys.platform == "win32":
-        ninja.rule(
+        ninjaRulesFile.rule(
             "sha256sum", description="checksum",
             command=f"cmd.exe /c {TOOLS_DIR}\\sha256sum.bat $in",
         )
     
-    ninja.rule(
+    ninjaRulesFile.rule(
         "postbuild", description="postbuild script $in",
         command=f"{POSTBUILD} $in",
+    )
+    
+    ninjaRulesFile.rule(
+        "objdiff-config", description="objdiff-config",
+        command=f"{PYTHON} {OBJDIFF_GENSCRIPT} --ninja $in",
     )
     
     elfBuildRequirements = []
     checksumBuildRequirements = []
     entriesPaths = []
+    objdiffConfigRequirements = []
     
     # Build all the objects
     for split_config in split_entries:
@@ -415,25 +433,37 @@ def ninja_setup_main(ninja_file_prefix: str, game_version_idx: int, split_entrie
                 if seg.type[0] == ".":
                     continue
                     
+                source_path = str(entry.src_paths[0])
+                target_path = str(entry.object_path)
                 
                 match seg.type:
                     case "asm" | "data" | "sdata" | "bss" | "sbss" | "rodata" | "header":
-                        if re.search("^asm.main.*", str(entry.src_paths[0])):
-                            ninja.build(outputs=str(entry.object_path), rule="as", inputs=str(entry.src_paths[0]),
+                        if re.search("^asm.main.*", source_path):
+                            ninjaFile.build(outputs=target_path, rule="as", inputs=source_path,
                                 variables={
                                     "DLFLAG": DL_EXE_FLAGS
                                 }
                             )
                         else:
-                            ninja.build(outputs=str(entry.object_path), rule="as", inputs=str(entry.src_paths[0]),
+                            ninjaFile.build(outputs=target_path, rule="as", inputs=source_path,
                                 variables={
                                     "DLFLAG": DL_OVL_FLAGS
                                 }
                             )
                     case "c":
-                        ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninja, None, non_matching)
+                        ninja_setup_list_add_source(target_path.removesuffix(".c.o"), source_path, ninjaFile, None, non_matching)
+                        
+                        if objdiff_mode:
+                            if sys.platform == "linux" or sys.platform == "linux2":
+                                expected_path = re.sub(r"^build/src", r"expected/asm", f"{target_path}.s.o")
+                            elif sys.platform == "win32":
+                                expected_path = re.sub(r"^build\\src", r"expected\\asm", f"{target_path}.s.o")
+                            
+                            tempVar = [ninja_setup_list_add_source(target_path.removesuffix(".c.o"), source_path, ninjaNonmatchingFile, ninjaDiffFile, True)]
+                            if tempVar != [None]:
+                                objdiffConfigRequirements += tempVar
                     case "bin":
-                        ninja.build(outputs=str(entry.object_path), rule="ld", inputs=str(entry.src_paths[0]))
+                        ninjaFile.build(outputs=target_path, rule="ld", inputs=source_path)
                     case "lib":
                         """Did you know that Silent Hill: Homecoming was meant to
                         have a seccion where Alex would have to go through a forest
@@ -455,12 +485,12 @@ def ninja_setup_main(ninja_file_prefix: str, game_version_idx: int, split_entrie
             split_config.SPLIT_BASENAME = f"VIN/{split_config.SPLIT_BASENAME}"
         
         
-        if split_config.SPLIT_BASENAME != "main":
-            output = f"{BUILD_DIR}/out/{split_config.SPLIT_BASENAME}"
-        else:
+        if split_config.SPLIT_BASENAME == "main":
             output = f"{BUILD_DIR}/out/SLUS_007.07"
+        else:
+            output = f"{BUILD_DIR}/out/{split_config.SPLIT_BASENAME}"
         
-        ninja.build(
+        ninjaFile.build(
             outputs=f"{output}.elf",
             rule="elf",
             inputs=split_config.SPLIT_LINKER,
@@ -470,7 +500,7 @@ def ninja_setup_main(ninja_file_prefix: str, game_version_idx: int, split_entrie
             },
             implicit=elfBuildRequirements
         )
-        ninja.build(
+        ninjaFile.build(
             outputs=output,
             rule="objcopy",
             inputs=f"{output}.elf",
@@ -478,7 +508,7 @@ def ninja_setup_main(ninja_file_prefix: str, game_version_idx: int, split_entrie
         )
         
         if split_config.SPLIT_BASENAME in TARGETS_POSTBUILD:
-            ninja.build(
+            ninjaFile.build(
                 outputs=f"{output}.fix",
                 rule="postbuild",
                 inputs=output,
@@ -487,6 +517,11 @@ def ninja_setup_main(ninja_file_prefix: str, game_version_idx: int, split_entrie
         
         checksumBuildRequirements += [str(s) for s in [output]]
     
+    if objdiff_mode:
+        if sys.platform == "linux" or sys.platform == "linux2":
+            ninjaDiffFile.build(outputs=f"{EXPECTED_DIR}/objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}/config.yaml", implicit=objdiffConfigRequirements)
+        elif sys.platform == "win32":
+            ninjaDiffFile.build(outputs=f"{EXPECTED_DIR}\\objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}\\config.yaml", implicit=objdiffConfigRequirements)
     
     if skip_checksum != True:
         for s in range(len(checksumBuildRequirements)):
@@ -498,69 +533,12 @@ def ninja_setup_main(ninja_file_prefix: str, game_version_idx: int, split_entrie
         elif sys.platform == "win32":
             checksumTarget = f"{CONFIG_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}"
         
-        ninja.build(
+        ninjaFile.build(
             outputs=f"{BUILD_DIR}/out/checksum.ok",
             rule="sha256sum",
             inputs=checksumTarget,
             implicit=checksumBuildRequirements
         )
-
-def ninja_setup_objdiff(split_entries):
-
-    ninja = ninja_syntax.Writer(open(str("build.ninja"), "w", encoding="utf-8"), width=9999)
-    objdiff = ninja_syntax.Writer(open(str("objdiff.ninja"), "w", encoding="utf-8"), width=9999)
-    
-    objdiff.rule(
-        "as", description="as $in",
-        command=f"{AS} {AS_FLAGS} $DLFLAG -o $out $in",
-    )
-
-    ninja.rule(
-        "cc", description="cc $in",
-        command=f"{CC} {CC_FLAGS} $DLFLAG -o $out $in",
-    )
-    
-    ninja.rule(
-        "cpp", description="cpp $in",
-        command=f"{CPP} -P -MMD -MP -MT $out -MF $out.d {CPP_FLAGS} $MAPIDFLAG $SKIPASMFLAG $NONMATCHINGFLAG -o $out $in",
-    )
-
-    ninja.rule(
-        "iconv", description="iconv $in",
-        command=f"{ICONV} {ICONV_FLAGS}",
-    )
-
-    ninja.rule(
-        "maspsx", description="maspsx $in",
-        command=f"{MASPSX} {MASPSX_FLAGS} $EXPANDIVFLAG {AS_FLAGS} $DLFLAG -o $out $in",
-    )
-    
-    objdiff.rule(
-        "objdiff-config", description="objdiff-config",
-        command=f"{PYTHON} {OBJDIFF_GENSCRIPT} --ninja $in",
-    )
-    objdiffConfigRequirements = []
-    # Build all the objects
-    for split_config in split_entries:
-        for split_entry in split_config.SPLIT_ENTRIES:
-            for entry in split_entry:
-                seg = entry.segment
-                
-                if entry.object_path is None:
-                    continue
-                
-                if seg.type[0] == ".":
-                    continue
-                    
-                if seg.type == "c":
-                    tempVar = [ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninja, objdiff, False)]
-                    if tempVar != [None]:
-                        objdiffConfigRequirements += tempVar
-    
-    if sys.platform == "linux" or sys.platform == "linux2":
-        objdiff.build(outputs=f"{EXPECTED_DIR}/objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}/config.yaml", implicit=objdiffConfigRequirements)
-    elif sys.platform == "win32":
-        objdiff.build(outputs=f"{EXPECTED_DIR}\\objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}\\config.yaml", implicit=objdiffConfigRequirements)
 
 def ninja_append(split_entries, skip_checksum: bool, non_matching: bool, game_version_idx: int, build_matching_nall_mode: bool):
     """Horrid code - Will"""
@@ -772,6 +750,8 @@ def clean_working_files(clean_build_files: bool):
             os.remove("matching.ninja")
         if os.path.exists("objdiff.ninja"):
             os.remove("objdiff.ninja")
+        if os.path.exists("rules.ninja"):
+            os.remove("rules.ninja")
         if os.path.exists(".ninja_log"):
             os.remove(".ninja_log")
         shutil.rmtree(ASM_DIR, ignore_errors=True)
@@ -829,26 +809,20 @@ def main():
         action="store_true",
     )
     parser.add_argument(
-        "-nall", "--ninja_all",
-        help="Builds setup for both matching build and Objdiff\nUse `ninja -f matching.ninja` to build the matching files",
-        action="store_true",
-    )
-    parser.add_argument(
         "-ver", "--game_version",
         help="Extract and work under a specific version of the game (NOT IMPLEMENTED)",
         type=str,
     )
     args = parser.parse_args()
 
-    cleanCompilationFiles   = (args.clean) or False
-    skipChecksumOption      = (args.skip_checksum) or False
-    objdiffConfigOnlyOption = (args.objdiff_config) or False
-    nonMatchingOption       = (args.non_matching) or False
-    gameVersionOption       = 0 # USA by default
-    yamlsPaths              = []
-    splitsYamlInfo          = []
-    regenMode               = False
-    allConfigsOption        = (args.ninja_all) or False
+    cleanCompilationFiles = (args.clean) or False
+    skipChecksumOption    = (args.skip_checksum) or False
+    objdiffConfigOption   = (args.objdiff_config) or False
+    nonMatchingOption     = (args.non_matching) or False
+    gameVersionOption     = 0 # USA by default
+    yamlsPaths            = []
+    splitsYamlInfo        = []
+    regenMode             = False
     
     if args.game_version != None:
         for gameVersionInfo in GAMEVERSIONS:
@@ -933,10 +907,6 @@ def main():
                     print("Map overlay(s) not found.")
                     sys.exit(1)
     
-    if regenMode == False and allConfigsOption and objdiffConfigOnlyOption:
-        print("\nPlease specify only one mode you want to work in:\nNinja files mode (-nall/--ninja_all)\nObjdiff mode (-obj/--objdiff)\nMatching mode (no args).")
-        sys.exit(1)
-    
     if regenMode == False:
         clean_working_files(True)
     else:
@@ -961,21 +931,28 @@ def main():
     
     
     if regenMode == False:
-        if objdiffConfigOnlyOption:
-            ninja_setup_objdiff(splitsYamlInfo)
-        elif allConfigsOption:
-            ninja_setup_main("matching", gameVersionOption, splitsYamlInfo, False, False)
-            ninja_setup_objdiff(splitsYamlInfo)
-        else:
-            ninja_setup_main("build", gameVersionOption, splitsYamlInfo, skipChecksumOption, nonMatchingOption)
+        ninja_build(splitsYamlInfo, gameVersionOption, objdiffConfigOption, skipChecksumOption, nonMatchingOption)
     else:
         ninja_append(splitsYamlInfo, skipChecksumOption, nonMatchingOption, gameVersionOption, False)
         if os.path.exists("matching.ninja"):
             ninja_append(splitsYamlInfo, False, False, gameVersionOption, True)
     
-    
-    
-    if objdiffConfigOnlyOption or allConfigsOption:
+    #if regenMode == False:
+    #    if objdiffConfigOption:
+    #        ninja_setup_objdiff(splitsYamlInfo)
+    #    elif allConfigsOption:
+    #        ninja_setup_main("matching", gameVersionOption, splitsYamlInfo, False, False)
+    #        ninja_setup_objdiff(splitsYamlInfo)
+    #    else:
+    #        ninja_setup_main("build", gameVersionOption, splitsYamlInfo, skipChecksumOption, nonMatchingOption)
+    #else:
+    #    ninja_append(splitsYamlInfo, skipChecksumOption, nonMatchingOption, gameVersionOption, False)
+    #    if os.path.exists("matching.ninja"):
+    #        ninja_append(splitsYamlInfo, False, False, gameVersionOption, True)
+    #
+    #
+    #
+    if objdiffConfigOption:
         subprocess.call([PYTHON, "-m", "ninja", "-f", "objdiff.ninja"])
         
 

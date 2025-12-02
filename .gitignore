@@ -12,9 +12,7 @@ expected/
 .cache/
 .splache
 .ninja_log
-build.ninja
-matching.ninja
-objdiff.ninja
+*.ninja
 
 objdiff.json
 null.d

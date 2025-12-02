@@ -46,7 +46,7 @@ void GameState_Boot_Update(void) // 0x80032D1C
             break;
 
         case 1:
-            if (!func_80045B28())
+            if (!Sd_AudioStreamingCheck())
             {
                 unkGameStateVar = D_800A9774[g_GameWork.gameStateStep_598[1]];
                 if (unkGameStateVar != 0)
@@ -183,7 +183,7 @@ void MainLoop(void) // 0x80032EE0
         func_8002EB88();
         Sd_CmdPoolExecute();
 
-        if (!func_80045B28())
+        if (!Sd_AudioStreamingCheck())
         {
             Fs_QueueUpdate();
         }

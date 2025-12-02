@@ -28,18 +28,18 @@ static u8* D_800A9FD8[1] = {
  * The way this function triggers is by adding a command to `g_Sd_CmdPool` which goes from 164 to 168
  * depending on the weapon (the code allows it to go down to 160, but it's impossible to get a
  * command with that value naturally). The value of this command goes through many functions until it reaches
- * `func_8007F14C`, where it's used to get the index of the audio bank to beloaded. The strange
+ * `func_8007F14C`, where it's used to get the index of the audio bank to be loaded. The strange
  * thing starts here, as the same value of the command assigned is used to get inside a specific element from
  * a variable that uses struct `s_800C37D4`: `D_800A986C`, which only has 5 elements. However, the
  * elements being accessed have index 164 to 168. So instead the code uses `D_800A986C` as a pointer
  * to jump all the way up to 0x800A9FEC where the table is actually used for switching the audio bank of the
- * currently selected weapon. This seems over-engineered and it would be interesting to investigate how this
+ * currently selected weapon. This is over-engineered and it would be interesting to investigate how this
  * works in other versions.
  *
  * With the previously said this means that this data is actually a `s_800C37D4` struct array that begins
- * at 0x800A9FEC, and since it's not being directly or (in a normal way) indirectly called by a function,
+ * at 0x800A9FEC, and since it's not being directly or indirectly (in a normal way) called by a function,
  * Splat mixes it up with `D_800A9FDC`, which is actually being called directly by `func_80047E3C`. Looking at
- * the code indicates that the data between 0x800A9FDC to 0x800A9FEC is actually 4 `int` values.
+ * the code indicates that the data between 0x800A9FDC to 0x800A9FEC are actually 4 `int` values.
  */
 static s32 D_800A9FDC[4] = {
     0x00001010, 0x00021490, 0x00027630, 0x00058F50
@@ -178,7 +178,7 @@ static s_800C37D4 D_800AA274[73] = {
     {}
 };
 
-void func_80047B24(s32 arg0) // 0x80047B24
+void func_80047B24(s32 cmd) // 0x80047B24
 {
     if (D_800C1658.xaAudioIdx_4 != 0)
     {
@@ -186,7 +186,7 @@ void func_80047B24(s32 arg0) // 0x80047B24
     }
 
     D_800C37D0 = 0;
-    Sd_CmdPoolAdd(arg0);
+    Sd_CmdPoolAdd(cmd);
     D_800C1658.isVabLoading_15 = true;
 }
 
@@ -459,7 +459,7 @@ void func_80048244(u16 cmd) // 0x80048244
         Sd_CmdPoolAdd(2);
     }
 
-    func_80046AD8();
+    Sd_StopBgmCmd();
     Sd_EngineCmd((u16)(cmd + 173)); // 173 must be some base value for a command category.
     Sd_CmdPoolAdd(cmd);
 
@@ -501,7 +501,7 @@ void func_800482D8(void) // 0x800482D8
 
 void Sd_StopSeq(void) // 0x8004839C
 {
-    func_80046B78();
+    Sd_StopBgmStep();
     SdSeqClose(D_800C37C8);
 
     g_Sd_AudioStreamingStates.vabLoadState_0 = 2;
