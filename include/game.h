@@ -590,7 +590,7 @@ typedef enum _SysState
     SysState_EventPlaySound = 12,
     SysState_GameOver       = 13,
     SysState_GamePaused     = 14,
-    SysState_Unk15          = 15
+    SysState_Invalid        = 15 /** Used by `func_800373CC` to signal that SysState shouldn't be updated. */
 } e_SysState;
 
 /** @brief Inventory command IDs. */
@@ -914,6 +914,16 @@ typedef enum _GameDifficulty
     GameDifficulty_Hard   = 1
 } e_GameDifficulty;
 
+typedef enum _TriggerType
+{
+    TriggerType_Unk0       = 0,
+    TriggerType_TouchAabb  = 1,
+    TriggerType_ButtonOmni = 2,
+    TriggerType_ButtonYaw  = 3,
+    TriggerType_TouchObb   = 4,
+    TriggerType_EndOfArray = -1
+} e_TriggerType;
+
 typedef union
 {
     u32 rawData_0;
@@ -1063,13 +1073,13 @@ STATIC_ASSERT_SIZEOF(s_Savegame, 636);
 /** TODO: Known as `Trigger` in SilentHillMapExaminer: https://github.com/ItEndsWithTens/SilentHillMapExaminer/blob/master/src/SHME.ExternalTool.Guts/Trigger.cs */
 typedef struct _EventParam
 {
-    u8  unk_0[2];
-    s16 eventFlagId_2;
-    u8 unk_4_0: 4;
-    u8 unk_4_4: 4;
-    u8  field_5; // Index into `D_800E839C`. Related pickup item SFX.
+    s16 requiredEventFlag_0;
+    s16 disabledEventFlag_2;
+    s8  triggerType_4_0 : 4;        /** `e_TriggerType` */
+    u8  field_4_4       : 4;
+    u8  field_5;                    // Index into `D_800E839C`. Related pickup item SFX.
     u8  unk_6[2];
-    u32 triggerType_8_0        : 5;
+    u32 sysState_8_0           : 5; /** `e_SysState` used by the event. */
     u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
     u32 flags_8_13             : 6;
     u32 field_8_19             : 5;

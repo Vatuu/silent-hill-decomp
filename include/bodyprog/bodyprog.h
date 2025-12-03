@@ -2153,7 +2153,9 @@ extern s_FsImageDesc D_800A9A04;
 extern s32 D_800A9A0C; // Old IDB name `FS_AllFilesLoaded`, though FS code doesn't set it.
 
 /** `e_SysState` */
-extern s32 D_800A9A10;
+extern s32 g_MapEventSysState;
+
+extern s32 D_800A9A18;
 
 // Enemies following Harry count?
 extern s32 D_800A9A1C;
@@ -2443,7 +2445,7 @@ extern s8 g_MapMsg_SelectCancelIdx;
 
 extern s32 D_800BCD84;
 
-extern s32 D_800BCD90[];
+extern s_EventParam* D_800BCD90[];
 
 extern s_800BCDA8 D_800BCDA8[2];
 
@@ -4166,7 +4168,7 @@ bool func_80037C5C(s_MapPoint2d* mapPoint);
 
 void func_80037DC4(s_SubCharacter* chara);
 
-void func_800373CC(s32);
+void func_800373CC(bool arg0);
 
 void func_80037E40(s_SubCharacter* chara);
 

@@ -1769,21 +1769,185 @@ void func_80037334(void) // 0x80037334
     g_SysWork.player_4C.chara_0.position_18.vy = coll.groundHeight_0;
 }
 
-void func_80037388(void) // 0x80037388
+void func_800373CC(bool arg0) // 0x800373CC
 {
-    volatile s32 v1;
-    s32          v2;
-    s32          i;
+    s_MapPoint2d* mapPoint;
+    s_EventParam* mapEvent;
+    s32           pointPosX;
+    s32           pointPosZ;
+    s32           pointRadiusX;
+    s32           pointRadiusZ;
+    s32           i;
 
-    v1 = v2;
-    for (i = 0; i < 5; i++)
-    { 
-        D_800BCDC0[i] = NO_VALUE;
-        D_800BCD90[i] = 0;
+    void func_80037388() // 0x80037388
+    {
+        s32 i;
+
+        for (i = 0; i < 5; i++)
+        {
+            D_800BCDC0[i] = NO_VALUE;
+            D_800BCD90[i] = 0;
+        }
     }
-}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_800348C0", func_800373CC); // 0x800373CC
+    if (g_SysWork.player_4C.extra_128.field_28)
+    {
+        for (i = 0; g_SysWork.player_4C.extra_128.field_28 != D_800BCDC0[i]; i++);
+
+        g_MapEventParam    = D_800BCD90[i];
+        D_800A9A18         = g_SysWork.player_4C.extra_128.field_28;
+        g_MapEventSysState = g_MapEventParam->sysState_8_0;
+        g_MapEventIdx      = g_MapEventParam->pointOfInterestIdx_8_5;
+
+        g_SysWork.player_4C.extra_128.field_28 = 0;
+        func_80037388();
+        return;
+    }
+
+    func_80037388();
+
+    D_800A9A18 = 0;
+
+    mapEvent = g_MapOverlayHeader.mapEvents_24 - 1;
+
+    while (true)
+    {
+        s32 disabledEventFlag_temp;
+        s16 disabledEventFlag;
+        s16 requiredEventFlag;
+
+        mapEvent++;
+
+        if (mapEvent->triggerType_4_0 == TriggerType_EndOfArray)
+        {
+            break;
+        }
+
+        // `requiredEventFlag`: if set, EventFlag that must be set for event to trigger?
+        // `disabledEventFlag`: if set, EventFlag that must not be set for event to trigger?
+        //
+        // TODO: Can this s32 temp be removed? Trying to set `disabledEventFlag` directly results in `lhu` instead?
+        requiredEventFlag      = mapEvent->requiredEventFlag_0;
+        disabledEventFlag_temp = mapEvent->disabledEventFlag_2;
+        disabledEventFlag      = disabledEventFlag_temp;
+
+        if (requiredEventFlag != 0 && !Savegame_EventFlagGet(requiredEventFlag))
+        {
+            continue;
+        }
+
+        if (disabledEventFlag != 0 && Savegame_EventFlagGet(disabledEventFlag) &&
+            (disabledEventFlag < 867 || mapEvent->field_4_4 == 1 || mapEvent->sysState_8_0 == SysState_EventSetFlag))
+        {
+            continue;
+        }
+
+        if (mapEvent->triggerType_4_0 == TriggerType_Unk0)
+        {
+            g_MapEventParam    = mapEvent;
+            g_MapEventSysState = mapEvent->sysState_8_0;
+            g_MapEventIdx      = mapEvent->pointOfInterestIdx_8_5;
+            return;
+        }
+
+        if (mapEvent->field_4_4 == 2 &&
+            !((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.action_6) && !arg0 && !func_8007F2AC()))
+        {
+            continue;
+        }
+
+        mapPoint = &g_MapOverlayHeader.mapPointsOfInterest_1C[mapEvent->field_5];
+
+        switch (mapEvent->triggerType_4_0)
+        {
+            case TriggerType_TouchAabb:
+                pointPosX    = mapPoint->positionX_0;
+                pointPosZ    = mapPoint->positionZ_8;
+                pointRadiusX = mapPoint->data.touchAabb.radiusX_4_16 * 1024;
+                pointRadiusZ = mapPoint->data.touchAabb.radiusZ_4_24 * 1024;
+
+                if (ABS(g_SysWork.player_4C.chara_0.position_18.vx - pointPosX) > pointRadiusX)
+                {
+                    continue;
+                }
+
+                if (ABS(g_SysWork.player_4C.chara_0.position_18.vz - pointPosZ) > pointRadiusZ)
+                {
+                    continue;
+                }
+                break;
+
+            case TriggerType_ButtonOmni:
+                if (!func_800378D4(mapPoint))
+                {
+                    continue;
+                }
+                break;
+
+            case TriggerType_ButtonYaw:
+                if (!func_80037A4C(mapPoint))
+                {
+                    continue;
+                }
+                break;
+
+            case TriggerType_TouchObb:
+                if (!func_80037C5C(mapPoint))
+                {
+                    continue;
+                }
+                break;
+        }
+
+        // Trigger checks have passed, try running the event.
+
+        // Skip running if this event is already being run.
+        if (mapEvent->field_4_4 == 1 && mapEvent == g_MapEventParam)
+        {
+            g_MapEventSysState = SysState_Invalid;
+            return;
+        }
+
+        if (mapEvent->field_4_4 == 3)
+        {
+            for (i = 0; D_800BCDC0[i] != NO_VALUE; i++);
+
+            D_800BCD90[i] = mapEvent;
+            D_800BCDC0[i] = mapEvent->unk_6[0];
+            continue;
+        }
+        else if (mapEvent->field_4_4 == 2)
+        {
+            if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2) && !g_SysWork.field_2388.isFlashlightOn_15 &&
+                ((g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & 1) || (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & 1)))
+            {
+                if (mapEvent->sysState_8_0 != SysState_LoadOverlay &&
+                    (mapEvent->sysState_8_0 != SysState_LoadRoom && mapEvent->pointOfInterestIdx_8_5 > 1))
+                {
+                    continue;
+                }
+            }
+        }
+
+        // If this is EventSetFlag we'll handle setting the flag here and skip running it.
+        // (Pretty much same as `SysState_EventSetFlag_Update`)
+        if (mapEvent->sysState_8_0 == SysState_EventSetFlag)
+        {
+            Savegame_EventFlagSetAlt(mapEvent->disabledEventFlag_2);
+            break;
+        }
+
+        // Set `g_MapEventSysState` to the SysState needed for the event, to be ran on next tick (SysState_ReadMessage/SaveMenu/EventCallFunc/etc)
+        g_MapEventParam    = mapEvent;
+        g_MapEventSysState = mapEvent->sysState_8_0;
+        g_MapEventIdx      = mapEvent->pointOfInterestIdx_8_5;
+        return;
+    }
+
+    g_MapEventParam    = NULL;
+    g_MapEventSysState = SysState_Invalid;
+    g_MapEventIdx      = 0;
+}
 
 bool func_800378D4(s_MapPoint2d* mapPoint) // 0x800378D4
 {
@@ -2473,10 +2637,11 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
         if (g_SysWork.sysState_8 == SysState_Gameplay)
         {
-            func_800373CC(1);
-            if (D_800A9A10 != SysState_Unk15)
+            func_800373CC(true);
+
+            if (g_MapEventSysState != SysState_Invalid)
             {
-                SysWork_StateSetNext(D_800A9A10);
+                SysWork_StateSetNext(g_MapEventSysState);
             }
         }
     }
@@ -2582,9 +2747,9 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
         Game_FlashlightToggle();
     }
 
-    if (D_800A9A10 != SysState_Unk15)
+    if (g_MapEventSysState != SysState_Invalid)
     {
-        SysWork_StateSetNext(D_800A9A10);
+        SysWork_StateSetNext(g_MapEventSysState);
     }
     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause_14)
     {
@@ -2944,8 +3109,8 @@ void SysState_Fmv_Update(void) // 0x80039A58
     LoadImage(&D_800A9A6C, (u32*)IMAGE_BUFFER_0);
     DrawSync(SyncMode_Wait);
 
-    // Set savegame flag based on `g_MapEventParam->eventFlagId_2` flag ID.
-    Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
+    // Set savegame flag based on `g_MapEventParam->disabledEventFlag_2` flag ID.
+    Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
 
     // Return to game.
     Game_StateSetNext(GameState_InGame);
@@ -3002,7 +3167,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
         }
     }
 
-    Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
+    Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
 
     if (g_MapEventParam->field_8_24)
     {
@@ -3078,7 +3243,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
             break;
 
         case MapMsgState_SelectEntry0:
-            Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
+            Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
 
             func = &g_MapOverlayHeader.unfreezePlayerControl_CC;
 
@@ -3181,7 +3346,7 @@ void SysState_EventCallFunc_Update(void) // 0x8003A3C8
 {
     if (g_MapEventParam->flags_8_13 != 0)
     {
-        Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
+        Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
     }
 
     g_DeltaTime0 = g_SomeTimer0;
@@ -3191,7 +3356,7 @@ void SysState_EventCallFunc_Update(void) // 0x8003A3C8
 void SysState_EventSetFlag_Update(void) // 0x8003A460
 {
     g_DeltaTime0 = g_SomeTimer0;
-    Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
+    Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
     g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
@@ -3201,7 +3366,7 @@ void SysState_EventPlaySound_Update(void) // 0x8003A4B4
 
     Sd_EngineCmd(((u16)g_MapEventIdx + Sfx_Base) & 0xFFFF);
 
-    Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
+    Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
     g_SysWork.sysState_8 = SysState_Gameplay;
 }
 
@@ -3383,7 +3548,7 @@ void GameState_MapEvent_Update(void) // 0x8003AA4C
 
     D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueDoThingWhenEmpty();
 
-    Savegame_EventFlagSetAlt(g_MapEventParam->eventFlagId_2);
+    Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
 
     g_MapOverlayHeader.mapEventFuncs_20[g_MapEventIdx]();
 

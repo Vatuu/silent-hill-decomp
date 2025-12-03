@@ -324,6 +324,7 @@ Savegame_MapRoomIdxSet                      = 0x80036420; // type:func
 Gfx_MapMsg_Draw                             = 0x800365B8; // type:func
 Gfx_MapMsg_SelectionUpdate                  = 0x80036B5C; // type:func
 Chara_PositionUpdateFromParams              = 0x800371E8; // type:func
+func_80037388.0                             = 0x80037388; // filename:func_80037388 type:func Compiler adds suffix to end of nested func names.
 func_800382B0.0                             = 0x800382B0; // filename:func_800382B0 type:func - Compiler adds suffix to end of nested func names.
 func_800382EC.0                             = 0x800382EC; // filename:func_800382EC type:func - Compiler adds suffix to end of nested func names.
 Math_Distance2dCheck                        = 0x80038A6C; // type:func
@@ -2106,6 +2107,7 @@ g_MapMsg_SelectFlashTimer                   = 0x800A99B0; // type:s16
 g_FullscreenMapTimFileIdxs                  = 0x800A99B4;
 g_MapMarkingTimFileIdxs                     = 0x800A99CC;
 D_800A99E4                                  = 0x800A99E4; // size:0x20
+g_MapEventSysState                          = 0x800A9A10; // type:s32
 g_MapEventIdx                               = 0x800A9A14; // type:u32
 
 //------------------------------------------------------------------------
