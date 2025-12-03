@@ -4166,7 +4166,7 @@ bool Event_CheckTouchObb(s_MapPoint2d* mapPoint);
 
 void func_80037DC4(s_SubCharacter* chara);
 
-void Event_Update(bool arg0);
+void Event_Update(bool disableButtonEvents);
 
 void func_80037E40(s_SubCharacter* chara);
 

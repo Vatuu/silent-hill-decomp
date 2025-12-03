@@ -1769,7 +1769,7 @@ void func_80037334(void) // 0x80037334
     g_SysWork.player_4C.chara_0.position_18.vy = coll.groundHeight_0;
 }
 
-void Event_Update(bool arg0) // 0x800373CC
+void Event_Update(bool disableButtonEvents) // 0x800373CC
 {
     s_MapPoint2d* mapPoint;
     s_EventParam* mapEvent;
@@ -1856,7 +1856,7 @@ void Event_Update(bool arg0) // 0x800373CC
 
         // `TriggerActivation_Button`: Only continue processing event when action button is pressed & `func_8007F2AC` returns false (maybe some IsBusy function?)
         if (mapEvent->activationType_4_4 == TriggerActivation_Button &&
-            !((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.action_6) && !arg0 && !func_8007F2AC()))
+            !((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.action_6) && !disableButtonEvents && !func_8007F2AC()))
         {
             continue;
         }
@@ -2720,7 +2720,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
 
     playerChara = &g_SysWork.player_4C.chara_0;
 
-    Event_Update(~playerChara->attackReceived_41 != 0);
+    Event_Update(playerChara->attackReceived_41 != NO_VALUE);
     Savegame_MapRoomIdxSet();
 
     switch (FP_ROUND_SCALED(playerChara->health_B0, 10, Q12_SHIFT))
