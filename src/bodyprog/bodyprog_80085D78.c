@@ -1291,7 +1291,89 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80085D78", func_80088370); // 0x80088370
+void func_80088370(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s16 arg8) // 0x80088370
+{
+    s32      iVar1;
+    s16      iVar4;
+    u16      uVar6[2];
+    s16      sVar5[2];
+    s32      i;
+    LINE_F3* line;
+    s32      temp;
+    s16      temp2;
+    s32      temp_v0;
+
+    line = (LINE_F3*)GsOUT_PACKET_P;
+
+    for (i = 0; i < 5; i++)
+    {
+        if (arg0 > 0)
+        {
+            iVar4 = CLAMP_LOW_THEN_MIN(FP_TO(arg0 - (i * 0x800) / 5, 12) / 0x800, 0, 0x1000);
+        }
+        else
+        {
+            iVar4 = -arg0;
+        }
+
+        iVar1   = iVar4;
+        temp_v0 = 0x1000 - iVar1;
+
+        uVar6[0] = FP_MULTIPLY_PRECISE(arg1, temp_v0, Q12_SHIFT) + FP_MULTIPLY_PRECISE(arg5, iVar1, Q12_SHIFT);
+        sVar5[0] = FP_MULTIPLY_PRECISE(arg2, temp_v0, Q12_SHIFT) + FP_MULTIPLY_PRECISE(arg6, iVar1, Q12_SHIFT);
+
+        temp2    = uVar6[0] + FP_MULTIPLY_PRECISE(arg3, temp_v0, Q12_SHIFT);
+        uVar6[1] = FP_MULTIPLY_PRECISE(arg7, iVar1, Q12_SHIFT) + temp2;
+
+        temp2    = sVar5[0] + FP_MULTIPLY_PRECISE(arg4, temp_v0, Q12_SHIFT);
+        sVar5[1] = FP_MULTIPLY_PRECISE(arg8, iVar1, Q12_SHIFT) + temp2;
+
+        setLineF3(line);
+        setXY0Fast(line, uVar6[0], sVar5[0]);
+        setXY1Fast(line, uVar6[1], sVar5[0]);
+        setXY2Fast(line, uVar6[1], sVar5[1]);
+
+        setSemiTrans(line, 0);
+
+        temp = 0x80 - ((i << 6) / 5);
+
+        *(u16*)(&line->r0) = 0;
+        line->b0           = temp;
+
+        addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, line);
+
+        line[1] = line[0];
+        line[2] = line[1];
+        line[3] = line[2];
+
+        line++;
+
+        setXY0Fast(line, uVar6[0], sVar5[0] - 1);
+        setXY1Fast(line, uVar6[1], sVar5[0] - 1);
+        setXY2Fast(line, uVar6[1], sVar5[1] + 1);
+
+        addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, line);
+
+        line++;
+
+        setXY0Fast(line, uVar6[1], sVar5[1]);
+        setXY1Fast(line, uVar6[0], sVar5[1]);
+        setXY2Fast(line, uVar6[0], sVar5[0]);
+
+        addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, line);
+
+        line++;
+
+        setXY0Fast(line, uVar6[1], sVar5[1] + 1);
+        setXY1Fast(line, uVar6[0], sVar5[1] + 1);
+        setXY2Fast(line, uVar6[0], sVar5[0] - 1);
+
+        addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, line);
+        line++;
+    }
+
+    GsOUT_PACKET_P = line;
+}
 
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
 {
