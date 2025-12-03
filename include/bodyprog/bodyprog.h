@@ -1404,7 +1404,7 @@ typedef struct _MapPoint2d
             u32 unk_4_0  : 12;
             u32 geo_4_12 : 12; // TODO: Figure out how this is decoded.
             u32 unk_4_24 : 8;
-        } buttonPress;
+        } touchFacing;
         struct
         {
             u32 unk_4_0      : 16;
@@ -2445,14 +2445,14 @@ extern s8 g_MapMsg_SelectCancelIdx;
 
 extern s32 D_800BCD84;
 
-extern s_EventParam* D_800BCD90[];
+extern s_EventParam* g_ItemTriggerEvents[];
 
 extern s_800BCDA8 D_800BCDA8[2];
 
 extern s_MapPoint2d D_800BCDB0;
 
 /** Related to special item interactions. */
-extern s32 D_800BCDC0[5];
+extern s32 g_ItemTriggerItemIds[5];
 
 extern u8 D_800BCDD4;
 
@@ -4158,17 +4158,15 @@ void func_80037188(void);
 /** Finds the ground hight and warps the player to it? */
 void func_80037334(void);
 
-void func_80037388(void);
+bool Event_CheckTouchFacing(s_MapPoint2d* mapPoint);
 
-bool func_800378D4(s_MapPoint2d* mapPoint);
+bool Event_CheckTouchObbFacing(s_MapPoint2d* mapPoint);
 
-bool func_80037A4C(s_MapPoint2d* mapPoint);
-
-bool func_80037C5C(s_MapPoint2d* mapPoint);
+bool Event_CheckTouchObb(s_MapPoint2d* mapPoint);
 
 void func_80037DC4(s_SubCharacter* chara);
 
-void func_800373CC(bool arg0);
+void Event_Update(bool arg0);
 
 void func_80037E40(s_SubCharacter* chara);
 

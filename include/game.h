@@ -590,7 +590,7 @@ typedef enum _SysState
     SysState_EventPlaySound = 12,
     SysState_GameOver       = 13,
     SysState_GamePaused     = 14,
-    SysState_Invalid        = 15 /** Used by `func_800373CC` to signal that SysState shouldn't be updated. */
+    SysState_Invalid        = 15 /** Used by `Event_Update` to signal that SysState shouldn't be updated. */
 } e_SysState;
 
 /** @brief Inventory command IDs. */
@@ -916,12 +916,11 @@ typedef enum _GameDifficulty
 
 typedef enum _TriggerType
 {
-    TriggerType_Unk0       = 0,
-    TriggerType_TouchAabb  = 1,
-    TriggerType_ButtonOmni = 2,
-    TriggerType_ButtonYaw  = 3,
-    TriggerType_TouchObb   = 4,
-    TriggerType_EndOfArray = -1
+    TriggerType_Unk0           = 0,
+    TriggerType_TouchAabb      = 1,
+    TriggerType_TouchFacing    = 2,
+    TriggerType_TouchObbFacing = 3,
+    TriggerType_TouchObb       = 4
 } e_TriggerType;
 
 typedef enum _TriggerActivation
@@ -1500,7 +1499,7 @@ typedef struct _MainCharacterExtra
     s32     state_1C;             /** `e_PlayerState` */
     s32     upperBodyState_20;    /** `e_PlayerUpperBodyState` */
     s32     lowerBodyState_24;    /** `e_PlayerLowerBodyState` */
-    s32     field_28;             // Related to item interactions. Forcing specific values opens options menu, a behaviour is caused by `func_800373CC`.
+    s32     field_28;             // Related to item interactions. Forcing specific values opens options menu, a behaviour is caused by `Event_Update`.
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 

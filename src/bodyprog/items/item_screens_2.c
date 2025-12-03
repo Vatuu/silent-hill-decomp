@@ -1152,9 +1152,9 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
     }
     else
     {
-        for (i = 0; D_800BCDC0[i] != NO_VALUE; i++)
+        for (i = 0; g_ItemTriggerItemIds[i] != NO_VALUE; i++)
         {
-            if (D_800BCDC0[i] == g_SavegamePtr->items_0[inventoryItemIdx].id_0)
+            if (g_ItemTriggerItemIds[i] == g_SavegamePtr->items_0[inventoryItemIdx].id_0)
             {
                 g_Gfx_Inventory_SelectionBordersDraw = 1;
                 g_Inventory_SelectionId              = InventorySelectionId_Item;
@@ -1162,7 +1162,7 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
                 g_GameWork.gameStateStep_598[2]      = 0;
 
                 Game_TurnFlashlightOn();
-                g_SysWork.player_4C.extra_128.field_28 = D_800BCDC0[i];
+                g_SysWork.player_4C.extra_128.field_28 = g_ItemTriggerItemIds[i];
                 break;
             }
         }

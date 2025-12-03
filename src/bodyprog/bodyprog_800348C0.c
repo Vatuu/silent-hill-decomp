@@ -1769,7 +1769,7 @@ void func_80037334(void) // 0x80037334
     g_SysWork.player_4C.chara_0.position_18.vy = coll.groundHeight_0;
 }
 
-void func_800373CC(bool arg0) // 0x800373CC
+void Event_Update(bool arg0) // 0x800373CC
 {
     s_MapPoint2d* mapPoint;
     s_EventParam* mapEvent;
@@ -1779,33 +1779,33 @@ void func_800373CC(bool arg0) // 0x800373CC
     s32           pointRadiusZ;
     s32           i;
 
-    void func_80037388() // 0x80037388
+    void Event_ItemTriggersReset() // 0x80037388
     {
         s32 i;
 
         for (i = 0; i < 5; i++)
         {
-            D_800BCDC0[i] = NO_VALUE;
-            D_800BCD90[i] = 0;
+            g_ItemTriggerItemIds[i] = NO_VALUE;
+            g_ItemTriggerEvents[i]  = 0;
         }
     }
 
     // TODO: `field_28` holds last inventory item ID that was used from menu?
     if (g_SysWork.player_4C.extra_128.field_28)
     {
-        for (i = 0; g_SysWork.player_4C.extra_128.field_28 != D_800BCDC0[i]; i++);
+        for (i = 0; g_SysWork.player_4C.extra_128.field_28 != g_ItemTriggerItemIds[i]; i++);
 
-        g_MapEventParam    = D_800BCD90[i];
+        g_MapEventParam    = g_ItemTriggerEvents[i];
         D_800A9A18         = g_SysWork.player_4C.extra_128.field_28;
         g_MapEventSysState = g_MapEventParam->sysState_8_0;
         g_MapEventIdx      = g_MapEventParam->pointOfInterestIdx_8_5;
 
         g_SysWork.player_4C.extra_128.field_28 = 0;
-        func_80037388();
+        Event_ItemTriggersReset();
         return;
     }
 
-    func_80037388();
+    Event_ItemTriggersReset();
 
     D_800A9A18 = 0;
 
@@ -1819,7 +1819,7 @@ void func_800373CC(bool arg0) // 0x800373CC
 
         mapEvent++;
 
-        if (mapEvent->triggerType_4_0 == TriggerType_EndOfArray)
+        if (mapEvent->triggerType_4_0 == NO_VALUE)
         {
             break;
         }
@@ -1843,6 +1843,9 @@ void func_800373CC(bool arg0) // 0x800373CC
             continue;
         }
 
+        // `TriggerType_Unk0` skips any trigger/activation check and always executes.
+        // Maybe used for map-load events, and events that should run every frame?
+        // (flags are still checked for it though)
         if (mapEvent->triggerType_4_0 == TriggerType_Unk0)
         {
             g_MapEventParam    = mapEvent;
@@ -1851,15 +1854,16 @@ void func_800373CC(bool arg0) // 0x800373CC
             return;
         }
 
+        // `TriggerActivation_Button`: Only continue processing event when action button is pressed & `func_8007F2AC` returns false (maybe some IsBusy function?)
         if (mapEvent->activationType_4_4 == TriggerActivation_Button &&
             !((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.action_6) && !arg0 && !func_8007F2AC()))
         {
             continue;
         }
 
+        // TODO: This uses `field_5` as the map point index, but we also have a separate `pointOfInterestIdx_8_5` field...
         mapPoint = &g_MapOverlayHeader.mapPointsOfInterest_1C[mapEvent->field_5];
 
-        // TODO: Trigger type names likely incorrect, "Button" functions don't appear to check buttons?
         switch (mapEvent->triggerType_4_0)
         {
             case TriggerType_TouchAabb:
@@ -1879,22 +1883,22 @@ void func_800373CC(bool arg0) // 0x800373CC
                 }
                 break;
 
-            case TriggerType_ButtonOmni:
-                if (!func_800378D4(mapPoint))
+            case TriggerType_TouchFacing:
+                if (!Event_CheckTouchFacing(mapPoint))
                 {
                     continue;
                 }
                 break;
 
-            case TriggerType_ButtonYaw:
-                if (!func_80037A4C(mapPoint))
+            case TriggerType_TouchObbFacing:
+                if (!Event_CheckTouchObbFacing(mapPoint))
                 {
                     continue;
                 }
                 break;
 
             case TriggerType_TouchObb:
-                if (!func_80037C5C(mapPoint))
+                if (!Event_CheckTouchObb(mapPoint))
                 {
                     continue;
                 }
@@ -1902,27 +1906,29 @@ void func_800373CC(bool arg0) // 0x800373CC
         }
 
         // Trigger checks have passed, check activation type.
-        // TODO: Could these checks be a switch?
 
-        // Skip processing any other events if this event is active & exclusive.
+        // `TriggerActivation_Exclusive`: Skips processing any other events if this event is active.
         if (mapEvent->activationType_4_4 == TriggerActivation_Exclusive && mapEvent == g_MapEventParam)
         {
             g_MapEventSysState = SysState_Invalid;
             return;
         }
 
-        // Stores required inventory item ID into array.
-        // When player uses the item on inventory screen it'll be stored into `extra_128.field_28`, and the check at top of function will process the event for it.
+        // `TriggerActivation_Item`: When trigger check has passed (player is in the trigger area)
+        // Required item ID for event is stored into `g_ItemTriggerItemIds` and event pointer at `g_ItemTriggerEvents`
+        // Once player uses an item in the inventory screen, it compares the ID against the ones stored at `g_ItemTriggerItemIds`
+        // If used item ID matches one that event has requested, `extra_128.field_28` gets set to the item ID.
+        // At the start of this function, if `extra_128.field_28` is set then it'll locate the `s_EventParam` for it from `g_ItemTriggerEvents` and run the event.
         if (mapEvent->activationType_4_4 == TriggerActivation_Item)
         {
-            for (i = 0; D_800BCDC0[i] != NO_VALUE; i++);
+            for (i = 0; g_ItemTriggerItemIds[i] != NO_VALUE; i++);
 
-            D_800BCD90[i] = mapEvent;
-            D_800BCDC0[i] = mapEvent->requiredItemId_6;
+            g_ItemTriggerEvents[i] = mapEvent;
+            g_ItemTriggerItemIds[i] = mapEvent->requiredItemId_6;
             continue;
         }
 
-        // Only allow button activated events if area is lit up?
+        // `TriggerActivation_Button`: Only allow button activated events when area is lit up?
         if (mapEvent->activationType_4_4 == TriggerActivation_Button)
         {
             if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2) && !g_SysWork.field_2388.isFlashlightOn_15 &&
@@ -1958,7 +1964,7 @@ void func_800373CC(bool arg0) // 0x800373CC
     g_MapEventIdx      = 0;
 }
 
-bool func_800378D4(s_MapPoint2d* mapPoint) // 0x800378D4
+bool Event_CheckTouchFacing(s_MapPoint2d* mapPoint) // 0x800378D4
 {
     q19_12 deltaX;
     q19_12 deltaZ;
@@ -2006,7 +2012,7 @@ bool func_800378D4(s_MapPoint2d* mapPoint) // 0x800378D4
     }
 }
 
-bool func_80037A4C(s_MapPoint2d* mapPoint) // 0x80037A4C
+bool Event_CheckTouchObbFacing(s_MapPoint2d* mapPoint) // 0x80037A4C
 {
     s32    temp_a0_2;
     s32    temp_a2;
@@ -2084,7 +2090,7 @@ bool func_80037A4C(s_MapPoint2d* mapPoint) // 0x80037A4C
     return false;
 }
 
-bool func_80037C5C(s_MapPoint2d* mapPoint) // 0x80037C5C
+bool Event_CheckTouchObb(s_MapPoint2d* mapPoint) // 0x80037C5C
 {
     q19_12 sinAngle;
     q19_12 cosAngle;
@@ -2646,7 +2652,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
         if (g_SysWork.sysState_8 == SysState_Gameplay)
         {
-            func_800373CC(true);
+            Event_Update(true);
 
             if (g_MapEventSysState != SysState_Invalid)
             {
@@ -2714,7 +2720,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
 
     playerChara = &g_SysWork.player_4C.chara_0;
 
-    func_800373CC(~playerChara->attackReceived_41 != 0);
+    Event_Update(~playerChara->attackReceived_41 != 0);
     Savegame_MapRoomIdxSet();
 
     switch (FP_ROUND_SCALED(playerChara->health_B0, 10, Q12_SHIFT))
