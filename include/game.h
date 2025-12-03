@@ -1499,7 +1499,7 @@ typedef struct _MainCharacterExtra
     s32     state_1C;             /** `e_PlayerState` */
     s32     upperBodyState_20;    /** `e_PlayerUpperBodyState` */
     s32     lowerBodyState_24;    /** `e_PlayerLowerBodyState` */
-    s32     field_28;             // Related to item interactions. Forcing specific values opens options menu, a behaviour is caused by `Event_Update`.
+    s32     lastUsedItemId_28;    /** `e_InventoryItemId` - Holds last item ID used from inventory, while inside an item-trigger area. */
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 

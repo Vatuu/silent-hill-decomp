@@ -1786,21 +1786,24 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         for (i = 0; i < 5; i++)
         {
             g_ItemTriggerItemIds[i] = NO_VALUE;
-            g_ItemTriggerEvents[i]  = 0;
+            g_ItemTriggerEvents[i]  = NULL;
         }
     }
 
-    // TODO: `field_28` holds last inventory item ID that was used from menu?
-    if (g_SysWork.player_4C.extra_128.field_28)
+    // `lastUsedItemId_28` is set by `Inventory_ItemUse` when player uses an item that matches one of the item-trigger events.
+    // If it's set, find its index in `g_ItemTriggerItemIds` and use that to get the corresponding `s_EventParam` from `g_ItemTriggerEvents`.
+    // After processing, the field is cleared and item trigger IDs are reset.
+    // (Multi-item events likely repopulate the trigger IDs below, based on whichever events are still active?)
+    if (g_SysWork.player_4C.extra_128.lastUsedItemId_28)
     {
-        for (i = 0; g_SysWork.player_4C.extra_128.field_28 != g_ItemTriggerItemIds[i]; i++);
+        for (i = 0; g_SysWork.player_4C.extra_128.lastUsedItemId_28 != g_ItemTriggerItemIds[i]; i++);
 
         g_MapEventParam    = g_ItemTriggerEvents[i];
-        D_800A9A18         = g_SysWork.player_4C.extra_128.field_28;
+        D_800A9A18         = g_SysWork.player_4C.extra_128.lastUsedItemId_28;
         g_MapEventSysState = g_MapEventParam->sysState_8_0;
         g_MapEventIdx      = g_MapEventParam->pointOfInterestIdx_8_5;
 
-        g_SysWork.player_4C.extra_128.field_28 = 0;
+        g_SysWork.player_4C.extra_128.lastUsedItemId_28 = 0;
         Event_ItemTriggersReset();
         return;
     }
