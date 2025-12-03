@@ -924,6 +924,14 @@ typedef enum _TriggerType
     TriggerType_EndOfArray = -1
 } e_TriggerType;
 
+typedef enum _TriggerActivation
+{
+    TriggerActivation_None      = 0, /** No activation conditions, other than event flag/trigger checks. */
+    TriggerActivation_Exclusive = 1, /** Prevents other events from being triggered while this event is active. */
+    TriggerActivation_Button    = 2, /** Requires button press to activate. */
+    TriggerActivation_Item      = 3, /** Requires inventory item usage to activate. */
+} e_TriggerActivation;
+
 typedef union
 {
     u32 rawData_0;
@@ -1075,10 +1083,11 @@ typedef struct _EventParam
 {
     s16 requiredEventFlag_0;
     s16 disabledEventFlag_2;
-    s8  triggerType_4_0 : 4;        /** `e_TriggerType` */
-    u8  field_4_4       : 4;
+    s8  triggerType_4_0        : 4; /** `e_TriggerType` */
+    u8  activationType_4_4     : 4; /** `e_TriggerActivation` */
     u8  field_5;                    // Index into `D_800E839C`. Related pickup item SFX.
-    u8  unk_6[2];
+    u8  requiredItemId_6;           /** `e_InventoryItemId` that player must use from item screen. */
+    u8  unk_7[1];
     u32 sysState_8_0           : 5; /** `e_SysState` used by the event. */
     u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
     u32 flags_8_13             : 6;

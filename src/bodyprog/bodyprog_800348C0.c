@@ -1790,6 +1790,7 @@ void func_800373CC(bool arg0) // 0x800373CC
         }
     }
 
+    // TODO: `field_28` holds last inventory item ID that was used from menu?
     if (g_SysWork.player_4C.extra_128.field_28)
     {
         for (i = 0; g_SysWork.player_4C.extra_128.field_28 != D_800BCDC0[i]; i++);
@@ -1837,7 +1838,7 @@ void func_800373CC(bool arg0) // 0x800373CC
         }
 
         if (disabledEventFlag != 0 && Savegame_EventFlagGet(disabledEventFlag) &&
-            (disabledEventFlag < 867 || mapEvent->field_4_4 == 1 || mapEvent->sysState_8_0 == SysState_EventSetFlag))
+            (disabledEventFlag < 867 || mapEvent->activationType_4_4 == TriggerActivation_Exclusive || mapEvent->sysState_8_0 == SysState_EventSetFlag))
         {
             continue;
         }
@@ -1850,7 +1851,7 @@ void func_800373CC(bool arg0) // 0x800373CC
             return;
         }
 
-        if (mapEvent->field_4_4 == 2 &&
+        if (mapEvent->activationType_4_4 == TriggerActivation_Button &&
             !((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.action_6) && !arg0 && !func_8007F2AC()))
         {
             continue;
@@ -1858,6 +1859,7 @@ void func_800373CC(bool arg0) // 0x800373CC
 
         mapPoint = &g_MapOverlayHeader.mapPointsOfInterest_1C[mapEvent->field_5];
 
+        // TODO: Trigger type names likely incorrect, "Button" functions don't appear to check buttons?
         switch (mapEvent->triggerType_4_0)
         {
             case TriggerType_TouchAabb:
@@ -1899,24 +1901,29 @@ void func_800373CC(bool arg0) // 0x800373CC
                 break;
         }
 
-        // Trigger checks have passed, try running the event.
+        // Trigger checks have passed, check activation type.
+        // TODO: Could these checks be a switch?
 
-        // Skip running if this event is already being run.
-        if (mapEvent->field_4_4 == 1 && mapEvent == g_MapEventParam)
+        // Skip processing any other events if this event is active & exclusive.
+        if (mapEvent->activationType_4_4 == TriggerActivation_Exclusive && mapEvent == g_MapEventParam)
         {
             g_MapEventSysState = SysState_Invalid;
             return;
         }
 
-        if (mapEvent->field_4_4 == 3)
+        // Stores required inventory item ID into array.
+        // When player uses the item on inventory screen it'll be stored into `extra_128.field_28`, and the check at top of function will process the event for it.
+        if (mapEvent->activationType_4_4 == TriggerActivation_Item)
         {
             for (i = 0; D_800BCDC0[i] != NO_VALUE; i++);
 
             D_800BCD90[i] = mapEvent;
-            D_800BCDC0[i] = mapEvent->unk_6[0];
+            D_800BCDC0[i] = mapEvent->requiredItemId_6;
             continue;
         }
-        else if (mapEvent->field_4_4 == 2)
+
+        // Only allow button activated events if area is lit up?
+        if (mapEvent->activationType_4_4 == TriggerActivation_Button)
         {
             if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2) && !g_SysWork.field_2388.isFlashlightOn_15 &&
                 ((g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & 1) || (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & 1)))
@@ -1928,6 +1935,8 @@ void func_800373CC(bool arg0) // 0x800373CC
                 }
             }
         }
+
+        // Trigger & activation checks passed, run the event.
 
         // If this is EventSetFlag we'll handle setting the flag here and skip running it.
         // (Pretty much same as `SysState_EventSetFlag_Update`)
