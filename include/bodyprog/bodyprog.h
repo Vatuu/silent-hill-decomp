@@ -2155,7 +2155,7 @@ extern s32 D_800A9A0C; // Old IDB name `FS_AllFilesLoaded`, though FS code doesn
 /** `e_SysState` */
 extern s32 g_MapEventSysState;
 
-extern s32 D_800A9A18;
+extern e_InventoryItemId g_MapEventLastUsedItem;
 
 // Enemies following Harry count?
 extern s32 D_800A9A1C;

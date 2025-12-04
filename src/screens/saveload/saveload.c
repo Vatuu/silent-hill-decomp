@@ -695,8 +695,8 @@ void Gfx_SavedFlashDraw(void) // 0x801E3E78
     POLY_F4* poly;
 
     ot      = &g_OrderingTable2[g_ActiveBufferIdx];
-    slotIdx = ~g_LastSaveIdx[0] == 0;
-    rowIdx = g_LastSaveIdx[slotIdx] - g_HiddenElementsByDisplacement[slotIdx];
+    slotIdx = g_LastSaveIdx[0] == NO_VALUE ? 1 : 0;
+    rowIdx  = g_LastSaveIdx[slotIdx] - g_HiddenElementsByDisplacement[slotIdx];
 
     if (rowIdx < 5)
     {

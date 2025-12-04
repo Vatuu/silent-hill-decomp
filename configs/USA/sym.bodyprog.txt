@@ -2113,6 +2113,7 @@ g_MapMarkingTimFileIdxs                     = 0x800A99CC;
 D_800A99E4                                  = 0x800A99E4; // size:0x20
 g_MapEventSysState                          = 0x800A9A10; // type:s32
 g_MapEventIdx                               = 0x800A9A14; // type:u32
+g_MapEventLastUsedItem                      = 0x800A9A18; // type:s32
 
 //------------------------------------------------------------------------
 //--- PA: 0x084ECC   VA: 0x800A9A2C   subsegment: .data, syswork_functable

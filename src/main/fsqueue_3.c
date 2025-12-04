@@ -3,6 +3,7 @@
 #include "main/fsmem.h"
 #include "bodyprog/bodyprog.h"
 
+#include <psyq/sys/file.h>
 #include <psyq/libapi.h>
 #include <psyq/libcd.h>
 #include <psyq/libgte.h>
@@ -143,7 +144,7 @@ bool Fs_QueueTickReadPcDrv(s_FsQueueEntry* entry)
 
     for (retry = 0; retry <= 2; retry++)
     {
-        handle = open(pathBuf, 0x4001);
+        handle = open(pathBuf, O_NOBUF | O_RDONLY);
         if (handle == NO_VALUE)
         {
             continue;

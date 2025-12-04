@@ -1798,10 +1798,10 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
     {
         for (i = 0; g_SysWork.player_4C.extra_128.lastUsedItemId_28 != g_ItemTriggerItemIds[i]; i++);
 
-        g_MapEventParam    = g_ItemTriggerEvents[i];
-        D_800A9A18         = g_SysWork.player_4C.extra_128.lastUsedItemId_28;
-        g_MapEventSysState = g_MapEventParam->sysState_8_0;
-        g_MapEventIdx      = g_MapEventParam->pointOfInterestIdx_8_5;
+        g_MapEventParam        = g_ItemTriggerEvents[i];
+        g_MapEventLastUsedItem = g_SysWork.player_4C.extra_128.lastUsedItemId_28;
+        g_MapEventSysState     = g_MapEventParam->sysState_8_0;
+        g_MapEventIdx          = g_MapEventParam->pointOfInterestIdx_8_5;
 
         g_SysWork.player_4C.extra_128.lastUsedItemId_28 = 0;
         Event_ItemTriggersReset();
@@ -1810,7 +1810,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
     Event_ItemTriggersReset();
 
-    D_800A9A18 = 0;
+    g_MapEventLastUsedItem = InventoryItemId_Unequipped;
 
     mapEvent = g_MapOverlayHeader.mapEvents_24 - 1;
 
@@ -1920,8 +1920,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // `TriggerActivation_Item`: When trigger check has passed (player is in the trigger area)
         // Required item ID for event is stored into `g_ItemTriggerItemIds` and event pointer at `g_ItemTriggerEvents`
         // Once player uses an item in the inventory screen, it compares the ID against the ones stored at `g_ItemTriggerItemIds`
-        // If used item ID matches one that event has requested, `extra_128.field_28` gets set to the item ID.
-        // At the start of this function, if `extra_128.field_28` is set then it'll locate the `s_EventParam` for it from `g_ItemTriggerEvents` and run the event.
+        // If used item ID matches one that event has requested, `extra_128.lastUsedItemId_28` gets set to the item ID.
+        // At the start of this function, if `extra_128.lastUsedItemId_28` is set then it'll locate the `s_EventParam` for it from `g_ItemTriggerEvents` and run the event.
         if (mapEvent->activationType_4_4 == TriggerActivation_Item)
         {
             for (i = 0; g_ItemTriggerItemIds[i] != NO_VALUE; i++);

@@ -8922,7 +8922,7 @@ bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
         return result;
     }
 
-    result = ~arg0 == 0;
+    result = arg0 == NO_VALUE;
     if (result)
     {
         return result;
@@ -8933,7 +8933,7 @@ bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
     result = arg2 < D_800C4620.groundHeight_0;
     if (result)
     {
-        result = ~D_800C4620.field_8 != 0;
+        result = D_800C4620.field_8 != NO_VALUE;
         if (result)
         {
             result = (arg0 & (1 << D_800C4620.field_8));
