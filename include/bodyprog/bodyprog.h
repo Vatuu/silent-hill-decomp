@@ -270,8 +270,24 @@ typedef struct
 
 typedef struct
 {
-    s32 vx_0; // Q23.8 } Displacement offset.
-    s32 vz_4; // Q23.8 }
+    union
+    {
+        s32 vx_0; // Q23.8 } Displacement offset.
+        struct
+        {
+            s16 field_0;
+            s16 field_2;
+        } s_0;
+    } field_0;
+    union
+    {
+        s32 vz_4; // Q23.8 }
+        struct
+        {
+            s16 field_0;
+            s16 field_2;
+        } s_0;
+    } field_4;
     s16 vy_8; // Q7.8
     u8  field_A;
     u8  field_B;
@@ -312,6 +328,11 @@ typedef struct
             s8 field_2;
             s8 field_3;
         } s_2;
+        struct
+        {
+            s16 field_0;
+            u16 field_2;
+        } s_3;
     } field_10;
 } s_MapHdr_field_4C;
 STATIC_ASSERT_SIZEOF(s_MapHdr_field_4C, 20);
@@ -1991,6 +2012,23 @@ typedef struct
     s32             field_164;
     s32             field_168;
 } s_func_80064334;
+
+typedef struct
+{
+    s_func_8005E89C field_0;
+    s_Collision     field_12C;
+    MATRIX          field_138;
+    SVECTOR         field_158[4];
+    VECTOR          field_178[4];
+    CVECTOR         field_1B8;
+    CVECTOR         field_1BC;
+    s32             field_1C0;
+    s32             field_1C4;
+    s32             field_1C8;
+    s32             field_1CC;
+    s32             field_1D0;
+    DVECTOR         field_1D4;
+} s_func_800CD1F8;
 
 typedef struct
 {

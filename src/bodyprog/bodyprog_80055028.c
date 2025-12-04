@@ -3856,15 +3856,15 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0
         {
             if (arg2 != 9)
             {
-                g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0 = (arg1->vx + Rng_TestProbabilityBits(9)) - 0xFF;
+                g_MapOverlayHeader.unkTable1_4C[temp_v0].field_0.vx_0 = (arg1->vx + Rng_TestProbabilityBits(9)) - 0xFF;
                 g_MapOverlayHeader.unkTable1_4C[temp_v0].vy_8 = (arg1->vy + Rng_TestProbabilityBits(9)) - 0xFF;
-                g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4 = (arg1->vz + Rng_TestProbabilityBits(9)) - 0xFF;
+                g_MapOverlayHeader.unkTable1_4C[temp_v0].field_4.vz_4 = (arg1->vz + Rng_TestProbabilityBits(9)) - 0xFF;
             }
             else
             {
-                g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0 = arg1->vx;
+                g_MapOverlayHeader.unkTable1_4C[temp_v0].field_0.vx_0 = arg1->vx;
                 g_MapOverlayHeader.unkTable1_4C[temp_v0].vy_8 = arg1->vy;
-                g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4 = arg1->vz;
+                g_MapOverlayHeader.unkTable1_4C[temp_v0].field_4.vz_4 = arg1->vz;
             }
 
             if (Rng_Rand16() & 0x1)
@@ -3927,8 +3927,8 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0
             else
             {
 
-                var_a1 = ABS(sp20.vx - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].vx_0);
-                var_v0 = ABS(sp20.vz - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].vz_4);
+                var_a1 = ABS(sp20.vx - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_0.vx_0);
+                var_v0 = ABS(sp20.vz - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_4.vz_4);
 
                 sp30[j] = MAX(var_a1, var_v0) + (CLAMP_HIGH(var_a1, var_v0) >> 1);
 
@@ -3996,11 +3996,11 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3) // 0
         if (temp_v0 != NO_VALUE)
         {
             g_MapOverlayHeader.unkTable1_4C[temp_v0].field_B = i * 4;
-            g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0    = (arg1->vx + Rng_TestProbabilityBits(11)) - 0x3FF;
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_0.vx_0 = (arg1->vx + Rng_TestProbabilityBits(11)) - 0x3FF;
             g_MapOverlayHeader.unkTable1_4C[temp_v0].vy_8    = (arg1->vy + Rng_TestProbabilityBits(12)) - 0x7FF;
-            g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4    = (arg1->vz + Rng_TestProbabilityBits(11)) - 0x3FF;
+            g_MapOverlayHeader.unkTable1_4C[temp_v0].field_4.vz_4 = (arg1->vz + Rng_TestProbabilityBits(11)) - 0x3FF;
 
-            Collision_Get(&sp10, g_MapOverlayHeader.unkTable1_4C[temp_v0].vx_0, g_MapOverlayHeader.unkTable1_4C[temp_v0].vz_4);
+            Collision_Get(&sp10, g_MapOverlayHeader.unkTable1_4C[temp_v0].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[temp_v0].field_4.vz_4);
 
             if (func_8005F680(&sp10) || (sp10.groundHeight_0 < (arg1->vy - 0x333)))
             {
@@ -4086,13 +4086,13 @@ bool func_80060044(POLY_FT4** poly, s32 arg1) // 0x80060044
 
     if (temp_a1 != 24)
     {
-        g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 += ptr->field_0.field_34[temp_a1];
+        g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 += ptr->field_0.field_34[temp_a1];
         g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 += ptr->field_0.field_64[temp_a1];
-        g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 += ptr->field_0.field_94[temp_a1];
+        g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 += ptr->field_0.field_94[temp_a1];
     }
 
-    *(u32*)&ptr->field_138.vx = (((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) + (((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 >> 4) - ptr->field_0.field_0.vy) << 0x10);
-    ptr->field_138.vz         = (g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 >> 4) - ptr->field_0.field_0.vz;
+    *(u32*)&ptr->field_138.vx = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) + (((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 >> 4) - ptr->field_0.field_0.vy) << 0x10);
+    ptr->field_138.vz         = (g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 >> 4) - ptr->field_0.field_0.vz;
 
     gte_ldv0(&ptr->field_138);
     gte_rtps();
@@ -4315,9 +4315,9 @@ bool func_80060044(POLY_FT4** poly, s32 arg1) // 0x80060044
 
     if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
     {
-        temp_s0             = func_80055D78(g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vy_8, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
-        *(u16*)&(*poly)->r0 = temp_s0 + (func_80055D78(g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vy_8, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4) << 8);
-        (*poly)->b0         = func_80055D78(g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vy_8, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
+        temp_s0             = func_80055D78(g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vy_8, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4);
+        *(u16*)&(*poly)->r0 = temp_s0 + (func_80055D78(g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vy_8, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4) << 8);
+        (*poly)->b0         = func_80055D78(g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vy_8, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4);
     }
     else
     {
@@ -4361,9 +4361,9 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
 
         if (temp_a3 != 24)
         {
-            g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 += ptr->field_0.field_34[temp_a3];
+            g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 += ptr->field_0.field_34[temp_a3];
             g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 += ptr->field_0.field_64[temp_a3];
-            g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 += ptr->field_0.field_94[temp_a3];
+            g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 += ptr->field_0.field_94[temp_a3];
         }
 
         g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_0 = MIN(g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_0 + (g_DeltaTime2 >> 2), 0x2000);
@@ -4386,10 +4386,10 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
 
             ptr->field_178 = g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_1.field_1 << 5;
 
-            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + ptr->field_178, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
-            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - ptr->field_178, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
-            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + ptr->field_178);
-            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - ptr->field_178);
+            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 + ptr->field_178, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4);
+            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 - ptr->field_178, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4);
+            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 + ptr->field_178);
+            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 - ptr->field_178);
 
             if (func_8005F680(&colls[0]) || func_8005F680(&colls[1]) || func_8005F680(&colls[2]) || func_8005F680(&colls[3]) ||
                 (g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - colls[0].groundHeight_0) < Q12(-0.2f) || (g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - colls[1].groundHeight_0) < Q12(-0.2f) ||
@@ -4449,7 +4449,7 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
 
     vwGetViewPosition(&ptr->field_14C);
 
-    if (ABS(ptr->field_14C.vx - g_MapOverlayHeader.unkTable1_4C[arg1].vx_0) + ABS(ptr->field_14C.vz - g_MapOverlayHeader.unkTable1_4C[arg1].vz_4) > 0x14000)
+    if (ABS(ptr->field_14C.vx - g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0) + ABS(ptr->field_14C.vz - g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4) > 0x14000)
     {
         if (g_MapOverlayHeader.unkTable1_4C[arg1].field_B == 3)
         {
@@ -4472,30 +4472,30 @@ bool func_800611C0(POLY_FT4** arg0, s32 arg1) // 0x800611C0
 
     setPolyFT4(*arg0);
 
-    *(s32*)&ptr->field_134.vx = ((((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - ptr->field_178) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+    *(s32*)&ptr->field_134.vx = ((((g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 - ptr->field_178) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
                                 (((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 >> 4) - ptr->field_0.field_0.vy) << 16);
 
-    ptr->field_134.vz = ((g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + ptr->field_178) >> 4) - ptr->field_0.field_0.vz;
+    ptr->field_134.vz = ((g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 + ptr->field_178) >> 4) - ptr->field_0.field_0.vz;
 
-    *(s32*)&ptr->field_13C.vx = ((((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + ptr->field_178) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+    *(s32*)&ptr->field_13C.vx = ((((g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 + ptr->field_178) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
                                 (((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 >> 4) - ptr->field_0.field_0.vy) << 16);
 
-    ptr->field_13C.vz = ((g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + ptr->field_178) >> 4) - ptr->field_0.field_0.vz;
+    ptr->field_13C.vz = ((g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 + ptr->field_178) >> 4) - ptr->field_0.field_0.vz;
 
-    *(s32*)&ptr->field_144.vx = ((((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - ptr->field_178) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+    *(s32*)&ptr->field_144.vx = ((((g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 - ptr->field_178) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
                                 (((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 >> 4) - ptr->field_0.field_0.vy) << 16);
 
-    ptr->field_144.vz = ((g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - ptr->field_178) >> 4) - ptr->field_0.field_0.vz;
+    ptr->field_144.vz = ((g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 - ptr->field_178) >> 4) - ptr->field_0.field_0.vz;
 
     gte_ldv3c(&ptr->field_134);
     gte_rtpt();
     gte_stsxy3_g3(*arg0);
     gte_stsz3c(&ptr->field_158);
 
-    *(s32*)&ptr->field_134.vx = ((((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + ptr->field_178) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+    *(s32*)&ptr->field_134.vx = ((((g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 + ptr->field_178) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
                                 (((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 >> 4) - ptr->field_0.field_0.vy) << 16);
 
-    ptr->field_134.vz = ((g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - ptr->field_178) >> 4) - ptr->field_0.field_0.vz;
+    ptr->field_134.vz = ((g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 - ptr->field_178) >> 4) - ptr->field_0.field_0.vz;
 
     gte_ldv0(&ptr->field_134);
     gte_rtps();
@@ -4740,15 +4740,15 @@ void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3) //
         temp_s3 = Rng_Rand16() % D_800AE5F0[temp_s0 * 4]       + D_800AE5F0[(temp_s0 * 4) + 1];
         temp_s2 = Rng_Rand16() % D_800AE5F0[(temp_s0 * 4) + 2] + D_800AE5F0[(temp_s0 * 4) + 3];
 
-        g_MapOverlayHeader.unkTable1_4C[idx].vx_0 = chara->position_18.vx +
-                                                    FP_MULTIPLY(temp_s3, Math_Sin(chara->rotation_24.vy), Q12_SHIFT) -
-                                                    FP_MULTIPLY(temp_s2, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = chara->position_18.vx +
+                                                            FP_MULTIPLY(temp_s3, Math_Sin(chara->rotation_24.vy), Q12_SHIFT) -
+                                                            FP_MULTIPLY(temp_s2, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
         g_MapOverlayHeader.unkTable1_4C[idx].vy_8 = chara->position_18.vy;
-        g_MapOverlayHeader.unkTable1_4C[idx].vz_4 = chara->position_18.vz +
-                                                    FP_MULTIPLY(temp_s3, Math_Cos(chara->rotation_24.vy), Q12_SHIFT) +
-                                                    FP_MULTIPLY(temp_s2, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = chara->position_18.vz +
+                                                            FP_MULTIPLY(temp_s3, Math_Cos(chara->rotation_24.vy), Q12_SHIFT) +
+                                                            FP_MULTIPLY(temp_s2, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
 
-        Collision_Get(&coll, g_MapOverlayHeader.unkTable1_4C[idx].vx_0, g_MapOverlayHeader.unkTable1_4C[idx].vz_4);
+        Collision_Get(&coll, g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
 
         if (ABS_DIFF(coll.groundHeight_0, chara->position_18.vy) > Q12(0.15f))
         {
@@ -4780,9 +4780,9 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
         return;
     }
 
-    g_MapOverlayHeader.unkTable1_4C[idx].vx_0     = arg0->vx;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0            = arg0->vx;
     g_MapOverlayHeader.unkTable1_4C[idx].vy_8     = arg0->vy;
-    g_MapOverlayHeader.unkTable1_4C[idx].vz_4     = arg0->vz;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4            = arg0->vz;
     g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2     = arg1;
     g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 = var;
     g_MapOverlayHeader.unkTable1_4C[idx].field_B  = Rng_TestProbabilityBits(2);
@@ -4851,8 +4851,8 @@ bool func_80062708(POLY_FT4** poly, s32 arg1) // 0x80062708
 
     vwGetViewPosition(&ptr->field_1FC);
 
-    if (ABS(ptr->field_1FC.vx - g_MapOverlayHeader.unkTable1_4C[arg1].vx_0) +
-            ABS(ptr->field_1FC.vz - g_MapOverlayHeader.unkTable1_4C[arg1].vz_4) >
+    if (ABS(ptr->field_1FC.vx - g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0) +
+            ABS(ptr->field_1FC.vz - g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4) >
         0x14000)
     {
         return false;
@@ -4871,17 +4871,17 @@ bool func_80062708(POLY_FT4** poly, s32 arg1) // 0x80062708
 
         if (Rng_TestProbabilityBits(1))
         {
-            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
-            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4);
-            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - temp_s2);
-            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + temp_s2);
+            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4);
+            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4);
+            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 - temp_s2);
+            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 + temp_s2);
         }
         else
         {
-            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - temp_s2);
-            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - temp_s2);
-            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + temp_s2);
-            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + temp_s2);
+            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 - temp_s2);
+            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 - temp_s2);
+            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 + temp_s2);
+            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 + temp_s2);
         }
 
         if (func_8005F680(&colls[0]) || func_8005F680(&colls[1]) || func_8005F680(&colls[2]) || func_8005F680(&colls[3]) ||
@@ -4906,10 +4906,10 @@ bool func_80062708(POLY_FT4** poly, s32 arg1) // 0x80062708
     {
         for (j = 0; j < 5; j++)
         {
-            *(s32*)&ptr->field_134[i * 5 + j].vx = (((((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_2DC) + ((ptr->field_2DC >> 1) * j)) & 0xFFFF) +
+            *(s32*)&ptr->field_134[i * 5 + j].vx = (((((g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_2DC) + ((ptr->field_2DC >> 1) * j)) & 0xFFFF) +
                                                    ((((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8) >> 4) - ptr->field_0.field_0.vy) << 0x10);
 
-            ptr->field_134[i * 5 + j].vz = (((g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 >> 4) - ptr->field_0.field_0.vz) - ptr->field_2DC) + ((ptr->field_2DC >> 1) * i);
+            ptr->field_134[i * 5 + j].vz = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 >> 4) - ptr->field_0.field_0.vz) - ptr->field_2DC) + ((ptr->field_2DC >> 1) * i);
         }
     }
 
@@ -5177,9 +5177,9 @@ void func_8006342C(s32 weaponAttack, q3_12 angle, s16 arg2, GsCOORDINATE2* coord
             break;
         }
 
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vx_0 = (Q4_TO_Q8(ptr->field_28.vx) + Rng_TestProbabilityBits(8)) - 0x80;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_0.vx_0 = (Q4_TO_Q8(ptr->field_28.vx) + Rng_TestProbabilityBits(8)) - 0x80;
         g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vy_8 = (Q4_TO_Q8((u16)ptr->field_28.vy) + Rng_TestProbabilityBits(8)) - 0x80;
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vz_4 = (Q4_TO_Q8(ptr->field_28.vz) + Rng_TestProbabilityBits(8)) - 0x80;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_4.vz_4 = (Q4_TO_Q8(ptr->field_28.vz) + Rng_TestProbabilityBits(8)) - 0x80;
 
         if (i < 3)
         {
@@ -5276,9 +5276,9 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
     gte_rt();
     gte_stlvnl(&ptr->field_1AC);
 
-    g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 = Q4_TO_Q8(ptr->field_1AC.vx);
+    g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 = Q4_TO_Q8(ptr->field_1AC.vx);
     g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 = Q4_TO_Q8((u16)ptr->field_1AC.vy);
-    g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 = Q4_TO_Q8(ptr->field_1AC.vz);
+    g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 = Q4_TO_Q8(ptr->field_1AC.vz);
 
     for (ptr->field_1D4 = 0; ptr->field_1D4 < 6; ptr->field_1D4++)
     {
@@ -5318,10 +5318,10 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
 
         for (ptr->field_1D8 = 0; ptr->field_1D8 < 3; ptr->field_1D8++)
         {
-            *(s32*)&ptr->field_14C[ptr->field_1D8] = (((Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + ptr->field_16C[ptr->field_1D8].vx) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+            *(s32*)&ptr->field_14C[ptr->field_1D8] = (((Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 + ptr->field_16C[ptr->field_1D8].vx) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
                                                       ((Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 + ptr->field_16C[ptr->field_1D8].vy) - ptr->field_0.field_0.vy) << 16));
 
-            (&ptr->field_14C[ptr->field_1D8])->vz = Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + ptr->field_16C[ptr->field_1D8].vz)- ptr->field_0.field_0.vz;
+            (&ptr->field_14C[ptr->field_1D8])->vz = Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 + ptr->field_16C[ptr->field_1D8].vz) - ptr->field_0.field_0.vz;
         }
 
         gte_ldv3c(&ptr->field_14C);
@@ -5329,9 +5329,9 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
         gte_stsxy3_g3(*poly);
         gte_stsz3c(&ptr->field_1BC);
 
-        *(s32*)&ptr->field_14C[0].vx = ((((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 + ptr->field_19C.vx) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+        *(s32*)&ptr->field_14C[0].vx = ((((g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 + ptr->field_19C.vx) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
                                        ((((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 + ptr->field_19C.vy) >> 4) - ptr->field_0.field_0.vy) << 16);
-        ptr->field_14C[0].vz = ((g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 + ptr->field_19C.vz) >> 4) - ptr->field_0.field_0.vz;
+        ptr->field_14C[0].vz = ((g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 + ptr->field_19C.vz) >> 4) - ptr->field_0.field_0.vz;
 
         gte_ldv0(&ptr->field_14C);
         gte_rtps();
@@ -5430,9 +5430,9 @@ bool func_80064334(POLY_FT4** poly, s32 arg1) // 0x80064334
     ptr->field_158                                              = g_MapOverlayHeader.unkTable1_4C[arg1].field_10.field_0;
     g_MapOverlayHeader.unkTable1_4C[arg1].field_10.s_0.field_0 += temp_s4;
 
-    *(s32*)&ptr->field_138 = (((g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+    *(s32*)&ptr->field_138 = (((g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
                              ((((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8) >> 4) - ptr->field_0.field_0.vy) << 16);
-    ptr->field_138.vz      = (g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 >> 4) - ptr->field_0.field_0.vz;
+    ptr->field_138.vz = (g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 >> 4) - ptr->field_0.field_0.vz;
 
     gte_ldv0(&ptr->field_138);
     gte_rtps();
@@ -5522,23 +5522,23 @@ bool func_80064334(POLY_FT4** poly, s32 arg1) // 0x80064334
         temp_v1_5 = Math_Sin(g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_0);
         temp_s0   = FP_MULTIPLY_PRECISE(temp_s4, 0x199, Q12_SHIFT);
 
-        g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 += FP_MULTIPLY(temp_s0, temp_v1_5, Q12_SHIFT);
-        g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 += FP_MULTIPLY(temp_s0, Math_Cos(g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_0), Q12_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 += FP_MULTIPLY(temp_s0, temp_v1_5, Q12_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 += FP_MULTIPLY(temp_s0, Math_Cos(g_MapOverlayHeader.unkTable1_4C[arg1].field_C.s_0.field_0), Q12_SHIFT);
 
         if (*g_MapOverlayHeader.data_190 != 0)
         {
-            g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 += ((*g_MapOverlayHeader.windSpeedX_184 * temp_s4) / 136) >> 2;
-            g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 += ((*g_MapOverlayHeader.windSpeedZ_188 * temp_s4) / 136) >> 2;
+            g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 += ((*g_MapOverlayHeader.windSpeedX_184 * temp_s4) / 136) >> 2;
+            g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 += ((*g_MapOverlayHeader.windSpeedZ_188 * temp_s4) / 136) >> 2;
         }
         else if (*g_MapOverlayHeader.data_18C != 0)
         {
-            g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 += ((*g_MapOverlayHeader.windSpeedX_184 * temp_s4) / 136) >> 1;
-            g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 += ((*g_MapOverlayHeader.windSpeedZ_188 * temp_s4) / 136) >> 1;
+            g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 += ((*g_MapOverlayHeader.windSpeedX_184 * temp_s4) / 136) >> 1;
+            g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 += ((*g_MapOverlayHeader.windSpeedZ_188 * temp_s4) / 136) >> 1;
         }
         else
         {
-            g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 += (((*g_MapOverlayHeader.windSpeedX_184 * temp_s4) / 136) * 2) / 3;
-            g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 += (((*g_MapOverlayHeader.windSpeedZ_188 * temp_s4) / 136) * 2) / 3;
+            g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 += (((*g_MapOverlayHeader.windSpeedX_184 * temp_s4) / 136) * 2) / 3;
+            g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 += (((*g_MapOverlayHeader.windSpeedZ_188 * temp_s4) / 136) * 2) / 3;
         }
     }
 
@@ -5552,9 +5552,9 @@ void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2) // 0x80064F04
     idx = func_8005E7E0(31);
     if (idx != NO_VALUE)
     {
-        g_MapOverlayHeader.unkTable1_4C[idx].vx_0    = Q12_TO_Q8(arg0->vx);
+        g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0            = Q12_TO_Q8(arg0->vx);
         g_MapOverlayHeader.unkTable1_4C[idx].vy_8    = Q12_TO_Q8(arg0->vy);
-        g_MapOverlayHeader.unkTable1_4C[idx].vz_4    = Q12_TO_Q8(arg0->vz);
+        g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4            = Q12_TO_Q8(arg0->vz);
         g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = arg1;
         g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2     = arg2;
     }
@@ -5568,9 +5568,9 @@ bool func_80064FC0(POLY_FT4** polys, s32 arg1) // 0x80064FC0
     ptr = PSX_SCRATCH;
 
     g_MapOverlayHeader.unkTable1_4C[arg1].field_A = 0;
-    temp                                          = g_MapOverlayHeader.unkTable1_4C[arg1].vx_0 - ptr->field_0.field_0.vx;
+    temp                                          = g_MapOverlayHeader.unkTable1_4C[arg1].field_0.vx_0 - ptr->field_0.field_0.vx;
     *(s32*)&ptr->field_12C.vx                     = (temp & 0xFFFF) + ((g_MapOverlayHeader.unkTable1_4C[arg1].vy_8 - ptr->field_0.field_0.vy) << 16);
-    ptr->field_12C.vz                             = g_MapOverlayHeader.unkTable1_4C[arg1].vz_4 - ptr->field_0.field_0.vz;
+    ptr->field_12C.vz                             = g_MapOverlayHeader.unkTable1_4C[arg1].field_4.vz_4 - ptr->field_0.field_0.vz;
 
     gte_ldv0(&ptr->field_12C);
     gte_rtps();

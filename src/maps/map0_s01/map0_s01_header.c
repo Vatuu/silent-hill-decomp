@@ -12,10 +12,8 @@
 #define func_800D9C60 ((void(*)())0x800D9C60)
 
 extern u8 D_800DDFB8[];
-extern s_AnimInfo HARRY_M0S01_ANIM_INFOS[];
-extern s_MapHdr_field_4C D_800DE270[300];
-extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
-extern s32 D_800DFB10[];
+extern s_AnimInfo      HARRY_M0S01_ANIM_INFOS[];
+extern s_BloodSplat    g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 extern s_UnkStruct3_Mo g_MapHeaders_38[21];
 extern u8 LOADABLE_INVENTORY_ITEMS[34];
 
