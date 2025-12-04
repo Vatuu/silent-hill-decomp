@@ -1790,20 +1790,20 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         }
     }
 
-    // `lastUsedItemId_28` is set by `Inventory_ItemUse` when player uses an item that matches one of the item-trigger events.
+    // `lastUsedItem_28` is set by `Inventory_ItemUse` when player uses an item that matches one of the item-trigger events.
     // If it's set, find its index in `g_ItemTriggerItemIds` and use that to get the corresponding `s_EventParam` from `g_ItemTriggerEvents`.
     // After processing, the field is cleared and item trigger IDs are reset.
     // (Multi-item events likely repopulate the trigger IDs below, based on whichever events are still active?)
-    if (g_SysWork.player_4C.extra_128.lastUsedItemId_28)
+    if (g_SysWork.player_4C.extra_128.lastUsedItem_28)
     {
-        for (i = 0; g_SysWork.player_4C.extra_128.lastUsedItemId_28 != g_ItemTriggerItemIds[i]; i++);
+        for (i = 0; g_SysWork.player_4C.extra_128.lastUsedItem_28 != g_ItemTriggerItemIds[i]; i++);
 
         g_MapEventParam        = g_ItemTriggerEvents[i];
-        g_MapEventLastUsedItem = g_SysWork.player_4C.extra_128.lastUsedItemId_28;
+        g_MapEventLastUsedItem = g_SysWork.player_4C.extra_128.lastUsedItem_28;
         g_MapEventSysState     = g_MapEventParam->sysState_8_0;
         g_MapEventIdx          = g_MapEventParam->pointOfInterestIdx_8_5;
 
-        g_SysWork.player_4C.extra_128.lastUsedItemId_28 = 0;
+        g_SysWork.player_4C.extra_128.lastUsedItem_28 = 0;
         Event_ItemTriggersReset();
         return;
     }
@@ -1920,8 +1920,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // `TriggerActivation_Item`: When trigger check has passed (player is in the trigger area)
         // Required item ID for event is stored into `g_ItemTriggerItemIds` and event pointer at `g_ItemTriggerEvents`
         // Once player uses an item in the inventory screen, it compares the ID against the ones stored at `g_ItemTriggerItemIds`
-        // If used item ID matches one that event has requested, `extra_128.lastUsedItemId_28` gets set to the item ID.
-        // At the start of this function, if `extra_128.lastUsedItemId_28` is set then it'll locate the `s_EventParam` for it from `g_ItemTriggerEvents` and run the event.
+        // If used item ID matches one that event has requested, `extra_128.lastUsedItem_28` gets set to the item ID.
+        // At the start of this function, if `extra_128.lastUsedItem_28` is set then it'll locate the `s_EventParam` for it from `g_ItemTriggerEvents` and run the event.
         if (mapEvent->activationType_4_4 == TriggerActivation_Item)
         {
             for (i = 0; g_ItemTriggerItemIds[i] != NO_VALUE; i++);

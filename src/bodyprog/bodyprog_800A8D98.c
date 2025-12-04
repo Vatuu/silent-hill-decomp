@@ -791,8 +791,8 @@ s8 g_MapMarkingTimFileIdxs[56] = {
 s_FsImageDesc D_800A9A04 = { .tPage = { 1, 21 }, .clutX = 224, .clutY = 13 };
 s32 D_800A9A0C = 0;
 
-s32               g_MapEventSysState = 0;
-u32               g_MapEventIdx = 0;
+e_SysState        g_MapEventSysState     = SysState_Gameplay;
+u32               g_MapEventIdx          = 0;
 e_InventoryItemId g_MapEventLastUsedItem = 0;
 
 s32 D_800A9A1C = 0;

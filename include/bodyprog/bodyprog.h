@@ -2152,8 +2152,7 @@ extern s_FsImageDesc D_800A9A04;
 
 extern s32 D_800A9A0C; // Old IDB name `FS_AllFilesLoaded`, though FS code doesn't set it.
 
-/** `e_SysState` */
-extern s32 g_MapEventSysState;
+extern e_SysState g_MapEventSysState;
 
 extern e_InventoryItemId g_MapEventLastUsedItem;
 

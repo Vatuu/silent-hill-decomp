@@ -1499,7 +1499,7 @@ typedef struct _MainCharacterExtra
     s32               state_1C;             /** `e_PlayerState` */
     s32               upperBodyState_20;    /** `e_PlayerUpperBodyState` */
     s32               lowerBodyState_24;    /** `e_PlayerLowerBodyState` */
-    e_InventoryItemId lastUsedItemId_28;    /** Holds last item ID used from inventory, while inside an item-trigger area. */
+    e_InventoryItemId lastUsedItem_28;      /** Holds last item ID used from inventory, when player is inside an item-trigger area. */
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 

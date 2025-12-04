@@ -143,7 +143,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                     break;
             }
 
-            g_SysWork.player_4C.extra_128.lastUsedItemId_28 = 0;
+            g_SysWork.player_4C.extra_128.lastUsedItem_28 = 0;
             g_GameWork.background2dColor_R_58C     = 0;
             g_GameWork.background2dColor_G_58D     = 0;
             g_GameWork.background2dColor_B_58E     = 0;
@@ -1152,7 +1152,7 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
     }
     else
     {
-        // If any active events are requesting the item ID that was used, set `extra_128.lastUsedItemId_28` for `Event_Update` to make use of it. 
+        // If any active events are requesting the item ID that was used, set `extra_128.lastUsedItem_28` for `Event_Update` to make use of it. 
         for (i = 0; g_ItemTriggerItemIds[i] != NO_VALUE; i++)
         {
             if (g_ItemTriggerItemIds[i] == g_SavegamePtr->items_0[inventoryItemIdx].id_0)
@@ -1163,7 +1163,7 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
                 g_GameWork.gameStateStep_598[2]      = 0;
 
                 Game_TurnFlashlightOn();
-                g_SysWork.player_4C.extra_128.lastUsedItemId_28 = g_ItemTriggerItemIds[i];
+                g_SysWork.player_4C.extra_128.lastUsedItem_28 = g_ItemTriggerItemIds[i];
                 break;
             }
         }
