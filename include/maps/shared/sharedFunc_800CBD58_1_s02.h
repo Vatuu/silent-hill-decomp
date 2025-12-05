@@ -2,11 +2,11 @@ void sharedFunc_800CBD58_1_s02(void)
 {
     s32 i;
 
-    for (i = 0; i < ARRAY_SIZE(sharedData_800E1FF8_1_s02); i++)
+    for (i = 0; i < ARRAY_SIZE(sharedData_800DFB7C_0_s00); i++)
     {
-        if (sharedData_800E1FF8_1_s02[i].field_A == 27 || sharedData_800E1FF8_1_s02[i].field_A == 28)
+        if (sharedData_800DFB7C_0_s00[i].field_A == 27 || sharedData_800DFB7C_0_s00[i].field_A == 28)
         {
-            sharedData_800E1FF8_1_s02[i].field_A = 0;
+            sharedData_800DFB7C_0_s00[i].field_A = 0;
         }
     }
 

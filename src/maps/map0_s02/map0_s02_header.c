@@ -9,7 +9,6 @@
 #define func_800CECDC (0x800CECDC)
 
 extern u8 D_800CFD90[];
-extern s_MapHdr_field_4C D_800D03DC[100];
 extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 extern s_AnimInfo HARRY_M0S02_ANIM_INFOS[];
 
@@ -59,8 +58,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .func_40                  = Map_WorldObjectsUpdate,
     .func_44                  = NULL,
     .func_48                  = NULL,
-    .unkTable1_4C             = D_800D03DC,
-    .unkTable1Count_50        = ARRAY_SIZE(D_800D03DC),
+    .unkTable1_4C             = sharedData_800DFB7C_0_s00,
+    .unkTable1Count_50        = ARRAY_SIZE(sharedData_800DFB7C_0_s00),
     .bloodSplats_54           = g_Effect_BloodSplats,
     .bloodSplatCount_58       = ARRAY_SIZE(g_Effect_BloodSplats),
     .field_5C                 = NULL,

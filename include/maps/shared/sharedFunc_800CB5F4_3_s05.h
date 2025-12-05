@@ -25,9 +25,9 @@ void sharedFunc_800CB5F4_3_s05(void) // 0x800CC19C
 
     counterC = sharedData_800DD180_3_s05.field_C;
 
-    for (i = ARRAY_SIZE(sharedData_800DAD20_3_s05) - 1; i >= 0; i--)
+    for (i = ARRAY_SIZE(sharedData_800DFB7C_0_s00) - 1; i >= 0; i--)
     {
-        if (sharedData_800DAD20_3_s05[i].field_A == 0)
+        if (sharedData_800DFB7C_0_s00[i].field_A == 0)
         {
             if (sharedData_800DD180_3_s05.field_1 == 0)
             {
@@ -35,7 +35,7 @@ void sharedFunc_800CB5F4_3_s05(void) // 0x800CC19C
             }
             else
             {
-                sharedData_800DAD20_3_s05[i].field_A = 12;
+                sharedData_800DFB7C_0_s00[i].field_A = 12;
             }
 
             counterC--;

@@ -1987,19 +1987,42 @@ typedef struct
 
 extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
 
-// TODO: Might use different size in other maps too.
-#if defined(MAP1_S03)
-    extern s_MapHdr_field_4C sharedData_800E1FF8_1_s02[300];
+// TODO: Ideally this should use some kind of `MAP_FIELD_4C_COUNT` define from each map .h file.
+// Right now `shared.h` gets included before map headers though, since this file has decls that map headers may need.
+// Not sure of a good fix yet, might just have to move the decls for these into each map header, or move map config into a file included before shared.h?
+#if defined(MAP0_S00)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[200];
+#elif defined(MAP0_S01)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[300];
+#elif defined(MAP0_S02)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[100];
+#elif defined(MAP1_S01)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[300];
+#elif defined(MAP1_S03)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[300];
+#elif defined(MAP1_S04)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[100];
 #elif defined(MAP1_S05)
-    extern s_MapHdr_field_4C sharedData_800E1FF8_1_s02[500];
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[500];
+#elif defined(MAP2_S01)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[200];
+#elif defined(MAP2_S03)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[200];
+#elif defined(MAP2_S04)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[200];
+#elif defined(MAP3_S05)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[450];
+#elif defined(MAP4_S01)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[450];
+#elif defined(MAP5_S03)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[150];
+#elif defined(MAP6_S04)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[300];
+#elif defined(MAP7_S01)
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[250];
 #else
-    extern s_MapHdr_field_4C sharedData_800E1FF8_1_s02[200];
+    extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[200];
 #endif
-
-// TODO: Merge with above.
-extern s_MapHdr_field_4C sharedData_800DD5B0_1_s01[300];
-extern s_MapHdr_field_4C sharedData_800DAD20_3_s05[450];
-extern s_MapHdr_field_4C sharedData_800DE270_0_s01[300];
 
 extern void (*sharedData_800DD7A0_0_s01[52])(s_SubCharacter*);
 

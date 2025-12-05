@@ -737,11 +737,11 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             break;
 
         case 46:
-            for (i = 0; i < ARRAY_SIZE(sharedData_800E1FF8_1_s02); i++)
+            for (i = 0; i < ARRAY_SIZE(sharedData_800DFB7C_0_s00); i++)
             {
-                if (sharedData_800E1FF8_1_s02[i].field_A == 1)
+                if (sharedData_800DFB7C_0_s00[i].field_A == 1)
                 {
-                    sharedData_800E1FF8_1_s02[i].field_A = 0;
+                    sharedData_800DFB7C_0_s00[i].field_A = 0;
                 }
             }
 

@@ -118,14 +118,14 @@ void func_800D49AC(void) // 0x800D49AC
             D_800D8568.field_1  = 0;
             D_800D8568.field_10 = 0;
 
-            for (i = 0; i < ARRAY_SIZE(sharedData_800E1FF8_1_s02); i++)
+            for (i = 0; i < ARRAY_SIZE(sharedData_800DFB7C_0_s00); i++)
             {
-                s32 field_A = sharedData_800E1FF8_1_s02[i].field_A;
+                s32 field_A = sharedData_800DFB7C_0_s00[i].field_A;
                 if (field_A < 12)
                 {
                     if (field_A >= 8)
                     {
-                        sharedData_800E1FF8_1_s02[i].field_A = 12;
+                        sharedData_800DFB7C_0_s00[i].field_A = 12;
                     }
                 }
             }

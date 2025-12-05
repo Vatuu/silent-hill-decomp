@@ -5,13 +5,13 @@ void sharedFunc_800CB0A4_4_s03(VECTOR3* arg0, VECTOR3* arg1)
     idx = func_8005E7E0(33);
     if (idx != NO_VALUE)
     {
-        sharedData_800E1FF8_1_s02[idx].field_0.vx_0         = arg0->vx;
-        sharedData_800E1FF8_1_s02[idx].vy_8            = arg0->vy;
-        sharedData_800E1FF8_1_s02[idx].field_4.vz_4         = arg0->vz;
-        sharedData_800E1FF8_1_s02[idx].field_C.s_0.field_0 = ratan2(arg1->vx - arg0->vx, arg1->vz - arg0->vz);
-        sharedData_800E1FF8_1_s02[idx].field_C.s_0.field_2 = ratan2(arg1->vy - arg0->vy, Math_Vector2MagCalc(arg1->vx - arg0->vx, arg1->vz - arg0->vz));
-        sharedData_800E1FF8_1_s02[idx].field_10.s_0.field_0 = D_800C4418.field_8;
-        sharedData_800E1FF8_1_s02[idx].field_B              = 0;
-        sharedData_800E1FF8_1_s02[idx].field_10.s_0.field_2 = Q12(1.0f);
+        sharedData_800DFB7C_0_s00[idx].field_0.vx_0         = arg0->vx;
+        sharedData_800DFB7C_0_s00[idx].vy_8            = arg0->vy;
+        sharedData_800DFB7C_0_s00[idx].field_4.vz_4         = arg0->vz;
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = ratan2(arg1->vx - arg0->vx, arg1->vz - arg0->vz);
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 = ratan2(arg1->vy - arg0->vy, Math_Vector2MagCalc(arg1->vx - arg0->vx, arg1->vz - arg0->vz));
+        sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0 = D_800C4418.field_8;
+        sharedData_800DFB7C_0_s00[idx].field_B              = 0;
+        sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = Q12(1.0f);
     }
 }
