@@ -71,7 +71,7 @@ extern s_WorldObjectDesc g_WorldObject9;
 extern s8 D_800ED5AD;
 extern s16 D_800ED5B4;
 extern s8 D_800ED5B8;
-extern s8 D_800ED5F0;
+extern u8 D_800ED5F0;
 extern s8 D_800ED840;
 extern s8 D_800ED841;
 extern u16 D_800EBA34[23]; // `g_MapMsgSounds`
@@ -117,6 +117,8 @@ void func_800E2950(void);
 void MapEvent_CutsceneCybilDeath(void);
 
 void func_800E3244(void);
+
+void func_800E558C(void);
 
 void func_800E5D44(void);
 
