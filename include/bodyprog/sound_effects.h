@@ -290,7 +290,8 @@ typedef enum _SfxId
     Sfx_Unk1664 = 1664,
     Sfx_Unk1665 = 1665,
     Sfx_Unk1666 = 1666,
-
+    Sfx_Unk1667 = 1667,
+    Sfx_Unk1668 = 1668,
     Sfx_Unk1669 = 1669,
     Sfx_Unk1670 = 1670,
     Sfx_Unk1671 = 1671,
@@ -342,6 +343,8 @@ typedef enum _SfxId
     Sfx_XaAudio606 = 4702,
 
     Sfx_XaAudio612 = 4708,
+
+    Sfx_XaAudio635 = 4731,
 
     Sfx_XaAudio657 = 4753,
 

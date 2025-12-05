@@ -1352,12 +1352,156 @@ void func_800DCD00(void) // 0x800DCD00
     }
 }
 
-INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02_2", D_800CD6A4);
+void func_800DD2D4(void) // 0x800DD2D4
+{
+    typedef struct
+    {
+        SPRT*     sprt_0;
+        DR_TPAGE* tpage_4;
+        DR_STP*   stp_8;
+        u8        unk_C[4];
+        u8        unk_10[4];
+        s32       activeBufferIdx_14;
+    } g_GteScratchData_func_800DD2D4;
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800DD2D4);
+    g_GteScratchData_func_800DD2D4* scratchData;
+    s32                             i;
 
-// TODO: Move this rodata inside funcs once both usages are decomped.
-extern VECTOR3 D_800CD6A4; // SFX position.
+    scratchData = PSX_SCRATCH_ADDR(0);
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            func_8005DC1C(Sfx_Unk1667, &QVECTOR3(21.1f, -1.5f, -60.75f), Q8_CLAMPED(0.5f), 0);
+            Fs_QueueStartRead(FILE_ANIM_KITCHEN1_DMS, FS_BUFFER_11);
+            Savegame_EventFlagSet(EventFlag_557);
+            D_800EB6B4 = NO_VALUE;
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            if (Fs_QueueDoThingWhenEmpty())
+            {
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 3:
+            DmsHeader_FixOffsets(FS_BUFFER_11);
+            g_SysWork.field_30    = 20;
+            g_SysWork.flags_22A4 |= 1 << 3;
+            func_800348C0();
+            Chara_Load(0, Chara_Bloodsucker, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 144, false);
+            D_800EB6B4 = 0;
+            SysWork_StateStepIncrement(0);
+
+        case 4:
+            if (g_SysWork.player_4C.chara_0.model_0.anim_4.status_0 & 1)
+            {
+                D_800EB6B4 = g_SysWork.player_4C.chara_0.model_0.anim_4.time_4 - Q12(Player_AnimGetSomething());
+                if (D_800EB6B4 > Q12(29.0f))
+                {
+                    D_800EB6B4 = Q12(29.0f);
+                    SysWork_StateStepIncrement(0);
+                }
+            }
+            break;
+
+        case 5:
+            Chara_ProcessLoads();
+            Chara_Spawn(Chara_Bloodsucker, 64, Q12(21.5f), Q12(-60.8f), FP_ANGLE(-90.0f), 17);
+            Sd_EngineCmd(Sfx_Unk1668);
+            Savegame_EventFlagSet(EventFlag_573);
+
+            g_WorldObject_Dor[0].rotation_28.vy = FP_ANGLE(25.0f);
+            g_WorldObject_Dor[1].rotation_28.vy = FP_ANGLE(58.0f);
+            g_WorldObject_Dor[2].rotation_28.vy = FP_ANGLE(-50.0f);
+            g_WorldObject_Dor[3].rotation_28.vy = FP_ANGLE(-15.0f);
+
+            SysWork_StateStepIncrement(0);
+
+        case 6:
+            D_800EB6B4 = g_SysWork.player_4C.chara_0.model_0.anim_4.time_4 - Q12(Player_AnimGetSomething());
+
+            scratchData->activeBufferIdx_14 = g_ActiveBufferIdx;
+            scratchData->sprt_0             = GsOUT_PACKET_P;
+            for (i = 0; i < 2; i++)
+            {
+                setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+                setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
+                scratchData->sprt_0->u0 = 0;
+                scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) << 5;
+                setWH(scratchData->sprt_0, i == 0 ? 256 : 64, 224);
+                addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
+
+                scratchData->sprt_0++;
+                scratchData->tpage_4 = scratchData->sprt_0;
+                setDrawTPage(scratchData->tpage_4, 0, 0, getTPageFromBuffer(2, 0, scratchData->activeBufferIdx_14, i));
+
+                AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->tpage_4);
+                scratchData->tpage_4++;
+                scratchData->sprt_0 = scratchData->tpage_4;
+            }
+
+            scratchData->stp_8 = scratchData->sprt_0;
+            SetDrawStp(scratchData->stp_8, 1);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
+            scratchData->stp_8++;
+            SetDrawStp(scratchData->stp_8, 0);
+            addPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[0], scratchData->stp_8);
+            scratchData->stp_8++;
+            GsOUT_PACKET_P = (PACKET*)scratchData->stp_8;
+
+            if (D_800EB6B4 > Q12(39.0f))
+            {
+                D_800EB6B4 = Q12(39.0f);
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 7:
+            D_800EB6B4 = g_SysWork.player_4C.chara_0.model_0.anim_4.time_4 - Q12(Player_AnimGetSomething());
+            if (D_800EB6B4 > Q12(96.0f))
+            {
+                Sd_EngineCmd(Sfx_XaAudio635);
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 8:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.0f), false);
+            D_800EB6B4 = g_SysWork.player_4C.chara_0.model_0.anim_4.time_4 - Q12(Player_AnimGetSomething());
+            break;
+
+        case 9:
+            SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            break;
+
+        default:
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+
+            SysWork_StateSetNext(SysState_GameOver);
+            break;
+    }
+
+    if (g_SysWork.sysStateStep_C[0] >= 6)
+    {
+        g_SysWork.npcs_1A0[0].properties_E4.player.afkTimer_E8 = g_SysWork.player_4C.chara_0.model_0.anim_4.time_4 - Q12(Player_AnimGetSomething());
+    }
+
+    if (D_800EB6B4 >= 0)
+    {
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, D_800CD42C, D_800EB6B4, FS_BUFFER_11);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800EB694, &D_800EB6A4, NULL, D_800EB6B4, FS_BUFFER_11));
+        vcUserCamTarget(&D_800EB694, NULL, true);
+        vcUserWatchTarget(&D_800EB6A4, NULL, true);
+    }
+}
 
 void func_800DD9E8(void) // 0x800DD9E8
 {
@@ -1365,7 +1509,7 @@ void func_800DD9E8(void) // 0x800DD9E8
     {
         if (D_800E9EDA == 0)
         {
-            func_8005DC1C(Sfx_Unk1666, &D_800CD6A4, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1666, &QVECTOR3(21.1f, -1.5f, -60.75f), Q8_CLAMPED(0.5f), 0);
 
             if (g_SysWork.sysStateStep_C[0] == 6)
             {
