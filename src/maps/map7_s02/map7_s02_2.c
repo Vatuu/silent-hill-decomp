@@ -1393,7 +1393,8 @@ void func_800DD2D4(void) // 0x800DD2D4
         case 3:
             DmsHeader_FixOffsets(FS_BUFFER_11);
             g_SysWork.field_30    = 20;
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
+
             func_800348C0();
             Chara_Load(0, Chara_Bloodsucker, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 144, false);
@@ -1429,7 +1430,7 @@ void func_800DD2D4(void) // 0x800DD2D4
             D_800EB6B4 = g_SysWork.player_4C.chara_0.model_0.anim_4.time_4 - Q12(Player_AnimGetSomething());
 
             scratchData->activeBufferIdx_14 = g_ActiveBufferIdx;
-            scratchData->sprt_0             = GsOUT_PACKET_P;
+            scratchData->sprt_0             = (SPRT*)GsOUT_PACKET_P;
             for (i = 0; i < 2; i++)
             {
                 setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));

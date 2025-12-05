@@ -578,20 +578,26 @@ void func_800EB11C(void)
             Player_ControlFreeze();
             ScreenFade_ResetTimestep();
             g_SysWork.field_30    = 20;
-            g_SysWork.flags_22A4 |= 1 << 3;
+            g_SysWork.flags_22A4 |= SysFlag2_3;
+
             Fs_QueueStartRead(FILE_ANIM_RSU_DMS, FS_BUFFER_15);
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets(FS_BUFFER_15);
+
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
+
             D_800F0684 = 0;
             D_800F0044 = 0;
             D_800F0040 = 0;
+
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 53, false);
             Game_TurnFlashlightOn();
+
             sharedFunc_800D08B8_0_s00(2, 127);
             sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
             sharedFunc_800D0B18_0_s00(6);
+
             Sd_EngineCmd(Sfx_Unk1522);
             Sd_EngineCmd(Sfx_Unk1599);
             D_800F0686 = 0;

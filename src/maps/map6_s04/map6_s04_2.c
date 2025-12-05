@@ -1029,7 +1029,7 @@ void func_800E3244(void) // 0x800E3244
 
             func_8008D438();
 
-            g_SysWork.field_2378 = 0x5C0;
+            g_SysWork.field_2378 = Q12(0.3594f);
             D_800ED5B8 = 1;
 
             SysWork_StateStepIncrement(0);
