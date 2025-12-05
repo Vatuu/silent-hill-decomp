@@ -63,13 +63,13 @@ typedef enum _EventFlag
     EventFlag_57 = 57,
     EventFlag_58 = 58,
 
-    EventFlag_M0S02_PickupGasolineTank = 60,
-    EventFlag_61                       = 61,
-    EventFlag_62                       = 62,
-    EventFlag_M2S00_PickupChainsaw     = 63,
-    EventFlag_M2S00_PickupRockDrill    = 64,
-    EventFlag_65 = 65,
-    EventFlag_66 = 66,
+    EventFlag_M0S02_PickupGasolineTank    = 60,
+    EventFlag_61                          = 61,
+    EventFlag_62                          = 62,
+    EventFlag_M2S00_PickupChainsaw        = 63,
+    EventFlag_M2S00_PickupRockDrill       = 64,
+    EventFlag_65                          = 65,
+    EventFlag_66                          = 66,
     EventFlag_M1S00_PickupMap             = 67, // Shared with M1S06
     EventFlag_M1S01_PickupChemical        = 68,
     EventFlag_M1S01_PickupGoldMedallion   = 69,
@@ -151,16 +151,16 @@ typedef enum _EventFlag
     EventFlag_158                       = 158,
     EventFlag_159                       = 159,
 
-    EventFlag_M2S00_PickupSteelPipe = 161,
-    EventFlag_M2S00_KGordonDoorOpen = 162,
-    EventFlag_163 = 163,
-    EventFlag_164 = 164,
-    EventFlag_165 = 165,
-    EventFlag_166 = 166,
-    EventFlag_167 = 167,
-    EventFlag_168 = 168,
-    EventFlag_169 = 169,
-    EventFlag_170 = 170,
+    EventFlag_M2S00_PickupSteelPipe   = 161,
+    EventFlag_M2S00_KGordonDoorOpen   = 162,
+    EventFlag_163                     = 163,
+    EventFlag_164                     = 164,
+    EventFlag_165                     = 165,
+    EventFlag_166                     = 166,
+    EventFlag_167                     = 167,
+    EventFlag_168                     = 168,
+    EventFlag_169                     = 169,
+    EventFlag_170                     = 170,
     EventFlag_M2S00_PickupMap         = 171, // Shared with M2S04
     EventFlag_172                     = 172,
     EventFlag_173                     = 173,
@@ -287,7 +287,7 @@ typedef enum _EventFlag
     EventFlag_312             = 312,
     EventFlag_313             = 313,
 
-    EventFlag_317             = 317,
+    EventFlag_317 = 317,
 
     EventFlag_322 = 322,
 
@@ -360,6 +360,9 @@ typedef enum _EventFlag
     EventFlag_410 = 410,
 
     EventFlag_412 = 412,
+    EventFlag_413 = 413,
+    EventFlag_414 = 414,
+    EventFlag_415 = 415,
 
     EventFlag_417 = 417,
     EventFlag_418 = 418,
