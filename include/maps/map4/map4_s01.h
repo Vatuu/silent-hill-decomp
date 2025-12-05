@@ -36,11 +36,33 @@ extern u16 g_MapMsgSounds2[2];
 extern u8 g_MapMsgSoundIdx;
 extern u8 g_MapMsgSoundIdx1;
 extern u8 g_MapMsgSoundIdx2;
-extern u8 D_800D5AEB;
-extern u8 D_800D5AF0;
-extern s32 g_Timer0;
-extern s32 g_Timer1;
+
+extern u16 D_800D5ACC;
+
 extern s32 g_Timer2;
+
+extern u8 D_800D5AEB;
+
+extern s32 g_Timer0;
+
+extern u8 D_800D5AF0;
+
+extern s32 g_Timer1;
+
+extern u8 D_800D5AF8;
+
+extern u8 D_800D5AF9;
+
+extern s32 D_800D5AFC;
+
+extern s32 D_800D5B00;
+
+extern s16 D_800D5B04;
+
+extern u8 D_800D5B06;
+
+extern s16 D_800D7F30;
+
 extern VECTOR3 g_CutsceneCameraPosition;
 extern VECTOR3 g_CutsceneCameraLookAt;
 
@@ -61,6 +83,8 @@ extern s16 D_800D5AE8;
 void func_800D1B78(s32 arg0);
 
 void func_800D1FF0(void);
+
+void func_800D3420(void);
 
 void func_800D496C(void);
 
