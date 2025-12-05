@@ -550,12 +550,12 @@ void func_800D13D8(void) // 0x800D13D8
         vcUserCamTarget(&D_800D5354, NULL, true);
         vcUserWatchTarget(&D_800D5364, NULL, true);
 
-        Dms_CharacterGetPosRot(&g_SysWork.field_2360, &rot, "LIGHT", D_800D4070, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &rot, "LIGHT", D_800D4070, FS_BUFFER_15);
         Dms_CharacterGetPosRot(&pos, &rot, "L_INT", D_800D4070, FS_BUFFER_15);
 
-        g_SysWork.field_2370.vx = -ratan2(pos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.field_2360.vx, pos.vz - g_SysWork.field_2360.vz));
-        g_SysWork.field_2370.vy = ratan2(pos.vx - g_SysWork.field_2360.vx, pos.vz - g_SysWork.field_2360.vz);
-        g_SysWork.field_2370.vz = 0;
+        g_SysWork.cutsceneLightRot_2370.vx = -ratan2(pos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.cutsceneLightPos_2360.vx, pos.vz - g_SysWork.cutsceneLightPos_2360.vz));
+        g_SysWork.cutsceneLightRot_2370.vy = ratan2(pos.vx - g_SysWork.cutsceneLightPos_2360.vx, pos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+        g_SysWork.cutsceneLightRot_2370.vz = 0;
     }
 }
 

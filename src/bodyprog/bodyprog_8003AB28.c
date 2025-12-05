@@ -2538,8 +2538,8 @@ void func_8003EB54(void) // 0x8003EB54
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
 
-    Math_Vector3Set(&g_SysWork.field_2360, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
-    Math_SVectorSet(&g_SysWork.field_2370, FP_ANGLE(10.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
+    Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
+    Math_SVectorSet(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(10.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
 void func_8003EBA0(void) // 0x8003EBA0
@@ -2549,8 +2549,8 @@ void func_8003EBA0(void) // 0x8003EBA0
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Torso];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
 
-    Math_Vector3Set(&g_SysWork.field_2360, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
-    Math_SVectorSet(&g_SysWork.field_2370, FP_ANGLE(-15.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
+    Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
+    Math_SVectorSet(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-15.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
 void func_8003EBF4(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
@@ -2763,7 +2763,7 @@ void func_8003F170(void) // 0x8003F170
     if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_0.field_E == 3)
     {
         func_80049AF8(g_SysWork.field_235C, &mat);
-        ApplyMatrixLV(&mat, (VECTOR*)&g_SysWork.field_2360, &sp48); // Bug? `g_SysWork.field_2360` is `VECTOR3`.
+        ApplyMatrixLV(&mat, (VECTOR*)&g_SysWork.cutsceneLightPos_2360, &sp48); // Bug? `g_SysWork.cutsceneLightPos_2360` is `VECTOR3`.
         ptr->field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_30 = sp48.vz + (mat.t[2] * 16);
     }
 
@@ -2810,7 +2810,7 @@ void func_8003F170(void) // 0x8003F170
     temp = FP_MULTIPLY(func_8003F4DC(&coord, &rot, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.field_2378, Q12_SHIFT);
 
     func_800554C4(temp, ptr2->field_2C, coord, g_SysWork.field_235C, &rot, 
-                  g_SysWork.field_2360.vx, g_SysWork.field_2360.vy, g_SysWork.field_2360.vz,
+                  g_SysWork.cutsceneLightPos_2360.vx, g_SysWork.cutsceneLightPos_2360.vy, g_SysWork.cutsceneLightPos_2360.vz,
                   g_WorldGfx.type_0->waterZones_8);
     func_80055814(ptr2->field_30);
 
@@ -2857,7 +2857,7 @@ q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg
     {
         default:
         case 1:
-            rot0 = sysWork->field_2370;
+            rot0 = sysWork->cutsceneLightRot_2370;
             break;
 
         case 0:

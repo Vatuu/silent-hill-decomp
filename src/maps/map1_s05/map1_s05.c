@@ -336,14 +336,14 @@ void func_800D525C(void) // 0x800D525C
     WorldObjectInit(&g_WorldObject1, "WHEEL_HI", 19.7f, -0.06f, -19.1f, 0.0f, 0.0f, 0.0f);
 
     g_SysWork.field_235C = NULL;
-    g_SysWork.field_2360.vx = Q12(19.7f);
-    g_SysWork.field_2360.vy = Q12(-3.0f);
-    g_SysWork.field_2360.vz = Q12(-19.1f);
+    g_SysWork.cutsceneLightPos_2360.vx = Q12(19.7f);
+    g_SysWork.cutsceneLightPos_2360.vy = Q12(-3.0f);
+    g_SysWork.cutsceneLightPos_2360.vz = Q12(-19.1f);
 
     g_SysWork.field_236C = NULL;
-    g_SysWork.field_2370.vx = Q12(-0.25f);
-    g_SysWork.field_2370.vy = Q12(0.0f);
-    g_SysWork.field_2370.vz = Q12(0.0f);
+    g_SysWork.cutsceneLightRot_2370.vx = FP_ANGLE(-90.0f);
+    g_SysWork.cutsceneLightRot_2370.vy = FP_ANGLE(0.0f);
+    g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
 
     Sd_EngineCmd(Sfx_Unk1478);
 }

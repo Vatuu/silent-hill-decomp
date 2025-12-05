@@ -337,15 +337,15 @@ void func_800E1D50(void) // 0x800E1D50
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800ED590, &D_800ED5A0, NULL, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14));
         vcUserCamTarget(&D_800ED590, NULL, true);
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
-        Dms_CharacterGetPosRot(&g_SysWork.field_2360, &lintRot, D_800CC4CC, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &lintRot, D_800CC4CC, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
         Dms_CharacterGetPosRot(&lintPos, &lintRot, D_800CC4D4, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
 
-        rotX = Q12_TO_Q6(lintPos.vx - g_SysWork.field_2360.vx);
-        rotZ = Q12_TO_Q6(lintPos.vz - g_SysWork.field_2360.vz);
+        rotX = Q12_TO_Q6(lintPos.vx - g_SysWork.cutsceneLightPos_2360.vx);
+        rotZ = Q12_TO_Q6(lintPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
 
-        g_SysWork.field_2370.vx = -ratan2(lintPos.vy - g_SysWork.field_2360.vy, Q6_TO_Q12(SquareRoot0(SQUARE(rotX) + SQUARE(rotZ))));
-        g_SysWork.field_2370.vy = ratan2(lintPos.vx - g_SysWork.field_2360.vx, lintPos.vz - g_SysWork.field_2360.vz);
-        g_SysWork.field_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lintPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Q6_TO_Q12(SquareRoot0(SQUARE(rotX) + SQUARE(rotZ))));
+        g_SysWork.cutsceneLightRot_2370.vy = ratan2(lintPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lintPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+        g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
     }
 }
 
@@ -542,16 +542,16 @@ void func_800E219C(void) // 0x800E219C
         vcUserCamTarget(&D_800ED590, NULL, true);
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
 
-        // "LIGHT", cutscene light position? (TODO: Rename `g_SysWork.field_2360`?)
-        Dms_CharacterGetPosRot(&g_SysWork.field_2360, &unused, D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
+        // "LIGHT", cutscene light position?
+        Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &unused, D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
 
         // "L_INT", interior light or intersection point?
         Dms_CharacterGetPosRot(&lightIntPos, &unused, D_800CC4D4, D_800ED5B0, FS_BUFFER_14);
 
-        // Light angle? (TODO: rename g_SysWork.field_2370?)
-        g_SysWork.field_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz));
-        g_SysWork.field_2370.vy = ratan2(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz);
-        g_SysWork.field_2370.vz = FP_ANGLE(0.0f);
+        // Light angle?
+        g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz));
+        g_SysWork.cutsceneLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+        g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
     }
 }
 
@@ -654,15 +654,15 @@ void func_800E2950(void) // 0x800E2950
 
             g_SysWork.field_236C = NULL;
 
-            g_SysWork.field_2370.vx = -ratan2(camLookAt.vy - camPos.vy, Math_Vector2MagCalc(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz));
-            g_SysWork.field_2370.vy = ratan2(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz);
-            g_SysWork.field_2370.vz = FP_ANGLE(0.0f);
+            g_SysWork.cutsceneLightRot_2370.vx = -ratan2(camLookAt.vy - camPos.vy, Math_Vector2MagCalc(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz));
+            g_SysWork.cutsceneLightRot_2370.vy = ratan2(camLookAt.vx - camPos.vx, camLookAt.vz - camPos.vz);
+            g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
 
             g_SysWork.field_235C = NULL;
 
-            g_SysWork.field_2360.vx = camPos.vx;
-            g_SysWork.field_2360.vy = MAX(Q12(-1.5f), camPos.vy);
-            g_SysWork.field_2360.vz = camPos.vz;
+            g_SysWork.cutsceneLightPos_2360.vx = camPos.vx;
+            g_SysWork.cutsceneLightPos_2360.vy = MAX(Q12(-1.5f), camPos.vy);
+            g_SysWork.cutsceneLightPos_2360.vz = camPos.vz;
 
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 4, false);
 
@@ -820,16 +820,16 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
         vcUserCamTarget(&D_800ED590, NULL, true);
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
 
-        // "LIGHT", cutscene light position? (TODO: Rename `g_SysWork.field_2360`?)
-        Dms_CharacterGetPosRot(&g_SysWork.field_2360, &unused, D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
+        // "LIGHT", cutscene light position?
+        Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &unused, D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
 
         // "L_INT", interior light or intersection point?
         Dms_CharacterGetPosRot(&lightIntPos, &unused, D_800CC4D4, D_800ED5B0, FS_BUFFER_14);
 
-        // Light angle? (TODO: rename g_SysWork.field_2370?)
-        g_SysWork.field_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz));
-        g_SysWork.field_2370.vy = ratan2(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz);
-        g_SysWork.field_2370.vz = FP_ANGLE(0.0f);
+        // Light angle?
+        g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz));
+        g_SysWork.cutsceneLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+        g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
     }
 }
 
@@ -1101,12 +1101,12 @@ void func_800E3244(void) // 0x800E3244
         lookAtX = FP_FROM(Math_Sin(D_800ED5B6 - Q12(0.172f)) * Q12(3.7f), Q12_SHIFT) + Q12(20.0f);
         Camera_LookAtSet(NULL, lookAtX, -Q12(1.0f), FP_FROM(Math_Cos(D_800ED5B6 - 704) * Q12(3.7f), Q12_SHIFT) + Q12(100.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-        Math_Vector3Set(&g_SysWork.field_2360, FP_FROM(Math_Sin(D_800ED5B6 - Q12(0.2188f)) * Q12(4.8f), Q12_SHIFT) + Q12(20.0f),
+        Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, FP_FROM(Math_Sin(D_800ED5B6 - Q12(0.2188f)) * Q12(4.8f), Q12_SHIFT) + Q12(20.0f),
                                               -Q12(1.0f),
                                                FP_FROM(Math_Cos(D_800ED5B6 - Q12(0.2188f)) * Q12(4.8f), Q12_SHIFT) + Q12(100.0f)
         );
 
-        Math_SetSVectorFast(&g_SysWork.field_2370, FP_ANGLE(-39.4f), (D_800ED5B6 + FP_ANGLE(182.9f)), FP_ANGLE(0.0f));
+        Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-39.4f), (D_800ED5B6 + FP_ANGLE(182.9f)), FP_ANGLE(0.0f));
         func_800E74C4();
     }
 
@@ -1118,15 +1118,15 @@ void func_800E3244(void) // 0x800E3244
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800ED590, &D_800ED5A0, NULL, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14));
         vcUserCamTarget(&D_800ED590, NULL, true);
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
-        Dms_CharacterGetPosRot(&g_SysWork.field_2360, &lintRot, D_800CC4CC, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
+        Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &lintRot, D_800CC4CC, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
         Dms_CharacterGetPosRot(&lintPos, &lintRot, D_800CC4D4, D_800ED5B0, (s_DmsHeader*)FS_BUFFER_14);
 
-        rotX = Q12_TO_Q6(lintPos.vx - g_SysWork.field_2360.vx);
-        rotZ = Q12_TO_Q6(lintPos.vz - g_SysWork.field_2360.vz);
+        rotX = Q12_TO_Q6(lintPos.vx - g_SysWork.cutsceneLightPos_2360.vx);
+        rotZ = Q12_TO_Q6(lintPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
 
-        g_SysWork.field_2370.vx = -ratan2(lintPos.vy - g_SysWork.field_2360.vy, Q6_TO_Q12(SquareRoot0(SQUARE(rotX) + SQUARE(rotZ))));
-        g_SysWork.field_2370.vy = ratan2(lintPos.vx - g_SysWork.field_2360.vx, lintPos.vz - g_SysWork.field_2360.vz);
-        g_SysWork.field_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lintPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Q6_TO_Q12(SquareRoot0(SQUARE(rotX) + SQUARE(rotZ))));
+        g_SysWork.cutsceneLightRot_2370.vy = ratan2(lintPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lintPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+        g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
     }
 }
 

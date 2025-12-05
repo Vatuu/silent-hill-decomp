@@ -487,14 +487,14 @@ void func_800D2E54(void) // 0x800D2E54
 
             func_8003ED74(4, 4);
 
-            g_SysWork.field_2360.vx = Q12(59.1f);
-            g_SysWork.field_2360.vy = Q12(-3.0f);
-            g_SysWork.field_2370.vx = Q12(-0.25f);
             g_SysWork.field_235C = NULL;
-            g_SysWork.field_2360.vz = Q12(19.1f);
+            g_SysWork.cutsceneLightPos_2360.vx = Q12(59.1f);
+            g_SysWork.cutsceneLightPos_2360.vy = Q12(-3.0f);
+            g_SysWork.cutsceneLightPos_2360.vz = Q12(19.1f);
             g_SysWork.field_236C = NULL;
-            g_SysWork.field_2370.vy = Q12(0.0f);
-            g_SysWork.field_2370.vz = Q12(0.0f);
+            g_SysWork.cutsceneLightRot_2370.vx = FP_ANGLE(-90.0f);
+            g_SysWork.cutsceneLightRot_2370.vy = FP_ANGLE(0.0f);
+            g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
             g_SysWork.field_2378 = Q12(0.7f);
 
             func_8008D438();

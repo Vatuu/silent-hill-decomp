@@ -409,11 +409,11 @@ void func_800D7A60(void) // 0x800D7A60
 
         case 5:
             SysWork_StateStepIncrementAfterTime(&D_800E2C68, Q12(10.0f), Q12(60.0f), Q12(76.0f), true, true);
-            Dms_CharacterGetPosRot(&g_SysWork.field_2360, &rot, "LIGHT", D_800E2C68, (s_DmsHeader*)FS_BUFFER_11);
+            Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &rot, "LIGHT", D_800E2C68, (s_DmsHeader*)FS_BUFFER_11);
             Dms_CharacterGetPosRot(&pos, &rot, "L_INT", D_800E2C68, (s_DmsHeader*)FS_BUFFER_11);
-            g_SysWork.field_2370.vx = -ratan2(pos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.field_2360.vx, pos.vz - g_SysWork.field_2360.vz));
-            g_SysWork.field_2370.vy = ratan2(pos.vx - g_SysWork.field_2360.vx, pos.vz - g_SysWork.field_2360.vz);
-            g_SysWork.field_2370.vz = 0;
+            g_SysWork.cutsceneLightRot_2370.vx = -ratan2(pos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.cutsceneLightPos_2360.vx, pos.vz - g_SysWork.cutsceneLightPos_2360.vz));
+            g_SysWork.cutsceneLightRot_2370.vy = ratan2(pos.vx - g_SysWork.cutsceneLightPos_2360.vx, pos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+            g_SysWork.cutsceneLightRot_2370.vz = 0;
             break;
 
         case 6:

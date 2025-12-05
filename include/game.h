@@ -1675,9 +1675,9 @@ typedef struct _SysWork
     u8              playerStopFlags_235A; /** `e_PlayerStopFlags` */
     s8              unk_235B[1];
     GsCOORDINATE2*  field_235C;
-    VECTOR3         field_2360; // Position?
-    GsCOORDINATE2*  field_236C;
-    SVECTOR         field_2370; // Rotation.
+    VECTOR3         cutsceneLightPos_2360; // } Often gets set from DMS cutscene data, unsure if this is cutscene only or also used for light in-game.
+    GsCOORDINATE2*  field_236C;            // }
+    SVECTOR         cutsceneLightRot_2370; // }
     s16             field_2378;
     s16             cameraAngleY_237A;
     s16             cameraAngleZ_237C;

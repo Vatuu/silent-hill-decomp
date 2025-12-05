@@ -167,8 +167,8 @@ void func_800D0B64(void) // 0x800D0B64
             g_SysWork.field_236C = NULL;
             g_SysWork.field_2378 = Q12(0.5f);
 
-            Math_Vector3Set(&g_SysWork.field_2360, Q12(18.7f), Q12(-1.9f), Q12(-137.8f));
-            Math_SetSVectorFast(&g_SysWork.field_2370, FP_ANGLE(-34.0f), FP_ANGLE(-100.0f), 0);
+            Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(18.7f), Q12(-1.9f), Q12(-137.8f));
+            Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-34.0f), FP_ANGLE(-100.0f), 0);
             func_8008D438();
 
             g_SysWork.field_30 = 20;
@@ -269,12 +269,12 @@ void func_800D0B64(void) // 0x800D0B64
             func_80088F94(&lisaChara, 0, 0);
             func_80085EB8(0, &playerChara, 139, false);
     
-            Math_Vector3Set(&g_SysWork.field_2360, Q12(16.3f), Q12(-1.55f), Q12(-138.6f));
+            Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(16.3f), Q12(-1.55f), Q12(-138.6f));
 
             // @hack This macro should work but must access `vz` by pointer for a match.
-            //Math_SetSVectorFast(g_SysWork.field_2370, 0xFF34, 0x2E3, 0);
-            *(s32*)&g_SysWork.field_2370.vx = 0x02E3FF34;
-            (&g_SysWork.field_2370)->vz = 0;
+            //Math_SetSVectorFast(g_SysWork.cutsceneLightRot_2370, 0xFF34, 0x2E3, 0);
+            *(s32*)&g_SysWork.cutsceneLightRot_2370.vx = 0x02E3FF34;
+            (&g_SysWork.cutsceneLightRot_2370)->vz = 0;
 
             func_8005DC1C(Sfx_DoorOpen0, &QVECTOR3(14.6f, -1.2f, -138.5f), Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);

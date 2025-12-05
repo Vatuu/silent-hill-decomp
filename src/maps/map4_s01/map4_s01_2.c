@@ -570,11 +570,11 @@ void func_800D2408(void) // 0x800D2408
         vcUserCamTarget(&g_CutsceneCameraPosition, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAt, NULL, true);
 
-        Dms_CharacterGetPosRot(&g_SysWork.field_2360, &unused, "LIGHT", g_Timer0, FS_BUFFER_11);
+        Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &unused, "LIGHT", g_Timer0, FS_BUFFER_11);
         Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", g_Timer0, FS_BUFFER_11);
-        g_SysWork.field_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz));
-        g_SysWork.field_2370.vy = ratan2(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz);
-        g_SysWork.field_2370.vz = 0;
+        g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz));
+        g_SysWork.cutsceneLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+        g_SysWork.cutsceneLightRot_2370.vz = 0;
     }
 }
 
@@ -750,9 +750,9 @@ void func_800D3420(void) // 0x800D3420
             sharedFunc_800CB5F4_3_s05();
 
             g_SysWork.field_235C = NULL;
-            Math_Vector3Set(&g_SysWork.field_2360, sharedData_800DD180_3_s05.field_20, Q12(-2.0f), sharedData_800DD180_3_s05.field_24 + 0x1800);
+            Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, sharedData_800DD180_3_s05.field_20, Q12(-2.0f), sharedData_800DD180_3_s05.field_24 + 0x1800);
             g_SysWork.field_236C = NULL;
-            Math_SetSVectorFast(&g_SysWork.field_2370, FP_ANGLE(-90.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
+            Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-90.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 
             func_8003EF10(11, 11, PrimitiveType_S32, &D_800D5B00, 0, Q12(100.0f));
             D_800D5B00 = 0;
@@ -843,8 +843,8 @@ void func_800D3420(void) // 0x800D3420
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
             g_SysWork.field_2378 = Q12(1.0f);
-            Math_Vector3Set(&g_SysWork.field_2360, Q12(178.8f), Q12(0.0f), Q12(62.8f));
-            Math_SetSVectorFast(&g_SysWork.field_2370, FP_ANGLE(30.0f), FP_ANGLE(-90.0f), FP_ANGLE(0.0f));
+            Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(178.8f), Q12(0.0f), Q12(62.8f));
+            Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(30.0f), FP_ANGLE(-90.0f), FP_ANGLE(0.0f));
 
             SysWork_StateStepIncrement(0);
             break;
@@ -903,8 +903,8 @@ void func_800D3420(void) // 0x800D3420
 
         case 21:
             func_80085EB8(0, CYBIL_PTR, 20, false);
-            Math_Vector3Set(&g_SysWork.field_2360, Q12(175.9f), Q12(-1.0f), Q12(22.8f));
-            Math_SetSVectorFast(&g_SysWork.field_2370, FP_ANGLE(0.0f), FP_ANGLE(60.0f), FP_ANGLE(0.0f));
+            Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(175.9f), Q12(-1.0f), Q12(22.8f));
+            Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(0.0f), FP_ANGLE(60.0f), FP_ANGLE(0.0f));
             g_SysWork.field_2378 = Q12(1.0f);
             D_800D5AFC           = Q12(217.0f);
             SysWork_StateStepIncrement(0);
@@ -989,11 +989,11 @@ void func_800D3420(void) // 0x800D3420
         vcUserWatchTarget(&g_CutsceneCameraLookAt, NULL, true);
         if (g_SysWork.sysStateStep_C[0] >= 21)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.field_2360, &unused, "LIGHT", D_800D5AFC, FS_BUFFER_11);
+            Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &unused, "LIGHT", D_800D5AFC, FS_BUFFER_11);
             Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800D5AFC, FS_BUFFER_11);
-            g_SysWork.field_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz));
-            g_SysWork.field_2370.vy = ratan2(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz);
-            g_SysWork.field_2370.vz = 0;
+            g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz));
+            g_SysWork.cutsceneLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+            g_SysWork.cutsceneLightRot_2370.vz = 0;
         }
     }
 
@@ -1064,14 +1064,14 @@ void func_800D4410(void) // 0x800D4410
             func_80085EB8(2, playerChara, 0, false);
             func_8008D438();
 
-            g_SysWork.field_2360.vx = Q12(19.6f);
-            g_SysWork.field_2360.vy = Q12(2.0f);
-            g_SysWork.field_2370.vx = Q12(0.25f);
             g_SysWork.field_235C = NULL;
-            g_SysWork.field_2360.vz = Q12(62.0f);
+            g_SysWork.cutsceneLightPos_2360.vx = Q12(19.6f);
+            g_SysWork.cutsceneLightPos_2360.vy = Q12(2.0f);
+            g_SysWork.cutsceneLightPos_2360.vz = Q12(62.0f);
             g_SysWork.field_236C = NULL;
-            g_SysWork.field_2370.vy = 0;
-            g_SysWork.field_2370.vz = 0;
+            g_SysWork.cutsceneLightRot_2370.vx = FP_ANGLE(90.0f);
+            g_SysWork.cutsceneLightRot_2370.vy = FP_ANGLE(0.0f);
+            g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
             g_SysWork.field_2378 = Q12(1.0f);
 
             func_8003ED74(14, 14);

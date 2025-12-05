@@ -564,16 +564,16 @@ void func_800D1AF8(void) // 0x800D1AF8
         vcUserCamTarget(&D_800D6F38, NULL, true);
         vcUserWatchTarget(&D_800D6F48, NULL, true);
 
-        // "LIGHT", cutscene light position? (TODO: Rename `g_SysWork.field_2360`?)
-        Dms_CharacterGetPosRot(&g_SysWork.field_2360, &unused, "LIGHT", D_800D6F58, FS_BUFFER_17);
+        // "LIGHT", cutscene light position?
+        Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &unused, "LIGHT", D_800D6F58, FS_BUFFER_17);
 
         // "L_INT", interior light or intersection point?
         Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800D6F58, FS_BUFFER_17);
 
-        // Light angle? (TODO: Rename `g_SysWork.field_2370`?)
-        g_SysWork.field_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.field_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz));
-        g_SysWork.field_2370.vy = ratan2(lightIntPos.vx - g_SysWork.field_2360.vx, lightIntPos.vz - g_SysWork.field_2360.vz);
-        g_SysWork.field_2370.vz = FP_ANGLE(0.0f);
+        // Light angle?
+        g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz));
+        g_SysWork.cutsceneLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+        g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
     }
 }
 
