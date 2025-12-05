@@ -1520,7 +1520,172 @@ void func_800E3E84(void) // 0x800E3E84
     func_800E2E90();
 }
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E3F30);
+void func_800E3F30(void) // 0x800E3F30
+{
+    typedef struct
+    {
+        SPRT*     sprt_0;
+        DR_TPAGE* tpage_4;
+        DR_STP*   stp_8;
+        u8        unk_C[4];
+        u8        unk_10[4];
+        s32       activeBufferIdx_14;
+    } g_GteScratchData_func_800DD2D4;
+
+    g_GteScratchData_func_800DD2D4* scratchData;
+    s32                             i;
+
+    if (g_SysWork.sysStateStep_C[0] == 0)
+    {
+        D_800EDA04 = 0;
+    }
+
+    if (D_800EDA04 != 0)
+    {
+        scratchData                     = PSX_SCRATCH_ADDR(0);
+        scratchData->activeBufferIdx_14 = g_ActiveBufferIdx;
+        scratchData->sprt_0             = (SPRT*)GsOUT_PACKET_P;
+        for (i = 0; i < 2; i++)
+        {
+            setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+            setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
+            scratchData->sprt_0->u0 = 0;
+            scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) << 5;
+            setWH(scratchData->sprt_0, i == 0 ? 256 : 64, 224);
+            addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
+
+            scratchData->sprt_0++;
+            scratchData->tpage_4 = (DR_TPAGE*)scratchData->sprt_0;
+            setDrawTPage(scratchData->tpage_4, 0, 0, getTPageFromBuffer(2, 0, scratchData->activeBufferIdx_14, i));
+
+            AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->tpage_4);
+            scratchData->tpage_4++;
+            scratchData->sprt_0 = (SPRT*)scratchData->tpage_4;
+        }
+        scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
+        SetDrawStp(scratchData->stp_8, 1);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
+        scratchData->stp_8++;
+        SetDrawStp(scratchData->stp_8, 0);
+        addPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[0], scratchData->stp_8);
+        scratchData->stp_8++;
+        GsOUT_PACKET_P = (PACKET*)scratchData->stp_8;
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            D_800F4804 = 0;
+
+            func_800E9260(Chara_EndingCybil, 1);
+            func_800E9260(Chara_Alessa, 2);
+            func_800E9260(Chara_EndingDahlia, 3);
+            func_800E941C();
+            func_800E9444(Chara_EndingCybil, &g_SysWork.npcs_1A0[0]);
+            func_800E9444(Chara_EndingDahlia, &g_SysWork.npcs_1A0[1]);
+            func_800E9444(Chara_Alessa, &g_SysWork.npcs_1A0[2]);
+
+            D_800F480A = 1;
+            D_800F4809 = 1;
+            D_800F4808 = 1;
+
+            g_SysWork.field_2378 = Q12(0.7f);
+
+            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
+
+            SysWork_StateStepIncrement(0);
+            D_800EDA04 = 0;
+            break;
+
+        case 1:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 21, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[1], 5, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[2], 10, false);
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 2:
+            func_80085EB8(2, &g_SysWork.npcs_1A0[0], 0, false);
+            SysWork_StateStepIncrement(0);
+
+        case 3:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
+            break;
+
+        case 4:
+            func_80085EB8(3, &g_SysWork.npcs_1A0[0], 0, false);
+            SysWork_StateStepIncrement(0);
+
+        case 5:
+            Map_MessageWithAudio(15, &D_800F4804, &D_800ED768);
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(0.0f), Q12(16.0f), true, false);
+            break;
+
+        case 6:
+            SysWork_StateStepIncrement(0);
+
+        case 7:
+            Map_MessageWithAudio(21, &D_800F4804, &D_800ED768);
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(17.0f), Q12(31.0f), true, false);
+            break;
+
+        case 8:
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(17.0f), Q12(31.0f), true, true);
+            break;
+
+        case 9:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 22, false);
+            SysWork_StateStepIncrement(0);
+
+        case 10:
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(32.0f), Q12(37.0f), false, true);
+            break;
+
+        case 11:
+            Savegame_EventFlagClear(EventFlag_576);
+            SysWork_StateStepIncrement(0);
+            func_800D6804(&g_SysWork.npcs_1A0[1].position_18, &g_SysWork.npcs_1A0[0].position_18);
+
+        case 12:
+            Map_MessageWithAudio(22, &D_800F4804, &D_800ED768);
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(32.0f), Q12(59.0f), true, false);
+            func_800D6788();
+            break;
+
+        case 13:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 23, false);
+            SysWork_StateStepIncrement(0);
+
+        case 14:
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(32.0f), Q12(59.0f), true, false);
+            func_800D6788();
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+            break;
+
+        case 15:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 24, false);
+            Map_MessageWithAudio(23, &D_800F4804, &D_800ED768);
+            g_SysWork.field_2378 = Q12(0.6f);
+            D_800EDA04           = 1;
+            SysWork_StateStepIncrement(0);
+
+        case 16:
+            SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(61.0f), Q12(91.0f), true, true);
+            break;
+
+        case 17:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            break;
+
+        default:
+            g_SysWork.sysStateStep_C[0] = 0;
+            D_800F4805++;
+            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+            func_800E9490(&g_SysWork.npcs_1A0[0]);
+            D_800F4808 = 0;
+            break;
+    }
+}
 
 void func_800E4714(void) // 0x800E4714
 {

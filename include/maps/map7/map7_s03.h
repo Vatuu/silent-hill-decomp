@@ -50,6 +50,8 @@ STATIC_ASSERT_SIZEOF(s_800ED7E0_ptr, 0x3C);
 extern s32 D_800ED73C; // } RNG related values?
 extern s32 D_800ED740; // }
 
+extern u16 D_800ED768;
+
 extern u16 D_800ED77C;
 
 extern u16 D_800ED7B4;
@@ -79,6 +81,8 @@ extern s32 D_800ED9B8;
 extern s_800ED7E0_ptr* D_800ED9BC[];
 
 extern s32 D_800EDA00;
+
+extern s32 D_800EDA04;
 
 extern u8 D_800EDA08;
 
@@ -170,6 +174,10 @@ void func_800D3E18(s_SubCharacter*, GsCOORDINATE2*);
 void Ai_Incubator_Init(s_SubCharacter* chara);
 
 void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
+void func_800D6788(void); // Assumed return type.
+
+void func_800D6804(VECTOR3*, VECTOR3*); // Assumed args/return type.
 
 void func_800D70EC(void);
 
