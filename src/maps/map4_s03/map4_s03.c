@@ -1059,7 +1059,124 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D8874);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D88C8);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D8FC0);
+void func_800D8FC0(void) // 0x800D8FC0
+{
+    typedef struct
+    {
+        SPRT*     sprt_0;
+        DR_TPAGE* tpage_4;
+        DR_STP*   stp_8;
+        s32       activeBufferIdx_C;
+    } g_GteScratchData_func_800D8FC0;
+
+    g_GteScratchData_func_800D8FC0* scratchData;
+    s32                             i;
+
+    scratchData = PSX_SCRATCH_ADDR(0);
+
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        (g_SysWork.sysStateStep_C[0] > 0) && (g_SysWork.sysStateStep_C[0] < 5))
+    {
+        SysWork_StateStepSet(0, 5);
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            func_800868DC(0);
+            func_800868DC(1);
+            func_800868DC(2);
+            func_800868DC(3);
+            func_800868DC(4);
+            func_800868DC(5);
+            SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+            Savegame_EventFlagSet(EventFlag_333);
+            func_800D76BC(1);
+            Game_TurnFlashlightOn();
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            SysWork_StateStepIncrementDelayed(Q12(2.2f), false);
+
+            scratchData->activeBufferIdx_C = g_ActiveBufferIdx;
+            scratchData->sprt_0            = (SPRT*)GsOUT_PACKET_P;
+            for (i = 0; i < 2; i++)
+            {
+                setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+                setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
+                scratchData->sprt_0->u0 = 0;
+                scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_C == 0) << 5;
+                setWH(scratchData->sprt_0, i == 0 ? 256 : 64, 224);
+                addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
+
+                scratchData->sprt_0++;
+                scratchData->tpage_4 = (DR_TPAGE*)scratchData->sprt_0;
+                setDrawTPage(scratchData->tpage_4, 0, 0, getTPageFromBuffer(2, 0, scratchData->activeBufferIdx_C, i));
+
+                AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->tpage_4);
+                scratchData->tpage_4++;
+                scratchData->sprt_0 = (SPRT*)scratchData->tpage_4;
+            }
+            scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
+            SetDrawStp(scratchData->stp_8, 1);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
+            scratchData->stp_8++;
+            SetDrawStp(scratchData->stp_8, 0);
+            addPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[0], scratchData->stp_8);
+            scratchData->stp_8++;
+            GsOUT_PACKET_P = (PACKET*)scratchData->stp_8;
+
+            Camera_LookAtSet(NULL, Q12(162.5f), Q12(-1.15f), Q12(50.5f), Q12(0.375f), Q12(0.475f), Q12(0.0374f), Q12(0.0875f), false);
+            break;
+
+        case 3:
+            Fs_QueueStartSeek(FILE_1ST_NO_BLOCK_TIM);
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(162.77f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(55.43f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(180.0f);
+            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
+            func_8008D438();
+            Camera_PositionSet(NULL, Q12(163.78f), Q12(-2.31f), Q12(58.91f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(162.5f), Q12(-1.15f), Q12(50.5f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 4:
+            if (func_800D76E8())
+            {
+                SysWork_StateStepIncrement(0);
+            }
+
+            Camera_PositionSet(NULL,
+                               func_800868F4(Q12(-1.28f), Q12(6.5f), 0) + Q12(163.78f),
+                               func_800868F4(Q12(1.16f), Q12(6.5f), 1) - Q12(2.31f),
+                               func_800868F4(Q12(-4.41f), Q12(6.5f), 2) + Q12(58.91f),
+                               Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
+
+            if (g_SysWork.sysStateStep_C[0] != 4)
+            {
+                SysWork_StateStepReset();
+            }
+            break;
+
+        case 5:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        default:
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_330);
+            g_SysWork.player_4C.chara_0.position_18.vx = Q12(162.77f);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(55.43f);
+            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(180.0f);
+            break;
+    }
+}
 
 void func_800D960C(void) // 0x800D960C
 {

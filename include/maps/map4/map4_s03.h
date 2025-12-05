@@ -122,7 +122,11 @@ void func_800D7450(void);
 
 void func_800D76BC(s_SubCharacter* chara);
 
+s32 func_800D76E8(void); // Assumed return type.
+
 void func_800D78D4(void* arg0); // Unknown arg type.
+
+void func_800D8FC0(void);
 
 void func_800D960C(void);
 
