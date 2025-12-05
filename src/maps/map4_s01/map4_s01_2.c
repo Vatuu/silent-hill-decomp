@@ -1000,7 +1000,7 @@ void func_800D3420(void) // 0x800D3420
     if (D_800D5B06 != 0)
     {
         scratchData->activeBufferIdx_14 = g_ActiveBufferIdx;
-        scratchData->sprt_0             = GsOUT_PACKET_P;
+        scratchData->sprt_0             = (SPRT*)GsOUT_PACKET_P;
         for (i = 0; i < 2; i++)
         {
             setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
@@ -1011,21 +1011,21 @@ void func_800D3420(void) // 0x800D3420
             addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
 
             scratchData->sprt_0++;
-            scratchData->tpage_4 = scratchData->sprt_0;
+            scratchData->tpage_4 = (DR_TPAGE*)scratchData->sprt_0;
             setDrawTPage(scratchData->tpage_4, 0, 0, getTPageFromBuffer(2, 0, scratchData->activeBufferIdx_14, i));
 
             AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->tpage_4);
             scratchData->tpage_4++;
-            scratchData->sprt_0 = scratchData->tpage_4;
+            scratchData->sprt_0 = (SPRT*)scratchData->tpage_4;
         }
-        scratchData->stp_8 = scratchData->sprt_0;
+        scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
         SetDrawStp(scratchData->stp_8, 1);
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
         scratchData->stp_8++;
         SetDrawStp(scratchData->stp_8, 0);
         addPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[0], scratchData->stp_8);
         scratchData->stp_8++;
-        GsOUT_PACKET_P = scratchData->stp_8;
+        GsOUT_PACKET_P = (PACKET*)scratchData->stp_8;
     }
 }
 

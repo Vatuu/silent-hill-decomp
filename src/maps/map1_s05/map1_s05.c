@@ -196,7 +196,109 @@ void func_800D49AC(void) // 0x800D49AC
     }
 }
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D4D1C);
+void func_800D4D1C(void) // 0x800D4D1C
+{
+    typedef struct
+    {
+        SPRT*     sprt_0;
+        DR_TPAGE* tpage_4;
+        DR_STP*   stp_8;
+        s32       activeBufferIdx_C;
+    } g_GteScratchData_func_800D4D1C;
+
+    g_GteScratchData_func_800D4D1C* scratchData;
+    s32                             i;
+
+    scratchData = PSX_SCRATCH_ADDR(0);
+
+    if (g_SysWork.sysStateStep_C[0] < 5)
+    {
+        if (g_SysWork.sysStateStep_C[0] > 0)
+        {
+            scratchData->activeBufferIdx_C = g_ActiveBufferIdx;
+            scratchData->sprt_0            = (SPRT*)GsOUT_PACKET_P;
+            for (i = 0; i < 2; i++)
+            {
+                setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+                setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
+                scratchData->sprt_0->u0 = 0;
+                scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_C == 0) << 5;
+                setWH(scratchData->sprt_0, i == 0 ? 256 : 64, 224);
+                addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
+
+                scratchData->sprt_0++;
+                scratchData->tpage_4 = (DR_TPAGE*)scratchData->sprt_0;
+                setDrawTPage(scratchData->tpage_4, 0, 0, getTPageFromBuffer(2, 0, scratchData->activeBufferIdx_C, i));
+
+                AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->tpage_4);
+                scratchData->tpage_4++;
+                scratchData->sprt_0 = (SPRT*)scratchData->tpage_4;
+            }
+            scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
+            SetDrawStp(scratchData->stp_8, 1);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
+            scratchData->stp_8++;
+            SetDrawStp(scratchData->stp_8, 0);
+            addPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[0], scratchData->stp_8);
+            scratchData->stp_8++;
+            GsOUT_PACKET_P = (PACKET*)scratchData->stp_8;
+        }
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Savegame_EventFlagClear(EventFlag_129);
+            D_800D5D11 = 1;
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+            g_SysWork.field_2378 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.2f, Q12_SHIFT);
+            if (g_SysWork.field_2378 > Q12(3.0f))
+            {
+                g_SysWork.field_2378 = Q12(3.0f);
+            }
+            break;
+
+        case 2:
+            D_800D8568.field_1 = 1;
+            D_800D8568.field_2 = 3;
+            SysWork_StateStepIncrement(0);
+
+        case 3:
+            if (D_800D5D11 & 1)
+            {
+                Sd_EngineCmd(Sfx_Unk1359);
+                D_800D5D11++;
+            }
+
+            func_800463C0(Sfx_Unk1359, 0, MAX(0, (Q12_FRACT(g_SysWork.field_2378) >> 4) - (D_800D5D11 * 8)), 0);
+
+            g_SysWork.field_2378 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.15f, 12);
+            if (g_SysWork.field_2378 < (6 - D_800D5D11) * Q12(0.5f))
+            {
+                D_800D5D11++;
+            }
+
+            if (g_SysWork.field_2378 < 0)
+            {
+                g_SysWork.field_2378 = 0;
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 4:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(2.5f), false);
+            break;
+
+        default:
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            Savegame_EventFlagSet(EventFlag_132);
+            break;
+    }
+}
 
 void func_800D525C(void) // 0x800D525C
 {
