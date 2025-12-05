@@ -644,7 +644,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 15:
-            func_800CCB8C(&D_800CCA1C, &D_800CCA28, 0x2800, 0xCC, 0x999, 0x666, 0x199, 0);
+            sharedFunc_800CCB8C_0_s01(&D_800CCA1C, &D_800CCA28, Q12(2.5f), Q12(0.05f), Q12(0.6f), Q12(0.4f), Q12(0.1f), 0);
             func_8005DC1C(Sfx_Unk1373, &D_800CCA34, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
@@ -658,7 +658,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
             break;
 
         case 17:
-            func_800CCB8C(&D_800CCA40, &D_800CCA4C, 0x3000, 0x147, 0x666, 0x666, 0xED, 0);
+            sharedFunc_800CCB8C_0_s01(&D_800CCA40, &D_800CCA4C, Q12(3.0f), Q12(0.08f), Q12(0.4f), Q12(0.4f), Q12(0.058f), 0);
             func_8005DC1C(Sfx_Unk1374, &D_800CCA58, Q8_CLAMPED(0.5f), 0);
             func_8005DC1C(Sfx_Unk1375, &D_800CCA58, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);

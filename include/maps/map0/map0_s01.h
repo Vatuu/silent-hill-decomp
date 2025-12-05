@@ -44,10 +44,6 @@ extern s_WorldObjectPose D_800DE140;
 
 extern VECTOR3 D_800DE154;
 
-extern s_MapHdr_field_4C D_800DE270[300];
-
-extern VECTOR3 D_800DFB10[];
-
 extern q19_12 g_Timer0;
 
 extern u8 g_MapMsgSoundIdx;

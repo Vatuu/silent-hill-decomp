@@ -5,8 +5,6 @@
 #include "maps/characters/Chara_Cybil.h"
 
 #define BLOOD_SPLAT_COUNT_MAX 150
-
-#define func_800CD1F8 ((void(*)())0x800CD1F8)
 #define func_800D0C3C ((void(*)())0x800D0C3C)
 #define func_800D2104 ((void(*)())0x800D2104)
 #define func_800D9C60 ((void(*)())0x800D9C60)
@@ -68,8 +66,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .func_40                  = Map_WorldObjectsUpdate,
     .func_44                  = NULL,
     .func_48                  = NULL,
-    .unkTable1_4C             = D_800DE270,
-    .unkTable1Count_50        = ARRAY_SIZE(D_800DE270),
+    .unkTable1_4C             = sharedData_800DE270_0_s01,
+    .unkTable1Count_50        = ARRAY_SIZE(sharedData_800DE270_0_s01),
     .bloodSplats_54           = g_Effect_BloodSplats,
     .bloodSplatCount_58       = ARRAY_SIZE(g_Effect_BloodSplats),
     .field_5C                 = NULL,
@@ -83,8 +81,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .field_7C                 = NULL,
     .func_80                  = NULL,
     .func_84                  = NULL,
-    .unk_88                   = D_800DFB10,
-    .func_8C                  = func_800CD1F8,
+    .unk_88                   = sharedData_800DFB10_0_s01,
+    .func_8C                  = sharedFunc_800CD1F8_0_s01,
     .func_90                  = NULL,
     .field_94                 = NULL,
     .func_98                  = NULL,

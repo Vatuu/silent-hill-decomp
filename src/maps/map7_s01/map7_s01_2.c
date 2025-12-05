@@ -398,7 +398,7 @@ void func_800D7A60(void) // 0x800D7A60
             break;
 
         case 4:
-            func_80085EB8(0u, &g_SysWork.player_4C.chara_0, 157, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 157, false);
 
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
@@ -432,7 +432,7 @@ void func_800D7A60(void) // 0x800D7A60
             break;
 
         case 8:
-            func_80085EB8(0u, &g_SysWork.player_4C.chara_0, 158, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 158, false);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             func_8005DC1C(Sfx_Unk1337, &g_WorldObject_Door.position_1C, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
@@ -921,9 +921,9 @@ void func_800D8FF8(void) // 0x800D8FF8
             break;
 
         case 6:
-            func_800CC9A4(&D_800CC594, &D_800CC5A0, Q12(2.4f), 90, Q12(0.18f), Q12(0.2f), 204, 0);
+            sharedFunc_800CCB8C_0_s01(&D_800CC594, &D_800CC5A0, Q12(2.4f), Q12(0.022f), Q12(0.18f), Q12(0.2f), Q12(0.05f), 0);
             func_8005DC1C(Sfx_Unk1658, &D_800CC5AC, Q8_CLAMPED(0.5f), 0);
-            func_80085EB8(0U, &g_SysWork.player_4C.chara_0, 167, false);
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 167, false);
             SysWork_StateStepIncrement(0);
 
         case 7:

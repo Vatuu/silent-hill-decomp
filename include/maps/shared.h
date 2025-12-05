@@ -1999,6 +1999,7 @@ extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
 // TODO: Merge with above.
 extern s_MapHdr_field_4C sharedData_800DD5B0_1_s01[300];
 extern s_MapHdr_field_4C sharedData_800DAD20_3_s05[450];
+extern s_MapHdr_field_4C sharedData_800DE270_0_s01[300];
 
 extern void (*sharedData_800DD7A0_0_s01[52])(s_SubCharacter*);
 
@@ -2287,6 +2288,10 @@ extern u8 sharedData_800D1D14_3_s02[8];
 
 /** Room flags? */
 extern u16 sharedData_800D1D1C_3_s02[60];
+
+extern VECTOR3 sharedData_800DFB10_0_s01[];
+
+bool sharedFunc_800CD1F8_0_s01(POLY_FT4** arg0, s32 arg1);
 
 void sharedFunc_800CFE78_3_s02(s32 arg0);
 

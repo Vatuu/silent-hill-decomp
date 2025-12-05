@@ -46,6 +46,8 @@ D_800CC8FC                          = 0x800CC8FC;
 //-----------------------------------------------------------
 //--- PA: 0x003614   VA: 0x800CCB8C   subsegment: c, map0_s01
 //-----------------------------------------------------------
+sharedFunc_800CCB8C_0_s01           = 0x800CCB8C; // type:func
+sharedFunc_800CD1F8_0_s01           = 0x800CD1F8; // type:func
 sharedFunc_800CB6B0_0_s00           = 0x800CE000; // type:func
 sharedFunc_800CBBBC_0_s00           = 0x800CE4C4; // type:func
 sharedFunc_800CBC94_0_s00           = 0x800CE59C; // type:func
@@ -266,7 +268,9 @@ g_Particle_SpeedX                   = 0x800DE254; // type:s32
 g_Particle_SpeedZ                   = 0x800DE258; // type:s32
 sharedData_800DFB6C_0_s00           = 0x800DE25C; // type:s32
 sharedData_800DFB70_0_s00           = 0x800DE260; // type:s32
+sharedData_800DE270_0_s01           = 0x800DE270;
 g_Effect_BloodSplats                = 0x800DF9E0;
+sharedData_800DFB10_0_s01           = 0x800DFB10; // type:VECTOR3
 g_ParticleVectors0                  = 0x800DFB40; // type:ParticleVectors
 g_Particle_RotationY                = 0x800DFB62; // type:s16
 g_ParticleVectors1                  = 0x800DFB70; // type:ParticleVectors
