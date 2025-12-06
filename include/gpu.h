@@ -110,8 +110,8 @@ typedef struct
 ({                                                                                                        \
     int tpage = getTPageN((tp), (abr), ((bufferIdx) * 16) + ((i) * 4), (((bufferIdx) << 4) & 0x10) >> 4); \
                                                                                                           \
-    /* @hack Empty inline assembly to force R into a register and back out. */                            \
-    /* Prevent `AND 0x9FF` inside `setDrawTPage` from being optimized out by VRP. */                      \
+    /* @hack Empty inline assembly to force `tpage` into a register and back out. */                      \
+    /* Prevents `AND 0x9FF` inside `setDrawTPage` from being optimized out by VRP. */                     \
     __asm__ __volatile__("" : "+r"(tpage));                                                               \
     tpage;                                                                                                \
 })

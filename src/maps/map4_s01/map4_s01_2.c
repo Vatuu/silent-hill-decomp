@@ -300,8 +300,8 @@ void func_800D2408(void) // 0x800D2408
 
             func_8008D438();
 
-            g_SysWork.field_235C = 0;
-            g_SysWork.field_236C = 0;
+            g_SysWork.field_235C = NULL;
+            g_SysWork.field_236C = NULL;
             g_SysWork.field_2378 = Q12(1.0f);
 
             SysWork_StateStepIncrement(0);

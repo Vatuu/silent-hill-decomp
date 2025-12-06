@@ -14,19 +14,17 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
     // TODO: `chara->model_0.anim_4.status_0 == ANIM_STATUS(30, false)` doesn't match?
     if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) == 30)
     {
-        chara->model_0.state_2 = 4;
-        g_SysWork.field_228A &= ~(1 << 1);
+        chara->model_0.state_2   = 4;
+        g_SysWork.field_2284[3] &= ~(1 << 1);
         return;
     }
 
     temp_v1 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
-    if ((temp_v1 - 62) < 3u)
+    if (temp_v1 >= 62 && temp_v1 < 65)
     {
         chara->moveSpeed_38 = Q12(0.0f);
-        return;
     }
-
-    if ((temp_v1 - 50) < 12u)
+    else if (temp_v1 >= 50 && temp_v1 < 62)
     {
         temp_s5 = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
                                       g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
