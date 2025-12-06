@@ -439,18 +439,18 @@ typedef enum _SysFlags
 // Temp name.
 typedef enum _SysFlags2
 {
-    SysFlag2_None = 0,
-    SysFlag2_0    = 1 << 0,
-    SysFlag2_1    = 1 << 1,
+    SysFlag2_None     = 0,
+    SysFlag2_0        = 1 << 0,
+    SysFlag2_1        = 1 << 1,
 
-    SysFlag2_3    = 1 << 3,
-    SysFlag2_4    = 1 << 4,
-    SysFlag2_5    = 1 << 5,
-    SysFlag2_6    = 1 << 6,
-    SysFlag2_7    = 1 << 7,
-    SysFlag2_8    = 1 << 8,
-    SysFlag2_9    = 1 << 9,
-    SysFlag2_10   = 1 << 10,
+    SysFlag2_3        = 1 << 3,
+    SysFlag2_4        = 1 << 4,
+    SysFlag2_5        = 1 << 5,
+    SysFlag2_6        = 1 << 6,
+    SysFlag2_MenuOpen = 1 << 7, /** Set by `SysState_Gameplay_Update` when opening menu, cleared when game returns to `SysState_Gameplay` and screen fade has completed. */
+    SysFlag2_8        = 1 << 8,
+    SysFlag2_9        = 1 << 9,
+    SysFlag2_10       = 1 << 10,
 } e_SysFlags2;
 
 typedef enum _SysWorkProcessFlags
@@ -916,11 +916,11 @@ typedef enum _GameDifficulty
 
 typedef enum _TriggerType
 {
-    TriggerType_Unk0           = 0,
-    TriggerType_TouchAabb      = 1,
-    TriggerType_TouchFacing    = 2,
-    TriggerType_TouchObbFacing = 3,
-    TriggerType_TouchObb       = 4
+    TriggerType_None           = 0, /** Skips trigger/activation type checks, always activates if required event flags are set, skips processing later events until flags deactivate it. */
+    TriggerType_TouchAabb      = 1, /** Checks if player has entered a rectangular area aligned to world axes. */
+    TriggerType_TouchFacing    = 2, /** Checks if player is within a small area and facing toward the trigger point. */
+    TriggerType_TouchObbFacing = 3, /** Checks if player has stepped into a shaped area, and is also facing toward it. */
+    TriggerType_TouchObb       = 4, /** Checks if player has stepped into a shaped area, without needing to look at it. */
 } e_TriggerType;
 
 typedef enum _TriggerActivationType

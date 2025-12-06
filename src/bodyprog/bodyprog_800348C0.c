@@ -1845,10 +1845,10 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             continue;
         }
 
-        // `TriggerType_Unk0` skips any trigger/activation check and always executes.
+        // `TriggerType_None` skips any trigger/activation check and always executes.
         // Maybe used for map-load events, and events that should run every frame?
-        // (Flags are still checked for it though.)
-        if (mapEvent->triggerType_4_0 == TriggerType_Unk0)
+        // Returns before processing other events, until flag checks above disable it.
+        if (mapEvent->triggerType_4_0 == TriggerType_None)
         {
             g_MapEventParam    = mapEvent;
             g_MapEventSysState = mapEvent->sysState_8_0;
@@ -1858,7 +1858,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
         // `TriggerActivationType_Button`: Only continue processing event when action button is pressed and `func_8007F2AC` returns false (maybe some IsBusy function?)
         if (mapEvent->activationType_4_4 == TriggerActivationType_Button &&
-            !((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.action_6) && !disableButtonEvents && !func_8007F2AC()))
+            (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.action_6) || disableButtonEvents || func_8007F2AC()))
         {
             continue;
         }
@@ -2794,11 +2794,11 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
         g_SysWork.sysState_8 == SysState_StatusMenu ||
         g_SysWork.sysState_8 == SysState_MapScreen)
     {
-        g_SysWork.flags_22A4 |= SysFlag2_7;
+        g_SysWork.flags_22A4 |= SysFlag2_MenuOpen;
     }
     else if (ScreenFade_IsNone())
     {
-        g_SysWork.flags_22A4 &= ~SysFlag2_7;
+        g_SysWork.flags_22A4 &= ~SysFlag2_MenuOpen;
     }
 }
 
