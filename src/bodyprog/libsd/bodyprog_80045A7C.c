@@ -164,16 +164,16 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
             break;
     }
 
-	// VAB audios.
-	
-	// Play/load VAB audio.
+    // VAB audios.
+
+    // Play/load VAB audio.
     if (cmd >= 160 && cmd < 245)
     {
         func_80047B24(cmd);
     }
-	
-	// (Unsure) Play/load song.
-	// This passes a command to the previous conditional.
+
+    // (Unsure) Play/load song.
+    // Passes a command to the previous conditional.
     if (cmd >= 32 && cmd < 72)
     {
         func_80048244(cmd);

@@ -169,7 +169,7 @@ bool func_8004C328(void) // 0x8004C328
             continue;
         }
 
-		// Checks if player has ammo.
+        // Checks if player has ammo.
         switch (itemId)
         {
             case InventoryItemId_HuntingRifle:
@@ -254,7 +254,7 @@ s32 Inventory_HyperBlasterFunctionalTest(void) // 0x8004C4F8
                g_GameWork.controllers_38[1].analogController_0.terminal_type  == PadTerminalType_GunControllerKonami;
     }
 
-	// Neither of the conditions has been completed.
+    // Neither of the conditions has been completed.
     return 0;
 }
 

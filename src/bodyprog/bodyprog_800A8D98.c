@@ -623,7 +623,7 @@ s8 D_800A97E2 = 0;
 s8 D_800A97E3 = 0;
 u32 D_800A97E4[8] = {};
 
-// Related to game's music.
+/** Related to game music. */
 u16 g_UnknownEngineCmdTable0[] = {
     0x0,
     0x0,
@@ -769,7 +769,7 @@ s_AnimInfo D_800A998C = {
 
 u32 unknown_D_800A999C = 0x80025234;
 s32 D_800A99A0 = 0;
-u8 g_Sd_BgmLayersLimit[8] = { 128, 128, 128, 128, 128, 128, 128, 128 };
+u8 g_Sd_BgmLayerLimits[8] = { 128, 128, 128, 128, 128, 128, 128, 128 };
 s32 g_MapMsg_CurrentIdx = 0;
 s16 g_MapMsg_SelectFlashTimer = 0;
 //s16 __padding = 0;

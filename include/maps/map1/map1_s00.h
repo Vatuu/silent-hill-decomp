@@ -14,7 +14,7 @@
 
 extern s32 D_800DD718;
 
-extern s_WorldObjectPose	       g_CommonWorldObjectPoses[5];
+extern s_WorldObjectPose           g_CommonWorldObjectPoses[5];
 extern s_WorldObjectDescNoRot g_WorldObject0;
 extern s_WorldObjectDescNoRot g_WorldObject1[6];
 extern s_WorldObjectDescNoRot g_WorldObject2;

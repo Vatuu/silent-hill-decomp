@@ -20,10 +20,10 @@
 
 extern s_WorldObjectDescNoRot g_WorldObject0;
 extern s_WorldObjectDescNoRot g_WorldObject1[2];
-extern s_WorldObjectDesc	  g_WorldObject2;
-extern s_WorldObjectDesc	  g_WorldObject3;
-extern s_WorldObjectDesc	  g_WorldObject4;
-extern s_WorldObjectDesc	  g_WorldObject5;
+extern s_WorldObjectDesc      g_WorldObject2;
+extern s_WorldObjectDesc      g_WorldObject3;
+extern s_WorldObjectDesc      g_WorldObject4;
+extern s_WorldObjectDesc      g_WorldObject5;
 
 extern VECTOR3 D_800CB2E4;
 extern VECTOR3 D_800CB2F0;

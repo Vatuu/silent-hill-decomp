@@ -105,14 +105,15 @@ typedef struct
 #define getTPageN(tp, abr, xn, yn) \
     ((((tp) & 0x3) << 7) | (((abr) & 0x3) << 5) | (((yn) & 0x1) << 4) | ((xn) & 0xF))
 
-/** @brief Wrapper around `getTPageN`, takes a `g_OrderingTable0` buffer index and unknown `i` idx. */
-#define getTPageFromBuffer(tp, abr, bufferIdx, i)                                                              \
-({                                                                                                             \
-    int tpage = getTPageN((tp), (abr), ((bufferIdx) * 16) + ((i) * 4), (((bufferIdx) << 4) & 0x10) >> 4);      \
-    /* @hack Empty inline assembly to force R into a register and back out, */                                 \
-    /* To prevent the `AND 0x9FF` inside `setDrawTPage` from being optimized out by VRP. */ \
-    __asm__ __volatile__("" : "+r"(tpage));                                                                    \
-    tpage;                                                                                                     \
+/** @brief Wrapper for `getTPageN`. Takes a `g_OrderingTable0` buffer index and unknown `i` idx. */
+#define getTPageFromBuffer(tp, abr, bufferIdx, i)                                                         \
+({                                                                                                        \
+    int tpage = getTPageN((tp), (abr), ((bufferIdx) * 16) + ((i) * 4), (((bufferIdx) << 4) & 0x10) >> 4); \
+                                                                                                          \
+    /* @hack Empty inline assembly to force R into a register and back out. */                            \
+    /* Prevent `AND 0x9FF` inside `setDrawTPage` from being optimized out by VRP. */                      \
+    __asm__ __volatile__("" : "+r"(tpage));                                                               \
+    tpage;                                                                                                \
 })
 
 /** @brief Same as `setRECT`, but uses 2x 32-bit stores instead of 4x 16-bit stores. */
@@ -388,12 +389,12 @@ void SetPriority(PACKET*, s32, s32);
     })
 
 #define gte_stMAC12(r0) __asm__ volatile( \
-    "mfc2	$12, $25;"                    \
+    "mfc2    $12, $25;"                    \
     "nop;"                                \
-    "sh	$12, 0( %0 );"                    \
-    "mfc2	$13, $26;"                    \
+    "sh    $12, 0( %0 );"                    \
+    "mfc2    $13, $26;"                    \
     "nop;"                                \
-    "sh	$13, 2( %0 );"                    \
+    "sh    $13, 2( %0 );"                    \
     :                                     \
     : "r"(r0)                             \
     : "$12", "$13", "memory")

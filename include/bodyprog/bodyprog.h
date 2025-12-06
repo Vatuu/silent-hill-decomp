@@ -2171,7 +2171,7 @@ extern s32 D_800A999C;
 
 extern s32 D_800A99A0;
 
-extern u8 g_Sd_BgmLayersLimit[8];
+extern u8 g_Sd_BgmLayerLimits[8];
 
 /** Relative file offset for map texture? */
 extern s8 D_800A99B5;

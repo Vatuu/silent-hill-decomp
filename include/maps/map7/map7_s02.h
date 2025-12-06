@@ -82,8 +82,8 @@ extern s32 D_800EB690;
 extern VECTOR3 D_800EB694;
 extern VECTOR3 D_800EB6A4;
 
-extern u8  D_800EB6B0;
-extern s32 D_800EB6B4;
+extern u8     D_800EB6B0;
+extern q19_12 D_800EB6B4; // Timer.
 
 extern s_WorldObjectDesc      g_WorldObject_Door;
 extern s_WorldObjectDesc      g_WorldObject_Beans[16];

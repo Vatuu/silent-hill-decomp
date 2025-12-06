@@ -261,7 +261,12 @@ void func_800D1FF0(void) // 0x800D1FF0
 
 void func_800D2408(void) // 0x800D2408
 {
-    #define CUTSCENE_SKIP_STATE 43
+    #define soundPos QVECTOR3(182.0f, -1.2f, 58.9f)
+
+    typedef enum _EventState
+    {
+        EventState_Skip = 43
+    } e_EventState;
 
     VECTOR3  lightIntPos;
     SVECTOR3 unused;
@@ -269,12 +274,11 @@ void func_800D2408(void) // 0x800D2408
     #define playerChara &g_SysWork.player_4C.chara_0
     #define cybilChara  &g_SysWork.npcs_1A0[0]
 
-    #define soundPos QVECTOR3(182.0f, -1.2f, 58.9f)
-
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 41)
     {
-        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, EventState_Skip);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -525,7 +529,7 @@ void func_800D2408(void) // 0x800D2408
             }
             break;
 
-        case CUTSCENE_SKIP_STATE:
+        case EventState_Skip:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
@@ -580,14 +584,18 @@ void func_800D2408(void) // 0x800D2408
 
 void func_800D2F74(void) // 0x800D2F74
 {
-    #define CUTSCENE_SKIP_STATE 10
+    typedef enum _EventState
+    {
+        EventState_Skip = 10
+    } e_EventState;
 
     #define playerChara &g_SysWork.player_4C.chara_0
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 10)
     {
-        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, EventState_Skip);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -655,7 +663,7 @@ void func_800D2F74(void) // 0x800D2F74
             Map_MessageWithAudio(0x5B, &g_MapMsgSoundIdx1, g_MapMsgSounds1);
             break;
 
-        case CUTSCENE_SKIP_STATE:
+        case EventState_Skip:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
 
             if (g_SysWork.sysStateStep_C[0] != 10)
@@ -692,6 +700,11 @@ void func_800D2F74(void) // 0x800D2F74
 
 void func_800D3420(void) // 0x800D3420
 {
+    typedef enum _EventState
+    {
+        EventState_Skip = 30
+    } e_EventState;
+
     typedef struct
     {
         SPRT*     sprt_0;
@@ -707,17 +720,16 @@ void func_800D3420(void) // 0x800D3420
     s32                             i;
     g_GteScratchData_func_800DD2D4* scratchData;
 
-    #define CUTSCENE_SKIP_STATE 30
-
-    #define PLAYER_PTR &g_SysWork.player_4C.chara_0
-    #define CYBIL_PTR  &g_SysWork.npcs_1A0[0]
+    #define playerChara &g_SysWork.player_4C.chara_0
+    #define cybilChara  &g_SysWork.npcs_1A0[0]
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
+    // Skip.
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 29)
     {
-        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, EventState_Skip);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -775,14 +787,16 @@ void func_800D3420(void) // 0x800D3420
             SysWork_StateStepIncrement(0);
 
         case 1:
-            func_80085EB8(0, PLAYER_PTR, 142, false);
+            func_80085EB8(0, playerChara, 142, false);
             D_800D5B06 = 1;
             SysWork_StateStepIncrement(0);
 
         case 2:
             D_800D5B00 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 12.0f, Q12_SHIFT);
+
             Map_MessageWithAudio(95, &D_800D5AF8, &D_800D5ACC);
             SysWork_StateStepIncrementAfterTime(&D_800D5AFC, Q12(5.0f), Q12(96.0f), Q12(115.0f), true, false);
+
             D_800D5B04 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.5f, Q12_SHIFT);
             if (D_800D5B04 > Q12(1.0f))
             {
@@ -793,6 +807,7 @@ void func_800D3420(void) // 0x800D3420
         case 3:
             SysWork_StateStepIncrementAfterTime(&D_800D5AFC, Q12(5.0f), Q12(96.0f), Q12(115.0f), true, true);
             D_800D5B00 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 12.0f, Q12_SHIFT);
+
             D_800D5B04 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.5f, Q12_SHIFT);
             if (D_800D5B04 > Q12(1.0f))
             {
@@ -807,11 +822,12 @@ void func_800D3420(void) // 0x800D3420
             SysWork_StateStepIncrement(0);
 
         case 6:
-            func_80085EB8(0, PLAYER_PTR, 51, false);
+            func_80085EB8(0, playerChara, 51, false);
             SysWork_StateStepIncrement(0);
 
         case 7:
             D_800D5AFC  = Q12(139.0f);
+
             D_800D5B00 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 12.0f, Q12_SHIFT);
             if (D_800D5B00 >= Q12(100.0f))
             {
@@ -825,11 +841,13 @@ void func_800D3420(void) // 0x800D3420
             {
                 D_800D5B04 = 0;
             }
+
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.5f), false);
             break;
 
         case 9:
             D_800D5B06 = 0;
+
             for (i = ARRAY_SIZE(sharedData_800DFB7C_0_s00) - 1; i >= 0; i--)
             {
                 sharedData_800DFB7C_0_s00[i].field_A = 0;
@@ -851,24 +869,24 @@ void func_800D3420(void) // 0x800D3420
 
         case 10:
             Chara_Spawn(Chara_Cybil, 0, Q12(183.0f), Q12(61.0f), FP_ANGLE(0.0f), 3);
-            Model_AnimFlagsClear(&(PLAYER_PTR)->model_0, 2);
+            Model_AnimFlagsClear(&(playerChara)->model_0, 2);
             SysWork_StateStepIncrement(0);
             break;
 
         case 11:
-            func_80085EB8(0, CYBIL_PTR, 18, false);
+            func_80085EB8(0, cybilChara, 18, false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
             break;
 
         case 12:
-            func_80085EB8(2, CYBIL_PTR, 0, false);
+            func_80085EB8(2, cybilChara, 0, false);
             SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 13:
-            func_80085EB8(3, CYBIL_PTR, 0, false);
+            func_80085EB8(3, cybilChara, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 14:
@@ -881,7 +899,7 @@ void func_800D3420(void) // 0x800D3420
             break;
 
         case 16:
-            func_80085EB8(0, CYBIL_PTR, 19, false);
+            func_80085EB8(0, cybilChara, 19, false);
             SysWork_StateStepIncrement(0);
 
         case 17:
@@ -894,7 +912,7 @@ void func_800D3420(void) // 0x800D3420
             break;
 
         case 19:
-            func_80085EB8(1, CYBIL_PTR, 0, false);
+            func_80085EB8(1, cybilChara, 0, false);
             break;
 
         case 20:
@@ -902,16 +920,18 @@ void func_800D3420(void) // 0x800D3420
             break;
 
         case 21:
-            func_80085EB8(0, CYBIL_PTR, 20, false);
+            func_80085EB8(0, cybilChara, 20, false);
             Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(175.9f), Q12(-1.0f), Q12(22.8f));
             Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(0.0f), FP_ANGLE(60.0f), FP_ANGLE(0.0f));
+
             g_SysWork.field_2378 = Q12(1.0f);
             D_800D5AFC           = Q12(217.0f);
+
             SysWork_StateStepIncrement(0);
             break;
 
         case 22:
-            func_80085EB8(2, CYBIL_PTR, 0, false);
+            func_80085EB8(2, cybilChara, 0, false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
@@ -921,7 +941,7 @@ void func_800D3420(void) // 0x800D3420
             break;
 
         case 24:
-            func_80085EB8(3, CYBIL_PTR, 0, false);
+            func_80085EB8(3, cybilChara, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 25:
@@ -960,12 +980,12 @@ void func_800D3420(void) // 0x800D3420
             }
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            D_800D5AFC = -1;
+            D_800D5AFC = NO_VALUE;
             Sd_EngineCmd(19);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_306);
 
-            Model_AnimFlagsSet(&(PLAYER_PTR)->model_0, 2);
+            Model_AnimFlagsSet(&(playerChara)->model_0, 2);
             g_SysWork.field_2378 = Q12(1.0f);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
@@ -979,14 +999,16 @@ void func_800D3420(void) // 0x800D3420
 
     if (D_800D5AFC >= 0)
     {
-        Dms_CharacterGetPosRot(PLAYER_PTR.position_18, PLAYER_PTR.rotation_24, "HERO", D_800D5AFC, FS_BUFFER_11);
+        Dms_CharacterGetPosRot(playerChara.position_18, playerChara.rotation_24, "HERO", D_800D5AFC, FS_BUFFER_11);
         if (g_SysWork.sysStateStep_C[0] >= 10)
         {
-            Dms_CharacterGetPosRot(CYBIL_PTR.position_18, CYBIL_PTR.rotation_24, "SIBYL", D_800D5AFC, FS_BUFFER_11);
+            Dms_CharacterGetPosRot(cybilChara.position_18, cybilChara.rotation_24, "SIBYL", D_800D5AFC, FS_BUFFER_11);
         }
+
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&g_CutsceneCameraPosition, &g_CutsceneCameraLookAt, NULL, D_800D5AFC, FS_BUFFER_11));
         vcUserCamTarget(&g_CutsceneCameraPosition, NULL, true);
         vcUserWatchTarget(&g_CutsceneCameraLookAt, NULL, true);
+
         if (g_SysWork.sysStateStep_C[0] >= 21)
         {
             Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &unused, "LIGHT", D_800D5AFC, FS_BUFFER_11);
@@ -1018,6 +1040,7 @@ void func_800D3420(void) // 0x800D3420
             scratchData->tpage_4++;
             scratchData->sprt_0 = (SPRT*)scratchData->tpage_4;
         }
+
         scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
         SetDrawStp(scratchData->stp_8, 1);
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
@@ -1031,15 +1054,19 @@ void func_800D3420(void) // 0x800D3420
 
 void func_800D4410(void) // 0x800D4410
 {
-    #define CUTSCENE_SKIP_STATE 14
+    typedef enum _EventState
+    {
+        EventState_Skip = 14
+    } e_EventState;
 
     #define playerChara &g_SysWork.player_4C.chara_0
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 13)
     {
         Sd_EngineCmd(19);
-        g_SysWork.sysStateStep_C[0] = CUTSCENE_SKIP_STATE;
+        g_SysWork.sysStateStep_C[0] = EventState_Skip;
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -1140,7 +1167,7 @@ void func_800D4410(void) // 0x800D4410
             SysWork_StateStepReset();
             break;
 
-        case CUTSCENE_SKIP_STATE:
+        case EventState_Skip:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 

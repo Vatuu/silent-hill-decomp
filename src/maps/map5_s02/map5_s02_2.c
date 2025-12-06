@@ -791,9 +791,9 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         // "L_INT", interior light or intersection point?
         Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800DA6EC, FS_BUFFER_17);
 
-        // Light angle?
+        // Set light rotation.
         g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz));
-        g_SysWork.cutsceneLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+        g_SysWork.cutsceneLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
         g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
     }
 }

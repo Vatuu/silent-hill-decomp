@@ -476,7 +476,7 @@ void func_800DAA28(void) // 0x800DAA28
         case 3:
             if (g_MapEventParam->field_5 == 19 || g_MapEventParam->field_5 == 20)
             {
-                if (g_MapEventParam->activationType_4_4 == TriggerActivation_Item)
+                if (g_MapEventParam->activationType_4_4 == TriggerActivationType_Item)
                 {
                     Savegame_EventFlagSet(EventFlag_M1S02_UsedRubberBall);
                     MapMsg_DisplayAndHandleSelection(false, 36, false, false, 0, false); // "Used rubber ball."
@@ -532,7 +532,7 @@ void func_800DABC4(void) // 0x800DABC4
             } 
             else if (g_MapEventParam->field_5 == 19 || g_MapEventParam->field_5 == 20)
             {
-                if (g_MapEventParam->activationType_4_4 == TriggerActivation_Item || Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
+                if (g_MapEventParam->activationType_4_4 == TriggerActivationType_Item || Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
                 {
                     func_800862F8(false, FILE_TIM_BALLHOLE_TIM, false);
                 }
@@ -573,7 +573,7 @@ void func_800DABC4(void) // 0x800DABC4
             func_800862F8(2, 0, false);
             if (g_MapEventParam->field_5 == 19 || g_MapEventParam->field_5 == 20)
             {
-                if (g_MapEventParam->activationType_4_4 == TriggerActivation_Item)
+                if (g_MapEventParam->activationType_4_4 == TriggerActivationType_Item)
                 {
                     Savegame_EventFlagSet(EventFlag_M1S02_UsedRubberBall);
                     MapMsg_DisplayAndHandleSelection(false, 36, false, false, 0, false);

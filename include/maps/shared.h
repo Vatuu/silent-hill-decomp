@@ -1988,8 +1988,8 @@ typedef struct
 extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
 
 // TODO: Ideally this should use some kind of `MAP_FIELD_4C_COUNT` define from each map .h file.
-// Right now `shared.h` gets included before map headers though, since this file has decls that map headers may need.
-// Not sure of a good fix yet, might just have to move the decls for these into each map header, or move map config into a file included before shared.h?
+// Right now, `shared.h` gets included before map headers, since this file has decls that map headers may need.
+// Not sure of a good fix yet. Might just have to move the decls for these into each map header, or move map config into a file included before shared.h?
 #if defined(MAP0_S00)
     extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[200];
 #elif defined(MAP0_S01)
@@ -2314,7 +2314,7 @@ extern u16 sharedData_800D1D1C_3_s02[60];
 
 extern VECTOR3 sharedData_800DFB10_0_s01[];
 
-bool sharedFunc_800CD1F8_0_s01(POLY_FT4** arg0, s32 arg1);
+bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx);
 
 void sharedFunc_800CFE78_3_s02(s32 arg0);
 

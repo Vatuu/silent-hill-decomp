@@ -1376,7 +1376,9 @@ void func_800DD2D4(void) // 0x800DD2D4
             func_8005DC1C(Sfx_Unk1667, &QVECTOR3(21.1f, -1.5f, -60.75f), Q8_CLAMPED(0.5f), 0);
             Fs_QueueStartRead(FILE_ANIM_KITCHEN1_DMS, FS_BUFFER_11);
             Savegame_EventFlagSet(EventFlag_557);
+
             D_800EB6B4 = NO_VALUE;
+
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1398,7 +1400,9 @@ void func_800DD2D4(void) // 0x800DD2D4
             func_800348C0();
             Chara_Load(0, Chara_Bloodsucker, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 144, false);
+
             D_800EB6B4 = 0;
+
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -1495,7 +1499,7 @@ void func_800DD2D4(void) // 0x800DD2D4
         g_SysWork.npcs_1A0[0].properties_E4.player.afkTimer_E8 = g_SysWork.player_4C.chara_0.model_0.anim_4.time_4 - Q12(Player_AnimGetSomething());
     }
 
-    if (D_800EB6B4 >= 0)
+    if (D_800EB6B4 >= Q12(0.0f))
     {
         Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, D_800CD42C, D_800EB6B4, FS_BUFFER_11);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800EB694, &D_800EB6A4, NULL, D_800EB6B4, FS_BUFFER_11));

@@ -1074,6 +1074,7 @@ void func_800D8FC0(void) // 0x800D8FC0
 
     scratchData = PSX_SCRATCH_ADDR(0);
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         (g_SysWork.sysStateStep_C[0] > 0) && (g_SysWork.sysStateStep_C[0] < 5))
     {
@@ -1122,6 +1123,7 @@ void func_800D8FC0(void) // 0x800D8FC0
                 scratchData->tpage_4++;
                 scratchData->sprt_0 = (SPRT*)scratchData->tpage_4;
             }
+
             scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
             SetDrawStp(scratchData->stp_8, 1);
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
@@ -1136,13 +1138,19 @@ void func_800D8FC0(void) // 0x800D8FC0
 
         case 3:
             Fs_QueueStartSeek(FILE_1ST_NO_BLOCK_TIM);
+
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(162.77f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(55.43f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(180.0f);
+
             Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
             func_8008D438();
+
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(163.78f), Q12(-2.31f), Q12(58.91f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(162.5f), Q12(-1.15f), Q12(50.5f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
             SysWork_StateStepIncrement(0);
             break;
 
@@ -1152,6 +1160,7 @@ void func_800D8FC0(void) // 0x800D8FC0
                 SysWork_StateStepIncrement(0);
             }
 
+            // Warp camera.
             Camera_PositionSet(NULL,
                                func_800868F4(Q12(-1.28f), Q12(6.5f), 0) + Q12(163.78f),
                                func_800868F4(Q12(1.16f), Q12(6.5f), 1) - Q12(2.31f),
@@ -1171,6 +1180,8 @@ void func_800D8FC0(void) // 0x800D8FC0
         default:
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_330);
+
+            // Warp player.
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(162.77f);
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(55.43f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(180.0f);
@@ -1189,6 +1200,7 @@ void func_800D960C(void) // 0x800D960C
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
+            // Warp camera.
             Camera_PositionSet(NULL, Q12(159.59f), Q12(-1.25f), Q12(59.49f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(161.69f), Q12(-1.53f), Q12(56.1f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 

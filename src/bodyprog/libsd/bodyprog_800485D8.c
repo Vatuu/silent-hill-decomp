@@ -59,7 +59,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
         D_800C1688.field_4 = VSync(SyncMode_Count) - D_800C1688.field_8;
     }
 
-	// Fade out background music.
+    // Fade out background music.
     if (D_800C1658.bgmFadeSpeed_14 != 0)
     {
         D_800C1658.field_E = NO_VALUE;
@@ -120,7 +120,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
         }
     }
 
-	// Slowly fade in/out game audio based if `D_800C1658.muteGame_17` enabled.
+    // Slowly fade in/out game audio based if `D_800C1658.muteGame_17` enabled.
     if (D_800C1658.muteGame_17 == true)
     {
         if (g_Sd_ChannelsVolume.volumeGlobal_A > 0)
@@ -148,7 +148,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
         }
     }
 
-	// Reset audio streaming system if failed.
+    // Reset audio streaming system if failed.
     if (D_800C1658.cdErrorCount_0 > CD_ERROR_LIMIT)
     {
         CdReset(0);

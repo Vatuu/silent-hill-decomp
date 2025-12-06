@@ -234,6 +234,7 @@ void func_800D4D1C(void) // 0x800D4D1C
                 scratchData->tpage_4++;
                 scratchData->sprt_0 = (SPRT*)scratchData->tpage_4;
             }
+
             scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
             SetDrawStp(scratchData->stp_8, 1);
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
@@ -254,6 +255,7 @@ void func_800D4D1C(void) // 0x800D4D1C
 
         case 1:
             SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
+
             g_SysWork.field_2378 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.2f, Q12_SHIFT);
             if (g_SysWork.field_2378 > Q12(3.0f))
             {

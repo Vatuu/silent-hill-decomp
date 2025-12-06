@@ -3,12 +3,12 @@
 #include "main/fsmem.h"
 #include "bodyprog/bodyprog.h"
 
-#include <psyq/sys/file.h>
 #include <psyq/libapi.h>
 #include <psyq/libcd.h>
 #include <psyq/libgte.h>
 #include <psyq/libgpu.h>
 #include <psyq/string.h>
+#include <psyq/sys/file.h>
 
 bool Fs_QueueAllocEntryData(s_FsQueueEntry* entry)
 {

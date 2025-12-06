@@ -3189,12 +3189,12 @@ void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx
         *availableAmmo -= missingAmmo;
         return;
     }
-	else
-	{
-		*currentAmmo  += *availableAmmo;
-		*availableAmmo = 0;
-		return;
-	}
+    else
+    {
+        *currentAmmo  += *availableAmmo;
+        *availableAmmo = 0;
+        return;
+    }
 }
 
 // Likely the first pad is supposed to be generated in the file linking while the second being inserted at `bodyprog_80055028.c` directly.

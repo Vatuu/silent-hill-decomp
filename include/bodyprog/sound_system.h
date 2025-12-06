@@ -53,14 +53,14 @@ typedef struct
     u16 field_E;           // Related to the handling of music layers.
     u16 field_10;
     u8  isStereoEnabled_12; // `bool`
-    s8  isXaStopping_13;    /** `bool` | It stop any play from a XA file in memory from playing, when doing it this is
-                             * set to `true`, otherwise it keep in `false`. */
-    u8  bgmFadeSpeed_14;    /** Value to get rested in order to speed the music fade. Range: [0, 2], default: 0. */
+    s8  isXaStopping_13;    /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`.
+                             */
+    u8  bgmFadeSpeed_14;    /** Music fade speed. Range: `[0, 2]`, default: 0. */
     u8  isVabLoading_15;    /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
     u8  isXaLoading_16;     /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
     u8  muteGame_17;        /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively get lower
-	                         * in volume until mute. The sounds will keep playing, but muted.
-						     */
+                             * in volume until mute (the sounds will keep playing, but muted).
+                             */
 } s_800C1658;
 
 typedef struct
@@ -87,13 +87,13 @@ typedef struct
                       */
     s16 volumeBgm_8;
     s16 volumeGlobal_A;
-	
-	/** As main difference with previous volume controlers, this seems to influence the behavior of the game.
-	 * When reducing `globalVolumeXa_E`, the current voice line continues playing at the same
-	 * volume while the next plays at the volume set here. Other volume controllers don't do this and instantly adjust audio volume.
-	 *
-	 * These are also the values modified in the configuration menu.
-	 */
+    
+    /** As main difference with previous volume controlers, this seems to influence the behavior of the game.
+     * When reducing `globalVolumeXa_E`, the current voice line continues playing at the same
+     * volume while the next plays at the volume set here. Other volume controllers don't do this and instantly adjust audio volume.
+     *
+     * These are also the values modified in the configuration menu.
+     */
     u8  globalVolumeSe_C;  // Global SE volume channel.
     u8  globalVolumeBgm_D; // Global BGM volume channel.
     u8  globalVolumeXa_E;  // Global Voice volume channel (not configurable).
@@ -223,14 +223,14 @@ extern u8 g_Sd_CurrentCmd;
  */
 void Sd_EngineCmd(u32 cmd);
 
-/** @brief Checks if an audio file is loading, is going to be loaded or a XA file is playing.
- * Depending of the audio file it marks different numbers.
+/** @brief Checks if an audio file is loading, is going to be loaded, or an XA file is playing.
+ * Depending of the audio file, it marks different numbers.
  *
- * 0 = Nothing is currently loading.
+ * 0 = Nothing currently loading.
  * 1 = XA file playing.
  * 2 = VAB file loading.
  * 3 = XA file loading.
- * 4 & 5 = Unknown. Requires further investigation about `D_800C37DC` functionallity.
+ * 4 and 5 = TODO: Unknown. Requires further investigation about `D_800C37DC` functionallity.
  */
 u8 Sd_AudioStreamingCheck(void);
 

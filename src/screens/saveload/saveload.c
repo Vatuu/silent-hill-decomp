@@ -687,25 +687,25 @@ void Gfx_WriteOptionSaveDraw(s32 arg0, s32 optionIdx) // 0x801E3C44
 
 void Gfx_SavedFlashDraw(void) // 0x801E3E78
 {
-    GsOT*    ot;
     s32      slotIdx;
-    s32      sin;
+    q19_12   sinFlashTimer;
     s8       color;
     u32      rowIdx;
+    GsOT*    ot;
     POLY_F4* poly;
 
     ot      = &g_OrderingTable2[g_ActiveBufferIdx];
-    slotIdx = g_LastSaveIdx[0] == NO_VALUE ? 1 : 0;
+    slotIdx = (g_LastSaveIdx[0] == NO_VALUE) ? 1 : 0;
     rowIdx  = g_LastSaveIdx[slotIdx] - g_HiddenElementsByDisplacement[slotIdx];
 
     if (rowIdx < 5)
     {
-        sin  = Math_Sin((g_Gfx_SaveFlashTimer << 10) / SAVE_FLASH_TIMER_MAX);
+        sinFlashTimer  = Math_Sin((g_Gfx_SaveFlashTimer << 10) / SAVE_FLASH_TIMER_MAX);
         poly = (POLY_F4*)GsOUT_PACKET_P;
         setPolyF4(poly);
         setSemiTrans(poly, true);
 
-        color = ~FP_FROM(sin * 255, Q12_SHIFT);
+        color = ~FP_FROM(sinFlashTimer * 255, Q12_SHIFT);
         setRGB0(poly, color, color, color);
 
         setXY4(poly,

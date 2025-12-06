@@ -549,9 +549,9 @@ void func_800E219C(void) // 0x800E219C
         // "L_INT", interior light or intersection point?
         Dms_CharacterGetPosRot(&lightIntPos, &unused, D_800CC4D4, D_800ED5B0, FS_BUFFER_14);
 
-        // Light angle?
+        // Set light rotation.
         g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz));
-        g_SysWork.cutsceneLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+        g_SysWork.cutsceneLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
         g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
     }
 }
@@ -827,9 +827,9 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
         // "L_INT", interior light or intersection point?
         Dms_CharacterGetPosRot(&lightIntPos, &unused, D_800CC4D4, D_800ED5B0, FS_BUFFER_14);
 
-        // Light angle?
+        // Set light rotation.
         g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz));
-        g_SysWork.cutsceneLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+        g_SysWork.cutsceneLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
         g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
     }
 }
@@ -1197,7 +1197,9 @@ void func_800E3EF4(void) // 0x800E3EF4
         case 2:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 1, false);
+
             g_SysWork.field_2378 = Q12(1.0f);
+
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -1223,7 +1225,9 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 8:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 149, false);
+
             D_800EBAA8 = 1;
+
             func_800892A4(8);
             SysWork_StateStepIncrement(0);
 
@@ -1258,7 +1262,9 @@ void func_800E3EF4(void) // 0x800E3EF4
         case 15:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 150, false);
             func_800DFC94(&D_800ED5B0);
+
             g_SysWork.field_2378 = Q12(0.8f);
+
             SysWork_StateStepIncrement(0);
 
         case 16:
@@ -1278,9 +1284,11 @@ void func_800E3EF4(void) // 0x800E3EF4
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 152, false);
             func_800DFD08();
             func_800DEC3C(&g_WorldObject_SFlauros.position_1C, &g_WorldObject_SFlauros.rotation_28);
+
             D_800EBB61 = 3;
             Savegame_EventFlagSet(EventFlag_464);
             g_SysWork.field_2378 = Q12(0.7f);
+
             SysWork_StateStepIncrement(0);
 
         case 20:
@@ -1294,8 +1302,10 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 22:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 188, false);
+
             g_SysWork.field_2378 = Q12(0.6f);
             D_800EBB61           = 1;
+
             func_8005DC1C(Sfx_Unk1635, NULL, Q8_CLAMPED(1.0f), 3);
             SysWork_StateStepIncrement(0);
 
@@ -1310,12 +1320,16 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 25:
             Chara_ProcessLoads();
+
             g_SysWork.field_2378 = Q12(1.0f);
+
             func_8005DC1C(Sfx_Unk1636, NULL, Q8_CLAMPED(1.0f), 3);
             func_800DED30();
             func_800DEF50(&g_SysWork.npcs_1A0[1].position_18, &g_SysWork.npcCoords_FC0[30], &D_800ED5B0);
             Chara_Spawn(Chara_Flauros, 0, g_SysWork.player_4C.chara_0.position_18.vx + Q12(1.0f), g_SysWork.player_4C.chara_0.position_18.vz, Q8_CLAMPED(0.5f), 3);
+
             D_800EBB61 = 2;
+
             SysWork_StateStepIncrement(0);
 
         case 26:
@@ -1333,7 +1347,9 @@ void func_800E3EF4(void) // 0x800E3EF4
         case 29:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
             func_80088F94(&g_SysWork.npcs_1A0[1], 0, 0);
+
             D_800EBB61 = 1;
+
             SysWork_StateStepIncrement(0);
 
         case 30:
@@ -1353,9 +1369,11 @@ void func_800E3EF4(void) // 0x800E3EF4
         case 33:
             Map_MessageWithAudio(51, &D_800ED5AC, &D_800EBA64);
             func_800DF134();
+
             D_800EBB70.vx = g_SysWork.npcs_1A0[0].position_18.vx;
             D_800EBB70.vy = g_SysWork.npcs_1A0[0].position_18.vy - Q12(1.0f);
             D_800EBB70.vz = g_SysWork.npcs_1A0[0].position_18.vz;
+
             func_800DF5B0(&g_WorldObject_SFlauros.position_1C, &D_800EBB70);
             SysWork_StateStepIncrement(0);
 
@@ -1398,6 +1416,7 @@ void func_800E3EF4(void) // 0x800E3EF4
         case 42:
             Map_MessageWithAudio(52, &D_800ED5AC, &D_800EBA64);
             SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(455.0f), Q12(455.0f), true, false);
+
             if (g_SysWork.sysStateStep_C[0] != 42)
             {
                 Sd_EngineCmd(19);
@@ -1408,6 +1427,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             if (!Sd_AudioStreamingCheck())
             {
                 D_800ED5B0 = NO_VALUE;
+
                 Chara_FsImageCalc(&sp30, Chara_Dahlia, 2);
                 Chara_Load(1, Chara_Dahlia, &g_SysWork.npcCoords_FC0[30], 2, NULL, &sp30);
                 Fs_QueueStartRead(FILE_ANIM_AMUSE2B_DMS, FS_BUFFER_14);
@@ -1431,7 +1451,9 @@ void func_800E3EF4(void) // 0x800E3EF4
             Chara_Spawn(Chara_Dahlia, 0, Q12(-40.0f), Q12(-40.0f), FP_ANGLE(0.0f), 3);
             Savegame_EventFlagClear(EventFlag_452);
             Savegame_EventFlagSet(EventFlag_465);
+
             g_SysWork.field_2378 = Q12(0.6f);
+
             SysWork_StateStepIncrement(0);
             break;
 
@@ -1458,7 +1480,9 @@ void func_800E3EF4(void) // 0x800E3EF4
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 9, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[1], 12, false);
+
             D_800ED5B0 = Q12(31.0f);
+
             SysWork_StateStepIncrement(0);
 
         case 51:
@@ -1532,6 +1556,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             {
                 func_80088F94(&g_SysWork.npcs_1A0[1], 0, 0);
             }
+
             SysWork_StateStepIncrement(0);
 
         default:
@@ -1580,6 +1605,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             scratchData->tpage_4++;
             scratchData->sprt_0 = (SPRT*)scratchData->tpage_4;
         }
+
         scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
         SetDrawStp(scratchData->stp_8, 1);
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
@@ -1599,8 +1625,9 @@ void func_800E3EF4(void) // 0x800E3EF4
         Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &unused, &D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
         Dms_CharacterGetPosRot(&lightIntPos, &unused, &D_800CC4D4, D_800ED5B0, FS_BUFFER_14);
 
+        // Set light rotation.
         g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz));
-        g_SysWork.cutsceneLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+        g_SysWork.cutsceneLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
         g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
 
         Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "ARSIA", D_800ED5B0, FS_BUFFER_14);
@@ -1670,19 +1697,25 @@ void func_800E558C(void) // 0x800E558C
         case 0:
             Player_ControlFreeze();
             Savegame_EventFlagSet(EventFlag_453);
+
             Fs_QueueStartRead(FILE_ANIM_HBM6_S4C_ANM, FS_BUFFER_4);
             Fs_QueueStartRead(FILE_ANIM_LOOKAR_DMS, FS_BUFFER_14);
             Fs_QueueWaitForEmpty();
+
             DmsHeader_FixOffsets(FS_BUFFER_14);
             ScreenFade_ResetTimestep();
+
             g_SysWork.field_30    = 20;
             D_800ED5B0            = NO_VALUE;
             g_SysWork.flags_22A4 |= SysFlag2_3;
+
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             func_800348C0();
             Chara_Load(0, Chara_Alessa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+
             D_800ED5AD = 2;
+
             SysWork_StateStepIncrement(0);
             break;
 
@@ -1700,7 +1733,9 @@ void func_800E558C(void) // 0x800E558C
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Alessa, 0, g_SysWork.player_4C.chara_0.position_18.vx + Q12(1.0f), g_SysWork.player_4C.chara_0.position_18.vz, FP_ANGLE(11.3f), 3);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 70, false);
+
             g_SysWork.field_2378 = Q12(2.5f);
+
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -1721,6 +1756,7 @@ void func_800E558C(void) // 0x800E558C
                 Chara_ProcessLoads();
                 Chara_Spawn(Chara_Alessa, 0, g_SysWork.player_4C.chara_0.position_18.vx + Q12(1.0f), g_SysWork.player_4C.chara_0.position_18.vz, FP_ANGLE(11.3f), 3);
             }
+
             SysWork_StateStepIncrement(0);
 
         default:
@@ -1729,6 +1765,7 @@ void func_800E558C(void) // 0x800E558C
             Savegame_EventFlagSet(EventFlag_468);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
+
             D_800ED5F0 = 0;
             break;
     }
@@ -1754,6 +1791,7 @@ void func_800E558C(void) // 0x800E558C
             scratchData->tpage_4++;
             scratchData->sprt_0 = (SPRT*)scratchData->tpage_4;
         }
+
         scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
         SetDrawStp(scratchData->stp_8, 1);
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
@@ -1769,6 +1807,7 @@ void func_800E558C(void) // 0x800E558C
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800ED590, &D_800ED5A0, NULL, D_800ED5B0, FS_BUFFER_14));
         vcUserCamTarget(&D_800ED590, NULL, true);
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
+
         if (g_SysWork.sysStateStep_C[0] >= 4)
         {
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "ARSIA", D_800ED5B0, FS_BUFFER_14);

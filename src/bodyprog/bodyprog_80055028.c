@@ -2067,12 +2067,12 @@ void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 
 u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData) // 0x8005AA08
 {
-	// Same as `gte_strgb3`, but takes `VECTOR3` pointer to store results.
-	// Not sure why this was needed, the func that uses it also ends up calling the normal `gte_strgb3` too.
+    // Same as `gte_strgb3`, but takes `VECTOR3` pointer to store results.
+    // Not sure why this was needed, the func that uses it also ends up calling the normal `gte_strgb3` too.
     #define gte_strgb3_vec( r0 ) __asm__ volatile ( \
-        "swc2	$20, 0( %0 );"                      \
-        "swc2	$21, 4( %0 );"                      \
-        "swc2	$22, 8( %0 )"                       \
+        "swc2    $20, 0( %0 );"                      \
+        "swc2    $21, 4( %0 );"                      \
+        "swc2    $22, 8( %0 )"                       \
         :                                           \
         : "r"( r0 )                                 \
         : "memory" )
@@ -5233,7 +5233,7 @@ bool func_80063A50(POLY_FT4** poly, s32 arg1) // 0x80063A50
             ptr->field_1E4         = 0x51;
             ptr->field_1E8         = 0xC0;
             Math_SetSVectorFast(&ptr->field_164, 0xFFFE, 0xFFDD, 0xDD);
-			
+
             Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
             break;
 

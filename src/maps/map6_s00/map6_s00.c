@@ -516,8 +516,13 @@ void MapEvent_CommonItemTake(void) // 0x800EB090
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-void func_800EB11C(void)
+void func_800EB11C(void) // 0x800EB11C
 {
+    typedef enum _EventState
+    {
+        EventState_Skip = 19
+    } e_EventState;
+
     typedef struct
     {
         SPRT*     sprt_0;
@@ -532,12 +537,11 @@ void func_800EB11C(void)
     s32 i;
     s32 vol;
 
-#define CUTSCENE_SKIP_STATE 19
-
+    // Skip.
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
-        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < CUTSCENE_SKIP_STATE)
+        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
     {
-        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, EventState_Skip);
     }
 
     if (g_SysWork.sysStateStep_C[0] >= 5 && g_SysWork.sysStateStep_C[0] < 13)
@@ -562,6 +566,7 @@ void func_800EB11C(void)
             scratchData->tpage_4++;
             scratchData->sprt_0 = (SPRT*)scratchData->tpage_4;
         }
+
         scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
         SetDrawStp(scratchData->stp_8, 1);
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
@@ -685,6 +690,7 @@ void func_800EB11C(void)
         case 18:
             MapMsg_DisplayAndHandleSelection(false, 19, 0, 0, 0, false);
             SysWork_StateStepIncrementAfterTime(&D_800F0040, Q12(2.5f), Q12(68.0f), Q12(143.0f), true, false);
+
             D_800F0044 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.4f, Q12_SHIFT);
             if (D_800F0044 > Q12(16.0f))
             {
@@ -692,7 +698,7 @@ void func_800EB11C(void)
             }
             break;
 
-        case CUTSCENE_SKIP_STATE:
+        case EventState_Skip:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
             
@@ -701,9 +707,12 @@ void func_800EB11C(void)
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+
             D_800F0040 = NO_VALUE;
+
             Savegame_EventFlagSet(EventFlag_402);
             Savegame_EventFlagClear(EventFlag_414);
+
             Sd_EngineCmd(19);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();

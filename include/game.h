@@ -72,7 +72,7 @@ struct _Model;
  * @return Packed weapon attack containing a weapon ID and attack input type.
  */
 #define WEAPON_ATTACK(weaponId, attackInputType) \
-	((weaponId) + ((attackInputType) * 10))
+    ((weaponId) + ((attackInputType) * 10))
 
 /** @brief Retrieves the weapon ID from a packed weapon attack.
  *
@@ -691,7 +691,7 @@ typedef enum _InventoryItemId
     InventoryItemId_HuntingRifle          = 161,
     InventoryItemId_Shotgun               = 162,
     InventoryItemId_HyperBlaster          = 163,
-	
+
     InventoryItemId_CutscenePhone         = 164,
     InventoryItemId_CutsceneFlauros       = 165,
     InventoryItemId_CutsceneAglaophotis   = 166,
@@ -723,9 +723,9 @@ typedef enum _CommonPickupItemId
 /** @brief Attack input types. Packed into a weapon attack using `WEAPON_ATTACK`. */
 typedef enum _AttackInputType
 {
-	AttackInputType_Tap      = 0,
-	AttackInputType_Hold     = 1,
-	AttackInputType_Multitap = 2
+    AttackInputType_Tap      = 0,
+    AttackInputType_Hold     = 1,
+    AttackInputType_Multitap = 2
 } e_AttackInputType;
 
 /** @brief Equipped weapon IDs. Derivative of `e_InventoryItemId`.
@@ -923,13 +923,13 @@ typedef enum _TriggerType
     TriggerType_TouchObb       = 4
 } e_TriggerType;
 
-typedef enum _TriggerActivation
+typedef enum _TriggerActivationType
 {
-    TriggerActivation_None      = 0, /** No activation conditions, other than event flag/trigger checks. */
-    TriggerActivation_Exclusive = 1, /** Prevents other events from being triggered while this event is active. */
-    TriggerActivation_Button    = 2, /** Requires button press to activate. */
-    TriggerActivation_Item      = 3, /** Requires inventory item usage to activate. */
-} e_TriggerActivation;
+    TriggerActivationType_None      = 0, /** No activation conditions other than event flag/trigger checks. */
+    TriggerActivationType_Exclusive = 1, /** Prevents other events from being triggered while this event is active. */
+    TriggerActivationType_Button    = 2, /** Requires a button press to activate. */
+    TriggerActivationType_Item      = 3, /** Requires an inventory item to activate. */
+} e_TriggerActivationType;
 
 typedef union
 {
@@ -1018,8 +1018,8 @@ typedef struct _Savegame
     s8              mapRoomIdx_A5;            /** Index to local map geometry `.IPD` files. */
     s16             savegameCount_A6;
     s8              locationId_A8;            /** `e_SaveLocationId` */
-    u8              current2dMapIdx_A9;       /** `e_Current2dMapIdx` Index to the 2D map shown when opening the map screen. */
-    u8              equippedWeapon_AA;        /** `e_InventoryItemId` Affects only the visible player weapon model. */
+    u8              current2dMapIdx_A9;       /** `e_Current2dMapIdx` | Index to the 2D map shown when opening the map screen. */
+    u8              equippedWeapon_AA;        /** `e_InventoryItemId` | Affects the visible player weapon model. */
     u8              inventorySlotCount_AB;    /** Item slots. */
     u32             itemToggleFlags_AC;       /** `e_ItemToggleFlags` */
     s32             field_B0[45];             // Flags related to map points?
@@ -1083,7 +1083,7 @@ typedef struct _EventParam
     s16 requiredEventFlag_0;
     s16 disabledEventFlag_2;
     s8  triggerType_4_0        : 4; /** `e_TriggerType` */
-    u8  activationType_4_4     : 4; /** `e_TriggerActivation` */
+    u8  activationType_4_4     : 4; /** `e_TriggerActivationType` */
     u8  field_5;                    // Index into `D_800E839C`. Related pickup item SFX.
     u8  requiredItemId_6;           /** `e_InventoryItemId` that player must use from item screen. */
     u8  unk_7[1];
@@ -1499,7 +1499,7 @@ typedef struct _MainCharacterExtra
     s32               state_1C;             /** `e_PlayerState` */
     s32               upperBodyState_20;    /** `e_PlayerUpperBodyState` */
     s32               lowerBodyState_24;    /** `e_PlayerLowerBodyState` */
-    e_InventoryItemId lastUsedItem_28;      /** Holds last item ID used from inventory, when player is inside an item-trigger area. */
+    e_InventoryItemId lastUsedItem_28;      /** Holds the last item ID used from inventory when the player is inside an item trigger area. */
 } s_MainCharacterExtra;
 STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
 
@@ -1675,7 +1675,7 @@ typedef struct _SysWork
     u8              playerStopFlags_235A; /** `e_PlayerStopFlags` */
     s8              unk_235B[1];
     GsCOORDINATE2*  field_235C;
-    VECTOR3         cutsceneLightPos_2360; // } Often gets set from DMS cutscene data, unsure if this is cutscene only or also used for light in-game.
+    VECTOR3         cutsceneLightPos_2360; // } Often gets set from DMS cutscene data. Unsure if this is cutscene-only or also used for light in-game.
     GsCOORDINATE2*  field_236C;            // }
     SVECTOR         cutsceneLightRot_2370; // }
     s16             field_2378;

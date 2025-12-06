@@ -76,10 +76,13 @@ void func_800DA7FC(void) // 0x800DA7FC
     var1 = Q12(0.333f);
     if (!Savegame_EventFlagGet(EventFlag_146))
     {
-        if (!(Savegame_EventFlagGet(EventFlag_48) || Savegame_EventFlagGet(EventFlag_49)))  // If Air Screamer isn't dead or Cybil and Harry cutscene have finished.
+        // Air Screamer isn't dead or Cybil and Harry cutscene have finished.
+        if (!(Savegame_EventFlagGet(EventFlag_48) || Savegame_EventFlagGet(EventFlag_49)))
         {
             var1 = Q12(240.0f);
-            if (Savegame_EventFlagGet(EventFlag_39) && g_GameWork.soundCmd_5B2 == 9) // If the FMV have just play and unknown.
+
+            // FMV has just played and unknown.
+            if (Savegame_EventFlagGet(EventFlag_39) && g_GameWork.soundCmd_5B2 == 9)
             {
                 flags = (1 << 1);
             }
@@ -88,7 +91,8 @@ void func_800DA7FC(void) // 0x800DA7FC
                 flags = (1 << 0) | (1 << 9);
             }
         }
-        else if (Savegame_EventFlagGet(EventFlag_47)) // If Air Screamer cutscene finished.
+        // Air Screamer cutscene finished.
+        else if (Savegame_EventFlagGet(EventFlag_47))
         {
             if (!Savegame_EventFlagGet(EventFlag_48))
             {

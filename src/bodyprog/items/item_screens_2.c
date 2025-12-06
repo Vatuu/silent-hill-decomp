@@ -143,7 +143,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                     break;
             }
 
-            g_SysWork.player_4C.extra_128.lastUsedItem_28 = 0;
+            g_SysWork.player_4C.extra_128.lastUsedItem_28 = InventoryItemId_Unequipped;
             g_GameWork.background2dColor_R_58C     = 0;
             g_GameWork.background2dColor_G_58D     = 0;
             g_GameWork.background2dColor_B_58E     = 0;

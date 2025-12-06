@@ -393,9 +393,9 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     GameFs_PlayerMapAnimLoad(mapIdx);
 
     // If the player spawns in the map with a weapon equipped (either because it's a demo
-	// or because the player saved the game with a weapon equipped), this and the next function
-	// make it appear and allocate its data.
-	// @note This code has some special functionallity if player spawna without an equipped weapon.
+    // or because the player saved the game with a weapon equipped), this and the next function
+    // make it appear and allocate its data.
+    // @note This code has some special functionallity if player spawna without an equipped weapon.
     if (g_SysWork.processFlags_2298 & (SysWorkProcessFlag_NewGame | SysWorkProcessFlag_LoadSave
                                        | SysWorkProcessFlag_Continue | SysWorkProcessFlag_BootDemo))
     {
@@ -914,7 +914,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
 
     if (bgmLayerLimitCpy == NULL)
     {
-        bgmLayerLimitCpy = g_Sd_BgmLayersLimit;
+        bgmLayerLimitCpy = g_Sd_BgmLayerLimits;
     }
 
     if (g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
@@ -1773,10 +1773,10 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 {
     s_MapPoint2d* mapPoint;
     s_EventParam* mapEvent;
-    s32           pointPosX;
-    s32           pointPosZ;
-    s32           pointRadiusX;
-    s32           pointRadiusZ;
+    q19_12        pointPosX;
+    q19_12        pointPosZ;
+    q19_12        pointRadiusX;
+    q19_12        pointRadiusZ;
     s32           i;
 
     void Event_ItemTriggersReset() // 0x80037388
@@ -1790,10 +1790,10 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         }
     }
 
-    // `lastUsedItem_28` is set by `Inventory_ItemUse` when player uses an item that matches one of the item-trigger events.
+    // `lastUsedItem_28` is set by `Inventory_ItemUse` when player uses an item that matches one of the item trigger events.
     // If it's set, find its index in `g_ItemTriggerItemIds` and use that to get the corresponding `s_EventParam` from `g_ItemTriggerEvents`.
     // After processing, the field is cleared and item trigger IDs are reset.
-    // (Multi-item events likely repopulate the trigger IDs below, based on whichever events are still active?)
+    // (Multi-item events likely repopulate the trigger IDs below based on whichever events are still active?)
     if (g_SysWork.player_4C.extra_128.lastUsedItem_28)
     {
         for (i = 0; g_SysWork.player_4C.extra_128.lastUsedItem_28 != g_ItemTriggerItemIds[i]; i++);
@@ -1803,7 +1803,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         g_MapEventSysState     = g_MapEventParam->sysState_8_0;
         g_MapEventIdx          = g_MapEventParam->pointOfInterestIdx_8_5;
 
-        g_SysWork.player_4C.extra_128.lastUsedItem_28 = 0;
+        g_SysWork.player_4C.extra_128.lastUsedItem_28 = InventoryItemId_Unequipped;
         Event_ItemTriggersReset();
         return;
     }
@@ -1829,7 +1829,6 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
         // `requiredEventFlag`: if set, EventFlag that must be set for event to trigger?
         // `disabledEventFlag`: if set, EventFlag that must not be set for event to trigger?
-        //
         // TODO: Can this s32 temp be removed? Trying to set `disabledEventFlag` directly results in `lhu` instead?
         requiredEventFlag      = mapEvent->requiredEventFlag_0;
         disabledEventFlag_temp = mapEvent->disabledEventFlag_2;
@@ -1841,14 +1840,14 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         }
 
         if (disabledEventFlag != 0 && Savegame_EventFlagGet(disabledEventFlag) &&
-            (disabledEventFlag < 867 || mapEvent->activationType_4_4 == TriggerActivation_Exclusive || mapEvent->sysState_8_0 == SysState_EventSetFlag))
+            (disabledEventFlag < 867 || mapEvent->activationType_4_4 == TriggerActivationType_Exclusive || mapEvent->sysState_8_0 == SysState_EventSetFlag))
         {
             continue;
         }
 
         // `TriggerType_Unk0` skips any trigger/activation check and always executes.
         // Maybe used for map-load events, and events that should run every frame?
-        // (flags are still checked for it though)
+        // (Flags are still checked for it though.)
         if (mapEvent->triggerType_4_0 == TriggerType_Unk0)
         {
             g_MapEventParam    = mapEvent;
@@ -1857,14 +1856,14 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             return;
         }
 
-        // `TriggerActivation_Button`: Only continue processing event when action button is pressed & `func_8007F2AC` returns false (maybe some IsBusy function?)
-        if (mapEvent->activationType_4_4 == TriggerActivation_Button &&
+        // `TriggerActivationType_Button`: Only continue processing event when action button is pressed and `func_8007F2AC` returns false (maybe some IsBusy function?)
+        if (mapEvent->activationType_4_4 == TriggerActivationType_Button &&
             !((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.action_6) && !disableButtonEvents && !func_8007F2AC()))
         {
             continue;
         }
 
-        // TODO: This uses `field_5` as the map point index, but we also have a separate `pointOfInterestIdx_8_5` field...
+        // TODO: This uses `field_5` as the map point index, but there is also a separate `pointOfInterestIdx_8_5` field.
         mapPoint = &g_MapOverlayHeader.mapPointsOfInterest_1C[mapEvent->field_5];
 
         switch (mapEvent->triggerType_4_0)
@@ -1872,8 +1871,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             case TriggerType_TouchAabb:
                 pointPosX    = mapPoint->positionX_0;
                 pointPosZ    = mapPoint->positionZ_8;
-                pointRadiusX = mapPoint->data.touchAabb.radiusX_4_16 * 1024;
-                pointRadiusZ = mapPoint->data.touchAabb.radiusZ_4_24 * 1024;
+                pointRadiusX = mapPoint->data.touchAabb.radiusX_4_16 * Q12(0.25f);
+                pointRadiusZ = mapPoint->data.touchAabb.radiusZ_4_24 * Q12(0.25f);
 
                 if (ABS(g_SysWork.player_4C.chara_0.position_18.vx - pointPosX) > pointRadiusX)
                 {
@@ -1908,21 +1907,21 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
                 break;
         }
 
-        // Trigger checks have passed, check activation type.
+        // Trigger checks have passed. Check activation type.
 
-        // `TriggerActivation_Exclusive`: Skips processing any other events if this event is active.
-        if (mapEvent->activationType_4_4 == TriggerActivation_Exclusive && mapEvent == g_MapEventParam)
+        // `TriggerActivationType_Exclusive`: Skip processing any other events if this event is active.
+        if (mapEvent->activationType_4_4 == TriggerActivationType_Exclusive && mapEvent == g_MapEventParam)
         {
             g_MapEventSysState = SysState_Invalid;
             return;
         }
 
-        // `TriggerActivation_Item`: When trigger check has passed (player is in the trigger area)
+        // `TriggerActivationType_Item`: When trigger check has passed (player is in the trigger area).
         // Required item ID for event is stored into `g_ItemTriggerItemIds` and event pointer at `g_ItemTriggerEvents`
-        // Once player uses an item in the inventory screen, it compares the ID against the ones stored at `g_ItemTriggerItemIds`
+        // Once player uses an item in the inventory screen, it compares the ID against the ones stored at `g_ItemTriggerItemIds`.
         // If used item ID matches one that event has requested, `extra_128.lastUsedItem_28` gets set to the item ID.
-        // At the start of this function, if `extra_128.lastUsedItem_28` is set then it'll locate the `s_EventParam` for it from `g_ItemTriggerEvents` and run the event.
-        if (mapEvent->activationType_4_4 == TriggerActivation_Item)
+        // At the start of this function, if `extra_128.lastUsedItem_28` is set, it will locate the `s_EventParam` for it from `g_ItemTriggerEvents` and run the event.
+        if (mapEvent->activationType_4_4 == TriggerActivationType_Item)
         {
             for (i = 0; g_ItemTriggerItemIds[i] != NO_VALUE; i++);
 
@@ -1931,8 +1930,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             continue;
         }
 
-        // `TriggerActivation_Button`: Only allow button activated events when area is lit up?
-        if (mapEvent->activationType_4_4 == TriggerActivation_Button)
+        // `TriggerActivationType_Button`: Only allow button activated events when area is lit up?
+        if (mapEvent->activationType_4_4 == TriggerActivationType_Button)
         {
             if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2) && !g_SysWork.field_2388.isFlashlightOn_15 &&
                 ((g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & 1) || (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & 1)))
@@ -1945,17 +1944,17 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             }
         }
 
-        // Trigger & activation checks passed, run the event.
+        // Trigger and activation checks passed. Run event.
 
-        // If this is EventSetFlag we'll handle setting the flag here and skip running it.
-        // (Pretty much same as `SysState_EventSetFlag_Update`)
+        // If this is `EventSetFlag`, handle setting the flag here and skip running it.
+        // (Same as `SysState_EventSetFlag_Update`.)
         if (mapEvent->sysState_8_0 == SysState_EventSetFlag)
         {
             Savegame_EventFlagSetAlt(mapEvent->disabledEventFlag_2);
             break;
         }
 
-        // Set `g_MapEventSysState` to the SysState needed for the event, to be ran on next tick (SysState_ReadMessage/SaveMenu/EventCallFunc/etc)
+        // Set `g_MapEventSysState` to the SysState needed for the event to be ran on next tick (`SysState_ReadMessage`/`SaveMenu`/`EventCallFunc`/etc.).
         g_MapEventParam    = mapEvent;
         g_MapEventSysState = mapEvent->sysState_8_0;
         g_MapEventIdx      = mapEvent->pointOfInterestIdx_8_5;

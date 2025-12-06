@@ -912,7 +912,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                 chara->model_0.stateStep_3++;
             }
 
-			// If player is not performing a movement.
+            // If player is not performing a movement.
             if (!(g_Player_HasMoveInput | g_Player_HasActionInput))
             {
                 break;
@@ -1107,7 +1107,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
             {
                 if (g_SysWork.player_4C.extra_128.state_1C >= PlayerState_EnemyGrabPinnedFrontStart &&
-				    g_SysWork.player_4C.extra_128.state_1C < PlayerState_EnemyGrabPinnedFront)
+                    g_SysWork.player_4C.extra_128.state_1C < PlayerState_EnemyGrabPinnedFront)
                 {
                     temp = -0x8000;
                     extra->model_0.anim_4.time_4 = (FP_TO(g_MapOverlayHeader.animInfos_34[chara->model_0.anim_4.status_0 - 76].startKeyframeIdx_C, Q12_SHIFT) + model->anim_4.time_4) + temp;
@@ -1166,7 +1166,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
             npcDist                                                                    = Q12(0.0f);
 
-			// Accommodates player position (for pinned enemy gram and Romper attack) and establishes required input count to get free.
+            // Accommodates player position (for pinned enemy gram and Romper attack) and establishes required input count to get free.
             switch (g_SysWork.player_4C.extra_128.state_1C)
             {
                 case PlayerState_OnFloorFront:
@@ -2438,7 +2438,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
         }
 
-		// Attack type (except melee multitap) and animation.
+        // Attack type (except melee multitap) and animation.
         if (extra->model_0.state_2 == 0)
         {
             g_Player_MeleeAttackType  = 0;
@@ -2462,8 +2462,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             else
             {
                 g_Player_MeleeAttackType = 0;
-				
-				// Handle Rock Drill animation.
+
+                // Handle Rock Drill animation.
                 if (g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) ||
                     g_Player_RockDrill_DirectionAttack == 0)
                 {
@@ -2496,7 +2496,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                          D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_F;
         }
 
-		// Used for make continuos/hold shooting smoother?
+        // Used for make continuos/hold shooting smoother?
         if (g_SysWork.targetNpcIdx_2353 != NO_VALUE &&
             g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
@@ -2637,8 +2637,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             }
         }
 
-		// Audio effects for attack animations, no ammo audio and removes ammo value.
-		// Additionally trigger some special state for the Rock Drill.
+        // Audio effects for attack animations, no ammo audio and removes ammo value.
+        // Additionally trigger some special state for the Rock Drill.
         if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
             if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
@@ -2723,8 +2723,8 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
         }
 
         // Finish attack animation.
-		// Though more context about `D_800AF220` and `D_800C44F0` is required,
-		// they likely indicate if an attack animation has finished.
+        // Though more context about `D_800AF220` and `D_800C44F0` is required,
+        // they likely indicate if an attack animation has finished.
         if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
         {
             // Attack anim.
@@ -2881,7 +2881,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                 extra->model_0.stateStep_3 = 0;
             }
 
-			// Set idle animation.
+            // Set idle animation.
             if (chara->properties_E4.player.exhaustionTimer_FC < Q12(10.0f) && chara->health_B0 >= Q12(30.0f))
             {
                 if (extra->model_0.stateStep_3 == 0)
@@ -2895,7 +2895,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
             else
             {
                 chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
-				
+
                 // If not normal idle anim, set it and update `upperBodyState_20`.
                 if (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Idle, true))
                 {
@@ -3239,7 +3239,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
 
             if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-				// Aim.
+                // Aim.
                 if (extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_HandgunAim, true) &&
                     extra->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_Unk34, true))
                 {
@@ -3337,7 +3337,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
                     if (g_TargetEnemyPosition.vx != g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vx ||
                         g_TargetEnemyPosition.vy != g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vy ||
                         g_TargetEnemyPosition.vz != g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vz ||
-						g_Player_PrevPosition.vx != g_SysWork.player_4C.chara_0.position_18.vx ||
+                        g_Player_PrevPosition.vx != g_SysWork.player_4C.chara_0.position_18.vx ||
                         g_Player_PrevPosition.vy != g_SysWork.player_4C.chara_0.position_18.vy ||
                         g_Player_PrevPosition.vz != g_SysWork.player_4C.chara_0.position_18.vz)
                     {
@@ -3807,7 +3807,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
     s32 totalAmmoVar;
     s32 i;
 
-	// Lock player view onto enemy.
+    // Lock player view onto enemy.
     switch (g_SysWork.player_4C.extra_128.upperBodyState_20)
     {
         case PlayerUpperBodyState_None:
@@ -3884,7 +3884,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
                         {
                             currentAmmoVar = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
                             totalAmmoVar   = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
-							
+
                             Items_AmmoReloadCalculation(&currentAmmoVar, &totalAmmoVar, g_SysWork.playerCombatInfo_38.weaponAttack_F);
 
                             g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = currentAmmoVar;
@@ -3956,7 +3956,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra
     {
         case PlayerUpperBodyState_Aim:
         case PlayerUpperBodyState_AimTargetLock:
-		    // Stop aiming.
+            // Stop aiming.
             if (( g_GameWork.config_0.optExtraWeaponCtrl_23 && !g_Player_IsAiming) ||
                 (!g_GameWork.config_0.optExtraWeaponCtrl_23 &&  g_Player_IsAiming))
             {
@@ -4323,7 +4323,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                         chara->model_0.stateStep_3++;
                     }
                 }
-	            // Check if player has >= 30% or < 10% health to determine level of exertion.
+                // Check if player has >= 30% or < 10% health to determine level of exertion.
                 else if (chara->properties_E4.player.exhaustionTimer_FC < Q12(10.0f) && chara->health_B0 >= Q12(30.0f))
                 {
                     if (chara->model_0.stateStep_3 == 0)
@@ -4434,11 +4434,11 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     if ((aimState == 0 && g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 == Q12(0.0f))||
                         chara->model_0.anim_4.status_0 >= ANIM_STATUS(HarryAnim_Unk29, false) ||
-						chara->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6)
+                        chara->model_0.anim_4.keyframeIdx_8 == D_800C44F0[0].field_6)
                     {
                         if (g_Player_IsMovingForward)
                         {
-							// Restrict aiming when going from idle to run.
+                            // Restrict aiming when going from idle to run.
                             if ((g_Player_IsRunning && temp_s3 == PlayerLowerBodyState_None) &&
                                 (aimState == 0 || (( g_GameWork.config_0.optExtraWeaponCtrl_23 && !g_Player_IsAiming) ||
                                                    (!g_GameWork.config_0.optExtraWeaponCtrl_23 &&  g_Player_IsAiming)) && 
@@ -4522,7 +4522,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     if (D_800C454C != Q12(0.0f))
                     {
                         // TODO: Convert hex to clean floats.
-						// Determine speed if using certain weapons while moving?
+                        // Determine speed if using certain weapons while moving?
                         switch (g_SysWork.playerCombatInfo_38.weaponAttack_F)
                         {
                             case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
@@ -4553,8 +4553,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                         {
                             g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = ((g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 * 0x88) / g_DeltaTime0);
                         }
-						
-						// Restart timer for idle animation.
+
+                        // Restart timer for idle animation.
                         if (D_800C454C != Q12(0.0f))
                         {
                             chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
@@ -4566,8 +4566,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                 {
                     chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
                 }
-				
-				// Turn if idle.
+
+                // Turn if idle.
                 if (g_Player_IsTurningLeft && chara->model_0.stateStep_3 == 1 &&
                     (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Idle, true) ||
                      chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_IdleExhausted, true)))
@@ -4695,7 +4695,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             {
                 if (!(g_SysWork.playerStopFlags_235A & PlayerStopFlag_StopWalking))
                 {
-					// Code to change the player's state to running.
+                    // Code to change the player's state to running.
                     if (g_Player_IsRunning)
                     {
                         if (aimState == 0 && temp_s3 == PlayerLowerBodyState_None &&
@@ -4723,7 +4723,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                          (chara->model_0.anim_4.keyframeIdx_8 >= 10 && chara->model_0.anim_4.keyframeIdx_8 <= 11) ||
                           chara->model_0.anim_4.keyframeIdx_8 == 22 || chara->model_0.anim_4.keyframeIdx_8 == 21)
                 {
-					// Aparently, code intended to change player's state if the player stop walking while either aiming or attacking.
+                    // Aparently, code intended to change player's state if the player stop walking while either aiming or attacking.
                     if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
@@ -4852,7 +4852,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             if (g_SysWork.player_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStartTargetLock &&
                 chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_RunForward, true))
             {
-				// TODO: What does `func_8007D6F0` do?
+                // TODO: What does `func_8007D6F0` do?
                 switch (temp_s3)
                 {
                     case PlayerLowerBodyState_WalkForward:
@@ -5027,7 +5027,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
 
             if ((g_SysWork.playerStopFlags_235A & PlayerStopFlag_StopRunning) &&
                 g_SysWork.player_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim &&
-			    g_SysWork.player_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStop)
+                g_SysWork.player_4C.extra_128.upperBodyState_20 != PlayerUpperBodyState_AimStop)
             {
                 if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
                 {
@@ -5210,14 +5210,14 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_SidestepRight, true) &&
                 chara->model_0.anim_4.keyframeIdx_8 >= 117)
             {
-				// Stopped sidestepping while attacking.
-				// If attacking with gun, dispatches to idle aim state instead of attack state.
+                // Stopped sidestepping while attacking.
+                // If attacking with gun, dispatches to idle aim state instead of attack state.
                 if (!g_Player_IsSteppingRightHold)
                 {
                     if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
                         aimState != 0)
                     {
-						// Some melee weapons allow attack while sidestepping.
+                        // Some melee weapons allow attack while sidestepping.
                         if (((extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk29, true) ||
                               extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_Unk30, true)) &&
                              (g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
@@ -5292,8 +5292,8 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             if (chara->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_SidestepLeft, true) &&
                 chara->model_0.anim_4.keyframeIdx_8 >= 92)
             {
-				// Stopped stepping while attacking.
-				// If attacking with gun, dispatches to idle aim state instead of attack state.
+                // Stopped stepping while attacking.
+                // If attacking with gun, dispatches to idle aim state instead of attack state.
                 if (!g_Player_IsSteppingLeftHold)
                 {
                     if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
@@ -5944,7 +5944,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
             break;
 
         case PlayerLowerBodyState_Attack:
-		    // If weapon is katana.
+            // If weapon is katana.
             if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_Katana)
             {
@@ -5963,7 +5963,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
                     g_Player_HeadingAngle                                                   = FP_ANGLE(0.0f);
                 }
             }
-			
+
             if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
                 WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_Katana)
             {
@@ -6194,13 +6194,13 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
     func_8007FDE0(D_800C4590.field_14, &sfx, &pitch0, &pitch1);
 
-	// This entire conditional is the reason why movement stop working when removing this function call.
+    // This entire conditional is the reason why movement stop working when removing this function call.
     if (g_SysWork.player_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_JumpBackward &&
         g_SysWork.player_4C.extra_128.lowerBodyState_24 != PlayerLowerBodyState_Reload)
     {
         D_800C4550 = g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126;
     }
-	
+
     switch (g_SysWork.player_4C.extra_128.lowerBodyState_24)
     {
         case PlayerLowerBodyState_RunForward:
@@ -6240,8 +6240,8 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
             extra->model_0.state_2     = 0;
         }
     }
-	
-	// Plays movement sounds.
+
+    // Plays movement sounds.
     switch (g_SysWork.player_4C.extra_128.lowerBodyState_24)
     {
         case PlayerLowerBodyState_None:
@@ -6280,7 +6280,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
 
         default:
             break;
-			
+
         case PlayerLowerBodyState_WalkBackward:
         case PlayerLowerBodyState_AimWalkBackward:
             func_800713E8(ANIM_STATUS(HarryAnim_WalkBackward, true), chara, 52, 63, sfx, pitch0);
@@ -7924,7 +7924,7 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_Player_IsInWalkToRunTransition                  = false;
     g_SysWork.player_4C.extra_128.state_1C            = PlayerState_None;
     g_SysWork.player_4C.extra_128.upperBodyState_20   = PlayerUpperBodyState_None;
-	g_SysWork.player_4C.extra_128.lowerBodyState_24   = PlayerLowerBodyState_None;
+    g_SysWork.player_4C.extra_128.lowerBodyState_24   = PlayerLowerBodyState_None;
     g_SysWork.player_4C.extra_128.model_0.stateStep_3 = 0;
     g_SysWork.player_4C.extra_128.model_0.state_2     = 0;
 
@@ -8315,7 +8315,7 @@ void Player_Controller(void) // 0x8007F32C
     }
 
     if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
-	    g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim)
+        g_SysWork.player_4C.extra_128.lowerBodyState_24 >= PlayerLowerBodyState_Aim)
     {
         g_Player_IsShooting  = g_Controller0->btnsHeld_C & g_GameWorkPtr->config_0.controllerConfig_0.action_6;
         g_Player_IsAttacking = g_Player_IsShooting;
@@ -8367,7 +8367,7 @@ void Player_Controller(void) // 0x8007F32C
         }
     }
 
-	// This is the conditional that makes impossible to move when aiming with specific weapons.
+    // This is the conditional that makes impossible to move when aiming with specific weapons.
     if (g_SysWork.playerCombatInfo_38.isAiming_13 && (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap) ||
                                                       (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap) &&
                                                        (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_Hammer ||

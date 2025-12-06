@@ -1545,6 +1545,7 @@ void func_800E3F30(void) // 0x800E3F30
         scratchData                     = PSX_SCRATCH_ADDR(0);
         scratchData->activeBufferIdx_14 = g_ActiveBufferIdx;
         scratchData->sprt_0             = (SPRT*)GsOUT_PACKET_P;
+
         for (i = 0; i < 2; i++)
         {
             setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
@@ -1562,6 +1563,7 @@ void func_800E3F30(void) // 0x800E3F30
             scratchData->tpage_4++;
             scratchData->sprt_0 = (SPRT*)scratchData->tpage_4;
         }
+
         scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
         SetDrawStp(scratchData->stp_8, 1);
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
@@ -1665,8 +1667,10 @@ void func_800E3F30(void) // 0x800E3F30
         case 15:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 24, false);
             Map_MessageWithAudio(23, &D_800F4804, &D_800ED768);
+
             g_SysWork.field_2378 = Q12(0.6f);
             D_800EDA04           = 1;
+
             SysWork_StateStepIncrement(0);
 
         case 16:
@@ -1680,8 +1684,10 @@ void func_800E3F30(void) // 0x800E3F30
         default:
             g_SysWork.sysStateStep_C[0] = 0;
             D_800F4805++;
+
             Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
             func_800E9490(&g_SysWork.npcs_1A0[0]);
+
             D_800F4808 = 0;
             break;
     }
