@@ -146,17 +146,22 @@ typedef struct
 #define setCodeWord(p, code, rgb24) \
     *(u32*)(((u8*)(p)) + 4) = (((code) << 24) | ((rgb24) & 0xFFFFFF))
 
-/** @brief Combines `setRGB0` and `setcode` */
+// TODO: Perhaps `setRGBC0`, `setRGBC1`, `setRGBC2`, and `setRGBC3` were one macro. Incidental value set to padding fields suggests it?
+/** @brief Combines `setRGB0` and `setcode`. */
 #define setRGBC0(prim, r, g, b, code) \
     *(u32*)(&(prim)->r0) = ((((r) + ((g) << 8)) + ((b) << 16)) + ((code) << 24))
 
-/** @brief Combines `setRGB1` and applies code to padding component? */
+/** @brief Combines `setRGB1` and incidentally applies code to the padding component. */
 #define setRGBC1(prim, r, g, b, code) \
     *(u32*)(&(prim)->r1) = ((((r) + ((g) << 8)) + ((b) << 16)) + ((code) << 24))
 
-/** @brief Combines `setRGB2` and applies code to padding component? */
+/** @brief Combines `setRGB2` and incidentally applies code to the padding component. */
 #define setRGBC2(prim, r, g, b, code) \
     *(u32*)(&(prim)->r2) = ((((r) + ((g) << 8)) + ((b) << 16)) + ((code) << 24))
+
+/** @brief Combines `setRGB3` and incidentally applies code to the padding component. */
+#define setRGBC3(prim, r, g, b, code) \
+    *(u32*)(&(prim)->r3) = ((((r) + ((g) << 8)) + ((b) << 16)) + ((code) << 24))
 
 /** @brief Combines `addPrim` and `setlen`. */
 #define addPrimFast(ot, p, _len) \
