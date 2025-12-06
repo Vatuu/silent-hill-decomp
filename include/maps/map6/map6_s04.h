@@ -36,6 +36,15 @@ extern s16 D_800EA856;
 
 extern s32 D_800EBA30;
 
+extern u16 D_800EBA64;
+
+extern s32 D_800EBAA8;
+
+extern u8 D_800EBB60;
+extern u8 D_800EBB61;
+
+extern VECTOR3 D_800EBB70;
+
 extern s8 D_800ED543;
 
 extern VECTOR3 D_800ED590;
@@ -53,6 +62,8 @@ extern s_Model g_Ai_MonsterCybil_ExtraModel; // Some kind of attachment or anoth
 
 extern s32 D_800ED588;
 extern s32 D_800ED58C;
+
+extern s_WorldObjectDesc g_WorldObject_SFlauros;
 
 extern s_WorldObject_0 g_WorldObject0[2];
 extern s_WorldObject_0 g_WorldObject1[3];
@@ -95,9 +106,27 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
 
 void func_800DEA94(s32* arg0);
 
+void func_800DEC3C(VECTOR3*, SVECTOR3*); // Assumed return type.
+
+void func_800DED30(void); // Assumed return type.
+
+void func_800DEF50(VECTOR3*, GsCOORDINATE2*, s32*); // Assumed return type.
+
+void func_800DF134(void); // Assumed return type.
+
+void func_800DF5B0(VECTOR3*, VECTOR3*); // Assumed return type.
+
+void func_800DF618(void); // Assumed return type.
+
+void func_800DFC94(s32*); // Assumed return type.
+
+void func_800DFD08(void); // Assumed return type.
+
 void func_800E01F4(void);
 
 void func_800E02E0(void);
+
+void func_800E0FAC(s32); // Assumed return type.
 
 void func_800E10F8(void);
 
@@ -117,6 +146,8 @@ void func_800E2950(void);
 void MapEvent_CutsceneCybilDeath(void);
 
 void func_800E3244(void);
+
+void func_800E3EF4(void);
 
 void func_800E558C(void);
 

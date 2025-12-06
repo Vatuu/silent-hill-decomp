@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
@@ -1130,18 +1131,510 @@ void func_800E3244(void) // 0x800E3244
     }
 }
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E3EF4);
+void func_800E3EF4(void) // 0x800E3EF4
+{
+    typedef struct
+    {
+        SPRT*     sprt_0;
+        DR_TPAGE* tpage_4;
+        DR_STP*   stp_8;
+        u8        unk_C[4];
+        u8        unk_10[4];
+        s32       activeBufferIdx_14;
+    } g_GteScratchData_func_800DD2D4;
 
-extern s8 D_800CC5B0[]; // "ARSIA"
-INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04_2", D_800CC5B0);
+    g_GteScratchData_func_800DD2D4* scratchData;
 
-INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04_2", D_800CC5B8);
+    VECTOR3       lightIntPos;
+    SVECTOR3      unused;
+    s_FsImageDesc sp30;
+    s32           i;
 
-INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04_2", D_800CC5C0);
+    scratchData = PSX_SCRATCH_ADDR(0);
 
-INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04_2", D_800CC5C8);
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        (g_SysWork.sysStateStep_C[0] >= 4) && (g_SysWork.sysStateStep_C[0] < 63))
+    {
+        func_800E01F4();
+        SysWork_StateStepSet(0, 65);
+    }
 
-INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04_2", jtbl_800CC5D0); // TODO: Why is this here?
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            D_800ED5AD = 1;
+            D_800ED5AC = 0;
+
+            Fs_QueueStartRead(FILE_ANIM_AMUSE2_DMS, FS_BUFFER_14);
+            Fs_QueueWaitForEmpty();
+            DmsHeader_FixOffsets(FS_BUFFER_14);
+            WorldObject_ModelNameSet(&g_WorldObject_SFlauros.object_0, "SFLAU_HI");
+
+            D_800ED5B0 = 0;
+            D_800EBB60 = 0;
+            D_800EBB61 = 0;
+
+            g_SysWork.field_30 = 20;
+            ScreenFade_ResetTimestep();
+            g_SysWork.flags_22A4 |= SysFlag2_3;
+
+            func_8008D438();
+
+            g_SysWork.field_235C = NULL;
+            g_SysWork.field_236C = NULL;
+            g_SysWork.field_2378 = Q12(1.0f);
+
+            sharedFunc_800D2EB4_0_s00();
+            func_8003D03C();
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 1:
+            func_80087EDC(36);
+            break;
+
+        case 2:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 1, false);
+            g_SysWork.field_2378 = Q12(1.0f);
+            SysWork_StateStepIncrement(0);
+
+        case 3:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(0.0f), false);
+            break;
+
+        case 4:
+            Map_MessageWithAudio(42, &D_800ED5AC, &D_800EBA64);
+            break;
+
+        case 5:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 4, false);
+            SysWork_StateStepIncrement(0);
+
+        case 6:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(1.0f), Q12(24.0f), false, true);
+            break;
+
+        case 7:
+            Map_MessageWithAudio(47, &D_800ED5AC, &D_800EBA64);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(1.0f), Q12(39.0f), false, true);
+            break;
+
+        case 8:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 149, false);
+            D_800EBAA8 = 1;
+            func_800892A4(8);
+            SysWork_StateStepIncrement(0);
+
+        case 9:
+            Map_MessageWithAudio(47, &D_800ED5AC, &D_800EBA64);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(1.0f), Q12(59.0f), false, false);
+            break;
+
+        case 10:
+            Chara_Load(1, Chara_Flauros, &g_SysWork.npcCoords_FC0[30], 0, NULL, NULL);
+            D_800EBAA8 = 0;
+            SysWork_StateStepIncrement(0);
+
+        case 11:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(1.0f), Q12(59.0f), false, true);
+            break;
+
+        case 12:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 8, false);
+            SysWork_StateStepIncrement(0);
+
+        case 13:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(1.0f), Q12(79.0f), true, true);
+            break;
+
+        case 14:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(80.0f), Q12(104.0f), true, true);
+            g_SysWork.field_2378 = Q12(2.0f);
+            Savegame_EventFlagSet(EventFlag_452);
+            break;
+
+        case 15:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 150, false);
+            func_800DFC94(&D_800ED5B0);
+            g_SysWork.field_2378 = Q12(0.8f);
+            SysWork_StateStepIncrement(0);
+
+        case 16:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(105.0f), Q12(114.0f), false, true);
+            break;
+
+        case 17:
+            Map_MessageWithAudio(48, &D_800ED5AC, &D_800EBA64);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(105.0f), Q12(162.0f), true, false);
+            break;
+
+        case 18:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(105.0f), Q12(162.0f), true, true);
+            break;
+
+        case 19:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 152, false);
+            func_800DFD08();
+            func_800DEC3C(&g_WorldObject_SFlauros.position_1C, &g_WorldObject_SFlauros.rotation_28);
+            D_800EBB61 = 3;
+            Savegame_EventFlagSet(EventFlag_464);
+            g_SysWork.field_2378 = Q12(0.7f);
+            SysWork_StateStepIncrement(0);
+
+        case 20:
+            Map_MessageWithAudio(49, &D_800ED5AC, &D_800EBA64);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(163.0f), Q12(199.0f), true, false);
+            break;
+
+        case 21:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(163.0f), Q12(199.0f), true, true);
+            break;
+
+        case 22:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 188, false);
+            g_SysWork.field_2378 = Q12(0.6f);
+            D_800EBB61           = 1;
+            func_8005DC1C(Sfx_Unk1635, NULL, Q8_CLAMPED(1.0f), 3);
+            SysWork_StateStepIncrement(0);
+
+        case 23:
+            Map_MessageWithAudio(50, &D_800ED5AC, &D_800EBA64);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(200.0f), Q12(229.0f), true, false);
+            break;
+
+        case 24:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(200.0f), Q12(229.0f), true, true);
+            break;
+
+        case 25:
+            Chara_ProcessLoads();
+            g_SysWork.field_2378 = Q12(1.0f);
+            func_8005DC1C(Sfx_Unk1636, NULL, Q8_CLAMPED(1.0f), 3);
+            func_800DED30();
+            func_800DEF50(&g_SysWork.npcs_1A0[1].position_18, &g_SysWork.npcCoords_FC0[30], &D_800ED5B0);
+            Chara_Spawn(Chara_Flauros, 0, g_SysWork.player_4C.chara_0.position_18.vx + Q12(1.0f), g_SysWork.player_4C.chara_0.position_18.vz, Q8_CLAMPED(0.5f), 3);
+            D_800EBB61 = 2;
+            SysWork_StateStepIncrement(0);
+
+        case 26:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(230.0f), Q12(299.0f), true, true);
+            break;
+
+        case 27:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 3, false);
+            SysWork_StateStepIncrement(0);
+
+        case 28:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(300.0f), Q12(310.0f), true, true);
+            break;
+
+        case 29:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_80088F94(&g_SysWork.npcs_1A0[1], 0, 0);
+            D_800EBB61 = 1;
+            SysWork_StateStepIncrement(0);
+
+        case 30:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(311.0f), Q12(357.0f), false, true);
+            break;
+
+        case 31:
+            func_8004690C(Sfx_Unk1636);
+            func_8004690C(Sfx_Unk1635);
+            func_8005DC1C(Sfx_Unk1634, NULL, Q8_CLAMPED(1.0f), 3);
+            SysWork_StateStepIncrement(0);
+
+        case 32:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(311.0f), Q12(365.0f), false, true);
+            break;
+
+        case 33:
+            Map_MessageWithAudio(51, &D_800ED5AC, &D_800EBA64);
+            func_800DF134();
+            D_800EBB70.vx = g_SysWork.npcs_1A0[0].position_18.vx;
+            D_800EBB70.vy = g_SysWork.npcs_1A0[0].position_18.vy - Q12(1.0f);
+            D_800EBB70.vz = g_SysWork.npcs_1A0[0].position_18.vz;
+            func_800DF5B0(&g_WorldObject_SFlauros.position_1C, &D_800EBB70);
+            SysWork_StateStepIncrement(0);
+
+        case 34:
+            SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
+            break;
+
+        case 35:
+            func_8005DC1C(Sfx_Unk1633, NULL, Q8_CLAMPED(1.0f), 3);
+            SysWork_StateStepIncrement(0);
+
+        case 36:
+            func_80085EB8(1, &g_SysWork.npcs_1A0[0], 0, false);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(311.0f), Q12(386.0f), true, false);
+            break;
+
+        case 37:
+            SysWork_StateStepIncrement(0);
+
+        case 38:
+            func_80086C58(&g_SysWork.npcs_1A0[0], 5);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(387.0f), Q12(431.0f), true, false);
+            break;
+
+        case 39:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 53, false);
+            func_800DF618();
+            D_800EBB61 = 0;
+            SysWork_StateStepIncrement(0);
+
+        case 40:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(432.0f), Q12(454.0f), true, true);
+            break;
+
+        case 41:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            g_SysWork.field_2378 = Q12(0.6f);
+            SysWork_StateStepIncrement(0);
+
+        case 42:
+            Map_MessageWithAudio(52, &D_800ED5AC, &D_800EBA64);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(455.0f), Q12(455.0f), true, false);
+            if (g_SysWork.sysStateStep_C[0] != 42)
+            {
+                Sd_EngineCmd(19);
+            }
+            break;
+
+        case 43:
+            if (!Sd_AudioStreamingCheck())
+            {
+                D_800ED5B0 = NO_VALUE;
+                Chara_FsImageCalc(&sp30, Chara_Dahlia, 2);
+                Chara_Load(1, Chara_Dahlia, &g_SysWork.npcCoords_FC0[30], 2, NULL, &sp30);
+                Fs_QueueStartRead(FILE_ANIM_AMUSE2B_DMS, FS_BUFFER_14);
+                SysWork_StateStepIncrement(0);
+            }
+            else
+            {
+                break;
+            }
+
+        case 44:
+            if (Fs_QueueDoThingWhenEmpty())
+            {
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 45:
+            DmsHeader_FixOffsets(FS_BUFFER_14);
+            Chara_ProcessLoads();
+            Chara_Spawn(Chara_Dahlia, 0, Q12(-40.0f), Q12(-40.0f), FP_ANGLE(0.0f), 3);
+            Savegame_EventFlagClear(EventFlag_452);
+            Savegame_EventFlagSet(EventFlag_465);
+            g_SysWork.field_2378 = Q12(0.6f);
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 46:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[1], 14, false);
+            D_800EBB60 = 1;
+            SysWork_StateStepIncrement(0);
+
+        case 47:
+            Map_MessageWithAudio(54, &D_800ED5AC, &D_800EBA64);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(0.0f), Q12(10.0f), false, true);
+            break;
+
+        case 48:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 6, false);
+            SysWork_StateStepIncrement(0);
+
+        case 49:
+            Map_MessageWithAudio(54, &D_800ED5AC, &D_800EBA64);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(0.0f), Q12(30.0f), true, false);
+            break;
+
+        case 50:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 9, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[1], 12, false);
+            D_800ED5B0 = Q12(31.0f);
+            SysWork_StateStepIncrement(0);
+
+        case 51:
+            Map_MessageWithAudio(56, &D_800ED5AC, &D_800EBA64);
+            break;
+
+        case 52:
+            Map_MessageWithAudio(58, &D_800ED5AC, &D_800EBA64);
+            break;
+
+        case 53:
+            Map_MessageWithAudio(62, &D_800ED5AC, &D_800EBA64);
+            break;
+
+        case 54:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[1], 13, false);
+            g_SysWork.field_2378 = Q12(0.7f);
+            SysWork_StateStepIncrement(0);
+
+        case 55:
+            Map_MessageWithAudio(71, &D_800ED5AC, &D_800EBA64);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(32.0f), Q12(80.0f), false, true);
+            break;
+
+        case 56:
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 7, false);
+            SysWork_StateStepIncrement(0);
+
+        case 57:
+            Map_MessageWithAudio(71, &D_800ED5AC, &D_800EBA64);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(32.0f), Q12(110.0f), true, false);
+            break;
+
+        case 58:
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(32.0f), Q12(110.0f), true, true);
+            break;
+
+        case 59:
+            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 123, false);
+            g_SysWork.field_2378 = Q12(1.0f);
+            SysWork_StateStepIncrement(0);
+
+        case 60:
+            Map_MessageWithAudio(74, &D_800ED5AC, &D_800EBA64);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(111.0f), Q12(145.0f), true, false);
+            break;
+
+        case 61:
+            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.5f), false);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+            SysWork_StateStepIncrement(0);
+
+        case 62:
+            Map_MessageWithAudio(75, &D_800ED5AC, &D_800EBA64);
+            SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(111.0f), Q12(145.0f), true, false);
+            break;
+
+        case 63:
+            SysWork_StateStepIncrement(0);
+            func_8004690C(Sfx_Unk1636);
+
+        case 64:
+            SysWork_StateStepIncrement(0);
+
+        case 65:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        case 66:
+            if (g_SysWork.npcs_1A0[1].model_0.charaId_0 == Chara_Flauros)
+            {
+                func_80088F94(&g_SysWork.npcs_1A0[1], 0, 0);
+            }
+            SysWork_StateStepIncrement(0);
+
+        default:
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            ScreenFade_ResetTimestep();
+
+            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            func_80088F94(&g_SysWork.npcs_1A0[1], 0, 0);
+
+            Savegame_EventFlagSet(EventFlag_451);
+
+            Player_ItemRemove(InventoryItemId_Flauros, 1);
+
+            func_8003D01C();
+            sharedFunc_800D2EF4_0_s00();
+            D_800A9938 = 190000;
+
+            Sd_EngineCmd(19);
+            func_8008D448();
+            func_8003EBA0();
+
+            g_SysWork.field_2378  = Q12(1.0f);
+            g_SysWork.flags_22A4 &= ~SysFlag2_4;
+            break;
+    }
+
+    if (D_800EBAA8 != 0)
+    {
+        scratchData->activeBufferIdx_14 = g_ActiveBufferIdx;
+        scratchData->sprt_0             = (SPRT*)GsOUT_PACKET_P;
+        for (i = 0; i < 2; i++)
+        {
+            setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
+            setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
+            scratchData->sprt_0->u0 = 0;
+            scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) << 5;
+            setWH(scratchData->sprt_0, i == 0 ? 256 : 64, 224);
+            addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
+
+            scratchData->sprt_0++;
+            scratchData->tpage_4 = (DR_TPAGE*)scratchData->sprt_0;
+            setDrawTPage(scratchData->tpage_4, 0, 0, getTPageFromBuffer(2, 0, scratchData->activeBufferIdx_14, i));
+
+            AddPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->tpage_4);
+            scratchData->tpage_4++;
+            scratchData->sprt_0 = (SPRT*)scratchData->tpage_4;
+        }
+        scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
+        SetDrawStp(scratchData->stp_8, 1);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
+        scratchData->stp_8++;
+        SetDrawStp(scratchData->stp_8, 0);
+        addPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[0], scratchData->stp_8);
+        scratchData->stp_8++;
+        GsOUT_PACKET_P = (PACKET*)scratchData->stp_8;
+    }
+
+    if (D_800ED5B0 >= 0)
+    {
+        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, &D_800CC4C4, D_800ED5B0, FS_BUFFER_14);
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800ED590, &D_800ED5A0, NULL, D_800ED5B0, FS_BUFFER_14));
+        vcUserCamTarget(&D_800ED590, NULL, true);
+        vcUserWatchTarget(&D_800ED5A0, NULL, true);
+        Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &unused, &D_800CC4CC, D_800ED5B0, FS_BUFFER_14);
+        Dms_CharacterGetPosRot(&lightIntPos, &unused, &D_800CC4D4, D_800ED5B0, FS_BUFFER_14);
+
+        g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz));
+        g_SysWork.cutsceneLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
+        g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
+
+        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "ARSIA", D_800ED5B0, FS_BUFFER_14);
+
+        if (D_800EBB60 != 0)
+        {
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[1].position_18, &g_SysWork.npcs_1A0[1].rotation_24, "DARIA", D_800ED5B0, FS_BUFFER_14);
+        }
+
+        if (D_800EBB61 == 3)
+        {
+            Dms_CharacterGetPosRot(&g_WorldObject_SFlauros.position_1C, &g_WorldObject_SFlauros.rotation_28, "SFLAU", D_800ED5B0, FS_BUFFER_14);
+        }
+        else if (D_800EBB61 == 1)
+        {
+            Dms_CharacterGetPosRot(&g_WorldObject_SFlauros.position_1C, &g_WorldObject_SFlauros.rotation_28, "SFLAU", D_800ED5B0, FS_BUFFER_14);
+            Savegame_EventFlagSet(EventFlag_454);
+        }
+        else
+        {
+            Savegame_EventFlagClear(EventFlag_454);
+        }
+
+        if (D_800EBB61 == 2)
+        {
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[1].position_18, &g_SysWork.npcs_1A0[1].rotation_24, "BFLAU", D_800ED5B0, FS_BUFFER_14);
+        }
+    }
+
+    if (g_SysWork.sysStateStep_C[0] >= 48)
+    {
+        func_800E0FAC(D_800ED5B0);
+    }
+}
 
 void func_800E558C(void) // 0x800E558C
 {
@@ -1278,7 +1771,7 @@ void func_800E558C(void) // 0x800E558C
         vcUserWatchTarget(&D_800ED5A0, NULL, true);
         if (g_SysWork.sysStateStep_C[0] >= 4)
         {
-            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, D_800CC5B0, D_800ED5B0, FS_BUFFER_14);
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "ARSIA", D_800ED5B0, FS_BUFFER_14);
             Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, D_800CC4C4, D_800ED5B0, FS_BUFFER_14);
             g_SysWork.player_4C.chara_0.rotation_24.vy += FP_ANGLE(22.5f);
         }

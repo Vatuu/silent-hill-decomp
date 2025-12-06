@@ -182,6 +182,7 @@ MAP_MESSAGES                        = 0x800EB81C; // type:u32 size:0x130
 //----------------------------------------------------
 sharedData_800DFB4C_0_s00           = 0x800EBB40;
 sharedData_800CD77C_1_s04           = 0x800EBB44; // type:s32
+D_800EBB60                          = 0x800EBB60; // size:1
 sharedData_800DFB6C_0_s00           = 0x800EBB88; // type:s32
 sharedData_800DFB70_0_s00           = 0x800EBB8C; // type:s32
 sharedData_800DFB7C_0_s00           = 0x800EBB90; // type:MapHdr_field_4C
@@ -212,6 +213,7 @@ g_Ai_MonsterCybil_ExtraModel        = 0x800ED540; // type:Model
 sharedData_800D16E4_2_s01           = 0x800ED57C; // type:s8
 sharedData_800D3150_3_s02           = 0x800ED580; // type:s32
 sharedData_800D16E0_2_s01           = 0x800ED584; // type:s32
+g_WorldObject_SFlauros              = 0x800ED5C0; // type:WorldObjectDesc size:0x2E
 g_WorldObject0                      = 0x800ED600; // type:WorldObject_0 size:0x38
 g_WorldObject1                      = 0x800ED640; // type:WorldObject_0 size:0x54
 g_WorldObject2                      = 0x800ED6A0; // type:WorldObject_0 size:0x1C
