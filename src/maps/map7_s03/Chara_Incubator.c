@@ -62,7 +62,48 @@ void func_800D3C80(s_SubCharacter* chara, GsCOORDINATE2* coord)
     coord->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
 }
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/Chara_Incubator", func_800D3E18);
+void func_800D3E18(s_SubCharacter* chara, GsCOORDINATE2* arg1)
+{
+    switch (chara->properties_E4.dahlia.stateIdx0)
+    {
+        case 0:
+            break;
+        case 1:
+            Model_AnimStatusSet(&chara->model_0, 2, false);
+            if (chara->properties_E4.dahlia.resetStateIdx0_F8 != 0)
+            {
+                chara->properties_E4.dahlia.stateIdx0 = 0;
+                chara->model_0.stateStep_3 = 0;
+                chara->properties_E4.dahlia.resetStateIdx0_F8 = 0;
+            }
+            break;
+        case 2:
+            Model_AnimStatusKeyframeSet(chara->model_0, 3, true, INCUBATOR_ANIM_INFOS, 0);
+            if (chara->properties_E4.dahlia.resetStateIdx0_F8) 
+            {
+                chara->properties_E4.dahlia.stateIdx0 = 0;
+                chara->model_0.stateStep_3 = 0;
+                chara->properties_E4.dahlia.resetStateIdx0_F8 = 0;
+            }
+            break;
+        case 3:
+            Model_AnimStatusSet(&chara->model_0, 1, false);
+            if (chara->properties_E4.dahlia.resetStateIdx0_F8)
+            {
+                chara->properties_E4.dahlia.stateIdx0 = 0;
+                chara->model_0.stateStep_3 = 0;
+                chara->properties_E4.dahlia.resetStateIdx0_F8 = 0;
+            }
+            break;
+    }
+    
+    chara->headingAngle_3C = chara->rotation_24.vy;
+    chara->moveSpeed_38 = chara->properties_E4.splitHead.moveDistance_126;
+    chara->field_34 += g_DeltaTime2;
+    
+    arg1->flg = 0;
+    Math_RotMatrixZxyNegGte(&chara->rotation_24, &arg1->coord);
+}
 
 void Ai_Incubator_Init(s_SubCharacter* chara) // 0x800D3F38
 {
