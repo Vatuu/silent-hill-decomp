@@ -680,7 +680,8 @@ u16 g_UnknownEngineCmdTable1[] = {
     0x307,
     0x308
 };
-s_800C37D4 D_800A986C[] = {
+// Maybe different struct?
+s_VAB_800C37D4 D_800A986C[] = {
     { 9,  3, 778, 0x30C030B, 0x30F030D },
     { 16, 3, 785, 0x3130312, 0x3150314 },
     { 22, 3, 791, 0x3190318, 0x31B031A },

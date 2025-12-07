@@ -18,6 +18,18 @@
 #define AUDIO_TYPE_MONO   1
 #define AUDIO_TYPE_STEREO 2
 
+// ======
+// ENUMS
+// ======
+
+typedef enum _VabAudioType
+{
+    VabAudioType_MusicKey = 0,
+    VabAudioType_Weapon   = 1,
+    VabAudioType_Ambient  = 2,
+	VabAudioType_Unk3     = 3
+} e_VabAudioType;
+
 // ========
 // STRUCTS
 // ========
@@ -45,13 +57,15 @@ STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
 
 typedef struct
 {
-    u16 cdErrorCount_0;    /** Counter for failed attempts at the moment of process a primite command. */
-    u16 xaAudioIdxCheck_2; /** XA Audio index. Used for check if the file exist. */
-    u16 xaAudioIdx_4;      /** XA Audio index. Used for playing the audio. */
-    u16 field_6;           // Current state of the music state?
-    u16 field_8[3];
-    u16 field_E;           // Related to the handling of music layers.
-    u16 field_10;
+    u16 cdErrorCount_0;     /** Counter for failed attempts at the moment of process a primite command. */
+    u16 xaAudioIdxCheck_2;  /** XA Audio index. Used for check if the file exist. */
+    u16 xaAudioIdx_4;       /** XA Audio index. Used for playing the audio. */
+    u16 bgmLoadedSongIdx_6; /** Index of the currently loaded song. */
+    u16 vabAudioIdx_8[3];   /** @unused Dead code. Stores the index of the last loaded VAB audio that is not a
+                             * music note, but it's never used.
+                             */
+    u16 field_E;            // Related to the handling of music layers.
+    u16 field_10;           
     u8  isStereoEnabled_12; // `bool`
     s8  isXaStopping_13;    /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`.
                              */
@@ -123,18 +137,21 @@ typedef struct
 
 typedef struct
 {
-    s8  field_0;
+    s8  vabTypeIdx_0;   // Index of `g_Sd_VabBuffers` which stores offsets where the VAB files
+                        // are saved in memory. See `e_VabAudioType`.
     s8  unk_1;
     u16 field_2;
-    u32 field_4; // VA Sound Sector count?
-    s32 field_8;
-} s_800C37D4;
+    u32 vabFileSize_4;   // VAB File size.
+    s32 vabFileOffset_8; // VAB Audio offset in file container.
+} s_VAB_800C37D4;
 
 // ========
 // GLOBALS
 // ========
 
-extern s_800C37D4 D_800A986C[];
+extern u8 g_Sd_VabLoadAttemps;
+
+extern s_VAB_800C37D4 D_800A986C[];
 
 extern u8 g_Sd_ReverbDepths[];
 
@@ -202,13 +219,15 @@ extern s_800C1698 D_800C1698;
  */
 extern u8 g_Sd_CmdPool[32];
 
-extern u8 D_800C37C8;
+/** @brief Indicates the type of the VAB file being loaded. See `e_VabAudioType`. */
+extern u8 g_Sd_VabType;
 
 extern u32 D_800C37CC;
 
-extern s_800C37D4* D_800C37D4;
+extern s_VAB_800C37D4* g_Sd_VabLoad_TargetVab;
 
-extern s_800C37D4* D_800C37D8;
+// Pointer to the data of the VAB loading to be used for music.
+extern s_VAB_800C37D4* g_Sd_BgmLoad_TargetVab;
 
 extern u8 D_800C37DC; // Boolean.
 
@@ -275,6 +294,8 @@ void Sd_XaPreLoadAudio(u16 xaIdx);
 
 void Sd_XaPreLoadAudioCmdAdd(s32 xaIdx);
 
+void Sd_XaPreLoadAudioInit(void);
+
 /** @brief Stops the streaming of the currently loaded XA audio in memory. */
 void Sd_XaAudioStop(void);
 
@@ -296,27 +317,55 @@ void Sd_CmdPoolAdd(u8 cmd);
 /** Updates a command pool by shifting a field. */
 void Sd_CmdPoolUpdate(void);
 
-void func_80047B80(void);
+void Sd_VabLoad(void);
 
 void Sd_SetReverbDepth(u8 depth);
 
 void Sd_SetReverbEnable(s32 mode);
 
-void func_80047B24(s32 cmd);
+void Sd_VabLoad_CmdSet(s32 cmd);
 
-void func_80047D1C(void);
+void Sd_VabLoad_TypeClear(void);
 
-void func_80047D50(void);
+/** @brief Sets the reader offset to the target VAB position. */
+void Sd_VabLoad_OffSet(void);
 
-void func_80047DB0(void);
+void Sd_VabLoad_FileLoad(void);
 
 void func_80047E3C(void);
 
 void func_80047F18(void);
 
+void func_80048000(void);
+
+void func_8004807C(void);
+
+void func_800480FC(void);
+
+void Sd_VabLoad_Finalization(void);
+
+/** Nullsub */
+void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
+
+/** Nullsub */
+void func_800485B8(s32 arg0, u8 arg1, u32 arg2);
+
+void Sd_BgmLoad_CmdSet(u16 songIdx);
+
 void Sd_StopSeq(void);
 
+void Sd_BgmLoad(void);
+
+/** @brief Sets the reader offset to the target VAB position. */
+void Sd_BgmLoad_OffSet(void);
+
+void Sd_BgmLoad_FileLoad(void);
+
+void Sd_BgmLoad_LoadCheck(void);
+
 void Sd_CmdPoolExecute(void);
+
+void func_800485C0(s32 idx);
 
 /** @brief Executes a new primitive command and checks the status against the previous.
  * If the previous primitive commands haven't completed, it starts

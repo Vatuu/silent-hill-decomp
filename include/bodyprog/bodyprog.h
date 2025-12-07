@@ -2555,8 +2555,6 @@ extern u8 D_800C3963;
 /** Game difficulty. */
 extern s32 D_800C3994;
 
-extern u8 D_800C37D0;
-
 extern s_800C38B0 D_800C38B0;
 
 extern s_800C38B4 D_800C38B4;
@@ -3192,37 +3190,6 @@ void func_80046A24(u16 cmd);
 void func_80046A70(void);
 
 u8 func_80046BB4(u8 arg0);
-
-void Sd_XaPreLoadAudioInit(void);
-
-void func_80048000(void);
-
-void func_8004807C(void);
-
-void func_800480FC(void);
-
-void func_800481F8(void);
-
-/** Sound func. */
-void func_80048244(u16 cmd);
-
-void func_800482D8(void);
-
-/** CD function. */
-void func_800483D4(void);
-
-/** CD function. */
-void func_80048424(void);
-
-void func_80048498(void);
-
-/** Nullsub */
-void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
-
-/** Nullsub */
-void func_800485B8(s32 arg0, u8 arg1, u32 arg2);
-
-void func_800485C0(s32 idx);
 
 /** `arg0` is probably a bit flag. */
 void func_8004C564(u8 arg0, s8 weaponAttack);

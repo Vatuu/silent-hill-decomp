@@ -41,11 +41,11 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
         default:
             if (g_Sd_CurrentCmd >= 160)
             {
-                func_80047B80();
+                Sd_VabLoad();
             }
             else if (g_Sd_CurrentCmd >= 32)
             {
-                func_800482D8();
+                Sd_BgmLoad();
             }
             else
             {

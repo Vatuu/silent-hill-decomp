@@ -453,7 +453,7 @@ void func_80035338(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
     s_800A992C*  playerAnim;
 
     animHdrCpy = animFile;
-    ptr         = &D_800A992C[idx];
+    ptr        = &D_800A992C[idx];
 
     if (charaId == Chara_None)
     {
@@ -814,6 +814,10 @@ void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
     func_8003F170();
     func_8003DA9C(Chara_Harry, boneCoords, 1, g_SysWork.player_4C.chara_0.timer_C6, 0);
 }
+
+// ========================================
+// IN-GAME MUSIC HANDLING RELATED
+// ========================================
 
 void func_80035DB4(s32 arg0) // 0x80035DB4
 {
@@ -2603,6 +2607,10 @@ s32 Camera_Distance2dGet(const VECTOR3* pos) // 0x80038B44
     return FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT);
 }
 
+// ========================================
+// GAME STATES UPDATERS
+// ========================================
+
 void GameState_InGame_Update(void) // 0x80038BD4
 {
     s_SubCharacter* player;
@@ -3200,6 +3208,10 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     Gfx_2dBackgroundMotionBlur(SyncMode_Immediate);
 }
 
+// ========================================
+// MAP EVENTS RELATED
+// ========================================
+
 void AreaLoad_UpdatePlayerPosition(void) // 0x80039F30
 {
     Chara_PositionUpdateFromParams(&D_800BCDB0);
@@ -3270,6 +3282,10 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
             break;
     }
 }
+
+// ========================================
+// SAVE FILE AND MAP EVENTS RELATED
+// ========================================
 
 void SysWork_SavegameUpdatePlayer(void) // 0x8003A120
 {

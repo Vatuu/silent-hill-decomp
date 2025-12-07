@@ -169,14 +169,14 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
     // Play/load VAB audio.
     if (cmd >= 160 && cmd < 245)
     {
-        func_80047B24(cmd);
+        Sd_VabLoad_CmdSet(cmd);
     }
 
-    // (Unsure) Play/load song.
+    // Play/load song.
     // Passes a command to the previous conditional.
     if (cmd >= 32 && cmd < 72)
     {
-        func_80048244(cmd);
+        Sd_BgmLoad_CmdSet(cmd);
     }
 }
 
@@ -265,10 +265,10 @@ void sd_work_init(void) // 0x80045E44
         D_800C15F8[D_800C15B8] = 0;
     }
 
-    D_800C1658.field_6                  = 0;
-    D_800C1658.field_8[0]               = 0;
-    D_800C1658.field_8[1]               = 0;
-    D_800C1658.field_8[2]               = 0;
+    D_800C1658.bgmLoadedSongIdx_6       = 0;
+    D_800C1658.vabAudioIdx_8[0]         = 0;
+    D_800C1658.vabAudioIdx_8[1]         = 0;
+    D_800C1658.vabAudioIdx_8[2]         = 0;
     D_800C1658.xaAudioIdx_4             = 0;
     D_800C1658.isXaStopping_13          = 0;
     D_800C1658.cdErrorCount_0           = 0;
