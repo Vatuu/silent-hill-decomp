@@ -359,8 +359,8 @@ generate: $(LD_FILES)
 
 objdiff-config:
 	rm -rf $(EXPECTED_DIR)
-	$(MAKE) regenerate
-	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 GEN_COMP_TU=1 build
+	$(MAKE) GEN_COMP_TU=1 regenerate
+	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
 	mkdir -p $(EXPECTED_DIR)
 	mv $(BUILD_DIR)/asm $(EXPECTED_DIR)/asm
 	$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml
