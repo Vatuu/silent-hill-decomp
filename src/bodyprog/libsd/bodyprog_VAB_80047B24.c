@@ -41,13 +41,13 @@ static u8* g_Sd_KdtBuffer[1] = {
  * command with that value naturally). The value of this command goes through many functions until it reaches
  * `func_8007F14C`, where it's used to get the index of the audio bank to be loaded. The strange
  * thing starts here, as the same value of the command assigned is used to get inside a specific element from
- * a variable that uses struct `s_VAB_800C37D4`: `D_800A986C`, which only has 5 elements. However, the
+ * a variable that uses struct `s_VabItemData`: `D_800A986C`, which only has 5 elements. However, the
  * elements being accessed have index 164 to 168. So instead the code uses `D_800A986C` as a pointer
  * to jump all the way up to 0x800A9FEC where the table is actually used for switching the audio bank of the
  * currently selected weapon. This is over-engineered and it would be interesting to investigate how this
  * works in other versions.
  *
- * With the previously said this means that this data is actually a `s_VAB_800C37D4` struct array that begins
+ * With the previously said this means that this data is actually a `s_VabItemData` struct array that begins
  * at 0x800A9FEC, and since it's not being directly or indirectly (in a normal way) called by a function,
  * Splat mixes it up with `D_800A9FDC`, which is actually being called directly by `func_80047E3C`. Looking at
  * the code indicates that the data between 0x800A9FDC to 0x800A9FEC are actually 4 `int` values.
@@ -56,7 +56,7 @@ static s32 D_800A9FDC[4] = {
     0x00001010, 0x00021490, 0x00027630, 0x00058F50
 };
 
-static s_VAB_800C37D4 D_800A9FEC[54] = {
+static s_VabItemData D_800A9FEC[54] = {
     { VabAudioType_MusicKey, 0, 4128, 136208, 140   },
     { VabAudioType_Ambient,  0, 3104, 220032, 539   },
     { VabAudioType_Ambient,  0, 3104, 135072, 25237 },
@@ -113,7 +113,7 @@ static s_VAB_800C37D4 D_800A9FEC[54] = {
     { VabAudioType_Unk3,     0, 4128,  83136, 25084 }
 };
 
-static s_VAB_800C37D4 D_800AA274[73] = {
+static s_VabItemData D_800AA274[73] = {
     { VabAudioType_Unk3,     0, 4640, 86848,  25126 },
     { VabAudioType_Unk3,     0, 6176, 133680, 25171 },
     { VabAudioType_Unk3,     0, 5664, 141408, 25318 },

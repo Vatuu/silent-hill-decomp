@@ -8,6 +8,9 @@
  *
  * Code here can still be refered as part of the SD system, but no
  * function with symbols recognized from the SD system should be here.
+ *
+ * This code is likely not part of the library itself, but rather specific
+ * game code as the library doesn't handle file streaming.
  */
 
 // ==========
@@ -63,7 +66,7 @@ typedef struct
     u16 bgmLoadedSongIdx_6; /** Index of the currently loaded music. */
     u16 vabAudioIdx_8[3];   /** @unused Dead code. Stores the index of the last loaded VAB audio that is not a music note, but it's never used. */
     u16 field_E;            // Related to the handling of music layers.
-    u16 field_10;           
+    u16 field_10;           // Related to the handling of music layers.
     u8  isStereoEnabled_12; /** `bool` */
     s8  isXaStopping_13;    /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`.
                              */
@@ -138,9 +141,15 @@ typedef struct
     s8  vabTypeIdx_0;    /**Index of `g_Sd_VabBuffers` which stores offsets where the VAB files are saved in memory. See `e_VabAudioType`. */
     s8  unk_1;
     u16 field_2;
+<<<<<<< HEAD
     u32 vabFileSize_4;   /** VAB file size. */
     s32 vabFileOffset_8; /** VAB audio offset in the file container. */
 } s_VAB_800C37D4;
+=======
+    u32 vabFileSize_4;   // VAB File size.
+    s32 vabFileOffset_8; // VAB Audio offset in file container.
+} s_VabItemData;
+>>>>>>> ef0a7f86 (Bare symbol recognition)
 
 // ========
 // GLOBALS
@@ -148,14 +157,16 @@ typedef struct
 
 extern u8 g_Sd_VabLoadAttemps;
 
-extern s_VAB_800C37D4 D_800A986C[];
+extern s_VabItemData D_800A986C[];
 
 extern u8 g_Sd_ReverbDepths[];
 
 extern s_XaItemData g_XaItemData[];
 
-/** Values capped at 127. */
-extern s8 g_Sd_BgmLayers[8];
+// Likely declared as `static` inside the function that uses it.
+extern s8 bgmLayersVolume[8];
+
+extern u8 g_Sd_BgmLayerLimits[8];
 
 // Likely declared as `static` as this is only used in `Sd_XaAudioPlay`.
 // `Sd_XaPreLoadAudioInit` (similar to `Sd_XaAudioPlay`) has a
@@ -221,10 +232,10 @@ extern u8 g_Sd_VabType;
 
 extern u32 D_800C37CC;
 
-extern s_VAB_800C37D4* g_Sd_VabLoad_TargetVab;
+extern s_VabItemData* g_Sd_VabLoad_TargetVab;
 
 // Pointer to the data of the VAB loading to be used for music.
-extern s_VAB_800C37D4* g_Sd_BgmLoad_TargetVab;
+extern s_VabItemData* g_Sd_BgmLoad_TargetVab;
 
 extern u8 D_800C37DC; // Boolean.
 
@@ -270,11 +281,11 @@ void Sd_StopBgm(void);
 
 void Sd_StopBgmStep(void);
 
-/** Manipulate the BGM audio layers. Can't be determined if this function
- * is fully in charge of that as `func_80035F4C` (not directly related to the SD audio system)
- * triggers and handles in-game music.
- */
-void func_80046C54(u8 arg0, u8 vol);
+/** Return the current BGM audio layers volume based upon the PSX's MIDI channel. */
+u8 Sd_BgmLayerVolumeGet(u8 layerIdx);
+
+/** Manipulate the BGM audio layers volume. */
+void Sd_BgmLayerVolumeSet(u8 layerIdx, u8 vol);
 
 /** @brief Loads and plays XA audio defined at `g_XaItemData`. */
 void Sd_XaAudioPlay(void);

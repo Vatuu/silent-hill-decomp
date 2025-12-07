@@ -23,7 +23,7 @@ void Sd_EngineCmd(u32 cmd) // 0x80045A7C
     // Execute sound command based on category.
     switch ((cmd >> 8) & 0xFF)
     {
-        // Unknown. Range [0, 255].
+        // Sound effects management and load of VAB files. Range [0, 255].
         case 0:
             func_80045BD8(cmd);
             return;
@@ -665,7 +665,7 @@ u8 g_Sd_ReverbDepths[36] = {
     40, 40, 20, 0
 };
 
-// Sound volumes?
+// Strange access. See `Sd_BgmLayerVolumeSet` and `Sd_BgmLayerVolumeGet`.
 u8 D_800AA604[41][16] = {
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 1, 2, 3, 4, 5, 5, 6, 0, 0, 0, 1, 1, 1, 0, 0 },
@@ -710,12 +710,12 @@ u8 D_800AA604[41][16] = {
     { 0, 1, 1, 2, 2, 3, 3, 4, 5, 6, 7, 0, 0, 0, 0, 0 }
 };
 
-u8 func_80046BB4(u8 arg0) // 0x80046BB4
+u8 Sd_BgmLayerVolumeGet(u8 layerIdx) // 0x80046BB4
 {
     u32 i;
     u8  ret;
 
-    if (arg0 == 0)
+    if (layerIdx == 0)
     {
         return 0;
     }
@@ -729,7 +729,7 @@ u8 func_80046BB4(u8 arg0) // 0x80046BB4
 
     for (i = 0; i < 15; i++)
     {
-        if (D_800AA604[(u8)D_800C1658.field_E][i] == arg0)
+        if (D_800AA604[(u8)D_800C1658.field_E][i] == layerIdx)
         {
             ret = SdGetMidiVol(0, i);
             break;
@@ -739,29 +739,34 @@ u8 func_80046BB4(u8 arg0) // 0x80046BB4
     return ret;
 }
 
-void func_80046C54(u8 arg0, u8 arg1) // 0x80046C54
+void Sd_BgmLayerVolumeSet(u8 layerIdx, u8 vol) // 0x80046C54
 {
     u32 i;
-    s16 var0;
+    s16 volCpy;
     u8  var1;
     u8  idx;
 
-    if (arg0 == 0)
+    if (layerIdx == 0)
     {
-        g_Sd_ChannelsVolume.volumeBgm_6 = (arg1 * 40) / 127;
+        g_Sd_ChannelsVolume.volumeBgm_6 = (vol * 40) / 127;
     }
     else if (D_800C1658.field_E < 809)
     {
+        // Converts values from 300 to 808 to an u8 value.
+        // However the game only seems to pass values from 769 to 776 including 0.
+        // This convertion seems to take be made having in the hexadecimal counterpart, in this cases
+        // it would be from 0x0103 to 0x0803. The convertion will ignore the 0x03 and just use the
+        // second value which goes from 1 to 8.
         idx = D_800C1658.field_E;
 
         for (i = 0; i < 15; i++)
         {
-            var1 = D_800AA604[idx][i];
-            var0 = arg1;
+            var1   = D_800AA604[idx][i];
+            volCpy = vol;
 
-            if (var1 == arg0)
+            if (var1 == layerIdx)
             {
-                SdSetMidiVol(0, i, var0);
+                SdSetMidiVol(0, i, volCpy);
             }
         }
     }

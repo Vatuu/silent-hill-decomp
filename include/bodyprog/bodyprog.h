@@ -2171,8 +2171,6 @@ extern s32 D_800A999C;
 
 extern s32 D_800A99A0;
 
-extern u8 g_Sd_BgmLayerLimits[8];
-
 /** Relative file offset for map texture? */
 extern s8 D_800A99B5;
 
@@ -3188,8 +3186,6 @@ void func_8004692C(u16 cmd);
 void func_80046A24(u16 cmd);
 
 void func_80046A70(void);
-
-u8 func_80046BB4(u8 arg0);
 
 /** `arg0` is probably a bit flag. */
 void func_8004C564(u8 arg0, s8 weaponAttack);

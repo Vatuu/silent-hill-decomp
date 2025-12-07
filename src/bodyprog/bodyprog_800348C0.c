@@ -20,8 +20,8 @@
 
 const s16 rodataPad_800251FC = 0;
 
-s32 g_MapMsg_StateMachineIdx1 = 0;
-s32 g_MapMsg_StateMachineIdx2 = 0;
+s32 g_MapMsg_StateMachineIdx1 = 0; // Static
+s32 g_MapMsg_StateMachineIdx2 = 0; // Static
 s32 g_MapMsg_DisplayLength = 0;
 s32 g_MapMsg_MainIdx = 0;
 s32 g_MapMsg_DisplayInc = 0;
@@ -837,9 +837,9 @@ void func_80035E1C(void) // 0x80035E1C
 {
     s32 i;
 
-    for (i = 0; i < ARRAY_SIZE(g_SysWork.field_2748); i++)
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.bgmLayerVol_2748); i++)
     {
-        g_SysWork.field_2748[i] = 0;
+        g_SysWork.bgmLayerVol_2748[i] = 0;
     }
 }
 
@@ -848,9 +848,9 @@ bool func_80035E44(void) // 0x80035E44
     s32 i;
     u16 val;
     
-    for (i = 0; i < (ARRAY_SIZE(g_SysWork.field_2748) - 1); i++)
+    for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVol_2748) - 1); i++)
     {
-        if (g_SysWork.field_2748[i] != 0) 
+        if (g_SysWork.bgmLayerVol_2748[i] != 0) 
         {
             return false;
         }
@@ -866,9 +866,9 @@ bool func_80035E44(void) // 0x80035E44
         return false;
     }
 
-    for (i = 1; i < (ARRAY_SIZE(g_SysWork.field_2748) - 1); i++) 
+    for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVol_2748) - 1); i++) 
     {
-        if (func_80046BB4(i))
+        if (Sd_BgmLayerVolumeGet(i))
         {
             return false;
         }
@@ -881,17 +881,17 @@ void func_80035ED0(void) // 0x80035ED0
 {
     s32 i;
 
-    for (i = 1; i < (ARRAY_SIZE(g_SysWork.field_2748) - 1); i++)
+    for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVol_2748) - 1); i++)
     {
-        g_SysWork.field_2748[i] = func_80046BB4(i) << 5;
+        g_SysWork.bgmLayerVol_2748[i] = Sd_BgmLayerVolumeGet(i) << 5;
     }
 
     if (!func_80045BC8())
     {
-        g_SysWork.field_2748[0] = Q12(1.0f);
+        g_SysWork.bgmLayerVol_2748[0] = Q12(1.0f);
     }
 
-    g_SysWork.field_2748[ARRAY_SIZE(g_SysWork.field_2748) - 1] = 0;
+    g_SysWork.bgmLayerVol_2748[ARRAY_SIZE(g_SysWork.bgmLayerVol_2748) - 1] = 0;
 }
 
 void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) // 0x80035F4C
@@ -914,7 +914,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
 
     flagsCpy         = flags;
     bgmLayerLimitCpy = bgmLayerLimitPtr;
-    ptr              = g_SysWork.field_2748;
+    ptr              = g_SysWork.bgmLayerVol_2748;
 
     if (bgmLayerLimitCpy == NULL)
     {
@@ -1031,7 +1031,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
             var_v1 = 127;
         }
 
-        g_Sd_BgmLayers[i] = var_v1;
+        bgmLayersVolume[i] = var_v1;
     }
 
     var_s4  = 0;
@@ -1100,7 +1100,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
         {
             for (i = 0; i < 8; i++)
             {
-                func_80046C54(i, g_Sd_BgmLayers[i]);
+                Sd_BgmLayerVolumeSet(i, bgmLayersVolume[i]);
             }
         } 
         else 

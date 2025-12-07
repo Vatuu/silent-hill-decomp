@@ -477,6 +477,8 @@ Sd_AllVoicesKeyOffVWithRROff                = 0x800469E8; // type:func
 Sd_StopBgmCmd                               = 0x80046AD8;
 Sd_StopBgm                                  = 0x80046B04;
 Sd_StopBgmStep                              = 0x80046B78;
+Sd_BgmLayerVolumeGet                        = 0x80046BB4;
+Sd_BgmLayerVolumeSet                        = 0x80046C54;
 Sd_XaAudioPlayCmdAdd                        = 0x80046D3C;
 Sd_XaAudioLengthGet                         = 0x80046DCC;
 Sd_XaAudioPlay                              = 0x80046E00;
@@ -2558,7 +2560,7 @@ g_SelectedFileIdx                           = 0x800BCD3F;
 //--- PA: 0x0981E8   VA: 0x800BCD48   subsegment: data, bodyprog_800B5C40
 //-----------------------------------------------------------------------
 g_DemoLoadAttempCount                       = 0x800BCD48;
-g_Sd_BgmLayers                              = 0x800BCD50;
+bgmLayersVolume                             = 0x800BCD50;
 
 //------------------------------------------------------------------------
 //--- PA: 0x098200   VA: 0x800BCD60   subsegment: .data, bodyprog_800348C0
