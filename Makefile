@@ -76,7 +76,11 @@ CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MMD -MP -undef -Wall
 LD_FLAGS            := $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
+ifeq ($(GEN_COMP_TU),1)
 SPLAT_FLAGS         := --disassemble-all --make-full-disasm-for-code
+else
+SPLAT_FLAGS         := --disassemble-all
+endif
 DUMPSXISO_FLAGS     := -x "$(ROM_DIR)/$(GAME_VERSION)" -s "$(ROM_DIR)/$(GAME_VERSION)/layout.xml" "$(IMAGE_DIR)/$(GAME_NAME).bin"
 MKPSXISO_FLAGS      := -y -q "$(ROM_DIR)/$(GAME_VERSION)/rebuild.xml"
 SILENT_ASSETS_FLAGS := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_SILENT)" -fh "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_HILL)" "$(ASSETS_DIR)/$(GAME_VERSION)"
@@ -356,7 +360,7 @@ generate: $(LD_FILES)
 objdiff-config:
 	rm -rf $(EXPECTED_DIR)
 	$(MAKE) regenerate
-	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
+	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 GEN_COMP_TU=1 build
 	mkdir -p $(EXPECTED_DIR)
 	mv $(BUILD_DIR)/asm $(EXPECTED_DIR)/asm
 	$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml

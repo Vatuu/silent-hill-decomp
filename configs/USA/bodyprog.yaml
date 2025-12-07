@@ -371,17 +371,21 @@ segments:
       - [0xA2288, lib, libgs, gs_001, .bss]
       - [0xA2348, lib, libgs, matrix, .bss] # Resized matrix.o .bss section from 0x80 to 0x78.
       - [0xA23C0, lib, libgs, gs_104, .bss]
-      - [0xA23DC, bss, bodyprog_800C6F3C] # Contains random padding data.
+      - [0xA23DC, pad, garbagebss/bodyprog_800C6F3C] # Contains random padding data.
       - [0xA23E0, lib, libgs, gs_107, .bss]
       - [0xA2420, lib, libgs, gs_123, .bss]
       - [0xA24A0, lib, libgs, global, .bss]
-      - [0xA24CC, bss, bodyprog_800C702C] # Contains random padding data.
+      - [0xA24CC, pad, garbagebss/bodyprog_800C702C] # Contains random padding data.
       - [0xA24D0, lib, libgs, objt3, .bss]
       - [0xA2600, lib, libgte, patchgte, .bss]
       - [0xA2610, lib, libpad, padmain, .bss]
       - [0xA2630, lib, libpad, padcmd, .bss]
       - [0xA2640, lib, libpad, padportd, .bss]
-      - [0xA28B0, bss, bodyprog_800C7410] # Contains random padding data.
+      - [0xA28B0, bss, bodyprog_800C7410]
+      - [0xA2B8C, pad, garbagebss/bodyprog_800C76EC] # Contains random padding data.
+      - [0xA2B90, bss, bodyprog_800C76F0]
+      - [0xA3F9C, pad, garbagebss/bodyprog_800C8AFC] # Contains random padding data.
+      - [0xA3FA0, bss, bodyprog_800C8B00]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data

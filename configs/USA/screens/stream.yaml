@@ -73,7 +73,7 @@ segments:
 
       # .bss section
       - [0x12AE0, .bss, stream]
-      - [0x12AE4, bss, stream_801F50E4] # Contains random padding data.
+      - [0x12AE4, pad, garbagebss/stream_801F50E4] # Contains random padding data.
       - [0x12AE8, lib, libds, dscb, .bss]
 
   # Random garbage data at end, overlaps into .bss causing issues, define as seperate segment

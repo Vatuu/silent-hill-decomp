@@ -921,7 +921,7 @@ def main():
     for yaml in yamlsPaths:
         splat.util.symbols.spim_context = spimdisasm.common.Context()
         splat.util.symbols.reset_symbols()
-        split.main([Path(f"{CONFIG_DIR}/{GAMEVERSIONS[gameVersionOption].GAME_SETUP_INFO.GAME_VERSION_DIR}/{yaml}")], modes="all", use_cache=False, verbose=False, disassemble_all=True, make_full_disasm_for_code=True)
+        split.main([Path(f"{CONFIG_DIR}/{GAMEVERSIONS[gameVersionOption].GAME_SETUP_INFO.GAME_VERSION_DIR}/{yaml}")], modes="all", use_cache=False, verbose=False, disassemble_all=True, make_full_disasm_for_code=objdiffConfigOption)
         if regenMode == True and appendSplits != []:
             for splitToAppend in appendSplits:
                 if yaml == splitToAppend:
@@ -937,21 +937,6 @@ def main():
         if os.path.exists("matching.ninja"):
             ninja_append(splitsYamlInfo, False, False, gameVersionOption, True)
     
-    #if regenMode == False:
-    #    if objdiffConfigOption:
-    #        ninja_setup_objdiff(splitsYamlInfo)
-    #    elif allConfigsOption:
-    #        ninja_setup_main("matching", gameVersionOption, splitsYamlInfo, False, False)
-    #        ninja_setup_objdiff(splitsYamlInfo)
-    #    else:
-    #        ninja_setup_main("build", gameVersionOption, splitsYamlInfo, skipChecksumOption, nonMatchingOption)
-    #else:
-    #    ninja_append(splitsYamlInfo, skipChecksumOption, nonMatchingOption, gameVersionOption, False)
-    #    if os.path.exists("matching.ninja"):
-    #        ninja_append(splitsYamlInfo, False, False, gameVersionOption, True)
-    #
-    #
-    #
     if objdiffConfigOption:
         subprocess.call([PYTHON, "-m", "ninja", "-f", "objdiff.ninja"])
         
