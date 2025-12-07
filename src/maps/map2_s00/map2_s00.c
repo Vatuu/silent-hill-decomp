@@ -573,7 +573,181 @@ void func_800D756C(s_SubCharacter* chara)
         }
 }
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D794C);
+void func_800D794C(s_SubCharacter* chara)
+{
+    s32 flag2;
+    s32 angle0;
+    s32 angle1;
+    s32 angle2;
+    s32 temp_s3;
+    s32 distance0;
+    s32 switch3;
+    s32 var_s5;
+    s32 angleAdd;
+    s32 dmgType;
+    s32 animStatus;
+
+    switch3 = 0;
+    angleAdd = 0;
+    animStatus = chara->model_0.anim_4.status_0;
+    distance0 = sharedData_800E21D0_0_s01.distance_150;
+    angle0 = sharedData_800E21D0_0_s01.angle_154;
+    flag2 = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2 & 1;
+    if (chara->properties_E4.unk0.field_E8_4)
+    {
+        angleAdd = Q12(0.1f);
+    }
+    temp_s3 = sharedFunc_800DC50C_2_s00(chara);
+    var_s5 = 0;
+    switch (chara->model_0.stateStep_3)
+    {
+        case 0:
+            switch3 = 1;
+            chara->properties_E4.unk0.properties_120.val32 = Q12(2.0f);
+            chara->flags_3E |= 4;
+            /* fallthrough */
+        case 1:
+            sharedFunc_800D529C_0_s01(chara, distance0 / 2, angle0);
+            if (func_80080514() < ((angleAdd * 2) + FP_ANGLE(72.0f)))
+            {
+                chara->model_0.stateStep_3 = 2;
+            }
+            else
+            {
+                chara->model_0.stateStep_3 = 3;
+            }
+        default:
+            break;
+        case 2:
+            var_s5 = 1;
+            if (temp_s3 == 0) 
+            {
+                if (chara->properties_E4.unk0.properties_120.val32 != 0)
+                {
+                    if (Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8) < Q12(1.0f))
+                    {
+                        chara->model_0.stateStep_3 = 1;
+                    }
+                }
+                else
+                {
+                    chara->model_0.stateStep_3 = 0;
+                }
+            }
+            else
+            {
+                chara->model_0.stateStep_3 = 4;
+            }
+            break;
+        case 3:
+            sharedFunc_800D529C_0_s01(chara, distance0 / 2, angle0);
+            if (temp_s3 != 0)
+            {
+                chara->model_0.stateStep_3 = 4;
+            }
+            else if (chara->properties_E4.unk0.properties_120.val32 == 0)
+            {
+                chara->model_0.stateStep_3 = 0;
+            }
+            else if (FP_ANGLE_NORM_S(angle0 - chara->rotation_24.vy) >= FP_ANGLE(-10.0f) &&
+                     FP_ANGLE_NORM_S(angle0 - chara->rotation_24.vy) < FP_ANGLE(10.0f))
+            {
+                var_s5 = 2;
+            }
+            break;
+        case 4:
+            if (animStatus == ANIM_STATUS(19, true))
+            {
+                switch3 = 2;
+                chara->model_0.anim_4.status_0 = 0x36;
+                chara->model_0.stateStep_3 = 5;
+            }
+            break;
+        case 5:
+            switch3 = 2;
+            break;
+    }
+    if (var_s5 == 1)
+    {
+        sharedFunc_800D57C8_0_s01(chara);
+    }
+    else
+    {
+        sharedFunc_800D598C_0_s01(chara);
+    }
+    dmgType = Chara_DamageTake(chara, Q12(1.0f));
+    switch (dmgType)
+    {
+        case 0:     
+            switch (switch3)
+            {
+                case 0:
+                    if (flag2 == 0)
+                    {
+                        chara->model_0.state_2 = 0x15;
+                        chara->model_0.stateStep_3 = 0;
+                        return;
+                    }
+                default:
+                    return;
+                case 2:
+                    if (animStatus == ANIM_STATUS(23, true) || animStatus == ANIM_STATUS(25, true))
+                    {
+                        chara->model_0.state_2 = 8;
+                        chara->model_0.stateStep_3 = 0;
+                    }
+                    else if (sharedFunc_800DC0A8_2_s00(chara))
+                    {
+                        chara->model_0.anim_4.status_0 = 0x2E;
+                    }
+                    break;
+                case 1:
+                    angle1 = sharedFunc_800DC894_2_s00(chara, distance0);
+                    angle2 = sharedFunc_800DC6E4_2_s00(chara, distance0);
+                    if (func_80080514() < angle1)
+                    {
+                        if (chara->properties_E4.unk0.field_E8_0 == 3)
+                        {
+                            sharedFunc_800DD13C_2_s00(chara, chara->field_40 + 1, Q12(0.6f));
+                        }
+                        chara->model_0.state_2 = 0x17;
+                        chara->model_0.stateStep_3 = 0;
+                        chara->properties_E4.player.flags_11C |= 0x10;
+                    }
+                    else if (func_80080514() < angle2)
+                    {
+                        chara->model_0.state_2 = 0x1B;
+                        chara->model_0.stateStep_3 = 0;
+                        chara->properties_E4.player.flags_11C |= 0x10;
+                    }
+                    break;
+            }
+            break;
+        case 1:
+            chara->model_0.state_2 = 0x1D;
+            chara->model_0.stateStep_3 = 0;
+            chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            break;
+        case 2:
+            chara->model_0.state_2 = 0x1E;
+            chara->model_0.stateStep_3 = 0;
+            chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            break;
+        case 3:
+        case 4:
+            chara->model_0.state_2 = 0x20;
+            chara->model_0.stateStep_3 = 0;
+            if (chara->health_B0 <= 0)
+            {
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
+            }
+            else
+            {
+                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            }
+            break;
+        }
+}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D7D0C);
 
