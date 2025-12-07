@@ -205,6 +205,10 @@ extern VbRVIEW D_800C3B48; // 0x800C3B48
 /** Holds the coords for displaying selection box around items and options. */
 extern DVECTOR D_800C3B68[4][4]; // 0x800C3BE8 - Type assumed.
 
+extern s32 D_800C3BA8;
+
+extern s32 D_800C3BAC;
+
 extern GsCOORD2PARAM g_Items_Transforms[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3BE8
 
 extern u8 g_Item_MapLoadableItems[48]; // 0x800C3BB8
@@ -354,6 +358,8 @@ void func_8004FB0C(void);
 void Gfx_Inventory_HealthStatusDraw(void);
 
 void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId);
+
+void Inventory_PlayerItemScroll(u32* selectedItemId);
 
 void Gfx_Results_ItemsDisplay(); // TODO: Might take s32 argument?
 

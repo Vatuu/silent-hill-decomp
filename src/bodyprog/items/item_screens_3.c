@@ -2109,7 +2109,703 @@ void Gfx_Results_ItemsPosition() // 0x8005227C
  * will be able to navigate through other functions. However,
  * messing with commands also will softlock the game.
  */
-INCLUDE_ASM("asm/bodyprog/nonmatchings/items/item_screens_3", Inventory_PlayerItemScroll); // 0x800523D8
+void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
+{
+    s32          sp10;
+    s32          sp14;
+    s32          temp_a0_8;
+    s32          temp_hi;
+    s32          temp_ret;
+    s32          temp_ret_2;
+    s32          temp_ret_3;
+    s32          i;
+    s32          j;
+    s32          k;
+    s32          l;
+    s32          var_s3;
+    s32          var_t3;
+    s32          temp;
+    s32          temp2;
+    s32          temp3;
+    s32          temp4;
+    s32          temp5;
+    register s32 v0 asm("v0"); // @hack
+    s_GameWork*  ptr;
+    s_GameWork*  ptr2;
+    s32*         ptr3;
+
+    switch (g_GameWork.gameStateStep_598[1])
+    {
+        case 1:
+            for (i = 0; i < 7; i++)
+            {
+                g_Items_Transforms[i].scale.vz = 0x1000;
+                g_Items_Transforms[i].scale.vy = 0x1000;
+                g_Items_Transforms[i].scale.vx = 0x1000;
+            }
+
+            if (g_SysWork.inventoryItemSelectedIdx_2351 == g_Inventory_SelectedItemIdx)
+            {
+                for (i = 0; i < 7; i++)
+                {
+                    if (D_800C3E18[i] != -1)
+                    {
+                        if (D_800C3E18[i] == g_SysWork.inventoryItemSelectedIdx_2351)
+                        {
+                            g_Items_Transforms[i].scale.vz = 0x1000;
+                            g_Items_Transforms[i].scale.vy = 0x1000;
+                            g_Items_Transforms[i].scale.vx = 0x1000;
+                            g_Items_Coords[i].coord.t[1]   = 0x40;
+                            g_Items_Coords[i].coord.t[0]   = 0;
+                            g_Items_Coords[i].coord.t[2]   = -0x400;
+                        }
+                        else
+                        {
+                            if (ABS(D_800C3E18[i] - g_SysWork.inventoryItemSelectedIdx_2351) >= g_SavegamePtr->inventorySlotCount_AB >> 1)
+                            {
+                                if (g_SysWork.inventoryItemSelectedIdx_2351 < D_800C3E18[i])
+                                {
+                                    var_s3 = (D_800C3E18[i] - g_SysWork.inventoryItemSelectedIdx_2351) - g_SavegamePtr->inventorySlotCount_AB;
+                                }
+                                else
+                                {
+                                    var_s3 = g_SavegamePtr->inventorySlotCount_AB - (g_SysWork.inventoryItemSelectedIdx_2351 - D_800C3E18[i]);
+                                }
+                            }
+                            else
+                            {
+                                var_s3 = D_800C3E18[i] - g_SysWork.inventoryItemSelectedIdx_2351;
+                            }
+
+                            temp_ret = Math_Sin((var_s3 << 0xA) / 3);
+                            temp_hi  = temp_ret / 3;
+
+                            g_Items_Coords[i].coord.t[1] = 0x40;
+                            g_Items_Coords[i].coord.t[0] = temp_hi;
+
+                            g_Items_Coords[i].coord.t[2]    = ABS(Math_Sin((var_s3 << 0xA) >> 2)) - 0x400;
+                            g_Items_Transforms[i].rotate.vy = -(var_s3 << 0xA) / 3;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                g_Inventory_ScrollTransitionTimer++;
+
+                if ((g_SysWork.inventoryItemSelectedIdx_2351 == (g_Inventory_SelectedItemIdx + 1)) ||
+                    ((g_Inventory_SelectedItemIdx - g_SysWork.inventoryItemSelectedIdx_2351) == (g_SavegamePtr->inventorySlotCount_AB - 1)))
+                {
+                    g_Inventory_ScrollTransitionTimer = -g_Inventory_ScrollTransitionTimer;
+                }
+
+                if (ABS((s32)g_Inventory_ScrollTransitionTimer) == 8)
+                {
+                    g_Inventory_ScrollTransitionTimer = 0;
+                    g_Inventory_SelectedItemIdx       = g_SysWork.inventoryItemSelectedIdx_2351;
+                }
+
+                for (i = 0; i < 7; i++)
+                {
+                    if (D_800C3E18[i] != -1)
+                    {
+                        if (ABS(D_800C3E18[i] - g_Inventory_SelectedItemIdx) >= g_SavegamePtr->inventorySlotCount_AB >> 1)
+                        {
+                            if (D_800C3E18[i] == g_Inventory_SelectedItemIdx)
+                            {
+                                var_s3 = 0;
+                            }
+                            else if (g_Inventory_SelectedItemIdx < D_800C3E18[i])
+                            {
+                                var_s3 = (D_800C3E18[i] - g_Inventory_SelectedItemIdx) - g_SavegamePtr->inventorySlotCount_AB;
+                            }
+                            else
+                            {
+                                var_s3 = g_SavegamePtr->inventorySlotCount_AB - (g_Inventory_SelectedItemIdx - D_800C3E18[i]);
+                            }
+                        }
+                        else
+                        {
+                            var_s3 = D_800C3E18[i] - g_Inventory_SelectedItemIdx;
+                        }
+
+                        if (g_Inventory_ScrollTransitionTimer != 0)
+                        {
+                            temp_ret_2 = Math_Sin(((var_s3 << 0xA) + (g_Inventory_ScrollTransitionTimer << 7)) / 3);
+                            temp_hi    = temp_ret_2 / 3;
+
+                            g_Items_Coords[i].coord.t[1] = 0x40;
+                            g_Items_Coords[i].coord.t[0] = temp_hi;
+
+                            g_Items_Coords[i].coord.t[2]    = ABS(Math_Sin(((var_s3 << 0xA) + (g_Inventory_ScrollTransitionTimer << 7)) >> 2)) - 0x400;
+                            g_Items_Transforms[i].rotate.vy = -(((var_s3 << 0xA) / 3) + ((g_Inventory_ScrollTransitionTimer << 7) / 3));
+                        }
+                        else
+                        {
+                            if (D_800C3E18[i] == g_Inventory_SelectedItemIdx)
+                            {
+                                g_Items_Coords[i].coord.t[1] = 0x40;
+                                g_Items_Coords[i].coord.t[0] = 0;
+                                g_Items_Coords[i].coord.t[2] = -0x400;
+                            }
+                            else
+                            {
+                                temp_ret_3 = Math_Sin((var_s3 << 0xA) / 3);
+                                temp_hi    = temp_ret_3 / 3;
+
+                                g_Items_Coords[i].coord.t[1] = 0x40;
+                                g_Items_Coords[i].coord.t[0] = temp_hi;
+
+                                g_Items_Coords[i].coord.t[2]    = ABS(Math_Sin((var_s3 << 0xA) / 4)) - 0x400;
+                                g_Items_Transforms[i].rotate.vy = -(var_s3 << 0xA) / 3;
+                            }
+                        }
+
+                        if (var_s3 < -3 || var_s3 > 3)
+                        {
+                            g_Items_Coords[i].coord.t[0] = 0x2800;
+                        }
+                    }
+                }
+                g_Inventory_ScrollTransitionTimer = ABS(g_Inventory_ScrollTransitionTimer);
+            }
+            break;
+
+        case 5:
+            if (g_Inventory_ScrollTransitionTimer == 0)
+            {
+
+                g_SysWork.playerCombatInfo_38.weaponAttack_F        = g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 + 0x80;
+                g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 = g_SysWork.inventoryItemSelectedIdx_2351 & 0xFF;
+                D_800C3E18[7]                                       = g_SysWork.inventoryItemSelectedIdx_2351;
+
+                for (k = 0; k < INVENTORY_ITEM_COUNT_MAX; k++)
+                {
+                    if (g_SavegamePtr->items_0[D_800C3E18[7]].id_0 == g_Item_MapLoadableItems[k])
+                    {
+                        Gfx_Items_Display((s_TmdFile*)FS_BUFFER_8, 7, k);
+                        func_8005487C(7);
+                        k = INVENTORY_ITEM_COUNT_MAX;
+                    }
+                }
+
+                if (g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 >> 5 == 5)
+                {
+                    g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].count_1;
+                    g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11   = 0;
+
+                    for (i = 0; i < g_SavegamePtr->inventorySlotCount_AB; i++)
+                    {
+                        if (g_SavegamePtr->items_0[i].id_0 == (g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 + 0x20))
+                        {
+                            g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11 = g_SavegamePtr->items_0[i].count_1;
+                        }
+                    }
+                }
+                else
+                {
+                    g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = 1;
+                }
+            }
+
+            g_Inventory_ScrollTransitionTimer++;
+
+            if (g_Inventory_ScrollTransitionTimer == 9)
+            {
+                g_Inventory_EquippedItem                            = g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0;
+                g_SavegamePtr->equippedWeapon_AA                    = g_Inventory_EquippedItem;
+                g_Inventory_ScrollTransitionTimer                   = 0;
+                g_SysWork.playerCombatInfo_38.weaponAttack_F        = g_Inventory_EquippedItem + 0x80;
+                g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 = g_SysWork.inventoryItemSelectedIdx_2351;
+
+                *selectedItemId                 = 0;
+                temp3                           = g_GameWork.gameStateStep_598[2];
+                D_800AE188                      = 0;
+                g_GameWork.gameStateStep_598[1] = 1;
+                D_800C3BA8                      = temp3;
+
+                func_8004EF48();
+                func_8004C564(0, -1);
+            }
+            else
+            {
+                g_Items_Transforms[7].scale.vz = g_Inventory_ScrollTransitionTimer << 9;
+                g_Items_Transforms[7].scale.vy = g_Inventory_ScrollTransitionTimer << 9;
+                g_Items_Transforms[7].scale.vx = g_Inventory_ScrollTransitionTimer << 9;
+            }
+
+            g_Items_Coords[7].coord.t[0] = 0;
+            g_Items_Coords[7].coord.t[1] = -0x280;
+            g_Items_Coords[7].coord.t[2] = 0;
+            break;
+
+        case 6:
+            g_Inventory_ScrollTransitionTimer++;
+
+            if (g_Inventory_ScrollTransitionTimer == 9)
+            {
+                g_Inventory_EquippedItem                            = 0;
+                g_SavegamePtr->equippedWeapon_AA                    = 0;
+                g_SysWork.playerCombatInfo_38.weaponAttack_F        = -1;
+                g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 = -1;
+                g_Inventory_ScrollTransitionTimer                   = 0;
+
+                temp = g_SysWork.inventoryItemSelectedIdx_2351;
+                if (temp == -1)
+                {
+                    D_800AE188 = 0;
+                }
+
+                *selectedItemId                 = 0;
+                temp3                           = g_GameWork.gameStateStep_598[2];
+                v0                              = 1;
+                g_GameWork.gameStateStep_598[1] = v0;
+                D_800C3BA8                      = temp3;
+
+                func_8004EF48();
+                func_8004C564(0, -1);
+            }
+            else
+            {
+                g_Items_Transforms[7].scale.vz = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                g_Items_Transforms[7].scale.vy = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                g_Items_Transforms[7].scale.vx = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+            }
+
+            g_Items_Coords[7].coord.t[0] = 0;
+            g_Items_Coords[7].coord.t[1] = -0x280;
+            g_Items_Coords[7].coord.t[2] = 0;
+            break;
+
+        case 7:
+            if (g_Inventory_ScrollTransitionTimer == 0)
+            {
+                D_800C3BAC = -1;
+                sp10       = g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10;
+                sp14       = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
+                Items_AmmoReloadCalculation(&sp10, &sp14, g_SysWork.playerCombatInfo_38.weaponAttack_F);
+                g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11                                    = sp14;
+                g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10                                  = sp10;
+                g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12].count_1 = sp10;
+
+                for (j = 0; j < g_SavegamePtr->inventorySlotCount_AB; j++)
+                {
+                    if (g_SavegamePtr->items_0[j].id_0 == (g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12].id_0 + 0x20))
+                    {
+                        g_SavegamePtr->items_0[j].count_1 = g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11;
+                        D_800C3BAC                        = j;
+                        j                                 = g_SavegamePtr->inventorySlotCount_AB;
+                    }
+                }
+            }
+
+            if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1 == 0 &&
+                g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 >> 5 == 6)
+            {
+                g_Inventory_ScrollTransitionTimer++;
+                *selectedItemId = 0;
+
+                if (g_Inventory_ScrollTransitionTimer == 9)
+                {
+                    g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 = 0xFF;
+                    ptr                                                                  = &g_GameWork;
+                    do
+                    {
+                        g_Inventory_ScrollTransitionTimer = 0;
+                        temp4                             = ptr->gameStateStep_598[2];
+                        g_GameWork.gameStateStep_598[1]   = 1;
+                        D_800C3BA8                        = temp4;
+                    } while (0); // @hack
+                    func_8004EF48();
+                }
+                else
+                {
+                    for (j = 0; j < 7; j++)
+                    {
+                        if (D_800C3E18[j] == g_SysWork.inventoryItemSelectedIdx_2351)
+                        {
+                            g_Items_Transforms[j].scale.vz = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                            g_Items_Transforms[j].scale.vy = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                            g_Items_Transforms[j].scale.vx = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                        }
+                    }
+                }
+            }
+            else if (g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 + 1].count_1 == 0 &&
+                     D_800C3BAC != -1)
+            {
+                *selectedItemId = 0;
+                g_Inventory_ScrollTransitionTimer++;
+
+                if (g_Inventory_ScrollTransitionTimer == 9)
+                {
+                    g_SavegamePtr->items_0[g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 + 1].id_0 = 0xFF;
+                    g_Inventory_ScrollTransitionTimer                                                    = 0;
+                    func_8004EF48();
+                    *selectedItemId                 = 0;
+                    D_800AE188                      = 0;
+                    temp5                           = g_GameWork.gameStateStep_598[2];
+                    g_GameWork.gameStateStep_598[1] = 1;
+                    D_800C3BA8                      = temp5;
+                }
+                else
+                {
+                    for (i = 0; i < 7; i++)
+                    {
+                        if (D_800C3E18[i] == (g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 + 1))
+                        {
+                            g_Items_Transforms[i].scale.vz = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                            g_Items_Transforms[i].scale.vy = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                            g_Items_Transforms[i].scale.vx = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                *selectedItemId = 0;
+
+                g_Inventory_ScrollTransitionTimer++;
+
+                if (g_Inventory_ScrollTransitionTimer == 9)
+                {
+                    g_Inventory_ScrollTransitionTimer = 0;
+                    *selectedItemId                   = 0;
+                    D_800AE188                        = 0;
+                    temp5                             = g_GameWork.gameStateStep_598[2];
+                    g_GameWork.gameStateStep_598[1]   = 1;
+                    D_800C3BA8                        = temp5;
+                }
+            }
+            break;
+
+        case 8:
+            var_t3 = -1;
+            if (g_Inventory_ScrollTransitionTimer == 0)
+            {
+                D_800C3BAC = -1;
+
+                if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 >> 5 == 6)
+                {
+                    for (l = 0; l < g_SavegamePtr->inventorySlotCount_AB; l++)
+                    {
+                        if (g_SavegamePtr->items_0[l].id_0 == (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 - 0x20))
+                        {
+                            temp_a0_8 = g_Items_GunsMaxLoadAmmo[g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 - 0xA0] - g_SavegamePtr->items_0[l].count_1;
+
+                            if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1 >= temp_a0_8)
+                            {
+                                g_SavegamePtr->items_0[l].count_1                                       += temp_a0_8;
+                                g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1 -= temp_a0_8;
+                            }
+                            else
+                            {
+                                g_SavegamePtr->items_0[l].count_1                                      += g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1;
+                                g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1 = 0;
+                            }
+
+                            if (g_SavegamePtr->items_0[l].id_0 == (g_SysWork.playerCombatInfo_38.weaponAttack_F + 0x80))
+                            {
+                                g_SysWork.playerCombatInfo_38.currentWeaponAmmo_10 = g_SavegamePtr->items_0[l].count_1;
+                                g_SysWork.playerCombatInfo_38.totalWeaponAmmo_11   = g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (l = 0; l < g_SavegamePtr->inventorySlotCount_AB; l++)
+                    {
+                        if (g_SavegamePtr->items_0[l].id_0 == (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 + 0x20))
+                        {
+                            D_800C3BAC = l;
+
+                            temp_a0_8 = g_Items_GunsMaxLoadAmmo[g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 - 0x80] - g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1;
+
+                            if (g_SavegamePtr->items_0[l].count_1 >= temp_a0_8)
+                            {
+                                g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1 += temp_a0_8;
+                                g_SavegamePtr->items_0[l].count_1                                       -= temp_a0_8;
+                            }
+                            else
+                            {
+                                var_t3                                                                   = l;
+                                g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1 += g_SavegamePtr->items_0[l].count_1;
+                                g_SavegamePtr->items_0[l].count_1                                        = 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ((g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1 == 0 && g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 >> 5 == 6) ||
+                (var_t3 >= 0 && g_SavegamePtr->items_0[var_t3].count_1 == 0))
+            {
+                g_Inventory_ScrollTransitionTimer++;
+                *selectedItemId = 0;
+
+                if (g_Inventory_ScrollTransitionTimer == 9)
+                {
+                    g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 = 0xFF;
+                    ptr2                                                                 = &g_GameWork;
+                    do
+                    {
+                        g_Inventory_ScrollTransitionTimer = 0;
+                        temp4                             = ptr2->gameStateStep_598[2];
+                        g_GameWork.gameStateStep_598[1]   = 1;
+                        D_800C3BA8                        = temp4;
+                    } while (0); // @hack
+                    func_8004EF48();
+                }
+                else
+                {
+                    for (l = 0; l < 7; l++)
+                    {
+                        if (D_800C3E18[l] == g_SysWork.inventoryItemSelectedIdx_2351)
+                        {
+                            g_Items_Transforms[l].scale.vz = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                            g_Items_Transforms[l].scale.vy = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                            g_Items_Transforms[l].scale.vx = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                        }
+                    }
+                }
+            }
+            else if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351 + 1].count_1 == 0 && D_800C3BAC != -1)
+            {
+                *selectedItemId = 0;
+                g_Inventory_ScrollTransitionTimer++;
+
+                if (g_Inventory_ScrollTransitionTimer == 9)
+                {
+                    g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351 + 1].id_0 = 0xFF;
+                    g_Inventory_ScrollTransitionTimer                                        = 0;
+                    func_8004EF48();
+                    *selectedItemId                 = 0;
+                    D_800AE188                      = 0;
+                    temp5                           = g_GameWork.gameStateStep_598[2];
+                    g_GameWork.gameStateStep_598[1] = 1;
+                    D_800C3BA8                      = temp5;
+                }
+                else
+                {
+                    for (l = 0; l < 7; l++)
+                    {
+                        if (D_800C3E18[l] == (g_SysWork.inventoryItemSelectedIdx_2351 + 1))
+                        {
+                            g_Items_Transforms[l].scale.vz = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                            g_Items_Transforms[l].scale.vy = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                            g_Items_Transforms[l].scale.vx = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                *selectedItemId = 0;
+                g_Inventory_ScrollTransitionTimer++;
+
+                if (g_Inventory_ScrollTransitionTimer == 9)
+                {
+                    g_Inventory_ScrollTransitionTimer = 0;
+                    *selectedItemId                   = 0;
+                    D_800AE188                        = 0;
+                    temp5                             = g_GameWork.gameStateStep_598[2];
+                    g_GameWork.gameStateStep_598[1]   = 1;
+                    D_800C3BA8                        = temp5;
+                }
+            }
+            break;
+
+        case 9:
+            if (g_Inventory_ScrollTransitionTimer == 0)
+            {
+                switch (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0)
+                {
+                    case 32:
+                    case 33:
+                    case 34:
+                        switch (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0)
+                        {
+                            case 33:
+                                g_SysWork.player_4C.chara_0.health_B0 += 0x50000;
+                                break;
+
+                            case 32:
+                                g_SysWork.player_4C.chara_0.health_B0 += 0x28000;
+                                break;
+
+                            case 34:
+                                g_SysWork.player_4C.chara_0.health_B0 += 0x64000;
+                                g_SavegamePtr->healthSaturation_238    = 0x12C000;
+                                break;
+                        }
+
+                        Sd_PlaySfx(0x52D, -0x40, 0x40);
+                        g_SysWork.player_4C.chara_0.health_B0 = CLAMP(g_SysWork.player_4C.chara_0.health_B0, 0, 0x64000);
+                        g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1--;
+                        break;
+                }
+            }
+
+            if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1 == 0)
+            {
+                g_Inventory_ScrollTransitionTimer++;
+
+                if (g_Inventory_ScrollTransitionTimer == 9)
+                {
+                    g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 = 0xFF;
+                    g_Inventory_ScrollTransitionTimer                                    = 0;
+
+                    *selectedItemId                 = 0;
+                    D_800AE188                      = 0;
+                    temp4                           = g_GameWork.gameStateStep_598[2];
+                    g_GameWork.gameStateStep_598[1] = 1;
+                    D_800C3BA8                      = temp4;
+                    func_8004EF48();
+                }
+                else
+                {
+                    for (i = 0; i < 7; i++)
+                    {
+                        if (D_800C3E18[i] == g_SysWork.inventoryItemSelectedIdx_2351)
+                        {
+                            g_Items_Transforms[i].scale.vz = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                            g_Items_Transforms[i].scale.vy = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                            g_Items_Transforms[i].scale.vx = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                g_Inventory_ScrollTransitionTimer++;
+
+                if (g_Inventory_ScrollTransitionTimer == 9)
+                {
+                    g_Inventory_ScrollTransitionTimer = 0;
+                    *selectedItemId                   = 0;
+                    D_800AE188                        = 0;
+
+                    temp5                           = g_GameWork.gameStateStep_598[2];
+                    g_GameWork.gameStateStep_598[1] = 1;
+                    D_800C3BA8                      = temp5;
+                }
+            }
+            break;
+
+        case 11:
+            if (g_Inventory_ScrollTransitionTimer == 0 &&
+                ((g_SavegamePtr->items_0[(u8)g_SysWork.inventoryItemSelectedIdx_2351].id_0 >= 0x40 &&
+                  g_SavegamePtr->items_0[(u8)g_SysWork.inventoryItemSelectedIdx_2351].id_0 < 0x80) ||
+                 g_SavegamePtr->items_0[(u8)g_SysWork.inventoryItemSelectedIdx_2351].id_0 == 0xE2))
+            {
+                g_SavegamePtr->items_0[(u8)g_SysWork.inventoryItemSelectedIdx_2351].count_1 = 0;
+            }
+
+            g_Inventory_ScrollTransitionTimer++;
+
+            if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].count_1 == 0)
+            {
+                if (g_Inventory_ScrollTransitionTimer == 9)
+                {
+                    g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 = 0xFF;
+                    g_Inventory_ScrollTransitionTimer                                    = 0;
+                    *selectedItemId                                                      = 0;
+                    D_800AE188                                                           = 0;
+
+                    temp3                           = g_GameWork.gameStateStep_598[2];
+                    g_GameWork.gameStateStep_598[1] = 0x11;
+                    D_800C3BA8                      = temp3;
+
+                    for (i = 0; i < 7; i++)
+                    {
+                        if (D_800C3E18[i] == g_SysWork.inventoryItemSelectedIdx_2351)
+                        {
+                            g_SavegamePtr->items_0[D_800C3E18[i]].id_0 = 0xFF;
+                            i                                          = 7;
+                        }
+                    }
+                }
+                else
+                {
+                    for (i = 0; i < 7; i++)
+                    {
+                        if (D_800C3E18[i] == g_SysWork.inventoryItemSelectedIdx_2351)
+                        {
+                            g_Items_Transforms[i].scale.vz = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                            g_Items_Transforms[i].scale.vy = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                            g_Items_Transforms[i].scale.vx = 0x1000 - (g_Inventory_ScrollTransitionTimer << 9);
+                        }
+                    }
+                }
+            }
+            break;
+
+        case 13:
+            D_800AE190++;
+            g_Inventory_ScrollTransitionTimer++;
+            D_800AE190                        = CLAMP(D_800AE190, 0, 0x20);
+            g_Inventory_ScrollTransitionTimer = CLAMP(g_Inventory_ScrollTransitionTimer, 0, 0x20);
+
+            if (g_Inventory_ScrollTransitionTimer == 0x20)
+            {
+                if (Fs_QueueGetLength() == 0)
+                {
+                    g_GameWork.gameStateStep_598[1] = 0xE;
+                    g_GameWork.gameStateStep_598[2] = 0;
+                }
+            }
+            break;
+
+        case 14:
+            D_800AE190++;
+            D_800AE190 = CLAMP(D_800AE190, 0, 0x40);
+
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.action_6 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            {
+                if (D_800AE190 == 0x40)
+                {
+                    g_Inventory_ScrollTransitionTimer    = 0;
+                    g_Gfx_Inventory_SelectionBordersDraw = 0;
+                    g_GameWork.gameStateStep_598[1]      = 0xF;
+                    g_GameWork.gameStateStep_598[2]      = 0;
+                    D_800AE190                           = 0;
+                }
+            }
+            break;
+
+        case 15:
+            D_800AE190 += 2;
+            g_Inventory_ScrollTransitionTimer++;
+            g_Inventory_ScrollTransitionTimer = CLAMP(g_Inventory_ScrollTransitionTimer, 0, 9);
+
+            if (D_800AE190 > 0x20)
+            {
+                g_Inventory_ScrollTransitionTimer = 0;
+                temp2                             = g_GameWork.gameStateStep_598[2];
+                g_GameWork.gameStateStep_598[1]   = 1;
+                ptr3                              = &D_800C3BA8;
+                do {} while (0); // @hack
+                g_GameWork.gameStateStep_598[2]      = 0;
+                *ptr3                                = temp2;
+                *selectedItemId                      = 0;
+                D_800AE188                           = 0;
+                D_800AE190                           = 0;
+                g_Gfx_Inventory_SelectionBordersDraw = 0;
+            }
+            break;
+    }
+
+    for (i = 0; i < 7; i++)
+    {
+        if (D_800C3E18[i] == g_SysWork.inventoryItemSelectedIdx_2351)
+        {
+            g_Items_Transforms[i].rotate.vy -= 0x10;
+        }
+    }
+
+    g_Items_Transforms[7].rotate.vy += 0x20;
+}
 
 void func_800539A4(s32 scrollDirection, s32 arg1) // 0x800539A4
 {
