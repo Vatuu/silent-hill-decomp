@@ -1483,11 +1483,8 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
     return ARRAY_SIZE(g_SysWork.npcs_1A0);
 }
 
-void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unsued2) // 0x80088F94
+void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unused2) // 0x80088F94
 {
-    u8   temp0;
-    s32* temp1;
-
     if (chara == NULL)
     {
         return;
@@ -1495,9 +1492,7 @@ void func_80088F94(s_SubCharacter* chara, s32 unused1, s32 unsued2) // 0x80088F9
 
     if (chara->model_0.charaId_0 <= Chara_MonsterCybil)
     {
-        temp0   = chara->field_40;
-        temp1   = &g_SysWork.field_228C[(temp0 << 24) >> 29];
-        *temp1 &= ~(1 << (temp0 & 0x1F));
+        CLEAR_FLAG(g_SysWork.field_228C, chara->field_40);
     }
 
     chara->model_0.charaId_0 = Chara_None;
