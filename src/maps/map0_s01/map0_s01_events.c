@@ -820,7 +820,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
 
             // Set flags.
             SysWork_NpcFlagSet(0);
-            g_SysWork.field_228C |= 1 << 0;
+            g_SysWork.field_228C[0] |= 1 << 0;
             Savegame_EventFlagSet(EventFlag_M0S01_PickupMap);
 
             SysWork_StateStepIncrement(0);

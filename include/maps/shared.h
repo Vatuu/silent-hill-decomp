@@ -2421,7 +2421,7 @@ s32 sharedFunc_800DC98C_2_s00(s_SubCharacter*, VECTOR3*, VECTOR3*, VECTOR3*);
 
 void sharedFunc_800DD2C4_2_s00(s_SubCharacter*, s32, s32); // Assumed void return type.
 
-void sharedFunc_800DD13C_2_s00(s_SubCharacter*, s32, q19_12); // Assumed void return type.
+void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnChance);
 
 void sharedFunc_800DD4A4_2_s00(s_SubCharacter* chara);
 

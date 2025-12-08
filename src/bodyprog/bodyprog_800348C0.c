@@ -276,7 +276,7 @@ void func_80034EC8(void) // 0x80034EC8
 {
     s32 i;
 
-    g_SysWork.field_228C = 0;
+    g_SysWork.field_228C[0] = 0;
     g_SysWork.npcFlags_2290 = 0;
 
     bzero(g_SysWork.npcs_1A0, ARRAY_SIZE(g_SysWork.npcs_1A0) * sizeof(s_SubCharacter));
@@ -2222,7 +2222,7 @@ void func_80037F24(bool cond) // 0x80037F24
 
         pos = (VECTOR3*)curCharaSpawn;
 
-        if (!(g_SysWork.flags_22A4 & SysFlag2_4) && HAS_FLAG(temp_a0, i) && !HAS_FLAG(&g_SysWork.field_228C, i) &&
+        if (!(g_SysWork.flags_22A4 & SysFlag2_4) && HAS_FLAG(temp_a0, i) && !HAS_FLAG(g_SysWork.field_228C, i) &&
             curCharaSpawn->data.spawnInfo.flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= curCharaSpawn->data.spawnInfo.field_7_0 &&
             func_8008F914(curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8) &&
             !Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, pos, Q12(22.0f)) &&
@@ -2256,7 +2256,7 @@ void func_80037F24(bool cond) // 0x80037F24
             g_SysWork.npcs_1A0[npcIdx].rotation_24.vy = curCharaSpawn->data.spawnInfo.rotationY_5 * 16;
 
             SET_FLAG(&g_SysWork.npcFlags_2290, npcIdx);
-            SET_FLAG(&g_SysWork.field_228C, i);
+            SET_FLAG(g_SysWork.field_228C, i);
 
             chara                          = &g_SysWork.npcs_1A0[npcIdx];
             chara->model_0.anim_4.flags_2 |= AnimFlag_Visible;
@@ -2416,7 +2416,7 @@ void func_80038354(void) // 0x80038354
                 {
                     npc->model_0.charaId_0 = Chara_None;
                     SysWork_NpcFlagClear(k);
-                    CLEAR_FLAG(&g_SysWork.field_228C, npc->field_40);
+                    CLEAR_FLAG(g_SysWork.field_228C, npc->field_40);
                     continue;
                 }
 

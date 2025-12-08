@@ -1648,7 +1648,7 @@ typedef struct _SysWork
     s8              field_2282;    // Room process flags?
     s8              field_2283;    // Index into `SfxPairs`.
     u16             field_2284[4];
-    s32             field_228C;
+    s32             field_228C[1];
     s32             npcFlags_2290; // Flags related to NPCs. Each bit corresponds to `npcs_1A0` index.
     s8              unk_2294[4];   // Padding?
     e_SysWorkProcessFlags processFlags_2298;
