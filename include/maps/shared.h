@@ -2373,6 +2373,8 @@ void sharedFunc_800D8618_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D8C34_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D91A0_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara);
 
 /** Player func. */
@@ -2970,7 +2972,7 @@ void sharedSymbol_800D0ECC_3_s03(s_SubCharacter* bloodsucker);
 void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader*, GsCOORDINATE2*);
 
 /** `arg1` is a multiplier? */
-q20_12 Chara_DamageTake(s_SubCharacter*, s32 mult);
+s32 Chara_DamageTake(s_SubCharacter*, s32 mult);
 
 void sharedFunc_800D3CC4_0_s01(s_SubCharacter* chara);
 

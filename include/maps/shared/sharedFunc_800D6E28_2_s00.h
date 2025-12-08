@@ -46,8 +46,8 @@ void sharedFunc_800D6E28_2_s00(s_SubCharacter* chara)
         case 2:
             distFieldF8 = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
             angFieldF8  = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8) - chara->rotation_24.vy);
-            
-            if (temp_s5 == 0)
+
+            if (!temp_s5)
             {
                 if ((distFieldF8 < Q12(0.5f) && (angFieldF8 >= FP_ANGLE(-5.0f) && angFieldF8 <= FP_ANGLE(5.0f))) ||
                     (chara->properties_E4.unk0.flags_11C & CharaUnk0Flag_Unk31))
