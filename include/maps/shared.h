@@ -2367,6 +2367,8 @@ void sharedFunc_800D69A0_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D6E28_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D7D0C_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D80EC_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D83F8_2_s00(s_SubCharacter* chara);

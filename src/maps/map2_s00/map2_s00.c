@@ -749,7 +749,7 @@ void func_800D794C(s_SubCharacter* chara)
         }
 }
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D7D0C);
+#include "maps/shared/sharedFunc_800D7D0C_2_s00.h" // 0x800D7D0C
 
 #include "maps/shared/sharedFunc_800D80EC_2_s00.h" // 0x800D80EC
 
