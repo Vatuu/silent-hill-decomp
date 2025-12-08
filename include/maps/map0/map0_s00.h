@@ -113,7 +113,7 @@ s32 func_800CC8FC(VECTOR3*, s32*, MATRIX*);
 
 void func_800CD8E8(s32, s32, s_800E330C*);
 
-void func_800CE02C(s32, s32, s_800E34FC* arg2, s32 mapId);
+void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId); // arg0 = value from 0 - 3 (enum?)
 
 void func_800D0124(void);
 

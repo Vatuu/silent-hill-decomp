@@ -2781,10 +2781,6 @@ GsLIGHT_MODE                                = 0x800C6F34;
 // gs_104.o externs
 GsCLIP3near                                 = 0x800C6F38;
 
-//----------------------------------------------------------------------
-//--- PA: 0x0A23DC   VA: 0x800C6F3C   subsegment: bss, bodyprog_800C6F3C
-//----------------------------------------------------------------------
-
 //------------------------------------------------------------------------
 //--- PA: 0x0A23E0   VA: 0x800C6F40   subsegment: lib, libgs, gs_107, .bss
 //------------------------------------------------------------------------
@@ -2809,10 +2805,6 @@ GsOUT_PACKET_P                              = 0x800C7018;
 GsMATE_C                                    = 0x800C701C;
 GsTON                                       = 0x800C7024;
 GsNDIV                                      = 0x800C7028;
-
-//----------------------------------------------------------------------
-//--- PA: 0x0A24CC   VA: 0x800C702C   subsegment: bss, bodyprog_800C702C
-//----------------------------------------------------------------------
 
 //-----------------------------------------------------------------------
 //--- PA: 0x0A24D0   VA: 0x800C7030   subsegment: lib, libgs, objt3, .bss
@@ -2855,11 +2847,19 @@ sd_vb_malloc_rec                            = 0x800C75D8;
 sd_seq_loop_mode                            = 0x800C7660;
 sd_tick_mode                                = 0x800C7664;
 sd_spu_alloc                                = 0x800C7668; // size:0x80
+
+//----------------------------------------------------------------------
+//--- PA: 0x0A2B90   VA: 0x800C76F0   subsegment: bss, bodyprog_800C76F0
+//----------------------------------------------------------------------
 s_attr                                      = 0x800C76F0; // size:0x40
 smf_midi                                    = 0x800C7738;
 smf_midi_sound_off                          = 0x800C82B8; // guessed name
 smf_port                                    = 0x800C8318;
 sd_timer_event                              = 0x800C8AF8;
+
+//----------------------------------------------------------------------
+//--- PA: 0x0A3FA0   VA: 0x800C8B00   subsegment: bss, bodyprog_800C8B00
+//----------------------------------------------------------------------
 smf_song                                    = 0x800C8B00;
 // TODO: `g_MapOverlayHeader` is part of the overlay bin file, maybe should be moved to `sym.maps_shared.txt` or similar.
 // Including here for now since all map configs include this sym file, and bodyprog also reads from this header.

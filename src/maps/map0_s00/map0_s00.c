@@ -100,7 +100,322 @@ INCLUDE_RODATA("asm/maps/map0_s00/nonmatchings/map0_s00", D_800CA7CC);
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CD8E8);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CE02C);
+void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
+{
+    SVECTOR3  posQ8;
+    POLY_FT4* poly;
+    s32       depth;
+    s32       depthDiv16;
+
+    func_800CE544(arg0, arg1, pos);
+
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
+    setPolyFT4(poly);
+    setSemiTrans(poly, true);
+
+    poly->tpage = 76;
+    poly->clut  = 76;
+
+    if (sharedData_800DD584_0_s00 != 0)
+    {
+        switch (arg0 & 3)
+        {
+            case 0:
+                poly->u0 = 64;
+                poly->v0 = 240;
+                poly->u1 = 64;
+                poly->v1 = 255;
+                poly->u2 = 80;
+                poly->v2 = 240;
+                poly->u3 = 80;
+                poly->v3 = 255;
+                break;
+
+            case 1:
+                poly->u0 = 80;
+                poly->v0 = 240;
+                poly->u1 = 80;
+                poly->v1 = 255;
+                poly->u2 = 96;
+                poly->v2 = 240;
+                poly->u3 = 96;
+                poly->v3 = 255;
+                break;
+
+            case 2:
+                poly->u0 = 96;
+                poly->v0 = 240;
+                poly->u1 = 96;
+                poly->v1 = 255;
+                poly->u2 = 112;
+                poly->v2 = 240;
+                poly->u3 = 112;
+                poly->v3 = 255;
+                break;
+
+            case 3:
+                poly->u0 = 112;
+                poly->v0 = 240;
+                poly->u1 = 112;
+                poly->v1 = 255;
+                poly->u2 = 128;
+                poly->v2 = 240;
+                poly->u3 = 128;
+                poly->v3 = 255;
+                break;
+        }
+    }
+    else
+    {
+        switch (g_SysWork.timer_1C & 7)
+        {
+            case 0:
+            case 1:
+                switch (arg0 & 3)
+                {
+                    case 0:
+                        poly->u0 = 64;
+                        poly->v0 = 240;
+                        poly->u1 = 64;
+                        poly->v1 = 255;
+                        poly->u2 = 80;
+                        poly->v2 = 240;
+                        poly->u3 = 80;
+                        poly->v3 = 255;
+                        break;
+
+                    case 1:
+                        poly->u0 = 80;
+                        poly->v0 = 240;
+                        poly->u1 = 80;
+                        poly->v1 = 255;
+                        poly->u2 = 96;
+                        poly->v2 = 240;
+                        poly->u3 = 96;
+                        poly->v3 = 255;
+                        break;
+
+                    case 2:
+                        poly->u0 = 96;
+                        poly->v0 = 240;
+                        poly->u1 = 96;
+                        poly->v1 = 255;
+                        poly->u2 = 112;
+                        poly->v2 = 240;
+                        poly->u3 = 112;
+                        poly->v3 = 255;
+                        break;
+
+                    case 3:
+                        poly->u0 = 112;
+                        poly->v0 = 240;
+                        poly->u1 = 112;
+                        poly->v1 = 255;
+                        poly->u2 = 128;
+                        poly->v2 = 240;
+                        poly->u3 = 128;
+                        poly->v3 = 255;
+                        break;
+                }
+                break;
+            case 2:
+            case 3:
+                switch (arg0 & 3)
+                {
+                    case 0:
+                        poly->u0 = 80;
+                        poly->v0 = 240;
+                        poly->u1 = 80;
+                        poly->v1 = 255;
+                        poly->u2 = 96;
+                        poly->v2 = 240;
+                        poly->u3 = 96;
+                        poly->v3 = 255;
+                        break;
+
+                    case 1:
+                        poly->u0 = 96;
+                        poly->v0 = 240;
+                        poly->u1 = 96;
+                        poly->v1 = 255;
+                        poly->u2 = 112;
+                        poly->v2 = 240;
+                        poly->u3 = 112;
+                        poly->v3 = 255;
+                        break;
+
+                    case 2:
+                        poly->u0 = 112;
+                        poly->v0 = 240;
+                        poly->u1 = 112;
+                        poly->v1 = 255;
+                        poly->u2 = 128;
+                        poly->v2 = 240;
+                        poly->u3 = 128;
+                        poly->v3 = 255;
+                        break;
+
+                    case 3:
+                        poly->u0 = 64;
+                        poly->v0 = 240;
+                        poly->u1 = 64;
+                        poly->v1 = 255;
+                        poly->u2 = 80;
+                        poly->v2 = 240;
+                        poly->u3 = 80;
+                        poly->v3 = 255;
+                        break;
+                }
+                break;
+
+            case 4:
+            case 5:
+                switch (arg0 & 3)
+                {
+                    case 0:
+                        poly->u0 = 96;
+                        poly->v0 = 240;
+                        poly->u1 = 96;
+                        poly->v1 = 255;
+                        poly->u2 = 112;
+                        poly->v2 = 240;
+                        poly->u3 = 112;
+                        poly->v3 = 255;
+                        break;
+
+                    case 1:
+                        poly->u0 = 112;
+                        poly->v0 = 240;
+                        poly->u1 = 112;
+                        poly->v1 = 255;
+                        poly->u2 = 128;
+                        poly->v2 = 240;
+                        poly->u3 = 128;
+                        poly->v3 = 255;
+                        break;
+
+                    case 2:
+                        poly->u0 = 64;
+                        poly->v0 = 240;
+                        poly->u1 = 64;
+                        poly->v1 = 255;
+                        poly->u2 = 80;
+                        poly->v2 = 240;
+                        poly->u3 = 80;
+                        poly->v3 = 255;
+                        break;
+
+                    case 3:
+                        poly->u0 = 80;
+                        poly->v0 = 240;
+                        poly->u1 = 80;
+                        poly->v1 = 255;
+                        poly->u2 = 96;
+                        poly->v2 = 240;
+                        poly->u3 = 96;
+                        poly->v3 = 255;
+                        break;
+                }
+                break;
+            case 6:
+            case 7:
+                switch (arg0 & 3)
+                {
+                    case 0:
+                        poly->u0 = 112;
+                        poly->v0 = 240;
+                        poly->u1 = 112;
+                        poly->v1 = 255;
+                        poly->u2 = 128;
+                        poly->v2 = 240;
+                        poly->u3 = 128;
+                        poly->v3 = 255;
+                        break;
+
+                    case 1:
+                        poly->u0 = 64;
+                        poly->v0 = 240;
+                        poly->u1 = 64;
+                        poly->v1 = 255;
+                        poly->u2 = 80;
+                        poly->v2 = 240;
+                        poly->u3 = 80;
+                        poly->v3 = 255;
+                        break;
+
+                    case 2:
+                        poly->u0 = 80;
+                        poly->v0 = 240;
+                        poly->u1 = 80;
+                        poly->v1 = 255;
+                        poly->u2 = 96;
+                        poly->v2 = 240;
+                        poly->u3 = 96;
+                        poly->v3 = 255;
+                        break;
+
+                    case 3:
+                        poly->u0 = 96;
+                        poly->v0 = 240;
+                        poly->u1 = 96;
+                        poly->v1 = 255;
+                        poly->u2 = 112;
+                        poly->v2 = 240;
+                        poly->u3 = 112;
+                        poly->v3 = 255;
+                        break;
+                }
+        }
+    }
+
+    poly->b0 = poly->g0 = poly->r0 = 0x80;
+
+    posQ8.vx = Q12_TO_Q8(pos->field_0.vx);
+    posQ8.vy = Q12_TO_Q8(pos->field_0.vy);
+    posQ8.vz = Q12_TO_Q8(pos->field_0.vz);
+
+    gte_ldv0(&posQ8);
+    gte_rtps();
+    gte_stsxy(&poly->x0);
+    gte_stszotz(&depth);
+
+    depthDiv16 = depth >> 4;
+    depth      = depth >> 1;
+
+    if (depth >= 33 && depth < 1023)
+    {
+        u8 var_a1;
+
+        if (depthDiv16 >= 13)
+        {
+            var_a1 = 3;
+        }
+        else
+        {
+            var_a1 = 16 - depthDiv16;
+        }
+
+        if (var_a1 >= 3)
+        {
+            if (var_a1 >= 17)
+            {
+                var_a1 = 16;
+            }
+        }
+        else
+        {
+            var_a1 = 3;
+        }
+
+        poly->x1 = poly->x0;
+        poly->x2 = poly->x3 = poly->x0 + var_a1;
+        poly->y2            = poly->y0;
+        poly->y1 = poly->y3 = poly->y0 + var_a1;
+
+        GsOUT_PACKET_P = (PACKET*)&poly[1];
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[depth], poly);
+    }
+}
 
 void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
 {
