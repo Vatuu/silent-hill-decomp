@@ -5,7 +5,7 @@ void sharedFunc_800D8618_2_s00(s_SubCharacter* chara)
     bool field14C_1;
     bool new_var;
     bool new_var2;
-    s32  temp_a0; // Possibly `bool`.
+    bool temp_a0;
     bool switchCond;
 
     switchCond = false;
@@ -29,7 +29,7 @@ void sharedFunc_800D8618_2_s00(s_SubCharacter* chara)
             break;
 
         case 2:
-            if (temp_a0 != 0)
+            if (temp_a0)
             {
                 chara->model_0.stateStep_3 = 3;
             }

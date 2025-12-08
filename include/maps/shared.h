@@ -2403,7 +2403,7 @@ bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* chara);
 
 s32 sharedFunc_800DC438_2_s00(s_SubCharacter* chara);
 
-s32 sharedFunc_800DC50C_2_s00(s_SubCharacter*); // Assumed return type.
+bool sharedFunc_800DC50C_2_s00(s_SubCharacter* chara);
 
 s32 sharedFunc_800DC598_2_s00(s_SubCharacter* chara);
 

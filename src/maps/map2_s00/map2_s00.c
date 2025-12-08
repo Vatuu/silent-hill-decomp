@@ -141,7 +141,7 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800D6A7C);
 
 void func_800D71A4(s_SubCharacter* chara)
 {
-    s32 temp_a0;
+    bool temp_a0;
     s32 rngAngle0;
     s32 angle0;
     s32 angleSubtract;
@@ -351,7 +351,7 @@ void func_800D71A4(s_SubCharacter* chara)
 
 void func_800D756C(s_SubCharacter* chara)
 {
-    s32 temp_a0;
+    bool temp_a0;
     s32 rngAngle0;
     s32 angle0;
     s32 angleSubtract;
@@ -579,7 +579,7 @@ void func_800D794C(s_SubCharacter* chara)
     s32 angle0;
     s32 angle1;
     s32 angle2;
-    s32 temp_s3;
+    bool temp_s3;
     s32 distance0;
     s32 switch3;
     s32 var_s5;
@@ -620,7 +620,7 @@ void func_800D794C(s_SubCharacter* chara)
             break;
         case 2:
             var_s5 = 1;
-            if (temp_s3 == 0) 
+            if (!temp_s3)
             {
                 if (chara->properties_E4.unk0.properties_120.val32 != 0)
                 {
@@ -641,7 +641,7 @@ void func_800D794C(s_SubCharacter* chara)
             break;
         case 3:
             sharedFunc_800D529C_0_s01(chara, distance0 / 2, angle0);
-            if (temp_s3 != 0)
+            if (temp_s3)
             {
                 chara->model_0.stateStep_3 = 4;
             }
@@ -823,7 +823,7 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800DC0E4_2_s00
 
 #include "maps/shared/sharedFunc_800DC438_2_s00.h" // 0x800DC438
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800DC50C_2_s00); // 0x800DC50C
+#include "maps/shared/sharedFunc_800DC50C_2_s00.h" // 0x800DC50C
 
 #include "maps/shared/sharedFunc_800DC598_2_s00.h" // 0x800DC598
 

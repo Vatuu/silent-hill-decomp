@@ -13,7 +13,7 @@ void sharedFunc_800D6E28_2_s00(s_SubCharacter* chara)
     s32    sp10;    // Possibly `bool`.
     s32    sp10_temp;
     bool   cond;
-    s32    temp_s5; // Possibly `bool`.
+    bool   temp_s5;
 
     animStatus = chara->model_0.anim_4.status_0;
     switchCond = 0;

@@ -1,6 +1,6 @@
 void sharedFunc_800D80EC_2_s00(s_SubCharacter* chara)
 {
-    s32  temp_a0; // Might be `bool`
+    bool temp_a0;
     bool unkField14C;
     s32  unkField150;
     s32  switchCond;
@@ -29,7 +29,7 @@ void sharedFunc_800D80EC_2_s00(s_SubCharacter* chara)
             break;
 
         case 1:
-            if (temp_a0 != 0)
+            if (temp_a0)
             {
                 chara->model_0.stateStep_3 = 2;
             }
@@ -38,7 +38,7 @@ void sharedFunc_800D80EC_2_s00(s_SubCharacter* chara)
         case 4:
             switchCond = 2;
 
-            if (temp_a0 != 0)
+            if (temp_a0)
             {
                 chara->model_0.stateStep_3 = 2;
             }
