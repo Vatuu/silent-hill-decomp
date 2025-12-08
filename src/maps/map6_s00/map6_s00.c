@@ -211,7 +211,7 @@ void func_800DB8D0(void) {}
 
 #include "maps/shared/sharedFunc_800DC0A8_2_s00.h" // 0x800DBA64
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800DC0E4_2_s00); // 0x800DBAA0
+#include "maps/shared/sharedFunc_800DC0E4_2_s00.h" // 0x800DBAA0
 
 #include "maps/shared/sharedFunc_800DC200_2_s00.h" // 0x800DBBBC
 

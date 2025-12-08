@@ -210,7 +210,7 @@ void func_800DAAF8(void) {}
 
 #include "maps/shared/sharedFunc_800DC0A8_2_s00.h" // 0x800DAC8C
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800DC0E4_2_s00); // 0x800DACC8
+#include "maps/shared/sharedFunc_800DC0E4_2_s00.h" // 0x800DACC8
 
 #include "maps/shared/sharedFunc_800DC200_2_s00.h" // 0x800DADE4
 

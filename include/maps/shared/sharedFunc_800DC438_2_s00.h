@@ -16,7 +16,7 @@ s32 sharedFunc_800DC438_2_s00(s_SubCharacter* chara)
     {
         if (sharedFunc_800DC3BC_2_s00(chara) && (sharedFunc_800DC0A8_2_s00(chara) || sharedFunc_800DBF88_2_s00(chara, Q12(2.0f))))
         {
-            if (sharedFunc_800DC0E4_2_s00(chara, Q12(1.0f)) != 0)
+            if (sharedFunc_800DC0E4_2_s00(chara, Q12(1.0f)))
             {
                 result = 1;
             }

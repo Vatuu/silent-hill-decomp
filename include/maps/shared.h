@@ -2395,7 +2395,7 @@ bool sharedFunc_800DBF88_2_s00(s_SubCharacter* chara, s32 arg1);
 
 bool sharedFunc_800DC0A8_2_s00(s_SubCharacter* chara);
 
-s32 sharedFunc_800DC0E4_2_s00(s_SubCharacter*, s32); // Assumed return type.
+bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* chara, s32 speedMult);
 
 bool sharedFunc_800DC200_2_s00(s_SubCharacter* chara);
 
