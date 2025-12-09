@@ -150,4 +150,6 @@ void func_800EE5D0(void);
 void func_800EE660(void);
 
 void func_800DD534(s_SubCharacter* chara);
+
+void func_800D6A7C(s_SubCharacter* chara);
 #endif
