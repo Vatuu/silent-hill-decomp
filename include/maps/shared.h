@@ -2385,6 +2385,8 @@ void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara);
 /** Player func. */
 void sharedFunc_800D93E8_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800DA598_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DB038_2_s00(s_SubCharacter* chara);
