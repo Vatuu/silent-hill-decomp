@@ -1687,7 +1687,7 @@ typedef struct _SysWork
     s32             field_2510;
     s_SysWork_2514  field_2514;
     u8              unk_254C[508];
-    s16             bgmLayerVol_2748[9];
+    s16             bgmLayerVolumes_2748[9];
     u8              unk_275A[2];
     q19_12          field_275C;
     s32             field_2760;

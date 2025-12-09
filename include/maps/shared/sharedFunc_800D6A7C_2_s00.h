@@ -1,18 +1,18 @@
 void sharedFunc_800D6A7C_2_s00(s_SubCharacter* chara)
 {
-    s32  animStatus;
-    s32  switchCond;
-    s32 sp10;
-    bool field14C_0;
-    bool field14C_1;
-    bool field14C_2;
-    bool field14C_0_tmp;
-    bool field14C_1_tmp;
-    bool field14C_2_tmp;
-    s32  distFieldF8;
-    s32  angFieldF8;
-    s32 temp_s5;
-    bool cond; // TODO: Why does moving this decl cause mismatch?
+    s32    animStatus;
+    s32    switchCond;
+    s32    sp10;
+    bool   field14C_0;
+    bool   field14C_1;
+    bool   field14C_2;
+    bool   field14C_0_tmp;
+    bool   field14C_1_tmp;
+    bool   field14C_2_tmp;
+    q19_12 distFieldF8;
+    q19_12 angFieldF8;
+    s32    temp_s5;
+    bool   cond; // TODO: Why does moving this decl cause mismatch?
 
     animStatus = chara->model_0.anim_4.status_0;
     switchCond = 0;
@@ -49,6 +49,7 @@ void sharedFunc_800D6A7C_2_s00(s_SubCharacter* chara)
         case 2:
             distFieldF8 = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
             angFieldF8  = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8) - chara->rotation_24.vy);
+
             if (!temp_s5)
             {
                 if ((distFieldF8 < Q12(1.0f) && (angFieldF8 >= FP_ANGLE(-5.0f) && angFieldF8 <= FP_ANGLE(5.0f))) ||
@@ -124,7 +125,7 @@ void sharedFunc_800D6A7C_2_s00(s_SubCharacter* chara)
                     break;
 
                 case 1:
-                    if ((animStatus == ANIM_STATUS(23, true)) || (animStatus == ANIM_STATUS(25, true)))
+                    if (animStatus == ANIM_STATUS(23, true) || animStatus == ANIM_STATUS(25, true))
                     {
                         if ((field14C_1 | field14C_0 | field14C_2) == 0)
                         {
@@ -134,9 +135,11 @@ void sharedFunc_800D6A7C_2_s00(s_SubCharacter* chara)
                         {
                             chara->model_0.state_2 = 6;
                         }
+
                         chara->model_0.stateStep_3 = 0;
                         break;
                     }
+
                     if (sharedFunc_800DC0A8_2_s00(chara) != false)
                     {
                         chara->model_0.anim_4.status_0 = ANIM_STATUS(23, false);
@@ -148,17 +151,19 @@ void sharedFunc_800D6A7C_2_s00(s_SubCharacter* chara)
                     {
                         if ((field14C_1 | field14C_0 | field14C_2) == 0)
                         {
-                            chara->model_0.state_2 = 0x21;
+                            chara->model_0.state_2 = 33;
                         }
                         else
                         {
-                            chara->model_0.state_2 = 0x23;
+                            chara->model_0.state_2 = 35;
                         }
+
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
             }
             break;
+
         case 1:
             chara->model_0.state_2               = 29;
             chara->model_0.stateStep_3           = 0;
@@ -175,7 +180,8 @@ void sharedFunc_800D6A7C_2_s00(s_SubCharacter* chara)
         case 4:
             chara->model_0.state_2     = 32;
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }

@@ -2923,10 +2923,11 @@ bool sharedFunc_800D62D8_0_s01(s_SubCharacter* airScreamer);
 /** Returns anim-related index. */
 s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* chara);
 
+/** Gets player Y position with an offset. */
 s32 sharedFunc_800D5274_0_s01(void);
 
 void sharedFunc_800D633C_0_s01(s_SubCharacter* chara);
-void sharedFunc_800D63A4_0_s01(s_SubCharacter*);
+void sharedFunc_800D63A4_0_s01(s_SubCharacter* chara);
 void sharedFunc_800D6600_0_s01(s_SubCharacter*);
 
 s32 sharedFunc_800D7120_0_s01(s32, s32, s32);

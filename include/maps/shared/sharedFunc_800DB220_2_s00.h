@@ -1,15 +1,15 @@
 void sharedFunc_800DB220_2_s00(s_SubCharacter* chara)
 {
-    s32  animStatus;
-    s32  switchCond;
-    s32  temp_s6;
-    s32  temp_s6_tmp;
-    bool field14C_2;
-    bool field14C_2_tmp;
-    s32  temp_s4;
-    s32  distFieldF8;
-    s32  angFieldF8;
-    u32  maxHack = FP_ANGLE(90.0f) * 2; // @hack Needed to get matching `sltu`
+    s32    animStatus;
+    s32    switchCond;
+    s32    temp_s6;
+    s32    temp_s6_tmp;
+    bool   field14C_2;
+    bool   field14C_2_tmp;
+    s32    temp_s4;
+    q19_12 distFieldF8;
+    q19_12 angFieldF8;
+    u32    maxHack = FP_ANGLE(90.0f) * 2; // @hack Needed to get matching `sltu`
 
     animStatus = chara->model_0.anim_4.status_0;
     switchCond = 0;
@@ -34,6 +34,7 @@ void sharedFunc_800DB220_2_s00(s_SubCharacter* chara)
         case 2:
             distFieldF8 = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
             angFieldF8  = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8) - chara->rotation_24.vy);
+
             if (temp_s4 == 2)
             {
                 chara->model_0.stateStep_3 = 3;
@@ -126,7 +127,7 @@ void sharedFunc_800DB220_2_s00(s_SubCharacter* chara)
                     chara->model_0.stateStep_3 = 0;
                     break;
 
-                case 3: /* switch 3 */
+                case 3:
                     if (temp_s6 == 1)
                     {
                         if (!field14C_2)
@@ -141,7 +142,7 @@ void sharedFunc_800DB220_2_s00(s_SubCharacter* chara)
                     }
                     break;
 
-                case 4: /* switch 3 */
+                case 4:
                     if (temp_s6 == 2)
                     {
                         if (field14C_2)
@@ -169,7 +170,8 @@ void sharedFunc_800DB220_2_s00(s_SubCharacter* chara)
         case 4:
             chara->model_0.state_2     = 45;
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }

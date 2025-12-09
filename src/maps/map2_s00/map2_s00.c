@@ -245,78 +245,89 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800DD2C4_2_s00
 
 #include "maps/shared/sharedFunc_800DD534_2_s00.h" // 0x800DD534
 
-void func_800DD588(s_SubCharacter* chara)
+void func_800DD588(s_SubCharacter* chara) // 0x800DD588
 {
-    s32 pcX;
-    s32 pcZ;
-    s32 pcRotY;
-    s32 angleAdvance;
-    s32 pcY;
-    s32 newZ;
-    s32 newY;
-    s32 newX;
-    s32 newAngle;
-    s32 s3;
-    s32 i;
-    s32 rotSin;
+    #define ANGLE_STEP_COUNT 16
 
-    pcX = g_SysWork.player_4C.chara_0.position_18.vx;
-    pcY = g_SysWork.player_4C.chara_0.position_18.vy;
-    pcZ = g_SysWork.player_4C.chara_0.position_18.vz;
-    pcRotY = g_SysWork.player_4C.chara_0.rotation_24.vy;
+    q19_12 posX;
+    q19_12 posY;
+    q19_12 posZ;
+    q19_12 rotY;
+    q19_12 curPosX;
+    q19_12 curPosY;
+    q19_12 curPosZ;
+    q19_12 curAngle;
+    q19_12 newAngle;
+    q19_12 angleStep;
+    q19_12 sinRotY;
+    s32    i;
+
+    posX = g_SysWork.player_4C.chara_0.position_18.vx;
+    posY = g_SysWork.player_4C.chara_0.position_18.vy;
+    posZ = g_SysWork.player_4C.chara_0.position_18.vz;
+    rotY = g_SysWork.player_4C.chara_0.rotation_24.vy;
     
     if (func_80080514() < FP_ANGLE(180.0f))
     {
-        angleAdvance = FP_ANGLE(22.5f);
+        angleStep = FP_ANGLE(360.0f / ANGLE_STEP_COUNT);
     }
     else
     {
-        angleAdvance = FP_ANGLE(-22.5f);
+        angleStep = FP_ANGLE(-(360.0f / ANGLE_STEP_COUNT));
     }
-    newAngle = (func_80080514() - FP_ANGLE(180.0f));
+
+    newAngle = func_80080514() - FP_ANGLE(180.0f);
     newAngle >>= 5;
     newAngle += FP_ANGLE(180.0f);
-    s3 = pcRotY + newAngle;
 
-    for (i = 0; i < 16; i++, s3 += angleAdvance)
+    // Probe points around position.
+    curAngle = rotY + newAngle;
+    for (i = 0; i < ANGLE_STEP_COUNT; i++, curAngle += angleStep)
     {
-        if (FP_ANGLE_NORM_S(pcRotY - s3) >= FP_ANGLE(-90.0f) && FP_ANGLE_NORM_S(pcRotY - s3) < FP_ANGLE(90.0f))
+        if (FP_ANGLE_NORM_S(rotY - curAngle) >= FP_ANGLE(-90.0f) &&
+            FP_ANGLE_NORM_S(rotY - curAngle) <  FP_ANGLE(90.0f))
         {
             continue;
         }
-        newX = pcX + FP_MULTIPLY_PRECISE(Math_Sin(s3), Q12(20.0f), Q12_SHIFT);
-        newZ = pcZ + FP_MULTIPLY_PRECISE(Math_Cos(s3), Q12(20.0f), Q12_SHIFT);
-        newY = func_80080884(newX, newZ) - Q12(2.0f);
-        if (newY < (pcY - Q12(2.0f)) || pcY < newY || newY < sharedFunc_800D5274_0_s01() ||
-            !func_8008F914(newX, newZ) || !func_800808AC(newX, newZ))
+
+        curPosX = posX + FP_MULTIPLY_PRECISE(Math_Sin(curAngle), Q12(20.0f), Q12_SHIFT);
+        curPosZ = posZ + FP_MULTIPLY_PRECISE(Math_Cos(curAngle), Q12(20.0f), Q12_SHIFT);
+        curPosY = func_80080884(curPosX, curPosZ) - Q12(2.0f);
+
+        if (curPosY < (posY - Q12(2.0f)) || posY < curPosY || curPosY < sharedFunc_800D5274_0_s01() ||
+            !func_8008F914(curPosX, curPosZ) || !func_800808AC(curPosX, curPosZ))
         {
             continue;
         }
-        chara->position_18.vx = newX;
-        chara->position_18.vy = newY;
-        chara->position_18.vz = newZ;
+
+        chara->position_18.vx = curPosX;
+        chara->position_18.vy = curPosY;
+        chara->position_18.vz = curPosZ;
 
         newAngle = ((func_80080514() - FP_ANGLE(180.0f)) >> 4) + FP_ANGLE(180.0f);
-        chara->rotation_24.vy = s3 + newAngle;
-        rotSin = Math_Sin(chara->rotation_24.vy);
-        chara->properties_E4.unk0.field_F8.vy = newY;
-        chara->properties_E4.unk0.field_F8.vx = newX + FP_MULTIPLY_PRECISE(rotSin, Q12(30.0f), Q12_SHIFT);
-        chara->properties_E4.unk0.field_F8.vz = newX + FP_MULTIPLY_PRECISE(Math_Cos(chara->rotation_24.vy), 0x1E000, Q12_SHIFT);
+        chara->rotation_24.vy = curAngle + newAngle;
+        sinRotY = Math_Sin(chara->rotation_24.vy);
+
+        chara->properties_E4.unk0.field_F8.vy = curPosY;
+        chara->properties_E4.unk0.field_F8.vx = curPosX + FP_MULTIPLY_PRECISE(sinRotY, Q12(30.0f), Q12_SHIFT);
+        chara->properties_E4.unk0.field_F8.vz = curPosX + FP_MULTIPLY_PRECISE(Math_Cos(chara->rotation_24.vy), Q12(30.0f), Q12_SHIFT);
+
         if (sharedFunc_800DC98C_2_s00(chara, NULL, &chara->properties_E4.unk0.field_F8, NULL))
         {
             break;
         }
     }
 
-    if (i == 16) 
+    if (i == ANGLE_STEP_COUNT)
     {
-        chara->position_18.vx = pcX + Q12(50.0f);
+        chara->position_18.vx = posX + Q12(50.0f);
         chara->position_18.vy = sharedFunc_800D5274_0_s01() * 2;
-        chara->position_18.vz = pcZ + Q12(50.0f);
+        chara->position_18.vz = posZ + Q12(50.0f);
         return;
     }
+
     chara->moveSpeed_38 = sharedData_800CAA98_0_s01.unk_380[9][0];
-    chara->properties_E4.larvalStalker.properties_E8[0xE].val32 = Q12(10.0f);    
+    chara->properties_E4.larvalStalker.properties_E8[14].val32 = Q12(10.0f);    
 }
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", func_800DD834);

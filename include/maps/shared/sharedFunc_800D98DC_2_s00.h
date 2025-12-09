@@ -1,19 +1,19 @@
 void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara)
 {
-    s32  animStatus;
-    s32  switchCond;
-    s32  sp10;
-    bool cond;
-    bool field14C_0;
-    bool field14C_1;
-    bool field14C_2;
-    bool field14C_0_tmp;
-    bool field14C_1_tmp;
-    bool field14C_2_tmp;
-    s32  temp_s4;
-    s32  distFieldF8;
-    s32  angFieldF8;
-    u32  maxHack = FP_ANGLE(60.0f) * 2; // @hack Needed to get matching `sltu`
+    s32    animStatus;
+    s32    switchCond;
+    s32    sp10;
+    bool   cond;
+    bool   field14C_0;
+    bool   field14C_1;
+    bool   field14C_2;
+    bool   field14C_0_tmp;
+    bool   field14C_1_tmp;
+    bool   field14C_2_tmp;
+    s32    temp_s4;
+    q19_12 distFieldF8;
+    q19_12 angFieldF8;
+    u32    maxHack = FP_ANGLE(60.0f) * 2; // @hack Needed to get matching `sltu`
 
     animStatus     = chara->model_0.anim_4.status_0;
     switchCond     = 0;
@@ -100,6 +100,7 @@ void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara)
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
+
                 case 1:
                     if (sp10 == switchCond)
                     {
@@ -107,6 +108,7 @@ void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara)
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
+
                 case 2:
                     if (sp10 == switchCond)
                     {
@@ -128,7 +130,8 @@ void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara)
         case 4:
             chara->model_0.state_2     = 45;
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }

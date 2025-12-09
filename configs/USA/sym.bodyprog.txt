@@ -2611,7 +2611,7 @@ g_DemoLoadAttempCount                       = 0x800BCD48;
 //---------------------------------------------------
 //--- PA: 0x0981F0   VA: 0x800BCD50   subsegment: bss
 //---------------------------------------------------
-bgmLayersVolume                             = 0x800BCD50;
+bgmLayerVolumes                             = 0x800BCD50;
 g_MapMsg_StateMachineIdx1                   = 0x800BCD60; // type:s32
 g_MapMsg_StateMachineIdx2                   = 0x800BCD64; // type:s32
 g_MapMsg_DisplayLength                      = 0x800BCD68; // type:s32

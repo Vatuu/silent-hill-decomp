@@ -23,7 +23,7 @@ void Sd_EngineCmd(u32 cmd) // 0x80045A7C
     // Execute sound command based on category.
     switch ((cmd >> 8) & 0xFF)
     {
-        // Sound effects management and load of VAB files. Range [0, 255].
+        // Sound effect management and VAB file loading. Range [0, 255].
         case 0:
             func_80045BD8(cmd);
             return;
@@ -752,11 +752,10 @@ void Sd_BgmLayerVolumeSet(u8 layerIdx, u8 vol) // 0x80046C54
     }
     else if (D_800C1658.field_E < 809)
     {
-        // Converts values from 300 to 808 to an u8 value.
-        // However the game only seems to pass values from 769 to 776 including 0.
-        // This convertion seems to take be made having in the hexadecimal counterpart, in this cases
-        // it would be from 0x0103 to 0x0803. The convertion will ignore the 0x03 and just use the
-        // second value which goes from 1 to 8.
+        // Converts values from 300 to 808 to a `u8` value.
+        // The game only seems to pass values from 769 to 776, including 0.
+        // This convertion seems to be made in hex, in this case from 0x103 to 0x803.
+        // The convertion ignores the 0x3 and just uses the second value from 1 to 8.
         idx = D_800C1658.field_E;
 
         for (i = 0; i < 15; i++)

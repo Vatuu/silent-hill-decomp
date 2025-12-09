@@ -9,8 +9,8 @@
  * Code here can still be refered as part of the SD system, but no
  * function with symbols recognized from the SD system should be here.
  *
- * This code is likely not part of the library itself, but rather specific
- * game code as the library doesn't handle file streaming.
+ * This code is likely not part of the library itself, but rather game-specific
+ * code, as the library doesn't handle file streaming.
  */
 
 // ==========
@@ -157,8 +157,8 @@ extern u8 g_Sd_ReverbDepths[];
 
 extern s_XaItemData g_XaItemData[];
 
-// Likely declared as `static` inside the function that uses it.
-extern s8 bgmLayersVolume[8];
+// TODO: Likely declared as `static` inside the function that uses it.
+extern s8 bgmLayerVolumes[8];
 
 extern u8 g_Sd_BgmLayerLimits[8];
 
@@ -280,10 +280,10 @@ void Sd_StopBgm(void);
 
 void Sd_StopBgmStep(void);
 
-/** Return the current BGM audio layers volume based upon the PSX's MIDI channel. */
+/** Returns the current BGM audio layer volume based on the PSX's MIDI channel. */
 u8 Sd_BgmLayerVolumeGet(u8 layerIdx);
 
-/** Manipulate the BGM audio layers volume. */
+/** Manipulates the BGM audio layer volume. */
 void Sd_BgmLayerVolumeSet(u8 layerIdx, u8 vol);
 
 /** @brief Loads and plays XA audio defined at `g_XaItemData`. */

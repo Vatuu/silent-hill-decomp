@@ -1,6 +1,6 @@
 #include "game.h"
 
-#include "bodyprog/bodyprog.h" // Only needed because of `g_OtTags0`.
+#include "bodyprog/bodyprog.h" // Only needed for `g_OtTags0`.
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math/math.h"
 

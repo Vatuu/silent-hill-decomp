@@ -5,9 +5,9 @@
 // q19_12 g_DeltaTime0;
 // GsOT_TAG g_OtTags1[2][2048];
 
-// SH2 symbols indicates this should be at `vc_main.c` but it already have it's data segment assigned.
-// It could be possible that this is part from another split as there is also some inbetween data in
-// bss data segment that is related to the view camera system.
+// SH2 symbols indicate this should be in `vc_main.c`, but the file already has its data segment assigned.
+// It's possible this is part of another split as there is also some inbetween data in
+// the bss data segment related to the view camera system.
 VC_ROAD_DATA vcNullRoadArray[] = {
     {
         .lim_sw_0          = { Q8(-30.0f), Q8(30.0f), Q8(-30.0f), Q8(30.0f) },
