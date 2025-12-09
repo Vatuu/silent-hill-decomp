@@ -11,6 +11,8 @@
 #define CARD_DEVICE_COUNT      8
 #define CARD_DEVICE_FILE_COUNT 15
 
+static inline void CardWork_ClearDirectoryFile(s32 idx);
+
 // ======
 // ENUMS
 // ======
@@ -84,8 +86,9 @@ typedef struct
 {
     char filenames_0[CARD_DEVICE_FILE_COUNT][21];
     u8   blockCounts_13B[CARD_DEVICE_FILE_COUNT]; // Size of each file in 8192 byte blocks.
+	s8   pad_14C[2];
 } s_CardDirectory;
-STATIC_ASSERT_SIZEOF(s_CardDirectory, 330);
+STATIC_ASSERT_SIZEOF(s_CardDirectory, 332);
 
 typedef struct
 {
@@ -194,16 +197,9 @@ extern s_MemCardInfo_BasicSaveInfo g_MemCard_1_BasicSaveInfo[CARD_DEVICE_FILE_CO
 
 extern s_MemCardInfo_BasicSaveInfo g_MemCard_2_BasicSaveInfo[CARD_DEVICE_FILE_COUNT];
 
-extern s_CardDirectory D_800B2628;
-
-extern s32 D_800B2774;
-
-/** File index. */
-extern s32 D_800B2778;
-
 extern s_MemCardInfo_BasicSaveInfo D_800B4580[CARD_DEVICE_FILE_COUNT];
 
-extern bool D_800B5480;
+extern bool D_800B5480[2];
 
 extern s_CardWork g_CardWork; // 0x800B5488
 

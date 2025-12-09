@@ -4,6 +4,10 @@
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
+u8  g_BackgroundColor = 128; // Or `g_BackgroundShade`, since it's applied to all components?
+u8  D_800A8E59        = 0; // Unused.
+s16 D_800A8E5A        = 3; // Unused.
+
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
 {
     s32       baseYOffset;

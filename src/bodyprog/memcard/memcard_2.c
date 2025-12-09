@@ -5,30 +5,30 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/memcard.h"
 
-u8 D_800BCD10[8] = { 0x00, 0x00, 0x00, 0x00, 0x80, 0x18, 0x13, 0x00 }; // @unused 
-s32 D_800BCD18[2] = {};
-s32 D_800BCD20[2] = {};
-s16 g_SavegameCount = 0;
-// 2 bytes of padding.
-s_SavegameEntry* g_ActiveSavegameEntry = 0;
-u8 g_MemCardElementCount[MEMORY_CARD_SLOT_COUNT] = {};
-// bytes of padding.
-u32 D_800BCD34 = 0;
-s8 D_800BCD38 = 0;
-s8 D_800BCD39 = 0;
-s16 g_MemCardsTotalElementCount = 0;
-u8 g_SlotElementCount[MEMORY_CARD_SLOT_COUNT] = {};
-u8 g_SelectedSaveIdx = 0;
-s8 g_SelectedFileIdx = 0;
-s8 D_800BCD40 = 0;
-
-u8 D_800BCD41 = 0x70;
-u8 D_800BCD42 = 0xE5;
-u8 D_800BCD43 = 0x8D;
-u8 D_800BCD44 = 0x05;
-u8 D_800BCD45 = 0x00;
-u8 D_800BCD46 = 0x02;
-u8 D_800BCD47 = 0x24;
+// u8 D_800BCD10[8] = { 0x00, 0x00, 0x00, 0x00, 0x80, 0x18, 0x13, 0x00 }; // @unused 
+// s32 D_800BCD18[2] = {};
+// s32 D_800BCD20[2] = {};
+// s16 g_SavegameCount = 0;
+// // 2 bytes of padding.
+// s_SavegameEntry* g_ActiveSavegameEntry = 0;
+// u8 g_MemCardElementCount[MEMORY_CARD_SLOT_COUNT] = {};
+// // bytes of padding.
+// u32 D_800BCD34 = 0;
+// s8 D_800BCD38 = 0;
+// s8 D_800BCD39 = 0;
+// s16 g_MemCardsTotalElementCount = 0;
+// u8 g_SlotElementCount[MEMORY_CARD_SLOT_COUNT] = {};
+// u8 g_SelectedSaveIdx = 0;
+// s8 g_SelectedFileIdx = 0;
+// s8 D_800BCD40 = 0;
+// 
+// u8 D_800BCD41 = 0x70;
+// u8 D_800BCD42 = 0xE5;
+// u8 D_800BCD43 = 0x8D;
+// u8 D_800BCD44 = 0x05;
+// u8 D_800BCD45 = 0x00;
+// u8 D_800BCD46 = 0x02;
+// u8 D_800BCD47 = 0x24;
 /*
 s32 g_DemoLoadAttempCount = 0;
 s32 D_800BCD4C = 0x24020028; // @unused

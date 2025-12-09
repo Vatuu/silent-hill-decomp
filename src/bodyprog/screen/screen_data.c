@@ -1,0 +1,95 @@
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
+
+// GsOT_TAG g_OtTags0[2][16];
+// q19_12 g_DeltaTime0;
+// GsOT_TAG g_OtTags1[2][2048];
+
+// SH2 symbols indicates this should be at `vc_main.c` but it already have it's data segment assigned.
+// It could be possible that this is part from another split as there is also some inbetween data in
+// bss data segment that is related to the view camera system.
+VC_ROAD_DATA vcNullRoadArray[] = {
+    {
+        .lim_sw_0          = { Q8(-30.0f), Q8(30.0f), Q8(-30.0f), Q8(30.0f) },
+        .lim_rd_8          = { Q8(-30.0f), Q8(30.0f), Q8(-30.0f), Q8(30.0f) },
+        .flags_10          = VC_RD_NOFLAG,
+        .area_size_type_11 = VC_AREA_WIDE,
+        .rd_type_11        = VC_RD_TYPE_ROAD,
+        .mv_y_type_11      = VC_MV_SELF_VIEW,
+        .lim_rd_max_hy_12  = Q4(6.0f),
+        .lim_rd_min_hy_13  = Q4(-6.0f),
+        .ofs_watch_hy_14   = Q4(0.5f),
+        .field_15          = 1,
+        .cam_mv_type_14    = VC_MV_CHASE,
+        .fix_ang_x_16      = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17      = FP_ANGLE_PACKED(0.0f)
+    },
+    {
+        .lim_sw_0          = { Q8(0.0f), Q8(0.0f), Q8(0.0f), Q8(0.0f) },
+        .lim_rd_8          = { Q8(0.0f), Q8(0.0f), Q8(0.0f), Q8(0.0f) },
+        .flags_10          = VC_RD_END_DATA_F,
+        .area_size_type_11 = VC_AREA_TINY,
+        .rd_type_11        = VC_RD_TYPE_ROAD,
+        .mv_y_type_11      = VC_MV_CHASE,
+        .lim_rd_max_hy_12  = Q4(0.0f),
+        .lim_rd_min_hy_13  = Q4(0.0f),
+        .ofs_watch_hy_14   = Q4(0.0f),
+        .field_15          = 0,
+        .cam_mv_type_14    = VC_MV_CHASE,
+        .fix_ang_x_16      = FP_ANGLE_PACKED(0.0f),
+        .fix_ang_y_17      = FP_ANGLE_PACKED(0.0f)
+    },
+};
+
+GsOT g_OrderingTable0[2] = {
+    { 11, &g_OtTags1[0][1], 0, 0, 0 },
+    { 11, &g_OtTags1[1][1], 0, 0, 0 }
+};
+
+GsOT g_OrderingTable1[2] = {
+    { 9, (GsOT_TAG*)FS_BUFFER_1, 0, 0, 0 },
+    { 9, (GsOT_TAG*)0x801E2E00, 0, 0, 0 }
+};
+
+GsOT g_OrderingTable2[2] = {
+    { 4, &g_OtTags0[0][0], 0, 0, 0 },
+    { 4, &g_OtTags0[1][0], 0, 0, 0 }
+};
+
+q19_12 g_DeltaTime1      = TIMESTEP_60_FPS;
+s32    g_IntervalVBlanks = 1;
+
+s_FsImageDesc g_Font16AtlasImg             = { { 0,   16  }, 0,    240, 304, 511 };
+s_FsImageDesc g_KonamiLogoImg              = { { 0,   12  }, 0,    0,   0,   0   };
+s_FsImageDesc g_KcetLogoImg                = { { 0,   14  }, 0,    0,   0,   1   };
+s_FsImageDesc D_800A900C                   = { { 0,   28  }, 0,    0,   0,   2   };
+s_FsImageDesc g_TitleImg                   = { { 1,   13  }, 32,   0,   224, 15  };
+s_FsImageDesc g_MapImg                     = { { 1,   5   }, 0,    16,  224, 15  };
+s_FsImageDesc g_MapMarkerAtlasImg          = { { 0,   7   }, 32,   0,   480, 255 };
+s_FsImageDesc g_ItemInspectionImg          = { { 1,   5   }, 0,    16,  224, 14  };
+s_FsImageDesc D_800A9034                   = { { 0,   5   }, 0,    16,  288, 0   };
+s_FsImageDesc g_ControllerButtonAtlasImg   = { { 0,   7   }, 32,   0,   464, 0   };
+s_FsImageDesc g_BrightnessScreenImg0       = { { 0,   28  }, 0,    16,  288, 0   };
+s_FsImageDesc g_BrightnessScreenImg1       = { { 0,   30  }, 0,    16,  288, 0   };
+s_FsImageDesc g_DeathTipImg                = { { 0,   30  }, 0,    16,  288, 0   };
+s_FsImageDesc g_HealthPortraitImg          = { { 1,   31  }, 12,   103, 224, 13  };
+s_FsImageDesc g_InventoryKeyItemTextureImg = { { 0,   14  }, 0,    0,   160, 0   };
+s_FsImageDesc g_FirstAidKitItemTextureImg  = { { 0,   15  }, 0,    0,   176, 0   };
+s_FsImageDesc D_800A9074                   = { { 0,   13  }, 32,   0,   240, 0   };
+s_FsImageDesc D_800A907C                   = { { 0,   5   }, 0,    128, 240, 8   };
+s_FsImageDesc D_800A9084                   = { { 0,   11  }, 0,    0,   304, 0   };
+s_FsImageDesc D_800A908C                   = { { 0,   13  }, 0,    0,   224, 0   }; // } Effect textures.
+s_FsImageDesc D_800A9094                   = { { 0,   13  }, 0,    128, 224, 8   }; // }
+s_FsImageDesc g_Font24AtlasImg             = { { 0,   31  }, 0,    0,   960, 496 };
+/* Not sure if these are really `s_FsImageDesc`. Seems plausible but not sure about negative values here. */
+s_FsImageDesc D_800A90A4                   = { { 0,   0   }, 35,   0,   35,  3   };
+s_FsImageDesc D_800A90AC                   = { { 0,   0   }, 0,    0,   0,  -1   };
+s_FsImageDesc D_800A90B4                   = { { 0,   0   }, 15,   0,  -53,  10  };
+s_FsImageDesc D_800A90BC                   = { { 0,   0   }, 76,   0,   140, 2   };
+s_FsImageDesc D_800A90C4                   = { { 168, 0   }, 246,  255, 7,   13  };
+s_FsImageDesc D_800A90CC                   = { { 153, 0   }, 94,   0,   35,  13  };
+s_FsImageDesc D_800A90D4                   = { { 205, 255 }, 122,  0,   56,  12  };
+s_FsImageDesc D_800A90DC                   = { { 168, 0   }, 246,  255,-7,   15  };
+s_FsImageDesc D_800A90E4                   = { { 153, 0   }, 94,   0,  -38,  15  };
+s_FsImageDesc D_800A90EC                   = { { 51,  0   }, 125,  0,  -56,  14  };
+s_FsImageDesc D_800A90F4                   = { { 0,   0   }, 0,    0,   0,   -1  };

@@ -1,6 +1,6 @@
 #include "game.h"
 
-#include "bodyprog/bodyprog.h"
+#include "main/fsqueue.h"
 #include "bodyprog/memcard.h"
 
 #include <psyq/libapi.h>
@@ -8,22 +8,12 @@
 #include <psyq/strings.h>
 #include <psyq/sys/file.h>
 
-u32 D_800B2610[2] = { 0xFFFF0100, 0x1800FFFF };
-s32 D_800B2618 = 0;
-s32 D_800B261C = 0;
-s32 D_800B2620 = 0;
-s32 D_800B2624 = 0;
-s_CardDirectory D_800B2628 = {};
-s32 D_800B2774 = 0;
-s32 D_800B2778 = 0;
-s32 D_800B277C = 0;
-s_MemCardInfo_BasicSaveInfo g_MemCard_1_BasicSaveInfo[CARD_DEVICE_FILE_COUNT] = {};
-s_MemCardInfo_BasicSaveInfo g_MemCard_2_BasicSaveInfo[CARD_DEVICE_FILE_COUNT] = {};
-s_MemCardInfo_BasicSaveInfo D_800B4580[CARD_DEVICE_FILE_COUNT] = {};
-bool D_800B5480 = false;
-u32 D_800B5484 = 0;
-s_CardWork g_CardWork = {};
-s_800B5508 D_800B5508 = {};
+s_MemCardInfo_BasicSaveInfo g_MemCard_1_BasicSaveInfo[CARD_DEVICE_FILE_COUNT];
+s_MemCardInfo_BasicSaveInfo g_MemCard_2_BasicSaveInfo[CARD_DEVICE_FILE_COUNT];
+s_MemCardInfo_BasicSaveInfo D_800B4580[CARD_DEVICE_FILE_COUNT];
+bool D_800B5480[2]; // @hack
+s_CardWork g_CardWork;
+s_800B5508 D_800B5508;
 
 static inline void CardWork_ClearDirectoryFile(s32 idx)
 {
@@ -81,7 +71,7 @@ void Savegame_CardCleanInit(void) // 0x8002E630
 
     Savegame_CardInit();
 
-    D_800B5480 = false;
+    D_800B5480[0] = false;
 
     // Clear arrays.
     bzero(&D_800B5508, sizeof(s_800B5508));
@@ -154,12 +144,12 @@ bool Savegame_CardFilesAreAllUnused(s32 deviceId) // 0x8002E76C
 
 void func_8002E7BC(void) // 0x8002E7BC
 {
-    if (D_800B5480 == true)
+    if (D_800B5480[0] == true)
     {
         return;
     }
 
-    D_800B5480 = true;
+    D_800B5480[0] = true;
     func_8002E8E4();
     Savegame_CardEventsInit();
 
@@ -169,9 +159,9 @@ void func_8002E7BC(void) // 0x8002E7BC
 
 void func_8002E830(void) // 0x8002E830
 {
-    if (D_800B5480) 
+    if (D_800B5480[0]) 
     {
-        D_800B5480 = false;
+        D_800B5480[0] = false;
         Savegame_CardEventsClose();
     }
 }
@@ -323,7 +313,7 @@ void func_8002EB88(void) // 0x8002EB88
 {
     s_800B55E8* ptr;
 
-    if (!D_800B5480)
+    if (!D_800B5480[0])
     {
         return;
     }
@@ -411,6 +401,11 @@ void func_8002ED7C(s_800B55E8* arg0) // 0x8002ED7C
     s32                          i;
     s_MemCardInfo_BasicSaveInfo* temp_a1;
     s_MemCardBasicInfo*          ptr;
+    static s32                   D_800B2618;
+    static s32                   D_800B261C;
+    static s32                   D_800B2620;
+    static s32                   D_800B2624;
+    static s_CardDirectory       D_800B2628;
 
     arg0->lastCardResult_14 = CardResult_Success;
 
@@ -624,6 +619,7 @@ void func_8002F2C4(s_800B55E8* arg0)
     s8*                 saveData1Buf;
     s32                 saveData1Size;
     s_SavegameFooter*   saveData1Footer;
+	static s32          D_800B2774;
 
     saveInfo = &D_800B5508.devices_0[arg0->deviceId_4];
 
@@ -761,6 +757,8 @@ void func_8002F61C(s_800B55E8* arg0)
     s32                 fileIdx;
     s32                 cardResult;
     s_MemCardBasicInfo* ptr;
+	static s32          D_800B2778;
+	static s32          D_800B277C;
 
     arg0->lastCardResult_14 = CardResult_Success;
 

@@ -2,6 +2,9 @@
 #include "bodyprog/math/math.h"
 #include "game.h"
 
+s_SysWork  g_SysWork;
+s_GameWork g_GameWork;
+
 s_GameWork* const       g_GameWorkConst = &g_GameWork;
 s_Savegame* const       g_SavegamePtr   = &g_GameWork.savegame_30C;
 s_ControllerData* const g_Controller0   = &g_GameWork.controllers_38[0];

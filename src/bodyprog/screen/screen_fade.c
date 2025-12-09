@@ -1,66 +1,83 @@
 #include "game.h"
 
-#include <psyq/libetc.h>
-
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
+#include <libetc.h>
+#include <libgs.h>
+
 const s32 rodataPad_80024CA0 = 0;
 
-void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) // 0x80032358
-{
-    setRECT((RECT*)PSX_SCRATCH, x, y, w, h);
-    VSync(SyncMode_Wait);
-    ClearImage2((RECT*)PSX_SCRATCH, r, g, b);
-    DrawSync(SyncMode_Wait);
-}
+q19_12 g_ScreenFadeTimestep;
 
-void Screen_Refresh(s32 screenWidth, bool isInterlaced) // 0x800323C8
-{
-    DrawSync(SyncMode_Wait);
-    Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
-    Screen_Init(screenWidth, isInterlaced);
-}
+DR_MODE D_800A8E5C[] = {
+    { 0x3000000, { 0xE1000240, 0x0 } },
+    { 0x3000000, { 0xE1000240, 0x0 } }
+};
 
-void Screen_Init(s32 screenWidth, bool isInterlaced) // 0x80032428
-{
-    g_GameWork.gsScreenWidth_588  = screenWidth;
-    g_GameWork.gsScreenHeight_58A = !isInterlaced ? FRAMEBUFFER_HEIGHT_PROGRESSIVE : FRAMEBUFFER_HEIGHT_INTERLACED;
+TILE D_800A8E74[] = {
+    { 0x3000000, 255, 0, 0, 0x62, -320, -240, 640, 480 },
+    { 0x3000000, 255, 0, 0, 0x62, -320, -240, 640, 480 }
+};
 
-    DrawSync(SyncMode_Wait);
-    GsInitGraph2(g_GameWork.gsScreenWidth_588, g_GameWork.gsScreenHeight_58A, isInterlaced | (1 << 2), 1, 0);
-    GsDefDispBuff2(0, 32, 0, isInterlaced ? 32 : 256);
+q19_12 g_ScreenFadeProgress = Q12(0.0f);
 
-    D_800C6E8E =
-    D_800C6E26 = FRAMEBUFFER_HEIGHT_PROGRESSIVE;
+DR_MODE D_800A8E98[] = {
+    { 0x3000000, { 0xE1000240, 0x0 } },
+    { 0x3000000, { 0xE1000240, 0x0 } }
+};
 
-    GsInit3D();
-    Screen_XyPositionSet(g_GameWorkConst->config_0.optScreenPosX_1C, g_GameWorkConst->config_0.optScreenPosY_1D);
-    GsSwapDispBuff();
-    GsSwapDispBuff();
-}
+// TODO: Make a macro?
+POLY_G4 D_800A8EB0[] = {
+    {
+        0x8000000,
+        0x0, 0x0, 0x0, 0x3A,
+        0xFF60, 0xFF90,
+        0x0, 0x0, 0x0, 0x0,
+        0xA0, 0xFF90,
+        0x0, 0x0, 0x0, 0x0,
+        0xFF60, 0xFFA0,
+        0x0, 0x0, 0x0, 0x0,
+        0xA0, 0xFFA0
+    },
+    {
+        0x8000000,
+        0x0, 0x0, 0x0, 0x3A,
+        0xFF60, 0xFF90,
+        0x0, 0x0, 0x0, 0x0,
+        0xA0, 0xFF90,
+        0x0, 0x0, 0x0, 0x0,
+        0xFF60, 0xFFA0,
+        0x0, 0x0, 0x0, 0x0,
+        0xA0, 0xFFA0
+    },
+    {
+        0x8000000,
+        0x0, 0x0, 0x0, 0x3A,
+        0xFF60, 0x70,
+        0x0, 0x0, 0x0, 0x0,
+        0xA0, 0x70,
+        0x0, 0x0, 0x0, 0x0,
+        0xFF60, 0x60,
+        0x0, 0x0, 0x0, 0x0,
+        0xA0, 0x60
+    },
+    {
+        0x8000000,
+        0x0, 0x0, 0x0, 0x3A,
+        0xFF60, 0x70,
+        0x0, 0x0, 0x0, 0x0,
+        0xA0, 0x70,
+        0x0, 0x0, 0x0, 0x0,
+        0xFF60, 0x60,
+        0x0, 0x0, 0x0, 0x0,
+        0xA0, 0x60
+    }
+};
 
-void Screen_XyPositionSet(s32 x, s32 y) // 0x800324F4
-{
-    Screen_DisplayEnvXySet(&GsDISPENV, x, y);
-}
-
-void Screen_DisplayEnvXySet(DISPENV* displayEnv, s32 x, s32 y) // 0x80032524
-{
-    #define RANGE_X 11
-    #define RANGE_Y 8
-
-    x = CLAMP(x, -RANGE_X, RANGE_X);
-    y = CLAMP(y, -RANGE_Y, RANGE_Y);
-
-    g_GameWorkConst->config_0.optScreenPosX_1C = x;
-    g_GameWorkConst->config_0.optScreenPosY_1D = y;
-
-    displayEnv->screen.x = g_GameWorkConst->config_0.optScreenPosX_1C;
-    displayEnv->screen.y = g_GameWorkConst->config_0.optScreenPosY_1D + RANGE_Y;
-}
+s32 D_800A8F40 = 0;
 
 void Screen_FadeDrawModeSet(DR_MODE* drMode) // 0x800325A4
 {

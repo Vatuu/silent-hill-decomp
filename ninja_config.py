@@ -737,7 +737,7 @@ def ninja_append(split_entries, skip_checksum: bool, non_matching: bool, game_ve
             implicit=checksumBuildRequirements
         )
 
-def clean_working_files(clean_build_files: bool):
+def clean_working_files(clean_build_files: bool, clean_target_files: bool):
     shutil.rmtree(BUILD_DIR, ignore_errors=True)
     shutil.rmtree(PERMUTER_DIR, ignore_errors=True)
     if os.path.exists(".splache"):
@@ -755,8 +755,10 @@ def clean_working_files(clean_build_files: bool):
         if os.path.exists(".ninja_log"):
             os.remove(".ninja_log")
         shutil.rmtree(ASM_DIR, ignore_errors=True)
-        shutil.rmtree(EXPECTED_DIR, ignore_errors=True)
         shutil.rmtree(LINKER_DIR, ignore_errors=True)
+        
+    if clean_target_files:
+        shutil.rmtree(EXPECTED_DIR, ignore_errors=True)
 
 def extract_files(version: int):
     print(f"Extracting files for version {GAMEVERSIONS[version].GAME_NAME_VERSION}")
@@ -836,7 +838,7 @@ def main():
     
     if cleanCompilationFiles:
         print("Cleaning compilation files")
-        clean_working_files(False)
+        clean_working_files(False, False)
         return
     
     if args.iso_extract:
@@ -908,7 +910,7 @@ def main():
                     sys.exit(1)
     
     if regenMode == False:
-        clean_working_files(True)
+        clean_working_files(True, objdiffConfigOption)
     else:
         appendSplits = []
         for asm_path in yamlsPaths:

@@ -20,21 +20,21 @@
 
 const s16 rodataPad_800251FC = 0;
 
-s32 g_MapMsg_StateMachineIdx1 = 0; // Static
-s32 g_MapMsg_StateMachineIdx2 = 0; // Static
-s32 g_MapMsg_DisplayLength = 0;
-s32 g_MapMsg_MainIdx = 0;
-s32 g_MapMsg_DisplayInc = 0;
-s32 D_800BCD74 = 0;
-s_MapMsgSelect g_MapMsg_Select = {};
-u8 g_MapMsg_AudioLoadBlock = 0;
-s8 g_MapMsg_SelectCancelIdx = 0;
-u32 D_800BCD7C = 0x00491021;
-u8 g_SysState_GameOver_TipIdx = 0;
-// 3 bytes of padding.
-s32 g_SomeTimer0 = 0;
-u32 D_800BCD88 = 0; // @unused Padding?
-u32 D_800BCD8C = 0; // @unused Padding?
+// s32 g_MapMsg_StateMachineIdx1 = 0; // Static
+// s32 g_MapMsg_StateMachineIdx2 = 0; // Static
+// s32 g_MapMsg_DisplayLength = 0;
+// s32 g_MapMsg_MainIdx = 0;
+// s32 g_MapMsg_DisplayInc = 0;
+// s32 D_800BCD74 = 0;
+// s_MapMsgSelect g_MapMsg_Select = {};
+// u8 g_MapMsg_AudioLoadBlock = 0;
+// s8 g_MapMsg_SelectCancelIdx = 0;
+// u32 D_800BCD7C = 0x00491021;
+extern u8 g_SysState_GameOver_TipIdx;
+// // 3 bytes of padding.
+extern s32 g_SomeTimer0;
+// u32 D_800BCD88 = 0; // @unused Padding?
+// u32 D_800BCD8C = 0; // @unused Padding?
 
 void func_800348C0(void) // 0x800348C0
 {
@@ -3282,10 +3282,6 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
             break;
     }
 }
-
-// ========================================
-// SAVE FILE AND MAP EVENTS RELATED
-// ========================================
 
 void SysWork_SavegameUpdatePlayer(void) // 0x8003A120
 {

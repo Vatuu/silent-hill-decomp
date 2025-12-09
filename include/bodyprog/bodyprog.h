@@ -2389,12 +2389,6 @@ extern SVECTOR D_800AFDB0;
 
 extern s32 D_800AFDEC;
 
-extern s32 D_800B2618;
-
-extern s32 D_800B261C;
-
-extern s32 D_800B2620;
-
 extern PACKET D_800BFBF0[][0xA10];
 
 extern GsF_LIGHT D_800C3AC8[];
@@ -2407,9 +2401,9 @@ extern const char* INVENTORY_ITEM_NAMES[];
 
 extern const char* g_ItemDescriptions[];
 
-extern q19_12 g_PrevScreenFadeProgress;
+extern s_FsImageDesc D_800A90A4;
 
-extern q19_12 g_ScreenFadeTimestep;
+extern s_FsImageDesc D_800A90B4;
 
 extern GsOT_TAG g_OtTags0[2][16];
 
@@ -2508,14 +2502,6 @@ extern s_Map g_Map;
 extern s8* D_800C15B0;
 
 extern s8 D_800C15B4;
-
-/** Absolute SFX index. */
-extern s16 D_800C15BC;
-
-extern s16 g_Sound_ActiveSfxIdx;
-
-/** Pitch? */
-extern u16 D_800C15C0;
 
 /** Base-0 SFX index. */
 extern s16 D_800C15C2;
@@ -2732,10 +2718,6 @@ extern s32 D_800C48F0;
 extern RECT D_801E557C[];
 
 extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
-
-extern s16 D_800C6E26;
-
-extern s16 D_800C6E8E;
 
 extern u8 D_800C6E90;
 

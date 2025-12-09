@@ -141,15 +141,9 @@ typedef struct
     s8  vabTypeIdx_0;    /**Index of `g_Sd_VabBuffers` which stores offsets where the VAB files are saved in memory. See `e_VabAudioType`. */
     s8  unk_1;
     u16 field_2;
-<<<<<<< HEAD
     u32 vabFileSize_4;   /** VAB file size. */
     s32 vabFileOffset_8; /** VAB audio offset in the file container. */
-} s_VAB_800C37D4;
-=======
-    u32 vabFileSize_4;   // VAB File size.
-    s32 vabFileOffset_8; // VAB Audio offset in file container.
 } s_VabItemData;
->>>>>>> ef0a7f86 (Bare symbol recognition)
 
 // ========
 // GLOBALS
@@ -172,9 +166,6 @@ extern u8 g_Sd_BgmLayerLimits[8];
 // `Sd_XaPreLoadAudioInit` (similar to `Sd_XaAudioPlay`) has a
 // variable that works the same and is only used there.
 extern u16 D_800C15CA;
-
-// Likely declared as `static` as this is only used in `Sd_XaAudioPlay`
-extern u16 D_800C15D0;
 
 // Likely declared as `static` inside the function that uses it.
 extern u32 D_800C15CC;
@@ -205,6 +196,14 @@ extern s32 D_800C15DC;
 
 // Only used in `Sd_CmdPoolUpdate` as iterator variable.
 extern s32 D_800C15E0;
+
+/** Absolute SFX index. */
+extern s16 D_800C15BC;
+
+extern s16 g_Sound_ActiveSfxIdx;
+
+/** Pitch? */
+extern u16 D_800C15C0;
 
 extern s_800C15F0 D_800C15F0;
 

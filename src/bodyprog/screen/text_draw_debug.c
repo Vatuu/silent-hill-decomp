@@ -1,19 +1,13 @@
 #include "game.h"
 
-#include <ctype.h>
-
-#include "bodyprog/bodyprog.h" // Only needed because of `D_800B5C58`.
+#include "bodyprog/bodyprog.h" // Only needed because of `g_OtTags0`.
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math/math.h"
 
-DVECTOR g_Gfx_DebugStringPosition0 = {};
-DVECTOR g_Gfx_DebugStringPosition1 = {};
-q19_12 g_PrevScreenFadeProgress = Q12(0.0f);
-u32 D_800B5C2C = 0xD892383C;
-s32 g_ScreenFadeTimestep = 0;
-s32 g_VBlanks = 0;
-s32 g_UncappedVBlanks = 0;
-s32 __g_UncappedVBlanks = 0;
+#include <ctype.h>
+
+DVECTOR g_Gfx_DebugStringPosition0;
+DVECTOR g_Gfx_DebugStringPosition1;
 
 void Gfx_DebugStringPosition(s16 x, s16 y) // 0x80031EFC
 {

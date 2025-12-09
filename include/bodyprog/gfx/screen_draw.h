@@ -6,6 +6,14 @@
  * to the screen display system (not from PSY-Q SDK).
  */
 
+// ========
+// GLOBALS
+// ========
+
+extern q19_12 g_PrevScreenFadeProgress;
+
+extern q19_12 g_ScreenFadeTimestep;
+
 // ==========
 // FUNCTIONS
 // ==========
