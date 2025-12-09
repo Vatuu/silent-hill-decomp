@@ -2366,7 +2366,15 @@ void sharedFunc_800D6400_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D69A0_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D6A7C_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D6E28_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D71A4_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D756C_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D794C_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D7D0C_2_s00(s_SubCharacter* chara);
 
@@ -2390,6 +2398,8 @@ void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara);
 void sharedFunc_800DA598_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DB038_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800DB220_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DB54C_2_s00(s_SubCharacter* chara);
 
@@ -2431,6 +2441,8 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnC
 void sharedFunc_800DD4A4_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DD4EC_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800DD534_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DDE14_2_s00(s_SubCharacter* chara);
 
