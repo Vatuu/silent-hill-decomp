@@ -1880,18 +1880,6 @@ typedef struct
 
 typedef struct
 {
-    VECTOR3 field_0;
-    VECTOR3 field_C;
-    s16     field_18;
-    s16     field_1A;
-    s16     field_1C;
-    u8      field_1E;
-    s8      field_1F;
-    char    unk_20[16];
-} s_sharedFunc_800CEFD0_1_s02;
-
-typedef struct
-{
     VECTOR3 vector_0;
     VECTOR3 viewPosition_C; // Q19.12
     SVECTOR svec_18;
@@ -2664,7 +2652,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter*);
 
 void sharedFunc_800D1DBC_1_s00(s_SubCharacter*);
 
-void sharedFunc_800CEFD0_1_s02(s32 arg0, s_sharedFunc_800CEFD0_1_s02* arg1, u16* arg2, s32* deltaTime); // TODO make this match for s_Particle
+void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* deltaTime); // TODO make this match for s_Particle
 
 /** @brief Sets a map overlay value based on a whether a game event flag is set. */
 void sharedFunc_800D0994_3_s00(void);

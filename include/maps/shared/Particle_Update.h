@@ -555,8 +555,7 @@ bool Particle_Update(s_Particle* partHead)
                         break;
 
                     case ParticleState_Active:
-                        // TODO: This should pass `s_Particle*` but the matcher is struggling with that atm.
-                        sharedFunc_800CEFD0_1_s02(pass, (s_sharedFunc_800CEFD0_1_s02*)curPart, &rand, &g_DeltaTime0);
+                        sharedFunc_800CEFD0_1_s02(pass, curPart, &rand, &g_DeltaTime0);
                         break;
 
                     default: // `ParticleState_Rest`
