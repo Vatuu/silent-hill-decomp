@@ -79,6 +79,11 @@ extern s_WorldObjectDesc      g_WorldObjectA;
 extern s_WorldObject_0        g_CommonWorldObjects[6];
 
 extern s_MapPoint2d D_800F1CAC[3][32];
+extern s_FsImageDesc* D_800F22A0;
+extern s_FsImageDesc* D_800F22A4;
+extern s_FsImageDesc* D_800F22A8;
+extern s16 g_DoorOfEclypse_MapMsgIdx;
+extern s16 D_800F1A14[8];
 
 void func_800D756C(s_SubCharacter* chara);
 
@@ -151,4 +156,5 @@ void func_800EE5D0(void);
 
 void func_800EE660(void);
 
+void func_800E9DD8(void);
 #endif
