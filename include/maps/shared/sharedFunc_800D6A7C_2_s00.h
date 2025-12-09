@@ -1,33 +1,33 @@
 void sharedFunc_800D6A7C_2_s00(s_SubCharacter* chara)
 {
-    s32 animStatus;
-    s32 switchCond;
+    s32  animStatus;
+    s32  switchCond;
     s32 sp10;
-    bool cond;
-    bool field_14C_0;
-    bool field_14C_1;
-    bool field_14C_2;
-    bool field_14C_0_tmp;
-    bool field_14C_1_tmp;
-    bool field_14C_2_tmp;
+    bool field14C_0;
+    bool field14C_1;
+    bool field14C_2;
+    bool field14C_0_tmp;
+    bool field14C_1_tmp;
+    bool field14C_2_tmp;
+    s32  distFieldF8;
+    s32  angFieldF8;
     s32 temp_s5;
-    s32 distFieldF8;
-    s32 angFieldF8;
+    bool cond; // TODO: Why does moving this decl cause mismatch?
 
     animStatus = chara->model_0.anim_4.status_0;
     switchCond = 0;
     sp10       = sharedFunc_800D4A80_0_s01(chara);
     cond       = false;
 
-    field_14C_0_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
-    field_14C_1_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
-    field_14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
-    field_14C_0     = field_14C_0_tmp;
-    field_14C_1     = field_14C_1_tmp;
-    field_14C_2     = field_14C_2_tmp;
+    field14C_0_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_0;
+    field14C_1_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_1;
+    field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
+    field14C_0     = field14C_0_tmp;
+    field14C_1     = field14C_1_tmp;
+    field14C_2     = field14C_2_tmp;
 
     temp_s5 = sharedFunc_800DC50C_2_s00(chara);
-    
+
     switch (chara->model_0.stateStep_3)
     {
         case 64:
@@ -84,7 +84,7 @@ void sharedFunc_800D6A7C_2_s00(s_SubCharacter* chara)
         case 3:
             if (animStatus == ANIM_STATUS(19, true))
             {
-                switchCond                         = 1;
+                switchCond                     = 1;
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(27, false);
                 chara->model_0.stateStep_3     = 4;
             }
@@ -97,7 +97,7 @@ void sharedFunc_800D6A7C_2_s00(s_SubCharacter* chara)
         case 5:
             if (animStatus == ANIM_STATUS(19, true))
             {
-                switchCond                         = 2;
+                switchCond                     = 2;
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(18, false);
                 chara->model_0.stateStep_3     = 6;
             }
@@ -116,7 +116,7 @@ void sharedFunc_800D6A7C_2_s00(s_SubCharacter* chara)
             switch (switchCond)
             {
                 case 0:
-                    if ((field_14C_1 | field_14C_0 | field_14C_2) != 0)
+                    if ((field14C_1 | field14C_0 | field14C_2) != 0)
                     {
                         chara->model_0.state_2     = 20;
                         chara->model_0.stateStep_3 = 0;
@@ -126,7 +126,7 @@ void sharedFunc_800D6A7C_2_s00(s_SubCharacter* chara)
                 case 1:
                     if ((animStatus == ANIM_STATUS(23, true)) || (animStatus == ANIM_STATUS(25, true)))
                     {
-                        if ((field_14C_1 | field_14C_0 | field_14C_2) == 0)
+                        if ((field14C_1 | field14C_0 | field14C_2) == 0)
                         {
                             chara->model_0.state_2 = 4;
                         }
@@ -146,7 +146,7 @@ void sharedFunc_800D6A7C_2_s00(s_SubCharacter* chara)
                 case 2:
                     if (sp10 == 3)
                     {
-                        if ((field_14C_1 | field_14C_0 | field_14C_2) == 0)
+                        if ((field14C_1 | field14C_0 | field14C_2) == 0)
                         {
                             chara->model_0.state_2 = 0x21;
                         }
