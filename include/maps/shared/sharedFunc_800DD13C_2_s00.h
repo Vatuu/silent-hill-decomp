@@ -19,12 +19,13 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnC
         return;
     }
 
-    // @bug This loops 32 times but `npcs_1A0` only has 6 entries (but only accesses `npcs_1A0` when bit is set inside `flags_2290` first)
+    // @bug This loops 32 times, but `npcs_1A0` only has 6 entries. Only accesses `npcs_1A0` when bit is set inside `flags_2290` first.
     for (i = 0; i < 32; i++)
     {
         if (flags & (1 << i))
         {
             bitsSet++;
+
             if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == chara->model_0.charaId_0)
             {
                 switch (g_SysWork.npcs_1A0[i].model_0.state_2)
@@ -36,6 +37,7 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnC
                     case 45:
                         counter += 2;
                         break;
+
                     default:
                         counter += 3;
                         break;
@@ -44,7 +46,7 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnC
         }
     }
 
-    // If free slot in `npcs_1A0` and some counter is not over 5 (idle, aggro? currently animating?)
+    // If free slot in `npcs_1A0` exists and some counter is not over 5 (idle, aggro? currently animating?)
     if (bitsSet < 32)
     {
         counter = (counter + 2) / 3;
@@ -53,9 +55,11 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnC
             s32 selectNpcSlot = npcSlot & 0x1F;
             CLEAR_FLAG(g_SysWork.field_228C, selectNpcSlot);
 
-            Chara_Spawn(chara->model_0.charaId_0, selectNpcSlot,
+            Chara_Spawn(chara->model_0.charaId_0,
+                        selectNpcSlot,
                         g_SysWork.player_4C.chara_0.position_18.vx + Q12(20.0f),
-                        g_SysWork.player_4C.chara_0.position_18.vz, FP_ANGLE(0.0f), 10);
+                        g_SysWork.player_4C.chara_0.position_18.vz, FP_ANGLE(0.0f),
+                        10);
         }
     }
 }

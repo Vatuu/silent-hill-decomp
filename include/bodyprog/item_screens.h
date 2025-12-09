@@ -359,6 +359,16 @@ void Gfx_Inventory_HealthStatusDraw(void);
 
 void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId);
 
+/** Name could be inaccurate.
+ * Breaking this function call makes items no longer rotate,
+ * and trying to scroll through the items will softlock the game.
+ * If the user breaks the function before entering the
+ * inventory, all items will be at the center of the screen
+ * and the equiped item will appear frozen in its base pose.
+ * If the user doesn't try scrolling through items, they
+ * will be able to navigate through other functions. However,
+ * messing with commands also will softlock the game.
+ */
 void Inventory_PlayerItemScroll(u32* selectedItemId);
 
 void Gfx_Results_ItemsDisplay(); // TODO: Might take s32 argument?

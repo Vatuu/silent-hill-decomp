@@ -1,22 +1,22 @@
 void sharedFunc_800D7D0C_2_s00(s_SubCharacter* chara) // 0x800D7D0C
 {
-    s32  temp_fp;
-    s32  temp_fp_tmp;
-    bool field14C_2;
-    bool field14C_2_tmp;
-    bool temp_s6;
-    q19_12  distance0;
-    q19_12  distance1;
-    q19_12  posDiffAngle;
-    q19_12  distanceTest;
-    s32  switchCond;
-    s32  animStatus;
+    s32     temp_fp;
+    s32     temp_fp_tmp;
+    bool    field14C_2;
+    bool    field14C_2_tmp;
+    bool    temp_s6;
+    q19_12 dist0;
+    q19_12 dist1;
+    q19_12 posDiffAngle;
+    q19_12 distTest;
+    s32    switchCond;
+    s32    animStatus;
 
     animStatus = chara->model_0.anim_4.status_0;
     switchCond = 0;
 
     temp_fp_tmp    = sharedFunc_800D4A80_0_s01(chara);
-    distance0      = sharedData_800E21D0_0_s01.distance_150;
+    dist0      = sharedData_800E21D0_0_s01.distance_150;
     field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
     temp_fp        = temp_fp_tmp;
     field14C_2     = field14C_2_tmp;
@@ -28,12 +28,12 @@ void sharedFunc_800D7D0C_2_s00(s_SubCharacter* chara) // 0x800D7D0C
         case 0:
             #define ANGLE_DIFF FP_ANGLE_NORM_S(g_SysWork.player_4C.chara_0.rotation_24.vy - chara->rotation_24.vy)
             
-            distanceTest = distance0 + (func_80080514() * 4);
-            if (sharedFunc_800DC200_2_s00(chara) && distanceTest > Q12(8.0f))
+            distTest = dist0 + (func_80080514() * 4);
+            if (sharedFunc_800DC200_2_s00(chara) && distTest > Q12(8.0f))
             {
                 chara->model_0.stateStep_3 = 4;
             }
-            else if (!sharedFunc_800DC3BC_2_s00(chara) || distanceTest >= Q12(4.0f) ||
+            else if (!sharedFunc_800DC3BC_2_s00(chara) || distTest >= Q12(4.0f) ||
                      (ANGLE_DIFF < FP_ANGLE(-30.0f) || ANGLE_DIFF >= FP_ANGLE(30.0f)) ||
                      func_80080514() >= Q12(0.2f))
             {
@@ -43,23 +43,26 @@ void sharedFunc_800D7D0C_2_s00(s_SubCharacter* chara) // 0x800D7D0C
             {
                 chara->model_0.stateStep_3 = 2;
             }
+
             chara->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
             break;
 
         case 1:
-            distanceTest = NO_VALUE;
+            distTest = NO_VALUE;
             if (chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy > Q12(-0.2f) &&
                 chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy < Q12(0.8f))
             {
-                distanceTest = chara->field_D4 + Q12(0.15f);
+                distTest = chara->field_D4 + Q12(0.15f);
             }
-            distance1    = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
+
+            dist1    = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
             posDiffAngle = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8) - chara->rotation_24.vy);
+
             if (temp_s6)
             {
                 chara->model_0.stateStep_3 = 2;
             }
-            else if (distance1 < distanceTest && (posDiffAngle >= FP_ANGLE(-22.5f) && posDiffAngle < FP_ANGLE(22.5f)))
+            else if (dist1 < distTest && (posDiffAngle >= FP_ANGLE(-22.5f) && posDiffAngle < FP_ANGLE(22.5f)))
             {
                 switchCond = 1;
             }
@@ -118,9 +121,12 @@ void sharedFunc_800D7D0C_2_s00(s_SubCharacter* chara) // 0x800D7D0C
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
+
                 case 1:
                     // TODO: Likely some kind of `CharaHasFlag` inline?
-                    if (!((&g_SysWork.player_4C.chara_0)->flags_3E & CharaFlag_Unk4) && g_SysWork.npcIdxs_2354[0] == -1 && g_SysWork.npcIdxs_2354[1] == -1)
+                    if (!((&g_SysWork.player_4C.chara_0)->flags_3E & CharaFlag_Unk4) &&
+                        g_SysWork.npcIdxs_2354[0] == NO_VALUE &&
+                        g_SysWork.npcIdxs_2354[1] == NO_VALUE)
                     {
                         if (animStatus == ANIM_STATUS(19, true))
                         {
@@ -134,6 +140,7 @@ void sharedFunc_800D7D0C_2_s00(s_SubCharacter* chara) // 0x800D7D0C
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
+
                 case 2:
                     if (animStatus == ANIM_STATUS(23, true) || animStatus == ANIM_STATUS(25, true))
                     {
@@ -146,6 +153,7 @@ void sharedFunc_800D7D0C_2_s00(s_SubCharacter* chara) // 0x800D7D0C
                         chara->model_0.anim_4.status_0 = ANIM_STATUS(23, false);
                     }
                     break;
+
                 case 3:
                     if (temp_fp == switchCond)
                     {
@@ -172,7 +180,8 @@ void sharedFunc_800D7D0C_2_s00(s_SubCharacter* chara) // 0x800D7D0C
         case 4:
             chara->model_0.state_2     = 32;
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }

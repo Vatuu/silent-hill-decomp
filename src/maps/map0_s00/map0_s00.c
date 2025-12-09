@@ -218,6 +218,7 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
                         break;
                 }
                 break;
+
             case 2:
             case 3:
                 switch (arg0 & 3)
@@ -317,6 +318,7 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
                         break;
                 }
                 break;
+
             case 6:
             case 7:
                 switch (arg0 & 3)

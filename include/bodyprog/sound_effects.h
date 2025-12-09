@@ -38,11 +38,11 @@ typedef enum _SfxId
     Sfx_RadioStaticLoop       = Sfx_Base + 0x2A, // 1322
     Sfx_Unk1323               = 1323,            // } Pair.
     Sfx_Unk1324               = 1324,            // }
-
-    Sfx_Unk1326 = 1326,
-    Sfx_Unk1327 = 1327,
-    Sfx_Unk1328 = 1328,
-    Sfx_Unk1329 = 1329,
+    Sfx_Unk1325               = 1325,
+    Sfx_Unk1326               = 1326,
+    Sfx_Unk1327               = 1327,
+    Sfx_Unk1328               = 1328,
+    Sfx_Unk1329               = 1329,
 
     Sfx_Unk1330       = 1330,
     Sfx_Unk1331       = 1331,

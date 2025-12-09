@@ -916,11 +916,11 @@ typedef enum _GameDifficulty
 
 typedef enum _TriggerType
 {
-    TriggerType_None           = 0, /** Skips trigger/activation type checks, always activates if required event flags are set, skips processing later events until flags deactivate it. */
-    TriggerType_TouchAabb      = 1, /** Checks if player has entered a rectangular area aligned to world axes. */
-    TriggerType_TouchFacing    = 2, /** Checks if player is within a small area and facing toward the trigger point. */
-    TriggerType_TouchObbFacing = 3, /** Checks if player has stepped into a shaped area, and is also facing toward it. */
-    TriggerType_TouchObb       = 4, /** Checks if player has stepped into a shaped area, without needing to look at it. */
+    TriggerType_None           = 0, /** Skips trigger/activation type checks. Always activates if required event flags are set and skips processing later events until flags deactivate it. */
+    TriggerType_TouchAabb      = 1, /** Checks if the player has entered a rectangular area aligned to world axes. */
+    TriggerType_TouchFacing    = 2, /** Checks if the player is within a small area and facing toward the trigger point. */
+    TriggerType_TouchObbFacing = 3, /** Checks if the player has stepped into a shaped area and is facing toward it. */
+    TriggerType_TouchObb       = 4, /** Checks if the player has stepped into a shaped area. No facing requirement. */
 } e_TriggerType;
 
 typedef enum _TriggerActivationType

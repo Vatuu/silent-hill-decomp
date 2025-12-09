@@ -51,7 +51,8 @@ void sharedFunc_800D91A0_2_s00(s_SubCharacter* chara) // 0x800D91A0
         case 4:
             chara->model_0.state_2     = 32;
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }

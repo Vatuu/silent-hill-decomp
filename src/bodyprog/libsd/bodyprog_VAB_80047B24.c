@@ -14,8 +14,7 @@
  * 2 = Unk.
  * 3 = Unk.
  *
- * @note Apparently the recognized symbols from other games may also
- * share this system.
+ * @note Deobfuscated symbols from other games may also share this system.
  */
 static u8* g_Sd_VabBuffers[4] = {
     (u8*)0x801FE460,
@@ -24,9 +23,8 @@ static u8* g_Sd_VabBuffers[4] = {
     (u8*)0x801FA600
 };
 
-/** @brief Holds currently loaded KDT file.
- * Declared as an array because of the way the code handles the load of
- * VAB files as it expect to have a position.
+/** @brief Stores the currently loaded KDT file.
+ * Declared as an array because of the way the code handles VAB file loading, as it expect to have a position.
  */
 static u8* g_Sd_KdtBuffer[1] = {
     (u8*)0x801F5600

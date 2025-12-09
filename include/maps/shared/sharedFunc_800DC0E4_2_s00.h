@@ -1,9 +1,9 @@
 bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* chara, s32 speedMult)
 {
-    s32 headingAngle;
-    s32 moveSpeed;
-    s32 posZ;
-    s32 posX;
+    q19_12 headingAngle;
+    q19_12 moveSpeed;
+    q19_12 posX;
+    q19_12 posZ;
 
     moveSpeed    = chara->moveSpeed_38;
     posX         = chara->position_18.vx;
@@ -19,8 +19,8 @@ bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* chara, s32 speedMult)
         case 0:
         case 7:
         case 12:
-            return 1;
+            return true;
     }
 
-    return func_80080884(posX, posZ) + Q12(1.2f) > chara->position_18.vy;
+    return (func_80080884(posX, posZ) + Q12(1.2f)) > chara->position_18.vy;
 }

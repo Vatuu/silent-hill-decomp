@@ -161,19 +161,19 @@ extern s_AnimInfo LITTLE_INCUBUS_ANIM_INFOS[];
 extern s_AnimInfo INCUBUS_ANIM_INFOS[];
 extern s_AnimInfo UNKKOWN_23_ANIM_INFOS[];
 
-void Ai_BloodyIncubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void Ai_BloodyIncubator_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void func_800D3740(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void func_800D38D8(s_SubCharacter*, GsCOORDINATE2*);
-void Ai_BloodyIncubator_Init(s_SubCharacter* chara);
+void Ai_BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void func_800D3740(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords);
+void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords);
+void Ai_BloodyIncubator_Init(s_SubCharacter* bloodyIncubator);
 
-void Ai_Incubator_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void Ai_Incubator_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void func_800D3C80(s_SubCharacter* chara, GsCOORDINATE2* coord);
-void func_800D3E18(s_SubCharacter*, GsCOORDINATE2*);
-void Ai_Incubator_Init(s_SubCharacter* chara);
+void Ai_Incubator_Update(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_Incubator_AnimUpdate(s_SubCharacter* incubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void func_800D3C80(s_SubCharacter* incubator, GsCOORDINATE2* coords);
+void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* coords);
+void Ai_Incubator_Init(s_SubCharacter* incubator);
 
-void Ai_LittleIncubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800D6788(void); // Assumed return type.
 

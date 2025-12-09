@@ -80,6 +80,10 @@ extern s_WorldObject_0        g_CommonWorldObjects[6];
 
 extern s_MapPoint2d D_800F1CAC[3][32];
 
+void func_800D756C(s_SubCharacter* chara);
+
+void func_800D794C(s_SubCharacter* chara);
+
 void func_800E7D54(void);
 
 void MapEvent_AtWaterWorks(void);
@@ -144,7 +148,5 @@ s32 func_800EE5A8(u32 arg0);
 void func_800EE5D0(void);
 
 void func_800EE660(void);
-
-void func_800D756C(s_SubCharacter* chara);
 
 #endif

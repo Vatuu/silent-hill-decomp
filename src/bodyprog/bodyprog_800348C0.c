@@ -1851,7 +1851,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
         // `TriggerType_None` skips any trigger/activation check and always executes.
         // Maybe used for map-load events, and events that should run every frame?
-        // Returns before processing other events, until flag checks above disable it.
+        // Returns before processing other events until flag checks above disable it.
         if (mapEvent->triggerType_4_0 == TriggerType_None)
         {
             g_MapEventParam    = mapEvent;

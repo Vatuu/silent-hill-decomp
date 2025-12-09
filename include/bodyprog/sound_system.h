@@ -57,16 +57,14 @@ STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
 
 typedef struct
 {
-    u16 cdErrorCount_0;     /** Counter for failed attempts at the moment of process a primite command. */
-    u16 xaAudioIdxCheck_2;  /** XA Audio index. Used for check if the file exist. */
-    u16 xaAudioIdx_4;       /** XA Audio index. Used for playing the audio. */
-    u16 bgmLoadedSongIdx_6; /** Index of the currently loaded song. */
-    u16 vabAudioIdx_8[3];   /** @unused Dead code. Stores the index of the last loaded VAB audio that is not a
-                             * music note, but it's never used.
-                             */
+    u16 cdErrorCount_0;     /** Counter for failed attempts when processing a primitive command. */
+    u16 xaAudioIdxCheck_2;  /** XA Audio index. Used to check if the file exists. */
+    u16 xaAudioIdx_4;       /** XA Audio index. Used to play the audio. */
+    u16 bgmLoadedSongIdx_6; /** Index of the currently loaded music. */
+    u16 vabAudioIdx_8[3];   /** @unused Dead code. Stores the index of the last loaded VAB audio that is not a music note, but it's never used. */
     u16 field_E;            // Related to the handling of music layers.
     u16 field_10;           
-    u8  isStereoEnabled_12; // `bool`
+    u8  isStereoEnabled_12; /** `bool` */
     s8  isXaStopping_13;    /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`.
                              */
     u8  bgmFadeSpeed_14;    /** Music fade speed. Range: `[0, 2]`, default: 0. */
@@ -137,12 +135,11 @@ typedef struct
 
 typedef struct
 {
-    s8  vabTypeIdx_0;   // Index of `g_Sd_VabBuffers` which stores offsets where the VAB files
-                        // are saved in memory. See `e_VabAudioType`.
+    s8  vabTypeIdx_0;    /**Index of `g_Sd_VabBuffers` which stores offsets where the VAB files are saved in memory. See `e_VabAudioType`. */
     s8  unk_1;
     u16 field_2;
-    u32 vabFileSize_4;   // VAB File size.
-    s32 vabFileOffset_8; // VAB Audio offset in file container.
+    u32 vabFileSize_4;   /** VAB file size. */
+    s32 vabFileOffset_8; /** VAB audio offset in the file container. */
 } s_VAB_800C37D4;
 
 // ========
