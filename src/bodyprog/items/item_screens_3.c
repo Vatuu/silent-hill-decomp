@@ -2195,7 +2195,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     g_Inventory_SelectedItemIdx       = g_SysWork.inventoryItemSelectedIdx_2351;
                 }
 
-                for (i = 0; i < ARRAY_SIZE(D_800C3E18); i++)
+                for (i = 0; i < 7; i++)
                 {
                     if (D_800C3E18[i] != NO_VALUE)
                     {
@@ -2446,7 +2446,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 }
                 else
                 {
-                    for (i = 0; i < ARRAY_SIZE(D_800C3E18); i++)
+                    for (i = 0; i < 7; i++)
                     {
                         if (D_800C3E18[i] == (g_SysWork.playerCombatInfo_38.weaponInventoryIdx_12 + 1))
                         {
@@ -2557,7 +2557,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 }
                 else
                 {
-                    for (l = 0; l < ARRAY_SIZE(D_800C3E18); l++)
+                    for (l = 0; l < 7; l++)
                     {
                         if (D_800C3E18[l] == g_SysWork.inventoryItemSelectedIdx_2351)
                         {
@@ -2666,7 +2666,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                 }
                 else
                 {
-                    for (i = 0; i < ARRAY_SIZE(D_800C3E18); i++)
+                    for (i = 0; i < 7; i++)
                     {
                         if (D_800C3E18[i] == g_SysWork.inventoryItemSelectedIdx_2351)
                         {
@@ -2718,12 +2718,12 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     g_GameWork.gameStateStep_598[1] = 17;
                     D_800C3BA8                      = temp3;
 
-                    for (i = 0; i < ARRAY_SIZE(D_800C3E18); i++)
+                    for (i = 0; i < 7; i++)
                     {
                         if (D_800C3E18[i] == g_SysWork.inventoryItemSelectedIdx_2351)
                         {
                             g_SavegamePtr->items_0[D_800C3E18[i]].id_0 = 0xFF;
-                            i                                          = ARRAY_SIZE(D_800C3E18);
+                            i                                          = 7;
                         }
                     }
                 }
@@ -2831,12 +2831,12 @@ void func_800539A4(s32 scrollDirection, s32 arg1) // 0x800539A4
     var_a3_2 = (scrollDirection != 0) ? LEFT_SCROLL : RIGHT_SCROLL;
     var_a3_2 = (arg1 + var_a3_2 + g_SavegamePtr->inventorySlotCount_AB) % g_SavegamePtr->inventorySlotCount_AB;
 
-    for (i = 0; i < ARRAY_SIZE(D_800C3E18); i++)
+    for (i = 0; i < 7; i++)
     {
         if (sp10[i] == var_a3_2)
         {
             var_s0 = i;
-            i      = ARRAY_SIZE(D_800C3E18);
+            i      = 7;
         }
     }
 

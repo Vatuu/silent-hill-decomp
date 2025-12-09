@@ -216,7 +216,7 @@ extern u8 g_Item_MapLoadableItems[48]; // 0x800C3BB8
 /** Used to organize the items displaying in the inventory.
  * 7 is the max number of visible items.
  */
-extern s32 D_800C3E18[7]; // 0x800C3E18
+extern s32 D_800C3E18[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3E18
 
 extern GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3E48
 
