@@ -50,6 +50,7 @@ extern s_WorldObject_0   g_WorldObject_Drug;
 extern s_WorldObjectPose g_WorldObject_UnkPose1[3];
 extern s_WorldObjectDesc g_WorldObject_Obj00;
 extern s_WorldObject_0   g_CommonWorldObjects[6];
+extern s_WorldObjectPose  g_CommonWorldObjectPoses[4]; // 0x800D949C
 
 void func_800D45B4(s32 arg0);
 
@@ -75,5 +76,7 @@ void func_800D54D0(void);
 void MapEvent_KaufmannBarFightCutscene(void);
 
 void Map_WorldObjectsInit(void);
+
+void func_800D68FC(void);
 
 #endif

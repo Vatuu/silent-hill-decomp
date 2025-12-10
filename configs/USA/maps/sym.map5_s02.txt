@@ -206,3 +206,4 @@ g_WorldObject_Drug                  = 0x800DA88C; // type:WorldObject_0 size:0x1
 g_WorldObject_UnkPose1              = 0x800DA8AC; // type:WorldObjectPose size:0x3C
 g_WorldObject_Obj00                 = 0x800DA8EC; // type:WorldObjectDesc size:0x2C
 g_CommonWorldObjects                = 0x800DA91C; // type:WorldObject_0 size:0xA8
+g_CommonWorldObjectPoses            = 0x800D949C; // type:WorldObjectPos size:0x50
