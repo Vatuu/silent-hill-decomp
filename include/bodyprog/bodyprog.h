@@ -4540,7 +4540,7 @@ q19_12 func_80080478(const VECTOR3* posFrom, const VECTOR3* posTo);
  *
  * @return Random Q12 fixed-point number.
  */
-s32 Rng_RandQ12(void);
+q19_12 Rng_RandQ12(void);
 
 s32 func_80080540(s32 arg0, s32 arg1, s32 arg2);
 

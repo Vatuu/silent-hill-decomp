@@ -8837,7 +8837,7 @@ q19_12 func_80080478(const VECTOR3* pos0, const VECTOR3* pos1) // 0x80080478
     return (ratan2(unk, y1 - y0) << 16) | atan2Delta;
 }
 
-s32 Rng_RandQ12(void) // 0x80080514
+q19_12 Rng_RandQ12(void) // 0x80080514
 {
     s32 rand16;
 
