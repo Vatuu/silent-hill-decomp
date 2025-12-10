@@ -27,7 +27,7 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800CCE60);
 
 #include "maps/shared/Particle_Update.h" // 0x800CE234
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800CEFF4_0_s00); // 0x800CE844
+#include "maps/shared/sharedFunc_800CEFF4_0_s00.h" // 0x800CE844
 
 #include "maps/shared/sharedFunc_800CF2A4_0_s01.h" // 0x800CEF34
 

@@ -578,7 +578,7 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
 
 #include "maps/shared/sharedFunc_800CEB24_0_s00.h" // 0x800CEB24
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800CEFF4_0_s00); // 0x800CEFF4
+#include "maps/shared/sharedFunc_800CEFF4_0_s00.h" // 0x800CEFF4
 
 #include "maps/shared/sharedFunc_800CF2A4_0_s01.h" // 0x800CF2A4
 

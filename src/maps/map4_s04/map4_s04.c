@@ -17,7 +17,7 @@ INCLUDE_RODATA("asm/maps/map4_s04/nonmatchings/map4_s04", g_MapOverlayHeader);
 
 #include "maps/shared/Particle_Update.h" // 0x800CC448
 
-INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04", sharedFunc_800CEFF4_0_s00); // 0x800CCA70
+#include "maps/shared/sharedFunc_800CEFF4_0_s00.h" // 0x800CCA70
 
 #include "maps/shared/sharedFunc_800CF2A4_0_s01.h" // 0x800CD160
 
