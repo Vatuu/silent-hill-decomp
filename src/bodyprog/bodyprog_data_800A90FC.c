@@ -459,8 +459,8 @@ u16 g_UnknownEngineCmdTable0[] = {
     63
 };
 u16 g_UnknownEngineCmdTable1[] = {
-      0,
-      0,
+    0,
+    0,
     769,
     770,
     771,
@@ -473,8 +473,8 @@ u16 g_UnknownEngineCmdTable1[] = {
 
 
 // u16 g_UnknownEngineCmdTable1[] = {
-//       0,
-//       0,
+//     0,
+//     0,
 //     769,
 //     770,
 //     771,
@@ -517,8 +517,8 @@ u16 g_UnknownEngineCmdTable1[] = {
 //     0x320
 // };
 
-// TODO: This and D_800A98A8 are part of `g_UnknownEngineCmdTable1`, however, the irregular coding decision
-// on `Sd_VabLoad` requires minor reworking.
+// TODO: This and D_800A98A8 are part of `g_UnknownEngineCmdTable1`. However, an irregular coding decision
+// in `Sd_VabLoad` requires minor reworking.
 s_VabItemData D_800A986C[] = {
     { 9,  3, 778, 0x30C030B, 0x30F030D },
     { 16, 3, 785, 0x3130312, 0x3150314 },

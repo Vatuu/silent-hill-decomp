@@ -1006,7 +1006,7 @@ STATIC_ASSERT_SIZEOF(s_InventoryItem, 4);
 typedef enum _ItemToggleFlags
 {
     ItemToggleFlag_RadioOn       = 1 << 0,
-    ItemToggleFlag_FlashlightOff = 1 << 1,
+    ItemToggleFlag_FlashlightOff = 1 << 1
 } e_ItemToggleFlags;
 
 typedef struct _Savegame

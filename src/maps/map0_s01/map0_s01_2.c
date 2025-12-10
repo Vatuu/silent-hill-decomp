@@ -76,7 +76,7 @@ void func_800DA7FC(void) // 0x800DA7FC
     var1 = Q12(0.333f);
     if (!Savegame_EventFlagGet(EventFlag_146))
     {
-        // Air Screamer isn't dead or Cybil and Harry and Cybil cutscene have started.
+        // Air Screamer isn't dead or the Cybil and Harry cutscene has started.
         if (!(Savegame_EventFlagGet(EventFlag_48) || Savegame_EventFlagGet(EventFlag_49)))
         {
             var1 = Q12(240.0f);
@@ -84,11 +84,11 @@ void func_800DA7FC(void) // 0x800DA7FC
             // FMV has just played and unknown.
             if (Savegame_EventFlagGet(EventFlag_39) && g_GameWork.soundCmd_5B2 == 9)
             {
-                flags = BgmFlags_Unk1;
+                flags = BgmFlag_Unk1;
             }
             else
             {
-                flags = BgmFlags_Unk0 | BgmFlags_Unk9;
+                flags = BgmFlag_Unk0 | BgmFlag_Unk9;
             }
         }
         // Air Screamer cutscene finished.
@@ -97,22 +97,22 @@ void func_800DA7FC(void) // 0x800DA7FC
             if (!Savegame_EventFlagGet(EventFlag_48))
             {
                 var1  = Q12(240.0f);
-                flags = BgmFlags_Unk8;
+                flags = BgmFlag_Unk8;
             }
             else
             {
                 var1  = Q12(0.125f);
-                flags = BgmFlags_Unk0 | BgmFlags_Unk9;
+                flags = BgmFlag_Unk0 | BgmFlag_Unk9;
             }
         }
         else
         {
-            flags = BgmFlags_Unk0;
+            flags = BgmFlag_Unk0;
         }
     }
     else
     {
-        flags = BgmFlags_Unk0;
+        flags = BgmFlag_Unk0;
     }
 
     func_80035F4C(flags, var1, NULL);

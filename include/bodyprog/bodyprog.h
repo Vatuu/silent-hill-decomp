@@ -49,18 +49,19 @@
 // ENUMS
 // ======
 
+/** @brief Background music flags. */
 typedef enum _BgmFlags
 {
-    BgmFlags_Unk0 = 1 << 0,
-    BgmFlags_Unk1 = 1 << 1,
-    BgmFlags_Unk2 = 1 << 2,
-    BgmFlags_Unk3 = 1 << 3,
-    BgmFlags_Unk4 = 1 << 4,
-    BgmFlags_Unk5 = 1 << 5,
-    BgmFlags_Unk6 = 1 << 6,
-    BgmFlags_Unk7 = 1 << 7,
-    BgmFlags_Unk8 = 1 << 8,
-    BgmFlags_Unk9 = 1 << 9
+    BgmFlag_Unk0 = 1 << 0,
+    BgmFlag_Unk1 = 1 << 1,
+    BgmFlag_Unk2 = 1 << 2,
+    BgmFlag_Unk3 = 1 << 3,
+    BgmFlag_Unk4 = 1 << 4,
+    BgmFlag_Unk5 = 1 << 5,
+    BgmFlag_Unk6 = 1 << 6,
+    BgmFlag_Unk7 = 1 << 7,
+    BgmFlag_Unk8 = 1 << 8,
+    BgmFlag_Unk9 = 1 << 9
 } e_BgmFlags;
 
 typedef enum _CollisionType
@@ -2207,7 +2208,7 @@ extern e_SysState g_MapEventSysState;
 
 extern e_InventoryItemId g_MapEventLastUsedItem;
 
-/** Radio pitch state. The pitch state of the radio based on the distance of the player from an enemy. Value can go from 0 to 3. */
+/** Radio pitch state based on the distance from the player to an enemy. Range: `[0, 3]`. */
 extern s32 g_RadioPitchState;
 
 extern void (*g_SysStateFuncs[])(void);

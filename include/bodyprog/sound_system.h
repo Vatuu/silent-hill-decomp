@@ -65,18 +65,19 @@ typedef struct
     u16 xaAudioIdx_4;       /** XA Audio index. Used to play the audio. */
     u16 bgmLoadedSongIdx_6; /** Index of the currently loaded music. */
     u16 vabAudioIdx_8[3];   /** @unused Dead code. Stores the index of the last loaded VAB audio that is not a music note, but it's never used. */
-    u16 field_E;            /** MIDI channel assignation for BGM layers.
-                             * Use to assign the correspondent the MIDI channel for the BGM layers.
+    u16 field_E;            /** MIDI channel assignment for BGM layers.
+                             * Used to assign the corresponding MIDI channel for BGM layers.
                              *
                              * This requires further investigation for a proper explanation. This is used
-                             * to access values from `D_800AA604` columns in an odd way as the values being
-                             * assign are from `g_UnknownEngineCmdTable1` which range from 769 to 808, including 0,
-                             * however the way this values are then used are by casting the variable as `u8` which removes
-                             * the second byte (range in hexadecimal: 0x1003 to 0x2803) which leaves only the first byte
-                             * which range from 1 to 40 (also including 0).
+                             * to access values from `D_800AA604` columns in an odd way, as the values assigned
+                             * are from `g_UnknownEngineCmdTable1`, which range from 769 to 808 (including 0).
+                             * However, the variables are cast as `u8`, which removes
+                             * the second byte (range in hexadecimal: 0x1003 to 0x2803), leaving only the first byte
+                             * ranging from 1 to 40 (also including 0).
                              */
-    u16 field_10;           /** Stores temporarely a value intended for `field_E` so it can be assigned onces the function
-                             * that assign it get executed as this is part of a rule of `Sd_EngineCmd`. */
+    u16 field_10;           /** Temporarily stores a value intended for `field_E` so it can be assigned when the function
+                             * that assigns it is executed. Part of a rule for `Sd_EngineCmd`.
+                             */
     u8  isStereoEnabled_12; /** `bool` */
     s8  isXaStopping_13;    /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`.
                              */

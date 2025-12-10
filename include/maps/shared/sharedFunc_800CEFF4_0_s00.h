@@ -94,13 +94,13 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
 
             gte_stsxy(&poly->x1);
 
-            if (depth > 0x20 && depth < 0x7FF)
+            if (depth > 32 && depth < 0x7FF)
             {
                 setPolyFT4(poly);
                 setSemiTrans(poly, 1);
 
 #if !defined(MAP4_S02)
-                poly->tpage = 0x2C;
+                poly->tpage = 44;
 #endif
 
 #if defined(MAP0_S00)
@@ -120,16 +120,16 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
                 }
                 else
                 {
-                    poly->tpage = 0x2C;
+                    poly->tpage = 44;
                     setRGB0(poly, r, g, b);
                 }
 #else
                 setRGB0(poly, r, g, b);
 #endif
 
-                setUV4(poly, 0xA, 0x70, 0xA, 0x80, 0xD, 0x70, 0xD, 0x80);
+                setUV4(poly, 10, 112, 10, 128, 13, 112, 13, 128);
 
-                if (!(depth > 0x3F && depth < 0x100))
+                if (!(depth > 63 && depth < 256))
                 {
                     poly->clut = 0x1A30;
                 }
@@ -147,17 +147,18 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
                 addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[depth], poly);
                 GsOUT_PACKET_P = (PACKET*)(poly + 1);
             }
+
             return;
     }
 
     switch (localPart->type_1F)
     {
         case 2:
-        case 0xF2:
+        case 242:
 #if defined(MAP4_S02)
             if (localPart->movement_18.vx == 5)
             {
-                if (localPart->stateStep_1E < 0x19)
+                if (localPart->stateStep_1E < 25)
                 {
                     colorComp = 0xA3;
                 }
@@ -170,10 +171,11 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
             else
 #endif
             {
-                if (localPart->stateStep_1E < 0x11)
+                if (localPart->stateStep_1E < 17)
                 {
                     colorComp = localPart->stateStep_1E;
                     colorComp = colorComp << arg1;
+
                     if (localPart->position0_0.vy == INT_MAX)
                     {
                         return;
@@ -256,9 +258,9 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
 
                 step = localPart->stateStep_1E;
 
-                setUV4(poly, 0x10, 0x70, 0x10, 0x7F, 0x1F, 0x70, 0x1F, 0x7F);
+                setUV4(poly, 16, 112, 16, 127, 31, 112, 31, 127);
 
-                poly->tpage = 0x2C;
+                poly->tpage = 44;
 
                 rScaled = r * step;
                 r      -= rScaled >> 4;
@@ -297,6 +299,7 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
                 {
                     setRGB0(poly, r, g, b);
                 }
+
 #elif defined(MAP4_S02)
                 if (localPart->movement_18.vx == 5)
                 {
@@ -313,6 +316,7 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
                     {
                         poly->clut = (((depth >> 5) + 0x68) << 6) | 0x30;
                     }
+
                     setRGB0(poly, r, g, b);
                 }
 #else
@@ -322,10 +326,11 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
                 addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[depth], poly);
                 GsOUT_PACKET_P = (PACKET*)(poly + 1);
             }
+
             return;
     }
 
-    if (localPart->stateStep_1E < 0x1F)
+    if (localPart->stateStep_1E < 31)
     {
         colorComp = localPart->stateStep_1E;
     }
@@ -334,22 +339,22 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
         colorComp = 0x20;
     }
 
-    if (localPart->stateStep_1E >= 0x31)
+    if (localPart->stateStep_1E >= 49)
     {
         localPart->stateStep_1E = 0;
         return;
     }
 
-    sp20.vx = localPart->position1_C.vx >> 4;
-    sp20.vy = localPart->position1_C.vy >> 4;
-    sp20.vz = localPart->position1_C.vz >> 4;
+    sp20.vx = Q12_TO_Q8(localPart->position1_C.vx);
+    sp20.vy = Q12_TO_Q8(localPart->position1_C.vy);
+    sp20.vz = Q12_TO_Q8(localPart->position1_C.vz);
 
     gte_ldv0(&sp20);
     gte_rtps();
 
-    sp28.vx = localPart->position0_0.vx >> 4;
-    sp28.vy = localPart->position0_0.vy >> 4;
-    sp28.vz = localPart->position0_0.vz >> 4;
+    sp28.vx = Q12_TO_Q8(localPart->position0_0.vx);
+    sp28.vy = Q12_TO_Q8(localPart->position0_0.vy);
+    sp28.vz = Q12_TO_Q8(localPart->position0_0.vz);
 
     gte_stsxy(&poly->x0);
     gte_stszotz(&depth);
@@ -364,10 +369,10 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
     {
         setPolyFT4(poly);
         setSemiTrans(poly, 1);
-        setUV4(poly, 0xA, 0x70, 0xA, 0x80, 0xD, 0x70, 0xD, 0x80);
+        setUV4(poly, 10, 112, 10, 128, 13, 112, 13, 128);
         setRGB0(poly, colorComp, colorComp, colorComp + 0x18);
 
-        poly->tpage = 0x2C;
+        poly->tpage = 44;
 
         if (!(depth > 0x3F && depth < 0x100))
         {

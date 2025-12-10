@@ -1,13 +1,13 @@
 void sharedFunc_800DF358_2_s00(s_SubCharacter* chara)
 {
-    s32 angle0;
-    s32 element0;
-    s32 element1;
+    q19_12                       angle0;
+    s32                          element0;
+    s32                          element1;
+    s32                          idx;
     s_sharedData_800E21D0_0_s01* base;
-    s32 idx;
 
-    angle0     = func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8);
-    angle0     = FP_ANGLE_NORM_S(angle0 - chara->rotation_24.vy);
+    angle0   = func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8);
+    angle0   = FP_ANGLE_NORM_S(angle0 - chara->rotation_24.vy);
     element0 = sharedData_800CAA98_0_s01.unk_380[30][0] / 2;
     element1 = sharedData_800CAA98_0_s01.unk_380[30][1];
 
@@ -25,10 +25,9 @@ void sharedFunc_800DF358_2_s00(s_SubCharacter* chara)
         }
     }
 
-    base     = &sharedData_800E21D0_0_s01;
-
-    base->field_B4[0][3]   = 0;
-    base->field_B4[0][0]   = 1;
+    base                 = &sharedData_800E21D0_0_s01;
+    base->field_B4[0][3] = 0;
+    base->field_B4[0][0] = 1;
 
     idx                    = 1;
     base->field_B4[0][2]   = sharedData_800CAA98_0_s01.unk_380[2][0];

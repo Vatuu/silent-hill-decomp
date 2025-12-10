@@ -923,12 +923,12 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
 
     if (g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
     {
-        flagsCpy &= BgmFlags_Unk8;
-        flagsCpy |= BgmFlags_Unk0;
+        flagsCpy &= BgmFlag_Unk8;
+        flagsCpy |= BgmFlag_Unk0;
         arg1      = Q12(0.2f);
     }
     
-    if (!(flagsCpy & BgmFlags_Unk8))
+    if (!(flagsCpy & BgmFlag_Unk8))
     {
         if (g_RadioPitchState > 0 && g_SavegamePtr->itemToggleFlags_AC & ItemToggleFlag_RadioOn)
         {
@@ -938,17 +938,17 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
 
     if (g_SysWork.sysFlags_22A0 & SysFlag_7)
     {
-        flagsCpy                 = BgmFlags_Unk0 | BgmFlags_Unk9;
+        flagsCpy                 = BgmFlag_Unk0 | BgmFlag_Unk9;
         g_SysWork.sysFlags_22A0 |= SysFlag_1;
     }
 
-    if (flagsCpy & BgmFlags_Unk0)
+    if (flagsCpy & BgmFlag_Unk0)
     {
-        flagsCpy &= BgmFlags_Unk8 | BgmFlags_Unk9;
+        flagsCpy &= BgmFlag_Unk8 | BgmFlag_Unk9;
     }
     else
     {
-        flagsCpy ^= BgmFlags_Unk0;
+        flagsCpy ^= BgmFlag_Unk0;
     }
 
     for (i = 0, temp_s7 = 8; i < 9; i++)
@@ -1081,7 +1081,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
                 break;
         }
     } 
-    else if (flagsCpy & BgmFlags_Unk9) 
+    else if (flagsCpy & BgmFlag_Unk9) 
     {
         if (D_800A99A0 != 3) 
         {

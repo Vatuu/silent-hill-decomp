@@ -844,7 +844,7 @@ void func_800D2E6C(void) // 0x800D2E6C
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-void func_800D30DC(void)
+void func_800D30DC(void) // 0x800D30DC
 {
     s32 i;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
@@ -852,9 +852,10 @@ void func_800D30DC(void)
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
     {
         g_WorldGfx_ObjectAdd(&D_800D5374.object_0, &D_800D5374.position_1C, &D_800D5374.rotation_28);
+
         if (!D_800D5345)
         {
-            for (i = 0; i < 7; i++)
+            for (i = 0; i < ARRAY_SIZE(D_800D53A4); i++)
             {
                 g_WorldGfx_ObjectAdd(&D_800D53A4[i].object_0, &D_800D53A4[i].position_1C, &D_800D53A4[i].rotation_28);
             }
