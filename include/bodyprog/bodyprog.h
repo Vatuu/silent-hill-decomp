@@ -49,6 +49,20 @@
 // ENUMS
 // ======
 
+typedef enum _BgmFlags
+{
+    BgmFlags_Unk0 = 1 << 0,
+    BgmFlags_Unk1 = 1 << 1,
+    BgmFlags_Unk2 = 1 << 2,
+    BgmFlags_Unk3 = 1 << 3,
+    BgmFlags_Unk4 = 1 << 4,
+    BgmFlags_Unk5 = 1 << 5,
+    BgmFlags_Unk6 = 1 << 6,
+    BgmFlags_Unk7 = 1 << 7,
+    BgmFlags_Unk8 = 1 << 8,
+    BgmFlags_Unk9 = 1 << 9
+} e_BgmFlags;
+
 typedef enum _CollisionType
 {
     CollisionType_None = 0,
@@ -2169,6 +2183,7 @@ extern u8 D_800A9990;
 /** Used in `func_800D929C` from `map0_s00.c`. */
 extern s32 D_800A999C;
 
+// Likely declared as static inside the function that uses it.
 extern s32 D_800A99A0;
 
 /** Relative file offset for map texture? */
@@ -2192,8 +2207,8 @@ extern e_SysState g_MapEventSysState;
 
 extern e_InventoryItemId g_MapEventLastUsedItem;
 
-// Enemies following Harry count?
-extern s32 D_800A9A1C;
+/** Radio pitch state. The pitch state of the radio based on the distance of the player from an enemy. Value can go from 0 to 3. */
+extern s32 g_RadioPitchState;
 
 extern void (*g_SysStateFuncs[])(void);
 
@@ -2322,6 +2337,10 @@ extern u8 D_800AA604[][16];
 extern u8 D_800AE185;
 
 extern u8 D_800AE186;
+
+extern s32 g_SomeTimer0;
+
+extern u8 g_SysState_GameOver_TipIdx;
 
 /** `e_InventoryItemId` | related to displaying items. */
 extern u8 D_800AE187;
@@ -4099,7 +4118,7 @@ void Gfx_LoadingScreen_PlayerRun(void);
 
 void func_80035DB4(s32);
 
-void func_80035E1C(void);
+void Bgm_MuteBgmLayers(void);
 
 bool func_80035E44(void);
 

@@ -415,8 +415,8 @@ u32 D_800A97E4[8] = {};
 
 /** Related to game music. */
 u16 g_UnknownEngineCmdTable0[] = {
-    0x0,
-    0x0,
+     0,
+     0,
     32,
     33,
     34,
@@ -459,8 +459,8 @@ u16 g_UnknownEngineCmdTable0[] = {
     63
 };
 u16 g_UnknownEngineCmdTable1[] = {
-    0,
-    0,
+      0,
+      0,
     769,
     770,
     771,
@@ -471,7 +471,54 @@ u16 g_UnknownEngineCmdTable1[] = {
     776
 };
 
-// TODO: Maybe different struct?
+
+// u16 g_UnknownEngineCmdTable1[] = {
+//       0,
+//       0,
+//     769,
+//     770,
+//     771,
+//     772,
+//     773,
+//     774,
+//     775,
+//     776,
+//     0x309,
+//     0x30A,
+//     0x30B,
+//     0x30C,
+//     0x30D,
+//     0x30F,
+//     0x310,
+//     0x311,
+//     0x312,
+//     0x313,
+//     0x314,
+//     0x315,
+//     0x316,
+//     0x317,
+//     0x318,
+//     0x319,
+//     0x31A,
+//     0x31B,
+//     0x31C,
+//     0x31D,
+//     0x31E,
+//     0x31F,
+//     0x321,
+//     0x322,
+//     0x323,
+//     0x324,
+//     0x325,
+//     0x326,
+//     0x30E,
+//     0x327,
+//     0x328,
+//     0x320
+// };
+
+// TODO: This and D_800A98A8 are part of `g_UnknownEngineCmdTable1`, however, the irregular coding decision
+// on `Sd_VabLoad` requires minor reworking.
 s_VabItemData D_800A986C[] = {
     { 9,  3, 778, 0x30C030B, 0x30F030D },
     { 16, 3, 785, 0x3130312, 0x3150314 },
@@ -481,6 +528,7 @@ s_VabItemData D_800A986C[] = {
 };
 
 u32 D_800A98A8 = 0x3200328;
+
 u16 g_UnknownEngineCmdTable2[] = {
     0,
     162,
@@ -588,7 +636,7 @@ e_SysState        g_MapEventSysState     = SysState_Gameplay;
 u32               g_MapEventIdx          = 0;
 e_InventoryItemId g_MapEventLastUsedItem = 0;
 
-s32 D_800A9A1C = 0;
+s32 g_RadioPitchState = 0;
 s32 D_800A9A20 = 0;
 s32 D_800A9A24 = 0;
 s32 D_800A9A28 = 0;

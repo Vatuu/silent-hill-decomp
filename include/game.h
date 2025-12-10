@@ -1653,10 +1653,10 @@ typedef struct _SysWork
     s8              unk_2294[4];   // Padding?
     e_SysWorkProcessFlags processFlags_2298;
     s32             field_229C;
-    e_SysFlags      sysFlags_22A0;
-    e_SysFlags2     flags_22A4; // `e_SysFlags2` | `SysFlag2_6` passed as "use through door cam" flag in `vcSetFirstCamWork`. Also `e_SysFlags` or different?
-    GsCOORDINATE2   coord_22A8; // For particles only?
-    GsCOORDINATE2   coord_22F8; // Likely related to above.
+    e_SysFlags      sysFlags_22A0; // Music related.
+    e_SysFlags2     flags_22A4;    // `e_SysFlags2` | `SysFlag2_6` passed as "use through door cam" flag in `vcSetFirstCamWork`. Also `e_SysFlags` or different?
+    GsCOORDINATE2   coord_22A8;    // For particles only?
+    GsCOORDINATE2   coord_22F8;    // Likely related to above.
     s8              field_2348   : 8;
     s8              field_2349   : 8; // Particle spawn multiplier?
     u8              field_234A   : 8;
@@ -1687,7 +1687,7 @@ typedef struct _SysWork
     s32             field_2510;
     s_SysWork_2514  field_2514;
     u8              unk_254C[508];
-    s16             bgmLayerVolumes_2748[9];
+    s16             bgmLayerVolumes_2748[9]; // Some fixed point value.
     u8              unk_275A[2];
     q19_12          field_275C;
     s32             field_2760;

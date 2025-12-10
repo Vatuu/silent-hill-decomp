@@ -52,15 +52,15 @@ SfxPairs                                    = 0x800252BC; // type:AreaLoadSfx si
 //--------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------
-//--- PA: 0x001094   VA: 0x80025BF4   subsegment: .rodata, libsd/bodyprog_80045A7C
+//--- PA: 0x001094   VA: 0x80025BF4   subsegment: .rodata, sound/bodyprog_80045A7C
 //--------------------------------------------------------------------------------
 
-//------------------------------------------------------------------------------------
-//--- PA: 0x00119C   VA: 0x80025CFC   subsegment: .rodata, libsd/bodyprog_VAB_80047B24
-//------------------------------------------------------------------------------------
+//---------------------------------------------------------------------
+//--- PA: 0x00119C   VA: 0x80025CFC   subsegment: .rodata, sound/sd_vab
+//---------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------
-//--- PA: 0x0011DC   VA: 0x80025D3C   subsegment: .rodata, libsd/bodyprog_800485D8
+//--- PA: 0x0011DC   VA: 0x80025D3C   subsegment: .rodata, sound/bodyprog_800485D8
 //--------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
@@ -324,6 +324,7 @@ GameFs_MapLoad                              = 0x8003521C; // type:func
 Math_MatrixTransform                        = 0x80035B04; // type:func
 Gfx_LoadingScreen_BackgroundTexture         = 0x80035BBC; // type:func
 Gfx_LoadingScreen_PlayerRun                 = 0x80035BE0; // type:func
+Bgm_MuteBgmLayers                           = 0x80035E1C;
 Savegame_MapRoomIdxSet                      = 0x80036420; // type:func
 Gfx_MapMsg_Draw                             = 0x800365B8; // type:func
 Gfx_MapMsg_SelectionUpdate                  = 0x80036B5C; // type:func
@@ -467,7 +468,7 @@ Skeleton_Init                               = 0x80044FE0; // type:func
 Skeleton_BoneModelAssign                    = 0x800451B0; // type:func
 
 //--------------------------------------------------------------------------
-//--- PA: 0x020F1C   VA: 0x80045A7C   subsegment: c, libsd/bodyprog_80045A7C
+//--- PA: 0x020F1C   VA: 0x80045A7C   subsegment: c, sound/bodyprog_80045A7C
 //--------------------------------------------------------------------------
 Sd_EngineCmd                                = 0x80045A7C; // type:func
 Sd_AudioStreamingCheck                      = 0x80045B28;
@@ -500,9 +501,9 @@ Sd_CmdPoolUpdate                            = 0x80047A70;
 Sd_SetReverbDepth                           = 0x80047AD0; // type:func
 Sd_SetReverbEnable                          = 0x80047AFC; // type:func
 
-//------------------------------------------------------------------------------
-//--- PA: 0x022FC4   VA: 0x80047B24   subsegment: c, libsd/bodyprog_VAB_80047B24
-//------------------------------------------------------------------------------
+//---------------------------------------------------------------
+//--- PA: 0x022FC4   VA: 0x80047B24   subsegment: c, sound/sd_vab
+//---------------------------------------------------------------
 Sd_VabLoad_CmdSet                           = 0x80047B24;
 Sd_VabLoad                                  = 0x80047B80;
 Sd_VabLoad_TypeClear                        = 0x80047D1C;
@@ -522,7 +523,7 @@ Sd_BgmLoad_FileLoad                         = 0x80048424;
 Sd_BgmLoad_LoadCheck                        = 0x80048498;
 
 //--------------------------------------------------------------------------
-//--- PA: 0x023A78   VA: 0x800485D8   subsegment: c, libsd/bodyprog_800485D8
+//--- PA: 0x023A78   VA: 0x800485D8   subsegment: c, sound/bodyprog_800485D8
 //--------------------------------------------------------------------------
 Sd_CmdPoolExecute                           = 0x800485D8;
 Sd_CdPrimitiveCmdTry                        = 0x80048954; // type:func
@@ -2142,6 +2143,7 @@ g_UnknownEngineCmdTable0                    = 0x800A9804;
 g_UnknownEngineCmdTable1                    = 0x800A9858; // type:u16
 g_UnknownEngineCmdTable2                    = 0x800A98AC;
 D_800A998C                                  = 0x800A998C; // type:AnimInfo size:0x10
+D_800A99A0                                  = 0x800A99A0;
 g_Sd_BgmLayerLimits                         = 0x800A99A4;
 g_MapMsg_CurrentIdx                         = 0x800A99AC; // type:s32
 g_MapMsg_SelectFlashTimer                   = 0x800A99B0; // type:s16
@@ -2151,6 +2153,7 @@ D_800A99E4                                  = 0x800A99E4; // size:0x20
 g_MapEventSysState                          = 0x800A9A10; // type:s32
 g_MapEventIdx                               = 0x800A9A14; // type:u32
 g_MapEventLastUsedItem                      = 0x800A9A18; // type:s32
+g_RadioPitchState                           = 0x800A9A1C;
 
 //------------------------------------------------------------------------
 //--- PA: 0x084ECC   VA: 0x800A9A2C   subsegment: .data, syswork_functable
@@ -2175,14 +2178,14 @@ IMG_ETC.87                                  = 0x800A9EC4;
 IMG_FLAME.241                               = 0x800A9FA8;
 Y_ARRAY.295                                 = 0x800A9FB4;
 
-//----------------------------------------------------------------------------------
-//--- PA: 0x085468   VA: 0x800A9FC8   subsegment: .data, libsd/bodyprog_VAB_80047B24
-//----------------------------------------------------------------------------------
+//-------------------------------------------------------------------
+//--- PA: 0x085468   VA: 0x800A9FC8   subsegment: .data, sound/sd_vab
+//-------------------------------------------------------------------
 g_Sd_VabBuffers                             = 0x800A9FC8;
 g_Sd_KdtBuffer                              = 0x800A9FD8;
 
 //------------------------------------------------------------------------------
-//--- PA: 0x085A80   VA: 0x800AA5E0   subsegment: .data, libsd/bodyprog_80045A7C
+//--- PA: 0x085A80   VA: 0x800AA5E0   subsegment: .data, sound/bodyprog_80045A7C
 //------------------------------------------------------------------------------
 g_Sd_ReverbDepths                           = 0x800AA5E0;
 g_XaItemData                                = 0x800AA894;
@@ -2650,7 +2653,7 @@ g_Map                                       = 0x800C1020; // type:u8 size:0x58C 
 //---------------------------------------------------
 
 //----------------------------------------------------------------------------
-//--- PA: 0x09CA58   VA: 0x800C15B8   subsegment: bss, libsd/bodyprog_80045A7C
+//--- PA: 0x09CA58   VA: 0x800C15B8   subsegment: bss, sound/bodyprog_80045A7C
 //----------------------------------------------------------------------------
 g_Sound_ActiveSfxIdx                        = 0x800C15BE; // type:s16
 

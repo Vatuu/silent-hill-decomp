@@ -11,7 +11,7 @@
 /** @brief Addresses where loaded VAB files are stored in memory.
  * 0 = Music VAB.
  * 1 = Weapon VAB.
- * 2 = Unk.
+ * 2 = Ambient VAB.
  * 3 = Unk.
  *
  * @note Deobfuscated symbols from other games may also share this system.
@@ -41,8 +41,7 @@ static u8* g_Sd_KdtBuffer[1] = {
  * command with that value naturally). The value of this command goes through many functions until it reaches
  * `func_8007F14C`, where it's used to get the index of the audio bank to be loaded. The strange
  * thing starts here, as the same value of the command assigned is used to get inside a specific element from
- * a variable that uses struct `s_VabItemData`: `D_800A986C`, which only has 5 elements. However, the
- * elements being accessed have index 164 to 168. So instead the code uses `D_800A986C` as a pointer
+ * an u16 array which locates at `800A986C`. The code uses `g_UnknownEngineCmdTable1[10]` as a pointer
  * to jump all the way up to 0x800A9FEC where the table is actually used for switching the audio bank of the
  * currently selected weapon. This is over-engineered and it would be interesting to investigate how this
  * works in other versions.
@@ -214,6 +213,7 @@ void Sd_VabLoad(void) // 0x80047B80
     {
         case 0:
             // Strange access of data. See `D_800A9FDC`.
+			// TODO: Incorrect match.
             cmd                    = g_Sd_CmdPool[0];
             g_Sd_VabLoad_TargetVab = &D_800A986C[cmd];
             g_Sd_VabType           = g_Sd_VabLoad_TargetVab->vabTypeIdx_0;

@@ -30,9 +30,9 @@ const s16 rodataPad_800251FC = 0;
 // u8 g_MapMsg_AudioLoadBlock = 0;
 // s8 g_MapMsg_SelectCancelIdx = 0;
 // u32 D_800BCD7C = 0x00491021;
-extern u8 g_SysState_GameOver_TipIdx;
+
 // // 3 bytes of padding.
-extern s32 g_SomeTimer0;
+
 // u32 D_800BCD88 = 0; // @unused Padding?
 // u32 D_800BCD8C = 0; // @unused Padding?
 
@@ -577,7 +577,7 @@ void func_8003569C(void) // 0x8003569C
 }
 
 // ========================================
-// AUDIO HANDLING?
+// AUDIO HANDLING
 // ========================================
 
 s32 func_80035780(void) // 0x80035780
@@ -599,21 +599,21 @@ s32 func_80035780(void) // 0x80035780
             g_GameWork.gameStateStep_598[1]++;
 
         case 1:
-            if (func_800358A8(g_MapOverlayHeader.field_14) == 0)
+            if (func_800358A8(g_MapOverlayHeader.field_14) == false)
             {
                 g_GameWork.gameStateStep_598[1] += 2;
             }
             else
             {
                 Sd_EngineCmd(18);
-                func_80035E1C();
+                Bgm_MuteBgmLayers();
         
                 g_GameWork.gameStateStep_598[1]++;
             }
             break;
 
         case 2:
-            if (!func_80045BC8())
+            if (func_80045BC8() == 0)
             {
                 func_800358DC(g_MapOverlayHeader.field_14);
                 g_GameWork.gameStateStep_598[1]++;
@@ -833,7 +833,7 @@ void func_80035DB4(s32 arg0) // 0x80035DB4
     }
 }
 
-void func_80035E1C(void) // 0x80035E1C
+void Bgm_MuteBgmLayers(void) // 0x80035E1C
 {
     s32 i;
 
@@ -899,22 +899,22 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
     s16  temp_v0;
     s32  var_a0;
     s32  var_a2;
-    s32  var_a3;
-    s32  var_v1;
+    s32  layerVol0;
+    s32  layerVol1;
     s32  temp_s2;
     s32  i;
     s32  flagsCpy;
-    s32  var_s3;
-    s32  var_s4;
+    s32  areBgmLayersActive;
+    bool musicIsPlaying;
     s32  var_t0;
-    bool cond;
+    bool cond0;
     s32  temp_s7;
-    s16* ptr;
+    s16* bgmLaterVolumesPtr;
     u8*  bgmLayerLimitCpy;
 
-    flagsCpy         = flags;
-    bgmLayerLimitCpy = bgmLayerLimitPtr;
-    ptr              = g_SysWork.bgmLayerVolumes_2748;
+    flagsCpy           = flags;
+    bgmLayerLimitCpy   = bgmLayerLimitPtr;
+    bgmLaterVolumesPtr = g_SysWork.bgmLayerVolumes_2748;
 
     if (bgmLayerLimitCpy == NULL)
     {
@@ -923,14 +923,14 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
 
     if (g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
     {
-        flagsCpy &= 1 << 8;
-        flagsCpy |= 1 << 0;
+        flagsCpy &= BgmFlags_Unk8;
+        flagsCpy |= BgmFlags_Unk0;
         arg1      = Q12(0.2f);
     }
     
-    if (!(flagsCpy & (1 << 8)))
+    if (!(flagsCpy & BgmFlags_Unk8))
     {
-        if (D_800A9A1C > 0 && g_SavegamePtr->itemToggleFlags_AC & ItemToggleFlag_RadioOn)
+        if (g_RadioPitchState > 0 && g_SavegamePtr->itemToggleFlags_AC & ItemToggleFlag_RadioOn)
         {
             g_SysWork.sysFlags_22A0 |= SysFlag_2;
         }
@@ -938,22 +938,22 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
 
     if (g_SysWork.sysFlags_22A0 & SysFlag_7)
     {
-        flagsCpy                 = (1 << 0) | (1 << 9);
+        flagsCpy                 = BgmFlags_Unk0 | BgmFlags_Unk9;
         g_SysWork.sysFlags_22A0 |= SysFlag_1;
     }
 
-    if (flagsCpy & (1 << 0))
+    if (flagsCpy & BgmFlags_Unk0)
     {
-        flagsCpy &= (1 << 8) | (1 << 9);
+        flagsCpy &= BgmFlags_Unk8 | BgmFlags_Unk9;
     }
     else
     {
-        flagsCpy ^= 1 << 0;
+        flagsCpy ^= BgmFlags_Unk0;
     }
 
     for (i = 0, temp_s7 = 8; i < 9; i++)
     {
-        var_a3 = ptr[i];
+        layerVol0 = bgmLaterVolumesPtr[i];
 
         if (i == temp_s7) 
         {
@@ -973,81 +973,81 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
         } 
         else 
         {
-            if ((flagsCpy >> i) & (1 << 0)) 
+            if ((flagsCpy >> i) & (1 << 0))
             {
-                var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT - 1); // Should be multiplied by 2 but doesn't match.
+                var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT - 1); // @hack Should be multiplied by 2 but doesn't match.
                 var_a0 = Q12(1.0f);
             } 
-            else 
+            else
             {
                 var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT);
                 var_a0 = Q12(0.0f);
             }
         }
 
-        var_a2 = var_a0 - var_a3;
+        var_a2 = var_a0 - layerVol0;
 
-        if (var_a3 != var_a0) 
+        if (layerVol0 != var_a0) 
         {
             if (var_t0 < var_a2) 
             {
-                var_a3 += var_t0;
+                layerVol0 += var_t0;
             } 
             else if (var_a2 >= -var_t0) 
             {
-                var_a3 = var_a0;
+                layerVol0 = var_a0;
             }
             else
             {
-                var_a3 -= var_t0;
+                layerVol0 -= var_t0;
             }
         }
 
-        ptr[i] = var_a3;
+        bgmLaterVolumesPtr[i] = layerVol0;
     }
 
-    var_s3  = 0;
-    temp_v0 = Q12(1.0f) - ptr[8];
+    areBgmLayersActive = 0;
+    temp_v0            = Q12(1.0f) - bgmLaterVolumesPtr[8];
 
     for (i = 0; i < 8; i++)
     {
-        var_v1  = ptr[i];
-        var_s3 |= var_v1 != 0;
+        layerVol1           = bgmLaterVolumesPtr[i];
+        areBgmLayersActive |= layerVol1 != 0;
 
         if (i == 0) 
         {
-            var_v1 = FP_MULTIPLY_PRECISE(var_v1, temp_v0, Q12_SHIFT);
+            layerVol1 = FP_MULTIPLY_PRECISE(layerVol1, temp_v0, Q12_SHIFT);
         }
 
-        var_v1 = FP_MULTIPLY_PRECISE(var_v1, 127, Q12_SHIFT);
-        if (var_v1 > 127) 
+        layerVol1 = FP_MULTIPLY_PRECISE(layerVol1, Q12(0.0312f), Q12_SHIFT);
+        if (layerVol1 > Q12(0.0312f)) 
         {
-            var_v1 = 127;
+            layerVol1 = Q12(0.0312f);
         }
 
-        var_v1 = (var_v1 * bgmLayerLimitCpy[i]) >> 7;
-        if (var_v1 > 127) 
+        layerVol1 = (layerVol1 * bgmLayerLimitCpy[i]) >> 7;
+        if (layerVol1 > Q12(0.0312f)) 
         {
-            var_v1 = 127;
+            layerVol1 = Q12(0.0312f);
         }
 
-        bgmLayerVolumes[i] = var_v1;
+        bgmLayerVolumes[i] = layerVol1;
     }
 
-    var_s4  = 0;
-    temp_s2 = func_80045BC8();
+    musicIsPlaying = false;
+    temp_s2        = func_80045BC8();
 
-    cond = temp_s2;
-    cond = temp_s2 != 0 && cond != 0xFFFF;
+    cond0 = temp_s2;
+    cond0 = temp_s2 != 0 && cond0 != 0xFFFF;
 
-    if (var_s3 != 0) 
+    if (areBgmLayersActive) 
     {
         switch (D_800A99A0) 
         {
             case 3:
-                func_80035E1C();
+                Bgm_MuteBgmLayers();
 
-                if (cond) 
+                if (cond0) 
                 {
                     D_800A99A0 = 0;
                 } 
@@ -1059,29 +1059,29 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
                 break;
 
             case 2:
-                func_80035E1C();
+                Bgm_MuteBgmLayers();
                 D_800A99A0 = 1;
                 break;
 
             case 1:
-                if (cond) 
+                if (cond0) 
                 {
                     func_80035ED0();
                 } 
                 else 
                 {
-                    func_80035E1C();
+                    Bgm_MuteBgmLayers();
                 }
 
                 D_800A99A0 = 0;
                 break;
 
             case 0:
-                var_s4 = 1;
+                musicIsPlaying = true;
                 break;
         }
     } 
-    else if (flagsCpy & (1 << 9)) 
+    else if (flagsCpy & BgmFlags_Unk9) 
     {
         if (D_800A99A0 != 3) 
         {
@@ -1091,12 +1091,12 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
     } 
     else if (D_800A99A0 == 0) 
     {
-        var_s4 = 1;
+        musicIsPlaying = true;
     }
 
-    if (var_s4 != 0) 
+    if (musicIsPlaying)
     {
-        if (cond) 
+        if (cond0) 
         {
             for (i = 0; i < 8; i++)
             {
@@ -1105,7 +1105,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
         } 
         else 
         {
-            func_80035E1C();
+            Bgm_MuteBgmLayers();
             D_800A99A0 = 3;
         }
     }
@@ -1115,7 +1115,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
 
 void func_800363D0(void) // 0x800363D0
 {
-    D_800A9A1C               = 0;
+    g_RadioPitchState               = 0;
     g_SysWork.sysFlags_22A0 |= SysFlag_3;
     func_80035DB4(0);
 }
@@ -2463,7 +2463,7 @@ void func_80038354(void) // 0x80038354
         }
     }
 
-    D_800A9A1C = k + 1;
+    g_RadioPitchState = k + 1;
 
     if (!(g_SavegamePtr->itemToggleFlags_AC & ItemToggleFlag_RadioOn))
     {

@@ -665,7 +665,7 @@ u8 g_Sd_ReverbDepths[36] = {
     40, 40, 20, 0
 };
 
-// Strange access. See `Sd_BgmLayerVolumeSet` and `Sd_BgmLayerVolumeGet`.
+// Odd access. See `Sd_BgmLayerVolumeSet` and `Sd_BgmLayerVolumeGet`.
 u8 D_800AA604[41][16] = {
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
     { 0, 1, 2, 3, 4, 5, 5, 6, 0, 0, 0, 1, 1, 1, 0, 0 },
@@ -752,10 +752,7 @@ void Sd_BgmLayerVolumeSet(u8 layerIdx, u8 vol) // 0x80046C54
     }
     else if (D_800C1658.field_E < 809)
     {
-        // Converts values from 300 to 808 to a `u8` value.
-        // The game only seems to pass values from 769 to 776, including 0.
-        // This convertion seems to be made in hex, in this case from 0x103 to 0x803.
-        // The convertion ignores the 0x3 and just uses the second value from 1 to 8.
+		
         idx = D_800C1658.field_E;
 
         for (i = 0; i < 15; i++)
