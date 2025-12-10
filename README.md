@@ -136,7 +136,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Purpose</td>
           </tr>
           <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a><br/>10/43 matched.</td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a><br/>12/43 matched.</td>
             <td colspan=2>Map and character code.</td>
           </tr>
           <tr>
@@ -314,7 +314,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Annie's Bar and Indian Runner in Resort Area.</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map5_s03"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map5_s03&label=MAP5_S03"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map5_s03"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map5_s03&label=MAP5_S03&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Norman's Motel in Resort Area.</td>
         </tr>
         <tr>
@@ -325,7 +325,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Silent Hill Resort Area in Otherworld.</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map6_s01"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map6_s01&label=MAP6_S01"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map6_s01"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map6_s01&label=MAP6_S01&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Boat at Lakeside Pier.</td>
         </tr>
         <tr>
