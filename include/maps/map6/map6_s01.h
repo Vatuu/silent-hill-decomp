@@ -52,8 +52,6 @@ extern VECTOR3 D_800D5364;
 
 extern u8 D_800D5370;
 
-extern s8 D_800CBB54;
-
 extern s_WorldObjectDesc D_800D5374;
 
 extern s_WorldObjectDesc D_800D53A4[7];

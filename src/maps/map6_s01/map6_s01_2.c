@@ -834,7 +834,7 @@ void func_800D2E6C(void) // 0x800D2E6C
 
     WorldObjectInit(&D_800D53A4[5], "GLAS2_HI", -21.39990234375f, -1.4208984375f, 58.769775390625f, 0.0, 180.0f, 0.0f);
 
-    WorldObjectInit(&D_800D53A4[6], &D_800CBB54, -19.599853515625f, -0.824951171875f, 59.39990234375f, 0.0, 180.0f, 0.0f);
+    WorldObjectInit(&D_800D53A4[6], "RIGHT_HI", -19.599853515625f, -0.824951171875f, 59.39990234375f, 0.0, 180.0f, 0.0f);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
@@ -885,5 +885,3 @@ void func_800D30DC(void)
         }
     }
 }
-
-INCLUDE_RODATA("asm/maps/map6_s01/nonmatchings/map6_s01_2", D_800CBB54);
