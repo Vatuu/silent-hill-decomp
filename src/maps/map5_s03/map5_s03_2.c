@@ -694,20 +694,20 @@ void Map_WorldObjectsInit(void) // 0x800D2A04
 
 void Map_WorldObjectsUpdate(void) // 0x800D2B68
 {
-    s32 var_s0;
+    s32 flags;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    var_s0 = 0;
+    flags = 0;
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
     {
         if (Savegame_EventFlagGet(EventFlag_389))
         {
-            D_800D6F8C = 0x3C720; // TODO: Q12(60.4454f)? Weird number.
+            D_800D6F8C = 0x3C720; // TODO: `Q12(60.4454f)`? Weird number.
         }
         else
         {
-            var_s0 = 2;
+            flags = 1 << 1;
         }
 
         g_WorldGfx_ObjectAdd(&g_WorldObject_Movaches.object_0, &g_WorldObject_Movaches.position_1C, &(SVECTOR3){ 0, 0, 0 });
@@ -757,5 +757,5 @@ void Map_WorldObjectsUpdate(void) // 0x800D2B68
     }
 
     func_80069844(0xFFFF);
-    func_8006982C(var_s0);
+    func_8006982C(flags);
 }

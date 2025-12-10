@@ -893,7 +893,7 @@ void func_800D8FF8(void) // 0x800D8FF8
             break;
 
         case 4:
-            if (g_SysWork.field_28 == 0)
+            if (g_SysWork.field_28 == Q12(0.0f))
             {
                 func_8005DC1C(Sfx_Unk1661, &D_800E1504, Q8_CLAMPED(0.5f), 0);
 
@@ -912,7 +912,7 @@ void func_800D8FF8(void) // 0x800D8FF8
             g_SysWork.field_28 += g_DeltaTime0;
             if (g_SysWork.field_28 > Q12(1.4f))
             {
-                g_SysWork.field_28 = 0;
+                g_SysWork.field_28 = Q12(0.0f);
             }
             break;
 
@@ -1477,7 +1477,7 @@ void func_800D9C9C(void) // 0x800D9C9C
                             g_WorldObject_Stone0.position_1C.vy = Q12(-1.05f);
 
                             SysWork_StateStepIncrement(1);
-                            g_SysWork.field_28 = 0;
+                            g_SysWork.field_28 = Q12(0.0f);
                             D_800E168E         = 0;
 
                             func_8005DC1C(Sfx_Unk1648, &g_WorldObject_Stone0.position_1C, Q8_CLAMPED(0.5f), 0);
@@ -1494,7 +1494,7 @@ void func_800D9C9C(void) // 0x800D9C9C
                     if (g_SysWork.field_28 > Q12(0.5f))
                     {
                         SysWork_StateStepIncrement(1);
-                        g_SysWork.field_28 = 0;
+                        g_SysWork.field_28 = Q12(0.0f);
                     }
                     break;
 

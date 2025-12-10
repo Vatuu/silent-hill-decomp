@@ -2658,7 +2658,8 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter*);
 
 void sharedFunc_800D1DBC_1_s00(s_SubCharacter*);
 
-void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* deltaTime); // TODO make this match for s_Particle
+// TODO: Make this match for `s_Particle`.
+void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* deltaTime);
 
 /** @brief Sets a map overlay value based on a whether a game event flag is set. */
 void sharedFunc_800D0994_3_s00(void);

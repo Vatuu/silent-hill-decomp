@@ -1,5 +1,5 @@
-// @hack Needed for match, same as version in rng.h without parens around it
-// Changing rng.h version still doesn't let it match though?
+// @hack Needed for match. Same as version in `rng.h` but without parenthesess around it.
+// TODO: Changing `rng.h version` still doesn't let it match though?
 #define Rng_GenerateInt(rand, low, high) (s32)((rand) % (((high) - (low)) + 1)) + (low)
 
 #ifdef MAP7_S03

@@ -1633,7 +1633,7 @@ typedef struct _SysWork
     s32             timer_1C;
     s32             timer_20;
     s32             timer_24;
-    s32             field_28;
+    q19_12          field_28; // Multi-purpose? Used as alpha to fade between images in `Gfx_BackgroundSpritesTransition`.
     q19_12          timer_2C; // Cutscene message timer?
     s32             field_30;
     s8              unk_34[4]; // Padding?
@@ -1735,7 +1735,7 @@ static inline s32 SysWork_StateSetNext(e_SysState sysState)
     g_SysWork.sysState_8        = sysState;
     g_SysWork.timer_24          = 0;
     g_SysWork.sysStateStep_C[0] = 0;
-    g_SysWork.field_28          = 0;
+    g_SysWork.field_28          = 0;//Q12(0.0f);
     g_SysWork.sysStateStep_C[1] = 0;
     g_SysWork.timer_2C          = 0;//Q12(0.0f);
     g_SysWork.sysStateStep_C[2] = 0;
@@ -1750,7 +1750,7 @@ static inline void SysWork_StateStepIncrement(s32 stepIdx)
 {
     if (stepIdx == 0)
     {
-        g_SysWork.field_28          = 0;
+        g_SysWork.field_28          = 0;//Q12(0.0f);
         g_SysWork.sysStateStep_C[1] = 0;
         g_SysWork.timer_2C          = 0;//Q12(0.0f);
         g_SysWork.sysStateStep_C[2] = 0;
@@ -1782,7 +1782,7 @@ static inline s32 SysWork_StateStepSet(s32 stepIdx, s32 sysStateStep)
     {
         step                        =
         g_SysWork.sysStateStep_C[0] = sysStateStep;
-        g_SysWork.field_28          = 0;
+        g_SysWork.field_28          = 0;//Q12(0.0f);
         g_SysWork.sysStateStep_C[1] = 0;
         g_SysWork.timer_2C          = 0;//Q12(0.0f);
         g_SysWork.sysStateStep_C[2] = 0;
@@ -1807,7 +1807,7 @@ static inline s32 SysWork_StateStepSet(s32 stepIdx, s32 sysStateStep)
 static inline void SysWork_StateStepReset()
 {
     g_SysWork.sysStateStep_C[0] = NO_VALUE;
-    g_SysWork.field_28          = 0;
+    g_SysWork.field_28          = 0;//Q12(0.0f);
     g_SysWork.sysStateStep_C[1] = 0;
     g_SysWork.timer_2C          = 0;//Q12(0.0f);
     g_SysWork.sysStateStep_C[2] = 0;

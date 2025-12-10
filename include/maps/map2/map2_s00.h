@@ -83,7 +83,7 @@ extern s_FsImageDesc* D_800F22A0;
 extern s_FsImageDesc* D_800F22A4;
 extern s_FsImageDesc* D_800F22A8;
 extern s16 g_DoorOfEclypse_MapMsgIdx;
-extern s16 D_800F1A14[8];
+extern s16 g_Gfx_LockTimFileIdxs[8];
 
 void func_800D756C(s_SubCharacter* chara);
 
@@ -121,6 +121,8 @@ void func_800E9CB4(void);
 /** @brief Handles the House Key use event. */
 void MapEvent_HouseKeyUse(void);
 
+void func_800E9DD8(void);
+
 void MapEvent_DoorOfEclipseEnter(void);
 
 void func_800EA6E0(void);
@@ -156,5 +158,4 @@ void func_800EE5D0(void);
 
 void func_800EE660(void);
 
-void func_800E9DD8(void);
 #endif

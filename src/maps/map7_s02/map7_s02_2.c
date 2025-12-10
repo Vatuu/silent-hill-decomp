@@ -2251,7 +2251,7 @@ void func_800DFDDC(void) // 0x800DFDDC
                             D_800EBB64.position_1C.vy = Q12(-1.05f);
 
                             SysWork_StateStepIncrement(1);
-                            g_SysWork.field_28 = 0;
+                            g_SysWork.field_28 = Q12(0.0f);
                             D_800EA492         = 0;
 
                             Sd_EngineCmd(Sfx_Base);
@@ -2268,7 +2268,7 @@ void func_800DFDDC(void) // 0x800DFDDC
                     if (g_SysWork.field_28 > Q12(0.5f))
                     {
                         SysWork_StateStepIncrement(1);
-                        g_SysWork.field_28 = 0;
+                        g_SysWork.field_28 = Q12(0.0f);
                     }
                     break;
 

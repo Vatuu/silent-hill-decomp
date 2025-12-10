@@ -3412,7 +3412,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            g_SysWork.field_28 = 0;
+            g_SysWork.field_28 = Q12(0.0f);
 
             if (g_GameWork.autosave_90.continueCount_27B < 99)
             {
@@ -3497,7 +3497,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
 
             if ((g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
                                                   g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)) ||
-                g_SysWork.field_28 > 240)
+                g_SysWork.field_28 > Q12(1.0f / 17.0f))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -3524,7 +3524,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
 
         case 6:
             SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(2.0f), false);
-            g_SysWork.field_28 = 0;
+            g_SysWork.field_28 = Q12(0.0f);
             Gfx_BackgroundSpriteDraw(&g_DeathTipImg);
             break;
 

@@ -269,6 +269,7 @@ MAP_MESSAGES                = 0x800F0F68; // type:u32 size:0x13C
 //--- PA: 0x027B2C   VA: 0x800F10A4   subsegment: data
 //----------------------------------------------------
 g_MapMsgSounds              = 0x800F1A10; // type:u16 size:0x4
+g_Gfx_LockTimFileIdxs       = 0x800F1A14; // type:s16
 g_CommonWorldObjectPoses    = 0x800F1A28; // type:WorldObjectPos size:0x280
 sharedData_800DFB4C_0_s00   = 0x800F212C;
 sharedData_800DFB50_0_s00   = 0x800F2130;

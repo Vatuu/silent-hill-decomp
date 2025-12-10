@@ -2741,7 +2741,7 @@ extern s16 SQRT[100];
  */
 void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image);
 
-void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2);
+void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image1, q3_12 alpha);
 
 /** Draws a background image.
  * Only applies to background images of notes or puzzles images.

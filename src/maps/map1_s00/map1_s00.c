@@ -248,7 +248,7 @@ void func_800D7B2C(void)
         case 8:
             Gfx_BackgroundSpritesTransition(&g_ItemInspectionImg, &D_800A9A04, g_SysWork.field_28);
 
-            g_SysWork.field_28 += Q12(0.0625f);
+            g_SysWork.field_28 += Q12(1.0f / 16.0f);
             if (g_SysWork.field_28 > Q12(1.0f))
             {
                 SysWork_StateStepIncrement(0);

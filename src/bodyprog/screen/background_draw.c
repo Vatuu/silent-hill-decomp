@@ -67,12 +67,12 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
         }
     }
 
-    GsOUT_PACKET_P        = packet;
+    GsOUT_PACKET_P           = packet;
     g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
-    g_BackgroundColor     = 0x80;
+    g_BackgroundColor        = 128;
 }
 
-void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image1, s16 arg2) // 0x800317CC
+void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image1, q3_12 alpha) // 0x800317CC
 {
     volatile int   pad;
     s32            i;
@@ -88,7 +88,7 @@ void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image
     for (i = 0; i < 3; i++)
     {
         image = (i > 0) ? image0 : image1;
-        color = (i < 2) ? FP_MULTIPLY_PRECISE(arg2, 128, Q12_SHIFT) : 128;
+        color = (i < 2) ? FP_MULTIPLY_PRECISE(alpha, 128, Q12_SHIFT) : 128;
 
         for (j = 0; j < 3; j++)
         {

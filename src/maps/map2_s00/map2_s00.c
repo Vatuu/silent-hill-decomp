@@ -1602,13 +1602,13 @@ void MapEvent_HouseKeyUse(void) // 0x800E9D1C
     Savegame_MapMarkingSet(MapMarkFlag_OldTown_DoghouseDotOnly);
 }
 
-void func_800E9DD8(void)
+void func_800E9DD8(void) // 0x800E9DD8
 {
-    s32 index;
-    s32 tim;
-    s32 tim2;
-    s32 tmp0;
-    s32 locksLeft;
+    s32  idx;
+    s32  tim;
+    s32  tim2;
+    s32  tmp0;
+    s32  locksLeft;
     s16 *timPtr;
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -1619,32 +1619,34 @@ void func_800E9DD8(void)
             D_800F22A4 = &D_800A9A04;
             D_800F22A8 = &g_ItemInspectionImg;
 
-            Fs_QueueStartReadTim(
-                D_800F1A14[
-                    (Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen) ? 4 : 0) +
-                    (Savegame_EventFlagGet(EventFlag_M2S00_LockOfWoodmanOpen) ? 2 : 0) +
-                    (Savegame_EventFlagGet(EventFlag_M2S00_LockOfScarecrowOpen) ? 1 : 0)
-                ],
-                FS_BUFFER_1,
-                D_800F22A8
-            );
+            Fs_QueueStartReadTim(g_Gfx_LockTimFileIdxs[(Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen)      ? 4 : 0) +
+                                                       (Savegame_EventFlagGet(EventFlag_M2S00_LockOfWoodmanOpen)   ? 2 : 0) +
+                                                       (Savegame_EventFlagGet(EventFlag_M2S00_LockOfScarecrowOpen) ? 1 : 0)],
+                                 FS_BUFFER_1,
+                                 D_800F22A8);
+
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 1:
             SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
-            return;
+            break;
+
         case 2:
             func_800862F8(3, 0, false);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
+
             D_800F22A8 = D_800F22A4;
-            return;
+            break;
+
         case 3:
             SysWork_StateStepIncrementAfterFade(2, false, false, false, false);
             Gfx_BackgroundSpriteDraw_2(D_800F22A0);
-            return;
+            break;
+
         case 4:
             Gfx_BackgroundSpriteDraw_2(D_800F22A0);
+
             if (Savegame_EventFlagGet(EventFlag_M2S00_PickupKeyOfLion) && !Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen))
             {
                 Savegame_EventFlagSet(EventFlag_M2S00_LockOfLionOpen);
@@ -1656,6 +1658,7 @@ void func_800E9DD8(void)
             {
                 Savegame_EventFlagSet(EventFlag_M2S00_LockOfWoodmanOpen);
                 g_DoorOfEclypse_MapMsgIdx = 33;
+
                 Player_ItemRemove(InventoryItemId_KeyOfWoodman, 1);
                 SysWork_StateStepSet(0, 5);
             }
@@ -1663,6 +1666,7 @@ void func_800E9DD8(void)
             {
                 Savegame_EventFlagSet(EventFlag_M2S00_LockOfScarecrowOpen);
                 g_DoorOfEclypse_MapMsgIdx = 34;
+
                 Player_ItemRemove(InventoryItemId_KeyOfScarecrow, 1);
                 SysWork_StateStepSet(0, 5);
             }
@@ -1681,6 +1685,7 @@ void func_800E9DD8(void)
                 {
                     locksLeft -= 1;
                 }
+
                 switch (locksLeft)
                 {
                     case 0:
@@ -1688,83 +1693,96 @@ void func_800E9DD8(void)
                         Savegame_EventFlagSet(EventFlag_M2S00_DoorOfEclypseOpen);
                         Savegame_MapMarkingSet(MapMarkFlag_OldTown_DoghouseArrowsOnly);
                         break;
+
                     case 1:
                         g_DoorOfEclypse_MapMsgIdx = 58;
                         break;
+
                     case 2:
                         g_DoorOfEclypse_MapMsgIdx = 57;
                         break;
+
                     case 3:
                         g_DoorOfEclypse_MapMsgIdx = 56;
                         break;
                 }
+
                 SysWork_StateStepSet(0, 11);
             }
-            return;
+            break;
+
         case 5:
             MapMsg_DisplayAndHandleSelection(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
             Gfx_BackgroundSpriteDraw_2(D_800F22A0);
             Sd_PlaySfx(Sfx_Unk1390, 0, 0x80);
             SysWork_StateStepIncrement(0);
-            return;
+            break;
+
         case 6:
-            Fs_QueueStartReadTim(
-                D_800F1A14[
-                    (Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen) ? 4 : 0) +
-                    (Savegame_EventFlagGet(EventFlag_M2S00_LockOfWoodmanOpen) ? 2 : 0) +
-                    (Savegame_EventFlagGet(EventFlag_M2S00_LockOfScarecrowOpen) ? 1 : 0)
-                ],
-                FS_BUFFER_1,
-                D_800F22A8
-            );
+            Fs_QueueStartReadTim(g_Gfx_LockTimFileIdxs[(Savegame_EventFlagGet(EventFlag_M2S00_LockOfLionOpen)      ? 4 : 0) +
+                                                       (Savegame_EventFlagGet(EventFlag_M2S00_LockOfWoodmanOpen)   ? 2 : 0) +
+                                                       (Savegame_EventFlagGet(EventFlag_M2S00_LockOfScarecrowOpen) ? 1 : 0)],
+                                 FS_BUFFER_1,
+                                 D_800F22A8);
             SysWork_StateStepIncrement(0);
+
         case 7:
             Gfx_BackgroundSpriteDraw_2(D_800F22A0);
             MapMsg_DisplayAndHandleSelection(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
-            return;
+            break;
+
         case 8:
             Gfx_BackgroundSpriteDraw_2(D_800F22A0);
             func_800862F8(1, 0, false);
-            return;
+            break;
+
         case 9:
             Gfx_BackgroundSpritesTransition(D_800F22A0, D_800F22A4, g_SysWork.field_28);
-            g_SysWork.field_28 += 0x80;
-            if (g_SysWork.field_28 > 0x1000)
+
+            g_SysWork.field_28 += Q12(1.0f / 32.0f);
+            if (g_SysWork.field_28 > Q12(1.0f))
             {
                 tmp0 = D_800F22A0;
                 D_800F22A8 = tmp0;
                 D_800F22A0 = D_800F22A4;
                 D_800F22A4 = tmp0;
+
                 SysWork_StateStepIncrement(0);
             }
             break;
+
         case 10:
             Gfx_BackgroundSpriteDraw_2(D_800F22A0);
-            SysWork_StateStepIncrementDelayed(0x1000, false);
-            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
+
+            if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                 g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 SysWork_StateStepIncrement(0);
-
             }
+
             if (g_SysWork.sysStateStep_C[0] != 10)
             {
                 SysWork_StateStepSet(0, 4);
             }
             break;
+
         case 11:
             Gfx_BackgroundSpriteDraw_2(D_800F22A0);
             MapMsg_DisplayAndHandleSelection(false, g_DoorOfEclypse_MapMsgIdx, 0, 0, 0, false);
-            return;
+            break;
+
         case 12:
             Gfx_BackgroundSpriteDraw_2(D_800F22A0);
             SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
-            return;
+            break;
+
         default:
             func_800862F8(6, 0, false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, false, false, false);
-            return;
+            break;
         }
 }
 
