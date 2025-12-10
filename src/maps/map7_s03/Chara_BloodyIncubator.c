@@ -62,7 +62,64 @@ void func_800D3740(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D3740
     coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
 }
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/Chara_BloodyIncubator", func_800D38D8);
+void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords) 
+{
+    switch (bloodyIncubator->properties_E4.player.afkTimer_E8)
+    {
+        case 0:
+            break;
+        case 1:
+            Model_AnimStatusKeyframeSet(bloodyIncubator->model_0, 9, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
+            Character_AnimStateReset(bloodyIncubator);
+            break;
+        case 2:
+            Model_AnimStatusKeyframeSet(bloodyIncubator->model_0, 1, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
+            Character_AnimStateReset(bloodyIncubator);
+            break;
+        case 3:
+            Model_AnimStatusKeyframeSet(bloodyIncubator->model_0, 2, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
+            Character_AnimStateReset(bloodyIncubator);
+            break;
+        case 4:
+            Model_AnimStatusKeyframeSet(bloodyIncubator->model_0, 3, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
+            Character_AnimStateReset(bloodyIncubator);
+            break;
+        case 5:
+            Model_AnimStatusSet(&bloodyIncubator->model_0, 10, false);
+            Character_AnimStateReset(bloodyIncubator);
+            break;
+        case 6:
+            Model_AnimStatusSet(&bloodyIncubator->model_0, 4, false);
+            Character_AnimStateReset(bloodyIncubator);
+            break;
+        case 7:
+            Model_AnimStatusSet(&bloodyIncubator->model_0, 5, false);
+            Character_AnimStateReset(bloodyIncubator);
+            break;
+        case 8:
+            Model_AnimStatusKeyframeSet(bloodyIncubator->model_0, 6, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
+            Character_AnimStateReset(bloodyIncubator);
+            break;
+        case 9:
+            Model_AnimStatusSet(&bloodyIncubator->model_0, 7, false);
+            Character_AnimStateReset(bloodyIncubator);
+            break;
+        case 10:
+            Model_AnimStatusSet(&bloodyIncubator->model_0, 8, false);
+            Character_AnimStateReset(bloodyIncubator);
+            break;
+        case 11:
+            Model_AnimStatusKeyframeSet(bloodyIncubator->model_0, 11, true, BLOODY_INCUBATOR_ANIM_INFOS, 0);
+            Character_AnimStateReset(bloodyIncubator);
+            break;
+
+    }
+    bloodyIncubator->headingAngle_3C = bloodyIncubator->rotation_24.vy;
+    bloodyIncubator->moveSpeed_38 = bloodyIncubator->properties_E4.dahlia.moveDistance_126;
+    bloodyIncubator->field_34 += g_DeltaTime2;
+    coords->flg = 0;
+    Math_RotMatrixZxyNegGte(&bloodyIncubator->rotation_24, &coords->coord);
+}
 
 void Ai_BloodyIncubator_Init(s_SubCharacter* chara) // 0x800D3BA4
 {
