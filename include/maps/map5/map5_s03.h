@@ -23,11 +23,17 @@
 #define MAP_ROOM_MIN_Z Q12(0.0f)
 #define MAP_ROOM_MAX_Z Q12(120.0f)
 
+extern s_WorldObjectPose      g_WorldObjectPose_HealthDrink0;
+extern s_WorldObjectPose      g_WorldObjectPose_ShotgunShells;
+extern s_WorldObjectPose      g_WorldObjectPose_HealthDrink1;
 extern s_WorldObjectDescNoRot g_WorldObject_Movaches;
+extern s32                    D_800D6F8C;
 extern s_WorldObject_0        g_WorldObject_SavePad;
-extern s_WorldObject_0        g_CommonWorldObjects[6];
+extern s_WorldObjectPose      g_WorldObjectPose_SavePad[2];
 extern s_WorldObjectDesc      g_WorldObject_Mag;
-extern s_WorldObjectPose      g_WorldObjectPose_SavePad[];
+extern s_WorldObject_0        g_CommonWorldObjects[6];
+extern s_WorldObject_0        g_WorldObject_HealthDrink;
+extern s_WorldObject_0        g_WorldObject_ShotgunShells;
 
 extern u16 D_800D3BDC;
 
@@ -65,5 +71,7 @@ void func_800D2640(void);
 void func_800D2674(void);
 
 void Map_WorldObjectsInit(void);
+
+void Map_WorldObjectsUpdate(void);
 
 #endif

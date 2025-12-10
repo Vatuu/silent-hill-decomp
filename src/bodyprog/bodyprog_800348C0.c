@@ -1764,9 +1764,9 @@ void func_80037334(void) // 0x80037334
 {
     s_Collision coll;
 
-    if (g_MapOverlayHeader.func_40 != 0)
+    if (g_MapOverlayHeader.worldObjectsUpdate_40 != 0)
     {
-        g_MapOverlayHeader.func_40();
+        g_MapOverlayHeader.worldObjectsUpdate_40();
     }
 
     Collision_Get(&coll, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
@@ -2674,9 +2674,9 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
     D_800A9A0C = ScreenFade_IsFinished() && Fs_QueueDoThingWhenEmpty();
 
-    if (!(g_SysWork.sysFlags_22A0 & SysFlag_Freeze) && g_MapOverlayHeader.func_40 != NULL)
+    if (!(g_SysWork.sysFlags_22A0 & SysFlag_Freeze) && g_MapOverlayHeader.worldObjectsUpdate_40 != NULL)
     {
-        g_MapOverlayHeader.func_40();
+        g_MapOverlayHeader.worldObjectsUpdate_40();
     }
 
     Screen_CutsceneCameraStateUpdate();

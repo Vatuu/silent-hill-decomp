@@ -122,6 +122,7 @@ MapEvent_DoorLocked                 = 0x800D1474; // type:func
 MapEvent_DoorUnlocked               = 0x800D1508; // type:func
 MapEvent_CommonItemTake             = 0x800D159C; // type:func
 Map_WorldObjectsInit                = 0x800D2A04; // type:func
+Map_WorldObjectsUpdate              = 0x800D2B68; // type:func
 
 
 
@@ -177,6 +178,9 @@ MAP_MESSAGES                        = 0x800D38A4; // type:u32 size:0x110
 //----------------------------------------------------
 //--- PA: 0x00A43C   VA: 0x800D39B4   subsegment: data
 //----------------------------------------------------
+g_WorldObjectPose_HealthDrink0      = 0x800D3BFC; // type:WorldObjectPose size:0x14
+g_WorldObjectPose_ShotgunShells     = 0x800D3C10; // type:WorldObjectPose size:0x14
+g_WorldObjectPose_HealthDrink1      = 0x800D3C24; // type:WorldObjectPose size:0x14
 sharedData_800DFB4C_0_s00           = 0x800D3C38;
 sharedData_800DFB50_0_s00           = 0x800D3C3C;
 g_Particle_SpeedX                   = 0x800D3C48; // type:s32
@@ -209,6 +213,8 @@ sharedData_800D32A0_0_s02           = 0x800D6F28; // type:s32
 sharedData_800D5CF4_3_s00           = 0x800D6F2C; // type:s32
 g_WorldObject_Movaches              = 0x800D6F68; // size:0x24
 g_WorldObject_SavePad               = 0x800D6F98; // size:0x18
-g_WorldObjectPose_SavePad           = 0x800D6FB8; // size:0x14
+g_WorldObjectPose_SavePad           = 0x800D6FB8; // size:0x28
 g_WorldObject_Mag                   = 0x800D6FE8; // size:0x2C
 g_CommonWorldObjects                = 0x800D7018; // size:0x18
+g_WorldObject_HealthDrink           = 0x800D7034; // type:WorldObject_0
+g_WorldObject_ShotgunShells         = 0x800D70A4; // type:WorldObject_0

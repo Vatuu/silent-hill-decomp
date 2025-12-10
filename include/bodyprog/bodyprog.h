@@ -1560,8 +1560,8 @@ typedef struct _MapOverlayHeader
     const char**           mapMessages_30; // Array of strings.
     s_AnimInfo*            animInfos_34;   // Map-specific anim infos for Harry (for anims 38+).
     s_UnkStruct3_Mo*       field_38; // Array of 40?
-    void                   (*func_3C)(); // func(?).
-    void                   (*func_40)();
+    void                   (*worldObjectsInit_3C)(void); // func(?).
+    void                   (*worldObjectsUpdate_40)(void);
     void                   (*func_44)();
     void                   (*func_48)(); // func(?).
     s_MapHdr_field_4C*     unkTable1_4C;

@@ -3254,9 +3254,9 @@ void func_8005E650(s32 mapId) // 0x8005E650
     D_800C4408 = 0;
     D_800C4414 = 0;
 
-    if (g_MapOverlayHeader.func_3C != NULL)
+    if (g_MapOverlayHeader.worldObjectsInit_3C != NULL)
     {
-        g_MapOverlayHeader.func_3C();
+        g_MapOverlayHeader.worldObjectsInit_3C();
     }
 }
 
