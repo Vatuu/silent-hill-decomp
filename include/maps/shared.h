@@ -2303,6 +2303,12 @@ extern u16 sharedData_800D1D1C_3_s02[60];
 
 extern VECTOR3 sharedData_800DFB10_0_s01[];
 
+extern u8 sharedData_800CCBA0_4_s00[];
+
+extern u8 sharedData_800CCBAC_4_s00[];
+
+void sharedFunc_800CC99C_4_s00(void);
+
 bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx);
 
 void sharedFunc_800CFE78_3_s02(s32 arg0);

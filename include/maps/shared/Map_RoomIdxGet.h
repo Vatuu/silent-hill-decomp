@@ -1,10 +1,16 @@
 #if !defined(M2CTX) // Inlines cause issues with M2C context
 
-#define CheckRange(axis, low, high)        \
-    ({                                     \
-        s32 val = (axis);                  \
-        (low) <= (val) && (val) <= (high); \
-    })
+#define CheckRange(axis, low, high)    \
+({                                     \
+    s32 val = (axis);                  \
+    (low) <= (val) && (val) <= (high); \
+})
+
+#define CheckNotInRange(axis, low, high)  \
+({                                        \
+    s32 val = (axis);                     \
+    !((low) <= (val) && (val) <= (high)); \
+})
 
 static inline s32 GetXIdx(q19_12 posX)
 {
@@ -81,6 +87,46 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
         yIdx = GetYIdx(x, z);
         res  = sharedData_800DF2DC_0_s00[(xIdx * 5) + yIdx];
     }
+
+#elif defined(MAP4_S00) || defined(MAP4_S06)
+
+    if (CheckRange(x + Q12(120.0f), Q12(-14.0f), Q12(14.0f)) && z < Q12(40.0f))
+    {
+        xIdx = 1;
+    }
+    else if (CheckRange(x + Q12(60.0f), Q12(-9.0f), Q12(9.0f)) &&
+             CheckRange(z + Q12(40.0f), Q12(-34.0f), Q12(34.0f)))
+    {
+        xIdx = 2;
+    }
+    else if (CheckRange(x + Q12(0.0f), Q12(-14.0f), Q12(14.0f)) && z > Q12(-80.0f))
+    {
+        xIdx = 3;
+    }
+    else
+    {
+        xIdx = 0;
+    }
+
+    if (CheckNotInRange(x + Q12(40.0f), Q12(-120.0f), Q12(120.0f)))
+    {
+        yIdx = 0;
+    }
+    else if (CheckRange(z + Q12(80.0f), Q12(-14.0f), Q12(14.0f)))
+    {
+        yIdx = 1;
+    }
+    else if (CheckRange(z + Q12(0.0f), Q12(-14.0f), Q12(14.0f)))
+    {
+        yIdx = 2;
+    }
+    else
+    {
+        yIdx = 0;
+    }
+
+    res = sharedData_800CCBA0_4_s00[(xIdx * 3) + yIdx];
+
 #endif
 
     // If no match in primary grid, try fallback grid.
