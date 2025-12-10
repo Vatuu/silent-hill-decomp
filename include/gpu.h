@@ -142,6 +142,18 @@ typedef struct
 #define setUV0AndClut(p, u, v, cx, cy) \
     *(u32*)(&(p)->u0) = (((((cy) << 6) | (((cx) >> 4) & 0x3F)) << 16) | ((v) << 8) | (u))
 
+/** @brief Combines `setUV0` and `setClut` into a single 32-bit store, using ADD to combine `u` and `v`. */
+#define setUV0AndClutSum(p, u, v, cx, cy) *(u32*)(&(p)->u0) = ((((((cy) << 6) | (((cx) >> 4) & 0x3F)) << 16) | (u)) + ((v) << 8))
+
+/** @brief Combines `setUV1` and `setClut` into a single 32-bit store, using ADD to combine `u` and `v`. */
+#define setUV1AndClutSum(p, u, v, cx, cy) *(u32*)(&(p)->u1) = ((((((cy) << 6) | (((cx) >> 4) & 0x3F)) << 16) | (u)) + ((v) << 8))
+
+/** @brief Same as `setUV2`, using ADD to combine `u` and `v`. */
+#define setUV2Sum(p, u, v) *(u16*)(&(p)->u2) = (((v) << 8) + (u))
+
+/** @brief Same as `setUV3`, using ADD to combine `u` and `v`. */
+#define setUV3Sum(p, u, v) *(u16*)(&(p)->u3) = (((v) << 8) + (u))
+
 /** @brief Combines `setcode` and `setRGB0`. */
 #define setCodeWord(p, code, rgb24) \
     *(u32*)(((u8*)(p)) + 4) = (((code) << 24) | ((rgb24) & 0xFFFFFF))
@@ -162,6 +174,11 @@ typedef struct
 /** @brief Combines `setRGB3` and incidentally applies code to the padding component. */
 #define setRGBC3(prim, r, g, b, code) \
     *(u32*)(&(prim)->r3) = ((((r) + ((g) << 8)) + ((b) << 16)) + ((code) << 24))
+
+/** @brief Slightly faster `setRGB0`. */
+#define setRGB0Fast(p, r, g, b)             \
+    *(u16*)&(*poly)->r0 = (r) + ((g) << 8); \
+    (*poly)->b0         = b;
 
 /** @brief Combines `addPrim` and `setlen`. */
 #define addPrimFast(ot, p, _len) \

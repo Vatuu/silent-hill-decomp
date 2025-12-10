@@ -26,6 +26,7 @@ sharedData_800CAA98_0_s01           = 0x800CA898; // type:s32 size:0xD6C
 //--- PA: 0x003518   VA: 0x800CCA90   subsegment: c, map5_s01
 //-----------------------------------------------------------
 sharedFunc_800CE5D4_1_s03           = 0x800CCA90; // type:func
+sharedFunc_800CE688_1_s03           = 0x800CCB44; // type:func
 sharedFunc_800CB6B0_0_s00           = 0x800CE2B4; // type:func
 sharedFunc_800CBBBC_0_s00           = 0x800CE76C; // type:func
 sharedFunc_800CBC94_0_s00           = 0x800CE844; // type:func
