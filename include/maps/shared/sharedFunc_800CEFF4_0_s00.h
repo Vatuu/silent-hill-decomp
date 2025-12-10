@@ -54,16 +54,16 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
             return;
 
         case 1:
-            sp20.vx = localPart->position1_C.vx >> 4;
-            sp20.vy = localPart->position1_C.vy >> 4;
-            sp20.vz = localPart->position1_C.vz >> 4;
+            sp20.vx = Q12_TO_Q8(localPart->position1_C.vx);
+            sp20.vy = Q12_TO_Q8(localPart->position1_C.vy);
+            sp20.vz = Q12_TO_Q8(localPart->position1_C.vz);
 
             gte_ldv0(&sp20);
             gte_rtps();
 
-            sp28.vx = localPart->position0_0.vx >> 4;
-            sp28.vy = localPart->position0_0.vy >> 4;
-            sp28.vz = localPart->position0_0.vz >> 4;
+            sp28.vx = Q12_TO_Q8(localPart->position0_0.vx);
+            sp28.vy = Q12_TO_Q8(localPart->position0_0.vy);
+            sp28.vz = Q12_TO_Q8(localPart->position0_0.vz);
 
             gte_stsxy(&poly->x0);
             gte_stszotz(&depth);
@@ -188,9 +188,9 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
                 }
             }
 
-            sp20.vx = (localPart->position0_0.vx - colorComp) >> 4;
-            sp20.vy = localPart->position0_0.vy >> 4;
-            sp20.vz = (localPart->position0_0.vz - colorComp) >> 4;
+            sp20.vx = Q12_TO_Q8(localPart->position0_0.vx - colorComp);
+            sp20.vy = Q12_TO_Q8(localPart->position0_0.vy);
+            sp20.vz = Q12_TO_Q8(localPart->position0_0.vz - colorComp);
 
             gte_ldv0(&sp20);
             gte_rtps();
