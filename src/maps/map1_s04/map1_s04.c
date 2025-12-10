@@ -171,7 +171,7 @@ void func_800CCA2C(void) // 0x800CCA2C
             {
                 Gfx_DebugStringDraw("TIME:");
                 // 98-12-16 calls into a `8002BCAC` func which is missing in retail, that func then calls `func_800321EC`
-                // sub_8002BCAC(6, 2, D_800CD770);
+                Gfx_DebugFixedPointPrint(6, 2, D_800CD770);
                 Gfx_DebugStringDraw("\n");
             }
 #endif

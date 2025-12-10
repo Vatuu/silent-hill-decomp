@@ -70,6 +70,10 @@ void Gfx_DebugStringDraw(char* str);
 
 char* Math_IntegerToString(s32 widthMin, s32 val);
 
+#ifdef DEBUG
+void Gfx_DebugFixedPointPrint(s32 offsetX, s32 fracDigits, s32 valueQ12);
+#endif
+
 void func_800321EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 #endif
