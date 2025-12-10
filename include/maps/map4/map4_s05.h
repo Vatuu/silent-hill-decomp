@@ -9,6 +9,11 @@
 #define HAS_PlayerState_Unk57
 #define HAS_PlayerState_Unk109
 
+#define MAP_ROOM_MIN_X Q12(-240.0f)
+#define MAP_ROOM_MAX_X Q12(240.0f)
+#define MAP_ROOM_MIN_Z Q12(-120.0f)
+#define MAP_ROOM_MAX_Z Q12(240.0f)
+
 extern s32 D_800D7858;
 
 extern q3_12 D_800D785C;

@@ -16,7 +16,7 @@ INCLUDE_RODATA("asm/maps/map4_s00/nonmatchings/map4_s00", g_MapOverlayHeader);
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800CC7A0
 
-#include "maps/shared/sharedFunc_800CC99C_4_s00.h" // 0x800CC99C
+#include "maps/shared/sharedFunc_800E9B38_2_s02.h" // 0x800CC99C
 
 void func_800CCA88(void) {}
 

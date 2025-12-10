@@ -561,7 +561,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D606C
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D607C);
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800D607C
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D6278);
 

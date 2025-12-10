@@ -7,6 +7,11 @@
 #define HAS_PlayerState_Unk129
 #define KEYFRAME_PlayerState_Unk123 877
 
+#define MAP_ROOM_MIN_X Q12(-240.0f)
+#define MAP_ROOM_MAX_X Q12(240.0f)
+#define MAP_ROOM_MIN_Z Q12(-120.0f)
+#define MAP_ROOM_MAX_Z Q12(240.0f)
+
 typedef struct
 {
     s_SubCharacter* chara_0;

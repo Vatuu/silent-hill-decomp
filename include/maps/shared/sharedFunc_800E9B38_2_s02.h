@@ -1,4 +1,4 @@
-void sharedFunc_800CC99C_4_s00(void) // 0x800CC99C
+void sharedFunc_800E9B38_2_s02(void) // 0x800CC99C
 {
     s32 flags;
 
@@ -32,8 +32,8 @@ void sharedFunc_800CC99C_4_s00(void) // 0x800CC99C
     if (flags & (1 << 3))
     {
         s8 temp_v0 = func_800364BC();
-        sharedData_800CCBAC_4_s00[3] = temp_v0;
+        sharedData_800ED43C_2_s02[3] = temp_v0;
     }
 
-    func_80035F4C(flags, Q12(0.1f), sharedData_800CCBAC_4_s00);
+    func_80035F4C(flags, Q12(0.1f), sharedData_800ED43C_2_s02);
 }

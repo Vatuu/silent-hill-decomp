@@ -88,7 +88,8 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
         res  = sharedData_800DF2DC_0_s00[(xIdx * 5) + yIdx];
     }
 
-#elif defined(MAP4_S00) || defined(MAP4_S06)
+#elif defined(MAP2_S02) || defined(MAP4_S00) || defined(MAP4_S02) || defined(MAP4_S03) || \
+      defined(MAP4_S05) || defined(MAP4_S06)
 
     if (CheckRange(x + Q12(120.0f), Q12(-14.0f), Q12(14.0f)) && z < Q12(40.0f))
     {
@@ -125,7 +126,7 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
         yIdx = 0;
     }
 
-    res = sharedData_800CCBA0_4_s00[(xIdx * 3) + yIdx];
+    res = sharedData_800ED430_2_s02[(xIdx * 3) + yIdx];
 
 #endif
 
