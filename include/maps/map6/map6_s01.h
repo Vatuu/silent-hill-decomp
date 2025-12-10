@@ -44,7 +44,7 @@ extern s16 D_800D41B0;
 /** Time. */
 extern q19_12 D_800D41B4;
 
-extern s8 D_800D5345;
+extern u8 D_800D5345;
 
 extern VECTOR3 D_800D5354;
 
@@ -54,13 +54,12 @@ extern u8 D_800D5370;
 
 extern s8 D_800CBB54;
 
-extern s8 D_800D5345;
-
 extern s_WorldObjectDesc D_800D5374;
 
 extern s_WorldObjectDesc D_800D53A4[7];
 
 extern s_WorldObject_0 g_CommonWorldObjects[6];
+extern s_WorldObjectPose  g_CommonWorldObjectPoses[3]; // 0x800D4128
 
 void func_800D0E78(s32 arg0);
 
@@ -76,5 +75,7 @@ void func_800D236C(void);
 void func_800D2658(void);
 
 void func_800D2E6C(void);
+
+void func_800D30DC(void);
 
 #endif

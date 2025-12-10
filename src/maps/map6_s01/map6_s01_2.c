@@ -844,6 +844,46 @@ void func_800D2E6C(void) // 0x800D2E6C
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-INCLUDE_ASM("asm/maps/map6_s01/nonmatchings/map6_s01_2", func_800D30DC);
+void func_800D30DC(void)
+{
+    s32 i;
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        g_WorldGfx_ObjectAdd(&D_800D5374.object_0, &D_800D5374.position_1C, &D_800D5374.rotation_28);
+        if (!D_800D5345)
+        {
+            for (i = 0; i < 7; i++)
+            {
+                g_WorldGfx_ObjectAdd(&D_800D53A4[i].object_0, &D_800D53A4[i].position_1C, &D_800D53A4[i].rotation_28);
+            }
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M6S01_RifleShells))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M6S01_HandgunBullets))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position_0, &g_CommonWorldObjectPoses[1].rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M6S01_HealthDrink))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[2].position_0, &g_CommonWorldObjectPoses[2].rotation_C);
+        }
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map6_s01/nonmatchings/map6_s01_2", D_800CBB54);

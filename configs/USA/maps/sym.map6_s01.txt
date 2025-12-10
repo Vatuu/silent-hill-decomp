@@ -153,6 +153,7 @@ MAP_MESSAGES                        = 0x800D3E38; // type:u32 size:0x16C
 //----------------------------------------------------
 //--- PA: 0x00AA2C   VA: 0x800D3FA4   subsegment: data
 //----------------------------------------------------
+g_CommonWorldObjectPoses            = 0x800D4128; // type:WorldObjectPos size:0x3C
 sharedData_800DFB4C_0_s00           = 0x800D4164;
 sharedData_800CD77C_1_s04           = 0x800D4168; // type:s32
 D_800D416C                          = 0x800D416C; // type:u8 size:1
