@@ -16,7 +16,7 @@ void (*g_LoadScreenFuncs[])() =
     NULL,
     Gfx_LoadingScreen_PlayerRun,
     Gfx_LoadingScreen_BackgroundTexture,
-    func_800CCB24
+    Gfx_LoadingScreen_StageString
 };
 
 s_MapPoint2d MAP_POINTS[] = 
@@ -49,8 +49,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     .mapMessages_30           = MAP_MESSAGES,
     .animInfos_34             = HARRY_M2S03_ANIM_INFOS,
     .field_38                 = g_MapHeaderTable_38,
-    .worldObjectsInit_3C      = func_800CCB2C,
-    .worldObjectsUpdate_40    = func_800CCB34,
+    .worldObjectsInit_3C      = Map_WorldObjectsInit,
+    .worldObjectsUpdate_40    = Map_WorldObjectsUpdate,
     .func_44                  = NULL,
     .func_48                  = NULL,
     .unkTable1_4C             = sharedData_800DFB7C_0_s00,

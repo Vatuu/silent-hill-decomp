@@ -76,7 +76,7 @@ void func_800CC8C8(void) // 0x800CC8C8
     func_80035F4C(var_a3, var_a1, &D_800CCF54);
 }
 
-void func_800CCA24(void) {}
+void Gfx_LoadingScreen_StageString(void) {} // 0x800CCA24
 
 void func_800CCA2C(void) // 0x800CCA2C
 {
@@ -155,6 +155,27 @@ void func_800CCA2C(void) // 0x800CCA2C
 
             Gfx_DebugStringPosition(50, 50);
 
+#ifdef DEBUG
+            // Code seen in 98-12-16 build.
+            Gfx_DebugStringDraw("VS 0:");
+            Gfx_DebugStringDraw(Math_IntegerToString(3, D_800CD768));
+            Gfx_DebugStringDraw("\n");
+            Gfx_DebugStringDraw("VS 1:");
+            Gfx_DebugStringDraw(Math_IntegerToString(3, D_800CD76C));
+            Gfx_DebugStringDraw("\n");
+            Gfx_DebugStringDraw("SDST:");
+            Gfx_DebugStringDraw(Math_IntegerToString(3, Sd_AudioStreamingCheck()));
+            Gfx_DebugStringDraw("\n");
+
+            if (D_800CD774 != 2)
+            {
+                Gfx_DebugStringDraw("TIME:");
+                // 98-12-16 calls into a `8002BCAC` func which is missing in retail, that func then calls `func_800321EC`
+                // sub_8002BCAC(6, 2, D_800CD770);
+                Gfx_DebugStringDraw("\n");
+            }
+#endif
+
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
             {
                 SysWork_StateStepIncrement(0);
@@ -193,9 +214,9 @@ void func_800CCA2C(void) // 0x800CCA2C
     }
 }
 
-void func_800CCE30(void) {} // 0x800CCE30
+void Map_WorldObjectsInit(void) {} // 0x800CCE30
 
-void func_800CCE38(void) // 0x800CCE38
+void Map_WorldObjectsUpdate(void) // 0x800CCE38
 {
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R1)
     {

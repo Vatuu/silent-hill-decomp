@@ -14,11 +14,11 @@
 
 #include "maps/shared/sharedFunc_800E7914_2_s00.h" // 0x800CCA1C
 
-void func_800CCB24(void) {} // 0x800CCB24
+void Gfx_LoadingScreen_StageString(void) {} // 0x800CCB24
 
-void func_800CCB2C(void) {} // 0x800CCB2C
+void Map_WorldObjectsInit(void) {} // 0x800CCB2C
 
-void func_800CCB34(void) {} // 0x800CCB34
+void Map_WorldObjectsUpdate(void) {} // 0x800CCB34
 
 const char* MAP_MESSAGES[] = {
 #include "maps/shared/mapMsg_common.h"

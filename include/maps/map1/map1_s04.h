@@ -25,14 +25,14 @@ extern u16 D_800CCF5C[];
 
 void func_800CC8C8(void);
 
-void func_800CCA24(void);
+void Gfx_LoadingScreen_StageString(void);
 
 // Some kind of debug menu? Controller buttons increment a counter which wraps around, has a `Gfx_DebugStringPosition` call but no strings drawn.
 void func_800CCA2C(void);
 
-void func_800CCE30(void);
+void Map_WorldObjectsInit(void);
 
 // Sound test func that plays different sounds when R1/R2/R3 are pressed?
-void func_800CCE38(void);
+void Map_WorldObjectsUpdate(void);
 
 #endif
