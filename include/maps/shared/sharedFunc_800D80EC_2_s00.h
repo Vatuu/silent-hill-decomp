@@ -16,7 +16,7 @@ void sharedFunc_800D80EC_2_s00(s_SubCharacter* chara)
     {
         case 0:
             chara->properties_E4.unk0.properties_120.val32 = Q12(2.0f);
-            if (func_80080514() < Q12(0.7f))
+            if (Rng_RandQ12() < Q12(0.7f))
             {
                 switchCond = 2;
                 sharedFunc_800D529C_0_s01(chara, Q12(8.0f), chara->rotation_24.vy);

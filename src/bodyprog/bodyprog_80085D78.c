@@ -1721,7 +1721,7 @@ void func_80089314(s32 arg0) // 0x80089314
     
     if ((s32)D_800AFD05 >= var0)
     {
-        var0 = func_80080514();
+        var0 = Rng_RandQ12();
         if (arg0 != 0)
         {
             var1 = ((var0 * 16) >> 12) + 20;
@@ -2603,7 +2603,7 @@ void func_8008A3AC(s_SubCharacter* chara) // 0x8008A3AC
     }
 }
 
-s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
+s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 {
     s32                sp10;
     s32                sp14;
@@ -2645,7 +2645,7 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
     s_SubCharacter_44* temp_v0_12;
     s32                temp_s0;
     s32                temp_s0_11;
-    s32                temp_s0_6;
+    q19_12             angle;
     s32                temp_s0_7;
     s32                temp_s0_8;
     s32                temp_s0_9;
@@ -2667,9 +2667,9 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
     s32                var_a1;
     s32                var_fp;
     s32                var_s3;
-    s32                var_s4;
+    s32                j;
     s32                var_s6;
-    s32                var_s7;
+    s32                i;
     s32                var_v1;
     s_ModelAnim*       var_s0;
     s_SubCharacter*    temp_s1_2;
@@ -2686,23 +2686,23 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
     s32                temp6;
 
     sp30 = -1;
-    func_8008A398(arg0);
+    func_8008A398(chara);
 
-    sp10 = arg0->field_44.field_0;
-    sp14 = (u8)arg0->field_44.field_2;
+    sp10 = chara->field_44.field_0;
+    sp14 = (u8)chara->field_44.field_2;
 
     if (sp10 == 0)
     {
-        arg0->field_44.field_4  = 0;
-        arg0->field_44.field_8  = 0;
-        arg0->field_44.field_14 = 0;
+        chara->field_44.field_4  = 0;
+        chara->field_44.field_8  = 0;
+        chara->field_44.field_14 = 0;
         return 0;
     }
 
     if (sp10 == sp30)
     {
-        arg0->field_44.field_8  = 0;
-        arg0->field_44.field_14 = 0;
+        chara->field_44.field_8  = 0;
+        chara->field_44.field_14 = 0;
         return 0;
     }
 
@@ -2712,13 +2712,13 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
 
     temp_s1 = sp1C->field_10;
 
-    if (arg0 == &g_SysWork.player_4C.chara_0)
+    if (chara == &g_SysWork.player_4C.chara_0)
     {
-        var_s0 = &((s_MainCharacter*)arg0)->extra_128.model_0.anim_4;
+        var_s0 = &((s_MainCharacter*)chara)->extra_128.model_0.anim_4;
     }
     else
     {
-        var_s0 = &arg0->model_0.anim_4;
+        var_s0 = &chara->model_0.anim_4;
     }
 
     anim  = func_80044918(var_s0);
@@ -2728,31 +2728,31 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
     var_s0_2 = func_8008A270(sp14);
     var_a0   = func_8008A2E0(sp14);
 
-    var_s7   = arg0->field_44.field_14;
+    i   = chara->field_44.field_14;
     sp2C     = FP_TO(var_s0_2 + var_a0, Q12_SHIFT);
     var_s0_2 = FP_TO(var_s0_2, Q12_SHIFT);
 
-    if (sp28 < var_s7)
+    if (sp28 < i)
     {
         sp10                   = 1;
-        arg0->field_44.field_0 = sp10;
+        chara->field_44.field_0 = sp10;
     }
 
     if (sp10 == 1)
     {
-        arg0->field_44.field_4 = 0;
+        chara->field_44.field_4 = 0;
         sp10                   = 2;
     }
 
-    if (var_s7 < var_s0_2)
+    if (i < var_s0_2)
     {
-        var_s7                  = var_s0_2;
-        arg0->field_44.field_14 = var_s7;
+        i                  = var_s0_2;
+        chara->field_44.field_14 = i;
     }
-    else if (sp2C < var_s7)
+    else if (sp2C < i)
     {
-        var_s7                  = sp2C;
-        arg0->field_44.field_14 = var_s7;
+        i                  = sp2C;
+        chara->field_44.field_14 = i;
     }
 
     if (sp28 < var_s0_2)
@@ -2768,13 +2768,13 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
             sp18 = 1;
         }
 
-        sp20 = arg0->field_44.field_C;
-        sp24 = arg0->field_44.field_E;
+        sp20 = chara->field_44.field_C;
+        sp24 = chara->field_44.field_E;
 
         if (temp_s1 == 3)
         {
-            sp3C = arg0->field_44.field_3;
-            sp40 = arg0->field_44.field_4;
+            sp3C = chara->field_44.field_3;
+            sp40 = chara->field_44.field_4;
             sp34 = *(u16*)&sp1C->field_6;
 
             sp54 = sp1C->field_0;
@@ -2804,7 +2804,7 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
 
             if (sp34 == 0 && charaId == Chara_Harry)
             {
-                if (arg0->model_0.charaId_0 == charaId)
+                if (chara->model_0.charaId_0 == charaId)
                 {
                     var_a0_2 = func_8007FD2C();
                 }
@@ -2865,9 +2865,9 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
                         {
                             if (temp_s1_2->model_0.charaId_0 < Chara_LockerDeadBody)
                             {
-                                temp_v0_4 = arg0->position_18.vx - temp_s1_2->position_18.vx;
-                                temp_v0_5 = arg0->position_18.vy - temp_s1_2->position_18.vy;
-                                temp_v0_6 = arg0->position_18.vz - temp_s1_2->position_18.vz;
+                                temp_v0_4 = chara->position_18.vx - temp_s1_2->position_18.vx;
+                                temp_v0_5 = chara->position_18.vy - temp_s1_2->position_18.vy;
+                                temp_v0_6 = chara->position_18.vz - temp_s1_2->position_18.vz;
 
                                 temp6   = FP_MULTIPLY_PRECISE(temp_v0_4, temp_v0_4, Q12_SHIFT) + FP_MULTIPLY_PRECISE(temp_v0_5, temp_v0_5, Q12_SHIFT);
                                 temp_s0 = FP_MULTIPLY_PRECISE(temp_v0_6, temp_v0_6, Q12_SHIFT) + temp6;
@@ -2925,77 +2925,78 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
                 }
 
             j_584:
-                sp48 = FP_MULTIPLY_PRECISE(var_s2, func_80080514(), Q12_SHIFT);
+                sp48 = FP_MULTIPLY_PRECISE(var_s2, Rng_RandQ12(), Q12_SHIFT);
             }
 
             var_s6 = FP_MULTIPLY(sp4C, sp10 - 2, Q12_SHIFT);
 
-            for (var_s7  = var_s7 + sp34; sp3C != 0 && sp40 < sp38 && sp28 >= var_s7;
-                 var_s7 += sp34, sp40++, sp3C--)
+            for (i = i + sp34;
+                 sp3C != 0 && sp40 < sp38 && sp28 >= i;
+                 i += sp34, sp40++, sp3C--)
             {
-                for (var_s4 = charaId; var_s4 > 0; var_s4--)
+                for (j = charaId; j > 0; j--)
                 {
-                    temp_v0_10 = func_80080514();
+                    temp_v0_10 = Rng_RandQ12();
                     temp_s2_2  = FP_MULTIPLY_PRECISE(sp48, temp_v0_10, Q12_SHIFT);
 
-                    temp_v0_10 = func_80080514() - 0x800;
-                    temp_s0_6  = var_s6 + FP_MULTIPLY_PRECISE(sp50, temp_v0_10, Q12_SHIFT);
+                    temp_v0_10 = Rng_RandQ12() - FP_ANGLE(180.0f);
+                    angle  = var_s6 + FP_MULTIPLY_PRECISE(sp50, temp_v0_10, Q12_SHIFT);
 
-                    temp3     = sp20 + FP_MULTIPLY(temp_s2_2, Math_Sin(temp_s0_6), Q12_SHIFT);
-                    temp_s0_7 = sp24 + FP_MULTIPLY(temp_s2_2, Math_Cos(temp_s0_6), Q12_SHIFT);
+                    temp3     = sp20 + FP_MULTIPLY(temp_s2_2, Math_Sin(angle), Q12_SHIFT);
+                    temp_s0_7 = sp24 + FP_MULTIPLY(temp_s2_2, Math_Cos(angle), Q12_SHIFT);
                     temp2     = Math_Cos(temp_s0_7);
                     temp_s0_8 = Math_Sin(temp_s0_7);
                     temp_s1_4 = FP_MULTIPLY(temp_s0_8, Math_Sin(temp3), Q12_SHIFT);
                     temp_s0_9 = FP_MULTIPLY(temp_s0_8, Math_Cos(temp3), Q12_SHIFT);
 
-                    arg0->field_44.field_48[0].vx = FP_MULTIPLY(sp54, temp_s1_4, Q12_SHIFT);
-                    arg0->field_44.field_48[0].vy = FP_MULTIPLY(sp54, temp2, Q12_SHIFT);
-                    arg0->field_44.field_48[0].vz = FP_MULTIPLY(sp54, temp_s0_9, Q12_SHIFT);
+                    chara->field_44.field_48[0].vx = FP_MULTIPLY(sp54, temp_s1_4, Q12_SHIFT);
+                    chara->field_44.field_48[0].vy = FP_MULTIPLY(sp54, temp2, Q12_SHIFT);
+                    chara->field_44.field_48[0].vz = FP_MULTIPLY(sp54, temp_s0_9, Q12_SHIFT);
 
                     var_s6 += sp4C;
 
-                    if (arg0->model_0.charaId_0 == Chara_Harry)
+                    if (chara->model_0.charaId_0 == Chara_Harry)
                     {
                         func_800892A4(5);
                     }
 
-                    temp = func_8006DA08(&D_800C4728, &arg0->field_44.field_18, &arg0->field_44.field_48[0], arg0);
+                    temp = func_8006DA08(&D_800C4728, &chara->field_44.field_18, &chara->field_44.field_48[0], chara);
                     ptr  = D_800C4728.field_10;
 
                     if (temp && ptr != NULL)
                     {
-                        arg0->field_44.field_48[1].vx = temp_s1_4;
-                        arg0->field_44.field_48[1].vy = temp2;
-                        arg0->field_44.field_48[1].vz = temp_s0_9;
-                        func_8008B714(arg0, ptr, &D_800C4728.field_4, 0);
+                        chara->field_44.field_48[1].vx = temp_s1_4;
+                        chara->field_44.field_48[1].vy = temp2;
+                        chara->field_44.field_48[1].vz = temp_s0_9;
+                        func_8008B714(chara, ptr, &D_800C4728.field_4, 0);
                     }
                 }
             }
 
-            if (var_s7 >= sp2C)
+            if (i >= sp2C)
             {
                 sp18 = 1;
             }
             else
             {
-                var_s7 -= sp34;
+                i -= sp34;
             }
 
             if (sp3C == 0)
             {
-                var_s7 = sp28;
+                i = sp28;
                 sp18   = 1;
             }
 
             if (sp40 >= sp38)
             {
-                var_s7 = sp28;
+                i = sp28;
                 sp18   = 1;
             }
 
-            arg0->field_44.field_14 = var_s7;
-            arg0->field_44.field_4  = sp40;
-            arg0->field_44.field_3  = sp3C;
+            chara->field_44.field_14 = i;
+            chara->field_44.field_4  = sp40;
+            chara->field_44.field_3  = sp3C;
         }
         else
         {
@@ -3007,9 +3008,9 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
             if (temp_s1 == 1)
             {
                 sp58 = 0;
-                if (var_s7 < sp28)
+                if (i < sp28)
                 {
-                    sp5C = (sp28 - var_s7) / (var_a0 * 4);
+                    sp5C = (sp28 - i) / (var_a0 * 4);
                 }
                 else
                 {
@@ -3024,20 +3025,20 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
 
             if (sp10 == 2)
             {
-                func_8008B15C(arg0);
+                func_8008B15C(chara);
                 sp10 = 3;
             }
 
-            temp_s0_10 = arg0->field_44.field_12;
-            temp_s1_5  = arg0->field_44.field_10;
+            temp_s0_10 = chara->field_44.field_12;
+            temp_s1_5  = chara->field_44.field_10;
 
-            sp60 = arg0->field_44.field_24[2].vx;
-            sp64 = arg0->field_44.field_24[2].vy;
-            sp68 = arg0->field_44.field_24[2].vz;
+            sp60 = chara->field_44.field_24[2].vx;
+            sp64 = chara->field_44.field_24[2].vy;
+            sp68 = chara->field_44.field_24[2].vz;
 
-            sp6C = arg0->field_44.field_18.vx;
-            sp70 = arg0->field_44.field_18.vy;
-            sp74 = arg0->field_44.field_18.vz;
+            sp6C = chara->field_44.field_18.vx;
+            sp70 = chara->field_44.field_18.vy;
+            sp74 = chara->field_44.field_18.vz;
 
             sp7C = Math_Cos(temp_s0_10);
             sp80 = Math_Sin(temp_s0_10);
@@ -3053,13 +3054,13 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
             sp90 = 0;
             sp94 = 0;
 
-            for (var_s2 = 4, var_fp = 0, var_s3 = 0, var_s7 = 0, var_s6 = 0;
+            for (var_s2 = 4, var_fp = 0, var_s3 = 0, i = 0, var_s6 = 0;
                  var_s2 > 0;
                  sp90  += sp68,
                  sp94   += sp64,
                  var_fp += sp60,
                  var_s3 += sp80,
-                 var_s7 += sp7C,
+                 i += sp7C,
                  var_s6 += sp78,
                  var_s2--)
             {
@@ -3070,7 +3071,7 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
                 }
                 temp5 = var_a0_3 >> 2;
 
-                var_a1 = (sp88 * var_s2) + var_s7;
+                var_a1 = (sp88 * var_s2) + i;
                 if (var_a1 < 0)
                 {
                     var_a1 += 3;
@@ -3114,43 +3115,43 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
                 temp_a0->vz = temp_v0_10 >> 2;
             }
 
-            arg0->field_44.field_10 = arg0->field_44.field_C;
-            arg0->field_44.field_12 = arg0->field_44.field_E;
+            chara->field_44.field_10 = chara->field_44.field_C;
+            chara->field_44.field_12 = chara->field_44.field_E;
 
             for (var_s2 = 0, temp_s1_3 = 4; (temp_s1_3 > 0) && (var_s2 == 0); temp_s1_3--)
             {
                 temp_v0_11                 = &D_800C4758[4 - temp_s1_3];
-                arg0->field_44.field_18.vx = temp_v0_11->vx;
-                arg0->field_44.field_18.vy = temp_v0_11->vy;
+                chara->field_44.field_18.vx = temp_v0_11->vx;
+                chara->field_44.field_18.vy = temp_v0_11->vy;
 
                 temp_s0_14                 = &D_800C4748[4 - temp_s1_3];
-                arg0->field_44.field_18.vz = temp_v0_11->vz;
+                chara->field_44.field_18.vz = temp_v0_11->vz;
 
-                func_8008B1DC(arg0, temp_s0_14->vx, temp_s0_14->vy);
+                func_8008B1DC(chara, temp_s0_14->vx, temp_s0_14->vy);
 
-                if (func_8008BF84(arg0, temp_s0_14->vx, sp1C, sp5C) != 0)
+                if (func_8008BF84(chara, temp_s0_14->vx, sp1C, sp5C) != 0)
                 {
                     var_s2 = sp58;
                     sp18  |= var_s2;
                 }
             }
 
-            var_s7     = sp28;
-            temp_v0_12 = &arg0->field_44;
+            i     = sp28;
+            temp_v0_12 = &chara->field_44;
 
             temp_v0_12->field_18.vx       = sp6C;
-            arg0->field_44.field_24[2].vx = sp6C;
+            chara->field_44.field_24[2].vx = sp6C;
             temp_v0_12->field_18.vy       = sp70;
-            arg0->field_44.field_24[2].vy = sp70;
+            chara->field_44.field_24[2].vy = sp70;
             temp_v0_12->field_18.vz       = sp74;
-            arg0->field_44.field_24[2].vz = sp74;
+            chara->field_44.field_24[2].vz = sp74;
         }
 
         if (sp18 != 0)
         {
-            arg0->field_44.field_0 = -1;
+            chara->field_44.field_0 = -1;
 
-            if (arg0->model_0.charaId_0 == Chara_Harry)
+            if (chara->model_0.charaId_0 == Chara_Harry)
             {
                 switch (sp14)
                 {
@@ -3205,18 +3206,18 @@ s32 func_8008A3E0(s_SubCharacter* arg0) // 0x8008A3E0
 
                 if (var_s0_2 != -1)
                 {
-                    func_8009151C(var_s0_2, arg0->field_44.field_8 != 0, func_8007FD2C());
+                    func_8009151C(var_s0_2, chara->field_44.field_8 != 0, func_8007FD2C());
                 }
             }
         }
         else
         {
-            arg0->field_44.field_0  = sp10;
-            arg0->field_44.field_14 = var_s7;
+            chara->field_44.field_0  = sp10;
+            chara->field_44.field_14 = i;
         }
     }
 
-    return arg0->field_44.field_8;
+    return chara->field_44.field_8;
 }
 
 void func_8008B15C(s_SubCharacter* chara) // 0x8008B15C
@@ -3633,7 +3634,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                     break;
 
                 case 2:
-                    var_s0 += func_80080514() * 0x32;
+                    var_s0 += Rng_RandQ12() * 0x32;
                     var_s0 *= 5;
                     break;
             }
@@ -3649,7 +3650,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
     }
 
     var_s7  = temp_fp->field_C;
-    temp2   = func_80080514();
+    temp2   = Rng_RandQ12();
     new_var = var_s0;
     var_v1  = 0x4800;
     var_v1  = var_v1 - temp2;

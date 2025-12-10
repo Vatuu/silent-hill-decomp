@@ -36,7 +36,7 @@ void sharedFunc_800D794C_2_s00(s_SubCharacter* chara)
         case 1:
             sharedFunc_800D529C_0_s01(chara, dist0 / 2, angle0);
 
-            if (func_80080514() < ((angleAdd * 2) + FP_ANGLE(72.0f)))
+            if (Rng_RandQ12() < ((angleAdd * 2) + FP_ANGLE(72.0f)))
             {
                 chara->model_0.stateStep_3 = 2;
             }
@@ -140,7 +140,7 @@ void sharedFunc_800D794C_2_s00(s_SubCharacter* chara)
                 case 1:
                     angle1 = sharedFunc_800DC894_2_s00(chara, dist0);
                     angle2 = sharedFunc_800DC6E4_2_s00(chara, dist0);
-                    if (func_80080514() < angle1)
+                    if (Rng_RandQ12() < angle1)
                     {
                         if (chara->properties_E4.unk0.field_E8_0 == 3)
                         {
@@ -151,7 +151,7 @@ void sharedFunc_800D794C_2_s00(s_SubCharacter* chara)
                         chara->model_0.stateStep_3             = 0;
                         chara->properties_E4.player.flags_11C |= CharaFlag_Unk5;
                     }
-                    else if (func_80080514() < angle2)
+                    else if (Rng_RandQ12() < angle2)
                     {
                         chara->model_0.state_2                 = 27;
                         chara->model_0.stateStep_3             = 0;

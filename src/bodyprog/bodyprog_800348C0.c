@@ -2147,7 +2147,7 @@ bool Event_CheckTouchObb(s_MapPoint2d* mapPoint) // 0x80037C5C
 
 void func_80037DC4(s_SubCharacter* chara) // 0x80037DC4
 {
-    if (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || func_80080514() >= FP_ANGLE(108.0f))
+    if (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || Rng_RandQ12() >= FP_ANGLE(108.0f))
     {
         g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4] &= ~(1 << chara->field_40);
     }

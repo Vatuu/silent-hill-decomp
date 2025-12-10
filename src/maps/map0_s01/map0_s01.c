@@ -599,7 +599,7 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
             {
                 if (!cond1)
                 {
-                    if (func_80080514() >= FP_ANGLE(180.0f))
+                    if (Rng_RandQ12() >= FP_ANGLE(180.0f))
                     {
                         chara->model_0.state_2 = 47;
                     }

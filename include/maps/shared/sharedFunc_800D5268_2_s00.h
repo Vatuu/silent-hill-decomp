@@ -41,7 +41,7 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* chara)
 
             if (animStatus == ANIM_STATUS(14, true))
             {
-                temp_v1 = func_80080514() * 12;
+                temp_v1 = Rng_RandQ12() * 12;
                 if (temp_v1 < chara->properties_E4.unk0.properties_120.val32)
                 {
                     chara->properties_E4.unk0.properties_120.val32 -= temp_v1;

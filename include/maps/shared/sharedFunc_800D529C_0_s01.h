@@ -12,7 +12,7 @@ void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 radius, s32 angle)
 
     posY  = func_80080884(posX, posZ);
     posY  = MIN(chara->properties_E4.unk0.properties_124.val32, posY);
-    posY -= Q12(1.5f) + func_80080514() / 2;
+    posY -= Q12(1.5f) + Rng_RandQ12() / 2;
 
     if (posY < sharedFunc_800D5274_0_s01())
     {

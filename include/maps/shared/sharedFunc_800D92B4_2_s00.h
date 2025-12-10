@@ -3,11 +3,11 @@ void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara)
     switch (chara->model_0.stateStep_3)
     {
         case 0:
-            chara->properties_E4.unk0.properties_120.val32 = (func_80080514() * 2) + Q12(0.5f);
+            chara->properties_E4.unk0.properties_120.val32 = (Rng_RandQ12() * 2) + Q12(0.5f);
 
             sharedFunc_800D529C_0_s01(chara,
                                       Q12(4.0f),
-                                      chara->rotation_24.vy + FP_MULTIPLY_PRECISE(func_80080514() - FP_ANGLE(180.0f), FP_ANGLE(45.0f), Q12_SHIFT));
+                                      chara->rotation_24.vy + FP_MULTIPLY_PRECISE(Rng_RandQ12() - FP_ANGLE(180.0f), FP_ANGLE(45.0f), Q12_SHIFT));
 
             chara->model_0.stateStep_3 = 1;
             break;

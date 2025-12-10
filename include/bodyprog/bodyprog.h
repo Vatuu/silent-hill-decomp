@@ -4536,8 +4536,11 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1);
 /** Presumably, returns a heading angle from `posFrom` to `posTo`. If so, rename to `Math_AngleBetweenPositionsGet`. */
 q19_12 func_80080478(const VECTOR3* posFrom, const VECTOR3* posTo);
 
-/** Generates a random angle? */
-s32 func_80080514(void);
+/** @brief Generates a random Q12 fixed-point number in the range `[0.0f, 1.0f)`. Used for angles and multipliers.
+ *
+ * @return Random Q12 fixed-point number.
+ */
+s32 Rng_RandQ12(void);
 
 s32 func_80080540(s32 arg0, s32 arg1, s32 arg2);
 

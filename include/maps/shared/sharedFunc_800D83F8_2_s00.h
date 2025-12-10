@@ -63,7 +63,7 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* chara)
                 {
                     chara->properties_E4.unk0.field_E8_8 = 2;
 
-                    if (var_s2 && func_80080514() < FP_ANGLE(180.0f))
+                    if (var_s2 && Rng_RandQ12() < FP_ANGLE(180.0f))
                     {
                         chara->model_0.state_2 = 24;
                     }
@@ -78,7 +78,7 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* chara)
                     {
                         chara->model_0.state_2 = 24;
                     }
-                    else if (func_80080514() < FP_ANGLE(180.0f))
+                    else if (Rng_RandQ12() < FP_ANGLE(180.0f))
                     {
                         chara->model_0.state_2 = 24;
                     }

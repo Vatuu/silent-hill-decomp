@@ -25,7 +25,7 @@ void sharedFunc_800D5DAC_2_s00(s_SubCharacter* chara)
 
         case 1:
             chara->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
-            if (sharedFunc_800DC30C_2_s00(chara) && func_80080514() < Q12(0.4f))
+            if (sharedFunc_800DC30C_2_s00(chara) && Rng_RandQ12() < Q12(0.4f))
             {
                 chara->model_0.stateStep_3 = 3;
             }
@@ -79,7 +79,7 @@ void sharedFunc_800D5DAC_2_s00(s_SubCharacter* chara)
                     {
                         if (field14C_2 == 0)
                         {
-                            if (chara->properties_E4.unk0.properties_120.val32 == 0 && !field14C_1 && func_80080514() < Q12(0.5f))
+                            if (chara->properties_E4.unk0.properties_120.val32 == 0 && !field14C_1 && Rng_RandQ12() < Q12(0.5f))
                             {
                                 chara->model_0.state_2     = 7;
                                 chara->model_0.stateStep_3 = 0;

@@ -45,7 +45,7 @@ void sharedFunc_800DB220_2_s00(s_SubCharacter* chara)
             }
             else if (distFieldF8 < Q12(0.5f))
             {
-                if (sharedFunc_800DC30C_2_s00(chara) && func_80080514() < Q12(0.3f))
+                if (sharedFunc_800DC30C_2_s00(chara) && Rng_RandQ12() < Q12(0.3f))
                 {
                     chara->model_0.stateStep_3 = 5;
                 }

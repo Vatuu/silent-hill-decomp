@@ -120,7 +120,7 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* chara)
                         temp_s1 += Q12(0.2f);
                     }
 
-                    if (func_80080514() < temp_s1)
+                    if (Rng_RandQ12() < temp_s1)
                     {
                         if (chara->properties_E4.unk0.field_E8_0 == 3)
                         {
@@ -130,7 +130,7 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* chara)
                         chara->model_0.stateStep_3           = 0;
                         chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
                     }
-                    else if (func_80080514() < temp_s2)
+                    else if (Rng_RandQ12() < temp_s2)
                     {
                         chara->model_0.state_2               = 42;
                         chara->model_0.stateStep_3           = 0;

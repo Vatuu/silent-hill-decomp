@@ -64,7 +64,7 @@ void sharedFunc_800D6E28_2_s00(s_SubCharacter* chara)
                     {
                         chara->model_0.stateStep_3 = 5;
                     }
-                    else if (sharedFunc_800DC3BC_2_s00(chara) && distFieldF8 < Q12(2.0f) && func_80080514() < Q12(0.5f))
+                    else if (sharedFunc_800DC3BC_2_s00(chara) && distFieldF8 < Q12(2.0f) && Rng_RandQ12() < Q12(0.5f))
                     {
                         chara->model_0.stateStep_3 = 3;
                     }

@@ -21,7 +21,7 @@ void sharedFunc_800DECC4_2_s00(s_SubCharacter* chara)
     radius = Math_Distance2dGet(&sharedData_800F21EC_2_s00, &chara->position_18);
 
     angle  = func_80080478(&sharedData_800F21EC_2_s00, &chara->position_18);
-    angle += FP_MULTIPLY_PRECISE(func_80080514() - FP_ANGLE(180.0f), FP_ANGLE(120.0f), Q12_SHIFT);
+    angle += FP_MULTIPLY_PRECISE(Rng_RandQ12() - FP_ANGLE(180.0f), FP_ANGLE(120.0f), Q12_SHIFT);
 
     radius = (radius - distMin) / 2;
 

@@ -9,7 +9,7 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnC
     flags   = g_SysWork.npcFlags_2290;
     counter = 0;
 
-    if (spawnChance < func_80080514())
+    if (spawnChance < Rng_RandQ12())
     {
         return;
     }

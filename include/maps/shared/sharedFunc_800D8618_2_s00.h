@@ -73,7 +73,7 @@ void sharedFunc_800D8618_2_s00(s_SubCharacter* chara)
                     else if (!field14C_2)
                     {
                         if (chara->properties_E4.unk0.properties_120.val32 == 0 && !field14C_1 &&
-                            func_80080514() < Q12(0.5f))
+                            Rng_RandQ12() < Q12(0.5f))
                         {
                             chara->model_0.state_2 = 21;
                         }

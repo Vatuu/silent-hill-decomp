@@ -28,7 +28,7 @@ void sharedFunc_800D3DFC_0_s01(s_SubCharacter* chara)
                 break;
         }
 
-        if (func_80080514() >= angle)
+        if (Rng_RandQ12() >= angle)
         {
             func_80037DC4(chara);
         }

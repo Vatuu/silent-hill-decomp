@@ -267,7 +267,7 @@ void func_800DD588(s_SubCharacter* chara) // 0x800DD588
     posZ = g_SysWork.player_4C.chara_0.position_18.vz;
     rotY = g_SysWork.player_4C.chara_0.rotation_24.vy;
     
-    if (func_80080514() < FP_ANGLE(180.0f))
+    if (Rng_RandQ12() < FP_ANGLE(180.0f))
     {
         angleStep = FP_ANGLE(360.0f / ANGLE_STEP_COUNT);
     }
@@ -276,7 +276,7 @@ void func_800DD588(s_SubCharacter* chara) // 0x800DD588
         angleStep = FP_ANGLE(-(360.0f / ANGLE_STEP_COUNT));
     }
 
-    newAngle = func_80080514() - FP_ANGLE(180.0f);
+    newAngle = Rng_RandQ12() - FP_ANGLE(180.0f);
     newAngle >>= 5;
     newAngle += FP_ANGLE(180.0f);
 
@@ -304,7 +304,7 @@ void func_800DD588(s_SubCharacter* chara) // 0x800DD588
         chara->position_18.vy = curPosY;
         chara->position_18.vz = curPosZ;
 
-        newAngle = ((func_80080514() - FP_ANGLE(180.0f)) >> 4) + FP_ANGLE(180.0f);
+        newAngle = ((Rng_RandQ12() - FP_ANGLE(180.0f)) >> 4) + FP_ANGLE(180.0f);
         chara->rotation_24.vy = curAngle + newAngle;
         sinRotY = Math_Sin(chara->rotation_24.vy);
 
@@ -350,7 +350,7 @@ void func_800DD834(s_SubCharacter* chara) // 0x800DD834
     posY = g_SysWork.player_4C.chara_0.position_18.vy;
     posZ = g_SysWork.player_4C.chara_0.position_18.vz;
 
-    curAngle = func_80080514();
+    curAngle = Rng_RandQ12();
     for (i = 0; i < ANGLE_STEP_COUNT; i++, curAngle += FP_ANGLE(360.0f / ANGLE_STEP_COUNT))
     {
         curPosX = posX + FP_MULTIPLY_PRECISE(Math_Sin(curAngle), Q12(20.0f), Q12_SHIFT);
@@ -367,7 +367,7 @@ void func_800DD834(s_SubCharacter* chara) // 0x800DD834
         chara->position_18.vy = curPosY;
         chara->position_18.vz = curPosZ;
 
-        newAngle = ((func_80080514() - FP_ANGLE(180.0f)) >> 4) + FP_ANGLE(180.0f);
+        newAngle = ((Rng_RandQ12() - FP_ANGLE(180.0f)) >> 4) + FP_ANGLE(180.0f);
         chara->rotation_24.vy = curAngle + newAngle;
 
         sinRotY = Math_Sin(chara->rotation_24.vy);

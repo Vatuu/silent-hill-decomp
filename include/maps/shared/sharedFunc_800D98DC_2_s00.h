@@ -50,7 +50,7 @@ void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara)
                 chara->model_0.stateStep_3 = 4;
             }
             else if (sharedFunc_800DC3BC_2_s00(chara) && cond == true && distFieldF8 < Q12(4.0f) &&
-                     (angFieldF8 >= FP_ANGLE(-30.0f) && angFieldF8 <= FP_ANGLE(30.0f)) && func_80080514() < Q12(0.7f))
+                     (angFieldF8 >= FP_ANGLE(-30.0f) && angFieldF8 <= FP_ANGLE(30.0f)) && Rng_RandQ12() < Q12(0.7f))
             {
                 chara->model_0.stateStep_3 = 2;
             }

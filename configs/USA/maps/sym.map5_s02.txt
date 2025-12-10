@@ -166,6 +166,7 @@ MAP_MESSAGES                        = 0x800D92B4; // type:u32 size:0xCC
 //----------------------------------------------------
 //--- PA: 0x00FE08   VA: 0x800D9380   subsegment: data
 //----------------------------------------------------
+g_CommonWorldObjectPoses            = 0x800D949C; // type:WorldObjectPos size:0x50
 sharedData_800DFB4C_0_s00           = 0x800D94EC;
 sharedData_800CD77C_1_s04           = 0x800D94F0; // type:s32
 sharedData_800DFB6C_0_s00           = 0x800D9500; // type:s32
@@ -206,4 +207,3 @@ g_WorldObject_Drug                  = 0x800DA88C; // type:WorldObject_0 size:0x1
 g_WorldObject_UnkPose1              = 0x800DA8AC; // type:WorldObjectPose size:0x3C
 g_WorldObject_Obj00                 = 0x800DA8EC; // type:WorldObjectDesc size:0x2C
 g_CommonWorldObjects                = 0x800DA91C; // type:WorldObject_0 size:0xA8
-g_CommonWorldObjectPoses            = 0x800D949C; // type:WorldObjectPos size:0x50

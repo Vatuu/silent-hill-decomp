@@ -28,14 +28,14 @@ void sharedFunc_800D7D0C_2_s00(s_SubCharacter* chara) // 0x800D7D0C
         case 0:
             #define ANGLE_DIFF FP_ANGLE_NORM_S(g_SysWork.player_4C.chara_0.rotation_24.vy - chara->rotation_24.vy)
             
-            distTest = dist0 + (func_80080514() * 4);
+            distTest = dist0 + (Rng_RandQ12() * 4);
             if (sharedFunc_800DC200_2_s00(chara) && distTest > Q12(8.0f))
             {
                 chara->model_0.stateStep_3 = 4;
             }
             else if (!sharedFunc_800DC3BC_2_s00(chara) || distTest >= Q12(4.0f) ||
                      (ANGLE_DIFF < FP_ANGLE(-30.0f) || ANGLE_DIFF >= FP_ANGLE(30.0f)) ||
-                     func_80080514() >= Q12(0.2f))
+                     Rng_RandQ12() >= Q12(0.2f))
             {
                 chara->model_0.stateStep_3 = 1;
             }

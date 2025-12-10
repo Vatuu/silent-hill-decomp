@@ -20,7 +20,7 @@ void sharedFunc_800D5974_2_s00(s_SubCharacter* chara)
     switch (stateStep)
     {
         case 0:
-            if (!sharedFunc_800DC30C_2_s00(chara) || func_80080514() >= FP_ANGLE(252.0f))
+            if (!sharedFunc_800DC30C_2_s00(chara) || Rng_RandQ12() >= FP_ANGLE(252.0f))
             {
                 chara->properties_E4.larvalStalker.properties_E8[0xE].val32 = Q12(2.0f);
                 chara->model_0.stateStep_3                                  = one;

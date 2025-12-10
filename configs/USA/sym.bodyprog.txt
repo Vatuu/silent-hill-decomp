@@ -693,6 +693,7 @@ Game_GasWeaponPowerTimerValue               = 0x8007FD3C; // type:func
 Math_DistanceGet                            = 0x800802CC; // type:func
 Math_Distance2dGet                          = 0x8008037C; // type:func
 Input_SelectClickSet                        = 0x80080458; // type:func
+Rng_RandQ12                                 = 0x80080514; // type:func
 Math_PreservedSignSubtract                  = 0x80080594; // type:func
 Math_MulFixed                               = 0x800808D4; // type:func
 Math_MagnitudeShiftGet                      = 0x800808F8; // type:func

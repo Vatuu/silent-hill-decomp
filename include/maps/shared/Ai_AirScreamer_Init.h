@@ -14,24 +14,24 @@ bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
 
     if (airScreamer->model_0.charaId_0 == Chara_NightFlutter)
     {
-        airScreamer->health_B0 = AIR_SCREAMER_BASE_HEALTH + (func_80080514() * NIGHT_FLUTTER_RAND_MAX);
+        airScreamer->health_B0 = AIR_SCREAMER_BASE_HEALTH + (Rng_RandQ12() * NIGHT_FLUTTER_RAND_MAX);
     }
     else
     {
-        airScreamer->health_B0 = AIR_SCREAMER_BASE_HEALTH + (func_80080514() * AIR_SCREAMER_RAND_MAX);
+        airScreamer->health_B0 = AIR_SCREAMER_BASE_HEALTH + (Rng_RandQ12() * AIR_SCREAMER_RAND_MAX);
     }
 
     switch (g_SavegamePtr->gameDifficulty_260)
     {
         case GameDifficulty_Easy:
-            airScreamer->health_B0 += func_80080514() * AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_EASY;
+            airScreamer->health_B0 += Rng_RandQ12() * AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_EASY;
             break;
 
         case GameDifficulty_Normal:
             break;
 
         case GameDifficulty_Hard:
-            airScreamer->health_B0 += func_80080514() * AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_HARD;
+            airScreamer->health_B0 += Rng_RandQ12() * AIR_SCREAMER_RAND_MAX_HEALTH_BONUS_HARD;
             break;
     }
 

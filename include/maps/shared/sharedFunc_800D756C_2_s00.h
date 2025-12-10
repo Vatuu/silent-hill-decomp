@@ -36,7 +36,7 @@ void sharedFunc_800D756C_2_s00(s_SubCharacter* chara)
         case 1:
             sharedFunc_800DE6A8_2_s00(chara, &chara->properties_E4.unk0.pos_104, Q12(2.0f));
 
-            if (!sharedFunc_800DC3BC_2_s00(chara) || func_80080514() >= FP_ANGLE(36.0f))
+            if (!sharedFunc_800DC3BC_2_s00(chara) || Rng_RandQ12() >= FP_ANGLE(36.0f))
             {
                 chara->model_0.stateStep_3 = 2;
             }
@@ -148,7 +148,7 @@ void sharedFunc_800D756C_2_s00(s_SubCharacter* chara)
                     {
                         if (switch3 == 1)
                         {
-                            rngAngle0     = func_80080514();
+                            rngAngle0     = Rng_RandQ12();
                             angleSubtract = FP_ANGLE(0.0f);
 
                             if (chara->properties_E4.unk0.field_E8_8 == switch3)
