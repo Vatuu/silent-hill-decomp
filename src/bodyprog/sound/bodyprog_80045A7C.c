@@ -176,7 +176,7 @@ void func_80045BD8(u16 cmd) // 0x80045BD8
     // Passes a command to the previous conditional.
     if (cmd >= 32 && cmd < 72)
     {
-        Sd_BgmLoad_CmdSet(cmd);
+        Sd_KdtLoad_CmdSet(cmd);
     }
 }
 
@@ -283,7 +283,7 @@ void sd_work_init(void) // 0x80045E44
     D_800C37DC                                 = false;
     D_800C1658.field_E                         = 0;
     D_800C1658.field_10                        = 0;
-    g_Sd_AudioStreamingStates.vabLoadState_0   = 0;
+    g_Sd_AudioStreamingStates.audioLoadState_0 = 0;
     g_Sd_AudioStreamingStates.xaLoadState_1    = 0;
     g_Sd_AudioStreamingStates.xaStopState_2    = 0;
     g_Sd_AudioStreamingStates.xaPreLoadState_3 = 0;

@@ -45,7 +45,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
             }
             else if (g_Sd_CurrentCmd >= 32)
             {
-                Sd_BgmLoad();
+                Sd_KdtLoad();
             }
             else
             {
@@ -153,9 +153,9 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
     {
         CdReset(0);
         CdControlB(CdlNop, NULL, NULL);
-        if (g_Sd_AudioStreamingStates.vabLoadState_0 != 0)
+        if (g_Sd_AudioStreamingStates.audioLoadState_0 != 0)
         {
-            g_Sd_AudioStreamingStates.vabLoadState_0 = 1;
+            g_Sd_AudioStreamingStates.audioLoadState_0 = 1;
         }
         
         g_Sd_AudioStreamingStates.xaLoadState_1    = 0;
@@ -186,9 +186,9 @@ u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res) // 0x80048954
         CdControlB(CdlNop, NULL, NULL);
         VSync(SyncMode_Wait3);
         
-        if (g_Sd_AudioStreamingStates.vabLoadState_0 != 0)
+        if (g_Sd_AudioStreamingStates.audioLoadState_0 != 0)
         {
-            g_Sd_AudioStreamingStates.vabLoadState_0 = 1;
+            g_Sd_AudioStreamingStates.audioLoadState_0 = 1;
         }
         
         g_Sd_AudioStreamingStates.xaLoadState_1    = 0;

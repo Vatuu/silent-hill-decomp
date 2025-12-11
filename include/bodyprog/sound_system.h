@@ -25,13 +25,13 @@
 // ENUMS
 // ======
 
-typedef enum _VabAudioType
+typedef enum _AudioType
 {
-    VabAudioType_MusicKey = 0,
-    VabAudioType_Weapon   = 1,
-    VabAudioType_Ambient  = 2,
-	VabAudioType_Unk3     = 3
-} e_VabAudioType;
+    AudioType_MusicKey  = 0,
+    AudioType_Weapon    = 1,
+    AudioType_Ambient   = 2,
+	AudioType_MusicBank = 3
+} e_AudioType;
 
 // ========
 // STRUCTS
@@ -70,7 +70,7 @@ typedef struct
                              *
                              * This requires further investigation for a proper explanation. This is used
                              * to access values from `D_800AA604` columns in an odd way, as the values assigned
-                             * are from `g_UnknownEngineCmdTable1`, which range from 769 to 808 (including 0).
+                             * are from `g_UnknownBgmTable1`, which range from 769 to 808 (including 0).
                              * However, the variables are cast as `u8`, which removes
                              * the second byte (range in hexadecimal: 0x1003 to 0x2803), leaving only the first byte
                              * ranging from 1 to 40 (also including 0).
@@ -91,7 +91,7 @@ typedef struct
 
 typedef struct
 {
-    u8 vabLoadState_0;   /** Load VAB audio state. */
+    u8 audioLoadState_0; /** Load VAB audio and KDT music key notes state. */
     u8 xaLoadState_1;    /** Load XA audio state. */
     u8 xaStopState_2;    /** Stop XA audio streaming state. */
     u8 xaPreLoadState_3; /** Prepare Load XA audio state. Positions the current read point to the one where the XA audio to load resides.
@@ -147,14 +147,15 @@ typedef struct
     s16 volumeRight_E;
 } s_800C1698;
 
+// Used to store KDT and VAB data access.
 typedef struct
 {
-    s8  vabTypeIdx_0;    /**Index of `g_Sd_VabBuffers` which stores offsets where the VAB files are saved in memory. See `e_VabAudioType`. */
+    s8  typeIdx_0;    /**Index of `g_Sd_VabBuffers` which stores offsets where the VAB files are saved in memory. See `e_VabAudioType`. */
     s8  unk_1;
     u16 field_2;
-    u32 vabFileSize_4;   /** VAB file size. */
-    s32 vabFileOffset_8; /** VAB audio offset in the file container. */
-} s_VabItemData;
+    u32 fileSize_4;   /** VAB file size. */
+    s32 fileOffset_8; /** VAB audio offset in the file container. */
+} s_AudioItemData;
 
 // ========
 // GLOBALS
@@ -162,7 +163,7 @@ typedef struct
 
 extern u8 g_Sd_VabLoadAttemps;
 
-extern s_VabItemData D_800A986C[];
+extern s_AudioItemData D_800A986C[];
 
 extern u8 g_Sd_ReverbDepths[];
 
@@ -237,15 +238,15 @@ extern s_800C1698 D_800C1698;
  */
 extern u8 g_Sd_CmdPool[32];
 
-/** @brief Indicates the type of the VAB file being loaded. See `e_VabAudioType`. */
-extern u8 g_Sd_VabType;
+/** @brief Indicates the type of the audio file being loaded. See `e_AudioType`. */
+extern u8 g_Sd_AudioType;
 
 extern u32 D_800C37CC;
 
-extern s_VabItemData* g_Sd_VabLoad_TargetVab;
+extern s_AudioItemData* g_Sd_VabTargetLoad;
 
 // Pointer to the data of the VAB loading to be used for music.
-extern s_VabItemData* g_Sd_BgmLoad_TargetVab;
+extern s_AudioItemData* g_Sd_KdTargetLoad;
 
 extern u8 D_800C37DC; // Boolean.
 
@@ -368,18 +369,17 @@ void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
 /** Nullsub */
 void func_800485B8(s32 arg0, u8 arg1, u32 arg2);
 
-void Sd_BgmLoad_CmdSet(u16 songIdx);
+void Sd_KdtLoad_CmdSet(u16 songIdx);
 
 void Sd_StopSeq(void);
 
-void Sd_BgmLoad(void);
+void Sd_KdtLoad(void);
 
-/** @brief Sets the reader offset to the target VAB position. */
-void Sd_BgmLoad_OffSet(void);
+void Sd_KdtLoad_OffSet(void);
 
-void Sd_BgmLoad_FileLoad(void);
+void Sd_KdtLoad_FileLoad(void);
 
-void Sd_BgmLoad_LoadCheck(void);
+void Sd_KdtLoad_LoadCheck(void);
 
 void Sd_CmdPoolExecute(void);
 

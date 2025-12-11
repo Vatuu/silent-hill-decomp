@@ -2129,7 +2129,7 @@ extern s_StructUnk3 D_800A952C;
 
 extern u16 D_800A9774[];
 
-extern u16 g_UnknownEngineCmdTable1[];
+extern u16 g_UnknownBgmTable1[];
 
 extern s32 D_800A9A20;
 
@@ -2159,9 +2159,9 @@ extern s32 g_UnknownFrameCounter;
 extern void (*g_GameStateUpdateFuncs[])(void);
 
 /** Related to sound commands. */
-extern u16 g_UnknownEngineCmdTable0[];
+extern u16 g_UnknownBgmTable0[];
 
-extern u16 g_UnknownEngineCmdTable2[];
+extern u16 g_UnknownBgmTable2[];
 
 /** `D_800A992C` and `D_800A9944` are likely the same variable or they are inside a struct.
  * `D_800A992C` has values that seem related to the player, while `D_800A9944`

@@ -414,9 +414,9 @@ s8 D_800A97E3 = 0;
 u32 D_800A97E4[8] = {};
 
 /** Related to game music. */
-u16 g_UnknownEngineCmdTable0[] = {
-     0,
-     0,
+u16 g_UnknownBgmTable0[] = {
+    0,
+    0,
     32,
     33,
     34,
@@ -458,7 +458,8 @@ u16 g_UnknownEngineCmdTable0[] = {
     71,
     63
 };
-u16 g_UnknownEngineCmdTable1[] = {
+
+u16 g_UnknownBgmTable1[] = {
     0,
     0,
     769,
@@ -468,68 +469,42 @@ u16 g_UnknownEngineCmdTable1[] = {
     773,
     774,
     775,
-    776
+    776,
+    0x309,
+    0x30A,
+    0x30B,
+    0x30C,
+    0x30D,
+    0x30F,
+    0x310,
+    0x311,
+    0x312,
+    0x313,
+    0x314,
+    0x315,
+    0x316,
+    0x317,
+    0x318,
+    0x319,
+    0x31A,
+    0x31B,
+    0x31C,
+    0x31D,
+    0x31E,
+    0x31F,
+    0x321,
+    0x322,
+    0x323,
+    0x324,
+    0x325,
+    0x326,
+    0x30E,
+    0x327,
+    0x328,
+    0x320
 };
 
-
-// u16 g_UnknownEngineCmdTable1[] = {
-//     0,
-//     0,
-//     769,
-//     770,
-//     771,
-//     772,
-//     773,
-//     774,
-//     775,
-//     776,
-//     0x309,
-//     0x30A,
-//     0x30B,
-//     0x30C,
-//     0x30D,
-//     0x30F,
-//     0x310,
-//     0x311,
-//     0x312,
-//     0x313,
-//     0x314,
-//     0x315,
-//     0x316,
-//     0x317,
-//     0x318,
-//     0x319,
-//     0x31A,
-//     0x31B,
-//     0x31C,
-//     0x31D,
-//     0x31E,
-//     0x31F,
-//     0x321,
-//     0x322,
-//     0x323,
-//     0x324,
-//     0x325,
-//     0x326,
-//     0x30E,
-//     0x327,
-//     0x328,
-//     0x320
-// };
-
-// TODO: This and D_800A98A8 are part of `g_UnknownEngineCmdTable1`. However, an irregular coding decision
-// in `Sd_VabLoad` requires minor reworking.
-s_VabItemData D_800A986C[] = {
-    { 9,  3, 778, 0x30C030B, 0x30F030D },
-    { 16, 3, 785, 0x3130312, 0x3150314 },
-    { 22, 3, 791, 0x3190318, 0x31B031A },
-    { 28, 3, 797, 0x31F031E, 0x3220321 },
-    { 35, 3, 804, 0x3260325, 0x327030E }
-};
-
-u32 D_800A98A8 = 0x3200328;
-
-u16 g_UnknownEngineCmdTable2[] = {
+u16 g_UnknownBgmTable2[] = {
     0,
     162,
     170,

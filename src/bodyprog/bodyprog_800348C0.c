@@ -655,7 +655,7 @@ void func_800358DC(s32 cmd) // 0x800358DC
     }
 
     g_GameWork.soundCmd_5B2 = cmd;
-    Sd_EngineCmd(g_UnknownEngineCmdTable0[cmd]);
+    Sd_EngineCmd(g_UnknownBgmTable0[cmd]);
 }
 
 void func_80035924(void) // 0x80035924
@@ -668,7 +668,7 @@ void func_80035924(void) // 0x80035924
         return;
     }
 
-    Sd_EngineCmd(g_UnknownEngineCmdTable1[cmd]);
+    Sd_EngineCmd(g_UnknownBgmTable1[cmd]);
 }
 
 void func_8003596C(void) // 0x8003596C
@@ -729,7 +729,7 @@ s32 func_80035AB0(s32 arg0) // 0x80035AB0
 void func_80035AC8(s32 idx) // 0x80035AC8
 {
     g_GameWork.field_5B3 = idx;
-    Sd_EngineCmd(g_UnknownEngineCmdTable2[idx]);
+    Sd_EngineCmd(g_UnknownBgmTable2[idx]);
 }
 
 // ========================================
