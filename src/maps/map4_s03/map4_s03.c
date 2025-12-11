@@ -168,7 +168,12 @@ u8 func_800D3B1C(void) // 0x800D3B1C
     return sp10;
 }
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3B44);
+void func_800D3B44(bool disableDamage)
+{
+    u8 sp10;
+
+    func_8007F250(&sp10, disableDamage);
+}
 
 void func_800D3B68(s_SubCharacter* chara) // 0x800D3B68
 {

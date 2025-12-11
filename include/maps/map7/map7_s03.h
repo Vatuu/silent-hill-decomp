@@ -222,6 +222,9 @@ void func_800DB154(GsCOORDINATE2*);
 void func_800DB288(void);
 
 void func_800DB608(void);
+
+void func_800DD240(VECTOR3* vec);
+
 void func_800DD67C(VECTOR3*, s_SubCharacter*, GsCOORDINATE2*);
 void func_800DD7D0(VECTOR3*);
 void func_800DD868(void);

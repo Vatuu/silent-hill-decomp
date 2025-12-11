@@ -8219,7 +8219,7 @@ void Game_PlayerMovementsReset(void) // 0x8007F1CC
     g_Player_IsInWalkToRunTransition = false;
 }
 
-void func_8007F250(u8* ptr, s8 disableDamage) // 0x8007F250
+void func_8007F250(u8* ptr, u8 disableDamage) // 0x8007F250
 {
     *ptr                   = D_800C4561;
     g_Player_DisableDamage = disableDamage;

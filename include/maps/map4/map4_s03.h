@@ -62,7 +62,7 @@ void func_800D3694(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 u8 func_800D3B1C(void);
 
-void func_800D3B44(s32);
+void func_800D3B44(bool disableDamage);
 
 void func_800D3B68(s_SubCharacter* chara);
 

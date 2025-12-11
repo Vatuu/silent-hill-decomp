@@ -4484,7 +4484,7 @@ void func_8007FB94(s_SubCharacter*, s_MainCharacterExtra*, s32);
 /** Resets several global variables to 0. */
 void func_8007F1CC(void);
 
-void func_8007F250(u8* ptr, s8 disableDamage);
+void func_8007F250(u8* ptr, u8 disableDamage);
 
 /** Some kind of player anim state check. */
 bool func_8007F26C(void);

@@ -108,7 +108,7 @@ void func_800DEA94(s32* arg0);
 
 void func_800DEC3C(VECTOR3*, SVECTOR3*); // Assumed return type.
 
-void func_800DED30(void); // Assumed return type.
+void func_800DED30(void);
 
 void func_800DEF50(VECTOR3*, GsCOORDINATE2*, s32*); // Assumed return type.
 
