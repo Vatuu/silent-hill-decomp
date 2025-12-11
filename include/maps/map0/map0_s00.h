@@ -37,6 +37,15 @@ typedef struct
     u8 field_2;
 } s_800DFB48;
 
+typedef struct
+{
+    VECTOR3 field_0;
+    SVECTOR field_C;
+    u8      unk_14;
+    u8      field_15;
+    u8      field_16;
+} s_func_800CD1F4;
+
 extern VECTOR3 D_800E32DC[4];
 
 /** "STAGE 0-0" string */
@@ -108,6 +117,8 @@ extern s16 D_800E0C64;
 void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
 
 bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
+
+void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2);
 
 s32 func_800CC8FC(VECTOR3*, s32*, MATRIX*);
 
