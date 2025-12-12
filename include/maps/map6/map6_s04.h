@@ -79,11 +79,11 @@ extern s_WorldObject_0 g_WorldObject7[2];
 extern s_WorldObject_0 g_WorldObject8;
 extern s_WorldObjectDesc g_WorldObject9;
 
-extern s8 D_800ED5AD;
+extern u8 D_800ED5AD;
 extern s16 D_800ED5B4;
 extern s8 D_800ED5B8;
 extern u8 D_800ED5F0;
-extern s8 D_800ED840;
+extern u8 D_800ED840;
 extern s8 D_800ED841;
 extern u16 D_800EBA34[23]; // `g_MapMsgSounds`
 extern s16 D_800ED5B4;
@@ -152,5 +152,13 @@ void func_800E3EF4(void);
 void func_800E558C(void);
 
 void func_800E5D44(void);
+
+void func_800E5F54(void);
+
+void func_800E0204(void); // Assumed types.
+void func_800E636C(void); // Assumed types.
+void func_800E6CB8(void); // Assumed types.
+void func_800E7204(void); // Assumed types.
+void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4); // Assumed types.
 
 #endif

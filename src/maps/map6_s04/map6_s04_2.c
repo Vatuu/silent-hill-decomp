@@ -1861,7 +1861,101 @@ void func_800E5D44(void) // 0x800E5D44
     g_SysWork.npcId_2280 = 3;
 }
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E5F54);
+// rodata at the bottom of this file. Inline once all users are decomped.
+extern VECTOR3 D_800CC7C0;
+extern VECTOR3 D_800CC7CC;
+
+void func_800E5F54(void)
+{
+    s32 cellZ0;
+    s32 cellX0;
+    s32 projCellZ0;
+    s32 projCellX0;
+    u16 flags;
+
+    flags = 0;
+    if (!Savegame_EventFlagGet(EventFlag_466))
+    {
+        Savegame_EventFlagSet(EventFlag_466);
+        func_8003A16C();
+    }
+    cellZ0 = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
+    cellX0 = g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE;
+
+    if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f))
+    {
+        projCellX0 = cellX0 + 17;
+    }
+    else
+    {
+        projCellX0 = cellX0 + 15;
+    } 
+
+    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f))
+    {
+        projCellZ0 = cellZ0 + 17;
+    }
+    else
+    {
+        projCellZ0 = cellZ0 + 15;
+    }
+
+    switch (PACKED_CELL_XZ(projCellX0, projCellZ0))
+    {
+        case PACKED_CELL_XZ(17, 19):
+            func_800E636C();
+            if (Savegame_EventFlagGet(EventFlag_443))
+            {
+                flags = 2;
+                if (g_SysWork.sysState_8 != SysState_EventCallFunc)
+                {
+                    func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], false);
+                }
+            }
+            if (D_800ED840)
+            {
+                func_8004690C(Sfx_Unk1616);
+                func_8004690C(Sfx_Unk1615);
+                D_800ED840 = 0;
+            }
+            break;
+        case PACKED_CELL_XZ(15, 15):
+            g_WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C, &g_WorldObject9.rotation_28);
+            /* fallthrough */
+        default:
+            if (!Savegame_EventFlagGet(EventFlag_452) &&
+                PLAYER_NEAR_POS(vx, 8.0f, 20.0f) && PLAYER_NEAR_POS(vz, -28.0f, 22.0f) &&
+                Vw_AabbVisibleInScreenCheck(Q12(7.0f), Q12(11.0f), Q12(-14.0f), Q12(0.0f), Q12(-36.0f), Q12(-20.0f)))
+            {
+                func_800E6CB8();
+            }
+            else if (!Savegame_EventFlagGet(EventFlag_453))
+            {
+                if (PLAYER_NEAR_POS(vx, -16.0f, 20.0f) && PLAYER_NEAR_POS(vz, -64.0f, 20.0f))
+                {
+                    if (Vw_AabbVisibleInScreenCheck(Q12(-22.0f), Q12(-9.0f), Q12(-8.0f), Q12(0.0f), Q12(-69.0f), Q12(-58.0f)))
+                    {
+                        func_800E7204();
+                    }
+                }
+            }
+            if (Savegame_EventFlagGet(EventFlag_454))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_SFlauros.object_0, &g_WorldObject_SFlauros.position_1C, &g_WorldObject_SFlauros.rotation_28);
+            }
+            if (!D_800ED840)
+            {
+                Sd_EngineCmd(Sfx_Unk1616);
+                Sd_EngineCmd(Sfx_Unk1615);
+                D_800ED840++;
+            }
+            func_800E75B8(Sfx_Unk1616, &D_800CC7C0, D_800ED5F0, Q12(32.0f), D_800ED5AD);
+            func_8005DE0C(Sfx_Unk1615, &D_800CC7CC, Q8(0.5f), Q12(32.0f), 0);
+    }
+    func_80069844(0xFFFF);
+    func_8006982C(flags);
+    func_800E0204();
+}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E636C);
 
