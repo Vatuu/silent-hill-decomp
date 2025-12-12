@@ -171,7 +171,7 @@ void Sd_EngineUtilities(u16 cmd) // 0x80045BD8
     }
 
     // Load KDT song file and VAB music key notes.
-    // To load the VAB audio it passes a command to the previous conditional.
+    // Passes a command to the previous conditional to load the VAB audio.
     if (cmd >= 32 && cmd < 72)
     {
         Sd_KdtLoad_CmdSet(cmd);

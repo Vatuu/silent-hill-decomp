@@ -53,7 +53,7 @@ typedef struct
     u16 xaAudioIdxCheck_2;          /** XA Audio index. Used to check if the file exists. */
     u16 xaAudioIdx_4;               /** XA Audio index. Used to play the audio. */
     u16 bgmLoadedSongIdx_6;         /** Index of the currently loaded music. */
-    u16 lastVabAudioLoadedIdx_8[3]; /** Stores the index of the last loaded VAB audio that is not a music note. */
+    u16 lastVabAudioLoadedIdx_8[3]; /** Stores the index of the last loaded VAB audio that's not a music note. */
     u16 field_E;                    /** MIDI channel assignment for BGM layers.
                                      * Used to assign the corresponding MIDI channel for BGM layers.
                                      *
@@ -71,7 +71,7 @@ typedef struct
     s8  isXaStopping_13;            /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`.
                                      */
     u8  bgmFadeSpeed_14;            /** Music fade speed. Range: `[0, 2]`, default: 0. */
-    u8  isAudioLoading_15;          /** `bool` | When a KDT or VAB file is being loaded. | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
+    u8  isAudioLoading_15;          /** `bool` | If a KDT or VAB file is being loaded. | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
     u8  isXaLoading_16;             /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
     u8  muteGame_17;                /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively get lower
                                      * in volume until mute (the sounds will keep playing, but muted).
@@ -145,7 +145,7 @@ typedef struct
     s8  field_5;
 } s_Sfx;
 
-// TODO: Field with `_24` seems to be part of a thing related to how XA files works.
+// TODO: Field with `_24` seems to be part of a thing related to how XA files work.
 typedef struct
 {
     u8  xaFileIdx_0;
@@ -153,19 +153,18 @@ typedef struct
     u8  unk_2; // }
     u8  unk_3; // }
     u32 sector_4      : 24;
-    u8  field_4_24    : 8; // Index. Indicates the element of the group index defined at `field_8_24`.
+    u8  field_4_24    : 8; // Index. Element of the group index defined at `field_8_24`.
     u32 audioLength_8 : 24;
     u8  field_8_24    : 8; // Index. Indicate some sort of group.
 } s_XaItemData;
 STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
-
 
 // Used to store KDT and VAB data access.
 typedef struct
 {
     s8  typeIdx_0;       /** See `e_AudioType`. */
     s8  pad_1;
-    u16 vagDataOffset_2; /** Offset of VAG data inside VAB files. */
+    u16 vagDataOffset_2; /** Offset of VAG data in VAB files. */
     u32 fileSize_4;      /** VAB file size. */
     s32 fileOffset_8;    /** VAB audio offset in the file container. */
 } s_AudioItemData;
@@ -398,9 +397,8 @@ void Sd_VabLoad_FileLoad(void);
 /** @brief Sets the reader offset to the VAG data position. */
 void Sd_VabLoad_OffVagDataSet(void);
 
-/** @brief Moves VAG data from the temporal file location to the indicated `g_Sd_VabBuffers` buffer.
- * In case of the file being bigger than what `VAB_BUFFER_LIMIT` have stablished then it initializes
- * a loop to move remaining data.
+/** @brief Moves VAG data from the temporary file location to the indicated `g_Sd_VabBuffers` buffer.
+ * If the file is larger than `VAB_BUFFER_LIMIT`, it loops to move remaining beyond this size.
  */
 void Sd_VabLoad_VagDataMove(void);
 

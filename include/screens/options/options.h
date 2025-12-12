@@ -96,10 +96,10 @@ extern s32 g_ExtraOptionsMenu_SelectedEntry;
 extern s32 g_MainOptionsMenu_PrevSelectedEntry;
 extern s32 g_ExtraOptionsMenu_PrevSelectedEntry;
 
-extern DVECTOR g_ExtraOptions_SelectionHighlightFrom_Unused;
-extern DVECTOR g_ExtraOptions_SelectionHighlightTo_Unused;
-extern DVECTOR g_MainOptions_SelectionHighlightFrom_Unused;
-extern DVECTOR g_MainOptions_SelectionHighlightTo_Unused;
+extern DVECTOR g_ExtraOptions_SelectionHighlightFrom_Unused; // @unused
+extern DVECTOR g_ExtraOptions_SelectionHighlightTo_Unused;   // @unused
+extern DVECTOR g_MainOptions_SelectionHighlightFrom_Unused;  // @unused
+extern DVECTOR g_MainOptions_SelectionHighlightTo_Unused;    // @unused
 
 extern DVECTOR g_ExtraOptions_SelectionHighlightFrom;
 extern DVECTOR g_ExtraOptions_SelectionHighlightTo;

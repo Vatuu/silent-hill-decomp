@@ -97,9 +97,9 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CC8FC);
 void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2) // 0x800CD1F4
 {
     VECTOR3 pos; // Q23.8
-    s16     temp_s0;
+    q3_12   angle0;
+    q3_12   angle1;
     s32     temp_s0_3;
-    s16     temp_s1;
     s32     var_s0;
 
     if (sharedData_800DD584_0_s00 != 0)
@@ -107,9 +107,9 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2) // 0x800CD1F4
         return;
     }
 
-    arg2->field_0.vx += (arg2->field_C.vx * g_DeltaTime0) / 136;
-    arg2->field_0.vy += (arg2->field_C.vy * g_DeltaTime0) / 136;
-    arg2->field_0.vz += (arg2->field_C.vz * g_DeltaTime0) / 136;
+    arg2->field_0.vx += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_C.vx);
+    arg2->field_0.vy += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_C.vy);
+    arg2->field_0.vz += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_C.vz);
 
     limitRange(arg2->field_C.vx, -0x100, 0xFF);
     limitRange(arg2->field_C.vy, -0xFF, 0xFF);
@@ -119,10 +119,10 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2) // 0x800CD1F4
     {
         case 1:
             arg2->field_C.vy += Rng_GenerateInt(Rng_Rand16(), -4, 4);
-            limitRange(arg2->field_C.vy, -0x10, 0x10);
+            limitRange(arg2->field_C.vy, -16, 16);
 
-            arg2->field_C.vx += FP_MULTIPLY(Math_Sin((arg2->field_16 + arg0) << 5), 0x28, Q12_SHIFT);
-            arg2->field_C.vz += FP_MULTIPLY(Math_Cos((arg2->field_16 + arg0) << 5), 0x28, Q12_SHIFT);
+            arg2->field_C.vx += FP_MULTIPLY(Math_Sin((arg2->field_16 + arg0) << 5), Q12(0.01f), Q12_SHIFT);
+            arg2->field_C.vz += FP_MULTIPLY(Math_Cos((arg2->field_16 + arg0) << 5), Q12(0.01f), Q12_SHIFT);
 
             var_s0 = arg2->field_16;
 
@@ -133,7 +133,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2) // 0x800CD1F4
             }
             else
             {
-                arg2->field_16 += 1;
+                arg2->field_16++;
             }
 
             if (arg1 != 0)
@@ -145,10 +145,10 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2) // 0x800CD1F4
 
         case 2:
             arg2->field_C.vy += Rng_GenerateInt(Rng_Rand16(), -4, 4);
-            limitRange(arg2->field_C.vy, -0x10, 0x10);
+            limitRange(arg2->field_C.vy, -16, 16);
 
-            arg2->field_C.vx += FP_MULTIPLY(Math_Sin((arg2->field_16 + arg0) << 5), 0x28, Q12_SHIFT);
-            arg2->field_C.vz += FP_MULTIPLY(Math_Cos((arg2->field_16 + arg0) << 6), 0x28, Q12_SHIFT);
+            arg2->field_C.vx += FP_MULTIPLY(Math_Sin((arg2->field_16 + arg0) << 5), Q12(0.01f), Q12_SHIFT);
+            arg2->field_C.vz += FP_MULTIPLY(Math_Cos((arg2->field_16 + arg0) << 6), Q12(0.01f), Q12_SHIFT);
 
             var_s0 = arg2->field_16;
 
@@ -159,7 +159,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2) // 0x800CD1F4
             }
             else
             {
-                arg2->field_16 += 1;
+                arg2->field_16++;
             }
 
             if (arg1 != 0)
@@ -171,26 +171,26 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2) // 0x800CD1F4
 
         case 3:
             arg2->field_C.vy += Rng_GenerateInt(Rng_Rand16(), -4, 4);
-            limitRange(arg2->field_C.vy, -0x10, 0x10);
+            limitRange(arg2->field_C.vy, -16, 16);
 
             if (arg2->field_16 == 0)
             {
-                temp_s0 = Rng_GenerateInt(Rng_Rand16(), 0, Q12(1.0f) - 1);
+                angle0 = Rng_GenerateInt(Rng_Rand16(), 0, Q12(1.0f) - 1);
 
-                arg2->field_C.vx = (u32)(Math_Sin(temp_s0) * 5) >> 7;
-                arg2->field_C.vz = (u32)(Math_Sin(temp_s0) * 5) >> 7;
+                arg2->field_C.vx = (u32)(Math_Sin(angle0) * 5) >> 7;
+                arg2->field_C.vz = (u32)(Math_Sin(angle0) * 5) >> 7;
             }
 
             var_s0 = arg2->field_16;
 
-            if (Rng_TestProbabilityBits(7) + 0x64 < var_s0)
+            if ((Rng_TestProbabilityBits(7) + 0x64) < var_s0)
             {
                 arg2->field_15 = Rng_GenerateInt(Rng_Rand16(), 1, 3);
                 arg2->field_16 = 0;
             }
             else
             {
-                arg2->field_16 += 1;
+                arg2->field_16++;
             }
 
             if (arg1 != 0)
@@ -215,16 +215,16 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2) // 0x800CD1F4
             }
 
             temp_s0_3 = SquareRoot0(SQUARE(pos.vx) + SQUARE(pos.vz));
-            temp_s0   = ratan2(pos.vx, pos.vz);
-            temp_s1   = ratan2(pos.vy, temp_s0_3);
+            angle0    = ratan2(pos.vx, pos.vz);
+            angle1    = ratan2(pos.vy, temp_s0_3);
 
-            arg2->field_C.vx += FP_MULTIPLY(Math_Sin(temp_s0), 0x50, Q12_SHIFT);
-            arg2->field_C.vz += FP_MULTIPLY(Math_Cos(temp_s0), 0x50, Q12_SHIFT);
-            arg2->field_C.vy += FP_MULTIPLY(Math_Sin(temp_s1), 0x28, Q12_SHIFT);
+            arg2->field_C.vx += FP_MULTIPLY(Math_Sin(angle0), Q12(0.02f) - 1, Q12_SHIFT);
+            arg2->field_C.vz += FP_MULTIPLY(Math_Cos(angle0), Q12(0.02f) - 1, Q12_SHIFT);
+            arg2->field_C.vy += FP_MULTIPLY(Math_Sin(angle1), Q12(0.01f),     Q12_SHIFT);
 
             var_s0 = arg2->field_16;
 
-            if ((Rng_TestProbabilityBits(6) + 0x50) < var_s0 || (arg1 != 0 && arg2->field_16 > 80))
+            if ((Rng_TestProbabilityBits(6) + 80) < var_s0 || (arg1 != 0 && arg2->field_16 > 80))
             {
                 arg2->field_16 = 0;
                 arg2->field_15 = Rng_GenerateInt(Rng_Rand16(), 1, 3);

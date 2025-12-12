@@ -287,7 +287,7 @@ typedef struct
 {
     union
     {
-        s32 vx_0; // Q23.8 } Displacement offset.
+        s32 vx_0; // Q23.8 } Displacement offset. `func_80062708` indicates Q12?
         struct
         {
             s16 field_0;
@@ -296,7 +296,7 @@ typedef struct
     } field_0;
     union
     {
-        s32 vz_4; // Q23.8 }
+        s32 vz_4; // Q23.8 } `func_80062708` indicates Q12?
         struct
         {
             s16 field_0;
@@ -305,7 +305,7 @@ typedef struct
     } field_4;
     s16 vy_8; // Q7.8
     u8  field_A;
-    u8  field_B;
+    u8  field_B; // Flags?
     union
     {
         s32 field_0;
@@ -324,7 +324,7 @@ typedef struct
     } field_C;
     union
     {
-        u32 field_0;
+        q20_12 field_0;
         struct
         {
             s16 field_0;
@@ -1421,7 +1421,7 @@ typedef struct _MapPoint2d
         u32 raw_4;
         struct
         {
-            u32   mapIdx_4_0          : 5; /** `e_PaperMapIdx` */
+            u32   mapIdx_4_0          : 5; /** `e_PaperMapIdx`? */
             u32   field_4_5           : 4;
             u32   loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
             u32   field_4_12          : 4;
@@ -1944,8 +1944,8 @@ typedef struct
     CVECTOR         field_12C;
     CVECTOR         field_130;
     SVECTOR         field_134[25];
-    VECTOR3         field_1FC;
-    u32             field_208;
+    VECTOR3         field_1FC; // Q19.12
+    q20_12          field_208;
     s32             field_20C;
     s32             field_210;
     s32             field_214[25];
@@ -2355,6 +2355,7 @@ extern s16 D_800AE5F0[];
 
 extern u8 D_800AE700[];
 
+/** `[1]` contains relative paper map file indices. */
 extern u8 D_800AE740[][2];
 
 extern s32 D_800AE770;
@@ -2621,6 +2622,7 @@ extern s16 D_800C4438[];
 
 extern u8 D_800C4448;
 
+/** Index into `g_PaperMapFileIdxs`. */
 extern u8 D_800C4449;
 
 extern s8 D_800C444A;
@@ -3747,11 +3749,11 @@ s16 func_8005C7B0(s32 arg0);
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
 
-bool func_80062708(POLY_FT4** poly, s32 arg1);
+bool func_80062708(POLY_FT4** poly, s32 idx);
 
-bool func_80063A50(POLY_FT4** poly, s32 arg1);
+bool func_80063A50(POLY_FT4** poly, s32 idx);
 
-bool func_80064334(POLY_FT4** poly, s32 arg1);
+bool func_80064334(POLY_FT4** poly, s32 idx);
 
 /** Displays gun shooting effects. */
 void func_8006342C(s32 weaponAttack, q3_12 angle, s16 arg2, GsCOORDINATE2* coord);

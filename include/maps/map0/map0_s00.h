@@ -40,7 +40,7 @@ typedef struct
 typedef struct
 {
     VECTOR3 field_0;
-    SVECTOR field_C;
+    SVECTOR field_C; // 2D position or offset.
     u8      unk_14;
     u8      field_15;
     u8      field_16; // Packed angle?

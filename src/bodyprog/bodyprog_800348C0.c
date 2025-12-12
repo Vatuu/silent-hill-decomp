@@ -1745,7 +1745,7 @@ void Chara_PositionUpdateFromParams(s_MapPoint2d* mapPoint) // 0x800371E8
 
     g_SysWork.loadingScreenIdx_2281 = mapPoint->data.areaLoad.loadingScreenId_4_9;
 
-    if (mapPoint->data.areaLoad.mapIdx_4_0 == 24)
+    if (mapPoint->data.areaLoad.mapIdx_4_0 == 24) // TODO: Demagic 24.
     {
         g_SavegamePtr->paperMapIdx_A9 = PaperMapIdx_OtherPlaces;
     }
