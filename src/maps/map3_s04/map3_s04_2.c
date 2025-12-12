@@ -175,7 +175,125 @@ void Map_WorldObjectsInit(void) // 0x800D3BD0
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04_2", func_800D3DA4);
+// Rodata at the end of this file. Inline once all users are decompiled.
+extern SVECTOR3 D_800CB35C;
+extern VECTOR3 D_800CB364;
+extern VECTOR3 D_800CB370;
+
+void func_800D3DA4(void)
+{
+    s32 cellZ0;
+    s32 cellX0;
+    s32 projCellZ0;
+    s32 projCellX0;
+    s32 i;
+    s32 drZ;
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+
+    cellZ0 = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
+    cellX0 = g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE;
+
+    if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f))
+    {
+        projCellX0 = cellX0 + 17;
+    }
+    else
+    {
+        projCellX0 = cellX0 + 15;
+    } 
+
+    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f))
+    {
+        projCellZ0 = cellZ0 + 17;
+    }
+    else
+    {
+        projCellZ0 = cellZ0 + 15;
+    }
+
+    switch (PACKED_CELL_XZ(projCellX0, projCellZ0))
+    {
+        case PACKED_CELL_XZ(19, 18):
+            if (!Savegame_EventFlagGet(EventFlag_M3S04_PickupPlateOfQueen))
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Plate.object_0, &g_WorldObject_Plate.position_1C, &D_800CB35C);
+            }
+            g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);
+            break;
+
+        case PACKED_CELL_XZ(17, 18):
+            if ((g_SysWork.sysState_8 == SysState_Gameplay) && (g_WorldObject_Dr->position_1C.vz != 0x3B199))
+            {
+                drZ = Q12(59.1f);
+
+                for (i = ARRAY_SIZE(g_WorldObject_Dr) - 1; i >= 0; i--)
+                {
+                    g_WorldObject_Dr[i].position_1C.vz = drZ;
+                }
+            }
+
+            for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
+            {
+                g_WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position_1C, &D_800CB35C);
+            }
+            break;
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_300))
+        {
+            if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(101.5f) && g_SysWork.player_4C.chara_0.position_18.vz > Q12(59.0f))
+            {
+                func_8005DC1C(Sfx_Unk1530, &D_800CB364, Q8_CLAMPED(1.0f), 2);
+                Savegame_EventFlagSet(EventFlag_300);
+                if (g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4] & (1<<2))
+                {
+                    g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4] &= ~(1<<3);
+                }
+            }
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_316))
+        {
+            if (Savegame_EventFlagGet(EventFlag_301) && g_SysWork.player_4C.chara_0.position_18.vz > Q12(104.0f))
+            {
+                if (!Vw_AabbVisibleInScreenCheck(Q12(139.0f), Q12(142.0f), Q12(-3.0f), Q12(0.0f), Q12(98.8f), Q12(99.0f)))
+                {
+                    func_8005DC1C(Sfx_Unk1528, &D_800CB370, 0xFF, 2);
+                    Savegame_EventFlagSet(EventFlag_316);
+                }
+            }
+            if (g_SysWork.player_4C.chara_0.position_18.vz < Q12(100.0f))
+            {
+                Savegame_EventFlagSet(EventFlag_301);
+            }
+        }
+    }
+    if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
+    {
+        Sd_EngineCmd(Sfx_Unk1529);
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M3S04_HealthDrink0))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M3S04_HandgunBullets))
+        {
+            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position_0, &g_CommonWorldObjectPoses[1].rotation_C);
+        }
+    }
+}
 
 void func_800D43B8(void) // 0x800D43B8
 {
