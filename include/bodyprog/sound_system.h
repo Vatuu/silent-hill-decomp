@@ -28,10 +28,12 @@
 /** @brief Audio types. */
 typedef enum _AudioType
 {
-    AudioType_MusicKey  = 0,
-    AudioType_Weapon    = 1,
-    AudioType_Ambient   = 2,
-	AudioType_MusicBank = 3
+    AudioType_MusicKey      = 0,
+    AudioType_BaseAudio     = 0,
+    AudioType_Weapon        = 1,
+    AudioType_Ambient       = 2,
+    AudioType_SpecialScreen = 2,
+    AudioType_MusicBank     = 3
 } e_AudioType;
 
 // ========
@@ -45,50 +47,36 @@ typedef struct
     u8 field_1;
 } s_800C15F0;
 
-// TODO: Field with `_24` seems to be part of a thing related to how XA files works.
 typedef struct
 {
-    u8  xaFileIdx_0;
-    u8  unk_1; // } Padding?
-    u8  unk_2; // }
-    u8  unk_3; // }
-    u32 sector_4      : 24;
-    u8  field_4_24    : 8; // Index. Indicates the element of the group index defined at `field_8_24`.
-    u32 audioLength_8 : 24;
-    u8  field_8_24    : 8; // Index. Indicate some sort of group.
-} s_XaItemData;
-STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
-
-typedef struct
-{
-    u16 cdErrorCount_0;     /** Counter for failed attempts when processing a primitive command. */
-    u16 xaAudioIdxCheck_2;  /** XA Audio index. Used to check if the file exists. */
-    u16 xaAudioIdx_4;       /** XA Audio index. Used to play the audio. */
-    u16 bgmLoadedSongIdx_6; /** Index of the currently loaded music. */
-    u16 vabAudioIdx_8[3];   /** @unused Dead code. Stores the index of the last loaded VAB audio that is not a music note, but it's never used. */
-    u16 field_E;            /** MIDI channel assignment for BGM layers.
-                             * Used to assign the corresponding MIDI channel for BGM layers.
-                             *
-                             * This requires further investigation for a proper explanation. This is used
-                             * to access values from `D_800AA604` columns in an odd way, as the values assigned
-                             * are from `g_UnknownBgmTable1`, which range from 769 to 808 (including 0).
-                             * However, the variables are cast as `u8`, which removes
-                             * the second byte (range in hexadecimal: 0x1003 to 0x2803), leaving only the first byte
-                             * ranging from 1 to 40 (also including 0).
-                             */
-    u16 field_10;           /** Temporarily stores a value intended for `field_E` so it can be assigned when the function
-                             * that assigns it is executed. Part of a rule for `Sd_EngineCmd`.
-                             */
-    u8  isStereoEnabled_12; /** `bool` */
-    s8  isXaStopping_13;    /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`.
-                             */
-    u8  bgmFadeSpeed_14;    /** Music fade speed. Range: `[0, 2]`, default: 0. */
-    u8  isVabLoading_15;    /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
-    u8  isXaLoading_16;     /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
-    u8  muteGame_17;        /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively get lower
-                             * in volume until mute (the sounds will keep playing, but muted).
-                             */
-} s_800C1658;
+    u16 cdErrorCount_0;             /** Counter for failed attempts when processing a primitive command. */
+    u16 xaAudioIdxCheck_2;          /** XA Audio index. Used to check if the file exists. */
+    u16 xaAudioIdx_4;               /** XA Audio index. Used to play the audio. */
+    u16 bgmLoadedSongIdx_6;         /** Index of the currently loaded music. */
+    u16 lastVabAudioLoadedIdx_8[3]; /** Stores the index of the last loaded VAB audio that is not a music note. */
+    u16 field_E;                    /** MIDI channel assignment for BGM layers.
+                                     * Used to assign the corresponding MIDI channel for BGM layers.
+                                     *
+                                     * This requires further investigation for a proper explanation. This is used
+                                     * to access values from `D_800AA604` columns in an odd way, as the values assigned
+                                     * are from `g_UnknownBgmTable1`, which range from 769 to 808 (including 0).
+                                     * However, the variables are cast as `u8`, which removes
+                                     * the second byte (range in hexadecimal: 0x1003 to 0x2803), leaving only the first byte
+                                     * ranging from 1 to 40 (also including 0).
+                                     */
+    u16 field_10;                   /** Temporarily stores a value intended for `field_E` so it can be assigned when the function
+                                     * that assigns it is executed. Part of a rule for `Sd_EngineCmd`.
+                                     */
+    u8  isStereoEnabled_12;         /** `bool` */
+    s8  isXaStopping_13;            /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`.
+                                     */
+    u8  bgmFadeSpeed_14;            /** Music fade speed. Range: `[0, 2]`, default: 0. */
+    u8  isAudioLoading_15;          /** `bool` | When a KDT or VAB file is being loaded. | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
+    u8  isXaLoading_16;             /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
+    u8  muteGame_17;                /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively get lower
+                                     * in volume until mute (the sounds will keep playing, but muted).
+                                     */
+} s_Sd_AudioWork;
 
 typedef struct
 {
@@ -148,23 +136,49 @@ typedef struct
     s16 volumeRight_E;
 } s_800C1698;
 
-/** @brief Stores KDT and VAB data access. */
 typedef struct
 {
-    s8  typeIdx_0;    /** `g_Sd_VabBuffers` index which stores offsets where VAB files are saved in memory. See `e_VabAudioType`. */
-    s8  unk_1;
+    u8  field_0;
+    u8  unk_1;
     u16 field_2;
-    u32 fileSize_4;   /** VAB file size. */
-    s32 fileOffset_8; /** VAB audio offset in the file container. */
+    u8  field_4;
+    s8  field_5;
+} s_Sfx;
+
+// TODO: Field with `_24` seems to be part of a thing related to how XA files works.
+typedef struct
+{
+    u8  xaFileIdx_0;
+    u8  unk_1; // } Padding?
+    u8  unk_2; // }
+    u8  unk_3; // }
+    u32 sector_4      : 24;
+    u8  field_4_24    : 8; // Index. Indicates the element of the group index defined at `field_8_24`.
+    u32 audioLength_8 : 24;
+    u8  field_8_24    : 8; // Index. Indicate some sort of group.
+} s_XaItemData;
+STATIC_ASSERT_SIZEOF(s_XaItemData, 12);
+
+
+// Used to store KDT and VAB data access.
+typedef struct
+{
+    s8  typeIdx_0;       /** See `e_AudioType`. */
+    s8  pad_1;
+    u16 vagDataOffset_2; /** Offset of VAG data inside VAB files. */
+    u32 fileSize_4;      /** VAB file size. */
+    s32 fileOffset_8;    /** VAB audio offset in the file container. */
 } s_AudioItemData;
 
 // ========
 // GLOBALS
 // ========
 
+extern s32 D_800A9FDC[];
+
 extern u8 g_Sd_VabLoadAttemps;
 
-extern s_AudioItemData D_800A986C[];
+extern s_AudioItemData g_AudioData[];
 
 extern u8 g_Sd_ReverbDepths[];
 
@@ -210,7 +224,7 @@ extern s32 D_800C15DC;
 // Only used in `Sd_CmdPoolUpdate` as iterator variable.
 extern s32 D_800C15E0;
 
-/** Absolute SFX index. */
+// Likely declared as `static` inside the function that uses it.
 extern s16 D_800C15BC;
 
 extern s16 g_Sound_ActiveSfxIdx;
@@ -220,7 +234,7 @@ extern u16 D_800C15C0;
 
 extern s_800C15F0 D_800C15F0;
 
-extern s_800C1658 D_800C1658;
+extern s_Sd_AudioWork g_Sd_AudioWork;
 
 /** @brief Hold states for different audio types streaming. */
 extern s_AudioStreamingStates g_Sd_AudioStreamingStates;
@@ -242,7 +256,8 @@ extern u8 g_Sd_CmdPool[32];
 /** @brief The type of audio file being loaded. See `e_AudioType`. */
 extern u8 g_Sd_AudioType;
 
-extern u32 D_800C37CC;
+/** @brief Amount of data moved when loading KDT/VAB files. */
+extern u32 g_Sd_DataMoved;
 
 extern s_AudioItemData* g_Sd_VabTargetLoad;
 
@@ -253,9 +268,37 @@ extern u8 D_800C37DC; // Boolean.
 
 extern u8 g_Sd_CurrentCmd;
 
+extern s_Sfx g_Sfx_Table0[420];
+
 // ==========
 // FUNCTIONS
 // ==========
+
+/** Sound func. */
+void Sd_EngineUtilities(u16 cmd);
+
+void sd_init(void);
+
+void sd_work_init(void);
+
+u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol);
+
+/** SFX func. */
+void func_800463C0(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
+
+/** SFX func. */
+void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
+
+/** SFX func. */
+void func_8004690C(u16 sfxId);
+
+/** Sound command func. Unknown category. */
+void func_8004692C(u16 cmd);
+
+/** Sound command func. Unknown category. */
+void func_80046A24(u16 cmd);
+
+void func_80046A70(void);
 
 /** @brief Passes a command to the sound driver.
  * Plays SFX among other things.
@@ -352,15 +395,20 @@ void Sd_VabLoad_OffSet(void);
 
 void Sd_VabLoad_FileLoad(void);
 
-void func_80047E3C(void);
+/** @brief Sets the reader offset to the VAG data position. */
+void Sd_VabLoad_OffVagDataSet(void);
 
-void func_80047F18(void);
+/** @brief Moves VAG data from the temporal file location to the indicated `g_Sd_VabBuffers` buffer.
+ * In case of the file being bigger than what `VAB_BUFFER_LIMIT` have stablished then it initializes
+ * a loop to move remaining data.
+ */
+void Sd_VabLoad_VagDataMove(void);
 
-void func_80048000(void);
+void Sd_VabLoad_OffVagNextDataSet(void);
 
-void func_8004807C(void);
+void Sd_VabLoad_NextVagDataMove(void);
 
-void func_800480FC(void);
+void Sd_VabLoad_LastVagDataMove(void);
 
 void Sd_VabLoad_Finalization(void);
 
@@ -388,7 +436,7 @@ void func_800485C0(s32 idx);
 
 /** @brief Executes a new primitive command and checks the status against the previous.
  * If the previous primitive commands haven't completed, it starts
- * adding to `D_800C1658.cdErrorCount_0` each time the process fails. When it
+ * adding to `g_Sd_AudioWork.cdErrorCount_0` each time the process fails. When it
  * reaches 600 failed attemps, it restarts the CD-ROM system.
  */
 u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res);

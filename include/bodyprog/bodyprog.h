@@ -1458,15 +1458,6 @@ typedef struct _MapPoint2d
 } s_MapPoint2d;
 STATIC_ASSERT_SIZEOF(s_MapPoint2d, 12);
 
-typedef struct
-{
-    u8  field_0;
-    u8  unk_1;
-    u16 field_2;
-    u8  field_4;
-    s8  field_5;
-} s_Sfx;
-
 /** Special map-specific Harry anim data. */
 typedef struct
 {
@@ -2741,8 +2732,6 @@ extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
 extern u8 D_800C6E90;
 
-extern s_Sfx g_Sfx_Table0[420];
-
 extern u8 D_800AD480[24];
 
 /** Weapon attacks. */
@@ -3162,32 +3151,6 @@ void func_800453E8(s_Skeleton* skel, bool cond);
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond);
 
 void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images);
-
-/** Sound func. */
-void func_80045BD8(u16 cmd);
-
-void sd_init(void);
-
-void sd_work_init(void);
-
-u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol);
-
-/** SFX func. */
-void func_800463C0(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
-
-/** SFX func. */
-void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
-
-/** SFX func. */
-void func_8004690C(u16 sfxId);
-
-/** Sound command func. Unknown category. */
-void func_8004692C(u16 cmd);
-
-/** Sound command func. Unknown category. */
-void func_80046A24(u16 cmd);
-
-void func_80046A70(void);
 
 /** `arg0` is probably a bit flag. */
 void func_8004C564(u8 arg0, s8 weaponAttack);

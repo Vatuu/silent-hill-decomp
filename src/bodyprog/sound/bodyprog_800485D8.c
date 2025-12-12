@@ -54,15 +54,15 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
             break;
     }
 
-    if (D_800C1658.xaAudioIdx_4 != 0)
+    if (g_Sd_AudioWork.xaAudioIdx_4 != 0)
     {
         D_800C1688.field_4 = VSync(SyncMode_Count) - D_800C1688.field_8;
     }
 
     // Fade out background music.
-    if (D_800C1658.bgmFadeSpeed_14 != 0)
+    if (g_Sd_AudioWork.bgmFadeSpeed_14 != 0)
     {
-        D_800C1658.field_E = NO_VALUE;
+        g_Sd_AudioWork.field_E = NO_VALUE;
 
         if (g_Sd_ChannelsVolume.volumeBgm_8 <= 0)
         {
@@ -71,7 +71,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
         }
         else
         {
-            g_Sd_ChannelsVolume.volumeBgm_8 -= D_800C1658.bgmFadeSpeed_14;
+            g_Sd_ChannelsVolume.volumeBgm_8 -= g_Sd_AudioWork.bgmFadeSpeed_14;
 
             if ((g_Sd_ChannelsVolume.volumeBgm_8 << 16) <= 0)
             {
@@ -110,7 +110,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
     {
         if (g_Sd_CurrentCmd == 0)
         {
-            if (D_800C1658.isXaLoading_16 == false)
+            if (g_Sd_AudioWork.isXaLoading_16 == false)
             {
                 Sd_CmdPoolAdd(2);
             }
@@ -120,8 +120,8 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
         }
     }
 
-    // Slowly fade in/out game audio based if `D_800C1658.muteGame_17` enabled.
-    if (D_800C1658.muteGame_17 == true)
+    // Slowly fade in/out game audio based if `g_Sd_AudioWork.muteGame_17` enabled.
+    if (g_Sd_AudioWork.muteGame_17 == true)
     {
         if (g_Sd_ChannelsVolume.volumeGlobal_A > 0)
         {
@@ -149,7 +149,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
     }
 
     // Reset audio streaming system if failed.
-    if (D_800C1658.cdErrorCount_0 > CD_ERROR_LIMIT)
+    if (g_Sd_AudioWork.cdErrorCount_0 > CD_ERROR_LIMIT)
     {
         CdReset(0);
         CdControlB(CdlNop, NULL, NULL);
@@ -161,7 +161,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
         g_Sd_AudioStreamingStates.xaLoadState_1    = 0;
         g_Sd_AudioStreamingStates.xaStopState_2    = 0;
         g_Sd_AudioStreamingStates.xaPreLoadState_3 = 0;
-        D_800C1658.cdErrorCount_0                  = 0;
+        g_Sd_AudioWork.cdErrorCount_0              = 0;
     }
 }
 
@@ -174,13 +174,13 @@ u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res) // 0x80048954
 
     if (CdSync(1, &syncRes) == CdlComplete && CdControl(comCopy, param, res))
     {
-        D_800C1658.cdErrorCount_0 = 0;
+        g_Sd_AudioWork.cdErrorCount_0 = 0;
         return false;
     }
 
-    D_800C1658.cdErrorCount_0++;
+    g_Sd_AudioWork.cdErrorCount_0++;
 
-    if (D_800C1658.cdErrorCount_0 > CD_ERROR_LIMIT)
+    if (g_Sd_AudioWork.cdErrorCount_0 > CD_ERROR_LIMIT)
     {
         CdReset(0);
         CdControlB(CdlNop, NULL, NULL);
@@ -194,10 +194,10 @@ u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res) // 0x80048954
         g_Sd_AudioStreamingStates.xaLoadState_1    = 0;
         g_Sd_AudioStreamingStates.xaStopState_2    = 0;
         g_Sd_AudioStreamingStates.xaPreLoadState_3 = 0;
-        D_800C1658.cdErrorCount_0                  = 0;
+        g_Sd_AudioWork.cdErrorCount_0              = 0;
     }
 
     return true;
 }
 
-const s32 unused_Rodata_80025D60[2] = { 0x6A375A00, 0x892FBD00 }; // Unused.
+const s32 rodataPad_80025D60[2] = { 0x6A375A00, 0x892FBD00 }; // Unused.
