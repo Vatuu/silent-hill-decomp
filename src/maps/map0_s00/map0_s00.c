@@ -241,7 +241,7 @@ INCLUDE_RODATA("asm/maps/map0_s00/nonmatchings/map0_s00", D_800CA7CC);
 
 void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
 {
-    SVECTOR   posQ8;
+    SVECTOR   pos; // Q23.8
     s32       depth;
     u8        temp_v0;
     POLY_FT4* poly;
@@ -278,7 +278,7 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
     }
     else
     {
-        switch (g_SysWork.timer_1C & 7)
+        switch (g_SysWork.timer_1C & 0x7)
         {
             case 0:
             case 1:
@@ -304,7 +304,7 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
 
             case 2:
             case 3:
-                switch (arg0 & 3)
+                switch (arg0 & 0x3)
                 {
                     case 0:
                         setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
@@ -326,7 +326,7 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
 
             case 4:
             case 5:
-                switch (arg0 & 3)
+                switch (arg0 & 0x3)
                 {
                     case 0:
                         setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
@@ -348,7 +348,7 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
 
             case 6:
             case 7:
-                switch (arg0 & 3)
+                switch (arg0 & 0x3)
                 {
                     case 0:
                         setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
@@ -372,12 +372,11 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
 
     if (Game_FlashlightIsOn())
     {
-        temp_v0 = func_80055D78(
-            g_SysWork.player_4C.chara_0.position_18.vx + arg2->field_0.vx,
-            g_SysWork.player_4C.chara_0.position_18.vy + arg2->field_0.vy,
-            g_SysWork.player_4C.chara_0.position_18.vz + arg2->field_0.vz);
+        temp_v0 = func_80055D78(g_SysWork.player_4C.chara_0.position_18.vx + arg2->field_0.vx,
+                                g_SysWork.player_4C.chara_0.position_18.vy + arg2->field_0.vy,
+                                g_SysWork.player_4C.chara_0.position_18.vz + arg2->field_0.vz);
 
-        temp_v0 = temp_v0 != 0 ? (temp_v0 >= 0 && temp_v0 <= 176 ? temp_v0 : 176) : 1;
+        temp_v0 = (temp_v0 != 0) ? ((temp_v0 >= 0 && temp_v0 <= 176) ? temp_v0 : 176) : 1;
 
         switch (D_800C39A0)
         {
@@ -390,11 +389,11 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
                 break;
 
             default:
-                temp_v0 = func_80055D78(
-                    g_SysWork.player_4C.chara_0.position_18.vx + arg2->field_0.vx,
-                    g_SysWork.player_4C.chara_0.position_18.vy + arg2->field_0.vy,
-                    g_SysWork.player_4C.chara_0.position_18.vz + arg2->field_0.vz);
-                temp_v0   = temp_v0 != 0 ? (temp_v0 >= 0 && temp_v0 <= 176 ? temp_v0 : 176) : 1;
+                temp_v0 = func_80055D78(g_SysWork.player_4C.chara_0.position_18.vx + arg2->field_0.vx,
+                                        g_SysWork.player_4C.chara_0.position_18.vy + arg2->field_0.vy,
+                                        g_SysWork.player_4C.chara_0.position_18.vz + arg2->field_0.vz);
+                temp_v0 = (temp_v0 != 0) ? ((temp_v0 >= 0 && temp_v0 <= 176) ? temp_v0 : 176) : 1;
+
                 temp_v0 >>= 3;
                 poly->r0  = sharedData_800E3258_0_s00.r + temp_v0;
                 poly->g0  = sharedData_800E3258_0_s00.g + temp_v0;
@@ -417,16 +416,16 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
             case 1:
             case 4:
             case 10:
-                temp_v0 = func_80055D78(
-                    g_SysWork.player_4C.chara_0.position_18.vx + arg2->field_0.vx,
-                    g_SysWork.player_4C.chara_0.position_18.vy + arg2->field_0.vy,
-                    g_SysWork.player_4C.chara_0.position_18.vz + arg2->field_0.vz);
-                temp_v0 = temp_v0 != 0 ? (temp_v0 >= 0 && temp_v0 <= 176 ? temp_v0 : 176) : 1;
+                temp_v0 = func_80055D78(g_SysWork.player_4C.chara_0.position_18.vx + arg2->field_0.vx,
+                                        g_SysWork.player_4C.chara_0.position_18.vy + arg2->field_0.vy,
+                                        g_SysWork.player_4C.chara_0.position_18.vz + arg2->field_0.vz);
+                temp_v0 = (temp_v0 != 0) ? ((temp_v0 >= 0 && temp_v0 <= 176) ? temp_v0 : 176) : 1;
 
                 poly->r0 = temp_v0 + sharedData_800E3258_0_s00.r;
                 poly->g0 = temp_v0 + sharedData_800E3258_0_s00.g;
                 poly->b0 = temp_v0 + sharedData_800E3258_0_s00.b;
                 break;
+
             default:
                 poly->r0 = sharedData_800E3258_0_s00.r;
                 poly->g0 = sharedData_800E3258_0_s00.g;
@@ -435,11 +434,11 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
         }
     }
 
-    posQ8.vx = Q12_TO_Q8(arg2->field_0.vx);
-    posQ8.vy = Q12_TO_Q8(arg2->field_0.vy);
-    posQ8.vz = Q12_TO_Q8(arg2->field_0.vz);
+    pos.vx = Q12_TO_Q8(arg2->field_0.vx);
+    pos.vy = Q12_TO_Q8(arg2->field_0.vy);
+    pos.vz = Q12_TO_Q8(arg2->field_0.vz);
 
-    gte_ldv0(&posQ8);
+    gte_ldv0(&pos);
     gte_rtps();
     gte_stsxy(&poly->x0);
     gte_stszotz(&depth);

@@ -1277,7 +1277,7 @@ typedef struct
 
 typedef struct
 {
-    u16              field_0;
+    u16              field_0; // Flags.
     u8               field_2; // Size of `field_4`.
     u8               unk_3;
     s_func_8006F8FC* field_4[20]; // Guessed size.
@@ -1392,26 +1392,26 @@ STATIC_ASSERT_SIZEOF(s_800AFE08, 28);
 typedef struct
 {
     s_800AFE08 sub_0;
-    s32  field_1C;
-    s16  field_20;
-    s16  field_22;
-    s32  field_24;
-    s32  field_28;
-    s32  field_2C;
-    s32  field_30;
-    s32  field_34;
-    s32  field_38;
-    s32  field_3C;
-    s32  field_40;
-    s32  field_44;
-    s32  field_48;
-    s32  field_4C;
-    s32  field_50;
-    s32  field_54;
+    s32        field_1C;
+    s16        field_20;
+    s16        field_22;
+    s32        field_24;
+    s32        field_28;
+    s32        field_2C;
+    s32        field_30;
+    s32        field_34;
+    s32        field_38;
+    s32        field_3C;
+    s32        field_40;
+    s32        field_44;
+    s32        field_48;
+    s32        field_4C;
+    s32        field_50;
+    s32        field_54;
 } s_800AFE24; // Size: 85
 
-/** @brief Contains X/Z coordinates, and optional 4 bytes of any kind of data.
- * Type of data usually depends on its usage, eg. character spawns will use `data.spawnInfo`, while `s_EventParam` includes a enum that specifies the kind of data it expects.
+/** @brief Contains X/Z coordinates and optional 4 bytes of any kind of data.
+ * Type of data usually depends on its usage, e.g. character spawns use `data.spawnInfo` while `s_EventParam` includes an enum that specifies the kind of data it expects.
  * Map headers include an array of these, which `s_EventParam` includes an index into. */
 typedef struct _MapPoint2d
 {
@@ -1430,9 +1430,9 @@ typedef struct _MapPoint2d
         } areaLoad;
         struct
         {
-            s8 charaId_4;   /** `e_CharacterId` */
-            u8 rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
-            s8 flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `state_2 = 0`. */
+            s8  charaId_4;   /** `e_CharacterId` */
+            u8  rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
+            s8  flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `state_2 = 0`. */
             s32 field_7_0 : 4;
         } spawnInfo;
         struct
@@ -1473,29 +1473,29 @@ typedef struct
  */
 typedef struct _BloodSplat
 {
-    s16 field_0; // Maybe an array of `u16`s?
+    s16 field_0; // Maybe an array of `u16`s? Contains indices.
 } s_BloodSplat;
 
 typedef struct
 {
-    u8  unk_0;
-    u8  field_1;
-    u8  field_2;
-    u8  unk_3;
-    u8  field_4;
-    u8  field_5;
-    u8  field_6;
-    u8  unk_7;
-    u8  unk_8[2];
-    s16 field_A;
-    u8  unk_C[2];
-    s16 field_E;
-    s16 field_10;
-    u8  unk_12[4];
-    s16 field_16;
-    u8  unk_18[8];
-    s32 field_20;
-    s32 field_24;
+    u8    unk_0;
+    u8    field_1;
+    u8    field_2;
+    u8    unk_3;
+    u8    field_4;
+    u8    field_5;
+    u8    field_6;
+    u8    unk_7;
+    u8    unk_8[2];
+    s16   field_A;
+    u8    unk_C[2];
+    s16   field_E;
+    q3_12 field_10;
+    u8    unk_12[4];
+    s16   field_16;
+    u8    unk_18[8];
+    s32   field_20;
+    s32   field_24;
 } s_MapOverlayHeader_5C;
 
 typedef struct
@@ -1528,7 +1528,7 @@ typedef struct
     VECTOR vec_18;
     s16    field_28[4];
     u8     field_30[4];
-    s16    field_34[4];
+    q3_12  field_34[4]; // Y angles.
     s16    field_3C[4];
     s16    field_44[4];
     s16    field_4C[4];
@@ -1570,7 +1570,7 @@ typedef struct _MapOverlayHeader
     void                   (*worldObjectsUpdate_40)(void);
     void                   (*func_44)();
     void                   (*func_48)(); // func(?).
-    s_MapHdr_field_4C*     unkTable1_4C;
+    s_MapHdr_field_4C*     unkTable1_4C; // Related to collision?
     s16                    unkTable1Count_50;
     s8                     unk_52[2];
     s_BloodSplat*          bloodSplats_54;
@@ -1860,7 +1860,7 @@ typedef struct
 
 typedef struct
 {
-    VECTOR3 field_0;
+    VECTOR3 field_0; // Q23.8 | Position.
     MATRIX  field_C;
     s32     field_2C;
     DVECTOR field_30;
@@ -1879,7 +1879,7 @@ typedef struct
     s16     field_DC[4];
     s16     field_E4[4];
     DVECTOR field_EC[4];
-    DVECTOR field_FC[4];
+    DVECTOR field_FC[4]; // Q3.12 | Positions or offsets. 
     s32     field_10C[4];
     s32     field_11C[4];
 } s_func_8005E89C;
@@ -1969,7 +1969,7 @@ typedef struct
     DR_TPAGE* field_4;
     SVECTOR   field_8[3];
     MATRIX    field_20;
-    VECTOR3   field_40;
+    VECTOR3   field_40; // Q23.8
     s32       field_4C;
     s16       field_50;
     s32       field_54[3];
@@ -3357,14 +3357,15 @@ void func_8005DD44(e_SfxId sfxId, VECTOR3* pos, q23_8 vol, s8 pitch); // Types a
 /** Checks `field_8` in collision struct. */
 bool func_8005F680(s_Collision* coll);
 
-void func_8005F6B0(s_SubCharacter* chara, VECTOR* arg1, s32 arg2, s32 arg3);
+/** Related to camera collision? */
+void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3);
 
 /** Spatial SFX func? */
-void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 inVolume, s32 falloff, s8 pitch);
+void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, s32 falloff, s8 pitch);
 
 void Map_EffectTexturesLoad(s32 mapIdx);
 
-void func_8005E414(s32 arg0);
+void func_8005E414(s32 orgIdx);
 
 void func_8005E650(s32 mapId);
 
@@ -3756,22 +3757,22 @@ bool func_80063A50(POLY_FT4** poly, s32 idx);
 bool func_80064334(POLY_FT4** poly, s32 idx);
 
 /** Displays gun shooting effects. */
-void func_8006342C(s32 weaponAttack, q3_12 angle, s16 arg2, GsCOORDINATE2* coord);
+void func_8006342C(s32 weaponAttack, q3_12 angle0, s16 angle1, GsCOORDINATE2* coord);
 
 s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z);
 
 /** Computes something for a targeted NPC. */
 bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* unkOffset, u32 npxIdx, q19_12 angleConstraint);
 
-bool func_80060044(POLY_FT4** poly, s32 arg1);
+bool func_80060044(POLY_FT4** poly, s32 idx);
 
-bool func_800611C0(POLY_FT4** poly, s32 arg1);
+bool func_800611C0(POLY_FT4** poly, s32 idx);
 
 void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3);
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
 
-bool func_80064FC0(POLY_FT4** polys, s32 arg1);
+bool func_80064FC0(POLY_FT4** polys, s32 idx);
 
 void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3);
 

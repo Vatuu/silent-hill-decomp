@@ -175,19 +175,19 @@ void Map_WorldObjectsInit(void) // 0x800D3BD0
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-// Rodata at the end of this file. Inline once all users are decompiled.
+// Rodata at the end of this file. TODO: Inline once all users are decompiled.
 extern SVECTOR3 D_800CB35C;
 extern VECTOR3 D_800CB364;
 extern VECTOR3 D_800CB370;
 
-void func_800D3DA4(void)
+void func_800D3DA4(void) // 0x800D3DA4
 {
-    s32 cellZ0;
-    s32 cellX0;
-    s32 projCellZ0;
-    s32 projCellX0;
-    s32 i;
-    s32 drZ;
+    s32    cellZ0;
+    s32    cellX0;
+    s32    projCellZ0;
+    s32    projCellX0;
+    s32    i;
+    q19_12 drZ;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     cellZ0 = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
@@ -200,7 +200,7 @@ void func_800D3DA4(void)
     else
     {
         projCellX0 = cellX0 + 15;
-    } 
+    }
 
     if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f))
     {
@@ -218,11 +218,12 @@ void func_800D3DA4(void)
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject_Plate.object_0, &g_WorldObject_Plate.position_1C, &D_800CB35C);
             }
+
             g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);
             break;
 
         case PACKED_CELL_XZ(17, 18):
-            if ((g_SysWork.sysState_8 == SysState_Gameplay) && (g_WorldObject_Dr->position_1C.vz != 0x3B199))
+            if (g_SysWork.sysState_8 == SysState_Gameplay && g_WorldObject_Dr->position_1C.vz != Q12(59.1f))
             {
                 drZ = Q12(59.1f);
 
@@ -243,13 +244,15 @@ void func_800D3DA4(void)
     {
         if (!Savegame_EventFlagGet(EventFlag_300))
         {
-            if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(101.5f) && g_SysWork.player_4C.chara_0.position_18.vz > Q12(59.0f))
+            if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(101.5f) &&
+                g_SysWork.player_4C.chara_0.position_18.vz > Q12(59.0f))
             {
                 func_8005DC1C(Sfx_Unk1530, &D_800CB364, Q8_CLAMPED(1.0f), 2);
                 Savegame_EventFlagSet(EventFlag_300);
-                if (g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4] & (1<<2))
+
+                if (g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4] & (1 << 2))
                 {
-                    g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4] &= ~(1<<3);
+                    g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4] &= ~(1 << 3);
                 }
             }
         }
@@ -267,12 +270,14 @@ void func_800D3DA4(void)
                     Savegame_EventFlagSet(EventFlag_316);
                 }
             }
+
             if (g_SysWork.player_4C.chara_0.position_18.vz < Q12(100.0f))
             {
                 Savegame_EventFlagSet(EventFlag_301);
             }
         }
     }
+
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
     {
         Sd_EngineCmd(Sfx_Unk1529);

@@ -1968,7 +1968,7 @@ void func_800E4714(void) // 0x800E4714
 
 void func_800E514C(void) // 0x800E514C
 {
-    VECTOR3 vec;
+    VECTOR3 pos; // Q19.12
     s32     localRand;
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -2317,13 +2317,13 @@ void func_800E514C(void) // 0x800E514C
             if (g_SysWork.field_28 > Q12(0.3f))
             {
                 localRand           = Rng_Rand16();
-                vec.vx              = g_SysWork.npcs_1A0[0].position_18.vx + Q12(0.2f);
-                vec.vy              = g_SysWork.npcs_1A0[0].position_18.vy + Q12(-0.9f);
-                vec.vz              = g_SysWork.npcs_1A0[0].position_18.vz + Q12(0.2f);
+                pos.vx              = g_SysWork.npcs_1A0[0].position_18.vx + Q12(0.2f);
+                pos.vy              = g_SysWork.npcs_1A0[0].position_18.vy + Q12(-0.9f);
+                pos.vz              = g_SysWork.npcs_1A0[0].position_18.vz + Q12(0.2f);
                 g_SysWork.field_28 -= Q12(0.2f);
                 g_SysWork.field_28 -= localRand % Q12(0.1f);
 
-                func_8005F6B0(g_SysWork.npcs_1A0, &vec, 8, 1);
+                func_8005F6B0(g_SysWork.npcs_1A0, &pos, 8, 1);
             }
             break;
 

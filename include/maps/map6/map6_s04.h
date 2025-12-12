@@ -124,6 +124,8 @@ void func_800DFD08(void); // Assumed return type.
 
 void func_800E01F4(void);
 
+void func_800E0204(void); // Assumed types.
+
 void func_800E02E0(void);
 
 void func_800E0FAC(s32); // Assumed return type.
@@ -155,10 +157,12 @@ void func_800E5D44(void);
 
 void func_800E5F54(void);
 
-void func_800E0204(void); // Assumed types.
 void func_800E636C(void); // Assumed types.
+
 void func_800E6CB8(void); // Assumed types.
+
 void func_800E7204(void); // Assumed types.
+
 void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4); // Assumed types.
 
 #endif
