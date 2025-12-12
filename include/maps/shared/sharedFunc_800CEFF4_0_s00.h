@@ -94,7 +94,7 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
 
             gte_stsxy(&poly->x1);
 
-            if (depth > 32 && depth < 0x7FF)
+            if (depth > 32 && depth < ORDERING_TABLE_SIZE - 1)
             {
                 setPolyFT4(poly);
                 setSemiTrans(poly, 1);
@@ -274,7 +274,7 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
 
             gte_stsxy3(&poly->x1, &poly->x2, &poly->x3);
 
-            if (depth > 0x20 && depth < 0x7FF)
+            if (depth > 32 && depth < ORDERING_TABLE_SIZE - 1)
             {
                 setPolyFT4(poly);
                 setSemiTrans(poly, 1);
@@ -365,7 +365,7 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
 
     gte_stsxy(&poly->x1);
 
-    if (depth > 0x20 && depth < 0x7FF)
+    if (depth > 32 && depth < ORDERING_TABLE_SIZE - 1)
     {
         setPolyFT4(poly);
         setSemiTrans(poly, 1);

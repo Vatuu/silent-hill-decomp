@@ -205,7 +205,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
         polyFt3->g0 = primColorG;
         polyFt3->b0 = primColorB;
 
-        if (zScreenStart >= 33 && zScreenStart < (2048 - 1))
+        if (zScreenStart > 32 && zScreenStart < ORDERING_TABLE_SIZE - 1)
         {
             setSemiTrans(polyFt3, true);
             polyFt3->x1 = polyFt3->x0;
@@ -282,7 +282,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
             switch (sharedData_800DD591_0_s00)
             {
                 case 2:
-                    if ((zScreenStart + 256) < 0x7FF)
+                    if ((zScreenStart + 256) < ORDERING_TABLE_SIZE - 1)
                     {
                         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[zScreenStart + 256], polyFt3);
                     }

@@ -3,7 +3,7 @@
 
 // GsOT_TAG g_OtTags0[2][16];
 // q19_12 g_DeltaTime0;
-// GsOT_TAG g_OtTags1[2][2048];
+// GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
 
 // SH2 symbols indicate this should be in `vc_main.c`, but the file already has its data segment assigned.
 // It's possible this is part of another split as there is also some inbetween data in

@@ -5339,22 +5339,9 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
 
         ptr->field_1BC = (ptr->field_1BC + ptr->field_1C0 + ptr->field_1C4 + ptr->field_1C8) >> 2;
 
-        if (ptr->field_1BC <= 0)
-        {
-            return false;
-        }
-
-        if ((ptr->field_1BC >> 3) >= 2048)
-        {
-            return false;
-        }
-
-        if (ABS(ptr->field_1CC.vx) >= 201)
-        {
-            return false;
-        }
-
-        if (ABS(ptr->field_1CC.vy) >= 161)
+        if (ptr->field_1BC <= 0 || (ptr->field_1BC >> 3) >= ORDERING_TABLE_SIZE ||
+            ABS(ptr->field_1CC.vx) >= 201 ||
+            ABS(ptr->field_1CC.vy) >= 161)
         {
             return false;
         }

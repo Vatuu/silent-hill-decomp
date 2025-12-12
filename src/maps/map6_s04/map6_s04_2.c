@@ -1611,7 +1611,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
         SetDrawStp(scratchData->stp_8, 1);
-        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], scratchData->stp_8);
         scratchData->stp_8++;
         SetDrawStp(scratchData->stp_8, 0);
         addPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[0], scratchData->stp_8);
@@ -1797,7 +1797,7 @@ void func_800E558C(void) // 0x800E558C
 
         scratchData->stp_8 = (DR_STP*)scratchData->sprt_0;
         SetDrawStp(scratchData->stp_8, 1);
-        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[0x7FF], scratchData->stp_8);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], scratchData->stp_8);
         scratchData->stp_8++;
         SetDrawStp(scratchData->stp_8, 0);
         addPrim(&g_OrderingTable2[g_ActiveBufferIdx].org[0], scratchData->stp_8);
