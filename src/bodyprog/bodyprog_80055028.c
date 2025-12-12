@@ -5997,8 +5997,8 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
         case 0:
             Screen_Refresh(SCREEN_WIDTH, true);
 
-            D_800C444A = g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9];
-            D_800C4448 = g_SavegamePtr->current2dMapIdx_A9;
+            D_800C444A = g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9];
+            D_800C4448 = g_SavegamePtr->paperMapIdx_A9;
             D_800C444C = NO_VALUE;
             D_800C4454 = Q12(1.0f);
             D_800AE770 = 0;
@@ -6006,7 +6006,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
             func_80037188();
             Sd_EngineCmd(Sfx_MenuMap);
             func_80066E40();
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4448], FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[D_800C4448], FS_BUFFER_2, &g_PaperMapImg);
             Fs_QueueWaitForEmpty();
 
             g_IntervalVBlanks = 1;
@@ -6104,7 +6104,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
                         {
                             D_800C4449 = D_800AE740[D_800C4448][0];
 
-                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4449]);
+                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[D_800C4449]);
                             ScreenFade_Start(true, false, false);
 
                             D_800C444C                      = NO_VALUE;
@@ -6122,7 +6122,7 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
                         {
                             D_800C4449 = D_800AE740[D_800C4448][1];
 
-                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4449]);
+                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[D_800C4449]);
                             ScreenFade_Start(true, false, false);
 
                             D_800C444C = NO_VALUE;
@@ -6167,13 +6167,13 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
             break;
 
         case 1:
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[D_800C4448], FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[D_800C4448], FS_BUFFER_2, &g_PaperMapImg);
 
-            temp_a0_4 = g_MapMarkingTimFileIdxs[D_800C4448];
+            temp_a0_4 = g_PaperMapMarkingFileIdxs[D_800C4448];
             if (temp_a0_4 != D_800C444A && temp_a0_4 != NO_VALUE)
             {
-                D_800C444A = g_MapMarkingTimFileIdxs[D_800C4448];
-                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[D_800C4448], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+                D_800C444A = g_PaperMapMarkingFileIdxs[D_800C4448];
+                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[D_800C4448], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
             }
 
             Fs_QueueWaitForEmpty();
@@ -6221,7 +6221,7 @@ static inline s32 MapCoordIdxGet(q19_12 coord, s32 bias, s32 shift, s32 offset)
     return (coord >> shift) + offset;
 }
 
-s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
+s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
 {
     #define MAP_OFFSET(coord) \
         ((coord) + (((coord) < 0) ? 20 : 21))
@@ -6253,7 +6253,7 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
     POLY_G3* poly;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
-    if (g_SavegamePtr->current2dMapIdx_A9 != map2dIdx)
+    if (g_SavegamePtr->paperMapIdx_A9 != paperMapIdx)
     {
         return 0;
     }
@@ -6280,7 +6280,7 @@ s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
     angle = g_SysWork.player_4C.chara_0.rotation_24.vy;
     mapCoordIdxZ = SHRT_MAX;
 
-    switch (map2dIdx)
+    switch (paperMapIdx)
     {
         case 1:
             switch (g_SavegamePtr->mapOverlayId_A4)
@@ -6776,7 +6776,7 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u
 
     ptr = PSX_SCRATCH;
 
-    if (g_MapMarkingTimFileIdxs[idx] == NO_VALUE)
+    if (g_PaperMapMarkingFileIdxs[idx] == NO_VALUE)
     {
         return false;
     }
@@ -6861,7 +6861,7 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u
 
             // Set polygon UVs.
             temp                       = (ptr->field_4.field_1 << 8) + 0x80;
-            *((s32*)&ptr->field_0->u0) = ptr->field_4.field_0 + temp + (getClut(g_MapMarkerAtlasImg.clutX, g_MapMarkerAtlasImg.clutY) << 16);
+            *((s32*)&ptr->field_0->u0) = ptr->field_4.field_0 + temp + (getClut(g_PaperMapMarkingAtlasImg.clutX, g_PaperMapMarkingAtlasImg.clutY) << 16);
             temp2                      = ptr->field_4.field_2 + 0x80;
             *((s32*)&ptr->field_0->u1) = ptr->field_4.field_0 + temp2 + (ptr->field_4.field_1 << 8) + 0x470000;
             sp0                        = ((ptr->field_4.field_1 + ptr->field_4.field_3) << 8) + 0x80;

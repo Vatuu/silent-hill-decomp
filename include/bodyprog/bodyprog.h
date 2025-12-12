@@ -1421,7 +1421,7 @@ typedef struct _MapPoint2d
         u32 raw_4;
         struct
         {
-            u32   mapIdx_4_0          : 5; /** `e_Current2dMapIdx` */
+            u32   mapIdx_4_0          : 5; /** `e_PaperMapIdx` */
             u32   field_4_5           : 4;
             u32   loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
             u32   field_4_12          : 4;
@@ -1799,7 +1799,7 @@ typedef struct
     u8 field_3;
 } s_800AE8A0_4;
 
-/** 2D map marking graphic data? */
+/** Paper map marking graphic data? */
 typedef struct
 {
     POLY_FT4*    field_0;
@@ -2091,21 +2091,21 @@ extern POLY_G4 D_800A8EB0[];
 
 extern s32 D_800A8F40;
 
-extern s_FsImageDesc g_Font16AtlasImg;    // 0x800A8FF4
-extern s_FsImageDesc g_KonamiLogoImg;     // 0x800A8FFC
-extern s_FsImageDesc g_KcetLogoImg;       // 0x800A9004
-extern s_FsImageDesc g_TitleImg;          // 0x800A9014
-extern s_FsImageDesc g_MapImg;            // 0x800A901C
-extern s_FsImageDesc g_MapMarkerAtlasImg; // 0x800A9024
-extern s_FsImageDesc g_ItemInspectionImg; // 0x800A902C
-extern s_FsImageDesc D_800A9034;
-extern s_FsImageDesc g_ControllerButtonAtlasImg;   // 0x800A903C
-extern s_FsImageDesc g_BrightnessScreenImg0;       // 0x800A9044
-extern s_FsImageDesc g_BrightnessScreenImg1;       // 0x800A904C
-extern s_FsImageDesc g_DeathTipImg;                // 0x800A9054
-extern s_FsImageDesc g_HealthPortraitImg;          // 0x800A905C
-extern s_FsImageDesc g_InventoryKeyItemTextureImg; // 0x800A9064
-extern s_FsImageDesc g_FirstAidKitItemTextureImg;  // 0x800A906C
+extern s_FsImageDesc g_Font16AtlasImg;
+extern s_FsImageDesc g_KonamiLogoImg;
+extern s_FsImageDesc g_KcetLogoImg;
+extern s_FsImageDesc g_TitleImg;
+extern s_FsImageDesc g_PaperMapImg;
+extern s_FsImageDesc g_PaperMapMarkingAtlasImg;
+extern s_FsImageDesc g_ItemInspectionImg;
+extern s_FsImageDesc g_LoadingScreenImg;
+extern s_FsImageDesc g_ControllerButtonAtlasImg;
+extern s_FsImageDesc g_BrightnessScreenImg0;
+extern s_FsImageDesc g_BrightnessScreenImg1;
+extern s_FsImageDesc g_DeathTipImg;
+extern s_FsImageDesc g_HealthPortraitImg;
+extern s_FsImageDesc g_InventoryKeyItemTextureImg;
+extern s_FsImageDesc g_FirstAidKitItemTextureImg;
 
 /** Some intentory item texture (`ITEM/TIM07.TIM`). */
 extern s_FsImageDesc D_800A9074;
@@ -2196,9 +2196,9 @@ extern s32 g_MapMsg_CurrentIdx;
 
 extern s16 g_MapMsg_SelectFlashTimer;
 
-extern s8 g_FullscreenMapTimFileIdxs[24];
+extern s8 g_PaperMapFileIdxs[24];
 
-extern s8 g_MapMarkingTimFileIdxs[56];
+extern s8 g_PaperMapMarkingFileIdxs[56];
 
 extern s_FsImageDesc D_800A9A04;
 
@@ -3531,8 +3531,8 @@ void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool reset);
 
 void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2);
 
-/** 2D map state handler. Rough name could be `Map_Map2dBackgroundStateUpdate`. */
-void func_800867B4(s32 state, s32 map2dFileIdx);
+/** Paper map state handler. Rough name could be `Map_PaperMapBackgroundStateUpdate`. */
+void func_800867B4(s32 state, s32 paperMapFileIdx);
 
 void func_800868DC(s32 idx);
 
@@ -3820,11 +3820,11 @@ void func_80066E40(void);
 
 void func_80066E7C(void);
 
-s32 func_80067914(s32 map2dIdx, u16 arg1, u16 arg2, u16 arg3);
+s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3);
 
 bool func_80068CC0(s32 arg0);
 
-/** 2D map func. Seems to draw map marking sprites. */
+/** Paper map func. Seems to draw map marking sprites. */
 bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u16 arg6);
 
 void func_800692A4(u16 arg0, u16 arg1, u16 arg2);

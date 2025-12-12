@@ -43,7 +43,7 @@ typedef struct
     SVECTOR field_C;
     u8      unk_14;
     u8      field_15;
-    u8      field_16;
+    u8      field_16; // Packed angle?
 } s_func_800CD1F4;
 
 extern VECTOR3 D_800E32DC[4];

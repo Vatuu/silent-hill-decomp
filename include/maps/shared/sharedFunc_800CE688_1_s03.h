@@ -1,16 +1,21 @@
 #include "inline_no_dmpsx.h"
+
 #include <psyq/gtemac.h>
 
 bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
 {
+    // TODO: Is there a way to make `Rng_GenerateInt` fit instead?
+    #define Rng_SymmetricOffset(rand, range) \
+        ((s32)((rand) % (range)) - ((range) >> 1))
+
     // TODO: `s_func_80060044` is a close match to this struct (based on `func_80060044` `gte_ldv0/gte_stsxy/gte_stsz` usage)
     // but that func flipped `field_140/field_144`? (maybe coder mistaking fields for `gte_stsxy/gte_stsz`?)
     typedef struct
     {
         VECTOR3   field_0;
-        u8        unk_C[0x20];
+        u8        unk_C[32];
         s32       field_2C;
-        u8        unk_30[0xFC];
+        u8        unk_30[252];
         SPRT*     sprt_12C;
         DR_TPAGE* tpage_130;
         DR_STP*   stp_134;
@@ -21,7 +26,7 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
         union
         {
             u16 u16;
-            u8  u8[2]; // activeBufferIdx at [1]
+            u8  u8[2]; // `activeBufferIdx` at [1].
         } field_148;
     } s_ScratchData_func_800CE688;
 
@@ -36,6 +41,7 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
     {
         scratchData->field_148.u8[1] = g_ActiveBufferIdx;
         scratchData->sprt_12C        = (SPRT*)*poly;
+
         for (i = 0; i < 2; i++)
         {
             setCodeWord(scratchData->sprt_12C, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
@@ -73,8 +79,7 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
 
         if (i != 0)
         {
-// TODO: Is there a way to make Rng_GenerateInt fit instead?
-#define Rng_SymmetricOffset(rand, range) ((s32)((rand) % (range)) - ((range) >> 1))
+
             scratchData->field_138.vx += Rng_SymmetricOffset(Rng_Rand16(), (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2);
             scratchData->field_138.vy += Rng_SymmetricOffset(Rng_Rand16(), (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2);
             scratchData->field_138.vz += Rng_SymmetricOffset(Rng_Rand16(), (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2);
@@ -90,7 +95,9 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
         gte_stsxy(&scratchData->x_140);
         gte_stsz(&scratchData->z_144);
 
-        if (scratchData->z_144 <= 0 || (scratchData->z_144 >> 3) >= 0x800 || ABS(scratchData->x_140) >= 0xC9 || ABS(scratchData->y_142) >= 0xA1)
+        if (scratchData->z_144 <= 0 || (scratchData->z_144 >> 3) >= 0x800 ||
+            ABS(scratchData->x_140) > 200 ||
+            ABS(scratchData->y_142) > 160)
         {
             return false;
         }
@@ -109,10 +116,10 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
 
             setSemiTrans(*poly, true);
 
-            setUV0AndClutSum(*poly, 0x80, polyV, 0x300, 0x80);
-            setUV1AndClutSum(*poly, 0xFF, polyV, 0x2C0, 0);
-            setUV2Sum(*poly, 0x80, polyV + 0x3F);
-            setUV3Sum(*poly, 0xFF, polyV + 0x3F);
+            setUV0AndClutSum(*poly, 128, polyV, 768, 128);
+            setUV1AndClutSum(*poly, 255, polyV, 704, 0);
+            setUV2Sum(*poly, 128, polyV + 63);
+            setUV3Sum(*poly, 255, polyV + 63);
 
             addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[scratchData->z_144 >> 3], *poly);
             (*poly)++;

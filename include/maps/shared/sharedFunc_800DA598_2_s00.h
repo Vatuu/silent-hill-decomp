@@ -126,6 +126,7 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* chara)
                         {
                             sharedFunc_800DD13C_2_s00(chara, chara->field_40 + 1, Q12(0.6f));
                         }
+
                         chara->model_0.state_2               = 38;
                         chara->model_0.stateStep_3           = 0;
                         chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;

@@ -752,7 +752,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
             DrawSync(SyncMode_Wait);
             StoreImage(&IMG_BUFFER_RECT, IMAGE_BUFFER);
             DrawSync(SyncMode_Wait);
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B5, FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + D_800A99B5, FS_BUFFER_2, &g_PaperMapImg);
             Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks = 1;
@@ -765,7 +765,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
         case 3:
             g_BackgroundColor = 88;
 
-            Gfx_BackgroundSpriteDraw(&g_MapImg);
+            Gfx_BackgroundSpriteDraw(&g_PaperMapImg);
             MapMsg_DisplayAndHandleSelection(true, 59, 6, 4, 0, false);
             break;
 
@@ -787,7 +787,7 @@ void MapEvent_MapItemTake(void) // 0x800DC3C8
         case 7:
             g_BackgroundColor = 88;
 
-            Gfx_BackgroundSpriteDraw(&g_MapImg);
+            Gfx_BackgroundSpriteDraw(&g_PaperMapImg);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 

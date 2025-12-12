@@ -144,16 +144,16 @@ char* Math_IntegerToString(s32 widthMin, s32 val) // 0x80032154
 }
 
 #ifdef DEBUG
-void Gfx_DebugFixedPointPrint(s32 offsetX, s32 fracDigits, s32 valueQ12) // 0x8002BCAC in 98-12-16, not included in retail.
+void Gfx_DebugQ12Print(s32 offsetX, s32 fracDigits, q19_12 val) // 0x8002BCAC in 98-12-16, not included in retail.
 {
     s32 i;
 
     for (i = 0; i <= fracDigits; i++)
     {
-        valueQ12 = valueQ12 * 10;
+        val *= 10;
     }
 
-    func_800321EC(offsetX - fracDigits - (fracDigits > 0), fracDigits, valueQ12 / 4096, 1);
+    func_800321EC((offsetX - fracDigits) - ((fracDigits > 0) ? 1 : 0), fracDigits, val / Q12(1.0f), 1);
 }
 #endif
 

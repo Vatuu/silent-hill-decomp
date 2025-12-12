@@ -349,7 +349,7 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     var = g_SavegamePtr->field_B0;
 
     g_SavegamePtr->gameDifficulty_260 = difficulty;
-    g_SavegamePtr->current2dMapIdx_A9 = Current2dMap_OldTown;
+    g_SavegamePtr->paperMapIdx_A9     = PaperMapIdx_OldTown;
 
     for (i = 0; i < 45; i++)
     {
@@ -759,7 +759,7 @@ void func_80035B98(void) // 0x80035B98
 
 void Gfx_LoadingScreen_BackgroundTexture(void) // 0x80035BBC
 {
-    Gfx_BackgroundSpriteDraw(&D_800A9034);
+    Gfx_BackgroundSpriteDraw(&g_LoadingScreenImg);
 }
 
 void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
@@ -1747,11 +1747,11 @@ void Chara_PositionUpdateFromParams(s_MapPoint2d* mapPoint) // 0x800371E8
 
     if (mapPoint->data.areaLoad.mapIdx_4_0 == 24)
     {
-        g_SavegamePtr->current2dMapIdx_A9 = Current2dMap_OtherPlaces;
+        g_SavegamePtr->paperMapIdx_A9 = PaperMapIdx_OtherPlaces;
     }
-    else if (mapPoint->data.areaLoad.mapIdx_4_0 != Current2dMap_OtherPlaces)
+    else if (mapPoint->data.areaLoad.mapIdx_4_0 != PaperMapIdx_OtherPlaces)
     {
-        g_SavegamePtr->current2dMapIdx_A9 = mapPoint->data.areaLoad.mapIdx_4_0;
+        g_SavegamePtr->paperMapIdx_A9 = mapPoint->data.areaLoad.mapIdx_4_0;
     }
 
     g_SysWork.cameraAngleY_237A = rotY;
@@ -3022,7 +3022,7 @@ void GameState_LoadStatusScreen_Update(void) // 0x800395C0
 
 void SysState_MapScreen_Update(void) // 0x800396D4
 {
-    if (!HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
+    if (!HAS_MAP(g_SavegamePtr->paperMapIdx_A9))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
             Gfx_MapMsg_Draw(MapMsgIdx_NoMap) > MapMsgState_Idle)
@@ -3044,12 +3044,12 @@ void SysState_MapScreen_Update(void) // 0x800396D4
     {
         if (g_SysWork.sysStateStep_C[0] == 0)
         {
-            if (g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
+            if (g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9] != NO_VALUE)
             {
-                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
             }
 
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9]);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[g_SavegamePtr->paperMapIdx_A9]);
 
             ScreenFade_Start(true, false, false);
             g_ScreenFadeTimestep = Q12(0.0f);
@@ -3073,12 +3073,12 @@ void GameState_LoadMapScreen_Update(void) // 0x8003991C
         func_8003943C();
         func_80066E40();
 
-        if (g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
+        if (g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9] != NO_VALUE)
         {
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
         }
 
-        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_2, &g_MapImg);
+        Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[g_SavegamePtr->paperMapIdx_A9], FS_BUFFER_2, &g_PaperMapImg);
         g_GameWork.gameStateStep_598[0]++;
     }
 

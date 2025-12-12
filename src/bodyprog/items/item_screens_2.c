@@ -768,15 +768,15 @@ void Inventory_Logic(void) // 0x8004D518
                 if ((!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) || g_SysWork.field_2388.isFlashlightOn_15 ||
                      (!(g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & (1 << 0)) &&
                       !(g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0)))) &&
-                    HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
+                    HAS_MAP(g_SavegamePtr->paperMapIdx_A9))
                 {
                     Sd_PlaySfx(Sfx_MenuConfirm, 64, 64);
 
-                    if (g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9] != NO_VALUE)
+                    if (g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9] != NO_VALUE)
                     {
-                        Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+                        Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
                     }
-                    Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[g_SavegamePtr->current2dMapIdx_A9]);
+                    Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[g_SavegamePtr->paperMapIdx_A9]);
 
                     ScreenFade_Start(true, false, false);
                     g_GameWork.gameStateStep_598[1] = 19;
@@ -800,7 +800,7 @@ void Inventory_Logic(void) // 0x8004D518
                 g_GameWork.gameStateStep_598[2] = step;
             }
 
-            if (!HAS_MAP(g_SavegamePtr->current2dMapIdx_A9))
+            if (!HAS_MAP(g_SavegamePtr->paperMapIdx_A9))
             {
                 Gfx_Inventory_UnavailableMapText(1);
             }

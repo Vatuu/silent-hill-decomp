@@ -465,7 +465,7 @@ void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2) // 0x8008677C
     g_MapOverlayHeader.func_13C(chara, arg1, &D_800C46A0, D_800C4702, arg2);
 }
 
-void func_800867B4(s32 state, s32 map2dFileIdx) // 0x800867B4
+void func_800867B4(s32 state, s32 paperMapFileIdx) // 0x800867B4
 {
     switch (state)
     {
@@ -474,8 +474,8 @@ void func_800867B4(s32 state, s32 map2dFileIdx) // 0x800867B4
             StoreImage(&D_8002AB10, IMAGE_BUFFER_2);
             DrawSync(SyncMode_Wait);
 
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[map2dFileIdx], FS_BUFFER_2, &g_MapImg);
-            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_MapMarkingTimFileIdxs[map2dFileIdx], FS_BUFFER_1, &g_MapMarkerAtlasImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[paperMapFileIdx], FS_BUFFER_2, &g_PaperMapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[paperMapFileIdx], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
 
             Screen_Init(SCREEN_WIDTH, true);
             GsSwapDispBuff();
@@ -483,7 +483,7 @@ void func_800867B4(s32 state, s32 map2dFileIdx) // 0x800867B4
             break;
 
         case 1:
-            Gfx_BackgroundSpriteDraw(&g_MapImg);
+            Gfx_BackgroundSpriteDraw(&g_PaperMapImg);
             break;
 
         case 2:
@@ -1062,7 +1062,7 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
     {
         case 0:
             g_MapOverlayHeader.freezePlayerControl_C8();
-            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx]);
+            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[mapFlagIdx]);
             SysWork_StateStepIncrement(1);
 
         case 1:
@@ -1073,7 +1073,7 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
             DrawSync(SyncMode_Wait);
             StoreImage(&RECT, IMAGE_BUFFER);
             DrawSync(SyncMode_Wait);
-            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_FullscreenMapTimFileIdxs[mapFlagIdx], FS_BUFFER_2, &g_MapImg);
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[mapFlagIdx], FS_BUFFER_2, &g_PaperMapImg);
             Screen_Init(SCREEN_WIDTH, true);
 
             g_IntervalVBlanks = 1;
@@ -1087,7 +1087,7 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
         case 3:
             g_BackgroundColor = 88;
 
-            Gfx_BackgroundSpriteDraw(&g_MapImg);
+            Gfx_BackgroundSpriteDraw(&g_PaperMapImg);
             MapMsg_DisplayAndHandleSelection(true, mapMsgIdx, 4, 5, 0, true); // 4 is "No", 5 is "Yes".
             break;
 
@@ -1128,7 +1128,7 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
         case 5:
             g_BackgroundColor = 88;
 
-            Gfx_BackgroundSpriteDraw(&g_MapImg);
+            Gfx_BackgroundSpriteDraw(&g_PaperMapImg);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), true);
             break;
 

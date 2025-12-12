@@ -792,8 +792,8 @@ void Map_WorldObjectsInit(void) // 0x800EBCE8
 {
     if (!Savegame_EventFlagGet(EventFlag_402))
     {
-        D_800A9034.v = 0;
-        Fs_QueueStartReadTim(FILE_TIM_GROUND_TIM, IMAGE_BUFFER_4, &D_800A9034);
+        g_LoadingScreenImg.v = 0;
+        Fs_QueueStartReadTim(FILE_TIM_GROUND_TIM, IMAGE_BUFFER_4, &g_LoadingScreenImg);
     }
 
     WorldObjectNoRotInit(&g_WorldObject_Window, "WINDOW_H", -155.0f, 3.0f, 20.0f);

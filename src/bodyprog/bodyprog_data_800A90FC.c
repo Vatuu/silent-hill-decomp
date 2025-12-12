@@ -589,12 +589,16 @@ u8 g_Sd_BgmLayerLimits[8] = { 128, 128, 128, 128, 128, 128, 128, 128 };
 s32 g_MapMsg_CurrentIdx = 0;
 s16 g_MapMsg_SelectFlashTimer = 0;
 //s16 __padding = 0;
-s8 g_FullscreenMapTimFileIdxs[24] = {
+
+/** @brief Relative paper map TIM file indices. */
+s8 g_PaperMapFileIdxs[24] = {
     0, 0, 1, 1, 9, 12, 10, 11,
     13, 12, 10, 11, 13, 2, 3, 4,
     8, 5, 6, 7, 8, 5, 6, 7
 };
-s8 g_MapMarkingTimFileIdxs[56] = {
+
+/** @brief Relative paper map marking TIM file indices. */
+s8 g_PaperMapMarkingFileIdxs[56] = {
     255, 0, 1, 1, 1, 4, 4, 4,
     4, 4, 4, 4, 4, 2, 2, 2,
     3, 3, 3, 3, 3, 3, 3, 3,

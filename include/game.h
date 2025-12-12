@@ -394,35 +394,36 @@ typedef enum _SaveLocationId
     SaveLocationId_NextFear    = 24
 } e_SaveLocationId;
 
-typedef enum _Current2dMapIdx
+/** @brief Paper map indices. Used for the map screen. */
+typedef enum _PaperMapIdx
 {
-    Current2dMap_OtherPlaces    = 0,
-    Current2dMap_OldTown        = 1,
-    Current2dMap_FogCentralTown = 2,
-    Current2dMap_AltCentralTown = 3,
-    Current2dMap_ResortTown     = 4,
-    Current2dMap_FogSchoolBF    = 5,
-    Current2dMap_FogSchool1F    = 6,
-    Current2dMap_FogSchool2F    = 7,
-    Current2dMap_FogSchoolRF    = 8,
-    Current2dMap_AltSchoolBF    = 9,
-    Current2dMap_AltSchool1F    = 10,
-    Current2dMap_AltSchool2F    = 11,
-    Current2dMap_AltSchoolRF    = 12,
-    Current2dMap_FogSewer1F     = 13,
-    Current2dMap_FogSewer2F     = 14,
-    Current2dMap_AltSewer       = 15,
-    Current2dMap_FogHospitalBF  = 16,
-    Current2dMap_FogHospital1F  = 17,
-    Current2dMap_FogHospital2F  = 18,
-    Current2dMap_FogHospital3F  = 19,
-    Current2dMap_AltHospitalBF  = 20,
-    Current2dMap_AltHospital1F  = 21,
-    Current2dMap_AltHospital2F  = 22,
-    Current2dMap_AltHospital3F  = 23
-} e_Current2dMapIdx;
+    PaperMapIdx_OtherPlaces    = 0,
+    PaperMapIdx_OldTown        = 1,
+    PaperMapIdx_FogCentralTown = 2,
+    PaperMapIdx_AltCentralTown = 3,
+    PaperMapIdx_ResortTown     = 4,
+    PaperMapIdx_FogSchoolBF    = 5,
+    PaperMapIdx_FogSchool1F    = 6,
+    PaperMapIdx_FogSchool2F    = 7,
+    PaperMapIdx_FogSchoolRF    = 8,
+    PaperMapIdx_AltSchoolBF    = 9,
+    PaperMapIdx_AltSchool1F    = 10,
+    PaperMapIdx_AltSchool2F    = 11,
+    PaperMapIdx_AltSchoolRF    = 12,
+    PaperMapIdx_FogSewer1F     = 13,
+    PaperMapIdx_FogSewer2F     = 14,
+    PaperMapIdx_AltSewer       = 15,
+    PaperMapIdx_FogHospitalBF  = 16,
+    PaperMapIdx_FogHospital1F  = 17,
+    PaperMapIdx_FogHospital2F  = 18,
+    PaperMapIdx_FogHospital3F  = 19,
+    PaperMapIdx_AltHospitalBF  = 20,
+    PaperMapIdx_AltHospital1F  = 21,
+    PaperMapIdx_AltHospital2F  = 22,
+    PaperMapIdx_AltHospital3F  = 23
+} e_PaperMapIdx;
 
-// Temp name.
+// Temp name. Related to music.
 typedef enum _SysFlags
 {
     SysFlag_None   = 0,
@@ -447,10 +448,10 @@ typedef enum _SysFlags2
     SysFlag2_4        = 1 << 4,
     SysFlag2_5        = 1 << 5,
     SysFlag2_6        = 1 << 6,
-    SysFlag2_MenuOpen = 1 << 7, /** Set by `SysState_Gameplay_Update` when opening menu, cleared when game returns to `SysState_Gameplay` and screen fade has completed. */
+    SysFlag2_MenuOpen = 1 << 7, /** Set by `SysState_Gameplay_Update` when opening the menu and cleared when returning to `SysState_Gameplay` once screen fade has completed. */
     SysFlag2_8        = 1 << 8,
     SysFlag2_9        = 1 << 9,
-    SysFlag2_10       = 1 << 10,
+    SysFlag2_10       = 1 << 10
 } e_SysFlags2;
 
 typedef enum _SysWorkProcessFlags
@@ -1018,7 +1019,7 @@ typedef struct _Savegame
     s8              mapRoomIdx_A5;            /** Index to local map geometry `.IPD` files. */
     s16             savegameCount_A6;
     s8              locationId_A8;            /** `e_SaveLocationId` */
-    u8              current2dMapIdx_A9;       /** `e_Current2dMapIdx` | Index to the 2D map shown when opening the map screen. */
+    u8              paperMapIdx_A9;           /** `e_PaperMapIdx` | Index of the paper map displayed when opening the map screen. */
     u8              equippedWeapon_AA;        /** `e_InventoryItemId` | Affects the visible player weapon model. */
     u8              inventorySlotCount_AB;    /** Item slots. */
     u32             itemToggleFlags_AC;       /** `e_ItemToggleFlags` */

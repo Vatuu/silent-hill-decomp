@@ -372,8 +372,8 @@ void func_800D5DD8(void) // 0x800D5DD8
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(43.2f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = Q12(0.4553f);
 
-            D_800D778E = g_SavegamePtr->current2dMapIdx_A9;
-            g_SavegamePtr->current2dMapIdx_A9 = 1;
+            D_800D778E = g_SavegamePtr->paperMapIdx_A9;
+            g_SavegamePtr->paperMapIdx_A9 = 1;
             D_800D7790 = 0;
 
             Camera_PositionSet(NULL, Q12(106.5799f), Q12(-3.6199f), Q12(45.23f), 0, 0, 0, 0, true);
@@ -474,7 +474,7 @@ void func_800D5DD8(void) // 0x800D5DD8
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
-            g_SavegamePtr->current2dMapIdx_A9 = D_800D778E;
+            g_SavegamePtr->paperMapIdx_A9 = D_800D778E;
 
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);

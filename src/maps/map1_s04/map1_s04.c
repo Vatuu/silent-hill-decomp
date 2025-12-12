@@ -170,8 +170,8 @@ void func_800CCA2C(void) // 0x800CCA2C
             if (D_800CD774 != 2)
             {
                 Gfx_DebugStringDraw("TIME:");
-                // 98-12-16 calls into a `8002BCAC` func which is missing in retail, that func then calls `func_800321EC`
-                Gfx_DebugFixedPointPrint(6, 2, D_800CD770);
+                // 98-12-16 calls into a `8002BCAC` func which is missing in retail. That func then calls `func_800321EC`.
+                Gfx_DebugQ12Print(6, 2, D_800CD770);
                 Gfx_DebugStringDraw("\n");
             }
 #endif

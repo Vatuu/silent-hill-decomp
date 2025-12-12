@@ -25,6 +25,7 @@
 // ENUMS
 // ======
 
+/** @brief Audio types. */
 typedef enum _AudioType
 {
     AudioType_MusicKey  = 0,
@@ -147,10 +148,10 @@ typedef struct
     s16 volumeRight_E;
 } s_800C1698;
 
-// Used to store KDT and VAB data access.
+/** @brief Stores KDT and VAB data access. */
 typedef struct
 {
-    s8  typeIdx_0;    /**Index of `g_Sd_VabBuffers` which stores offsets where the VAB files are saved in memory. See `e_VabAudioType`. */
+    s8  typeIdx_0;    /** `g_Sd_VabBuffers` index which stores offsets where VAB files are saved in memory. See `e_VabAudioType`. */
     s8  unk_1;
     u16 field_2;
     u32 fileSize_4;   /** VAB file size. */
@@ -238,7 +239,7 @@ extern s_800C1698 D_800C1698;
  */
 extern u8 g_Sd_CmdPool[32];
 
-/** @brief Indicates the type of the audio file being loaded. See `e_AudioType`. */
+/** @brief The type of audio file being loaded. See `e_AudioType`. */
 extern u8 g_Sd_AudioType;
 
 extern u32 D_800C37CC;

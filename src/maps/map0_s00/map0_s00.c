@@ -96,7 +96,7 @@ INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CC8FC);
 
 void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2) // 0x800CD1F4
 {
-    VECTOR3 sp10;
+    VECTOR3 pos; // Q23.8
     s16     temp_s0;
     s32     temp_s0_3;
     s16     temp_s1;
@@ -203,20 +203,20 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2) // 0x800CD1F4
         case 5:
             if (arg0 < Rng_GenerateInt(Rng_Rand16(), 10, 19) || g_SysWork.field_2358 == 0)
             {
-                sp10.vx = (D_800E32DC->vx - arg2->field_0.vx) >> 4;
-                sp10.vy = (D_800E32DC->vy - arg2->field_0.vy) >> 4;
-                sp10.vz = (D_800E32DC->vz - arg2->field_0.vz) >> 4;
+                pos.vx = Q12_TO_Q8(D_800E32DC->vx - arg2->field_0.vx);
+                pos.vy = Q12_TO_Q8(D_800E32DC->vy - arg2->field_0.vy);
+                pos.vz = Q12_TO_Q8(D_800E32DC->vz - arg2->field_0.vz);
             }
             else
             {
-                sp10.vx = g_SysWork.playerBoneCoords_890[10].workm.t[0] - (arg2->field_0.vx >> 4);
-                sp10.vy = g_SysWork.playerBoneCoords_890[10].workm.t[1] - (arg2->field_0.vy >> 4);
-                sp10.vz = g_SysWork.playerBoneCoords_890[10].workm.t[2] - (arg2->field_0.vz >> 4);
+                pos.vx = g_SysWork.playerBoneCoords_890[HarryBone_RightHand].workm.t[0] - Q12_TO_Q8(arg2->field_0.vx);
+                pos.vy = g_SysWork.playerBoneCoords_890[HarryBone_RightHand].workm.t[1] - Q12_TO_Q8(arg2->field_0.vy);
+                pos.vz = g_SysWork.playerBoneCoords_890[HarryBone_RightHand].workm.t[2] - Q12_TO_Q8(arg2->field_0.vz);
             }
 
-            temp_s0_3 = SquareRoot0(SQUARE(sp10.vx) + SQUARE(sp10.vz));
-            temp_s0   = ratan2(sp10.vx, sp10.vz);
-            temp_s1   = ratan2(sp10.vy, temp_s0_3);
+            temp_s0_3 = SquareRoot0(SQUARE(pos.vx) + SQUARE(pos.vz));
+            temp_s0   = ratan2(pos.vx, pos.vz);
+            temp_s1   = ratan2(pos.vy, temp_s0_3);
 
             arg2->field_C.vx += FP_MULTIPLY(Math_Sin(temp_s0), 0x50, Q12_SHIFT);
             arg2->field_C.vz += FP_MULTIPLY(Math_Cos(temp_s0), 0x50, Q12_SHIFT);
@@ -224,7 +224,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2) // 0x800CD1F4
 
             var_s0 = arg2->field_16;
 
-            if (Rng_TestProbabilityBits(6) + 0x50 < var_s0 || (arg1 != 0 && arg2->field_16 >= 0x51))
+            if ((Rng_TestProbabilityBits(6) + 0x50) < var_s0 || (arg1 != 0 && arg2->field_16 > 80))
             {
                 arg2->field_16 = 0;
                 arg2->field_15 = Rng_GenerateInt(Rng_Rand16(), 1, 3);

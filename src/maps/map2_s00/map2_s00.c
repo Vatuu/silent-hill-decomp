@@ -1032,7 +1032,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             Player_ControlFreeze();
             g_SysWork.field_30 = 20;
             D_800F228C = 0;
-            g_Gfx_Map2dMarkingFade = 0;
+            g_Gfx_PaperMapMarkingAlpha = 0;
 
             Savegame_MapMarkingSet(MapMarkFlag_OldTown_CofeArrowOnly);
             Savegame_MapMarkingSet(MapMarkFlag_OldTown_CofeSignOnly);
@@ -1114,11 +1114,11 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
         case 10:
             func_800692A4(0x48, 0x10, Q12(0.5f));
             func_80068E0C(1, 1, 0, 0, 72, 0x10, Q12(0.5f));
-            func_80068E0C(2, 1, 0x36A, g_Gfx_Map2dMarkingFade, 0x48, 0x10, Q12(0.5f));
+            func_80068E0C(2, 1, 0x36A, g_Gfx_PaperMapMarkingAlpha, 0x48, 0x10, Q12(0.5f));
 
             // Fade in map marking to half opacity.
-            g_Gfx_Map2dMarkingFade++;
-            if (g_Gfx_Map2dMarkingFade >= 128)
+            g_Gfx_PaperMapMarkingAlpha++;
+            if (g_Gfx_PaperMapMarkingAlpha >= 128)
             {
                 if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
                                                      g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
@@ -1134,7 +1134,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
                 }
 
                 // Clamp map marking fade.
-                g_Gfx_Map2dMarkingFade = 128;
+                g_Gfx_PaperMapMarkingAlpha = 128;
             }
             break;
 

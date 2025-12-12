@@ -28,8 +28,8 @@ extern q3_12 D_800F228C;
 
 extern u8 D_800F228E;
 
-/** 2D map marking color shade. Used to fade in the sprite to half opacity. */
-extern s32 g_Gfx_Map2dMarkingFade;
+/** Paper map marking fade alpha. Used to fade in the marking sprite to half opacity. */
+extern s32 g_Gfx_PaperMapMarkingAlpha;
 
 extern u16 g_MapMsgSounds[2];
 
@@ -39,7 +39,7 @@ extern u8 D_800F2295;
 
 extern s32 D_800F2298;
 
-/** 2D map zoom counter or timer. */
+/** Paper map zoom counter or timer. */
 extern s32 D_800F229C;
 
 extern s32 D_800F1A24;
