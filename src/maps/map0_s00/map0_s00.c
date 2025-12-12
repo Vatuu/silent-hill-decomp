@@ -94,7 +94,7 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
 
 INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CC8FC);
 
-void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2) // 0x800CD1F4
+void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
 {
     VECTOR3 pos; // Q23.8
     q3_12   angle0;
@@ -239,7 +239,248 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_func_800CD1F4* arg2) // 0x800CD1F4
 
 INCLUDE_RODATA("asm/maps/map0_s00/nonmatchings/map0_s00", D_800CA7CC);
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CD8E8);
+void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
+{
+    SVECTOR   posQ8;
+    s32       depth;
+    u8        temp_v0;
+    POLY_FT4* poly;
+
+    func_800CD1F4(arg0, arg1, arg2);
+
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
+
+    // Set as `POLY_FT4` with `tpage = 44`.
+    setPolyFT4TPage(poly, 44);
+
+    poly->clut = 12;
+
+    if (sharedData_800DD584_0_s00 != 0)
+    {
+        switch (arg0 & 3)
+        {
+            case 0:
+                setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                break;
+
+            case 1:
+                setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                break;
+
+            case 2:
+                setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                break;
+
+            case 3:
+                setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                break;
+        }
+    }
+    else
+    {
+        switch (g_SysWork.timer_1C & 7)
+        {
+            case 0:
+            case 1:
+                switch (arg0 & 3)
+                {
+                    case 0:
+                        setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                        break;
+
+                    case 1:
+                        setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                        break;
+
+                    case 2:
+                        setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                        break;
+
+                    case 3:
+                        setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                        break;
+                }
+                break;
+
+            case 2:
+            case 3:
+                switch (arg0 & 3)
+                {
+                    case 0:
+                        setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                        break;
+
+                    case 1:
+                        setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                        break;
+
+                    case 2:
+                        setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                        break;
+
+                    case 3:
+                        setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                        break;
+                }
+                break;
+
+            case 4:
+            case 5:
+                switch (arg0 & 3)
+                {
+                    case 0:
+                        setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                        break;
+
+                    case 1:
+                        setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                        break;
+
+                    case 2:
+                        setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                        break;
+
+                    case 3:
+                        setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                        break;
+                }
+                break;
+
+            case 6:
+            case 7:
+                switch (arg0 & 3)
+                {
+                    case 0:
+                        setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                        break;
+
+                    case 1:
+                        setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                        break;
+
+                    case 2:
+                        setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                        break;
+
+                    case 3:
+                        setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                        break;
+                }
+                break;
+        }
+    }
+
+    if (Game_FlashlightIsOn())
+    {
+        temp_v0 = func_80055D78(
+            g_SysWork.player_4C.chara_0.position_18.vx + arg2->field_0.vx,
+            g_SysWork.player_4C.chara_0.position_18.vy + arg2->field_0.vy,
+            g_SysWork.player_4C.chara_0.position_18.vz + arg2->field_0.vz);
+
+        temp_v0 = temp_v0 != 0 ? (temp_v0 >= 0 && temp_v0 <= 176 ? temp_v0 : 176) : 1;
+
+        switch (D_800C39A0)
+        {
+            case 1:
+            case 4:
+            case 10:
+                poly->r0 = temp_v0 + sharedData_800E3258_0_s00.r;
+                poly->g0 = temp_v0 + sharedData_800E3258_0_s00.g;
+                poly->b0 = temp_v0 + sharedData_800E3258_0_s00.b;
+                break;
+
+            default:
+                temp_v0 = func_80055D78(
+                    g_SysWork.player_4C.chara_0.position_18.vx + arg2->field_0.vx,
+                    g_SysWork.player_4C.chara_0.position_18.vy + arg2->field_0.vy,
+                    g_SysWork.player_4C.chara_0.position_18.vz + arg2->field_0.vz);
+                temp_v0   = temp_v0 != 0 ? (temp_v0 >= 0 && temp_v0 <= 176 ? temp_v0 : 176) : 1;
+                temp_v0 >>= 3;
+                poly->r0  = sharedData_800E3258_0_s00.r + temp_v0;
+                poly->g0  = sharedData_800E3258_0_s00.g + temp_v0;
+                poly->b0  = sharedData_800E3258_0_s00.b + temp_v0;
+                break;
+
+            case 7:
+            case 9:
+            case 11:
+                poly->r0 = sharedData_800E3258_0_s00.r;
+                poly->g0 = sharedData_800E3258_0_s00.g;
+                poly->b0 = sharedData_800E3258_0_s00.b;
+                break;
+        }
+    }
+    else
+    {
+        switch (D_800C39A0)
+        {
+            case 1:
+            case 4:
+            case 10:
+                temp_v0 = func_80055D78(
+                    g_SysWork.player_4C.chara_0.position_18.vx + arg2->field_0.vx,
+                    g_SysWork.player_4C.chara_0.position_18.vy + arg2->field_0.vy,
+                    g_SysWork.player_4C.chara_0.position_18.vz + arg2->field_0.vz);
+                temp_v0 = temp_v0 != 0 ? (temp_v0 >= 0 && temp_v0 <= 176 ? temp_v0 : 176) : 1;
+
+                poly->r0 = temp_v0 + sharedData_800E3258_0_s00.r;
+                poly->g0 = temp_v0 + sharedData_800E3258_0_s00.g;
+                poly->b0 = temp_v0 + sharedData_800E3258_0_s00.b;
+                break;
+            default:
+                poly->r0 = sharedData_800E3258_0_s00.r;
+                poly->g0 = sharedData_800E3258_0_s00.g;
+                poly->b0 = sharedData_800E3258_0_s00.b;
+                break;
+        }
+    }
+
+    posQ8.vx = Q12_TO_Q8(arg2->field_0.vx);
+    posQ8.vy = Q12_TO_Q8(arg2->field_0.vy);
+    posQ8.vz = Q12_TO_Q8(arg2->field_0.vz);
+
+    gte_ldv0(&posQ8);
+    gte_rtps();
+    gte_stsxy(&poly->x0);
+    gte_stszotz(&depth);
+
+    depth = depth >> 1;
+
+    if (depth >= 1 && depth < (ORDERING_TABLE_SIZE / 2) - 1)
+    {
+        u8 temp_a1;
+
+        if ((depth >> 3) >= 13)
+        {
+            temp_a1 = 3;
+        }
+        else
+        {
+            temp_a1 = 16 - (depth >> 3);
+        }
+
+        if (temp_a1 < 0 || temp_a1 >= 3)
+        {
+            if (temp_a1 > 16)
+            {
+                temp_a1 = 16;
+            }
+        }
+        else
+        {
+            temp_a1 = 3;
+        }
+
+        poly->x1 = poly->x0;
+        poly->x2 = poly->x3 = poly->x0 + temp_a1;
+        poly->y2            = poly->y0;
+        poly->y1 = poly->y3 = poly->y0 + temp_a1;
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[depth], poly);
+
+        GsOUT_PACKET_P = poly + 1;
+    }
+}
 
 void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
 {
@@ -262,47 +503,19 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
         switch (arg0 & 3)
         {
             case 0:
-                poly->u0 = 64;
-                poly->v0 = 240;
-                poly->u1 = 64;
-                poly->v1 = 255;
-                poly->u2 = 80;
-                poly->v2 = 240;
-                poly->u3 = 80;
-                poly->v3 = 255;
+                setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
                 break;
 
             case 1:
-                poly->u0 = 80;
-                poly->v0 = 240;
-                poly->u1 = 80;
-                poly->v1 = 255;
-                poly->u2 = 96;
-                poly->v2 = 240;
-                poly->u3 = 96;
-                poly->v3 = 255;
+                setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
                 break;
 
             case 2:
-                poly->u0 = 96;
-                poly->v0 = 240;
-                poly->u1 = 96;
-                poly->v1 = 255;
-                poly->u2 = 112;
-                poly->v2 = 240;
-                poly->u3 = 112;
-                poly->v3 = 255;
+                setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
                 break;
 
             case 3:
-                poly->u0 = 112;
-                poly->v0 = 240;
-                poly->u1 = 112;
-                poly->v1 = 255;
-                poly->u2 = 128;
-                poly->v2 = 240;
-                poly->u3 = 128;
-                poly->v3 = 255;
+                setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
                 break;
         }
     }
@@ -315,47 +528,19 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
                 switch (arg0 & 3)
                 {
                     case 0:
-                        poly->u0 = 64;
-                        poly->v0 = 240;
-                        poly->u1 = 64;
-                        poly->v1 = 255;
-                        poly->u2 = 80;
-                        poly->v2 = 240;
-                        poly->u3 = 80;
-                        poly->v3 = 255;
+                        setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
                         break;
 
                     case 1:
-                        poly->u0 = 80;
-                        poly->v0 = 240;
-                        poly->u1 = 80;
-                        poly->v1 = 255;
-                        poly->u2 = 96;
-                        poly->v2 = 240;
-                        poly->u3 = 96;
-                        poly->v3 = 255;
+                        setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
                         break;
 
                     case 2:
-                        poly->u0 = 96;
-                        poly->v0 = 240;
-                        poly->u1 = 96;
-                        poly->v1 = 255;
-                        poly->u2 = 112;
-                        poly->v2 = 240;
-                        poly->u3 = 112;
-                        poly->v3 = 255;
+                        setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
                         break;
 
                     case 3:
-                        poly->u0 = 112;
-                        poly->v0 = 240;
-                        poly->u1 = 112;
-                        poly->v1 = 255;
-                        poly->u2 = 128;
-                        poly->v2 = 240;
-                        poly->u3 = 128;
-                        poly->v3 = 255;
+                        setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
                         break;
                 }
                 break;
@@ -365,47 +550,19 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
                 switch (arg0 & 3)
                 {
                     case 0:
-                        poly->u0 = 80;
-                        poly->v0 = 240;
-                        poly->u1 = 80;
-                        poly->v1 = 255;
-                        poly->u2 = 96;
-                        poly->v2 = 240;
-                        poly->u3 = 96;
-                        poly->v3 = 255;
+                        setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
                         break;
 
                     case 1:
-                        poly->u0 = 96;
-                        poly->v0 = 240;
-                        poly->u1 = 96;
-                        poly->v1 = 255;
-                        poly->u2 = 112;
-                        poly->v2 = 240;
-                        poly->u3 = 112;
-                        poly->v3 = 255;
+                        setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
                         break;
 
                     case 2:
-                        poly->u0 = 112;
-                        poly->v0 = 240;
-                        poly->u1 = 112;
-                        poly->v1 = 255;
-                        poly->u2 = 128;
-                        poly->v2 = 240;
-                        poly->u3 = 128;
-                        poly->v3 = 255;
+                        setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
                         break;
 
                     case 3:
-                        poly->u0 = 64;
-                        poly->v0 = 240;
-                        poly->u1 = 64;
-                        poly->v1 = 255;
-                        poly->u2 = 80;
-                        poly->v2 = 240;
-                        poly->u3 = 80;
-                        poly->v3 = 255;
+                        setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
                         break;
                 }
                 break;
@@ -415,47 +572,19 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
                 switch (arg0 & 3)
                 {
                     case 0:
-                        poly->u0 = 96;
-                        poly->v0 = 240;
-                        poly->u1 = 96;
-                        poly->v1 = 255;
-                        poly->u2 = 112;
-                        poly->v2 = 240;
-                        poly->u3 = 112;
-                        poly->v3 = 255;
+                        setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
                         break;
 
                     case 1:
-                        poly->u0 = 112;
-                        poly->v0 = 240;
-                        poly->u1 = 112;
-                        poly->v1 = 255;
-                        poly->u2 = 128;
-                        poly->v2 = 240;
-                        poly->u3 = 128;
-                        poly->v3 = 255;
+                        setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
                         break;
 
                     case 2:
-                        poly->u0 = 64;
-                        poly->v0 = 240;
-                        poly->u1 = 64;
-                        poly->v1 = 255;
-                        poly->u2 = 80;
-                        poly->v2 = 240;
-                        poly->u3 = 80;
-                        poly->v3 = 255;
+                        setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
                         break;
 
                     case 3:
-                        poly->u0 = 80;
-                        poly->v0 = 240;
-                        poly->u1 = 80;
-                        poly->v1 = 255;
-                        poly->u2 = 96;
-                        poly->v2 = 240;
-                        poly->u3 = 96;
-                        poly->v3 = 255;
+                        setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
                         break;
                 }
                 break;
@@ -465,47 +594,19 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
                 switch (arg0 & 3)
                 {
                     case 0:
-                        poly->u0 = 112;
-                        poly->v0 = 240;
-                        poly->u1 = 112;
-                        poly->v1 = 255;
-                        poly->u2 = 128;
-                        poly->v2 = 240;
-                        poly->u3 = 128;
-                        poly->v3 = 255;
+                        setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
                         break;
 
                     case 1:
-                        poly->u0 = 64;
-                        poly->v0 = 240;
-                        poly->u1 = 64;
-                        poly->v1 = 255;
-                        poly->u2 = 80;
-                        poly->v2 = 240;
-                        poly->u3 = 80;
-                        poly->v3 = 255;
+                        setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
                         break;
 
                     case 2:
-                        poly->u0 = 80;
-                        poly->v0 = 240;
-                        poly->u1 = 80;
-                        poly->v1 = 255;
-                        poly->u2 = 96;
-                        poly->v2 = 240;
-                        poly->u3 = 96;
-                        poly->v3 = 255;
+                        setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
                         break;
 
                     case 3:
-                        poly->u0 = 96;
-                        poly->v0 = 240;
-                        poly->u1 = 96;
-                        poly->v1 = 255;
-                        poly->u2 = 112;
-                        poly->v2 = 240;
-                        poly->u3 = 112;
-                        poly->v3 = 255;
+                        setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
                         break;
                 }
         }
@@ -525,7 +626,7 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
     depthDiv16 = depth >> 4;
     depth      = depth >> 1;
 
-    if (depth >= 33 && depth < 1023)
+    if (depth > 32 && depth < (ORDERING_TABLE_SIZE / 2) - 1)
     {
         u8 var_a1;
 
@@ -555,8 +656,9 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
         poly->y2            = poly->y0;
         poly->y1 = poly->y3 = poly->y0 + var_a1;
 
-        GsOUT_PACKET_P = (PACKET*)&poly[1];
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[depth], poly);
+
+        GsOUT_PACKET_P = (PACKET*)&poly[1];
     }
 }
 
@@ -828,8 +930,8 @@ void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
 
                     curUnk->field_15 = 1;
                     curUnk->field_14 = 1;
-                    curUnk->field_C  = 0;
-                    curUnk->field_10 = 0;
+                    curUnk->field_C.vx = 0;
+                    curUnk->field_C.vz = 0;
                     curUnk->field_0.vz = (unkZ + rand) - Q12(2.5f);
                 }
             }

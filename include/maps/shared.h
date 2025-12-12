@@ -2203,13 +2203,12 @@ STATIC_ASSERT_SIZEOF(s_800E34FC, 20);
 
 typedef struct
 {
-    VECTOR3 field_0;
-    s16     field_C;
-    s16     field_E;
-    s16     field_10;
-    s16     field_12;
-    s8      field_14;
-    s8      field_15;
+    VECTOR3  field_0;
+    SVECTOR3 field_C; // 2D position or offset.
+    u8       unk_12[2];
+    u8       field_14;
+    u8       field_15;
+    u8       field_16; // Packed angle?
 } s_800E330C;
 STATIC_ASSERT_SIZEOF(s_800E330C, 24);
 
