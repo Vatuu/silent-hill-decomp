@@ -23,7 +23,7 @@ void Gfx_BackgroundSpriteDraw(s_FsImageDesc* image) // 0x800314EC
     SPRT*     sprt;
     PACKET*   packet;
 
-    ot          = (GsOT*)&g_OtTags1[g_ActiveBufferIdx][1024 * 2];
+    ot          = (GsOT*)&g_OtTags1[g_ActiveBufferIdx + 1][0];
     packet      = GsOUT_PACKET_P;
     baseYOffset = -120 << (g_GameWork.gsScreenHeight_58A >> 8);
     texShift    = image->tPage[0];
@@ -183,7 +183,7 @@ bool Gfx_2dBackgroundMotionBlur(s32 vBlanks) // 0x80031CCC
     SPRT*     sprt;
     DR_TPAGE* tPage;
 
-    ot   = (GsOT*)&g_OtTags1[g_ActiveBufferIdx][1024 * 2];
+    ot   = (GsOT*)&g_OtTags1[g_ActiveBufferIdx + 1][0];
     sprt = (SPRT*)GsOUT_PACKET_P;
     sp10 = D_800C6E90;
 

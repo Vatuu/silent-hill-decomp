@@ -184,6 +184,16 @@ typedef struct
 #define addPrimFast(ot, p, _len) \
     (((p)->tag = getaddr(ot) | ((_len) << 24)), setaddr(ot, p))
 
+/** @brief Combines `setPolyFT4` with `tpage` setter.
+  * @hack Needed to allow `tpage` and POLY_FT4 code `0x2C` to be merged in some cases.
+*/
+#define setPolyFT4TPage(poly, tp) \
+({ \
+    s32 tpage = (tp); \
+    setPolyFT4((poly)); \
+    (poly)->tpage = tpage; \
+})
+
 extern _GsFCALL GsFCALL4;
 
 void GsTMDfastG3LFG(void* op, VERT* vp, VERT* np, PACKET* pk, int n, int shift, GsOT* ot, u_long* scratch);

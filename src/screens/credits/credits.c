@@ -270,7 +270,7 @@ bool func_801E342C(void) // 0x801E342C
         Sd_EngineCmd(19);
     }
 
-    ot   = (GsOT*)&g_OtTags1[g_ActiveBufferIdx][ORDERING_TABLE_SIZE];
+    ot   = (GsOT*)&g_OtTags1[g_ActiveBufferIdx + 1][0];
     tile = (TILE*)GsOUT_PACKET_P;
 
     addPrimFast(ot, tile, 3);

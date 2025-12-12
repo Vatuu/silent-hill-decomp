@@ -561,7 +561,6 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
     MATRIX    worldMat;
     s32       depth;
     s32       clutBase;
-    s32       primCodeHack;
     GsOT*     ot;
     POLY_FT4* prim;
 
@@ -604,9 +603,7 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
         return;
     }
 
-    primCodeHack = 0x2C;
-    setlen(prim, 9); setcode(prim, primCodeHack); // @hack Line should be `setPolyFT4(prim)`, `primCodeHack` is needed to remove tpage `li 0x2C` insn.
-    prim->tpage = 0x2C;
+    setPolyFT4TPage(prim, 0x2C);
 
     switch (g_MapOverlayHeader.field_16)
     {
