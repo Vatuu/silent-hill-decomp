@@ -197,47 +197,44 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* arg0)
                                 arg0->properties_E4.larvalStalker.properties_E8[5].val16[0] = FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) - 0x81;
                             }
 
-                            if (arg0->model_0.anim_4.status_0 != 0x18 && !(FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) > 0x80 && FP_FROM(arg0->model_0.anim_4.time_4, 0xC) < 0x88))
+                            if (arg0->model_0.anim_4.status_0 == 0x18 || (FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) > 0x80 && FP_FROM(arg0->model_0.anim_4.time_4, 0xC) < 0x88))
                             {
-                                if (FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) > 0x87 && FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) < 0x8E)
+                                arg0->model_0.anim_4.status_0 = 0x4E;
+                            }
+                            else if (FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) > 0x87 && FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) < 0x8E)
+                            {
+                                arg0->model_0.anim_4.status_0                               = 8;
+                                arg0->properties_E4.larvalStalker.properties_E8[5].val16[1] = (0xC - arg0->properties_E4.larvalStalker.properties_E8[5].val16[0]) >> 1;
+                            }
+                            else if (FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) > 0x8D && FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) < 0x95)
+                            {
+                                arg0->model_0.anim_4.status_0 = 0xA;
+
+                                switch (arg0->properties_E4.larvalStalker.properties_E8[5].val16[0])
                                 {
-                                    arg0->model_0.anim_4.status_0                               = 8;
-                                    arg0->properties_E4.larvalStalker.properties_E8[5].val16[1] = (0xC - arg0->properties_E4.larvalStalker.properties_E8[5].val16[0]) >> 1;
-                                }
-                                else if (FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) > 0x8D && FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) < 0x95)
-                                {
-                                    arg0->model_0.anim_4.status_0 = 0xA;
+                                    case 13:
+                                        arg0->properties_E4.larvalStalker.properties_E8[5].val16[1] = 5;
+                                        break;
 
-                                    switch (arg0->properties_E4.larvalStalker.properties_E8[5].val16[0])
-                                    {
-                                        case 13:
-                                            arg0->properties_E4.larvalStalker.properties_E8[5].val16[1] = 5;
-                                            break;
+                                    case 14:
+                                    case 15:
+                                        arg0->properties_E4.larvalStalker.properties_E8[5].val16[1] = 4;
+                                        break;
 
-                                        case 14:
-                                        case 15:
-                                            arg0->properties_E4.larvalStalker.properties_E8[5].val16[1] = 4;
-                                            break;
+                                    case 16:
+                                    case 17:
+                                        arg0->properties_E4.larvalStalker.properties_E8[5].val16[1] = 3;
+                                        break;
 
-                                        case 16:
-                                        case 17:
-                                            arg0->properties_E4.larvalStalker.properties_E8[5].val16[1] = 3;
-                                            break;
-
-                                        default:
-                                            arg0->properties_E4.larvalStalker.properties_E8[5].val16[1] = 2;
-                                            break;
-                                    }
-                                }
-                                else
-                                {
-                                    arg0->model_0.anim_4.status_0                               = 0xA;
-                                    arg0->properties_E4.larvalStalker.properties_E8[5].val16[1] = 1;
+                                    default:
+                                        arg0->properties_E4.larvalStalker.properties_E8[5].val16[1] = 2;
+                                        break;
                                 }
                             }
                             else
                             {
-                                arg0->model_0.anim_4.status_0 = 0x4E;
+                                arg0->model_0.anim_4.status_0                               = 0xA;
+                                arg0->properties_E4.larvalStalker.properties_E8[5].val16[1] = 1;
                             }
                         }
                         else
