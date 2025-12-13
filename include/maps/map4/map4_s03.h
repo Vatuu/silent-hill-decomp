@@ -12,13 +12,17 @@
 #define MAP_ROOM_MIN_Z Q12(-120.0f)
 #define MAP_ROOM_MAX_Z Q12(240.0f)
 
+typedef struct {
+    u8 unk0[0x38];
+} s_D_800E06A0;
+
 typedef struct
 {
     s_SubCharacter* chara_0;
     s32             field_4;
-    u8              unk_8[0x230];
+    s_D_800E06A0    unk_8[10];
     s_WorldObject_0 objRef_238;
-} s_800E0698;
+} s_D_800E0698;
 
 extern s_AnimInfo TWINFEELER_ANIM_INFOS[];
 
@@ -39,6 +43,9 @@ extern VECTOR3           g_WorldObject_UnkPos;
 extern SVECTOR3          g_WorldObject_UnkRot;
 extern s_WorldObjectDesc g_WorldObject_SavePad;
 extern s_WorldObject_0   g_CommonWorldObjects[6];
+extern s_WorldObject_0   D_800E08D0;
+extern VECTOR3 D_800DB7C8;
+extern SVECTOR D_800DB924;
 
 extern s32 D_800E05A8;
 extern s16 D_800E05AC;
@@ -48,7 +55,7 @@ extern s8 D_800E05E0;
 extern s8 D_800E05E1;
 extern s8 D_800E05E2;
 
-extern s_800E0698 D_800E0698;
+extern s_D_800E0698 D_800E0698;
 
 void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 
@@ -138,5 +145,11 @@ void func_800D960C(void);
 void func_800D9824(void);
 
 void Map_WorldObjectsInit(void);
+
+void func_800D7808(s_D_800E06A0*, s32); // Assumed types.
+
+void func_800D88C8(s_D_800E06A0*, u8); // Assumed types.
+
+void func_800D7718(void);
 
 #endif

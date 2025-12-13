@@ -1027,7 +1027,36 @@ void func_800D76BC(s_SubCharacter* chara) // 0x800D76BC
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D76E8);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7718);
+void func_800D7718(void)
+{
+    MATRIX sp10;
+    s16 temp_v0;
+    s32 var_s2;
+    s32 i;
+    s_D_800E06A0* var_s0;
+
+    func_80049C2C(&sp10, Q12(160.0f), Q12(0.0f), Q12(40.0f));
+    SetRotMatrix(&sp10);
+    SetTransMatrix(&sp10);
+    var_s2 = 0xBC;
+    if (D_800E0698.chara_0)
+    {
+        if (g_DeltaTime0 != 0)
+        {
+            D_800DB924.pad++;
+            if (!(D_800DB924.pad & 0xB))
+            {
+                var_s2 = 0xA4;
+            }
+        }
+        g_WorldGfx_ObjectAdd(&D_800E0698.objRef_238, &D_800DB7C8, (SVECTOR3*)&D_800DB924);
+    }
+    for (i = 0; i < 10; i++)
+    {
+        func_800D7808(&D_800E0698.unk_8[i], i);
+        func_800D88C8(&D_800E0698.unk_8[i], var_s2);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7808);
 
