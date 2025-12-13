@@ -2580,7 +2580,7 @@ void Ai_Stalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
 
 void Ai_Stalker_Init(s_SubCharacter* chara); // Matches across all maps except `map6_s03`.
 
-void sharedFunc_800D3308_0_s00(s_SubCharacter*);
+void sharedFunc_800D3308_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara);
 
@@ -2591,12 +2591,12 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter*);
 void sharedFunc_800D7BE8_0_s00(s_SubCharacter* chara);
 
 /** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data). */
-void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, bool arg1);
+void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond);
 
 /** Resets some player properties. */
-void sharedFunc_800D8904_0_s00(s_SubCharacter* playerChara, q19_12 afkTime);
+void sharedFunc_800D8904_0_s00(s_SubCharacter* player, q19_12 afkTime);
 
-void sharedFunc_800D891C_0_s00(s_SubCharacter* playerChara);
+void sharedFunc_800D891C_0_s00(s_SubCharacter* player);
 
 void sharedFunc_800D8928_0_s00(s_SubCharacter* chara);
 

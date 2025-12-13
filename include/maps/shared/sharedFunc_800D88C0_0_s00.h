@@ -1,19 +1,19 @@
-void sharedFunc_800D88C0_0_s00(s_SubCharacter* playerChara, bool arg1)
+void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond)
 {
-    playerChara->properties_E4.player.field_F4 = 1;
+    player->properties_E4.player.field_F4 = 1;
 
-    if (arg1)
+    if (cond)
     {
-        playerChara->model_0.anim_4.status_0      = ANIM_STATUS(HarryAnim_TransitionToStill, true);
-        playerChara->model_0.anim_4.keyframeIdx_8 = 0;
-        playerChara->model_0.anim_4.time_4        = Q12(0.0f);
-        playerChara->model_0.anim_4.alpha_A       = Q12(1.0f);
+        player->model_0.anim_4.status_0      = ANIM_STATUS(HarryAnim_TransitionToStill, true);
+        player->model_0.anim_4.keyframeIdx_8 = 0;
+        player->model_0.anim_4.time_4        = Q12(0.0f);
+        player->model_0.anim_4.alpha_A       = Q12(1.0f);
     }
     else
     {
-        playerChara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
-        playerChara->model_0.stateStep_3              = 0;
+        player->properties_E4.player.afkTimer_E8 = Q12(0.0f);
+        player->model_0.stateStep_3              = 0;
     }
 
-    playerChara->model_0.anim_4.flags_2 |= AnimFlag_Unlocked;
+    player->model_0.anim_4.flags_2 |= AnimFlag_Unlocked;
 }
