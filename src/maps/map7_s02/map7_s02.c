@@ -25,7 +25,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara) {} // 0x800D16E4
 
 INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", sharedFunc_800D4924_0_s00); // 0x800D16EC
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02", sharedFunc_800D492C_0_s00); // 0x800D22BC
+#include "maps/shared/sharedFunc_800D492C_0_s00.h" // 0x800D22BC
 
 #include "maps/shared/sharedFunc_800D5098_0_s00.h" // 0x800D2A28
 
