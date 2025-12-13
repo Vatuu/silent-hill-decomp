@@ -10,7 +10,9 @@ extern s_WorldObjectDescNoRot g_WorldObject_Kidn04;
 
 extern s_WorldObject_0 g_WorldObject_Fan0;
 
-extern s8 D_800F13AC;
+extern u8 D_800F13AC;
+
+extern u16 D_800ED8B0[16];
 
 void Map_WorldObjectsInit(void);
 

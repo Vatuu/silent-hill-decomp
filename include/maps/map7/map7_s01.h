@@ -130,6 +130,7 @@ extern s_WorldObject_0        g_WorldObject_SavePad;
 extern s_WorldObjectPose      g_WorldObject_UnkPose0;
 extern s_WorldObjectDesc      g_WorldObject_Diary;
 extern s_WorldObject_0        g_CommonWorldObjects[6];
+extern s_WorldObjectPose      g_CommonWorldObjectPoses[8]; // 0x800E15C8
 
 extern s32 D_800E33A0;
 extern s16 D_800E33A4;
@@ -234,5 +235,7 @@ void func_800DC080(void);
 void Map_WorldObjectsInit(void);
 
 void func_800DEDA4(void);
+
+void func_800DDCD4(void);
 
 #endif
