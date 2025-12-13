@@ -4097,12 +4097,10 @@ bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
     gte_stsz(&ptr->field_140);
 
     temp_v0_2 = ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3;
-    if (temp_v0_2 <= 0 || (temp_v0_2 >> 3) >= 0x800)
-    {
-        return false;
-    }
 
-    if (ABS(ptr->field_144.vx) > 200 || ABS(ptr->field_144.vy) > 160)
+    if (temp_v0_2 <= 0 || (temp_v0_2 >> 3) >= ORDERING_TABLE_SIZE ||
+        ABS(ptr->field_144.vx) > 200 ||
+        ABS(ptr->field_144.vy) > 160)
     {
         return false;
     }
@@ -4503,7 +4501,7 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
 
     ptr->field_158 = (ptr->field_158 + ptr->field_15C + ptr->field_160 + ptr->field_164) >> 2;
 
-    if (ptr->field_158 - 8 <= 0 || ((ptr->field_158 - 8) >> 3) >= 0x800)
+    if (ptr->field_158 - 8 <= 0 || ((ptr->field_158 - 8) >> 3) >= ORDERING_TABLE_SIZE)
     {
         return false;
     }
@@ -4942,7 +4940,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
 
             ptr->field_20C = (ptr->field_214[temp_a1_3] + ptr->field_214[temp_a1_3 + 1] + ptr->field_214[temp_a1_3 + 5] + ptr->field_214[temp_a1_3 + 6]) >> 2;
 
-            if (ptr->field_20C <= 0 || ptr->field_20C >> 3 >= 0x800)
+            if (ptr->field_20C <= 0 || ptr->field_20C >> 3 >= ORDERING_TABLE_SIZE)
             {
                 continue;
             }
@@ -5424,17 +5422,9 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
     gte_stsxy(&ptr->field_154);
     gte_stsz(&ptr->field_150);
 
-    if (ptr->field_150 <= 0 || (ptr->field_150 >> 3) >= 0x800)
-    {
-        return false;
-    }
-
-    if (ABS(ptr->field_154.vx) > 200)
-    {
-        return false;
-    }
-
-    if (ABS(ptr->field_154.vy) > 160)
+    if (ptr->field_150 <= 0 || (ptr->field_150 >> 3) >= ORDERING_TABLE_SIZE ||
+        ABS(ptr->field_154.vx) > 200 ||
+        ABS(ptr->field_154.vy) > 160)
     {
         return false;
     }
@@ -5740,7 +5730,7 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
     gte_stsxy(&ptr->field_3C);
     gte_stsz(&ptr->field_40);
 
-    if (ptr->field_40 < ptr->field_38 && (ptr->field_40 >> 3) >= 0x800)
+    if (ptr->field_40 < ptr->field_38 && (ptr->field_40 >> 3) >= ORDERING_TABLE_SIZE)
     {
         return;
     }

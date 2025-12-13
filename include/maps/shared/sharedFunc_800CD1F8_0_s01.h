@@ -187,17 +187,9 @@ bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx)
 
     ptr->field_1C4 = (ptr->field_1C4 + ptr->field_1C8 + ptr->field_1CC + ptr->field_1D0) >> 2;
 
-    if (ptr->field_1C4 <= 0 || (ptr->field_1C4 >> 3) >= 0x800)
-    {
-        return false;
-    }
-
-    if (ABS(ptr->field_1D4.vx) >= 0xC9)
-    {
-        return false;
-    }
-
-    if (ABS(ptr->field_1D4.vy) >= 0xA1)
+    if (ptr->field_1C4 <= 0 || (ptr->field_1C4 >> 3) >= ORDERING_TABLE_SIZE ||
+        ABS(ptr->field_1D4.vx) > 200 ||
+        ABS(ptr->field_1D4.vy) > 160)
     {
         return false;
     }
