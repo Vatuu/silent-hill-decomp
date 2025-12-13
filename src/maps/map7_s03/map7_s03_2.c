@@ -3902,7 +3902,61 @@ void func_800E9874(void) // 0x800E9874
     }
 }
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E98EC);
+extern SVECTOR3 D_800CD168;
+
+void func_800E98EC(void)
+{
+    s32 i;
+    VECTOR3 objPos;
+
+    if (D_800F4819 != 2)
+    {
+        D_800F48A4 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(2.67f), Q12_SHIFT);
+    }
+    if (D_800F48A4 > Q12(20.0f))
+    {
+        D_800F48A4 -= Q12(20.0f);
+    }
+    for (i = 0; i < 3; i++)
+    {
+        if (i == 0)
+        {
+            objPos.vx = g_WorldObject_UnkPos.vx;
+            objPos.vy = g_WorldObject_UnkPos.vy;
+            objPos.vz = g_WorldObject_UnkPos.vz - D_800F48A4;
+        }
+        else if (i == 1)
+        {
+            objPos.vz = (g_WorldObject_UnkPos.vz - D_800F48A4) - Q12(20.0f);
+        }
+        else
+        {
+            objPos.vz = (g_WorldObject_UnkPos.vz - D_800F48A4) + Q12(20.0f);
+        }
+        if (D_800F4818)
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Real, &objPos, &D_800CD168);
+        }
+        if (D_800F4819)
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Ura, &objPos, &D_800CD168);
+        }
+        if (D_800F481A)
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Under, &objPos, &D_800CD168);
+        }
+    }
+
+    func_80069844(0xFFFF);
+    if (D_800F4818)
+    {
+        func_8006982C(2);
+    }
+    if (D_800F4819)
+    {
+        func_8006982C(4);
+    }
+}
 
 void func_800E9AC8(void) // 0x800E9AC8
 {

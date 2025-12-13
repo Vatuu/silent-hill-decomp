@@ -129,9 +129,9 @@ extern s8 D_800F4814;
 extern u8 D_800F4815;
 extern u8 D_800F4816;
 extern u8 D_800F4817;
-extern s8 D_800F4818;
-extern s8 D_800F4819;
-extern s8 D_800F481A;
+extern u8 D_800F4818;
+extern u8 D_800F4819;
+extern u8 D_800F481A;
 extern u8 D_800F481B;
 extern u8 D_800F481C;
 
@@ -328,5 +328,7 @@ void Map_WorldObjectsInit(void);
 void func_800E9874(void);
 
 void func_800E9AC8(void);
+
+void func_800E98EC(void);
 
 #endif
