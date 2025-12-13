@@ -205,9 +205,8 @@ typedef enum _SfxId
     Sfx_Unk1539 = 1539,
     Sfx_Unk1540 = 1540,
     Sfx_Unk1541 = 1541, // Door jammed alt.
-
+    Sfx_Unk1542 = 1542,
     Sfx_Unk1543 = 1543,
-
     Sfx_Unk1554 = 1554,
 
     Sfx_Unk1556 = 1556,
