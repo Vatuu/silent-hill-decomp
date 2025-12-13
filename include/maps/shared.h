@@ -3138,23 +3138,13 @@ typedef struct
     WorldObject_ModelNameSet(&(eventPose)->object_0, (name));     \
 }
 
-#define Chara_MoveSpeedUpdate(chara, speed)                                                          \
-{                                                                                                    \
-    q19_12 moveSpeed;                                                                                \
-    q19_12 newSpeed;                                                                                 \
-                                                                                                     \
-    moveSpeed = chara->moveSpeed_38;                                                                 \
-    if (chara->moveSpeed_38 > Q12(0.0f))                                                             \
-    {                                                                                                \
-        newSpeed = MAX(moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT), Q12(0.0f));  \
-    }                                                                                                \
-    else                                                                                             \
-    {                                                                                                \
-        newSpeed = MIN(moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT), Q12(0.0f));  \
-    }                                                                                                \
-    chara->moveSpeed_38 = newSpeed;                                                                  \
-}
+#define APPROACH(current, target, step) \
+    ((current) > (target) ? MAX((current) - (step), (target)) : MIN((target), (current) + (step)))
 
+#define Chara_MoveSpeedUpdate(chara, speed) \
+    chara->moveSpeed_38 = APPROACH(chara->moveSpeed_38, Q12(0.0f), FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT))
+
+// TODO: Is it possible to merge these macros?
 #define Chara_MoveSpeedUpdate2(chara, speed, limit)                                                  \
 {                                                                                                    \
     q19_12 moveSpeed;                                                                                \
@@ -3184,22 +3174,7 @@ typedef struct
     chara->moveSpeed_38 = newMoveSpeed;                                                              \
 }
 
-// TODO: Is it possible to merge these macros?
-#define Chara_MoveSpeedUpdate3(chara, speed, limit)                                                  \
-{                                                                                                    \
-    q19_12 moveSpeed;                                                                                \
-    q19_12 newSpeed;                                                                                 \
-                                                                                                     \
-    moveSpeed = chara->moveSpeed_38;                                                                 \
-    if (chara->moveSpeed_38 > limit)                                                                 \
-    {                                                                                                \
-        newSpeed = MAX(moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT), limit);      \
-    }                                                                                                \
-    else                                                                                             \
-    {                                                                                                \
-        newSpeed = MIN(limit, moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT));      \
-    }                                                                                                \
-    chara->moveSpeed_38 = newSpeed;                                                                  \
-}
+#define Chara_MoveSpeedUpdate3(chara, speed, limit) \
+    chara->moveSpeed_38 = APPROACH(chara->moveSpeed_38, limit, FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT))
 
 #endif
