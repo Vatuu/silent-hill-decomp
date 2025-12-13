@@ -2196,7 +2196,7 @@ g_AudioData                                 = 0x800A9FEC;
 //------------------------------------------------------------------------------
 g_Sd_ReverbDepths                           = 0x800AA5E0;
 g_XaItemData                                = 0x800AA894;
-g_Sfx_Table0                                = 0x800ACAA8;
+g_Vab_InfoTable                             = 0x800ACAA8;
 
 //-------------------------------------------------------------------
 //--- PA: 0x088920   VA: 0x800AD480   subsegment: .data, view/vw_calc
@@ -2663,6 +2663,7 @@ g_Map                                       = 0x800C1020; // type:u8 size:0x58C 
 //----------------------------------------------------------------------------
 //--- PA: 0x09CA58   VA: 0x800C15B8   subsegment: bss, sound/bodyprog_80045A7C
 //----------------------------------------------------------------------------
+audioIdx                                    = 0x800C15BC;
 g_Sound_ActiveSfxIdx                        = 0x800C15BE; // type:s16
 
 //---------------------------------------------------
@@ -2672,6 +2673,7 @@ g_Sd_AudioWork                              = 0x800C1658;
 g_Sd_AudioStreamingStates                   = 0x800C1670;
 g_Sd_ChannelsVolume                         = 0x800C1678;
 g_Sd_ReverbDepth                            = 0x800C1687;
+g_Sd_VabPlayingInfo                         = 0x800C1698;
 g_Sd_CmdPool                                = 0x800C16A8; // type:u8 size:0x20
 g_Sd_AudioType                              = 0x800C37C8;
 g_Sd_DataMoved                              = 0x800C37CC;

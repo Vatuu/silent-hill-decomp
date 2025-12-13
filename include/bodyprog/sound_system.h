@@ -21,6 +21,22 @@
 #define AUDIO_TYPE_MONO   1
 #define AUDIO_TYPE_STEREO 2
 
+/** @brief Obfuscation macro.
+ * The third field from `s_VabInfo` is obfuscated.
+ * The value get pass to `SdVoKeyOn` through the first argument (`vab_pro`) where it is used to give a
+ * value to the variables `prog` (by doing the equivalent of `vab_progIdx_2 & 0x7F`) and `vabid`
+ * (by doing the equivalent of `vab_progIdx_2 >> 8`).
+ * This indicates that for example from the values that are 516 (0x204) `prog` would receive the value of
+ * 2 while `vabid` would receive 4. This also fit for other values like 256 (0x100) and 514 (0x202).
+ *
+ * The first argument it is related to the values of `e_AudioType` and `g_Sd_AudioType` as it is used to
+ * access to the index of `vab_h` which is aparently used to allocate VAG data in memory.
+ *
+ * The second value is aparently the index for a VAB specific attribute named `program`.
+ */
+#define TYPE_AND_PROG_SFX(audioType, progIdx) \
+    (audioType << 8) + progIdx
+
 // ======
 // ENUMS
 // ======
@@ -122,28 +138,31 @@ typedef struct
     s32 field_8; // Somebody defined this as an individual global variable in the symbol file as `g_Game_VSyncTimeSinceBoot`.
 } s_800C1688;
 
-/** Sound struct for currently used SFX? */
+/** Sound struct for currently used SFX.
+ * @note It is recomended to read VAB file format documentation to fully understand this struct.
+ */
 typedef struct
 {
-    u8  field_0;
-    u8  field_1;
-    s16 field_2;
-    s16 field_4;
-    s16 field_6;
-    s16 field_8;
-    s16 field_A; // Pitch?
+    u8  audioVabIdx_0;
+    u8  pad_1;
+    s16 typeIdx_2; /** `e_AudioType` */
+    s16 progIdx_4;
+    s16 toneIdx_6;
+    s16 noteIdx_8;
+    s16 pitch_A;
     s16 volumeLeft_C;
     s16 volumeRight_E;
-} s_800C1698;
+} s_VabPlayingInfo;
 
+/** @note It is recomended to read VAB file format documentation to fully understand this struct. */
 typedef struct
 {
-    u8  field_0;
-    u8  unk_1;
-    u16 field_2;
-    u8  field_4;
-    s8  field_5;
-} s_Sfx;
+    u8  audioVabIdx_0; /** Index of audio inside VAB files. */
+    u8  pad_1;
+    u16 vab_progIdx_2; /** See `TYPE_AND_PROG_SFX`. */
+    u8  noteIdx_4;
+    s8  field_5;       // Volume??? (Tested In-game indeed changes the volume)
+} s_VabInfo;
 
 // TODO: Field with `_24` seems to be part of a thing related to how XA files work.
 typedef struct
@@ -224,7 +243,7 @@ extern s32 D_800C15DC;
 extern s32 D_800C15E0;
 
 // Likely declared as `static` inside the function that uses it.
-extern s16 D_800C15BC;
+extern s16 audioIdx;
 
 extern s16 g_Sound_ActiveSfxIdx;
 
@@ -244,7 +263,7 @@ extern u8 g_Sd_ReverbDepth;
 
 extern s_800C1688 D_800C1688;
 
-extern s_800C1698 D_800C1698;
+extern s_VabPlayingInfo g_Sd_VabPlayingInfo;
 
 /** Command pool related to audio and streaming.
  * Seems like `Sd_CmdPoolExecute` is the main function on charge of executing commands,
@@ -267,7 +286,7 @@ extern u8 D_800C37DC; // Boolean.
 
 extern u8 g_Sd_CurrentCmd;
 
-extern s_Sfx g_Sfx_Table0[420];
+extern s_VabInfo g_Vab_InfoTable[420];
 
 // ==========
 // FUNCTIONS

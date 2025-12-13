@@ -325,60 +325,60 @@ u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol) // 0x80046048
         return NO_VALUE;
     }
 
-    D_800C15BC = sfxId - Sfx_Base;
-    volCpy     = vol;
+    audioIdx = sfxId - Sfx_Base;
+    volCpy   = vol;
 
-    // Copy key SFX data.
-    D_800C1698.field_2 = g_Sfx_Table0[D_800C15BC].field_2 >> 8;
-    D_800C1698.field_4 = g_Sfx_Table0[D_800C15BC].field_2 & 0xFF;
-    D_800C1698.field_8 = g_Sfx_Table0[D_800C15BC].field_4;
+    // Copy key VAB information.
+    g_Sd_VabPlayingInfo.typeIdx_2 = g_Vab_InfoTable[audioIdx].vab_progIdx_2 >> 8;
+    g_Sd_VabPlayingInfo.progIdx_4 = g_Vab_InfoTable[audioIdx].vab_progIdx_2 & 0xFF;
+    g_Sd_VabPlayingInfo.noteIdx_8 = g_Vab_InfoTable[audioIdx].noteIdx_4;
 
-    convertedVol = g_Sd_ChannelsVolume.volumeSe_4 + g_Sfx_Table0[D_800C15BC].field_5;
+    convertedVol = g_Sd_ChannelsVolume.volumeSe_4 + g_Vab_InfoTable[audioIdx].field_5;
     convertedVol = convertedVol - (convertedVol * volCpy) / 255;
 
-    WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, convertedVol);
+    WriteVolume(&g_Sd_VabPlayingInfo.volumeLeft_C, &g_Sd_VabPlayingInfo.volumeRight_E, convertedVol);
 
     // Apply stereo balance.
     if (g_Sd_AudioWork.isStereoEnabled_12 == true)
     {
         if (balance < 0)
         {
-            D_800C1698.volumeRight_E -= (D_800C1698.volumeLeft_C * ABS(balance)) >> 7;
+            g_Sd_VabPlayingInfo.volumeRight_E -= (g_Sd_VabPlayingInfo.volumeLeft_C * ABS(balance)) >> 7;
         }
         else
         {
-            D_800C1698.volumeLeft_C -= (D_800C1698.volumeLeft_C * balance) >> 7;
+            g_Sd_VabPlayingInfo.volumeLeft_C -= (g_Sd_VabPlayingInfo.volumeLeft_C * balance) >> 7;
         }
     }
 
     // Clamp volume to positive range.
-    if (D_800C1698.volumeLeft_C < 0)
+    if (g_Sd_VabPlayingInfo.volumeLeft_C < 0)
     {
-        D_800C1698.volumeLeft_C = 0;
+        g_Sd_VabPlayingInfo.volumeLeft_C = 0;
     }
-    if (D_800C1698.volumeRight_E < 0)
+    if (g_Sd_VabPlayingInfo.volumeRight_E < 0)
     {
-        D_800C1698.volumeRight_E = 0;
+        g_Sd_VabPlayingInfo.volumeRight_E = 0;
     }
 
     if (sfxId == Sfx_RadioInterferenceLoop)
     {
-        D_800C1698.field_6 = g_Sfx_Table0[D_800C15BC].field_0;
-        SdUtKeyOnV(22, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 0,
-                   Sd_GetVolSe(D_800C1698.volumeLeft_C), Sd_GetVolSe(D_800C1698.volumeRight_E));
-        D_800C1698.field_0 = 22;
+        g_Sd_VabPlayingInfo.toneIdx_6 = g_Vab_InfoTable[audioIdx].audioVabIdx_0;
+        SdUtKeyOnV(22, g_Sd_VabPlayingInfo.typeIdx_2, g_Sd_VabPlayingInfo.progIdx_4, g_Sd_VabPlayingInfo.toneIdx_6, g_Sd_VabPlayingInfo.noteIdx_8, 0,
+                   Sd_GetVolSe(g_Sd_VabPlayingInfo.volumeLeft_C), Sd_GetVolSe(g_Sd_VabPlayingInfo.volumeRight_E));
+        g_Sd_VabPlayingInfo.audioVabIdx_0 = 22;
     }
     else if (sfxId == Sfx_RadioStaticLoop)
     {
-        D_800C1698.field_6 = g_Sfx_Table0[D_800C15BC].field_0;
-        SdUtKeyOnV(23, D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, 120,
-                   Sd_GetVolSe(D_800C1698.volumeLeft_C), Sd_GetVolSe(D_800C1698.volumeRight_E));
-        D_800C1698.field_0 = 23;
+        g_Sd_VabPlayingInfo.toneIdx_6 = g_Vab_InfoTable[audioIdx].audioVabIdx_0;
+        SdUtKeyOnV(23, g_Sd_VabPlayingInfo.typeIdx_2, g_Sd_VabPlayingInfo.progIdx_4, g_Sd_VabPlayingInfo.toneIdx_6, g_Sd_VabPlayingInfo.noteIdx_8, 120,
+                   Sd_GetVolSe(g_Sd_VabPlayingInfo.volumeLeft_C), Sd_GetVolSe(g_Sd_VabPlayingInfo.volumeRight_E));
+        g_Sd_VabPlayingInfo.audioVabIdx_0 = 23;
     }
     else
     {
-        D_800C1698.field_0 = SdVoKeyOn(g_Sfx_Table0[D_800C15BC].field_2, D_800C1698.field_8 * 256,
-                                       Sd_GetVolSe(D_800C1698.volumeLeft_C), Sd_GetVolSe(D_800C1698.volumeRight_E));
+        g_Sd_VabPlayingInfo.audioVabIdx_0 = SdVoKeyOn(g_Vab_InfoTable[audioIdx].vab_progIdx_2, g_Sd_VabPlayingInfo.noteIdx_8 * 0x100,
+                                                      Sd_GetVolSe(g_Sd_VabPlayingInfo.volumeLeft_C), Sd_GetVolSe(g_Sd_VabPlayingInfo.volumeRight_E));
     }
 
     for (i = 0; i < 24; i++)
@@ -389,15 +389,15 @@ u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol) // 0x80046048
         }
     }
 
-    if (D_800C1698.field_0 < 24)
+    if (g_Sd_VabPlayingInfo.audioVabIdx_0 < 24)
     {
-        D_800C15F8[D_800C1698.field_0] = sfxId;
-        attr.voice = 1 << D_800C1698.field_0;
+        D_800C15F8[g_Sd_VabPlayingInfo.audioVabIdx_0] = sfxId;
+        attr.voice = 1 << g_Sd_VabPlayingInfo.audioVabIdx_0;
 
         SpuGetVoiceAttr(&attr);
 
-        D_800C1628[D_800C1698.field_0] = attr.pitch;
-        return D_800C1698.field_0;
+        D_800C1628[g_Sd_VabPlayingInfo.audioVabIdx_0] = attr.pitch;
+        return g_Sd_VabPlayingInfo.audioVabIdx_0;
     }
 
     return NO_VALUE;
@@ -416,7 +416,7 @@ void func_800463C0(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x800463C0
     }
 
     g_Sound_ActiveSfxIdx = sfxId - Sfx_Base;
-    D_800C16A4           = g_Sd_ChannelsVolume.volumeSe_4 + g_Sfx_Table0[g_Sound_ActiveSfxIdx].field_5;
+    D_800C16A4           = g_Sd_ChannelsVolume.volumeSe_4 + g_Vab_InfoTable[g_Sound_ActiveSfxIdx].field_5;
 
     if (sfxId == Sfx_RadioInterferenceLoop)
     {
@@ -448,24 +448,24 @@ void func_800463C0(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x800463C0
         attr.voice = 1 << voiceIdx;
     }
 
-    D_800C1698.field_A = 0;
-    D_800C1698.field_8 = g_Sfx_Table0[g_Sound_ActiveSfxIdx].field_4;
-    D_800C15C0         = D_800C1628[voiceIdx] + (pitch * 2);
-    convertedVol       = vol;
-    convertedVol       = D_800C1698.volumeLeft_C - ((D_800C1698.volumeLeft_C * (convertedVol)) / 255);
+    g_Sd_VabPlayingInfo.pitch_A   = 0;
+    g_Sd_VabPlayingInfo.noteIdx_8 = g_Vab_InfoTable[g_Sound_ActiveSfxIdx].noteIdx_4;
+    D_800C15C0                    = D_800C1628[voiceIdx] + (pitch * 2);
+    convertedVol                  = vol;
+    convertedVol                  = g_Sd_VabPlayingInfo.volumeLeft_C - ((g_Sd_VabPlayingInfo.volumeLeft_C * (convertedVol)) / 255);
 
-    WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, convertedVol);
+    WriteVolume(&g_Sd_VabPlayingInfo.volumeLeft_C, &g_Sd_VabPlayingInfo.volumeRight_E, convertedVol);
 
     // Apply stereo balance.
     if (g_Sd_AudioWork.isStereoEnabled_12 == true)
     {
         if (balance < 0)
         {
-            D_800C1698.volumeRight_E -= (convertedVol * ABS(balance)) >> 7;
+            g_Sd_VabPlayingInfo.volumeRight_E -= (convertedVol * ABS(balance)) >> 7;
         }
         else
         {
-            D_800C1698.volumeLeft_C -= (convertedVol * balance) >> 7;
+            g_Sd_VabPlayingInfo.volumeLeft_C -= (convertedVol * balance) >> 7;
         }
     }
 
@@ -478,17 +478,17 @@ void func_800463C0(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x800463C0
     attr.volmode.right = 0;
 
     // Clamp volume to positive range.
-    if (D_800C1698.volumeLeft_C < 0)
+    if (g_Sd_VabPlayingInfo.volumeLeft_C < 0)
     {
-        D_800C1698.volumeLeft_C = 0;
+        g_Sd_VabPlayingInfo.volumeLeft_C = 0;
     }
-    if (D_800C1698.volumeRight_E < 0)
+    if (g_Sd_VabPlayingInfo.volumeRight_E < 0)
     {
-        D_800C1698.volumeRight_E = 0;
+        g_Sd_VabPlayingInfo.volumeRight_E = 0;
     }
 
-    attr.volume.right = Sd_GetVolSe(D_800C1698.volumeRight_E << 7);
-    attr.volume.left  = Sd_GetVolSe(D_800C1698.volumeLeft_C << 7);
+    attr.volume.right = Sd_GetVolSe(g_Sd_VabPlayingInfo.volumeRight_E << 7);
+    attr.volume.left  = Sd_GetVolSe(g_Sd_VabPlayingInfo.volumeLeft_C << 7);
     attr.pitch        = D_800C15C0;
 
     SpuSetVoiceAttr(&attr);
@@ -504,52 +504,52 @@ void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x80046620
         return;
     }
 
-    D_800C15C2         = sfxId - Sfx_Base;
-    D_800C1698.field_2 = g_Sfx_Table0[D_800C15C2].field_2 >> 8;
-    D_800C1698.field_4 = g_Sfx_Table0[D_800C15C2].field_2 & 0xFF;
-    D_800C1698.field_6 = g_Sfx_Table0[D_800C15C2].field_0;
-    D_800C1698.field_8 = g_Sfx_Table0[D_800C15C2].field_4 + (s8)(pitch * 5 / 127);
+    D_800C15C2                    = sfxId - Sfx_Base;
+    g_Sd_VabPlayingInfo.typeIdx_2 = g_Vab_InfoTable[D_800C15C2].vab_progIdx_2 >> 8;
+    g_Sd_VabPlayingInfo.progIdx_4 = g_Vab_InfoTable[D_800C15C2].vab_progIdx_2 & 0xFF;
+    g_Sd_VabPlayingInfo.toneIdx_6 = g_Vab_InfoTable[D_800C15C2].audioVabIdx_0;
+    g_Sd_VabPlayingInfo.noteIdx_8 = g_Vab_InfoTable[D_800C15C2].noteIdx_4 + (s8)(pitch * 5 / 127);
 
     if (pitch > 0)
     {
-        D_800C1698.field_A = ABS(pitch * 5) % 127;
+        g_Sd_VabPlayingInfo.pitch_A = ABS(pitch * 5) % 127;
     }
     else
     {
-        D_800C1698.field_A = 0x7F - ABS(pitch * 5) % 127;
+        g_Sd_VabPlayingInfo.pitch_A = 127 - ABS(pitch * 5) % 127;
     }
 
-    temp                    = g_Sd_ChannelsVolume.volumeSe_4 + g_Sfx_Table0[D_800C15C2].field_5;
-    convertedVol            = vol;
-    D_800C1698.volumeLeft_C = temp - (temp * convertedVol) / 255;
+    temp                             = g_Sd_ChannelsVolume.volumeSe_4 + g_Vab_InfoTable[D_800C15C2].field_5;
+    convertedVol                     = vol;
+    g_Sd_VabPlayingInfo.volumeLeft_C = temp - (temp * convertedVol) / 255;
 
-    WriteVolume(&D_800C1698.volumeLeft_C, &D_800C1698.volumeRight_E, D_800C1698.volumeLeft_C);
+    WriteVolume(&g_Sd_VabPlayingInfo.volumeLeft_C, &g_Sd_VabPlayingInfo.volumeRight_E, g_Sd_VabPlayingInfo.volumeLeft_C);
 
     // Apply stereo balance.
     if (g_Sd_AudioWork.isStereoEnabled_12 == true)
     {
         if (balance < 0)
         {
-            D_800C1698.volumeRight_E -= (D_800C1698.volumeRight_E * ABS(balance)) >> 7;
+            g_Sd_VabPlayingInfo.volumeRight_E -= (g_Sd_VabPlayingInfo.volumeRight_E * ABS(balance)) >> 7;
         }
         else
         {
-            D_800C1698.volumeLeft_C -= (D_800C1698.volumeLeft_C * balance) >> 7;
+            g_Sd_VabPlayingInfo.volumeLeft_C -= (g_Sd_VabPlayingInfo.volumeLeft_C * balance) >> 7;
         }
     }
 
     // Clamp volume to positive range.
-    if (D_800C1698.volumeLeft_C < 0)
+    if (g_Sd_VabPlayingInfo.volumeLeft_C < 0)
     {
-        D_800C1698.volumeLeft_C = 0;
+        g_Sd_VabPlayingInfo.volumeLeft_C = 0;
     }
-    if (D_800C1698.volumeRight_E < 0)
+    if (g_Sd_VabPlayingInfo.volumeRight_E < 0)
     {
-        D_800C1698.volumeRight_E = 0;
+        g_Sd_VabPlayingInfo.volumeRight_E = 0;
     }
 
-    D_800C1698.field_0 = SdUtKeyOn(D_800C1698.field_2, D_800C1698.field_4, D_800C1698.field_6, D_800C1698.field_8, D_800C1698.field_A,
-                                   Sd_GetVolSe(D_800C1698.volumeLeft_C), Sd_GetVolSe(D_800C1698.volumeRight_E));
+    g_Sd_VabPlayingInfo.audioVabIdx_0 = SdUtKeyOn(g_Sd_VabPlayingInfo.typeIdx_2, g_Sd_VabPlayingInfo.progIdx_4, g_Sd_VabPlayingInfo.toneIdx_6, g_Sd_VabPlayingInfo.noteIdx_8, g_Sd_VabPlayingInfo.pitch_A,
+                                                  Sd_GetVolSe(g_Sd_VabPlayingInfo.volumeLeft_C), Sd_GetVolSe(g_Sd_VabPlayingInfo.volumeRight_E));
 }
 
 void Sd_LastVoiceKeyOff(void) // 0x800468EC
@@ -570,8 +570,8 @@ void func_8004692C(u16 cmd) // 0x8004692C
     }
 
     D_800C15C4 = cmd - 1280;
-    D_800C15C6 = g_Sfx_Table0[D_800C15C4].field_2;
-    D_800C15C8 = g_Sfx_Table0[D_800C15C4].field_4 << 8;
+    D_800C15C6 = g_Vab_InfoTable[D_800C15C4].vab_progIdx_2;
+    D_800C15C8 = g_Vab_InfoTable[D_800C15C4].noteIdx_4 << 8;
     SdVoKeyOff(D_800C15C6, D_800C15C8);
 }
 
@@ -1496,427 +1496,427 @@ s_XaItemData g_XaItemData[727] = {
     { 9, 0, 0, 0, 3,     3, 9085,  1 }
 };
 
-s_Sfx g_Sfx_Table0[420] = {
-    { 0, 0, 0,    0,   0   },
-    { 0, 0, 512,  48,  -30 },
-    { 1, 0, 512,  48,  -30 },
-    { 0, 0, 256,  48,  0   },
-    { 1, 0, 256,  49,  0   },
-    { 2, 0, 256,  50,  0   },
-    { 3, 0, 256,  51,  0   },
-    { 0, 0, 256,  48,  0   },
-    { 1, 0, 256,  49,  0   },
-    { 2, 0, 256,  50,  0   },
-    { 0, 0, 256,  48,  0   },
-    { 1, 0, 256,  49,  0   },
-    { 2, 0, 256,  50,  0   },
-    { 0, 0, 256,  48,  0   },
-    { 1, 0, 256,  49,  0   },
-    { 2, 0, 256,  50,  0   },
-    { 3, 0, 256,  51,  -50 },
-    { 4, 0, 256,  52,  0   },
-    { 5, 0, 256,  53,  0   },
-    { 0, 0, 256,  48,  -40 },
-    { 0, 0, 256,  48,  -50 },
-    { 1, 0, 256,  49,  0   },
-    { 1, 0, 256,  49,  0   },
-    { 2, 0, 256,  50,  0   },
-    { 0, 0, 0,    48,  0   },
-    { 1, 0, 0,    49,  -10 },
-    { 2, 0, 0,    50,  -10 },
-    { 3, 0, 0,    51,  0   },
-    { 4, 0, 0,    52,  0   },
-    { 5, 0, 0,    53,  0   },
-    { 6, 0, 0,    54,  -20 },
-    { 7, 0, 0,    5,   0   },
-    { 8, 0, 0,    15,  -40 },
-    { 9, 0, 0,    25,  -50 },
-    { 10,0, 0,    58,  0   },
-    { 11,0, 0,    59,  0   },
-    { 14,0, 0,    62,  0   },
-    { 15,0, 0,    63,  0   },
-    { 0, 0, 1,    48,  -40 },
-    { 1, 0, 1,    49,  -60 },
-    { 2, 0, 1,    50,  -40 },
-    { 3, 0, 1,    51,  -100},
-    { 4, 0, 1,    52,  -80 },
-    { 6, 0, 1,    54,  -70 },
-    { 7, 0, 1,    55,  -70 },
-    { 8, 0, 1,    56,  -60 },
-    { 9, 0, 1,    57,  0   },
-    { 10,0, 1,    58,  0   },
-    { 11,0, 1,    59,  0   },
-    { 12,0, 1,    60,  0   },
-    { 13,0, 1,    15,  -80 },
-    { 12,0, 0,    95,  -30 },
-    { 5, 0, 1,    5,   -60 },
-    { 13,0, 0,    60,  0   },
-    { 14,0, 1,    72,  0   },
-    { 15,0, 1,    73,  0   },
-    { 0, 0, 2,    48,  0   },
-    { 1, 0, 2,    49,  0   },
-    { 2, 0, 2,    50,  0   },
-    { 3, 0, 2,    51,  0   },
-    { 4, 0, 2,    52,  -20 },
-    { 5, 0, 2,    53,  0   },
-    { 6, 0, 2,    54,  0   },
-    { 7, 0, 2,    55,  0   },
-    { 8, 0, 2,    56,  -50 },
-    { 9, 0, 2,    57,  0   },
-    { 10,0, 2,    75,  -20 },
-    { 11,0, 2,    84,  0   },
-    { 12,0, 2,    85,  0   },
-    { 13,0, 2,    86,  0   },
-    { 14,0, 2,    87,  0   },
-    { 9, 0, 2,    57,  0   },
-    { 15,0, 2,    58,  0   },
-    { 2, 0, 512,  5,   -60 },
-    { 3, 0, 512,  51,  -20 },
-    { 4, 0, 512,  52,  -20 },
-    { 5, 0, 512,  53,  0   },
-    { 6, 0, 512,  54,  0   },
-    { 9, 0, 512,  57,  0   },
-    { 10,0, 512,  58,  -100},
-    { 12,0, 512,  60,  0   },
-    { 13,0, 512,  61,  -20 },
-    { 0, 0, 515,  48,  0   },
-    { 1, 0, 515,  49,  0   },
-    { 2, 0, 515,  50,  0   },
-    { 3, 0, 515,  51,  0   },
-    { 4, 0, 515,  52,  0   },
-    { 5, 0, 515,  53,  0   },
-    { 0, 0, 512,  48,  0   },
-    { 1, 0, 512,  49,  0   },
-    { 2, 0, 512,  50,  0   },
-    { 5, 0, 512,  53,  0   },
-    { 7, 0, 512,  55,  0   },
-    { 8, 0, 512,  56,  0   },
-    { 11,0, 512,  59,  0   },
-    { 14,0, 512,  62,  0   },
-    { 0, 0, 514,  48,  0   },
-    { 1, 0, 514,  49,  0   },
-    { 2, 0, 514,  50,  0   },
-    { 3, 0, 514,  51,  0   },
-    { 4, 0, 514,  55,  0   },
-    { 5, 0, 514,  52,  0   },
-    { 6, 0, 514,  54,  0   },
-    { 7, 0, 514,  53,  -30 },
-    { 8, 0, 514,  56,  0   },
-    { 9, 0, 512,  57,  0   },
-    { 15,0, 512,  63,  0   },
-    { 0, 0, 512,  48,  -50 },
-    { 8, 0, 512,  95,  -80 },
-    { 9, 0, 512,  105, 0   },
-    { 11,0, 512,  59,  0   },
-    { 14,0, 512,  62,  0   },
-    { 0, 0, 513,  48,  0   },
-    { 1, 0, 513,  49,  0   },
-    { 2, 0, 513,  50,  0   },
-    { 1, 0, 512,  49,  0   },
-    { 3, 0, 513,  51,  0   },
-    { 4, 0, 513,  52,  0   },
-    { 5, 0, 513,  53,  0   },
-    { 6, 0, 513,  54,  0   },
-    { 9, 0, 514,  57,  0   },
-    { 10,0, 514,  58,  0   },
-    { 11,0, 514,  59,  0   },
-    { 12,0, 514,  60,  0   },
-    { 13,0, 514,  61,  0   },
-    { 14,0, 514,  15,  -80 },
-    { 0, 0, 515,  48,  0   },
-    { 1, 0, 515,  49,  0   },
-    { 2, 0, 515,  50,  0   },
-    { 3, 0, 515,  51,  0   },
-    { 4, 0, 515,  52,  0   },
-    { 6, 0, 515,  54,  0   },
-    { 7, 0, 515,  55,  0   },
-    { 8, 0, 515,  25,  -30 },
-    { 9, 0, 515,  56,  0   },
-    { 2, 0, 512,  49,  0   },
-    { 3, 0, 512,  51,  0   },
-    { 4, 0, 512,  52,  0   },
-    { 5, 0, 512,  53,  -50 },
-    { 6, 0, 512,  54,  -10 },
-    { 7, 0, 512,  55,  0   },
-    { 12,0, 512,  60,  -30 },
-    { 13,0, 512,  38,  0   },
-    { 14,0, 512,  25,  0   },
-    { 0, 0, 516,  48,  0   },
-    { 1, 0, 516,  49,  0   },
-    { 2, 0, 516,  50,  0   },
-    { 3, 0, 516,  51,  0   },
-    { 4, 0, 516,  52,  0   },
-    { 7, 0, 516,  55,  0   },
-    { 8, 0, 512,  56,  0   },
-    { 12,0, 513,  82,  -20 },
-    { 13,0, 513,  83,  -20 },
-    { 2, 0, 512,  50,  0   },
-    { 7, 0, 512,  55,  0   },
-    { 8, 0, 512,  56,  -20 },
-    { 9, 0, 512,  57,  0   },
-    { 15,0, 512,  72,  0   },
-    { 0, 0, 513,  48,  0   },
-    { 1, 0, 513,  51,  0   },
-    { 2, 0, 513,  52,  0   },
-    { 3, 0, 513,  53,  0   },
-    { 4, 0, 513,  54,  0   },
-    { 5, 0, 513,  56,  0   },
-    { 6, 0, 513,  59,  0   },
-    { 7, 0, 513,  61,  0   },
-    { 8, 0, 513,  62,  0   },
-    { 5, 0, 512,  35,  -120},
-    { 9, 0, 513,  63,  0   },
-    { 10,0, 513,  64,  0   },
-    { 15,0, 514,  84,  0   },
-    { 1, 0, 512,  36,  0   },
-    { 4, 0, 512,  37,  0   },
-    { 5, 0, 512,  38,  0   },
-    { 6, 0, 512,  39,  0   },
-    { 13,0, 512,  61,  0   },
-    { 0, 0, 513,  75,  -70 },
-    { 1, 0, 513,  76,  -70 },
-    { 14,0, 513,  84,  -40 },
-    { 15,0, 513,  85,  -40 },
-    { 2, 0, 512,  50,  0   },
-    { 1, 0, 512,  74,  -30 },
-    { 4, 0, 512,  72,  -40 },
-    { 5, 0, 512,  73,  -30 },
-    { 8, 0, 513,  56,  0   },
-    { 6, 0, 512,  52,  -20 },
-    { 10,0, 512,  76,  0   },
-    { 15,0, 513,  84,  -110},
-    { 2, 0, 514,  49,  0   },
-    { 4, 0, 514,  50,  0   },
-    { 6, 0, 514,  51,  0   },
-    { 0, 0, 512,  36,  0   },
-    { 1, 0, 512,  5,   -30 },
-    { 2, 0, 512,  37,  0   },
-    { 4, 0, 512,  39,  0   },
-    { 5, 0, 512,  40,  0   },
-    { 6, 0, 512,  41,  -80 },
-    { 7, 0, 512,  42,  0   },
-    { 8, 0, 512,  43,  0   },
-    { 9, 0, 512,  44,  0   },
-    { 15,0, 512,  65,  0   },
-    { 1, 0, 512,  49,  0   },
-    { 2, 0, 512,  50,  0   },
-    { 5, 0, 512,  53,  0   },
-    { 6, 0, 512,  54,  0   },
-    { 7, 0, 512,  55,  0   },
-    { 10,0, 512,  56,  0   },
-    { 15,0, 512,  63,  -80 },
-    { 11,0, 512,  59,  -30 },
-    { 7, 0, 513,  85,  -70 },
-    { 8, 0, 513,  55,  -20 },
-    { 9, 0, 513,  56,  -20 },
-    { 2, 0, 512,  50,  0   },
-    { 2, 0, 512,  50,  -90 },
-    { 4, 0, 512,  52,  0   },
-    { 5, 0, 512,  53,  0   },
-    { 6, 0, 512,  54,  -40 },
-    { 7, 0, 512,  72,  0   },
-    { 9, 0, 512,  56,  0   },
-    { 10,0, 512,  57,  0   },
-    { 12,0, 512,  59,  0   },
-    { 13,0, 512,  58,  0   },
-    { 11,0, 512,  60,  -30 },
-    { 0, 0, 513,  48,  -30 },
-    { 2, 0, 513,  49,  0   },
-    { 3, 0, 513,  50,  0   },
-    { 0, 0, 515,  48,  0   },
-    { 1, 0, 515,  49,  0   },
-    { 2, 0, 515,  50,  0   },
-    { 3, 0, 515,  51,  -30 },
-    { 4, 0, 515,  52,  0   },
-    { 5, 0, 515,  53,  0   },
-    { 6, 0, 515,  35,  -80 },
-    { 7, 0, 515,  54,  0   },
-    { 8, 0, 515,  55,  0   },
-    { 9, 0, 515,  56,  0   },
-    { 10,0, 515,  57,  -30 },
-    { 11,0, 515,  58,  0   },
-    { 12,0, 515,  59,  0   },
-    { 13,0, 515,  60,  0   },
-    { 14,0, 512,  84,  0   },
-    { 0, 0, 512,  48,  0   },
-    { 14,0, 512,  68,  -110},
-    { 4, 0, 512,  52,  0   },
-    { 2, 0, 512,  50,  0   },
-    { 4, 0, 512,  52,  -20 },
-    { 3, 0, 512,  51,  -40 },
-    { 5, 0, 512,  53,  -20 },
-    { 0, 0, 514,  48,  0   },
-    { 15,0, 512,  105, -80 },
-    { 0, 0, 513,  48,  0   },
-    { 2, 0, 512,  50,  -70 },
-    { 6, 0, 512,  54,  0   },
-    { 14,0, 512,  55,  0   },
-    { 15,0, 512,  73,  -20 },
-    { 1, 0, 512,  49,  0   },
-    { 3, 0, 512,  51,  -70 },
-    { 1, 0, 513,  49,  0   },
-    { 2, 0, 512,  49,  0   },
-    { 4, 0, 512,  52,  0   },
-    { 5, 0, 512,  53,  0   },
-    { 6, 0, 512,  54,  0   },
-    { 1, 0, 512,  49,  -30 },
-    { 2, 0, 512,  35,  -90 },
-    { 1, 0, 514,  49,  0   },
-    { 2, 0, 514,  50,  0   },
-    { 3, 0, 514,  51,  0   },
-    { 4, 0, 514,  55,  0   },
-    { 5, 0, 514,  52,  -30 },
-    { 6, 0, 514,  54,  -30 },
-    { 7, 0, 514,  53,  -30 },
-    { 8, 0, 514,  56,  0   },
-    { 2, 0, 512,  49,  -60 },
-    { 4, 0, 512,  52,  -60 },
-    { 5, 0, 512,  53,  0   },
-    { 6, 0, 512,  54,  0   },
-    { 7, 0, 512,  55,  0   },
-    { 12,0, 512,  25,  -90 },
-    { 1, 0, 512,  56,  -20 },
-    { 8, 0, 512,  57,  -20 },
-    { 9, 0, 512,  58,  -20 },
-    { 10,0, 512,  59,  -20 },
-    { 11,0, 512,  60,  -20 },
-    { 13,0, 512,  61,  -80 },
-    { 14,0, 512,  61,  -80 },
-    { 3, 0, 512,  15,  -60 },
-    { 0, 0, 512,  48,  -20 },
-    { 15,0, 512,  62,  -20 },
-    { 0, 0, 513,  48,  0   },
-    { 1, 0, 513,  49,  0   },
-    { 2, 0, 513,  50,  0   },
-    { 3, 0, 513,  51,  0   },
-    { 4, 0, 513,  52,  0   },
-    { 5, 0, 513,  53,  0   },
-    { 13,0, 512,  67,  0   },
-    { 2, 0, 512,  50,  0   },
-    { 15,0, 512,  84,  0   },
-    { 1, 0, 512,  49,  0   },
-    { 0, 0, 514,  35,  -20 },
-    { 1, 0, 514,  48,  -30 },
-    { 2, 0, 514,  49,  -30 },
-    { 3, 0, 512,  51,  -20 },
-    { 4, 0, 512,  52,  -20 },
-    { 3, 0, 514,  50,  0   },
-    { 4, 0, 514,  51,  -30 },
-    { 5, 0, 514,  52,  0   },
-    { 2, 0, 512,  50,  0   },
-    { 4, 0, 512,  52,  0   },
-    { 8, 0, 512,  56,  0   },
-    { 9, 0, 512,  57,  0   },
-    { 0, 0, 512,  48,  0   },
-    { 5, 0, 512,  53,  0   },
-    { 6, 0, 512,  54,  0   },
-    { 7, 0, 512,  55,  0   },
-    { 1, 0, 512,  49,  0   },
-    { 2, 0, 512,  50,  0   },
-    { 0, 0, 512,  48,  -60 },
-    { 1, 0, 512,  49,  -20 },
-    { 3, 0, 512,  51,  -10 },
-    { 2, 0, 512,  50,  0   },
-    { 4, 0, 512,  15,  -30 },
-    { 6, 0, 512,  54,  -20 },
-    { 7, 0, 512,  55,  -20 },
-    { 8, 0, 512,  56,  0   },
-    { 12,0, 512,  82,  -40 },
-    { 13,0, 512,  83,  -40 },
-    { 1, 0, 512,  35,  -50 },
-    { 2, 0, 512,  95,  -50 },
-    { 5, 0, 512,  105, -50 },
-    { 14,0, 512,  84,  -20 },
-    { 15,0, 512,  85,  -20 },
-    { 5, 0, 512,  53,  0   },
-    { 0, 0, 512,  48,  0   },
-    { 1, 0, 512,  49,  0   },
-    { 13,0, 513,  83,  0   },
-    { 1, 0, 512,  49,  -30 },
-    { 2, 0, 512,  50,  -80 },
-    { 4, 0, 512,  52,  -60 },
-    { 5, 0, 512,  53,  0   },
-    { 6, 0, 512,  54,  0   },
-    { 7, 0, 512,  55,  0   },
-    { 8, 0, 512,  56,  0   },
-    { 0, 0, 512,  48,  0   },
-    { 3, 0, 512,  51,  0   },
-    { 9, 0, 512,  57,  0   },
-    { 10,0, 512,  58,  0   },
-    { 11,0, 512,  59,  0   },
-    { 12,0, 512,  60,  0   },
-    { 13,0, 512,  61,  0   },
-    { 14,0, 512,  62,  0   },
-    { 0, 0, 513,  48,  0   },
-    { 1, 0, 513,  49,  0   },
-    { 2, 0, 513,  50,  0   },
-    { 3, 0, 513,  51,  0   },
-    { 4, 0, 513,  52,  0   },
-    { 5, 0, 513,  53,  -60 },
-    { 6, 0, 513,  54,  -50 },
-    { 7, 0, 513,  55,  -20 },
-    { 15,0, 512,  63,  0   },
-    { 2, 0, 512,  50,  -50 },
-    { 14,0, 512,  72,  0   },
-    { 0, 0, 512,  48,  0   },
-    { 2, 0, 512,  50,  -30 },
-    { 4, 0, 512,  52,  0   },
-    { 5, 0, 512,  53,  0   },
-    { 6, 0, 512,  54,  0   },
-    { 7, 0, 512,  55,  0   },
-    { 0, 0, 513,  48,  -30 },
-    { 1, 0, 513,  49,  0   },
-    { 2, 0, 513,  50,  0   },
-    { 3, 0, 513,  51,  0   },
-    { 4, 0, 513,  52,  0   },
-    { 5, 0, 513,  53,  0   },
-    { 6, 0, 513,  54,  -30 },
-    { 7, 0, 513,  55,  0   },
-    { 9, 0, 513,  57,  0   },
-    { 10,0, 513,  58,  0   },
-    { 11,0, 513,  59,  0   },
-    { 8, 0, 512,  61,  0   },
-    { 1, 0, 512,  49,  0   },
-    { 3, 0, 512,  51,  0   },
-    { 14,0, 512,  72,  0   },
-    { 2, 0, 512,  50,  -20 },
-    { 6, 0, 512,  54,  0   },
-    { 1, 0, 512,  49,  0   },
-    { 14,0, 512,  73,  0   },
-    { 12,0, 513,  60,  0   },
-    { 13,0, 513,  61,  0   },
-    { 14,0, 513,  62,  0   },
-    { 15,0, 512,  75,  0   },
-    { 1, 0, 512,  49,  0   },
-    { 2, 0, 512,  50,  0   },
-    { 3, 0, 512,  51,  0   },
-    { 5, 0, 512,  53,  0   },
-    { 6, 0, 512,  54,  0   },
-    { 7, 0, 512,  55,  0   },
-    { 8, 0, 512,  56,  -20 },
-    { 9, 0, 512,  57,  0   },
-    { 10,0, 512,  58,  -60 },
-    { 11,0, 512,  59,  -60 },
-    { 12,0, 512,  60,  -10 },
-    { 13,0, 512,  61,  -10 },
-    { 14,0, 512,  62,  -20 },
-    { 15,0, 512,  63,  -20 },
-    { 0, 0, 513,  48,  -30 },
-    { 1, 0, 513,  49,  -30 },
-    { 2, 0, 513,  50,  -30 },
-    { 3, 0, 513,  51,  -30 },
-    { 4, 0, 513,  52,  -50 },
-    { 5, 0, 513,  52,  -50 },
-    { 6, 0, 513,  53,  -50 },
-    { 7, 0, 513,  53,  -50 },
-    { 0, 0, 514,  48,  -80 },
-    { 1, 0, 514,  49,  -60 },
-    { 2, 0, 514,  50,  -60 },
-    { 3, 0, 514,  51,  -60 },
-    { 4, 0, 514,  52,  -60 },
-    { 5, 0, 514,  53,  -60 },
-    { 6, 0, 514,  54,  -60 },
-    { 8, 0, 513,  54,  -30 }
+s_VabInfo g_Vab_InfoTable[420] = {
+    { 0,  0, 0,                                              0, 0    },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_SpecialScreen, 0), 48,  -30 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_SpecialScreen, 0), 48,  -30 },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        50,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        51,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        50,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        50,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        50,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        51,  -50 },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        52,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        53,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        48,  -40 },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        48,  -50 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        49,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Weapon, 0),        50,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     49,  -10 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     50,  -10 },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     51,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     52,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     54,  -20 },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     5,   0   },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     15,  -40 },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     25,  -50 },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     58,  0   },
+    { 11, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     59,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     62,  0   },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     63,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     48,  -40 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     49,  -60 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     50,  -40 },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     51,  -100},
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     52,  -80 },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     54,  -70 },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     55,  -70 },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     56,  -60 },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     57,  0   },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     58,  0   },
+    { 11, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     59,  0   },
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     60,  0   },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     15,  -80 },
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     95,  -30 },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     5,   -60 },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 0),     60,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     72,  0   },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 1),     73,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     50,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     51,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     52,  -20 },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     54,  0   },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     55,  0   },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     56,  -50 },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     57,  0   },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     75,  -20 },
+    { 11, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     84,  0   },
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     85,  0   },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     86,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     87,  0   },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     57,  0   },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_BaseAudio, 2),     58,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       5,   -60 },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       51,  -20 },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       52,  -20 },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       54,  0   },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       57,  0   },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       58,  -100},
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       60,  0   },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       61,  -20 },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       50,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       51,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       52,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       53,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       53,  0   },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       55,  0   },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       56,  0   },
+    { 11, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       59,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       62,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       50,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       51,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       55,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       52,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       54,  0   },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       53,  -30 },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       56,  0   },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       57,  0   },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       63,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       48,  -50 },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       95,  -80 },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       105, 0   },
+    { 11, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       59,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       62,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       50,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       51,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       52,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       54,  0   },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       57,  0   },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       58,  0   },
+    { 11, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       59,  0   },
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       60,  0   },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       61,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       15,  -80 },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       50,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       51,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       52,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       54,  0   },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       55,  0   },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       25,  -30 },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       56,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       51,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       52,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       53,  -50 },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       54,  -10 },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       55,  0   },
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       60,  -30 },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       38,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       25,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 4),       48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 4),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 4),       50,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 4),       51,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 4),       52,  0   },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 4),       55,  0   },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       56,  0   },
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       82,  -20 },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       83,  -20 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  0   },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       55,  0   },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       56,  -20 },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       57,  0   },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       72,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       51,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       52,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       53,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       54,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       56,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       59,  0   },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       61,  0   },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       62,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       35,  -120},
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       63,  0   },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       64,  0   },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       84,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       36,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       37,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       38,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       39,  0   },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       61,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       75,  -70 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       76,  -70 },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       84,  -40 },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       85,  -40 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       74,  -30 },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       72,  -40 },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       73,  -30 },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       56,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       52,  -20 },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       76,  0   },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       84,  -110},
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       49,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       50,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       51,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       36,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       5,   -30 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       37,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       39,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       40,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       41,  -80 },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       42,  0   },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       43,  0   },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       44,  0   },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       65,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       54,  0   },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       55,  0   },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       56,  0   },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       63,  -80 },
+    { 11, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       59,  -30 },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       85,  -70 },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       55,  -20 },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       56,  -20 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  -90 },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       52,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       54,  -40 },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       72,  0   },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       56,  0   },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       57,  0   },
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       59,  0   },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       58,  0   },
+    { 11, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       60,  -30 },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       48,  -30 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       49,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       50,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       50,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       51,  -30 },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       52,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       35,  -80 },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       54,  0   },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       55,  0   },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       56,  0   },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       57,  -30 },
+    { 11, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       58,  0   },
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       59,  0   },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 3),       60,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       84,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       48,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       68,  -110},
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       52,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       52,  -20 },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       51,  -40 },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       53,  -20 },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       48,  0   },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       105, -80 },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       48,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  -70 },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       54,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       55,  0   },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       73,  -20 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       51,  -70 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       52,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       54,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  -30 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       35,  -90 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       50,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       51,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       55,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       52,  -30 },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       54,  -30 },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       53,  -30 },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       56,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  -60 },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       52,  -60 },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       54,  0   },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       55,  0   },
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       25,  -90 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       56,  -20 },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       57,  -20 },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       58,  -20 },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       59,  -20 },
+    { 11, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       60,  -20 },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       61,  -80 },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       61,  -80 },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       15,  -60 },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       48,  -20 },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       62,  -20 },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       50,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       51,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       52,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       53,  0   },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       67,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  0   },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       84,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       35,  -20 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       48,  -30 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       49,  -30 },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       51,  -20 },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       52,  -20 },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       50,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       51,  -30 },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       52,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       52,  0   },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       56,  0   },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       57,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       48,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       54,  0   },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       55,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       48,  -60 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  -20 },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       51,  -10 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       15,  -30 },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       54,  -20 },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       55,  -20 },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       56,  0   },
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       82,  -40 },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       83,  -40 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       35,  -50 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       95,  -50 },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       105, -50 },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       84,  -20 },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       85,  -20 },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       53,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  0   },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       83,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  -30 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  -80 },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       52,  -60 },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       54,  0   },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       55,  0   },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       56,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       48,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       51,  0   },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       57,  0   },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       58,  0   },
+    { 11, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       59,  0   },
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       60,  0   },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       61,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       62,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       48,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       50,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       51,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       52,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       53,  -60 },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       54,  -50 },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       55,  -20 },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       63,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  -50 },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       72,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       48,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  -30 },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       52,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       54,  0   },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       55,  0   },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       48,  -30 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       50,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       51,  0   },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       52,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       54,  -30 },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       55,  0   },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       57,  0   },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       58,  0   },
+    { 11, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       59,  0   },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       61,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       51,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       72,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  -20 },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       54,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       73,  0   },
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       60,  0   },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       61,  0   },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       62,  0   },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       75,  0   },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       49,  0   },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       50,  0   },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       51,  0   },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       53,  0   },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       54,  0   },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       55,  0   },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       56,  -20 },
+    { 9,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       57,  0   },
+    { 10, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       58,  -60 },
+    { 11, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       59,  -60 },
+    { 12, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       60,  -10 },
+    { 13, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       61,  -10 },
+    { 14, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       62,  -20 },
+    { 15, 0, TYPE_AND_PROG_SFX(AudioType_Ambient, 0),       63,  -20 },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       48,  -30 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       49,  -30 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       50,  -30 },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       51,  -30 },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       52,  -50 },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       52,  -50 },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       53,  -50 },
+    { 7,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       53,  -50 },
+    { 0,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       48,  -80 },
+    { 1,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       49,  -60 },
+    { 2,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       50,  -60 },
+    { 3,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       51,  -60 },
+    { 4,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       52,  -60 },
+    { 5,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       53,  -60 },
+    { 6,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 2),       54,  -60 },
+    { 8,  0, TYPE_AND_PROG_SFX(AudioType_Ambient, 1),       54,  -30 }
 };
 
 void Sd_XaAudioPlayCmdAdd(u16 sfx) // 0x80046D3C
