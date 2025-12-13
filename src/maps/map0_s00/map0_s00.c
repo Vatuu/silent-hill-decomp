@@ -961,7 +961,7 @@ bool func_800D0600(void) // 0x800D0600
 
 #include "maps/shared/Ai_Stalker_Init.h" // 0x800D309C
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800D3308_0_s00); // 0x800D3308
+#include "maps/shared/sharedFunc_800D3308_0_s00.h" // 0x800D3308
 
 #include "maps/shared/sharedFunc_800D3B44_0_s00.h" // 0x800D3B44
 

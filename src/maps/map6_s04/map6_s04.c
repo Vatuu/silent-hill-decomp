@@ -39,7 +39,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D1DBC_1_s00
 
 #include "maps/shared/Ai_Stalker_Init.h" // 0x800D36F4
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D3308_0_s00); // 0x800D3960
+#include "maps/shared/sharedFunc_800D3308_0_s00.h" // 0x800D3960
 
 #include "maps/shared/sharedFunc_800D3B44_0_s00.h" // 0x800D419C
 
