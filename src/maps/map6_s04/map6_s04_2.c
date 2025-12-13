@@ -185,7 +185,50 @@ INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04_2", D_800CB69C);
 
 INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04_2", D_800CB6AC);
 
+// TODO: rodata mismatch
+#ifdef NON_MATCHING
+void func_800E0204(void) // 0x800E0204
+{
+    if (D_800ED588 == 0)
+    {
+        if (!Fs_QueueDoThingWhenEmpty())
+        {
+            return;
+        }
+
+        D_800ED588++;
+        func_800DE274();
+    }
+
+    switch (D_800ED588)
+    {
+        case 1:
+        case 2:
+        case 6:
+            break;
+
+        case 3:
+            func_800DE95C();
+            func_800E0164();
+            func_800DFB44();
+            break;
+
+        case 4:
+            func_800DE95C();
+            func_800E0164();
+            func_800DE5CC();
+            break;
+
+        case 5:
+            func_800DE95C();
+            func_800E0164();
+            func_800E00F4();
+            break;
+    }
+}
+#else
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04_2", func_800E0204);
+#endif
 
 void func_800E02E0(void) // 0x800E02E0
 {
