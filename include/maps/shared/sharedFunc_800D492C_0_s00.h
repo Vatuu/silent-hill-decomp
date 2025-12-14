@@ -1,45 +1,46 @@
 void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
 {
-    s16  x6_8;
-    s32  z_F0;
-    s32  x_F0;
-    bool condCombo;
-    s32  sqr;
-    s32  maxMag;
-    s32  var_s5;
-    s32  dx;
-    s32  dz;
+    q3_12  angle;
+    q19_12 offsetX;
+    q19_12 offsetZ;
+    bool   condCombo;
+    q19_12 dist0;
+    q19_12 magMax;
+    q19_12 dist1;
+    q19_12 deltaX;
+    q19_12 deltaZ;
 
-    sqr = SquareRoot0(SQUARE((g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx) >> 6) +
-                      SQUARE((g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) >> 6))
-          << 6;
+    // TODO: Demagic everything.
 
-    if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3) == 0)
+    dist0 = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
+                                g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
+
+    if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 0)
     {
-        var_s5    = 0x5800;
+        dist1     = 0x5800;
         condCombo = func_8006FD90(chara, 0, 0x7800, 0x7800);
     }
-    else if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3) == 2)
+    else if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 2)
     {
 #if defined(MAP1_S00) || defined(MAP1_S01)
-        var_s5    = 0x4800;
+        dist1     = 0x4800;
         condCombo = func_8006FD90(chara, 0, 0xC000, 0);
 #else
-        var_s5    = 0x6000;
+        dist1     = 0x6000;
         condCombo = func_8006FD90(chara, 0, 0x10000, 0);
 #endif
     }
     else
     {
 #if defined(MAP1_S00) || defined(MAP1_S01)
-        var_s5 = 0x1000;
+        dist1 = 0x1000;
 #else
-        var_s5 = 0x1333;
+        dist1 = 0x1333;
 #endif
         condCombo = func_8006FD90(chara, 1, 0x666, 0x666);
     }
 
-    condCombo |= func_80070360(chara, sqr, 0xCCC);
+    condCombo |= func_80070360(chara, dist0, 0xCCC);
 
     if (!(chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & 0x2000))
     {
@@ -53,29 +54,29 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
         }
     }
 
-    x_F0 = chara->position_18.vx - chara->properties_E4.player.field_F0;
-    z_F0 = chara->position_18.vz - chara->properties_E4.player.field_F4;
+    offsetX = chara->position_18.vx - chara->properties_E4.player.field_F0;
+    offsetZ = chara->position_18.vz - chara->properties_E4.player.field_F4;
 
-    maxMag = MAX(ABS(x_F0), ABS(z_F0));
+    magMax = MAX(ABS(offsetX), ABS(offsetZ));
 
     if (!(chara->properties_E4.player.afkTimer_E8 & 0x18))
     {
-        if (!(Rng_GenerateInt(Rng_Rand16(), 0, 0x1FF) && maxMag <= Q12(4.0f)) ||
-            (!Rng_GenerateInt(Rng_Rand16(), 0, 0x7F) && Rng_GenerateInt((u32)Rng_Rand16(), 0, 0xFFF) < FP_TO(maxMag, Q12_SHIFT) / Q12(4.0f)))
+        if (!(Rng_GenerateInt(Rng_Rand16(), 0, 0x1FF) && magMax <= Q12(4.0f)) ||
+            (!Rng_GenerateInt(Rng_Rand16(), 0, 0x7F) && Rng_GenerateInt((u32)Rng_Rand16(), 0, 0xFFF) < FP_TO(magMax, Q12_SHIFT) / Q12(4.0f)))
         {
             if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & 0x800)
             {
-                dx = Rng_GenerateInt(Rng_Rand16(), Q12(-0.5f), Q12(0.5f) - 1) - x_F0;
-                dz = Rng_GenerateInt(Rng_Rand16(), Q12(-0.5f), Q12(0.5f) - 1) - z_F0;
+                deltaX = Rng_GenerateInt(Rng_Rand16(), Q12(-0.5f), Q12(0.5f) - 1) - offsetX;
+                deltaZ = Rng_GenerateInt(Rng_Rand16(), Q12(-0.5f), Q12(0.5f) - 1) - offsetZ;
 
-                chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = ratan2(dx, dz);
+                chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = ratan2(deltaX, deltaZ);
             }
             else
             {
-                dx = Rng_GenerateInt(Rng_Rand16(), Q12(-4.0f), Q12(4.0f) - 1) - x_F0;
-                dz = Rng_GenerateInt(Rng_Rand16(), Q12(-4.0f), Q12(4.0f) - 1) - z_F0;
+                deltaX = Rng_GenerateInt(Rng_Rand16(), Q12(-4.0f), Q12(4.0f) - 1) - offsetX;
+                deltaZ = Rng_GenerateInt(Rng_Rand16(), Q12(-4.0f), Q12(4.0f) - 1) - offsetZ;
                 
-                chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = ratan2(dx, dz);
+                chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = ratan2(deltaX, deltaZ);
             }
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 8;
         }
@@ -94,11 +95,11 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
     }
 
     // Smoothly rotate toward target direction
-    x6_8 = func_8005BF38(chara->properties_E4.larvalStalker.properties_E8[6].val16[0] - chara->rotation_24.vy);
+    angle = func_8005BF38(chara->properties_E4.larvalStalker.properties_E8[6].val16[0] - chara->rotation_24.vy);
 
-    if (((g_DeltaTime0 >> 4) + 1 < ABS(x6_8)))
+    if (((g_DeltaTime0 >> 4) + 1 < ABS(angle)))
     {
-        if (x6_8 > 0)
+        if (angle > 0)
         {
             chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x200, Q12_SHIFT);
         }
@@ -125,7 +126,7 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= 0xFFEF;
         }
 
-        if (sqr < 0x2000 && sqr < var_s5 && !func_800700F8(chara, &g_SysWork.player_4C.chara_0))
+        if (dist0 < 0x2000 && dist0 < dist1 && !func_800700F8(chara, &g_SysWork.player_4C.chara_0))
         {
             chara->properties_E4.player.runTimer_F8                       = 0x5000;
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1;
@@ -152,7 +153,7 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
 
             if (((!Rng_TestProbabilityBits(4) && chara->properties_E4.player.runTimer_F8 > 0x1000) && (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & 2)) ||
                 (!Rng_TestProbabilityBits(4) && chara->properties_E4.player.runTimer_F8 > 0x2800) ||
-                (!Rng_TestProbabilityBits(5) && ((var_s5 >> 1) < sqr)))
+                (!Rng_TestProbabilityBits(5) && ((dist1 >> 1) < dist0)))
             {
                 if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & 2)
                 {

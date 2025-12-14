@@ -2,25 +2,26 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
 {
     VECTOR3 vec0;
     q3_12   angle;
-    s16     var_s6;
+    q3_12   var_s6;
     q19_12  dist;
     s32     i;
     u32     animStatus;
 
+    // TODO: Demagic everything.
+
     chara->field_E1_0 = 3;
 
-    Chara_MoveSpeedUpdate(chara, 0x1800);
+    Chara_MoveSpeedUpdate(chara, Q12(1.5f));
 
     dist = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
                                g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
 
     var_s6 = 0;
-
     angle = func_8005BF38(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
                                  g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
                           chara->rotation_24.vy);
 
-    if (ABS(angle) < 0x200)
+    if (ABS(angle) < FP_ANGLE(45.0f))
     {
         if (chara->model_0.anim_4.status_0 == 0x45 && dist >= 0x87B)
         {
@@ -57,7 +58,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
         {
             if (dist < 0x851 || dist > 0x8A3)
             {
-                var_s6 = CLAMP_HIGH(FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1000, Q12_SHIFT), dist - 0x87A);
+                var_s6 = CLAMP_HIGH(FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT), dist - 0x87A);
             }
             chara->properties_E4.player.field_104 = chara->model_0.anim_4.time_4 + Q12(-83.0f);
         }
@@ -65,7 +66,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
         {
             if (dist < 0x5EB || dist > 0x63D)
             {
-                var_s6 = CLAMP_HIGH(FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x1000, Q12_SHIFT), dist - 0x614);
+                var_s6 = CLAMP_HIGH(FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT), dist - 0x614);
             }
             chara->properties_E4.player.field_104 = chara->model_0.anim_4.time_4 + Q12(-70.0f);
         }
@@ -88,7 +89,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
             chara->field_E1_0                                            = 3;
 
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 0x40;
-            chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= 0xffdf;
+            chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= 0xFFDF;
         }
         else
         {

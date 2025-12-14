@@ -1527,7 +1527,7 @@ STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 
 typedef union
 {
-    s32 field_0;
+    s32 field_0; // Flags?
     struct
     {
         u8 field_0; // Flags.
