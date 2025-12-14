@@ -52,7 +52,7 @@ void sharedFunc_800D7D0C_2_s00(s_SubCharacter* chara) // 0x800D7D0C
             if (chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy > Q12(-0.2f) &&
                 chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy < Q12(0.8f))
             {
-                distTest = chara->field_D4 + Q12(0.15f);
+                distTest = chara->field_D4.field_0 + Q12(0.15f);
             }
 
             dist1    = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);

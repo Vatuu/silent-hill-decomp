@@ -2741,7 +2741,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
     }
 
     unkPos.vx = (g_SysWork.npcs_1A0[npxIdx].position_18.vx + g_SysWork.npcs_1A0[npxIdx].field_D8.offsetX_0) - unkOffset->vx;
-    unkPos.vy = (g_SysWork.npcs_1A0[npxIdx].position_18.vy + g_SysWork.npcs_1A0[npxIdx].field_CE)           - unkOffset->vy;
+    unkPos.vy = (g_SysWork.npcs_1A0[npxIdx].position_18.vy + g_SysWork.npcs_1A0[npxIdx].field_C8.field_6) - unkOffset->vy;
     unkPos.vz = (g_SysWork.npcs_1A0[npxIdx].position_18.vz + g_SysWork.npcs_1A0[npxIdx].field_D8.offsetZ_2) - unkOffset->vz;
 
     mag0 = Math_Vector2MagCalc(unkPos.vx, unkPos.vz);
@@ -2762,7 +2762,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
         }
 
         unkPos.vx = (g_SysWork.npcs_1A0[i].position_18.vx + g_SysWork.npcs_1A0[i].field_D8.offsetX_0) - unkOffset->vx;
-        unkPos.vy = (g_SysWork.npcs_1A0[i].position_18.vy + g_SysWork.npcs_1A0[i].field_CE)           - unkOffset->vy;
+        unkPos.vy = (g_SysWork.npcs_1A0[i].position_18.vy + g_SysWork.npcs_1A0[i].field_C8.field_6) - unkOffset->vy;
         unkPos.vz = (g_SysWork.npcs_1A0[i].position_18.vz + g_SysWork.npcs_1A0[i].field_D8.offsetZ_2) - unkOffset->vz;
 
         angle2 = ratan2(unkPos.vx, unkPos.vz);
@@ -3479,10 +3479,10 @@ void func_8005E89C(void) // 0x8005E89C
                                             -FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT),
                                              FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT));
 
-            ptr->field_64[i] = CLAMP_CUSTOM((chara->position_18.vy + chara->field_CE) - D_800C42E8[i].field_2,
-                                            (chara->position_18.vy + chara->field_CE) - curPtr->field_2,
+            ptr->field_64[i] = CLAMP_CUSTOM((chara->position_18.vy + chara->field_C8.field_6) - D_800C42E8[i].field_2,
+                                            (chara->position_18.vy + chara->field_C8.field_6) - curPtr->field_2,
                                             -FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT) >> 4,
-                                             FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT));
+                                            FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT));
 
             ptr->field_94[i] = CLAMP_CUSTOM((chara->position_18.vz + chara->field_D8.offsetZ_2) - D_800C42E8[i].field_8,
                                             (chara->position_18.vz + chara->field_D8.offsetZ_2) - curPtr->field_8,
@@ -3838,7 +3838,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
             D_800C42E8[i].field_0 = 1;
             D_800C42E8[i].field_1 = func_8005C7D0(chara);
             D_800C42E8[i].field_4 = chara->position_18.vx + chara->field_D8.offsetX_0;
-            D_800C42E8[i].field_2 = chara->position_18.vy + chara->field_CE;
+            D_800C42E8[i].field_2 = chara->position_18.vy + chara->field_C8.field_6;
             D_800C42E8[i].field_8 = chara->position_18.vz + chara->field_D8.offsetZ_2;
         }
     }
@@ -7200,9 +7200,9 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0
         return 1;
     }
 
-    sp28.rotation_C.vy = chara->field_C8;
-    sp28.rotation_C.vx = chara->field_CA;
-    sp28.rotation_C.vz = chara->field_D4;
+    sp28.rotation_C.vy = chara->field_C8.field_0;
+    sp28.rotation_C.vx = chara->field_C8.field_2;
+    sp28.rotation_C.vz = chara->field_D4.field_0;
 
     sp28.field_12 = chara->field_E1_0;
 
@@ -7384,7 +7384,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 
         for (curChara = charas; curChara < &charas[charaCount]; curChara++)
         {
             chara  = *curChara;
-            var_a0 = (chara->field_D4 >> 4) + sp18.field_4.field_28;
+            var_a0 = (chara->field_D4.field_0 >> 4) + sp18.field_4.field_28;
 
             if (chara->field_E1_0 < (u32)sp18.field_4.field_0)
             {
@@ -7394,8 +7394,8 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 
             sp18.field_98.field_0 = Q12_TO_Q8(chara->position_18.vx + chara->field_D8.offsetX_4);
             sp18.field_9C.field_0 = Q12_TO_Q8(chara->position_18.vz + chara->field_D8.offsetZ_6);
 
-            sp18.field_A0.s_1.field_0 = Q12_TO_Q8(chara->field_C8 + chara->position_18.vy);
-            sp18.field_A0.s_1.field_2 = Q12_TO_Q8(chara->field_CA + chara->position_18.vy);
+            sp18.field_A0.s_1.field_0 = Q12_TO_Q8(chara->field_C8.field_0 + chara->position_18.vy);
+            sp18.field_A0.s_1.field_2 = Q12_TO_Q8(chara->field_C8.field_2 + chara->position_18.vy);
             sp18.field_A0.s_1.field_4 = var_a0;
             sp18.field_A0.s_1.field_6 = chara->field_E1_0;
             sp18.field_A0.s_1.field_8 = &chara->field_E0;
@@ -7498,8 +7498,8 @@ void func_8006A940(VECTOR3* offset, s_func_8006AB50* arg1, s_SubCharacter** char
             continue;
         }
 
-        temp3 = curChara->field_C8 + curChara->position_18.vy;
-        temp4 = curChara->field_CA + curChara->position_18.vy;
+        temp3 = curChara->field_C8.field_0 + curChara->position_18.vy;
+        temp4 = curChara->field_C8.field_2 + curChara->position_18.vy;
 
         // TODO: Rotation + position? Seems wrong.
         temp6 = arg1->rotation_C.vy + arg1->position_0.vy;
@@ -7513,7 +7513,7 @@ void func_8006A940(VECTOR3* offset, s_func_8006AB50* arg1, s_SubCharacter** char
         posZ = (curChara->position_18.vz + curChara->field_D8.offsetZ_6) - arg1->position_0.vz;
 
         temp2 = Vc_VectorMagnitudeCalc(posX, Q12(0.0f), posZ);
-        if (((curChara->field_D4 + arg1->rotation_C.vz) + FP_ANGLE(36.0f)) < temp2)
+        if (((curChara->field_D4.field_0 + arg1->rotation_C.vz) + FP_ANGLE(36.0f)) < temp2)
         {
             continue;
         }
@@ -9842,23 +9842,23 @@ void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* chara) //
 
     if (arg1 == 1)
     {
-        arg0->field_C = Q12_TO_Q8(chara->field_D4);
+        arg0->field_C = Q12_TO_Q8(chara->field_D4.field_0);
         offsetX       = chara->field_D8.offsetX_4;
         offsetZ       = chara->field_D8.offsetZ_6;
-        unkY          = chara->position_18.vy + chara->field_CA;
+        unkY          = chara->position_18.vy + chara->field_C8.field_2;
     }
     else
     {
-        arg0->field_C = Q12_TO_Q8(chara->field_D6);
+        arg0->field_C = Q12_TO_Q8(chara->field_D4.field_2);
         offsetX       = chara->field_D8.offsetX_0;
         offsetZ       = chara->field_D8.offsetZ_2;
-        unkY          = chara->position_18.vy + chara->field_CC;
+        unkY          = chara->position_18.vy + chara->field_C8.field_4;
     }
 
     arg0->field_A = Q12_TO_Q8(unkY);
     arg0->field_0 = Q12_TO_Q8(chara->position_18.vx + offsetX);
     arg0->field_4 = Q12_TO_Q8(chara->position_18.vz + offsetZ);
-    arg0->field_8 = Q12_TO_Q8(chara->position_18.vy + chara->field_C8);
+    arg0->field_8 = Q12_TO_Q8(chara->position_18.vy + chara->field_C8.field_0);
 }
 
 void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara) // 0x8006EEB8
@@ -10445,12 +10445,12 @@ bool func_8006FD90(s_SubCharacter* chara, s32 arg1, q19_12 arg2, q19_12 arg3) //
     if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 2)
     {
         sp40.vy = 0;
-        sp30.vy = g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_C8;
+        sp30.vy = g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_C8.field_0;
     }
     else
     {
-        sp30.vy = chara->position_18.vy + chara->field_CE;
-        sp40.vy = (g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_CE) - (chara->position_18.vy - chara->field_CE);
+        sp30.vy = chara->position_18.vy + chara->field_C8.field_6;
+        sp40.vy = (g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_C8.field_6) - (chara->position_18.vy - chara->field_C8.field_6);
     }
 
     // Maybe `sp10` is not `VECTOR3`. Might need to rewrite this whole function if its `s_func_800700F8_2`?
@@ -10613,16 +10613,16 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     // Compute inverse alpha.
     invAlpha = Q12(1.0f) - alpha;
 
-    chara->field_C8           = FP_FROM((arg1->field_0 * invAlpha) + (arg2->field_0 * alpha), Q12_SHIFT);
-    chara->field_CA           = FP_FROM((arg1->field_2 * invAlpha) + (arg2->field_2 * alpha), Q12_SHIFT);
-    chara->field_CC           = FP_FROM((arg1->field_4 * invAlpha) + (arg2->field_4 * alpha), Q12_SHIFT);
-    chara->field_CE           = FP_FROM((arg1->field_6 * invAlpha) + (arg2->field_6 * alpha), Q12_SHIFT);
+    chara->field_C8.field_0   = FP_FROM((arg1->field_0 * invAlpha) + (arg2->field_0 * alpha), Q12_SHIFT);
+    chara->field_C8.field_2   = FP_FROM((arg1->field_2 * invAlpha) + (arg2->field_2 * alpha), Q12_SHIFT);
+    chara->field_C8.field_4   = FP_FROM((arg1->field_4 * invAlpha) + (arg2->field_4 * alpha), Q12_SHIFT);
+    chara->field_C8.field_6   = FP_FROM((arg1->field_6 * invAlpha) + (arg2->field_6 * alpha), Q12_SHIFT);
     chara->field_D8.offsetX_4 = FP_FROM((arg1->field_10 * invAlpha) + (arg2->field_10 * alpha), Q12_SHIFT);
     chara->field_D8.offsetZ_6 = FP_FROM((arg1->field_12 * invAlpha) + (arg2->field_12 * alpha), Q12_SHIFT);
-    chara->field_D4           = FP_FROM((arg1->field_8 * invAlpha) + (arg2->field_8 * alpha), Q12_SHIFT);
+    chara->field_D4.field_0   = FP_FROM((arg1->field_8 * invAlpha) + (arg2->field_8 * alpha), Q12_SHIFT);
     chara->field_D8.offsetX_0 = FP_FROM((arg1->field_C * invAlpha) + (arg2->field_C * alpha), Q12_SHIFT);
     chara->field_D8.offsetZ_2 = FP_FROM((arg1->field_E * invAlpha) + (arg2->field_E * alpha), Q12_SHIFT);
-    chara->field_D6           = FP_FROM((arg1->field_A * invAlpha) + (arg2->field_A * alpha), Q12_SHIFT);
+    chara->field_D4.field_2   = FP_FROM((arg1->field_A * invAlpha) + (arg2->field_A * alpha), Q12_SHIFT);
 }
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 scaleZ) // 0x800705E4

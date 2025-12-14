@@ -451,7 +451,7 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 
     chara->moveSpeed_38       = 0;
     chara->headingAngle_3C    = chara->rotation_24.vy;
-    chara->field_D4           = Q12(0.3f);
+    chara->field_D4.field_0   = Q12(0.3f);
     chara->field_E1_0         = 4;
     chara->field_D8.offsetX_4 = Q12(0.0f);
     chara->field_D8.offsetZ_6 = Q12(0.0f);
@@ -627,10 +627,10 @@ void func_800DEFE8(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800DEFE8
     }
 
     yPos            = chara->position_18.vy;
-    chara->field_CA = yPos;
-    chara->field_CC = yPos;
-    chara->field_C8 = yPos - Q12(1.0f);
-    chara->field_CE = yPos - Q12(0.5f);
+    chara->field_C8.field_2 = yPos;
+    chara->field_C8.field_4 = yPos;
+    chara->field_C8.field_0 = yPos - Q12(1.0f);
+    chara->field_C8.field_6 = yPos - Q12(0.5f);
 }
 
 void func_800DF044(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DF044
@@ -749,7 +749,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     }
 
     chara->moveSpeed_38       = 0;
-    chara->field_D4           = Q12(0.3f);
+    chara->field_D4.field_0   = Q12(0.3f);
     chara->field_D8.offsetX_4 = Q12(0.0f);
     chara->field_D8.offsetZ_6 = Q12(0.0f);
     chara->field_E1_0         = 4;
@@ -916,10 +916,10 @@ void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0888
     }
 
     posY            = chara->position_18.vy;
-    chara->field_CA = posY;
-    chara->field_CC = posY;
-    chara->field_C8 = posY - Q12(1.0f);
-    chara->field_CE = posY - Q12(0.5f);
+    chara->field_C8.field_2 = posY;
+    chara->field_C8.field_4 = posY;
+    chara->field_C8.field_0 = posY - Q12(1.0f);
+    chara->field_C8.field_6 = posY - Q12(0.5f);
 }
 
 void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800E08E4

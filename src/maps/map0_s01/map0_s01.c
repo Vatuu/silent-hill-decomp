@@ -445,7 +445,7 @@ void func_800D4420(s_SubCharacter* chara) // 0x800D4420
             deltaY = chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy;
             if (deltaY > Q12(-0.2f) && deltaY < Q12(0.8f))
             {
-                dist0 = chara->field_D4 + Q12(0.15f);
+                dist0 = chara->field_D4.field_0 + Q12(0.15f);
             }
 
             dist = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
@@ -834,9 +834,9 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D7EBC_0_s01
 
 #include "maps/shared/sharedFunc_800D81B0_0_s01.h" // 0x800D81B0
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D81D0_0_s01);
+#include "maps/shared/sharedFunc_800D81D0_0_s01.h" // 0x800D81D0
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D8244_0_s01);
+#include "maps/shared/sharedFunc_800D8244_0_s01.h" // 0x800D8244
 
 INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D82B8_0_s01); // 0x800D82B8
 

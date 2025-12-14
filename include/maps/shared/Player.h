@@ -942,7 +942,7 @@ void Player_ControlFreeze(void)
 
     sharedData_800E39D8_0_s00 = 0;
 
-    playerChara->field_D6                                       = Q12(0.0f);
+    playerChara->field_D4.field_2                               = Q12(0.0f);
     g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
     playerChara->flags_3E                                      |= CharaFlag_Unk4;
     playerChara->field_E1_0                                     = 4;
@@ -1009,10 +1009,10 @@ void Player_ControlUnfreeze(bool setIdle)
 
     g_SysWork.playerCombatInfo_38.isAiming_13 = false;
 
-    player->field_D6                                            = Q12(0.23f);
-    g_SysWork.player_4C.chara_0.field_C8                        = Q12(-1.6f);
-    g_SysWork.player_4C.chara_0.field_CE                        = Q12(-1.1f);
-    g_SysWork.player_4C.chara_0.field_CA                        = Q12(0.0f);
+    player->field_D4.field_2                                    = Q12(0.23f);
+    g_SysWork.player_4C.chara_0.field_C8.field_0                = Q12(-1.6f);
+    g_SysWork.player_4C.chara_0.field_C8.field_6                = Q12(-1.1f);
+    g_SysWork.player_4C.chara_0.field_C8.field_2                = Q12(0.0f);
     g_SysWork.player_4C.chara_0.field_D8.offsetZ_6              = Q12(0.0f);
     g_SysWork.player_4C.chara_0.field_D8.offsetX_4              = Q12(0.0f);
     g_SysWork.player_4C.chara_0.field_D8.offsetZ_2              = Q12(0.0f);
@@ -1558,13 +1558,13 @@ bool sharedFunc_800D2E94_0_s00(void)
         {
             npcChara->health_B0 = Q12(400.0f);
             npcChara->model_0.state_2++;
-            npcChara->field_C8           = Q12(-0.2f);
-            npcChara->field_CA           = Q12(0.2f);
-            npcChara->field_D4           = Q12(0.05f);
-            npcChara->field_D6           = Q12(0.5f);
+            npcChara->field_C8.field_0   = Q12(-0.2f);
+            npcChara->field_C8.field_2   = Q12(0.2f);
+            npcChara->field_D4.field_0   = Q12(0.05f);
+            npcChara->field_D4.field_2   = Q12(0.5f);
             npcChara->field_40           = 0;
-            npcChara->field_CE           = 0;
-            npcChara->field_D0           = 0;
+            npcChara->field_C8.field_6   = 0;
+            npcChara->field_C8.field_8   = 0;
             npcChara->field_D8.offsetZ_6 = Q12(0.0f);
             npcChara->field_D8.offsetX_4 = Q12(0.0f);
             npcChara->field_D8.offsetZ_2 = Q12(0.0f);

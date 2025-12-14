@@ -105,7 +105,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
     else if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 0x1D7 && FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 0x1DD)
     {
         vec0.vx = chara->position_18.vx;
-        vec0.vy = chara->position_18.vy + chara->field_D0;
+        vec0.vy = chara->position_18.vy + chara->field_C8.field_8;
         vec0.vz = chara->position_18.vz;
 
         if (func_8008A0E4(1, 0x31, chara, &vec0, &g_SysWork.player_4C, chara->rotation_24.vy, 0x400) != -1)

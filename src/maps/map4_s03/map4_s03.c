@@ -217,7 +217,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     localChara->properties_E4.larvalStalker.properties_E8[13].val32 = -1;
 
-    chara->field_D4 = Q12(0.3f);
+    chara->field_D4.field_0 = Q12(0.3f);
 
     chara->model_0.anim_4.alpha_A = Q12(0.0f);
 
@@ -496,10 +496,10 @@ void func_800D5B6C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5B6C
     }
 
     posY            = chara->position_18.vy;
-    chara->field_CA = posY;
-    chara->field_CC = posY;
-    chara->field_C8 = posY - Q12(1.0f);
-    chara->field_CE = posY - Q12(0.5f);
+    chara->field_C8.field_2 = posY;
+    chara->field_C8.field_4 = posY;
+    chara->field_C8.field_0 = posY - Q12(1.0f);
+    chara->field_C8.field_6 = posY - Q12(0.5f);
 }
 
 void func_800D5BC8(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5BC8

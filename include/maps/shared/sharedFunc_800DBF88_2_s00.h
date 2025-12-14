@@ -29,7 +29,7 @@ bool sharedFunc_800DBF88_2_s00(s_SubCharacter* chara, s32 arg1)
 
     unkPosY = unkVec->vy;
 
-    charaFieldC8 = chara->field_C8;
+    charaFieldC8 = chara->field_C8.field_0;
 
     func_8006F250(sharedData_800E2370_0_s01, posX, posZ, posDeltaX, posDeltaZ);
 

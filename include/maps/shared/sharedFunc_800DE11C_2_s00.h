@@ -10,7 +10,7 @@ void sharedFunc_800DE11C_2_s00(s_SubCharacter* chara)
 
     pcX      = g_SysWork.player_4C.chara_0.position_18.vx;
     pcZ      = g_SysWork.player_4C.chara_0.position_18.vz;
-    field_D4 = g_SysWork.player_4C.chara_0.field_D4;
+    field_D4 = g_SysWork.player_4C.chara_0.field_D4.field_0;
 
     angle0 = ratan2(chara->position_18.vx - g_SysWork.player_4C.chara_0.position_18.vx,
                     chara->position_18.vz - g_SysWork.player_4C.chara_0.position_18.vz);

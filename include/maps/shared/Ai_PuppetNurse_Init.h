@@ -15,7 +15,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
     chara->field_E1_0                  = 3;
     chara->headingAngle_3C             = chara->rotation_24.vy;
     chara->properties_E4.puppetNurse.position_E8 = chara->position_18;
-    chara->field_D4                    = Q12(0.3f);
+    chara->field_D4.field_0                                  = Q12(0.3f);
     chara->properties_E4.puppetNurse.damage_F4.position_0.vx = Q12(0.0f);
     chara->properties_E4.puppetNurse.damage_F4.position_0.vy = Q12(0.0f);
     chara->properties_E4.puppetNurse.damage_F4.position_0.vz = Q12(0.0f);

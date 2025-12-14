@@ -1922,18 +1922,21 @@ typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) ==
 
 typedef struct
 {
-    s32            flags_0;
-    s_AnmHeader*   anmHdr_4;
-    GsCOORDINATE2* coords_8;
-    MATRIX*        matrices_C;
-    s8             unk_10[164];
-    s32            field_B4[6][4]; // [*][3] is angle.
-    s32            field_114;
-    s32            field_118;
-    VECTOR3        field_11C;
-    VECTOR3        field_128;
-    VECTOR3        field_134;
-    VECTOR3        unk_140;
+    s32               flags_0;
+    s_AnmHeader*      anmHdr_4;
+    GsCOORDINATE2*    coords_8;
+    MATRIX*           matrices_C;
+    s8                unk_10[0x8C];
+    s_SubCharacter_C8 field_9C;
+    s_SubCharacter_D4 field_A8;
+    s_SubCharacter_D8 field_AC;
+    s32               field_B4[6][4]; // [*][3] is angle.
+    s32               field_114;
+    s32               field_118;
+    VECTOR3           field_11C;
+    VECTOR3           field_128;
+    VECTOR3           field_134;
+    VECTOR3           unk_140;
     union
     {
         struct
@@ -2949,6 +2952,10 @@ void sharedFunc_800D7B14_0_s01(s_SubCharacter* airScreamer, GsCOORDINATE2* coord
 void sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D81B0_0_s01(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D81D0_0_s01(s_SubCharacter* chara);
+
+void sharedFunc_800D8244_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer);
 

@@ -19,7 +19,7 @@ s32 sharedFunc_800DC598_2_s00(s_SubCharacter* chara)
             {
                 func_8006F250(sharedData_800E2370_0_s01, chara->position_18.vx, chara->position_18.vz, 0, 0);
 
-                if (sharedData_800E2370_0_s01[1] < ((chara->position_18.vy + chara->field_C8) - Q12(2.0f)))
+                if (sharedData_800E2370_0_s01[1] < ((chara->position_18.vy + chara->field_C8.field_0) - Q12(2.0f)))
                 {
                     ret = 1;
                 }
