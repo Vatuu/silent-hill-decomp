@@ -88,6 +88,7 @@ extern s8 D_800ED841;
 extern u16 D_800EBA34[23]; // `g_MapMsgSounds`
 extern s16 D_800ED5B4;
 extern s8  D_800ED5B8;
+extern s16 D_800EA856;
 
 void func_800D8848(s_SubCharacter* chara); // 0x800D8848
 
