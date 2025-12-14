@@ -320,17 +320,19 @@ void func_800E9444(e_CharacterId, s_SubCharacter*);
 void func_800E9490(s_SubCharacter* chara);
 
 void func_800E9498(void);
+
 void func_800E94AC(void);
+
 void func_800E94F4(void);
 
 void Map_WorldObjectsInit(void);
 
-void func_800E9874(void);
-
-void func_800E9AC8(void);
-
 void func_800E972C(void);
 
+void func_800E9874(void);
+
 void func_800E98EC(void);
+
+void func_800E9AC8(void);
 
 #endif

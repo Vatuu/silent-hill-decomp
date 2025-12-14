@@ -3879,23 +3879,27 @@ void Map_WorldObjectsInit(void) // 0x800E9528
     }
 }
 
-void func_800E972C(void)
+void func_800E972C(void) // 0x800E972C
 {
     if (D_800F4810)
     {
         *(s32*)&(g_WorldObject_Bin.rotation_28.vx) = (u16)D_800F482C;
         *(s16*)&(g_WorldObject_Bin.rotation_28.vz) = 0;
+
         g_WorldGfx_ObjectAdd(&g_WorldObject_Bin.object_0, &g_WorldObject_Bin.position_1C, &g_WorldObject_Bin.rotation_28);
         D_800F482C -= (FP_TO(g_DeltaTime0, Q12_SHIFT) / Q12(3.6f));
     }
+
     if (D_800F4811)
     {
         g_WorldGfx_ObjectAdd(&g_WorldObject_Nu.object_0, &g_WorldObject_Nu.position_1C, &g_WorldObject_Nu.rotation_28);
     }
+
     if (D_800F4812)
     {
         g_WorldGfx_ObjectAdd(&g_WorldObject_Baby.object_0, &g_WorldObject_Baby.position_1C, &g_WorldObject_Baby.rotation_28);
     }
+
     if (Savegame_EventFlagGet(EventFlag_577) && !Savegame_EventFlagGet(EventFlag_578) && !Savegame_EventFlagGet(EventFlag_582))
     {
         if (Savegame_EventFlagGet(EventFlag_391))
@@ -3908,6 +3912,7 @@ void func_800E972C(void)
         }
         
     }
+
     if (D_800F4818 || D_800F4819)
     {
         func_800E98EC();
@@ -3937,19 +3942,21 @@ void func_800E9874(void) // 0x800E9874
 
 extern SVECTOR3 D_800CD168;
 
-void func_800E98EC(void)
+void func_800E98EC(void) // 0x800E98EC
 {
-    s32 i;
+    s32     i;
     VECTOR3 objPos;
 
     if (D_800F4819 != 2)
     {
         D_800F48A4 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(2.67f), Q12_SHIFT);
     }
+
     if (D_800F48A4 > Q12(20.0f))
     {
         D_800F48A4 -= Q12(20.0f);
     }
+
     for (i = 0; i < 3; i++)
     {
         if (i == 0)
@@ -3966,14 +3973,17 @@ void func_800E98EC(void)
         {
             objPos.vz = (g_WorldObject_UnkPos.vz - D_800F48A4) + Q12(20.0f);
         }
+
         if (D_800F4818)
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject_Real, &objPos, &D_800CD168);
         }
+
         if (D_800F4819)
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject_Ura, &objPos, &D_800CD168);
         }
+
         if (D_800F481A)
         {
             g_WorldGfx_ObjectAdd(&g_WorldObject_Under, &objPos, &D_800CD168);
@@ -3981,10 +3991,12 @@ void func_800E98EC(void)
     }
 
     func_80069844(0xFFFF);
+
     if (D_800F4818)
     {
         func_8006982C(2);
     }
+
     if (D_800F4819)
     {
         func_8006982C(4);

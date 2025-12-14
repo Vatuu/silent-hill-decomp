@@ -234,8 +234,8 @@ void func_800DC080(void);
 
 void Map_WorldObjectsInit(void);
 
-void func_800DEDA4(void);
-
 void func_800DDCD4(void);
+
+void func_800DEDA4(void);
 
 #endif

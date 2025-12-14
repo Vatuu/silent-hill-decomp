@@ -3956,7 +3956,7 @@ q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 /** Creates random angle of some kind. */
 q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4, s32 arg5);
 
-bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
+bool func_8006FD90(s_SubCharacter* chara, s32 arg1, q19_12 arg2, q19_12 arg3);
 
 bool func_80070030(s_SubCharacter* chara, q19_12 x, q19_12 y, q19_12 z);
 

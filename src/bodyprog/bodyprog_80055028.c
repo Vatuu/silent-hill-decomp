@@ -10397,7 +10397,7 @@ q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4
     return FP_ANGLE(360.0f);
 }
 
-bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x8006FD90
+bool func_8006FD90(s_SubCharacter* chara, s32 arg1, q19_12 arg2, q19_12 arg3) // 0x8006FD90
 {
     VECTOR3 sp10;
     VECTOR3 sp20;

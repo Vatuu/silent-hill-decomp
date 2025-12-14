@@ -502,27 +502,26 @@ void Map_WorldObjectsInit(void) // 0x800EA340
     }
 }
 
-void func_800EA3F0(void)
+void func_800EA3F0(void) // 0x800EA3F0
 {
-    VECTOR3 objPos;
+    VECTOR3  objPos;
     SVECTOR3 objRot;
-    s32 dist0;
-    s32 tmp0;
-    s32 i;
-    s32 volume;
-    s32 dist1;
-    s32 audioBalance;
-    s32 var_v0;
-    s32 tmp1;
+    q19_12   dist0;
+    q19_12   dist1;
+    s32      tmp0;
+    s32      i;
+    s32      vol;
+    s32      audioBalance;
+    s32      var_v0;
+    s32      tmp1;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     func_80069844(0xFFFF);
 
     if ((PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3)) ||
         (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3)))
-
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object_0, &g_WorldObject_Kidn04.position_1C, &(SVECTOR3){});
+        g_WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object_0, &g_WorldObject_Kidn04.position_1C, &(SVECTOR3){ 0, 0, 0 });
         func_8006982C(2);
     }
 
@@ -531,6 +530,7 @@ void func_800EA3F0(void)
         if (Savegame_EventFlagGet(EventFlag_346))
         {
             func_8006982C(4);
+
             if (g_SysWork.player_4C.chara_0.position_18.vz < Q12(-68.0f))
             {
                 Savegame_EventFlagClear(EventFlag_346);
@@ -541,10 +541,11 @@ void func_800EA3F0(void)
             func_8006982C(2);
         }
     }
+
     audioBalance = 0;
     tmp0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f), Q12_SHIFT);
 
-    for (i = 0; i < 16; i++)
+    for (i = 0; i < ARRAY_SIZE(D_800ED8B0); i++)
     {
         switch (i)
         {
@@ -554,17 +555,20 @@ void func_800EA3F0(void)
                 objPos.vz = Q12(32.5f);
                 Math_SetSVectorFast(&objRot, 0, 0, 0);
                 break;
+
             case 4:
                 objPos.vx = Q12(56.575f);
                 objPos.vy = Q12(-2.875f);
                 objPos.vz = Q12(27.5f);
                 break;
+
             case 7:
                 objPos.vx = Q12(65.45f);
                 objPos.vy = Q12(-2.875f);
                 objPos.vz = Q12(27.5f);
                 objRot.vy = FP_ANGLE(180.0f);
                 break;
+
             case 11:
                 objPos.vx = Q12(68.8f);
                 objPos.vy = Q12(-2.375f);
@@ -582,13 +586,13 @@ void func_800EA3F0(void)
         }
 
         // @hack
-        tmp1 = (g_SysWork.player_4C.chara_0.position_18.vx / ((s32) (40.0f * (1 << 12))));
+        tmp1 = (g_SysWork.player_4C.chara_0.position_18.vx / ((s32)(40.0f * Q12(1.0f))));
         
         objRot.vx = D_800ED8B0[i];
         
         if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
         {
-          g_WorldGfx_ObjectAdd(&g_WorldObject_Fan0, &objPos, &objRot);
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Fan0, &objPos, &objRot);
         }
 
         audioBalance += Sound_StereoBalanceGet(&objPos);
@@ -597,13 +601,12 @@ void func_800EA3F0(void)
 
     if (PLAYER_NEAR_POS(vx, 61.0f, 4.0f) && PLAYER_NEAR_POS(vz, 22.5f, 5.0f))
     {
-        volume = Q8(1.0f);
+        vol = Q8(1.0f);
     }
     else
     {        
         dist0 = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - Q12(61.0f), g_SysWork.player_4C.chara_0.position_18.vz - Q12(27.5f));
         dist1 = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - Q12(61.0f), g_SysWork.player_4C.chara_0.position_18.vz - Q12(17.5f));
-        
         if (dist1 >= dist0) 
         {
             tmp0 = dist0;
@@ -613,25 +616,26 @@ void func_800EA3F0(void)
             tmp0 = dist1;
         }
 
-        if(tmp0 <= Q12(32.0f))
+        if (tmp0 <= Q12(32.0f))
         {
             tmp1 = tmp0 >> 9;
-            volume = Q8(1.0f) - tmp1;
+            vol = Q8(1.0f) - tmp1;
         }
         else
         {
-            volume = Q8(0.0f);
+            vol = Q8(0.0f);
         }
     }
 
-    if (volume != Q8(0.0f)) 
+    if (vol != Q8(0.0f)) 
     {
         if (!D_800F13AC)
         {
             Sd_EngineCmd(Sfx_Unk1542);
             D_800F13AC++;
         }
-        func_800463C0(Sfx_Unk1542, audioBalance >> 4, -volume, 0);
+
+        func_800463C0(Sfx_Unk1542, audioBalance >> 4, -vol, 0);
     }
     else if (D_800F13AC)
     {

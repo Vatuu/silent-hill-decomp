@@ -2092,23 +2092,20 @@ extern VECTOR3 D_800CC984;
 extern SVECTOR3 D_800CC990;
 extern VECTOR3 D_800CC998;
 
-void func_800DDCD4(void)
+void func_800DDCD4(void) // 0x800DDCD4
 {
-    s16 audioStream;
-    s32 npcTimer;
-
-    s32 cellZ0;
-    s32 cellX0;
-    s32 projCellZ0;
-    s32 projCellX0;
-
-    s32 tmp1;
-    s32 tmp2;
-    s32 tmp3;
-    s32 temp_v0_5;
-    s32 v1;
-    s32 i;
-
+    s16              audioStream;
+    s32              npcTimer;
+    s32              cellZ0;
+    s32              cellX0;
+    s32              projCellZ0;
+    s32              projCellX0;
+    s32              tmp1;
+    s32              tmp2;
+    s32              tmp3;
+    s32              temp_v0_5;
+    s32              v1;
+    s32              i;
     s_WorldObject_0* objPtr;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
@@ -2163,13 +2160,14 @@ void func_800DDCD4(void)
                 g_SysWork.npcs_1A0[0].properties_E4.dahlia.field_124 = Q12(1.25f);
                 func_8008677C(g_SysWork.npcs_1A0, 2, 1);
                 npcTimer = 0;
+
                 audioStream = Sd_AudioStreamingCheck();
                 if (audioStream == 1)
                 {
                     if (g_SysWork.npcs_1A0[0].position_18.vz < Q12(-24.0f))
                     {
                         npcTimer = (Q12(-24.0f) - g_SysWork.npcs_1A0[0].position_18.vz) / 5;
-                        v1 = npcTimer < D_800E33A4 ? D_800E33A4 : npcTimer;
+                        v1 = (npcTimer < D_800E33A4) ? D_800E33A4 : npcTimer;
                         D_800E33A4 = v1;
                     } 
                     else
@@ -2188,11 +2186,13 @@ void func_800DDCD4(void)
                 {
                     tmp2 = Q12(1.0f);
                 }
+
                 tmp1 = npcTimer;
                 if (tmp1 > Q12(1.0f))
                 {
                     tmp1 = Q12(1.0f);
                 }
+
                 if (tmp1 < Q12(0.0f))
                 {
                     tmp2 = Q12(0.0f);
@@ -2200,7 +2200,7 @@ void func_800DDCD4(void)
                 npcTimer = tmp2;
                 
                 g_SysWork.npcs_1A0[0].timer_C6 = npcTimer;
-                if ((g_SysWork.npcs_1A0[0].position_18.vz < Q12(-30.0f)) || (g_SysWork.npcs_1A0[0].timer_C6 == Q12(1.0f))) 
+                if (g_SysWork.npcs_1A0[0].position_18.vz < Q12(-30.0f) || g_SysWork.npcs_1A0[0].timer_C6 == Q12(1.0f)) 
                 {
                     func_80088F94(g_SysWork.npcs_1A0, 0, 0);
                 }
@@ -2211,6 +2211,7 @@ void func_800DDCD4(void)
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupKeyOfPhaleg)) 
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject_Key0.object_0, &g_WorldObject_Key0.position_1C, &g_WorldObject_Key0.rotation_28);
+
                 if (D_800E33A0)
                 {
                     tmp3 = D_800E33A0 - g_DeltaTime0;
@@ -2232,6 +2233,7 @@ void func_800DDCD4(void)
             if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_GhostChildAlessa)
             {
                 g_SysWork.npcs_1A0[0].timer_C6 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.2f), Q12_SHIFT);
+
                 if (g_SysWork.npcs_1A0[0].timer_C6 > Q12(1.0f)) 
                 {
                     func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
@@ -2292,6 +2294,7 @@ void func_800DDCD4(void)
 
         case PACKED_CELL_XZ(19, 15):
             g_WorldGfx_ObjectAdd(&g_WorldObject_Zukan.object_0, &g_WorldObject_Zukan.position_1C, &D_800CC990);
+
             if (Savegame_EventFlagGet(EventFlag_M5S03_SeenSecondNewspaper))
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject_Scrap.object_0, &g_WorldObject_Scrap.position_1C, &D_800CC990);
@@ -2305,6 +2308,7 @@ void func_800DDCD4(void)
                 {
                     g_WorldGfx_ObjectAdd(&g_WorldObject_Key2, &g_WorldObject_UnkPose1.position_0, &g_WorldObject_UnkPose1.rotation_C);
                 }
+
                 g_WorldGfx_ObjectAdd(&g_WorldObject_Futa[1], &g_WorldObject_UnkPose1.position_0, &g_WorldObject_UnkPose1.rotation_C);
             }
             else
@@ -2323,13 +2327,16 @@ void func_800DDCD4(void)
                     }
                     break;
                 } 
+
                 func_8005DC1C(Sfx_Unk1653, &D_800CC998, Q8(0.125f), 0);
+
                 temp_v0_5 = Rng_Rand16();
                 projCellZ0 = temp_v0_5;
                 if (temp_v0_5 < 0)
                 {
                     projCellZ0 = (s32) (temp_v0_5 + 0x1FFF);
                 }
+
                 projCellZ0 >>= 13;
                 D_800E2CE8 = (temp_v0_5 - (projCellZ0 << 13)) + 0x333;
             }
@@ -2348,6 +2355,7 @@ void func_800DDCD4(void)
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject_Stone0.object_0, &g_WorldObject_Stone0.position_1C, &g_WorldObject_Stone0.rotation_28);
             }
+
             g_WorldGfx_ObjectAdd(&g_WorldObject_Kubomi.object_0, &g_WorldObject_Kubomi.position_1C, &D_800CC990);
             break;
 
@@ -2357,7 +2365,7 @@ void func_800DDCD4(void)
 
         case PACKED_CELL_XZ(15, 15):
         case PACKED_CELL_XZ(13, 14):
-            for (i = 0; i < 6; i++)
+            for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position_1C, &D_800CC990);
             }
@@ -2393,16 +2401,19 @@ void func_800DDCD4(void)
             else
             {
                 g_WorldGfx_ObjectAdd(&g_WorldObject_Window.object_0, &g_WorldObject_Window.position_1C, &g_WorldObject_Window.rotation_28);
+
                 if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupKeyOfHagith))
                 {
                     g_WorldGfx_ObjectAdd(&g_WorldObject_KeyX1, &g_WorldObject_UnkPos2, &g_WorldObject_UnkRot2);
                 }
+
                 g_WorldGfx_ObjectAdd(&g_WorldObject_KeyX2, &g_WorldObject_UnkPos2, &g_WorldObject_UnkRot4);
             }
     
             g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObject_UnkPose0.position_0, &g_WorldObject_UnkPose0.rotation_C);
             break;
     }
+
     func_80069844(0xFFFF);
     func_8006982C(0);
 

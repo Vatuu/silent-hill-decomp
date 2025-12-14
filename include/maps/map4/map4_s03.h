@@ -12,8 +12,9 @@
 #define MAP_ROOM_MIN_Z Q12(-120.0f)
 #define MAP_ROOM_MAX_Z Q12(240.0f)
 
-typedef struct {
-    u8 unk0[0x38];
+typedef struct
+{
+    u8 unk0[56];
 } s_D_800E06A0;
 
 typedef struct
@@ -136,7 +137,13 @@ void func_800D76BC(s_SubCharacter* chara);
 
 s32 func_800D76E8(void); // Assumed return type.
 
+void func_800D7718(void);
+
+void func_800D7808(s_D_800E06A0*, s32); // Assumed types.
+
 void func_800D78D4(void* arg0); // Unknown arg type.
+
+void func_800D88C8(s_D_800E06A0*, u8); // Assumed types.
 
 void func_800D8FC0(void);
 
@@ -145,11 +152,5 @@ void func_800D960C(void);
 void func_800D9824(void);
 
 void Map_WorldObjectsInit(void);
-
-void func_800D7808(s_D_800E06A0*, s32); // Assumed types.
-
-void func_800D88C8(s_D_800E06A0*, u8); // Assumed types.
-
-void func_800D7718(void);
 
 #endif

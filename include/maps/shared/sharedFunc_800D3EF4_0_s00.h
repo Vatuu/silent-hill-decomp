@@ -64,8 +64,8 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
             }
         }
 
-        if ((g_SysWork.field_2284[3] & 0x1) ||
-            ((chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 2)) && Rng_TestProbabilityBits(2)) ||
+        if ((g_SysWork.field_2284[3] & (1 << 0)) ||
+            ( (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 2)) && Rng_TestProbabilityBits(2)) ||
             (!(chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 2)) && Rng_TestProbabilityBits(1)))
         {
             if (mag < Q12(0.9f))
@@ -81,7 +81,6 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
 
                             sharedFunc_800D7E04_0_s00(chara, 1364);
 
-                            // TODO: Floats.
                             if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 492 && FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 505)
                             {
                                 chara->model_0.anim_4.status_0                               = ANIM_STATUS(37, true);
@@ -92,25 +91,25 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
 
                             chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
 
-                            chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 0x1DD;
+                            chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 477;
 
-                            if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 0x1DD &&
-                                FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 0x1E2)
+                            if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 477 &&
+                                FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 482)
                             {
                                 chara->properties_E4.larvalStalker.properties_E8[5].val16[1] = 1;
                             }
-                            else if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 0x1E1 &&
-                                     FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 0x1E8)
+                            else if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 481 &&
+                                     FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 488)
                             {
                                 chara->properties_E4.larvalStalker.properties_E8[5].val16[1] = 2;
                             }
-                            else if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 0x1E7 && 
-                                     FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 0x1EB)
+                            else if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 487 && 
+                                     FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 491)
                             {
                                 chara->properties_E4.larvalStalker.properties_E8[5].val16[1] = 3;
                             }
-                            else if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 0x1EA &&
-                                     FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 0x1ED)
+                            else if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 490 &&
+                                     FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 493)
                             {
                                 chara->properties_E4.larvalStalker.properties_E8[5].val16[1] = 4;
                             }
@@ -142,7 +141,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
                         chara->model_0.anim_4.status_0 = ANIM_STATUS(35, false);
                     }
 
-                    chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 477; // TODO: Float.
+                    chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 477;
                     g_SysWork.field_2284[3]                                     |= 3;
                     return;
                 }
