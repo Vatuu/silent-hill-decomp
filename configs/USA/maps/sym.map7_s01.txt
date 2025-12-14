@@ -210,6 +210,7 @@ MAP_MESSAGES                        = 0x800E09E0; // type:u32 size:0x184
 //----------------------------------------------------
 //--- PA: 0x0175EC   VA: 0x800E0B64   subsegment: data
 //----------------------------------------------------
+g_CommonWorldObjectPoses            = 0x800E15C8; // type:WorldObjectPose size:0xA0
 sharedData_800DFB4C_0_s00           = 0x800E1668;
 sharedData_800CD77C_1_s04           = 0x800E166C; // type:s32
 sharedData_800DFB6C_0_s00           = 0x800E16B4; // type:s32
@@ -242,9 +243,9 @@ g_WorldObject_Driver                = 0x800E2EA8; // type:WorldObjectDescNoRot s
 g_WorldObject_Zukan                 = 0x800E2ED8; // type:WorldObjectDescNoRot size:0x24
 g_WorldObject_Scrap                 = 0x800E2F08; // type:WorldObjectDescNoRot size:0x24
 g_WorldObject_Key2                  = 0x800E2F38; // type:WorldObject_0 size:0x1C
-g_WorldObject_Futa                  = 0x800E2F58; // type:WorldObject_0 size:0x1C
+g_WorldObject_Futa                  = 0x800E2F58; // type:WorldObject_0 size:0x38
 g_WorldObject_UnkPose1              = 0x800E2F98; // type:WorldObjectPose size:0x14
-g_WorldObject_Key1_2                = 0x800E2FB8; // type:WorldObject_0 size:0x1C
+g_WorldObject_Key1_2                = 0x800E2FB8; // type:WorldObject_0 size:0x38
 g_WorldObject_UnkPose2              = 0x800E2FF8; // type:WorldObjectPose size:0x14
 g_WorldObject_Camera                = 0x800E3018; // type:WorldObjectDesc size:0x2C
 g_WorldObject_Ring                  = 0x800E3048; // type:WorldObjectDesc size:0x2C

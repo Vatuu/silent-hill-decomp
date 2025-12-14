@@ -155,11 +155,11 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara) {} // 0x800D3DAC
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D4924_0_s00); // 0x800D3DB4
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D492C_0_s00); // 0x800D4984
+#include "maps/shared/sharedFunc_800D492C_0_s00.h" // 0x800D4984
 
 #include "maps/shared/sharedFunc_800D5098_0_s00.h" // 0x800D50F0
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D54A8_0_s00); // 0x800D5500
+#include "maps/shared/sharedFunc_800D54A8_0_s00.h" // 0x800D5500
 
 #include "maps/shared/sharedFunc_800D5B48_0_s00.h" // 0x800D5BA0
 
@@ -177,7 +177,7 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D54A8_0_s00
 
 #include "maps/shared/sharedFunc_800D67FC_0_s00.h" // 0x800D6854
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D6970_0_s00); // 0x800D69C8
+#include "maps/shared/sharedFunc_800D6970_0_s00.h" // 0x800D69C8
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D70C4_0_s00); // 0x800D711C
 
@@ -250,16 +250,16 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
     animInfo = &LOCKER_DEAD_BODY_ANIM_INFOS[chara->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 
-    chara->field_C8           = Q12(-0.3f);
+    chara->field_C8.field_0   = Q12(-0.3f);
     chara->field_D8.offsetX_4 = Q12(0.06f);
     chara->field_D8.offsetZ_6 = Q12(0.93f);
-    chara->field_CA           = Q12(0.0f);
-    chara->field_CC           = Q12(0.0f);
-    chara->field_CE           = Q12(0.0f);
+    chara->field_C8.field_2   = Q12(0.0f);
+    chara->field_C8.field_4   = Q12(0.0f);
+    chara->field_C8.field_6   = Q12(0.0f);
     chara->field_D8.offsetX_0 = Q12(0.0f);
     chara->field_D8.offsetZ_2 = Q12(0.0f);
-    chara->field_D6           = Q12(0.0f);
-    chara->field_D4           = Q12(0.33f);
+    chara->field_D4.field_2   = Q12(0.0f);
+    chara->field_D4.field_0   = Q12(0.33f);
 
     func_8005C814(&chara->field_D8, chara);
 }

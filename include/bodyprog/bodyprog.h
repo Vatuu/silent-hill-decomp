@@ -617,13 +617,21 @@ typedef struct _Primitive
     u16 field_0;
     u16 field_2;
     u16 field_4;
-    u8  field_6_0  : 8;
-    s8  field_6_8  : 7;
-    u8  field_6_15 : 1; // `bool`
+    union
+    {
+        struct
+        {
+            u8 field_6_0  : 8;
+            s8 field_6_8  : 7;
+            u8 field_6_15 : 1; // `bool`
+        } bits;
+
+        u16 flags; // @hack `func_8005AC50` accesses `field_6_15` above with some weird shifts, haven't found how to make it work with bitfield yet.
+    } field_6;
     u16 field_8;
     u16 field_A;
-    u8  field_C[4];
-    u8  unk_10[4];
+    u8  field_C[4];  // } Unknown type, `func_8005AC50` reads these as `s32`, but that breaks other funcs that use this struct, s32 reads might have just been memcpy?
+    u8  field_10[4]; // }
 } s_Primitive;
 STATIC_ASSERT_SIZEOF(s_Primitive, 20);
 
@@ -1263,6 +1271,8 @@ typedef struct
     SVECTOR       field_7C;
     s_800C4168_84 field_84[3];
     u8            field_CC[1]; // Unknown size.
+    u8            unk_CD[127];
+    u16           field_14C;
 } s_800C4168;
 
 typedef struct
@@ -1714,7 +1724,7 @@ typedef struct
 typedef struct
 {
     DVECTOR  screenXy_0[90];
-    u16      screenZ_168[18];
+    s16      screenZ_168[18];
     s16      field_18C[72];
     s32      field_21C[39]; // Used as `VECTOR3`?
     u8       field_2B8[200];
@@ -1742,6 +1752,19 @@ typedef struct
             s_Normal field_3DC;
             SVECTOR  field_3E0[3];
         } normal;
+
+        struct
+        {
+            u8  field_0;
+            u8  field_1;
+            u8  field_2;
+            u8  field_3;
+            u8  field_4;
+            u8  field_5;
+            u8  field_6;
+            u8  field_7;
+            s32 field_8;
+        } s_1;
     } u;
 } s_GteScratchData2;
 
@@ -3259,6 +3282,8 @@ void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 
 u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData);
 
+void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, s32 arg3);
+
 void Texture_Init1(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
 
 void Texture_RefCountReset(s_Texture* tex);
@@ -3661,7 +3686,7 @@ s32 func_8008A0CC(void); /** Returns 0. */
 
 s64 func_8008A0D4(void); /** Returns 0. */
 
-s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6);
+s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s_SubCharacter* chara2, q3_12 angle0, q3_12 angle1);
 
 u32 func_8008A270(s32 idx);
 
@@ -3956,7 +3981,7 @@ q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 /** Creates random angle of some kind. */
 q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4, s32 arg5);
 
-bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3);
+bool func_8006FD90(s_SubCharacter* chara, s32 arg1, q19_12 arg2, q19_12 arg3);
 
 bool func_80070030(s_SubCharacter* chara, q19_12 x, q19_12 y, q19_12 z);
 

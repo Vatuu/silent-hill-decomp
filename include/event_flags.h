@@ -366,7 +366,7 @@ typedef enum _EventFlag
     EventFlag_413 = 413,
     EventFlag_414 = 414,
     EventFlag_415 = 415,
-
+    EventFlag_416 = 416,
     EventFlag_417 = 417,
     EventFlag_418 = 418,
     EventFlag_419 = 419,
@@ -508,7 +508,7 @@ typedef enum _EventFlag
     EventFlag_566 = 566, // }
     EventFlag_567 = 567, // }
     EventFlag_568 = 568, // }
-
+    EventFlag_569 = 569,
     EventFlag_570 = 570,
     EventFlag_571 = 571,
 
@@ -517,8 +517,10 @@ typedef enum _EventFlag
     EventFlag_575 = 575,
     EventFlag_576 = 576,
     EventFlag_577 = 577,
-
+    EventFlag_578 = 578,
     EventFlag_579 = 579,
+
+    EventFlag_582 = 582,
 
     EventFlag_584 = 584,
     EventFlag_586 = 586,

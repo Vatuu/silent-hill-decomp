@@ -35,30 +35,30 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* harry, GsCOORDINATE2* coords)
     posY             = localHarry->position_18.vy;
     rightShinPosY    = Q8_TO_Q12(boneMats[BoneMatIdx_RightShin].t[1]);
     leftShinPosY     = Q8_TO_Q12(boneMats[BoneMatIdx_LeftShin].t[1]);
-    harry->field_C8  = Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]);
+    harry->field_C8.field_0  = Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]);
     offsetPosY       = posY + Q12(0.25f);
-    harry->field_C8 -= offsetPosY;
-    harry->field_CA  = posY;
+    harry->field_C8.field_0 -= offsetPosY;
+    harry->field_C8.field_2  = posY;
 
     if (rightShinPosY >= leftShinPosY)
     {
-        harry->field_CC = leftShinPosY - harry->field_CA;
+        harry->field_C8.field_4 = leftShinPosY - harry->field_C8.field_2;
     }
     else
     {
-        harry->field_CC = rightShinPosY - harry->field_CA;
+        harry->field_C8.field_4 = rightShinPosY - harry->field_C8.field_2;
     }
 
     // `((torsoPosY - headPosY) / 2) - posY`
-    harry->field_CE = ((Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]) + Q8_TO_Q12(boneMats[BoneMatIdx_Torso].t[1])) / 2) - posY;
+    harry->field_C8.field_6 = ((Q8_TO_Q12(boneMats[BoneMatIdx_Head].t[1]) + Q8_TO_Q12(boneMats[BoneMatIdx_Torso].t[1])) / 2) - posY;
 
     unkQ12 = sharedFunc_800CD6B0_3_s03(boneMats, ARRAY_SIZE(boneMats), &unkPos);
     deltaX = unkPos.vx - harry->position_18.vx;
     deltaY = unkPos.vz - harry->position_18.vz;
 
-    unkQ12                    = sharedFunc_800CD940_3_s03(unkQ12 + Q12(0.05f), harry->field_D4);
-    harry->field_D6           = unkQ12 - Q12(0.05f);
-    harry->field_D4           = unkQ12;
+    unkQ12                    = sharedFunc_800CD940_3_s03(unkQ12 + Q12(0.05f), harry->field_D4.field_0);
+    harry->field_D4.field_2   = unkQ12 - Q12(0.05f);
+    harry->field_D4.field_0   = unkQ12;
     harry->field_D8.offsetX_0 = deltaX;
     harry->field_D8.offsetZ_2 = deltaY;
 

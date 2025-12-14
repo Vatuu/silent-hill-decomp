@@ -217,7 +217,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     localChara->properties_E4.larvalStalker.properties_E8[13].val32 = -1;
 
-    chara->field_D4 = Q12(0.3f);
+    chara->field_D4.field_0 = Q12(0.3f);
 
     chara->model_0.anim_4.alpha_A = Q12(0.0f);
 
@@ -496,10 +496,10 @@ void func_800D5B6C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5B6C
     }
 
     posY            = chara->position_18.vy;
-    chara->field_CA = posY;
-    chara->field_CC = posY;
-    chara->field_C8 = posY - Q12(1.0f);
-    chara->field_CE = posY - Q12(0.5f);
+    chara->field_C8.field_2 = posY;
+    chara->field_C8.field_4 = posY;
+    chara->field_C8.field_0 = posY - Q12(1.0f);
+    chara->field_C8.field_6 = posY - Q12(0.5f);
 }
 
 void func_800D5BC8(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5BC8
@@ -1027,7 +1027,39 @@ void func_800D76BC(s_SubCharacter* chara) // 0x800D76BC
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D76E8);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7718);
+void func_800D7718(void) // 0x800D7718
+{
+    MATRIX        mat;
+    s16           temp_v0;
+    s32           var_s2;
+    s32           i;
+    s_D_800E06A0* ptr;
+
+    func_80049C2C(&mat, Q12(160.0f), Q12(0.0f), Q12(40.0f));
+    SetRotMatrix(&mat);
+    SetTransMatrix(&mat);
+
+    var_s2 = 188;
+    if (D_800E0698.chara_0)
+    {
+        if (g_DeltaTime0 != 0)
+        {
+            D_800DB924.pad++;
+            if (!(D_800DB924.pad & 0xB))
+            {
+                var_s2 = 164;
+            }
+        }
+
+        g_WorldGfx_ObjectAdd(&D_800E0698.objRef_238, &D_800DB7C8, (SVECTOR3*)&D_800DB924);
+    }
+
+    for (i = 0; i < ARRAY_SIZE(D_800E0698.unk_8); i++)
+    {
+        func_800D7808(&D_800E0698.unk_8[i], i);
+        func_800D88C8(&D_800E0698.unk_8[i], var_s2);
+    }
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7808);
 

@@ -205,9 +205,8 @@ typedef enum _SfxId
     Sfx_Unk1539 = 1539,
     Sfx_Unk1540 = 1540,
     Sfx_Unk1541 = 1541, // Door jammed alt.
-
+    Sfx_Unk1542 = 1542,
     Sfx_Unk1543 = 1543,
-
     Sfx_Unk1554 = 1554,
 
     Sfx_Unk1556 = 1556,
@@ -276,7 +275,7 @@ typedef enum _SfxId
     Sfx_Unk1643 = 1643,
     Sfx_Unk1644 = 1644,
     Sfx_Unk1645 = 1645,
-
+    Sfx_Unk1646 = 1646,
     Sfx_Unk1647 = 1647,
     Sfx_Unk1648 = 1648,
     Sfx_Unk1649 = 1649,
@@ -338,6 +337,7 @@ typedef enum _SfxId
     Sfx_XaAudio565 = 4661,
 
     Sfx_XaAudio568 = 4664,
+    Sfx_XaAudio569 = 4665,
 
     Sfx_XaAudio596 = 4692,
 

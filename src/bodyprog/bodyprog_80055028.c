@@ -727,7 +727,7 @@ void func_80056244(s_LmHeader* lmHdr, bool unkFlag) // 0x80056244
         {
             for (prim = &curMeshHdr->primitives_4[0]; prim < &curMeshHdr->primitives_4[curMeshHdr->primitiveCount_0]; prim++)
             {
-                prim->field_6_15 = unkFlag;
+                prim->field_6.bits.field_6_15 = unkFlag;
             }
         }
     }
@@ -973,17 +973,17 @@ void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat
         for (curPrim = curMeshHdr->primitives_4; curPrim < &curMeshHdr->primitives_4[curMeshHdr->primitiveCount_0]; curPrim++)
         {
             // No material(?).
-            if (curPrim->field_6_8 == NO_VALUE)
+            if (curPrim->field_6.bits.field_6_8 == NO_VALUE)
             {
-                curPrim->field_6_0 = 32;
+                curPrim->field_6.bits.field_6_0 = 32;
             }
 
             // Apply material flags.
-            if (curPrim->field_6_8 == arg1)
+            if (curPrim->field_6.bits.field_6_8 == arg1)
             {
                 if (matFlags & MaterialFlag_0)
                 {
-                    curPrim->field_6_0 = mat->field_E;
+                    curPrim->field_6.bits.field_6_0 = mat->field_E;
                 }
                 if (matFlags & MaterialFlag_1)
                 {
@@ -2138,7 +2138,150 @@ u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData
     gte_strgb3(&var_t0->vx, &var_t0->vy, &var_t0->vz); // Store result from final `gte_nct`.
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005AC50); // 0x8005AC50
+void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, s32 arg3) // 0x8005AC50
+{
+    typedef union
+    {
+        POLY_GT3* gt3;
+        POLY_GT4* gt4;
+        PACKET*   packet;
+    } u_poly;
+
+    s32          sp0;
+    s32          sp4;
+    GsOT_TAG*    var_a0;
+    s16          temp_v1;
+    s32          temp_a0;
+    s32          temp_t4;
+    s32          temp_t4_2;
+    s32          temp_v0;
+    s32          temp_v0_2;
+    s32          var_t9;
+    s32          var_v0;
+    s32          var_v1;
+    s_Primitive* var_t8;
+    u16*         var_t5;
+    s32          var_a3;
+
+    u_poly poly;
+
+    var_a3              = D_800C4168.field_0;
+    scratchData->u.s_1.field_8 = D_800C4168.field_14C << 16;
+
+    temp_a0 = 0x79C << (arg3 + 2);
+    var_t9  = D_800C4168.isFogEnabled_1 ? MIN(temp_a0, D_800C4168.drawDistance_10) : temp_a0;
+
+    for (var_t8 = meshHdr->primitives_4, poly.packet = GsOUT_PACKET_P; var_t8 < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; var_t8++)
+    {
+        *(s32*)&scratchData->u.s_1.field_0 = *(s32*)&var_t8->field_C;
+        *(s32*)&scratchData->u.s_1.field_4 = *(s32*)&var_t8->field_10;
+
+        if (scratchData->u.s_1.field_3 == 0xFF)
+        {
+            temp_t4 = (scratchData->screenZ_168[scratchData->u.s_1.field_0] + scratchData->screenZ_168[scratchData->u.s_1.field_1] +
+                       scratchData->screenZ_168[scratchData->u.s_1.field_2] + scratchData->screenZ_168[scratchData->u.s_1.field_2]) >> 2;
+
+            if (temp_t4 <= 0 || var_t9 < temp_t4)
+            {
+                continue;
+            }
+
+            gte_NormalClip(*(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_0],
+                           *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_1],
+                           *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2], &sp0);
+
+            if (sp0 <= 0)
+            {
+                continue;
+            }
+
+            *(s32*)&poly.gt3->x0 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_0];
+            *(s32*)&poly.gt3->x1 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_1];
+            *(s32*)&poly.gt3->x2 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2];
+
+            if (var_a3 != 0)
+            {
+                *(s32*)&poly.gt3->r0 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_4];
+                *(s32*)&poly.gt3->r1 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_5];
+                *(s32*)&poly.gt3->r2 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_6];
+            }
+            else
+            {
+                *(s32*)&poly.gt3->r0 = *(s32*)&poly.gt3->r1 = *(s32*)&poly.gt3->r2 = *(s32*)&scratchData->field_3D8;
+            }
+
+            poly.gt3->code = ((var_t8->field_6.flags >> 15) * 2) | 0x34;
+
+            *(s32*)&poly.gt3->u0 = *(s32*)&var_t8->field_0 + scratchData->u.s_1.field_8;
+            *(s32*)&poly.gt3->u1 = *(s32*)&var_t8->field_4 & 0xFFFFFF;
+            *(u16*)&poly.gt3->u2 = var_t8->field_8;
+
+            setlen(poly.gt3, 9);
+
+            addPrim(&ot[(temp_t4 >> arg3) >> 2], poly.gt3);
+            poly.gt3++;
+        }
+        else
+        {
+            temp_t4 = (scratchData->screenZ_168[scratchData->u.s_1.field_0] + scratchData->screenZ_168[scratchData->u.s_1.field_1] +
+                       scratchData->screenZ_168[scratchData->u.s_1.field_2] + scratchData->screenZ_168[scratchData->u.s_1.field_3]) >> 2;
+
+            if (temp_t4 <= 0 || var_t9 < temp_t4)
+            {
+                continue;
+            }
+
+            gte_ldsxy3(*(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_0],
+                       *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_1],
+                       *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2]);
+            gte_nclip();
+            gte_stopz(&sp4);
+
+            if (sp4 <= 0)
+            {
+                gte_ldsxy0(*(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_3]);
+                gte_nclip();
+                gte_stopz(&sp4);
+
+                if (sp4 >= 0)
+                {
+                    continue;
+                }
+            }
+
+            *(s32*)&poly.gt4->x0 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_0];
+            *(s32*)&poly.gt4->x1 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_1];
+            *(s32*)&poly.gt4->x2 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2];
+            *(s32*)&poly.gt4->x3 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_3];
+
+            if (var_a3 != 0)
+            {
+                *(s32*)&poly.gt4->r0 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_4];
+                *(s32*)&poly.gt4->r1 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_5];
+                *(s32*)&poly.gt4->r2 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_6];
+                *(s32*)&poly.gt4->r3 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_7];
+            }
+            else
+            {
+                *(s32*)&poly.gt4->r0 = *(s32*)&poly.gt4->r1 = *(s32*)&poly.gt4->r2 = *(s32*)&poly.gt4->r3 = *(s32*)&scratchData->field_3D8;
+            }
+
+            poly.gt4->code = ((var_t8->field_6.flags >> 15) * 2) | 0x3C;
+
+            *(s32*)&poly.gt4->u0 = *(s32*)&var_t8->field_0 + scratchData->u.s_1.field_8;
+            *(s32*)&poly.gt4->u1 = *(s32*)&var_t8->field_4 & 0xFFFFFF;
+            *(u16*)&poly.gt4->u2 = var_t8->field_8;
+            *(u16*)&poly.gt4->u3 = var_t8->field_A;
+
+            setlen(poly.gt4, 12);
+
+            addPrim(&ot[(temp_t4 >> arg3) >> 2], poly.gt4);
+            poly.gt4++;
+        }
+    }
+
+    GsOUT_PACKET_P = poly.packet;
+}
 
 void Texture_Init1(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0
 {
@@ -2741,7 +2884,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
     }
 
     unkPos.vx = (g_SysWork.npcs_1A0[npxIdx].position_18.vx + g_SysWork.npcs_1A0[npxIdx].field_D8.offsetX_0) - unkOffset->vx;
-    unkPos.vy = (g_SysWork.npcs_1A0[npxIdx].position_18.vy + g_SysWork.npcs_1A0[npxIdx].field_CE)           - unkOffset->vy;
+    unkPos.vy = (g_SysWork.npcs_1A0[npxIdx].position_18.vy + g_SysWork.npcs_1A0[npxIdx].field_C8.field_6) - unkOffset->vy;
     unkPos.vz = (g_SysWork.npcs_1A0[npxIdx].position_18.vz + g_SysWork.npcs_1A0[npxIdx].field_D8.offsetZ_2) - unkOffset->vz;
 
     mag0 = Math_Vector2MagCalc(unkPos.vx, unkPos.vz);
@@ -2762,7 +2905,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
         }
 
         unkPos.vx = (g_SysWork.npcs_1A0[i].position_18.vx + g_SysWork.npcs_1A0[i].field_D8.offsetX_0) - unkOffset->vx;
-        unkPos.vy = (g_SysWork.npcs_1A0[i].position_18.vy + g_SysWork.npcs_1A0[i].field_CE)           - unkOffset->vy;
+        unkPos.vy = (g_SysWork.npcs_1A0[i].position_18.vy + g_SysWork.npcs_1A0[i].field_C8.field_6) - unkOffset->vy;
         unkPos.vz = (g_SysWork.npcs_1A0[i].position_18.vz + g_SysWork.npcs_1A0[i].field_D8.offsetZ_2) - unkOffset->vz;
 
         angle2 = ratan2(unkPos.vx, unkPos.vz);
@@ -3479,10 +3622,10 @@ void func_8005E89C(void) // 0x8005E89C
                                             -FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT),
                                              FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT));
 
-            ptr->field_64[i] = CLAMP_CUSTOM((chara->position_18.vy + chara->field_CE) - D_800C42E8[i].field_2,
-                                            (chara->position_18.vy + chara->field_CE) - curPtr->field_2,
+            ptr->field_64[i] = CLAMP_CUSTOM((chara->position_18.vy + chara->field_C8.field_6) - D_800C42E8[i].field_2,
+                                            (chara->position_18.vy + chara->field_C8.field_6) - curPtr->field_2,
                                             -FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT) >> 4,
-                                             FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT));
+                                            FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT));
 
             ptr->field_94[i] = CLAMP_CUSTOM((chara->position_18.vz + chara->field_D8.offsetZ_2) - D_800C42E8[i].field_8,
                                             (chara->position_18.vz + chara->field_D8.offsetZ_2) - curPtr->field_8,
@@ -3838,7 +3981,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
             D_800C42E8[i].field_0 = 1;
             D_800C42E8[i].field_1 = func_8005C7D0(chara);
             D_800C42E8[i].field_4 = chara->position_18.vx + chara->field_D8.offsetX_0;
-            D_800C42E8[i].field_2 = chara->position_18.vy + chara->field_CE;
+            D_800C42E8[i].field_2 = chara->position_18.vy + chara->field_C8.field_6;
             D_800C42E8[i].field_8 = chara->position_18.vz + chara->field_D8.offsetZ_2;
         }
     }
@@ -7200,9 +7343,9 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0
         return 1;
     }
 
-    sp28.rotation_C.vy = chara->field_C8;
-    sp28.rotation_C.vx = chara->field_CA;
-    sp28.rotation_C.vz = chara->field_D4;
+    sp28.rotation_C.vy = chara->field_C8.field_0;
+    sp28.rotation_C.vx = chara->field_C8.field_2;
+    sp28.rotation_C.vz = chara->field_D4.field_0;
 
     sp28.field_12 = chara->field_E1_0;
 
@@ -7384,7 +7527,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 
         for (curChara = charas; curChara < &charas[charaCount]; curChara++)
         {
             chara  = *curChara;
-            var_a0 = (chara->field_D4 >> 4) + sp18.field_4.field_28;
+            var_a0 = (chara->field_D4.field_0 >> 4) + sp18.field_4.field_28;
 
             if (chara->field_E1_0 < (u32)sp18.field_4.field_0)
             {
@@ -7394,8 +7537,8 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 
             sp18.field_98.field_0 = Q12_TO_Q8(chara->position_18.vx + chara->field_D8.offsetX_4);
             sp18.field_9C.field_0 = Q12_TO_Q8(chara->position_18.vz + chara->field_D8.offsetZ_6);
 
-            sp18.field_A0.s_1.field_0 = Q12_TO_Q8(chara->field_C8 + chara->position_18.vy);
-            sp18.field_A0.s_1.field_2 = Q12_TO_Q8(chara->field_CA + chara->position_18.vy);
+            sp18.field_A0.s_1.field_0 = Q12_TO_Q8(chara->field_C8.field_0 + chara->position_18.vy);
+            sp18.field_A0.s_1.field_2 = Q12_TO_Q8(chara->field_C8.field_2 + chara->position_18.vy);
             sp18.field_A0.s_1.field_4 = var_a0;
             sp18.field_A0.s_1.field_6 = chara->field_E1_0;
             sp18.field_A0.s_1.field_8 = &chara->field_E0;
@@ -7498,8 +7641,8 @@ void func_8006A940(VECTOR3* offset, s_func_8006AB50* arg1, s_SubCharacter** char
             continue;
         }
 
-        temp3 = curChara->field_C8 + curChara->position_18.vy;
-        temp4 = curChara->field_CA + curChara->position_18.vy;
+        temp3 = curChara->field_C8.field_0 + curChara->position_18.vy;
+        temp4 = curChara->field_C8.field_2 + curChara->position_18.vy;
 
         // TODO: Rotation + position? Seems wrong.
         temp6 = arg1->rotation_C.vy + arg1->position_0.vy;
@@ -7513,7 +7656,7 @@ void func_8006A940(VECTOR3* offset, s_func_8006AB50* arg1, s_SubCharacter** char
         posZ = (curChara->position_18.vz + curChara->field_D8.offsetZ_6) - arg1->position_0.vz;
 
         temp2 = Vc_VectorMagnitudeCalc(posX, Q12(0.0f), posZ);
-        if (((curChara->field_D4 + arg1->rotation_C.vz) + FP_ANGLE(36.0f)) < temp2)
+        if (((curChara->field_D4.field_0 + arg1->rotation_C.vz) + FP_ANGLE(36.0f)) < temp2)
         {
             continue;
         }
@@ -9842,23 +9985,23 @@ void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* chara) //
 
     if (arg1 == 1)
     {
-        arg0->field_C = Q12_TO_Q8(chara->field_D4);
+        arg0->field_C = Q12_TO_Q8(chara->field_D4.field_0);
         offsetX       = chara->field_D8.offsetX_4;
         offsetZ       = chara->field_D8.offsetZ_6;
-        unkY          = chara->position_18.vy + chara->field_CA;
+        unkY          = chara->position_18.vy + chara->field_C8.field_2;
     }
     else
     {
-        arg0->field_C = Q12_TO_Q8(chara->field_D6);
+        arg0->field_C = Q12_TO_Q8(chara->field_D4.field_2);
         offsetX       = chara->field_D8.offsetX_0;
         offsetZ       = chara->field_D8.offsetZ_2;
-        unkY          = chara->position_18.vy + chara->field_CC;
+        unkY          = chara->position_18.vy + chara->field_C8.field_4;
     }
 
     arg0->field_A = Q12_TO_Q8(unkY);
     arg0->field_0 = Q12_TO_Q8(chara->position_18.vx + offsetX);
     arg0->field_4 = Q12_TO_Q8(chara->position_18.vz + offsetZ);
-    arg0->field_8 = Q12_TO_Q8(chara->position_18.vy + chara->field_C8);
+    arg0->field_8 = Q12_TO_Q8(chara->position_18.vy + chara->field_C8.field_0);
 }
 
 void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara) // 0x8006EEB8
@@ -10397,7 +10540,7 @@ q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4
     return FP_ANGLE(360.0f);
 }
 
-bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x8006FD90
+bool func_8006FD90(s_SubCharacter* chara, s32 arg1, q19_12 arg2, q19_12 arg3) // 0x8006FD90
 {
     VECTOR3 sp10;
     VECTOR3 sp20;
@@ -10445,12 +10588,12 @@ bool func_8006FD90(s_SubCharacter* chara, s32 arg1, s32 arg2, s32 arg3) // 0x800
     if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 2)
     {
         sp40.vy = 0;
-        sp30.vy = g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_C8;
+        sp30.vy = g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_C8.field_0;
     }
     else
     {
-        sp30.vy = chara->position_18.vy + chara->field_CE;
-        sp40.vy = (g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_CE) - (chara->position_18.vy - chara->field_CE);
+        sp30.vy = chara->position_18.vy + chara->field_C8.field_6;
+        sp40.vy = (g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_C8.field_6) - (chara->position_18.vy - chara->field_C8.field_6);
     }
 
     // Maybe `sp10` is not `VECTOR3`. Might need to rewrite this whole function if its `s_func_800700F8_2`?
@@ -10613,16 +10756,16 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     // Compute inverse alpha.
     invAlpha = Q12(1.0f) - alpha;
 
-    chara->field_C8           = FP_FROM((arg1->field_0 * invAlpha) + (arg2->field_0 * alpha), Q12_SHIFT);
-    chara->field_CA           = FP_FROM((arg1->field_2 * invAlpha) + (arg2->field_2 * alpha), Q12_SHIFT);
-    chara->field_CC           = FP_FROM((arg1->field_4 * invAlpha) + (arg2->field_4 * alpha), Q12_SHIFT);
-    chara->field_CE           = FP_FROM((arg1->field_6 * invAlpha) + (arg2->field_6 * alpha), Q12_SHIFT);
+    chara->field_C8.field_0   = FP_FROM((arg1->field_0 * invAlpha) + (arg2->field_0 * alpha), Q12_SHIFT);
+    chara->field_C8.field_2   = FP_FROM((arg1->field_2 * invAlpha) + (arg2->field_2 * alpha), Q12_SHIFT);
+    chara->field_C8.field_4   = FP_FROM((arg1->field_4 * invAlpha) + (arg2->field_4 * alpha), Q12_SHIFT);
+    chara->field_C8.field_6   = FP_FROM((arg1->field_6 * invAlpha) + (arg2->field_6 * alpha), Q12_SHIFT);
     chara->field_D8.offsetX_4 = FP_FROM((arg1->field_10 * invAlpha) + (arg2->field_10 * alpha), Q12_SHIFT);
     chara->field_D8.offsetZ_6 = FP_FROM((arg1->field_12 * invAlpha) + (arg2->field_12 * alpha), Q12_SHIFT);
-    chara->field_D4           = FP_FROM((arg1->field_8 * invAlpha) + (arg2->field_8 * alpha), Q12_SHIFT);
+    chara->field_D4.field_0   = FP_FROM((arg1->field_8 * invAlpha) + (arg2->field_8 * alpha), Q12_SHIFT);
     chara->field_D8.offsetX_0 = FP_FROM((arg1->field_C * invAlpha) + (arg2->field_C * alpha), Q12_SHIFT);
     chara->field_D8.offsetZ_2 = FP_FROM((arg1->field_E * invAlpha) + (arg2->field_E * alpha), Q12_SHIFT);
-    chara->field_D6           = FP_FROM((arg1->field_A * invAlpha) + (arg2->field_A * alpha), Q12_SHIFT);
+    chara->field_D4.field_2   = FP_FROM((arg1->field_A * invAlpha) + (arg2->field_A * alpha), Q12_SHIFT);
 }
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 scaleZ) // 0x800705E4

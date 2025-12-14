@@ -121,17 +121,17 @@ extern u8 D_800F480C;
 extern s8 D_800F480D;
 extern s8 D_800F480E;
 extern s8 D_800F480F;
-extern s8 D_800F4810;
-extern s8 D_800F4811;
-extern s8 D_800F4812;
+extern u8 D_800F4810;
+extern u8 D_800F4811;
+extern u8 D_800F4812;
 extern u8 D_800F4813;
-extern s8 D_800F4814;
+extern u8 D_800F4814;
 extern u8 D_800F4815;
 extern u8 D_800F4816;
 extern u8 D_800F4817;
-extern s8 D_800F4818;
-extern s8 D_800F4819;
-extern s8 D_800F481A;
+extern u8 D_800F4818;
+extern u8 D_800F4819;
+extern u8 D_800F481A;
 extern u8 D_800F481B;
 extern u8 D_800F481C;
 
@@ -320,12 +320,18 @@ void func_800E9444(e_CharacterId, s_SubCharacter*);
 void func_800E9490(s_SubCharacter* chara);
 
 void func_800E9498(void);
+
 void func_800E94AC(void);
+
 void func_800E94F4(void);
 
 void Map_WorldObjectsInit(void);
 
+void func_800E972C(void);
+
 void func_800E9874(void);
+
+void func_800E98EC(void);
 
 void func_800E9AC8(void);
 

@@ -47,11 +47,11 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara) {} // 0x800D454C
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D4924_0_s00); // 0x800D4554
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D492C_0_s00); // 0x800D5124
+#include "maps/shared/sharedFunc_800D492C_0_s00.h" // 0x800D5124
 
 #include "maps/shared/sharedFunc_800D5098_0_s00.h" // 0x800D5890
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D54A8_0_s00); // 0x800D5CA0
+#include "maps/shared/sharedFunc_800D54A8_0_s00.h" // 0x800D5CA0
 
 #include "maps/shared/sharedFunc_800D5B48_0_s00.h" // 0x800D6340
 
@@ -69,7 +69,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D54A8_0_s00
 
 #include "maps/shared/sharedFunc_800D67FC_0_s00.h" // 0x800D6FF4
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D6970_0_s00); // 0x800D7168
+#include "maps/shared/sharedFunc_800D6970_0_s00.h" // 0x800D7168
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D70C4_0_s00); // 0x800D78BC
 
@@ -155,14 +155,14 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
 
 void func_800D8A90(s_SubCharacter* chara) // 0x800D8A90
 {
-    chara->field_D4  = Q12(0.3f);
-    chara->field_D6  = Q12(0.23f);
-    chara->field_C8  = Q12(-1.6f);
-    chara->field_CE  = Q12(-1.05f);
-    chara->field_D0  = Q12(-1.45f);
+    chara->field_D4.field_0 = Q12(0.3f);
+    chara->field_D4.field_2 = Q12(0.23f);
+    chara->field_C8.field_0 = Q12(-1.6f);
+    chara->field_C8.field_6 = Q12(-1.05f);
+    chara->field_C8.field_8 = Q12(-1.45f);
     chara->health_B0 = Q12(4000.0f);
-    chara->field_CA  = 0;
-    chara->field_CC  = 0;
+    chara->field_C8.field_2 = 0;
+    chara->field_C8.field_4 = 0;
 
     chara->field_D8.offsetZ_6 = 0;
     chara->field_D8.offsetX_4 = 0;
@@ -226,7 +226,13 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DA9C8);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DB4CC);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DB6FC);
+void func_800DB6FC(VECTOR3* pos) 
+{
+    Vw_AabbVisibleInScreenCheck(pos->vx - Q12(0.5f), pos->vx + Q12(0.5f),
+                                pos->vy - Q12(1.7f), pos->vy + Q12(0.1f),
+                                pos->vz - Q12(0.5f), pos->vz + Q12(0.5f)
+    );
+}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DB748);
 

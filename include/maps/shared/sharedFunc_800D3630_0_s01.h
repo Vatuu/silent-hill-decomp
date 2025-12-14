@@ -22,7 +22,7 @@ bool sharedFunc_800D3630_0_s01(s_SubCharacter* chara, q19_12* dist)
         offsetZ = FP_MULTIPLY_PRECISE(newDist, Math_Cos(angle), Q12_SHIFT);
 
         chara->properties_E4.npc.field_104 = chara->position_18.vx + offsetX;
-        chara->properties_E4.npc.field_108 = g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_CE;
+        chara->properties_E4.npc.field_108 = g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_C8.field_6;
         chara->properties_E4.npc.field_10C = chara->position_18.vz + offsetZ;
     }
 

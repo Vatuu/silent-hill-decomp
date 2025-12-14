@@ -451,7 +451,7 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 
     chara->moveSpeed_38       = 0;
     chara->headingAngle_3C    = chara->rotation_24.vy;
-    chara->field_D4           = Q12(0.3f);
+    chara->field_D4.field_0   = Q12(0.3f);
     chara->field_E1_0         = 4;
     chara->field_D8.offsetX_4 = Q12(0.0f);
     chara->field_D8.offsetZ_6 = Q12(0.0f);
@@ -627,10 +627,10 @@ void func_800DEFE8(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800DEFE8
     }
 
     yPos            = chara->position_18.vy;
-    chara->field_CA = yPos;
-    chara->field_CC = yPos;
-    chara->field_C8 = yPos - Q12(1.0f);
-    chara->field_CE = yPos - Q12(0.5f);
+    chara->field_C8.field_2 = yPos;
+    chara->field_C8.field_4 = yPos;
+    chara->field_C8.field_0 = yPos - Q12(1.0f);
+    chara->field_C8.field_6 = yPos - Q12(0.5f);
 }
 
 void func_800DF044(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DF044
@@ -749,7 +749,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     }
 
     chara->moveSpeed_38       = 0;
-    chara->field_D4           = Q12(0.3f);
+    chara->field_D4.field_0   = Q12(0.3f);
     chara->field_D8.offsetX_4 = Q12(0.0f);
     chara->field_D8.offsetZ_6 = Q12(0.0f);
     chara->field_E1_0         = 4;
@@ -916,10 +916,10 @@ void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0888
     }
 
     posY            = chara->position_18.vy;
-    chara->field_CA = posY;
-    chara->field_CC = posY;
-    chara->field_C8 = posY - Q12(1.0f);
-    chara->field_CE = posY - Q12(0.5f);
+    chara->field_C8.field_2 = posY;
+    chara->field_C8.field_4 = posY;
+    chara->field_C8.field_0 = posY - Q12(1.0f);
+    chara->field_C8.field_6 = posY - Q12(0.5f);
 }
 
 void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800E08E4
@@ -3879,7 +3879,45 @@ void Map_WorldObjectsInit(void) // 0x800E9528
     }
 }
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E972C);
+void func_800E972C(void) // 0x800E972C
+{
+    if (D_800F4810)
+    {
+        *(s32*)&(g_WorldObject_Bin.rotation_28.vx) = (u16)D_800F482C;
+        *(s16*)&(g_WorldObject_Bin.rotation_28.vz) = 0;
+
+        g_WorldGfx_ObjectAdd(&g_WorldObject_Bin.object_0, &g_WorldObject_Bin.position_1C, &g_WorldObject_Bin.rotation_28);
+        D_800F482C -= (FP_TO(g_DeltaTime0, Q12_SHIFT) / Q12(3.6f));
+    }
+
+    if (D_800F4811)
+    {
+        g_WorldGfx_ObjectAdd(&g_WorldObject_Nu.object_0, &g_WorldObject_Nu.position_1C, &g_WorldObject_Nu.rotation_28);
+    }
+
+    if (D_800F4812)
+    {
+        g_WorldGfx_ObjectAdd(&g_WorldObject_Baby.object_0, &g_WorldObject_Baby.position_1C, &g_WorldObject_Baby.rotation_28);
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_577) && !Savegame_EventFlagGet(EventFlag_578) && !Savegame_EventFlagGet(EventFlag_582))
+    {
+        if (Savegame_EventFlagGet(EventFlag_391))
+        {
+            func_800E14DC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[2], false);
+        }
+        else
+        {
+            func_800E14DC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[4], false);
+        }
+        
+    }
+
+    if (D_800F4818 || D_800F4819)
+    {
+        func_800E98EC();
+    }
+}
 
 void func_800E9874(void) // 0x800E9874
 {
@@ -3902,7 +3940,68 @@ void func_800E9874(void) // 0x800E9874
     }
 }
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800E98EC);
+extern SVECTOR3 D_800CD168;
+
+void func_800E98EC(void) // 0x800E98EC
+{
+    s32     i;
+    VECTOR3 objPos;
+
+    if (D_800F4819 != 2)
+    {
+        D_800F48A4 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(2.67f), Q12_SHIFT);
+    }
+
+    if (D_800F48A4 > Q12(20.0f))
+    {
+        D_800F48A4 -= Q12(20.0f);
+    }
+
+    for (i = 0; i < 3; i++)
+    {
+        if (i == 0)
+        {
+            objPos.vx = g_WorldObject_UnkPos.vx;
+            objPos.vy = g_WorldObject_UnkPos.vy;
+            objPos.vz = g_WorldObject_UnkPos.vz - D_800F48A4;
+        }
+        else if (i == 1)
+        {
+            objPos.vz = (g_WorldObject_UnkPos.vz - D_800F48A4) - Q12(20.0f);
+        }
+        else
+        {
+            objPos.vz = (g_WorldObject_UnkPos.vz - D_800F48A4) + Q12(20.0f);
+        }
+
+        if (D_800F4818)
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Real, &objPos, &D_800CD168);
+        }
+
+        if (D_800F4819)
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Ura, &objPos, &D_800CD168);
+        }
+
+        if (D_800F481A)
+        {
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Under, &objPos, &D_800CD168);
+        }
+    }
+
+    func_80069844(0xFFFF);
+
+    if (D_800F4818)
+    {
+        func_8006982C(2);
+    }
+
+    if (D_800F4819)
+    {
+        func_8006982C(4);
+    }
+}
 
 void func_800E9AC8(void) // 0x800E9AC8
 {

@@ -35,7 +35,7 @@ bool sharedFunc_800D2E04_0_s01(s_SubCharacter* chara, VECTOR3* inVec, q19_12* ou
     if (((u32)angle0 * 2) >= angle1 && dist0 >= dist)
     {
         sharedData_800DE170_0_s01.vx = chara->position_18.vx;
-        sharedData_800DE170_0_s01.vy = chara->position_18.vy + chara->field_C8; // Head offset.
+        sharedData_800DE170_0_s01.vy = chara->position_18.vy + chara->field_C8.field_0; // Head offset.
         sharedData_800DE170_0_s01.vz = chara->position_18.vz;
         return !func_8006D90C(&sharedData_800E2330_0_s01, &sharedData_800DE170_0_s01, inVec);
     }

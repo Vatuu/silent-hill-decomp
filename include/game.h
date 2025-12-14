@@ -1442,6 +1442,24 @@ typedef struct
     VECTOR3 field_48[3];
 } s_SubCharacter_44;
 
+typedef struct _SubCharacter_C8
+{
+    q3_12 field_0; // } Y anim root offset? Set to player head position in `sharedFunc_800D0828_3_s03`.
+    q3_12 field_2; // } } Computed as Y offsets in `sharedFunc_800D0828_3_s03`.
+    q3_12 field_4; // } }
+    q3_12 field_6; // Some kind of Y offset.
+    s16   field_8; // Q3.12? Maybe weapon range?
+    s16   field_A;
+} s_SubCharacter_C8;
+STATIC_ASSERT_SIZEOF(s_SubCharacter_C8, 12);
+
+typedef struct _SubCharacter_D4
+{
+    q3_12 field_0;
+    q3_12 field_2;
+} s_SubCharacter_D4;
+STATIC_ASSERT_SIZEOF(s_SubCharacter_D4, 4);
+
 typedef struct _SubCharacter
 {
     s_Model  model_0;          // In player: Manage the half lower part of Harry's body animations (legs and feet).
@@ -1465,15 +1483,8 @@ typedef struct _SubCharacter
     s16     timer_C6;      // Some sort of timer, value written by `Ai_LarvalStalker_Update`.
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
-
-    q3_12             field_C8; // } Y anim root offset? Set to player head position in `sharedFunc_800D0828_3_s03`.
-    q3_12             field_CA; // } } Computed as Y offsets in `sharedFunc_800D0828_3_s03`.
-    q3_12             field_CC; // } }
-    q3_12             field_CE; // Some kind of Y offset.
-    s16               field_D0; // Q3.12? Maybe weapon range?
-    s16               field_D2;
-    q3_12             field_D4;
-    q3_12             field_D6;
+    s_SubCharacter_C8 field_C8;
+    s_SubCharacter_D4 field_D4;
     s_SubCharacter_D8 field_D8; // Translation data?
 
     u8 field_E0; // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
@@ -1527,7 +1538,7 @@ STATIC_ASSERT_SIZEOF(s_PlayerCombat, 20);
 
 typedef union
 {
-    s32 field_0;
+    s32 field_0; // Flags?
     struct
     {
         u8 field_0; // Flags.

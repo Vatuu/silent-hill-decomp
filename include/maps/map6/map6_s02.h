@@ -59,6 +59,8 @@ extern s8 D_800D4E6E;
 
 extern s16 D_800D4E70;
 
+extern s_WorldObjectDesc g_WorldObject_SavePad;
+
 void func_800CF0B8(void);
 
 /** Func related to the UFO ending cutscene? */
@@ -69,5 +71,9 @@ void func_800D0500(void);
 void func_800D1330(s16);
 
 void Map_WorldObjectsInit(void);
+
+s32 func_800D1D40(void);
+
+void func_800D2170(s32 arg0);
 
 #endif

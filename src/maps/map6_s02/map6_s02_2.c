@@ -904,8 +904,6 @@ INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1040);
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1330);
 
-extern s_WorldObjectDesc g_WorldObject_SavePad;
-
 void Map_WorldObjectsInit(void) // 0x800D1658
 {
     WorldObjectInit(&g_WorldObject_SavePad, D_800A99E4.savePadName_4, -18.85f, 3.06f, -21.16f, 0.0f, 111.6f, 0.0f);
@@ -929,7 +927,56 @@ INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1718);
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1AE4);
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1D40);
+s32 func_800D1D40(void)
+{
+    s32 angle;
+
+    angle = ratan2(g_SysWork.player_4C.chara_0.position_18.vx + Q12(20.0f),
+                   g_SysWork.player_4C.chara_0.position_18.vz + Q12(20.0f));
+
+    if (!D_800D4E6C) 
+    {
+        Savegame_EventFlagSet(EventFlag_416);
+
+        if (angle > FP_ANGLE(0.0f) && angle < FP_ANGLE(90.0f))
+        {
+            D_800D4E6C = 1;
+        }
+        return 0x102;
+    }
+    if (D_800D4E6C & 1)
+    {
+        if (angle < FP_ANGLE(-78.8f))
+        {
+            D_800D4E6C++;
+        }
+        else
+        {
+            if ((D_800D4E6C == 1 && angle > FP_ANGLE(90.0f)) || angle > FP_ANGLE(78.8f))
+            {
+                D_800D4E6C--;
+            }
+        }
+    } 
+    else
+    {
+        if (angle < FP_ANGLE(0.0f) && angle > FP_ANGLE(-78.8f))
+        {
+            D_800D4E6C--;
+        }
+        else if (angle > FP_ANGLE(0.0f) && angle < FP_ANGLE(78.8f))
+        {
+            D_800D4E6C++;
+        }
+        if (D_800D4E6C == 6 && angle < FP_ANGLE(-157.5f))
+        {
+            Savegame_EventFlagSet(EventFlag_405);
+        }
+    }
+
+    Savegame_EventFlagClear(EventFlag_416);
+    return (1 << D_800D4E6C) + 0x80;
+}
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1EB8);
 

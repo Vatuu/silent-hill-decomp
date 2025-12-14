@@ -1922,18 +1922,21 @@ typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) ==
 
 typedef struct
 {
-    s32            flags_0;
-    s_AnmHeader*   anmHdr_4;
-    GsCOORDINATE2* coords_8;
-    MATRIX*        matrices_C;
-    s8             unk_10[164];
-    s32            field_B4[6][4]; // [*][3] is angle.
-    s32            field_114;
-    s32            field_118;
-    VECTOR3        field_11C;
-    VECTOR3        field_128;
-    VECTOR3        field_134;
-    VECTOR3        unk_140;
+    s32               flags_0;
+    s_AnmHeader*      anmHdr_4;
+    GsCOORDINATE2*    coords_8;
+    MATRIX*           matrices_C;
+    s8                unk_10[0x8C];
+    s_SubCharacter_C8 field_9C;
+    s_SubCharacter_D4 field_A8;
+    s_SubCharacter_D8 field_AC;
+    s32               field_B4[6][4]; // [*][3] is angle.
+    s32               field_114;
+    s32               field_118;
+    VECTOR3           field_11C;
+    VECTOR3           field_128;
+    VECTOR3           field_134;
+    VECTOR3           unk_140;
     union
     {
         struct
@@ -2349,6 +2352,10 @@ void sharedFunc_800D3E44_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D4358_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D4A9C_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D5268_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D5974_2_s00(s_SubCharacter* chara);
@@ -2358,6 +2365,8 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara);
 void sharedFunc_800D5DAC_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D6400_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D6504_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D69A0_2_s00(s_SubCharacter* chara);
 
@@ -2584,7 +2593,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D6970_0_s00(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800D6970_0_s00(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* coords);
 
 void sharedFunc_800D70C4_0_s00(s_SubCharacter*);
 
@@ -2950,6 +2959,10 @@ void sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D81B0_0_s01(s_SubCharacter* airScreamer);
 
+void sharedFunc_800D81D0_0_s01(s_SubCharacter* chara);
+
+void sharedFunc_800D8244_0_s01(s_SubCharacter* chara);
+
 void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D8714_0_s01(s_SubCharacter* chara, s32 arg1, s32 arg2);
@@ -2985,7 +2998,7 @@ void sharedFunc_800D0E20_3_s03(s_SubCharacter* bloodsucker);
 void sharedSymbol_800D0E38_3_s03(s_SubCharacter* bloodsucker);
 void sharedFunc_800D0E80_3_s03(s_SubCharacter* bloodsucker);
 void sharedSymbol_800D0ECC_3_s03(s_SubCharacter* bloodsucker);
-void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** `arg1` is a multiplier? */
 s32 Chara_DamageTake(s_SubCharacter*, s32 mult);
@@ -3008,7 +3021,7 @@ void sharedFunc_800D2364_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D5638_0_s01(s_SubCharacter* chara);
 
-void sharedFunc_800DF2D0_2_s00(s_SubCharacter*);
+void sharedFunc_800DF2D0_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D4E84_0_s01(s_SubCharacter* chara);
 
@@ -3138,23 +3151,18 @@ typedef struct
     WorldObject_ModelNameSet(&(eventPose)->object_0, (name));     \
 }
 
-#define Chara_MoveSpeedUpdate(chara, speed)                                                          \
-{                                                                                                    \
-    q19_12 moveSpeed;                                                                                \
-    q19_12 newSpeed;                                                                                 \
-                                                                                                     \
-    moveSpeed = chara->moveSpeed_38;                                                                 \
-    if (chara->moveSpeed_38 > Q12(0.0f))                                                             \
-    {                                                                                                \
-        newSpeed = MAX(moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT), Q12(0.0f));  \
-    }                                                                                                \
-    else                                                                                             \
-    {                                                                                                \
-        newSpeed = MIN(moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT), Q12(0.0f));  \
-    }                                                                                                \
-    chara->moveSpeed_38 = newSpeed;                                                                  \
-}
+#define APPROACH(current, target, step) \
+    ((current) > (target) ? MAX((current) - (step), (target)) : MIN((target), (current) + (step)))
 
+/** @brief Updates the move speed of a character.
+ *
+ * @param chara Character to update.
+ * @param speed Move speed (Q*.12).
+ */
+#define Chara_MoveSpeedUpdate(chara, speed) \
+    chara->moveSpeed_38 = APPROACH(chara->moveSpeed_38, Q12(0.0f), FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT))
+
+// TODO: Is it possible to merge these macros?
 #define Chara_MoveSpeedUpdate2(chara, speed, limit)                                                  \
 {                                                                                                    \
     q19_12 moveSpeed;                                                                                \
@@ -3184,22 +3192,7 @@ typedef struct
     chara->moveSpeed_38 = newMoveSpeed;                                                              \
 }
 
-// TODO: Is it possible to merge these macros?
-#define Chara_MoveSpeedUpdate3(chara, speed, limit)                                                  \
-{                                                                                                    \
-    q19_12 moveSpeed;                                                                                \
-    q19_12 newSpeed;                                                                                 \
-                                                                                                     \
-    moveSpeed = chara->moveSpeed_38;                                                                 \
-    if (chara->moveSpeed_38 > limit)                                                                 \
-    {                                                                                                \
-        newSpeed = MAX(moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT), limit);      \
-    }                                                                                                \
-    else                                                                                             \
-    {                                                                                                \
-        newSpeed = MIN(limit, moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT));      \
-    }                                                                                                \
-    chara->moveSpeed_38 = newSpeed;                                                                  \
-}
+#define Chara_MoveSpeedUpdate3(chara, speed, limit) \
+    chara->moveSpeed_38 = APPROACH(chara->moveSpeed_38, limit, FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT))
 
 #endif

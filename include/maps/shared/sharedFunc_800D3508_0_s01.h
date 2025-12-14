@@ -38,7 +38,7 @@ bool sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1)
         temp_lo = FP_MULTIPLY_PRECISE(temp_s2, Math_Cos(angle), Q12_SHIFT);
 
         chara->properties_E4.unk0.pos_104.vx = chara->position_18.vx + temp_hi;
-        temp_hi = g_SysWork.player_4C.chara_0.field_CE;
+        temp_hi                              = g_SysWork.player_4C.chara_0.field_C8.field_6;
         chara->properties_E4.unk0.pos_104.vy = g_SysWork.player_4C.chara_0.position_18.vy + temp_hi;
         chara->properties_E4.unk0.pos_104.vz = chara->position_18.vz + temp_lo;
     }
