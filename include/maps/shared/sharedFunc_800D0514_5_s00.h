@@ -1,4 +1,4 @@
-void func_800D0514(s_SubCharacter* subChar)
+void sharedFunc_800D0514_5_s00(s_SubCharacter* subChar)
 {
     s32 dx;
     s32 dz;
