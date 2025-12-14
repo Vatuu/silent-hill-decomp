@@ -3141,6 +3141,11 @@ typedef struct
 #define APPROACH(current, target, step) \
     ((current) > (target) ? MAX((current) - (step), (target)) : MIN((target), (current) + (step)))
 
+/** @brief Updates the move speed of a character.
+ *
+ * @param chara Character to update.
+ * @param speed Move speed (Q*.12).
+ */
 #define Chara_MoveSpeedUpdate(chara, speed) \
     chara->moveSpeed_38 = APPROACH(chara->moveSpeed_38, Q12(0.0f), FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT))
 
