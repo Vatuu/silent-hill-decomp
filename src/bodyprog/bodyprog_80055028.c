@@ -727,7 +727,7 @@ void func_80056244(s_LmHeader* lmHdr, bool unkFlag) // 0x80056244
         {
             for (prim = &curMeshHdr->primitives_4[0]; prim < &curMeshHdr->primitives_4[curMeshHdr->primitiveCount_0]; prim++)
             {
-                prim->field_6_15 = unkFlag;
+                prim->field_6.bits.field_6_15 = unkFlag;
             }
         }
     }
@@ -973,17 +973,17 @@ void Model_MaterialFlagsApply(s_ModelHeader* modelHdr, s32 arg1, s_Material* mat
         for (curPrim = curMeshHdr->primitives_4; curPrim < &curMeshHdr->primitives_4[curMeshHdr->primitiveCount_0]; curPrim++)
         {
             // No material(?).
-            if (curPrim->field_6_8 == NO_VALUE)
+            if (curPrim->field_6.bits.field_6_8 == NO_VALUE)
             {
-                curPrim->field_6_0 = 32;
+                curPrim->field_6.bits.field_6_0 = 32;
             }
 
             // Apply material flags.
-            if (curPrim->field_6_8 == arg1)
+            if (curPrim->field_6.bits.field_6_8 == arg1)
             {
                 if (matFlags & MaterialFlag_0)
                 {
-                    curPrim->field_6_0 = mat->field_E;
+                    curPrim->field_6.bits.field_6_0 = mat->field_E;
                 }
                 if (matFlags & MaterialFlag_1)
                 {
@@ -2138,7 +2138,150 @@ u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData
     gte_strgb3(&var_t0->vx, &var_t0->vy, &var_t0->vz); // Store result from final `gte_nct`.
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005AC50); // 0x8005AC50
+void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, s32 arg3) // 0x8005AC50
+{
+    typedef union
+    {
+        POLY_GT3* gt3;
+        POLY_GT4* gt4;
+        PACKET*   packet;
+    } u_poly;
+
+    s32          sp0;
+    s32          sp4;
+    GsOT_TAG*    var_a0;
+    s16          temp_v1;
+    s32          temp_a0;
+    s32          temp_t4;
+    s32          temp_t4_2;
+    s32          temp_v0;
+    s32          temp_v0_2;
+    s32          var_t9;
+    s32          var_v0;
+    s32          var_v1;
+    s_Primitive* var_t8;
+    u16*         var_t5;
+    s32          var_a3;
+
+    u_poly poly;
+
+    var_a3              = D_800C4168.field_0;
+    scratchData->u.s_1.field_8 = D_800C4168.field_14C << 16;
+
+    temp_a0 = 0x79C << (arg3 + 2);
+    var_t9  = D_800C4168.isFogEnabled_1 ? MIN(temp_a0, D_800C4168.drawDistance_10) : temp_a0;
+
+    for (var_t8 = meshHdr->primitives_4, poly.packet = GsOUT_PACKET_P; var_t8 < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; var_t8++)
+    {
+        *(s32*)&scratchData->u.s_1.field_0 = *(s32*)&var_t8->field_C;
+        *(s32*)&scratchData->u.s_1.field_4 = *(s32*)&var_t8->field_10;
+
+        if (scratchData->u.s_1.field_3 == 0xFF)
+        {
+            temp_t4 = (scratchData->screenZ_168[scratchData->u.s_1.field_0] + scratchData->screenZ_168[scratchData->u.s_1.field_1] +
+                       scratchData->screenZ_168[scratchData->u.s_1.field_2] + scratchData->screenZ_168[scratchData->u.s_1.field_2]) >> 2;
+
+            if (temp_t4 <= 0 || var_t9 < temp_t4)
+            {
+                continue;
+            }
+
+            gte_NormalClip(*(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_0],
+                           *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_1],
+                           *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2], &sp0);
+
+            if (sp0 <= 0)
+            {
+                continue;
+            }
+
+            *(s32*)&poly.gt3->x0 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_0];
+            *(s32*)&poly.gt3->x1 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_1];
+            *(s32*)&poly.gt3->x2 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2];
+
+            if (var_a3 != 0)
+            {
+                *(s32*)&poly.gt3->r0 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_4];
+                *(s32*)&poly.gt3->r1 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_5];
+                *(s32*)&poly.gt3->r2 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_6];
+            }
+            else
+            {
+                *(s32*)&poly.gt3->r0 = *(s32*)&poly.gt3->r1 = *(s32*)&poly.gt3->r2 = *(s32*)&scratchData->field_3D8;
+            }
+
+            poly.gt3->code = ((var_t8->field_6.flags >> 15) * 2) | 0x34;
+
+            *(s32*)&poly.gt3->u0 = *(s32*)&var_t8->field_0 + scratchData->u.s_1.field_8;
+            *(s32*)&poly.gt3->u1 = *(s32*)&var_t8->field_4 & 0xFFFFFF;
+            *(u16*)&poly.gt3->u2 = var_t8->field_8;
+
+            setlen(poly.gt3, 9);
+
+            addPrim(&ot[(temp_t4 >> arg3) >> 2], poly.gt3);
+            poly.gt3++;
+        }
+        else
+        {
+            temp_t4 = (scratchData->screenZ_168[scratchData->u.s_1.field_0] + scratchData->screenZ_168[scratchData->u.s_1.field_1] +
+                       scratchData->screenZ_168[scratchData->u.s_1.field_2] + scratchData->screenZ_168[scratchData->u.s_1.field_3]) >> 2;
+
+            if (temp_t4 <= 0 || var_t9 < temp_t4)
+            {
+                continue;
+            }
+
+            gte_ldsxy3(*(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_0],
+                       *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_1],
+                       *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2]);
+            gte_nclip();
+            gte_stopz(&sp4);
+
+            if (sp4 <= 0)
+            {
+                gte_ldsxy0(*(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_3]);
+                gte_nclip();
+                gte_stopz(&sp4);
+
+                if (sp4 >= 0)
+                {
+                    continue;
+                }
+            }
+
+            *(s32*)&poly.gt4->x0 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_0];
+            *(s32*)&poly.gt4->x1 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_1];
+            *(s32*)&poly.gt4->x2 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2];
+            *(s32*)&poly.gt4->x3 = *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_3];
+
+            if (var_a3 != 0)
+            {
+                *(s32*)&poly.gt4->r0 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_4];
+                *(s32*)&poly.gt4->r1 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_5];
+                *(s32*)&poly.gt4->r2 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_6];
+                *(s32*)&poly.gt4->r3 = *(s32*)&scratchData->field_21C[scratchData->u.s_1.field_7];
+            }
+            else
+            {
+                *(s32*)&poly.gt4->r0 = *(s32*)&poly.gt4->r1 = *(s32*)&poly.gt4->r2 = *(s32*)&poly.gt4->r3 = *(s32*)&scratchData->field_3D8;
+            }
+
+            poly.gt4->code = ((var_t8->field_6.flags >> 15) * 2) | 0x3C;
+
+            *(s32*)&poly.gt4->u0 = *(s32*)&var_t8->field_0 + scratchData->u.s_1.field_8;
+            *(s32*)&poly.gt4->u1 = *(s32*)&var_t8->field_4 & 0xFFFFFF;
+            *(u16*)&poly.gt4->u2 = var_t8->field_8;
+            *(u16*)&poly.gt4->u3 = var_t8->field_A;
+
+            setlen(poly.gt4, 12);
+
+            addPrim(&ot[(temp_t4 >> arg3) >> 2], poly.gt4);
+            poly.gt4++;
+        }
+    }
+
+    GsOUT_PACKET_P = poly.packet;
+}
 
 void Texture_Init1(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0
 {
