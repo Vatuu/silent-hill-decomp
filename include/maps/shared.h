@@ -2352,6 +2352,8 @@ void sharedFunc_800D3E44_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D4358_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D46C8_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D4A9C_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara);
@@ -2779,6 +2781,8 @@ void sharedFunc_800D029C_5_s00(s_SubCharacter* scratcher);
 void sharedFunc_800D03F8_5_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D041C_5_s00(s_SubCharacter* chara);
+
+void sharedFunc_800D0514_5_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher);
 
