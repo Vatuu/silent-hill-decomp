@@ -226,7 +226,13 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DA9C8);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DB4CC);
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DB6FC);
+void func_800DB6FC(VECTOR3* pos) 
+{
+    Vw_AabbVisibleInScreenCheck(pos->vx - Q12(0.5f), pos->vx + Q12(0.5f),
+                                pos->vy - Q12(1.7f), pos->vy + Q12(0.1f),
+                                pos->vz - Q12(0.5f), pos->vz + Q12(0.5f)
+    );
+}
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DB748);
 
