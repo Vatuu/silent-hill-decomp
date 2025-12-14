@@ -2421,7 +2421,7 @@ s64 func_8008A0D4(void) // 0x8008A0D4
     return 0;
 }
 
-s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s_SubCharacter* chara2, s16 angle0, s16 angle1) // 0x8008A0E4
+s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s_SubCharacter* chara2, q3_12 angle0, q3_12 angle1) // 0x8008A0E4
 {
     s32          var_t1;
     s32          temp_a1;

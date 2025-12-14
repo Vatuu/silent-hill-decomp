@@ -2587,7 +2587,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D6970_0_s00(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800D6970_0_s00(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* coords);
 
 void sharedFunc_800D70C4_0_s00(s_SubCharacter*);
 

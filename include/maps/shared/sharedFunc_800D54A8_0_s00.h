@@ -35,9 +35,9 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
 
     for (i = 0; i < 3; i++)
     {
-        if ((g_DeltaTime0 >> 4) + 1 < ABS(angle))
+        if (((g_DeltaTime0 >> 4) + 1) < ABS(angle))
         {
-            if (angle > 0)
+            if (angle > FP_ANGLE(0.0f))
             {
                 chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x200, Q12_SHIFT);
             }
@@ -83,7 +83,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
             g_SysWork.field_2284[3]                                     &= 0xFFFE;
             animStatus                                                   = chara->model_0.anim_4.status_0;
             chara->model_0.state_2                                       = 9;
-            chara->model_0.anim_4.status_0                               = 0x14;
+            chara->model_0.anim_4.status_0                               = ANIM_STATUS(10, false);
             chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = animStatus;
             chara->field_E1_0                                            = 0;
             chara->field_E1_0                                            = 3;
@@ -95,14 +95,15 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
         {
             chara->properties_E4.player.runTimer_F8 += g_DeltaTime0;
 
-            if (chara->properties_E4.player.runTimer_F8 > 0x1800)
+            if (chara->properties_E4.player.runTimer_F8 > Q12(1.5f))
             {
                 g_SysWork.player_4C.chara_0.damage_B4.amount_C += (FP_TO(D_800AD4C8[50].field_4, Q12_SHIFT) * (Rng_TestProbabilityBits(5) + 0x55)) / 100;
-                chara->properties_E4.player.runTimer_F8         = Rng_Rand16() % 0x800;
+                chara->properties_E4.player.runTimer_F8         = Rng_Rand16() % Q12(0.5f);
             }
         }
     }
-    else if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 0x1D7 && FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 0x1DD)
+    else if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 471 &&
+             FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 477)
     {
         vec0.vx = chara->position_18.vx;
         vec0.vy = chara->position_18.vy + chara->field_C8.field_8;
@@ -112,22 +113,24 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
         {
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 0x20;
             g_SysWork.field_2284[3]                                      &= 0xFFFD;
-            sharedFunc_800D7E04_0_s00(chara, 0x556);
-            chara->properties_E4.player.runTimer_F8 = 0x1000;
+            sharedFunc_800D7E04_0_s00(chara, 1366);
+            chara->properties_E4.player.runTimer_F8 = Q12(1.0f);
         }
     }
-    else if (chara->model_0.anim_4.status_0 == 0x13 || chara->model_0.anim_4.status_0 == 0x11 || dist > 0x2000)
+    else if (chara->model_0.anim_4.status_0 == ANIM_STATUS(9, true) ||
+             chara->model_0.anim_4.status_0 == ANIM_STATUS(8, true) ||
+             dist > Q12(2.0f))
     {
         g_SysWork.field_2284[3] &= 0xFFFC;
         chara->model_0.state_2   = 9;
 
-        if (chara->model_0.anim_4.status_0 == 0x45 || chara->model_0.anim_4.status_0 == 0x12)
+        if (chara->model_0.anim_4.status_0 == ANIM_STATUS(34, true) || chara->model_0.anim_4.status_0 == ANIM_STATUS(9, false))
         {
-            chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = 0x13;
+            chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = ANIM_STATUS(9, true);
         }
-        else if (chara->model_0.anim_4.status_0 == 0x47 || chara->model_0.anim_4.status_0 == 0x10)
+        else if (chara->model_0.anim_4.status_0 == ANIM_STATUS(35, true) || chara->model_0.anim_4.status_0 == ANIM_STATUS(8, false))
         {
-            chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = 0x11;
+            chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = ANIM_STATUS(8, true);
         }
         else
         {
@@ -135,7 +138,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
         }
 
         chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 0x40;
-        chara->model_0.anim_4.status_0                                = 0x48;
+        chara->model_0.anim_4.status_0                                = ANIM_STATUS(36, false);
         chara->field_E1_0                                             = 3;
     }
 

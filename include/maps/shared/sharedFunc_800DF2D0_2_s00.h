@@ -1,6 +1,6 @@
 void sharedFunc_800DF2D0_2_s00(s_SubCharacter* chara)
 {
-    s32                          angleDiff;
+    q19_12                       angleDiff;
     s32                          idx0;
     s_sharedData_800E21D0_0_s01* dst;
     s_func_800D2E04*             src;
