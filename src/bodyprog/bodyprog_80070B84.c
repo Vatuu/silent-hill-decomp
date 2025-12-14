@@ -7733,16 +7733,16 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
             {
                 if (D_800C4554 != NO_VALUE || D_800C4556 != D_800C4554)
                 {
-                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &D_800C44E0.field_0, g_SysWork.npcs_1A0, D_800C4556, D_800C4554);
+                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &D_800C44E0.field_0, &g_SysWork.npcs_1A0[0], D_800C4556, D_800C4554);
                 }
                 else
                 {
-                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &D_800C44E0.field_0, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
+                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &D_800C44E0.field_0, &g_SysWork.npcs_1A0[0], sp98.vx, sp98.vy);
                 }
             }
             else
             {
-                func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &g_SysWork.playerCombatInfo_38.field_0, g_SysWork.npcs_1A0, sp98.vx, sp98.vy);
+                func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombatInfo_38.weaponAttack_F, chara, &g_SysWork.playerCombatInfo_38.field_0, &g_SysWork.npcs_1A0[0], sp98.vx, sp98.vy);
             }
 
             D_800C42D2 = sp98.vx;

@@ -5,6 +5,9 @@
 #include "maps/shared.h"
 #include "maps/map7/map7_s02.h"
 
+#include "inline_no_dmpsx.h"
+#include <psyq/gtemac.h>
+
 // TODO: Move to src/maps/characters/ once other map usages are split.
 
 #include "maps/shared/Ai_Bloodsucker_Update.h" // 0x800D6874
@@ -19,4 +22,4 @@
 
 #include "maps/shared/sharedSymbol_800D0ECC_3_s03.h" // 0x800D6C8C
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/Chara_Bloodsucker", sharedFunc_800D0F28_3_s03); // 0x800D6C94
+#include "maps/shared/sharedFunc_800D0F28_3_s03.h" // 0x800D6C94

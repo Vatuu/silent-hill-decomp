@@ -3661,7 +3661,7 @@ s32 func_8008A0CC(void); /** Returns 0. */
 
 s64 func_8008A0D4(void); /** Returns 0. */
 
-s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s32 arg4, s16 arg5, s16 arg6);
+s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* pos, s_SubCharacter* chara2, s16 angle0, s16 angle1);
 
 u32 func_8008A270(s32 idx);
 

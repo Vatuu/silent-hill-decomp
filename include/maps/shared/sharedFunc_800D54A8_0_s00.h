@@ -108,7 +108,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
         vec0.vy = chara->position_18.vy + chara->field_C8.field_8;
         vec0.vz = chara->position_18.vz;
 
-        if (func_8008A0E4(1, 0x31, chara, &vec0, &g_SysWork.player_4C, chara->rotation_24.vy, 0x400) != -1)
+        if (func_8008A0E4(1, 0x31, chara, &vec0, &g_SysWork.player_4C, chara->rotation_24.vy, FP_ANGLE(90.0f)) != -1)
         {
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 0x20;
             g_SysWork.field_2284[3]                                      &= 0xFFFD;

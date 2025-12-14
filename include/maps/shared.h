@@ -2992,7 +2992,7 @@ void sharedFunc_800D0E20_3_s03(s_SubCharacter* bloodsucker);
 void sharedSymbol_800D0E38_3_s03(s_SubCharacter* bloodsucker);
 void sharedFunc_800D0E80_3_s03(s_SubCharacter* bloodsucker);
 void sharedSymbol_800D0ECC_3_s03(s_SubCharacter* bloodsucker);
-void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** `arg1` is a multiplier? */
 s32 Chara_DamageTake(s_SubCharacter*, s32 mult);
