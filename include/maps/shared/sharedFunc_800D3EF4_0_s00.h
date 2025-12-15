@@ -159,7 +159,12 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
 
         if (chara->properties_E4.player.runTimer_F8 == Q12(0.0f))
         {
-            chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = func_8006FAFC(chara, Q12(2.0f), g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz, Q12(1.0f), 1);
+            chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = func_8006FAFC(chara,
+                                                                                         Q12(2.0f),
+                                                                                         g_SysWork.player_4C.chara_0.position_18.vx,
+                                                                                         g_SysWork.player_4C.chara_0.position_18.vz,
+                                                                                         Q12(1.0f),
+                                                                                         true);
             if (chara->properties_E4.larvalStalker.properties_E8[6].val16[0] == Q12(1.0f))
             {
                 chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = chara->rotation_24.vy - FP_ANGLE(180.0f);

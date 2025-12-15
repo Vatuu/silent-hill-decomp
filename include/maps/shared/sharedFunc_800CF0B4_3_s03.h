@@ -17,7 +17,7 @@ void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse)
                                                                     g_SysWork.player_4C.chara_0.position_18.vx,
                                                                     g_SysWork.player_4C.chara_0.position_18.vz,
                                                                     FP_ANGLE(360.0f),
-                                                                    1);
+                                                                    true);
 
     angle = func_8005BF38(localNurse->properties_E4.puppetNurse.field_11C - nurse->rotation_24.vy);
     if (ABS(angle) > FP_ANGLE(5.0f))

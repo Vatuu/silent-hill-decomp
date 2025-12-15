@@ -131,6 +131,14 @@
 #define Q4(x) \
     TO_FIXED(x, Q4_SHIFT)
 
+/** @brief Converts a floating-point value to Q*.6 fixed-point.
+ *
+ * @param x Value to convert (`float`).
+ * @return `x` converted to Q*.6 fixed-point.
+ */
+#define Q6(x) \
+    TO_FIXED(x, Q6_SHIFT)
+
 /** @brief Converts a floating-point value to Q*.8 fixed-point.
  *
  * @param x Value to convert (`float`).

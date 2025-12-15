@@ -5,6 +5,7 @@
 #define FP_PI (0x5000 / 2)
 
 #define Q4_SHIFT  4
+#define Q6_SHIFT  6
 #define Q8_SHIFT  8
 #define Q12_SHIFT 12
 

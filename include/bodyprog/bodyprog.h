@@ -3979,13 +3979,13 @@ void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8
 q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 
 /** Creates random angle of some kind. */
-q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4, s32 arg5);
+q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, q3_12 arg4, bool cond);
 
 bool func_8006FD90(s_SubCharacter* chara, s32 arg1, q19_12 arg2, q19_12 arg3);
 
-bool func_80070030(s_SubCharacter* chara, q19_12 x, q19_12 y, q19_12 z);
+bool func_80070030(s_SubCharacter* chara, q19_12 posX, q19_12 posY, q19_12 posZ);
 
-bool func_80070084(s_SubCharacter* chara, q19_12 x, q19_12 y, q19_12 z);
+bool func_80070084(s_SubCharacter* chara, q19_12 posX, q19_12 posY, q19_12 posZ);
 
 bool func_800700F8(s_SubCharacter* npc, s_SubCharacter* player);
 

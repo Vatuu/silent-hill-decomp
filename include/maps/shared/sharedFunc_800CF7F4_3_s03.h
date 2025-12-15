@@ -9,7 +9,7 @@ void sharedFunc_800CF7F4_3_s03(s_SubCharacter* chara)
                                                                                       g_SysWork.player_4C.chara_0.position_18.vx,
                                                                                       g_SysWork.player_4C.chara_0.position_18.vz,
                                                                                       FP_ANGLE(360.0f),
-                                                                                      1);
+                                                                                      true);
     }
 
     angle = func_8005BF38(chara->properties_E4.larvalStalker.properties_E8[13].val16[0] - chara->rotation_24.vy);

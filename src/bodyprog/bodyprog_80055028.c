@@ -10473,15 +10473,15 @@ q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0
     return FP_ANGLE(360.0f);
 }
 
-q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4, s32 arg5) // 0x8006FAFC
+q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, q3_12 arg4, bool cond) // 0x8006FAFC
 {
     s16    temp_v1;
     q7_8   angle;
     q19_12 newPosZ;
     q19_12 newPosX;
-    s32    temp_v0;
-    s32    temp_v0_2;
-    s32    temp_v1_2;
+    q25_6  deltaX;
+    q25_6  deltaZ;
+    q25_6  mag;
     s32    i;
     s32    var_s4;
     s32    var_s7;
@@ -10489,7 +10489,8 @@ q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4
 
     var_s4 = 0;
 
-    if (arg5 != 0)
+    if (cond != 0)
+
     {
         var_s4 = INT_MAX;
     }
@@ -10519,14 +10520,14 @@ q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, s16 arg4
 
         if (!func_80070030(chara, newPosX, chara->position_18.vy, newPosZ))
         {
-            temp_v0   = (arg2 - newPosX) >> 6;
-            temp_v0_2 = (arg3 - newPosZ) >> 6;
-            temp_v1_2 = (temp_v0 * temp_v0) + (temp_v0_2 * temp_v0_2);
+            deltaX = Q12_TO_Q6(arg2 - newPosX);
+            deltaZ = Q12_TO_Q6(arg3 - newPosZ);
+            mag    = SQUARE(deltaX ) + SQUARE(deltaZ);
 
-            if ((arg5 == 0 && (var_s4 < temp_v1_2)) ||
-                (arg5 != 0 && (temp_v1_2 < var_s4)))
+            if ((!cond && (var_s4 < mag)) ||
+                ( cond && (mag < var_s4)))
             {
-                var_s4          = temp_v1_2;
+                var_s4          = mag;
                 subroutine_arg4 = angle;
             }
         }

@@ -35,7 +35,12 @@ void sharedFunc_800D140C_1_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
     {
         if (sp18.offset_0.vx == 0 && sp18.offset_0.vz == 0)
         {
-            larvalStalkerProps.properties_E8[8].val16[0]  = func_8006FAFC(chara, Q12(1.0f), larvalStalkerProps.properties_E8[4].val32, larvalStalkerProps.properties_E8[5].val32, 0x1000, 0);
+            larvalStalkerProps.properties_E8[8].val16[0]  = func_8006FAFC(chara,
+                                                                          Q12(1.0f),
+                                                                          larvalStalkerProps.properties_E8[4].val32,
+                                                                          larvalStalkerProps.properties_E8[5].val32,
+                                                                          Q12(1.0f),
+                                                                          false);
             larvalStalkerProps.properties_E8[0].val16[0] |= 1 << 3;
         }
     }
