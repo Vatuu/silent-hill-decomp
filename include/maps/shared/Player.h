@@ -1711,7 +1711,7 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
 #endif
 }
 
-u8 sharedFunc_800D2EA4_0_s00(void)
+s32 sharedFunc_800D2EA4_0_s00(void)
 {
     return g_SysWork.player_4C.chara_0.properties_E4.player.field_10D;
 }

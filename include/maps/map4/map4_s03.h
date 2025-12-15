@@ -45,12 +45,13 @@ extern SVECTOR3          g_WorldObject_UnkRot;
 extern s_WorldObjectDesc g_WorldObject_SavePad;
 extern s_WorldObject_0   g_CommonWorldObjects[6];
 extern s_WorldObject_0   D_800E08D0;
+extern s_WorldObjectPose g_CommonWorldObjectPoses[3]; // 0x800DB930
 extern VECTOR3 D_800DB7C8;
 extern SVECTOR D_800DB924;
 
 extern s32 D_800E05A8;
 extern s16 D_800E05AC;
-extern s16 D_800E05AE;
+extern u16 D_800E05AE;
 
 extern s8 D_800E05E0;
 extern s8 D_800E05E1;
@@ -152,5 +153,7 @@ void func_800D960C(void);
 void func_800D9824(void);
 
 void Map_WorldObjectsInit(void);
+
+void func_800D9BB0(void);
 
 #endif

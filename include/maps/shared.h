@@ -2553,7 +2553,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec);
 
 bool sharedFunc_800D2E94_0_s00(void);
 
-u8 sharedFunc_800D2EA4_0_s00(void);
+s32 sharedFunc_800D2EA4_0_s00(void);
 
 void sharedFunc_800D2EB4_0_s00(void);
 
