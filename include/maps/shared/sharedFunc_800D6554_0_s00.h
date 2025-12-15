@@ -1,37 +1,35 @@
 void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
 {
-    s32  someDist;
-    s16  someRotY;
-    s32  var;
-    u16* flags;
+    q19_12 dist;
+    q3_12  angle;
+    s32    cond; // Not `bool`?
+    u16*   flags;
 
-    someDist = FP_TO(SquareRoot0(SQUARE(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx, 6)) +
-                                 SQUARE(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz, 6))),
-                     6);
+    dist = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
+                               g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
+    angle = func_8005BF38((s16)(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
+                                       g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+                          chara->rotation_24.vy));
 
-    someRotY = func_8005BF38((s16)(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                          g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
-                             chara->rotation_24.vy));
-
-    if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3))
+    if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))))
     {
-        var = func_8006FD90(chara, 0, 0x7800, 0x7800);
+        cond = func_8006FD90(chara, 0, Q12(7.5f), Q12(7.5f));
     }
-    else if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 2)
+    else if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
     {
 #if defined(MAP1_S00) || defined(MAP1_S01)
-        var = func_8006FD90(chara, 0, 0xC000, 0);
+        cond = func_8006FD90(chara, 0, Q12(12.0f), Q12(0.0f));
 #else
-        var = func_8006FD90(chara, 0, 0x10000, 0);
+        cond = func_8006FD90(chara, 0, Q12(16.0f), Q12(0.0f));
 #endif
     }
     else
     {
-        var = func_8006FD90(chara, 1, 0x666, 0xCCC);
+        cond = func_8006FD90(chara, 1, Q12(0.4f), Q12(0.8f));
     }
 
-    var |= func_80070360(chara, someDist, Q12(1.0f));
-    if (var == 0)
+    cond |= func_80070360(chara, dist, Q12(1.0f));
+    if (cond == 0)
     {
         return;
     }
@@ -39,7 +37,7 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
     chara->properties_E4.player.field_F0 = g_SysWork.player_4C.chara_0.position_18.vx;
     chara->properties_E4.player.field_F4 = g_SysWork.player_4C.chara_0.position_18.vz;
 
-    if (someDist < Q12(1.2f) && someRotY < FP_ANGLE(180.0f))
+    if (dist < Q12(1.2f) && angle < FP_ANGLE(180.0f))
     {
         flags = &chara->properties_E4.player.afkTimer_E8;
         if (!(*flags & (1 << 1)))
@@ -53,10 +51,10 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
 
         chara->model_0.anim_4.status_0 = ANIM_STATUS(30, false);
 
-        *GET_PROPERTY_LOW(chara->properties_E4.player.exhaustionTimer_FC)  = 0x37;
-        *GET_PROPERTY_HIGH(chara->properties_E4.player.exhaustionTimer_FC) = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 0x1AB;
+        *GET_PROPERTY_LOW(chara->properties_E4.player.exhaustionTimer_FC)  = 55;
+        *GET_PROPERTY_HIGH(chara->properties_E4.player.exhaustionTimer_FC) = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 427;
         *GET_PROPERTY_LOW(chara->properties_E4.player.afkTimer_E8) |= 1 << 10;
 
-        sharedFunc_800D7E04_0_s00(chara, 0x553);
+        sharedFunc_800D7E04_0_s00(chara, 1363);
     }
 }

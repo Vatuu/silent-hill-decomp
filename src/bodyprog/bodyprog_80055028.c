@@ -10630,19 +10630,19 @@ bool func_80070084(s_SubCharacter* chara, q19_12 x, q19_12 y, q19_12 z) // 0x800
     return cond;
 }
 
-bool func_800700F8(s_SubCharacter* chara0, s_SubCharacter* chara1) // 0x800700F8
+bool func_800700F8(s_SubCharacter* npc, s_SubCharacter* player) // 0x800700F8
 {
     s_func_800700F8_2 sp10;
     VECTOR3           pos;
     VECTOR3           offset; // Q19.12
 
-    pos = chara0->position_18;
+    pos = npc->position_18;
 
-    offset.vx = chara1->position_18.vx - chara0->position_18.vx;
+    offset.vx = player->position_18.vx - npc->position_18.vx;
     offset.vy = Q12(-0.1f);
-    offset.vz = chara1->position_18.vz - chara0->position_18.vz;
+    offset.vz = player->position_18.vz - npc->position_18.vz;
 
-    return func_8006DB3C(&sp10, &pos, &offset, chara0) && sp10.field_10 == 0;
+    return func_8006DB3C(&sp10, &pos, &offset, npc) && sp10.field_10 == 0;
 }
 
 bool func_80070184(s_SubCharacter* chara, s32 arg1, q3_12 rotY) // 0x80070184
