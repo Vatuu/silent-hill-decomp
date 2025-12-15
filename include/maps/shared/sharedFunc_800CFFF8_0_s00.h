@@ -1,3 +1,5 @@
+// TODO: Change `s_func_800CFFF8` to `s_Particle`.
+
 void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand)
 {
     s32 absX;

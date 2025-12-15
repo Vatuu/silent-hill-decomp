@@ -2645,6 +2645,8 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part);
 
 void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand); // TODO: Make this match for `s_Particle`.
 
+void sharedFunc_800D0690_1_s03(s32 pass, s_Particle* part, s16* rand, s32* deltaTime);
+
 void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, s32* deltaTime);
 
 void SysWork_StateStepIncrementAfterTime(s32* timer, s32 inc, s32 timeMin, s32 timeMax, bool setTimerToMax, bool incStateStep);
