@@ -923,7 +923,76 @@ void Map_WorldObjectsInit(void) // 0x800D1658
     Savegame_EventFlagSet(EventFlag_428);
 }
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1718);
+void func_800D1718(void)
+{
+    s32 rng0;
+    s32 flags;
+    s32 mag;
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+
+    flags = 0;
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    {
+        flags = func_800D1D40();
+        g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);
+    }
+    else
+    {
+        Savegame_EventFlagClear(EventFlag_405);
+        Savegame_EventFlagClear(EventFlag_406);
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    {
+        mag = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - Q12(60.0f),
+                                  g_SysWork.player_4C.chara_0.position_18.vz + Q12(20.0f));
+        if (mag < Q12(1.4f))
+        {
+            if (ratan2(g_SysWork.player_4C.chara_0.position_18.vx - Q12(60.0f),
+                       g_SysWork.player_4C.chara_0.position_18.vz + Q12(20.0f)) > FP_ANGLE(67.5f))
+            {
+                Savegame_EventFlagSet(EventFlag_407);
+                D_800D4E6C = 6;
+            }
+        }
+        if (!D_800D4E6D)
+        {
+            g_SysWork.field_2378 = Q12(2.8f);
+            Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(60.0f), Q12(-2.5f), Q12(-20.0f));
+            Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-90.0f), 0, 0);
+            
+            func_800D2170(0);
+            Sd_EngineCmd(Sfx_Unk1611);
+            D_800D4E6D = 1;
+        }
+        else if (g_SysWork.sysFlags_22A0 & 0x40)
+        {
+            func_800D2170(1);
+            D_800D4E6D = 1;
+        }
+        else if (D_800D4E6D == 1)
+        {
+            D_800D4E6D++;
+            D_800C4414 |= 0x20;
+        }
+        rng0 = Rng_Rand16() & 0xFFF;
+        D_800D4E70 += FP_MULTIPLY_PRECISE(rng0, g_DeltaTime0, Q12_SHIFT);
+        func_800463C0(Sfx_Unk1611, 0, ((Math_Sin(D_800D4E70) >> 0xA) - 0x20), -0x40);
+    }
+    else
+    {
+        if (D_800D4E6D)
+        {
+            func_8004690C(Sfx_Unk1611);
+            D_800D4E6D = 0;
+            D_800C4414 &= 0xDF;
+        }
+        Savegame_EventFlagClear(EventFlag_407);
+        Savegame_EventFlagClear(EventFlag_408);
+    }
+    func_80069844(0xFFFF);
+    func_8006982C(flags);
+}
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1AE4);
 

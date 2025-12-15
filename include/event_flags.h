@@ -357,8 +357,9 @@ typedef enum _EventFlag
     EventFlag_403 = 403,
 
     EventFlag_405 = 405,
-
+    EventFlag_406 = 406,
     EventFlag_407 = 407,
+    EventFlag_408 = 408,
 
     EventFlag_410 = 410,
 
