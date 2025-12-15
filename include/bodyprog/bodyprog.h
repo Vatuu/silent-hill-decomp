@@ -3987,7 +3987,7 @@ bool func_80070030(s_SubCharacter* chara, q19_12 x, q19_12 y, q19_12 z);
 
 bool func_80070084(s_SubCharacter* chara, q19_12 x, q19_12 y, q19_12 z);
 
-bool func_800700F8(s_SubCharacter* chara0, s_SubCharacter* chara1);
+bool func_800700F8(s_SubCharacter* npc, s_SubCharacter* player);
 
 bool func_80070184(s_SubCharacter* chara, s32 arg1, q3_12 rotY);
 
