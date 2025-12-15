@@ -7,7 +7,7 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
     q19_12 unkDist;
     q19_12 unkAngle;
     bool   field14C_2;
-    s32    temp_s3; // Possibly `bool`
+    s32    temp_s3;
     s32    switchCond0;
     s32    temp_s0;
     s32    temp_s2;
@@ -37,6 +37,7 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
 
         case 1:
             sharedFunc_800DDF74_2_s00(chara, unkDist / 2, unkAngle);
+
             if (!sharedFunc_800DC30C_2_s00(chara) || Rng_RandQ12() >= Q12(0.3f))
             {
                 if (Rng_RandQ12() < (Q12(0.2f) + (var_s7 * 2)))
@@ -57,7 +58,7 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
         case 2:
             switchCond0 = 1;
 
-            if (temp_s3)
+            if (temp_s3 != 0)
             {
                 chara->model_0.stateStep_3 = 4;
             }
@@ -112,9 +113,11 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
         case 1:
             sharedFunc_800DF448_2_s00(chara, 0);
             break;
+
         case 2:
             sharedFunc_800DF2D0_2_s00(chara);
             break;
+
         default:
             sharedFunc_800DF60C_2_s00(chara);
             break;
@@ -136,12 +139,14 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
                 case 1:
                     temp_s0 = sharedFunc_800DC894_2_s00(chara, unkDist);
                     temp_s2 = sharedFunc_800DC6E4_2_s00(chara, unkDist);
+
                     if (Rng_RandQ12() < temp_s0)
                     {
                         if (chara->properties_E4.unk0.field_E8_0 == 3)
                         {
                             sharedFunc_800DD13C_2_s00(chara, chara->field_40 + 1, Q12(0.6f));
                         }
+
                         chara->model_0.state_2               = 10;
                         chara->model_0.stateStep_3           = 0;
                         chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
@@ -175,7 +180,8 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
         case 4:
             chara->model_0.state_2     = 17;
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }

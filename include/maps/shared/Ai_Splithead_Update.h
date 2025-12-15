@@ -7,7 +7,7 @@ void Ai_Splithead_Update(s_SubCharacter* splithead, s_AnmHeader* anmHdr, GsCOORD
         Ai_Splithead_Init(splithead);
     }
 
-    if (g_DeltaTime0 != Q12(0.0))
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         sharedFunc_800CFE94_1_s05(splithead);
         sharedFunc_800D0054_1_s05(splithead);
@@ -17,7 +17,7 @@ void Ai_Splithead_Update(s_SubCharacter* splithead, s_AnmHeader* anmHdr, GsCOORD
 
     sharedFunc_800D274C_1_s05(splithead, anmHdr);
 
-    if (g_DeltaTime0 != Q12(0.0))
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         sharedFunc_800D2D74_1_s05(splithead);
         sharedFunc_800D3B30_1_s05(splithead);

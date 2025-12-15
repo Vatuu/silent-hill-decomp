@@ -5,7 +5,7 @@ void Ai_Creaper_Update(s_SubCharacter* creaper, s_AnmHeader* anmHdr, GsCOORDINAT
         Ai_Creaper_Init(creaper);
     }
 
-    if (g_DeltaTime0 != Q12(0.0))
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         sharedFunc_800D7EE8_1_s02(creaper);
         sharedFunc_800D8244_1_s02(creaper);

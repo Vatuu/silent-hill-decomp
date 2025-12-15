@@ -1,6 +1,6 @@
 void Ai_PuppetNurse_UpdateMain(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (g_DeltaTime0 != Q12(0.0))
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         Ai_PuppetNurse_DamageHandle(chara);
         Ai_PuppetNurse_Control(chara);

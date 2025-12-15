@@ -1,6 +1,5 @@
-// Note: very close match to `sharedFunc_800D46C8_2_s00` other than some checks being removed.
+// Note: Very close match to `sharedFunc_800D46C8_2_s00` other than some checks being removed.
 // Changes here should be copied over there.
-
 void sharedFunc_800D4A9C_2_s00(s_SubCharacter* chara)
 {
     s32  animStatus;
@@ -36,6 +35,7 @@ void sharedFunc_800D4A9C_2_s00(s_SubCharacter* chara)
 
         case 1:
             sharedFunc_800DE034_2_s00(chara, &chara->properties_E4.unk0.pos_104, Q12(2.0f));
+
             if (!sharedFunc_800DC30C_2_s00(chara))
             {
                 chara->model_0.stateStep_3 = 2;
@@ -70,6 +70,7 @@ void sharedFunc_800D4A9C_2_s00(s_SubCharacter* chara)
                 {
                     switchCond = 1;
                 }
+
                 chara->model_0.stateStep_3 = 0;
             }
             else if (field14C_2 || field14C_0 || field14C_1)
@@ -90,6 +91,7 @@ void sharedFunc_800D4A9C_2_s00(s_SubCharacter* chara)
             {
                 switchCond                     = 2;
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(22, false);
+
                 if (field14C_1 || field14C_0)
                 {
                     chara->model_0.stateStep_3 = 7;
@@ -148,8 +150,8 @@ void sharedFunc_800D4A9C_2_s00(s_SubCharacter* chara)
                     else if (switchCond == 1)
                     {
                         s32 randVal = Rng_RandQ12();
-                        s32 var_a0  = Q12(0.0f);
 
+                        s32 var_a0  = Q12(0.0f);
                         if (chara->properties_E4.unk0.field_E8_8 == 1)
                         {
                             var_a0 = Q12(0.1f);
@@ -174,6 +176,7 @@ void sharedFunc_800D4A9C_2_s00(s_SubCharacter* chara)
                         {
                             chara->model_0.state_2 = 22;
                         }
+
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
@@ -189,6 +192,7 @@ void sharedFunc_800D4A9C_2_s00(s_SubCharacter* chara)
                         {
                             chara->model_0.state_2 = 21;
                         }
+
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
@@ -207,7 +211,7 @@ void sharedFunc_800D4A9C_2_s00(s_SubCharacter* chara)
             chara->model_0.state_2     = 17;
             chara->model_0.stateStep_3 = 0;
 
-            if (chara->health_B0 <= 0)
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }

@@ -7529,7 +7529,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
     {
         g_SysWork.timer_2C++;
 
-        if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >= Q12(3.1739) || (g_SysWork.timer_2C & (1 << 0)))
+        if (g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 >= Q12(3.1739f) || (g_SysWork.timer_2C & (1 << 0)))
         {
             func_8006342C(g_SavegamePtr->equippedWeapon_AA - InventoryItemId_KitchenKnife, 0, 0, coord);
         }

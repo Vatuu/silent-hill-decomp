@@ -547,7 +547,7 @@ void func_800DA5A0(void) // 0x800DA5A0
 
         case 5:
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(-26.0f);
-            g_SysWork.player_4C.chara_0.position_18.vz = Q12(127.0);
+            g_SysWork.player_4C.chara_0.position_18.vz = Q12(127.0f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(-135.0f);
 
             func_800865FC(true, 0, 0, FP_ANGLE(-135.0f), Q12(-29.0f), Q12(125.0f));

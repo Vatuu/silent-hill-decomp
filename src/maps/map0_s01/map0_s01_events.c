@@ -360,7 +360,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             break;
 
         case 50:
-            g_Timer0 = Q12(308.0);
+            g_Timer0 = Q12(308.0f);
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
             break;
 

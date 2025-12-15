@@ -630,7 +630,7 @@ typedef struct _Primitive
     } field_6;
     u16 field_8;
     u16 field_A;
-    u8  field_C[4];  // } Unknown type, `func_8005AC50` reads these as `s32`, but that breaks other funcs that use this struct, s32 reads might have just been memcpy?
+    u8  field_C[4];  // } Unknown type. `func_8005AC50` reads these as `s32`, but that breaks other funcs which use this struct. `s32` reads might have just been `memcpy`?
     u8  field_10[4]; // }
 } s_Primitive;
 STATIC_ASSERT_SIZEOF(s_Primitive, 20);

@@ -35,7 +35,7 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* chara)
         }
     }
 
-    if (g_DeltaTime0 != Q12(0.0))
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         func_8005CB20(chara, &sp10, *(s16*)&chara->properties_E4.player.positionY_EC, *((s16*)&chara->properties_E4.player.positionY_EC + 1));
     }

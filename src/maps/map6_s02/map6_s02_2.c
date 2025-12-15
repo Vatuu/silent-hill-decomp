@@ -927,14 +927,14 @@ INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1718);
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1AE4);
 
-s32 func_800D1D40(void)
+s32 func_800D1D40(void) // 0x800D1D40
 {
-    s32 angle;
+    q19_12 angle;
 
     angle = ratan2(g_SysWork.player_4C.chara_0.position_18.vx + Q12(20.0f),
                    g_SysWork.player_4C.chara_0.position_18.vz + Q12(20.0f));
 
-    if (!D_800D4E6C) 
+    if (D_800D4E6C == 0) 
     {
         Savegame_EventFlagSet(EventFlag_416);
 
@@ -942,9 +942,11 @@ s32 func_800D1D40(void)
         {
             D_800D4E6C = 1;
         }
-        return 0x102;
+
+        return 258;
     }
-    if (D_800D4E6C & 1)
+
+    if (D_800D4E6C & (1 << 0))
     {
         if (angle < FP_ANGLE(-78.8f))
         {
@@ -968,6 +970,7 @@ s32 func_800D1D40(void)
         {
             D_800D4E6C++;
         }
+
         if (D_800D4E6C == 6 && angle < FP_ANGLE(-157.5f))
         {
             Savegame_EventFlagSet(EventFlag_405);

@@ -90,19 +90,32 @@ extern s16 D_800ED5B4;
 extern s8  D_800ED5B8;
 extern s16 D_800EA856;
 
-void func_800D8848(s_SubCharacter* chara); // 0x800D8848
+void func_800D87B0(s_SubCharacter* chara);
+
+void func_800D8848(s_SubCharacter* chara);
 
 void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
 void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel);
+
 void func_800D8A90(s_SubCharacter* chara);
+
 void func_800D8B14(s_SubCharacter*, s_Model*);
+
 void func_800D8D7C(s_SubCharacter*, s_Model*, GsCOORDINATE2*);
+
 void func_800D9790(s_SubCharacter*, s_Model*);
+
 void func_800D99E4(s_SubCharacter*, s_Model*, s_AnmHeader*, GsCOORDINATE2*);
+
 void func_800D9AAC(s_SubCharacter*, s_Model*);
+
 void func_800DB4CC(s_SubCharacter*, s_Model*, GsCOORDINATE2*);
 
+void func_800DB6FC(VECTOR3* pos);
+
 void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
 void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800DEA94(s32* arg0);
@@ -165,7 +178,5 @@ void func_800E6CB8(void); // Assumed types.
 void func_800E7204(void); // Assumed types.
 
 void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4); // Assumed types.
-
-void func_800DB6FC(VECTOR3* pos);
 
 #endif

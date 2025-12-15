@@ -30,7 +30,7 @@ void Ai_Stalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
 
     if (chara->model_0.state_2 != 1)
     {
-        if (g_DeltaTime0 != Q12(0.0))
+        if (g_DeltaTime0 != Q12(0.0f))
         {
             sharedFunc_800D3308_0_s00(chara);
             sharedFunc_800D3B44_0_s00(chara);
@@ -40,7 +40,7 @@ void Ai_Stalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
         sharedFunc_800D6970_0_s00(chara, anmHdr, coords);
         sharedFunc_800D70C4_0_s00(chara);
         
-        if (g_DeltaTime0 != Q12(0.0))
+        if (g_DeltaTime0 != Q12(0.0f))
         {
             sharedFunc_800D7BE8_0_s00(chara);
         }

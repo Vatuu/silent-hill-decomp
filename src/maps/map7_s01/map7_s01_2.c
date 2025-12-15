@@ -936,7 +936,7 @@ void func_800D8FF8(void) // 0x800D8FF8
 
         case 2:
         case 9:
-            SysWork_StateStepIncrementDelayed(Q12(1.0), false);
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         default:

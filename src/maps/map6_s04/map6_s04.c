@@ -77,21 +77,23 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800D70C4_0_s00
 
 #include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D85FC
 
-void func_800D87B0(s_SubCharacter* chara)
+void func_800D87B0(s_SubCharacter* chara) // 0x800D87B0
 {
-    if (chara->properties_E4.player.playerMoveDistance_126)
+    if (chara->properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
     {
         chara->properties_E4.player.playerMoveDistance_126 -= Q12(0.4f);
-        if (chara->properties_E4.player.playerMoveDistance_126 < 0)
+        if (chara->properties_E4.player.playerMoveDistance_126 < Q12(0.0f))
         {
-            chara->properties_E4.player.playerMoveDistance_126 = 0;
+            chara->properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
         }
     }
-    if (!chara->model_0.stateStep_3)
+
+    if (chara->model_0.stateStep_3 == 0)
     {
         g_SysWork.npcs_1A0[0].properties_E4.player.playerMoveDistance_126 = Q12(1.5f);
         Model_AnimStatusSet(&chara->model_0, 9, false);
     }
+
     if (chara->model_0.anim_4.keyframeIdx_8 == D_800EA856)
     {
         g_SysWork.npcs_1A0[0].properties_E4.splitHead.field_EC.val16[0] = 1;
@@ -128,7 +130,7 @@ void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
         Ai_MonsterCybil_Init(chara, extraModel);
     }
 
-    if (g_DeltaTime0 != Q12(0.0))
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         func_800D8B14(chara, extraModel);
         func_800D8D7C(chara, extraModel, coords);
@@ -247,12 +249,11 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DA9C8);
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DB4CC);
 
-void func_800DB6FC(VECTOR3* pos) 
+void func_800DB6FC(VECTOR3* pos) // 0x800DB6FC
 {
     Vw_AabbVisibleInScreenCheck(pos->vx - Q12(0.5f), pos->vx + Q12(0.5f),
                                 pos->vy - Q12(1.7f), pos->vy + Q12(0.1f),
-                                pos->vz - Q12(0.5f), pos->vz + Q12(0.5f)
-    );
+                                pos->vz - Q12(0.5f), pos->vz + Q12(0.5f));
 }
 
 INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800DB748);

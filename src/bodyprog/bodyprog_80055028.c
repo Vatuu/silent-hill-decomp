@@ -2147,9 +2147,8 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
         PACKET*   packet;
     } u_poly;
 
-    s32          sp0;
+    s32          r4;
     s32          sp4;
-    GsOT_TAG*    var_a0;
     s16          temp_v1;
     s32          temp_a0;
     s32          temp_t4;
@@ -2159,11 +2158,11 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
     s32          var_t9;
     s32          var_v0;
     s32          var_v1;
-    s_Primitive* var_t8;
-    u16*         var_t5;
     s32          var_a3;
-
-    u_poly poly;
+    GsOT_TAG*    localOt;
+    s_Primitive* prim;
+    u16*         var_t5;
+    u_poly       poly;
 
     var_a3              = D_800C4168.field_0;
     scratchData->u.s_1.field_8 = D_800C4168.field_14C << 16;
@@ -2171,10 +2170,10 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
     temp_a0 = 0x79C << (arg3 + 2);
     var_t9  = D_800C4168.isFogEnabled_1 ? MIN(temp_a0, D_800C4168.drawDistance_10) : temp_a0;
 
-    for (var_t8 = meshHdr->primitives_4, poly.packet = GsOUT_PACKET_P; var_t8 < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; var_t8++)
+    for (prim = meshHdr->primitives_4, poly.packet = GsOUT_PACKET_P; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
     {
-        *(s32*)&scratchData->u.s_1.field_0 = *(s32*)&var_t8->field_C;
-        *(s32*)&scratchData->u.s_1.field_4 = *(s32*)&var_t8->field_10;
+        *(s32*)&scratchData->u.s_1.field_0 = *(s32*)&prim->field_C;
+        *(s32*)&scratchData->u.s_1.field_4 = *(s32*)&prim->field_10;
 
         if (scratchData->u.s_1.field_3 == 0xFF)
         {
@@ -2188,9 +2187,10 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
 
             gte_NormalClip(*(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_0],
                            *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_1],
-                           *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2], &sp0);
+                           *(s32*)&scratchData->screenXy_0[scratchData->u.s_1.field_2],
+                           &r4);
 
-            if (sp0 <= 0)
+            if (r4 <= 0)
             {
                 continue;
             }
@@ -2210,11 +2210,11 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
                 *(s32*)&poly.gt3->r0 = *(s32*)&poly.gt3->r1 = *(s32*)&poly.gt3->r2 = *(s32*)&scratchData->field_3D8;
             }
 
-            poly.gt3->code = ((var_t8->field_6.flags >> 15) * 2) | 0x34;
+            poly.gt3->code = ((prim->field_6.flags >> 15) * 2) | 0x34;
 
-            *(s32*)&poly.gt3->u0 = *(s32*)&var_t8->field_0 + scratchData->u.s_1.field_8;
-            *(s32*)&poly.gt3->u1 = *(s32*)&var_t8->field_4 & 0xFFFFFF;
-            *(u16*)&poly.gt3->u2 = var_t8->field_8;
+            *(s32*)&poly.gt3->u0 = *(s32*)&prim->field_0 + scratchData->u.s_1.field_8;
+            *(s32*)&poly.gt3->u1 = *(s32*)&prim->field_4 & 0xFFFFFF;
+            *(u16*)&poly.gt3->u2 = prim->field_8;
 
             setlen(poly.gt3, 9);
 
@@ -2266,12 +2266,12 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
                 *(s32*)&poly.gt4->r0 = *(s32*)&poly.gt4->r1 = *(s32*)&poly.gt4->r2 = *(s32*)&poly.gt4->r3 = *(s32*)&scratchData->field_3D8;
             }
 
-            poly.gt4->code = ((var_t8->field_6.flags >> 15) * 2) | 0x3C;
+            poly.gt4->code = ((prim->field_6.flags >> 15) * 2) | 0x3C;
 
-            *(s32*)&poly.gt4->u0 = *(s32*)&var_t8->field_0 + scratchData->u.s_1.field_8;
-            *(s32*)&poly.gt4->u1 = *(s32*)&var_t8->field_4 & 0xFFFFFF;
-            *(u16*)&poly.gt4->u2 = var_t8->field_8;
-            *(u16*)&poly.gt4->u3 = var_t8->field_A;
+            *(s32*)&poly.gt4->u0 = *(s32*)&prim->field_0 + scratchData->u.s_1.field_8;
+            *(s32*)&poly.gt4->u1 = *(s32*)&prim->field_4 & 0xFFFFFF;
+            *(u16*)&poly.gt4->u2 = prim->field_8;
+            *(u16*)&poly.gt4->u3 = prim->field_A;
 
             setlen(poly.gt4, 12);
 

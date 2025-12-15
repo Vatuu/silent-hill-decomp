@@ -1,4 +1,4 @@
-// Note: very close match to `sharedFunc_800D4A9C_2_s00` other than some checks being removed.
+// Note: Very close match to `sharedFunc_800D4A9C_2_s00` other than some checks being removed.
 // Changes here should be copied over there.
 
 void sharedFunc_800D46C8_2_s00(s_SubCharacter* chara)

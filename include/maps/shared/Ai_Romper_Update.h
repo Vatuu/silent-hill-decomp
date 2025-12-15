@@ -4,7 +4,7 @@ void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2
     {
         Ai_Romper_Init(romper);
     }
-    else if (g_DeltaTime0 != Q12(0.0))
+    else if (g_DeltaTime0 != Q12(0.0f))
     {
         sharedFunc_800E6420_2_s02(romper);
         sharedFunc_800E66E8_2_s02(romper);
