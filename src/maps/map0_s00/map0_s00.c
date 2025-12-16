@@ -993,7 +993,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* chara) {}
 
 #include "maps/shared/sharedFunc_800D6970_0_s00.h" // 0x800D6970
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", sharedFunc_800D70C4_0_s00); // 0x800D70C4
+#include "maps/shared/sharedFunc_800D70C4_0_s00.h" // 0x800D70C4
 
 #include "maps/shared/sharedFunc_800D7BE8_0_s00.h" // 0x800D7BE8
 
