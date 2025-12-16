@@ -603,7 +603,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
                 {
                     audioType = AUDIO_TYPE_MONO;
                 }
-                Sd_EngineCmd(audioType);
+                SD_Call(audioType);
             }
             break;
 
@@ -613,12 +613,12 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             if ((vol < OPT_SOUND_VOLUME_MAX && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)) ||
                 (vol > 0                    && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)))
             {
-                Sd_EngineCmd(Sfx_MenuMove);
+                SD_Call(Sfx_MenuMove);
             }
             if ((vol == OPT_SOUND_VOLUME_MAX && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight)) ||
                 (vol == 0                    && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft)))
             {
-                Sd_EngineCmd(Sfx_MenuError);
+                SD_Call(Sfx_MenuError);
             }
 
             // Scroll left/right.
@@ -643,12 +643,12 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
             if ((vol < OPT_SOUND_VOLUME_MAX && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)) ||
                 (vol > 0                    && (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickLeft)))
             {
-                Sd_EngineCmd(Sfx_MenuMove);
+                SD_Call(Sfx_MenuMove);
             }
             if ((vol == OPT_SOUND_VOLUME_MAX && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight)) ||
                 (vol == 0                    && (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft)))
             {
-                Sd_EngineCmd(Sfx_MenuError);
+                SD_Call(Sfx_MenuError);
             }
 
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickRight)
@@ -2059,7 +2059,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
                                                  g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
-                Sd_EngineCmd(Sfx_MenuCancel);
+                SD_Call(Sfx_MenuCancel);
 
                 ScreenFade_Start(false, false, false);
                 g_GameWork.gameStateStep_598[1] = ControllerMenuState_Leave;
@@ -2094,13 +2094,13 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             // Set binding preset.
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                Sd_EngineCmd(Sfx_MenuConfirm);
+                SD_Call(Sfx_MenuConfirm);
                 Settings_RestoreControlDefaults(g_GameWork.gameStateStep_598[1] - 1);
             }
             // Reset selection cursor.
             else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                Sd_EngineCmd(Sfx_MenuCancel);
+                SD_Call(Sfx_MenuCancel);
                 g_GameWork.gameStateStep_598[1] = ControllerMenuState_Exit;
                 g_GameWork.gameStateStep_598[2] = 0;
             }
@@ -2191,7 +2191,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
     // Play cursor navigation SFX.
     if (g_Controller0->btnsPulsedGui_1C & (ControllerFlag_LStickUp | ControllerFlag_LStickRight | ControllerFlag_LStickDown | ControllerFlag_LStickLeft))
     {
-        Sd_EngineCmd(Sfx_MenuMove);
+        SD_Call(Sfx_MenuMove);
     }
 
     // Draw menu graphics.
@@ -2234,12 +2234,12 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
                 !(bindings[actionIdx] & ~btnFlag))
             {
                 boundActionIdx = actionIdx;
-                Sd_EngineCmd(Sfx_MenuError);
+                SD_Call(Sfx_MenuError);
             }
             else
             {
                 bindings[actionIdx] &= ~btnFlag;
-                Sd_EngineCmd(Sfx_MenuConfirm);
+                SD_Call(Sfx_MenuConfirm);
             }
         }
         else
@@ -2255,25 +2255,25 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
                         if (!(bindings[curActionIdx] & ~btnFlag))
                         {
                             boundActionIdx = curActionIdx;
-                            Sd_EngineCmd(Sfx_MenuError);
+                            SD_Call(Sfx_MenuError);
                         }
                         else
                         {
                             bindings[curActionIdx] &= ~btnFlag;
                             bindings[actionIdx]    |= btnFlag;
-                            Sd_EngineCmd(Sfx_MenuConfirm);
+                            SD_Call(Sfx_MenuConfirm);
                         }
                     }
                     else
                     {
                         bindings[actionIdx] = boundBtnFlag | btnFlag;
-                        Sd_EngineCmd(Sfx_MenuConfirm);
+                        SD_Call(Sfx_MenuConfirm);
                     }
                     break;
 
                 case 2:
                     bindings[InputAction_Skip] |= btnFlag;
-                    Sd_EngineCmd(Sfx_MenuConfirm);
+                    SD_Call(Sfx_MenuConfirm);
                     break;
 
                 default:
@@ -2295,20 +2295,20 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
                              curActionIdx == InputAction_Item) &&
                             !(bindings[curActionIdx] & ~btnFlag))
                         {
-                            Sd_EngineCmd(Sfx_MenuError);
+                            SD_Call(Sfx_MenuError);
                             boundActionIdx = curActionIdx;
                         }
                         else
                         {
                             bindings[curActionIdx] &= ~btnFlag;
                             bindings[actionIdx]    |= btnFlag;
-                            Sd_EngineCmd(Sfx_MenuConfirm);
+                            SD_Call(Sfx_MenuConfirm);
                         }
                     }
                     else
                     {
                         bindings[actionIdx] |= btnFlag;
-                        Sd_EngineCmd(Sfx_MenuConfirm);
+                        SD_Call(Sfx_MenuConfirm);
                     }
                     break;
             }

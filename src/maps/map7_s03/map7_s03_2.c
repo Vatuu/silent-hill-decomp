@@ -1159,7 +1159,7 @@ void func_800E3390(void) // 0x800E3390
     {
         D_800F4805 = 5;
         Savegame_EventFlagClear(EventFlag_576);
-        Sd_EngineCmd(19);
+        SD_Call(19);
     }
 
     switch (D_800F4805)
@@ -1402,7 +1402,7 @@ void func_800E3390(void) // 0x800E3390
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
 
-            Sd_EngineCmd(19);
+            SD_Call(19);
 
             func_800E14DC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[2], 1);
             D_800F4805           = 0;
@@ -1818,12 +1818,12 @@ void func_800E4714(void) // 0x800E4714
 
             if (g_SysWork.sysStateStep_C[0] != 15)
             {
-                Sd_EngineCmd(19);
+                SD_Call(19);
             }
             break;
 
         case 16:
-            Sd_EngineCmd(Sfx_XaAudio600);
+            SD_Call(Sfx_XaAudio600);
             SysWork_StateStepIncrement(0);
 
         case 17:
@@ -2154,7 +2154,7 @@ void func_800E514C(void) // 0x800E514C
 
             g_SysWork.field_2378 = Q12(0.6f);
 
-            Sd_XaPreLoadAudio(Sfx_XaAudio606);
+            Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio606);
             SysWork_StateStepIncrement(0);
 
         case 27:
@@ -2168,7 +2168,7 @@ void func_800E514C(void) // 0x800E514C
             SysWork_StateStepIncrement(0);
 
         case 30:
-            Sd_EngineCmd(Sfx_XaAudio606);
+            SD_Call(Sfx_XaAudio606);
             SysWork_StateStepIncrement(0);
 
         case 31:
@@ -2489,12 +2489,12 @@ void func_800E62CC(void) // 0x800E62CC
             break;
 
         case 2:
-            Sd_XaPreLoadAudio(Sfx_XaAudio596);
+            Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio596);
             SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
             break;
 
         case 3:
-            Sd_EngineCmd(Sfx_XaAudio596);
+            SD_Call(Sfx_XaAudio596);
             func_800DD9F8(&g_SysWork.npcs_1A0[2]);
             SysWork_StateStepIncrement(0);
 
@@ -2705,7 +2705,7 @@ void func_800E62CC(void) // 0x800E62CC
             Model_AnimFlagsSet(&g_SysWork.npcs_1A0[0].model_0, 2);
             func_800E9490(&g_SysWork.npcs_1A0[5]);
             func_800E9260(Chara_EndingKaufmann, 5);
-            Sd_XaPreLoadAudio(Sfx_XaAudio657);
+            Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio657);
 
             D_800F480D = 0;
 
@@ -2717,7 +2717,7 @@ void func_800E62CC(void) // 0x800E62CC
 
         case 36:
             func_80085EB8(0, g_SysWork.npcs_1A0, 25, false);
-            Sd_EngineCmd(Sfx_XaAudio657);
+            SD_Call(Sfx_XaAudio657);
             func_800D7ED0();
             SysWork_StateStepIncrement(0);
 
@@ -2726,7 +2726,7 @@ void func_800E62CC(void) // 0x800E62CC
 
             if (g_SysWork.sysStateStep_C[0] != 37)
             {
-                Sd_EngineCmd(19);
+                SD_Call(19);
             }
             break;
 
@@ -2937,7 +2937,7 @@ void func_800E7380(void) // 0x800E7380
             D_800F4804 = 0;
             D_800F47F0 = Q12(69.0f);
 
-            Sd_EngineCmd(Sfx_XaAudio602);
+            SD_Call(Sfx_XaAudio602);
 
             g_SysWork.field_2378 = Q12(0.8f);
             func_800E1788(7);
@@ -2953,7 +2953,7 @@ void func_800E7380(void) // 0x800E7380
 
             if (g_SysWork.sysStateStep_C[0] != 2)
             {
-                Sd_EngineCmd(19);
+                SD_Call(19);
             }
             break;
 
@@ -3134,7 +3134,7 @@ void func_800E787C(void) // 0x800E787C
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 177, false);
             func_8005DC1C(Sfx_Unk1694, NULL, Q8_CLAMPED(1.0f), 3);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 27, false);
-            Sd_EngineCmd(Sfx_XaAudio612);
+            SD_Call(Sfx_XaAudio612);
             D_800F4819 = 2;
             SysWork_StateStepIncrement(0);
 

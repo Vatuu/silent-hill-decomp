@@ -10,10 +10,10 @@
 
 #define CD_ERROR_LIMIT 600 // Matches value used in beatmania `FSCD.C`.
 
-void Sd_CmdPoolExecute(void) // 0x800485D8
+void Sd_TaskPoolExecute(void) // 0x800485D8
 {
-    g_Sd_CurrentCmd = g_Sd_CmdPool[0];
-    switch (g_Sd_CurrentCmd)
+    g_Sd_CurrentTask = g_Sd_TaskPool[0];
+    switch (g_Sd_CurrentTask)
     {
         case 0:
             break;
@@ -27,7 +27,7 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
             break;
 
         case 6:
-            Sd_XaPreLoadAudioInit();
+            Sd_XaPreLoadAudio();
             break;
 
         case 7:
@@ -39,17 +39,17 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
             break;
 
         default:
-            if (g_Sd_CurrentCmd >= 160)
+            if (g_Sd_CurrentTask >= 160)
             {
                 Sd_VabLoad();
             }
-            else if (g_Sd_CurrentCmd >= 32)
+            else if (g_Sd_CurrentTask >= 32)
             {
                 Sd_KdtLoad();
             }
             else
             {
-                Sd_CmdPoolUpdate();
+                Sd_TaskPoolUpdate();
             }
             break;
     }
@@ -64,55 +64,55 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
     {
         g_Sd_AudioWork.field_E = NO_VALUE;
 
-        if (g_Sd_ChannelsVolume.volumeBgm_8 <= 0)
+        if (gSDVolConfig.volumeBgm_8 <= 0)
         {
-            g_Sd_ChannelsVolume.volumeBgm_8 = 0;
+            gSDVolConfig.volumeBgm_8 = 0;
             Sd_StopBgmStep();
         }
         else
         {
-            g_Sd_ChannelsVolume.volumeBgm_8 -= g_Sd_AudioWork.bgmFadeSpeed_14;
+            gSDVolConfig.volumeBgm_8 -= g_Sd_AudioWork.bgmFadeSpeed_14;
 
-            if ((g_Sd_ChannelsVolume.volumeBgm_8 << 16) <= 0)
+            if ((gSDVolConfig.volumeBgm_8 << 16) <= 0)
             {
-                g_Sd_ChannelsVolume.volumeBgm_8 = 0;
+                gSDVolConfig.volumeBgm_8 = 0;
                 Sd_StopBgmStep();
             }
         }
 
-        g_Sd_ChannelsVolume.volumeBgm_6 = g_Sd_ChannelsVolume.volumeBgm_8;
+        gSDVolConfig.volumeBgm_6 = gSDVolConfig.volumeBgm_8;
         
-        Sd_SetVolBgm(g_Sd_ChannelsVolume.volumeBgm_8, g_Sd_ChannelsVolume.volumeBgm_8);
+        Sd_SetVolBgm(gSDVolConfig.volumeBgm_8, gSDVolConfig.volumeBgm_8);
     }
-    else if (g_Sd_ChannelsVolume.volumeBgm_6 != g_Sd_ChannelsVolume.volumeBgm_8)
+    else if (gSDVolConfig.volumeBgm_6 != gSDVolConfig.volumeBgm_8)
     {
-        if (g_Sd_ChannelsVolume.volumeBgm_8 < g_Sd_ChannelsVolume.volumeBgm_6)
+        if (gSDVolConfig.volumeBgm_8 < gSDVolConfig.volumeBgm_6)
         {
-            g_Sd_ChannelsVolume.volumeBgm_8++;
-            if (ABS(g_Sd_ChannelsVolume.volumeBgm_8 - g_Sd_ChannelsVolume.volumeBgm_6) < 2) 
+            gSDVolConfig.volumeBgm_8++;
+            if (ABS(gSDVolConfig.volumeBgm_8 - gSDVolConfig.volumeBgm_6) < 2) 
             {
-                g_Sd_ChannelsVolume.volumeBgm_8 = g_Sd_ChannelsVolume.volumeBgm_6;
+                gSDVolConfig.volumeBgm_8 = gSDVolConfig.volumeBgm_6;
             }
         }
         else
         {
-            g_Sd_ChannelsVolume.volumeBgm_8--;
-            if (ABS(g_Sd_ChannelsVolume.volumeBgm_8 - g_Sd_ChannelsVolume.volumeBgm_6) < 2) 
+            gSDVolConfig.volumeBgm_8--;
+            if (ABS(gSDVolConfig.volumeBgm_8 - gSDVolConfig.volumeBgm_6) < 2) 
             {
-                g_Sd_ChannelsVolume.volumeBgm_8 = g_Sd_ChannelsVolume.volumeBgm_6;
+                gSDVolConfig.volumeBgm_8 = gSDVolConfig.volumeBgm_6;
             }
         }
 
-        Sd_SetVolBgm(g_Sd_ChannelsVolume.volumeBgm_8, g_Sd_ChannelsVolume.volumeBgm_8);
+        Sd_SetVolBgm(gSDVolConfig.volumeBgm_8, gSDVolConfig.volumeBgm_8);
     }
 
     if ((u32)D_800C1688.field_4 > (u32)D_800C1688.field_0)
     {
-        if (g_Sd_CurrentCmd == 0)
+        if (g_Sd_CurrentTask == 0)
         {
             if (g_Sd_AudioWork.isXaLoading_16 == false)
             {
-                Sd_CmdPoolAdd(2);
+                Sd_TaskPoolAdd(2);
             }
 
             D_800C1688.field_8 = VSync(SyncMode_Count);
@@ -123,28 +123,28 @@ void Sd_CmdPoolExecute(void) // 0x800485D8
     // Slowly fade in/out game audio based if `g_Sd_AudioWork.muteGame_17` enabled.
     if (g_Sd_AudioWork.muteGame_17 == true)
     {
-        if (g_Sd_ChannelsVolume.volumeGlobal_A > 0)
+        if (gSDVolConfig.volumeGlobal_A > 0)
         {
-            g_Sd_ChannelsVolume.volumeGlobal_A -= 8;
-            if ((g_Sd_ChannelsVolume.volumeGlobal_A << 16) <= 0)
+            gSDVolConfig.volumeGlobal_A -= 8;
+            if ((gSDVolConfig.volumeGlobal_A << 16) <= 0)
             {
-                g_Sd_ChannelsVolume.volumeGlobal_A = 0;
+                gSDVolConfig.volumeGlobal_A = 0;
             }
             
-            SdSetMVol(g_Sd_ChannelsVolume.volumeGlobal_A, g_Sd_ChannelsVolume.volumeGlobal_A);
+            SdSetMVol(gSDVolConfig.volumeGlobal_A, gSDVolConfig.volumeGlobal_A);
         }
     }
     else
     {
-        if (g_Sd_ChannelsVolume.volumeGlobal_A < (OPT_SOUND_VOLUME_MAX - 1))
+        if (gSDVolConfig.volumeGlobal_A < (OPT_SOUND_VOLUME_MAX - 1))
         {
-            g_Sd_ChannelsVolume.volumeGlobal_A += 4;
-            if (g_Sd_ChannelsVolume.volumeGlobal_A >= (OPT_SOUND_VOLUME_MAX - 1))
+            gSDVolConfig.volumeGlobal_A += 4;
+            if (gSDVolConfig.volumeGlobal_A >= (OPT_SOUND_VOLUME_MAX - 1))
             {
-                g_Sd_ChannelsVolume.volumeGlobal_A = OPT_SOUND_VOLUME_MAX - 1;
+                gSDVolConfig.volumeGlobal_A = OPT_SOUND_VOLUME_MAX - 1;
             }
             
-            SdSetMVol(g_Sd_ChannelsVolume.volumeGlobal_A, g_Sd_ChannelsVolume.volumeGlobal_A);
+            SdSetMVol(gSDVolConfig.volumeGlobal_A, gSDVolConfig.volumeGlobal_A);
         }
     }
 
@@ -200,4 +200,4 @@ u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res) // 0x80048954
     return true;
 }
 
-const s32 rodataPad_80025D60[2] = { 0x6A375A00, 0x892FBD00 }; // Unused.
+const s32 rodataPad_80025D60[2] = { 0x6A375A00, 0x892FBD00 }; // Unused. Likely linker generated garbage.

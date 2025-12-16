@@ -51,12 +51,12 @@ SfxPairs                                    = 0x800252BC; // type:AreaLoadSfx si
 //--- PA: 0x00091C   VA: 0x8002547C   subsegment: .rodata, bodyprog_8003AB28
 //--------------------------------------------------------------------------
 
-//--------------------------------------------------------------------------------
-//--- PA: 0x001094   VA: 0x80025BF4   subsegment: .rodata, sound/bodyprog_80045A7C
-//--------------------------------------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x001094   VA: 0x80025BF4   subsegment: .rodata, sound/sd_call
+//----------------------------------------------------------------------
 
 //---------------------------------------------------------------------
-//--- PA: 0x00119C   VA: 0x80025CFC   subsegment: .rodata, sound/sd_vab
+//--- PA: 0x00119C   VA: 0x80025CFC   subsegment: .rodata, sound/sd_snd
 //---------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------
@@ -467,45 +467,45 @@ Bone_ModelIdxGet                            = 0x80044F6C; // type:func
 Skeleton_Init                               = 0x80044FE0; // type:func
 Skeleton_BoneModelAssign                    = 0x800451B0; // type:func
 
-//--------------------------------------------------------------------------
-//--- PA: 0x020F1C   VA: 0x80045A7C   subsegment: c, sound/bodyprog_80045A7C
-//--------------------------------------------------------------------------
-Sd_EngineCmd                                = 0x80045A7C; // type:func
+//----------------------------------------------------------------
+//--- PA: 0x020F1C   VA: 0x80045A7C   subsegment: c, sound/sd_call
+//----------------------------------------------------------------
+SD_Call                                     = 0x80045A7C; // type:func
 Sd_AudioStreamingCheck                      = 0x80045B28;
-Sd_EngineUtilities                          = 0x80045BD8;
+SD_BranchCTRL                               = 0x80045BD8;
 Sd_AudioSystemSet                           = 0x80045D28; // type:func
-sd_init                                     = 0x80045DD4; // type:func
+SD_Init                                     = 0x80045DD4; // type:func
 sd_work_init                                = 0x80045E44; // type:func
 Sd_PlaySfx                                  = 0x80046048; // type:func
 Sd_LastVoiceKeyOff                          = 0x800468EC; // type:func
 Sd_AllVoicesKeyOff                          = 0x800469AC; // type:func
 Sd_AllVoicesKeyOffVWithRROff                = 0x800469E8; // type:func
-Sd_StopBgmCmd                               = 0x80046AD8;
+Sd_StopBgmTaskAdd                           = 0x80046AD8;
 Sd_StopBgm                                  = 0x80046B04;
 Sd_StopBgmStep                              = 0x80046B78;
 Sd_BgmLayerVolumeGet                        = 0x80046BB4;
 Sd_BgmLayerVolumeSet                        = 0x80046C54;
-Sd_XaAudioPlayCmdAdd                        = 0x80046D3C;
+Sd_XaAudioPlayTaskAdd                       = 0x80046D3C;
 Sd_XaAudioLengthGet                         = 0x80046DCC;
 Sd_XaAudioPlay                              = 0x80046E00;
-Sd_XaPreLoadAudio                           = 0x8004729C;
-Sd_XaPreLoadAudioCmdAdd                     = 0x800472BC;
-Sd_XaPreLoadAudioInit                       = 0x80047308;
-Sd_XaAudioStopCmdAdd                        = 0x8004760C;
+Sd_XaPreLoadAudioPreTaskAdd                 = 0x8004729C;
+Sd_XaPreLoadAudioTaskAdd                    = 0x800472BC;
+Sd_XaPreLoadAudio                           = 0x80047308;
+Sd_XaAudioStopTaskAdd                       = 0x8004760C;
 Sd_XaAudioStop                              = 0x80047634;
 Sd_SetVolume                                = 0x80047798; // type:func
 Sd_SetVolBgm                                = 0x80047808; // type:func
 Sd_SetVolXa                                 = 0x80047860; // type:func
 Sd_GetVolSe                                 = 0x800478B8; // type:func
-Sd_CmdPoolAdd                               = 0x800478DC;
-Sd_CmdPoolUpdate                            = 0x80047A70;
+Sd_TaskPoolAdd                              = 0x800478DC;
+Sd_TaskPoolUpdate                           = 0x80047A70;
 Sd_SetReverbDepth                           = 0x80047AD0; // type:func
 Sd_SetReverbEnable                          = 0x80047AFC; // type:func
 
 //---------------------------------------------------------------
-//--- PA: 0x022FC4   VA: 0x80047B24   subsegment: c, sound/sd_vab
+//--- PA: 0x022FC4   VA: 0x80047B24   subsegment: c, sound/sd_snd
 //---------------------------------------------------------------
-Sd_VabLoad_CmdSet                           = 0x80047B24;
+Sd_VabLoad_TaskAdd                          = 0x80047B24;
 Sd_VabLoad                                  = 0x80047B80;
 Sd_VabLoad_TypeClear                        = 0x80047D1C;
 Sd_VabLoad_OffSet                           = 0x80047D50;
@@ -516,9 +516,9 @@ Sd_VabLoad_OffVagNextDataSet                = 0x80048000;
 Sd_VabLoad_NextVagDataMove                  = 0x8004807C;
 Sd_VabLoad_LastVagDataMove                  = 0x800480FC;
 Sd_VabLoad_Finalization                     = 0x800481F8;
-Sd_KdtLoad_CmdSet                           = 0x80048244;
+Sd_KdtLoad_TaskAdd                          = 0x80048244;
 Sd_KdtLoad                                  = 0x800482D8;
-Sd_StopSeq                                  = 0x8004839C; // type:func
+Sd_KdtLoad_StopSeq                          = 0x8004839C; // type:func
 Sd_KdtLoad_OffSet                           = 0x800483D4;
 Sd_KdtLoad_FileLoad                         = 0x80048424;
 Sd_KdtLoad_LoadCheck                        = 0x80048498;
@@ -527,10 +527,10 @@ Sd_KdtLoad_LoadCheck                        = 0x80048498;
 //--- PA: 0x023A50   VA: 0x800485B0   subsegment: c, sound/bodyprog_nullsub_800485B0
 //----------------------------------------------------------------------------------
 
-//--------------------------------------------------------------------------
-//--- PA: 0x023A78   VA: 0x800485D8   subsegment: c, sound/bodyprog_800485D8
-//--------------------------------------------------------------------------
-Sd_CmdPoolExecute                           = 0x800485D8;
+//----------------------------------------------------------------
+//--- PA: 0x023A78   VA: 0x800485D8   subsegment: c, sound/sd_data
+//----------------------------------------------------------------
+Sd_TaskPoolExecute                          = 0x800485D8;
 Sd_CdPrimitiveCmdTry                        = 0x80048954; // type:func
 
 //---------------------------------------------------------------
@@ -2184,16 +2184,12 @@ IMG_ETC.87                                  = 0x800A9EC4;
 IMG_FLAME.241                               = 0x800A9FA8;
 Y_ARRAY.295                                 = 0x800A9FB4;
 
-//-------------------------------------------------------------------
-//--- PA: 0x085468   VA: 0x800A9FC8   subsegment: .data, sound/sd_vab
-//-------------------------------------------------------------------
+//--------------------------------------------------------------------
+//--- PA: 0x085468   VA: 0x800A9FC8   subsegment: .data, sound/sd_data
+//--------------------------------------------------------------------
 g_Sd_VabBuffers                             = 0x800A9FC8;
 g_Sd_KdtBuffer                              = 0x800A9FD8;
 g_AudioData                                 = 0x800A9FEC;
-
-//------------------------------------------------------------------------------
-//--- PA: 0x085A80   VA: 0x800AA5E0   subsegment: .data, sound/bodyprog_80045A7C
-//------------------------------------------------------------------------------
 g_Sd_ReverbDepths                           = 0x800AA5E0;
 g_XaItemData                                = 0x800AA894;
 g_Vab_InfoTable                             = 0x800ACAA8;
@@ -2660,27 +2656,29 @@ g_Map                                       = 0x800C1020; // type:u8 size:0x58C 
 //--- PA: 0x09CA50   VA: 0x800C15B0   subsegment: bss
 //---------------------------------------------------
 
-//----------------------------------------------------------------------------
-//--- PA: 0x09CA58   VA: 0x800C15B8   subsegment: bss, sound/bodyprog_80045A7C
-//----------------------------------------------------------------------------
-audioIdx                                    = 0x800C15BC;
-g_Sound_ActiveSfxIdx                        = 0x800C15BE; // type:s16
-
-//---------------------------------------------------
-//--- PA: 0x09CA88   VA: 0x800C15E8   subsegment: bss
-//---------------------------------------------------
+//-------------------------------------------------------------------
+//--- PA: 0x09CA58   VA: 0x800C15B8   subsegment: .bss, sound/sd_call
+//-------------------------------------------------------------------
 g_Sd_AudioWork                              = 0x800C1658;
 g_Sd_AudioStreamingStates                   = 0x800C1670;
-g_Sd_ChannelsVolume                         = 0x800C1678;
+
+//---------------------------------------------------
+//--- PA: 0x09CB18   VA: 0x800C1678   subsegment: bss
+//---------------------------------------------------
+gSDVolConfig                                = 0x800C1678;
 g_Sd_ReverbDepth                            = 0x800C1687;
 g_Sd_VabPlayingInfo                         = 0x800C1698;
-g_Sd_CmdPool                                = 0x800C16A8; // type:u8 size:0x20
+g_Sd_TaskPool                               = 0x800C16A8; // type:u8 size:0x20
 g_Sd_AudioType                              = 0x800C37C8;
 g_Sd_DataMoved                              = 0x800C37CC;
 g_Sd_VabLoadAttemps                         = 0x800C37D0;
 g_Sd_VabTargetLoad                          = 0x800C37D4;
 g_Sd_KdTargetLoad                           = 0x800C37D8;
-g_Sd_CurrentCmd                             = 0x800C37DD;
+g_Sd_CurrentTask                            = 0x800C37DD;
+
+//---------------------------------------------------
+//--- PA: 0x09EC80   VA: 0x800C37E0   subsegment: bss
+//---------------------------------------------------
 vwViewPointInfo                             = 0x800C37E0; // type:VW_VIEW_WORK size:0x84
 VbWvsMatrix                                 = 0x800C3888; // type:MATRIX size:0x20
 g_StringPosition                            = 0x800C38A8; // type:DVECTOR

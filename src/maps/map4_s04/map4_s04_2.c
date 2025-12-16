@@ -324,7 +324,7 @@ void func_800D23E4(void) // 0x800D23E4
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            Sd_EngineCmd(19);
+            SD_Call(19);
 
             Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
 

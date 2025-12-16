@@ -55,8 +55,8 @@ void GameState_LoadScreen_Update(void) // 0x800348E8
         {
             g_SysWork.flags_22A4 &= ~SysFlag2_10;
 
-            Sd_EngineCmd(Sfx_Unk1502);
-            Sd_EngineCmd(Sfx_Unk1501);
+            SD_Call(Sfx_Unk1502);
+            SD_Call(Sfx_Unk1501);
         }
     }
 }
@@ -97,7 +97,7 @@ void GameFs_MapStartup(void) // 0x80034964
                 g_GameWork.gameStateStep_598[0] = 3;
             }
 
-            Sd_EngineCmd(19);
+            SD_Call(19);
             break;
 
         case 1:
@@ -605,7 +605,7 @@ s32 func_80035780(void) // 0x80035780
             }
             else
             {
-                Sd_EngineCmd(18);
+                SD_Call(18);
                 Bgm_MuteBgmLayers();
         
                 g_GameWork.gameStateStep_598[1]++;
@@ -655,7 +655,7 @@ void func_800358DC(s32 cmd) // 0x800358DC
     }
 
     g_GameWork.soundCmd_5B2 = cmd;
-    Sd_EngineCmd(g_UnknownBgmTable0[cmd]);
+    SD_Call(g_UnknownBgmTable0[cmd]);
 }
 
 void func_80035924(void) // 0x80035924
@@ -668,7 +668,7 @@ void func_80035924(void) // 0x80035924
         return;
     }
 
-    Sd_EngineCmd(g_UnknownBgmTable1[cmd]);
+    SD_Call(g_UnknownBgmTable1[cmd]);
 }
 
 void func_8003596C(void) // 0x8003596C
@@ -703,7 +703,7 @@ s32 func_8003599C(void) // 0x8003599C
 
             if (func_80035AB0((s8)g_MapOverlayHeader.field_15) != 0)
             {
-                Sd_EngineCmd(17);
+                SD_Call(17);
                 g_GameWork.gameStateStep_598[1]++;
                 return 1;
             }
@@ -729,7 +729,7 @@ s32 func_80035AB0(s32 arg0) // 0x80035AB0
 void func_80035AC8(s32 idx) // 0x80035AC8
 {
     g_GameWork.field_5B3 = idx;
-    Sd_EngineCmd(g_UnknownBgmTable2[idx]);
+    SD_Call(g_UnknownBgmTable2[idx]);
 }
 
 // ========================================
@@ -1086,7 +1086,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
         if (D_800A99A0 != 3) 
         {
             D_800A99A0 = 3;
-            Sd_EngineCmd(18);
+            SD_Call(18);
         }
     } 
     else if (D_800A99A0 == 0) 
@@ -1295,7 +1295,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
                             if (g_SysWork.sysFlags_22A0 & SysFlag_5)
                             {
-                                Sd_EngineCmd(19);
+                                SD_Call(19);
                             }
                             break;
                         }
@@ -1363,7 +1363,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 
                     if (g_SysWork.sysFlags_22A0 & SysFlag_5)
                     {
-                        Sd_EngineCmd(19);
+                        SD_Call(19);
                     }
 
                     D_800BCD74 = 1;
@@ -2523,7 +2523,7 @@ void func_80038354(void) // 0x80038354
         {
             if (D_800BCDA8[l].field_1 >= 0)
             {
-                Sd_EngineCmd((u16)(Sfx_RadioInterferenceLoop + l));
+                SD_Call((u16)(Sfx_RadioInterferenceLoop + l));
             }
         }
         else
@@ -2824,7 +2824,7 @@ void SysState_GamePaused_Update(void) // 0x800391E8
 
     if (g_SysWork.sysStateStep_C[0] == 0)
     {
-        Sd_EngineCmd(3);
+        SD_Call(3);
         g_SysWork.sysStateStep_C[0]++;
     }
 
@@ -2840,7 +2840,7 @@ void SysState_GamePaused_Update(void) // 0x800391E8
         (g_Controller0->btnsClicked_10 & ControllerFlag_L3))
     {
         D_800A9A68 = 0;
-        Sd_EngineCmd(4);
+        SD_Call(4);
         g_MapEventIdx = 0;
         SysWork_StateSetNext(SysState_SaveMenu1);
         return;
@@ -2849,7 +2849,7 @@ void SysState_GamePaused_Update(void) // 0x800391E8
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.pause_14)
     {
         D_800A9A68 = 0;
-        Sd_EngineCmd(4);
+        SD_Call(4);
         SysWork_StateSetNext(SysState_Gameplay);
     }
 }
@@ -2866,7 +2866,7 @@ void SysState_OptionsMenu_Update(void) // 0x80039344
         case 1:
             if (func_8003C850() != 0)
             {
-                Sd_EngineCmd(19);
+                SD_Call(19);
                 GameFs_OptionBinLoad();
 
                 g_SysWork.sysStateStep_C[0]++;
@@ -3002,7 +3002,7 @@ void GameState_LoadStatusScreen_Update(void) // 0x800395C0
 
         if (Sd_AudioStreamingCheck())
         {
-            Sd_EngineCmd(19);
+            SD_Call(19);
         }
 
         save = g_SavegamePtr;
@@ -3157,7 +3157,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     g_SysWork.field_2283            = g_MapEventParam->field_8_19;
     g_SysWork.field_2282            = g_MapEventParam->flags_8_13;
 
-    Sd_EngineCmd(SfxPairs[g_SysWork.field_2283].sfx_0);
+    SD_Call(SfxPairs[g_SysWork.field_2283].sfx_0);
 
     if (g_SysWork.field_2283 == 7)
     {
@@ -3219,7 +3219,7 @@ void AreaLoad_UpdatePlayerPosition(void) // 0x80039F30
 
 void func_80039F54(void) // 0x80039F54
 {
-    Sd_EngineCmd(SfxPairs[g_SysWork.field_2283].sfx_2);
+    SD_Call(SfxPairs[g_SysWork.field_2283].sfx_2);
 }
 
 s8 func_80039F90(void) // 0x80039F90
@@ -3393,7 +3393,7 @@ void SysState_EventPlaySound_Update(void) // 0x8003A4B4
 {
     g_DeltaTime0 = g_SomeTimer0;
 
-    Sd_EngineCmd(((u16)g_MapEventIdx + Sfx_Base) & 0xFFFF);
+    SD_Call(((u16)g_MapEventIdx + Sfx_Base) & 0xFFFF);
 
     Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
     g_SysWork.sysState_8 = SysState_Gameplay;

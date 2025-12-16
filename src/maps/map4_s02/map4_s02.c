@@ -631,7 +631,7 @@ void func_800EA3F0(void) // 0x800EA3F0
     {
         if (!D_800F13AC)
         {
-            Sd_EngineCmd(Sfx_Unk1542);
+            SD_Call(Sfx_Unk1542);
             D_800F13AC++;
         }
 

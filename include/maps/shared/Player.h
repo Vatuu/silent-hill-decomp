@@ -307,7 +307,7 @@ void sharedFunc_800D0CB8_0_s00(void)
             }
             else if (sharedData_800E32CC_0_s00 != 0)
             {
-                Sd_EngineCmd(Sfx_Unk1360);
+                SD_Call(Sfx_Unk1360);
                 g_SysWork.field_234B_0 = 1;
             }
     }

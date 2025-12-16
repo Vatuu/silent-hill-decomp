@@ -335,7 +335,7 @@ void func_800D27F4(void) // 0x800D27F4
             if (g_SysWork.sysStateStep_C[0] == 9 &&
                 (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.skip_4 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)))
             {
-                Sd_EngineCmd(19);
+                SD_Call(19);
                 SysWork_StateStepIncrement(0);
             }
             break;

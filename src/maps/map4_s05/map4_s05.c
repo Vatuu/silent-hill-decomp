@@ -290,7 +290,7 @@ void func_800D6800(void) // 0x800D6800
 
     if (D_800D7D80 == 0)
     {
-        Sd_EngineCmd(Sfx_Unk1522);
+        SD_Call(Sfx_Unk1522);
         D_800D7D82++;
     }
 
@@ -360,7 +360,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             D_800DB954 = NO_VALUE;
             ScreenFade_ResetTimestep();
 
-            Sd_EngineCmd(Sfx_Unk1467);
+            SD_Call(Sfx_Unk1467);
             func_800463C0(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
 
             D_800D7D70 = 0;

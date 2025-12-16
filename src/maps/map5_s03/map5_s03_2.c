@@ -191,7 +191,7 @@ void func_800D1628(void) // 0x800D1628
 
                 if (g_SysWork.sysStateStep_C[0] != 6)
                 {
-                    Sd_EngineCmd(Sfx_MenuConfirm);
+                    SD_Call(Sfx_MenuConfirm);
                 }
             }
             break;
@@ -550,7 +550,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
             g_SysWork.field_2378 = Q12(1.0f);
 
-            Sd_EngineCmd(19);
+            SD_Call(19);
             sharedFunc_800D2EF4_0_s00();
             func_8003D01C();
             break;
@@ -622,7 +622,7 @@ void func_800D2674(void) // 0x800D2674
             Camera_LookAtSet(NULL, Q12(105.14f), Q12(0.37f), Q12(60.61f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
             func_80085EB8(0U, &g_SysWork.player_4C.chara_0, 105, false);
-            Sd_EngineCmd(Sfx_Unk1520);
+            SD_Call(Sfx_Unk1520);
             SysWork_StateStepIncrement(0);
 
         case 5:

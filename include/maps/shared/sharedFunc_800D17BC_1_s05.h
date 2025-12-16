@@ -19,7 +19,7 @@ void sharedFunc_800D17BC_1_s05(s_SubCharacter* splithead)
 
         case ANIM_STATUS(10, true):
             splithead->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
-            Sd_EngineCmd(Sfx_Unk1477);
+            SD_Call(Sfx_Unk1477);
             break;
 
         case ANIM_STATUS(1, false):

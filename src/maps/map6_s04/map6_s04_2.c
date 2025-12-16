@@ -791,8 +791,8 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
             break;
 
         case 3:
-            Sd_EngineCmd(16);
-            Sd_EngineCmd(19);
+            SD_Call(16);
+            SD_Call(19);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 162, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 7, false);
             SysWork_StateStepIncrement(0);
@@ -850,7 +850,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
             func_8008D448();
             func_8003EBA0();
             g_SysWork.field_2378 = Q12(1.0f);
-            Sd_EngineCmd(19);
+            SD_Call(19);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             break;
     }
@@ -993,7 +993,7 @@ void func_800E3244(void) // 0x800E3244
             break;
 
         case 10:
-            Sd_EngineCmd(19);
+            SD_Call(19);
 
             D_800ED5B0 = Q12(186.0f);
 
@@ -1102,12 +1102,12 @@ void func_800E3244(void) // 0x800E3244
             break;
 
         case 27:
-            Sd_EngineCmd(19);
+            SD_Call(19);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.8f), false);
             break;
 
         case EventState_Skip:
-            Sd_EngineCmd(19);
+            SD_Call(19);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
@@ -1465,7 +1465,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
             if (g_SysWork.sysStateStep_C[0] != 42)
             {
-                Sd_EngineCmd(19);
+                SD_Call(19);
             }
             break;
 
@@ -1621,7 +1621,7 @@ void func_800E3EF4(void) // 0x800E3EF4
             sharedFunc_800D2EF4_0_s00();
             D_800A9938 = 190000;
 
-            Sd_EngineCmd(19);
+            SD_Call(19);
             func_8008D448();
             func_8003EBA0();
 
@@ -1996,8 +1996,8 @@ void func_800E5F54(void) // 0x800E5F54
 
             if (!D_800ED840)
             {
-                Sd_EngineCmd(Sfx_Unk1616);
-                Sd_EngineCmd(Sfx_Unk1615);
+                SD_Call(Sfx_Unk1616);
+                SD_Call(Sfx_Unk1615);
                 D_800ED840++;
             }
 

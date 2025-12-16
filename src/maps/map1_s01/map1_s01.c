@@ -533,7 +533,7 @@ void func_800D7864(void) // 0x800D7864
 
             if (g_WorldObject0.position_1C.vy >= Q12(0.0f))
             {
-                Sd_EngineCmd(Sfx_Unk1417);
+                SD_Call(Sfx_Unk1417);
                 SysWork_StateStepIncrement(0);
             }
             break;
@@ -622,7 +622,7 @@ void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
 
     if (g_SysWork.sysStateStep_C[1] == 4)
     {
-        Sd_EngineCmd(Sfx_Unk1421);
+        SD_Call(Sfx_Unk1421);
         SysWork_StateStepSet(1, 5);
         return;
     }
@@ -705,73 +705,73 @@ void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
         {
             case 0:
                 SysWork_StateStepSet(1, 1);
-                Sd_EngineCmd(Sfx_Unk1438);
+                SD_Call(Sfx_Unk1438);
                 g_PianoCursorX = Q12(-77.0f);
                 break;
 
             case 1:
                 SysWork_StateStepSet(1, 3);
-                Sd_EngineCmd(Sfx_Unk1445);
+                SD_Call(Sfx_Unk1445);
                 g_PianoCursorX = Q12(-64.0f);
                 break;
 
             case 2:
                 SysWork_StateStepSet(1, 3);
-                Sd_EngineCmd(Sfx_Unk1445);
+                SD_Call(Sfx_Unk1445);
                 g_PianoCursorX = Q12(-52.0f);
                 break;
 
             case 3:
                 SysWork_StateStepSet(1, 1);
-                Sd_EngineCmd(Sfx_Unk1439);
+                SD_Call(Sfx_Unk1439);
                 g_PianoCursorX = Q12(-39.0f);
                 break;
 
             case 4:
                 SysWork_StateStepSet(1, 1);
-                Sd_EngineCmd(Sfx_Unk1440);
+                SD_Call(Sfx_Unk1440);
                 g_PianoCursorX = Q12(-27.0f);
                 break;
 
             case 5:
                 SysWork_StateStepSet(1, 1);
-                Sd_EngineCmd(Sfx_Unk1441);
+                SD_Call(Sfx_Unk1441);
                 g_PianoCursorX = Q12(-2.0f);
                 break;
 
             case 6:
                 SysWork_StateStepSet(1, 1);
-                Sd_EngineCmd(Sfx_Unk1442);
+                SD_Call(Sfx_Unk1442);
                 g_PianoCursorX = Q12(8.0f);
                 break;
 
             case 7:
                 SysWork_StateStepSet(1, 3);
-                Sd_EngineCmd(Sfx_Unk1445);
+                SD_Call(Sfx_Unk1445);
                 g_PianoCursorX = Q12(23.0f);
                 break;
 
             case 8:
                 SysWork_StateStepSet(1, 1);
-                Sd_EngineCmd(Sfx_Unk1443);
+                SD_Call(Sfx_Unk1443);
                 g_PianoCursorX = Q12(36.0f);
                 break;
 
             case 9:
                 SysWork_StateStepSet(1, 3);
-                Sd_EngineCmd(Sfx_Unk1445);
+                SD_Call(Sfx_Unk1445);
                 g_PianoCursorX = Q12(48.0f);
                 break;
 
             case 10:
                 SysWork_StateStepSet(1, 3);
-                Sd_EngineCmd(Sfx_Unk1445);
+                SD_Call(Sfx_Unk1445);
                 g_PianoCursorX = Q12(64.0f);
                 break;
 
             case 11:
                 SysWork_StateStepSet(1, 1);
-                Sd_EngineCmd(Sfx_Unk1444);
+                SD_Call(Sfx_Unk1444);
                 g_PianoCursorX = Q12(73.0f);
                 break;
         }

@@ -524,7 +524,7 @@ void func_800D13D8(void) // 0x800D13D8
 
             D_800D4070 = NO_VALUE;
 
-            Sd_EngineCmd(19);
+            SD_Call(19);
             Savegame_EventFlagSet(EventFlag_424);
             Savegame_MapMarkingSet(MapMarkFlag_ResortTown_LighthouseCircle);
 
@@ -683,7 +683,7 @@ void func_800D2658(void) // 0x800D2658
             D_800D4070 = NO_VALUE;
 
             ScreenFade_ResetTimestep();
-            Sd_EngineCmd(Sfx_Unk1467);
+            SD_Call(Sfx_Unk1467);
             func_800463C0(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
 
             D_800D41B0 = 0;

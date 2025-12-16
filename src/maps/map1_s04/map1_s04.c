@@ -132,7 +132,7 @@ void func_800CCA2C(void) // 0x800CCA2C
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_Circle)
             {
-                Sd_EngineCmd(D_800CD038[D_800CD768][D_800CD76C]);
+                SD_Call(D_800CD038[D_800CD768][D_800CD76C]);
                 D_800CD770 = 0;
                 D_800CD774 = 1;
             }
@@ -185,7 +185,7 @@ void func_800CCA2C(void) // 0x800CCA2C
         case 2:
             if (g_Controller0->btnsClicked_10 & ControllerFlag_Circle)
             {
-                Sd_EngineCmd(D_800CD768_tbl[D_800CD768]);
+                SD_Call(D_800CD768_tbl[D_800CD768]);
             }
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_Cross)
@@ -220,17 +220,17 @@ void Map_WorldObjectsUpdate(void) // 0x800CCE38
 {
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R1)
     {
-        Sd_EngineCmd(Sfx_UseKey);
+        SD_Call(Sfx_UseKey);
     }
 
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R2)
     {
-        Sd_EngineCmd(Sfx_DoorUnlocked);
+        SD_Call(Sfx_DoorUnlocked);
     }
 
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
     {
-        Sd_EngineCmd(Sfx_Unk1343);
+        SD_Call(Sfx_Unk1343);
     }
 }
 

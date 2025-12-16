@@ -417,7 +417,7 @@ void func_800D54D0(void) // 0x800D54D0
 
                 if (g_SysWork.sysStateStep_C[0] != 6)
                 {
-                    Sd_EngineCmd(Sfx_MenuConfirm);
+                    SD_Call(Sfx_MenuConfirm);
                 }
             }
             break;
@@ -437,7 +437,7 @@ void func_800D54D0(void) // 0x800D54D0
 
                 if (g_SysWork.sysStateStep_C[0] != 9)
                 {
-                    Sd_EngineCmd(Sfx_MenuConfirm);
+                    SD_Call(Sfx_MenuConfirm);
                 }
             }
             break;
@@ -767,7 +767,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             g_SysWork.field_2378 = Q12(1.0f);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             g_SysWork.player_4C.chara_0.field_E1_0 = 3;
-            Sd_EngineCmd(19);
+            SD_Call(19);
             break;
     }
 

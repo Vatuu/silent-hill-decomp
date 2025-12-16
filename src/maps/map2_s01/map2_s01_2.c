@@ -414,7 +414,7 @@ void func_800CED88(void) // 0x800CED88
 
             g_Timer0 = NO_VALUE;
 
-            Sd_EngineCmd(19);
+            SD_Call(19);
             func_8003D01C();
             break;
     }

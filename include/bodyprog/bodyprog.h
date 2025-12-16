@@ -2538,15 +2538,6 @@ extern s8* D_800C15B0;
 
 extern s8 D_800C15B4;
 
-/** Base-0 SFX index. */
-extern s16 D_800C15C2;
-
-/** SFX IDs? */
-extern u16 D_800C15F8[];
-
-/** Voices? */
-extern s16 D_800C1628[];
-
 extern s16 D_800C16A4;
 
 extern s32 D_800C16C8; // Type assumed.

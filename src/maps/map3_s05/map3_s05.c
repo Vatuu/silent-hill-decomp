@@ -246,7 +246,7 @@ void func_800D5A98(void) // 0x800D5A98
             break;
 
         case 6:
-            Sd_EngineCmd(Sfx_Base);
+            SD_Call(Sfx_Base);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -721,7 +721,7 @@ void func_800D72AC(void) // 0x800D72AC
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(-22.8f);
             g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(90.0f);
 
-            Sd_EngineCmd(Sfx_Unk1535);
+            SD_Call(Sfx_Unk1535);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -913,7 +913,7 @@ void func_800D87AC(void) // 0x800D87AC
 
         if (D_800DD528 == 0)
         {
-            Sd_EngineCmd(Sfx_Unk1503);
+            SD_Call(Sfx_Unk1503);
             D_800DD528++;
         }
 

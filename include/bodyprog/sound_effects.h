@@ -318,9 +318,9 @@ typedef enum _SfxId
     Sfx_Unk1916 = 1916,
 
     /** Values starting from `4096` are XA files defined in `g_XaItemData` struct.
-     * In both `Sd_XaAudioPlayCmdAdd` (call through `Sd_EngineCmd`) and `Sd_XaPreLoadAudioCmdAdd`
+     * In both `Sd_XaAudioPlayTaskAdd` (call through `SD_Call`) and `Sd_XaPreLoadAudioTaskAdd`
      * (call through `Sd_XaPreLoadAudio`), when the command is assigned to
-     * `D_800C1658.xaAudioIdxCheck_2` or `D_800C1658.xaAudioIdxCheck_4`, is also masked with `0xFFF`.
+     * `g_Sd_AudioWork.xaAudioIdxCheck_2` or `g_Sd_AudioWork.xaAudioIdxCheck_4`, is also masked with `0xFFF`.
      * This make sense as `4096` in hexadecimal is `0x1000`, meaning that the fourth value (1) gets
      * ignored and only the other values which start from 0 are considered.
      */

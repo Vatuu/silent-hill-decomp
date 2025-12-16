@@ -239,7 +239,7 @@ void func_800D5614(void) // 0x800D5614
             break;
 
         case 15:
-            Sd_EngineCmd(19);
+            SD_Call(19);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
             // Warp player.
@@ -616,7 +616,7 @@ void func_800D6578(void) // 0x800D6578
     {
         if (!Savegame_EventFlagGet(EventFlag_142) && Savegame_EventFlagGet(EventFlag_143))
         {
-            Sd_EngineCmd(Sfx_Unk1480);
+            SD_Call(Sfx_Unk1480);
             D_800DAFE4 = 1;
         }
 

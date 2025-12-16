@@ -736,7 +736,7 @@ void func_800DB368(void) // 0x800DB368
         case 0:
             Player_ControlFreeze();
             Savegame_EventFlagSet(EventFlag_122);
-            Sd_EngineCmd(Sfx_XaAudio53);
+            SD_Call(Sfx_XaAudio53);
             func_800865FC(true, 0, 0, FP_ANGLE(-90.0f), Q12(20.3f), Q12(143.5f));
 
             func_800868DC(0);
@@ -793,8 +793,8 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         case 11:
-            Sd_EngineCmd(Sfx_Unk1456);
-            Sd_EngineCmd(19);
+            SD_Call(Sfx_Unk1456);
+            SD_Call(19);
 
             D_800E1FD4 = WorldGfx_PlayerHeldItemSet(InventoryItemId_CutscenePhone);
             SysWork_StateStepIncrement(0);
@@ -803,18 +803,18 @@ void func_800DB368(void) // 0x800DB368
             if (Fs_QueueIsEntryLoaded(D_800E1FD4))
             {
                 func_8003D01C();
-                Sd_XaPreLoadAudio(Sfx_XaAudio54);
+                Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio54);
                 SysWork_StateStepIncrement(0);
             }
             break;
 
         case 13:
             func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
-            Sd_XaPreLoadAudio(Sfx_XaAudio54);
+            Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio54);
             break;
 
         case 14:
-            Sd_EngineCmd(Sfx_XaAudio54);
+            SD_Call(Sfx_XaAudio54);
             SysWork_StateStepIncrement(0);
 
         case 15:
@@ -859,12 +859,12 @@ void func_800DB368(void) // 0x800DB368
 
         case 24:
             sharedFunc_800D2EF4_0_s00();
-            Sd_EngineCmd(19);
+            SD_Call(19);
 
             D_800E1FD4 = func_8003CD6C(&g_SysWork.playerCombatInfo_38);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            Sd_EngineCmd(Sfx_Unk1457);
+            SD_Call(Sfx_Unk1457);
             SysWork_StateStepIncrement(0);
 
         case 25:
@@ -883,7 +883,7 @@ void func_800DB368(void) // 0x800DB368
             break;
 
         case 28:
-            Sd_EngineCmd(19);
+            SD_Call(19);
             func_80085EB8(3, &g_SysWork.player_4C.chara_0, 0, false);
 
             if (!D_800E1FD8)
@@ -930,7 +930,7 @@ void func_800DBB7C(void) // 0x800DBB7C
         case 0:
             Player_ControlFreeze();
             Savegame_EventFlagSet(EventFlag_121);
-            Sd_EngineCmd(Sfx_XaAudio56);
+            SD_Call(Sfx_XaAudio56);
             SysWork_StateStepIncrement(0);
 
         case 1:
@@ -1131,7 +1131,7 @@ void func_800DCF00(void) // 0x800DCF00
 
         if (D_800E1FE4 == 0)
         {
-            Sd_EngineCmd(Sfx_Unk1451);
+            SD_Call(Sfx_Unk1451);
         }
 
         func_8005DE0C(Sfx_Unk1451, &g_WorldObject0.position_1C, (D_800E1FE4 + Q12(0.1f)) >> 4, Q12(32.0f), 0);
@@ -1358,7 +1358,7 @@ void func_800DDA84(void) // 0x800DDA84
 
         if (!D_800E5A98)
         {
-            Sd_EngineCmd(Sfx_Unk1455);
+            SD_Call(Sfx_Unk1455);
             D_800E5A98 = 1;
         }
 

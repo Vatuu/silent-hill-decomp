@@ -1870,7 +1870,7 @@ void func_800EA960(void) // 0x800EA960
         case 2:
             func_8005DC1C(Sfx_Unk1481, &QVECTOR3(-41.576f, -3.619f, 345.992f), Q8_CLAMPED(0.5f), 0);
             Savegame_EventFlagSet(EventFlag_164);
-            Sd_EngineCmd(Sfx_Unk1482);
+            SD_Call(Sfx_Unk1482);
 
             D_800F534C = NO_VALUE;
 
@@ -1895,7 +1895,7 @@ void func_800EA960(void) // 0x800EA960
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
             break;
         case 7:
-            Sd_EngineCmd(Sfx_Unk1484);
+            SD_Call(Sfx_Unk1484);
             D_800F534E = Q12(0.0f);
             SysWork_StateStepIncrement(0);
 
@@ -2002,7 +2002,7 @@ void func_800EAD2C(void) // 0x800EAD2C
             break;
 
         case 6:
-            Sd_EngineCmd(Sfx_Unk1484);
+            SD_Call(Sfx_Unk1484);
             D_800F534E = Q12(0.0f);
             SysWork_StateStepIncrement(0);
 
@@ -2605,7 +2605,7 @@ void func_800EC080(void) // 0x800EC080
                 if (D_800F534C == 0)
                 {
                     D_800F534C = 1;
-                    Sd_EngineCmd(Sfx_Unk1482);
+                    SD_Call(Sfx_Unk1482);
                     D_800F5350 = Q12(0.75f);
                 }
                 else if (D_800F534C == NO_VALUE)
@@ -2628,7 +2628,7 @@ void func_800EC080(void) // 0x800EC080
                 if (D_800F534C == 0)
                 {
                     D_800F534C++;
-                    Sd_EngineCmd(Sfx_Unk1482);
+                    SD_Call(Sfx_Unk1482);
                 }
 
                 func_8005DE0C(Sfx_Unk1482, &QVECTOR3(237.0f, -1.0f, 346.0f), Q8(0.5f), Q12(16.0f), 0);

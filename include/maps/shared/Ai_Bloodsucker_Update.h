@@ -42,7 +42,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
 
     if (!(bloodsucker->properties_E4.larvalStalker.properties_E8[13].val32 & (1 << 0)))
     {
-        Sd_EngineCmd(Sfx_Unk1525);
+        SD_Call(Sfx_Unk1525);
         bloodsucker->properties_E4.larvalStalker.properties_E8[13].val32 |= 1 << 0;
     }
 
@@ -75,7 +75,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
         if (!(bloodsucker->properties_E4.larvalStalker.properties_E8[13].val32 & (1 << 1)))
         {
             bloodsucker->properties_E4.larvalStalker.properties_E8[13].val32 |= 1 << 1;
-            Sd_EngineCmd(Sfx_Unk1527);
+            SD_Call(Sfx_Unk1527);
         }
 
         bloodsucker->properties_E4.larvalStalker.properties_E8[3].val32 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 2.0f, Q12_SHIFT);

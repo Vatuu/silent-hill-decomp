@@ -1990,7 +1990,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
         case PlayerState_InstantDeath:
             if (extra->model_0.state_2 == 0)
             {
-                Sd_EngineCmd(4731);
+                SD_Call(4731);
             }
 
             func_8007FB94(chara, extra, ANIM_STATUS(101, true));
@@ -8170,31 +8170,31 @@ void func_8007F14C(u8 weaponAttack) // 0x8007F14C
         case WEAPON_ATTACK(EquippedWeaponId_Hammer,       AttackInputType_Tap):
         case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Tap):
         case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Tap):
-            Sd_EngineCmd(164);
+            SD_Call(164);
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
-            Sd_EngineCmd(169);
+            SD_Call(169);
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
-            Sd_EngineCmd(163);
+            SD_Call(163);
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
-            Sd_EngineCmd(166);
+            SD_Call(166);
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-            Sd_EngineCmd(167);
+            SD_Call(167);
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
-            Sd_EngineCmd(168);
+            SD_Call(168);
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-            Sd_EngineCmd(165);
+            SD_Call(165);
             break;
     }
 }

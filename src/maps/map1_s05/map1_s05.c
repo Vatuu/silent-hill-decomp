@@ -271,7 +271,7 @@ void func_800D4D1C(void) // 0x800D4D1C
         case 3:
             if (D_800D5D11 & 1)
             {
-                Sd_EngineCmd(Sfx_Unk1359);
+                SD_Call(Sfx_Unk1359);
                 D_800D5D11++;
             }
 
@@ -347,7 +347,7 @@ void func_800D525C(void) // 0x800D525C
     g_SysWork.cutsceneLightRot_2370.vy = FP_ANGLE(0.0f);
     g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
 
-    Sd_EngineCmd(Sfx_Unk1478);
+    SD_Call(Sfx_Unk1478);
 }
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D5400);

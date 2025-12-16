@@ -242,7 +242,7 @@ void func_800D7B2C(void)
             break;
 
         case 7:
-            Sd_EngineCmd(Sfx_Unk1416);
+            SD_Call(Sfx_Unk1416);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -256,7 +256,7 @@ void func_800D7B2C(void)
             break;
 
         case 9:
-            Sd_EngineCmd(Sfx_Unk1419);
+            SD_Call(Sfx_Unk1419);
             SysWork_StateStepIncrement(0);
 
         case 10:
@@ -340,7 +340,7 @@ void func_800D7EB0(void)
             break;
 
         case 7:
-            Sd_EngineCmd(0x588u);
+            SD_Call(0x588u);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -354,7 +354,7 @@ void func_800D7EB0(void)
             break;
 
         case 9:
-            Sd_EngineCmd(Sfx_Unk1419);
+            SD_Call(Sfx_Unk1419);
             SysWork_StateStepIncrement(0);
 
         case 10:
@@ -953,7 +953,7 @@ void Map_WorldObjectsUpdate(void)
         {
             if (D_800E1182 == 0)
             {
-                Sd_EngineCmd(Sfx_Unk1430);
+                SD_Call(Sfx_Unk1430);
             }
 
             if (!Savegame_EventFlagGet(EventFlag_84))
@@ -986,7 +986,7 @@ void Map_WorldObjectsUpdate(void)
         {
             if (D_800E1182 == 0)
             {
-                Sd_EngineCmd(Sfx_Unk1430);
+                SD_Call(Sfx_Unk1430);
             }
 
             D_800E1182 = Q12(0.2f);

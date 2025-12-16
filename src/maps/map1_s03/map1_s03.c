@@ -1101,7 +1101,7 @@ void func_800DCDDC(void) // 0x800DCDDC
             D_800E617C = NO_VALUE;
             ScreenFade_ResetTimestep();
 
-            Sd_EngineCmd(Sfx_Unk1467);
+            SD_Call(Sfx_Unk1467);
             func_800463C0(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
 
             D_800E2018 = 0;

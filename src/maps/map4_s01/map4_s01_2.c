@@ -195,7 +195,7 @@ void func_800D1FF0(void) // 0x800D1FF0
         case 5:
             Camera_PositionSet(NULL, Q12(179.35f), Q12(-1.5f), Q12(61.0098f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(176.98f), Q12(-0.49f), Q12(64.07f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-            Sd_EngineCmd(Sfx_Unk1538);
+            SD_Call(Sfx_Unk1538);
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 105, false);
 
             g_SysWork.player_4C.chara_0.position_18.vx = Q12(178.3f);
@@ -550,7 +550,7 @@ void func_800D2408(void) // 0x800D2408
             func_80088F94(cybilChara, 0, 0);
             Fs_QueueWaitForEmpty();
             func_8003D01C();
-            Sd_EngineCmd(19);
+            SD_Call(19);
             Savegame_EventFlagSet(EventFlag_303);
             func_8008D448();
             func_8003EBA0();
@@ -683,7 +683,7 @@ void func_800D2F74(void) // 0x800D2F74
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            Sd_EngineCmd(19);
+            SD_Call(19);
             sharedFunc_800D2EF4_0_s00();
             func_8003D01C();
             break;
@@ -775,7 +775,7 @@ void func_800D3420(void) // 0x800D3420
             g_SysWork.player_4C.chara_0.position_18.vz = Q12(60.0f);
 
             func_8003C3AC();
-            Sd_EngineCmd(Sfx_Unk1540);
+            SD_Call(Sfx_Unk1540);
 
             D_800D5B04 = Q12(0.2f);
             D_800D5AF9 = 1;
@@ -981,7 +981,7 @@ void func_800D3420(void) // 0x800D3420
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             D_800D5AFC = NO_VALUE;
-            Sd_EngineCmd(19);
+            SD_Call(19);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_306);
 
@@ -1065,7 +1065,7 @@ void func_800D4410(void) // 0x800D4410
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 13)
     {
-        Sd_EngineCmd(19);
+        SD_Call(19);
         g_SysWork.sysStateStep_C[0] = EventState_Skip;
     }
 

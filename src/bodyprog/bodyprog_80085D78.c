@@ -527,7 +527,7 @@ void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundsIdxs) // 0x800
     }
     else if (mapMsgState == MapMsgState_Finish)
     {
-        Sd_EngineCmd(soundsIdxs[*soundIdx]);
+        SD_Call(soundsIdxs[*soundIdx]);
         *soundIdx += 1;
     }
 }
@@ -1176,7 +1176,7 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
         
         case 1:
             g_SysWork.sysFlags_22A0 |= SysFlag_7;
-            Sd_EngineCmd(23);
+            SD_Call(23);
 
             SysWork_StateStepIncrement(1);
             break;
@@ -1214,7 +1214,7 @@ void func_80088048(void) // 0x80088048
     {
         case 0:
             Bgm_MuteBgmLayers();
-            Sd_EngineCmd(18);
+            SD_Call(18);
             SysWork_StateStepIncrement(1);
             break;
 
@@ -1244,11 +1244,11 @@ void func_800880F0(s32 arg0) // 0x800880F0
 
             if (arg0 == 0)
             {
-                Sd_EngineCmd(22);
+                SD_Call(22);
             }
             else
             {
-                Sd_EngineCmd(23);
+                SD_Call(23);
             }
 
             SysWork_StateStepIncrement(1);

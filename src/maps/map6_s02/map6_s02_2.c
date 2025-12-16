@@ -348,7 +348,7 @@ void func_800CFC34(void) // 0x800CFC34
 
             ScreenFade_ResetTimestep();
 
-            Sd_EngineCmd(Sfx_Unk1467);
+            SD_Call(Sfx_Unk1467);
             func_800463C0(Sfx_Unk1467, 0, 255, 0);
 
             D_800D3C94 = 0;
@@ -482,7 +482,7 @@ void func_800CFC34(void) // 0x800CFC34
 
                 SysWork_StateSetNext(SysState_Gameplay);
 
-                Sd_EngineCmd(Sfx_Unk1611);
+                SD_Call(Sfx_Unk1611);
                 func_8004690C(Sfx_Unk1467);
             }
             break;
@@ -551,7 +551,7 @@ void func_800D0500(void) // 0x800D0500
             D_800D4E2D = 0;
             D_800D3C9E = 0;
 
-            Sd_EngineCmd(Sfx_Unk1613);
+            SD_Call(Sfx_Unk1613);
 
             D_800D3C98 = 0;
 
@@ -620,17 +620,17 @@ void func_800D0500(void) // 0x800D0500
         case 4:
             Fs_QueueStartReadTim(FILE_TIM_UFO4_TIM, FS_BUFFER_1, D_800D3B44);
             func_8004690C(Sfx_Unk1613);
-            Sd_EngineCmd(Sfx_Unk1612);
+            SD_Call(Sfx_Unk1612);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
-            Sd_XaPreLoadAudio(Sfx_XaAudio565);
+            Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio565);
 
         case 5:
             SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
             break;
 
         case 6:
-            Sd_EngineCmd(Sfx_XaAudio565);
+            SD_Call(Sfx_XaAudio565);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -712,7 +712,7 @@ void func_800D0500(void) // 0x800D0500
             Fs_QueueWaitForEmpty();
             GameFs_StfRollBinLoad();
             Fs_QueueWaitForEmpty();
-            Sd_EngineCmd(Sfx_XaAudio562);
+            SD_Call(Sfx_XaAudio562);
             SysWork_StateStepIncrement(0);
 
         case 18:
@@ -962,7 +962,7 @@ void func_800D1718(void)
             Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-90.0f), 0, 0);
             
             func_800D2170(0);
-            Sd_EngineCmd(Sfx_Unk1611);
+            SD_Call(Sfx_Unk1611);
             D_800D4E6D = 1;
         }
         else if (g_SysWork.sysFlags_22A0 & 0x40)

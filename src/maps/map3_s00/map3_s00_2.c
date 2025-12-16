@@ -434,7 +434,7 @@ void func_800D0CF8(void) // 0x800D0CF8
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
-            Sd_EngineCmd(0x13);
+            SD_Call(0x13);
 
             D_800D253C = NO_VALUE;
 

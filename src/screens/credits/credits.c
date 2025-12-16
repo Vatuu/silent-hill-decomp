@@ -67,7 +67,7 @@ void func_801E2E28(s32 idx) // 0x801E2E28
 
     D_801E5E8C = idx;
 
-    Sd_XaPreLoadAudio(D_801E5558[idx].field_0);
+    Sd_XaPreLoadAudioPreTaskAdd(D_801E5558[idx].field_0);
     var1 = (D_801E5558[idx].field_4 * 2) - 0x1F8;
     var0 = var1 / D_801E5C20;
 
@@ -86,7 +86,7 @@ bool func_801E2ED8(void) // 0x801E2ED8
             break;
 
         case 1:
-            Sd_EngineCmd((u16)D_801E5558[D_801E5E8C].field_0);
+            SD_Call((u16)D_801E5558[D_801E5E8C].field_0);
             D_801E5E88++;
             break;
 
@@ -176,8 +176,8 @@ bool func_801E3124(void) // 0x801E3124
                     break;
             }
 
-            Sd_EngineCmd(18);
-            Sd_EngineCmd(16);
+            SD_Call(18);
+            SD_Call(16);
             g_GameWork.gameStateStep_598[1]++;
             break;
 
@@ -267,7 +267,7 @@ bool func_801E342C(void) // 0x801E342C
         (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4))
     {
         D_800C48F0 = D_801E5558[D_801E5E8C].field_4 + (D_801E5E84 / 2);
-        Sd_EngineCmd(19);
+        SD_Call(19);
     }
 
     ot   = (GsOT*)&g_OtTags1[g_ActiveBufferIdx + 1][0];
@@ -667,7 +667,7 @@ bool func_801E3970(void) // 0x801E3970
 
         skipTo     = FP_FROM(skipToInt, Q12_SHIFT);
         D_800C48F0 = skipTo;
-        Sd_EngineCmd(19);
+        SD_Call(19);
     }
 
     if (showKcet)

@@ -313,7 +313,7 @@ void MapEvent_Generator0(void) // 0x800D27C8
 
         case EventState_PressSwitch:
             func_8005DC1C(Sfx_Unk1494, &QVECTOR3(140.5f, -0.5f, -20.6f), Q8_CLAMPED(0.5f), 0);
-            Sd_EngineCmd(Sfx_Unk1495);
+            SD_Call(Sfx_Unk1495);
             Savegame_EventFlagSet(EventFlag_M3S01_GeneratorOn);
 
             g_GeneratorMakeNoise = true;
@@ -545,7 +545,7 @@ void func_800D2E54(void) // 0x800D2E54
         {
             if (!g_GeneratorMakeNoise)
             {
-                Sd_EngineCmd(Sfx_Unk1503);
+                SD_Call(Sfx_Unk1503);
                 g_GeneratorMakeNoise++;
             }
             else if (g_GeneratorMakeNoise == true)

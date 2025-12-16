@@ -280,7 +280,7 @@ void func_800D3DA4(void) // 0x800D3DA4
 
     if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
     {
-        Sd_EngineCmd(Sfx_Unk1529);
+        SD_Call(Sfx_Unk1529);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))

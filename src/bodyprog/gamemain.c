@@ -40,7 +40,7 @@ void GameState_Boot_Update(void) // 0x80032D1C
                 unkGameStateVar = D_800A9774[g_GameWork.gameStateStep_598[1]];
                 if (unkGameStateVar != 0)
                 {
-                    Sd_EngineCmd(unkGameStateVar);
+                    SD_Call(unkGameStateVar);
                     g_GameWork.gameStateStep_598[1]++;
                 }
                 else
@@ -117,7 +117,7 @@ void MainLoop(void) // 0x80032EE0
     InitGeom();
     func_8004BB10(); // Initializes something for graphics.
     func_800890B8();
-    sd_init();
+    SD_Init();
 
     // Run game.
     while (true)
@@ -170,7 +170,7 @@ void MainLoop(void) // 0x80032EE0
 
         Screen_FadeUpdate();
         func_8002EB88();
-        Sd_CmdPoolExecute();
+        Sd_TaskPoolExecute();
 
         if (!Sd_AudioStreamingCheck())
         {

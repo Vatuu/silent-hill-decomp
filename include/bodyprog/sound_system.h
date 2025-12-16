@@ -1,5 +1,5 @@
-#ifndef _BODYPROG_SOUNDSYSTEM_H
-#define _BODYPROG_SOUNDSYSTEM_H
+#ifndef _SOUND_SYSTEM_H
+#define _SOUND_SYSTEM_H
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` that has been identified to be
@@ -9,8 +9,14 @@
  * Code here can still be refered as part of the SD system, but no
  * function with symbols recognized from the SD system should be here.
  *
- * This code is likely not part of the library itself, but rather game-specific
- * code, as the library doesn't handle file streaming.
+ * This code is not part of the library itself, but rather game-specific
+ * code, as the library doesn't handle file streaming and the game does
+ * some additional work and conditionals for events.
+ */
+
+/** @note Name recognition notes/todo.
+ * `Tokimeki Memorial ~Forever With You~` and `Konami International Rally Championship` symbols
+ * indicates that what have been dubbed as "commands" are actually name as "tasks"
  */
 
 // ==========
@@ -81,7 +87,7 @@ typedef struct
                                      * ranging from 1 to 40 (also including 0).
                                      */
     u16 field_10;                   /** Temporarily stores a value intended for `field_E` so it can be assigned when the function
-                                     * that assigns it is executed. Part of a rule for `Sd_EngineCmd`.
+                                     * that assigns it is executed. Part of a rule for `SD_Call`.
                                      */
     u8  isStereoEnabled_12;         /** `bool` */
     s8  isXaStopping_13;            /** `bool` | Set to `true` to stop an XA file in memory from playing, otherwise `false`.
@@ -200,6 +206,8 @@ extern s_AudioItemData g_AudioData[];
 
 extern u8 g_Sd_ReverbDepths[];
 
+extern u8 D_800AA604[][];
+
 extern s_XaItemData g_XaItemData[];
 
 // TODO: Likely declared as `static` inside the function that uses it.
@@ -207,69 +215,13 @@ extern s8 bgmLayerVolumes[8];
 
 extern u8 g_Sd_BgmLayerLimits[8];
 
-// Likely declared as `static` as this is only used in `Sd_XaAudioPlay`.
-// `Sd_XaPreLoadAudioInit` (similar to `Sd_XaAudioPlay`) has a
-// variable that works the same and is only used there.
-extern u16 D_800C15CA;
-
-// Likely declared as `static` inside the function that uses it.
-extern u32 D_800C15CC;
-
-// Likely declared as `static` inside the function that uses it.
-extern u32 D_800C15D4;
-
-// Likely declared as `static` inside the function that uses it.
-extern s16 D_800C15C4;
-
-// Likely declared as `static` inside the function that uses it.
-extern s16 D_800C15C6;
-
-// Likely declared as `static` inside the function that uses it.
-extern s16 D_800C15C8;
-
-// Likely declared as `static` inside the function that uses it.
-extern u16 D_800C15D0;
-
-// Only used in `sd_work_init` as iterator variable.
-extern s32 D_800C15B8;
-
-// Only used in `Sd_CmdPoolAdd` as iterator variable.
-extern s32 D_800C15D8;
-
-// Only used in `Sd_CmdPoolAdd` as iterator variable.
-extern s32 D_800C15DC;
-
-// Only used in `Sd_CmdPoolUpdate` as iterator variable.
-extern s32 D_800C15E0;
-
-// Likely declared as `static` inside the function that uses it.
-extern s16 audioIdx;
-
-extern s16 g_Sound_ActiveSfxIdx;
-
-/** Pitch? */
-extern u16 D_800C15C0;
-
-extern s_800C15F0 D_800C15F0;
-
-extern s_Sd_AudioWork g_Sd_AudioWork;
-
-/** @brief Hold states for different audio types streaming. */
-extern s_AudioStreamingStates g_Sd_AudioStreamingStates;
-
-extern s_ChannelsVolumeController g_Sd_ChannelsVolume;
-
-extern u8 g_Sd_ReverbDepth;
-
-extern s_800C1688 D_800C1688;
-
 extern s_VabPlayingInfo g_Sd_VabPlayingInfo;
 
-/** Command pool related to audio and streaming.
- * Seems like `Sd_CmdPoolExecute` is the main function on charge of executing commands,
+/** Task pool related to audio and streaming.
+ * Seems like `Sd_TaskPoolExecute` is the main function on charge of executing tasks,
  * as this function is part of the mainloop function.
  */
-extern u8 g_Sd_CmdPool[32];
+extern u8 g_Sd_TaskPool[32];
 
 /** @brief The type of audio file being loaded. See `e_AudioType`. */
 extern u8 g_Sd_AudioType;
@@ -284,44 +236,50 @@ extern s_AudioItemData* g_Sd_KdTargetLoad;
 
 extern u8 D_800C37DC; // Boolean.
 
-extern u8 g_Sd_CurrentCmd;
+extern u8 g_Sd_CurrentTask;
 
 extern s_VabInfo g_Vab_InfoTable[420];
+
+extern u8* g_Sd_KdtBuffer[];
+
+extern s_AudioItemData g_AudioData[];
+
+extern s32 D_800A9FDC[];
+
+extern u8* g_Sd_KdtBuffer[];
+
+extern u8* g_Sd_VabBuffers[];
+
+extern s_800C15F0 D_800C15F0[4];
+
+/** SFX IDs? */
+extern u16 D_800C15F8[24];
+
+/** Voices? */
+extern s16 D_800C1628[24];
+
+extern s_Sd_AudioWork g_Sd_AudioWork;
+
+/** @brief Hold states for different audio types streaming. */
+extern s_AudioStreamingStates g_Sd_AudioStreamingStates;
+
+extern s32 bssPad_800C1674;
+
+/** @note Name from retrieved debug symbols. */
+extern s_ChannelsVolumeController gSDVolConfig;
+
+extern u8 g_Sd_ReverbDepth;
+
+extern s_800C1688 D_800C1688;
 
 // ==========
 // FUNCTIONS
 // ==========
 
-/** Sound func. */
-void Sd_EngineUtilities(u16 cmd);
-
-void sd_init(void);
-
-void sd_work_init(void);
-
-u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol);
-
-/** SFX func. */
-void func_800463C0(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
-
-/** SFX func. */
-void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
-
-/** SFX func. */
-void func_8004690C(u16 sfxId);
-
-/** Sound command func. Unknown category. */
-void func_8004692C(u16 cmd);
-
-/** Sound command func. Unknown category. */
-void func_80046A24(u16 cmd);
-
-void func_80046A70(void);
-
-/** @brief Passes a command to the sound driver.
+/** @brief Passes a "task" to the sound driver.
  * Plays SFX among other things.
  */
-void Sd_EngineCmd(u32 cmd);
+void SD_Call(u32 cmd);
 
 /** @brief Checks if an audio file is loading, is going to be loaded, or an XA file is playing.
  * Depending of the audio file, it marks different numbers.
@@ -336,11 +294,42 @@ u8 Sd_AudioStreamingCheck(void);
 
 u16 func_80045BC8(void);
 
-/** @brief Sets the audio system to stereo or mono. */
+/** @brief Sound effect management and VAB + KDT file load.
+ * Scratch: https://decomp.me/scratch/AA6ui
+ * @note Name from retrieved debug symbols.
+ */
+void SD_BranchCTRL(u16 task);
+
+/** @brief Sets the audio system to stereo or mono.
+ * Scratch: https://decomp.me/scratch/jtrpu
+ */
 void Sd_AudioSystemSet(u8 isStereo);
+
+/** @note Name from retrieved debug symbols. */
+void SD_Init(void);
+
+/** @note Name from retrieved debug symbols. */
+void sd_work_init(void);
+
+// @unused
+void func_80045FF8(void);
+
+u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol);
+
+/** SFX func. */
+void func_800463C0(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
+
+/** SFX func. */
+void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
 
 /** @brief Executes `SdUtKeyOffV` and runs through the element 23 of `smf_port`. */
 void Sd_LastVoiceKeyOff(void);
+
+/** SFX func. */
+void func_8004690C(u16 sfxId);
+
+/** Sound command func. Unknown category. */
+void func_8004692C(u16 cmd);
 
 /** @brief Executes `SdUtKeyOffV` and runs through all elements of `smf_port`. */
 void Sd_AllVoicesKeyOff(void);
@@ -348,7 +337,12 @@ void Sd_AllVoicesKeyOff(void);
 /** @brief Executes `SdUtKeyOffVWithRROff` and runs through all elements of `smf_port`. */
 void Sd_AllVoicesKeyOffVWithRROff(void);
 
-void Sd_StopBgmCmd(void);
+/** Sound command func. Unknown category. */
+void func_80046A24(u16 cmd);
+
+void func_80046A70(void);
+
+void Sd_StopBgmTaskAdd(void);
 
 void Sd_StopBgm(void);
 
@@ -364,18 +358,18 @@ void Sd_BgmLayerVolumeSet(u8 layerIdx, u8 vol);
 void Sd_XaAudioPlay(void);
 
 /** @brief Initializes the process to play an XA audios defined at `g_XaItemData`. */
-void Sd_XaAudioPlayCmdAdd(u16 sfx);
+void Sd_XaAudioPlayTaskAdd(u16 sfx);
 
 /** @unused Gets the length of XA audios defined at `g_XaItemData`. */
 s32 Sd_XaAudioLengthGet(s32 idx);
 
-void Sd_XaAudioStopCmdAdd(void);
+void Sd_XaAudioStopTaskAdd(void);
 
-void Sd_XaPreLoadAudio(u16 xaIdx);
+void Sd_XaPreLoadAudioPreTaskAdd(u16 xaIdx);
 
-void Sd_XaPreLoadAudioCmdAdd(s32 xaIdx);
+void Sd_XaPreLoadAudioTaskAdd(s32 xaIdx);
 
-void Sd_XaPreLoadAudioInit(void);
+void Sd_XaPreLoadAudio(void);
 
 /** @brief Stops the streaming of the currently loaded XA audio in memory. */
 void Sd_XaAudioStop(void);
@@ -392,11 +386,11 @@ void Sd_SetVolXa(s16 volLeft, s16 volRight);
 /** @brief Sets the volume for the channels of sound effects. */
 s16 Sd_GetVolSe(s16 arg0);
 
-/** Updates and add commands to a command pool. */
-void Sd_CmdPoolAdd(u8 cmd);
+/** Updates and add tasks to a task pool. */
+void Sd_TaskPoolAdd(u8 task);
 
-/** Updates a command pool by shifting a field. */
-void Sd_CmdPoolUpdate(void);
+/** Updates a task pool by shifting a field. */
+void Sd_TaskPoolUpdate(void);
 
 void Sd_VabLoad(void);
 
@@ -404,7 +398,7 @@ void Sd_SetReverbDepth(u8 depth);
 
 void Sd_SetReverbEnable(s32 mode);
 
-void Sd_VabLoad_CmdSet(s32 cmd);
+void Sd_VabLoad_TaskAdd(s32 cmd);
 
 void Sd_VabLoad_TypeClear(void);
 
@@ -435,11 +429,11 @@ void func_800485B0(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4);
 /** Nullsub */
 void func_800485B8(s32 arg0, u8 arg1, u32 arg2);
 
-void Sd_KdtLoad_CmdSet(u16 songIdx);
-
-void Sd_StopSeq(void);
+void Sd_KdtLoad_TaskAdd(u16 songIdx);
 
 void Sd_KdtLoad(void);
+
+void Sd_KdtLoad_StopSeq(void);
 
 void Sd_KdtLoad_OffSet(void);
 
@@ -447,7 +441,7 @@ void Sd_KdtLoad_FileLoad(void);
 
 void Sd_KdtLoad_LoadCheck(void);
 
-void Sd_CmdPoolExecute(void);
+void Sd_TaskPoolExecute(void);
 
 void func_800485C0(s32 idx);
 

@@ -349,7 +349,7 @@ void func_800DA248(void) // 0x800DA248
 
         case 15:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 155, false);
-            Sd_EngineCmd(Sfx_XaAudio568);
+            SD_Call(Sfx_XaAudio568);
             SysWork_StateStepIncrement(0);
 
         case 16:
@@ -406,7 +406,7 @@ void func_800DA248(void) // 0x800DA248
             Savegame_EventFlagSet(EventFlag_482);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             Chara_ProcessLoads();
-            Sd_EngineCmd(19);
+            SD_Call(19);
             break;
     }
 
@@ -512,7 +512,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             break;
 
         case 10:
-            Sd_EngineCmd(4662);
+            SD_Call(4662);
             SysWork_StateStepIncrement(0);
 
         case 11:
@@ -548,7 +548,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             break;
 
         case 18:
-            Sd_EngineCmd(19);
+            SD_Call(19);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             SysWork_StateStepIncrement(0);
             break;
@@ -746,7 +746,7 @@ void func_800DB738(void) // 0x800DB738
             if (g_SysWork.sysStateStep_C[0] == 8 &&
                 g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.skip_4 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
-                Sd_EngineCmd(19);
+                SD_Call(19);
                 SysWork_StateStepIncrement(0);
             }
             break;
@@ -845,7 +845,7 @@ void func_800DBB34(void) // 0x800DBB34
 
         case 6:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 11, false);
-            Sd_EngineCmd(Sfx_XaAudio603);
+            SD_Call(Sfx_XaAudio603);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -903,7 +903,7 @@ void func_800DBB34(void) // 0x800DBB34
 
         case 15:
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
-            Sd_EngineCmd(19);
+            SD_Call(19);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
@@ -1420,7 +1420,7 @@ void func_800DD2D4(void) // 0x800DD2D4
         case 5:
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Bloodsucker, 64, Q12(21.5f), Q12(-60.8f), FP_ANGLE(-90.0f), 17);
-            Sd_EngineCmd(Sfx_Unk1668);
+            SD_Call(Sfx_Unk1668);
             Savegame_EventFlagSet(EventFlag_573);
 
             g_WorldObject_Dor[0].rotation_28.vy = FP_ANGLE(25.0f);
@@ -1473,7 +1473,7 @@ void func_800DD2D4(void) // 0x800DD2D4
             D_800EB6B4 = g_SysWork.player_4C.chara_0.model_0.anim_4.time_4 - Q12(Player_AnimGetSomething());
             if (D_800EB6B4 > Q12(96.0f))
             {
-                Sd_EngineCmd(Sfx_XaAudio635);
+                SD_Call(Sfx_XaAudio635);
                 SysWork_StateStepIncrement(0);
             }
             break;
@@ -1630,7 +1630,7 @@ void func_800DDEC8(void) // 0x800DDEC8
 
         case 4:
             func_8005DC1C(Sfx_Unk1494, &(VECTOR3){ Q12(180.5f), Q12(-0.5f), Q12(-60.6f) }, Q8_CLAMPED(0.5f), 0);
-            Sd_EngineCmd(Sfx_Unk1495);
+            SD_Call(Sfx_Unk1495);
             Savegame_EventFlagClear(EventFlag_549);
 
             D_800EBAF4 = 1;
@@ -1829,7 +1829,7 @@ void func_800DF21C(void) // 0x800DF21C
 
             D_800EB6B4 = NO_VALUE;
 
-            Sd_EngineCmd(19);
+            SD_Call(19);
             Savegame_EventFlagSet(EventFlag_560);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
@@ -1930,7 +1930,7 @@ void func_800DFB48(void) // 0x800DFB48
             break;
 
         case 7:
-            Sd_EngineCmd(Sfx_MenuMap);
+            SD_Call(Sfx_MenuMap);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -2157,7 +2157,7 @@ void func_800DFDDC(void) // 0x800DFDDC
                         if (SQUARE(temp_v0_2) + SQUARE(temp_v0_3) < 122)
                         {
                             D_800E9D8E = j + (i * 3) + 1;
-                            Sd_EngineCmd(Sfx_Base);
+                            SD_Call(Sfx_Base);
 
                             // @hack Maybe not meant to reuse `temp_a0_2`, but that helps it to match.
                             if (D_800EA494.field_0 == 1)
@@ -2223,7 +2223,7 @@ void func_800DFDDC(void) // 0x800DFDDC
             switch (g_SysWork.sysStateStep_C[1])
             {
                 case 0:
-                    Sd_EngineCmd(Sfx_Base);
+                    SD_Call(Sfx_Base);
 
                 case 1:
                     g_SysWork.field_28 += g_DeltaTime0;
@@ -2254,7 +2254,7 @@ void func_800DFDDC(void) // 0x800DFDDC
                             g_SysWork.field_28 = Q12(0.0f);
                             D_800EA492         = 0;
 
-                            Sd_EngineCmd(Sfx_Base);
+                            SD_Call(Sfx_Base);
                         }
                     }
                     break;
@@ -2285,7 +2285,7 @@ void func_800DFDDC(void) // 0x800DFDDC
                     break;
 
                 case 5:
-                    Sd_EngineCmd(Sfx_Base);
+                    SD_Call(Sfx_Base);
 
                     D_800EBB64.position_1C.vx = Q12(-139.5f);
                     D_800EBB64.position_1C.vy = Q12(-0.05f);
@@ -2502,7 +2502,7 @@ void func_800E0FF0(void) // 0x800E0FF0
                 }
                 else
                 {
-                    Sd_EngineCmd(Sfx_Unk1653);
+                    SD_Call(Sfx_Unk1653);
                     D_800EBB94 = Rng_GenerateInt(Rng_Rand16(), Q12(0.2f), Q12(2.2f) - 1);
                 }
             }
@@ -2565,7 +2565,7 @@ void func_800E1398(void) // 0x800E1398
             ScreenFade_Reset();
             g_SysWork.sysFlags_22A0 |= 1 << 0;
 
-            Sd_EngineCmd(0x679U);
+            SD_Call(0x679U);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -2657,7 +2657,7 @@ void func_800E1DAC(void) // 0x800E1DAC
             break;
 
         case 6:
-            Sd_EngineCmd(Sfx_Unk1654);
+            SD_Call(Sfx_Unk1654);
             SysWork_StateStepIncrement(0);
 
         case 7:

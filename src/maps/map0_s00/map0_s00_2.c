@@ -1099,7 +1099,7 @@ void func_800DBE00(void) // 0x800DBE00
     func_8004690C(Sfx_Unk1361);
     func_8004690C(Sfx_Unk1360);
 
-    Sd_EngineCmd(22);
+    SD_Call(22);
     func_800892A4(4);
 
     SysWork_StateSetNext(SysState_Gameplay);
@@ -1176,7 +1176,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
             if (!Savegame_EventFlagGet(EventFlag_188))
             {
                 func_8004690C(Sfx_Unk1361);
-                Sd_EngineCmd(Sfx_Unk1358);
+                SD_Call(Sfx_Unk1358);
                 Savegame_EventFlagSet(EventFlag_188);
             }
 

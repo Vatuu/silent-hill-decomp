@@ -285,7 +285,7 @@ void func_800D725C(void) // 0x800D725C
 
         case 15:
             func_80085EB8(0, &g_SysWork.player_4C.chara_0, 155, false);
-            Sd_EngineCmd(Sfx_XaAudio568);
+            SD_Call(Sfx_XaAudio568);
             SysWork_StateStepIncrement(0);
 
         case 16:
@@ -342,7 +342,7 @@ void func_800D725C(void) // 0x800D725C
             Savegame_EventFlagSet(EventFlag_482);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             Chara_ProcessLoads();
-            Sd_EngineCmd(19);
+            SD_Call(19);
             break;
     }
 
@@ -443,7 +443,7 @@ void func_800D7A60(void) // 0x800D7A60
             break;
 
         case 10:
-            Sd_EngineCmd(4662);
+            SD_Call(4662);
             SysWork_StateStepIncrement(0);
 
         case 11:
@@ -479,7 +479,7 @@ void func_800D7A60(void) // 0x800D7A60
             break;
 
         case 18:
-            Sd_EngineCmd(19);
+            SD_Call(19);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             SysWork_StateStepIncrement(0);
             break;
@@ -1059,7 +1059,7 @@ void func_800D94DC(void) // 0x800D94DC
                         continue;
                     }
 
-                    Sd_EngineCmd(Sfx_Unk1650);
+                    SD_Call(Sfx_Unk1650);
 
                     for (j = 0; j < (ARRAY_SIZE(D_800E1688) - 1); j++)
                     {
@@ -1087,7 +1087,7 @@ void func_800D94DC(void) // 0x800D94DC
             break;
 
         case 6:
-            Sd_EngineCmd(Sfx_Unk1343);
+            SD_Call(Sfx_Unk1343);
             SysWork_StateStepIncrement(0);
 
         case 5:
@@ -1154,7 +1154,7 @@ void func_800D9A08(void) // 0x800D9A08
             break;
 
         case 7:
-            Sd_EngineCmd(Sfx_MenuMap);
+            SD_Call(Sfx_MenuMap);
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -1382,7 +1382,7 @@ void func_800D9C9C(void) // 0x800D9C9C
                         if (SQUARE(temp_v0_2) + SQUARE(temp_v0_3) < 122)
                         {
                             D_800E156E = j + (i * 3) + 1;
-                            Sd_EngineCmd(Sfx_Unk1644);
+                            SD_Call(Sfx_Unk1644);
 
                             // @hack Maybe not meant to reuse `temp_a0_2`, but that helps it to match.
                             if (D_800E1690.field_0 == 1)
@@ -1732,7 +1732,7 @@ void func_800DB13C(void) // 0x800DB13C
         }
         else
         {
-            Sd_EngineCmd(Sfx_Unk1653);
+            SD_Call(Sfx_Unk1653);
             D_800E2CE8 = Rng_GenerateInt(Rng_Rand16(), Q12(0.2f), Q12(2.2f) - 1);
         }
     }
@@ -1813,7 +1813,7 @@ void func_800DB3D0(void) // 0x800DB3D0
             ScreenFade_Reset();
             g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
 
-            Sd_EngineCmd(Sfx_Unk1657);
+            SD_Call(Sfx_Unk1657);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -1905,7 +1905,7 @@ void func_800DBDE0(void) // 0x800DBDE0
             break;
 
         case 6:
-            Sd_EngineCmd(Sfx_Unk1654);
+            SD_Call(Sfx_Unk1654);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -2145,14 +2145,14 @@ void func_800DDCD4(void) // 0x800DDCD4
                 if (g_SysWork.npcs_1A0[0].model_0.charaId_0 != Chara_GhostChildAlessa)
                 {
                     Chara_Spawn(Chara_GhostChildAlessa, 0, Q12(-60.0f), Q12(-20.0f), FP_ANGLE(180.0f), 3);
-                    Sd_XaPreLoadAudio(Sfx_XaAudio569);
+                    Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio569);
                 }
                 else if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(-62.0f))
                 {
                     Savegame_EventFlagSet(EventFlag_485);
                     sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
                     func_800865FC(true, 1, 0, FP_ANGLE(90.0f), Q12(-60.0f), Q12(-35.0f));
-                    Sd_EngineCmd(Sfx_XaAudio569);
+                    SD_Call(Sfx_XaAudio569);
                 }
             }
             else if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_GhostChildAlessa)

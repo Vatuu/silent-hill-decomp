@@ -180,7 +180,7 @@ void func_800D0B64(void) // 0x800D0B64
             Chara_Spawn(Chara_Lisa, 0, Q12(17.4f), Q12(139.1f), 0, 3);
             SysWork_StateStepIncrement(0);
     
-            Sd_EngineCmd(Sfx_Unk1640);
+            SD_Call(Sfx_Unk1640);
 
             D_800D4362 = 0;
 
@@ -340,7 +340,7 @@ void func_800D0B64(void) // 0x800D0B64
 
             g_Timer0 = NO_VALUE;
 
-            Sd_EngineCmd(19);
+            SD_Call(19);
 
             D_800D4362 = Q12(1.0f);
 
@@ -410,7 +410,7 @@ void func_800D2700(void) // 0x800D2700
 
     if (Savegame_EventFlagGet(EventFlag_471))
     {
-        Sd_EngineCmd(Sfx_Unk1640);
+        SD_Call(Sfx_Unk1640);
         D_800D4362 = Q12(1.0f);
     }
 

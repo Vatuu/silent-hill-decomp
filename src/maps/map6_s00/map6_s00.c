@@ -603,8 +603,8 @@ void func_800EB11C(void) // 0x800EB11C
             sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
             sharedFunc_800D0B18_0_s00(6);
 
-            Sd_EngineCmd(Sfx_Unk1522);
-            Sd_EngineCmd(Sfx_Unk1599);
+            SD_Call(Sfx_Unk1522);
+            SD_Call(Sfx_Unk1599);
             D_800F0686 = 0;
             SysWork_StateStepIncrement(0);
 
@@ -713,7 +713,7 @@ void func_800EB11C(void) // 0x800EB11C
             Savegame_EventFlagSet(EventFlag_402);
             Savegame_EventFlagClear(EventFlag_414);
 
-            Sd_EngineCmd(19);
+            SD_Call(19);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
             func_8004690C(Sfx_Unk1522);

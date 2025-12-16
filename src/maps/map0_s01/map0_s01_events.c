@@ -224,12 +224,12 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
         case 21:
             SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(10.0f), Q12(141.0f), Q12(159.0f), true, true);
-            Sd_XaPreLoadAudio(Sfx_XaAudio12);
+            Sd_XaPreLoadAudioPreTaskAdd(Sfx_XaAudio12);
             break;
 
         case 22:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 7, false);
-            Sd_EngineCmd(Sfx_XaAudio12);
+            SD_Call(Sfx_XaAudio12);
             SysWork_StateStepIncrement(0);
 
         case 23:
@@ -350,7 +350,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
 
         case 48:
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
-            Sd_EngineCmd(19);
+            SD_Call(19);
             Chara_Load(0, Chara_AirScreamer, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, 0, 0);
             func_80086470(3, InventoryItemId_Handgun, HANDGUN_AMMO_PICKUP_ITEM_COUNT, false);
             SysWork_StateStepIncrement(0);
@@ -383,7 +383,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            Sd_EngineCmd(23);
+            SD_Call(23);
 
             Savegame_EventFlagSet(EventFlag_49);
             g_Timer0 = NO_VALUE;
@@ -540,8 +540,8 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
 
             Savegame_EventFlagSet(EventFlag_50);
 
-            Sd_EngineCmd(Sfx_RadioInterferenceLoop);
-            Sd_EngineCmd(Sfx_RadioStaticLoop);
+            SD_Call(Sfx_RadioInterferenceLoop);
+            SD_Call(Sfx_RadioStaticLoop);
 
             Savegame_EventFlagSet(EventFlag_52);
 
@@ -1054,8 +1054,8 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (g_SysWork.sysFlags_22A0 & SysFlag_6)
         {
-            Sd_EngineCmd(Sfx_RadioInterferenceLoop);
-            Sd_EngineCmd(Sfx_RadioStaticLoop);
+            SD_Call(Sfx_RadioInterferenceLoop);
+            SD_Call(Sfx_RadioStaticLoop);
         }
 
         func_8005DE0C(Sfx_RadioInterferenceLoop, &D_800DE154, D_800E23A1, 0x10000, 0);
