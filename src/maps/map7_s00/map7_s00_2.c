@@ -422,6 +422,34 @@ void func_800D2700(void) // 0x800D2700
     }
 }
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00_2", func_800D286C);
+void func_800D286C(void) {
+    VECTOR3 sp10;
+    s32 i;
+
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
+    {
+        for (i = 0; i < 6; i++)
+        {
+            sp10.vx = 0x3CCCC;
+            sp10.vy = 0;
+            sp10.vz = D_800D4370[(i >= 2) ? i-2 : i];
+
+            g_WorldGfx_ObjectAdd(&D_800D4380[i], &sp10, &D_800CB61C);
+        }
+
+        func_800463C0(Sfx_Unk1640, 0, (0xFF - (D_800D4362 >> 4)) >= 0x20 ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
+    {
+        g_WorldGfx_ObjectAdd(&D_800D4430.object_0, &D_800D4430.position_1C.position_0, &D_800D4430.position_1C.rotation_C);
+        if (Savegame_EventFlagGet(EventFlag_471))
+        {
+            func_800463C0(Sfx_Unk1640, 0, (0xFF - (D_800D4362 >> 4)) >= 0x20 ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);
+        }
+    }
+}
 
 INCLUDE_RODATA("asm/maps/map7_s00/nonmatchings/map7_s00_2", D_800CB61C);
