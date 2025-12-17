@@ -1914,7 +1914,8 @@ typedef struct
     s32         unk_380[301][2]; // Unknown size, biggest constant index used is 35. Associated with anims.
     s_SfxVolume sfxVolumes_CE8[11];
     u_Property  properties_D14[4];
-    u16         field_D24[9][2];
+    u16         field_D24[2][3][2];
+    u8          field_D3C[2][6];
     s8*         ptr_D48[5];
     s16         field_D5C[4][2]; // Related to animations. Move offset distances?
 } s_func_800D2E04;

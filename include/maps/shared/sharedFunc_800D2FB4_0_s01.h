@@ -24,8 +24,8 @@ s32 sharedFunc_800D2FB4_0_s01(s_SubCharacter* chara, VECTOR3* playerPos, s32 pla
         }
     }
 
-    var_s1  = sharedData_800CAA98_0_s01.field_D24[var_a0][0];
-    temp_s2 = sharedData_800CAA98_0_s01.field_D24[var_a0][1];
+    var_s1  = sharedData_800CAA98_0_s01.field_D24[0][var_a0][0];
+    temp_s2 = sharedData_800CAA98_0_s01.field_D24[0][var_a0][1];
 
     switch (g_SavegamePtr->gameDifficulty_260)
     {
