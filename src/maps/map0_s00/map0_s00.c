@@ -34,9 +34,8 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
 {
     MATRIX      sp10;
     MATRIX      sp30;
-    MATRIX      sp50;      // @hack Guessed type based on `func_800CC8FC`. It doesn't fully match at first glance.
-    MATRIX      sp70;      // @hack Unused or `sp50` and `sp70` are one big type together.
-    VECTOR3     sp90[12];  // @hack Guessed type based on func_800CC8FC. This one is fairly certain.
+    s_func_800CC8FC sp50;
+    VECTOR3         sp90[12];
     s32         sp120[32]; // @hack Unknown type, it's passed to `func_800CC8FC` but it's an unused parameter. 
     s32         temp_s4;
     s32         i;
@@ -92,7 +91,200 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
     return false;
 }
 
-INCLUDE_ASM("asm/maps/map0_s00/nonmatchings/map0_s00", func_800CC8FC);
+s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
+{
+    SVECTOR            sp10;
+    SVECTOR            sp18;
+    SVECTOR            sp20;
+    DVECTOR            sp28;
+    DVECTOR            sp30[8];
+    SVECTOR            sp50[12];
+    MATRIX             spB0;
+    VECTOR3*           vecPtr;
+    s32                temp_a0;
+    s32                temp_s4;
+    s32                temp_s5;
+    s32                temp_s7;
+    s32                j;
+    s32                i;
+    s32                var_s5;
+    s_func_800CC8FC_0* ptr;
+    DVECTOR*           dVecPtr;
+
+    s16 D_800CA7CC[18][2] = {
+        { 0x00, 0x06 },
+        { 0x01, 0x07 },
+        { 0x02, 0x08 },
+        { 0x03, 0x09 },
+        { 0x04, 0x0A },
+        { 0x05, 0x0B },
+        { 0x00, 0x01 },
+        { 0x01, 0x02 },
+        { 0x02, 0x03 },
+        { 0x03, 0x04 },
+        { 0x04, 0x05 },
+        { 0x05, 0x00 },
+        { 0x06, 0x07 },
+        { 0x07, 0x08 },
+        { 0x08, 0x09 },
+        { 0x09, 0x0A },
+        { 0x0A, 0x0B },
+        { 0x0B, 0x06 },
+    };
+
+    temp_s4 = D_800E0C74.field_0 >> 6;
+    temp_s7 = D_800E0C74.field_0 >> 3;
+    temp_a0 = D_800E0C74.field_0 / 20;
+    temp_s5 = D_800E0C74.field_0 / 12;
+
+    for (i = 0; i < 6; i++)
+    {
+        sp50[i].vx = FP_MULTIPLY(temp_a0, Math_Sin((i * 0x3C000) / 360), 0xC);
+        sp50[i].vy = FP_MULTIPLY(temp_a0, Math_Cos((i * 0x3C000) / 360), 0xC);
+        sp50[i].vz = -temp_s4;
+    }
+
+    for (i = 0; i < 6; i++)
+    {
+        sp50[i + 6].vx = FP_MULTIPLY(temp_s5, Math_Sin((i * 0x3C000) / 360), 0xC);
+        sp50[i + 6].vy = FP_MULTIPLY(temp_s5, Math_Cos((i * 0x3C000) / 360), 0xC);
+        sp50[i + 6].vz = temp_s7;
+    }
+
+    var_s5 = 0;
+    Math_RotMatrixZxyNegGte(&g_ParticleVectors0.svec_18, &spB0);
+
+    for (j = 0; j < 18; j++)
+    {
+        sp10 = sp50[D_800CA7CC[j][0]];
+
+        PushMatrix();
+        ApplyMatrixSV(&spB0, &sp10, &sp18);
+        PopMatrix();
+
+        vecPtr = &arg0[D_800CA7CC[j][0]];
+
+        vecPtr->vx = (sp18.vx * 0x10) + (g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx);
+        vecPtr->vy = (sp18.vy * 0x10) + (g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy);
+        vecPtr->vz = (sp18.vz * 0x10) + (g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz);
+
+        sp18.vx += (g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 4;
+        sp18.vy += (g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy) >> 4;
+        sp18.vz += (g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz) >> 4;
+
+        gte_ldv0(&sp18);
+        gte_rtps();
+
+        sp10 = sp50[D_800CA7CC[j][1]];
+
+        PushMatrix();
+        ApplyMatrixSV(&spB0, &sp10, &sp20);
+        PopMatrix();
+
+        vecPtr = &arg0[D_800CA7CC[j][1]];
+
+        vecPtr->vx = (sp20.vx * 0x10) + (g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx);
+        vecPtr->vy = (sp20.vy * 0x10) + (g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy);
+        vecPtr->vz = (sp20.vz * 0x10) + (g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz);
+
+        sp20.vx += (g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 4;
+        sp20.vy += (g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy) >> 4;
+        sp20.vz += (g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz) >> 4;
+
+        if ((sp18.vy >= 0 && sp20.vy < 0) || (sp18.vy < 0 && sp20.vy >= 0))
+        {
+            sp30[var_s5].vx = sp18.vx - (sp18.vy * (sp20.vx - sp18.vx)) / (sp20.vy - sp18.vy);
+            sp30[var_s5].vy = sp18.vz - (sp18.vy * (sp20.vz - sp18.vz)) / (sp20.vy - sp18.vy);
+            var_s5++;
+        }
+    }
+
+    if (var_s5 == 0)
+    {
+        return 0;
+    }
+
+    for (i = 0; i < (var_s5 - 1); i++)
+    {
+        for (j = i + 1; j < var_s5; j++)
+        {
+            if (sp30[i].vx > sp30[j].vx)
+            {
+                sp28    = sp30[i];
+                sp30[i] = sp30[j];
+                sp30[j] = sp28;
+            }
+        }
+    }
+
+    ptr = arg2->field_0;
+
+    for (j = 0; j < 3; j++)
+    {
+        ptr[j].field_0 = sp30[j];
+    }
+
+    if ((ptr[1].field_0.vx - ptr[0].field_0.vx) * (ptr[2].field_0.vy - ptr[0].field_0.vy) <=
+        (ptr[1].field_0.vy - ptr[0].field_0.vy) * (ptr[2].field_0.vx - ptr[0].field_0.vx))
+    {
+        sp28           = ptr[1].field_0;
+        ptr[1].field_0 = ptr[2].field_0;
+        ptr[2].field_0 = sp28;
+    }
+
+    for (j = 0; j < 3; j++)
+    {
+        ptr[j].field_4 = j - 1;
+        ptr[j].field_5 = j + 1;
+    }
+
+    ptr[0].field_4 = 2;
+    ptr[2].field_5 = 0;
+
+    ptr = arg2->field_0;
+
+    for (i = 3; i < var_s5; i++)
+    {
+        dVecPtr = &sp10;
+
+        j = 0;
+
+        while ((ptr[ptr[j].field_5].field_0.vx - ptr[j].field_0.vx) * (dVecPtr[i + 8].vy - ptr[j].field_0.vy) >
+               (ptr[ptr[j].field_5].field_0.vy - ptr[j].field_0.vy) * (dVecPtr[i + 8].vx - ptr[j].field_0.vx))
+        {
+            j = ptr[j].field_5;
+        }
+
+        ptr[i].field_7 = j;
+
+        j = 0;
+
+        while ((ptr[j].field_0.vx - ptr[ptr[j].field_4].field_0.vx) * (dVecPtr[i + 8].vy - ptr[ptr[j].field_4].field_0.vy) >
+               (ptr[j].field_0.vy - ptr[ptr[j].field_4].field_0.vy) * (dVecPtr[i + 8].vx - ptr[ptr[j].field_4].field_0.vx))
+        {
+            j = ptr[j].field_5;
+        }
+
+        ptr[i].field_6 = j;
+
+        ptr[ptr[i].field_7].field_5 = i;
+        ptr[ptr[i].field_6].field_4 = i;
+
+        ptr[i].field_5 = ptr[i].field_6;
+        ptr[i].field_4 = ptr[i].field_7;
+
+        ptr[i].field_0 = sp30[i];
+    }
+
+    D_800DFB54 = 1;
+
+    for (i = 0; ptr[i].field_5 != 0; D_800DFB54++)
+    {
+        i = ptr[i].field_5;
+    }
+
+    return D_800DFB54;
+}
 
 void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
 {
@@ -236,8 +428,6 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
             break;
     }
 }
-
-INCLUDE_RODATA("asm/maps/map0_s00/nonmatchings/map0_s00", D_800CA7CC);
 
 void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
 {
@@ -830,7 +1020,7 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
 
 #include "maps/shared/sharedFunc_800CE954_7_s03.h" // 0x800D0124
 
-bool func_800D012C(VECTOR3* pos, MATRIX* unused0, s32* unused1) // 0x800D012C
+bool func_800D012C(VECTOR3* pos, s_func_800CC8FC* unused0, s32* unused1) // 0x800D012C
 {
     q19_12 deltaX;
     q19_12 deltaZ;

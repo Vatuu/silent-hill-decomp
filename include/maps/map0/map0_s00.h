@@ -37,6 +37,25 @@ typedef struct
     u8 field_2;
 } s_800DFB48;
 
+typedef struct
+{
+    DVECTOR field_0;
+    u8      field_4;
+    u8      field_5;
+    u8      field_6;
+    u8      field_7;
+} s_func_800CC8FC_0;
+
+typedef struct
+{
+    s_func_800CC8FC_0 field_0[8];
+} s_func_800CC8FC;
+
+typedef struct
+{
+    s32 field_0;
+} s_800E0C74;
+
 extern VECTOR3 D_800E32DC[4];
 
 /** "STAGE 0-0" string */
@@ -91,6 +110,8 @@ extern s_800DFB44 D_800DFB44;
 
 extern s_800DFB48 D_800DFB48;
 
+extern s32 D_800DFB54;
+
 extern s32 D_800DFB5C;
 
 extern u8 D_800DFB60;
@@ -105,11 +126,13 @@ extern bool g_WarpCamera;
 
 extern s16 D_800E0C64;
 
+extern s_800E0C74 D_800E0C74;
+
 void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
 
 bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
 
-s32 func_800CC8FC(VECTOR3*, s32*, MATRIX*);
+s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2);
 
 void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2);
 
@@ -122,7 +145,7 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId);
 void func_800D0124(void);
 
 /** Collision space distance check. @hack Guessed types. */
-bool func_800D012C(VECTOR3* pos, MATRIX* unused0, s32* unused1);
+bool func_800D012C(VECTOR3* pos, s_func_800CC8FC* unused0, s32* unused1);
 
 void func_800CF7AC(s32 arg0, s_Particle* part, u16* arg2, s32* deltaTime);
 
