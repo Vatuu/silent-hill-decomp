@@ -390,8 +390,8 @@ INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00_2", func_800D1604);
 
 void func_800D2700(void) // 0x800D2700
 {
-    s32 i;
-    s32 z;
+    s32    i;
+    q19_12 z;
 
     WorldObject_ModelNameSet(&g_WorldObject0[0], "DR3R_HID");
     WorldObject_ModelNameSet(&g_WorldObject0[1], "DR3L_HID");
@@ -401,6 +401,7 @@ void func_800D2700(void) // 0x800D2700
     WorldObject_ModelNameSet(&g_WorldObject0[5], "DR2L_HID");
 
     z = Q12(-137.45f);
+
     for (i = 3; i >= 0; i--)
     {
         D_800D4370[i] = z;
@@ -422,7 +423,8 @@ void func_800D2700(void) // 0x800D2700
     }
 }
 
-void func_800D286C(void) {
+void func_800D286C(void) // 0x800D286C
+{
     VECTOR3 sp10;
     s32 i;
 
@@ -436,7 +438,7 @@ void func_800D286C(void) {
             sp10.vy = 0;
             sp10.vz = D_800D4370[(i >= 2) ? i-2 : i];
 
-            g_WorldGfx_ObjectAdd(&D_800D4380[i], &sp10, &D_800CB61C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject0[i], &sp10, &D_800CB61C);
         }
 
         func_800463C0(Sfx_Unk1640, 0, (0xFF - (D_800D4362 >> 4)) >= 0x20 ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);
@@ -444,7 +446,8 @@ void func_800D286C(void) {
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
     {
-        g_WorldGfx_ObjectAdd(&D_800D4430.object_0, &D_800D4430.position_1C.position_0, &D_800D4430.position_1C.rotation_C);
+        g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
+
         if (Savegame_EventFlagGet(EventFlag_471))
         {
             func_800463C0(Sfx_Unk1640, 0, (0xFF - (D_800D4362 >> 4)) >= 0x20 ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);

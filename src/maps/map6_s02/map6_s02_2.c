@@ -923,14 +923,15 @@ void Map_WorldObjectsInit(void) // 0x800D1658
     Savegame_EventFlagSet(EventFlag_428);
 }
 
-void func_800D1718(void)
+void func_800D1718(void) // 0x800D1718
 {
-    s32 rng0;
-    s32 flags;
-    s32 mag;
+    s32    rng;
+    s32    flags;
+    q19_12 mag;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     flags = 0;
+
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
         flags = func_800D1D40();
@@ -955,41 +956,48 @@ void func_800D1718(void)
                 D_800D4E6C = 6;
             }
         }
+
         if (!D_800D4E6D)
         {
             g_SysWork.field_2378 = Q12(2.8f);
             Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(60.0f), Q12(-2.5f), Q12(-20.0f));
-            Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-90.0f), 0, 0);
+            Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-90.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
             
-            func_800D2170(0);
+            func_800D2170(false);
             SD_Call(Sfx_Unk1611);
+
             D_800D4E6D = 1;
         }
-        else if (g_SysWork.sysFlags_22A0 & 0x40)
+        else if (g_SysWork.sysFlags_22A0 & SysFlag_6)
         {
-            func_800D2170(1);
+            func_800D2170(true);
             D_800D4E6D = 1;
         }
         else if (D_800D4E6D == 1)
         {
             D_800D4E6D++;
-            D_800C4414 |= 0x20;
+            D_800C4414 |= 1 << 5;
         }
-        rng0 = Rng_Rand16() & 0xFFF;
-        D_800D4E70 += FP_MULTIPLY_PRECISE(rng0, g_DeltaTime0, Q12_SHIFT);
-        func_800463C0(Sfx_Unk1611, 0, ((Math_Sin(D_800D4E70) >> 0xA) - 0x20), -0x40);
+
+        rng = Rng_Rand16() & 0xFFF;
+        D_800D4E70 += FP_MULTIPLY_PRECISE(rng, g_DeltaTime0, Q12_SHIFT);
+
+        func_800463C0(Sfx_Unk1611, 0, ((Math_Sin(D_800D4E70) >> 10) - 32), -64);
     }
     else
     {
         if (D_800D4E6D)
         {
             func_8004690C(Sfx_Unk1611);
+
             D_800D4E6D = 0;
-            D_800C4414 &= 0xDF;
+            D_800C4414 &= ~(1 << 5);
         }
+
         Savegame_EventFlagClear(EventFlag_407);
         Savegame_EventFlagClear(EventFlag_408);
     }
+
     func_80069844(0xFFFF);
     func_8006982C(flags);
 }
@@ -1052,31 +1060,31 @@ s32 func_800D1D40(void) // 0x800D1D40
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1EB8);
 
-void func_800D2170(s32 arg0)
+void func_800D2170(s32 arg0) // 0x800D2170
 {
-    TIM_IMAGE sp10;
-    s32* buffers[2];
-    s32 temp_a0;
-    s32 rng15;
-    s32 rng0;
-    s32 var_s1;
-    s32 i;
-    s32 j;
+    TIM_IMAGE img;
+    s32*      buffers[2];
+    s32       temp_a0;
+    s32       rng15;
+    s32       rng0;
+    s32       i;
+    s32       j;
+    s32       k;
+    u32*      rowPtr;
+    u_int*    s6 = FS_BUFFER_22;
+    u_int*    s3 = FS_BUFFER_23;
 
-    u32* rowPtr;
-
-    u_int *s6 = FS_BUFFER_22;
-    u_int *s3 = FS_BUFFER_23;
-
-    if (arg0 == 0)
+    if (!arg0)
     {
-        var_s1 = 0;
+        k = 0;
+
         func_8008D438();
         Fs_QueueStartReadTim(FILE_TIM_LHEFFECT_TIM, FS_BUFFER_1, &D_800CAB90);
         Fs_QueueWaitForEmpty();
         OpenTIM(FS_BUFFER_1);
-        ReadTIM(&sp10);
-        buffers[0] = (s32*)sp10.paddr;
+        ReadTIM(&img);
+
+        buffers[0] = (s32*)img.paddr;
         buffers[1] = buffers[0] + 0x2000;
     }
     else
@@ -1084,17 +1092,18 @@ void func_800D2170(s32 arg0)
         memset(s6, 0, 0x2400);
         StoreImage(&D_800CAB98, FS_BUFFER_1);
         DrawSync(0);
+
         buffers[0] = FS_BUFFER_1;
         buffers[1] = FS_BUFFER_10;
-        var_s1 = 2;
+        k = 2;
     }
 
-    for (; var_s1 < 7; var_s1++)
+    for (; k < (ARRAY_SIZE(D_800D3C74) - 1); k++)
     {
-        func_800D1EB8(D_800D3C74[var_s1 + 1], buffers[var_s1 & 1], buffers[(var_s1 & 1) == 0]);
+        func_800D1EB8(D_800D3C74[k + 1], buffers[k & 1], buffers[(k & 0x1) == 0]);
     }
 
-    for (var_s1 = 0, rowPtr = s3; var_s1 < 16; var_s1++, rowPtr++) 
+    for (k = 0, rowPtr = s3; k < 16; k++, rowPtr++) 
     {
         for (i = 0, j = 0; i < 16; j++, i++)
         {
@@ -1104,14 +1113,15 @@ void func_800D2170(s32 arg0)
             if (rng15 < 8) 
             {
                 temp_a0 = (rng0 >> 4) & 0x7FFFF;
-                (&(&s6[(rng15) << 8])[var_s1])[j * 0x10] = temp_a0;
+                (&(&s6[(rng15) << 8])[k])[j * 16] = temp_a0;
 
-                if (rng15 > 0) {
-                    (&(&s6[(rng15 - 1) << 8])[var_s1])[j * 0x10] = temp_a0 + 0x80000;
+                if (rng15 > 0)
+                {
+                    (&(&s6[(rng15 - 1) << 8])[k])[j * 16] = temp_a0 + 0x80000;
                 }
             }
 
-            rowPtr[j * 0x10] = 0x100000;
+            rowPtr[j * 16] = 0x100000;
         }
     }
 }

@@ -51,4 +51,6 @@ void func_800D0B64(void);
 
 void func_800D2700(void);
 
+void func_800D286C(void);
+
 #endif

@@ -49,8 +49,8 @@ extern s_WorldObjectPose g_CommonWorldObjectPoses[3]; // 0x800DB930
 extern VECTOR3 D_800DB7C8;
 extern SVECTOR D_800DB924;
 
-extern s32 D_800E05A8;
-extern s16 D_800E05AC;
+extern s32 D_800E05A8;   // Angle?
+extern q3_12 D_800E05AC; // Angle?
 extern u16 D_800E05AE;
 
 extern s8 D_800E05E0;

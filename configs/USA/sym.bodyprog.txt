@@ -2665,7 +2665,7 @@ g_Sd_AudioStreamingStates                   = 0x800C1670;
 //---------------------------------------------------
 //--- PA: 0x09CB18   VA: 0x800C1678   subsegment: bss
 //---------------------------------------------------
-gSDVolConfig                                = 0x800C1678;
+g_SDVolConfig                                = 0x800C1678;
 g_Sd_ReverbDepth                            = 0x800C1687;
 g_Sd_VabPlayingInfo                         = 0x800C1698;
 g_Sd_TaskPool                               = 0x800C16A8; // type:u8 size:0x20

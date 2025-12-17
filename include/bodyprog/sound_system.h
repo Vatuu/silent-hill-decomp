@@ -1,16 +1,16 @@
-#ifndef _SOUND_SYSTEM_H
-#define _SOUND_SYSTEM_H
+#ifndef BODYPROG_SOUNDSYSTEM_H
+#define BODYPROG_SOUNDSYSTEM_H
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` that has been identified to be
  * related the audio system of the game, but haven't been recognized
  * to be a function from the Konami's LIBSD system.
  *
- * Code here can still be refered as part of the SD system, but no
- * function with symbols recognized from the SD system should be here.
+ * Code here can still be considered part of the SD system, but no
+ * functions with deobfuscated symbols from the SD system should be here.
  *
- * This code is not part of the library itself, but rather game-specific
- * code, as the library doesn't handle file streaming and the game does
+ * This code is game-specific and not part of the library itself.
+ * The library doesn't handle file streaming and the game handles
  * some additional work and conditionals for events.
  */
 
@@ -27,18 +27,19 @@
 #define AUDIO_TYPE_MONO   1
 #define AUDIO_TYPE_STEREO 2
 
-/** @brief Obfuscation macro.
+/** @brief Packs an audio type and program index into a single  value.
+ *
  * The third field from `s_VabInfo` is obfuscated.
  * The value get pass to `SdVoKeyOn` through the first argument (`vab_pro`) where it is used to give a
  * value to the variables `prog` (by doing the equivalent of `vab_progIdx_2 & 0x7F`) and `vabid`
  * (by doing the equivalent of `vab_progIdx_2 >> 8`).
- * This indicates that for example from the values that are 516 (0x204) `prog` would receive the value of
- * 2 while `vabid` would receive 4. This also fit for other values like 256 (0x100) and 514 (0x202).
+ * This indicates from the values that are 516 (0x204), `prog` receives the value of
+ * 2 while `vabid` would receive 4. This also fits with other values like 256 (0x100) and 514 (0x202).
  *
- * The first argument it is related to the values of `e_AudioType` and `g_Sd_AudioType` as it is used to
- * access to the index of `vab_h` which is aparently used to allocate VAG data in memory.
+ * The first argument is related to `e_AudioType` and `g_Sd_AudioType`, used to
+ * access the index of `vab_h`, which apparently allocates VAG data in memory.
  *
- * The second value is aparently the index for a VAB specific attribute named `program`.
+ * The second value is the index for a VAB-specific attribute named `program`.
  */
 #define TYPE_AND_PROG_SFX(audioType, progIdx) \
     (audioType << 8) + progIdx
@@ -266,7 +267,7 @@ extern s_AudioStreamingStates g_Sd_AudioStreamingStates;
 extern s32 bssPad_800C1674;
 
 /** @note Name from retrieved debug symbols. */
-extern s_ChannelsVolumeController gSDVolConfig;
+extern s_ChannelsVolumeController g_SDVolConfig;
 
 extern u8 g_Sd_ReverbDepth;
 

@@ -1,9 +1,9 @@
-// @hack Checks if `ang >= -val && ang < val`.
-// Needed to allow `li XX, (val*2), sltu` to be emitted instead of just `sltiu`.
+// @hack Checks if `angle >= -val && angle < val`.
+// Needed to allow `li XX, (val * 2), sltu` to be emitted instead of just `sltiu`.
 // TODO: Move this to header, other funcs have the same `sltu` issue.
-inline static bool Math_CheckAngleRange(s32 ang, s32 val)
+inline static bool Math_CheckAngleRange(q19_12 angle, q19_12 angleRange)
 {
-    return (u32)(ang + val) > (val * 2);
+    return (u32)(angle + angleRange) > (angleRange * 2);
 }
 
 void sharedFunc_800D603C_2_s00(s_SubCharacter* chara) // 0x800D603C
@@ -54,7 +54,7 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* chara) // 0x800D603C
             else
             {
                 temp_v0                    = 1;
-                chara->model_0.stateStep_3 = temp_v0 * 2; // @hack Copy of the `temp_v0 == 1` hack below for them to be folded together.
+                chara->model_0.stateStep_3 = temp_v0 * 2; // @hack Copy of `temp_v0 == 1` hack below for them to be folded together.
             }
             break;
 
@@ -136,6 +136,7 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* chara) // 0x800D603C
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
+
                 case 2:
                     if (temp_s7 == 3)
                     {
@@ -157,7 +158,8 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* chara) // 0x800D603C
         case 4:
             chara->model_0.state_2     = 17;
             chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+
+            if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }

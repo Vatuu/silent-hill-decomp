@@ -541,6 +541,7 @@ typedef struct
     s_func_8006E490_20 field_20[2];
 } s_func_8006E490;
 
+// Something associated with anim keyframes.
 typedef struct
 {
     q3_12 field_0;

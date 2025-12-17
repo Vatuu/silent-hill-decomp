@@ -57,7 +57,7 @@ extern s8 D_800D4E6C;
 extern s8 D_800D4E6D;
 extern s8 D_800D4E6E;
 
-extern s16 D_800D4E70;
+extern q3_12 D_800D4E70; // Angle.
 
 extern s_WorldObjectDesc g_WorldObject_SavePad;
 
@@ -76,10 +76,10 @@ void func_800D1330(s16);
 
 void Map_WorldObjectsInit(void);
 
+void func_800D1718(void);
+
 s32 func_800D1D40(void);
 
 void func_800D2170(s32 arg0);
-
-void func_800D1718(void);
 
 #endif
