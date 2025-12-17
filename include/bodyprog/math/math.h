@@ -140,11 +140,11 @@ static inline q3_12 Math_AngleNormalize(q19_12 angle)
     return FP_ANGLE_NORM_S(angle);
 }
 
-// @hack Checks if `ang >= -val && ang < val`.
+// @hack Checks if `val >= -range && val < range`.
 // Needed to allow `li XX, (val*2), sltu` to be emitted instead of just `sltiu`.
-inline static bool Math_CheckSignedRange(s32 ang, s32 val)
+inline static bool Math_CheckSignedRange(s32 val, s32 range)
 {
-    return (u32)(ang + val) > (val * 2);
+    return (u32)(val + range) > (range * 2);
 }
 
 /** @brief Clears an `SVECTOR`'s components.
