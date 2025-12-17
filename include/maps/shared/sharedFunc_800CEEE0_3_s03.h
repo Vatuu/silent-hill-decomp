@@ -9,7 +9,7 @@ void sharedFunc_800CEEE0_3_s03(s_SubCharacter* nurse)
     Chara_MoveSpeedUpdate2(nurse, Q12(1.4f), limit);
     limit =0;
 
-    if (!(Rng_Rand16() & 0x3F))
+    if (Rng_GenerateUInt(0, 63) == 0)
     {
         nurseCpy->properties_E4.puppetNurse.field_11C = func_8006F99C(nurse, FP_ANGLE(360.0f), nurse->rotation_24.vy);
     }

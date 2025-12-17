@@ -871,7 +871,7 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
                 arg2->field_12++;
                 if (arg1)
                 {
-                    if (Rng_Rand16() & 0x1)
+                    if (Rng_GenerateUInt(0, 1) != 0)
                     {
                         arg2->field_11 = 5;
                         arg2->field_12 = 0;
@@ -884,7 +884,7 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
 
                 if (arg2->field_12 > Rng_GenerateUInt(100, 227))
                 {
-                    arg2->field_11 = ((Rng_Rand16() & 1) * 3) + 1;
+                    arg2->field_11 = (Rng_GenerateUInt(0, 1) * 3) + 1;
                     arg2->field_12 = 0;
                 }
 
@@ -905,7 +905,7 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
 
                 if (arg2->field_12 > Rng_GenerateUInt(100, 227))
                 {
-                    arg2->field_11 = (Rng_Rand16() & 1) + 3;
+                    arg2->field_11 = Rng_GenerateUInt(3, 4);
                     arg2->field_12 = 0;
                     rng0 = Rng_GenerateInt(0, 0xfff);
                     arg2->field_C = (u32)(Math_Sin(rng0) * 3) / 0x100;
@@ -1084,8 +1084,8 @@ void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
                     vec = &D_800E32DC[idx];
 
                     // TODO: Is this angle math?
-                    var_s1->field_0.vx = (vec->vx + Q12_FRACT(rand0)) - Q12(0.5f);
-                    var_s1->field_0.vz = (vec->vz + Q12_FRACT(Rng_Rand16())) - Q12(0.5f);
+                    var_s1->field_0.vx = (vec->vx + Rng_GenerateUIntFromInput(rand0, 0, 4095)) - Q12(0.5f);
+                    var_s1->field_0.vz = (vec->vz + Rng_GenerateUInt(0, 4095)) - Q12(0.5f);
                     var_s1->field_0.vy = vec->vy;
                     var_s1->field_11 = 1;
                     var_s1->field_10 = 1;

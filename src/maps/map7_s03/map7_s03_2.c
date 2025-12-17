@@ -2331,7 +2331,7 @@ void func_800E514C(void) // 0x800E514C
                 pos.vy              = g_SysWork.npcs_1A0[0].position_18.vy + Q12(-0.9f);
                 pos.vz              = g_SysWork.npcs_1A0[0].position_18.vz + Q12(0.2f);
                 g_SysWork.field_28 -= Q12(0.2f);
-                g_SysWork.field_28 -= localRand % Q12(0.1f);
+                g_SysWork.field_28 -= Rng_GenerateIntFromInput(localRand, 0, Q12(0.1f) - 1);
 
                 func_8005F6B0(g_SysWork.npcs_1A0, &pos, 8, 1);
             }

@@ -441,16 +441,8 @@ void func_800DA454(void) // 0x800DA454
             vec0.vx = g_SysWork.player_4C.chara_0.position_18.vx + (sinAngle * 16);
             vec0.vz = g_SysWork.player_4C.chara_0.position_18.vz + (Math_Cos((s32)angle) * 16);
 
-            temp_s0 = (Rng_Rand16() & 0x1F) + 75;
-            temp_v0_5 = Rng_Rand16();
-            var_a3 = temp_v0_5;
+            func_8005DD44(Sfx_Unk1353, &vec0, Rng_GenerateUInt(75, 106), Rng_GenerateInt(-16, 15));
 
-            if (temp_v0_5 < 0)
-            {
-                var_a3 = temp_v0_5 + 0x1F;
-            }
-
-            func_8005DD44(Sfx_Unk1353, &vec0, temp_s0, (s8)((temp_v0_5 - ((var_a3 >> 5) << 5)) - 16));
             D_800DFAB8 = 0;
         }
     }

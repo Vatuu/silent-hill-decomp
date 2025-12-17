@@ -64,14 +64,14 @@ void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
             break;
 
         case 3:
-            offsetX = Rng_Rand16() & 0xFFF;
+            offsetX = Rng_GenerateUInt(0, 4095);
             sharedData_800DFB7C_0_s00[arg0].field_0.vx_0 = D_800E3A40[arg1].vx_0 + FP_FROM((D_800E3A40[arg1].field_C * Math_Sin(offsetX)), Q12_SHIFT);
             zOff2 = FP_FROM((D_800E3A40[arg1].field_C * Math_Cos(offsetX)), Q12_SHIFT);
             sharedData_800DFB7C_0_s00[arg0].field_4.vz_4 = D_800E3A40[arg1].vz_4 + zOff2;
             break;
 
         case 4:
-            offsetX = (((Rng_Rand16() & 0x7FF) + (u16)D_800E3A40[arg1].field_A) - 0x400);
+            offsetX = ((Rng_GenerateUInt(0, 2047) + (u16)D_800E3A40[arg1].field_A) - 0x400);
             sharedData_800DFB7C_0_s00[arg0].field_0.vx_0 = D_800E3A40[arg1].vx_0 + FP_FROM((D_800E3A40[arg1].field_C * Math_Sin(offsetX)), Q12_SHIFT);
             zOff2 = FP_FROM((D_800E3A40[arg1].field_C * Math_Cos(offsetX)), Q12_SHIFT);
             sharedData_800DFB7C_0_s00[arg0].field_4.vz_4 = D_800E3A40[arg1].vz_4 + zOff2;
@@ -89,8 +89,8 @@ void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
         sharedData_800DFB7C_0_s00[arg0].field_C.s_0.field_0 = sharedData_800DFB7C_0_s00[arg0].field_C.field_0 - D_800E3A40[arg1].field_10;
     }
 
-    sharedData_800DFB7C_0_s00[arg0].field_C.s_1.field_2 = Rng_Rand16() & 0x3;
-    sharedData_800DFB7C_0_s00[arg0].field_C.s_1.field_3 = (Rng_Rand16() & 0x3F) + 0x60;
+    sharedData_800DFB7C_0_s00[arg0].field_C.s_1.field_2 = Rng_GenerateUInt(0, 3);
+    sharedData_800DFB7C_0_s00[arg0].field_C.s_1.field_3 = Rng_GenerateUInt(0x60, 0x9F);
     sharedData_800DFB7C_0_s00[arg0].field_10.s_2.field_0 = arg1;
 }
 
@@ -1598,9 +1598,9 @@ void func_800DE828(void) // 0x800DE828
         {
             if (D_800E20E8 == 0)
             {
-                if (!(Rng_Rand16() & 0x1F))
+                if (Rng_GenerateUInt(0, 31) == 0)
                 {
-                    D_800E20E8 = -((Rng_Rand16() & 7) + 2);
+                    D_800E20E8 = -Rng_GenerateUInt(2, 9);
                 }
             }
 
@@ -1619,13 +1619,13 @@ void func_800DE828(void) // 0x800DE828
                         func_8005DC1C(Sfx_Unk1435, &sfxPos, Q8_CLAMPED(0.5f), 0);
                         g_WorldObject1.rotation_28.vy = 0;
     
-                        if (D_800E20E8 >= 8 && !(Rng_Rand16() & 0x3))
+                        if (D_800E20E8 >= 8 && Rng_GenerateUInt(0, 3) == 0)
                         {
                             D_800E20E8 = 0;
                         }
                         else
                         {
-                            D_800E20E8 = ((Rng_Rand16() & 3) - D_800E20E8) + 1;
+                            D_800E20E8 = (Rng_GenerateUInt(0, 3) - D_800E20E8) + 1;
                         }
                         D_800E20E8 = MIN(D_800E20E8, 0);
                     }
@@ -1634,7 +1634,7 @@ void func_800DE828(void) // 0x800DE828
                 {
                     func_8005DC1C(Sfx_Unk1435, &sfxPos, Q8_CLAMPED(0.5f), 0);
     
-                    D_800E20E8 = ~(Rng_Rand16() & 0x3) - D_800E20E8;
+                    D_800E20E8 = ~Rng_GenerateUInt(0, 3) - D_800E20E8;
                     D_800E20E8 = MAX(D_800E20E8, 1);
                 }
             }

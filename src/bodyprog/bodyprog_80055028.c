@@ -4896,11 +4896,11 @@ void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3) //
         }
         else
         {
-            g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2     = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
+            g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
             g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 = arg3;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_B  = (Rng_Rand16() & 0x3) + 4; // TODO: `Rng_GenerateInt` doesn't match?
+            g_MapOverlayHeader.unkTable1_4C[idx].field_B             = Rng_GenerateUInt(4, 7);
             g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = func_8005C7D0(chara);
-            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0    = Rng_Rand16() & 0x1FFF;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0    = Rng_GenerateUInt(0, 8191);
         }
 
         i--;
@@ -5894,7 +5894,7 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
         if (arg1 == 0)
         {
             D_800C4428[i] = (i << 9) + Rng_GenerateInt(0, 255) - 128;
-            D_800C4438[i] = (Math_Cos(Rng_Rand16() & 0x7FF) >> 1) + 0x1000;
+            D_800C4438[i] = (Math_Cos(Rng_GenerateUInt(0, 2047)) >> 1) + 0x1000;
         }
 
         temp_s0 = FP_MULTIPLY_PRECISE(temp_fp, D_800C4438[i], Q12_SHIFT);

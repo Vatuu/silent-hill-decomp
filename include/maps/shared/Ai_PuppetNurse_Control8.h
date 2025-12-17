@@ -51,7 +51,7 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
             }
             else
             {
-                speed = Rng_Rand16() & 0x1FF;
+                speed = Rng_GenerateUInt(0, 0x1FF); // TODO: Combine with the +0.8f below?
                 Chara_MoveSpeedUpdate(nurse, (speed + Q12(0.8f)));
             }
             break;

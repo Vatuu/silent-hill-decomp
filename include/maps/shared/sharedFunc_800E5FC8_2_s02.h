@@ -40,7 +40,7 @@ void sharedFunc_800E5FC8_2_s02(s_SubCharacter* chara, s16 arg1, s16 arg2, u8* ar
                     break;
             }
 
-            func_8005DD44(Sfx_Unk1405, &chara->position_18, vol, pitch + ((Rng_Rand16() & 0xF) - 7));
+            func_8005DD44(Sfx_Unk1405, &chara->position_18, vol, pitch + Rng_GenerateUInt(-7, 8));
             *arg3 = 1;
         }
     }

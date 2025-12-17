@@ -83,7 +83,7 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
             scratchData->field_138.vx += Rng_SymmetricOffset(Rng_Rand16(), (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2);
             scratchData->field_138.vy += Rng_SymmetricOffset(Rng_Rand16(), (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2);
             scratchData->field_138.vz += Rng_SymmetricOffset(Rng_Rand16(), (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2);
-            polyV                      = ((Rng_Rand16() & 1) == 0) << 6;
+            polyV                      = (Rng_GenerateUInt(0, 1) == 0) << 6;
         }
         else
         {

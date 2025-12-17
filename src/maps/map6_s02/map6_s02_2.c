@@ -790,8 +790,8 @@ void func_800D0500(void) // 0x800D0500
             {
                 if (Rng_Rand16() % 0x100 == 0)
                 {
-                    D_800D4E2C = (Rng_Rand16() & 0xF) - 8;
-                    D_800D4E2D = (Rng_Rand16() & 0xF) - 8;
+                    D_800D4E2C = Rng_GenerateUInt(-8, 7);
+                    D_800D4E2D = Rng_GenerateUInt(-8, 7);
                 }
             }
             else
@@ -824,7 +824,7 @@ void func_800D0500(void) // 0x800D0500
                 D_800D3C9E += g_DeltaTime0;
                 if (D_800D3C9E >= 0)
                 {
-                    D_800D3C9E = (Rng_Rand16() % Q12(2.4f)) + Q12(1.0f);
+                    D_800D3C9E = Rng_GenerateInt(Q12(1.0f), Q12(3.4f) - 1);
                 }
                 else
                 {
@@ -836,8 +836,8 @@ void func_800D0500(void) // 0x800D0500
             {
                 if (Rng_Rand16() % 0x100 == 0)
                 {
-                    D_800D4E2C = (Rng_Rand16() & 0xF) - 8;
-                    D_800D4E2D = (Rng_Rand16() & 0xF) - 8;
+                    D_800D4E2C = Rng_GenerateUInt(-8, 7);
+                    D_800D4E2D = Rng_GenerateUInt(-8, 7);
                 }
             }
             else if (Rng_Rand16() % 0x20 == 0)
@@ -861,8 +861,8 @@ void func_800D0500(void) // 0x800D0500
             {
                 if (Rng_Rand16() % 0x100 == 0)
                 {
-                    D_800D4E2C = (Rng_Rand16() & 0xF) - 8;
-                    D_800D4E2D = (Rng_Rand16() & 0xF) - 8;
+                    D_800D4E2C = Rng_GenerateUInt(-8, 7);
+                    D_800D4E2D = Rng_GenerateUInt(-8, 7);
                 }
             }
             else if (Rng_Rand16() % 0x20 == 0)
@@ -925,7 +925,6 @@ void Map_WorldObjectsInit(void) // 0x800D1658
 
 void func_800D1718(void) // 0x800D1718
 {
-    s32    rng;
     s32    flags;
     q19_12 mag;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
@@ -979,8 +978,7 @@ void func_800D1718(void) // 0x800D1718
             D_800C4414 |= 1 << 5;
         }
 
-        rng = Rng_Rand16() & 0xFFF;
-        D_800D4E70 += FP_MULTIPLY_PRECISE(rng, g_DeltaTime0, Q12_SHIFT);
+        D_800D4E70 += FP_MULTIPLY_PRECISE(Rng_GenerateUInt(0, 4095), g_DeltaTime0, Q12_SHIFT);
 
         Sd_SfxAttributesUpdate(Sfx_Unk1611, 0, ((Math_Sin(D_800D4E70) >> 10) - 32), -64);
     }

@@ -1965,7 +1965,7 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800DD348);
 void Map_WorldObjectsInit(void) // 0x800DD368
 {
     D_800E2CE8 = 0;
-    D_800E33A0 = Rng_Rand16() % 16384;
+    D_800E33A0 = Rng_GenerateInt(0, 16383);
     D_800E33A4 = 0;
 
     WorldObjectInit(&g_WorldObject_Diary, "DIARY_HI", -180.0f, 0.0f, -140.755f, 0.0f, 180.0f, 0.0f);
@@ -2224,7 +2224,7 @@ void func_800DDCD4(void) // 0x800DDCD4
                 else
                 {
                     func_8005DC1C(Sfx_Unk1646, &D_800CC984, Q8(0.5f), 0);
-                    D_800E33A0 = (Rng_Rand16() % 10240) + 0x2000;
+                    D_800E33A0 = Rng_GenerateInt(Q12(2.0f), Q12(4.5f) - 1);
                 }
             }
             break;
@@ -2330,15 +2330,7 @@ void func_800DDCD4(void) // 0x800DDCD4
 
                 func_8005DC1C(Sfx_Unk1653, &D_800CC998, Q8(0.125f), 0);
 
-                temp_v0_5 = Rng_Rand16();
-                projCellZ0 = temp_v0_5;
-                if (temp_v0_5 < 0)
-                {
-                    projCellZ0 = (s32) (temp_v0_5 + 0x1FFF);
-                }
-
-                projCellZ0 >>= 13;
-                D_800E2CE8 = (temp_v0_5 - (projCellZ0 << 13)) + 0x333;
+                D_800E2CE8 = Rng_GenerateInt(819, 9010);
             }
             break;
 

@@ -13,7 +13,7 @@ void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
         sharedData_800DFB7C_0_s00[i].field_C.s_0.field_0  = 0;
         sharedData_800DFB7C_0_s00[i].field_C.s_0.field_2  = arg3;
         sharedData_800DFB7C_0_s00[i].field_10.s_1.field_0 = arg4;
-        sharedData_800DFB7C_0_s00[i].field_10.s_1.field_2 = (Rng_Rand16() & 31) + 16;
-        sharedData_800DFB7C_0_s00[i].field_10.s_1.field_3 = Rng_Rand16() & 15;
+        sharedData_800DFB7C_0_s00[i].field_10.s_1.field_2 = Rng_GenerateUInt(16, 47);
+        sharedData_800DFB7C_0_s00[i].field_10.s_1.field_3 = Rng_GenerateUInt(0, 15);
     }
 }

@@ -379,14 +379,14 @@ void func_800D0B64(void) // 0x800D0B64
 
         if (g_SysWork.sysStateStep_C[0] >= 10)
         {
-            D_800D4362 += FP_MULTIPLY_PRECISE(((Rng_Rand16() & 0x7FF) + Q12(0.5f)), g_DeltaTime0, Q12_SHIFT) >> 3;
+            D_800D4362 += FP_MULTIPLY_PRECISE(Rng_GenerateUInt(Q12(0.5f), Q12(1.0f) - 1), g_DeltaTime0, Q12_SHIFT) >> 3;
             if (D_800D4362 > Q12(1.0f))
             {
                 D_800D4362 = Q12(1.0f);
             }
         }
 
-        func_8005DE0C(Sfx_Unk1640, &QVECTOR3(17.8f, 2.0f, -139.1f), D_800D4362 >> 5, Q12(32.0f), (Rng_Rand16() & 0xF) -8);
+        func_8005DE0C(Sfx_Unk1640, &QVECTOR3(17.8f, 2.0f, -139.1f), D_800D4362 >> 5, Q12(32.0f), Rng_GenerateUInt(-8, 7));
     }
 }
 
@@ -445,7 +445,7 @@ void func_800D286C(void) // 0x800D286C
             g_WorldGfx_ObjectAdd(&g_WorldObject0[i], &pos, &D_800CB61C);
         }
 
-        Sd_SfxAttributesUpdate(Sfx_Unk1640, 0, ((0xFF - (D_800D4362 >> 4)) >= 0x20) ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);
+        Sd_SfxAttributesUpdate(Sfx_Unk1640, 0, ((0xFF - (D_800D4362 >> 4)) >= 0x20) ? ~(D_800D4362 >> 4) : 0x20, Rng_GenerateUInt(-8, 7));
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
@@ -454,7 +454,7 @@ void func_800D286C(void) // 0x800D286C
 
         if (Savegame_EventFlagGet(EventFlag_471))
         {
-            Sd_SfxAttributesUpdate(Sfx_Unk1640, 0, ((0xFF - (D_800D4362 >> 4)) >= 0x20) ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);
+            Sd_SfxAttributesUpdate(Sfx_Unk1640, 0, ((0xFF - (D_800D4362 >> 4)) >= 0x20) ? ~(D_800D4362 >> 4) : 0x20, Rng_GenerateUInt(-8, 7));
         }
     }
 }

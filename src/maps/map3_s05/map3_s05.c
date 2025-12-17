@@ -847,8 +847,6 @@ void func_800D87AC(void) // 0x800D87AC
     s32     flags;
     s32     i;
     s32     newZ;
-    s32     rng0;
-    s32     rng1;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     cellX = g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE;
@@ -934,22 +932,13 @@ void func_800D87AC(void) // 0x800D87AC
             D_800DD52A = CLAMP_LOW(D_800DD52A - g_DeltaTime0, Q12(0.0f));
         }
 
-        if (D_800DD52A == Q12(0.0f) && !(Rng_Rand16() & 0x3F))
+        if (D_800DD52A == Q12(0.0f) && Rng_GenerateUInt(0, 63) == 0)
         {
-            D_800DD52A = 0xCCC;
-            soundPos.vx = (Rng_Rand16() % Q12(5.0f)) + Q12(137.5f);
-            rng0 = Rng_Rand16();
-
-            rng1 = rng0;
-            if (rng0 < 0)
-            {
-                rng1 = (rng0 + 0x1FFF);
-            }
-
-            rng1 >>= 13;
-            soundPos.vy = (rng1 << 13) - rng0;
-            soundPos.vx = Q12(-56.8f) - (Rng_Rand16() % Q12(6.4f));
-            func_8005DC1C(Sfx_Unk1537, &soundPos, (Rng_Rand16() & 0x3F) + 0xC0, 2);
+            D_800DD52A = Q12(0.8f);
+            soundPos.vx = Rng_GenerateInt(Q12(137.5f), Q12(142.5f) - 1);
+            soundPos.vy = -Rng_GenerateInt(0, 8191);
+            soundPos.vx = Q12(-56.8f) - Rng_GenerateInt(0, Q12(6.4f) - 1);
+            func_8005DC1C(Sfx_Unk1537, &soundPos, Rng_GenerateUInt(192, 255), 2);
         }
     }
 
