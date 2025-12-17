@@ -93,6 +93,8 @@ void func_800D4028(s_SubCharacter* chara);
 
 void func_800D46E0(VECTOR3* vec0, VECTOR3* vec1);
 
+s32 func_800D4924(VECTOR3* vec, q19_12 angle); // Assumed return type.
+
 void func_800D4A34(s_SubCharacter* chara);
 
 u32 func_800D4DD8(void);

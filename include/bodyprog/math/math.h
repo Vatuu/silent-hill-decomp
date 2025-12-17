@@ -141,7 +141,7 @@ static inline q3_12 Math_AngleNormalize(q19_12 angle)
 }
 
 // @hack Checks if `val >= -range && val < range`.
-// Needed to allow `li XX, (val*2), sltu` to be emitted instead of just `sltiu`.
+// Needed to allow `li XX, (range*2), sltu` to be emitted instead of just `sltiu`.
 inline static bool Math_CheckSignedRange(s32 val, s32 range)
 {
     return (u32)(val + range) > (range * 2);
