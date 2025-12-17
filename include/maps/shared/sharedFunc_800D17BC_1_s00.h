@@ -121,7 +121,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* chara)
         }
         else
         {
-            if (!Rng_TestProbabilityBits(3))
+            if (Rng_GenerateInt(Rng_Rand16(), 0, 7) == 0)
             {
                 func_80037DC4(chara);
             }

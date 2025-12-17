@@ -31,7 +31,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORD
     chara->timer_C6        = Q12(1.0f);
     chara->model_0.state_2 = 1;
 
-    if (*mapOverlayPtr == 37 || !Rng_TestProbabilityBits(2))
+    if (*mapOverlayPtr == 37 || Rng_GenerateInt(Rng_Rand16(), 0, 3) == 0)
     {
         func_80037DC4(chara);
     }

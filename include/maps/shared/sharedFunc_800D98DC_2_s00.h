@@ -13,7 +13,6 @@ void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara)
     s32    temp_s4;
     q19_12 distFieldF8;
     q19_12 angFieldF8;
-    u32    maxHack = FP_ANGLE(60.0f) * 2; // @hack Needed to get matching `sltu`
 
     animStatus     = chara->model_0.anim_4.status_0;
     switchCond     = 0;
@@ -45,7 +44,7 @@ void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara)
             else if (temp_s4 == 1 ||
                      (sharedFunc_800DC30C_2_s00(chara) && cond == true &&
                       chara->properties_E4.unk0.flags_11C & CharaUnk0Flag_Unk31 &&
-                      (distFieldF8 < Q12(2.0f) || angFieldF8 + FP_ANGLE(60.0f) > maxHack))) // @hack Should be `angFieldF8 >= FP_ANGLE(-60.0f) && angFieldF8 < FP_ANGLE(60.0f)`
+                      (distFieldF8 < Q12(2.0f) || Math_CheckAngleRange(angFieldF8, FP_ANGLE(60.0f))))) // @hack Should be `angFieldF8 >= FP_ANGLE(-60.0f) && angFieldF8 < FP_ANGLE(60.0f)`
             {
                 chara->model_0.stateStep_3 = 4;
             }

@@ -114,12 +114,12 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
     // Handle aggressive/chase mode.
     if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 11))
     {
-        if (!Rng_TestProbabilityBits(10))
+        if (Rng_GenerateInt(Rng_Rand16(), 0, 1023) == 0)
         {
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 3);
         }
 
-        if (!Rng_TestProbabilityBits(10))
+        if (Rng_GenerateInt(Rng_Rand16(), 0, 1023) == 0)
         {
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 4);
         }
@@ -149,10 +149,10 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
                 sharedFunc_800D7E04_0_s00(chara, 1363);
             }
 
-            if (((!Rng_TestProbabilityBits(4) && chara->properties_E4.player.runTimer_F8 > Q12(1.0f)) &&
+            if (((Rng_GenerateInt(Rng_Rand16(), 0, 15) == 0 && chara->properties_E4.player.runTimer_F8 > Q12(1.0f)) &&
                  (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 1))) ||
-                (!Rng_TestProbabilityBits(4) && chara->properties_E4.player.runTimer_F8 > Q12(2.5f)) ||
-                (!Rng_TestProbabilityBits(5) && ((dist1 >> 1) < dist0)))
+                (Rng_GenerateInt(Rng_Rand16(), 0, 15) == 0 && chara->properties_E4.player.runTimer_F8 > Q12(2.5f)) ||
+                (Rng_GenerateInt(Rng_Rand16(), 0, 31) == 0 && ((dist1 >> 1) < dist0)))
             {
                 if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 1))
                 {
@@ -178,7 +178,7 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
         {
             chara->properties_E4.larvalStalker.properties_E8[11].val16[1] += g_DeltaTime0;
 
-            if (!Rng_TestProbabilityBits(12) || (u16)chara->properties_E4.larvalStalker.properties_E8[11].val16[1] > Q12(1.2f))
+            if (Rng_GenerateInt(Rng_Rand16(), 0, 4095) == 0 || (u16)chara->properties_E4.larvalStalker.properties_E8[11].val16[1] > Q12(1.2f))
             {
                 chara->properties_E4.larvalStalker.properties_E8[11].val16[1] = 0;
                 chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 10);

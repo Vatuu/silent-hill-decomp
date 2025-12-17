@@ -11,10 +11,9 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
     bool    cond;
     s32     temp_fp;
     s32     new_var;
-    q19_12 angFieldF8;
-    q19_12 distFieldF8;
-    s32    temp_v0;
-    u32    maxHack = Q12(2.0f);
+    q19_12  angFieldF8;
+    q19_12  distFieldF8;
+    s32     temp_v0;
 
     animStatus = chara->model_0.anim_4.status_0;
     switchCond = 0;
@@ -74,9 +73,8 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
                     // @hack This check should be
                     // `if (diff >= Q12(-1.0f) && diff < Q12(1.0f))`
                     // But that results in `sltiu 0x2000` instead of the `li 0x2000/sltu` needed.
-
-                    int diff = (chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy);
-                    if (diff + Q12(1.0f) > maxHack)
+                    // TODO: Despite calling `Math_CheckAngleRange` this is checking a distance rather than an angle.
+                    if (Math_CheckAngleRange(chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy, Q12(1.0f)))
                     {
                         chara->model_0.stateStep_3 = 3;
                     }
