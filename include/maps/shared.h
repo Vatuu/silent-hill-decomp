@@ -3008,6 +3008,7 @@ void sharedFunc_800D0E80_3_s03(s_SubCharacter* bloodsucker);
 void sharedSymbol_800D0ECC_3_s03(s_SubCharacter* bloodsucker);
 void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+// TODO: Is this func bloodsucker specific?
 s32 Chara_DamageTake(s_SubCharacter* chara, q19_12 mult);
 
 void sharedFunc_800D3CC4_0_s01(s_SubCharacter* chara);

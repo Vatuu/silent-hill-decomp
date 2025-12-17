@@ -1,20 +1,12 @@
 s32 Chara_DamageTake(s_SubCharacter* chara, q19_12 mult)
 {
-    s32 temp_a0;
-    s32 temp_v0;
     s32 dmg;
-    s32 var_hi;
-    s32 sign_2;
-    s32 attack;
-    u32 var_lo;
-    u32 ret;
-    u32 sign;
-    u8  temp_a1;
     s32 animStatus;
+    s32 attack;
+    u32 ret;
+    s32 temp_v0;
+    u8  temp_a1;
     s32 angle;
-    u32 var0;
-    u16 dmgConst;
-    s32 dmgWtf;
 
     dmg        = chara->damage_B4.amount_C;
     animStatus = chara->model_0.anim_4.status_0;
