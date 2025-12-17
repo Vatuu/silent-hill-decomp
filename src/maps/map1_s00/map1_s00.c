@@ -46,7 +46,7 @@ INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800CF168_1_s00
 
 #include "maps/shared/sharedFunc_800D17BC_1_s00.h" // 0x800D17BC
 
-INCLUDE_ASM("asm/maps/map1_s00/nonmatchings/map1_s00", sharedFunc_800D1DBC_1_s00); // 0x800D1DBC
+#include "maps/shared/sharedFunc_800D1DBC_1_s00.h" // 0x800D1DBC
 
 #include "maps/shared/Ai_Stalker_Update.h" // 0x800D24F8
 

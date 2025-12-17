@@ -1052,7 +1052,69 @@ s32 func_800D1D40(void) // 0x800D1D40
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1EB8);
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D2170);
+void func_800D2170(s32 arg0)
+{
+    TIM_IMAGE sp10;
+    s32* buffers[2];
+    s32 temp_a0;
+    s32 rng15;
+    s32 rng0;
+    s32 var_s1;
+    s32 i;
+    s32 j;
+
+    u32* rowPtr;
+
+    u_int *s6 = FS_BUFFER_22;
+    u_int *s3 = FS_BUFFER_23;
+
+    if (arg0 == 0)
+    {
+        var_s1 = 0;
+        func_8008D438();
+        Fs_QueueStartReadTim(FILE_TIM_LHEFFECT_TIM, FS_BUFFER_1, &D_800CAB90);
+        Fs_QueueWaitForEmpty();
+        OpenTIM(FS_BUFFER_1);
+        ReadTIM(&sp10);
+        buffers[0] = (s32*)sp10.paddr;
+        buffers[1] = buffers[0] + 0x2000;
+    }
+    else
+    {
+        memset(s6, 0, 0x2400);
+        StoreImage(&D_800CAB98, FS_BUFFER_1);
+        DrawSync(0);
+        buffers[0] = FS_BUFFER_1;
+        buffers[1] = FS_BUFFER_10;
+        var_s1 = 2;
+    }
+
+    for (; var_s1 < 7; var_s1++)
+    {
+        func_800D1EB8(D_800D3C74[var_s1 + 1], buffers[var_s1 & 1], buffers[(var_s1 & 1) == 0]);
+    }
+
+    for (var_s1 = 0, rowPtr = s3; var_s1 < 16; var_s1++, rowPtr++) 
+    {
+        for (i = 0, j = 0; i < 16; j++, i++)
+        {
+            rng0 = Rng_Rand16();
+            rng15 = rng0 & 0xF;
+
+            if (rng15 < 8) 
+            {
+                temp_a0 = (rng0 >> 4) & 0x7FFFF;
+                (&(&s6[(rng15) << 8])[var_s1])[j * 0x10] = temp_a0;
+
+                if (rng15 > 0) {
+                    (&(&s6[(rng15 - 1) << 8])[var_s1])[j * 0x10] = temp_a0 + 0x80000;
+                }
+            }
+
+            rowPtr[j * 0x10] = 0x100000;
+        }
+    }
+}
 
 INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D2364);
 

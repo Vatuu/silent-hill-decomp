@@ -61,6 +61,10 @@ extern s16 D_800D4E70;
 
 extern s_WorldObjectDesc g_WorldObject_SavePad;
 
+extern s_FsImageDesc D_800CAB90;
+extern RECT D_800CAB98;
+extern u8 D_800D3C74[8];
+
 void func_800CF0B8(void);
 
 /** Func related to the UFO ending cutscene? */
