@@ -72,16 +72,20 @@ const char* MAP_MESSAGES[] = {
 
 void MapEvent_CafeCutscene(void) // 0x800DA980
 {
-    #define CUTSCENE_SKIP_STATE 52
+    typedef enum _EventState
+    {
+        EventState_Skip = 52
+    } e_EventState;
 
     u8              temp_s0_5;
     s_SubCharacter* chara0;
     s_SubCharacter* chara1;
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 5 && g_SysWork.sysStateStep_C[0] < 47)
     {
-        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, EventState_Skip);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -368,7 +372,7 @@ void MapEvent_CafeCutscene(void) // 0x800DA980
             SysWork_StateStepReset();
             break;
 
-        case CUTSCENE_SKIP_STATE:
+        case EventState_Skip:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 

@@ -282,16 +282,20 @@ void func_800D72DC(void) // 0x800D72DC
 
 void func_800D7308(void)
 {
-    #define CUTSCENE_SKIP_STATE 8
+    typedef enum _EventState
+    {
+        EventState_Skip = 8
+    } e_EventState;
 
     s32 i;
 
-    g_SysWork.sysFlags_22A0 |= 1 << 1;
+    g_SysWork.sysFlags_22A0 |= SysFlag_1;
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < CUTSCENE_SKIP_STATE)
+        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
     {
-        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, EventState_Skip);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -873,20 +877,24 @@ extern VECTOR3 g_CameraLookAtTarget;
 
 void func_800D87C0(void) // 0x800D87C0
 {
-    #define CUTSCENE_SKIP_STATE 20
+    typedef enum _EventState
+    {
+        EventState_Skip = 20
+    } e_EventState;
 
     s32                tmp0;
     s_WorldObjectDesc* obj;
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < CUTSCENE_SKIP_STATE)
+        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
     {
         if ( g_SysWork.sysStateStep_C[0]  < 4)
         {
             D_800DD598 = 1;
         }
 
-        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, EventState_Skip);
     }
 
     switch (g_SysWork.sysStateStep_C[0])

@@ -136,15 +136,19 @@ const char* MAP_MESSAGES[] = {
 
 void func_800D0B64(void) // 0x800D0B64
 {
-    #define CUTSCENE_SKIP_STATE 27
+    typedef enum _EventState
+    {
+        EventState_Skip = 27
+    } e_EventState;
 
     #define playerChara g_SysWork.player_4C.chara_0
     #define lisaChara g_SysWork.npcs_1A0[0]
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < CUTSCENE_SKIP_STATE)
+        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
     {
-        SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
+        SysWork_StateStepSet(0, EventState_Skip);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -314,7 +318,7 @@ void func_800D0B64(void) // 0x800D0B64
             SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(6.0f), Q12(106.0f), Q12(150.0f), true, true);
             break;
 
-        case CUTSCENE_SKIP_STATE:
+        case EventState_Skip:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
@@ -425,23 +429,23 @@ void func_800D2700(void) // 0x800D2700
 
 void func_800D286C(void) // 0x800D286C
 {
-    VECTOR3 sp10;
-    s32 i;
+    VECTOR3 pos;
+    s32     i;
 
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
     {
-        for (i = 0; i < 6; i++)
+        for (i = 0; i < ARRAY_SIZE(g_WorldObject0); i++)
         {
-            sp10.vx = 0x3CCCC;
-            sp10.vy = 0;
-            sp10.vz = D_800D4370[(i >= 2) ? i-2 : i];
+            pos.vx = Q12(60.8f);
+            pos.vy = Q12(0.0f);
+            pos.vz = D_800D4370[(i >= 2) ? (i - 2) : i];
 
-            g_WorldGfx_ObjectAdd(&g_WorldObject0[i], &sp10, &D_800CB61C);
+            g_WorldGfx_ObjectAdd(&g_WorldObject0[i], &pos, &D_800CB61C);
         }
 
-        func_800463C0(Sfx_Unk1640, 0, (0xFF - (D_800D4362 >> 4)) >= 0x20 ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);
+        func_800463C0(Sfx_Unk1640, 0, ((0xFF - (D_800D4362 >> 4)) >= 0x20) ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
@@ -450,7 +454,7 @@ void func_800D286C(void) // 0x800D286C
 
         if (Savegame_EventFlagGet(EventFlag_471))
         {
-            func_800463C0(Sfx_Unk1640, 0, (0xFF - (D_800D4362 >> 4)) >= 0x20 ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);
+            func_800463C0(Sfx_Unk1640, 0, ((0xFF - (D_800D4362 >> 4)) >= 0x20) ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);
         }
     }
 }

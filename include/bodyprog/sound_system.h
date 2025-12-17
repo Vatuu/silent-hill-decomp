@@ -1,5 +1,5 @@
-#ifndef BODYPROG_SOUNDSYSTEM_H
-#define BODYPROG_SOUNDSYSTEM_H
+#ifndef _BODYPROG_SOUNDSYSTEM_H
+#define _BODYPROG_SOUNDSYSTEM_H
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` that has been identified to be

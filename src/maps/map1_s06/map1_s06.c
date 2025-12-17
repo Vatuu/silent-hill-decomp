@@ -336,13 +336,17 @@ void func_800D5D6C(u16 arg0) // 0x800D5D6C
 
 void func_800D5DD8(void) // 0x800D5DD8
 {
-    #define CUTSCENE_SKIP_STATE 14
+    typedef enum _EventState
+    {
+        EventState_Skip = 14
+    } e_EventState;
 
+    // Skip.
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4)
     {
         if (g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
         {
-            SysWork_StateStepSet(0, CUTSCENE_SKIP_STATE);
+            SysWork_StateStepSet(0, EventState_Skip);
         }
 
         if (D_800D7790 == 0 && g_SysWork.sysStateStep_C[0] > 6 && g_SysWork.sysStateStep_C[0] < 12)
@@ -465,7 +469,7 @@ void func_800D5DD8(void) // 0x800D5DD8
             func_800867B4(2, 0);
             SysWork_StateStepIncrement(0);
 
-        case CUTSCENE_SKIP_STATE:
+        case EventState_Skip:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 
