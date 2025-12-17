@@ -229,6 +229,7 @@ void func_800DD67C(VECTOR3*, s_SubCharacter*, GsCOORDINATE2*);
 void func_800DD7D0(VECTOR3*);
 void func_800DD868(void);
 u8   func_800DD964(void);
+void func_800DD98C(s32 arg0); // Assumed void return type.
 void func_800DD98C(s32);
 void func_800DD9B0(s_SubCharacter* chara);
 void func_800DD9D4(s_SubCharacter* chara);
@@ -252,6 +253,7 @@ void Ai_Incubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
 
 void func_800DFA14(void);
 void func_800DFB2C(s32);
+void func_800DFB2C(s32 arg0); // Assumed void return type.
 void func_800DFB50(s_SubCharacter* chara);
 void func_800DFB74(s_SubCharacter* chara);
 bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
