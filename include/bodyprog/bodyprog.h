@@ -1701,14 +1701,14 @@ typedef struct
 
 typedef struct
 {
-    s8   field_0; /** `bool` */
-    u8   field_1;
-    s8   unk_2[2];
+    s8      field_0; /** `bool` */
+    u8      field_1;
+    s8      unk_2[2]; // Probably padding.
     VECTOR3 field_4;
-    u32  field_10; // Maybe `bool`, not enough context.
-    s32  field_14;
-    s32  field_18;
-    q7_8 field_1C; // Angle.
+    u32     field_10; // Maybe `bool`, not enough context.
+    s32     field_14;
+    s32     field_18;
+    q7_8    field_1C; // Angle.
 } s_func_800700F8_2;
 
 typedef struct
@@ -1717,8 +1717,8 @@ typedef struct
     s32     field_C; // Absolute ground height? Might be using `s_Collision` substruct?
     s16     field_10;
     s16     field_12;
-    s8      field_14; // Count of something? 12 is significant.
-    s8      unk_15[3];
+    s8      field_14;  // Count of something? 12 is significant.
+    s8      unk_15[3]; // Probably padding.
     s32     field_18;
 } s_800C4590;
 
@@ -3927,9 +3927,9 @@ void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2);
 /** `arg1` is likely Q23.8. */
 void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2);
 
-bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
+bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* pos0, VECTOR3* pos1);
 
-bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2, s_SubCharacter* chara);
+bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, s_SubCharacter* chara);
 
 void func_8006DAE4(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, s32 arg3);
 
@@ -3973,7 +3973,7 @@ q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 /** Creates random angle of some kind. */
 q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, q3_12 arg4, bool cond);
 
-bool func_8006FD90(s_SubCharacter* chara, s32 arg1, q19_12 arg2, q19_12 arg3);
+bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 distStep);
 
 bool func_80070030(s_SubCharacter* chara, q19_12 posX, q19_12 posY, q19_12 posZ);
 
@@ -3992,7 +3992,7 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
 
 bool func_80070208(s_SubCharacter* chara, q19_12 dist);
 
-s32 func_8007029C(s_SubCharacter* chara, q19_12 arg1, q3_12 angle);
+s32 func_8007029C(s_SubCharacter* chara, q19_12 dist, q3_12 rotY);
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 scaleZ);
 

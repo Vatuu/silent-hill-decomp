@@ -94,20 +94,20 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
 s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
 {
     SVECTOR            sp10;
-    SVECTOR            sp18;
-    SVECTOR            sp20;
+    SVECTOR            offset0; // Q23.8
+    SVECTOR            offset1; // Q23.8
     DVECTOR            sp28;
     DVECTOR            sp30[8];
     SVECTOR            sp50[12];
-    MATRIX             spB0;
-    VECTOR3*           vecPtr;
+    MATRIX             mat;
     s32                temp_a0;
     s32                temp_s4;
     s32                temp_s5;
     s32                temp_s7;
     s32                j;
     s32                i;
-    s32                var_s5;
+    s32                count;
+    VECTOR3*           unkPos;
     s_func_800CC8FC_0* ptr;
     DVECTOR*           dVecPtr;
 
@@ -139,74 +139,75 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
 
     for (i = 0; i < 6; i++)
     {
-        sp50[i].vx = FP_MULTIPLY(temp_a0, Math_Sin((i * 0x3C000) / 360), 0xC);
-        sp50[i].vy = FP_MULTIPLY(temp_a0, Math_Cos((i * 0x3C000) / 360), 0xC);
+        sp50[i].vx = FP_MULTIPLY(temp_a0, Math_Sin((i * 0x3C000) / 360), Q12_SHIFT);
+        sp50[i].vy = FP_MULTIPLY(temp_a0, Math_Cos((i * 0x3C000) / 360), Q12_SHIFT);
         sp50[i].vz = -temp_s4;
     }
 
     for (i = 0; i < 6; i++)
     {
-        sp50[i + 6].vx = FP_MULTIPLY(temp_s5, Math_Sin((i * 0x3C000) / 360), 0xC);
-        sp50[i + 6].vy = FP_MULTIPLY(temp_s5, Math_Cos((i * 0x3C000) / 360), 0xC);
+        sp50[i + 6].vx = FP_MULTIPLY(temp_s5, Math_Sin((i * 0x3C000) / 360), Q12_SHIFT);
+        sp50[i + 6].vy = FP_MULTIPLY(temp_s5, Math_Cos((i * 0x3C000) / 360), Q12_SHIFT);
         sp50[i + 6].vz = temp_s7;
     }
 
-    var_s5 = 0;
-    Math_RotMatrixZxyNegGte(&g_ParticleVectors0.svec_18, &spB0);
+    count = 0;
+    Math_RotMatrixZxyNegGte(&g_ParticleVectors0.svec_18, &mat);
 
     for (j = 0; j < 18; j++)
     {
         sp10 = sp50[D_800CA7CC[j][0]];
 
         PushMatrix();
-        ApplyMatrixSV(&spB0, &sp10, &sp18);
+        ApplyMatrixSV(&mat, &sp10, &offset0);
         PopMatrix();
 
-        vecPtr = &arg0[D_800CA7CC[j][0]];
+        unkPos = &arg0[D_800CA7CC[j][0]];
 
-        vecPtr->vx = (sp18.vx * 0x10) + (g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx);
-        vecPtr->vy = (sp18.vy * 0x10) + (g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy);
-        vecPtr->vz = (sp18.vz * 0x10) + (g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz);
+        unkPos->vx = Q8_TO_Q12(offset0.vx) + (g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx);
+        unkPos->vy = Q8_TO_Q12(offset0.vy) + (g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy);
+        unkPos->vz = Q8_TO_Q12(offset0.vz) + (g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz);
 
-        sp18.vx += (g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 4;
-        sp18.vy += (g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy) >> 4;
-        sp18.vz += (g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz) >> 4;
+        offset0.vx += Q12_TO_Q8(g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx);
+        offset0.vy += Q12_TO_Q8(g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy);
+        offset0.vz += Q12_TO_Q8(g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz);
 
-        gte_ldv0(&sp18);
+        gte_ldv0(&offset0);
         gte_rtps();
 
         sp10 = sp50[D_800CA7CC[j][1]];
 
         PushMatrix();
-        ApplyMatrixSV(&spB0, &sp10, &sp20);
+        ApplyMatrixSV(&mat, &sp10, &offset1);
         PopMatrix();
 
-        vecPtr = &arg0[D_800CA7CC[j][1]];
+        unkPos = &arg0[D_800CA7CC[j][1]];
 
-        vecPtr->vx = (sp20.vx * 0x10) + (g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx);
-        vecPtr->vy = (sp20.vy * 0x10) + (g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy);
-        vecPtr->vz = (sp20.vz * 0x10) + (g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz);
+        unkPos->vx = Q8_TO_Q12(offset1.vx) + (g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx);
+        unkPos->vy = Q8_TO_Q12(offset1.vy) + (g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy);
+        unkPos->vz = Q8_TO_Q12(offset1.vz) + (g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz);
 
-        sp20.vx += (g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 4;
-        sp20.vy += (g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy) >> 4;
-        sp20.vz += (g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz) >> 4;
+        offset1.vx += Q12_TO_Q8(g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx);
+        offset1.vy += Q12_TO_Q8(g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy);
+        offset1.vz += Q12_TO_Q8(g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz);
 
-        if ((sp18.vy >= 0 && sp20.vy < 0) || (sp18.vy < 0 && sp20.vy >= 0))
+        if ((offset0.vy >= Q8(0.0f) && offset1.vy <  Q8(0.0f)) ||
+            (offset0.vy <  Q8(0.0f) && offset1.vy >= Q8(0.0f)))
         {
-            sp30[var_s5].vx = sp18.vx - (sp18.vy * (sp20.vx - sp18.vx)) / (sp20.vy - sp18.vy);
-            sp30[var_s5].vy = sp18.vz - (sp18.vy * (sp20.vz - sp18.vz)) / (sp20.vy - sp18.vy);
-            var_s5++;
+            sp30[count].vx = offset0.vx - (offset0.vy * (offset1.vx - offset0.vx)) / (offset1.vy - offset0.vy);
+            sp30[count].vy = offset0.vz - (offset0.vy * (offset1.vz - offset0.vz)) / (offset1.vy - offset0.vy);
+            count++;
         }
     }
 
-    if (var_s5 == 0)
+    if (count == 0)
     {
         return 0;
     }
 
-    for (i = 0; i < (var_s5 - 1); i++)
+    for (i = 0; i < (count - 1); i++)
     {
-        for (j = i + 1; j < var_s5; j++)
+        for (j = i + 1; j < count; j++)
         {
             if (sp30[i].vx > sp30[j].vx)
             {
@@ -243,7 +244,7 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
 
     ptr = arg2->field_0;
 
-    for (i = 3; i < var_s5; i++)
+    for (i = 3; i < count; i++)
     {
         dVecPtr = &sp10;
 
