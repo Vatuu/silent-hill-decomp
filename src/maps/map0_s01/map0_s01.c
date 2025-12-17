@@ -5,9 +5,9 @@
 #include "maps/shared.h"
 #include "maps/map0/map0_s01.h"
 
-const u32 D_800CA5C8[4] = {};
+const VECTOR D_800CA5C8 = {};
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800CCB8C_0_s01);
+#include "maps/shared/sharedFunc_800CCB8C_0_s01.h" // 0x800CCB8C
 
 #include "maps/shared/sharedFunc_800CD1F8_0_s01.h" // 0x800CD1F8
 

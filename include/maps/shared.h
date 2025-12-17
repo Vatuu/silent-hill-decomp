@@ -2250,6 +2250,13 @@ typedef struct _MapHeader_field_5C
     s32 field_24;
 } s_MapHeader_field_5C;
 
+typedef struct
+{
+    s32 vx;
+    s32 vy;
+    s16 vz;
+} s_sharedData_800DFB10_0_s01;
+
 extern s_MapHeader_field_5C sharedData_800DD180_3_s05;
 
 extern s_800E330C sharedData_800E330C_0_s00[20];
@@ -2303,7 +2310,7 @@ extern u8 sharedData_800D1D14_3_s02[8];
 /** Room flags? */
 extern u16 sharedData_800D1D1C_3_s02[60];
 
-extern VECTOR3 sharedData_800DFB10_0_s01[];
+extern s_sharedData_800DFB10_0_s01 sharedData_800DFB10_0_s01[];
 
 extern u8 sharedData_800ED430_2_s02[];
 
@@ -3010,6 +3017,8 @@ void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr,
 
 // TODO: Is this func bloodsucker specific?
 s32 Chara_DamageTake(s_SubCharacter* chara, q19_12 mult);
+
+void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7);
 
 void sharedFunc_800D3CC4_0_s01(s_SubCharacter* chara);
 
