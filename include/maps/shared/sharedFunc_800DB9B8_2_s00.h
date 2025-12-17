@@ -1,6 +1,6 @@
-// Very similar to `sharedFunc_800DB9B8_2_s00`, changes here should be copied there.
+// Very similar to `sharedFunc_800D6504_2_s00`, changes here should be copied there.
 
-void sharedFunc_800D6504_2_s00(s_SubCharacter* chara)
+void sharedFunc_800DB9B8_2_s00(s_SubCharacter* chara)
 {
     s32    animStatus;
     bool   field14C_2;
@@ -18,43 +18,28 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* chara)
     switch ((u32)chara->model_0.stateStep_3)
     {
         case 0:
-            if (field14C_2)
-            {
-                sharedFunc_800DE11C_2_s00(chara);
-            }
-            else
-            {
-                sharedFunc_800DDF74_2_s00(chara, Q12(4.0f), func_80080478(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18));
-                chara->properties_E4.unk0.pos_104 = chara->properties_E4.unk0.field_F8;
-            }
-
-            chara->model_0.stateStep_3 = 1;
-
-        case 1:
             if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(6, false);
-                chara->model_0.stateStep_3     = 2;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(8, false);
+                chara->model_0.stateStep_3     = 1;
             }
             break;
-
-        case 2:
-            if (animStatus != ANIM_STATUS(6, false))
+        case 1:
+            if (animStatus != ANIM_STATUS(8, false))
             {
-                chara->model_0.stateStep_3           = 3;
+                chara->model_0.stateStep_3           = 2;
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
-
-        case 3:
-            if (animStatus != ANIM_STATUS(6, true))
+        case 2:
+            if (animStatus != ANIM_STATUS(8, true))
             {
                 cond = true;
             }
             break;
     }
 
-    sharedFunc_800DF80C_2_s00(chara);
+    sharedFunc_800E041C_2_s00(chara);
 
     switch (Chara_DamageTake(chara, Q12(0.6f)))
     {
@@ -77,17 +62,18 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* chara)
             {
                 if (chara->properties_E4.unk0.field_E8_8 == 5)
                 {
-                    chara->model_0.state_2     = 14;
+                    chara->model_0.state_2     = 42;
                     chara->model_0.stateStep_3 = 0;
 
                     if (Rng_RandQ12() < ((FP_TO(chara->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1 * 2)))
                     {
                         chara->properties_E4.unk0.field_E8_8 = 3;
                     }
+                    break;
                 }
                 else
                 {
-                    chara->model_0.state_2     = 10;
+                    chara->model_0.state_2     = 38;
                     chara->model_0.stateStep_3 = 0;
 
                     if (Rng_RandQ12() <= ((FP_TO(chara->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1 * 2)))
@@ -105,9 +91,8 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* chara)
             switch (chara->properties_E4.unk0.field_E8_8)
             {
                 case 3:
-                    chara->model_0.state_2     = 13;
+                    chara->model_0.state_2     = 41;
                     chara->model_0.stateStep_3 = 0;
-
                     if (Rng_RandQ12() < ((Q12(0.5f) - (var_s1 * 3))))
                     {
                         chara->properties_E4.unk0.field_E8_8 = 2;
@@ -115,7 +100,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* chara)
                     break;
 
                 case 2:
-                    chara->model_0.state_2     = 7;
+                    chara->model_0.state_2     = 36;
                     chara->model_0.stateStep_3 = 0;
 
                     if (Rng_RandQ12() > (FP_TO(chara->health_B0, Q12_SHIFT) / Q12(380.0f) + (var_s1 * 2)))
@@ -129,7 +114,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* chara)
                     break;
 
                 case 5:
-                    chara->model_0.state_2     = 14;
+                    chara->model_0.state_2     = 42;
                     chara->model_0.stateStep_3 = 0;
 
                     if (Rng_RandQ12() < FP_TO(chara->health_B0, Q12_SHIFT) / Q12(380.0f))
@@ -142,11 +127,11 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* chara)
                 case 4:
                     if (Rng_RandQ12() < (Q12(0.2f) + (var_s1 * 5)))
                     {
-                        chara->model_0.state_2 = 7;
+                        chara->model_0.state_2 = 36;
                     }
                     else
                     {
-                        chara->model_0.state_2 = 14;
+                        chara->model_0.state_2 = 42;
                     }
 
                     chara->model_0.stateStep_3 = 0;
@@ -172,11 +157,11 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* chara)
 
                     if (Rng_RandQ12() < (Q12(0.4f) + (var_s1 * 3)))
                     {
-                        chara->model_0.state_2 = 7;
+                        chara->model_0.state_2 = 36;
                     }
                     else
                     {
-                        chara->model_0.state_2 = 14;
+                        chara->model_0.state_2 = 42;
                     }
 
                     chara->model_0.stateStep_3 = 0;
@@ -197,7 +182,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* chara)
 
         case 3:
         case 4:
-            chara->model_0.state_2     = 17;
+            chara->model_0.state_2     = 45;
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= Q12(0.0f))

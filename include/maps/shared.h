@@ -2420,6 +2420,8 @@ void sharedFunc_800DB54C_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DB8AC_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800DB9B8_2_s00(s_SubCharacter* chara);
+
 /** Player func. */
 void sharedFunc_800DBDEC_2_s00(s_SubCharacter* chara);
 
