@@ -355,7 +355,7 @@ void func_800D7308(void)
             break;
 
         case 8:
-            func_8004690C(Sfx_Unk1433);
+            Sd_SfxStop(Sfx_Unk1433);
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
 

@@ -559,8 +559,8 @@ void func_800D2E54(void) // 0x800D2E54
     {
         if (g_GeneratorMakeNoise == true)
         {
-            func_8004690C(Sfx_Unk1495);
-            func_8004690C(Sfx_Unk1503);
+            Sd_SfxStop(Sfx_Unk1495);
+            Sd_SfxStop(Sfx_Unk1503);
             g_GeneratorMakeNoise = false;
         }
     }

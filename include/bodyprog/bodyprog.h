@@ -1564,7 +1564,7 @@ typedef struct _MapOverlayHeader
     s8                     unk_9[3];
     s32                    (*func_C)();
     void                   (*func_10)();
-    s8                     field_14; // Flags?
+    s8                     field_14; // Flags? Music related.
     u8                     field_15;
     s8                     field_16; // Used for switch case in `func_8003EBF4`.
     s8                     field_17;

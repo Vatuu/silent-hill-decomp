@@ -131,7 +131,7 @@ void func_800D0C14(void) // 0x800D0C14
             ScreenFade_ResetTimestep();
             g_SysWork.flags_22A4 |= SysFlag2_3;
 
-            func_8004690C(Sfx_Unk1522);
+            Sd_SfxStop(Sfx_Unk1522);
 
             Fs_QueueStartRead(FILE_ANIM_HSPTL2_DMS, FS_BUFFER_15);
             Fs_QueueWaitForEmpty();

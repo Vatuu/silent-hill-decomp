@@ -27,7 +27,7 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
         else if (flags & (1 << 6))
         {
             flags &= ~0x3C;
-            func_8004690C(sharedData_800CAA98_0_s01.sfxVolumes_CE8[2].id_0);
+            Sd_SfxStop(sharedData_800CAA98_0_s01.sfxVolumes_CE8[2].id_0);
         }
 
         data = &sharedData_800CAA98_0_s01;

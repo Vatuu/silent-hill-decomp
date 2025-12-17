@@ -445,7 +445,7 @@ void func_800D286C(void) // 0x800D286C
             g_WorldGfx_ObjectAdd(&g_WorldObject0[i], &pos, &D_800CB61C);
         }
 
-        func_800463C0(Sfx_Unk1640, 0, ((0xFF - (D_800D4362 >> 4)) >= 0x20) ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);
+        Sd_SfxAttributesUpdate(Sfx_Unk1640, 0, ((0xFF - (D_800D4362 >> 4)) >= 0x20) ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
@@ -454,7 +454,7 @@ void func_800D286C(void) // 0x800D286C
 
         if (Savegame_EventFlagGet(EventFlag_471))
         {
-            func_800463C0(Sfx_Unk1640, 0, ((0xFF - (D_800D4362 >> 4)) >= 0x20) ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);
+            Sd_SfxAttributesUpdate(Sfx_Unk1640, 0, ((0xFF - (D_800D4362 >> 4)) >= 0x20) ? ~(D_800D4362 >> 4) : 0x20, (Rng_Rand16() & 0xF) - 8);
         }
     }
 }

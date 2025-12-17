@@ -527,7 +527,7 @@ void Map_WorldObjectsInit(void) // 0x800D63D8
 
     if (!Savegame_EventFlagGet(EventFlag_143))
     {
-        func_8004690C(Sfx_Unk1359);
+        Sd_SfxStop(Sfx_Unk1359);
     }
 }
 
@@ -647,7 +647,7 @@ void func_800D6578(void) // 0x800D6578
     }
 
     vol = MAX(255 - (D_800DAF78 >> 4), 0);
-    func_800463C0(Sfx_Unk1480, D_800DB054, vol & 255, 0);
+    Sd_SfxAttributesUpdate(Sfx_Unk1480, D_800DB054, vol & 255, 0);
 }
 
 void func_800D6C88(void) // 0x800D6C88

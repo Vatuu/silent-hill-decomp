@@ -1461,7 +1461,7 @@ void func_800D9C9C(void) // 0x800D9C9C
 
                         SysWork_StateStepIncrement(1);
 
-                        func_8004690C(Sfx_Unk1647);
+                        Sd_SfxStop(Sfx_Unk1647);
                     }
 
                     g_WorldObject_Stone0.position_1C.vz = ((g_SysWork.field_28 * Q12(0.1f)) / Q12(2.0f)) - Q12(140.6f);

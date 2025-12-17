@@ -460,8 +460,8 @@ void MapEvent_ToBeContinued(void) // 0x800DB790
 
         case 8:
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(1.5f), false);
-            func_8004690C(Sfx_RadioInterferenceLoop);
-            func_8004690C(Sfx_RadioStaticLoop);
+            Sd_SfxStop(Sfx_RadioInterferenceLoop);
+            Sd_SfxStop(Sfx_RadioStaticLoop);
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -878,8 +878,8 @@ void MapEvent_AirScreamerDeath(void) // 0x800DC8C8
     {
         case 0:
             Player_ControlFreeze();
-            func_8004690C(Sfx_RadioInterferenceLoop);
-            func_8004690C(Sfx_RadioStaticLoop);
+            Sd_SfxStop(Sfx_RadioInterferenceLoop);
+            Sd_SfxStop(Sfx_RadioStaticLoop);
 
             Savegame_EventFlagClear(EventFlag_52);
             g_MapMsgSoundIdx = 0;

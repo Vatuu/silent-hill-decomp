@@ -635,11 +635,11 @@ void func_800EA3F0(void) // 0x800EA3F0
             D_800F13AC++;
         }
 
-        func_800463C0(Sfx_Unk1542, audioBalance >> 4, -vol, 0);
+        Sd_SfxAttributesUpdate(Sfx_Unk1542, audioBalance >> 4, -vol, 0);
     }
     else if (D_800F13AC)
     {
-        func_8004690C(Sfx_Unk1542);
+        Sd_SfxStop(Sfx_Unk1542);
         D_800F13AC = 0;
     }
 }

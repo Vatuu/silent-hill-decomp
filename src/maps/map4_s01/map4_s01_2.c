@@ -247,7 +247,7 @@ void func_800D1FF0(void) // 0x800D1FF0
         default:
             if (Savegame_EventFlagGet(EventFlag_302))
             {
-                func_8004690C(Sfx_Unk1538);
+                Sd_SfxStop(Sfx_Unk1538);
                 SysWork_StateSetNext(SysState_Gameplay);
                 SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
                 break;
@@ -854,7 +854,7 @@ void func_800D3420(void) // 0x800D3420
             }
 
             D_800D5AF9 = 0;
-            func_8004690C(Sfx_Unk1540);
+            Sd_SfxStop(Sfx_Unk1540);
             D_800D5AFC = Q12(140.0f);
             func_8003ED74(7, 4);
 

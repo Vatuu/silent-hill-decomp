@@ -190,7 +190,7 @@ void func_800CCA2C(void) // 0x800CCA2C
 
             if (g_Controller0->btnsClicked_10 & ControllerFlag_Cross)
             {
-                func_8004690C(D_800CD768_tbl[D_800CD768]);
+                Sd_SfxStop(D_800CD768_tbl[D_800CD768]);
             }
 
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)

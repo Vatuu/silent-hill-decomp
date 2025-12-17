@@ -767,7 +767,7 @@ void MapEvent_CutsceneCybilDeath(void) // 0x800E2CA0
 
             Game_TurnFlashlightOn();
             func_8003D03C();
-            func_8004690C(Sfx_Unk1617);
+            Sd_SfxStop(Sfx_Unk1617);
             Player_ControlFreeze();
 
             g_SysWork.npcs_1A0[0].health_B0 = NO_VALUE;
@@ -911,7 +911,7 @@ void func_800E3244(void) // 0x800E3244
             D_800EBA30 = 0;
             D_800ED5B6 = 0;
 
-            func_8004690C(Sfx_Unk1617);
+            Sd_SfxStop(Sfx_Unk1617);
             Player_ControlFreeze();
             sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
 
@@ -1020,7 +1020,7 @@ void func_800E3244(void) // 0x800E3244
             }
             else
             {
-                func_8004690C(Sfx_Unk1624);
+                Sd_SfxStop(Sfx_Unk1624);
             }
 
             SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(195.0f), Q12(213.0f), false, true);
@@ -1134,8 +1134,8 @@ void func_800E3244(void) // 0x800E3244
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             func_80088F94(&g_SysWork.npcs_1A0[1], 0, 0);
 
-            func_8004690C(Sfx_Unk1625);
-            func_8004690C(Sfx_Unk1624);
+            Sd_SfxStop(Sfx_Unk1625);
+            Sd_SfxStop(Sfx_Unk1624);
             Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, (1<<1));
             break;
     }
@@ -1403,8 +1403,8 @@ void func_800E3EF4(void) // 0x800E3EF4
             break;
 
         case 31:
-            func_8004690C(Sfx_Unk1636);
-            func_8004690C(Sfx_Unk1635);
+            Sd_SfxStop(Sfx_Unk1636);
+            Sd_SfxStop(Sfx_Unk1635);
             func_8005DC1C(Sfx_Unk1634, NULL, Q8_CLAMPED(1.0f), 3);
             SysWork_StateStepIncrement(0);
 
@@ -1588,7 +1588,7 @@ void func_800E3EF4(void) // 0x800E3EF4
 
         case 63:
             SysWork_StateStepIncrement(0);
-            func_8004690C(Sfx_Unk1636);
+            Sd_SfxStop(Sfx_Unk1636);
 
         case 64:
             SysWork_StateStepIncrement(0);
@@ -1962,8 +1962,8 @@ void func_800E5F54(void) // 0x800E5F54
 
             if (D_800ED840)
             {
-                func_8004690C(Sfx_Unk1616);
-                func_8004690C(Sfx_Unk1615);
+                Sd_SfxStop(Sfx_Unk1616);
+                Sd_SfxStop(Sfx_Unk1615);
                 D_800ED840 = 0;
             }
             break;

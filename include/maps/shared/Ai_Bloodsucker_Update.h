@@ -95,7 +95,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
         {
             bloodsucker->properties_E4.larvalStalker.properties_E8[3].val32 = 0;
             bloodsucker->properties_E4.larvalStalker.properties_E8[13].val32 &= ~(1 << 1);
-            func_8004690C(Sfx_Unk1527);
+            Sd_SfxStop(Sfx_Unk1527);
         }
     }
 }

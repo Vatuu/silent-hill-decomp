@@ -298,7 +298,7 @@ void sharedFunc_800D0CB8_0_s00(void)
             if (sharedData_800E32CC_0_s00 == 0)
             {
                 g_SysWork.field_234B_0 = 0;
-                func_8004690C(Sfx_Unk1360);
+                Sd_SfxStop(Sfx_Unk1360);
             }
 
             if (g_SysWork.field_234B_0 != 0)
@@ -316,7 +316,7 @@ void sharedFunc_800D0CB8_0_s00(void)
 
 void sharedFunc_800D0E04_0_s00(void)
 {
-    func_8004690C(Sfx_Unk1360);
+    Sd_SfxStop(Sfx_Unk1360);
 }
 
 void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)

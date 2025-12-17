@@ -831,8 +831,8 @@ void func_800D429C(void) // 0x800D429C
     {
         if (D_800D8490 != 0)
         {
-            func_8004690C(Sfx_Unk1525);
-            func_8004690C(Sfx_Unk1527);
+            Sd_SfxStop(Sfx_Unk1525);
+            Sd_SfxStop(Sfx_Unk1527);
             D_800D8490 = 0;
         }
     }

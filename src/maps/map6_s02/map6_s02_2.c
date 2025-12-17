@@ -316,7 +316,7 @@ void func_800CFC34(void) // 0x800CFC34
         {
             D_800D3C94 = 0;
         }
-        func_800463C0(Sfx_Unk1467, 0, ~(D_800D3C94 >> 4), pitchDiv512);
+        Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, ~(D_800D3C94 >> 4), pitchDiv512);
     }
     else if (g_SysWork.sysStateStep_C[0] > 0)
     {
@@ -325,14 +325,14 @@ void func_800CFC34(void) // 0x800CFC34
         {
             D_800D3C94 = 4080;
         }
-        func_800463C0(Sfx_Unk1467, 0, ~(D_800D3C94 >> 4), pitchDiv512);
+        Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, ~(D_800D3C94 >> 4), pitchDiv512);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             Player_ControlFreeze();
-            func_8004690C(Sfx_Unk1611);
+            Sd_SfxStop(Sfx_Unk1611);
 
             if (Savegame_EventFlagGet(EventFlag_456) && Savegame_EventFlagGet(EventFlag_457) &&
                 Savegame_EventFlagGet(EventFlag_458) && Savegame_EventFlagGet(EventFlag_459))
@@ -349,7 +349,7 @@ void func_800CFC34(void) // 0x800CFC34
             ScreenFade_ResetTimestep();
 
             SD_Call(Sfx_Unk1467);
-            func_800463C0(Sfx_Unk1467, 0, 255, 0);
+            Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, 255, 0);
 
             D_800D3C94 = 0;
             D_800D3C90 = 0;
@@ -483,7 +483,7 @@ void func_800CFC34(void) // 0x800CFC34
                 SysWork_StateSetNext(SysState_Gameplay);
 
                 SD_Call(Sfx_Unk1611);
-                func_8004690C(Sfx_Unk1467);
+                Sd_SfxStop(Sfx_Unk1467);
             }
             break;
     }
@@ -538,7 +538,7 @@ void func_800D0500(void) // 0x800D0500
             break;
 
         case 1:
-            func_8004690C(Sfx_Unk1467);
+            Sd_SfxStop(Sfx_Unk1467);
             Fs_QueueWaitForEmpty();
             func_800348C0();
             Fs_QueueStartReadTim(FILE_TIM_UFO2_TIM, FS_BUFFER_1, &D_800D3B44[2]);
@@ -585,7 +585,7 @@ void func_800D0500(void) // 0x800D0500
             }
             D_800D3C9C = var_v1;
 
-            func_800463C0(Sfx_Unk1613, 0, D_800D3C9C, 0);
+            Sd_SfxAttributesUpdate(Sfx_Unk1613, 0, D_800D3C9C, 0);
             break;
 
         case 3:
@@ -614,12 +614,12 @@ void func_800D0500(void) // 0x800D0500
             }
             D_800D3C9C = var_v1;
 
-            func_800463C0(Sfx_Unk1613, 0, D_800D3C9C, 0);
+            Sd_SfxAttributesUpdate(Sfx_Unk1613, 0, D_800D3C9C, 0);
             break;
 
         case 4:
             Fs_QueueStartReadTim(FILE_TIM_UFO4_TIM, FS_BUFFER_1, D_800D3B44);
-            func_8004690C(Sfx_Unk1613);
+            Sd_SfxStop(Sfx_Unk1613);
             SD_Call(Sfx_Unk1612);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
@@ -982,14 +982,13 @@ void func_800D1718(void) // 0x800D1718
         rng = Rng_Rand16() & 0xFFF;
         D_800D4E70 += FP_MULTIPLY_PRECISE(rng, g_DeltaTime0, Q12_SHIFT);
 
-        func_800463C0(Sfx_Unk1611, 0, ((Math_Sin(D_800D4E70) >> 10) - 32), -64);
+        Sd_SfxAttributesUpdate(Sfx_Unk1611, 0, ((Math_Sin(D_800D4E70) >> 10) - 32), -64);
     }
     else
     {
         if (D_800D4E6D)
         {
-            func_8004690C(Sfx_Unk1611);
-
+            Sd_SfxStop(Sfx_Unk1611);
             D_800D4E6D = 0;
             D_800C4414 &= ~(1 << 5);
         }

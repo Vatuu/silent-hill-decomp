@@ -1121,7 +1121,7 @@ void func_800DCF00(void) // 0x800DCF00
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             Savegame_EventFlagSet(EventFlag_120);
-            func_8004690C(Sfx_Unk1451);
+            Sd_SfxStop(Sfx_Unk1451);
             break;
     }
 
@@ -1369,7 +1369,7 @@ void func_800DDA84(void) // 0x800DDA84
         if (D_800E5A98)
         {
             D_800E5A98 = 0;
-            func_8004690C(Sfx_Unk1455);
+            Sd_SfxStop(Sfx_Unk1455);
         }
     }
 

@@ -1198,7 +1198,7 @@ void func_800DC954(void) // 0x800DC954
         return;
     }
 
-    func_8004690C(Sfx_Unk1664);
+    Sd_SfxStop(Sfx_Unk1664);
 }
 
 void func_800DCD00(void) // 0x800DCD00
@@ -1295,7 +1295,7 @@ void func_800DCD00(void) // 0x800DCD00
 
             if (g_SysWork.sysStateStep_C[0] != 8)
             {
-                func_8004690C(Sfx_Unk1664);
+                Sd_SfxStop(Sfx_Unk1664);
             }
             break;
 
@@ -1347,7 +1347,7 @@ void func_800DCD00(void) // 0x800DCD00
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            func_8004690C(Sfx_Unk1664);
+            Sd_SfxStop(Sfx_Unk1664);
             break;
     }
 }
@@ -1666,8 +1666,8 @@ void func_800DDEC8(void) // 0x800DDEC8
             break;
 
         case 10:
-            func_8004690C(Sfx_Unk1495);
-            func_8004690C(Sfx_Unk1503);
+            Sd_SfxStop(Sfx_Unk1495);
+            Sd_SfxStop(Sfx_Unk1503);
             func_8005DC1C(Sfx_Unk1497, &D_800E9D00, Q8_CLAMPED(0.5f), 0);
 
         case 6:
@@ -2232,7 +2232,7 @@ void func_800DFDDC(void) // 0x800DFDDC
                         g_SysWork.field_28 = Q12(2.0f);
 
                         WorldObject_ModelNameSet(&D_800EBB64.object_0, "STONE3_H");
-                        func_8004690C(Sfx_Base);
+                        Sd_SfxStop(Sfx_Base);
 
                         SysWork_StateStepIncrement(1);
                     }

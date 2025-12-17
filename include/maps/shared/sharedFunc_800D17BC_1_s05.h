@@ -50,7 +50,7 @@ void sharedFunc_800D17BC_1_s05(s_SubCharacter* splithead)
                 splithead->properties_E4.splitHead.timer_F4 = Q12(0.0f);
                 splithead->model_0.anim_4.status_0          = ANIM_STATUS(11, false);
 
-                func_8004690C(Sfx_Unk1477);
+                Sd_SfxStop(Sfx_Unk1477);
                 break;
             }
 

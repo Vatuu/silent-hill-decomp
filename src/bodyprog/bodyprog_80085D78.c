@@ -3420,7 +3420,7 @@ bool func_8008B474(s32 arg0, s32 vol, s32 soundType) // 0x8008B474
 
     if (unkVol == 0)
     {
-        func_8004690C(sfxId);
+        Sd_SfxStop(sfxId);
     }
     else if (cond)
     {

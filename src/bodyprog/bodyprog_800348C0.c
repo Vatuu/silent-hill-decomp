@@ -193,7 +193,7 @@ void GameFs_MapStartup(void) // 0x80034964
             g_GameWork.gameStateStep_598[0]++;
 
         case 8:
-            if (func_8003C850() != 0)
+            if (func_8003C850() != false)
             {
                 Game_StateStepIncrement();
             }
@@ -1722,7 +1722,7 @@ void func_80037188(void) // 0x80037188
 
     for (i = 0; i < 2; i++)
     {
-        func_8004690C(Sfx_RadioInterferenceLoop + i);
+        Sd_SfxStop(Sfx_RadioInterferenceLoop + i);
     }
 }
 
@@ -2548,11 +2548,11 @@ void func_80038354(void) // 0x80038354
 
                 var_a2_2 = CLAMP(var_v1_3, 0, 0xFF);
 
-                func_800463C0(Sfx_RadioInterferenceLoop + l, temp_s0_4, var_a2_2, 0);
+                Sd_SfxAttributesUpdate(Sfx_RadioInterferenceLoop + l, temp_s0_4, var_a2_2, 0);
             }
             else
             {
-                func_8004690C(Sfx_RadioInterferenceLoop + l);
+                Sd_SfxStop(Sfx_RadioInterferenceLoop + l);
             }
         }
 
@@ -2957,12 +2957,12 @@ void func_8003943C(void) // 0x8003943C
             break;
 
         case MapOverlayId_MAP3_S03:
-            func_8004690C(Sfx_Unk1525);
-            func_8004690C(Sfx_Unk1527);
+            Sd_SfxStop(Sfx_Unk1525);
+            Sd_SfxStop(Sfx_Unk1527);
             break;
 
         case MapOverlayId_MAP0_S00:
-            func_8004690C(Sfx_Unk1358);
+            Sd_SfxStop(Sfx_Unk1358);
             break;
     }
 }

@@ -668,7 +668,7 @@ void func_800D2674(void) // 0x800D2674
             SysWork_StateSetNext(SysState_Gameplay);
 
             vcReturnPreAutoCamWork(true);
-            func_8004690C(Sfx_Unk1520);
+            Sd_SfxStop(Sfx_Unk1520);
             break;
     }
 }

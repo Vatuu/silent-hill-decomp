@@ -1050,7 +1050,7 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
         case 0:
             Player_ControlFreeze();
             Map_PlaceIpdAtCell(FILE_BG_THRF908_IPD, -7, 6);
-            func_8004690C(Sfx_Unk1358);
+            Sd_SfxStop(Sfx_Unk1358);
             Sd_PlaySfx(Sfx_Unk1359, 0, 208);
             func_800865FC(true, 0, 0, FP_ANGLE(180.0f), Q12(-252.0f), Q12(219.0f));
             func_800865FC(true, 0, 1, FP_ANGLE(112.5f), Q12(-251.0f), Q12(218.5f));
@@ -1095,9 +1095,9 @@ void MapEvent_CutsceneAlleyNightmare(void) // 0x800DB94C
 
 void func_800DBE00(void) // 0x800DBE00
 {
-    func_8004690C(Sfx_Unk1359);
-    func_8004690C(Sfx_Unk1361);
-    func_8004690C(Sfx_Unk1360);
+    Sd_SfxStop(Sfx_Unk1359);
+    Sd_SfxStop(Sfx_Unk1361);
+    Sd_SfxStop(Sfx_Unk1360);
 
     SD_Call(22);
     func_800892A4(4);
@@ -1175,7 +1175,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
 
             if (!Savegame_EventFlagGet(EventFlag_188))
             {
-                func_8004690C(Sfx_Unk1361);
+                Sd_SfxStop(Sfx_Unk1361);
                 SD_Call(Sfx_Unk1358);
                 Savegame_EventFlagSet(EventFlag_188);
             }

@@ -16,7 +16,8 @@
 
 /** @note Name recognition notes/todo.
  * `Tokimeki Memorial ~Forever With You~` and `Konami International Rally Championship` symbols
- * indicates that what have been dubbed as "commands" are actually name as "tasks"
+ * indicates that what have been dubbed as `commands` are actually name as `tasks`, but also TM
+ * may hint that at  point they were called `events`.
  */
 
 // ==========
@@ -95,7 +96,7 @@ typedef struct
                                      */
     u8  bgmFadeSpeed_14;            /** Music fade speed. Range: `[0, 2]`, default: 0. */
     u8  isAudioLoading_15;          /** `bool` | If a KDT or VAB file is being loaded. | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
-    u8  isXaLoading_16;             /** `bool` | Loading: `true`, Nothing loading: `false`, default: Nothing loading. */
+    u8  isXaNotPlaying_16;          /** `bool` | Playing: `false`, Nothing playing: `true`, default: Nothing playing. */
     u8  muteGame_17;                /** `bool` | Mutes the game. If the value is `true`, the whole game audio will progressively get lower
                                      * in volume until mute (the sounds will keep playing, but muted).
                                      */
@@ -106,9 +107,7 @@ typedef struct
     u8 audioLoadState_0; /** Load VAB audio and KDT music key notes state. */
     u8 xaLoadState_1;    /** Load XA audio state. */
     u8 xaStopState_2;    /** Stop XA audio streaming state. */
-    u8 xaPreLoadState_3; /** Prepare Load XA audio state. Positions the current read point to the one where the XA audio to load resides.
-                          * This is arbitrary as `xaLoadState_1` is already used for that.
-                          */
+    u8 xaPreLoadState_3; /** Prepare Load XA audio state. Positions the current read point to the one where the XA audio to load resides. */
 } s_AudioStreamingStates;
 
 // Game audio channels volume configuration struct.
@@ -218,9 +217,14 @@ extern u8 g_Sd_BgmLayerLimits[8];
 
 extern s_VabPlayingInfo g_Sd_VabPlayingInfo;
 
-/** Task pool related to audio and streaming.
- * Seems like `Sd_TaskPoolExecute` is the main function on charge of executing tasks,
- * as this function is part of the mainloop function.
+/** @brief Task pool related to audio and audio data streaming.
+ * `Sd_TaskPoolExecute` is the main function on charge of executing tasks.
+ *
+ * @note Possible name retrieved from debug symbols.
+ * `Tokimeki Memorial ~Forever With You~` symbols have a global variable name
+ * as `gSDEvt`. This function can't be restored, but the name would fit for
+ * the purpose, additionally this game features a similar command pool system
+ * to the one of SH1.
  */
 extern u8 g_Sd_TaskPool[32];
 
@@ -253,11 +257,15 @@ extern u8* g_Sd_VabBuffers[];
 
 extern s_800C15F0 D_800C15F0[4];
 
-/** SFX IDs? */
-extern u16 D_800C15F8[24];
+/** @brief Stores SFX index of audio currently being play.
+ * The value of the SFX index stored is based on `e_SfxId`.
+ */
+extern u16 g_AudioPlayingIdxList[24];
 
-/** Voices? */
-extern s16 D_800C1628[24];
+/** @brief Stores SFX pitch of audio currently being play.
+ * Shares the same index where the SFX is being store on `g_AudioPlayingIdxList`.
+ */
+extern s16 g_AudioPlayingPitchList[24];
 
 extern s_Sd_AudioWork g_Sd_AudioWork;
 
@@ -266,8 +274,16 @@ extern s_AudioStreamingStates g_Sd_AudioStreamingStates;
 
 extern s32 bssPad_800C1674;
 
-/** @note Name from retrieved debug symbols. */
-extern s_ChannelsVolumeController g_SDVolConfig;
+/** @note Name from retrieved debug symbols.
+ * Debug symbols from: `Konami International Rally Championship`
+ *
+ * Symbols doesn't indicate the struct name, the size may not
+ * contradict this definition as it seems the variable is intended
+ * to have a size of 48/0x30 bytes while this have a size of 16/0x10
+ * bytes, but they to serve the same purpose of adjusting the volume
+ * channels.
+ */
+extern s_ChannelsVolumeController gSDVolConfig;
 
 extern u8 g_Sd_ReverbDepth;
 
@@ -279,6 +295,17 @@ extern s_800C1688 D_800C1688;
 
 /** @brief Passes a "task" to the sound driver.
  * Plays SFX among other things.
+ *
+ * @note Name from retrieved debug symbols.
+ * KCET games using LIBSD and SH2 features a function with this name
+ * differing in the uppercase usage among each game
+ * * `Tokimeki Memorial ~Forever With You~` and `International Rally Championship` name it as `SD_Call`
+ * * `Winning Eleven 6` names it as `SD_call`
+ * * `Silent Scope 3` and `Silent Hill 2` names it as `sd_call`
+ *
+ * Each game variates the functionallity mainly based if they features,
+ * but in all instances it serve as a way to pass a command/task for the
+ * audio streaming system of the game. The most similar being IRC and SH2.
  */
 void SD_Call(u32 cmd);
 
@@ -297,7 +324,14 @@ u16 func_80045BC8(void);
 
 /** @brief Sound effect management and VAB + KDT file load.
  * Scratch: https://decomp.me/scratch/AA6ui
+ *
  * @note Name from retrieved debug symbols.
+ * `Tokimeki Memorial ~Forever With You~` and `International Rally Championship`
+ * features a function that serves a similar purpose as this in order to handle
+ * the load of VAB files and some other audio system features.
+ * Both cases are different, most noticiably the case of TM where it's used
+ * to also handle XA files and more low level features related the audio system
+ * that neither SH1 nor IRC features.
  */
 void SD_BranchCTRL(u16 task);
 
@@ -306,37 +340,52 @@ void SD_BranchCTRL(u16 task);
  */
 void Sd_AudioSystemSet(u8 isStereo);
 
-/** @note Name from retrieved debug symbols. */
+/** @note Name from retrieved debug symbols.
+ * The function can be found among many Konami games featuring the LIBSD library,
+ * but it's function from `International Rally Championship` (name as `SD_Call`) and
+ * Winning Eleven 5 (Inside `SOUNDCD.IRX`; Name as `sd_call`) that have more
+ * similarity to SH1 case. Additionally a similar name function can be found inside
+ * SH2 named as `shSdInit` which is completely different to this one.
+ */
 void SD_Init(void);
 
-/** @note Name from retrieved debug symbols. */
+/** @note Name from retrieved debug symbols.
+ * See `SD_Init`.
+ *
+ * As previously said IRC and WE5 are the games that are more similar to SH1, in those
+ * cases a function that handles more of the initalization process for the audio system
+ * can be found just like the case of SH1. However, both games differ with the name.
+ * IRC name it as `SD_InitMyself` while WE5 name it as `sd_work_init`. It is more probable
+ * that WE5 is the actual name SH1 use as in that case the function does some loops and shares
+ * many of the function calls that SH1 have.
+ */
 void sd_work_init(void);
 
-// @unused
-void func_80045FF8(void);
+/** @unused Stop main audio system. */
+void Sd_AudioStop(void);
 
 u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol);
 
-/** SFX func. */
-void func_800463C0(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
+/** Update atributes from a specified audio currently playing. */
+void Sd_SfxAttributesUpdate(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
 
 /** SFX func. */
 void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
 
-/** @brief Executes `SdUtKeyOffV` and runs through the element 23 of `smf_port`. */
-void Sd_LastVoiceKeyOff(void);
+/** @brief Stop the last VAB audio data playing. */
+void Sd_LastSfxStop(void);
 
-/** SFX func. */
-void func_8004690C(u16 sfxId);
+/** @brief Indicates to stop specific VAB audio data play. */
+void Sd_SfxStop(u16 sfxId);
 
-/** Sound command func. Unknown category. */
-void func_8004692C(u16 cmd);
+/** @brief Stop specific VAB audio data play based on `e_SfxId`. */
+void Sd_SfxStopStep(u16 sfxId);
 
-/** @brief Executes `SdUtKeyOffV` and runs through all elements of `smf_port`. */
-void Sd_AllVoicesKeyOff(void);
+/** @brief Stop all VAB audio data playing. */
+void Sd_AllSfxStop(void);
 
-/** @brief Executes `SdUtKeyOffVWithRROff` and runs through all elements of `smf_port`. */
-void Sd_AllVoicesKeyOffVWithRROff(void);
+/** @brief Stop all VAB audio data with `Release Rate` mode enabled playing. */
+void Sd_AllSfxWithRRStop(void);
 
 /** Sound command func. Unknown category. */
 void func_80046A24(u16 cmd);
@@ -370,6 +419,7 @@ void Sd_XaPreLoadAudioPreTaskAdd(u16 xaIdx);
 
 void Sd_XaPreLoadAudioTaskAdd(s32 xaIdx);
 
+/** @brief Prepares the load of a XA audio defined at `g_XaItemData`. */
 void Sd_XaPreLoadAudio(void);
 
 /** @brief Stops the streaming of the currently loaded XA audio in memory. */

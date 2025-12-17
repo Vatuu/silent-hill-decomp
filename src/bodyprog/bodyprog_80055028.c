@@ -3107,7 +3107,7 @@ void func_8005DC3C(e_SfxId sfxId, const VECTOR3* pos, q23_8 vol, s32 soundType, 
 
     if (soundType & (1 << 2))
     {
-        func_800463C0(sfxId, balance, ~volCpy, pitch);
+        Sd_SfxAttributesUpdate(sfxId, balance, ~volCpy, pitch);
     }
     else
     {
@@ -3205,7 +3205,7 @@ void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, s32 falloff, s8 pitch)
         finalVol = 0;
     }
 
-    func_800463C0(sfxId, balance, finalVol, pitch);
+    Sd_SfxAttributesUpdate(sfxId, balance, finalVol, pitch);
 }
 
 void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC

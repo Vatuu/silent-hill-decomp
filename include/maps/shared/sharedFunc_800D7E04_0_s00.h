@@ -49,7 +49,7 @@ void sharedFunc_800D7E04_0_s00(s_SubCharacter* chara, s32 caseArg)
 
     if (var_s1 != NO_VALUE)
     {
-        func_8004690C(*((u16*)&chara->properties_E4.player.field_100 + 1));
+        Sd_SfxStop(*((u16*)&chara->properties_E4.player.field_100 + 1));
         *((u16*)&chara->properties_E4.player.field_100 + 1) = var_s1;
     }
 }

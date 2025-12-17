@@ -779,7 +779,7 @@ void func_800D72AC(void) // 0x800D72AC
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            func_8004690C(Sfx_Unk1535);
+            Sd_SfxStop(Sfx_Unk1535);
             break;
     }
 }
@@ -921,7 +921,7 @@ void func_800D87AC(void) // 0x800D87AC
     }
     else if (D_800DD528)
     {
-        func_8004690C(Sfx_Unk1503);
+        Sd_SfxStop(Sfx_Unk1503);
         D_800DD528 = 0;
     }
 

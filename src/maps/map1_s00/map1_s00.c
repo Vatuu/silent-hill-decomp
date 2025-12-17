@@ -997,7 +997,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (D_800E1182 != 0)
         {
-            func_8004690C(Sfx_Unk1430);
+            Sd_SfxStop(Sfx_Unk1430);
         }
 
         D_800E1182 = 0;

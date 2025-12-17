@@ -1916,14 +1916,14 @@ void func_800EA960(void) // 0x800EA960
                 vol = 0;
             }
 
-            func_800463C0(Sfx_Unk1484, balance, vol, 0);
+            Sd_SfxAttributesUpdate(Sfx_Unk1484, balance, vol, 0);
 
             D_800F5344.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x88, Q12_SHIFT);
             if (D_800F5344.vz > 0)
             {
                 D_800F5344.vz = 0;
 
-                func_8004690C(Sfx_Unk1484);
+                Sd_SfxStop(Sfx_Unk1484);
                 Sd_PlaySfx(Sfx_Unk1485, Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f)), 0);
                 SysWork_StateStepIncrement(0);
             }
@@ -2023,13 +2023,13 @@ void func_800EAD2C(void) // 0x800EAD2C
                 vol = 0;
             }
 
-            func_800463C0(Sfx_Unk1484, balance, vol, 0);
+            Sd_SfxAttributesUpdate(Sfx_Unk1484, balance, vol, 0);
 
             D_800F5344.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.1f / 3.0f), Q12_SHIFT);
             if (D_800F5344.vz > 0)
             {
                 D_800F5344.vz = 0;
-                func_8004690C(Sfx_Unk1484);
+                Sd_SfxStop(Sfx_Unk1484);
                 Sd_PlaySfx(Sfx_Unk1485, Sound_StereoBalanceGet(&QVECTOR3(-35.0f, 0.0f, 352.0f)), 0);
                 SysWork_StateStepIncrement(0);
             }
@@ -2649,7 +2649,7 @@ void func_800EC080(void) // 0x800EC080
             if (D_800F534C != 0)
             {
                 D_800F534C = 0;
-                func_8004690C(Sfx_Unk1482);
+                Sd_SfxStop(Sfx_Unk1482);
             }
             break;
     }

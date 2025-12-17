@@ -477,9 +477,12 @@ Sd_AudioSystemSet                           = 0x80045D28; // type:func
 SD_Init                                     = 0x80045DD4; // type:func
 sd_work_init                                = 0x80045E44; // type:func
 Sd_PlaySfx                                  = 0x80046048; // type:func
-Sd_LastVoiceKeyOff                          = 0x800468EC; // type:func
-Sd_AllVoicesKeyOff                          = 0x800469AC; // type:func
-Sd_AllVoicesKeyOffVWithRROff                = 0x800469E8; // type:func
+Sd_SfxAttributesUpdate                      = 0x800463C0;
+Sd_LastSfxStop                              = 0x800468EC; // type:func
+Sd_SfxStop                                  = 0x8004690C;
+Sd_SfxStopStep                              = 0x8004692C;
+Sd_AllSfxStop                               = 0x800469AC; // type:func
+Sd_AllSfxWithRRStop                         = 0x800469E8; // type:func
 Sd_StopBgmTaskAdd                           = 0x80046AD8;
 Sd_StopBgm                                  = 0x80046B04;
 Sd_StopBgmStep                              = 0x80046B78;
@@ -2659,13 +2662,15 @@ g_Map                                       = 0x800C1020; // type:u8 size:0x58C 
 //-------------------------------------------------------------------
 //--- PA: 0x09CA58   VA: 0x800C15B8   subsegment: .bss, sound/sd_call
 //-------------------------------------------------------------------
+D_800C15E8                                  = 0x800C15E8;
+g_AudioPlayingPitchList                     = 0x800C1628;
 g_Sd_AudioWork                              = 0x800C1658;
 g_Sd_AudioStreamingStates                   = 0x800C1670;
 
 //---------------------------------------------------
 //--- PA: 0x09CB18   VA: 0x800C1678   subsegment: bss
 //---------------------------------------------------
-g_SDVolConfig                                = 0x800C1678;
+gSDVolConfig                                = 0x800C1678;
 g_Sd_ReverbDepth                            = 0x800C1687;
 g_Sd_VabPlayingInfo                         = 0x800C1698;
 g_Sd_TaskPool                               = 0x800C16A8; // type:u8 size:0x20

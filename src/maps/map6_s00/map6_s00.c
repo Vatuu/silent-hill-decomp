@@ -716,8 +716,8 @@ void func_800EB11C(void) // 0x800EB11C
             SD_Call(19);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
-            func_8004690C(Sfx_Unk1522);
-            func_8004690C(Sfx_Unk1599);
+            Sd_SfxStop(Sfx_Unk1522);
+            Sd_SfxStop(Sfx_Unk1599);
             sharedFunc_800D08B8_0_s00(6, 127);
             sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
             break;
@@ -742,14 +742,14 @@ void func_800EB11C(void) // 0x800EB11C
         {
             vol = 255;
         }
-        func_800463C0(Sfx_Unk1522, 0, ~vol, 0);
+        Sd_SfxAttributesUpdate(Sfx_Unk1522, 0, ~vol, 0);
 
         vol = (Q12(1.0f) - Math_Cos((D_800F0686) >> 2)) >> 4;
         if (vol > 255)
         {
             vol = 255;
         }
-        func_800463C0(Sfx_Unk1599, 0, ~vol, 0);
+        Sd_SfxAttributesUpdate(Sfx_Unk1599, 0, ~vol, 0);
     }
     else if (g_SysWork.sysStateStep_C[0] >= 17 && g_SysWork.sysStateStep_C[0] < 20)
     {
@@ -764,14 +764,14 @@ void func_800EB11C(void) // 0x800EB11C
         {
             vol = 255;
         }
-        func_800463C0(Sfx_Unk1522, 0, ~vol, 0);
+        Sd_SfxAttributesUpdate(Sfx_Unk1522, 0, ~vol, 0);
 
         vol = D_800F0686 >> 4;
         if (vol > 255)
         {
             vol = 255;
         }
-        func_800463C0(Sfx_Unk1599, 0, ~vol, 0);
+        Sd_SfxAttributesUpdate(Sfx_Unk1599, 0, ~vol, 0);
     }
 
     if (g_SysWork.sysStateStep_C[0] >= 5 && g_SysWork.sysStateStep_C[0] < 10)

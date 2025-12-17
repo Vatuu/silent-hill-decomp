@@ -275,7 +275,7 @@ void func_800D4D1C(void) // 0x800D4D1C
                 D_800D5D11++;
             }
 
-            func_800463C0(Sfx_Unk1359, 0, MAX(0, (Q12_FRACT(g_SysWork.field_2378) >> 4) - (D_800D5D11 * 8)), 0);
+            Sd_SfxAttributesUpdate(Sfx_Unk1359, 0, MAX(0, (Q12_FRACT(g_SysWork.field_2378) >> 4) - (D_800D5D11 * 8)), 0);
 
             g_SysWork.field_2378 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.15f, 12);
             if (g_SysWork.field_2378 < (6 - D_800D5D11) * Q12(0.5f))

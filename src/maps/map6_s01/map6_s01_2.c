@@ -660,7 +660,7 @@ void func_800D2658(void) // 0x800D2658
         {
             D_800D41B0 = Q12(0.0f);
         }
-        func_800463C0(Sfx_Unk1467, 0, ~(D_800D41B0 >> 4), 0);
+        Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, ~(D_800D41B0 >> 4), 0);
     }
     else if (g_SysWork.sysStateStep_C[0] > 0)
     {
@@ -669,7 +669,7 @@ void func_800D2658(void) // 0x800D2658
         {
             D_800D41B0 = Q12(0.9961f);
         }
-        func_800463C0(Sfx_Unk1467, 0, ~(D_800D41B0 >> 4), 0);
+        Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, ~(D_800D41B0 >> 4), 0);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -684,7 +684,7 @@ void func_800D2658(void) // 0x800D2658
 
             ScreenFade_ResetTimestep();
             SD_Call(Sfx_Unk1467);
-            func_800463C0(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
+            Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
 
             D_800D41B0 = 0;
             D_800D41B4 = Q12(0.0f);
@@ -803,7 +803,7 @@ void func_800D2658(void) // 0x800D2658
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
             D_800D4070 = NO_VALUE;
-            func_8004690C(Sfx_Unk1467);
+            Sd_SfxStop(Sfx_Unk1467);
             break;
     }
 

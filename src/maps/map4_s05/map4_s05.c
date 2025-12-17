@@ -295,7 +295,7 @@ void func_800D6800(void) // 0x800D6800
     }
 
     D_800D7D80 = MIN(D_800D7D80 + ((g_DeltaTime0 * 2) / 3), Q12(1.0f));
-    func_800463C0(Sfx_Unk1522, 0, -(D_800D7D80 >> 4) & 0xFF, 0);
+    Sd_SfxAttributesUpdate(Sfx_Unk1522, 0, -(D_800D7D80 >> 4) & 0xFF, 0);
 
     if (D_800D7D80 == Q12(1.0f) && D_800D7D82 >= 0 && D_800D7D82 < 3)
     {
@@ -334,7 +334,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             D_800D7D70 = 0;
         }
 
-        func_800463C0(Sfx_Unk1467, 0, ~(D_800D7D70 >> 4), pitch);
+        Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, ~(D_800D7D70 >> 4), pitch);
     }
     else if (g_SysWork.sysStateStep_C[0] > 0)
     {
@@ -344,7 +344,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             D_800D7D70 = Q12(0.9961f);
         }
 
-        func_800463C0(Sfx_Unk1467, 0, ~(D_800D7D70 >> 4), pitch);
+        Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, ~(D_800D7D70 >> 4), pitch);
     }
 
     switch (g_SysWork.sysStateStep_C[0])
@@ -361,7 +361,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             ScreenFade_ResetTimestep();
 
             SD_Call(Sfx_Unk1467);
-            func_800463C0(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
+            Sd_SfxAttributesUpdate(Sfx_Unk1467, 0, Q8_CLAMPED(1.0f), 0);
 
             D_800D7D70 = 0;
             D_800D7D6C = 0;

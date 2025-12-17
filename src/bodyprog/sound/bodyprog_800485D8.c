@@ -64,53 +64,53 @@ void Sd_TaskPoolExecute(void) // 0x800485D8
     {
         g_Sd_AudioWork.field_E = NO_VALUE;
 
-        if (g_SDVolConfig.volumeBgm_8 <= 0)
+        if (gSDVolConfig.volumeBgm_8 <= 0)
         {
-            g_SDVolConfig.volumeBgm_8 = 0;
+            gSDVolConfig.volumeBgm_8 = 0;
             Sd_StopBgmStep();
         }
         else
         {
-            g_SDVolConfig.volumeBgm_8 -= g_Sd_AudioWork.bgmFadeSpeed_14;
+            gSDVolConfig.volumeBgm_8 -= g_Sd_AudioWork.bgmFadeSpeed_14;
 
-            if ((g_SDVolConfig.volumeBgm_8 << 16) <= 0)
+            if ((gSDVolConfig.volumeBgm_8 << 16) <= 0)
             {
-                g_SDVolConfig.volumeBgm_8 = 0;
+                gSDVolConfig.volumeBgm_8 = 0;
                 Sd_StopBgmStep();
             }
         }
 
-        g_SDVolConfig.volumeBgm_6 = g_SDVolConfig.volumeBgm_8;
+        gSDVolConfig.volumeBgm_6 = gSDVolConfig.volumeBgm_8;
         
-        Sd_SetVolBgm(g_SDVolConfig.volumeBgm_8, g_SDVolConfig.volumeBgm_8);
+        Sd_SetVolBgm(gSDVolConfig.volumeBgm_8, gSDVolConfig.volumeBgm_8);
     }
-    else if (g_SDVolConfig.volumeBgm_6 != g_SDVolConfig.volumeBgm_8)
+    else if (gSDVolConfig.volumeBgm_6 != gSDVolConfig.volumeBgm_8)
     {
-        if (g_SDVolConfig.volumeBgm_8 < g_SDVolConfig.volumeBgm_6)
+        if (gSDVolConfig.volumeBgm_8 < gSDVolConfig.volumeBgm_6)
         {
-            g_SDVolConfig.volumeBgm_8++;
-            if (ABS(g_SDVolConfig.volumeBgm_8 - g_SDVolConfig.volumeBgm_6) < 2) 
+            gSDVolConfig.volumeBgm_8++;
+            if (ABS(gSDVolConfig.volumeBgm_8 - gSDVolConfig.volumeBgm_6) < 2) 
             {
-                g_SDVolConfig.volumeBgm_8 = g_SDVolConfig.volumeBgm_6;
+                gSDVolConfig.volumeBgm_8 = gSDVolConfig.volumeBgm_6;
             }
         }
         else
         {
-            g_SDVolConfig.volumeBgm_8--;
-            if (ABS(g_SDVolConfig.volumeBgm_8 - g_SDVolConfig.volumeBgm_6) < 2) 
+            gSDVolConfig.volumeBgm_8--;
+            if (ABS(gSDVolConfig.volumeBgm_8 - gSDVolConfig.volumeBgm_6) < 2) 
             {
-                g_SDVolConfig.volumeBgm_8 = g_SDVolConfig.volumeBgm_6;
+                gSDVolConfig.volumeBgm_8 = gSDVolConfig.volumeBgm_6;
             }
         }
 
-        Sd_SetVolBgm(g_SDVolConfig.volumeBgm_8, g_SDVolConfig.volumeBgm_8);
+        Sd_SetVolBgm(gSDVolConfig.volumeBgm_8, gSDVolConfig.volumeBgm_8);
     }
 
     if ((u32)D_800C1688.field_4 > (u32)D_800C1688.field_0)
     {
         if (g_Sd_CurrentTask == 0)
         {
-            if (g_Sd_AudioWork.isXaLoading_16 == false)
+            if (g_Sd_AudioWork.isXaNotPlaying_16 == false)
             {
                 Sd_TaskPoolAdd(2);
             }
@@ -123,28 +123,28 @@ void Sd_TaskPoolExecute(void) // 0x800485D8
     // Slowly fade in/out game audio based if `g_Sd_AudioWork.muteGame_17` enabled.
     if (g_Sd_AudioWork.muteGame_17 == true)
     {
-        if (g_SDVolConfig.volumeGlobal_A > 0)
+        if (gSDVolConfig.volumeGlobal_A > 0)
         {
-            g_SDVolConfig.volumeGlobal_A -= 8;
-            if ((g_SDVolConfig.volumeGlobal_A << 16) <= 0)
+            gSDVolConfig.volumeGlobal_A -= 8;
+            if ((gSDVolConfig.volumeGlobal_A << 16) <= 0)
             {
-                g_SDVolConfig.volumeGlobal_A = 0;
+                gSDVolConfig.volumeGlobal_A = 0;
             }
             
-            SdSetMVol(g_SDVolConfig.volumeGlobal_A, g_SDVolConfig.volumeGlobal_A);
+            SdSetMVol(gSDVolConfig.volumeGlobal_A, gSDVolConfig.volumeGlobal_A);
         }
     }
     else
     {
-        if (g_SDVolConfig.volumeGlobal_A < (OPT_SOUND_VOLUME_MAX - 1))
+        if (gSDVolConfig.volumeGlobal_A < (OPT_SOUND_VOLUME_MAX - 1))
         {
-            g_SDVolConfig.volumeGlobal_A += 4;
-            if (g_SDVolConfig.volumeGlobal_A >= (OPT_SOUND_VOLUME_MAX - 1))
+            gSDVolConfig.volumeGlobal_A += 4;
+            if (gSDVolConfig.volumeGlobal_A >= (OPT_SOUND_VOLUME_MAX - 1))
             {
-                g_SDVolConfig.volumeGlobal_A = OPT_SOUND_VOLUME_MAX - 1;
+                gSDVolConfig.volumeGlobal_A = OPT_SOUND_VOLUME_MAX - 1;
             }
             
-            SdSetMVol(g_SDVolConfig.volumeGlobal_A, g_SDVolConfig.volumeGlobal_A);
+            SdSetMVol(gSDVolConfig.volumeGlobal_A, gSDVolConfig.volumeGlobal_A);
         }
     }
 

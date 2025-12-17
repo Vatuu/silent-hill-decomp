@@ -1483,9 +1483,9 @@ void func_800E3D18(void) // 0x800E3D18
             D_800F4805 = 3;
 
             Savegame_EventFlagSet(EventFlag_586);
-            func_8004690C(Sfx_Unk1688);
-            func_8004690C(Sfx_Unk1689);
-            func_8004690C(Sfx_Unk1690);
+            Sd_SfxStop(Sfx_Unk1688);
+            Sd_SfxStop(Sfx_Unk1689);
+            Sd_SfxStop(Sfx_Unk1690);
 
             D_800F4820 = 0;
 
@@ -2657,7 +2657,7 @@ void func_800E62CC(void) // 0x800E62CC
                 func_800E9260(Chara_EndingKaufmann, 4);
             }
 
-            func_8004690C(Sfx_Unk1689);
+            Sd_SfxStop(Sfx_Unk1689);
             func_8005DC1C(Sfx_Unk1688, NULL, Q8_CLAMPED(1.0f), 3);
             func_800D88C4();
             SysWork_StateStepIncrement(0);
@@ -2765,7 +2765,7 @@ void func_800E62CC(void) // 0x800E62CC
 
             D_800F480B = 0;
 
-            func_8004690C(Sfx_Unk1688);
+            Sd_SfxStop(Sfx_Unk1688);
 
             D_800F4805++;
             break;
@@ -3163,7 +3163,7 @@ void func_800E787C(void) // 0x800E787C
             func_800D88D8();
             func_800D7CF8();
             D_800F4834 = 1;
-            func_8004690C(Sfx_Unk1688);
+            Sd_SfxStop(Sfx_Unk1688);
             func_8005DC1C(Sfx_Unk1689, NULL, Q8_CLAMPED(1.0f), 3);
             SysWork_StateStepIncrement(0);
 
@@ -3314,7 +3314,7 @@ void func_800E787C(void) // 0x800E787C
             D_800F4838 = 0;
             D_800F4834 = 0;
 
-            func_8004690C(Sfx_Unk1689);
+            Sd_SfxStop(Sfx_Unk1689);
             func_8005DC1C(Sfx_Unk1690, NULL, Q8_CLAMPED(1.0f), 3);
             SysWork_StateStepIncrement(0);
 
@@ -3335,7 +3335,7 @@ void func_800E787C(void) // 0x800E787C
             D_800F4820 = 0;
 
             func_800D7E50(&g_SysWork.player_4C.chara_0.position_18);
-            func_8004690C(Sfx_Unk1690);
+            Sd_SfxStop(Sfx_Unk1690);
 
             D_800F480D = 0;
             D_800F4808 = 1;
@@ -3583,9 +3583,9 @@ void func_800E86BC(void) // 0x800E86BC
         default:
             D_800F4805++;
 
-            func_8004690C(Sfx_Unk1688);
-            func_8004690C(Sfx_Unk1689);
-            func_8004690C(Sfx_Unk1690);
+            Sd_SfxStop(Sfx_Unk1688);
+            Sd_SfxStop(Sfx_Unk1689);
+            Sd_SfxStop(Sfx_Unk1690);
 
             D_800F4818 = 0;
 
@@ -3736,9 +3736,9 @@ void func_800E8D20(void) // 0x800E8D20
         default:
             D_800F4805++;
 
-            func_8004690C(Sfx_Unk1688);
-            func_8004690C(Sfx_Unk1689);
-            func_8004690C(Sfx_Unk1690);
+            Sd_SfxStop(Sfx_Unk1688);
+            Sd_SfxStop(Sfx_Unk1689);
+            Sd_SfxStop(Sfx_Unk1690);
 
             D_800F4820 = 0;
 
