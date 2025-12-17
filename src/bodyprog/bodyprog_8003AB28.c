@@ -628,7 +628,7 @@ void Gfx_MainMenu_FogRandomize(void) // 0x8003BAC4
 
     ptr   = D_800BCDE0;
     ptr1  = ptr + 441;
-    RAND += Rng_GenerateInt(Rng_Rand16(), 4, 11u);
+    RAND += Rng_GenerateInt(4, 11u);
     val   = FP_MULTIPLY(Math_Sin(RAND), 10, Q12_SHIFT) - 122;
     ptr2  = ptr + 461;
 
@@ -639,13 +639,13 @@ void Gfx_MainMenu_FogRandomize(void) // 0x8003BAC4
 
     for (i = 0; i < 16; i++)
     {
-        idx       = Rng_GenerateInt(Rng_Rand16(), 0, MAIN_MENU_FOG_COUNT - 1);
+        idx       = Rng_GenerateInt(0, MAIN_MENU_FOG_COUNT - 1);
         ptr1[idx] = NO_VALUE;
     }
 
     for (i = 0; i < 9; i++)
     {
-        idx       = Rng_GenerateInt(Rng_Rand16(), 0, MAIN_MENU_FOG_COUNT - 1);
+        idx       = Rng_GenerateInt(0, MAIN_MENU_FOG_COUNT - 1);
         ptr1[idx] = 0;
     }
 }

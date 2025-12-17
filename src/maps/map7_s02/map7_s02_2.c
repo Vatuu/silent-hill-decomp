@@ -1189,7 +1189,7 @@ void func_800DC954(void) // 0x800DC954
         if (D_800E9ED6 == 0 && !Savegame_EventFlagGet(EventFlag_555))
         {
             Sd_PlaySfx(Sfx_Unk1664, 0, Q8_CLAMPED(0.875f));
-            D_800E9ED6 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
+            D_800E9ED6 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
         }
         else
         {
@@ -1235,7 +1235,7 @@ void func_800DCD00(void) // 0x800DCD00
             if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
             {
                 Sd_PlaySfx(Sfx_Unk1664, 0, 224);
-                D_800E9ED8 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
+                D_800E9ED8 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
             }
             else
             {
@@ -1262,7 +1262,7 @@ void func_800DCD00(void) // 0x800DCD00
             if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
             {
                 Sd_PlaySfx(Sfx_Unk1664, 0, 224);
-                D_800E9ED8 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
+                D_800E9ED8 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
             }
             else
             {
@@ -1286,7 +1286,7 @@ void func_800DCD00(void) // 0x800DCD00
             if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
             {
                 Sd_PlaySfx(Sfx_Unk1664, 0, 224);
-                D_800E9ED8 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
+                D_800E9ED8 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
             }
             else
             {
@@ -1335,7 +1335,7 @@ void func_800DCD00(void) // 0x800DCD00
             if (D_800E9ED8 == 0 && !Savegame_EventFlagGet(EventFlag_555))
             {
                 Sd_PlaySfx(Sfx_Unk1664, 0, 224);
-                D_800E9ED8 = Rng_GenerateInt(Rng_Rand16(), Q12(1.2f), Q12(2.8f) - 1);
+                D_800E9ED8 = Rng_GenerateInt(Q12(1.2f), Q12(2.8f) - 1);
             }
             else
             {
@@ -1518,11 +1518,11 @@ void func_800DD9E8(void) // 0x800DD9E8
 
             if (g_SysWork.sysStateStep_C[0] == 6)
             {
-                D_800E9EDA = Rng_GenerateInt(Rng_Rand16(), Q12(0.1f), Q12(0.2f) - 2);
+                D_800E9EDA = Rng_GenerateInt(Q12(0.1f), Q12(0.2f) - 2);
             }
             else
             {
-                D_800E9EDA = Rng_GenerateInt(Rng_Rand16(), Q12(0.4f), Q12(1.2f) - 2);
+                D_800E9EDA = Rng_GenerateInt(Q12(0.4f), Q12(1.2f) - 2);
             }
         }
         else
@@ -2503,7 +2503,7 @@ void func_800E0FF0(void) // 0x800E0FF0
                 else
                 {
                     SD_Call(Sfx_Unk1653);
-                    D_800EBB94 = Rng_GenerateInt(Rng_Rand16(), Q12(0.2f), Q12(2.2f) - 1);
+                    D_800EBB94 = Rng_GenerateInt(Q12(0.2f), Q12(2.2f) - 1);
                 }
             }
         }

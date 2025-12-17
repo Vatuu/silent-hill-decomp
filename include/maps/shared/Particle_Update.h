@@ -92,7 +92,7 @@ bool Particle_Update(s_Particle* partHead)
         }
         else
         {
-            g_Particle_SpeedX += Rng_GenerateInt(Rng_Rand16(), -8, 8);
+            g_Particle_SpeedX += Rng_GenerateInt(-8, 8);
             limitRange(g_Particle_SpeedX, 200, 800);
         }
 
@@ -103,7 +103,7 @@ bool Particle_Update(s_Particle* partHead)
         }
         else
         {
-            g_Particle_SpeedZ += Rng_GenerateInt(Rng_Rand16(), -8, 8);
+            g_Particle_SpeedZ += Rng_GenerateInt(-8, 8);
             limitRange(g_Particle_SpeedZ, 20, 800); // Might be a dev mistake? Makes more sense to be 200 like above.
         }
     }

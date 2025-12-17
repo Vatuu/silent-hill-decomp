@@ -59,20 +59,20 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
 
     if (!(chara->properties_E4.player.afkTimer_E8 & 0x18))
     {
-        if (!(Rng_GenerateInt(Rng_Rand16(), 0, 0x1FF) && magMax <= Q12(4.0f)) ||
-            (!Rng_GenerateInt(Rng_Rand16(), 0, 0x7F) && Rng_GenerateInt((u32)Rng_Rand16(), 0, 0xFFF) < FP_TO(magMax, Q12_SHIFT) / Q12(4.0f)))
+        if (!(Rng_GenerateInt(0, 0x1FF) && magMax <= Q12(4.0f)) ||
+            (!Rng_GenerateInt(0, 0x7F) && Rng_GenerateUInt(0, 0xFFF) < FP_TO(magMax, Q12_SHIFT) / Q12(4.0f)))
         {
             if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 11))
             {
-                deltaX = Rng_GenerateInt(Rng_Rand16(), Q12(-0.5f), Q12(0.5f) - 1) - offsetX;
-                deltaZ = Rng_GenerateInt(Rng_Rand16(), Q12(-0.5f), Q12(0.5f) - 1) - offsetZ;
+                deltaX = Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1) - offsetX;
+                deltaZ = Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1) - offsetZ;
 
                 chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = ratan2(deltaX, deltaZ);
             }
             else
             {
-                deltaX = Rng_GenerateInt(Rng_Rand16(), Q12(-4.0f), Q12(4.0f) - 1) - offsetX;
-                deltaZ = Rng_GenerateInt(Rng_Rand16(), Q12(-4.0f), Q12(4.0f) - 1) - offsetZ;
+                deltaX = Rng_GenerateInt(Q12(-4.0f), Q12(4.0f) - 1) - offsetX;
+                deltaZ = Rng_GenerateInt(Q12(-4.0f), Q12(4.0f) - 1) - offsetZ;
                 
                 chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = ratan2(deltaX, deltaZ);
             }
@@ -114,12 +114,12 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
     // Handle aggressive/chase mode.
     if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 11))
     {
-        if (Rng_GenerateInt(Rng_Rand16(), 0, 1023) == 0)
+        if (Rng_GenerateInt(0, 1023) == 0)
         {
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 3);
         }
 
-        if (Rng_GenerateInt(Rng_Rand16(), 0, 1023) == 0)
+        if (Rng_GenerateInt(0, 1023) == 0)
         {
             chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 4);
         }
@@ -149,10 +149,10 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
                 sharedFunc_800D7E04_0_s00(chara, 1363);
             }
 
-            if (((Rng_GenerateInt(Rng_Rand16(), 0, 15) == 0 && chara->properties_E4.player.runTimer_F8 > Q12(1.0f)) &&
+            if (((Rng_GenerateInt(0, 15) == 0 && chara->properties_E4.player.runTimer_F8 > Q12(1.0f)) &&
                  (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 1))) ||
-                (Rng_GenerateInt(Rng_Rand16(), 0, 15) == 0 && chara->properties_E4.player.runTimer_F8 > Q12(2.5f)) ||
-                (Rng_GenerateInt(Rng_Rand16(), 0, 31) == 0 && ((dist1 >> 1) < dist0)))
+                (Rng_GenerateInt(0, 15) == 0 && chara->properties_E4.player.runTimer_F8 > Q12(2.5f)) ||
+                (Rng_GenerateInt(0, 31) == 0 && ((dist1 >> 1) < dist0)))
             {
                 if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 1))
                 {
@@ -178,7 +178,7 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
         {
             chara->properties_E4.larvalStalker.properties_E8[11].val16[1] += g_DeltaTime0;
 
-            if (Rng_GenerateInt(Rng_Rand16(), 0, 4095) == 0 || (u16)chara->properties_E4.larvalStalker.properties_E8[11].val16[1] > Q12(1.2f))
+            if (Rng_GenerateInt(0, 4095) == 0 || (u16)chara->properties_E4.larvalStalker.properties_E8[11].val16[1] > Q12(1.2f))
             {
                 chara->properties_E4.larvalStalker.properties_E8[11].val16[1] = 0;
                 chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 10);

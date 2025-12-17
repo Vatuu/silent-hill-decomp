@@ -1733,7 +1733,7 @@ void func_800DB13C(void) // 0x800DB13C
         else
         {
             SD_Call(Sfx_Unk1653);
-            D_800E2CE8 = Rng_GenerateInt(Rng_Rand16(), Q12(0.2f), Q12(2.2f) - 1);
+            D_800E2CE8 = Rng_GenerateInt(Q12(0.2f), Q12(2.2f) - 1);
         }
     }
 }

@@ -55,7 +55,7 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
             localPart->type_1F = ParticleType_Rain;
             
             // Set start position.
-            localPart->position0_0.vy = g_Particle_Position.vy + Q12(Rng_GenerateInt(Rng_Rand16(), 0, 2));
+            localPart->position0_0.vy = g_Particle_Position.vy + Q12(Rng_GenerateInt(0, 2));
 
 #if defined(MAP5_S00) || defined(MAP6_S03)
             localPart->position1_C.vy = localPart->position0_0.vy - Q12(0.125f);

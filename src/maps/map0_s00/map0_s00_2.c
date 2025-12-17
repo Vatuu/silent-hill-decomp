@@ -1584,8 +1584,8 @@ void func_800DD0CC(void) // 0x800DD0CC
     if (vecs[0] >= Q12(1.0f))
     {
         D_800DFB44.field_0 = 0;
-        D_800DFB48.field_0 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 95);
-        D_800DFB48.field_1 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 63);
+        D_800DFB48.field_0 = Rng_GenerateUInt(32, 95);
+        D_800DFB48.field_1 = Rng_GenerateUInt(32, 63);
         vecs[0]           &= Q12_FRACT(vecs[0]);
     }
 
@@ -1596,7 +1596,7 @@ void func_800DD0CC(void) // 0x800DD0CC
     if (vecs[1] >= Q12(1.0f))
     {
         D_800DFB44.field_2 = 0;
-        D_800DFB48.field_2 = Rng_GenerateInt((u32)Rng_Rand16(), 32, 95);
+        D_800DFB48.field_2 = Rng_GenerateUInt(32, 95);
         vecs[1]           &= Q12_FRACT(vecs[1]);
     }
 

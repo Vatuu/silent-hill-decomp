@@ -1,6 +1,6 @@
 // @hack Needed for match. Same as version in `rng.h` but without parenthesess around it.
 // TODO: Changing `rng.h version` still doesn't let it match though?
-#define Rng_GenerateInt(rand, low, high) (s32)((rand) % (((high) - (low)) + 1)) + (low)
+#define Rng_GenerateIntFromInput(rand, low, high) (s32)((rand) % (((high) - (low)) + 1)) + (low)
 
 #ifdef MAP7_S03
 extern s16 D_800F23D0; // TODO: Might be sharedData?
@@ -46,18 +46,18 @@ void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* delta
     !defined(MAP4_S04) && !defined(MAP4_S05) && !defined(MAP5_S00) && !defined(MAP6_S03)
             if (localPart->type_1F == 0)
             {
-                localPart->movement_18.vx += Rng_GenerateInt(*rand, -7, 7);
+                localPart->movement_18.vx += Rng_GenerateIntFromInput(*rand, -7, 7);
                 *rand                      = Rng_Rand16();
                 localRand                  = *rand;
-                localPart->movement_18.vz += Rng_GenerateInt(localRand, -7, 7);
-                localPart->movement_18.vy += Rng_GenerateInt(*rand, -1, 3);
+                localPart->movement_18.vz += Rng_GenerateIntFromInput(localRand, -7, 7);
+                localPart->movement_18.vy += Rng_GenerateIntFromInput(*rand, -1, 3);
             }
             else
             {
                 s32 localRand2 = Rng_Rand16();
                 s32 temp       = 12;
 
-                localPart->movement_18.vy += ((temp - g_Particle_PrevPosition.vy) - (g_Particle_PrevPosition.vy << 1) - (sharedData_800DD588_0_s00[0] >> 4)) + Rng_GenerateInt(localRand2, -2, 2);
+                localPart->movement_18.vy += ((temp - g_Particle_PrevPosition.vy) - (g_Particle_PrevPosition.vy << 1) - (sharedData_800DD588_0_s00[0] >> 4)) + Rng_GenerateIntFromInput(localRand2, -2, 2);
 
                 limitRange(localPart->movement_18.vy, 5, 1000);
             }

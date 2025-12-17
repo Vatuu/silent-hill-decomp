@@ -704,9 +704,9 @@ void func_800D6774(void) // 0x800D6774
             i = Rng_Rand16() % (((Q12(2.5f) - D_800DB9E0) / Q12(0.5f)) + 1);
             for (; i > 0; i--)
             {
-                vec.vx = Rng_GenerateInt(Rng_Rand16(), Q12(118.0f), Q12(123.0f) - 1);
+                vec.vx = Rng_GenerateInt(Q12(118.0f), Q12(123.0f) - 1);
                 vec.vy = 0;
-                vec.vz = Rng_GenerateInt(Rng_Rand16(), Q12(140.0f), Q12(143.0f) - 1);
+                vec.vz = Rng_GenerateInt(Q12(140.0f), Q12(143.0f) - 1);
                 func_800D19AC(&vec);
             }
             break;

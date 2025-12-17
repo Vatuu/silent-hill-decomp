@@ -311,7 +311,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
     switch (arg2->field_15)
     {
         case 1:
-            arg2->field_C.vy += Rng_GenerateInt(Rng_Rand16(), -4, 4);
+            arg2->field_C.vy += Rng_GenerateInt(-4, 4);
             limitRange(arg2->field_C.vy, -16, 16);
 
             arg2->field_C.vx += FP_MULTIPLY(Math_Sin((arg2->field_16 + arg0) << 5), Q12(0.01f), Q12_SHIFT);
@@ -321,7 +321,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
 
             if ((Rng_TestProbabilityBits(5) + 0x80) < var_s0)
             {
-                arg2->field_15 = Rng_GenerateInt(Rng_Rand16(), 1, 3);
+                arg2->field_15 = Rng_GenerateInt(1, 3);
                 arg2->field_16 = 0;
             }
             else
@@ -337,7 +337,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
             break;
 
         case 2:
-            arg2->field_C.vy += Rng_GenerateInt(Rng_Rand16(), -4, 4);
+            arg2->field_C.vy += Rng_GenerateInt(-4, 4);
             limitRange(arg2->field_C.vy, -16, 16);
 
             arg2->field_C.vx += FP_MULTIPLY(Math_Sin((arg2->field_16 + arg0) << 5), Q12(0.01f), Q12_SHIFT);
@@ -347,7 +347,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
 
             if ((Rng_TestProbabilityBits(6) + 0x80) < var_s0)
             {
-                arg2->field_15 = Rng_GenerateInt(Rng_Rand16(), 1, 3);
+                arg2->field_15 = Rng_GenerateInt(1, 3);
                 arg2->field_16 = 0;
             }
             else
@@ -363,12 +363,12 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
             break;
 
         case 3:
-            arg2->field_C.vy += Rng_GenerateInt(Rng_Rand16(), -4, 4);
+            arg2->field_C.vy += Rng_GenerateInt(-4, 4);
             limitRange(arg2->field_C.vy, -16, 16);
 
             if (arg2->field_16 == 0)
             {
-                angle0 = Rng_GenerateInt(Rng_Rand16(), 0, Q12(1.0f) - 1);
+                angle0 = Rng_GenerateInt(0, Q12(1.0f) - 1);
 
                 arg2->field_C.vx = (u32)(Math_Sin(angle0) * 5) >> 7;
                 arg2->field_C.vz = (u32)(Math_Sin(angle0) * 5) >> 7;
@@ -378,7 +378,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
 
             if ((Rng_TestProbabilityBits(7) + 0x64) < var_s0)
             {
-                arg2->field_15 = Rng_GenerateInt(Rng_Rand16(), 1, 3);
+                arg2->field_15 = Rng_GenerateInt(1, 3);
                 arg2->field_16 = 0;
             }
             else
@@ -394,7 +394,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
             break;
 
         case 5:
-            if (arg0 < Rng_GenerateInt(Rng_Rand16(), 10, 19) || g_SysWork.field_2358 == 0)
+            if (arg0 < Rng_GenerateInt(10, 19) || g_SysWork.field_2358 == 0)
             {
                 pos.vx = Q12_TO_Q8(D_800E32DC->vx - arg2->field_0.vx);
                 pos.vy = Q12_TO_Q8(D_800E32DC->vy - arg2->field_0.vy);
@@ -420,7 +420,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
             if ((Rng_TestProbabilityBits(6) + 80) < var_s0 || (arg1 != 0 && arg2->field_16 > 80))
             {
                 arg2->field_16 = 0;
-                arg2->field_15 = Rng_GenerateInt(Rng_Rand16(), 1, 3);
+                arg2->field_15 = Rng_GenerateInt(1, 3);
             }
             else
             {
@@ -882,14 +882,14 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
                     }
                 }
 
-                if (arg2->field_12 > Rng_GenerateInt((u32)Rng_Rand16(), 100, 227))
+                if (arg2->field_12 > Rng_GenerateUInt(100, 227))
                 {
                     arg2->field_11 = ((Rng_Rand16() & 1) * 3) + 1;
                     arg2->field_12 = 0;
                 }
 
-                arg2->field_C += Rng_GenerateInt(Rng_Rand16(), -4, 4);
-                arg2->field_E += Rng_GenerateInt(Rng_Rand16(), -4, 4);
+                arg2->field_C += Rng_GenerateInt(-4, 4);
+                arg2->field_E += Rng_GenerateInt(-4, 4);
                 break;
 
             case 2:
@@ -900,14 +900,14 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
                     arg2->field_12 = 0;
                 }
 
-                arg2->field_C += Rng_GenerateInt(Rng_Rand16(), -4, 4);
-                arg2->field_E += Rng_GenerateInt(Rng_Rand16(), -4, 4);
+                arg2->field_C += Rng_GenerateInt(-4, 4);
+                arg2->field_E += Rng_GenerateInt(-4, 4);
 
-                if (arg2->field_12 > Rng_GenerateInt((u32)Rng_Rand16(), 100, 227))
+                if (arg2->field_12 > Rng_GenerateUInt(100, 227))
                 {
                     arg2->field_11 = (Rng_Rand16() & 1) + 3;
                     arg2->field_12 = 0;
-                    rng0 = Rng_GenerateInt(Rng_Rand16(), 0, 0xfff);
+                    rng0 = Rng_GenerateInt(0, 0xfff);
                     arg2->field_C = (u32)(Math_Sin(rng0) * 3) / 0x100;
                     arg2->field_E = (u32)(Math_Cos(rng0) * 3) / 0x100;
                 }
@@ -916,7 +916,7 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
             case 3:
                 arg2->field_12++;
 
-                if (arg2->field_12 > Rng_GenerateInt((u32)Rng_Rand16(), 100, 227))
+                if (arg2->field_12 > Rng_GenerateUInt(100, 227))
                 {
                     arg2->field_11 = 2;
                     arg2->field_E = 0;
@@ -944,13 +944,13 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
 
                 if (arg1)
                 {
-                    arg2->field_11 = Rng_GenerateInt((u32)Rng_Rand16(), 5, 6);
+                    arg2->field_11 = Rng_GenerateUInt(5, 6);
                     arg2->field_12 = 0;
                 }
 
                 if (arg2->field_12 > 192)
                 {
-                    arg2->field_11 = Rng_GenerateInt((u32)Rng_Rand16(), 1, 2);
+                    arg2->field_11 = Rng_GenerateUInt(1, 2);
                     arg2->field_E = 0;
                     arg2->field_C = 0;
                     arg2->field_12 = 0;
@@ -984,21 +984,21 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
             case 6:
                 arg2->field_12++;
 
-                if (arg2->field_12 > Rng_GenerateInt((u32)Rng_Rand16(), 20, 21))
+                if (arg2->field_12 > Rng_GenerateUInt(20, 21))
                 {
                     if (arg1)
                     {
-                        arg2->field_11 = Rng_GenerateInt((u32)Rng_Rand16(), 5, 6);
+                        arg2->field_11 = Rng_GenerateUInt(5, 6);
                         arg2->field_12 = 0;
                     }
                     else
                     {
-                        arg2->field_11 = (Rng_GenerateInt((u32)Rng_Rand16(), 0, 1) * 3) + 1;
+                        arg2->field_11 = (Rng_GenerateUInt(0, 1) * 3) + 1;
                     }
                 }
 
-                arg2->field_C += Rng_GenerateInt(Rng_Rand16(), -4, 4);
-                arg2->field_E += Rng_GenerateInt(Rng_Rand16(), -4, 4);
+                arg2->field_C += Rng_GenerateInt(-4, 4);
+                arg2->field_E += Rng_GenerateInt(-4, 4);
                 break;
         }
 

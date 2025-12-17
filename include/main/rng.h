@@ -43,12 +43,40 @@ extern u32 g_RngSeed;
 /** @brief Generates an integer in the range `[low, high]` from a random input.
  *
  * @param rand Random base value.
- * @param low Lower range.
- * @param high Upper range.
+ * @param low Lower range (inclusive).
+ * @param high Upper range (inclusive).
  * @return Random integer in the range `[low, high]` (`s32`).
 */
-#define Rng_GenerateInt(rand, low, high) \
+#define Rng_GenerateIntFromInput(rand, low, high) \
     ((s32)((rand) % (((high) - (low)) + 1)) + (low))
+
+/** @brief Generates an integer in the range `[low, high]` from an unsigned random input.
+ *
+ * @param rand Random base value.
+ * @param low Lower range (inclusive).
+ * @param high Upper range (inclusive).
+ * @return Random integer in the range `[low, high]` (`s32`).
+*/
+#define Rng_GenerateUIntFromInput(rand, low, high) \
+    ((s32)((u32)(rand) % (((high) - (low)) + 1)) + (low))
+
+/** @brief Shorthand of `Rng_GenerateIntFromInput(Rng_Rand16(), low, high)` 
+ *
+ * @param low Lower range (inclusive).
+ * @param high Upper range (inclusive).
+ * @return Random integer in the range `[low, high]` (`s32`).
+*/
+#define Rng_GenerateInt(low, high) \
+    Rng_GenerateIntFromInput(Rng_Rand16(), low, high)
+
+/** @brief Shorthand of `Rng_GenerateUIntFromInput(Rng_Rand16(), low, high)` 
+ *
+ * @param low Lower range (inclusive).
+ * @param high Upper range (inclusive).
+ * @return Random integer in the range `[low, high]` (`s32`).
+*/
+#define Rng_GenerateUInt(low, high) \
+    Rng_GenerateUIntFromInput(Rng_Rand16(), low, high)
 
 /** @brief Generates a new random 32-bit unsigned integer and updates
  * `g_RngSeed`.

@@ -53,7 +53,7 @@ void sharedFunc_800D7BE8_0_s00(s_SubCharacter* chara)
                 if (chara->properties_E4.larvalStalker.properties_E8[8].val16[0] < Q12(0.0f) ||
                     chara->properties_E4.larvalStalker.properties_E8[8].val16[0] > Q12(0.5f))
                 {
-                    if (Rng_GenerateInt(Rng_Rand16(), 0, 7) != 0)
+                    if (Rng_GenerateInt(0, 7) != 0)
                     {
                         func_8005DC1C(Sfx_Unk1363, &chara->position_18, Q8_CLAMPED(0.5f), 0);
                     }

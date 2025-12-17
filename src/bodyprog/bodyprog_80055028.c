@@ -3555,7 +3555,7 @@ void func_8005E89C(void) // 0x8005E89C
                 {
                     if (g_MapOverlayHeader.unkTable1_4C[i].field_A == 12 &&
                         Rng_TestProbabilityBits(12) > g_MapOverlayHeader.field_5C->field_10 &&
-                        Rng_GenerateInt(Rng_Rand16(), 0, 15) != 0)
+                        Rng_GenerateInt(0, 15) != 0)
                     {
                         g_MapOverlayHeader.func_60(i, 1);
                     }
@@ -4009,7 +4009,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
                 g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = pos->vz;
             }
 
-            if (Rng_GenerateInt(Rng_Rand16(), 0, 1) != 0)
+            if (Rng_GenerateInt(0, 1) != 0)
             {
                 g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = (Rng_Rand16() % 3) + (Rng_TestProbabilityBits(3) * 8);
             }
@@ -5523,7 +5523,7 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
 
     ptr = PSX_SCRATCH;
 
-    temp_s4 = FP_MULTIPLY_PRECISE(g_DeltaTime0, Rng_GenerateInt(Rng_Rand16(), Q12(0.8f), Q12(1.2f) - 2), Q12_SHIFT);
+    temp_s4 = FP_MULTIPLY_PRECISE(g_DeltaTime0, Rng_GenerateInt(Q12(0.8f), Q12(1.2f) - 2), Q12_SHIFT);
 
     if (g_MapOverlayHeader.unkTable1_4C[idx].field_A == 20)
     {
@@ -5893,7 +5893,7 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
         temp2 = arg1;
         if (arg1 == 0)
         {
-            D_800C4428[i] = (i << 9) + Rng_GenerateInt(Rng_Rand16(), 0, 255) - 128;
+            D_800C4428[i] = (i << 9) + Rng_GenerateInt(0, 255) - 128;
             D_800C4438[i] = (Math_Cos(Rng_Rand16() & 0x7FF) >> 1) + 0x1000;
         }
 

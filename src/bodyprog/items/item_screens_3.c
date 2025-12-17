@@ -1518,7 +1518,7 @@ static inline s16 GetUvOrRandom(void)
 {
     if (D_800AE198 == 1) 
     {
-        D_800AE1A8 = Rng_GenerateInt(Rng_Rand16(), 0, 133);
+        D_800AE1A8 = Rng_GenerateInt(0, 133);
         return D_800AE1A8;
     }
     else

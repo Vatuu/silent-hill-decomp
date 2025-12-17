@@ -61,7 +61,7 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* chara)
         }
     }
 
-    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(27, true) && Rng_GenerateInt(Rng_Rand16(), 0, 3) == 0)
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(27, true) && Rng_GenerateInt(0, 3) == 0)
     {
         if (larvalStalkerProps.properties_E8[0].val16[0] & (1 << 1))
         {
