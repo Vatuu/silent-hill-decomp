@@ -33,8 +33,8 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* chara) // 0x800D603C
             angleDelta  = FP_ANGLE_NORM_S(angle - chara->rotation_24.vy);
 
             if (sharedFunc_800DC200_2_s00(chara) &&
-                (Math_CheckAngleRange(angleDelta, FP_ANGLE(120.0f)) ||
-                 (dist < Q12(5.0f) && Math_CheckAngleRange(angleDelta, FP_ANGLE(60.0f)))))
+                (Math_CheckSignedRange(angleDelta, FP_ANGLE(120.0f)) ||
+                 (dist < Q12(5.0f) && Math_CheckSignedRange(angleDelta, FP_ANGLE(60.0f)))))
             {
                 chara->model_0.stateStep_3 = 4;
             }

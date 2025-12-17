@@ -79,7 +79,7 @@ s32 Chara_DamageTake(s_SubCharacter* chara, q19_12 mult)
                 ret = 3;
             }
         }
-        else if (chara->properties_E4.unk0.field_E8_0 != 3 && temp_a1 == 2 && Math_CheckAngleRange(angle, FP_ANGLE(120.0f)))
+        else if (chara->properties_E4.unk0.field_E8_0 != 3 && temp_a1 == 2 && Math_CheckSignedRange(angle, FP_ANGLE(120.0f)))
         {
             ret = 2;
         }

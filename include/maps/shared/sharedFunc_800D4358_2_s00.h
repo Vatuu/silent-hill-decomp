@@ -70,11 +70,9 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
                 }
                 else if (sharedFunc_800DC30C_2_s00(chara))
                 {
-                    // @hack This check should be
-                    // `if (diff >= Q12(-1.0f) && diff < Q12(1.0f))`
+                    // @hack This check should be `if (diff >= Q12(-1.0f) && diff < Q12(1.0f))`
                     // But that results in `sltiu 0x2000` instead of the `li 0x2000/sltu` needed.
-                    // TODO: Despite calling `Math_CheckAngleRange` this is checking a distance rather than an angle.
-                    if (Math_CheckAngleRange(chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy, Q12(1.0f)))
+                    if (Math_CheckSignedRange(chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy, Q12(1.0f)))
                     {
                         chara->model_0.stateStep_3 = 3;
                     }

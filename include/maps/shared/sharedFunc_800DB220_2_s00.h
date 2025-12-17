@@ -53,7 +53,7 @@ void sharedFunc_800DB220_2_s00(s_SubCharacter* chara)
                     switchCond = 1;
                 }
             }
-            else if (distFieldF8 < Q12(4.0f) && Math_CheckAngleRange(angFieldF8, FP_ANGLE(90.0f))) // @hack Should be `angFieldF8 >= FP_ANGLE(-90.0f) && angFieldF8 < FP_ANGLE(90.0f)`
+            else if (distFieldF8 < Q12(4.0f) && Math_CheckSignedRange(angFieldF8, FP_ANGLE(90.0f))) // @hack Should be `angFieldF8 >= FP_ANGLE(-90.0f) && angFieldF8 < FP_ANGLE(90.0f)`
             {
                 switchCond = 2;
             }

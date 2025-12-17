@@ -44,7 +44,7 @@ void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara)
             else if (temp_s4 == 1 ||
                      (sharedFunc_800DC30C_2_s00(chara) && cond == true &&
                       chara->properties_E4.unk0.flags_11C & CharaUnk0Flag_Unk31 &&
-                      (distFieldF8 < Q12(2.0f) || Math_CheckAngleRange(angFieldF8, FP_ANGLE(60.0f))))) // @hack Should be `angFieldF8 >= FP_ANGLE(-60.0f) && angFieldF8 < FP_ANGLE(60.0f)`
+                      (distFieldF8 < Q12(2.0f) || Math_CheckSignedRange(angFieldF8, FP_ANGLE(60.0f))))) // @hack Should be `angFieldF8 >= FP_ANGLE(-60.0f) && angFieldF8 < FP_ANGLE(60.0f)`
             {
                 chara->model_0.stateStep_3 = 4;
             }
