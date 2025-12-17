@@ -447,7 +447,8 @@ void func_800D5DD8(void) // 0x800D5DD8
             {
                 D_800D778F = 0x80;
 
-                if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 | g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
+                if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
+                                                     g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
                 {
                     SysWork_StateStepIncrement(0);
                 }
@@ -512,7 +513,6 @@ void MapEvent_MapTake(void) // 0x800D63B0
 void Map_WorldObjectsInit(void) // 0x800D63D8
 {
     WorldObjectNoRotInit(&D_800DAF84, "REDX_HID", 20.4568f, -0.8345f, -17.97f);
-
     WorldObjectInit(&D_800DAFB4, "KEY_HIDE", 20.9021f, -0.002f, -17.26f, 0.0f, -37.45f, 0.0f);
 
     D_800D7761 = 0;
@@ -520,9 +520,7 @@ void Map_WorldObjectsInit(void) // 0x800D63D8
     D_800DAF78 = 0;
 
     WorldObjectInit(&D_800DAFF4, D_800A99E4.savePadName_4, 61.8531f, -0.805f, 140.61f, 0, 92.9f, 0.0f);
-
     WorldObjectInit(&D_800DB024, "PICT00_H", 133.294f, -0.8614f, 19.04f, 0.0f, 162.6f, 0.0f);
-
     WorldObjectInit(&D_800DB064, "MAP_HIDE", 96.9405f, -0.3365f, 21.092f, 0.0f, 66.8f, 0.0f);
 
     if (!Savegame_EventFlagGet(EventFlag_143))
@@ -630,6 +628,7 @@ void func_800D6578(void) // 0x800D6578
         }
     }
 
+    // Set sound position.
     soundPos.vx = g_SysWork.player_4C.chara_0.position_18.vx;
     soundPos.vy = g_SysWork.player_4C.chara_0.position_18.vy;
     soundPos.vz = g_SysWork.player_4C.chara_0.position_18.vz - Q12(16.0f);

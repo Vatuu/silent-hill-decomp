@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
 
-#define copyData(arg0, data)                  \
+#define CopyData(arg0, data)                  \
 {                                             \
     s32 __temp;                               \
                                               \
@@ -87,7 +87,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
                 break;
             } 
 
-            copyData(chara, sharedData_800DA928_1_s00[1]);
+            CopyData(chara, sharedData_800DA928_1_s00[1]);
             break;
 
         case 7:
@@ -102,7 +102,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
         case 28:
         case 29:
         case 36:
-            copyData(chara, sharedData_800DA928_1_s00[1]);
+            CopyData(chara, sharedData_800DA928_1_s00[1]);
             break;  
             
         case 8:
@@ -112,14 +112,14 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
         case 9:
         case 26:
         case 27:
-            copyData(chara, sharedData_800DA950_1_s00);
+            CopyData(chara, sharedData_800DA950_1_s00);
             break;
             
         case 10:
             var_a3 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0];
             if (var_a3 == 0) 
             {
-                copyData(chara, sharedData_800DA964_1_s00[0]);
+                CopyData(chara, sharedData_800DA964_1_s00[0]);
                 break;
             }
 
@@ -173,7 +173,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             keyframeIdx2 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0];
             if (keyframeIdx2 == 0) 
             {
-                copyData(chara, sharedData_800DAC34_1_s00[0]);
+                CopyData(chara, sharedData_800DAC34_1_s00[0]);
                 break;
             }
 
@@ -203,7 +203,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
         case 14:
             if (chara->properties_E4.larvalStalker.properties_E8[3].val16[0] == 0) 
             {
-                copyData(chara, sharedData_800DAE28_1_s00[0]);
+                CopyData(chara, sharedData_800DAE28_1_s00[0]);
                 break;
             }
             
@@ -288,7 +288,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
         case 16:
             if (chara->properties_E4.larvalStalker.properties_E8[3].val16[0] == 0) 
             {
-                copyData(chara, sharedData_800DAF68_1_s00[0]);
+                CopyData(chara, sharedData_800DAF68_1_s00[0]);
                 break;
             }
 
@@ -320,7 +320,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             keyframeIdx1 = chara->properties_E4.larvalStalker.properties_E8[3].val16[1];
             if (keyframeIdx1 == -1) 
             {
-                copyData(chara, sharedData_800DB008_1_s00);
+                CopyData(chara, sharedData_800DB008_1_s00);
                 break;
             }
             if (keyframeIdx1 == -2) 
@@ -345,19 +345,19 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
         case 19:
         case 34:
         case 35:
-            copyData(chara, sharedData_800DB008_1_s00);
+            CopyData(chara, sharedData_800DB008_1_s00);
             break;
             
         case 20:
         case 21:
-            copyData(chara, sharedData_800DB01C_1_s00);
+            CopyData(chara, sharedData_800DB01C_1_s00);
             break;
             
         case 22:
         case 23:
         case 24:
         case 25:
-            copyData(chara, sharedData_800DB030_1_s00);
+            CopyData(chara, sharedData_800DB030_1_s00);
             break;
             
         case 2:

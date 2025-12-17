@@ -12,7 +12,7 @@ void sharedFunc_800D0690_1_s03(s32 pass, s_Particle* part, s16* rand, s32* delta
     part->position1_C.vx  = part->position0_0.vx;
     part->position1_C.vz  = part->position0_0.vz;
 
-    if (ABS(part->position0_0.vx) + ABS(part->position0_0.vz) > Q12(6.0f))
+    if ((ABS(part->position0_0.vx) + ABS(part->position0_0.vz)) > Q12(6.0f))
     {
         part->stateStep_1E = 0;
     }

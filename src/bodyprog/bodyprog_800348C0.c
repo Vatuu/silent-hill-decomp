@@ -2475,7 +2475,6 @@ void func_80038354(void) // 0x80038354
     for (l = 0; l < ARRAY_SIZE(D_800BCDA8); l++)
     {
         temp_s0_2 = D_800BCDA8[l].field_1;
-
         if (temp_s0_2 == NO_VALUE)
         {
             var_v0_4 = NO_VALUE;
@@ -2502,7 +2501,6 @@ void func_80038354(void) // 0x80038354
         if (temp_s1 == NO_VALUE)
         {
             temp_v0_4 = func_800382EC();
-
             if (temp_v0_4 != temp_s1)
             {
                 var_v0_5 = field_0[temp_v0_4].bitIdx_0;

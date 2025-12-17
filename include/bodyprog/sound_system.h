@@ -16,8 +16,8 @@
 
 /** @note Name recognition notes/todo.
  * `Tokimeki Memorial ~Forever With You~` and `Konami International Rally Championship` symbols
- * indicates that what have been dubbed as `commands` are actually name as `tasks`, but also TM
- * may hint that at  point they were called `events`.
+ * indicate that what are named `commands` in the decomp are actually named as `tasks`. TM
+ * suggests that at some point, they were called `events`.
  */
 
 // ==========
@@ -218,13 +218,13 @@ extern u8 g_Sd_BgmLayerLimits[8];
 extern s_VabPlayingInfo g_Sd_VabPlayingInfo;
 
 /** @brief Task pool related to audio and audio data streaming.
- * `Sd_TaskPoolExecute` is the main function on charge of executing tasks.
+ * `Sd_TaskPoolExecute` is the main function responsible for executing tasks.
  *
  * @note Possible name retrieved from debug symbols.
- * `Tokimeki Memorial ~Forever With You~` symbols have a global variable name
- * as `gSDEvt`. This function can't be restored, but the name would fit for
- * the purpose, additionally this game features a similar command pool system
- * to the one of SH1.
+ * `Tokimeki Memorial ~Forever With You~` symbols have a global variable named
+ * `gSDEvt`. This function can't be restored, but the name would fit for
+ * this purpose. This game also features a similar command pool system
+ * to the one in SH1.
  */
 extern u8 g_Sd_TaskPool[32];
 
@@ -257,13 +257,11 @@ extern u8* g_Sd_VabBuffers[];
 
 extern s_800C15F0 D_800C15F0[4];
 
-/** @brief Stores SFX index of audio currently being play.
- * The value of the SFX index stored is based on `e_SfxId`.
- */
+/** @brief `e_SfxId` | Stores the index of the currently playing SFX . */
 extern u16 g_AudioPlayingIdxList[24];
 
-/** @brief Stores SFX pitch of audio currently being play.
- * Shares the same index where the SFX is being store on `g_AudioPlayingIdxList`.
+/** @brief Stores the pitch of currently playing SFX.
+ * Shares the same index where the SFX is stored in `g_AudioPlayingIdxList`.
  */
 extern s16 g_AudioPlayingPitchList[24];
 
@@ -277,10 +275,10 @@ extern s32 bssPad_800C1674;
 /** @note Name from retrieved debug symbols.
  * Debug symbols from: `Konami International Rally Championship`
  *
- * Symbols doesn't indicate the struct name, the size may not
+ * Symbol don't indicate the struct name. The size may not
  * contradict this definition as it seems the variable is intended
- * to have a size of 48/0x30 bytes while this have a size of 16/0x10
- * bytes, but they to serve the same purpose of adjusting the volume
+ * to have a size of 48/0x30 bytes, while this has a size of 16/0x10
+ * bytes. They serve the same purpose of adjusting the volume
  * channels.
  */
 extern s_ChannelsVolumeController gSDVolConfig;
@@ -293,19 +291,19 @@ extern s_800C1688 D_800C1688;
 // FUNCTIONS
 // ==========
 
-/** @brief Passes a "task" to the sound driver.
+/** @brief Passes a task to the sound driver.
  * Plays SFX among other things.
  *
  * @note Name from retrieved debug symbols.
- * KCET games using LIBSD and SH2 features a function with this name
- * differing in the uppercase usage among each game
- * * `Tokimeki Memorial ~Forever With You~` and `International Rally Championship` name it as `SD_Call`
- * * `Winning Eleven 6` names it as `SD_call`
- * * `Silent Scope 3` and `Silent Hill 2` names it as `sd_call`
+ * KCET games using LIBSD and SH2 feature a function with this name
+ * differing in case between each game.
+ * * `Tokimeki Memorial ~Forever With You~` and `International Rally Championship` call it `SD_Call`.
+ * * `Winning Eleven 6` calls it `SD_call`.
+ * * `Silent Scope 3` and `Silent Hill 2` call it `sd_call`.
  *
- * Each game variates the functionallity mainly based if they features,
- * but in all instances it serve as a way to pass a command/task for the
- * audio streaming system of the game. The most similar being IRC and SH2.
+ * Each game varies the functionallity mainly based on its requirements,
+ * but in all instances, it's used to pass a command/task to the
+ * audio streaming system. The most similar are IRC and SH2.
  */
 void SD_Call(u32 cmd);
 
@@ -327,11 +325,11 @@ u16 func_80045BC8(void);
  *
  * @note Name from retrieved debug symbols.
  * `Tokimeki Memorial ~Forever With You~` and `International Rally Championship`
- * features a function that serves a similar purpose as this in order to handle
- * the load of VAB files and some other audio system features.
- * Both cases are different, most noticiably the case of TM where it's used
- * to also handle XA files and more low level features related the audio system
- * that neither SH1 nor IRC features.
+ * have a function with a similar purpose as this for handling
+ * the loading of VAB files and some other audio system features.
+ * Both cases are different. Notably in TM, it's used
+ * to also handle XA files and more low-level features related the audio system
+ * that neither SH1 nor IRC have.
  */
 void SD_BranchCTRL(u16 task);
 
@@ -341,23 +339,22 @@ void SD_BranchCTRL(u16 task);
 void Sd_AudioSystemSet(u8 isStereo);
 
 /** @note Name from retrieved debug symbols.
- * The function can be found among many Konami games featuring the LIBSD library,
- * but it's function from `International Rally Championship` (name as `SD_Call`) and
- * Winning Eleven 5 (Inside `SOUNDCD.IRX`; Name as `sd_call`) that have more
- * similarity to SH1 case. Additionally a similar name function can be found inside
- * SH2 named as `shSdInit` which is completely different to this one.
+ * The function can be found in many Konami games with the LIBSD library,
+ * but `International Rally Championship` (name as `SD_Call`) and
+ * Winning Eleven 5 (Inside `SOUNDCD.IRX`; Name as `sd_call`) have more
+ * similarity to SH1. Additionally, SH2 has a similarly named function 
+ * (`shSdInit`) which is completely different.
  */
 void SD_Init(void);
 
 /** @note Name from retrieved debug symbols.
  * See `SD_Init`.
  *
- * As previously said IRC and WE5 are the games that are more similar to SH1, in those
- * cases a function that handles more of the initalization process for the audio system
- * can be found just like the case of SH1. However, both games differ with the name.
- * IRC name it as `SD_InitMyself` while WE5 name it as `sd_work_init`. It is more probable
- * that WE5 is the actual name SH1 use as in that case the function does some loops and shares
- * many of the function calls that SH1 have.
+ * As noted above, IRC and WE5 are games with the most similarities to SH1, where a similar function that
+ * handles more of the initalization process for the audio system is found.
+ * Each game has a slightly different name.
+ * IRC calls it `SD_InitMyself`, while WE5 calls it `sd_work_init`. It's probable
+ * that WE5 is the name SH1 used, as the its variant contains similar loops and function calls to SH1.
  */
 void sd_work_init(void);
 
@@ -366,25 +363,25 @@ void Sd_AudioStop(void);
 
 u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol);
 
-/** Update atributes from a specified audio currently playing. */
+/** Updates attributes from currently playing specified audio. */
 void Sd_SfxAttributesUpdate(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
 
 /** SFX func. */
 void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch);
 
-/** @brief Stop the last VAB audio data playing. */
+/** @brief Stops the last VAB audio data playback. */
 void Sd_LastSfxStop(void);
 
-/** @brief Indicates to stop specific VAB audio data play. */
+/** @brief Stops specified VAB audio data playback. */
 void Sd_SfxStop(u16 sfxId);
 
-/** @brief Stop specific VAB audio data play based on `e_SfxId`. */
+/** @brief Stops specified VAB audio data playback according to an SFX ID. */
 void Sd_SfxStopStep(u16 sfxId);
 
-/** @brief Stop all VAB audio data playing. */
+/** @brief Stops all VAB audio data playback. */
 void Sd_AllSfxStop(void);
 
-/** @brief Stop all VAB audio data with `Release Rate` mode enabled playing. */
+/** @brief Stops all VAB audio data playback with `Release Rate` mode enabled. */
 void Sd_AllSfxWithRRStop(void);
 
 /** Sound command func. Unknown category. */
@@ -404,13 +401,13 @@ u8 Sd_BgmLayerVolumeGet(u8 layerIdx);
 /** Manipulates the BGM audio layer volume. */
 void Sd_BgmLayerVolumeSet(u8 layerIdx, u8 vol);
 
-/** @brief Loads and plays XA audio defined at `g_XaItemData`. */
+/** @brief Loads and plays XA audio in `g_XaItemData`. */
 void Sd_XaAudioPlay(void);
 
-/** @brief Initializes the process to play an XA audios defined at `g_XaItemData`. */
+/** @brief Initializes the process to play XA audios in `g_XaItemData`. */
 void Sd_XaAudioPlayTaskAdd(u16 sfx);
 
-/** @unused Gets the length of XA audios defined at `g_XaItemData`. */
+/** @unused Gets the length of XA audios in `g_XaItemData`. */
 s32 Sd_XaAudioLengthGet(s32 idx);
 
 void Sd_XaAudioStopTaskAdd(void);
@@ -419,7 +416,7 @@ void Sd_XaPreLoadAudioPreTaskAdd(u16 xaIdx);
 
 void Sd_XaPreLoadAudioTaskAdd(s32 xaIdx);
 
-/** @brief Prepares the load of a XA audio defined at `g_XaItemData`. */
+/** @brief Prepares the audio load of the XA set in `g_XaItemData`. */
 void Sd_XaPreLoadAudio(void);
 
 /** @brief Stops the streaming of the currently loaded XA audio in memory. */
