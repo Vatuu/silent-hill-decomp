@@ -476,6 +476,7 @@ SD_BranchCTRL                               = 0x80045BD8;
 Sd_AudioSystemSet                           = 0x80045D28; // type:func
 SD_Init                                     = 0x80045DD4; // type:func
 sd_work_init                                = 0x80045E44; // type:func
+Sd_AudioStop                                = 0x80045FF8; // type:func
 Sd_PlaySfx                                  = 0x80046048; // type:func
 Sd_SfxAttributesUpdate                      = 0x800463C0;
 Sd_LastSfxStop                              = 0x800468EC; // type:func
