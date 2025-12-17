@@ -28,7 +28,7 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
     groaner->field_E1_0      = 3;
     groaner->headingAngle_3C = groaner->rotation_24.vy;
 
-    groaner->properties_E4.larvalStalker.properties_E8[11].val16[0] = Rng_TestProbabilityBits(9) + 0xF00;
+    groaner->properties_E4.larvalStalker.properties_E8[11].val16[0] = Rng_GenerateUInt(Q12(0.9375f), Q12(1.0625f) - 1);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {

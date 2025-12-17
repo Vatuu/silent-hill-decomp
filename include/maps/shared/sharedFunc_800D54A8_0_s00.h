@@ -97,7 +97,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
 
             if (chara->properties_E4.player.runTimer_F8 > Q12(1.5f))
             {
-                g_SysWork.player_4C.chara_0.damage_B4.amount_C += (FP_TO(D_800AD4C8[50].field_4, Q12_SHIFT) * (Rng_TestProbabilityBits(5) + 85)) / 100;
+                g_SysWork.player_4C.chara_0.damage_B4.amount_C += (FP_TO(D_800AD4C8[50].field_4, Q12_SHIFT) * Rng_GenerateUInt(85, 116)) / 100;
                 chara->properties_E4.player.runTimer_F8         = Rng_Rand16() % Q12(0.5f);
             }
         }

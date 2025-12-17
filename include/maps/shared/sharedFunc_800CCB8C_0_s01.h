@@ -103,7 +103,7 @@ void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s
 
             sharedData_800DFB7C_0_s00[temp_v0_8].field_10.s_0.field_2 = MIN(temp_s0_2 / (arg2 >> 0xA), 0x1000);
 
-            sharedData_800DFB7C_0_s00[temp_v0_8].field_B = ((Rng_Rand16() % MIN(((temp_s0_2 * 6) / ptr->field_44) + 3, 8)) * 0x10) - 0x80 + (Rng_Rand16() & 0xF);
+            sharedData_800DFB7C_0_s00[temp_v0_8].field_B = ((Rng_Rand16() % MIN(((temp_s0_2 * 6) / ptr->field_44) + 3, 8)) * 0x10) - 0x80 + Rng_GenerateUInt(0, 15);
 
             ptr->field_34.vx += ptr->field_0.vx;
             ptr->field_34.vy += ptr->field_0.vy;
@@ -111,12 +111,12 @@ void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s
 
             temp_s0_2 = SquareRoot0(SQUARE(ptr->field_34.vx >> 6) + SQUARE(ptr->field_34.vy >> 6) + SQUARE(ptr->field_34.vz >> 6)) << 6;
 
-            sharedData_800DFB7C_0_s00[temp_v0_8].field_C.s_0.field_0  = (arg2 * (Rng_TestProbabilityBits(7) + 0x40) >> 7) * ptr->field_34.vx / temp_s0_2;
-            sharedData_800DFB7C_0_s00[temp_v0_8].field_C.s_0.field_2  = (arg2 * (Rng_TestProbabilityBits(7) + 0x40) >> 7) * ptr->field_34.vy / temp_s0_2;
-            sharedData_800DFB7C_0_s00[temp_v0_8].field_10.s_0.field_0 = (arg2 * (Rng_TestProbabilityBits(7) + 0x40) >> 7) * ptr->field_34.vz / temp_s0_2;
+            sharedData_800DFB7C_0_s00[temp_v0_8].field_C.s_0.field_0  = (arg2 * Rng_GenerateUInt(64, 191) >> 7) * ptr->field_34.vx / temp_s0_2;
+            sharedData_800DFB7C_0_s00[temp_v0_8].field_C.s_0.field_2  = (arg2 * Rng_GenerateUInt(64, 191) >> 7) * ptr->field_34.vy / temp_s0_2;
+            sharedData_800DFB7C_0_s00[temp_v0_8].field_10.s_0.field_0 = (arg2 * Rng_GenerateUInt(64, 191) >> 7) * ptr->field_34.vz / temp_s0_2;
 
-            sharedData_800DFB7C_0_s00[temp_v0_8].field_0.s_0.field_2 = (ptr->field_48 + Rng_TestProbabilityBits(9)) - 0xFF;
-            sharedData_800DFB7C_0_s00[temp_v0_8].field_4.s_0.field_2 = (ptr->field_4A + Rng_TestProbabilityBits(9)) - 0xFF;
+            sharedData_800DFB7C_0_s00[temp_v0_8].field_0.s_0.field_2 = (ptr->field_48 + Rng_GenerateUInt(0, 511)) - 255; // TODO: `-255` should be lower RNG bound?
+            sharedData_800DFB7C_0_s00[temp_v0_8].field_4.s_0.field_2 = (ptr->field_4A + Rng_GenerateUInt(0, 511)) - 255;
 
             temp_lo  = (var_s5 * arg6) / var_s1;
             var_v0_2 = var_s5 + ((ABS(temp_lo) + sp24) >> 2);

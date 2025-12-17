@@ -319,7 +319,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
 
             var_s0 = arg2->field_16;
 
-            if ((Rng_TestProbabilityBits(5) + 0x80) < var_s0)
+            if (Rng_GenerateUInt(128, 159) < var_s0)
             {
                 arg2->field_15 = Rng_GenerateInt(1, 3);
                 arg2->field_16 = 0;
@@ -345,7 +345,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
 
             var_s0 = arg2->field_16;
 
-            if ((Rng_TestProbabilityBits(6) + 0x80) < var_s0)
+            if (Rng_GenerateUInt(128, 191) < var_s0)
             {
                 arg2->field_15 = Rng_GenerateInt(1, 3);
                 arg2->field_16 = 0;
@@ -376,7 +376,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
 
             var_s0 = arg2->field_16;
 
-            if ((Rng_TestProbabilityBits(7) + 0x64) < var_s0)
+            if (Rng_GenerateUInt(100, 227) < var_s0)
             {
                 arg2->field_15 = Rng_GenerateInt(1, 3);
                 arg2->field_16 = 0;
@@ -417,7 +417,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
 
             var_s0 = arg2->field_16;
 
-            if ((Rng_TestProbabilityBits(6) + 80) < var_s0 || (arg1 != 0 && arg2->field_16 > 80))
+            if (Rng_GenerateUInt(80, 143) < var_s0 || (arg1 != 0 && arg2->field_16 > 80))
             {
                 arg2->field_16 = 0;
                 arg2->field_15 = Rng_GenerateInt(1, 3);

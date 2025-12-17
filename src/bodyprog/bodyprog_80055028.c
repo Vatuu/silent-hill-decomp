@@ -3554,7 +3554,7 @@ void func_8005E89C(void) // 0x8005E89C
                 for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++)
                 {
                     if (g_MapOverlayHeader.unkTable1_4C[i].field_A == 12 &&
-                        Rng_TestProbabilityBits(12) > g_MapOverlayHeader.field_5C->field_10 &&
+                        Rng_GenerateUInt(0, 4095) > g_MapOverlayHeader.field_5C->field_10 &&
                         Rng_GenerateInt(0, 15) != 0)
                     {
                         g_MapOverlayHeader.func_60(i, 1);
@@ -3908,31 +3908,31 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
 
         case 3:
             var_s5 = 3;
-            count = Rng_TestProbabilityBits(1) + 1;
+            count = Rng_GenerateUInt(1, 2);
             unkCount = 18;
             break;
 
         case 4:
             var_s5 = 3;
-            count = Rng_TestProbabilityBits(2) + 1;
+            count = Rng_GenerateUInt(1, 4);
             unkCount = 24;
             break;
 
         case 5:
             var_s5 = 4;
-            count = Rng_TestProbabilityBits(2) + 2;
+            count = Rng_GenerateUInt(2, 5);
             unkCount = 0x1E;
             break;
 
         case 6:
             var_s5 = 4;
-            count = Rng_TestProbabilityBits(3) + 1;
+            count = Rng_GenerateUInt(1, 8);
             unkCount = 36;
             break;
 
         case 7:
             var_s5 = 5;
-            count = Rng_TestProbabilityBits(3) + 2;
+            count = Rng_GenerateUInt(2, 9);
             unkCount = 42;
             break;
 
@@ -3998,9 +3998,9 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
         {
             if (arg2 != 9)
             {
-                g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = (pos->vx + Rng_TestProbabilityBits(9)) - 0xFF;
-                g_MapOverlayHeader.unkTable1_4C[idx].vy_8         = (pos->vy + Rng_TestProbabilityBits(9)) - 0xFF;
-                g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = (pos->vz + Rng_TestProbabilityBits(9)) - 0xFF;
+                g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = (pos->vx + Rng_GenerateUInt(0, 511)) - 255; // TODO: `-255` should be lower RNG bound?
+                g_MapOverlayHeader.unkTable1_4C[idx].vy_8         = (pos->vy + Rng_GenerateUInt(0, 511)) - 255;
+                g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = (pos->vz + Rng_GenerateUInt(0, 511)) - 255;
             }
             else
             {
@@ -4011,17 +4011,17 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
 
             if (Rng_GenerateInt(0, 1) != 0)
             {
-                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = (Rng_Rand16() % 3) + (Rng_TestProbabilityBits(3) * 8);
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = Rng_GenerateInt(0, 2) + (Rng_GenerateUInt(0, 7) * 8);
             }
             else
             {
-                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = (Rng_TestProbabilityBits(1) + 3) + (Rng_TestProbabilityBits(1) * 8);
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = (Rng_GenerateUInt(0, 1) + 3) + (Rng_GenerateUInt(0, 1) * 8);
             }
 
             g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1  = unkCount;
             g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_2  = arg3;
             g_MapOverlayHeader.unkTable1_4C[idx].field_B              = i * 4;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 = Rng_TestProbabilityBits(8);
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 = Rng_GenerateUInt(0, 255);
 
             if (chara->model_0.charaId_0 == Chara_Floatstinger)
             {
@@ -4081,7 +4081,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
                 }
                 else
                 {
-                    dists[j] += Rng_TestProbabilityBits(14);
+                    dists[j] += Rng_GenerateUInt(0, 16383);
                 }
             }
         }
@@ -4136,9 +4136,9 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
         if (idx != NO_VALUE)
         {
             g_MapOverlayHeader.unkTable1_4C[idx].field_B      = i * 4;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = (pos->vx + Rng_TestProbabilityBits(11)) - 0x3FF;
-            g_MapOverlayHeader.unkTable1_4C[idx].vy_8         = (pos->vy + Rng_TestProbabilityBits(12)) - 0x7FF;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = (pos->vz + Rng_TestProbabilityBits(11)) - 0x3FF;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = (pos->vx + Rng_GenerateUInt(0, 2047)) - 1023; // TODO: `-1023` should be lower RNG bound?
+            g_MapOverlayHeader.unkTable1_4C[idx].vy_8         = (pos->vy + Rng_GenerateUInt(0, 4095)) - 2047;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = (pos->vz + Rng_GenerateUInt(0, 2047)) - 1023;
 
             Collision_Get(&coll, g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
 
@@ -4159,9 +4159,9 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
 
                 g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 = -(Rng_Rand16() & 0x800);
                 g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_2 = coll.groundHeight_0;
-                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0  = Rng_TestProbabilityBits(4);
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0  = Rng_GenerateUInt(0, 15);
                 g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_2  = arg3;
-                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1  = Rng_TestProbabilityBits(4) + 6;
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1  = Rng_GenerateUInt(6, 21);
                 g_MapOverlayHeader.bloodSplats_54[j].field_0              = idx;
                 unkCount++;
             }
@@ -4539,7 +4539,7 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
             else
             {
                 g_MapOverlayHeader.unkTable1_4C[idx].field_B          = 1;
-                g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 = Rng_TestProbabilityBits(8);
+                g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 = Rng_GenerateUInt(0, 255);
             }
 
             *ptr = sp10;
@@ -4925,7 +4925,7 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
     g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4            = arg0->vz;
     g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2     = arg1;
     g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 = var;
-    g_MapOverlayHeader.unkTable1_4C[idx].field_B  = Rng_TestProbabilityBits(2);
+    g_MapOverlayHeader.unkTable1_4C[idx].field_B  = Rng_GenerateUInt(0, 3);
     g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = 6;
     g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0    = arg3 * Q12(5.0f);
 }
@@ -5008,7 +5008,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
 
         sp10 = *ptr;
 
-        if (Rng_TestProbabilityBits(1))
+        if (Rng_GenerateUInt(0, 1) != 0)
         {
             Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
             Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
@@ -5299,8 +5299,8 @@ void func_8006342C(s32 weaponAttack, q3_12 angle0, q3_12 angle1, GsCOORDINATE2* 
                 g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.s_0.field_2 = angle1;
             }
 
-            g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_B              = Rng_TestProbabilityBits(1);
-            g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_10.s_0.field_0 = Rng_TestProbabilityBits(10);
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_B              = Rng_GenerateUInt(0, 1);
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_10.s_0.field_0 = Rng_GenerateUInt(0, 1023);
             g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_10.s_0.field_2 = 0;
         }
         else
@@ -5316,9 +5316,9 @@ void func_8006342C(s32 weaponAttack, q3_12 angle0, q3_12 angle1, GsCOORDINATE2* 
             break;
         }
 
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_0.vx_0 = (Q4_TO_Q8(ptr->field_28.vx) + Rng_TestProbabilityBits(8)) - 0x80;
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vy_8 = (Q4_TO_Q8((u16)ptr->field_28.vy) + Rng_TestProbabilityBits(8)) - 0x80;
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_4.vz_4 = (Q4_TO_Q8(ptr->field_28.vz) + Rng_TestProbabilityBits(8)) - 0x80;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_0.vx_0 = (Q4_TO_Q8(ptr->field_28.vx) + Rng_GenerateUInt(0, 255)) - 0x80;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vy_8 = (Q4_TO_Q8((u16)ptr->field_28.vy) + Rng_GenerateUInt(0, 255)) - 0x80;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_4.vz_4 = (Q4_TO_Q8(ptr->field_28.vz) + Rng_GenerateUInt(0, 255)) - 0x80;
 
         if (i < 3)
         {
@@ -5326,10 +5326,10 @@ void func_8006342C(s32 weaponAttack, q3_12 angle0, q3_12 angle1, GsCOORDINATE2* 
         }
         else
         {
-            g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_B = Rng_Rand16() % 3;
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_B = Rng_GenerateInt(0, 2);
         }
 
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_C.s_0.field_0      = Rng_TestProbabilityBits(12);
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_C.s_0.field_0      = Rng_GenerateUInt(0, 4095);
         g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_C.s_0.field_2      = 0;
         g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_10.s_0.field_0 = 0;
     }
@@ -10440,15 +10440,15 @@ q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0
     {
         if (i == 0)
         {
-            curAngleOffset = Rng_TestProbabilityBits(6) - 32;
+            curAngleOffset = Rng_GenerateUInt(-32, 31);
         }
         else if (i & 1)
         {
-            curAngleOffset = (256 << ((i + 1) >> 1)) + Rng_TestProbabilityBits(6);
+            curAngleOffset = (256 << ((i + 1) >> 1)) + Rng_GenerateUInt(0, 63);
         }
         else
         {
-            curAngleOffset = -(256 << (i >> 1)) - Rng_TestProbabilityBits(6);
+            curAngleOffset = -(256 << (i >> 1)) - Rng_GenerateUInt(0, 63);
         }
 
         if (angleOffset != NO_VALUE)
