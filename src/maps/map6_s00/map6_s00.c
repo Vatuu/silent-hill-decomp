@@ -65,7 +65,7 @@ INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800D2390_0_s01
 
 #include "maps/shared/sharedFunc_800D2BF4_0_s01.h" // 0x800D2380
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", Chara_DamageTake); // 0x800D2398
+#include "maps/shared/Chara_DamageTake.h" // 0x800D2398
 
 #include "maps/shared/sharedFunc_800D2E04_0_s01.h" // 0x800D259C
 

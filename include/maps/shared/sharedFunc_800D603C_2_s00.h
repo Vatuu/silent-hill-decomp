@@ -1,11 +1,3 @@
-// @hack Checks if `angle >= -val && angle < val`.
-// Needed to allow `li XX, (val * 2), sltu` to be emitted instead of just `sltiu`.
-// TODO: Move this to header, other funcs have the same `sltu` issue.
-inline static bool Math_CheckAngleRange(q19_12 angle, q19_12 angleRange)
-{
-    return (u32)(angle + angleRange) > (angleRange * 2);
-}
-
 void sharedFunc_800D603C_2_s00(s_SubCharacter* chara) // 0x800D603C
 {
     s32    animStatus;

@@ -140,6 +140,14 @@ static inline q3_12 Math_AngleNormalize(q19_12 angle)
     return FP_ANGLE_NORM_S(angle);
 }
 
+// @hack Checks if `ang >= -val && ang < val`.
+// Needed to allow `li XX, (val*2), sltu` to be emitted instead of just `sltiu`.
+// (TODO: Some distance checks also have same sltu issue, need better name.)
+inline static bool Math_CheckAngleRange(s32 ang, s32 val)
+{
+    return (u32)(ang + val) > (val * 2);
+}
+
 /** @brief Clears an `SVECTOR`'s components.
  *
  * @param vec Output vector.

@@ -30,7 +30,7 @@ void sharedFunc_800D3C24_2_s00(s_SubCharacter* chara)
 
             if (cond0)
             {
-                Chara_DamageTake(chara, 0);
+                Chara_DamageTake(chara, Q12(0.0f));
 
                 chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
                 chara->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
@@ -41,7 +41,7 @@ void sharedFunc_800D3C24_2_s00(s_SubCharacter* chara)
 
             if (cond1)
             {
-                Chara_DamageTake(chara, 0);
+                Chara_DamageTake(chara, Q12(0.0f));
                 sharedFunc_800D2364_0_s01(chara);
 
                 chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
@@ -53,7 +53,7 @@ void sharedFunc_800D3C24_2_s00(s_SubCharacter* chara)
 
             if (chara->health_B0 <= Q12(0.0f))
             {
-                Chara_DamageTake(chara, 0);
+                Chara_DamageTake(chara, Q12(0.0f));
 
                 if (animStatus == ANIM_STATUS(26, true) && newStep == 1)
                 {
@@ -84,7 +84,7 @@ void sharedFunc_800D3C24_2_s00(s_SubCharacter* chara)
             break;
 
         case 1:
-            Chara_DamageTake(chara, 0);
+            Chara_DamageTake(chara, Q12(0.0f));
             break;
 
         case 2:

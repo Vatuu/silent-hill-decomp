@@ -65,7 +65,7 @@ INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2390_0_s01
 
 #include "maps/shared/sharedFunc_800D2BF4_0_s01.h" // 0x800D2BF4
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", Chara_DamageTake); // 0x800D2C0C
+#include "maps/shared/Chara_DamageTake.h" // 0x800D2C0C
 
 #include "maps/shared/sharedFunc_800D2E04_0_s01.h" // 0x800D2E04
 
@@ -683,7 +683,8 @@ void func_800D4894(s_SubCharacter* chara)
 
     sharedFunc_800D5D80_0_s01(chara);
 
-    damageType = Chara_DamageTake(chara, 0x999);
+    damageType = Chara_DamageTake(chara, Q12(0.6f));
+    // TODO: Switch?
     if (damageType >= 0)
     {
         if (damageType < 3)
