@@ -56,7 +56,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
 
     switch (chara->model_0.anim_4.status_0) 
     {
-        case 4:
+        case ANIM_STATUS(2, false):
             keyframeIdx1 = chara->properties_E4.larvalStalker.properties_E8[3].val16[1];
             if (keyframeIdx1 != -1) 
             {
@@ -90,32 +90,32 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             CopyData(chara, sharedData_800DA928_1_s00[1]);
             break;
 
-        case 7:
-        case 37:
+        case ANIM_STATUS(3, true):
+        case ANIM_STATUS(18, true):
             keyframeIdx0 = (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 24 && FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 30) ? 0 : 1;
             keyframeIdx1 = (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 23 && FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 29) ? 0 : 1;
             func_80070400(chara, &sharedData_800DA928_1_s00[keyframeIdx0], &sharedData_800DA928_1_s00[keyframeIdx1]);
             break;
 
-        case 5:
-        case 6:
-        case 28:
-        case 29:
-        case 36:
+        case ANIM_STATUS(2, true):
+        case ANIM_STATUS(3, false):
+        case ANIM_STATUS(14, false):
+        case ANIM_STATUS(14, true):
+        case ANIM_STATUS(18, false):
             CopyData(chara, sharedData_800DA928_1_s00[1]);
             break;  
             
-        case 8:
+        case ANIM_STATUS(4, false):
             func_80070400(chara, &sharedData_800DB008_1_s00, &sharedData_800DA950_1_s00);
             break;
             
-        case 9:
-        case 26:
-        case 27:
+        case ANIM_STATUS(4, true):
+        case ANIM_STATUS(13, false):
+        case ANIM_STATUS(13, true):
             CopyData(chara, sharedData_800DA950_1_s00);
             break;
             
-        case 10:
+        case ANIM_STATUS(5, false):
             var_a3 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0];
             if (var_a3 == 0) 
             {
@@ -136,8 +136,8 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             func_80070400(chara, &sharedData_800DA964_1_s00[keyframeIdx0], &sharedData_800DA964_1_s00[var_a3]);
             break;
             
-        case 11:
-        case 31:
+        case ANIM_STATUS(5, true):
+        case ANIM_STATUS(15, true):
             var_a0 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
             var_a1 = var_a0 - 41;
             if (var_a1 < 15) 
@@ -169,7 +169,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             func_80070400(chara, &sharedData_800DA964_1_s00[keyframeIdx0], &sharedData_800DA964_1_s00[keyframeIdx1]);
             break;
             
-        case 12:
+        case ANIM_STATUS(6, false):
             keyframeIdx2 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0];
             if (keyframeIdx2 == 0) 
             {
@@ -181,9 +181,9 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             keyframeIdx0 = ((var_a1 - 7) - (var_a1 >= 23)) - (var_a1 >= 24);
             func_80070400(chara, &sharedData_800DAC34_1_s00[keyframeIdx0], &sharedData_800DAC34_1_s00[keyframeIdx2]);
             break;
-            
-        case 13:
-        case 33:
+
+        case ANIM_STATUS(6, true):
+        case ANIM_STATUS(16, true):
             var_a2 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
             var_a1 = var_a2 - 86;
             if (var_a1 < 15) 
@@ -200,7 +200,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             func_80070400(chara, &sharedData_800DAC34_1_s00[keyframeIdx0], &sharedData_800DAC34_1_s00[keyframeIdx1]);
             break;
             
-        case 14:
+        case ANIM_STATUS(7, false):
             if (chara->properties_E4.larvalStalker.properties_E8[3].val16[0] == 0) 
             {
                 CopyData(chara, sharedData_800DAE28_1_s00[0]);
@@ -228,7 +228,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             func_80070400(chara, &sharedData_800DA964_1_s00[keyframeIdx0], &sharedData_800DAE28_1_s00[keyframeIdx1]);
             break;
             
-        case 15:
+        case ANIM_STATUS(7, true):
             chara->properties_E4.larvalStalker.properties_E8[3].val16[1] = -2;
             keyframeIdx1 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
 
@@ -285,7 +285,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             func_80070400(chara, &sharedData_800DAE28_1_s00[keyframeIdx0], &sharedData_800DAE28_1_s00[keyframeIdx1]);
             break;
             
-        case 16:
+        case ANIM_STATUS(8, false):
             if (chara->properties_E4.larvalStalker.properties_E8[3].val16[0] == 0) 
             {
                 CopyData(chara, sharedData_800DAF68_1_s00[0]);
@@ -305,8 +305,8 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             keyframeIdx1 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0];
             func_80070400(chara, &sharedData_800DAC34_1_s00[keyframeIdx0], &sharedData_800DAF68_1_s00[keyframeIdx1]);
             break;
-            
-        case 17:
+
+        case ANIM_STATUS(8, true):
             chara->properties_E4.larvalStalker.properties_E8[3].val16[1] = -2;
             var_a0 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
             var_a1 = var_a0 - 143;
@@ -315,8 +315,8 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             keyframeIdx1 = MIN(7, var_a0 - 142);
             func_80070400(chara, &sharedData_800DAF68_1_s00[keyframeIdx0], &sharedData_800DAF68_1_s00[keyframeIdx1]);
             break;
-            
-        case 18:
+
+        case ANIM_STATUS(9, false):
             keyframeIdx1 = chara->properties_E4.larvalStalker.properties_E8[3].val16[1];
             if (keyframeIdx1 == -1) 
             {
@@ -342,26 +342,26 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             func_80070400(chara, &sharedData_800DAC34_1_s00[keyframeIdx0], &sharedData_800DB008_1_s00);
             break;
 
-        case 19:
-        case 34:
-        case 35:
+        case ANIM_STATUS(9, true):
+        case ANIM_STATUS(17, false):
+        case ANIM_STATUS(17, true):
             CopyData(chara, sharedData_800DB008_1_s00);
             break;
             
-        case 20:
-        case 21:
+        case ANIM_STATUS(10, false):
+        case ANIM_STATUS(10, true):
             CopyData(chara, sharedData_800DB01C_1_s00);
             break;
             
-        case 22:
-        case 23:
-        case 24:
-        case 25:
+        case ANIM_STATUS(11, false):
+        case ANIM_STATUS(11, true):
+        case ANIM_STATUS(12, false):
+        case ANIM_STATUS(12, true):
             CopyData(chara, sharedData_800DB030_1_s00);
             break;
             
-        case 2:
-        case 3:
+        case ANIM_STATUS(1, false):
+        case ANIM_STATUS(1, true):
             chara->field_C8.field_0   = Q12(-0.72f);
             chara->field_C8.field_4   = Q12(-0.2f);
             chara->field_C8.field_6   = Q12(-0.66f);

@@ -1,19 +1,19 @@
-void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, s32* deltaTime)
+void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, q19_12* deltaTime)
 {
 #if defined(MAP7_S03)
-    s32         xDelta;
-    s32         zDelta;
+    q19_12      deltaX;
+    q19_12      deltaZ;
     s_Particle* ptr;
 
     ptr = part;
     
-    xDelta = g_Particle_PrevPosition.vx - g_Particle_Position.vx;
-    zDelta = g_Particle_PrevPosition.vz - g_Particle_Position.vz;
+    deltaX = g_Particle_PrevPosition.vx - g_Particle_Position.vx;
+    deltaZ = g_Particle_PrevPosition.vz - g_Particle_Position.vz;
 
     if (pass == 0)
     {
-        part->position0_0.vx += xDelta;
-        part->position0_0.vz += zDelta - ((*deltaTime) * 2);
+        part->position0_0.vx += deltaX;
+        part->position0_0.vz += deltaZ - ((*deltaTime) * 2);
 
         if ((ABS(part->position0_0.vx) + ABS(part->position0_0.vz)) > Q12(8.0))
         {
