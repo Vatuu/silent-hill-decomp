@@ -229,9 +229,9 @@ void func_800DBF14(void) {}
 
 INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800DC894_2_s00); // 0x800DC894
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800DC98C_2_s00); // 0x800DC98C
+#include "maps/shared/sharedFunc_800D4AEC_0_s01.h" // 0x800DC98C
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800D4E84_0_s01); // 0x800DCD24
+#include "maps/shared/sharedFunc_800D4E84_0_s01.h" // 0x800DCD24
 
 #include "maps/shared/sharedFunc_800D5274_0_s01.h" // 0x800DD114
 

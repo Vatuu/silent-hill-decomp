@@ -2169,6 +2169,12 @@ extern u8 sharedData_800CFB44_0_s02[8];
 extern u8 sharedData_800CFB4C_0_s02[8];
 extern u8 sharedData_800CFB54_0_s02[8];
 
+extern VECTOR3 sharedData_800DE1A0_0_s01;
+
+extern VECTOR3 sharedData_800DE1B0_0_s01;
+
+extern VECTOR3 sharedData_800DE1C0_0_s01;
+
 extern VECTOR3 sharedData_800DE1E0_0_s01;
 
 extern VECTOR3 sharedData_800DE1F0_0_s01;
@@ -2450,7 +2456,7 @@ s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* chara, q19_12 arg1);
 
 q19_12 sharedFunc_800DC894_2_s00(s_SubCharacter*, s32);
 
-s32 sharedFunc_800DC98C_2_s00(s_SubCharacter*, VECTOR3*, VECTOR3*, VECTOR3*);
+s32 sharedFunc_800D4AEC_0_s01(s_SubCharacter*, VECTOR3*, VECTOR3*, VECTOR3*);
 
 void sharedFunc_800DD2C4_2_s00(s_SubCharacter*, s32, s32); // Assumed void return type.
 

@@ -255,9 +255,9 @@ void func_800DC230(void) {}
 
 INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800DC894_2_s00); // 0x800DCBB0
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800DC98C_2_s00); // 0x800DCCA8
+#include "maps/shared/sharedFunc_800D4AEC_0_s01.h" // 0x800DCCA8
 
-INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800D4E84_0_s01); // 0x800DD040
+#include "maps/shared/sharedFunc_800D4E84_0_s01.h" // 0x800DD040
 
 #include "maps/shared/sharedFunc_800D5274_0_s01.h" // 0x800DD430
 

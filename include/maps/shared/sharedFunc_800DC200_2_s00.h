@@ -10,5 +10,5 @@ bool sharedFunc_800DC200_2_s00(s_SubCharacter* chara)
     sharedData_800F216C_2_s00.vy = chara->position_18.vy + Q12(0.5f);
     sharedData_800F216C_2_s00.vz = chara->position_18.vz + FP_MULTIPLY_PRECISE(Math_Cos(chara->rotation_24.vy), Q12(2.0f), Q12_SHIFT);
 
-    return sharedFunc_800DC98C_2_s00(chara, NULL, &sharedData_800F216C_2_s00, NULL) != 0;
+    return sharedFunc_800D4AEC_0_s01(chara, NULL, &sharedData_800F216C_2_s00, NULL) != 0;
 }

@@ -65,7 +65,7 @@ void sharedFunc_800DD588_2_s00(s_SubCharacter* chara)
         chara->properties_E4.unk0.field_F8.vx = curPosX + FP_MULTIPLY_PRECISE(sinRotY, Q12(30.0f), Q12_SHIFT);
         chara->properties_E4.unk0.field_F8.vz = curPosX + FP_MULTIPLY_PRECISE(Math_Cos(chara->rotation_24.vy), Q12(30.0f), Q12_SHIFT);
 
-        if (sharedFunc_800DC98C_2_s00(chara, NULL, &chara->properties_E4.unk0.field_F8, NULL))
+        if (sharedFunc_800D4AEC_0_s01(chara, NULL, &chara->properties_E4.unk0.field_F8, NULL))
         {
             break;
         }
