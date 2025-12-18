@@ -53,6 +53,7 @@ OBJCOPY := $(CROSS)-objcopy
 OBJDUMP := $(CROSS)-objdump
 CPP     := $(CROSS)-cpp
 CC      := $(TOOLS_DIR)/gcc-2.8.1-psx/cc1
+CC272   := $(TOOLS_DIR)/gcc-2.7.2-cdk/cc1
 OBJDIFF := $(OBJDIFF_DIR)/objdiff
 
 PYTHON          := python3
@@ -446,6 +447,9 @@ endif
 
 $(BUILD_DIR)/%.sjis.i: $(BUILD_DIR)/%.i
 	iconv -f UTF-8 -t SHIFT-JIS $< -o $@
+
+# Switch compiler to 2.7.2-cdk / 2.7.2-970404 for `lib_unk` code.
+$(BUILD_DIR)/src/bodyprog/lib_unk/%.c.s: CC := $(CC272)
 
 $(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.sjis.i
 	@mkdir -p $(dir $@)

@@ -285,7 +285,7 @@ segments:
       - [0x78A48, lib, libspu, s_sva] # SpuSetVoiceAttr
       - [0x79048, lib, libspu, s_n2p] # _spu_note2pitch _spu_pitch2note
       - [0x79248, lib, libspu, s_gva] # SpuGetVoiceAttr
-      - [0x79638, asm, lib_unk/lib_8009E198]
+      - [0x79638,   c, lib_unk/lib_8009E198]
       - [0x7A244,   c, libsd/smf_snd]
       - [0x7D7FC, lib, libspu, s_q] # SpuQuit
       - [0x7D87C, lib, libapi, a13] # DisableEvent
