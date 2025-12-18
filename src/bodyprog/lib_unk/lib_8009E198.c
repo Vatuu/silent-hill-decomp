@@ -22,7 +22,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E4F8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E520);
 
-s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* arg1)
+s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* arg1) // 0x8009E550
 {
     s32 padState;
     s32 padInfoCurID;
@@ -51,11 +51,45 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E61C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E718);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E7D8);
+bool func_8009E7D8(s_SysWork_2510* arg0) // 0x8009E7D8
+{
+    s_SysWork_2510* var_a1;
+
+    for (var_a1 = arg0; var_a1; var_a1 = var_a1->next_0)
+    {
+        if (var_a1 == &D_800B141C)
+        {
+            return false;
+        }
+    }
+
+    var_a1            = arg0->next_0;
+    arg0->next_0      = &D_800B141C;
+    D_800B141C.next_0 = var_a1;
+
+    return true;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E82C);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E97C);
+bool func_8009E97C(s_SysWork_2510* arg0) // 0x8009E97C
+{
+    s_SysWork_2510* var_a1;
+
+    for (var_a1 = arg0; var_a1; var_a1 = var_a1->next_0)
+    {
+        if (var_a1 == &D_800B142C)
+        {
+            return false;
+        }
+    }
+
+    var_a1            = arg0->next_0;
+    arg0->next_0      = &D_800B142C;
+    D_800B142C.next_0 = var_a1;
+
+    return true;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E9D0);
 
@@ -67,8 +101,27 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009EC64);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009ECCC);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009ED74);
+s_SysWork_2514_18* func_8009ED74(s_SysWork_2514* arg0) // 0x8009ED74
+{
+    return &arg0->head_18;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009ED7C);
+s_SysWork_2514_18* func_8009ED7C(s_SysWork_2514_18* arg0) // 0x8009ED7C
+{
+    if (arg0 != NULL)
+    {
+        return arg0->next_0;
+    }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009ED90);
+    return NULL;
+}
+
+s32 func_8009ED90(s_SysWork_2514_18* arg0) // 0x8009ED90
+{
+    if (arg0 != NULL)
+    {
+        return arg0->field_4; // TODO: Is this `s_SysWork_2514_18*`?
+    }
+
+    return 0;
+}
