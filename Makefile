@@ -97,14 +97,19 @@ TARGET_POSTBUILD := bodyprog screens/stream maps/map3_s06 maps/map4_s05 maps/map
 # - Files under main executable paths use -G8; overlay files use -G0.
 # - Enables `--expand-div` for certain `libsd` sources which require it (others can't build with it).
 # - Adds overlay-specific compiler flags based on files directory (currently only per-map defines).
+# - Switches aspsx-version for lib_unk code.
 define FlagsSwitch
 	$(if $(findstring /main/,$(1)), $(eval DL_FLAGS = -G8), $(eval DL_FLAGS = -G0))
 	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
 	$(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
 	
+	$(if $(findstring lib_unk,$(1)), \
+		$(eval ASPSX_VERSION := 2.67), \
+		$(eval ASPSX_VERSION := 2.77))
+
 	$(if $(or $(findstring smf_mid,$(1)), $(findstring smf_io,$(1)),), \
-		$(eval MASPSX_FLAGS = --aspsx-version=2.77 --run-assembler --expand-div $(AS_FLAGS)), \
-		$(eval MASPSX_FLAGS = --aspsx-version=2.77 --run-assembler $(AS_FLAGS)))
+		$(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) --run-assembler --expand-div $(AS_FLAGS)), \
+		$(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) --run-assembler $(AS_FLAGS)))
 
 	$(eval _rel_path := $(patsubst build/src/maps/%,%,$(patsubst build/${asm}/maps/%,%,$(1))))
 	$(eval _map_name := $(shell echo $(word 1, $(subst /, ,$(_rel_path))) | tr a-z A-Z))
