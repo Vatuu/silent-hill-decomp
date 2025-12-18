@@ -5,6 +5,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
     q19_12 mag;
     s32    i;
 
+    // TODO: Use `Math_Vector2MagCalc`.
     mag   = SquareRoot0(SQUARE((sharedData_800E3A18_0_s00 - chara->position_18.vx) >> 6) + SQUARE((sharedData_800E3A1C_0_s00 - chara->position_18.vz) >> 6));
     mag <<= 6;
     angle0 = func_8005BF38(ratan2(sharedData_800E3A18_0_s00 - chara->position_18.vx, sharedData_800E3A1C_0_s00 - chara->position_18.vz) - chara->rotation_24.vy);
@@ -65,12 +66,12 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
         }
 
         if ((g_SysWork.field_2284[3] & (1 << 0)) ||
-            ( (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 2)) && Rng_GenerateInt(0, 3) != 0) ||
-            (!(chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 2)) && Rng_GenerateInt(0, 1) != 0))
+            ( (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 2)) && Rng_GenerateInt(0, 3) != 0) || // 1 in 4 chance.
+            (!(chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 2)) && Rng_GenerateInt(0, 1) != 0))   // 1 in 2 chance.
         {
             if (mag < Q12(0.9f))
             {
-                if (mag > Q12(0.7f) || Rng_GenerateInt(0, 3) == 0)
+                if (mag > Q12(0.7f) || Rng_GenerateInt(0, 3) == 0) // 1 in 4 chance.
                 {
                     if (ABS(angle0) < FP_ANGLE(90.0f))
                     {
@@ -172,7 +173,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
         }
 
         chara->properties_E4.player.runTimer_F8 += g_DeltaTime0;
-        if ((chara->properties_E4.player.runTimer_F8 > Q12(2.5f)) && Rng_GenerateInt(0, 15) == 0)
+        if ((chara->properties_E4.player.runTimer_F8 > Q12(2.5f)) && Rng_GenerateInt(0, 15) == 0) // 1 in 16 chance.
         {
             chara->properties_E4.player.runTimer_F8 = Q12(0.0f);
         }

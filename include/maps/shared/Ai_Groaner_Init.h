@@ -14,12 +14,14 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
     groaner->model_0.anim_4.alpha_A = Q12(0.0f);
 
     groaner->health_B0 = GROANER_HEALTH_BASE + (Rng_Rand16() % GROANER_HEALTH_BONUS_MAX);
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal && Rng_GenerateInt(0, 7) == 0)
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal &&
+        Rng_GenerateInt(0, 7) == 0) // 1 in 8 chance.
     {
         groaner->health_B0 *= 2;
     }
 
-    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard && Rng_GenerateInt(0, 3) == 0)
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard &&
+        Rng_GenerateInt(0, 3) == 0)// 1 in 4 chance.
     {
         groaner->health_B0 *= 2;
     }

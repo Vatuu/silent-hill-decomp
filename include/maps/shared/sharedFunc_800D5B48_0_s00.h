@@ -9,7 +9,7 @@ void sharedFunc_800D5B48_0_s00(s_SubCharacter* chara)
 
     // 25% chance.
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(27, true) &&
-        !Rng_GenerateInt(0, 3))
+        !Rng_GenerateInt(0, 3)) // 1 in 4 chance.
     {
         flags = chara->properties_E4.larvalStalker.properties_E8[0].val16[0];
         if (!(flags & (1 << 13)))

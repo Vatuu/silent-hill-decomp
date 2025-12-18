@@ -2935,7 +2935,7 @@ bool sharedFunc_800D3430_0_s01(s_SubCharacter* chara, s32* arg1, s32* arg2);
 
 s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara);
 
-s32 sharedFunc_800D31D0_0_s01(s_SubCharacter* chara, VECTOR3* arg1, s32 arg2);
+bool sharedFunc_800D31D0_0_s01(s_SubCharacter* chara, VECTOR3* pos, s32 arg2);
 
 bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer);
 
@@ -3091,7 +3091,7 @@ void sharedFunc_800DF22C_2_s00(s_SubCharacter* chara);
 
 s32 sharedFunc_800DF24C_2_s00(s_SubCharacter* chara);
 
-s32 sharedFunc_800D2FB4_0_s01(s_SubCharacter* chara, VECTOR3* playerPos, s32 playerField10C);
+bool sharedFunc_800D2FB4_0_s01(s_SubCharacter* chara, VECTOR3* playerPos, s32 playerField10C);
 
 void sharedFunc_800D72E8_0_s01(s_SubCharacter* chara, s32 field_34, s32 rotSpeedY);
 

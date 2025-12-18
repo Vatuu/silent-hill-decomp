@@ -66,7 +66,7 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
 
     if (nurse->model_0.stateStep_3 && sharedFunc_800CE398_3_s03(nurse->model_0.anim_4.status_0))
     {
-        if (Rng_GenerateUInt(0, 31) == 0)
+        if (Rng_GenerateUInt(0, 31) == 0) // 1 in 32 chance.
         {
             rng = Rng_Rand16();
             nurse->model_0.anim_4.status_0 = g_PuppetNurse_AnimStatus2[(rng >> 7) & 1];

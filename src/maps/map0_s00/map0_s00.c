@@ -871,7 +871,7 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
                 arg2->field_12++;
                 if (arg1)
                 {
-                    if (Rng_GenerateUInt(0, 1) != 0)
+                    if (Rng_GenerateUInt(0, 1) != 0) // 1 in 2 chance.
                     {
                         arg2->field_11 = 5;
                         arg2->field_12 = 0;

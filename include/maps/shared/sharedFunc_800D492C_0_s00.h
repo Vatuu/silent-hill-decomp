@@ -59,8 +59,8 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
 
     if (!(chara->properties_E4.player.afkTimer_E8 & 0x18))
     {
-        if (!(Rng_GenerateInt(0, 0x1FF) && magMax <= Q12(4.0f)) ||
-            (!Rng_GenerateInt(0, 0x7F) && Rng_GenerateUInt(0, 0xFFF) < FP_TO(magMax, Q12_SHIFT) / Q12(4.0f)))
+        if (!(Rng_GenerateInt(0, 511) && magMax <= Q12(4.0f)) ||                                             // 1 in 512 chance.
+            (!Rng_GenerateInt(0, 127) && Rng_GenerateUInt(0, 0xFFF) < FP_TO(magMax, Q12_SHIFT) / Q12(4.0f))) // 1 in 128 chance.
         {
             if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 11))
             {
@@ -149,10 +149,10 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
                 sharedFunc_800D7E04_0_s00(chara, 1363);
             }
 
-            if (((Rng_GenerateInt(0, 15) == 0 && chara->properties_E4.player.runTimer_F8 > Q12(1.0f)) &&
+            if (((Rng_GenerateInt(0, 15) == 0 && chara->properties_E4.player.runTimer_F8 > Q12(1.0f)) && // 1 in 16 cheance.
                  (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 1))) ||
-                (Rng_GenerateInt(0, 15) == 0 && chara->properties_E4.player.runTimer_F8 > Q12(2.5f)) ||
-                (Rng_GenerateInt(0, 31) == 0 && ((dist1 >> 1) < dist0)))
+                (Rng_GenerateInt(0, 15) == 0 && chara->properties_E4.player.runTimer_F8 > Q12(2.5f)) ||  // 1 in 16 chance.
+                (Rng_GenerateInt(0, 31) == 0 && ((dist1 >> 1) < dist0)))                                 // 1 in 32 chance.
             {
                 if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 1))
                 {
@@ -178,7 +178,7 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
         {
             chara->properties_E4.larvalStalker.properties_E8[11].val16[1] += g_DeltaTime0;
 
-            if (Rng_GenerateInt(0, 4095) == 0 || (u16)chara->properties_E4.larvalStalker.properties_E8[11].val16[1] > Q12(1.2f))
+            if (Rng_GenerateInt(0, 4095) == 0 || (u16)chara->properties_E4.larvalStalker.properties_E8[11].val16[1] > Q12(1.2f)) // 1 in 4096 chance.
             {
                 chara->properties_E4.larvalStalker.properties_E8[11].val16[1] = 0;
                 chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 10);

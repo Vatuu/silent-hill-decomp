@@ -60,7 +60,7 @@ extern u32 g_RngSeed;
 #define Rng_GenerateUIntFromInput(rand, low, high) \
     ((s32)((u32)(rand) % (((high) - (low)) + 1)) + (low))
 
-/** @brief Shorthand of `Rng_GenerateIntFromInput(Rng_Rand16(), low, high)` 
+/** @brief Shorthand of `Rng_GenerateIntFromInput(Rng_Rand16(), low, high)` .
  *
  * @param low Lower range (inclusive).
  * @param high Upper range (inclusive).
@@ -69,7 +69,7 @@ extern u32 g_RngSeed;
 #define Rng_GenerateInt(low, high) \
     Rng_GenerateIntFromInput(Rng_Rand16(), low, high)
 
-/** @brief Shorthand of `Rng_GenerateUIntFromInput(Rng_Rand16(), low, high)` 
+/** @brief Shorthand of `Rng_GenerateUIntFromInput(Rng_Rand16(), low, high)` .
  *
  * @param low Lower range (inclusive).
  * @param high Upper range (inclusive).

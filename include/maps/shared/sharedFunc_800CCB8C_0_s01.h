@@ -1,4 +1,5 @@
 #include "inline_no_dmpsx.h"
+
 #include <psyq/gtemac.h>
 
 void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7)
@@ -61,7 +62,7 @@ void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s
     gte_SetRotMatrix(&ptr->field_C);
     gte_SetTransMatrix(&ptr->field_C);
 
-    ptr->field_44 = (SquareRoot0(SQUARE(var_s1 >> 6) + SQUARE(arg4 >> 6)) << 6) + 1;
+    ptr->field_44 = Math_Vector2MagCalc(var_s1, arg4) + 1;
 
     for (var_s7 = -arg4; arg4 >= var_s7;)
     {

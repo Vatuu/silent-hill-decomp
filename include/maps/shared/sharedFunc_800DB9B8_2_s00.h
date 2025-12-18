@@ -24,6 +24,7 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* chara)
                 chara->model_0.stateStep_3     = 1;
             }
             break;
+
         case 1:
             if (animStatus != ANIM_STATUS(8, false))
             {
@@ -31,6 +32,7 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* chara)
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
+
         case 2:
             if (animStatus != ANIM_STATUS(8, true))
             {
@@ -93,6 +95,7 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* chara)
                 case 3:
                     chara->model_0.state_2     = 41;
                     chara->model_0.stateStep_3 = 0;
+
                     if (Rng_RandQ12() < ((Q12(0.5f) - (var_s1 * 3))))
                     {
                         chara->properties_E4.unk0.field_E8_8 = 2;

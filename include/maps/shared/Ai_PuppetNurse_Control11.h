@@ -19,7 +19,7 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
 
     if (sharedFunc_800CE398_3_s03(nurse->model_0.anim_4.status_0))
     {
-        if (Rng_GenerateUInt(0, 15) == 0)
+        if (Rng_GenerateUInt(0, 15) == 0) // 1 in 16 chance.
         {
             if (Rng_Rand16() & 0x80)
             {
@@ -53,7 +53,7 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
     localNurse = nurse;
     Chara_MoveSpeedUpdate3(nurse, Q12(1.4f), Q12(0.27f));
 
-    if (Rng_GenerateUInt(0, 63) == 0)
+    if (Rng_GenerateUInt(0, 63) == 0) // 1 in 64 chance.
     {
         tmp = Q12(1.5f);
         temp_s0 = localNurse->properties_E4.puppetNurse.field_108 + ((Rng_Rand16() % Q12(3.0f)) - tmp);

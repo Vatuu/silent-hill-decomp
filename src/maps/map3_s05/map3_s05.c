@@ -932,7 +932,7 @@ void func_800D87AC(void) // 0x800D87AC
             D_800DD52A = CLAMP_LOW(D_800DD52A - g_DeltaTime0, Q12(0.0f));
         }
 
-        if (D_800DD52A == Q12(0.0f) && Rng_GenerateUInt(0, 63) == 0)
+        if (D_800DD52A == Q12(0.0f) && Rng_GenerateUInt(0, 63) == 0) // 1 in 64 chance.
         {
             D_800DD52A = Q12(0.8f);
             soundPos.vx = Rng_GenerateInt(Q12(137.5f), Q12(142.5f) - 1);

@@ -26,7 +26,7 @@ void sharedFunc_800E6758_2_s02(s_SubCharacter* chara)
     speed               = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(15.0f), Q12_SHIFT);
     chara->moveSpeed_38 = MAX(speed, Q12(0.0f));
 
-    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(12, true) && (Rng_GenerateUInt(0, 4095) == 0 || var))
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(12, true) && (Rng_GenerateUInt(0, 4095) == 0 || var)) // 1 in 4096 chance.
     {
         chara->model_0.state_2         = 2;
         chara->model_0.anim_4.status_0 = ANIM_STATUS(15, false);

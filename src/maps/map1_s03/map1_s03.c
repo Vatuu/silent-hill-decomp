@@ -1598,7 +1598,7 @@ void func_800DE828(void) // 0x800DE828
         {
             if (D_800E20E8 == 0)
             {
-                if (Rng_GenerateUInt(0, 31) == 0)
+                if (Rng_GenerateUInt(0, 31) == 0) // 1 in 32 chance.
                 {
                     D_800E20E8 = -Rng_GenerateUInt(2, 9);
                 }
@@ -1619,7 +1619,7 @@ void func_800DE828(void) // 0x800DE828
                         func_8005DC1C(Sfx_Unk1435, &sfxPos, Q8_CLAMPED(0.5f), 0);
                         g_WorldObject1.rotation_28.vy = 0;
     
-                        if (D_800E20E8 >= 8 && Rng_GenerateUInt(0, 3) == 0)
+                        if (D_800E20E8 >= 8 && Rng_GenerateUInt(0, 3) == 0) // 1 in 4 chance.
                         {
                             D_800E20E8 = 0;
                         }

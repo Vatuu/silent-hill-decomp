@@ -343,8 +343,8 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D48CC);
 
 s32 func_800D4924(VECTOR3* vec, q19_12 angle) // 0x800D4924
 {
-    s32 posX;
-    s32 posZ;
+    q19_12 posX;
+    q19_12 posZ;
 
     posX = vec->vx + FP_MULTIPLY_FLOAT_PRECISE(Math_Sin(angle), 1.0f, Q12_SHIFT);
     posZ = vec->vz + FP_MULTIPLY_FLOAT_PRECISE(Math_Cos(angle), 1.0f, Q12_SHIFT);

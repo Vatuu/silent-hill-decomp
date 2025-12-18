@@ -121,7 +121,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* chara)
         }
         else
         {
-            if (Rng_GenerateInt(0, 7) == 0)
+            if (Rng_GenerateInt(0, 7) == 0) // 1 in 8 chance.
             {
                 func_80037DC4(chara);
             }

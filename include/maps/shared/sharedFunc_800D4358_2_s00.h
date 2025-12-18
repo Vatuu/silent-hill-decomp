@@ -11,7 +11,7 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
     bool    cond;
     s32     temp_fp;
     s32     new_var;
-    q19_12  angFieldF8;
+    q19_12  angleFieldF8;
     q19_12  distFieldF8;
     s32     temp_v0;
 
@@ -42,7 +42,7 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
 
         case 2:
             distFieldF8 = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
-            angFieldF8  = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8) - chara->rotation_24.vy);
+            angleFieldF8  = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8) - chara->rotation_24.vy);
 
             temp_v0     = sharedFunc_800DC598_2_s00(chara);
             if (temp_v0 == 1)
@@ -53,7 +53,7 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
             {
                 chara->model_0.stateStep_3 = 5;
             }
-            else if ((distFieldF8 < Q12(0.5f) && (angFieldF8 >= FP_ANGLE(-5.0f) && angFieldF8 <= FP_ANGLE(5.0f))) ||
+            else if ((distFieldF8 < Q12(0.5f) && (angleFieldF8 >= FP_ANGLE(-5.0f) && angleFieldF8 <= FP_ANGLE(5.0f))) ||
                      (chara->properties_E4.unk0.flags_11C & CharaUnk0Flag_Unk31))
             {
                 chara->model_0.stateStep_3 = 0;
@@ -70,8 +70,8 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
                 }
                 else if (sharedFunc_800DC30C_2_s00(chara))
                 {
-                    // @hack This check should be `if (diff >= Q12(-1.0f) && diff < Q12(1.0f))`
-                    // But that results in `sltiu 0x2000` instead of the `li 0x2000/sltu` needed.
+                    // @hack This check should be `if (diff >= Q12(-1.0f) && diff < Q12(1.0f))`,
+                    // but that results in `sltiu 0x2000` instead of the `li 0x2000/sltu` needed.
                     if (Math_CheckSignedRange(chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy, Q12(1.0f)))
                     {
                         chara->model_0.stateStep_3 = 3;

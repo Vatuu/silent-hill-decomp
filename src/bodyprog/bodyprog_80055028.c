@@ -4009,7 +4009,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
                 g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = pos->vz;
             }
 
-            if (Rng_GenerateInt(0, 1) != 0)
+            if (Rng_GenerateInt(0, 1) != 0) // 1 in 2 chance.
             {
                 g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = Rng_GenerateInt(0, 2) + (Rng_GenerateUInt(0, 7) * 8);
             }
@@ -5008,7 +5008,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
 
         sp10 = *ptr;
 
-        if (Rng_GenerateUInt(0, 1) != 0)
+        if (Rng_GenerateUInt(0, 1) != 0) // 1 in 2 chance.
         {
             Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
             Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
