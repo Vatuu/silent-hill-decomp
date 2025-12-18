@@ -92,7 +92,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
         chara->model_0.stateStep_3                                  = 0;
         chara->model_0.anim_4.keyframeIdx_8                         = 7;
         chara->position_18.vy                                       = 0;
-        chara->properties_E4.larvalStalker.properties_E8[0].val8[0] = 0;
+        chara->properties_E4.dummy.properties_E8[0].val8[0] = 0;
     }
 
     if (chara->model_0.stateStep_3 == 0)
@@ -121,9 +121,9 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     cond = false;
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(1, true))
     {
-        if (((u8)chara->properties_E4.larvalStalker.properties_E8[0].val8[0] == 0 &&
+        if (((u8)chara->properties_E4.dummy.properties_E8[0].val8[0] == 0 &&
              (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 20) < 3u) ||
-            ((u8)chara->properties_E4.larvalStalker.properties_E8[0].val8[0] != 0 &&
+            ((u8)chara->properties_E4.dummy.properties_E8[0].val8[0] != 0 &&
              (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 25) < 3u))
         {
             cond = true;
@@ -131,9 +131,9 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     }
     else
     {
-        if (((u8)chara->properties_E4.larvalStalker.properties_E8[0].val8[0] == 0 &&
+        if (((u8)chara->properties_E4.dummy.properties_E8[0].val8[0] == 0 &&
              (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 29) < 3u) ||
-            ((u8)chara->properties_E4.larvalStalker.properties_E8[0].val8[0] != 0 &&
+            ((u8)chara->properties_E4.dummy.properties_E8[0].val8[0] != 0 &&
              (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 36) < 3u))
         {
             cond = true;
@@ -143,7 +143,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     if (cond)
     {
         func_8005DD44(1447, &chara->position_18, Q8_CLAMPED(0.5f), Rng_GenerateInt(-7, 8u));
-        chara->properties_E4.larvalStalker.properties_E8[0].val8[0] ^= 1;
+        chara->properties_E4.dummy.properties_E8[0].val8[0] ^= 1;
     }
 }
 

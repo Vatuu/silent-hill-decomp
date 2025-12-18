@@ -58,5 +58,5 @@ void sharedFunc_800DD834_2_s00(s_SubCharacter* chara)
     }
 
     chara->moveSpeed_38 = sharedData_800CAA98_0_s01.unk_380[9][0];
-    chara->properties_E4.larvalStalker.properties_E8[14].val32 = Q12(10.0f);
+    chara->properties_E4.dummy.properties_E8[14].val32 = Q12(10.0f);
 }

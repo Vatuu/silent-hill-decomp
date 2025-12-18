@@ -463,16 +463,16 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
     chara->field_D8.offsetZ_6 = Q12(0.0f);
     chara->flags_3E          |= CharaFlag_Unk3;
 
-    localChara->properties_E4.larvalStalker.properties_E8[2].val32 = 0;
-    localChara->properties_E4.larvalStalker.properties_E8[1].val32 = 0;
+    localChara->properties_E4.dummy.properties_E8[2].val32 = 0;
+    localChara->properties_E4.dummy.properties_E8[1].val32 = 0;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        localChara->properties_E4.larvalStalker.properties_E8[3].val32 = Q12(300.0f);
+        localChara->properties_E4.dummy.properties_E8[3].val32 = Q12(300.0f);
     }
     else
     {
-        localChara->properties_E4.larvalStalker.properties_E8[3].val32 = Q12(30.0f);
+        localChara->properties_E4.dummy.properties_E8[3].val32 = Q12(30.0f);
     }
 
     activeStateStep = chara->model_0.stateStep_3;

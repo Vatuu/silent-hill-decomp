@@ -4,7 +4,7 @@ void sharedFunc_800D1524_1_s00(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOO
 {
     s_AnimInfo* animInfo;
 
-    #define charaKeyframeProp (chara->properties_E4.larvalStalker.properties_E8[3].val16[0])
+    #define charaKeyframeProp (chara->properties_E4.dummy.properties_E8[3].val16[0])
 
     switch (chara->model_0.anim_4.status_0)
     {

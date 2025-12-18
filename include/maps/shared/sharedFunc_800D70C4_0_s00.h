@@ -71,7 +71,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara)
             break;
 
         case ANIM_STATUS(38, false):
-            if (chara->properties_E4.larvalStalker.properties_E8[5].val16[0] == NO_VALUE)
+            if (chara->properties_E4.dummy.properties_E8[5].val16[0] == NO_VALUE)
             {
                 func_80070400(chara, &sharedData_800DE2C4_0_s00, &sharedData_800DDBBC_0_s00[0]);
             }
@@ -102,13 +102,13 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara)
             break;
 
         case ANIM_STATUS(39, false):
-            if (chara->properties_E4.larvalStalker.properties_E8[5].val16[0] == NO_VALUE)
+            if (chara->properties_E4.dummy.properties_E8[5].val16[0] == NO_VALUE)
             {
                 func_80070400(chara, &sharedData_800DE2D8_0_s00, &sharedData_800DDC70_0_s00[0]);
             }
             else
             {
-                func_80070400(chara, &sharedData_800DE8C8_0_s00[chara->properties_E4.larvalStalker.properties_E8[5].val16[0]], &sharedData_800DDC70_0_s00[0]);
+                func_80070400(chara, &sharedData_800DE8C8_0_s00[chara->properties_E4.dummy.properties_E8[5].val16[0]], &sharedData_800DDC70_0_s00[0]);
             }
             break;
 
@@ -129,13 +129,13 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara)
             break;
 
         case ANIM_STATUS(40, false):
-            if (chara->properties_E4.larvalStalker.properties_E8[5].val16[0] == NO_VALUE)
+            if (chara->properties_E4.dummy.properties_E8[5].val16[0] == NO_VALUE)
             {
                 func_80070400(chara, &sharedData_800DE2EC_0_s00, &sharedData_800DDCFC_0_s00[0]);
             }
             else
             {
-                func_80070400(chara, &sharedData_800DEB0C_0_s00[chara->properties_E4.larvalStalker.properties_E8[5].val16[0]], &sharedData_800DDCFC_0_s00[0]);
+                func_80070400(chara, &sharedData_800DEB0C_0_s00[chara->properties_E4.dummy.properties_E8[5].val16[0]], &sharedData_800DDCFC_0_s00[0]);
             }
             break;
 
@@ -189,11 +189,11 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara)
             break;
 
         case ANIM_STATUS(24, false):
-            if (chara->properties_E4.larvalStalker.properties_E8[5].val16[1] != 0)
+            if (chara->properties_E4.dummy.properties_E8[5].val16[1] != 0)
             {
                 func_80070400(chara,
-                              &sharedData_800DDD88_0_s00[chara->properties_E4.larvalStalker.properties_E8[5].val16[0]],
-                              &sharedData_800DE0E4_0_s00[chara->properties_E4.larvalStalker.properties_E8[5].val16[1]]);
+                              &sharedData_800DDD88_0_s00[chara->properties_E4.dummy.properties_E8[5].val16[0]],
+                              &sharedData_800DE0E4_0_s00[chara->properties_E4.dummy.properties_E8[5].val16[1]]);
             }
             else
             {
@@ -208,22 +208,22 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara)
             break;
 
         case ANIM_STATUS(25, false):
-            if (chara->properties_E4.larvalStalker.properties_E8[5].val16[1] == 83)
+            if (chara->properties_E4.dummy.properties_E8[5].val16[1] == 83)
             {
                 func_80070400(chara, &sharedData_800DDF2C_0_s00[0], &sharedData_800DE1E8_0_s00[1]);
             }
             else
             {
-                keyframeIdx0 = chara->properties_E4.larvalStalker.properties_E8[5].val16[0];
-                if (chara->properties_E4.larvalStalker.properties_E8[5].val16[1] == 23)
+                keyframeIdx0 = chara->properties_E4.dummy.properties_E8[5].val16[0];
+                if (chara->properties_E4.dummy.properties_E8[5].val16[1] == 23)
                 {
                     func_80070400(chara, &sharedData_800DE580_0_s00[keyframeIdx0 + 20], &sharedData_800DE1E8_0_s00[1]);
                 }
-                else if (chara->properties_E4.larvalStalker.properties_E8[5].val16[1] == 25)
+                else if (chara->properties_E4.dummy.properties_E8[5].val16[1] == 25)
                 {
                     func_80070400(chara, &sharedData_800DE8C8_0_s00[keyframeIdx0], &sharedData_800DE1E8_0_s00[1]);
                 }
-                else if (chara->properties_E4.larvalStalker.properties_E8[5].val16[1] == 27)
+                else if (chara->properties_E4.dummy.properties_E8[5].val16[1] == 27)
                 {
                     func_80070400(chara, &sharedData_800DEB0C_0_s00[keyframeIdx0], &sharedData_800DE1E8_0_s00[1]);
                 }
@@ -271,7 +271,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara)
 
         case ANIM_STATUS(34, false):
         case ANIM_STATUS(35, false):
-            keyframeIdx0 = chara->properties_E4.larvalStalker.properties_E8[5].val16[0];
+            keyframeIdx0 = chara->properties_E4.dummy.properties_E8[5].val16[0];
             keyframeIdx1 = 0;
             func_80070400(chara, &sharedData_800DEF1C_0_s00[keyframeIdx0], &sharedData_800DE440_0_s00[keyframeIdx1]);
             break;
@@ -316,8 +316,8 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara)
             break;
 
         case ANIM_STATUS(7, false):
-            keyframeIdx0 = chara->properties_E4.larvalStalker.properties_E8[5].val16[0];
-            keyframeIdx1 = chara->properties_E4.larvalStalker.properties_E8[5].val16[1];
+            keyframeIdx0 = chara->properties_E4.dummy.properties_E8[5].val16[0];
+            keyframeIdx1 = chara->properties_E4.dummy.properties_E8[5].val16[1];
             func_80070400(chara, &sharedData_800DEF1C_0_s00[keyframeIdx0], &sharedData_800DE580_0_s00[keyframeIdx1]);
             break;
 
@@ -327,14 +327,14 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara)
             func_80070400(chara, &sharedData_800DE580_0_s00[keyframeIdx0], &sharedData_800DE580_0_s00[keyframeIdx1]);
 
             chara->field_C8.field_8                                      = Q12(-0.7f);
-            chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = 15;
+            chara->properties_E4.dummy.properties_E8[5].val16[0] = 15;
             break;
 
         case ANIM_STATUS(1, false):
         case ANIM_STATUS(42, false):
             func_80070400(chara,
-                          &sharedData_800DE580_0_s00[19 + chara->properties_E4.larvalStalker.properties_E8[5].val16[0]],
-                          &sharedData_800DEC74_0_s00[chara->properties_E4.larvalStalker.properties_E8[5].val16[1]]);
+                          &sharedData_800DE580_0_s00[19 + chara->properties_E4.dummy.properties_E8[5].val16[0]],
+                          &sharedData_800DEC74_0_s00[chara->properties_E4.dummy.properties_E8[5].val16[1]]);
             break;
 
         case ANIM_STATUS(1, true):
@@ -347,8 +347,8 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara)
         case ANIM_STATUS(3, false):
         case ANIM_STATUS(43, false):
             func_80070400(chara,
-                          &sharedData_800DE580_0_s00[19 + chara->properties_E4.larvalStalker.properties_E8[5].val16[0]],
-                          &sharedData_800DECB0_0_s00[chara->properties_E4.larvalStalker.properties_E8[5].val16[1]]);
+                          &sharedData_800DE580_0_s00[19 + chara->properties_E4.dummy.properties_E8[5].val16[0]],
+                          &sharedData_800DECB0_0_s00[chara->properties_E4.dummy.properties_E8[5].val16[1]]);
             break;
 
         case ANIM_STATUS(3, true):
@@ -360,7 +360,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara)
 
         case ANIM_STATUS(2, false):
         case ANIM_STATUS(44, false):
-            keyframeIdx2 = chara->properties_E4.larvalStalker.properties_E8[5].val16[0];
+            keyframeIdx2 = chara->properties_E4.dummy.properties_E8[5].val16[0];
             keyframeIdx2--;
             keyframeIdx1 = 0;
             func_80070400(chara, &sharedData_800DE580_0_s00[keyframeIdx2 + 20], &sharedData_800DEDA0_0_s00[keyframeIdx1]);
@@ -375,8 +375,8 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara)
 
         case ANIM_STATUS(4, false):
             func_80070400(chara,
-                          &sharedData_800DE8C8_0_s00[chara->properties_E4.larvalStalker.properties_E8[5].val16[0]],
-                          &sharedData_800DEE04_0_s00[chara->properties_E4.larvalStalker.properties_E8[5].val16[1]]);
+                          &sharedData_800DE8C8_0_s00[chara->properties_E4.dummy.properties_E8[5].val16[0]],
+                          &sharedData_800DEE04_0_s00[chara->properties_E4.dummy.properties_E8[5].val16[1]]);
             break;
 
         case ANIM_STATUS(4, true):
@@ -386,11 +386,11 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara)
             break;
 
         case ANIM_STATUS(5, false):
-            if (chara->properties_E4.larvalStalker.properties_E8[5].val16[1] >= 2)
+            if (chara->properties_E4.dummy.properties_E8[5].val16[1] >= 2)
             {
                 func_80070400(chara,
-                              &sharedData_800DE8C8_0_s00[chara->properties_E4.larvalStalker.properties_E8[5].val16[0]],
-                              &sharedData_800DEE40_0_s00[chara->properties_E4.larvalStalker.properties_E8[5].val16[1]]);
+                              &sharedData_800DE8C8_0_s00[chara->properties_E4.dummy.properties_E8[5].val16[0]],
+                              &sharedData_800DEE40_0_s00[chara->properties_E4.dummy.properties_E8[5].val16[1]]);
             }
             else
             {
@@ -409,13 +409,13 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara)
             break;
 
         case ANIM_STATUS(30, false):
-            if (chara->properties_E4.larvalStalker.properties_E8[5].val16[0] == 15)
+            if (chara->properties_E4.dummy.properties_E8[5].val16[0] == 15)
             {
                 func_80070400(chara, &sharedData_800DE580_0_s00[19], &sharedData_800DEF1C_0_s00[0]);
             }
-            else if (chara->properties_E4.larvalStalker.properties_E8[5].val16[0] == 55)
+            else if (chara->properties_E4.dummy.properties_E8[5].val16[0] == 55)
             {
-                func_80070400(chara, &sharedData_800DE300_0_s00[chara->properties_E4.larvalStalker.properties_E8[5].val16[1]], &sharedData_800DEF1C_0_s00[0]);
+                func_80070400(chara, &sharedData_800DE300_0_s00[chara->properties_E4.dummy.properties_E8[5].val16[1]], &sharedData_800DEF1C_0_s00[0]);
             }
             break;
 

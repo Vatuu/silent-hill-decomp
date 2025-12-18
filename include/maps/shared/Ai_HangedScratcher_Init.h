@@ -5,11 +5,11 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
     q19_12 radiusMax;
     q19_12 radiusMin;
 
-    scratcher->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
+    scratcher->properties_E4.dummy.properties_E8[0].val16[0] = 0;
 
     for (i = 0; i < 16; i++)
     {
-        scratcher->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
+        scratcher->properties_E4.dummy.properties_E8[i].val32 = 0;
     }
 
     scratcher->health_B0 = Q12(350.0f);
@@ -61,7 +61,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
             break;
 
         case 17:
-            scratcher->properties_E4.larvalStalker.properties_E8[0].val16[1] = Q12(1.2f);
+            scratcher->properties_E4.dummy.properties_E8[0].val16[1] = Q12(1.2f);
 
         case 6:
             scratcher->model_0.state_2 = 6;
@@ -94,8 +94,8 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
             break;
     }
 
-    scratcher->properties_E4.larvalStalker.properties_E8[3].val32 = scratcher->position_18.vx;
-    scratcher->properties_E4.larvalStalker.properties_E8[4].val32 = scratcher->position_18.vz;
+    scratcher->properties_E4.dummy.properties_E8[3].val32 = scratcher->position_18.vx;
+    scratcher->properties_E4.dummy.properties_E8[4].val32 = scratcher->position_18.vz;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
@@ -114,8 +114,8 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
     }
 
     // TODO: Use `Rng_GenerateInt`.
-    scratcher->properties_E4.larvalStalker.properties_E8[9].val16[0] = (Rng_Rand16() % (radiusMax >> 2)) + ((radiusMax * 3) >> 2);
-    scratcher->properties_E4.larvalStalker.properties_E8[9].val16[1] = (Rng_Rand16() % (radiusMin >> 2)) + ((radiusMin * 3) >> 2);
+    scratcher->properties_E4.dummy.properties_E8[9].val16[0] = (Rng_Rand16() % (radiusMax >> 2)) + ((radiusMax * 3) >> 2);
+    scratcher->properties_E4.dummy.properties_E8[9].val16[1] = (Rng_Rand16() % (radiusMin >> 2)) + ((radiusMin * 3) >> 2);
 
     scratcher->flags_3E |= CharaFlag_Unk9 | CharaFlag_Unk3;
 }

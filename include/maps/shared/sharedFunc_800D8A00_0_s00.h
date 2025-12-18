@@ -13,10 +13,10 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
     // TODO: This data is hard to keep track of and may not point to the right `properties_E4` struct.
     // Short-hand defines to make it easier to follow.
     #define charaState3  chara->model_0.stateStep_3
-    #define charaStateE8 chara->properties_E4.larvalStalker.properties_E8[0].val32
-    #define charaStateEC chara->properties_E4.larvalStalker.properties_E8[1].val32
-    #define charaStateF4 chara->properties_E4.larvalStalker.properties_E8[3].val32
-    #define charaStateFC chara->properties_E4.larvalStalker.properties_E8[5].val32
+    #define charaStateE8 chara->properties_E4.dummy.properties_E8[0].val32
+    #define charaStateEC chara->properties_E4.dummy.properties_E8[1].val32
+    #define charaStateF4 chara->properties_E4.dummy.properties_E8[3].val32
+    #define charaStateFC chara->properties_E4.dummy.properties_E8[5].val32
 
     angleIn = FP_ANGLE_ABS(angleIn);
     arg2 = arg2In;

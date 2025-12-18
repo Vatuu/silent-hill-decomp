@@ -55,7 +55,7 @@ void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker)
 
     for (i = 0; i < 16; i++)
     {
-        bloodsucker->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
+        bloodsucker->properties_E4.dummy.properties_E8[i].val32 = 0;
     }
 
     bloodsucker->field_E1_0      = 4;

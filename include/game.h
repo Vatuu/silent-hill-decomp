@@ -1321,12 +1321,12 @@ typedef struct _SubCharaPropertiesNpc
 } s_SubCharaPropertiesNpc;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesNpc, 68);
 
-typedef struct _SubCharPropertiesLarvalStalker
+typedef struct _SubCharPropertiesDummy
 {
     s32        unk_E4;            // Is this part of `a_SubCharacter`?
     u_Property properties_E8[16];
-} s_SubCharaPropertiesLarvalStalker;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
+} s_SubCharaPropertiesDummy;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesDummy, 68);
 
 typedef struct _SubCharPropertiesUnk0
 {
@@ -1496,7 +1496,7 @@ typedef struct _SubCharacter
     {
         s_SubCharaPropertiesPlayer        player;
         s_SubCharaPropertiesNpc           npc;
-        s_SubCharaPropertiesLarvalStalker larvalStalker;
+        s_SubCharaPropertiesDummy         dummy;
         s_SubCharaPropertiesUnk0          unk0;
         s_SubCharaPropertiesPuppetNurse   puppetNurse;
         s_SubCharaPropertiesDahlia        dahlia;

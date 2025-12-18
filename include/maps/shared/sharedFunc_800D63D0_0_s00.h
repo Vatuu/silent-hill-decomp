@@ -64,7 +64,7 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara)
     }
 
 #if defined(MAP5_S02) || defined(MAP7_S02)
-    if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 9))
+    if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 9))
     {
         chara->timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
         if (chara->timer_C6 > Q12(1.0f))

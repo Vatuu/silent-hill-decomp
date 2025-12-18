@@ -57,7 +57,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
     switch (chara->model_0.anim_4.status_0) 
     {
         case ANIM_STATUS(2, false):
-            keyframeIdx1 = chara->properties_E4.larvalStalker.properties_E8[3].val16[1];
+            keyframeIdx1 = chara->properties_E4.dummy.properties_E8[3].val16[1];
             if (keyframeIdx1 != -1) 
             {
                 if (keyframeIdx1 == -2) 
@@ -116,14 +116,14 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             break;
             
         case ANIM_STATUS(5, false):
-            var_a3 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0];
+            var_a3 = chara->properties_E4.dummy.properties_E8[3].val16[0];
             if (var_a3 == 0) 
             {
                 CopyData(chara, sharedData_800DA964_1_s00[0]);
                 break;
             }
 
-            keyframeIdx1 = chara->properties_E4.larvalStalker.properties_E8[3].val16[1];
+            keyframeIdx1 = chara->properties_E4.dummy.properties_E8[3].val16[1];
             if ((keyframeIdx1 - 24) >= 0) 
             {
                 keyframeIdx0 = keyframeIdx1 - 10;
@@ -170,14 +170,14 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             break;
             
         case ANIM_STATUS(6, false):
-            keyframeIdx2 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0];
+            keyframeIdx2 = chara->properties_E4.dummy.properties_E8[3].val16[0];
             if (keyframeIdx2 == 0) 
             {
                 CopyData(chara, sharedData_800DAC34_1_s00[0]);
                 break;
             }
 
-            var_a1 = chara->properties_E4.larvalStalker.properties_E8[3].val16[1];
+            var_a1 = chara->properties_E4.dummy.properties_E8[3].val16[1];
             keyframeIdx0 = ((var_a1 - 7) - (var_a1 >= 23)) - (var_a1 >= 24);
             func_80070400(chara, &sharedData_800DAC34_1_s00[keyframeIdx0], &sharedData_800DAC34_1_s00[keyframeIdx2]);
             break;
@@ -201,13 +201,13 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             break;
             
         case ANIM_STATUS(7, false):
-            if (chara->properties_E4.larvalStalker.properties_E8[3].val16[0] == 0) 
+            if (chara->properties_E4.dummy.properties_E8[3].val16[0] == 0) 
             {
                 CopyData(chara, sharedData_800DAE28_1_s00[0]);
                 break;
             }
             
-            var_a1 = chara->properties_E4.larvalStalker.properties_E8[3].val16[1];
+            var_a1 = chara->properties_E4.dummy.properties_E8[3].val16[1];
             if (var_a1 < 15) 
             {
                 keyframeIdx0 = var_a1 - (var_a1 >= 11);
@@ -224,12 +224,12 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
                 }
             }
 
-            keyframeIdx1 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0];
+            keyframeIdx1 = chara->properties_E4.dummy.properties_E8[3].val16[0];
             func_80070400(chara, &sharedData_800DA964_1_s00[keyframeIdx0], &sharedData_800DAE28_1_s00[keyframeIdx1]);
             break;
             
         case ANIM_STATUS(7, true):
-            chara->properties_E4.larvalStalker.properties_E8[3].val16[1] = -2;
+            chara->properties_E4.dummy.properties_E8[3].val16[1] = -2;
             keyframeIdx1 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
 
             var_a1 = keyframeIdx1 - 121;
@@ -286,13 +286,13 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             break;
             
         case ANIM_STATUS(8, false):
-            if (chara->properties_E4.larvalStalker.properties_E8[3].val16[0] == 0) 
+            if (chara->properties_E4.dummy.properties_E8[3].val16[0] == 0) 
             {
                 CopyData(chara, sharedData_800DAF68_1_s00[0]);
                 break;
             }
 
-            var_a1 = chara->properties_E4.larvalStalker.properties_E8[3].val16[1];
+            var_a1 = chara->properties_E4.dummy.properties_E8[3].val16[1];
             if (var_a1 < 15) 
             {
                 keyframeIdx0 = MIN(8, var_a1);
@@ -302,12 +302,12 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
                 keyframeIdx0 = ((var_a1 - 7) - (var_a1 >= 23)) - (var_a1 >= 24);
             }
 
-            keyframeIdx1 = chara->properties_E4.larvalStalker.properties_E8[3].val16[0];
+            keyframeIdx1 = chara->properties_E4.dummy.properties_E8[3].val16[0];
             func_80070400(chara, &sharedData_800DAC34_1_s00[keyframeIdx0], &sharedData_800DAF68_1_s00[keyframeIdx1]);
             break;
 
         case ANIM_STATUS(8, true):
-            chara->properties_E4.larvalStalker.properties_E8[3].val16[1] = -2;
+            chara->properties_E4.dummy.properties_E8[3].val16[1] = -2;
             var_a0 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
             var_a1 = var_a0 - 143;
 
@@ -317,7 +317,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* chara)
             break;
 
         case ANIM_STATUS(9, false):
-            keyframeIdx1 = chara->properties_E4.larvalStalker.properties_E8[3].val16[1];
+            keyframeIdx1 = chara->properties_E4.dummy.properties_E8[3].val16[1];
             if (keyframeIdx1 == -1) 
             {
                 CopyData(chara, sharedData_800DB008_1_s00);

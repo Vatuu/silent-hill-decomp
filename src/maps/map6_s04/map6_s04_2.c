@@ -552,8 +552,8 @@ void func_800E219C(void) // 0x800E219C
 
             // TODO: Wrong properties union field.
             g_SysWork.npcs_1A0[0].properties_E4.player.afkTimer_E8                      = Q12(0.0f);
-            g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[1].val16[0] = 1;
-            g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[1].val16[1] = 1;
+            g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[1].val16[0] = 1;
+            g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[1].val16[1] = 1;
 
             vcReturnPreAutoCamWork(true);
             func_800E15FC(&g_SysWork.player_4C, &g_SysWork.npcs_1A0[0], true);
@@ -649,8 +649,8 @@ void func_800E2724(void) // 0x800E2724
 
             // TODO: `Chara_MonsterCybil` properties
             g_SysWork.npcs_1A0[0].properties_E4.player.afkTimer_E8                      = Q12(0.0f);
-            g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[1].val16[0] = curStateStep;
-            g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[1].val16[1] = curStateStep;
+            g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[1].val16[0] = curStateStep;
+            g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[1].val16[1] = curStateStep;
             func_800D8A90(&g_SysWork.npcs_1A0[0]);
 
             Savegame_EventFlagSet(EventFlag_467);

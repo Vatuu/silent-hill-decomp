@@ -10,13 +10,13 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
     mag <<= 6;
     angle0 = func_8005BF38(ratan2(sharedData_800E3A18_0_s00 - chara->position_18.vx, sharedData_800E3A1C_0_s00 - chara->position_18.vz) - chara->rotation_24.vy);
 
-    if (mag > Q12(8.0f) && (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 0)) && !(g_SysWork.flags_22A4 & 0x80))
+    if (mag > Q12(8.0f) && (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 0)) && !(g_SysWork.flags_22A4 & 0x80))
     {
         if (!Vw_AabbVisibleInScreenCheck(chara->position_18.vx - Q12(1.0f), chara->position_18.vx + Q12(1.0f),
                                          chara->position_18.vy - Q12(1.8f), chara->position_18.vy,
                                          chara->position_18.vz - Q12(1.0f), chara->position_18.vz - Q12(1.0f)))
         {
-            chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 12;
+            chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 12;
         }
     }
 
@@ -24,7 +24,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
     {
         chara->properties_E4.player.runTimer_F8 = Q12(0.0f);
 
-        if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 12))
+        if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 12))
         {
             chara->rotation_24.vy = ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
                                            g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
@@ -66,8 +66,8 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
         }
 
         if ((g_SysWork.field_2284[3] & (1 << 0)) ||
-            ( (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 2)) && Rng_GenerateInt(0, 3) != 0) || // 1 in 4 chance.
-            (!(chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 2)) && Rng_GenerateInt(0, 1) != 0))   // 1 in 2 chance.
+            ( (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 2)) && Rng_GenerateInt(0, 3) != 0) || // 1 in 4 chance.
+            (!(chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 2)) && Rng_GenerateInt(0, 1) != 0))   // 1 in 2 chance.
         {
             if (mag < Q12(0.9f))
             {
@@ -85,38 +85,38 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
                             if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 492 && FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 505)
                             {
                                 chara->model_0.anim_4.status_0                               = ANIM_STATUS(37, true);
-                                chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = 29;
-                                chara->properties_E4.larvalStalker.properties_E8[5].val16[1] = 0;
+                                chara->properties_E4.dummy.properties_E8[5].val16[0] = 29;
+                                chara->properties_E4.dummy.properties_E8[5].val16[1] = 0;
                                 return;
                             }
 
                             chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
 
-                            chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 477;
+                            chara->properties_E4.dummy.properties_E8[5].val16[0] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 477;
 
                             if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 477 &&
                                 FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 482)
                             {
-                                chara->properties_E4.larvalStalker.properties_E8[5].val16[1] = 1;
+                                chara->properties_E4.dummy.properties_E8[5].val16[1] = 1;
                             }
                             else if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 481 &&
                                      FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 488)
                             {
-                                chara->properties_E4.larvalStalker.properties_E8[5].val16[1] = 2;
+                                chara->properties_E4.dummy.properties_E8[5].val16[1] = 2;
                             }
                             else if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 487 && 
                                      FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 491)
                             {
-                                chara->properties_E4.larvalStalker.properties_E8[5].val16[1] = 3;
+                                chara->properties_E4.dummy.properties_E8[5].val16[1] = 3;
                             }
                             else if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 490 &&
                                      FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 493)
                             {
-                                chara->properties_E4.larvalStalker.properties_E8[5].val16[1] = 4;
+                                chara->properties_E4.dummy.properties_E8[5].val16[1] = 4;
                             }
                             else
                             {
-                                chara->properties_E4.larvalStalker.properties_E8[5].val16[1] = 0;
+                                chara->properties_E4.dummy.properties_E8[5].val16[1] = 0;
                             }
                             return;
                         }
@@ -142,7 +142,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
                         chara->model_0.anim_4.status_0 = ANIM_STATUS(35, false);
                     }
 
-                    chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 477;
+                    chara->properties_E4.dummy.properties_E8[5].val16[0] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 477;
                     g_SysWork.field_2284[3]                                     |= 3;
                     return;
                 }
@@ -160,15 +160,15 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
 
         if (chara->properties_E4.player.runTimer_F8 == Q12(0.0f))
         {
-            chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = func_8006FAFC(chara,
+            chara->properties_E4.dummy.properties_E8[6].val16[0] = func_8006FAFC(chara,
                                                                                          Q12(2.0f),
                                                                                          g_SysWork.player_4C.chara_0.position_18.vx,
                                                                                          g_SysWork.player_4C.chara_0.position_18.vz,
                                                                                          Q12(1.0f),
                                                                                          true);
-            if (chara->properties_E4.larvalStalker.properties_E8[6].val16[0] == Q12(1.0f))
+            if (chara->properties_E4.dummy.properties_E8[6].val16[0] == Q12(1.0f))
             {
-                chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = chara->rotation_24.vy - FP_ANGLE(180.0f);
+                chara->properties_E4.dummy.properties_E8[6].val16[0] = chara->rotation_24.vy - FP_ANGLE(180.0f);
             }
         }
 
@@ -178,13 +178,13 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
             chara->properties_E4.player.runTimer_F8 = Q12(0.0f);
         }
 
-        if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 12))
+        if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 12))
         {
-            chara->rotation_24.vy = chara->properties_E4.larvalStalker.properties_E8[6].val16[0];
+            chara->rotation_24.vy = chara->properties_E4.dummy.properties_E8[6].val16[0];
         }
         else
         {
-            angle1 = func_8005BF38(chara->properties_E4.larvalStalker.properties_E8[6].val16[0] - chara->rotation_24.vy);
+            angle1 = func_8005BF38(chara->properties_E4.dummy.properties_E8[6].val16[0] - chara->rotation_24.vy);
             if (((g_DeltaTime0 >> 2) + 1) < ABS(angle1))
             {
                 if (angle1 > FP_ANGLE(0.0f))

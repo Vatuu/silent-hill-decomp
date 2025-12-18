@@ -852,12 +852,12 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
 
     if (chara->flags_3E & CharaFlag_Unk4)
     {
-        chara->properties_E4.larvalStalker.properties_E8[10].val32 += g_DeltaTime0;
+        chara->properties_E4.dummy.properties_E8[10].val32 += g_DeltaTime0;
     }
 
-    if (chara->properties_E4.larvalStalker.properties_E8[10].val32 > D_800C45EC)
+    if (chara->properties_E4.dummy.properties_E8[10].val32 > D_800C45EC)
     {
-        chara->properties_E4.larvalStalker.properties_E8[10].val32 = 0;
+        chara->properties_E4.dummy.properties_E8[10].val32 = 0;
         chara->flags_3E &= ~CharaFlag_Unk4;
     }
 
@@ -2057,7 +2057,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
             switch (g_SysWork.player_4C.extra_128.state_1C)
             {
                 case PlayerState_DamagePushBack:
-                    Math_ShortestAngleGet(chara->rotation_24.vy, g_SysWork.player_4C.chara_0.properties_E4.larvalStalker.properties_E8[0xC].val16[0], &sp1C);
+                    Math_ShortestAngleGet(chara->rotation_24.vy, g_SysWork.player_4C.chara_0.properties_E4.dummy.properties_E8[0xC].val16[0], &sp1C);
 
                     if (ABS(sp1C) >= 0x400)
                     {
@@ -2075,7 +2075,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
                     break;
 
                 case PlayerState_DamagePushFront:
-                    Math_ShortestAngleGet(chara->rotation_24.vy, g_SysWork.player_4C.chara_0.properties_E4.larvalStalker.properties_E8[12].val16[0], &sp1E);
+                    Math_ShortestAngleGet(chara->rotation_24.vy, g_SysWork.player_4C.chara_0.properties_E4.dummy.properties_E8[12].val16[0], &sp1E);
 
                     if (ABS(sp1E) < 0x400)
                     {
@@ -7239,7 +7239,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                             flexRotMax = chara->properties_E4.player.field_100 * TIMESTEP_SCALE(g_DeltaTime0, var_a2 + chara->properties_E4.player.field_100);
                             if (flexRotMax < flexRotStep)
                             {
-                                g_Player_FlexRotationX = chara->properties_E4.larvalStalker.properties_E8[3].val16[0] - flexRotMax;
+                                g_Player_FlexRotationX = chara->properties_E4.dummy.properties_E8[3].val16[0] - flexRotMax;
                             }
                         }
                         else
@@ -7247,7 +7247,7 @@ void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
                             flexRotMax = -(chara->properties_E4.player.field_100 * TIMESTEP_SCALE(g_DeltaTime0, var_a2 + chara->properties_E4.player.field_100));
                             if (flexRotStep < flexRotMax)
                             {
-                                g_Player_FlexRotationX = chara->properties_E4.larvalStalker.properties_E8[3].val16[0] - flexRotMax;
+                                g_Player_FlexRotationX = chara->properties_E4.dummy.properties_E8[3].val16[0] - flexRotMax;
                             }
                         }
                     }
@@ -7952,7 +7952,7 @@ void func_8007E9C4(void) // 0x8007E9C4
     chara->properties_E4.player.field_100                      = 0;
     chara->properties_E4.player.field_104                      = 0;
     chara->properties_E4.player.runTimer_108                   = Q12(0.0f);
-    chara->properties_E4.larvalStalker.properties_E8[10].val32 = 0;
+    chara->properties_E4.dummy.properties_E8[10].val32 = 0;
     chara->properties_E4.player.flags_11C                      = 0;
     chara->properties_E4.player.playerMoveDistance_126         = 0;
 

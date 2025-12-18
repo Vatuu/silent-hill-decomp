@@ -67,14 +67,14 @@ void Ai_Floatstinger_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
     func_800D37E8(chara, anmHdr);
     func_800D3AD4(chara);
 
-    chara->properties_E4.larvalStalker.properties_E8[1].val16[0] = chara->rotation_24.vy;
+    chara->properties_E4.dummy.properties_E8[1].val16[0] = chara->rotation_24.vy;
 }
 
 void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 {
     s32 i;
 
-    chara->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
+    chara->properties_E4.dummy.properties_E8[0].val16[0] = 0;
 
     chara->model_0.anim_4.alpha_A = Q12(0.0f);
 
@@ -95,7 +95,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
 
     for (i = 0; i < 16; i++)
     {
-        chara->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
+        chara->properties_E4.dummy.properties_E8[i].val32 = 0;
     }
 
     switch (chara->model_0.stateStep_3)
@@ -104,7 +104,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
             chara->model_0.state_2 = 5;
             Character_AnimSet(chara, ANIM_STATUS(FloatstingerAnim_Unk9, true), 191);
 
-            chara->properties_E4.larvalStalker.properties_E8[7].val16[1] = -0x90; // Could be `FP_ANGLE(-12.7f)`?
+            chara->properties_E4.dummy.properties_E8[7].val16[1] = -0x90; // Could be `FP_ANGLE(-12.7f)`?
             break;
 
         case 4:
@@ -134,7 +134,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
         D_800DB8A8[i] = 0;
     }
 
-    chara->properties_E4.larvalStalker.properties_E8[1].val16[0] = chara->rotation_24.vy;
+    chara->properties_E4.dummy.properties_E8[1].val16[0] = chara->rotation_24.vy;
     chara->flags_3E |= CharaFlag_Unk9 | CharaFlag_Unk3;
 
     D_800D7858 = 0;
@@ -142,7 +142,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
         D_800D785C = Q12(2.4f);
-        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 0;
+        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 0;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {

@@ -22,7 +22,7 @@ void sharedFunc_800D5974_2_s00(s_SubCharacter* chara)
         case 0:
             if (!sharedFunc_800DC30C_2_s00(chara) || Rng_RandQ12() >= FP_ANGLE(252.0f))
             {
-                chara->properties_E4.larvalStalker.properties_E8[0xE].val32 = Q12(2.0f);
+                chara->properties_E4.dummy.properties_E8[0xE].val32 = Q12(2.0f);
                 chara->model_0.stateStep_3                                  = one;
             }
             else
@@ -61,7 +61,7 @@ void sharedFunc_800D5974_2_s00(s_SubCharacter* chara)
             switch (switch2Idx)
             {
                 case 0:
-                    if (chara->properties_E4.larvalStalker.properties_E8[0xE].val32 == 0 || f150 > 0x2000)
+                    if (chara->properties_E4.dummy.properties_E8[0xE].val32 == 0 || f150 > 0x2000)
                     {
                         if (bit3 == 0)
                         {

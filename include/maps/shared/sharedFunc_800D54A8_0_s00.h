@@ -50,7 +50,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
                               chara->rotation_24.vy);
     }
 
-    if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 5))
+    if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 5))
     {
         if (chara->model_0.anim_4.status_0 == ANIM_STATUS(9, true))
         {
@@ -84,12 +84,12 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
             animStatus                                                   = chara->model_0.anim_4.status_0;
             chara->model_0.state_2                                       = 9;
             chara->model_0.anim_4.status_0                               = ANIM_STATUS(10, false);
-            chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = animStatus;
+            chara->properties_E4.dummy.properties_E8[5].val16[0] = animStatus;
             chara->field_E1_0                                            = 0;
             chara->field_E1_0                                            = 3;
 
-            chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 6;
-            chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 5);
+            chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 6;
+            chara->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 5);
         }
         else
         {
@@ -112,7 +112,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
         // TODO: What's weapon attack 49?
         if (func_8008A0E4(1, 49, chara, &vec0, &g_SysWork.player_4C, chara->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
         {
-            chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 5;
+            chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 5;
             g_SysWork.field_2284[3]                                      &= ~(1 << 1);
             sharedFunc_800D7E04_0_s00(chara, 1366);
             chara->properties_E4.player.runTimer_F8 = Q12(1.0f);
@@ -127,25 +127,25 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
 
         if (chara->model_0.anim_4.status_0 == ANIM_STATUS(34, true) || chara->model_0.anim_4.status_0 == ANIM_STATUS(9, false))
         {
-            chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = ANIM_STATUS(9, true);
+            chara->properties_E4.dummy.properties_E8[5].val16[0] = ANIM_STATUS(9, true);
         }
         else if (chara->model_0.anim_4.status_0 == ANIM_STATUS(35, true) || chara->model_0.anim_4.status_0 == ANIM_STATUS(8, false))
         {
-            chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = ANIM_STATUS(8, true);
+            chara->properties_E4.dummy.properties_E8[5].val16[0] = ANIM_STATUS(8, true);
         }
         else
         {
-            chara->properties_E4.larvalStalker.properties_E8[5].val16[0] = chara->model_0.anim_4.status_0;
+            chara->properties_E4.dummy.properties_E8[5].val16[0] = chara->model_0.anim_4.status_0;
         }
 
-        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 6;
+        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 6;
         chara->model_0.anim_4.status_0                                = ANIM_STATUS(36, false);
         chara->field_E1_0                                             = 3;
     }
 
     if (g_DeltaTime0 != Q12(0.0f))
     {
-        chara->properties_E4.larvalStalker.properties_E8[1].val16[0] = FP_MULTIPLY(var_s6, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
-        chara->properties_E4.larvalStalker.properties_E8[1].val16[1] = FP_MULTIPLY(var_s6, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
+        chara->properties_E4.dummy.properties_E8[1].val16[0] = FP_MULTIPLY(var_s6, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+        chara->properties_E4.dummy.properties_E8[1].val16[1] = FP_MULTIPLY(var_s6, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
     }
 }

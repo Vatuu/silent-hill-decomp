@@ -93,7 +93,7 @@ void func_800D494C(void) // 0x800D494C
     if (g_SysWork.npcs_1A0[0].health_B0 > 0)
     {
         var_a0 = 2;
-        if (g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[0].val16[0] & 0x10)
+        if (g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[0].val16[0] & 0x10)
         {
             var_a0 = 6;
         }

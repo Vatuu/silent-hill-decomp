@@ -40,9 +40,9 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
 
     condCombo |= func_80070360(chara, dist0, Q12(0.8f));
 
-    if (!(chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 13)))
+    if (!(chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 13)))
     {
-        if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 11))
+        if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 11))
         {
             Chara_MoveSpeedUpdate3(chara, Q12(0.5f), Q12(0.35f));
         }
@@ -63,38 +63,38 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
             (!Rng_GenerateInt(0, 127) &&                         // 1 in 128 chance.
              Rng_GenerateUInt(0, Q12(1.0f) - 1) < FP_TO(magMax, Q12_SHIFT) / Q12(4.0f)))
         {
-            if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 11))
+            if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 11))
             {
                 deltaX = Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1) - offsetX;
                 deltaZ = Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1) - offsetZ;
 
-                chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = ratan2(deltaX, deltaZ);
+                chara->properties_E4.dummy.properties_E8[6].val16[0] = ratan2(deltaX, deltaZ);
             }
             else
             {
                 deltaX = Rng_GenerateInt(Q12(-4.0f), Q12(4.0f) - 1) - offsetX;
                 deltaZ = Rng_GenerateInt(Q12(-4.0f), Q12(4.0f) - 1) - offsetZ;
                 
-                chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = ratan2(deltaX, deltaZ);
+                chara->properties_E4.dummy.properties_E8[6].val16[0] = ratan2(deltaX, deltaZ);
             }
-            chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 3;
+            chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 3;
         }
     }
 
-    if (!(chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 4)) && func_8007029C(chara, Q12(1.0f), chara->rotation_24.vy))
+    if (!(chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 4)) && func_8007029C(chara, Q12(1.0f), chara->rotation_24.vy))
     {
-        chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = func_8006F99C(chara, Q12(3.5f), chara->rotation_24.vy);
+        chara->properties_E4.dummy.properties_E8[6].val16[0] = func_8006F99C(chara, Q12(3.5f), chara->rotation_24.vy);
 
-        if (chara->properties_E4.larvalStalker.properties_E8[6].val16[0] == (1 << 12))
+        if (chara->properties_E4.dummy.properties_E8[6].val16[0] == (1 << 12))
         {
-            chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = chara->rotation_24.vy + FP_ANGLE(180.0f);
+            chara->properties_E4.dummy.properties_E8[6].val16[0] = chara->rotation_24.vy + FP_ANGLE(180.0f);
         }
 
-        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 4;
+        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 4;
     }
 
     // Smoothly rotate toward target direction
-    angle = func_8005BF38(chara->properties_E4.larvalStalker.properties_E8[6].val16[0] - chara->rotation_24.vy);
+    angle = func_8005BF38(chara->properties_E4.dummy.properties_E8[6].val16[0] - chara->rotation_24.vy);
 
     if ((((g_DeltaTime0 >> 4) + 1) < ABS(angle)))
     {
@@ -109,53 +109,53 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
     }
     else
     {
-        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~((1 << 3) | (1 << 4));
+        chara->properties_E4.dummy.properties_E8[0].val16[0] &= ~((1 << 3) | (1 << 4));
     }
 
     // Handle aggressive/chase mode.
-    if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 11))
+    if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 11))
     {
         if (Rng_GenerateInt(0, 1023) == 0)
         {
-            chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 3);
+            chara->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 3);
         }
 
         if (Rng_GenerateInt(0, 1023) == 0)
         {
-            chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 4);
+            chara->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 4);
         }
 
         if (dist0 < Q12(2.0f) && dist0 < dist1 && !func_800700F8(chara, &g_SysWork.player_4C.chara_0))
         {
             chara->properties_E4.player.runTimer_F8                       = Q12(5.0f);
-            chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1;
-            chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 11);
+            chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1;
+            chara->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 11);
         }
     }
 
-    if ((chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 0)))
+    if ((chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 0)))
     {
-        if ((chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 10)) || condCombo)
+        if ((chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 10)) || condCombo)
         {
             if (condCombo)
             {
                 chara->properties_E4.player.field_F0                          = g_SysWork.player_4C.chara_0.position_18.vx;
                 chara->properties_E4.player.field_F4                          = g_SysWork.player_4C.chara_0.position_18.vz;
-                chara->properties_E4.larvalStalker.properties_E8[11].val16[1] = 0;
+                chara->properties_E4.dummy.properties_E8[11].val16[1] = 0;
             }
 
-            if (!(chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 10)))
+            if (!(chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 10)))
             {
-                chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= (1 << 10);
+                chara->properties_E4.dummy.properties_E8[0].val16[0] |= (1 << 10);
                 sharedFunc_800D7E04_0_s00(chara, 1363);
             }
 
             if (((Rng_GenerateInt(0, 15) == 0 && chara->properties_E4.player.runTimer_F8 > Q12(1.0f)) && // 1 in 16 cheance.
-                 (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 1))) ||
+                 (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 1))) ||
                 (Rng_GenerateInt(0, 15) == 0 && chara->properties_E4.player.runTimer_F8 > Q12(2.5f)) ||  // 1 in 16 chance.
                 (Rng_GenerateInt(0, 31) == 0 && ((dist1 >> 1) < dist0)))                                 // 1 in 32 chance.
             {
-                if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 1))
+                if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 1))
                 {
                     chara->model_0.state_2 = 2;
                 }
@@ -164,7 +164,7 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
                     chara->model_0.state_2 = 3;
                 }
 
-                chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~((1 << 3) | (1 << 4));
+                chara->properties_E4.dummy.properties_E8[0].val16[0] &= ~((1 << 3) | (1 << 4));
             }
             else
             {
@@ -175,14 +175,14 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
 
     if (!condCombo)
     {
-        if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 10))
+        if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 10))
         {
-            chara->properties_E4.larvalStalker.properties_E8[11].val16[1] += g_DeltaTime0;
+            chara->properties_E4.dummy.properties_E8[11].val16[1] += g_DeltaTime0;
 
-            if (Rng_GenerateInt(0, 4095) == 0 || (u16)chara->properties_E4.larvalStalker.properties_E8[11].val16[1] > Q12(1.2f)) // 1 in 4096 chance.
+            if (Rng_GenerateInt(0, 4095) == 0 || (u16)chara->properties_E4.dummy.properties_E8[11].val16[1] > Q12(1.2f)) // 1 in 4096 chance.
             {
-                chara->properties_E4.larvalStalker.properties_E8[11].val16[1] = 0;
-                chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 10);
+                chara->properties_E4.dummy.properties_E8[11].val16[1] = 0;
+                chara->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 10);
             }
         }
     }

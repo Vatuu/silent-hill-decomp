@@ -19,14 +19,14 @@ static inline void Ai_Creaper_PropertiesUpdateFromStep(s_SubCharacter* chara)
             return;
         }
 
-        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 4;
-        chara->properties_E4.larvalStalker.properties_E8[5].val32 = chara->position_18.vx;
-        chara->properties_E4.larvalStalker.properties_E8[6].val32 = chara->position_18.vz;
+        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 4;
+        chara->properties_E4.dummy.properties_E8[5].val32 = chara->position_18.vx;
+        chara->properties_E4.dummy.properties_E8[6].val32 = chara->position_18.vz;
     }
 
     if (chara->model_0.stateStep_3 == 13 || chara->model_0.stateStep_3 == 3)
     {
-        chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 6;
+        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 6;
     }
 
     chara->model_0.state_2 = 1;
@@ -66,7 +66,7 @@ void Ai_Creaper_Init(s_SubCharacter* creaper)
     }
 
     creaper->health_B0                                             = Q12(200.0f);
-    creaper->properties_E4.larvalStalker.properties_E8[0].val16[0] = 0;
+    creaper->properties_E4.dummy.properties_E8[0].val16[0] = 0;
     creaper->model_0.anim_4.alpha_A                                = Q12(0.0f);
     creaper->moveSpeed_38                                          = 0;
     creaper->headingAngle_3C                                       = creaper->rotation_24.vy;
@@ -75,7 +75,7 @@ void Ai_Creaper_Init(s_SubCharacter* creaper)
 
     for (i = 0; i < 16; i++)
     {
-        creaper->properties_E4.larvalStalker.properties_E8[i].val32 = 0;
+        creaper->properties_E4.dummy.properties_E8[i].val32 = 0;
     }
 
     Ai_Creaper_PropertiesUpdateFromStep(creaper);
@@ -84,20 +84,20 @@ void Ai_Creaper_Init(s_SubCharacter* creaper)
 
     Chara_DamageClear(creaper);
 
-    creaper->properties_E4.larvalStalker.properties_E8[3].val32 = creaper->position_18.vx;
-    creaper->properties_E4.larvalStalker.properties_E8[4].val32 = creaper->position_18.vz;
+    creaper->properties_E4.dummy.properties_E8[3].val32 = creaper->position_18.vx;
+    creaper->properties_E4.dummy.properties_E8[4].val32 = creaper->position_18.vz;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        creaper->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT_PRECISE((Q12(BASE_EASY_VAL) + (Rng_Rand16() % Q12(RAND_EASY_MAX))), 2.0f, Q12_SHIFT);
+        creaper->properties_E4.dummy.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT_PRECISE((Q12(BASE_EASY_VAL) + (Rng_Rand16() % Q12(RAND_EASY_MAX))), 2.0f, Q12_SHIFT);
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
-        creaper->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT_PRECISE((Q12(BASE_NORMAL_VAL) + (Rng_Rand16() % Q12(RAND_NORMAL_MAX))), 2.0f, Q12_SHIFT);
+        creaper->properties_E4.dummy.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT_PRECISE((Q12(BASE_NORMAL_VAL) + (Rng_Rand16() % Q12(RAND_NORMAL_MAX))), 2.0f, Q12_SHIFT);
     }
     else
     {
-        creaper->properties_E4.larvalStalker.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT_PRECISE((Q12(BASE_HARD_VAL) + (Rng_Rand16() % Q12(RAND_HARD_MAX))), 2.0f, Q12_SHIFT);
+        creaper->properties_E4.dummy.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT_PRECISE((Q12(BASE_HARD_VAL) + (Rng_Rand16() % Q12(RAND_HARD_MAX))), 2.0f, Q12_SHIFT);
     }
 
 #ifdef MAP5_S00

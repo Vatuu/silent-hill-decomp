@@ -10,7 +10,7 @@ void sharedFunc_800D9774_1_s02(s_SubCharacter* creaper)
 
     if (creaper->moveSpeed_38 == Q12(0.0f) && !(creaper->properties_E4.player.afkTimer_E8 & 0xC))
     {
-        creaper->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 3;
+        creaper->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 3;
 
         func_80037DC4(creaper);
 

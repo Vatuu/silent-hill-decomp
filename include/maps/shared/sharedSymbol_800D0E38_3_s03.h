@@ -11,6 +11,6 @@ void sharedSymbol_800D0E38_3_s03(s_SubCharacter* bloodsucker)
         bloodsucker->model_0.state_2 = 3;
     }
 
-    bloodsucker->properties_E4.larvalStalker.properties_E8[2].val32 = Q12(0.3f);
+    bloodsucker->properties_E4.dummy.properties_E8[2].val32 = Q12(0.3f);
 #endif
 }

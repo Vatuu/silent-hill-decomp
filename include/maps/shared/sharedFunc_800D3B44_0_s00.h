@@ -9,7 +9,7 @@ void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara)
     s32 var_v0;
     s32 temp_v1;
 
-    if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 10))
+    if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 10))
     {
         chara->flags_3E |= CharaFlag_Unk3;
     }

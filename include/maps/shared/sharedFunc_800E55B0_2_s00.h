@@ -103,7 +103,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara)
 
         if (newAnimStatus != 0)
         {
-            chara->properties_E4.larvalStalker.properties_E8[6].val16[0] = 0;
+            chara->properties_E4.dummy.properties_E8[6].val16[0] = 0;
             chara->model_0.anim_4.status_0                               = newAnimStatus;
             chara->model_0.state_2                                       = 9;
         }

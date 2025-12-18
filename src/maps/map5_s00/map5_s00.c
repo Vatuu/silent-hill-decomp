@@ -328,15 +328,15 @@ void func_800D6B00(void) // 0x800D6B00
             }
             else if (D_800DAB78 > Q12(2.5f))
             {
-                g_SysWork.npcs_1A0[D_800DAB7C[2]].properties_E4.larvalStalker.properties_E8[0].val8[0] |= (1 << 7);
+                g_SysWork.npcs_1A0[D_800DAB7C[2]].properties_E4.dummy.properties_E8[0].val8[0] |= (1 << 7);
             }
             else if (D_800DAB78 > Q12(1.25f))
             {
-                g_SysWork.npcs_1A0[D_800DAB7C[1]].properties_E4.larvalStalker.properties_E8[0].val8[0] |= (1 << 7);
+                g_SysWork.npcs_1A0[D_800DAB7C[1]].properties_E4.dummy.properties_E8[0].val8[0] |= (1 << 7);
             }
             else if (D_800DAB78 > Q12(-0.1f))
             {
-                g_SysWork.npcs_1A0[D_800DAB7C[0]].properties_E4.larvalStalker.properties_E8[0].val8[0] |= (1 << 7);
+                g_SysWork.npcs_1A0[D_800DAB7C[0]].properties_E4.dummy.properties_E8[0].val8[0] |= (1 << 7);
             }
 
             func_800D6414();

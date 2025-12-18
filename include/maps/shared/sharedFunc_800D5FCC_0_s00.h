@@ -11,9 +11,9 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* chara)
         chara->flags_3E |= CharaFlag_Unk2;
     }
 
-    chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 6;
+    chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 6;
 
-    if (!(chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 13)))
+    if (!(chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 13)))
     {
         Chara_MoveSpeedUpdate(chara, Q12(FRICTION_PER_FRAME));
     }
@@ -31,7 +31,7 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* chara)
     else if (ANIM_TIME_RANGE_CHECK(chara->model_0.anim_4.time_4, 395, 402))
     {
         dist = Q12(1.0f);
-        distDiv = 8 - chara->properties_E4.larvalStalker.properties_E8[5].val16[1];
+        distDiv = 8 - chara->properties_E4.dummy.properties_E8[5].val16[1];
         angleOffset = FP_ANGLE(180.0f);
     }
     else if (ANIM_TIME_RANGE_CHECK(chara->model_0.anim_4.time_4, 407, 412))
@@ -88,8 +88,8 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* chara)
         dist = (s32)(dist * (u32)FP_MULTIPLY_PRECISE(STALKER_ANIM_INFOS[chara->model_0.anim_4.status_0].duration_8.constant, g_DeltaTime0, Q12_SHIFT)) /
                FP_TO(distDiv, Q12_SHIFT);
 
-        chara->properties_E4.larvalStalker.properties_E8[1].val16[0] = FP_MULTIPLY(dist, Math_Sin(chara->rotation_24.vy + angleOffset), Q12_SHIFT);
-        chara->properties_E4.larvalStalker.properties_E8[1].val16[1] = FP_MULTIPLY(dist, Math_Cos(chara->rotation_24.vy + angleOffset), Q12_SHIFT);
+        chara->properties_E4.dummy.properties_E8[1].val16[0] = FP_MULTIPLY(dist, Math_Sin(chara->rotation_24.vy + angleOffset), Q12_SHIFT);
+        chara->properties_E4.dummy.properties_E8[1].val16[1] = FP_MULTIPLY(dist, Math_Cos(chara->rotation_24.vy + angleOffset), Q12_SHIFT);
     }
 
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(26, true) ||
@@ -117,7 +117,7 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* chara)
 
         if (chara->health_B0 > sharedData_800E3A24_0_s00 &&
             (Rng_Rand16() % 8) == 0 &&
-            (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 13)) == 0)
+            (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 13)) == 0)
         {
             if (chara->model_0.anim_4.status_0 == ANIM_STATUS(26, true))
             {
@@ -133,8 +133,8 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* chara)
             }
             
             chara->model_0.state_2 = 8;
-            chara->properties_E4.larvalStalker.properties_E8[0].val16[0] |= 1 << 7;
-            chara->properties_E4.larvalStalker.properties_E8[0].val16[0] &= ~(1 << 6);
+            chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 7;
+            chara->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 6);
         }
     }
 }

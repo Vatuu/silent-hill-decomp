@@ -10,10 +10,10 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* chara)
     s32    var;
     q19_12 duration;
 
-    #define larvalStalkerProps chara->properties_E4.larvalStalker
+    #define dummyProps chara->properties_E4.dummy
 
     chara->flags_3E &= ~CharaFlag_Unk2;
-    if (!(larvalStalkerProps.properties_E8[0].val16[0] & (1 << 13)))
+    if (!(dummyProps.properties_E8[0].val16[0] & (1 << 13)))
     {
         Chara_MoveSpeedUpdate(chara, Q12(1.5f));
     }
@@ -46,24 +46,24 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* chara)
         duration = STALKER_ANIM_INFOS[chara->model_0.anim_4.status_0].duration_8.constant;
         step     = (FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT) * animMult) / animDiv;
 
-        larvalStalkerProps.properties_E8[1].val16[0] = FP_MULTIPLY(step, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
-        larvalStalkerProps.properties_E8[1].val16[1] = FP_MULTIPLY(step, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
+        dummyProps.properties_E8[1].val16[0] = FP_MULTIPLY(step, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+        dummyProps.properties_E8[1].val16[1] = FP_MULTIPLY(step, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
     }
 
-    if (larvalStalkerProps.properties_E8[0].val16[0] & (1 << 7))
+    if (dummyProps.properties_E8[0].val16[0] & (1 << 7))
     {
         frameIdx = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
         if ((frameIdx >= 121 && frameIdx < 129) ||
             (frameIdx >= 149 && frameIdx < 158) ||
             (frameIdx >= 171 && frameIdx < 176))
         {
-            larvalStalkerProps.properties_E8[0].val16[0] &= ~(1 << 7);
+            dummyProps.properties_E8[0].val16[0] &= ~(1 << 7);
         }
     }
 
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(27, true) && Rng_GenerateInt(0, 3) == 0) // 1 in 4 chance.
     {
-        if (larvalStalkerProps.properties_E8[0].val16[0] & (1 << 1))
+        if (dummyProps.properties_E8[0].val16[0] & (1 << 1))
         {
             chara->model_0.state_2 = 2;
         }
@@ -73,8 +73,8 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* chara)
         }
 
         chara->model_0.anim_4.status_0 = ANIM_STATUS(30, false);
-        larvalStalkerProps.properties_E8[5].val16[0] = 55;
-        larvalStalkerProps.properties_E8[5].val16[1] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 427;
+        dummyProps.properties_E8[5].val16[0] = 55;
+        dummyProps.properties_E8[5].val16[1] = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) - 427;
     }
 
     // @hack `animDiv` has to be used for certain stuff for a match, weird.

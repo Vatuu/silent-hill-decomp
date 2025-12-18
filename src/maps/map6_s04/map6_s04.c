@@ -112,7 +112,7 @@ void func_800D8848(s_SubCharacter* chara) // 0x800D8848
 
     if (chara->model_0.anim_4.keyframeIdx_8 == D_800EA856)
     {
-        g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[1].val16[1] = 1;
+        g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[1].val16[1] = 1;
         chara->model_0.stateStep_3                                                  = 0;
     }
 }
@@ -151,7 +151,7 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
 
     chara->field_E1_0 = 3;
 
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[12].val16[1] = FP_ANGLE(90.0f);
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[12].val16[1] = FP_ANGLE(90.0f);
 
     chara->model_0.anim_4.flags_2 |= AnimFlag_Visible | AnimFlag_Unlocked;
 
@@ -163,15 +163,15 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
 
     chara->health_B0 = Q12(4000.0f);
 
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[7].val16[0] = 10;
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[5].val16[1] = 0;
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[7].val16[1] = 0;
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[2].val32    = 0;
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[8].val32    = 0;
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[9].val32    = 0;
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[4].val32    = 0;
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[11].val8[2] = 0;
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[3].val32    = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[7].val16[0] = 10;
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[5].val16[1] = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[7].val16[1] = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[2].val32    = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[8].val32    = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[9].val32    = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[4].val32    = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[11].val8[2] = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[3].val32    = 0;
 
     func_8003DD80(Chara_MonsterCybil, UNK_PACKED_DATA(1, 1));
 }
@@ -196,11 +196,11 @@ void func_800D8A90(s_SubCharacter* chara) // 0x800D8A90
 
     // TODO: Wrong union member used here.
 
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[0xB].val8[1] = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[0xB].val8[1] = 0;
     D_800ED543                                                                   = 0;
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[7].val16[0]  = 10;
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[5].val16[1]  = 0;
-    g_SysWork.npcs_1A0[0].properties_E4.larvalStalker.properties_E8[7].val16[1]  = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[7].val16[0]  = 10;
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[5].val16[1]  = 0;
+    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[7].val16[1]  = 0;
     g_SysWork.npcs_1A0[0].properties_E4.player.field_F0                          = 0;
     g_SysWork.npcs_1A0[0].properties_E4.player.runTimer_108                      = 0;
     g_SysWork.npcs_1A0[0].properties_E4.npc.field_10C                            = 0;

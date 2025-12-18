@@ -11,11 +11,11 @@ void sharedSymbol_800D0ECC_3_s03(s_SubCharacter* bloodsucker)
 
     if (ANIM_STATUS_IS_ACTIVE(bloodsucker->model_0.anim_4.status_0))
     {
-        bloodsucker->properties_E4.larvalStalker.properties_E8[2].val32 = Q12(0.3f);
+        bloodsucker->properties_E4.dummy.properties_E8[2].val32 = Q12(0.3f);
     }
     else
     {
-        bloodsucker->properties_E4.larvalStalker.properties_E8[2].val32 = Q12(0.75f);
+        bloodsucker->properties_E4.dummy.properties_E8[2].val32 = Q12(0.75f);
     }
 #endif
 }
