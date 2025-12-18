@@ -44,6 +44,8 @@ extern s_WorldObjectPose D_800DE140;
 
 extern VECTOR3 D_800DE154;
 
+extern VECTOR3 D_800DE1A0;
+
 extern q19_12 g_Timer0;
 
 extern u8 g_MapMsgSoundIdx;
