@@ -15,7 +15,7 @@ typedef struct
 typedef struct _s_SysWork_2514_18
 {
     struct _s_SysWork_2514_18* next_0;
-    s32                        field_4;
+    struct _s_SysWork_2514_18* prev_4;
     u8                         unk_8[4];
     s32                        field_C;
     u8                         unk_10[8];
@@ -26,18 +26,19 @@ typedef struct _s_SysWork_2514_18
 
 typedef struct
 {
-    u32               field_0   : 8;
-    u8                field_1   : 8;
-    u32               field_2_0 : 1;
-    u32               field_2_1 : 1;
-    u32               field_2_2 : 4;
-    u32               field_2_3 : 1;
-    u32               field_2_4 : 1;
-    u32               field_2_5 : 8;
-    u8                unk_4[8];
-    s_SysWork_2514_C* field_C;
-    u8                unk_10[8];
-    s_SysWork_2514_18 head_18;
+    u32                field_0   : 8;
+    u8                 field_1   : 8;
+    u32                field_2_0 : 1;
+    u32                field_2_1 : 1;
+    u32                field_2_2 : 4;
+    u32                field_2_3 : 1;
+    u32                field_2_4 : 1;
+    u32                field_2_5 : 8;
+    u8                 unk_4[8];
+    s_SysWork_2514_C*  field_C;
+    s_SysWork_2514_18* field_10;
+    u8                 unk_14[4];
+    s_SysWork_2514_18  head_18;
 } s_SysWork_2514;
 STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
 
@@ -51,8 +52,16 @@ typedef struct _s_SysWork_2510
 } s_SysWork_2510;
 STATIC_ASSERT_SIZEOF(s_SysWork_2510, 16);
 
+// Could be array?
+extern s_SysWork_2510 D_800B13EC;
+extern s_SysWork_2510 D_800B13FC;
+extern s_SysWork_2510 D_800B140C;
 extern s_SysWork_2510 D_800B141C;
 extern s_SysWork_2510 D_800B142C;
+
+s_SysWork_2510* func_8009E4F8(void);
+
+s_SysWork_2510* func_8009E520(s_SysWork_2510* node, s32 key);
 
 s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* arg1);
 
@@ -60,10 +69,12 @@ bool func_8009E7D8(s_SysWork_2510* arg0);
 
 bool func_8009E97C(s_SysWork_2510* arg0);
 
-s_SysWork_2514_18* func_8009ED74(s_SysWork_2514* arg0);
+bool func_8009EC1C(s_SysWork_2514* list, s_SysWork_2514_18* node);
 
-s_SysWork_2514_18* func_8009ED7C(s_SysWork_2514_18* arg0);
+s_SysWork_2514_18* func_8009ED74(s_SysWork_2514* list);
 
-s32 func_8009ED90(s_SysWork_2514_18* arg0);
+s_SysWork_2514_18* func_8009ED7C(s_SysWork_2514_18* node);
+
+s_SysWork_2514_18* func_8009ED90(s_SysWork_2514_18* node);
 
 #endif

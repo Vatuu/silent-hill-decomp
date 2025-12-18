@@ -18,9 +18,27 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E3B0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E438);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E4F8);
+s_SysWork_2510* func_8009E4F8(void) // 0x8009E4F8
+{
+    D_800B13EC.next_0 = &D_800B13FC;
+    D_800B13FC.next_0 = &D_800B140C;
+    D_800B140C.next_0 = NULL;
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E520);
+    return &D_800B13EC;
+}
+
+s_SysWork_2510* func_8009E520(s_SysWork_2510* node, s32 key) // 0x8009E520
+{
+    for (; node; node = node->next_0)
+    {
+        if (node->key_4 == key)
+        {
+            return node;
+        }
+    }
+
+    return NULL;
+}
 
 s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* arg1) // 0x8009E550
 {
@@ -95,33 +113,67 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E9D0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009EBB8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009EC1C);
+bool func_8009EC1C(s_SysWork_2514* list, s_SysWork_2514_18* node) // 0x8009EC1C
+{
+    s_SysWork_2514_18* next;
+    s_SysWork_2514_18* prev;
+
+    next = node->next_0;
+    prev = node->prev_4;
+
+    // @bug `node == NULL` check happens after already trying to read from `node`
+    if (node == NULL)
+    {
+        return false;
+    }
+
+    if (node == &list->head_18)
+    {
+        return false;
+    }
+
+    if (node->prev_4 == NULL)
+    {
+        return false;
+    }
+
+    // Remove node from the doubly-linked list by making its neighbors skip over it.
+    prev->next_0 = next;
+    next->prev_4 = prev;
+
+    // Add node to the front of the secondary list in `field_10` (free list?)
+    next           = list->field_10;
+    list->field_10 = node;
+    node->next_0   = next;
+
+    return true;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009EC64);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009ECCC);
 
-s_SysWork_2514_18* func_8009ED74(s_SysWork_2514* arg0) // 0x8009ED74
+s_SysWork_2514_18* func_8009ED74(s_SysWork_2514* list) // 0x8009ED74
 {
-    return &arg0->head_18;
+    return &list->head_18;
 }
 
-s_SysWork_2514_18* func_8009ED7C(s_SysWork_2514_18* arg0) // 0x8009ED7C
+s_SysWork_2514_18* func_8009ED7C(s_SysWork_2514_18* node) // 0x8009ED7C
 {
-    if (arg0 != NULL)
+    if (node != NULL)
     {
-        return arg0->next_0;
+        return node->next_0;
     }
 
     return NULL;
 }
 
-s32 func_8009ED90(s_SysWork_2514_18* arg0) // 0x8009ED90
+s_SysWork_2514_18* func_8009ED90(s_SysWork_2514_18* node) // 0x8009ED90
 {
-    if (arg0 != NULL)
+    if (node != NULL)
     {
-        return arg0->field_4; // TODO: Is this `s_SysWork_2514_18*`?
+        return node->prev_4;
     }
 
-    return 0;
+    return NULL;
 }
