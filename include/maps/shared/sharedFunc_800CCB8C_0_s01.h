@@ -116,8 +116,8 @@ void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s
             sharedData_800DFB7C_0_s00[temp_v0_8].field_C.s_0.field_2  = (arg2 * Rng_GenerateUInt(64, 191) >> 7) * ptr->field_34.vy / temp_s0_2;
             sharedData_800DFB7C_0_s00[temp_v0_8].field_10.s_0.field_0 = (arg2 * Rng_GenerateUInt(64, 191) >> 7) * ptr->field_34.vz / temp_s0_2;
 
-            sharedData_800DFB7C_0_s00[temp_v0_8].field_0.s_0.field_2 = (ptr->field_48 + Rng_GenerateUInt(0, 511)) - 255; // TODO: `-255` should be lower RNG bound?
-            sharedData_800DFB7C_0_s00[temp_v0_8].field_4.s_0.field_2 = (ptr->field_4A + Rng_GenerateUInt(0, 511)) - 255;
+            sharedData_800DFB7C_0_s00[temp_v0_8].field_0.s_0.field_2 = Rng_AddGeneratedUInt(ptr->field_48, -255, 256);
+            sharedData_800DFB7C_0_s00[temp_v0_8].field_4.s_0.field_2 = Rng_AddGeneratedUInt(ptr->field_4A, -255, 256);
 
             temp_lo  = (var_s5 * arg6) / var_s1;
             var_v0_2 = var_s5 + ((ABS(temp_lo) + sp24) >> 2);

@@ -6,9 +6,9 @@ void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 
     if (i != NO_VALUE)
     {
-        sharedData_800DFB7C_0_s00[i].field_0.vx_0         = ((arg0 + (Rng_Rand16() & 63)) - 32) * 16;
-        sharedData_800DFB7C_0_s00[i].vy_8                 = (arg1 + (Rng_Rand16() & 63)) * 16;
-        sharedData_800DFB7C_0_s00[i].field_4.vz_4         = ((arg2 + (Rng_Rand16() & 63)) - 32) * 16;
+        sharedData_800DFB7C_0_s00[i].field_0.vx_0         = Rng_AddGeneratedUInt(arg0, -32, 31) * 16;
+        sharedData_800DFB7C_0_s00[i].vy_8                 = Rng_AddGeneratedUInt(arg1, 0, 63) * 16;
+        sharedData_800DFB7C_0_s00[i].field_4.vz_4         = Rng_AddGeneratedUInt(arg2, -32, 31) * 16;
         sharedData_800DFB7C_0_s00[i].field_B              = 0;
         sharedData_800DFB7C_0_s00[i].field_C.s_0.field_0  = 0;
         sharedData_800DFB7C_0_s00[i].field_C.s_0.field_2  = arg3;

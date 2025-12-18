@@ -78,6 +78,19 @@ extern u32 g_RngSeed;
 #define Rng_GenerateUInt(low, high) \
     Rng_GenerateUIntFromInput(Rng_Rand16(), low, high)
 
+/** @brief Adds a generated integer in the range `[low, high]` from an unsigned random input to `base`.
+ *
+ * @hack Needed to fix issue with wrong instruction order when `n + Rng_GenerateUInt(low, high)` is used with non-zero `low` value.
+ * More info: https://decomp.me/scratch/UlgCi
+ *
+ * @param base Base number to be added to.
+ * @param low Lower range (inclusive).
+ * @param high Upper range (inclusive).
+ * @return Random integer in the range `[low, high]` (`s32`).
+*/
+#define Rng_AddGeneratedUInt(base, low, high) \
+    (base + (s32)(Rng_Rand16() % (u32)(((high) - (low)) + 1)) + (low))
+
 /** @brief Generates a new random 32-bit unsigned integer and updates
  * `g_RngSeed`.
  *

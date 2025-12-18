@@ -3999,9 +3999,9 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
         {
             if (arg2 != 9)
             {
-                g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = (pos->vx + Rng_GenerateUInt(0, 511)) - 255; // TODO: `-255` should be lower RNG bound?
-                g_MapOverlayHeader.unkTable1_4C[idx].vy_8         = (pos->vy + Rng_GenerateUInt(0, 511)) - 255;
-                g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = (pos->vz + Rng_GenerateUInt(0, 511)) - 255;
+                g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = Rng_AddGeneratedUInt(pos->vx, -255, 256);
+                g_MapOverlayHeader.unkTable1_4C[idx].vy_8         = Rng_AddGeneratedUInt(pos->vy, -255, 256);
+                g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = Rng_AddGeneratedUInt(pos->vz, -255, 256);
             }
             else
             {
@@ -4016,7 +4016,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
             }
             else
             {
-                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = (Rng_GenerateUInt(0, 1) + 3) + (Rng_GenerateUInt(0, 1) * 8);
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = Rng_GenerateUInt(3, 4) + (Rng_GenerateUInt(0, 1) * 8);
             }
 
             g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1  = unkCount;
@@ -4137,9 +4137,9 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
         if (idx != NO_VALUE)
         {
             g_MapOverlayHeader.unkTable1_4C[idx].field_B      = i * 4;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = (pos->vx + Rng_GenerateUInt(0, 2047)) - 1023; // TODO: `-1023` should be lower RNG bound?
-            g_MapOverlayHeader.unkTable1_4C[idx].vy_8         = (pos->vy + Rng_GenerateUInt(0, 4095)) - 2047;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = (pos->vz + Rng_GenerateUInt(0, 2047)) - 1023;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = Rng_AddGeneratedUInt(pos->vx, -1023, 1024);
+            g_MapOverlayHeader.unkTable1_4C[idx].vy_8         = Rng_AddGeneratedUInt(pos->vy, -2047, 2048);
+            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = Rng_AddGeneratedUInt(pos->vz, -1023, 1024);
 
             Collision_Get(&coll, g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
 
@@ -5317,9 +5317,9 @@ void func_8006342C(s32 weaponAttack, q3_12 angle0, q3_12 angle1, GsCOORDINATE2* 
             break;
         }
 
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_0.vx_0 = (Q4_TO_Q8(ptr->field_28.vx) + Rng_GenerateUInt(0, 255)) - 0x80;
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vy_8 = (Q4_TO_Q8((u16)ptr->field_28.vy) + Rng_GenerateUInt(0, 255)) - 0x80;
-        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_4.vz_4 = (Q4_TO_Q8(ptr->field_28.vz) + Rng_GenerateUInt(0, 255)) - 0x80;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_0.vx_0 = Rng_AddGeneratedUInt(Q4_TO_Q8(ptr->field_28.vx), -128, 127);
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vy_8         = Rng_AddGeneratedUInt(Q4_TO_Q8(ptr->field_28.vy), -128, 127);
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_4.vz_4 = Rng_AddGeneratedUInt(Q4_TO_Q8(ptr->field_28.vz), -128, 127);
 
         if (i < 3)
         {

@@ -59,8 +59,9 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
 
     if (!(chara->properties_E4.player.afkTimer_E8 & 0x18))
     {
-        if (!(Rng_GenerateInt(0, 511) && magMax <= Q12(4.0f)) ||                                             // 1 in 512 chance.
-            (!Rng_GenerateInt(0, 127) && Rng_GenerateUInt(0, 0xFFF) < FP_TO(magMax, Q12_SHIFT) / Q12(4.0f))) // 1 in 128 chance.
+        if (!(Rng_GenerateInt(0, 511) && magMax <= Q12(4.0f)) || // 1 in 512 chance.
+            (!Rng_GenerateInt(0, 127) &&                         // 1 in 128 chance.
+             Rng_GenerateUInt(0, Q12(1.0f) - 1) < FP_TO(magMax, Q12_SHIFT) / Q12(4.0f)))
         {
             if (chara->properties_E4.larvalStalker.properties_E8[0].val16[0] & (1 << 11))
             {

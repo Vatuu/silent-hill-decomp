@@ -46,8 +46,8 @@ void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
         case 2:
             for (i = 0; i < 8; i++)
             {
-                offsetX = (Rng_Rand16() % (s32)(D_800E3A40[arg1].field_C * 2)) - (u16)D_800E3A40[arg1].field_C;
-                offsetZ = (Rng_Rand16() % (s32)(D_800E3A40[arg1].field_C * 2)) - (u16)D_800E3A40[arg1].field_C;
+                offsetX = Rng_GenerateInt(-D_800E3A40[arg1].field_C, D_800E3A40[arg1].field_C - 1);
+                offsetZ = Rng_GenerateInt(-D_800E3A40[arg1].field_C, D_800E3A40[arg1].field_C - 1);
                 if ((SQUARE(offsetX) + SQUARE(offsetZ)) < (D_800E3A40[arg1].field_C * D_800E3A40[arg1].field_C))
                 {
                     break;
@@ -65,14 +65,14 @@ void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
             break;
 
         case 3:
-            offsetX = Rng_GenerateUInt(0, 4095);
+            offsetX = Rng_GenerateUInt(0, FP_ANGLE(360.0f) - 1);
             sharedData_800DFB7C_0_s00[arg0].field_0.vx_0 = D_800E3A40[arg1].vx_0 + FP_FROM((D_800E3A40[arg1].field_C * Math_Sin(offsetX)), Q12_SHIFT);
             zOff2 = FP_FROM((D_800E3A40[arg1].field_C * Math_Cos(offsetX)), Q12_SHIFT);
             sharedData_800DFB7C_0_s00[arg0].field_4.vz_4 = D_800E3A40[arg1].vz_4 + zOff2;
             break;
 
         case 4:
-            offsetX = ((Rng_GenerateUInt(0, 2047) + (u16)D_800E3A40[arg1].field_A) - 0x400);
+            offsetX = Rng_AddGeneratedUInt(D_800E3A40[arg1].field_A, FP_ANGLE(-90.0f), FP_ANGLE(90.0f) - 1);
             sharedData_800DFB7C_0_s00[arg0].field_0.vx_0 = D_800E3A40[arg1].vx_0 + FP_FROM((D_800E3A40[arg1].field_C * Math_Sin(offsetX)), Q12_SHIFT);
             zOff2 = FP_FROM((D_800E3A40[arg1].field_C * Math_Cos(offsetX)), Q12_SHIFT);
             sharedData_800DFB7C_0_s00[arg0].field_4.vz_4 = D_800E3A40[arg1].vz_4 + zOff2;
@@ -90,8 +90,8 @@ void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
         sharedData_800DFB7C_0_s00[arg0].field_C.s_0.field_0 = sharedData_800DFB7C_0_s00[arg0].field_C.field_0 - D_800E3A40[arg1].field_10;
     }
 
-    sharedData_800DFB7C_0_s00[arg0].field_C.s_1.field_2 = Rng_GenerateUInt(0, 3);
-    sharedData_800DFB7C_0_s00[arg0].field_C.s_1.field_3 = Rng_GenerateUInt(0x60, 0x9F);
+    sharedData_800DFB7C_0_s00[arg0].field_C.s_1.field_2  = Rng_GenerateUInt(0, 3);
+    sharedData_800DFB7C_0_s00[arg0].field_C.s_1.field_3  = Rng_GenerateUInt(96, 159);
     sharedData_800DFB7C_0_s00[arg0].field_10.s_2.field_0 = arg1;
 }
 

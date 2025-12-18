@@ -1046,19 +1046,10 @@ bool func_800D012C(VECTOR3* pos, s_func_800CC8FC* unused0, s32* unused1) // 0x80
 
 void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
 {
-    VECTOR3*    vec;
-    s32         unkZ;
-    s32         i;
-    s32         var_v0;
-    s32         idx;
-    s32         rand0;
-    s32         rand1;
-    s32         rand;
-    s32         mult;
-    s_800E330C* curUnk;
-    s_800E34FC* var_s1;
+    s32 i;
 
     g_SysWork.field_234B_4 = arg0;
+
     if (arg0)
     {
         sharedFunc_800D0A60_0_s00(D_800C39A0);
@@ -1074,24 +1065,17 @@ void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
 
             if (D_800DD593)
             {
-
                 for (i = 0; i < ARRAY_SIZE(sharedData_800E34FC_0_s00); i++)
                 {
-                    rand = Rng_Rand16();
-                    rand0 = rand;
-                    var_s1 = &sharedData_800E34FC_0_s00[i];
-                    idx = (i / 20) + 1;
-                    vec = &D_800E32DC[idx];
-
                     // TODO: Is this angle math?
-                    var_s1->field_0.vx = (vec->vx + Rng_GenerateUIntFromInput(rand0, 0, 4095)) - Q12(0.5f);
-                    var_s1->field_0.vz = (vec->vz + Rng_GenerateUInt(0, 4095)) - Q12(0.5f);
-                    var_s1->field_0.vy = vec->vy;
-                    var_s1->field_11 = 1;
-                    var_s1->field_10 = 1;
-                    var_s1->field_12 = 0;
-                    var_s1->field_C = 0;
-                    var_s1->field_E = 0;
+                    sharedData_800E34FC_0_s00[i].field_0.vx = Rng_AddGeneratedUInt(D_800E32DC[(i / 20) + 1].vx, Q12(-0.5f), Q12(0.5f) - 1);
+                    sharedData_800E34FC_0_s00[i].field_0.vz = Rng_AddGeneratedUInt(D_800E32DC[(i / 20) + 1].vz, Q12(-0.5f), Q12(0.5f) - 1);
+                    sharedData_800E34FC_0_s00[i].field_0.vy = D_800E32DC[(i / 20) + 1].vy;
+                    sharedData_800E34FC_0_s00[i].field_11   = 1;
+                    sharedData_800E34FC_0_s00[i].field_10   = 1;
+                    sharedData_800E34FC_0_s00[i].field_12   = 0;
+                    sharedData_800E34FC_0_s00[i].field_C    = 0;
+                    sharedData_800E34FC_0_s00[i].field_E    = 0;
                 }
             }
 
@@ -1099,30 +1083,14 @@ void func_800D0394(s32 arg0, VECTOR3* vecs) // 0x800D0394
             {
                 for (i = 0; i < ARRAY_SIZE(sharedData_800E330C_0_s00); i++)
                 {
-                    curUnk = &sharedData_800E330C_0_s00[i];
+                    sharedData_800E330C_0_s00[i].field_0.vx = D_800E32DC[0].vx + Rng_GenerateInt(Q12(-2.5f), Q12(2.5f) - 1);
+                    sharedData_800E330C_0_s00[i].field_0.vy = D_800E32DC[0].vy + Rng_GenerateIntFromInput(-Rng_Rand16(), 0, Q12(4.0f) - 1); // TODO: Weird `-Rng_Rand16()`
+                    sharedData_800E330C_0_s00[i].field_0.vz = D_800E32DC[0].vz + Rng_GenerateInt(Q12(-2.5f), Q12(2.5f) - 1);
 
-                    // TODO: Should be `Rng_GenerateInt(-2.5f, 2.5f)`, but casts in this macro make it not fit here.
-                    curUnk->field_0.vx = D_800E32DC[0].vx + (Rng_Rand16() % Q12(5.0f)) - Q12(2.5f);
-
-                    rand0 = -Rng_Rand16();
-                    var_v0 = rand0;
-                    if (rand0 < 0)
-                    {
-                        var_v0 = rand0 + (Q12(4.0f) - 1);
-                    }
-
-                    curUnk->field_0.vy = D_800E32DC[0].vy + (rand0 - ((var_v0 >> 14) << 14));
-
-                    rand1 = Rng_Rand16();
-                    unkZ = D_800E32DC[0].vz;
-                    mult = rand1 / Q12(5.0f);
-                    rand = rand1 - (mult * Q12(5.0f));
-
-                    curUnk->field_15 = 1;
-                    curUnk->field_14 = 1;
-                    curUnk->field_C.vx = 0;
-                    curUnk->field_C.vz = 0;
-                    curUnk->field_0.vz = (unkZ + rand) - Q12(2.5f);
+                    sharedData_800E330C_0_s00[i].field_15   = 1;
+                    sharedData_800E330C_0_s00[i].field_14   = 1;
+                    sharedData_800E330C_0_s00[i].field_C.vx = 0;
+                    sharedData_800E330C_0_s00[i].field_C.vz = 0;
                 }
             }
         }
