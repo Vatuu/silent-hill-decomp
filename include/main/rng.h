@@ -89,7 +89,7 @@ extern u32 g_RngSeed;
  * @return Random integer in the range `[low, high]` (`s32`).
 */
 #define Rng_AddGeneratedUInt(base, low, high) \
-    (base + (s32)(Rng_Rand16() % (u32)(((high) - (low)) + 1)) + (low))
+    (base + (s32)((u32)Rng_Rand16() % (((high) - (low)) + 1)) + (low))
 
 /** @brief Generates a new random 32-bit unsigned integer and updates
  * `g_RngSeed`.

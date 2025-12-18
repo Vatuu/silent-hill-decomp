@@ -37,6 +37,7 @@ void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
             break;
 
         case 1:
+            // TODO: Not sure if this fits any RNG macro?
             tmp0 = (Rng_Rand16() % D_800E3A40[arg1].field_C) - (D_800E3A40[arg1].field_C >> 1);
             sharedData_800DFB7C_0_s00[arg0].field_0.vx_0 = D_800E3A40[arg1].vx_0 + FP_FROM((tmp0 * Math_Sin(D_800E3A40[arg1].field_A)), Q12_SHIFT);
             zOff2 = FP_FROM((tmp0 * Math_Cos(D_800E3A40[arg1].field_A)), Q12_SHIFT);
@@ -83,7 +84,7 @@ void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2) // 0x800CDCE0
 
     if (arg2 == 0)
     {
-        sharedData_800DFB7C_0_s00[arg0].field_C.s_0.field_0 = (Rng_Rand16() % D_800E3A40[arg1].field_10);
+        sharedData_800DFB7C_0_s00[arg0].field_C.s_0.field_0 = Rng_GenerateInt(0, D_800E3A40[arg1].field_10 - 1);
     }
     else
     {
