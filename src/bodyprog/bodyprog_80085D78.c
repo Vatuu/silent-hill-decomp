@@ -1551,7 +1551,7 @@ s32 func_80089128(void) // 0x80089128
 
     temp_s0 = g_SysWork.field_2510;
 
-    if (!var_s2->field_2_0)
+    if (!var_s2->field_0.field_0_16)
     {
         func_800890B8();
     }
@@ -1559,12 +1559,12 @@ s32 func_80089128(void) // 0x80089128
     if (g_GameWork.config_0.optVibrationEnabled_21)
     {
         func_8009E2A0(var_s2);
-        var_s2->field_1 = 1 << 7;
+        var_s2->field_0.field_0_8 = 1 << 7;
     }
     else
     {
         func_8009E2D8(var_s2);
-        var_s2->field_1 = 0;
+        var_s2->field_0.field_0_8 = 0;
     }
 
     if (PadChkVsync())
@@ -1580,7 +1580,7 @@ s32 func_80089128(void) // 0x80089128
     temp_v0 = func_8009ED74(var_s2);
     var_s0  = func_8009ED7C(temp_v0);
 
-    if (!var_s2->field_2_1)
+    if (!var_s2->field_0.field_0_17)
     {
         var_s3 = g_VBlanks;
     }
@@ -1795,7 +1795,7 @@ bool func_80089524(s_SysWork_2514* arg0, s32 padInfoMode) // 0x80089524
     u8              socket;
     s_SysWork_2514* temp;
 
-    socket = arg0->field_0;
+    socket = arg0->field_0.padPort_0_0;
     PadInfoMode(socket, 2, 0);
 
     padState = PadGetState(socket);
@@ -1807,8 +1807,8 @@ bool func_80089524(s_SysWork_2514* arg0, s32 padInfoMode) // 0x80089524
         cond = PadSetMainMode(socket, 1, 0);
 
         temp            = &g_SysWork.field_2514;
-        temp->field_2_4 = 0;
-        temp->field_2_3 = 0;
+        temp->field_0.field_0_23 = 0;
+        temp->field_0.field_0_22 = 0;
     }
 
     return cond;

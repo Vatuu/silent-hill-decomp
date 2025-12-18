@@ -57,7 +57,46 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E310);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E3B0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E438);
+bool func_8009E438(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurID, s32 padInfoCurExID)
+{
+    s_SysWork_2514_0 tmp;
+    bool             isChanged;
+
+    tmp = arg0->field_0;
+
+    if (padState == PadStateFindCTP1) // "Check for controller connection with controllers other than DUAL SHOCK (Complete the acquisition of controller information)"
+    {
+        // TODO: 16Button is just standard controller?
+        if (padInfoCurID == PadTerminalType_16Button | padInfoCurID == PadTerminalType_AnalogJoystick | padInfoCurID == PadTerminalType_AnalogController) // `|` Dev mistake?
+        {
+            isChanged      = tmp.field_0_24 != 3;
+            tmp.field_0_24 = 3;
+        }
+        else
+        {
+            isChanged      = tmp.field_0_24 != 4;
+            tmp.field_0_24 = 4;
+        }
+    }
+    else
+    {
+        isChanged      = tmp.field_0_24 != 0;
+        tmp.field_0_24 = 0;
+    }
+
+    if (isChanged)
+    {
+        arg0->field_4  = 0;
+        arg0->field_8  = 0;
+        arg0->field_A  = 0;
+        tmp.field_0_19 = 0;
+        tmp.field_0_23 = 0;
+        tmp.field_0_22 = 0;
+        arg0->field_0  = tmp;
+    }
+
+    return true;
+}
 
 s_SysWork_2510* func_8009E4F8(void) // 0x8009E4F8
 {
@@ -88,7 +127,7 @@ s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* arg1) // 0x8009E550
     s32 padInfoCurExID;
     u8  padPort;
 
-    padPort        = arg0->field_0;
+    padPort        = arg0->field_0.padPort_0_0;
     padState       = PadGetState(padPort);
     padInfoCurID   = PadInfoMode(padPort, InfoModeCurID, 0);
     padInfoCurExID = PadInfoMode(padPort, InfoModeCurExID, 0);

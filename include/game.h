@@ -897,19 +897,6 @@ typedef enum _CharacterId
     Chara_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
 } e_CharacterId;
 
-/** Based on LIBOVR.PDF `Buffer Data Format` section. */
-typedef enum _PadTerminalType
-{
-    PadTerminalType_Mouse               = 1,
-    PadTerminalType_16ButtonAnalog      = 2,
-    PadTerminalType_GunControllerKonami = 3,
-    PadTerminalType_16Button            = 4,
-    PadTerminalType_AnalogJoystick      = 5,
-    PadTerminalType_GunControllerNamco  = 6,
-    PadTerminalType_AnalogController    = 7,
-    PadTerminalType_MultitapAdapter     = 8
-} e_PadTerminalType;
-
 typedef enum _GameDifficulty
 {
     GameDifficulty_Easy   = -1,

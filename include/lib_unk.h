@@ -4,6 +4,19 @@
 // Konami library for handling DualShock vibration?
 // Built with 2.7.2-970404 / 2.7.2-cdk compiler.
 
+/** Based on LIBOVR.PDF `Buffer Data Format` section. */
+typedef enum _PadTerminalType
+{
+    PadTerminalType_Mouse               = 1,
+    PadTerminalType_16ButtonAnalog      = 2,
+    PadTerminalType_GunControllerKonami = 3,
+    PadTerminalType_16Button            = 4,
+    PadTerminalType_AnalogJoystick      = 5,
+    PadTerminalType_GunControllerNamco  = 6,
+    PadTerminalType_AnalogController    = 7,
+    PadTerminalType_MultitapAdapter     = 8
+} e_PadTerminalType;
+
 typedef struct
 {
     s8  field_0[4];
@@ -26,15 +39,24 @@ typedef struct _s_SysWork_2514_18
 
 typedef struct
 {
-    u32                field_0   : 8;
-    u8                 field_1   : 8;
-    u32                field_2_0 : 1;
-    u32                field_2_1 : 1;
-    u32                field_2_2 : 4;
-    u32                field_2_3 : 1;
-    u32                field_2_4 : 1;
-    u32                field_2_5 : 8;
-    u8                 unk_4[8];
+    u32 padPort_0_0 : 8;
+    u8  field_0_8   : 8;
+    u32 field_0_16  : 1;
+    u32 field_0_17  : 1;
+    u32 field_0_18  : 1;
+    u32 field_0_19  : 3;
+    u32 field_0_22  : 1;
+    u32 field_0_23  : 1;
+    u32 field_0_24  : 8;
+} s_SysWork_2514_0;
+
+typedef struct
+{
+    s_SysWork_2514_0   field_0;
+    s32                field_4;
+    s16                field_8;
+    s8                 field_A;
+    u8                 unk_B[1];
     s_SysWork_2514_C*  field_C;
     s_SysWork_2514_18* field_10;
     u8                 unk_14[4];
@@ -48,13 +70,13 @@ typedef struct _s_SysWork_2510
     u8                      key_4;
     u8                      pad_5[3];
     s32                     field_8;
-    s32                     (*func_C)(s_SysWork_2514*, s32, s32, s32);
+    s32                     (*func_C)(s_SysWork_2514*, s32 padState, s32 padInfoCurID, s32 padInfoCurExID);
 } s_SysWork_2510;
 STATIC_ASSERT_SIZEOF(s_SysWork_2510, 16);
 
 s32 func_8009E3B0(s_SysWork_2514*, s32, s32, s32);
 
-s32 func_8009E438(s_SysWork_2514*, s32, s32, s32);
+bool func_8009E438(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurID, s32 padInfoCurExID);
 
 s_SysWork_2510* func_8009E4F8(void);
 
