@@ -1323,7 +1323,7 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesNpc, 68);
 
 typedef struct _SubCharPropertiesDummy
 {
-    s32        unk_E4;            // Is this part of `a_SubCharacter`?
+    s32        unk_E4;
     u_Property properties_E8[16];
 } s_SubCharaPropertiesDummy;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesDummy, 68);
@@ -1411,6 +1411,32 @@ typedef struct _SubCharaPropertiesSplitHead
     s16        moveDistance_126;
 } s_SubCharaPropertiesSplitHead;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesSplitHead, 68);
+
+typedef struct _SubCharaPropertiesLarvalStalker
+{
+    s32 unk_E4;
+    u16 flags_E8;
+    u8  field_EA;
+    u8  unk_EB;
+    s32 timer_EC;
+    u32 field_F0;
+    u16 timer_F4;
+    u16 unk_F8;
+    q19_12 targetX;
+    q19_12 targetZ;
+    s16 angle_100;
+    s16 angle_102;
+    s32 animTime_104;
+    s16 angle_108;
+    u16 timer_10A;
+    u_Property field_10C;
+    VECTOR3 field_110;
+    s32 flags_11C;
+    u_Property field_120;
+    s16 field_124;
+    s16 moveDistance_126;
+} s_SubCharaPropertiesLarvalStalker;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
 
 /** Offsets for translation? */
 typedef struct
@@ -1501,6 +1527,7 @@ typedef struct _SubCharacter
         s_SubCharaPropertiesPuppetNurse   puppetNurse;
         s_SubCharaPropertiesDahlia        dahlia;
         s_SubCharaPropertiesSplitHead     splitHead;
+        s_SubCharaPropertiesLarvalStalker larvalStalker;
     } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);

@@ -23,7 +23,7 @@ INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", func_800CCB1C);
 
 #include "maps/shared/Ai_LarvalStalker_Update.h" // 0x800D00B8
 
-INCLUDE_ASM("asm/maps/map6_s04/nonmatchings/map6_s04", sharedFunc_800CF168_1_s00); // 0x800D01D0
+#include "maps/shared/sharedFunc_800CF168_1_s00.h" // 0x800D01D0
 
 #include "maps/shared/sharedFunc_800D140C_1_s00.h" // 0x800D2474
 
