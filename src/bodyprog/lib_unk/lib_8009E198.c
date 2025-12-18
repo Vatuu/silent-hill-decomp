@@ -2,6 +2,47 @@
 #include <libpad.h>
 #include "lib_unk.h"
 
+// TODO: Could be array?
+s_SysWork_2510 D_800B13EC = {
+    .next_0  = NULL,
+    .key_4   = 0,
+    .pad_5   = { 0, 0, 0 },
+    .field_8 = 0,
+    .func_C  = func_8009E3B0,
+};
+
+s_SysWork_2510 D_800B13FC = {
+    .next_0  = NULL,
+    .key_4   = 3,
+    .pad_5   = { 0, 0, 0 },
+    .field_8 = 0,
+    .func_C  = NULL,
+};
+
+s_SysWork_2510 D_800B140C = {
+    .next_0  = NULL,
+    .key_4   = 4,
+    .pad_5   = { 0, 0, 0 },
+    .field_8 = 0,
+    .func_C  = func_8009E438,
+};
+
+s_SysWork_2510 D_800B141C = {
+    .next_0  = NULL,
+    .key_4   = 2,
+    .pad_5   = { 0, 1, 0 },
+    .field_8 = 0,
+    .func_C  = func_8009E82C,
+};
+
+s_SysWork_2510 D_800B142C = {
+    .next_0  = NULL,
+    .key_4   = 1,
+    .pad_5   = { 1, 2, 0 },
+    .field_8 = 0x800B2610, // TODO: Pointer to data? Pretty far from this files .data section.
+    .func_C  = func_8009E9D0,
+};
+
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E198);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E230);

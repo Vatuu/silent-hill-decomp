@@ -48,16 +48,13 @@ typedef struct _s_SysWork_2510
     u8                      key_4;
     u8                      pad_5[3];
     s32                     field_8;
-    s32                     (*func_C)(void*, s32, s32, s32);
+    s32                     (*func_C)(s_SysWork_2514*, s32, s32, s32);
 } s_SysWork_2510;
 STATIC_ASSERT_SIZEOF(s_SysWork_2510, 16);
 
-// Could be array?
-extern s_SysWork_2510 D_800B13EC;
-extern s_SysWork_2510 D_800B13FC;
-extern s_SysWork_2510 D_800B140C;
-extern s_SysWork_2510 D_800B141C;
-extern s_SysWork_2510 D_800B142C;
+s32 func_8009E3B0(s_SysWork_2514*, s32, s32, s32);
+
+s32 func_8009E438(s_SysWork_2514*, s32, s32, s32);
 
 s_SysWork_2510* func_8009E4F8(void);
 
@@ -67,7 +64,11 @@ s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* arg1);
 
 bool func_8009E7D8(s_SysWork_2510* arg0);
 
+s32 func_8009E82C(s_SysWork_2514*, s32, s32, s32);
+
 bool func_8009E97C(s_SysWork_2510* arg0);
+
+s32 func_8009E9D0(s_SysWork_2514*, s32, s32, s32);
 
 bool func_8009EC1C(s_SysWork_2514* list, s_SysWork_2514_18* node);
 
