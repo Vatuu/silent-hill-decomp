@@ -9,6 +9,7 @@
 #include "bodyprog/item_screens.h"
 #include "bodyprog/joy.h"
 #include "bodyprog/player_logic.h"
+#include "bodyprog/sound_system.h"
 #include "main/rng.h"
 
 // Some kind of `Anim_UpdateX` function, included in some `s_AnimInfo` array which also had pointers to `Anim_Update1`/`Anim_Update2`.

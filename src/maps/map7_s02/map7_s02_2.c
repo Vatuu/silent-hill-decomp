@@ -2,6 +2,7 @@
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
+#include "bodyprog/sound_system.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map7/map7_s02.h"

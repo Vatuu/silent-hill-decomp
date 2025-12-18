@@ -9,6 +9,7 @@
 #include "bodyprog/joy.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
+#include "bodyprog/sound_system.h"
 
 // q19_12  g_DeltaTime2;
 // s32     g_MainLoop_FrameCount;

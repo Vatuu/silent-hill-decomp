@@ -1,6 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/sound_system.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map5/map5_s01.h"

@@ -547,6 +547,7 @@ u16 g_UnknownBgmTable2[] = {
     203
 };
 
+// Loaded NPC type in memory and their data information index in `g_InitializedCharaAnimInfo`.
 s8 D_800A98FC[Chara_Count] = {
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -556,11 +557,7 @@ s8 D_800A98FC[Chara_Count] = {
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 3 0x00 padding.
 };
 
-/* These is some 24-byte struct with data followed by 72 bytes (3 structs worth)
- * of zeros, which are also zeroed at runtime in `func_800348C0`.
- * I think it is an array of this struct.
- */
-s_800A992C D_800A992C[4] = {
+s_CharaAnimInfo g_InitializedCharaAnimInfo[GROUP_CHARA_COUNT] = {
     {
         .charaId0_0       = Chara_Harry,
         .charaId1_1       = Chara_Harry,
@@ -569,7 +566,6 @@ s_800A992C D_800A992C[4] = {
         .animFileSize1_C  = 0x2E630,
         .animFileSize2_10 = 0x2E630,
         .npcCoords_14     = NULL
-//extern u8 D_800A9944[]; <-- Aforementioned 72 empty bytes below.
     }, {}, {}, {}
 };
 

@@ -9,6 +9,7 @@
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
+#include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
 #include "screens/stream/stream.h"
@@ -41,7 +42,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         GameState_MovieIntro
     };
 
-    bool        playIntroFmv;
+    bool        playInGameDemo;
     s32         prevGameDifficultyIdx;
     s32         nextGameDifficultyIdx;
     e_GameState prevState;
@@ -53,13 +54,13 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
      * is a value divisible by 3, the intro FMV will play. Otherwise, it defaults to a gameplay
      * demo.
      */
-    playIntroFmv = ((g_Demo_ReproducedCount + 1) % 3) != 0;
+    playInGameDemo = ((g_Demo_ReproducedCount + 1) % 3) != 0;
 
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
         g_MainMenuState = 0;
         
-        if (playIntroFmv)
+        if (playInGameDemo)
         {
             g_SysWork.processFlags_2298 = SysWorkProcessFlag_BootDemo;
         }
@@ -85,7 +86,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             g_MainMenuState++;
 
         case MenuState_Main:
-            if (playIntroFmv)
+            if (playInGameDemo)
             {
                 GameFs_MapStartup();
 
@@ -221,7 +222,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             break;
 
         case MenuState_DifficultySelector:
-            if (playIntroFmv)
+            if (playInGameDemo)
             {
                 GameFs_MapStartup();
 
@@ -337,7 +338,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         g_SysWork.timer_20 = 0;
     }
 
-    if (!playIntroFmv)
+    if (!playInGameDemo)
     {
         switch (g_GameWork.gameStateStep_598[0])
         {

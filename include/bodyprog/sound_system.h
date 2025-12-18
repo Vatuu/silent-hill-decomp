@@ -28,6 +28,10 @@
 #define AUDIO_TYPE_MONO   1
 #define AUDIO_TYPE_STEREO 2
 
+// ==============
+// HELPER MACROS
+// ==============
+
 /** @brief Packs an audio type and program index into a single  value.
  *
  * The third field from `s_VabInfo` is obfuscated.

@@ -1,6 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
+#include "bodyprog/sound_system.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map6/map6_s01.h"
@@ -836,6 +837,7 @@ void func_800D2E6C(void) // 0x800D2E6C
 
     WorldObjectInit(&D_800D53A4[6], "RIGHT_HI", -19.599853515625f, -0.824951171875f, 59.39990234375f, 0.0, 180.0f, 0.0f);
 
+
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[2], D_800A99E4.ampouleName_10);
@@ -843,6 +845,8 @@ void func_800D2E6C(void) // 0x800D2E6C
     WorldObject_ModelNameSet(&g_CommonWorldObjects[4], D_800A99E4.shotgunShellsName_18);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
+
+const s16 D_800CBB5C = 0x1440;
 
 void func_800D30DC(void) // 0x800D30DC
 {

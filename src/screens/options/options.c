@@ -8,6 +8,7 @@
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/sound_system.h"
 #include "screens/options/options.h"
 #include "screens/stream/stream.h"
 

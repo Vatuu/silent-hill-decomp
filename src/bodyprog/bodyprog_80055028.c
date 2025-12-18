@@ -10,6 +10,7 @@
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/player_logic.h"
+#include "bodyprog/sound_system.h"
 #include "main/rng.h"
 
 extern s_800C4168 D_800C4168;

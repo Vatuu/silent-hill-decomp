@@ -2152,6 +2152,7 @@ g_SelectedSaveSlotIdx                       = 0x800A97D6;
 g_UnknownBgmTable0                          = 0x800A9804;
 g_UnknownBgmTable1                          = 0x800A9858; // type:u16
 g_UnknownBgmTable2                          = 0x800A98AC;
+g_InitializedCharaAnimInfo                  = 0x800A992C;
 D_800A998C                                  = 0x800A998C; // type:AnimInfo size:0x10
 D_800A99A0                                  = 0x800A99A0;
 g_Sd_BgmLayerLimits                         = 0x800A99A4;

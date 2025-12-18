@@ -1,4 +1,5 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/sound_system.h"
 #include "bodyprog/libsd.h"
 
 /** In Jan 16 Demo and the Nov 24, 98 Preview,

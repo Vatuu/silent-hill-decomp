@@ -6,6 +6,7 @@
 #include "bodyprog/credits.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/sound_system.h"
 #include "main/rng.h"
 #include "screens/credits/credits.h"
 

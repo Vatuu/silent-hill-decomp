@@ -7,8 +7,6 @@
 #include "bodyprog/view/vw_system.h"
 #include "main/fsqueue.h"
 #include "types.h"
-// TODO: Assign `sound_system.h` corresponding to any *.c file calling functions located there.
-#include "bodyprog/sound_system.h"
 
 /** @brief This header is used to declare any variable, struct, or
  * function of `BODYPROG.BIN` that has not been identified to
@@ -1021,11 +1019,11 @@ typedef struct
     // 2 bytes of padding.
     s32            animFile0_4; // s_AnmHeader*    animFile0_4; // TODO: Needs to be a pointer.
     s_AnmHeader*   animFile1_8;
-    s32            animFileSize1_C;
-    s32            animFileSize2_10;
+    s32            animFileSize1_C;  // Incorrect.
+    s32            animFileSize2_10; // Incorrect.
     GsCOORDINATE2* npcCoords_14;
-} s_800A992C;
-STATIC_ASSERT_SIZEOF(s_800A992C, 24);
+} s_CharaAnimInfo;
+STATIC_ASSERT_SIZEOF(s_CharaAnimInfo, 24);
 
 /** Related to weapon attacks. Stats, SFX IDs, damange values, etc.? */
 typedef struct
@@ -2178,13 +2176,8 @@ extern u16 g_UnknownBgmTable0[];
 
 extern u16 g_UnknownBgmTable2[];
 
-/** `D_800A992C` and `D_800A9944` are likely the same variable or they are inside a struct.
- * `D_800A992C` has values that seem related to the player, while `D_800A9944`
- * dynamically allocates data for other characters.
- *
- * `D_800A992C`'s `field_4` and `field_8` are set to `FS_BUFFER_0`.
- */
-extern s_800A992C D_800A992C[];
+/** @brief Stores loaded character's animation data information. */
+extern s_CharaAnimInfo g_InitializedCharaAnimInfo[];
 
 extern s32 D_800A9938;
 
@@ -4052,7 +4045,7 @@ void GameFs_MapLoad(s32 mapIdx);
 
 bool func_8003528C(s32 idx0, s32 idx1);
 
-/** Searches for the index of the character animation data in `D_800A992C`. */
+/** Searches for the index of the character animation data in `g_InitializedCharaAnimInfo`. */
 s32 func_800352F8(e_CharacterId charaId);
 
 /** Either allocates or determines where to allocate animation data. */

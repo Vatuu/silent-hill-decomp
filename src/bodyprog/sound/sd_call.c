@@ -9,6 +9,7 @@ static CdlLOC D_800C15E8[2];
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/libsd.h"
+#include "bodyprog/sound_system.h"
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
