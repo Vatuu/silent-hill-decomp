@@ -1,4 +1,26 @@
+
+
+
+//================================================
+//=== .rodata section
+//================================================
+
+
+//-----------------------------------------------------------------
+//--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map2_s00
+//-----------------------------------------------------------------
 sharedData_800CAA98_0_s01   = 0x800CA908; // type:s32 size:0xD6C
+
+
+
+//================================================
+//=== .text section
+//================================================
+
+
+//-----------------------------------------------------------
+//--- PA: 0x004048   VA: 0x800CD5C0   subsegment: c, map2_s00
+//-----------------------------------------------------------
 sharedFunc_800CB6B0_0_s00   = 0x800CD5C0; // type:func
 sharedFunc_800CBBBC_0_s00   = 0x800CDC3C; // type:func
 sharedFunc_800CBC94_0_s00   = 0x800CDD14; // type:func
@@ -219,6 +241,17 @@ MapEvent_DoghouseKeyTake    = 0x800E97E4; // type:func
 MapEvent_HouseKeyUse        = 0x800E9D1C; // type:func
 MapEvent_DoorOfEclipseEnter = 0x800EA444; // type:func
 MapEvent_KGordonKeyUse      = 0x800EA894; // type:func
+
+
+
+//================================================
+//=== .data section
+//================================================
+
+
+//----------------------------------------------------
+//--- PA: 0x025134   VA: 0x800EE6AC   subsegment: data
+//----------------------------------------------------
 HARRY_M2S00_ANIM_INFOS      = 0x800EE6AC;
 sharedData_800DD584_0_s00   = 0x800EE9DF; // type:u8
 sharedData_800DD588_0_s00   = 0x800EE9E0; // type:s32
@@ -235,7 +268,15 @@ MAP_ROOM_IDXS               = 0x800F05D8; // type:u8 unknown type
 sharedData_800DF2DC_0_s00   = 0x800F06B8; // type:s32 unknown type
 sharedData_800F06D4_2_s00   = 0x800F06D4; // size:8
 MAP_POINTS                  = 0x800F06EC; // type:MapPoint2d
+
+//---------------------------------------------------------------
+//--- PA: 0x0279F0   VA: 0x800F0F68   subsegment: .data, map2_s00
+//---------------------------------------------------------------
 MAP_MESSAGES                = 0x800F0F68; // type:u32 size:0x13C
+
+//----------------------------------------------------
+//--- PA: 0x027B2C   VA: 0x800F10A4   subsegment: data
+//----------------------------------------------------
 g_MapMsgSounds              = 0x800F1A10; // type:u16 size:0x4
 g_Gfx_LockTimFileIdxs       = 0x800F1A14; // type:s16
 g_CommonWorldObjectPoses    = 0x800F1A28; // type:WorldObjectPos size:0x280
@@ -246,9 +287,9 @@ sharedData_800DE180_0_s01   = 0x800F214C; // type:VECTOR3 size:0xC
 sharedData_800DE190_0_s01   = 0x800F215C; // type:VECTOR3 size:0xC
 sharedData_800F216C_2_s00   = 0x800F216C; // type:VECTOR3 size:0xC
 sharedData_800F217C_2_s00   = 0x800F217C; // type:VECTOR3 size:0xC
-sharedData_800DE1A0_0_s01 = 0x800F218C; // type:VECTOR3 size:0xC
-sharedData_800DE1B0_0_s01 = 0x800F219C; // type:VECTOR3 size:0xC
-sharedData_800DE1C0_0_s01 = 0x800F21AC; // type:VECTOR3 size:0xC
+sharedData_800DE1A0_0_s01   = 0x800F218C; // type:VECTOR3 size:0xC
+sharedData_800DE1B0_0_s01   = 0x800F219C; // type:VECTOR3 size:0xC
+sharedData_800DE1C0_0_s01   = 0x800F21AC; // type:VECTOR3 size:0xC
 sharedData_800F21BC_2_s00   = 0x800F21BC; // type:VECTOR3 size:0xC
 sharedData_800F21DC_2_s00   = 0x800F21DC; // type:VECTOR3 size:0xC
 sharedData_800F21EC_2_s00   = 0x800F21EC; // type:VECTOR3 size:0xC

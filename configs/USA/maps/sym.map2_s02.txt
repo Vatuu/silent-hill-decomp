@@ -1,4 +1,26 @@
+
+
+
+//================================================
+//=== .rodata section
+//================================================
+
+
+//-----------------------------------------------------------------
+//--- PA: 0x000000   VA: 0x800C9578   subsegment: .rodata, map2_s02
+//-----------------------------------------------------------------
 sharedData_800CAA98_0_s01   = 0x800CA898; // type:s32 size:0xD6C
+
+
+
+//================================================
+//=== .text section
+//================================================
+
+
+//-----------------------------------------------------------
+//--- PA: 0x00332C   VA: 0x800CC8A4   subsegment: c, map2_s02
+//-----------------------------------------------------------
 sharedFunc_800CB6B0_0_s00   = 0x800CC8A4; // type:func
 sharedFunc_800CBBBC_0_s00   = 0x800CCD90; // type:func
 sharedFunc_800CBC94_0_s00   = 0x800CCE68; // type:func
@@ -222,6 +244,17 @@ Map_RoomIdxGet              = 0x800E993C; // type:func
 sharedFunc_800E9B38_2_s02   = 0x800E9B38; // type:func
 MapEvent_DoorJammed         = 0x800E9C2C; // type:func
 MapEvent_DoorLocked         = 0x800E9CC0; // type:func
+
+
+
+//================================================
+//=== .data section
+//================================================
+
+
+//----------------------------------------------------
+//--- PA: 0x021524   VA: 0x800EAA9C   subsegment: data
+//----------------------------------------------------
 HARRY_M2S02_ANIM_INFOS      = 0x800EAA9C;
 sharedData_800DD584_0_s00   = 0x800EAD57; // type:u8
 sharedData_800DD588_0_s00   = 0x800EAD58; // type:s32
@@ -239,7 +272,15 @@ MAP_ROOM_IDXS               = 0x800ED3C4; // type:u8
 sharedData_800ED430_2_s02   = 0x800ED430;
 sharedData_800ED43C_2_s02   = 0x800ED43C; // type:u8 size:8
 MAP_POINTS                  = 0x800ED454; // type:MapPoint2d
+
+//---------------------------------------------------------------
+//--- PA: 0x02411C   VA: 0x800ED694   subsegment: .data, map2_s02
+//---------------------------------------------------------------
 MAP_MESSAGES                = 0x800ED694; // type:u32 size:0x48
+
+//----------------------------------------------------
+//--- PA: 0x024164   VA: 0x800ED6DC   subsegment: data
+//----------------------------------------------------
 g_CommonWorldObjectPoses    = 0x800ED8D4; // type:WorldObjectPos size:0x64
 sharedData_800DFB4C_0_s00   = 0x800ED944;
 sharedData_800DFB50_0_s00   = 0x800ED948;
@@ -248,9 +289,9 @@ sharedData_800DE180_0_s01   = 0x800ED964; // type:VECTOR3 size:0xC
 sharedData_800DE190_0_s01   = 0x800ED974; // type:VECTOR3 size:0xC
 sharedData_800F216C_2_s00   = 0x800ED984; // type:VECTOR3 size:0xC
 sharedData_800F217C_2_s00   = 0x800ED994; // type:VECTOR3 size:0xC
-sharedData_800DE1A0_0_s01 = 0x800ED9A4; // type:VECTOR3 size:0xC
-sharedData_800DE1B0_0_s01 = 0x800ED9B4; // type:VECTOR3 size:0xC
-sharedData_800DE1C0_0_s01 = 0x800ED9C4; // type:VECTOR3 size:0xC
+sharedData_800DE1A0_0_s01   = 0x800ED9A4; // type:VECTOR3 size:0xC
+sharedData_800DE1B0_0_s01   = 0x800ED9B4; // type:VECTOR3 size:0xC
+sharedData_800DE1C0_0_s01   = 0x800ED9C4; // type:VECTOR3 size:0xC
 sharedData_800F21BC_2_s00   = 0x800ED9D4; // type:VECTOR3 size:0xC
 sharedData_800F21DC_2_s00   = 0x800ED9F4; // type:VECTOR3 size:0xC
 sharedData_800F21EC_2_s00   = 0x800EDA04; // type:VECTOR3 size:0xC
