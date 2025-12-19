@@ -1,4 +1,4 @@
-s32 sharedFunc_800D4AEC_0_s01(s_SubCharacter* arg0, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3)
+bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* arg0, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3)
 {
     s32      sp18;
     VECTOR3* var_s0;

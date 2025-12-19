@@ -2456,7 +2456,7 @@ s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* chara, q19_12 arg1);
 
 q19_12 sharedFunc_800DC894_2_s00(s_SubCharacter*, s32);
 
-s32 sharedFunc_800D4AEC_0_s01(s_SubCharacter*, VECTOR3*, VECTOR3*, VECTOR3*);
+bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
 
 void sharedFunc_800DD2C4_2_s00(s_SubCharacter*, s32, s32); // Assumed void return type.
 

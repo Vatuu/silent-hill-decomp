@@ -397,8 +397,8 @@ bool func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
 {
     u32         tempField_8;
     u32         tempField_4;
-    s_CharaAnimInfo* ptr0;
-    s_CharaAnimInfo* ptr1;
+    s_CharacterAnimInfo* ptr0;
+    s_CharacterAnimInfo* ptr1;
 
     ptr0        = &g_InitializedCharaAnimInfo[idx0];
     ptr1        = &g_InitializedCharaAnimInfo[idx1];
@@ -431,75 +431,74 @@ s32 func_800352F8(e_CharacterId charaId) // 0x800352F8
 
 void func_80035338(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord) // 0x80035338
 {
-    s32               i;
-    s_AnmHeader*      animHdrCpy;
-    s_CharaAnimInfo*  ptr;
-    s_CharaAnimInfo*  npcAnim;
+    s32                  i;
+    s_AnmHeader*         localAnimHdr;
+    s_CharacterAnimInfo* initAnimInfo;
+    s_CharacterAnimInfo* npcAnimInfo;
 
-    animHdrCpy = animFile;
-    ptr        = &g_InitializedCharaAnimInfo[idx];
+    localAnimHdr = animFile;
+    initAnimInfo = &g_InitializedCharaAnimInfo[idx];
 
     if (charaId == Chara_None)
     {
         return;
     }
 
-    for (npcAnim = &ptr[-1]; animHdrCpy == NULL; npcAnim--)
+    for (npcAnimInfo = &initAnimInfo[-1]; localAnimHdr == NULL; npcAnimInfo--)
     {
-        animHdrCpy = npcAnim->animFile0_4 + npcAnim->animFileSize1_C;
+        localAnimHdr = npcAnimInfo->animFile0_4 + npcAnimInfo->animFileSize1_C;
     }
 
-	/** If the pointer have NPCs animation data then it does:
-	 * Reassigns data pointers.
-	 * Adjust position in case passing a NULL value to `coord` argument.
-	 * Initialize character bones.
-	 *
-	 * If any of the previous check fail the values previously assigned to that index get clear and
-	 * then tries to check if the character has been loaded in a different slot of
-	 * `g_InitializedCharaAnimInfo` if not it loads the animation file.
-	 */
-    if (ptr->charaId1_1 == charaId)
+	// If the pointer has NPC animation data, the following chain of events will occur:
+	// - Reassigns data pointers.
+	// - Adjusts position if passing `NULL` value to `coord` argument.
+	// - Initializes character bones.
+	// 
+	// If any of the previous checks fail, values previously assigned at index are cleared. Then, if the
+	// character hasn't been loaded in a different `g_InitializedCharaAnimInfo` slot, the animation file is loaded.
+	// 
+    if (initAnimInfo->charaId1_1 == charaId)
     {
-        if (idx == 1 || animHdrCpy == ptr->animFile1_8)
+        if (idx == 1 || localAnimHdr == initAnimInfo->animFile1_8)
         {
-            func_80035560(idx, charaId, ptr->animFile1_8, coord);
+            func_80035560(idx, charaId, initAnimInfo->animFile1_8, coord);
             return;
         }
-        else if (animHdrCpy < ptr->animFile1_8)
+        else if (localAnimHdr < initAnimInfo->animFile1_8)
         {
-            ptr->animFile0_4 = animHdrCpy;
+            initAnimInfo->animFile0_4 = localAnimHdr;
 
-            Mem_Move32(animHdrCpy, g_InitializedCharaAnimInfo[idx].animFile1_8, g_InitializedCharaAnimInfo[idx].animFileSize2_10);
-            func_80035560(idx, charaId, animHdrCpy, coord);
+            Mem_Move32(localAnimHdr, g_InitializedCharaAnimInfo[idx].animFile1_8, g_InitializedCharaAnimInfo[idx].animFileSize2_10);
+            func_80035560(idx, charaId, localAnimHdr, coord);
             return;
         }
     }
 
-    ptr->npcCoords_14     = &g_SysWork.npcCoords_FC0[0];
-    ptr->charaId1_1       = Chara_None;
-    ptr->animFile1_8      = NULL;
-    ptr->animFileSize2_10 = 0;
-    ptr->charaId0_0       = charaId;
-    ptr->animFile0_4      = animHdrCpy;
-    ptr->animFileSize1_C  = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
+    initAnimInfo->npcCoords_14     = &g_SysWork.npcCoords_FC0[0];
+    initAnimInfo->charaId1_1       = Chara_None;
+    initAnimInfo->animFile1_8      = NULL;
+    initAnimInfo->animFileSize2_10 = 0;
+    initAnimInfo->charaId0_0       = charaId;
+    initAnimInfo->animFile0_4      = localAnimHdr;
+    initAnimInfo->animFileSize1_C  = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
 
     i = func_800352F8(charaId);
 
     if (i > 0)
     {
         Mem_Move32(g_InitializedCharaAnimInfo[idx].animFile0_4, g_InitializedCharaAnimInfo[i].animFile1_8, g_InitializedCharaAnimInfo[i].animFileSize2_10);
-        func_80035560(idx, charaId, ptr->animFile0_4, coord);
+        func_80035560(idx, charaId, initAnimInfo->animFile0_4, coord);
     }
     else
     {
-        Fs_QueueStartReadAnm(idx, charaId, animHdrCpy, coord);
+        Fs_QueueStartReadAnm(idx, charaId, localAnimHdr, coord);
     }
 
     for (i = 1; i < 4; i++)
     {
         if (i != idx && g_InitializedCharaAnimInfo[i].charaId1_1 != Chara_None && func_8003528C(idx, i) != 0)
         {
-            bzero(&g_InitializedCharaAnimInfo[i], sizeof(s_CharaAnimInfo));
+            bzero(&g_InitializedCharaAnimInfo[i], sizeof(s_CharacterAnimInfo));
         }
     }
 }
@@ -509,7 +508,7 @@ void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
 {
     s32            idx0;
     GsCOORDINATE2* coordCpy;
-    s_CharaAnimInfo*    ptr;
+    s_CharacterAnimInfo*    ptr;
 
     coordCpy = coord;
     ptr      = &g_InitializedCharaAnimInfo[idx];

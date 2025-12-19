@@ -557,7 +557,7 @@ s8 D_800A98FC[Chara_Count] = {
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 3 0x00 padding.
 };
 
-s_CharaAnimInfo g_InitializedCharaAnimInfo[GROUP_CHARA_COUNT] = {
+s_CharacterAnimInfo g_InitializedCharaAnimInfo[GROUP_CHARA_COUNT] = {
     {
         .charaId0_0       = Chara_Harry,
         .charaId1_1       = Chara_Harry,

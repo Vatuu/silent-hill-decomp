@@ -1012,18 +1012,18 @@ typedef struct
     s16 field_0; // Flags?
 } s_8008D850;
 
-typedef struct
+typedef struct _CharacterAnimInfo
 {
-    s8             charaId0_0;  /** `e_CharacterId`. */
-    s8             charaId1_1;  /** `e_CharacterId`. */
+    s8             charaId0_0;  /** `e_CharacterId` */
+    s8             charaId1_1;  /** `e_CharacterId` */
     // 2 bytes of padding.
-    s32            animFile0_4; // s_AnmHeader*    animFile0_4; // TODO: Needs to be a pointer.
+    s32            animFile0_4; // s_AnmHeader* animFile0_4; // TODO: Needs to be a pointer.
     s_AnmHeader*   animFile1_8;
     s32            animFileSize1_C;  // Incorrect.
     s32            animFileSize2_10; // Incorrect.
     GsCOORDINATE2* npcCoords_14;
-} s_CharaAnimInfo;
-STATIC_ASSERT_SIZEOF(s_CharaAnimInfo, 24);
+} s_CharacterAnimInfo;
+STATIC_ASSERT_SIZEOF(s_CharacterAnimInfo, 24);
 
 /** Related to weapon attacks. Stats, SFX IDs, damange values, etc.? */
 typedef struct
@@ -1702,7 +1702,7 @@ typedef struct
     s8      field_0; /** `bool` */
     u8      field_1;
     s8      unk_2[2]; // Probably padding.
-    VECTOR3 field_4;
+    VECTOR3 field_4;  // Q19.12
     u32     field_10; // Maybe `bool`, not enough context.
     s32     field_14;
     s32     field_18;
@@ -2176,8 +2176,8 @@ extern u16 g_UnknownBgmTable0[];
 
 extern u16 g_UnknownBgmTable2[];
 
-/** @brief Stores loaded character's animation data information. */
-extern s_CharaAnimInfo g_InitializedCharaAnimInfo[];
+/** @brief Stores loaded character's animation data. */
+extern s_CharacterAnimInfo g_InitializedCharaAnimInfo[];
 
 extern s32 D_800A9938;
 
