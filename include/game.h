@@ -515,25 +515,6 @@ typedef enum _CharaFlags
     CharaFlag_Unk9 = 1 << 8
 } e_CharaFlags;
 
-/** @brief String color IDs for strings displayed in screen space.
- * Used as indices into `STRING_COLORS`.
- *
- * TODO: Move to `text_draw.h`.
- */
-typedef enum _StringColorId
-{
-    StringColorId_Gold           = 0,
-    StringColorId_DarkGrey       = 1,
-    StringColorId_Green          = 2,
-    StringColorId_Nuclear        = 3,
-    StringColorId_Red            = 4,
-    StringColorId_GreenDuplicate = 5, // Gives same color as `StringColorId_Green`. Unused?
-    StringColorId_LightGrey      = 6,
-    StringColorId_White          = 7,
-
-    StringColorId_Count          = 8
-} e_StringColorId;
-
 /** @brief Character animation flags. */
 typedef enum _AnimFlags
 {

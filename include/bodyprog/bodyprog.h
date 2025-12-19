@@ -1049,9 +1049,7 @@ typedef struct
 } s_800AD4C8;
 STATIC_ASSERT_SIZEOF(s_800AD4C8, 24);
 
-/** @brief Collision point data.
- * TODO: Not sure on the name, still don't know what `field_18` is for. -- Sezz
- */
+/** @brief Collision point data. */
 typedef struct
 {
     VECTOR3     position_0; // Q19.12
