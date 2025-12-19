@@ -629,13 +629,13 @@ void Player_Controller(void);
 /** @brief Determines if the player can stomp or kick a knocked enemy. */
 bool func_8007F95C(void);
 
-#define Player_ExtraStateSet(playerChara, extra, state)                          \
-{                                                                                \
+#define Player_ExtraStateSet(playerChara, extra, state)                              \
+{                                                                                    \
     g_SysWork.playerWork_4C.extra_128.state_1C          = (state);                   \
-    (playerChara)->model_0.stateStep_3              = 0;                         \
-    (playerChara)->model_0.state_2                  = 0;                         \
-    (extra)->model_0.stateStep_3                    = 0;                         \
-    (extra)->model_0.state_2                        = 0;                         \
+    (playerChara)->model_0.stateStep_3                  = 0;                         \
+    (playerChara)->model_0.state_2                      = 0;                         \
+    (extra)->model_0.stateStep_3                        = 0;                         \
+    (extra)->model_0.state_2                            = 0;                         \
     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None; \
     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None; \
 }
@@ -660,13 +660,13 @@ static inline void Player_AnimFlagsSet(u32 flags)
  *
  * @param flags Animation flags to clear.
  */
-#define Player_AnimFlagsClear(flags)                              \
-{                                                                 \
+#define Player_AnimFlagsClear(flags)                                  \
+{                                                                     \
     s_PlayerExtra*  playerExtra = &g_SysWork.playerWork_4C.extra_128; \
-    s_SubCharacter* playerChara = &g_SysWork.playerWork_4C.player_0;   \
-                                                                  \
-    playerExtra->model_0.anim_4.flags_2 &= ~(flags);              \
-    playerChara->model_0.anim_4.flags_2 &= ~(flags);              \
+    s_SubCharacter* playerChara = &g_SysWork.playerWork_4C.player_0;  \
+                                                                      \
+    playerExtra->model_0.anim_4.flags_2 &= ~(flags);                  \
+    playerChara->model_0.anim_4.flags_2 &= ~(flags);                  \
 }
 
 #endif
