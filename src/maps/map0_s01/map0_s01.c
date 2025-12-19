@@ -47,7 +47,7 @@ const VECTOR D_800CA5C8 = {};
 
 #include "maps/shared/sharedFunc_800D2364_0_s01.h" // 0x800D2364
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D2390_0_s01); // 0x800D2390
+#include "maps/shared/sharedFunc_800D2390_0_s01.h" // 0x800D2390
 
 #include "maps/shared/Ai_AirScreamer_Init.h" // 0x800D2974
 
