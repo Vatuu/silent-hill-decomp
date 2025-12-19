@@ -1012,7 +1012,8 @@ typedef struct
     s16 field_0; // Flags?
 } s_8008D850;
 
-typedef struct _CharacterAnimInfo
+// or `s_AnimMetadata`?
+typedef struct _CharaAnimDataInfo
 {
     s8             charaId0_0;  /** `e_CharacterId` */
     s8             charaId1_1;  /** `e_CharacterId` */
@@ -2152,8 +2153,8 @@ extern s32 D_800A9A24;
 /** Z. */
 extern s32 D_800A9A28;
 
-// Loaded NPC type in memory and their data information index in `g_InitCharaDataAnimInfo`.
-extern s8 g_CharaAnimInfoIdx[Chara_Count];
+/** Loaded NPC types in memory and their `g_InitCharaDataAnimInfo` indices. */
+extern s8 g_CharaAnimInfoIdxs[Chara_Count];
 
 extern s32 D_800A9EB0;
 
@@ -2176,7 +2177,7 @@ extern u16 g_UnknownBgmTable0[];
 
 extern u16 g_UnknownBgmTable2[];
 
-/** @brief Stores loaded character's animation data information. */
+/** @brief Stores a loaded character's animation data information. */
 extern s_CharaAnimDataInfo g_InitCharaDataAnimInfo[];
 
 extern s32 D_800A9938;
@@ -2843,7 +2844,11 @@ void WorldGfx_CharaFree(s_CharaModel* model);
 
 void WorldGfx_HarryCharaLoad(void);
 
-/** Load characters meant to be loaded by default in the map overlay loaded. */
+/** @brief Loads default characters in the map overlay.
+ *
+ * @param mapHdr Map header.
+ * @return Character model queue index.
+ */
 s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr);
 
 void WorldGfx_CharaLmBufferAssign(s8 forceFree);
@@ -4007,10 +4012,10 @@ s32 func_800334D8(s32 idx);
 
 bool func_80033548(void);
 
-/** Updates the savegame buffer with the current player SysWork info (position, rotation, health, event index). */
+/** @brief Updates the savegame buffer with the current player SysWork info (position, rotation, health, event index). */
 void SysWork_SavegameUpdatePlayer(void);
 
-/** Updates SysWork with player info from the savegame buffer (position, rotation, health). */
+/** @brief Updates SysWork with player info from the savegame buffer (position, rotation, health). */
 void SysWork_SavegameReadPlayer(void);
 
 s32 MainLoop_ShouldWarmReset(void);
@@ -4046,14 +4051,17 @@ void GameFs_MapLoad(s32 mapIdx);
 
 bool func_8003528C(s32 idx0, s32 idx1);
 
-/** Searches for the index of the character animation data in `g_InitCharaDataAnimInfo`. */
+/** @brief Finds for the index of the character animation data in `g_InitCharaDataAnimInfo`.
+ *
+ * @param charaId ID of the character for which to find the animation data.
+ * @return Animation data index.
+ */
 s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId);
 
 /** Allocates and adjust where is animation data allocated. */
 void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coords);
 
-/** Called by `Fs_QueuePostLoadAnm`. */
-// Assign data for `g_InitCharaDataAnimInfo` and initialize bones for NPCs.
+/** Called by `Fs_QueuePostLoadAnm`. Assigns data to `g_InitCharaDataAnimInfo` and initializes NPC bones. */
 void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord);
 
 void func_8003569C(void);

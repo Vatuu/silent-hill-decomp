@@ -280,20 +280,20 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                     if (mag0 >= 0x4A4)
                     {
                         tmpSinCos = Math_Sin(chara->rotation_24.vy);
-                        larvalStalkerProps.angle_100 = ((mag0 - 0x47A) <= Q12(0.02f)) ?
-                            ((mag0 - 0x47A) * tmpSinCos) >> Q12_SHIFT :
-                            (Q12(0.02f) * tmpSinCos) >> Q12_SHIFT;
+                        larvalStalkerProps.angle_100 = ((mag0 - Q12(0.28f)) <= Q12(0.02f)) ?
+                                                       FP_MULTIPLY(mag0 - Q12(0.28f), tmpSinCos, Q12_SHIFT) :
+                                                       FP_MULTIPLY(Q12(0.02f), tmpSinCos, Q12_SHIFT);
 
                         tmpSinCos = Math_Cos(chara->rotation_24.vy);
-                        larvalStalkerProps.angle_102 = ((mag0 - 0x47A) <= Q12(0.02f)) ?
-                            ((mag0 - 0x47A) * tmpSinCos) >> Q12_SHIFT :
-                            (Q12(0.02f) * tmpSinCos) >> Q12_SHIFT;
+                        larvalStalkerProps.angle_102 = ((mag0 - Q12(0.28f)) <= Q12(0.02f)) ?
+                                                       FP_MULTIPLY(mag0 - Q12(0.28f), tmpSinCos, Q12_SHIFT) :
+                                                       FP_MULTIPLY(Q12(0.02f), tmpSinCos, Q12_SHIFT);
                     }
 
                     if (mag0 < 0x451)
                     {
-                        larvalStalkerProps.angle_100 = (((mag0 - 0x47A) < Q12(-0.02f) ? Q12(-0.02f) : (mag0 - 0x47A)) * Math_Sin(chara->rotation_24.vy)) >> Q12_SHIFT;
-                        larvalStalkerProps.angle_102 = (((mag0 - 0x47A) < Q12(-0.02f) ? Q12(-0.02f) : (mag0 - 0x47A)) * Math_Cos(chara->rotation_24.vy)) >> Q12_SHIFT;
+                        larvalStalkerProps.angle_100 = ((((mag0 - Q12(0.28f)) < Q12(-0.02f)) ? Q12(-0.02f) : (mag0 - Q12(0.28f))) * Math_Sin(chara->rotation_24.vy)) >> Q12_SHIFT;
+                        larvalStalkerProps.angle_102 = ((((mag0 - Q12(0.28f)) < Q12(-0.02f)) ? Q12(-0.02f) : (mag0 - Q12(0.28f))) * Math_Cos(chara->rotation_24.vy)) >> Q12_SHIFT;
                     }
                 }
                 else
@@ -301,20 +301,20 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                     if (mag0 >= 0x2E2)
                     {
                         tmpSinCos = Math_Sin(chara->rotation_24.vy);
-                        larvalStalkerProps.angle_100 = ((mag0 - 0x2B8) <= Q12(0.02f)) ?
-                            ((mag0 - 0x2B8) * tmpSinCos) >> Q12_SHIFT :
-                            (Q12(0.02f) * tmpSinCos) >> Q12_SHIFT;
+                        larvalStalkerProps.angle_100 = ((mag0 - Q12(0.17f)) <= Q12(0.02f)) ?
+                                                       FP_MULTIPLY(mag0 - Q12(0.17f), tmpSinCos, Q12_SHIFT) :
+                                                       FP_MULTIPLY(Q12(0.02f), tmpSinCos, Q12_SHIFT);
 
                         tmpSinCos = Math_Cos(chara->rotation_24.vy);
-                        larvalStalkerProps.angle_102 = ((mag0 - 0x2B8) <= Q12(0.02f)) ?
-                            ((mag0 - 0x2B8) * tmpSinCos) >> Q12_SHIFT :
-                            (Q12(0.02f) * tmpSinCos) >> Q12_SHIFT;
+                        larvalStalkerProps.angle_102 = ((mag0 - Q12(0.17f)) <= Q12(0.02f)) ?
+                                                       FP_MULTIPLY(mag0 - Q12(0.17f), tmpSinCos, Q12_SHIFT) :
+                                                       FP_MULTIPLY(Q12(0.02f), tmpSinCos, Q12_SHIFT);
                     }
 
                     if (mag0 < 0x28F)
                     {
-                        larvalStalkerProps.angle_100 = (((mag0 - 0x2B8) < Q12(-0.02f) ? Q12(-0.02f) : (mag0 - 0x2B8)) * Math_Sin(chara->rotation_24.vy)) >> Q12_SHIFT;
-                        larvalStalkerProps.angle_102 = (((mag0 - 0x2B8) < Q12(-0.02f) ? Q12(-0.02f) : (mag0 - 0x2B8)) * Math_Cos(chara->rotation_24.vy)) >> Q12_SHIFT;
+                        larvalStalkerProps.angle_100 = (((mag0 - Q12(0.17f)) < Q12(-0.02f) ? Q12(-0.02f) : (mag0 - Q12(0.17f))) * Math_Sin(chara->rotation_24.vy)) >> Q12_SHIFT;
+                        larvalStalkerProps.angle_102 = (((mag0 - Q12(0.17f)) < Q12(-0.02f) ? Q12(-0.02f) : (mag0 - Q12(0.17f))) * Math_Cos(chara->rotation_24.vy)) >> Q12_SHIFT;
                     }
                 }
 

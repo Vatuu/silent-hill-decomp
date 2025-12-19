@@ -393,20 +393,20 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
 // CHARACTER ANIMATIONS MEMORY ALLOC
 // ========================================
 
-bool func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
+bool func_8003528C(s32 charaDataAnimInfoIdx0, s32 charaDataAnimInfoIdx1) // 0x8003528C
 {
     u32                  tempField_8;
     u32                  tempField_4;
-    s_CharaAnimDataInfo* ptr0;
-    s_CharaAnimDataInfo* ptr1;
+    s_CharaAnimDataInfo* animDataInfo0;
+    s_CharaAnimDataInfo* animDataInfo1;
 
-    ptr0        = &g_InitCharaDataAnimInfo[idx0];
-    ptr1        = &g_InitCharaDataAnimInfo[idx1];
-    tempField_4 = ptr0->animFile0_4;
-    tempField_8 = ptr1->animFile1_8;
+    animDataInfo0 = &g_InitCharaDataAnimInfo[charaDataAnimInfoIdx0];
+    animDataInfo1 = &g_InitCharaDataAnimInfo[charaDataAnimInfoIdx1];
+    tempField_4   = animDataInfo0->animFile0_4;
+    tempField_8   = animDataInfo1->animFile1_8;
 
-    if (tempField_4 >= (tempField_8 + ptr1->animBufferSize2_10) ||
-        tempField_8 >= (tempField_4 + ptr0->animBufferSize1_C))
+    if (tempField_4 >= (tempField_8 + animDataInfo1->animBufferSize2_10) ||
+        tempField_8 >= (tempField_4 + animDataInfo0->animBufferSize1_C))
     {
         return false;
     }
@@ -418,7 +418,7 @@ s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId) // 0x800352F8
 {
     s32 i;
 
-    for (i = 1; i < GROUP_CHARA_COUNT; i++)
+    for (i = 1; (i < GROUP_CHARA_COUNT); i++)
     {
         if (g_InitCharaDataAnimInfo[i].charaId1_1 == charaId)
         {
@@ -432,68 +432,67 @@ s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId) // 0x800352F8
 void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord) // 0x80035338
 {
     s32                  i;
-    s_AnmHeader*         animPtrCpy;
-    s_CharaAnimDataInfo* initAnimInfo;
-    s_CharaAnimDataInfo* npcAnimFilePtr;
+    s_AnmHeader*         localAnimFile; // Local pointer required for match.
+    s_CharaAnimDataInfo* initAnimDataInfo;
+    s_CharaAnimDataInfo* npcAnimDataInfo;
 
-    animPtrCpy   = animFile;
-    initAnimInfo = &g_InitCharaDataAnimInfo[idx];
+    localAnimFile    = animFile;
+    initAnimDataInfo = &g_InitCharaDataAnimInfo[idx];
 
     if (charaId == Chara_None)
     {
         return;
     }
 	
-	// Estimates animation buffer data pointer by adding the current pointer position and the buffer size
-    for (npcAnimFilePtr = &initAnimInfo[-1]; animPtrCpy == NULL; npcAnimFilePtr--)
+	// Estimates animation buffer data pointer by adding buffer size and current pointer position.
+    for (npcAnimDataInfo = &initAnimDataInfo[-1]; localAnimFile == NULL; npcAnimDataInfo--)
     {
-        animPtrCpy = npcAnimFilePtr->animFile0_4 + npcAnimFilePtr->animBufferSize1_C;
+        localAnimFile = npcAnimDataInfo->animFile0_4 + npcAnimDataInfo->animBufferSize1_C;
     }
 
-	/** If the target character ID matches with the selected element from `g_InitCharaDataAnimInfo`
-	 * then it ensures the animation buffer pointer matches with the previously estimated one, but
-	 * if the estimated pointer is in a position behind of the currently saved one then it moves
-	 * data to the position of the estimated pointer.
-	 *
-	 * If any of the previous checks fail, values previously assigned at index are cleared. Then, if
-	 * the character hasn't been loaded in a different `g_InitializedCharaAnimInfo` slot, the
-	 * animation file is loaded.
-	 */
-    if (initAnimInfo->charaId1_1 == charaId)
+	// If the target character ID matches with the selected element from `g_InitCharaDataAnimInfo`
+	// then it ensures the animation buffer pointer matches with the previously estimated one, but
+	// if the estimated pointer is in a position behind of the currently saved one then it moves
+	// data to the position of the estimated pointer.
+	// 
+	// If any of the previous checks fail, values previously assigned at index are cleared. Then, if
+	// the character hasn't been loaded in a different `g_InitializedCharaAnimInfo` slot, the
+	// animation file is loaded.
+    if (initAnimDataInfo->charaId1_1 == charaId)
     {
-        if (idx == 1 || animPtrCpy == initAnimInfo->animFile1_8)
+        if (idx == 1 || localAnimFile == initAnimDataInfo->animFile1_8)
         {
-            func_80035560(idx, charaId, initAnimInfo->animFile1_8, coord);
+            func_80035560(idx, charaId, initAnimDataInfo->animFile1_8, coord);
             return;
         }
-        else if (animPtrCpy < initAnimInfo->animFile1_8)
+        else if (localAnimFile < initAnimDataInfo->animFile1_8)
         {
-            initAnimInfo->animFile0_4 = animPtrCpy;
+            initAnimDataInfo->animFile0_4 = localAnimFile;
 
-            Mem_Move32(animPtrCpy, g_InitCharaDataAnimInfo[idx].animFile1_8, g_InitCharaDataAnimInfo[idx].animBufferSize2_10);
-            func_80035560(idx, charaId, animPtrCpy, coord);
+            Mem_Move32(localAnimFile, g_InitCharaDataAnimInfo[idx].animFile1_8, g_InitCharaDataAnimInfo[idx].animBufferSize2_10);
+            func_80035560(idx, charaId, localAnimFile, coord);
             return;
         }
     }
 	
-    initAnimInfo->npcCoords_14       = &g_SysWork.npcCoords_FC0[0];
-    initAnimInfo->charaId1_1         = Chara_None;
-    initAnimInfo->animFile1_8        = NULL;
-    initAnimInfo->animBufferSize2_10 = 0;
-    initAnimInfo->charaId0_0         = charaId;
-    initAnimInfo->animFile0_4        = animPtrCpy;
-    initAnimInfo->animBufferSize1_C  = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
+    initAnimDataInfo->npcCoords_14       = &g_SysWork.npcCoords_FC0[0];
+    initAnimDataInfo->charaId1_1         = Chara_None;
+    initAnimDataInfo->animFile1_8        = NULL;
+    initAnimDataInfo->animBufferSize2_10 = 0;
+    initAnimDataInfo->charaId0_0         = charaId;
+    initAnimDataInfo->animFile0_4        = localAnimFile;
+    initAnimDataInfo->animBufferSize1_C  = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
 
     i = Fs_CharaAnimDataInfoIdxGet(charaId);
 
     if (i > 0)
     {
         Mem_Move32(g_InitCharaDataAnimInfo[idx].animFile0_4, g_InitCharaDataAnimInfo[i].animFile1_8, g_InitCharaDataAnimInfo[i].animBufferSize2_10);
-        func_80035560(idx, charaId, initAnimInfo->animFile0_4, coord);
+        func_80035560(idx, charaId, initAnimDataInfo->animFile0_4, coord);
     }
     else
     {
-        Fs_QueueStartReadAnm(idx, charaId, animPtrCpy, coord);
+        Fs_QueueStartReadAnm(idx, charaId, localAnimFile, coord);
     }
 
     for (i = 1; i < GROUP_CHARA_COUNT; i++)
@@ -508,40 +507,40 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
 void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord) // 0x80035560
 {
     s32                  idx0;
-    GsCOORDINATE2*       coordCpy;
-    s_CharaAnimDataInfo* ptr;
+    GsCOORDINATE2*       localCoord;
+    s_CharaAnimDataInfo* animDataInfo;
 
-    coordCpy = coord;
-    ptr      = &g_InitCharaDataAnimInfo[idx];
+    localCoord   = coord;
+    animDataInfo = &g_InitCharaDataAnimInfo[idx];
 
-    if (coordCpy == NULL)
+    if (localCoord == NULL)
     {
         if (idx == 1)
         {
-            coordCpy = &g_SysWork.npcCoords_FC0[0];
+            localCoord = &g_SysWork.npcCoords_FC0[0];
         }
         else if (idx >= 2)
         {
-            idx0      = g_InitCharaDataAnimInfo[idx - 1].animFile1_8->boneCount_6;
-            coordCpy  = g_InitCharaDataAnimInfo[idx - 1].npcCoords_14;
-            coordCpy += idx0 + 1;
+            idx0        = g_InitCharaDataAnimInfo[idx - 1].animFile1_8->boneCount_6;
+            localCoord  = g_InitCharaDataAnimInfo[idx - 1].npcCoords_14;
+            localCoord += idx0 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
-            if ((&coordCpy[animFile->boneCount_6] + 1) >= &g_SysWork.npcCoords_FC0[NPC_BONE_COUNT_MAX])
+            if ((&localCoord[animFile->boneCount_6] + 1) >= &g_SysWork.npcCoords_FC0[NPC_BONE_COUNT_MAX])
             {
-                coordCpy = g_MapOverlayHeader.field_28;
+                localCoord = g_MapOverlayHeader.field_28;
             }
         }
     }
 
-    ptr->charaId1_1         = charaId;
-    ptr->animFile1_8        = animFile;
-    ptr->animBufferSize2_10 = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
-    ptr->npcCoords_14       = coordCpy;
+    animDataInfo->charaId1_1         = charaId;
+    animDataInfo->animFile1_8        = animFile;
+    animDataInfo->animBufferSize2_10 = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
+    animDataInfo->npcCoords_14       = localCoord;
 
-    Anim_BoneInit(animFile, coordCpy);
+    Anim_BoneInit(animFile, localCoord);
 
-    g_CharaAnimInfoIdx[charaId] = idx;
+    g_CharaAnimInfoIdxs[charaId] = idx;
 }
 
 void func_8003569C(void) // 0x8003569C
@@ -2290,7 +2289,7 @@ void func_80038354(void) // 0x80038354
     u8                 temp_a2;
     u32                new_var;
     s32                l;
-    s32                temp;
+    s32                tempAnimDataInfoIdx;
     s32                temp2;
     GsCOORDINATE2*     coord;
     s_SubCharacter*    npc;
@@ -2429,14 +2428,14 @@ void func_80038354(void) // 0x80038354
 
             npc->model_0.anim_4.flags_2 |= AnimFlag_Unlocked;
 
-            temp    = g_CharaAnimInfoIdx[npc->model_0.charaId_0];
-            coord = g_InitCharaDataAnimInfo[temp].npcCoords_14;
+            tempAnimDataInfoIdx = g_CharaAnimInfoIdxs[npc->model_0.charaId_0];
+            coord               = g_InitCharaDataAnimInfo[tempAnimDataInfoIdx].npcCoords_14;
 
             func_8008A384(npc);
             func_80037E40(npc);
             func_8003BD48(npc);
 
-            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model_0.charaId_0](npc, g_InitCharaDataAnimInfo[temp].animFile1_8, coord);
+            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model_0.charaId_0](npc, g_InitCharaDataAnimInfo[tempAnimDataInfoIdx].animFile1_8, coord);
 
             func_8003BE28();
             func_80037E78(npc);

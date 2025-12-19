@@ -1503,7 +1503,7 @@ void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) // 0x800
 {
     s_MapPoint2d* mapPoint;
 
-    mapPoint                         = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdx[charaId] - 1][spawnIdx];
+    mapPoint                         = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
     mapPoint->data.spawnInfo.flags_6 = spawnFlags;
 }
 
@@ -1512,10 +1512,10 @@ void func_80089034(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ
     s_MapPoint2d* mapPoint0;
     s_MapPoint2d* mapPoint1;
 
-    mapPoint0              = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdx[charaId] - 1][spawnIdx];
+    mapPoint0              = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
     mapPoint0->positionX_0 = posX;
 
-    mapPoint1              = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdx[charaId] - 1][spawnIdx];
+    mapPoint1              = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
     mapPoint1->positionZ_8 = posZ;
 }
 

@@ -21,7 +21,7 @@ struct _Model;
 
 #define NPC_COUNT_MAX            6
 #define NPC_BONE_COUNT_MAX       10 * NPC_COUNT_MAX
-#define GROUP_CHARA_COUNT        4                  /** The game can only handle up to 4 different types of character loaded. While the game can have up to 7 character loaded (included the player), it can only be from 4 different types (including the player). */
+#define GROUP_CHARA_COUNT        4                  /** While up to 6 NPCs and a player can exist in the game world, only 4 different character types (including the player) can be loaded at a time. */
 #define INVENTORY_ITEM_COUNT_MAX 40
 #define INPUT_ACTION_COUNT       14
 #define SAVEGAME_FOOTER_MAGIC    0xDCDC
@@ -1635,8 +1635,8 @@ typedef struct _SysWork
     GsCOORDINATE2   npcCoords_FC0[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     s8              npcId_2280;                        // NPC ID for `npcFlags_2290`. Not an index, starts at 1.
     s8              loadingScreenIdx_2281;
-    s8              field_2282;    // Room process flags?
-    s8              field_2283;    // Index into `SfxPairs`.
+    s8              field_2282;
+    s8              field_2283; // Index into `SfxPairs`.
     u16             field_2284[4];
     s32             field_228C[1];
     s32             npcFlags_2290; // Flags related to NPCs. Each bit corresponds to `npcs_1A0` index.
