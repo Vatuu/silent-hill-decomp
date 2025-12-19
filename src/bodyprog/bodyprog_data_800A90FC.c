@@ -547,8 +547,7 @@ u16 g_UnknownBgmTable2[] = {
     203
 };
 
-// Loaded NPC type in memory and their data information index in `g_InitializedCharaAnimInfo`.
-s8 D_800A98FC[Chara_Count] = {
+s8 g_CharaAnimInfoIdx[Chara_Count] = {
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -557,15 +556,15 @@ s8 D_800A98FC[Chara_Count] = {
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 3 0x00 padding.
 };
 
-s_CharacterAnimInfo g_InitializedCharaAnimInfo[GROUP_CHARA_COUNT] = {
+s_CharaAnimDataInfo g_InitCharaDataAnimInfo[GROUP_CHARA_COUNT] = {
     {
-        .charaId0_0       = Chara_Harry,
-        .charaId1_1       = Chara_Harry,
-        .animFile0_4      = FS_BUFFER_0,
-        .animFile1_8      = (s_AnmHeader*)FS_BUFFER_0,
-        .animFileSize1_C  = 0x2E630,
-        .animFileSize2_10 = 0x2E630,
-        .npcCoords_14     = NULL
+        .charaId0_0         = Chara_Harry,
+        .charaId1_1         = Chara_Harry,
+        .animFile0_4        = FS_BUFFER_0,
+        .animFile1_8        = (s_AnmHeader*)FS_BUFFER_0,
+        .animBufferSize1_C  = 0x2E630,
+        .animBufferSize2_10 = 0x2E630,
+        .npcCoords_14       = NULL
     }, {}, {}, {}
 };
 

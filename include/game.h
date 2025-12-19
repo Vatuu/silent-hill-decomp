@@ -21,7 +21,7 @@ struct _Model;
 
 #define NPC_COUNT_MAX            6
 #define NPC_BONE_COUNT_MAX       10 * NPC_COUNT_MAX
-#define GROUP_CHARA_COUNT        4
+#define GROUP_CHARA_COUNT        4                  /** The game can only handle up to 4 different types of character loaded. While the game can have up to 7 character loaded (included the player), it can only be from 4 different types (including the player). */
 #define INVENTORY_ITEM_COUNT_MAX 40
 #define INPUT_ACTION_COUNT       14
 #define SAVEGAME_FOOTER_MAGIC    0xDCDC

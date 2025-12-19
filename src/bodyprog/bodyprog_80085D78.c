@@ -1378,7 +1378,7 @@ void func_80088370(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s
 
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
 {
-    func_80035338(modelIdx + 1, charaId, NULL, coords);
+    Fs_CharaAnimDataAlloc(modelIdx + 1, charaId, NULL, coords);
     WorldGfx_CharaLmBufferAssign(forceFree);
     WorldGfx_CharaLoad(charaId, modelIdx, lmHdr, tex);
     return true;
@@ -1394,7 +1394,7 @@ bool Chara_ProcessLoads(void) // 0x80088D0C
 void func_80088D34(s32 idx) // 0x80088D34
 {
     idx++;
-    Anim_BoneInit(g_InitializedCharaAnimInfo[idx].animFile1_8, g_InitializedCharaAnimInfo[idx].npcCoords_14);
+    Anim_BoneInit(g_InitCharaDataAnimInfo[idx].animFile1_8, g_InitCharaDataAnimInfo[idx].npcCoords_14);
 }
 
 s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12 rotY, u32 stateStep) // 0x80088D78
@@ -1503,7 +1503,7 @@ void func_80088FF4(e_CharacterId charaId, s32 spawnIdx, s32 spawnFlags) // 0x800
 {
     s_MapPoint2d* mapPoint;
 
-    mapPoint                         = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
+    mapPoint                         = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdx[charaId] - 1][spawnIdx];
     mapPoint->data.spawnInfo.flags_6 = spawnFlags;
 }
 
@@ -1512,10 +1512,10 @@ void func_80089034(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ
     s_MapPoint2d* mapPoint0;
     s_MapPoint2d* mapPoint1;
 
-    mapPoint0              = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
+    mapPoint0              = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdx[charaId] - 1][spawnIdx];
     mapPoint0->positionX_0 = posX;
 
-    mapPoint1              = &g_MapOverlayHeader.charaSpawns_24C[D_800A98FC[charaId] - 1][spawnIdx];
+    mapPoint1              = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdx[charaId] - 1][spawnIdx];
     mapPoint1->positionZ_8 = posZ;
 }
 

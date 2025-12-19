@@ -23,7 +23,7 @@ const s16 rodataPad_800251FC = 0;
 
 void func_800348C0(void) // 0x800348C0
 {
-    bzero(&g_InitializedCharaAnimInfo[1], 0x48);
+    bzero(&g_InitCharaDataAnimInfo[1], 0x48);
 }
 
 void GameState_LoadScreen_Update(void) // 0x800348E8
@@ -148,10 +148,10 @@ void GameFs_MapStartup(void) // 0x80034964
             break;
         
         case 5:
-            func_80035338(1, g_MapOverlayHeader.charaGroupIds_248[0], NULL, 0);
-            func_80035338(2, g_MapOverlayHeader.charaGroupIds_248[1], NULL, 0);
-            func_80035338(3, g_MapOverlayHeader.charaGroupIds_248[2], NULL, 0);
-            func_8003D21C(&g_MapOverlayHeader);
+            Fs_CharaAnimDataAlloc(1, g_MapOverlayHeader.charaGroupIds_248[0], NULL, 0);
+            Fs_CharaAnimDataAlloc(2, g_MapOverlayHeader.charaGroupIds_248[1], NULL, 0);
+            Fs_CharaAnimDataAlloc(3, g_MapOverlayHeader.charaGroupIds_248[2], NULL, 0);
+            WorldGfx_MapInitCharaLoad(&g_MapOverlayHeader);
 
             g_GameWork.gameStateStep_598[0]++;
 
@@ -163,7 +163,7 @@ void GameFs_MapStartup(void) // 0x80034964
             break;
 
         case 7:
-            if (func_80039F90() & SysWorkProcessFlag_RoomTransition)
+            if (func_80039F90() & (1 << 0))
             {
                 func_8003C30C();
             }
@@ -363,8 +363,8 @@ void Game_PlayerInit(void) // 0x80035178
         Game_TurnFlashlightOn();
     }
 
-    g_InitializedCharaAnimInfo->animFileSize2_10 = 0x2E630;
-    g_InitializedCharaAnimInfo->animFileSize1_C  = 0x2E630;
+    g_InitCharaDataAnimInfo[0].animBufferSize2_10 = 0x2E630;
+    g_InitCharaDataAnimInfo[0].animBufferSize1_C  = 0x2E630;
     func_8007E5AC();
 }
 
@@ -395,18 +395,18 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
 
 bool func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
 {
-    u32         tempField_8;
-    u32         tempField_4;
-    s_CharacterAnimInfo* ptr0;
-    s_CharacterAnimInfo* ptr1;
+    u32                  tempField_8;
+    u32                  tempField_4;
+    s_CharaAnimDataInfo* ptr0;
+    s_CharaAnimDataInfo* ptr1;
 
-    ptr0        = &g_InitializedCharaAnimInfo[idx0];
-    ptr1        = &g_InitializedCharaAnimInfo[idx1];
+    ptr0        = &g_InitCharaDataAnimInfo[idx0];
+    ptr1        = &g_InitCharaDataAnimInfo[idx1];
     tempField_4 = ptr0->animFile0_4;
     tempField_8 = ptr1->animFile1_8;
 
-    if (tempField_4 >= (tempField_8 + ptr1->animFileSize2_10) ||
-        tempField_8 >= (tempField_4 + ptr0->animFileSize1_C))
+    if (tempField_4 >= (tempField_8 + ptr1->animBufferSize2_10) ||
+        tempField_8 >= (tempField_4 + ptr0->animBufferSize1_C))
     {
         return false;
     }
@@ -414,13 +414,13 @@ bool func_8003528C(s32 idx0, s32 idx1) // 0x8003528C
     return true;
 }
 
-s32 func_800352F8(e_CharacterId charaId) // 0x800352F8
+s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId) // 0x800352F8
 {
     s32 i;
 
-    for (i = 1; i < 4; i++)
+    for (i = 1; i < GROUP_CHARA_COUNT; i++)
     {
-        if (g_InitializedCharaAnimInfo[i].charaId1_1 == charaId)
+        if (g_InitCharaDataAnimInfo[i].charaId1_1 == charaId)
         {
             return i;
         }
@@ -429,89 +429,90 @@ s32 func_800352F8(e_CharacterId charaId) // 0x800352F8
     return 0;
 }
 
-void func_80035338(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord) // 0x80035338
+void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord) // 0x80035338
 {
     s32                  i;
-    s_AnmHeader*         localAnimHdr;
-    s_CharacterAnimInfo* initAnimInfo;
-    s_CharacterAnimInfo* npcAnimInfo;
+    s_AnmHeader*         animPtrCpy;
+    s_CharaAnimDataInfo* initAnimInfo;
+    s_CharaAnimDataInfo* npcAnimFilePtr;
 
-    localAnimHdr = animFile;
-    initAnimInfo = &g_InitializedCharaAnimInfo[idx];
+    animPtrCpy   = animFile;
+    initAnimInfo = &g_InitCharaDataAnimInfo[idx];
 
     if (charaId == Chara_None)
     {
         return;
     }
-
-    for (npcAnimInfo = &initAnimInfo[-1]; localAnimHdr == NULL; npcAnimInfo--)
+	
+	// Estimates animation buffer data pointer by adding the current pointer position and the buffer size
+    for (npcAnimFilePtr = &initAnimInfo[-1]; animPtrCpy == NULL; npcAnimFilePtr--)
     {
-        localAnimHdr = npcAnimInfo->animFile0_4 + npcAnimInfo->animFileSize1_C;
+        animPtrCpy = npcAnimFilePtr->animFile0_4 + npcAnimFilePtr->animBufferSize1_C;
     }
 
-	// If the pointer has NPC animation data, the following chain of events will occur:
-	// - Reassigns data pointers.
-	// - Adjusts position if passing `NULL` value to `coord` argument.
-	// - Initializes character bones.
-	// 
-	// If any of the previous checks fail, values previously assigned at index are cleared. Then, if the
-	// character hasn't been loaded in a different `g_InitializedCharaAnimInfo` slot, the animation file is loaded.
-	// 
+	/** If the target character ID matches with the selected element from `g_InitCharaDataAnimInfo`
+	 * then it ensures the animation buffer pointer matches with the previously estimated one, but
+	 * if the estimated pointer is in a position behind of the currently saved one then it moves
+	 * data to the position of the estimated pointer.
+	 *
+	 * If any of the previous checks fail, values previously assigned at index are cleared. Then, if
+	 * the character hasn't been loaded in a different `g_InitializedCharaAnimInfo` slot, the
+	 * animation file is loaded.
+	 */
     if (initAnimInfo->charaId1_1 == charaId)
     {
-        if (idx == 1 || localAnimHdr == initAnimInfo->animFile1_8)
+        if (idx == 1 || animPtrCpy == initAnimInfo->animFile1_8)
         {
             func_80035560(idx, charaId, initAnimInfo->animFile1_8, coord);
             return;
         }
-        else if (localAnimHdr < initAnimInfo->animFile1_8)
+        else if (animPtrCpy < initAnimInfo->animFile1_8)
         {
-            initAnimInfo->animFile0_4 = localAnimHdr;
+            initAnimInfo->animFile0_4 = animPtrCpy;
 
-            Mem_Move32(localAnimHdr, g_InitializedCharaAnimInfo[idx].animFile1_8, g_InitializedCharaAnimInfo[idx].animFileSize2_10);
-            func_80035560(idx, charaId, localAnimHdr, coord);
+            Mem_Move32(animPtrCpy, g_InitCharaDataAnimInfo[idx].animFile1_8, g_InitCharaDataAnimInfo[idx].animBufferSize2_10);
+            func_80035560(idx, charaId, animPtrCpy, coord);
             return;
         }
     }
+	
+    initAnimInfo->npcCoords_14       = &g_SysWork.npcCoords_FC0[0];
+    initAnimInfo->charaId1_1         = Chara_None;
+    initAnimInfo->animFile1_8        = NULL;
+    initAnimInfo->animBufferSize2_10 = 0;
+    initAnimInfo->charaId0_0         = charaId;
+    initAnimInfo->animFile0_4        = animPtrCpy;
+    initAnimInfo->animBufferSize1_C  = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
 
-    initAnimInfo->npcCoords_14     = &g_SysWork.npcCoords_FC0[0];
-    initAnimInfo->charaId1_1       = Chara_None;
-    initAnimInfo->animFile1_8      = NULL;
-    initAnimInfo->animFileSize2_10 = 0;
-    initAnimInfo->charaId0_0       = charaId;
-    initAnimInfo->animFile0_4      = localAnimHdr;
-    initAnimInfo->animFileSize1_C  = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
-
-    i = func_800352F8(charaId);
+    i = Fs_CharaAnimDataInfoIdxGet(charaId);
 
     if (i > 0)
     {
-        Mem_Move32(g_InitializedCharaAnimInfo[idx].animFile0_4, g_InitializedCharaAnimInfo[i].animFile1_8, g_InitializedCharaAnimInfo[i].animFileSize2_10);
+        Mem_Move32(g_InitCharaDataAnimInfo[idx].animFile0_4, g_InitCharaDataAnimInfo[i].animFile1_8, g_InitCharaDataAnimInfo[i].animBufferSize2_10);
         func_80035560(idx, charaId, initAnimInfo->animFile0_4, coord);
     }
     else
     {
-        Fs_QueueStartReadAnm(idx, charaId, localAnimHdr, coord);
+        Fs_QueueStartReadAnm(idx, charaId, animPtrCpy, coord);
     }
 
-    for (i = 1; i < 4; i++)
+    for (i = 1; i < GROUP_CHARA_COUNT; i++)
     {
-        if (i != idx && g_InitializedCharaAnimInfo[i].charaId1_1 != Chara_None && func_8003528C(idx, i) != 0)
+        if (i != idx && g_InitCharaDataAnimInfo[i].charaId1_1 != Chara_None && func_8003528C(idx, i) != false)
         {
-            bzero(&g_InitializedCharaAnimInfo[i], sizeof(s_CharacterAnimInfo));
+            bzero(&g_InitCharaDataAnimInfo[i], sizeof(s_CharaAnimDataInfo));
         }
     }
 }
 
-// Assign data for `g_InitializedCharaAnimInfo` and initialize bones for NPCs.
 void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord) // 0x80035560
 {
-    s32            idx0;
-    GsCOORDINATE2* coordCpy;
-    s_CharacterAnimInfo*    ptr;
+    s32                  idx0;
+    GsCOORDINATE2*       coordCpy;
+    s_CharaAnimDataInfo* ptr;
 
     coordCpy = coord;
-    ptr      = &g_InitializedCharaAnimInfo[idx];
+    ptr      = &g_InitCharaDataAnimInfo[idx];
 
     if (coordCpy == NULL)
     {
@@ -521,8 +522,8 @@ void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
         }
         else if (idx >= 2)
         {
-            idx0      = g_InitializedCharaAnimInfo[idx - 1].animFile1_8->boneCount_6;
-            coordCpy  = g_InitializedCharaAnimInfo[idx - 1].npcCoords_14;
+            idx0      = g_InitCharaDataAnimInfo[idx - 1].animFile1_8->boneCount_6;
+            coordCpy  = g_InitCharaDataAnimInfo[idx - 1].npcCoords_14;
             coordCpy += idx0 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
@@ -533,14 +534,14 @@ void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
         }
     }
 
-    ptr->charaId1_1       = charaId;
-    ptr->animFile1_8      = animFile;
-    ptr->animFileSize2_10 = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
-    ptr->npcCoords_14     = coordCpy;
+    ptr->charaId1_1         = charaId;
+    ptr->animFile1_8        = animFile;
+    ptr->animBufferSize2_10 = Fs_GetFileSectorAlignedSize(CHARA_FILE_INFOS[charaId].animFileIdx);
+    ptr->npcCoords_14       = coordCpy;
 
     Anim_BoneInit(animFile, coordCpy);
 
-    D_800A98FC[charaId] = idx;
+    g_CharaAnimInfoIdx[charaId] = idx;
 }
 
 void func_8003569C(void) // 0x8003569C
@@ -549,13 +550,13 @@ void func_8003569C(void) // 0x8003569C
     GsCOORDINATE2* coord;
     s_AnmHeader*   animFile;
 
-    for (i = 1; i < 3; i++)
+    for (i = 1; i < GROUP_CHARA_COUNT - 1; i++)
     {
         if (g_MapOverlayHeader.charaGroupIds_248[i] != Chara_None)
         {
-            coord    = g_InitializedCharaAnimInfo[i].npcCoords_14;
-            animFile = g_InitializedCharaAnimInfo[i + 1].animFile1_8;
-            coord   += g_InitializedCharaAnimInfo[i].animFile1_8->boneCount_6 + 1;
+            coord    = g_InitCharaDataAnimInfo[i].npcCoords_14;
+            animFile = g_InitCharaDataAnimInfo[i + 1].animFile1_8;
+            coord   += g_InitCharaDataAnimInfo[i].animFile1_8->boneCount_6 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
             if ((&coord[animFile->boneCount_6] + 1) >= &g_SysWork.npcCoords_FC0[NPC_BONE_COUNT_MAX])
@@ -563,7 +564,7 @@ void func_8003569C(void) // 0x8003569C
                 coord = g_MapOverlayHeader.field_28;
             }
 
-            g_InitializedCharaAnimInfo[i + 1].npcCoords_14 = coord;
+            g_InitCharaDataAnimInfo[i + 1].npcCoords_14 = coord;
             Anim_BoneInit(animFile, coord);
         }
     }
@@ -2428,14 +2429,14 @@ void func_80038354(void) // 0x80038354
 
             npc->model_0.anim_4.flags_2 |= AnimFlag_Unlocked;
 
-            temp    = D_800A98FC[npc->model_0.charaId_0];
-            coord = g_InitializedCharaAnimInfo[temp].npcCoords_14;
+            temp    = g_CharaAnimInfoIdx[npc->model_0.charaId_0];
+            coord = g_InitCharaDataAnimInfo[temp].npcCoords_14;
 
             func_8008A384(npc);
             func_80037E40(npc);
             func_8003BD48(npc);
 
-            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model_0.charaId_0](npc, g_InitializedCharaAnimInfo[temp].animFile1_8, coord);
+            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model_0.charaId_0](npc, g_InitCharaDataAnimInfo[temp].animFile1_8, coord);
 
             func_8003BE28();
             func_80037E78(npc);

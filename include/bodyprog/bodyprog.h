@@ -1019,11 +1019,11 @@ typedef struct _CharacterAnimInfo
     // 2 bytes of padding.
     s32            animFile0_4; // s_AnmHeader* animFile0_4; // TODO: Needs to be a pointer.
     s_AnmHeader*   animFile1_8;
-    s32            animFileSize1_C;  // Incorrect.
-    s32            animFileSize2_10; // Incorrect.
+    s32            animBufferSize1_C;
+    s32            animBufferSize2_10;
     GsCOORDINATE2* npcCoords_14;
-} s_CharacterAnimInfo;
-STATIC_ASSERT_SIZEOF(s_CharacterAnimInfo, 24);
+} s_CharaAnimDataInfo;
+STATIC_ASSERT_SIZEOF(s_CharaAnimDataInfo, 24);
 
 /** Related to weapon attacks. Stats, SFX IDs, damange values, etc.? */
 typedef struct
@@ -2152,8 +2152,8 @@ extern s32 D_800A9A24;
 /** Z. */
 extern s32 D_800A9A28;
 
-/** Associates each character ID with a map's `charaGroupIds_248` index for that ID (+ 1?). */
-extern s8 D_800A98FC[Chara_Count];
+// Loaded NPC type in memory and their data information index in `g_InitCharaDataAnimInfo`.
+extern s8 g_CharaAnimInfoIdx[Chara_Count];
 
 extern s32 D_800A9EB0;
 
@@ -2176,8 +2176,8 @@ extern u16 g_UnknownBgmTable0[];
 
 extern u16 g_UnknownBgmTable2[];
 
-/** @brief Stores loaded character's animation data. */
-extern s_CharacterAnimInfo g_InitializedCharaAnimInfo[];
+/** @brief Stores loaded character's animation data information. */
+extern s_CharaAnimDataInfo g_InitCharaDataAnimInfo[];
 
 extern s32 D_800A9938;
 
@@ -2843,7 +2843,8 @@ void WorldGfx_CharaFree(s_CharaModel* model);
 
 void WorldGfx_HarryCharaLoad(void);
 
-s32 func_8003D21C(s_MapOverlayHeader* mapHdr);
+/** Load characters meant to be loaded by default in the map overlay loaded. */
+s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr);
 
 void WorldGfx_CharaLmBufferAssign(s8 forceFree);
 
@@ -4045,13 +4046,14 @@ void GameFs_MapLoad(s32 mapIdx);
 
 bool func_8003528C(s32 idx0, s32 idx1);
 
-/** Searches for the index of the character animation data in `g_InitializedCharaAnimInfo`. */
-s32 func_800352F8(e_CharacterId charaId);
+/** Searches for the index of the character animation data in `g_InitCharaDataAnimInfo`. */
+s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId);
 
-/** Either allocates or determines where to allocate animation data. */
-void func_80035338(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coords);
+/** Allocates and adjust where is animation data allocated. */
+void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coords);
 
 /** Called by `Fs_QueuePostLoadAnm`. */
+// Assign data for `g_InitCharaDataAnimInfo` and initialize bones for NPCs.
 void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord);
 
 void func_8003569C(void);

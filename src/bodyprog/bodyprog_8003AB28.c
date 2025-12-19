@@ -1550,7 +1550,7 @@ void WorldGfx_HarryCharaLoad(void) // 0x8003D160
     g_WorldGfx.harryModel_164C.texture_C = image;
 }
 
-s32 func_8003D21C(s_MapOverlayHeader* mapHdr) // 0x8003D21C
+s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr) // 0x8003D21C
 {
     s_FsImageDesc image;
     bool          cond;
