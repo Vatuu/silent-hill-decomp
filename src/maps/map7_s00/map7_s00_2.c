@@ -142,7 +142,7 @@ void func_800D0B64(void) // 0x800D0B64
         EventState_Skip = 27
     } e_EventState;
 
-    #define playerChara g_SysWork.player_4C.chara_0
+    #define playerChara g_SysWork.playerWork_4C.player_0
     #define lisaChara g_SysWork.npcs_1A0[0]
 
     // Skip.

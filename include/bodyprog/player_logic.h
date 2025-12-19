@@ -565,11 +565,11 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, s_AnmHeader*
 /** @brief Main update function for player logic. */
 void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
 
-/** @brief Updates `g_SysWork.player_4C.extra_128.upperBodyState_20` and prepares
+/** @brief Updates `g_SysWork.playerWork_4C.extra_128.upperBodyState_20` and prepares
  * transitions between running to and from walking animations.
  *
  * @param extra Pointer to `s_PlayerExtra` struct.
- * @param upperState Check if `g_SysWork.player_4C.extra_128.upperBodyState_20` is not the same being input in order to clear animation status.
+ * @param upperState Check if `g_SysWork.playerWork_4C.extra_128.upperBodyState_20` is not the same being input in order to clear animation status.
  * @param unused @unused Possibly animation index.
  * @param arg3 Player turn state. Only affects turn animations.
  * * 0 and 2: Idle state.
@@ -631,13 +631,13 @@ bool func_8007F95C(void);
 
 #define Player_ExtraStateSet(playerChara, extra, state)                          \
 {                                                                                \
-    g_SysWork.player_4C.extra_128.state_1C          = (state);                   \
+    g_SysWork.playerWork_4C.extra_128.state_1C          = (state);                   \
     (playerChara)->model_0.stateStep_3              = 0;                         \
     (playerChara)->model_0.state_2                  = 0;                         \
     (extra)->model_0.stateStep_3                    = 0;                         \
     (extra)->model_0.state_2                        = 0;                         \
-    g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None; \
-    g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None; \
+    g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None; \
+    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None; \
 }
 
 /** @brief Sets the given animation flag for both the player character data and extra player data.
@@ -649,8 +649,8 @@ static inline void Player_AnimFlagsSet(u32 flags)
     s_SubCharacter*       chara;
     s_PlayerExtra* extra;
 
-    extra = &g_SysWork.player_4C.extra_128;
-    chara = &g_SysWork.player_4C.chara_0;
+    extra = &g_SysWork.playerWork_4C.extra_128;
+    chara = &g_SysWork.playerWork_4C.player_0;
 
     extra->model_0.anim_4.flags_2 |= flags;
     chara->model_0.anim_4.flags_2 |= flags;
@@ -662,8 +662,8 @@ static inline void Player_AnimFlagsSet(u32 flags)
  */
 #define Player_AnimFlagsClear(flags)                              \
 {                                                                 \
-    s_PlayerExtra*  playerExtra = &g_SysWork.player_4C.extra_128; \
-    s_SubCharacter* playerChara = &g_SysWork.player_4C.chara_0;   \
+    s_PlayerExtra*  playerExtra = &g_SysWork.playerWork_4C.extra_128; \
+    s_SubCharacter* playerChara = &g_SysWork.playerWork_4C.player_0;   \
                                                                   \
     playerExtra->model_0.anim_4.flags_2 &= ~(flags);              \
     playerChara->model_0.anim_4.flags_2 &= ~(flags);              \

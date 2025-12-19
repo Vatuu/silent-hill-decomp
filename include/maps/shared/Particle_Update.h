@@ -129,7 +129,7 @@ bool Particle_Update(s_Particle* partHead)
     sharedData_800E2156_0_s01 = 0;
 
 #if defined(MAP0_S00)
-    if (g_SavegamePtr->mapRoomIdx_A5 == 3 && g_SysWork.player_4C.chara_0.position_18.vz > Q12(200.0f))
+    if (g_SavegamePtr->mapRoomIdx_A5 == 3 && g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(200.0f))
     {
         sharedData_800DD591_0_s00 = 1;
     }
@@ -194,7 +194,7 @@ bool Particle_Update(s_Particle* partHead)
     switch (g_SavegamePtr->mapRoomIdx_A5)
     {
         case 3:
-            if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(200.0f))
+            if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(200.0f))
             {
                 sharedData_800DD591_0_s00 = 1;
                 sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-5.0f);
@@ -211,8 +211,8 @@ bool Particle_Update(s_Particle* partHead)
             break;
 
         case 7:
-            if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(-55.0f) && g_SysWork.player_4C.chara_0.position_18.vx < Q12(-33.0f) && 
-                g_SysWork.player_4C.chara_0.position_18.vz > Q12(-14.0f) && g_SysWork.player_4C.chara_0.position_18.vz < Q12(0.0f))
+            if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-55.0f) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-33.0f) && 
+                g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-14.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(0.0f))
             {
                     sharedData_800DD591_0_s00 = 10;
                     sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-44.5f);
@@ -228,8 +228,8 @@ bool Particle_Update(s_Particle* partHead)
                     sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-44.5f);
                     sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-11.2f);
             }
-            else if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(-90.0f) && g_SysWork.player_4C.chara_0.position_18.vx < Q12(-56.0f) && 
-                     g_SysWork.player_4C.chara_0.position_18.vz > Q12(-14.0f) && g_SysWork.player_4C.chara_0.position_18.vz < Q12(0.0f))
+            else if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-90.0f) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-56.0f) && 
+                     g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-14.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(0.0f))
             {
                     sharedData_800DD591_0_s00 = 10;
                     sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-79.0f);
@@ -252,8 +252,8 @@ bool Particle_Update(s_Particle* partHead)
             break;
 
         case 1:
-            if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(-240.0f) && g_SysWork.player_4C.chara_0.position_18.vx < Q12(-226.0f) && 
-                g_SysWork.player_4C.chara_0.position_18.vz > Q12(136.0f))
+            if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-240.0f) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-226.0f) && 
+                g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(136.0f))
             {
                 sharedData_800DD591_0_s00 = 10;
                 sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-232.0f);
@@ -269,7 +269,7 @@ bool Particle_Update(s_Particle* partHead)
                 sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-228.0f);
                 sharedData_800E326C_0_s00.corners_0[5].vz = Q12(158.0f);
             }
-            else if (g_SysWork.player_4C.chara_0.position_18.vx <= Q12(-240.0f) && g_SysWork.player_4C.chara_0.position_18.vz > Q12(133.0f))
+            else if (g_SysWork.playerWork_4C.player_0.position_18.vx <= Q12(-240.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(133.0f))
             {
                 sharedData_800DD591_0_s00 = 9;
                 sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-251.0f);
@@ -288,8 +288,8 @@ bool Particle_Update(s_Particle* partHead)
             break;
 
         case 6:
-            if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(-225.0f) && g_SysWork.player_4C.chara_0.position_18.vx < Q12(-195.0f) && 
-                g_SysWork.player_4C.chara_0.position_18.vz > Q12(-100.0f) && g_SysWork.player_4C.chara_0.position_18.vz < Q12(-72.0f))
+            if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-225.0f) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-195.0f) && 
+                g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-100.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-72.0f))
             {
                 sharedData_800DD591_0_s00 = 10;
                 sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-208.0f);
@@ -312,7 +312,7 @@ bool Particle_Update(s_Particle* partHead)
             break;
 
         case 27:
-            if (g_SysWork.player_4C.chara_0.position_18.vx < Q12(-275.0f) && g_SysWork.player_4C.chara_0.position_18.vz < Q12(-175.0f))
+            if (g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-275.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-175.0f))
             {
                 sharedData_800DD591_0_s00 = 0xA;
                 sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-287.0f);
@@ -400,8 +400,8 @@ bool Particle_Update(s_Particle* partHead)
 #elif defined(MAP5_S01)
     sharedData_800DD591_0_s00 = 1;
 
-    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(-33.0f) && g_SysWork.player_4C.chara_0.position_18.vz < Q12(-20.0f) &&
-        g_SysWork.player_4C.chara_0.position_18.vx > Q12(13.0f) && g_SysWork.player_4C.chara_0.position_18.vx < Q12(44.0f))
+    if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-33.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-20.0f) &&
+        g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(13.0f) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(44.0f))
     {
         sharedData_800E326C_0_s00.corners_0[0].vx = Q12(24.0f);
         sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-19.0f);
@@ -416,8 +416,8 @@ bool Particle_Update(s_Particle* partHead)
         sharedData_800E326C_0_s00.corners_0[5].vx = Q12(31.5f);
         sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-21.5f);
     }
-    else if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(-82.0f) && g_SysWork.player_4C.chara_0.position_18.vz < Q12(-56.0f) &&
-             g_SysWork.player_4C.chara_0.position_18.vx > Q12(43.0f) && g_SysWork.player_4C.chara_0.position_18.vx < Q12(70.0f))
+    else if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-82.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-56.0f) &&
+             g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(43.0f) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(70.0f))
     {
         sharedData_800E326C_0_s00.corners_0[0].vx = Q12(58.7f);
         sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-70.5f);

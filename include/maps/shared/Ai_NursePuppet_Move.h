@@ -25,13 +25,13 @@ void Ai_NursePuppet_Move(s_SubCharacter* nurse)
     q19_12 addAngle;
     q19_12 distAbs;
 
-    deltaX  = Q12_TO_Q6(g_SysWork.player_4C.chara_0.position_18.vx - nurse->position_18.vx);
-    deltaZ  = Q12_TO_Q6(g_SysWork.player_4C.chara_0.position_18.vz - nurse->position_18.vz);
+    deltaX  = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx);
+    deltaZ  = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz);
     dist    = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ))) - Q12(0.76f);
     distAbs = ABS(dist);
 
-    angle = func_8005BF38((ratan2(g_SysWork.player_4C.chara_0.position_18.vx - nurse->position_18.vx,
-                                  g_SysWork.player_4C.chara_0.position_18.vz - nurse->position_18.vz) - nurse->rotation_24.vy));
+    angle = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx,
+                                  g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz) - nurse->rotation_24.vy));
     absAngle = ABS(angle);
 
     if (distAbs > Q12(0.03f))

@@ -20,14 +20,14 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
         }
     }
 
-    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(30, true) && !func_800700F8(chara, &g_SysWork.player_4C.chara_0))
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(30, true) && !func_800700F8(chara, &g_SysWork.playerWork_4C.player_0))
     {
         chara->properties_E4.player.runTimer_F8 = Q12(0.0f);
 
         if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 12))
         {
-            chara->rotation_24.vy = ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                           g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
+            chara->rotation_24.vy = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                           g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
         }
         else
         {
@@ -75,7 +75,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
                 {
                     if (ABS(angle0) < FP_ANGLE(90.0f))
                     {
-                        if (g_SysWork.player_4C.chara_0.health_B0 > Q12(0.0f))
+                        if (g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
                         {
                             chara->model_0.state_2   = 5;
                             g_SysWork.field_2284[3] |= 2;
@@ -128,10 +128,10 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
         {
             if (ABS(angle0) < FP_ANGLE(60.0f))
             {
-                if (g_SysWork.player_4C.chara_0.health_B0 > Q12(0.0f))
+                if (g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
                 {
                     chara->model_0.state_2 = 6;
-                    angle1              = func_8005BF38(g_SysWork.player_4C.chara_0.rotation_24.vy - chara->rotation_24.vy);
+                    angle1              = func_8005BF38(g_SysWork.playerWork_4C.player_0.rotation_24.vy - chara->rotation_24.vy);
 
                     if (ABS(angle1) > FP_ANGLE(90.0f))
                     {
@@ -162,8 +162,8 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara)
         {
             chara->properties_E4.dummy.properties_E8[6].val16[0] = func_8006FAFC(chara,
                                                                                          Q12(2.0f),
-                                                                                         g_SysWork.player_4C.chara_0.position_18.vx,
-                                                                                         g_SysWork.player_4C.chara_0.position_18.vz,
+                                                                                         g_SysWork.playerWork_4C.player_0.position_18.vx,
+                                                                                         g_SysWork.playerWork_4C.player_0.position_18.vz,
                                                                                          Q12(1.0f),
                                                                                          true);
             if (chara->properties_E4.dummy.properties_E8[6].val16[0] == Q12(1.0f))

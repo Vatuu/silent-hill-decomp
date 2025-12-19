@@ -57,8 +57,8 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnC
 
             Chara_Spawn(chara->model_0.charaId_0,
                         selectNpcSlot,
-                        g_SysWork.player_4C.chara_0.position_18.vx + Q12(20.0f),
-                        g_SysWork.player_4C.chara_0.position_18.vz, FP_ANGLE(0.0f),
+                        g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(20.0f),
+                        g_SysWork.playerWork_4C.player_0.position_18.vz, FP_ANGLE(0.0f),
                         10);
         }
     }

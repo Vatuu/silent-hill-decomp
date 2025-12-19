@@ -26,13 +26,13 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
     }
     else if (temp_v1 >= 50 && temp_v1 < 62)
     {
-        temp_s5 = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                      g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
+        temp_s5 = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                      g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
 
         for (i = 0; i < 6; i++)
         {
-            temp_3    = func_8005BF38((ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                              g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+            temp_3    = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                              g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                                       chara->rotation_24.vy));
             temp_v1_2 = ((g_DeltaTime0 / 3) >> 3) + 1;
 

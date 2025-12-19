@@ -19,7 +19,7 @@ void sharedFunc_800D09D4_3_s00(void)
                     if (!Savegame_EventFlagGet(EventFlag_197))
                     {
                         // Test player Z position against specific value.
-                        if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(143.2f))
+                        if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(143.2f))
                         {
                             flags = 0x6;
                         }

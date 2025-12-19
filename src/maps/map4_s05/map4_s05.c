@@ -227,12 +227,12 @@ void func_800D6800(void) // 0x800D6800
         case 2:
             g_SysWork.field_30 = 20;
 
-            MAP_POINTS[14].positionX_0 = g_SysWork.player_4C.chara_0.position_18.vx;
-            MAP_POINTS[14].positionZ_8 = g_SysWork.player_4C.chara_0.position_18.vz;
+            MAP_POINTS[14].positionX_0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
+            MAP_POINTS[14].positionZ_8 = g_SysWork.playerWork_4C.player_0.position_18.vz;
             // TODO: Likely wrong union field.
-            MAP_POINTS[14].data.spawnInfo.flags_6 = ((u32)func_8005BF38(g_SysWork.player_4C.chara_0.rotation_24.vy) + Q12(1.0f)) >> 4;
+            MAP_POINTS[14].data.spawnInfo.flags_6 = ((u32)func_8005BF38(g_SysWork.playerWork_4C.player_0.rotation_24.vy) + Q12(1.0f)) >> 4;
 
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 52, false);
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 52, false);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(-118.22f), Q12(1.46f), Q12(105.67f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -246,14 +246,14 @@ void func_800D6800(void) // 0x800D6800
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
+            func_80085EB8(2, &g_SysWork.playerWork_4C.player_0, 0, false);
             SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
 
             // Warp player.
-            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-120.0f);
-            g_SysWork.player_4C.chara_0.position_18.vy = Q12(2.0f);
-            g_SysWork.player_4C.chara_0.position_18.vz = Q12(104.0f);
-            g_SysWork.player_4C.chara_0.rotation_24.vy = 0;
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-120.0f);
+            g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(2.0f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(104.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = 0;
 
             // Warp NPC.
             g_SysWork.npcs_1A0[0].position_18.vx = Q12(-120.0f);
@@ -280,7 +280,7 @@ void func_800D6800(void) // 0x800D6800
             break;
 
         default:
-            func_80085EB8(3, &g_SysWork.player_4C.chara_0, 0, false);
+            func_80085EB8(3, &g_SysWork.playerWork_4C.player_0, 0, false);
 
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
@@ -477,7 +477,7 @@ void func_800D6BC0(void) // 0x800D6BC0
 
     if (D_800DB954 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, "HERO", D_800DB954, FS_BUFFER_19);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800DB954, FS_BUFFER_19);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800DB938, &D_800DB948, NULL, D_800DB954, FS_BUFFER_19));
         vcUserCamTarget(&D_800DB938, NULL, true);
         vcUserWatchTarget(&D_800DB948, NULL, true);

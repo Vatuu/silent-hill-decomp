@@ -711,9 +711,9 @@ void MapEvent_AtWaterWorks(void) // 0x800E7E60
         case 0:
             Player_ControlFreeze();
 
-            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-255.78f);
-            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-107.46f);
-            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(-45.0f);
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-255.78f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-107.46f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-45.0f);
 
             ScreenFade_ResetTimestep();
             func_800867B4(0, 1);
@@ -814,7 +814,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 59);
             break;
 
         case 3:
@@ -840,7 +840,7 @@ void MapEvent_SteelPipeTake(void) // 0x800E81EC
             SysWork_StateStepIncrement(0);
 
         case 7:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 60);
             break;
 
         default:
@@ -1084,7 +1084,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 59);
             break;
 
         case 3:
@@ -1219,7 +1219,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             break;
 
         case 19:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 60);
             break;
 
         case 22:
@@ -1255,7 +1255,7 @@ void func_800E9470(void) // 0x800E9470
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 59);
             break;
 
         case 3:
@@ -1281,7 +1281,7 @@ void func_800E9470(void) // 0x800E9470
             break;
 
         case 8:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 60);
             break;
 
         default:
@@ -1305,7 +1305,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 59);
             break;
 
         case 3:
@@ -1337,7 +1337,7 @@ void MapEvent_DoghouseNote(void) // 0x800E95F8
             break;
 
         case 9:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 60);
             break;
 
         default:
@@ -1368,7 +1368,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 59);
             break;
 
         case 3:
@@ -1408,7 +1408,7 @@ void MapEvent_DoghouseKeyTake(void) // 0x800E97E4
             break;
 
         case 11:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 60);
             break;
 
         default:
@@ -1451,7 +1451,7 @@ void func_800E9A74(void) // 0x800E9A74
             break;
 
         case 2:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 59, false);
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 59, false);
             SysWork_StateStepIncrement(0);
 
         case 3:
@@ -1459,7 +1459,7 @@ void func_800E9A74(void) // 0x800E9A74
             break;
 
         case 4:
-            func_80085EB8(1, &g_SysWork.player_4C.chara_0, 0, false);
+            func_80085EB8(1, &g_SysWork.playerWork_4C.player_0, 0, false);
             break;
 
         case 5:
@@ -1487,7 +1487,7 @@ void func_800E9A74(void) // 0x800E9A74
             SysWork_StateStepIncrement(0);
 
         case 8:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 60);
             break;
 
         default:
@@ -1714,9 +1714,9 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             func_8003ED74(1, 1);
             func_8003EF10(6, 6, PrimitiveType_S32, &D_800F1A24, 0, Q12(100.0f));
 
-            g_SysWork.player_4C.chara_0.position_18.vx = Q12(147.7f);
-            g_SysWork.player_4C.chara_0.position_18.vz = Q12(376.5f);
-            g_SysWork.player_4C.chara_0.rotation_24.vy = Q12(-0.25f);
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(147.7f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(376.5f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12(-0.25f);
             g_SysWork.field_30 = 20;
             g_SysWork.flags_22A4 |= SysFlag2_3;
 
@@ -2120,9 +2120,9 @@ void func_800EB174(void) // 0x800EB174
             Camera_PositionSet(NULL, Q12(-261.27f), Q12(-2.11f), Q12(-105.46f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-262.74f), Q12(0.07f), Q12(-102.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
 
-            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-262.39f);
-            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-104.33f);
-            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(45.0f);
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-262.39f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-104.33f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(45.0f);
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -2186,7 +2186,7 @@ void func_800EB3F4(void) // 0x800EB3F4
             Savegame_EventFlagSet(EventFlag_169);
 
             g_SysWork.field_30 = 20;
-            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, AnimFlag_Visible);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -2219,11 +2219,11 @@ void func_800EB3F4(void) // 0x800EB3F4
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
-            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, AnimFlag_Visible);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, AnimFlag_Visible);
 
-            if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
-                g_SysWork.playerCombatInfo_38.weaponAttack_F %= 10; // TODO: Use macro.
+                g_SysWork.playerCombat_38.weaponAttack_F %= 10; // TODO: Use macro.
             }
 
             vcReturnPreAutoCamWork(true);
@@ -2414,10 +2414,10 @@ void func_800EC080(void) // 0x800EC080
 
     flags = 0;
 
-    cellZ0 = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
-    cellX0 = g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE;
+    cellZ0 = g_SysWork.playerWork_4C.player_0.position_18.vz / CHUNK_CELL_SIZE;
+    cellX0 = g_SysWork.playerWork_4C.player_0.position_18.vx / CHUNK_CELL_SIZE;
 
-    if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f))
+    if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(0.0f))
     {
         projCellX0 = cellX0 + 17;
     }
@@ -2426,7 +2426,7 @@ void func_800EC080(void) // 0x800EC080
         projCellX0 = cellX0 + 15;
     } 
 
-    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f))
+    if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(0.0f))
     {
         projCellZ0 = cellZ0 + 17;
     }
@@ -2474,7 +2474,7 @@ void func_800EC080(void) // 0x800EC080
             if (Savegame_EventFlagGet(EventFlag_163)) 
             {
                 flags |= 1 << 2;
-                if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(198.0f))
+                if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(198.0f))
                 {
                     Savegame_EventFlagClear(EventFlag_163);
                 }
@@ -2576,10 +2576,10 @@ void func_800EC080(void) // 0x800EC080
             break;
     }
 
-    cellZ1 = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
-    cellX1 = g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE;
+    cellZ1 = g_SysWork.playerWork_4C.player_0.position_18.vz / CHUNK_CELL_SIZE;
+    cellX1 = g_SysWork.playerWork_4C.player_0.position_18.vx / CHUNK_CELL_SIZE;
 
-    if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f)) 
+    if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(0.0f)) 
     {
         projCellX1 = cellX1 + 17;
     }
@@ -2588,7 +2588,7 @@ void func_800EC080(void) // 0x800EC080
         projCellX1 = cellX1 + 15;
     }
 
-    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f)) 
+    if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(0.0f)) 
     {
         projCellZ1 = cellZ1 + 17;
     }
@@ -2654,10 +2654,10 @@ void func_800EC080(void) // 0x800EC080
             break;
     }
 
-    cellZ2 = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
-    cellX2 = g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE;
+    cellZ2 = g_SysWork.playerWork_4C.player_0.position_18.vz / CHUNK_CELL_SIZE;
+    cellX2 = g_SysWork.playerWork_4C.player_0.position_18.vx / CHUNK_CELL_SIZE;
 
-    if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f))
+    if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(0.0f))
     {
         projCellX2 = cellX2 + 17;
     }
@@ -2666,7 +2666,7 @@ void func_800EC080(void) // 0x800EC080
         projCellX2 = cellX2 + 15;
     }
 
-    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f))
+    if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(0.0f))
     {
         projCellZ2 = cellZ2 + 17;
     }

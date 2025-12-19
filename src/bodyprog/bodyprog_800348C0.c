@@ -168,7 +168,7 @@ void GameFs_MapStartup(void) // 0x80034964
                 func_8003C30C();
             }
 
-            func_8003C220(&g_MapOverlayHeader, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
+            func_8003C220(&g_MapOverlayHeader, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
             if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_OverlayTransition)
             {
                 func_80037188();
@@ -273,7 +273,7 @@ void func_80034EC8(void) // 0x80034EC8
 
 void func_80034F18(void) // 0x80034F18
 {
-    vcSetCameraUseWarp(&g_SysWork.player_4C.chara_0.position_18, g_SysWork.cameraAngleY_237A);
+    vcSetCameraUseWarp(&g_SysWork.playerWork_4C.player_0.position_18, g_SysWork.cameraAngleY_237A);
     func_8005E70C();
 
     if (g_SysWork.field_234A != 0)
@@ -293,9 +293,9 @@ void Game_InGameInit(void) // 0x80034FB8
 
     mapOvlId = g_SavegamePtr->mapOverlayId_A4;
 
-    vcInitCamera(&g_MapOverlayHeader, &g_SysWork.player_4C.chara_0.position_18);
+    vcInitCamera(&g_MapOverlayHeader, &g_SysWork.playerWork_4C.player_0.position_18);
 
-    vcSetCameraUseWarp(&g_SysWork.player_4C.chara_0.position_18, g_SysWork.cameraAngleY_237A);
+    vcSetCameraUseWarp(&g_SysWork.playerWork_4C.player_0.position_18, g_SysWork.cameraAngleY_237A);
     func_80040004(&g_MapOverlayHeader);
     func_80035B58(0);
     WorldGfx_CharaModelProcessAllLoads();
@@ -383,10 +383,10 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     if (g_SysWork.processFlags_2298 & (SysWorkProcessFlag_NewGame | SysWorkProcessFlag_LoadSave
                                        | SysWorkProcessFlag_Continue | SysWorkProcessFlag_BootDemo))
     {
-        func_8003CD6C(&g_SysWork.playerCombatInfo_38);
+        func_8003CD6C(&g_SysWork.playerCombat_38);
     }
 
-    func_800546A8(g_SysWork.playerCombatInfo_38.weaponAttack_F);
+    func_800546A8(g_SysWork.playerCombat_38.weaponAttack_F);
 }
 
 // ========================================
@@ -763,7 +763,7 @@ void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
     GsCOORDINATE2* boneCoords;
 
     boneCoords = g_SysWork.playerBoneCoords_890;
-    model      = &g_SysWork.player_4C.chara_0.model_0;
+    model      = &g_SysWork.playerWork_4C.player_0.model_0;
 
     if (g_SysWork.sysState_8 == SysState_Gameplay)
     {
@@ -772,17 +772,17 @@ void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
             AreaLoad_UpdatePlayerPosition();
         }
 
-        vcInitCamera(&g_MapOverlayHeader, &g_SysWork.player_4C.chara_0.position_18);
+        vcInitCamera(&g_MapOverlayHeader, &g_SysWork.playerWork_4C.player_0.position_18);
         func_80040004(&g_MapOverlayHeader);
 
         camLookAt.vy = Q12(-0.6f);
-        camLookAt.vx = g_SysWork.player_4C.chara_0.position_18.vx;
-        camLookAt.vz = g_SysWork.player_4C.chara_0.position_18.vz;
+        camLookAt.vx = g_SysWork.playerWork_4C.player_0.position_18.vx;
+        camLookAt.vz = g_SysWork.playerWork_4C.player_0.position_18.vz;
 
         vcUserWatchTarget(&camLookAt, NULL, true);
 
-        camLookAt.vx -= Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f)) * 2;
-        temp          = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy - FP_ANGLE(22.5f));
+        camLookAt.vx -= Math_Sin(g_SysWork.playerWork_4C.player_0.rotation_24.vy - FP_ANGLE(22.5f)) * 2;
+        temp          = Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy - FP_ANGLE(22.5f));
         camLookAt.vy  = Q12(-1.0f);
         camLookAt.vz -= temp * 2;
 
@@ -791,21 +791,21 @@ void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
         func_8003EEDC(0, 0);
 
         model->anim_4.flags_2                             |= AnimFlag_Visible;
-        g_SysWork.player_4C.extra_128.disabledAnimBones_18 = 0;
+        g_SysWork.playerWork_4C.extra_128.disabledAnimBones_18 = 0;
         model->anim_4.flags_2                             |= AnimFlag_Unlocked | AnimFlag_Visible;
         model->anim_4.time_4                               = Q12(26.0f);
-        g_SysWork.player_4C.chara_0.position_18.vy         = Q12(0.2f);
+        g_SysWork.playerWork_4C.player_0.position_18.vy         = Q12(0.2f);
 
         D_800A998C.status_4 = model->anim_4.status_0;
 
-        Math_MatrixTransform(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, boneCoords);
+        Math_MatrixTransform(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, boneCoords);
         g_SysWork.sysState_8++;
     }
 
     Anim_Update1(model, (s_Skeleton*)FS_BUFFER_0, boneCoords, &D_800A998C);
     vcMoveAndSetCamera(true, false, false, false, false, false, false, false);
     func_8003F170();
-    func_8003DA9C(Chara_Harry, boneCoords, 1, g_SysWork.player_4C.chara_0.timer_C6, 0);
+    func_8003DA9C(Chara_Harry, boneCoords, 1, g_SysWork.playerWork_4C.player_0.timer_C6, 0);
 }
 
 // ========================================
@@ -914,7 +914,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
         bgmLayerLimitCpy = g_Sd_BgmLayerLimits;
     }
 
-    if (g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
+    if (g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f) || g_SysWork.sysState_8 == SysState_GameOver)
     {
         flagsCpy &= BgmFlag_Unk8;
         flagsCpy |= BgmFlag_Unk0;
@@ -1131,8 +1131,8 @@ void Savegame_MapRoomIdxSet(void) // 0x80036420
     s32 z;
     s8  newMapRoomIdx;
 
-    x = g_SysWork.player_4C.chara_0.position_18.vx;
-    z = g_SysWork.player_4C.chara_0.position_18.vz;
+    x = g_SysWork.playerWork_4C.player_0.position_18.vx;
+    z = g_SysWork.playerWork_4C.player_0.position_18.vz;
 
     // Set map room index based on current player position.
     if (g_MapOverlayHeader.getMapRoomIdxFunc_4 == NULL)
@@ -1208,8 +1208,8 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
         hasInput = true;
     }
 
-    g_SysWork.player_4C.chara_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
-    func_8004C564(g_SysWork.playerCombatInfo_38.weaponAttack_F, WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap));
+    g_SysWork.playerWork_4C.player_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(0.0f);
+    func_8004C564(g_SysWork.playerCombat_38.weaponAttack_F, WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap));
 
     if (g_MapMsg_MainIdx != mapMsgIdx)
     {
@@ -1724,16 +1724,16 @@ void Chara_PositionUpdateFromParams(s_MapPoint2d* mapPoint) // 0x800371E8
     s32 rotY;
 
     rotY = FP_ANGLE_FROM_PACKED(mapPoint->data.areaLoad.rotationY_4_16);
-    Math_SVectorSet(&g_SysWork.player_4C.chara_0.rotation_24, FP_ANGLE(0.0f), rotY, FP_ANGLE(0.0f));
+    Math_SVectorSet(&g_SysWork.playerWork_4C.player_0.rotation_24, FP_ANGLE(0.0f), rotY, FP_ANGLE(0.0f));
 
-    g_SysWork.player_4C.chara_0.position_18.vy = Q12(0.0f);
-    g_SysWork.player_4C.chara_0.position_18.vx = mapPoint->positionX_0;
-    g_SysWork.player_4C.chara_0.position_18.vz = mapPoint->positionZ_8;
+    g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(0.0f);
+    g_SysWork.playerWork_4C.player_0.position_18.vx = mapPoint->positionX_0;
+    g_SysWork.playerWork_4C.player_0.position_18.vz = mapPoint->positionZ_8;
 
     if (mapPoint->data.areaLoad.field_4_24 >= 2)
     {
-        g_SysWork.player_4C.chara_0.position_18.vx += FP_MULTIPLY_FLOAT_PRECISE(Math_Sin(rotY), 0.4f, Q12_SHIFT);
-        g_SysWork.player_4C.chara_0.position_18.vz += FP_MULTIPLY_FLOAT_PRECISE(Math_Cos(rotY), 0.4f, Q12_SHIFT);
+        g_SysWork.playerWork_4C.player_0.position_18.vx += FP_MULTIPLY_FLOAT_PRECISE(Math_Sin(rotY), 0.4f, Q12_SHIFT);
+        g_SysWork.playerWork_4C.player_0.position_18.vz += FP_MULTIPLY_FLOAT_PRECISE(Math_Cos(rotY), 0.4f, Q12_SHIFT);
     }
 
     g_SysWork.loadingScreenIdx_2281 = mapPoint->data.areaLoad.loadingScreenId_4_9;
@@ -1762,8 +1762,8 @@ void func_80037334(void) // 0x80037334
         g_MapOverlayHeader.worldObjectsUpdate_40();
     }
 
-    Collision_Get(&coll, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
-    g_SysWork.player_4C.chara_0.position_18.vy = coll.groundHeight_0;
+    Collision_Get(&coll, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
+    g_SysWork.playerWork_4C.player_0.position_18.vy = coll.groundHeight_0;
 }
 
 void Event_Update(bool disableButtonEvents) // 0x800373CC
@@ -1791,16 +1791,16 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
     // If it's set, find its index in `g_ItemTriggerItemIds` and use that to get the corresponding `s_EventParam` from `g_ItemTriggerEvents`.
     // After processing, the field is cleared and item trigger IDs are reset.
     // (Multi-item events likely repopulate the trigger IDs below based on whichever events are still active?)
-    if (g_SysWork.player_4C.extra_128.lastUsedItem_28)
+    if (g_SysWork.playerWork_4C.extra_128.lastUsedItem_28)
     {
-        for (i = 0; g_SysWork.player_4C.extra_128.lastUsedItem_28 != g_ItemTriggerItemIds[i]; i++);
+        for (i = 0; g_SysWork.playerWork_4C.extra_128.lastUsedItem_28 != g_ItemTriggerItemIds[i]; i++);
 
         g_MapEventParam        = g_ItemTriggerEvents[i];
-        g_MapEventLastUsedItem = g_SysWork.player_4C.extra_128.lastUsedItem_28;
+        g_MapEventLastUsedItem = g_SysWork.playerWork_4C.extra_128.lastUsedItem_28;
         g_MapEventSysState     = g_MapEventParam->sysState_8_0;
         g_MapEventIdx          = g_MapEventParam->pointOfInterestIdx_8_5;
 
-        g_SysWork.player_4C.extra_128.lastUsedItem_28 = InventoryItemId_Unequipped;
+        g_SysWork.playerWork_4C.extra_128.lastUsedItem_28 = InventoryItemId_Unequipped;
         Event_ItemTriggersReset();
         return;
     }
@@ -1871,12 +1871,12 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
                 pointRadiusX = mapPoint->data.touchAabb.radiusX_4_16 * Q12(0.25f);
                 pointRadiusZ = mapPoint->data.touchAabb.radiusZ_4_24 * Q12(0.25f);
 
-                if (ABS(g_SysWork.player_4C.chara_0.position_18.vx - pointPosX) > pointRadiusX)
+                if (ABS(g_SysWork.playerWork_4C.player_0.position_18.vx - pointPosX) > pointRadiusX)
                 {
                     continue;
                 }
 
-                if (ABS(g_SysWork.player_4C.chara_0.position_18.vz - pointPosZ) > pointRadiusZ)
+                if (ABS(g_SysWork.playerWork_4C.player_0.position_18.vz - pointPosZ) > pointRadiusZ)
                 {
                     continue;
                 }
@@ -1972,9 +1972,9 @@ bool Event_CheckTouchFacing(s_MapPoint2d* mapPoint) // 0x800378D4
 
     if (g_MainLoop_FrameCount > D_800A9A20)
     {
-        rotY       = g_SysWork.player_4C.chara_0.rotation_24.vy;
-        D_800A9A24 = g_SysWork.player_4C.chara_0.position_18.vx - (Math_Sin(rotY) >> 3); // `/ 8`.
-        D_800A9A28 = g_SysWork.player_4C.chara_0.position_18.vz - (Math_Cos(rotY) >> 3); // `/ 8`.
+        rotY       = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
+        D_800A9A24 = g_SysWork.playerWork_4C.player_0.position_18.vx - (Math_Sin(rotY) >> 3); // `/ 8`.
+        D_800A9A28 = g_SysWork.playerWork_4C.player_0.position_18.vz - (Math_Cos(rotY) >> 3); // `/ 8`.
         D_800A9A20 = g_MainLoop_FrameCount;
     }
 
@@ -1995,7 +1995,7 @@ bool Event_CheckTouchFacing(s_MapPoint2d* mapPoint) // 0x800378D4
         return false;
     }
 
-    deltaRotY = g_SysWork.player_4C.chara_0.rotation_24.vy - ratan2(deltaX, deltaZ);
+    deltaRotY = g_SysWork.playerWork_4C.player_0.rotation_24.vy - ratan2(deltaX, deltaZ);
     if (deltaRotY >= FP_ANGLE(180.0f))
     {
         deltaRotY -= FP_ANGLE(360.0f);
@@ -2027,13 +2027,13 @@ bool Event_CheckTouchObbFacing(s_MapPoint2d* mapPoint) // 0x80037A4C
     s32    scaledSinPlayerRotY;
     s32    scaledCosRotY;
 
-    halfSinRotY   = Math_Sin(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1; // `/ 2`.
+    halfSinRotY   = Math_Sin(g_SysWork.playerWork_4C.player_0.rotation_24.vy) >> 1; // `/ 2`.
     scaledCosRotY = -Math_Cos(FP_ANGLE_FROM_PACKED(mapPoint->data.areaLoad.rotationY_4_16)) * mapPoint->data.areaLoad.field_4_24;
 
     clampedHalfCosPlayerRotY = halfSinRotY;
 
     temp_a0_2 = scaledCosRotY >> 4; // `/ 16`.
-    deltaX    = mapPoint->positionX_0 - g_SysWork.player_4C.chara_0.position_18.vx;
+    deltaX    = mapPoint->positionX_0 - g_SysWork.playerWork_4C.player_0.position_18.vx;
     temp_s2   = deltaX - temp_a0_2;
     temp_s4   = deltaX + temp_a0_2;
 
@@ -2052,13 +2052,13 @@ bool Event_CheckTouchObbFacing(s_MapPoint2d* mapPoint) // 0x80037A4C
     {
         if (MIN(halfSinRotY, 0) <= MAX(temp_s2, temp_s4))
         {
-            halfCosPlayerRotY   = Math_Cos(g_SysWork.player_4C.chara_0.rotation_24.vy) >> 1; // `/ 2`.
+            halfCosPlayerRotY   = Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy) >> 1; // `/ 2`.
             scaledSinPlayerRotY = Math_Sin(FP_ANGLE_FROM_PACKED(mapPoint->data.areaLoad.rotationY_4_16)) * mapPoint->data.areaLoad.field_4_24;
 
             clampedHalfCosPlayerRotY = halfCosPlayerRotY;
 
             temp_a0_2 = scaledSinPlayerRotY >> 4; // `/ 16`.
-            deltaZ    = mapPoint->positionZ_8 - g_SysWork.player_4C.chara_0.position_18.vz;
+            deltaZ    = mapPoint->positionZ_8 - g_SysWork.playerWork_4C.player_0.position_18.vz;
             temp_v1   = deltaZ - temp_a0_2;
             temp_a2   = deltaZ + temp_a0_2;
 
@@ -2103,13 +2103,13 @@ bool Event_CheckTouchObb(s_MapPoint2d* mapPoint) // 0x80037C5C
 
     shift8Field_7 = mapPoint->data.areaLoad.field_4_24 << 8;
 
-    deltaX = g_SysWork.player_4C.chara_0.position_18.vx - mapPoint->positionX_0;
+    deltaX = g_SysWork.playerWork_4C.player_0.position_18.vx - mapPoint->positionX_0;
     if (mapPoint->data.areaLoad.field_4_24 << 9 < ABS(deltaX))
     {
         return false;
     }
 
-    deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - mapPoint->positionZ_8;
+    deltaZ = g_SysWork.playerWork_4C.player_0.position_18.vz - mapPoint->positionZ_8;
     scale  = 2;
     if ((shift8Field_7 * scale) < ABS(deltaZ))
     {
@@ -2218,8 +2218,8 @@ void func_80037F24(bool cond) // 0x80037F24
         if (!(g_SysWork.flags_22A4 & SysFlag2_4) && HAS_FLAG(temp_a0, i) && !HAS_FLAG(g_SysWork.field_228C, i) &&
             curCharaSpawn->data.spawnInfo.flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= curCharaSpawn->data.spawnInfo.field_7_0 &&
             func_8008F914(curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8) &&
-            !Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, pos, Q12(22.0f)) &&
-            (!cond || Math_Distance2dCheck(&g_SysWork.player_4C.chara_0.position_18, pos, Q12(20.0f))))
+            !Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position_18, pos, Q12(22.0f)) &&
+            (!cond || Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position_18, pos, Q12(20.0f))))
         {
             while (HAS_FLAG(&g_SysWork.npcFlags_2290, npcIdx))
             {
@@ -2332,8 +2332,8 @@ void func_80038354(void) // 0x80038354
         return NO_VALUE;
     }
 
-    posXShift6 = g_SysWork.player_4C.chara_0.position_18.vx >> 6;
-    posZShift6 = g_SysWork.player_4C.chara_0.position_18.vz >> 6;
+    posXShift6 = g_SysWork.playerWork_4C.player_0.position_18.vx >> 6;
+    posZShift6 = g_SysWork.playerWork_4C.player_0.position_18.vz >> 6;
 
     Demo_DemoRandSeedBackup();
     Demo_DemoRandSeedRestore();
@@ -2369,7 +2369,7 @@ void func_80038354(void) // 0x80038354
 
                     if (var_t5 != 0)
                     {
-                        s32 playerCell = (g_SysWork.player_4C.chara_0.position_18.vx + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                        s32 playerCell = (g_SysWork.playerWork_4C.player_0.position_18.vx + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
                         s32 npcCell    = (npc->position_18.vx                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
                         if (npcCell != playerCell)
                         {
@@ -2377,7 +2377,7 @@ void func_80038354(void) // 0x80038354
                         }
 
                         // TODO: Unique vars for these.
-                        playerCell = (g_SysWork.player_4C.chara_0.position_18.vz + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
+                        playerCell = (g_SysWork.playerWork_4C.player_0.position_18.vz + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
                         npcCell    = (npc->position_18.vz                        + (CHUNK_CELL_SIZE * 4)) / CHUNK_CELL_SIZE;
                         if (npcCell != playerCell)
                         {
@@ -2627,7 +2627,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
             break;
     }
 
-    if (g_SysWork.sysState_8 != SysState_Gameplay && g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f))
+    if (g_SysWork.sysState_8 != SysState_Gameplay && g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f))
     {
         SysWork_StateSetNext(SysState_Gameplay);
     }
@@ -2685,7 +2685,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
         }
         Demo_DemoRandSeedRestore();
 
-        player = &g_SysWork.player_4C.chara_0;
+        player = &g_SysWork.playerWork_4C.player_0;
         Player_Update(player, FS_BUFFER_0, g_SysWork.playerBoneCoords_890);
 
         Demo_DemoRandSeedRestore();
@@ -2699,10 +2699,10 @@ void GameState_InGame_Update(void) // 0x80038BD4
         Demo_DemoRandSeedRestore();
         if (player->model_0.anim_4.flags_2 & AnimFlag_Visible)
         {
-            func_8003DA9C(Chara_Harry, g_SysWork.playerBoneCoords_890, 1, g_SysWork.player_4C.chara_0.timer_C6, 0);
-            func_8008A384(&g_SysWork.player_4C.chara_0);
-            func_8007D970(&g_SysWork.player_4C, g_SysWork.playerBoneCoords_890);
-            func_8008A3AC(&g_SysWork.player_4C.chara_0);
+            func_8003DA9C(Chara_Harry, g_SysWork.playerBoneCoords_890, 1, g_SysWork.playerWork_4C.player_0.timer_C6, 0);
+            func_8008A384(&g_SysWork.playerWork_4C.player_0);
+            func_8007D970(&g_SysWork.playerWork_4C, g_SysWork.playerBoneCoords_890);
+            func_8008A3AC(&g_SysWork.playerWork_4C.player_0);
         }
 
         Demo_DemoRandSeedRestore();
@@ -2719,7 +2719,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
 {
     s_SubCharacter* playerChara;
 
-    playerChara = &g_SysWork.player_4C.chara_0;
+    playerChara = &g_SysWork.playerWork_4C.player_0;
 
     Event_Update(playerChara->attackReceived_41 != NO_VALUE);
     Savegame_MapRoomIdxSet();
@@ -2752,7 +2752,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
             break;
     }
 
-    if (g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f))
+    if (g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f))
     {
         return;
     }
@@ -2884,9 +2884,9 @@ void func_8003943C(void) // 0x8003943C
     {
         val0        = g_SysWork.field_275C - Q12(256.0f);
         roundedVal0 = FP_ROUND_TO_ZERO(val0, Q12_SHIFT);
-        func_8008B438(g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap), roundedVal0, 0);
+        func_8008B438(g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap), roundedVal0, 0);
 
-        if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+        if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
         {
             val1        = g_SysWork.field_2764 - Q12(256.0f);
             roundedVal1 = FP_ROUND_TO_ZERO(val1, Q12_SHIFT);
@@ -2895,9 +2895,9 @@ void func_8003943C(void) // 0x8003943C
     }
     else
     {
-        func_8008B438(g_SysWork.playerCombatInfo_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap), 0, 0);
+        func_8008B438(g_SysWork.playerCombat_38.weaponAttack_F != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap), 0, 0);
 
-        if (g_SysWork.playerCombatInfo_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+        if (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
         {
             func_8008B40C(0, 0);
         }
@@ -3161,8 +3161,8 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     if (D_800BCDB0.data.areaLoad.field_4_24 == 1)
     {
         mapPoint                = &g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->field_5];
-        var1                    = g_SysWork.player_4C.chara_0.position_18.vz - mapPoint->positionZ_8;
-        D_800BCDB0.positionX_0 += g_SysWork.player_4C.chara_0.position_18.vx - mapPoint->positionX_0;
+        var1                    = g_SysWork.playerWork_4C.player_0.position_18.vz - mapPoint->positionZ_8;
+        D_800BCDB0.positionX_0 += g_SysWork.playerWork_4C.player_0.position_18.vx - mapPoint->positionX_0;
         D_800BCDB0.positionZ_8 += var1;
     }
 
@@ -3281,10 +3281,10 @@ void SysWork_SavegameUpdatePlayer(void) // 0x8003A120
     save = g_SavegamePtr;
 
     save->locationId_A8       = g_MapEventIdx;
-    save->playerPositionX_244 = g_SysWork.player_4C.chara_0.position_18.vx;
-    save->playerPositionZ_24C = g_SysWork.player_4C.chara_0.position_18.vz;
-    save->playerRotationY_248 = g_SysWork.player_4C.chara_0.rotation_24.vy;
-    save->playerHealth_240    = g_SysWork.player_4C.chara_0.health_B0;
+    save->playerPositionX_244 = g_SysWork.playerWork_4C.player_0.position_18.vx;
+    save->playerPositionZ_24C = g_SysWork.playerWork_4C.player_0.position_18.vz;
+    save->playerRotationY_248 = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
+    save->playerHealth_240    = g_SysWork.playerWork_4C.player_0.health_B0;
 }
 
 void func_8003A16C(void) // 0x8003A16C
@@ -3300,10 +3300,10 @@ void func_8003A16C(void) // 0x8003A16C
 
 void SysWork_SavegameReadPlayer(void) // 0x8003A1F4
 {
-    g_SysWork.player_4C.chara_0.position_18.vx = g_SavegamePtr->playerPositionX_244;
-    g_SysWork.player_4C.chara_0.position_18.vz = g_SavegamePtr->playerPositionZ_24C;
-    g_SysWork.player_4C.chara_0.rotation_24.vy = g_SavegamePtr->playerRotationY_248;
-    g_SysWork.player_4C.chara_0.health_B0      = g_SavegamePtr->playerHealth_240;
+    g_SysWork.playerWork_4C.player_0.position_18.vx = g_SavegamePtr->playerPositionX_244;
+    g_SysWork.playerWork_4C.player_0.position_18.vz = g_SavegamePtr->playerPositionZ_24C;
+    g_SysWork.playerWork_4C.player_0.rotation_24.vy = g_SavegamePtr->playerRotationY_248;
+    g_SysWork.playerWork_4C.player_0.health_B0      = g_SavegamePtr->playerHealth_240;
 }
 
 void SysState_SaveMenu_Update(void) // 0x8003A230

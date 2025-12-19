@@ -532,7 +532,7 @@ void func_800EA3F0(void) // 0x800EA3F0
         {
             func_8006982C(4);
 
-            if (g_SysWork.player_4C.chara_0.position_18.vz < Q12(-68.0f))
+            if (g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-68.0f))
             {
                 Savegame_EventFlagClear(EventFlag_346);
             }
@@ -587,7 +587,7 @@ void func_800EA3F0(void) // 0x800EA3F0
         }
 
         // @hack
-        tmp1 = (g_SysWork.player_4C.chara_0.position_18.vx / ((s32)(40.0f * Q12(1.0f))));
+        tmp1 = (g_SysWork.playerWork_4C.player_0.position_18.vx / ((s32)(40.0f * Q12(1.0f))));
         
         objRot.vx = D_800ED8B0[i];
         
@@ -606,8 +606,8 @@ void func_800EA3F0(void) // 0x800EA3F0
     }
     else
     {        
-        dist0 = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - Q12(61.0f), g_SysWork.player_4C.chara_0.position_18.vz - Q12(27.5f));
-        dist1 = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - Q12(61.0f), g_SysWork.player_4C.chara_0.position_18.vz - Q12(17.5f));
+        dist0 = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - Q12(61.0f), g_SysWork.playerWork_4C.player_0.position_18.vz - Q12(27.5f));
+        dist1 = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - Q12(61.0f), g_SysWork.playerWork_4C.player_0.position_18.vz - Q12(17.5f));
         if (dist1 >= dist0) 
         {
             tmp0 = dist0;

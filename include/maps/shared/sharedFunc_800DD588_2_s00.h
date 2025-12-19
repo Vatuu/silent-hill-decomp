@@ -15,10 +15,10 @@ void sharedFunc_800DD588_2_s00(s_SubCharacter* chara)
     q19_12 sinRotY;
     s32    i;
 
-    posX = g_SysWork.player_4C.chara_0.position_18.vx;
-    posY = g_SysWork.player_4C.chara_0.position_18.vy;
-    posZ = g_SysWork.player_4C.chara_0.position_18.vz;
-    rotY = g_SysWork.player_4C.chara_0.rotation_24.vy;
+    posX = g_SysWork.playerWork_4C.player_0.position_18.vx;
+    posY = g_SysWork.playerWork_4C.player_0.position_18.vy;
+    posZ = g_SysWork.playerWork_4C.player_0.position_18.vz;
+    rotY = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
     
     if (Rng_RandQ12() < FP_ANGLE(180.0f))
     {

@@ -113,7 +113,7 @@ void sharedFunc_800E12D0_6_s04(void)
             case 3:
                 flags = 4;
 
-                dist = Math_Distance2dGet(&g_SysWork.player_4C.chara_0.position_18, &sharedData_800EB750_6_s04);
+                dist = Math_Distance2dGet(&g_SysWork.playerWork_4C.player_0.position_18, &sharedData_800EB750_6_s04);
                 if (dist < Q12(10.0f))
                 {
                     dist = Q12(0.03125f);

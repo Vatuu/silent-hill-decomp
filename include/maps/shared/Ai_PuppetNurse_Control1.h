@@ -40,7 +40,7 @@ void Ai_PuppetNurse_Control1(s_SubCharacter* nurse)
         localNurse->model_0.stateStep_3 = 0;
     }
 
-    if (nurse->properties_E4.puppetNurse.field_11E && g_SysWork.player_4C.chara_0.attackReceived_41 == NO_VALUE)
+    if (nurse->properties_E4.puppetNurse.field_11E && g_SysWork.playerWork_4C.player_0.attackReceived_41 == NO_VALUE)
     {
         localNurse->model_0.state_2 = 8;
         localNurse->model_0.stateStep_3 = 0;

@@ -46,18 +46,18 @@ void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara)
         }
 
         // TODO: Not sure what this shifting is doing.
-        temp_v0                      = ((g_SysWork.player_4C.chara_0.position_18.vx - sharedData_800E39E4_0_s00) >> 6);
-        temp_v0_2                    = (g_SysWork.player_4C.chara_0.position_18.vz - sharedData_800E39E8_0_s00) >> 6;
+        temp_v0                      = ((g_SysWork.playerWork_4C.player_0.position_18.vx - sharedData_800E39E4_0_s00) >> 6);
+        temp_v0_2                    = (g_SysWork.playerWork_4C.player_0.position_18.vz - sharedData_800E39E8_0_s00) >> 6;
         sharedData_800E39EC_0_s00[0] = (FP_TO(SquareRoot0(SQUARE(temp_v0) + SQUARE(temp_v0_2)), Q12_SHIFT) << 6) / g_DeltaTime0;
-        sharedData_800E3A0C_0_s00[0] = ratan2(g_SysWork.player_4C.chara_0.position_18.vx - sharedData_800E39E4_0_s00, g_SysWork.player_4C.chara_0.position_18.vz - sharedData_800E39E8_0_s00);
-        sharedData_800E39E4_0_s00    = g_SysWork.player_4C.chara_0.position_18.vx;
-        sharedData_800E39E8_0_s00    = g_SysWork.player_4C.chara_0.position_18.vz;
+        sharedData_800E3A0C_0_s00[0] = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - sharedData_800E39E4_0_s00, g_SysWork.playerWork_4C.player_0.position_18.vz - sharedData_800E39E8_0_s00);
+        sharedData_800E39E4_0_s00    = g_SysWork.playerWork_4C.player_0.position_18.vx;
+        sharedData_800E39E8_0_s00    = g_SysWork.playerWork_4C.player_0.position_18.vz;
 
         if (sharedData_800DD5A6_0_s00 != 5)
         {
             sharedData_800DD5A6_0_s00++;
-            sharedData_800E3A18_0_s00 = g_SysWork.player_4C.chara_0.position_18.vx;
-            sharedData_800E3A1C_0_s00 = g_SysWork.player_4C.chara_0.position_18.vz;
+            sharedData_800E3A18_0_s00 = g_SysWork.playerWork_4C.player_0.position_18.vx;
+            sharedData_800E3A1C_0_s00 = g_SysWork.playerWork_4C.player_0.position_18.vz;
         }
         else
         {
@@ -75,8 +75,8 @@ void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara)
             }
 
             temp_s1                   = sharedData_800E39EC_0_s00[0] + (var_s2 >> 2);
-            sharedData_800E3A18_0_s00 = ((temp_s1 * Math_Sin(temp_a2)) >> 14) + g_SysWork.player_4C.chara_0.position_18.vx;
-            sharedData_800E3A1C_0_s00 = ((temp_s1 * Math_Cos(temp_a2)) >> 14) + g_SysWork.player_4C.chara_0.position_18.vz;
+            sharedData_800E3A18_0_s00 = ((temp_s1 * Math_Sin(temp_a2)) >> 14) + g_SysWork.playerWork_4C.player_0.position_18.vx;
+            sharedData_800E3A1C_0_s00 = ((temp_s1 * Math_Cos(temp_a2)) >> 14) + g_SysWork.playerWork_4C.player_0.position_18.vz;
         }
     }
 

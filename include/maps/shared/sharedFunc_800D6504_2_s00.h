@@ -24,7 +24,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* chara)
             }
             else
             {
-                sharedFunc_800DDF74_2_s00(chara, Q12(4.0f), func_80080478(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18));
+                sharedFunc_800DDF74_2_s00(chara, Q12(4.0f), func_80080478(&chara->position_18, &g_SysWork.playerWork_4C.player_0.position_18));
                 chara->properties_E4.unk0.pos_104 = chara->properties_E4.unk0.field_F8;
             }
 

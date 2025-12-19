@@ -2722,7 +2722,7 @@ s32 func_8005C7D0(s_SubCharacter* chara) // 0x8005C7D0
 
     i = 0;
 
-    if (chara == &g_SysWork.player_4C.chara_0)
+    if (chara == &g_SysWork.playerWork_4C.player_0)
     {
         return ARRAY_SIZE(g_SysWork.npcs_1A0);
     }
@@ -2927,7 +2927,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
             continue;
         }
 
-        if (func_8006DA08(&sp10, unkOffset, &unkPos, &g_SysWork.player_4C.chara_0) && sp10.field_10 == &g_SysWork.npcs_1A0[i])
+        if (func_8006DA08(&sp10, unkOffset, &unkPos, &g_SysWork.playerWork_4C.player_0) && sp10.field_10 == &g_SysWork.npcs_1A0[i])
         {
             *targetNpcIdx  = i;
             *outAngle0  = angle3;
@@ -3019,7 +3019,7 @@ s32 func_8005D9B8(VECTOR3* pos, q23_8 vol) // 0x8005D9B8
     s32 var_v0;
 
     vwGetViewPosition(&D_800C42C0);
-    D_800C42CC = &g_SysWork.player_4C.chara_0.position_18;
+    D_800C42CC = &g_SysWork.playerWork_4C.player_0.position_18;
 
     deltaX = D_800C42C0.vx - D_800C42CC->vx;
     deltaY = D_800C42C0.vy - D_800C42CC->vy;
@@ -3154,9 +3154,9 @@ static inline s32 calc_atten(s32 volume, VECTOR3* pos, s32 falloff)
 {
     s32 dist;
 
-    dist = SquareRoot0(SQUARE((g_SysWork.player_4C.chara_0.position_18.vx - pos->vx) >> 6) +
-                       SQUARE((g_SysWork.player_4C.chara_0.position_18.vy - pos->vy) >> 6) +
-                       SQUARE((g_SysWork.player_4C.chara_0.position_18.vz - pos->vz) >> 6)) << 6;
+    dist = SquareRoot0(SQUARE((g_SysWork.playerWork_4C.player_0.position_18.vx - pos->vx) >> 6) +
+                       SQUARE((g_SysWork.playerWork_4C.player_0.position_18.vy - pos->vy) >> 6) +
+                       SQUARE((g_SysWork.playerWork_4C.player_0.position_18.vz - pos->vz) >> 6)) << 6;
 
     return (volume * dist / falloff);
 }
@@ -3487,9 +3487,9 @@ void func_8005E89C(void) // 0x8005E89C
 
     ptr = PSX_SCRATCH;
 
-    posX            = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vx, Q12_SHIFT);
-    posY            = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vy, Q12_SHIFT);
-    posZ            = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vz, Q12_SHIFT);
+    posX            = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12_SHIFT);
+    posY            = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT);
+    posZ            = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_SHIFT);
     ptr->field_0.vx = Q8(posX);
     ptr->field_0.vy = Q8(posY);
     ptr->field_0.vz = Q8(posZ);
@@ -3611,7 +3611,7 @@ void func_8005E89C(void) // 0x8005E89C
         {
             if (D_800C42E8[i].field_1 == 6)
             {
-                chara = &g_SysWork.player_4C.chara_0;
+                chara = &g_SysWork.playerWork_4C.player_0;
             }
             else
             {
@@ -5741,9 +5741,9 @@ void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4
 
     ptr = PSX_SCRATCH;
 
-    posX             = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vx, Q12_SHIFT);
-    posY             = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vy, Q12_SHIFT);
-    posZ             = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vz, Q12_SHIFT);
+    posX             = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12_SHIFT);
+    posY             = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT);
+    posZ             = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_SHIFT);
     ptr->field_40.vx = Q8(posX);
     ptr->field_40.vy = Q8(posY);
     ptr->field_40.vz = Q8(posZ);
@@ -5852,9 +5852,9 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
 
     ptr = PSX_SCRATCH;
 
-    x                = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vx, Q12_SHIFT);
-    y                = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vy, Q12_SHIFT);
-    z                = FP_FROM(g_SysWork.player_4C.chara_0.position_18.vz, Q12_SHIFT);
+    x                = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12_SHIFT);
+    y                = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT);
+    z                = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_SHIFT);
     ptr->field_2C.vx = Q8(x);
     ptr->field_2C.vy = Q8(y);
     ptr->field_2C.vz = Q8(z);
@@ -5943,9 +5943,9 @@ void func_80066184(void) // 0x80066184
 
     ptr = PSX_SCRATCH;
 
-    ptr->field_3C.vx = Q12(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vx, Q12_SHIFT));
-    ptr->field_3C.vy = Q12(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vy, Q12_SHIFT));
-    ptr->field_3C.vz = Q12(FP_FROM(g_SysWork.player_4C.chara_0.position_18.vz, Q12_SHIFT));
+    ptr->field_3C.vx = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12_SHIFT));
+    ptr->field_3C.vy = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT));
+    ptr->field_3C.vz = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_SHIFT));
 
     func_80049C2C(&ptr->field_4, ptr->field_3C.vx, ptr->field_3C.vy, ptr->field_3C.vz);
 
@@ -6377,26 +6377,26 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
         return 0;
     }
 
-    if (g_SysWork.player_4C.chara_0.position_18.vx <= Q12(0.0f))
+    if (g_SysWork.playerWork_4C.player_0.position_18.vx <= Q12(0.0f))
     {
-        cellX = (g_SysWork.player_4C.chara_0.position_18.vx - CHUNK_CELL_SIZE) / CHUNK_CELL_SIZE;
+        cellX = (g_SysWork.playerWork_4C.player_0.position_18.vx - CHUNK_CELL_SIZE) / CHUNK_CELL_SIZE;
     }
     else
     {
-        cellX = (g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE);
+        cellX = (g_SysWork.playerWork_4C.player_0.position_18.vx / CHUNK_CELL_SIZE);
     }
 
-    if (g_SysWork.player_4C.chara_0.position_18.vz <= Q12(0.0f))
+    if (g_SysWork.playerWork_4C.player_0.position_18.vz <= Q12(0.0f))
     {
-        cellZ = (g_SysWork.player_4C.chara_0.position_18.vz - CHUNK_CELL_SIZE) / CHUNK_CELL_SIZE;
+        cellZ = (g_SysWork.playerWork_4C.player_0.position_18.vz - CHUNK_CELL_SIZE) / CHUNK_CELL_SIZE;
     }
     else
     {
-        cellZ = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
+        cellZ = g_SysWork.playerWork_4C.player_0.position_18.vz / CHUNK_CELL_SIZE;
     }
 
     mapCoordIdxX = SHRT_MAX;
-    angle = g_SysWork.player_4C.chara_0.rotation_24.vy;
+    angle = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
     mapCoordIdxZ = SHRT_MAX;
 
     switch (paperMapIdx)
@@ -6407,8 +6407,8 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                 case 10:
                     if (cellZ < 4 || (cellZ < 6 && (cellX >= -1 && cellX < 1)))
                     {
-                        mapCoordIdxX = MapCoordIdxGet(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 13, 19);
-                        mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 13, 1);
+                        mapCoordIdxX = MapCoordIdxGet(g_SysWork.playerWork_4C.player_0.position_18.vx, 0x1FFF, 13, 19);
+                        mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0x1FFF, 13, 1);
                         break;
                     }
 
@@ -6513,13 +6513,13 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
             if (cellX == -2 && cellZ == 0)
             {
                 angle       += FP_ANGLE(180.0f);
-                mapCoordIdxX = D_800AE774[2][2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(-0.2f));
-                mapCoordIdxZ = D_800AE774[2][2][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(0.2f));
+                mapCoordIdxX = D_800AE774[2][2][0] + (((g_SysWork.playerWork_4C.player_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(-0.2f));
+                mapCoordIdxZ = D_800AE774[2][2][1] + (((g_SysWork.playerWork_4C.player_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(0.2f));
             }
             else
             {
-                mapCoordIdxX = D_800AE774[cellX + 4][cellZ + 2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(0.2f));
-                mapCoordIdxZ = D_800AE774[cellX + 4][cellZ + 2][1] + (((g_SysWork.player_4C.chara_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(-0.2f));
+                mapCoordIdxX = D_800AE774[cellX + 4][cellZ + 2][0] + (((g_SysWork.playerWork_4C.player_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(0.2f));
+                mapCoordIdxZ = D_800AE774[cellX + 4][cellZ + 2][1] + (((g_SysWork.playerWork_4C.player_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(-0.2f));
             }
             break;
 
@@ -6527,28 +6527,28 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
         case 17:
         case 18:
         case 19:
-            mapCoordIdxX = D_800AE7E4[cellX + 1][cellZ + 2][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / 0x222); // TODO: Demagic into clean float.
-            mapCoordIdxZ = D_800AE7E4[cellX + 1][cellZ + 2][1] + ((((g_SysWork.player_4C.chara_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) * 6) / Q12(-0.8f));
+            mapCoordIdxX = D_800AE7E4[cellX + 1][cellZ + 2][0] + (((g_SysWork.playerWork_4C.player_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / 0x222); // TODO: Demagic into clean float.
+            mapCoordIdxZ = D_800AE7E4[cellX + 1][cellZ + 2][1] + ((((g_SysWork.playerWork_4C.player_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) * 6) / Q12(-0.8f));
             break;
 
         case 20:
         case 21:
         case 22:
         case 23:
-            mapCoordIdxX = D_800AE820[cellX + 4][cellZ + 4][0] + (((g_SysWork.player_4C.chara_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / 0x222);
-            mapCoordIdxZ = D_800AE820[cellX + 4][cellZ + 4][1] + ((((g_SysWork.player_4C.chara_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) * 6) / Q12(-0.8f));
+            mapCoordIdxX = D_800AE820[cellX + 4][cellZ + 4][0] + (((g_SysWork.playerWork_4C.player_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / 0x222);
+            mapCoordIdxZ = D_800AE820[cellX + 4][cellZ + 4][1] + ((((g_SysWork.playerWork_4C.player_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) * 6) / Q12(-0.8f));
             break;
 
         case 4:
             switch (g_SavegamePtr->mapOverlayId_A4)
             {
                 case 30:
-                    mapCoordIdxX = MapCoordIdxGet(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 13, 0x3C);
-                    mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 13, -0x55);
+                    mapCoordIdxX = MapCoordIdxGet(g_SysWork.playerWork_4C.player_0.position_18.vx, 0x1FFF, 13, 0x3C);
+                    mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0x1FFF, 13, -0x55);
 
-                    temp_v1_7 = g_SysWork.player_4C.chara_0.position_18.vx / 163840;
-                    if ((g_SysWork.player_4C.chara_0.position_18.vx > 0 && (temp_v1_7 + 1) == -4) ||
-                        (g_SysWork.player_4C.chara_0.position_18.vx <= 0 && (temp_v1_7 - 1) == -4))
+                    temp_v1_7 = g_SysWork.playerWork_4C.player_0.position_18.vx / 163840;
+                    if ((g_SysWork.playerWork_4C.player_0.position_18.vx > 0 && (temp_v1_7 + 1) == -4) ||
+                        (g_SysWork.playerWork_4C.player_0.position_18.vx <= 0 && (temp_v1_7 - 1) == -4))
                     // if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4)) // TODO: Causing mismatch.
                     {
                         if (PLAYER_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
@@ -6609,8 +6609,8 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
                     break;
 
                 case 33:
-                    mapCoordIdxX = MapCoordIdxGet(g_SysWork.player_4C.chara_0.position_18.vx, 0x1FFF, 13, 0);
-                    mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vz, 0x1FFF, 13, 55);
+                    mapCoordIdxX = MapCoordIdxGet(g_SysWork.playerWork_4C.player_0.position_18.vx, 0x1FFF, 13, 0);
+                    mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0x1FFF, 13, 55);
                     break;
 
                 case 34:
@@ -6669,13 +6669,13 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
 
                         case 0x6BD:
                         case 0x6BE:
-                            mapCoordIdxX = MapCoordIdxGet(g_SysWork.player_4C.chara_0.position_18.vx, 0xFFF, 12, 80);
-                            mapCoordIdxZ = MapCoordIdxGet(Q12(280.0f) - g_SysWork.player_4C.chara_0.position_18.vz, 0xFFF, 12, 0);
+                            mapCoordIdxX = MapCoordIdxGet(g_SysWork.playerWork_4C.player_0.position_18.vx, 0xFFF, 12, 80);
+                            mapCoordIdxZ = MapCoordIdxGet(Q12(280.0f) - g_SysWork.playerWork_4C.player_0.position_18.vz, 0xFFF, 12, 0);
                             break;
 
                         default:
-                            mapCoordIdxX = MapCoordIdxGet(g_SysWork.player_4C.chara_0.position_18.vx, 0xFFF, 12, 80);
-                            mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vz, 0xFFF, 12, 0);
+                            mapCoordIdxX = MapCoordIdxGet(g_SysWork.playerWork_4C.player_0.position_18.vx, 0xFFF, 12, 80);
+                            mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0xFFF, 12, 0);
                             break;
                     }
                     break;
@@ -6754,20 +6754,20 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
             break;
 
         case 13:
-            mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vz, 0x7FF, 11, 0);
-            mapCoordIdxZ  = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vx, 0x7FF, 11, 40);
+            mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0x7FF, 11, 0);
+            mapCoordIdxZ  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vx, 0x7FF, 11, 40);
             angle -= FP_ANGLE(90.0f);
             break;
 
         case 14:
-            mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vz, 0x7FF, 11, -80);
-            mapCoordIdxZ  = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vx, 0x7FF, 11, -140);
+            mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0x7FF, 11, -80);
+            mapCoordIdxZ  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vx, 0x7FF, 11, -140);
             angle -= FP_ANGLE(90.0f);
             break;
 
         case 15:
-            mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.player_4C.chara_0.position_18.vx, 0x7FF, 11, 55);
-            mapCoordIdxZ  = MapCoordIdxGet(g_SysWork.player_4C.chara_0.position_18.vz, 0x7FF, 11, -80);
+            mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vx, 0x7FF, 11, 55);
+            mapCoordIdxZ  = MapCoordIdxGet(g_SysWork.playerWork_4C.player_0.position_18.vz, 0x7FF, 11, -80);
             angle += FP_ANGLE(180.0f);
             break;
 
@@ -7173,7 +7173,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 
     if (arg4 == NO_VALUE)
     {
         arg4 = 1;
-        if (chara == &g_SysWork.player_4C && chara->health_B0 > Q12(0.0f))
+        if (chara == &g_SysWork.playerWork_4C && chara->health_B0 > Q12(0.0f))
         {
             func_80069DF0(arg0, &chara->position_18, chara->position_18.vy, chara->rotation_24.vy);
         }
@@ -7413,7 +7413,7 @@ s_SubCharacter** func_8006A1A4(s32* charaCount, s_SubCharacter* chara, bool arg2
         }
     }
 
-    curChara = &g_SysWork.player_4C.chara_0;
+    curChara = &g_SysWork.playerWork_4C.player_0;
     if (curChara->model_0.charaId_0 != Chara_None)
     {
         if (curChara->field_E1_0 != 0 &&
@@ -10553,18 +10553,18 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     q19_12  distMult;
     q19_12  distMax;
 
-    if (func_8005BF38(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                             g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+    if (func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                             g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                       chara->rotation_24.vy) < 0)
     {
-        distMult = (func_8005BF38(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                        g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+        distMult = (func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                        g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                                  chara->rotation_24.vy) * 2) + FP_ANGLE(360.0f);
     }
     else
     {
-        distMult = (FP_ANGLE(180.0f) - func_8005BF38((ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                                         g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+        distMult = (FP_ANGLE(180.0f) - func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                                         g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                                                         chara->rotation_24.vy))) * 2;
     }
 
@@ -10573,8 +10573,8 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
         distMult = FP_MULTIPLY_PRECISE(distMult, i, Q12_SHIFT);
     }
 
-    dist = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                               g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
+    dist = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                               g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
     distMax = baseDistMax + FP_MULTIPLY_PRECISE(distStep, distMult, Q12_SHIFT);
     if (distMax < dist)
     {
@@ -10584,18 +10584,18 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     pos.vx = chara->position_18.vx;
     pos.vz = chara->position_18.vz;
 
-    offset.vx = g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx;
-    offset.vz = g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz;
+    offset.vx = g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx;
+    offset.vz = g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz;
 
     if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
     {
         offset.vy = Q12(0.0f);
-        pos.vy = g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_C8.field_0;
+        pos.vy = g_SysWork.playerWork_4C.player_0.position_18.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_0;
     }
     else
     {
         pos.vy = chara->position_18.vy + chara->field_C8.field_6;
-        offset.vy = (g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_C8.field_6) -
+        offset.vy = (g_SysWork.playerWork_4C.player_0.position_18.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_6) -
                     (chara->position_18.vy - chara->field_C8.field_6);
     }
 
@@ -10722,10 +10722,10 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80
     dist = someDist;
     if (dist == Q12(0.0f))
     {
-        deltaX = g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx;
+        deltaX = g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx;
         deltaX = Q12_TO_Q6(deltaX);
 
-        deltaZ = g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz;
+        deltaZ = g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz;
         deltaZ = Q12_TO_Q6(deltaZ);
 
         dist = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ));
@@ -10733,7 +10733,7 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80
     }
 
     // TODO: Why `>> 8`?
-    result = FP_MULTIPLY(arg2, g_SysWork.player_4C.chara_0.properties_E4.player.field_10C, Q12_SHIFT) - (dist >> 8);
+    result = FP_MULTIPLY(arg2, g_SysWork.playerWork_4C.player_0.properties_E4.player.field_10C, Q12_SHIFT) - (dist >> 8);
     if (result < 0)
     {
         result = 0;

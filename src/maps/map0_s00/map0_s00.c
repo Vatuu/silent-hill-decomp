@@ -164,13 +164,13 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
 
         unkPos = &arg0[D_800CA7CC[j][0]];
 
-        unkPos->vx = Q8_TO_Q12(offset0.vx) + (g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx);
-        unkPos->vy = Q8_TO_Q12(offset0.vy) + (g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy);
-        unkPos->vz = Q8_TO_Q12(offset0.vz) + (g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz);
+        unkPos->vx = Q8_TO_Q12(offset0.vx) + (g_ParticleVectors0.vector_0.vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+        unkPos->vy = Q8_TO_Q12(offset0.vy) + (g_ParticleVectors0.vector_0.vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+        unkPos->vz = Q8_TO_Q12(offset0.vz) + (g_ParticleVectors0.vector_0.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
 
-        offset0.vx += Q12_TO_Q8(g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx);
-        offset0.vy += Q12_TO_Q8(g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy);
-        offset0.vz += Q12_TO_Q8(g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz);
+        offset0.vx += Q12_TO_Q8(g_ParticleVectors0.vector_0.vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+        offset0.vy += Q12_TO_Q8(g_ParticleVectors0.vector_0.vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+        offset0.vz += Q12_TO_Q8(g_ParticleVectors0.vector_0.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
 
         gte_ldv0(&offset0);
         gte_rtps();
@@ -183,13 +183,13 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
 
         unkPos = &arg0[D_800CA7CC[j][1]];
 
-        unkPos->vx = Q8_TO_Q12(offset1.vx) + (g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx);
-        unkPos->vy = Q8_TO_Q12(offset1.vy) + (g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy);
-        unkPos->vz = Q8_TO_Q12(offset1.vz) + (g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz);
+        unkPos->vx = Q8_TO_Q12(offset1.vx) + (g_ParticleVectors0.vector_0.vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+        unkPos->vy = Q8_TO_Q12(offset1.vy) + (g_ParticleVectors0.vector_0.vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+        unkPos->vz = Q8_TO_Q12(offset1.vz) + (g_ParticleVectors0.vector_0.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
 
-        offset1.vx += Q12_TO_Q8(g_ParticleVectors0.vector_0.vx - g_SysWork.player_4C.chara_0.position_18.vx);
-        offset1.vy += Q12_TO_Q8(g_ParticleVectors0.vector_0.vy - g_SysWork.player_4C.chara_0.position_18.vy);
-        offset1.vz += Q12_TO_Q8(g_ParticleVectors0.vector_0.vz - g_SysWork.player_4C.chara_0.position_18.vz);
+        offset1.vx += Q12_TO_Q8(g_ParticleVectors0.vector_0.vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+        offset1.vy += Q12_TO_Q8(g_ParticleVectors0.vector_0.vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+        offset1.vz += Q12_TO_Q8(g_ParticleVectors0.vector_0.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
 
         if ((offset0.vy >= Q8(0.0f) && offset1.vy <  Q8(0.0f)) ||
             (offset0.vy <  Q8(0.0f) && offset1.vy >= Q8(0.0f)))
@@ -563,9 +563,9 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
 
     if (Game_FlashlightIsOn())
     {
-        temp_v0 = func_80055D78(g_SysWork.player_4C.chara_0.position_18.vx + arg2->field_0.vx,
-                                g_SysWork.player_4C.chara_0.position_18.vy + arg2->field_0.vy,
-                                g_SysWork.player_4C.chara_0.position_18.vz + arg2->field_0.vz);
+        temp_v0 = func_80055D78(g_SysWork.playerWork_4C.player_0.position_18.vx + arg2->field_0.vx,
+                                g_SysWork.playerWork_4C.player_0.position_18.vy + arg2->field_0.vy,
+                                g_SysWork.playerWork_4C.player_0.position_18.vz + arg2->field_0.vz);
 
         temp_v0 = (temp_v0 != 0) ? ((temp_v0 >= 0 && temp_v0 <= 176) ? temp_v0 : 176) : 1;
 
@@ -580,9 +580,9 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
                 break;
 
             default:
-                temp_v0 = func_80055D78(g_SysWork.player_4C.chara_0.position_18.vx + arg2->field_0.vx,
-                                        g_SysWork.player_4C.chara_0.position_18.vy + arg2->field_0.vy,
-                                        g_SysWork.player_4C.chara_0.position_18.vz + arg2->field_0.vz);
+                temp_v0 = func_80055D78(g_SysWork.playerWork_4C.player_0.position_18.vx + arg2->field_0.vx,
+                                        g_SysWork.playerWork_4C.player_0.position_18.vy + arg2->field_0.vy,
+                                        g_SysWork.playerWork_4C.player_0.position_18.vz + arg2->field_0.vz);
                 temp_v0 = (temp_v0 != 0) ? ((temp_v0 >= 0 && temp_v0 <= 176) ? temp_v0 : 176) : 1;
 
                 temp_v0 >>= 3;
@@ -607,9 +607,9 @@ void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
             case 1:
             case 4:
             case 10:
-                temp_v0 = func_80055D78(g_SysWork.player_4C.chara_0.position_18.vx + arg2->field_0.vx,
-                                        g_SysWork.player_4C.chara_0.position_18.vy + arg2->field_0.vy,
-                                        g_SysWork.player_4C.chara_0.position_18.vz + arg2->field_0.vz);
+                temp_v0 = func_80055D78(g_SysWork.playerWork_4C.player_0.position_18.vx + arg2->field_0.vx,
+                                        g_SysWork.playerWork_4C.player_0.position_18.vy + arg2->field_0.vy,
+                                        g_SysWork.playerWork_4C.player_0.position_18.vz + arg2->field_0.vz);
                 temp_v0 = (temp_v0 != 0) ? ((temp_v0 >= 0 && temp_v0 <= 176) ? temp_v0 : 176) : 1;
 
                 poly->r0 = temp_v0 + sharedData_800E3258_0_s00.r;
@@ -960,8 +960,8 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
             case 5:
                 if (arg2->field_12 == 0)
                 {
-                    vecCpy.vx = (arg2->field_0.vx - g_SysWork.player_4C.chara_0.position_18.vx) >> 4;
-                    vecCpy.vz = (arg2->field_0.vz - g_SysWork.player_4C.chara_0.position_18.vz) >> 4;
+                    vecCpy.vx = (arg2->field_0.vx - g_SysWork.playerWork_4C.player_0.position_18.vx) >> 4;
+                    vecCpy.vz = (arg2->field_0.vz - g_SysWork.playerWork_4C.player_0.position_18.vz) >> 4;
                     angle = ratan2(vecCpy.vx, vecCpy.vz);
                     arg2->field_C = (u32)(Math_Sin(angle) * 3) / 0x10;
                     arg2->field_E = (u32)(Math_Cos(angle) * 3) / 0x10;
@@ -1032,8 +1032,8 @@ bool func_800D012C(VECTOR3* pos, s_func_800CC8FC* unused0, s32* unused1) // 0x80
             return true;
 
         case 2:
-            deltaX = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vx - pos->vx);
-            deltaZ = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vz - pos->vz);
+            deltaX = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vx - pos->vx);
+            deltaZ = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vz - pos->vz);
             return SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)) < Q8(1.0f);
     }
 
@@ -1101,10 +1101,10 @@ bool func_800D0600(void) // 0x800D0600
 {
     #define DIST_MAX Q12(40.0f)
 
-    if (ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[0].vx) +
-        ABS(g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[0].vz) < DIST_MAX ||
-        ABS(g_SysWork.player_4C.chara_0.position_18.vx - D_800E32DC[1].vx) +
-        ABS(g_SysWork.player_4C.chara_0.position_18.vz - D_800E32DC[1].vz) < DIST_MAX)
+    if (ABS(g_SysWork.playerWork_4C.player_0.position_18.vx - D_800E32DC[0].vx) +
+        ABS(g_SysWork.playerWork_4C.player_0.position_18.vz - D_800E32DC[0].vz) < DIST_MAX ||
+        ABS(g_SysWork.playerWork_4C.player_0.position_18.vx - D_800E32DC[1].vx) +
+        ABS(g_SysWork.playerWork_4C.player_0.position_18.vz - D_800E32DC[1].vz) < DIST_MAX)
     {
         return true;
     }

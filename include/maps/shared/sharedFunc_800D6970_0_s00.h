@@ -125,7 +125,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCO
         ptr->position_38.vz = chara->position_18.vz;
 
         // TODO: What's weapon attack 48?
-        func_8008A0E4(1, 48, chara, &ptr->position_38, &g_SysWork.player_4C.chara_0,
+        func_8008A0E4(1, 48, chara, &ptr->position_38, &g_SysWork.playerWork_4C.player_0,
                       ratan2(ptr->field_20.vx - chara->position_18.vx, ptr->field_20.vz - chara->position_18.vz),
                       ratan2(Math_Vector2MagCalc(chara->position_18.vx - ptr->field_20.vx,
                                                  chara->position_18.vz - ptr->field_20.vz),
@@ -136,11 +136,11 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCO
 
     if (chara->model_0.state_2 == 2 || chara->model_0.state_2 == 3)
     {
-        ptr->angle_46 = func_8005BF38((ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                              g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+        ptr->angle_46 = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                              g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                                        chara->rotation_24.vy));
-        temp          = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                            g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
+        temp          = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                            g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
 
         if (temp < Q12(3.0f) && ABS(ptr->angle_46) < FP_ANGLE(45.0f))
         {

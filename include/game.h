@@ -199,18 +199,18 @@ struct _Model;
  * if the chunk index will be a positive number. Seems like they forgot to use `ABS`?
  */
 #define PLAYER_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                                   \
-    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.comp / Q12(40.0f),                        \
-     ((g_SysWork.player_4C.chara_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
-      (g_SysWork.player_4C.chara_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
+    (__chunkIdx = g_SysWork.playerWork_4C.player_0.position_18.comp / Q12(40.0f),                        \
+     ((g_SysWork.playerWork_4C.player_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) == (x1)) || \
+      (g_SysWork.playerWork_4C.player_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) == (x3))))
 
 #define PLAYER_NOT_IN_MAP_CHUNK(comp, x0, x1, x2, x3)                                               \
-    (__chunkIdx = g_SysWork.player_4C.chara_0.position_18.comp / Q12(40.0f),                        \
-     ((g_SysWork.player_4C.chara_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) != (x1)) || \
-      (g_SysWork.player_4C.chara_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) != (x3))))
+    (__chunkIdx = g_SysWork.playerWork_4C.player_0.position_18.comp / Q12(40.0f),                        \
+     ((g_SysWork.playerWork_4C.player_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) != (x1)) || \
+      (g_SysWork.playerWork_4C.player_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) != (x3))))
 
 #define PLAYER_NEAR_POS(comp, base, tol)                                                                                                                   \
-    (((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.player_4C.chara_0.position_18.comp - Q12(base)) < Q12(tol)) : \
-                                                                                 ((Q12(base) - g_SysWork.player_4C.chara_0.position_18.comp) < Q12(tol)))
+    (((g_SysWork.playerWork_4C.player_0.position_18.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.playerWork_4C.player_0.position_18.comp - Q12(base)) < Q12(tol)) : \
+                                                                                 ((Q12(base) - g_SysWork.playerWork_4C.player_0.position_18.comp) < Q12(tol)))
 
 /** @brief Packs XZ cell coordinates in a single value.
  *
@@ -1512,10 +1512,13 @@ typedef struct _PlayerExtra
 } s_PlayerExtra;
 STATIC_ASSERT_SIZEOF(s_PlayerExtra, 44);
 
-// TODO: Based on SH2 symbols this struct should be named `shPlayerWork` and `chara_0` should be `player`.
+/** @brief Player workspace.
+ *
+ * Possible original name: `shPlayerWork`.
+ */
 typedef struct _PlayerWork
 {
-    s_SubCharacter chara_0; // TODO: `player_0`
+    s_SubCharacter player_0; /** Possible original name: `player`. */
     s_PlayerExtra  extra_128;
 } s_PlayerWork;
 STATIC_ASSERT_SIZEOF(s_PlayerWork, 340);
@@ -1608,8 +1611,8 @@ typedef struct _SysWork
     q19_12          timer_2C; // Cutscene message timer?
     s32             field_30;
     s8              unk_34[4]; // Padding?
-    s_PlayerCombat  playerCombatInfo_38; // Something related to weapons and attack. This is a struct as `func_8003CD6C` requires one and `GameFs_MapLoad` input is pointing here.
-    s_PlayerWork    player_4C; // TODO: Rename to `playerWork_4C`
+    s_PlayerCombat  playerCombat_38; // Something related to weapons and attack. This is a struct as `func_8003CD6C` requires one and `GameFs_MapLoad` input is pointing here.
+    s_PlayerWork    playerWork_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   playerBoneCoords_890[HarryBone_Count];
     GsCOORDINATE2   unkCoords_E30[5];  // Might be part of previous array for 5 extra coords which go unused.

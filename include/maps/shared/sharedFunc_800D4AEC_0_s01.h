@@ -49,13 +49,13 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
         sharedData_800DE1A0_0_s01.vy = i;
     }
 
-    temp_s0 = g_SysWork.player_4C.chara_0.field_E1_0;
+    temp_s0 = g_SysWork.playerWork_4C.player_0.field_E1_0;
 
-    g_SysWork.player_4C.chara_0.field_E1_0 = 0;
+    g_SysWork.playerWork_4C.player_0.field_E1_0 = 0;
 
     cond = func_8006DB3C(&sharedData_800E2330_0_s01, var_s0, &sharedData_800DE1A0_0_s01, chara);
 
-    g_SysWork.player_4C.chara_0.field_E1_0 = temp_s0;
+    g_SysWork.playerWork_4C.player_0.field_E1_0 = temp_s0;
     offsetX                                = sharedData_800E2330_0_s01.field_4.vx - posX;
     offsetZ                                = sharedData_800E2330_0_s01.field_4.vz - posZ;
 

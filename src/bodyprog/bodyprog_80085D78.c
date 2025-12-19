@@ -81,7 +81,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
     switch (arg0)
     {
         case 0:
-            if (chara == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.playerWork_4C.player_0)
             {
                 g_MapOverlayHeader.func_D4(arg2);
             }
@@ -92,7 +92,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             break;
 
         case 1:
-            if (chara == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.playerWork_4C.player_0)
             {
                 keyframeState = g_MapOverlayHeader.func_E8(chara);
                 if (keyframeState == 1) 
@@ -111,7 +111,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             break;
 
         case 2:
-            if (chara == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.playerWork_4C.player_0)
             {
                 g_MapOverlayHeader.func_DC();
             }
@@ -122,7 +122,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             break;
 
         case 3:
-            if (chara == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.playerWork_4C.player_0)
             {
                 g_MapOverlayHeader.func_E4(chara, arg2);
             }
@@ -133,7 +133,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             break;
 
         case 4:
-            if (chara == &g_SysWork.player_4C.chara_0)
+            if (chara == &g_SysWork.playerWork_4C.player_0)
             {
                 g_MapOverlayHeader.func_E4(chara, arg2);
                 g_MapOverlayHeader.func_D8();
@@ -429,16 +429,16 @@ void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOr
 {
     if (!isPos) 
     {
-        D_800C4640[idx0][idx1].vx = g_SysWork.player_4C.chara_0.position_18.vx + offsetOrPosX;
-        D_800C4640[idx0][idx1].vy = g_SysWork.player_4C.chara_0.position_18.vy;
-        D_800C4640[idx0][idx1].vz = g_SysWork.player_4C.chara_0.position_18.vz + offsetOrPosZ;
+        D_800C4640[idx0][idx1].vx = g_SysWork.playerWork_4C.player_0.position_18.vx + offsetOrPosX;
+        D_800C4640[idx0][idx1].vy = g_SysWork.playerWork_4C.player_0.position_18.vy;
+        D_800C4640[idx0][idx1].vz = g_SysWork.playerWork_4C.player_0.position_18.vz + offsetOrPosZ;
 
         D_800C4700[idx0] = angleY;
     }
     else if (isPos == true)
     {
         D_800C4640[idx0][idx1].vx = offsetOrPosX;
-        D_800C4640[idx0][idx1].vy = g_SysWork.player_4C.chara_0.position_18.vy;
+        D_800C4640[idx0][idx1].vy = g_SysWork.playerWork_4C.player_0.position_18.vy;
         D_800C4640[idx0][idx1].vz = offsetOrPosZ;
 
         D_800C4700[idx0] = angleY;
@@ -2442,14 +2442,14 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
         return NO_VALUE;
     }
 
-    if (chara == &g_SysWork.player_4C.chara_0)
+    if (chara == &g_SysWork.playerWork_4C.player_0)
     {
         anim1                       = D_800297B8;
         anim0                       = g_MapOverlayHeader.animInfos_34;
         modelAnim->animInfo_C       = anim1;
         modelAnim->maybeSomeState_1 = 76;
         modelAnim->animInfo_10      = anim0;
-        modelAnim                   = &g_SysWork.player_4C.extra_128.model_0.anim_4;
+        modelAnim                   = &g_SysWork.playerWork_4C.extra_128.model_0.anim_4;
         modelAnim->animInfo_C       = anim1;
         modelAnim->animInfo_10      = anim0;
         modelAnim->maybeSomeState_1 = 76;
@@ -2480,7 +2480,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
     temp_a1         = func_8008A3E0(chara);
     ret             = NO_VALUE;
 
-    if (chara == &g_SysWork.player_4C.chara_0)
+    if (chara == &g_SysWork.playerWork_4C.player_0)
     {
         count    = 6;
         var_v0_2 = 1;
@@ -2509,7 +2509,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
 
     if (chara->model_0.charaId_0 != Chara_Harry)
     {
-        if (g_SysWork.player_4C.chara_0.attackReceived_41 != NO_VALUE)
+        if (g_SysWork.playerWork_4C.player_0.attackReceived_41 != NO_VALUE)
         {
             ret = 0;
         }
@@ -2713,7 +2713,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
     temp_s1 = sp1C->field_10;
 
-    if (chara == &g_SysWork.player_4C.chara_0)
+    if (chara == &g_SysWork.playerWork_4C.player_0)
     {
         var_s0 = &((s_PlayerWork*)chara)->extra_128.model_0.anim_4;
     }
@@ -3428,22 +3428,22 @@ bool func_8008B474(s32 arg0, s32 vol, s32 soundType) // 0x8008B474
         // NOTE: func_8005DC1C calls func_8005DC3C. `soundType` is `pitch` when calling `func_8005DC3C` directly.
         if (unkVol > Q12(256.0f))
         {
-            func_8005DC1C(sfxId, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), soundType);
+            func_8005DC1C(sfxId, &g_SysWork.playerWork_4C.player_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), soundType);
         }
         else
         {
-            func_8005DC1C(sfxId, &g_SysWork.player_4C.chara_0.position_18, Q8_CLAMPED(0.0f), soundType);
+            func_8005DC1C(sfxId, &g_SysWork.playerWork_4C.player_0.position_18, Q8_CLAMPED(0.0f), soundType);
         }
     }
     else
     {
         if (unkVol > Q12(256.0f))
         {
-            func_8005DC3C(sfxId, &g_SysWork.player_4C.chara_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), 4, soundType);
+            func_8005DC3C(sfxId, &g_SysWork.playerWork_4C.player_0.position_18, FP_FROM(unkVol - Q12(256.0f), Q12_SHIFT), 4, soundType);
         }
         else
         {
-            func_8005DC3C(sfxId, &g_SysWork.player_4C.chara_0.position_18, 0, 4, soundType);
+            func_8005DC3C(sfxId, &g_SysWork.playerWork_4C.player_0.position_18, 0, 4, soundType);
         }
     }
 
@@ -3552,14 +3552,14 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
     sp14         = attacker->field_44.field_8;
     var_s2       = arg3;
 
-    if (target == &g_SysWork.player_4C.chara_0)
+    if (target == &g_SysWork.playerWork_4C.player_0)
     {
         sp10             = NO_VALUE;
         target->field_40 = (((s32)((u32)((u8*)attacker - sizeof(s_PlayerWork)) - (u32)target) * -0x6EB3E453) >> 3);
     }
     else
     {
-        sp10 = 1 << (((s32)((u32)((u8*)target - sizeof(s_PlayerWork)) - (u32)&g_SysWork.player_4C) * -0x6EB3E453) >> 3);
+        sp10 = 1 << (((s32)((u32)((u8*)target - sizeof(s_PlayerWork)) - (u32)&g_SysWork.playerWork_4C) * -0x6EB3E453) >> 3);
 
         if (sp14 & sp10)
         {
@@ -3688,7 +3688,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
             break;
 
         default:
-            if (target != &g_SysWork.player_4C && !(target->flags_3E & CharaFlag_Unk3))
+            if (target != &g_SysWork.playerWork_4C && !(target->flags_3E & CharaFlag_Unk3))
             {
                 var_s4 *= 4;
             }
@@ -4045,7 +4045,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         sp4C -= *(u16*)&arg2->field_A >> 1;
     }
 
-    if (chara == &g_SysWork.player_4C.chara_0)
+    if (chara == &g_SysWork.playerWork_4C.player_0)
     {
         chara0 = (u8*)chara + sizeof(s_PlayerWork);
         var_v0 = 6;
@@ -4053,7 +4053,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     }
     else
     {
-        chara0 = &g_SysWork.player_4C.chara_0;
+        chara0 = &g_SysWork.playerWork_4C.player_0;
         var_v0 = 1;
         var_v1 = -1;
     }
@@ -4075,7 +4075,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     for (i = var_v0; i > 0; i--, chara1++, sp18 *= 2)
     {
         if (g_SysWork.sysState_8 == SysState_GameOver ||
-            g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f) ||
+            g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f) ||
             chara1 == chara ||
             chara1->model_0.charaId_0 == Chara_None ||
             chara1->health_B0 < Q12(0.0f) ||

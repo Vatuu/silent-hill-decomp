@@ -11,12 +11,12 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
 
     Chara_MoveSpeedUpdate(chara, Q12(1.5f));
 
-    dist = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                               g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
+    dist = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                               g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
 
     var_s6 = 0;
-    angle = func_8005BF38(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                 g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+    angle = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                 g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                           chara->rotation_24.vy);
 
     if (ABS(angle) < FP_ANGLE(45.0f))
@@ -45,8 +45,8 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
             }
         }
 
-        angle = func_8005BF38(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                     g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+        angle = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                     g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                               chara->rotation_24.vy);
     }
 
@@ -75,10 +75,10 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
             chara->properties_E4.player.field_104 = Q12(0.0f);
         }
 
-        chara->rotation_24.vy = ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                       g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
+        chara->rotation_24.vy = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                       g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
 
-        if (g_SysWork.player_4C.chara_0.attackReceived_41 == NO_VALUE)
+        if (g_SysWork.playerWork_4C.player_0.attackReceived_41 == NO_VALUE)
         {
             g_SysWork.field_2284[3]                                     &= ~(1 << 0);
             animStatus                                                   = chara->model_0.anim_4.status_0;
@@ -97,7 +97,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
 
             if (chara->properties_E4.player.runTimer_F8 > Q12(1.5f))
             {
-                g_SysWork.player_4C.chara_0.damage_B4.amount_C += (FP_TO(D_800AD4C8[50].field_4, Q12_SHIFT) * Rng_GenerateUInt(85, 116)) / 100;
+                g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += (FP_TO(D_800AD4C8[50].field_4, Q12_SHIFT) * Rng_GenerateUInt(85, 116)) / 100;
                 chara->properties_E4.player.runTimer_F8         = Rng_Rand16() % Q12(0.5f);
             }
         }
@@ -110,7 +110,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara)
         vec0.vz = chara->position_18.vz;
 
         // TODO: What's weapon attack 49?
-        if (func_8008A0E4(1, 49, chara, &vec0, &g_SysWork.player_4C, chara->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
+        if (func_8008A0E4(1, 49, chara, &vec0, &g_SysWork.playerWork_4C, chara->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
         {
             chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 5;
             g_SysWork.field_2284[3]                                      &= ~(1 << 1);
