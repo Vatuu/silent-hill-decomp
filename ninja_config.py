@@ -160,6 +160,7 @@ if sys.platform == "linux" or sys.platform == "linux2":
     OBJDUMP           = f"{CROSS}-objdump"
     CPP               = f"{CROSS}-cpp"
     CC                = f"{TOOLS_DIR}/gcc-2.8.1-psx/cc1"
+    CC272             = f"{TOOLS_DIR}/gcc-2.7.2-cdk/cc1"
     OBJDIFF           = f"{OBJDIFF_DIR}/objdiff"
     OBJDIFF_GENSCRIPT = f"{OBJDIFF_DIR}/objdiff_generate.py"
     PREBUILD          = f"{TOOLS_DIR}/prebuild.sh"
@@ -174,6 +175,7 @@ elif sys.platform == "win32":
     OBJDUMP           = f"{CROSS}-objdump.exe"
     CPP               = f"{TOOLS_DIR}/win-build/mcpp/mcpp.exe"
     CC                = f"{TOOLS_DIR}/win-build/gcc-psx/cc1psx.exe"
+    CC272             = f"{TOOLS_DIR}/win-build/gcc-psx/cc1psx.exe"
     OBJDIFF           = f"{OBJDIFF_DIR}\\objdiff.exe"
     OBJDIFF_GENSCRIPT = f"{OBJDIFF_DIR}\\objdiff_generate.py"
     PREBUILD          = f"cmd.exe /c {TOOLS_DIR}\\prebuild.bat"
@@ -196,7 +198,7 @@ if sys.platform == "linux" or sys.platform == "linux2":
     ICONV_FLAGS = f"-f UTF-8 -t SHIFT-JIS $in -o $out"
 elif sys.platform == "win32":
     CPP_FLAGS = f"{INCLUDE_FLAGS} -D_LANGUAGE_C -DUSE_INCLUDE_ASM -P -MMD -MP -N -Wall -I-"
-    MASPSX_FLAGS  = f"--gnu-as-path {AS} --aspsx-version=2.77 --run-assembler"
+    MASPSX_FLAGS  = f"--gnu-as-path {AS} --run-assembler"
     ICONV_FLAGS = f"$in $out"
 CC_FLAGS      = f"{OPT_FLAGS} -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet"
 AS_FLAGS      = f"{ENDIAN} {INCLUDE_FLAGS} {OPT_FLAGS} -march=r3000 -mtune=r3000 -no-pad-sections"
@@ -266,9 +268,10 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
             }
         )
     
-    # Checks if the file is part from a memcard file (bodyprog) in order
-    # to enable iconv conversion, otherwise checks if the files is from
-    # the executable or an overlay in order to asign the intended DL flag
+    # Checks:
+    # Enables SHIFT-JIS conversion if the file is part from a memcard file (bodyprog)
+    # Assign proper DL flag for the executable or the overlays
+    # Assign proper compiler version for the `lib_unk` compilation
     if re.search("^src.bodyprog.memcard*", source_path):
         ninjaFile.build(
             outputs=f"{target_path}.sjis.i", rule="iconv", inputs=f"{target_path}.i", implicit=f"{target_path}.i"
@@ -286,6 +289,13 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
                 "DLFLAG": DL_EXE_FLAGS
             }
         )
+    elif re.search("^src.bodyprog.lib_unk.*", source_path):
+        ninjaFile.build(
+            outputs=f"{target_path}.c.s", rule="cc272", inputs=f"{target_path}.i",
+            variables={
+                "DLFLAG": DL_EXE_FLAGS
+            }
+        )
     else:
         ninjaFile.build(
             outputs=f"{target_path}.c.s", rule="cc", inputs=f"{target_path}.i",
@@ -294,15 +304,18 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
             }
         )
     
-    # Checks if the file are either `smf_io` or `smf_mid` (bodyprog) in order
-    # to enable `--expand-div` parameter, otherwise checks if the files is
-    # from the executable or an overlay in order to asign the intended DL flag
+    # Checks:
+    # Enables `--expand-div` for `smf_io` or `smf_mid`
+    # Assign proper DL flag for the executable or the overlays
+    # Assign proper assembler version for the `lib_unk` compilation
+    maspxVersion = "2.77"
     if re.search("smf_io", source_path) or re.search("smf_mid", source_path):
         ninjaFile.build(
             outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s",
             variables={
                 "EXPANDIVFLAG": "--expand-div",
-                "DLFLAG": DL_OVL_FLAGS
+                "DLFLAG": DL_OVL_FLAGS,
+                "MASPSXVER": maspxVersion
             }
         )
     elif re.search("^src.main.*", source_path):
@@ -310,7 +323,18 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
             outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s",
             variables={
                 "EXPANDIVFLAG": "",
-                "DLFLAG": DL_EXE_FLAGS
+                "DLFLAG": DL_EXE_FLAGS,
+                "MASPSXVER": maspxVersion
+            }
+        )
+    elif re.search("^src.bodyprog.lib_unk.*", source_path):
+        maspxVersion = "2.67"
+        ninjaFile.build(
+            outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s",
+            variables={
+                "EXPANDIVFLAG": "",
+                "DLFLAG": DL_OVL_FLAGS,
+                "MASPSXVER": maspxVersion
             }
         )
     else:
@@ -318,7 +342,8 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
             outputs=f"{target_path}.c.o", rule="maspsx", inputs=f"{target_path}.c.s",
             variables={
                 "EXPANDIVFLAG": "",
-                "DLFLAG": DL_OVL_FLAGS
+                "DLFLAG": DL_OVL_FLAGS,
+                "MASPSXVER": maspxVersion
             }
         )
     
@@ -352,6 +377,11 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
     )
     
     ninjaRulesFile.rule(
+        "cc272", description="cc272 $in",
+        command=f"{CC272} {CC_FLAGS} $DLFLAG -o $out $in",
+    )
+    
+    ninjaRulesFile.rule(
         "cpp", description="cpp $in",
         command=f"{CPP} -P -MMD -MP -MT $out -MF $out.d {CPP_FLAGS} $MAPIDFLAG $SKIPASMFLAG $NONMATCHINGFLAG -o $out $in",
         depfile="$out.d"
@@ -369,7 +399,7 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
 
     ninjaRulesFile.rule(
         "maspsx", description="maspsx $in",
-        command=f"{MASPSX} {MASPSX_FLAGS} $EXPANDIVFLAG {AS_FLAGS} $DLFLAG -o $out $in",
+        command=f"{MASPSX} {MASPSX_FLAGS} --aspsx-version=$MASPSXVER $EXPANDIVFLAG {AS_FLAGS} $DLFLAG -o $out $in",
     )
     
     ninjaRulesFile.rule(
