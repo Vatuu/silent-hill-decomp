@@ -211,6 +211,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                     {
                         larvalStalkerProps.angle_108 = Chara_MovementAngleGet(chara, Q12(2.0f), larvalStalkerProps.targetX, larvalStalkerProps.targetZ, Q12(1.0f), true);
                     }
+
                     ANGLE_STUFF(func_8005BF38(larvalStalkerProps.angle_108 - chara->rotation_24.vy), FP_ANGLE(1.5f), FP_ANGLE(30.0f));
                     break;
                 }
@@ -239,7 +240,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
             {
                 chara->model_0.state_2 = 8;
 
-                func_8005DC1C(0x595, &chara->position_18, 0x80, 0);
+                func_8005DC1C(Sfx_Unk1429, &chara->position_18, Q8(0.5f), 0);
 
                 larvalStalkerProps.timer_EC = 0;
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(12, false);
@@ -277,7 +278,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                 angle0 = func_8005BF38(g_SysWork.player_4C.chara_0.rotation_24.vy - chara->rotation_24.vy);
                 if (FP_ANGLE(90.0f) < ABS(angle0))
                 {
-                    if (mag0 >= 0x4A4)
+                    if (mag0 >= Q12(0.29004f))
                     {
                         tmpSinCos = Math_Sin(chara->rotation_24.vy);
                         larvalStalkerProps.angle_100 = ((mag0 - Q12(0.28f)) <= Q12(0.02f)) ?
@@ -290,15 +291,15 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                                                        FP_MULTIPLY(Q12(0.02f), tmpSinCos, Q12_SHIFT);
                     }
 
-                    if (mag0 < 0x451)
+                    if (mag0 < Q12(0.27f))
                     {
-                        larvalStalkerProps.angle_100 = ((((mag0 - Q12(0.28f)) < Q12(-0.02f)) ? Q12(-0.02f) : (mag0 - Q12(0.28f))) * Math_Sin(chara->rotation_24.vy)) >> Q12_SHIFT;
-                        larvalStalkerProps.angle_102 = ((((mag0 - Q12(0.28f)) < Q12(-0.02f)) ? Q12(-0.02f) : (mag0 - Q12(0.28f))) * Math_Cos(chara->rotation_24.vy)) >> Q12_SHIFT;
+                        larvalStalkerProps.angle_100 = FP_MULTIPLY(((mag0 - Q12(0.28f)) < Q12(-0.02f)) ? Q12(-0.02f) : (mag0 - Q12(0.28f)), Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+                        larvalStalkerProps.angle_102 = FP_MULTIPLY(((mag0 - Q12(0.28f)) < Q12(-0.02f)) ? Q12(-0.02f) : (mag0 - Q12(0.28f)), Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
                     }
                 }
                 else
                 {
-                    if (mag0 >= 0x2E2)
+                    if (mag0 > Q12(0.18f))
                     {
                         tmpSinCos = Math_Sin(chara->rotation_24.vy);
                         larvalStalkerProps.angle_100 = ((mag0 - Q12(0.17f)) <= Q12(0.02f)) ?
@@ -311,10 +312,10 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                                                        FP_MULTIPLY(Q12(0.02f), tmpSinCos, Q12_SHIFT);
                     }
 
-                    if (mag0 < 0x28F)
+                    if (mag0 < Q12(0.16f))
                     {
-                        larvalStalkerProps.angle_100 = (((mag0 - Q12(0.17f)) < Q12(-0.02f) ? Q12(-0.02f) : (mag0 - Q12(0.17f))) * Math_Sin(chara->rotation_24.vy)) >> Q12_SHIFT;
-                        larvalStalkerProps.angle_102 = (((mag0 - Q12(0.17f)) < Q12(-0.02f) ? Q12(-0.02f) : (mag0 - Q12(0.17f))) * Math_Cos(chara->rotation_24.vy)) >> Q12_SHIFT;
+                        larvalStalkerProps.angle_100 = FP_MULTIPLY(((mag0 - Q12(0.17f)) < Q12(-0.02f)) ? Q12(-0.02f) : (mag0 - Q12(0.17f)), Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+                        larvalStalkerProps.angle_102 = FP_MULTIPLY(((mag0 - Q12(0.17f)) < Q12(-0.02f)) ? Q12(-0.02f) : (mag0 - Q12(0.17f)), Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
                     }
                 }
 
@@ -341,8 +342,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                     Chara_MoveSpeedUpdate(chara, Q12(1.5f));
                 }
 
-                
-                pos = chara->position_18;
+                pos     = chara->position_18;
                 pos.vy += chara->field_C8.field_8;
 
                 if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk31, AttackInputType_Multitap), chara, &pos, &g_SysWork.player_4C.chara_0, chara->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
@@ -386,7 +386,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                 chara->properties_E4.dummy.properties_E8[3].val16[0] = 0;
                 chara->model_0.state_2 = 9;
 
-                func_8005DC1C(0x595, &chara->position_18, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1429, &chara->position_18, Q8(0.5f), 0);
             } 
             else
             {
@@ -407,14 +407,14 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
             {
                 chara->model_0.state_2 = 3;
 
-                if ((chara->model_0.anim_4.status_0 >> 1) != ANIM_STATUS(5, false))
+                if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) != ANIM_STATUS(5, false))
                 {
                     chara->model_0.anim_4.status_0 = ANIM_STATUS(10, false);
                 }
             } 
             else
             {
-                if (FP_ANGLE(1.5f) <= ABS(angle0) && (chara->model_0.anim_4.status_0 >> 1) != 10)
+                if (FP_ANGLE(1.5f) <= ABS(angle0) && ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) != 10)
                 {
                     Chara_MoveSpeedUpdate3(chara, Q12(0.375f), Q12(0.0f));
 
@@ -436,7 +436,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                 {
                     Chara_MoveSpeedUpdate(chara, Q12(1.5f));
 
-                    if ((chara->model_0.anim_4.status_0 >> 1) != ANIM_STATUS(5, false))
+                    if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) != ANIM_STATUS(5, false))
                     {
                         chara->model_0.anim_4.status_0 = ANIM_STATUS(10, false);
                     }
@@ -506,7 +506,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                 chara->properties_E4.dummy.properties_E8[3].val16[0] = 0;
                 chara->model_0.state_2 = 9;
 
-                func_8005DC1C(Sfx_Unk1429, &chara->position_18, 0x80, 0);
+                func_8005DC1C(Sfx_Unk1429, &chara->position_18, Q8(0.5f), 0);
             }
 
             if (!(larvalStalkerProps.flags_E8 & (1 << 7)))
@@ -542,7 +542,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                 chara->moveSpeed_38 = 0;
             }
 
-            if ((chara->model_0.anim_4.status_0 >> 1) == ANIM_STATUS(5, false))
+            if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) == ANIM_STATUS(5, false))
             {
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(12, false);
                 chara->model_0.state_2 = 8;

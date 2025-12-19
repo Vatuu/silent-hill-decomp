@@ -2225,10 +2225,10 @@ STATIC_ASSERT_SIZEOF(s_800E330C, 24);
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s16 field_8;
-    s16 field_A;
+    s32   field_0;
+    s32   field_4;
+    q3_12 field_8; // Y offset.
+    s16   field_A;
 } s_D_800D5A8C;
 STATIC_ASSERT_SIZEOF(s_D_800D5A8C, 12);
 

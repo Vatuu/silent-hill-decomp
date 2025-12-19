@@ -1031,7 +1031,7 @@ typedef struct
 {
     q4_12 field_0;
     s16   field_2;
-    u16   field_4;
+    u16   field_4;  // Related to damage. Multiplier?
     s8    field_6;  // Accessed by `func_8008BF84` as `u16`
     s8    unk_7;
     u8    field_8;  // Accessed by `func_8008BF84` as `u16`
