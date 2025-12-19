@@ -278,7 +278,7 @@ void func_800E0B5C(s32 arg0);
 void func_800E0B90(void);
 void func_800E0C10(void);
 
-void func_800E14DC(s_MainCharacter*, s_SubCharacter*, bool);
+void func_800E14DC(s_PlayerWork*, s_SubCharacter*, bool);
 
 void func_800E1788(s32);
 

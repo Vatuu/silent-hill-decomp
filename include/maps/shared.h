@@ -1968,7 +1968,7 @@ typedef struct
 // Used by puzzle in M5S01 and M7S01.
 typedef struct
 {
-    u8 field_0;
+    u8 field_0; // Q12
     u8 field_1;
 } s_800F0158;
 
@@ -2169,6 +2169,7 @@ extern u8 sharedData_800CFB44_0_s02[8];
 extern u8 sharedData_800CFB4C_0_s02[8];
 extern u8 sharedData_800CFB54_0_s02[8];
 
+/** Q19.12 */
 extern VECTOR3 sharedData_800DE1A0_0_s01;
 
 extern VECTOR3 sharedData_800DE1B0_0_s01;
@@ -2528,7 +2529,7 @@ void sharedFunc_800D0CB8_0_s00(void);
 
 void sharedFunc_800D0E04_0_s00(void);
 
-void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
+void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
 
 void sharedFunc_800D209C_0_s00(void);
 
@@ -2667,7 +2668,7 @@ void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, q19_12* de
 
 void SysWork_StateStepIncrementAfterTime(q19_12* timer, q19_12 inc, q19_12 timeMin, q19_12 timeMax, bool setTimerToMax, bool incStateStep);
 
-void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord);
+void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra, GsCOORDINATE2* coord);
 
 void sharedFunc_800CB7F4_1_s01(void);
 

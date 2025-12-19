@@ -2715,7 +2715,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
     if (chara == &g_SysWork.player_4C.chara_0)
     {
-        var_s0 = &((s_MainCharacter*)chara)->extra_128.model_0.anim_4;
+        var_s0 = &((s_PlayerWork*)chara)->extra_128.model_0.anim_4;
     }
     else
     {
@@ -3555,11 +3555,11 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
     if (target == &g_SysWork.player_4C.chara_0)
     {
         sp10             = NO_VALUE;
-        target->field_40 = (((s32)((u32)((u8*)attacker - sizeof(s_MainCharacter)) - (u32)target) * -0x6EB3E453) >> 3);
+        target->field_40 = (((s32)((u32)((u8*)attacker - sizeof(s_PlayerWork)) - (u32)target) * -0x6EB3E453) >> 3);
     }
     else
     {
-        sp10 = 1 << (((s32)((u32)((u8*)target - sizeof(s_MainCharacter)) - (u32)&g_SysWork.player_4C) * -0x6EB3E453) >> 3);
+        sp10 = 1 << (((s32)((u32)((u8*)target - sizeof(s_PlayerWork)) - (u32)&g_SysWork.player_4C) * -0x6EB3E453) >> 3);
 
         if (sp14 & sp10)
         {
@@ -4047,7 +4047,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
 
     if (chara == &g_SysWork.player_4C.chara_0)
     {
-        chara0 = (u8*)chara + sizeof(s_MainCharacter);
+        chara0 = (u8*)chara + sizeof(s_PlayerWork);
         var_v0 = 6;
         var_v1 = 1;
     }

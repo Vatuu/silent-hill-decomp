@@ -560,15 +560,15 @@ bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 key
 void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** Player anim handler? */
-void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Player_AnimUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** @brief Main update function for player logic. */
-void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
+void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
 
 /** @brief Updates `g_SysWork.player_4C.extra_128.upperBodyState_20` and prepares
  * transitions between running to and from walking animations.
  *
- * @param extra Pointer to `s_MainCharacterExtra` struct.
+ * @param extra Pointer to `s_PlayerExtra` struct.
  * @param upperState Check if `g_SysWork.player_4C.extra_128.upperBodyState_20` is not the same being input in order to clear animation status.
  * @param unused @unused Possibly animation index.
  * @param arg3 Player turn state. Only affects turn animations.
@@ -577,10 +577,10 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
  * *       3: Left turn state.
  * *       4: Right turn state.
  */
-void Player_UpperBodyStateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3);
+void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3);
 
 /** @brief Triggers animations and actions performed by the player's upper body. */
-void Player_UpperBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra);
+void Player_UpperBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra);
 
 /** @brief Updates animations and status related to player attacks.
  * Returns `true` if animations where succefully finished and if performing a multitap attack.
@@ -590,16 +590,16 @@ bool Player_CombatAnimUpdate(void);
 /** @brief Main animation and state handler for the player's upper body.
  * Returns `true` if combat animations where completed or if the player's health is >60%.
  */
-bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra);
+bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra);
 
 /** @brief Updates upper body states related to combat. */
-void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra);
+void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra);
 
 /** @brief Cancels movement when the player abruptly stops running sideways. */
 void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 arg1, s32 animStatus, s32 keyframeIdx, e_PlayerLowerBodyState lowerBodyState, s32 headingAngle, s32 aimState);
 
 /** @brief Main player movement function. */
-void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra); 
+void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra); 
 
 /** @brief Multiple purposes.
  * * Assigns the value used by a global that handles player movement.
@@ -607,7 +607,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra);
  * * Restarts the animation state if the player is not longer exhausted or has recovered health.
  * * Handles audio related to Harry's movements.
  */
-void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra);
+void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra);
 
 /** @brief Checks for damage received by the player and handles the animations
  * for getting hurt or grabbed by monsters.
@@ -615,7 +615,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra);
  * @note SH2 symbols have a similar function named `PlayerCheckDamage`, but code-wise it has
  * no similarities.
  */
-void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra);
+void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra);
 
 // Removing this function makes it impossible to run.
 s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1);
@@ -647,7 +647,7 @@ bool func_8007F95C(void);
 static inline void Player_AnimFlagsSet(u32 flags)
 {
     s_SubCharacter*       chara;
-    s_MainCharacterExtra* extra;
+    s_PlayerExtra* extra;
 
     extra = &g_SysWork.player_4C.extra_128;
     chara = &g_SysWork.player_4C.chara_0;
@@ -660,12 +660,13 @@ static inline void Player_AnimFlagsSet(u32 flags)
  *
  * @param flags Animation flags to clear.
  */
-#define Player_AnimFlagsClear(flags)                                       \
-{                                                                          \
-    s_MainCharacterExtra* playerExtra    = &g_SysWork.player_4C.extra_128; \
-    s_SubCharacter*       playerChara    = &g_SysWork.player_4C.chara_0;   \
-    playerExtra->model_0.anim_4.flags_2 &= ~(flags);                       \
-    playerChara->model_0.anim_4.flags_2 &= ~(flags);                       \
+#define Player_AnimFlagsClear(flags)                              \
+{                                                                 \
+    s_PlayerExtra*  playerExtra = &g_SysWork.player_4C.extra_128; \
+    s_SubCharacter* playerChara = &g_SysWork.player_4C.chara_0;   \
+                                                                  \
+    playerExtra->model_0.anim_4.flags_2 &= ~(flags);              \
+    playerChara->model_0.anim_4.flags_2 &= ~(flags);              \
 }
 
 #endif

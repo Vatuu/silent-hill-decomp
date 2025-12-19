@@ -126,7 +126,7 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch(void)
 }
 
 // Slight change in PlayerState_Unk55 version
-static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_MainCharacterExtra* extra)
+static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_PlayerExtra* extra)
 {
     if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Unk52)
     {
@@ -184,7 +184,7 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_MainCharacterExtra* 
     }
 }
 
-void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
+void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra, GsCOORDINATE2* coord)
 {
     s_Collision coll;
     e_SfxId     sfx;

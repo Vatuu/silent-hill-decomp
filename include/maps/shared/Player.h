@@ -693,7 +693,7 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
 // NOTE: Huge PlayerState anim function, kept as separate file for now.
 #include "maps/shared/sharedFunc_800CDAA8_0_s02.h" // 0x800CBAE4
 
-void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coord)
+void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coord)
 {
     s_Collision coll;
     VECTOR3     offset;
@@ -905,8 +905,8 @@ void sharedFunc_800D20D8_0_s00(void)
 
 void Player_ControlFreeze(void)
 {
-    s_MainCharacterExtra* playerExtra;
-    s_SubCharacter*       playerChara;
+    s_PlayerExtra*  playerExtra;
+    s_SubCharacter* playerChara;
 
     playerExtra = &g_SysWork.player_4C.extra_128;
     playerChara = &g_SysWork.player_4C.chara_0;
@@ -955,8 +955,8 @@ void Player_ControlFreeze(void)
 
 void Player_ControlUnfreeze(bool setIdle)
 {
-    s_SubCharacter*       player;
-    s_MainCharacterExtra* extra;
+    s_SubCharacter* player;
+    s_PlayerExtra*  extra;
 
     g_Player_DisableControl = false;
 
@@ -1044,12 +1044,12 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
 
     #define ANGLE_THRESHOLD (FP_ANGLE(360.0) >> 6) // 360 / 64 = 5.625 degrees.
 
-    VECTOR3*              localVec;
-    s32                   playerVecDist;
-    s16                   playerRotDelta;
-    s32                   angleStep;
-    s_MainCharacterExtra* playerExtra;
-    s_SubCharacter*       playerChara;
+    VECTOR3*        localVec;
+    s32             playerVecDist;
+    s16             playerRotDelta;
+    s32             angleStep;
+    s_SubCharacter* playerChara;
+    s_PlayerExtra*  playerExtra;
 
     angle       = FP_ANGLE_ABS(angle);
     playerExtra = &g_SysWork.player_4C.extra_128;
@@ -1263,7 +1263,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
 
 void sharedFunc_800D2C7C_0_s00(s32 playerState)
 {
-    s_MainCharacterExtra* extra;
+    s_PlayerExtra* extra;
     s_SubCharacter*       chara;
 
     extra = &g_SysWork.player_4C.extra_128;
@@ -1372,8 +1372,8 @@ void sharedFunc_800D2E6C_0_s00(void)
 void Player_FallBackward(void)
 {
 #if defined(MAP0_S01)
-    s_SubCharacter*       playerChara;
-    s_MainCharacterExtra* playerExtra;
+    s_SubCharacter* playerChara;
+    s_PlayerExtra*  playerExtra;
 
     playerChara = &g_SysWork.player_4C.chara_0;
     playerExtra = &g_SysWork.player_4C.extra_128;
@@ -1393,8 +1393,8 @@ void sharedFunc_800D2E7C_0_s00(void)
 void sharedFunc_800D2E84_0_s00(void)
 {
 #if defined(MAP6_S04)
-    s_MainCharacterExtra* playerExtra;
-    s_SubCharacter*       playerChara;
+    s_SubCharacter* playerChara;
+    s_PlayerExtra*  playerExtra;
 
     playerChara = &g_SysWork.player_4C.chara_0;
     playerExtra = &g_SysWork.player_4C.extra_128;
@@ -1408,11 +1408,11 @@ void sharedFunc_800D2E84_0_s00(void)
 void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
 {
 #if defined(MAP1_S05)
-    q19_12                angle;
-    s32                   vecSqr;
-    s32                   playerExtraState;
-    s_SubCharacter*       playerChara;
-    s_MainCharacterExtra* playerExtra;
+    q19_12          angle;
+    s32             vecSqr;
+    s32             playerExtraState;
+    s_SubCharacter* playerChara;
+    s_PlayerExtra*  playerExtra;
 
     playerChara = &g_SysWork.player_4C.chara_0;
     playerExtra = &g_SysWork.player_4C.extra_128;

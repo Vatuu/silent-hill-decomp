@@ -146,7 +146,7 @@ void func_800E0FAC(s32); // Assumed return type.
 
 void func_800E10F8(void);
 
-void func_800E15FC(s_MainCharacter* player, s_SubCharacter* npc, bool);
+void func_800E15FC(s_PlayerWork* playerWork, s_SubCharacter* npc, bool);
 
 void func_800E1CA0(void);
 

@@ -1,5 +1,5 @@
-#ifndef _LIB_UNK_H
-#define _LIB_UNK_H
+#ifndef _LIBUNK_H
+#define _LIBUNK_H
 
 // Konami library for handling DualShock vibration?
 // Built with 2.7.2-970404 / 2.7.2-cdk compiler.

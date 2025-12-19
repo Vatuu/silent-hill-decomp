@@ -1,6 +1,7 @@
 #include "common.h"
-#include <libpad.h>
 #include "lib_unk.h"
+
+#include <libpad.h>
 
 // TODO: Could be array?
 s_SysWork_2510 D_800B13EC = {

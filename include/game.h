@@ -120,7 +120,7 @@ struct _Model;
     (FP_FROM(animTime, Q12_SHIFT) >= (low) && FP_FROM(animTime, Q12_SHIFT) <= (high))
 
 /** @brief Creates a bitmask with a contiguous range of bits set.
- * For use with `s_MainCharacterExtra::disabledAnimBones_18`.
+ * For use with `s_PlayerExtra::disabledAnimBones_18`.
  *
  * Generates an `unsigned int` mask with all bits in the range `[fromInclusive, toInclusive]` set.
  *
@@ -1210,7 +1210,7 @@ typedef struct _Model
     s8          charaId_0;    /** `e_CharacterId` */
     u8          paletteIdx_1; /** Changes the texture palette index for this model. */
     u8          state_2;      /** Current state for this model/character. 0 usually means it still has to be initialized. */
-    u8          stateStep_3;  // Step number or temp data for the current `state_2`? In `s_MainCharacterExtra` always 1, set to 0 for 1 tick when anim state appears to change.
+    u8          stateStep_3;  // Step number or temp data for the current `state_2`? In `s_PlayerExtra` always 1, set to 0 for 1 tick when anim state appears to change.
                               // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
                               // Sometimes holds actual anim index?
     s_ModelAnim anim_4;
@@ -1520,7 +1520,7 @@ typedef struct _SubCharacter
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
 
-typedef struct _MainCharacterExtra
+typedef struct _PlayerExtra
 {
     s_Model           model_0;              /** Manages upper half body's animations (torso, arms, head). */
     s32               disabledAnimBones_18; /** Bitfield of disabled animation bones. Can be created using the `BITMASK_RANGE` macro. */
@@ -1528,16 +1528,16 @@ typedef struct _MainCharacterExtra
     s32               upperBodyState_20;    /** `e_PlayerUpperBodyState` */
     s32               lowerBodyState_24;    /** `e_PlayerLowerBodyState` */
     e_InventoryItemId lastUsedItem_28;      /** Holds the last item ID used from inventory when the player is inside an item trigger area. */
-} s_MainCharacterExtra;
-STATIC_ASSERT_SIZEOF(s_MainCharacterExtra, 44);
+} s_PlayerExtra;
+STATIC_ASSERT_SIZEOF(s_PlayerExtra, 44);
 
 // TODO: Based on SH2 symbols this struct should be named `shPlayerWork` and `chara_0` should be `player`.
-typedef struct _MainCharacter
+typedef struct _PlayerWork
 {
-    s_SubCharacter       chara_0;
-    s_MainCharacterExtra extra_128;
-} s_MainCharacter;
-STATIC_ASSERT_SIZEOF(s_MainCharacter, 340);
+    s_SubCharacter chara_0; // TODO: `player_0`
+    s_PlayerExtra  extra_128;
+} s_PlayerWork;
+STATIC_ASSERT_SIZEOF(s_PlayerWork, 340);
 
 typedef struct _PlayerCombat
 {
@@ -1628,7 +1628,7 @@ typedef struct _SysWork
     s32             field_30;
     s8              unk_34[4]; // Padding?
     s_PlayerCombat  playerCombatInfo_38; // Something related to weapons and attack. This is a struct as `func_8003CD6C` requires one and `GameFs_MapLoad` input is pointing here.
-    s_MainCharacter player_4C;
+    s_PlayerWork    player_4C; // TODO: Rename to `playerWork_4C`
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   playerBoneCoords_890[HarryBone_Count];
     GsCOORDINATE2   unkCoords_E30[5];  // Might be part of previous array for 5 extra coords which go unused.

@@ -1,7 +1,6 @@
 bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3)
 {
-    s32      sp18;
-    VECTOR3* var_s0;
+    bool     cond;
     s32      temp_v1;
     s32      temp_s0;
     q19_12   unkY;
@@ -18,7 +17,8 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
     s32      temp;
     s32      temp2;
     s32      temp3;
-
+    VECTOR3* var_s0;
+    
     if (arg1 == NULL)
     {
         var_s0 = &chara->position_18;
@@ -41,7 +41,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
     if (sharedFunc_800D4A80_0_s01(chara) == 1)
     {
         i                            = 0;
-        sharedData_800DE1A0_0_s01.vy = 0;
+        sharedData_800DE1A0_0_s01.vy = Q12(0.0f);
     }
     else
     {
@@ -53,7 +53,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
 
     g_SysWork.player_4C.chara_0.field_E1_0 = 0;
 
-    sp18 = func_8006DB3C(&sharedData_800E2330_0_s01, var_s0, &sharedData_800DE1A0_0_s01, chara);
+    cond = func_8006DB3C(&sharedData_800E2330_0_s01, var_s0, &sharedData_800DE1A0_0_s01, chara);
 
     g_SysWork.player_4C.chara_0.field_E1_0 = temp_s0;
     offsetX                                = sharedData_800E2330_0_s01.field_4.vx - posX;
@@ -87,7 +87,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
                 var_v1 = FP_TO(temp, Q12_SHIFT) / sharedData_800E2330_0_s01.field_14;
             }
 
-            sp18  = true;
+            cond  = true;
             temp3 = FP_MULTIPLY_PRECISE(offsetX, var_v1, Q12_SHIFT);
             temp2 = FP_MULTIPLY_PRECISE(i, var_v1, Q12_SHIFT);
 
@@ -99,7 +99,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
 
             temp2                                 = FP_MULTIPLY_PRECISE(offsetZ, var_v1, Q12_SHIFT);
             sharedData_800E2330_0_s01.field_4.vz  = temp2 + posZ;
-            sharedData_800E2330_0_s01.field_4.vy += 0; // @hack
+            sharedData_800E2330_0_s01.field_4.vy += Q12(0.0f); // @hack
         }
     }
 
@@ -107,7 +107,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
     {
         *arg3 = sharedData_800E2330_0_s01.field_4;
 
-        if (sp18 != false)
+        if (cond)
         {
             if (sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.field_18)
             {
@@ -131,5 +131,5 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
         }
     }
 
-    return !sp18;
+    return !cond;
 }

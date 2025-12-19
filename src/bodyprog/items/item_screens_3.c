@@ -23,6 +23,7 @@ static u8 g_Items_GunsMaxLoadAmmo[36] = {
 
 u32 D_800AD4C4 = 0;
 
+// Weapon attack data?
 s_800AD4C8 D_800AD4C8[70] = {
     { Q12(0.4f), 0x0199, 0x0082, 0, 8, 0, 8, 0x33, 0x03, 0x0000, 3, 3, 1, -1, 2, 0, &D_800AD4C4 },
     { Q12(1.0f), 0xFE67, 0x0046, 102, 6, 0, 8, 0xCC, 0x04, 0x1000, 7, 4, 2, -1, 3, 0, &D_800AD4C4 },

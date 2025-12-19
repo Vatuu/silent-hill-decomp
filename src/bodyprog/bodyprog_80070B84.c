@@ -91,7 +91,7 @@ void func_80070CF0(s_SubCharacter* chara, q19_12 arg1, q19_12 moveDistMax, q19_1
     }
 }
 
-void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weaponAttack, s32 animStatus)  // 0x80070DF0
+void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* chara, s32 weaponAttack, s32 animStatus)  // 0x80070DF0
 {
     q3_12 shortestAngle;
     q3_12 angleTo;
@@ -415,7 +415,7 @@ void Player_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     // - `arg1`  always `0x8010A600`/`FS_BUFFER_0` (holds anim data).
     // - `coord` always `&g_SysWork.playerBoneCoords_890`.
 
-    s_MainCharacterExtra* extra;
+    s_PlayerExtra* extra;
 
     extra = &g_SysWork.player_4C.extra_128;
 
@@ -586,7 +586,7 @@ static inline void func_80071968_Switch1(void)
     }
 }
 
-void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x80071968
+void Player_AnimUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x80071968
 {
     s_AnimInfo* animInfo;
 
@@ -814,7 +814,7 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, s_Anm
     }
 }
 
-void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords)
+void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords)
 {
     SVECTOR       playerAngles;
     q3_12         headingAngle0;
@@ -2148,7 +2148,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCO
     Math_RotMatrixZxyNegGte(&chara->rotation_24, &coords->coord);
 }
 
-void Player_UpperBodyStateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3) // 0x80073FC0
+void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState upperState, s32 unused, s32 arg3) // 0x80073FC0
 {
     e_PlayerUpperBodyState prevState;
     s_Model*         charaModel;
@@ -2309,7 +2309,7 @@ void Player_UpperBodyStateUpdate(s_MainCharacterExtra* extra, e_PlayerUpperBodyS
     }
 }
 
-void Player_UpperBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80074254
+void Player_UpperBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80074254
 {
     s32 stumbleSfx;
 
@@ -2351,7 +2351,7 @@ void Player_UpperBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
     Player_CombatStateUpdate(chara, extra);
 }
 
-bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80075504
+bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80075504
 {
     s32 enemyAttackedIdx;
     s16 sp20;
@@ -3801,7 +3801,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_MainCharacterExtra* ext
     return false;
 }
 
-void Player_CombatStateUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x800771BC
+void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x800771BC
 {
     s32 currentAmmoVar;
     s32 totalAmmoVar;
@@ -4217,7 +4217,7 @@ void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 animStatus0, 
     }
 }
 
-void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x80077D00
+void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80077D00
 {
     #define MOVE_DIST_MAX Q12(1000000.0f)
     #define MOVE_DIST_MIN 1
@@ -6186,7 +6186,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_MainCharacterExtra* extra) 
     func_8007B924(chara, extra);
 }
 
-void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007B924
+void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
 {
     e_SfxId sfx;
     s8    pitch0;
@@ -6459,7 +6459,7 @@ void func_8007B924(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007
     }
 }
 
-void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords) // 0x8007C0D8
+void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords) // 0x8007C0D8
 {
     s_Collision coll;
     VECTOR3     offset;
@@ -6626,7 +6626,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDIN
     coords->coord.t[2]                        = Q12_TO_Q8(chara->position_18.vz);
 }
 
-void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) // 0x8007C800
+void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007C800
 {
     s16 headingAngle;
     u16 enemyRotY;
@@ -7150,7 +7150,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_MainCharacterExtra* extra) //
     }
 }
 
-void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords) // 0x8007D090
+void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords) // 0x8007D090
 {
     #define FLEX_ROT_X_RANGE FP_ANGLE(56.25f)
     #define FLEX_ROT_Y_RANGE FP_ANGLE(33.75f)
@@ -8499,7 +8499,7 @@ void Math_ShortestAngleGet(q3_12 angleFrom, q3_12 angleTo, q3_12* shortestAngle)
     }
 }
 
-void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus) // 0x8007FB94
+void func_8007FB94(s_SubCharacter* chara, s_PlayerExtra* extra, s32 animStatus) // 0x8007FB94
 {
     s32 i;
 
@@ -8534,7 +8534,7 @@ void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animS
     }
 }
 
-void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus) // 0x8007FC48
+void func_8007FC48(s_SubCharacter* chara, s_PlayerExtra* extra, s32 animStatus) // 0x8007FC48
 {
     s32 i;
 

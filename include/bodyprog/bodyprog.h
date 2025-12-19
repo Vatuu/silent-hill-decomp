@@ -1608,8 +1608,8 @@ typedef struct _MapOverlayHeader
     s32                    (*func_AC)(POLY_FT4**, s32); // func(?) only map4_s03, map4_s05.
     s32                    (*func_B0)(POLY_FT4**, s32); // func(?) only map4_s03, map4_s05.
     s32                    (*func_B4)(POLY_FT4**, s32); // func(?) only map1_s03, map4_s05, map6_s01, map6_s02, map5_s01.
-    void                   (*func_B8)(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
-    void                   (*func_BC)(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
+    void                   (*func_B8)(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
+    void                   (*func_BC)(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
     void                   (*func_C0)(); // func(?).
     void                   (*func_C4)(); // func(?).
     void                   (*freezePlayerControl_C8)();
@@ -4435,7 +4435,7 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx);
 
 void func_80070B84(s_SubCharacter* chara, q19_12 moveDistMax, q19_12 arg2, s32 keyframeIdx);
 
-void func_80070DF0(s_MainCharacterExtra* extra, s_SubCharacter* chara, s32 weaponAttack, s32 animStatus);
+void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* chara, s32 weaponAttack, s32 animStatus);
 
 // Variable anim duration func for player. It's nearly completely matched https://decomp.me/scratch/PBvwU.
 s32 func_800706E4(s_Model* model);
@@ -4443,9 +4443,9 @@ s32 func_800706E4(s_Model* model);
 /** Special player SFX handler for heavy breath and damage. */
 bool func_80071620(u32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, e_SfxId sfxId);
 
-void func_8007C0D8(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
+void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
 
-void func_8007D090(s_SubCharacter* chara, s_MainCharacterExtra* extra, GsCOORDINATE2* coords);
+void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
 
 void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
@@ -4455,7 +4455,7 @@ void func_8007E9C4(void);
 /** Sound func. */
 void func_8007F14C(u8 weaponAttack);
 
-void func_8007FB94(s_SubCharacter*, s_MainCharacterExtra*, s32);
+void func_8007FB94(s_SubCharacter*, s_PlayerExtra*, s32);
 
 /** Resets several global variables to 0. */
 void func_8007F1CC(void);
@@ -4485,7 +4485,7 @@ void Math_ShortestAngleGet(q3_12 angleFrom, q3_12 angleTo, q3_12* shortestAngle)
  * @param extra Extra player character parameters.
  * @param animStatus Packed anim status.
  */
-void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus);
+void func_8007FB94(s_SubCharacter* chara, s_PlayerExtra* extra, s32 animStatus);
 
 /** Anim func.
  *
@@ -4493,7 +4493,7 @@ void func_8007FB94(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animS
  * @param extra Extra player character parameters.
  * @param animStatus Packed anim status.
  */
-void func_8007FC48(s_SubCharacter* chara, s_MainCharacterExtra* extra, s32 animStatus);
+void func_8007FC48(s_SubCharacter* chara, s_PlayerExtra* extra, s32 animStatus);
 
 /** Gets property 8 from player. */
 s32 func_8007FD2C(void);
