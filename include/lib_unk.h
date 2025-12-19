@@ -59,7 +59,7 @@ typedef struct
     u8                 unk_B[1];
     s_SysWork_2514_C*  field_C;
     s_SysWork_2514_18* field_10;
-    u8                 unk_14[4];
+    s32                unk_14;
     s_SysWork_2514_18  head_18;
 } s_SysWork_2514;
 STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
@@ -74,7 +74,7 @@ typedef struct _s_SysWork_2510
 } s_SysWork_2510;
 STATIC_ASSERT_SIZEOF(s_SysWork_2510, 16);
 
-s32 func_8009E3B0(s_SysWork_2514*, s32, s32, s32);
+bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurID, s32 padInfoCurExID);
 
 bool func_8009E438(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurID, s32 padInfoCurExID);
 
@@ -91,6 +91,8 @@ s32 func_8009E82C(s_SysWork_2514*, s32, s32, s32);
 bool func_8009E97C(s_SysWork_2510* arg0);
 
 s32 func_8009E9D0(s_SysWork_2514*, s32, s32, s32);
+
+bool func_8009EBB8(s_SysWork_2514* list, s_SysWork_2514_18* node, s32 count);
 
 bool func_8009EC1C(s_SysWork_2514* list, s_SysWork_2514_18* node);
 
