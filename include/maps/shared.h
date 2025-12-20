@@ -1916,18 +1916,20 @@ typedef struct
     u_Property  properties_D14[4];
     u16         field_D24[2][3][2];
     u8          field_D3C[2][6];
-    s8*         ptr_D48[5];
+    s8*         ptr_D48[4];
+    SVECTOR*    ptr_D58;
     s16         field_D5C[4][2]; // Related to animations. Move offset distances?
+    s8          unk_D6C[4];
+    s16         field_D70[2][2];
 } s_func_800D2E04;
-typedef char static_assertion_sizeof_s_func_800D2E04[(sizeof(s_func_800D2E04) == 3436) ? 1 : -1];
 
 typedef struct
 {
     s32               flags_0;
     s_AnmHeader*      anmHdr_4;
     GsCOORDINATE2*    coords_8;
-    MATRIX*           matrices_C;
-    s8                unk_10[0x8C];
+    VECTOR3           matrices_C[1]; // Unknown size.
+    s8                unk_10[0x84];
     s_SubCharacter_C8 field_9C;
     s_SubCharacter_D4 field_A8;
     s_SubCharacter_D8 field_AC;
