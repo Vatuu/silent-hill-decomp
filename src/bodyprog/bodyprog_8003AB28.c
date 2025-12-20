@@ -971,9 +971,9 @@ void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
 
 void func_8003C3AC(void) // 0x8003C3AC
 {
-    VECTOR3         pos0; // World's borders?
-                          // Modifying `pos0.vz = Q12(200.0f);`makes the world to not render and
-                          // in case of stepping in the void the player becomes unable to move
+    VECTOR3         pos0; // World borders?
+                          // Modifying `pos0.vz = Q12(200.0f);` makes the world to not render and when
+                          // in the void, the player becomes immovable.
     VECTOR3         pos1;
     SVECTOR         pos2;
     s32             temp_a1;

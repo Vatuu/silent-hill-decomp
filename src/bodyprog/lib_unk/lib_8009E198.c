@@ -56,7 +56,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E2D8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E310);
 
-bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurID, s32 padInfoCurExID) // 0x8009E3B0
+bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 padInfoCurExId) // 0x8009E3B0
 {
     s_SysWork_2514_0 tmp;
 
@@ -81,6 +81,7 @@ bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurID, s32 pad
             arg0->field_A = 0;
             arg0->field_0 = tmp;
         }
+
         return true;
     }
 
@@ -92,17 +93,20 @@ bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurID, s32 pad
     return tmp.field_0_24 != 3;
 }
 
-bool func_8009E438(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurID, s32 padInfoCurExID) // 0x8009E438
+bool func_8009E438(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 padInfoCurExId) // 0x8009E438
 {
     s_SysWork_2514_0 tmp;
     bool             isChanged;
 
     tmp = arg0->field_0;
 
-    if (padState == PadStateFindCTP1) // "Check for controller connection with controllers other than DUAL SHOCK (Complete the acquisition of controller information)"
+    // "Check for controller connection with controllers other than DUAL SHOCK (Complete the acquisition of controller information)"
+    if (padState == PadStateFindCTP1)
     {
         // TODO: 16Button is just standard controller?
-        if (padInfoCurID == PadTerminalType_16Button | padInfoCurID == PadTerminalType_AnalogJoystick | padInfoCurID == PadTerminalType_AnalogController) // `|` Dev mistake?
+        if (padInfoCurId == PadTerminalType_16Button |
+            padInfoCurId == PadTerminalType_AnalogJoystick |
+            padInfoCurId == PadTerminalType_AnalogController) // `|` Dev mistake?
         {
             isChanged      = tmp.field_0_24 != 3;
             tmp.field_0_24 = 3;
@@ -155,26 +159,26 @@ s_SysWork_2510* func_8009E520(s_SysWork_2510* node, s32 key) // 0x8009E520
     return NULL;
 }
 
-s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* arg1) // 0x8009E550
+s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* node) // 0x8009E550
 {
     s32 padState;
-    s32 padInfoCurID;
-    s32 padInfoCurExID;
+    s32 padInfoCurId;
+    s32 padInfoCurExId;
     u8  padPort;
 
     padPort        = arg0->field_0.padPort_0_0;
     padState       = PadGetState(padPort);
-    padInfoCurID   = PadInfoMode(padPort, InfoModeCurID, 0);
-    padInfoCurExID = PadInfoMode(padPort, InfoModeCurExID, 0);
+    padInfoCurId   = PadInfoMode(padPort, InfoModeCurID, 0);
+    padInfoCurExId = PadInfoMode(padPort, InfoModeCurExID, 0);
 
-    while (arg1)
+    while (node)
     {
-        if (arg1->func_C != NULL && arg1->func_C(arg0, padState, padInfoCurID, padInfoCurExID) == 1)
+        if (node->func_C != NULL && node->func_C(arg0, padState, padInfoCurId, padInfoCurExId) == 1)
         {
             break;
         }
         
-        arg1 = arg1->next_0;
+        node = node->next_0;
     }
 
     return padState;
@@ -184,42 +188,42 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E61C);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E718);
 
-bool func_8009E7D8(s_SysWork_2510* arg0) // 0x8009E7D8
+bool func_8009E7D8(s_SysWork_2510* node) // 0x8009E7D8
 {
-    s_SysWork_2510* var_a1;
+    s_SysWork_2510* curNode;
 
-    for (var_a1 = arg0; var_a1; var_a1 = var_a1->next_0)
+    for (curNode = node; curNode; curNode = curNode->next_0)
     {
-        if (var_a1 == &D_800B141C)
+        if (curNode == &D_800B141C)
         {
             return false;
         }
     }
 
-    var_a1            = arg0->next_0;
-    arg0->next_0      = &D_800B141C;
-    D_800B141C.next_0 = var_a1;
+    curNode           = node->next_0;
+    node->next_0      = &D_800B141C;
+    D_800B141C.next_0 = curNode;
 
     return true;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E82C);
 
-bool func_8009E97C(s_SysWork_2510* arg0) // 0x8009E97C
+bool func_8009E97C(s_SysWork_2510* node) // 0x8009E97C
 {
-    s_SysWork_2510* var_a1;
+    s_SysWork_2510* curNode;
 
-    for (var_a1 = arg0; var_a1; var_a1 = var_a1->next_0)
+    for (curNode = node; curNode; curNode = curNode->next_0)
     {
-        if (var_a1 == &D_800B142C)
+        if (curNode == &D_800B142C)
         {
             return false;
         }
     }
 
-    var_a1            = arg0->next_0;
-    arg0->next_0      = &D_800B142C;
-    D_800B142C.next_0 = var_a1;
+    curNode           = node->next_0;
+    node->next_0      = &D_800B142C;
+    D_800B142C.next_0 = curNode;
 
     return true;
 }
@@ -289,11 +293,11 @@ bool func_8009EC1C(s_SysWork_2514* list, s_SysWork_2514_18* node) // 0x8009EC1C
         return false;
     }
 
-    // Remove node from the doubly-linked list by making its neighbors skip over it.
+    // Remove node from doubly-linked list by making its neighbors skip over it.
     prev->next_0 = next;
     next->prev_4 = prev;
 
-    // Add node to the front of the secondary list in `field_10` (free list?)
+    // Add node to front of secondary list in `field_10` (free list?).
     next           = list->field_10;
     list->field_10 = node;
     node->next_0   = next;

@@ -64,31 +64,32 @@ typedef struct
 } s_SysWork_2514;
 STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
 
+// Controller node?
 typedef struct _s_SysWork_2510
 {
     struct _s_SysWork_2510* next_0;
     u8                      key_4;
     u8                      pad_5[3];
     s32                     field_8;
-    s32                     (*func_C)(s_SysWork_2514*, s32 padState, s32 padInfoCurID, s32 padInfoCurExID);
+    s32                     (*func_C)(s_SysWork_2514*, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
 } s_SysWork_2510;
 STATIC_ASSERT_SIZEOF(s_SysWork_2510, 16);
 
-bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurID, s32 padInfoCurExID);
+bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
 
-bool func_8009E438(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurID, s32 padInfoCurExID);
+bool func_8009E438(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
 
 s_SysWork_2510* func_8009E4F8(void);
 
 s_SysWork_2510* func_8009E520(s_SysWork_2510* node, s32 key);
 
-s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* arg1);
+s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* node);
 
-bool func_8009E7D8(s_SysWork_2510* arg0);
+bool func_8009E7D8(s_SysWork_2510* node);
 
 s32 func_8009E82C(s_SysWork_2514*, s32, s32, s32);
 
-bool func_8009E97C(s_SysWork_2510* arg0);
+bool func_8009E97C(s_SysWork_2510* node);
 
 s32 func_8009E9D0(s_SysWork_2514*, s32, s32, s32);
 

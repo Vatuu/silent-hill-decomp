@@ -1,99 +1,101 @@
-void sharedFunc_800D6600_0_s01(s_SubCharacter* arg0)
+void sharedFunc_800D6600_0_s01(s_SubCharacter* chara)
 {
-    s32 sp18;
-    s32 sp1C;
-    s32 temp_fp;
-    s32 temp_s0;
-    s32 temp_s1;
-    s32 temp_s2;
-    s32 temp_v0_3;
-    s32 var_s4;
-    s32 var_s5;
-    s32 var_s6;
-    u32 temp_v0_9;
-    s32 temp;
+    q19_12 newPosX;
+    q19_12 sp1C;
+    q19_12 newPosY;
+    q19_12 angle0;
+    q19_12 angle2;
+    q19_12 angle1;
+    q19_12 newPosZ;
+    q19_12 posX;
+    q19_12 posY;
+    q19_12 posZ;
+    q20_12 angle3;
+    s32    temp;
 
-    sp18      = FP_MULTIPLY_PRECISE(arg0->damage_B4.position_0.vx, 0x3000, Q12_SHIFT);
-    temp_fp   = FP_MULTIPLY_PRECISE(arg0->damage_B4.position_0.vy, 0x3000, Q12_SHIFT);
-    temp_v0_3 = FP_MULTIPLY_PRECISE(arg0->damage_B4.position_0.vz, 0x3000, Q12_SHIFT);
+    newPosX = FP_MULTIPLY_PRECISE(chara->damage_B4.position_0.vx, Q12(3.0f), Q12_SHIFT);
+    newPosY = FP_MULTIPLY_PRECISE(chara->damage_B4.position_0.vy, Q12(3.0f), Q12_SHIFT);
+    newPosZ = FP_MULTIPLY_PRECISE(chara->damage_B4.position_0.vz, Q12(3.0f), Q12_SHIFT);
 
-    arg0->damage_B4.position_0.vx = 0;
-    arg0->damage_B4.position_0.vy = 0;
-    arg0->damage_B4.position_0.vz = 0;
+    chara->damage_B4.position_0.vx = Q12(0.0f);
+    chara->damage_B4.position_0.vy = Q12(0.0f);
+    chara->damage_B4.position_0.vz = Q12(0.0f);
 
-    sp1C = SquareRoot12(FP_SQUARE_PRECISE(sp18, Q12_SHIFT) + FP_SQUARE_PRECISE(temp_fp, Q12_SHIFT) + FP_SQUARE_PRECISE(temp_v0_3, Q12_SHIFT));
+    sp1C = SquareRoot12(FP_SQUARE_PRECISE(newPosX, Q12_SHIFT) +
+                        FP_SQUARE_PRECISE(newPosY, Q12_SHIFT) +
+                        FP_SQUARE_PRECISE(newPosZ, Q12_SHIFT));
 
-    temp_s1 = arg0->properties_E4.dummy.properties_E8[1].val32;
-    temp_s0 = arg0->properties_E4.dummy.properties_E8[2].val16[0];
-    temp_s2 = arg0->properties_E4.dummy.properties_E8[2].val16[1];
+    angle2 = chara->properties_E4.dummy.properties_E8[1].val32;
+    angle0 = chara->properties_E4.dummy.properties_E8[2].val16[0];
+    angle1 = chara->properties_E4.dummy.properties_E8[2].val16[1];
 
-    if (temp_s1 == 0)
+    if (angle2 == FP_ANGLE(0.0f))
     {
-        var_s4 = 0;
-        var_s6 = 0;
-        var_s5 = 0;
+        posZ = Q12(0.0f);
+        posY = Q12(0.0f);
+        posX = Q12(0.0f);
     }
     else
     {
-        var_s6  = FP_MULTIPLY_PRECISE(temp_s1, Math_Sin(temp_s0), Q12_SHIFT);
-        temp_s0 = FP_MULTIPLY_PRECISE(temp_s1, Math_Cos(temp_s0), Q12_SHIFT);
+        posY   = FP_MULTIPLY_PRECISE(angle2, Math_Sin(angle0), Q12_SHIFT);
+        angle0 = FP_MULTIPLY_PRECISE(angle2, Math_Cos(angle0), Q12_SHIFT);
 
-        if (temp_s0 < 0)
+        if (angle0 < FP_ANGLE(0.0f))
         {
-            temp_s0  = -temp_s0;
-            temp_s2 ^= 0x800;
+            angle0  = -angle0;
+            angle1 ^= 0x800;
         }
 
-        var_s5 = FP_MULTIPLY_PRECISE(temp_s0, Math_Sin(temp_s2), Q12_SHIFT);
-        var_s4 = FP_MULTIPLY_PRECISE(temp_s0, Math_Cos(temp_s2), Q12_SHIFT);
+        posX = FP_MULTIPLY_PRECISE(angle0, Math_Sin(angle1), Q12_SHIFT);
+        posZ = FP_MULTIPLY_PRECISE(angle0, Math_Cos(angle1), Q12_SHIFT);
     }
 
     if (sp1C > 0)
     {
-        var_s5 += sp18;
-        var_s6 += temp_fp;
-        var_s4 += temp_v0_3;
+        posX += newPosX;
+        posY += newPosY;
+        posZ += newPosZ;
     }
 
-    if (!(var_s5 | var_s6 | var_s4))
+    if (!(posX | posY | posZ))
     {
-        arg0->properties_E4.dummy.properties_E8[1].val32    = 0;
-        arg0->properties_E4.dummy.properties_E8[2].val16[0] = 0;
-        arg0->properties_E4.dummy.properties_E8[2].val16[1] = arg0->rotation_24.vy;
+        chara->properties_E4.dummy.properties_E8[1].val32    = FP_ANGLE(0.0f); // } Presumably angles.
+        chara->properties_E4.dummy.properties_E8[2].val16[0] = FP_ANGLE(0.0f); // }
+        chara->properties_E4.dummy.properties_E8[2].val16[1] = chara->rotation_24.vy;
         return;
     }
 
-    sharedData_800DE210_0_s01.vx = var_s5;
-    sharedData_800DE210_0_s01.vy = var_s6;
-    sharedData_800DE210_0_s01.vz = var_s4;
+    sharedData_800DE210_0_s01.vx = posX;
+    sharedData_800DE210_0_s01.vy = posY;
+    sharedData_800DE210_0_s01.vz = posZ;
 
-    sharedData_800DE200_0_s01.vx = FP_MULTIPLY_PRECISE(g_DeltaTime0, var_s5, Q12_SHIFT);
-    sharedData_800DE200_0_s01.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, var_s6, Q12_SHIFT);
-    sharedData_800DE200_0_s01.vz = FP_MULTIPLY_PRECISE(g_DeltaTime0, var_s4, Q12_SHIFT);
+    sharedData_800DE200_0_s01.vx = FP_MULTIPLY_PRECISE(g_DeltaTime0, posX, Q12_SHIFT);
+    sharedData_800DE200_0_s01.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, posY, Q12_SHIFT);
+    sharedData_800DE200_0_s01.vz = FP_MULTIPLY_PRECISE(g_DeltaTime0, posZ, Q12_SHIFT);
 
-    temp = sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE200_0_s01, arg0);
-    temp = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset_0, &sharedData_800DE210_0_s01, arg0, temp, &sharedData_800E21D0_0_s01.field_128);
+    temp = sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE200_0_s01, chara);
+    temp = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset_0, &sharedData_800DE210_0_s01, chara, temp, &sharedData_800E21D0_0_s01.field_128);
 
-    sharedFunc_800D6C7C_0_s01(&sharedData_800DE200_0_s01, arg0, temp, &sharedData_800E21D0_0_s01.unk_140);
+    sharedFunc_800D6C7C_0_s01(&sharedData_800DE200_0_s01, chara, temp, &sharedData_800E21D0_0_s01.unk_140);
 
-    temp_s2   = ratan2(var_s5, var_s4);
-    temp_s0   = FP_SQUARE_PRECISE(var_s5, Q12_SHIFT) + FP_SQUARE_PRECISE(var_s4, Q12_SHIFT);
-    temp_s1   = temp_s0 + FP_SQUARE_PRECISE(var_s6, Q12_SHIFT);
-    temp_s0   = SquareRoot12(temp_s0);
-    temp_s1   = SquareRoot12(temp_s1);
-    temp_s0   = ratan2(var_s6, temp_s0);
-    temp_v0_9 = FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x6000, Q12_SHIFT);
+    angle1 = ratan2(posX, posZ);
+    angle0 = FP_SQUARE_PRECISE(posX, Q12_SHIFT) + FP_SQUARE_PRECISE(posZ, Q12_SHIFT);
+    angle2 = angle0 + FP_SQUARE_PRECISE(posY, Q12_SHIFT);
+    angle0 = SquareRoot12(angle0);
+    angle2 = SquareRoot12(angle2);
+    angle0 = ratan2(posY, angle0);
+    angle3 = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(6.0f), Q12_SHIFT);
 
-    if (temp_s1 < temp_v0_9)
+    if (angle2 < angle3)
     {
-        temp_s1 = 0;
+        angle2 = FP_ANGLE(0.0f);
     }
     else
     {
-        temp_s1 = temp_s1 - temp_v0_9;
+        angle2 = angle2 - angle3;
     }
 
-    arg0->properties_E4.dummy.properties_E8[1].val32    = temp_s1;
-    arg0->properties_E4.dummy.properties_E8[2].val16[0] = temp_s0;
-    arg0->properties_E4.dummy.properties_E8[2].val16[1] = temp_s2;
+    chara->properties_E4.dummy.properties_E8[1].val32    = angle2;
+    chara->properties_E4.dummy.properties_E8[2].val16[0] = angle0;
+    chara->properties_E4.dummy.properties_E8[2].val16[1] = angle1;
 }

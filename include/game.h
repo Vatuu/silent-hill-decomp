@@ -769,7 +769,7 @@ typedef enum _HarryBone
     HarryBone_Count         = 18
 } s_HarryBone;
 
-/** @brief Player control flags */
+/** @brief Player control flags. */
 typedef enum _PlayerFlags
 {
     PlayerFlag_None           = 0,
@@ -795,6 +795,7 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk19          = 1 << 19,
     PlayerFlag_Unk20          = 1 << 20,
 
+    PlayerFlag_Unk28          = 1 << 28,
     PlayerFlag_Unk29          = 1 << 29,
     PlayerFlag_Unk30          = 1 << 30,
     PlayerFlag_Unk31          = 1 << 31

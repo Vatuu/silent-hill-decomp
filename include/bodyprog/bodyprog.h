@@ -3006,7 +3006,7 @@ u32 IpdHeader_LoadStateGet(s_IpdChunk* chunk);
  */
 bool IpdHeader_IsLoaded(s32 ipdIdx);
 
-// Start process of load map geometry and assign textures when the game is set in a loading screen mode?
+/** Starts the process of loading map geometry and assigns textures when the game is set in a loading screen mode? */
 void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
 /** @brief Computes the distance from an XZ position to the edge of an XZ chunk cell boundary.
@@ -3033,14 +3033,14 @@ q19_12 Ipd_PaddedDistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cell
  */
 q19_12 Ipd_DistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ);
 
-// Load geometry, set material and properly assign the position of the map when loading a new room/map?
+/** Loads geometry, sets materials and properly assigns the position of the map when loading a new room/map? */
 s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
 void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
-// Set materials for active chunks?
+/** Sets materials for active chunks? */
 void func_800433B8(s_Map* map);
 
 s32 Map_IpdIdxGet(s32 cellX, s32 cellZ);
@@ -3051,7 +3051,7 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior);
 
 s32 Ipd_LoadStart(s_IpdChunk* chunk, e_FsFile fileIdx, s32 cellX, s32 cellZ, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
-/** Checks if currently loaded chunks has been loaded properly. */
+/** Checks if currently loaded chunks have been loaded properly. */
 bool Ipd_AreChunksLoaded(void);
 
 bool func_80043830(void);
@@ -4321,7 +4321,7 @@ void WorldGfx_IpdSamplePointStore(void);
 
 void WorldGfx_IpdSamplePointReset(void);
 
-/** Handles player movement, sets render distance and loads map models. */
+/** Handles player movement, sets render distance, and loads map models. */
 void func_8003C3AC(void);
 
 void func_8003C878(s32);
