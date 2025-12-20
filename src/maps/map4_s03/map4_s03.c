@@ -488,7 +488,48 @@ void func_800D5888(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     }
 }
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5904);
+void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords) 
+{
+    MATRIX mat;
+    GsCOORDINATE2* var_a0;
+    s32 temp_a3;
+    s32 temp_t1;
+    s32 posX;
+    s32 posY;
+    s32 posZ;
+
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(2, true))
+    {
+        Vw_CoordHierarchyMatrixCompute(&coords[6], &mat);
+    }
+    else
+    {
+        Vw_CoordHierarchyMatrixCompute(&coords[14], &mat);
+    }
+    
+    posY = chara->position_18.vy;
+    posX = (mat.t[0] * 0x10) - chara->position_18.vx;
+    posZ = (mat.t[2] * 0x10) - chara->position_18.vz;
+    temp_t1 = (mat.t[1] * 0x10) - posY;
+    temp_a3 = temp_t1 - 0x400;
+    chara->field_C8.field_0 = temp_a3;
+    if (temp_a3 >= posY)
+    {
+        chara->field_C8.field_2 = posY;
+    }
+    else
+    {
+        chara->field_C8.field_2 = temp_a3;
+    }
+    chara->field_C8.field_4 = temp_t1 + 0x400;
+    chara->field_D4.field_0 = 0x800;
+    chara->field_C8.field_6 = temp_t1;
+    chara->field_D4.field_2 = 0x666;
+    sharedFunc_800CD920_3_s03(chara, posX, posZ);
+        
+    chara->field_D8.offsetX_0 = chara->field_D8.offsetX_4;
+    chara->field_D8.offsetZ_2 = chara->field_D8.offsetZ_6;
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D59C0);
 

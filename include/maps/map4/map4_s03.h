@@ -158,4 +158,6 @@ void Map_WorldObjectsInit(void);
 
 void func_800D9BB0(void);
 
+void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords);
+
 #endif
