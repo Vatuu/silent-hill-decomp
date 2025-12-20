@@ -1,5 +1,5 @@
 
-void sharedFunc_800DEC64_2_s00(s_SubCharacter* chara)
+s32 sharedFunc_800DEC64_2_s00(s_SubCharacter* chara)
 {
-    sharedFunc_800DE250_2_s00(chara);
+    return sharedFunc_800DE250_2_s00(chara);
 }

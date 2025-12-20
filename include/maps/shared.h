@@ -2413,6 +2413,8 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D8618_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D8888_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D8C34_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D91A0_2_s00(s_SubCharacter* chara);
@@ -3096,7 +3098,7 @@ void sharedFunc_800CBD58_1_s02(void);
 
 void sharedFunc_800DE1F8_2_s00(s_SubCharacter* chara);
 
-void sharedFunc_800DEC64_2_s00(s_SubCharacter* chara);
+s32 sharedFunc_800DEC64_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DEC84_2_s00(s_SubCharacter* chara, q19_12 radius, q19_12 angle);
 
