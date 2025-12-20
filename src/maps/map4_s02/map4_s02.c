@@ -47,7 +47,7 @@ INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D2364_0_s01.h" // 0x800D0D18
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800D2390_0_s01); // 0x800D0D44
+#include "maps/shared/sharedFunc_800D2390_0_s01.h" // 0x800D0D44
 
 #include "maps/shared/Ai_AirScreamer_Init.h" // 0x800D1328
 

@@ -2918,7 +2918,7 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2364_0_s01(s_SubCharacter* chara);
 
-void sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer);
+bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer);
 
 bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer);
 

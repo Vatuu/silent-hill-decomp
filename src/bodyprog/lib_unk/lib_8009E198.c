@@ -9,7 +9,7 @@ s_SysWork_2510 D_800B13EC = {
     .key_4   = 0,
     .pad_5   = { 0, 0, 0 },
     .field_8 = 0,
-    .func_C  = func_8009E3B0,
+    .func_C  = func_8009E3B0, // Handles `PadStateDiscon` / `PadStateFindPad`
 };
 
 s_SysWork_2510 D_800B13FC = {
@@ -25,7 +25,7 @@ s_SysWork_2510 D_800B140C = {
     .key_4   = 4,
     .pad_5   = { 0, 0, 0 },
     .field_8 = 0,
-    .func_C  = func_8009E438,
+    .func_C  = func_8009E438, // Handles `PadStateFindCTP1`
 };
 
 s_SysWork_2510 D_800B141C = {
@@ -56,9 +56,43 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E2D8);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E310);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E3B0);
+bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurID, s32 padInfoCurExID) // 0x8009E3B0
+{
+    s_SysWork_2514_0 tmp;
 
-bool func_8009E438(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurID, s32 padInfoCurExID)
+    tmp = arg0->field_0;
+
+    if (padState == PadStateDiscon || padState == PadStateFindPad)
+    {
+        if (tmp.field_0_24 != 0)
+        {
+            tmp.field_0_24 = 0;
+            tmp.field_0_19 = 0;
+            tmp.field_0_23 = 0;
+            tmp.field_0_22 = 0;
+
+            if (padState == PadStateDiscon)
+            {
+                tmp.field_0_18 = 0;
+            }
+
+            arg0->field_4 = 0;
+            arg0->field_8 = 0;
+            arg0->field_A = 0;
+            arg0->field_0 = tmp;
+        }
+        return true;
+    }
+
+    if (tmp.field_0_24 == 0)
+    {
+        return false;
+    }
+
+    return tmp.field_0_24 != 3;
+}
+
+bool func_8009E438(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurID, s32 padInfoCurExID) // 0x8009E438
 {
     s_SysWork_2514_0 tmp;
     bool             isChanged;
@@ -192,7 +226,44 @@ bool func_8009E97C(s_SysWork_2510* arg0) // 0x8009E97C
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E9D0);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009EBB8);
+bool func_8009EBB8(s_SysWork_2514* list, s_SysWork_2514_18* node, s32 count) // 0x8009EBB8
+{
+    s_SysWork_2514_18* cur;
+    s_SysWork_2514_18* head;
+
+    if (count >= 128)
+    {
+        return false;
+    }
+
+    if (count <= 0 || list == NULL)
+    {
+        return false;
+    }
+
+    if (node == NULL)
+    {
+        return false;
+    }
+
+    head = NULL;
+    cur  = node;
+
+    for (; count > 0; count--)
+    {
+        cur->next_0 = head;
+        cur->prev_4 = NULL;
+        head        = cur++;
+    }
+
+    list->field_10 = head;
+    list->unk_14   = NULL;
+
+    list->head_18.next_0 = &list->head_18;
+    list->head_18.prev_4 = &list->head_18;
+
+    return true;
+}
 
 bool func_8009EC1C(s_SysWork_2514* list, s_SysWork_2514_18* node) // 0x8009EC1C
 {
