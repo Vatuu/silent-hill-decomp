@@ -24,7 +24,7 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter* chara)
     sharedData_800DE1E0_0_s01.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vy, Q12_SHIFT);
     sharedData_800DE1E0_0_s01.vz = FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vz, Q12_SHIFT);
 
-    temp_s0 = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01,
+    temp_s0 = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset_0,
                                         &sharedData_800DE1F0_0_s01,
                                         chara,
                                         sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE1E0_0_s01, chara),
