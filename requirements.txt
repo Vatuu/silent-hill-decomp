@@ -1,6 +1,7 @@
 python-Levenshtein
 python-ranges
 toml
+intervaltree<3.1.0
 splat64[mips]>=0.33.2,<0.35.0
 spimdisasm<1.36.0
 clang-format
