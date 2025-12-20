@@ -971,7 +971,9 @@ void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
 
 void func_8003C3AC(void) // 0x8003C3AC
 {
-    VECTOR3         pos0;
+    VECTOR3         pos0; // World's borders?
+                          // Modifying `pos0.vz = Q12(200.0f);`makes the world to not render and
+                          // in case of stepping in the void the player becomes unable to move
     VECTOR3         pos1;
     SVECTOR         pos2;
     s32             temp_a1;
@@ -1007,7 +1009,6 @@ void func_8003C3AC(void) // 0x8003C3AC
         chara->position_18.vx >= Q12(-40.0f) && chara->position_18.vx <= Q12(40.0f) &&
         chara->position_18.vz >= Q12(200.0f) && chara->position_18.vz <= Q12(240.0f))
     {
-
         pos0.vz = Q12(200.0f);
     }
 
@@ -1041,7 +1042,7 @@ void func_8003C3AC(void) // 0x8003C3AC
             pos1.vx = chara->position_18.vx + FP_MULTIPLY(Math_Sin(pos2.vy), var_s1, Q12_SHIFT);
             pos1.vz = chara->position_18.vz + FP_MULTIPLY(Math_Cos(pos2.vy), var_s1, Q12_SHIFT);
         }
-    } 
+    }
     else
     {
         pos1     = chara->position_18;
@@ -1080,7 +1081,7 @@ void func_8003C3AC(void) // 0x8003C3AC
 s32 func_8003C850(void) // 0x8003C850
 {
     func_8003C3AC();
-    return func_80043740();
+    return Ipd_AreChunksLoaded();
 }
 
 void func_8003C878(s32 arg0) // 0x8003C878

@@ -463,7 +463,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     AddPrim(&arg0->org[1], &D_800BFBF0[g_ActiveBufferIdx]);
 }
 
-u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx) // 80041ADC
+u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx) // 0x80041ADC
 {
     if (queueIdx == NO_VALUE)
     {
@@ -1358,8 +1358,8 @@ s32 Ipd_LoadStart(s_IpdChunk* chunk, e_FsFile fileIdx, s32 cellX, s32 cellZ, q19
         return fileIdx;
     }
 
-    chunk->cellX_8   = cellX;
-    chunk->cellZ_A   = cellZ;
+    chunk->cellX_8    = cellX;
+    chunk->cellZ_A    = cellZ;
     chunk->queueIdx_4 = Fs_QueueStartRead(fileIdx, chunk->ipdHdr_0);
 
     Ipd_DistanceToEdgeCalc(chunk, posX0, posZ0, posX1, posZ1, isExterior);
@@ -1367,20 +1367,20 @@ s32 Ipd_LoadStart(s_IpdChunk* chunk, e_FsFile fileIdx, s32 cellX, s32 cellZ, q19
     return chunk->queueIdx_4;
 }
 
-bool func_80043740(void) // 0x80043740
+bool Ipd_AreChunksLoaded(void) // 0x80043740
 {
     s32         i;
     s_IpdChunk* curChunk;
 
     switch (LmHeader_LoadStateGet(&g_Map.globalLm_138))
     {
-        case 0:
+        case StaticModelLoadState_Invalid:
             break;
 
-        case 1:
+        case StaticModelLoadState_Unloaded:
             return false;
 
-        case 2:
+        case StaticModelLoadState_Corrupted:
             return false;
     }
 
@@ -1390,8 +1390,8 @@ bool func_80043740(void) // 0x80043740
     {
         switch (IpdHeader_LoadStateGet(curChunk))
         {
-            case 0:
-            case 3:
+            case StaticModelLoadState_Invalid:
+            case StaticModelLoadState_Loaded:
                 continue;
         }
 

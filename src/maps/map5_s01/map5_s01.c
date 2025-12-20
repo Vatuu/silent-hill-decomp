@@ -550,7 +550,7 @@ void func_800EBA40(void) // 0x800EBA40
     s32 i;
     s32 j;
 
-    func_80037188();
+    Game_RadioSoundStop();
 
     switch (g_SysWork.sysStateStep_C[0])
     {

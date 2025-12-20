@@ -61,7 +61,7 @@ void GameState_Options_Update(void) // 0x801E2D44
 
             if (g_GameWork.gameStatePrev_590 == GameState_InGame)
             {
-                func_80037188();
+                Game_RadioSoundStop();
             }
 
             g_MainOptionsMenu_SelectedEntry      = MainOptionsMenuEntry_Exit;

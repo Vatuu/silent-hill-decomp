@@ -171,19 +171,19 @@ void GameFs_MapStartup(void) // 0x80034964
             func_8003C220(&g_MapOverlayHeader, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
             if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_OverlayTransition)
             {
-                func_80037188();
+                Game_RadioSoundStop();
             }
 
             g_GameWork.gameStateStep_598[0]++;
 
-        case 8:
+        case 8: // Checks if geometry have succesfully loaded?
             if (func_8003C850() != false)
             {
                 Game_StateStepIncrement();
             }
             break;
 
-        case 9:
+        case 9: // Checks if the current song playing is the same as the one intended to be playing.
             if (func_80035780() == 0)
             {
                 g_GameWork.gameState_594 = GameState_MainLoadScreen;
@@ -606,7 +606,7 @@ s32 func_80035780(void) // 0x80035780
             break;
 
         case 2:
-            if (func_80045BC8() == 0)
+            if (func_80045BC8() == false)
             {
                 func_800358DC(g_MapOverlayHeader.field_14);
                 g_GameWork.gameStateStep_598[1]++;
@@ -1704,7 +1704,7 @@ void func_80037154(void) // 0x80037154
     }
 }
 
-void func_80037188(void) // 0x80037188
+void Game_RadioSoundStop(void) // 0x80037188
 {
     s32 i;
 
@@ -3509,7 +3509,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             else
             {
                 Fs_QueueWaitForEmpty();
-                func_80037188();
+                Game_RadioSoundStop();
                 SysWork_StateStepIncrement(0);
             }
 

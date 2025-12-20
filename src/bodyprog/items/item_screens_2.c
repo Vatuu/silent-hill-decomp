@@ -114,7 +114,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             ScreenFade_Start(true, true, false);
             g_ScreenFadeTimestep = Q12(3.0f);
 
-            func_80037188();
+            Game_RadioSoundStop();
 
             g_Inventory_IsScrolling              = true;
             g_Gfx_Inventory_SelectionBordersDraw = 0;
