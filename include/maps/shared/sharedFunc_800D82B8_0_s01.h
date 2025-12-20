@@ -31,7 +31,7 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
         var_a3 = 0;
         var_s3 = 1;
 
-        temp_s5 = sharedData_800CAA98_0_s01.ptr_D58;
+        temp_s5 = sharedData_800CAA98_0_s01.ptr_D48[4];
         coord   = sharedData_800E21D0_0_s01.coords_8;
 
         temp_a0  = &temp_s5[1];

@@ -831,7 +831,7 @@ q19_12 Model_AnimDurationGet(s_Model* model) // 0x800D7E88
     return Anim_DurationGet(model, func_80044918(&model->anim_4));
 }
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", sharedFunc_800D7EBC_0_s01); // 0x800D7EBC
+#include "maps/shared/sharedFunc_800D7EBC_0_s01.h" // 0x800D7EBC
 
 #include "maps/shared/sharedFunc_800D81B0_0_s01.h" // 0x800D81B0
 

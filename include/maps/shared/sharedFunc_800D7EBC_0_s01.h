@@ -1,0 +1,89 @@
+bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
+{
+    VECTOR3*           vec;
+    GsCOORDINATE2*     coords;
+    s32                temp_v0;
+    s32                temp_v1_2;
+    s_SubCharacter_44* temp_s1;
+    s32                animStatus;
+    s_PlayerWork*      player;
+
+    player = &g_SysWork.playerWork_4C;
+
+    animStatus = airScreamer->model_0.anim_4.status_0;
+    temp_s1    = &airScreamer->field_44;
+
+    if (!(player->player_0.flags_3E & 8) && g_SysWork.npcIdxs_2354[0] == -1 && g_SysWork.npcIdxs_2354[1] == -1 &&
+        airScreamer->model_0.state_2 != 0xC && airScreamer->model_0.state_2 != 0x19 &&
+        airScreamer->model_0.state_2 != 0x28 && airScreamer->model_0.state_2 != 0x31)
+    {
+        airScreamer->field_44.field_0 = 0;
+    }
+    else
+    {
+        vec    = sharedData_800E21D0_0_s01.matrices_C;
+        coords = sharedData_800E21D0_0_s01.coords_8;
+
+        switch (animStatus)
+        {
+            case 5:
+            case 3:
+                if (temp_s1->field_0 == 0)
+                {
+                    if (animStatus == 3)
+                    {
+                        temp_s1->field_2 = 0x28;
+                    }
+                    else
+                    {
+                        temp_s1->field_2 = 0x29;
+                    }
+                    temp_s1->field_0 = 1;
+                }
+
+                func_800805BC(&vec[0], sharedData_800CAA98_0_s01.ptr_D48[1], &coords[sharedData_800CAA98_0_s01.ptr_D48[1]->pad], 2);
+                temp_v0           = func_80080478(&vec[0], &vec[1]);
+                temp_v1_2         = temp_v0 >> 0x10;
+                temp_s1->field_18 = *vec;
+                temp_s1->field_C  = temp_v0;
+                temp_s1->field_E  = temp_v1_2;
+
+                if (func_8008A3E0(airScreamer) != 0)
+                {
+                    airScreamer->properties_E4.player.flags_11C |= 1;
+                }
+                break;
+
+            case 7:
+                if (temp_s1->field_0 == 0)
+                {
+                    temp_s1->field_2 = 0x2A;
+                    temp_s1->field_0 = 1;
+                }
+                func_800805BC(vec, sharedData_800CAA98_0_s01.ptr_D48[2], &coords[sharedData_800CAA98_0_s01.ptr_D48[2]->pad], 2);
+                func_800805BC(&vec[2], sharedData_800CAA98_0_s01.ptr_D48[3], &coords[sharedData_800CAA98_0_s01.ptr_D48[3]->pad], 2);
+
+                vec[0].vx = (vec[0].vx + vec[2].vx) / 2;
+                vec[0].vy = (vec[0].vy + vec[2].vy) / 2;
+                vec[0].vz = (vec[0].vz + vec[2].vz) / 2;
+                vec[1].vx = (vec[1].vx + vec[3].vx) / 2;
+                vec[1].vy = (vec[1].vy + vec[3].vy) / 2;
+                vec[1].vz = (vec[1].vz + vec[3].vz) / 2;
+
+                temp_v0   = func_80080478(vec, &vec[1]);
+                temp_v1_2 = temp_v0 >> 0x10;
+
+                temp_s1->field_18 = sharedData_800E21D0_0_s01.matrices_C[0];
+                temp_s1->field_C  = temp_v0;
+                temp_s1->field_E  = temp_v1_2;
+
+                if (func_8008A3E0(airScreamer) != 0)
+                {
+                    airScreamer->properties_E4.player.flags_11C |= 2;
+                }
+                break;
+        }
+    }
+
+    return true;
+}

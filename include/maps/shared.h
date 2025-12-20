@@ -1916,8 +1916,7 @@ typedef struct
     u_Property  properties_D14[4];
     u16         field_D24[2][3][2];
     u8          field_D3C[2][6];
-    s8*         ptr_D48[4];
-    SVECTOR*    ptr_D58;
+    SVECTOR*    ptr_D48[5];
     s16         field_D5C[4][2]; // Related to animations. Move offset distances?
     s8          unk_D6C[4];
     s16         field_D70[2][2];
@@ -2992,7 +2991,7 @@ bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* airScreamer);
  */
 void sharedFunc_800D7B14_0_s01(s_SubCharacter* airScreamer, GsCOORDINATE2* coords);
 
-void sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer);
+bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D81B0_0_s01(s_SubCharacter* airScreamer);
 
