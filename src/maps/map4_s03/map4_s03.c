@@ -973,7 +973,7 @@ s32 func_800D7394(void) // 0x800D7394
 
 void func_800D7408(void) // 0x800D7408
 {
-    D_800E0698.player_0 = NULL;
+    D_800E0698.chara_0 = NULL;
     D_800E0698.field_4 = 0;
 
     func_800D7450();
@@ -1028,7 +1028,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D761C);
 
 void func_800D76BC(s_SubCharacter* chara) // 0x800D76BC
 {
-    D_800E0698.player_0 = chara;
+    D_800E0698.chara_0 = chara;
     D_800E0698.field_4 = 0;
 
     func_800D7548();
@@ -1049,9 +1049,9 @@ void func_800D7718(void) // 0x800D7718
     SetTransMatrix(&mat);
 
     var_s2 = 188;
-    if (D_800E0698.player_0)
+    if (D_800E0698.chara_0 != NULL)
     {
-        if (g_DeltaTime0 != 0)
+        if (g_DeltaTime0 != Q12(0.0f))
         {
             D_800DB924.pad++;
             if (!(D_800DB924.pad & 0xB))
