@@ -182,8 +182,8 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
             {
                 Chara_DamageTake(chara, Q12(0.0f));
 
-                chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
-                chara->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
+                chara->position_18.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(100.0f);
+                chara->position_18.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(100.0f);
 
                 sharedFunc_800D3DFC_0_s01(chara);
                 break;
@@ -194,8 +194,8 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
                 Chara_DamageTake(chara, Q12(0.0f));
                 sharedFunc_800D2364_0_s01(chara);
 
-                chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
-                chara->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
+                chara->position_18.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(100.0f);
+                chara->position_18.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(100.0f);
 
                 sharedFunc_800D3DFC_0_s01(chara);
                 break;
@@ -371,7 +371,7 @@ void func_800D426C(s_SubCharacter* chara) // 0x800D426C
         chara->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
     }
 
-    sharedFunc_800D529C_0_s01(chara, Q12(1.0f), func_80080478(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18));
+    sharedFunc_800D529C_0_s01(chara, Q12(1.0f), func_80080478(&chara->position_18, &g_SysWork.playerWork_4C.player_0.position_18));
     sharedFunc_800D598C_0_s01(chara);
 
     switch (Chara_DamageTake(chara, Q12(1.0f)))
@@ -379,7 +379,7 @@ void func_800D426C(s_SubCharacter* chara) // 0x800D426C
         case 0:
             if (!chara->properties_E4.unk0.properties_120.val32 ||
                 chara == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353] ||
-                Math_Distance2dGet(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18) > Q12(6.5f))
+                Math_Distance2dGet(&chara->position_18, &g_SysWork.playerWork_4C.player_0.position_18) > Q12(6.5f))
             {
                 chara->model_0.state_2 = 47;
                 chara->model_0.stateStep_3 = 0;
@@ -502,7 +502,7 @@ void func_800D45BC(s_SubCharacter* chara) // 0x800D45BC
     {
         case 0:
             if (!chara->properties_E4.unk0.properties_120.val32 ||
-                Math_Distance2dGet(&chara->position_18, &g_SysWork.player_4C.chara_0.position_18) > Q12(2.0f))
+                Math_Distance2dGet(&chara->position_18, &g_SysWork.playerWork_4C.player_0.position_18) > Q12(2.0f))
             {
                 chara->model_0.state_2 = 47;
                 chara->model_0.stateStep_3 = 0;

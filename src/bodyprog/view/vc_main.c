@@ -905,7 +905,7 @@ void vcSetNearestEnemyDataInVC_WORK(VC_WORK* w_p) // 0x80081D90
                     set_active_data_f = false;
                     if (sc_p == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353])
                     {
-                        set_active_data_f = g_SysWork.playerCombatInfo_38.isAiming_13 > false;
+                        set_active_data_f = g_SysWork.playerCombat_38.isAiming_13 > false;
                     }
                 }
             }
@@ -1368,7 +1368,7 @@ void vcAutoRenewalWatchTgtPosAndAngZ(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type, V
     }
 
     vcMixSelfViewEffectToWatchTgtPos(&w_p->watch_tgt_pos_7C, &w_p->watch_tgt_ang_z_8C, self_view_eff_rate,
-                                     w_p, &g_SysWork.playerBoneCoords_890[HarryBone_Head].workm, g_SysWork.player_4C.chara_0.model_0.anim_4.status_0);
+                                     w_p, &g_SysWork.playerBoneCoords_890[HarryBone_Head].workm, g_SysWork.playerWork_4C.player_0.model_0.anim_4.status_0);
 
     if (w_p->watch_tgt_pos_7C.vy > w_p->watch_tgt_max_y_88)
     {
@@ -1481,7 +1481,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
     sys_work = &g_SysWork;
 
     vwMatrixToAngleYXZ(&cam_ang, head_mat);
-    angle_delta_y = Math_AngleNormalize(cam_ang.vy - sys_work->player_4C.chara_0.rotation_24.vy);
+    angle_delta_y = Math_AngleNormalize(cam_ang.vy - sys_work->playerWork_4C.player_0.rotation_24.vy);
 
     // 4-step angle adjustment based on hardcoded anim statuses.
 
@@ -1513,14 +1513,14 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
             break;
 
         default:
-            cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy;
+            cam_ang.vy = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
             break;
 
         case ANIM_STATUS(HarryAnim_LookAround, false):
         case ANIM_STATUS(HarryAnim_LookAround, true):
             if (w_p->nearest_enemy_2DC != NULL)
             {
-                cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy;
+                cam_ang.vy = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
             }
             else
             {
@@ -1549,7 +1549,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
                 corrected_angle_y = angle_delta_y;
             }
 
-            cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy + corrected_angle_y;
+            cam_ang.vy = g_SysWork.playerWork_4C.player_0.rotation_24.vy + corrected_angle_y;
             break;
 
         case ANIM_STATUS(HarryAnim_WalkForward, false):
@@ -1574,7 +1574,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
                 corrected_angle_y = FP_ANGLE(-10.0f);
             }
 
-            cam_ang.vy = g_SysWork.player_4C.chara_0.rotation_24.vy + corrected_angle_y;
+            cam_ang.vy = g_SysWork.playerWork_4C.player_0.rotation_24.vy + corrected_angle_y;
             break;
     }
 
@@ -1608,7 +1608,7 @@ void vcMixSelfViewEffectToWatchTgtPos(VECTOR3* watch_tgt_pos, s16* watch_tgt_ang
         case ANIM_STATUS(HarryAnim_TurnLeft, true):
         case ANIM_STATUS(HarryAnim_TurnRight, false):
         case ANIM_STATUS(HarryAnim_TurnRight, true):
-            temp_dir = (g_SysWork.player_4C.chara_0.rotation_24.vy >> 7) & 0xF;
+            temp_dir = (g_SysWork.playerWork_4C.player_0.rotation_24.vy >> 7) & 0xF;
             if (temp_dir == 0 || temp_dir == 5)
             {
                 cam_ang.vx -= FP_ANGLE(1.0f);

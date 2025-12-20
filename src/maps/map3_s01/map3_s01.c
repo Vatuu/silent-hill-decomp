@@ -172,7 +172,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         case 2:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 59);
             break;
 
         case 3:
@@ -207,7 +207,7 @@ void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
             break;
 
         case 10:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 60);
             break;
 
         default:
@@ -241,7 +241,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
             break;
 
         case EventState_2:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 59);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 59);
             break;
 
         case EventState_SfxId:
@@ -253,7 +253,7 @@ void MapEvent_UseBottleOnLiquid(void) // 0x800D25A8
             break;
 
         case EventState_5:
-            func_80086C58(&g_SysWork.player_4C.chara_0, 60);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 60);
             break;
 
         default:

@@ -27,6 +27,6 @@ void Ai_LarvalStalker_Init(s_SubCharacter* arg0)
         arg0->properties_E4.dummy.properties_E8[i].val32 = 0;
     }
 
-    arg0->properties_E4.dummy.properties_E8[4].val32 = g_SysWork.player_4C.chara_0.position_18.vx;
-    arg0->properties_E4.dummy.properties_E8[5].val32 = g_SysWork.player_4C.chara_0.position_18.vz;
+    arg0->properties_E4.dummy.properties_E8[4].val32 = g_SysWork.playerWork_4C.player_0.position_18.vx;
+    arg0->properties_E4.dummy.properties_E8[5].val32 = g_SysWork.playerWork_4C.player_0.position_18.vz;
 }

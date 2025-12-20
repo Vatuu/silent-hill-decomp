@@ -14,8 +14,8 @@ void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse)
     Rng_Rand16();
     localNurse->properties_E4.puppetNurse.field_11C = func_8006FAFC(nurse,
                                                                     Q12(1.0f),
-                                                                    g_SysWork.player_4C.chara_0.position_18.vx,
-                                                                    g_SysWork.player_4C.chara_0.position_18.vz,
+                                                                    g_SysWork.playerWork_4C.player_0.position_18.vx,
+                                                                    g_SysWork.playerWork_4C.player_0.position_18.vz,
                                                                     FP_ANGLE(360.0f),
                                                                     true);
 

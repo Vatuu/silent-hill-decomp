@@ -10,8 +10,8 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
     q19_12 deltaX;
     q19_12 deltaZ;
 
-    dist0 = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
+    dist0 = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
 
     if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))))
     {
@@ -125,7 +125,7 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
             chara->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 4);
         }
 
-        if (dist0 < Q12(2.0f) && dist0 < dist1 && !func_800700F8(chara, &g_SysWork.player_4C.chara_0))
+        if (dist0 < Q12(2.0f) && dist0 < dist1 && !func_800700F8(chara, &g_SysWork.playerWork_4C.player_0))
         {
             chara->properties_E4.player.runTimer_F8                       = Q12(5.0f);
             chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1;
@@ -139,8 +139,8 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* chara)
         {
             if (condCombo)
             {
-                chara->properties_E4.player.field_F0                          = g_SysWork.player_4C.chara_0.position_18.vx;
-                chara->properties_E4.player.field_F4                          = g_SysWork.player_4C.chara_0.position_18.vz;
+                chara->properties_E4.player.field_F0                          = g_SysWork.playerWork_4C.player_0.position_18.vx;
+                chara->properties_E4.player.field_F4                          = g_SysWork.playerWork_4C.player_0.position_18.vz;
                 chara->properties_E4.dummy.properties_E8[11].val16[1] = 0;
             }
 

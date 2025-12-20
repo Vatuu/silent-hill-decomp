@@ -116,7 +116,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
 #ifdef HAS_PARTICLE_CASE_11
                 PARTICLE_CASE(11):
 #if defined(MAP0_S02)
-                    if (g_SysWork.player_4C.chara_0.position_18.vx < Q12(-120.0f))
+                    if (g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-120.0f))
                     {
                         sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
                         break;

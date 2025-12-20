@@ -14,9 +14,9 @@ void sharedFunc_800DD834_2_s00(s_SubCharacter* chara)
     q19_12 sinRotY;
     s32    i;
 
-    posX = g_SysWork.player_4C.chara_0.position_18.vx;
-    posY = g_SysWork.player_4C.chara_0.position_18.vy;
-    posZ = g_SysWork.player_4C.chara_0.position_18.vz;
+    posX = g_SysWork.playerWork_4C.player_0.position_18.vx;
+    posY = g_SysWork.playerWork_4C.player_0.position_18.vy;
+    posZ = g_SysWork.playerWork_4C.player_0.position_18.vz;
 
     curAngle = Rng_RandQ12();
     for (i = 0; i < ANGLE_STEP_COUNT; i++, curAngle += FP_ANGLE(360.0f / ANGLE_STEP_COUNT))

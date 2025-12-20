@@ -946,9 +946,9 @@ void func_800EC42C(void) // 0x800EC42C
 
     if (D_800F3E0C >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, "HERO", D_800F3E0C, (s_DmsHeader*)FS_BUFFER_13);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800F3E0C, (s_DmsHeader*)FS_BUFFER_13);
 
-        g_SysWork.player_4C.chara_0.position_18.vx -= Q12(20.0f);
+        g_SysWork.playerWork_4C.player_0.position_18.vx -= Q12(20.0f);
 
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800F3DF0, &D_800F3E00, NULL, D_800F3E0C, (s_DmsHeader*)FS_BUFFER_13));
 

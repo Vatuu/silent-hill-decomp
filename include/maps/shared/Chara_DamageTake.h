@@ -62,7 +62,7 @@ s32 Chara_DamageTake(s_SubCharacter* chara, q19_12 mult)
     if (dmg > 0 || chara->health_B0 <= 0)
     {
         temp_a1 = D_800AD4C8[attack].field_10;
-        angle   = FP_ANGLE_NORM_S(g_SysWork.player_4C.chara_0.rotation_24.vy - chara->rotation_24.vy);
+        angle   = FP_ANGLE_NORM_S(g_SysWork.playerWork_4C.player_0.rotation_24.vy - chara->rotation_24.vy);
 
 #ifdef MAP0_S01
         if (chara->health_B0 <= Q12(0.0f))

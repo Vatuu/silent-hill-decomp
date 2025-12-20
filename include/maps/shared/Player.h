@@ -303,7 +303,7 @@ void sharedFunc_800D0CB8_0_s00(void)
 
             if (g_SysWork.field_234B_0 != 0)
             {
-                func_8005DE0C(Sfx_Unk1360, &g_SysWork.player_4C.chara_0.position_18, unkValDiv4, 0, 0);
+                func_8005DE0C(Sfx_Unk1360, &g_SysWork.playerWork_4C.player_0.position_18, unkValDiv4, 0, 0);
             }
             else if (sharedData_800E32CC_0_s00 != 0)
             {
@@ -347,18 +347,18 @@ void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
 
     g_SysWork.coord_22F8.flg        = false;
-    g_SysWork.coord_22F8.coord.t[0] = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vx);
-    g_SysWork.coord_22F8.coord.t[1] = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vy);
-    g_SysWork.coord_22F8.coord.t[2] = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vz);
+    g_SysWork.coord_22F8.coord.t[0] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vx);
+    g_SysWork.coord_22F8.coord.t[1] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vy);
+    g_SysWork.coord_22F8.coord.t[2] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vz);
 
     func_80049B6C(&g_SysWork.coord_22F8, &matUnused, &worldMat);
 
     gte_SetRotMatrix(&worldMat);
     gte_SetTransMatrix(&worldMat);
 
-    beamDirY      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, Math_Cos(*rotY), Q12_SHIFT);
-    beamDirX      = FP_MULTIPLY(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, Math_Sin(*rotY), Q12_SHIFT), Math_Sin(*rotX), Q12_SHIFT);
-    beamDirZ      = FP_MULTIPLY(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombatInfo_38.weaponAttack_F].field_0, Math_Sin(*rotY), Q12_SHIFT), Math_Cos(*rotX), Q12_SHIFT);
+    beamDirY      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, Math_Cos(*rotY), Q12_SHIFT);
+    beamDirX      = FP_MULTIPLY(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, Math_Sin(*rotY), Q12_SHIFT), Math_Sin(*rotX), Q12_SHIFT);
+    beamDirZ      = FP_MULTIPLY(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, Math_Sin(*rotY), Q12_SHIFT), Math_Cos(*rotX), Q12_SHIFT);
     beamStart.vx  = vec0->vx;
     beamStart.vy  = vec0->vy;
     beamStart.vz  = vec0->vz;
@@ -367,7 +367,7 @@ void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     beamOffset.vz = beamDirZ;
 
     PushMatrix();
-    cond = func_8006DA08(&sp60, &beamStart, &beamOffset, &g_SysWork.player_4C.chara_0);
+    cond = func_8006DA08(&sp60, &beamStart, &beamOffset, &g_SysWork.playerWork_4C.player_0);
     PopMatrix();
 
     primCount = cond ? (FP_FROM(sp60.field_14, Q12_SHIFT) + 1) : 16;
@@ -378,9 +378,9 @@ void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
         beamStart.vy = vec0->vy + FP_MULTIPLY(beamDirY, i, 4);
         beamStart.vz = vec0->vz + FP_MULTIPLY(beamDirZ, i, 4);
 
-        startRelPos.vx = Q12_TO_Q8(beamStart.vx - g_SysWork.player_4C.chara_0.position_18.vx);
-        startRelPos.vy = Q12_TO_Q8(beamStart.vy - g_SysWork.player_4C.chara_0.position_18.vy);
-        startRelPos.vz = Q12_TO_Q8(beamStart.vz - g_SysWork.player_4C.chara_0.position_18.vz);
+        startRelPos.vx = Q12_TO_Q8(beamStart.vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+        startRelPos.vy = Q12_TO_Q8(beamStart.vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+        startRelPos.vz = Q12_TO_Q8(beamStart.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
         gte_ldv0(&startRelPos);
         gte_rtps();
 
@@ -389,9 +389,9 @@ void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
         beamOffset.vx = vec0->vx + FP_MULTIPLY(beamDirX, i + 1, 4);
         beamOffset.vy = vec0->vy + FP_MULTIPLY(beamDirY, i + 1, 4);
         beamOffset.vz = vec0->vz + FP_MULTIPLY(beamDirZ, i + 1, 4);
-        endRelPos.vx  = Q12_TO_Q8(beamOffset.vx - g_SysWork.player_4C.chara_0.position_18.vx);
-        endRelPos.vy  = Q12_TO_Q8(beamOffset.vy - g_SysWork.player_4C.chara_0.position_18.vy);
-        endRelPos.vz  = Q12_TO_Q8(beamOffset.vz - g_SysWork.player_4C.chara_0.position_18.vz);
+        endRelPos.vx  = Q12_TO_Q8(beamOffset.vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+        endRelPos.vy  = Q12_TO_Q8(beamOffset.vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+        endRelPos.vz  = Q12_TO_Q8(beamOffset.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
 
         gte_stsxy(&polyGt4->x0);
         gte_stszotz(&zScreenStart);
@@ -403,9 +403,9 @@ void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
 
         if (i == (primCount - 1))
         {
-            endRelPos.vx = Q12_TO_Q8(sp60.field_4.vx - g_SysWork.player_4C.chara_0.position_18.vx);
-            endRelPos.vy = Q12_TO_Q8(sp60.field_4.vy - g_SysWork.player_4C.chara_0.position_18.vy);
-            endRelPos.vz = Q12_TO_Q8(sp60.field_4.vz - g_SysWork.player_4C.chara_0.position_18.vz);
+            endRelPos.vx = Q12_TO_Q8(sp60.field_4.vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+            endRelPos.vy = Q12_TO_Q8(sp60.field_4.vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+            endRelPos.vz = Q12_TO_Q8(sp60.field_4.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
         }
 
         gte_ldv0(&endRelPos);
@@ -568,9 +568,9 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
 
     GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
     g_SysWork.coord_22F8.flg        = false;
-    g_SysWork.coord_22F8.coord.t[0] = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vx);
-    g_SysWork.coord_22F8.coord.t[1] = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vy);
-    g_SysWork.coord_22F8.coord.t[2] = Q12_TO_Q8(g_SysWork.player_4C.chara_0.position_18.vz);
+    g_SysWork.coord_22F8.coord.t[0] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vx);
+    g_SysWork.coord_22F8.coord.t[1] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vy);
+    g_SysWork.coord_22F8.coord.t[2] = Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vz);
 
     func_80049B6C(&g_SysWork.coord_22F8, &matUnused0, &worldMat);
 
@@ -579,16 +579,16 @@ void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
 
     prim = (POLY_FT4*)GsOUT_PACKET_P;
 
-    vec0Delta.vx = Q12_TO_Q8(vec0->vx - g_SysWork.player_4C.chara_0.position_18.vx);
-    vec0Delta.vy = Q12_TO_Q8(vec0->vy - g_SysWork.player_4C.chara_0.position_18.vy);
-    vec0Delta.vz = Q12_TO_Q8(vec0->vz - g_SysWork.player_4C.chara_0.position_18.vz);
+    vec0Delta.vx = Q12_TO_Q8(vec0->vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+    vec0Delta.vy = Q12_TO_Q8(vec0->vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+    vec0Delta.vz = Q12_TO_Q8(vec0->vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
 
     gte_ldv0(&vec0Delta);
     gte_rtps();
 
-    vec1Delta.vx = Q12_TO_Q8(vec1->vx - g_SysWork.player_4C.chara_0.position_18.vx);
-    vec1Delta.vy = Q12_TO_Q8(vec1->vy - g_SysWork.player_4C.chara_0.position_18.vy);
-    vec1Delta.vz = Q12_TO_Q8(vec1->vz - g_SysWork.player_4C.chara_0.position_18.vz);
+    vec1Delta.vx = Q12_TO_Q8(vec1->vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+    vec1Delta.vy = Q12_TO_Q8(vec1->vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+    vec1Delta.vz = Q12_TO_Q8(vec1->vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
 
     gte_stsxy(&prim->x0);
     gte_stszotz(&depth);
@@ -711,13 +711,13 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
     s16         var_v1;
 
     cond = false;
-    if (g_SysWork.player_4C.extra_128.state_1C < PlayerState_Unk58)
+    if (g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_Unk58)
     {
         cond = true;
     }
 
 #if defined(MAP0_S00)
-    else if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Unk74)
+    else if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_Unk74)
     {
         cond = g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S02;
     }
@@ -730,7 +730,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
     else
     {
-        switch (g_SysWork.player_4C.extra_128.state_1C)
+        switch (g_SysWork.playerWork_4C.extra_128.state_1C)
         {
 #ifdef HAS_PlayerState_Unk128
             case PlayerState_Unk128:
@@ -788,7 +788,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 #endif
 
 #if defined(MAP0_S01)
-    if (g_SysWork.player_4C.extra_128.state_1C == PlayerState_Unk53)
+    if (g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_Unk53)
     {
         cond = false;
     }
@@ -866,8 +866,8 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
         chara->position_18.vx += offset.vx;
         chara->position_18.vz += offset.vz;
 
-        if (g_SysWork.player_4C.extra_128.state_1C < PlayerState_Unk87 ||
-            (g_SysWork.player_4C.extra_128.state_1C >= PlayerState_Unk89 && g_SysWork.player_4C.extra_128.state_1C != PlayerState_Unk106))
+        if (g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_Unk87 ||
+            (g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_Unk89 && g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_Unk106))
         {
             chara->position_18.vy = Q12(0.0f);
         }
@@ -891,7 +891,7 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
 void sharedFunc_800D209C_0_s00(void)
 {
-    g_SysWork.playerCombatInfo_38.weaponAttack_F = NO_VALUE;
+    g_SysWork.playerCombat_38.weaponAttack_F = NO_VALUE;
     g_SavegamePtr->equippedWeapon_AA             = InventoryItemId_Unequipped;
 
     Player_ControlFreeze();
@@ -908,8 +908,8 @@ void Player_ControlFreeze(void)
     s_PlayerExtra*  playerExtra;
     s_SubCharacter* playerChara;
 
-    playerExtra = &g_SysWork.player_4C.extra_128;
-    playerChara = &g_SysWork.player_4C.chara_0;
+    playerExtra = &g_SysWork.playerWork_4C.extra_128;
+    playerChara = &g_SysWork.playerWork_4C.player_0;
 
     sharedData_800DD59C_0_s00 = NO_VALUE;
 
@@ -943,13 +943,13 @@ void Player_ControlFreeze(void)
     sharedData_800E39D8_0_s00 = 0;
 
     playerChara->field_D4.field_2                               = Q12(0.0f);
-    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
+    g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Unk4 | PlayerFlag_Unk5;
     playerChara->flags_3E                                      |= CharaFlag_Unk4;
     playerChara->field_E1_0                                     = 4;
 
-    if (g_SysWork.playerCombatInfo_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+    if (g_SysWork.playerCombat_38.weaponAttack_F < WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
     {
-        g_SysWork.playerCombatInfo_38.weaponAttack_F = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F);
+        g_SysWork.playerCombat_38.weaponAttack_F = WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F);
     }
 }
 
@@ -960,14 +960,14 @@ void Player_ControlUnfreeze(bool setIdle)
 
     g_Player_DisableControl = false;
 
-    extra  = &g_SysWork.player_4C.extra_128;
-    player = &g_SysWork.player_4C.chara_0;
+    extra  = &g_SysWork.playerWork_4C.extra_128;
+    player = &g_SysWork.playerWork_4C.player_0;
 
     if (setIdle)
     {
-        g_SysWork.player_4C.extra_128.state_1C          = PlayerState_None;
-        g_SysWork.player_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
-        g_SysWork.player_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+        g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_None;
+        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
 
         // TODO: Will `Character_AnimSet` work here?
         player->model_0.anim_4.status_0      = ANIM_STATUS(HarryAnim_Idle, true);
@@ -1007,17 +1007,17 @@ void Player_ControlUnfreeze(bool setIdle)
     g_Player_IsSteppingLeftHold  = false;
     g_Player_IsTurningLeft       = false;
 
-    g_SysWork.playerCombatInfo_38.isAiming_13 = false;
+    g_SysWork.playerCombat_38.isAiming_13 = false;
 
     player->field_D4.field_2                                    = Q12(0.23f);
-    g_SysWork.player_4C.chara_0.field_C8.field_0                = Q12(-1.6f);
-    g_SysWork.player_4C.chara_0.field_C8.field_6                = Q12(-1.1f);
-    g_SysWork.player_4C.chara_0.field_C8.field_2                = Q12(0.0f);
-    g_SysWork.player_4C.chara_0.field_D8.offsetZ_6              = Q12(0.0f);
-    g_SysWork.player_4C.chara_0.field_D8.offsetX_4              = Q12(0.0f);
-    g_SysWork.player_4C.chara_0.field_D8.offsetZ_2              = Q12(0.0f);
-    g_SysWork.player_4C.chara_0.field_D8.offsetX_0              = Q12(0.0f);
-    g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~(PlayerFlag_Unk2 |
+    g_SysWork.playerWork_4C.player_0.field_C8.field_0                = Q12(-1.6f);
+    g_SysWork.playerWork_4C.player_0.field_C8.field_6                = Q12(-1.1f);
+    g_SysWork.playerWork_4C.player_0.field_C8.field_2                = Q12(0.0f);
+    g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6              = Q12(0.0f);
+    g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4              = Q12(0.0f);
+    g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2              = Q12(0.0f);
+    g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0              = Q12(0.0f);
+    g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~(PlayerFlag_Unk2 |
                                                                     PlayerFlag_Unk13 |
                                                                     PlayerFlag_DamageReceived |
                                                                     PlayerFlag_Moving);
@@ -1052,8 +1052,8 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
     s_PlayerExtra*  playerExtra;
 
     angle       = FP_ANGLE_ABS(angle);
-    playerExtra = &g_SysWork.player_4C.extra_128;
-    playerChara = &g_SysWork.player_4C.chara_0;
+    playerExtra = &g_SysWork.playerWork_4C.extra_128;
+    playerChara = &g_SysWork.playerWork_4C.player_0;
     localVec    = vec;
 
     g_Player_FlexRotationY = FP_ANGLE(0.0f);
@@ -1254,7 +1254,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             D_800C4606                                                              = 1;
             sharedData_800E39E0_0_s00                                               = 0;
             D_800C4588                                                              = 0;
-            g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.playerMoveDistance_126 = 0;
             return true;
     }
 #endif
@@ -1266,10 +1266,10 @@ void sharedFunc_800D2C7C_0_s00(s32 playerState)
     s_PlayerExtra* extra;
     s_SubCharacter*       chara;
 
-    extra = &g_SysWork.player_4C.extra_128;
-    chara = &g_SysWork.player_4C.chara_0;
+    extra = &g_SysWork.playerWork_4C.extra_128;
+    chara = &g_SysWork.playerWork_4C.player_0;
 
-    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
+    g_SysWork.playerWork_4C.player_0.properties_E4.player.playerMoveDistance_126 = 0;
 
     D_800C4606 = 0;
 
@@ -1307,7 +1307,7 @@ void sharedFunc_800D2D44_0_s00(void)
 
 s32 sharedFunc_800D2D6C_0_s00(void)
 {
-    return ~(g_SysWork.player_4C.chara_0.model_0.anim_4.flags_2 & AnimFlag_Unlocked);
+    return ~(g_SysWork.playerWork_4C.player_0.model_0.anim_4.flags_2 & AnimFlag_Unlocked);
 }
 
 void sharedFunc_800D2D84_0_s00(void)
@@ -1321,7 +1321,7 @@ s32 sharedFunc_800D2DAC_0_s00(void)
     s_AnimInfo* animInfo;   
 
     // NOTE: There are 37 base anims for Harry. 38 and beyond are map-specific.
-    model    = &g_SysWork.player_4C.chara_0.model_0;
+    model    = &g_SysWork.playerWork_4C.player_0.model_0;
     animInfo = &g_MapOverlayHeader.animInfos_34[model->anim_4.status_0 - ANIM_STATUS(38, false)];
 
     if (animInfo->updateFunc_0 == Anim_Update0)
@@ -1349,21 +1349,21 @@ s32 sharedFunc_800D2DAC_0_s00(void)
 
 s32 sharedFunc_800D2E50_0_s00(void)
 {
-    return g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 == 0;
+    return g_SysWork.playerWork_4C.player_0.properties_E4.player.playerMoveDistance_126 == 0;
 }
 
 void sharedFunc_800D2E60_0_s00(void)
 {
-    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = 0;
+    g_SysWork.playerWork_4C.player_0.properties_E4.player.playerMoveDistance_126 = 0;
 }
 
 void sharedFunc_800D2E6C_0_s00(void)
 {
 #if defined(MAP0_S01)
-    g_SysWork.playerCombatInfo_38.weaponAttack_F = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap);
-    func_8003CD6C(&g_SysWork.playerCombatInfo_38);
+    g_SysWork.playerCombat_38.weaponAttack_F = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap);
+    func_8003CD6C(&g_SysWork.playerCombat_38);
 
-    g_SysWork.playerCombatInfo_38.weaponAttack_F = NO_VALUE;
+    g_SysWork.playerCombat_38.weaponAttack_F = NO_VALUE;
 
     func_8003D03C();
 #endif
@@ -1375,11 +1375,11 @@ void Player_FallBackward(void)
     s_SubCharacter* playerChara;
     s_PlayerExtra*  playerExtra;
 
-    playerChara = &g_SysWork.player_4C.chara_0;
-    playerExtra = &g_SysWork.player_4C.extra_128;
+    playerChara = &g_SysWork.playerWork_4C.player_0;
+    playerExtra = &g_SysWork.playerWork_4C.extra_128;
 
-    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(2.3f);
-    g_SysWork.player_4C.chara_0.properties_E4.player.headingAngle_124       = FP_ANGLE(180.0f);
+    g_SysWork.playerWork_4C.player_0.properties_E4.player.playerMoveDistance_126 = Q12(2.3f);
+    g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124       = FP_ANGLE(180.0f);
     g_Player_HeadingAngle                                                   = FP_ANGLE(180.0f);
 
     Player_ExtraStateSet(playerChara, playerExtra, PlayerState_FallBackward);
@@ -1396,8 +1396,8 @@ void sharedFunc_800D2E84_0_s00(void)
     s_SubCharacter* playerChara;
     s_PlayerExtra*  playerExtra;
 
-    playerChara = &g_SysWork.player_4C.chara_0;
-    playerExtra = &g_SysWork.player_4C.extra_128;
+    playerChara = &g_SysWork.playerWork_4C.player_0;
+    playerExtra = &g_SysWork.playerWork_4C.extra_128;
 
     func_8005DC1C(Sfx_Unk1317, &playerChara->position_18, Q8_CLAMPED(0.125f), 0);
 
@@ -1414,8 +1414,8 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
     s_SubCharacter* playerChara;
     s_PlayerExtra*  playerExtra;
 
-    playerChara = &g_SysWork.player_4C.chara_0;
-    playerExtra = &g_SysWork.player_4C.extra_128;
+    playerChara = &g_SysWork.playerWork_4C.player_0;
+    playerExtra = &g_SysWork.playerWork_4C.extra_128;
 
     if (vec->vx == 0 && vec->vz == 0)
     {
@@ -1426,7 +1426,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
     }
     else
     {
-        g_SysWork.player_4C.chara_0.properties_E4.player.field_118 = FP_ANGLE_ABS(ratan2(vec->vx, vec->vz));
+        g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118 = FP_ANGLE_ABS(ratan2(vec->vx, vec->vz));
     }
 
     if (posX == 0 && posZ == 0)
@@ -1447,13 +1447,13 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
 
     if (vecSqr > Q12(0.75f))
     {
-        if (g_SysWork.player_4C.extra_128.state_1C < PlayerState_DamagePushBack || g_SysWork.player_4C.extra_128.state_1C >= PlayerState_Unk31)
+        if (g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_DamagePushBack || g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_Unk31)
         {
             angle = FP_ANGLE_ABS(FP_ANGLE_ABS(ratan2(vec->vx, vec->vz)) - (u16)playerChara->rotation_24.vy);
 
             if (D_800D587C > Q12(1.75f))
             {
-                if (g_SysWork.player_4C.extra_128.state_1C >= 23 && g_SysWork.player_4C.extra_128.state_1C < 27)
+                if (g_SysWork.playerWork_4C.extra_128.state_1C >= 23 && g_SysWork.playerWork_4C.extra_128.state_1C < 27)
                 {
                     playerChara->model_0.stateStep_3 = 0;
                     playerChara->model_0.state_2     = 0;
@@ -1473,9 +1473,9 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
                 Player_ExtraStateSet(playerChara, playerExtra, playerExtraState);
                 func_8005DC1C(Sfx_Unk1326, &playerChara->position_18, Q8_CLAMPED(0.125f), 0);
             }
-            else if ((g_SysWork.player_4C.extra_128.state_1C < PlayerState_DamageTorsoBack || g_SysWork.player_4C.extra_128.state_1C >= PlayerState_DamageFeetFront) &&
-                     g_SysWork.player_4C.extra_128.state_1C != PlayerState_DamagePushBack &&
-                     g_SysWork.player_4C.extra_128.state_1C != PlayerState_DamagePushFront)
+            else if ((g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_DamageTorsoBack || g_SysWork.playerWork_4C.extra_128.state_1C >= PlayerState_DamageFeetFront) &&
+                     g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_DamagePushBack &&
+                     g_SysWork.playerWork_4C.extra_128.state_1C != PlayerState_DamagePushFront)
             {
                 if (angle >= FP_ANGLE(45.0f) && angle < FP_ANGLE(135.0f))
                 {
@@ -1497,14 +1497,14 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
                 Player_ExtraStateSet(playerChara, playerExtra, playerExtraState);
             }
 
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk12;
 
             playerChara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
             playerChara->properties_E4.player.field_F4    = 0;
-            g_SysWork.playerCombatInfo_38.isAiming_13     = false;
+            g_SysWork.playerCombat_38.isAiming_13     = false;
             playerChara->field_44.field_0                 = NO_VALUE;
 
-            g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk9;
 
             playerChara->field_44.field_0 = NO_VALUE; // Redundant set needed for match.
         }
@@ -1519,18 +1519,18 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
         playerChara->damage_B4.amount_C = SquareRoot0(vecSqr) * 64;
     }
 
-    if (!(g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived) &&
+    if (!(g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C & PlayerFlag_DamageReceived) &&
         vecSqr > Q12(0.75f) && vecSqr <= Q12(1.75f))
     {
         func_8005DC1C(Sfx_Unk1327, &playerChara->position_18, Q8_CLAMPED(0.125f), 0);
 
         playerChara->properties_E4.player.field_10C = 64;
-        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
+        g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_DamageReceived;
     }
 
     if (playerChara->damage_B4.amount_C != Q12(0.0f))
     {
-        g_SysWork.player_4C.chara_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
+        g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
 
         playerChara->health_B0 -= playerChara->damage_B4.amount_C;
         func_800893D0(playerChara->damage_B4.amount_C);
@@ -1547,12 +1547,12 @@ bool sharedFunc_800D2E94_0_s00(void)
 
     npcChara = &g_SysWork.npcs_1A0[5];
 
-    if (g_SysWork.player_4C.chara_0.position_18.vx < Q12(-255.0f) &&
-        g_SysWork.player_4C.chara_0.position_18.vz > Q12(-110.0f) &&
-        g_SysWork.player_4C.chara_0.position_18.vz < Q12(-100.0f))
+    if (g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-255.0f) &&
+        g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-110.0f) &&
+        g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-100.0f))
     {
-        playerDist = SquareRoot0(SQUARE(Q12(-262.0f) - g_SysWork.player_4C.chara_0.position_18.vx) +
-                                 SQUARE(Q12(-104.0f) - g_SysWork.player_4C.chara_0.position_18.vz));
+        playerDist = SquareRoot0(SQUARE(Q12(-262.0f) - g_SysWork.playerWork_4C.player_0.position_18.vx) +
+                                 SQUARE(Q12(-104.0f) - g_SysWork.playerWork_4C.player_0.position_18.vz));
 
         if (npcChara->model_0.state_2 == 0 || npcChara->model_0.stateStep_3 == 0)
         {
@@ -1583,7 +1583,7 @@ bool sharedFunc_800D2E94_0_s00(void)
         {
             if (playerDist < Q12(2.0f) &&
                 Savegame_EventFlagGet(EventFlag_167) && !Savegame_EventFlagGet(EventFlag_168) &&
-                g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
+                g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap))
             {
                 npcChara->model_0.charaId_0 = Chara_Padlock;
             }
@@ -1613,13 +1613,13 @@ bool sharedFunc_800D2E94_0_s00(void)
 
         if (npcChara->damage_B4.amount_C != Q12(0.0f))
         {
-            if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombatInfo_38.weaponAttack_F) == EquippedWeaponId_KitchenKnife)
+            if (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F) == EquippedWeaponId_KitchenKnife)
             {
                 npcChara->damage_B4.amount_C >>= 1;
             }
 
             // Apply `damageReceived` to character health.
-            if (g_SysWork.playerCombatInfo_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
+            if (g_SysWork.playerCombat_38.weaponAttack_F >= WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap))
             {
                 npcChara->health_B0 = NO_VALUE;
             }
@@ -1662,9 +1662,9 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
     q3_12   angle0;
     bool    isInFont;
 
-    g_SysWork.player_4C.chara_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
-    g_SysWork.player_4C.chara_0.headingAngle_3C                             = FP_ANGLE(0.0f);
-    isInFont                                                                = Math_AngleFrontCheck(*angle, g_SysWork.player_4C.chara_0.rotation_24.vy);
+    g_SysWork.playerWork_4C.player_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
+    g_SysWork.playerWork_4C.player_0.headingAngle_3C                             = FP_ANGLE(0.0f);
+    isInFont                                                                = Math_AngleFrontCheck(*angle, g_SysWork.playerWork_4C.player_0.rotation_24.vy);
 
     angle--; // @hack Permuter find, needed for match.
     angle++;
@@ -1680,20 +1680,20 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
         D_800C4610.vz = *offsetZ + FP_FROM((-Math_Sin(*angle) * -0xCB) + (Math_Cos(*angle) * 0x3C6), Q12_SHIFT);
     }
 
-    headingAngle = g_SysWork.player_4C.chara_0.headingAngle_3C;
+    headingAngle = g_SysWork.playerWork_4C.player_0.headingAngle_3C;
     vec.vx       = Math_Sin(headingAngle); // @unused
     vec.vx       = Q12(0.0f);
     vec.vz       = Math_Cos(headingAngle); // @unused
     vec.vz       = Q12(0.0f);
 
-    vec.vx = D_800C4610.vx - g_SysWork.player_4C.chara_0.position_18.vx;
-    vec.vz = D_800C4610.vz - g_SysWork.player_4C.chara_0.position_18.vz;
-    vec.vy = FP_MULTIPLY_PRECISE(g_SysWork.player_4C.chara_0.field_34, g_DeltaTime0, Q12_SHIFT);
+    vec.vx = D_800C4610.vx - g_SysWork.playerWork_4C.player_0.position_18.vx;
+    vec.vz = D_800C4610.vz - g_SysWork.playerWork_4C.player_0.position_18.vz;
+    vec.vy = FP_MULTIPLY_PRECISE(g_SysWork.playerWork_4C.player_0.field_34, g_DeltaTime0, Q12_SHIFT);
 
-    func_80069B24(&D_800C4590, &vec, &g_SysWork.player_4C.chara_0);
+    func_80069B24(&D_800C4590, &vec, &g_SysWork.playerWork_4C.player_0);
 
-    D_800C4610.vx = g_SysWork.player_4C.chara_0.position_18.vx + D_800C4590.offset_0.vx;
-    D_800C4610.vz = g_SysWork.player_4C.chara_0.position_18.vz + D_800C4590.offset_0.vz;
+    D_800C4610.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + D_800C4590.offset_0.vx;
+    D_800C4610.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + D_800C4590.offset_0.vz;
 
     // TODO: Convert hex to float or fraction.
     if (!isInFont)
@@ -1713,15 +1713,15 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
 
 s32 sharedFunc_800D2EA4_0_s00(void)
 {
-    return g_SysWork.player_4C.chara_0.properties_E4.player.field_10D;
+    return g_SysWork.playerWork_4C.player_0.properties_E4.player.field_10D;
 }
 
 void sharedFunc_800D2EB4_0_s00(void)
 {
     u8 prevVar;
 
-    prevVar = g_SysWork.playerCombatInfo_38.weaponAttack_F;
-    g_SysWork.playerCombatInfo_38.weaponAttack_F = NO_VALUE;
+    prevVar = g_SysWork.playerCombat_38.weaponAttack_F;
+    g_SysWork.playerCombat_38.weaponAttack_F = NO_VALUE;
     sharedData_800DD59C_0_s00 = prevVar;
 
     func_8003DD80(Chara_Harry, UNK_PACKED_DATA(1, 1));
@@ -1729,6 +1729,6 @@ void sharedFunc_800D2EB4_0_s00(void)
 
 void sharedFunc_800D2EF4_0_s00(void)
 {
-    g_SysWork.playerCombatInfo_38.weaponAttack_F = sharedData_800DD59C_0_s00;
+    g_SysWork.playerCombat_38.weaponAttack_F = sharedData_800DD59C_0_s00;
 }
 

@@ -2,8 +2,8 @@ void sharedFunc_800D0514_5_s00(s_SubCharacter* chara)
 {
     q19_12 dist;
 
-    dist = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                               g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
+    dist = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                               g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
 
     Chara_MoveSpeedUpdate(chara, Q12(4.0f));
 

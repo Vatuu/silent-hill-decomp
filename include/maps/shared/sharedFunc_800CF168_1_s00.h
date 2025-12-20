@@ -49,8 +49,8 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
 
     #define larvalStalkerProps chara->properties_E4.larvalStalker
 
-    angle0 = func_8005BF38(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                   g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+    angle0 = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                   g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                            chara->rotation_24.vy);
     mag0 = Math_Vector2MagCalc(larvalStalkerProps.targetX - chara->position_18.vx,
                                 larvalStalkerProps.targetZ - chara->position_18.vz);
@@ -78,11 +78,11 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
         distStep = Q12(1.5f);
     }
 
-    if (Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                            g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) < ((baseDistMax * 2) + distStep))
+    if (Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                            g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) < ((baseDistMax * 2) + distStep))
     {
-        larvalStalkerProps.targetX = g_SysWork.player_4C.chara_0.position_18.vx;
-        larvalStalkerProps.targetZ = g_SysWork.player_4C.chara_0.position_18.vz;
+        larvalStalkerProps.targetX = g_SysWork.playerWork_4C.player_0.position_18.vx;
+        larvalStalkerProps.targetZ = g_SysWork.playerWork_4C.player_0.position_18.vz;
     }
 
     switch (chara->model_0.state_2)
@@ -186,10 +186,10 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
             }
 
             if (mag0 >= FP_TO(larvalStalkerProps.field_EA, Q12_SHIFT) + Q12(2.0f) ||
-                g_SysWork.player_4C.chara_0.moveSpeed_38 <= larvalStalkerProps.field_EA * Q12(1.5f) + Q12(0.5f))
+                g_SysWork.playerWork_4C.player_0.moveSpeed_38 <= larvalStalkerProps.field_EA * Q12(1.5f) + Q12(0.5f))
             {
                 if (FP_ANGLE(45.0f) > ABS(angle0) && 
-                    (mag0 < (chara->field_D4.field_0 + Q12(0.05f) + g_SysWork.player_4C.chara_0.field_D4.field_0)))
+                    (mag0 < (chara->field_D4.field_0 + Q12(0.05f) + g_SysWork.playerWork_4C.player_0.field_D4.field_0)))
                 {
                     if (!Rng_GenerateInt(0, 7))
                     {
@@ -265,17 +265,17 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                         func_8005DC1C(0, &chara->position_18, Q8(0.5f), 0);
                         larvalStalkerProps.timer_EC = Q12(0.0f);
 
-                        if (g_SysWork.player_4C.chara_0.field_40 == NO_VALUE) 
+                        if (g_SysWork.playerWork_4C.player_0.field_40 == NO_VALUE) 
                         {
-                            g_SysWork.player_4C.chara_0.field_40 = func_8005C7D0(chara);
+                            g_SysWork.playerWork_4C.player_0.field_40 = func_8005C7D0(chara);
                         }
 
-                        g_SysWork.player_4C.chara_0.attackReceived_41 = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap);
-                        g_SysWork.player_4C.chara_0.damage_B4.amount_C += (FP_TO(D_800AD4C8[WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap)].field_4, Q12_SHIFT) * ((Rng_Rand16() & 0x1F) + 0x55)) / 100;
+                        g_SysWork.playerWork_4C.player_0.attackReceived_41 = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap);
+                        g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += (FP_TO(D_800AD4C8[WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap)].field_4, Q12_SHIFT) * ((Rng_Rand16() & 0x1F) + 0x55)) / 100;
                     }
                 }
 
-                angle0 = func_8005BF38(g_SysWork.player_4C.chara_0.rotation_24.vy - chara->rotation_24.vy);
+                angle0 = func_8005BF38(g_SysWork.playerWork_4C.player_0.rotation_24.vy - chara->rotation_24.vy);
                 if (FP_ANGLE(90.0f) < ABS(angle0))
                 {
                     if (mag0 >= Q12(0.29004f))
@@ -319,7 +319,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                     }
                 }
 
-                if ((&g_SysWork.player_4C.chara_0)->attackReceived_41 == NO_VALUE)
+                if ((&g_SysWork.playerWork_4C.player_0)->attackReceived_41 == NO_VALUE)
                 {
                     g_SysWork.field_2284[3] &= ~(1 << 0);
                     chara->model_0.anim_4.status_0 = ANIM_STATUS(5, false);
@@ -337,7 +337,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
             }
             else
             {
-                if (mag0 < ((chara->field_D4.field_0 + Q12(0.02f)) + g_SysWork.player_4C.chara_0.field_D4.field_0))
+                if (mag0 < ((chara->field_D4.field_0 + Q12(0.02f)) + g_SysWork.playerWork_4C.player_0.field_D4.field_0))
                 {
                     Chara_MoveSpeedUpdate(chara, Q12(1.5f));
                 }
@@ -345,7 +345,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                 pos     = chara->position_18;
                 pos.vy += chara->field_C8.field_8;
 
-                if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk31, AttackInputType_Multitap), chara, &pos, &g_SysWork.player_4C.chara_0, chara->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
+                if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Unk31, AttackInputType_Multitap), chara, &pos, &g_SysWork.playerWork_4C.player_0, chara->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
                 {
                     larvalStalkerProps.timer_EC = Q12(0.0f);
                     larvalStalkerProps.flags_E8 |= 1 << 6;
@@ -403,7 +403,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
             break;
 
         case 7:
-            if (func_800700F8(chara, &g_SysWork.player_4C.chara_0) || (distStep * 2) < mag0)
+            if (func_800700F8(chara, &g_SysWork.playerWork_4C.player_0) || (distStep * 2) < mag0)
             {
                 chara->model_0.state_2 = 3;
 
@@ -459,7 +459,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                 else
                 {
                     if (mag0 < (FP_TO(larvalStalkerProps.field_EA, Q12_SHIFT) + Q12(2.0f)) &&
-                        g_SysWork.player_4C.chara_0.moveSpeed_38 > ((larvalStalkerProps.field_EA * Q12(1.5f)) + Q12(0.5f)))
+                        g_SysWork.playerWork_4C.player_0.moveSpeed_38 > ((larvalStalkerProps.field_EA * Q12(1.5f)) + Q12(0.5f)))
                     {
                         chara->model_0.state_2 = 8;
 

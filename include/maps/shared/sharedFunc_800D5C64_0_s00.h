@@ -100,7 +100,7 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* chara)
 
     if (var || func_80070360(chara, Q12(0.0f), Q12(1.0f)))
     {
-        chara->properties_E4.player.field_F0 = g_SysWork.player_4C.chara_0.position_18.vx;
-        chara->properties_E4.player.field_F4 = g_SysWork.player_4C.chara_0.position_18.vz;
+        chara->properties_E4.player.field_F0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
+        chara->properties_E4.player.field_F4 = g_SysWork.playerWork_4C.player_0.position_18.vz;
     }
 }

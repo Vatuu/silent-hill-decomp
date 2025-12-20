@@ -2,9 +2,9 @@ bool sharedFunc_800D3430_0_s01(s_SubCharacter* chara, s32* dist, s32* angle)
 {
     bool cond;
 
-    sharedData_800DE180_0_s01.vx = g_SysWork.player_4C.chara_0.position_18.vx;
-    sharedData_800DE180_0_s01.vy = g_SysWork.player_4C.chara_0.position_18.vy + g_SysWork.player_4C.chara_0.field_C8.field_0; // Head offset.
-    sharedData_800DE180_0_s01.vz = g_SysWork.player_4C.chara_0.position_18.vz;
+    sharedData_800DE180_0_s01.vx = g_SysWork.playerWork_4C.player_0.position_18.vx;
+    sharedData_800DE180_0_s01.vy = g_SysWork.playerWork_4C.player_0.position_18.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_0; // Head offset.
+    sharedData_800DE180_0_s01.vz = g_SysWork.playerWork_4C.player_0.position_18.vz;
     cond                         = sharedFunc_800D2E04_0_s01(chara, &sharedData_800DE180_0_s01, dist, angle);
 
     if (cond)

@@ -58,8 +58,8 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* chara)
             {
                 chara->properties_E4.npc.field_10C = 0;
 
-                angle = ABS(func_8005BF38(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                                  g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+                angle = ABS(func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                                  g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                                            chara->rotation_24.vy));
 
                 if (chara->properties_E4.dummy.properties_E8[0].val16[0] & 0x40)

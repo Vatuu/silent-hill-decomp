@@ -26,7 +26,7 @@ void sharedFunc_800D7D0C_2_s00(s_SubCharacter* chara) // 0x800D7D0C
     switch (chara->model_0.stateStep_3)
     {
         case 0:
-            #define ANGLE_DIFF FP_ANGLE_NORM_S(g_SysWork.player_4C.chara_0.rotation_24.vy - chara->rotation_24.vy)
+            #define ANGLE_DIFF FP_ANGLE_NORM_S(g_SysWork.playerWork_4C.player_0.rotation_24.vy - chara->rotation_24.vy)
             
             distTest = dist0 + (Rng_RandQ12() * 4);
             if (sharedFunc_800DC200_2_s00(chara) && distTest > Q12(8.0f))
@@ -124,7 +124,7 @@ void sharedFunc_800D7D0C_2_s00(s_SubCharacter* chara) // 0x800D7D0C
 
                 case 1:
                     // TODO: Likely some kind of `CharaHasFlag` inline?
-                    if (!((&g_SysWork.player_4C.chara_0)->flags_3E & CharaFlag_Unk4) &&
+                    if (!((&g_SysWork.playerWork_4C.player_0)->flags_3E & CharaFlag_Unk4) &&
                         g_SysWork.npcIdxs_2354[0] == NO_VALUE &&
                         g_SysWork.npcIdxs_2354[1] == NO_VALUE)
                     {

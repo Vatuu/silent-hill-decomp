@@ -22,7 +22,7 @@ s32 func_800706E4(s_Model* model) // 0x800706E4
 
     result = 0;
 
-    switch (g_SysWork.player_4C.extra_128.state_1C)
+    switch (g_SysWork.playerWork_4C.extra_128.state_1C)
     {
         case 39:
         case 40:
@@ -37,13 +37,13 @@ s32 func_800706E4(s_Model* model) // 0x800706E4
                     if (g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(128, false) ||
                         g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(129, false))
                     {
-                        if (g_SysWork.player_4C.chara_0.health_B0 <= Q12(0.0f))
+                        if (g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f))
                         {
-                            g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 -= g_DeltaTime0;
-                            if (g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 >= Q12(0.0f))
+                            g_SysWork.playerWork_4C.player_0.properties_E4.player.afkTimer_E8 -= g_DeltaTime0;
+                            if (g_SysWork.playerWork_4C.player_0.properties_E4.player.afkTimer_E8 >= Q12(0.0f))
                             {
-                                g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 -= g_DeltaTime0;
-                                result = g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8;
+                                g_SysWork.playerWork_4C.player_0.properties_E4.player.afkTimer_E8 -= g_DeltaTime0;
+                                result = g_SysWork.playerWork_4C.player_0.properties_E4.player.afkTimer_E8;
                             }
                             else
                             {
@@ -64,14 +64,14 @@ s32 func_800706E4(s_Model* model) // 0x800706E4
                 if (g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(132, true) ||
                     g_MapOverlayHeader.field_38[D_800AF220].status_2 == ANIM_STATUS(133, false))
                 {
-                    if (g_SysWork.player_4C.chara_0.health_B0 <= 0)
+                    if (g_SysWork.playerWork_4C.player_0.health_B0 <= 0)
                     {
-                        g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 -= g_DeltaTime0 * 2;
-                        if (g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 >= Q12(0.0f))
+                        g_SysWork.playerWork_4C.player_0.properties_E4.player.afkTimer_E8 -= g_DeltaTime0 * 2;
+                        if (g_SysWork.playerWork_4C.player_0.properties_E4.player.afkTimer_E8 >= Q12(0.0f))
                         {
-                            g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8 -= g_DeltaTime0 * 2;
+                            g_SysWork.playerWork_4C.player_0.properties_E4.player.afkTimer_E8 -= g_DeltaTime0 * 2;
 
-                            result = g_SysWork.player_4C.chara_0.properties_E4.player.afkTimer_E8;
+                            result = g_SysWork.playerWork_4C.player_0.properties_E4.player.afkTimer_E8;
                         }
                         else
                         {
@@ -142,13 +142,13 @@ s32 func_800706E4(s_Model* model) // 0x800706E4
                     break;
 
                 case ANIM_STATUS(27, true):
-                    if (g_SysWork.player_4C.chara_0.health_B0 < Q12(30.0f))
+                    if (g_SysWork.playerWork_4C.player_0.health_B0 < Q12(30.0f))
                     {
-                        result = Q12(40.0f) - g_SysWork.player_4C.chara_0.health_B0;
+                        result = Q12(40.0f) - g_SysWork.playerWork_4C.player_0.health_B0;
                     }
                     else
                     {
-                        result = FP_TO(FP_FROM(g_SysWork.player_4C.chara_0.properties_E4.player.exhaustionTimer_FC, Q12_SHIFT), Q12_SHIFT);
+                        result = FP_TO(FP_FROM(g_SysWork.playerWork_4C.player_0.properties_E4.player.exhaustionTimer_FC, Q12_SHIFT), Q12_SHIFT);
                     }
                     break;
             }

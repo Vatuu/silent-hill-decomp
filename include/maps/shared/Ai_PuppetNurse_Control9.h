@@ -12,12 +12,12 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
 
     localNurse = nurse;
 
-    deltaX = Q12_TO_Q6(g_SysWork.player_4C.chara_0.position_18.vx - nurse->position_18.vx);
-    deltaZ = Q12_TO_Q6(g_SysWork.player_4C.chara_0.position_18.vz - nurse->position_18.vz);
+    deltaX = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx);
+    deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz);
     dist   = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
-    angle = func_8005BF38(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - nurse->position_18.vx,
-                                 g_SysWork.player_4C.chara_0.position_18.vz - nurse->position_18.vz) -
+    angle = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx,
+                                 g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz) -
                           nurse->rotation_24.vy);
     angleAbs = ABS(angle);
 
@@ -55,7 +55,7 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
 
                 somePtr = localNurse->properties_E4.npc.field_124;
                 if (dist < FP_MULTIPLY_PRECISE(somePtr->field_8, Q12(3.0f), Q12_SHIFT) &&
-                    angleAbs < FP_ANGLE(60.0f) && g_SysWork.player_4C.chara_0.health_B0 > Q12(0.0f))
+                    angleAbs < FP_ANGLE(60.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
                 {
                     nurse->model_0.state_2 = 12;
                     nurse->model_0.stateStep_3 = 0;

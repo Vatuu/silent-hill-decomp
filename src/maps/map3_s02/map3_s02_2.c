@@ -165,12 +165,12 @@ s16 func_800D1354(void) // 0x800D1354
     s32 z6;
 
     // TODO: Use `Math_Vector2MagCalc`.
-    x = g_SysWork.player_4C.chara_0.position_18.vx - Q12(95.2f);
-    z = g_SysWork.player_4C.chara_0.position_18.vz + Q12(140.0f);
+    x = g_SysWork.playerWork_4C.player_0.position_18.vx - Q12(95.2f);
+    z = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(140.0f);
     cos0 = Math_Cos(func_8005BF38((ratan2(x, z) - ratan2(Q12(4.8f) + 1, Q12(12.8f) + 1))));
 
-    x6 = Q12_TO_Q6(g_SysWork.player_4C.chara_0.position_18.vx - Q12(95.2f));
-    z6 = Q12_TO_Q6(g_SysWork.player_4C.chara_0.position_18.vz + Q12(140.0f));
+    x6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vx - Q12(95.2f));
+    z6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(140.0f));
 
     tmp0 = FP_FROM((cos0 * Q6_TO_Q12((SquareRoot0(SQUARE(x6) + SQUARE(z6))))), Q12_SHIFT);
     var1 = FP_TO(tmp0, Q12_SHIFT) / Q6_TO_Q12(SquareRoot0(0xBAC52));

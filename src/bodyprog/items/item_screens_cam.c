@@ -160,7 +160,7 @@ void func_8004BFE8(void) // 0x8004BFE8
     // Set distance between projection plane and viewpoint. Results in FOV change.
     GsSetProjection(1000);
 
-    g_Player_WeaponAttack = g_SysWork.playerCombatInfo_38.weaponAttack_F;
+    g_Player_WeaponAttack = g_SysWork.playerCombat_38.weaponAttack_F;
 }
 
 /** Possible failsafe?

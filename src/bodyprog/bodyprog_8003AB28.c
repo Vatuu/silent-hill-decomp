@@ -961,7 +961,7 @@ void func_8003C30C(void) // 0x8003C30C
 void WorldGfx_IpdSamplePointStore(void) // 0x8003C368
 {
     g_WorldGfx.useStoredPoint_4 = true;
-    g_WorldGfx.ipdSamplePoint_8 = g_SysWork.player_4C.chara_0.position_18;
+    g_WorldGfx.ipdSamplePoint_8 = g_SysWork.playerWork_4C.player_0.position_18;
 }
 
 void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
@@ -986,7 +986,7 @@ void func_8003C3AC(void) // 0x8003C3AC
     u8              flags1;
     s_SubCharacter* chara;
 
-    chara = &g_SysWork.player_4C.chara_0;
+    chara = &g_SysWork.playerWork_4C.player_0;
 
     if (g_WorldGfx.useStoredPoint_4)
     {
@@ -1124,7 +1124,7 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
         if (arg0->field_10.lmIdx_9 == 0)
         {
             func_8003BED0();
-            lmIdx = func_8004287C(arg0, &arg0->field_10, g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz);
+            lmIdx = func_8004287C(arg0, &arg0->field_10, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
 
             if (lmIdx == 0)
             {
@@ -3214,7 +3214,7 @@ void func_80040004(s_WorldGfx* worldGfx) // 0x80040004
 
 void func_80040014(void) // 0x80040014
 {
-    func_80069860(g_SysWork.player_4C.chara_0.position_18.vx, g_SysWork.player_4C.chara_0.position_18.vz, g_WorldGfx.heldItem_1BAC.bone_18.next_14);
+    func_80069860(g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz, g_WorldGfx.heldItem_1BAC.bone_18.next_14);
 };
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_8003AB28", D_80025BE4);

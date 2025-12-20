@@ -188,7 +188,7 @@ void func_800D23E4(void) // 0x800D23E4
 
         case 1:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 11, false);
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
             SysWork_StateStepIncrement(0);
             break;
 
@@ -221,7 +221,7 @@ void func_800D23E4(void) // 0x800D23E4
 
             if (D_800D6EF4 >= Q12(32.0f) && D_800D37C1 == 0)
             {
-                func_80085EB8(0, &g_SysWork.player_4C.chara_0, 134, false);
+                func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 134, false);
                 D_800D37C1++;
             }
             break;
@@ -231,13 +231,13 @@ void func_800D23E4(void) // 0x800D23E4
 
             if (D_800D6EF4 >= Q12(32.0f) && D_800D37C1 == 0)
             {
-                func_80085EB8(0, &g_SysWork.player_4C.chara_0, 134, false);
+                func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 134, false);
                 D_800D37C1++;
             }
             break;
 
         case 9:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
 
             g_SysWork.field_2378 = Q12(1.2f);
@@ -290,8 +290,8 @@ void func_800D23E4(void) // 0x800D23E4
             break;
 
         case 20:
-            Model_AnimFlagsClear(&g_SysWork.player_4C.chara_0.model_0, 2);
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 53, false);
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 53, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 21, false);
             SysWork_StateStepIncrement(0);
 
@@ -301,7 +301,7 @@ void func_800D23E4(void) // 0x800D23E4
 
         case 22:
             func_8005DC1C(Sfx_DoorOpen0, &QVECTOR3(54.6f, -1.2f, 141.5f), Q8_CLAMPED(0.5f), 0);
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
             SysWork_StateStepIncrement(0);
 
         case 23:
@@ -326,7 +326,7 @@ void func_800D23E4(void) // 0x800D23E4
 
             SD_Call(19);
 
-            Model_AnimFlagsSet(&g_SysWork.player_4C.chara_0.model_0, 2);
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
 
             func_8003D01C();
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
@@ -351,7 +351,7 @@ void func_800D23E4(void) // 0x800D23E4
 
     if (D_800D6EF4 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.player_4C.chara_0.position_18, &g_SysWork.player_4C.chara_0.rotation_24, D_800CBB78, D_800D6EF4, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, D_800CBB78, D_800D6EF4, FS_BUFFER_15);
         Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, D_800CBB80, D_800D6EF4, FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D6ED8, &D_800D6EE8, NULL, D_800D6EF4, FS_BUFFER_15));
         vcUserCamTarget(&D_800D6ED8, NULL, true);

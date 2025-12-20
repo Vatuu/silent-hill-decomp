@@ -196,11 +196,11 @@ void func_800D1FF0(void) // 0x800D1FF0
             Camera_PositionSet(NULL, Q12(179.35f), Q12(-1.5f), Q12(61.0098f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(176.98f), Q12(-0.49f), Q12(64.07f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             SD_Call(Sfx_Unk1538);
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 105, false);
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 105, false);
 
-            g_SysWork.player_4C.chara_0.position_18.vx = Q12(178.3f);
-            g_SysWork.player_4C.chara_0.position_18.vz = Q12(61.9f);
-            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(0.0f);
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(178.3f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(61.9f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(0.0f);
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
@@ -212,7 +212,7 @@ void func_800D1FF0(void) // 0x800D1FF0
         case 6:
             tmp = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.22f), Q12_SHIFT);
 
-            g_SysWork.player_4C.chara_0.position_18.vz += tmp;
+            g_SysWork.playerWork_4C.player_0.position_18.vz += tmp;
             WorldObject_D_800D7FF0.position_1C.vz += tmp;
 
             D_800D5AE8 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(2.0f), Q12_SHIFT);
@@ -224,7 +224,7 @@ void func_800D1FF0(void) // 0x800D1FF0
             if (WorldObject_D_800D7FF0.position_1C.vz > Q12(63.6814f))
             {
                 tmp = WorldObject_D_800D7FF0.position_1C.vz - Q12(63.6814f);
-                g_SysWork.player_4C.chara_0.position_18.vz -= tmp;
+                g_SysWork.playerWork_4C.player_0.position_18.vz -= tmp;
                 WorldObject_D_800D7FF0.position_1C.vz -= tmp;
 
                 SysWork_StateStepIncrement(0);
@@ -271,7 +271,7 @@ void func_800D2408(void) // 0x800D2408
     VECTOR3  lightIntPos;
     SVECTOR3 unused;
 
-    #define playerChara &g_SysWork.player_4C.chara_0
+    #define playerChara &g_SysWork.playerWork_4C.player_0
     #define cybilChara  &g_SysWork.npcs_1A0[0]
 
     // Skip.
@@ -515,7 +515,7 @@ void func_800D2408(void) // 0x800D2408
 
         case 41:
             sharedFunc_800D2EF4_0_s00();
-            func_8003CD6C(&g_SysWork.playerCombatInfo_38);
+            func_8003CD6C(&g_SysWork.playerCombat_38);
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement(0);
 
@@ -535,7 +535,7 @@ void func_800D2408(void) // 0x800D2408
 
         case 44:
             sharedFunc_800D2EF4_0_s00();
-            func_8003CD6C(&g_SysWork.playerCombatInfo_38);
+            func_8003CD6C(&g_SysWork.playerCombat_38);
             SysWork_StateStepIncrement(0);
 
         default:
@@ -589,7 +589,7 @@ void func_800D2F74(void) // 0x800D2F74
         EventState_Skip = 10
     } e_EventState;
 
-    #define playerChara &g_SysWork.player_4C.chara_0
+    #define playerChara &g_SysWork.playerWork_4C.player_0
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
@@ -720,7 +720,7 @@ void func_800D3420(void) // 0x800D3420
     s32                             i;
     g_GteScratchData_func_800DD2D4* scratchData;
 
-    #define playerChara &g_SysWork.player_4C.chara_0
+    #define playerChara &g_SysWork.playerWork_4C.player_0
     #define cybilChara  &g_SysWork.npcs_1A0[0]
 
     scratchData = PSX_SCRATCH_ADDR(0);
@@ -771,8 +771,8 @@ void func_800D3420(void) // 0x800D3420
             func_8008D438();
 
             g_SysWork.field_2378                       = Q12(2.5f);
-            g_SysWork.player_4C.chara_0.position_18.vx = Q12(180.0f);
-            g_SysWork.player_4C.chara_0.position_18.vz = Q12(60.0f);
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(180.0f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(60.0f);
 
             func_8003C3AC();
             SD_Call(Sfx_Unk1540);
@@ -1059,7 +1059,7 @@ void func_800D4410(void) // 0x800D4410
         EventState_Skip = 14
     } e_EventState;
 
-    #define playerChara &g_SysWork.player_4C.chara_0
+    #define playerChara &g_SysWork.playerWork_4C.player_0
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&

@@ -6,7 +6,7 @@ void sharedSymbol_800D0E38_3_s03(s_SubCharacter* bloodsucker)
         bloodsucker->model_0.anim_4.status_0 = (bloodsucker->model_0.stateStep_3 * 2) + 22;
     }
 
-    if (g_SysWork.player_4C.chara_0.position_18.vx < -Q12(140.75f))
+    if (g_SysWork.playerWork_4C.player_0.position_18.vx < -Q12(140.75f))
     {
         bloodsucker->model_0.state_2 = 3;
     }

@@ -8,7 +8,7 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
     switch (nurse->model_0.stateStep_3)
     {
         case 0:
-            angle = func_8005BF38((g_SysWork.player_4C.chara_0.rotation_24.vy - nurse->rotation_24.vy) - FP_ANGLE(90.0f));
+            angle = func_8005BF38((g_SysWork.playerWork_4C.player_0.rotation_24.vy - nurse->rotation_24.vy) - FP_ANGLE(90.0f));
             if (angle < FP_ANGLE(0.0f))
             {
                 nurse->properties_E4.puppetNurse.field_104 = -angle;

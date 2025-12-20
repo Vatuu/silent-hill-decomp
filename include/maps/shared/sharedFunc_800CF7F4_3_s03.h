@@ -6,8 +6,8 @@ void sharedFunc_800CF7F4_3_s03(s_SubCharacter* chara)
     {
         chara->properties_E4.dummy.properties_E8[13].val16[0] = func_8006FAFC(chara,
                                                                                       Q12(1.0f),
-                                                                                      g_SysWork.player_4C.chara_0.position_18.vx,
-                                                                                      g_SysWork.player_4C.chara_0.position_18.vz,
+                                                                                      g_SysWork.playerWork_4C.player_0.position_18.vx,
+                                                                                      g_SysWork.playerWork_4C.player_0.position_18.vz,
                                                                                       FP_ANGLE(360.0f),
                                                                                       true);
     }

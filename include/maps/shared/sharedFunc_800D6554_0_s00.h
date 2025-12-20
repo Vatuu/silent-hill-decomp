@@ -5,10 +5,10 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
     s32    cond; // Not `bool`?
     u16*   flags;
 
-    dist = Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                               g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz);
-    angle = func_8005BF38((s16)(ratan2(g_SysWork.player_4C.chara_0.position_18.vx - chara->position_18.vx,
-                                       g_SysWork.player_4C.chara_0.position_18.vz - chara->position_18.vz) -
+    dist = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                               g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
+    angle = func_8005BF38((s16)(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                       g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                           chara->rotation_24.vy));
 
     if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))))
@@ -34,8 +34,8 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara)
         return;
     }
 
-    chara->properties_E4.player.field_F0 = g_SysWork.player_4C.chara_0.position_18.vx;
-    chara->properties_E4.player.field_F4 = g_SysWork.player_4C.chara_0.position_18.vz;
+    chara->properties_E4.player.field_F0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
+    chara->properties_E4.player.field_F4 = g_SysWork.playerWork_4C.player_0.position_18.vz;
 
     if (dist < Q12(1.2f) && angle < FP_ANGLE(180.0f))
     {

@@ -19,7 +19,7 @@ typedef struct
 
 typedef struct
 {
-    s_SubCharacter* chara_0;
+    s_SubCharacter* player_0;
     s32             field_4;
     s_D_800E06A0    unk_8[10];
     s_WorldObject_0 objRef_238;

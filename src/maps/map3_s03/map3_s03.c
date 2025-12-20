@@ -290,13 +290,13 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         case 2:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 146, false);
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 146, false);
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
 
             // Warp player.
-            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-62.38f);
-            g_SysWork.player_4C.chara_0.position_18.vz = Q12(-59.66f);
-            g_SysWork.player_4C.chara_0.rotation_24.vy = FP_ANGLE(320.9f);
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-62.38f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-59.66f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(320.9f);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(-61.03f), Q12(-2.14f), Q12(-62.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -346,12 +346,12 @@ void func_800D27F4(void) // 0x800D27F4
             break;
 
         case 11:
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 147, false);
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 147, false);
             SysWork_StateStepIncrement(0);
             break;
 
         case 12:
-            func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
+            func_80085EB8(2, &g_SysWork.playerWork_4C.player_0, 0, false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
@@ -364,7 +364,7 @@ void func_800D27F4(void) // 0x800D27F4
             SysWork_StateStepIncrement(0);
 
         case 15:
-            func_80086D04(&g_SysWork.player_4C.chara_0);
+            func_80086D04(&g_SysWork.playerWork_4C.player_0);
             break;
 
         default:
@@ -419,16 +419,16 @@ void func_800D2CDC(void) // 0x800D2CDC
 
         case 2:
             // Warp player.
-            g_SysWork.player_4C.chara_0.position_18.vx = Q12(-139.7f);
-            g_SysWork.player_4C.chara_0.position_18.vy = Q12(0.0f);
-            g_SysWork.player_4C.chara_0.position_18.vz = Q12(61.4f);
-            g_SysWork.player_4C.chara_0.rotation_24.vy = ratan2(Q12(-2.0f), Q12(-1.2f));
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-139.7f);
+            g_SysWork.playerWork_4C.player_0.position_18.vy = Q12(0.0f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(61.4f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = ratan2(Q12(-2.0f), Q12(-1.2f));
 
             WorldGfx_PlayerHeldItemSet(InventoryItemId_CutsceneBloodPack);
             Fs_QueueWaitForEmpty();
 
             func_8003D01C();
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 154, false);
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 154, false);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(-139.3f), Q12(-2.9f), Q12(65.22f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -438,7 +438,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             break;
 
         case 3:
-            func_80085EB8(2, &g_SysWork.player_4C.chara_0, 0, false);
+            func_80085EB8(2, &g_SysWork.playerWork_4C.player_0, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 4:
@@ -446,7 +446,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             break;
 
         case 5:
-            func_80085EB8(3, &g_SysWork.player_4C.chara_0, 0, false);
+            func_80085EB8(3, &g_SysWork.playerWork_4C.player_0, 0, false);
             SysWork_StateStepIncrement(0);
 
         case 6:
@@ -461,12 +461,12 @@ void func_800D2CDC(void) // 0x800D2CDC
                 g_SysWork.npcs_1A0[i].model_0.state_2 = state;
             }
 
-            func_80085EB8(0, &g_SysWork.player_4C.chara_0, 51, false);
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
 
             func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 110, 15, 0);
             func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 100, 15, 0);
             func_8003D03C();
-            func_8003CD6C(&g_SysWork.playerCombatInfo_38);
+            func_8003CD6C(&g_SysWork.playerCombat_38);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(-140.45f), Q12(0.03f), Q12(59.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
@@ -582,10 +582,10 @@ void func_800D429C(void) // 0x800D429C
         D_800D8428 = 0;
     }
 
-    cellZ0 = g_SysWork.player_4C.chara_0.position_18.vz / CHUNK_CELL_SIZE;
-    cellX0 = g_SysWork.player_4C.chara_0.position_18.vx / CHUNK_CELL_SIZE;
+    cellZ0 = g_SysWork.playerWork_4C.player_0.position_18.vz / CHUNK_CELL_SIZE;
+    cellX0 = g_SysWork.playerWork_4C.player_0.position_18.vx / CHUNK_CELL_SIZE;
 
-    if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(0.0f))
+    if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(0.0f))
     {
         projCellX0 = cellX0 + 17;
     }
@@ -594,7 +594,7 @@ void func_800D429C(void) // 0x800D429C
         projCellX0 = cellX0 + 15;
     } 
 
-    if (g_SysWork.player_4C.chara_0.position_18.vz > Q12(0.0f))
+    if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(0.0f))
     {
         projCellZ0 = cellZ0 + 17;
     }
@@ -780,7 +780,7 @@ void func_800D429C(void) // 0x800D429C
 
             if (!Savegame_EventFlagGet(EventFlag_239) &&
                 Savegame_EventFlagGet(EventFlag_M3S03_PickupPlateOfTurtle) &&
-                g_SysWork.player_4C.chara_0.position_18.vz > Q12(-18.2f))
+                g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-18.2f))
             {
                 func_8005DC1C(Sfx_Unk1528, &QVECTOR3(-140.0f, -1.2f, -23.5f), Q8_CLAMPED(1.0f), 2);
                 Savegame_EventFlagSet(EventFlag_239);

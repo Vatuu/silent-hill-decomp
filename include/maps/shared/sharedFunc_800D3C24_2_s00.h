@@ -32,8 +32,8 @@ void sharedFunc_800D3C24_2_s00(s_SubCharacter* chara)
             {
                 Chara_DamageTake(chara, Q12(0.0f));
 
-                chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
-                chara->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
+                chara->position_18.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(100.0f);
+                chara->position_18.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(100.0f);
 
                 sharedFunc_800D3DFC_0_s01(chara);
                 break;
@@ -44,8 +44,8 @@ void sharedFunc_800D3C24_2_s00(s_SubCharacter* chara)
                 Chara_DamageTake(chara, Q12(0.0f));
                 sharedFunc_800D2364_0_s01(chara);
 
-                chara->position_18.vx = g_SysWork.player_4C.chara_0.position_18.vx + Q12(100.0f);
-                chara->position_18.vz = g_SysWork.player_4C.chara_0.position_18.vz + Q12(100.0f);
+                chara->position_18.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(100.0f);
+                chara->position_18.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(100.0f);
 
                 sharedFunc_800D3DFC_0_s01(chara);
                 break;

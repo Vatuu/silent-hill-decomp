@@ -625,7 +625,7 @@ void func_800EA1C4(void) // 0x800EA1C4
             func_8006982C(4);
             func_80069844(2);
 
-            if (g_SysWork.player_4C.chara_0.position_18.vz < Q12(-68.0f))
+            if (g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-68.0f))
             {
                 Savegame_EventFlagClear(EventFlag_346);
             }
@@ -641,9 +641,9 @@ void func_800EA1C4(void) // 0x800EA1C4
     {
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
         {
-                if (g_SysWork.player_4C.chara_0.position_18.vx > Q12(-116.0f))
+                if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-116.0f))
                 {
-                    if (g_SysWork.player_4C.chara_0.position_18.vy > Q12(0.0f))
+                    if (g_SysWork.playerWork_4C.player_0.position_18.vy > Q12(0.0f))
                     {
                         if (g_ScreenFadeTimestep > Q12(0.0f))
                         {
@@ -665,8 +665,8 @@ void func_800EA1C4(void) // 0x800EA1C4
         {
             if (D_800F0B2C == Q12(0.0f))
             {
-                if (Math_Vector2MagCalc(g_SysWork.player_4C.chara_0.position_18.vx + Q12(96.0f),
-                                        g_SysWork.player_4C.chara_0.position_18.vz + Q12(89.0f)) < Q12(4.0f))
+                if (Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(96.0f),
+                                        g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(89.0f)) < Q12(4.0f))
                 {
                     func_8005DC1C(Sfx_Unk1492, &D_800ED938, Q8_CLAMPED(0.766f), 2);
                     D_800F0B2C = Q12(0.3f);

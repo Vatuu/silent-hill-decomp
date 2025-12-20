@@ -146,7 +146,7 @@ void func_800CED88(void) // 0x800CED88
     s_SubCharacter* dahlia;
 
     #define dahliaChara (&g_SysWork.npcs_1A0[0])
-    #define playerChara (&g_SysWork.player_4C.chara_0)
+    #define playerChara (&g_SysWork.playerWork_4C.player_0)
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < EventState_Skip)
