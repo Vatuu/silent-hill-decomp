@@ -2375,6 +2375,8 @@ void sharedFunc_800D46C8_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D4A9C_2_s00(s_SubCharacter* chara);
 
+bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
+
 void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D5268_2_s00(s_SubCharacter* chara);
@@ -2420,6 +2422,8 @@ void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara);
 /** Player func. */
 void sharedFunc_800D93E8_2_s00(s_SubCharacter* chara);
 
+void sharedFunc_800D94EC_2_s00(s_SubCharacter* chara);
+
 void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DA598_2_s00(s_SubCharacter* chara);
@@ -2461,17 +2465,17 @@ s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* chara, q19_12 arg1);
 
 q19_12 sharedFunc_800DC894_2_s00(s_SubCharacter*, s32);
 
-bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
+void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnChance);
 
 void sharedFunc_800DD2C4_2_s00(s_SubCharacter*, s32, s32); // Assumed void return type.
-
-void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnChance);
 
 void sharedFunc_800DD4A4_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DD4EC_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DD534_2_s00(s_SubCharacter* chara);
+
+void sharedFunc_800DDA80_2_s00(s_SubCharacter*); // Assumed void return type.
 
 void sharedFunc_800DDE14_2_s00(s_SubCharacter* chara);
 
