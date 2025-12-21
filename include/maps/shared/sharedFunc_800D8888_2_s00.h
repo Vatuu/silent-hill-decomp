@@ -129,11 +129,13 @@ void sharedFunc_800D8888_2_s00(s_SubCharacter* chara)
                     break;
             }
             break;
+
         case 1:
             chara->model_0.state_2               = 29;
             chara->model_0.stateStep_3           = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
+
         case 2:
             chara->model_0.state_2               = 30;
             chara->model_0.stateStep_3           = 0;

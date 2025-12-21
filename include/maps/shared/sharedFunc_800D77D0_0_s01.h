@@ -1,50 +1,50 @@
-s32 sharedFunc_800D77D0_0_s01(s_SubCharacter* chara)
+q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* chara)
 {
-    s32 temp_a0;
-    s32 nonState;
-    s32 rot;
-    s32 speed;
-    s32 speed_2;
-    s32 temp_lo;
-    s32 div;
-    s32 var_a0_3;
-    u32 absRot;
-    u32 absSpeed;
-    s32 ret;
-    s32 ret_3;
-    s32 var_v1;
-    s32 temp_s1;
-    s32 animTime;
+    q19_12 temp_a0;
+    bool   isNotState1;
+    q19_12 rot;
+    q19_12 speed;
+    q19_12 speed_2;
+    q19_12 temp_lo;
+    q19_12 div;
+    q19_12 var_a0_3;
+    q20_12 absRot;
+    q20_12 absSpeed;
+    q19_12 ret;
+    q19_12 ret_3;
+    q19_12 var_v1;
+    s32    animStatus;
+    q19_12 animTime;
 
-    temp_s1  = chara->model_0.anim_4.status_0;
-    nonState = chara->model_0.state_2 != 1;
+    animStatus  = chara->model_0.anim_4.status_0;
+    isNotState1 = chara->model_0.state_2 != 1;
 
-    switch (temp_s1)
+    switch (animStatus)
     {
-        case 0x35:
-            if (!(chara->model_0.anim_4.keyframeIdx_8 == 0x60) < 1 & chara->health_B0 < 1)
+        case ANIM_STATUS(26, true):
+            if (!(chara->model_0.anim_4.keyframeIdx_8 == 96) < 1 & chara->health_B0 < 1)
             {
-                return 0;
+                return Q12(0.0f);
             }
             else
             {
-                return 0x5000;
+                return Q12(5.0f);
             }
             break;
 
-        case 0x1B:
-        case 0x1D:
-        case 0x2F:
-        case 0x33:
+        case ANIM_STATUS(13, true):
+        case ANIM_STATUS(14, true):
+        case ANIM_STATUS(23, true):
+        case ANIM_STATUS(25, true):
             speed = chara->moveSpeed_38 * Q12(0.01f);
             rot   = chara->rotationSpeed_2C.vy * Q12(0.044f);
 
             if (!(speed | rot))
             {
-                return 0;
+                return Q12(0.0f);
             }
 
-            if (speed < 0)
+            if (speed < Q12(0.0f))
             {
                 absSpeed = -speed;
             }
@@ -53,7 +53,7 @@ s32 sharedFunc_800D77D0_0_s01(s_SubCharacter* chara)
                 absSpeed = speed;
             }
 
-            if (rot < 0)
+            if (rot < FP_ANGLE(0.0f))
             {
                 absRot = -rot;
             }
@@ -64,9 +64,9 @@ s32 sharedFunc_800D77D0_0_s01(s_SubCharacter* chara)
 
             if (absRot < absSpeed)
             {
-                if (absSpeed < 0x14000)
+                if (absSpeed < Q12(20.0f))
                 {
-                    var_a0_3 = 0x14000;
+                    var_a0_3 = Q12(20.0f);
                 }
                 else
                 {
@@ -75,9 +75,9 @@ s32 sharedFunc_800D77D0_0_s01(s_SubCharacter* chara)
             }
             else
             {
-                if (absRot < 0x14000)
+                if (absRot < Q12(20.0f))
                 {
-                    var_a0_3 = 0x14000;
+                    var_a0_3 = Q12(20.0f);
                 }
                 else
                 {
@@ -86,55 +86,56 @@ s32 sharedFunc_800D77D0_0_s01(s_SubCharacter* chara)
             }
             return var_a0_3;
 
-        case 0x27:
-            if (nonState)
+        case ANIM_STATUS(19, true):
+            if (isNotState1)
             {
-                return 0x18000;
+                return Q12(24.0f);
             }
-            return FP_MULTIPLY_PRECISE(chara->field_34, -0x2000, Q12_SHIFT) + 0x14000;
+            return FP_MULTIPLY_PRECISE(chara->field_34, Q12(-2.0f), Q12_SHIFT) + Q12(20.0f);
 
-        case 0x23:
-            if (nonState)
+        case ANIM_STATUS(17, true):
+            if (isNotState1)
             {
-                return 0x28000;
+                return Q12(40.0f);
             }
+
             temp_a0 = chara->field_34;
-            var_v1  = chara->moveSpeed_38 - 0x4000;
+            var_v1  = chara->moveSpeed_38 - Q12(4.0f);
 
-            ret  = 0x14000;
-            ret += FP_MULTIPLY_PRECISE(ABS(var_v1), 0x1800, Q12_SHIFT);
-            ret += FP_MULTIPLY_PRECISE(temp_a0, -0x1800, Q12_SHIFT);
+            ret  = Q12(20.0f);
+            ret += FP_MULTIPLY_PRECISE(ABS(var_v1), Q12(1.5f), Q12_SHIFT);
+            ret += FP_MULTIPLY_PRECISE(temp_a0, Q12(-1.5f), Q12_SHIFT);
             return ret;
 
-        case 0x13:
-        case 0x15:
-        case 0x17:
-        case 0x21:
+        case ANIM_STATUS(9, true):
+        case ANIM_STATUS(10, true):
+        case ANIM_STATUS(11, true):
+        case ANIM_STATUS(16, true):
             div      = func_80080884(chara->position_18.vx, chara->position_18.vz) - chara->position_18.vy;
-            var_a0_3 = 0x14000;
+            var_a0_3 = Q12(20.0f);
 
-            if (div > 0)
+            if (div > Q12(0.0f))
             {
                 speed_2  = chara->field_34;
                 animTime = chara->model_0.anim_4.time_4;
 
-                switch (temp_s1)
+                switch (animStatus)
                 {
-                    case 0x21:
-                        ret_3 = 0x14D000;
+                    case ANIM_STATUS(16, true):
+                        ret_3 = Q12(333.0f);
                         break;
 
-                    case 0x15:
-                        ret_3 = 0xBD000;
+                    case ANIM_STATUS(10, true):
+                        ret_3 = Q12(189.0f);
                         break;
 
-                    case 0x17:
-                        ret_3 = 0xD7000;
+                    case ANIM_STATUS(11, true):
+                        ret_3 = Q12(215.0f);
                         break;
 
-                    case 0x14:
+                    case ANIM_STATUS(10, false):
                     default:
-                        ret_3 = 0xAB000;
+                        ret_3 = Q12(171.0f);
                         break;
                 }
 
@@ -142,17 +143,16 @@ s32 sharedFunc_800D77D0_0_s01(s_SubCharacter* chara)
                 var_a0_3 = FP_MULTIPLY_PRECISE(speed_2, temp_lo, Q12_SHIFT);
             }
 
-            if (var_a0_3 < 0x4CC)
+            if (var_a0_3 < Q12(0.3f))
             {
-                var_a0_3 = 0x4CC;
+                var_a0_3 = Q12(0.3f);
             }
-
-            if (var_a0_3 > 0x1E000)
+            if (var_a0_3 > Q12(30.0f))
             {
-                var_a0_3 = 0x1E000;
+                var_a0_3 = Q12(30.0f);
             }
             return var_a0_3;
     }
 
-    return 0xA000;
+    return Q12(10.0f);
 }
