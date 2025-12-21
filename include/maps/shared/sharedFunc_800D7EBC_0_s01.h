@@ -13,7 +13,7 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
     animStatus = airScreamer->model_0.anim_4.status_0;
     temp_s1    = &airScreamer->field_44;
 
-    if (!(player->player_0.flags_3E & CharaUnk0Flag_Unk3) &&
+    if (!(player->player_0.flags_3E & CharaFlag_Unk4) &&
         g_SysWork.npcIdxs_2354[0] == NO_VALUE && g_SysWork.npcIdxs_2354[1] == NO_VALUE &&
         airScreamer->model_0.state_2 != 12 && airScreamer->model_0.state_2 != 25 &&
         airScreamer->model_0.state_2 != 40 && airScreamer->model_0.state_2 != 49)

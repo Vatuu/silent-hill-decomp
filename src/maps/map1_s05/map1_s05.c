@@ -44,7 +44,7 @@ void func_800CAAD0(void) // 0x800CAAD0
 
         if (D_800D8568.field_1 == 0)
         {
-            func_800CABF8(i, 0);
+            func_800CABF8(i, false);
         }
         else
         {
@@ -91,7 +91,7 @@ void func_800CABF8(s32 idx, bool arg1) // 0x800CABF8
         sharedData_800DFB7C_0_s00[idx].field_A = 8;
     }
 
-    if (arg1 == 1)
+    if (arg1 == true)
     {
         sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 = Rng_GenerateUInt(0, 15);
     }
