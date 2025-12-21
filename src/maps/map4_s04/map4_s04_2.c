@@ -1,5 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/sound_system.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
@@ -127,15 +129,255 @@ const char* MAP_MESSAGES[] = {
     "\tNothing_helpful. ~E "
 };
 
-INCLUDE_RODATA("asm/maps/map4_s04/nonmatchings/map4_s04_2", D_800CBB78);
+void func_800D1910(void) // 0x800D1910
+{
+    Gfx_DebugStringPosition(30, 30);
+    ClearImage(&D_800D3720, 0, 0, 0);
 
-INCLUDE_RODATA("asm/maps/map4_s04/nonmatchings/map4_s04_2", D_800CBB80);
+    // GPU packet setup
+    {
+        typedef struct
+        {
+            SPRT*      sprt_0;
+            DR_TPAGE*  tpage_4;
+            DR_STP*    stp_8;
+            DR_AREA*   area_C;
+            DR_OFFSET* offset_10;
+        } s_ScratchData;
 
-INCLUDE_ASM("asm/maps/map4_s04/nonmatchings/map4_s04_2", func_800D1910);
+        s_ScratchData* scratch;
+        s32            layer;
+        s32            i;
 
-// TODO: Move rodata into funcs once above is decomped.
-extern s8 D_800CBB78[];
-extern s8 D_800CBB80[];
+        scratch = PSX_SCRATCH_ADDR(0);
+
+        scratch->sprt_0 = (SPRT*)GsOUT_PACKET_P;
+        for (layer = 0; layer < 4; layer++)
+        {
+            for (i = 0; i < 2; i++)
+            {
+                s32 colorVal;
+                u8  tpageAbr;
+
+                // @hack Might have been a switch instead?
+                setXY0Fast(scratch->sprt_0, 
+                           (i * 256) - (layer < 2 ? (layer == 1 ? 159 : 161) : 160),
+                           (layer < 2 ? -112 : (layer == 2) ? -111 : -113));
+
+                setUV0(scratch->sprt_0, 0, 0);
+
+                switch (layer)
+                {
+                    case 0:
+                        colorVal = 0x20;
+                        tpageAbr = 1;
+                        break;
+
+                    case 1:
+                        colorVal = 0x40;
+                        tpageAbr = 0;
+                        break;
+
+                    default:
+                        colorVal = 0x80;
+                        tpageAbr = 0;
+                }
+
+                if (layer == 3)
+                {
+                    setCodeWord(scratch->sprt_0, PRIM_RECT | RECT_TEXTURE, PACKED_COLOR(0x80, 0x80, 0x80, 0));
+                }
+                else
+                {
+                    s32 rgb24 = colorVal + (colorVal << 8) + (colorVal << 16);
+                    setCodeWordSum(scratch->sprt_0, PRIM_RECT | RECT_TEXTURE | RECT_BLEND, rgb24);
+                }
+
+                setWH(scratch->sprt_0, i == 0 ? 256 : 64, 224);
+                addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->sprt_0, 4);
+
+                scratch->sprt_0++;
+                scratch->tpage_4 = (DR_TPAGE*)scratch->sprt_0;
+
+                setDrawTPage(scratch->tpage_4, 0, 0, getTPageN(2, tpageAbr, (i * 4) + 21, 1));
+
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->tpage_4);
+                scratch->tpage_4++;
+                scratch->sprt_0 = (SPRT*)scratch->tpage_4;
+            }
+        }
+
+        // First DR_AREA
+        scratch->area_C = (DR_AREA*)scratch->sprt_0;
+        SetDrawArea(scratch->area_C, &D_800D3710[g_ActiveBufferIdx == 0 ? 1 : 0]);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->area_C);
+        scratch->area_C++;
+
+        // Second DR_AREA
+        SetDrawArea(scratch->area_C, &D_800D3720);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], scratch->area_C);
+        scratch->area_C++;
+
+        // First DR_OFFSET
+        scratch->offset_10 = (DR_OFFSET*)scratch->area_C;
+        SetDrawOffset(scratch->offset_10, &D_800D3728[g_ActiveBufferIdx == 0 ? 1 : 0]);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->offset_10);
+        scratch->offset_10++;
+
+        // Second DR_OFFSET
+        SetDrawOffset(scratch->offset_10, &D_800D3730);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], scratch->offset_10);
+        scratch->offset_10++;
+
+        // First DR_STP (disabled)
+        scratch->stp_8 = (DR_STP*)scratch->offset_10;
+        SetDrawStp(scratch->stp_8, 0);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->stp_8);
+        scratch->stp_8++;
+
+        // Second DR_STP (enabled)
+        SetDrawStp(scratch->stp_8, 1);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], scratch->stp_8);
+        scratch->stp_8++;
+
+        GsOUT_PACKET_P = (PACKET*)scratch->stp_8;
+    }
+
+    if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
+        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 14)
+    {
+        SysWork_StateStepSet(0, 14);
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            D_800D6EF8 = 0;
+            Fs_QueueStartRead(FILE_ANIM_HSPTL4_DMS, FS_BUFFER_15);
+            Fs_QueueWaitForEmpty();
+            DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_15);
+            D_800D6EF4 = 0;
+            Chara_Load(0, Chara_Lisa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
+            Chara_ProcessLoads();
+            Chara_Spawn(Chara_Lisa, 0, Q12(70.0f), Q12(150.0f), 0, 3);
+            func_8003D03C();
+            sharedFunc_800D2EB4_0_s00();
+            D_800D6EF8 = 0;
+
+            // TODO: Find the correct order, looking at other functions, seems to be random...
+            g_SysWork.field_235C = NULL;
+            g_SysWork.field_236C = NULL;
+            g_SysWork.field_2378 = Q12(1.0f);
+            Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(57.0f), Q12(-3.0f), Q12(141.8f));
+            // TODO: `Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-90.0f), 0, 0);` doesn't match.
+            *(s32*)&g_SysWork.cutsceneLightRot_2370.vx = 0xfc00; // `FP_ANGLE(-90.0f)`
+            (&g_SysWork.cutsceneLightRot_2370)->vz     = 0;
+
+            func_8008D438();
+            g_SysWork.field_30 = 20;
+            ScreenFade_ResetTimestep();
+            g_SysWork.flags_22A4 |= SysFlag2_3;
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 117, false);
+            D_800D37C0 = 0;
+            func_8003ED74(15, 15);
+            SysWork_StateStepIncrement(0);
+            g_WorldObject0.position_1C.vz = Q12(141.0f);
+            break;
+
+        case 1:
+            func_80085EB8(2, &g_SysWork.playerWork_4C.player_0, 0, false);
+            func_80085EB8(0, &g_SysWork.npcs_1A0[0], 9, false);
+            D_800D37C0 = 1;
+            SysWork_StateStepIncrement(0);
+
+        case 2:
+            SysWork_StateStepIncrementAfterFade(2, false, 0, Q12(1.0f), false);
+            break;
+
+        case 3:
+            func_80085EB8(3, &g_SysWork.playerWork_4C.player_0, 0, false);
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 4:
+            SysWork_StateStepIncrementDelayed(Q12(1.2f), false);
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(8.0f), Q12(0.0f), Q12(23.0f), true, false);
+            break;
+
+        case 5:
+            Map_MessageWithAudio(15, &D_800D6EF8, &D_800D3734); // "Where am I?"
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(8.0f), Q12(0.0f), Q12(23.0f), true, false);
+            break;
+
+        case 6:
+            D_800D6EF4                    = Q12(24.0f);
+            g_WorldObject0.position_1C.vz = Q12(140.8f);
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 135, false);
+            SysWork_StateStepIncrement(0);
+
+        case 7:
+            Map_MessageWithAudio(16, &D_800D6EF8, &D_800D3734); // "Harry. Lisa... Then I'm in the hospital."
+            break;
+
+        case 8:
+            Map_MessageWithAudio(25, &D_800D6EF8, &D_800D3734);
+            break;
+
+        case 9:
+            Map_MessageWithAudio(30, &D_800D6EF8, &D_800D3734);
+            break;
+
+        case 10:
+            Map_MessageWithAudio(37, &D_800D6EF8, &D_800D3734);
+            break;
+
+        case 11:
+            Map_MessageWithAudio(44, &D_800D6EF8, &D_800D3734);
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(10.0f), Q12(25.0f), Q12(46.0f), true, false);
+            g_WorldObject0.position_1C.vz = Q12(140.95f);
+            break;
+
+        case 12:
+            func_80086C58(&g_SysWork.npcs_1A0[0], 10);
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(10.0f), Q12(25.0f), Q12(46.0f), true, false);
+            break;
+
+        case 13:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.8f), false);
+            SysWork_StateStepIncrementAfterTime(&D_800D6EF4, Q12(10.0f), Q12(25.0f), Q12(46.0f), true, false);
+            break;
+
+        case 14:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        default:
+            func_80085EB8(3, &g_SysWork.playerWork_4C.player_0, 0, false);
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+            Savegame_EventFlagSet(EventFlag_338);
+            SD_Call(19);
+            func_8003D01C();
+            sharedFunc_800D2EF4_0_s00();
+            break;
+    }
+
+    g_SysWork.npcs_1A0[0].position_18.vy = Q12(0.0f);
+
+    if (D_800D6EF4 >= 0)
+    {
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
+        if (D_800D37C0 != 0)
+        {
+            Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "LISA", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
+        }
+        vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D6ED8, &D_800D6EE8, NULL, D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15));
+        vcUserCamTarget(&D_800D6ED8, NULL, true);
+        vcUserWatchTarget(&D_800D6EE8, NULL, true);
+    }
+}
 
 void func_800D23E4(void) // 0x800D23E4
 {
@@ -351,8 +593,8 @@ void func_800D23E4(void) // 0x800D23E4
 
     if (D_800D6EF4 >= Q12(0.0f))
     {
-        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, D_800CBB78, D_800D6EF4, FS_BUFFER_15);
-        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, D_800CBB80, D_800D6EF4, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800D6EF4, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "LISA", D_800D6EF4, FS_BUFFER_15);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D6ED8, &D_800D6EE8, NULL, D_800D6EF4, FS_BUFFER_15));
         vcUserCamTarget(&D_800D6ED8, NULL, true);
         vcUserWatchTarget(&D_800D6EE8, NULL, true);

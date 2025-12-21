@@ -18,7 +18,19 @@
 #define MAP_ROOM_MIN_Z Q12(-160.0f)
 #define MAP_ROOM_MAX_Z Q12(160.0f)
 
+extern RECT D_800D3710[2];
+
+extern RECT D_800D3720;
+
+extern DVECTOR D_800D3728[2];
+
+extern DVECTOR D_800D3730;
+
+extern u16 D_800D3734;
+
 extern u16 D_800D3778;
+
+extern u8 D_800D37C0;
 
 extern u8 D_800D37C1;
 
@@ -33,6 +45,8 @@ extern u8 D_800D6EF8;
 
 extern s_WorldObjectDesc      g_WorldObjectSavepad; // 0x800D6F38
 extern s_WorldObjectDescNoRot g_WorldObject0;       // 0x800D6F08
+
+void func_800D1910(void);
 
 void func_800D23E4(void);
 
