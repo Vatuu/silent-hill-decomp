@@ -2980,7 +2980,7 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D76A0_0_s01(s_SubCharacter* chara);
 
-s32 sharedFunc_800D77D0_0_s01(s_SubCharacter*); // Assumed return type.
+q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* chara);
 
 bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* airScreamer);
 

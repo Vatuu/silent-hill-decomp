@@ -9,7 +9,7 @@ void sharedFunc_800D8888_2_s00(s_SubCharacter* chara)
     q19_12 angle;
     q19_12 distFieldF8;
     s32    var_s6;  // Possibly `bool`
-    s32    temp_a0; // Possibly `bool`
+    bool   cond;
     q19_12 angleDiff;
 
     animStatus     = chara->model_0.anim_4.status_0;
@@ -22,7 +22,7 @@ void sharedFunc_800D8888_2_s00(s_SubCharacter* chara)
 
     distFieldF8 = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
     var_s6      = 0;
-    temp_a0     = sharedFunc_800DC50C_2_s00(chara);
+    cond        = sharedFunc_800DC50C_2_s00(chara);
 
     switch (chara->model_0.stateStep_3)
     {
@@ -45,7 +45,7 @@ void sharedFunc_800D8888_2_s00(s_SubCharacter* chara)
             break;
 
         case 1:
-            if (temp_a0 != 0)
+            if (cond)
             {
                 chara->model_0.stateStep_3 = 2;
             }
@@ -144,6 +144,7 @@ void sharedFunc_800D8888_2_s00(s_SubCharacter* chara)
         case 4:
             chara->model_0.state_2     = 32;
             chara->model_0.stateStep_3 = 0;
+
             if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;

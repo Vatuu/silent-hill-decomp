@@ -109,6 +109,8 @@ void func_800D55C8(s_SubCharacter*);
 
 void func_800D5888(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords);
+
 void func_800D59EC(s_SubCharacter*, GsCOORDINATE2*);
 
 void func_800D5B6C(s_SubCharacter* chara, GsCOORDINATE2* coords);
@@ -157,7 +159,5 @@ void func_800D9824(void);
 void Map_WorldObjectsInit(void);
 
 void func_800D9BB0(void);
-
-void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 #endif

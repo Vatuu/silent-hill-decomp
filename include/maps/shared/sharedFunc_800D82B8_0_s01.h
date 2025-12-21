@@ -25,7 +25,6 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
     s32            vz;
 
     sp10 = sharedFunc_800D4A80_0_s01(airScreamer);
-
     if (sp10 != 0)
     {
         var_a3 = 0;
@@ -39,7 +38,7 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
         var_t0   = temp_s5->pad;
         var_t0_2 = &sharedData_800E21D0_0_s01.matrices_C;
 
-        for (i = 1; var_s0 != -1; i++)
+        for (i = 1; var_s0 != NO_VALUE; i++)
         {
             if (var_s0 != var_t0)
             {
@@ -69,7 +68,6 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
             temp2  = var_t0_2[i].vz - vz;
 
             temp_a0_2 = FP_SQUARE_PRECISE(temp, Q12_SHIFT) + FP_SQUARE_PRECISE(temp2, Q12_SHIFT);
-
             if (var_t1 < temp_a0_2)
             {
                 var_t1 = temp_a0_2;
@@ -115,28 +113,28 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
         airScreamer->field_D4.field_0 = new_var4;
         airScreamer->field_D4.field_2 = 0;
 
-        airScreamer->field_C8.field_4 = 0;
-        airScreamer->field_C8.field_0 = 0;
-        airScreamer->field_C8.field_6 = 0;
-        airScreamer->field_C8.field_8 = 0;
+        airScreamer->field_C8.field_4 = Q12(0.0f);
+        airScreamer->field_C8.field_0 = Q12(0.0f);
+        airScreamer->field_C8.field_6 = Q12(0.0f);
+        airScreamer->field_C8.field_8 = Q12(0.0f);
         airScreamer->field_C8.field_2 = new_var3;
         airScreamer->field_E1_0       = 0;
     }
 
     if ((airScreamer->properties_E4.player.afkTimer_E8 & 0xF) == 3)
     {
-        airScreamer->field_C8.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_C8.field_2, 0x1200, Q12_SHIFT);
-        airScreamer->field_D4.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_D4.field_2, 0x1200, Q12_SHIFT);
+        airScreamer->field_C8.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_C8.field_2, Q12(1.125f), Q12_SHIFT);
+        airScreamer->field_D4.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_D4.field_2, Q12(1.125f), Q12_SHIFT);
     }
 
-    if (airScreamer->properties_E4.player.flags_11C & 0x1000)
+    if (airScreamer->properties_E4.player.flags_11C & PlayerFlag_Unk12)
     {
-        airScreamer->field_C8.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_C8.field_2, 0xE00, Q12_SHIFT);
-        airScreamer->field_D4.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_D4.field_2, 0xE00, Q12_SHIFT);
+        airScreamer->field_C8.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_C8.field_2, Q12(0.875f), Q12_SHIFT);
+        airScreamer->field_D4.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_D4.field_2, Q12(0.875f), Q12_SHIFT);
     }
 
-    airScreamer->field_D8.offsetX_0 = 0;
-    airScreamer->field_D8.offsetZ_2 = 0;
-    airScreamer->field_D8.offsetX_4 = 0;
-    airScreamer->field_D8.offsetZ_6 = 0;
+    airScreamer->field_D8.offsetX_0 = Q12(0.0f);
+    airScreamer->field_D8.offsetZ_2 = Q12(0.0f);
+    airScreamer->field_D8.offsetX_4 = Q12(0.0f);
+    airScreamer->field_D8.offsetZ_6 = Q12(0.0f);
 }

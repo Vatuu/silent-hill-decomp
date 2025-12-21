@@ -488,15 +488,14 @@ void func_800D5888(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     }
 }
 
-void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords) 
+void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5904
 {
     MATRIX mat;
-    GsCOORDINATE2* var_a0;
-    s32 temp_a3;
-    s32 temp_t1;
-    s32 posX;
-    s32 posY;
-    s32 posZ;
+    q19_12 unkPosY;
+    q19_12 unkBasePosY;
+    q19_12 posX;
+    q19_12 posY;
+    q19_12 posZ;
 
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(2, true))
     {
@@ -508,23 +507,25 @@ void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords)
     }
     
     posY = chara->position_18.vy;
-    posX = (mat.t[0] * 0x10) - chara->position_18.vx;
-    posZ = (mat.t[2] * 0x10) - chara->position_18.vz;
-    temp_t1 = (mat.t[1] * 0x10) - posY;
-    temp_a3 = temp_t1 - 0x400;
-    chara->field_C8.field_0 = temp_a3;
-    if (temp_a3 >= posY)
+    posX = Q8_TO_Q12(mat.t[0]) - chara->position_18.vx;
+    posZ = Q8_TO_Q12(mat.t[2]) - chara->position_18.vz;
+
+    unkBasePosY = Q8_TO_Q12(mat.t[1]) - posY;
+    unkPosY = unkBasePosY - Q12(0.25f);
+    chara->field_C8.field_0 = unkPosY;
+    if (unkPosY >= posY)
     {
         chara->field_C8.field_2 = posY;
     }
     else
     {
-        chara->field_C8.field_2 = temp_a3;
+        chara->field_C8.field_2 = unkPosY;
     }
-    chara->field_C8.field_4 = temp_t1 + 0x400;
-    chara->field_D4.field_0 = 0x800;
-    chara->field_C8.field_6 = temp_t1;
-    chara->field_D4.field_2 = 0x666;
+
+    chara->field_C8.field_4 = unkBasePosY + Q12(0.25f);
+    chara->field_D4.field_0 = Q12(0.5f);
+    chara->field_C8.field_6 = unkBasePosY;
+    chara->field_D4.field_2 = Q12(0.4f);
     sharedFunc_800CD920_3_s03(chara, posX, posZ);
         
     chara->field_D8.offsetX_0 = chara->field_D8.offsetX_4;
@@ -537,7 +538,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D59EC);
 
 void func_800D5B6C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5B6C
 {
-    s32 posY;
+    q19_12 posY;
 
     if (chara->model_0.anim_4.flags_2 & 2)
     {

@@ -776,7 +776,7 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk0           = 1 << 0,
     PlayerFlag_Shooting       = 1 << 1,
     PlayerFlag_Unk2           = 1 << 2,
-    PlayerFlag_WallStopRight  = 1 << 3, // Use right leg for wall stop.
+    PlayerFlag_WallStopRight  = 1 << 3, /** Use right leg for wall stop. */
     PlayerFlag_Unk4           = 1 << 4,
     PlayerFlag_Unk5           = 1 << 5, // `PlayerFlag_MoveBackward`?
     PlayerFlag_Unk6           = 1 << 6,

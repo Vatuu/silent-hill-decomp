@@ -517,7 +517,7 @@ static inline void func_80071968_Switch0(void)
             case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Multitap):
-            case EquippedWeaponId_Unk31:
+            case WEAPON_ATTACK(EquippedWeaponId_Unk31,AttackInputType_Tap):
                 break;
         }
     }
@@ -567,16 +567,16 @@ static inline void func_80071968_Switch1(void)
                 func_8003DD80(Chara_Harry, UNK_PACKED_DATA(4, 1));
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Hold):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk8, AttackInputType_Multitap):
-            case WEAPON_ATTACK(EquippedWeaponId_Unk9, AttackInputType_Multitap):
-            case EquippedWeaponId_Unk31:
+            case WEAPON_ATTACK(EquippedWeaponId_Unk3,  AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk8,  AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk9,  AttackInputType_Tap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk3,  AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk8,  AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk9,  AttackInputType_Hold):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk3,  AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk8,  AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk9,  AttackInputType_Multitap):
+            case WEAPON_ATTACK(EquippedWeaponId_Unk31, AttackInputType_Tap):
                 break;
         }
     }
@@ -635,7 +635,7 @@ void Player_AnimUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, s_AnmHeader*
         case PlayerState_Unk137:
         case PlayerState_Unk138:
         case PlayerState_Unk139:
-        case PlayerState_Unk141: // Throwing the disinfective alcohol scene. (Hospital Basement Otherworld)
+        case PlayerState_Unk141: // Throwing disinfective alcohol scene. (Hospital Basement Otherworld)
         case PlayerState_Unk142:
         case PlayerState_Unk143:
         case PlayerState_Unk144:
