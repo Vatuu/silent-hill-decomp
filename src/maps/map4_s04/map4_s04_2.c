@@ -185,12 +185,11 @@ void func_800D1910(void) // 0x800D1910
 
                 if (layer == 3)
                 {
-                    setCodeWord(scratch->sprt_0, PRIM_RECT | RECT_TEXTURE, PACKED_COLOR(0x80, 0x80, 0x80, 0));
+                    setRGBC0(scratch->sprt_0, 0x80, 0x80, 0x80, PRIM_RECT | RECT_TEXTURE);
                 }
                 else
                 {
-                    s32 rgb24 = colorVal + (colorVal << 8) + (colorVal << 16);
-                    setCodeWordSum(scratch->sprt_0, PRIM_RECT | RECT_TEXTURE | RECT_BLEND, rgb24);
+                    setRGBC0(scratch->sprt_0, colorVal, colorVal, colorVal, PRIM_RECT | RECT_TEXTURE | RECT_BLEND);
                 }
 
                 setWH(scratch->sprt_0, i == 0 ? 256 : 64, 224);

@@ -158,10 +158,6 @@ typedef struct
 #define setCodeWord(p, code, rgb24) \
     *(u32*)(((u8*)(p)) + 4) = (((code) << 24) | ((rgb24) & 0xFFFFFF))
 
-/** @brief Combines `setcode` and `setRGB0` by summing together. */
-#define setCodeWordSum(p, code, rgb24) \
-    *(u32*)(((u8*)(p)) + 4) = (((code) << 24) + ((rgb24)))
-
 // TODO: Perhaps `setRGBC0`, `setRGBC1`, `setRGBC2`, and `setRGBC3` were one macro. Incidental value set to padding fields suggests it?
 /** @brief Combines `setRGB0` and `setcode`. */
 #define setRGBC0(prim, r, g, b, code) \
