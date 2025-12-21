@@ -24,6 +24,8 @@ extern s_WorldObjectDesc g_WorldObject1; //800D86C8
 
 void func_800CAAD0(void);
 
+void func_800CABF8(s32 idx, bool arg1);
+
 void func_800D494C(void);
 
 void func_800D49AC(void);

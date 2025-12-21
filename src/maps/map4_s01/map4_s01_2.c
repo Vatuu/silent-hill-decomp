@@ -741,7 +741,7 @@ void func_800D3420(void) // 0x800D3420
             D_800D5AFC         = Q12(96.0f);
 
             sharedData_800DD180_3_s05.field_1  = 3;
-            sharedData_800DD180_3_s05.field_0  = 0x11;
+            sharedData_800DD180_3_s05.flags_0  = (1 << 4) | (1 << 0);
             sharedData_800DD180_3_s05.field_C  = 0xFA;
             sharedData_800DD180_3_s05.field_12 = -0x2333;
             sharedData_800DD180_3_s05.field_14 = -0x1333;

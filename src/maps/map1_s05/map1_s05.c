@@ -14,7 +14,7 @@ void func_800CAAD0(void) // 0x800CAAD0
     s32 i;
     s32 fieldC;
 
-    if (D_800D8568.field_0 & 1)
+    if (D_800D8568.flags_0 & (1 << 0))
     {
         D_800D8568.field_18 = D_800D8568.field_1A = D_800D8568.field_1C * 2;
     }
@@ -60,7 +60,83 @@ void func_800CAAD0(void) // 0x800CAAD0
     D_800C4414 |= 1;
 }
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CABF8);
+void func_800CABF8(s32 idx, bool arg1) // 0x800CABF8
+{
+    s32 rand;
+    s16 randAngle;
+
+    if (D_800D8568.field_1 == 1 &&
+        Rng_GenerateUInt(0, 4095) < D_800D8568.field_10 &&
+        Rng_GenerateUInt(0, 7) == 0)
+    {
+        sharedData_800DFB7C_0_s00[idx].field_A = 12;
+        return;
+    }
+
+    if ((D_800D8568.flags_0 & (1 << 4)) && Rng_GenerateUInt(0, 3) == 0)
+    {
+        sharedData_800DFB7C_0_s00[idx].field_A = 12;
+        return;
+    }
+
+    rand      = Rng_GenerateInt(0, (s16)D_800D8568.field_1C - 1);
+    randAngle = Rng_GenerateUInt(0, FP_ANGLE(360.0f) - 1);
+
+    if ((D_800D8568.flags_0 & (1 << 2)) && Rng_GenerateUInt(0, 63) == 0)
+    {
+        sharedData_800DFB7C_0_s00[idx].field_A = 10;
+    }
+    else
+    {
+        sharedData_800DFB7C_0_s00[idx].field_A = 8;
+    }
+
+    if (arg1 == 1)
+    {
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 = Rng_GenerateUInt(0, 15);
+    }
+    else
+    {
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 = Rng_GenerateUInt(0, 4095);
+    }
+
+    if (D_800D8568.flags_0 & (1 << 4))
+    {
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 =
+            MIN((((D_800D8568.field_3 << 4) * rand) / (s16)D_800D8568.field_1C) +
+                    (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 +
+                    D_800D8568.field_10 +
+                    Rng_GenerateUInt(0, 1023),
+                4095);
+    }
+    else
+    {
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 =
+            MIN((((D_800D8568.field_3 << 4) * rand) / (s16)D_800D8568.field_1C) +
+                    (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 +
+                    D_800D8568.field_10,
+                4095);
+    }
+
+    sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 = (u8)Rng_Rand16() | 0x80; // Same as `Rng_Rand16() - 128` ?
+    sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_1 = (u8)Rng_Rand16() | 0x80;
+
+    sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = Rng_GenerateUInt(0, 4095);
+
+    if (D_800D8568.flags_0 & (1 << 0))
+    {
+        sharedData_800DFB7C_0_s00[idx].field_0.vx_0 = FP_FROM(rand * Math_Cos(randAngle), Q12_SHIFT);
+        sharedData_800DFB7C_0_s00[idx].field_4.vz_4 = FP_FROM(rand * Math_Sin(randAngle), Q12_SHIFT);
+    }
+    else
+    {
+        sharedData_800DFB7C_0_s00[idx].field_0.vx_0 = Rng_GenerateInt(-D_800D8568.field_18, D_800D8568.field_18 - 1);
+        sharedData_800DFB7C_0_s00[idx].field_4.vz_4 = Rng_GenerateInt(-D_800D8568.field_1A, D_800D8568.field_1A - 1);
+    }
+
+    sharedData_800DFB7C_0_s00[idx].vy_8    = D_800D8568.field_14 + FP_FROM((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 * D_800D8568.field_16, Q12_SHIFT);
+    sharedData_800DFB7C_0_s00[idx].field_B = Rng_GenerateUInt(0, 1) + (Rng_GenerateInt(0, 2) * 2);
+}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CB040);
 
@@ -358,7 +434,7 @@ void func_800D525C(void) // 0x800D525C
     D_800D86F8[1] = 0;
     D_800D86FC[0] = 0x40;
     D_800D86FC[1] = 0x40;
-    D_800D8568.field_0 = 9;
+    D_800D8568.flags_0 = (1 << 3) | (1 << 0);
     D_800D8568.field_C = 0x12C;
     D_800D8568.field_12 = -0x2CCCu;
     D_800D8568.field_14 = -0x800;

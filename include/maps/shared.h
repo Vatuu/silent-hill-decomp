@@ -2235,7 +2235,7 @@ STATIC_ASSERT_SIZEOF(s_D_800D5A8C, 12);
 
 typedef struct _MapHeader_field_5C
 {
-    u8  field_0;
+    u8  flags_0;
     u8  field_1;
     u8  field_2;
     u8  field_3;

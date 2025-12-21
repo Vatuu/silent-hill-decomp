@@ -3,7 +3,7 @@ void sharedFunc_800CB5F4_3_s05(void) // 0x800CC19C
     s32 i;
     s32 counterC;
 
-    if (sharedData_800DD180_3_s05.field_0 & (1 << 0))
+    if (sharedData_800DD180_3_s05.flags_0 & (1 << 0))
     {
         sharedData_800DD180_3_s05.field_1A = sharedData_800DD180_3_s05.field_1C * 2;
         sharedData_800DD180_3_s05.field_18 = sharedData_800DD180_3_s05.field_1A;
