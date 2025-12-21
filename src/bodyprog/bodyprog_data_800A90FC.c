@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "screens/b_konami/b_konami.h"
 
 s_CharaFileInfo CHARA_FILE_INFOS[] = {
 /* `Chara_` name       { `animFileIdx`          `modelFileIdx`         `textureFileIdx`       `field_6`  `materialBlendMode_6_10` `field_8`    `cameraAnchor_C_0`      `cameraOffsetY_C_2` } */
@@ -376,8 +377,8 @@ u16 D_800A9774[] = {
 
 void (*g_GameStateUpdateFuncs[])(void) = {
     GameState_Boot_Update,
-    (void (*)())0x800C95AC, // Konami Logo.
-    (void (*)())0x800C99A4, // KCET Logo.
+    GameState_KonamiLogo_Update,
+    GameState_KcetLogo_Update,
     GameState_StartMovieIntro_Update,
     GameState_DeathLoadScreen_Update,
     GameState_MovieIntroAlternate_Update,
