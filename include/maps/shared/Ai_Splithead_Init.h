@@ -2,12 +2,12 @@ void Ai_Splithead_Init(s_SubCharacter* splithead)
 {
     s32 i;
 
-    splithead->health_B0                                             = Q12(6.2256f);
-    splithead->properties_E4.dummy.properties_E8[0].val16[0] = 0;
-    splithead->model_0.anim_4.alpha_A                                = Q12(0.0f);
-    splithead->moveSpeed_38                                          = 0;
-    splithead->headingAngle_3C                                       = splithead->rotation_24.vy;
-    splithead->field_E1_0                                            = 4;
+    splithead->health_B0                        = 25500; // Splithead health isn't stored as Q12?
+    splithead->properties_E4.splitHead.flags_E8 = 0;
+    splithead->model_0.anim_4.alpha_A           = Q12(0.0f);
+    splithead->moveSpeed_38                     = 0;
+    splithead->headingAngle_3C                  = splithead->rotation_24.vy;
+    splithead->field_E1_0                       = 4;
 
     for (i = 0; i < 16; i++)
     {

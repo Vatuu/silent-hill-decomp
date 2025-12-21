@@ -1687,6 +1687,8 @@ typedef enum _SplitheadAnim
 {
     SplitheadAnim_Still = 0,
 
+    SplitheadAnim_Unk2 = 2,
+
     SplitheadAnim_Unk10 = 10,
 } e_SplitheadAnim;
 
@@ -2894,7 +2896,7 @@ void Ai_Splithead_Init(s_SubCharacter* splithead);
 
 void sharedFunc_800CF990_1_s05(s_SubCharacter* splithead);
 
-void sharedFunc_800CFE94_1_s05(s_SubCharacter* splithead);
+void Ai_Splithead_DamageTake(s_SubCharacter* splithead);
 
 void sharedFunc_800D0054_1_s05(s_SubCharacter* splithead);
 

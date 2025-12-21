@@ -9,7 +9,7 @@ void Ai_Splithead_Update(s_SubCharacter* splithead, s_AnmHeader* anmHdr, GsCOORD
 
     if (g_DeltaTime0 != Q12(0.0f))
     {
-        sharedFunc_800CFE94_1_s05(splithead);
+        Ai_Splithead_DamageTake(splithead);
         sharedFunc_800D0054_1_s05(splithead);
         sharedFunc_800D267C_1_s05(splithead);
         sharedFunc_800D3AFC_1_s05(splithead);
