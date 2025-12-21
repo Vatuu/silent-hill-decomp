@@ -97,4 +97,6 @@ void func_800D9DDC(void);
 
 void func_800D9EC4(void);
 
+bool func_800CBB30(POLY_FT4** poly, s32 idx);
+
 #endif
