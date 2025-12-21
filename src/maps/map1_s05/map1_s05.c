@@ -9,7 +9,56 @@ INCLUDE_RODATA("asm/maps/map1_s05/nonmatchings/map1_s05", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map1_s05/nonmatchings/map1_s05", g_MapOverlayHeader);
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CAAD0);
+void func_800CAAD0(void) // 0x800CAAD0
+{
+    s32 i;
+    s32 fieldC;
+
+    if (D_800D8568.field_0 & 1)
+    {
+        D_800D8568.field_18 = D_800D8568.field_1A = D_800D8568.field_1C * 2;
+    }
+    else
+    {
+        D_800D8568.field_1C = (D_800D8568.field_18 + D_800D8568.field_1A) >> 1;
+    }
+
+    D_800D8568.field_16 = D_800D8568.field_12 - D_800D8568.field_14;
+
+    if (D_800D8568.field_1 != 0)
+    {
+        D_800D8568.field_10 = 0x1000;
+    }
+    else
+    {
+        D_800D8568.field_10 = 0;
+    }
+
+    fieldC = D_800D8568.field_C;
+    for (i = ARRAY_SIZE(sharedData_800DFB7C_0_s00) - 1; i >= 0; i--)
+    {
+        if (sharedData_800DFB7C_0_s00[i].field_A != 0)
+        {
+            continue;
+        }
+
+        if (D_800D8568.field_1 == 0)
+        {
+            func_800CABF8(i, 0);
+        }
+        else
+        {
+            sharedData_800DFB7C_0_s00[i].field_A = 12;
+        }
+
+        if (--fieldC == 0)
+        {
+            break;
+        }
+    }
+
+    D_800C4414 |= 1;
+}
 
 INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CABF8);
 
