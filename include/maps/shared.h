@@ -2349,6 +2349,8 @@ void sharedFunc_800CCDD4_1_s05(void* arg0, s32 arg1); // Unknown arg types.
 
 void sharedFunc_800CCE2C_1_s05(u8 arg0, u8 arg1, s32 posX0, s32 posY0, s32 posZ0, s32 posX1, s32 posY1, s32 posZ1);
 
+void sharedFunc_800D4408_1_s05(VECTOR3* arg0, s32 idx, s32 posX, s32 posY, s32 posZ);
+
 q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
 
 /* TODO: This function is almost identical to `sharedFunc_800D57C8_0_s01`.
