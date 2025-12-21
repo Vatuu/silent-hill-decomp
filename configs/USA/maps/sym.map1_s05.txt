@@ -64,6 +64,7 @@ Ai_Splithead_DamageTake   = 0x800CFE94; // type:func
 sharedFunc_800D0054_1_s05 = 0x800D0054; // type:func
 sharedFunc_800D17BC_1_s05 = 0x800D17BC; // type:func
 sharedFunc_800D2214_1_s05 = 0x800D2214; // type:func
+sharedFunc_800D2444_1_s05 = 0x800D2444; // type:func
 sharedFunc_800D263C_1_s05 = 0x800D263C; // type:func
 sharedFunc_800D267C_1_s05 = 0x800D267C; // type:func
 sharedFunc_800D274C_1_s05 = 0x800D274C; // type:func

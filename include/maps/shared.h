@@ -1689,6 +1689,7 @@ typedef enum _SplitheadAnim
 
     SplitheadAnim_Unk2 = 2,
 
+    SplitheadAnim_Unk9 = 9,
     SplitheadAnim_Unk10 = 10,
 } e_SplitheadAnim;
 
@@ -2911,6 +2912,8 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splithead, s32*, s32*);
 void sharedFunc_800D17BC_1_s05(s_SubCharacter* splithead);
 
 void sharedFunc_800D2214_1_s05(s_SubCharacter* splithead);
+
+void sharedFunc_800D2444_1_s05(s_SubCharacter* splithead);
 
 void sharedFunc_800D263C_1_s05(s_SubCharacter* splithead);
 

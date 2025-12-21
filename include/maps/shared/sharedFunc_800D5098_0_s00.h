@@ -34,7 +34,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* chara)
             temp_3    = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
                                               g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                                       chara->rotation_24.vy));
-            temp_v1_2 = ((g_DeltaTime0 / 3) >> 3) + 1;
+            temp_v1_2 = ((g_DeltaTime0 / 3) >> 3) + 1; // @hack `(g_DeltaTime0 / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
 
             if ((temp_3 >= 0 && temp_v1_2 < temp_3) || (temp_3 < 0 && temp_v1_2 < -temp_3))
             {
