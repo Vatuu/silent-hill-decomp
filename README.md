@@ -136,7 +136,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Purpose</td>
           </tr>
           <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a><br/>13/43 matched.</td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a><br/>14/43 matched.</td>
             <td colspan=2>Map and character code.</td>
           </tr>
           <tr>
@@ -287,7 +287,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Mall and boss fight.</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map4_s04"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map4_s04&label=MAP4_S04"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map4_s04"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map4_s04&label=MAP4_S04&color=rgb(255,215,0)"/></a></td>
             <td>Hospital First Floor.</td>
             <td>Cutscene with Lisa after finding the<br/>altar in the Green Lion Antique Shop<br/>and meeting Lisa again after the mall<br/>boss fight.</td>
         </tr>
