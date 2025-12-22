@@ -11,7 +11,7 @@ INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", g_MapOverlayHeader);
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800CBA4C_1_s02); // 0x800CBA4C
+#include "maps/shared/sharedFunc_800CBA4C_1_s02.h" // 0x800CBA4C
 
 #include "maps/shared/sharedFunc_800CBC98_1_s02.h" // 0x800CBC98
 
@@ -1594,9 +1594,9 @@ void func_800DD494(void) // 0x800DD494
         func_80088FF4(Chara_Creaper, 9, 3);
     }
 
-    sharedData_800E30C8_1_s02.field_0 = -0x10666;
+    sharedData_800E30C8_1_s02.field_0[0]  = -0x10666;
     sharedData_800E30C8_1_s02.field_10[0] = 0x199;
-    sharedData_800E30C8_1_s02.vec_18.vx = -0x33333;
+    sharedData_800E30C8_1_s02.field_18[0] = -0x33333;
     sharedData_800E30C8_1_s02.field_28[0] = 0x1999;
     sharedData_800E30C8_1_s02.field_34[0] = 0x400;
     sharedData_800E30C8_1_s02.field_30[0] = 0;
@@ -1607,9 +1607,9 @@ void func_800DD494(void) // 0x800DD494
     sharedData_800E30C8_1_s02.field_64[0] = 0x800;
     sharedData_800E30C8_1_s02.field_6c[0] = 0xCC;
 
-    sharedData_800E30C8_1_s02.field_4 = -0xECCC;
+    sharedData_800E30C8_1_s02.field_0[1]  = -0xECCC;
     sharedData_800E30C8_1_s02.field_10[1] = 0x199;
-    sharedData_800E30C8_1_s02.vec_18.vy = -0x33333;
+    sharedData_800E30C8_1_s02.field_18[1] = -0x33333;
     sharedData_800E30C8_1_s02.field_34[1] = 0xC00;
     sharedData_800E30C8_1_s02.field_28[1] = 0x1999;
     sharedData_800E30C8_1_s02.field_30[1] = 0;

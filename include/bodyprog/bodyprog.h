@@ -1533,12 +1533,9 @@ STATIC_ASSERT_SIZEOF(s_MapOverlayHeader_7C, 0x20);
 
 typedef struct
 {
-    s32    field_0;
-    s32    field_4;
-    s32    field_8;
-    s32    field_C;
+    s32    field_0[4];
     s16    field_10[4];
-    VECTOR vec_18;
+    s32    field_18[4];
     u16    field_28[4];
     u8     field_30[4];
     q3_12  field_34[4]; // Y angles.
