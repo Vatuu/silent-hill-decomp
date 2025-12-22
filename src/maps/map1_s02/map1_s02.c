@@ -89,7 +89,7 @@ INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800D4924_0_s00
 
 #include "maps/shared/Ai_Creaper_Init.h" // 0x800D7C28
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800D7EE8_1_s02); // 0x800D7EE8
+#include "maps/shared/sharedFunc_800D7EE8_1_s02.h" // 0x800D7EE8
 
 #include "maps/shared/sharedFunc_800D8244_1_s02.h" // 0x800D8244
 

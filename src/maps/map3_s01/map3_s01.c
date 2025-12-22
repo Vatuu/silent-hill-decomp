@@ -39,7 +39,7 @@ INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", g_MapOverlayHeader);
 
 #include "maps/shared/Ai_Creaper_Init.h" // 0x800CEEDC
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", sharedFunc_800D7EE8_1_s02); // 0x800CF19C
+#include "maps/shared/sharedFunc_800D7EE8_1_s02.h" // 0x800CF19C
 
 #include "maps/shared/sharedFunc_800D8244_1_s02.h" // 0x800CF4F8
 

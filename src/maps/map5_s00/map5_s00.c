@@ -93,7 +93,7 @@ INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D3300_5_s00
 
 #include "maps/shared/Ai_Creaper_Init.h" // 0x800D390C - doesn't fully match `map1_s02` version, small block of code added to end.
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D7EE8_1_s02); // 0x800D3BDC
+#include "maps/shared/sharedFunc_800D7EE8_1_s02.h" // 0x800D3BDC
 
 #include "maps/shared/sharedFunc_800D8244_1_s02.h" // 0x800D3F38
 
