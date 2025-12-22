@@ -7,7 +7,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* chara)
     q19_12 speed_2;
     q19_12 temp_lo;
     q19_12 div;
-    q19_12 var_a0_3;
+    q19_12 speed1;
     q20_12 absRot;
     q20_12 absSpeed;
     q19_12 ret;
@@ -66,25 +66,25 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* chara)
             {
                 if (absSpeed < Q12(20.0f))
                 {
-                    var_a0_3 = Q12(20.0f);
+                    speed1 = Q12(20.0f);
                 }
                 else
                 {
-                    var_a0_3 = speed;
+                    speed1 = speed;
                 }
             }
             else
             {
                 if (absRot < Q12(20.0f))
                 {
-                    var_a0_3 = Q12(20.0f);
+                    speed1 = Q12(20.0f);
                 }
                 else
                 {
-                    var_a0_3 = rot;
+                    speed1 = rot;
                 }
             }
-            return var_a0_3;
+            return speed1;
 
         case ANIM_STATUS(19, true):
             if (isNotState1)
@@ -112,7 +112,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* chara)
         case ANIM_STATUS(11, true):
         case ANIM_STATUS(16, true):
             div      = func_80080884(chara->position_18.vx, chara->position_18.vz) - chara->position_18.vy;
-            var_a0_3 = Q12(20.0f);
+            speed1 = Q12(20.0f);
 
             if (div > Q12(0.0f))
             {
@@ -140,18 +140,18 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* chara)
                 }
 
                 temp_lo  = FP_TO(ret_3 - animTime, Q12_SHIFT) / div;
-                var_a0_3 = FP_MULTIPLY_PRECISE(speed_2, temp_lo, Q12_SHIFT);
+                speed1 = FP_MULTIPLY_PRECISE(speed_2, temp_lo, Q12_SHIFT);
             }
 
-            if (var_a0_3 < Q12(0.3f))
+            if (speed1 < Q12(0.3f))
             {
-                var_a0_3 = Q12(0.3f);
+                speed1 = Q12(0.3f);
             }
-            if (var_a0_3 > Q12(30.0f))
+            if (speed1 > Q12(30.0f))
             {
-                var_a0_3 = Q12(30.0f);
+                speed1 = Q12(30.0f);
             }
-            return var_a0_3;
+            return speed1;
     }
 
     return Q12(10.0f);

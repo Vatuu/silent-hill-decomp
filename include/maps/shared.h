@@ -2238,28 +2238,28 @@ STATIC_ASSERT_SIZEOF(s_D_800D5A8C, 12);
 
 typedef struct _MapHeader_field_5C
 {
-    u8  flags_0;
-    u8  field_1;
-    u8  field_2;
-    u8  field_3;
-    u8  field_4;
-    u8  field_5;
-    u8  field_6;
-    u8  field_7;
-    s16 field_8;
-    s16 field_A;
-    u16 field_C;
-    s16 field_E;
-    s16 field_10;
-    s16 field_12;
-    s16 field_14;
-    s16 field_16;
-    s16 field_18;
-    s16 field_1A;
-    u16 field_1C;
-    s16 field_1E;
-    s32 field_20;
-    s32 field_24;
+    u8    flags_0;
+    u8    field_1;
+    u8    field_2;
+    u8    field_3;
+    u8    field_4;
+    u8    field_5;
+    u8    field_6;
+    u8    field_7;
+    s16   field_8;
+    s16   field_A;
+    u16   field_C;
+    s16   field_E;
+    q3_12 field_10;
+    s16   field_12;
+    s16   field_14;
+    s16   field_16;
+    s16   field_18;
+    s16   field_1A;
+    u16   field_1C;
+    s16   field_1E;
+    s32   field_20;
+    s32   field_24;
 } s_MapHeader_field_5C;
 
 typedef struct
@@ -2352,7 +2352,7 @@ void sharedFunc_800CCDD4_1_s05(void* arg0, s32 arg1); // Unknown arg types.
 
 void sharedFunc_800CCE2C_1_s05(u8 arg0, u8 arg1, s32 posX0, s32 posY0, s32 posZ0, s32 posX1, s32 posY1, s32 posZ1);
 
-void sharedFunc_800D4408_1_s05(VECTOR3* arg0, s32 idx, s32 posX, s32 posY, s32 posZ);
+void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, s32 posX, s32 posY, s32 posZ);
 
 q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
 

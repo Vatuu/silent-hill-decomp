@@ -52,6 +52,8 @@ extern q19_12 g_PianoCursorY;
 extern s32    g_PianoKeyCounter;
 extern s32    D_800DD594;
 
+bool func_800CBB30(POLY_FT4** poly, s32 idx);
+
 void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /**  The same function in map1_s00: `func_800D77F8`. */
@@ -96,7 +98,5 @@ void func_800D9514(void);
 void func_800D9DDC(void);
 
 void func_800D9EC4(void);
-
-bool func_800CBB30(POLY_FT4** poly, s32 idx);
 
 #endif

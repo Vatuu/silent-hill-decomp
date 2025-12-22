@@ -134,7 +134,7 @@ void func_800D1910(void) // 0x800D1910
     Gfx_DebugStringPosition(30, 30);
     ClearImage(&D_800D3720, 0, 0, 0);
 
-    // GPU packet setup
+    // GPU packet setup.
     {
         typedef struct
         {
@@ -145,9 +145,9 @@ void func_800D1910(void) // 0x800D1910
             DR_OFFSET* offset_10;
         } s_ScratchData;
 
-        s_ScratchData* scratch;
         s32            layer;
         s32            i;
+        s_ScratchData* scratch;
 
         scratch = PSX_SCRATCH_ADDR(0);
 
@@ -161,8 +161,8 @@ void func_800D1910(void) // 0x800D1910
 
                 // @hack Might have been a switch instead?
                 setXY0Fast(scratch->sprt_0, 
-                           (i * 256) - (layer < 2 ? (layer == 1 ? 159 : 161) : 160),
-                           (layer < 2 ? -112 : (layer == 2) ? -111 : -113));
+                           (i * 256) - ((layer < 2) ? ((layer == 1) ? 159 : 161) : 160),
+                           ((layer < 2) ? -112 : ((layer == 2) ? -111 : -113)));
 
                 setUV0(scratch->sprt_0, 0, 0);
 
@@ -206,35 +206,35 @@ void func_800D1910(void) // 0x800D1910
             }
         }
 
-        // First DR_AREA
+        // First `DR_AREA`.
         scratch->area_C = (DR_AREA*)scratch->sprt_0;
         SetDrawArea(scratch->area_C, &D_800D3710[g_ActiveBufferIdx == 0 ? 1 : 0]);
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->area_C);
         scratch->area_C++;
 
-        // Second DR_AREA
+        // Second `DR_AREA`.
         SetDrawArea(scratch->area_C, &D_800D3720);
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], scratch->area_C);
         scratch->area_C++;
 
-        // First DR_OFFSET
+        // First `DR_OFFSET`.
         scratch->offset_10 = (DR_OFFSET*)scratch->area_C;
         SetDrawOffset(scratch->offset_10, &D_800D3728[g_ActiveBufferIdx == 0 ? 1 : 0]);
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->offset_10);
         scratch->offset_10++;
 
-        // Second DR_OFFSET
+        // Second `DR_OFFSET`.
         SetDrawOffset(scratch->offset_10, &D_800D3730);
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], scratch->offset_10);
         scratch->offset_10++;
 
-        // First DR_STP (disabled)
+        // First `DR_STP` (disabled).
         scratch->stp_8 = (DR_STP*)scratch->offset_10;
         SetDrawStp(scratch->stp_8, 0);
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], scratch->stp_8);
         scratch->stp_8++;
 
-        // Second DR_STP (enabled)
+        // Second `DR_STP` (enabled).
         SetDrawStp(scratch->stp_8, 1);
         addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], scratch->stp_8);
         scratch->stp_8++;
@@ -253,32 +253,40 @@ void func_800D1910(void) // 0x800D1910
         case 0:
             Player_ControlFreeze();
             D_800D6EF8 = 0;
+
             Fs_QueueStartRead(FILE_ANIM_HSPTL4_DMS, FS_BUFFER_15);
             Fs_QueueWaitForEmpty();
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_15);
+
             D_800D6EF4 = 0;
+
             Chara_Load(0, Chara_Lisa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Lisa, 0, Q12(70.0f), Q12(150.0f), 0, 3);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
+
             D_800D6EF8 = 0;
 
-            // TODO: Find the correct order, looking at other functions, seems to be random...
+            // TODO: Find correct order. Looking at other functions, seems to be random.
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
             g_SysWork.field_2378 = Q12(1.0f);
             Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(57.0f), Q12(-3.0f), Q12(141.8f));
+
             // TODO: `Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-90.0f), 0, 0);` doesn't match.
-            *(s32*)&g_SysWork.cutsceneLightRot_2370.vx = 0xfc00; // `FP_ANGLE(-90.0f)`
+            *(s32*)&g_SysWork.cutsceneLightRot_2370.vx = 0xFC00; // `FP_ANGLE(-90.0f)`
             (&g_SysWork.cutsceneLightRot_2370)->vz     = 0;
 
             func_8008D438();
+
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
             g_SysWork.flags_22A4 |= SysFlag2_3;
+
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 117, false);
             D_800D37C0 = 0;
+
             func_8003ED74(15, 15);
             SysWork_StateStepIncrement(0);
             g_WorldObject0.position_1C.vz = Q12(141.0f);
@@ -287,7 +295,9 @@ void func_800D1910(void) // 0x800D1910
         case 1:
             func_80085EB8(2, &g_SysWork.playerWork_4C.player_0, 0, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 9, false);
+
             D_800D37C0 = 1;
+
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -312,6 +322,7 @@ void func_800D1910(void) // 0x800D1910
         case 6:
             D_800D6EF4                    = Q12(24.0f);
             g_WorldObject0.position_1C.vz = Q12(140.8f);
+
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 135, false);
             SysWork_StateStepIncrement(0);
 
@@ -356,7 +367,9 @@ void func_800D1910(void) // 0x800D1910
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
+
             Savegame_EventFlagSet(EventFlag_338);
+
             SD_Call(19);
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
@@ -365,13 +378,15 @@ void func_800D1910(void) // 0x800D1910
 
     g_SysWork.npcs_1A0[0].position_18.vy = Q12(0.0f);
 
-    if (D_800D6EF4 >= 0)
+    if (D_800D6EF4 >= Q12(0.0f))
     {
         Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
+
         if (D_800D37C0 != 0)
         {
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "LISA", D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15);
         }
+
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D6ED8, &D_800D6EE8, NULL, D_800D6EF4, (s_DmsHeader*)FS_BUFFER_15));
         vcUserCamTarget(&D_800D6ED8, NULL, true);
         vcUserWatchTarget(&D_800D6EE8, NULL, true);

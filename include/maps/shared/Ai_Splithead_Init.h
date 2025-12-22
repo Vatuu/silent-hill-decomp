@@ -2,7 +2,7 @@ void Ai_Splithead_Init(s_SubCharacter* splithead)
 {
     s32 i;
 
-    splithead->health_B0                        = 25500; // Splithead health isn't stored as Q12?
+    splithead->health_B0                        = 25500; // TODO: Splithead health isn't stored as Q12?
     splithead->properties_E4.splitHead.flags_E8 = 0;
     splithead->model_0.anim_4.alpha_A           = Q12(0.0f);
     splithead->moveSpeed_38                     = 0;

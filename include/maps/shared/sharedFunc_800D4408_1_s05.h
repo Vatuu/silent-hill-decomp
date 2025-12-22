@@ -1,4 +1,4 @@
-void sharedFunc_800D4408_1_s05(VECTOR3* arg0, s32 idx, s32 posX, s32 posY, s32 posZ)
+void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, s32 posX, s32 posY, s32 posZ)
 {
     typedef struct
     {
@@ -8,6 +8,7 @@ void sharedFunc_800D4408_1_s05(VECTOR3* arg0, s32 idx, s32 posX, s32 posY, s32 p
     } s_ScratchData;
 
     s_ScratchData* scratch;
+
     scratch = PSX_SCRATCH;
 
     Math_SetSVectorFastSum(&scratch->field_20, posX, posY, posZ);
@@ -22,7 +23,7 @@ void sharedFunc_800D4408_1_s05(VECTOR3* arg0, s32 idx, s32 posX, s32 posY, s32 p
     gte_rt();
     gte_stlvnl(&scratch->field_28);
 
-    arg0->vx = Q8_TO_Q12(scratch->field_28.vx);
-    arg0->vy = Q8_TO_Q12(scratch->field_28.vy);
-    arg0->vz = Q8_TO_Q12(scratch->field_28.vz);
+    pos->vx = Q8_TO_Q12(scratch->field_28.vx);
+    pos->vy = Q8_TO_Q12(scratch->field_28.vy);
+    pos->vz = Q8_TO_Q12(scratch->field_28.vz);
 }

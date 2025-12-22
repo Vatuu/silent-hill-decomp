@@ -2,10 +2,11 @@
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
+#include "inline_no_dmpsx.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map1/map1_s01.h"
-#include "inline_no_dmpsx.h"
+
 #include <psyq/gtemac.h>
 
 INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", D_800C9578);
@@ -18,7 +19,7 @@ INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CBA38_1_s01.h" // 0x800CBA38
 
-bool func_800CBB30(POLY_FT4** poly, s32 idx)       // 0x800CBB30
+bool func_800CBB30(POLY_FT4** poly, s32 idx) // 0x800CBB30
 {
     typedef struct
     {
@@ -41,10 +42,10 @@ bool func_800CBB30(POLY_FT4** poly, s32 idx)       // 0x800CBB30
 
     ptr = PSX_SCRATCH;
 
-    *(s32*)&(*poly)->u0 = (((sharedData_800DFB7C_0_s00[idx].field_B << 5) + 0xA0) << 8) + 0x011300E0;
-    *(s32*)&(*poly)->u1 = (((sharedData_800DFB7C_0_s00[idx].field_B << 5) + 0xA0) << 8) + 0x2B00FF;
-    *(u16*)&(*poly)->u2 = (((sharedData_800DFB7C_0_s00[idx].field_B << 5) + 0xBF) << 8) + 0xE0;
-    *(u16*)&(*poly)->u3 = (((sharedData_800DFB7C_0_s00[idx].field_B << 5) + 0xBF) << 8) + 0xFF;
+    *(s32*)&(*poly)->u0 = (((sharedData_800DFB7C_0_s00[idx].field_B << 5) + 160) << 8) + 0x011300E0;
+    *(s32*)&(*poly)->u1 = (((sharedData_800DFB7C_0_s00[idx].field_B << 5) + 160) << 8) + 0x2B00FF;
+    *(u16*)&(*poly)->u2 = (((sharedData_800DFB7C_0_s00[idx].field_B << 5) + 191) << 8) + 0xE0;
+    *(u16*)&(*poly)->u3 = (((sharedData_800DFB7C_0_s00[idx].field_B << 5) + 191) << 8) + 0xFF;
 
     temp_v1_2 = 0x40 - (sharedData_800DFB7C_0_s00[idx].field_C.field_0 >> 6);
     if (temp_v1_2 >= 0)
@@ -63,7 +64,7 @@ bool func_800CBB30(POLY_FT4** poly, s32 idx)       // 0x800CBB30
 
     sharedData_800DFB7C_0_s00[idx].vy_8 += FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DEE50_1_s01.field_C, Q12_SHIFT);
 
-    temp_v0_4 = SquareRoot0(SQUARE(temp_v0_2) + SQUARE(temp_v0_3)) << 0xA;
+    temp_v0_4 = SquareRoot0(SQUARE(temp_v0_2) + SQUARE(temp_v0_3)) << 10;
     temp_s1   = FP_MULTIPLY_PRECISE(temp_v0_4, sharedData_800DEE50_1_s01.field_A, Q12_SHIFT);
 
     temp_v1_3 = (Rng_Rand16() % temp_s1) - (temp_s1 >> 2);
@@ -80,12 +81,12 @@ bool func_800CBB30(POLY_FT4** poly, s32 idx)       // 0x800CBB30
 
     ptr->field_12C.vz = ((sharedData_800DFB7C_0_s00[idx].field_4.vz_4 + sharedData_800DEE50_1_s01.field_18) >> 4) - ptr->field_0.field_0.vz;
 
-    sharedData_800DFB7C_0_s00[idx].field_C.field_0 += CLAMP_LOW(
-        FP_TO(FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DEE50_1_s01.field_C, Q12_SHIFT), Q12_SHIFT) /
-            (FP_MULTIPLY(Math_Cos(sharedData_800DEE50_1_s01.field_10), sharedData_800DEE50_1_s01.field_6, Q12_SHIFT) - sharedData_800DEE50_1_s01.field_8),
-        0);
+    sharedData_800DFB7C_0_s00[idx].field_C.field_0 += CLAMP_LOW(FP_TO(FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DEE50_1_s01.field_C, Q12_SHIFT), Q12_SHIFT) /
+                                                                (FP_MULTIPLY(Math_Cos(sharedData_800DEE50_1_s01.field_10), sharedData_800DEE50_1_s01.field_6, Q12_SHIFT) -
+                                                                 sharedData_800DEE50_1_s01.field_8),
+                                                                0);
 
-    if (sharedData_800DFB7C_0_s00[idx].field_C.field_0 > 0x1000 || sharedData_800DEE50_1_s01.field_10 == 0x400)
+    if (sharedData_800DFB7C_0_s00[idx].field_C.field_0 > Q12(1.0f) || sharedData_800DEE50_1_s01.field_10 == Q12(0.25f))
     {
         if (sharedData_800DEE50_1_s01.field_1C == 0 && Math_Cos(sharedData_800DEE50_1_s01.field_10) < Rng_TestProbabilityBits(12))
         {
@@ -96,7 +97,7 @@ bool func_800CBB30(POLY_FT4** poly, s32 idx)       // 0x800CBB30
             sharedFunc_800CB8A0_1_s01(idx);
         }
 
-        return 0;
+        return false;
     }
 
     gte_ldv0(&ptr->field_12C);

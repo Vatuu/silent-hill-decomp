@@ -64,6 +64,7 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* chara)
                 {
                     switchCond = 1;
                 }
+
                 chara->model_0.stateStep_3 = 0;
             }
             else if (chara->properties_E4.unk0.properties_120.val32 == 0)
@@ -73,19 +74,22 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* chara)
             else if (field14C_2 || field14C_0 || field14C_1)
             {
                 chara->model_0.stateStep_3 = 3;
+
                 if (field15C > 32)
                 {
-                    s32 angleDiff = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.pos_104) - chara->rotation_24.vy);
+                    q19_12 angleDiff = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.pos_104) - chara->rotation_24.vy);
                     sharedFunc_800DEC84_2_s00(chara, Q12(3.0f), (angleDiff / 4) + chara->rotation_24.vy);
                     chara->properties_E4.unk0.properties_120.val32 = Q12(6.0f);
                 }
             }
             break;
+
         case 4:
             if (animStatus == ANIM_STATUS(17, true))
             {
                 switchCond                     = 2;
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(16, false);
+
                 if (!field14C_1 && !field14C_0)
                 {
                     chara->model_0.stateStep_3 = 6;
@@ -100,6 +104,7 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* chara)
                 chara->model_0.stateStep_3 = 5;
             }
             break;
+
         case 5:
             if (animStatus == ANIM_STATUS(17, true))
             {
@@ -108,6 +113,7 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* chara)
                 chara->model_0.stateStep_3     = 7;
             }
             break;
+
         case 6:
             switchCond = 3;
 
@@ -119,7 +125,6 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* chara)
             {
                 switchCond = 2;
             }
-
             break;
 
         case 7:
@@ -131,6 +136,7 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* chara)
             {
                 switchCond                     = 4;
                 chara->model_0.anim_4.status_0 = ANIM_STATUS(15, false);
+
                 if (!field14C_1 && !field14C_0)
                 {
                     chara->model_0.stateStep_3 = 10;
@@ -145,6 +151,7 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* chara)
                 chara->model_0.stateStep_3 = 9;
             }
             break;
+
         case 9:
             if (animStatus == ANIM_STATUS(17, true))
             {
@@ -165,7 +172,6 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* chara)
             {
                 switchCond = 4;
             }
-
             break;
 
         case 11:
@@ -220,6 +226,7 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* chara)
                         }
                     }
                     break;
+
                 case 3:
                     if (temp_fp == 1)
                     {
@@ -235,6 +242,7 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* chara)
                         }
                     }
                     break;
+
                 case 4:
                     if (temp_fp == 2)
                     {
@@ -250,6 +258,7 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* chara)
                         }
                     }
                     break;
+
                 case 5:
                     if (temp_fp == 2)
                     {
@@ -279,6 +288,7 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* chara)
         case 4:
             chara->model_0.state_2     = 45;
             chara->model_0.stateStep_3 = 0;
+
             if (chara->health_B0 <= Q12(0.0f))
             {
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;

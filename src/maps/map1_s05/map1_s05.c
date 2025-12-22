@@ -4,6 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map1/map1_s05.h"
+#include "maps/characters/Chara_Splithead.h"
 
 INCLUDE_RODATA("asm/maps/map1_s05/nonmatchings/map1_s05", D_800C9578);
 
@@ -16,7 +17,8 @@ void func_800CAAD0(void) // 0x800CAAD0
 
     if (D_800D8568.flags_0 & (1 << 0))
     {
-        D_800D8568.field_18 = D_800D8568.field_1A = D_800D8568.field_1C * 2;
+        D_800D8568.field_18 =
+        D_800D8568.field_1A = D_800D8568.field_1C * 2;
     }
     else
     {
@@ -27,11 +29,11 @@ void func_800CAAD0(void) // 0x800CAAD0
 
     if (D_800D8568.field_1 != 0)
     {
-        D_800D8568.field_10 = 0x1000;
+        D_800D8568.field_10 = Q12(1.0f);
     }
     else
     {
-        D_800D8568.field_10 = 0;
+        D_800D8568.field_10 = Q12(0.0f);
     }
 
     fieldC = D_800D8568.field_C;
@@ -57,13 +59,13 @@ void func_800CAAD0(void) // 0x800CAAD0
         }
     }
 
-    D_800C4414 |= 1;
+    D_800C4414 |= 1 << 0;
 }
 
 void func_800CABF8(s32 idx, bool arg1) // 0x800CABF8
 {
-    s32 rand;
-    s16 randAngle;
+    s32   rand;
+    q3_12 randAngle;
 
     if (D_800D8568.field_1 == 1 &&
         Rng_GenerateUInt(0, 4095) < D_800D8568.field_10 &&
@@ -102,23 +104,21 @@ void func_800CABF8(s32 idx, bool arg1) // 0x800CABF8
 
     if (D_800D8568.flags_0 & (1 << 4))
     {
-        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 =
-            MIN((((D_800D8568.field_3 << 4) * rand) / (s16)D_800D8568.field_1C) +
-                    (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 +
-                    D_800D8568.field_10 +
-                    Rng_GenerateUInt(0, 1023),
-                4095);
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = MIN((((D_800D8568.field_3 << 4) * rand) / (s16)D_800D8568.field_1C) +
+                                                                 (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 +
+                                                                 D_800D8568.field_10 +
+                                                                 Rng_GenerateUInt(0, 1023),
+                                                                 4095);
     }
     else
     {
-        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 =
-            MIN((((D_800D8568.field_3 << 4) * rand) / (s16)D_800D8568.field_1C) +
-                    (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 +
-                    D_800D8568.field_10,
-                4095);
+        sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = MIN((((D_800D8568.field_3 << 4) * rand) / (s16)D_800D8568.field_1C) +
+                                                                 (u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 +
+                                                                 D_800D8568.field_10,
+                                                                 4095);
     }
 
-    sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 = (u8)Rng_Rand16() | 0x80; // Same as `Rng_Rand16() - 128` ?
+    sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0 = (u8)Rng_Rand16() | 0x80; // TODO: Same as `Rng_Rand16() - 128`?
     sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_1 = (u8)Rng_Rand16() | 0x80;
 
     sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = Rng_GenerateUInt(0, 4095);

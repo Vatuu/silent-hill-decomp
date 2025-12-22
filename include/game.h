@@ -1373,7 +1373,7 @@ typedef struct _SubCharaPropertiesSplitHead
     s32        field_100;
     u_Property field_104;
     u8         field_108[4];
-    s32        field_10C;
+    q19_12     field_10C;
     VECTOR3    field_110;
     s32        flags_11C;
     u_Property field_120;
