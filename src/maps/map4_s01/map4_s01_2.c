@@ -740,29 +740,29 @@ void func_800D3420(void) // 0x800D3420
             g_SysWork.field_30 = 20;
             D_800D5AFC         = Q12(96.0f);
 
-            sharedData_800DD180_3_s05.field_1  = 3;
-            sharedData_800DD180_3_s05.flags_0  = (1 << 4) | (1 << 0);
-            sharedData_800DD180_3_s05.field_C  = 0xFA;
-            sharedData_800DD180_3_s05.field_12 = -0x2333;
-            sharedData_800DD180_3_s05.field_14 = -0x1333;
-            sharedData_800DD180_3_s05.field_1C = 0x400;
-            sharedData_800DD180_3_s05.field_E  = -0x800;
-            sharedData_800DD180_3_s05.field_3  = 0x40;
-            sharedData_800DD180_3_s05.field_4  = 0x80;
-            sharedData_800DD180_3_s05.field_5  = 0xFF;
-            sharedData_800DD180_3_s05.field_8  = 0x80;
-            sharedData_800DD180_3_s05.field_20 = 0xB04B0;
-            sharedData_800DD180_3_s05.field_24 = 0x132CE;
-            sharedData_800DD180_3_s05.field_6  = 0x14;
-            sharedData_800DD180_3_s05.field_A  = 0x1000;
-            sharedData_800DD180_3_s05.field_2  = 8;
+            sharedData_800D8568_1_s05.field_1  = 3;
+            sharedData_800D8568_1_s05.flags_0  = (1 << 4) | (1 << 0);
+            sharedData_800D8568_1_s05.field_C  = 0xFA;
+            sharedData_800D8568_1_s05.field_12 = -0x2333;
+            sharedData_800D8568_1_s05.field_14 = -0x1333;
+            sharedData_800D8568_1_s05.field_1C = 0x400;
+            sharedData_800D8568_1_s05.field_E  = -0x800;
+            sharedData_800D8568_1_s05.field_3  = 0x40;
+            sharedData_800D8568_1_s05.field_4  = 0x80;
+            sharedData_800D8568_1_s05.field_5  = 0xFF;
+            sharedData_800D8568_1_s05.field_8  = 0x80;
+            sharedData_800D8568_1_s05.field_20 = 0xB04B0;
+            sharedData_800D8568_1_s05.field_24 = 0x132CE;
+            sharedData_800D8568_1_s05.field_6  = 0x14;
+            sharedData_800D8568_1_s05.field_A  = 0x1000;
+            sharedData_800D8568_1_s05.field_2  = 8;
 
             g_SysWork.flags_22A4 |= SysFlag2_3;
 
-            sharedFunc_800CB5F4_3_s05();
+            sharedFunc_800CAAD0_1_s05();
 
             g_SysWork.field_235C = NULL;
-            Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, sharedData_800DD180_3_s05.field_20, Q12(-2.0f), sharedData_800DD180_3_s05.field_24 + 0x1800);
+            Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, sharedData_800D8568_1_s05.field_20, Q12(-2.0f), sharedData_800D8568_1_s05.field_24 + 0x1800);
             g_SysWork.field_236C = NULL;
             Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-90.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 

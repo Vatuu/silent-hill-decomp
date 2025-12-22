@@ -20,6 +20,8 @@
 //-----------------------------------------------------------
 //--- PA: 0x001558   VA: 0x800CAAD0   subsegment: c, map1_s05
 //-----------------------------------------------------------
+sharedFunc_800CAAD0_1_s05 = 0x800CAAD0; // type:func
+sharedFunc_800CABF8_1_s05 = 0x800CABF8; // type:func
 sharedFunc_800CBE7C_1_s05 = 0x800CBE7C; // type:func
 sharedFunc_800CBF74_1_s05 = 0x800CBF74; // type:func
 sharedFunc_800CC618_1_s05 = 0x800CC618; // type:func
@@ -112,6 +114,7 @@ sharedData_800CD77C_1_s04 = 0x800D5CEC; // type:s32
 sharedData_800DFB6C_0_s00 = 0x800D5D1C; // type:s32
 sharedData_800DFB70_0_s00 = 0x800D5D20; // type:s32
 sharedData_800DFB7C_0_s00 = 0x800D5D28; // type:MapHdr_field_4C size:0x2710
+sharedData_800D8568_1_s05 = 0x800D8568;
 g_ParticleVectors0        = 0x800D8598; // type:ParticleVectors
 g_ParticleVectors1        = 0x800D85C8; // type:ParticleVectors
 sharedData_800E0CA8_0_s00 = 0x800D85F4; // type:s32

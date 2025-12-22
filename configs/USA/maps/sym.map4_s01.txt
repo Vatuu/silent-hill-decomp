@@ -28,8 +28,8 @@
 //-----------------------------------------------------------
 //--- PA: 0x002C24   VA: 0x800CC19C   subsegment: c, map4_s01
 //-----------------------------------------------------------
-sharedFunc_800CB5F4_3_s05           = 0x800CC19C; // type:func
-sharedFunc_800CB71C_3_s05           = 0x800CC2C4; // type:func
+sharedFunc_800CAAD0_1_s05           = 0x800CC19C; // type:func
+sharedFunc_800CABF8_1_s05           = 0x800CC2C4; // type:func
 sharedFunc_800CB6B0_0_s00           = 0x800CD548; // type:func
 sharedFunc_800D08B8_0_s00           = 0x800CD6B0; // type:func
 sharedFunc_800D0A60_0_s00           = 0x800CD830; // type:func
@@ -150,7 +150,7 @@ g_Timer1                            = 0x800D5AF4; // type:s32
 sharedData_800DFB6C_0_s00           = 0x800D5B10; // type:s32
 sharedData_800DFB70_0_s00           = 0x800D5B14; // type:s32
 sharedData_800DFB7C_0_s00           = 0x800D5B20;
-sharedData_800DD180_3_s05           = 0x800D7F20;
+sharedData_800D8568_1_s05           = 0x800D7F20;
 g_ParticleVectors0                  = 0x800D7F50; // type:ParticleVectors
 g_ParticleVectors1                  = 0x800D7F80; // type:ParticleVectors
 sharedData_800E0CA8_0_s00           = 0x800D7FAC; // type:s32

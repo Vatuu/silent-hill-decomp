@@ -13,9 +13,9 @@ INCLUDE_RODATA("asm/maps/map4_s01/nonmatchings/map4_s01", D_800C9578);
 
 INCLUDE_RODATA("asm/maps/map4_s01/nonmatchings/map4_s01", g_MapOverlayHeader);
 
-#include "maps/shared/sharedFunc_800CB5F4_3_s05.h" // 0x800CC19C
+#include "maps/shared/sharedFunc_800CAAD0_1_s05.h" // 0x800CC19C
 
-INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", sharedFunc_800CB71C_3_s05);
+#include "maps/shared/sharedFunc_800CABF8_1_s05.h" // 0x800CC2C4
 
 INCLUDE_ASM("asm/maps/map4_s01/nonmatchings/map4_s01", func_800CC70C);
 
@@ -64,12 +64,12 @@ bool func_800CCF50(POLY_FT4** poly, s32 idx) // 0x800CCF50
 
     sharedData_800DFB7C_0_s00[idx].vy_8 = sharedData_800DFB7C_0_s00[idx].vy_8 + ptr->field_0.field_C4;
 
-    var_s1 = (sharedData_800DD180_3_s05.field_8 * sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_1) >> 8;
+    var_s1 = (sharedData_800D8568_1_s05.field_8 * sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_1) >> 8;
 
-    ptr->field_134 = sharedData_800DD180_3_s05.field_20 + sharedData_800DFB7C_0_s00[idx].field_0.vx_0 +
+    ptr->field_134 = sharedData_800D8568_1_s05.field_20 + sharedData_800DFB7C_0_s00[idx].field_0.vx_0 +
                      FP_MULTIPLY(Math_Sin(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2), var_s1, Q12_SHIFT);
 
-    ptr->field_138 = sharedData_800DD180_3_s05.field_24 + sharedData_800DFB7C_0_s00[idx].field_4.vz_4 +
+    ptr->field_138 = sharedData_800D8568_1_s05.field_24 + sharedData_800DFB7C_0_s00[idx].field_4.vz_4 +
                      FP_MULTIPLY(Math_Cos(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2), var_s1, Q12_SHIFT);
 
     *(s32*)&ptr->field_12C = (((ptr->field_134 >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
@@ -89,7 +89,7 @@ bool func_800CCF50(POLY_FT4** poly, s32 idx) // 0x800CCF50
 
     if (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 > 0x1000)
     {
-        sharedFunc_800CB71C_3_s05(idx, 1);
+        sharedFunc_800CABF8_1_s05(idx, 1);
         return false;
     }
 

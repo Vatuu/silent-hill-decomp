@@ -8,8 +8,6 @@
 
 extern s32 D_800D587C;
 
-extern s_MapHeader_field_5C D_800D8568; // TODO: `sharedData_800DD180_3_s05`?
-
 extern u16 D_800D86F8[2];
 extern u8  D_800D86FC[2];
 
@@ -21,10 +19,6 @@ extern s8 D_800D86FE;
 
 extern s_WorldObjectDesc g_WorldObject0; //800D8698
 extern s_WorldObjectDesc g_WorldObject1; //800D86C8
-
-void func_800CAAD0(void);
-
-void func_800CABF8(s32 idx, bool arg1);
 
 void func_800D494C(void);
 

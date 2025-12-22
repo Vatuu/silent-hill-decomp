@@ -2269,7 +2269,7 @@ typedef struct
     s16 vz;
 } s_sharedData_800DFB10_0_s01;
 
-extern s_MapHeader_field_5C sharedData_800DD180_3_s05;
+extern s_MapHeader_field_5C sharedData_800D8568_1_s05;
 
 extern s_800E330C sharedData_800E330C_0_s00[20];
 
@@ -2344,7 +2344,9 @@ void sharedFunc_800CFEAC_3_s02(void);
 
 void sharedFunc_800CFEEC_3_s02(void);
 
-void sharedFunc_800CB5F4_3_s05(void);
+void sharedFunc_800CAAD0_1_s05(void);
+
+void sharedFunc_800CABF8_1_s05(s32 idx, bool arg1);
 
 void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
