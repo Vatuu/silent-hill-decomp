@@ -114,6 +114,7 @@ sharedData_800DD592_0_s00 = 0x800D6E26;
 sharedData_800DD598_0_s00 = 0x800D6E28;
 sharedData_800DD59C_0_s00 = 0x800D6E2C; // type:u8
 sharedData_800D5880_1_s05 = 0x800D6E2E; // type:s16
+sharedData_800D5884_1_s05 = 0x800D6E30; // type:s32
 SPLITHEAD_ANIM_INFOS      = 0x800D6E34; // type:s32 unknown type
 sharedData_800D5A68_1_s05 = 0x800D7014;
 MAP_ROOM_IDXS             = 0x800D71B0; // type:u8

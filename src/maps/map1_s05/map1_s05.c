@@ -162,7 +162,7 @@ INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800CCF30);
 
 #include "maps/shared/Ai_Splithead_Init.h" // 0x800CF8D8
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", sharedFunc_800CF990_1_s05); // 0x800CF990
+#include "maps/shared/sharedFunc_800CF990_1_s05.h" // 0x800CF990
 
 #include "maps/shared/Ai_Splithead_DamageTake.h" // 0x800CFE94
 
