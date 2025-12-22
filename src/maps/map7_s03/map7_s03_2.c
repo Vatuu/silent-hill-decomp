@@ -707,13 +707,19 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFA14);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFA48);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DFB04);
-
-void func_800DFB2C(s32 arg0) // 0x800DFB2C
+s32 func_800DFB04(void) // 0x800DFB04
 {
     u8 sp10;
 
-    func_8007F250(&sp10, arg0);
+    func_8007F250(&sp10, 0U);
+    return sp10;
+}
+
+void func_800DFB2C(bool disableDamage) // 0x800DFB2C
+{
+    u8 sp10;
+
+    func_8007F250(&sp10, disableDamage);
 }
 
 void func_800DFB50(s_SubCharacter* chara) // 0x800DFB50

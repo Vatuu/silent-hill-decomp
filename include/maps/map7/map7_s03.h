@@ -252,8 +252,8 @@ void func_800DF074(s_SubCharacter* chara);
 void Ai_Incubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800DFA14(void);
-void func_800DFB2C(s32);
-void func_800DFB2C(s32 arg0); // Assumed void return type.
+s32 func_800DFB04(void);
+void func_800DFB2C(bool disableDamage);
 void func_800DFB50(s_SubCharacter* chara);
 void func_800DFB74(s_SubCharacter* chara);
 bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
