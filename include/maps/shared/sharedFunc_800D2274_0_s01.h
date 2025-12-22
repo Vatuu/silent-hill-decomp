@@ -20,16 +20,17 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
             }
         }
 
-        if (flags & ( 1<< 28))
+        if (flags & (1 << 28))
         {
-            flags &= ~0x7C;
+            flags &= ~((1 << 2) | (1 << 3) | (1 << 4) | (1 << 5) | (1 << 6));
         }
         else if (flags & (1 << 6))
         {
-            flags &= ~0x3C;
+            flags &= ~((1 << 2) | (1 << 3) | (1 << 4) | (1 << 5));
             Sd_SfxStop(sharedData_800CAA98_0_s01.sfxVolumes_CE8[2].id_0);
         }
 
+        // Run through flags.
         data = &sharedData_800CAA98_0_s01;
         for (i = 0; i < 11; i++)
         {

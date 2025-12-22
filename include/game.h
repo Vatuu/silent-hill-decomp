@@ -1245,8 +1245,8 @@ typedef struct _SubCharaPropertiesPlayer
     s32           field_E4;
     q19_12        afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
     q19_12        positionY_EC;
-    s32           field_F0;
-    q19_12        field_F4;    // Angle. Related to X axis flex rotation.
+    q19_12        field_F0;
+    q19_12        field_F4; // Angle related to X axis flex rotation.
     q19_12        runTimer_F8;
     q19_12        exhaustionTimer_FC;
     q19_12        field_100;    // Angle?
@@ -1330,7 +1330,7 @@ typedef struct _SubCharaPropertiesPuppetNurse
     u8               field_118;
     u8               modelVariation_119;
     u16              field_11A;
-    s16              field_11C;
+    q3_12            field_11C; // Angle.
     s16              field_11E;
     s16              field_120;
     u16              flags_122; /** `e_PuppetNurseFlags` */

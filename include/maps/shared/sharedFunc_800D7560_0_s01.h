@@ -1,10 +1,10 @@
 void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
 {
-    s32      headingAngle;
-    s32      sinHeadingAngle;
-    s32      cosHeadingAngle;
-    s32      offsetX;
-    s32      offsetZ;
+    q19_12   headingAngle;
+    q19_12   sinHeadingAngle;
+    q19_12   cosHeadingAngle;
+    q19_12   offsetX;
+    q19_12   offsetZ;
     MATRIX*  mat;
     SVECTOR* rot;
     VECTOR*  scale;

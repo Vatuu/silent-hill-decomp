@@ -1,6 +1,6 @@
 void Ai_PuppetNurse_Control10(s_SubCharacter* nurse)
 {
-    u8 animStatus;
+    u8     animStatus;
     q19_12 deltaX;
     q19_12 deltaZ;
     q19_12 dist;

@@ -4,13 +4,14 @@
 /** @brief Splithead character flags. */
 typedef enum _SplitheadFlags
 {
-	SplitheadFlag_0 = 1 << 0,
+	SplitheadFlag_None = 0,
+	SplitheadFlag_0    = 1 << 0,
 
-	SplitheadFlag_4 = 1 << 4,
-	SplitheadFlag_5 = 1 << 5,
-	SplitheadFlag_6 = 1 << 6,
-	SplitheadFlag_7 = 1 << 7,
-	SplitheadFlag_8 = 1 << 8
+	SplitheadFlag_4    = 1 << 4,
+	SplitheadFlag_5    = 1 << 5,
+	SplitheadFlag_6    = 1 << 6,
+	SplitheadFlag_7    = 1 << 7,
+	SplitheadFlag_8    = 1 << 8
 } e_SplitheadFlags;
 
 #endif

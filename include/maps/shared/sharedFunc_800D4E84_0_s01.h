@@ -47,7 +47,7 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* chara)
         return;
     }
 
-    sharedData_800E21D0_0_s01.flags_0 |= 0x08000000;
+    sharedData_800E21D0_0_s01.flags_0 |= (1 << 27);
 
     if (angle > FP_ANGLE(-11.34f) && angle < FP_ANGLE(11.34f))
     {

@@ -28,6 +28,7 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
                 nurse->model_0.anim_4.status_0 = ANIM_STATUS(10, false);
                 nurse->model_0.stateStep_3 = 2;
             }
+
             nurse->properties_E4.puppetNurse.field_104 -= g_DeltaTime0;
             break;
 

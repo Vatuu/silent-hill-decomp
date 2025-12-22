@@ -69,14 +69,14 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
         if (Rng_GenerateUInt(0, 31) == 0) // 1 in 32 chance.
         {
             rng = Rng_Rand16();
-            nurse->model_0.anim_4.status_0 = g_PuppetNurse_AnimStatus2[(rng >> 7) & 1];
+            nurse->model_0.anim_4.status_0 = g_PuppetNurse_AnimStatus2[(rng >> 7) & 0x1];
             nurse->model_0.state_2 = 6;
             nurse->model_0.stateStep_3 = 0;
             return;
         }
         else
         {
-            nurse->model_0.anim_4.status_0 = g_PuppetNurse_AnimStatus3[(Rng_Rand16() >> 2) & 3];
+            nurse->model_0.anim_4.status_0 = g_PuppetNurse_AnimStatus3[(Rng_Rand16() >> 2) & 0x3];
         }
     }
 }

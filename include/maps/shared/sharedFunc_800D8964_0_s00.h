@@ -1,5 +1,5 @@
 #if !defined(MAP_CHARA_COUNT)
-#define MAP_CHARA_COUNT 1
+    #define MAP_CHARA_COUNT 1
 #endif
 
 /*
@@ -16,9 +16,9 @@
  */
 
 #if MAP_CHARA_COUNT > 1
-#define CHARA_CASE(id) case id
+    #define CHARA_CASE(id) case id
 #else
-#define CHARA_CASE(id) default
+    #define CHARA_CASE(id) default
 #endif
 
 s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara)

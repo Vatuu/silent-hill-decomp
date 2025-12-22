@@ -716,6 +716,7 @@ void func_800D6774(void) // 0x800D6774
     VECTOR3     vec;
     s32         i;
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 11)
     {
@@ -901,6 +902,7 @@ void func_800D6F24(void) // 0x800D6F24
     s32   var_v0;
     void* var_s0;
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 9)
     {
@@ -1279,6 +1281,7 @@ void func_800D8FC0(void) // 0x800D8FC0
 
 void func_800D960C(void) // 0x800D960C
 {
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 4)
     {
