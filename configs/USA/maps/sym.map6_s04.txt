@@ -36,6 +36,7 @@ sharedData_800CAB70_0_s00           = 0x800CAE48; // type:VECTOR
 sharedFunc_800CB7F4_1_s01           = 0x800CC7E0; // type:func
 sharedFunc_800CB8A0_1_s01           = 0x800CC88C; // type:func
 sharedFunc_800CBA38_1_s01           = 0x800CCA24; // type:func
+sharedFunc_800CBB30_1_s01           = 0x800CCB1C; // type:func
 sharedFunc_800CB6B0_0_s00           = 0x800CD3AC; // type:func
 sharedFunc_800D08B8_0_s00           = 0x800CD514; // type:func
 sharedFunc_800D0A60_0_s00           = 0x800CD694; // type:func

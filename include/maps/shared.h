@@ -2700,6 +2700,8 @@ void sharedFunc_800CB8A0_1_s01(s32 idx);
 
 bool sharedFunc_800CBA38_1_s01(s32 idx);
 
+bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx);
+
 // MAP1_S00 LarvalStalker funcs
 void Ai_LarvalStalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
