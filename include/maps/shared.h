@@ -2348,6 +2348,8 @@ void sharedFunc_800CAAD0_1_s05(void);
 
 void sharedFunc_800CABF8_1_s05(s32 idx, bool arg1);
 
+bool sharedFunc_800CB884_1_s05(POLY_FT4** poly, s32 idx);
+
 void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
 void sharedFunc_800CCDD4_1_s05(void* arg0, s32 arg1); // Unknown arg types.
