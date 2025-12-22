@@ -2246,7 +2246,7 @@ typedef struct _MapHeader_field_5C
     u8    field_5;
     u8    field_6;
     u8    field_7;
-    s16   field_8;
+    u16   field_8;
     s16   field_A;
     u16   field_C;
     s16   field_E;

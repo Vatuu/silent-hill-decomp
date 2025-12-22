@@ -319,6 +319,11 @@ typedef struct
             u8 field_2;
             u8 field_3;
         } s_1;
+        struct
+        {
+            u16 field_0;
+            u16 field_2;
+        } s_2;
     } field_C;
     union
     {
@@ -336,10 +341,10 @@ typedef struct
         } s_1;
         struct
         {
-            s8 field_0;
-            s8 field_1;
-            s8 field_2;
-            s8 field_3;
+            u8 field_0;
+            u8 field_1;
+            u8 field_2;
+            u8 field_3;
         } s_2;
         struct
         {
