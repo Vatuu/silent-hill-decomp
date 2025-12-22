@@ -348,7 +348,7 @@ typedef struct
         } s_2;
         struct
         {
-            s16 field_0;
+            u16 field_0;
             u16 field_2;
         } s_3;
     } field_10;
@@ -1539,7 +1539,7 @@ typedef struct
     s32    field_C;
     s16    field_10[4];
     VECTOR vec_18;
-    s16    field_28[4];
+    u16    field_28[4];
     u8     field_30[4];
     q3_12  field_34[4]; // Y angles.
     s16    field_3C[4];
@@ -1904,8 +1904,16 @@ typedef struct
     s32     field_D8;
     s16     field_DC[4];
     s16     field_E4[4];
-    DVECTOR field_EC[4];
-    DVECTOR field_FC[4]; // Q3.12 | Positions or offsets. 
+    union
+    {
+        DVECTOR field_0[4];
+        s32     raw_0[4];
+    } u_field_EC;
+    union
+    {
+        DVECTOR field_0[4];
+        s32     raw_0[4];
+    } u_field_FC; // Q3.12 | Positions or offsets.
     s32     field_10C[4];
     s32     field_11C[4];
 } s_func_8005E89C;

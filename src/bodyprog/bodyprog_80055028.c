@@ -3586,17 +3586,17 @@ void func_8005E89C(void) // 0x8005E89C
             {
                 ptr->field_DC[i]            = Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
                 ptr->field_E4[i]            = Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
-                *(s32*)&ptr->field_EC[i].vx = (g_MapOverlayHeader.field_94->field_5C[i] >> 1) * Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
-                *(s32*)&ptr->field_FC[i].vx = (g_MapOverlayHeader.field_94->field_5C[i] >> 1) * Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->u_field_EC.raw_0[i]    = (g_MapOverlayHeader.field_94->field_5C[i] >> 1) * Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->u_field_FC.raw_0[i]    = (g_MapOverlayHeader.field_94->field_5C[i] >> 1) * Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
                 ptr->field_10C[i]           = g_MapOverlayHeader.field_94->field_64[i] * Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
                 ptr->field_11C[i]           = g_MapOverlayHeader.field_94->field_64[i] * Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
             }
             else
             {
-                ptr->field_EC[i].vx = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
-                ptr->field_EC[i].vy = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy + FP_ANGLE(90.0f)), Q12_SHIFT);
-                ptr->field_FC[i].vx = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
-                ptr->field_FC[i].vy = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy + FP_ANGLE(90.0f)), Q12_SHIFT);
+                ptr->u_field_EC.field_0[i].vx = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
+                ptr->u_field_EC.field_0[i].vy = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy + FP_ANGLE(90.0f)), Q12_SHIFT);
+                ptr->u_field_FC.field_0[i].vx = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
+                ptr->u_field_FC.field_0[i].vy = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy + FP_ANGLE(90.0f)), Q12_SHIFT);
             }
         }
 
