@@ -107,6 +107,16 @@
 #define Math_Vector2MagCalc(x, z) \
     Q6_TO_Q12(SquareRoot0(SQUARE(Q12_TO_Q6(x)) + SQUARE(Q12_TO_Q6(z))))
 
+/** @brief Computes the magnitude of a 3D vector in Q19.12, using intermediate components in Q25.6 to avoid overflow.
+ *
+ * @param x X vector component (Q19.12).
+ * @param y Y vector component (Q19.12).
+ * @param z Z vector component (Q19.12).
+ * @return 2D vector magnitude (Q19.12).
+ */
+#define Math_Vector3MagCalc(x, y, z) \
+    Q6_TO_Q12(SquareRoot0(SQUARE(Q12_TO_Q6(x)) + SQUARE(Q12_TO_Q6(y)) + SQUARE(Q12_TO_Q6(z))))
+
 /** @brief Sets an `SVECTOR` using a fast bitwise method.
  *
  * @param vec Vector to set.

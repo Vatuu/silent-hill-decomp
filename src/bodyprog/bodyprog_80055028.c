@@ -3150,18 +3150,17 @@ void func_8005DD44(e_SfxId sfxId, VECTOR3* pos, q23_8 vol, s8 pitch) // 0x8005DD
     func_80046620(sfxId, balance, ~volCpy, pitch);
 }
 
-static inline s32 calc_atten(s32 volume, VECTOR3* pos, s32 falloff)
+static inline s32 AttenuationCalc(s32 volume, VECTOR3* pos, q19_12 falloff)
 {
-    s32 dist;
+    q19_12 dist;
 
-    dist = SquareRoot0(SQUARE((g_SysWork.playerWork_4C.player_0.position_18.vx - pos->vx) >> 6) +
-                       SQUARE((g_SysWork.playerWork_4C.player_0.position_18.vy - pos->vy) >> 6) +
-                       SQUARE((g_SysWork.playerWork_4C.player_0.position_18.vz - pos->vz) >> 6)) << 6;
-
-    return (volume * dist / falloff);
+    dist = Math_Vector3MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - pos->vx,
+                               g_SysWork.playerWork_4C.player_0.position_18.vy - pos->vy,
+                               g_SysWork.playerWork_4C.player_0.position_18.vz - pos->vz);
+    return (volume * dist) / falloff;
 }
 
-void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, s32 falloff, s8 pitch)
+void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, q19_12 falloff, s8 pitch)
 {
     s32 balance;
     u16 finalVol;
@@ -3189,15 +3188,15 @@ void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, s32 falloff, s8 pitch)
         return;
     }
 
-    att0 = calc_atten(vol, pos, falloff);
+    att0 = AttenuationCalc(vol, pos, falloff);
     s3 = vol - 0xFF;
-    if ((att0 - s3) >= 0xFF || (calc_atten(vol, pos, falloff) - s3) >= 0)
+    if ((att0 - s3) >= 0xFF || (AttenuationCalc(vol, pos, falloff) - s3) >= 0)
     {
-        att2 = calc_atten(vol, pos, falloff) - s3;
+        att2 = AttenuationCalc(vol, pos, falloff) - s3;
         finalVol = 0xFF;
         if (att2 < 0xFF)
         {
-            att1 = calc_atten(vol, pos, falloff) - (vol + 1);
+            att1 = AttenuationCalc(vol, pos, falloff) - (vol + 1);
             finalVol = att1;
         }
     }
@@ -10564,8 +10563,8 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
     else
     {
         distMult = (FP_ANGLE(180.0f) - func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
-                                                         g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
-                                                        chara->rotation_24.vy))) * 2;
+                                                             g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
+                                                      chara->rotation_24.vy))) * 2;
     }
 
     for (i = distMult; count > 0; count--)

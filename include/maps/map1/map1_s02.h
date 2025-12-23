@@ -57,9 +57,9 @@ extern s32 D_800E1FD4;
 
 extern u8 D_800E1FD8;
 
-extern DVECTOR D_800E1FDC;
+extern DVECTOR D_800E1FDC; // Q19.12
 
-extern q3_12 D_800E1FE0;
+extern q3_12 D_800E1FE0; // Y angle.
 
 extern u8 D_800E1FE2;
 

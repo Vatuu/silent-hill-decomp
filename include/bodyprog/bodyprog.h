@@ -3387,7 +3387,7 @@ bool func_8005F680(s_Collision* coll);
 void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3);
 
 /** Spatial SFX func? */
-void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, s32 falloff, s8 pitch);
+void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, q19_12 falloff, s8 pitch);
 
 void Map_EffectTexturesLoad(s32 mapIdx);
 
