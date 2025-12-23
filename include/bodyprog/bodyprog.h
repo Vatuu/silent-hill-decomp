@@ -1539,10 +1539,10 @@ typedef struct
     u16    field_28[4];
     u8     field_30[4];
     q3_12  field_34[4]; // Y angles.
-    s16    field_3C[4];
-    s16    field_44[4];
+    u16    field_3C[4];
+    u16    field_44[4];
     s16    field_4C[4];
-    s16    field_54[4];
+    u16    field_54[4];
     u16    field_5C[4];
     q4_12  field_64[4];
     s16    field_6c[4];

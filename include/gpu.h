@@ -176,9 +176,17 @@ typedef struct
     *(u32*)(&(prim)->r3) = ((((r) + ((g) << 8)) + ((b) << 16)) + ((code) << 24))
 
 /** @brief Slightly faster `setRGB0`. */
-#define setRGB0Fast(p, r, g, b)             \
-    *(u16*)&(*poly)->r0 = (r) + ((g) << 8); \
-    (*poly)->b0         = b;
+#define setRGB0Fast(p, r, g, b) \
+    (*(u16*)&(p)->r0 = (r) + ((g) << 8), (p)->b0 = (b))
+
+#define setRGB1Fast(p, r, g, b) \
+    (*(u16*)&(p)->r1 = (r) + ((g) << 8), (p)->b1 = (b))
+
+#define setRGB2Fast(p, r, g, b) \
+    (*(u16*)&(p)->r2 = (r) + ((g) << 8), (p)->b2 = (b))
+
+#define setRGB3Fast(p, r, g, b) \
+    (*(u16*)&(p)->r3 = (r) + ((g) << 8), (p)->b3 = (b))
 
 /** @brief Combines `addPrim` and `setlen`. */
 #define addPrimFast(ot, p, _len) \
