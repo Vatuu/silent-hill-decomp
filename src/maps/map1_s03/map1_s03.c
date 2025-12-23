@@ -155,7 +155,7 @@ INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CE164);
 
 void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara) {} // 0x800D3DAC
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D4924_0_s00); // 0x800D3DB4
+#include "maps/shared/sharedFunc_800D4924_0_s00.h" // 0x800D3DB4
 
 #include "maps/shared/sharedFunc_800D492C_0_s00.h" // 0x800D4984
 
