@@ -85,6 +85,8 @@ s_SysWork_2510* func_8009E520(s_SysWork_2510* node, s32 key);
 
 s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* node);
 
+bool func_8009E61C(s_SysWork_2514* arg0, s32 state, s_SysWork_2510* head);
+
 bool func_8009E7D8(s_SysWork_2510* node);
 
 s32 func_8009E82C(s_SysWork_2514*, s32, s32, s32);

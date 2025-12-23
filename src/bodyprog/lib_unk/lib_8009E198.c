@@ -184,7 +184,54 @@ s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* node) // 0x8009E550
     return padState;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E61C);
+bool func_8009E61C(s_SysWork_2514* arg0, s32 state, s_SysWork_2510* head) // 0x8009E61C
+{
+    s_SysWork_2514_0 status;
+    s_SysWork_2510*  node;
+    u8*              pattern;
+    u8*              act;
+    s32              length;
+
+    status = arg0->field_0;
+
+    if (!status.field_0_23)
+    {
+        pattern = &arg0->field_4;
+        if (status.field_0_18 && !status.field_0_17)
+        {
+            length = status.field_0_19;
+        }
+        else
+        {
+            length = 0;
+        }
+        status.field_0_23 = 1;
+        PadSetAct(status.padPort_0_0, pattern, length);
+    }
+
+    if (!status.field_0_22)
+    {
+        node = func_8009E520(head, status.field_0_24);
+        act  = (node == NULL) ? NULL : node->field_8;
+        if (act == NULL)
+        {
+            status.field_0_22 = true;
+        }
+        else
+        {
+            if (state == 6)
+            {
+                status.field_0_22 = PadSetActAlign(status.padPort_0_0, act);
+            }
+            // @hack keep node alive
+            act = (node == NULL) ? NULL : node->field_8;
+        }
+    }
+
+    arg0->field_0 = status;
+
+    return status.field_0_22;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E718);
 
