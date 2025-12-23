@@ -59,7 +59,7 @@ extern u8 D_800E1FD8;
 
 extern DVECTOR D_800E1FDC;
 
-extern s16 D_800E1FE0;
+extern q3_12 D_800E1FE0;
 
 extern u8 D_800E1FE2;
 
@@ -105,6 +105,8 @@ void func_800DBB7C(void);
 void func_800DBF88(void);
 
 void func_800DBFC8(void);
+
+void func_800DC1E0(void);
 
 void func_800DCF00(void);
 

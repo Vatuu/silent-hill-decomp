@@ -2783,7 +2783,7 @@ void sharedFunc_800D0110_3_s03(s_SubCharacter*);
 
 void Ai_PuppetNurse_Control(s_SubCharacter* nurse);
 
-void sharedFunc_800D02E4_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
 
 void sharedFunc_800D03E4_3_s03(s_SubCharacter*);
 

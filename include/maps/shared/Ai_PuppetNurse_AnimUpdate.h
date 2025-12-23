@@ -1,22 +1,22 @@
 void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coord)
 {
-    s_AnimInfo* animInfo;
-    s_AnimInfo* animInfoBase;
     s32         sfxIdx0;
     s32         sfxIdx1;
     q19_12      angle;
     s32         i;
     s32         j;
+    s_AnimInfo* animInfo;
+    s_AnimInfo* animInfoBase;
 
     animInfoBase = nurse->properties_E4.puppetNurse.field_124->animInfo_24;
-    sfxIdx0 = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model_0.anim_4.time_4, Q12_SHIFT));
+    sfxIdx0      = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model_0.anim_4.time_4, Q12_SHIFT));
+
     func_8003DD80(nurse->model_0.charaId_0, nurse->properties_E4.puppetNurse.modelVariation_119);
     Math_MatrixTransform(&nurse->position_18, &nurse->rotation_24, coord);
 
-    if (nurse->model_0.anim_4.status_0)
+    if (nurse->model_0.anim_4.status_0 != ANIM_STATUS(0, false))
     {
-        (&animInfoBase[nurse->model_0.anim_4.status_0])->updateFunc_0(
-            &nurse->model_0, anmHdr, coord, &animInfoBase[nurse->model_0.anim_4.status_0]);
+        (&animInfoBase[nurse->model_0.anim_4.status_0])->updateFunc_0(&nurse->model_0, anmHdr, coord, &animInfoBase[nurse->model_0.anim_4.status_0]);
     }
 
     angle = nurse->properties_E4.npc.field_124->field_18;
@@ -27,7 +27,7 @@ void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
             coord->coord.m[i][j] = FP_MULTIPLY_PRECISE(angle, coord->coord.m[i][j], Q12_SHIFT);
         }
     }
-    
+
     sfxIdx1 = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model_0.anim_4.time_4, Q12_SHIFT));
     if (sfxIdx1 != sfxIdx0 && sfxIdx1 != 9)
     {

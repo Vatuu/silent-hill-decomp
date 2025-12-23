@@ -1089,15 +1089,17 @@ void func_800DC1E0(void) // 0x800DC1E0
     {
         case 0:
             Player_ControlFreeze();
+
             D_800E1FE2 = 0;
             g_SysWork.field_28 = 0;
             g_SysWork.sysStateStep_C[1] = 0;
             g_SysWork.timer_2C = 0;
             g_SysWork.sysStateStep_C[2] = 0;
-            g_SysWork.sysStateStep_C[0] += 1;
+            g_SysWork.sysStateStep_C[0]++;
     
         case 1:
-            MapMsg_DisplayAndHandleSelection(2, 0x29, 2, 4, -1, false);
+            MapMsg_DisplayAndHandleSelection(2, 41, 2, 4, NO_VALUE, false);
+
             D_800E1FE3 = 0;
             D_800E1FE0 = 0;
             D_800E1FDC.vy = 0;
@@ -1111,7 +1113,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             if (D_800E1FE2 == 0) 
             {
                 Camera_PositionSet(NULL, 0x3D000, -0x1333, -0x3C000, 0x2800, 0xC00, 0x1800, 0x800, false);
-                SysWork_StateStepIncrementDelayed(0x2000, false);
+                SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
                 
                 if (g_SysWork.sysStateStep_C[0] != 2 && g_SysWork.sysStateStep_C[0] != 4) 
                 {
@@ -1120,7 +1122,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                     g_SysWork.sysStateStep_C[1] = 0;
                     g_SysWork.timer_2C = 0;
                     g_SysWork.sysStateStep_C[2] = 0;
-                    D_800E1FE2 += 1;
+                    D_800E1FE2++;
                 }
             }
             else
@@ -1136,39 +1138,39 @@ void func_800DC1E0(void) // 0x800DC1E0
         case 5:
             if (Savegame_EventFlagGet(EventFlag_118)) 
             {
-                func_8005DC1C(0x5AC, &D_800CB934, 0x80, 0);
+                func_8005DC1C(Sfx_Unk1452, &D_800CB934, Q8(0.5f), 0);
             } 
             else 
             {
-                func_8005DC1C(0x5AC, &D_800CB940, 0x80, 0);
+                func_8005DC1C(Sfx_Unk1452, &D_800CB940, Q8(0.5f), 0);
             }
-            
+
             g_SysWork.field_28 = 0;
             g_SysWork.sysStateStep_C[1] = 0;
             g_SysWork.timer_2C = 0;
             g_SysWork.sysStateStep_C[2] = 0;
-            g_SysWork.sysStateStep_C[0] += 1;
-            
+            g_SysWork.sysStateStep_C[0]++;
+
         case 6:
-            SysWork_StateStepIncrementDelayed(0x1000, false);
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
-            
+
         case 7:
             if (D_800E1FDC.vx == 0) 
             {
-                SD_Call(0x5AD);
+                SD_Call(Sfx_Unk1453);
             }
-            
-            if (D_800E1FDC.vx < 0x400) 
+
+            if (D_800E1FDC.vx < Q12(0.25f)) 
             {
-                D_800E1FE0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x2AA, Q12_SHIFT);
+                D_800E1FE0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.1666f), Q12_SHIFT);
             } 
             else 
             {
-                D_800E1FE0 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x2AA, Q12_SHIFT);
-                D_800E1FE0 = MAX(D_800E1FE0, 0xAA);
+                D_800E1FE0 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.1666f), Q12_SHIFT);
+                D_800E1FE0 = MAX(D_800E1FE0, 170); // TODO: Float.
             }
-            
+
             if (D_800E1FE3 != 0) 
             {
                 if (Savegame_EventFlagGet(EventFlag_118)) 
@@ -1184,9 +1186,9 @@ void func_800DC1E0(void) // 0x800DC1E0
                     {
                         D_800E1FDC.vx -= var_t2;
                     }
-    
+
                     var_t3 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, 0x2AA), Q12_SHIFT) >> 1;
-                    
+
                     if (D_800E1FDC.vy - var_t3 > 0x400) 
                     {
                         var_t3 = D_800E1FDC.vy - 0x400;
@@ -1287,8 +1289,8 @@ void func_800DC1E0(void) // 0x800DC1E0
                 g_WorldObject6.rotation_28.vy = (g_WorldObject6.rotation_28.vy + 0x1040) & 0xC00;
                 g_WorldObject7.rotation_28.vy = (g_WorldObject7.rotation_28.vy + 0x1040) & 0xC00;
                 
-                Sd_SfxStop(0x5AD);
-    
+                Sd_SfxStop(Sfx_Unk1453);
+
                 g_SysWork.sysStateStep_C[0] = 1;
                 g_SysWork.field_28 = 0;
                 g_SysWork.sysStateStep_C[1] = 0;
@@ -1296,15 +1298,15 @@ void func_800DC1E0(void) // 0x800DC1E0
                 g_SysWork.sysStateStep_C[2] = 0;
             }
             break;
-            
+
         default:
             Player_ControlUnfreeze(false);
-    
+
             SysWork_StateSetNext(SysState_Gameplay);
-    
+
             Savegame_EventFlagClear(EventFlag_119);
             Savegame_EventFlagClear(EventFlag_118);
-            
+
             if (D_800E1FE2 != 0) 
             {
                 vcReturnPreAutoCamWork(false);

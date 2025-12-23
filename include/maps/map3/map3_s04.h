@@ -32,8 +32,9 @@ extern s32 D_800D5A40;
 extern s16 D_800D5A48[3];
 extern s16 D_800D5A4E;
 
-
 void func_800D2470(void);
+
+void func_800D2668(void);
 
 void func_800D2E58(void);
 

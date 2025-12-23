@@ -142,31 +142,41 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04_2", func_800D250C);
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D25D0
 
-void func_800D2668(void)
+void func_800D2668(void) // 0x800D2668
 {
-    s32 i;
-    SVECTOR3 *tmpSvec;
+    typedef enum _EventState
+    {
+        EventState_Skip = 25
+    } e_EventState;
 
-    #define STATE_SKIP_CUTSCENE 25
+    s32       i;
+    SVECTOR3* tmpSvec;
+
+    // Skip.
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 23)
     {
-        SysWork_StateStepSet(0, STATE_SKIP_CUTSCENE);
+        SysWork_StateStepSet(0, EventState_Skip);
     }
+
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             Player_ControlFreeze();
+
             D_800D5A48[0] = Q12(2.2f);
             D_800D5A48[1] = Q12(2.1f);
             D_800D5A48[2] = Q12(2.6f);
             D_800D5A3C = 0;
+
             Fs_QueueStartRead(FILE_ANIM_HSPTL3_DMS, FS_BUFFER_11);
             Chara_Load(0, Chara_Lisa, &g_SysWork.npcCoords_FC0[0], -1, NULL, NULL);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_Lisa, 0, Q12(4.4f), Q12(269.9f), 0, 3);
+
             sharedFunc_800D88AC_0_s00(&g_SysWork.npcs_1A0[0]);
             DmsHeader_FixOffsets(FS_BUFFER_11);
+
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
             g_SysWork.flags_22A4 |= SysFlag2_3;
@@ -177,136 +187,168 @@ void func_800D2668(void)
             g_SysWork.field_2378 = Q12(0.7f);
             Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(58.34f), Q12(-1.93f), Q12(141.8f));
 
-            //@hack 
-            //Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-15.0f), FP_ANGLE(-177.0f), FP_ANGLE(0.0f));
-            *((s32 *) (&(&g_SysWork.cutsceneLightRot_2370)->vx)) = ((s32) (0xff56 & 0xFFFF)) | ((s32) (0xf823 << 16));
+            // @hack 
+            // Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-15.0f), FP_ANGLE(-177.0f), FP_ANGLE(0.0f));
+            *((s32*) (&(&g_SysWork.cutsceneLightRot_2370)->vx)) = ((s32) (0xff56 & 0xFFFF)) | ((s32) (0xf823 << 16));
             tmpSvec = &g_SysWork.cutsceneLightRot_2370;
-            *((s16 *) (&tmpSvec->vz)) = 0;
+            *((s16*) (&tmpSvec->vz)) = 0;
 
             func_8008D438();
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
+
             D_800D5A40 = 0;
             D_800D5A4E = 0;
+
             SysWork_StateStepIncrement(0);
             break;
+
         case 1:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
-            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 0x33, false);
+            func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 2:
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
+
         case 3:
             Map_MessageWithAudio(15, &D_800D5A3C, &D_800D599C);
             break;
+
         case 4:
             func_80085EB8(0, g_SysWork.npcs_1A0, 6, false);
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 5:
             Map_MessageWithAudio(19, &D_800D5A3C, &D_800D599C);
             SysWork_StateStepIncrementAfterTime(&D_800D5A40, Q12(10.0f), Q12(1.0f), Q12(21.0f), true, false);
             break;
+
         case 6:
             D_800D5A40 = Q12(22.0f);
+
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 7, false);
             SysWork_StateStepIncrement(0);
             break;
+
         case 7:
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
             break;
+
         case 8:
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 9:
             Map_MessageWithAudio(23, &D_800D5A3C, &D_800D599C);
             break;
+
         case 10:
             SysWork_StateStepIncrementDelayed(Q12(0.7f), false);
             break;
+
         case 11:
             Map_MessageWithAudio(25, &D_800D5A3C, &D_800D599C);
             break;
+
         case 12:
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
+
         case 13:
             Map_MessageWithAudio(27, &D_800D5A3C, &D_800D599C);
             break;
+
         case 14:
             Map_MessageWithAudio(34, &D_800D5A3C, &D_800D599C);
             Savegame_EventFlagSet(EventFlag_298);
             break;
+
         case 15:
             Map_MessageWithAudio(40, &D_800D5A3C, &D_800D599C);
             break;
+
         case 16:
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 17:
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 0x7D, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 8, false);
             SD_Call(Sfx_Unk1522);
-            D_800D5A4E += 1;
+
+            D_800D5A4E++;
+
             SysWork_StateStepIncrement(0);
-            /* fallthrough */
+
         case 18:
             Map_MessageWithAudio(42, &D_800D5A3C, &D_800D599C);
             SysWork_StateStepIncrementAfterTime(&D_800D5A40, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
             break;
+
         case 19:
             SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
             SysWork_StateStepIncrementAfterTime(&D_800D5A40, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
             break;
+
         case 20:
             Map_MessageWithAudio(43, &D_800D5A3C, &D_800D599C);
             SysWork_StateStepIncrementAfterTime(&D_800D5A40, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
             break;
+
         case 21:
             Map_MessageWithAudio(45, &D_800D5A3C, &D_800D599C);
             SysWork_StateStepIncrementDelayed(Q12(2.2f), false);
             SysWork_StateStepIncrementAfterTime(&D_800D5A40, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
+
             if (g_SysWork.sysStateStep_C[0] != 21)
             {
                 SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(1.0f), false);
             }
             break;
+
         case 22:
             Map_MessageWithAudio(45, &D_800D5A3C, &D_800D599C);
             SysWork_StateStepIncrementAfterTime(&D_800D5A40, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
             break;
+
         case 23:
             SysWork_StateStepIncrementAfterFade(1, true, 0, 0, false);
             SysWork_StateStepIncrementAfterTime(&D_800D5A40, Q12(9.0f), Q12(23.0f), Q12(139.0f), true, false);
             break;
+
         case 24:
             Map_MessageWithAudio(46, &D_800D5A3C, &D_800D599C);
             Savegame_EventFlagSet(EventFlag_299);
             break;
-        case STATE_SKIP_CUTSCENE:
+
+        case EventState_Skip:
             SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
             break;
+
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             sharedFunc_800D2EF4_0_s00();
             func_80088F94(g_SysWork.npcs_1A0, 0, 0);
-            D_800D5A40 = -1;
+
+            D_800D5A40 = NO_VALUE;
+
             Savegame_EventFlagSet(EventFlag_294);
             Savegame_MapMarkingSet(MapMarkFlag_AltHospital1F_WomensBathroomBroken);
             func_8008D448();
             break;
     }
-    if (D_800D5A4E)
+
+    if (D_800D5A4E != Q12(0.0f))
     {
         D_800D5A4E += g_DeltaTime0 >> 1;
         if (D_800D5A4E > Q12(1.0f))
         {
             D_800D5A4E = Q12(1.0f);
         }
+
         Sd_SfxAttributesUpdate(Sfx_Unk1522, 0, -(D_800D5A4E >> 4), 0);
+
         i = 0;
         while (i < 3)
         {
@@ -326,7 +368,9 @@ void func_800D2668(void)
             i++;
         }
     }
-    if (D_800D5A40 >= 0) {
+
+    if (D_800D5A40 >= Q12(0.0f))
+    {
         Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800D5A40, FS_BUFFER_11);
         Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "LISA", D_800D5A40, FS_BUFFER_11);
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800D5A20, &D_800D5A30, NULL, D_800D5A40, FS_BUFFER_11));

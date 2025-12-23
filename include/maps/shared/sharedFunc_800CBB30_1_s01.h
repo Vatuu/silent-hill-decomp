@@ -12,7 +12,7 @@ bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx)
         DVECTOR         field_138;
     } s_func_800CBB30;
 
-    s32              temp_a0;
+    q19_12           temp_a0;
     s32              temp_s1;
     s32              temp_v0_2;
     s32              temp_v0_3;
