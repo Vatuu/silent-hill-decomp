@@ -11,6 +11,8 @@ void Ai_PuppetNurse_UpdateMain(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
         sharedFunc_800D02E4_3_s03(nurse, coords);
         return;
     }
-
-    Ai_PuppetNurse_AnimUpdate(nurse, anmHdr, coords);
+    else
+    {
+        Ai_PuppetNurse_AnimUpdate(nurse, anmHdr, coords);
+    }
 }

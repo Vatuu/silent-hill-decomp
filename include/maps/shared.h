@@ -2785,13 +2785,13 @@ void Ai_PuppetNurse_Control(s_SubCharacter* nurse);
 
 void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
 
-void sharedFunc_800D03E4_3_s03(s_SubCharacter*);
+void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_AnimUpdate(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 void sharedFunc_800D0828_3_s03(s_SubCharacter* harry, GsCOORDINATE2* coords);
 
-void sharedFunc_800D0968_3_s03(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
 
 void Ai_Creaper_Update(s_SubCharacter* creaper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
