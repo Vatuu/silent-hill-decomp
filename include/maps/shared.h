@@ -3250,4 +3250,30 @@ typedef struct
 #define Chara_MoveSpeedUpdate3(chara, speed, limit) \
     chara->moveSpeed_38 = APPROACH(chara->moveSpeed_38, limit, FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT))
 
+#define Chara_MoveSpeedUpdate4(chara, speed, limit)                                                   \
+    {                                                                                                 \
+        q19_12 newSpeed;                                                                              \
+        q19_12 newMoveSpeed;                                                                          \
+                                                                                                      \
+        if (chara->moveSpeed_38 > limit)                                                              \
+        {                                                                                             \
+            newMoveSpeed = limit;                                                                     \
+            newSpeed     = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT); \
+            if (newMoveSpeed < newSpeed)                                                              \
+            {                                                                                         \
+                newMoveSpeed = newSpeed;                                                              \
+            }                                                                                         \
+        }                                                                                             \
+        else                                                                                          \
+        {                                                                                             \
+            newMoveSpeed = limit;                                                                     \
+            newSpeed     = chara->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT); \
+            if (newMoveSpeed >= newSpeed)                                                             \
+            {                                                                                         \
+                newMoveSpeed = newSpeed;                                                              \
+            }                                                                                         \
+        }                                                                                             \
+        chara->moveSpeed_38 = newMoveSpeed;                                                           \
+    }
+
 #endif

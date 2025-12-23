@@ -197,7 +197,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara) {} // 0x800D3DAC
 
 #include "maps/shared/sharedFunc_800D82F0_1_s02.h" // 0x800D8768
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D8684_1_s02); // 0x800D8AFC
+#include "maps/shared/sharedFunc_800D8684_1_s02.h" // 0x800D8AFC
 
 INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D8F30_1_s02); // 0x800D93A8
 
