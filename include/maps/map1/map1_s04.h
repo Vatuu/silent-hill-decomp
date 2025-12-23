@@ -6,6 +6,10 @@
 #define MAP_ROOM_MIN_Z Q12(-80.0f)
 #define MAP_ROOM_MAX_Z Q12(200.0f)
 
+extern u8 D_800CCF54;
+
+extern u16 D_800CCF5C[];
+
 extern u16 D_800CD038[][0x28];
 
 extern s32 D_800CD768;
@@ -18,10 +22,6 @@ extern u16 D_800CD768_tbl[0];
 extern s32 D_800CD76C;
 extern s32 D_800CD770;
 extern s32 D_800CD774;
-
-extern u8 D_800CCF54;
-
-extern u16 D_800CCF5C[];
 
 void func_800CC8C8(void);
 

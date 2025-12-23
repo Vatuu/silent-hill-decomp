@@ -339,5 +339,5 @@ sharedData_800E2330_0_s01           = 0x800F3DA0; // type:s32 - unknown type
 sharedData_800E2350_0_s01           = 0x800F3DC0;
 sharedData_800E2370_0_s01           = 0x800F3DE0; //type:s32 size:0x08
 g_WorldObject0                      = 0x800F3E10; // type:WorldObjectDescNoRot size:0x28
-g_WorldObject1                      = 0x800F3E40; // type:WorldObjectDesc size:0x2E
+g_WorldObject1                      = 0x800F3E40; // type:WorldObjectDesc size:0x30
 g_CommonWorldObjects                = 0x800F3E70; // type:WorldObject_0 size:0xA8

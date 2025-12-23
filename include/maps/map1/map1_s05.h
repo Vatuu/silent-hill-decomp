@@ -8,17 +8,17 @@
 
 extern s32 D_800D587C;
 
-extern u16 D_800D86F8[2];
-extern u8  D_800D86FC[2];
-
 extern u8 D_800D5C3C;
 
 extern u8 D_800D5D11;
 
-extern s8 D_800D86FE;
+extern s_WorldObjectDesc g_WorldObject0; // 0x800D8698
+extern s_WorldObjectDesc g_WorldObject1; // 0x800D86C8
 
-extern s_WorldObjectDesc g_WorldObject0; //800D8698
-extern s_WorldObjectDesc g_WorldObject1; //800D86C8
+extern u16 D_800D86F8[2];
+extern u8  D_800D86FC[2];
+
+extern s8 D_800D86FE;
 
 void func_800D494C(void);
 

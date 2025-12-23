@@ -146,4 +146,4 @@ sharedData_800E0CBA_0_s00           = 0x800D4DFA; // type:s8
 sharedData_800E39D8_0_s00           = 0x800D4DFC; // type:s32
 sharedData_800D32A0_0_s02           = 0x800D4E00; // type:s32
 sharedData_800D3150_3_s02           = 0x800D4E04; // type:s32
-g_WorldObject_SavePad               = 0x800D4E3C; // type:WorldObjectDesc size:0x2E
+g_WorldObject_SavePad               = 0x800D4E3C; // type:WorldObjectDesc size:0x30

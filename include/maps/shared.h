@@ -3164,6 +3164,7 @@ typedef struct
     VECTOR3  position_0; // Q19.12
     SVECTOR3 rotation_C; // Q19.12
 } s_WorldObjectPose;
+STATIC_ASSERT_SIZEOF(s_WorldObjectPose, 0x14);
 
 typedef struct
 {
@@ -3171,12 +3172,14 @@ typedef struct
     VECTOR3         position_1C; // Q19.12
     SVECTOR3        rotation_28; // Q19.12
 } s_WorldObjectDesc;
+STATIC_ASSERT_SIZEOF(s_WorldObjectDesc, 0x30);
 
 typedef struct
 {
     s_WorldObject_0 object_0;
     VECTOR3         position_1C; // Q19.12
 } s_WorldObjectDescNoRot;
+STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 0x28);
 
 #define WorldObjectPoseInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
     WorldObjectPoseSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))

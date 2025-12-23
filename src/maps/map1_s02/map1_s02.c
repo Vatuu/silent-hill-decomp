@@ -1639,7 +1639,7 @@ void func_800DDA84(void) // 0x800DDA84
     {
         if (!Savegame_EventFlagGet(EventFlag_M1S02_PickupRubberBall))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObjectD.object_0, &g_WorldObjectD.position_1C, &D_800CBA44);
+            g_WorldGfx_ObjectAdd(&g_WorldObjectD.object_0, &g_WorldObjectD.position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 
@@ -1668,7 +1668,7 @@ void func_800DDA84(void) // 0x800DDA84
         g_WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position_1C, &g_WorldObject5.rotation_28);
         g_WorldGfx_ObjectAdd(&g_WorldObject6.object_0, &g_WorldObject6.position_1C, &g_WorldObject6.rotation_28);
         g_WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C, &g_WorldObject7.rotation_28);
-        g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &D_800CBA44);
+        g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &(SVECTOR3){ 0, 0, 0 });
 
         if (g_WorldObject6.rotation_28.vy != FP_ANGLE(180.0f) ||
             g_WorldObject7.rotation_28.vy != g_WorldObject6.rotation_28.vy)
@@ -1839,5 +1839,3 @@ void func_800DEC88(void) // 0x800DEC88
         }
     }
 }
-
-INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800CBA44);

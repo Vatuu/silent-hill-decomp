@@ -132,5 +132,5 @@ sharedData_800D8614_1_s05 = 0x800D8614; // type:s16
 sharedData_800D8616_1_s05 = 0x800D8616; // type:s16
 sharedData_800D8684_1_s05 = 0x800D8684; // type:s32
 sharedData_800D8688_1_s05 = 0x800D8688; // type:s32
-g_WorldObject0            = 0x800D8698; // type:WorldObjectDesc size:0x2E
-g_WorldObject1            = 0x800D86C8; // type:WorldObjectDesc size:0x2E
+g_WorldObject0            = 0x800D8698; // type:WorldObjectDesc size:0x30
+g_WorldObject1            = 0x800D86C8; // type:WorldObjectDesc size:0x30

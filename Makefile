@@ -147,7 +147,10 @@ gen_o_files = $(addprefix $(BUILD_DIR)/, \
 get_yaml_path = $(addsuffix .yaml,$(addprefix $(CONFIG_DIR)/,$1))
 
 # Function to get target output path for given target.
-get_target_out = $(patsubst $(OUT_DIR)/$(GAME_VERSION)%,$(OUT_DIR)%,$(addprefix $(OUT_DIR)/,$(shell $(GET_YAML_TARGET) $(call get_yaml_path,$1))))
+get_target_out_slow = $(patsubst $(OUT_DIR)/$(GAME_VERSION)%,$(OUT_DIR)%,$(addprefix $(OUT_DIR)/,$(shell $(GET_YAML_TARGET) $(call get_yaml_path,$1))))
+
+# Faster version of the above using a cache lookup.
+get_target_out = $(patsubst $(strip $1)|%,%,$(filter $(strip $1)|%,$(TARGET_OUT_CACHE)))
 
 # Template definition for elf target.
 # First parameter should be source target with folder (e.g. screens/credits).
@@ -332,6 +335,8 @@ TARGET_IN := $(TARGET_EXE_1) $(TARGET_ENG_1) $(TARGET_BKO_1) $(TARGET_CRE_1) $(T
 endif
 
 # Source Definitions
+
+TARGET_OUT_CACHE := $(foreach target,$(TARGET_IN),$(target)|$(call get_target_out_slow,$(target)))
 
 TARGET_OUT := $(foreach target,$(TARGET_IN),$(call get_target_out,$(target)))
 

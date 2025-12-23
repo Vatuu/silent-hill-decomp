@@ -12,34 +12,13 @@
 #define MAP_ROOM_MIN_Z Q12(-80.0f)
 #define MAP_ROOM_MAX_Z Q12(200.0f)
 
-extern u8 D_800D71E8[];
+extern u8 D_800D71E8[8];
 
 extern u16 D_800D775C;
 
 extern u8 D_800D7760;
 
 extern u8 D_800D7761;
-
-/** Time. */
-extern q3_12 D_800DAF78;
-
-extern s_WorldObjectDesc D_800DAF84;
-
-extern s_WorldObjectDesc D_800DAFB4;
-
-extern s_WorldObjectDesc D_800DAFF4;
-
-extern s_WorldObjectDesc D_800DB024;
-
-extern s_WorldObjectDesc D_800DB064;
-
-extern u8 D_800DAFE4;
-
-/** Related to stereo sound balance. */
-extern s8 D_800DB054;
-
-/** Stereo sound balance. */
-extern s8 D_800DB055;
 
 extern u8 D_800D778D;
 
@@ -48,6 +27,27 @@ extern u8 D_800D778E;
 extern u8 D_800D778F;
 
 extern u8 D_800D7790;
+
+/** Time. */
+extern q3_12 D_800DAF78;
+
+extern s_WorldObjectDesc D_800DAF84;
+
+extern s_WorldObjectDesc D_800DAFB4;
+
+extern u8 D_800DAFE4;
+
+extern s_WorldObjectDesc D_800DAFF4;
+
+extern s_WorldObjectDesc D_800DB024;
+
+/** Related to stereo sound balance. */
+extern s8 D_800DB054;
+
+/** Stereo sound balance. */
+extern s8 D_800DB055;
+
+extern s_WorldObjectDesc D_800DB064;
 
 void func_800D5400(void);
 

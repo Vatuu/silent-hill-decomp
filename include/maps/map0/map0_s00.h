@@ -56,44 +56,18 @@ typedef struct
     s32 field_0;
 } s_800E0C74;
 
-extern VECTOR3 D_800E32DC[4];
-
-/** "STAGE 0-0" string */
-extern char D_800CAE7C[];
-
-extern VECTOR3 D_800CB6A4;
-
 /** `bool` */
 extern u8 D_800DD593;
 
 /** `bool` */
 extern u8 D_800DD594;
 
-/** Distance. */
-extern q19_12 D_800DFAD0;
-
-extern s32 D_800DFAD4;
-
-extern q19_12 D_800DFADC;
-
-extern u8 D_800E34EC;
-
-extern u8 D_800E39AC;
-
-extern s_WorldObject_0 D_800E3A5C[2];
-
-extern VECTOR3 D_800E3A9C;
-
-extern SVECTOR3 D_800E3AAC;
-
 /** Time. */
 extern q19_12 D_800DFAB8;
 
-extern u16 g_MapMsgSounds[];
+extern u16 g_MapMsgSounds[]; // 0x800DFABC
 
 extern u8 D_800DFAC2;
-
-extern u8 g_MapMsgSoundIdx;
 
 extern s32 D_800DFAC4;
 
@@ -101,8 +75,19 @@ extern u16 D_800DFAC8;
 
 extern s32 D_800DFACC;
 
+/** Distance. */
+extern q19_12 D_800DFAD0;
+
+extern s32 D_800DFAD4;
+
+extern bool g_WarpCamera; // 0x800DFAD8
+
+extern q19_12 D_800DFADC;
+
 extern VECTOR3 D_800DFAE0[];  // }  TODO might be one big table.
 extern VECTOR3 D_800DFB28[3]; // }
+
+extern u8 g_MapMsgSoundIdx; // 0x800DFB58
 
 extern s32 D_800DFB40;
 
@@ -122,11 +107,21 @@ extern u8 D_800DF2F8;
 
 extern s16 D_800DF300[];
 
-extern bool g_WarpCamera;
-
 extern s16 D_800E0C64;
 
 extern s_800E0C74 D_800E0C74;
+
+extern VECTOR3 D_800E32DC[4];
+
+extern u8 D_800E34EC;
+
+extern u8 D_800E39AC;
+
+extern s_WorldObject_0 D_800E3A5C[2];
+
+extern VECTOR3 D_800E3A9C;
+
+extern SVECTOR3 D_800E3AAC;
 
 void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
 

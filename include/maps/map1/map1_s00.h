@@ -12,28 +12,41 @@
 #define MAP_ROOM_MIN_Z Q12(-80.0f)
 #define MAP_ROOM_MAX_Z Q12(200.0f)
 
+extern u8 D_800DCC4C;
+
+extern u16 D_800DCC54[42];
+
+extern s_MapPoint2d MAP_POINTS[]; // 0x800DCCB8
+
 extern s32 D_800DD718;
 
-extern s_WorldObjectPose           g_CommonWorldObjectPoses[5];
-extern s_WorldObjectDescNoRot g_WorldObject0;
-extern s_WorldObjectDescNoRot g_WorldObject1[6];
-extern s_WorldObjectDescNoRot g_WorldObject2;
-extern s_WorldObjectDescNoRot g_WorldObject3;
-extern s_WorldObjectDescNoRot g_WorldObject4;
-extern s_WorldObjectDescNoRot g_WorldObject5;
-extern s_WorldObjectDescNoRot g_WorldObject6[2];
-extern s_WorldObjectDesc       g_WorldObject7;
-extern s_WorldObjectDesc       g_WorldObject8;
+extern s_WorldObjectPose           g_CommonWorldObjectPoses[5]; // 0x800DD71C
+
+extern s_WorldObjectDescNoRot g_WorldObject0; // 0x800E0EF0
+
+extern s_WorldObjectDescNoRot g_WorldObject1[6]; // 0x800E0F20
+
+extern s_WorldObjectDescNoRot g_WorldObject2; // 0x800E1010
+
+extern s_WorldObjectDescNoRot g_WorldObject3; // 0x800E1040
+
+extern s_WorldObjectDescNoRot g_WorldObject4; // 0x800E1070
+
+extern s_WorldObjectDescNoRot g_WorldObject5; // 0x800E10A0
+
+extern s_WorldObjectDescNoRot g_WorldObject6[2]; // 0x800E10D0
+
+extern s_WorldObjectDesc       g_WorldObject7; // 0x800E1120
+
+extern s_WorldObjectDesc       g_WorldObject8; // 0x800E1150
 
 extern u8 D_800E1180;
+
 extern s16 D_800E1182;
 
-extern s_WorldObjectDesc g_WorldObject9;
-extern s_WorldObject_0   g_CommonWorldObjects[6];
+extern s_WorldObjectDesc g_WorldObject9; // 0x800E1190
 
-extern s_MapPoint2d MAP_POINTS[];
-extern u8 D_800DCC4C;
-extern u16 D_800DCC54[42];
+extern s_WorldObject_0   g_CommonWorldObjects[6]; // 0x800E11C0
 
 void func_800D7AC4(void);
 

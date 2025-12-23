@@ -19,9 +19,17 @@
 #define MAP_ROOM_MAX_Z Q12(400.0f)
 #define MAP_HAS_SECONDARY_GRID
 
-extern u8 D_800F1CA8[3]; // = { 0, 1, 2 }
+extern u16 g_MapMsgSounds[2]; // 0x800F1A10
 
-extern s16 D_800F22AE;
+extern s16 g_Gfx_LockTimFileIdxs[8]; // 0x800F1A14
+
+extern s32 D_800F1A24;
+
+extern s_WorldObjectPose  g_CommonWorldObjectPoses[32]; // 0x800F1A28
+
+extern s_MapPoint2d D_800F1CAC[3][32];
+
+extern u8 D_800F1CA8[3]; // = { 0, 1, 2 }
 
 /** Alpha value? */
 extern q3_12 D_800F228C;
@@ -29,11 +37,9 @@ extern q3_12 D_800F228C;
 extern u8 D_800F228E;
 
 /** Paper map marking fade alpha. Used to fade in the marking sprite to half opacity. */
-extern s32 g_Gfx_PaperMapMarkingAlpha;
+extern s32 g_Gfx_PaperMapMarkingAlpha; // 0x800F2290
 
-extern u16 g_MapMsgSounds[2];
-
-extern u8 g_MapMsgSoundIdx;
+extern u8 g_MapMsgSoundIdx; // 0x800F2294
 
 extern u8 D_800F2295;
 
@@ -42,48 +48,46 @@ extern s32 D_800F2298;
 /** Paper map zoom counter or timer. */
 extern s32 D_800F229C;
 
-extern s32 D_800F1A24;
+extern s_FsImageDesc* D_800F22A0;
+extern s_FsImageDesc* D_800F22A4;
+extern s_FsImageDesc* D_800F22A8;
+
+extern s16 g_DoorOfEclypse_MapMsgIdx; // 0x800F22AC
+
+extern s16 D_800F22AE;
+
+/* TODO: Rename these with sequental names (not really essential, but would be nice). */
+extern SVECTOR3 D_800F5344;
+extern s8       D_800F534C;
 
 /** Time. */
 extern q3_12 D_800F534E;
 
-extern s_WorldObjectPose  g_CommonWorldObjectPoses[32];
-
 extern s16 D_800F5350;
 
-/* TODO: Rename these with sequental names (not really essential, but would be nice). */
-extern SVECTOR3               D_800F5344;
-extern s8                     D_800F534C;
 extern s_WorldObject_0        D_800F535C;
 extern VECTOR3                D_800F537C;
 extern SVECTOR3               D_800F538C;
-extern s_WorldObjectDesc      g_WorldObject0;
-extern s_WorldObjectDesc      g_WorldObject1;
-extern s_WorldObjectDesc      g_WorldObject2;
-extern s_WorldObjectDesc      g_WorldObject3;
-extern s_WorldObjectDescNoRot g_WorldObjectB[3];
-extern s_WorldObjectDesc      g_WorldObject4[3];
-extern s_WorldObject_0        g_WorldObject5[4];
+extern s_WorldObjectDesc      g_WorldObject0; // 0x800F539C
+extern s_WorldObjectDesc      g_WorldObject1; // 0x800F53CC
+extern s_WorldObjectDesc      g_WorldObject2; // 0x800F53FC
+extern s_WorldObjectDesc      g_WorldObject3; // 0x800F542C
+extern s_WorldObjectDescNoRot g_WorldObjectB[3]; // 0x800F545C
+extern s_WorldObjectDesc      g_WorldObject4[3]; // 0x800F54DC
+extern s_WorldObject_0        g_WorldObject5[4]; // 0x800F556C
 extern VECTOR3                D_800F55DC[2];
-extern s_WorldObject_0        g_WorldObject6[3];
-extern s_WorldObject_0        g_WorldObject7[4];
+extern s_WorldObject_0        g_WorldObject6[3]; // 0x800F55FC
+extern s_WorldObject_0        g_WorldObject7[4]; // 0x800F565C
 extern VECTOR3                D_800F56CC[2];
 extern u8                     D_800F56E4;
 extern s_WorldObject_0        D_800F56EC;
 extern s_WorldObjectPose      D_800F570C;
 extern s_WorldObjectPose      D_800F572C;
 extern s_WorldObjectPose      D_800F574C;
-extern s_WorldObjectDesc      g_WorldObject8;
-extern s_WorldObjectDesc      g_WorldObject9;
-extern s_WorldObjectDesc      g_WorldObjectA;
-extern s_WorldObject_0        g_CommonWorldObjects[6];
-
-extern s_MapPoint2d D_800F1CAC[3][32];
-extern s_FsImageDesc* D_800F22A0;
-extern s_FsImageDesc* D_800F22A4;
-extern s_FsImageDesc* D_800F22A8;
-extern s16 g_DoorOfEclypse_MapMsgIdx;
-extern s16 g_Gfx_LockTimFileIdxs[8];
+extern s_WorldObjectDesc      g_WorldObject8; // 0x800F576C
+extern s_WorldObjectDesc      g_WorldObject9; // 0x800F579C
+extern s_WorldObjectDesc      g_WorldObjectA; // 0x800F57CC
+extern s_WorldObject_0        g_CommonWorldObjects[6]; // 0x800F57FC
 
 void func_800D756C(s_SubCharacter* chara);
 

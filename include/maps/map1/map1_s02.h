@@ -23,27 +23,8 @@
 #define MAP_ROOM_MIN_Z Q12(-80.0f)
 #define MAP_ROOM_MAX_Z Q12(200.0f)
 
-extern s_WorldObjectDescNoRot       g_WorldObject0;               // D_800E58C8
-extern s_WorldObjectDesc            g_WorldObject1;               // D_800E57D8
-extern s_WorldObjectDesc            g_WorldObject2;               // D_800E5A68
-extern s_WorldObjectDesc            g_WorldObject3;               // D_800E5948
-extern s_WorldObjectDesc            g_WorldObject4;               // D_800E5808
-extern s_WorldObjectDesc            g_WorldObject5;               // D_800E5838
-extern s_WorldObjectDesc            g_WorldObject6;               // D_800E5868
-extern s_WorldObjectDesc            g_WorldObject7;               // D_800E5898
-extern s_WorldObjectDesc            g_WorldObject8;               // D_800E59A8
-extern s_WorldObjectDesc            g_WorldObject9;               // D_800E59D8
-extern s_WorldObjectDesc            g_WorldObjectA;               // D_800E5A08
-extern s_WorldObjectDesc            g_WorldObjectB;               // D_800E5A38
-extern s_WorldObject_0              g_WorldObjectC;               // D_800E58F8
-extern s_WorldObjectDescNoRot       g_WorldObjectD;               // D_800E5978
-extern s_WorldObject_0              g_CommonWorldObjects[6];      // D_800E5AA8
-extern s_WorldObjectPose            g_CommonWorldObjectPoses[11]; // D_800E1EEC
-extern VECTOR3 g_ObjPosC[2]; // 800E5918
-extern SVECTOR g_ObjRotC[2]; // 800E5938
-extern u8 D_800E5A98;
-extern u8 D_800E5A99;
-extern SVECTOR3 D_800CBA44;
+extern u8 D_800E1208[8];
+extern u16 D_800E1210[42]; // Flags.
 
 extern u16 D_800E1EDC;
 
@@ -52,6 +33,8 @@ extern u8 D_800E1EE2;
 extern s32 D_800E1EE4;
 
 extern u16 D_800E1EE8;
+
+extern s_WorldObjectPose g_CommonWorldObjectPoses[11]; // 0x800E1EEC
 
 extern s32 D_800E1FD4;
 
@@ -67,12 +50,27 @@ extern u8 D_800E1FE3;
 
 extern q3_12 D_800E1FE4;
 
-extern u8 D_800E1208[8];
-extern u16 D_800E1210[42]; // Flags.
+extern s_WorldObjectDesc            g_WorldObject1; // 0x800E57D8 "DOOR_HID", TODO: `g_WorldObject_Door`
+extern s_WorldObjectDesc            g_WorldObject4; // 0x800E5808
+extern s_WorldObjectDesc            g_WorldObject5; // 0x800E5838
+extern s_WorldObjectDesc            g_WorldObject6; // 0x800E5868
+extern s_WorldObjectDesc            g_WorldObject7; // 0x800E5898
+extern s_WorldObjectDescNoRot       g_WorldObject0; // 0x800E58C8 "BOX_HIDE", TODO: `g_WorldObject_Box`
+extern s_WorldObject_0              g_WorldObjectC; // 0x800E58F8
+extern VECTOR3                      g_ObjPosC[2]; // 0x800E5918
+extern SVECTOR                      g_ObjRotC[2]; // 0x800E5938
+extern s_WorldObjectDesc            g_WorldObject3; // 0x800E5948
+extern s_WorldObjectDescNoRot       g_WorldObjectD; // 0x800E5978
+extern s_WorldObjectDesc            g_WorldObject8; // 0x800E59A8
+extern s_WorldObjectDesc            g_WorldObject9; // 0x800E59D8
+extern s_WorldObjectDesc            g_WorldObjectA; // 0x800E5A08
+extern s_WorldObjectDesc            g_WorldObjectB; // 0x800E5A38
+extern s_WorldObjectDesc            g_WorldObject2; // 0x800E5A68
 
-//extern s_WorldObjectDesc D_800E57D8;      // "DOOR_HID", TODO: `g_WorldObject_Door`
+extern u8 D_800E5A98;
+extern u8 D_800E5A99;
 
-//extern s_WorldObjectDescNoRot D_800E58C8; // "BOX_HIDE", TODO: `g_WorldObject_Box`
+extern s_WorldObject_0              g_CommonWorldObjects[6]; // 0x800E5AA8
 
 void func_800D9EBC(void);
 

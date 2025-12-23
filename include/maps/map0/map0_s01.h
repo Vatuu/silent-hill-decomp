@@ -32,7 +32,7 @@
 #define MAP_ROOM_MAX_Z Q12(400.0f)
 #define MAP_HAS_SECONDARY_GRID
 
-extern s8 D_800CBAD4;
+extern u16 g_MapMsgSounds[]; // 0x800DE0CC
 
 extern u16 D_800DE124;
 
@@ -44,36 +44,34 @@ extern s_WorldObjectPose D_800DE140;
 
 extern VECTOR3 D_800DE154;
 
-extern q19_12 g_Timer0;
+extern u8 D_800DE250;
 
-extern u8 g_MapMsgSoundIdx;
+extern u8 D_800DE251;
+
+extern VECTOR3 g_CutsceneCameraPositionTarget; // 0x800E2380
+
+extern VECTOR3 g_CutsceneCameraLookAtTarget; // 0x800E2390
+
+extern q19_12 g_Timer0; // 0x800E239C
+
+extern u8 g_MapMsgSoundIdx; // 0x800E23A0
 
 extern u8 D_800E23A1;
-
-extern VECTOR3 g_CutsceneCameraPositionTarget;
-
-extern VECTOR3 g_CutsceneCameraLookAtTarget;
 
 extern s_WorldObject_0 D_800E23B0[1];
 extern s_WorldObject_0 D_800E23D0[1];
 extern s_WorldObject_0 D_800E23F0[3];
 extern s_WorldObject_0 D_800E2450[2];
 
-extern VECTOR3 g_CutscenePosition;
-extern s_WorldObjectDesc g_EventThing_KitchenKnife;
-extern s_WorldObjectDesc g_EventThing_Flashlight;
-extern s_WorldObjectDesc g_EventThing_Map;
-extern s_WorldObjectDesc g_EventThing_PocketRadio;
+extern VECTOR3 g_CutscenePosition; // 0x800E2490
+extern s_WorldObjectDesc g_EventThing_KitchenKnife; // 0x800E24A0
+extern s_WorldObjectDesc g_EventThing_Flashlight; // 0x800E24D0
+extern s_WorldObjectDesc g_EventThing_Map; // 0x800E2500
+extern s_WorldObjectDesc g_EventThing_PocketRadio; // 0x800E2530
 
 extern s16 D_800E2560;
 
-extern s_WorldObject_0 g_CommonWorldObjects[];
-
-extern u16 g_MapMsgSounds[];
-
-extern u8 D_800DE250;
-
-extern u8 D_800DE251;
+extern s_WorldObject_0 g_CommonWorldObjects[]; // 0x800E2570
 
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s_SubCharacter* chara);

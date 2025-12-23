@@ -210,6 +210,6 @@ sharedData_800E3A28_0_s00   = 0x800DFE5C; // type:s32
 sharedData_800E3A2C_0_s00   = 0x800DFE60; // type:s32
 g_WorldObject0              = 0x800DFE70; // type:WorldObject_0 size:0x38
 g_WorldObjectPos0           = 0x800DFEB0; // type:VECTOR3 size:0xC
-g_WorldObject1              = 0x800DFEC0; // type:WorldObjectDesc size:0x2E
+g_WorldObject1              = 0x800DFEC0; // type:WorldObjectDesc size:0x30
 g_WorldObject2              = 0x800DFF00; // type:WorldObjectDescNoRot size:0x28
 g_CommonWorldObjects        = 0x800DFF30; // type:WorldObject_0 size:0xA8
