@@ -1216,7 +1216,7 @@ typedef struct
     s8          unk_10[8];
     s32         field_18;
     s32         idx_1C;
-    s8          unk_20[4];
+    s32         field_20;
     s_AnimInfo* animInfo_24;
     s8          unk_28[12];
 } s_800D5710;

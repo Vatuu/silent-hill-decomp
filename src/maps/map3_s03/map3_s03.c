@@ -90,7 +90,7 @@ INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", g_PuppetNurse_ModelSta
 
 #include "maps/shared/Ai_PuppetNurse_Control.h" // 0x800D01D0
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D02E4_3_s03);
+#include "maps/shared/sharedFunc_800D02E4_3_s03.h"
 
 INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D03E4_3_s03);
 
