@@ -3108,7 +3108,7 @@ void sharedFunc_800CE8B8_0_s02(void);
 
 void sharedFunc_800CE5D4_1_s03(VECTOR3* arg0, u16 arg1, u16 arg2, u32 arg3);
 
-void sharedFunc_800CBA4C_1_s02(s32, s32, s32);
+void sharedFunc_800CBA4C_1_s02(s32 idx, s32 arg1, s32 arg2);
 
 void sharedFunc_800CBC98_1_s02(void);
 

@@ -1544,7 +1544,7 @@ typedef struct
     s16    field_4C[4];
     s16    field_54[4];
     u16    field_5C[4];
-    u16    field_64[4];
+    q4_12  field_64[4];
     s16    field_6c[4];
     s16    field_74;
     s16    unk_76;

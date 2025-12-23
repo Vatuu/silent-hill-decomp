@@ -9,14 +9,14 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creaper)
         creaper->damage_B4.position_0.vx += (creaper->moveSpeed_38 * Math_Sin(creaper->headingAngle_3C)) >> 15;
         creaper->damage_B4.position_0.vz += (creaper->moveSpeed_38 * Math_Cos(creaper->headingAngle_3C)) >> 15;
 
-        creaper->moveSpeed_38 = (SquareRoot0(
-                                    SQUARE(Q12_TO_Q6(creaper->damage_B4.position_0.vx)) +
-                                    SQUARE(Q12_TO_Q6(creaper->damage_B4.position_0.vz))) << 18) / Q12(0.8f);
+        creaper->moveSpeed_38 = (SquareRoot0(SQUARE(Q12_TO_Q6(creaper->damage_B4.position_0.vx)) +
+                                             SQUARE(Q12_TO_Q6(creaper->damage_B4.position_0.vz))) << 18) /
+                                Q12(0.8f);
 
         creaper->field_34        = FP_TO(creaper->damage_B4.position_0.vy, Q12_SHIFT) / Q12(0.8f);
         creaper->headingAngle_3C = Rng_AddGeneratedUInt(ratan2(creaper->damage_B4.position_0.vx, creaper->damage_B4.position_0.vz), -128, 127);
 
-        creaper->properties_E4.splitHead.flags_E8 |= (1 << 1);
+        creaper->properties_E4.splitHead.flags_E8 |= 1 << 1;
 
         if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == 7)
         {
@@ -69,7 +69,8 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creaper)
             creaper->health_B0       = Q12(20.0f);
             creaper->flags_3E       |= CharaFlag_Unk2;
 
-            if (ABS(func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - creaper->position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz - creaper->position_18.vz) - creaper->rotation_24.vy)) < FP_ANGLE(60.0f))
+            if (ABS(func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - creaper->position_18.vx,
+                                         g_SysWork.playerWork_4C.player_0.position_18.vz - creaper->position_18.vz) - creaper->rotation_24.vy)) < FP_ANGLE(60.0f))
             {
                 creaper->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
             }

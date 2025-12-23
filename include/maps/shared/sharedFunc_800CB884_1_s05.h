@@ -1,4 +1,5 @@
 #include "inline_no_dmpsx.h"
+
 #include <psyq/gtemac.h>
 
 bool sharedFunc_800CB884_1_s05(POLY_FT4** poly, s32 idx) // 0x800CCF50
@@ -69,7 +70,7 @@ bool sharedFunc_800CB884_1_s05(POLY_FT4** poly, s32 idx) // 0x800CCF50
 
     sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += ptr->field_0.field_CE;
 
-    if (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 > 0x1000)
+    if (sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_0 > Q12(1.0f))
     {
         sharedFunc_800CABF8_1_s05(idx, 1);
         return false;

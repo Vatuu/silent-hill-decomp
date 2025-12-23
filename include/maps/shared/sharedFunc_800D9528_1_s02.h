@@ -6,7 +6,7 @@ void sharedFunc_800D9528_1_s02(s_SubCharacter* creaper)
     {
         if (creaper->rotation_24.vy != func_8005BF38(creaper->headingAngle_3C + FP_ANGLE(180.0f)))
         {
-            if (func_8005BF38(creaper->headingAngle_3C + FP_ANGLE(180.0f) - creaper->rotation_24.vy) > 0)
+            if (func_8005BF38(creaper->headingAngle_3C + FP_ANGLE(180.0f) - creaper->rotation_24.vy) > FP_ANGLE(0.0f))
             {
                 creaper->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
             }
