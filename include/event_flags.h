@@ -117,6 +117,8 @@ typedef enum _EventFlag
     EventFlag_115                        = 115,
     EventFlag_M1S03_MonsterLurksBookRead = 116,
     EventFlag_117                        = 117,
+    EventFlag_118                        = 118,
+    EventFlag_119                        = 119,
 
     EventFlag_120 = 120,
     EventFlag_121 = 121,

@@ -172,6 +172,7 @@ MAP_MESSAGES              = 0x800E1854; // type:u32 size:0xDC
 g_CommonWorldObjectPoses  = 0x800E1EEC; // type:WorldObjectPos size:0xDC
 sharedData_800DFB4C_0_s00 = 0x800E1FC8;
 sharedData_800DFB50_0_s00 = 0x800E1FCC;
+D_800E1FE3                = 0x800E1FE3;
 g_Particle_SpeedX         = 0x800E1FE8; // type:s32
 g_Particle_SpeedZ         = 0x800E1FEC; // type:s32
 sharedData_800DFB6C_0_s00 = 0x800E1FF0; // type:s32

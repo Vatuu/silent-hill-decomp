@@ -57,6 +57,14 @@ extern s32 D_800E1FD4;
 
 extern u8 D_800E1FD8;
 
+extern DVECTOR D_800E1FDC;
+
+extern s16 D_800E1FE0;
+
+extern u8 D_800E1FE2;
+
+extern u8 D_800E1FE3;
+
 extern q3_12 D_800E1FE4;
 
 extern u8 D_800E1208[8];

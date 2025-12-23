@@ -1074,13 +1074,244 @@ void func_800DBFC8(void) // 0x800DBFC8
     }
 }
 
-INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800CB934);
+const VECTOR3 D_800CB934 = { 0x0003C800, 0xFFFFF4CD, 0xFFFC3000 };
 
-INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800CB940);
+const VECTOR3 D_800CB940 = { 0x0003C800, 0xFFFFF4CD, 0xFFFC5000 };
 
-INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800CB94C);
+const VECTOR3 D_800CB94C = { 0x0003A666, 0xFFFFF000, 0xFFFC4000 };
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", func_800DC1E0);
+void func_800DC1E0(void) // 0x800DC1E0
+{
+    s32 var_t2;
+    s32 var_t3;
+
+    switch (g_SysWork.sysStateStep_C[0]) 
+    {
+        case 0:
+            Player_ControlFreeze();
+            D_800E1FE2 = 0;
+            g_SysWork.field_28 = 0;
+            g_SysWork.sysStateStep_C[1] = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[0] += 1;
+    
+        case 1:
+            MapMsg_DisplayAndHandleSelection(2, 0x29, 2, 4, -1, false);
+            D_800E1FE3 = 0;
+            D_800E1FE0 = 0;
+            D_800E1FDC.vy = 0;
+            D_800E1FDC.vx = 0;
+            break;
+            
+        case 2:
+            D_800E1FE3 = 1;
+    
+        case 4:
+            if (D_800E1FE2 == 0) 
+            {
+                Camera_PositionSet(NULL, 0x3D000, -0x1333, -0x3C000, 0x2800, 0xC00, 0x1800, 0x800, false);
+                SysWork_StateStepIncrementDelayed(0x2000, false);
+                
+                if (g_SysWork.sysStateStep_C[0] != 2 && g_SysWork.sysStateStep_C[0] != 4) 
+                {
+                    g_SysWork.sysStateStep_C[0] = 5;
+                    g_SysWork.field_28 = 0;
+                    g_SysWork.sysStateStep_C[1] = 0;
+                    g_SysWork.timer_2C = 0;
+                    g_SysWork.sysStateStep_C[2] = 0;
+                    D_800E1FE2 += 1;
+                }
+            }
+            else
+            {
+                g_SysWork.sysStateStep_C[0] = 5;
+                g_SysWork.field_28 = 0;
+                g_SysWork.sysStateStep_C[1] = 0;
+                g_SysWork.timer_2C = 0;
+                g_SysWork.sysStateStep_C[2] = 0;
+            }
+            break;
+            
+        case 5:
+            if (Savegame_EventFlagGet(EventFlag_118)) 
+            {
+                func_8005DC1C(0x5AC, &D_800CB934, 0x80, 0);
+            } 
+            else 
+            {
+                func_8005DC1C(0x5AC, &D_800CB940, 0x80, 0);
+            }
+            
+            g_SysWork.field_28 = 0;
+            g_SysWork.sysStateStep_C[1] = 0;
+            g_SysWork.timer_2C = 0;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[0] += 1;
+            
+        case 6:
+            SysWork_StateStepIncrementDelayed(0x1000, false);
+            break;
+            
+        case 7:
+            if (D_800E1FDC.vx == 0) 
+            {
+                SD_Call(0x5AD);
+            }
+            
+            if (D_800E1FDC.vx < 0x400) 
+            {
+                D_800E1FE0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x2AA, Q12_SHIFT);
+            } 
+            else 
+            {
+                D_800E1FE0 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x2AA, Q12_SHIFT);
+                D_800E1FE0 = MAX(D_800E1FE0, 0xAA);
+            }
+            
+            if (D_800E1FE3 != 0) 
+            {
+                if (Savegame_EventFlagGet(EventFlag_118)) 
+                {
+                    var_t2 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, 0x2AA), Q12_SHIFT);
+                    
+                    if (D_800E1FDC.vx - var_t2 > 0x800) 
+                    {
+                        var_t2 = D_800E1FDC.vx - 0x800;
+                        D_800E1FDC.vx = 0x800;
+                    }
+                    else
+                    {
+                        D_800E1FDC.vx -= var_t2;
+                    }
+    
+                    var_t3 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, 0x2AA), Q12_SHIFT) >> 1;
+                    
+                    if (D_800E1FDC.vy - var_t3 > 0x400) 
+                    {
+                        var_t3 = D_800E1FDC.vy - 0x400;
+                        D_800E1FDC.vy = 0x400;
+                    }
+                    else
+                    {
+                        D_800E1FDC.vy -= var_t3;
+                    }
+                } 
+                else 
+                {
+                    var_t3 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, 0x2AA), Q12_SHIFT);
+                    
+                    if (D_800E1FDC.vx - var_t3 > 0x800) 
+                    {
+                        var_t3 = D_800E1FDC.vx - 0x800;
+                        D_800E1FDC.vx = 0x800;
+                    }
+                    else
+                    {
+                        D_800E1FDC.vx -= var_t3;
+                    }
+    
+                    var_t2 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, 0x2AA), Q12_SHIFT) >> 1;
+                    
+                    if (D_800E1FDC.vy - var_t2 > 0x400)
+                    {
+                        var_t2 = D_800E1FDC.vy - 0x400;
+                        D_800E1FDC.vy = 0x400;
+                    }
+                    else
+                    {
+                        D_800E1FDC.vy -= var_t2;
+                    }
+                }
+            } 
+            else if (Savegame_EventFlagGet(EventFlag_118)) 
+            {
+                var_t2 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, 0x2AA), Q12_SHIFT);
+                
+                if (D_800E1FDC.vx + var_t2 > 0x800) 
+                {
+                    var_t2 = 0x800 - D_800E1FDC.vx;
+                    D_800E1FDC.vx = 0x800;
+                }
+                else
+                {
+                    D_800E1FDC.vx += var_t2;
+                }
+                
+                var_t3 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, 0x2AA), Q12_SHIFT) >> 1;
+                
+                if (D_800E1FDC.vy + var_t3 > 0x400) 
+                {
+                    var_t3 = 0x400 - D_800E1FDC.vy;
+                    D_800E1FDC.vy = 0x400;
+                }
+                else
+                {
+                    D_800E1FDC.vy += var_t3;
+                }
+            } 
+            else 
+            {
+                var_t3 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, 0x2AA), Q12_SHIFT);
+                
+                if (D_800E1FDC.vx + var_t3 > 0x800) 
+                {
+                    var_t3 = 0x800 - D_800E1FDC.vx;
+                    D_800E1FDC.vx = 0x800;
+                }
+                else
+                {
+                    D_800E1FDC.vx += var_t3;
+                }
+    
+                var_t2 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, 0x2AA), Q12_SHIFT) >> 1;
+                
+                if (D_800E1FDC.vy + var_t2 > 0x400)
+                {
+                    var_t2 = 0x400 - D_800E1FDC.vy;
+                    D_800E1FDC.vy = 0x400;
+                }
+                else
+                {
+                    D_800E1FDC.vy += var_t2;
+                }
+            }
+            
+            g_WorldObject6.rotation_28.vy += var_t2;
+            g_WorldObject7.rotation_28.vy += var_t3;
+            
+            func_8005DE0C(0x5AD, &D_800CB94C, D_800E1FE0 >> 3, 0x12000, 0);
+            
+            if (D_800E1FDC.vx == 0x800 && D_800E1FDC.vy == 0x400) 
+            {
+                g_WorldObject6.rotation_28.vy = (g_WorldObject6.rotation_28.vy + 0x1040) & 0xC00;
+                g_WorldObject7.rotation_28.vy = (g_WorldObject7.rotation_28.vy + 0x1040) & 0xC00;
+                
+                Sd_SfxStop(0x5AD);
+    
+                g_SysWork.sysStateStep_C[0] = 1;
+                g_SysWork.field_28 = 0;
+                g_SysWork.sysStateStep_C[1] = 0;
+                g_SysWork.timer_2C = 0;
+                g_SysWork.sysStateStep_C[2] = 0;
+            }
+            break;
+            
+        default:
+            Player_ControlUnfreeze(false);
+    
+            SysWork_StateSetNext(SysState_Gameplay);
+    
+            Savegame_EventFlagClear(EventFlag_119);
+            Savegame_EventFlagClear(EventFlag_118);
+            
+            if (D_800E1FE2 != 0) 
+            {
+                vcReturnPreAutoCamWork(false);
+            }
+            break;
+    }
+}
 
 void func_800DCF00(void) // 0x800DCF00
 {
