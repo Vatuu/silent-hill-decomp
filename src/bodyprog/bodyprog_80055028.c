@@ -10473,7 +10473,7 @@ q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0
     return FP_ANGLE(360.0f);
 }
 
-q7_8 func_8006FAFC(s_SubCharacter* chara, s32 dist, s32 arg2, s32 arg3, q3_12 arg4, bool cond) // 0x8006FAFC
+q7_8 func_8006FAFC(s_SubCharacter* chara, q19_12 dist, s32 arg2, s32 arg3, q3_12 arg4, bool cond) // 0x8006FAFC
 {
     s16    temp_v1;
     q7_8   angle;
