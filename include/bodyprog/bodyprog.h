@@ -248,12 +248,6 @@ STATIC_ASSERT_SIZEOF(s_8002AC04, 16);
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-} s_func_80089644_1;
-
-typedef struct
-{
     s32               id_0;
     s32               flags_4;
     s32               modelCount_8;

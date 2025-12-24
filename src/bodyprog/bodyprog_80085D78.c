@@ -1574,8 +1574,8 @@ s32 func_80089128(void) // 0x80089128
 
     var_s5 = 0;
 
-    var_s2->field_C->field_4 = 0;
-    var_s2->field_C->field_C = 0;
+    var_s2->field_C[0].data_4 = 0;
+    var_s2->field_C[1].data_4 = 0;
 
     temp_v0 = func_8009ED74(var_s2);
     var_s0  = func_8009ED7C(temp_v0);
@@ -1831,7 +1831,7 @@ s32 func_800895E4(s_SysWork_2514* arg0, s_8002AC04* arg1, u8 arg2) // 0x800895E4
 bool func_80089644(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s32 arg2, u32 arg3) // 0x80089644
 {
     u32                var1;
-    s_func_80089644_1* ptr0;
+    s_SysWork_2514_C*  ptr0;
     s_8002AC04*        ptr1;
 
     arg3             *= 5;
@@ -1854,10 +1854,10 @@ bool func_80089644(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s32 arg2, u32 ar
     if (arg1->field_14_31 && (arg2 & arg1->field_1E))
     {
         var1 = arg1->field_18;
-        ptr0 = &arg0->field_C->field_0[arg1->field_14_24 << 3];
-        if (ptr0->field_4 < var1)
+        ptr0 = &arg0->field_C[arg1->field_14_24];
+        if (ptr0->data_4 < var1)
         {
-            ptr0->field_4 = var1;
+            ptr0->data_4 = var1;
         }
     }
 
