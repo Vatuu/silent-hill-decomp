@@ -10,12 +10,7 @@ Usage:
 
 Options used regularly can be saved to a file and read with @ argument, eg. `tools/bin2c.py @bin2c.txt -b assets/VIN/MAP0_S00.BIN ...`
 
-Recommended defaults for bin2c.txt:
---use-cpp
---sym
-configs/sym.bodyprog.txt
--s
-ctx.c
+Recommend using @tools/bin2c.cfg argument to read in default settings/mappings.
 """
 
 # TODO:
@@ -75,7 +70,7 @@ def process_fp_angle(val):
     return f"FP_ANGLE({round_fp(val, 11.377778)})"
 
 class StructParser:
-    def __init__(self, alignment=4, verbose=False, union_choices=None):
+    def __init__(self, alignment=4, verbose=False, union_choices=None, enum_choices=None):
         self.parser = c_parser.CParser()
         self.structs = {}  # name -> construct format
         self.struct_asts = {}  # name -> AST for reference
@@ -84,6 +79,7 @@ class StructParser:
         self.alignment = alignment  # Default alignment (4 bytes for PSX/32-bit)
         self.verbose = verbose  # Debug output
         self.union_choices = union_choices or {}  # Dict: "StructName.unionField" -> "memberName"
+        self.enum_choices = enum_choices or {} # Dict: "StructName.field" -> "enumName"
         self.enum_values = {}
         self.enum_value_mappings = {} # Dict: enumName -> array of value -> name
         self.struct_sizes = {}  # name -> size in bytes
@@ -1079,18 +1075,16 @@ class StructParser:
                     return "NO_VALUE"
                 elif field_key == "VC_ROAD_DATA.fix_ang_x_16" or field_key == "VC_ROAD_DATA.fix_ang_y_17":
                     return process_fp_angle_packed(value & 0xFF)
-                elif field_key == "VC_ROAD_DATA.mv_y_type_11":
-                    enum_val = self.lookup_enum_name("VC_CAM_MV_TYPE", value)
-                    if enum_val is not None:
-                        return enum_val
-                elif field_key == "VC_ROAD_DATA.cam_mv_type_14":
-                    enum_val = self.lookup_enum_name("VC_CAM_MV_TYPE", value)
-                    if enum_val is not None:
-                        return enum_val
-                elif field_key == "VC_ROAD_DATA.flags_10":
-                    flag_val = self.lookup_flag_name("VC_ROAD_FLAGS", value)
-                    if flag_val is not None:
-                        return flag_val
+                else:
+                    enum_type = self.enum_choices.get(field_key)
+                    if enum_type:
+                        if enum_type.startswith("&"):
+                            enum_val = self.lookup_flag_name(enum_type[1:], value)
+                        else:
+                            enum_val = self.lookup_enum_name(enum_type, value)
+
+                        if enum_val is not None:
+                            return enum_val
 
                 if field_type in ("q19_12", "q20_12"):
                     return process_fp(value, 12)
@@ -1128,8 +1122,11 @@ Examples:
   # Multiple union choices
   %(prog)s -s ctx.c -b data.bin -t MyStruct -u "MyStruct.field1=option1" -u "MyStruct.field2=option2"
 
+  # Specify an enum type to format value as
+  %(prog)s -s ctx.c -b data.bin -t MyStruct -u "MyStruct.field1=enumTypeName"
+
   # Read common arguments from a text file
-  %(prog)s @bin2c.txt -t MyStruct -b data.bin -o 0x100
+  %(prog)s @tools/bin2c.cfg -t MyStruct -b data.bin -o 0x100
   
   --use-cpp can speed up & improve header parsing by using the C preprocessor.
   Requires 'cpp' (typically from GCC) to be available in your PATH.
@@ -1168,6 +1165,8 @@ Examples:
                         help='Print verbose debug information about struct layout')
     parser.add_argument('-u', '--union', action='append', dest='union_choices',
                         help='Specify union member to use: "StructName.unionField=memberName"')
+    parser.add_argument('-e', '--enum', action='append', dest='enum_choices',
+                        help='Specify fields to output as enum: "StructName.fieldName=enumTypeName" (prepend enum name with & for flag enums)')
     parser.add_argument('--unnamed-values', action='store_true',
                         help='Don\'t output value names inside initializers')
     parser.add_argument('--hex', action='store_true',
@@ -1189,6 +1188,15 @@ Examples:
                 return 1
             key, value = choice.split('=', 1)
             union_choice_dict[key] = value
+
+    enum_choice_dict = {}
+    if args.enum_choices:
+        for choice in args.enum_choices:
+            if '=' not in choice:
+                print(f"Error: Invalid enum choice format '{choice}'. Use 'StructName.field=member'", file=sys.stderr)
+                return 1
+            key, value = choice.split('=', 1)
+            enum_choice_dict[key] = value
     
     # Parse offset
     offset = int(args.offset, 0)
@@ -1221,7 +1229,7 @@ Examples:
     
     # Parse struct definitions
     try:
-        struct_parser = StructParser(alignment=args.alignment, verbose=args.verbose, union_choices=union_choice_dict)
+        struct_parser = StructParser(alignment=args.alignment, verbose=args.verbose, union_choices=union_choice_dict, enum_choices=enum_choice_dict)
         struct_parser.pointer_size = args.pointer_size
         struct_parser.unnamed_values = args.unnamed_values
         struct_parser.numbers_hex = args.hex
