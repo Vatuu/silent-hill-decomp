@@ -8,6 +8,7 @@ void sharedFunc_800D9774_1_s02(s_SubCharacter* creaper)
         creaper->field_E1_0  = 0;
     }
 
+    //if (creaper->moveSpeed_38 == Q12(0.0f) && !(creaper->properties_E4.creaper.flags_E8 & (CreaperFlag_3 | CreaperFlag_4))) // TODO: Doesn't match?
     if (creaper->moveSpeed_38 == Q12(0.0f) && !(creaper->properties_E4.player.afkTimer_E8 & 0xC))
     {
         creaper->properties_E4.creaper.flags_E8 |= CreaperFlag_3;

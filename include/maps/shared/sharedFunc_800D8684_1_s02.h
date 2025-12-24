@@ -4,7 +4,7 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
     q3_12         angle1;
     s32           temp_s2;
     s32           temp;
-    s_PlayerWork* ptr;
+    s_PlayerWork* playerWork;
 
     angle1 = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - creaper->position_18.vx,
                                     g_SysWork.playerWork_4C.player_0.position_18.vz - creaper->position_18.vz) -
@@ -29,10 +29,11 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
     if (temp < Q12(1.2f) && !(creaper->properties_E4.creaper.flags_E8 & CreaperFlag_0) &&
         !func_800700F8(creaper, &g_SysWork.playerWork_4C.player_0))
     {
-        ptr = &g_SysWork.playerWork_4C;
+        playerWork = &g_SysWork.playerWork_4C;
 
         if (temp_s2 > Q12(1.2f))
         {
+            //if ((creaper->properties_E4.creaper.flags_E8 & (CreaperFlag_4 | CreaperFlag_5)) == CreaperFlag_4) // TODO: Doesn't match?
             if ((creaper->properties_E4.player.afkTimer_E8 & 0x30) == 0x10)
             {
                 creaper->properties_E4.creaper.flags_E8  |= CreaperFlag_5;
@@ -46,8 +47,8 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
                 creaper->properties_E4.player.field_F0 = 0;
             }
         }
-        else if (!(g_SysWork.field_2284[3] & 2) && !(ptr->player_0.flags_3E & 8) &&
-                 temp_s2 < Q12(0.5f) && ABS(angle1) < FP_ANGLE(10.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > 0)
+        else if (!(g_SysWork.field_2284[3] & 2) && !(playerWork->player_0.flags_3E & CharaFlag_Unk4) &&
+                 temp_s2 < Q12(0.5f) && ABS(angle1) < FP_ANGLE(10.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
         {
             creaper->model_0.state_2               = 3;
             creaper->model_0.anim_4.status_0       = ANIM_STATUS(CreaperAnim_12, false);
@@ -96,7 +97,7 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
 
             creaper->properties_E4.dummy.properties_E8[8].val16[0] = func_8006FAFC(creaper, Q12(1.2f), creaper->properties_E4.player.field_F4, creaper->properties_E4.player.runTimer_F8, Q12(1.0f), true);
 
-            if (creaper->properties_E4.dummy.properties_E8[8].val16[0] == 0x1000)
+            if (creaper->properties_E4.dummy.properties_E8[8].val16[0] == FP_ANGLE(360.0f))
             {
                 creaper->properties_E4.dummy.properties_E8[8].val16[0] = creaper->rotation_24.vy;
             }
