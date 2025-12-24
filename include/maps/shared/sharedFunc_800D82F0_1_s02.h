@@ -36,16 +36,16 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
         }
     }
 
-    if (creaper->properties_E4.creaper.flags_E8 & (1 << 8))
+    if (creaper->properties_E4.creaper.flags_E8 & CreaperFlag_8)
     {
         creaper->model_0.state_2                = 2;
         creaper->model_0.anim_4.status_0        = ANIM_STATUS(CreaperAnim_13, false);
         creaper->properties_E4.player.field_F0  = Q12(0.5f);
         creaper->properties_E4.player.field_104 = 0;
     }
-    else if (creaper->properties_E4.creaper.flags_E8 & (1 << 6))
+    else if (creaper->properties_E4.creaper.flags_E8 & CreaperFlag_6)
     {
-        if (creaper->properties_E4.creaper.flags_E8 & (1 << 7))
+        if (creaper->properties_E4.creaper.flags_E8 & CreaperFlag_7)
         {
             if (Rng_GenerateUInt(0, 7) == 0) // 1 in 8 cahnce.
             {
@@ -57,7 +57,7 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
 
                         creaper->properties_E4.player.field_104 = 0;
                         sharedData_800E57CC_1_s02--;
-                        creaper->properties_E4.creaper.flags_E8 &= ~(1 << 7);
+                        creaper->properties_E4.creaper.flags_E8 &= ~CreaperFlag_7;
                     }
                 }
             }
@@ -75,13 +75,13 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
                 {
                     if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == Chara_Creaper &&
                         g_SysWork.npcs_1A0[i].field_40 != creaper->field_40 &&
-                        g_SysWork.npcs_1A0[i].properties_E4.creaper.flags_E8 & (1 << 6) &&
+                        g_SysWork.npcs_1A0[i].properties_E4.creaper.flags_E8 & CreaperFlag_6 &&
                         g_SysWork.npcs_1A0[i].model_0.state_2 == 1 &&
                         !Math_Distance2dCheck(&creaper->position_18, &g_SysWork.npcs_1A0[i].position_18, Q12(16.0f)))
                     {
                         g_SysWork.npcs_1A0[i].properties_E4.player.field_104 = 0;
                         sharedData_800E57CC_1_s02++;
-                        g_SysWork.npcs_1A0[i].properties_E4.creaper.flags_E8 |= 1 << 7;
+                        g_SysWork.npcs_1A0[i].properties_E4.creaper.flags_E8 |= CreaperFlag_7;
                     }
                 }
             }

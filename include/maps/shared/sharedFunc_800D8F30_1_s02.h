@@ -86,19 +86,19 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creaper)
                       creaper, &creaperPos, &g_SysWork.playerWork_4C.player_0, creaper->rotation_24.vy,
                       ratan2(Q12(0.4f), (playerPos.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_2) - (creaper->position_18.vy + creaper->field_C8.field_2)));
 
-        if (!(creaper->properties_E4.creaper.flags_E8 & (1 << 0)))
+        if (!(creaper->properties_E4.creaper.flags_E8 & CreaperFlag_0))
         {
             func_8005DC1C(Sfx_Unk1424, &creaper->position_18, Q8(0.5f), 0);
         }
 
-        creaper->properties_E4.creaper.flags_E8 |= 1 << 0;
+        creaper->properties_E4.creaper.flags_E8 |= CreaperFlag_0;
 
         // Run through NPCs.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
             if (creaper->model_0.charaId_0 == Chara_Creaper && !Math_Distance2dCheck(&creaper->position_18, &g_SysWork.npcs_1A0[i].position_18, Q12(16.0f)))
             {
-                g_SysWork.npcs_1A0[i].properties_E4.creaper.flags_E8 |= 1 << 8;
+                g_SysWork.npcs_1A0[i].properties_E4.creaper.flags_E8 |= CreaperFlag_8;
             }
         }
     }
