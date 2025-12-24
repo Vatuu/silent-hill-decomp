@@ -3,7 +3,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map3/map3_s02.h"
-#include "maps/Characters/Chara_Creaper.h"
+#include "maps/characters/Chara_Creaper.h"
 
 INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", D_800C9578);
 

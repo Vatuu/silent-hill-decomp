@@ -1490,14 +1490,15 @@ typedef struct _SubCharacter
 
     union
     {
-        s_SubCharaPropertiesPlayer        player;
-        s_SubCharaPropertiesNpc           npc;
-        s_SubCharaPropertiesDummy         dummy;
-        s_SubCharaPropertiesUnk0          unk0;
-        s_SubCharaPropertiesPuppetNurse   puppetNurse;
+        s_SubCharaPropertiesDummy  dummy; // TODO: Temporary.
+        s_SubCharaPropertiesPlayer player;
+        s_SubCharaPropertiesNpc    npc;
+
         s_SubCharaPropertiesDahlia        dahlia;
-        s_SubCharaPropertiesSplitHead     splitHead;
         s_SubCharaPropertiesLarvalStalker larvalStalker;
+        s_SubCharaPropertiesPuppetNurse   puppetNurse;
+        s_SubCharaPropertiesSplitHead     splitHead;
+        s_SubCharaPropertiesUnk0          unk0;
     } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
