@@ -13,12 +13,12 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creaper)
     {
         g_SysWork.field_2284[3]         &= ~(1 << 1);
         creaper->model_0.state_2         = 2;
-        creaper->model_0.anim_4.status_0 = ANIM_STATUS(13, false);
+        creaper->model_0.anim_4.status_0 = ANIM_STATUS(CreaperAnim_13, false);
         return;
     }
 
-    if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == 12 ||
-        creaper->model_0.anim_4.status_0 == ANIM_STATUS(2, false) ||
+    if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == CreaperAnim_12 ||
+        creaper->model_0.anim_4.status_0 == ANIM_STATUS(CreaperAnim_2, false) ||
         ANIM_TIME_RANGE_CHECK(creaper->model_0.anim_4.time_4, 4, 7))
     {
         dist = Math_Vector2MagCalc(playerPos.vx - creaper->position_18.vx, playerPos.vz - creaper->position_18.vz);
@@ -102,7 +102,7 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creaper)
             }
         }
     }
-    else if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == 13)
+    else if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == CreaperAnim_13)
     {
         g_SysWork.field_2284[3]               &= ~(1 << 1);
         creaper->model_0.state_2               = 2;

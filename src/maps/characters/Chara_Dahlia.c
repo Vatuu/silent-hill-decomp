@@ -128,7 +128,7 @@ void Ai_Dahlia_AnimStateUpdate(s_SubCharacter* dahlia, GsCOORDINATE2* coords)
                 dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < 0)
                 {
-                    dahliaProps.moveDistance_126 = 0;
+                    dahliaProps.moveDistance_126 = Q12(0.0f);
                 }
             }
 

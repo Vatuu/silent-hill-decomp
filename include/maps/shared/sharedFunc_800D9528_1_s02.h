@@ -2,7 +2,7 @@ void sharedFunc_800D9528_1_s02(s_SubCharacter* creaper)
 {
     s32 var_s0;
 
-    if (creaper->model_0.anim_4.status_0 == ANIM_STATUS(7, true))
+    if (creaper->model_0.anim_4.status_0 == ANIM_STATUS(CreaperAnim_7, true))
     {
         if (creaper->rotation_24.vy != func_8005BF38(creaper->headingAngle_3C + FP_ANGLE(180.0f)))
         {
@@ -30,10 +30,10 @@ void sharedFunc_800D9528_1_s02(s_SubCharacter* creaper)
         creaper->properties_E4.dummy.properties_E8[1].val16[1] = FP_FROM(var_s0 * Math_Cos(creaper->rotation_24.vy + FP_ANGLE(180.0f)), Q12_SHIFT);
     }
 
-    if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == 3  ||
-        ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == 4  ||
-        ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == 14 ||
-        ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == 15)
+    if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == CreaperAnim_3  ||
+        ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == CreaperAnim_4  ||
+        ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == CreaperAnim_14 ||
+        ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == CreaperAnim_15)
     {
         creaper->model_0.state_2 = 5;
     }

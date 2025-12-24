@@ -1254,7 +1254,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             D_800C4606                                                              = 1;
             sharedData_800E39E0_0_s00                                               = 0;
             D_800C4588                                                              = 0;
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.playerMoveDistance_126 = 0;
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
             return true;
     }
 #endif
@@ -1263,13 +1263,13 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
 
 void sharedFunc_800D2C7C_0_s00(s32 playerState)
 {
-    s_PlayerExtra* extra;
-    s_SubCharacter*       chara;
+    s_SubCharacter* player;
+    s_PlayerExtra*  extra;
 
-    extra = &g_SysWork.playerWork_4C.extra_128;
-    chara = &g_SysWork.playerWork_4C.player_0;
+    extra  = &g_SysWork.playerWork_4C.extra_128;
+    player = &g_SysWork.playerWork_4C.player_0;
 
-    g_SysWork.playerWork_4C.player_0.properties_E4.player.playerMoveDistance_126 = 0;
+    g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
 
     D_800C4606 = 0;
 
@@ -1292,7 +1292,7 @@ void sharedFunc_800D2C7C_0_s00(s32 playerState)
             break;
     }
 
-    Player_ExtraStateSet(chara, extra, playerState);
+    Player_ExtraStateSet(player, extra, playerState);
 }
 
 void sharedFunc_800D2D2C_0_s00(void)
@@ -1349,12 +1349,12 @@ s32 sharedFunc_800D2DAC_0_s00(void)
 
 s32 sharedFunc_800D2E50_0_s00(void)
 {
-    return g_SysWork.playerWork_4C.player_0.properties_E4.player.playerMoveDistance_126 == 0;
+    return g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 == Q12(0.0f);
 }
 
 void sharedFunc_800D2E60_0_s00(void)
 {
-    g_SysWork.playerWork_4C.player_0.properties_E4.player.playerMoveDistance_126 = 0;
+    g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
 }
 
 void sharedFunc_800D2E6C_0_s00(void)
@@ -1378,7 +1378,7 @@ void Player_FallBackward(void)
     playerChara = &g_SysWork.playerWork_4C.player_0;
     playerExtra = &g_SysWork.playerWork_4C.extra_128;
 
-    g_SysWork.playerWork_4C.player_0.properties_E4.player.playerMoveDistance_126 = Q12(2.3f);
+    g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(2.3f);
     g_SysWork.playerWork_4C.player_0.properties_E4.player.headingAngle_124       = FP_ANGLE(180.0f);
     g_Player_HeadingAngle                                                   = FP_ANGLE(180.0f);
 
@@ -1662,7 +1662,7 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
     q3_12   angle0;
     bool    isInFont;
 
-    g_SysWork.playerWork_4C.player_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
+    g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
     g_SysWork.playerWork_4C.player_0.headingAngle_3C                             = FP_ANGLE(0.0f);
     isInFont                                                                = Math_AngleFrontCheck(*angle, g_SysWork.playerWork_4C.player_0.rotation_24.vy);
 

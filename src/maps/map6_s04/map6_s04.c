@@ -79,18 +79,18 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara) {} // 0x800D454C
 
 void func_800D87B0(s_SubCharacter* chara) // 0x800D87B0
 {
-    if (chara->properties_E4.player.playerMoveDistance_126 != Q12(0.0f))
+    if (chara->properties_E4.player.moveDistance_126 != Q12(0.0f))
     {
-        chara->properties_E4.player.playerMoveDistance_126 -= Q12(0.4f);
-        if (chara->properties_E4.player.playerMoveDistance_126 < Q12(0.0f))
+        chara->properties_E4.player.moveDistance_126 -= Q12(0.4f);
+        if (chara->properties_E4.player.moveDistance_126 < Q12(0.0f))
         {
-            chara->properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
+            chara->properties_E4.player.moveDistance_126 = Q12(0.0f);
         }
     }
 
     if (chara->model_0.stateStep_3 == 0)
     {
-        g_SysWork.npcs_1A0[0].properties_E4.player.playerMoveDistance_126 = Q12(1.5f);
+        g_SysWork.npcs_1A0[0].properties_E4.player.moveDistance_126 = Q12(1.5f);
         Model_AnimStatusSet(&chara->model_0, 9, false);
     }
 

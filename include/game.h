@@ -1238,6 +1238,14 @@ typedef struct _CharaDamage
     q19_12 amount_C;
 } s_CharaDamage;
 
+/** @brief Temporary struct. */
+typedef struct _SubCharPropertiesDummy
+{
+    s32        unk_E4;
+    u_Property properties_E8[16];
+} s_SubCharaPropertiesDummy;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesDummy, 68);
+
 // TODO: Re-offset `s_SubCharaPropertiesPlayer` / `s_SubCharaPropertiesNpc`.
 // Probably easier to do that after it's merged with rest of code.
 typedef struct _SubCharaPropertiesPlayer
@@ -1260,10 +1268,10 @@ typedef struct _SubCharaPropertiesPlayer
     s16           field_118;
     s8            unk_11A[2];
     e_PlayerFlags flags_11C;
-    q3_12         quickTurnHeadingAngle_120; /** Target heading angle from a quick turn. */
+    q3_12         quickTurnHeadingAngle_120; /** Target quick turn heading angle. */
     q3_12         field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
     q3_12         headingAngle_124;
-    q3_12         playerMoveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
+    q3_12         moveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
 } s_SubCharaPropertiesPlayer;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
 
@@ -1291,60 +1299,13 @@ typedef struct _SubCharaPropertiesNpc
 } s_SubCharaPropertiesNpc;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesNpc, 68);
 
-typedef struct _SubCharPropertiesDummy
-{
-    s32        unk_E4;
-    u_Property properties_E8[16];
-} s_SubCharaPropertiesDummy;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesDummy, 68);
-
-typedef struct _SubCharPropertiesUnk0
-{
-    s32        unk_E4; // Is this part of `a_SubCharacter`?
-    u32        field_E8_0 : 4;
-    u32        field_E8_4 : 4;
-    u32        field_E8_8 : 4;
-    u32        field_E8_C : 20;
-    u_Property properties_EC;
-    u_Property properties_F0;
-    u_Property properties_F4;
-    VECTOR3    field_F8; // Q19.12 | Position or offset.
-    VECTOR3    pos_104;  /** Q19.12 */
-    VECTOR3    pos_110;
-    s32        flags_11C; /** `e_CharaUnk0Flags` */
-    u_Property properties_120;
-    u_Property properties_124;
-} s_SubCharaPropertiesUnk0;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesUnk0, 68);
-
-typedef struct _SubCharaPropertiesPuppetNurse
-{
-    s_func_8006CF18* unk_E4;
-    VECTOR3          position_E8; /** Q19.12 */
-    s_CharaDamage    damage_F4;
-    q19_12           field_104;
-    s32              field_108;
-    s32              field_10C;
-    s8               unk_110[4];
-    s32              field_114;
-    u8               field_118;
-    u8               modelVariation_119;
-    u16              field_11A;
-    q3_12            field_11C; // Angle.
-    s16              field_11E;
-    s16              field_120;
-    u16              flags_122; /** `e_PuppetNurseFlags` */
-    s_800D5710*      field_124;
-} s_SubCharaPropertiesPuppetNurse;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPuppetNurse, 68);
-
 typedef struct _SubCharaPropertiesCreaper
 {
     s32        unk_E4;
     u16        flags_E8;
     u16        unk_EA;           // } Copied from `s_SubCharaPropertiesSplithead`. `flags_E8` might be shared by coincidence, unsure.
     u_Property field_EC;         // }
-    u_Property field_F0;         // }
+    q19_12     field_F0; // Timer.
     q4_12      timer_F4;         // }
     u16        unk_F8;           // }
     q19_12     timer_F8;         // }
@@ -1382,29 +1343,6 @@ typedef struct _SubCharPropertiesDahlia
 } s_SubCharaPropertiesDahlia;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesDahlia, 68);
 
-typedef struct _SubCharaPropertiesSplithead
-{
-    s32        unk_E4;
-    u16        flags_E8;
-    u16        unk_EA;
-    u_Property field_EC;
-    u_Property field_F0;
-    q4_12      timer_F4;
-    u16        unk_F8;
-    q19_12     timer_F8;
-    s32        field_FC;
-    s32        field_100;
-    u_Property field_104;
-    u8         field_108[4];
-    q19_12     field_10C;
-    VECTOR3    field_110;
-    s32        flags_11C;
-    u_Property field_120;
-    s16        field_124;
-    q3_12      moveDistance_126;
-} s_SubCharaPropertiesSplithead;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesSplithead, 68);
-
 typedef struct _SubCharaPropertiesLarvalStalker
 {
     s32        unk_E4;
@@ -1430,6 +1368,69 @@ typedef struct _SubCharaPropertiesLarvalStalker
     q3_12      moveDistance_126;
 } s_SubCharaPropertiesLarvalStalker;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
+
+typedef struct _SubCharaPropertiesPuppetNurse
+{
+    s_func_8006CF18* unk_E4;
+    VECTOR3          position_E8; /** Q19.12 */
+    s_CharaDamage    damage_F4;
+    q19_12           field_104;
+    s32              field_108;
+    s32              field_10C;
+    s8               unk_110[4];
+    s32              field_114;
+    u8               field_118;
+    u8               modelVariation_119;
+    u16              field_11A;
+    q3_12            field_11C; // Angle.
+    s16              field_11E;
+    s16              field_120;
+    u16              flags_122; /** `e_PuppetNurseFlags` */
+    s_800D5710*      field_124;
+} s_SubCharaPropertiesPuppetNurse;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPuppetNurse, 68);
+
+typedef struct _SubCharaPropertiesSplithead
+{
+    s32        unk_E4;
+    u16        flags_E8;
+    u16        unk_EA;
+    u_Property field_EC;
+    u_Property field_F0;
+    q4_12      timer_F4;
+    u16        unk_F8;
+    q19_12     timer_F8;
+    s32        field_FC;
+    s32        field_100;
+    u_Property field_104;
+    u8         field_108[4];
+    q19_12     field_10C;
+    VECTOR3    field_110;
+    s32        flags_11C;
+    u_Property field_120;
+    s16        field_124;
+    q3_12      moveDistance_126;
+} s_SubCharaPropertiesSplithead;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesSplithead, 68);
+
+typedef struct _SubCharPropertiesUnk0
+{
+    s32        unk_E4; // Is this part of `a_SubCharacter`?
+    u32        field_E8_0 : 4;
+    u32        field_E8_4 : 4;
+    u32        field_E8_8 : 4;
+    u32        field_E8_C : 20;
+    u_Property properties_EC;
+    u_Property properties_F0;
+    u_Property properties_F4;
+    VECTOR3    field_F8; // Q19.12 | Position or offset.
+    VECTOR3    pos_104;  /** Q19.12 */
+    VECTOR3    pos_110;
+    s32        flags_11C; /** `e_CharaUnk0Flags` */
+    u_Property properties_120;
+    u_Property properties_124;
+} s_SubCharaPropertiesUnk0;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesUnk0, 68);
 
 /** Offsets for translation? */
 typedef struct
@@ -1513,7 +1514,7 @@ typedef struct _SubCharacter
 
     union
     {
-        s_SubCharaPropertiesDummy  dummy; // TODO: Temporary.
+        s_SubCharaPropertiesDummy  dummy;
         s_SubCharaPropertiesPlayer player;
         s_SubCharaPropertiesNpc    npc;
 

@@ -97,7 +97,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
                     g_SysWork.playerWork_4C.extra_128.model_0.stateStep_3 = 0;
                 }
 
-                g_SysWork.playerWork_4C.player_0.properties_E4.player.playerMoveDistance_126 = Q12(0.0f);
+                g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.afkTimer_E8            = Q12(0.0f);
         }
     }
