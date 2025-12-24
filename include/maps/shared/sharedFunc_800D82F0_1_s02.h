@@ -6,12 +6,12 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
 
     creaper->properties_E4.player.field_104 += g_DeltaTime0;
 
-    if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 2)
+    if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
     {
         cond = func_8006FD90(creaper, 2, Q12(12.0f), Q12(8.0f));
     }
-    else if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 0x2) &&
-             (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 0x1))
+    else if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) &&
+             (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)))
     {
         cond = func_8006FD90(creaper, 2, Q12(0.8f), Q12(0.4f));
     }
@@ -21,16 +21,15 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
     }
 
     cond |= func_80070360(creaper, Q12(0.0f), Q12(0.5f));
-
     if (cond)
     {
         creaper->flags_3E |= CharaFlag_Unk3;
 
         if (Rng_GenerateUInt(0, 7) == 0 && // 1 in 8 chance.
-            creaper->model_0.anim_4.status_0 == ANIM_STATUS(11, true))
+            creaper->model_0.anim_4.status_0 == ANIM_STATUS(CreaperAnim_11, true))
         {
             creaper->model_0.state_2                = 2;
-            creaper->model_0.anim_4.status_0        = ANIM_STATUS(13, false);
+            creaper->model_0.anim_4.status_0        = ANIM_STATUS(CreaperAnim_13, false);
             creaper->properties_E4.player.field_F0  = Q12(0.5f);
             creaper->properties_E4.player.field_104 = 0;
             return;
@@ -40,7 +39,7 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
     if (creaper->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 8))
     {
         creaper->model_0.state_2                = 2;
-        creaper->model_0.anim_4.status_0        = ANIM_STATUS(13, false);
+        creaper->model_0.anim_4.status_0        = ANIM_STATUS(CreaperAnim_13, false);
         creaper->properties_E4.player.field_F0  = Q12(0.5f);
         creaper->properties_E4.player.field_104 = 0;
     }

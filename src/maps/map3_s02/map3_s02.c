@@ -3,6 +3,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map3/map3_s02.h"
+#include "maps/Characters/Chara_Creaper.h"
 
 INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", D_800C9578);
 
@@ -35,4 +36,3 @@ INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", g_MapOverlayHeader);
 #include "maps/shared/sharedFunc_800D9960_1_s02.h" // 0x800CE7DC
 
 INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02", sharedFunc_800D99D0_1_s02); // 0x800CE84C
-

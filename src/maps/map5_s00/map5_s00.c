@@ -4,6 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map5/map5_s00.h"
+#include "maps/Characters/Chara_Creaper.h"
 
 INCLUDE_RODATA("asm/maps/map5_s00/nonmatchings/map5_s00", D_800C9578);
 
