@@ -106,7 +106,7 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creaper)
     {
         g_SysWork.field_2284[3]               &= ~(1 << 1);
         creaper->model_0.state_2               = 2;
-        creaper->properties_E4.player.field_F0 = Q12(0.0f);
+        creaper->properties_E4.creaper.timer_F0 = Q12(0.0f);
         creaper->properties_E4.dummy.properties_E8[8].val16[0] = func_8006FAFC(creaper, Q12(4.8f), playerPos.vx, playerPos.vz, FP_ANGLE(360.0f), false);
         creaper->field_44.field_0 = 0;
     }

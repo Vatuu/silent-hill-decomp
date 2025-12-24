@@ -9,7 +9,7 @@ typedef enum _CreaperFlags
 	CreaperFlag_2 = 1 << 2,
 	CreaperFlag_3 = 1 << 3,
 	CreaperFlag_4 = 1 << 4,
-	CreaperFlag_5 = 1 << 5,
+	CreaperFlag_5 = 1 << 5, // Target player position updated?
 	CreaperFlag_6 = 1 << 6,
 	CreaperFlag_7 = 1 << 7,
 	CreaperFlag_8 = 1 << 8

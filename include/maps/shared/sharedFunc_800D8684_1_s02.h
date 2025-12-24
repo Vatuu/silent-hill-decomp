@@ -10,15 +10,15 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
                                     g_SysWork.playerWork_4C.player_0.position_18.vz - creaper->position_18.vz) -
                              creaper->rotation_24.vy));
 
-    if (((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 2 && func_8006FD90(creaper, 0, Q12(12.0f), Q12(8.0f))) ||
-        ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 0x2) &&
-         (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 0x1) && func_8006FD90(creaper, 2, Q12(0.8f), Q12(0.4f))) ||
-        (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && func_8006FD90(creaper, 1, Q12(4.0f), Q12(12.0f))) ||
+    if (((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1) && func_8006FD90(creaper, 0, Q12(12.0f), Q12(8.0f))) ||
+        ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) &&
+         (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)) && func_8006FD90(creaper, 2, Q12(0.8f), Q12(0.4f))) ||
+        (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))) && func_8006FD90(creaper, 1, Q12(4.0f), Q12(12.0f))) ||
         (func_80070360(creaper, 0, Q12(0.5f)) || (u16)creaper->properties_E4.creaper.flags_E8 & CreaperFlag_8))
     {
-        creaper->properties_E4.npc.field_F4                     = g_SysWork.playerWork_4C.player_0.position_18.vx;
-        creaper->properties_E4.npc.field_F8                     = g_SysWork.playerWork_4C.player_0.position_18.vz;
-        creaper->properties_E4.creaper.flags_E8 &= ~CreaperFlag_5;
+        creaper->properties_E4.creaper.playerPositionX_F4 = g_SysWork.playerWork_4C.player_0.position_18.vx;
+        creaper->properties_E4.creaper.playerPositionZ_F8 = g_SysWork.playerWork_4C.player_0.position_18.vz;
+        creaper->properties_E4.creaper.flags_E8          &= ~CreaperFlag_5;
     }
 
     temp_s2 = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - creaper->position_18.vx,
@@ -36,24 +36,24 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
             //if ((creaper->properties_E4.creaper.flags_E8 & (CreaperFlag_4 | CreaperFlag_5)) == CreaperFlag_4) // TODO: Doesn't match?
             if ((creaper->properties_E4.player.afkTimer_E8 & 0x30) == 0x10)
             {
-                creaper->properties_E4.creaper.flags_E8  |= CreaperFlag_5;
-                creaper->properties_E4.player.field_F4    = creaper->properties_E4.player.exhaustionTimer_FC;
-                creaper->properties_E4.player.runTimer_F8 = creaper->properties_E4.player.field_100;
+                creaper->properties_E4.creaper.flags_E8          |= CreaperFlag_5;
+                creaper->properties_E4.creaper.playerPositionX_F4 = creaper->properties_E4.creaper.playerPositionX_FC;
+                creaper->properties_E4.creaper.playerPositionZ_F8 = creaper->properties_E4.creaper.playerPositionZ_100;
             }
             else
             {
-                creaper->model_0.state_2               = 1;
-                creaper->model_0.anim_4.status_0       = ANIM_STATUS(CreaperAnim_11, false);
-                creaper->properties_E4.player.field_F0 = 0;
+                creaper->model_0.state_2                = 1;
+                creaper->model_0.anim_4.status_0        = ANIM_STATUS(CreaperAnim_11, false);
+                creaper->properties_E4.creaper.timer_F0 = Q12(0.0f);
             }
         }
-        else if (!(g_SysWork.field_2284[3] & 2) && !(playerWork->player_0.flags_3E & CharaFlag_Unk4) &&
+        else if (!(g_SysWork.field_2284[3] & (1 << 1)) && !(playerWork->player_0.flags_3E & CharaFlag_Unk4) &&
                  temp_s2 < Q12(0.5f) && ABS(angle1) < FP_ANGLE(10.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
         {
-            creaper->model_0.state_2               = 3;
-            creaper->model_0.anim_4.status_0       = ANIM_STATUS(CreaperAnim_12, false);
-            creaper->properties_E4.player.field_F0 = 0;
-            g_SysWork.field_2284[3]               |= 1 << 1;
+            creaper->model_0.state_2                = 3;
+            creaper->model_0.anim_4.status_0        = ANIM_STATUS(CreaperAnim_12, false);
+            creaper->properties_E4.creaper.timer_F0 = Q12(0.0f);
+            g_SysWork.field_2284[3]                |= 1 << 1;
         }
         else
         {
@@ -83,14 +83,14 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
     {
         Chara_MoveSpeedUpdate4(creaper, Q12(1.5f), (u16)creaper->properties_E4.dummy.properties_E8[9].val16[0]);
 
-        creaper->properties_E4.player.field_F0 += g_DeltaTime0;
+        creaper->properties_E4.creaper.timer_F0 += g_DeltaTime0;
 
         if ((ABS(angle1) > FP_ANGLE(10.0f) && func_80070184(creaper, Q12(1.0f), creaper->properties_E4.dummy.properties_E8[8].val16[0])) ||
             (!Rng_GenerateInt(0, 7) && // 1 in 8 chance.
-             ((!((u16)creaper->properties_E4.creaper.flags_E8 & CreaperFlag_0) && creaper->properties_E4.player.field_F0 > Q12(0.5f)) ||
-              ( ((u16)creaper->properties_E4.creaper.flags_E8 & CreaperFlag_0) && creaper->properties_E4.player.field_F0 > Q12(2.0f)))))
+             ((!((u16)creaper->properties_E4.creaper.flags_E8 & CreaperFlag_0) && creaper->properties_E4.creaper.timer_F0 > Q12(0.5f)) ||
+              ( ((u16)creaper->properties_E4.creaper.flags_E8 & CreaperFlag_0) && creaper->properties_E4.creaper.timer_F0 > Q12(2.0f)))))
         {
-            if (creaper->properties_E4.player.field_F0 > Q12(2.0f))
+            if (creaper->properties_E4.creaper.timer_F0 > Q12(2.0f))
             {
                 creaper->properties_E4.creaper.flags_E8 &= ~CreaperFlag_0;
             }
@@ -103,7 +103,7 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
             }
             else
             {
-                creaper->properties_E4.player.field_F0 = 0;
+                creaper->properties_E4.creaper.timer_F0 = Q12(0.0f);
             }
         }
 

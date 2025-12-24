@@ -30,7 +30,7 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
         {
             creaper->model_0.state_2                = 2;
             creaper->model_0.anim_4.status_0        = ANIM_STATUS(CreaperAnim_13, false);
-            creaper->properties_E4.player.field_F0  = Q12(0.5f);
+            creaper->properties_E4.creaper.timer_F0 = Q12(0.5f);
             creaper->properties_E4.player.field_104 = 0;
             return;
         }
@@ -40,7 +40,7 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
     {
         creaper->model_0.state_2                = 2;
         creaper->model_0.anim_4.status_0        = ANIM_STATUS(CreaperAnim_13, false);
-        creaper->properties_E4.player.field_F0  = Q12(0.5f);
+        creaper->properties_E4.creaper.timer_F0 = Q12(0.5f);
         creaper->properties_E4.player.field_104 = 0;
     }
     else if (creaper->properties_E4.creaper.flags_E8 & CreaperFlag_6)

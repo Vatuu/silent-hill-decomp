@@ -1303,22 +1303,23 @@ typedef struct _SubCharaPropertiesCreaper
 {
     s32        unk_E4;
     u16        flags_E8;
-    u16        unk_EA;           // } Copied from `s_SubCharaPropertiesSplithead`. `flags_E8` might be shared by coincidence, unsure.
-    u_Property field_EC;         // }
-    q19_12     field_F0; // Timer.
-    q4_12      timer_F4;         // }
-    u16        unk_F8;           // }
-    q19_12     timer_F8;         // }
-    s32        field_FC;         // }
-    s32        field_100;        // }
-    u_Property field_104;        // }
-    u8         field_108[4];     // }
-    q19_12     field_10C;        // }
-    VECTOR3    field_110;        // }
-    s32        flags_11C;        // }
-    u_Property field_120;        // }
-    s16        field_124;        // }
-    q3_12      moveDistance_126; // }
+
+    u16        unk_EA;   // } Copied from `s_SubCharaPropertiesSplithead`. Inaccurate and here for padding.
+    u_Property field_EC; // }
+
+    q19_12     timer_F0; // Timer with unknown purpose.
+    q19_12     playerPositionX_F4;
+    q19_12     playerPositionZ_F8;
+    q19_12     playerPositionX_FC;  // } Previous player position? Backup? Last alerted position?
+    q19_12     playerPositionZ_100; // }
+
+    s32        field_100;    // } Copied from `s_SubCharaPropertiesSplithead`. Inaccurate and here for padding.
+    u_Property field_104;    // }
+    u8         field_108[4]; // }
+    q19_12     field_10C;    // }
+    VECTOR3    field_110;    // }
+    s32        flags_11C;    // }
+    u_Property field_120;    // }
 } s_SubCharaPropertiesCreaper;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesCreaper, 68);
 
