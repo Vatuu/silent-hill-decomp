@@ -163,6 +163,7 @@ sharedData_800E32D0_0_s00   = 0x800DE27C; // type:s32
 sharedData_800E32D4_0_s00   = 0x800DE280; // type:u16
 sharedData_800E39D8_0_s00   = 0x800DE284; // type:s32
 sharedData_800D32A0_0_s02   = 0x800DE288; // type:s32
+sharedData_800DE28C_5_s00   = 0x800DE28C;
 sharedData_800E57CC_1_s02   = 0x800DE290; // type:s8
 g_WorldObject_Map           = 0x800DE2A0; // type:WorldObjectDesc size:0x2C
 g_WorldObject_SavePad0      = 0x800DE2D0; // type:WorldObjectDesc size:0x2C
