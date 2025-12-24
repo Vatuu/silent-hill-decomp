@@ -125,8 +125,8 @@ struct _Model;
  * Generates an `unsigned int` mask with all bits in the range `[fromInclusive, toInclusive]` set.
  *
  * For example:
- * - `BITMASK_RANGE(0, 2)` -> 0b000...0111 (decimal 7)
- * - `BITMASK_RANGE(4, 11)` -> 0b000...111111110000 (decimal 4080)
+ * - `BITMASK_RANGE(0, 2)` -> 0b000...0111 (decimal 7).
+ * - `BITMASK_RANGE(4, 11)` -> 0b000...111111110000 (decimal 4080).
  *
  * @param fromInclusive Index of the lowest bit to set (0 = least significant bit).
  * @param toInclusive Index of the highest bit to set.
