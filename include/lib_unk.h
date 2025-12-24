@@ -19,10 +19,21 @@ typedef enum _PadTerminalType
 
 typedef struct
 {
-    s8  field_0[4];
-    s32 field_4;
-    s8  unk_8[4];
-    s32 field_C;
+    u32 bits_0_0   : 8;
+    u32 bits_0_8   : 1;
+    u32 bits_0_9   : 7; 
+
+    u32 bits_0_16  : 3;
+    u32 bits_0_19  : 5;
+
+    u32 bits_0_24  : 3;
+    u32 bits_0_27  : 5;
+} s_SysWork_2514_C_0;
+
+typedef struct
+{
+    s_SysWork_2514_C_0 flags_0;
+    s32 data_4;
 } s_SysWork_2514_C;
 
 typedef struct _s_SysWork_2514_18
@@ -74,6 +85,8 @@ typedef struct _s_SysWork_2510
     s32                     (*func_C)(s_SysWork_2514*, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
 } s_SysWork_2510;
 STATIC_ASSERT_SIZEOF(s_SysWork_2510, 16);
+
+s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2);
 
 bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
 

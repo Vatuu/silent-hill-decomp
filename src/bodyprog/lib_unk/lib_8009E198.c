@@ -54,7 +54,43 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E2A0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E2D8);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E310);
+s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2)
+{
+    s_SysWork_2514_C_0 tmp;
+
+    s32 ret = arg0 != NULL;
+    if (!ret)
+    {
+        return ret;
+    }
+
+    ret = arg0->field_0.field_0_16;
+    if (ret)
+    {
+        if (arg1 == NULL)
+        {
+            arg2 = 0;
+        }
+        arg0->field_C = arg1;
+        arg0->unk_B[0] = arg2;
+        while (arg2 > 0)
+        {
+            tmp.bits_0_0  = 0;
+            tmp.bits_0_8  = 0;
+            tmp.bits_0_9  = 0;
+            tmp.bits_0_16 = 0;
+            tmp.bits_0_19 = 0;
+            tmp.bits_0_24 = 0;
+            tmp.bits_0_27 = 0;
+            arg2--;
+            arg1->flags_0 = tmp;
+            arg1->data_4 = 0;
+            arg1++;
+        }
+    }
+
+    return ret;
+}
 
 bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 padInfoCurExId) // 0x8009E3B0
 {

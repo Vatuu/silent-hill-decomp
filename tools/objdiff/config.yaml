@@ -259,5 +259,6 @@ expected_paths:
 ignored_files:
   - main/header
   - main/psyq/libsn/snmain
+  - bodyprog/lib_unk2
 
 output: ./objdiff.json
