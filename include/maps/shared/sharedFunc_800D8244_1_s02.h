@@ -26,5 +26,5 @@ void sharedFunc_800D8244_1_s02(s_SubCharacter* creaper)
             break;
     }
 
-    creaper->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 8);
+    creaper->properties_E4.creaper.flags_E8 &= ~CreaperFlag_8;
 }

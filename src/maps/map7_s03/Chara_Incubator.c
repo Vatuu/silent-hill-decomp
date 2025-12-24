@@ -104,7 +104,7 @@ void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* coords) // 0x800D3E
     }
     
     incubator->headingAngle_3C = incubator->rotation_24.vy;
-    incubator->moveSpeed_38 = incubator->properties_E4.splitHead.moveDistance_126;
+    incubator->moveSpeed_38 = incubator->properties_E4.splithead.moveDistance_126;
     incubator->field_34 += g_DeltaTime2;
     
     coords->flg = false;

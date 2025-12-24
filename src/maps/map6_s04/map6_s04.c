@@ -96,7 +96,7 @@ void func_800D87B0(s_SubCharacter* chara) // 0x800D87B0
 
     if (chara->model_0.anim_4.keyframeIdx_8 == D_800EA856)
     {
-        g_SysWork.npcs_1A0[0].properties_E4.splitHead.field_EC.val16[0] = 1;
+        g_SysWork.npcs_1A0[0].properties_E4.splithead.field_EC.val16[0] = 1;
         chara->model_0.stateStep_3 = 0;
         g_SysWork.npcs_1A0[0].properties_E4.player.field_122 = 0;
     }

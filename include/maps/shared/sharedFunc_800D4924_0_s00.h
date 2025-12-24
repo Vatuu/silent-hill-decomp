@@ -52,28 +52,28 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* chara)
         chara->properties_E4.player.field_F0 = sharedData_800E3A18_0_s00;
         chara->properties_E4.player.field_F4 = sharedData_800E3A1C_0_s00;
 
-        if (!(chara->properties_E4.splitHead.flags_E8 & (1 << 10)))
+        if (!(chara->properties_E4.splithead.flags_E8 & (1 << 10)))
         {
-            chara->properties_E4.splitHead.flags_E8 |= 1 << 10;
+            chara->properties_E4.splithead.flags_E8 |= 1 << 10;
             sharedFunc_800D7E04_0_s00(chara, 1363);
         }
 
         chara->properties_E4.dummy.properties_E8[11].val16[1] = 0;
     }
-    else if (chara->properties_E4.splitHead.flags_E8 & (1 << 10))
+    else if (chara->properties_E4.splithead.flags_E8 & (1 << 10))
     {
         chara->properties_E4.dummy.properties_E8[11].val16[1] += g_DeltaTime0;
 
         if (!Rng_TestProbabilityBits(9) || (u16)chara->properties_E4.dummy.properties_E8[11].val16[1] > Q12(1.2f))
         {
             chara->properties_E4.dummy.properties_E8[11].val16[1] = 0;
-            chara->properties_E4.splitHead.flags_E8              &= ~(1 << 10);
+            chara->properties_E4.splithead.flags_E8              &= ~(1 << 10);
         }
     }
 
     if (mag > Q12(8.0f))
     {
-        if (chara->properties_E4.splitHead.flags_E8 & (1 << 0) && chara->properties_E4.splitHead.flags_E8 & (1 << 10) &&
+        if (chara->properties_E4.splithead.flags_E8 & (1 << 0) && chara->properties_E4.splithead.flags_E8 & (1 << 10) &&
             !(g_SysWork.flags_22A4 & (1 << 7)))
         {
             if (!Vw_AabbVisibleInScreenCheck(chara->position_18.vx - Q12(1.0f),
@@ -83,22 +83,22 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* chara)
                                              chara->position_18.vz - Q12(1.0f),
                                              chara->position_18.vz - Q12(1.0f)))
             {
-                chara->properties_E4.splitHead.flags_E8 |= 1 << 12;
+                chara->properties_E4.splithead.flags_E8 |= 1 << 12;
             }
         }
     }
 
-    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(30, true) && !(chara->properties_E4.splitHead.flags_E8 & 0x100) &&
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(30, true) && !(chara->properties_E4.splithead.flags_E8 & 0x100) &&
         !func_800700F8(chara, &g_SysWork.playerWork_4C.player_0))
     {
         chara->properties_E4.player.runTimer_F8 = 0;
 
-        if (!(chara->properties_E4.splitHead.flags_E8 & 0x2000))
+        if (!(chara->properties_E4.splithead.flags_E8 & 0x2000))
         {
             Chara_MoveSpeedUpdate3(chara, FP_ANGLE(180.0f), (0x800 - ABS(angle0)) * 2);
         }
 
-        if (chara->properties_E4.splitHead.flags_E8 & 0x1000)
+        if (chara->properties_E4.splithead.flags_E8 & 0x1000)
         {
             chara->rotation_24.vy = ratan2(chara->properties_E4.player.field_F0 - chara->position_18.vx,
                                            chara->properties_E4.player.field_F4 - chara->position_18.vz);
@@ -132,8 +132,8 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* chara)
 
         if ((g_SysWork.field_2284[3] & (1 << 0)) || func_80070320() ||
             ABS(chara->position_18.vy - g_SysWork.playerWork_4C.player_0.position_18.vy) > 0x4CC ||
-            ( (chara->properties_E4.splitHead.flags_E8 & (1 << 2)) &&  Rng_GenerateInt(0, 3)) || // 3 in 4 chance?
-            (!(chara->properties_E4.splitHead.flags_E8 & (1 << 2)) && !Rng_GenerateInt(0, 3)))   // 1 in 4 chance.
+            ( (chara->properties_E4.splithead.flags_E8 & (1 << 2)) &&  Rng_GenerateInt(0, 3)) || // 3 in 4 chance?
+            (!(chara->properties_E4.splithead.flags_E8 & (1 << 2)) && !Rng_GenerateInt(0, 3)))   // 1 in 4 chance.
         {
             if (!(g_SysWork.playerWork_4C.player_0.flags_3E & 8) && mag < 0xE66 && (mag >= 0xB34 || !Rng_GenerateInt(0, 3)) &&
                 ABS(angle0) < 0x400 && g_SysWork.playerWork_4C.player_0.health_B0 > 0)
@@ -212,7 +212,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* chara)
     }
     else
     {
-        if (!(chara->properties_E4.splitHead.flags_E8 & (1 << 13)))
+        if (!(chara->properties_E4.splithead.flags_E8 & (1 << 13)))
         {
             Chara_MoveSpeedUpdate3(chara, Q12(0.5f), Q12(0.7f));
         }
@@ -238,7 +238,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* chara)
             chara->properties_E4.player.runTimer_F8 = Q12(0.0f);
         }
 
-        if (chara->properties_E4.splitHead.flags_E8 & (1 << 12))
+        if (chara->properties_E4.splithead.flags_E8 & (1 << 12))
         {
             chara->rotation_24.vy = chara->properties_E4.dummy.properties_E8[6].val16[0];
         }

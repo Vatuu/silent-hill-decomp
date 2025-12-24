@@ -28,7 +28,7 @@ void Ai_Splithead_DamageTake(s_SubCharacter* splithead)
         damageAmt = 1;
     }
 
-    if (splithead->properties_E4.splitHead.flags_E8 & SplitheadFlag_0)
+    if (splithead->properties_E4.splithead.flags_E8 & SplitheadFlag_0)
     {
         // TODO: Odd `WEAPON_ATTACK` value. Input type 3 doesn't exist.
         if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard &&
@@ -57,10 +57,10 @@ void Ai_Splithead_DamageTake(s_SubCharacter* splithead)
 
     splithead->health_B0 = newHealth;
 
-    if (splithead->health_B0 < 24000 && !(splithead->properties_E4.splitHead.flags_E8 & SplitheadFlag_4))
+    if (splithead->health_B0 < 24000 && !(splithead->properties_E4.splithead.flags_E8 & SplitheadFlag_4))
     {
         splithead->model_0.state_2                   = 4;
-        splithead->properties_E4.splitHead.flags_E8 |= SplitheadFlag_4;
+        splithead->properties_E4.splithead.flags_E8 |= SplitheadFlag_4;
     }
     else if (splithead->health_B0 == 0)
     {
@@ -70,18 +70,18 @@ void Ai_Splithead_DamageTake(s_SubCharacter* splithead)
         }
         else if (splithead->moveSpeed_38 > Q12(0.0f))
         {
-            splithead->properties_E4.splitHead.flags_E8 |= SplitheadFlag_5;
+            splithead->properties_E4.splithead.flags_E8 |= SplitheadFlag_5;
         }
         else if (splithead->moveSpeed_38 < Q12(0.0f))
         {
-            splithead->properties_E4.splitHead.flags_E8 &= ~SplitheadFlag_5;
+            splithead->properties_E4.splithead.flags_E8 &= ~SplitheadFlag_5;
         }
 
         splithead->model_0.state_2 = 6;
     }
-    else if (splithead->properties_E4.splitHead.flags_E8 & SplitheadFlag_0)
+    else if (splithead->properties_E4.splithead.flags_E8 & SplitheadFlag_0)
     {
-        splithead->properties_E4.splitHead.flags_E8 |= SplitheadFlag_6 | SplitheadFlag_7;
+        splithead->properties_E4.splithead.flags_E8 |= SplitheadFlag_6 | SplitheadFlag_7;
     }
 
     splithead->damage_B4.amount_C      = Q12(0.0f);
