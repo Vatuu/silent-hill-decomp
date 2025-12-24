@@ -90,7 +90,7 @@ segments:
       - [0x6CD4,     lib, libgs, gs_123, .rdata]
       - [0x6D64,     lib, libgs, objt, .rdata]
       - [0x6E04,     lib, libgs, objt3, .rdata]
-      - [0x6EA4,  rodata, lib_unk/lib_8009687C] # rsin_tbl, rcos_tbl
+      - [0x6EA4,  rodata, lib_unk2/lib_8009687C] # rsin_tbl, rcos_tbl
       - [0x96A4,     lib, libpad, padentry, .rdata]
       - [0x96C4,     lib, libspu, s_sva, .rdata]
       - [0x9704,     lib, libspu, s_sca, .rdata]
@@ -227,7 +227,7 @@ segments:
       - [0x7127C, lib, libgs, gs_127]
       - [0x712FC, lib, libgs, objt]
       - [0x7148C, lib, libgs, objt3]
-      - [0x71D1C, asm, lib_unk/lib_8009687C] # Konami custom RotMatrix functions? Fewer branches and different GTE instructions compared to PSX SDK versions.
+      - [0x71D1C, asm, lib_unk2/lib_8009687C] # Konami custom RotMatrix functions? Fewer branches and different GTE instructions compared to PSX SDK versions.
       - [0x72368, lib, libgte, msc00]
       - [0x723F8, lib, libgte, msc01]
       - [0x72488, lib, libgte, msc02]
