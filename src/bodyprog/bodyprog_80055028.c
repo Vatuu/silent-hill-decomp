@@ -10473,7 +10473,7 @@ q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0
     return FP_ANGLE(360.0f);
 }
 
-q7_8 func_8006FAFC(s_SubCharacter* chara, q19_12 dist, s32 arg2, s32 arg3, q3_12 arg4, bool cond) // 0x8006FAFC
+q7_8 func_8006FAFC(s_SubCharacter* chara, q19_12 dist, q19_12 posX, q19_12 posZ, q3_12 arg4, bool cond) // 0x8006FAFC
 {
     s16    temp_v1;
     q7_8   angle;
@@ -10520,8 +10520,8 @@ q7_8 func_8006FAFC(s_SubCharacter* chara, q19_12 dist, s32 arg2, s32 arg3, q3_12
 
         if (!func_80070030(chara, newPosX, chara->position_18.vy, newPosZ))
         {
-            deltaX = Q12_TO_Q6(arg2 - newPosX);
-            deltaZ = Q12_TO_Q6(arg3 - newPosZ);
+            deltaX = Q12_TO_Q6(posX - newPosX);
+            deltaZ = Q12_TO_Q6(posZ - newPosZ);
             mag    = SQUARE(deltaX) + SQUARE(deltaZ);
 
             if ((!cond && (var_s4 < mag)) ||

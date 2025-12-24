@@ -1302,6 +1302,7 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesNpc, 68);
 typedef struct _SubCharaPropertiesCreaper
 {
     s32        unk_E4;
+
     u16        flags_E8;
 
     u16        unk_EA;   // } Copied from `s_SubCharaPropertiesSplithead`. Inaccurate and here for padding.
@@ -1313,9 +1314,10 @@ typedef struct _SubCharaPropertiesCreaper
     q19_12     playerPositionX_FC;  // } Previous player position? Backup? Last alerted position?
     q19_12     playerPositionZ_100; // }
     q19_12     field_104;
+    q3_12      rotationY_108;
 
-    u_Property unk_104;    // } Copied from `s_SubCharaPropertiesSplithead`. Inaccurate and here for padding.
-    u8         unk_108[4]; // }
+    //u_Property unk_104;    // } Copied from `s_SubCharaPropertiesSplithead`. Inaccurate and here for padding.
+    u8         unk_108[6]; // }
     q19_12     unk_10C;    // }
     VECTOR3    unk_110;    // }
     s32        unk_11C;    // }
