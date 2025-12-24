@@ -1658,7 +1658,831 @@ void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005801C); // 0x8005801C
+void func_8005801C(s_MeshHeader* arg0, s_GteScratchData* arg1, GsOT_TAG* arg2, s32 arg3) // 0x8005801C
+{
+    s32          sp10;
+    s32          sp14;
+    s32          sp18;
+    s32          sp1C;
+    s32          sp20;
+    s32          var_t3;
+    s32          var_t3_2;
+    s32          temp_a2;
+    s32          temp_a2_3;
+    s32          temp_a2_4;
+    s32          temp_a2_5;
+    s32          temp_a2_7;
+    s32          temp_a0;
+    s32          temp_a0_13;
+    s32          temp_a0_5;
+    s32          temp_a0_7;
+    s32          temp_a0_9;
+    s32          temp_a1;
+    s32          temp_a1_2;
+    s32          temp_a1_3;
+    s32          temp_a1_4;
+    s32          temp_a1_5;
+    s32          temp_a2_2;
+    s32          temp_a2_6;
+    s32          temp_a3;
+    s32          temp_a3_2;
+    s32          temp_a3_3;
+    s32          temp_a3_4;
+    s32          temp_a3_5;
+    s32          temp_v1;
+    s32          temp_v1_11;
+    s32          temp_v1_16;
+    s32          temp_v1_21;
+    s32          temp_v1_27;
+    s32          temp_v1_5;
+    s_Primitive* var_s6;
+    u32          temp_t0;
+    u32          temp_t0_2;
+    u32          temp_t0_3;
+    u32          temp_t0_4;
+    u32          temp_t0_5;
+    PACKET*      packet_2;
+    POLY_GT4*    poly_gt4_4;
+    PACKET*      packet;
+    POLY_G4*     poly_g4;
+    POLY_G4*     poly_g4_2;
+    POLY_GT4*    poly_gt4;
+    POLY_FT4*    poly_ft4;
+    s32          temp;
+    s32          temp2;
+    s32          temp3;
+    s32          temp4;
+
+    temp_v1 = 0x79C << (arg3 + 2);
+
+    if (!D_800C4168.isFogEnabled_1)
+    {
+        arg1->field_380.s_0.field_1C = temp_v1;
+    }
+    else
+    {
+        arg1->field_380.s_0.field_1C = D_800C4168.drawDistance_10;
+
+        if (temp_v1 < arg1->field_380.s_0.field_1C)
+        {
+            arg1->field_380.s_0.field_1C = temp_v1;
+        }
+    }
+
+    arg1->field_380.s_0.field_0    = g_GameWork.gsScreenWidth_588 >> 1;
+    arg1->field_380.s_0.field_4    = D_800C4168.fogRelated_18;
+    arg1->field_380.s_0.field_8    = D_800C4168.worldTintColor_28;
+    arg1->field_380.s_0.field_8.cd = 0x3C;
+
+    if (D_800C4168.field_0 == 0)
+    {
+        gte_lddp(0x1000 - D_800C4168.field_20);
+        gte_ldrgb(&arg1->field_380.s_0.field_8);
+        gte_dpcs();
+        gte_strgb(&arg1->field_380.s_0.field_8);
+    }
+
+    arg1->field_380.s_0.field_C    = D_800C4168.fogColor_1C;
+    arg1->field_380.s_0.field_C.cd = 0x38;
+
+    SetBackColor(0, 0, 0);
+
+    var_s6 = arg0->primitives_4;
+
+    if (D_800C4168.field_0 != 0)
+    {
+        if (D_800C4168.isFogEnabled_1 != 0)
+        {
+            if (*(s32*)&arg1->field_380.s_0.field_C & 0xFFFFFF)
+            {
+                poly_gt4 = GsOUT_PACKET_P;
+                poly_g4  = poly_gt4 + 1;
+
+                for (; var_s6 < &arg0->primitives_4[arg0->primitiveCount_0]; var_s6++)
+                {
+                    *(s32*)&arg1->field_380.s_0.field_10 = *(s32*)&var_s6->field_C;
+
+                    arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_10];
+
+                    if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_11])
+                    {
+                        arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_11];
+                    }
+
+                    if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_12])
+                    {
+                        arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_12];
+                    }
+
+                    if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_13])
+                    {
+                        arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_13];
+                    }
+
+                    if (arg1->field_380.s_0.field_18 <= 0)
+                    {
+                        continue;
+                    }
+
+                    if (arg1->field_380.s_0.field_18 < 0x21)
+                    {
+                        arg1->field_380.s_0.field_18 = 0x20;
+                    }
+
+                    if (arg1->field_380.s_0.field_18 > arg1->field_380.s_0.field_1C)
+                    {
+                        continue;
+                    }
+
+                    gte_NormalClip(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10],
+                                   *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11],
+                                   *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12], &sp10);
+
+                    if (sp10 <= 0)
+                    {
+                        gte_ldsxy0(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13]);
+                        gte_nclip();
+                        gte_stopz(&sp10);
+
+                        if (sp10 >= 0)
+                        {
+                            continue;
+                        }
+                    }
+
+                    temp_a3 = arg1->field_380.s_0.field_0;
+                    temp_a2 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10];
+
+                    temp_a1   = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11];
+                    temp_a0   = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12];
+                    temp_v1_5 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13];
+                    temp_t0   = temp_a3 * 2;
+                    temp_a2_2 = temp_a2;
+
+                    if ((s16)temp_a2 + temp_a3 < temp_t0 || (s16)temp_a1 + temp_a3 < temp_t0 ||
+                        (s16)temp_a0 + temp_a3 < temp_t0 || (s16)temp_v1_5 + temp_a3 < temp_t0)
+                    {
+                        *(s32*)&poly_gt4->x0 = temp_a2_2;
+                        *(s32*)&poly_g4->x0  = temp_a2_2;
+                        *(s32*)&poly_gt4->x1 = temp_a1;
+                        *(s32*)&poly_g4->x1  = temp_a1;
+                        *(s32*)&poly_gt4->x2 = temp_a0;
+                        *(s32*)&poly_g4->x2  = temp_a0;
+                        *(s32*)&poly_gt4->x3 = temp_v1_5;
+                        *(s32*)&poly_g4->x3  = temp_v1_5;
+
+                        *(s32*)&arg1->field_380.s_0.field_14 = *(s32*)&var_s6->field_10;
+
+                        var_t3  = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_10] * 0x10;
+                        var_t3 -= arg1->field_380.s_0.field_4;
+                        if (var_t3 < 0)
+                        {
+                            var_t3 = 0;
+                        }
+
+                        gte_lddp(var_t3);
+                        gte_ldrgb(&arg1->field_380.s_0.field_C);
+                        gte_dpcs();
+                        gte_strgb(&poly_g4->r0);
+                        gte_lddp(arg1->field_252[arg1->field_380.s_0.field_10] << 4);
+                        gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_14] << 5);
+                        gte_ldrgb(&arg1->field_380.s_0.field_8);
+                        gte_dpcl();
+                        gte_strgb(&poly_gt4->r0);
+
+                        var_t3  = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_11] * 0x10;
+                        var_t3 -= arg1->field_380.s_0.field_4;
+                        if (var_t3 < 0)
+                        {
+                            var_t3 = 0;
+                        }
+
+                        gte_lddp(var_t3);
+                        gte_ldrgb(&arg1->field_380.s_0.field_C);
+                        gte_dpcs();
+                        gte_strgb(&poly_g4->r1);
+                        gte_lddp(arg1->field_252[arg1->field_380.s_0.field_11] << 4);
+                        gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_15] << 5);
+                        gte_ldrgb(&arg1->field_380.s_0.field_8);
+                        gte_dpcl();
+                        gte_strgb(&poly_gt4->r1);
+
+                        var_t3  = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_12] * 0x10;
+                        var_t3 -= arg1->field_380.s_0.field_4;
+                        if (var_t3 < 0)
+                        {
+                            var_t3 = 0;
+                        }
+
+                        gte_lddp(var_t3);
+                        gte_ldrgb(&arg1->field_380.s_0.field_C);
+                        gte_dpcs();
+                        gte_strgb(&poly_g4->r2);
+                        gte_lddp(arg1->field_252[arg1->field_380.s_0.field_12] << 4);
+                        gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_16] << 5);
+                        gte_ldrgb(&arg1->field_380.s_0.field_8);
+                        gte_dpcl();
+                        gte_strgb(&poly_gt4->r2);
+
+                        var_t3  = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_13] * 0x10;
+                        var_t3 -= arg1->field_380.s_0.field_4;
+                        if (var_t3 < 0)
+                        {
+                            var_t3 = 0;
+                        }
+
+                        gte_lddp(var_t3);
+                        gte_ldrgb(&arg1->field_380.s_0.field_C);
+                        gte_dpcs();
+                        gte_strgb(&poly_g4->r3);
+                        gte_lddp(arg1->field_252[arg1->field_380.s_0.field_13] << 4);
+                        gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_17] << 5);
+                        gte_ldrgb(&arg1->field_380.s_0.field_8);
+                        gte_dpcl();
+                        gte_strgb(&poly_gt4->r3);
+
+                        *(s32*)&poly_gt4->u0 = *(s32*)&var_s6->field_0;
+                        *(s32*)&poly_gt4->u1 = *(s32*)&var_s6->field_4 & 0xFFFFFF;
+                        *(u16*)&poly_gt4->u2 = var_s6->field_8;
+                        *(u16*)&poly_gt4->u3 = var_s6->field_A;
+
+                        setlen(poly_gt4, 12);
+                        setlen(poly_g4, 8);
+
+                        if (var_s6->field_6.flags & 0x8000)
+                        {
+                            packet = poly_g4 + 1;
+
+                            SetPriority(packet, 0, 0);
+                            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], packet);
+
+                            setSemiTrans(poly_g4, 1);
+                            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_g4);
+
+                            packet = (PACKET*)(poly_g4 + 1) + 0xC;
+                            SetPriority(packet, 1, 1);
+                            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], packet);
+
+                            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_gt4);
+
+                            poly_gt4 = (PACKET*)(poly_g4 + 1) + 0xC + 0xC;
+                            poly_g4  = poly_gt4 + 1;
+                        }
+                        else
+                        {
+                            setSemiTrans(poly_gt4, 1);
+
+                            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_gt4);
+                            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_g4);
+
+                            poly_gt4 = poly_g4 + 1;
+                            poly_g4  = poly_gt4 + 1;
+                        }
+                    }
+                }
+                GsOUT_PACKET_P = poly_g4; // @bug? Should be `poly_gt4`
+                return;
+            }
+
+            poly_gt4 = GsOUT_PACKET_P;
+
+            for (; var_s6 < &arg0->primitives_4[arg0->primitiveCount_0]; var_s6++)
+            {
+                *(s32*)&arg1->field_380.s_0.field_10 = *(s32*)&var_s6->field_C;
+
+                arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_10];
+
+                if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_11])
+                {
+                    arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_11];
+                }
+
+                if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_12])
+                {
+                    arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_12];
+                }
+
+                if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_13])
+                {
+                    arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_13];
+                }
+
+                if (arg1->field_380.s_0.field_18 <= 0)
+                {
+                    continue;
+                }
+
+                if (arg1->field_380.s_0.field_18 < 0x21)
+                {
+                    arg1->field_380.s_0.field_18 = 0x20;
+                }
+
+                if (arg1->field_380.s_0.field_18 > arg1->field_380.s_0.field_1C)
+                {
+                    continue;
+                }
+
+                gte_ldsxy3(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10],
+                           *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11],
+                           *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12]);
+                gte_nclip();
+                gte_stopz(&sp14);
+
+                if (sp14 <= 0)
+                {
+                    gte_ldsxy0(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13]);
+                    gte_nclip();
+                    gte_stopz(&sp14);
+
+                    if (sp14 >= 0)
+                    {
+                        continue;
+                    }
+                }
+
+                temp_a3_2 = arg1->field_380.s_0.field_0;
+                temp_a2_3 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10];
+
+                temp_a1_2  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11];
+                temp_a0_5  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12];
+                temp_v1_11 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13];
+                temp_t0_2  = temp_a3_2 * 2;
+                temp2      = temp_a2_3;
+
+                if ((s16)temp_a2_3 + temp_a3_2 < temp_t0_2 || (s16)temp_a1_2 + temp_a3_2 < temp_t0_2 ||
+                    (s16)temp_a0_5 + temp_a3_2 < temp_t0_2 || (s16)temp_v1_11 + temp_a3_2 < temp_t0_2)
+                {
+                    *(s32*)&poly_gt4->x0 = temp2;
+                    *(s32*)&poly_gt4->x1 = temp_a1_2;
+                    *(s32*)&poly_gt4->x2 = temp_a0_5;
+                    *(s32*)&poly_gt4->x3 = temp_v1_11;
+
+                    *(s32*)&arg1->field_380.s_0.field_14 = *(s32*)&var_s6->field_10;
+
+                    gte_lddp(arg1->field_252[arg1->field_380.s_0.field_10] << 4);
+                    gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_14] << 5);
+                    gte_ldrgb(&arg1->field_380.s_0.field_8);
+                    gte_dpcl();
+                    gte_strgb(&poly_gt4->r0);
+
+                    gte_lddp(arg1->field_252[arg1->field_380.s_0.field_11] << 4);
+                    gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_15] << 5);
+                    gte_ldrgb(&arg1->field_380.s_0.field_8);
+                    gte_dpcl();
+                    gte_strgb(&poly_gt4->r1);
+
+                    gte_lddp(arg1->field_252[arg1->field_380.s_0.field_12] << 4);
+                    gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_16] << 5);
+                    gte_ldrgb(&arg1->field_380.s_0.field_8);
+                    gte_dpcl();
+                    gte_strgb(&poly_gt4->r2);
+
+                    gte_lddp(arg1->field_252[arg1->field_380.s_0.field_13] << 4);
+                    gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_17] << 5);
+                    gte_ldrgb(&arg1->field_380.s_0.field_8);
+                    gte_dpcl();
+                    gte_strgb(&poly_gt4->r3);
+
+                    *(s32*)&poly_gt4->u0 = *(s32*)&var_s6->field_0;
+                    *(s32*)&poly_gt4->u1 = *(s32*)&var_s6->field_4 & 0xFFFFFF;
+                    *(u16*)&poly_gt4->u2 = var_s6->field_8;
+                    *(u16*)&poly_gt4->u3 = var_s6->field_A;
+
+                    setlen(poly_gt4, 12);
+
+                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_gt4);
+                    poly_gt4++;
+                }
+            }
+
+            GsOUT_PACKET_P = poly_gt4;
+            return;
+        }
+        else
+        {
+            goto __block1530;
+        }
+    }
+
+    if (D_800C4168.isFogEnabled_1 != 0)
+    {
+        poly_gt4  = GsOUT_PACKET_P;
+        poly_g4_2 = poly_gt4 + 1;
+
+        for (; var_s6 < &arg0->primitives_4[arg0->primitiveCount_0]; var_s6++)
+        {
+            *(s32*)&arg1->field_380.s_0.field_10 = *(s32*)&var_s6->field_C;
+
+            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_10];
+
+            if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_11])
+            {
+                arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_11];
+            }
+
+            if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_12])
+            {
+                arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_12];
+            }
+
+            if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_13])
+            {
+                arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_13];
+            }
+
+            if (arg1->field_380.s_0.field_18 <= 0)
+            {
+                continue;
+            }
+
+            if (arg1->field_380.s_0.field_18 < 0x21)
+            {
+                arg1->field_380.s_0.field_18 = 0x20;
+            }
+
+            if (arg1->field_380.s_0.field_18 > arg1->field_380.s_0.field_1C)
+            {
+                continue;
+            }
+
+            gte_ldsxy3(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10],
+                       *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11],
+                       *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12]);
+            gte_nclip();
+            gte_stopz(&sp18);
+
+            if (sp18 <= 0)
+            {
+                gte_ldsxy0(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13]);
+                gte_nclip();
+                gte_stopz(&sp18);
+
+                if (sp18 >= 0)
+                {
+                    continue;
+                }
+            }
+
+            temp_a3_4 = arg1->field_380.s_0.field_0;
+            temp_a2_5 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10];
+
+            temp_a1_4  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11];
+            temp_a0_9  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12];
+            temp_v1_21 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13];
+            temp_t0_4  = temp_a3_4 * 2;
+            temp_a2_6  = temp_a2_5;
+
+            if ((s16)temp_a2_5 + temp_a3_4 < temp_t0_4 || (s16)temp_a1_4 + temp_a3_4 < temp_t0_4 ||
+                (s16)temp_a0_9 + temp_a3_4 < temp_t0_4 || (s16)temp_v1_21 + temp_a3_4 < temp_t0_4)
+            {
+                *(s32*)&poly_gt4->x0  = temp_a2_6;
+                *(s32*)&poly_g4_2->x0 = temp_a2_6;
+                *(s32*)&poly_gt4->x1  = temp_a1_4;
+                *(s32*)&poly_g4_2->x1 = temp_a1_4;
+                *(s32*)&poly_gt4->x2  = temp_a0_9;
+                *(s32*)&poly_g4_2->x2 = temp_a0_9;
+                *(s32*)&poly_gt4->x3  = temp_v1_21;
+                *(s32*)&poly_g4_2->x3 = temp_v1_21;
+
+                temp4    = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_10] * 0x10;
+                var_t3_2 = temp4 - arg1->field_380.s_0.field_4;
+                if (var_t3_2 < 0)
+                {
+                    var_t3_2 = 0;
+                }
+
+                gte_lddp(var_t3_2);
+                gte_ldrgb(&arg1->field_380.s_0.field_C);
+                gte_dpcs();
+                gte_strgb(&poly_g4_2->r0);
+                gte_lddp(0x1000 - var_t3_2);
+                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_dpcs();
+                gte_strgb(&poly_gt4->r0);
+
+                temp4    = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_11] * 0x10;
+                var_t3_2 = temp4 - arg1->field_380.s_0.field_4;
+                if (var_t3_2 < 0)
+                {
+                    var_t3_2 = 0;
+                }
+
+                gte_lddp(var_t3_2);
+                gte_ldrgb(&arg1->field_380.s_0.field_C);
+                gte_dpcs();
+                gte_strgb(&poly_g4_2->r1);
+                gte_lddp(0x1000 - var_t3_2);
+                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_dpcs();
+                gte_strgb(&poly_gt4->r1);
+
+                temp4    = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_12] * 0x10;
+                var_t3_2 = temp4 - arg1->field_380.s_0.field_4;
+                if (var_t3_2 < 0)
+                {
+                    var_t3_2 = 0;
+                }
+
+                gte_lddp(var_t3_2);
+                gte_ldrgb(&arg1->field_380.s_0.field_C);
+                gte_dpcs();
+                gte_strgb(&poly_g4_2->r2);
+                gte_lddp(0x1000 - var_t3_2);
+                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_dpcs();
+                gte_strgb(&poly_gt4->r2);
+
+                temp4    = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_13] * 0x10;
+                var_t3_2 = temp4 - arg1->field_380.s_0.field_4;
+                if (var_t3_2 < 0)
+                {
+                    var_t3_2 = 0;
+                }
+
+                gte_lddp(var_t3_2);
+                gte_ldrgb(&arg1->field_380.s_0.field_C);
+                gte_dpcs();
+                gte_strgb(&poly_g4_2->r3);
+                gte_lddp(0x1000 - var_t3_2);
+                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_dpcs();
+                gte_strgb(&poly_gt4->r3);
+
+                *(s32*)&poly_gt4->u0 = *(s32*)&var_s6->field_0;
+                *(s32*)&poly_gt4->u1 = *(s32*)&var_s6->field_4 & 0xFFFFFF;
+                *(u16*)&poly_gt4->u2 = var_s6->field_8;
+                *(u16*)&poly_gt4->u3 = var_s6->field_A;
+
+                setlen(poly_gt4, 12);
+                setlen(poly_g4_2, 8);
+
+                if (var_s6->field_6.flags & 0x8000)
+                {
+                    packet_2 = poly_g4_2 + 1;
+
+                    SetPriority(packet_2, 0, 0);
+
+                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], packet_2);
+                    setSemiTrans(poly_g4_2, 1);
+                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_g4_2);
+
+                    packet_2 = (PACKET*)(poly_g4_2 + 1) + 0xC;
+                    SetPriority(packet_2, 1, 1);
+                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], packet_2);
+                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_gt4);
+
+                    poly_gt4  = (PACKET*)(poly_g4_2 + 1) + 0xC + 0xC;
+                    poly_g4_2 = poly_gt4 + 1;
+                }
+                else
+                {
+                    setSemiTrans(poly_gt4, 1);
+                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_gt4);
+                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_g4_2);
+
+                    poly_gt4  = poly_g4_2 + 1;
+                    poly_g4_2 = poly_gt4 + 1;
+                }
+            }
+        }
+        GsOUT_PACKET_P = poly_g4_2; // @bug? Should be `poly_gt4`
+        return;
+    }
+    else
+    {
+        goto __block19CC;
+    }
+
+__block1530:
+{
+    poly_gt4_4 = GsOUT_PACKET_P;
+
+    for (; var_s6 < &arg0->primitives_4[arg0->primitiveCount_0]; var_s6++)
+    {
+        *(s32*)&arg1->field_380.s_0.field_10 = *(s32*)&var_s6->field_C;
+
+        arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_10];
+
+        if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_11])
+        {
+            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_11];
+        }
+
+        if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_12])
+        {
+            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_12];
+        }
+
+        if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_13])
+        {
+            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_13];
+        }
+
+        if (arg1->field_380.s_0.field_18 <= 0)
+        {
+            continue;
+        }
+
+        if (arg1->field_380.s_0.field_18 < 0x21)
+        {
+            arg1->field_380.s_0.field_18 = 0x20;
+        }
+
+        if (arg1->field_380.s_0.field_18 > arg1->field_380.s_0.field_1C)
+        {
+            continue;
+        }
+
+        gte_ldsxy3(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10],
+                   *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11],
+                   *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12]);
+        gte_nclip();
+        gte_stopz(&sp1C);
+
+        if (sp1C <= 0)
+        {
+            gte_ldsxy0(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13]);
+            gte_nclip();
+            gte_stopz(&sp1C);
+
+            if (sp1C >= 0)
+            {
+                continue;
+            }
+        }
+
+        temp_a3_3 = arg1->field_380.s_0.field_0;
+        temp_a2_4 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10];
+
+        temp_a1_3  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11];
+        temp_a0_7  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12];
+        temp_v1_16 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13];
+        temp_t0_3  = temp_a3_3 * 2;
+        temp3      = temp_a2_4;
+
+        if ((s16)temp_a2_4 + temp_a3_3 < temp_t0_3 || (s16)temp_a1_3 + temp_a3_3 < temp_t0_3 ||
+            (s16)temp_a0_7 + temp_a3_3 < temp_t0_3 || (s16)temp_v1_16 + temp_a3_3 < temp_t0_3)
+        {
+            *(s32*)&poly_gt4_4->x0 = temp3;
+            *(s32*)&poly_gt4_4->x1 = temp_a1_3;
+            *(s32*)&poly_gt4_4->x2 = temp_a0_7;
+            *(s32*)&poly_gt4_4->x3 = temp_v1_16;
+
+            *(s32*)&arg1->field_380.s_0.field_14 = *(s32*)&var_s6->field_10;
+
+            if (arg1->field_2B8[arg1->field_380.s_0.field_14] >= 8)
+            {
+                gte_lddp(0x1000 - (arg1->field_2B8[arg1->field_380.s_0.field_14] << 5));
+                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_dpcs();
+                gte_strgb(&poly_gt4_4->r0);
+            }
+            else
+            {
+                *(s32*)&poly_gt4_4->r0 = 0x3C000000;
+            }
+
+            if (arg1->field_2B8[arg1->field_380.s_0.field_15] >= 8)
+            {
+                gte_lddp(0x1000 - (arg1->field_2B8[arg1->field_380.s_0.field_15] << 5));
+                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_dpcs();
+                gte_strgb(&poly_gt4_4->r1);
+            }
+            else
+            {
+                *(s32*)&poly_gt4_4->r1 = 0x3C000000;
+            }
+
+            if (arg1->field_2B8[arg1->field_380.s_0.field_16] >= 8)
+            {
+                gte_lddp(0x1000 - (arg1->field_2B8[arg1->field_380.s_0.field_16] << 5));
+                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_dpcs();
+                gte_strgb(&poly_gt4_4->r2);
+            }
+            else
+            {
+                *(s32*)&poly_gt4_4->r2 = 0x3C000000;
+            }
+
+            if (arg1->field_2B8[arg1->field_380.s_0.field_17] >= 8)
+            {
+                gte_lddp(0x1000 - (arg1->field_2B8[arg1->field_380.s_0.field_17] << 5));
+                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_dpcs();
+                gte_strgb(&poly_gt4_4->r3);
+            }
+            else
+            {
+                *(s32*)&poly_gt4_4->r3 = 0x3C000000;
+            }
+
+            *(s32*)&poly_gt4_4->u0 = *(s32*)&var_s6->field_0;
+            *(s32*)&poly_gt4_4->u1 = *(s32*)&var_s6->field_4 & 0xFFFFFF;
+            *(u16*)&poly_gt4_4->u2 = var_s6->field_8;
+            *(u16*)&poly_gt4_4->u3 = var_s6->field_A;
+
+            setlen(poly_gt4_4, 12);
+
+            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_gt4_4);
+            poly_gt4_4++;
+        }
+    }
+    GsOUT_PACKET_P = poly_gt4_4;
+    return;
+}
+
+__block19CC:
+    arg1->field_380.s_0.field_8.cd = 0x2C;
+    poly_ft4                       = GsOUT_PACKET_P;
+
+    for (var_s6 = arg0->primitives_4; var_s6 < &arg0->primitives_4[arg0->primitiveCount_0]; var_s6++)
+    {
+        *(s32*)&arg1->field_380.s_0.field_10 = *(s32*)&var_s6->field_C;
+        arg1->field_380.s_0.field_18         = arg1->field_18C[arg1->field_380.s_0.field_10];
+
+        if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_11])
+        {
+            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_11];
+        }
+
+        if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_12])
+        {
+            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_12];
+        }
+
+        if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_13])
+        {
+            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_13];
+        }
+
+        if (arg1->field_380.s_0.field_18 <= 0)
+        {
+            continue;
+        }
+
+        if (arg1->field_380.s_0.field_18 < 0x21)
+        {
+            arg1->field_380.s_0.field_18 = 0x20;
+        }
+
+        if (arg1->field_380.s_0.field_18 > arg1->field_380.s_0.field_1C)
+        {
+            continue;
+        }
+
+        gte_ldsxy3(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10],
+                   *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11],
+                   *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12]);
+        gte_nclip();
+        gte_stopz(&sp20);
+
+        if (sp20 <= 0)
+        {
+            gte_ldsxy0(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13]);
+            gte_nclip();
+            gte_stopz(&sp20);
+
+            if (sp20 >= 0)
+            {
+                continue;
+            }
+        }
+
+        temp_a3_5 = arg1->field_380.s_0.field_0;
+        temp_a2_7 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10];
+
+        temp_a1_5  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11];
+        temp_a0_13 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12];
+        temp_v1_27 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13];
+        temp_t0_5  = temp_a3_5 * 2;
+        temp       = temp_a2_7;
+
+        if ((s16)temp_a2_7 + temp_a3_5 < temp_t0_5 || (s16)temp_a1_5 + temp_a3_5 < temp_t0_5 ||
+            (s16)temp_a0_13 + temp_a3_5 < temp_t0_5 || (s16)temp_v1_27 + temp_a3_5 < temp_t0_5)
+        {
+            *(s32*)&poly_ft4->x0 = temp;
+            *(s32*)&poly_ft4->x1 = temp_a1_5;
+            *(s32*)&poly_ft4->x2 = temp_a0_13;
+            *(s32*)&poly_ft4->x3 = temp_v1_27;
+
+            *(s32*)&poly_ft4->r0 = *(s32*)&arg1->field_380.s_0.field_8;
+
+            *(s32*)&poly_ft4->u0 = *(s32*)&var_s6->field_0;
+            *(s32*)&poly_ft4->u1 = *(s32*)&var_s6->field_4 & 0xFFFFFF;
+            *(u16*)&poly_ft4->u2 = var_s6->field_8;
+            *(u16*)&poly_ft4->u3 = var_s6->field_A;
+
+            setlen(poly_ft4, 9);
+
+            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_ft4);
+
+            poly_ft4++;
+        }
+    }
+    GsOUT_PACKET_P = poly_ft4;
+}
 
 void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, GsOT_TAG* tag) // 0x80059D50
 {

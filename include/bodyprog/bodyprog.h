@@ -590,11 +590,19 @@ typedef struct _GteScratchData
         struct
         {
             s32 field_0;
-            u8  unk_4[12];
-            u8  field_10;
-            u8  field_11;
-            u8  field_12;
-            u8  field_13;
+            s32     field_4;
+            CVECTOR field_8;
+            CVECTOR field_C;
+            u8      field_10;
+            u8      field_11;
+            u8      field_12;
+            u8      field_13;
+            u8      field_14;
+            u8      field_15;
+            u8      field_16;
+            u8      field_17;
+            s32     field_18;
+            s32     field_1C;
         } s_0;
     } field_380;
 
@@ -3344,6 +3352,8 @@ void func_80057658(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, SVECTOR3* lightVec);
 
 void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
+
+void func_8005801C(s_MeshHeader* arg0, s_GteScratchData* arg1, GsOT_TAG* arg2, s32 arg3);
 
 /** `arg4` unused. */
 s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuf9, e_FsFile fileIdx, s32 arg4);
