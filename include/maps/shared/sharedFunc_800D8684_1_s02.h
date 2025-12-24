@@ -2,8 +2,8 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
 {
     q3_12         angle0;
     q3_12         angle1;
-    s32           temp_s2;
-    s32           temp;
+    q19_12        distToPlayer;
+    q19_12        distToTarget;
     s_PlayerWork* playerWork;
 
     angle1 = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - creaper->position_18.vx,
@@ -21,17 +21,17 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
         creaper->properties_E4.creaper.flags_E8          &= ~CreaperFlag_5;
     }
 
-    temp_s2 = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - creaper->position_18.vx,
-                                  g_SysWork.playerWork_4C.player_0.position_18.vz - creaper->position_18.vz);
-    temp    = Math_Vector2MagCalc(creaper->properties_E4.player.field_F4 - creaper->position_18.vx,
-                                  creaper->properties_E4.player.runTimer_F8 - creaper->position_18.vz);
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - creaper->position_18.vx,
+                                       g_SysWork.playerWork_4C.player_0.position_18.vz - creaper->position_18.vz);
+    distToTarget = Math_Vector2MagCalc(creaper->properties_E4.creaper.playerPositionX_F4 - creaper->position_18.vx,
+                                       creaper->properties_E4.creaper.playerPositionZ_F8 - creaper->position_18.vz);
 
-    if (temp < Q12(1.2f) && !(creaper->properties_E4.creaper.flags_E8 & CreaperFlag_0) &&
+    if (distToTarget < Q12(1.2f) && !(creaper->properties_E4.creaper.flags_E8 & CreaperFlag_0) &&
         !func_800700F8(creaper, &g_SysWork.playerWork_4C.player_0))
     {
         playerWork = &g_SysWork.playerWork_4C;
 
-        if (temp_s2 > Q12(1.2f))
+        if (distToPlayer > Q12(1.2f))
         {
             //if ((creaper->properties_E4.creaper.flags_E8 & (CreaperFlag_4 | CreaperFlag_5)) == CreaperFlag_4) // TODO: Doesn't match?
             if ((creaper->properties_E4.player.afkTimer_E8 & 0x30) == 0x10)
@@ -48,7 +48,7 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
             }
         }
         else if (!(g_SysWork.field_2284[3] & (1 << 1)) && !(playerWork->player_0.flags_3E & CharaFlag_Unk4) &&
-                 temp_s2 < Q12(0.5f) && ABS(angle1) < FP_ANGLE(10.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
+                 distToPlayer < Q12(0.5f) && ABS(angle1) < FP_ANGLE(10.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
         {
             creaper->model_0.state_2                = 3;
             creaper->model_0.anim_4.status_0        = ANIM_STATUS(CreaperAnim_12, false);

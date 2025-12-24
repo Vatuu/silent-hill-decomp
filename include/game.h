@@ -1312,14 +1312,14 @@ typedef struct _SubCharaPropertiesCreaper
     q19_12     playerPositionZ_F8;
     q19_12     playerPositionX_FC;  // } Previous player position? Backup? Last alerted position?
     q19_12     playerPositionZ_100; // }
+    q19_12     field_104;
 
-    s32        field_100;    // } Copied from `s_SubCharaPropertiesSplithead`. Inaccurate and here for padding.
-    u_Property field_104;    // }
-    u8         field_108[4]; // }
-    q19_12     field_10C;    // }
-    VECTOR3    field_110;    // }
-    s32        flags_11C;    // }
-    u_Property field_120;    // }
+    u_Property unk_104;    // } Copied from `s_SubCharaPropertiesSplithead`. Inaccurate and here for padding.
+    u8         unk_108[4]; // }
+    q19_12     unk_10C;    // }
+    VECTOR3    unk_110;    // }
+    s32        unk_11C;    // }
+    u_Property unk_120;    // }
 } s_SubCharaPropertiesCreaper;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesCreaper, 68);
 
