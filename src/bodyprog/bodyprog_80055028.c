@@ -3535,7 +3535,7 @@ u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2) // 
     return ABS(mag1);
 }
 
-s16 func_8005C7B0(s32 arg0) // 0x8005C7B0
+s32 func_8005C7B0(s32 arg0) // 0x8005C7B0
 {
     return D_800AE520[arg0 >> 5];
 }

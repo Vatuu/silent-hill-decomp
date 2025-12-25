@@ -3781,7 +3781,7 @@ bool func_8005BF58(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5,
 
 s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8);
 
-s16 func_8005C7B0(s32 arg0);
+s32 func_8005C7B0(s32 arg0);
 
 /** `arg0` type assumed. */
 void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3);
