@@ -1625,8 +1625,8 @@ extern s_AnimInfo GROANER_ANIM_INFOS[];
 
 extern s_AnimInfo HANGED_SCRATCHER_ANIM_INFOS[];
 
-// Three variables used by `Ai_Splithead_Init`.
-extern s_AnimInfo SPLITHEAD_ANIM_INFOS[];
+// Three variables used by `Ai_SplitHead_Init`.
+extern s_AnimInfo SPLIT_HEAD_ANIM_INFOS[];
 extern s16 sharedData_800D8614_1_s05; // These two `s16`s could be `DVECTOR`?
 extern s16 sharedData_800D8616_1_s05;
 
@@ -2424,13 +2424,13 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner);
 
 void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner);
 
-void Ai_Splithead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_Splithead_Init(s_SubCharacter* splitHead);
+void Ai_SplitHead_Init(s_SubCharacter* splitHead);
 
 void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead);
 
-void Ai_Splithead_DamageTake(s_SubCharacter* splitHead);
+void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead);
 
 void sharedFunc_800D0054_1_s05(s_SubCharacter* splitHead);
 

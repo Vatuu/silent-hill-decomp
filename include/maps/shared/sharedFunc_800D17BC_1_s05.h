@@ -10,7 +10,7 @@ void sharedFunc_800D17BC_1_s05(s_SubCharacter* splitHead)
     {
         case ANIM_STATUS(11, false):
         case ANIM_STATUS(11, true):
-            splitHead->properties_E4.splithead.flags_E8 |= 1 << 3;
+            splitHead->properties_E4.splitHead.flags_E8 |= 1 << 3;
 
             if (!sharedFunc_800D4530_1_s05(splitHead))
             {
@@ -24,7 +24,7 @@ void sharedFunc_800D17BC_1_s05(s_SubCharacter* splitHead)
 
         case ANIM_STATUS(1, false):
         case ANIM_STATUS(1, true):
-            timer0      = splitHead->properties_E4.splithead.timer_F4;
+            timer0      = splitHead->properties_E4.splitHead.timer_F4;
             timer1      = sharedData_800D5880_1_s05;
             timer1_div6 = timer1 / 6;
 
@@ -43,18 +43,18 @@ void sharedFunc_800D17BC_1_s05(s_SubCharacter* splitHead)
 
             func_8005DE0C(Sfx_Unk1477, &splitHead->position_18, vol, Q12(16.0f), 0);
 
-            if (splitHead->properties_E4.splithead.timer_F4 > sharedData_800D5880_1_s05)
+            if (splitHead->properties_E4.splitHead.timer_F4 > sharedData_800D5880_1_s05)
             {
                 sharedData_800D5880_1_s05                   = Q12(3.8f);
                 splitHead->model_0.state_2                  = 5;
-                splitHead->properties_E4.splithead.timer_F4 = Q12(0.0f);
+                splitHead->properties_E4.splitHead.timer_F4 = Q12(0.0f);
                 splitHead->model_0.anim_4.status_0          = ANIM_STATUS(11, false);
 
                 Sd_SfxStop(Sfx_Unk1477);
                 break;
             }
 
-            splitHead->properties_E4.splithead.timer_F4 += g_DeltaTime0;
+            splitHead->properties_E4.splitHead.timer_F4 += g_DeltaTime0;
             break;
     }
 }

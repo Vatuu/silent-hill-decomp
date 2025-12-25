@@ -4411,7 +4411,7 @@ void func_8003E238(s_Skeleton* skel, s32 arg1);
 /** Something for Stalker. */
 void func_8003E388(s_Skeleton* skel, s32 arg1);
 
-/** Something for Splithead. */
+/** Something for Split Head. */
 void func_8003E414(s_Skeleton* skel, s32 arg1);
 
 /** Something for Puppet Nurse. */

@@ -16,7 +16,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creaper)
         creaper->field_34        = FP_TO(creaper->damage_B4.position_0.vy, Q12_SHIFT) / Q12(0.8f);
         creaper->headingAngle_3C = Rng_AddGeneratedUInt(ratan2(creaper->damage_B4.position_0.vx, creaper->damage_B4.position_0.vz), -128, 127);
 
-        creaper->properties_E4.splithead.flags_E8 |= 1 << 1;
+        creaper->properties_E4.splitHead.flags_E8 |= 1 << 1;
 
         if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == 7)
         {

@@ -1,4 +1,4 @@
-// Ai_Splithead
+// Ai_SplitHead
 
 void sharedFunc_800D0054_1_s05(s_SubCharacter* splitHead)
 {

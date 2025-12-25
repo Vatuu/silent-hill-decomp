@@ -1,4 +1,4 @@
-void Ai_Splithead_DamageTake(s_SubCharacter* splitHead)
+void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
 {
     u8  isPlayerDead;
     s32 damageAmt;
@@ -28,7 +28,7 @@ void Ai_Splithead_DamageTake(s_SubCharacter* splitHead)
         damageAmt = 1;
     }
 
-    if (splitHead->properties_E4.splithead.flags_E8 & SplitHeadFlag_0)
+    if (splitHead->properties_E4.splitHead.flags_E8 & SplitHeadFlag_0)
     {
         // TODO: Odd `WEAPON_ATTACK` value. Input type 3 doesn't exist.
         if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard &&
@@ -57,10 +57,10 @@ void Ai_Splithead_DamageTake(s_SubCharacter* splitHead)
 
     splitHead->health_B0 = newHealth;
 
-    if (splitHead->health_B0 < 24000 && !(splitHead->properties_E4.splithead.flags_E8 & SplitHeadFlag_4))
+    if (splitHead->health_B0 < 24000 && !(splitHead->properties_E4.splitHead.flags_E8 & SplitHeadFlag_4))
     {
         splitHead->model_0.state_2                   = 4;
-        splitHead->properties_E4.splithead.flags_E8 |= SplitHeadFlag_4;
+        splitHead->properties_E4.splitHead.flags_E8 |= SplitHeadFlag_4;
     }
     else if (splitHead->health_B0 == Q12(0.0f))
     {
@@ -70,18 +70,18 @@ void Ai_Splithead_DamageTake(s_SubCharacter* splitHead)
         }
         else if (splitHead->moveSpeed_38 > Q12(0.0f))
         {
-            splitHead->properties_E4.splithead.flags_E8 |= SplitHeadFlag_5;
+            splitHead->properties_E4.splitHead.flags_E8 |= SplitHeadFlag_5;
         }
         else if (splitHead->moveSpeed_38 < Q12(0.0f))
         {
-            splitHead->properties_E4.splithead.flags_E8 &= ~SplitHeadFlag_5;
+            splitHead->properties_E4.splitHead.flags_E8 &= ~SplitHeadFlag_5;
         }
 
         splitHead->model_0.state_2 = 6;
     }
-    else if (splitHead->properties_E4.splithead.flags_E8 & SplitHeadFlag_0)
+    else if (splitHead->properties_E4.splitHead.flags_E8 & SplitHeadFlag_0)
     {
-        splitHead->properties_E4.splithead.flags_E8 |= SplitHeadFlag_6 | SplitHeadFlag_7;
+        splitHead->properties_E4.splitHead.flags_E8 |= SplitHeadFlag_6 | SplitHeadFlag_7;
     }
 
     splitHead->damage_B4.amount_C      = Q12(0.0f);

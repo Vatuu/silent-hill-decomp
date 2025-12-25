@@ -1963,7 +1963,7 @@ void func_8003DD80(e_CharacterId charaId, s32 arg1) // 0x8003DD80
             func_8003E238(&model->skeleton_14, arg1);
             break;
 
-        case Chara_Splithead:
+        case Chara_SplitHead:
             func_8003E414(&model->skeleton_14, arg1);
             break;
 

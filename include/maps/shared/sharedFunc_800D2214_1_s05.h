@@ -1,11 +1,11 @@
-void sharedFunc_800D2214_1_s05(s_SubCharacter* splithead)
+void sharedFunc_800D2214_1_s05(s_SubCharacter* splitHead)
 {
-    switch (splithead->model_0.anim_4.status_0)
+    switch (splitHead->model_0.anim_4.status_0)
     {
         case 23:
-            Chara_MoveSpeedUpdate(splithead, Q12(0.5f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(0.5f));
 
-            if (!sharedFunc_800D4530_1_s05(splithead))
+            if (!sharedFunc_800D4530_1_s05(splitHead))
             {
                 break;
             }
@@ -15,8 +15,8 @@ void sharedFunc_800D2214_1_s05(s_SubCharacter* splithead)
         case 20:
         case 21:
         case 22:
-            splithead->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
-            Chara_MoveSpeedUpdate(splithead, Q12(1.0f));
+            splitHead->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
+            Chara_MoveSpeedUpdate(splitHead, Q12(1.0f));
             break;
 
         default:
@@ -30,11 +30,11 @@ void sharedFunc_800D2214_1_s05(s_SubCharacter* splithead)
         case 25:
         case 26:
         case 27:
-            Chara_MoveSpeedUpdate(splithead, Q12(1.0f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(1.0f));
 
             if (!Savegame_EventFlagGet(EventFlag_131))
             {
-                func_8005DC1C(Sfx_Unk1479, &splithead->position_18, Q8_CLAMPED(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1479, &splitHead->position_18, Q8_CLAMPED(0.5f), 0);
             }
 
             Savegame_EventFlagSet(EventFlag_131);

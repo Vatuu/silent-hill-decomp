@@ -48,13 +48,13 @@ INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800CC078);
 
 #include "maps/shared/Player.h"
 
-#include "maps/shared/Ai_Splithead_Update.h" // 0x800D02CC
+#include "maps/shared/Ai_SplitHead_Update.h" // 0x800D02CC
 
-#include "maps/shared/Ai_Splithead_Init.h" // 0x800D038C
+#include "maps/shared/Ai_SplitHead_Init.h" // 0x800D038C
 
 #include "maps/shared/sharedFunc_800CF990_1_s05.h" // 0x800D0444
 
-#include "maps/shared/Ai_Splithead_DamageTake.h" // 0x800D0948
+#include "maps/shared/Ai_SplitHead_DamageTake.h" // 0x800D0948
 
 #include "maps/shared/sharedFunc_800D0054_1_s05.h" // 0x800D0B08
 

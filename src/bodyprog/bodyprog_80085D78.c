@@ -3842,7 +3842,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                     var_a3 = 6;
                     break;
 
-                case Chara_Splithead:
+                case Chara_SplitHead:
                     var_a3 = 7;
                     break;
 

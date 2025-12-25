@@ -18,7 +18,7 @@ s_CharaFileInfo CHARA_FILE_INFOS[] = {
 /* Creaper          */ {  FILE_ANIM_COC_ANM,     FILE_CHARA_COC_ILM,    FILE_CHARA_COC_TIM,    Q8(0.25f), BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.5f)          },
 /* Romper           */ {  FILE_ANIM_JACK_ANM,    FILE_CHARA_JACK_ILM,   FILE_CHARA_JACK_TIM,   Q8(0.3f),  BlendMode_Subtractive,   &D_800A90A4, CameraAnchor_Ground,    Q8(-0.8f)          },
 /* Chicken          */ {  FILE_ANIM_CKN_ANM,     FILE_CHARA_CKN_ILM,    FILE_CHARA_CKN_TIM,    Q8(0.0f),  BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.9f)          }, /** @unused */
-/* Splithead        */ {  FILE_ANIM_FAT_ANM,     FILE_CHARA_FAT_ILM,    FILE_CHARA_FAT_TIM,    Q8(0.0f),  BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.7f)          },
+/* SplitHead        */ {  FILE_ANIM_FAT_ANM,     FILE_CHARA_FAT_ILM,    FILE_CHARA_FAT_TIM,    Q8(0.0f),  BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.7f)          },
 /* Floatstinger     */ {  FILE_ANIM_MTH_ANM,     FILE_CHARA_MTH_ILM,    FILE_CHARA_MOTH_TIM,   Q8(0.0f),  BlendMode_Additive,      NULL,        CameraAnchor_Character, Q8(-2.3f)          },
 /* PuppetNurse      */ {  FILE_ANIM_PRS_ANM,     FILE_CHARA_PRS_ILM,    FILE_CHARA_PRS_TIM,    Q8(0.25f), BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.9f)          },
 /* DummyNurse       */ {  FILE_ANIM_DUMMY_ANM,   FILE_CHARA_DUMMY_ILM,  NO_VALUE,              Q8(0.25f), BlendMode_Subtractive,   NULL,        CameraAnchor_Character, Q8(-0.9f)          },

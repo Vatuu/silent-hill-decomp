@@ -4,7 +4,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* chara)
     u32 animStatus;
 
     // NOTE: This code reads `chara->field_E8` both as word and a half... (half here).
-    if (!(chara->properties_E4.splithead.flags_E8 & CharaUnk0Flag_Unk1))
+    if (!(chara->properties_E4.splitHead.flags_E8 & CharaUnk0Flag_Unk1))
     {
         Chara_MoveSpeedUpdate(chara, Q12(1.8f));
     }
@@ -39,7 +39,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* chara)
         if (newAnimStatus != ANIM_STATUS(0, false))
         {
             func_800622B8(3, chara, newAnimStatus, 6);
-            chara->properties_E4.splithead.flags_E8 |= CharaUnk0Flag_Unk6;
+            chara->properties_E4.splitHead.flags_E8 |= CharaUnk0Flag_Unk6;
         }
     }
 }

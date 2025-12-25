@@ -842,7 +842,7 @@ typedef enum _CharacterId
     Chara_Creaper          = 11,
     Chara_Romper           = 12,
     Chara_Chicken          = 13, /** @unused */
-    Chara_Splithead        = 14,
+    Chara_SplitHead        = 14,
     Chara_Floatstinger     = 15,
     Chara_PuppetNurse      = 16,
     Chara_DummyNurse       = 17, /** Uses dummy anim file without model/texture, but uses same update funcptr as `Chara_PuppetNurse`. */
@@ -1402,7 +1402,7 @@ typedef struct _SubCharaPropertiesPuppetNurse
 } s_SubCharaPropertiesPuppetNurse;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPuppetNurse, 68);
 
-typedef struct _SubCharaPropertiesSplithead
+typedef struct _SubCharaPropertiesSplitHead
 {
     s32        unk_E4;
     u16        flags_E8;
@@ -1422,8 +1422,8 @@ typedef struct _SubCharaPropertiesSplithead
     u_Property field_120;
     s16        field_124;
     q3_12      moveDistance_126;
-} s_SubCharaPropertiesSplithead;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesSplithead, 68);
+} s_SubCharaPropertiesSplitHead;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesSplitHead, 68);
 
 typedef struct _SubCharPropertiesUnk0
 {
@@ -1534,7 +1534,7 @@ typedef struct _SubCharacter
         s_SubCharaPropertiesDahlia        dahlia;
         s_SubCharaPropertiesLarvalStalker larvalStalker;
         s_SubCharaPropertiesPuppetNurse   puppetNurse;
-        s_SubCharaPropertiesSplithead     splithead;
+        s_SubCharaPropertiesSplitHead     splitHead;
         s_SubCharaPropertiesUnk0          unk0;
     } properties_E4;
 } s_SubCharacter;

@@ -4797,7 +4797,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
             }
         }
 
-        if (chara->model_0.charaId_0 == Chara_Splithead)
+        if (chara->model_0.charaId_0 == Chara_SplitHead)
         {
             i = 24;
         }
