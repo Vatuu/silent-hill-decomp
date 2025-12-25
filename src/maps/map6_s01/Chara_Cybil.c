@@ -1,1 +1,1 @@
-#include "../src/maps/characters/Chara_Cybil.c"
+#include "../src/maps/characters/cybil.c"

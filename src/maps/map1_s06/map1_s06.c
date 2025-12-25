@@ -4,7 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map1/map1_s06.h"
-#include "maps/characters/Chara_Splithead.h"
+#include "maps/characters/splithead.h"
 
 INCLUDE_RODATA("asm/maps/map1_s06/nonmatchings/map1_s06", D_800C9578);
 

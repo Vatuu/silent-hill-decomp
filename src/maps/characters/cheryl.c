@@ -2,7 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "maps/shared.h"
-#include "maps/characters/Chara_Cheryl.h"
+#include "maps/characters/cheryl.h"
 
 /** AI code for `Chara_Cheryl`
  *

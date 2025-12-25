@@ -1,1 +1,1 @@
-#include "../src/maps/characters/Chara_Kaufmann.c"
+#include "../src/maps/characters/kaufmann.c"

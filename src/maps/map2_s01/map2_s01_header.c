@@ -2,7 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "maps/shared.h"
 #include "maps/map2/map2_s01.h"
-#include "maps/characters/Chara_Dahlia.h"
+#include "maps/characters/dahlia.h"
 
 #define BLOOD_SPLAT_COUNT_MAX 150
 

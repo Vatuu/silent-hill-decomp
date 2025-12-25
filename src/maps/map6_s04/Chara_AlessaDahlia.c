@@ -5,10 +5,10 @@
 #include "maps/shared.h"
 #include "maps/map6/map6_s04.h"
 
-#include "../src/maps/characters/Chara_Alessa.c"
+#include "../src/maps/characters/alessa.c"
 
 // TODO: Splitting Dahlia to separate file causes alignment issue inside `Ai_Dahlia_AnimStateUpdate` rodata
 // (4 bytes inserted between VECTOR3 and jtbl both used in that func)
 // Including her here seems to let it work for now.
 
-#include "../src/maps/characters/Chara_Dahlia.c"
+#include "../src/maps/characters/dahlia.c"

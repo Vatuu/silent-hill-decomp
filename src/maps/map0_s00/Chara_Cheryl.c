@@ -1,1 +1,1 @@
-#include "../src/maps/characters/Chara_Cheryl.c"
+#include "../src/maps/characters/cheryl.c"

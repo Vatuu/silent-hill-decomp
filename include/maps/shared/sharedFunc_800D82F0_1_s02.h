@@ -47,7 +47,7 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
     {
         if (creaper->properties_E4.creaper.flags_E8 & CreaperFlag_7)
         {
-            if (Rng_GenerateUInt(0, 7) == 0) // 1 in 8 cahnce.
+            if (Rng_GenerateUInt(0, 7) == 0) // 1 in 8 chance.
             {
                 if (creaper->properties_E4.creaper.timer_104 > Q12(0.5f))
                 {

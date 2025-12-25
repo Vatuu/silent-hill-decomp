@@ -3,7 +3,7 @@
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-#include "maps/characters/Chara_Dahlia.h"
+#include "maps/characters/dahlia.h"
 
 /** AI code for `Chara_Dahlia`
  *

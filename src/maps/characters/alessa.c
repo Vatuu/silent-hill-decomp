@@ -2,7 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-#include "maps/characters/Chara_Alessa.h"
+#include "maps/characters/alessa.h"
 
 /** AI code for `Chara_Alessa`
  *

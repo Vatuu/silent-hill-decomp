@@ -6,7 +6,7 @@
 #include "maps/map1/map1_s03.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-#include "maps/characters/Chara_Creaper.h"
+#include "maps/characters/creaper.h"
 
 INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800C9578);
 

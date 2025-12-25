@@ -6,11 +6,11 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map7/map7_s02.h"
-#include "maps/characters/Chara_BloodyLisa.h"
-#include "maps/characters/Chara_Dahlia.h"
-#include "maps/characters/Chara_GhostChildAlessa.h"
-#include "maps/characters/Chara_Kaufmann.h"
-#include "maps/characters/Chara_Lisa.h"
+#include "maps/characters/bloodyLisa.h"
+#include "maps/characters/dahlia.h"
+#include "maps/characters/ghostChildAlessa.h"
+#include "maps/characters/kaufmann.h"
+#include "maps/characters/lisa.h"
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D8C74
 

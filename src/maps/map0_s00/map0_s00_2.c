@@ -5,7 +5,7 @@
 #include "inline_no_dmpsx.h"
 #include "maps/shared.h"
 #include "maps/map0/map0_s00.h"
-#include "maps/characters/Chara_Cheryl.h"
+#include "maps/characters/cheryl.h"
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D88AC
 

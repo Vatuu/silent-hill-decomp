@@ -2,7 +2,7 @@
 #include "bodyprog/math/math.h"
 #include "maps/shared.h"
 #include "maps/map5/map5_s03.h"
-#include "maps/characters/Chara_Kaufmann.h"
+#include "maps/characters/kaufmann.h"
 
 #define BLOOD_SPLAT_COUNT_MAX 50
 

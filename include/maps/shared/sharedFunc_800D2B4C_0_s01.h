@@ -1,4 +1,4 @@
-void sharedFunc_800D2B4C_0_s01(s_SubCharacter* chara)
+void sharedFunc_800D2B4C_0_s01(s_SubCharacter* airScreamer)
 {
     q19_12         time;
     s_AnmHeader*   anmHdr;
@@ -10,10 +10,10 @@ void sharedFunc_800D2B4C_0_s01(s_SubCharacter* chara)
 
     g_DeltaTime0 = Q12(0.0f);
 
-    func_80044950(chara, anmHdr, coords);
+    func_80044950(airScreamer, anmHdr, coords);
 
     g_DeltaTime0 = time;
 
-    sharedFunc_800D7560_0_s01(chara);
-    sharedFunc_800D82B8_0_s01(chara);
+    sharedFunc_800D7560_0_s01(airScreamer);
+    sharedFunc_800D82B8_0_s01(airScreamer);
 }

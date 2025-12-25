@@ -1,0 +1,4 @@
+#ifndef _MAPS_CHARACTERS_ALESSA_H
+#define _MAPS_CHARACTERS_ALESSA_H
+
+#endif

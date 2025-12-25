@@ -4,7 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map3/map3_s03.h"
-#include "maps/characters/Chara_PuppetNurse.h"
+#include "maps/characters/puppetNurse.h"
 
 INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800C9578);
 

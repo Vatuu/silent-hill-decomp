@@ -4,7 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map5/map5_s02.h"
-#include "maps/characters/Chara_Kaufmann.h"
+#include "maps/characters/kaufmann.h"
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D3AFC
 

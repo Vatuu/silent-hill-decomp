@@ -5,8 +5,8 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map6/map6_s01.h"
-#include "maps/characters/Chara_Cybil.h"
-#include "maps/characters/Chara_Dahlia.h"
+#include "maps/characters/cybil.h"
+#include "maps/characters/dahlia.h"
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D0358
 

@@ -2843,14 +2843,14 @@ bool sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1);
 
 bool sharedFunc_800D3630_0_s01(s_SubCharacter* chara, q19_12* dist);
 
-/** Returns flags? */
+/** Returns flags? Specific to Air Screamer? */
 s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, q19_12* outDist, q19_12* outAngle, q19_12 dist, s32* arg4);
 
 void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void Ai_Romper_Init(s_SubCharacter* romper);
 
-/** Probably Romper func given the placement.. */
+/** Probably Romper func given the placement. */
 void sharedFunc_800E5FC8_2_s02(s_SubCharacter* chara, s16 arg1, s16 arg2, u8* arg3);
 
 void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper);
@@ -2950,19 +2950,19 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer);
 
 bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D2B00_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D2B00_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D2B10_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D2B10_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D2B28_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D2B28_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D2B4C_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D2B4C_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D2BB0_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D2BB0_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D2BE4_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D2BE4_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D2BF4_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D2BF4_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D2E04_0_s01(s_SubCharacter* chara, VECTOR3* inVec, s32* outDist, s32* outAngle);
 
@@ -2974,7 +2974,7 @@ bool sharedFunc_800D31D0_0_s01(s_SubCharacter* chara, VECTOR3* pos, s32 arg2);
 
 bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer);
 
-void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara);
+void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D62D8_0_s01(s_SubCharacter* airScreamer);
 

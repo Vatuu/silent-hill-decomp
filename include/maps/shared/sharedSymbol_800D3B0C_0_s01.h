@@ -1,4 +1,4 @@
-void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
+void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
 {
     q19_12 animTime;
     s32    var0;
@@ -10,7 +10,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
     u32    modelState;
     u32    animStatus;
 
-    field40 = chara->field_40;
+    field40 = airScreamer->field_40;
     switch (field40 % 0x3)
     {
         case 0:
@@ -40,7 +40,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
     }
 
     stateStep = 0;
-    switch (chara->model_0.stateStep_3)
+    switch (airScreamer->model_0.stateStep_3)
     {
 #if defined(MAP0_S01)
         case 12:
@@ -65,7 +65,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
             else
             {
                 var0 = 2;
-                if (chara->model_0.anim_4.status_0 == ANIM_STATUS(19, true))
+                if (airScreamer->model_0.anim_4.status_0 == ANIM_STATUS(19, true))
                 {
                     animStatus = NO_VALUE;
                 }
@@ -126,7 +126,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
             animStatus = ANIM_STATUS(19, true);;
             var3 = 19;
             var2 = 2;
-            chara->health_B0 *= 4;;
+            airScreamer->health_B0 *= 4;;
             break;
 
         case 11:
@@ -151,29 +151,29 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* chara)
             var3 = 33;
             stateStep = 67;
             var2 = 2;
-            chara->health_B0 -= (chara->health_B0 >> 2);
+            airScreamer->health_B0 -= (airScreamer->health_B0 >> 2);
             break;
 #endif
     }
 
-    chara->model_0.state_2 = var3;
-    chara->model_0.stateStep_3 = stateStep;
-    chara->properties_E4.player.flags_11C = 0;
-    chara->properties_E4.unk0.field_E8_0 = var0;
-    chara->properties_E4.unk0.field_E8_4 = var1;
-    chara->properties_E4.unk0.field_E8_8 = var2;
+    airScreamer->model_0.state_2 = var3;
+    airScreamer->model_0.stateStep_3 = stateStep;
+    airScreamer->properties_E4.player.flags_11C = 0;
+    airScreamer->properties_E4.unk0.field_E8_0 = var0;
+    airScreamer->properties_E4.unk0.field_E8_4 = var1;
+    airScreamer->properties_E4.unk0.field_E8_8 = var2;
 
     if (var3 == 1)
     {
-        chara->properties_E4.unk0.flags_11C = CharaUnk0Flag_Unk16;
+        airScreamer->properties_E4.unk0.flags_11C = CharaUnk0Flag_Unk16;
     }
 
-    if (animStatus != NO_VALUE && animStatus != chara->model_0.anim_4.status_0)
+    if (animStatus != NO_VALUE && animStatus != airScreamer->model_0.anim_4.status_0)
     {
-        chara->model_0.anim_4.status_0      = animStatus;
-        animTime                            = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
-        chara->model_0.anim_4.alpha_A       = Q12(0.0f);
-        chara->model_0.anim_4.keyframeIdx_8 = animTime;
-        chara->model_0.anim_4.time_4        = FP_TO(animTime, Q12_SHIFT);
+        airScreamer->model_0.anim_4.status_0      = animStatus;
+        animTime                            = func_80044918(&airScreamer->model_0.anim_4)->startKeyframeIdx_C;
+        airScreamer->model_0.anim_4.alpha_A       = Q12(0.0f);
+        airScreamer->model_0.anim_4.keyframeIdx_8 = animTime;
+        airScreamer->model_0.anim_4.time_4        = FP_TO(animTime, Q12_SHIFT);
     }
 }
