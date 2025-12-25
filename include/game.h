@@ -1314,10 +1314,12 @@ typedef struct _SubCharaPropertiesBloodsucker
 {
     s32 unk_E4;
 
-    s8     unk_E8[4];
+    q19_12 timer_E8;
     q19_12 timer_EC;
     q19_12 timer_F0;
     q19_12 timer_F4;
+    s8     unk_F8[36]; //  Unused?
+    s32    flags_118;
 
 } s_SubCharaPropertiesBloodsucker;
 

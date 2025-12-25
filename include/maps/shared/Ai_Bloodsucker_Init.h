@@ -53,6 +53,7 @@ void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker)
 {
     s32 i;
 
+    // TODO: Use Bloodsucker properties.
     for (i = 0; i < 16; i++)
     {
         bloodsucker->properties_E4.dummy.properties_E8[i].val32 = 0;

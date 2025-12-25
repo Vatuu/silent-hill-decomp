@@ -8,6 +8,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map7/map7_s02.h"
+#include "maps/characters/bloodsucker.h"
 
 // TODO: Move to src/maps/characters/ once other map usages are split.
 
