@@ -1,6 +1,6 @@
 void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (romper->model_0.state_2 == 0)
+    if (romper->model_0.state_2 == ModelState_Uninitialized)
     {
         Ai_Romper_Init(romper);
     }

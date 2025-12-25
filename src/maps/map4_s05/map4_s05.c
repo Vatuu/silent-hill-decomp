@@ -52,7 +52,7 @@ void Ai_Floatstinger_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
 {
     D_800DB928 = coords;
 
-    if (chara->model_0.state_2 == 0)
+    if (chara->model_0.state_2 == ModelState_Uninitialized)
     {
         Ai_Floatstinger_Init(chara);
     }

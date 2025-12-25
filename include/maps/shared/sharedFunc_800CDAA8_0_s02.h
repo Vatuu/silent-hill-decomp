@@ -227,7 +227,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
             func_8007FC48(playerChara, extra, 400);
 
-            if (extra->model_0.state_2 == 0)
+            if (extra->model_0.state_2 == ModelState_Uninitialized)
             {
                 extra->model_0.state_2++;
             }
@@ -268,7 +268,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             sharedData_800D32A0_0_s02 = g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126;
             func_8007FB94(playerChara, extra, 400);
 
-            if (extra->model_0.state_2 == 0)
+            if (extra->model_0.state_2 == ModelState_Uninitialized)
             {
                 extra->model_0.state_2++;
             }
@@ -311,7 +311,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             Model_AnimStatusSet(&extra->model_0, HarryAnim_Idle, false);
             Model_AnimStatusSet(&playerChara->model_0, HarryAnim_Idle, false);
 
-            if (extra->model_0.state_2 == 0)
+            if (extra->model_0.state_2 == ModelState_Uninitialized)
             {
                 extra->model_0.state_2++;
             }
@@ -364,7 +364,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             Model_AnimStatusSet(&extra->model_0, HarryAnim_WalkForward, false);
             Model_AnimStatusSet(&playerChara->model_0, HarryAnim_WalkForward, false);
 
-            if (extra->model_0.state_2 == 0)
+            if (extra->model_0.state_2 == ModelState_Uninitialized)
             {
                 extra->model_0.state_2++;
             }
@@ -416,7 +416,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             Model_AnimStatusSet(&extra->model_0, HarryAnim_RunForward, false);
             Model_AnimStatusSet(&playerChara->model_0, HarryAnim_RunForward, false);
 
-            if (extra->model_0.state_2 == 0)
+            if (extra->model_0.state_2 == ModelState_Uninitialized)
             {
                 extra->model_0.state_2++;
             }
@@ -453,7 +453,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             Model_AnimStatusSet(&extra->model_0, HarryAnim_WalkBackward, false);
             Model_AnimStatusSet(&playerChara->model_0, HarryAnim_WalkBackward, false);
 
-            if (extra->model_0.state_2 == 0)
+            if (extra->model_0.state_2 == ModelState_Uninitialized)
             {
                 extra->model_0.state_2++;
             }
@@ -485,7 +485,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             Model_AnimStatusSet(&extra->model_0, HarryAnim_TurnRight, false);
             Model_AnimStatusSet(&playerChara->model_0, HarryAnim_TurnRight, false);
 
-            if (extra->model_0.state_2 == 0)
+            if (extra->model_0.state_2 == ModelState_Uninitialized)
             {
                 extra->model_0.state_2++;
             }
@@ -534,7 +534,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             Model_AnimStatusSet(&extra->model_0, HarryAnim_TurnLeft, false);
             Model_AnimStatusSet(&playerChara->model_0, HarryAnim_TurnLeft, false);
 
-            if (extra->model_0.state_2 == 0)
+            if (extra->model_0.state_2 == ModelState_Uninitialized)
             {
                 extra->model_0.state_2++;
             }

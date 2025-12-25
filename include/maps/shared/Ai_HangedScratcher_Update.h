@@ -1,6 +1,6 @@
 void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (scratcher->model_0.state_2 == 0)
+    if (scratcher->model_0.state_2 == ModelState_Uninitialized)
     {
         Ai_HangedScratcher_Init(scratcher);
     }

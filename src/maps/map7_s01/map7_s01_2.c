@@ -6,8 +6,8 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map7/map7_s01.h"
-#include "maps/characters/bloodyLisa.h"
-#include "maps/characters/ghostChildAlessa.h"
+#include "maps/characters/bloody_lisa.h"
+#include "maps/characters/ghost_child_alessa.h"
 #include "maps/characters/lisa.h"
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D5CD8

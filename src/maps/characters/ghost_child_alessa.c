@@ -1,7 +1,7 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "maps/shared.h"
-#include "maps/characters/ghostChildAlessa.h"
+#include "maps/characters/ghost_child_alessa.h"
 
 /** AI code for `Chara_GhostChildAlessa`
  *

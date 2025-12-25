@@ -23,7 +23,7 @@ void Ai_Stalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
     }
     
 
-    if (chara->model_0.state_2 == 0)
+    if (chara->model_0.state_2 == ModelState_Uninitialized)
     {
         Ai_Stalker_Init(chara);
     }

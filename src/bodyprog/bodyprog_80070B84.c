@@ -157,21 +157,23 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* chara, s32 weaponAttack
     if (chara->model_0.anim_4.status_0 == animStatus &&
         chara->model_0.anim_4.keyframeIdx_8 == HARRY_BASE_ANIM_INFOS[animStatus].endKeyframeIdx_E)
     {
-        g_SysWork.playerWork_4C.extra_128.state_1C                      = PlayerState_None;
+        g_SysWork.playerWork_4C.extra_128.state_1C                       = PlayerState_None;
         g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Unk2;
-        chara->model_0.stateStep_3                                  = 0;
-        chara->model_0.state_2                                      = 0;
-        extra->model_0.stateStep_3                                  = 0;
-        extra->model_0.state_2                                      = 0;
-        g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_None;
-        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_None;
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6              = Q12(0.0f);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4              = Q12(0.0f);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2              = Q12(0.0f);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0              = Q12(0.0f);
-        g_SysWork.playerCombat_38.weaponAttack_F                = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife);
-        g_SysWork.targetNpcIdx_2353                                 = NO_VALUE;
-        g_SysWork.playerCombat_38.isAiming_13                   = false;
+
+        chara->model_0.stateStep_3 = 0;
+        chara->model_0.state_2     = ModelState_Uninitialized;
+        extra->model_0.stateStep_3 = 0;
+        extra->model_0.state_2     = ModelState_Uninitialized;
+
+        g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
+        g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
+        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
+        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
+        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
+        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
+        g_SysWork.playerCombat_38.weaponAttack_F            = (g_SavegamePtr->equippedWeapon_AA == InventoryItemId_Unequipped) ? NO_VALUE : (g_SavegamePtr->equippedWeapon_AA + InventoryItemId_KitchenKnife);
+        g_SysWork.targetNpcIdx_2353                         = NO_VALUE;
+        g_SysWork.playerCombat_38.isAiming_13               = false;
     }
 }
 
@@ -254,7 +256,7 @@ void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerBodyState low
     if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != lowerBodyState)
     {
         chara->model_0.stateStep_3              = 0;
-        chara->model_0.state_2                  = 0;
+        chara->model_0.state_2                  = ModelState_Uninitialized;
         chara->properties_E4.player.runTimer_F8 = Q12(0.0f);
         chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
         g_SysWork.playerStopFlags_235A          = PlayerStopFlag_None;
@@ -920,9 +922,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
             g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_None;
             chara->model_0.stateStep_3                      = 0;
-            chara->model_0.state_2                          = 0;
+            chara->model_0.state_2                          = ModelState_Uninitialized;
             extra->model_0.stateStep_3                      = 0;
-            extra->model_0.state_2                          = 0;
+            extra->model_0.state_2                          = ModelState_Uninitialized;
             g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
 
@@ -957,16 +959,19 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
             if (extra->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
-                chara->attackReceived_41                                                = NO_VALUE;
-                g_SysWork.targetNpcIdx_2353                                           = NO_VALUE;
-                g_SysWork.playerWork_4C.extra_128.state_1C                                  = PlayerState_None;
-                g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C             &= ~PlayerFlag_DamageReceived;
-                chara->model_0.stateStep_3                                              = 0;
-                chara->model_0.state_2                                                  = 0;
-                extra->model_0.stateStep_3                                              = 0;
-                extra->model_0.state_2                                                  = 0;
-                g_SysWork.playerWork_4C.extra_128.upperBodyState_20                         = PlayerUpperBodyState_None;
-                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24                         = PlayerLowerBodyState_None;
+                chara->attackReceived_41 = NO_VALUE;
+
+                g_SysWork.targetNpcIdx_2353                                      = NO_VALUE;
+                g_SysWork.playerWork_4C.extra_128.state_1C                       = PlayerState_None;
+                g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
+
+                chara->model_0.stateStep_3 = 0;
+                chara->model_0.state_2     = ModelState_Uninitialized;
+                extra->model_0.stateStep_3 = 0;
+                extra->model_0.state_2     = ModelState_Uninitialized;
+
+                g_SysWork.playerWork_4C.extra_128.upperBodyState_20                    = PlayerUpperBodyState_None;
+                g_SysWork.playerWork_4C.extra_128.lowerBodyState_24                    = PlayerLowerBodyState_None;
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
             }
 
@@ -998,9 +1003,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             {
                 g_SysWork.playerWork_4C.extra_128.state_1C          = thrownState;
                 chara->model_0.stateStep_3                      = 0;
-                chara->model_0.state_2                          = 0;
+                chara->model_0.state_2                          = ModelState_Uninitialized;
                 extra->model_0.stateStep_3                      = 0;
-                extra->model_0.state_2                          = 0;
+                extra->model_0.state_2                          = ModelState_Uninitialized;
                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 chara->properties_E4.player.afkTimer_E8         = Q12(10.0f);
@@ -1096,9 +1101,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             {
                 g_SysWork.playerWork_4C.extra_128.state_1C          = romperAttackState;
                 chara->model_0.stateStep_3                      = 0;
-                chara->model_0.state_2                          = 0;
+                chara->model_0.state_2                          = ModelState_Uninitialized;
                 extra->model_0.stateStep_3                      = 0;
-                extra->model_0.state_2                          = 0;
+                extra->model_0.state_2                          = ModelState_Uninitialized;
                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 chara->properties_E4.player.afkTimer_E8         = Q12(15.0f);
@@ -1532,9 +1537,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
                 g_SysWork.playerWork_4C.extra_128.state_1C          = enemyGrabReleaseState;
                 chara->model_0.stateStep_3                      = 0;
-                chara->model_0.state_2                          = 0;
+                chara->model_0.state_2                          = ModelState_Uninitialized;
                 extra->model_0.stateStep_3                      = 0;
-                extra->model_0.state_2                          = 0;
+                extra->model_0.state_2                          = ModelState_Uninitialized;
                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 chara->flags_3E                                |= CharaFlag_Unk4;
@@ -1650,9 +1655,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                         g_SysWork.playerWork_4C.extra_128.state_1C                      = PlayerState_None;
                         g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
                         chara->model_0.stateStep_3                                  = 0;
-                        chara->model_0.state_2                                      = 0;
+                        chara->model_0.state_2                                      = ModelState_Uninitialized;
                         extra->model_0.stateStep_3                                  = 0;
-                        extra->model_0.state_2                                      = 0;
+                        extra->model_0.state_2                                      = ModelState_Uninitialized;
                         g_SysWork.playerWork_4C.player_0.field_D4.field_0                = Q12(0.3f);
                         g_SysWork.playerWork_4C.player_0.field_D4.field_2                = Q12(0.23f);
                         g_SysWork.playerWork_4C.player_0.field_C8.field_0                = Q12(-1.6f);
@@ -1696,9 +1701,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                             case PlayerState_EnemyReleasePinnedFront:
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_Unk43;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
@@ -1706,9 +1711,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                             case PlayerState_EnemyReleasePinnedBack:
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_Unk44;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
@@ -1740,9 +1745,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                         g_SysWork.playerWork_4C.extra_128.state_1C                      = PlayerState_None;
                         g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_DamageReceived;
                         chara->model_0.stateStep_3                                  = 0;
-                        chara->model_0.state_2                                      = 0;
+                        chara->model_0.state_2                                      = ModelState_Uninitialized;
                         extra->model_0.stateStep_3                                  = 0;
-                        extra->model_0.state_2                                      = 0;
+                        extra->model_0.state_2                                      = ModelState_Uninitialized;
                         g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_None;
                         g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_None;
                         chara->field_D4.field_0                                     = Q12(0.3f);
@@ -1767,7 +1772,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                         chara->model_0.stateStep_3++;
                     }
 
-                    if (extra->model_0.state_2 == 0 && chara->position_18.vy >= chara->properties_E4.player.positionY_EC)
+                    if (extra->model_0.state_2 == ModelState_Uninitialized && chara->position_18.vy >= chara->properties_E4.player.positionY_EC)
                     {
                         extra->model_0.state_2++;
                         func_8005DC1C(Sfx_Unk1317, &chara->position_18, Q8_CLAMPED(0.125f), 0);
@@ -1790,9 +1795,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                             {
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_Death;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                             }
@@ -1800,9 +1805,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                             {
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_None;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                             }
@@ -1829,9 +1834,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                             {
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_Death;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                             }
@@ -1839,9 +1844,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                             {
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_None;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                             }
@@ -1865,9 +1870,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             {
                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_None;
                 chara->model_0.stateStep_3                      = 0;
-                chara->model_0.state_2                          = 0;
+                chara->model_0.state_2                          = ModelState_Uninitialized;
                 extra->model_0.stateStep_3                      = 0;
-                extra->model_0.state_2                          = 0;
+                extra->model_0.state_2                          = ModelState_Uninitialized;
                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 chara->field_D4.field_2                         = Q12(0.23f);
@@ -1881,9 +1886,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             {
                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_None;
                 chara->model_0.stateStep_3                      = 0;
-                chara->model_0.state_2                          = 0;
+                chara->model_0.state_2                          = ModelState_Uninitialized;
                 extra->model_0.stateStep_3                      = 0;
-                extra->model_0.state_2                          = 0;
+                extra->model_0.state_2                          = ModelState_Uninitialized;
                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 chara->field_D4.field_2                         = Q12(0.23f);
@@ -1988,7 +1993,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             break;
 
         case PlayerState_InstantDeath:
-            if (extra->model_0.state_2 == 0)
+            if (extra->model_0.state_2 == ModelState_Uninitialized)
             {
                 SD_Call(4731);
             }
@@ -2116,9 +2121,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                 g_SysWork.playerWork_4C.extra_128.state_1C                                  = PlayerState_None;
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C             &= ~PlayerFlag_DamageReceived;
                 chara->model_0.stateStep_3                                              = 0;
-                chara->model_0.state_2                                                  = 0;
+                chara->model_0.state_2                                                  = ModelState_Uninitialized;
                 extra->model_0.stateStep_3                                              = 0;
-                extra->model_0.state_2                                                  = 0;
+                extra->model_0.state_2                                                  = ModelState_Uninitialized;
                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20                         = PlayerUpperBodyState_None;
                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24                         = PlayerLowerBodyState_None;
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
@@ -2278,7 +2283,7 @@ void Player_UpperBodyStateUpdate(s_PlayerExtra* extra, e_PlayerUpperBodyState up
     if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 != upperState)
     {
         extra->model_0.stateStep_3 = 0;
-        extra->model_0.state_2     = 0;
+        extra->model_0.state_2     = ModelState_Uninitialized;
     }
 
     switch (prevState)
@@ -2439,7 +2444,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
         }
 
         // Attack type (except melee multitap) and animation.
-        if (extra->model_0.state_2 == 0)
+        if (extra->model_0.state_2 == ModelState_Uninitialized)
         {
             g_Player_MeleeAttackType  = 0;
             g_Player_IsMultiTapAttack = 0;
@@ -3332,7 +3337,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
             }
             else
             {
-                if (extra->model_0.state_2 != 0)
+                if (extra->model_0.state_2 != ModelState_Uninitialized)
                 {
                     if (g_TargetEnemyPosition.vx != g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vx ||
                         g_TargetEnemyPosition.vy != g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353].position_18.vy ||
@@ -3381,7 +3386,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 }
             }
 
-            if (extra->model_0.state_2 == 0)
+            if (extra->model_0.state_2 == ModelState_Uninitialized)
             {
                 extra->model_0.state_2++;
             }
@@ -3867,7 +3872,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                     {
                         g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Aim;
                         chara->model_0.stateStep_3                      = 0;
-                        chara->model_0.state_2                          = 0;
+                        chara->model_0.state_2                          = ModelState_Uninitialized;
                     }
                     else if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 < PlayerLowerBodyState_Aim)
                     {
@@ -3875,7 +3880,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                     }
 
                     extra->model_0.stateStep_3            = 0;
-                    extra->model_0.state_2                = 0;
+                    extra->model_0.state_2                = ModelState_Uninitialized;
                     chara->properties_E4.player.field_100 = 0;
 
                     if (g_SysWork.playerCombat_38.totalWeaponAmmo_11 != 0)
@@ -3928,9 +3933,9 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                 {
                     g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_StompEnemy;
                     chara->model_0.stateStep_3                      = 0;
-                    chara->model_0.state_2                          = 0;
+                    chara->model_0.state_2                          = ModelState_Uninitialized;
                     extra->model_0.stateStep_3                      = 0;
-                    extra->model_0.state_2                          = 0;
+                    extra->model_0.state_2                          = ModelState_Uninitialized;
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     return;
@@ -3940,9 +3945,9 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                 {
                     g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_KickEnemy;
                     chara->model_0.stateStep_3                      = 0;
-                    chara->model_0.state_2                          = 0;
+                    chara->model_0.state_2                          = ModelState_Uninitialized;
                     extra->model_0.stateStep_3                      = 0;
-                    extra->model_0.state_2                          = 0;
+                    extra->model_0.state_2                          = ModelState_Uninitialized;
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     return;
@@ -3973,9 +3978,9 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                 {
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     chara->model_0.stateStep_3                      = 0;
-                    chara->model_0.state_2                          = 0;
+                    chara->model_0.state_2                          = ModelState_Uninitialized;
                     extra->model_0.stateStep_3                      = 0;
-                    extra->model_0.state_2                          = 0;
+                    extra->model_0.state_2                          = ModelState_Uninitialized;
                     break;
                 }
 
@@ -3985,7 +3990,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                 }
 
                 extra->model_0.stateStep_3 = 0;
-                extra->model_0.state_2     = 0;
+                extra->model_0.state_2     = ModelState_Uninitialized;
                 break;
             }
 
@@ -4098,7 +4103,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                                 {
                                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Attack;
                                     chara->model_0.stateStep_3                      = 0;
-                                    chara->model_0.state_2                          = 0;
+                                    chara->model_0.state_2                          = ModelState_Uninitialized;
                                 }
                             }
 
@@ -4112,7 +4117,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                         {
                             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Attack;
                             chara->model_0.stateStep_3                      = 0;
-                            chara->model_0.state_2                          = 0;
+                            chara->model_0.state_2                          = ModelState_Uninitialized;
                         }
 
                     case NO_VALUE:
@@ -4124,7 +4129,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                         {
                             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Attack;
                             chara->model_0.stateStep_3                      = 0;
-                            chara->model_0.state_2                          = 0;
+                            chara->model_0.state_2                          = ModelState_Uninitialized;
                         }
                         break;
                 }
@@ -4143,7 +4148,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                         {
                             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Reload;
                             chara->model_0.stateStep_3                      = 0;
-                            chara->model_0.state_2                          = 0;
+                            chara->model_0.state_2                          = ModelState_Uninitialized;
                         }
                     }
                 }
@@ -4159,12 +4164,12 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x
                     {
                         g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_Attack;
                         chara->model_0.stateStep_3                      = 0;
-                        chara->model_0.state_2                          = 0;
+                        chara->model_0.state_2                          = ModelState_Uninitialized;
                     }
                 }
 
                 extra->model_0.stateStep_3 = 0;
-                extra->model_0.state_2     = 0;
+                extra->model_0.state_2     = ModelState_Uninitialized;
             }
             else
             {
@@ -4494,7 +4499,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_JumpBackward;
                                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunJumpBackward;
                                     extra->model_0.stateStep_3                      = 0;
-                                    extra->model_0.state_2                          = 0;
+                                    extra->model_0.state_2                          = ModelState_Uninitialized;
                                 }
                             }
                         }
@@ -4735,7 +4740,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         {
                             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
-                            chara->model_0.state_2                                      = 0;
+                            chara->model_0.state_2                                      = ModelState_Uninitialized;
                             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_Attack;
                         }
                         else
@@ -5123,7 +5128,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_JumpBackward;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_RunJumpBackward;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                             }
                         }
                     }
@@ -5144,7 +5149,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         {
                             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
-                            chara->model_0.state_2                                      = 0;
+                            chara->model_0.state_2                                      = ModelState_Uninitialized;
                             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_Attack;
                         }
                         else
@@ -5226,7 +5231,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         {
                             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
-                            chara->model_0.state_2                                      = 0;
+                            chara->model_0.state_2                                      = ModelState_Uninitialized;
                             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_Attack;
                         }
                         else
@@ -5307,7 +5312,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                         {
                             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Unk10;
                             chara->model_0.stateStep_3                                  = 0;
-                            chara->model_0.state_2                                      = 0;
+                            chara->model_0.state_2                                      = ModelState_Uninitialized;
                             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_Attack;
                         }
                         else
@@ -5530,7 +5535,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 }
             }
 
-            if (chara->model_0.state_2 == 0)
+            if (chara->model_0.state_2 == ModelState_Uninitialized)
             {
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120 = chara->rotation_24.vy;
             }
@@ -5541,7 +5546,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 chara->model_0.stateStep_3++;
             }
 
-            if (chara->model_0.state_2 == 0)
+            if (chara->model_0.state_2 == ModelState_Uninitialized)
             {
                 chara->model_0.state_2++;
             }
@@ -5578,7 +5583,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                             }
 
                             chara->model_0.stateStep_3 = 0;
-                            chara->model_0.state_2     = 0;
+                            chara->model_0.state_2     = ModelState_Uninitialized;
                         }
                         else if (g_Player_IsMovingBackward)
                         {
@@ -5592,7 +5597,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                             }
 
                             chara->model_0.stateStep_3 = 0;
-                            chara->model_0.state_2     = 0;
+                            chara->model_0.state_2     = ModelState_Uninitialized;
                         }
                         else if (g_Player_IsSteppingRightHold)
                         {
@@ -5608,7 +5613,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                             }
 
                             chara->model_0.stateStep_3 = 0;
-                            chara->model_0.state_2     = 0;
+                            chara->model_0.state_2     = ModelState_Uninitialized;
                         }
                         else if (g_Player_IsSteppingLeftHold)
                         {
@@ -5624,13 +5629,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                             }
 
                             chara->model_0.stateStep_3 = 0;
-                            chara->model_0.state_2     = 0;
+                            chara->model_0.state_2     = ModelState_Uninitialized;
                         }
                         else if (chara->model_0.anim_4.keyframeIdx_8 >= 216)
                         {
                             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState;
                             chara->model_0.stateStep_3                      = 0;
-                            chara->model_0.state_2                          = 0;
+                            chara->model_0.state_2                          = ModelState_Uninitialized;
                         }
                     }
                 }
@@ -5653,7 +5658,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 }
             }
 
-            if (chara->model_0.state_2 == 0)
+            if (chara->model_0.state_2 == ModelState_Uninitialized)
             {
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120 = chara->rotation_24.vy;
             }
@@ -5664,7 +5669,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 chara->model_0.stateStep_3++;
             }
 
-            if (chara->model_0.state_2 == 0)
+            if (chara->model_0.state_2 == ModelState_Uninitialized)
             {
                 chara->model_0.state_2++;
             }
@@ -5701,7 +5706,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                             }
 
                             chara->model_0.stateStep_3 = 0;
-                            chara->model_0.state_2     = 0;
+                            chara->model_0.state_2     = ModelState_Uninitialized;
                         }
                         else if (g_Player_IsMovingBackward)
                         {
@@ -5715,7 +5720,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                             }
 
                             chara->model_0.stateStep_3 = 0;
-                            chara->model_0.state_2     = 0;
+                            chara->model_0.state_2     = ModelState_Uninitialized;
                         }
                         else if (g_Player_IsSteppingRightHold)
                         {
@@ -5731,7 +5736,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                             }
 
                             chara->model_0.stateStep_3 = 0;
-                            chara->model_0.state_2     = 0;
+                            chara->model_0.state_2     = ModelState_Uninitialized;
                         }
                         else if (g_Player_IsSteppingLeftHold)
                         {
@@ -5747,13 +5752,13 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                             }
 
                             chara->model_0.stateStep_3 = 0;
-                            chara->model_0.state_2     = 0;
+                            chara->model_0.state_2     = ModelState_Uninitialized;
                         }
                         else if (chara->model_0.anim_4.keyframeIdx_8 >= 229)
                         {
                             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState;
                             chara->model_0.stateStep_3                      = 0;
-                            chara->model_0.state_2                          = 0;
+                            chara->model_0.state_2                          = ModelState_Uninitialized;
                         }
                     }
                 }
@@ -5775,7 +5780,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                  chara->model_0.anim_4.status_0 <= ANIM_STATUS(HarryAnim_JumpBackward, true)) &&
                 chara->model_0.anim_4.keyframeIdx_8 < 245)
             {
-                if (chara->model_0.state_2 == 0)
+                if (chara->model_0.state_2 == ModelState_Uninitialized)
                 {
                     chara->field_34 = Q12(-2.0f);
                 }
@@ -5805,9 +5810,9 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                     g_SysWork.playerWork_4C.extra_128.state_1C = PlayerState_FallBackward;
 
                     chara->model_0.stateStep_3 = 0;
-                    chara->model_0.state_2     = 0;
+                    chara->model_0.state_2     = ModelState_Uninitialized;
                     extra->model_0.stateStep_3 = 0;
-                    extra->model_0.state_2     = 0;
+                    extra->model_0.state_2     = ModelState_Uninitialized;
 
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20                         = PlayerUpperBodyState_None;
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24                         = PlayerLowerBodyState_None;
@@ -5817,7 +5822,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 {
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = aimState;
                     chara->model_0.stateStep_3                      = 0;
-                    chara->model_0.state_2                          = 0;
+                    chara->model_0.state_2                          = ModelState_Uninitialized;
                     chara->field_34                                 = Q12(0.0f);
                 }
             }
@@ -6235,9 +6240,9 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
             chara->health_B0 >= Q12(30.0f))
         {
             chara->model_0.stateStep_3 = 0;
-            chara->model_0.state_2     = 0;
+            chara->model_0.state_2     = ModelState_Uninitialized;
             extra->model_0.stateStep_3 = 0;
-            extra->model_0.state_2     = 0;
+            extra->model_0.state_2     = ModelState_Uninitialized;
         }
     }
 
@@ -6597,9 +6602,9 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
                     {
                         g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_FallBackward;
                         chara->model_0.stateStep_3                      = 0;
-                        chara->model_0.state_2                          = 0;
+                        chara->model_0.state_2                          = ModelState_Uninitialized;
                         extra->model_0.stateStep_3                      = 0;
-                        extra->model_0.state_2                          = 0;
+                        extra->model_0.state_2                          = ModelState_Uninitialized;
                         g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                         g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     }
@@ -6608,9 +6613,9 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
                 {
                     g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_FallForward;
                     chara->model_0.stateStep_3                      = 0;
-                    chara->model_0.state_2                          = 0;
+                    chara->model_0.state_2                          = ModelState_Uninitialized;
                     extra->model_0.stateStep_3                      = 0;
-                    extra->model_0.state_2                          = 0;
+                    extra->model_0.state_2                          = ModelState_Uninitialized;
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 }
@@ -6732,9 +6737,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                 g_SysWork.playerWork_4C.player_0.field_D4.field_2    = Q12(0.0f);
                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_InstantDeath;
                 chara->model_0.stateStep_3                      = 0;
-                chara->model_0.state_2                          = 0;
+                chara->model_0.state_2                          = ModelState_Uninitialized;
                 extra->model_0.stateStep_3                      = 0;
-                extra->model_0.state_2                          = 0;
+                extra->model_0.state_2                          = ModelState_Uninitialized;
                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                 return;
@@ -6806,9 +6811,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                 case 67:
                     g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_Unk7;
                     chara->model_0.stateStep_3                      = 0;
-                    chara->model_0.state_2                          = 0;
+                    chara->model_0.state_2                          = ModelState_Uninitialized;
                     extra->model_0.stateStep_3                      = 0;
-                    extra->model_0.state_2                          = 0;
+                    extra->model_0.state_2                          = ModelState_Uninitialized;
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     break;
@@ -6822,9 +6827,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                     {
                         g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_DamageThrownFront;
                         chara->model_0.stateStep_3                      = 0;
-                        chara->model_0.state_2                          = 0;
+                        chara->model_0.state_2                          = ModelState_Uninitialized;
                         extra->model_0.stateStep_3                      = 0;
-                        extra->model_0.state_2                          = 0;
+                        extra->model_0.state_2                          = ModelState_Uninitialized;
                         g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                         g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     }
@@ -6832,9 +6837,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                     {
                         g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_DamageThrownBack;
                         chara->model_0.stateStep_3                      = 0;
-                        chara->model_0.state_2                          = 0;
+                        chara->model_0.state_2                          = ModelState_Uninitialized;
                         extra->model_0.stateStep_3                      = 0;
-                        extra->model_0.state_2                          = 0;
+                        extra->model_0.state_2                          = ModelState_Uninitialized;
                         g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                         g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     }
@@ -6845,9 +6850,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                     chara->damage_B4.amount_C                       = Q12(10.0f);
                     g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_DamageHead;
                     chara->model_0.stateStep_3                      = 0;
-                    chara->model_0.state_2                          = 0;
+                    chara->model_0.state_2                          = ModelState_Uninitialized;
                     extra->model_0.stateStep_3                      = 0;
-                    extra->model_0.state_2                          = 0;
+                    extra->model_0.state_2                          = ModelState_Uninitialized;
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     break;
@@ -6856,9 +6861,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                 case 42:
                     g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_DamageHead;
                     chara->model_0.stateStep_3                      = 0;
-                    chara->model_0.state_2                          = 0;
+                    chara->model_0.state_2                          = ModelState_Uninitialized;
                     extra->model_0.stateStep_3                      = 0;
-                    extra->model_0.state_2                          = 0;
+                    extra->model_0.state_2                          = ModelState_Uninitialized;
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     break;
@@ -6877,9 +6882,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                             case 54:
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_EnemyGrabPinnedFrontStart;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
@@ -6888,9 +6893,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                             case 56:
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_EnemyGrabTorsoFront;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
@@ -6898,9 +6903,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                             case 49:
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_EnemyGrabLegsFront;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
@@ -6908,9 +6913,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                             case 66:
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_EnemyGrabNeckFront;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
@@ -6926,9 +6931,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                             case 54:
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_EnemyGrabPinnedBackStart;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
@@ -6937,9 +6942,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                             case 56:
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_EnemyGrabTorsoBack;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
@@ -6947,9 +6952,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                             case 49:
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_EnemyGrabLegsBack;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
@@ -6957,9 +6962,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                             case 66:
                                 g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_EnemyGrabNeckBack;
                                 chara->model_0.stateStep_3                      = 0;
-                                chara->model_0.state_2                          = 0;
+                                chara->model_0.state_2                          = ModelState_Uninitialized;
                                 extra->model_0.stateStep_3                      = 0;
-                                extra->model_0.state_2                          = 0;
+                                extra->model_0.state_2                          = ModelState_Uninitialized;
                                 g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                                 g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                                 break;
@@ -6972,9 +6977,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
                     chara->field_D4.field_2                         = Q12(0.0f);
                     g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_InstantDeath;
                     chara->model_0.stateStep_3                      = 0;
-                    chara->model_0.state_2                          = 0;
+                    chara->model_0.state_2                          = ModelState_Uninitialized;
                     extra->model_0.stateStep_3                      = 0;
-                    extra->model_0.state_2                          = 0;
+                    extra->model_0.state_2                          = ModelState_Uninitialized;
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     return;
@@ -7029,9 +7034,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
 
                     g_SysWork.playerWork_4C.extra_128.state_1C          = angleState;
                     chara->model_0.stateStep_3                      = 0;
-                    chara->model_0.state_2                          = 0;
+                    chara->model_0.state_2                          = ModelState_Uninitialized;
                     extra->model_0.stateStep_3                      = 0;
-                    extra->model_0.state_2                          = 0;
+                    extra->model_0.state_2                          = ModelState_Uninitialized;
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     break;
@@ -7048,9 +7053,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
 
                     g_SysWork.playerWork_4C.extra_128.state_1C          = angleState;
                     chara->model_0.stateStep_3                      = 0;
-                    chara->model_0.state_2                          = 0;
+                    chara->model_0.state_2                          = ModelState_Uninitialized;
                     extra->model_0.stateStep_3                      = 0;
-                    extra->model_0.state_2                          = 0;
+                    extra->model_0.state_2                          = ModelState_Uninitialized;
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
                     break;
@@ -7131,9 +7136,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
         {
             g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_Unk36;
             chara->model_0.stateStep_3                      = 0;
-            chara->model_0.state_2                          = 0;
+            chara->model_0.state_2                          = ModelState_Uninitialized;
             extra->model_0.stateStep_3                      = 0;
-            extra->model_0.state_2                          = 0;
+            extra->model_0.state_2                          = ModelState_Uninitialized;
             g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
         }
@@ -7141,9 +7146,9 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
         {
             g_SysWork.playerWork_4C.extra_128.state_1C          = PlayerState_Death;
             chara->model_0.stateStep_3                      = 0;
-            chara->model_0.state_2                          = 0;
+            chara->model_0.state_2                          = ModelState_Uninitialized;
             extra->model_0.stateStep_3                      = 0;
-            extra->model_0.state_2                          = 0;
+            extra->model_0.state_2                          = ModelState_Uninitialized;
             g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None;
             g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None;
         }
@@ -7926,10 +7931,10 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_SysWork.playerWork_4C.extra_128.upperBodyState_20   = PlayerUpperBodyState_None;
     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24   = PlayerLowerBodyState_None;
     g_SysWork.playerWork_4C.extra_128.model_0.stateStep_3 = 0;
-    g_SysWork.playerWork_4C.extra_128.model_0.state_2     = 0;
+    g_SysWork.playerWork_4C.extra_128.model_0.state_2     = ModelState_Uninitialized;
 
     chara->model_0.stateStep_3                = 0;
-    chara->model_0.state_2                    = 0;
+    chara->model_0.state_2                    = ModelState_Uninitialized;
     g_SysWork.playerStopFlags_235A            = PlayerStopFlag_None;
     g_Player_FlexRotationY                    = FP_ANGLE(0.0f);
     g_Player_FlexRotationX                    = FP_ANGLE(0.0f);

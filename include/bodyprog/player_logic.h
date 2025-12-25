@@ -633,9 +633,9 @@ bool func_8007F95C(void);
 {                                                                                    \
     g_SysWork.playerWork_4C.extra_128.state_1C          = (state);                   \
     (playerChara)->model_0.stateStep_3                  = 0;                         \
-    (playerChara)->model_0.state_2                      = 0;                         \
+    (playerChara)->model_0.state_2                      = ModelState_Uninitialized;  \
     (extra)->model_0.stateStep_3                        = 0;                         \
-    (extra)->model_0.state_2                            = 0;                         \
+    (extra)->model_0.state_2                            = ModelState_Uninitialized;  \
     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 = PlayerUpperBodyState_None; \
     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 = PlayerLowerBodyState_None; \
 }

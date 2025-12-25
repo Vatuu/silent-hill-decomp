@@ -2238,7 +2238,7 @@ void func_80037F24(bool cond) // 0x80037F24
             }
 
             g_SysWork.npcs_1A0[npcIdx].field_40            = i;
-            g_SysWork.npcs_1A0[npcIdx].model_0.state_2     = 0;
+            g_SysWork.npcs_1A0[npcIdx].model_0.state_2     = ModelState_Uninitialized;
             g_SysWork.npcs_1A0[npcIdx].model_0.stateStep_3 = curCharaSpawn->data.spawnInfo.flags_6;
             g_SysWork.npcs_1A0[npcIdx].position_18.vx      = curCharaSpawn->positionX_0;
             g_SysWork.npcs_1A0[npcIdx].position_18.vz      = curCharaSpawn->positionZ_8;

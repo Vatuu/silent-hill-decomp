@@ -348,19 +348,19 @@ void func_800D6B00(void) // 0x800D6B00
             g_SysWork.field_2378 = Q12(1.0f);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
-            g_SysWork.npcs_1A0[D_800DAB7C[0]].model_0.state_2     = 0;
+            g_SysWork.npcs_1A0[D_800DAB7C[0]].model_0.state_2     = ModelState_Uninitialized;
             g_SysWork.npcs_1A0[D_800DAB7C[0]].model_0.stateStep_3 = 17;
             g_SysWork.npcs_1A0[D_800DAB7C[0]].position_18.vx     += Q12(-0.1878f);
             g_SysWork.npcs_1A0[D_800DAB7C[0]].position_18.vz     += Q12(0.245f);
             g_SysWork.npcs_1A0[D_800DAB7C[0]].rotation_24.vy      = FP_ANGLE(112.5f);
 
-            g_SysWork.npcs_1A0[D_800DAB7C[1]].model_0.state_2     = 0;
+            g_SysWork.npcs_1A0[D_800DAB7C[1]].model_0.state_2     = ModelState_Uninitialized;
             g_SysWork.npcs_1A0[D_800DAB7C[1]].model_0.stateStep_3 = 17;
             g_SysWork.npcs_1A0[D_800DAB7C[1]].position_18.vx     += Q12(1.8128f);
             g_SysWork.npcs_1A0[D_800DAB7C[1]].position_18.vz     += Q12(0.799f);
             g_SysWork.npcs_1A0[D_800DAB7C[1]].rotation_24.vy      = FP_ANGLE(180.0f);
 
-            g_SysWork.npcs_1A0[D_800DAB7C[2]].model_0.state_2     = 0;
+            g_SysWork.npcs_1A0[D_800DAB7C[2]].model_0.state_2     = ModelState_Uninitialized;
             g_SysWork.npcs_1A0[D_800DAB7C[2]].model_0.stateStep_3 = 17;
             g_SysWork.npcs_1A0[D_800DAB7C[2]].position_18.vx     += Q12(0.6531f);
             g_SysWork.npcs_1A0[D_800DAB7C[2]].position_18.vz     += Q12(-1.2493f);

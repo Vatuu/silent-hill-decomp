@@ -43,7 +43,7 @@ void sharedFunc_800D3CC4_0_s01(s_SubCharacter* chara)
             break;
 
         case 7:
-            chara->model_0.state_2     = 0;
+            chara->model_0.state_2     = ModelState_Uninitialized;
             chara->model_0.stateStep_3 = 13;
             sharedSymbol_800D3B0C_0_s01(chara);
             break;

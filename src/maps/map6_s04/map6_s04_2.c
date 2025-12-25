@@ -45,7 +45,7 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
     s32         var_s1;
     s_AnimInfo* animInfo;
 
-    if (chara->model_0.state_2 == 0)
+    if (chara->model_0.state_2 == ModelState_Uninitialized)
     {
         chara->model_0.anim_4.alpha_A = Q12(0.0f);
         chara->model_0.state_2        = 1;
@@ -84,7 +84,7 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
 {
     s_AnimInfo* animInfo;
 
-    if (chara->model_0.state_2 == 0)
+    if (chara->model_0.state_2 == ModelState_Uninitialized)
     {
         chara->model_0.anim_4.alpha_A = Q12(0.0f);
         chara->model_0.state_2        = 1;

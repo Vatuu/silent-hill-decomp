@@ -579,7 +579,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5E30);
 
 void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5F28
 {
-    if (chara->model_0.state_2 == 0)
+    if (chara->model_0.state_2 == ModelState_Uninitialized)
     {
         Ai_Twinfeeler_TextureLoad(); // Just calls `Fs_QueueStartReadTim`.
         chara->model_0.state_2     = 1;

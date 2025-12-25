@@ -21,7 +21,7 @@
  */
 void Ai_Alessa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (chara->model_0.state_2 == 0)
+    if (chara->model_0.state_2 == ModelState_Uninitialized)
     {
         Ai_Alessa_Init(chara);
     }

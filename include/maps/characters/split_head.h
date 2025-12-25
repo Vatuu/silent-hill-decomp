@@ -1,6 +1,8 @@
 #ifndef _MAPS_CHARACTERS_SPLITHEAD_H
 #define _MAPS_CHARACTERS_SPLITHEAD_H
 
+// TODO: Offical name is actually "Split Head", not "Splithead", which has been used predominantly until now.
+
 /** @brief Splithead character flags. */
 typedef enum _SplitheadFlags
 {

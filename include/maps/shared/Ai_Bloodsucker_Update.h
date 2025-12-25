@@ -3,7 +3,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
     u32 animStatusDiv2;
     s32 stateStepMul2;
 
-    if (bloodsucker->model_0.state_2 == 0)
+    if (bloodsucker->model_0.state_2 == ModelState_Uninitialized)
     {
         Ai_Bloodsucker_Init(bloodsucker);
     }

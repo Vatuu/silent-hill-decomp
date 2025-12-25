@@ -1447,7 +1447,7 @@ typedef struct _MapPoint2d
         {
             s8  charaId_4;   /** `e_CharacterId` */
             u8  rotationY_5; /** Degrees in Q7.8, range [0, 256]. */
-            s8  flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `state_2 = 0`. */
+            s8  flags_6;     /** Copied to `stateStep_3` in `s_Model`, with `state_2 = ModelState_Uninitialized`. */
             s32 field_7_0 : 4;
         } spawnInfo;
         struct

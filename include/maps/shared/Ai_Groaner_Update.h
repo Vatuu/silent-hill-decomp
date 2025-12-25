@@ -2,7 +2,7 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
 {
     u8 var;
 
-    if (groaner->model_0.state_2 == 0)
+    if (groaner->model_0.state_2 == ModelState_Uninitialized)
     {
         Ai_Groaner_Init(groaner);
     }

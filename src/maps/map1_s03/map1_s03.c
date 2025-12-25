@@ -216,7 +216,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
 {
     s_AnimInfo* animInfo;
 
-    if (chara->model_0.state_2 == 0)
+    if (chara->model_0.state_2 == ModelState_Uninitialized)
     {
         chara->model_0.anim_4.alpha_A = Q12(0.0f);
         Character_AnimSet(chara, ANIM_STATUS(LockerDeadBodyAnim_2, true), 0);

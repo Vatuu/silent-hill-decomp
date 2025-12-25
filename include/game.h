@@ -879,6 +879,13 @@ typedef enum _CharacterId
     Chara_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
 } e_CharacterId;
 
+/** @brief Character model states. */
+typedef enum _ModelState
+{
+    ModelState_Uninitialized = 0,
+
+} e_ModelState;
+
 typedef enum _GameDifficulty
 {
     GameDifficulty_Easy   = -1,
@@ -1187,11 +1194,12 @@ typedef struct _ModelAnim
 } s_ModelAnim;
 STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
+/** @brief Character model data. TODO: Name might be inaccurate, could be something like common data for a loaded character. */
 typedef struct _Model
 {
     s8          charaId_0;    /** `e_CharacterId` */
     u8          paletteIdx_1; /** Changes the texture palette index for this model. */
-    u8          state_2;      /** Current state for this model/character. 0 usually means it still has to be initialized. */
+    u8          state_2;      /** Current state for this model/character. */
     u8          stateStep_3;  // Step number or temp data for the current `state_2`? In `s_PlayerExtra` always 1, set to 0 for 1 tick when anim state appears to change.
                               // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
                               // Sometimes holds actual anim index?

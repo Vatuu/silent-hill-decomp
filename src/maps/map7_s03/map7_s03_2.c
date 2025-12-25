@@ -7,7 +7,7 @@
 #include "maps/shared.h"
 #include "maps/map7/map7_s03.h"
 #include "maps/characters/alessa.h"
-#include "maps/characters/bloodyLisa.h"
+#include "maps/characters/bloody_lisa.h"
 #include "maps/characters/cybil.h"
 #include "maps/characters/dahlia.h"
 #include "maps/characters/kaufmann.h"
@@ -49,7 +49,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOO
     s32         var_a2;
     s_AnimInfo* animInfo;
 
-    if (incubus->model_0.state_2 == 0)
+    if (incubus->model_0.state_2 == ModelState_Uninitialized)
     {
         incubus->model_0.anim_4.alpha_A = Q12(0.0f);
         incubus->model_0.state_2        = 1;
@@ -401,7 +401,7 @@ void func_800DD98C(s32 arg0) // 0x800DD98C
 
 void func_800DD9B0(s_SubCharacter* chara) // 0x800DD9B0
 {
-    if (chara->model_0.state_2 != 0)
+    if (chara->model_0.state_2 != ModelState_Uninitialized)
     {
         chara->model_0.state_2     = 2;
         chara->model_0.stateStep_3 = 0;
@@ -414,7 +414,7 @@ void func_800DD9B0(s_SubCharacter* chara) // 0x800DD9B0
 
 void func_800DD9D4(s_SubCharacter* chara) // 0x800DD9D4
 {
-    if (chara->model_0.state_2 != 0)
+    if (chara->model_0.state_2 != ModelState_Uninitialized)
     {
         chara->model_0.state_2     = 10;
         chara->model_0.stateStep_3 = 0;
@@ -427,7 +427,7 @@ void func_800DD9D4(s_SubCharacter* chara) // 0x800DD9D4
 
 void func_800DD9F8(s_SubCharacter* chara) // 0x800DD9F8
 {
-    if (chara->model_0.state_2 != 0)
+    if (chara->model_0.state_2 != ModelState_Uninitialized)
     {
         chara->model_0.state_2     = 3;
         chara->model_0.stateStep_3 = 0;
@@ -724,7 +724,7 @@ void func_800DFB2C(bool disableDamage) // 0x800DFB2C
 
 void func_800DFB50(s_SubCharacter* chara) // 0x800DFB50
 {
-    if (chara->model_0.state_2 != 0)
+    if (chara->model_0.state_2 != ModelState_Uninitialized)
     {
         chara->model_0.state_2     = 4;
         chara->model_0.stateStep_3 = 0;
@@ -737,7 +737,7 @@ void func_800DFB50(s_SubCharacter* chara) // 0x800DFB50
 
 void func_800DFB74(s_SubCharacter* chara) // 0x800DFB74
 {
-    if (chara->model_0.state_2 != 0)
+    if (chara->model_0.state_2 != ModelState_Uninitialized)
     {
         chara->model_0.state_2     = 2;
         chara->model_0.stateStep_3 = 0;
@@ -955,7 +955,7 @@ void func_800E0914(s_SubCharacter* chara) // 0x800E0914
 
 void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800E093C
 {
-    if (chara->model_0.state_2 == 0)
+    if (chara->model_0.state_2 == ModelState_Uninitialized)
     {
         Ai_Unknown23_Init(chara, coords);
     }

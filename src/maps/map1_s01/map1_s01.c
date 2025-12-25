@@ -87,7 +87,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     s_AnimInfo* animInfo;
     bool        cond;
 
-    if (chara->model_0.state_2 == 0)
+    if (chara->model_0.state_2 == ModelState_Uninitialized)
     {
         chara->model_0.state_2                                      = 1;
         chara->model_0.anim_4.status_0                              = ANIM_STATUS(3, true);

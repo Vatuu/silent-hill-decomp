@@ -6,9 +6,9 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map7/map7_s02.h"
-#include "maps/characters/bloodyLisa.h"
+#include "maps/characters/bloody_lisa.h"
 #include "maps/characters/dahlia.h"
-#include "maps/characters/ghostChildAlessa.h"
+#include "maps/characters/ghost_child_alessa.h"
 #include "maps/characters/kaufmann.h"
 #include "maps/characters/lisa.h"
 

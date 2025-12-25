@@ -2,7 +2,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORD
 {
     s8* mapOverlayPtr;
 
-    if (chara->model_0.state_2 == 0)
+    if (chara->model_0.state_2 == ModelState_Uninitialized)
     {
         Ai_LarvalStalker_Init(chara);
     }
