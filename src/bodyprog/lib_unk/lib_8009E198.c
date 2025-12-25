@@ -72,7 +72,7 @@ s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2) // 0x8
             arg2 = 0;
         }
 
-        arg0->field_C = arg1;
+        arg0->field_C  = arg1;
         arg0->unk_B[0] = arg2;
 
         while (arg2 > 0)
@@ -86,7 +86,7 @@ s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2) // 0x8
             tmp.bits_0_27 = 0;
             arg2--;
             arg1->flags_0 = tmp;
-            arg1->data_4 = 0;
+            arg1->data_4  = 0;
             arg1++;
         }
     }
@@ -215,7 +215,7 @@ s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* node) // 0x8009E550
         {
             break;
         }
-        
+
         node = node->next_0;
     }
 
@@ -313,7 +313,91 @@ bool func_8009E97C(s_SysWork_2510* node) // 0x8009E97C
     return true;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E9D0);
+s32 func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s32 arg3)
+{
+    s_SysWork_2514_0   status;
+    u_SysWork_2514_C_0 tmp;
+    s32                field_0_19;
+    s32                unk_B_0;
+    s32                i;
+    u32                mask = (1 << padState);
+    u8                 stack[0x18];
+
+    status = work->field_0;
+
+    if (mask & ((1 << PadStateReqInfo) | (1 << PadStateExecCmd)))
+    {
+        return status.field_0_24 == 1;
+    }
+    if (padState != PadStateStable)
+    {
+        return 0;
+    }
+
+    if (((0x90u >> arg3) & 1))
+    {
+        status.field_0_24 = 1;
+        status.field_0_23 = 0;
+        status.field_0_22 = 0;
+
+        arg2          = work->field_C;
+        unk_B_0       = work->unk_B[0];
+        work->field_4 = 0;
+        work->field_8 = 0;
+
+        field_0_19 = 0;
+        i          = 2;
+
+        if (unk_B_0 < 3)
+        {
+            i = unk_B_0;
+        }
+
+        if (i > 0)
+        {
+            tmp.flags.bits_0_0  = 2;
+            tmp.flags.bits_0_8  = 0;
+            tmp.flags.bits_0_9  = 10;
+            tmp.flags.bits_0_16 = 0;
+            tmp.flags.bits_0_24 = 0;
+            tmp.flags.bits_0_19 = 1;
+            tmp.flags.bits_0_27 = 2;
+            arg2->flags_0       = tmp.flags;
+            field_0_19          = 1;
+        }
+
+        if (i >= 2)
+        {
+            tmp.flags.bits_0_0  = 3;
+            tmp.flags.bits_0_8  = 0;
+            tmp.flags.bits_0_9  = 20;
+            tmp.flags.bits_0_16 = 1;
+            tmp.flags.bits_0_24 = 1;
+            tmp.flags.bits_0_19 = 1;
+            tmp.flags.bits_0_27 = 1;
+            arg2++;
+            arg2->flags_0 = tmp.flags;
+
+            field_0_19 = 2;
+            i          = 2;
+        }
+
+        work->field_A     = i;
+        status.field_0_19 = field_0_19;
+        work->field_0     = status;
+        tmp.value         = 0;
+        arg2++;
+
+        while (i < unk_B_0)
+        {
+            *(u32*)arg2 = tmp.value;
+            arg2++;
+            i++;
+        };
+        return 1;
+    }
+    return 0;
+}
 
 bool func_8009EBB8(s_SysWork_2514* list, s_SysWork_2514_18* node, s32 count) // 0x8009EBB8
 {
