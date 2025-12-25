@@ -1,4 +1,4 @@
-s32 sharedFunc_800D7440_0_s01(s_800C4590* arg0, VECTOR* offset, s_SubCharacter* chara)
+s32 sharedFunc_800D7440_0_s01(s_800C4590* arg0, VECTOR* offset, s_SubCharacter* airScreamer)
 {
     s32         newPosY;
     s32         posY;
@@ -8,17 +8,17 @@ s32 sharedFunc_800D7440_0_s01(s_800C4590* arg0, VECTOR* offset, s_SubCharacter* 
 
     arg0Cpy = arg0;
 
-    sharedFunc_800D81D0_0_s01(chara);
-    sharedFunc_800D8714_0_s01(chara, chara->moveSpeed_38, chara->headingAngle_3C);
-    sharedFunc_800D87FC_0_s01(chara);
+    sharedFunc_800D81D0_0_s01(airScreamer);
+    sharedFunc_800D8714_0_s01(airScreamer, airScreamer->moveSpeed_38, airScreamer->headingAngle_3C);
+    sharedFunc_800D87FC_0_s01(airScreamer);
 
-    result = func_80069B24(arg0Cpy, offset, chara);
+    result = func_80069B24(arg0Cpy, offset, airScreamer);
 
-    posY    = chara->position_18.vy;
-    newPosY = func_80080884(chara->position_18.vx + arg0Cpy->offset_0.vx,
-                            chara->position_18.vz + arg0Cpy->offset_0.vz);
+    posY    = airScreamer->position_18.vy;
+    newPosY = func_80080884(airScreamer->position_18.vx + arg0Cpy->offset_0.vx,
+                            airScreamer->position_18.vz + arg0Cpy->offset_0.vz);
 
-    if (sharedFunc_800D4A80_0_s01(chara) != 4)
+    if (sharedFunc_800D4A80_0_s01(airScreamer) != 4)
     {
         if (offset->vy > Q12(0.0f) && newPosY < (posY - Q12(0.5f)))
         {
@@ -38,6 +38,6 @@ s32 sharedFunc_800D7440_0_s01(s_800C4590* arg0, VECTOR* offset, s_SubCharacter* 
         result = 1;
     }
 
-    sharedFunc_800D8244_0_s01(chara);
+    sharedFunc_800D8244_0_s01(airScreamer);
     return result;
 }

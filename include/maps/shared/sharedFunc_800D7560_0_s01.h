@@ -1,4 +1,4 @@
-void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
+void sharedFunc_800D7560_0_s01(s_SubCharacter* airScreamer)
 {
     q19_12   headingAngle;
     q19_12   sinHeadingAngle;
@@ -11,15 +11,15 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
 
     mat                                       = (s32*)(sharedData_800E21D0_0_s01.coords_8) + 1;
     *(s32*)sharedData_800E21D0_0_s01.coords_8 = 0;
-    rot                                       = &chara->rotation_24;
+    rot                                       = &airScreamer->rotation_24;
     Math_RotMatrixZxyNegGte(rot, mat);
 
-    if ((chara->properties_E4.player.afkTimer_E8 & 0xF) == 3)
+    if ((airScreamer->properties_E4.player.afkTimer_E8 & 0xF) == 3)
     {
         scale = &sharedData_800DD870_0_s01;
         ScaleMatrix(mat, scale);
     }
-    else if (chara->properties_E4.player.flags_11C & PlayerFlag_Unk12)
+    else if (airScreamer->properties_E4.player.flags_11C & PlayerFlag_Unk12)
     {
         scale = &sharedData_800DD880_0_s01;
         ScaleMatrix(mat, scale);
@@ -40,7 +40,7 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* chara)
         offsetZ         = FP_MULTIPLY_PRECISE(cosHeadingAngle, Q12(-0.17f), Q12_SHIFT);
     }
 
-    mat->t[0] = Q12_TO_Q8(chara->position_18.vx + offsetX);
-    mat->t[1] = Q12_TO_Q8(chara->position_18.vy);
-    mat->t[2] = Q12_TO_Q8(chara->position_18.vz + offsetZ);
+    mat->t[0] = Q12_TO_Q8(airScreamer->position_18.vx + offsetX);
+    mat->t[1] = Q12_TO_Q8(airScreamer->position_18.vy);
+    mat->t[2] = Q12_TO_Q8(airScreamer->position_18.vz + offsetZ);
 }

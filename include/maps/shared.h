@@ -1310,65 +1310,6 @@
 // NPC TABLES
 // ===========
 
-/*s_AnimInfo AIR_SCREAMER_ANIM_INFOS[] = {
-    { Anim_Update2, ANIM_STATUS(0, false), false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },
-    { Anim_Update1, ANIM_STATUS(0, true), false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },
-    { Anim_Update2, ANIM_STATUS(1, false), false, ANIM_STATUS(1, true), { Q12(10) }, NO_VALUE, 0 },
-    { Anim_Update0, ANIM_STATUS(1, true), false, ANIM_STATUS(23, false), { Q12(20) }, 0, 11 },
-    { Anim_Update2, ANIM_STATUS(2, false), false, ANIM_STATUS(2, true), { Q12(15) }, NO_VALUE, 12 },
-    { Anim_Update0, ANIM_STATUS(2, true), false, ANIM_STATUS(19, false), { Q12(15) }, 12, 25 },
-    { Anim_Update2, ANIM_STATUS(3, false), false, ANIM_STATUS(3, true), { Q12(30) }, NO_VALUE, 26 },
-    { Anim_Update0, ANIM_STATUS(3, true), false, ANIM_STATUS(17, false), { Q12(25) }, 26, 55 },
-    { Anim_Update2, ANIM_STATUS(4, false), false, ANIM_STATUS(4, true), { Q12(15) }, NO_VALUE, 56 },
-    { Anim_Update0, ANIM_STATUS(4, true), false, ANIM_STATUS(26, false), { Q12(15) }, 56, 80 },
-    { Anim_Update2, ANIM_STATUS(5, false), false, ANIM_STATUS(5, true), { Q12(10) }, NO_VALUE, 81 },
-    { Anim_Update0, ANIM_STATUS(5, true), false, ANIM_STATUS(26, false), { Q12(10) }, 81, 99 },
-    { Anim_Update2, ANIM_STATUS(6, false), false, ANIM_STATUS(6, true), { Q12(30) }, NO_VALUE, 100 },
-    { Anim_Update0, ANIM_STATUS(6, true), false, ANIM_STATUS(23, false), { Q12(20) }, 100, 114 },
-    { Anim_Update2, ANIM_STATUS(7, false), false, ANIM_STATUS(7, true), { Q12(30) }, NO_VALUE, 115 },
-    { Anim_Update0, ANIM_STATUS(7, true), false, ANIM_STATUS(19, false), { Q12(20) }, 115, 129 },
-    { Anim_Update2, ANIM_STATUS(8, false), false, ANIM_STATUS(8, true), { Q12(30) }, NO_VALUE, 130 },
-    { Anim_Update0, ANIM_STATUS(8, true), false, ANIM_STATUS(17, false), { Q12(25) }, 130, 153 },
-    { Anim_Update2, ANIM_STATUS(9, false), false, ANIM_STATUS(9, true), { Q12(30) }, NO_VALUE, 154 },
-    { Anim_Update0, ANIM_STATUS(9, true), false, ANIM_STATUS(21, false), { Q12(24) }, 154, 171 },
-    { Anim_Update2, ANIM_STATUS(10, false), false, ANIM_STATUS(10, true), { Q12(10) }, NO_VALUE, 172 },
-    { Anim_Update0, ANIM_STATUS(10, true), false, ANIM_STATUS(26, false), sharedFunc_800D77D0_0_s01, 172, 189 },
-    { Anim_Update2, ANIM_STATUS(11, false), false, ANIM_STATUS(11, true), { Q12(10) }, NO_VALUE, 190 },
-    { Anim_Update0, ANIM_STATUS(11, true), false, ANIM_STATUS(26, false), sharedFunc_800D77D0_0_s01, 190, 230 },
-    { Anim_Update2, ANIM_STATUS(12, false), false, ANIM_STATUS(12, true), { Q12(10) }, NO_VALUE, 231 },
-    { Anim_Update0, ANIM_STATUS(12, true), false, ANIM_STATUS(26, false), { Q12(10) }, 231, 242 },
-    { Anim_Update2, ANIM_STATUS(13, false), false, ANIM_STATUS(13, true), { Q12(5) }, NO_VALUE, 243 },
-    { Anim_Update0, ANIM_STATUS(13, true), false, ANIM_STATUS(14, false), { Q12(10) }, 243, 272 },
-    { Anim_Update2, ANIM_STATUS(14, false), false, ANIM_STATUS(14, true), { Q12(1.5) }, NO_VALUE, 273 },
-    { Anim_Update1, ANIM_STATUS(14, true), false, NO_VALUE, { Q12(10) }, 273, 302 },
-    { Anim_Update2, ANIM_STATUS(15, false), false, ANIM_STATUS(15, true), func_800E21C8, NO_VALUE, 303 },
-    { Anim_Update0, ANIM_STATUS(15, true), false, ANIM_STATUS(19, false), func_800E21C8, 303, 314 },
-    { Anim_Update2, ANIM_STATUS(16, false), false, ANIM_STATUS(16, true), { Q12(30) }, NO_VALUE, 315 },
-    { Anim_Update0, ANIM_STATUS(16, true), false, ANIM_STATUS(25, false), sharedFunc_800D77D0_0_s01, 315, 339 },
-    { Anim_Update2, ANIM_STATUS(17, false), false, ANIM_STATUS(17, true), func_800E21C8, NO_VALUE, 340 },
-    { Anim_Update1, ANIM_STATUS(17, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 340, 352 },
-    { Anim_Update2, ANIM_STATUS(18, false), false, ANIM_STATUS(18, true), { Q12(30) }, NO_VALUE, 353 },
-    { Anim_Update0, ANIM_STATUS(18, true), false, ANIM_STATUS(17, false), { Q12(20) }, 353, 364 },
-    { Anim_Update2, ANIM_STATUS(19, false), false, ANIM_STATUS(19, true), func_800E21C8, NO_VALUE, 365 },
-    { Anim_Update1, ANIM_STATUS(19, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 365, 376 },
-    { Anim_Update2, ANIM_STATUS(20, false), false, ANIM_STATUS(20, true), { Q12(10) }, NO_VALUE, 377 },
-    { Anim_Update0, ANIM_STATUS(20, true), false, ANIM_STATUS(26, false), { Q12(10) }, 377, 383 },
-    { Anim_Update2, ANIM_STATUS(21, false), false, ANIM_STATUS(21, true), { Q12(15) }, NO_VALUE, 384 },
-    { Anim_Update1, ANIM_STATUS(21, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 384, 407 },
-    { Anim_Update2, ANIM_STATUS(22, false), false, ANIM_STATUS(22, true), { Q12(30) }, NO_VALUE, 408 },
-    { Anim_Update0, ANIM_STATUS(22, true), false, ANIM_STATUS(19, false), { Q12(20) }, 408, 432 },
-    { Anim_Update2, ANIM_STATUS(23, false), false, ANIM_STATUS(23, true), { Q12(10) }, NO_VALUE, 433 },
-    { Anim_Update1, ANIM_STATUS(23, true), false, NO_VALUE, func_800E21C8, 433, 447 },
-    { Anim_Update2, ANIM_STATUS(24, false), false, ANIM_STATUS(24, true), func_800E21C8, NO_VALUE, 448 },
-    { Anim_Update0, ANIM_STATUS(24, true), false, ANIM_STATUS(17, false), func_800E21C8, 448, 482 },
-    { Anim_Update2, ANIM_STATUS(25, false), false, ANIM_STATUS(25, true), { Q12(30) }, NO_VALUE, 483 },
-    { Anim_Update1, ANIM_STATUS(25, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 483, 523 },
-    { Anim_Update2, ANIM_STATUS(26, false), false, ANIM_STATUS(26, true), { Q12(1.5) }, NO_VALUE, 96 },
-    { Anim_Update1, ANIM_STATUS(26, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 96, 99 },
-    { Anim_Update2, ANIM_STATUS(27, false), false, ANIM_STATUS(27, true), { Q12(30) }, NO_VALUE, 365 },
-    { Anim_Update1, ANIM_STATUS(27, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 365, 376 }
-};*/
-
 /*s_AnimInfo BLOODY_INCUBATOR_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0,  false), false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { Anim_Update1, ANIM_STATUS(0,  true),  false, NO_VALUE, { Q12(30) }, NO_VALUE, 1 },
@@ -1938,7 +1879,7 @@ typedef struct
     s32               field_B4[6][4]; // [*][3] is angle.
     s32               field_114;
     s32               field_118;
-    VECTOR3           field_11C;
+    VECTOR3           field_11C; // Q19.12
     VECTOR3           field_128;
     VECTOR3           field_134;
     VECTOR3           unk_140;
@@ -2985,20 +2926,20 @@ s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* chara);
 /** Gets player Y position with an offset. */
 s32 sharedFunc_800D5274_0_s01(void);
 
-void sharedFunc_800D633C_0_s01(s_SubCharacter* chara);
-void sharedFunc_800D63A4_0_s01(s_SubCharacter* chara);
-void sharedFunc_800D6600_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D633C_0_s01(s_SubCharacter* airScreamer);
+void sharedFunc_800D63A4_0_s01(s_SubCharacter* airScreamer);
+void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer);
 
 s32 sharedFunc_800D7120_0_s01(s32, s32, s32);
 s32 sharedFunc_800D71F0_0_s01(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
-s32 sharedFunc_800D7440_0_s01(s_800C4590* arg0, VECTOR* vec1, s_SubCharacter* chara);
+s32 sharedFunc_800D7440_0_s01(s_800C4590* arg0, VECTOR* vec1, s_SubCharacter* airScreamer);
 
-void sharedFunc_800D7560_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D7560_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D76A0_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D76A0_0_s01(s_SubCharacter* airScreamer);
 
-q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* chara);
+q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* airScreamer);
 
@@ -3013,15 +2954,15 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D81B0_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D81D0_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D81D0_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D8244_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D8244_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D8714_0_s01(s_SubCharacter* chara, s32 arg1, s32 arg2);
+void sharedFunc_800D8714_0_s01(s_SubCharacter* airScreamer, q19_12 angle0, q19_12 angle1);
 
-void sharedFunc_800D87FC_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D87FC_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D8804_0_s01(void);
 
@@ -3035,8 +2976,12 @@ void sharedFunc_800E1290_6_s04(void);
 
 void sharedFunc_800E12D0_6_s04(void);
 
-s32 sharedFunc_800D2DAC_0_s00(void); // Player anim func. Checks if the active keyframe is at the start or end of the anim's range.
-s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara); // NPC anim func. Checks if the active keyframe is at the start or end of the anim's range.
+/** Player anim func. Checks if the active keyframe is at the start or end of the anim's range. */
+s32 sharedFunc_800D2DAC_0_s00(void);
+
+/** NPC anim func. Checks if the active keyframe is at the start or end of the anim's range. */
+s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara);
+
 bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfxId);
 
 void sharedFunc_800D0700_0_s00(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd, s32 flag);

@@ -5,6 +5,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map6/map6_s00.h"
+#include "maps/characters/air_screamer.h"
 
 INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800C9578);
 

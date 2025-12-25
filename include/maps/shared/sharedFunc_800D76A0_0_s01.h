@@ -1,19 +1,19 @@
-void sharedFunc_800D76A0_0_s01(s_SubCharacter* chara)
+void sharedFunc_800D76A0_0_s01(s_SubCharacter* airScreamer)
 {
-    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(23, true) ||
-        chara->model_0.anim_4.status_0 == ANIM_STATUS(13, true) ||
-        chara->model_0.anim_4.status_0 == ANIM_STATUS(14, true))
+    if (airScreamer->model_0.anim_4.status_0 == ANIM_STATUS(AirScreamerAnim_23, true) ||
+        airScreamer->model_0.anim_4.status_0 == ANIM_STATUS(AirScreamerAnim_13, true) ||
+        airScreamer->model_0.anim_4.status_0 == ANIM_STATUS(AirScreamerAnim_14, true))
     {
-        if (sharedFunc_800D77D0_0_s01(chara) != Q12(0.0f))
+        if (sharedFunc_800D77D0_0_s01(airScreamer) != Q12(0.0f))
         {
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(25, false);
+            airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(AirScreamerAnim_25, false);
         }
     }
-    else if (chara->model_0.anim_4.status_0 == ANIM_STATUS(25, true))
+    else if (airScreamer->model_0.anim_4.status_0 == ANIM_STATUS(AirScreamerAnim_25, true))
     {
-        if (sharedFunc_800D77D0_0_s01(chara) == Q12(0.0f))
+        if (sharedFunc_800D77D0_0_s01(airScreamer) == Q12(0.0f))
         {
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(23, false);
+            airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(AirScreamerAnim_23, false);
         }
     }
 }

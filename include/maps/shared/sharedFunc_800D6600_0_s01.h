@@ -1,4 +1,4 @@
-void sharedFunc_800D6600_0_s01(s_SubCharacter* chara)
+void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
 {
     q19_12 newPosX;
     q19_12 sp1C;
@@ -13,21 +13,21 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* chara)
     q20_12 angle3;
     s32    temp;
 
-    newPosX = FP_MULTIPLY_PRECISE(chara->damage_B4.position_0.vx, Q12(3.0f), Q12_SHIFT);
-    newPosY = FP_MULTIPLY_PRECISE(chara->damage_B4.position_0.vy, Q12(3.0f), Q12_SHIFT);
-    newPosZ = FP_MULTIPLY_PRECISE(chara->damage_B4.position_0.vz, Q12(3.0f), Q12_SHIFT);
+    newPosX = FP_MULTIPLY_PRECISE(airScreamer->damage_B4.position_0.vx, Q12(3.0f), Q12_SHIFT);
+    newPosY = FP_MULTIPLY_PRECISE(airScreamer->damage_B4.position_0.vy, Q12(3.0f), Q12_SHIFT);
+    newPosZ = FP_MULTIPLY_PRECISE(airScreamer->damage_B4.position_0.vz, Q12(3.0f), Q12_SHIFT);
 
-    chara->damage_B4.position_0.vx = Q12(0.0f);
-    chara->damage_B4.position_0.vy = Q12(0.0f);
-    chara->damage_B4.position_0.vz = Q12(0.0f);
+    airScreamer->damage_B4.position_0.vx = Q12(0.0f);
+    airScreamer->damage_B4.position_0.vy = Q12(0.0f);
+    airScreamer->damage_B4.position_0.vz = Q12(0.0f);
 
     sp1C = SquareRoot12(FP_SQUARE_PRECISE(newPosX, Q12_SHIFT) +
                         FP_SQUARE_PRECISE(newPosY, Q12_SHIFT) +
                         FP_SQUARE_PRECISE(newPosZ, Q12_SHIFT));
 
-    angle2 = chara->properties_E4.dummy.properties_E8[1].val32;
-    angle0 = chara->properties_E4.dummy.properties_E8[2].val16[0];
-    angle1 = chara->properties_E4.dummy.properties_E8[2].val16[1];
+    angle2 = airScreamer->properties_E4.dummy.properties_E8[1].val32;
+    angle0 = airScreamer->properties_E4.dummy.properties_E8[2].val16[0];
+    angle1 = airScreamer->properties_E4.dummy.properties_E8[2].val16[1];
 
     if (angle2 == FP_ANGLE(0.0f))
     {
@@ -59,9 +59,9 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* chara)
 
     if (!(posX | posY | posZ))
     {
-        chara->properties_E4.dummy.properties_E8[1].val32    = FP_ANGLE(0.0f); // } Presumably angles.
-        chara->properties_E4.dummy.properties_E8[2].val16[0] = FP_ANGLE(0.0f); // }
-        chara->properties_E4.dummy.properties_E8[2].val16[1] = chara->rotation_24.vy;
+        airScreamer->properties_E4.dummy.properties_E8[1].val32    = FP_ANGLE(0.0f); // } Presumably angles.
+        airScreamer->properties_E4.dummy.properties_E8[2].val16[0] = FP_ANGLE(0.0f); // }
+        airScreamer->properties_E4.dummy.properties_E8[2].val16[1] = airScreamer->rotation_24.vy;
         return;
     }
 
@@ -73,10 +73,10 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* chara)
     sharedData_800DE200_0_s01.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, posY, Q12_SHIFT);
     sharedData_800DE200_0_s01.vz = FP_MULTIPLY_PRECISE(g_DeltaTime0, posZ, Q12_SHIFT);
 
-    temp = sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE200_0_s01, chara);
-    temp = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset_0, &sharedData_800DE210_0_s01, chara, temp, &sharedData_800E21D0_0_s01.field_128);
+    temp = sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE200_0_s01, airScreamer);
+    temp = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset_0, &sharedData_800DE210_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.field_128);
 
-    sharedFunc_800D6C7C_0_s01(&sharedData_800DE200_0_s01, chara, temp, &sharedData_800E21D0_0_s01.unk_140);
+    sharedFunc_800D6C7C_0_s01(&sharedData_800DE200_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.unk_140);
 
     angle1 = ratan2(posX, posZ);
     angle0 = FP_SQUARE_PRECISE(posX, Q12_SHIFT) + FP_SQUARE_PRECISE(posZ, Q12_SHIFT);
@@ -95,7 +95,7 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* chara)
         angle2 = angle2 - angle3;
     }
 
-    chara->properties_E4.dummy.properties_E8[1].val32    = angle2;
-    chara->properties_E4.dummy.properties_E8[2].val16[0] = angle0;
-    chara->properties_E4.dummy.properties_E8[2].val16[1] = angle1;
+    airScreamer->properties_E4.dummy.properties_E8[1].val32    = angle2;
+    airScreamer->properties_E4.dummy.properties_E8[2].val16[0] = angle0;
+    airScreamer->properties_E4.dummy.properties_E8[2].val16[1] = angle1;
 }

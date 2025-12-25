@@ -4,6 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map0/map0_s01.h"
+#include "maps/characters/air_screamer.h"
 
 const VECTOR D_800CA5C8 = {};
 

@@ -1121,7 +1121,7 @@ typedef struct _SavegameContainer
 } s_SavegameContainer;
 STATIC_ASSERT_SIZEOF(s_SavegameContainer, 640);
 
-/** @brief Contains `s_SaveUserConfig` data padded to 128 bytes, with footer at the end containing checksum + magic. */
+/** @brief Contains `s_SaveUserConfig` data padded to 128 bytes with a footer at the end containing checksum + magic. */
 typedef struct _SaveUserConfigContainer
 {
     s_SaveUserConfig config_0;
@@ -1163,7 +1163,9 @@ typedef struct _GameWork
 } s_GameWork;
 STATIC_ASSERT_SIZEOF(s_GameWork, 1496);
 
-/** @brief Const data passed over to `Anim_Update` funcs. Struct itself contains which `Anim_Update` func is to be called. */
+/** @brief Constant character animation info passed to `Anim_Update` functions.
+ * The struct itself defines which `Anim_Update` function is to be called.
+ */
 typedef struct _AnimInfo
 {
     void (*updateFunc_0)(struct _Model* model, struct _AnmHeader* anmHdr, GsCOORDINATE2* coords, struct _AnimInfo* animInfo);
@@ -1181,6 +1183,7 @@ typedef struct _AnimInfo
 } s_AnimInfo;
 STATIC_ASSERT_SIZEOF(s_AnimInfo, 16);
 
+/** @brief Character model animation. */
 typedef struct _ModelAnim
 {
     u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status`. */
@@ -1194,7 +1197,7 @@ typedef struct _ModelAnim
 } s_ModelAnim;
 STATIC_ASSERT_SIZEOF(s_ModelAnim, 20);
 
-/** @brief Character model data. TODO: Name might be inaccurate, could be something like common data for a loaded character. */
+/** @brief Character model. */
 typedef struct _Model
 {
     s8          charaId_0;    /** `e_CharacterId` */
@@ -1484,7 +1487,7 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter_C8, 12);
 
 typedef struct _SubCharacter_D4
 {
-    q3_12 field_0;
+    q3_12 field_0; // Y position offset?
     q3_12 field_2;
 } s_SubCharacter_D4;
 STATIC_ASSERT_SIZEOF(s_SubCharacter_D4, 4);
