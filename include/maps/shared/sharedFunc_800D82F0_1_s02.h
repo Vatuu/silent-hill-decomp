@@ -4,7 +4,7 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
 
     Chara_MoveSpeedUpdate3(creaper, Q12(4.0f), Q12(0.0f));
 
-    creaper->properties_E4.player.field_104 += g_DeltaTime0;
+    creaper->properties_E4.creaper.timer_104 += g_DeltaTime0;
 
     if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
     {
@@ -31,7 +31,7 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
             creaper->model_0.state_2                 = 2;
             creaper->model_0.anim_4.status_0         = ANIM_STATUS(CreaperAnim_13, false);
             creaper->properties_E4.creaper.timer_F0  = Q12(0.5f);
-            creaper->properties_E4.creaper.field_104 = Q12(0.0f);
+            creaper->properties_E4.creaper.timer_104 = Q12(0.0f);
             return;
         }
     }
@@ -41,7 +41,7 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
         creaper->model_0.state_2                 = 2;
         creaper->model_0.anim_4.status_0         = ANIM_STATUS(CreaperAnim_13, false);
         creaper->properties_E4.creaper.timer_F0  = Q12(0.5f);
-        creaper->properties_E4.creaper.field_104 = Q12(0.0f);
+        creaper->properties_E4.creaper.timer_104 = Q12(0.0f);
     }
     else if (creaper->properties_E4.creaper.flags_E8 & CreaperFlag_6)
     {
@@ -49,13 +49,13 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
         {
             if (Rng_GenerateUInt(0, 7) == 0) // 1 in 8 cahnce.
             {
-                if (creaper->properties_E4.creaper.field_104 > Q12(0.5f))
+                if (creaper->properties_E4.creaper.timer_104 > Q12(0.5f))
                 {
-                    if (creaper->properties_E4.creaper.field_104 < Q12(2.5f))
+                    if (creaper->properties_E4.creaper.timer_104 < Q12(2.5f))
                     {
                         func_8005DC1C(Sfx_Unk1427, &creaper->position_18, Q8_CLAMPED(0.5f), 0);
 
-                        creaper->properties_E4.creaper.field_104 = Q12(0.0f);
+                        creaper->properties_E4.creaper.timer_104 = Q12(0.0f);
                         sharedData_800E57CC_1_s02--;
                         creaper->properties_E4.creaper.flags_E8 &= ~CreaperFlag_7;
                     }
@@ -65,12 +65,12 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
         else if (sharedData_800E57CC_1_s02 == 0)
         {
             if (Rng_GenerateUInt(0, 511) == 0 && // 1 in 512 chance.
-                creaper->properties_E4.creaper.field_104 > Q12(4.0f))
+                creaper->properties_E4.creaper.timer_104 > Q12(4.0f))
             {
                 s32 i;
 
                 func_8005DC1C(Sfx_Unk1427, &creaper->position_18, Q8_CLAMPED(0.5f), 0);
-                creaper->properties_E4.creaper.field_104 = Q12(0.0f);
+                creaper->properties_E4.creaper.timer_104 = Q12(0.0f);
 
                 for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
                 {
@@ -80,17 +80,17 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
                         g_SysWork.npcs_1A0[i].model_0.state_2 == 1 &&
                         !Math_Distance2dCheck(&creaper->position_18, &g_SysWork.npcs_1A0[i].position_18, Q12(16.0f)))
                     {
-                        g_SysWork.npcs_1A0[i].properties_E4.creaper.field_104 = Q12(0.0f);
+                        g_SysWork.npcs_1A0[i].properties_E4.creaper.timer_104 = Q12(0.0f);
                         sharedData_800E57CC_1_s02++;
                         g_SysWork.npcs_1A0[i].properties_E4.creaper.flags_E8 |= CreaperFlag_7;
                     }
                 }
             }
             else if (Rng_GenerateUInt(0, 63) == 0 && // 1 in 64 chance.
-                     creaper->properties_E4.creaper.field_104 > Q12(2.0f))
+                     creaper->properties_E4.creaper.timer_104 > Q12(2.0f))
             {
                 func_8005DC1C(Sfx_Unk1426, &creaper->position_18, Q8_CLAMPED(0.5f), 0);
-                creaper->properties_E4.creaper.field_104 = Rng_GenerateInt(Q12(0.8f), Q12(1.8f) - 1);
+                creaper->properties_E4.creaper.timer_104 = Rng_GenerateInt(Q12(0.8f), Q12(1.8f) - 1);
             }
         }
     }

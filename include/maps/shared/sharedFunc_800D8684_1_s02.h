@@ -63,7 +63,7 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
             }
             else
             {
-                Chara_MoveSpeedUpdate3(creaper, Q12(1.5f), ((u16)creaper->properties_E4.dummy.properties_E8[9].val16[0] * (FP_ANGLE(90.0f) - ABS(angle1))) >> 10);
+                Chara_MoveSpeedUpdate3(creaper, Q12(1.5f), (creaper->properties_E4.creaper.moveSpeed_10C * (FP_ANGLE(90.0f) - ABS(angle1))) >> 10);
             }
 
             if (((g_DeltaTime0 >> 2) + 1) < ABS(angle1) && Rng_GenerateInt(0, 7)) // 1 in 8 chance.
@@ -81,11 +81,11 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
     }
     else
     {
-        Chara_MoveSpeedUpdate4(creaper, Q12(1.5f), (u16)creaper->properties_E4.dummy.properties_E8[9].val16[0]);
+        Chara_MoveSpeedUpdate4(creaper, Q12(1.5f), creaper->properties_E4.creaper.moveSpeed_10C);
 
         creaper->properties_E4.creaper.timer_F0 += g_DeltaTime0;
 
-        if ((ABS(angle1) > FP_ANGLE(10.0f) && func_80070184(creaper, Q12(1.0f), creaper->properties_E4.dummy.properties_E8[8].val16[0])) ||
+        if ((ABS(angle1) > FP_ANGLE(10.0f) && func_80070184(creaper, Q12(1.0f), creaper->properties_E4.creaper.rotationY_108)) ||
             (!Rng_GenerateInt(0, 7) && // 1 in 8 chance.
              ((!(creaper->properties_E4.creaper.flags_E8 & CreaperFlag_0) && creaper->properties_E4.creaper.timer_F0 > Q12(0.5f)) ||
               ( (creaper->properties_E4.creaper.flags_E8 & CreaperFlag_0) && creaper->properties_E4.creaper.timer_F0 > Q12(2.0f)))))

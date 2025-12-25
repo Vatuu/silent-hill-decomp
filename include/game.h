@@ -1305,7 +1305,7 @@ typedef struct _SubCharaPropertiesCreaper
 
     u16    flags_E8;
     s8     unk_EA[2];
-    // TODO: Should be like this?
+    // TODO: Should be like this? `sharedFunc_800D8684_1_s02` and `sharedFunc_800D9774_1_s02` require flag field to be `s32`, but changing it breaks matches elsewhere.
     //s32    flags_E8;
 
     q3_12  offsetX_EC;
@@ -1315,8 +1315,10 @@ typedef struct _SubCharaPropertiesCreaper
     q19_12 playerPositionZ_F8;
     q19_12 playerPositionX_FC;  // } Previous player position? Backup? Last alerted position?
     q19_12 playerPositionZ_100; // }
-    q19_12 field_104;
+    q19_12 timer_104;           // Timer with unknown purpose.
     q3_12  rotationY_108;
+    s8     unk_108[2];
+    q4_12  moveSpeed_10C;
     // TODO: Rest should be padding. Check if there are any more.
 } s_SubCharaPropertiesCreaper;
 //STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesCreaper, 68);

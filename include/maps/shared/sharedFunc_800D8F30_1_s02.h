@@ -2,7 +2,7 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creaper)
 {
     VECTOR3 creaperPos;
     s32     i;
-    s32     field_10C;
+    q19_12  moveSpeed0;
     q19_12  dist;
     q19_12  moveSpeed;
     q19_12  moveSpeedTmp0;
@@ -28,15 +28,15 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creaper)
         }
         else
         {
-            field_10C = (u16)creaper->properties_E4.dummy.properties_E8[9].val16[0] >> 1;
+            moveSpeed0 = creaper->properties_E4.creaper.moveSpeed_10C / 2;
 
             // TODO: Why don't either of these fit?
-            // creaper->moveSpeed_38 = APPROACH(creaper->moveSpeed_38, field_10C, FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(6.0f), Q12_SHIFT));
-            // Chara_MoveSpeedUpdate3(creaper, Q12(6.0f), field_10C);
+            // creaper->moveSpeed_38 = APPROACH(creaper->moveSpeed_38, moveSpeed0, FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(6.0f), Q12_SHIFT));
+            // Chara_MoveSpeedUpdate3(creaper, Q12(6.0f), moveSpeed0);
 
-            if (field_10C < creaper->moveSpeed_38)
+            if (moveSpeed0 < creaper->moveSpeed_38)
             {
-                moveSpeed   = field_10C;
+                moveSpeed   = moveSpeed0;
                 moveSpeedTmp0 = creaper->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(6.0f), Q12_SHIFT);
                 if (moveSpeed < moveSpeedTmp0)
                 {
@@ -45,7 +45,7 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creaper)
             }
             else
             {
-                moveSpeed   = field_10C;
+                moveSpeed   = moveSpeed0;
                 moveSpeedTmp0 = creaper->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(6.0f), Q12_SHIFT);
                 if (moveSpeed >= moveSpeedTmp0)
                 {
