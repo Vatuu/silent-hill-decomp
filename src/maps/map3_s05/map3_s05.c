@@ -19,7 +19,7 @@ INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CB884_1_s05.h" // 0x800CC3A8
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800CC9A0);
+#include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CC9A0
 
 #include "maps/shared/Player.h"
 
@@ -916,7 +916,7 @@ void func_800D87AC(void) // 0x800D87AC
             D_800DD528++;
         }
 
-        func_8005DE0C(Sfx_Unk1503, &g_CommonWorldObjectPoses[4].position_0, Q8_CLAMPED(0.5f), Q12(16.0f), 0);
+        func_8005DE0C(Sfx_Unk1503, &D_800DACD4, Q8_CLAMPED(0.5f), Q12(16.0f), 0);
     }
     else if (D_800DD528)
     {

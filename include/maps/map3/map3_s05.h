@@ -53,7 +53,8 @@ extern s_WorldObject_0        g_WorldObject5;
 extern s_WorldObject_0        g_WorldObject6;
 extern s_WorldObjectDesc      g_WorldObject7;
 extern s_WorldObject_0   g_CommonWorldObjects[6];
-extern s_WorldObjectPose g_CommonWorldObjectPoses[5];
+extern s_WorldObjectPose g_CommonWorldObjectPoses[4];
+extern VECTOR3 D_800DACD4;
 
 void func_800D5934(void);
 
