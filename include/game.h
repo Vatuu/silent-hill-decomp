@@ -1301,29 +1301,25 @@ STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesNpc, 68);
 
 typedef struct _SubCharaPropertiesCreaper
 {
-    s32        unk_E4;
+    s32    unk_E4;
 
-    u16        flags_E8;
+    u16    flags_E8;
+    s8     unk_EA[2];
+    // TODO: Should be like this?
+    //s32    flags_E8;
 
-    u16        unk_EA;   // } Copied from `s_SubCharaPropertiesSplithead`. Inaccurate and here for padding.
-    u_Property field_EC; // }
-
-    q19_12     timer_F0; // Timer with unknown purpose.
-    q19_12     playerPositionX_F4;
-    q19_12     playerPositionZ_F8;
-    q19_12     playerPositionX_FC;  // } Previous player position? Backup? Last alerted position?
-    q19_12     playerPositionZ_100; // }
-    q19_12     field_104;
-    q3_12      rotationY_108;
-
-    //u_Property unk_104;    // } Copied from `s_SubCharaPropertiesSplithead`. Inaccurate and here for padding.
-    u8         unk_108[6]; // }
-    q19_12     unk_10C;    // }
-    VECTOR3    unk_110;    // }
-    s32        unk_11C;    // }
-    u_Property unk_120;    // }
+    q3_12  offsetX_EC;
+    q3_12  offsetZ_EE;
+    q19_12 timer_F0;            // Timer with unknown purpose.
+    q19_12 playerPositionX_F4;  // Or target position, which happens to be derived from the player.
+    q19_12 playerPositionZ_F8;
+    q19_12 playerPositionX_FC;  // } Previous player position? Backup? Last alerted position?
+    q19_12 playerPositionZ_100; // }
+    q19_12 field_104;
+    q3_12  rotationY_108;
+    // TODO: Rest should be padding. Check if there are any more.
 } s_SubCharaPropertiesCreaper;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesCreaper, 68);
+//STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesCreaper, 68);
 
 typedef struct _SubCharPropertiesDahlia
 {

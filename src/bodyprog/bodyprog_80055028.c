@@ -1658,7 +1658,7 @@ void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
     }
 }
 
-void func_8005801C(s_MeshHeader* arg0, s_GteScratchData* arg1, GsOT_TAG* arg2, s32 arg3) // 0x8005801C
+void func_8005801C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3) // 0x8005801C
 {
     s32          sp10;
     s32          sp14;
@@ -1695,112 +1695,112 @@ void func_8005801C(s_MeshHeader* arg0, s_GteScratchData* arg1, GsOT_TAG* arg2, s
     s32          temp_v1_21;
     s32          temp_v1_27;
     s32          temp_v1_5;
-    s_Primitive* var_s6;
     u32          temp_t0;
     u32          temp_t0_2;
     u32          temp_t0_3;
     u32          temp_t0_4;
     u32          temp_t0_5;
-    PACKET*      packet_2;
-    POLY_GT4*    poly_gt4_4;
-    PACKET*      packet;
-    POLY_G4*     poly_g4;
-    POLY_G4*     poly_g4_2;
-    POLY_GT4*    poly_gt4;
-    POLY_FT4*    poly_ft4;
     s32          temp;
     s32          temp2;
     s32          temp3;
     s32          temp4;
+    s_Primitive* prim;
+    PACKET*      packet0;
+    PACKET*      packet1;
+    POLY_GT4*    poly0;
+    POLY_G4*     poly1;
+    POLY_G4*     poly2;
+    POLY_GT4*    poly3;
+    POLY_FT4*    poly4;
 
     temp_v1 = 0x79C << (arg3 + 2);
 
     if (!D_800C4168.isFogEnabled_1)
     {
-        arg1->field_380.s_0.field_1C = temp_v1;
+        scratchData->field_380.s_0.field_1C = temp_v1;
     }
     else
     {
-        arg1->field_380.s_0.field_1C = D_800C4168.drawDistance_10;
+        scratchData->field_380.s_0.field_1C = D_800C4168.drawDistance_10;
 
-        if (temp_v1 < arg1->field_380.s_0.field_1C)
+        if (temp_v1 < scratchData->field_380.s_0.field_1C)
         {
-            arg1->field_380.s_0.field_1C = temp_v1;
+            scratchData->field_380.s_0.field_1C = temp_v1;
         }
     }
 
-    arg1->field_380.s_0.field_0    = g_GameWork.gsScreenWidth_588 >> 1;
-    arg1->field_380.s_0.field_4    = D_800C4168.fogRelated_18;
-    arg1->field_380.s_0.field_8    = D_800C4168.worldTintColor_28;
-    arg1->field_380.s_0.field_8.cd = 0x3C;
+    scratchData->field_380.s_0.field_0    = g_GameWork.gsScreenWidth_588 >> 1;
+    scratchData->field_380.s_0.field_4    = D_800C4168.fogRelated_18;
+    scratchData->field_380.s_0.field_8    = D_800C4168.worldTintColor_28;
+    scratchData->field_380.s_0.field_8.cd = 0x3C;
 
     if (D_800C4168.field_0 == 0)
     {
         gte_lddp(0x1000 - D_800C4168.field_20);
-        gte_ldrgb(&arg1->field_380.s_0.field_8);
+        gte_ldrgb(&scratchData->field_380.s_0.field_8);
         gte_dpcs();
-        gte_strgb(&arg1->field_380.s_0.field_8);
+        gte_strgb(&scratchData->field_380.s_0.field_8);
     }
 
-    arg1->field_380.s_0.field_C    = D_800C4168.fogColor_1C;
-    arg1->field_380.s_0.field_C.cd = 0x38;
+    scratchData->field_380.s_0.field_C    = D_800C4168.fogColor_1C;
+    scratchData->field_380.s_0.field_C.cd = 0x38;
 
     SetBackColor(0, 0, 0);
 
-    var_s6 = arg0->primitives_4;
+    prim = meshHdr->primitives_4;
 
     if (D_800C4168.field_0 != 0)
     {
         if (D_800C4168.isFogEnabled_1 != 0)
         {
-            if (*(s32*)&arg1->field_380.s_0.field_C & 0xFFFFFF)
+            if (*(s32*)&scratchData->field_380.s_0.field_C & 0xFFFFFF)
             {
-                poly_gt4 = GsOUT_PACKET_P;
-                poly_g4  = poly_gt4 + 1;
+                poly3 = GsOUT_PACKET_P;
+                poly1  = poly3 + 1;
 
-                for (; var_s6 < &arg0->primitives_4[arg0->primitiveCount_0]; var_s6++)
+                for (; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
                 {
-                    *(s32*)&arg1->field_380.s_0.field_10 = *(s32*)&var_s6->field_C;
+                    *(s32*)&scratchData->field_380.s_0.field_10 = *(s32*)&prim->field_C;
 
-                    arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_10];
+                    scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_10];
 
-                    if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_11])
+                    if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_11])
                     {
-                        arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_11];
+                        scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_11];
                     }
 
-                    if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_12])
+                    if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_12])
                     {
-                        arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_12];
+                        scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_12];
                     }
 
-                    if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_13])
+                    if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_13])
                     {
-                        arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_13];
+                        scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_13];
                     }
 
-                    if (arg1->field_380.s_0.field_18 <= 0)
-                    {
-                        continue;
-                    }
-
-                    if (arg1->field_380.s_0.field_18 < 0x21)
-                    {
-                        arg1->field_380.s_0.field_18 = 0x20;
-                    }
-
-                    if (arg1->field_380.s_0.field_18 > arg1->field_380.s_0.field_1C)
+                    if (scratchData->field_380.s_0.field_18 <= 0)
                     {
                         continue;
                     }
 
-                    gte_NormalClip(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10],
-                                   *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11],
-                                   *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12], &sp10);
+                    if (scratchData->field_380.s_0.field_18 <= 32)
+                    {
+                        scratchData->field_380.s_0.field_18 = 32;
+                    }
+
+                    if (scratchData->field_380.s_0.field_18 > scratchData->field_380.s_0.field_1C)
+                    {
+                        continue;
+                    }
+
+                    gte_NormalClip(*(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_10],
+                                   *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_11],
+                                   *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_12], &sp10);
 
                     if (sp10 <= 0)
                     {
-                        gte_ldsxy0(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13]);
+                        gte_ldsxy0(*(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_13]);
                         gte_nclip();
                         gte_stopz(&sp10);
 
@@ -1810,187 +1810,188 @@ void func_8005801C(s_MeshHeader* arg0, s_GteScratchData* arg1, GsOT_TAG* arg2, s
                         }
                     }
 
-                    temp_a3 = arg1->field_380.s_0.field_0;
-                    temp_a2 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10];
+                    temp_a3 = scratchData->field_380.s_0.field_0;
+                    temp_a2 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_10];
 
-                    temp_a1   = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11];
-                    temp_a0   = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12];
-                    temp_v1_5 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13];
+                    temp_a1   = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_11];
+                    temp_a0   = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_12];
+                    temp_v1_5 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_13];
                     temp_t0   = temp_a3 * 2;
                     temp_a2_2 = temp_a2;
 
                     if ((s16)temp_a2 + temp_a3 < temp_t0 || (s16)temp_a1 + temp_a3 < temp_t0 ||
                         (s16)temp_a0 + temp_a3 < temp_t0 || (s16)temp_v1_5 + temp_a3 < temp_t0)
                     {
-                        *(s32*)&poly_gt4->x0 = temp_a2_2;
-                        *(s32*)&poly_g4->x0  = temp_a2_2;
-                        *(s32*)&poly_gt4->x1 = temp_a1;
-                        *(s32*)&poly_g4->x1  = temp_a1;
-                        *(s32*)&poly_gt4->x2 = temp_a0;
-                        *(s32*)&poly_g4->x2  = temp_a0;
-                        *(s32*)&poly_gt4->x3 = temp_v1_5;
-                        *(s32*)&poly_g4->x3  = temp_v1_5;
+                        *(s32*)&poly3->x0 = temp_a2_2;
+                        *(s32*)&poly1->x0  = temp_a2_2;
+                        *(s32*)&poly3->x1 = temp_a1;
+                        *(s32*)&poly1->x1  = temp_a1;
+                        *(s32*)&poly3->x2 = temp_a0;
+                        *(s32*)&poly1->x2  = temp_a0;
+                        *(s32*)&poly3->x3 = temp_v1_5;
+                        *(s32*)&poly1->x3  = temp_v1_5;
 
-                        *(s32*)&arg1->field_380.s_0.field_14 = *(s32*)&var_s6->field_10;
+                        *(s32*)&scratchData->field_380.s_0.field_14 = *(s32*)&prim->field_10;
 
-                        var_t3  = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_10] * 0x10;
-                        var_t3 -= arg1->field_380.s_0.field_4;
+                        var_t3  = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_10] * 16;
+                        var_t3 -= scratchData->field_380.s_0.field_4;
                         if (var_t3 < 0)
                         {
                             var_t3 = 0;
                         }
 
                         gte_lddp(var_t3);
-                        gte_ldrgb(&arg1->field_380.s_0.field_C);
+                        gte_ldrgb(&scratchData->field_380.s_0.field_C);
                         gte_dpcs();
-                        gte_strgb(&poly_g4->r0);
-                        gte_lddp(arg1->field_252[arg1->field_380.s_0.field_10] << 4);
-                        gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_14] << 5);
-                        gte_ldrgb(&arg1->field_380.s_0.field_8);
+                        gte_strgb(&poly1->r0);
+                        gte_lddp(scratchData->field_252[scratchData->field_380.s_0.field_10] << 4);
+                        gte_ldsv_(scratchData->field_2B8[scratchData->field_380.s_0.field_14] << 5);
+                        gte_ldrgb(&scratchData->field_380.s_0.field_8);
                         gte_dpcl();
-                        gte_strgb(&poly_gt4->r0);
+                        gte_strgb(&poly3->r0);
 
-                        var_t3  = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_11] * 0x10;
-                        var_t3 -= arg1->field_380.s_0.field_4;
+                        var_t3  = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_11] * 16;
+                        var_t3 -= scratchData->field_380.s_0.field_4;
                         if (var_t3 < 0)
                         {
                             var_t3 = 0;
                         }
 
                         gte_lddp(var_t3);
-                        gte_ldrgb(&arg1->field_380.s_0.field_C);
+                        gte_ldrgb(&scratchData->field_380.s_0.field_C);
                         gte_dpcs();
-                        gte_strgb(&poly_g4->r1);
-                        gte_lddp(arg1->field_252[arg1->field_380.s_0.field_11] << 4);
-                        gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_15] << 5);
-                        gte_ldrgb(&arg1->field_380.s_0.field_8);
+                        gte_strgb(&poly1->r1);
+                        gte_lddp(scratchData->field_252[scratchData->field_380.s_0.field_11] << 4);
+                        gte_ldsv_(scratchData->field_2B8[scratchData->field_380.s_0.field_15] << 5);
+                        gte_ldrgb(&scratchData->field_380.s_0.field_8);
                         gte_dpcl();
-                        gte_strgb(&poly_gt4->r1);
+                        gte_strgb(&poly3->r1);
 
-                        var_t3  = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_12] * 0x10;
-                        var_t3 -= arg1->field_380.s_0.field_4;
+                        var_t3  = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_12] * 0x10;
+                        var_t3 -= scratchData->field_380.s_0.field_4;
                         if (var_t3 < 0)
                         {
                             var_t3 = 0;
                         }
 
                         gte_lddp(var_t3);
-                        gte_ldrgb(&arg1->field_380.s_0.field_C);
+                        gte_ldrgb(&scratchData->field_380.s_0.field_C);
                         gte_dpcs();
-                        gte_strgb(&poly_g4->r2);
-                        gte_lddp(arg1->field_252[arg1->field_380.s_0.field_12] << 4);
-                        gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_16] << 5);
-                        gte_ldrgb(&arg1->field_380.s_0.field_8);
+                        gte_strgb(&poly1->r2);
+                        gte_lddp(scratchData->field_252[scratchData->field_380.s_0.field_12] << 4);
+                        gte_ldsv_(scratchData->field_2B8[scratchData->field_380.s_0.field_16] << 5);
+                        gte_ldrgb(&scratchData->field_380.s_0.field_8);
                         gte_dpcl();
-                        gte_strgb(&poly_gt4->r2);
+                        gte_strgb(&poly3->r2);
 
-                        var_t3  = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_13] * 0x10;
-                        var_t3 -= arg1->field_380.s_0.field_4;
+                        var_t3  = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_13] * 0x10;
+                        var_t3 -= scratchData->field_380.s_0.field_4;
                         if (var_t3 < 0)
                         {
                             var_t3 = 0;
                         }
 
                         gte_lddp(var_t3);
-                        gte_ldrgb(&arg1->field_380.s_0.field_C);
+                        gte_ldrgb(&scratchData->field_380.s_0.field_C);
                         gte_dpcs();
-                        gte_strgb(&poly_g4->r3);
-                        gte_lddp(arg1->field_252[arg1->field_380.s_0.field_13] << 4);
-                        gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_17] << 5);
-                        gte_ldrgb(&arg1->field_380.s_0.field_8);
+                        gte_strgb(&poly1->r3);
+                        gte_lddp(scratchData->field_252[scratchData->field_380.s_0.field_13] << 4);
+                        gte_ldsv_(scratchData->field_2B8[scratchData->field_380.s_0.field_17] << 5);
+                        gte_ldrgb(&scratchData->field_380.s_0.field_8);
                         gte_dpcl();
-                        gte_strgb(&poly_gt4->r3);
+                        gte_strgb(&poly3->r3);
 
-                        *(s32*)&poly_gt4->u0 = *(s32*)&var_s6->field_0;
-                        *(s32*)&poly_gt4->u1 = *(s32*)&var_s6->field_4 & 0xFFFFFF;
-                        *(u16*)&poly_gt4->u2 = var_s6->field_8;
-                        *(u16*)&poly_gt4->u3 = var_s6->field_A;
+                        *(s32*)&poly3->u0 = *(s32*)&prim->field_0;
+                        *(s32*)&poly3->u1 = *(s32*)&prim->field_4 & 0xFFFFFF;
+                        *(u16*)&poly3->u2 = prim->field_8;
+                        *(u16*)&poly3->u3 = prim->field_A;
 
-                        setlen(poly_gt4, 12);
-                        setlen(poly_g4, 8);
+                        setlen(poly3, 12);
+                        setlen(poly1, 8);
 
-                        if (var_s6->field_6.flags & 0x8000)
+                        if (prim->field_6.flags & 0x8000)
                         {
-                            packet = poly_g4 + 1;
+                            packet1 = poly1 + 1;
 
-                            SetPriority(packet, 0, 0);
-                            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], packet);
+                            SetPriority(packet1, 0, 0);
+                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], packet1);
 
-                            setSemiTrans(poly_g4, 1);
-                            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_g4);
+                            setSemiTrans(poly1, 1);
+                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly1);
 
-                            packet = (PACKET*)(poly_g4 + 1) + 0xC;
-                            SetPriority(packet, 1, 1);
-                            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], packet);
+                            packet1 = (PACKET*)(poly1 + 1) + 0xC;
+                            SetPriority(packet1, 1, 1);
+                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], packet1);
 
-                            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_gt4);
+                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly3);
 
-                            poly_gt4 = (PACKET*)(poly_g4 + 1) + 0xC + 0xC;
-                            poly_g4  = poly_gt4 + 1;
+                            poly3 = (PACKET*)(poly1 + 1) + 0xC + 0xC;
+                            poly1  = poly3 + 1;
                         }
                         else
                         {
-                            setSemiTrans(poly_gt4, 1);
+                            setSemiTrans(poly3, 1);
 
-                            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_gt4);
-                            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_g4);
+                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly3);
+                            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly1);
 
-                            poly_gt4 = poly_g4 + 1;
-                            poly_g4  = poly_gt4 + 1;
+                            poly3 = poly1 + 1;
+                            poly1  = poly3 + 1;
                         }
                     }
                 }
-                GsOUT_PACKET_P = poly_g4; // @bug? Should be `poly_gt4`
+
+                GsOUT_PACKET_P = poly1; // @bug? Should be `poly_gt4`
                 return;
             }
 
-            poly_gt4 = GsOUT_PACKET_P;
+            poly3 = GsOUT_PACKET_P;
 
-            for (; var_s6 < &arg0->primitives_4[arg0->primitiveCount_0]; var_s6++)
+            for (; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
             {
-                *(s32*)&arg1->field_380.s_0.field_10 = *(s32*)&var_s6->field_C;
+                *(s32*)&scratchData->field_380.s_0.field_10 = *(s32*)&prim->field_C;
 
-                arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_10];
+                scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_10];
 
-                if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_11])
+                if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_11])
                 {
-                    arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_11];
+                    scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_11];
                 }
 
-                if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_12])
+                if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_12])
                 {
-                    arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_12];
+                    scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_12];
                 }
 
-                if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_13])
+                if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_13])
                 {
-                    arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_13];
+                    scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_13];
                 }
 
-                if (arg1->field_380.s_0.field_18 <= 0)
-                {
-                    continue;
-                }
-
-                if (arg1->field_380.s_0.field_18 < 0x21)
-                {
-                    arg1->field_380.s_0.field_18 = 0x20;
-                }
-
-                if (arg1->field_380.s_0.field_18 > arg1->field_380.s_0.field_1C)
+                if (scratchData->field_380.s_0.field_18 <= 0)
                 {
                     continue;
                 }
 
-                gte_ldsxy3(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10],
-                           *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11],
-                           *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12]);
+                if (scratchData->field_380.s_0.field_18 <= 32)
+                {
+                    scratchData->field_380.s_0.field_18 = 32;
+                }
+
+                if (scratchData->field_380.s_0.field_18 > scratchData->field_380.s_0.field_1C)
+                {
+                    continue;
+                }
+
+                gte_ldsxy3(*(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_10],
+                           *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_11],
+                           *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_12]);
                 gte_nclip();
                 gte_stopz(&sp14);
 
                 if (sp14 <= 0)
                 {
-                    gte_ldsxy0(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13]);
+                    gte_ldsxy0(*(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_13]);
                     gte_nclip();
                     gte_stopz(&sp14);
 
@@ -2000,62 +2001,62 @@ void func_8005801C(s_MeshHeader* arg0, s_GteScratchData* arg1, GsOT_TAG* arg2, s
                     }
                 }
 
-                temp_a3_2 = arg1->field_380.s_0.field_0;
-                temp_a2_3 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10];
+                temp_a3_2 = scratchData->field_380.s_0.field_0;
+                temp_a2_3 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_10];
 
-                temp_a1_2  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11];
-                temp_a0_5  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12];
-                temp_v1_11 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13];
+                temp_a1_2  = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_11];
+                temp_a0_5  = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_12];
+                temp_v1_11 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_13];
                 temp_t0_2  = temp_a3_2 * 2;
                 temp2      = temp_a2_3;
 
                 if ((s16)temp_a2_3 + temp_a3_2 < temp_t0_2 || (s16)temp_a1_2 + temp_a3_2 < temp_t0_2 ||
                     (s16)temp_a0_5 + temp_a3_2 < temp_t0_2 || (s16)temp_v1_11 + temp_a3_2 < temp_t0_2)
                 {
-                    *(s32*)&poly_gt4->x0 = temp2;
-                    *(s32*)&poly_gt4->x1 = temp_a1_2;
-                    *(s32*)&poly_gt4->x2 = temp_a0_5;
-                    *(s32*)&poly_gt4->x3 = temp_v1_11;
+                    *(s32*)&poly3->x0 = temp2;
+                    *(s32*)&poly3->x1 = temp_a1_2;
+                    *(s32*)&poly3->x2 = temp_a0_5;
+                    *(s32*)&poly3->x3 = temp_v1_11;
 
-                    *(s32*)&arg1->field_380.s_0.field_14 = *(s32*)&var_s6->field_10;
+                    *(s32*)&scratchData->field_380.s_0.field_14 = *(s32*)&prim->field_10;
 
-                    gte_lddp(arg1->field_252[arg1->field_380.s_0.field_10] << 4);
-                    gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_14] << 5);
-                    gte_ldrgb(&arg1->field_380.s_0.field_8);
+                    gte_lddp(scratchData->field_252[scratchData->field_380.s_0.field_10] << 4);
+                    gte_ldsv_(scratchData->field_2B8[scratchData->field_380.s_0.field_14] << 5);
+                    gte_ldrgb(&scratchData->field_380.s_0.field_8);
                     gte_dpcl();
-                    gte_strgb(&poly_gt4->r0);
+                    gte_strgb(&poly3->r0);
 
-                    gte_lddp(arg1->field_252[arg1->field_380.s_0.field_11] << 4);
-                    gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_15] << 5);
-                    gte_ldrgb(&arg1->field_380.s_0.field_8);
+                    gte_lddp(scratchData->field_252[scratchData->field_380.s_0.field_11] << 4);
+                    gte_ldsv_(scratchData->field_2B8[scratchData->field_380.s_0.field_15] << 5);
+                    gte_ldrgb(&scratchData->field_380.s_0.field_8);
                     gte_dpcl();
-                    gte_strgb(&poly_gt4->r1);
+                    gte_strgb(&poly3->r1);
 
-                    gte_lddp(arg1->field_252[arg1->field_380.s_0.field_12] << 4);
-                    gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_16] << 5);
-                    gte_ldrgb(&arg1->field_380.s_0.field_8);
+                    gte_lddp(scratchData->field_252[scratchData->field_380.s_0.field_12] << 4);
+                    gte_ldsv_(scratchData->field_2B8[scratchData->field_380.s_0.field_16] << 5);
+                    gte_ldrgb(&scratchData->field_380.s_0.field_8);
                     gte_dpcl();
-                    gte_strgb(&poly_gt4->r2);
+                    gte_strgb(&poly3->r2);
 
-                    gte_lddp(arg1->field_252[arg1->field_380.s_0.field_13] << 4);
-                    gte_ldsv_(arg1->field_2B8[arg1->field_380.s_0.field_17] << 5);
-                    gte_ldrgb(&arg1->field_380.s_0.field_8);
+                    gte_lddp(scratchData->field_252[scratchData->field_380.s_0.field_13] << 4);
+                    gte_ldsv_(scratchData->field_2B8[scratchData->field_380.s_0.field_17] << 5);
+                    gte_ldrgb(&scratchData->field_380.s_0.field_8);
                     gte_dpcl();
-                    gte_strgb(&poly_gt4->r3);
+                    gte_strgb(&poly3->r3);
 
-                    *(s32*)&poly_gt4->u0 = *(s32*)&var_s6->field_0;
-                    *(s32*)&poly_gt4->u1 = *(s32*)&var_s6->field_4 & 0xFFFFFF;
-                    *(u16*)&poly_gt4->u2 = var_s6->field_8;
-                    *(u16*)&poly_gt4->u3 = var_s6->field_A;
+                    *(s32*)&poly3->u0 = *(s32*)&prim->field_0;
+                    *(s32*)&poly3->u1 = *(s32*)&prim->field_4 & 0xFFFFFF;
+                    *(u16*)&poly3->u2 = prim->field_8;
+                    *(u16*)&poly3->u3 = prim->field_A;
 
-                    setlen(poly_gt4, 12);
+                    setlen(poly3, 12);
 
-                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_gt4);
-                    poly_gt4++;
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly3);
+                    poly3++;
                 }
             }
 
-            GsOUT_PACKET_P = poly_gt4;
+            GsOUT_PACKET_P = poly3;
             return;
         }
         else
@@ -2066,54 +2067,54 @@ void func_8005801C(s_MeshHeader* arg0, s_GteScratchData* arg1, GsOT_TAG* arg2, s
 
     if (D_800C4168.isFogEnabled_1 != 0)
     {
-        poly_gt4  = GsOUT_PACKET_P;
-        poly_g4_2 = poly_gt4 + 1;
+        poly3  = GsOUT_PACKET_P;
+        poly2 = poly3 + 1;
 
-        for (; var_s6 < &arg0->primitives_4[arg0->primitiveCount_0]; var_s6++)
+        for (; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
         {
-            *(s32*)&arg1->field_380.s_0.field_10 = *(s32*)&var_s6->field_C;
+            *(s32*)&scratchData->field_380.s_0.field_10 = *(s32*)&prim->field_C;
 
-            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_10];
+            scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_10];
 
-            if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_11])
+            if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_11])
             {
-                arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_11];
+                scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_11];
             }
 
-            if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_12])
+            if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_12])
             {
-                arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_12];
+                scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_12];
             }
 
-            if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_13])
+            if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_13])
             {
-                arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_13];
+                scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_13];
             }
 
-            if (arg1->field_380.s_0.field_18 <= 0)
-            {
-                continue;
-            }
-
-            if (arg1->field_380.s_0.field_18 < 0x21)
-            {
-                arg1->field_380.s_0.field_18 = 0x20;
-            }
-
-            if (arg1->field_380.s_0.field_18 > arg1->field_380.s_0.field_1C)
+            if (scratchData->field_380.s_0.field_18 <= 0)
             {
                 continue;
             }
 
-            gte_ldsxy3(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10],
-                       *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11],
-                       *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12]);
+            if (scratchData->field_380.s_0.field_18 < 0x21)
+            {
+                scratchData->field_380.s_0.field_18 = 0x20;
+            }
+
+            if (scratchData->field_380.s_0.field_18 > scratchData->field_380.s_0.field_1C)
+            {
+                continue;
+            }
+
+            gte_ldsxy3(*(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_10],
+                       *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_11],
+                       *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_12]);
             gte_nclip();
             gte_stopz(&sp18);
 
             if (sp18 <= 0)
             {
-                gte_ldsxy0(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13]);
+                gte_ldsxy0(*(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_13]);
                 gte_nclip();
                 gte_stopz(&sp18);
 
@@ -2123,129 +2124,129 @@ void func_8005801C(s_MeshHeader* arg0, s_GteScratchData* arg1, GsOT_TAG* arg2, s
                 }
             }
 
-            temp_a3_4 = arg1->field_380.s_0.field_0;
-            temp_a2_5 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10];
+            temp_a3_4 = scratchData->field_380.s_0.field_0;
+            temp_a2_5 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_10];
 
-            temp_a1_4  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11];
-            temp_a0_9  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12];
-            temp_v1_21 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13];
+            temp_a1_4  = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_11];
+            temp_a0_9  = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_12];
+            temp_v1_21 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_13];
             temp_t0_4  = temp_a3_4 * 2;
             temp_a2_6  = temp_a2_5;
 
             if ((s16)temp_a2_5 + temp_a3_4 < temp_t0_4 || (s16)temp_a1_4 + temp_a3_4 < temp_t0_4 ||
                 (s16)temp_a0_9 + temp_a3_4 < temp_t0_4 || (s16)temp_v1_21 + temp_a3_4 < temp_t0_4)
             {
-                *(s32*)&poly_gt4->x0  = temp_a2_6;
-                *(s32*)&poly_g4_2->x0 = temp_a2_6;
-                *(s32*)&poly_gt4->x1  = temp_a1_4;
-                *(s32*)&poly_g4_2->x1 = temp_a1_4;
-                *(s32*)&poly_gt4->x2  = temp_a0_9;
-                *(s32*)&poly_g4_2->x2 = temp_a0_9;
-                *(s32*)&poly_gt4->x3  = temp_v1_21;
-                *(s32*)&poly_g4_2->x3 = temp_v1_21;
+                *(s32*)&poly3->x0  = temp_a2_6;
+                *(s32*)&poly2->x0 = temp_a2_6;
+                *(s32*)&poly3->x1  = temp_a1_4;
+                *(s32*)&poly2->x1 = temp_a1_4;
+                *(s32*)&poly3->x2  = temp_a0_9;
+                *(s32*)&poly2->x2 = temp_a0_9;
+                *(s32*)&poly3->x3  = temp_v1_21;
+                *(s32*)&poly2->x3 = temp_v1_21;
 
-                temp4    = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_10] * 0x10;
-                var_t3_2 = temp4 - arg1->field_380.s_0.field_4;
+                temp4    = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_10] * 0x10;
+                var_t3_2 = temp4 - scratchData->field_380.s_0.field_4;
                 if (var_t3_2 < 0)
                 {
                     var_t3_2 = 0;
                 }
 
                 gte_lddp(var_t3_2);
-                gte_ldrgb(&arg1->field_380.s_0.field_C);
+                gte_ldrgb(&scratchData->field_380.s_0.field_C);
                 gte_dpcs();
-                gte_strgb(&poly_g4_2->r0);
+                gte_strgb(&poly2->r0);
                 gte_lddp(0x1000 - var_t3_2);
-                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
-                gte_strgb(&poly_gt4->r0);
+                gte_strgb(&poly3->r0);
 
-                temp4    = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_11] * 0x10;
-                var_t3_2 = temp4 - arg1->field_380.s_0.field_4;
+                temp4    = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_11] * 0x10;
+                var_t3_2 = temp4 - scratchData->field_380.s_0.field_4;
                 if (var_t3_2 < 0)
                 {
                     var_t3_2 = 0;
                 }
 
                 gte_lddp(var_t3_2);
-                gte_ldrgb(&arg1->field_380.s_0.field_C);
+                gte_ldrgb(&scratchData->field_380.s_0.field_C);
                 gte_dpcs();
-                gte_strgb(&poly_g4_2->r1);
+                gte_strgb(&poly2->r1);
                 gte_lddp(0x1000 - var_t3_2);
-                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
-                gte_strgb(&poly_gt4->r1);
+                gte_strgb(&poly3->r1);
 
-                temp4    = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_12] * 0x10;
-                var_t3_2 = temp4 - arg1->field_380.s_0.field_4;
+                temp4    = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_12] * 0x10;
+                var_t3_2 = temp4 - scratchData->field_380.s_0.field_4;
                 if (var_t3_2 < 0)
                 {
                     var_t3_2 = 0;
                 }
 
                 gte_lddp(var_t3_2);
-                gte_ldrgb(&arg1->field_380.s_0.field_C);
+                gte_ldrgb(&scratchData->field_380.s_0.field_C);
                 gte_dpcs();
-                gte_strgb(&poly_g4_2->r2);
+                gte_strgb(&poly2->r2);
                 gte_lddp(0x1000 - var_t3_2);
-                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
-                gte_strgb(&poly_gt4->r2);
+                gte_strgb(&poly3->r2);
 
-                temp4    = 0x1000 - arg1->field_252[arg1->field_380.s_0.field_13] * 0x10;
-                var_t3_2 = temp4 - arg1->field_380.s_0.field_4;
+                temp4    = 0x1000 - scratchData->field_252[scratchData->field_380.s_0.field_13] * 0x10;
+                var_t3_2 = temp4 - scratchData->field_380.s_0.field_4;
                 if (var_t3_2 < 0)
                 {
                     var_t3_2 = 0;
                 }
 
                 gte_lddp(var_t3_2);
-                gte_ldrgb(&arg1->field_380.s_0.field_C);
+                gte_ldrgb(&scratchData->field_380.s_0.field_C);
                 gte_dpcs();
-                gte_strgb(&poly_g4_2->r3);
+                gte_strgb(&poly2->r3);
                 gte_lddp(0x1000 - var_t3_2);
-                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
-                gte_strgb(&poly_gt4->r3);
+                gte_strgb(&poly3->r3);
 
-                *(s32*)&poly_gt4->u0 = *(s32*)&var_s6->field_0;
-                *(s32*)&poly_gt4->u1 = *(s32*)&var_s6->field_4 & 0xFFFFFF;
-                *(u16*)&poly_gt4->u2 = var_s6->field_8;
-                *(u16*)&poly_gt4->u3 = var_s6->field_A;
+                *(s32*)&poly3->u0 = *(s32*)&prim->field_0;
+                *(s32*)&poly3->u1 = *(s32*)&prim->field_4 & 0xFFFFFF;
+                *(u16*)&poly3->u2 = prim->field_8;
+                *(u16*)&poly3->u3 = prim->field_A;
 
-                setlen(poly_gt4, 12);
-                setlen(poly_g4_2, 8);
+                setlen(poly3, 12);
+                setlen(poly2, 8);
 
-                if (var_s6->field_6.flags & 0x8000)
+                if (prim->field_6.flags & 0x8000)
                 {
-                    packet_2 = poly_g4_2 + 1;
+                    packet0 = poly2 + 1;
 
-                    SetPriority(packet_2, 0, 0);
+                    SetPriority(packet0, 0, 0);
 
-                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], packet_2);
-                    setSemiTrans(poly_g4_2, 1);
-                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_g4_2);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], packet0);
+                    setSemiTrans(poly2, 1);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly2);
 
-                    packet_2 = (PACKET*)(poly_g4_2 + 1) + 0xC;
-                    SetPriority(packet_2, 1, 1);
-                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], packet_2);
-                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_gt4);
+                    packet0 = (PACKET*)(poly2 + 1) + 0xC;
+                    SetPriority(packet0, 1, 1);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], packet0);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly3);
 
-                    poly_gt4  = (PACKET*)(poly_g4_2 + 1) + 0xC + 0xC;
-                    poly_g4_2 = poly_gt4 + 1;
+                    poly3  = (PACKET*)(poly2 + 1) + 0xC + 0xC;
+                    poly2 = poly3 + 1;
                 }
                 else
                 {
-                    setSemiTrans(poly_gt4, 1);
-                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_gt4);
-                    addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_g4_2);
+                    setSemiTrans(poly3, 1);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly3);
+                    addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly2);
 
-                    poly_gt4  = poly_g4_2 + 1;
-                    poly_g4_2 = poly_gt4 + 1;
+                    poly3  = poly2 + 1;
+                    poly2 = poly3 + 1;
                 }
             }
         }
-        GsOUT_PACKET_P = poly_g4_2; // @bug? Should be `poly_gt4`
+        GsOUT_PACKET_P = poly2; // @bug? Should be `poly_gt4`
         return;
     }
     else
@@ -2255,53 +2256,53 @@ void func_8005801C(s_MeshHeader* arg0, s_GteScratchData* arg1, GsOT_TAG* arg2, s
 
 __block1530:
 {
-    poly_gt4_4 = GsOUT_PACKET_P;
+    poly0 = GsOUT_PACKET_P;
 
-    for (; var_s6 < &arg0->primitives_4[arg0->primitiveCount_0]; var_s6++)
+    for (; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
     {
-        *(s32*)&arg1->field_380.s_0.field_10 = *(s32*)&var_s6->field_C;
+        *(s32*)&scratchData->field_380.s_0.field_10 = *(s32*)&prim->field_C;
 
-        arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_10];
+        scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_10];
 
-        if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_11])
+        if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_11])
         {
-            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_11];
+            scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_11];
         }
 
-        if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_12])
+        if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_12])
         {
-            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_12];
+            scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_12];
         }
 
-        if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_13])
+        if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_13])
         {
-            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_13];
+            scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_13];
         }
 
-        if (arg1->field_380.s_0.field_18 <= 0)
-        {
-            continue;
-        }
-
-        if (arg1->field_380.s_0.field_18 < 0x21)
-        {
-            arg1->field_380.s_0.field_18 = 0x20;
-        }
-
-        if (arg1->field_380.s_0.field_18 > arg1->field_380.s_0.field_1C)
+        if (scratchData->field_380.s_0.field_18 <= 0)
         {
             continue;
         }
 
-        gte_ldsxy3(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10],
-                   *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11],
-                   *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12]);
+        if (scratchData->field_380.s_0.field_18 <= 32)
+        {
+            scratchData->field_380.s_0.field_18 = 32;
+        }
+
+        if (scratchData->field_380.s_0.field_18 > scratchData->field_380.s_0.field_1C)
+        {
+            continue;
+        }
+
+        gte_ldsxy3(*(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_10],
+                   *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_11],
+                   *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_12]);
         gte_nclip();
         gte_stopz(&sp1C);
 
         if (sp1C <= 0)
         {
-            gte_ldsxy0(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13]);
+            gte_ldsxy0(*(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_13]);
             gte_nclip();
             gte_stopz(&sp1C);
 
@@ -2311,136 +2312,136 @@ __block1530:
             }
         }
 
-        temp_a3_3 = arg1->field_380.s_0.field_0;
-        temp_a2_4 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10];
+        temp_a3_3 = scratchData->field_380.s_0.field_0;
+        temp_a2_4 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_10];
 
-        temp_a1_3  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11];
-        temp_a0_7  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12];
-        temp_v1_16 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13];
+        temp_a1_3  = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_11];
+        temp_a0_7  = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_12];
+        temp_v1_16 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_13];
         temp_t0_3  = temp_a3_3 * 2;
         temp3      = temp_a2_4;
 
         if ((s16)temp_a2_4 + temp_a3_3 < temp_t0_3 || (s16)temp_a1_3 + temp_a3_3 < temp_t0_3 ||
             (s16)temp_a0_7 + temp_a3_3 < temp_t0_3 || (s16)temp_v1_16 + temp_a3_3 < temp_t0_3)
         {
-            *(s32*)&poly_gt4_4->x0 = temp3;
-            *(s32*)&poly_gt4_4->x1 = temp_a1_3;
-            *(s32*)&poly_gt4_4->x2 = temp_a0_7;
-            *(s32*)&poly_gt4_4->x3 = temp_v1_16;
+            *(s32*)&poly0->x0 = temp3;
+            *(s32*)&poly0->x1 = temp_a1_3;
+            *(s32*)&poly0->x2 = temp_a0_7;
+            *(s32*)&poly0->x3 = temp_v1_16;
 
-            *(s32*)&arg1->field_380.s_0.field_14 = *(s32*)&var_s6->field_10;
+            *(s32*)&scratchData->field_380.s_0.field_14 = *(s32*)&prim->field_10;
 
-            if (arg1->field_2B8[arg1->field_380.s_0.field_14] >= 8)
+            if (scratchData->field_2B8[scratchData->field_380.s_0.field_14] >= 8)
             {
-                gte_lddp(0x1000 - (arg1->field_2B8[arg1->field_380.s_0.field_14] << 5));
-                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_lddp(0x1000 - (scratchData->field_2B8[scratchData->field_380.s_0.field_14] << 5));
+                gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
-                gte_strgb(&poly_gt4_4->r0);
+                gte_strgb(&poly0->r0);
             }
             else
             {
-                *(s32*)&poly_gt4_4->r0 = 0x3C000000;
+                *(s32*)&poly0->r0 = 0x3C000000;
             }
 
-            if (arg1->field_2B8[arg1->field_380.s_0.field_15] >= 8)
+            if (scratchData->field_2B8[scratchData->field_380.s_0.field_15] >= 8)
             {
-                gte_lddp(0x1000 - (arg1->field_2B8[arg1->field_380.s_0.field_15] << 5));
-                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_lddp(0x1000 - (scratchData->field_2B8[scratchData->field_380.s_0.field_15] << 5));
+                gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
-                gte_strgb(&poly_gt4_4->r1);
+                gte_strgb(&poly0->r1);
             }
             else
             {
-                *(s32*)&poly_gt4_4->r1 = 0x3C000000;
+                *(s32*)&poly0->r1 = 0x3C000000;
             }
 
-            if (arg1->field_2B8[arg1->field_380.s_0.field_16] >= 8)
+            if (scratchData->field_2B8[scratchData->field_380.s_0.field_16] >= 8)
             {
-                gte_lddp(0x1000 - (arg1->field_2B8[arg1->field_380.s_0.field_16] << 5));
-                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_lddp(0x1000 - (scratchData->field_2B8[scratchData->field_380.s_0.field_16] << 5));
+                gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
-                gte_strgb(&poly_gt4_4->r2);
+                gte_strgb(&poly0->r2);
             }
             else
             {
-                *(s32*)&poly_gt4_4->r2 = 0x3C000000;
+                *(s32*)&poly0->r2 = 0x3C000000;
             }
 
-            if (arg1->field_2B8[arg1->field_380.s_0.field_17] >= 8)
+            if (scratchData->field_2B8[scratchData->field_380.s_0.field_17] >= 8)
             {
-                gte_lddp(0x1000 - (arg1->field_2B8[arg1->field_380.s_0.field_17] << 5));
-                gte_ldrgb(&arg1->field_380.s_0.field_8);
+                gte_lddp(0x1000 - (scratchData->field_2B8[scratchData->field_380.s_0.field_17] << 5));
+                gte_ldrgb(&scratchData->field_380.s_0.field_8);
                 gte_dpcs();
-                gte_strgb(&poly_gt4_4->r3);
+                gte_strgb(&poly0->r3);
             }
             else
             {
-                *(s32*)&poly_gt4_4->r3 = 0x3C000000;
+                *(s32*)&poly0->r3 = 0x3C000000;
             }
 
-            *(s32*)&poly_gt4_4->u0 = *(s32*)&var_s6->field_0;
-            *(s32*)&poly_gt4_4->u1 = *(s32*)&var_s6->field_4 & 0xFFFFFF;
-            *(u16*)&poly_gt4_4->u2 = var_s6->field_8;
-            *(u16*)&poly_gt4_4->u3 = var_s6->field_A;
+            *(s32*)&poly0->u0 = *(s32*)&prim->field_0;
+            *(s32*)&poly0->u1 = *(s32*)&prim->field_4 & 0xFFFFFF;
+            *(u16*)&poly0->u2 = prim->field_8;
+            *(u16*)&poly0->u3 = prim->field_A;
 
-            setlen(poly_gt4_4, 12);
+            setlen(poly0, 12);
 
-            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_gt4_4);
-            poly_gt4_4++;
+            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly0);
+            poly0++;
         }
     }
-    GsOUT_PACKET_P = poly_gt4_4;
+    GsOUT_PACKET_P = poly0;
     return;
 }
 
 __block19CC:
-    arg1->field_380.s_0.field_8.cd = 0x2C;
-    poly_ft4                       = GsOUT_PACKET_P;
+    scratchData->field_380.s_0.field_8.cd = 0x2C;
+    poly4                       = GsOUT_PACKET_P;
 
-    for (var_s6 = arg0->primitives_4; var_s6 < &arg0->primitives_4[arg0->primitiveCount_0]; var_s6++)
+    for (prim = meshHdr->primitives_4; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
     {
-        *(s32*)&arg1->field_380.s_0.field_10 = *(s32*)&var_s6->field_C;
-        arg1->field_380.s_0.field_18         = arg1->field_18C[arg1->field_380.s_0.field_10];
+        *(s32*)&scratchData->field_380.s_0.field_10 = *(s32*)&prim->field_C;
+        scratchData->field_380.s_0.field_18         = scratchData->field_18C[scratchData->field_380.s_0.field_10];
 
-        if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_11])
+        if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_11])
         {
-            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_11];
+            scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_11];
         }
 
-        if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_12])
+        if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_12])
         {
-            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_12];
+            scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_12];
         }
 
-        if (arg1->field_380.s_0.field_18 < arg1->field_18C[arg1->field_380.s_0.field_13])
+        if (scratchData->field_380.s_0.field_18 < scratchData->field_18C[scratchData->field_380.s_0.field_13])
         {
-            arg1->field_380.s_0.field_18 = arg1->field_18C[arg1->field_380.s_0.field_13];
+            scratchData->field_380.s_0.field_18 = scratchData->field_18C[scratchData->field_380.s_0.field_13];
         }
 
-        if (arg1->field_380.s_0.field_18 <= 0)
-        {
-            continue;
-        }
-
-        if (arg1->field_380.s_0.field_18 < 0x21)
-        {
-            arg1->field_380.s_0.field_18 = 0x20;
-        }
-
-        if (arg1->field_380.s_0.field_18 > arg1->field_380.s_0.field_1C)
+        if (scratchData->field_380.s_0.field_18 <= 0)
         {
             continue;
         }
 
-        gte_ldsxy3(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10],
-                   *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11],
-                   *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12]);
+        if (scratchData->field_380.s_0.field_18 < 0x21)
+        {
+            scratchData->field_380.s_0.field_18 = 0x20;
+        }
+
+        if (scratchData->field_380.s_0.field_18 > scratchData->field_380.s_0.field_1C)
+        {
+            continue;
+        }
+
+        gte_ldsxy3(*(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_10],
+                   *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_11],
+                   *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_12]);
         gte_nclip();
         gte_stopz(&sp20);
 
         if (sp20 <= 0)
         {
-            gte_ldsxy0(*(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13]);
+            gte_ldsxy0(*(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_13]);
             gte_nclip();
             gte_stopz(&sp20);
 
@@ -2450,38 +2451,39 @@ __block19CC:
             }
         }
 
-        temp_a3_5 = arg1->field_380.s_0.field_0;
-        temp_a2_7 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_10];
+        temp_a3_5 = scratchData->field_380.s_0.field_0;
+        temp_a2_7 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_10];
 
-        temp_a1_5  = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_11];
-        temp_a0_13 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_12];
-        temp_v1_27 = *(s32*)&arg1->screenXy_0[arg1->field_380.s_0.field_13];
+        temp_a1_5  = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_11];
+        temp_a0_13 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_12];
+        temp_v1_27 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_13];
         temp_t0_5  = temp_a3_5 * 2;
         temp       = temp_a2_7;
 
         if ((s16)temp_a2_7 + temp_a3_5 < temp_t0_5 || (s16)temp_a1_5 + temp_a3_5 < temp_t0_5 ||
             (s16)temp_a0_13 + temp_a3_5 < temp_t0_5 || (s16)temp_v1_27 + temp_a3_5 < temp_t0_5)
         {
-            *(s32*)&poly_ft4->x0 = temp;
-            *(s32*)&poly_ft4->x1 = temp_a1_5;
-            *(s32*)&poly_ft4->x2 = temp_a0_13;
-            *(s32*)&poly_ft4->x3 = temp_v1_27;
+            *(s32*)&poly4->x0 = temp;
+            *(s32*)&poly4->x1 = temp_a1_5;
+            *(s32*)&poly4->x2 = temp_a0_13;
+            *(s32*)&poly4->x3 = temp_v1_27;
 
-            *(s32*)&poly_ft4->r0 = *(s32*)&arg1->field_380.s_0.field_8;
+            *(s32*)&poly4->r0 = *(s32*)&scratchData->field_380.s_0.field_8;
 
-            *(s32*)&poly_ft4->u0 = *(s32*)&var_s6->field_0;
-            *(s32*)&poly_ft4->u1 = *(s32*)&var_s6->field_4 & 0xFFFFFF;
-            *(u16*)&poly_ft4->u2 = var_s6->field_8;
-            *(u16*)&poly_ft4->u3 = var_s6->field_A;
+            *(s32*)&poly4->u0 = *(s32*)&prim->field_0;
+            *(s32*)&poly4->u1 = *(s32*)&prim->field_4 & 0xFFFFFF;
+            *(u16*)&poly4->u2 = prim->field_8;
+            *(u16*)&poly4->u3 = prim->field_A;
 
-            setlen(poly_ft4, 9);
+            setlen(poly4, 9);
 
-            addPrim(&arg2[(arg1->field_380.s_0.field_18 >> arg3) >> 2], poly_ft4);
+            addPrim(&tag[(scratchData->field_380.s_0.field_18 >> arg3) >> 2], poly4);
 
-            poly_ft4++;
+            poly4++;
         }
     }
-    GsOUT_PACKET_P = poly_ft4;
+
+    GsOUT_PACKET_P = poly4;
 }
 
 void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, GsOT_TAG* tag) // 0x80059D50
@@ -2502,7 +2504,7 @@ void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, Gs
     }
 }
 
-void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* arg2, s32 arg3, GsOT_TAG* tag) // 0x80059E34
+void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 arg3, GsOT_TAG* tag) // 0x80059E34
 {
     s32          sp0;
     s32          var_t2;
@@ -2546,16 +2548,16 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* arg2, s32 
     var_t9  = D_800C4168.isFogEnabled_1 ? MIN(temp_v1, D_800C4168.drawDistance_10) : temp_v1;
 
     poly                        = (POLY_FT4*)GsOUT_PACKET_P;
-    arg2->field_380.s_0.field_0 = g_GameWork.gsScreenWidth_588 >> 1;
+    scratchData->field_380.s_0.field_0 = g_GameWork.gsScreenWidth_588 >> 1;
 
     for (prim = meshHdr->primitives_4; prim < &meshHdr->primitives_4[meshHdr->primitiveCount_0]; prim++)
     {
-        *(s32*)&arg2->field_380.s_0.field_10 = *(s32*)&prim->field_C;
+        *(s32*)&scratchData->field_380.s_0.field_10 = *(s32*)&prim->field_C;
 
-        var_t2 = arg2->field_18C[arg2->field_380.s_0.field_10];
-        var_t2 = MAX(arg2->field_18C[arg2->field_380.s_0.field_11], var_t2);
-        var_t2 = MAX(arg2->field_18C[arg2->field_380.s_0.field_12], var_t2);
-        var_t2 = MAX(arg2->field_18C[arg2->field_380.s_0.field_13], var_t2);
+        var_t2 = scratchData->field_18C[scratchData->field_380.s_0.field_10];
+        var_t2 = MAX(scratchData->field_18C[scratchData->field_380.s_0.field_11], var_t2);
+        var_t2 = MAX(scratchData->field_18C[scratchData->field_380.s_0.field_12], var_t2);
+        var_t2 = MAX(scratchData->field_18C[scratchData->field_380.s_0.field_13], var_t2);
 
         if (var_t2 <= 0)
         {
@@ -2572,14 +2574,14 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* arg2, s32 
             continue;
         }
 
-        gte_NormalClip(*(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_10],
-                       *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_11],
-                       *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_12],
+        gte_NormalClip(*(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_10],
+                       *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_11],
+                       *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_12],
                        &sp0);
 
         if (sp0 <= 0)
         {
-            gte_ldsxy0(*(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_13]);
+            gte_ldsxy0(*(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_13]);
             gte_nclip();
             gte_stopz(&sp0);
 
@@ -2589,16 +2591,16 @@ void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* arg2, s32 
             }
         }
 
-        temp = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_10];
-        x1 = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_11];
-        x2 = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_12];
-        x3 = *(s32*)&arg2->screenXy_0[arg2->field_380.s_0.field_13];
+        temp = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_10];
+        x1 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_11];
+        x2 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_12];
+        x3 = *(s32*)&scratchData->screenXy_0[scratchData->field_380.s_0.field_13];
 
-        temp_t0 = arg2->field_380.s_0.field_0;
+        temp_t0 = scratchData->field_380.s_0.field_0;
         temp_t1 = temp_t0 * 2;
         x0 = temp;
 
-        if (arg2->screenXy_0[arg2->field_380.s_0.field_10].vx + temp_t0 >= temp_t1 &&
+        if (scratchData->screenXy_0[scratchData->field_380.s_0.field_10].vx + temp_t0 >= temp_t1 &&
             (s16)x1 + temp_t0 >= temp_t1 &&
             (s16)x2 + temp_t0 >= temp_t1 &&
             (s16)x3 + temp_t0 >= temp_t1)
@@ -5674,7 +5676,7 @@ bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
     return true;
 }
 
-void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3) // 0x800622B8
+void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) // 0x800622B8
 {
     s_Collision coll;
     s32         temp_s0;
@@ -5688,6 +5690,7 @@ void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3) //
         return;
     }
 
+    // Related to blood.
     arg3 = func_8005F55C(arg3);
 
     i = D_800AE5CC[animStatus + 1] - D_800AE5CC[animStatus];
@@ -11297,69 +11300,69 @@ q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0
     return FP_ANGLE(360.0f);
 }
 
-q7_8 func_8006FAFC(s_SubCharacter* chara, q19_12 dist, q19_12 posX, q19_12 posZ, q3_12 arg4, bool cond) // 0x8006FAFC
+q7_8 func_8006FAFC(s_SubCharacter* chara, q19_12 dist, q19_12 posX, q19_12 posZ, q3_12 spanAngle, bool isClockwise) // 0x8006FAFC
 {
-    s16    temp_v1;
-    q7_8   angle;
-    q19_12 newPosZ;
-    q19_12 newPosX;
+    s16    spanAngleDiv3;
+    q7_8   curAngle;
+    q19_12 curPosZ;
+    q19_12 curPosX;
     q25_6  deltaX;
     q25_6  deltaZ;
-    q25_6  mag;
+    q25_6  curDist;
     s32    i;
-    s32    var_s4;
-    s32    var_s7;
-    s16    subroutine_arg4;
+    q19_12 distMinOrMax;
+    s32    stepCount;
+    q3_12  unkAngle;
 
-    var_s4 = 0;
-
-    if (cond != 0)
-
+    // Define if distance should track minimum or maximum.
+    distMinOrMax = Q12(0.0f);
+    if (isClockwise)
     {
-        var_s4 = INT_MAX;
+        distMinOrMax = INT_MAX;
     }
 
-    temp_v1         = arg4 / 3;
-    subroutine_arg4 = Q12(-1.0f);
+    spanAngleDiv3 = spanAngle / 3;
+    unkAngle = FP_ANGLE(-360.0f);
 
-    var_s7 = 7;
-    if (arg4 == Q12(1.0f))
+    // Define step count.
+    stepCount = 7;
+    if (spanAngle == FP_ANGLE(360.0f))
     {
-        var_s7 = 12;
+        stepCount = 12;
     }
 
-    for (i = 0; i < var_s7; i++)
+    // Run through steps in span.
+    for (i = 0; i < stepCount; i++)
     {
-        if (arg4 == Q12(1.0f))
+        if (spanAngle == FP_ANGLE(360.0f))
         {
-            angle = Q12(((i * 30) + (Rng_Rand16() % 30))) / 360;
+            curAngle = Q12(((i * 30) + (Rng_Rand16() % 30))) / 360;
         }
         else
         {
-            angle = (chara->rotation_24.vy + ((i - 3) * temp_v1) + ((Rng_Rand16() % temp_v1) >> 1)) - (temp_v1 >> 2);
+            curAngle = (chara->rotation_24.vy + ((i - 3) * spanAngleDiv3) + ((Rng_Rand16() % spanAngleDiv3) >> 1)) - (spanAngleDiv3 >> 2);
         }
 
-        newPosX = chara->position_18.vx + FP_MULTIPLY(dist, Math_Sin(angle), Q12_SHIFT);
-        newPosZ = chara->position_18.vz + FP_MULTIPLY(dist, Math_Cos(angle), Q12_SHIFT);
+        curPosX = chara->position_18.vx + FP_MULTIPLY(dist, Math_Sin(curAngle), Q12_SHIFT);
+        curPosZ = chara->position_18.vz + FP_MULTIPLY(dist, Math_Cos(curAngle), Q12_SHIFT);
 
-        if (!func_80070030(chara, newPosX, chara->position_18.vy, newPosZ))
+        if (!func_80070030(chara, curPosX, chara->position_18.vy, curPosZ))
         {
-            deltaX = Q12_TO_Q6(posX - newPosX);
-            deltaZ = Q12_TO_Q6(posZ - newPosZ);
-            mag    = SQUARE(deltaX) + SQUARE(deltaZ);
-
-            if ((!cond && (var_s4 < mag)) ||
-                ( cond && (mag < var_s4)))
+            deltaX  = Q12_TO_Q6(posX - curPosX);
+            deltaZ  = Q12_TO_Q6(posZ - curPosZ);
+            curDist = SQUARE(deltaX) + SQUARE(deltaZ);
+            if ((!isClockwise && (distMinOrMax < curDist)) ||
+                ( isClockwise && (curDist      < distMinOrMax)))
             {
-                var_s4          = mag;
-                subroutine_arg4 = angle;
+                distMinOrMax = curDist;
+                unkAngle     = curAngle;
             }
         }
     }
 
-    if (subroutine_arg4 != FP_ANGLE(-360.0f))
+    if (unkAngle != FP_ANGLE(-360.0f))
     {
-        return func_8005BF38(subroutine_arg4);
+        return func_8005BF38(unkAngle);
     }
 
     return FP_ANGLE(360.0f);

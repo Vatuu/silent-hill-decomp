@@ -54,7 +54,7 @@ INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E2A0);
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E2D8);
 
-s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2)
+s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2) // 0x8009E310
 {
     s_SysWork_2514_C_0 tmp;
 
@@ -71,8 +71,10 @@ s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2)
         {
             arg2 = 0;
         }
+
         arg0->field_C = arg1;
         arg0->unk_B[0] = arg2;
+
         while (arg2 > 0)
         {
             tmp.bits_0_0  = 0;

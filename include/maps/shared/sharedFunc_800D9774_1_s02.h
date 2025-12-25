@@ -16,11 +16,11 @@ void sharedFunc_800D9774_1_s02(s_SubCharacter* creaper)
 
         if (creaper->model_0.anim_4.status_0 == ANIM_STATUS(CreaperAnim_14, true))
         {
-            func_800622B8(3, creaper, ANIM_STATUS(5, false), 5);
+            func_800622B8(3, creaper, ANIM_STATUS(CreaperAnim_5, false), 5);
         }
         else
         {
-            func_800622B8(3, creaper, ANIM_STATUS(5, true), 5);
+            func_800622B8(3, creaper, ANIM_STATUS(CreaperAnim_5, true), 5);
         }
     }
 }

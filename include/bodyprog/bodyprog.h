@@ -589,7 +589,7 @@ typedef struct _GteScratchData
         MATRIX field_0;
         struct
         {
-            s32 field_0;
+            s32     field_0;
             s32     field_4;
             CVECTOR field_8;
             CVECTOR field_C;
@@ -3266,7 +3266,7 @@ s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
 /** TODO: Unknown `arg3` type. */
 void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, GsOT_TAG* tag);
 
-void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* arg2, s32 arg3, GsOT_TAG* tag);
+void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 arg3, GsOT_TAG* tag);
 
 /** TODO: Unknown `arg2` type. */
 void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* mat);
@@ -3353,7 +3353,7 @@ void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 
 void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
-void func_8005801C(s_MeshHeader* arg0, s_GteScratchData* arg1, GsOT_TAG* arg2, s32 arg3);
+void func_8005801C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3);
 
 /** `arg4` unused. */
 s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBuf9, e_FsFile fileIdx, s32 arg4);
@@ -3765,7 +3765,13 @@ void ActiveTextures_PutTextures(s_ActiveTextures* activeTexs, s_Texture* texs, s
 
 s_Texture* ActiveTextures_FindTexture(char* texName, s_ActiveTextures* activeTexs);
 
-/** Sets the debug string position. */
+// TODO: Rename to `Gfx_DebugStringPositionSet`.
+/** @brief Sets the debug string position.
+ *
+ * @param unused @unused
+ * @param x X screen position.
+ * @param y Y screen position.
+ */
 void func_8005BF0C(s16 unused, s16 x, s16 y);
 
 /** Angle func. */
@@ -3798,7 +3804,7 @@ bool func_80060044(POLY_FT4** poly, s32 idx);
 
 bool func_800611C0(POLY_FT4** poly, s32 idx);
 
-void func_800622B8(s32 arg0, s_SubCharacter* chara, s32 animStatus, s32 arg3);
+void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3);
 
 void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2);
 
@@ -3983,8 +3989,8 @@ void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8
 
 q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 
-/** Creates random angle of some kind. */
-q7_8 func_8006FAFC(s_SubCharacter* chara, q19_12 dist, q19_12 posX, q19_12 posZ, q3_12 arg4, bool cond);
+/** Creates random angle of some kind. Unsure if `spanAngle` is an angle. */
+q7_8 func_8006FAFC(s_SubCharacter* chara, q19_12 dist, q19_12 posX, q19_12 posZ, q3_12 spanAngle, bool cond);
 
 bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 distStep);
 
