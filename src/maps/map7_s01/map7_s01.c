@@ -97,7 +97,7 @@ INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", g_PuppetNurse_ModelSta
 
 #include "maps/shared/Ai_PuppetNurse_Control.h" // 0x800D41C4
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D02E4_3_s03); // 0x800D42D8
+#include "maps/shared/sharedFunc_800D02E4_3_s03.h" // 0x800D42D8
 
 INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D03E4_3_s03); // 0x800D43D8
 
