@@ -1,4 +1,4 @@
-void Ai_Splithead_DamageTake(s_SubCharacter* splithead)
+void Ai_Splithead_DamageTake(s_SubCharacter* splitHead)
 {
     u8  isPlayerDead;
     s32 damageAmt;
@@ -6,17 +6,17 @@ void Ai_Splithead_DamageTake(s_SubCharacter* splithead)
 
     // `func_8007F250` sets first arg to `D_800C4561` value, which gets set to 1 by `Player_ReceiveDamage` when player health is 0 or below.
     // Second arg is used to set `g_Player_DisableDamage`.
-    // `isPlayerDead` gets checked below. If it's set, splithead health isn't allowed to go below 0.
-    // Presumably this is used to prevent both player + splithead from dying at the same moment?
-    func_8007F250(&isPlayerDead, splithead->health_B0 == 0);
+    // `isPlayerDead` gets checked below. If it's set, Split Head health isn't allowed to go below 0.
+    // Presumably this is used to prevent both player + Split Head from dying at the same moment?
+    func_8007F250(&isPlayerDead, splitHead->health_B0 == 0);
 
     // Return early if no damage or health is already 0.
-    if (splithead->damage_B4.amount_C == Q12(0.0f) || splithead->health_B0 == 0) // TODO: Splithead health isn't Q12 going off checks below?
+    if (splitHead->damage_B4.amount_C == Q12(0.0f) || splitHead->health_B0 == 0) // TODO: Split Head health isn't Q12 going off checks below?
     {
         return;
     }
 
-    damageAmt = FP_FROM(splithead->damage_B4.amount_C, Q12_SHIFT);
+    damageAmt = FP_FROM(splitHead->damage_B4.amount_C, Q12_SHIFT);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
@@ -28,7 +28,7 @@ void Ai_Splithead_DamageTake(s_SubCharacter* splithead)
         damageAmt = 1;
     }
 
-    if (splithead->properties_E4.splithead.flags_E8 & SplitheadFlag_0)
+    if (splitHead->properties_E4.splithead.flags_E8 & SplitHeadFlag_0)
     {
         // TODO: Odd `WEAPON_ATTACK` value. Input type 3 doesn't exist.
         if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Hard &&
@@ -42,7 +42,7 @@ void Ai_Splithead_DamageTake(s_SubCharacter* splithead)
         }
     }
 
-    newHealth = splithead->health_B0 - damageAmt;
+    newHealth = splitHead->health_B0 - damageAmt;
     if (isPlayerDead)
     {
         if (newHealth <= 0)
@@ -55,39 +55,39 @@ void Ai_Splithead_DamageTake(s_SubCharacter* splithead)
         newHealth = 0;
     }
 
-    splithead->health_B0 = newHealth;
+    splitHead->health_B0 = newHealth;
 
-    if (splithead->health_B0 < 24000 && !(splithead->properties_E4.splithead.flags_E8 & SplitheadFlag_4))
+    if (splitHead->health_B0 < 24000 && !(splitHead->properties_E4.splithead.flags_E8 & SplitHeadFlag_4))
     {
-        splithead->model_0.state_2                   = 4;
-        splithead->properties_E4.splithead.flags_E8 |= SplitheadFlag_4;
+        splitHead->model_0.state_2                   = 4;
+        splitHead->properties_E4.splithead.flags_E8 |= SplitHeadFlag_4;
     }
-    else if (splithead->health_B0 == 0)
+    else if (splitHead->health_B0 == Q12(0.0f))
     {
-        if (ANIM_STATUS_IDX_GET(splithead->model_0.anim_4.status_0) == SplitheadAnim_Unk2)
+        if (ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) == SplitHeadAnim_Unk2)
         {
-            splithead->model_0.anim_4.status_0 = ANIM_STATUS(8, false);
+            splitHead->model_0.anim_4.status_0 = ANIM_STATUS(8, false);
         }
-        else if (splithead->moveSpeed_38 > Q12(0.0f))
+        else if (splitHead->moveSpeed_38 > Q12(0.0f))
         {
-            splithead->properties_E4.splithead.flags_E8 |= SplitheadFlag_5;
+            splitHead->properties_E4.splithead.flags_E8 |= SplitHeadFlag_5;
         }
-        else if (splithead->moveSpeed_38 < Q12(0.0f))
+        else if (splitHead->moveSpeed_38 < Q12(0.0f))
         {
-            splithead->properties_E4.splithead.flags_E8 &= ~SplitheadFlag_5;
+            splitHead->properties_E4.splithead.flags_E8 &= ~SplitHeadFlag_5;
         }
 
-        splithead->model_0.state_2 = 6;
+        splitHead->model_0.state_2 = 6;
     }
-    else if (splithead->properties_E4.splithead.flags_E8 & SplitheadFlag_0)
+    else if (splitHead->properties_E4.splithead.flags_E8 & SplitHeadFlag_0)
     {
-        splithead->properties_E4.splithead.flags_E8 |= SplitheadFlag_6 | SplitheadFlag_7;
+        splitHead->properties_E4.splithead.flags_E8 |= SplitHeadFlag_6 | SplitHeadFlag_7;
     }
 
-    splithead->damage_B4.amount_C      = Q12(0.0f);
-    splithead->damage_B4.position_0.vz = Q12(0.0f);
-    splithead->damage_B4.position_0.vy = Q12(0.0f);
-    splithead->damage_B4.position_0.vx = Q12(0.0f);
+    splitHead->damage_B4.amount_C      = Q12(0.0f);
+    splitHead->damage_B4.position_0.vz = Q12(0.0f);
+    splitHead->damage_B4.position_0.vy = Q12(0.0f);
+    splitHead->damage_B4.position_0.vx = Q12(0.0f);
 
-    func_8007F250(&isPlayerDead, splithead->health_B0 == 0);
+    func_8007F250(&isPlayerDead, splitHead->health_B0 == 0);
 }

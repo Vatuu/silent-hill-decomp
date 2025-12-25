@@ -1,18 +1,18 @@
 // Ai_Splithead
 
-void sharedFunc_800D0054_1_s05(s_SubCharacter* splithead)
+void sharedFunc_800D0054_1_s05(s_SubCharacter* splitHead)
 {
-    extern void (*sharedData_800D5A68_1_s05[])(s_SubCharacter* splithead); // TODO: Add func table to this func.
+    extern void (*sharedData_800D5A68_1_s05[])(s_SubCharacter* splitHead); // TODO: Add func table to this func.
 
-    splithead->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 3);
-    sharedData_800D5A68_1_s05[splithead->model_0.state_2](splithead);
+    splitHead->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 3);
+    sharedData_800D5A68_1_s05[splitHead->model_0.state_2](splitHead);
 
-    if (splithead->model_0.anim_4.status_0 == 23)
+    if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_Unk11, true))
     {
-        splithead->properties_E4.player.runTimer_F8 = splithead->model_0.anim_4.time_4;
+        splitHead->properties_E4.player.runTimer_F8 = splitHead->model_0.anim_4.time_4;
     }
-    else if (splithead->model_0.anim_4.status_0 == 22)
+    else if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_Unk11, false))
     {
-        splithead->properties_E4.player.runTimer_F8 = Q12(201.0f);
+        splitHead->properties_E4.player.runTimer_F8 = Q12(201.0f);
     }
 }

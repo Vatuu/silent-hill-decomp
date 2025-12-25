@@ -7,6 +7,8 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/characters/creaper.h"
+#include "maps/characters/locker_dead_body.h"
+#include "maps/characters/stalker.h"
 
 INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800C9578);
 

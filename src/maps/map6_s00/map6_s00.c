@@ -6,6 +6,8 @@
 #include "maps/shared.h"
 #include "maps/map6/map6_s00.h"
 #include "maps/characters/air_screamer.h"
+#include "maps/characters/groaner.h"
+#include "maps/characters/romper.h"
 
 INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800C9578);
 

@@ -4,6 +4,8 @@
 #include "maps/shared.h"
 #include "maps/map2/map2_s02.h"
 #include "maps/characters/air_screamer.h"
+#include "maps/characters/groaner.h"
+#include "maps/characters/romper.h"
 
 INCLUDE_RODATA("asm/maps/map2_s02/nonmatchings/map2_s02", D_800C9578);
 

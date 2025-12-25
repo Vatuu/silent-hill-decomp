@@ -59,8 +59,8 @@ extern s_WorldObjectDescNoRot g_WorldObject_Kidn05;
 
 extern s8 D_800DB9B0;
 
-void Ai_Floatstinger_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void Ai_Floatstinger_Init(s_SubCharacter* chara);
+void Ai_Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_Floatstinger_Init(s_SubCharacter* floatstinger);
 void func_800D1968(s_SubCharacter*);
 void func_800D1B98(s_SubCharacter*);
 void func_800D35F0(s_SubCharacter*);

@@ -5,6 +5,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map4/map4_s05.h"
+#include "maps/characters/floatstinger.h"
 
 INCLUDE_RODATA("asm/maps/map4_s05/nonmatchings/map4_s05", D_800C9578);
 
@@ -70,79 +71,78 @@ void Ai_Floatstinger_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
     chara->properties_E4.dummy.properties_E8[1].val16[0] = chara->rotation_24.vy;
 }
 
-void Ai_Floatstinger_Init(s_SubCharacter* chara) // 0x800D1790
+void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
 {
     s32 i;
 
-    chara->properties_E4.dummy.properties_E8[0].val16[0] = 0;
-
-    chara->model_0.anim_4.alpha_A = Q12(0.0f);
+    floatstinger->properties_E4.dummy.properties_E8[0].val16[0] = 0;
+    floatstinger->model_0.anim_4.alpha_A = Q12(0.0f);
 
     // Set health.
-    chara->health_B0 = Q12(4000.0f);
+    floatstinger->health_B0 = Q12(4000.0f);
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        chara->health_B0 = Q12(6000.0f);
+        floatstinger->health_B0 = Q12(6000.0f);
     }
     else
     {
         
     }
 
-    chara->moveSpeed_38 = Q12(0.0f);
-    chara->field_34     = 0;
-    chara->field_E1_0   = 4;
+    floatstinger->moveSpeed_38 = Q12(0.0f);
+    floatstinger->field_34     = 0;
+    floatstinger->field_E1_0   = 4;
 
     for (i = 0; i < 16; i++)
     {
-        chara->properties_E4.dummy.properties_E8[i].val32 = 0;
+        floatstinger->properties_E4.dummy.properties_E8[i].val32 = 0;
     }
 
-    switch (chara->model_0.stateStep_3)
+    switch (floatstinger->model_0.stateStep_3)
     {
         case 3:
-            chara->model_0.state_2 = 5;
-            Character_AnimSet(chara, ANIM_STATUS(FloatstingerAnim_Unk9, true), 191);
+            floatstinger->model_0.state_2 = 5;
+            Character_AnimSet(floatstinger, ANIM_STATUS(FloatstingerAnim_Unk9, true), 191);
 
-            chara->properties_E4.dummy.properties_E8[7].val16[1] = -0x90; // Could be `FP_ANGLE(-12.7f)`?
+            floatstinger->properties_E4.dummy.properties_E8[7].val16[1] = -0x90; // Could be `FP_ANGLE(-12.7f)`?
             break;
 
         case 4:
-            chara->position_18.vx = Q12(-114.5f);
-            chara->position_18.vy = Q12(2.0f);
-            chara->position_18.vz = Q12(108.0f);
+            floatstinger->position_18.vx = Q12(-114.5f);
+            floatstinger->position_18.vy = Q12(2.0f);
+            floatstinger->position_18.vz = Q12(108.0f);
 
-            chara->model_0.state_2 = 2;
-            Character_AnimSet(chara, ANIM_STATUS(FloatstingerAnim_Unk9, true), 191);
-            chara->rotation_24.vy = FP_ANGLE(-90.0f);
+            floatstinger->model_0.state_2 = 2;
+            Character_AnimSet(floatstinger, ANIM_STATUS(FloatstingerAnim_Unk9, true), 191);
+            floatstinger->rotation_24.vy = FP_ANGLE(-90.0f);
             break;
     }
 
-    chara->model_0.stateStep_3 = 0;
+    floatstinger->model_0.stateStep_3 = 0;
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, FLOATSTINGER_ANIM_INFOS);
+    ModelAnim_AnimInfoSet(&floatstinger->model_0.anim_4, FLOATSTINGER_ANIM_INFOS);
 
-    Chara_DamageClear(chara);
+    Chara_DamageClear(floatstinger);
 
     D_800DB89C = 0;
     D_800DB898 = 0;
 
-    chara->headingAngle_3C = chara->rotation_24.vy;
+    floatstinger->headingAngle_3C = floatstinger->rotation_24.vy;
 
     for (i = 0; i < 15; i++)
     {
         D_800DB8A8[i] = 0;
     }
 
-    chara->properties_E4.dummy.properties_E8[1].val16[0] = chara->rotation_24.vy;
-    chara->flags_3E |= CharaFlag_Unk9 | CharaFlag_Unk3;
+    floatstinger->properties_E4.dummy.properties_E8[1].val16[0] = floatstinger->rotation_24.vy;
+    floatstinger->flags_3E |= CharaFlag_Unk9 | CharaFlag_Unk3;
 
     D_800D7858 = 0;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
         D_800D785C = Q12(2.4f);
-        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 0;
+        floatstinger->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 0;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {

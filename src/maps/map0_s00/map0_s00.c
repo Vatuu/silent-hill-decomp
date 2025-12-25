@@ -4,6 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map0/map0_s00.h"
+#include "maps/characters/stalker.h"
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CB6B0
 

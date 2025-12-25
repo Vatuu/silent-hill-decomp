@@ -1,8 +1,8 @@
-void sharedFunc_800D03F8_5_s00(s_SubCharacter* chara)
+void sharedFunc_800D03F8_5_s00(s_SubCharacter* scratcher)
 {
-    if (chara->properties_E4.player.field_104 != 0)
+    if (scratcher->properties_E4.player.field_104 != 0)
     {
-        chara->model_0.state_2         = 7;
-        chara->model_0.anim_4.status_0 = ANIM_STATUS(18, false);
+        scratcher->model_0.state_2         = 7;
+        scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_Unk18, false);
     }
 }

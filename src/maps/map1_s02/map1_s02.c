@@ -5,6 +5,7 @@
 #include "maps/shared.h"
 #include "maps/map1/map1_s02.h"
 #include "maps/characters/creaper.h"
+#include "maps/characters/stalker.h"
 
 INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800C9578);
 
