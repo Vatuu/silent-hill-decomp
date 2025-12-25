@@ -1,6 +1,7 @@
 #ifndef _MAPS_CHARACTERS_LOCKERDEADBODY_H
 #define _MAPS_CHARACTERS_LOCKERDEADBODY_H
 
+/** @brief Locker Dead Body character animation indices. */
 typedef enum _LockerDeadBodyAnim
 {
     LockerDeadBodyAnim_Still = 0,

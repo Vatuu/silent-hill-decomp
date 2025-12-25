@@ -1,6 +1,7 @@
 #ifndef _MAPS_CHARACTERS_ROMPER_H
 #define _MAPS_CHARACTERS_ROMPER_H
 
+/** @brief Romper character animation indices. */
 typedef enum _RomperAnim
 {
     RomperAnim_Still = 0,

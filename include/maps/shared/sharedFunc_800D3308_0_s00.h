@@ -11,7 +11,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* chara)
 
     if (chara->damage_B4.amount_C > Q12(0.0f) && chara->health_B0 > Q12(0.0f))
     {
-        sharedFunc_800D7E04_0_s00(chara, 0x555);
+        sharedFunc_800D7E04_0_s00(chara, 1365);
     }
 
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(34, true) ||

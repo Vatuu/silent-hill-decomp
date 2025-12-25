@@ -1,7 +1,8 @@
 #ifndef _MAPS_CHARACTERS_HANGEDSCRATCHER_H
 #define _MAPS_CHARACTERS_HANGEDSCRATCHER_H
 
-typedef enum _HangedScratcher
+/** @brief Hanged Scratcher character animation indices. */
+typedef enum _HangedScratcherAnim
 {
     HangedScratcherAnim_Still = 0,
     HangedScratcherAnim_Unk1  = 1,
@@ -19,7 +20,7 @@ typedef enum _HangedScratcher
     HangedScratcherAnim_Unk16 = 16,
     HangedScratcherAnim_Unk17 = 17,
     HangedScratcherAnim_Unk18 = 18,
-} e_HangedScratcher;
+} e_HangedScratcherAnim;
 
 /*s_AnimInfo HANGED_SCRATCHER_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },

@@ -303,7 +303,7 @@ void sharedFunc_800D0CB8_0_s00(void)
 
             if (g_SysWork.field_234B_0 != 0)
             {
-                func_8005DE0C(Sfx_Unk1360, &g_SysWork.playerWork_4C.player_0.position_18, unkValDiv4, 0, 0);
+                func_8005DE0C(Sfx_Unk1360, &g_SysWork.playerWork_4C.player_0.position_18, unkValDiv4, Q12(0.0f), 0);
             }
             else if (sharedData_800E32CC_0_s00 != 0)
             {

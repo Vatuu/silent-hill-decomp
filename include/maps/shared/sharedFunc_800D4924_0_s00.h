@@ -141,7 +141,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* chara)
                 chara->model_0.state_2   = 5;
                 g_SysWork.field_2284[3] |= 2;
 
-                sharedFunc_800D7E04_0_s00(chara, 0x554);
+                sharedFunc_800D7E04_0_s00(chara, 1364);
 
                 if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) > 492 && FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 505)
                 {

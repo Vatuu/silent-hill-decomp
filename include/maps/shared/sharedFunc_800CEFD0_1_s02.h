@@ -1,29 +1,29 @@
 // @hack Needed for match. Same as version in `rng.h` but without parenthesess around it.
 // TODO: Changing `rng.h version` still doesn't let it match though?
-#define Rng_GenerateIntFromInput(rand, low, high) (s32)((rand) % (((high) - (low)) + 1)) + (low)
+#define Rng_GenerateIntFromInput(rand, low, high) \
+    (s32)((rand) % (((high) - (low)) + 1)) + (low)
 
 #ifdef MAP7_S03
-extern s16 D_800F23D0; // TODO: Might be sharedData?
+    extern s16 D_800F23D0; // TODO: Might be sharedData?
 #endif
 
 // Value used in case 0 comparison
 #define UNK_VAL 5
 
 #if defined(MAP1_S06)
-#define UNK_VAL 6
+    #define UNK_VAL 6
 #elif defined(MAP7_S03)
-#define UNK_VAL 8
+    #define UNK_VAL 8
 #endif
 
 void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* deltaTime)
 {
-    s_Collision sp10;
-
-    s32 xDeltaCase0, zDeltaCase0;
-    s32 xDeltaCase1, zDeltaCase1;
-
-    u16 localRand;
-
+    s_Collision coll;
+    q19_12      xDeltaCase0;
+    q19_12      zDeltaCase0;
+    q19_12      xDeltaCase1;
+    q19_12      zDeltaCase1;
+    u16         localRand;
     s_Particle* localPart = part;
 
 #if defined(MAP0_S00) || defined(MAP0_S01) || defined(MAP0_S02) || defined(MAP1_S00) || \
@@ -80,32 +80,33 @@ void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* delta
                 {
                     localPart->position0_0.vx = -localPart->position0_0.vx;
                     localPart->position0_0.vz = -localPart->position0_0.vz;
-                    localPart->type_1F       += 0xF0; // Hex
+                    localPart->type_1F       += 240;
                 }
             }
 
-            if (localPart->position0_0.vy >= 0)
+            if (localPart->position0_0.vy >= Q12(0.0f))
             {
 #if defined(MAP7_S03)
-                localPart->position0_0.vy = 0;
-                localPart->movement_18.vy = 0;
+                localPart->position0_0.vy = Q12(0.0f);
+                localPart->movement_18.vy = Q12(0.0f);
                 localPart->stateStep_1E++;
 #else
                 PushMatrix();
-                Collision_Get(&sp10, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
+                Collision_Get(&coll, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
                 PopMatrix();
 
-                if (localPart->position0_0.vy >= sp10.groundHeight_0)
+                if (localPart->position0_0.vy >= coll.groundHeight_0)
                 {
 #if defined(MAP1_S06)
                     localPart->stateStep_1E = 0;
 #else
-                    localPart->position0_0.vy = sp10.groundHeight_0;
-                    if (sp10.groundHeight_0 < 0 && sp10.groundHeight_0 > -Q12(0.2))
+                    localPart->position0_0.vy = coll.groundHeight_0;
+                    if (coll.groundHeight_0 < Q12(0.0f) && coll.groundHeight_0 > Q12(-0.2))
                     {
-                        localPart->position0_0.vy = 0;
+                        localPart->position0_0.vy = Q12(0.0f);
                     }
-                    localPart->movement_18.vy = 0;
+
+                    localPart->movement_18.vy = Q12(0.0f);
                     localPart->stateStep_1E++;
 #endif
                 }
@@ -173,21 +174,22 @@ void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* delta
             if (localPart->position0_0.vy >= 0)
             {
                 PushMatrix();
-                Collision_Get(&sp10, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
+                Collision_Get(&coll, localPart->position0_0.vx + g_Particle_Position.vx, localPart->position0_0.vz + g_Particle_Position.vz);
                 PopMatrix();
 
-                localPart->position0_0.vy = sp10.groundHeight_0;
-                localPart->movement_18.vx = sp10.field_8;
+                localPart->position0_0.vy = coll.groundHeight_0;
+                localPart->movement_18.vx = coll.field_8;
 
-                if (sp10.field_8 == 11)
+                if (coll.field_8 == 11)
                 {
                     localPart->type_1F        = 3;
                     localPart->position1_C.vx = localPart->position0_0.vx;
                     localPart->position1_C.vz = localPart->position0_0.vz;
-                    localPart->position1_C.vy = localPart->position0_0.vy - 96;
+                    localPart->position1_C.vy = localPart->position0_0.vy - 96; // TODO: Float.
                 }
-                localPart->movement_18.vz = 0;
-                localPart->movement_18.vy = 0;
+
+                localPart->movement_18.vz = Q12(0.0f);
+                localPart->movement_18.vy = Q12(0.0f);
                 localPart->stateStep_1E++;
             }
 #endif

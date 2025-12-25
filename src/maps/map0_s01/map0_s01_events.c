@@ -1062,8 +1062,8 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
             SD_Call(Sfx_RadioStaticLoop);
         }
 
-        func_8005DE0C(Sfx_RadioInterferenceLoop, &D_800DE154, D_800E23A1, 0x10000, 0);
-        func_8005DE0C(Sfx_RadioStaticLoop, &D_800DE154, D_800E23A1, 0x10000, 0);
+        func_8005DE0C(Sfx_RadioInterferenceLoop, &D_800DE154, D_800E23A1, Q12(16.0f), 0);
+        func_8005DE0C(Sfx_RadioStaticLoop, &D_800DE154, D_800E23A1, Q12(16.0f), 0);
 
         Savegame_EventFlagSet(EventFlag_52);
     }

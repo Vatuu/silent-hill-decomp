@@ -1749,7 +1749,9 @@ void func_800DF21C(void) // 0x800DF21C
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 6, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[1], 25, false);
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
+
             Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, AnimFlag_Visible);
+
             Map_MessageWithAudio(62, &D_800EB6B0, &D_800E9D50);
             SysWork_StateStepIncrement(0);
             break;
@@ -1781,7 +1783,9 @@ void func_800DF21C(void) // 0x800DF21C
         case 7:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 10, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[1], 12, false);
+
             D_800EB6B4 = Q12(60.0f);
+
             Savegame_EventFlagClear(EventFlag_560);
             SysWork_StateStepIncrement(0);
 
@@ -2261,9 +2265,9 @@ void func_800DFDDC(void) // 0x800DFDDC
                     break;
 
                 case 3:
-                    D_800EBB64.rotation_28.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), 12);
-                    D_800EBB64.position_1C.vy  = FP_MULTIPLY(Math_Cos(D_800EBB64.rotation_28.vz), Q12(0.15f), 0xC) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
-                    D_800EBB64.position_1C.vz  = FP_MULTIPLY(Math_Sin(D_800EBB64.rotation_28.vz), -Q12(0.15f), 0xC) - Q12(140.5f);
+                    D_800EBB64.rotation_28.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), Q12_SHIFT);
+                    D_800EBB64.position_1C.vy  = FP_MULTIPLY(Math_Cos(D_800EBB64.rotation_28.vz), Q12(0.15f), Q12_SHIFT) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
+                    D_800EBB64.position_1C.vz  = FP_MULTIPLY(Math_Sin(D_800EBB64.rotation_28.vz), Q12(-0.15f), Q12_SHIFT) - Q12(140.5f);
 
                     g_SysWork.field_28 += g_DeltaTime0;
                     if (g_SysWork.field_28 > Q12(0.5f))
@@ -2275,9 +2279,9 @@ void func_800DFDDC(void) // 0x800DFDDC
 
                 case 4:
                     D_800EA492                           += g_DeltaTime2;
-                    D_800EBB64.rotation_28.vz            += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), 12);
-                    D_800EBB64.position_1C.vy            += FP_MULTIPLY_PRECISE(D_800EA492, g_DeltaTime0, 12);
-                    D_800EBB64.position_1C.vz            += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), 12);
+                    D_800EBB64.rotation_28.vz            += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), Q12_SHIFT);
+                    D_800EBB64.position_1C.vy            += FP_MULTIPLY_PRECISE(D_800EA492, g_DeltaTime0, Q12_SHIFT);
+                    D_800EBB64.position_1C.vz            += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), Q12_SHIFT);
 
                     if (D_800EBB64.position_1C.vy > 0)
                     {

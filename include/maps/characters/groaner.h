@@ -1,6 +1,7 @@
 #ifndef _MAPS_CHARACTERS_GROANER_H
 #define _MAPS_CHARACTERS_GROANER_H
 
+/** @brief Groaner character animation indices. */
 typedef enum _GroanerAnim
 {
     GroanerAnim_Still = 0,

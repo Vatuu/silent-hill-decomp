@@ -1310,6 +1310,17 @@ typedef struct _SubCharaPropertiesNpc
 } s_SubCharaPropertiesNpc;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesNpc, 68);
 
+typedef struct _SubCharaPropertiesBloodsucker
+{
+    s32 unk_E4;
+
+    s8     unk_E8[4];
+    q19_12 timer_EC;
+    q19_12 timer_F0;
+    q19_12 timer_F4;
+
+} s_SubCharaPropertiesBloodsucker;
+
 typedef struct _SubCharaPropertiesCreaper
 {
     s32    unk_E4;
@@ -1530,6 +1541,7 @@ typedef struct _SubCharacter
         s_SubCharaPropertiesPlayer player;
         s_SubCharaPropertiesNpc    npc;
 
+        s_SubCharaPropertiesBloodsucker   bloodsucker;
         s_SubCharaPropertiesCreaper       creaper;
         s_SubCharaPropertiesDahlia        dahlia;
         s_SubCharaPropertiesLarvalStalker larvalStalker;

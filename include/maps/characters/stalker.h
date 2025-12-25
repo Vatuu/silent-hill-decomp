@@ -1,6 +1,7 @@
 #ifndef _MAPS_CHARACTERS_STALKER_H
 #define _MAPS_CHARACTERS_STALKER_H
 
+/** @brief Stalker character animation indices. */
 typedef enum _StalkerAnim
 {
     StalkerAnim_Still = 0,

@@ -14,6 +14,7 @@ typedef enum _SplitHeadFlags
 	SplitHeadFlag_8    = 1 << 8
 } e_SplitHeadFlags;
 
+/** @brief Split Head character animation indices. */
 typedef enum _SplitHeadAnim
 {
     SplitHeadAnim_Still = 0,

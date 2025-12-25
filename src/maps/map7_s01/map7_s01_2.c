@@ -1470,6 +1470,7 @@ void func_800D9C9C(void) // 0x800D9C9C
 
                 case 2:
                     D_800E168E += g_DeltaTime2 >> 1;
+
                     if (g_WorldObject_Stone0.position_1C.vy < Q12(-1.05f))
                     {
                         g_WorldObject_Stone0.position_1C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E168E, 12);
@@ -1487,9 +1488,9 @@ void func_800D9C9C(void) // 0x800D9C9C
                     break;
 
                 case 3:
-                    g_WorldObject_Stone0.rotation_28.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), 12);
-                    g_WorldObject_Stone0.position_1C.vy  = FP_MULTIPLY(Math_Cos(g_WorldObject_Stone0.rotation_28.vz), Q12(0.15f), 0xC) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
-                    g_WorldObject_Stone0.position_1C.vz  = FP_MULTIPLY(Math_Sin(g_WorldObject_Stone0.rotation_28.vz), -Q12(0.15f), 0xC) - Q12(140.5f);
+                    g_WorldObject_Stone0.rotation_28.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), Q12_SHIFT);
+                    g_WorldObject_Stone0.position_1C.vy  = FP_MULTIPLY(Math_Cos(g_WorldObject_Stone0.rotation_28.vz), Q12(0.15f), Q12_SHIFT) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
+                    g_WorldObject_Stone0.position_1C.vz  = FP_MULTIPLY(Math_Sin(g_WorldObject_Stone0.rotation_28.vz), Q12(-0.15f), Q12_SHIFT) - Q12(140.5f);
 
                     g_SysWork.field_28                   += g_DeltaTime0;
                     if (g_SysWork.field_28 > Q12(0.5f))
@@ -1501,9 +1502,9 @@ void func_800D9C9C(void) // 0x800D9C9C
 
                 case 4:
                     D_800E168E                          += g_DeltaTime2;
-                    g_WorldObject_Stone0.rotation_28.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), 12);
-                    g_WorldObject_Stone0.position_1C.vy += FP_MULTIPLY_PRECISE(D_800E168E, g_DeltaTime0, 12);
-                    g_WorldObject_Stone0.position_1C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), 12);
+                    g_WorldObject_Stone0.rotation_28.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), Q12_SHIFT);
+                    g_WorldObject_Stone0.position_1C.vy += FP_MULTIPLY_PRECISE(D_800E168E, g_DeltaTime0, Q12_SHIFT);
+                    g_WorldObject_Stone0.position_1C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), Q12_SHIFT);
 
                     if (g_WorldObject_Stone0.position_1C.vy > 0)
                     {
@@ -1528,9 +1529,11 @@ void func_800D9C9C(void) // 0x800D9C9C
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
             func_8008D448();
+
             Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, AnimFlag_Visible);
             Savegame_EventFlagClear(EventFlag_500 + D_800E1690.field_0);
             Savegame_EventFlagSet(EventFlag_487);
+
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             break;
 
