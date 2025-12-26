@@ -109,7 +109,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara) {} // 0x800D3934
 
 #include "maps/shared/sharedFunc_800D9960_1_s02.h" // 0x800D9960
 
-INCLUDE_ASM("asm/maps/map1_s02/nonmatchings/map1_s02", sharedFunc_800D99D0_1_s02); // 0x800D99D0
+#include "maps/shared/sharedFunc_800D99D0_1_s02.h" // 0x800D99D0
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D9E0C
 

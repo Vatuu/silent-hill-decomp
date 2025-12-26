@@ -212,7 +212,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara) {} // 0x800D3DAC
 
 #include "maps/shared/sharedFunc_800D9960_1_s02.h" // 0x800D9DD8
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", sharedFunc_800D99D0_1_s02); // 0x800D9E48
+#include "maps/shared/sharedFunc_800D99D0_1_s02.h" // 0x800D9E48
 
 void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DA284
 {

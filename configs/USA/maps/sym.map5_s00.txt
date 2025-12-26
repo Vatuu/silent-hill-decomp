@@ -125,6 +125,19 @@ sharedData_800DD598_0_s00   = 0x800D9198;
 sharedData_800DD59C_0_s00   = 0x800D919C; // type:u8
 HANGED_SCRATCHER_ANIM_INFOS = 0x800D91A0; // type:s32 unknown type
 CREEPER_ANIM_INFOS          = 0x800D9CBC; // type:s32 unknown type
+sharedData_800E0F78_1_s02   = 0x800D9EFC;
+sharedData_800E0FC8_1_s02   = 0x800D9F4C;
+sharedData_800E0FDC_1_s02   = 0x800D9F60;
+sharedData_800E0FF0_1_s02   = 0x800D9F74;
+sharedData_800E1004_1_s02   = 0x800D9F88;
+sharedData_800E10CC_1_s02   = 0x800DA050;
+sharedData_800E10E0_1_s02   = 0x800DA064;
+sharedData_800E1158_1_s02   = 0x800DA0DC;
+sharedData_800E116C_1_s02   = 0x800DA0F0;
+sharedData_800E1180_1_s02   = 0x800DA104;
+sharedData_800E1194_1_s02   = 0x800DA118;
+sharedData_800E11A8_1_s02   = 0x800DA12C;
+sharedData_800E11BC_1_s02   = 0x800DA140;
 
 //---------------------------------------------------------------
 //--- PA: 0x011294   VA: 0x800DA80C   subsegment: .data, map5_s00
