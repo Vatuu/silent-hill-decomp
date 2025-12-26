@@ -1,25 +1,25 @@
-void sharedFunc_800D8244_1_s02(s_SubCharacter* creaper)
+void sharedFunc_800D8244_1_s02(s_SubCharacter* creeper)
 {
-    switch (creaper->model_0.state_2)
+    switch (creeper->model_0.state_2)
     {
         case 1:
-            sharedFunc_800D82F0_1_s02(creaper);
+            sharedFunc_800D82F0_1_s02(creeper);
             break;
 
         case 2:
-            sharedFunc_800D8684_1_s02(creaper);
+            sharedFunc_800D8684_1_s02(creeper);
             break;
 
         case 3:
-            sharedFunc_800D8F30_1_s02(creaper);
+            sharedFunc_800D8F30_1_s02(creeper);
             break;
     
         case 4:
-            sharedFunc_800D9528_1_s02(creaper);
+            sharedFunc_800D9528_1_s02(creeper);
             break;
 
         case 5:
-            sharedFunc_800D9774_1_s02(creaper);
+            sharedFunc_800D9774_1_s02(creeper);
             break;
 
         default:
@@ -27,5 +27,5 @@ void sharedFunc_800D8244_1_s02(s_SubCharacter* creaper)
     }
 
     // Reset alerted flag.
-    creaper->properties_E4.creaper.flags_E8 &= ~CreaperFlag_Alerted;
+    creeper->properties_E4.creeper.flags_E8 &= ~CreeperFlag_Alerted;
 }

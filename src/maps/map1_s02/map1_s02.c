@@ -4,7 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map1/map1_s02.h"
-#include "maps/characters/creaper.h"
+#include "maps/characters/creeper.h"
 #include "maps/characters/stalker.h"
 
 INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800C9578);
@@ -87,9 +87,9 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara) {} // 0x800D3934
 
 #include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D79E4
 
-#include "maps/shared/Ai_Creaper_Update.h" // 0x800D7B98
+#include "maps/shared/Ai_Creeper_Update.h" // 0x800D7B98
 
-#include "maps/shared/Ai_Creaper_Init.h" // 0x800D7C28
+#include "maps/shared/Ai_Creeper_Init.h" // 0x800D7C28
 
 #include "maps/shared/sharedFunc_800D7EE8_1_s02.h" // 0x800D7EE8
 
@@ -1516,7 +1516,7 @@ void func_800DD494(void) // 0x800DD494
         func_80088FF4(Chara_GreyChild, 1, 0);
         func_80088FF4(Chara_GreyChild, 3, 0);
         func_80088FF4(Chara_GreyChild, 8, 0);
-        func_80088FF4(Chara_Creaper, 1, 0);
+        func_80088FF4(Chara_Creeper, 1, 0);
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
@@ -1524,11 +1524,11 @@ void func_800DD494(void) // 0x800DD494
         func_80088FF4(Chara_GreyChild, 13, 11);
         func_80088FF4(Chara_GreyChild, 14, 3);
         func_80088FF4(Chara_GreyChild, 15, 3);
-        func_80088FF4(Chara_Creaper, 0, 13);
-        func_80088FF4(Chara_Creaper, 2, 13);
-        func_80088FF4(Chara_Creaper, 4, 13);
-        func_80088FF4(Chara_Creaper, 6, 13);
-        func_80088FF4(Chara_Creaper, 9, 3);
+        func_80088FF4(Chara_Creeper, 0, 13);
+        func_80088FF4(Chara_Creeper, 2, 13);
+        func_80088FF4(Chara_Creeper, 4, 13);
+        func_80088FF4(Chara_Creeper, 6, 13);
+        func_80088FF4(Chara_Creeper, 9, 3);
     }
 
     sharedData_800E30C8_1_s02.field_0[0]  = -0x10666;
@@ -1833,11 +1833,11 @@ void func_800DEC88(void) // 0x800DEC88
 
     if (Savegame_EventFlagGet(EventFlag_98))
     {
-        func_80088FF4(Chara_Creaper, 7, 12);
-        func_80088FF4(Chara_Creaper, 8, 12);
+        func_80088FF4(Chara_Creeper, 7, 12);
+        func_80088FF4(Chara_Creeper, 8, 12);
         if (g_SavegamePtr->gameDifficulty_260 == 1)
         {
-            func_80088FF4(Chara_Creaper, 9, 12);
+            func_80088FF4(Chara_Creeper, 9, 12);
         }
     }
 }

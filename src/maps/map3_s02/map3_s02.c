@@ -3,7 +3,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map3/map3_s02.h"
-#include "maps/characters/creaper.h"
+#include "maps/characters/creeper.h"
 
 INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", D_800C9578);
 
@@ -13,9 +13,9 @@ INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02", g_MapOverlayHeader);
 
 #include "maps/shared/Player.h"
 
-#include "maps/shared/Ai_Creaper_Update.h" // 0x800CCA14
+#include "maps/shared/Ai_Creeper_Update.h" // 0x800CCA14
 
-#include "maps/shared/Ai_Creaper_Init.h" // 0x800CCAA4
+#include "maps/shared/Ai_Creeper_Init.h" // 0x800CCAA4
 
 #include "maps/shared/sharedFunc_800D7EE8_1_s02.h" // 0x800CCD64
 

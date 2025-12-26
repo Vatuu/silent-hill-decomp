@@ -4,7 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map5/map5_s00.h"
-#include "maps/characters/creaper.h"
+#include "maps/characters/creeper.h"
 #include "maps/characters/hanged_scratcher.h"
 
 INCLUDE_RODATA("asm/maps/map5_s00/nonmatchings/map5_s00", D_800C9578);
@@ -91,9 +91,9 @@ INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800D3214);
 
 INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D3300_5_s00); // 0x800D3300
 
-#include "maps/shared/Ai_Creaper_Update.h" // 0x800D387C
+#include "maps/shared/Ai_Creeper_Update.h" // 0x800D387C
 
-#include "maps/shared/Ai_Creaper_Init.h" // 0x800D390C - doesn't fully match `map1_s02` version, small block of code added to end.
+#include "maps/shared/Ai_Creeper_Init.h" // 0x800D390C - doesn't fully match `map1_s02` version, small block of code added to end.
 
 #include "maps/shared/sharedFunc_800D7EE8_1_s02.h" // 0x800D3BDC
 
@@ -727,20 +727,20 @@ void Map_WorldObjectsInit(void) // 0x800D82A8
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        func_80088FF4(Chara_Creaper, 0, 0);
-        func_80088FF4(Chara_Creaper, 1, 0);
-        func_80088FF4(Chara_Creaper, 4, 0);
-        func_80088FF4(Chara_Creaper, 7, 0);
-        func_80088FF4(Chara_Creaper, 12, 0);
+        func_80088FF4(Chara_Creeper, 0, 0);
+        func_80088FF4(Chara_Creeper, 1, 0);
+        func_80088FF4(Chara_Creeper, 4, 0);
+        func_80088FF4(Chara_Creeper, 7, 0);
+        func_80088FF4(Chara_Creeper, 12, 0);
         g_SysWork.npcId_2280 = 3;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        func_80088FF4(Chara_Creaper, 5, 12);
-        func_80088FF4(Chara_Creaper, 6, 12);
-        func_80088FF4(Chara_Creaper, 7, 0);
-        func_80088FF4(Chara_Creaper, 8, 13);
-        func_80088FF4(Chara_Creaper, 9, 13);
+        func_80088FF4(Chara_Creeper, 5, 12);
+        func_80088FF4(Chara_Creeper, 6, 12);
+        func_80088FF4(Chara_Creeper, 7, 0);
+        func_80088FF4(Chara_Creeper, 8, 13);
+        func_80088FF4(Chara_Creeper, 9, 13);
         g_SysWork.npcId_2280 = 4;
     }
     else

@@ -1611,8 +1611,8 @@ extern s_AnimInfo LARVAL_STALKER_ANIM_INFOS[]; // Used by `Ai_LarvalStalker_Init
 
 extern s_AnimInfo STALKER_ANIM_INFOS[]; // Used by `Ai_Stalker_Init`.
 
-// Two variables used by `Ai_Creaper_Init`.
-extern s_AnimInfo CREAPER_ANIM_INFOS[];
+// Two variables used by `Ai_Creeper_Init`.
+extern s_AnimInfo CREEPER_ANIM_INFOS[];
 extern s8 sharedData_800E57CC_1_s02;
 
 extern s_sharedData_800E21D0_0_s01 sharedData_800E21D0_0_s01;
@@ -2322,29 +2322,29 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* harry, GsCOORDINATE2* coords);
 
 void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
 
-void Ai_Creaper_Update(s_SubCharacter* creaper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_Creaper_Init(s_SubCharacter* creaper); // `map5_s00` version has extra code at end of func.
+void Ai_Creeper_Init(s_SubCharacter* creeper); // `map5_s00` version has extra code at end of func.
 
-void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creaper);
+void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper);
 
-void sharedFunc_800D8244_1_s02(s_SubCharacter* creaper);
+void sharedFunc_800D8244_1_s02(s_SubCharacter* creeper);
 
-void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper);
+void sharedFunc_800D82F0_1_s02(s_SubCharacter* creeper);
 
-void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper);
+void sharedFunc_800D8684_1_s02(s_SubCharacter* creeper);
 
-void sharedFunc_800D8F30_1_s02(s_SubCharacter* creaper);
+void sharedFunc_800D8F30_1_s02(s_SubCharacter* creeper);
 
-void sharedFunc_800D9528_1_s02(s_SubCharacter* creaper);
+void sharedFunc_800D9528_1_s02(s_SubCharacter* creeper);
 
-void sharedFunc_800D9774_1_s02(s_SubCharacter* creaper);
+void sharedFunc_800D9774_1_s02(s_SubCharacter* creeper);
 
-void sharedFunc_800D983C_1_s02(s_SubCharacter* creaper);
+void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper);
 
 void sharedFunc_800D9960_1_s02(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void sharedFunc_800D99D0_1_s02(s_SubCharacter* creaper);
+void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper);
 
 void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 

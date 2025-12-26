@@ -1,26 +1,26 @@
-void sharedFunc_800D9774_1_s02(s_SubCharacter* creaper)
+void sharedFunc_800D9774_1_s02(s_SubCharacter* creeper)
 {
-    creaper->flags_3E &= ~CharaFlag_Unk2;
+    creeper->flags_3E &= ~CharaFlag_Unk2;
 
-    if (creaper->health_B0 == Q12(0.0f) && func_8005C7D0(creaper) != g_SysWork.targetNpcIdx_2353)
+    if (creeper->health_B0 == Q12(0.0f) && func_8005C7D0(creeper) != g_SysWork.targetNpcIdx_2353)
     {
-        creaper->health_B0  = NO_VALUE;
-        creaper->field_E1_0 = 0;
+        creeper->health_B0  = NO_VALUE;
+        creeper->field_E1_0 = 0;
     }
 
-    //if (creaper->moveSpeed_38 == Q12(0.0f) && !(creaper->properties_E4.creaper.flags_E8 & (CreaperFlag_3 | CreaperFlag_4))) // TODO: Doesn't match?
-    if (creaper->moveSpeed_38 == Q12(0.0f) && !(creaper->properties_E4.player.afkTimer_E8 & 0xC))
+    //if (creeper->moveSpeed_38 == Q12(0.0f) && !(creeper->properties_E4.creeper.flags_E8 & (CreeperFlag_3 | CreeperFlag_4))) // TODO: Doesn't match?
+    if (creeper->moveSpeed_38 == Q12(0.0f) && !(creeper->properties_E4.player.afkTimer_E8 & 0xC))
     {
-        creaper->properties_E4.creaper.flags_E8 |= CreaperFlag_3;
-        func_80037DC4(creaper);
+        creeper->properties_E4.creeper.flags_E8 |= CreeperFlag_3;
+        func_80037DC4(creeper);
 
-        if (creaper->model_0.anim_4.status_0 == ANIM_STATUS(CreaperAnim_14, true))
+        if (creeper->model_0.anim_4.status_0 == ANIM_STATUS(CreeperAnim_14, true))
         {
-            func_800622B8(3, creaper, ANIM_STATUS(CreaperAnim_5, false), 5);
+            func_800622B8(3, creeper, ANIM_STATUS(CreeperAnim_5, false), 5);
         }
         else
         {
-            func_800622B8(3, creaper, ANIM_STATUS(CreaperAnim_5, true), 5);
+            func_800622B8(3, creeper, ANIM_STATUS(CreeperAnim_5, true), 5);
         }
     }
 }

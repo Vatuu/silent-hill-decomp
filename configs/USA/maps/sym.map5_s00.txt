@@ -88,8 +88,8 @@ sharedFunc_800D26D8_5_s00   = 0x800D26D8; // type:func
 sharedFunc_800D2844_5_s00   = 0x800D2844; // type:func
 sharedFunc_800D2C18_5_s00   = 0x800D2C18; // type:func
 sharedFunc_800D3300_5_s00   = 0x800D3300; // type:func
-Ai_Creaper_Update           = 0x800D387C; // type:func
-Ai_Creaper_Init             = 0x800D390C; // type:func - extra code at end compared to 1_s02
+Ai_Creeper_Update           = 0x800D387C; // type:func
+Ai_Creeper_Init             = 0x800D390C; // type:func - extra code at end compared to 1_s02
 sharedFunc_800D7EE8_1_s02   = 0x800D3BDC; // type:func
 sharedFunc_800D8244_1_s02   = 0x800D3F38; // type:func
 sharedFunc_800D82F0_1_s02   = 0x800D3FE4; // type:func
@@ -124,7 +124,7 @@ sharedData_800DF158_1_s02   = 0x800D9194; // type:u8
 sharedData_800DD598_0_s00   = 0x800D9198;
 sharedData_800DD59C_0_s00   = 0x800D919C; // type:u8
 HANGED_SCRATCHER_ANIM_INFOS = 0x800D91A0; // type:s32 unknown type
-CREAPER_ANIM_INFOS          = 0x800D9CBC; // type:s32 unknown type
+CREEPER_ANIM_INFOS          = 0x800D9CBC; // type:s32 unknown type
 
 //---------------------------------------------------------------
 //--- PA: 0x011294   VA: 0x800DA80C   subsegment: .data, map5_s00

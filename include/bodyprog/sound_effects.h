@@ -119,7 +119,7 @@ typedef enum _SfxId
     Sfx_Unk1422 = 1422,
     Sfx_Unk1423 = 1423,
     Sfx_Unk1424 = 1424,
-    Sfx_Unk1425 = 1425, // Creaper hit?
+    Sfx_Unk1425 = 1425, // Creeper hit?
     Sfx_Unk1426 = 1426,
     Sfx_Unk1427 = 1427,
 

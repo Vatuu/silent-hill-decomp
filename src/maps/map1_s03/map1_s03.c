@@ -6,7 +6,7 @@
 #include "maps/map1/map1_s03.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-#include "maps/characters/creaper.h"
+#include "maps/characters/creeper.h"
 #include "maps/characters/locker_dead_body.h"
 #include "maps/characters/stalker.h"
 
@@ -190,9 +190,9 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara) {} // 0x800D3DAC
 
 #include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D7E5C
 
-#include "maps/shared/Ai_Creaper_Update.h" // 0x800D8010
+#include "maps/shared/Ai_Creeper_Update.h" // 0x800D8010
 
-#include "maps/shared/Ai_Creaper_Init.h" // 0x800D80A0
+#include "maps/shared/Ai_Creeper_Init.h" // 0x800D80A0
 
 #include "maps/shared/sharedFunc_800D7EE8_1_s02.h" // 0x800D8360
 
@@ -1232,8 +1232,8 @@ void func_800DD3AC(void) // 0x800DD3AC
         func_80088FF4(Chara_GreyChild, 5, 0);
         func_80088FF4(Chara_GreyChild, 6, 0);
         func_80088FF4(Chara_GreyChild, 7, 0);
-        func_80088FF4(Chara_Creaper, 5, 0);
-        func_80088FF4(Chara_Creaper, 6, 0);
+        func_80088FF4(Chara_Creeper, 5, 0);
+        func_80088FF4(Chara_Creeper, 6, 0);
     }
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
@@ -1496,33 +1496,33 @@ void func_800DE624(void) // 0x800DE624
 
     if (playerHealth > Q12(20.0f))
     {
-        func_80088FF4(Chara_Creaper, 0, 3);
+        func_80088FF4(Chara_Creeper, 0, 3);
     }
     else
     {
-        func_80088FF4(Chara_Creaper, 0, 0);
+        func_80088FF4(Chara_Creeper, 0, 0);
     }
 
     if (playerHealth > Q12(60.0f))
     {
-        func_80088FF4(Chara_Creaper, 1, 3);
-        func_80088FF4(Chara_Creaper, 2, 3);
+        func_80088FF4(Chara_Creeper, 1, 3);
+        func_80088FF4(Chara_Creeper, 2, 3);
     }
     else
     {
-        func_80088FF4(Chara_Creaper, 1, 0);
-        func_80088FF4(Chara_Creaper, 2, 0);
+        func_80088FF4(Chara_Creeper, 1, 0);
+        func_80088FF4(Chara_Creeper, 2, 0);
     }
 
     if (playerHealth > Q12(80.0f))
     {
-        func_80088FF4(Chara_Creaper, 3, 3);
-        func_80088FF4(Chara_Creaper, 4, 3);
+        func_80088FF4(Chara_Creeper, 3, 3);
+        func_80088FF4(Chara_Creeper, 4, 3);
     }
     else
     {
-        func_80088FF4(Chara_Creaper, 3, 0);
-        func_80088FF4(Chara_Creaper, 4, 0);
+        func_80088FF4(Chara_Creeper, 3, 0);
+        func_80088FF4(Chara_Creeper, 4, 0);
     }
 }
 

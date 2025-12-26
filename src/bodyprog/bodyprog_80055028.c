@@ -8014,7 +8014,7 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 
         case Chara_Stalker:
         case Chara_GreyChild:
         case Chara_Mumbler:
-        case Chara_Creaper:
+        case Chara_Creeper:
         case Chara_Romper:
         case Chara_PuppetNurse:
         case Chara_PuppetDoctor:

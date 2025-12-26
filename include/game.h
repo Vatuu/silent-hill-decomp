@@ -839,7 +839,7 @@ typedef enum _CharacterId
     Chara_GreyChild        = 8,
     Chara_Mumbler          = 9,
     Chara_HangedScratcher  = 10,
-    Chara_Creaper          = 11,
+    Chara_Creeper          = 11,
     Chara_Romper           = 12,
     Chara_Chicken          = 13, /** @unused */
     Chara_SplitHead        = 14,
@@ -1316,7 +1316,7 @@ typedef struct _PropertiesAirScreamer
 
     s32 stateIdx0; // } Temp filler.
     s32 field_EC;
-    s16 field_F0; // } Maybe 2D offset like in Creaper properties? Must check.
+    s16 field_F0; // } Maybe 2D offset like in Creeper properties? Must check.
     s16 field_F2; // }
     s32 field_F4;
     s32     resetStateIdx0_F8; // } Temp filler.
@@ -1342,7 +1342,7 @@ typedef struct _SubCharaPropertiesBloodsucker
     s32    flags_118;
 } s_SubCharaPropertiesBloodsucker;
 
-typedef struct _SubCharaPropertiesCreaper
+typedef struct _SubCharaPropertiesCreeper
 {
     s32    unk_E4;
     u16    flags_E8; // TODO: `sharedFunc_800D8684_1_s02` and `sharedFunc_800D9774_1_s02` require `s32`, but changing it breaks matches elsewhere.
@@ -1358,8 +1358,8 @@ typedef struct _SubCharaPropertiesCreaper
     q3_12  rotationY_108;
     s16    animStatus_10A;
     q4_12  moveSpeed_10C;
-} s_SubCharaPropertiesCreaper;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesCreaper, 44);
+} s_SubCharaPropertiesCreeper;
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesCreeper, 44);
 
 typedef struct _SubCharPropertiesDahlia
 {
@@ -1559,7 +1559,7 @@ typedef struct _SubCharacter
 
         s_PropertiesAirScreamer           airScreamer;
         s_SubCharaPropertiesBloodsucker   bloodsucker;
-        s_SubCharaPropertiesCreaper       creaper;
+        s_SubCharaPropertiesCreeper       creeper;
         s_SubCharaPropertiesDahlia        dahlia;
         s_SubCharaPropertiesLarvalStalker larvalStalker;
         s_SubCharaPropertiesPuppetNurse   puppetNurse;

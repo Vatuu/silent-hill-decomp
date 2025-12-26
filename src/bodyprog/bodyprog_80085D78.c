@@ -3833,7 +3833,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                     var_a3 = 3;
                     break;
 
-                case Chara_Creaper:
+                case Chara_Creeper:
                     var_a3 = 5;
                     break;
 

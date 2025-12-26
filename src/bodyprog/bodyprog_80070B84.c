@@ -8438,7 +8438,7 @@ bool func_8007F95C(void) // 0x8007F95C
                 }
                 else
                 {
-                    if (curNpc1->model_0.charaId_0 == Chara_Creaper)
+                    if (curNpc1->model_0.charaId_0 == Chara_Creeper)
                     {
                         radius = Q12(0.65f);
                     }
