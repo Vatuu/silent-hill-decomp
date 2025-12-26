@@ -2488,7 +2488,7 @@ void sharedFunc_800D2B28_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2B4C_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D2BB0_0_s01(s_SubCharacter* airScreamer);
+void Ai_AirScreamer_GroundWarp(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2BE4_0_s01(s_SubCharacter* airScreamer);
 

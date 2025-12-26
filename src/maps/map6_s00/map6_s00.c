@@ -63,7 +63,7 @@ INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D2B4C_0_s01.h" // 0x800D22D8
 
-#include "maps/shared/sharedFunc_800D2BB0_0_s01.h" // 0x800D233C
+#include "maps/shared/Ai_AirScreamer_GroundWarp.h" // 0x800D233C
 
 #include "maps/shared/sharedFunc_800D2BE4_0_s01.h" // 0x800D2370
 

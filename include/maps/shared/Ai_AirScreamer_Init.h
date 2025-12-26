@@ -6,6 +6,7 @@ bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
     #define RAND_MAX_HEALTH_BONUS_EASY -100
     #define RAND_MAX_HEALTH_BONUS_HARD  100
 
+    // Return early if already initialized.
     if (airScreamer->model_0.state_2 != ModelState_Uninitialized)
     {
         return false;
@@ -44,7 +45,7 @@ bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
     sharedFunc_800D2B10_0_s01(airScreamer);
     sharedFunc_800D2B28_0_s01(airScreamer);
     sharedFunc_800D2B4C_0_s01(airScreamer);
-    sharedFunc_800D2BB0_0_s01(airScreamer);
+    Ai_AirScreamer_GroundWarp(airScreamer);
     sharedFunc_800D2BE4_0_s01(airScreamer);
 
     return true;

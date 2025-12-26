@@ -121,13 +121,13 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
         airScreamer->field_E1_0       = 0;
     }
 
-    if ((airScreamer->properties_E4.player.afkTimer_E8 & 0xF) == 3)
+    if (airScreamer->properties_E4.airScreamer.field_E8_0 == 3)
     {
         airScreamer->field_C8.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_C8.field_2, Q12(1.125f), Q12_SHIFT);
         airScreamer->field_D4.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_D4.field_2, Q12(1.125f), Q12_SHIFT);
     }
 
-    if (airScreamer->properties_E4.player.flags_11C & PlayerFlag_Unk12)
+    if (airScreamer->properties_E4.airScreamer.flags_11C & PlayerFlag_Unk12)
     {
         airScreamer->field_C8.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_C8.field_2, Q12(0.875f), Q12_SHIFT);
         airScreamer->field_D4.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_D4.field_2, Q12(0.875f), Q12_SHIFT);

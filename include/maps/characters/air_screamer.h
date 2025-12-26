@@ -1,12 +1,49 @@
 #ifndef _MAPS_CHARACTERS_AIRSCREAMER_H
 #define _MAPS_CHARACTERS_AIRSCREAMER_H
 
+/** @brief Air Screamer character flags. */
+typedef enum _AirScreamerFlags
+{
+    AirScreamerFlag_None = 0,
+    AirScreamerFlag_0    = 1 << 0,
+    AirScreamerFlag_1    = 1 << 1,
+    AirScreamerFlag_2    = 1 << 2,
+    AirScreamerFlag_3    = 1 << 3,
+    AirScreamerFlag_4    = 1 << 4,
+    AirScreamerFlag_5    = 1 << 5,
+    AirScreamerFlag_6    = 1 << 6,
+    AirScreamerFlag_7    = 1 << 7,
+    AirScreamerFlag_8    = 1 << 8,
+    AirScreamerFlag_9    = 1 << 9,
+    AirScreamerFlag_10   = 1 << 10,
+    AirScreamerFlag_11   = 1 << 11,
+    AirScreamerFlag_12   = 1 << 12,
+    AirScreamerFlag_13   = 1 << 13,
+    AirScreamerFlag_14   = 1 << 14,
+    AirScreamerFlag_15   = 1 << 15,
+    AirScreamerFlag_16   = 1 << 16,
+    AirScreamerFlag_17   = 1 << 17,
+    AirScreamerFlag_18   = 1 << 18,
+    AirScreamerFlag_19   = 1 << 19,
+    AirScreamerFlag_20   = 1 << 20,
+    AirScreamerFlag_21   = 1 << 21,
+    AirScreamerFlag_22   = 1 << 22,
+    AirScreamerFlag_23   = 1 << 23,
+    AirScreamerFlag_24   = 1 << 24,
+    AirScreamerFlag_25   = 1 << 25,
+    AirScreamerFlag_26   = 1 << 26,
+    AirScreamerFlag_27   = 1 << 27,
+    AirScreamerFlag_28   = 1 << 28
+} e_AirScreamerFlags;
+
 /** @brief Air Screamer character animation indices. */
 typedef enum _AirScreamerAnim
 {
     AirScreamerAnim_Still = 0,
 
+    AirScreamerAnim_1     = 1,
     AirScreamerAnim_2     = 2,
+    AirScreamerAnim_3     = 3,
 
     AirScreamerAnim_9     = 9,
     AirScreamerAnim_10    = 10,

@@ -1254,12 +1254,12 @@ typedef struct _SubCharPropertiesDummy
 {
     s32        unk_E4;
     u_Property properties_E8[16];
-} s_SubCharaPropertiesDummy;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesDummy, 68);
+} s_PropertiesDummy;
+STATIC_ASSERT_SIZEOF(s_PropertiesDummy, 68);
 
-// TODO: Re-offset `s_SubCharaPropertiesPlayer` / `s_SubCharaPropertiesNpc`.
+// TODO: Re-offset `s_PropertiesPlayer` / `s_PropertiesNpc`.
 // Probably easier to do that after it's merged with rest of code.
-typedef struct _SubCharaPropertiesPlayer
+typedef struct _PropertiesPlayer
 {
     s32           field_E4;
     q19_12        afkTimer_E8; // Increments every tick for 10 seconds before AFK anim starts.
@@ -1283,11 +1283,11 @@ typedef struct _SubCharaPropertiesPlayer
     q3_12         field_122; // Some sort of X angle for the player. Specially used when aiming an enemy.
     q3_12         headingAngle_124;
     q3_12         moveDistance_126; // Used to indicate how much the player should move foward. Seems to be squared.
-} s_SubCharaPropertiesPlayer;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPlayer, 68);
+} s_PropertiesPlayer;
+STATIC_ASSERT_SIZEOF(s_PropertiesPlayer, 68);
 
 // TODO: This may be a puppet doctor/nurse specific struct, need to compare with other NPCs.
-typedef struct _SubCharaPropertiesNpc
+typedef struct _PropertiesNpc
 {
     s_func_8006CF18* unk_E4; // TODO: Not sure if this is meant to be in player or NPC properties, has to be at 0x0.
     VECTOR3          position_E8; /** Q19.12 */
@@ -1307,31 +1307,28 @@ typedef struct _SubCharaPropertiesNpc
     s16              field_120;
     s16              field_122;
     s_800D5710*      field_124;
-} s_SubCharaPropertiesNpc;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesNpc, 68);
+} s_PropertiesNpc;
+STATIC_ASSERT_SIZEOF(s_PropertiesNpc, 68);
 
 typedef struct _PropertiesAirScreamer
 {
     s32 unk_E4;
 
-    s32 stateIdx0; // } Temp filler.
-    s32 field_EC;
-    s16 field_F0; // } Maybe 2D offset like in Creeper properties? Must check.
-    s16 field_F2; // }
-    s32 field_F4;
-    s32     resetStateIdx0_F8; // } Temp filler.
-    s32     field_FC;          // }
-    s32     field_100;         // }
-    s32     properties_104;    // }
-    s32     properties_108;    // }
-    s32     properties_10C;    // }
-    VECTOR3 field_110;         // }
-    s32     flags_11C;         // }
-    s32     properties_120;    // }
+    u32    field_E8_0 : 4;
+    u32    field_E8_4 : 4;
+    u32    field_E8_8 : 4;
+    u32    unk_E8_C   : 20;
+    s32    field_EC;
+    s16    field_F0; // } Maybe 2D offset like in Creeper properties? Must check.
+    s16    field_F2; // }
+    s32    field_F4;
+    s8     unk_F8[36]; // Maybe used by yet to be decompiled functions.
+    s32    flags_11C; /** `e_AirScreamerFlags` */
+    q19_12 timer_120;
     q19_12 groundHeight_124;
 } s_PropertiesAirScreamer;
 
-typedef struct _SubCharaPropertiesBloodsucker
+typedef struct _PropertiesBloodsucker
 {
     s32    unk_E4;
     q19_12 timer_E8;
@@ -1339,13 +1336,13 @@ typedef struct _SubCharaPropertiesBloodsucker
     q19_12 timer_F0;
     q19_12 timer_F4;
     s8     unk_F8[36]; // Unused?
-    s32    flags_118;
-} s_SubCharaPropertiesBloodsucker;
+    s32    flags_118; /** `e_BloodsuckerFlags` */
+} s_PropertiesBloodsucker;
 
-typedef struct _SubCharaPropertiesCreeper
+typedef struct _PropertiesCreeper
 {
     s32    unk_E4;
-    u16    flags_E8; // TODO: `sharedFunc_800D8684_1_s02` and `sharedFunc_800D9774_1_s02` require `s32`, but changing it breaks matches elsewhere.
+    u16    flags_E8; /** `e_CreeperFlags` */ // TODO: `sharedFunc_800D8684_1_s02` and `sharedFunc_800D9774_1_s02` require `s32`, but changing it breaks matches elsewhere.
     s8     unk_EA[2];
     q3_12  offsetX_EC;
     q3_12  offsetZ_EE;
@@ -1358,8 +1355,8 @@ typedef struct _SubCharaPropertiesCreeper
     q3_12  rotationY_108;
     s16    animStatus_10A;
     q4_12  moveSpeed_10C;
-} s_SubCharaPropertiesCreeper;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesCreeper, 44);
+} s_PropertiesCreeper;
+STATIC_ASSERT_SIZEOF(s_PropertiesCreeper, 44);
 
 typedef struct _SubCharPropertiesDahlia
 {
@@ -1379,10 +1376,10 @@ typedef struct _SubCharPropertiesDahlia
     u_Property properties_120;
     s16        field_124;
     q3_12      moveDistance_126;
-} s_SubCharaPropertiesDahlia;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesDahlia, 68);
+} s_PropertiesDahlia;
+STATIC_ASSERT_SIZEOF(s_PropertiesDahlia, 68);
 
-typedef struct _SubCharaPropertiesLarvalStalker
+typedef struct _PropertiesLarvalStalker
 {
     s32        unk_E4;
     u16        flags_E8;
@@ -1405,10 +1402,10 @@ typedef struct _SubCharaPropertiesLarvalStalker
     u_Property field_120;
     s16        field_124;
     q3_12      moveDistance_126;
-} s_SubCharaPropertiesLarvalStalker;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesLarvalStalker, 68);
+} s_PropertiesLarvalStalker;
+STATIC_ASSERT_SIZEOF(s_PropertiesLarvalStalker, 68);
 
-typedef struct _SubCharaPropertiesPuppetNurse
+typedef struct _PropertiesPuppetNurse
 {
     s_func_8006CF18* unk_E4;
     VECTOR3          position_E8; /** Q19.12 */
@@ -1426,10 +1423,10 @@ typedef struct _SubCharaPropertiesPuppetNurse
     s16              field_120;
     u16              flags_122; /** `e_PuppetNurseFlags` */
     s_800D5710*      field_124;
-} s_SubCharaPropertiesPuppetNurse;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesPuppetNurse, 68);
+} s_PropertiesPuppetNurse;
+STATIC_ASSERT_SIZEOF(s_PropertiesPuppetNurse, 68);
 
-typedef struct _SubCharaPropertiesSplitHead
+typedef struct _PropertiesSplitHead
 {
     s32        unk_E4;
     u16        flags_E8;
@@ -1445,12 +1442,12 @@ typedef struct _SubCharaPropertiesSplitHead
     u8         field_108[4];
     q19_12     field_10C;
     VECTOR3    field_110;
-    s32        flags_11C;
+    s32        flags_11C; /** `e_SplitHeadFlags` */
     u_Property field_120;
     s16        field_124;
     q3_12      moveDistance_126;
-} s_SubCharaPropertiesSplitHead;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesSplitHead, 68);
+} s_PropertiesSplitHead;
+STATIC_ASSERT_SIZEOF(s_PropertiesSplitHead, 68);
 
 typedef struct _SubCharPropertiesUnk0
 {
@@ -1468,8 +1465,8 @@ typedef struct _SubCharPropertiesUnk0
     s32        flags_11C; /** `e_CharaUnk0Flags` */
     u_Property properties_120;
     u_Property properties_124;
-} s_SubCharaPropertiesUnk0;
-STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesUnk0, 68);
+} s_PropertiesUnk0;
+STATIC_ASSERT_SIZEOF(s_PropertiesUnk0, 68);
 
 /** Offsets for translation? */
 typedef struct
@@ -1533,13 +1530,13 @@ typedef struct _SubCharacter
     s16      flags_3E;     /** `e_CharaFlags` */
     s8       field_40;     // In player: Index of the NPC attacking the player.
                            // In NPCs: Unknown.
-    s8  attackReceived_41; // Indicates what attack has been performed to the character. For enemies is based on `e_EquippedWeaponId` enum.
+    s8  attackReceived_41; // Indicates what attack has been performed to the character. For enemies, based on `e_EquippedWeaponId`.
     s8  unk_42[2];         // Most likely padding.
     s_SubCharacter_44  field_44;
     q19_12  health_B0;
     s_CharaDamage damage_B4;
     u16     deathTimer_C4; // Part of `shBattleInfo` struct in SH2, may use something similar here.
-    s16     timer_C6;      // Some sort of timer, value written by `Ai_LarvalStalker_Update`.
+    q3_12   timer_C6;      // Some sort of timer. Written to by `Ai_LarvalStalker_Update`.
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
     s_SubCharacter_C8 field_C8;
@@ -1553,18 +1550,18 @@ typedef struct _SubCharacter
 
     union
     {
-        s_SubCharaPropertiesDummy         dummy;
-        s_SubCharaPropertiesPlayer        player;
-        s_SubCharaPropertiesNpc           npc;
+        s_PropertiesDummy         dummy;
+        s_PropertiesPlayer        player;
+        s_PropertiesNpc           npc;
 
-        s_PropertiesAirScreamer           airScreamer;
-        s_SubCharaPropertiesBloodsucker   bloodsucker;
-        s_SubCharaPropertiesCreeper       creeper;
-        s_SubCharaPropertiesDahlia        dahlia;
-        s_SubCharaPropertiesLarvalStalker larvalStalker;
-        s_SubCharaPropertiesPuppetNurse   puppetNurse;
-        s_SubCharaPropertiesSplitHead     splitHead;
-        s_SubCharaPropertiesUnk0          unk0;
+        s_PropertiesAirScreamer   airScreamer;
+        s_PropertiesBloodsucker   bloodsucker;
+        s_PropertiesCreeper       creeper;
+        s_PropertiesDahlia        dahlia;
+        s_PropertiesLarvalStalker larvalStalker;
+        s_PropertiesPuppetNurse   puppetNurse;
+        s_PropertiesSplitHead     splitHead;
+        s_PropertiesUnk0          unk0;
     } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);

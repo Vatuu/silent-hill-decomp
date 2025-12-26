@@ -27,11 +27,11 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
 
         switch (animStatus)
         {
-            case ANIM_STATUS(2, true):
-            case ANIM_STATUS(1, true):
+            case ANIM_STATUS(AirScreamerAnim_2, true):
+            case ANIM_STATUS(AirScreamerAnim_1, true):
                 if (temp_s1->field_0 == 0)
                 {
-                    if (animStatus == ANIM_STATUS(1, true))
+                    if (animStatus == ANIM_STATUS(AirScreamerAnim_1, true))
                     {
                         temp_s1->field_2 = 40;
                     }
@@ -53,11 +53,11 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
 
                 if (func_8008A3E0(airScreamer) != 0)
                 {
-                    airScreamer->properties_E4.player.flags_11C |= PlayerFlag_Unk0;
+                    airScreamer->properties_E4.airScreamer.flags_11C |= PlayerFlag_Unk0;
                 }
                 break;
 
-            case ANIM_STATUS(3, true):
+            case ANIM_STATUS(AirScreamerAnim_3, true):
                 if (temp_s1->field_0 == 0)
                 {
                     temp_s1->field_2 = 42;
@@ -83,7 +83,7 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
 
                 if (func_8008A3E0(airScreamer) != 0)
                 {
-                    airScreamer->properties_E4.player.flags_11C |= CharaUnk0Flag_Unk1;
+                    airScreamer->properties_E4.airScreamer.flags_11C |= CharaUnk0Flag_Unk1;
                 }
                 break;
         }

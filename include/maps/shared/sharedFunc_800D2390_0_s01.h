@@ -84,7 +84,7 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
     sp28 = 0;
 
     posX  = airScreamer->position_18.vx;
-    flags = airScreamer->properties_E4.player.flags_11C;
+    flags = airScreamer->properties_E4.airScreamer.flags_11C;
     posZ  = airScreamer->position_18.vz;
 
     temp_v0 = sharedData_800CAA98_0_s01.unk_380[39][airScreamer->model_0.anim_4.keyframeIdx_8];
@@ -184,6 +184,8 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
         }
     }
 
+    // TODO: Weird `e_AirScreamerFlags` operations.
+
     flags = BitAssign(flags, 13, bit0 & sp28);
     flags = BitAssign(flags, 17, bit0);
     flags = BitAssign(flags, 18, !bit1);
@@ -192,14 +194,14 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
     flags = BitAssign(flags, 21, var_s7);
     flags = BitAssign(flags, 22, var_s3);
     flags = BitAssign(flags, 23, !bit3 ? (temp_s6 & 1) : 0);
-    flags = BitAssign(flags, 24, bit3 == 1 ? (temp_s6 & 1) : 0);
+    flags = BitAssign(flags, 24, (bit3 == 1) ? (temp_s6 & 1) : 0);
     flags = BitAssign(flags, 25, bit4);
     flags = BitAssign(flags, 26, bit5);
     flags = BitAssign(flags, 27, bit7);
     flags = BIT_CLEAR(BitAssign(flags, 15, bit14), 14);
-    var_a0  = BitAssign(flags, 28, sp34);
+    var_a0 = BitAssign(flags, 28, sp34);
 
-    new_var4 = BIT_MASK(7);
+    new_var4 = AirScreamerFlag_7;
 
     if (bit27 == 0)
     {
@@ -213,11 +215,11 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
 
     var_v1_3 = MaskAssign(var_a0, new_var4, var_v1_3);
 
-    new_var2 = BIT_MASK(8);
+    new_var2 = AirScreamerFlag_8;
     flags  = MaskAssign(var_v1_3, new_var2, (bit27 == 0) ? ((bit7 & 0x1) & sp24) : 0);
     var_v1_3 = BitAssign(flags, 9, var_s4);
 
-    var_a0 = BIT_MASK(10);
+    var_a0 = AirScreamerFlag_10;
     if (!cond0 && !cond1)
     {
         var_v0_20 = bit0;
@@ -229,12 +231,12 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
     }
 
     flags = BIT_CLEAR(MaskAssign(var_v1_3, var_a0, var_v0_20), 4);
-    flags = BIT_CLEAR(flags, 5);
-    flags = BIT_CLEAR(flags, 6);
-    flags = BIT_CLEAR(BitAssign(flags, 3, !bit15 ? bit14 & 1 : 0), 2);
-    flags = BIT_CLEAR(flags, 0);
-    flags = BIT_CLEAR(flags, 1);
+    flags &= ~AirScreamerFlag_5;
+    flags &= ~AirScreamerFlag_6;
+    flags = BIT_CLEAR(BitAssign(flags, 3, !bit15 ? (bit14 & (1 << 0)) : 0), 2);
+    flags &= ~AirScreamerFlag_0;
+    flags &= ~AirScreamerFlag_1;
 
-    airScreamer->properties_E4.player.flags_11C = flags;
+    airScreamer->properties_E4.airScreamer.flags_11C = flags;
     return true;
 }

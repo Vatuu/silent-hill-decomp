@@ -10,14 +10,14 @@ bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer)
         deltaTime = Q12(0.0f);
     }
 
-    someTime = airScreamer->properties_E4.unk0.properties_120.val32;
+    someTime = airScreamer->properties_E4.airScreamer.timer_120;
     if (someTime < deltaTime)
     {
-        airScreamer->properties_E4.unk0.properties_120.val32 = 0;
+        airScreamer->properties_E4.airScreamer.timer_120 = Q12(0.0f);
     }
     else
     {
-        airScreamer->properties_E4.unk0.properties_120.val32 = someTime - deltaTime;
+        airScreamer->properties_E4.airScreamer.timer_120 = someTime - deltaTime;
     }
 
     sharedData_800E21D0_0_s01.field_14C.flags = sharedFunc_800D3758_0_s01(airScreamer,
@@ -26,9 +26,9 @@ bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer)
                                                                           &sharedData_800E21D0_0_s01.field_158,
                                                                           &sharedData_800E21D0_0_s01.field_15C);
 
-    if (airScreamer->properties_E4.unk0.field_E8_0 == 3)
+    if (airScreamer->properties_E4.airScreamer.field_E8_0 == 3)
     {
-        airScreamer->properties_E4.unk0.field_E8_8 = 0;
+        airScreamer->properties_E4.airScreamer.field_E8_8 = 0;
     }
 
     func = sharedData_800DD7A0_0_s01[airScreamer->model_0.state_2];

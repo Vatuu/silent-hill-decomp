@@ -86,7 +86,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800CE180);
 
 #include "maps/shared/sharedFunc_800D2B4C_0_s01.h" // 0x800D2C38
 
-#include "maps/shared/sharedFunc_800D2BB0_0_s01.h" // 0x800D2C9C
+#include "maps/shared/Ai_AirScreamer_GroundWarp.h" // 0x800D2C9C
 
 #include "maps/shared/sharedFunc_800D2BE4_0_s01.h" // 0x800D2CD0
 

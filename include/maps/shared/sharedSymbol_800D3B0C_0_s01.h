@@ -54,6 +54,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
 
         case 13:
             animStatus = ANIM_STATUS(AirScreamerAnim_19, true);
+
             if (g_SavegamePtr->mapOverlayId_A4 == 1)
             {
                 var0 = 2;
@@ -65,10 +66,12 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
             else
             {
                 var0 = 2;
+
                 if (airScreamer->model_0.anim_4.status_0 == ANIM_STATUS(AirScreamerAnim_19, true))
                 {
                     animStatus = NO_VALUE;
                 }
+
                 var3 = 18;
             }
             break;
@@ -151,21 +154,21 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
             var3 = 33;
             stateStep = 67;
             var2 = 2;
-            airScreamer->health_B0 -= (airScreamer->health_B0 >> 2);
+            airScreamer->health_B0 -= airScreamer->health_B0 >> 2;
             break;
 #endif
     }
 
     airScreamer->model_0.state_2 = var3;
     airScreamer->model_0.stateStep_3 = stateStep;
-    airScreamer->properties_E4.player.flags_11C = 0;
-    airScreamer->properties_E4.unk0.field_E8_0 = var0;
-    airScreamer->properties_E4.unk0.field_E8_4 = var1;
-    airScreamer->properties_E4.unk0.field_E8_8 = var2;
+    airScreamer->properties_E4.airScreamer.flags_11C = AirScreamerFlag_None;
+    airScreamer->properties_E4.airScreamer.field_E8_0 = var0;
+    airScreamer->properties_E4.airScreamer.field_E8_4 = var1;
+    airScreamer->properties_E4.airScreamer.field_E8_8 = var2;
 
     if (var3 == 1)
     {
-        airScreamer->properties_E4.unk0.flags_11C = CharaUnk0Flag_Unk16;
+        airScreamer->properties_E4.airScreamer.flags_11C = CharaUnk0Flag_Unk16;
     }
 
     if (animStatus != NO_VALUE && animStatus != airScreamer->model_0.anim_4.status_0)
