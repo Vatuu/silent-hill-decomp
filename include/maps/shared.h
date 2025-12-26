@@ -2153,25 +2153,25 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D670C_0_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D67FC_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker);
 
 void sharedFunc_800D7E04_0_s00(s_SubCharacter* chara, s32 caseArg);
 
 void sharedFunc_800D88AC_0_s00(s_SubCharacter* playerChara);
 
-void Ai_Stalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_Stalker_Init(s_SubCharacter* chara); // Matches across all maps except `map6_s03`.
+void Ai_Stalker_Init(s_SubCharacter* stalker); // Matches across all maps except `map6_s03`.
 
-void sharedFunc_800D3308_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D3B44_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D6970_0_s00(s_SubCharacter* chara, s_AnmHeader* animHdr, GsCOORDINATE2* coords);
+void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, GsCOORDINATE2* coords);
 
-void sharedFunc_800D70C4_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D7BE8_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D7BE8_0_s00(s_SubCharacter* stalker);
 
 /** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data). */
 void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond);

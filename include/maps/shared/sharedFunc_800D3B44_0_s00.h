@@ -1,4 +1,4 @@
-void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara)
+void sharedFunc_800D3B44_0_s00(s_SubCharacter* stalker)
 {
     s16 temp_a2;
     s32 temp_s1;
@@ -9,14 +9,14 @@ void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara)
     s32 var_v0;
     s32 temp_v1;
 
-    if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 10))
+    if (stalker->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 10))
     {
-        chara->flags_3E |= CharaFlag_Unk3;
+        stalker->flags_3E |= CharaFlag_Unk3;
     }
 
-    if (chara->model_0.anim_4.status_0 != ANIM_STATUS(34, true))
+    if (stalker->model_0.anim_4.status_0 != ANIM_STATUS(34, true))
     {
-        temp_v1 = chara->model_0.anim_4.status_0;
+        temp_v1 = stalker->model_0.anim_4.status_0;
 
         if (temp_v1 > ANIM_STATUS(34, true))
         {
@@ -31,7 +31,7 @@ void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara)
 
         if (temp_v1 != var_v0)
         {
-            chara->field_44.field_0 = 0;
+            stalker->field_44.field_0 = 0;
         }
     }
 
@@ -80,57 +80,57 @@ void sharedFunc_800D3B44_0_s00(s_SubCharacter* chara)
         }
     }
 
-    switch (chara->model_0.state_2)
+    switch (stalker->model_0.state_2)
     {
         case 0:
             break;
 
         case 2:
-            sharedFunc_800D3EF4_0_s00(chara);
+            sharedFunc_800D3EF4_0_s00(stalker);
             break;
 
         case 3:
-            sharedFunc_800D4924_0_s00(chara);
+            sharedFunc_800D4924_0_s00(stalker);
             break;
 
         case 8:
-            sharedFunc_800D5C64_0_s00(chara);
+            sharedFunc_800D5C64_0_s00(stalker);
             break;
 
         case 4:
-            sharedFunc_800D492C_0_s00(chara);
+            sharedFunc_800D492C_0_s00(stalker);
             break;
 
         case 5:
-            sharedFunc_800D5098_0_s00(chara);
+            sharedFunc_800D5098_0_s00(stalker);
             break;
 
         case 6:
-            sharedFunc_800D54A8_0_s00(chara);
+            sharedFunc_800D54A8_0_s00(stalker);
             break;
 
         case 7:
-            sharedFunc_800D5B48_0_s00(chara);
+            sharedFunc_800D5B48_0_s00(stalker);
             break;
 
         case 9:
-            sharedFunc_800D5FCC_0_s00(chara);
+            sharedFunc_800D5FCC_0_s00(stalker);
             break;
 
         case 10:
-            sharedFunc_800D63D0_0_s00(chara);
+            sharedFunc_800D63D0_0_s00(stalker);
             break;
 
         case 11:
-            sharedFunc_800D654C_0_s00(chara);
+            sharedFunc_800D654C_0_s00(stalker);
             break;
 
         case 12:
-            sharedFunc_800D6554_0_s00(chara);
+            sharedFunc_800D6554_0_s00(stalker);
             break;
 
         case 13:
-            sharedFunc_800D670C_0_s00(chara);
+            sharedFunc_800D670C_0_s00(stalker);
             break;
     }
 }

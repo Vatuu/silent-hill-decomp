@@ -1,4 +1,4 @@
-void Ai_Stalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
@@ -22,29 +22,29 @@ void Ai_Stalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
         sharedData_800E3A2C_0_s00 = Q12(100.0f);
     }
     
-
-    if (chara->model_0.state_2 == ModelState_Uninitialized)
+    // Initialize.
+    if (stalker->model_0.state_2 == ModelState_Uninitialized)
     {
-        Ai_Stalker_Init(chara);
+        Ai_Stalker_Init(stalker);
     }
 
-    if (chara->model_0.state_2 != 1)
+    if (stalker->model_0.state_2 != 1)
     {
         if (g_DeltaTime0 != Q12(0.0f))
         {
-            sharedFunc_800D3308_0_s00(chara);
-            sharedFunc_800D3B44_0_s00(chara);
-            sharedFunc_800D67FC_0_s00(chara);
+            sharedFunc_800D3308_0_s00(stalker);
+            sharedFunc_800D3B44_0_s00(stalker);
+            sharedFunc_800D67FC_0_s00(stalker);
         }
 
-        sharedFunc_800D6970_0_s00(chara, anmHdr, coords);
-        sharedFunc_800D70C4_0_s00(chara);
+        sharedFunc_800D6970_0_s00(stalker, anmHdr, coords);
+        sharedFunc_800D70C4_0_s00(stalker);
         
         if (g_DeltaTime0 != Q12(0.0f))
         {
-            sharedFunc_800D7BE8_0_s00(chara);
+            sharedFunc_800D7BE8_0_s00(stalker);
         }
 
-        *(u16*)&chara->properties_E4.player.afkTimer_E8 &= Q12(15.0f) - 1;
+        stalker->properties_E4.stalker.flags_E8 &= ~StalkerFlag_12;
     }
 }

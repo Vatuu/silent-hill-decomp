@@ -11597,11 +11597,11 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     chara->field_D4.field_2   = FP_FROM((arg1->field_A * invAlpha) + (arg2->field_A * alpha), Q12_SHIFT);
 }
 
-void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 scaleZ) // 0x800705E4
+void func_800705E4(GsCOORDINATE2* coord, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0x800705E4
 {
-    s16 scales[3];
-    s32 row;
-    s32 col;
+    q3_12 scales[3];
+    s32   row;
+    s32   col;
 
     scales[0] = scaleX;
     scales[1] = scaleY;

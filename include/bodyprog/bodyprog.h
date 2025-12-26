@@ -4016,7 +4016,7 @@ bool func_80070208(s_SubCharacter* chara, q19_12 dist);
 
 s32 func_8007029C(s_SubCharacter* chara, q19_12 dist, q3_12 rotY);
 
-void func_800705E4(GsCOORDINATE2* coord, s32 idx, s32 scaleX, s32 scaleY, s32 scaleZ);
+void func_800705E4(GsCOORDINATE2* coord, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
 
 void Player_FlexRotationYReset(void);
 

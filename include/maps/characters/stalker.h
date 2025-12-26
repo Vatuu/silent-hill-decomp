@@ -1,16 +1,43 @@
 #ifndef _MAPS_CHARACTERS_STALKER_H
 #define _MAPS_CHARACTERS_STALKER_H
 
+/** @brief Stalker character flags. */
+typedef enum _StalkerFlags
+{
+    StalkerFlag_None = 0,
+    StalkerFlag_0    = 1 << 0,
+    StalkerFlag_1    = 1 << 1,
+    StalkerFlag_2    = 1 << 2,
+
+    StalkerFlag_10   = 1 << 10,
+    StalkerFlag_11   = 1 << 11,
+    StalkerFlag_12   = 1 << 12
+} s_StalkerFlags;
+
 /** @brief Stalker character animation indices. */
 typedef enum _StalkerAnim
 {
     StalkerAnim_Still = 0,
 
-    StalkerAnim_Unk14 = 14,
-    StalkerAnim_Unk27 = 27,
-    StalkerAnim_Unk28 = 28,
+    StalkerAnim_8     = 8,
+    StalkerAnim_9     = 9,
 
-    StalkerAnim_Unk30 = 30,
+    StalkerAnim_14    = 14,
+
+    StalkerAnim_19    = 19,
+    StalkerAnim_20    = 20,
+    StalkerAnim_21    = 21,
+
+    StalkerAnim_27    = 27,
+    StalkerAnim_28    = 28,
+
+    StalkerAnim_30    = 30,
+    StalkerAnim_31    = 31,
+    StalkerAnim_32    = 32,
+
+    StalkerAnim_38    = 38,
+    StalkerAnim_39    = 39,
+    StalkerAnim_40    = 40,
 } e_StalkerAnim;
 
 /*s_AnimInfo STALKER_ANIM_INFOS[] = {

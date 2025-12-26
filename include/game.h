@@ -1470,7 +1470,23 @@ typedef struct _PropertiesSplitHead
 } s_PropertiesSplitHead;
 STATIC_ASSERT_SIZEOF(s_PropertiesSplitHead, 68);
 
-typedef struct _SubCharPropertiesUnk0
+/** @brief Stalker character properties. */
+typedef struct _PropertiesStalker
+{
+    s32    unk_E4; // Is this part of `a_SubCharacter`?
+
+    s16    flags_E8;
+    s8     unk_EA[6];
+    q19_12 positionX_F0;
+    q19_12 positionZ_F4;
+    q19_12 field_F8;
+    s8     unk_FC[6];
+    s16    field_102;
+    s8     unk_104[12];
+    q19_12 health_110;
+} s_PropertiesStalker;
+
+typedef struct _PropertiesUnk0
 {
     s32        unk_E4; // Is this part of `a_SubCharacter`?
     u32        field_E8_0 : 4;
@@ -1583,6 +1599,7 @@ typedef struct _SubCharacter
         s_PropertiesLarvalStalker   larvalStalker;
         s_PropertiesPuppetNurse     puppetNurse;
         s_PropertiesSplitHead       splitHead;
+        s_PropertiesStalker         stalker;
         s_PropertiesUnk0            unk0;
     } properties_E4;
 } s_SubCharacter;
