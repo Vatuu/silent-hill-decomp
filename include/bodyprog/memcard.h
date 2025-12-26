@@ -86,7 +86,7 @@ typedef struct
 {
     char filenames_0[CARD_DEVICE_FILE_COUNT][21];
     u8   blockCounts_13B[CARD_DEVICE_FILE_COUNT]; // Size of each file in 8192 byte blocks.
-	s8   pad_14C[2];
+    s8   pad_14C[2];
 } s_CardDirectory;
 STATIC_ASSERT_SIZEOF(s_CardDirectory, 332);
 

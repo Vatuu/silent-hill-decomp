@@ -1,7 +1,10 @@
 // This inline allows getting rid of some ugly gotos, couldn't find a different way to handle it.
 static inline void Ai_Creaper_PropertiesUpdateFromStep(s_SubCharacter* chara)
 {
-    s32 stateStep = chara->model_0.stateStep_3;
+    s32 stateStep;
+    
+    stateStep = chara->model_0.stateStep_3;
+
     if (chara->model_0.stateStep_3 != 3)
     {
         if (stateStep < 3)

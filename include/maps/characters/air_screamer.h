@@ -4,26 +4,26 @@
 /** @brief Air Screamer character animation indices. */
 typedef enum _AirScreamerAnim
 {
-	AirScreamerAnim_Still = 0,
+    AirScreamerAnim_Still = 0,
 
-	AirScreamerAnim_2     = 2,
+    AirScreamerAnim_2     = 2,
 
-	AirScreamerAnim_9     = 9,
-	AirScreamerAnim_10    = 10,
-	AirScreamerAnim_11    = 11,
+    AirScreamerAnim_9     = 9,
+    AirScreamerAnim_10    = 10,
+    AirScreamerAnim_11    = 11,
 
-	AirScreamerAnim_13 	  = 13,
-	AirScreamerAnim_14 	  = 14,
+    AirScreamerAnim_13    = 13,
+    AirScreamerAnim_14    = 14,
 
-	AirScreamerAnim_16    = 16,
-	AirScreamerAnim_17    = 17,
+    AirScreamerAnim_16    = 16,
+    AirScreamerAnim_17    = 17,
 
-	AirScreamerAnim_19    = 19,
+    AirScreamerAnim_19    = 19,
 
-	AirScreamerAnim_23    = 23,
+    AirScreamerAnim_23    = 23,
 
-	AirScreamerAnim_25    = 25,
-	AirScreamerAnim_26    = 26
+    AirScreamerAnim_25    = 25,
+    AirScreamerAnim_26    = 26
 } e_AirScreamerAnim;
 
 /*s_AnimInfo AIR_SCREAMER_ANIM_INFOS[] = {

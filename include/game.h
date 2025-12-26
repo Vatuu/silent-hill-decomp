@@ -1318,7 +1318,7 @@ typedef struct _SubCharaPropertiesBloodsucker
     q19_12 timer_EC;
     q19_12 timer_F0;
     q19_12 timer_F4;
-    s8     unk_F8[36]; //  Unused?
+    s8     unk_F8[36]; // Unused?
     s32    flags_118;
 
 } s_SubCharaPropertiesBloodsucker;

@@ -36,7 +36,8 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creaper)
         }
     }
 
-    if (creaper->properties_E4.creaper.flags_E8 & CreaperFlag_8)
+    // Check if Creaper was alerted.
+    if (creaper->properties_E4.creaper.flags_E8 & CreaperFlag_Alerted)
     {
         creaper->model_0.state_2                 = 2;
         creaper->model_0.anim_4.status_0         = ANIM_STATUS(CreaperAnim_13, false);

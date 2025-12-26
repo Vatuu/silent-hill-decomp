@@ -26,5 +26,6 @@ void sharedFunc_800D8244_1_s02(s_SubCharacter* creaper)
             break;
     }
 
-    creaper->properties_E4.creaper.flags_E8 &= ~CreaperFlag_8;
+    // Reset alerted flag.
+    creaper->properties_E4.creaper.flags_E8 &= ~CreaperFlag_Alerted;
 }

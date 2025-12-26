@@ -11300,14 +11300,14 @@ q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0
     return FP_ANGLE(360.0f);
 }
 
-q7_8 func_8006FAFC(s_SubCharacter* chara, q19_12 dist, q19_12 posX, q19_12 posZ, q3_12 spanAngle, bool isClockwise) // 0x8006FAFC
+q3_12 func_8006FAFC(s_SubCharacter* chara, q19_12 dist, q19_12 targetPosX, q19_12 targetPosZ, q3_12 spanAngle, bool isClockwise) // 0x8006FAFC
 {
     s16    spanAngleDiv3;
-    q7_8   curAngle;
+    q3_12  curAngle;
     q19_12 curPosZ;
     q19_12 curPosX;
-    q25_6  deltaX;
-    q25_6  deltaZ;
+    q25_6  curOffsetX;
+    q25_6  curOffsetZ;
     q25_6  curDist;
     s32    i;
     q19_12 distMinOrMax;
@@ -11348,9 +11348,9 @@ q7_8 func_8006FAFC(s_SubCharacter* chara, q19_12 dist, q19_12 posX, q19_12 posZ,
 
         if (!func_80070030(chara, curPosX, chara->position_18.vy, curPosZ))
         {
-            deltaX  = Q12_TO_Q6(posX - curPosX);
-            deltaZ  = Q12_TO_Q6(posZ - curPosZ);
-            curDist = SQUARE(deltaX) + SQUARE(deltaZ);
+            curOffsetX = Q12_TO_Q6(targetPosX - curPosX);
+            curOffsetZ = Q12_TO_Q6(targetPosZ - curPosZ);
+            curDist    = SQUARE(curOffsetX) + SQUARE(curOffsetZ);
             if ((!isClockwise && (distMinOrMax < curDist)) ||
                 ( isClockwise && (curDist      < distMinOrMax)))
             {

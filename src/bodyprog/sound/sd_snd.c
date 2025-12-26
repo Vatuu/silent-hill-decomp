@@ -38,7 +38,7 @@ void Sd_VabLoad(void) // 0x80047B80
             cmd                = g_Sd_TaskPool[0];
             g_Sd_VabTargetLoad = &g_AudioData[cmd-160];
             g_Sd_AudioType     = g_Sd_VabTargetLoad->typeIdx_0;
-			
+
             // If audio being loaded isn't BASE.VAB or KDT file.
             if (g_Sd_AudioType != 0)
             {
@@ -52,7 +52,7 @@ void Sd_VabLoad(void) // 0x80047B80
 
                 g_Sd_AudioWork.lastVabAudioLoadedIdx_8[g_Sd_AudioType - 1] = cmd;
             }
-			
+
             // Ambient sounds.
             if (cmd >= 170 && cmd <= 204)
             {

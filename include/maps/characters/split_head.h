@@ -4,14 +4,14 @@
 /** @brief Split Head character flags. */
 typedef enum _SplitHeadFlags
 {
-	SplitHeadFlag_None = 0,
-	SplitHeadFlag_0    = 1 << 0,
+    SplitHeadFlag_None = 0,
+    SplitHeadFlag_0    = 1 << 0,
 
-	SplitHeadFlag_4    = 1 << 4,
-	SplitHeadFlag_5    = 1 << 5,
-	SplitHeadFlag_6    = 1 << 6,
-	SplitHeadFlag_7    = 1 << 7,
-	SplitHeadFlag_8    = 1 << 8
+    SplitHeadFlag_4    = 1 << 4,
+    SplitHeadFlag_5    = 1 << 5,
+    SplitHeadFlag_6    = 1 << 6,
+    SplitHeadFlag_7    = 1 << 7,
+    SplitHeadFlag_8    = 1 << 8
 } e_SplitHeadFlags;
 
 /** @brief Split Head character animation indices. */

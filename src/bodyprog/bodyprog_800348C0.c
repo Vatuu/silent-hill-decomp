@@ -443,21 +443,21 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
     {
         return;
     }
-	
-	// Estimates animation buffer data pointer by adding buffer size and current pointer position.
+
+    // Estimates animation buffer data pointer by adding buffer size and current pointer position.
     for (npcAnimDataInfo = &initAnimDataInfo[-1]; localAnimFile == NULL; npcAnimDataInfo--)
     {
         localAnimFile = npcAnimDataInfo->animFile0_4 + npcAnimDataInfo->animBufferSize1_C;
     }
 
-	// If the target character ID matches with the selected element from `g_InitCharaDataAnimInfo`
-	// then it ensures the animation buffer pointer matches with the previously estimated one, but
-	// if the estimated pointer is in a position behind of the currently saved one then it moves
-	// data to the position of the estimated pointer.
-	// 
-	// If any of the previous checks fail, values previously assigned at index are cleared. Then, if
-	// the character hasn't been loaded in a different `g_InitializedCharaAnimInfo` slot, the
-	// animation file is loaded.
+    // If the target character ID matches with the selected element from `g_InitCharaDataAnimInfo`
+    // then it ensures the animation buffer pointer matches with the previously estimated one, but
+    // if the estimated pointer is in a position behind of the currently saved one then it moves
+    // data to the position of the estimated pointer.
+    // 
+    // If any of the previous checks fail, values previously assigned at index are cleared. Then, if
+    // the character hasn't been loaded in a different `g_InitializedCharaAnimInfo` slot, the
+    // animation file is loaded.
     if (initAnimDataInfo->charaId1_1 == charaId)
     {
         if (idx == 1 || localAnimFile == initAnimDataInfo->animFile1_8)
@@ -474,7 +474,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
             return;
         }
     }
-	
+
     initAnimDataInfo->npcCoords_14       = &g_SysWork.npcCoords_FC0[0];
     initAnimDataInfo->charaId1_1         = Chara_None;
     initAnimDataInfo->animFile1_8        = NULL;

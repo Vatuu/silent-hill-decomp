@@ -76,13 +76,13 @@ void SD_Call(u32 cmd) // 0x80045A7C
 u8 Sd_AudioStreamingCheck(void) // 0x80045B28
 {
     u8 state;
-	
+
     state = 1;
     if (g_Sd_AudioWork.xaAudioIdx_4 != 0)
     {
         return state;
     }
-	
+
     state = 2;
     if (g_Sd_AudioWork.isAudioLoading_15 == 0)
     {
@@ -246,7 +246,8 @@ void SD_Init(void) // 0x80045DD4
 
 void sd_work_init(void) // 0x80045E44
 {
-	static s32 i;
+    static s32 i;
+
     SdSetAutoKeyOffMode(0);
     SdUtSetReverbType(1);
     SpuClearReverbWorkArea(1);
@@ -329,7 +330,7 @@ static inline void WriteVolume(s16* left, s16* right, s16 vol)
 
 u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol) // 0x80046048
 {
-	static s16   audioIdx;
+    static s16   audioIdx;
     SpuVoiceAttr attr;
     s16          convertedVol;
     s16          volCpy;
@@ -420,8 +421,8 @@ u8 Sd_PlaySfx(u16 sfxId, q0_8 balance, u8 vol) // 0x80046048
 
 void Sd_SfxAttributesUpdate(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x800463C0
 {
-	static s16   audioIdx;
-	static u16   audioPitch;
+    static s16   audioIdx;
+    static u16   audioPitch;
     SpuVoiceAttr attr;
     s16          convertedVol;
     s32          voiceIdx;
@@ -460,7 +461,7 @@ void Sd_SfxAttributesUpdate(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x8004
         {
             return;
         }
-		
+
         attr.voice = 1 << voiceIdx;
     }
 
@@ -513,7 +514,7 @@ void Sd_SfxAttributesUpdate(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x8004
 // Plays audio, but it's only used on player's movement sounds and features pitch option unlike `Sd_PlaySfx`.
 void func_80046620(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x80046620
 {
-	static s16 audioIdx;
+    static s16 audioIdx;
     s16        temp;
     s16        convertedVol;
 
@@ -585,7 +586,7 @@ void Sd_SfxStopStep(u16 sfxId) // 0x8004692C
     static s16 vabInfoIdx;
     static s16 vabProgIdxs;
     static s16 pitch;
-	
+
     if (sfxId == Sfx_Base)
     {
         return;
@@ -725,7 +726,7 @@ void Sd_BgmLayerVolumeSet(u8 layerIdx, u8 vol) // 0x80046C54
     }
     else if (g_Sd_AudioWork.field_E < 809)
     {
-		
+
         idx = g_Sd_AudioWork.field_E;
 
         for (i = 0; i < 15; i++)
@@ -770,8 +771,8 @@ s32 Sd_XaAudioLengthGet(s32 idx) // 0x80046DCC
 
 void Sd_XaAudioPlay(void) // 0x80046E00
 {
-	static u16 xaAudioIdx;
-	static u32 xaFileOffset;
+    static u16 xaAudioIdx;
+    static u32 xaFileOffset;
     u32*       xaFileOffsetsPtr;
     u32*       xaFileOffsetTargetPtr;
 
@@ -917,12 +918,11 @@ void Sd_XaPreLoadAudioTaskAdd(s32 xaIdx) // 0x800472BC
 
 void Sd_XaPreLoadAudio(void) // 0x80047308
 {
-	static u16 xaAudioIdx;
-	static u16 pad_800C15D2;
-	static u32 xaFileOffset;
-	
-    u32* xaFileOffsetsPtr;
-    u32* xaFileOffsetTargetPtr;
+    static u16 xaAudioIdx;
+    static u16 pad_800C15D2;
+    static u32 xaFileOffset;
+    u32*       xaFileOffsetsPtr;
+    u32*       xaFileOffsetTargetPtr;
 
     g_Sd_AudioWork.cdErrorCount_0++;
 
@@ -1099,7 +1099,7 @@ void Sd_TaskPoolAdd(u8 task) // 0x800478DC
 {
     static s32 i;
     static s32 y;
-	
+
     // If `task` is 2, shift field next to element containing value that matches 1 in `g_Sd_TaskPool`.
     if (task == 2)
     {

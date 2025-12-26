@@ -14,7 +14,7 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creaper)
         ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) &&
          (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)) && func_8006FD90(creaper, 2, Q12(0.8f), Q12(0.4f))) ||
         (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))) && func_8006FD90(creaper, 1, Q12(4.0f), Q12(12.0f))) ||
-        (func_80070360(creaper, 0, Q12(0.5f)) || creaper->properties_E4.creaper.flags_E8 & CreaperFlag_8))
+        (func_80070360(creaper, 0, Q12(0.5f)) || creaper->properties_E4.creaper.flags_E8 & CreaperFlag_Alerted))
     {
         creaper->properties_E4.creaper.playerPositionX_F4 = g_SysWork.playerWork_4C.player_0.position_18.vx;
         creaper->properties_E4.creaper.playerPositionZ_F8 = g_SysWork.playerWork_4C.player_0.position_18.vz;

@@ -15,28 +15,28 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
         s16             field_144;
     } s_func_800CB040;
 
-    s_func_800CB040* ptr;
     s32              var_s1;
     s32              halfSizeCeil;
     s32              halfSizeFloor;
+    s_func_800CB040* ptr;
 
     ptr = PSX_SCRATCH;
 
     if (sharedData_800DFB7C_0_s00[idx].field_A == 8)
     {
-        *(s32*)&(*poly)->u0 = ((sharedData_800DFB7C_0_s00[idx].field_B >= 2) << 6) + (sharedData_800DFB7C_0_s00[idx].field_B >= 3 ? 0x020EC000 : 0x020E8000);
+        *(s32*)&(*poly)->u0 = ((sharedData_800DFB7C_0_s00[idx].field_B >= 2) << 6) + ((sharedData_800DFB7C_0_s00[idx].field_B >= 3) ? 0x020EC000 : 0x020E8000);
 
         *(s32*)&(*poly)->u1 = ((sharedData_800DFB7C_0_s00[idx].field_B >= 2) ? 0x7F : 0x3F) + (sharedData_800DFB7C_0_s00[idx].field_B >= 3 ? 0x6DC000 : 0x6D8000);
 
-        *(s16*)&(*poly)->u2 = ((sharedData_800DFB7C_0_s00[idx].field_B >= 2) << 6) | (sharedData_800DFB7C_0_s00[idx].field_B >= 3 ? 0xFF00 : 0xBF00);
+        *(s16*)&(*poly)->u2 = ((sharedData_800DFB7C_0_s00[idx].field_B >= 2) << 6) | ((sharedData_800DFB7C_0_s00[idx].field_B >= 3) ? 0xFF00 : 0xBF00);
 
-        *(s16*)&(*poly)->u3 = ((sharedData_800DFB7C_0_s00[idx].field_B >= 2) ? 0x7F : 0x3F) | (sharedData_800DFB7C_0_s00[idx].field_B >= 3 ? 0xFF00 : 0xBF00);
+        *(s16*)&(*poly)->u3 = ((sharedData_800DFB7C_0_s00[idx].field_B >= 2) ? 0x7F : 0x3F) | ((sharedData_800DFB7C_0_s00[idx].field_B >= 3) ? 0xFF00 : 0xBF00);
 
         // TODO: Might be single line statements / macros like above?
         if ((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 < 0xE00)
         {
             POLY_FT4* poly2     = *poly;
-            s32       var_v1_3  = 0xb4 + ((0xC4 - ((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 >> 5)) << 8) + -(((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 >> 7));
+            s32       var_v1_3  = 0xB4 + ((0xC4 - ((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 >> 5)) << 8) + -(((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 >> 7));
             s32       var_v0_6  = var_v1_3 + (MAX(0, 0xC4 - ((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 >> 4)) << 0x10) + 0x2E000000;
             *(s32*)&(poly2->r0) = var_v0_6;
         }
@@ -101,9 +101,10 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
         if (sharedData_800D8568_1_s05.flags_0 & 2 && sharedData_800DFB7C_0_s00[idx].field_A == 8)
         {
             sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = (u16)sharedData_800D8568_1_s05.field_10 + Rng_GenerateUInt(0, 0xFFF);
-            if ((sharedData_800D8568_1_s05.flags_0 & 8) && Rng_GenerateUInt(0, 0xF) == 0)
+            if ((sharedData_800D8568_1_s05.flags_0 & (1 << 3)) && 
+                Rng_GenerateUInt(0, 15) == 0) // 1 in 16 chance.
             {
-                sharedData_800DFB7C_0_s00[idx].field_A = 0xB;
+                sharedData_800DFB7C_0_s00[idx].field_A = 11;
             }
             else
             {
@@ -112,16 +113,18 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
         }
         else
         {
-            if (sharedData_800D8568_1_s05.flags_0 & 8 && Rng_GenerateUInt(0, 0xF) == 0)
+            if (sharedData_800D8568_1_s05.flags_0 & (1 << 3) &&
+                Rng_GenerateUInt(0, 15) == 0) // 1 in 16 chance.
             {
-                s32 randNum                                        = Rng_GenerateUInt(Q12(0.5f), Q12(1.0f) - 1);
-                sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = randNum + (sharedData_800D8568_1_s05.field_10 >> 1);
-                sharedData_800DFB7C_0_s00[idx].field_A             = 0xB;
+                s32 randVal                                        = Rng_GenerateUInt(Q12(0.5f), Q12(1.0f) - 1);
+                sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = randVal + (sharedData_800D8568_1_s05.field_10 >> 1);
+                sharedData_800DFB7C_0_s00[idx].field_A             = 11;
             }
             else
             {
                 sharedFunc_800CABF8_1_s05(idx, true);
             }
+
             return 0;
         }
     }
@@ -150,8 +153,8 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
     var_s1 = MAX(var_s1, 2);
 
     // `ptr->field_140` contains a base X/Y position for the poly.
-    // We then add signed half-size offsets (ceil / floor) to generate
-    // the four corner vertices of a centered quad.
+    // Signed half-size offsets are then added (ceil/floor) to generate
+    // four corner vertices of a centered quad.
     halfSizeCeil  = (var_s1 + 1) >> 1;
     halfSizeFloor = -(var_s1 >> 1);
 

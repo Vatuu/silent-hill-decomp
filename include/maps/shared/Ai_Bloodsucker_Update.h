@@ -3,11 +3,13 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
     u32 animStatusDiv2;
     s32 stateStepMul2;
 
+    // Initialize.
     if (bloodsucker->model_0.state_2 == ModelState_Uninitialized)
     {
         Ai_Bloodsucker_Init(bloodsucker);
     }
 
+    // Handle model state.
     switch (bloodsucker->model_0.state_2)
     {
         case 1:
@@ -29,6 +31,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
 
     sharedFunc_800D0F28_3_s03(bloodsucker, anmHdr, coords);
 
+    // Reset flags if ???
     if (g_SysWork.sysFlags_22A0 & SysFlag_6)
     {
         bloodsucker->properties_E4.bloodsucker.flags_118 &= ~BloodsuckerFlag_0;
@@ -68,6 +71,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
     animStatusDiv2 = bloodsucker->model_0.anim_4.status_0 / 2;
     stateStepMul2  = bloodsucker->model_0.stateStep_3 * 2;
 
+    // SFX timer state handling. TODO: Inspect behavior in-game.
     if (animStatusDiv2 == ((stateStepMul2 + 23) / 2) || animStatusDiv2 == ((stateStepMul2 + 17) / 2))
     {
         if (!(bloodsucker->properties_E4.bloodsucker.flags_118 & BloodsuckerFlag_1))

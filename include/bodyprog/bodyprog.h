@@ -3989,8 +3989,10 @@ void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8
 
 q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 
-/** Creates random angle of some kind. Unsure if `spanAngle` is an angle. */
-q7_8 func_8006FAFC(s_SubCharacter* chara, q19_12 dist, q19_12 posX, q19_12 posZ, q3_12 spanAngle, bool cond);
+/** Angle getter. Something to do with the direction from a character to a target position, probably for NPC AI.
+ * Unsure if `spanAngle` is an angle.
+ */
+q3_12 func_8006FAFC(s_SubCharacter* chara, q19_12 dist, q19_12 targetPosX, q19_12 targetPosZ, q3_12 spanAngle, bool cond);
 
 bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 distStep);
 

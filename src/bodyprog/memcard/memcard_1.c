@@ -619,7 +619,7 @@ void func_8002F2C4(s_800B55E8* arg0)
     s8*                 saveData1Buf;
     s32                 saveData1Size;
     s_SavegameFooter*   saveData1Footer;
-	static s32          D_800B2774;
+    static s32          D_800B2774;
 
     saveInfo = &D_800B5508.devices_0[arg0->deviceId_4];
 
@@ -757,8 +757,8 @@ void func_8002F61C(s_800B55E8* arg0)
     s32                 fileIdx;
     s32                 cardResult;
     s_MemCardBasicInfo* ptr;
-	static s32          D_800B2778;
-	static s32          D_800B277C;
+    static s32          D_800B2778;
+    static s32          D_800B277C;
 
     arg0->lastCardResult_14 = CardResult_Success;
 
