@@ -99,31 +99,31 @@ TARGET_POSTBUILD := bodyprog screens/stream maps/map3_s06 maps/map4_s05 maps/map
 # - Adds overlay-specific compiler flags based on files directory (currently only per-map defines).
 # - Switches aspsx-version for lib_unk code.
 define FlagsSwitch
-    $(if $(findstring /main/,$(1)), $(eval DL_FLAGS = -G8), $(eval DL_FLAGS = -G0))
-    $(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
-    $(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
-    
-    $(if $(findstring lib_unk,$(1)), \
-        $(eval ASPSX_VERSION := 2.67), \
-        $(eval ASPSX_VERSION := 2.77))
+	$(if $(findstring /main/,$(1)), $(eval DL_FLAGS = -G8), $(eval DL_FLAGS = -G0))
+	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
+	$(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
+	
+	$(if $(findstring lib_unk,$(1)), \
+		$(eval ASPSX_VERSION := 2.67), \
+		$(eval ASPSX_VERSION := 2.77))
 
-    $(if $(or $(findstring smf_mid,$(1)), $(findstring smf_io,$(1)),), \
-        $(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) --run-assembler --expand-div $(AS_FLAGS)), \
-        $(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) --run-assembler $(AS_FLAGS)))
+	$(if $(or $(findstring smf_mid,$(1)), $(findstring smf_io,$(1)),), \
+		$(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) --run-assembler --expand-div $(AS_FLAGS)), \
+		$(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) --run-assembler $(AS_FLAGS)))
 
-    $(eval _rel_path := $(patsubst build/src/maps/%,%,$(patsubst build/${asm}/maps/%,%,$(1))))
-    $(eval _map_name := $(shell echo $(word 1, $(subst /, ,$(_rel_path))) | tr a-z A-Z))
-    $(if $(and $(findstring MAP,$(_map_name)),$(findstring _S,$(_map_name))), \
-        $(eval OVL_FLAGS := -D$(_map_name)), \
-        $(eval OVL_FLAGS :=))
+	$(eval _rel_path := $(patsubst build/src/maps/%,%,$(patsubst build/${asm}/maps/%,%,$(1))))
+	$(eval _map_name := $(shell echo $(word 1, $(subst /, ,$(_rel_path))) | tr a-z A-Z))
+	$(if $(and $(findstring MAP,$(_map_name)),$(findstring _S,$(_map_name))), \
+		$(eval OVL_FLAGS := -D$(_map_name)), \
+		$(eval OVL_FLAGS :=))
 endef
 
 ifeq ($(NON_MATCHING),1)
-    CPP_FLAGS := $(CPP_FLAGS) -DNON_MATCHING
+	CPP_FLAGS := $(CPP_FLAGS) -DNON_MATCHING
 endif
 
 ifeq ($(SKIP_ASM),1)
-    CPP_FLAGS := $(CPP_FLAGS) -DSKIP_ASM
+	CPP_FLAGS := $(CPP_FLAGS) -DSKIP_ASM
 endif
 
 # Utils
@@ -139,9 +139,9 @@ find_c_files = $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" 2> /dev/nul
 
 # Function to generate matching .o files for target name in build directory.
 gen_o_files = $(addprefix $(BUILD_DIR)/, \
-                            $(patsubst %.s, %.s.o, $(call find_s_files, $1)) \
-                            $(patsubst %.c, %.c.o, $(call find_c_files, $1)) \
-                            $(patsubst %.bin, %.bin.o, $(call find_bin_files, $1)))
+							$(patsubst %.s, %.s.o, $(call find_s_files, $1)) \
+							$(patsubst %.c, %.c.o, $(call find_c_files, $1)) \
+							$(patsubst %.bin, %.bin.o, $(call find_bin_files, $1)))
 
 # Function to get path to .yaml file for given target.
 get_yaml_path = $(addsuffix .yaml,$(addprefix $(CONFIG_DIR)/,$1))
@@ -174,35 +174,35 @@ define make_elf_target
 ifeq ($(GAME_VERSION), USA)
 
 $2: $2.elf
-    $(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
+	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
 ifneq (,$(filter $1,$(TARGET_POSTBUILD)))
-    -$(POSTBUILD) $1
+	-$(POSTBUILD) $1
 endif
 
 $2.elf: $(call gen_o_files, $1)
-    @mkdir -p $(dir $2)
-    $(LD) $(LD_FLAGS) \
-        -Map $2.map \
-        -T $(LINKER_DIR)/$1.ld \
-        -T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt \
-        -T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
-        -T $(CONFIG_DIR)/lib_externs.ld \
-        -o $$@
+	@mkdir -p $(dir $2)
+	$(LD) $(LD_FLAGS) \
+		-Map $2.map \
+		-T $(LINKER_DIR)/$1.ld \
+		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt \
+		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
+		-T $(CONFIG_DIR)/lib_externs.ld \
+		-o $$@
 
 #else GAME_VERSION
 else
 
 $2: $2.elf
-    $(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
+	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
 
 $2.elf: $(call gen_o_files, $1)
-    @mkdir -p $(dir $2)
-    $(LD) $(LD_FLAGS) \
-        -Map $2.map \
-        -T $(LINKER_DIR)/$1.ld \
-        -T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt \
-        -T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
-        -o $$@
+	@mkdir -p $(dir $2)
+	$(LD) $(LD_FLAGS) \
+		-Map $2.map \
+		-T $(LINKER_DIR)/$1.ld \
+		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_syms_auto.$(notdir $1).txt \
+		-T $(LINKER_DIR)/$(filter-out ./,$(dir $1))undefined_funcs_auto.$(notdir $1).txt \
+		-o $$@
 
 #endif GAME_VERSION
 endif
@@ -255,8 +255,8 @@ TARGET_MAPS := map0_s00 map0_s01 map0_s02 \
 
 # If BUILD_MAP is set, only use that; otherwise use the default huge list
 # (allows large speedup by skipping config parse of all maps)
-TARGET_MAPS             := $(if $(BUILD_MAP),$(BUILD_MAP),$(TARGET_MAPS))
-TARGET_MAPS             := $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
+TARGET_MAPS				:= $(if $(BUILD_MAP),$(BUILD_MAP),$(TARGET_MAPS))
+TARGET_MAPS				:= $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
 
 #endif BUILD_MAPS
 endif
@@ -356,87 +356,87 @@ default: build
 build: $(TARGET_OUT) checksum
 
 reset-build:
-    rm -rf $(BUILD_DIR)/src
-    rm -rf $(OUT_DIR)
-    $(MAKE) build $(TARGET_OUT) checksum
+	rm -rf $(BUILD_DIR)/src
+	rm -rf $(OUT_DIR)
+	$(MAKE) build $(TARGET_OUT) checksum
 
 clean-build: reset
-    $(MAKE) generate
-    $(MAKE) build
+	$(MAKE) generate
+	$(MAKE) build
 
 generate: $(LD_FILES)
 
 # Rules - Build (Objdiff/Progress)
 
 objdiff-config:
-    rm -rf $(EXPECTED_DIR)
-    $(MAKE) GEN_COMP_TU=1 regenerate
-    $(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
-    mkdir -p $(EXPECTED_DIR)
-    mv $(BUILD_DIR)/asm $(EXPECTED_DIR)/asm
-    $(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml
+	rm -rf $(EXPECTED_DIR)
+	$(MAKE) GEN_COMP_TU=1 regenerate
+	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
+	mkdir -p $(EXPECTED_DIR)
+	mv $(BUILD_DIR)/asm $(EXPECTED_DIR)/asm
+	$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml
 
 report:
-    $(MAKE) BUILD_EXE=1 BUILD_ENGINE=1 BUILD_SCREENS=1 BUILD_MAPS=1 objdiff-config
-    $(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
+	$(MAKE) BUILD_EXE=1 BUILD_ENGINE=1 BUILD_SCREENS=1 BUILD_MAPS=1 objdiff-config
+	$(OBJDIFF) report generate > $(BUILD_DIR)/progress.json
 
 progress:
-    $(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
+	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
 
 reset-progress:
-    rm -rf $(BUILD_DIR)/src
-    rm -rf $(OUT_DIR)
-    $(MAKE) NON_MATCHING=1 SKIP_ASM=1 build $(TARGET_OUT)
+	rm -rf $(BUILD_DIR)/src
+	rm -rf $(OUT_DIR)
+	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build $(TARGET_OUT)
 
 # Rules - Rom handling (Extraction/Insertion)
 # TODO: Allow to insert any files to the game Files
 # At the moment only overlays have been handled
 
 setup: reset
-    rm -rf $(EXPECTED_DIR)
-    $(MAKE) extract
-    $(MAKE) generate
+	rm -rf $(EXPECTED_DIR)
+	$(MAKE) extract
+	$(MAKE) generate
 
 insert-ovl:
-    $(INSERT_OVLS) $(INSERT_OVLS_FLAGS)
-    $(MKPSXISO) $(MKPSXISO_FLAGS)
+	$(INSERT_OVLS) $(INSERT_OVLS_FLAGS)
+	$(MKPSXISO) $(MKPSXISO_FLAGS)
 
 extract:
-    rm -rf "$(ASSETS_DIR)/$(GAME_VERSION)"
-    $(DUMPSXISO) $(DUMPSXISO_FLAGS)
-    $(SILENT_ASSETS) $(SILENT_ASSETS_FLAGS)
+	rm -rf "$(ASSETS_DIR)/$(GAME_VERSION)"
+	$(DUMPSXISO) $(DUMPSXISO_FLAGS)
+	$(SILENT_ASSETS) $(SILENT_ASSETS_FLAGS)
 
 # Rules - Cleaning
 
 clean-rom:
-    find $(ROM_DIR) -maxdepth 1 -type f -delete
-    find $(ROM_DIR)/$(GAME_VERSION_DIR) -maxdepth 1 -type f -delete
+	find $(ROM_DIR) -maxdepth 1 -type f -delete
+	find $(ROM_DIR)/$(GAME_VERSION_DIR) -maxdepth 1 -type f -delete
 
 clean:
-    rm -rf $(BUILD_DIR)
-    rm -rf $(PERMUTER_DIR)
+	rm -rf $(BUILD_DIR)
+	rm -rf $(PERMUTER_DIR)
 
 reset: clean
-    rm -rf $(ASM_DIR)
-    rm -rf $(LINKER_DIR)
+	rm -rf $(ASM_DIR)
+	rm -rf $(LINKER_DIR)
 
 # Rules - Misc.
 
 regenerate: reset
-    $(MAKE) generate
+	$(MAKE) generate
 
 compilation-test:
-    $(COMPTEST)
+	$(COMPTEST)
 
 checksum: $(TARGET_OUT)
 ifeq ($(CHECKSUM),1)
 ifeq ($(SKIP_ASM),0)
-    @sha256sum --ignore-missing --check "$(CONFIG_DIR)/checksum.sha"
+	@sha256sum --ignore-missing --check "$(CONFIG_DIR)/checksum.sha"
 endif
 endif
 
 config-formatter:
-    $(PYTHON) $(TOOLS_DIR)/configs_formatter.py
+	$(PYTHON) $(TOOLS_DIR)/configs_formatter.py
 
 # Recipes
 
@@ -448,43 +448,43 @@ $(foreach target,$(TARGET_IN),$(eval $(call make_elf_target,$(target),$(call get
 # (Running make with MAKE_COMPILE_LOG=1 will create a compile.log that can be passed to tools/create_compile_commands.py)
 
 $(BUILD_DIR)/%.i: %.c
-    @mkdir -p $(dir $@)
-    $(call FlagsSwitch, $@)
+	@mkdir -p $(dir $@)
+	$(call FlagsSwitch, $@)
 ifeq ($(MAKE_COMPILE_LOG),1)
-    @echo "$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<" >> compile.log
+	@echo "$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<" >> compile.log
 endif
-    $(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<
+	$(CPP) -P -MMD -MP -MT $@ -MF $@.d $(CPP_FLAGS) $(OVL_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.sjis.i: $(BUILD_DIR)/%.i
-    iconv -f UTF-8 -t SHIFT-JIS $< -o $@
+	iconv -f UTF-8 -t SHIFT-JIS $< -o $@
 
 # Switch compiler to 2.7.2-cdk / 2.7.2-970404 for `lib_unk` code.
 $(BUILD_DIR)/src/bodyprog/lib_unk/%.c.s: CC := $(CC272)
 
 $(BUILD_DIR)/%.c.s: $(BUILD_DIR)/%.sjis.i
-    @mkdir -p $(dir $@)
-    $(call FlagsSwitch, $@)
-    $(CC) $(CC_FLAGS) -o $@ $<
+	@mkdir -p $(dir $@)
+	$(call FlagsSwitch, $@)
+	$(CC) $(CC_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.c.o: $(BUILD_DIR)/%.c.s
-    @mkdir -p $(dir $@)
-    $(call FlagsSwitch, $@)
-    $(MASPSX) $(MASPSX_FLAGS) -o $@ $<
+	@mkdir -p $(dir $@)
+	$(call FlagsSwitch, $@)
+	$(MASPSX) $(MASPSX_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.s.o: %.s
-    @mkdir -p $(dir $@)
-    $(call FlagsSwitch, $@)
-    $(AS) $(AS_FLAGS) -o $@ $<
+	@mkdir -p $(dir $@)
+	$(call FlagsSwitch, $@)
+	$(AS) $(AS_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.bin.o: %.bin
-    @mkdir -p $(dir $@)
-    $(LD) $(LD_FLAGS) -r -b binary -o $@ $<
+	@mkdir -p $(dir $@)
+	$(LD) $(LD_FLAGS) -r -b binary -o $@ $<
 
 # Split .yaml.
 $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
-    @mkdir -p $(dir $@)
-    $(SPLAT) $(SPLAT_FLAGS) $<
-    $(if $(filter $*,$(TARGET_PREBUILD)),@-$(PREBUILD) $*,@true)
+	@mkdir -p $(dir $@)
+	$(SPLAT) $(SPLAT_FLAGS) $<
+	$(if $(filter $*,$(TARGET_PREBUILD)),@-$(PREBUILD) $*,@true)
 
 ### Settings
 .SECONDARY:
