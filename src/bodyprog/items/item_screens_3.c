@@ -910,8 +910,7 @@ s_800AFBF4 D_800AFBF4[11] = {
     { 1298, 0,    0,    64, 62, 63, 0,  52, 0 }
 };
 
-// Special collision global.
-s_CollisionPoint D_800AFC78 = {
+s_CollisionPoint g_CollisionPoint = {
     .position_0 = {},
     .collision_C = {},
     .field_18 = NO_VALUE

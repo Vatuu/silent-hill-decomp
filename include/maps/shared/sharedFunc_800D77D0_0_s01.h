@@ -6,7 +6,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
     q19_12 speed;
     q19_12 speed_2;
     q19_12 temp_lo;
-    q19_12 div;
+    q19_12 distToGround;
     q19_12 speed1;
     q20_12 absRot;
     q20_12 absSpeed;
@@ -111,10 +111,10 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
         case ANIM_STATUS(AirScreamerAnim_10, true):
         case ANIM_STATUS(AirScreamerAnim_11, true):
         case ANIM_STATUS(AirScreamerAnim_16, true):
-            div      = func_80080884(airScreamer->position_18.vx, airScreamer->position_18.vz) - airScreamer->position_18.vy;
-            speed1 = Q12(20.0f);
+            distToGround = Collision_GroundHeightGet(airScreamer->position_18.vx, airScreamer->position_18.vz) - airScreamer->position_18.vy;
+            speed1       = Q12(20.0f);
 
-            if (div > Q12(0.0f))
+            if (distToGround > Q12(0.0f))
             {
                 speed_2  = airScreamer->field_34;
                 animTime = airScreamer->model_0.anim_4.time_4;
@@ -139,7 +139,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
                         break;
                 }
 
-                temp_lo  = FP_TO(ret_3 - animTime, Q12_SHIFT) / div;
+                temp_lo  = FP_TO(ret_3 - animTime, Q12_SHIFT) / distToGround;
                 speed1 = FP_MULTIPLY_PRECISE(speed_2, temp_lo, Q12_SHIFT);
             }
 

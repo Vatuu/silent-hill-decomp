@@ -176,7 +176,7 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
 
             if (func_800808AC(chara->position_18.vx, chara->position_18.vz) == 7)
             {
-                cond0 = chara->position_18.vy >= func_80080884(chara->position_18.vx, chara->position_18.vz);
+                cond0 = chara->position_18.vy >= Collision_GroundHeightGet(chara->position_18.vx, chara->position_18.vz);
             }
 
             if (cond1)

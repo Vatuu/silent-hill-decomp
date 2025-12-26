@@ -1,6 +1,8 @@
 #ifndef _MAPS_CHARACTERS_CREAPER_H
 #define _MAPS_CHARACTERS_CREAPER_H
 
+// TODO: Official name is "Creeper", not "Creaper".
+
 /** @brief Creaper character flags. */
 typedef enum _CreaperFlags
 {

@@ -1310,28 +1310,43 @@ typedef struct _SubCharaPropertiesNpc
 } s_SubCharaPropertiesNpc;
 STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesNpc, 68);
 
-typedef struct _SubCharaPropertiesBloodsucker
+typedef struct _PropertiesAirScreamer
 {
     s32 unk_E4;
 
+    s32 stateIdx0; // } Temp filler.
+    s32 field_EC;
+    s16 field_F0; // } Maybe 2D offset like in Creaper properties? Must check.
+    s16 field_F2; // }
+    s32 field_F4;
+    s32     resetStateIdx0_F8; // } Temp filler.
+    s32     field_FC;          // }
+    s32     field_100;         // }
+    s32     properties_104;    // }
+    s32     properties_108;    // }
+    s32     properties_10C;    // }
+    VECTOR3 field_110;         // }
+    s32     flags_11C;         // }
+    s32     properties_120;    // }
+    q19_12 groundHeight_124;
+} s_PropertiesAirScreamer;
+
+typedef struct _SubCharaPropertiesBloodsucker
+{
+    s32    unk_E4;
     q19_12 timer_E8;
     q19_12 timer_EC;
     q19_12 timer_F0;
     q19_12 timer_F4;
     s8     unk_F8[36]; // Unused?
     s32    flags_118;
-
 } s_SubCharaPropertiesBloodsucker;
 
 typedef struct _SubCharaPropertiesCreaper
 {
     s32    unk_E4;
-
-    u16    flags_E8;
+    u16    flags_E8; // TODO: `sharedFunc_800D8684_1_s02` and `sharedFunc_800D9774_1_s02` require `s32`, but changing it breaks matches elsewhere.
     s8     unk_EA[2];
-    // TODO: Should be like this? `sharedFunc_800D8684_1_s02` and `sharedFunc_800D9774_1_s02` require flag field to be `s32`, but changing it breaks matches elsewhere.
-    //s32    flags_E8;
-
     q3_12  offsetX_EC;
     q3_12  offsetZ_EE;
     q19_12 timer_F0;            // Timer with unknown purpose.
@@ -1538,10 +1553,11 @@ typedef struct _SubCharacter
 
     union
     {
-        s_SubCharaPropertiesDummy  dummy;
-        s_SubCharaPropertiesPlayer player;
-        s_SubCharaPropertiesNpc    npc;
+        s_SubCharaPropertiesDummy         dummy;
+        s_SubCharaPropertiesPlayer        player;
+        s_SubCharaPropertiesNpc           npc;
 
+        s_PropertiesAirScreamer           airScreamer;
         s_SubCharaPropertiesBloodsucker   bloodsucker;
         s_SubCharaPropertiesCreaper       creaper;
         s_SubCharaPropertiesDahlia        dahlia;

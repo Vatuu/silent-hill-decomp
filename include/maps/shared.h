@@ -2024,7 +2024,7 @@ void sharedFunc_800DDA80_2_s00(s_SubCharacter*); // Assumed void return type.
 
 void sharedFunc_800DDE14_2_s00(s_SubCharacter* chara);
 
-void sharedFunc_800DDF74_2_s00(s_SubCharacter* chara, s32 mulX, q19_12 angle0);
+void sharedFunc_800DDF74_2_s00(s_SubCharacter* chara, s32 mulX, q19_12 headingAngle);
 
 void sharedFunc_800DE034_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist);
 
@@ -2512,7 +2512,7 @@ bool sharedFunc_800D62D8_0_s01(s_SubCharacter* airScreamer);
 s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* chara);
 
 /** Gets player Y position with an offset. */
-s32 sharedFunc_800D5274_0_s01(void);
+q19_12 sharedFunc_800D5274_0_s01(void);
 
 void sharedFunc_800D633C_0_s01(s_SubCharacter* airScreamer);
 void sharedFunc_800D63A4_0_s01(s_SubCharacter* airScreamer);

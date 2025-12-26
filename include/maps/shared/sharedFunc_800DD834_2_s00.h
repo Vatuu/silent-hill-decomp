@@ -23,7 +23,7 @@ void sharedFunc_800DD834_2_s00(s_SubCharacter* chara)
     {
         curPosX = posX + FP_MULTIPLY_PRECISE(Math_Sin(curAngle), Q12(20.0f), Q12_SHIFT);
         curPosZ = posZ + FP_MULTIPLY_PRECISE(Math_Cos(curAngle), Q12(20.0f), Q12_SHIFT);
-        curPosY = func_80080884(curPosX, curPosZ) - Q12(2.0f);
+        curPosY = Collision_GroundHeightGet(curPosX, curPosZ) - Q12(2.0f);
 
         if (curPosY < (posY - Q12(2.0f)) || posY < curPosY || curPosY < sharedFunc_800D5274_0_s01() ||
             !func_8008F914(curPosX, curPosZ) || !func_800808AC(curPosX, curPosZ))

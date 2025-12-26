@@ -101,7 +101,7 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
     temp_s0_2 = func_800808AC(posX, posZ);
 
     cond2 = temp_s0_2 == 7;
-    if (airScreamer->position_18.vy >= (func_80080884(posX, posZ) - Q12(0.15f)))
+    if (airScreamer->position_18.vy >= (Collision_GroundHeightGet(posX, posZ) - Q12(0.15f)))
     {
         sp28 = !cond2;
     }
@@ -155,7 +155,7 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
 
     var_s4 = 0;
 
-    if (airScreamer->position_18.vy < (func_80080884(airScreamer->position_18.vx, airScreamer->position_18.vz) - Q12(0.1f)))
+    if (airScreamer->position_18.vy < (Collision_GroundHeightGet(airScreamer->position_18.vx, airScreamer->position_18.vz) - Q12(0.1f)))
     {
         switch (func_800808AC(airScreamer->position_18.vx, airScreamer->position_18.vz))
         {

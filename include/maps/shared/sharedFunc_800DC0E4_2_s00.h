@@ -22,5 +22,5 @@ bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* chara, s32 speedMult)
             return true;
     }
 
-    return (func_80080884(posX, posZ) + Q12(1.2f)) > chara->position_18.vy;
+    return (Collision_GroundHeightGet(posX, posZ) + Q12(1.2f)) > chara->position_18.vy;
 }

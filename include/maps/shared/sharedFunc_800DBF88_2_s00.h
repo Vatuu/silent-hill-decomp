@@ -33,7 +33,7 @@ bool sharedFunc_800DBF88_2_s00(s_SubCharacter* chara, s32 arg1)
 
     func_8006F250(sharedData_800E2370_0_s01, posX, posZ, posDeltaX, posDeltaZ);
 
-    if (arg1 >= sharedData_800E2370_0_s01[0] && func_80080884(posX, posZ) + charaFieldC8 >= sharedData_800E2370_0_s01[1])
+    if (arg1 >= sharedData_800E2370_0_s01[0] && (Collision_GroundHeightGet(posX, posZ) + charaFieldC8) >= sharedData_800E2370_0_s01[1])
     {
         if (posDeltaY < Q12(0.0f))
         {

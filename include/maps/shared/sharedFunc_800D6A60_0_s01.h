@@ -9,7 +9,7 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* char
     s32      vec2X;
     s32      vec2Z;
     q19_12   posY;
-    s32      calcY;
+    q19_12   groundHeight;
     s32      newVec1Y;
     s32      newVec2Y;
     s32      time;
@@ -67,8 +67,8 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* char
     vec1Y = vec1->vy;
     vec0Y = vec0Cpy->vy;
 
-    calcY = func_80080884(chara->position_18.vx, chara->position_18.vz);
-    sharedData_800E21D0_0_s01.field_114 = calcY;
+    groundHeight = Collision_GroundHeightGet(chara->position_18.vx, chara->position_18.vz);
+    sharedData_800E21D0_0_s01.field_114 = groundHeight;
     retCode1 = 1;
 
     if (!(chara->field_E1_0))
@@ -76,23 +76,23 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* char
         newVec2Y = 0;
         newVec1Y = 0;
     } 
-    else if (posY >= calcY && vec0Y >= 0)
+    else if (posY >= groundHeight && vec0Y >= Q12(0.0f))
     {
         flags &= ~PlayerFlag_Unk30;
-        posY = calcY;
+        posY = groundHeight;
         newVec2Y = 0;
         newVec1Y = 0;
     } 
     else 
     {
         posY += vec0Y;
-        if (posY >= calcY)
+        if (posY >= groundHeight)
         {
             flags |= PlayerFlag_Unk30;
             ret = retCode1;
             newVec2Y = 0;
             newVec1Y = -vec1Y;
-            posY = calcY;
+            posY = groundHeight;
         } 
         else 
         {

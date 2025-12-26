@@ -8,5 +8,5 @@ bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* chara)
             return false;
     }
 
-    return func_80080884(chara->position_18.vx, chara->position_18.vz) <= Q12(3.0f);
+    return Collision_GroundHeightGet(chara->position_18.vx, chara->position_18.vz) <= Q12(3.0f);
 }

@@ -3,13 +3,13 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
     bool     cond;
     s32      temp_v1;
     s32      temp_s0;
-    q19_12   unkY;
+    q19_12   groundHeight;
+    q19_12   groundOffset;
     q19_12   offsetX;
     q19_12   offsetZ;
     s32      var_a0;
     s32      i;
     s32      var_v1;
-    s32      temp_v0;
     s32      temp_v0_2;
     q19_12   posX;
     q19_12   posY;
@@ -111,21 +111,21 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
         {
             if (sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.field_18)
             {
-                temp_v0                              = (Rng_RandQ12() / 2) + Q12(1.5f);
-                sharedData_800E2330_0_s01.field_4.vy = sharedData_800E2330_0_s01.field_18 - temp_v0;
+                groundOffset                              = (Rng_RandQ12() / 2) + Q12(1.5f);
+                sharedData_800E2330_0_s01.field_4.vy = sharedData_800E2330_0_s01.field_18 - groundOffset;
             }
             else
             {
-                unkY  = func_80080884(chara->position_18.vx, chara->position_18.vz);
-                temp_v0    = Rng_RandQ12() / 2 + Q12(1.5f);
-                unkY -= temp_v0;
+                groundHeight  = Collision_GroundHeightGet(chara->position_18.vx, chara->position_18.vz);
+                groundOffset  = (Rng_RandQ12() / 2) + Q12(1.5f);
+                groundHeight -= groundOffset;
 
-                temp_v0                              = (Rng_RandQ12() / 2) - Q12(0.25f);
-                sharedData_800E2330_0_s01.field_4.vy = chara->position_18.vy - temp_v0;
+                groundOffset                         = (Rng_RandQ12() / 2) - Q12(0.25f);
+                sharedData_800E2330_0_s01.field_4.vy = chara->position_18.vy - groundOffset;
 
-                if (unkY < sharedData_800E2330_0_s01.field_4.vy)
+                if (groundHeight < sharedData_800E2330_0_s01.field_4.vy)
                 {
-                    sharedData_800E2330_0_s01.field_4.vy = unkY;
+                    sharedData_800E2330_0_s01.field_4.vy = groundHeight;
                 }
             }
         }

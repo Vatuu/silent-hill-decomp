@@ -1,26 +1,24 @@
 void sharedFunc_800DEBCC_2_s00(s_SubCharacter* chara)
 {
-    q19_12 posX;
-    q19_12 posZ;
-    q19_12 posY;
+    q19_12 newPosX;
+    q19_12 newPosY;
+    q19_12 newPosZ;
 
-    posX = chara->properties_E4.unk0.pos_104.vx;
-    posZ = chara->properties_E4.unk0.pos_104.vz;
+    newPosX = chara->properties_E4.unk0.pos_104.vx;
+    newPosZ = chara->properties_E4.unk0.pos_104.vz;
 
-    posY = func_80080884(posX, posZ);
-    posY = MIN(chara->properties_E4.unk0.properties_124.val32, posY);
-
-    posY -= Q12(1.7f);
-
-    // `posY = MAX(posY, sharedFunc_800D5274_0_s01())`? Doesn't currently match.
-    if (posY < sharedFunc_800D5274_0_s01())
+    newPosY  = Collision_GroundHeightGet(newPosX, newPosZ);
+    newPosY  = MIN(chara->properties_E4.unk0.properties_124.val32, newPosY);
+    newPosY -= Q12(1.7f);
+    if (newPosY < sharedFunc_800D5274_0_s01())
     {
-        posY = sharedFunc_800D5274_0_s01();
+        newPosY = sharedFunc_800D5274_0_s01();
     }
 
-    chara->properties_E4.unk0.field_F8.vx = posX;
-    chara->properties_E4.unk0.field_F8.vy = posY;
-    chara->properties_E4.unk0.field_F8.vz = posZ;
+    // TODO: Work out which character this is for.
+    chara->properties_E4.unk0.field_F8.vx = newPosX;
+    chara->properties_E4.unk0.field_F8.vy = newPosY;
+    chara->properties_E4.unk0.field_F8.vz = newPosZ;
 
     sharedFunc_800D4E84_0_s01(chara);
 }

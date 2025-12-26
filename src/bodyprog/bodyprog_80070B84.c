@@ -8805,7 +8805,7 @@ void func_800803FC(VECTOR3* pos, s32 idx) // 0x800803FC
     posZ = g_MapOverlayHeader.charaSpawns_24C[0][idx].positionZ_8;
 
     pos->vx = posX;
-    pos->vy = func_80080884(posX, posZ);
+    pos->vy = Collision_GroundHeightGet(posX, posZ);
     pos->vz = posZ;
 }
 
@@ -8954,28 +8954,28 @@ bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x8008074C
     return func_800806AC(arg0, arg1, 1 << 31, arg3);
 }
 
-void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
+void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
 {
     q19_12       groundHeight;
-    s32          caseVar;
+    s32          count;
     q19_12       collX;
     q19_12       collZ;
     s_Collision* coll;
 
-    coll = &D_800AFC78.collision_C;
+    coll = &g_CollisionPoint.collision_C;
 
-    collX = D_800AFC78.position_0.vx;
-    collZ = D_800AFC78.position_0.vz;
-    if (D_800AFC78.field_18 != NO_VALUE && collX == posX && collZ == posZ)
+    collX = g_CollisionPoint.position_0.vx;
+    collZ = g_CollisionPoint.position_0.vz;
+    if (g_CollisionPoint.field_18 != NO_VALUE && collX == posX && collZ == posZ)
     {
         return;
     }
 
     Collision_Get(coll, posX, posZ);
-    D_800AFC78.position_0.vx = posX;
-    D_800AFC78.position_0.vz = posZ;
+    g_CollisionPoint.position_0.vx = posX;
+    g_CollisionPoint.position_0.vz = posZ;
 
-    caseVar = coll->field_8;
+    count = coll->field_8;
     switch (coll->field_8)
     {
         case 0:
@@ -8986,13 +8986,13 @@ void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
                     if (posZ <= Q12(0.0f))
                     {
                         groundHeight = Q12(4.0f);
-                        caseVar      = 7;
+                        count      = 7;
                     }
                     break;
 
                 case MapOverlayId_MAP6_S00:
                     groundHeight = Q12(4.0f);
-                    caseVar      = 7;
+                    count      = 7;
                     break;
             }
             break;
@@ -9003,7 +9003,7 @@ void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
             {
                 case MapOverlayId_MAP6_S00:
                     groundHeight = Q12(4.0f);
-                    caseVar      = 7;
+                    count      = 7;
                     break;
             }
             break;
@@ -9013,20 +9013,20 @@ void func_8008076C(s32 posX, s32 posZ) // 0x8008076C
             break;
     }
     
-    D_800AFC78.position_0.vy = groundHeight;
-    D_800AFC78.field_18      = caseVar;
+    g_CollisionPoint.position_0.vy = groundHeight;
+    g_CollisionPoint.field_18      = count;
 }
 
-q19_12 func_80080884(q19_12 posX, q19_12 posZ) // 0x80080884
+q19_12 Collision_GroundHeightGet(q19_12 posX, q19_12 posZ) // 0x80080884
 {
-    func_8008076C(posX, posZ);
-    return D_800AFC78.position_0.vy;
+    Collision_Fill(posX, posZ);
+    return g_CollisionPoint.position_0.vy;
 }
 
 s32 func_800808AC(q19_12 posX, q19_12 posZ) // 0x800808AC
 {
-    func_8008076C(posX, posZ);
-    return D_800AFC78.field_18;
+    Collision_Fill(posX, posZ);
+    return g_CollisionPoint.field_18;
 }
 
 s32 Math_MulFixed(s32 val0, s32 val1, s32 shift) // 0x800808D4

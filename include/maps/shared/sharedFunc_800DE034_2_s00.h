@@ -11,7 +11,7 @@ void sharedFunc_800DE034_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist)
     posX         = vec->vx + FP_MULTIPLY_PRECISE(scaledRadius, Math_Sin(angle), Q12_SHIFT);
     posZ         = vec->vz + FP_MULTIPLY_PRECISE(scaledRadius, Math_Cos(angle), Q12_SHIFT);
 
-    posY                                  = func_80080884(posX, posZ);
+    posY                                  = Collision_GroundHeightGet(posX, posZ);
     chara->properties_E4.unk0.field_F8.vx = posX;
     chara->properties_E4.unk0.field_F8.vy = posY;
     chara->properties_E4.unk0.field_F8.vz = posZ;

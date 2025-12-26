@@ -25,7 +25,7 @@ void sharedFunc_800D3C24_2_s00(s_SubCharacter* chara)
 
             if (func_800808AC(chara->position_18.vx, chara->position_18.vz) == 7)
             {
-                cond1 = chara->position_18.vy >= func_80080884(chara->position_18.vx, chara->position_18.vz);
+                cond1 = chara->position_18.vy >= Collision_GroundHeightGet(chara->position_18.vx, chara->position_18.vz);
             }
 
             if (cond0)

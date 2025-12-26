@@ -9,7 +9,7 @@ s32 sharedFunc_800DC598_2_s00(s_SubCharacter* chara)
     if (animStatus == ANIM_STATUS(25, true) ||
         animStatus == ANIM_STATUS(23, true))
     {
-        if (chara->position_18.vy < (func_80080884(chara->position_18.vx, chara->position_18.vz) - Q12(0.7f)))
+        if (chara->position_18.vy < (Collision_GroundHeightGet(chara->position_18.vx, chara->position_18.vz) - Q12(0.7f)))
         {
             if (sharedFunc_800DC200_2_s00(chara) && chara->moveSpeed_38 > Q12(1.5f))
             {

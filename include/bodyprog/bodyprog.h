@@ -354,7 +354,7 @@ typedef struct _Collision
     q19_12 groundHeight_0;
     q3_12  field_4;  // } Angles??
     q3_12  field_6;  // }
-    s8     field_8;  // Count of something, maybe valid ground at probed points around center? 0, 7, 12 are significant.
+    s8     field_8;  // Count of something, maybe valid ground at probed points around center? Set to 0, 7, or 12.
     // 3 bytes of padding.
 } s_Collision;
 STATIC_ASSERT_SIZEOF(s_Collision, 12);
@@ -1061,7 +1061,7 @@ typedef struct
 {
     VECTOR3     position_0; // Q19.12
     s_Collision collision_C;
-    s32         field_18;
+    s32         field_18; // Count of points in circle?
 } s_CollisionPoint;
 
 typedef struct
@@ -1714,8 +1714,8 @@ typedef struct
 
 typedef struct
 {
-    VECTOR3 offset_0;
-    s32     field_C; // Absolute ground height? Might be using `s_Collision` substruct?
+    VECTOR3 offset_0;  // Q19.12
+    s32     field_C;   // Absolute ground height? Might be using `s_Collision` substruct?
     s16     field_10;
     s16     field_12;
     s8      field_14;  // Count of something? 12 is significant.
@@ -2411,7 +2411,8 @@ extern s16 D_800AF624;
 /** Keyframe index. */
 extern s16 D_800AF626;
 
-extern s_CollisionPoint D_800AFC78; // Maybe different struct.
+/** Generic collision global used by high-level getters. */
+extern s_CollisionPoint g_CollisionPoint;
 
 extern u8 D_800AFD04;
 
@@ -4563,12 +4564,22 @@ bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3); // arg3 type assumed
 /** Probably returns `bool`. */
 bool func_8008074C(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
-/** Fills special collision global with collision data. */
-void func_8008076C(s32 posX, s32 posZ);
+/** Fills `g_CollisionPoint` with collision data at a given 2D position.
+ *
+ * @param posX X position.
+ * @param posZ Z position.
+ */
+void Collision_Fill(q19_12 posX, q19_12 posZ);
 
-/** Returns ground height? */
-q19_12 func_80080884(q19_12 posX, q19_12 posZ);
+/** @brief Gets the ground height at a given 2D position.
+ *
+ * @param posX X position.
+ * @param posZ Z position.
+ * @return Ground height.
+ */
+q19_12 Collision_GroundHeightGet(q19_12 posX, q19_12 posZ);
 
+/** Getter for collision circle point count? */
 s32 func_800808AC(q19_12 posX, q19_12 posZ);
 
 /** Returns a Q shift based on a magnitude. */
