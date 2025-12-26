@@ -72,6 +72,12 @@ typedef struct
 } s_800E3A40;
 extern s_800E3A40 D_800E3A40[];
 
+void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2);
+
+void func_800CE0CC(s32 arg0);
+
+bool func_800CE164(POLY_FT4** poly, s32 idx);
+
 void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800DA4D4(void);
@@ -100,10 +106,6 @@ void func_800DC9A0(void);
 void func_800DCB54(void);
 
 void func_800DCDDC(void);
-
-void func_800CDCE0(s32 arg0, s32 arg1, s32 arg2);
-
-void func_800CE0CC(s32 arg0);
 
 void func_800DD3AC(void);
 

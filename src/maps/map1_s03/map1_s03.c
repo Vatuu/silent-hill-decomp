@@ -116,7 +116,80 @@ void func_800CE0CC(s32 arg0) // 0x800CE0CC
     }
 }
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800CE164);
+bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
+{
+    typedef struct
+    {
+        s_func_8005E89C field_0;
+        SVECTOR         field_12C;
+        DVECTOR         field_134;
+        s32             field_138;
+    } s_ScratchData;
+
+    s_ScratchData* scratch = PSX_SCRATCH;
+    s32            idx2;
+    s32            var_lo;
+    s32            var_a2;
+    s32            var_a1;
+    s32            rgbColor;
+
+    sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += g_DeltaTime0;
+
+    idx2 = sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0;
+    if ((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 > D_800E3A40[idx2].field_10)
+    {
+        func_800CDCE0(idx, idx2, 1);
+        return false;
+    }
+
+    Math_SetSVectorFastSum(&scratch->field_12C,
+                           (sharedData_800DFB7C_0_s00[idx].field_0.vx_0 >> 4) - (u16)scratch->field_0.field_0.vx,
+                           ((s32)sharedData_800DFB7C_0_s00[idx].vy_8 >> 4) - scratch->field_0.field_0.vy,
+                           (sharedData_800DFB7C_0_s00[idx].field_4.vz_4 >> 4) - scratch->field_0.field_0.vz);
+
+    gte_ldv0(&scratch->field_12C);
+    gte_rtps();
+    gte_stsxy(&scratch->field_134.vx);
+    gte_stsz(&scratch->field_138);
+
+    var_lo = FP_TO((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0, Q12_SHIFT) / D_800E3A40[idx2].field_10;
+
+    setPolyFT4(*poly);
+
+    var_a2 = (FP_FROM(FP_MULTIPLY_PRECISE(D_800E3A40[idx2].field_E * sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_3, Math_Sin(var_lo >> 2), Q12_SHIFT), Q12_SHIFT) * scratch->field_0.field_2C) / scratch->field_138;
+    var_a1 = (var_a2 * (0x800 - ABS(scratch->field_0.field_30.vx))) >> 0xA;
+
+    setXY0Fast(*poly, (u16)scratch->field_134.vx - var_a2, scratch->field_134.vy - var_a1);
+    setXY1Fast(*poly, (u16)scratch->field_134.vx + var_a2, scratch->field_134.vy - var_a1);
+    setXY2Fast(*poly, (u16)scratch->field_134.vx - var_a2, scratch->field_134.vy);
+    setXY3Fast(*poly, (u16)scratch->field_134.vx + var_a2, scratch->field_134.vy);
+
+    *(u32*)&(*poly)->u0 = ((sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 0xD) + 0xE0000);
+    *(u32*)&(*poly)->u1 = ((sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 0xD) + 0x2D003F);
+    *(u16*)&(*poly)->u2 = ((sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 0xD) | 0x1F00);
+    *(u16*)&(*poly)->u3 = ((sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 0xD) | 0x1F3F);
+
+    setSemiTrans(*poly, true);
+
+    if (var_lo < 0x800)
+    {
+        rgbColor = FP_MULTIPLY_PRECISE((var_lo * 2), 0x80, Q12_SHIFT);
+    }
+    else
+    {
+        rgbColor = 0x80 - FP_MULTIPLY_PRECISE(((var_lo - 0x800) * 2), 0x80, Q12_SHIFT);
+    }
+
+    rgbColor = (rgbColor * func_80055D78(sharedData_800DFB7C_0_s00[idx].field_0.vx_0, sharedData_800DFB7C_0_s00[idx].vy_8, sharedData_800DFB7C_0_s00[idx].field_4.vz_4)) >> 7;
+
+    setRGB0Fast(*poly, rgbColor, rgbColor, rgbColor);
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(scratch->field_138 + 256) >> 3], *poly);
+
+    *poly += 1;
+
+    return true;
+}
 
 #include "maps/shared/sharedFunc_800CE5D4_1_s03.h" // 0x800CE5D4
 
