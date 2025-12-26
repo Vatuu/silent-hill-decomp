@@ -24,7 +24,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
 
     Chara_DamageClear(chara);
 
-    chara->properties_E4.puppetNurse.flags_122 = 0;
+    chara->properties_E4.puppetNurse.flags_122 = PuppetNurseFlag_None;
     chara->properties_E4.puppetNurse.field_108 = chara->position_18.vx;
     chara->properties_E4.puppetNurse.field_10C = chara->position_18.vz;
 
@@ -34,7 +34,6 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
     charaState     = stateStepDiv3 / 3;
 
     chara->properties_E4.puppetNurse.field_11A = 0;
-
     chara->flags_3E |= CharaFlag_Unk3;
 
     if (!isPuppetDoctor)
@@ -52,7 +51,6 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
     chara2->properties_E4.puppetNurse.field_124 = &sharedData_800D5710_3_s03[charStatIdx];
 
     chara->health_B0 = chara2->properties_E4.puppetNurse.field_124->health_0;
-
     chara->model_0.paletteIdx_1 = charPalette;
 
     switch (charaState)
@@ -81,8 +79,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
 
     ModelAnim_AnimInfoSet(&chara->model_0.anim_4, chara2->properties_E4.puppetNurse.field_124->animInfo_24);
 
-    chara->model_0.anim_4.status_0 = ANIM_STATUS(17, false);
+    chara->model_0.anim_4.status_0 = ANIM_STATUS(PuppetNurseAnim_17, false);
     chara->model_0.anim_4.alpha_A  = Q12(0.0f);
-
     chara2->properties_E4.puppetNurse.field_120 = Q12(1.0f);
 }

@@ -1,6 +1,12 @@
 #ifndef _MAPS_CHARACTERS_HANGEDSCRATCHER_H
 #define _MAPS_CHARACTERS_HANGEDSCRATCHER_H
 
+/** @brief Hanged Scratcher character flags */
+typedef enum _HangedScratchedFlags
+{
+    HangedScratchedFlag_0 = 1 << 0
+} e_HangedScratchedFlags;
+
 /** @brief Hanged Scratcher character animation indices. */
 typedef enum _HangedScratcherAnim
 {

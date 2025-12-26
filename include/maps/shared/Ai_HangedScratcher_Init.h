@@ -1,12 +1,13 @@
 void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
 {
     s32    i;
-    q51_12 healthbaseHard;
+    q51_12 healthBaseHard;
     q19_12 radiusMax;
     q19_12 radiusMin;
 
-    scratcher->properties_E4.dummy.properties_E8[0].val16[0] = 0;
+    scratcher->properties_E4.hangedScratcher.flags_E8 = 0;
 
+    // TODO: Use `hangedScratcher` properties.
     for (i = 0; i < 16; i++)
     {
         scratcher->properties_E4.dummy.properties_E8[i].val32 = 0;
@@ -16,14 +17,14 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
         // TODO: Weird health value, and not sure why `s64` is needed to match - maybe some `s64` multiply was optimized out?
-        healthbaseHard       = Q12(472.44873f);
-        scratcher->health_B0 = healthbaseHard;
+        healthBaseHard       = Q12(472.44873f);
+        scratcher->health_B0 = healthBaseHard;
     }
 
-    scratcher->moveSpeed_38    = 0;
-    scratcher->field_34        = 0;
+    scratcher->moveSpeed_38    = Q12(0.0f);
+    scratcher->field_34        = Q12(0.0f);
     scratcher->headingAngle_3C = scratcher->rotation_24.vy;
-    scratcher->rotation_24.vx  = 0;
+    scratcher->rotation_24.vx  = FP_ANGLE(0.0f);
 
     ModelAnim_AnimInfoSet(&scratcher->model_0.anim_4, HANGED_SCRATCHER_ANIM_INFOS);
     Chara_DamageClear(scratcher);
@@ -36,7 +37,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
             {
                 scratcher->model_0.state_2 = 2;
             }
-            else if (scratcher->model_0.stateStep_3 == 7) // BUG: This will never run? Meant to be `== 9`?
+            else if (scratcher->model_0.stateStep_3 == 7) // @unused This will never run? Meant to be `== 9`?
             {
                 scratcher->model_0.state_2 = 16;
             }
@@ -56,12 +57,12 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
         case 14:
             scratcher->model_0.state_2 = 5;
             Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_Unk15, true), 232);
-            scratcher->position_18.vy = 0;
-            scratcher->rotation_24.vz = 0;
+            scratcher->position_18.vy = Q12(0.0f);
+            scratcher->rotation_24.vz = FP_ANGLE(0.0f);
             break;
 
         case 17:
-            scratcher->properties_E4.dummy.properties_E8[0].val16[1] = Q12(1.2f);
+            scratcher->properties_E4.hangedScratcher.field_EA = Q12(1.2f);
 
         case 6:
             scratcher->model_0.state_2 = 6;
@@ -94,8 +95,8 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
             break;
     }
 
-    scratcher->properties_E4.dummy.properties_E8[3].val32 = scratcher->position_18.vx;
-    scratcher->properties_E4.dummy.properties_E8[4].val32 = scratcher->position_18.vz;
+    scratcher->properties_E4.hangedScratcher.positionX_F4 = scratcher->position_18.vx;
+    scratcher->properties_E4.hangedScratcher.positionZ_F8 = scratcher->position_18.vz;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
@@ -114,8 +115,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
     }
 
     // TODO: Use `Rng_GenerateInt`.
-    scratcher->properties_E4.dummy.properties_E8[9].val16[0] = (Rng_Rand16() % (radiusMax >> 2)) + ((radiusMax * 3) >> 2);
-    scratcher->properties_E4.dummy.properties_E8[9].val16[1] = (Rng_Rand16() % (radiusMin >> 2)) + ((radiusMin * 3) >> 2);
-
-    scratcher->flags_3E |= CharaFlag_Unk9 | CharaFlag_Unk3;
+    scratcher->properties_E4.hangedScratcher.radiusMax_10C = (Rng_Rand16() % (radiusMax >> 2)) + ((radiusMax * 3) >> 2);
+    scratcher->properties_E4.hangedScratcher.radiusMin_110= (Rng_Rand16() % (radiusMin >> 2)) + ((radiusMin * 3) >> 2);
+    scratcher->flags_3E                                   |= CharaFlag_Unk9 | CharaFlag_Unk3;
 }

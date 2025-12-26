@@ -1310,6 +1310,7 @@ typedef struct _PropertiesNpc
 } s_PropertiesNpc;
 STATIC_ASSERT_SIZEOF(s_PropertiesNpc, 68);
 
+/** @brief Air Screamer or Night Flutter character properties. */
 typedef struct _PropertiesAirScreamer
 {
     s32 unk_E4;
@@ -1328,6 +1329,7 @@ typedef struct _PropertiesAirScreamer
     q19_12 groundHeight_124;
 } s_PropertiesAirScreamer;
 
+/** @brief Bloodsucker character properties. */
 typedef struct _PropertiesBloodsucker
 {
     s32    unk_E4;
@@ -1339,6 +1341,7 @@ typedef struct _PropertiesBloodsucker
     s32    flags_118; /** `e_BloodsuckerFlags` */
 } s_PropertiesBloodsucker;
 
+/** @brief Creeper character properties. */
 typedef struct _PropertiesCreeper
 {
     s32    unk_E4;
@@ -1358,6 +1361,7 @@ typedef struct _PropertiesCreeper
 } s_PropertiesCreeper;
 STATIC_ASSERT_SIZEOF(s_PropertiesCreeper, 44);
 
+/** @brief Dahlia character properties. */
 typedef struct _SubCharPropertiesDahlia
 {
     s32        unk_E4;
@@ -1379,6 +1383,21 @@ typedef struct _SubCharPropertiesDahlia
 } s_PropertiesDahlia;
 STATIC_ASSERT_SIZEOF(s_PropertiesDahlia, 68);
 
+/** @brief Hanged Scratcher character properties. */
+typedef struct _PropertiesHangedScratcher
+{
+    s32    unk_E4;
+    s16    flags_E8;
+    q3_12  field_EA;
+    s8     unk_EC[8];
+    q19_12 positionX_F4;
+    q19_12 positionZ_F8;
+    s8     unk_FC[16];
+    q3_12  radiusMax_10C;
+    q3_12  radiusMin_110;
+} s_PropertiesHangedScratcher;
+
+/** @brief Larval Stalker character properties. */
 typedef struct _PropertiesLarvalStalker
 {
     s32        unk_E4;
@@ -1405,6 +1424,7 @@ typedef struct _PropertiesLarvalStalker
 } s_PropertiesLarvalStalker;
 STATIC_ASSERT_SIZEOF(s_PropertiesLarvalStalker, 68);
 
+/** @brief Puppet Nurse or Pupper Doctor character properties. */
 typedef struct _PropertiesPuppetNurse
 {
     s_func_8006CF18* unk_E4;
@@ -1426,6 +1446,7 @@ typedef struct _PropertiesPuppetNurse
 } s_PropertiesPuppetNurse;
 STATIC_ASSERT_SIZEOF(s_PropertiesPuppetNurse, 68);
 
+/** @brief Split Head character properties. */
 typedef struct _PropertiesSplitHead
 {
     s32        unk_E4;
@@ -1550,18 +1571,19 @@ typedef struct _SubCharacter
 
     union
     {
-        s_PropertiesDummy         dummy;
-        s_PropertiesPlayer        player;
-        s_PropertiesNpc           npc;
+        s_PropertiesDummy           dummy;
+        s_PropertiesPlayer          player;
+        s_PropertiesNpc             npc;
 
-        s_PropertiesAirScreamer   airScreamer;
-        s_PropertiesBloodsucker   bloodsucker;
-        s_PropertiesCreeper       creeper;
-        s_PropertiesDahlia        dahlia;
-        s_PropertiesLarvalStalker larvalStalker;
-        s_PropertiesPuppetNurse   puppetNurse;
-        s_PropertiesSplitHead     splitHead;
-        s_PropertiesUnk0          unk0;
+        s_PropertiesAirScreamer     airScreamer;
+        s_PropertiesBloodsucker     bloodsucker;
+        s_PropertiesCreeper         creeper;
+        s_PropertiesDahlia          dahlia;
+        s_PropertiesHangedScratcher hangedScratcher;
+        s_PropertiesLarvalStalker   larvalStalker;
+        s_PropertiesPuppetNurse     puppetNurse;
+        s_PropertiesSplitHead       splitHead;
+        s_PropertiesUnk0            unk0;
     } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);

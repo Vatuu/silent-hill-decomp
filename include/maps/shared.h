@@ -2666,10 +2666,13 @@ void sharedFunc_800D72E8_0_s01(s_SubCharacter* chara, s32 field_34, s32 rotSpeed
 
 void sharedFunc_800D6EC4_0_s01(s_SubCharacter* chara);
 
+/** @brief Handles the jammed door event. */
 void MapEvent_DoorJammed(void);
 
+/** @brief Handles the locked door event. */
 void MapEvent_DoorLocked(void);
 
+/** @brief Handles the unlocked door event. */
 void MapEvent_DoorUnlocked(void);
 
 void sharedFunc_800CEEE0_3_s03(s_SubCharacter* nurse);
@@ -2713,7 +2716,7 @@ typedef struct
     s_WorldObject_0 object_0;
     VECTOR3         position_1C; // Q19.12
 } s_WorldObjectDescNoRot;
-STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 0x28);
+STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
 
 #define WorldObjectPoseInit(eventPos, posX, posY, posZ, rotX, rotY, rotZ) \
     WorldObjectPoseSet(eventPos, Q12(posX), Q12(posY), Q12(posZ), FP_ANGLE(rotX), FP_ANGLE(rotY), FP_ANGLE(rotZ))
