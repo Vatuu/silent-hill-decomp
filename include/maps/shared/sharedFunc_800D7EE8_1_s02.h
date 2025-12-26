@@ -3,7 +3,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creaper)
     if (creaper->damage_B4.amount_C > Q12(0.0f) && creaper->health_B0 > Q12(0.0f))
     {
         func_8005DC1C(Sfx_Unk1425, &creaper->position_18, Q8_CLAMPED(0.5f), 0);
-        creaper->properties_E4.player.field_104 = 0;
+        creaper->properties_E4.creaper.timer_104 = Q12(0.0f);
 
         // TODO: Weird position scaling?
         creaper->damage_B4.position_0.vx += (creaper->moveSpeed_38 * Math_Sin(creaper->headingAngle_3C)) >> 15;
@@ -16,46 +16,46 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creaper)
         creaper->field_34        = FP_TO(creaper->damage_B4.position_0.vy, Q12_SHIFT) / Q12(0.8f);
         creaper->headingAngle_3C = Rng_AddGeneratedUInt(ratan2(creaper->damage_B4.position_0.vx, creaper->damage_B4.position_0.vz), -128, 127);
 
-        creaper->properties_E4.splitHead.flags_E8 |= 1 << 1;
+        creaper->properties_E4.creaper.flags_E8 |= CreaperFlag_1;
 
-        if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == 7)
+        if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == CreaperAnim_7)
         {
             creaper->health_B0 = Q12(0.0f);
 
-            creaper->properties_E4.dummy.properties_E8[8].val16[1] = ANIM_STATUS(16, true); // Field used to store anim status?
-            if (creaper->model_0.anim_4.status_0 == ANIM_STATUS(7, true))
+            creaper->properties_E4.creaper.animStatus_10A = ANIM_STATUS(CreaperAnim_16, true);
+            if (creaper->model_0.anim_4.status_0 == ANIM_STATUS(CreaperAnim_7, true))
             {
-                creaper->model_0.anim_4.status_0 = ANIM_STATUS(16, true);
+                creaper->model_0.anim_4.status_0 = ANIM_STATUS(CreaperAnim_16, true);
             }
             else
             {
-                creaper->model_0.anim_4.status_0 = ANIM_STATUS(16, false);
+                creaper->model_0.anim_4.status_0 = ANIM_STATUS(CreaperAnim_16, false);
             }
         }
-        else if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == 8)
+        else if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == CreaperAnim_8)
         {
             creaper->health_B0 = Q12(0.0f);
 
-            creaper->properties_E4.dummy.properties_E8[8].val16[1] = ANIM_STATUS(17, true);
-            if (creaper->model_0.anim_4.status_0 == ANIM_STATUS(8, true))
+            creaper->properties_E4.creaper.animStatus_10A = ANIM_STATUS(CreaperAnim_17, true);
+            if (creaper->model_0.anim_4.status_0 == ANIM_STATUS(CreaperAnim_8, true))
             {
-                creaper->model_0.anim_4.status_0 = ANIM_STATUS(17, true);
+                creaper->model_0.anim_4.status_0 = ANIM_STATUS(CreaperAnim_17, true);
             }
             else
             {
-                creaper->model_0.anim_4.status_0 = ANIM_STATUS(17, false);
+                creaper->model_0.anim_4.status_0 = ANIM_STATUS(CreaperAnim_17, false);
             }
         }
-        else if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == 9)
+        else if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == CreaperAnim_9)
         {
             creaper->health_B0               = Q12(0.0f);
-            creaper->model_0.anim_4.status_0 = ANIM_STATUS(3, false);
+            creaper->model_0.anim_4.status_0 = ANIM_STATUS(CreaperAnim_3, false);
             creaper->model_0.state_2         = 5;
         }
         else if (ANIM_STATUS_IDX_GET(creaper->model_0.anim_4.status_0) == 10)
         {
             creaper->health_B0               = Q12(0.0f);
-            creaper->model_0.anim_4.status_0 = ANIM_STATUS(4, false);
+            creaper->model_0.anim_4.status_0 = ANIM_STATUS(CreaperAnim_4, false);
             creaper->model_0.state_2         = 5;
         }
         else
@@ -72,11 +72,11 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creaper)
             if (ABS(func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - creaper->position_18.vx,
                                          g_SysWork.playerWork_4C.player_0.position_18.vz - creaper->position_18.vz) - creaper->rotation_24.vy)) < FP_ANGLE(60.0f))
             {
-                creaper->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
+                creaper->model_0.anim_4.status_0 = ANIM_STATUS(CreaperAnim_7, false);
             }
             else
             {
-                creaper->model_0.anim_4.status_0 = ANIM_STATUS(8, false);
+                creaper->model_0.anim_4.status_0 = ANIM_STATUS(CreaperAnim_8, false);
             }
         }
     }

@@ -1341,11 +1341,10 @@ typedef struct _SubCharaPropertiesCreaper
     q19_12 playerPositionZ_100; // }
     q19_12 timer_104;           // Timer with unknown purpose.
     q3_12  rotationY_108;
-    s8     unk_108[2];
+    s16    animStatus_10A;
     q4_12  moveSpeed_10C;
-    // TODO: Rest should be padding. Check if there are any more.
 } s_SubCharaPropertiesCreaper;
-//STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesCreaper, 68);
+STATIC_ASSERT_SIZEOF(s_SubCharaPropertiesCreaper, 44);
 
 typedef struct _SubCharPropertiesDahlia
 {

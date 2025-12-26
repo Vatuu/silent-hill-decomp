@@ -21,7 +21,8 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creaper)
         creaper->model_0.anim_4.status_0 == ANIM_STATUS(CreaperAnim_2, false) ||
         ANIM_TIME_RANGE_CHECK(creaper->model_0.anim_4.time_4, 4, 7))
     {
-        distToPlayer = Math_Vector2MagCalc(playerPos.vx - creaper->position_18.vx, playerPos.vz - creaper->position_18.vz);
+        distToPlayer = Math_Vector2MagCalc(playerPos.vx - creaper->position_18.vx,
+                                           playerPos.vz - creaper->position_18.vz);
         if (distToPlayer < Q12(0.4f))
         {
             Chara_MoveSpeedUpdate3(creaper, Q12(16.0f), Q12(0.0f));

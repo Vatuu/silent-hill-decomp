@@ -26,12 +26,16 @@ typedef enum _CreaperAnim
     CreaperAnim_5     = 5,
 
     CreaperAnim_7     = 7,
+    CreaperAnim_8     = 8,
+    CreaperAnim_9     = 9,
 
     CreaperAnim_11    = 11,
     CreaperAnim_12    = 12,
     CreaperAnim_13    = 13,
     CreaperAnim_14    = 14,
-    CreaperAnim_15    = 15
+    CreaperAnim_15    = 15,
+    CreaperAnim_16    = 16,
+    CreaperAnim_17    = 17
 } e_CreaperAnim;
 
 #endif
