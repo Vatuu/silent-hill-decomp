@@ -7,7 +7,8 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creeper)
     q19_12  moveSpeed;
     q19_12  moveSpeedTmp0;
 
-    #define playerPos (g_SysWork.playerWork_4C.player_0.position_18)
+    // TODO: Using name `playerPos` causes decomp.me context errors. Change name when all functions are matched.
+    #define PLAYER_POS (g_SysWork.playerWork_4C.player_0.position_18)
 
     if (func_800700F8(creeper, &g_SysWork.playerWork_4C.player_0))
     {
@@ -21,8 +22,8 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creeper)
         creeper->model_0.anim_4.status_0 == ANIM_STATUS(CreeperAnim_2, false) ||
         ANIM_TIME_RANGE_CHECK(creeper->model_0.anim_4.time_4, 4, 7))
     {
-        distToPlayer = Math_Vector2MagCalc(playerPos.vx - creeper->position_18.vx,
-                                           playerPos.vz - creeper->position_18.vz);
+        distToPlayer = Math_Vector2MagCalc(PLAYER_POS.vx - creeper->position_18.vx,
+                                           PLAYER_POS.vz - creeper->position_18.vz);
         if (distToPlayer < Q12(0.4f))
         {
             Chara_MoveSpeedUpdate3(creeper, Q12(16.0f), Q12(0.0f));
@@ -56,9 +57,9 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creeper)
             creeper->moveSpeed_38 = moveSpeed;
         }
 
-        if (((g_DeltaTime0 >> 2) + 1) < ABS(func_8005BF38((ratan2(playerPos.vx - creeper->position_18.vx, playerPos.vz - creeper->position_18.vz) - creeper->rotation_24.vy))))
+        if (((g_DeltaTime0 >> 2) + 1) < ABS(func_8005BF38((ratan2(PLAYER_POS.vx - creeper->position_18.vx, PLAYER_POS.vz - creeper->position_18.vz) - creeper->rotation_24.vy))))
         {
-            if ((func_8005BF38((ratan2(playerPos.vx - creeper->position_18.vx, playerPos.vz - creeper->position_18.vz) - creeper->rotation_24.vy)) << 0x10) > 0)
+            if ((func_8005BF38((ratan2(PLAYER_POS.vx - creeper->position_18.vx, PLAYER_POS.vz - creeper->position_18.vz) - creeper->rotation_24.vy)) << 0x10) > 0)
             {
                 creeper->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
             }
@@ -69,7 +70,7 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creeper)
         }
         else
         {
-            creeper->rotation_24.vy = ratan2(playerPos.vx - creeper->position_18.vx, playerPos.vz - creeper->position_18.vz);
+            creeper->rotation_24.vy = ratan2(PLAYER_POS.vx - creeper->position_18.vx, PLAYER_POS.vz - creeper->position_18.vz);
         }
 
         creeper->field_44.field_0 = 1;
@@ -85,7 +86,7 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creeper)
 
         func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Multitap),
                       creeper, &creeperPos, &g_SysWork.playerWork_4C.player_0, creeper->rotation_24.vy,
-                      ratan2(Q12(0.4f), (playerPos.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_2) - (creeper->position_18.vy + creeper->field_C8.field_2)));
+                      ratan2(Q12(0.4f), (PLAYER_POS.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_2) - (creeper->position_18.vy + creeper->field_C8.field_2)));
 
         if (!(creeper->properties_E4.creeper.flags_E8 & CreeperFlag_0))
         {
@@ -109,7 +110,7 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creeper)
         g_SysWork.field_2284[3]                     &= ~(1 << 1);
         creeper->model_0.state_2                     = 2;
         creeper->properties_E4.creeper.timer_F0      = Q12(0.0f);
-        creeper->properties_E4.creeper.rotationY_108 = func_8006FAFC(creeper, Q12(4.8f), playerPos.vx, playerPos.vz, FP_ANGLE(360.0f), false);
+        creeper->properties_E4.creeper.rotationY_108 = func_8006FAFC(creeper, Q12(4.8f), PLAYER_POS.vx, PLAYER_POS.vz, FP_ANGLE(360.0f), false);
         creeper->field_44.field_0                    = 0;
     }
 }
