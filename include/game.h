@@ -1473,10 +1473,10 @@ typedef struct _PropertiesStalker
 {
     s16    flags_E8;
     s8     unk_EA[2];
-    q3_12  field_EC;
-    q3_12  field_EE;
-    q19_12 positionX_F0;
-    q19_12 positionZ_F4;
+    q3_12  offset_EC;
+    q3_12  offset_EE;
+    q19_12 targetPositionX_F0;
+    q19_12 targetPositionZ_F4;
     q19_12 timer_F8;
     s16    keyframeIdx_FC;
     s16    field_FE;
@@ -1484,6 +1484,8 @@ typedef struct _PropertiesStalker
     s16    field_102;
     s8     unk_104[12];
     q19_12 health_110;
+    s8     unk_114[2];
+    q4_12  timer_116;
 } s_PropertiesStalker;
 
 typedef struct _PropertiesUnk0

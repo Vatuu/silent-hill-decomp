@@ -1,6 +1,7 @@
 void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker)
 {
-    q3_12  angleToTargetHeading;
+    q3_12  angleDeltaToTargetHeading;
+    q3_12  grabAngleDelta;
     q3_12  angleToPlayer;
     q19_12 distToPlayer;
     s32    i;
@@ -128,8 +129,9 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker)
                 {
                     stalker->model_0.state_2 = 6;
 
-                    angleToTargetHeading = func_8005BF38(g_SysWork.playerWork_4C.player_0.rotation_24.vy - stalker->rotation_24.vy);
-                    if (ABS(angleToTargetHeading) > FP_ANGLE(90.0f))
+                    // Grab player in front or behind.
+                    grabAngleDelta = func_8005BF38(g_SysWork.playerWork_4C.player_0.rotation_24.vy - stalker->rotation_24.vy);
+                    if (ABS(grabAngleDelta) > FP_ANGLE(90.0f))
                     {
                         stalker->model_0.anim_4.status_0 = ANIM_STATUS(StalkerAnim_34, false);
                     }
@@ -183,10 +185,10 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker)
         }
         else
         {
-            angleToTargetHeading = func_8005BF38(stalker->properties_E4.stalker.targetHeadingAngle_100 - stalker->rotation_24.vy);
-            if (((g_DeltaTime0 >> 2) + 1) < ABS(angleToTargetHeading))
+            angleDeltaToTargetHeading = func_8005BF38(stalker->properties_E4.stalker.targetHeadingAngle_100 - stalker->rotation_24.vy);
+            if (((g_DeltaTime0 >> 2) + 1) < ABS(angleDeltaToTargetHeading))
             {
-                if (angleToTargetHeading > FP_ANGLE(0.0f))
+                if (angleDeltaToTargetHeading > FP_ANGLE(0.0f))
                 {
                     stalker->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(180.0f), Q12_SHIFT);
                 }

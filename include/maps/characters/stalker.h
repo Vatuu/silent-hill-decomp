@@ -9,6 +9,7 @@ typedef enum _StalkerFlags
     StalkerFlag_1            = 1 << 1,
     StalkerFlag_2            = 1 << 2,
 
+    StalkerFlag_7            = 1 << 7,
     StalkerFlag_8            = 1 << 8,
 
     StalkerFlag_10           = 1 << 10,
@@ -54,8 +55,8 @@ typedef enum _StalkerAnim
     StalkerAnim_31    = 31,
     StalkerAnim_32    = 32,
     StalkerAnim_33    = 33,
-    StalkerAnim_34    = 34,
-    StalkerAnim_35    = 35,
+    StalkerAnim_34    = 34, // } Grab player front/back.
+    StalkerAnim_35    = 35, // }
     StalkerAnim_36    = 36,
     StalkerAnim_37    = 37,
     StalkerAnim_38    = 38,

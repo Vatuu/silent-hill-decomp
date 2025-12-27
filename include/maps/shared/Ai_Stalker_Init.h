@@ -96,10 +96,10 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
 
     stalker->model_0.stateStep_3 = 0;
 
-    stalker->properties_E4.stalker.field_102    = NO_VALUE;
-    stalker->properties_E4.stalker.positionX_F0 = stalker->position_18.vx;
-    stalker->properties_E4.stalker.positionZ_F4 = stalker->position_18.vz;
-    stalker->properties_E4.stalker.health_110   = stalker->health_B0;
+    stalker->properties_E4.stalker.field_102          = NO_VALUE;
+    stalker->properties_E4.stalker.targetPositionX_F0 = stalker->position_18.vx;
+    stalker->properties_E4.stalker.targetPositionZ_F4 = stalker->position_18.vz;
+    stalker->properties_E4.stalker.health_110         = stalker->health_B0;
 
     ModelAnim_AnimInfoSet(&stalker->model_0.anim_4, STALKER_ANIM_INFOS);
 

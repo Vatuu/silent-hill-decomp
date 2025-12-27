@@ -37,11 +37,11 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
 
     if (g_DeltaTime0 != Q12(0.0f))
     {
-        func_8005CB20(stalker, &sp10, stalker->properties_E4.stalker.field_EC, stalker->properties_E4.stalker.field_EE);
+        func_8005CB20(stalker, &sp10, stalker->properties_E4.stalker.offset_EC, stalker->properties_E4.stalker.offset_EE);
     }
 
-    stalker->properties_E4.stalker.field_EE = Q12(0.0f);
-    stalker->properties_E4.stalker.field_EC = Q12(0.0f);
+    stalker->properties_E4.stalker.offset_EE = Q12(0.0f);
+    stalker->properties_E4.stalker.offset_EC = Q12(0.0f);
     stalker->moveSpeed_38                   = prevMoveSpeed;
 
     if (stalker->field_34 != Q12(0.0f))

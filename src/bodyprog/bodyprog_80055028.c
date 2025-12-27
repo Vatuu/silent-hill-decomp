@@ -11369,7 +11369,7 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
 {
     VECTOR3 sp10;
     VECTOR3 sp20;
-    VECTOR3 pos; // Q19.12
+    VECTOR3 pos;    // Q19.12
     VECTOR3 offset; // Q19.12
     s32     i;
     q19_12  dist;

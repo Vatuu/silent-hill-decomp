@@ -1,5 +1,11 @@
 void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
 {
+#if defined(MAP1_S00) || defined(MAP1_S01)
+    #define BASE_DIST_MAX Q12(6.0f)
+#else
+    #define BASE_DIST_MAX Q12(8.0f)
+#endif
+
     q20_12 animFrameIdx;
     s32    animDivTmp;
     s32    animDiv;
@@ -10,10 +16,8 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
     s32    var;
     q19_12 duration;
 
-    #define dummyProps stalker->properties_E4.dummy
-
     stalker->flags_3E &= ~CharaFlag_Unk2;
-    if (!(dummyProps.properties_E8[0].val16[0] & (1 << 13)))
+    if (!(stalker->properties_E4.stalker.flags_E8 & StalkerFlag_13))
     {
         Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
     }
@@ -46,24 +50,24 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
         duration = STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant;
         step     = (FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT) * animMult) / animDiv;
 
-        dummyProps.properties_E8[1].val16[0] = FP_MULTIPLY(step, Math_Sin(stalker->rotation_24.vy), Q12_SHIFT);
-        dummyProps.properties_E8[1].val16[1] = FP_MULTIPLY(step, Math_Cos(stalker->rotation_24.vy), Q12_SHIFT);
+        stalker->properties_E4.stalker.offset_EC = FP_MULTIPLY(step, Math_Sin(stalker->rotation_24.vy), Q12_SHIFT);
+        stalker->properties_E4.stalker.offset_EE = FP_MULTIPLY(step, Math_Cos(stalker->rotation_24.vy), Q12_SHIFT);
     }
 
-    if (dummyProps.properties_E8[0].val16[0] & (1 << 7))
+    if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_7)
     {
         frameIdx = FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT);
         if ((frameIdx >= 121 && frameIdx < 129) ||
             (frameIdx >= 149 && frameIdx < 158) ||
             (frameIdx >= 171 && frameIdx < 176))
         {
-            dummyProps.properties_E8[0].val16[0] &= ~(1 << 7);
+            stalker->properties_E4.stalker.flags_E8 &= ~StalkerFlag_7;
         }
     }
 
-    if (stalker->model_0.anim_4.status_0 == ANIM_STATUS(27, true) && Rng_GenerateInt(0, 3) == 0) // 1 in 4 chance.
+    if (stalker->model_0.anim_4.status_0 == ANIM_STATUS(StalkerAnim_27, true) && !Rng_GenerateInt(0, 3)) // 1 in 4 chance.
     {
-        if (dummyProps.properties_E8[0].val16[0] & (1 << 1))
+        if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_1)
         {
             stalker->model_0.state_2 = 2;
         }
@@ -72,9 +76,9 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
             stalker->model_0.state_2 = 3;
         }
 
-        stalker->model_0.anim_4.status_0 = ANIM_STATUS(30, false);
-        dummyProps.properties_E8[5].val16[0] = 55;
-        dummyProps.properties_E8[5].val16[1] = FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) - 427;
+        stalker->model_0.anim_4.status_0              = ANIM_STATUS(StalkerAnim_30, false);
+        stalker->properties_E4.stalker.keyframeIdx_FC = 55;
+        stalker->properties_E4.stalker.field_FE       = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model_0.anim_4.time_4, 427);
     }
 
     // @hack `animDiv` has to be used for certain stuff for a match, weird.
@@ -86,11 +90,7 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
     }
     else if (flags == 2)
     {
-        #if defined(MAP1_S00) || defined(MAP1_S01)
-            var = func_8006FD90(stalker, 0, Q12(6.0f), Q12(0.0f));
-        #else
-            var = func_8006FD90(stalker, 0, Q12(8.0f), Q12(0.0f));
-        #endif
+        var = func_8006FD90(stalker, 0, BASE_DIST_MAX, Q12(0.0f));
     }
     else
     {
@@ -100,7 +100,7 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
 
     if (var || func_80070360(stalker, Q12(0.0f), Q12(1.0f)))
     {
-        stalker->properties_E4.player.field_F0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
-        stalker->properties_E4.player.field_F4 = g_SysWork.playerWork_4C.player_0.position_18.vz;
+        stalker->properties_E4.stalker.targetPositionX_F0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
+        stalker->properties_E4.stalker.targetPositionZ_F4 = g_SysWork.playerWork_4C.player_0.position_18.vz;
     }
 }
