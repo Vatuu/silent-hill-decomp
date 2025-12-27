@@ -58,7 +58,7 @@ INCLUDE_RODATA("asm/maps/map1_s06/nonmatchings/map1_s06", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D0054_1_s05.h" // 0x800D0B08
 
-INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D0B84);
+#include "maps/shared/sharedFunc_800D00D0_1_s05.h" // 0x800D0B84
 
 INCLUDE_ASM("asm/maps/map1_s06/nonmatchings/map1_s06", func_800D13FC);
 
