@@ -102,6 +102,8 @@ void func_800DAA28(void);
 
 void func_800DABC4(void);
 
+void func_800DAF18(void);
+
 // `MapEvent_TheMonsterLurksBookRead`
 void func_800DBEC8(void);
 

@@ -1481,11 +1481,13 @@ typedef struct _PropertiesStalker
     s16    keyframeIdx_FC;    // Or anim status?? Seems to be used as both.
     s16    relKeyframeIdx_FE; // Unsure.
     q3_12  targetHeadingAngle_100;
-    s16    field_102;
+    s16    field_102; // SFX ID?
     q19_12 relAnimTime_104;
-    s8     unk_108[8];
+    u16    field_108;
+    u8     field_10A;
+    s8     unk_10B[5];
     q19_12 health_110;
-    s8     unk_114[2];
+    q3_12  angle_114;
     q4_12  timer_116;
 } s_PropertiesStalker;
 

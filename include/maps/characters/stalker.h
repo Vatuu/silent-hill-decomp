@@ -14,11 +14,12 @@ typedef enum _StalkerFlags
     StalkerFlag_6            = 1 << 6,
     StalkerFlag_7            = 1 << 7,
     StalkerFlag_8            = 1 << 8,
-
+    StalkerFlag_9            = 1 << 9,
     StalkerFlag_10           = 1 << 10,
     StalkerFlag_11           = 1 << 11,
     StalkerFlag_WarpRotation = 1 << 12, /** Warps to target heading angle. */
-    StalkerFlag_13           = 1 << 13
+    StalkerFlag_13           = 1 << 13,
+    StalkerFlag_14           = 1 << 14
 } s_StalkerFlags;
 
 /** @brief Stalker character animation indices. */

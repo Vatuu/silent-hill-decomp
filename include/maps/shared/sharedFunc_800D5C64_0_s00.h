@@ -88,7 +88,7 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
     {
         cond = func_8006FD90(stalker, 0, Q12(7.5f), Q12(0.0f));
     }
-    else if (flags == 2)
+    else if (flags == (1 << 1))
     {
         cond = func_8006FD90(stalker, 0, BASE_DIST_MAX, Q12(0.0f));
     }
