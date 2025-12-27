@@ -1,6 +1,6 @@
-// Seems like this function is intended to be called repeatedly, swapping between states
-// Might be called many times in a single logic update, or over multiple updates
-// Very similar to `sharedFunc_800D23EC_0_s00`, but that func is for player chara.
+// Seems like this function is intended to be called repeatedly, swapping between states.
+// Might be called many times in a single logic update or over multiple updates.
+// Very similar to `sharedFunc_800D23EC_0_s00`, but that func is for the player.
 bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, s32 angleIn, s32 arg4)
 {
     #define ANGLE_THRESHOLD (FP_ANGLE(360.0) >> 6) // 360 / 64 = 5.625 degrees.

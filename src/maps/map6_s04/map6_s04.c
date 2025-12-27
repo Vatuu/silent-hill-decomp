@@ -4,6 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map6/map6_s04.h"
+#include "maps/characters/larval_stalker.h"
 #include "maps/characters/stalker.h"
 
 INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04", D_800C9578);

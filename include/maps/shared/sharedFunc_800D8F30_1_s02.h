@@ -110,7 +110,7 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creeper)
         g_SysWork.field_2284[3]                     &= ~(1 << 1);
         creeper->model_0.state_2                     = 2;
         creeper->properties_E4.creeper.timer_F0      = Q12(0.0f);
-        creeper->properties_E4.creeper.rotationY_108 = func_8006FAFC(creeper, Q12(4.8f), PLAYER_POS.vx, PLAYER_POS.vz, FP_ANGLE(360.0f), false);
+        creeper->properties_E4.creeper.rotationY_108 = Chara_HeadingAngleGet(creeper, Q12(4.8f), PLAYER_POS.vx, PLAYER_POS.vz, FP_ANGLE(360.0f), false);
         creeper->field_44.field_0                    = 0;
     }
 }

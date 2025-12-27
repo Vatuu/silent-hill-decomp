@@ -12,7 +12,7 @@ void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse)
 
     // @note Did they forget to make it an if?
     Rng_Rand16();
-    localNurse->properties_E4.puppetNurse.field_11C = func_8006FAFC(nurse,
+    localNurse->properties_E4.puppetNurse.field_11C = Chara_HeadingAngleGet(nurse,
                                                                     Q12(1.0f),
                                                                     g_SysWork.playerWork_4C.player_0.position_18.vx,
                                                                     g_SysWork.playerWork_4C.player_0.position_18.vz,

@@ -4,7 +4,7 @@ void sharedFunc_800CF7F4_3_s03(s_SubCharacter* chara)
 
     if ((Rng_Rand16() & Q8_CLAMPED(1.0f)) >= Q8(0.5f))
     {
-        chara->properties_E4.dummy.properties_E8[13].val16[0] = func_8006FAFC(chara,
+        chara->properties_E4.dummy.properties_E8[13].val16[0] = Chara_HeadingAngleGet(chara,
                                                                                       Q12(1.0f),
                                                                                       g_SysWork.playerWork_4C.player_0.position_18.vx,
                                                                                       g_SysWork.playerWork_4C.player_0.position_18.vz,

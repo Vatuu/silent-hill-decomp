@@ -57,7 +57,7 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
     {
         tmp = Q12(1.5f);
         temp_s0 = localNurse->properties_E4.puppetNurse.field_108 + ((Rng_Rand16() % Q12(3.0f)) - tmp);
-        localNurse->properties_E4.puppetNurse.field_11C = func_8006FAFC(nurse,
+        localNurse->properties_E4.puppetNurse.field_11C = Chara_HeadingAngleGet(nurse,
                                                                         Q12(1.0f),
                                                                         temp_s0,
                                                                         localNurse->properties_E4.puppetNurse.field_10C + ((Rng_Rand16() % Q12(3.0f)) - tmp),

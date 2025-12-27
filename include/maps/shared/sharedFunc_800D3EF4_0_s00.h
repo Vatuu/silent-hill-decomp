@@ -159,7 +159,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker)
         // Set target heading angle.
         if (stalker->properties_E4.stalker.timer_F8 == Q12(0.0f))
         {
-            stalker->properties_E4.stalker.targetHeadingAngle_100 = func_8006FAFC(stalker,
+            stalker->properties_E4.stalker.targetHeadingAngle_100 = Chara_HeadingAngleGet(stalker,
                                                                                   Q12(2.0f),
                                                                                   g_SysWork.playerWork_4C.player_0.position_18.vx,
                                                                                   g_SysWork.playerWork_4C.player_0.position_18.vz,

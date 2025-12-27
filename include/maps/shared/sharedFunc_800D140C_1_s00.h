@@ -35,7 +35,7 @@ void sharedFunc_800D140C_1_s00(s_SubCharacter* chara, GsCOORDINATE2* coords)
     {
         if (sp18.offset_0.vx == 0 && sp18.offset_0.vz == 0)
         {
-            dummyProps.properties_E8[8].val16[0]  = func_8006FAFC(chara,
+            dummyProps.properties_E8[8].val16[0]  = Chara_HeadingAngleGet(chara,
                                                                           Q12(1.0f),
                                                                           dummyProps.properties_E8[4].val32,
                                                                           dummyProps.properties_E8[5].val32,

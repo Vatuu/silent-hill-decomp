@@ -95,7 +95,7 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creeper)
                 creeper->properties_E4.creeper.flags_E8 &= ~CreeperFlag_0;
             }
 
-            creeper->properties_E4.creeper.rotationY_108 = func_8006FAFC(creeper,
+            creeper->properties_E4.creeper.rotationY_108 = Chara_HeadingAngleGet(creeper,
                                                                          Q12(1.2f),
                                                                          creeper->properties_E4.creeper.playerPositionX_F4,
                                                                          creeper->properties_E4.creeper.playerPositionZ_F8,

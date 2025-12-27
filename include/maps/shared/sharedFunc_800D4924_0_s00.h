@@ -214,7 +214,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker)
 
         if (stalker->properties_E4.stalker.timer_F8 == Q12(0.0f))
         {
-            stalker->properties_E4.stalker.targetHeadingAngle_100 = func_8006FAFC(stalker,
+            stalker->properties_E4.stalker.targetHeadingAngle_100 = Chara_HeadingAngleGet(stalker,
                                                                                   Q12(2.5f),
                                                                                   stalker->properties_E4.stalker.targetPositionX_F0,
                                                                                   stalker->properties_E4.stalker.targetPositionZ_F4,

@@ -2182,10 +2182,13 @@ void sharedFunc_800D8904_0_s00(s_SubCharacter* player, q19_12 afkTime);
 
 void sharedFunc_800D891C_0_s00(s_SubCharacter* player);
 
+/** Locks a character's animation. */
 void sharedFunc_800D8928_0_s00(s_SubCharacter* chara);
 
+/** Unlocked flag getter. */
 s32 sharedFunc_800D893C_0_s00(s_SubCharacter* chara);
 
+/** Unlocks a character's animation. */
 void sharedFunc_800D8950_0_s00(s_SubCharacter* chara);
 
 bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In, s32 angleIn, s32 arg4);
@@ -2233,7 +2236,7 @@ bool sharedFunc_800CBA38_1_s01(s32 idx);
 bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx);
 
 // MAP1_S00 LarvalStalker funcs
-void Ai_LarvalStalker_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void sharedFunc_800CF168_1_s00(s_SubCharacter*);
 
@@ -2241,9 +2244,9 @@ void sharedFunc_800D140C_1_s00(s_SubCharacter*, GsCOORDINATE2*);
 
 void sharedFunc_800D1524_1_s00(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
-void Ai_LarvalStalker_Init(s_SubCharacter* chara);
+void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker);
 
-void sharedFunc_800D17BC_1_s00(s_SubCharacter*);
+void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker);
 
 void sharedFunc_800D1DBC_1_s00(s_SubCharacter*);
 

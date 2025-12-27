@@ -32,7 +32,6 @@
     larvalStalkerProps.angle_100 = FP_FROM(temp * Math_Sin(chara->rotation_24.vy), Q12_SHIFT);                                           \
     larvalStalkerProps.angle_102 = FP_FROM(temp * Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
 
-#define Chara_MovementAngleGet func_8006FAFC
 void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
 {
     s32     temp;
@@ -52,8 +51,8 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
     angle0 = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
                                    g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                            chara->rotation_24.vy);
-    mag0 = Math_Vector2MagCalc(larvalStalkerProps.targetX - chara->position_18.vx,
-                                larvalStalkerProps.targetZ - chara->position_18.vz);
+    mag0 = Math_Vector2MagCalc(larvalStalkerProps.targetPositionX - chara->position_18.vx,
+                                larvalStalkerProps.targetPositionZ - chara->position_18.vz);
     chara->rotation_24.vy = func_8005BF38(chara->rotation_24.vy);
 
     if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) != 1)
@@ -81,8 +80,8 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
     if (Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
                             g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) < ((baseDistMax * 2) + distStep))
     {
-        larvalStalkerProps.targetX = g_SysWork.playerWork_4C.player_0.position_18.vx;
-        larvalStalkerProps.targetZ = g_SysWork.playerWork_4C.player_0.position_18.vz;
+        larvalStalkerProps.targetPositionX = g_SysWork.playerWork_4C.player_0.position_18.vx;
+        larvalStalkerProps.targetPositionZ = g_SysWork.playerWork_4C.player_0.position_18.vz;
     }
 
     switch (chara->model_0.state_2)
@@ -193,9 +192,9 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                 {
                     if (!Rng_GenerateInt(0, 7))
                     {
-                        targetX = larvalStalkerProps.targetX + Rng_GenerateInt(0, Q12(1.5f) - 1);
-                        targetZ = larvalStalkerProps.targetZ + Rng_GenerateInt(0, Q12(1.5f) - 1);
-                        larvalStalkerProps.angle_108 = Chara_MovementAngleGet(chara, Q12(2.0f), targetX, targetZ, Q12(1.0f), true);
+                        targetX = larvalStalkerProps.targetPositionX + Rng_GenerateInt(0, Q12(1.5f) - 1);
+                        targetZ = larvalStalkerProps.targetPositionZ + Rng_GenerateInt(0, Q12(1.5f) - 1);
+                        larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(chara, Q12(2.0f), targetX, targetZ, Q12(1.0f), true);
                         ANGLE_STUFF(func_8005BF38(larvalStalkerProps.angle_108 - chara->rotation_24.vy), FP_ANGLE(1.5f), FP_ANGLE(30.0f));
                     } 
                     else
@@ -209,7 +208,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
                 {
                     if (!Rng_GenerateInt(0, 31))
                     {
-                        larvalStalkerProps.angle_108 = Chara_MovementAngleGet(chara, Q12(2.0f), larvalStalkerProps.targetX, larvalStalkerProps.targetZ, Q12(1.0f), true);
+                        larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(chara, Q12(2.0f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), true);
                     }
 
                     ANGLE_STUFF(func_8005BF38(larvalStalkerProps.angle_108 - chara->rotation_24.vy), FP_ANGLE(1.5f), FP_ANGLE(30.0f));
@@ -364,7 +363,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
 
             if (larvalStalkerProps.timer_EC == Q12(0.0f)) 
             {
-                larvalStalkerProps.angle_108 = Chara_MovementAngleGet(chara, Q12(2.0f), larvalStalkerProps.targetX, larvalStalkerProps.targetZ, Q12(1.0f), false);
+                larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(chara, Q12(2.0f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), false);
                 if (larvalStalkerProps.angle_108 == Q12(1.0f)) 
                 {
                     larvalStalkerProps.angle_108 = Rng_TestProbabilityBits(12);
@@ -484,7 +483,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
 
             if (larvalStalkerProps.timer_EC == Q12(0.0f))
             {
-                larvalStalkerProps.angle_108 = Chara_MovementAngleGet(chara, Q12(1.5f), larvalStalkerProps.targetX, larvalStalkerProps.targetZ, Q12(1.0f), false);
+                larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(chara, Q12(1.5f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), false);
                 if (larvalStalkerProps.angle_108 == Q12(1.0f))
                 {
                     larvalStalkerProps.angle_108 = Rng_Rand16() & 0xFFF;
@@ -621,7 +620,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* chara)
 
             if (larvalStalkerProps.timer_EC == Q12(0.0f))
             {
-                larvalStalkerProps.angle_108 = Chara_MovementAngleGet(chara, FP_ANGLE(180.0f), larvalStalkerProps.targetX, larvalStalkerProps.targetZ, Q12(1.0f), false);
+                larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(chara, FP_ANGLE(180.0f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), false);
             }
 
             larvalStalkerProps.timer_EC += g_DeltaTime0;

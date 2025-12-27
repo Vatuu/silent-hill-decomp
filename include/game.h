@@ -1380,7 +1380,7 @@ STATIC_ASSERT_SIZEOF(s_PropertiesDahlia, 64);
 /** @brief Hanged Scratcher character properties. */
 typedef struct _PropertiesHangedScratcher
 {
-    s16    flags_E8;
+    s16    flags_E8; /** `e_HangedScratcherFlags` */
     q3_12  field_EA;
     s8     unk_EC[8];
     q19_12 positionX_F4;
@@ -1393,15 +1393,15 @@ typedef struct _PropertiesHangedScratcher
 /** @brief Larval Stalker character properties. */
 typedef struct _PropertiesLarvalStalker
 {
-    u16        flags_E8;
+    u16        flags_E8; /** `e_LarvalStalkerFlags` */
     u8         field_EA;
     u8         unk_EB;
     q19_12     timer_EC;
     u32        field_F0;
     q4_12      timer_F4;
     u16        unk_F8;
-    q19_12     targetX;
-    q19_12     targetZ;
+    q19_12     targetPositionX;
+    q19_12     targetPositionZ;
     q3_12      angle_100;
     q3_12      angle_102;
     q19_12     animTime_104;
@@ -1440,7 +1440,7 @@ STATIC_ASSERT_SIZEOF(s_PropertiesPuppetNurse, 64);
 /** @brief Split Head character properties. */
 typedef struct _PropertiesSplitHead
 {
-    u16        flags_E8;
+    u16        flags_E8; /** `e_SplitHeadFlags` */
     u8         field_EA;
     s8         unk_EB;
     u_Property field_EC;
@@ -1464,7 +1464,7 @@ STATIC_ASSERT_SIZEOF(s_PropertiesSplitHead, 64);
 /** @brief Stalker character properties. */
 typedef struct _PropertiesStalker
 {
-    s16    flags_E8;
+    s16    flags_E8; /** `e_StalkerFlags` */
     s8     unk_EA[2]; // Padding?
     q3_12  offset_EC;
     q3_12  offset_EE;
