@@ -1478,11 +1478,12 @@ typedef struct _PropertiesStalker
     q19_12 targetPositionX_F0;
     q19_12 targetPositionZ_F4;
     q19_12 timer_F8;
-    s16    keyframeIdx_FC;
-    s16    field_FE;
+    s16    keyframeIdx_FC;    // Or anim status?? Seems to be used as both.
+    s16    relKeyframeIdx_FE; // Unsure.
     q3_12  targetHeadingAngle_100;
     s16    field_102;
-    s8     unk_104[12];
+    q19_12 relAnimTime_104;
+    s8     unk_108[8];
     q19_12 health_110;
     s8     unk_114[2];
     q4_12  timer_116;

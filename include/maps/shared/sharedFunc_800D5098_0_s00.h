@@ -1,44 +1,41 @@
 void sharedFunc_800D5098_0_s00(s_SubCharacter* stalker)
 {
-    s16 temp_3;
-    s32 temp_s5;
-    s32 temp_v1;
-    s32 temp_v1_2;
-    s32 newMoveSpeed0;
-    s32 i;
-    s32 var_v1;
+    #define DIST_TO_PLAYER_MAX Q12(0.9f)
+    #define MOVE_SPEED_MAX     Q12(0.7f)
 
-    #define SPEED_0_9 Q12(0.9f)
-    #define SPEED_0_7 Q12(0.7f)
+    q3_12  angleDeltaToPlayer;
+    q19_12 distToPlayer;
+    q19_12 angle1;
+    q19_12 newMoveSpeed0;
+    s32    i;
+    q19_12 newMoveSpeed1;
 
-    // TODO: `chara->model_0.anim_4.status_0 == ANIM_STATUS(30, false)` doesn't match?
-    if (ANIM_STATUS_IDX_GET(stalker->model_0.anim_4.status_0) == 30)
+    if (ANIM_STATUS_IDX_GET(stalker->model_0.anim_4.status_0) == StalkerAnim_30)
     {
         stalker->model_0.state_2   = 4;
         g_SysWork.field_2284[3] &= ~(1 << 1);
         return;
     }
 
-    temp_v1 = FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT);
-    if (temp_v1 >= 62 && temp_v1 < 65)
+    if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 62, 64))
     {
         stalker->moveSpeed_38 = Q12(0.0f);
     }
-    else if (temp_v1 >= 50 && temp_v1 < 62)
+    else if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 50, 61))
     {
-        temp_s5 = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
-                                      g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz);
+        distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
+                                           g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz);
 
         for (i = 0; i < 6; i++)
         {
-            temp_3    = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
-                                              g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz) -
-                                      stalker->rotation_24.vy));
-            temp_v1_2 = ((g_DeltaTime0 / 3) >> 3) + 1; // @hack `(g_DeltaTime0 / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
-
-            if ((temp_3 >= 0 && temp_v1_2 < temp_3) || (temp_3 < 0 && temp_v1_2 < -temp_3))
+            angleDeltaToPlayer = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
+                                                       g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz) -
+                                               stalker->rotation_24.vy));
+            angle1        = ((g_DeltaTime0 / 3) >> 3) + 1; // @hack `(g_DeltaTime0 / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
+            if ((angleDeltaToPlayer >= FP_ANGLE(0.0f) && angle1 <  angleDeltaToPlayer) ||
+                (angleDeltaToPlayer <  FP_ANGLE(0.0f) && angle1 < -angleDeltaToPlayer))
             {
-                if (temp_3 > 0)
+                if (angleDeltaToPlayer > FP_ANGLE(0.0f))
                 {
                     stalker->rotation_24.vy = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.0833f, Q12_SHIFT) + stalker->rotation_24.vy;
                 }
@@ -49,25 +46,25 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* stalker)
             }
         }
 
-        if (!((u16)stalker->properties_E4.player.afkTimer_E8 & (1 << 13)))
+        if (!(stalker->properties_E4.stalker.flags_E8 & StalkerFlag_13))
         {
-            if (temp_s5 > SPEED_0_9)
+            if (distToPlayer > DIST_TO_PLAYER_MAX)
             {
-                if (stalker->moveSpeed_38 > SPEED_0_7)
+                if (stalker->moveSpeed_38 > MOVE_SPEED_MAX)
                 {
                     newMoveSpeed0 = stalker->moveSpeed_38 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
-                    if (newMoveSpeed0 < SPEED_0_7)
+                    if (newMoveSpeed0 < MOVE_SPEED_MAX)
                     {
-                        newMoveSpeed0 = SPEED_0_7;
+                        newMoveSpeed0 = MOVE_SPEED_MAX;
                     }
                 }
                 else
                 {
-                    newMoveSpeed0 = SPEED_0_7;
-                    var_v1        = stalker->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
-                    if (var_v1 <= SPEED_0_7)
+                    newMoveSpeed0 = MOVE_SPEED_MAX;
+                    newMoveSpeed1 = stalker->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
+                    if (newMoveSpeed1 <= MOVE_SPEED_MAX)
                     {
-                        newMoveSpeed0 = var_v1;
+                        newMoveSpeed0 = newMoveSpeed1;
                     }
                 }
 
@@ -75,23 +72,23 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* stalker)
                 return;
             }
 
-            if (temp_s5 < SPEED_0_7)
+            if (distToPlayer < MOVE_SPEED_MAX)
             {
-                if (stalker->moveSpeed_38 > -SPEED_0_7)
+                if (stalker->moveSpeed_38 > -MOVE_SPEED_MAX)
                 {
                     newMoveSpeed0 = stalker->moveSpeed_38 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
-                    if (newMoveSpeed0 < -SPEED_0_7)
+                    if (newMoveSpeed0 < -MOVE_SPEED_MAX)
                     {
-                        newMoveSpeed0 = -SPEED_0_7;
+                        newMoveSpeed0 = -MOVE_SPEED_MAX;
                     }
                 }
                 else
                 {
-                    newMoveSpeed0 = -SPEED_0_7;
-                    var_v1        = stalker->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
-                    if (var_v1 <= -SPEED_0_7)
+                    newMoveSpeed0 = -MOVE_SPEED_MAX;
+                    newMoveSpeed1 = stalker->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
+                    if (newMoveSpeed1 <= -MOVE_SPEED_MAX)
                     {
-                        newMoveSpeed0 = var_v1;
+                        newMoveSpeed0 = newMoveSpeed1;
                     }
                 }
 

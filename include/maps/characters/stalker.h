@@ -8,7 +8,10 @@ typedef enum _StalkerFlags
     StalkerFlag_0            = 1 << 0,
     StalkerFlag_1            = 1 << 1,
     StalkerFlag_2            = 1 << 2,
-
+    StalkerFlag_3            = 1 << 3,
+    StalkerFlag_4            = 1 << 4,
+    StalkerFlag_5            = 1 << 5,
+    StalkerFlag_6            = 1 << 6,
     StalkerFlag_7            = 1 << 7,
     StalkerFlag_8            = 1 << 8,
 

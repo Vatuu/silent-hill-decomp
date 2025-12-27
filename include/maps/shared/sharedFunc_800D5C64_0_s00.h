@@ -6,14 +6,14 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
     #define BASE_DIST_MAX Q12(8.0f)
 #endif
 
-    q20_12 animFrameIdx;
+    u32    activeKeyframeIdx;
     s32    animDivTmp;
     s32    animDiv;
     s32    step;
     q19_12 animMult;
     s32    frameIdx;
     s32    flags;
-    s32    var;
+    s32    cond;
     q19_12 duration;
 
     stalker->flags_3E &= ~CharaFlag_Unk2;
@@ -24,21 +24,21 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
 
     Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
 
-    animFrameIdx = FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT);
+    activeKeyframeIdx = FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT);
     animDivTmp = 0;
     animMult = Q12(0.0f);
 
-    if (animFrameIdx >= 110 && animFrameIdx < 117)
+    if (activeKeyframeIdx >= 110 && activeKeyframeIdx < 117)
     {
         animMult = Q12(0.3f);
         animDivTmp = 7;
     } 
-    else if (animFrameIdx >= 117 && animFrameIdx < 121)
+    else if (activeKeyframeIdx >= 117 && activeKeyframeIdx < 121)
     {
         animMult = Q12(0.3f);
         animDivTmp = 4;
     }
-    else if (animFrameIdx >= 121 && animFrameIdx < 124)
+    else if (activeKeyframeIdx >= 121 && activeKeyframeIdx < 124)
     {
         animMult = Q12(0.1f);
         animDivTmp = 4;
@@ -76,9 +76,9 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
             stalker->model_0.state_2 = 3;
         }
 
-        stalker->model_0.anim_4.status_0              = ANIM_STATUS(StalkerAnim_30, false);
-        stalker->properties_E4.stalker.keyframeIdx_FC = 55;
-        stalker->properties_E4.stalker.field_FE       = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model_0.anim_4.time_4, 427);
+        stalker->model_0.anim_4.status_0                 = ANIM_STATUS(StalkerAnim_30, false);
+        stalker->properties_E4.stalker.keyframeIdx_FC    = ANIM_STATUS(StalkerAnim_27, true);
+        stalker->properties_E4.stalker.relKeyframeIdx_FE = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model_0.anim_4.time_4, 427);
     }
 
     // @hack `animDiv` has to be used for certain stuff for a match, weird.
@@ -86,19 +86,18 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
     flags = animDiv & 0x3;
     if (flags == 0)
     {
-        var = func_8006FD90(stalker, 0, Q12(7.5f), Q12(0.0f));
+        cond = func_8006FD90(stalker, 0, Q12(7.5f), Q12(0.0f));
     }
     else if (flags == 2)
     {
-        var = func_8006FD90(stalker, 0, BASE_DIST_MAX, Q12(0.0f));
+        cond = func_8006FD90(stalker, 0, BASE_DIST_MAX, Q12(0.0f));
     }
     else
     {
-        var = func_8006FD90(stalker, 1, Q12(0.4f), Q12(0.0f));
-
+        cond = func_8006FD90(stalker, 1, Q12(0.4f), Q12(0.0f));
     }
 
-    if (var || func_80070360(stalker, Q12(0.0f), Q12(1.0f)))
+    if (cond || func_80070360(stalker, Q12(0.0f), Q12(1.0f)))
     {
         stalker->properties_E4.stalker.targetPositionX_F0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
         stalker->properties_E4.stalker.targetPositionZ_F4 = g_SysWork.playerWork_4C.player_0.position_18.vz;
