@@ -26,6 +26,12 @@ extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8]; // 0x800E1410
 extern u8 D_800E14C8;
 extern u16 D_800E14D0[];
 
+extern SVECTOR D_800E1F74;
+extern u16     D_800E1F7C[];
+
+extern VECTOR3 D_800E1F88[];
+extern VECTOR3 D_800E1FC4[];
+
 extern u16 D_800E2000[1]; // g_MapMsgSounds
 extern s_FsImageDesc D_800E2004;
 extern VECTOR3 D_800E200C;
@@ -36,6 +42,12 @@ extern s32 D_800E20E8; // Angle.
 extern s16 D_800E20EC;
 extern u8 D_800E20EE;
 
+extern u16 D_800E20F8;
+extern u16 D_800E20FA;
+extern s16 D_800E20FC;
+extern s16 D_800E20FE;
+extern u8  D_800E2100;
+extern u8  D_800E2101;
 extern u8 D_800E2102; // g_MapMsgSoundIdx
 
 extern s_WorldObjectDesc g_WorldObject5; // 0x800E6130

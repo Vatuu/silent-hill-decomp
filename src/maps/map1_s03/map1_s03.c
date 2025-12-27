@@ -708,11 +708,420 @@ void func_800DABC4(void) // 0x800DABC4
     }
 }
 
-INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBAA4);
+const VECTOR3 D_800CBAA4 = { 0xFFFF5800, 0xFFFFF800, 0xFFFF319A };
 
-INCLUDE_RODATA("asm/maps/map1_s03/nonmatchings/map1_s03", D_800CBAB0);
+const VECTOR3 D_800CBAB0 = { 0xFFFF5CCD, 0x00000000, 0xFFFF2A67 };
 
-INCLUDE_ASM("asm/maps/map1_s03/nonmatchings/map1_s03", func_800DAF18);
+void func_800DAF18(void) // 0x800DAF18
+{
+    VECTOR3       sp28;
+    VECTOR3       sp38;
+    VECTOR3       sp48;
+    MATRIX        sp58;
+    VECTOR        sp78;
+    s32           temp_s0_2;
+    s32           temp_s2;
+    s32           temp_v1_9;
+    s32           i;
+    s32           var_v0;
+    s32           var_v0_2;
+    s32           var_v1;
+    s_PlayerWork* player;
+    s_PlayerWork* player2;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            D_800E20FC = 0;
+            D_800E2100 = 0;
+            Savegame_MapMarkingSet(MapMarkFlag_AltSchoolRF_ValveSign);
+            D_800E2101                  = 0;
+            g_SysWork.field_28          = 0;
+            g_SysWork.sysStateStep_C[1] = 0;
+            g_SysWork.timer_2C          = 0;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[0]++;
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            MapMsg_DisplayAndHandleSelection(true, 0x28, 4, 3, 0, false);
+            break;
+
+        case 3:
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            break;
+
+        case 4:
+            SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
+
+            sharedData_800E30C8_1_s02.field_0[0]  = -0xA333;
+            sharedData_800E30C8_1_s02.field_10[0] = -0x599;
+            sharedData_800E30C8_1_s02.field_18[0] = -0xD599;
+            sharedData_800E30C8_1_s02.field_28[0] = 0x733;
+            sharedData_800E30C8_1_s02.field_30[0] = 1;
+            sharedData_800E30C8_1_s02.field_3C[0] = 0x2E1;
+            sharedData_800E30C8_1_s02.field_44[0] = 0x400;
+            sharedData_800E30C8_1_s02.field_4C[0] = 0x1800;
+            sharedData_800E30C8_1_s02.field_5C[0] = 0x2E1;
+            sharedData_800E30C8_1_s02.field_64[0] = 0x400;
+            sharedData_800E30C8_1_s02.field_6c[0] = 0;
+
+            sharedData_800E30C8_1_s02.field_0[1]  = -0xA400;
+            sharedData_800E30C8_1_s02.field_10[1] = 0x199;
+            sharedData_800E30C8_1_s02.field_18[1] = -0xCFAE;
+            sharedData_800E30C8_1_s02.field_28[1] = 0x4EB8;
+            sharedData_800E30C8_1_s02.field_30[1] = 0;
+            sharedData_800E30C8_1_s02.field_34[1] = 0x800;
+            sharedData_800E30C8_1_s02.field_3C[1] = 0x4CC;
+            sharedData_800E30C8_1_s02.field_44[1] = 0x800;
+            sharedData_800E30C8_1_s02.field_4C[1] = 0x999;
+            sharedData_800E30C8_1_s02.field_5C[1] = 0x4CC;
+            sharedData_800E30C8_1_s02.field_64[1] = 0x800;
+            sharedData_800E30C8_1_s02.field_6c[1] = 0xCCC;
+
+            D_800E3A40[0].vx_0     = -0xA333;
+            D_800E3A40[0].field_8  = 0x1EB;
+            D_800E3A40[0].field_C  = 0x147;
+            D_800E3A40[0].vz_4     = -0xD599;
+            D_800E3A40[0].idx_14   = 2;
+            D_800E3A40[0].field_12 = 0x28;
+            D_800E3A40[0].field_E  = 0x400;
+            D_800E3A40[0].field_10 = 0x4CC;
+
+            D_800E3A40[1].vx_0     = -0xA400;
+            D_800E3A40[1].vz_4     = -0x11B85;
+            D_800E3A40[1].field_C  = 0xCC;
+            D_800E3A40[1].field_12 = 0x28;
+
+            if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
+            {
+                sharedData_800E30C8_1_s02.field_0[2]  = -0xA199;
+                sharedData_800E30C8_1_s02.field_10[2] = 0x214;
+                sharedData_800E30C8_1_s02.field_28[2] = 0x6D1E;
+                sharedData_800E30C8_1_s02.field_34[2] = 0xC00;
+                sharedData_800E30C8_1_s02.field_74    = 0x96;
+                sharedData_800E30C8_1_s02.field_18[2] = -0x11C00;
+                sharedData_800E30C8_1_s02.field_30[2] = 0;
+                sharedData_800E30C8_1_s02.field_3C[2] = 0x4CC;
+                sharedData_800E30C8_1_s02.field_44[2] = 0x800;
+                sharedData_800E30C8_1_s02.field_4C[2] = 0x999;
+                sharedData_800E30C8_1_s02.field_5C[2] = 0x4CC;
+                sharedData_800E30C8_1_s02.field_64[2] = 0x800;
+                sharedData_800E30C8_1_s02.field_6c[2] = 0xCCC;
+                sharedData_800E30C8_1_s02.field_78    = 3;
+
+                D_800E3A40[1].field_8  = 0x385;
+                D_800E3A40[1].idx_14   = 4;
+                D_800E3A40[1].field_A  = 0;
+                D_800E3A40[1].field_E  = 0x333;
+                D_800E3A40[1].field_10 = 0x599;
+                D_800E3A40[2].field_C  = 0xF5;
+                D_800E3A40[2].vx_0     = -0x10DC2;
+                D_800E3A40[2].vz_4     = -0x11C00;
+                D_800E3A40[2].field_8  = 0x333;
+                D_800E3A40[2].idx_14   = 3;
+                D_800E3A40[2].field_12 = 0x3C;
+                D_800E3A40[2].field_E  = 0x333;
+                D_800E3A40[2].field_10 = 0x333;
+            }
+            else
+            {
+                sharedData_800E30C8_1_s02.field_74 = 0x50;
+                sharedData_800E30C8_1_s02.field_78 = 2;
+                D_800E3A40[1].field_8              = 0x333;
+                D_800E3A40[1].idx_14               = 3;
+                D_800E3A40[1].field_E              = 0x266;
+                D_800E3A40[1].field_10             = 0x333;
+            }
+
+            sharedData_800E30C8_1_s02.field_28[sharedData_800E30C8_1_s02.field_78] = 0x800;
+            sharedData_800E30C8_1_s02.field_10[sharedData_800E30C8_1_s02.field_78] = 0x28F;
+            sharedData_800E30C8_1_s02.field_3C[sharedData_800E30C8_1_s02.field_78] = 0x199;
+            sharedData_800E30C8_1_s02.field_5C[sharedData_800E30C8_1_s02.field_78] = 0x1EB;
+            sharedData_800E30C8_1_s02.field_64[sharedData_800E30C8_1_s02.field_78] = 0x4CC;
+
+            g_SysWork.playerWork_4C.player_0.position_18.vx = -0xB733;
+            g_SysWork.playerWork_4C.player_0.position_18.vz = -0xCF33;
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = 0x400;
+
+            func_8003D03C();
+            sharedFunc_800D2EB4_0_s00();
+            Camera_PositionSet(NULL, -0xC614, -0x1333, -0xE11E, 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, -0x93D7, -0xC28, -0xBA14, 0, 0, 0, 0, true);
+
+            g_SysWork.field_28          = 0;
+            g_SysWork.sysStateStep_C[1] = 0;
+            g_SysWork.timer_2C          = 0;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[0]++;
+
+        case 5:
+            SysWork_StateStepIncrementDelayed(0x1800, false);
+            break;
+
+        case 6:
+            D_800E20FE                  = 0;
+            g_SysWork.field_28          = 0;
+            g_SysWork.sysStateStep_C[1] = 0;
+            g_SysWork.timer_2C          = 0;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[0]++;
+
+        case 7:
+            D_800E20FE++;
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 0x6B);
+            break;
+
+        case 8:
+            sharedFunc_800CBC98_1_s02();
+            func_800CE0CC(0);
+            func_800CE0CC(1);
+
+            if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
+            {
+                func_800CE0CC(2);
+            }
+
+            player                                   = &g_SysWork.playerWork_4C;
+            player->player_0.model_0.anim_4.flags_2 &= 0xFFFD;
+
+            func_8008D438();
+            Camera_PositionSet(NULL, D_800E1F88[0].vx, D_800E1F88[0].vy, D_800E1F88[0].vz, 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, D_800E1FC4[0].vx, D_800E1FC4[0].vy, D_800E1FC4[0].vz, 0, 0, 0, 0, true);
+
+            D_800E20FA                  = 0;
+            g_SysWork.field_28          = 0;
+            g_SysWork.sysStateStep_C[1] = 0;
+            g_SysWork.timer_2C          = 0;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[0]++;
+
+        case 9:
+            D_800E20FA += g_DeltaTime0;
+
+            for (i = 1; i < 6; i++)
+            {
+                if (D_800E20FA < D_800E1F7C[i])
+                {
+                    break;
+                }
+            }
+
+            if (i == 6 || (!Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall) && i > 3))
+            {
+                g_SysWork.field_28          = 0;
+                g_SysWork.sysStateStep_C[1] = 0;
+                g_SysWork.timer_2C          = 0;
+                g_SysWork.sysStateStep_C[2] = 0;
+                g_SysWork.sysStateStep_C[0]++;
+            }
+            else
+            {
+                var_v1 = i >> 1;
+
+                if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
+                {
+                    var_v1 += 2;
+                }
+
+                if (i & 1)
+                {
+                    sp28.vx = D_800E1F88[var_v1].vx;
+                    sp28.vy = D_800E1F88[var_v1].vy;
+                    sp28.vz = D_800E1F88[var_v1].vz;
+
+                    sp38.vx = D_800E1FC4[var_v1].vx;
+                    sp38.vy = D_800E1FC4[var_v1].vy;
+                    sp38.vz = D_800E1FC4[var_v1].vz;
+                }
+                else
+                {
+                    sp28.vx = D_800E1F88[var_v1 - 1].vx + (((D_800E1F88[var_v1].vx - D_800E1F88[var_v1 - 1].vx) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    sp28.vy = D_800E1F88[var_v1 - 1].vy + (((D_800E1F88[var_v1].vy - D_800E1F88[var_v1 - 1].vy) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    sp28.vz = D_800E1F88[var_v1 - 1].vz + (((D_800E1F88[var_v1].vz - D_800E1F88[var_v1 - 1].vz) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+
+                    sp38.vx = D_800E1FC4[var_v1 - 1].vx + (((D_800E1FC4[var_v1].vx - D_800E1FC4[var_v1 - 1].vx) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    sp38.vy = D_800E1FC4[var_v1 - 1].vy + (((D_800E1FC4[var_v1].vy - D_800E1FC4[var_v1 - 1].vy) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                    sp38.vz = D_800E1FC4[var_v1 - 1].vz + (((D_800E1FC4[var_v1].vz - D_800E1FC4[var_v1 - 1].vz) * (D_800E20FA - D_800E1F7C[i - 1])) / (D_800E1F7C[i] - D_800E1F7C[i - 1]));
+                }
+
+                Camera_PositionSet(&sp28, 0, 0, 0, 0, 0, 0, 0, true);
+                Camera_LookAtSet(&sp38, 0, 0, 0, 0, 0, 0, 0, true);
+
+                g_SysWork.field_236C               = NULL;
+                g_SysWork.cutsceneLightRot_2370.vx = -ratan2(sp38.vy - sp28.vy,
+                                                             SquareRoot0(SQUARE((sp38.vx - sp28.vx) >> 6) + SQUARE((sp38.vz - sp28.vz) >> 6)) << 6);
+
+                g_SysWork.cutsceneLightRot_2370.vy = ratan2(sp38.vx - sp28.vx, sp38.vz - sp28.vz);
+                g_SysWork.cutsceneLightRot_2370.vz = 0;
+                g_SysWork.field_235C               = NULL;
+                g_SysWork.cutsceneLightPos_2360.vx = sp28.vx;
+                g_SysWork.cutsceneLightPos_2360.vy = MAX(-0x1800, sp28.vy);
+                g_SysWork.cutsceneLightPos_2360.vz = sp28.vz;
+            }
+            break;
+
+        case 10:
+            if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
+            {
+                g_SysWork.field_28          = 0;
+                g_SysWork.sysStateStep_C[1] = 0;
+                g_SysWork.timer_2C          = 0;
+                g_SysWork.sysStateStep_C[2] = 0;
+                g_SysWork.sysStateStep_C[0]++;
+            }
+            else
+            {
+                MapMsg_DisplayAndHandleSelection(false, 0x29, false, false, 0, false);
+            }
+            break;
+
+        case 11:
+            player2                                   = &g_SysWork.playerWork_4C;
+            player2->player_0.model_0.anim_4.flags_2 |= 2;
+            func_8008D448();
+            func_8003EBA0();
+            Camera_PositionSet(NULL, -0xC614, -0x1333, -0xE11E, 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, -0x93D7, -0xC28, -0xBA14, 0, 0, 0, 0, true);
+            sharedFunc_800CBD58_1_s02();
+
+            if (Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
+            {
+                Savegame_EventFlagSet(EventFlag_M1S03_KeyDownTheDrain);
+            }
+
+            D_800E2101                  = 0;
+            D_800E20FE                  = 0;
+            g_SysWork.field_28          = 0;
+            g_SysWork.sysStateStep_C[1] = 0;
+            g_SysWork.timer_2C          = 0;
+            g_SysWork.sysStateStep_C[2] = 0;
+            g_SysWork.sysStateStep_C[0]++;
+
+        case 12:
+            D_800E20FE++;
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 0x6C);
+            break;
+
+        default:
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+            vcReturnPreAutoCamWork(true);
+            sharedFunc_800D2EF4_0_s00();
+            break;
+    }
+
+    if (g_SysWork.sysStateStep_C[0] == 7 || g_SysWork.sysStateStep_C[0] == 0xC)
+    {
+        Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords_890[10], &sp58);
+
+        gte_SetRotMatrix(&sp58);
+        gte_SetTransMatrix(&sp58);
+        gte_ldv0(&D_800E1F74);
+        gte_rt();
+        gte_stlvnl(&sp78);
+
+        temp_s2 = ratan2((sp78.vy * 0x10) + 0xB33, (sp78.vz * 0x10) + 0xCEB8);
+        if (D_800E20FE > 2)
+        {
+            var_v0 = FP_FROM(g_SysWork.playerWork_4C.player_0.model_0.anim_4.time_4, Q12_SHIFT) - Player_AnimGetSomething();
+        }
+        else
+        {
+            var_v0 = 0;
+        }
+
+        if (var_v0 >= 6 && var_v0 < 0x25)
+        {
+            if ((g_SysWork.sysStateStep_C[0] == 7 && func_8005BF38(D_800E20F8 - temp_s2) < 0) ||
+                (g_SysWork.sysStateStep_C[0] == 12 && func_8005BF38(D_800E20F8 - temp_s2) > 0))
+            {
+                if (D_800E2101 == 0)
+                {
+                    func_8005DC1C(0x5B7, &D_800CBAA4, 0x80, 0);
+                    D_800E2101++;
+                }
+                else if (!(D_800E2101 & 1) && D_800E2101 < 8)
+                {
+                    func_8005DC1C(0x5B6, &D_800CBAA4, 0x80, 0);
+
+                    if (D_800E2101 == 2)
+                    {
+                        if (g_SysWork.sysStateStep_C[0] == 0xC)
+                        {
+                            Sd_SfxStop(0x5B9);
+                            D_800E2100 = 0;
+                        }
+                        else if (g_SysWork.sysStateStep_C[0] == 7)
+                        {
+                            SD_Call(0x5B9);
+                            D_800E2100 = 1;
+                        }
+                    }
+                    D_800E2101++;
+                }
+
+                g_WorldObject5.rotation_28.vx += func_8005BF38(D_800E20F8 - temp_s2);
+
+                if (D_800E2100 != 0)
+                {
+                    D_800E20FC -= func_8005BF38(D_800E20F8 - temp_s2);
+
+                    if (D_800E20FC < 0)
+                    {
+                        D_800E20FC = 0;
+                    }
+
+                    if (D_800E20FC > 0xFF0)
+                    {
+                        D_800E20FC = 0xFF0;
+                    }
+                }
+            }
+            else if (D_800E2101 & 1)
+            {
+                D_800E2101++;
+            }
+        }
+        D_800E20F8 = temp_s2;
+    }
+
+    if (D_800E2100 != 0)
+    {
+        temp_s0_2 = Sound_StereoBalanceGet(&D_800CBAB0) >> 1;
+        vwGetViewPosition(&sp48);
+
+        temp_v1_9 = Math_Vector3MagCalc((((g_SysWork.playerWork_4C.player_0.position_18.vx + sp48.vx) >> 1) + 0xA333),
+                                        ((g_SysWork.playerWork_4C.player_0.position_18.vy + sp48.vy) >> 1),
+                                        (((g_SysWork.playerWork_4C.player_0.position_18.vz + sp48.vz) >> 1) + 0xD599));
+
+        if (temp_v1_9 < 0x1000)
+        {
+            var_v0_2 = D_800E20FC;
+        }
+        else
+        {
+            var_v0_2 = temp_v1_9;
+            if (var_v0_2 > 0x11000)
+            {
+                var_v0_2 = 0;
+            }
+            else
+            {
+                var_v0_2 = FP_MULTIPLY_PRECISE(D_800E20FC, 0x1000 - (FP_TO(var_v0_2 - 0x1000, Q12_SHIFT) / 0x10000), Q12_SHIFT);
+            }
+        }
+
+        var_v0_2 = ~(var_v0_2 >> 4);
+        Sd_SfxAttributesUpdate(0x5B9, temp_s0_2, var_v0_2, 0);
+    }
+}
 
 void func_800DBEC8(void) // 0x800DBEC8
 {
