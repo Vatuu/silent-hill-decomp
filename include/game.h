@@ -56,13 +56,6 @@ struct _Model;
 #define SCREEN_POSITION_Y(percent) \
     (s32)(SCREEN_HEIGHT * ((percent) / 100.0f))
 
-// TODO: Not correct. Should use unions instead.
-/** @brief Accessors for low and high parts of each character property, returns a pointer which can be read or written to. */
-#define GET_PROPERTY_LOW(prop) \
-    ((u16*)&(prop))
-#define GET_PROPERTY_HIGH(prop) \
-    ((u16*)&(prop) + 1)
-
 /** @brief Checks if a specified map has been collected. */
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
@@ -1472,7 +1465,7 @@ STATIC_ASSERT_SIZEOF(s_PropertiesSplitHead, 64);
 typedef struct _PropertiesStalker
 {
     s16    flags_E8;
-    s8     unk_EA[2];
+    s8     unk_EA[2]; // Padding?
     q3_12  offset_EC;
     q3_12  offset_EE;
     q19_12 targetPositionX_F0;
@@ -1481,11 +1474,11 @@ typedef struct _PropertiesStalker
     s16    keyframeIdx_FC;    // Or anim status?? Seems to be used as both.
     s16    relKeyframeIdx_FE; // Unsure.
     q3_12  targetHeadingAngle_100;
-    s16    field_102; // SFX ID?
+    s16    sfxId_102;
     q19_12 relAnimTime_104;
-    u16    field_108;
+    q4_12  timer_108;
     u8     field_10A;
-    s8     unk_10B[5];
+    s8     unk_10B[5]; // Padding?
     q19_12 health_110;
     q3_12  angle_114;
     q4_12  timer_116;

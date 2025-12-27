@@ -76,10 +76,10 @@ typedef enum _SfxId
     Sfx_Unk1360 = 1360,
     Sfx_Unk1361 = 1361,
 
-    Sfx_Unk1363 = 1363,
-    Sfx_Unk1364 = 1364,
-    Sfx_Unk1365 = 1365,
-    Sfx_Unk1366 = 1366,
+    Sfx_Unk1363 = 1363, // } Stalker sounds.
+    Sfx_Unk1364 = 1364, // }
+    Sfx_Unk1365 = 1365, // }
+    Sfx_Unk1366 = 1366, // }
 
     Sfx_Unk1368 = 1368,
     Sfx_Unk1369 = 1369,
