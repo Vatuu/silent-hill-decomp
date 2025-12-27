@@ -68,6 +68,7 @@ sharedFunc_800CF990_1_s05 = 0x800CF990; // type:func
 Ai_SplitHead_DamageTake   = 0x800CFE94; // type:func
 sharedFunc_800D0054_1_s05 = 0x800D0054; // type:func
 sharedFunc_800D00D0_1_s05 = 0x800D00D0; // type:func
+sharedFunc_800D0948_1_s05 = 0x800D0948; // type:func
 sharedFunc_800D17BC_1_s05 = 0x800D17BC; // type:func
 sharedFunc_800D2214_1_s05 = 0x800D2214; // type:func
 sharedFunc_800D2444_1_s05 = 0x800D2444; // type:func

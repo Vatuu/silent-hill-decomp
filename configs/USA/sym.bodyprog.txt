@@ -675,6 +675,7 @@ Map_EffectTexturesLoad                      = 0x8005E0DC; // type:func
 GameState_MapScreen_Update                  = 0x80066EB0; // type:func
 IpdCollData_FixOffsets                      = 0x8006993C; // type:func
 Collision_Get                               = 0x800699F8; // type:func
+Chara_HeadingAngleGet                       = 0x8006FAFC; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, bodyprog_800706E4
@@ -716,7 +717,6 @@ Collision_Fill                              = 0x8008076C; // type:func
 Collision_GroundHeightGet                   = 0x80080884; // type:func
 Math_MulFixed                               = 0x800808D4; // type:func
 Math_MagnitudeShiftGet                      = 0x800808F8; // type:func
-Chara_HeadingAngleGet = 0x8006FAFC; // type:func
 
 //---------------------------------------------------------------
 //--- PA: 0x05BDE0   VA: 0x80080940   subsegment: c, view/vc_main
