@@ -76,6 +76,7 @@ Ai_SplitHead_DamageTake   = 0x800D0948; // type:func
 sharedFunc_800D0054_1_s05 = 0x800D0B08; // type:func
 sharedFunc_800D00D0_1_s05 = 0x800D0B84; // type:func
 sharedFunc_800D0948_1_s05 = 0x800D13FC; // type:func
+sharedFunc_800D11A0_1_s05 = 0x800D1C54; // type:func
 sharedFunc_800D17BC_1_s05 = 0x800D2270; // type:func
 sharedFunc_800D2214_1_s05 = 0x800D2CC8; // type:func
 sharedFunc_800D2444_1_s05 = 0x800D2EF8; // type:func
@@ -120,6 +121,7 @@ sharedData_800D5880_1_s05 = 0x800D6E2E; // type:s16
 sharedData_800D5884_1_s05 = 0x800D6E30; // type:s32
 SPLIT_HEAD_ANIM_INFOS     = 0x800D6E34; // type:s32 unknown type
 sharedData_800D5A68_1_s05 = 0x800D7014;
+sharedData_800D5A8C_1_s05 = 0x800D7038;
 MAP_ROOM_IDXS             = 0x800D71B0; // type:u8
 MAP_POINTS                = 0x800D7200; // type:MapPoint2d
 

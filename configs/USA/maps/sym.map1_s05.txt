@@ -69,6 +69,7 @@ Ai_SplitHead_DamageTake   = 0x800CFE94; // type:func
 sharedFunc_800D0054_1_s05 = 0x800D0054; // type:func
 sharedFunc_800D00D0_1_s05 = 0x800D00D0; // type:func
 sharedFunc_800D0948_1_s05 = 0x800D0948; // type:func
+sharedFunc_800D11A0_1_s05 = 0x800D11A0; // type:func
 sharedFunc_800D17BC_1_s05 = 0x800D17BC; // type:func
 sharedFunc_800D2214_1_s05 = 0x800D2214; // type:func
 sharedFunc_800D2444_1_s05 = 0x800D2444; // type:func
@@ -104,6 +105,7 @@ sharedData_800D5880_1_s05 = 0x800D5880; // type:s16
 sharedData_800D5884_1_s05 = 0x800D5884; // type:s32
 SPLIT_HEAD_ANIM_INFOS     = 0x800D5888; // type:s32 unknown type
 sharedData_800D5A68_1_s05 = 0x800D5A68;
+sharedData_800D5A8C_1_s05 = 0x800D5A8C;
 MAP_ROOM_IDXS             = 0x800D5C04; // type:u8
 
 //---------------------------------------------------------------
