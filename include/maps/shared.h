@@ -1496,6 +1496,16 @@ typedef struct
     s32    field_15C;
 } s_sharedData_800E21D0_0_s01;
 
+typedef struct
+{
+    s32  field_0; // Distance/Magnitude?
+    s32  field_4; // X
+    s32  field_8; // Z
+    s8   field_C; // 0 / 1 / 2
+    s8   field_D; // `bool`
+    char unk_E[2];
+} s_sharedFunc_800D4594_1_s05;
+
 // Used by puzzle in M5S01 and M7S01.
 typedef struct
 {

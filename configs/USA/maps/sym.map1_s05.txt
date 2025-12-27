@@ -84,6 +84,7 @@ sharedFunc_800D4070_1_s05 = 0x800D4070; // type:func
 sharedFunc_800D4408_1_s05 = 0x800D4408; // type:func
 sharedFunc_800D450C_1_s05 = 0x800D450C; // type:func
 sharedFunc_800D4530_1_s05 = 0x800D4530; // type:func
+sharedFunc_800D4594_1_s05 = 0x800D4594; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D489C; // type:func
 Map_RoomIdxGet            = 0x800D48AC; // type:func
 

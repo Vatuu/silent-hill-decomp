@@ -91,6 +91,7 @@ sharedFunc_800D4070_1_s05 = 0x800D4B24; // type:func
 sharedFunc_800D4408_1_s05 = 0x800D4EBC; // type:func
 sharedFunc_800D450C_1_s05 = 0x800D4FC0; // type:func
 sharedFunc_800D4530_1_s05 = 0x800D4FE4; // type:func
+sharedFunc_800D4594_1_s05 = 0x800D5048; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D5350; // type:func
 Map_RoomIdxGet            = 0x800D5360; // type:func
 MapEvent_DoorJammed       = 0x800D5450; // type:func
