@@ -6,30 +6,30 @@ void sharedFunc_800D3B44_0_s00(s_SubCharacter* stalker)
     s32 temp_v0_2;
     s32 i;
     s32 var_s2;
-    s32 var_v0;
-    s32 temp_v1;
+    s32 unkAnimStatus;
+    s32 animStatus;
 
-    if (stalker->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 10))
+    if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_10)
     {
         stalker->flags_3E |= CharaFlag_Unk3;
     }
 
-    if (stalker->model_0.anim_4.status_0 != ANIM_STATUS(34, true))
+    if (stalker->model_0.anim_4.status_0 != ANIM_STATUS(StalkerAnim_34, true))
     {
-        temp_v1 = stalker->model_0.anim_4.status_0;
+        animStatus = stalker->model_0.anim_4.status_0;
 
-        if (temp_v1 > ANIM_STATUS(34, true))
+        if (animStatus > ANIM_STATUS(StalkerAnim_34, true))
         {
-            var_v0 = ANIM_STATUS(35, true);
-            var_v0++; // } TODO: Hack.
-            var_v0--; // }
+            unkAnimStatus = ANIM_STATUS(StalkerAnim_35, true);
+            unkAnimStatus++; // } TODO: Hack.
+            unkAnimStatus--; // }
         }
         else
         {
-            var_v0 = ANIM_STATUS(7, true);
+            unkAnimStatus = ANIM_STATUS(StalkerAnim_7, true);
         }
 
-        if (temp_v1 != var_v0)
+        if (animStatus != unkAnimStatus)
         {
             stalker->field_44.field_0 = 0;
         }

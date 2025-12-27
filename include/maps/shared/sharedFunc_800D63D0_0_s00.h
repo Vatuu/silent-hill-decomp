@@ -1,14 +1,14 @@
-void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara)
+void sharedFunc_800D63D0_0_s00(s_SubCharacter* stalker)
 {
     u16* flags;
     s32  curMoveSpeed;
     s32  newMoveSpeed;
     s32  newAnimStatus;
 
-    flags = &chara->properties_E4.player.afkTimer_E8;
+    flags = &stalker->properties_E4.player.afkTimer_E8;
     if (!(*flags & (1 << 13)))
     {
-        curMoveSpeed = chara->moveSpeed_38;
+        curMoveSpeed = stalker->moveSpeed_38;
         if (curMoveSpeed > 0)
         {
             newMoveSpeed = curMoveSpeed - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.5f, Q12_SHIFT);
@@ -25,30 +25,30 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara)
                 newMoveSpeed = 0;
             }
         }
-        chara->moveSpeed_38 = newMoveSpeed;
+        stalker->moveSpeed_38 = newMoveSpeed;
     }
 
-    if (chara->health_B0 == Q12(0.0f))
+    if (stalker->health_B0 == Q12(0.0f))
     {
-        chara->flags_3E &= ~CharaFlag_Unk2;
+        stalker->flags_3E &= ~CharaFlag_Unk2;
 
-        if (g_SysWork.targetNpcIdx_2353 != func_8005C7D0(chara))
+        if (g_SysWork.targetNpcIdx_2353 != func_8005C7D0(stalker))
         {
-            chara->health_B0  = NO_VALUE;
-            chara->field_E1_0 = 0;
+            stalker->health_B0  = NO_VALUE;
+            stalker->field_E1_0 = 0;
         }
     }
 
-    if (chara->moveSpeed_38 == 0 && !(chara->properties_E4.player.afkTimer_E8 & ((1 << 8) | (1 << 9))))
+    if (stalker->moveSpeed_38 == 0 && !(stalker->properties_E4.player.afkTimer_E8 & ((1 << 8) | (1 << 9))))
     {
-        newAnimStatus = (chara->model_0.anim_4.status_0 == ANIM_STATUS(31, true)) ? ANIM_STATUS(0, true) : ANIM_STATUS(0, false);
+        newAnimStatus = (stalker->model_0.anim_4.status_0 == ANIM_STATUS(31, true)) ? ANIM_STATUS(0, true) : ANIM_STATUS(0, false);
 
-        if (chara->model_0.anim_4.status_0 == ANIM_STATUS(32, true))
+        if (stalker->model_0.anim_4.status_0 == ANIM_STATUS(32, true))
         {
             newAnimStatus = ANIM_STATUS(1, false);
         }
 
-        if (chara->model_0.anim_4.status_0 == ANIM_STATUS(33, true))
+        if (stalker->model_0.anim_4.status_0 == ANIM_STATUS(33, true))
         {
             newAnimStatus = ANIM_STATUS(6, false);
         }
@@ -56,20 +56,20 @@ void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara)
         if (newAnimStatus != ANIM_STATUS(0, false))
         {
 #if !defined(MAP5_S02) && !defined(MAP7_S02)
-            func_800622B8(3, chara, newAnimStatus, 3);
+            func_800622B8(3, stalker, newAnimStatus, 3);
 #endif
-            flags   = &chara->properties_E4.player.afkTimer_E8;
+            flags   = &stalker->properties_E4.player.afkTimer_E8;
             *flags |= 1 << 9;
         }
     }
 
 #if defined(MAP5_S02) || defined(MAP7_S02)
-    if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 9))
+    if (stalker->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 9))
     {
-        chara->timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
-        if (chara->timer_C6 > Q12(1.0f))
+        stalker->timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
+        if (stalker->timer_C6 > Q12(1.0f))
         {
-            chara->model_0.charaId_0 = Chara_None;
+            stalker->model_0.charaId_0 = Chara_None;
         }
     }
 #endif

@@ -1468,8 +1468,10 @@ typedef struct _PropertiesStalker
     q3_12  field_EE;
     q19_12 positionX_F0;
     q19_12 positionZ_F4;
-    q19_12 field_F8;
-    s8     unk_FC[6];
+    q19_12 timer_F8;
+    s16    keyframeIdx_FC;
+    s16    field_FE;
+    s8     unk_100[2];
     s16    field_102;
     s8     unk_104[12];
     q19_12 health_110;

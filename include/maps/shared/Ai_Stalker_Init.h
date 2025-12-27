@@ -36,7 +36,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_2;
 
         case 3:
-            stalker->properties_E4.stalker.field_F8  = Q12(2.5f);
+            stalker->properties_E4.stalker.timer_F8  = Q12(2.5f);
             stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_0;
 
         case 8:
@@ -53,7 +53,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
         case 6:
             stalker->model_0.state_2                 = 2;
             stalker->flags_3E                       |= CharaFlag_Unk3;
-            stalker->properties_E4.stalker.field_F8  = Q12(1.0f);
+            stalker->properties_E4.stalker.timer_F8  = Q12(1.0f);
             stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_0 | StalkerFlag_1;
             stalker->field_E1_0                      = 3;
             stalker->flags_3E                       &= ~CharaFlag_Unk5;

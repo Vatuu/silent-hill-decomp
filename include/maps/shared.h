@@ -2129,35 +2129,36 @@ void sharedFunc_800D2EB4_0_s00(void);
 
 void sharedFunc_800D2EF4_0_s00(void);
 
-void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D4924_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D492C_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D492C_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D5098_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D5098_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D54A8_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D54A8_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D5B48_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D5B48_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D5C64_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D5FCC_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D5FCC_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D63D0_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D63D0_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D654C_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D654C_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D6554_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D6554_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D670C_0_s00(s_SubCharacter* chara);
+void sharedFunc_800D670C_0_s00(s_SubCharacter* stalker);
 
 void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker);
 
-void sharedFunc_800D7E04_0_s00(s_SubCharacter* chara, s32 caseArg);
+void sharedFunc_800D7E04_0_s00(s_SubCharacter* stalker, s32 caseArg);
 
-void sharedFunc_800D88AC_0_s00(s_SubCharacter* playerChara);
+/** Unsure, but likely takes a Stalker. */
+void sharedFunc_800D88AC_0_s00(s_SubCharacter* stalker);
 
 void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 

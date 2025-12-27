@@ -46,11 +46,11 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
 
     if (stalker->field_34 != Q12(0.0f))
     {
-        newFlags = stalker->properties_E4.player.afkTimer_E8 | StalkerFlag_8;
+        newFlags = stalker->properties_E4.stalker.flags_E8 | StalkerFlag_8;
     }
     else
     {
-        newFlags = stalker->properties_E4.player.afkTimer_E8 & ~StalkerFlag_8;
+        newFlags = stalker->properties_E4.stalker.flags_E8 & ~StalkerFlag_8;
     }
     stalker->properties_E4.stalker.flags_E8 = newFlags;
 }
