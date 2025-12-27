@@ -285,6 +285,11 @@ typedef struct
             s16 field_0;
             s16 field_2;
         } s_0;
+        struct
+        {
+            u16 field_0;
+            u16 field_2;
+        } s_1;
     } field_0;
     union
     {
