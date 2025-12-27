@@ -4,17 +4,17 @@
 /** @brief Stalker character flags. */
 typedef enum _StalkerFlags
 {
-    StalkerFlag_None = 0,
-    StalkerFlag_0    = 1 << 0,
-    StalkerFlag_1    = 1 << 1,
-    StalkerFlag_2    = 1 << 2,
+    StalkerFlag_None         = 0,
+    StalkerFlag_0            = 1 << 0,
+    StalkerFlag_1            = 1 << 1,
+    StalkerFlag_2            = 1 << 2,
 
-    StalkerFlag_8    = 1 << 8,
+    StalkerFlag_8            = 1 << 8,
 
-    StalkerFlag_10   = 1 << 10,
-    StalkerFlag_11   = 1 << 11,
-    StalkerFlag_12   = 1 << 12,
-    StalkerFlag_13   = 1 << 13
+    StalkerFlag_10           = 1 << 10,
+    StalkerFlag_11           = 1 << 11,
+    StalkerFlag_WarpRotation = 1 << 12, /** Warps to target heading angle. */
+    StalkerFlag_13           = 1 << 13
 } s_StalkerFlags;
 
 /** @brief Stalker character animation indices. */

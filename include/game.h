@@ -109,15 +109,24 @@ struct _Model;
 #define ANIM_STATUS_IS_ACTIVE(animStatus) \
     ((animStatus) & (1 << 0))
 
-/** @brief Checks if an animation time is within the keyframe range `[low, high]`.
+/** @brief Checks if an animation time is within the keyframe index range `[low, high]`.
  *
- * @param animTime Animation time to check.
- * @param low Low keyframe.
- * @param high High keyframe.
- * @return `true` if the animation time is within the keyframe range, `false` otherwise.
+ * @param animTime Animation time to check (Q*.12).
+ * @param low Low keyframe index.
+ * @param high High keyframe index.
+ * @return `true` if the animation time is within the keyframe index range, `false` otherwise.
  */
 #define ANIM_TIME_RANGE_CHECK(animTime, low, high) \
     (FP_FROM(animTime, Q12_SHIFT) >= (low) && FP_FROM(animTime, Q12_SHIFT) <= (high))
+
+/** @brief Gets the relative keyframe index of an animation time with a base offset.
+ *
+ * @param animTime Animation time (Q*.12).
+ * @param baseOffset Base keyframe index offset.
+ * @return Relative keyframe index.
+ */
+#define ANIM_TIME_REL_KEYFRAME_IDX_GET(animTime, baseOffset) \
+    (FP_FROM(animTime, Q12_SHIFT) - (baseOffset))
 
 /** @brief Creates a bitmask with a contiguous range of bits set.
  * For use with `s_PlayerExtra::disabledAnimBones_18`.
@@ -1471,7 +1480,7 @@ typedef struct _PropertiesStalker
     q19_12 timer_F8;
     s16    keyframeIdx_FC;
     s16    field_FE;
-    s8     unk_100[2];
+    q3_12  targetHeadingAngle_100;
     s16    field_102;
     s8     unk_104[12];
     q19_12 health_110;
@@ -1713,8 +1722,8 @@ typedef struct _SysWork
     s8              npcId_2280;                        // NPC ID for `npcFlags_2290`. Not an index, starts at 1.
     s8              loadingScreenIdx_2281;
     s8              field_2282;
-    s8              field_2283; // Index into `SfxPairs`.
-    u16             field_2284[4];
+    s8              field_2283;    // Index into `SfxPairs`.
+    u16             field_2284[4]; // Flags.
     s32             field_228C[1];
     s32             npcFlags_2290; // Flags related to NPCs. Each bit corresponds to `npcs_1A0` index.
     s8              unk_2294[4];   // Padding?

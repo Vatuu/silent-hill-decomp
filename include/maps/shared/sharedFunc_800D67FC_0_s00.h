@@ -23,7 +23,7 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
     }
 
     prevMoveSpeed = stalker->moveSpeed_38;
-    if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_12)
+    if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_WarpRotation)
     {
         if (stalker->model_0.state_2 == 2)
         {

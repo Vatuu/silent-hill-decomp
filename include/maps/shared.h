@@ -1604,8 +1604,8 @@ extern s32 sharedData_800E39E4_0_s00;
 extern s32 sharedData_800E39E8_0_s00;
 extern s32 sharedData_800E39EC_0_s00[];
 extern u16 sharedData_800E3A0C_0_s00[];
-extern s32 sharedData_800E3A18_0_s00;
-extern s32 sharedData_800E3A1C_0_s00;
+extern q19_12 sharedData_800E3A18_0_s00; // Player X position?
+extern q19_12 sharedData_800E3A1C_0_s00; // Player Z position?
 
 extern s_AnimInfo LARVAL_STALKER_ANIM_INFOS[]; // Used by `Ai_LarvalStalker_Init`.
 

@@ -45,6 +45,6 @@ void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINAT
             sharedFunc_800D7BE8_0_s00(stalker);
         }
 
-        stalker->properties_E4.stalker.flags_E8 &= ~StalkerFlag_12;
+        stalker->properties_E4.stalker.flags_E8 &= ~StalkerFlag_WarpRotation;
     }
 }
