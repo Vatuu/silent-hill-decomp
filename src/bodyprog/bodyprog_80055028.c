@@ -3635,10 +3635,10 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
     return ret;
 }
 
-s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, s16 x, s16 z) // 0x8005CB20
+s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 x, q3_12 z) // 0x8005CB20
 {
     s_800C4590 sp10;
-    VECTOR3    offset;
+    VECTOR3    offset; // Q19.12
     q19_12     headingAngle;
     s32        temp_s0;
     s32        temp_s0_2;

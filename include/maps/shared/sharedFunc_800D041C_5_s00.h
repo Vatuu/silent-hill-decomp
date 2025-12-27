@@ -14,6 +14,6 @@ void sharedFunc_800D041C_5_s00(s_SubCharacter* scratcher)
           func_8006FD90(scratcher, 1, Q12(1.5f), Q12(0.3f)))))
     {
         scratcher->model_0.state_2         = 3;
-        scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_Unk17, false);
+        scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_17, false);
     }
 }

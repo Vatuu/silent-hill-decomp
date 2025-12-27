@@ -2,7 +2,7 @@ void sharedFunc_800D2444_1_s05(s_SubCharacter* splitHead)
 {
     q3_12 angle;
 
-    if (ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) == SplitHeadAnim_Unk9)
+    if (ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) == SplitHeadAnim_9)
     {
         Chara_MoveSpeedUpdate3(splitHead, Q12(0.8f), Q12(-1.2f));
 

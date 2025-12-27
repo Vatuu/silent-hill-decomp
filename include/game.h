@@ -1451,7 +1451,8 @@ typedef struct _PropertiesSplitHead
 {
     s32        unk_E4;
     u16        flags_E8;
-    u16        unk_EA;
+    u8         field_EA;
+    s8         unk_EB;
     u_Property field_EC;
     u_Property field_F0;
     q4_12      timer_F4;
@@ -1476,7 +1477,9 @@ typedef struct _PropertiesStalker
     s32    unk_E4; // Is this part of `a_SubCharacter`?
 
     s16    flags_E8;
-    s8     unk_EA[6];
+    s8     unk_EA[2];
+    q3_12  field_EC;
+    q3_12  field_EE;
     q19_12 positionX_F0;
     q19_12 positionZ_F4;
     q19_12 field_F8;

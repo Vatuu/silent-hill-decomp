@@ -5,8 +5,25 @@
 typedef enum _RomperAnim
 {
     RomperAnim_Still = 0,
-
-    RomperAnim_Unk15 = 15,
+    RomperAnim_1     = 1,
+    RomperAnim_2     = 2,
+    RomperAnim_3     = 3,
+    RomperAnim_4     = 4,
+    RomperAnim_5     = 5,
+    RomperAnim_6     = 6,
+    RomperAnim_7     = 7,
+    RomperAnim_8     = 8,
+    RomperAnim_9     = 9,
+    RomperAnim_10    = 10,
+    RomperAnim_11    = 11,
+    RomperAnim_12    = 12,
+    RomperAnim_13    = 13,
+    RomperAnim_14    = 14,
+    RomperAnim_15    = 15,
+    RomperAnim_16    = 16,
+    RomperAnim_17    = 17,
+    RomperAnim_18    = 18,
+    RomperAnim_19    = 19
 } e_RomperAnim;
 
 /*s_AnimInfo ROMPER_ANIM_INFOS[] = {

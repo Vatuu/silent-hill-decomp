@@ -19,7 +19,7 @@ void sharedFunc_800D1CE4_5_s00(s_SubCharacter* scratcher)
     {
         Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
 
-        if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim_4.status_0) == HangedScratcherAnim_Unk10)
+        if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim_4.status_0) == HangedScratcherAnim_10)
         {
             if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 176, 185))
             {
@@ -33,19 +33,19 @@ void sharedFunc_800D1CE4_5_s00(s_SubCharacter* scratcher)
 
     if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 191, 193))
     {
-        Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_Unk12, true), 202);
+        Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_12, true), 202);
         scratcher->rotation_24.vz = FP_ANGLE(0.0f);
         return;
     }
 
-    if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_Unk12, true))
+    if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_12, true))
     {
         scratcher->flags_3E |= CharaFlag_Unk2;
 
         if (scratcher->health_B0 <= Q12(0.0f))
         {
             scratcher->model_0.state_2         = 13;
-            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_Unk6, false);
+            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_6, false);
         }
     }
 }

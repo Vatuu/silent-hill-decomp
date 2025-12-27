@@ -1,29 +1,29 @@
 void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
 {
-    s32* sp10[7]; // Type assumed.
-    s16  newRotY;
-    s32  prevMoveSpeed;
-    u16  newFlags;
+    s_800C4590* sp10[7];
+    q3_12       newHeadingAngle;
+    q19_12      prevMoveSpeed;
+    u16         newFlags;
 
     stalker->field_34       = stalker->field_34 + g_DeltaTime2;
-    newRotY               = func_8005BF38(stalker->rotation_24.vy);
-    stalker->rotation_24.vy = newRotY;
+    newHeadingAngle         = func_8005BF38(stalker->rotation_24.vy);
+    stalker->rotation_24.vy = newHeadingAngle;
 
-    if ((u16)stalker->properties_E4.player.afkTimer_E8 & (1 << 13))
+    if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_13)
     {
         Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
         if (stalker->moveSpeed_38 == Q12(0.0f))
         {
-            *(u16*)&stalker->properties_E4.player.afkTimer_E8 &= ~(1 << 13);
+            stalker->properties_E4.stalker.flags_E8 &= ~StalkerFlag_13;
         }
     }
     else
     {
-        stalker->headingAngle_3C = newRotY;
+        stalker->headingAngle_3C = newHeadingAngle;
     }
 
     prevMoveSpeed = stalker->moveSpeed_38;
-    if ((u16)stalker->properties_E4.player.afkTimer_E8 & (1 << 12))
+    if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_12)
     {
         if (stalker->model_0.state_2 == 2)
         {
@@ -37,21 +37,20 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
 
     if (g_DeltaTime0 != Q12(0.0f))
     {
-        func_8005CB20(stalker, &sp10, *(s16*)&stalker->properties_E4.player.positionY_EC, *((s16*)&stalker->properties_E4.player.positionY_EC + 1));
+        func_8005CB20(stalker, &sp10, stalker->properties_E4.stalker.field_EC, stalker->properties_E4.stalker.field_EE);
     }
 
-    *((u16*)&stalker->properties_E4.player.positionY_EC + 1) = 0;
-    *(u16*)&stalker->properties_E4.player.positionY_EC       = 0;
-    stalker->moveSpeed_38                                    = prevMoveSpeed;
+    stalker->properties_E4.stalker.field_EE = Q12(0.0f);
+    stalker->properties_E4.stalker.field_EC = Q12(0.0f);
+    stalker->moveSpeed_38                   = prevMoveSpeed;
 
-    if (stalker->field_34 != 0)
+    if (stalker->field_34 != Q12(0.0f))
     {
-        newFlags = stalker->properties_E4.player.afkTimer_E8 | (1 << 8);
+        newFlags = stalker->properties_E4.player.afkTimer_E8 | StalkerFlag_8;
     }
     else
     {
-        newFlags = stalker->properties_E4.player.afkTimer_E8 & ~(1 << 8);
+        newFlags = stalker->properties_E4.player.afkTimer_E8 & ~StalkerFlag_8;
     }
-
-    *(u16*)&stalker->properties_E4.player.afkTimer_E8 = newFlags;
+    stalker->properties_E4.stalker.flags_E8 = newFlags;
 }

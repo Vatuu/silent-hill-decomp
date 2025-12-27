@@ -9,35 +9,65 @@ typedef enum _StalkerFlags
     StalkerFlag_1    = 1 << 1,
     StalkerFlag_2    = 1 << 2,
 
+    StalkerFlag_8    = 1 << 8,
+
     StalkerFlag_10   = 1 << 10,
     StalkerFlag_11   = 1 << 11,
-    StalkerFlag_12   = 1 << 12
+    StalkerFlag_12   = 1 << 12,
+    StalkerFlag_13   = 1 << 13
 } s_StalkerFlags;
 
 /** @brief Stalker character animation indices. */
 typedef enum _StalkerAnim
 {
     StalkerAnim_Still = 0,
-
+    StalkerAnim_1     = 1,
+    StalkerAnim_2     = 2,
+    StalkerAnim_3     = 3,
+    StalkerAnim_4     = 4,
+    StalkerAnim_5     = 5,
+    StalkerAnim_6     = 6,
+    StalkerAnim_7     = 7,
     StalkerAnim_8     = 8,
     StalkerAnim_9     = 9,
-
+    StalkerAnim_10    = 10,
+    StalkerAnim_11    = 11,
+    StalkerAnim_12    = 12,
+    StalkerAnim_13    = 13,
     StalkerAnim_14    = 14,
-
+    StalkerAnim_15    = 15,
+    StalkerAnim_16    = 16,
+    StalkerAnim_17    = 17,
+    StalkerAnim_18    = 18,
     StalkerAnim_19    = 19,
     StalkerAnim_20    = 20,
     StalkerAnim_21    = 21,
-
+    StalkerAnim_22    = 22,
+    StalkerAnim_23    = 23,
+    StalkerAnim_24    = 24,
+    StalkerAnim_25    = 25,
+    StalkerAnim_26    = 26,
     StalkerAnim_27    = 27,
     StalkerAnim_28    = 28,
-
+    StalkerAnim_29    = 29,
     StalkerAnim_30    = 30,
     StalkerAnim_31    = 31,
     StalkerAnim_32    = 32,
-
+    StalkerAnim_33    = 33,
+    StalkerAnim_34    = 34,
+    StalkerAnim_35    = 35,
+    StalkerAnim_36    = 36,
+    StalkerAnim_37    = 37,
     StalkerAnim_38    = 38,
     StalkerAnim_39    = 39,
     StalkerAnim_40    = 40,
+    StalkerAnim_41    = 41,
+    StalkerAnim_42    = 42,
+    StalkerAnim_43    = 43,
+    StalkerAnim_44    = 44,
+    StalkerAnim_45    = 45,
+    StalkerAnim_46    = 46,
+    StalkerAnim_47    = 47
 } e_StalkerAnim;
 
 /*s_AnimInfo STALKER_ANIM_INFOS[] = {

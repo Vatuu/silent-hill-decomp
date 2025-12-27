@@ -5,8 +5,29 @@
 typedef enum _GroanerAnim
 {
     GroanerAnim_Still = 0,
-
-    GroanerAnim_Unk17 = 17,
+    GroanerAnim_1     = 1,
+    GroanerAnim_2     = 2,
+    GroanerAnim_3     = 3,
+    GroanerAnim_4     = 4,
+    GroanerAnim_5     = 5,
+    GroanerAnim_6     = 6,
+    GroanerAnim_7     = 7,
+    GroanerAnim_8     = 8,
+    GroanerAnim_9     = 9,
+    GroanerAnim_10    = 10,
+    GroanerAnim_11    = 11,
+    GroanerAnim_12    = 12,
+    GroanerAnim_13    = 13,
+    GroanerAnim_14    = 14,
+    GroanerAnim_15    = 15,
+    GroanerAnim_16    = 16,
+    GroanerAnim_17    = 17,
+    GroanerAnim_18    = 18,
+    GroanerAnim_19    = 19,
+    GroanerAnim_20    = 20,
+    GroanerAnim_21    = 21,
+    GroanerAnim_22    = 22,
+    GroanerAnim_23    = 23
 } e_GroanerAnim;
 
 /*s_AnimInfo GROANER_ANIM_INFOS[] = {

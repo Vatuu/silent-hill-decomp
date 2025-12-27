@@ -11,8 +11,8 @@ void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead)
     splitHead->field_C8.field_0   = pos.vy;
     splitHead->field_D8.offsetZ_6 = pos.vz - splitHead->position_18.vz;
 
-    if (ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) == SplitHeadAnim_Unk2 ||
-        ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) == SplitHeadAnim_Unk14)
+    if (ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) == SplitHeadAnim_2 ||
+        ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) == SplitHeadAnim_14)
     {
         splitHead->field_D4.field_0 = Q12(1.3f);
     }

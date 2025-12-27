@@ -48,7 +48,7 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
     if (groaner->model_0.stateStep_3 == 3)
     {
         groaner->model_0.state_2 = 1;
-        Character_AnimSet(groaner, ANIM_STATUS(GroanerAnim_Unk17, true), 371);
+        Character_AnimSet(groaner, ANIM_STATUS(GroanerAnim_17, true), 371);
         groaner->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 5;
     }
 

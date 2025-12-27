@@ -102,7 +102,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
     {
         case 3:
             floatstinger->model_0.state_2 = 5;
-            Character_AnimSet(floatstinger, ANIM_STATUS(FloatstingerAnim_Unk9, true), 191);
+            Character_AnimSet(floatstinger, ANIM_STATUS(FloatstingerAnim_9, true), 191);
 
             floatstinger->properties_E4.dummy.properties_E8[7].val16[1] = -0x90; // Could be `FP_ANGLE(-12.7f)`?
             break;
@@ -113,7 +113,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
             floatstinger->position_18.vz = Q12(108.0f);
 
             floatstinger->model_0.state_2 = 2;
-            Character_AnimSet(floatstinger, ANIM_STATUS(FloatstingerAnim_Unk9, true), 191);
+            Character_AnimSet(floatstinger, ANIM_STATUS(FloatstingerAnim_9, true), 191);
             floatstinger->rotation_24.vy = FP_ANGLE(-90.0f);
             break;
     }

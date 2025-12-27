@@ -45,7 +45,7 @@ void Ai_Romper_Init(s_SubCharacter* romper)
     }
 
     romper->model_0.state_2 = 2;
-    Character_AnimSet(romper, ANIM_STATUS(RomperAnim_Unk15, true), 147);
+    Character_AnimSet(romper, ANIM_STATUS(RomperAnim_15, true), 147);
 
     romper->properties_E4.dummy.properties_E8[2].val16[0] = 6;
     romper->properties_E4.dummy.properties_E8[2].val16[1] = romper->rotation_24.vy;

@@ -157,17 +157,17 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
     setPolyFT4(*poly);
 
     var_a2 = (FP_FROM(FP_MULTIPLY_PRECISE(D_800E3A40[idx2].field_E * sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_3, Math_Sin(var_lo >> 2), Q12_SHIFT), Q12_SHIFT) * scratch->field_0.field_2C) / scratch->field_138;
-    var_a1 = (var_a2 * (0x800 - ABS(scratch->field_0.field_30.vx))) >> 0xA;
+    var_a1 = (var_a2 * (0x800 - ABS(scratch->field_0.field_30.vx))) >> 10;
 
     setXY0Fast(*poly, (u16)scratch->field_134.vx - var_a2, scratch->field_134.vy - var_a1);
     setXY1Fast(*poly, (u16)scratch->field_134.vx + var_a2, scratch->field_134.vy - var_a1);
     setXY2Fast(*poly, (u16)scratch->field_134.vx - var_a2, scratch->field_134.vy);
     setXY3Fast(*poly, (u16)scratch->field_134.vx + var_a2, scratch->field_134.vy);
 
-    *(u32*)&(*poly)->u0 = ((sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 0xD) + 0xE0000);
-    *(u32*)&(*poly)->u1 = ((sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 0xD) + 0x2D003F);
-    *(u16*)&(*poly)->u2 = ((sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 0xD) | 0x1F00);
-    *(u16*)&(*poly)->u3 = ((sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 0xD) | 0x1F3F);
+    *(u32*)&(*poly)->u0 = ((sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 13) + 0xE0000);
+    *(u32*)&(*poly)->u1 = ((sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 13) + 0x2D003F);
+    *(u16*)&(*poly)->u2 = ((sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 13) | 0x1F00);
+    *(u16*)&(*poly)->u3 = ((sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_2 << 13) | 0x1F3F);
 
     setSemiTrans(*poly, true);
 

@@ -18,14 +18,20 @@ typedef enum _SplitHeadFlags
 typedef enum _SplitHeadAnim
 {
     SplitHeadAnim_Still = 0,
-
-    SplitHeadAnim_Unk2  = 2,
-
-    SplitHeadAnim_Unk9  = 9,
-    SplitHeadAnim_Unk10 = 10,
-    SplitHeadAnim_Unk11 = 11,
-
-    SplitHeadAnim_Unk14 = 14
+    SplitHeadAnim_1     = 1,
+    SplitHeadAnim_2     = 2,
+    SplitHeadAnim_3     = 3,
+    SplitHeadAnim_4     = 4,
+    SplitHeadAnim_5     = 5,
+    SplitHeadAnim_6     = 6,
+    SplitHeadAnim_7     = 7,
+    SplitHeadAnim_8     = 8,
+    SplitHeadAnim_9     = 9,
+    SplitHeadAnim_10    = 10,
+    SplitHeadAnim_11    = 11,
+    SplitHeadAnim_12    = 12,
+    SplitHeadAnim_13    = 13,
+    SplitHeadAnim_14    = 14
 } e_SplitHeadAnim;
 
 /*s_AnimInfo SPLIT_HEAD_ANIM_INFOS[] = {

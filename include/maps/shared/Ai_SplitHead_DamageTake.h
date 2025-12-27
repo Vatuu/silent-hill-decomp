@@ -64,7 +64,7 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
     }
     else if (splitHead->health_B0 == Q12(0.0f))
     {
-        if (ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) == SplitHeadAnim_Unk2)
+        if (ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) == SplitHeadAnim_2)
         {
             splitHead->model_0.anim_4.status_0 = ANIM_STATUS(8, false);
         }

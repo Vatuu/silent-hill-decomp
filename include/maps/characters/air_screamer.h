@@ -40,27 +40,33 @@ typedef enum _AirScreamerFlags
 typedef enum _AirScreamerAnim
 {
     AirScreamerAnim_Still = 0,
-
     AirScreamerAnim_1     = 1,
     AirScreamerAnim_2     = 2,
     AirScreamerAnim_3     = 3,
-
+    AirScreamerAnim_4     = 4,
+    AirScreamerAnim_5     = 5,
+    AirScreamerAnim_6     = 6,
+    AirScreamerAnim_7     = 7,
+    AirScreamerAnim_8     = 8,
     AirScreamerAnim_9     = 9,
     AirScreamerAnim_10    = 10,
     AirScreamerAnim_11    = 11,
-
+    AirScreamerAnim_12    = 12,
     AirScreamerAnim_13    = 13,
     AirScreamerAnim_14    = 14,
-
+    AirScreamerAnim_15    = 15,
     AirScreamerAnim_16    = 16,
     AirScreamerAnim_17    = 17,
-
+    AirScreamerAnim_18    = 18,
     AirScreamerAnim_19    = 19,
-
+    AirScreamerAnim_20    = 20,
+    AirScreamerAnim_21    = 21,
+    AirScreamerAnim_22    = 22,
     AirScreamerAnim_23    = 23,
-
+    AirScreamerAnim_24    = 24,
     AirScreamerAnim_25    = 25,
-    AirScreamerAnim_26    = 26
+    AirScreamerAnim_26    = 26,
+    AirScreamerAnim_27    = 27
 } e_AirScreamerAnim;
 
 /*s_AnimInfo AIR_SCREAMER_ANIM_INFOS[] = {

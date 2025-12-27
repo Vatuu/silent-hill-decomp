@@ -19,16 +19,16 @@ typedef enum _CreeperFlags
 typedef enum _CreeperAnim
 {
     CreeperAnim_Still = 0,
-
+    CreeperAnim_1     = 1,
     CreeperAnim_2     = 2,
     CreeperAnim_3     = 3,
     CreeperAnim_4     = 4,
     CreeperAnim_5     = 5,
-
+    CreeperAnim_6     = 6,
     CreeperAnim_7     = 7,
     CreeperAnim_8     = 8,
     CreeperAnim_9     = 9,
-
+    CreeperAnim_10    = 10,
     CreeperAnim_11    = 11,
     CreeperAnim_12    = 12,
     CreeperAnim_13    = 13,

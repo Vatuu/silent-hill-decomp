@@ -11,21 +11,32 @@ typedef enum _HangedScratcherFlags
 typedef enum _HangedScratcherAnim
 {
     HangedScratcherAnim_Still = 0,
-    HangedScratcherAnim_Unk1  = 1,
-    HangedScratcherAnim_Unk2  = 2,
-    HangedScratcherAnim_Unk3  = 3,
-
-    HangedScratcherAnim_Unk6  = 6,
-
-    HangedScratcherAnim_Unk10 = 10,
-
-    HangedScratcherAnim_Unk12 = 12,
-
-    HangedScratcherAnim_Unk14 = 14,
-    HangedScratcherAnim_Unk15 = 15,
-    HangedScratcherAnim_Unk16 = 16,
-    HangedScratcherAnim_Unk17 = 17,
-    HangedScratcherAnim_Unk18 = 18,
+    HangedScratcherAnim_1     = 1,
+    HangedScratcherAnim_2     = 2,
+    HangedScratcherAnim_3     = 3,
+    HangedScratcherAnim_4     = 4,
+    HangedScratcherAnim_5     = 5,
+    HangedScratcherAnim_6     = 6,
+    HangedScratcherAnim_7     = 7,
+    HangedScratcherAnim_8     = 8,
+    HangedScratcherAnim_9     = 9,
+    HangedScratcherAnim_10    = 10,
+    HangedScratcherAnim_11    = 11,
+    HangedScratcherAnim_12    = 12,
+    HangedScratcherAnim_13    = 13,
+    HangedScratcherAnim_14    = 14,
+    HangedScratcherAnim_15    = 15,
+    HangedScratcherAnim_16    = 16,
+    HangedScratcherAnim_17    = 17,
+    HangedScratcherAnim_18    = 18,
+    HangedScratcherAnim_19    = 19,
+    HangedScratcherAnim_20    = 20,
+    HangedScratcherAnim_21    = 21,
+    HangedScratcherAnim_22    = 22,
+    HangedScratcherAnim_23    = 23,
+    HangedScratcherAnim_24    = 24,
+    HangedScratcherAnim_25    = 25,
+    HangedScratcherAnim_26    = 26
 } e_HangedScratcherAnim;
 
 /*s_AnimInfo HANGED_SCRATCHER_ANIM_INFOS[] = {

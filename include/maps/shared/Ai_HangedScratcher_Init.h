@@ -46,7 +46,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
                 scratcher->model_0.state_2 = 1;
             }
 
-            Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_Unk14, true), 222);
+            Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_14, true), 222);
             scratcher->position_18.vy = Q12(-3.6f);
             scratcher->rotation_24.vz = FP_ANGLE(180.0f);
 
@@ -56,7 +56,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
         case 7:
         case 14:
             scratcher->model_0.state_2 = 5;
-            Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_Unk15, true), 232);
+            Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_15, true), 232);
             scratcher->position_18.vy = Q12(0.0f);
             scratcher->rotation_24.vz = FP_ANGLE(0.0f);
             break;
@@ -66,7 +66,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
 
         case 6:
             scratcher->model_0.state_2 = 6;
-            Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_Unk15, true), 232);
+            Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_15, true), 232);
             scratcher->position_18.vy = Q12(0.0f);
             scratcher->rotation_24.vz = FP_ANGLE(0.0f);
             break;
@@ -81,15 +81,15 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
             switch (scratcher->model_0.stateStep_3)
             {
                 case 18:
-                    Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_Unk1, true), 0);
+                    Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_1, true), 0);
                     break;
 
                 case 19:
-                    Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_Unk2, true), 51);
+                    Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_2, true), 51);
                     break;
 
                 case 20:
-                    Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_Unk3, true), 87);
+                    Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_3, true), 87);
                     break;
             }
             break;
