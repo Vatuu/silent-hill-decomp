@@ -8292,10 +8292,10 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 
     VECTOR3              sp130;
     VECTOR3              offsetCpy;
     s32                  var_a0;
-    s32                  var_a1;
+    s32                  i;
     s32                  var_s4;
     s32                  var_v0;
-    s32                  var_a2;
+    s32                  count;
     s_SubCharacter**     curChara;
     s_IpdCollisionData** curCollData;
     s_SubCharacter*      chara;
@@ -8376,7 +8376,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 
             }
 
             func_8006CC9C(&sp18);
-            func_8006CF18(&sp18, chara->properties_E4.npc.unk_E4, chara->field_E1_4);
+            func_8006CF18(&sp18, chara->field_E4, chara->field_E1_4);
         }
 
         func_8006D01C(&sp120, &sp130, func_8006CB90(&sp18), &sp18);
@@ -8391,15 +8391,15 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 
 
         if (sp18.field_44.field_0.field_0 || sp18.field_44.field_30.field_0)
         {
-            var_a2 = 8;
+            count = 8;
             if (sp18.field_44.field_8.field_0 < 9)
             {
-                var_a2 = sp18.field_44.field_8.field_0;
+                count = sp18.field_44.field_8.field_0;
             }
 
-            for (var_a1 = 0; var_a1 < var_a2; var_a1++)
+            for (i = 0; i < count; i++)
             {
-                *sp18.field_44.field_10[var_a1] += 1;
+                *sp18.field_44.field_10[i] += 1;
             }
         }
         else if (sp18.field_34)
@@ -8423,10 +8423,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 
     else
     {
         arg0->field_14 = sp18.field_94;
-        var_v0         = func_8006CC44(sp18.field_4.positionX_18 + Q12_TO_Q8(sp120.vx),
-                                       sp18.field_4.positionZ_1C + Q12_TO_Q8(sp120.vz),
-                                       &sp18) *
-                         16;
+        var_v0         = func_8006CC44(sp18.field_4.positionX_18 + Q12_TO_Q8(sp120.vx), sp18.field_4.positionZ_1C + Q12_TO_Q8(sp120.vz), &sp18) * 16;
     }
 
     arg0->field_C  = var_v0;
