@@ -292,7 +292,66 @@ bool func_8009E7D8(s_SysWork_2510* node) // 0x8009E7D8
     return true;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E82C);
+s32 func_8009E82C(s_SysWork_2514* work, s32 padState, s32 padInfoCurId, s32 padInfoCurExId)
+{
+    s32                 field_0_19;
+    s32*                var_t1;
+    s_SysWork_2514_C_0* cur;
+    s_SysWork_2514_C_0  tmp;
+    s32                 i;
+    s32                 count;
+    s_SysWork_2514_0    status;
+    u8                  stack[0x18];
+
+    if ((padState == PadStateFindCTP1) && ((0xB0U >> padInfoCurId) & 1))
+    {
+        work->field_4 = 0x40;
+        work->field_8 = 0;
+        count         = work->unk_B[0];
+
+        status            = work->field_0;
+        cur               = (s_SysWork_2514_C_0*)work->field_C;
+        status.field_0_24 = 2;
+        status.field_0_23 = 0;
+        status.field_0_22 = 0;
+        field_0_19        = 0;
+        i                 = 1;
+
+        if (count < 2)
+        {
+            i = count;
+        }
+        if (i > 0)
+        {
+            tmp.bits_0_0  = 1;
+            tmp.bits_0_8  = 0;
+            tmp.bits_0_9  = 10;
+            tmp.bits_0_16 = 1;
+            tmp.bits_0_24 = 0;
+            tmp.bits_0_19 = 1;
+            tmp.bits_0_27 = 2;
+            *cur          = tmp;
+            field_0_19    = 2;
+            i             = 1;
+        }
+
+        work->field_A     = i;
+        status.field_0_19 = field_0_19;
+        work->field_0     = status;
+        tmp               = (s_SysWork_2514_C_0){ 0 };
+        cur              += 2;
+
+        while (i < count)
+        {
+            *cur = tmp;
+            cur += 2;
+            i++;
+        };
+
+        return 1;
+    }
+    return 0;
+}
 
 bool func_8009E97C(s_SysWork_2510* node) // 0x8009E97C
 {
