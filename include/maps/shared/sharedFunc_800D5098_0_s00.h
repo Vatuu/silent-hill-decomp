@@ -10,6 +10,8 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* stalker)
     s32    i;
     q19_12 newMoveSpeed1;
 
+    #define stalkerProps stalker->properties_E4.stalker
+
     if (ANIM_STATUS_IDX_GET(stalker->model_0.anim_4.status_0) == StalkerAnim_30)
     {
         stalker->model_0.state_2   = 4;
@@ -46,7 +48,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* stalker)
             }
         }
 
-        if (!(stalker->properties_E4.stalker.flags_E8 & StalkerFlag_13))
+        if (!(stalkerProps.flags_E8 & StalkerFlag_13))
         {
             if (distToPlayer > DIST_TO_PLAYER_MAX)
             {
@@ -103,4 +105,6 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* stalker)
     {
         Chara_MoveSpeedUpdate(stalker, Q12(6.0f));
     }
+
+    #undef stalkerProps
 }

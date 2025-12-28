@@ -58,6 +58,8 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
     s32 keyframeIdx1;
     s32 keyframeIdx2;
 
+    #define stalkerProps stalker->properties_E4.stalker
+
     switch (stalker->model_0.anim_4.status_0)
     {
         case ANIM_STATUS(StalkerAnim_8, false):
@@ -71,7 +73,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             break;
 
         case ANIM_STATUS(StalkerAnim_38, false):
-            if (stalker->properties_E4.stalker.keyframeIdx_FC == NO_VALUE)
+            if (stalkerProps.keyframeIdx_FC == NO_VALUE)
             {
                 func_80070400(stalker, &sharedData_800DE2C4_0_s00, &sharedData_800DDBBC_0_s00[0]);
             }
@@ -102,13 +104,13 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             break;
 
         case ANIM_STATUS(StalkerAnim_39, false):
-            if (stalker->properties_E4.stalker.keyframeIdx_FC == NO_VALUE)
+            if (stalkerProps.keyframeIdx_FC == NO_VALUE)
             {
                 func_80070400(stalker, &sharedData_800DE2D8_0_s00, &sharedData_800DDC70_0_s00[0]);
             }
             else
             {
-                func_80070400(stalker, &sharedData_800DE8C8_0_s00[stalker->properties_E4.stalker.keyframeIdx_FC], &sharedData_800DDC70_0_s00[0]);
+                func_80070400(stalker, &sharedData_800DE8C8_0_s00[stalkerProps.keyframeIdx_FC], &sharedData_800DDC70_0_s00[0]);
             }
             break;
 
@@ -129,13 +131,13 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             break;
 
         case ANIM_STATUS(StalkerAnim_40, false):
-            if (stalker->properties_E4.stalker.keyframeIdx_FC == NO_VALUE)
+            if (stalkerProps.keyframeIdx_FC == NO_VALUE)
             {
                 func_80070400(stalker, &sharedData_800DE2EC_0_s00, &sharedData_800DDCFC_0_s00[0]);
             }
             else
             {
-                func_80070400(stalker, &sharedData_800DEB0C_0_s00[stalker->properties_E4.stalker.keyframeIdx_FC], &sharedData_800DDCFC_0_s00[0]);
+                func_80070400(stalker, &sharedData_800DEB0C_0_s00[stalkerProps.keyframeIdx_FC], &sharedData_800DDCFC_0_s00[0]);
             }
             break;
 
@@ -189,11 +191,11 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             break;
 
         case ANIM_STATUS(StalkerAnim_24, false):
-            if (stalker->properties_E4.stalker.relKeyframeIdx_FE != 0)
+            if (stalkerProps.relKeyframeIdx_FE != 0)
             {
                 func_80070400(stalker,
-                              &sharedData_800DDD88_0_s00[stalker->properties_E4.stalker.keyframeIdx_FC],
-                              &sharedData_800DE0E4_0_s00[stalker->properties_E4.stalker.relKeyframeIdx_FE]);
+                              &sharedData_800DDD88_0_s00[stalkerProps.keyframeIdx_FC],
+                              &sharedData_800DE0E4_0_s00[stalkerProps.relKeyframeIdx_FE]);
             }
             else
             {
@@ -208,22 +210,22 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             break;
 
         case ANIM_STATUS(StalkerAnim_25, false):
-            if (stalker->properties_E4.stalker.relKeyframeIdx_FE == 83)
+            if (stalkerProps.relKeyframeIdx_FE == 83)
             {
                 func_80070400(stalker, &sharedData_800DDF2C_0_s00[0], &sharedData_800DE1E8_0_s00[1]);
             }
             else
             {
-                keyframeIdx0 = stalker->properties_E4.stalker.keyframeIdx_FC;
-                if (stalker->properties_E4.stalker.relKeyframeIdx_FE == 23)
+                keyframeIdx0 = stalkerProps.keyframeIdx_FC;
+                if (stalkerProps.relKeyframeIdx_FE == 23)
                 {
                     func_80070400(stalker, &sharedData_800DE580_0_s00[keyframeIdx0 + 20], &sharedData_800DE1E8_0_s00[1]);
                 }
-                else if (stalker->properties_E4.stalker.relKeyframeIdx_FE == 25)
+                else if (stalkerProps.relKeyframeIdx_FE == 25)
                 {
                     func_80070400(stalker, &sharedData_800DE8C8_0_s00[keyframeIdx0], &sharedData_800DE1E8_0_s00[1]);
                 }
-                else if (stalker->properties_E4.stalker.relKeyframeIdx_FE == 27)
+                else if (stalkerProps.relKeyframeIdx_FE == 27)
                 {
                     func_80070400(stalker, &sharedData_800DEB0C_0_s00[keyframeIdx0], &sharedData_800DE1E8_0_s00[1]);
                 }
@@ -271,7 +273,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
 
         case ANIM_STATUS(StalkerAnim_34, false):
         case ANIM_STATUS(StalkerAnim_35, false):
-            keyframeIdx0 = stalker->properties_E4.stalker.keyframeIdx_FC;
+            keyframeIdx0 = stalkerProps.keyframeIdx_FC;
             keyframeIdx1 = 0;
             func_80070400(stalker, &sharedData_800DEF1C_0_s00[keyframeIdx0], &sharedData_800DE440_0_s00[keyframeIdx1]);
             break;
@@ -316,8 +318,8 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             break;
 
         case ANIM_STATUS(StalkerAnim_7, false):
-            keyframeIdx0 = stalker->properties_E4.stalker.keyframeIdx_FC;
-            keyframeIdx1 = stalker->properties_E4.stalker.relKeyframeIdx_FE;
+            keyframeIdx0 = stalkerProps.keyframeIdx_FC;
+            keyframeIdx1 = stalkerProps.relKeyframeIdx_FE;
             func_80070400(stalker, &sharedData_800DEF1C_0_s00[keyframeIdx0], &sharedData_800DE580_0_s00[keyframeIdx1]);
             break;
 
@@ -327,14 +329,14 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             func_80070400(stalker, &sharedData_800DE580_0_s00[keyframeIdx0], &sharedData_800DE580_0_s00[keyframeIdx1]);
 
             stalker->field_C8.field_8                                      = Q12(-0.7f);
-            stalker->properties_E4.stalker.keyframeIdx_FC = 15;
+            stalkerProps.keyframeIdx_FC = 15;
             break;
 
         case ANIM_STATUS(StalkerAnim_1, false):
         case ANIM_STATUS(StalkerAnim_42, false):
             func_80070400(stalker,
-                          &sharedData_800DE580_0_s00[19 + stalker->properties_E4.stalker.keyframeIdx_FC],
-                          &sharedData_800DEC74_0_s00[stalker->properties_E4.stalker.relKeyframeIdx_FE]);
+                          &sharedData_800DE580_0_s00[19 + stalkerProps.keyframeIdx_FC],
+                          &sharedData_800DEC74_0_s00[stalkerProps.relKeyframeIdx_FE]);
             break;
 
         case ANIM_STATUS(StalkerAnim_1, true):
@@ -347,8 +349,8 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
         case ANIM_STATUS(StalkerAnim_3, false):
         case ANIM_STATUS(StalkerAnim_43, false):
             func_80070400(stalker,
-                          &sharedData_800DE580_0_s00[19 + stalker->properties_E4.stalker.keyframeIdx_FC],
-                          &sharedData_800DECB0_0_s00[stalker->properties_E4.stalker.relKeyframeIdx_FE]);
+                          &sharedData_800DE580_0_s00[19 + stalkerProps.keyframeIdx_FC],
+                          &sharedData_800DECB0_0_s00[stalkerProps.relKeyframeIdx_FE]);
             break;
 
         case ANIM_STATUS(StalkerAnim_3, true):
@@ -360,7 +362,7 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
 
         case ANIM_STATUS(StalkerAnim_2, false):
         case ANIM_STATUS(StalkerAnim_44, false):
-            keyframeIdx2 = stalker->properties_E4.stalker.keyframeIdx_FC;
+            keyframeIdx2 = stalkerProps.keyframeIdx_FC;
             keyframeIdx2--;
             keyframeIdx1 = 0;
             func_80070400(stalker, &sharedData_800DE580_0_s00[keyframeIdx2 + 20], &sharedData_800DEDA0_0_s00[keyframeIdx1]);
@@ -375,8 +377,8 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
 
         case ANIM_STATUS(StalkerAnim_4, false):
             func_80070400(stalker,
-                          &sharedData_800DE8C8_0_s00[stalker->properties_E4.stalker.keyframeIdx_FC],
-                          &sharedData_800DEE04_0_s00[stalker->properties_E4.stalker.relKeyframeIdx_FE]);
+                          &sharedData_800DE8C8_0_s00[stalkerProps.keyframeIdx_FC],
+                          &sharedData_800DEE04_0_s00[stalkerProps.relKeyframeIdx_FE]);
             break;
 
         case ANIM_STATUS(StalkerAnim_4, true):
@@ -386,11 +388,11 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             break;
 
         case ANIM_STATUS(StalkerAnim_5, false):
-            if (stalker->properties_E4.stalker.relKeyframeIdx_FE >= 2)
+            if (stalkerProps.relKeyframeIdx_FE >= 2)
             {
                 func_80070400(stalker,
-                              &sharedData_800DE8C8_0_s00[stalker->properties_E4.stalker.keyframeIdx_FC],
-                              &sharedData_800DEE40_0_s00[stalker->properties_E4.stalker.relKeyframeIdx_FE]);
+                              &sharedData_800DE8C8_0_s00[stalkerProps.keyframeIdx_FC],
+                              &sharedData_800DEE40_0_s00[stalkerProps.relKeyframeIdx_FE]);
             }
             else
             {
@@ -409,13 +411,13 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
             break;
 
         case ANIM_STATUS(StalkerAnim_30, false):
-            if (stalker->properties_E4.stalker.keyframeIdx_FC == 15)
+            if (stalkerProps.keyframeIdx_FC == 15)
             {
                 func_80070400(stalker, &sharedData_800DE580_0_s00[19], &sharedData_800DEF1C_0_s00[0]);
             }
-            else if (stalker->properties_E4.stalker.keyframeIdx_FC == 55)
+            else if (stalkerProps.keyframeIdx_FC == 55)
             {
-                func_80070400(stalker, &sharedData_800DE300_0_s00[stalker->properties_E4.stalker.relKeyframeIdx_FE], &sharedData_800DEF1C_0_s00[0]);
+                func_80070400(stalker, &sharedData_800DE300_0_s00[stalkerProps.relKeyframeIdx_FE], &sharedData_800DEF1C_0_s00[0]);
             }
             break;
 
@@ -436,4 +438,6 @@ void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker)
     }
 
     func_8005C814(&stalker->field_D8, stalker);
+
+    #undef stalkerProps
 }

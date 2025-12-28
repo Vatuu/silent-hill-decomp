@@ -4,6 +4,7 @@
 /** @brief Creeper character flags. */
 typedef enum _CreeperFlags
 {
+    CreeperFlag_None    = 0,
     CreeperFlag_0       = 1 << 0,
     CreeperFlag_1       = 1 << 1,
     CreeperFlag_2       = 1 << 2,

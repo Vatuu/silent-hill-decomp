@@ -10,6 +10,8 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* stalker)
     q3_12  angleDeltaToPlayer;
     s32    cond; // Not `bool`?
 
+    #define stalkerProps stalker->properties_E4.stalker
+
     distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
                                              g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz);
     angleDeltaToPlayer = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
@@ -35,12 +37,12 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* stalker)
         return;
     }
 
-    stalker->properties_E4.stalker.targetPositionX_F0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
-    stalker->properties_E4.stalker.targetPositionZ_F4 = g_SysWork.playerWork_4C.player_0.position_18.vz;
+    stalkerProps.targetPositionX_F0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
+    stalkerProps.targetPositionZ_F4 = g_SysWork.playerWork_4C.player_0.position_18.vz;
 
     if (distToPlayer < Q12(1.2f) && angleDeltaToPlayer < FP_ANGLE(180.0f))
     {
-        if (!(stalker->properties_E4.stalker.flags_E8 & StalkerFlag_1))
+        if (!(stalkerProps.flags_E8 & StalkerFlag_1))
         {
             stalker->model_0.state_2 = 3;
         }
@@ -51,10 +53,12 @@ void sharedFunc_800D6554_0_s00(s_SubCharacter* stalker)
 
         stalker->model_0.anim_4.status_0 = ANIM_STATUS(StalkerAnim_30, false);
 
-        stalker->properties_E4.stalker.keyframeIdx_FC    = 55;
-        stalker->properties_E4.stalker.relKeyframeIdx_FE = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model_0.anim_4.time_4, 427);
-        stalker->properties_E4.stalker.flags_E8         |= StalkerFlag_10;
+        stalkerProps.keyframeIdx_FC    = 55;
+        stalkerProps.relKeyframeIdx_FE = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model_0.anim_4.time_4, 427);
+        stalkerProps.flags_E8         |= StalkerFlag_10;
 
         sharedFunc_800D7E04_0_s00(stalker, 1363);
     }
+
+    #undef stalkerProps
 }

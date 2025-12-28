@@ -1,11 +1,13 @@
 // This inline allows getting rid of some ugly gotos, couldn't find a different way to handle it.
-static inline void Ai_Creeper_PropertiesUpdateFromStep(s_SubCharacter* chara)
+static inline void Ai_Creeper_PropertiesUpdateFromStep(s_SubCharacter* creeper)
 {
     s32 stateStep;
     
-    stateStep = chara->model_0.stateStep_3;
+    #define creeperProps creeper->properties_E4.creeper
 
-    if (chara->model_0.stateStep_3 != 3)
+    stateStep = creeper->model_0.stateStep_3;
+
+    if (creeper->model_0.stateStep_3 != 3)
     {
         if (stateStep < 3)
         {
@@ -22,18 +24,20 @@ static inline void Ai_Creeper_PropertiesUpdateFromStep(s_SubCharacter* chara)
             return;
         }
 
-        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 4;
-        chara->properties_E4.dummy.properties_E8[5].val32 = chara->position_18.vx;
-        chara->properties_E4.dummy.properties_E8[6].val32 = chara->position_18.vz;
+        creeperProps.flags_E8               |= CreeperFlag_4;
+        creeperProps.prevTargetPositionX_FC  = creeper->position_18.vx;
+        creeperProps.prevTargetPositionZ_100 = creeper->position_18.vz;
     }
 
-    if (chara->model_0.stateStep_3 == 13 || chara->model_0.stateStep_3 == 3)
+    if (creeper->model_0.stateStep_3 == 13 || creeper->model_0.stateStep_3 == 3)
     {
-        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 6;
+        creeperProps.flags_E8 |= CreeperFlag_6;
     }
 
-    chara->model_0.state_2 = 1;
-    Character_AnimSet(chara, ANIM_STATUS(11, true), 94);
+    creeper->model_0.state_2 = 1;
+    Character_AnimSet(creeper, ANIM_STATUS(11, true), 94);
+
+    #undef creeperProps
 }
 
 void Ai_Creeper_Init(s_SubCharacter* creeper)
@@ -47,6 +51,8 @@ void Ai_Creeper_Init(s_SubCharacter* creeper)
     #define RAND_HARD_MAX   0.4f
 
     s32 i;
+
+    #define creeperProps creeper->properties_E4.creeper
 
     // Checks if any other Creeper NPCs are also present, making sure to skip this `s_SubCharacter` instance in the NPC array.
     i = 0;
@@ -68,35 +74,43 @@ void Ai_Creeper_Init(s_SubCharacter* creeper)
         sharedData_800E57CC_1_s02 = 0;
     }
 
-    creeper->health_B0                                             = Q12(200.0f);
-    creeper->properties_E4.dummy.properties_E8[0].val16[0] = 0;
-    creeper->model_0.anim_4.alpha_A                                = Q12(0.0f);
-    creeper->moveSpeed_38                                          = 0;
-    creeper->headingAngle_3C                                       = creeper->rotation_24.vy;
-    creeper->field_E1_0                                            = 2;
+    creeper->health_B0              = Q12(200.0f);
+    creeperProps.flags_E8           = CreeperFlag_None;
+    creeper->model_0.anim_4.alpha_A = Q12(0.0f);
+    creeper->moveSpeed_38           = Q12(0.0f);
+    creeper->headingAngle_3C        = creeper->rotation_24.vy;
+    creeper->field_E1_0             = 2;
 
     Chara_PropertiesClear(creeper);
     Ai_Creeper_PropertiesUpdateFromStep(creeper);
     ModelAnim_AnimInfoSet(&creeper->model_0.anim_4, CREEPER_ANIM_INFOS);
     Chara_DamageClear(creeper);
 
-    creeper->properties_E4.dummy.properties_E8[3].val32 = creeper->position_18.vx;
-    creeper->properties_E4.dummy.properties_E8[4].val32 = creeper->position_18.vz;
+    creeperProps.targetPositionX_F4 = creeper->position_18.vx;
+    creeperProps.targetPositionZ_F8 = creeper->position_18.vz;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        creeper->properties_E4.dummy.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT_PRECISE((Q12(BASE_EASY_VAL) + (Rng_Rand16() % Q12(RAND_EASY_MAX))), 2.0f, Q12_SHIFT);
+        creeperProps.moveSpeed_10C = FP_MULTIPLY_FLOAT_PRECISE((Q12(BASE_EASY_VAL) + (Rng_Rand16() % Q12(RAND_EASY_MAX))), 2.0f, Q12_SHIFT);
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
-        creeper->properties_E4.dummy.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT_PRECISE((Q12(BASE_NORMAL_VAL) + (Rng_Rand16() % Q12(RAND_NORMAL_MAX))), 2.0f, Q12_SHIFT);
+        creeperProps.moveSpeed_10C = FP_MULTIPLY_FLOAT_PRECISE((Q12(BASE_NORMAL_VAL) + (Rng_Rand16() % Q12(RAND_NORMAL_MAX))), 2.0f, Q12_SHIFT);
     }
     else
     {
-        creeper->properties_E4.dummy.properties_E8[9].val16[0] = FP_MULTIPLY_FLOAT_PRECISE((Q12(BASE_HARD_VAL) + (Rng_Rand16() % Q12(RAND_HARD_MAX))), 2.0f, Q12_SHIFT);
+        creeperProps.moveSpeed_10C = FP_MULTIPLY_FLOAT_PRECISE((Q12(BASE_HARD_VAL) + (Rng_Rand16() % Q12(RAND_HARD_MAX))), 2.0f, Q12_SHIFT);
     }
 
 #ifdef MAP5_S00
     creeper->flags_3E |= CharaFlag_Unk9;
 #endif
+
+    #undef BASE_EASY_VAL
+    #undef BASE_NORMAL_VAL
+    #undef BASE_HARD_VAL
+    #undef RAND_EASY_MAX
+    #undef RAND_NORMAL_MAX
+    #undef RAND_HARD_MAX
+    #undef creeperProps
 }

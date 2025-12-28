@@ -5,16 +5,18 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
     q19_12      prevMoveSpeed;
     u16         newFlags;
 
+    #define stalkerProps stalker->properties_E4.stalker
+
     stalker->field_34       = stalker->field_34 + g_DeltaTime2;
     newHeadingAngle         = func_8005BF38(stalker->rotation_24.vy);
     stalker->rotation_24.vy = newHeadingAngle;
 
-    if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_13)
+    if (stalkerProps.flags_E8 & StalkerFlag_13)
     {
         Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
         if (stalker->moveSpeed_38 == Q12(0.0f))
         {
-            stalker->properties_E4.stalker.flags_E8 &= ~StalkerFlag_13;
+            stalkerProps.flags_E8 &= ~StalkerFlag_13;
         }
     }
     else
@@ -23,7 +25,7 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
     }
 
     prevMoveSpeed = stalker->moveSpeed_38;
-    if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_WarpRotation)
+    if (stalkerProps.flags_E8 & StalkerFlag_WarpRotation)
     {
         if (stalker->model_0.state_2 == 2)
         {
@@ -37,20 +39,22 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker)
 
     if (g_DeltaTime0 != Q12(0.0f))
     {
-        func_8005CB20(stalker, &sp10, stalker->properties_E4.stalker.offset_EC, stalker->properties_E4.stalker.offset_EE);
+        func_8005CB20(stalker, &sp10, stalkerProps.offset_EC, stalkerProps.offset_EE);
     }
 
-    stalker->properties_E4.stalker.offset_EE = Q12(0.0f);
-    stalker->properties_E4.stalker.offset_EC = Q12(0.0f);
-    stalker->moveSpeed_38                   = prevMoveSpeed;
+    stalkerProps.offset_EE = Q12(0.0f);
+    stalkerProps.offset_EC = Q12(0.0f);
+    stalker->moveSpeed_38  = prevMoveSpeed;
 
     if (stalker->field_34 != Q12(0.0f))
     {
-        newFlags = stalker->properties_E4.stalker.flags_E8 | StalkerFlag_8;
+        newFlags = stalkerProps.flags_E8 | StalkerFlag_8;
     }
     else
     {
-        newFlags = stalker->properties_E4.stalker.flags_E8 & ~StalkerFlag_8;
+        newFlags = stalkerProps.flags_E8 & ~StalkerFlag_8;
     }
-    stalker->properties_E4.stalker.flags_E8 = newFlags;
+    stalkerProps.flags_E8 = newFlags;
+
+    #undef stalkerProps
 }

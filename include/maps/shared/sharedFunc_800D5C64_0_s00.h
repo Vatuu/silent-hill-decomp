@@ -16,8 +16,10 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
     s32    cond;
     q19_12 duration;
 
+    #define stalkerProps stalker->properties_E4.stalker
+
     stalker->flags_3E &= ~CharaFlag_Unk2;
-    if (!(stalker->properties_E4.stalker.flags_E8 & StalkerFlag_13))
+    if (!(stalkerProps.flags_E8 & StalkerFlag_13))
     {
         Chara_MoveSpeedUpdate(stalker, Q12(1.5f));
     }
@@ -50,24 +52,24 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
         duration = STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant;
         step     = (FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT) * animMult) / animDiv;
 
-        stalker->properties_E4.stalker.offset_EC = FP_MULTIPLY(step, Math_Sin(stalker->rotation_24.vy), Q12_SHIFT);
-        stalker->properties_E4.stalker.offset_EE = FP_MULTIPLY(step, Math_Cos(stalker->rotation_24.vy), Q12_SHIFT);
+        stalkerProps.offset_EC = FP_MULTIPLY(step, Math_Sin(stalker->rotation_24.vy), Q12_SHIFT);
+        stalkerProps.offset_EE = FP_MULTIPLY(step, Math_Cos(stalker->rotation_24.vy), Q12_SHIFT);
     }
 
-    if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_7)
+    if (stalkerProps.flags_E8 & StalkerFlag_7)
     {
         frameIdx = FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT);
         if ((frameIdx >= 121 && frameIdx < 129) ||
             (frameIdx >= 149 && frameIdx < 158) ||
             (frameIdx >= 171 && frameIdx < 176))
         {
-            stalker->properties_E4.stalker.flags_E8 &= ~StalkerFlag_7;
+            stalkerProps.flags_E8 &= ~StalkerFlag_7;
         }
     }
 
     if (stalker->model_0.anim_4.status_0 == ANIM_STATUS(StalkerAnim_27, true) && !Rng_GenerateInt(0, 3)) // 1 in 4 chance.
     {
-        if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_1)
+        if (stalkerProps.flags_E8 & StalkerFlag_1)
         {
             stalker->model_0.state_2 = 2;
         }
@@ -76,9 +78,9 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
             stalker->model_0.state_2 = 3;
         }
 
-        stalker->model_0.anim_4.status_0                 = ANIM_STATUS(StalkerAnim_30, false);
-        stalker->properties_E4.stalker.keyframeIdx_FC    = ANIM_STATUS(StalkerAnim_27, true);
-        stalker->properties_E4.stalker.relKeyframeIdx_FE = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model_0.anim_4.time_4, 427);
+        stalker->model_0.anim_4.status_0 = ANIM_STATUS(StalkerAnim_30, false);
+        stalkerProps.keyframeIdx_FC      = ANIM_STATUS(StalkerAnim_27, true);
+        stalkerProps.relKeyframeIdx_FE   = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model_0.anim_4.time_4, 427);
     }
 
     // @hack `animDiv` has to be used for certain stuff for a match, weird.
@@ -99,7 +101,9 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
 
     if (cond || func_80070360(stalker, Q12(0.0f), Q12(1.0f)))
     {
-        stalker->properties_E4.stalker.targetPositionX_F0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
-        stalker->properties_E4.stalker.targetPositionZ_F4 = g_SysWork.playerWork_4C.player_0.position_18.vz;
+        stalkerProps.targetPositionX_F0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
+        stalkerProps.targetPositionZ_F4 = g_SysWork.playerWork_4C.player_0.position_18.vz;
     }
+
+    #undef stalkerProps
 }

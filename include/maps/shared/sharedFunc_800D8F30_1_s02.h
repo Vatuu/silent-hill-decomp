@@ -7,6 +7,8 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creeper)
     q19_12  moveSpeed;
     q19_12  moveSpeedTmp0;
 
+    #define creeperProps creeper->properties_E4.creeper
+
     // TODO: Using name `playerPos` causes decomp.me context errors. Change name when all functions are matched.
     #define PLAYER_POS (g_SysWork.playerWork_4C.player_0.position_18)
 
@@ -30,7 +32,7 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creeper)
         }
         else
         {
-            moveSpeed0 = creeper->properties_E4.creeper.moveSpeed_10C / 2;
+            moveSpeed0 = creeperProps.moveSpeed_10C / 2;
 
             // TODO: Why don't either of these fit?
             // creeper->moveSpeed_38 = APPROACH(creeper->moveSpeed_38, moveSpeed0, FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(6.0f), Q12_SHIFT));
@@ -88,12 +90,12 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creeper)
                       creeper, &creeperPos, &g_SysWork.playerWork_4C.player_0, creeper->rotation_24.vy,
                       ratan2(Q12(0.4f), (PLAYER_POS.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_2) - (creeper->position_18.vy + creeper->field_C8.field_2)));
 
-        if (!(creeper->properties_E4.creeper.flags_E8 & CreeperFlag_0))
+        if (!(creeperProps.flags_E8 & CreeperFlag_0))
         {
             func_8005DC1C(Sfx_Unk1424, &creeper->position_18, Q8(0.5f), 0);
         }
 
-        creeper->properties_E4.creeper.flags_E8 |= CreeperFlag_0;
+        creeperProps.flags_E8 |= CreeperFlag_0;
 
         // Alert other Creepers.
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
@@ -107,10 +109,12 @@ void sharedFunc_800D8F30_1_s02(s_SubCharacter* creeper)
     }
     else if (ANIM_STATUS_IDX_GET(creeper->model_0.anim_4.status_0) == CreeperAnim_13)
     {
-        g_SysWork.field_2284[3]                     &= ~(1 << 1);
-        creeper->model_0.state_2                     = 2;
-        creeper->properties_E4.creeper.timer_F0      = Q12(0.0f);
-        creeper->properties_E4.creeper.rotationY_108 = Chara_HeadingAngleGet(creeper, Q12(4.8f), PLAYER_POS.vx, PLAYER_POS.vz, FP_ANGLE(360.0f), false);
-        creeper->field_44.field_0                    = 0;
+        g_SysWork.field_2284[3]   &= ~(1 << 1);
+        creeper->model_0.state_2   = 2;
+        creeperProps.timer_F0      = Q12(0.0f);
+        creeperProps.rotationY_108 = Chara_HeadingAngleGet(creeper, Q12(4.8f), PLAYER_POS.vx, PLAYER_POS.vz, FP_ANGLE(360.0f), false);
+        creeper->field_44.field_0   = 0;
     }
+
+    #undef creeperProps
 }

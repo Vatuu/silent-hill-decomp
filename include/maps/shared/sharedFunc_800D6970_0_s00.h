@@ -14,16 +14,18 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
     s_AnimInfo*                  animInfo;
     s_sharedFunc_800D6970_0_s00* ptr;
 
+    #define stalkerProps stalker->properties_E4.stalker
+
     func_8003DD80(stalker->model_0.charaId_0, 2);
 
     switch (stalker->model_0.anim_4.status_0)
     {
         case ANIM_STATUS(StalkerAnim_7, false):
-            STALKER_ANIM_INFOS[ANIM_STATUS(StalkerAnim_7, false)].endKeyframeIdx_E = stalker->properties_E4.stalker.relKeyframeIdx_FE + 50;
+            STALKER_ANIM_INFOS[ANIM_STATUS(StalkerAnim_7, false)].endKeyframeIdx_E = stalkerProps.relKeyframeIdx_FE + 50;
             break;
 
         case ANIM_STATUS(StalkerAnim_7, true):
-            STALKER_ANIM_INFOS[ANIM_STATUS(StalkerAnim_7, true)].startKeyframeIdx_C = (stalker->properties_E4.stalker.relKeyframeIdx_FE + 50);
+            STALKER_ANIM_INFOS[ANIM_STATUS(StalkerAnim_7, true)].startKeyframeIdx_C = (stalkerProps.relKeyframeIdx_FE + 50);
 
             if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 50, 58))
             {
@@ -49,46 +51,46 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
 
         case ANIM_STATUS(StalkerAnim_1, false):
         case ANIM_STATUS(StalkerAnim_42, false):
-            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].endKeyframeIdx_E = stalker->properties_E4.stalker.relKeyframeIdx_FE;
+            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].endKeyframeIdx_E = stalkerProps.relKeyframeIdx_FE;
             break;
 
         case ANIM_STATUS(StalkerAnim_1, true):
         case ANIM_STATUS(StalkerAnim_42, true):
-            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].startKeyframeIdx_C = stalker->properties_E4.stalker.relKeyframeIdx_FE;
+            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].startKeyframeIdx_C = stalkerProps.relKeyframeIdx_FE;
             break;
 
         case ANIM_STATUS(StalkerAnim_3, false):
         case ANIM_STATUS(StalkerAnim_43, false):
-            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].endKeyframeIdx_E = stalker->properties_E4.stalker.relKeyframeIdx_FE + 9;
+            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].endKeyframeIdx_E = stalkerProps.relKeyframeIdx_FE + 9;
             break;
 
         case ANIM_STATUS(StalkerAnim_3, true):
         case ANIM_STATUS(StalkerAnim_43, true):
-            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].startKeyframeIdx_C = stalker->properties_E4.stalker.relKeyframeIdx_FE + 9;
+            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].startKeyframeIdx_C = stalkerProps.relKeyframeIdx_FE + 9;
             break;
 
         case ANIM_STATUS(StalkerAnim_4, false):
-            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].endKeyframeIdx_E = stalker->properties_E4.stalker.relKeyframeIdx_FE + 20;
+            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].endKeyframeIdx_E = stalkerProps.relKeyframeIdx_FE + 20;
             break;
 
         case ANIM_STATUS(StalkerAnim_4, true):
-            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].startKeyframeIdx_C = stalker->properties_E4.stalker.relKeyframeIdx_FE + 20;
+            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].startKeyframeIdx_C = stalkerProps.relKeyframeIdx_FE + 20;
             break;
 
         case ANIM_STATUS(StalkerAnim_5, false):
-            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].endKeyframeIdx_E = stalker->properties_E4.stalker.relKeyframeIdx_FE + 25;
+            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].endKeyframeIdx_E = stalkerProps.relKeyframeIdx_FE + 25;
             break;
 
         case ANIM_STATUS(StalkerAnim_5, true):
-            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].startKeyframeIdx_C = stalker->properties_E4.stalker.relKeyframeIdx_FE + 25;
+            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].startKeyframeIdx_C = stalkerProps.relKeyframeIdx_FE + 25;
             break;
 
         case ANIM_STATUS(StalkerAnim_24, false):
-            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].endKeyframeIdx_E = stalker->properties_E4.stalker.relKeyframeIdx_FE + 395;
+            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].endKeyframeIdx_E = stalkerProps.relKeyframeIdx_FE + 395;
             break;
 
         case ANIM_STATUS(StalkerAnim_24, true):
-            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].startKeyframeIdx_C = stalker->properties_E4.stalker.relKeyframeIdx_FE + 395;
+            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].startKeyframeIdx_C = stalkerProps.relKeyframeIdx_FE + 395;
             break;
     }
 
@@ -129,7 +131,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
                              ptr->field_20.vy - (stalker->position_18.vy + stalker->field_C8.field_8)));
     }
 
-    ptr->angle_44 = stalker->properties_E4.stalker.angle_114;
+    ptr->angle_44 = stalkerProps.angle_114;
 
     if (stalker->model_0.state_2 == 2 || stalker->model_0.state_2 == 3)
     {
@@ -141,8 +143,8 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
 
         if (temp < Q12(3.0f) && ABS(ptr->angle_46) < FP_ANGLE(45.0f))
         {
-            if (sharedData_800E3A18_0_s00 == stalker->properties_E4.stalker.targetPositionX_F0 &&
-                sharedData_800E3A1C_0_s00 == stalker->properties_E4.stalker.targetPositionZ_F4)
+            if (sharedData_800E3A18_0_s00 == stalkerProps.targetPositionX_F0 &&
+                sharedData_800E3A1C_0_s00 == stalkerProps.targetPositionZ_F4)
             {
                 if (ptr->angle_46 > FP_ANGLE(0.0f))
                 {
@@ -184,5 +186,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
     Math_RotMatrixZxyNegGte(&ptr->field_30, &ptr->field_0);
     MulMatrix(&coord[3].coord, &ptr->field_0);
 
-    stalker->properties_E4.stalker.angle_114 = ptr->angle_44;
+    stalkerProps.angle_114 = ptr->angle_44;
+
+    #undef stalkerProps
 }

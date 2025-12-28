@@ -1,5 +1,7 @@
 void sharedFunc_800D8244_1_s02(s_SubCharacter* creeper)
 {
+    #define creeperProps creeper->properties_E4.creeper
+
     switch (creeper->model_0.state_2)
     {
         case 1:
@@ -27,5 +29,7 @@ void sharedFunc_800D8244_1_s02(s_SubCharacter* creeper)
     }
 
     // Reset alerted flag.
-    creeper->properties_E4.creeper.flags_E8 &= ~CreeperFlag_Alerted;
+    creeperProps.flags_E8 &= ~CreeperFlag_Alerted;
+
+    #undef creeperProps
 }

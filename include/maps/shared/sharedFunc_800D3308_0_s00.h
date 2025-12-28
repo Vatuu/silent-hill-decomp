@@ -6,6 +6,8 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
     q19_12 var_a0;
     q20_12 var_v1;
 
+    #define stalkerProps stalker->properties_E4.stalker
+
     var_a0 = stalker->properties_E4.npc.field_10C - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(20.0f), Q12_SHIFT);
     stalker->properties_E4.npc.field_10C = MAX(var_a0, Q12(0.0f));
 
@@ -33,12 +35,12 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
             stalker->health_B0 = MAX(stalker->health_B0 - stalker->damage_B4.amount_C, Q12(0.0f));
 
             stalker->properties_E4.player.field_110                        -= stalker->damage_B4.amount_C >> 2;
-            stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_0 | StalkerFlag_10;
+            stalkerProps.flags_E8 |= StalkerFlag_0 | StalkerFlag_10;
 
             stalker->damage_B4.position_0.vx += FP_MULTIPLY(stalker->moveSpeed_38, Math_Sin(stalker->headingAngle_3C), Q12_SHIFT) >> 3;
             stalker->damage_B4.position_0.vz += FP_MULTIPLY(stalker->moveSpeed_38, Math_Cos(stalker->headingAngle_3C), Q12_SHIFT) >> 3;
 
-            if (stalker->properties_E4.stalker.flags_E8 & 0x40)
+            if (stalkerProps.flags_E8 & 0x40)
             {
                 mag          = Math_Vector2MagCalc(stalker->damage_B4.position_0.vx, stalker->damage_B4.position_0.vz);
                 stalker->moveSpeed_38 = (mag << 12) / 0xC000;
@@ -49,40 +51,40 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                 stalker->moveSpeed_38 = (mag << 12) / 0x1800;
             }
 
-            stalker->headingAngle_3C                                        = ratan2(stalker->damage_B4.position_0.vx, stalker->damage_B4.position_0.vz);
-            stalker->properties_E4.stalker.flags_E8 |= 0x2000;
-            stalker->properties_E4.npc.field_10C                           += stalker->damage_B4.amount_C;
+            stalker->headingAngle_3C              = ratan2(stalker->damage_B4.position_0.vx, stalker->damage_B4.position_0.vz);
+            stalkerProps.flags_E8                |= 0x2000;
+            stalker->properties_E4.npc.field_10C += stalker->damage_B4.amount_C;
 
             if (stalker->properties_E4.npc.field_10C >= sharedData_800E3A2C_0_s00 ||
-                (!(stalker->properties_E4.stalker.flags_E8 & 0x40) && stalker->health_B0 <= sharedData_800E3A24_0_s00))
+                (!(stalkerProps.flags_E8 & 0x40) && stalker->health_B0 <= sharedData_800E3A24_0_s00))
             {
                 stalker->properties_E4.npc.field_10C = 0;
 
                 angle = ABS(func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
-                                                  g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz) -
-                                           stalker->rotation_24.vy));
+                                                 g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz) -
+                                          stalker->rotation_24.vy));
 
-                if (stalker->properties_E4.stalker.flags_E8 & 0x40)
+                if (stalkerProps.flags_E8 & 0x40)
                 {
                     if (stalker->model_0.anim_4.status_0 == 0x35)
                     {
                         stalker->properties_E4.dummy.properties_E8[5].val16[0] = NO_VALUE;
-                        stalker->model_0.anim_4.status_0                               = 0x4C;
+                        stalker->model_0.anim_4.status_0                       = 0x4C;
                     }
                     else if (stalker->model_0.anim_4.status_0 == 0x23)
                     {
                         stalker->properties_E4.dummy.properties_E8[5].val16[0] = NO_VALUE;
-                        stalker->model_0.anim_4.status_0                               = 0x4E;
+                        stalker->model_0.anim_4.status_0                       = 0x4E;
                     }
                     else if (stalker->model_0.anim_4.status_0 == 0x25)
                     {
                         stalker->properties_E4.dummy.properties_E8[5].val16[0] = NO_VALUE;
-                        stalker->model_0.anim_4.status_0                               = 0x50;
+                        stalker->model_0.anim_4.status_0                       = 0x50;
                     }
                 }
                 else
                 {
-                    if (stalker->health_B0 > sharedData_800E3A24_0_s00 && !(stalker->properties_E4.stalker.flags_E8 & 0x80))
+                    if (stalker->health_B0 > sharedData_800E3A24_0_s00 && !(stalkerProps.flags_E8 & 0x80))
                     {
                         if (stalker->model_0.state_2 == 5)
                         {
@@ -103,7 +105,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                             }
                         }
                     }
-                    else if (stalker->properties_E4.stalker.flags_E8 & 0x80)
+                    else if (stalkerProps.flags_E8 & 0x80)
                     {
                         stalker->model_0.state_2 = 9;
 
@@ -114,12 +116,14 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                                 stalker->properties_E4.dummy.properties_E8[5].val16[0] = 0;
                                 stalker->model_0.anim_4.status_0                               = 0x4C;
                             }
-                            else if (FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) > 0x6A && FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) < 0x6D)
+                            else if (FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) > 0x6A &&
+                                     FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) < 0x6D)
                             {
                                 stalker->properties_E4.dummy.properties_E8[5].val16[0] = FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) - 0x6B;
-                                stalker->model_0.anim_4.status_0                               = 0x4C;
+                                stalker->model_0.anim_4.status_0                       = 0x4C;
                             }
-                            else if (FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) > 0x6C && FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) < 0x71)
+                            else if (FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) > 0x6C &&
+                                     FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) < 0x71)
                             {
                                 if (angle >= 0x2AA)
                                 {
@@ -186,7 +190,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                                 }
                             }
                         }
-                        else if ((stalker->model_0.anim_4.status_0 >> 1) == 0xC)
+                        else if (ANIM_STATUS_IDX_GET(stalker->model_0.anim_4.status_0) == StalkerAnim_12)
                         {
                             if (stalker->model_0.anim_4.status_0 == 0x18)
                             {
@@ -233,7 +237,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                             }
                             else
                             {
-                                stalker->model_0.anim_4.status_0                               = 0xA;
+                                stalker->model_0.anim_4.status_0                       = 0xA;
                                 stalker->properties_E4.dummy.properties_E8[5].val16[1] = 1;
                             }
                         }
@@ -242,7 +246,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                             if (stalker->model_0.anim_4.status_0 == 0x1A)
                             {
                                 stalker->properties_E4.dummy.properties_E8[5].val16[0] = 0;
-                                stalker->model_0.anim_4.status_0                               = 0x50;
+                                stalker->model_0.anim_4.status_0                       = 0x50;
                             }
                             else
                             {
@@ -255,7 +259,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                                 else if (FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) < 0xA0 || FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) > 0xA8)
                                 {
                                     stalker->properties_E4.dummy.properties_E8[5].val16[1] = 0;
-                                    stalker->model_0.anim_4.status_0                               = 0xA;
+                                    stalker->model_0.anim_4.status_0                       = 0xA;
                                 }
                                 else
                                 {
@@ -263,7 +267,8 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                                 }
                             }
                         }
-                        stalker->properties_E4.stalker.flags_E8 &= 0xFF7F;
+
+                        stalkerProps.flags_E8 &= 0xFF7F;
                     }
                     else
                     {
@@ -296,31 +301,32 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                             if (stalker->model_0.anim_4.status_0 == 23)
                             {
                                 stalker->properties_E4.dummy.properties_E8[5].val16[1] = 23;
-                                stalker->model_0.anim_4.status_0                               = 0x32;
+                                stalker->model_0.anim_4.status_0                       = 0x32;
                                 stalker->properties_E4.dummy.properties_E8[5].val16[0] = FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) - 0x6B;
                             }
                             else if (stalker->model_0.anim_4.status_0 == 25)
                             {
                                 stalker->properties_E4.dummy.properties_E8[5].val16[1] = 25;
-                                stalker->model_0.anim_4.status_0                               = 0x32;
+                                stalker->model_0.anim_4.status_0                       = 0x32;
                                 stalker->properties_E4.dummy.properties_E8[5].val16[0] = FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) - 0x81;
                             }
                             else if (stalker->model_0.anim_4.status_0 == 27)
                             {
                                 stalker->properties_E4.dummy.properties_E8[5].val16[1] = 27;
-                                stalker->model_0.anim_4.status_0                               = 0x32;
+                                stalker->model_0.anim_4.status_0                       = 0x32;
                                 stalker->properties_E4.dummy.properties_E8[5].val16[0] = FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) - 0x9E;
                             }
                             else
                             {
                                 stalker->properties_E4.dummy.properties_E8[5].val16[1] = 83;
-                                stalker->model_0.anim_4.status_0                               = ANIM_STATUS(41, false);
+                                stalker->model_0.anim_4.status_0                       = ANIM_STATUS(41, false);
                             }
                         }
                     }
                 }
-                stalker->properties_E4.player.runTimer_F8                       = Q12(0.0f);
-                stalker->properties_E4.stalker.flags_E8 &= 0xF7E7;
+
+                stalker->properties_E4.player.runTimer_F8 = Q12(0.0f);
+                stalkerProps.flags_E8                     &= 0xF7E7;
             }
         }
     }
@@ -329,4 +335,6 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
     stalker->damage_B4.position_0.vz = Q12(0.0f);
     stalker->damage_B4.position_0.vy = Q12(0.0f);
     stalker->damage_B4.position_0.vx = Q12(0.0f);
+
+    #undef stalkerProps
 }

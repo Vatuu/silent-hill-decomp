@@ -2,6 +2,8 @@ void sharedFunc_800D9528_1_s02(s_SubCharacter* creeper)
 {
     q19_12 dist;
 
+    #define creeperProps creeper->properties_E4.creeper
+
     if (creeper->model_0.anim_4.status_0 == ANIM_STATUS(CreeperAnim_7, true))
     {
         if (creeper->rotation_24.vy != func_8005BF38(creeper->headingAngle_3C + FP_ANGLE(180.0f)))
@@ -26,8 +28,8 @@ void sharedFunc_800D9528_1_s02(s_SubCharacter* creeper)
             dist            = baseDist / Q12(4.0f);
         }
 
-        creeper->properties_E4.creeper.offsetX_EC = FP_MULTIPLY(dist, Math_Sin(creeper->rotation_24.vy + FP_ANGLE(180.0f)), Q12_SHIFT);
-        creeper->properties_E4.creeper.offsetZ_EE = FP_MULTIPLY(dist, Math_Cos(creeper->rotation_24.vy + FP_ANGLE(180.0f)), Q12_SHIFT);
+        creeperProps.offsetX_EC = FP_MULTIPLY(dist, Math_Sin(creeper->rotation_24.vy + FP_ANGLE(180.0f)), Q12_SHIFT);
+        creeperProps.offsetZ_EE = FP_MULTIPLY(dist, Math_Cos(creeper->rotation_24.vy + FP_ANGLE(180.0f)), Q12_SHIFT);
     }
 
     if (ANIM_STATUS_IDX_GET(creeper->model_0.anim_4.status_0) == CreeperAnim_3  ||
@@ -37,4 +39,6 @@ void sharedFunc_800D9528_1_s02(s_SubCharacter* creeper)
     {
         creeper->model_0.state_2 = 5;
     }
+
+    #undef creeperProps
 }

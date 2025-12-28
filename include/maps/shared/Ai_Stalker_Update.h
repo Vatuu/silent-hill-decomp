@@ -1,5 +1,7 @@
 void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
+    #define stalkerProps stalker->properties_E4.stalker
+
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
     {
         sharedData_800E3A20_0_s00 = Q12(350.0f);
@@ -45,6 +47,8 @@ void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINAT
             sharedFunc_800D7BE8_0_s00(stalker);
         }
 
-        stalker->properties_E4.stalker.flags_E8 &= ~StalkerFlag_WarpRotation;
+        stalkerProps.flags_E8 &= ~StalkerFlag_WarpRotation;
     }
+
+    #undef stalkerProps
 }

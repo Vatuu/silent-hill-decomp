@@ -1,9 +1,11 @@
 void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
 {
+    #define creeperProps creeper->properties_E4.creeper
+
     if (creeper->damage_B4.amount_C > Q12(0.0f) && creeper->health_B0 > Q12(0.0f))
     {
         func_8005DC1C(Sfx_Unk1425, &creeper->position_18, Q8_CLAMPED(0.5f), 0);
-        creeper->properties_E4.creeper.timer_104 = Q12(0.0f);
+        creeperProps.timer_104 = Q12(0.0f);
 
         // TODO: Weird position scaling?
         creeper->damage_B4.position_0.vx += (creeper->moveSpeed_38 * Math_Sin(creeper->headingAngle_3C)) >> 15;
@@ -16,13 +18,13 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
         creeper->field_34        = FP_TO(creeper->damage_B4.position_0.vy, Q12_SHIFT) / Q12(0.8f);
         creeper->headingAngle_3C = Rng_AddGeneratedUInt(ratan2(creeper->damage_B4.position_0.vx, creeper->damage_B4.position_0.vz), -128, 127);
 
-        creeper->properties_E4.creeper.flags_E8 |= CreeperFlag_1;
+        creeperProps.flags_E8 |= CreeperFlag_1;
 
         if (ANIM_STATUS_IDX_GET(creeper->model_0.anim_4.status_0) == CreeperAnim_7)
         {
             creeper->health_B0 = Q12(0.0f);
 
-            creeper->properties_E4.creeper.animStatus_10A = ANIM_STATUS(CreeperAnim_16, true);
+            creeperProps.animStatus_10A = ANIM_STATUS(CreeperAnim_16, true);
             if (creeper->model_0.anim_4.status_0 == ANIM_STATUS(CreeperAnim_7, true))
             {
                 creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_16, true);
@@ -36,7 +38,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
         {
             creeper->health_B0 = Q12(0.0f);
 
-            creeper->properties_E4.creeper.animStatus_10A = ANIM_STATUS(CreeperAnim_17, true);
+            creeperProps.animStatus_10A = ANIM_STATUS(CreeperAnim_17, true);
             if (creeper->model_0.anim_4.status_0 == ANIM_STATUS(CreeperAnim_8, true))
             {
                 creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_17, true);
@@ -88,4 +90,6 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
         creeper->damage_B4.position_0.vy = Q12(0.0f);
         creeper->damage_B4.position_0.vx = Q12(0.0f);
     }
+
+    #undef creeperProps
 }

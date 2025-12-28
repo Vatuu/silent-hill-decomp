@@ -1344,12 +1344,12 @@ typedef struct _PropertiesCreeper
     s8     unk_EA[2];
     q3_12  offsetX_EC;
     q3_12  offsetZ_EE;
-    q19_12 timer_F0;            // Timer with unknown purpose.
-    q19_12 playerPositionX_F4;  // Or target position, which happens to be derived from the player.
-    q19_12 playerPositionZ_F8;
-    q19_12 playerPositionX_FC;  // } Previous player position? Backup? Last alerted position?
-    q19_12 playerPositionZ_100; // }
-    q19_12 timer_104;           // Timer with unknown purpose.
+    q19_12 timer_F0;                // Timer with unknown purpose.
+    q19_12 targetPositionX_F4;
+    q19_12 targetPositionZ_F8;
+    q19_12 prevTargetPositionX_FC;  // } Unsure. Maybe home position to return to? 
+    q19_12 prevTargetPositionZ_100; // }
+    q19_12 timer_104;               // Timer with unknown purpose.
     q3_12  rotationY_108;
     s16    animStatus_10A;
     q4_12  moveSpeed_10C;

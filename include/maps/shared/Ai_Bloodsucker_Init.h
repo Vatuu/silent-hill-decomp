@@ -8,7 +8,7 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
         case 17:
             chara->model_0.state_2     = 1;
             chara->model_0.stateStep_3 = 0;
-            Character_AnimSet(chara, ANIM_STATUS(7, true), 81);
+            Character_AnimSet(chara, ANIM_STATUS(BloodsuckerAnim_7, true), 81);
             return;
 
 #ifdef MAP7_S02 // MAP7_S02 skips rest of function.

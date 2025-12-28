@@ -10,6 +10,8 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* stalker)
     q19_12 deltaX;
     q19_12 deltaZ;
 
+    #define stalkerProps stalker->properties_E4.stalker
+
     distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
                                        g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz);
 
@@ -40,9 +42,9 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* stalker)
 
     condCombo |= func_80070360(stalker, distToPlayer, Q12(0.8f));
 
-    if (!(stalker->properties_E4.stalker.flags_E8 & StalkerFlag_13))
+    if (!(stalkerProps.flags_E8 & StalkerFlag_13))
     {
-        if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_11)
+        if (stalkerProps.flags_E8 & StalkerFlag_11)
         {
             Chara_MoveSpeedUpdate3(stalker, Q12(0.5f), Q12(0.35f));
         }
@@ -52,8 +54,8 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* stalker)
         }
     }
 
-    offsetX      = stalker->position_18.vx - stalker->properties_E4.stalker.targetPositionX_F0;
-    offsetZ      = stalker->position_18.vz - stalker->properties_E4.stalker.targetPositionZ_F4;
+    offsetX      = stalker->position_18.vx - stalkerProps.targetPositionX_F0;
+    offsetZ      = stalker->position_18.vz - stalkerProps.targetPositionZ_F4;
     distToTarget = MAX(ABS(offsetX), ABS(offsetZ));
 
     if (!(stalker->properties_E4.player.afkTimer_E8 & 0x18))
@@ -62,36 +64,36 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* stalker)
             (!Rng_GenerateInt(0, 127) &&                               // 1 in 128 chance.
              Rng_GenerateUInt(0, Q12(1.0f) - 1) < FP_TO(distToTarget, Q12_SHIFT) / Q12(4.0f)))
         {
-            if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_11)
+            if (stalkerProps.flags_E8 & StalkerFlag_11)
             {
                 deltaX = Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1) - offsetX;
                 deltaZ = Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1) - offsetZ;
-                stalker->properties_E4.stalker.targetHeadingAngle_100 = ratan2(deltaX, deltaZ);
+                stalkerProps.targetHeadingAngle_100 = ratan2(deltaX, deltaZ);
             }
             else
             {
                 deltaX = Rng_GenerateInt(Q12(-4.0f), Q12(4.0f) - 1) - offsetX;
                 deltaZ = Rng_GenerateInt(Q12(-4.0f), Q12(4.0f) - 1) - offsetZ;
-                stalker->properties_E4.stalker.targetHeadingAngle_100 = ratan2(deltaX, deltaZ);
+                stalkerProps.targetHeadingAngle_100 = ratan2(deltaX, deltaZ);
             }
 
-            stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_3;
+            stalkerProps.flags_E8 |= StalkerFlag_3;
         }
     }
 
-    if (!(stalker->properties_E4.stalker.flags_E8 & StalkerFlag_4) && func_8007029C(stalker, Q12(1.0f), stalker->rotation_24.vy))
+    if (!(stalkerProps.flags_E8 & StalkerFlag_4) && func_8007029C(stalker, Q12(1.0f), stalker->rotation_24.vy))
     {
-        stalker->properties_E4.stalker.targetHeadingAngle_100 = func_8006F99C(stalker, Q12(3.5f), stalker->rotation_24.vy);
-        if (stalker->properties_E4.stalker.targetHeadingAngle_100 == StalkerFlag_WarpRotation)
+        stalkerProps.targetHeadingAngle_100 = func_8006F99C(stalker, Q12(3.5f), stalker->rotation_24.vy);
+        if (stalkerProps.targetHeadingAngle_100 == StalkerFlag_WarpRotation)
         {
-            stalker->properties_E4.stalker.targetHeadingAngle_100 = stalker->rotation_24.vy + FP_ANGLE(180.0f);
+            stalkerProps.targetHeadingAngle_100 = stalker->rotation_24.vy + FP_ANGLE(180.0f);
         }
 
-        stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_4;
+        stalkerProps.flags_E8 |= StalkerFlag_4;
     }
 
     // Smoothly rotate toward target direction
-    angle = func_8005BF38(stalker->properties_E4.stalker.targetHeadingAngle_100 - stalker->rotation_24.vy);
+    angle = func_8005BF38(stalkerProps.targetHeadingAngle_100 - stalker->rotation_24.vy);
 
     if ((((g_DeltaTime0 >> 4) + 1) < ABS(angle)))
     {
@@ -106,53 +108,53 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* stalker)
     }
     else
     {
-        stalker->properties_E4.stalker.flags_E8 &= ~(StalkerFlag_3 | StalkerFlag_4);
+        stalkerProps.flags_E8 &= ~(StalkerFlag_3 | StalkerFlag_4);
     }
 
     // Handle aggressive/chase mode.
-    if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_11)
+    if (stalkerProps.flags_E8 & StalkerFlag_11)
     {
         if (!Rng_GenerateInt(0, 1023)) // 1 in 1024 chance.
         {
-            stalker->properties_E4.stalker.flags_E8 &= ~StalkerFlag_3;
+            stalkerProps.flags_E8 &= ~StalkerFlag_3;
         }
 
         if (!Rng_GenerateInt(0, 1023)) // 1 in 1024 chance.
         {
-            stalker->properties_E4.stalker.flags_E8 &= ~StalkerFlag_4;
+            stalkerProps.flags_E8 &= ~StalkerFlag_4;
         }
 
         if (distToPlayer < Q12(2.0f) && distToPlayer < dist1 && !func_800700F8(stalker, &g_SysWork.playerWork_4C.player_0))
         {
-            stalker->properties_E4.stalker.timer_F8  = Q12(5.0f);
-            stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_0;
-            stalker->properties_E4.stalker.flags_E8 &= ~StalkerFlag_11;
+            stalkerProps.timer_F8  = Q12(5.0f);
+            stalkerProps.flags_E8 |= StalkerFlag_0;
+            stalkerProps.flags_E8 &= ~StalkerFlag_11;
         }
     }
 
-    if ((stalker->properties_E4.stalker.flags_E8 & StalkerFlag_0))
+    if ((stalkerProps.flags_E8 & StalkerFlag_0))
     {
-        if ((stalker->properties_E4.stalker.flags_E8 & StalkerFlag_10) || condCombo)
+        if ((stalkerProps.flags_E8 & StalkerFlag_10) || condCombo)
         {
             if (condCombo)
             {
-                stalker->properties_E4.stalker.targetPositionX_F0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
-                stalker->properties_E4.stalker.targetPositionZ_F4 = g_SysWork.playerWork_4C.player_0.position_18.vz;
-                stalker->properties_E4.stalker.timer_116          = Q12(0.0f);
+                stalkerProps.targetPositionX_F0 = g_SysWork.playerWork_4C.player_0.position_18.vx;
+                stalkerProps.targetPositionZ_F4 = g_SysWork.playerWork_4C.player_0.position_18.vz;
+                stalkerProps.timer_116          = Q12(0.0f);
             }
 
-            if (!(stalker->properties_E4.stalker.flags_E8 & StalkerFlag_10))
+            if (!(stalkerProps.flags_E8 & StalkerFlag_10))
             {
-                stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_10;
+                stalkerProps.flags_E8 |= StalkerFlag_10;
                 sharedFunc_800D7E04_0_s00(stalker, 1363);
             }
 
-            if (((!Rng_GenerateInt(0, 15) && stalker->properties_E4.stalker.timer_F8 > Q12(1.0f)) && // 1 in 16 cheance.
-                 (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_1)) ||
-                (!Rng_GenerateInt(0, 15) && stalker->properties_E4.stalker.timer_F8 > Q12(2.5f)) ||  // 1 in 16 chance.
+            if (((!Rng_GenerateInt(0, 15) && stalkerProps.timer_F8 > Q12(1.0f)) && // 1 in 16 cheance.
+                 (stalkerProps.flags_E8 & StalkerFlag_1)) ||
+                (!Rng_GenerateInt(0, 15) && stalkerProps.timer_F8 > Q12(2.5f)) ||  // 1 in 16 chance.
                 (!Rng_GenerateInt(0, 31) && ((dist1 >> 1) < distToPlayer)))                          // 1 in 32 chance.
             {
-                if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_1)
+                if (stalkerProps.flags_E8 & StalkerFlag_1)
                 {
                     stalker->model_0.state_2 = 2;
                 }
@@ -161,26 +163,28 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* stalker)
                     stalker->model_0.state_2 = 3;
                 }
 
-                stalker->properties_E4.stalker.flags_E8 &= ~(StalkerFlag_3 | StalkerFlag_4);
+                stalkerProps.flags_E8 &= ~(StalkerFlag_3 | StalkerFlag_4);
             }
             else
             {
-                stalker->properties_E4.stalker.timer_F8 += g_DeltaTime0;
+                stalkerProps.timer_F8 += g_DeltaTime0;
             }
         }
     }
 
     if (!condCombo)
     {
-        if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_10)
+        if (stalkerProps.flags_E8 & StalkerFlag_10)
         {
-            stalker->properties_E4.stalker.timer_116 += g_DeltaTime0;
+            stalkerProps.timer_116 += g_DeltaTime0;
 
-            if (!Rng_GenerateInt(0, 4095) || stalker->properties_E4.stalker.timer_116 > Q12(1.2f)) // 1 in 4096 chance.
+            if (!Rng_GenerateInt(0, 4095) || stalkerProps.timer_116 > Q12(1.2f)) // 1 in 4096 chance.
             {
-                stalker->properties_E4.stalker.timer_116 = Q12(0.0f);
-                stalker->properties_E4.stalker.flags_E8 &= ~StalkerFlag_10;
+                stalkerProps.timer_116 = Q12(0.0f);
+                stalkerProps.flags_E8 &= ~StalkerFlag_10;
             }
         }
     }
+
+    #undef stalkerProps
 }

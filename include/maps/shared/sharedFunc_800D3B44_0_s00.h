@@ -9,7 +9,9 @@ void sharedFunc_800D3B44_0_s00(s_SubCharacter* stalker)
     s32 unkAnimStatus;
     s32 animStatus;
 
-    if (stalker->properties_E4.stalker.flags_E8 & StalkerFlag_10)
+    #define stalkerProps stalker->properties_E4.stalker
+
+    if (stalkerProps.flags_E8 & StalkerFlag_10)
     {
         stalker->flags_3E |= CharaFlag_Unk3;
     }
@@ -133,4 +135,6 @@ void sharedFunc_800D3B44_0_s00(s_SubCharacter* stalker)
             sharedFunc_800D670C_0_s00(stalker);
             break;
     }
+
+    #undef stalkerProps
 }

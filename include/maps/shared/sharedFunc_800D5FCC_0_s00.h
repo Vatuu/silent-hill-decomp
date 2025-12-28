@@ -6,14 +6,15 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* stalker)
     s32    distDiv;
     q19_12 angleOffset;
 
+    #define stalkerProps stalker->properties_E4.stalker
+
     if (stalker->health_B0 < sharedData_800E3A24_0_s00)
     {
         stalker->flags_3E |= CharaFlag_Unk2;
     }
 
-    stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_6;
-
-    if (!(stalker->properties_E4.stalker.flags_E8 & StalkerFlag_13))
+    stalkerProps.flags_E8 |= StalkerFlag_6;
+    if (!(stalkerProps.flags_E8 & StalkerFlag_13))
     {
         Chara_MoveSpeedUpdate(stalker, Q12(FRICTION_PER_FRAME));
     }
@@ -31,7 +32,7 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* stalker)
     else if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 395, 402))
     {
         dist = Q12(1.0f);
-        distDiv = 8 - stalker->properties_E4.stalker.relKeyframeIdx_FE;
+        distDiv = 8 - stalkerProps.relKeyframeIdx_FE;
         angleOffset = FP_ANGLE(180.0f);
     }
     else if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 407, 412))
@@ -90,8 +91,8 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* stalker)
         dist = (s32)(dist * (u32)FP_MULTIPLY_PRECISE(STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant, g_DeltaTime0, Q12_SHIFT)) /
                FP_TO(distDiv, Q12_SHIFT);
 
-        stalker->properties_E4.stalker.offset_EC = FP_MULTIPLY(dist, Math_Sin(stalker->rotation_24.vy + angleOffset), Q12_SHIFT);
-        stalker->properties_E4.stalker.offset_EE = FP_MULTIPLY(dist, Math_Cos(stalker->rotation_24.vy + angleOffset), Q12_SHIFT);
+        stalkerProps.offset_EC = FP_MULTIPLY(dist, Math_Sin(stalker->rotation_24.vy + angleOffset), Q12_SHIFT);
+        stalkerProps.offset_EE = FP_MULTIPLY(dist, Math_Cos(stalker->rotation_24.vy + angleOffset), Q12_SHIFT);
     }
 
     if (stalker->model_0.anim_4.status_0 == ANIM_STATUS(StalkerAnim_26, true) ||
@@ -119,7 +120,7 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* stalker)
 
         if (stalker->health_B0 > sharedData_800E3A24_0_s00 &&
             !Rng_GenerateInt(0, 7) && // 1 in 8 chance.
-            !(stalker->properties_E4.stalker.flags_E8 & StalkerFlag_13))
+            !(stalkerProps.flags_E8 & StalkerFlag_13))
         {
             if (stalker->model_0.anim_4.status_0 == ANIM_STATUS(StalkerAnim_26, true))
             {
@@ -135,8 +136,10 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* stalker)
             }
             
             stalker->model_0.state_2 = 8;
-            stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_7;
-            stalker->properties_E4.stalker.flags_E8 &= ~StalkerFlag_6;
+            stalkerProps.flags_E8 |= StalkerFlag_7;
+            stalkerProps.flags_E8 &= ~StalkerFlag_6;
         }
     }
+
+    #undef stalkerProps
 }

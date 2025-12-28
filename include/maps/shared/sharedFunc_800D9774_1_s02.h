@@ -1,5 +1,7 @@
 void sharedFunc_800D9774_1_s02(s_SubCharacter* creeper)
 {
+    #define creeperProps creeper->properties_E4.creeper
+
     creeper->flags_3E &= ~CharaFlag_Unk2;
 
     if (creeper->health_B0 == Q12(0.0f) && func_8005C7D0(creeper) != g_SysWork.targetNpcIdx_2353)
@@ -23,4 +25,6 @@ void sharedFunc_800D9774_1_s02(s_SubCharacter* creeper)
             func_800622B8(3, creeper, ANIM_STATUS(CreeperAnim_5, true), 5);
         }
     }
+
+    #undef creeperProps
 }
