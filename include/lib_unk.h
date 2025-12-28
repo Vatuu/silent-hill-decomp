@@ -96,6 +96,8 @@ s32 func_8009E230(s_SysWork_2514* arg0);
 
 s32 func_8009E268(s_SysWork_2514* arg0);
 
+s32 func_8009E2A0(s_SysWork_2514* arg0);
+
 s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2);
 
 bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
