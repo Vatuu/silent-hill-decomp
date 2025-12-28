@@ -295,7 +295,6 @@ bool func_8009E7D8(s_SysWork_2510* node) // 0x8009E7D8
 s32 func_8009E82C(s_SysWork_2514* work, s32 padState, s32 padInfoCurId, s32 padInfoCurExId)
 {
     s32                 field_0_19;
-    s32*                var_t1;
     s_SysWork_2514_C_0* cur;
     s_SysWork_2514_C_0  tmp;
     s32                 i;
