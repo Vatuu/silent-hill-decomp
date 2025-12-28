@@ -1,57 +1,58 @@
 void Ai_PuppetNurse_Control(s_SubCharacter* nurse)
 {
+    // Handle control state.
     switch (nurse->model_0.state_2)
     {
-        case 1:
+        case PuppetNurseState_1:
             Ai_PuppetNurse_Control1(nurse);
             break;
 
-        case 2:
+        case PuppetNurseState_2:
             Ai_PuppetNurse_Control2(nurse);
             break;
 
-        case 3:
-            Ai_PuppetNurse_Control3_4(nurse, 1);
+        case PuppetNurseState_3:
+            Ai_PuppetNurse_Control3_4(nurse, true);
             break;
 
-        case 4:
-            Ai_PuppetNurse_Control3_4(nurse, 0);
+        case PuppetNurseState_4:
+            Ai_PuppetNurse_Control3_4(nurse, false);
             break;
 
-        case 5:
+        case PuppetNurseState_5:
             Ai_PuppetNurse_Control5(nurse);
             break;
 
-        case 6:
-            Ai_PuppetNurse_Control6_7(nurse, 0);
+        case PuppetNurseState_6:
+            Ai_PuppetNurse_Control6_7(nurse, false);
             break;
 
-        case 7:
-            Ai_PuppetNurse_Control6_7(nurse, 1);
+        case PuppetNurseState_7:
+            Ai_PuppetNurse_Control6_7(nurse, true);
             break;
 
-        case 8:
+        case PuppetNurseState_8:
             Ai_PuppetNurse_Control8(nurse);
             break;
 
-        case 9:
+        case PuppetNurseState_9:
             Ai_PuppetNurse_Control9(nurse);
             break;
 
-        case 10:
+        case PuppetNurseState_10:
             Ai_PuppetNurse_Control10(nurse);
             break;
 
-        case 11:
+        case PuppetNurseState_11:
             Ai_PuppetNurse_Control11(nurse);
             break;
 
-        case 12:
-            sharedFunc_800CF9F8_3_s03(nurse);
+        case PuppetNurseState_12:
+            Ai_PuppetNurse_Control12(nurse);
             break;
 
-        case 13:
-            sharedFunc_800D0110_3_s03(nurse);
+        case PuppetNurseState_13:
+            Ai_PuppetNurse_Control13(nurse);
             break;
     }
 }

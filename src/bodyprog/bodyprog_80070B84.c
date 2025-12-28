@@ -8986,7 +8986,7 @@ void Collision_Fill(q19_12 posX, q19_12 posZ) // 0x8008076C
                     if (posZ <= Q12(0.0f))
                     {
                         groundHeight = Q12(4.0f);
-                        count      = 7;
+                        count        = 7;
                     }
                     break;
 

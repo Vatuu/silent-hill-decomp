@@ -1,9 +1,10 @@
-void Ai_PuppetDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
+void Ai_PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (chara->model_0.state_2 == ModelState_Uninitialized)
+    // Initialize.
+    if (doctor->model_0.state_2 == ModelState_Uninitialized)
     {
-        Ai_PuppetNurse_Init(chara, 1);
+        Ai_PuppetNurse_Init(doctor, true);
     }
 
-    Ai_PuppetNurse_UpdateMain(chara, anmHdr, coords);
+    Ai_PuppetNurse_UpdateMain(doctor, anmHdr, coords);
 }

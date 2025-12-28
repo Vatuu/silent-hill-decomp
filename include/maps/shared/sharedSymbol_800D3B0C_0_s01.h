@@ -4,7 +4,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
     s32 var0;
     s32 var1;
     s32 var2;
-    u32 var3;
+    u32 controlState;
     u32 stateStep;
     s32 field40;
     u32 modelState;
@@ -51,7 +51,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
             var1 = 1;
             var2 = 3;
             animStatus = NO_VALUE;
-            var3 = 1;
+            controlState = AirScreamerState_1;
             break;
 
         case 13:
@@ -63,7 +63,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
                 var1 = 1;
                 var2 = 2;
                 animStatus = ANIM_STATUS(AirScreamerAnim_2, true);
-                var3 = 46;
+                controlState = AirScreamerState_46;
             }
             else
             {
@@ -74,40 +74,40 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
                     animStatus = NO_VALUE;
                 }
 
-                var3 = 18;
+                controlState = AirScreamerState_18;
             }
             break;
 #else
         default:
             var0 = 1;
             animStatus = ANIM_STATUS(AirScreamerAnim_23, true);
-            var3 = 3;
+            controlState = AirScreamerState_3;
             break;
 
         case 0:
         case 2:
             var0 = 1;
             animStatus = ANIM_STATUS(AirScreamerAnim_25, true);
-            var3 = 5;
+            controlState = AirScreamerState_5;
             break;
 
         case 3:
             var0 = 1;
             animStatus = ANIM_STATUS(AirScreamerAnim_19, true);
-            var3 = 19;
+            controlState = AirScreamerState_19;
             break;
 
         case 4:
             var0 = 0;
             animStatus = ANIM_STATUS(AirScreamerAnim_25, true);
-            var3 = 4;
+            controlState = AirScreamerState_4;
             stateStep = 64;
             break;
 
         case 5:
             var0 = 0;
             animStatus = ANIM_STATUS(AirScreamerAnim_19, true);
-            var3 = 18;
+            controlState = AirScreamerState_18;
             stateStep = 64;
             break;
 
@@ -115,7 +115,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
             var0 = 0;
             animStatus = ANIM_STATUS(AirScreamerAnim_17, true);
             var2 = 2;
-            var3 = 33;
+            controlState = AirScreamerState_33;
             stateStep = 64;
             break;
 
@@ -123,13 +123,13 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
             var0 = 1;
             animStatus = ANIM_STATUS(AirScreamerAnim_14, true);
             var2 = 4;
-            var3 = 9;
+            controlState = AirScreamerState_9;
             break;
 
         case 9:
             var0 = 3;
             animStatus = ANIM_STATUS(AirScreamerAnim_19, true);;
-            var3 = 19;
+            controlState = AirScreamerState_19;
             var2 = 2;
             airScreamer->health_B0 *= 4;;
             break;
@@ -137,7 +137,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
         case 11:
             var0 = 0;
             animStatus = ANIM_STATUS(AirScreamerAnim_17, true);
-            var3 = 33;
+            controlState = AirScreamerState_33;
             stateStep = 65;
             var2 = 2;
             break;
@@ -145,7 +145,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
         case 7:
             var0 = 0;
             animStatus = ANIM_STATUS(AirScreamerAnim_17, true);
-            var3 = 33;
+            controlState = AirScreamerState_33;
             stateStep = 66;
             var2 = 2;
             break;
@@ -153,7 +153,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
         case 10:
             var0 = 0;
             animStatus = ANIM_STATUS(AirScreamerAnim_17, true);
-            var3 = 33;
+            controlState = AirScreamerState_33;
             stateStep = 67;
             var2 = 2;
             airScreamer->health_B0 -= airScreamer->health_B0 >> 2;
@@ -161,14 +161,14 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
 #endif
     }
 
-    airScreamer->model_0.state_2 = var3;
+    airScreamer->model_0.state_2 = controlState;
     airScreamer->model_0.stateStep_3 = stateStep;
     airScreamerProps.flags_11C = AirScreamerFlag_None;
     airScreamerProps.field_E8_0 = var0;
     airScreamerProps.field_E8_4 = var1;
     airScreamerProps.field_E8_8 = var2;
 
-    if (var3 == 1)
+    if (controlState == AirScreamerState_1)
     {
         airScreamerProps.flags_11C = CharaUnk0Flag_Unk16;
     }

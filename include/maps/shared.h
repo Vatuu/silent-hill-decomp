@@ -1558,7 +1558,8 @@ extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
     extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[200];
 #endif
 
-extern void (*sharedData_800DD7A0_0_s01[52])(s_SubCharacter*);
+/** Air Screamer or Night Flutter control functions. Indexed using `e_AirScreamerState`. */
+extern void (*g_Ai_AirScreamer_ControlFuncs[52])(s_SubCharacter* airScreamer); // TODO: Use `AirScreamerState_Count`.
 
 extern s_MapPoint2d MAP_POINTS[];
 
@@ -2278,11 +2279,11 @@ void Ai_PuppetNurse_UpdateMain(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOO
 
 void func_800CDB5C(s_SubCharacter*, s32);
 
-void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor);
+void Ai_PuppetNurse_Init(s_SubCharacter* chara, bool isPuppetDoctor);
 
 void Ai_PuppetNurse_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_PuppetDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void Ai_PuppetNurse_DamageHandle(s_SubCharacter*);
 
@@ -2292,6 +2293,7 @@ void Ai_PuppetNurse_SfxPlay(s_SubCharacter* nurse, s32 idx);
 
 s32 Ai_PuppetNurse_AnimSfxGet(s32 idx);
 
+/** Checks damage angle. */
 bool Ai_PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse);
 
 void Ai_NursePuppet_Move(s_SubCharacter* nurse);
@@ -2302,29 +2304,29 @@ void Ai_PuppetNurse_Control1(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_Control2(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, s32 idx);
+void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor);
 
 void Ai_PuppetNurse_Control5(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control6_7(s_SubCharacter* nurse, s32 arg1);
+void Ai_PuppetNurse_Control6_7(s_SubCharacter* nurse, bool isDoctor);
 
 void Ai_PuppetNurse_Control8(s_SubCharacter* nurse);
 
 s32 sharedFunc_800CEEAC_3_s03(void);
 
-void Ai_PuppetNurse_Control9(s_SubCharacter*);
+void Ai_PuppetNurse_Control9(s_SubCharacter* nurse);
 
 void sharedFunc_800CF7F4_3_s03(s_SubCharacter* chara);
 
 bool sharedFunc_800CF90C_3_s03(s_SubCharacter* chara);
 
-void sharedFunc_800CF9F8_3_s03(s_SubCharacter* nurse);
+void Ai_PuppetNurse_Control12(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control10(s_SubCharacter*);
+void Ai_PuppetNurse_Control10(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_Control11(s_SubCharacter*);
+void Ai_PuppetNurse_Control11(s_SubCharacter* nurse);
 
-void sharedFunc_800D0110_3_s03(s_SubCharacter* nurse);
+void Ai_PuppetNurse_Control13(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_Control(s_SubCharacter* nurse);
 
@@ -2332,7 +2334,7 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
 
 void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse);
 
-void Ai_PuppetNurse_AnimUpdate(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void sharedFunc_800D0828_3_s03(s_SubCharacter* harry, GsCOORDINATE2* coords);
 
@@ -2404,6 +2406,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper);
 
 void sharedFunc_800E66E8_2_s02(s_SubCharacter* romper);
 
+// Or romper?
 void sharedFunc_800E6758_2_s02(s_SubCharacter* groaner);
 
 void sharedFunc_800E83D4_2_s02(s_SubCharacter* chara);
@@ -2608,7 +2611,7 @@ s32 Chara_DamageTake(s_SubCharacter* chara, q19_12 mult);
 
 void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7);
 
-void sharedFunc_800D3CC4_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D3CC4_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D3DFC_0_s01(s_SubCharacter* chara);
 

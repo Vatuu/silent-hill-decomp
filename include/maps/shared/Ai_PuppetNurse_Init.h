@@ -1,4 +1,4 @@
-void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
+void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
 {
     extern s_800D5710 sharedData_800D5710_3_s03[4]; // Likely static.
 
@@ -9,77 +9,81 @@ void Ai_PuppetNurse_Init(s_SubCharacter* chara, s32 isPuppetDoctor)
     s32             stateStepDiv3;
     s_SubCharacter* chara2;
 
-    chara2 = chara; // TODO: Not sure why this is needed, possibly an inline here somewhere?
+    #define nurseProps nurse->properties_E4.puppetNurse
 
-    chara->moveSpeed_38                = Q12(0.0f);
-    chara->field_E1_0                  = 3;
-    chara->headingAngle_3C             = chara->rotation_24.vy;
-    chara->properties_E4.puppetNurse.position_E8 = chara->position_18;
-    chara->field_D4.field_0                                  = Q12(0.3f);
-    chara->properties_E4.puppetNurse.damage_F4.position_0.vx = Q12(0.0f);
-    chara->properties_E4.puppetNurse.damage_F4.position_0.vy = Q12(0.0f);
-    chara->properties_E4.puppetNurse.damage_F4.position_0.vz = Q12(0.0f);
-    chara->properties_E4.puppetNurse.field_114 = 0;
-    chara->properties_E4.puppetNurse.field_118 = 0;
+    chara2 = nurse; // TODO: Not sure why this is needed, possibly an inline here somewhere?
 
-    Chara_DamageClear(chara);
+    nurse->moveSpeed_38                = Q12(0.0f);
+    nurse->field_E1_0                  = 3;
+    nurse->headingAngle_3C             = nurse->rotation_24.vy;
+    nurseProps.position_E8 = nurse->position_18;
+    nurse->field_D4.field_0                                  = Q12(0.3f);
+    nurseProps.damage_F4.position_0.vx = Q12(0.0f);
+    nurseProps.damage_F4.position_0.vy = Q12(0.0f);
+    nurseProps.damage_F4.position_0.vz = Q12(0.0f);
+    nurseProps.field_114 = 0;
+    nurseProps.field_118 = 0;
 
-    chara->properties_E4.puppetNurse.flags_122 = PuppetNurseFlag_None;
-    chara->properties_E4.puppetNurse.field_108 = chara->position_18.vx;
-    chara->properties_E4.puppetNurse.field_10C = chara->position_18.vz;
+    Chara_DamageClear(nurse);
 
-    charPalette    = (chara->model_0.stateStep_3 - 1) % 3;
-    stateStepDiv3  = (chara->model_0.stateStep_3 - 1) / 3;
+    nurseProps.flags_122 = PuppetNurseFlag_None;
+    nurseProps.field_108 = nurse->position_18.vx;
+    nurseProps.field_10C = nurse->position_18.vz;
+
+    charPalette    = (nurse->model_0.stateStep_3 - 1) % 3;
+    stateStepDiv3  = (nurse->model_0.stateStep_3 - 1) / 3;
     modelVariation = stateStepDiv3 % 3;
     charaState     = stateStepDiv3 / 3;
 
-    chara->properties_E4.puppetNurse.field_11A = 0;
-    chara->flags_3E |= CharaFlag_Unk3;
+    nurseProps.field_11A = 0;
+    nurse->flags_3E |= CharaFlag_Unk3;
 
     if (!isPuppetDoctor)
     {
         charStatIdx                                 = charPalette + 1; // Skip doctor stat at beginning.
-        chara->properties_E4.puppetNurse.modelVariation_119 = modelVariation + 1;
+        nurseProps.modelVariation_119 = modelVariation + 1;
     }
     else
     {
-        chara->properties_E4.puppetNurse.modelVariation_119 = 1;
+        nurseProps.modelVariation_119 = 1;
         charPalette                                 = 0;
         charStatIdx                                 = 0;
     }
 
     chara2->properties_E4.puppetNurse.field_124 = &sharedData_800D5710_3_s03[charStatIdx];
 
-    chara->health_B0 = chara2->properties_E4.puppetNurse.field_124->health_0;
-    chara->model_0.paletteIdx_1 = charPalette;
+    nurse->health_B0 = chara2->properties_E4.puppetNurse.field_124->health_0;
+    nurse->model_0.paletteIdx_1 = charPalette;
 
     switch (charaState)
     {
         case 0:
-            chara->model_0.state_2              = 11;
-            chara->model_0.stateStep_3          = 0;
-            chara->model_0.anim_4.time_4        = Q12(459.0f);
-            chara->model_0.anim_4.keyframeIdx_8 = 459;
+            nurse->model_0.state_2              = PuppetNurseState_11;
+            nurse->model_0.stateStep_3          = 0;
+            nurse->model_0.anim_4.time_4        = Q12(459.0f);
+            nurse->model_0.anim_4.keyframeIdx_8 = 459;
             break;
 
         case 1:
-            chara->model_0.state_2              = 10;
-            chara->model_0.stateStep_3          = 0;
-            chara->model_0.anim_4.time_4        = Q12(459.0f);
-            chara->model_0.anim_4.keyframeIdx_8 = 459;
+            nurse->model_0.state_2              = PuppetNurseState_10;
+            nurse->model_0.stateStep_3          = 0;
+            nurse->model_0.anim_4.time_4        = Q12(459.0f);
+            nurse->model_0.anim_4.keyframeIdx_8 = 459;
             break;
 
         case 2:
-            chara->model_0.state_2              = 9;
-            chara->model_0.stateStep_3          = 0;
-            chara->model_0.anim_4.time_4        = Q12(459.0f);
-            chara->model_0.anim_4.keyframeIdx_8 = 459;
+            nurse->model_0.state_2              = PuppetNurseState_9;
+            nurse->model_0.stateStep_3          = 0;
+            nurse->model_0.anim_4.time_4        = Q12(459.0f);
+            nurse->model_0.anim_4.keyframeIdx_8 = 459;
             break;
     }
 
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, chara2->properties_E4.puppetNurse.field_124->animInfo_24);
+    ModelAnim_AnimInfoSet(&nurse->model_0.anim_4, chara2->properties_E4.puppetNurse.field_124->animInfo_24);
 
-    chara->model_0.anim_4.status_0 = ANIM_STATUS(PuppetNurseAnim_17, false);
-    chara->model_0.anim_4.alpha_A  = Q12(0.0f);
+    nurse->model_0.anim_4.status_0 = ANIM_STATUS(PuppetNurseAnim_17, false);
+    nurse->model_0.anim_4.alpha_A  = Q12(0.0f);
     chara2->properties_E4.puppetNurse.field_120 = Q12(1.0f);
+
+    #undef nurseProps
 }

@@ -1,3 +1,7 @@
+/** @brief Initializes an Air Screamer or Night Flutter character.
+ *
+ * @param airScreamer Air Screamer or Night Flutter character to initialize.
+ */
 bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
 {
     #define BASE_HEALTH                 Q12(380.0f)
@@ -7,7 +11,7 @@ bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
     #define RAND_MAX_HEALTH_BONUS_HARD  100
 
     // Return early if already initialized.
-    if (airScreamer->model_0.state_2 != ModelState_Uninitialized)
+    if (airScreamer->model_0.state_2 != AirScreamerState_None)
     {
         return false;
     }

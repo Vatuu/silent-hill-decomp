@@ -1,3 +1,4 @@
+/** Probes collision and sets 1airScreamerProps.groundHeight_124`. */
 void sharedFunc_800D2200_0_s01(s_SubCharacter* airScreamer)
 {
     s32 count;

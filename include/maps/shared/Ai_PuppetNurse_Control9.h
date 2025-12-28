@@ -57,7 +57,7 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
                 if (dist < FP_MULTIPLY_PRECISE(somePtr->field_8, Q12(3.0f), Q12_SHIFT) &&
                     angleAbs < FP_ANGLE(60.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
                 {
-                    nurse->model_0.state_2 = 12;
+                    nurse->model_0.state_2 = PuppetNurseState_12;
                     nurse->model_0.stateStep_3 = 0;
                 }
             }
@@ -66,11 +66,11 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
 
     if (nurse->model_0.stateStep_3 && sharedFunc_800CE398_3_s03(nurse->model_0.anim_4.status_0))
     {
-        if (Rng_GenerateUInt(0, 31) == 0) // 1 in 32 chance.
+        if (!Rng_GenerateUInt(0, 31)) // 1 in 32 chance.
         {
             rng = Rng_Rand16();
             nurse->model_0.anim_4.status_0 = g_PuppetNurse_AnimStatus2[(rng >> 7) & 0x1];
-            nurse->model_0.state_2 = 6;
+            nurse->model_0.state_2 = PuppetNurseState_6;
             nurse->model_0.stateStep_3 = 0;
             return;
         }

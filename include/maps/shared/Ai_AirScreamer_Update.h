@@ -1,3 +1,9 @@
+/** @brief Updates an active Air Screamer or Night Flutter character.
+ *
+ * @param airScreamer Air Screamer or Night Flutter character to update.
+ * @param animHdr Animation header.
+ * @param coords TODO
+ */
 void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     sharedFunc_800D21E4_0_s01(anmHdr, coords);

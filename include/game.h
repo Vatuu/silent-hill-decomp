@@ -881,7 +881,7 @@ typedef enum _CharacterId
     Chara_Hack = NO_VALUE, // @hack Force enum to be treated as `s32`.
 } e_CharacterId;
 
-/** @brief Character model states. */
+/** @brief Character model states. TODO: Remove. Each character should have its own enum of control states. */
 typedef enum _ModelState
 {
     ModelState_Uninitialized = 0,
@@ -1204,7 +1204,7 @@ typedef struct _Model
 {
     s8          charaId_0;    /** `e_CharacterId` */
     u8          paletteIdx_1; /** Changes the texture palette index for this model. */
-    u8          state_2;      /** Current state for this model/character. */
+    u8          state_2;      /** Active character control state. */
     u8          stateStep_3;  // Step number or temp data for the current `state_2`? In `s_PlayerExtra` always 1, set to 0 for 1 tick when anim state appears to change.
                               // Used differently in player's `s_SubCharacter`. 0: anim transitioning(?), bit 1: animated, bit 2: turning.
                               // Sometimes holds actual anim index?

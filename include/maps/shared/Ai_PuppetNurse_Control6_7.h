@@ -1,10 +1,10 @@
-void Ai_PuppetNurse_Control6_7(s_SubCharacter* nurse, s32 arg1)
+void Ai_PuppetNurse_Control6_7(s_SubCharacter* nurse, bool isDoctor)
 {
     if (!nurse->model_0.stateStep_3)
     {
-        Ai_PuppetNurse_SfxPlay(nurse, arg1 + 1);
+        Ai_PuppetNurse_SfxPlay(nurse, isDoctor + 1);
 
-        if (arg1)
+        if (isDoctor)
         {
             nurse->model_0.anim_4.status_0 = ANIM_STATUS(PuppetNurseAnim_8, false);
         }
@@ -18,7 +18,7 @@ void Ai_PuppetNurse_Control6_7(s_SubCharacter* nurse, s32 arg1)
 
     if (nurse->model_0.anim_4.status_0 == ANIM_STATUS(PuppetNurseAnim_18, false))
     {
-        nurse->model_0.state_2 = 9;
+        nurse->model_0.state_2 = PuppetNurseState_9;
         nurse->model_0.stateStep_3 = 0;
     }
 

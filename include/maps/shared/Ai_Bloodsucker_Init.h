@@ -58,8 +58,6 @@ void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker)
     bloodsucker->headingAngle_3C = bloodsucker->rotation_24.vy;
 
     Ai_Bloodsucker_AnimUpdateFromStep(bloodsucker);
-
     ModelAnim_AnimInfoSet(&bloodsucker->model_0.anim_4, BLOODSUCKER_ANIM_INFOS);
-
     Chara_DamageClear(bloodsucker);
 }

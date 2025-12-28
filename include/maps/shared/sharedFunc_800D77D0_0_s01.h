@@ -17,7 +17,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
     q19_12 animTime;
 
     animStatus  = airScreamer->model_0.anim_4.status_0;
-    isNotState1 = airScreamer->model_0.state_2 != 1;
+    isNotState1 = airScreamer->model_0.state_2 != AirScreamerState_1;
 
     switch (animStatus)
     {

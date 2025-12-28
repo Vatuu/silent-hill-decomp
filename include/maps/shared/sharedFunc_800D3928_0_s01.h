@@ -2,7 +2,7 @@ bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer)
 {
     q20_12 someTime;
     q19_12 deltaTime;
-    void (*func)(s_SubCharacter*);
+    void (*controlFunc)(s_SubCharacter*);
 
     #define airScreamerProps airScreamer->properties_E4.airScreamer
 
@@ -33,10 +33,11 @@ bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer)
         airScreamerProps.field_E8_8 = 0;
     }
 
-    func = sharedData_800DD7A0_0_s01[airScreamer->model_0.state_2];
-    if (func)
+    // Handle control state.
+    controlFunc = g_Ai_AirScreamer_ControlFuncs[airScreamer->model_0.state_2];
+    if (controlFunc)
     {
-        func(airScreamer);
+        controlFunc(airScreamer);
     }
 
     return true;

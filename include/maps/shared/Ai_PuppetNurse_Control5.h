@@ -32,7 +32,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
             }
             else
             {
-                nurse->model_0.state_2 = 13;
+                nurse->model_0.state_2 = PuppetNurseState_13;
                 nurse->model_0.stateStep_3 = 0;
                 return;
             }
@@ -42,7 +42,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
     {
         if ((&g_SysWork.playerWork_4C.player_0)->attackReceived_41 == NO_VALUE)
         {
-            nurse->model_0.state_2 = 8;
+            nurse->model_0.state_2 = PuppetNurseState_8;
             nurse->model_0.stateStep_3 = 0;
             return;
         }

@@ -1,7 +1,7 @@
 #ifndef _MAPS_CHARACTERS_AIRSCREAMER_H
 #define _MAPS_CHARACTERS_AIRSCREAMER_H
 
-/** @brief Air Screamer character flags. */
+/** @brief Air Screamer or Night Flutter character flags. */
 typedef enum _AirScreamerFlags
 {
     AirScreamerFlag_None = 0,
@@ -68,6 +68,60 @@ typedef enum _AirScreamerAnim
     AirScreamerAnim_26    = 26,
     AirScreamerAnim_27    = 27
 } e_AirScreamerAnim;
+
+/** @brief Air Screamer or Night Flutter character control states. */
+typedef enum _AirScreamerState
+{
+    AirScreamerState_None  = 0,
+    AirScreamerState_1     = 1,
+    AirScreamerState_2     = 2,
+    AirScreamerState_3     = 3,
+    AirScreamerState_4     = 4,
+    AirScreamerState_5     = 5,
+    AirScreamerState_6     = 6,
+    AirScreamerState_7     = 7,
+    AirScreamerState_8     = 8,
+    AirScreamerState_9     = 9,
+    AirScreamerState_12    = 12,
+    AirScreamerState_13    = 13,
+    AirScreamerState_14    = 14,
+    AirScreamerState_15    = 15,
+    AirScreamerState_18    = 18,
+    AirScreamerState_19    = 19,
+    AirScreamerState_20    = 20,
+    AirScreamerState_21    = 21,
+    AirScreamerState_22    = 22,
+    AirScreamerState_23    = 23,
+    AirScreamerState_24    = 24,
+    AirScreamerState_25    = 25,
+    AirScreamerState_26    = 26,
+    AirScreamerState_27    = 27,
+    AirScreamerState_28    = 28,
+    AirScreamerState_29    = 29,
+    AirScreamerState_30    = 30,
+    AirScreamerState_31    = 31,
+    AirScreamerState_32    = 32,
+    AirScreamerState_33    = 33,
+    AirScreamerState_34    = 34,
+    AirScreamerState_35    = 35,
+    AirScreamerState_36    = 36,
+    AirScreamerState_37    = 37,
+    AirScreamerState_38    = 38,
+    AirScreamerState_39    = 39,
+    AirScreamerState_40    = 40,
+    AirScreamerState_41    = 41,
+    AirScreamerState_42    = 42,
+    AirScreamerState_43    = 43,
+    AirScreamerState_44    = 44,
+    AirScreamerState_45    = 45,
+    AirScreamerState_46    = 46,
+    AirScreamerState_47    = 47,
+    AirScreamerState_48    = 48,
+    AirScreamerState_49    = 49,
+    AirScreamerState_50    = 50,
+    AirScreamerState_51    = 51,
+    AirScreamerState_Count = 52
+} e_AirScreamerState;
 
 /*s_AnimInfo AIR_SCREAMER_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0, false), false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },

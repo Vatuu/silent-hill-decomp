@@ -5,7 +5,6 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
     s_func_800D2E04* data;
 
     #define airScreamerProps airScreamer->properties_E4.airScreamer
-
     flags = airScreamerProps.flags_11C;
 
     if (!(flags & AirScreamerFlag_16))

@@ -9,7 +9,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
         Ai_Bloodsucker_Init(bloodsucker);
     }
 
-    // Handle model state.
+    // Handle control state.
     switch (bloodsucker->model_0.state_2)
     {
         case 1:
