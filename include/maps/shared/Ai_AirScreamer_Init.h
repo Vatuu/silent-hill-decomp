@@ -49,4 +49,10 @@ bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
     sharedFunc_800D2BE4_0_s01(airScreamer);
 
     return true;
+
+    #undef BASE_HEALTH
+    #undef AIR_SCREAMER_RAND_MAX
+    #undef NIGHT_FLUTTER_RAND_MAX
+    #undef RAND_MAX_HEALTH_BONUS_EASY
+    #undef RAND_MAX_HEALTH_BONUS_HARD
 }

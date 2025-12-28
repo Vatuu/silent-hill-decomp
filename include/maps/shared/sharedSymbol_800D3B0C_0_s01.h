@@ -10,6 +10,8 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
     u32 modelState;
     u32 animStatus;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     field40 = airScreamer->field_40;
     switch (field40 % 0x3)
     {
@@ -161,14 +163,14 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
 
     airScreamer->model_0.state_2 = var3;
     airScreamer->model_0.stateStep_3 = stateStep;
-    airScreamer->properties_E4.airScreamer.flags_11C = AirScreamerFlag_None;
-    airScreamer->properties_E4.airScreamer.field_E8_0 = var0;
-    airScreamer->properties_E4.airScreamer.field_E8_4 = var1;
-    airScreamer->properties_E4.airScreamer.field_E8_8 = var2;
+    airScreamerProps.flags_11C = AirScreamerFlag_None;
+    airScreamerProps.field_E8_0 = var0;
+    airScreamerProps.field_E8_4 = var1;
+    airScreamerProps.field_E8_8 = var2;
 
     if (var3 == 1)
     {
-        airScreamer->properties_E4.airScreamer.flags_11C = CharaUnk0Flag_Unk16;
+        airScreamerProps.flags_11C = CharaUnk0Flag_Unk16;
     }
 
     if (animStatus != NO_VALUE && animStatus != airScreamer->model_0.anim_4.status_0)
@@ -179,4 +181,6 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
         airScreamer->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
         airScreamer->model_0.anim_4.time_4        = FP_TO(keyframeIdx, Q12_SHIFT);
     }
+
+    #undef airScreamerProps
 }

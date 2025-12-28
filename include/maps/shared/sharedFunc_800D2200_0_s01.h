@@ -2,6 +2,8 @@ void sharedFunc_800D2200_0_s01(s_SubCharacter* airScreamer)
 {
     s32 count;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     count = func_800808AC(airScreamer->position_18.vx, airScreamer->position_18.vz);
     if (count == 7)
     {
@@ -12,11 +14,13 @@ void sharedFunc_800D2200_0_s01(s_SubCharacter* airScreamer)
     {
         if (count != 0)
         {
-            airScreamer->properties_E4.airScreamer.groundHeight_124 = Collision_GroundHeightGet(airScreamer->position_18.vx, airScreamer->position_18.vz);
+            airScreamerProps.groundHeight_124 = Collision_GroundHeightGet(airScreamer->position_18.vx, airScreamer->position_18.vz);
         }
     }
     else if (count != 12)
     {
-        airScreamer->properties_E4.airScreamer.groundHeight_124 = Collision_GroundHeightGet(airScreamer->position_18.vx, airScreamer->position_18.vz);
+        airScreamerProps.groundHeight_124 = Collision_GroundHeightGet(airScreamer->position_18.vx, airScreamer->position_18.vz);
     }
+
+    #undef airScreamerProps
 }

@@ -24,6 +24,8 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
     SVECTOR*       temp_s5;
     VECTOR3*       var_t0_2;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     sp10 = sharedFunc_800D4A80_0_s01(airScreamer);
     if (sp10 != 0)
     {
@@ -121,13 +123,13 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
         airScreamer->field_E1_0       = 0;
     }
 
-    if (airScreamer->properties_E4.airScreamer.field_E8_0 == 3)
+    if (airScreamerProps.field_E8_0 == 3)
     {
         airScreamer->field_C8.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_C8.field_2, Q12(1.125f), Q12_SHIFT);
         airScreamer->field_D4.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_D4.field_2, Q12(1.125f), Q12_SHIFT);
     }
 
-    if (airScreamer->properties_E4.airScreamer.flags_11C & PlayerFlag_Unk12)
+    if (airScreamerProps.flags_11C & PlayerFlag_Unk12)
     {
         airScreamer->field_C8.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_C8.field_2, Q12(0.875f), Q12_SHIFT);
         airScreamer->field_D4.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_D4.field_2, Q12(0.875f), Q12_SHIFT);
@@ -137,4 +139,6 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
     airScreamer->field_D8.offsetZ_2 = Q12(0.0f);
     airScreamer->field_D8.offsetX_4 = Q12(0.0f);
     airScreamer->field_D8.offsetZ_6 = Q12(0.0f);
+
+    #undef airScreamerProps
 }

@@ -8,6 +8,8 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
     s_SubCharacter_44* temp_s1;
     s_PlayerWork*      player;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     player = &g_SysWork.playerWork_4C;
 
     animStatus = airScreamer->model_0.anim_4.status_0;
@@ -53,7 +55,7 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
 
                 if (func_8008A3E0(airScreamer) != 0)
                 {
-                    airScreamer->properties_E4.airScreamer.flags_11C |= PlayerFlag_Unk0;
+                    airScreamerProps.flags_11C |= PlayerFlag_Unk0;
                 }
                 break;
 
@@ -83,11 +85,13 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
 
                 if (func_8008A3E0(airScreamer) != 0)
                 {
-                    airScreamer->properties_E4.airScreamer.flags_11C |= CharaUnk0Flag_Unk1;
+                    airScreamerProps.flags_11C |= CharaUnk0Flag_Unk1;
                 }
                 break;
         }
     }
 
     return true;
+
+    #undef airScreamerProps
 }

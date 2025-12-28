@@ -2,12 +2,14 @@ void Ai_SplitHead_Init(s_SubCharacter* splitHead)
 {
     s32 i;
 
-    splitHead->health_B0                        = 25500; // TODO: Split Head health isn't stored as Q12?
-    splitHead->properties_E4.splitHead.flags_E8 = SplitHeadFlag_None;
-    splitHead->model_0.anim_4.alpha_A           = Q12(0.0f);
-    splitHead->moveSpeed_38                     = 0;
-    splitHead->headingAngle_3C                  = splitHead->rotation_24.vy;
-    splitHead->field_E1_0                       = 4;
+    #define splitheadProps splitHead->properties_E4.splitHead
+
+    splitHead->health_B0              = 25500; // TODO: Split Head health isn't stored as Q12?
+    splitheadProps.flags_E8           = SplitHeadFlag_None;
+    splitHead->model_0.anim_4.alpha_A = Q12(0.0f);
+    splitHead->moveSpeed_38           = Q12(0.0f);
+    splitHead->headingAngle_3C        = splitHead->rotation_24.vy;
+    splitHead->field_E1_0             = 4;
     Chara_PropertiesClear(splitHead);
 
     splitHead->model_0.state_2 = 8;
@@ -19,6 +21,8 @@ void Ai_SplitHead_Init(s_SubCharacter* splitHead)
 
     Chara_DamageClear(splitHead);
 
-    splitHead->properties_E4.splitHead.field_EA = 196;
-    splitHead->flags_3E                        |= CharaFlag_Unk9 | CharaFlag_Unk3;
+    splitheadProps.field_EA = 196;
+    splitHead->flags_3E    |= CharaFlag_Unk9 | CharaFlag_Unk3;
+
+    #undef splitheadProps
 }

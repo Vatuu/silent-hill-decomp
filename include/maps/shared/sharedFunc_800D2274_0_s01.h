@@ -4,7 +4,9 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
     u32              flags;
     s_func_800D2E04* data;
 
-    flags = airScreamer->properties_E4.airScreamer.flags_11C;
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
+    flags = airScreamerProps.flags_11C;
 
     if (!(flags & AirScreamerFlag_16))
     {
@@ -43,4 +45,6 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
     }
 
     return true;
+
+    #undef airScreamerProps
 }

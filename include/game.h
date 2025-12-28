@@ -1437,6 +1437,21 @@ typedef struct _PropertiesPuppetNurse
 } s_PropertiesPuppetNurse;
 STATIC_ASSERT_SIZEOF(s_PropertiesPuppetNurse, 64);
 
+typedef struct _PropertiesRomper
+{
+    s32    field_E4;
+    s8     unk_E8[4];
+    s16    field_EC;
+    q3_12  rotationY_EE;
+    s8     unk_F0[8];
+    q19_12 positionX_F8;
+    q19_12 positionZ_FC;
+    s8     unk_100[4];
+    q19_12 positionX_104;
+    s8     unk_108[4];
+    q19_12 positionZ_10C;
+} s_PropertiesRomper;
+
 /** @brief Split Head character properties. */
 typedef struct _PropertiesSplitHead
 {
@@ -1595,6 +1610,7 @@ typedef struct _SubCharacter
         s_PropertiesHangedScratcher hangedScratcher;
         s_PropertiesLarvalStalker   larvalStalker;
         s_PropertiesPuppetNurse     puppetNurse;
+        s_PropertiesRomper          romper;
         s_PropertiesSplitHead       splitHead;
         s_PropertiesStalker         stalker;
         s_PropertiesUnk0            unk0;

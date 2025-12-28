@@ -81,10 +81,12 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
     s32    new_var2;
     s32    new_var4;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     sp28 = 0;
 
     posX  = airScreamer->position_18.vx;
-    flags = airScreamer->properties_E4.airScreamer.flags_11C;
+    flags = airScreamerProps.flags_11C;
     posZ  = airScreamer->position_18.vz;
 
     temp_v0 = sharedData_800CAA98_0_s01.unk_380[39][airScreamer->model_0.anim_4.keyframeIdx_8];
@@ -237,6 +239,8 @@ bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer)
     flags &= ~AirScreamerFlag_0;
     flags &= ~AirScreamerFlag_1;
 
-    airScreamer->properties_E4.airScreamer.flags_11C = flags;
+    airScreamerProps.flags_11C = flags;
     return true;
+
+    #undef airScreamerProps
 }

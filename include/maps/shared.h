@@ -1721,7 +1721,7 @@ extern VECTOR3 sharedData_800DE1C0_0_s01;
 
 extern VECTOR3 sharedData_800DE1E0_0_s01;
 
-extern VECTOR3 sharedData_800DE1F0_0_s01;
+extern VECTOR3 sharedData_800DE1F0_0_s01; // Q19.12
 
 extern s_800C4590 sharedData_800E2350_0_s01;
 
@@ -2318,13 +2318,13 @@ void sharedFunc_800CF7F4_3_s03(s_SubCharacter* chara);
 
 bool sharedFunc_800CF90C_3_s03(s_SubCharacter* chara);
 
-void sharedFunc_800CF9F8_3_s03(s_SubCharacter*);
+void sharedFunc_800CF9F8_3_s03(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_Control10(s_SubCharacter*);
 
 void Ai_PuppetNurse_Control11(s_SubCharacter*);
 
-void sharedFunc_800D0110_3_s03(s_SubCharacter*);
+void sharedFunc_800D0110_3_s03(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_Control(s_SubCharacter* nurse);
 
