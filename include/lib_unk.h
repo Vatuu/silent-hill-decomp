@@ -57,7 +57,7 @@ typedef struct _s_SysWork_2514_18
 typedef struct
 {
     u32 padPort_0_0 : 8;
-    u8  field_0_8   : 8;
+    u32 field_0_8   : 8;
     u32 field_0_16  : 1;
     u32 field_0_17  : 1;
     u32 field_0_18  : 1;
@@ -70,7 +70,7 @@ typedef struct
 typedef struct
 {
     s_SysWork_2514_0   field_0;
-    s32                field_4;
+    s32                actuatorData_4;
     s16                field_8;
     s8                 field_A;
     u8                 unk_B[1];
