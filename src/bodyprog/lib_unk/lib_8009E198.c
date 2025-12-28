@@ -474,7 +474,50 @@ bool func_8009EC1C(s_SysWork_2514* list, s_SysWork_2514_18* node) // 0x8009EC1C
     return true;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009EC64);
+/**
+ * @brief Ensures a node in a linked list is sorted based on its key value.
+ */
+s32 func_8009EC64(s_SysWork_2514* work, s16 value)
+{
+    s_SysWork_2514* list = work;
+    s32             value32;
+
+    s_SysWork_2514_18*  prev;
+    s_SysWork_2514_18*  head;
+    s_SysWork_2514_18** prevAddress;
+    s32*                prevUnk8;
+    s_SysWork_2514_18*  node;
+    s_SysWork_2514_18*  cur;
+    s32                 unsorted;
+
+    head    = &list->head_18;
+    node    = list->field_10;
+    value32 = value;
+
+    prevAddress = &head->prev_4;
+    prev        = *prevAddress;
+    prevUnk8    = &prev->key_8.value;
+
+    unsorted = (!node) & (prev == head) & (value32 >= prev->key_8.value);
+    // @hack?
+    unsorted = unsorted > 0;
+
+    if (!unsorted)
+    {
+        return unsorted;
+    }
+
+    // Remove `prev`.
+    cur          = prev->prev_4;
+    cur->next_0  = head;
+    head->prev_4 = cur;
+
+    // Insert it front of `node`.
+    list->field_10 = prev;
+    prev->next_0   = node;
+
+    return 1;
+}
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009ECCC);
 

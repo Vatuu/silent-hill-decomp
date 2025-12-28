@@ -1527,7 +1527,7 @@ void func_80089090(s32 arg0) // 0x80089090
 void func_800890B8(void) // 0x800890B8
 {
     func_8009E198(&g_SysWork.field_2514, 0);
-    func_8009E310(&g_SysWork.field_2514, g_SysWork.field_2514.head_18.unk_8, 2);
+    func_8009E310(&g_SysWork.field_2514, &g_SysWork.field_2514.head_18.key_8, 2);
     func_8009EBB8(&g_SysWork.field_2514, g_SysWork.field_2514.head_18.unk_18, 16);
 
     g_SysWork.field_2510 = func_8009E4F8();

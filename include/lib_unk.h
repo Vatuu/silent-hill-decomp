@@ -30,17 +30,23 @@ typedef struct
     u32 bits_0_27  : 5;
 } s_SysWork_2514_C_0;
 
+typedef union
+{
+    s_SysWork_2514_C_0 flags;
+    s32                value;
+} u_SysWork_2514_C_0;
+
 typedef struct
 {
     s_SysWork_2514_C_0 flags_0;
-    s32 data_4;
+    s32                data_4;
 } s_SysWork_2514_C;
 
 typedef struct _s_SysWork_2514_18
 {
     struct _s_SysWork_2514_18* next_0;
     struct _s_SysWork_2514_18* prev_4;
-    u8                         unk_8[4];
+    u_SysWork_2514_C_0         key_8;
     s32                        field_C;
     u8                         unk_10[8];
     u8                         unk_18[4];
@@ -74,12 +80,6 @@ typedef struct
     s_SysWork_2514_18  head_18;
 } s_SysWork_2514;
 STATIC_ASSERT_SIZEOF(s_SysWork_2514, 56);
-
-typedef union
-{
-    s_SysWork_2514_C_0 flags;
-    u32 value;
-} u_SysWork_2514_C_0;
 
 // Controller node?
 typedef struct _s_SysWork_2510
@@ -117,6 +117,8 @@ s32 func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s3
 bool func_8009EBB8(s_SysWork_2514* list, s_SysWork_2514_18* node, s32 count);
 
 bool func_8009EC1C(s_SysWork_2514* list, s_SysWork_2514_18* node);
+
+s32 func_8009EC64(s_SysWork_2514* work, s16 value);
 
 s_SysWork_2514_18* func_8009ED74(s_SysWork_2514* list);
 
