@@ -92,6 +92,8 @@ typedef struct _s_SysWork_2510
 } s_SysWork_2510;
 STATIC_ASSERT_SIZEOF(s_SysWork_2510, 16);
 
+s32 func_8009E230(s_SysWork_2514* arg0);
+
 s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2);
 
 bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 padInfoCurExId);
