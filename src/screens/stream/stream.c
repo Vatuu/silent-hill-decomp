@@ -241,6 +241,8 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
 
     StUnSetRing();
     DecDCToutCallback(NULL);
+
+    #undef SEARCH_COUNT_MAX
 }
 
 void strSetDefDecEnv(DECENV* dec, s32 x0, s32 y0, s32 x1, s32 y1) // 0x801E2F8C
@@ -357,6 +359,8 @@ int strNextVlc(DECENV* dec) // 0x801E3298
 
     StFreeRing(next);
     return 0;
+
+    #undef COUNT_MAX
 }
 
 u_long* strNext(DECENV* dec) // 0x801E331C

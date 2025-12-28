@@ -699,6 +699,8 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
         g_Options_SelectionHighlightTimer = 0;
         g_MainOptionsMenu_SelectedEntry         = MainOptionsMenuEntry_Exit;
     }
+
+    #undef SOUND_VOL_STEP
 }
 
 void Options_MainOptionsMenu_BgmVolumeBarDraw(void) // 0x801E3F68
@@ -777,6 +779,10 @@ void Options_MainOptionsMenu_VolumeBarDraw(bool isSfx, u8 vol) // 0x801E3FB8
             GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_F4);
         }
     }
+
+    #undef STR_OFFSET_Y
+    #undef NOTCH_SIZE_X
+    #undef NOTCH_COUNT
 }
 
 void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
@@ -829,6 +835,11 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
         Gfx_Strings2dLayerIdxSet(8);
         Gfx_StringDraw(ENTRY_STRS[i], DEFAULT_MAP_MESSAGE_LENGTH);
     }
+
+    #undef LINE_BASE_X
+    #undef LINE_BASE_Y
+    #undef LINE_OFFSET_X
+    #undef LINE_OFFSET_Y
 }
 
 void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
@@ -881,6 +892,11 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     }
 
     Gfx_StringsReset2dLayerIdx();
+
+    #undef LINE_BASE_X
+    #undef LINE_BASE_Y
+    #undef LINE_OFFSET_X
+    #undef LINE_OFFSET_Y
 }
 
 void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
@@ -968,6 +984,14 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
             Options_Selection_BulletPointDraw(&bulletQuads[1], true,  true);
         }
     }
+
+    #undef BULLET_QUAD_COUNT
+    #undef LINE_BASE_X
+    #undef LINE_BASE_Y
+    #undef LINE_OFFSET_X
+    #undef LINE_OFFSET_Y
+    #undef HIGHLIGHT_OFFSET_X
+    #undef HIGHLIGHT_OFFSET_Y
 }
 
 void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
@@ -1051,6 +1075,10 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
             Options_Selection_BulletPointDraw(&bulletQuads[1], true,  true);
         }
     }
+
+    #undef LINE_OFFSET_Y
+    #undef HIGHLIGHT_OFFSET_X
+    #undef HIGHLIGHT_OFFSET_Y
 }
 
 void Options_Menu_VignetteDraw(void) // 0x801E49F0
@@ -1262,6 +1290,9 @@ void Options_ExtraOptionsMenu_ConfigDraw(void) // 0x801E4B2C
                 break;
         }
     }
+
+    #undef STR_BASE_Y
+    #undef STR_OFFSET_Y
 }
 
 void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
@@ -1546,6 +1577,10 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
 
     Options_ScreenPosMenu_ArrowsDraw();
     Options_ScreenPosMenu_ConfigDraw();
+
+    #undef OPT_SCREEN_POS_X_RANGE
+    #undef OPT_SCREEN_POS_Y_RANGE
+    #undef BG_FADE_STEP
 }
 
 void Options_ScreenPosMenu_ArrowsDraw(void) // 0x801E5A08
@@ -1607,6 +1642,8 @@ void Options_ScreenPosMenu_ArrowsDraw(void) // 0x801E5A08
             Options_Selection_ArrowDraw(&BACK_ARROWS[i], false, false);
         }
     }
+
+    #undef DIR_COUNT
 }
 
 void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
@@ -1865,6 +1902,8 @@ void Options_Selection_HighlightDraw(const s_Line2d* line, bool hasShadow, bool 
 
         Gfx_Primitive2dTextureSet(0, 0, 9, 2);
     }
+
+    #undef STR_OFFSET_Y
 }
 
 void Options_Selection_ArrowDraw(const s_Triangle2d* arrow, bool isFlashing, bool resetColor) // 0x801E662C
@@ -2038,6 +2077,8 @@ void Options_Selection_BulletPointDraw(const s_Quad2d* quad, bool isBorder, bool
         addPrim((u8*)ot->org + LAYER_24, poly);
         GsOUT_PACKET_P = (u8*)poly + sizeof(POLY_G3);
     }
+
+    #undef TRI_COUNT
 }
 
 // ========================================
@@ -2497,6 +2538,11 @@ void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx,
 
     AddPrim(ot, poly);
     AddPrim(ot, drMode);
+
+    #undef STR_BASE_Y
+    #undef STR_OFFSET_Y
+    #undef ICON_SIZE_Y
+    #undef ICON_OFFSET_X
 }
 
 void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) // 0x801E716C
@@ -2556,4 +2602,8 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
     }
 
     GsOUT_PACKET_P = packet;
+
+    #undef ICON_SIZE_X
+    #undef ICON_SIZE_Y
+    #undef ICON_OFFSET_X
 }

@@ -213,6 +213,11 @@ void Gfx_SaveSlotFileStringDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryT
         Gfx_StringSetPosition((slotIdx * OFFSET_X) + FILE_ID_STR_MARGIN_X, POS_Y);
         Gfx_StringDrawInt(1, fileId);
     }
+
+    #undef OFFSET_X
+    #undef FILE_STR_MARGIN_X
+    #undef FILE_ID_STR_MARGIN_X
+    #undef POS_Y
 }
 
 bool Gfx_SavegameEntryStringColorSet(s_SavegameMetadata* saveEntry) // 0x801E3078
@@ -275,6 +280,11 @@ void Gfx_SavegameEntryLocationNameDraw(s_SavegameEntry* saveEntry, s32 saveIdx, 
                               (var0 * OFFSET_Y) + MARGIN_Y);
         Gfx_StringDraw(g_SaveLocationNames[nameIdx], 50);
     }
+
+    #undef OFFSET_X
+    #undef MARGIN_X
+    #undef OFFSET_Y
+    #undef MARGIN_Y
 }
 
 void Gfx_SaveEntryBorder(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEntry, s32 saveIdx, s32 slotIdx) // 0x801E326C
@@ -837,6 +847,9 @@ void Gfx_SaveSlotBorderDraw(void) // 0x801E4010
     }
 
     Gfx_Primitive2dTextureSet(0, 0, 7, 1);
+
+    #undef BORDER_LINE_COUNT
+    #undef BORDER_PIXEL_WIDTH
 }
 
 void Gfx_SaveSlotMemCardMsgBoxShineDraw(s32 slotIdx) // 0x801E43C8
@@ -1083,6 +1096,10 @@ void Gfx_SaveSlotBoxDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, s32 se
     GsOUT_PACKET_P = (u8*)unkPoly + sizeof(POLY_F4);
 
     Gfx_Primitive2dTextureSet(0, 0, 8, 1);
+
+    #undef SCROLL_BAR_THUMB_RECT_COUNT
+    #undef SCROLL_BAR_ARROW_COUNT
+    #undef SCROLL_BAR_OFFSET_Y
 }
 
 void Gfx_SaveEntryBorderDraw(s_SavegameEntry* saveEntry, s_SavegameEntry* nextSaveEntry, s32 saveIdx, s32 slotIdx) // 0x801E4D90
@@ -1855,6 +1872,8 @@ void Savegame_FormatLogic(void) // 0x801E69E8
             }
             break;
     }
+
+    #undef STR_TIMER_MAX
 }
 
 void Savegame_SaveLogic(void) // 0x801E6B18
