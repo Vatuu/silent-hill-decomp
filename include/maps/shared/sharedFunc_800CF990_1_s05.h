@@ -1,5 +1,3 @@
-extern s32 sharedData_800D5884_1_s05;
-
 void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead)
 {
     s32     keyframeIdx;

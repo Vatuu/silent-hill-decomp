@@ -1641,6 +1641,8 @@ extern s_AnimInfo SPLIT_HEAD_ANIM_INFOS[];
 extern s16 sharedData_800D8614_1_s05; // These two `s16`s could be `DVECTOR`?
 extern s16 sharedData_800D8616_1_s05;
 
+extern s32 sharedData_800D5884_1_s05;
+
 extern s16 sharedData_800D5A8C_1_s05;
 
 extern u8  sharedData_800D16E4_2_s01;
