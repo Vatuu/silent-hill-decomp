@@ -6,12 +6,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
     q19_12 radiusMin;
 
     scratcher->properties_E4.hangedScratcher.flags_E8 = 0;
-
-    // TODO: Use `hangedScratcher` properties.
-    for (i = 0; i < 16; i++)
-    {
-        scratcher->properties_E4.dummy.properties_E8[i].val32 = 0;
-    }
+    Chara_PropertiesClear(scratcher);
 
     scratcher->health_B0 = Q12(350.0f);
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)

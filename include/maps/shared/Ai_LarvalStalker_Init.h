@@ -20,16 +20,10 @@ void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker)
     larvalStalker->moveSpeed_38 = 0;
 
     Chara_DamageClear(larvalStalker);
-
     larvalStalker->field_E1_0      = 0;
     larvalStalker->headingAngle_3C = larvalStalker->rotation_24.vy;
 
-    // TODO: Use Larval Stalker properties.
-    for (i = 0; i < 16; i++)
-    {
-        larvalStalker->properties_E4.dummy.properties_E8[i].val32 = 0;
-    }
-
+    Chara_PropertiesClear(larvalStalker);
     larvalStalker->properties_E4.larvalStalker.targetPositionX = g_SysWork.playerWork_4C.player_0.position_18.vx;
     larvalStalker->properties_E4.larvalStalker.targetPositionZ = g_SysWork.playerWork_4C.player_0.position_18.vz;
 }

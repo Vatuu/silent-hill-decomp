@@ -2,14 +2,10 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
 {
     s32 i;
 
-    stalker->properties_E4.stalker.flags_E8 = StalkerFlag_None;
+    #define stalkerProps stalker->properties_E4.stalker
 
-    // TODO: Use `stalker` properties.
-    for (i = 0; i < 16; i++)
-    {
-        stalker->properties_E4.dummy.properties_E8[i].val32 = 0;
-    }
-
+    stalkerProps.flags_E8 = StalkerFlag_None;
+    Chara_PropertiesClear(stalker);
     stalker->health_B0 = sharedData_800E3A20_0_s00;
 
 #ifdef MAP6_S03
@@ -33,11 +29,11 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
     switch (stalker->model_0.stateStep_3)
     {
         case 11:
-            stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_2;
+            stalkerProps.flags_E8 |= StalkerFlag_2;
 
         case 3:
-            stalker->properties_E4.stalker.timer_F8  = Q12(2.5f);
-            stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_0;
+            stalkerProps.timer_F8  = Q12(2.5f);
+            stalkerProps.flags_E8 |= StalkerFlag_0;
 
         case 8:
             stalker->model_0.state_2 = 4;
@@ -45,18 +41,18 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             break;
 
         case 7:
-            stalker->model_0.state_2                 = 4;
-            stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_11;
-            stalker->field_E1_0                      = 3;
+            stalker->model_0.state_2 = 4;
+            stalkerProps.flags_E8   |= StalkerFlag_11;
+            stalker->field_E1_0      = 3;
             break;
 
         case 6:
-            stalker->model_0.state_2                 = 2;
-            stalker->flags_3E                       |= CharaFlag_Unk3;
-            stalker->properties_E4.stalker.timer_F8  = Q12(1.0f);
-            stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_0 | StalkerFlag_1;
-            stalker->field_E1_0                      = 3;
-            stalker->flags_3E                       &= ~CharaFlag_Unk5;
+            stalker->model_0.state_2 = 2;
+            stalker->flags_3E       |= CharaFlag_Unk3;
+            stalkerProps.timer_F8    = Q12(1.0f);
+            stalkerProps.flags_E8   |= StalkerFlag_0 | StalkerFlag_1;
+            stalker->field_E1_0      = 3;
+            stalker->flags_3E       &= ~CharaFlag_Unk5;
             break;
 
         case 5:
@@ -66,13 +62,13 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             break;
 
         case 9:
-            stalker->model_0.state_2                 = 12;
+            stalker->model_0.state_2              = 12;
             //Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_27, true), 427); // TODO: Doesn't match?
-            stalker->model_0.anim_4.status_0         = ANIM_STATUS(StalkerAnim_27, true);
-            stalker->model_0.anim_4.time_4           = Q12(427.0f);
-            stalker->model_0.anim_4.keyframeIdx_8    = 427;
-            stalker->properties_E4.stalker.flags_E8 |= StalkerFlag_0;
-            stalker->field_E1_0                      = 3;
+            stalker->model_0.anim_4.status_0      = ANIM_STATUS(StalkerAnim_27, true);
+            stalker->model_0.anim_4.time_4        = Q12(427.0f);
+            stalker->model_0.anim_4.keyframeIdx_8 = 427;
+            stalkerProps.flags_E8                |= StalkerFlag_0;
+            stalker->field_E1_0                   = 3;
             break;
 
         case 10:
@@ -94,18 +90,18 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             break;
     }
 
-    stalker->model_0.stateStep_3 = 0;
-
-    stalker->properties_E4.stalker.sfxId_102          = NO_VALUE;
-    stalker->properties_E4.stalker.targetPositionX_F0 = stalker->position_18.vx;
-    stalker->properties_E4.stalker.targetPositionZ_F4 = stalker->position_18.vz;
-    stalker->properties_E4.stalker.health_110         = stalker->health_B0;
+    stalker->model_0.stateStep_3    = 0;
+    stalkerProps.sfxId_102          = NO_VALUE;
+    stalkerProps.targetPositionX_F0 = stalker->position_18.vx;
+    stalkerProps.targetPositionZ_F4 = stalker->position_18.vz;
+    stalkerProps.health_110         = stalker->health_B0;
 
     ModelAnim_AnimInfoSet(&stalker->model_0.anim_4, STALKER_ANIM_INFOS);
-
     Chara_DamageClear(stalker);
 
 #ifdef MAP6_S03
     stalker->flags_3E |= CharaFlag_Unk9;
 #endif
+
+    #undef stalkerProps
 }

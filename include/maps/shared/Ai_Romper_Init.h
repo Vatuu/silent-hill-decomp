@@ -38,11 +38,7 @@ void Ai_Romper_Init(s_SubCharacter* romper)
     romper->moveSpeed_38    = Q12(0.0f);
     romper->field_E1_0      = 3;
     romper->headingAngle_3C = romper->rotation_24.vy;
-
-    for (i = 0; i < 16; i++)
-    {
-        romper->properties_E4.dummy.properties_E8[i].val32 = 0;
-    }
+    Chara_PropertiesClear(romper);
 
     romper->model_0.state_2 = 2;
     Character_AnimSet(romper, ANIM_STATUS(RomperAnim_15, true), 147);

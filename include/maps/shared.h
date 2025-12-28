@@ -1893,7 +1893,7 @@ bool sharedFunc_800CB884_1_s05(POLY_FT4** poly, s32 idx);
 
 void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 
-void sharedFunc_800CCDD4_1_s05(void* arg0, s32 arg1); // Unknown arg types.
+void sharedFunc_800CCDD4_1_s05(POLY_FT4** poly, s32 idx); // Unknown arg types.
 
 void sharedFunc_800CCE2C_1_s05(u8 arg0, u8 arg1, s32 posX0, s32 posY0, s32 posZ0, s32 posX1, s32 posY1, s32 posZ1);
 
@@ -2250,17 +2250,17 @@ bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx);
 // MAP1_S00 LarvalStalker funcs
 void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void sharedFunc_800CF168_1_s00(s_SubCharacter*);
+void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker);
 
-void sharedFunc_800D140C_1_s00(s_SubCharacter*, GsCOORDINATE2*);
+void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* coords);
 
-void sharedFunc_800D1524_1_s00(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800D1524_1_s00(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker);
 
 void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker);
 
-void sharedFunc_800D1DBC_1_s00(s_SubCharacter*);
+void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker);
 
 // TODO: Make this match for `s_Particle`.
 void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* deltaTime);

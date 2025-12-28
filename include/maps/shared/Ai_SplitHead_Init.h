@@ -8,12 +8,7 @@ void Ai_SplitHead_Init(s_SubCharacter* splitHead)
     splitHead->moveSpeed_38                     = 0;
     splitHead->headingAngle_3C                  = splitHead->rotation_24.vy;
     splitHead->field_E1_0                       = 4;
-
-    // TODO: Use `splitHead` properties.
-    for (i = 0; i < 16; i++)
-    {
-        splitHead->properties_E4.dummy.properties_E8[i].val32 = 0;
-    }
+    Chara_PropertiesClear(splitHead);
 
     splitHead->model_0.state_2 = 8;
     Character_AnimSet(splitHead, ANIM_STATUS(SplitHeadAnim_10, true), 162);

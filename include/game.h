@@ -1397,16 +1397,16 @@ typedef struct _PropertiesLarvalStalker
     u8         field_EA;
     u8         unk_EB;
     q19_12     timer_EC;
-    u32        field_F0;
+    q20_12     timer_F0;
     q4_12      timer_F4;
-    u16        unk_F8;
+    s16        field_F8;
     q19_12     targetPositionX;
     q19_12     targetPositionZ;
     q3_12      angle_100;
     q3_12      angle_102;
     q19_12     animTime_104;
     q3_12      angle_108;
-    u16        timer_10A;
+    q4_12      timer_10A;
     u_Property field_10C;
     VECTOR3    field_110;
     s32        flags_11C;
@@ -2150,6 +2150,16 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
         chara->properties_E4.dahlia.resetStateIdx0_F8 = 0;
     }
 }
+
+/** @brief Clears a character's properties. TODO: Declare `i` here.
+ *
+ * @param chara Character to update.
+ */
+#define Chara_PropertiesClear(chara)                           \
+    for (i = 0; i < 16; i++)                                   \
+    {                                                          \
+        chara->properties_E4.dummy.properties_E8[i].val32 = 0; \
+    }
 
 /** @brief Clears a character's damage field.
  *

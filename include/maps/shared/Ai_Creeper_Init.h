@@ -73,18 +73,11 @@ void Ai_Creeper_Init(s_SubCharacter* creeper)
     creeper->model_0.anim_4.alpha_A                                = Q12(0.0f);
     creeper->moveSpeed_38                                          = 0;
     creeper->headingAngle_3C                                       = creeper->rotation_24.vy;
-
     creeper->field_E1_0                                            = 2;
 
-    for (i = 0; i < 16; i++)
-    {
-        creeper->properties_E4.dummy.properties_E8[i].val32 = 0;
-    }
-
+    Chara_PropertiesClear(creeper);
     Ai_Creeper_PropertiesUpdateFromStep(creeper);
-
     ModelAnim_AnimInfoSet(&creeper->model_0.anim_4, CREEPER_ANIM_INFOS);
-
     Chara_DamageClear(creeper);
 
     creeper->properties_E4.dummy.properties_E8[3].val32 = creeper->position_18.vx;

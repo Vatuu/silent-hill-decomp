@@ -1,4 +1,3 @@
-
 #include "inline_no_dmpsx.h"
 
 #include <psyq/gtemac.h>"

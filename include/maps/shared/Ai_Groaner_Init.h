@@ -5,11 +5,7 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
 
     s32 i;
 
-    for (i = 0; i < 16; i++)
-    {
-        groaner->properties_E4.dummy.properties_E8[i].val32 = 0;
-    }
-
+    Chara_PropertiesClear(groaner);
     groaner->properties_E4.dummy.properties_E8[0].val16[0] = 0;
     groaner->model_0.anim_4.alpha_A = Q12(0.0f);
 

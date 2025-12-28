@@ -53,12 +53,7 @@ void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker)
 {
     s32 i;
 
-    // TODO: Use Bloodsucker properties.
-    for (i = 0; i < 16; i++)
-    {
-        bloodsucker->properties_E4.dummy.properties_E8[i].val32 = 0;
-    }
-
+    Chara_PropertiesClear(bloodsucker);
     bloodsucker->field_E1_0      = 4;
     bloodsucker->headingAngle_3C = bloodsucker->rotation_24.vy;
 
