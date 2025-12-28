@@ -488,7 +488,7 @@ s32 func_8009EC64(s_SysWork_2514* work, s16 value)
     s32*                prevUnk8;
     s_SysWork_2514_18*  node;
     s_SysWork_2514_18*  cur;
-    s32                 unsorted;
+    bool                unsorted;
 
     head    = &list->head_18;
     node    = list->field_10;
@@ -498,9 +498,7 @@ s32 func_8009EC64(s_SysWork_2514* work, s16 value)
     prev        = *prevAddress;
     prevUnk8    = &prev->key_8.value;
 
-    unsorted = (!node) & (prev == head) & (value32 >= prev->key_8.value);
-    // @hack?
-    unsorted = unsorted > 0;
+    unsorted = ((!node) & (prev == head) & (value32 >= prev->key_8.value)) != 0;
 
     if (!unsorted)
     {
