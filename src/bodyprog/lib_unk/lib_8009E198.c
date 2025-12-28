@@ -187,7 +187,7 @@ bool func_8009E3B0(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 pad
                 tmp.field_0_18 = 0;
             }
 
-            arg0->field_4 = 0;
+            arg0->actuatorData_4 = 0;
             arg0->field_8 = 0;
             arg0->field_A = 0;
             arg0->field_0 = tmp;
@@ -236,7 +236,7 @@ bool func_8009E438(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 pad
 
     if (isChanged)
     {
-        arg0->field_4  = 0;
+        arg0->actuatorData_4  = 0;
         arg0->field_8  = 0;
         arg0->field_A  = 0;
         tmp.field_0_19 = 0;
@@ -307,7 +307,7 @@ bool func_8009E61C(s_SysWork_2514* arg0, s32 state, s_SysWork_2510* head) // 0x8
 
     if (!status.field_0_23)
     {
-        pattern = &arg0->field_4;
+        pattern = &arg0->actuatorData_4;
         if (status.field_0_18 && !status.field_0_17)
         {
             length = status.field_0_19;
@@ -344,7 +344,82 @@ bool func_8009E61C(s_SysWork_2514* arg0, s32 state, s_SysWork_2510* head) // 0x8
     return status.field_0_22;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E718);
+s32 func_8009E718(s_SysWork_2514 *arg0)
+{
+    u32 packedval;
+    u32 scale;
+    s32 outlen;
+    s32 outidx;
+    s_SysWork_2514_C *in;
+    s_SysWork_2514_0 status;
+    s32 i;
+    u8 *out;
+    u64 tmp;
+    u8 inlen;
+
+    status = arg0->field_0;
+    if (!(status.field_0_18 && !status.field_0_17))
+    {
+        return 0;
+    }
+
+    // 0-128, but seems to only ever be set to 128
+    scale = status.field_0_8;
+
+    in = arg0->field_C;
+    out = &arg0->actuatorData_4;
+    for (i = (u8) arg0->field_A; i != 0; i--)
+    {
+        // contains up to 4 actuator data bytes packed into a u32,
+        // even though there are only two actuators max
+        packedval = in->data_4;
+        outlen = in->flags_0.bits_0_24;
+
+        // scale the original actuator values by 0.0 - 1.0 (0 - 128)
+        // however, scale seems to only ever be 1.0, so this is useless?
+        tmp = ((u64)packedval * scale) >> 7;
+        if (tmp > 0xFFFFFFFF)
+        {
+            // if we overflowed, max out every actuator
+            packedval = 0xFFFFFFFF;
+        }
+        else
+        {
+            packedval = tmp;
+        }
+
+        outidx = in->flags_0.bits_0_16;
+
+        // ensure there's data for at least 1 actuator
+        if (outlen == 0)
+        {
+            outlen = 1;
+            if (packedval != 0)
+            {
+                // if any actuator values were not zero, enable at least the first one
+                // the other bytes will be ignored because outlen = 1
+                // note that it's actuator 0 in a dualshock/dual analog that only takes 0 or 1,
+                // but outidx could be non-zero, though I'm not sure if it ever is
+                packedval = 0x01FFFFFF;
+            }
+        }
+
+        // change outlen bytes of actuator data starting with byte outidx
+        while (outlen != 0)
+        {
+            // get high byte and store it in actuator data
+            out[outidx] = packedval >> 24;
+            outlen--;
+            outidx++;
+            // shift the next byte to high byte
+            packedval <<= 8;
+        }
+
+        in++;
+    }
+
+    return 1;
+}
 
 bool func_8009E7D8(s_SysWork_2510* node) // 0x8009E7D8
 {
@@ -377,7 +452,7 @@ s32 func_8009E82C(s_SysWork_2514* work, s32 padState, s32 padInfoCurId, s32 padI
 
     if ((padState == PadStateFindCTP1) && ((0xB0U >> padInfoCurId) & 1))
     {
-        work->field_4 = 0x40;
+        work->actuatorData_4 = 0x40;
         work->field_8 = 0;
         count         = work->unk_B[0];
 
@@ -473,7 +548,7 @@ s32 func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s3
 
         arg2          = work->field_C;
         unk_B_0       = work->unk_B[0];
-        work->field_4 = 0;
+        work->actuatorData_4 = 0;
         work->field_8 = 0;
 
         field_0_19 = 0;
