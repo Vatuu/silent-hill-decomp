@@ -1,11 +1,13 @@
-s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* chara)
+s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* airScreamer)
 {
     s32 flags;
     s32 result;
 
-    flags = chara->properties_E4.player.flags_11C;
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
+    flags = airScreamerProps.flags_11C;
     result = 0;
-    if (sharedData_800E21D0_0_s01.flags_0 >= 0 && chara->health_B0 >= Q12(0.0f))
+    if (sharedData_800E21D0_0_s01.flags_0 >= 0 && airScreamer->health_B0 >= Q12(0.0f))
     {
         result = 4;
         if (!(flags & PlayerFlag_Unk17))
@@ -27,5 +29,7 @@ s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* chara)
     }
 
     return result;
+
+    #undef airScreamerProps
 }
 

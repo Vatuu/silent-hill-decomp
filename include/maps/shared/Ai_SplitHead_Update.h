@@ -3,7 +3,7 @@ void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORD
     sharedData_800D8610_1_s05 = coords;
 
     // Initialize.
-    if (splitHead->model_0.controlState_2 == ModelState_Uninitialized)
+    if (splitHead->model_0.controlState_2 == SplitHeadControl_None)
     {
         Ai_SplitHead_Init(splitHead);
     }
@@ -11,7 +11,7 @@ void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORD
     if (g_DeltaTime0 != Q12(0.0f))
     {
         Ai_SplitHead_DamageTake(splitHead);
-        sharedFunc_800D0054_1_s05(splitHead);
+        Ai_SplitHead_ControlUpdate(splitHead);
         sharedFunc_800D267C_1_s05(splitHead);
         sharedFunc_800D3AFC_1_s05(splitHead);
     }

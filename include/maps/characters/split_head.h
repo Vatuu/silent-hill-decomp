@@ -7,6 +7,7 @@ typedef enum _SplitHeadFlags
     SplitHeadFlag_None = 0,
     SplitHeadFlag_0    = 1 << 0,
 
+    SplitHeadFlag_3    = 1 << 3,
     SplitHeadFlag_4    = 1 << 4,
     SplitHeadFlag_5    = 1 << 5,
     SplitHeadFlag_6    = 1 << 6,
@@ -33,6 +34,20 @@ typedef enum _SplitHeadAnim
     SplitHeadAnim_13    = 13,
     SplitHeadAnim_14    = 14
 } e_SplitHeadAnim;
+
+/** @brief Split Head character control states. */
+typedef enum _SplitHeadControl
+{
+    SplitHeadControl_None = 0,
+    SplitHeadControl_1    = 1,
+    SplitHeadControl_2    = 2,
+    SplitHeadControl_3    = 3,
+    SplitHeadControl_4    = 4,
+    SplitHeadControl_5    = 5,
+    SplitHeadControl_6    = 6,
+    SplitHeadControl_7    = 7,
+    SplitHeadControl_8    = 8
+} e_SplitHeadControl;
 
 /*s_AnimInfo SPLIT_HEAD_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },

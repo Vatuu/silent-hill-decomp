@@ -1,4 +1,4 @@
-s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara)
+s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer)
 {
     s32 headingAngleDelta;
     s32 invDist;
@@ -7,10 +7,10 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara)
     s32 headingAngleTo;
     s32 headingAngleFrom;
 
-    headingAngleTo = func_80080478(&g_SysWork.playerWork_4C.player_0.position_18, &chara->position_18);
+    headingAngleTo = func_80080478(&g_SysWork.playerWork_4C.player_0.position_18, &airScreamer->position_18);
     headingAngleFrom = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
 
-    invDist = Q12(8.0f) - Math_Distance2dGet(&g_SysWork.playerWork_4C.player_0.position_18, &chara->position_18);
+    invDist = Q12(8.0f) - Math_Distance2dGet(&g_SysWork.playerWork_4C.player_0.position_18, &airScreamer->position_18);
     if (invDist < Q12(0.0f))
     {
         invDist = Q12(0.0f);
@@ -42,7 +42,7 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara)
             dist += distProp8;
         }
 
-        if (chara == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353])
+        if (airScreamer == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353])
         {
             dist += Q12(1.0f);
         }

@@ -1571,7 +1571,7 @@ extern VECTOR sharedData_800DD880_0_s01;
 
 /** Could be a padded `VECTOR`, but the ASM for the function `vec = vec` assignments copies only the first 3 fields. */
 extern VECTOR3 sharedData_800DE170_0_s01;
-extern VECTOR3 sharedData_800DE180_0_s01;
+extern VECTOR3 sharedData_800DE180_0_s01; // Q19.12 player position relevant to Air Screamer.
 extern VECTOR3 sharedData_800DE190_0_s01;
 
 extern s_func_800700F8_2 sharedData_800E2330_0_s01;
@@ -2386,12 +2386,12 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher);
 
 void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher);
 
-bool sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1);
+bool sharedFunc_800D3508_0_s01(s_SubCharacter* airScreamer, q19_12* dist);
 
-bool sharedFunc_800D3630_0_s01(s_SubCharacter* chara, q19_12* dist);
+bool sharedFunc_800D3630_0_s01(s_SubCharacter* airScreamer, q19_12* dist);
 
 /** Returns flags? Specific to Air Screamer? */
-s32 sharedFunc_800D3758_0_s01(s_SubCharacter* chara, q19_12* outDist, q19_12* outAngle, q19_12 dist, s32* arg4);
+s32 sharedFunc_800D3758_0_s01(s_SubCharacter* airScreamer, q19_12* outDist, q19_12* outAngle, q19_12 dist, s32* arg4);
 
 void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
@@ -2453,7 +2453,7 @@ void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead);
 
 void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead);
 
-void sharedFunc_800D0054_1_s05(s_SubCharacter* splitHead);
+void Ai_SplitHead_ControlUpdate(s_SubCharacter* splitHead);
 
 void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead);
 
@@ -2513,13 +2513,14 @@ void sharedFunc_800D2BE4_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2BF4_0_s01(s_SubCharacter* airScreamer);
 
-bool sharedFunc_800D2E04_0_s01(s_SubCharacter* chara, VECTOR3* inVec, s32* outDist, s32* outAngle);
+bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, s32* outDist, s32* outAngle);
 
-bool sharedFunc_800D3430_0_s01(s_SubCharacter* chara, s32* arg1, s32* arg2);
+bool sharedFunc_800D3430_0_s01(s_SubCharacter* airScreamer, q19_12* dist, q19_12* angle);
 
-s32 sharedFunc_800D3814_0_s01(s_SubCharacter* chara);
+/** Pecking distance getter? */
+s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer);
 
-bool sharedFunc_800D31D0_0_s01(s_SubCharacter* chara, VECTOR3* pos, s32 arg2);
+bool sharedFunc_800D31D0_0_s01(s_SubCharacter* airScreamer, VECTOR3* pos, s32 arg2);
 
 bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer);
 
@@ -2528,7 +2529,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer);
 bool sharedFunc_800D62D8_0_s01(s_SubCharacter* airScreamer);
 
 /** Returns anim-related index. */
-s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* chara);
+s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* airScreamer);
 
 /** Gets player Y position with an offset. */
 q19_12 sharedFunc_800D5274_0_s01(void);
@@ -2679,7 +2680,7 @@ void sharedFunc_800DF22C_2_s00(s_SubCharacter* chara);
 
 s32 sharedFunc_800DF24C_2_s00(s_SubCharacter* chara);
 
-bool sharedFunc_800D2FB4_0_s01(s_SubCharacter* chara, VECTOR3* playerPos, s32 playerField10C);
+bool sharedFunc_800D2FB4_0_s01(s_SubCharacter* airScreamer, VECTOR3* playerPos, s32 playerField10C);
 
 void sharedFunc_800D72E8_0_s01(s_SubCharacter* chara, s32 field_34, s32 rotSpeedY);
 

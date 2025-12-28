@@ -1312,18 +1312,20 @@ STATIC_ASSERT_SIZEOF(s_PropertiesNpc, 64);
 /** @brief Air Screamer or Night Flutter character properties. */
 typedef struct _PropertiesAirScreamer
 {
-    u32    field_E8_0 : 4;
-    u32    field_E8_4 : 4;
-    u32    field_E8_8 : 4;
-    u32    unk_E8_C   : 20;
-    s32    field_EC;
-    s16    field_F0; // } Maybe 2D offset like in Creeper properties? Must check.
-    s16    field_F2; // }
-    s32    field_F4;
-    s8     unk_F8[36]; // Maybe used by yet to be decompiled functions.
-    s32    flags_11C; /** `e_AirScreamerFlags` */
-    q19_12 timer_120;
-    q19_12 groundHeight_124;
+    u32     field_E8_0 : 4;
+    u32     field_E8_4 : 4;
+    u32     field_E8_8 : 4;
+    u32     unk_E8_C   : 20;
+    s32     field_EC;
+    s16     field_F0; // } Maybe 2D offset like in Creeper properties? Must check.
+    s16     field_F2; // }
+    s32     field_F4;
+    s8      unk_F8[12];
+    VECTOR3 position_104;
+    s8      unk_110[12];
+    s32     flags_11C; /** `e_AirScreamerFlags` */
+    q19_12  timer_120;
+    q19_12  groundHeight_124;
 } s_PropertiesAirScreamer;
 
 /** @brief Bloodsucker character properties. */
@@ -1462,7 +1464,7 @@ typedef struct _PropertiesSplitHead
     u_Property field_F0;
     q4_12      timer_F4;
     u16        unk_F8;
-    q19_12     timer_F8;
+    q19_12     animTime_F8;
     s32        field_FC;
     s32        field_100;
     u_Property field_104;

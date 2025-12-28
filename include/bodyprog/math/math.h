@@ -98,6 +98,16 @@
            ((mat).m[1][0] * (vec).vy) + \
            ((mat).m[2][0] * (vec).vz)) >> 17)
 
+/** @brief Computes the Y axis angle from one position to another in fixed-point Q*.12.
+ *
+ * @param posFrom Start position.
+ * @param posTo End position.
+ * @return Y axis angle between positions (Q19.12).
+ */
+#define Math_AngleBetweenPositionsGet(posFrom, posTo) \
+    ratan2(posTo.vx - posFrom.vx,                     \
+           posTo.vz - posFrom.vz);                    \
+
 /** @brief Computes the magnitude of a 2D vector in Q19.12, using intermediate components in Q25.6 to avoid overflow.
  *
  * @param x X vector component (Q19.12).

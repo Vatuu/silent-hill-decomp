@@ -1,48 +1,54 @@
-bool sharedFunc_800D3508_0_s01(s_SubCharacter* chara, s32* arg1)
+bool sharedFunc_800D3508_0_s01(s_SubCharacter* airScreamer, q19_12* dist)
 {
-    s32    temp_hi;
-    q19_12 angle;
-    s32    temp_s2;
-    u32    temp_lo;
+    q19_12 angleToPlayer;
+    q19_12 angleToPlayerCpy;
+    q19_12 offsetDist;
+    q19_12 offsetX;
+    u32    offsetZ;
     bool   cond;
-    q19_12 tmpAngle;
+    // TODO: Fix messy local var reuse.
 
-    temp_s2 = g_SysWork.playerWork_4C.player_0.properties_E4.player.field_10C << 8;
-    if (arg1 != NULL)
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+    #define playerProps      g_SysWork.playerWork_4C.player_0.properties_E4.player
+
+    offsetDist = playerProps.field_10C << 8;
+    if (dist != NULL)
     {
-        *arg1 = temp_s2;
+        *dist = offsetDist;
     }
 
-    cond = sharedFunc_800D2FB4_0_s01(chara, &g_SysWork.playerWork_4C.player_0.position_18, temp_s2);
+    cond = sharedFunc_800D2FB4_0_s01(airScreamer, &g_SysWork.playerWork_4C.player_0.position_18, offsetDist);
     if (cond)
     {
-        tmpAngle = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
-        angle = tmpAngle;
+        angleToPlayer    = Math_AngleBetweenPositionsGet(airScreamer->position_18, g_SysWork.playerWork_4C.player_0.position_18);
+        angleToPlayerCpy = angleToPlayer;
 
-        temp_lo = g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0;
-        if (!(temp_lo & 0x2))
+        offsetZ = g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0;
+        if (!(offsetZ & 0x2))
         {
             // @hack Permuter find.
-            temp_lo = 0;
-            while (temp_lo) {};
+            offsetZ = 0;
+            while (offsetZ) {};
 
             do
             {
-                sharedFunc_800D4A80_0_s01(chara);
+                sharedFunc_800D4A80_0_s01(airScreamer);
             }
             while (false);
         }
 
-        tmpAngle = FP_MULTIPLY_PRECISE(temp_s2, Math_Sin(angle), Q12_SHIFT);
-        temp_hi = tmpAngle;
-        temp_lo = FP_MULTIPLY_PRECISE(temp_s2, Math_Cos(angle), Q12_SHIFT);
+        angleToPlayer = FP_MULTIPLY_PRECISE(offsetDist, Math_Sin(angleToPlayerCpy), Q12_SHIFT);
+        offsetX = angleToPlayer;
+        offsetZ = FP_MULTIPLY_PRECISE(offsetDist, Math_Cos(angleToPlayerCpy), Q12_SHIFT);
 
-        chara->properties_E4.unk0.pos_104.vx = chara->position_18.vx + temp_hi;
-        temp_hi                              = g_SysWork.playerWork_4C.player_0.field_C8.field_6;
-        chara->properties_E4.unk0.pos_104.vy = g_SysWork.playerWork_4C.player_0.position_18.vy + temp_hi;
-        chara->properties_E4.unk0.pos_104.vz = chara->position_18.vz + temp_lo;
+        airScreamerProps.position_104.vx = airScreamer->position_18.vx + offsetX;
+        airScreamerProps.position_104.vy = g_SysWork.playerWork_4C.player_0.position_18.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_6;
+        airScreamerProps.position_104.vz = airScreamer->position_18.vz + offsetZ;
     }
 
     return cond;
+
+    #undef airScreamerProps
+    #undef playerProps
 }
 

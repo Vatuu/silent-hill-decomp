@@ -1,6 +1,6 @@
 #include "inline_no_dmpsx.h"
 
-#include <psyq/gtemac.h>"
+#include <psyq/gtemac.h>
 
 bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx)
 {

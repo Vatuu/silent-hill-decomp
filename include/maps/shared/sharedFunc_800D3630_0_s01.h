@@ -1,30 +1,38 @@
-bool sharedFunc_800D3630_0_s01(s_SubCharacter* chara, q19_12* dist)
+bool sharedFunc_800D3630_0_s01(s_SubCharacter* airScreamer, q19_12* dist)
 {
     bool   cond;
-    q19_12 angle;
+    q19_12 angleToPlayer;
+    q19_12 offsetDist;
     q19_12 offsetX;
     q19_12 offsetZ;
-    q19_12 newDist;
 
-    newDist = sharedFunc_800D3814_0_s01(chara);
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
+    offsetDist = sharedFunc_800D3814_0_s01(airScreamer);
     if (dist != NULL)
     {
-        *dist = newDist;
+        *dist = offsetDist;
     }
 
-    cond = sharedFunc_800D31D0_0_s01(chara, &g_SysWork.playerWork_4C.player_0.position_18, newDist);
+    // Set target position for pecking?
+    cond = sharedFunc_800D31D0_0_s01(airScreamer, &g_SysWork.playerWork_4C.player_0.position_18, offsetDist);
     if (cond)
     {
-        newDist = MAX(newDist, Q12(1.5));
-        angle  = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
+        // Compute extra offset distance.
+        offsetDist = MAX(offsetDist, Q12(1.5f));
 
-        offsetX = FP_MULTIPLY_PRECISE(newDist, Math_Sin(angle), Q12_SHIFT);
-        offsetZ = FP_MULTIPLY_PRECISE(newDist, Math_Cos(angle), Q12_SHIFT);
+        // Compute extra offset.
+        angleToPlayer = Math_AngleBetweenPositionsGet(airScreamer->position_18, g_SysWork.playerWork_4C.player_0.position_18);
+        offsetX = FP_MULTIPLY_PRECISE(offsetDist, Math_Sin(angleToPlayer), Q12_SHIFT);
+        offsetZ = FP_MULTIPLY_PRECISE(offsetDist, Math_Cos(angleToPlayer), Q12_SHIFT);
 
-        chara->properties_E4.npc.field_104 = chara->position_18.vx + offsetX;
-        chara->properties_E4.npc.field_108 = g_SysWork.playerWork_4C.player_0.position_18.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_6;
-        chara->properties_E4.npc.field_10C = chara->position_18.vz + offsetZ;
+        // Set target position slightly ahead of Air Screamer.
+        airScreamerProps.position_104.vx = airScreamer->position_18.vx + offsetX;
+        airScreamerProps.position_104.vy = g_SysWork.playerWork_4C.player_0.position_18.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_6;
+        airScreamerProps.position_104.vz = airScreamer->position_18.vz + offsetZ;
     }
 
     return cond;
+
+    #undef airScreamerProps
 }

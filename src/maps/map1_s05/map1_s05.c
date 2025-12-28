@@ -42,7 +42,7 @@ INCLUDE_RODATA("asm/maps/map1_s05/nonmatchings/map1_s05", g_MapOverlayHeader);
 
 #include "maps/shared/Ai_SplitHead_DamageTake.h" // 0x800CFE94
 
-#include "maps/shared/sharedFunc_800D0054_1_s05.h" // 0x800D0054
+#include "maps/shared/Ai_SplitHead_ControlUpdate.h" // 0x800D0054
 
 #include "maps/shared/sharedFunc_800D00D0_1_s05.h" // 0x800D00D0
 

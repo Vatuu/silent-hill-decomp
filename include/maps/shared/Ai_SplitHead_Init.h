@@ -12,7 +12,7 @@ void Ai_SplitHead_Init(s_SubCharacter* splitHead)
     splitHead->field_E1_0             = 4;
     Chara_PropertiesClear(splitHead);
 
-    splitHead->model_0.controlState_2 = 8;
+    splitHead->model_0.controlState_2 = SplitHeadControl_8;
     Character_AnimSet(splitHead, ANIM_STATUS(SplitHeadAnim_10, true), 162);
     ModelAnim_AnimInfoSet(&splitHead->model_0.anim_4, SPLIT_HEAD_ANIM_INFOS);
 

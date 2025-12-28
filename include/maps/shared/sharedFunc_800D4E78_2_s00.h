@@ -78,7 +78,7 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
         case 3:
             sharedFunc_800DDF74_2_s00(chara, unkDist / 2, unkAngle);
 
-#define ANGLE_DIFF FP_ANGLE_NORM_S(unkAngle - chara->rotation_24.vy)
+            #define ANGLE_DIFF FP_ANGLE_NORM_S(unkAngle - chara->rotation_24.vy)
 
             if (temp_s3 != 0)
             {
