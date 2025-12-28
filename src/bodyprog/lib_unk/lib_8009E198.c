@@ -46,13 +46,69 @@ s_SysWork_2510 D_800B142C = {
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E198);
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E230);
+s32 func_8009E230(s_SysWork_2514* arg0)
+{
+    u32 tmp = *(u32*)arg0;
+    s32 ret = arg0->field_0.field_0_17;
+    if (ret)
+    {
+        // @hack bitfield struct assignments don't match here?
+        u32 mask    = ~(1 << 23);
+        tmp        &= mask;
+        mask        = ~(1 << 17);
+        tmp        &= mask;
+        *(u32*)arg0 = tmp;
+    }
+    return ret;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E268);
+s32 func_8009E268(s_SysWork_2514* arg0)
+{
+    u32 tmp = *(u32*)arg0;
+    s32 ret = arg0->field_0.field_0_17 ^ 1;
+    if (ret)
+    {
+        // @hack bitfield struct assignments don't match here?
+        u32 mask    = ~(1 << 23);
+        tmp        &= mask;
+        mask        = 1 << 17;
+        tmp        |= mask;
+        *(u32*)arg0 = tmp;
+    }
+    return ret;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E2A0);
+s32 func_8009E2A0(s_SysWork_2514* arg0)
+{
+    u32 tmp = *(u32*)arg0;
+    s32 ret = arg0->field_0.field_0_18 ^ 1;
+    if (ret)
+    {
+        // @hack bitfield struct assignments don't match here?
+        u32 mask    = ~(1 << 23);
+        tmp        &= mask;
+        mask        = 1 << 18;
+        tmp        |= mask;
+        *(u32*)arg0 = tmp;
+    }
+    return ret;
+}
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E2D8);
+s32 func_8009E2D8(s_SysWork_2514* arg0)
+{
+    u32 tmp = *(u32*)arg0;
+    s32 ret = arg0->field_0.field_0_18;
+    if (ret)
+    {
+        // @hack bitfield struct assignments don't match here?
+        u32 mask    = ~(1 << 23);
+        tmp        &= mask;
+        mask        = ~(1 << 18);
+        tmp        &= mask;
+        *(u32*)arg0 = tmp;
+    }
+    return ret;
+}
 
 s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2) // 0x8009E310
 {
