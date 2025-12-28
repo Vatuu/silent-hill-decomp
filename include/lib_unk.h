@@ -126,7 +126,8 @@ bool func_8009EBB8(s_SysWork_2514* list, s_SysWork_2514_18* node, s32 count);
 
 bool func_8009EC1C(s_SysWork_2514* list, s_SysWork_2514_18* node);
 
-s32 func_8009EC64(s_SysWork_2514* work, s16 value);
+/** @brief Ensures a node in a linked list is sorted based on its key value. */
+bool func_8009EC64(s_SysWork_2514* work, s16 val);
 
 s_SysWork_2514_18* func_8009ED74(s_SysWork_2514* list);
 

@@ -1478,7 +1478,8 @@ typedef struct _PropertiesStalker
     q19_12 relAnimTime_104;
     q4_12  timer_108;
     u8     field_10A;
-    s8     unk_10B[5]; // Padding?
+    s8     unk_10B; // Padding?
+    q19_12 timer_10C;
     q19_12 health_110;
     q3_12  angle_114;
     q4_12  timer_116;

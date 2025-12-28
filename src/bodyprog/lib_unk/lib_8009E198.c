@@ -46,11 +46,15 @@ s_SysWork_2510 D_800B142C = {
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E198);
 
-s32 func_8009E230(s_SysWork_2514* arg0)
+s32 func_8009E230(s_SysWork_2514* arg0) // 0x8009E230
 {
-    u32 tmp = *(u32*)arg0;
-    s32 ret = arg0->field_0.field_0_17;
-    if (ret)
+    u32 tmp;
+    s32 ret;
+
+    tmp = *(u32*)arg0;
+
+    ret = arg0->field_0.field_0_17;
+    if (ret != 0)
     {
         // @hack bitfield struct assignments don't match here?
         u32 mask    = ~(1 << 23);
@@ -59,14 +63,19 @@ s32 func_8009E230(s_SysWork_2514* arg0)
         tmp        &= mask;
         *(u32*)arg0 = tmp;
     }
+
     return ret;
 }
 
-s32 func_8009E268(s_SysWork_2514* arg0)
+s32 func_8009E268(s_SysWork_2514* arg0) // 0x8009E268
 {
-    u32 tmp = *(u32*)arg0;
-    s32 ret = arg0->field_0.field_0_17 ^ 1;
-    if (ret)
+    u32 tmp;
+    s32 ret;
+
+    tmp = *(u32*)arg0;
+
+    ret = arg0->field_0.field_0_17 ^ 1;
+    if (ret != 0)
     {
         // @hack bitfield struct assignments don't match here?
         u32 mask    = ~(1 << 23);
@@ -75,6 +84,7 @@ s32 func_8009E268(s_SysWork_2514* arg0)
         tmp        |= mask;
         *(u32*)arg0 = tmp;
     }
+
     return ret;
 }
 
@@ -82,7 +92,7 @@ s32 func_8009E2A0(s_SysWork_2514* arg0)
 {
     u32 tmp = *(u32*)arg0;
     s32 ret = arg0->field_0.field_0_18 ^ 1;
-    if (ret)
+    if (ret != 0)
     {
         // @hack bitfield struct assignments don't match here?
         u32 mask    = ~(1 << 23);
@@ -91,14 +101,19 @@ s32 func_8009E2A0(s_SysWork_2514* arg0)
         tmp        |= mask;
         *(u32*)arg0 = tmp;
     }
+
     return ret;
 }
 
-s32 func_8009E2D8(s_SysWork_2514* arg0)
+s32 func_8009E2D8(s_SysWork_2514* arg0) // 0x8009E2D8
 {
-    u32 tmp = *(u32*)arg0;
-    s32 ret = arg0->field_0.field_0_18;
-    if (ret)
+    u32 tmp;
+    s32 ret;
+
+    tmp = *(u32*)arg0;
+
+    ret = arg0->field_0.field_0_18;
+    if (ret != 0)
     {
         // @hack bitfield struct assignments don't match here?
         u32 mask    = ~(1 << 23);
@@ -107,21 +122,23 @@ s32 func_8009E2D8(s_SysWork_2514* arg0)
         tmp        &= mask;
         *(u32*)arg0 = tmp;
     }
+
     return ret;
 }
 
 s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2) // 0x8009E310
 {
     s_SysWork_2514_C_0 tmp;
-
-    s32 ret = arg0 != NULL;
-    if (!ret)
+    s32                ret;
+    
+    ret = arg0 != NULL;
+    if (ret == 0)
     {
         return ret;
     }
 
     ret = arg0->field_0.field_0_16;
-    if (ret)
+    if (ret != 0)
     {
         if (arg1 == NULL)
         {
@@ -194,7 +211,7 @@ bool func_8009E438(s_SysWork_2514* arg0, s32 padState, s32 padInfoCurId, s32 pad
 
     tmp = arg0->field_0;
 
-    // "Check for controller connection with controllers other than DUAL SHOCK (Complete the acquisition of controller information)"
+    // "Check for controller connection with controllers other than DUAL SHOCK (Complete the acquisition of controller information)".
     if (padState == PadStateFindCTP1)
     {
         // TODO: 16Button is just standard controller?
@@ -588,14 +605,10 @@ bool func_8009EC1C(s_SysWork_2514* list, s_SysWork_2514_18* node) // 0x8009EC1C
     return true;
 }
 
-/**
- * @brief Ensures a node in a linked list is sorted based on its key value.
- */
-s32 func_8009EC64(s_SysWork_2514* work, s16 value)
+bool func_8009EC64(s_SysWork_2514* work, s16 val) // 0x8009EC64
 {
-    s_SysWork_2514* list = work;
-    s32             value32;
-
+    s_SysWork_2514*     list = work;
+    s32                 val32;
     s_SysWork_2514_18*  prev;
     s_SysWork_2514_18*  head;
     s_SysWork_2514_18** prevAddress;
@@ -606,14 +619,13 @@ s32 func_8009EC64(s_SysWork_2514* work, s16 value)
 
     head    = &list->head_18;
     node    = list->field_10;
-    value32 = value;
+    val32 = val;
 
     prevAddress = &head->prev_4;
     prev        = *prevAddress;
     prevUnk8    = &prev->key_8.value;
 
-    unsorted = ((!node) & (prev == head) & (value32 >= prev->key_8.value)) != 0;
-
+    unsorted = ((!node) & (prev == head) & (val32 >= prev->key_8.value)) != 0;
     if (!unsorted)
     {
         return unsorted;
@@ -624,11 +636,11 @@ s32 func_8009EC64(s_SysWork_2514* work, s16 value)
     cur->next_0  = head;
     head->prev_4 = cur;
 
-    // Insert it front of `node`.
+    // Insert in front of `node`.
     list->field_10 = prev;
     prev->next_0   = node;
 
-    return 1;
+    return true;
 }
 
 INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009ECCC);

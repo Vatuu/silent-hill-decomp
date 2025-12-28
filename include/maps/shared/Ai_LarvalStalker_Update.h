@@ -2,6 +2,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr,
 {
     s8* mapOverlayPtr;
 
+    // Initialize.
     if (larvalStalker->model_0.state_2 == ModelState_Uninitialized)
     {
         Ai_LarvalStalker_Init(larvalStalker);
