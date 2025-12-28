@@ -1,4 +1,4 @@
-void sharedFunc_800D9774_1_s02(s_SubCharacter* creeper)
+void Ai_Creeper_Control_5(s_SubCharacter* creeper)
 {
     #define creeperProps creeper->properties_E4.creeper
 

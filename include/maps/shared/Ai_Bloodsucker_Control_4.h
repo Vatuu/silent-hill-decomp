@@ -1,4 +1,4 @@
-void sharedSymbol_800D0ECC_3_s03(s_SubCharacter* bloodsucker)
+void Ai_Bloodsucker_Control_4(s_SubCharacter* bloodsucker)
 {
 #ifdef MAP3_S03
     if (bloodsucker->model_0.anim_4.status_0 != ((bloodsucker->model_0.stateStep_3 * 2) + 2) &&

@@ -25,11 +25,11 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
         {
             if (Rng_Rand16() & 0x80)
             {
-                controlState = PuppetNurseState_6;
+                controlState = PuppetNurseControl_6;
             }
             else
             {
-                controlState = PuppetNurseState_7;
+                controlState = PuppetNurseControl_7;
             }
 
             nurse->model_0.state_2 = controlState;
@@ -47,7 +47,7 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
 
     if (sharedFunc_800CF294_3_s03(nurse, dist))
     {
-        nurse->model_0.state_2 = PuppetNurseState_9;
+        nurse->model_0.state_2 = PuppetNurseControl_9;
         nurse->model_0.stateStep_3 = 0;
         return;
     }

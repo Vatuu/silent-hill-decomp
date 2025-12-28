@@ -1340,7 +1340,7 @@ typedef struct _PropertiesBloodsucker
 /** @brief Creeper character properties. */
 typedef struct _PropertiesCreeper
 {
-    u16    flags_E8; /** `e_CreeperFlags` */ // TODO: `sharedFunc_800D8684_1_s02` and `sharedFunc_800D9774_1_s02` require `s32`, but changing it breaks matches elsewhere.
+    u16    flags_E8; /** `e_CreeperFlags` */ // TODO: `Ai_Creeper_Control_2` and `Ai_Creeper_Control_5` require `s32`, but changing it breaks matches elsewhere.
     s8     unk_EA[2];
     q3_12  offsetX_EC;
     q3_12  offsetZ_EE;

@@ -34,21 +34,21 @@ typedef enum _PuppetNurseAnim
 } e_PuppetNurseAnim;
 
 /** @brief Puppet Nurse or Puppet Doctor character control states. */
-typedef enum _PuppetNurseState
+typedef enum _PuppetNurseControl
 {
-    PuppetNurseState_1  = 1,
-    PuppetNurseState_2  = 2,
-    PuppetNurseState_3  = 3, // Doctor-specific.
-    PuppetNurseState_4  = 4, // Nurse-specific.
-    PuppetNurseState_5  = 5,
-    PuppetNurseState_6  = 6, // Nurse-specific.
-    PuppetNurseState_7  = 7, // Doctor-specific.
-    PuppetNurseState_8  = 8,
-    PuppetNurseState_9  = 9,
-    PuppetNurseState_10 = 10,
-    PuppetNurseState_11 = 11,
-    PuppetNurseState_12 = 12,
-    PuppetNurseState_13 = 13
-} e_PuppetNurseState;
+    PuppetNurseControl_1  = 1,
+    PuppetNurseControl_2  = 2,
+    PuppetNurseControl_3  = 3, // Doctor-specific.
+    PuppetNurseControl_4  = 4, // Nurse-specific.
+    PuppetNurseControl_5  = 5,
+    PuppetNurseControl_6  = 6, // Nurse-specific.
+    PuppetNurseControl_7  = 7, // Doctor-specific.
+    PuppetNurseControl_8  = 8,
+    PuppetNurseControl_9  = 9,
+    PuppetNurseControl_10 = 10,
+    PuppetNurseControl_11 = 11,
+    PuppetNurseControl_12 = 12,
+    PuppetNurseControl_13 = 13
+} e_PuppetNurseControl;
 
 #endif

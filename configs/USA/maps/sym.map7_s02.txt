@@ -129,10 +129,10 @@ Ai_BloodyLisa_Init                  = 0x800D6850; // type:func
 //--------------------------------------------------------------------
 Ai_Bloodsucker_Update               = 0x800D6874; // type:func
 Ai_Bloodsucker_Init                 = 0x800D6B8C; // type:func
-sharedFunc_800D0E20_3_s03           = 0x800D6C20; // type:func
-sharedSymbol_800D0E38_3_s03         = 0x800D6C38; // type:func
-sharedFunc_800D0E80_3_s03           = 0x800D6C40; // type:func
-sharedSymbol_800D0ECC_3_s03         = 0x800D6C8C; // type:func
+Ai_Bloodsucker_Control_1            = 0x800D6C20; // type:func
+Ai_Bloodsucker_Control_2            = 0x800D6C38; // type:func
+Ai_Bloodsucker_Control_3            = 0x800D6C40; // type:func
+Ai_Bloodsucker_Control_4            = 0x800D6C8C; // type:func
 sharedFunc_800D0F28_3_s03           = 0x800D6C94; // type:func
 
 //---------------------------------------------------------------

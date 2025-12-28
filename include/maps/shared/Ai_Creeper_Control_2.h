@@ -1,4 +1,4 @@
-void sharedFunc_800D8684_1_s02(s_SubCharacter* creeper)
+void Ai_Creeper_Control_2(s_SubCharacter* creeper)
 {
     q3_12         unkAngleDelta;
     q3_12         angleDeltaToPlayer;
@@ -44,7 +44,7 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creeper)
             }
             else
             {
-                creeper->model_0.state_2         = 1;
+                creeper->model_0.state_2         = CreeperControl_1;
                 creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_11, false);
                 creeperProps.timer_F0            = Q12(0.0f);
             }
@@ -52,7 +52,7 @@ void sharedFunc_800D8684_1_s02(s_SubCharacter* creeper)
         else if (!(g_SysWork.field_2284[3] & (1 << 1)) && !(playerWork->player_0.flags_3E & CharaFlag_Unk4) &&
                  distToPlayer < Q12(0.5f) && ABS(angleDeltaToPlayer) < FP_ANGLE(10.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
         {
-            creeper->model_0.state_2         = 3;
+            creeper->model_0.state_2         = CreeperControl_3;
             creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_12, false);
             creeperProps.timer_F0            = Q12(0.0f);
             g_SysWork.field_2284[3]         |= 1 << 1;

@@ -105,13 +105,13 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D03E4_3_s03
 
 #include "maps/shared/Ai_Bloodsucker_Init.h" // 0x800D0CDC
 
-#include "maps/shared/sharedFunc_800D0E20_3_s03.h" // 0x800D0E20
+#include "maps/shared/Ai_Bloodsucker_Control_1.h" // 0x800D0E20
 
-#include "maps/shared/sharedSymbol_800D0E38_3_s03.h" // 0x800D0E38
+#include "maps/shared/Ai_Bloodsucker_Control_2.h" // 0x800D0E38
 
-#include "maps/shared/sharedFunc_800D0E80_3_s03.h" // 0x800D0E80
+#include "maps/shared/Ai_Bloodsucker_Control_3.h" // 0x800D0E80
 
-#include "maps/shared/sharedSymbol_800D0ECC_3_s03.h" // 0x800D0ECC
+#include "maps/shared/Ai_Bloodsucker_Control_4.h" // 0x800D0ECC
 
 #include "maps/shared/sharedFunc_800D0F28_3_s03.h" // 0x800D0F28
 

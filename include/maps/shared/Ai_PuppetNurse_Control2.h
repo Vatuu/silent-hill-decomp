@@ -10,7 +10,7 @@ void Ai_PuppetNurse_Control2(s_SubCharacter* nurse)
     }
     if (nurse->model_0.anim_4.status_0 == ANIM_STATUS(PuppetNurseAnim_18, false))
     {
-        nurse->model_0.state_2 = PuppetNurseState_9;
+        nurse->model_0.state_2 = PuppetNurseControl_9;
         nurse->model_0.stateStep_3 = 0;
     }
 

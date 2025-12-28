@@ -39,4 +39,15 @@ typedef enum _CreeperAnim
     CreeperAnim_17    = 17
 } e_CreeperAnim;
 
+/** @brief Creeper character control states. */
+typedef enum _CreeperControl
+{
+    CreeperControl_None = 0,
+    CreeperControl_1    = 1,
+    CreeperControl_2    = 2,
+    CreeperControl_3    = 3,
+    CreeperControl_4    = 4,
+    CreeperControl_5    = 5
+} e_CreeperControl;
+
 #endif

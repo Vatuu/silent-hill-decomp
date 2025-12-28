@@ -36,13 +36,13 @@ void Ai_PuppetNurse_Control1(s_SubCharacter* nurse)
 
     if (localNurse->model_0.anim_4.status_0 == ANIM_STATUS(PuppetNurseAnim_18, false))
     {
-        localNurse->model_0.state_2 = PuppetNurseState_9;
+        localNurse->model_0.state_2 = PuppetNurseControl_9;
         localNurse->model_0.stateStep_3 = 0;
     }
 
     if (nurse->properties_E4.puppetNurse.field_11E && g_SysWork.playerWork_4C.player_0.attackReceived_41 == NO_VALUE)
     {
-        localNurse->model_0.state_2 = PuppetNurseState_8;
+        localNurse->model_0.state_2 = PuppetNurseControl_8;
         localNurse->model_0.stateStep_3 = 0;
         return;
     }

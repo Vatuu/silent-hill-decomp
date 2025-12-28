@@ -31,15 +31,15 @@ INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D8244_1_s02.h" // 0x800D0558
 
-#include "maps/shared/sharedFunc_800D82F0_1_s02.h" // 0x800D0604
+#include "maps/shared/Ai_Creeper_Control_1.h" // 0x800D0604
 
-#include "maps/shared/sharedFunc_800D8684_1_s02.h" // 0x800D0998
+#include "maps/shared/Ai_Creeper_Control_2.h" // 0x800D0998
 
-#include "maps/shared/sharedFunc_800D8F30_1_s02.h" // 0x800D1244
+#include "maps/shared/Ai_Creeper_Control_3.h" // 0x800D1244
 
-#include "maps/shared/sharedFunc_800D9528_1_s02.h" // 0x800D183C
+#include "maps/shared/Ai_Creeper_Control_4.h" // 0x800D183C
 
-#include "maps/shared/sharedFunc_800D9774_1_s02.h" // 0x800D1A88
+#include "maps/shared/Ai_Creeper_Control_5.h" // 0x800D1A88
 
 #include "maps/shared/sharedFunc_800D983C_1_s02.h" // 0x800D1B50
 

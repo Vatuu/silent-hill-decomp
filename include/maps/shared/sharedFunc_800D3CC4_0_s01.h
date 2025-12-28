@@ -45,7 +45,7 @@ void sharedFunc_800D3CC4_0_s01(s_SubCharacter* airScreamer)
             break;
 
         case 7:
-            airScreamer->model_0.state_2     = AirScreamerState_None;
+            airScreamer->model_0.state_2     = AirScreamerControl_None;
             airScreamer->model_0.stateStep_3 = 13;
             sharedSymbol_800D3B0C_0_s01(airScreamer);
             break;

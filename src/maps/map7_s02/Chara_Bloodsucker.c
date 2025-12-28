@@ -16,12 +16,12 @@
 
 #include "maps/shared/Ai_Bloodsucker_Init.h" // 0x800D6B8C
 
-#include "maps/shared/sharedFunc_800D0E20_3_s03.h" // 0x800D6C20
+#include "maps/shared/Ai_Bloodsucker_Control_1.h" // 0x800D6C20
 
-#include "maps/shared/sharedSymbol_800D0E38_3_s03.h" // 0x800D6C38
+#include "maps/shared/Ai_Bloodsucker_Control_2.h" // 0x800D6C38
 
-#include "maps/shared/sharedFunc_800D0E80_3_s03.h" // 0x800D6C40
+#include "maps/shared/Ai_Bloodsucker_Control_3.h" // 0x800D6C40
 
-#include "maps/shared/sharedSymbol_800D0ECC_3_s03.h" // 0x800D6C8C
+#include "maps/shared/Ai_Bloodsucker_Control_4.h" // 0x800D6C8C
 
 #include "maps/shared/sharedFunc_800D0F28_3_s03.h" // 0x800D6C94

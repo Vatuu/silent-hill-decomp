@@ -1,6 +1,6 @@
 void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
 {
-    s32 modelState;
+    s32 controlState;
 
     if (!nurse->model_0.stateStep_3)
     {
@@ -11,8 +11,8 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
 
     sharedFunc_800CE7C8_3_s03(nurse);
 
-    modelState = nurse->model_0.stateStep_3;
-    if (modelState == 1)
+    controlState = nurse->model_0.stateStep_3;
+    if (controlState == PuppetNurseControl_1)
     {
         if (nurse->properties_E4.puppetNurse.flags_122 & PuppetNurseFlag_0)
         {
@@ -24,7 +24,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
             {
                 if (func_80070320())
                 {
-                    nurse->model_0.state_2 = modelState;
+                    nurse->model_0.state_2 = controlState;
                     nurse->model_0.stateStep_3 = 0;
                     nurse->model_0.anim_4.status_0 = ANIM_STATUS(PuppetNurseAnim_18, false);
                     return;
@@ -32,17 +32,17 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
             }
             else
             {
-                nurse->model_0.state_2 = PuppetNurseState_13;
+                nurse->model_0.state_2 = PuppetNurseControl_13;
                 nurse->model_0.stateStep_3 = 0;
                 return;
             }
         }
     }
-    else if (modelState == 2)
+    else if (controlState == 2)
     {
         if ((&g_SysWork.playerWork_4C.player_0)->attackReceived_41 == NO_VALUE)
         {
-            nurse->model_0.state_2 = PuppetNurseState_8;
+            nurse->model_0.state_2 = PuppetNurseControl_8;
             nurse->model_0.stateStep_3 = 0;
             return;
         }

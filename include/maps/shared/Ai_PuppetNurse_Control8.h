@@ -1,7 +1,7 @@
 void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
 {
     u16          modelStates[8];
-    s32          modelState;
+    s32          controlState;
     q19_12       speed;
     register s32 angle asm("v1"); // @hack forced register for a match. Doesn't affect code logic.
 
@@ -39,15 +39,15 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
             {
                 if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                 {
-                    modelState = 9;
+                    controlState = PuppetNurseControl_9;
                     
                 }
                 else
                 {
-                    modelState = modelStates[(Rng_Rand16() >> 4) & 7];
+                    controlState = modelStates[(Rng_Rand16() >> 4) & 7];
                 }
 
-                nurse->model_0.state_2 = modelState;
+                nurse->model_0.state_2 = controlState;
                 nurse->model_0.stateStep_3 = 0;
             }
             else

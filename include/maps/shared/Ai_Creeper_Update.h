@@ -1,7 +1,7 @@
 void Ai_Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     // Initialize.
-    if (creeper->model_0.state_2 == ModelState_Uninitialized)
+    if (creeper->model_0.state_2 == CreeperControl_None)
     {
         Ai_Creeper_Init(creeper);
     }

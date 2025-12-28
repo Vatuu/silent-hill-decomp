@@ -1,4 +1,4 @@
-void sharedFunc_800D82F0_1_s02(s_SubCharacter* creeper)
+void Ai_Creeper_Control_1(s_SubCharacter* creeper)
 {
     bool cond;
 
@@ -29,7 +29,7 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creeper)
         if (Rng_GenerateUInt(0, 7) == 0 && // 1 in 8 chance.
             creeper->model_0.anim_4.status_0 == ANIM_STATUS(CreeperAnim_11, true))
         {
-            creeper->model_0.state_2         = 2;
+            creeper->model_0.state_2         = CreeperControl_2;
             creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_13, false);
             creeperProps.timer_F0            = Q12(0.5f);
             creeperProps.timer_104           = Q12(0.0f);
@@ -40,7 +40,7 @@ void sharedFunc_800D82F0_1_s02(s_SubCharacter* creeper)
     // Check if Creeper was alerted.
     if (creeperProps.flags_E8 & CreeperFlag_Alerted)
     {
-        creeper->model_0.state_2                 = 2;
+        creeper->model_0.state_2                 = CreeperControl_2;
         creeper->model_0.anim_4.status_0         = ANIM_STATUS(CreeperAnim_13, false);
         creeperProps.timer_F0  = Q12(0.5f);
         creeperProps.timer_104 = Q12(0.0f);

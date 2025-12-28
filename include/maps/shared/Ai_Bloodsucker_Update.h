@@ -4,7 +4,7 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
     s32 stateStepMul2;
 
     // Initialize.
-    if (bloodsucker->model_0.state_2 == ModelState_Uninitialized)
+    if (bloodsucker->model_0.state_2 == BloodsuckerControl_None)
     {
         Ai_Bloodsucker_Init(bloodsucker);
     }
@@ -12,20 +12,20 @@ void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsC
     // Handle control state.
     switch (bloodsucker->model_0.state_2)
     {
-        case 1:
-            sharedFunc_800D0E20_3_s03(bloodsucker);
+        case BloodsuckerControl_1:
+            Ai_Bloodsucker_Control_1(bloodsucker);
             break;
 
-        case 2:
-            sharedSymbol_800D0E38_3_s03(bloodsucker);
+        case BloodsuckerControl_2:
+            Ai_Bloodsucker_Control_2(bloodsucker);
             break;
 
-        case 3:
-            sharedFunc_800D0E80_3_s03(bloodsucker);
+        case BloodsuckerControl_3:
+            Ai_Bloodsucker_Control_3(bloodsucker);
             break;
 
-        case 4:
-            sharedSymbol_800D0ECC_3_s03(bloodsucker);
+        case BloodsuckerControl_4:
+            Ai_Bloodsucker_Control_4(bloodsucker);
             break;
     }
 

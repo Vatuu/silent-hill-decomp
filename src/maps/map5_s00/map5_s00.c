@@ -99,15 +99,15 @@ INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D3300_5_s00
 
 #include "maps/shared/sharedFunc_800D8244_1_s02.h" // 0x800D3F38
 
-#include "maps/shared/sharedFunc_800D82F0_1_s02.h" // 0x800D3FE4
+#include "maps/shared/Ai_Creeper_Control_1.h" // 0x800D3FE4
 
-#include "maps/shared/sharedFunc_800D8684_1_s02.h" // 0x800D4378
+#include "maps/shared/Ai_Creeper_Control_2.h" // 0x800D4378
 
-#include "maps/shared/sharedFunc_800D8F30_1_s02.h" // 0x800D4C24
+#include "maps/shared/Ai_Creeper_Control_3.h" // 0x800D4C24
 
-#include "maps/shared/sharedFunc_800D9528_1_s02.h" // 0x800D521C
+#include "maps/shared/Ai_Creeper_Control_4.h" // 0x800D521C
 
-#include "maps/shared/sharedFunc_800D9774_1_s02.h" // 0x800D5468
+#include "maps/shared/Ai_Creeper_Control_5.h" // 0x800D5468
 
 #include "maps/shared/sharedFunc_800D983C_1_s02.h" // 0x800D5530
 

@@ -1558,8 +1558,8 @@ extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
     extern s_MapHdr_field_4C sharedData_800DFB7C_0_s00[200];
 #endif
 
-/** Air Screamer or Night Flutter control functions. Indexed using `e_AirScreamerState`. */
-extern void (*g_Ai_AirScreamer_ControlFuncs[52])(s_SubCharacter* airScreamer); // TODO: Use `AirScreamerState_Count`.
+/** Air Screamer or Night Flutter control functions. Indexed using `e_AirScreamerControl`. */
+extern void (*g_Ai_AirScreamer_ControlFuncs[52])(s_SubCharacter* airScreamer); // TODO: Use `AirScreamerControl_Count`.
 
 extern s_MapPoint2d MAP_POINTS[];
 
@@ -2348,15 +2348,15 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper);
 
 void sharedFunc_800D8244_1_s02(s_SubCharacter* creeper);
 
-void sharedFunc_800D82F0_1_s02(s_SubCharacter* creeper);
+void Ai_Creeper_Control_1(s_SubCharacter* creeper);
 
-void sharedFunc_800D8684_1_s02(s_SubCharacter* creeper);
+void Ai_Creeper_Control_2(s_SubCharacter* creeper);
 
-void sharedFunc_800D8F30_1_s02(s_SubCharacter* creeper);
+void Ai_Creeper_Control_3(s_SubCharacter* creeper);
 
-void sharedFunc_800D9528_1_s02(s_SubCharacter* creeper);
+void Ai_Creeper_Control_4(s_SubCharacter* creeper);
 
-void sharedFunc_800D9774_1_s02(s_SubCharacter* creeper);
+void Ai_Creeper_Control_5(s_SubCharacter* creeper);
 
 void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper);
 
@@ -2600,10 +2600,10 @@ bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyfra
 // `Ai_Bloodsucker` related
 void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker);
-void sharedFunc_800D0E20_3_s03(s_SubCharacter* bloodsucker);
-void sharedSymbol_800D0E38_3_s03(s_SubCharacter* bloodsucker);
-void sharedFunc_800D0E80_3_s03(s_SubCharacter* bloodsucker);
-void sharedSymbol_800D0ECC_3_s03(s_SubCharacter* bloodsucker);
+void Ai_Bloodsucker_Control_1(s_SubCharacter* bloodsucker);
+void Ai_Bloodsucker_Control_2(s_SubCharacter* bloodsucker);
+void Ai_Bloodsucker_Control_3(s_SubCharacter* bloodsucker);
+void Ai_Bloodsucker_Control_4(s_SubCharacter* bloodsucker);
 void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 // TODO: Is this func bloodsucker specific?

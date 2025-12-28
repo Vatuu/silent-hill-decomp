@@ -95,15 +95,15 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara) {} // 0x800D3934
 
 #include "maps/shared/sharedFunc_800D8244_1_s02.h" // 0x800D8244
 
-#include "maps/shared/sharedFunc_800D82F0_1_s02.h" // 0x800D82F0
+#include "maps/shared/Ai_Creeper_Control_1.h" // 0x800D82F0
 
-#include "maps/shared/sharedFunc_800D8684_1_s02.h" // 0x800D8684
+#include "maps/shared/Ai_Creeper_Control_2.h" // 0x800D8684
 
-#include "maps/shared/sharedFunc_800D8F30_1_s02.h" // 0x800D8F30
+#include "maps/shared/Ai_Creeper_Control_3.h" // 0x800D8F30
 
-#include "maps/shared/sharedFunc_800D9528_1_s02.h" // 0x800D9528
+#include "maps/shared/Ai_Creeper_Control_4.h" // 0x800D9528
 
-#include "maps/shared/sharedFunc_800D9774_1_s02.h" // 0x800D9774
+#include "maps/shared/Ai_Creeper_Control_5.h" // 0x800D9774
 
 #include "maps/shared/sharedFunc_800D983C_1_s02.h" // 0x800D983C
 
