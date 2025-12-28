@@ -3,7 +3,7 @@ void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORD
     sharedData_800D8610_1_s05 = coords;
 
     // Initialize.
-    if (splitHead->model_0.state_2 == ModelState_Uninitialized)
+    if (splitHead->model_0.controlState_2 == ModelState_Uninitialized)
     {
         Ai_SplitHead_Init(splitHead);
     }

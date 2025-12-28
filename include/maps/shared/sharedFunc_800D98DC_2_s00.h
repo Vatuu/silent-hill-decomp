@@ -95,7 +95,7 @@ void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara)
                 case 0:
                     if ((field14C_1 | field14C_0 | field14C_2) != 0)
                     {
-                        chara->model_0.state_2     = 35;
+                        chara->model_0.controlState_2     = 35;
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
@@ -103,7 +103,7 @@ void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara)
                 case 1:
                     if (sp10 == switchCond)
                     {
-                        chara->model_0.state_2     = (field14C_1 | field14C_0 | field14C_2) ? 6 : 5;
+                        chara->model_0.controlState_2     = (field14C_1 | field14C_0 | field14C_2) ? 6 : 5;
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
@@ -111,7 +111,7 @@ void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara)
                 case 2:
                     if (sp10 == switchCond)
                     {
-                        chara->model_0.state_2     = (field14C_1 | field14C_0 | field14C_2) ? 20 : 19;
+                        chara->model_0.controlState_2     = (field14C_1 | field14C_0 | field14C_2) ? 20 : 19;
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
@@ -120,14 +120,14 @@ void sharedFunc_800D98DC_2_s00(s_SubCharacter* chara)
 
         case 1:
         case 2:
-            chara->model_0.state_2               = 44;
+            chara->model_0.controlState_2               = 44;
             chara->model_0.stateStep_3           = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 3:
         case 4:
-            chara->model_0.state_2     = 45;
+            chara->model_0.controlState_2     = 45;
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= Q12(0.0f))

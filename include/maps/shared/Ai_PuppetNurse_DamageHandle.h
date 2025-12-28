@@ -33,12 +33,12 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                     
                     if (!Ai_PuppetNurse_SomeAngleCheck(nurse))
                     {
-                        nurse->model_0.state_2 = PuppetNurseControl_4;
+                        nurse->model_0.controlState_2 = PuppetNurseControl_4;
                         nurse->model_0.stateStep_3 = 0;
                     }
                     else
                     {
-                        nurse->model_0.state_2 = PuppetNurseControl_3;
+                        nurse->model_0.controlState_2 = PuppetNurseControl_3;
                         nurse->model_0.stateStep_3 = 0;
                     }
 
@@ -49,12 +49,12 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                 }
                 else
                 {
-                    if (nurse->model_0.state_2 != PuppetNurseControl_2 && 
+                    if (nurse->model_0.controlState_2 != PuppetNurseControl_2 && 
                         ((nurse->properties_E4.puppetNurse.field_124->field_4 < nurse->properties_E4.puppetNurse.field_114) ||
                          (nurse->damage_B4.amount_C > Q12(320.0f))))
                     {
                         nurse->properties_E4.puppetNurse.field_114 = 0;
-                        nurse->model_0.state_2 = PuppetNurseControl_2;
+                        nurse->model_0.controlState_2 = PuppetNurseControl_2;
                         nurse->model_0.stateStep_3 = 0;
                     }
                 }

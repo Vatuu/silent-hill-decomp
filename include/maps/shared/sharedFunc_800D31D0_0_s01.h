@@ -27,7 +27,7 @@ bool sharedFunc_800D31D0_0_s01(s_SubCharacter* chara, VECTOR3* pos, s32 arg2)
             break;
     }
 
-    if (chara->model_0.state_2 == 3 || chara->model_0.state_2 == 9)
+    if (chara->model_0.controlState_2 == 3 || chara->model_0.controlState_2 == 9)
     {
         var_s1 += Q12(1.0f);
     }

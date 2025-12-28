@@ -28,7 +28,7 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnC
 
             if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == chara->model_0.charaId_0)
             {
-                switch (g_SysWork.npcs_1A0[i].model_0.state_2)
+                switch (g_SysWork.npcs_1A0[i].model_0.controlState_2)
                 {
                     case 2:
                     case 17:

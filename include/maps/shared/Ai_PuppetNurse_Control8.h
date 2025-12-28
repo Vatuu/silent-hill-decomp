@@ -47,7 +47,7 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
                     controlState = modelStates[(Rng_Rand16() >> 4) & 7];
                 }
 
-                nurse->model_0.state_2 = controlState;
+                nurse->model_0.controlState_2 = controlState;
                 nurse->model_0.stateStep_3 = 0;
             }
             else

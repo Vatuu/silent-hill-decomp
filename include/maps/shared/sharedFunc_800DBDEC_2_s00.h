@@ -47,7 +47,7 @@ void sharedFunc_800DBDEC_2_s00(s_SubCharacter* chara)
 
     if (cond)
     {
-        chara->model_0.state_2     = 2;
+        chara->model_0.controlState_2     = 2;
         chara->model_0.stateStep_3 = 0;
 
         chara->properties_E4.unk0.field_E8_8 = 1;

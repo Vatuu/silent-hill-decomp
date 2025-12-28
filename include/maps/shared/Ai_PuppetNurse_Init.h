@@ -58,21 +58,21 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
     switch (charaState)
     {
         case 0:
-            nurse->model_0.state_2              = PuppetNurseControl_11;
+            nurse->model_0.controlState_2              = PuppetNurseControl_11;
             nurse->model_0.stateStep_3          = 0;
             nurse->model_0.anim_4.time_4        = Q12(459.0f);
             nurse->model_0.anim_4.keyframeIdx_8 = 459;
             break;
 
         case 1:
-            nurse->model_0.state_2              = PuppetNurseControl_10;
+            nurse->model_0.controlState_2              = PuppetNurseControl_10;
             nurse->model_0.stateStep_3          = 0;
             nurse->model_0.anim_4.time_4        = Q12(459.0f);
             nurse->model_0.anim_4.keyframeIdx_8 = 459;
             break;
 
         case 2:
-            nurse->model_0.state_2              = PuppetNurseControl_9;
+            nurse->model_0.controlState_2              = PuppetNurseControl_9;
             nurse->model_0.stateStep_3          = 0;
             nurse->model_0.anim_4.time_4        = Q12(459.0f);
             nurse->model_0.anim_4.keyframeIdx_8 = 459;

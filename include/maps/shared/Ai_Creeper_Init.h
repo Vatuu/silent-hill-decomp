@@ -34,7 +34,7 @@ static inline void Ai_Creeper_PropertiesUpdateFromStep(s_SubCharacter* creeper)
         creeperProps.flags_E8 |= CreeperFlag_6;
     }
 
-    creeper->model_0.state_2 = 1;
+    creeper->model_0.controlState_2 = 1;
     Character_AnimSet(creeper, ANIM_STATUS(11, true), 94);
 
     #undef creeperProps

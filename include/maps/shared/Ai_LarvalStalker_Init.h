@@ -4,7 +4,7 @@ void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker)
 
     #define larvalStalkerProps larvalStalker->properties_E4.larvalStalker
 
-    larvalStalker->model_0.state_2              = 3;
+    larvalStalker->model_0.controlState_2              = 3;
     larvalStalker->model_0.anim_4.time_4        = 0;
     larvalStalker->model_0.anim_4.status_0      = ANIM_STATUS(LarvalStalkerAnim_10, false);
     larvalStalker->model_0.anim_4.time_4        = Q12(162.0f);

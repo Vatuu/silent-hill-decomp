@@ -52,22 +52,22 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
         {
             creeper->health_B0               = Q12(0.0f);
             creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_3, false);
-            creeper->model_0.state_2         = CreeperControl_5;
+            creeper->model_0.controlState_2         = CreeperControl_5;
         }
         else if (ANIM_STATUS_IDX_GET(creeper->model_0.anim_4.status_0) == 10)
         {
             creeper->health_B0               = Q12(0.0f);
             creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_4, false);
-            creeper->model_0.state_2         = CreeperControl_5;
+            creeper->model_0.controlState_2         = CreeperControl_5;
         }
         else
         {
-            if (creeper->model_0.state_2 == CreeperControl_3)
+            if (creeper->model_0.controlState_2 == CreeperControl_3)
             {
                 g_SysWork.field_2284[3] &= ~(1 << 1);
             }
 
-            creeper->model_0.state_2 = CreeperControl_4;
+            creeper->model_0.controlState_2 = CreeperControl_4;
             creeper->health_B0       = Q12(20.0f);
             creeper->flags_3E       |= CharaFlag_Unk2;
 

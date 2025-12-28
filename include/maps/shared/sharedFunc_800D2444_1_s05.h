@@ -29,6 +29,6 @@ void sharedFunc_800D2444_1_s05(s_SubCharacter* splitHead)
     }
     else
     {
-        splitHead->model_0.state_2 = 4;
+        splitHead->model_0.controlState_2 = 4;
     }
 }

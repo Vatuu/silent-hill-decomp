@@ -114,7 +114,7 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* stalker)
                 stalker->model_0.anim_4.status_0 = ANIM_STATUS(StalkerAnim_20, false);
             }
 
-            stalker->model_0.state_2 = 10;
+            stalker->model_0.controlState_2 = 10;
             func_80037DC4(stalker);
         }
 
@@ -135,7 +135,7 @@ void sharedFunc_800D5FCC_0_s00(s_SubCharacter* stalker)
                 stalker->model_0.anim_4.status_0 = ANIM_STATUS(StalkerAnim_13, false);
             }
             
-            stalker->model_0.state_2 = 8;
+            stalker->model_0.controlState_2 = 8;
             stalkerProps.flags_E8 |= StalkerFlag_7;
             stalkerProps.flags_E8 &= ~StalkerFlag_6;
         }

@@ -30,15 +30,15 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
         case 9:
             if (scratcher->model_0.stateStep_3 == 3)
             {
-                scratcher->model_0.state_2 = 2;
+                scratcher->model_0.controlState_2 = 2;
             }
             else if (scratcher->model_0.stateStep_3 == 7) // @unused This will never run? Meant to be `== 9`?
             {
-                scratcher->model_0.state_2 = 16;
+                scratcher->model_0.controlState_2 = 16;
             }
             else
             {
-                scratcher->model_0.state_2 = 1;
+                scratcher->model_0.controlState_2 = 1;
             }
 
             Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_14, true), 222);
@@ -50,7 +50,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
 
         case 7:
         case 14:
-            scratcher->model_0.state_2 = 5;
+            scratcher->model_0.controlState_2 = 5;
             Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_15, true), 232);
             scratcher->position_18.vy = Q12(0.0f);
             scratcher->rotation_24.vz = FP_ANGLE(0.0f);
@@ -60,7 +60,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
             scratcher->properties_E4.hangedScratcher.field_EA = Q12(1.2f);
 
         case 6:
-            scratcher->model_0.state_2 = 6;
+            scratcher->model_0.controlState_2 = 6;
             Character_AnimSet(scratcher, ANIM_STATUS(HangedScratcherAnim_15, true), 232);
             scratcher->position_18.vy = Q12(0.0f);
             scratcher->rotation_24.vz = FP_ANGLE(0.0f);
@@ -69,7 +69,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
         case 18:
         case 19:
         case 20:
-            scratcher->model_0.state_2 = 14;
+            scratcher->model_0.controlState_2 = 14;
             scratcher->position_18.vy  = Q12(0.0f);
             scratcher->rotation_24.vz  = FP_ANGLE(0.0f);
 

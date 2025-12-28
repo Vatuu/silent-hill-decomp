@@ -7,7 +7,7 @@ void Ai_Bloodsucker_Control_3(s_SubCharacter* bloodsucker)
 
     if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-140.5f))
     {
-        bloodsucker->model_0.state_2 = BloodsuckerControl_2;
+        bloodsucker->model_0.controlState_2 = BloodsuckerControl_2;
     }
 
     bloodsucker->properties_E4.bloodsucker.timer_F0 = Q12(1.0f);

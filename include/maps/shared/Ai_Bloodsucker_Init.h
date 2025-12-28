@@ -6,7 +6,7 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
     switch (chara->model_0.stateStep_3)
     {
         case 17:
-            chara->model_0.state_2     = 1;
+            chara->model_0.controlState_2     = 1;
             chara->model_0.stateStep_3 = 0;
             Character_AnimSet(chara, ANIM_STATUS(BloodsuckerAnim_7, true), 81);
             return;
@@ -16,12 +16,12 @@ static inline void Ai_Bloodsucker_AnimUpdateFromStep(s_SubCharacter* chara)
 #else
         case 18:
             chara->health_B0       = 1;
-            chara->model_0.state_2 = 2;
+            chara->model_0.controlState_2 = 2;
             break;
 
         case 19:
         case 20:
-            chara->model_0.state_2 = 2;
+            chara->model_0.controlState_2 = 2;
             break;
 
         default:

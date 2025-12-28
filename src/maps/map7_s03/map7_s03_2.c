@@ -49,10 +49,10 @@ void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOO
     s32         var_a2;
     s_AnimInfo* animInfo;
 
-    if (incubus->model_0.state_2 == ModelState_Uninitialized)
+    if (incubus->model_0.controlState_2 == ModelState_Uninitialized)
     {
         incubus->model_0.anim_4.alpha_A = Q12(0.0f);
-        incubus->model_0.state_2        = 1;
+        incubus->model_0.controlState_2        = 1;
         incubus->model_0.stateStep_3    = 0;
         Character_AnimSet(incubus, ANIM_STATUS(1, true), 0);
 
@@ -401,9 +401,9 @@ void func_800DD98C(s32 arg0) // 0x800DD98C
 
 void func_800DD9B0(s_SubCharacter* chara) // 0x800DD9B0
 {
-    if (chara->model_0.state_2 != ModelState_Uninitialized)
+    if (chara->model_0.controlState_2 != ModelState_Uninitialized)
     {
-        chara->model_0.state_2     = 2;
+        chara->model_0.controlState_2     = 2;
         chara->model_0.stateStep_3 = 0;
     }
     else
@@ -414,9 +414,9 @@ void func_800DD9B0(s_SubCharacter* chara) // 0x800DD9B0
 
 void func_800DD9D4(s_SubCharacter* chara) // 0x800DD9D4
 {
-    if (chara->model_0.state_2 != ModelState_Uninitialized)
+    if (chara->model_0.controlState_2 != ModelState_Uninitialized)
     {
-        chara->model_0.state_2     = 10;
+        chara->model_0.controlState_2     = 10;
         chara->model_0.stateStep_3 = 0;
     }
     else
@@ -427,9 +427,9 @@ void func_800DD9D4(s_SubCharacter* chara) // 0x800DD9D4
 
 void func_800DD9F8(s_SubCharacter* chara) // 0x800DD9F8
 {
-    if (chara->model_0.state_2 != ModelState_Uninitialized)
+    if (chara->model_0.controlState_2 != ModelState_Uninitialized)
     {
-        chara->model_0.state_2     = 3;
+        chara->model_0.controlState_2     = 3;
         chara->model_0.stateStep_3 = 0;
     }
     else
@@ -479,11 +479,11 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
     if (activeStateStep != 0)
     {
         chara->model_0.stateStep_3 = 0;
-        chara->model_0.state_2     = activeStateStep;
+        chara->model_0.controlState_2     = activeStateStep;
     }
     else
     {
-        chara->model_0.state_2     = 1;
+        chara->model_0.controlState_2     = 1;
         chara->model_0.stateStep_3 = 0;
     }
 
@@ -548,7 +548,7 @@ void func_800DEA54(s_SubCharacter* chara) // 0x800DEA54
 {
     func_800DDB3C();
 
-    chara->model_0.state_2     = ANIM_STATUS(5, true);
+    chara->model_0.controlState_2     = ANIM_STATUS(5, true);
     chara->model_0.stateStep_3 = 0;
 
     // TODO: Wrong union member used here.
@@ -580,7 +580,7 @@ void func_800DEAF4(s_SubCharacter* chara) // 0x800DEAF4
             break;
 
         case 2:
-            chara->model_0.state_2     = 7;
+            chara->model_0.controlState_2     = 7;
             chara->model_0.stateStep_3 = 0;
             break;
     }
@@ -651,7 +651,7 @@ void func_800DF074(s_SubCharacter* chara) // 0x800DF074
 {
     u8 charaState;
 
-    charaState = chara->model_0.state_2;
+    charaState = chara->model_0.controlState_2;
     if (charaState != 2 && charaState != 4 && charaState != 13 && charaState != 3 && charaState != 5 && (chara->properties_E4.player.positionY_EC & (1 << 2)))
     {
         func_800DD6CC();
@@ -660,7 +660,7 @@ void func_800DF074(s_SubCharacter* chara) // 0x800DF074
 
 void Ai_Incubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DF0D8
 {
-    if ((chara->model_0.state_2 != 0 || Ai_Incubus_Init(chara, coords)) && chara->model_0.state_2 != 1)
+    if ((chara->model_0.controlState_2 != 0 || Ai_Incubus_Init(chara, coords)) && chara->model_0.controlState_2 != 1)
     {
         if (g_DeltaTime0 != Q12(0.0f))
         {
@@ -724,9 +724,9 @@ void func_800DFB2C(bool disableDamage) // 0x800DFB2C
 
 void func_800DFB50(s_SubCharacter* chara) // 0x800DFB50
 {
-    if (chara->model_0.state_2 != ModelState_Uninitialized)
+    if (chara->model_0.controlState_2 != ModelState_Uninitialized)
     {
-        chara->model_0.state_2     = 4;
+        chara->model_0.controlState_2     = 4;
         chara->model_0.stateStep_3 = 0;
     }
     else
@@ -737,9 +737,9 @@ void func_800DFB50(s_SubCharacter* chara) // 0x800DFB50
 
 void func_800DFB74(s_SubCharacter* chara) // 0x800DFB74
 {
-    if (chara->model_0.state_2 != ModelState_Uninitialized)
+    if (chara->model_0.controlState_2 != ModelState_Uninitialized)
     {
-        chara->model_0.state_2     = 2;
+        chara->model_0.controlState_2     = 2;
         chara->model_0.stateStep_3 = 0;
     }
     else
@@ -777,12 +777,12 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
 
     if (chara->model_0.stateStep_3 == 0)
     {
-        chara->model_0.state_2     = 1;
+        chara->model_0.controlState_2     = 1;
         chara->model_0.stateStep_3 = 0;
     }
     else
     {
-        chara->model_0.state_2     = chara->model_0.stateStep_3;
+        chara->model_0.controlState_2     = chara->model_0.stateStep_3;
         chara->model_0.stateStep_3 = 0;
     }
 
@@ -821,7 +821,7 @@ void func_800DFEF0(s_SubCharacter* chara) // 0x800DFEF0
 
     if (chara->model_0.anim_4.status_0 == 8)
     {
-        chara->model_0.state_2     = 2;
+        chara->model_0.controlState_2     = 2;
         chara->model_0.stateStep_3 = 0;
     }
 }
@@ -869,7 +869,7 @@ void func_800E0528(s_SubCharacter* chara) // 0x800E0528
             break;
 
         case 2:
-            chara->model_0.state_2     = 3;
+            chara->model_0.controlState_2     = 3;
             chara->model_0.stateStep_3 = 0;
             break;
     }
@@ -885,7 +885,7 @@ void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800E0670
 
     func_800DB608();
 
-    if (chara->model_0.state_2 == 3)
+    if (chara->model_0.controlState_2 == 3)
     {
         func_800DFF60(chara, coord);
     }
@@ -955,12 +955,12 @@ void func_800E0914(s_SubCharacter* chara) // 0x800E0914
 
 void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800E093C
 {
-    if (chara->model_0.state_2 == ModelState_Uninitialized)
+    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
     {
         Ai_Unknown23_Init(chara, coords);
     }
 
-    if (chara->model_0.state_2 != 1)
+    if (chara->model_0.controlState_2 != 1)
     {
         if (g_DeltaTime0 != Q12(0.0f))
         {

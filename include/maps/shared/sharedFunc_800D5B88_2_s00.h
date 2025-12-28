@@ -64,26 +64,26 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara)
 
                     if (cond1 && Rng_RandQ12() < FP_ANGLE(180.0f))
                     {
-                        chara->model_0.state_2 = 11;
+                        chara->model_0.controlState_2 = 11;
                     }
                     else
                     {
-                        chara->model_0.state_2 = 10;
+                        chara->model_0.controlState_2 = 10;
                     }
                 }
                 else
                 {
                     if (cond1)
                     {
-                        chara->model_0.state_2 = 11;
+                        chara->model_0.controlState_2 = 11;
                     }
                     else if (Rng_RandQ12() < FP_ANGLE(180.0f))
                     {
-                        chara->model_0.state_2 = 11;
+                        chara->model_0.controlState_2 = 11;
                     }
                     else
                     {
-                        chara->model_0.state_2 = 10;
+                        chara->model_0.controlState_2 = 10;
                     }
                 }
 
@@ -93,14 +93,14 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* chara)
 
         case 1:
         case 2:
-            chara->model_0.state_2                 = 16;
+            chara->model_0.controlState_2                 = 16;
             chara->model_0.stateStep_3             = 0;
             chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
             break;
 
         case 3:
         case 4:
-            chara->model_0.state_2     = 17;
+            chara->model_0.controlState_2     = 17;
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= Q12(0.0f))

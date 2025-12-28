@@ -82,7 +82,7 @@ void sharedFunc_800D3B44_0_s00(s_SubCharacter* stalker)
         }
     }
 
-    switch (stalker->model_0.state_2)
+    switch (stalker->model_0.controlState_2)
     {
         case 0:
             break;

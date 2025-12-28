@@ -1,7 +1,7 @@
 void Ai_PuppetNurse_Control(s_SubCharacter* nurse)
 {
     // Handle control state.
-    switch (nurse->model_0.state_2)
+    switch (nurse->model_0.controlState_2)
     {
         case PuppetNurseControl_1:
             Ai_PuppetNurse_Control1(nurse);

@@ -20,7 +20,7 @@
  */
 void Ai_BloodyLisa_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
-    if (chara->model_0.state_2 == ModelState_Uninitialized)
+    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
     {
         Ai_BloodyLisa_Init(chara);
     }

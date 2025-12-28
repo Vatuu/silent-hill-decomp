@@ -65,26 +65,26 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* chara)
 
                     if (var_s2 && Rng_RandQ12() < FP_ANGLE(180.0f))
                     {
-                        chara->model_0.state_2 = 24;
+                        chara->model_0.controlState_2 = 24;
                     }
                     else
                     {
-                        chara->model_0.state_2 = 23;
+                        chara->model_0.controlState_2 = 23;
                     }
                 }
                 else
                 {
                     if (var_s2)
                     {
-                        chara->model_0.state_2 = 24;
+                        chara->model_0.controlState_2 = 24;
                     }
                     else if (Rng_RandQ12() < FP_ANGLE(180.0f))
                     {
-                        chara->model_0.state_2 = 24;
+                        chara->model_0.controlState_2 = 24;
                     }
                     else
                     {
-                        chara->model_0.state_2 = 23;
+                        chara->model_0.controlState_2 = 23;
                     }
                 }
                 chara->model_0.stateStep_3 = 0;
@@ -92,20 +92,20 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* chara)
             break;
 
         case 1:
-            chara->model_0.state_2               = 29;
+            chara->model_0.controlState_2               = 29;
             chara->model_0.stateStep_3           = 0;
             chara->properties_E4.unk0.flags_11C |= 1 << 3;
             break;
 
         case 2:
-            chara->model_0.state_2               = 30;
+            chara->model_0.controlState_2               = 30;
             chara->model_0.stateStep_3           = 0;
             chara->properties_E4.unk0.flags_11C |= 1 << 3;
             break;
 
         case 3:
         case 4:
-            chara->model_0.state_2     = 32;
+            chara->model_0.controlState_2     = 32;
             chara->model_0.stateStep_3 = 0;
             if (chara->health_B0 <= 0)
             {

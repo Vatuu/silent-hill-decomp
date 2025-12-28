@@ -37,7 +37,7 @@ void Ai_Creeper_Control_4(s_SubCharacter* creeper)
         ANIM_STATUS_IDX_GET(creeper->model_0.anim_4.status_0) == CreeperAnim_14 ||
         ANIM_STATUS_IDX_GET(creeper->model_0.anim_4.status_0) == CreeperAnim_15)
     {
-        creeper->model_0.state_2 = CreeperControl_5;
+        creeper->model_0.controlState_2 = CreeperControl_5;
     }
 
     #undef creeperProps

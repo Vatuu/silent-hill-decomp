@@ -60,7 +60,7 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
 
     if (splitHead->health_B0 < 24000 && !(splitHeadProps.flags_E8 & SplitHeadFlag_4))
     {
-        splitHead->model_0.state_2 = 4;
+        splitHead->model_0.controlState_2 = 4;
         splitHeadProps.flags_E8   |= SplitHeadFlag_4;
     }
     else if (splitHead->health_B0 == Q12(0.0f))
@@ -78,7 +78,7 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
             splitHeadProps.flags_E8 &= ~SplitHeadFlag_5;
         }
 
-        splitHead->model_0.state_2 = 6;
+        splitHead->model_0.controlState_2 = 6;
     }
     else if (splitHeadProps.flags_E8 & SplitHeadFlag_0)
     {

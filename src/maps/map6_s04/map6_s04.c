@@ -127,7 +127,7 @@ void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
 
     extraModel = &g_Ai_MonsterCybil_ExtraModel;
 
-    if (chara->model_0.state_2 == ModelState_Uninitialized)
+    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
     {
         Ai_MonsterCybil_Init(chara, extraModel);
     }
@@ -145,8 +145,8 @@ void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDI
 
 void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D89CC
 {
-    chara->model_0.state_2++;
-    extraModel->state_2++;
+    chara->model_0.controlState_2++;
+    extraModel->controlState_2++;
 
     chara->model_0.stateStep_3 = 0;
     extraModel->stateStep_3    = 0;

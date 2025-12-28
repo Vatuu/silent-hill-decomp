@@ -11,8 +11,8 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
     localNurse = nurse;
     nurse->properties_E4.puppetNurse.flags_122 &= ~PuppetNurseFlag_0;
 
-    if (localNurse->model_0.state_2 == PuppetNurseControl_1 ||
-        localNurse->model_0.state_2 == PuppetNurseControl_5)
+    if (localNurse->model_0.controlState_2 == PuppetNurseControl_1 ||
+        localNurse->model_0.controlState_2 == PuppetNurseControl_5)
     {
         Vw_CoordHierarchyMatrixCompute(&coords[10], &mat);
         posX = Q8_TO_Q12(mat.t[0]);
@@ -24,7 +24,7 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
         pos.vy = posY;
         pos.vz = posZ;
         
-        if (localNurse->model_0.state_2 == PuppetNurseControl_1)
+        if (localNurse->model_0.controlState_2 == PuppetNurseControl_1)
         {
             weaponAttack = localNurse->properties_E4.npc.field_124->field_20;
         }

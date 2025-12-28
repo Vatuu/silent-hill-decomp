@@ -161,14 +161,14 @@ void sharedFunc_800D71A4_2_s00(s_SubCharacter* chara)
 
                             if (rngAngle0 < (FP_ANGLE(252.0f) - (angleSubtract * 2)))
                             {
-                                chara->model_0.state_2     = 28;
+                                chara->model_0.controlState_2     = 28;
                                 chara->model_0.stateStep_3 = 0;
                             }
                         }
                     }
                     else
                     {
-                        chara->model_0.state_2     = 21;
+                        chara->model_0.controlState_2     = 21;
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
@@ -176,7 +176,7 @@ void sharedFunc_800D71A4_2_s00(s_SubCharacter* chara)
                 case 2:
                     if (animStatus == ANIM_STATUS(23, true) || animStatus == ANIM_STATUS(25, true))
                     {
-                        chara->model_0.state_2     = 6;
+                        chara->model_0.controlState_2     = 6;
                         chara->model_0.stateStep_3 = 0;
                     }
                     else if (sharedFunc_800DC0A8_2_s00(chara))
@@ -188,7 +188,7 @@ void sharedFunc_800D71A4_2_s00(s_SubCharacter* chara)
                 case 3:
                     if (animStatus == ANIM_STATUS(23, true) || animStatus == ANIM_STATUS(25, true))
                     {
-                        chara->model_0.state_2     = 7;
+                        chara->model_0.controlState_2     = 7;
                         chara->model_0.stateStep_3 = 0;
                     }
                     else if (sharedFunc_800DC0A8_2_s00(chara))
@@ -200,20 +200,20 @@ void sharedFunc_800D71A4_2_s00(s_SubCharacter* chara)
             break;
 
         case 1:
-            chara->model_0.state_2               = 29;
+            chara->model_0.controlState_2               = 29;
             chara->model_0.stateStep_3           = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 2:
-            chara->model_0.state_2               = 30;
+            chara->model_0.controlState_2               = 30;
             chara->model_0.stateStep_3           = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 3:
         case 4:
-            chara->model_0.state_2     = 32;
+            chara->model_0.controlState_2     = 32;
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= Q12(0.0f))

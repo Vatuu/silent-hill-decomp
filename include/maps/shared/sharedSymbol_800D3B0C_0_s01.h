@@ -161,7 +161,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
 #endif
     }
 
-    airScreamer->model_0.state_2 = controlState;
+    airScreamer->model_0.controlState_2 = controlState;
     airScreamer->model_0.stateStep_3 = stateStep;
     airScreamerProps.flags_11C = AirScreamerFlag_None;
     airScreamerProps.field_E8_0 = var0;

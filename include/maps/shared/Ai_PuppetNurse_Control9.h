@@ -57,7 +57,7 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
                 if (dist < FP_MULTIPLY_PRECISE(somePtr->field_8, Q12(3.0f), Q12_SHIFT) &&
                     angleAbs < FP_ANGLE(60.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
                 {
-                    nurse->model_0.state_2 = PuppetNurseControl_12;
+                    nurse->model_0.controlState_2 = PuppetNurseControl_12;
                     nurse->model_0.stateStep_3 = 0;
                 }
             }
@@ -70,7 +70,7 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
         {
             rng = Rng_Rand16();
             nurse->model_0.anim_4.status_0 = g_PuppetNurse_AnimStatus2[(rng >> 7) & 0x1];
-            nurse->model_0.state_2 = PuppetNurseControl_6;
+            nurse->model_0.controlState_2 = PuppetNurseControl_6;
             nurse->model_0.stateStep_3 = 0;
             return;
         }

@@ -82,7 +82,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker)
             {
                 if (ABS(angleDeltaToPlayer) < FP_ANGLE(90.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
                 {
-                    stalker->model_0.state_2 = 5;
+                    stalker->model_0.controlState_2 = 5;
                     g_SysWork.field_2284[3] |= 1 << 1;
 
                     sharedFunc_800D7E04_0_s00(stalker, 1364);
@@ -129,7 +129,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker)
             {
                 if (g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
                 {
-                    stalker->model_0.state_2 = 6;
+                    stalker->model_0.controlState_2 = 6;
 
                     // Grab player in front or behind.
                     grabAngleDelta = func_8005BF38(g_SysWork.playerWork_4C.player_0.rotation_24.vy - stalker->rotation_24.vy);
@@ -151,7 +151,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker)
 
         if (distToPlayer < Q12(0.7f))
         {
-            stalker->model_0.state_2 = 4;
+            stalker->model_0.controlState_2 = 4;
         }
     }
     else

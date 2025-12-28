@@ -6,7 +6,7 @@ void sharedFunc_800D7BE8_0_s00(s_SubCharacter* stalker)
     {
         if (!(stalkerProps.flags_E8 & StalkerFlag_10))
         {
-            if (!(stalkerProps.flags_E8 & StalkerFlag_6) && stalker->model_0.state_2 != 12)
+            if (!(stalkerProps.flags_E8 & StalkerFlag_6) && stalker->model_0.controlState_2 != 12)
             {
                 stalkerProps.timer_108 += g_DeltaTime0;
                 Rng_Rand16();

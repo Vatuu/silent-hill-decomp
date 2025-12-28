@@ -72,9 +72,9 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
                     {
                         modelPtr0                                         = &g_SysWork.playerWork_4C.player_0.model_0;
                         extraModelPtr0->anim_4.status_0                 -= 10;
-                        g_SysWork.playerWork_4C.player_0.model_0.state_2       = ModelState_Uninitialized;
+                        g_SysWork.playerWork_4C.player_0.model_0.controlState_2       = ModelState_Uninitialized;
                         g_SysWork.playerWork_4C.player_0.model_0.stateStep_3   = 0;
-                        g_SysWork.playerWork_4C.extra_128.model_0.state_2     = ModelState_Uninitialized;
+                        g_SysWork.playerWork_4C.extra_128.model_0.controlState_2     = ModelState_Uninitialized;
                         g_SysWork.playerWork_4C.extra_128.model_0.stateStep_3 = 0;
                         modelPtr0->anim_4.status_0                      -= 10;
                     }
@@ -89,11 +89,11 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
                     extraModelPtr1->anim_4.status_0                   = ANIM_STATUS(HarryAnim_TransitionToStill, true);
                     extraModelPtr1->anim_4.keyframeIdx_8              = 0;
 
-                    g_SysWork.playerWork_4C.player_0.model_0.state_2       = ModelState_Uninitialized;
+                    g_SysWork.playerWork_4C.player_0.model_0.controlState_2       = ModelState_Uninitialized;
                     g_SysWork.playerWork_4C.player_0.model_0.stateStep_3   = 0;
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20   = PlayerUpperBodyState_None;
                     g_SysWork.playerWork_4C.extra_128.lowerBodyState_24   = PlayerLowerBodyState_None;
-                    g_SysWork.playerWork_4C.extra_128.model_0.state_2     = ModelState_Uninitialized;
+                    g_SysWork.playerWork_4C.extra_128.model_0.controlState_2     = ModelState_Uninitialized;
                     g_SysWork.playerWork_4C.extra_128.model_0.stateStep_3 = 0;
                 }
 

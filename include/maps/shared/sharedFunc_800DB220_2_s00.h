@@ -104,19 +104,19 @@ void sharedFunc_800DB220_2_s00(s_SubCharacter* chara)
                 case 2:
                     if (sharedFunc_800DC67C_2_s00(chara))
                     {
-                        chara->model_0.state_2 = 42;
+                        chara->model_0.controlState_2 = 42;
                     }
                     else if (field14C_2)
                     {
-                        chara->model_0.state_2 = 38;
+                        chara->model_0.controlState_2 = 38;
                     }
                     else if (switchCond == 2)
                     {
-                        chara->model_0.state_2 = 39;
+                        chara->model_0.controlState_2 = 39;
                     }
                     else if (switchCond == 1)
                     {
-                        chara->model_0.state_2 = 36;
+                        chara->model_0.controlState_2 = 36;
                     }
                     else
                     {
@@ -131,11 +131,11 @@ void sharedFunc_800DB220_2_s00(s_SubCharacter* chara)
                     {
                         if (!field14C_2)
                         {
-                            chara->model_0.state_2 = 13;
+                            chara->model_0.controlState_2 = 13;
                         }
                         else
                         {
-                            chara->model_0.state_2 = 10;
+                            chara->model_0.controlState_2 = 10;
                         }
                         chara->model_0.stateStep_3 = 0;
                     }
@@ -146,11 +146,11 @@ void sharedFunc_800DB220_2_s00(s_SubCharacter* chara)
                     {
                         if (field14C_2)
                         {
-                            chara->model_0.state_2 = 23;
+                            chara->model_0.controlState_2 = 23;
                         }
                         else
                         {
-                            chara->model_0.state_2 = 26;
+                            chara->model_0.controlState_2 = 26;
                         }
                         chara->model_0.stateStep_3 = 0;
                     }
@@ -160,14 +160,14 @@ void sharedFunc_800DB220_2_s00(s_SubCharacter* chara)
 
         case 1:
         case 2:
-            chara->model_0.state_2               = 44;
+            chara->model_0.controlState_2               = 44;
             chara->model_0.stateStep_3           = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 3:
         case 4:
-            chara->model_0.state_2     = 45;
+            chara->model_0.controlState_2     = 45;
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= Q12(0.0f))

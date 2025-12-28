@@ -89,9 +89,9 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     s_AnimInfo* animInfo;
     bool        cond;
 
-    if (chara->model_0.state_2 == ModelState_Uninitialized)
+    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
     {
-        chara->model_0.state_2                                      = 1;
+        chara->model_0.controlState_2                                      = 1;
         chara->model_0.anim_4.status_0                              = ANIM_STATUS(3, true);
         chara->model_0.anim_4.time_4                                = Q12(7.0f);
         chara->model_0.anim_4.alpha_A                               = Q12(0.0f);
@@ -103,13 +103,13 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
     if (chara->model_0.stateStep_3 == 0)
     {
-        if (chara->model_0.state_2 == 2)
+        if (chara->model_0.controlState_2 == 2)
         {
             chara->model_0.anim_4.status_0      = ANIM_STATUS(1, true);
             chara->model_0.anim_4.time_4         = Q12(7.0f);
             chara->model_0.anim_4.keyframeIdx_8 = 7;
         }
-        else if (chara->model_0.state_2 == 3)
+        else if (chara->model_0.controlState_2 == 3)
         {
             chara->model_0.anim_4.status_0      = ANIM_STATUS(2, true);
             chara->model_0.anim_4.time_4         = Q12(23.0f);
@@ -963,7 +963,7 @@ void func_800D87C0(void) // 0x800D87C0
 
         case 8:
             g_SysWork.npcs_1A0[0].model_0.stateStep_3 = 0;
-            g_SysWork.npcs_1A0[0].model_0.state_2++;
+            g_SysWork.npcs_1A0[0].model_0.controlState_2++;
 
             Savegame_EventFlagSet(EventFlag_76);
 
@@ -985,7 +985,7 @@ void func_800D87C0(void) // 0x800D87C0
 
         case 10:
             g_SysWork.npcs_1A0[0].model_0.stateStep_3 = 0;
-            g_SysWork.npcs_1A0[0].model_0.state_2++;
+            g_SysWork.npcs_1A0[0].model_0.controlState_2++;
 
             SysWork_StateStepIncrement(0);
 

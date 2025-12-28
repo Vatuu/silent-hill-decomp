@@ -11,7 +11,7 @@ bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
     #define RAND_MAX_HEALTH_BONUS_HARD  100
 
     // Return early if already initialized.
-    if (airScreamer->model_0.state_2 != AirScreamerControl_None)
+    if (airScreamer->model_0.controlState_2 != AirScreamerControl_None)
     {
         return false;
     }

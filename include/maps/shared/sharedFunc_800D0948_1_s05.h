@@ -161,7 +161,7 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
         (angle3 < 0x55 || distToPlayer > Q12(3.2f) && angle3 < 0xAA) &&
         (sp10.field_0 == 0 || sp10.field_10 != 0))
     {
-        chara->model_0.state_2 = 3;
+        chara->model_0.controlState_2 = 3;
     }
 
     if (!Rng_TestProbabilityBits(7))

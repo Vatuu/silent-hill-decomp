@@ -32,7 +32,7 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
                 controlState = PuppetNurseControl_7;
             }
 
-            nurse->model_0.state_2 = controlState;
+            nurse->model_0.controlState_2 = controlState;
             nurse->model_0.stateStep_3 = 0;
         } 
         else
@@ -47,7 +47,7 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
 
     if (sharedFunc_800CF294_3_s03(nurse, dist))
     {
-        nurse->model_0.state_2 = PuppetNurseControl_9;
+        nurse->model_0.controlState_2 = PuppetNurseControl_9;
         nurse->model_0.stateStep_3 = 0;
         return;
     }

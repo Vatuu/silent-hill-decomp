@@ -2,12 +2,12 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
 {
     u8 prevControlState;
 
-    if (groaner->model_0.state_2 == ModelState_Uninitialized)
+    if (groaner->model_0.controlState_2 == ModelState_Uninitialized)
     {
         Ai_Groaner_Init(groaner);
     }
 
-    prevControlState = groaner->model_0.state_2;
+    prevControlState = groaner->model_0.controlState_2;
 
     if (g_DeltaTime0 != Q12(0.0f))
     {
@@ -23,7 +23,7 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
         sharedFunc_800E6338_2_s00(groaner); // Control func with state machine?
         sharedFunc_800E71E8_2_s00(groaner);
 
-        if (groaner->model_0.state_2 != prevControlState)
+        if (groaner->model_0.controlState_2 != prevControlState)
         {
             *(u16*)&groaner->properties_E4.player.afkTimer_E8 &= ~(1 << 8);
         }

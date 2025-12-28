@@ -8,7 +8,7 @@ void sharedFunc_800D029C_5_s00(s_SubCharacter* scratcher)
         scratcher->field_44.field_0 = 0;
     }
 
-    switch (scratcher->model_0.state_2)
+    switch (scratcher->model_0.controlState_2)
     {
         case 0:
             break;

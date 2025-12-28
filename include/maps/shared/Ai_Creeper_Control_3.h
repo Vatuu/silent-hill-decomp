@@ -13,7 +13,7 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
     if (func_800700F8(creeper, &g_SysWork.playerWork_4C.player_0))
     {
         g_SysWork.field_2284[3]         &= ~(1 << 1);
-        creeper->model_0.state_2         = CreeperControl_2;
+        creeper->model_0.controlState_2         = CreeperControl_2;
         creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_13, false);
         return;
     }
@@ -108,7 +108,7 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
     else if (ANIM_STATUS_IDX_GET(creeper->model_0.anim_4.status_0) == CreeperAnim_13)
     {
         g_SysWork.field_2284[3]   &= ~(1 << 1);
-        creeper->model_0.state_2   = CreeperControl_2;
+        creeper->model_0.controlState_2   = CreeperControl_2;
         creeperProps.timer_F0      = Q12(0.0f);
         creeperProps.rotationY_108 = Chara_HeadingAngleGet(creeper, Q12(4.8f), playerPos.vx, playerPos.vz, FP_ANGLE(360.0f), false);
         creeper->field_44.field_0   = 0;

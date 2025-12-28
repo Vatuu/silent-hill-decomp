@@ -88,7 +88,7 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* chara)
                 case 0:
                     if (!field14C)
                     {
-                        chara->model_0.state_2     = 36;
+                        chara->model_0.controlState_2     = 36;
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
@@ -96,7 +96,7 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* chara)
                 case 2:
                     if (temp_s4 == 1)
                     {
-                        chara->model_0.state_2     = 8;
+                        chara->model_0.controlState_2     = 8;
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
@@ -104,7 +104,7 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* chara)
                 case 3:
                     if (temp_s4 == 2)
                     {
-                        chara->model_0.state_2     = 22;
+                        chara->model_0.controlState_2     = 22;
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
@@ -127,13 +127,13 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* chara)
                             sharedFunc_800DD13C_2_s00(chara, chara->field_40 + 1, Q12(0.6f));
                         }
 
-                        chara->model_0.state_2               = 38;
+                        chara->model_0.controlState_2               = 38;
                         chara->model_0.stateStep_3           = 0;
                         chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
                     }
                     else if (Rng_RandQ12() < temp_s2)
                     {
-                        chara->model_0.state_2               = 42;
+                        chara->model_0.controlState_2               = 42;
                         chara->model_0.stateStep_3           = 0;
                         chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
                     }
@@ -143,14 +143,14 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* chara)
 
         case 1:
         case 2:
-            chara->model_0.state_2               = 44;
+            chara->model_0.controlState_2               = 44;
             chara->model_0.stateStep_3           = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 3:
         case 4:
-            chara->model_0.state_2     = 45;
+            chara->model_0.controlState_2     = 45;
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= Q12(0.0f))

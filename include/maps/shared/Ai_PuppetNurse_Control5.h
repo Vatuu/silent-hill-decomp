@@ -24,7 +24,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
             {
                 if (func_80070320())
                 {
-                    nurse->model_0.state_2 = controlState;
+                    nurse->model_0.controlState_2 = controlState;
                     nurse->model_0.stateStep_3 = 0;
                     nurse->model_0.anim_4.status_0 = ANIM_STATUS(PuppetNurseAnim_18, false);
                     return;
@@ -32,7 +32,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
             }
             else
             {
-                nurse->model_0.state_2 = PuppetNurseControl_13;
+                nurse->model_0.controlState_2 = PuppetNurseControl_13;
                 nurse->model_0.stateStep_3 = 0;
                 return;
             }
@@ -42,7 +42,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
     {
         if ((&g_SysWork.playerWork_4C.player_0)->attackReceived_41 == NO_VALUE)
         {
-            nurse->model_0.state_2 = PuppetNurseControl_8;
+            nurse->model_0.controlState_2 = PuppetNurseControl_8;
             nurse->model_0.stateStep_3 = 0;
             return;
         }

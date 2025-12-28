@@ -4,7 +4,7 @@ void sharedFunc_800E554C_2_s00(s_SubCharacter* chara) // 0x800E4DA0
         chara->model_0.anim_4.status_0 == ANIM_STATUS(9, true) &&
         (Rng_Rand16() % 8) == 0)
     {
-        chara->model_0.state_2         = 1;
+        chara->model_0.controlState_2         = 1;
         chara->model_0.anim_4.status_0 = ANIM_STATUS(17, false);
     }
 }

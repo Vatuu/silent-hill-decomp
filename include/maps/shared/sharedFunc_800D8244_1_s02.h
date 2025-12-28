@@ -3,7 +3,7 @@ void sharedFunc_800D8244_1_s02(s_SubCharacter* creeper)
     #define creeperProps creeper->properties_E4.creeper
 
     // Handle control state.
-    switch (creeper->model_0.state_2)
+    switch (creeper->model_0.controlState_2)
     {
         case CreeperControl_1:
             Ai_Creeper_Control_1(creeper);

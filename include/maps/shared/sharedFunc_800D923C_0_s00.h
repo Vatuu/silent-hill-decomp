@@ -18,7 +18,7 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara)
     chara->properties_E4.player.field_F0     = 0;
     chara->properties_E4.player.field_F4     = FP_ANGLE(0.0f);
 
-    chara->model_0.state_2++;
+    chara->model_0.controlState_2++;
 
     chara->field_E1_0 = 3;
 }

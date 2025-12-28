@@ -28,7 +28,7 @@ void sharedFunc_800E6758_2_s02(s_SubCharacter* groaner)
 
     if (groaner->model_0.anim_4.status_0 == ANIM_STATUS(12, true) && (Rng_GenerateUInt(0, 4095) == 0 || var)) // 1 in 4096 chance.
     {
-        groaner->model_0.state_2         = 2;
+        groaner->model_0.controlState_2         = 2;
         groaner->model_0.anim_4.status_0 = ANIM_STATUS(15, false);
     }
 }

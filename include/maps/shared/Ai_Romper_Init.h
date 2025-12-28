@@ -41,7 +41,7 @@ void Ai_Romper_Init(s_SubCharacter* romper)
     romper->headingAngle_3C = romper->rotation_24.vy;
     Chara_PropertiesClear(romper);
 
-    romper->model_0.state_2 = 2;
+    romper->model_0.controlState_2 = 2;
     Character_AnimSet(romper, ANIM_STATUS(RomperAnim_15, true), 147);
 
     romperProps.field_EC = 6;

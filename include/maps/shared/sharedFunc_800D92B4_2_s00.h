@@ -35,7 +35,7 @@ void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara)
 
         case 3:
         case 4:
-            chara->model_0.state_2     = 32;
+            chara->model_0.controlState_2     = 32;
             chara->model_0.stateStep_3 = 0;
             if (chara->health_B0 <= 0)
             {

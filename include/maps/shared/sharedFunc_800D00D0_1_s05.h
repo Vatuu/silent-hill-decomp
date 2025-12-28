@@ -22,7 +22,7 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
         {
             if (ABS(temp_s2) > 0x400 || temp_s0 > 0x5000)
             {
-                chara->model_0.state_2 = 5;
+                chara->model_0.controlState_2 = 5;
             }
             else
             {
@@ -67,7 +67,7 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
             chara->properties_E4.dummy.properties_E8[0].val16[0] &= 0xFFBF;
             if (!(Rng_Rand16() & 3))
             {
-                chara->model_0.state_2         = 7;
+                chara->model_0.controlState_2         = 7;
                 chara->model_0.anim_4.status_0 = 0x12;
             }
             else
@@ -78,7 +78,7 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
         else if ((chara->model_0.anim_4.status_0 == 0x15) && !Rng_TestProbabilityBits(5))
         {
             chara->model_0.anim_4.status_0 = 0x16;
-            chara->model_0.state_2         = 5;
+            chara->model_0.controlState_2         = 5;
         }
     }
     else if (chara->properties_E4.dummy.properties_E8[0].val16[0] & 2)

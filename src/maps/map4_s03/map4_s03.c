@@ -242,12 +242,12 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     if (chara->model_0.stateStep_3 != 0)
     {
-        chara->model_0.state_2     = chara->model_0.stateStep_3;
+        chara->model_0.controlState_2     = chara->model_0.stateStep_3;
         chara->model_0.stateStep_3 = 0;
     }
     else
     {
-        chara->model_0.state_2     = 11;
+        chara->model_0.controlState_2     = 11;
         chara->model_0.stateStep_3 = 0;
     }
 
@@ -271,9 +271,9 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3E58);
 
 void func_800D3FB0(s_SubCharacter* chara) // 0x800D3FB0
 {
-    if (chara->model_0.state_2 >= 2)
+    if (chara->model_0.controlState_2 >= 2)
     {
-        chara->model_0.state_2     = 12;
+        chara->model_0.controlState_2     = 12;
         chara->model_0.stateStep_3 = 0;
     }
     else
@@ -284,9 +284,9 @@ void func_800D3FB0(s_SubCharacter* chara) // 0x800D3FB0
 
 void func_800D3FD8(s_SubCharacter* chara) // 0x800D3FD8
 {
-    if (chara->model_0.state_2 >= 2)
+    if (chara->model_0.controlState_2 >= 2)
     {
-        chara->model_0.state_2     = 13;
+        chara->model_0.controlState_2     = 13;
         chara->model_0.stateStep_3 = 0;
     }
     else
@@ -297,9 +297,9 @@ void func_800D3FD8(s_SubCharacter* chara) // 0x800D3FD8
 
 void func_800D4000(s_SubCharacter* chara) // 0x800D4000
 {
-    if (chara->model_0.state_2 >= 2)
+    if (chara->model_0.controlState_2 >= 2)
     {
-        chara->model_0.state_2     = 3;
+        chara->model_0.controlState_2     = 3;
         chara->model_0.stateStep_3 = 0;
     }
     else
@@ -365,7 +365,7 @@ void func_800D4A34(s_SubCharacter* chara) // 0x800D4A34
 
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
     {
-        chara->model_0.state_2     = 8;
+        chara->model_0.controlState_2     = 8;
         chara->model_0.stateStep_3 = 0;
     }
 }
@@ -408,7 +408,7 @@ void func_800D50D8(s_SubCharacter* chara) // 0x800D50D8
 
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
     {
-        chara->model_0.state_2     = 4;
+        chara->model_0.controlState_2     = 4;
         chara->model_0.stateStep_3 = 0;
         chara->moveSpeed_38        = 0;
     }
@@ -418,7 +418,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D511C);
 
 void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D53B0
 {
-    switch (chara->model_0.state_2)
+    switch (chara->model_0.controlState_2)
     {
         case 11:
             func_800D4028(chara);
@@ -579,14 +579,14 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D5E30);
 
 void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5F28
 {
-    if (chara->model_0.state_2 == ModelState_Uninitialized)
+    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
     {
         Ai_Twinfeeler_TextureLoad(); // Just calls `Fs_QueueStartReadTim`.
-        chara->model_0.state_2     = 1;
+        chara->model_0.controlState_2     = 1;
         chara->model_0.stateStep_3 = 0;
     }
 
-    if (chara->model_0.state_2 != 1 || Ai_Twinfeeler_Init(chara))
+    if (chara->model_0.controlState_2 != 1 || Ai_Twinfeeler_Init(chara))
     {
         if (g_DeltaTime0 != Q12(0.0f))
         {
@@ -602,7 +602,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
             func_800D5E30(chara, coords);
             func_800D3B44(chara->flags_3E & CharaFlag_Unk2);
 
-            if (chara->model_0.state_2 != 10)
+            if (chara->model_0.controlState_2 != 10)
             {
                 Sd_SfxStop(Sfx_Unk1567);
             }

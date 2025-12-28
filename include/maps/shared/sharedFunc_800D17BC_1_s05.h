@@ -46,7 +46,7 @@ void sharedFunc_800D17BC_1_s05(s_SubCharacter* splitHead)
             if (splitHead->properties_E4.splitHead.timer_F4 > sharedData_800D5880_1_s05)
             {
                 sharedData_800D5880_1_s05                   = Q12(3.8f);
-                splitHead->model_0.state_2                  = 5;
+                splitHead->model_0.controlState_2                  = 5;
                 splitHead->properties_E4.splitHead.timer_F4 = Q12(0.0f);
                 splitHead->model_0.anim_4.status_0          = ANIM_STATUS(11, false);
 

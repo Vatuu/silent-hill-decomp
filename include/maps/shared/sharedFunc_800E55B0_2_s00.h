@@ -17,7 +17,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara)
         chara->properties_E4.splitHead.flags_E8 &= ~(1 << 4);
     }
 
-    if (chara->model_0.state_2 == 6)
+    if (chara->model_0.controlState_2 == 6)
     {
         if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) >= 39 && FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) < 49)
         {
@@ -63,7 +63,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara)
                 timeScaled = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.9781f, Q12_SHIFT);
             }
 
-            if (chara->model_0.state_2 == 7)
+            if (chara->model_0.controlState_2 == 7)
             {
                 chara->properties_E4.splitHead.field_F0.val16[0] = FP_FROM(timeScaled * Math_Sin(chara->rotation_24.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
                 chara->properties_E4.splitHead.field_F0.val16[1] = FP_FROM(timeScaled * Math_Cos(chara->rotation_24.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
@@ -105,7 +105,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara)
         {
             chara->properties_E4.dummy.properties_E8[6].val16[0] = 0;
             chara->model_0.anim_4.status_0                               = newAnimStatus;
-            chara->model_0.state_2                                       = 9;
+            chara->model_0.controlState_2                                       = 9;
         }
     }
 }

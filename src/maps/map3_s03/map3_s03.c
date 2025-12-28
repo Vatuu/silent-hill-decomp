@@ -459,7 +459,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             i     = 2;
             for (i = 2; i >= 0; i--)
             {
-                g_SysWork.npcs_1A0[i].model_0.state_2 = state;
+                g_SysWork.npcs_1A0[i].model_0.controlState_2 = state;
             }
 
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);

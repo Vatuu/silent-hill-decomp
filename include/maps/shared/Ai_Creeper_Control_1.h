@@ -29,7 +29,7 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
         if (Rng_GenerateUInt(0, 7) == 0 && // 1 in 8 chance.
             creeper->model_0.anim_4.status_0 == ANIM_STATUS(CreeperAnim_11, true))
         {
-            creeper->model_0.state_2         = CreeperControl_2;
+            creeper->model_0.controlState_2         = CreeperControl_2;
             creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_13, false);
             creeperProps.timer_F0            = Q12(0.5f);
             creeperProps.timer_104           = Q12(0.0f);
@@ -40,7 +40,7 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
     // Check if Creeper was alerted.
     if (creeperProps.flags_E8 & CreeperFlag_Alerted)
     {
-        creeper->model_0.state_2                 = CreeperControl_2;
+        creeper->model_0.controlState_2                 = CreeperControl_2;
         creeper->model_0.anim_4.status_0         = ANIM_STATUS(CreeperAnim_13, false);
         creeperProps.timer_F0  = Q12(0.5f);
         creeperProps.timer_104 = Q12(0.0f);
@@ -78,7 +78,7 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
                     if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == Chara_Creeper &&
                         g_SysWork.npcs_1A0[i].field_40 != creeper->field_40 &&
                         (g_SysWork.npcs_1A0[i].properties_E4.creeper.flags_E8 & CreeperFlag_6) &&
-                        g_SysWork.npcs_1A0[i].model_0.state_2 == 1 &&
+                        g_SysWork.npcs_1A0[i].model_0.controlState_2 == 1 &&
                         !Math_Distance2dCheck(&creeper->position_18, &g_SysWork.npcs_1A0[i].position_18, Q12(16.0f)))
                     {
                         g_SysWork.npcs_1A0[i].properties_E4.creeper.timer_104 = Q12(0.0f);

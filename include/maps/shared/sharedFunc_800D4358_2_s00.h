@@ -117,7 +117,7 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
                 case 0:
                     if (field14C_1 | field14C_0 | field14C_2)
                     {
-                        chara->model_0.state_2     = 6;
+                        chara->model_0.controlState_2     = 6;
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
@@ -127,11 +127,11 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
                     {
                         if (field14C_1 | field14C_0 | field14C_2)
                         {
-                            chara->model_0.state_2 = 20;
+                            chara->model_0.controlState_2 = 20;
                         }
                         else
                         {
-                            chara->model_0.state_2 = 19;
+                            chara->model_0.controlState_2 = 19;
                         }
                         chara->model_0.stateStep_3 = 0;
                     }
@@ -142,11 +142,11 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
                     {
                         if (field14C_1 | field14C_0 | field14C_2)
                         {
-                            chara->model_0.state_2 = 35;
+                            chara->model_0.controlState_2 = 35;
                         }
                         else
                         {
-                            chara->model_0.state_2 = 34;
+                            chara->model_0.controlState_2 = 34;
                         }
 
                         chara->model_0.stateStep_3 = 0;
@@ -157,14 +157,14 @@ void sharedFunc_800D4358_2_s00(s_SubCharacter* chara)
 
         case 1:
         case 2:
-            chara->model_0.state_2               = 16;
+            chara->model_0.controlState_2               = 16;
             chara->model_0.stateStep_3           = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 3:
         case 4:
-            chara->model_0.state_2     = 17;
+            chara->model_0.controlState_2     = 17;
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= Q12(0.0f))

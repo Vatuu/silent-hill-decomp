@@ -131,7 +131,7 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
                 case 0:
                     if (field14C_2 == 0)
                     {
-                        chara->model_0.state_2     = 7;
+                        chara->model_0.controlState_2     = 7;
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
@@ -147,13 +147,13 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
                             sharedFunc_800DD13C_2_s00(chara, chara->field_40 + 1, Q12(0.6f));
                         }
 
-                        chara->model_0.state_2               = 10;
+                        chara->model_0.controlState_2               = 10;
                         chara->model_0.stateStep_3           = 0;
                         chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
                     }
                     else if (Rng_RandQ12() < temp_s2)
                     {
-                        chara->model_0.state_2               = 14;
+                        chara->model_0.controlState_2               = 14;
                         chara->model_0.stateStep_3           = 0;
                         chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
                     }
@@ -162,7 +162,7 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
                 case 2:
                     if (sp10 == switchCond1)
                     {
-                        chara->model_0.state_2     = 22;
+                        chara->model_0.controlState_2     = 22;
                         chara->model_0.stateStep_3 = 0;
                     }
                     break;
@@ -171,14 +171,14 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
 
         case 1:
         case 2:
-            chara->model_0.state_2               = 16;
+            chara->model_0.controlState_2               = 16;
             chara->model_0.stateStep_3           = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 3:
         case 4:
-            chara->model_0.state_2     = 17;
+            chara->model_0.controlState_2     = 17;
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= Q12(0.0f))

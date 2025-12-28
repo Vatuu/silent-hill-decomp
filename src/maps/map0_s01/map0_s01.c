@@ -382,7 +382,7 @@ void func_800D426C(s_SubCharacter* chara) // 0x800D426C
                 chara == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353] ||
                 Math_Distance2dGet(&chara->position_18, &g_SysWork.playerWork_4C.player_0.position_18) > Q12(6.5f))
             {
-                chara->model_0.state_2 = 47;
+                chara->model_0.controlState_2 = 47;
                 chara->model_0.stateStep_3 = 0;
                 chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
                 return;
@@ -393,14 +393,14 @@ void func_800D426C(s_SubCharacter* chara) // 0x800D426C
 
         case 1:
         case 2:
-            chara->model_0.state_2 = 50;
+            chara->model_0.controlState_2 = 50;
             chara->model_0.stateStep_3 = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             return;
 
         case 3:
         case 4:
-            chara->model_0.state_2 = 51;
+            chara->model_0.controlState_2 = 51;
             chara->model_0.stateStep_3 = 0;
             if (chara->health_B0 <= 0)
             {
@@ -455,7 +455,7 @@ void func_800D4420(s_SubCharacter* chara) // 0x800D4420
                 angle = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8) - chara->rotation_24.vy);
                 if (angle >= FP_ANGLE(-8.0f) && angle < FP_ANGLE(8.0f))
                 {
-                    chara->model_0.state_2 = 49;
+                    chara->model_0.controlState_2 = 49;
                     chara->model_0.stateStep_3 = 0;
                 }
             }
@@ -463,14 +463,14 @@ void func_800D4420(s_SubCharacter* chara) // 0x800D4420
 
         case 1:
         case 2:
-            chara->model_0.state_2 = 50;
+            chara->model_0.controlState_2 = 50;
             chara->model_0.stateStep_3 = 0;
             chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
             break;
 
         case 3:
         case 4:
-            chara->model_0.state_2 = 51;
+            chara->model_0.controlState_2 = 51;
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= Q12(0.0f))
@@ -505,7 +505,7 @@ void func_800D45BC(s_SubCharacter* chara) // 0x800D45BC
             if (!chara->properties_E4.unk0.properties_120.val32 ||
                 Math_Distance2dGet(&chara->position_18, &g_SysWork.playerWork_4C.player_0.position_18) > Q12(2.0f))
             {
-                chara->model_0.state_2 = 47;
+                chara->model_0.controlState_2 = 47;
                 chara->model_0.stateStep_3 = 0;
                 break;
             }
@@ -515,14 +515,14 @@ void func_800D45BC(s_SubCharacter* chara) // 0x800D45BC
 
         case 1:
         case 2:
-            chara->model_0.state_2 = 50;
+            chara->model_0.controlState_2 = 50;
             chara->model_0.stateStep_3 = 0;
             chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
             break;
 
         case 3:
         case 4:
-            chara->model_0.state_2 = 51;
+            chara->model_0.controlState_2 = 51;
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= Q12(0.0f))
@@ -602,16 +602,16 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
                 {
                     if (Rng_RandQ12() >= FP_ANGLE(180.0f))
                     {
-                        chara->model_0.state_2 = 47;
+                        chara->model_0.controlState_2 = 47;
                     }
                     else
                     {
-                        chara->model_0.state_2 = 48;
+                        chara->model_0.controlState_2 = 48;
                     }
                 }
                 else
                 {
-                    chara->model_0.state_2 = 48;
+                    chara->model_0.controlState_2 = 48;
                 }
 
                 chara->model_0.stateStep_3 = 0;
@@ -623,14 +623,14 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
 
         case 1: 
         case 2: 
-            chara->model_0.state_2 = 50;
+            chara->model_0.controlState_2 = 50;
             chara->model_0.stateStep_3 = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 3: 
         case 4: 
-            chara->model_0.state_2 = 51;
+            chara->model_0.controlState_2 = 51;
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= Q12(0.0f))
@@ -692,14 +692,14 @@ void func_800D4894(s_SubCharacter* chara)
         {
             if (cond)
             {
-                chara->model_0.state_2 = ANIM_STATUS(23, true);
+                chara->model_0.controlState_2 = ANIM_STATUS(23, true);
                 chara->model_0.stateStep_3 = 0;
                 chara->properties_E4.unk0.field_E8_8 = 3;
             }
         }
         else if (damageType < 5)
         {
-            chara->model_0.state_2     = ANIM_STATUS(25, true);
+            chara->model_0.controlState_2     = ANIM_STATUS(25, true);
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= Q12(0.0f))
@@ -755,7 +755,7 @@ void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
 
     if (cond)
     {
-        chara->model_0.state_2 = 2;
+        chara->model_0.controlState_2 = 2;
         chara->model_0.stateStep_3 = 0;
         chara->properties_E4.unk0.field_E8_8 = 1;
     }

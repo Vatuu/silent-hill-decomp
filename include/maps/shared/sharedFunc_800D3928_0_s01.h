@@ -34,7 +34,7 @@ bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer)
     }
 
     // Handle control state.
-    controlFunc = g_Ai_AirScreamer_ControlFuncs[airScreamer->model_0.state_2];
+    controlFunc = g_Ai_AirScreamer_ControlFuncs[airScreamer->model_0.controlState_2];
     if (controlFunc)
     {
         controlFunc(airScreamer);

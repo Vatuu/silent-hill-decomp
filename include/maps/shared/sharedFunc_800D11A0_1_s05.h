@@ -19,7 +19,7 @@ void sharedFunc_800D11A0_1_s05(s_SubCharacter* chara)
         {
             if (ABS(temp_s2) > 0x400 || temp_s0 > 0x8000 || temp_s0 < 0x3333 && ABS(temp_s2) > 0x100)
             {
-                chara->model_0.state_2 = 2;
+                chara->model_0.controlState_2 = 2;
             }
             else
             {
@@ -61,7 +61,7 @@ void sharedFunc_800D11A0_1_s05(s_SubCharacter* chara)
         {
             sharedData_800D5A8C_1_s05     = 0;
             chara->model_0.anim_4.status_0 = 0x16;
-            chara->model_0.state_2         = 2;
+            chara->model_0.controlState_2         = 2;
         }
     }
     else

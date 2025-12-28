@@ -3,7 +3,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr,
     s8* mapOverlayPtr;
 
     // Initialize.
-    if (larvalStalker->model_0.state_2 == ModelState_Uninitialized)
+    if (larvalStalker->model_0.controlState_2 == ModelState_Uninitialized)
     {
         Ai_LarvalStalker_Init(larvalStalker);
     }
@@ -29,7 +29,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr,
     mapOverlayPtr = &g_SavegamePtr->mapOverlayId_A4;
 
     larvalStalker->timer_C6        = Q12(1.0f);
-    larvalStalker->model_0.state_2 = 1;
+    larvalStalker->model_0.controlState_2 = 1;
 
     if (*mapOverlayPtr == 37 || Rng_GenerateInt(0, 3) == 0) // 1 in 4 chance.
     {

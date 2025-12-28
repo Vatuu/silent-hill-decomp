@@ -62,11 +62,11 @@ void sharedFunc_800DB038_2_s00(s_SubCharacter* chara)
                 if (chara->properties_E4.unk0.field_E8_8 == 5 && cond1)
                 {
                     chara->properties_E4.unk0.field_E8_8 = 1;
-                    chara->model_0.state_2               = 42;
+                    chara->model_0.controlState_2               = 42;
                 }
                 else
                 {
-                    chara->model_0.state_2 = 39;
+                    chara->model_0.controlState_2 = 39;
                 }
 
                 chara->model_0.stateStep_3 = 0;
@@ -75,14 +75,14 @@ void sharedFunc_800DB038_2_s00(s_SubCharacter* chara)
 
         case 1:
         case 2:
-            chara->model_0.state_2               = 44;
+            chara->model_0.controlState_2               = 44;
             chara->model_0.stateStep_3           = 0;
             chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 3:
         case 4:
-            chara->model_0.state_2     = 45;
+            chara->model_0.controlState_2     = 45;
             chara->model_0.stateStep_3 = 0;
 
             if (chara->health_B0 <= 0)

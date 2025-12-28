@@ -44,7 +44,7 @@ void sharedFunc_800D1CE4_5_s00(s_SubCharacter* scratcher)
 
         if (scratcher->health_B0 <= Q12(0.0f))
         {
-            scratcher->model_0.state_2         = 13;
+            scratcher->model_0.controlState_2         = 13;
             scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_6, false);
         }
     }
