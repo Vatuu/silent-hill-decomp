@@ -45,18 +45,15 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
     }
     else
     {
-        if (func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - larvalStalker->position_18.vx,
-                                 g_SysWork.playerWork_4C.player_0.position_18.vz - larvalStalker->position_18.vz) -
+        if (func_8005BF38(Math_AngleBetweenPositionsGet(larvalStalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                           larvalStalker->rotation_24.vy) < FP_ANGLE(0.0f))
         {
-            angle = -func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - larvalStalker->position_18.vx,
-                                          g_SysWork.playerWork_4C.player_0.position_18.vz - larvalStalker->position_18.vz) -
+            angle = -func_8005BF38(Math_AngleBetweenPositionsGet(larvalStalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                    larvalStalker->rotation_24.vy);
         }
         else
         {
-            angle = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - larvalStalker->position_18.vx,
-                                         g_SysWork.playerWork_4C.player_0.position_18.vz - larvalStalker->position_18.vz) -
+            angle = func_8005BF38(Math_AngleBetweenPositionsGet(larvalStalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                   larvalStalker->rotation_24.vy);
         }
 

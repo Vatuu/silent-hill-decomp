@@ -57,9 +57,9 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
             creeper->moveSpeed_38 = moveSpeed;
         }
 
-        if (TIMESTEP_ANGLE_3 < ABS(func_8005BF38((ratan2(playerPos.vx - creeper->position_18.vx, playerPos.vz - creeper->position_18.vz) - creeper->rotation_24.vy))))
+        if (TIMESTEP_ANGLE_3 < ABS(func_8005BF38((Math_AngleBetweenPositionsGet(creeper->position_18, playerPos) - creeper->rotation_24.vy))))
         {
-            if ((func_8005BF38((ratan2(playerPos.vx - creeper->position_18.vx, playerPos.vz - creeper->position_18.vz) - creeper->rotation_24.vy)) << 0x10) > 0)
+            if ((func_8005BF38((Math_AngleBetweenPositionsGet(creeper->position_18, playerPos) - creeper->rotation_24.vy)) << 16) > 0)
             {
                 creeper->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
             }
@@ -70,7 +70,7 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
         }
         else
         {
-            creeper->rotation_24.vy = ratan2(playerPos.vx - creeper->position_18.vx, playerPos.vz - creeper->position_18.vz);
+            creeper->rotation_24.vy = Math_AngleBetweenPositionsGet(creeper->position_18, playerPos);
         }
 
         creeper->field_44.field_0 = 1;

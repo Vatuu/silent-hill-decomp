@@ -2,8 +2,8 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
 {
     s_func_800700F8_2 sp10;
     VECTOR3           sp30;
-    q3_12             angle2;
-    q3_12             angle3;
+    q3_12             angleToPlayer2;
+    q3_12             angleDeltaToPlayer;
     q3_12             angle1;
     q3_12             angle;
     q3_12             angleToPlayer;
@@ -29,21 +29,21 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
         else
         {
             angleMult                                               = NO_VALUE;
-            chara->properties_E4.dummy.properties_E8[0].val16[0] |= 4;
+            chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 2;
         }
 
         for (i = 0; i < 16; i++)
         {
             if (i != 0 && i != 15)
             {
-                angle2 = Rng_TestProbabilityBits(7) - 64;
-                if (i & 1)
+                angleToPlayer2 = Rng_TestProbabilityBits(7) - 64;
+                if (i & 0x1)
                 {
-                    angle1 = angle2 * angleMult;
+                    angle1 = angleToPlayer2 * angleMult;
                 }
                 else
                 {
-                    angle1 = angle2 * -angleMult;
+                    angle1 = angleToPlayer2 * -angleMult;
                 }
             }
             else
@@ -97,7 +97,6 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
     chara->properties_E4.dummy.properties_E8[2].val16[1] += g_DeltaTime0;
 
     angleToPlayer = func_8005BF38((chara->properties_E4.dummy.properties_E8[2].val16[0] - chara->rotation_24.vy));
-
     if (TIMESTEP_ANGLE_2 < ABS(angleToPlayer))
     {
         if (angleToPlayer > FP_ANGLE(0.0f))
@@ -114,18 +113,17 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
         chara->rotation_24.vy = chara->properties_E4.dummy.properties_E8[2].val16[0];
     }
 
-    angleToPlayer = ABS(func_8005BF38(chara->properties_E4.dummy.properties_E8[2].val16[0] - chara->rotation_24.vy));
-    angle3 = ABS(func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
-                                      g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
-                               chara->rotation_24.vy));
+    angleToPlayer      = ABS(func_8005BF38(chara->properties_E4.dummy.properties_E8[2].val16[0] - chara->rotation_24.vy));
+    angleDeltaToPlayer = ABS(func_8005BF38(Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                                           chara->rotation_24.vy));
 
-    if (ABS(angleToPlayer - angle3) < FP_ANGLE(14.95f))
+    if (ABS(angleToPlayer - angleDeltaToPlayer) < FP_ANGLE(15.0f))
     {
-        if (distToPlayer <= Q12(5.75f) && angleToPlayer < FP_ANGLE(59.95f))
+        if (distToPlayer <= Q12(5.75f) && angleToPlayer < FP_ANGLE(60.0f))
         {
             Chara_MoveSpeedUpdate3(chara, Q12(0.8f), -Q12(1.2f));
         }
-        else if ((distToPlayer <= Q12(5.75f) && angleToPlayer > FP_ANGLE(59.95f)) ||
+        else if ((distToPlayer <= Q12(5.75f) && angleToPlayer > FP_ANGLE(60.0f)) ||
                  (distToPlayer >  Q12(5.75f) && angleToPlayer > FP_ANGLE(90.0f)))
         {
             Chara_MoveSpeedUpdate(chara, Q12(0.8f));
@@ -147,17 +145,15 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
         }
     }
 
-    angle2 = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
-                    g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
-
-    sp30.vx = FP_MULTIPLY(distToPlayer, Math_Sin(angle2), Q12_SHIFT);
+    angleToPlayer2 = Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18);
+    sp30.vx = FP_MULTIPLY(distToPlayer, Math_Sin(angleToPlayer2), Q12_SHIFT);
     sp30.vy = Q12(0.0f);
-    sp30.vz = FP_MULTIPLY(distToPlayer, Math_Cos(angle2), Q12_SHIFT);
+    sp30.vz = FP_MULTIPLY(distToPlayer, Math_Cos(angleToPlayer2), Q12_SHIFT);
 
     func_8006DB3C(&sp10, &chara->position_18, &sp30, chara);
 
     if (distToPlayer < Q12(6.4f) &&
-        (angle3 < 0x55 || distToPlayer > Q12(3.2f) && angle3 < 0xAA) &&
+        (angleDeltaToPlayer < FP_ANGLE(7.5f) || distToPlayer > Q12(3.2f) && angleDeltaToPlayer < FP_ANGLE(15.0f)) &&
         (sp10.field_0 == 0 || sp10.field_10 != 0))
     {
         chara->model_0.controlState_2 = 3;
@@ -165,11 +161,11 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
 
     if (!Rng_TestProbabilityBits(7))
     {
-        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 0x100;
+        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 8;
     }
 
     if (!Rng_TestProbabilityBits(6))
     {
-        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 0x80;
+        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 7;
     }
 }

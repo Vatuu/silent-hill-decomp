@@ -118,8 +118,8 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
                     }
 
                     angleDeltaToPlayer = func_8005BF38(ratan2(sharedData_800E3A18_0_s00 - stalker->position_18.vx,
-                                                         sharedData_800E3A1C_0_s00 - stalker->position_18.vz) -
-                                                  stalker->rotation_24.vy);
+                                                              sharedData_800E3A1C_0_s00 - stalker->position_18.vz) -
+                                                       stalker->rotation_24.vy);
                 }
 
                 if (ABS(angleDeltaToPlayer) < TIMESTEP_ANGLE_4 || distToPlayer > (radiusMin >> 2))

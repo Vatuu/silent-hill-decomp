@@ -16,8 +16,7 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
     deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz);
     dist   = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)));
 
-    angle = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx,
-                                 g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz) -
+    angle = func_8005BF38(Math_AngleBetweenPositionsGet(nurse->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                           nurse->rotation_24.vy);
     angleAbs = ABS(angle);
 

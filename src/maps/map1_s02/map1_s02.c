@@ -1213,7 +1213,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             {
                 if (Savegame_EventFlagGet(EventFlag_118)) 
                 {
-                    rotY0 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(59.95f)), Q12_SHIFT);
+                    rotY0 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT);
                     if ((D_800E1FDC.vx - rotY0) > FP_ANGLE(180.0f)) 
                     {
                         rotY0 = D_800E1FDC.vx - FP_ANGLE(180.0f);
@@ -1224,7 +1224,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                         D_800E1FDC.vx -= rotY0;
                     }
 
-                    rotY1 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(59.95f)), Q12_SHIFT) >> 1;
+                    rotY1 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT) >> 1;
                     if ((D_800E1FDC.vy - rotY1) > FP_ANGLE(90.0f)) 
                     {
                         rotY1 = D_800E1FDC.vy - FP_ANGLE(90.0f);
@@ -1237,7 +1237,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                 } 
                 else 
                 {
-                    rotY1 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(59.95f)), Q12_SHIFT);
+                    rotY1 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT);
                     if ((D_800E1FDC.vx - rotY1) > FP_ANGLE(180.0f)) 
                     {
                         rotY1 = D_800E1FDC.vx - FP_ANGLE(180.0f);
@@ -1248,7 +1248,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                         D_800E1FDC.vx -= rotY1;
                     }
     
-                    rotY0 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(59.95f)), Q12_SHIFT) >> 1;
+                    rotY0 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT) >> 1;
                     if ((D_800E1FDC.vy - rotY0) > FP_ANGLE(90.0f))
                     {
                         rotY0 = D_800E1FDC.vy - FP_ANGLE(90.0f);
@@ -1262,7 +1262,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             } 
             else if (Savegame_EventFlagGet(EventFlag_118)) 
             {
-                rotY0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(59.95f)), Q12_SHIFT);
+                rotY0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT);
                 if ((D_800E1FDC.vx + rotY0) > FP_ANGLE(180.0f)) 
                 {
                     rotY0 = FP_ANGLE(180.0f) - D_800E1FDC.vx;
@@ -1273,7 +1273,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                     D_800E1FDC.vx += rotY0;
                 }
                 
-                rotY1 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(59.95f)), Q12_SHIFT) >> 1;
+                rotY1 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT) >> 1;
                 if ((D_800E1FDC.vy + rotY1) > FP_ANGLE(90.0f)) 
                 {
                     rotY1 = FP_ANGLE(90.0f) - D_800E1FDC.vy;
@@ -1286,7 +1286,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             } 
             else 
             {
-                rotY1 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(59.95f)), Q12_SHIFT);
+                rotY1 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT);
                 if ((D_800E1FDC.vx + rotY1) > FP_ANGLE(180.0f)) 
                 {
                     rotY1 = FP_ANGLE(180.0f) - D_800E1FDC.vx;
@@ -1297,7 +1297,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                     D_800E1FDC.vx += rotY1;
                 }
     
-                rotY0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(59.95f)), Q12_SHIFT) >> 1;
+                rotY0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT) >> 1;
                 if ((D_800E1FDC.vy + rotY0) > FP_ANGLE(90.0f))
                 {
                     rotY0 = FP_ANGLE(90.0f) - D_800E1FDC.vy;

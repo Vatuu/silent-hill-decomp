@@ -76,7 +76,7 @@
 #define TIMESTEP_SCALE(deltaTime, x) \
     (((x) * (deltaTime)) / TIMESTEP_30_FPS)
 
-// TODO: Could these have been one common macro? Used as the maximum rotation allowed of a given tick with a minimum of 1.
+// TODO: Could these have been one common macro? Used as the maximum rotation allowed on the current tick with a minimum of 1.
 #define TIMESTEP_ANGLE_0 (((g_DeltaTime0) >> 4) + 1)
 #define TIMESTEP_ANGLE_1 ((((g_DeltaTime0) / 3) >> 4) + 1)
 #define TIMESTEP_ANGLE_2 ((((g_DeltaTime0) / 3) >> 3) + 1)
@@ -113,7 +113,7 @@
  */
 #define Math_AngleBetweenPositionsGet(posFrom, posTo) \
     ratan2(posTo.vx - posFrom.vx,                     \
-           posTo.vz - posFrom.vz);                    \
+           posTo.vz - posFrom.vz)                     \
 
 /** @brief Computes the magnitude of a 2D vector in Q19.12, using intermediate components in Q25.6 to avoid overflow.
  *

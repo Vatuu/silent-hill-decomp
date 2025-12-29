@@ -4,13 +4,12 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
     q3_12  angleDeltaToPlayer;
     q19_12 distToPlayer;
     
-    // TODO: Use `Math_AngleBetweenPositionsGet`.
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
-                                       g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
-    angleDeltaToPlayer = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
-                                              g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
+    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                             g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
+    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                        chara->rotation_24.vy);
-    if (chara->model_0.anim_4.status_0 == 23)
+
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(11, true))
     {
         if (distToPlayer > Q12(3.5f))
         {
@@ -29,7 +28,7 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
 
                 if (sharedFunc_800D4530_1_s05(chara) != false)
                 {
-                    chara->model_0.anim_4.status_0 = 4;
+                    chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
                     func_8005DC1C(Sfx_Unk1475, &chara->position_18, Q8(0.5f), 0);
                 }
             }
@@ -92,11 +91,11 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(14.95f), Q12_SHIFT);
+                chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
             }
             else
             {
-                chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(14.95f), Q12_SHIFT);
+                chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
             }
         }
         else
@@ -127,11 +126,11 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(14.95f), Q12_SHIFT);
+                chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
             }
             else
             {
-                chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(14.95f), Q12_SHIFT);
+                chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
             }
         }
         else

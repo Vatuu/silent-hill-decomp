@@ -14,9 +14,8 @@ void Ai_Stalker_Control_12(s_SubCharacter* stalker)
 
     distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
                                              g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz);
-    angleDeltaToPlayer = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
-                                               g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz) -
-                                  stalker->rotation_24.vy));
+    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(stalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                                       stalker->rotation_24.vy);
 
     if (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))))
     {

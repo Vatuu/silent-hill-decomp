@@ -136,9 +136,8 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
     if (stalker->model_0.controlState_2 == StalkerControl_2 ||
         stalker->model_0.controlState_2 == StalkerControl_3)
     {
-        ptr->angle_46 = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
-                                              g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz) -
-                                       stalker->rotation_24.vy));
+        ptr->angle_46 = func_8005BF38(Math_AngleBetweenPositionsGet(stalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                                      stalker->rotation_24.vy);
         temp          = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
                                             g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz);
 

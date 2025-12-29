@@ -3,10 +3,10 @@ void sharedFunc_800D11A0_1_s05(s_SubCharacter* chara)
     q3_12  angleDeltaToPlayer;
     q19_12 distToPlayer;
 
-    // TODO: Use `Math_AngleBetweenPositionsGet`.
     distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
                                              g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
-    angleDeltaToPlayer = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) - chara->rotation_24.vy);
+    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                                       chara->rotation_24.vy);
 
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(11, true))
     {

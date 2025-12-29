@@ -49,8 +49,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
     #define larvalStalkerProps larvalStalker->properties_E4.larvalStalker
 
-    angleDeltaToPlayer = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - larvalStalker->position_18.vx,
-                                              g_SysWork.playerWork_4C.player_0.position_18.vz - larvalStalker->position_18.vz) -
+    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(larvalStalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                        larvalStalker->rotation_24.vy);
     distToTarget       = Math_Vector2MagCalc(larvalStalkerProps.targetPositionX - larvalStalker->position_18.vx,
                                              larvalStalkerProps.targetPositionZ - larvalStalker->position_18.vz);

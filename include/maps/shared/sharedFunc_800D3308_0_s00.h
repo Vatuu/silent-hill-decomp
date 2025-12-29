@@ -59,8 +59,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
             {
                 stalkerProps.timer_10C = 0;
 
-                angle = ABS(func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
-                                                 g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz) -
+                angle = ABS(func_8005BF38(Math_AngleBetweenPositionsGet(stalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                           stalker->rotation_24.vy));
 
                 if (stalkerProps.flags_E8 & StalkerFlag_6)
@@ -95,7 +94,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                         if (ANIM_STATUS_IDX_GET(stalker->model_0.anim_4.status_0) < StalkerAnim_22 ||
                             ANIM_STATUS_IDX_GET(stalker->model_0.anim_4.status_0) > StalkerAnim_23)
                         {
-                            if (angle >= FP_ANGLE(59.95f))
+                            if (angle >= FP_ANGLE(60.0f))
                             {
                                 stalker->model_0.anim_4.status_0 = 46;
                             }
@@ -125,7 +124,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                             else if (FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) > 108 &&
                                      FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) < 113)
                             {
-                                if (angle >= FP_ANGLE(59.95f))
+                                if (angle >= FP_ANGLE(60.0f))
                                 {
                                     stalker->model_0.anim_4.status_0 = 84;
                                 }
@@ -154,7 +153,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                                 if (FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) > 112 &&
                                     FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) < 118)
                                 {
-                                    if (angle >= FP_ANGLE(59.95f))
+                                    if (angle >= FP_ANGLE(60.0f))
                                     {
                                         stalker->model_0.anim_4.status_0 = 86;
                                     }
@@ -178,7 +177,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                                 }
                                 else
                                 {
-                                    if (angle >= FP_ANGLE(59.95f))
+                                    if (angle >= FP_ANGLE(60.0f))
                                     {
                                         stalker->model_0.anim_4.status_0 = 88;
                                     }

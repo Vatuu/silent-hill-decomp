@@ -12,8 +12,7 @@ void sharedFunc_800DE11C_2_s00(s_SubCharacter* chara)
     playerPosZ = g_SysWork.playerWork_4C.player_0.position_18.vz;
     dist       = g_SysWork.playerWork_4C.player_0.field_D4.field_0;
 
-    headingAngle = ratan2(chara->position_18.vx - g_SysWork.playerWork_4C.player_0.position_18.vx,
-                          chara->position_18.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
+    headingAngle = Math_AngleBetweenPositionsGet(g_SysWork.playerWork_4C.player_0.position_18, chara->position_18);
     newPosX      = playerPosX + FP_MULTIPLY_PRECISE(dist, Math_Sin(headingAngle), Q12_SHIFT);
     newPosZ      = playerPosZ + FP_MULTIPLY_PRECISE(dist, Math_Cos(headingAngle), Q12_SHIFT);
     newPosY      = Collision_GroundHeightGet(newPosX, newPosZ);

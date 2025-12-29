@@ -6,8 +6,7 @@ void sharedFunc_800D2444_1_s05(s_SubCharacter* splitHead)
     {
         Chara_MoveSpeedUpdate3(splitHead, Q12(0.8f), Q12(-1.2f));
 
-        angleDeltaToPlayer = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx,
-                                                  g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz) -
+        angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                            splitHead->rotation_24.vy);
         if (TIMESTEP_ANGLE_2 < ABS(angleDeltaToPlayer)) // @hack `(g_DeltaTime0 / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
         {
@@ -22,8 +21,7 @@ void sharedFunc_800D2444_1_s05(s_SubCharacter* splitHead)
         }
         else
         {
-            splitHead->rotation_24.vy = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx,
-                                               g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz);
+            splitHead->rotation_24.vy = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
         }
     }
     else

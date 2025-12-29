@@ -2562,7 +2562,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                 if (enemyAttackedIdx == g_SysWork.targetNpcIdx_2353)
                 {
                     temp_a1 = Q12_FRACT(ratan2((g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vx + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetX_0) - g_SysWork.playerWork_4C.player_0.position_18.vx,
-                                                (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.playerWork_4C.player_0.position_18.vz) + 0x1000);
+                                               (g_SysWork.npcs_1A0[enemyAttackedIdx].position_18.vz + g_SysWork.npcs_1A0[enemyAttackedIdx].field_D8.offsetZ_2) - g_SysWork.playerWork_4C.player_0.position_18.vz) + Q12(1.0f));
 
                     Math_ShortestAngleGet(chara->rotation_24.vy, temp_a1, &ssp20);
                     D_800C454C = g_DeltaTime0 * 0xF;

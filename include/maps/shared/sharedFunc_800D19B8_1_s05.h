@@ -115,7 +115,7 @@ void sharedFunc_800D19B8_1_s05(s_SubCharacter* chara)
     }
 
     angleToPlayer   = ABS(func_8005BF38(chara->properties_E4.dummy.properties_E8[2].val16[0] - chara->rotation_24.vy));
-    var_s1_2 = ABS(func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) - chara->rotation_24.vy));
+    var_s1_2 = ABS(func_8005BF38(Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18) - chara->rotation_24.vy));
 
     if (ABS(angleToPlayer - var_s1_2) < 0xAA)
     {
@@ -145,7 +145,7 @@ void sharedFunc_800D19B8_1_s05(s_SubCharacter* chara)
         }
     }
 
-    angle1 = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
+    angle1 = Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18);
 
     sp30.vx = FP_MULTIPLY(distToPlayer, Math_Sin(angle1), Q12_SHIFT);
     sp30.vy = Q12(0.0f);

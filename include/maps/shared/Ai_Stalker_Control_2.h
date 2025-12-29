@@ -34,8 +34,7 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
 
         if (stalkerProps.flags_E8 & StalkerFlag_WarpRotation)
         {
-            stalker->rotation_24.vy = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
-                                             g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz);
+            stalker->rotation_24.vy = Math_AngleBetweenPositionsGet(stalker->position_18, g_SysWork.playerWork_4C.player_0.position_18);
         }
         else
         {
@@ -63,8 +62,8 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
                 }
 
                 angleDeltaToPlayer = func_8005BF38(ratan2(sharedData_800E3A18_0_s00 - stalker->position_18.vx,
-                                                     sharedData_800E3A1C_0_s00 - stalker->position_18.vz) -
-                                              stalker->rotation_24.vy);
+                                                          sharedData_800E3A1C_0_s00 - stalker->position_18.vz) -
+                                                   stalker->rotation_24.vy);
             }
 
             if (ABS(angleDeltaToPlayer) < TIMESTEP_ANGLE_3 || distToPlayer > Q12(2.0f))

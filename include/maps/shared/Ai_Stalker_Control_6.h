@@ -76,8 +76,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
             stalkerProps.relAnimTime_104 = Q12(0.0f);
         }
 
-        stalker->rotation_24.vy = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
-                                         g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz);
+        stalker->rotation_24.vy = Math_AngleBetweenPositionsGet(stalker->position_18, g_SysWork.playerWork_4C.player_0.position_18);
 
         if (g_SysWork.playerWork_4C.player_0.attackReceived_41 == NO_VALUE)
         {

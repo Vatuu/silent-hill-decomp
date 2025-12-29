@@ -2009,7 +2009,7 @@ void vcMakeIdealCamPosForThroughDoorCam(VECTOR3* ideal_pos, VC_WORK* w_p) // 0x8
                 case 10:
                 case 13:
                 case 14:
-                    angle_threshold = FP_ANGLE(14.95f);
+                    angle_threshold = FP_ANGLE(15.0f);
                     offset_forward  = Q12(0.85f);
                     offset_lateral  = Q12(0.6f);
                     offset_scale    = Q12(0.7f);
