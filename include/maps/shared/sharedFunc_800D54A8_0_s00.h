@@ -83,7 +83,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* stalker)
         {
             g_SysWork.field_2284[3]         &= ~(1 << 0);
             animStatus                       = stalker->model_0.anim_4.status_0;
-            stalker->model_0.controlState_2         = 9;
+            stalker->model_0.controlState_2  = StalkerControl_9;
             stalker->model_0.anim_4.status_0 = ANIM_STATUS(StalkerAnim_10, false);
             stalkerProps.keyframeIdx_FC      = animStatus;
             stalker->field_E1_0              = 0;
@@ -112,7 +112,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* stalker)
         if (func_8008A0E4(1, 49, stalker, &vec0, &g_SysWork.playerWork_4C, stalker->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
         {
             stalkerProps.flags_E8 |= StalkerFlag_5;
-            g_SysWork.field_2284[3]                 &= ~(1 << 1);
+            g_SysWork.field_2284[3] &= ~(1 << 1);
 
             sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1366);
 
@@ -124,7 +124,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* stalker)
              distToPlayer > Q12(2.0f))
     {
         g_SysWork.field_2284[3] &= ~((1 << 0) | (1 << 1));
-        stalker->model_0.controlState_2 = 9;
+        stalker->model_0.controlState_2 = StalkerControl_9;
 
         if (stalker->model_0.anim_4.status_0 == ANIM_STATUS(StalkerAnim_34, true) ||
             stalker->model_0.anim_4.status_0 == ANIM_STATUS(StalkerAnim_9,  false))
@@ -142,8 +142,8 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* stalker)
         }
 
         stalkerProps.flags_E8 |= StalkerFlag_6;
-        stalker->model_0.anim_4.status_0         = ANIM_STATUS(StalkerAnim_36, false);
-        stalker->field_E1_0                      = 3;
+        stalker->model_0.anim_4.status_0 = ANIM_STATUS(StalkerAnim_36, false);
+        stalker->field_E1_0 = 3;
     }
 
     if (g_DeltaTime0 != Q12(0.0f))

@@ -78,7 +78,7 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
         case 3:
             sharedFunc_800DDF74_2_s00(chara, unkDist / 2, unkAngle);
 
-            #define ANGLE_DIFF FP_ANGLE_NORM_S(unkAngle - chara->rotation_24.vy)
+            #define angleDiff FP_ANGLE_NORM_S(unkAngle - chara->rotation_24.vy)
 
             if (temp_s3 != 0)
             {
@@ -88,11 +88,13 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
             {
                 chara->model_0.stateStep_3 = 0;
             }
-            else if (ANGLE_DIFF >= FP_ANGLE(-10.0f) && ANGLE_DIFF < FP_ANGLE(10.0f))
+            else if (angleDiff >= FP_ANGLE(-10.0f) && angleDiff < FP_ANGLE(10.0f))
             {
                 switchCond0 = 2;
             }
             break;
+
+            #undef angleDiff
 
         case 4:
             if (animStatus == ANIM_STATUS(25, true) || animStatus == ANIM_STATUS(23, true))

@@ -75,6 +75,25 @@ typedef enum _StalkerAnim
     StalkerAnim_47    = 47
 } e_StalkerAnim;
 
+/** @brief Stalker character control states. */
+typedef enum _StalkerControl
+{
+    StalkerControl_None = 0,
+    StalkerControl_1    = 1,
+    StalkerControl_2    = 2,
+    StalkerControl_3    = 3,
+    StalkerControl_4    = 4,
+    StalkerControl_5    = 5,
+    StalkerControl_6    = 6,
+    StalkerControl_7    = 7,
+    StalkerControl_8    = 8,
+    StalkerControl_9    = 9,
+    StalkerControl_10   = 10,
+    StalkerControl_11   = 11,
+    StalkerControl_12   = 12,
+    StalkerControl_13   = 13
+} e_StalkerControl;
+
 /*s_AnimInfo STALKER_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, 0, 0 },

@@ -42,7 +42,8 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
     q19_12  distStep;
     q19_12  baseDistMax;
     q19_12  angleDeltaToPlayer;
-    q19_12  sinCosRotY;
+    q19_12  sinRotY;
+    q19_12  cosRotY;
     q19_12  targetX;
     q19_12  targetZ;
 
@@ -281,15 +282,15 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
                 {
                     if (distToTarget >= Q12(0.29004f))
                     {
-                        sinCosRotY = Math_Sin(larvalStalker->rotation_24.vy);
+                        sinRotY = Math_Sin(larvalStalker->rotation_24.vy);
                         larvalStalkerProps.angle_100 = ((distToTarget - Q12(0.28f)) <= Q12(0.02f)) ?
-                                                       FP_MULTIPLY(distToTarget - Q12(0.28f), sinCosRotY, Q12_SHIFT) :
-                                                       FP_MULTIPLY(Q12(0.02f), sinCosRotY, Q12_SHIFT);
+                                                       FP_MULTIPLY(distToTarget - Q12(0.28f), sinRotY, Q12_SHIFT) :
+                                                       FP_MULTIPLY(Q12(0.02f), sinRotY, Q12_SHIFT);
 
-                        sinCosRotY = Math_Cos(larvalStalker->rotation_24.vy);
+                        cosRotY = Math_Cos(larvalStalker->rotation_24.vy);
                         larvalStalkerProps.angle_102 = ((distToTarget - Q12(0.28f)) <= Q12(0.02f)) ?
-                                                       FP_MULTIPLY(distToTarget - Q12(0.28f), sinCosRotY, Q12_SHIFT) :
-                                                       FP_MULTIPLY(Q12(0.02f), sinCosRotY, Q12_SHIFT);
+                                                       FP_MULTIPLY(distToTarget - Q12(0.28f), cosRotY, Q12_SHIFT) :
+                                                       FP_MULTIPLY(Q12(0.02f), cosRotY, Q12_SHIFT);
                     }
 
                     if (distToTarget < Q12(0.27f))
@@ -302,15 +303,15 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
                 {
                     if (distToTarget > Q12(0.18f))
                     {
-                        sinCosRotY = Math_Sin(larvalStalker->rotation_24.vy);
+                        sinRotY = Math_Sin(larvalStalker->rotation_24.vy);
                         larvalStalkerProps.angle_100 = ((distToTarget - Q12(0.17f)) <= Q12(0.02f)) ?
-                                                       FP_MULTIPLY(distToTarget - Q12(0.17f), sinCosRotY, Q12_SHIFT) :
-                                                       FP_MULTIPLY(Q12(0.02f), sinCosRotY, Q12_SHIFT);
+                                                       FP_MULTIPLY(distToTarget - Q12(0.17f), sinRotY, Q12_SHIFT) :
+                                                       FP_MULTIPLY(Q12(0.02f), sinRotY, Q12_SHIFT);
 
-                        sinCosRotY = Math_Cos(larvalStalker->rotation_24.vy);
+                        sinRotY = Math_Cos(larvalStalker->rotation_24.vy);
                         larvalStalkerProps.angle_102 = ((distToTarget - Q12(0.17f)) <= Q12(0.02f)) ?
-                                                       FP_MULTIPLY(distToTarget - Q12(0.17f), sinCosRotY, Q12_SHIFT) :
-                                                       FP_MULTIPLY(Q12(0.02f), sinCosRotY, Q12_SHIFT);
+                                                       FP_MULTIPLY(distToTarget - Q12(0.17f), sinRotY, Q12_SHIFT) :
+                                                       FP_MULTIPLY(Q12(0.02f), sinRotY, Q12_SHIFT);
                     }
 
                     if (distToTarget < Q12(0.16f))

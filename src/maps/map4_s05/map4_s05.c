@@ -408,7 +408,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             break;
 
         case 8:
-            func_80080B58(&g_SysWork.playerBoneCoords_890[2], &(SVECTOR3){}, &QVECTOR3(154.31f, -15.5f, 24.07f));
+            func_80080B58(&g_SysWork.playerBoneCoords_890[2], &(SVECTOR3){ 0, 0, 0 }, &QVECTOR3(154.31f, -15.5f, 24.07f));
             sharedFunc_800CE5D4_1_s03(&D_800D7D88, Q12(1.0f), Q12(0.2f), 1);
             SysWork_StateStepIncrementDelayed(Q12(2.5f), false);
             break;
@@ -507,26 +507,28 @@ void Map_WorldObjectsInit(void) // 0x800D723C
     }
 }
 
-void Map_WorldObjectsUpdate(void)
+void Map_WorldObjectsUpdate(void) // 0x800D7360
 {
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     func_80069844(0xFFFF);
+    
     if (PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
     {
-        if (!D_800DB9B0)
+        if (D_800DB9B0 == 0)
         {
-            func_8003ED74(6, 0xC);
+            func_8003ED74(6, 12);
             D_800DB9B0++;
         }
+
         if (Savegame_EventFlagGet(EventFlag_348))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Kidn05.object_0, &g_WorldObject_Kidn05.position_1C, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Kidn05.object_0, &g_WorldObject_Kidn05.position_1C, &(SVECTOR3){ FP_ANGLE(0.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f) });
             func_8006982C(4);
         }
         else
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object_0, &g_WorldObject_Kidn04.position_1C, &(SVECTOR3){});
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object_0, &g_WorldObject_Kidn04.position_1C, &(SVECTOR3){ FP_ANGLE(0.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f) });
             func_8006982C(2);
         }
     }
@@ -536,6 +538,7 @@ void Map_WorldObjectsUpdate(void)
         if (Savegame_EventFlagGet(EventFlag_346))
         {
             func_8006982C(4);
+
             if (g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(212.0f))
             {
                 Savegame_EventFlagClear(EventFlag_346);
@@ -553,6 +556,7 @@ void Map_WorldObjectsUpdate(void)
             Savegame_MapMarkingSet(MapMarkFlag_AltCentralTown_KoontzStBigCross);
             Savegame_MapMarkingSet(MapMarkFlag_AltCentralTown_CrichtonKoontzBigCross);
         }
+
         func_80069844(0xFFFF);
     }
 }

@@ -53,7 +53,7 @@ void sharedFunc_800D11A0_1_s05(s_SubCharacter* chara)
     }
     else if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) == 10)
     {
-        Chara_MoveSpeedUpdate(chara, 0x1998);
+        Chara_MoveSpeedUpdate(chara, 0x1998); // TODO
 
         sharedData_800D5A8C_1_s05 += g_DeltaTime0;
 

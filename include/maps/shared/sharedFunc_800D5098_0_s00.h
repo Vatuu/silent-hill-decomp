@@ -14,7 +14,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* stalker)
 
     if (ANIM_STATUS_IDX_GET(stalker->model_0.anim_4.status_0) == StalkerAnim_30)
     {
-        stalker->model_0.controlState_2   = 4;
+        stalker->model_0.controlState_2 = StalkerControl_4;
         g_SysWork.field_2284[3] &= ~(1 << 1);
         return;
     }

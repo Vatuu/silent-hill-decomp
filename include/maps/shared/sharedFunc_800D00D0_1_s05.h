@@ -25,7 +25,6 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
             else
             {
                 chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 3;
-
                 Chara_MoveSpeedUpdate(chara, Q12(4.8f));
 
                 if (sharedFunc_800D4530_1_s05(chara) != false)

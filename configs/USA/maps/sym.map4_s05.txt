@@ -79,6 +79,7 @@ SysWork_StateStepIncrementAfterTime = 0x800D5FE4; // type:func
 MapEvent_DoorJammed                 = 0x800D607C; // type:func
 MapEvent_DoorLocked                 = 0x800D6110; // type:func
 Map_WorldObjectsInit                = 0x800D723C; // type:func
+Map_WorldObjectsUpdate              = 0x800D7360; // type:func
 
 
 
@@ -145,4 +146,3 @@ sharedData_800E39E0_0_s00           = 0x800DB894; // type:s16 size:2
 sharedData_800E39E2_0_s00           = 0x800DB896; // type:s16 size:2
 g_WorldObject_Kidn04                = 0x800DB958; // type:WorldObjectDescNoRot size:0x28
 g_WorldObject_Kidn05                = 0x800DB988; // type:WorldObjectDescNoRot size:0x28
-Map_WorldObjectsUpdate = 0x800D7360; // type:func

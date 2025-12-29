@@ -138,7 +138,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker)
                 distToPlayer < Q12(0.9f) && (distToPlayer > Q12(0.7f) || !Rng_GenerateInt(0, 3)) && // 1 in 4 chance.
                 ABS(angleDeltaToPlayer) < FP_ANGLE(90.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
             {
-                stalker->model_0.controlState_2 = 5;
+                stalker->model_0.controlState_2 = StalkerControl_5;
                 g_SysWork.field_2284[3] |= 1 << 1;
 
                 sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1364);
@@ -151,7 +151,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker)
                 }
                 else
                 {
-                    stalker->model_0.anim_4.status_0              = ANIM_STATUS(StalkerAnim_7, false);
+                    stalker->model_0.anim_4.status_0 = ANIM_STATUS(StalkerAnim_7, false);
                     stalkerProps.keyframeIdx_FC = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model_0.anim_4.time_4, 477);
 
                     if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 478, 481))
@@ -178,14 +178,14 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker)
             }
             else if (distToPlayer < Q12(0.7f))
             {
-                stalker->model_0.controlState_2 = 4;
+                stalker->model_0.controlState_2 = StalkerControl_4;
             }
         }
         else if (!(g_SysWork.playerWork_4C.player_0.flags_3E & CharaFlag_Unk4) &&
                  distToPlayer < Q12(1.0f) && distToPlayer > Q12(0.5f) &&
-                 ABS(angleDeltaToPlayer) < FP_ANGLE(59.95f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
+                 ABS(angleDeltaToPlayer) < FP_ANGLE(60.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
         {
-            stalker->model_0.controlState_2 = 6;
+            stalker->model_0.controlState_2 = StalkerControl_6;
 
             // Grab player in front or behind.
             grabAngleDelta = func_8005BF38(g_SysWork.playerWork_4C.player_0.rotation_24.vy - stalker->rotation_24.vy);
@@ -204,7 +204,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker)
         }
         else if (distToPlayer < Q12(0.7f))
         {
-            stalker->model_0.controlState_2 = 4;
+            stalker->model_0.controlState_2 = StalkerControl_4;
         }
     }
     else
@@ -263,7 +263,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker)
         temp2 = radiusMin >> 1;
         if (Q6_TO_Q12(temp) < temp2)
         {
-            stalker->model_0.controlState_2 = 4;
+            stalker->model_0.controlState_2 = StalkerControl_4;
         }
     }
 

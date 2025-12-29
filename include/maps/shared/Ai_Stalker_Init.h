@@ -36,18 +36,18 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             stalkerProps.flags_E8 |= StalkerFlag_0;
 
         case 8:
-            stalker->model_0.controlState_2 = 4;
+            stalker->model_0.controlState_2 = StalkerControl_4;
             stalker->field_E1_0      = 3;
             break;
 
         case 7:
-            stalker->model_0.controlState_2 = 4;
+            stalker->model_0.controlState_2 = StalkerControl_4;
             stalkerProps.flags_E8   |= StalkerFlag_11;
             stalker->field_E1_0      = 3;
             break;
 
         case 6:
-            stalker->model_0.controlState_2 = 2;
+            stalker->model_0.controlState_2 = StalkerControl_2;
             stalker->flags_3E       |= CharaFlag_Unk3;
             stalkerProps.timer_F8    = Q12(1.0f);
             stalkerProps.flags_E8   |= StalkerFlag_0 | StalkerFlag_1;
@@ -56,13 +56,13 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             break;
 
         case 5:
-            stalker->model_0.controlState_2 = 1;
+            stalker->model_0.controlState_2 = StalkerControl_1;
             stalker->field_E1_0      = 0;
             stalker->flags_3E       |= CharaFlag_Unk5;
             break;
 
         case 9:
-            stalker->model_0.controlState_2              = 12;
+            stalker->model_0.controlState_2              = StalkerControl_12;
             //Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_27, true), 427); // TODO: Doesn't match?
             stalker->model_0.anim_4.status_0      = ANIM_STATUS(StalkerAnim_27, true);
             stalker->model_0.anim_4.time_4        = Q12(427.0f);
@@ -72,7 +72,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             break;
 
         case 10:
-            stalker->model_0.controlState_2              = 11;
+            stalker->model_0.controlState_2              = StalkerControl_11;
             //Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_28, true), 442); // TODO: Doesn't match?
             stalker->model_0.anim_4.status_0      = ANIM_STATUS(StalkerAnim_28, true);
             stalker->model_0.anim_4.time_4        = Q12(443.0f);
@@ -81,7 +81,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
             break;
 
         case 17:
-            stalker->model_0.controlState_2              = 13;
+            stalker->model_0.controlState_2              = StalkerControl_13;
             //Character_AnimSet(stalker, ANIM_STATUS(StalkerAnim_14, true), 176); // TODO: Doesn't match?
             stalker->model_0.anim_4.status_0      = ANIM_STATUS(StalkerAnim_14, true);
             stalker->model_0.anim_4.time_4        = Q12(176.0f);

@@ -25,12 +25,12 @@ void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINAT
     }
     
     // Initialize.
-    if (stalker->model_0.controlState_2 == ModelState_Uninitialized)
+    if (stalker->model_0.controlState_2 == StalkerControl_None)
     {
         Ai_Stalker_Init(stalker);
     }
 
-    if (stalker->model_0.controlState_2 != 1)
+    if (stalker->model_0.controlState_2 != StalkerControl_1)
     {
         if (g_DeltaTime0 != Q12(0.0f))
         {

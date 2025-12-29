@@ -71,11 +71,11 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
     {
         if (stalkerProps.flags_E8 & StalkerFlag_1)
         {
-            stalker->model_0.controlState_2 = 2;
+            stalker->model_0.controlState_2 = StalkerControl_2;
         }
         else
         {
-            stalker->model_0.controlState_2 = 3;
+            stalker->model_0.controlState_2 = StalkerControl_3;
         }
 
         stalker->model_0.anim_4.status_0 = ANIM_STATUS(StalkerAnim_30, false);

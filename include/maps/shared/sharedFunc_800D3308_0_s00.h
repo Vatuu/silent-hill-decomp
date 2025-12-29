@@ -85,12 +85,12 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                 {
                     if (stalker->health_B0 > sharedData_800E3A24_0_s00 && !(stalkerProps.flags_E8 & 0x80))
                     {
-                        if (stalker->model_0.controlState_2 == 5)
+                        if (stalker->model_0.controlState_2 == StalkerControl_5)
                         {
-                            g_SysWork.field_2284[3] &= 0xFFFD;
+                            g_SysWork.field_2284[3] &= ~(1 << 1);
                         }
 
-                        stalker->model_0.controlState_2 = 7;
+                        stalker->model_0.controlState_2 = StalkerControl_7;
 
                         if (ANIM_STATUS_IDX_GET(stalker->model_0.anim_4.status_0) < StalkerAnim_22 ||
                             ANIM_STATUS_IDX_GET(stalker->model_0.anim_4.status_0) > StalkerAnim_23)
@@ -107,7 +107,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                     }
                     else if (stalkerProps.flags_E8 & StalkerFlag_7)
                     {
-                        stalker->model_0.controlState_2 = 9;
+                        stalker->model_0.controlState_2 = StalkerControl_9;
 
                         if (ANIM_STATUS_IDX_GET(stalker->model_0.anim_4.status_0) == 11)
                         {
@@ -265,7 +265,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                                          FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) > 168)
                                 {
                                     stalkerProps.relKeyframeIdx_FE = 0;
-                                    stalker->model_0.anim_4.status_0                       = 10;
+                                    stalker->model_0.anim_4.status_0 = 10;
                                 }
                                 else
                                 {
@@ -274,13 +274,13 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
                             }
                         }
 
-                        stalkerProps.flags_E8 &= 0xFF7F;
+                        stalkerProps.flags_E8 &= ~(1 << 7);
                     }
                     else
                     {
-                        stalker->model_0.controlState_2 = 9;
+                        stalker->model_0.controlState_2 = StalkerControl_9;
 
-                        if (angle < 0x2AA)
+                        if (angle < FP_ANGLE(60.0f))
                         {
                             if (FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) > 361 &&
                                 FP_FROM(stalker->model_0.anim_4.time_4, Q12_SHIFT) < 373)
