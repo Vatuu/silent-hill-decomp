@@ -47,39 +47,39 @@ INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800CB25C);
 
 INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800CFF74_5_s00); // 0x800CFF74
 
-#include "maps/shared/sharedFunc_800D029C_5_s00.h" // 0x800D029C
+#include "maps/shared/Ai_HangedScratcher_ControlUpdate.h" // 0x800D029C
 
-#include "maps/shared/sharedFunc_800D03F8_5_s00.h" // 0x800D03F8
+#include "maps/shared/Ai_HangedScratcher_Control_16.h" // 0x800D03F8
 
-#include "maps/shared/sharedFunc_800D041C_5_s00.h" // 0x800D041C
+#include "maps/shared/Ai_HangedScratcher_Control_1.h" // 0x800D041C
 
-#include "maps/shared/sharedFunc_800D0514_5_s00.h"
+#include "maps/shared/Ai_HangedScratcher_Control_2.h" // 0x800D0514
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D063C_5_s00);
+INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_3);
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D0C44_5_s00);
+INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_4);
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D0F04_5_s00);
+INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_5);
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D10B8_5_s00);
+INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_6);
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D1274_5_s00);
+INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_7);
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D19AC_5_s00);
+INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_8);
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D1AD0_5_s00);
+INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_9);
 
-#include "maps/shared/sharedFunc_800D1C0C_5_s00.h"
+#include "maps/shared/Ai_HangedScratcher_Control_10.h" // 0x800D1C0C
 
-#include "maps/shared/sharedFunc_800D1CE4_5_s00.h"
+#include "maps/shared/Ai_HangedScratcher_Control_11.h" // 0x800D1CE4
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D1E84_5_s00);
+INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_12);
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D2040_5_s00);
+INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_13);
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D2180_5_s00);
+INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_14);
 
-INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D23E0_5_s00);
+INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_15);
 
 INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D26D8_5_s00); // 0x800D26D8
 

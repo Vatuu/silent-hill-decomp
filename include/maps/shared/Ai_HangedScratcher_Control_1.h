@@ -1,4 +1,4 @@
-void sharedFunc_800D041C_5_s00(s_SubCharacter* scratcher)
+void Ai_HangedScratcher_Control_1(s_SubCharacter* scratcher)
 {
     q19_12 distToPlayer;
 

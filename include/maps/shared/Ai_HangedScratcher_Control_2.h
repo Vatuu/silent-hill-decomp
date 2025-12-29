@@ -1,4 +1,4 @@
-void sharedFunc_800D0514_5_s00(s_SubCharacter* chara)
+void Ai_HangedScratcher_Control_2(s_SubCharacter* chara)
 {
     q19_12 dist;
 

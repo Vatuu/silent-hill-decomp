@@ -1,4 +1,4 @@
-void sharedFunc_800D03F8_5_s00(s_SubCharacter* scratcher)
+void Ai_HangedScratcher_Control_16(s_SubCharacter* scratcher)
 {
     #define scratcherProps scratcher->properties_E4.hangedScratcher
 

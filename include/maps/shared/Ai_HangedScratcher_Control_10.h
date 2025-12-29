@@ -1,4 +1,4 @@
-void sharedFunc_800D1C0C_5_s00(s_SubCharacter* scratcher)
+void Ai_HangedScratcher_Control_10(s_SubCharacter* scratcher)
 {
     Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
 

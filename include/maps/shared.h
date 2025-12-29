@@ -2306,28 +2306,6 @@ void sharedFunc_800D9960_1_s02(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOO
 
 void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper);
 
-void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void Ai_HangedScratcher_Init(s_SubCharacter* scratcher);
-
-void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher);
-
-void sharedFunc_800D029C_5_s00(s_SubCharacter* scratcher);
-
-void sharedFunc_800D03F8_5_s00(s_SubCharacter* scratcher);
-
-void sharedFunc_800D041C_5_s00(s_SubCharacter* scratcher);
-
-void sharedFunc_800D0514_5_s00(s_SubCharacter* scratcher);
-
-void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher);
-
-void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader*, GsCOORDINATE2*);
-
-void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher);
-
-void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher);
-
 bool sharedFunc_800D3508_0_s01(s_SubCharacter* airScreamer, q19_12* dist);
 
 bool sharedFunc_800D3630_0_s01(s_SubCharacter* airScreamer, q19_12* dist);

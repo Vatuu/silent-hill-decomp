@@ -10,7 +10,7 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
     q19_12            distToPlayer;
     s32               var_s1;
     s32               i;
-    s32               var_s7;
+    s32               angleMult;
     s32               var_v1;
 
     distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
@@ -23,12 +23,12 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
 
         if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 2))
         {
-            var_s7                                               = 1;
+            angleMult                                               = 1;
             chara->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 2);
         }
         else
         {
-            var_s7                                               = NO_VALUE;
+            angleMult                                               = NO_VALUE;
             chara->properties_E4.dummy.properties_E8[0].val16[0] |= 4;
         }
 
@@ -39,11 +39,11 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
                 angle2 = Rng_TestProbabilityBits(7) - 64;
                 if (i & 1)
                 {
-                    angle1 = angle2 * var_s7;
+                    angle1 = angle2 * angleMult;
                 }
                 else
                 {
-                    angle1 = angle2 * -var_s7;
+                    angle1 = angle2 * -angleMult;
                 }
             }
             else
