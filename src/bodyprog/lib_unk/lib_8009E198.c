@@ -133,7 +133,7 @@ s32 func_8009E310(s_SysWork_2514* arg0, s_SysWork_2514_C* arg1, s32 arg2) // 0x8
 {
     s_SysWork_2514_C_0 tmp;
     s32                ret;
-    
+
     ret = arg0 != NULL;
     if (ret == 0)
     {
@@ -723,7 +723,60 @@ bool func_8009EC64(s_SysWork_2514* work, s16 val) // 0x8009EC64
     return true;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009ECCC);
+s_SysWork_2514_18* func_8009ECCC(s_SysWork_2514* arg0, s32 key) // 0x8009ECCC
+{
+    s_SysWork_2514_18* head;
+    s_SysWork_2514_18* node;
+    s_SysWork_2514_18* next;
+    s_SysWork_2514_18* prev;
+    s_SysWork_2514_18* tmp;
+    s_SysWork_2514_18* cur;
+    s32                midpoint;
+
+    node = arg0->field_10;
+    head = &arg0->head_18;
+
+    if (!node)
+    {
+        return NULL;
+    }
+
+    cur            = node->next_0;
+    next           = head->next_0;
+    arg0->field_10 = cur;
+
+    tmp  = arg0->head_18.prev_4;
+    prev = tmp;
+
+    midpoint = (next->key_8.value + prev->key_8.value) >> 1;
+
+    if (midpoint <= key)
+    {
+        prev = head;
+        cur  = next;
+
+        while (cur != head && key < cur->key_8.value)
+        {
+            prev = cur;
+            cur  = prev->next_0;
+        }
+    }
+    else
+    {
+        cur = head;
+    }
+
+    cur->prev_4  = node;
+    prev->next_0 = node;
+    node->next_0 = cur;
+
+    tmp          = prev;
+    node->prev_4 = tmp;
+
+    node->key_8.value = key;
+
+    return node;
+}
 
 s_SysWork_2514_18* func_8009ED74(s_SysWork_2514* list) // 0x8009ED74
 {
