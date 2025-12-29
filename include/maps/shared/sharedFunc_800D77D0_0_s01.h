@@ -1,9 +1,9 @@
 q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
 {
     q19_12 temp_a0;
-    bool   isNotState1;
+    bool   isNotControlState1;
     q19_12 rot;
-    q19_12 speed;
+    q19_12 moveSpeed;
     q19_12 speed_2;
     q19_12 temp_lo;
     q19_12 distToGround;
@@ -16,8 +16,8 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
     s32    animStatus;
     q19_12 animTime;
 
-    animStatus  = airScreamer->model_0.anim_4.status_0;
-    isNotState1 = airScreamer->model_0.controlState_2 != AirScreamerControl_1;
+    animStatus         = airScreamer->model_0.anim_4.status_0;
+    isNotControlState1 = airScreamer->model_0.controlState_2 != AirScreamerControl_1;
 
     switch (animStatus)
     {
@@ -36,21 +36,21 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
         case ANIM_STATUS(AirScreamerAnim_14, true):
         case ANIM_STATUS(AirScreamerAnim_23, true):
         case ANIM_STATUS(AirScreamerAnim_25, true):
-            speed = airScreamer->moveSpeed_38 * Q12(0.01f);
-            rot   = airScreamer->rotationSpeed_2C.vy * Q12(0.044f);
+            moveSpeed = airScreamer->moveSpeed_38 * Q12(0.01f);
+            rot       = airScreamer->rotationSpeed_2C.vy * Q12(0.044f);
 
-            if (!(speed | rot))
+            if (!(moveSpeed | rot))
             {
                 return Q12(0.0f);
             }
 
-            if (speed < Q12(0.0f))
+            if (moveSpeed < Q12(0.0f))
             {
-                absSpeed = -speed;
+                absSpeed = -moveSpeed;
             }
             else
             {
-                absSpeed = speed;
+                absSpeed = moveSpeed;
             }
 
             if (rot < FP_ANGLE(0.0f))
@@ -70,7 +70,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
                 }
                 else
                 {
-                    speed1 = speed;
+                    speed1 = moveSpeed;
                 }
             }
             else
@@ -87,14 +87,14 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
             return speed1;
 
         case ANIM_STATUS(AirScreamerAnim_19, true):
-            if (isNotState1)
+            if (isNotControlState1)
             {
                 return Q12(24.0f);
             }
             return FP_MULTIPLY_PRECISE(airScreamer->field_34, Q12(-2.0f), Q12_SHIFT) + Q12(20.0f);
 
         case ANIM_STATUS(AirScreamerAnim_17, true):
-            if (isNotState1)
+            if (isNotControlState1)
             {
                 return Q12(40.0f);
             }

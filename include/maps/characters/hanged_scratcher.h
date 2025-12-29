@@ -14,8 +14,8 @@ typedef enum _HangedScratcherAnim
     HangedScratcherAnim_1     = 1,
     HangedScratcherAnim_2     = 2,
     HangedScratcherAnim_3     = 3,
-    HangedScratcherAnim_4     = 4,
-    HangedScratcherAnim_5     = 5,
+    HangedScratcherAnim_4     = 4, // } Pair.
+    HangedScratcherAnim_5     = 5, // }
     HangedScratcherAnim_6     = 6,
     HangedScratcherAnim_7     = 7,
     HangedScratcherAnim_8     = 8,
@@ -38,6 +38,54 @@ typedef enum _HangedScratcherAnim
     HangedScratcherAnim_25    = 25,
     HangedScratcherAnim_26    = 26
 } e_HangedScratcherAnim;
+
+/** @brief Hanged Scratcher character control states. */
+typedef enum _HangedScratcherControl
+{
+    HangedScratcherControl_None = 0,
+    HangedScratcherControl_1    = 1,
+    HangedScratcherControl_2    = 2,
+    HangedScratcherControl_3    = 3,
+    HangedScratcherControl_4    = 4,
+    HangedScratcherControl_5    = 5,
+    HangedScratcherControl_6    = 6,
+    HangedScratcherControl_7    = 7,
+    HangedScratcherControl_8    = 8,
+    HangedScratcherControl_9    = 9,
+    HangedScratcherControl_10   = 10,
+    HangedScratcherControl_11   = 11,
+    HangedScratcherControl_12   = 12,
+    HangedScratcherControl_13   = 13,
+    HangedScratcherControl_14   = 14,
+    HangedScratcherControl_15   = 15,
+    HangedScratcherControl_16   = 16
+} e_HangedScratcherControl;
+
+/** @brief Hanged Scratcher character state steps. */
+typedef enum _HangedScratcherStateStep
+{
+    HangedScratcherStateStep_0  = 0,
+    HangedScratcherStateStep_1  = 1,
+    HangedScratcherStateStep_2  = 2,
+    HangedScratcherStateStep_3  = 3,
+    HangedScratcherStateStep_4  = 4,
+    HangedScratcherStateStep_5  = 5,
+    HangedScratcherStateStep_6  = 6,
+    HangedScratcherStateStep_7  = 7,
+    HangedScratcherStateStep_8  = 8,
+    HangedScratcherStateStep_9  = 9,
+    HangedScratcherStateStep_10 = 10,
+    HangedScratcherStateStep_11 = 11,
+    HangedScratcherStateStep_12 = 12,
+    HangedScratcherStateStep_13 = 13,
+    HangedScratcherStateStep_14 = 14,
+    HangedScratcherStateStep_15 = 15,
+    HangedScratcherStateStep_16 = 16,
+    HangedScratcherStateStep_17 = 17,
+    HangedScratcherStateStep_18 = 18,
+    HangedScratcherStateStep_19 = 19,
+    HangedScratcherStateStep_20 = 20
+} e_HangedScratcherStateStep;
 
 /*s_AnimInfo HANGED_SCRATCHER_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },

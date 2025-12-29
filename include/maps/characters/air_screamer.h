@@ -62,7 +62,7 @@ typedef enum _AirScreamerAnim
     AirScreamerAnim_20    = 20,
     AirScreamerAnim_21    = 21,
     AirScreamerAnim_22    = 22,
-    AirScreamerAnim_23    = 23,
+    AirScreamerAnim_23    = 23, // Fly idle?
     AirScreamerAnim_24    = 24,
     AirScreamerAnim_25    = 25,
     AirScreamerAnim_26    = 26,
@@ -123,6 +123,30 @@ typedef enum _AirScreamerControl
 
     AirScreamerControl_Count = 52
 } e_AirScreamerControl;
+
+/** @brief Air Screamer or Night Flutter character state steps. */
+typedef enum _AirScreamerStateStep
+{
+    AirScreamerStateStep_0  = 0,
+    AirScreamerStateStep_1  = 1,
+    AirScreamerStateStep_2  = 2,
+    AirScreamerStateStep_3  = 3,
+    AirScreamerStateStep_4  = 4,
+    AirScreamerStateStep_5  = 5,
+    AirScreamerStateStep_6  = 6,
+    AirScreamerStateStep_7  = 7,
+    AirScreamerStateStep_8  = 8,
+    AirScreamerStateStep_9  = 9,
+    AirScreamerStateStep_10 = 10,
+    AirScreamerStateStep_11 = 11,
+    AirScreamerStateStep_12 = 12,
+    AirScreamerStateStep_13 = 13,
+
+    AirScreamerStateStep_64 = 64,
+    AirScreamerStateStep_65 = 65,
+    AirScreamerStateStep_66 = 66,
+    AirScreamerStateStep_67 = 67
+} e_AirScreamerStateStep;
 
 /*s_AnimInfo AIR_SCREAMER_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0, false), false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },

@@ -1397,7 +1397,9 @@ typedef struct _PropertiesHangedScratcher
     s8     unk_EC[8];
     q19_12 positionX_F4;
     q19_12 positionZ_F8;
-    s8     unk_FC[16];
+    s8     unk_FC[8];
+    s32    field_104;
+    s8     unk_108[4];
     q3_12  radiusMax_10C;
     q3_12  radiusMin_110;
 } s_PropertiesHangedScratcher;

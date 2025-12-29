@@ -1,7 +1,7 @@
 void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     // Initialize.
-    if (scratcher->model_0.controlState_2 == ModelState_Uninitialized)
+    if (scratcher->model_0.controlState_2 == HangedScratcherControl_None)
     {
         Ai_HangedScratcher_Init(scratcher);
     }
