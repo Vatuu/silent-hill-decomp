@@ -32,7 +32,7 @@
     larvalStalkerProps.angle_100 = FP_FROM(temp * Math_Sin(larvalStalker->rotation_24.vy), Q12_SHIFT);                                           \
     larvalStalkerProps.angle_102 = FP_FROM(temp * Math_Cos(larvalStalker->rotation_24.vy), Q12_SHIFT);
 
-void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
+void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 {
     s32     temp;
     VECTOR3 pos;
@@ -86,9 +86,10 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
         larvalStalkerProps.targetPositionZ = g_SysWork.playerWork_4C.player_0.position_18.vz;
     }
 
+    // Handle control state.
     switch (larvalStalker->model_0.controlState_2)
     {
-        case 1:
+        case LarvalStalkerControl_1:
             larvalStalker->moveSpeed_38 = Q12(0.0f);
 
             if (!Rng_GenerateInt(0, 31)) // 1 in 32 chance.
@@ -97,7 +98,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
             }
             break;
 
-        case 2:
+        case LarvalStalkerControl_2:
             Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(0.3f));
 
             if (func_80070184(larvalStalker, Q12(1.0f), larvalStalker->rotation_24.vy) || !Rng_GenerateInt(0, 63)) // 1 in 64 chance.
@@ -114,7 +115,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
             }
             break;
 
-        case 3:
+        case LarvalStalkerControl_3:
             Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f));
 
             if (larvalStalker->model_0.anim_4.status_0 == ANIM_STATUS(LarvalStalkerAnim_11, true))
@@ -175,7 +176,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
             }
             break;
 
-        case 4:
+        case LarvalStalkerControl_4:
             Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(0.3f));
 
             if ((larvalStalkerProps.flags_E8 & LarvalStalkerFlag_2) && ANIM_STATUS_IDX_GET(larvalStalker->model_0.anim_4.status_0) == 11 &&
@@ -251,7 +252,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
             }
             break;
 
-        case 5:
+        case LarvalStalkerControl_5:
             Chara_TurnModulate(angleDeltaToPlayer, FP_ANGLE(1.5f), FP_ANGLE(30.0f));
 
             if (larvalStalkerProps.flags_E8 & LarvalStalkerFlag_6)
@@ -361,7 +362,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
             }
             break;
 
-        case 6:
+        case LarvalStalkerControl_6:
             Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(1.0f));
 
             if (larvalStalkerProps.timer_EC == Q12(0.0f)) 
@@ -403,7 +404,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
             }
             break;
 
-        case 7:
+        case LarvalStalkerControl_7:
             if (func_800700F8(larvalStalker, &g_SysWork.playerWork_4C.player_0) || (distStep * 2) < distToTarget)
             {
                 larvalStalker->model_0.controlState_2 = LarvalStalkerControl_3;
@@ -474,7 +475,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
             }
             break;
 
-        case 8:
+        case LarvalStalkerControl_8:
             larvalStalkerProps.timer_10A += FP_MULTIPLY_PRECISE(g_DeltaTime0, Rng_Rand16() & 0xFFF, Q12_SHIFT);
             if (larvalStalkerProps.timer_10A > Q12(3.5f))
             {
@@ -523,7 +524,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
             }
             break;
 
-        case 9:
+        case LarvalStalkerControl_9:
             larvalStalkerProps.timer_10A += FP_MULTIPLY_PRECISE(g_DeltaTime0, (Rng_Rand16() & 0x7FF) + Q12(0.5f), Q12_SHIFT);
             if (larvalStalkerProps.timer_10A > Q12(3.5f))
             {
@@ -549,7 +550,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
             }
             break;
 
-        case 10:
+        case LarvalStalkerControl_10:
             Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f));
 
             if (ANIM_TIME_RANGE_CHECK(larvalStalker->model_0.anim_4.time_4, 86, 92))
@@ -595,7 +596,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
             }
             break;
 
-        case 11:
+        case LarvalStalkerControl_11:
             if (ANIM_TIME_RANGE_CHECK(larvalStalker->model_0.anim_4.time_4, 143, 151)) 
             {
                 ANIM_STUFF(Q12(0.3f), Q12(9.0f));
@@ -635,7 +636,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
             Chara_TurnModulate(func_8005BF38(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), FP_ANGLE(1.5f), 170);
             break;
 
-        case 12:
+        case LarvalStalkerControl_12:
             if (ANIM_TIME_RANGE_CHECK(larvalStalker->model_0.anim_4.time_4, 0x79, 0x7F))
             {
                 temp = FP_MULTIPLY_PRECISE(LARVAL_STALKER_ANIM_INFOS[larvalStalker->model_0.anim_4.status_0].duration_8.constant,
@@ -657,7 +658,7 @@ void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker)
             Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(0.0f));
             break;
 
-        case 13:
+        case LarvalStalkerControl_13:
             larvalStalker->flags_3E &= ~CharaFlag_Unk2;
 
             if (larvalStalker->health_B0 <= Q12(0.0f) && func_8005C7D0(larvalStalker) != g_SysWork.targetNpcIdx_2353)

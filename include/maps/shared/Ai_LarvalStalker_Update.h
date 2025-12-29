@@ -11,7 +11,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr,
     }
 
     sharedFunc_800D17BC_1_s00(larvalStalker);
-    sharedFunc_800CF168_1_s00(larvalStalker);
+    Ai_LarvalStalker_ControlUpdate(larvalStalker);
     sharedFunc_800D140C_1_s00(larvalStalker, coords);
     sharedFunc_800D1524_1_s00(larvalStalker, anmHdr, coords);
     sharedFunc_800D1DBC_1_s00(larvalStalker);

@@ -59,7 +59,7 @@ typedef enum _LarvalStalkerControl
 
 void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker);
+void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker);
 
 void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* coords);
 

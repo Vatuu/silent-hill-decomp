@@ -1123,31 +1123,31 @@ bool func_800D0600(void) // 0x800D0600
 
 #include "maps/shared/sharedFunc_800D3308_0_s00.h" // 0x800D3308
 
-#include "maps/shared/sharedFunc_800D3B44_0_s00.h" // 0x800D3B44
+#include "maps/shared/Ai_Stalker_ControlUpdate.h" // 0x800D3B44
 
-#include "maps/shared/sharedFunc_800D3EF4_0_s00.h" // 0x800D3EF4
+#include "maps/shared/Ai_Stalker_Control_2.h" // 0x800D3EF4
 
-void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker) {}
+void Ai_Stalker_Control_3(s_SubCharacter* stalker) {}
 
-#include "maps/shared/sharedFunc_800D492C_0_s00.h" // 0x800D492C
+#include "maps/shared/Ai_Stalker_Control_4.h" // 0x800D492C
 
-#include "maps/shared/sharedFunc_800D5098_0_s00.h" // 0x800D63D0
+#include "maps/shared/Ai_Stalker_Control_5.h" // 0x800D63D0
 
-#include "maps/shared/sharedFunc_800D54A8_0_s00.h" // 0x800D54A8
+#include "maps/shared/Ai_Stalker_Control_6.h" // 0x800D54A8
 
-#include "maps/shared/sharedFunc_800D5B48_0_s00.h" // 0x800D5B48
+#include "maps/shared/Ai_Stalker_Control_7.h" // 0x800D5B48
 
-#include "maps/shared/sharedFunc_800D5C64_0_s00.h" // 0x800D5C64
+#include "maps/shared/Ai_Stalker_Control_8.h" // 0x800D5C64
 
-#include "maps/shared/sharedFunc_800D5FCC_0_s00.h" // 0x800D5FCC
+#include "maps/shared/Ai_Stalker_Control_9.h" // 0x800D5FCC
 
-#include "maps/shared/sharedFunc_800D63D0_0_s00.h" // 0x800D63D0
+#include "maps/shared/Ai_Stalker_Control_10.h" // 0x800D63D0
 
-#include "maps/shared/sharedFunc_800D654C_0_s00.h" // 0x800D654C
+#include "maps/shared/Ai_Stalker_Control_11.h" // 0x800D654C
 
-#include "maps/shared/sharedFunc_800D6554_0_s00.h" // 0x800D6554
+#include "maps/shared/Ai_Stalker_Control_12.h" // 0x800D6554
 
-#include "maps/shared/sharedFunc_800D670C_0_s00.h" // 0x800D670C
+#include "maps/shared/Ai_Stalker_Control_13.h" // 0x800D670C
 
 #include "maps/shared/sharedFunc_800D67FC_0_s00.h" // 0x800D67FC
 

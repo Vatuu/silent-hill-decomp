@@ -1,4 +1,4 @@
-void sharedFunc_800D492C_0_s00(s_SubCharacter* stalker)
+void Ai_Stalker_Control_4(s_SubCharacter* stalker)
 {
     q3_12  angle;
     q19_12 offsetX;

@@ -1,4 +1,4 @@
-void sharedFunc_800D5B48_0_s00(s_SubCharacter* stalker)
+void Ai_Stalker_Control_7(s_SubCharacter* stalker)
 {
     u16 flags;
 

@@ -1,4 +1,4 @@
-void sharedFunc_800D5FCC_0_s00(s_SubCharacter* stalker)
+void Ai_Stalker_Control_9(s_SubCharacter* stalker)
 {
     #define FRICTION_PER_FRAME 1.5f // TODO: Or is it per tick?
 

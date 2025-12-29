@@ -1,5 +1,5 @@
 
-void sharedFunc_800D670C_0_s00(s_SubCharacter* stalker)
+void Ai_Stalker_Control_13(s_SubCharacter* stalker)
 {
     #define stalkerProps stalker->properties_E4.stalker
 

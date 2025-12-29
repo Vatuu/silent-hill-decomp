@@ -1,4 +1,4 @@
-void sharedFunc_800D63D0_0_s00(s_SubCharacter* stalker)
+void Ai_Stalker_Control_10(s_SubCharacter* stalker)
 {
     q19_12 curMoveSpeed;
     q19_12 newMoveSpeed;

@@ -1,4 +1,4 @@
-void sharedFunc_800D5098_0_s00(s_SubCharacter* stalker)
+void Ai_Stalker_Control_5(s_SubCharacter* stalker)
 {
     #define DIST_TO_PLAYER_MAX Q12(0.9f)
     #define MOVE_SPEED_MAX     Q12(0.7f)

@@ -1,4 +1,4 @@
-void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
+void Ai_Stalker_Control_8(s_SubCharacter* stalker)
 {
 #if defined(MAP1_S00) || defined(MAP1_S01)
     #define BASE_DIST_MAX Q12(6.0f)

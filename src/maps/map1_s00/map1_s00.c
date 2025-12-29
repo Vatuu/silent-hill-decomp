@@ -38,7 +38,7 @@ INCLUDE_RODATA("asm/maps/map1_s00/nonmatchings/map1_s00", g_MapOverlayHeader);
 
 #include "maps/shared/Ai_LarvalStalker_Update.h" // 0x800CF050
 
-#include "maps/shared/sharedFunc_800CF168_1_s00.h" // 0x800CF168
+#include "maps/shared/Ai_LarvalStalker_ControlUpdate.h" // 0x800CF168
 
 #include "maps/shared/sharedFunc_800D140C_1_s00.h" // 0x800D140C
 
@@ -56,31 +56,31 @@ INCLUDE_RODATA("asm/maps/map1_s00/nonmatchings/map1_s00", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D3308_0_s00.h" // 0x800D28F8
 
-#include "maps/shared/sharedFunc_800D3B44_0_s00.h" // 0x800D3134
+#include "maps/shared/Ai_Stalker_ControlUpdate.h" // 0x800D3134
 
-void sharedFunc_800D3EF4_0_s00(s_SubCharacter* chara) {} // 0x800D34E4
+void Ai_Stalker_Control_2(s_SubCharacter* chara) {} // 0x800D34E4
 
-#include "maps/shared/sharedFunc_800D4924_0_s00.h" // 0x800D34EC
+#include "maps/shared/Ai_Stalker_Control_3.h" // 0x800D34EC
 
-#include "maps/shared/sharedFunc_800D492C_0_s00.h" // 0x800D40BC
+#include "maps/shared/Ai_Stalker_Control_4.h" // 0x800D40BC
 
-#include "maps/shared/sharedFunc_800D5098_0_s00.h" // 0x800D4828
+#include "maps/shared/Ai_Stalker_Control_5.h" // 0x800D4828
 
-#include "maps/shared/sharedFunc_800D54A8_0_s00.h" // 0x800D4C38
+#include "maps/shared/Ai_Stalker_Control_6.h" // 0x800D4C38
 
-#include "maps/shared/sharedFunc_800D5B48_0_s00.h" // 0x800D52D8
+#include "maps/shared/Ai_Stalker_Control_7.h" // 0x800D52D8
 
-#include "maps/shared/sharedFunc_800D5C64_0_s00.h" // 0x800D53F4
+#include "maps/shared/Ai_Stalker_Control_8.h" // 0x800D53F4
 
-#include "maps/shared/sharedFunc_800D5FCC_0_s00.h" // 0x800D575C
+#include "maps/shared/Ai_Stalker_Control_9.h" // 0x800D575C
 
-#include "maps/shared/sharedFunc_800D63D0_0_s00.h" // 0x800D5B60
+#include "maps/shared/Ai_Stalker_Control_10.h" // 0x800D5B60
 
-#include "maps/shared/sharedFunc_800D654C_0_s00.h" // 0x800D5CDC
+#include "maps/shared/Ai_Stalker_Control_11.h" // 0x800D5CDC
 
-#include "maps/shared/sharedFunc_800D6554_0_s00.h" // 0x800D5CE4
+#include "maps/shared/Ai_Stalker_Control_12.h" // 0x800D5CE4
 
-#include "maps/shared/sharedFunc_800D670C_0_s00.h" // 0x800D5E9C
+#include "maps/shared/Ai_Stalker_Control_13.h" // 0x800D5E9C
 
 #include "maps/shared/sharedFunc_800D67FC_0_s00.h" // 0x800D5F8C
 

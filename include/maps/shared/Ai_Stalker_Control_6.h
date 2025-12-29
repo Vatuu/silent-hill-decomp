@@ -1,4 +1,4 @@
-void sharedFunc_800D54A8_0_s00(s_SubCharacter* stalker)
+void Ai_Stalker_Control_6(s_SubCharacter* stalker)
 {
     VECTOR3 vec0;
     q3_12   angleDeltaToPlayer;

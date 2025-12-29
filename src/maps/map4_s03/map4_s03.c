@@ -456,7 +456,6 @@ void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D53B0
             func_800D4A78(chara, coords);
             break;
 
-
         case 2:
             func_800D50D8(chara);
             break;

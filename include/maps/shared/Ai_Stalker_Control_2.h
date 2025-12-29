@@ -1,4 +1,4 @@
-void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker)
+void Ai_Stalker_Control_2(s_SubCharacter* stalker)
 {
     q3_12  angleDeltaToTargetHeading;
     q3_12  grabAngleDelta;

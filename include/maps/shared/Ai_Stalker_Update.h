@@ -35,7 +35,7 @@ void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINAT
         if (g_DeltaTime0 != Q12(0.0f))
         {
             sharedFunc_800D3308_0_s00(stalker);
-            sharedFunc_800D3B44_0_s00(stalker);
+            Ai_Stalker_ControlUpdate(stalker);
             sharedFunc_800D67FC_0_s00(stalker);
         }
 
