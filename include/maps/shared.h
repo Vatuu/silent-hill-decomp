@@ -1501,9 +1501,10 @@ typedef struct
     s32  field_0; // Distance/Magnitude?
     s32  field_4; // X
     s32  field_8; // Z
-    s8   field_C; // 0 / 1 / 2
-    s8   field_D; // `bool`
-    char unk_E[2];
+    u8   field_C; // 0 / 1 / 2
+    u8   field_D; // `bool`
+    u8   field_E;
+    s8   unk_F;
 } s_sharedFunc_800D4594_1_s05;
 
 // Used by puzzle in M5S01 and M7S01.
@@ -1644,6 +1645,13 @@ extern s16 sharedData_800D8616_1_s05;
 extern s32 sharedData_800D5884_1_s05;
 
 extern s16 sharedData_800D5A8C_1_s05;
+
+extern u8 sharedData_800D5AAE_1_s05;
+extern u8 sharedData_800D5AAF_1_s05;
+
+extern u8      sharedData_800D5CF8_1_s05[];
+extern u8      sharedData_800D5D08_1_s05[];
+extern VECTOR3 sharedData_800D8618_1_s05[];
 
 extern u8  sharedData_800D16E4_2_s01;
 
