@@ -35,8 +35,8 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara)
                 timeScaled = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 3.2188f, Q12_SHIFT);
             }
 
-            chara->properties_E4.splitHead.field_F0.val16[0] = FP_FROM(timeScaled * Math_Sin(chara->rotation_24.vy + FP_ANGLE(180.0f)), Q12_SHIFT);
-            chara->properties_E4.splitHead.field_F0.val16[1] = FP_FROM(timeScaled * Math_Cos(chara->rotation_24.vy + FP_ANGLE(180.0f)), Q12_SHIFT);
+            chara->properties_E4.dummy.properties_E8[2].val16[0] = FP_FROM(timeScaled * Math_Sin(chara->rotation_24.vy + FP_ANGLE(180.0f)), Q12_SHIFT);
+            chara->properties_E4.dummy.properties_E8[2].val16[1] = FP_FROM(timeScaled * Math_Cos(chara->rotation_24.vy + FP_ANGLE(180.0f)), Q12_SHIFT);
         }
 
         if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) != 4)
@@ -65,8 +65,8 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara)
 
             if (chara->model_0.controlState_2 == 7)
             {
-                chara->properties_E4.splitHead.field_F0.val16[0] = FP_FROM(timeScaled * Math_Sin(chara->rotation_24.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
-                chara->properties_E4.splitHead.field_F0.val16[1] = FP_FROM(timeScaled * Math_Cos(chara->rotation_24.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
+                chara->properties_E4.dummy.properties_E8[2].val16[0] = FP_FROM(timeScaled * Math_Sin(chara->rotation_24.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
+                chara->properties_E4.dummy.properties_E8[2].val16[1] = FP_FROM(timeScaled * Math_Cos(chara->rotation_24.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
 
                 if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) != 8)
                 {
@@ -75,8 +75,8 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara)
             }
             else
             {
-                chara->properties_E4.splitHead.field_F0.val16[0] = FP_FROM(timeScaled * Math_Sin(chara->rotation_24.vy + FP_ANGLE(90.0f)), Q12_SHIFT);
-                chara->properties_E4.splitHead.field_F0.val16[1] = FP_FROM(timeScaled * Math_Cos(chara->rotation_24.vy + FP_ANGLE(90.0f)), Q12_SHIFT);
+                chara->properties_E4.dummy.properties_E8[2].val16[0] = FP_FROM(timeScaled * Math_Sin(chara->rotation_24.vy + FP_ANGLE(90.0f)), Q12_SHIFT);
+                chara->properties_E4.dummy.properties_E8[2].val16[1] = FP_FROM(timeScaled * Math_Cos(chara->rotation_24.vy + FP_ANGLE(90.0f)), Q12_SHIFT);
 
                 if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) != 14)
                 {

@@ -1454,6 +1454,7 @@ typedef struct _PropertiesPuppetNurse
 } s_PropertiesPuppetNurse;
 STATIC_ASSERT_SIZEOF(s_PropertiesPuppetNurse, 64);
 
+/** @brief Romper character properties. */
 typedef struct _PropertiesRomper
 {
     s32    field_E4;
@@ -1472,24 +1473,25 @@ typedef struct _PropertiesRomper
 /** @brief Split Head character properties. */
 typedef struct _PropertiesSplitHead
 {
-    u16        flags_E8; /** `e_SplitHeadFlags` */
-    u8         field_EA;
-    s8         unk_EB;
-    u_Property field_EC;
-    u_Property field_F0;
-    q4_12      timer_F4;
-    u16        unk_F8;
-    q19_12     animTime_F8;
-    s32        field_FC;
-    s32        field_100;
-    u_Property field_104;
-    u8         field_108[4];
-    q19_12     field_10C;
-    VECTOR3    field_110;
-    s32        flags_11C; /** `e_SplitHeadFlags` */
-    u_Property field_120;
-    s16        field_124;
-    q3_12      moveDistance_126;
+    u16     flags_E8; /** `e_SplitHeadFlags` */
+    u8      field_EA;
+    s8      unk_EB;
+    q3_12   angle_EC;
+    q3_12   field_EE;
+    s8      unk_F0[4];
+    q4_12   timer_F4;
+    s8      unk_F8[2];
+    q19_12  animTime_F8;
+    s32     field_FC;
+    s32     field_100;
+    s8      unk_104[4];
+    u8      field_108[4];
+    q19_12  field_10C;
+    VECTOR3 field_110;
+    s32     flags_11C; /** `e_SplitHeadFlags` */
+    s8      unk_120[4];
+    s16     field_124;
+    q3_12   moveDistance_126;
 } s_PropertiesSplitHead;
 STATIC_ASSERT_SIZEOF(s_PropertiesSplitHead, 64);
 

@@ -5,24 +5,24 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
     s32         i;
     s_AnimInfo* animInfo;
 
-    #define splitHeadProps splitHead->properties_E4.splitHeadProps
+    #define splitHeadProps splitHead->properties_E4.splitHead
 
     splitHead->rotation_24.vy = func_8005BF38(splitHead->rotation_24.vy);
 
     switch (splitHead->model_0.anim_4.status_0)
     {
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 8:
-        case 14:
-        case 16:
-        case 17:
-        case 26:
-        case 27:
-        case 28:
-        case 29:
+        case ANIM_STATUS(SplitHeadAnim_1, false):
+        case ANIM_STATUS(SplitHeadAnim_1, true):
+        case ANIM_STATUS(SplitHeadAnim_2, false):
+        case ANIM_STATUS(SplitHeadAnim_2, true):
+        case ANIM_STATUS(SplitHeadAnim_4, false):
+        case ANIM_STATUS(SplitHeadAnim_7, false):
+        case ANIM_STATUS(SplitHeadAnim_8, false):
+        case ANIM_STATUS(SplitHeadAnim_8, true):
+        case ANIM_STATUS(SplitHeadAnim_13, false):
+        case ANIM_STATUS(SplitHeadAnim_13, true):
+        case ANIM_STATUS(SplitHeadAnim_14, false):
+        case ANIM_STATUS(SplitHeadAnim_14, true):
             func_8003DD80(splitHead->model_0.charaId_0, 2);
             break;
 
@@ -33,15 +33,15 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
 
     switch (splitHead->model_0.anim_4.status_0)
     {
-        case 19:
-        case 23:
+        case ANIM_STATUS(SplitHeadAnim_9, true):
+        case ANIM_STATUS(SplitHeadAnim_11, true):
             switch (splitHead->model_0.controlState_2)
             {
                 case SplitHeadControl_2:
                 case SplitHeadControl_7:
                     sharedData_800D5884_1_s05 = FP_MULTIPLY_PRECISE(splitHead->moveSpeed_38, Q12(9.3f), Q12_SHIFT);
 
-                    if (splitHead->rotation_24.vy != splitHead->properties_E4.dummy.properties_E8[1].val16[0])
+                    if (splitHead->rotation_24.vy != splitHeadProps.angle_EC)
                     {
                         if (splitHead->moveSpeed_38 >= Q12(0.0f))
                         {
@@ -56,22 +56,22 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
 
                 case SplitHeadControl_1:
                 case SplitHeadControl_3:
-                    if (!(splitHead->properties_E4.dummy.properties_E8[0].val16[0] & 0x8))
+                    if (!(splitHeadProps.flags_E8 & SplitHeadFlag_3))
                     {
                         sharedData_800D5884_1_s05 = CLAMP_LOW(FP_MULTIPLY_PRECISE(splitHead->moveSpeed_38, Q12(9.3f), Q12_SHIFT), Q12(12.0f));
 
                         if (splitHead->moveSpeed_38 > Q12(0.0f))
                         {
-                            splitHead->properties_E4.dummy.properties_E8[0].val16[0] |= 0x20;
+                            splitHeadProps.flags_E8 |= SplitHeadFlag_5;
                         } 
                         else if (splitHead->moveSpeed_38 < Q12(0.0f))
                         {
-                            splitHead->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 5);
+                            splitHeadProps.flags_E8 &= ~(1 << 5);
                         }
                     }
                     else
                     {
-                        if (splitHead->properties_E4.dummy.properties_E8[0].val16[0] & 0x20)
+                        if (splitHeadProps.flags_E8 & SplitHeadFlag_5)
                         {
                             sharedData_800D5884_1_s05 = Q12(24.0f);
                         }
@@ -83,7 +83,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
                     break;
 
                 case SplitHeadControl_4:
-                    if (!(splitHead->properties_E4.dummy.properties_E8[0].val16[0] & 0x8))
+                    if (!(splitHeadProps.flags_E8 & SplitHeadFlag_3))
                     {
                         sharedData_800D5884_1_s05 = CLAMP_LOW(FP_MULTIPLY_PRECISE(splitHead->moveSpeed_38, Q12(9.3f), Q12_SHIFT), Q12(12.0f));
                     }
@@ -104,7 +104,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
                 case SplitHeadControl_5:
                     sharedData_800D5884_1_s05 = FP_MULTIPLY_PRECISE(splitHead->moveSpeed_38, Q12(9.3f), Q12_SHIFT);
 
-                    if (splitHead->rotation_24.vy != splitHead->properties_E4.dummy.properties_E8[1].val16[0])
+                    if (splitHead->rotation_24.vy != splitHeadProps.angle_EC)
                     {
                         if (splitHead->moveSpeed_38 >= Q12(0.0f))
                         {
@@ -120,7 +120,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
                 case SplitHeadControl_6:
                     sharedData_800D5884_1_s05 = FP_MULTIPLY_PRECISE(splitHead->moveSpeed_38, Q12(9.3f), Q12_SHIFT);
 
-                    if (splitHead->properties_E4.dummy.properties_E8[0].val16[0] & 0x20)
+                    if (splitHeadProps.flags_E8 & SplitHeadFlag_5)
                     {
                         sharedData_800D5884_1_s05 = MAX(sharedData_800D5884_1_s05, Q12(12.0f));
                     }
@@ -133,10 +133,10 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
 
             SPLIT_HEAD_ANIM_INFOS[splitHead->model_0.anim_4.status_0].duration_8.constant = sharedData_800D5884_1_s05;
 
-        case 7:
+        case ANIM_STATUS(SplitHeadAnim_3, true):
             break;
 
-        case 5:
+        case ANIM_STATUS(SplitHeadAnim_2, true):
             if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
             {
                 SPLIT_HEAD_ANIM_INFOS[5].duration_8.constant = Q12(12.0f);
@@ -152,44 +152,45 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
             break;
     }
 
-    Math_MatrixTransform(&splitHead->position_18, (SVECTOR* )&splitHead->rotation_24, sharedData_800D8610_1_s05);
+    Math_MatrixTransform(&splitHead->position_18, (SVECTOR*)&splitHead->rotation_24, sharedData_800D8610_1_s05);
 
     animInfo = &SPLIT_HEAD_ANIM_INFOS[splitHead->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&splitHead->model_0, anmHdr, sharedData_800D8610_1_s05, animInfo);
 
-    if ((splitHead->model_0.anim_4.status_0 == 23) && ((splitHead->rotation_24.vy != splitHead->properties_E4.dummy.properties_E8[1].val16[0])))
+    // TODO: Are the unconverted numbers angles or time values?
+    if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_11, true) && (splitHead->rotation_24.vy != splitHeadProps.angle_EC))
     {
-        if ((splitHead->properties_E4.dummy.properties_E8[1].val16[0] < splitHead->rotation_24.vy && splitHead->moveSpeed_38 >= Q12(0.0f)) ||
-            (splitHead->rotation_24.vy < splitHead->properties_E4.dummy.properties_E8[1].val16[0] && splitHead->moveSpeed_38 < Q12(0.0f)))
+        if ((splitHeadProps.angle_EC   < splitHead->rotation_24.vy && splitHead->moveSpeed_38 >= Q12(0.0f)) ||
+            (splitHead->rotation_24.vy < splitHeadProps.angle_EC   && splitHead->moveSpeed_38 <  Q12(0.0f)))
         {
-            splitHead->properties_E4.dummy.properties_E8[1].val16[1] = CLAMP_LOW(splitHead->properties_E4.dummy.properties_E8[1].val16[1] - FP_MULTIPLY_PRECISE(g_DeltaTime0, 0xA0, Q12_SHIFT), -0xC0);
+            splitHeadProps.field_EE = CLAMP_LOW(splitHeadProps.field_EE - FP_MULTIPLY_PRECISE(g_DeltaTime0, 160, Q12_SHIFT), -192);
         }
         else
         {
-            splitHead->properties_E4.dummy.properties_E8[1].val16[1] = MIN(splitHead->properties_E4.dummy.properties_E8[1].val16[1] + FP_MULTIPLY_PRECISE(g_DeltaTime0, 0xA0, Q12_SHIFT), 0xC0);
+            splitHeadProps.field_EE = MIN(splitHeadProps.field_EE + FP_MULTIPLY_PRECISE(g_DeltaTime0, 160, Q12_SHIFT), 192);
         }
     }
     else
     {
-        if (splitHead->properties_E4.dummy.properties_E8[1].val16[1] > 0)
+        if (splitHeadProps.field_EE > Q12(0.0f))
         {
-            splitHead->properties_E4.dummy.properties_E8[1].val16[1] = CLAMP_LOW(splitHead->properties_E4.dummy.properties_E8[1].val16[1] - FP_MULTIPLY_PRECISE(g_DeltaTime0, 0xA0, Q12_SHIFT), Q12(0.0f));
+            splitHeadProps.field_EE = CLAMP_LOW(splitHeadProps.field_EE - FP_MULTIPLY_PRECISE(g_DeltaTime0, 160, Q12_SHIFT), Q12(0.0f));
         }
         else
         {
-            splitHead->properties_E4.dummy.properties_E8[1].val16[1] = MIN(splitHead->properties_E4.dummy.properties_E8[1].val16[1] + FP_MULTIPLY_PRECISE(g_DeltaTime0, 0xA0, Q12_SHIFT), Q12(0.0f));
+            splitHeadProps.field_EE = MIN(splitHeadProps.field_EE + FP_MULTIPLY_PRECISE(g_DeltaTime0, 160, Q12_SHIFT), Q12(0.0f));
         }
     }
 
-    if (splitHead->properties_E4.dummy.properties_E8[1].val16[1] != 0)
+    if (splitHeadProps.field_EE != Q12(0.0f))
     {
-        *(s32*)&sp10 = splitHead->properties_E4.dummy.properties_E8[1].val16[1] << 16;
+        *(s32*)&sp10 = splitHeadProps.field_EE << 16;
         sp10.vz= 0;
 
         Math_RotMatrixZxyNegGte(&sp10, &sp18);
         MulMatrix(&sharedData_800D8610_1_s05[1].coord, &sp18);
 
-        *(s32*)&sp10 = (splitHead->properties_E4.dummy.properties_E8[1].val16[1] >> 3) << 16;
+        *(s32*)&sp10 = (splitHeadProps.field_EE >> 3) << 16;
         sp10.vz = 0;
 
         Math_RotMatrixZxyNegGte(&sp10, &sp18);
@@ -200,7 +201,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
         }
     }
 
-    splitHead->properties_E4.dummy.properties_E8[1].val16[0] = splitHead->rotation_24.vy;
+    splitHeadProps.angle_EC = splitHead->rotation_24.vy;
 
     #undef splitHeadProps
 }
