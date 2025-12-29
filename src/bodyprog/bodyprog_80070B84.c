@@ -7416,8 +7416,8 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
     s32               temp_s3;
     s32               temp_s4;
     s32               temp_s5;
-    s16               angle;
-    u16               angleDelta;
+    q3_12             angle;
+    q4_12             angleDelta;
 
     temp_s0  = g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 >> 3;
     temp_s0 += Q12(0.75f);

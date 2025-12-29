@@ -1,7 +1,9 @@
 #include "common.h"
 #include "lib_unk.h"
 
-#include <libpad.h>
+#include <psyq/libpad.h>
+
+#include "bodyprog/math/math.h"
 
 // TODO: Could be array?
 s_SysWork_2510 D_800B13EC = {
@@ -344,81 +346,80 @@ bool func_8009E61C(s_SysWork_2514* arg0, s32 state, s_SysWork_2510* head) // 0x8
     return status.field_0_22;
 }
 
-s32 func_8009E718(s_SysWork_2514 *arg0)
+bool func_8009E718(s_SysWork_2514* arg0) // 0x8009E718
 {
-    u32 packedval;
-    u32 scale;
-    s32 outlen;
-    s32 outidx;
-    s_SysWork_2514_C *in;
-    s_SysWork_2514_0 status;
-    s32 i;
-    u8 *out;
-    u64 tmp;
-    u8 inlen;
+    s_SysWork_2514_0  status;
+    u32               packedVal;
+    u32               scale;
+    s32               outLen;
+    s32               outIdx;
+    s32               i;
+    u64               tmp;
+    u8                inLen;
+    s_SysWork_2514_C* in;
+    u8*               out;
 
     status = arg0->field_0;
     if (!(status.field_0_18 && !status.field_0_17))
     {
-        return 0;
+        return false;
     }
 
-    // 0-128, but seems to only ever be set to 128
+    // 0-128, but seems to only ever be set to 128.
     scale = status.field_0_8;
 
-    in = arg0->field_C;
+    in  = arg0->field_C;
     out = &arg0->actuatorData_4;
-    for (i = (u8) arg0->field_A; i != 0; i--)
+    for (i = (u8)arg0->field_A; i != 0; i--)
     {
-        // contains up to 4 actuator data bytes packed into a u32,
-        // even though there are only two actuators max
-        packedval = in->data_4;
-        outlen = in->flags_0.bits_0_24;
+        // Contains up to 4 actuator data bytes packed into a `u32`, even though there are only two actuators max.
+        packedVal = in->data_4;
+        outLen    = in->flags_0.bits_0_24;
 
-        // scale the original actuator values by 0.0 - 1.0 (0 - 128)
-        // however, scale seems to only ever be 1.0, so this is useless?
-        tmp = ((u64)packedval * scale) >> 7;
-        if (tmp > 0xFFFFFFFF)
+        // Scale original actuator values by `[0.0f, 1.0f]` (`[0, 128]`). However, scale seems to only ever be 1.0f, so this is useless?
+        tmp = ((u64)packedVal * scale) >> 7;
+        if (tmp > UINT_MAX)
         {
-            // if we overflowed, max out every actuator
-            packedval = 0xFFFFFFFF;
+            // If overflowed, max out every actuator.
+            packedVal = UINT_MAX;
         }
         else
         {
-            packedval = tmp;
+            packedVal = tmp;
         }
 
-        outidx = in->flags_0.bits_0_16;
+        outIdx = in->flags_0.bits_0_16;
 
-        // ensure there's data for at least 1 actuator
-        if (outlen == 0)
+        // Ensure there's data for at least 1 actuator.
+        if (outLen == 0)
         {
-            outlen = 1;
-            if (packedval != 0)
+            outLen = 1;
+            if (packedVal != 0)
             {
-                // if any actuator values were not zero, enable at least the first one
-                // the other bytes will be ignored because outlen = 1
-                // note that it's actuator 0 in a dualshock/dual analog that only takes 0 or 1,
-                // but outidx could be non-zero, though I'm not sure if it ever is
-                packedval = 0x01FFFFFF;
+                // If any actuator values were not zero, enable at least the first one.
+                // The other bytes will be ignored because outLen = 1.
+                // Note that it's actuator 0 in a dualshock/dual analog that only takes 0 or 1,
+                // but outIdx could be non-zero, though it's unclear if it ever is.
+                packedVal = 0x01FFFFFF;
             }
         }
 
-        // change outlen bytes of actuator data starting with byte outidx
-        while (outlen != 0)
+        // Change outLen bytes of actuator data starting with byte outIdx.
+        while (outLen != 0)
         {
-            // get high byte and store it in actuator data
-            out[outidx] = packedval >> 24;
-            outlen--;
-            outidx++;
-            // shift the next byte to high byte
-            packedval <<= 8;
+            // Get high byte and store it in actuator data.
+            out[outIdx] = packedVal >> 24;
+            outLen--;
+            outIdx++;
+
+            // Shift next byte to high byte.
+            packedVal <<= 8;
         }
 
         in++;
     }
 
-    return 1;
+    return true;
 }
 
 bool func_8009E7D8(s_SysWork_2510* node) // 0x8009E7D8
@@ -440,7 +441,7 @@ bool func_8009E7D8(s_SysWork_2510* node) // 0x8009E7D8
     return true;
 }
 
-s32 func_8009E82C(s_SysWork_2514* work, s32 padState, s32 padInfoCurId, s32 padInfoCurExId)
+bool func_8009E82C(s_SysWork_2514* work, s32 padState, s32 padInfoCurId, s32 padInfoCurExId)
 {
     s32                 field_0_19;
     s_SysWork_2514_C_0* cur;
@@ -448,13 +449,13 @@ s32 func_8009E82C(s_SysWork_2514* work, s32 padState, s32 padInfoCurId, s32 padI
     s32                 i;
     s32                 count;
     s_SysWork_2514_0    status;
-    u8                  stack[0x18];
+    u8                  stack[24];
 
-    if ((padState == PadStateFindCTP1) && ((0xB0U >> padInfoCurId) & 1))
+    if (padState == PadStateFindCTP1 && ((0xB0u >> padInfoCurId) & 0x1))
     {
         work->actuatorData_4 = 0x40;
-        work->field_8 = 0;
-        count         = work->unk_B[0];
+        work->field_8        = 0;
+        count                = work->unk_B[0];
 
         status            = work->field_0;
         cur               = (s_SysWork_2514_C_0*)work->field_C;
@@ -495,9 +496,10 @@ s32 func_8009E82C(s_SysWork_2514* work, s32 padState, s32 padInfoCurId, s32 padI
             i++;
         };
 
-        return 1;
+        return true;
     }
-    return 0;
+
+    return false;
 }
 
 bool func_8009E97C(s_SysWork_2510* node) // 0x8009E97C
@@ -519,7 +521,7 @@ bool func_8009E97C(s_SysWork_2510* node) // 0x8009E97C
     return true;
 }
 
-s32 func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s32 arg3)
+bool func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s32 arg3)
 {
     s_SysWork_2514_0   status;
     u_SysWork_2514_C_0 tmp;
@@ -527,7 +529,7 @@ s32 func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s3
     s32                unk_B_0;
     s32                i;
     u32                mask = (1 << padState);
-    u8                 stack[0x18];
+    u8                 stack[24];
 
     status = work->field_0;
 
@@ -537,10 +539,10 @@ s32 func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s3
     }
     if (padState != PadStateStable)
     {
-        return 0;
+        return false;
     }
 
-    if (((0x90u >> arg3) & 1))
+    if (((0x90u >> arg3) & 0x1))
     {
         status.field_0_24 = 1;
         status.field_0_23 = 0;
@@ -600,9 +602,11 @@ s32 func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s3
             arg2++;
             i++;
         };
-        return 1;
+
+        return true;
     }
-    return 0;
+
+    return false;
 }
 
 bool func_8009EBB8(s_SysWork_2514* list, s_SysWork_2514_18* node, s32 count) // 0x8009EBB8

@@ -42,10 +42,10 @@ typedef struct
 {
     VECTOR3 field_0;
     u8      unk_C[4];
-    u8      unk_10[0x28];
+    u8      unk_10[40];
     s32     flags_38;
 } s_800ED7E0_ptr;
-STATIC_ASSERT_SIZEOF(s_800ED7E0_ptr, 0x3C);
+STATIC_ASSERT_SIZEOF(s_800ED7E0_ptr, 60);
 
 extern s32 D_800ED73C; // } RNG related values?
 extern s32 D_800ED740; // }

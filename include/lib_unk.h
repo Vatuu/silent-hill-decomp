@@ -114,13 +114,15 @@ s32 func_8009E550(s_SysWork_2514* arg0, s_SysWork_2510* node);
 
 bool func_8009E61C(s_SysWork_2514* arg0, s32 state, s_SysWork_2510* head);
 
+bool func_8009E718(s_SysWork_2514* arg0);
+
 bool func_8009E7D8(s_SysWork_2510* node);
 
-s32 func_8009E82C(s_SysWork_2514*, s32, s32, s32);
+bool func_8009E82C(s_SysWork_2514*, s32, s32, s32);
 
 bool func_8009E97C(s_SysWork_2510* node);
 
-s32 func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s32 arg3);
+bool func_8009E9D0(s_SysWork_2514* work, s32 padState, s_SysWork_2514_C* arg2, s32 arg3);
 
 bool func_8009EBB8(s_SysWork_2514* list, s_SysWork_2514_18* node, s32 count);
 

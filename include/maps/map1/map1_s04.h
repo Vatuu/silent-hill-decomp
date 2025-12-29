@@ -10,7 +10,7 @@ extern u8 D_800CCF54;
 
 extern u16 D_800CCF5C[];
 
-extern u16 D_800CD038[][0x28];
+extern u16 D_800CD038[][40];
 
 extern s32 D_800CD768;
 

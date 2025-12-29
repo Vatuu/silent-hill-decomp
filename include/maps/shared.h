@@ -2459,7 +2459,7 @@ void Ai_SplitHead_ControlUpdate(s_SubCharacter* splitHead);
 
 void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead);
 
-void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader*);
+void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr);
 
 void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead);
 
