@@ -2,6 +2,7 @@
 #include "lib_unk.h"
 
 #include <psyq/libpad.h>
+#include <psyq/libgte.h>
 
 #include "bodyprog/math/math.h"
 

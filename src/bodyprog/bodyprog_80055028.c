@@ -3110,7 +3110,7 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
     GsOUT_PACKET_P = poly.packet;
 }
 
-void Texture_Init1(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0
+void Texture_Init(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0
 {
     tex->imageDesc_0.tPage[0] = tPage0;
     tex->imageDesc_0.tPage[1] = tPage1;
@@ -3197,7 +3197,7 @@ void func_8005B378(s_Texture* tex, char* arg1) // 0x8005B378
     StringCopy(tex->name_8.str, arg1);
 }
 
-void Texture_Init0(s_Texture* tex) // 0x8005B3A4
+void Texture_RefClear(s_Texture* tex) // 0x8005B3A4
 {
     tex->name_8.u32[1] = 0;
     tex->name_8.u32[0] = 0;
@@ -3238,12 +3238,12 @@ void func_8005B424(VECTOR3* vec0, VECTOR3* vec1) // 0x8005B424
     *((s_func_8005B424*)vec0) = *((s_func_8005B424*)vec1);
 }
 
-void ActiveTextures_CountReset(s_ActiveTextures* activeTexs) // 0x8005B46C
+void Textures_ActiveTex_CountReset(s_ActiveTextures* activeTexs) // 0x8005B46C
 {
     activeTexs->count_0 = 0;
 }
 
-void ActiveTextures_PutTextures(s_ActiveTextures* activeTexs, s_Texture* texs, s32 texIdx) // 0x8005B474
+void Textures_ActiveTex_PutTextures(s_ActiveTextures* activeTexs, s_Texture* texs, s32 texIdx) // 0x8005B474
 {
     s_Texture*  curTex;
     s_Texture** texEntries;
@@ -3256,7 +3256,7 @@ void ActiveTextures_PutTextures(s_ActiveTextures* activeTexs, s_Texture* texs, s
     }
 }
 
-s_Texture* ActiveTextures_FindTexture(char* texName, s_ActiveTextures* activeTexs) // 0x8005B4BC
+s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveTextures* activeTexs) // 0x8005B4BC
 {
     char       prevTexName[8];
     s32        i;

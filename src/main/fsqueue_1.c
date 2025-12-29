@@ -29,7 +29,7 @@ bool Fs_QueueDoThingWhenEmpty(void)
 
     if (Fs_QueueGetLength() == 0)
     {
-        result = func_8003C850() != 0;
+        result = Ipd_ChunkInitCheck() != 0;
     }
 
     return result;

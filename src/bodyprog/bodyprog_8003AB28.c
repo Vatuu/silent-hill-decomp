@@ -905,7 +905,7 @@ void CharaModel_Free(s_CharaModel* model) // 0x8003C1AC
     model->texture_C  = image;
 }
 
-void func_8003C220(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ) // 0x8003C220
+void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ) // 0x8003C220
 {
     s32        activeIpdCount;
     u8         flags;
@@ -928,34 +928,34 @@ void func_8003C220(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ) /
     }
 
     mapType = mapHdr->type_0;
-    func_800421D8(mapType->tag_2, mapType->plmFileIdx_0, activeIpdCount, CHECK_FLAG(mapType->flags_6, MapTypeFlag_Interior, false), 0, 0);
+    Ipd_MapFileInfoSet(mapType->tag_2, mapType->plmFileIdx_0, activeIpdCount, CHECK_FLAG(mapType->flags_6, MapTypeFlag_Interior, false), 0, 0);
 
     if (mapHdr->type_0 == &MAP_TYPES[MapType_THR])
     {
         Map_PlaceIpdAtCell(FILE_BG_THR05FD_IPD, -1, 8);
     }
 
-    func_80042C3C(playerPosX, playerPosZ, playerPosX, playerPosZ);
+    Ipd_ChunkInit(playerPosX, playerPosZ, playerPosX, playerPosZ);
 }
 
-void Ipd_ActiveChunksClear1(void) // 0x8003C2EC
+void Ipd_ActiveMapChunksClear0(void) // 0x8003C2EC
 {
-    Ipd_ActiveChunksClear0();
+    Ipd_ActiveMapChunksClear();
 }
 
-void func_8003C30C(void) // 0x8003C30C
+void Map_WorldClear(void) // 0x8003C30C
 {
     u8 flags;
 
     flags = g_WorldGfx.type_0->flags_6;
     if ((flags & MapTypeFlag_Interior) && (flags & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks))) 
     {
-        func_800420C0();
+        Map_WorldClearReset();
         return;
     }
 
-    Ipd_ActiveChunksClear0();
-    Ipd_TexturesInit0();
+    Ipd_ActiveMapChunksClear();
+    Ipd_TexturesRefClear();
 }
 
 void WorldGfx_IpdSamplePointStore(void) // 0x8003C368
@@ -969,13 +969,32 @@ void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
     g_WorldGfx.useStoredPoint_4 = false;
 }
 
-void func_8003C3AC(void) // 0x8003C3AC
+void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
 {
-    VECTOR3         pos0; // World borders?
+    VECTOR3         pos0; // Render distance?
                           // Modifying `pos0.vz = Q12(200.0f);` makes the world to not render and when
                           // in the void, the player becomes immovable.
-    VECTOR3         pos1;
-    SVECTOR         pos2;
+                          //
+                          // Seems like most of the time the x and z values are sharing the same value as
+                          // the position of the player while also summing a derivative of the speed
+                          // of the player and the angle at which the player is looking at.
+                          // 
+                          // In Old Silent Hill (after Cafe 5to2) while standing still this value is
+                          // the same as `g_SysWork.playerWork_4C.player_0.position_18`.
+                          // 
+    VECTOR3         pos1; // Render distance?
+                          // In case of reversing the conditional `if (D_800C4168.isFogEnabled_1)`
+                          // to make it trigger the else when the fog is enabled the render distance
+                          // is slightly reduced.
+                          //
+                          // Similar to `pos0` in the case of the enviroment not having the fog enabled
+                          // it uses from base the position of the player, otherwise uses the camera
+                          // position and angle to then make some extra calculations.
+                          // 
+                          // In Old Silent Hill (after Cafe 5to2) while standing still this value is
+                          // slightly different to the player position as this is based upon camera's
+                          // angle and position.
+    SVECTOR         ang;
     s32             temp_a1;
     s32             temp_a2;
     s32             moveAmt;
@@ -984,8 +1003,7 @@ void func_8003C3AC(void) // 0x8003C3AC
     s32             var_a0;
     s32             var_a1;
     s32             var_s1;
-    u8              flags0;
-    u8              flags1;
+    u8              flagsCpy;
     s_SubCharacter* chara;
 
     chara = &g_SysWork.playerWork_4C.player_0;
@@ -1015,22 +1033,22 @@ void func_8003C3AC(void) // 0x8003C3AC
     if (D_800C4168.isFogEnabled_1)
     {
         vwGetViewPosition(&pos1);
-        vwGetViewAngle(&pos2);
+        vwGetViewAngle(&ang);
 
-        flags1 = g_WorldGfx.type_0->flags_6;
-        if (!(flags1 & MapTypeFlag_Interior) || !(flags1 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
+        flagsCpy = g_WorldGfx.type_0->flags_6;
+        if (!(flagsCpy & MapTypeFlag_Interior) || !(flagsCpy & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
         {
-            var_s1 = FP_MULTIPLY(Math_Cos(pos2.vx), Q12(9.0f), Q12_SHIFT);
+            var_s1 = FP_MULTIPLY(Math_Cos(ang.vx), Q12(9.0f), Q12_SHIFT);
         }
         else
         {
             var_s1 = Q12(0.0f);
         }
         
-        temp_s0_2 = FP_MULTIPLY(var_s1, Math_Sin(pos2.vy), Q12_SHIFT);
+        temp_s0_2 = FP_MULTIPLY(var_s1, Math_Sin(ang.vy), Q12_SHIFT);
         temp_s0_2 = CLAMP(temp_s0_2, Q12(-6.0f), Q12(6.0f));
 
-        temp_v1_4 = FP_MULTIPLY(var_s1, Math_Cos(pos2.vy), Q12_SHIFT);
+        temp_v1_4 = FP_MULTIPLY(var_s1, Math_Cos(ang.vy), Q12_SHIFT);
         temp_v1_4 = CLAMP(temp_v1_4, Q12(-6.0f), Q12(6.0f));
 
         pos1.vx += temp_s0_2;
@@ -1039,8 +1057,8 @@ void func_8003C3AC(void) // 0x8003C3AC
         if (Vc_VectorMagnitudeCalc(pos1.vx - chara->position_18.vx, 0, pos1.vz - chara->position_18.vz) > 0x10000)
         {
             var_s1  = Q12(14.0f);
-            pos1.vx = chara->position_18.vx + FP_MULTIPLY(Math_Sin(pos2.vy), var_s1, Q12_SHIFT);
-            pos1.vz = chara->position_18.vz + FP_MULTIPLY(Math_Cos(pos2.vy), var_s1, Q12_SHIFT);
+            pos1.vx = chara->position_18.vx + FP_MULTIPLY(Math_Sin(ang.vy), var_s1, Q12_SHIFT);
+            pos1.vz = chara->position_18.vz + FP_MULTIPLY(Math_Cos(ang.vy), var_s1, Q12_SHIFT);
         }
     }
     else
@@ -1050,8 +1068,8 @@ void func_8003C3AC(void) // 0x8003C3AC
         pos1.vz += FP_FROM(FP_TO(Math_Cos(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
     }
 
-    flags0 = g_WorldGfx.type_0->flags_6;
-    if ((flags0 & MapTypeFlag_Interior) && (flags0 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
+    flagsCpy = g_WorldGfx.type_0->flags_6;
+    if ((flagsCpy & MapTypeFlag_Interior) && (flagsCpy & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
     {
         var_a1 = chara->position_18.vx / Q12(2.5f);
         if (chara->position_18.vx < Q12(0.0f))
@@ -1075,12 +1093,12 @@ void func_8003C3AC(void) // 0x8003C3AC
         pos1.vz = CLAMP(pos1.vz, temp_a2 + 1, temp_a2 + (Q12(2.5f) - 1));
     }
 
-    func_80042C3C(pos0.vx, pos0.vz, pos1.vx, pos1.vz);
+    Ipd_ChunkInit(pos0.vx, pos0.vz, pos1.vx, pos1.vz);
 }
 
-s32 func_8003C850(void) // 0x8003C850
+s32 Ipd_ChunkInitCheck(void) // 0x8003C850
 {
-    func_8003C3AC();
+    Ipd_CloseRangeChunksInit();
     return Ipd_AreChunksLoaded();
 }
 
@@ -1090,7 +1108,7 @@ void func_8003C878(s32 arg0) // 0x8003C878
 
     while (func_80043830())
     {
-        func_8003C3AC();
+        Ipd_CloseRangeChunksInit();
         Fs_QueueWaitForEmpty();
     }
 

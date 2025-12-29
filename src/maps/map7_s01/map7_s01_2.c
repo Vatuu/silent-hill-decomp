@@ -309,7 +309,7 @@ void func_800D725C(void) // 0x800D725C
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(180.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-100.0f);
 
-            func_8003C3AC();
+            Ipd_CloseRangeChunksInit();
             SysWork_StateStepIncrement(0);
 
         case 20:
@@ -332,7 +332,7 @@ void func_800D725C(void) // 0x800D725C
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(180.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-100.0f);
 
-            func_8003C3AC();
+            Ipd_CloseRangeChunksInit();
             Chara_FsImageCalc(&charaTex, Chara_BloodyLisa, 2);
             Chara_Load(1, Chara_BloodyLisa, &g_SysWork.npcCoords_FC0[30], 0, (s_LmHeader*)0x8019E600, &charaTex);
             Chara_ProcessLoads();

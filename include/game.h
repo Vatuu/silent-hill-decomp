@@ -450,7 +450,7 @@ typedef enum _SysFlags2
 
     SysFlag2_3        = 1 << 3,
     SysFlag2_4        = 1 << 4,
-    SysFlag2_5        = 1 << 5,
+    SysFlag2_5        = 1 << 5, /** Related to camera. */
     SysFlag2_6        = 1 << 6,
     SysFlag2_MenuOpen = 1 << 7, /** Set by `SysState_Gameplay_Update` when opening the menu and cleared when returning to `SysState_Gameplay` once screen fade has completed. */
     SysFlag2_8        = 1 << 8,
@@ -912,6 +912,21 @@ typedef enum _TriggerActivationType
     TriggerActivationType_Item      = 3, /** Requires an inventory item to activate. */
 } e_TriggerActivationType;
 
+
+/** Some events seems to indicate specific cutscenes behaviour.
+ * EventParamUnkState_1 is only used by the code to trigger the cutscenes to go into the
+ * In-game mode.
+ * EventParamUnkState_0 is only used as check by the code that defines if the in-game world
+ * should be stop or not.
+ */
+typedef enum _EventParamUnkState
+{
+    EventParamUnkState_None = 0,
+    EventParamUnkState_0    = 1 << 0, // EventParamUnkState_UnfreezeWorld
+    EventParamUnkState_1    = 1 << 1,
+    EventParamUnkState_2    = 1 << 2
+} e_EventParamUnkState;
+
 typedef union
 {
     u32 rawData_0;
@@ -1070,7 +1085,7 @@ typedef struct _EventParam
     u8  unk_7[1];
     u32 sysState_8_0           : 5; /** `e_SysState` used by the event. */
     u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
-    u32 flags_8_13             : 6;
+    u32 flags_8_13             : 6; /** `e_EventParamUnkCutsceneState`. */
     u32 field_8_19             : 5;
     u32 field_8_24             : 1;
     u32 mapOverlayIdx_8_25     : 6;
@@ -1722,7 +1737,7 @@ typedef struct _SysWork
     s8              unk_0[8];
     e_SysState      sysState_8;
     s32             sysStateStep_C[3]; /** Temp data used by current `sysState_8`. Can be another state ID or other data. */
-    s32             field_18; // Related to map messages.
+    s32             isMgsStringSet_18; /** Indicates if string have been loaded and is going (or it is) being display. This should be a boolean value, however, the code may indicate that developers declared it as a int value. */
     s32             timer_1C;
     s32             timer_20;
     s32             timer_24;
@@ -1738,7 +1753,7 @@ typedef struct _SysWork
     GsCOORDINATE2   npcCoords_FC0[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     s8              npcId_2280;                        // NPC ID for `npcFlags_2290`. Not an index, starts at 1.
     s8              loadingScreenIdx_2281;
-    s8              field_2282;
+    s8              field_2282;    /** `e_EventParamUnkCutsceneState`. */
     s8              field_2283;    // Index into `SfxPairs`.
     u16             field_2284[4]; // Flags.
     s32             field_228C[1];

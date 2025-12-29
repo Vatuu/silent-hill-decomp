@@ -959,10 +959,11 @@ class StructParser:
                     
                     for bf_name, bf_value in decoded.items():
                         bf_type = current_field_types.get(bf_name)
+                        fix_fstring_bug = f"{struct_name}.{bf_name}"
                         if not self.unnamed_values:
-                            self.append_line(lines, f"{indent_str}  .{bf_name} = {self.format_value(bf_value, bf_type, f"{struct_name}.{bf_name}")},")
+                            self.append_line(lines, f"{indent_str}  .{bf_name} = {self.format_value(bf_value, bf_type, fix_fstring_bug)},")
                         else:
-                            self.append_line(lines, f"{indent_str}  {self.format_value(bf_value, bf_type, f"{struct_name}.{bf_name}")},")
+                            self.append_line(lines, f"{indent_str}  {self.format_value(bf_value, bf_type, fix_fstring_bug)},")
                     
                     continue
 
@@ -989,10 +990,11 @@ class StructParser:
                         self.append_line(lines, f"{indent_str}  {array_str},")
                 else:
                     # For basic types and pointers
+                    fix_fstring_bug = f"{struct_name}.{key}"
                     if not self.unnamed_values:
-                        self.append_line(lines, f"{indent_str}  .{key} = {self.format_value(value, field_type, f"{struct_name}.{key}")},")
+                        self.append_line(lines, f"{indent_str}  .{key} = {self.format_value(value, field_type, fix_fstring_bug)},")
                     else:
-                        self.append_line(lines, f"{indent_str}  {self.format_value(value, field_type, f"{struct_name}.{key}")},")
+                        self.append_line(lines, f"{indent_str}  {self.format_value(value, field_type, fix_fstring_bug)},")
             
             self.append_line(lines, f"{indent_str}}}")
             return "\n".join(lines)

@@ -509,7 +509,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-40.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(127.0f);
 
-            func_8003C3AC();
+            Ipd_CloseRangeChunksInit();
 
             g_SysWork.playerWork_4C.player_0.position_18.vx = temp_s1_2;
             g_SysWork.playerWork_4C.player_0.position_18.vz = temp_s2;
@@ -550,7 +550,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             break;
 
         case 7:
-            if (func_8003C850())
+            if (Ipd_ChunkInitCheck())
             {
                 SysWork_StateStepIncrement(0);
             }

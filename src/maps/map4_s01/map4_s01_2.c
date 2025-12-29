@@ -774,7 +774,7 @@ void func_800D3420(void) // 0x800D3420
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(180.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(60.0f);
 
-            func_8003C3AC();
+            Ipd_CloseRangeChunksInit();
             SD_Call(Sfx_Unk1540);
 
             D_800D5B04 = Q12(0.2f);

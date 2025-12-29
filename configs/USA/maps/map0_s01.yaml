@@ -75,5 +75,5 @@ segments:
       - [0x14220, data]
       - [0x1481C, .data, map0_s01_header]
       - [0x14910, .data, map0_s01_events]
-      - [0x14A40, data]
+      - [0x14B54, data]
   - [0x19100]

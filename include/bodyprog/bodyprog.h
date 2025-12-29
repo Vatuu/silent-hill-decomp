@@ -1234,7 +1234,7 @@ typedef struct _Map
     q19_12             positionX_57C;
     s32                cellX_580;
     s32                cellZ_584;
-    bool               isExterior;
+    bool               isExterior_588;
 } s_Map;
 STATIC_ASSERT_SIZEOF(s_Map, 1420);
 
@@ -1621,7 +1621,7 @@ typedef struct _MapOverlayHeader
     void                   (*func_C0)(); // func(?).
     void                   (*func_C4)(); // func(?).
     void                   (*freezePlayerControl_C8)();
-    void                   (*unfreezePlayerControl_CC)(s32);
+    void                   (*unfreezePlayerControl_CC)(bool);
     s32                    (*func_D0)(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount); // 0x800C964C
     s32                    (*func_D4)(s32);                  // Assumed return type.
     void                   (*func_D8)();                     // Assumed return type.
@@ -2363,7 +2363,11 @@ extern u8 D_800AE185;
 
 extern u8 D_800AE186;
 
-extern s32 g_SomeTimer0;
+/** Copy of delta timers.
+ * Appears to be used as save of the delta timer currently used as some instances where 2D backgrounds
+ * are drawn uses `g_DeltaTime1` while `g_DeltaTime0` is being stopped.
+ */
+extern s32 g_DeltaTimeCpy;
 
 extern u8 g_SysState_GameOver_TipIdx;
 
@@ -2813,10 +2817,10 @@ s32 Map_TypeGet(void);
 
 void CharaModel_Free(s_CharaModel* model);
 
-void func_8003C220(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ);
+void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerPosZ);
 
 /** Unknown bodyprog func. Called by `Fs_QueueDoThingWhenEmpty`. */
-s32 func_8003C850(void);
+s32 Ipd_ChunkInitCheck(void);
 
 /** `arg0` should be `void*`? */
 void func_8003C878(s32 arg0);
@@ -2948,14 +2952,14 @@ u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx);
 
 void Map_Init(s_LmHeader* lmHdr, s_IpdHeader* ipdBuf, s32 ipdBufSize);
 
-void GlobalLm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr);
+void Lm_Init(s_GlobalLm* globalLm, s_LmHeader* lmHdr);
 
 void LmHeader_Init(s_LmHeader* lmHdr);
 
 /** @brief Clears `queueIdx_4` in array of `s_IpdChunk` */
 void Ipd_ActiveChunksQueueIdxClear(s_IpdChunk* chunks, s32 chunkCount);
 
-void Ipd_TexturesInit1(void);
+void Ipd_TexturesInit(void);
 
 void Map_IpdCollisionDataInit(void);
 
@@ -2967,17 +2971,17 @@ void Map_IpdCollisionDataInit(void);
  */
 void Map_PlaceIpdAtCell(s16 ipdFileIdx, s32 cellX, s32 cellZ);
 
-void Ipd_ActiveChunksClear0(void);
+void Ipd_ActiveMapChunksClear(void);
 
-void Ipd_TexturesInit0(void);
+void Ipd_TexturesRefClear(void);
 
-void func_800420C0(void);
+void Map_WorldClearReset(void);
 
 void Map_GlobalLmFree(void);
 
 s_Texture* func_80042178(char* texName);
 
-void func_800421D8(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool isExterior, e_FsFile ipdFileIdx, e_FsFile texFileIdx);
+void Ipd_MapFileInfoSet(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool isExterior, e_FsFile ipdFileIdx, e_FsFile texFileIdx);
 
 void Ipd_ActiveChunksClear(s_Map* map, s32 arg1);
 
@@ -3025,7 +3029,7 @@ u32 IpdHeader_LoadStateGet(s_IpdChunk* chunk);
 bool IpdHeader_IsLoaded(s32 ipdIdx);
 
 /** Starts the process of loading map geometry and assigns textures when the game is set in a loading screen mode? */
-void func_80042C3C(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
+void Ipd_ChunkInit(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
 /** @brief Computes the distance from an XZ position to the edge of an XZ chunk cell boundary.
  * For exteriors, the cell boundary is expanded by `Q12(1.0f)`.
@@ -3052,14 +3056,14 @@ q19_12 Ipd_PaddedDistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cell
 q19_12 Ipd_DistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ);
 
 /** Loads geometry, sets materials and properly assigns the position of the map when loading a new room/map? */
-s32 func_80042EBC(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
+s32 Map_ChunkLoad(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ);
 
 void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 void Ipd_DistanceToEdgeCalc(s_IpdChunk* chunk, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1, bool isExterior);
 
 /** Sets materials for active chunks? */
-void func_800433B8(s_Map* map);
+void Ipd_ChunkMaterialsApply(s_Map* map);
 
 s32 Map_IpdIdxGet(s32 cellX, s32 cellZ);
 
@@ -3293,14 +3297,14 @@ u8 func_8005AA08(s_MeshHeader* meshHdr, s32 arg1, s_GteScratchData2* scratchData
 
 void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_TAG* ot, s32 arg3);
 
-void Texture_Init1(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
+void Texture_Init(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY);
 
 void Texture_RefCountReset(s_Texture* tex);
 
 /** @unused */
 void func_8005B378(s_Texture* tex, char* arg1);
 
-void Texture_Init0(s_Texture* tex);
+void Texture_RefClear(s_Texture* tex);
 
 void Material_TimFileNameGet(char* filename, s_Material* mat);
 
@@ -3765,11 +3769,11 @@ void GameFs_Tim00TIMLoad(void);
 
 void GameFs_MapItemsModelLoad(u32 mapId);
 
-void ActiveTextures_CountReset(s_ActiveTextures* activeTexs);
+void Textures_ActiveTex_CountReset(s_ActiveTextures* activeTexs);
 
-void ActiveTextures_PutTextures(s_ActiveTextures* activeTexs, s_Texture* texs, s32 texIdx);
+void Textures_ActiveTex_PutTextures(s_ActiveTextures* activeTexs, s_Texture* texs, s32 texIdx);
 
-s_Texture* ActiveTextures_FindTexture(char* texName, s_ActiveTextures* activeTexs);
+s_Texture* Textures_ActiveTex_FindTexture(char* texName, s_ActiveTextures* activeTexs);
 
 // TODO: Rename to `Gfx_DebugStringPositionSet`.
 /** @brief Sets the debug string position.
@@ -4341,16 +4345,20 @@ void func_8003C110(void);
 void CharaModel_Free(s_CharaModel* model);
 
 /** @unused */
-void Ipd_ActiveChunksClear1(void);
+void Ipd_ActiveMapChunksClear0(void);
 
-void func_8003C30C(void);
+void Map_WorldClear(void);
 
 void WorldGfx_IpdSamplePointStore(void);
 
 void WorldGfx_IpdSamplePointReset(void);
 
-/** Handles player movement, sets render distance, and loads map models. */
-void func_8003C3AC(void);
+/** Sets render distance, and loads map models.
+ * Breaking the function doesn't causes the game to crash, but instead
+ * the world won't render beyond what has been previously loaded. Some
+ * circumstances can also cause the player to be unable to move.
+ */
+void Ipd_CloseRangeChunksInit(void);
 
 void func_8003C878(s32);
 
