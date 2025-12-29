@@ -2238,7 +2238,7 @@ s32 Ai_PuppetNurse_AnimSfxGet(s32 idx);
 /** Checks damage angle. */
 bool Ai_PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse);
 
-void Ai_NursePuppet_Move(s_SubCharacter* nurse);
+void Ai_PuppetNurse_Move(s_SubCharacter* nurse);
 
 bool sharedFunc_800CE398_3_s03(s32 arg0);
 

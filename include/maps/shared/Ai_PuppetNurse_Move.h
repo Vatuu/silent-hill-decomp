@@ -14,23 +14,18 @@ static void inline GetNewSpeed(s_SubCharacter* nurse, q19_12 dist)
     Chara_MoveSpeedUpdate2(nurse, Q12(4.0f), limit);
 }
 
-void Ai_NursePuppet_Move(s_SubCharacter* nurse)
+void Ai_PuppetNurse_Move(s_SubCharacter* nurse)
 {
     q3_12  angleDeltaToPlayer;
     q3_12  tmpAngle;
     q3_12  absAngle;
     q19_12 distToPlayer;
-    q19_12 deltaX;
-    q19_12 deltaZ;
     q19_12 addAngle;
     q19_12 distAbs;
 
-    // TODO: Doesn't match?
-    //distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx,
-    //                                         g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz);
-    deltaX             = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx);
-    deltaZ             = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz);
-    distToPlayer       = Q6_TO_Q12(SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ))) - Q12(0.76f);
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx,
+                                       g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz) - Q12(0.76f);
+
     distAbs            = ABS(distToPlayer);
     angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(nurse->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                        nurse->rotation_24.vy);
@@ -44,7 +39,7 @@ void Ai_NursePuppet_Move(s_SubCharacter* nurse)
     {
         Chara_MoveSpeedUpdate(nurse, Q12(4.0f));
     }
-    
+
     if (absAngle > FP_ANGLE(10.0f))
     {
         tmpAngle = 2;

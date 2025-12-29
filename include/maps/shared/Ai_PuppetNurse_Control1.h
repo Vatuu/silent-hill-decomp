@@ -47,7 +47,7 @@ void Ai_PuppetNurse_Control1(s_SubCharacter* nurse)
         return;
     }
 
-    Ai_NursePuppet_Move(localNurse);
+    Ai_PuppetNurse_Move(localNurse);
     nurse->properties_E4.puppetNurse.field_104 -= g_DeltaTime0;
 }
 

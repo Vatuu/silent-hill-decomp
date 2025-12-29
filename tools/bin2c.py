@@ -1203,8 +1203,10 @@ Examples:
     # Parse offset
     offset = int(args.offset, 0)
 
-    # silent-hill-decomp map address hack
-    if offset > 0x800C9578:
+    # silent-hill-decomp address hack
+    if offset >= 0x80024B60 and offset < 0x800C9578: # Bodyprog
+        offset -= 0x80024B60
+    elif offset >= 0x800C9578: # Maps
         offset -= 0x800C9578
 
     max_size = int(args.size, 0) if args.size else None
@@ -1356,7 +1358,7 @@ Examples:
                     results.append(result)
                 
                 # Output as C array
-                print(f"{args.type} {args.name}[] = {{")
+                print(f"{args.type} {args.name}[{len(results)}] = {{")
                 for i, result in enumerate(results):
                     initializer = struct_parser.to_initializer(result, args.type)
                     # Add comma except for last element

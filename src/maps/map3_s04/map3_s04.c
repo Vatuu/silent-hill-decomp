@@ -42,7 +42,7 @@ INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04", g_MapOverlayHeader);
 
 #include "maps/shared/Ai_PuppetNurse_DamageHandle.h" // 0x800CDDE8
 
-#include "maps/shared/Ai_NursePuppet_Move.h"
+#include "maps/shared/Ai_PuppetNurse_Move.h"
 
 #include "maps/shared/sharedFunc_800CE398_3_s03.h" // 0x800CE25C
 

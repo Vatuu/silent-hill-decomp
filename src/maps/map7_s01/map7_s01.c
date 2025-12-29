@@ -49,7 +49,7 @@ const VECTOR D_800CA5C8 = {};
 
 #include "maps/shared/Ai_PuppetNurse_DamageHandle.h" // 0x800D1F18
 
-#include "maps/shared/Ai_NursePuppet_Move.h"
+#include "maps/shared/Ai_PuppetNurse_Move.h"
 
 #include "maps/shared/sharedFunc_800CE398_3_s03.h" // 0x800D238C
 
