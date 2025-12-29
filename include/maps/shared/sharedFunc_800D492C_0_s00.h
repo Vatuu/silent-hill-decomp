@@ -95,7 +95,7 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* stalker)
     // Smoothly rotate toward target direction
     angle = func_8005BF38(stalkerProps.targetHeadingAngle_100 - stalker->rotation_24.vy);
 
-    if ((((g_DeltaTime0 >> 4) + 1) < ABS(angle)))
+    if (TIMESTEP_ANGLE_0 < ABS(angle))
     {
         if (angle > FP_ANGLE(0.0f))
         {
@@ -146,13 +146,13 @@ void sharedFunc_800D492C_0_s00(s_SubCharacter* stalker)
             if (!(stalkerProps.flags_E8 & StalkerFlag_10))
             {
                 stalkerProps.flags_E8 |= StalkerFlag_10;
-                sharedFunc_800D7E04_0_s00(stalker, 1363);
+                sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1363);
             }
 
-            if (((!Rng_GenerateInt(0, 15) && stalkerProps.timer_F8 > Q12(1.0f)) && // 1 in 16 cheance.
+            if (((!Rng_GenerateInt(0, 15) && stalkerProps.timer_F8 > Q12(1.0f)) && // 1 in 16 chance.
                  (stalkerProps.flags_E8 & StalkerFlag_1)) ||
                 (!Rng_GenerateInt(0, 15) && stalkerProps.timer_F8 > Q12(2.5f)) ||  // 1 in 16 chance.
-                (!Rng_GenerateInt(0, 31) && ((dist1 >> 1) < distToPlayer)))                          // 1 in 32 chance.
+                (!Rng_GenerateInt(0, 31) && ((dist1 >> 1) < distToPlayer)))        // 1 in 32 chance.
             {
                 if (stalkerProps.flags_E8 & StalkerFlag_1)
                 {

@@ -3,12 +3,12 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
     VECTOR unkPos;
     q3_12  angleDeltaToPlayer;
     q19_12 distToPlayer;
-
+    
     // TODO: Use `Math_AngleBetweenPositionsGet`.
     distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
                                        g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
-    angleDeltaToPlayer = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx -chara->position_18.vx,
-                                               g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
+    angleDeltaToPlayer = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                              g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                                        chara->rotation_24.vy);
     if (chara->model_0.anim_4.status_0 == 23)
     {
@@ -36,7 +36,7 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
             }
         }
 
-        if (((g_DeltaTime0 >> 4) + 1) < ABS(angleDeltaToPlayer))
+        if (TIMESTEP_ANGLE_0 < ABS(angleDeltaToPlayer))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
@@ -89,7 +89,7 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
 
         Chara_MoveSpeedUpdate3(chara, Q12(1.2f), Q12(0.0f));
 
-        if ((((g_DeltaTime0 / 3) >> 4) + 1) < ABS(angleDeltaToPlayer))
+        if (TIMESTEP_ANGLE_1 < ABS(angleDeltaToPlayer))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
@@ -124,7 +124,7 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
             Chara_MoveSpeedUpdate3(chara, Q12(1.2f), Q12(0.6f));
         }
 
-        if ((((g_DeltaTime0 / 3) >> 4) + 1) < ABS(angleDeltaToPlayer))
+        if (TIMESTEP_ANGLE_1 < ABS(angleDeltaToPlayer))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {

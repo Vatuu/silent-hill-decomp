@@ -9,7 +9,7 @@ void sharedFunc_800D2444_1_s05(s_SubCharacter* splitHead)
         angleDeltaToPlayer = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx,
                                                   g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz) -
                                            splitHead->rotation_24.vy);
-        if ((((g_DeltaTime0 / 3) >> 3) + 1) < ABS(angleDeltaToPlayer)) // @hack `(g_DeltaTime0 / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
+        if (TIMESTEP_ANGLE_2 < ABS(angleDeltaToPlayer)) // @hack `(g_DeltaTime0 / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {

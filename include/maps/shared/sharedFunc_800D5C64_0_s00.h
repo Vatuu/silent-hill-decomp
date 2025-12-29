@@ -105,5 +105,6 @@ void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker)
         stalkerProps.targetPositionZ_F4 = g_SysWork.playerWork_4C.player_0.position_18.vz;
     }
 
+    #undef BASE_DIST_MAX
     #undef stalkerProps
 }

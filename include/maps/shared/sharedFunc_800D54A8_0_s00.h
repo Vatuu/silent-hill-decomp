@@ -34,7 +34,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* stalker)
 
     for (i = 0; i < 3; i++)
     {
-        if (((g_DeltaTime0 >> 4) + 1) < ABS(angleDeltaToPlayer))
+        if (TIMESTEP_ANGLE_0 < ABS(angleDeltaToPlayer))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
@@ -114,7 +114,7 @@ void sharedFunc_800D54A8_0_s00(s_SubCharacter* stalker)
             stalkerProps.flags_E8 |= StalkerFlag_5;
             g_SysWork.field_2284[3]                 &= ~(1 << 1);
 
-            sharedFunc_800D7E04_0_s00(stalker, 1366);
+            sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1366);
 
             stalkerProps.timer_F8 = Q12(1.0f);
         }

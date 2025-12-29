@@ -33,7 +33,7 @@ void sharedFunc_800D5098_0_s00(s_SubCharacter* stalker)
             angleDeltaToPlayer = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - stalker->position_18.vx,
                                                        g_SysWork.playerWork_4C.player_0.position_18.vz - stalker->position_18.vz) -
                                                stalker->rotation_24.vy));
-            angle1        = ((g_DeltaTime0 / 3) >> 3) + 1; // @hack `(g_DeltaTime0 / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
+            angle1 = TIMESTEP_ANGLE_2; // @hack `(g_DeltaTime0 / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
             if ((angleDeltaToPlayer >= FP_ANGLE(0.0f) && angle1 <  angleDeltaToPlayer) ||
                 (angleDeltaToPlayer <  FP_ANGLE(0.0f) && angle1 < -angleDeltaToPlayer))
             {

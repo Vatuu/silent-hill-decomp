@@ -98,7 +98,7 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
 
     angleToPlayer = func_8005BF38((chara->properties_E4.dummy.properties_E8[2].val16[0] - chara->rotation_24.vy));
 
-    if ((((g_DeltaTime0 / 3) >> 3) + 1) < ABS(angleToPlayer))
+    if (TIMESTEP_ANGLE_2 < ABS(angleToPlayer))
     {
         if (angleToPlayer > FP_ANGLE(0.0f))
         {

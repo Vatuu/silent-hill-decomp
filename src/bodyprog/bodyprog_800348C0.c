@@ -653,15 +653,17 @@ void func_800358DC(s32 cmd) // 0x800358DC
 
 void func_80035924(void) // 0x80035924
 {
-    s8 cmd;
-
-    cmd = g_GameWork.soundCmd_5B2;
-    if (cmd == 0 || g_GameWork.soundCmd_5B2 == 1)
+    if (g_GameWork.soundCmd_5B2 == 0)
     {
         return;
     }
 
-    SD_Call(g_UnknownBgmTable1[cmd]);
+    if (g_GameWork.soundCmd_5B2 == 1)
+    {
+        return;
+    }
+
+    SD_Call(g_UnknownBgmTable1[g_GameWork.soundCmd_5B2]);
 }
 
 void func_8003596C(void) // 0x8003596C

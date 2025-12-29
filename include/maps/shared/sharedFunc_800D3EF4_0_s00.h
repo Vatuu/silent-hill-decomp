@@ -51,7 +51,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker)
 
         for (i = 3 + ((ABS(angleDeltaToPlayer) > FP_ANGLE(90.0f)) ? 1 : 0); i > 0; i--)
         {
-            if (((g_DeltaTime0 >> 2) + 1) < ABS(angleDeltaToPlayer))
+            if (TIMESTEP_ANGLE_3 < ABS(angleDeltaToPlayer))
             {
                 if (angleDeltaToPlayer > FP_ANGLE(0.0f))
                 {
@@ -67,7 +67,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker)
                                               stalker->rotation_24.vy);
             }
 
-            if (ABS(angleDeltaToPlayer) < ((g_DeltaTime0 >> 2) + 1) || distToPlayer > Q12(2.0f))
+            if (ABS(angleDeltaToPlayer) < TIMESTEP_ANGLE_3 || distToPlayer > Q12(2.0f))
             {
                 break;
             }
@@ -85,7 +85,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker)
                     stalker->model_0.controlState_2 = 5;
                     g_SysWork.field_2284[3] |= 1 << 1;
 
-                    sharedFunc_800D7E04_0_s00(stalker, 1364);
+                    sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1364);
 
                     if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 493, 504))
                     {
@@ -95,7 +95,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker)
                         return;
                     }
 
-                    stalker->model_0.anim_4.status_0              = ANIM_STATUS(StalkerAnim_7, false);
+                    stalker->model_0.anim_4.status_0 = ANIM_STATUS(StalkerAnim_7, false);
                     stalkerProps.keyframeIdx_FC = ANIM_TIME_REL_KEYFRAME_IDX_GET(stalker->model_0.anim_4.time_4, 477);
 
                     if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 478, 481))
@@ -188,7 +188,7 @@ void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker)
         else
         {
             angleDeltaToTargetHeading = func_8005BF38(stalkerProps.targetHeadingAngle_100 - stalker->rotation_24.vy);
-            if (((g_DeltaTime0 >> 2) + 1) < ABS(angleDeltaToTargetHeading))
+            if (TIMESTEP_ANGLE_3 < ABS(angleDeltaToTargetHeading))
             {
                 if (angleDeltaToTargetHeading > FP_ANGLE(0.0f))
                 {

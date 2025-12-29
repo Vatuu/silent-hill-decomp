@@ -12,7 +12,7 @@ void sharedFunc_800D670C_0_s00(s_SubCharacter* stalker)
     if (!(stalkerProps.flags_E8 & StalkerFlag_14) &&
         stalker->model_0.anim_4.time_4 > Q12(211.0f))
     {
-        sharedFunc_800D7E04_0_s00(stalker, 1365);
+        sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1365);
 
         stalker->health_B0     = NO_VALUE;
         stalkerProps.flags_E8 |= StalkerFlag_14;

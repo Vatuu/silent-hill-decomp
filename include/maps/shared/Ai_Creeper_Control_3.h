@@ -57,7 +57,7 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
             creeper->moveSpeed_38 = moveSpeed;
         }
 
-        if (((g_DeltaTime0 >> 2) + 1) < ABS(func_8005BF38((ratan2(playerPos.vx - creeper->position_18.vx, playerPos.vz - creeper->position_18.vz) - creeper->rotation_24.vy))))
+        if (TIMESTEP_ANGLE_3 < ABS(func_8005BF38((ratan2(playerPos.vx - creeper->position_18.vx, playerPos.vz - creeper->position_18.vz) - creeper->rotation_24.vy))))
         {
             if ((func_8005BF38((ratan2(playerPos.vx - creeper->position_18.vx, playerPos.vz - creeper->position_18.vz) - creeper->rotation_24.vy)) << 0x10) > 0)
             {

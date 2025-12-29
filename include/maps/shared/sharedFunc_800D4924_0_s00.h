@@ -56,7 +56,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker)
         if (!(stalkerProps.flags_E8 & StalkerFlag_10))
         {
             stalkerProps.flags_E8 |= StalkerFlag_10;
-            sharedFunc_800D7E04_0_s00(stalker, 1363);
+            sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1363);
         }
 
         stalkerProps.timer_116 = Q12(0.0f);
@@ -106,7 +106,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker)
         {
             for (i = 3 + ((ABS(angleDeltaToPlayer) > FP_ANGLE(90.0f)) ? 1 : 0); i > 0; i--)
             {
-                if (((g_DeltaTime0 >> 3) + 1) < ABS(angleDeltaToPlayer))
+                if (TIMESTEP_ANGLE_4 < ABS(angleDeltaToPlayer))
                 {
                     if (angleDeltaToPlayer > FP_ANGLE(0.0f))
                     {
@@ -122,7 +122,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker)
                                                   stalker->rotation_24.vy);
                 }
 
-                if (ABS(angleDeltaToPlayer) < ((g_DeltaTime0 >> 3) + 1) || distToPlayer > (radiusMin >> 2))
+                if (ABS(angleDeltaToPlayer) < TIMESTEP_ANGLE_4 || distToPlayer > (radiusMin >> 2))
                 {
                     break;
                 }
@@ -130,7 +130,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker)
         }
 
         if ((g_SysWork.field_2284[3] & (1 << 0)) || func_80070320() ||
-            ABS(stalker->position_18.vy - g_SysWork.playerWork_4C.player_0.position_18.vy) > 0x4CC ||
+            ABS(stalker->position_18.vy - g_SysWork.playerWork_4C.player_0.position_18.vy) > Q12(0.3f) ||
             ( (stalkerProps.flags_E8 & StalkerFlag_2) &&  Rng_GenerateInt(0, 3)) || // 3 in 4 chance?
             (!(stalkerProps.flags_E8 & StalkerFlag_2) && !Rng_GenerateInt(0, 3)))   // 1 in 4 chance.
         {
@@ -141,7 +141,7 @@ void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker)
                 stalker->model_0.controlState_2 = 5;
                 g_SysWork.field_2284[3] |= 1 << 1;
 
-                sharedFunc_800D7E04_0_s00(stalker, 1364);
+                sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1364);
 
                 if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 493, 504))
                 {

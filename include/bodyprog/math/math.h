@@ -76,6 +76,13 @@
 #define TIMESTEP_SCALE(deltaTime, x) \
     (((x) * (deltaTime)) / TIMESTEP_30_FPS)
 
+// TODO: Could these have been one common macro? Used as the maximum rotation allowed of a given tick with a minimum of 1.
+#define TIMESTEP_ANGLE_0 (((g_DeltaTime0) >> 4) + 1)
+#define TIMESTEP_ANGLE_1 ((((g_DeltaTime0) / 3) >> 4) + 1)
+#define TIMESTEP_ANGLE_2 ((((g_DeltaTime0) / 3) >> 3) + 1)
+#define TIMESTEP_ANGLE_3 ((g_DeltaTime0 >> 2) + 1)
+#define TIMESTEP_ANGLE_4 ((g_DeltaTime0 >> 3) + 1)
+
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
  * using a 64-bit intermediate via `Math_MulFixed` for higher precision.
  *
@@ -98,10 +105,10 @@
            ((mat).m[1][0] * (vec).vy) + \
            ((mat).m[2][0] * (vec).vz)) >> 17)
 
-/** @brief Computes the Y axis angle from one position to another in fixed-point Q*.12.
+/** @brief Computes the Y axis angle from one 3D position in fixed-point Q*.12 to another.
  *
- * @param posFrom Start position.
- * @param posTo End position.
+ * @param posFrom Start position (Q19.12).
+ * @param posTo End position (Q19.12).
  * @return Y axis angle between positions (Q19.12).
  */
 #define Math_AngleBetweenPositionsGet(posFrom, posTo) \
