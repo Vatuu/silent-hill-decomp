@@ -145,3 +145,4 @@ sharedData_800E39E0_0_s00           = 0x800DB894; // type:s16 size:2
 sharedData_800E39E2_0_s00           = 0x800DB896; // type:s16 size:2
 g_WorldObject_Kidn04                = 0x800DB958; // type:WorldObjectDescNoRot size:0x28
 g_WorldObject_Kidn05                = 0x800DB988; // type:WorldObjectDescNoRot size:0x28
+Map_WorldObjectsUpdate = 0x800D7360; // type:func
