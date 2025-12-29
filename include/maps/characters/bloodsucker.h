@@ -32,4 +32,18 @@ typedef enum _BloodsuckerControl
     BloodsuckerControl_4    = 4
 } e_BloodsuckerControl;
 
+void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
+void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker);
+
+void Ai_Bloodsucker_Control_1(s_SubCharacter* bloodsucker);
+
+void Ai_Bloodsucker_Control_2(s_SubCharacter* bloodsucker);
+
+void Ai_Bloodsucker_Control_3(s_SubCharacter* bloodsucker);
+
+void Ai_Bloodsucker_Control_4(s_SubCharacter* bloodsucker);
+
+void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
 #endif

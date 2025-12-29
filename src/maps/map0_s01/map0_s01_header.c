@@ -2,7 +2,9 @@
 #include "bodyprog/math/math.h"
 #include "maps/map0/map0_s01.h"
 #include "maps/shared.h"
+#include "maps/characters/air_screamer.h"
 #include "maps/characters/cybil.h"
+#include "maps/characters/stalker.h"
 
 #define BLOOD_SPLAT_COUNT_MAX 150
 #define func_800D0C3C ((void(*)())0x800D0C3C)

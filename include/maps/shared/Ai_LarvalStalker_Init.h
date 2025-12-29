@@ -4,8 +4,8 @@ void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker)
 
     #define larvalStalkerProps larvalStalker->properties_E4.larvalStalker
 
-    larvalStalker->model_0.controlState_2              = 3;
-    larvalStalker->model_0.anim_4.time_4        = 0;
+    larvalStalker->model_0.controlState_2       = LarvalStalkerControl_3;
+    larvalStalker->model_0.anim_4.time_4        = Q12(0.0f);
     larvalStalker->model_0.anim_4.status_0      = ANIM_STATUS(LarvalStalkerAnim_10, false);
     larvalStalker->model_0.anim_4.time_4        = Q12(162.0f);
     larvalStalker->model_0.anim_4.keyframeIdx_8 = 162;
@@ -16,8 +16,8 @@ void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker)
     ModelAnim_AnimInfoSet(&larvalStalker->model_0.anim_4, LARVAL_STALKER_ANIM_INFOS);
 
     larvalStalker->health_B0    = Q12(300.0f);
-    larvalStalker->field_34     = 0;
-    larvalStalker->moveSpeed_38 = 0;
+    larvalStalker->field_34     = Q12(0.0f);
+    larvalStalker->moveSpeed_38 = Q12(0.0f);
 
     Chara_DamageClear(larvalStalker);
     larvalStalker->field_E1_0      = 0;

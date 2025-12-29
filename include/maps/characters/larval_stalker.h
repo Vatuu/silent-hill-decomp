@@ -38,4 +38,37 @@ typedef enum _LarvalStalkerAnim
     LarvalStalkerAnim_18    = 18
 } e_LarvalStalkerAnim;
 
+/** @brief Larval Stalker character control states. */
+typedef enum _LarvalStalkerControl
+{
+    LarvalStalkerControl_None = 0,
+    LarvalStalkerControl_1    = 1,
+    LarvalStalkerControl_2    = 2,
+    LarvalStalkerControl_3    = 3,
+    LarvalStalkerControl_4    = 4,
+    LarvalStalkerControl_5    = 5,
+    LarvalStalkerControl_6    = 6,
+    LarvalStalkerControl_7    = 7,
+    LarvalStalkerControl_8    = 8,
+    LarvalStalkerControl_9    = 9,
+    LarvalStalkerControl_10   = 10,
+    LarvalStalkerControl_11   = 11,
+    LarvalStalkerControl_12   = 12,
+    LarvalStalkerControl_13   = 13
+} e_LarvalStalkerControl;
+
+void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
+void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker);
+
+void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* coords);
+
+void sharedFunc_800D1524_1_s00(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
+void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker);
+
+void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker);
+
+void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker);
+
 #endif

@@ -183,4 +183,95 @@ typedef enum _AirScreamerControl
     { Anim_Update1, ANIM_STATUS(27, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 365, 376 }
 };*/
 
+void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
+bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
+void sharedFunc_800D2200_0_s01(s_SubCharacter* airScreamer);
+
+bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D2364_0_s01(s_SubCharacter* airScreamer);
+
+bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer);
+
+bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D2B00_0_s01(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D2B10_0_s01(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D2B28_0_s01(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D2B4C_0_s01(s_SubCharacter* airScreamer);
+
+/** @brief Warps an Air Screamer or Night Flutter character to the ground.
+ *
+ * @param airScreamer Air Screamer or Night Flutter character to warp.
+ */
+void Ai_AirScreamer_GroundWarp(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D2BE4_0_s01(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D2BF4_0_s01(s_SubCharacter* airScreamer);
+
+bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, s32* outDist, s32* outAngle);
+
+bool sharedFunc_800D3430_0_s01(s_SubCharacter* airScreamer, q19_12* dist, q19_12* angle);
+
+/** Pecking distance getter? */
+s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer);
+
+bool sharedFunc_800D31D0_0_s01(s_SubCharacter* airScreamer, VECTOR3* pos, s32 arg2);
+
+bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer);
+
+void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer);
+
+bool sharedFunc_800D62D8_0_s01(s_SubCharacter* airScreamer);
+
+/** Returns anim-related index. */
+s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* airScreamer);
+
+/** Gets player Y position with an offset. */
+q19_12 sharedFunc_800D5274_0_s01(void);
+
+void sharedFunc_800D633C_0_s01(s_SubCharacter* airScreamer);
+void sharedFunc_800D63A4_0_s01(s_SubCharacter* airScreamer);
+void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer);
+
+s32 sharedFunc_800D7120_0_s01(s32, s32, s32);
+s32 sharedFunc_800D71F0_0_s01(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+
+s32 sharedFunc_800D7440_0_s01(s_800C4590* arg0, VECTOR* vec1, s_SubCharacter* airScreamer);
+
+void sharedFunc_800D7560_0_s01(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D76A0_0_s01(s_SubCharacter* airScreamer);
+
+q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer);
+
+bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* airScreamer);
+
+/** @brief Applies a multi-stage bend deformation to several model coordinates.
+ * Builds three rotation matrices using scaled fractions of `chara->field_2A` and
+ * multiplies them into `coords[10]`, `coords[9]`, `coords[1]`, and `coords[2]`.
+ * Used when the animation flag bit 0 is active to drive a chained bending motion.
+ */
+void sharedFunc_800D7B14_0_s01(s_SubCharacter* airScreamer, GsCOORDINATE2* coords);
+
+bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer);
+
+bool sharedFunc_800D81B0_0_s01(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D81D0_0_s01(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D8244_0_s01(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D8714_0_s01(s_SubCharacter* airScreamer, q19_12 angle0, q19_12 angle1);
+
+void sharedFunc_800D87FC_0_s01(s_SubCharacter* airScreamer);
+
 #endif

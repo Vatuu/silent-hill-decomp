@@ -3,6 +3,7 @@
 #include "maps/shared.h"
 #include "maps/map5/map5_s03.h"
 #include "maps/characters/kaufmann.h"
+#include "maps/characters/stalker.h"
 
 #define BLOOD_SPLAT_COUNT_MAX 50
 

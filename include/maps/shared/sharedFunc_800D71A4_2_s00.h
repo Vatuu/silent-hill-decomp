@@ -14,7 +14,7 @@ void sharedFunc_800D71A4_2_s00(s_SubCharacter* chara)
     q19_12 rngAngle0;
     q19_12 angleSubtract;
     q19_12 angle1;
-    s32    dmgType;
+    s32    damageType;
 
     animStatus = chara->model_0.anim_4.status_0;
     angle0     = sharedData_800E21D0_0_s01.field_15C;
@@ -139,8 +139,8 @@ void sharedFunc_800D71A4_2_s00(s_SubCharacter* chara)
 
     sharedFunc_800D57C8_0_s01(chara);
 
-    dmgType = Chara_DamageTake(chara, Q12(1.0f));
-    switch (dmgType)
+    damageType = Chara_DamageTake(chara, Q12(1.0f));
+    switch (damageType)
     {
         case 0:
             switch (switchCond)

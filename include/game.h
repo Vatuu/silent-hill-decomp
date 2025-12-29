@@ -913,17 +913,12 @@ typedef enum _TriggerActivationType
 } e_TriggerActivationType;
 
 
-/** Some events seems to indicate specific cutscenes behaviour.
- * EventParamUnkState_1 is only used by the code to trigger the cutscenes to go into the
- * In-game mode.
- * EventParamUnkState_0 is only used as check by the code that defines if the in-game world
- * should be stop or not.
- */
+/** Some events indicate specific cutscenes behavior via flags. */
 typedef enum _EventParamUnkState
 {
     EventParamUnkState_None = 0,
-    EventParamUnkState_0    = 1 << 0, // EventParamUnkState_UnfreezeWorld
-    EventParamUnkState_1    = 1 << 1,
+    EventParamUnkState_0    = 1 << 0, /** Possible name: `EventParamUnkState_UnfreezeWorld`. Used to freeze/unfreeze the game world. */
+    EventParamUnkState_1    = 1 << 1, /** Triggers cutscenes that go to the in-game mode. */
     EventParamUnkState_2    = 1 << 2
 } e_EventParamUnkState;
 
@@ -1085,7 +1080,7 @@ typedef struct _EventParam
     u8  unk_7[1];
     u32 sysState_8_0           : 5; /** `e_SysState` used by the event. */
     u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
-    u32 flags_8_13             : 6; /** `e_EventParamUnkCutsceneState`. */
+    u32 flags_8_13             : 6; /** `e_EventParamUnkCutsceneState` */
     u32 field_8_19             : 5;
     u32 field_8_24             : 1;
     u32 mapOverlayIdx_8_25     : 6;
@@ -1415,7 +1410,7 @@ typedef struct _PropertiesLarvalStalker
     u8         unk_EB;
     q19_12     timer_EC;
     q20_12     timer_F0;
-    q4_12      timer_F4;
+    s16        keyframeIdx_F4; // Relative keyframe?
     s16        field_F8;
     q19_12     targetPositionX;
     q19_12     targetPositionZ;
@@ -1739,7 +1734,7 @@ typedef struct _SysWork
     s8              unk_0[8];
     e_SysState      sysState_8;
     s32             sysStateStep_C[3]; /** Temp data used by current `sysState_8`. Can be another state ID or other data. */
-    s32             isMgsStringSet_18; /** Indicates if string have been loaded and is going (or it is) being display. This should be a boolean value, however, the code may indicate that developers declared it as a int value. */
+    s32             isMgsStringSet_18; /** `bool` | Indicates if string have been loaded and is going (or it is) being display. */
     s32             timer_1C;
     s32             timer_20;
     s32             timer_24;
@@ -1755,7 +1750,7 @@ typedef struct _SysWork
     GsCOORDINATE2   npcCoords_FC0[NPC_BONE_COUNT_MAX]; // Dynamic coord buffer? 10 coords per NPC (given max of 6 NPCs).
     s8              npcId_2280;                        // NPC ID for `npcFlags_2290`. Not an index, starts at 1.
     s8              loadingScreenIdx_2281;
-    s8              field_2282;    /** `e_EventParamUnkCutsceneState`. */
+    s8              field_2282;    /** `e_EventParamUnkCutsceneState` */
     s8              field_2283;    // Index into `SfxPairs`.
     u16             field_2284[4]; // Flags.
     s32             field_228C[1];

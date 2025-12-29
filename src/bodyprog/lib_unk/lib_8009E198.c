@@ -1,8 +1,8 @@
 #include "common.h"
 #include "lib_unk.h"
 
-#include <psyq/libpad.h>
 #include <psyq/libgte.h>
+#include <psyq/libpad.h>
 
 #include "bodyprog/math/math.h"
 

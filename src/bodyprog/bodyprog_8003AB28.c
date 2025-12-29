@@ -972,28 +972,20 @@ void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
 void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
 {
     VECTOR3         pos0; // Render distance?
-                          // Modifying `pos0.vz = Q12(200.0f);` makes the world to not render and when
-                          // in the void, the player becomes immovable.
+                          // Modifying `pos0.vz = Q12(200.0f);` makes the world to not render. In the void, the player becomes immovable.
                           //
-                          // Seems like most of the time the x and z values are sharing the same value as
-                          // the position of the player while also summing a derivative of the speed
-                          // of the player and the angle at which the player is looking at.
+                          // Most of the time, X and Z share the same value as
+                          // the player player position or a position slightly ahead computed from the heading angle.
                           // 
-                          // In Old Silent Hill (after Cafe 5to2) while standing still this value is
+                          // In Old Silent Hill (after Cafe 5to2) while standing still, this value is
                           // the same as `g_SysWork.playerWork_4C.player_0.position_18`.
-                          // 
     VECTOR3         pos1; // Render distance?
-                          // In case of reversing the conditional `if (D_800C4168.isFogEnabled_1)`
-                          // to make it trigger the else when the fog is enabled the render distance
+                          // If the conditional `if (D_800C4168.isFogEnabled_1)` is reversed
+                          // to run the `else` block, when fog is enabled, the render distance
                           // is slightly reduced.
                           //
-                          // Similar to `pos0` in the case of the enviroment not having the fog enabled
-                          // it uses from base the position of the player, otherwise uses the camera
-                          // position and angle to then make some extra calculations.
-                          // 
-                          // In Old Silent Hill (after Cafe 5to2) while standing still this value is
-                          // slightly different to the player position as this is based upon camera's
-                          // angle and position.
+                          // Similarly to `pos0`, when fog is disabled, it uses the player position.
+                          // Otherwise it's based the camera position, using its rotation to then make some extra calculations.
     SVECTOR         ang;
     s32             temp_a1;
     s32             temp_a2;

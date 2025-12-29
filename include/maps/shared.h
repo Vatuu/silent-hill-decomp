@@ -2144,51 +2144,6 @@ void sharedFunc_800D2EB4_0_s00(void);
 
 void sharedFunc_800D2EF4_0_s00(void);
 
-void sharedFunc_800D3EF4_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D4924_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D492C_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D5098_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D54A8_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D5B48_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D5C64_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D5FCC_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D63D0_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D654C_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D6554_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D670C_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D7E04_0_s00(s_SubCharacter* stalker, s32 sfxId);
-
-/** Unsure, but likely takes a Stalker. */
-void sharedFunc_800D88AC_0_s00(s_SubCharacter* stalker);
-
-void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void Ai_Stalker_Init(s_SubCharacter* stalker); // Matches across all maps except `map6_s03`.
-
-void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D3B44_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, GsCOORDINATE2* coords);
-
-void sharedFunc_800D70C4_0_s00(s_SubCharacter* stalker);
-
-void sharedFunc_800D7BE8_0_s00(s_SubCharacter* stalker);
-
 /** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data). */
 void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond);
 
@@ -2249,21 +2204,6 @@ void sharedFunc_800CB8A0_1_s01(s32 idx);
 bool sharedFunc_800CBA38_1_s01(s32 idx);
 
 bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx);
-
-// MAP1_S00 LarvalStalker funcs
-void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void sharedFunc_800CF168_1_s00(s_SubCharacter* larvalStalker);
-
-void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* coords);
-
-void sharedFunc_800D1524_1_s00(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void Ai_LarvalStalker_Init(s_SubCharacter* larvalStalker);
-
-void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker);
-
-void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker);
 
 // TODO: Make this match for `s_Particle`.
 void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* deltaTime);
@@ -2447,132 +2387,10 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner);
 
 void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner);
 
-void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void Ai_SplitHead_Init(s_SubCharacter* splitHead);
-
-void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead);
-
-void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead);
-
-void Ai_SplitHead_ControlUpdate(s_SubCharacter* splitHead);
-
-void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead);
-
-void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr);
-
-void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead);
-
-void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, s32*, s32*);
-
-void sharedFunc_800D17BC_1_s05(s_SubCharacter* splitHead);
-
-void sharedFunc_800D2214_1_s05(s_SubCharacter* splitHead);
-
-void sharedFunc_800D2444_1_s05(s_SubCharacter* splitHead);
-
-void sharedFunc_800D263C_1_s05(s_SubCharacter* splitHead);
-
-void sharedFunc_800D3AFC_1_s05(s_SubCharacter* splitHead);
-
-void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead);
-
-void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead);
-
-/** Probably takes X and Z position values. */
-void sharedFunc_800D450C_1_s05(s32 arg0, s32 arg1);
-
-bool sharedFunc_800D4530_1_s05(s_SubCharacter* splitHead);
-
+/** Related to Air Screamer? */
 extern GsCOORDINATE2* sharedData_800D8610_1_s05;
 
-void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void sharedFunc_800D2200_0_s01(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D2364_0_s01(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer);
-
-/** Also reused for Night Flutter. */
-bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D2B00_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D2B10_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D2B28_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D2B4C_0_s01(s_SubCharacter* airScreamer);
-
-void Ai_AirScreamer_GroundWarp(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D2BE4_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D2BF4_0_s01(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, s32* outDist, s32* outAngle);
-
-bool sharedFunc_800D3430_0_s01(s_SubCharacter* airScreamer, q19_12* dist, q19_12* angle);
-
-/** Pecking distance getter? */
-s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800D31D0_0_s01(s_SubCharacter* airScreamer, VECTOR3* pos, s32 arg2);
-
-bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer);
-
-void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800D62D8_0_s01(s_SubCharacter* airScreamer);
-
-/** Returns anim-related index. */
-s32 sharedFunc_800D4A80_0_s01(s_SubCharacter* airScreamer);
-
-/** Gets player Y position with an offset. */
-q19_12 sharedFunc_800D5274_0_s01(void);
-
-void sharedFunc_800D633C_0_s01(s_SubCharacter* airScreamer);
-void sharedFunc_800D63A4_0_s01(s_SubCharacter* airScreamer);
-void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer);
-
-s32 sharedFunc_800D7120_0_s01(s32, s32, s32);
-s32 sharedFunc_800D71F0_0_s01(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-
-s32 sharedFunc_800D7440_0_s01(s_800C4590* arg0, VECTOR* vec1, s_SubCharacter* airScreamer);
-
-void sharedFunc_800D7560_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D76A0_0_s01(s_SubCharacter* airScreamer);
-
-q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800D7AB0_0_s01(s_SubCharacter* airScreamer);
-
-/** @brief Applies a multi-stage bend deformation to several model coordinates.
- * Builds three rotation matrices using scaled fractions of `chara->field_2A` and
- * multiplies them into `coords[10]`, `coords[9]`, `coords[1]`, and `coords[2]`.
- * Used when the animation flag bit 0 is active to drive a chained bending motion.
- */
-void sharedFunc_800D7B14_0_s01(s_SubCharacter* airScreamer, GsCOORDINATE2* coords);
-
-bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer);
-
-bool sharedFunc_800D81B0_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D81D0_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D8244_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D8714_0_s01(s_SubCharacter* airScreamer, q19_12 angle0, q19_12 angle1);
-
-void sharedFunc_800D87FC_0_s01(s_SubCharacter* airScreamer);
+/** Unclear, but funcs past here may be specific to Air Screamer. */
 
 void sharedFunc_800D8804_0_s01(void);
 
@@ -2600,16 +2418,7 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch);
 
-// `Ai_Bloodsucker` related
-void Ai_Bloodsucker_Update(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-void Ai_Bloodsucker_Init(s_SubCharacter* bloodsucker);
-void Ai_Bloodsucker_Control_1(s_SubCharacter* bloodsucker);
-void Ai_Bloodsucker_Control_2(s_SubCharacter* bloodsucker);
-void Ai_Bloodsucker_Control_3(s_SubCharacter* bloodsucker);
-void Ai_Bloodsucker_Control_4(s_SubCharacter* bloodsucker);
-void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-// TODO: Is this func bloodsucker specific?
+// TODO: Is this func Bloodsucker-specific?
 s32 Chara_DamageTake(s_SubCharacter* chara, q19_12 mult);
 
 void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7);
@@ -2654,7 +2463,7 @@ s32 sharedFunc_800CD980_3_s03(s_SubCharacter* chara);
 
 q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center);
 
-void sharedFunc_800D6EC4_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D7B14_0_s01(s_SubCharacter*, GsCOORDINATE2*);
 

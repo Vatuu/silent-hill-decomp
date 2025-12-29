@@ -27,7 +27,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
     larvalStalkerProps.targetPositionX = g_SysWork.playerWork_4C.player_0.position_18.vx;
     larvalStalkerProps.targetPositionZ = g_SysWork.playerWork_4C.player_0.position_18.vz;
 
-    if (larvalStalker->model_0.controlState_2 == 11)
+    if (larvalStalker->model_0.controlState_2 == LarvalStalkerControl_11)
     {
         if (ANIM_STATUS_IDX_GET(larvalStalker->model_0.anim_4.status_0) == LarvalStalkerAnim_9)
         {
@@ -35,7 +35,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
             larvalStalker->model_0.anim_4.status_0 = ANIM_STATUS(LarvalStalkerAnim_17, false);
         }
     }
-    else if (larvalStalker->model_0.controlState_2 == 12)
+    else if (larvalStalker->model_0.controlState_2 == LarvalStalkerControl_12)
     {
         if (ANIM_STATUS_IDX_GET(larvalStalker->model_0.anim_4.status_0) == LarvalStalkerAnim_2)
         {
@@ -62,7 +62,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
 
         if (larvalStalker->health_B0 > Q12(100.0f))
         {
-            larvalStalker->model_0.controlState_2 = 10;
+            larvalStalker->model_0.controlState_2 = LarvalStalkerControl_10;
             if (angle < FP_ANGLE(90.0f))
             {
                 keyframe2      = FP_FROM(larvalStalker->model_0.anim_4.time_4, Q12_SHIFT);
@@ -183,7 +183,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
                     }
                 }
 
-                larvalStalker->model_0.controlState_2 = 12;
+                larvalStalker->model_0.controlState_2 = LarvalStalkerControl_12;
             }
             else
             {
@@ -216,7 +216,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
                     larvalStalker->model_0.anim_4.status_0 = ANIM_STATUS(LarvalStalkerAnim_8, false);
                 }
 
-                larvalStalker->model_0.controlState_2 = 11;
+                larvalStalker->model_0.controlState_2 = LarvalStalkerControl_11;
             }
         }
     }

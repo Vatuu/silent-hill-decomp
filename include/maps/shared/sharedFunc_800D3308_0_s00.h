@@ -4,7 +4,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
     u16    keyframeIdx;
     q19_12 mag;
     q19_12 var_a0;
-    q20_12 var_v1;
+    q20_12 newHealth;
 
     #define stalkerProps stalker->properties_E4.stalker
 
@@ -13,7 +13,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
 
     if (stalker->damage_B4.amount_C > Q12(0.0f) && stalker->health_B0 > Q12(0.0f))
     {
-        sharedFunc_800D7E04_0_s00(stalker, 1365);
+        sharedFunc_800D7E04_0_s00(stalker, Sfx_Unk1365);
     }
 
     if (stalker->model_0.anim_4.status_0 == ANIM_STATUS(StalkerAnim_34, true) ||
@@ -24,16 +24,15 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
 
     if (stalker->health_B0 > Q12(0.0f))
     {
-        var_v1          = stalker->health_B0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800E3A28_0_s00, Q12_SHIFT);
-        stalker->health_B0 = MIN(var_v1, stalkerProps.health_110);
+        newHealth          = stalker->health_B0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800E3A28_0_s00, Q12_SHIFT);
+        stalker->health_B0 = MIN(newHealth, stalkerProps.health_110);
     }
 
     if (stalker->damage_B4.amount_C > Q12(0.0f))
     {
         if (stalker->health_B0 > Q12(0.0f))
         {
-            stalker->health_B0 = MAX(stalker->health_B0 - stalker->damage_B4.amount_C, Q12(0.0f));
-
+            stalker->health_B0       = MAX(stalker->health_B0 - stalker->damage_B4.amount_C, Q12(0.0f));
             stalkerProps.health_110 -= stalker->damage_B4.amount_C >> 2;
             stalkerProps.flags_E8   |= StalkerFlag_0 | StalkerFlag_10;
 

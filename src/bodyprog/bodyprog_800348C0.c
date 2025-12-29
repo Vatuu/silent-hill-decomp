@@ -3228,12 +3228,11 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
     s32 i;
     void (**unfreezePlayerFunc)(bool);
 	
-	// In the instance where this function (`SysState_ReadMessage_Update`) is call
-	// the entire In-Game world get frozen.
-	// If any of the next instances is pass then the In-Game world will unfreeze.
-	// - An specific event related flag is not enabled.
-	// - An specific camera related flag is not enabled.
-	// - If there is no alive enemy.
+	// When `SysState_ReadMessage_Update` is called, the game world freezes.
+	// The following conditions unfreeze:
+	// - A specific event related flag is disenabled.
+	// - A specific camera related flag is disenabled.
+	// - There is no alive enemy.
     if (!(g_MapEventParam->flags_8_13 & EventParamUnkState_0) && !(g_SysWork.flags_22A4 & SysFlag2_5))
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)

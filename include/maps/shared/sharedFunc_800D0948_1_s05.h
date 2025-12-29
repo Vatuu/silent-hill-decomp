@@ -19,8 +19,7 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
     if ((u16)chara->properties_E4.dummy.properties_E8[2].val16[1] > Q12(0.6f))
     {
         angle = FP_ANGLE(0.0f);
-        angleToPlayer = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
-                               g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
+        angleToPlayer = Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18);
 
         if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 2))
         {

@@ -82,4 +82,41 @@ typedef enum _SplitHeadControl
     { Anim_Update1, ANIM_STATUS(14, true), false, NO_VALUE, { Q12(2) }, 34, 36 }
 };*/
 
+void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
+void Ai_SplitHead_Init(s_SubCharacter* splitHead);
+
+void sharedFunc_800CF990_1_s05(s_SubCharacter* splitHead);
+
+void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead);
+
+void Ai_SplitHead_ControlUpdate(s_SubCharacter* splitHead);
+
+void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead);
+
+void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr);
+
+void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead);
+
+void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, s32*, s32*);
+
+void sharedFunc_800D17BC_1_s05(s_SubCharacter* splitHead);
+
+void sharedFunc_800D2214_1_s05(s_SubCharacter* splitHead);
+
+void sharedFunc_800D2444_1_s05(s_SubCharacter* splitHead);
+
+void sharedFunc_800D263C_1_s05(s_SubCharacter* splitHead);
+
+void sharedFunc_800D3AFC_1_s05(s_SubCharacter* splitHead);
+
+void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead);
+
+void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead);
+
+/** Probably takes X and Z position values. Specific to Split Head? */
+void sharedFunc_800D450C_1_s05(s32 arg0, s32 arg1);
+
+bool sharedFunc_800D4530_1_s05(s_SubCharacter* splitHead);
+
 #endif

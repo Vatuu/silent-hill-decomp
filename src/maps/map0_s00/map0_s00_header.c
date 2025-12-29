@@ -3,6 +3,7 @@
 #include "maps/shared.h"
 #include "maps/map0/map0_s00.h"
 #include "maps/characters/cheryl.h"
+#include "maps/characters/stalker.h"
 
 #define BLOOD_SPLAT_COUNT_MAX 150
 
