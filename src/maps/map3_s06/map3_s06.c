@@ -33,4 +33,4 @@ INCLUDE_RODATA("asm/maps/map3_s06/nonmatchings/map3_s06", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800CCEA8
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"

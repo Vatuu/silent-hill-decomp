@@ -62,7 +62,7 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800CE180);
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800CFEAC
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CA7F0);
 

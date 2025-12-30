@@ -34,7 +34,7 @@ INCLUDE_RODATA("asm/maps/map1_s00/nonmatchings/map1_s00", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800CD000
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 #include "maps/shared/Ai_LarvalStalker_Update.h" // 0x800CF050
 

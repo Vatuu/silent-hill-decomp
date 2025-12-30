@@ -21,7 +21,7 @@ INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CD3AC
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 #include "maps/shared/Ai_LarvalStalker_Update.h" // 0x800D00B8
 

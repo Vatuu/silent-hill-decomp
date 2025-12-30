@@ -39,7 +39,7 @@ INCLUDE_ASM("asm/maps/map5_s00/nonmatchings/map5_s00", func_800CB25C);
 
 #include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800CD88C
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 #include "maps/shared/Ai_HangedScratcher_Update.h" // 0x800CFC24
 

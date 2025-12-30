@@ -35,7 +35,7 @@ INCLUDE_RODATA("asm/maps/map6_s03/nonmatchings/map6_s03", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800CCDCC
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 // TODO: Move this line into separate `Chara_Stalker` split.
 #include "../src/maps/characters/stalker.c" // 0x800CEFCC

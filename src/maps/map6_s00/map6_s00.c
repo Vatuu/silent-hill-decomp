@@ -39,7 +39,7 @@ INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800CEFFC
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 INCLUDE_RODATA("asm/maps/map6_s00/nonmatchings/map6_s00", D_800CA854);
 

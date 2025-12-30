@@ -41,7 +41,7 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800CC004);
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800CE2AC
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 #include "maps/shared/sharedFunc_800CD6B0_3_s03.h" // 0x800D04BC
 

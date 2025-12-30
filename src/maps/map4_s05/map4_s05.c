@@ -47,7 +47,7 @@ INCLUDE_ASM("asm/maps/map4_s05/nonmatchings/map4_s05", func_800CBC04);
 
 #include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800CE5C8
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 void Ai_Floatstinger_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D16FC
 {

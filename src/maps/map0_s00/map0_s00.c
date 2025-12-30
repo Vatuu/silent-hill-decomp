@@ -1115,7 +1115,7 @@ bool func_800D0600(void) // 0x800D0600
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800D0700
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 // TODO: Move this line into separate `Chara_Stalker` split.
 #include "../src/maps/characters/stalker.c" // 0x800D2F08

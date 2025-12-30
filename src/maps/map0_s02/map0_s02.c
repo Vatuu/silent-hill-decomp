@@ -28,7 +28,7 @@
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800CC89C
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CE7DC
 

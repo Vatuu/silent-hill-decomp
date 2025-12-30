@@ -25,4 +25,4 @@ INCLUDE_RODATA("asm/maps/map4_s01/nonmatchings/map4_s01", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CD548
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"

@@ -6,7 +6,7 @@
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CA904
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CC7C0
 

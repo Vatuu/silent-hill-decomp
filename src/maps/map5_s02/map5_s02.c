@@ -12,7 +12,7 @@ INCLUDE_RODATA("asm/maps/map5_s02/nonmatchings/map5_s02", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CB6CC
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 // TODO: Move this line into separate `Chara_Stalker` split.
 #include "../src/maps/characters/stalker.c" // 0x800CDC08

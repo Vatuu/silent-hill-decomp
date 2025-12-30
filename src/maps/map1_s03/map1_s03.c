@@ -219,7 +219,7 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
 
 #include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800D089C
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 // TODO: Move this line into separate `Chara_Stalker` split.
 #include "../src/maps/characters/stalker.c" // 0x800D2DC0

@@ -36,7 +36,7 @@ const VECTOR D_800CA5C8 = {};
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800CFA30
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CA9F0);
 

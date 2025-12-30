@@ -35,7 +35,7 @@ INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800CF7B8
 
-#include "maps/shared/Player.h"
+#include "../src/maps/characters/player.c"
 
 INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CA860);
 
