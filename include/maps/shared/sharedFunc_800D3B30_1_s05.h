@@ -87,7 +87,8 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
             }
             else if (splitHead->model_0.anim_4.time_4 < Q12(33.0f))
             {
-                var_v1_3 = FP_MULTIPLY_PRECISE(g_SysWork.playerWork_4C.player_0.field_D4.field_0, splitHead->model_0.anim_4.time_4 + Q12(-31.0f), Q12_SHIFT) >> 1;
+                var_v1_3 = FP_MULTIPLY_PRECISE(g_SysWork.playerWork_4C.player_0.field_D4.field_0,
+                                               splitHead->model_0.anim_4.time_4 + Q12(-31.0f), Q12_SHIFT) >> 1;
             }
             else
             {
@@ -104,7 +105,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
             {
                 (&g_SysWork.playerWork_4C)->player_0.attackReceived_41 = 0x2F;
                 splitHead->properties_E4.splitHead.flags_E8           |= 0x202;
-                func_8005DC1C(0x5C1, &g_SysWork.playerWork_4C.player_0.position_18, Q8(0.999f), 2);
+                func_8005DC1C(Sfx_Unk1473, &g_SysWork.playerWork_4C.player_0.position_18, Q8(0.999f), 2);
             }
         }
     }
