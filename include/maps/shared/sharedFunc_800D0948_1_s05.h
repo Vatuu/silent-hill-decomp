@@ -1,3 +1,4 @@
+// `Ai_*_Move`
 void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
 {
     s_func_800700F8_2 sp10;

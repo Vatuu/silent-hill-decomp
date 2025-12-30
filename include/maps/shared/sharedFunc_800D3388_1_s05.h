@@ -12,9 +12,11 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, s32* arg1, s32* arg2)
     s32                          var_a0;
     s32                          var_a1;
     s32                          i;
+    s32                          new_var;
     s_sharedFunc_800D4594_1_s05* ptr0;
     s_sharedFunc_800D4594_1_s05* ptr1;
-    s32                          new_var;
+
+    #define splitHeadProps = splitHead->properties_E4.splitHead
 
     var_s6 = 0;
 
@@ -196,4 +198,6 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, s32* arg1, s32* arg2)
         sharedData_800D5CF8_1_s05[i] = sp18[i];
         sharedData_800D5D08_1_s05[i] = sp28[i];
     }
+
+    #undef splitHeadProps
 }

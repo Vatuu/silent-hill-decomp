@@ -18,7 +18,7 @@ void Ai_Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINAT
     if (g_DeltaTime0 != Q12(0.0f))
     {
         sharedFunc_800D7EE8_1_s02(creeper);
-        sharedFunc_800D8244_1_s02(creeper);
+        Ai_Creeper_ControlUpdate(creeper);
         sharedFunc_800D983C_1_s02(creeper);
     }
 
@@ -32,7 +32,6 @@ static inline void Ai_Creeper_PropertiesUpdateFromStep(s_SubCharacter* creeper)
     s32 stateStep;
 
     stateStep = creeper->model_0.stateStep_3;
-
     if (creeper->model_0.stateStep_3 != 3)
     {
         if (stateStep < 3)
@@ -61,12 +60,12 @@ static inline void Ai_Creeper_PropertiesUpdateFromStep(s_SubCharacter* creeper)
     }
 
     creeper->model_0.controlState_2 = 1;
-    Character_AnimSet(creeper, ANIM_STATUS(11, true), 94);
+    Character_AnimSet(creeper, ANIM_STATUS(CreeperAnim_11, true), 94);
 }
 
 void Ai_Creeper_Init(s_SubCharacter* creeper)
 {
-    // TODO: Values used in the `Rng_Rand16` calls at the end, not sure of the actual purpose yet.
+    // TODO: Values used in the `Rng_Rand16` calls at the end. TODO: Not sure of the actual purpose yet.
     #define BASE_EASY_VAL   0.7f
     #define BASE_NORMAL_VAL 0.9f
     #define BASE_HARD_VAL   1.2f
@@ -76,7 +75,7 @@ void Ai_Creeper_Init(s_SubCharacter* creeper)
 
     s32 i;
 
-    // Checks if any other Creeper NPCs are also present, making sure to skip this `s_SubCharacter` instance in the NPC array.
+    // Check if any other Creeper NPCs are present, making sure to skip this `s_SubCharacter` instance in the NPC array.
     i = 0;
     do
     {
@@ -228,7 +227,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
     }
 }
 
-void sharedFunc_800D8244_1_s02(s_SubCharacter* creeper)
+void Ai_Creeper_ControlUpdate(s_SubCharacter* creeper)
 {
     // Handle control state.
     switch (creeper->model_0.controlState_2)
@@ -287,7 +286,7 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
         if (Rng_GenerateUInt(0, 7) == 0 && // 1 in 8 chance.
             creeper->model_0.anim_4.status_0 == ANIM_STATUS(CreeperAnim_11, true))
         {
-            creeper->model_0.controlState_2         = CreeperControl_2;
+            creeper->model_0.controlState_2  = CreeperControl_2;
             creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_13, false);
             creeperProps.timer_F0            = Q12(0.5f);
             creeperProps.timer_104           = Q12(0.0f);
@@ -307,7 +306,7 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
     {
         if (creeperProps.flags_E8 & CreeperFlag_7)
         {
-            if (Rng_GenerateUInt(0, 7) == 0) // 1 in 8 chance.
+            if (!Rng_GenerateUInt(0, 7)) // 1 in 8 chance.
             {
                 if (creeperProps.timer_104 > Q12(0.5f))
                 {
@@ -324,7 +323,7 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
         }
         else if (sharedData_800E57CC_1_s02 == 0)
         {
-            if (Rng_GenerateUInt(0, 511) == 0 && creeperProps.timer_104 > Q12(4.0f)) // 1 in 512 chance.
+            if (!Rng_GenerateUInt(0, 511) && creeperProps.timer_104 > Q12(4.0f)) // 1 in 512 chance.
             {
                 s32 i;
 
@@ -345,7 +344,7 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
                     }
                 }
             }
-            else if (Rng_GenerateUInt(0, 63) == 0 && creeperProps.timer_104 > Q12(2.0f)) // 1 in 64 chance.
+            else if (!Rng_GenerateUInt(0, 63) && creeperProps.timer_104 > Q12(2.0f)) // 1 in 64 chance.
             {
                 func_8005DC1C(Sfx_Unk1426, &creeper->position_18, Q8_CLAMPED(0.5f), 0);
                 creeperProps.timer_104 = Rng_GenerateInt(Q12(0.8f), Q12(1.8f) - 1);
@@ -398,15 +397,16 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
             }
             else
             {
-                creeper->model_0.controlState_2         = CreeperControl_1;
+                creeper->model_0.controlState_2  = CreeperControl_1;
                 creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_11, false);
                 creeperProps.timer_F0            = Q12(0.0f);
             }
         }
         else if (!(g_SysWork.field_2284[3] & (1 << 1)) && !(playerWork->player_0.flags_3E & CharaFlag_Unk4) &&
-                 distToPlayer < Q12(0.5f) && ABS(angleDeltaToPlayer) < FP_ANGLE(10.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
+                 distToPlayer < Q12(0.5f) && ABS(angleDeltaToPlayer) < FP_ANGLE(10.0f) &&
+                 g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
         {
-            creeper->model_0.controlState_2         = CreeperControl_3;
+            creeper->model_0.controlState_2  = CreeperControl_3;
             creeper->model_0.anim_4.status_0 = ANIM_STATUS(CreeperAnim_12, false);
             creeperProps.timer_F0            = Q12(0.0f);
             g_SysWork.field_2284[3]         |= 1 << 1;
@@ -452,11 +452,11 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
             }
 
             creeperProps.rotationY_108 = Chara_HeadingAngleGet(creeper,
-                                                                         Q12(1.2f),
-                                                                         creeperProps.targetPositionX_F4,
-                                                                         creeperProps.targetPositionZ_F8,
-                                                                         Q12(1.0f),
-                                                                         true);
+                                                               Q12(1.2f),
+                                                               creeperProps.targetPositionX_F4,
+                                                               creeperProps.targetPositionZ_F8,
+                                                               Q12(1.0f),
+                                                               true);
             if (creeperProps.rotationY_108 == FP_ANGLE(360.0f))
             {
                 creeperProps.rotationY_108 = creeper->rotation_24.vy;
@@ -491,7 +491,7 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
     q19_12  moveSpeed;
     q19_12  moveSpeedTmp0;
 
-    #define playerPos    g_SysWork.playerWork_4C.player_0.position_18
+    #define playerPos g_SysWork.playerWork_4C.player_0.position_18
 
     if (func_800700F8(creeper, &g_SysWork.playerWork_4C.player_0))
     {
@@ -764,9 +764,9 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creaper)
             break;
 
         case ANIM_STATUS(CreeperAnim_1, true):
-            creaper->properties_E4.creeper.animStatus_10A          = ANIM_STATUS(CreeperAnim_1, true);
-            keyframeIdx0                                           = FP_FROM(creaper->model_0.anim_4.time_4, Q12_SHIFT);
-            keyframeIdx1                                           = keyframeIdx0 + 1;
+            creaper->properties_E4.creeper.animStatus_10A = ANIM_STATUS(CreeperAnim_1, true);
+            keyframeIdx0 = FP_FROM(creaper->model_0.anim_4.time_4, Q12_SHIFT);
+            keyframeIdx1 = keyframeIdx0 + 1;
             func_80070400(creaper, &sharedData_800E0F78_1_s02[keyframeIdx0], &sharedData_800E0F78_1_s02[keyframeIdx1]);
             break;
 
@@ -822,6 +822,7 @@ void sharedFunc_800D99D0_1_s02(s_SubCharacter* creaper)
         case ANIM_STATUS(CreeperAnim_16, true):
             keyframeIdx2 = FP_FROM(creaper->model_0.anim_4.time_4, Q12_SHIFT) - 50;
             keyframeIdx3 = keyframeIdx2 - !(keyframeIdx2 < 10) - !(keyframeIdx2 < 11);
+
             keyframeIdx0 = keyframeIdx3 - !(keyframeIdx2 < 12);
             keyframeIdx1 = (keyframeIdx2 + 1) - !(keyframeIdx2 < 9) - !(keyframeIdx2 < 10) - !(keyframeIdx2 < 11);
             func_80070400(creaper, &sharedData_800E1004_1_s02[keyframeIdx0], &sharedData_800E1004_1_s02[keyframeIdx1]);

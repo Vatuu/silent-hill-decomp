@@ -25,8 +25,8 @@ void Ai_PuppetNurse_Move(s_SubCharacter* nurse)
 
     distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx,
                                        g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz) - Q12(0.76f);
+    distAbs      = ABS(distToPlayer);
 
-    distAbs            = ABS(distToPlayer);
     angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(nurse->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                        nurse->rotation_24.vy);
     absAngle           = ABS(angleDeltaToPlayer);

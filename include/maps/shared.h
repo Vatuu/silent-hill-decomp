@@ -2296,7 +2296,7 @@ void Ai_Creeper_Init(s_SubCharacter* creeper); // `map5_s00` version has extra c
 
 void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper);
 
-void sharedFunc_800D8244_1_s02(s_SubCharacter* creeper);
+void Ai_Creeper_ControlUpdate(s_SubCharacter* creeper);
 
 void Ai_Creeper_Control_1(s_SubCharacter* creeper);
 
