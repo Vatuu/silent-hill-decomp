@@ -1330,9 +1330,8 @@ typedef struct _PropertiesAirScreamer
     s16     field_F0; // } Maybe 2D offset like in Creeper properties? Must check.
     s16     field_F2; // }
     s32     field_F4;
-    s32     field_F8;
-    s8      unk_FC[8];
-    VECTOR3 position_104;
+    VECTOR3 position_F8;  // Q19.12 | Maybe target position?
+    VECTOR3 position_104; // Q19.12
     s8      unk_110[12];
     s32     flags_11C; /** `e_AirScreamerFlags` */
     q19_12  timer_120;

@@ -2081,7 +2081,8 @@ void sharedFunc_800DEE24_2_s00(s_SubCharacter*); // Assumed return type.
 
 void sharedFunc_800DF358_2_s00(s_SubCharacter*); // Assumed return type.
 
-void sharedFunc_800DF448_2_s00(s_SubCharacter*, s32); // Assumed return type.
+/** Condition is probably to differentiate between an Air Screamer and Night Flutter. */
+void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond); // Assumed return type.
 
 void sharedFunc_800DF710_2_s00(s_SubCharacter* chara);
 
