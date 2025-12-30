@@ -221,47 +221,8 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
 
 #include "maps/shared/Player.h"
 
-#include "maps/shared/Ai_Stalker_Update.h" // 0x800D2DC0
-
-#include "maps/shared/Ai_Stalker_Init.h" // 0x800D2F54
-
-#include "maps/shared/sharedFunc_800D3308_0_s00.h" // 0x800D31C0
-
-#include "maps/shared/Ai_Stalker_ControlUpdate.h" // 0x800D39FC
-
-void Ai_Stalker_Control_2(s_SubCharacter* chara) {} // 0x800D3DAC
-
-#include "maps/shared/Ai_Stalker_Control_3.h" // 0x800D3DB4
-
-#include "maps/shared/Ai_Stalker_Control_4.h" // 0x800D4984
-
-#include "maps/shared/Ai_Stalker_Control_5.h" // 0x800D50F0
-
-#include "maps/shared/Ai_Stalker_Control_6.h" // 0x800D5500
-
-#include "maps/shared/Ai_Stalker_Control_7.h" // 0x800D5BA0
-
-#include "maps/shared/Ai_Stalker_Control_8.h" // 0x800D5CBC
-
-#include "maps/shared/Ai_Stalker_Control_9.h" // 0x800D6024
-
-#include "maps/shared/Ai_Stalker_Control_10.h" // 0x800D6428
-
-#include "maps/shared/Ai_Stalker_Control_11.h" // 0x800D65A4
-
-#include "maps/shared/Ai_Stalker_Control_12.h" // 0x800D65AC
-
-#include "maps/shared/Ai_Stalker_Control_13.h" // 0x800D6764
-
-#include "maps/shared/sharedFunc_800D67FC_0_s00.h" // 0x800D6854
-
-#include "maps/shared/sharedFunc_800D6970_0_s00.h" // 0x800D69C8
-
-#include "maps/shared/sharedFunc_800D70C4_0_s00.h" // 0x800D711C
-
-#include "maps/shared/sharedFunc_800D7BE8_0_s00.h" // 0x800D7C40
-
-#include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D7E5C
+// TODO: Move this line into separate `Chara_Stalker` split.
+#include "../src/maps/characters/stalker.c" // 0x800D2DC0
 
 // TODO: Move this line into separate `Chara_Creeper` split.
 #include "../src/maps/characters/creeper.c" // 0x800D8010

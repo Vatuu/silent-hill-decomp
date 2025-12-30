@@ -37,47 +37,8 @@ INCLUDE_RODATA("asm/maps/map6_s04/nonmatchings/map6_s04", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D1DBC_1_s00.h" // 0x800D2E24
 
-#include "maps/shared/Ai_Stalker_Update.h" // 0x800D3560
-
-#include "maps/shared/Ai_Stalker_Init.h" // 0x800D36F4
-
-#include "maps/shared/sharedFunc_800D3308_0_s00.h" // 0x800D3960
-
-#include "maps/shared/Ai_Stalker_ControlUpdate.h" // 0x800D419C
-
-void Ai_Stalker_Control_2(s_SubCharacter* chara) {} // 0x800D454C
-
-#include "maps/shared/Ai_Stalker_Control_3.h" // 0x800D4554
-
-#include "maps/shared/Ai_Stalker_Control_4.h" // 0x800D5124
-
-#include "maps/shared/Ai_Stalker_Control_5.h" // 0x800D5890
-
-#include "maps/shared/Ai_Stalker_Control_6.h" // 0x800D5CA0
-
-#include "maps/shared/Ai_Stalker_Control_7.h" // 0x800D6340
-
-#include "maps/shared/Ai_Stalker_Control_8.h" // 0x800D645C
-
-#include "maps/shared/Ai_Stalker_Control_9.h" // 0x800D67C4
-
-#include "maps/shared/Ai_Stalker_Control_10.h" // 0x800D6BC8
-
-#include "maps/shared/Ai_Stalker_Control_11.h" // 0x800D6D44
-
-#include "maps/shared/Ai_Stalker_Control_12.h" // 0x800D6D4C
-
-#include "maps/shared/Ai_Stalker_Control_13.h" // 0x800D6F04
-
-#include "maps/shared/sharedFunc_800D67FC_0_s00.h" // 0x800D6FF4
-
-#include "maps/shared/sharedFunc_800D6970_0_s00.h" // 0x800D7168
-
-#include "maps/shared/sharedFunc_800D70C4_0_s00.h" // 0x800D78BC
-
-#include "maps/shared/sharedFunc_800D7BE8_0_s00.h" // 0x800D83E0
-
-#include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D85FC
+// TODO: Move this line into separate `Chara_Stalker` split.
+#include "../src/maps/characters/stalker.c" // 0x800D3560
 
 void func_800D87B0(s_SubCharacter* chara) // 0x800D87B0
 {
