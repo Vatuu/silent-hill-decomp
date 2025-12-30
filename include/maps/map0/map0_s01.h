@@ -140,8 +140,6 @@ void func_800D4E84(s_SubCharacter*);
 
 void func_800D529C(s_SubCharacter* chara, q19_12 arg1, q19_12 angle);
 
-void func_800D39F4(s_SubCharacter* chara);
-
 void MapEvent_CafeCutscene(void);
 
 /** @brief @unused Handles the demo end screen event after the Air Screamer breaks through the cafe window. Seen in demo builds. */
@@ -150,10 +148,6 @@ void MapEvent_ToBeContinued(void);
 void func_800D49B0(s_SubCharacter* chara);
 
 void func_800D4894(s_SubCharacter* chara);
-
-void func_800D3A3C(s_SubCharacter* chara);
-
-void func_800D3AC0(s_SubCharacter* chara);
 
 void func_800D598C(s_SubCharacter* chara);
 

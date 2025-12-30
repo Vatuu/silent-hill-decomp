@@ -125,7 +125,7 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara)
             break;
     }
 
-    switch (Chara_DamageTake(chara, Q12(1.0f)))
+    switch (Ai_AirScreamer_DamageTake(chara, Q12(1.0f)))
     {
         case 0:
             switch (switchCond1)

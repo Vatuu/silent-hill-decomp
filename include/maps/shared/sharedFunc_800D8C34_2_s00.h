@@ -4,7 +4,7 @@ void sharedFunc_800D8C34_2_s00(s_SubCharacter* chara)
     sharedFunc_800D598C_0_s01(chara);
     chara->flags_3E &= ~CharaFlag_Unk3;
 
-    switch (Chara_DamageTake(chara, Q12(1.0f)))
+    switch (Ai_AirScreamer_DamageTake(chara, Q12(1.0f)))
     {
         case 0:
             // @hack Explicit `u32` cast needed for match.

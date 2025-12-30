@@ -207,6 +207,12 @@ typedef enum _AirScreamerStateStep
     { Anim_Update1, ANIM_STATUS(27, true), false, NO_VALUE, sharedFunc_800D77D0_0_s01, 365, 376 }
 };*/
 
+/** @brief Updates an active Air Screamer or Night Flutter character.
+ *
+ * @param airScreamer Air Screamer or Night Flutter character to update.
+ * @param animHdr Animation header.
+ * @param coords TODO
+ */
 void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
@@ -219,6 +225,10 @@ void sharedFunc_800D2364_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D2390_0_s01(s_SubCharacter* airScreamer);
 
+/** @brief Initializes an Air Screamer or Night Flutter character.
+ *
+ * @param airScreamer Air Screamer or Night Flutter character to initialize.
+ */
 bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2B00_0_s01(s_SubCharacter* airScreamer);
@@ -239,6 +249,8 @@ void sharedFunc_800D2BE4_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D2BF4_0_s01(s_SubCharacter* airScreamer);
 
+s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult);
+
 bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, s32* outDist, s32* outAngle);
 
 bool sharedFunc_800D3430_0_s01(s_SubCharacter* airScreamer, q19_12* dist, q19_12* angle);
@@ -251,6 +263,10 @@ bool sharedFunc_800D31D0_0_s01(s_SubCharacter* airScreamer, VECTOR3* pos, s32 ar
 bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer);
 
 void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D3CC4_0_s01(s_SubCharacter* airScreamer);
+
+void sharedFunc_800D3DFC_0_s01(s_SubCharacter* chara);
 
 bool sharedFunc_800D62D8_0_s01(s_SubCharacter* airScreamer);
 
@@ -297,5 +313,12 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer);
 void sharedFunc_800D8714_0_s01(s_SubCharacter* airScreamer, q19_12 angle0, q19_12 angle1);
 
 void sharedFunc_800D87FC_0_s01(s_SubCharacter* airScreamer);
+
+// NOTE: Following are only present in M0S01
+void func_800D39F4(s_SubCharacter* airScreamer);
+
+void func_800D3A3C(s_SubCharacter* airScreamer);
+
+void func_800D3AC0(s_SubCharacter* airScreamer);
 
 #endif

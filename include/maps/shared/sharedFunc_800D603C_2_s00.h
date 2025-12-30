@@ -99,7 +99,7 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* chara) // 0x800D603C
 
     sharedFunc_800DF448_2_s00(chara, 1);
 
-    switch (Chara_DamageTake(chara, Q12(1.0f)))
+    switch (Ai_AirScreamer_DamageTake(chara, Q12(1.0f)))
     {
         case 0:
             switch (switchCond)

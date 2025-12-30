@@ -10,7 +10,7 @@ void sharedFunc_800D3E44_2_s00(s_SubCharacter* chara)
 
     sharedFunc_800DF2D0_2_s00(chara);
 
-    switch (Chara_DamageTake(chara, Q12(1.0f)))
+    switch (Ai_AirScreamer_DamageTake(chara, Q12(1.0f)))
     {
         case 0:
             if (sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2)

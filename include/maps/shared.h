@@ -2404,14 +2404,7 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch);
 
-// TODO: Is this func Bloodsucker-specific?
-s32 Chara_DamageTake(s_SubCharacter* chara, q19_12 mult);
-
 void sharedFunc_800CCB8C_0_s01(VECTOR* arg0, VECTOR* arg1, s16 arg2, s32 arg3, s16 arg4, s16 arg5, s32 arg6, s32 arg7);
-
-void sharedFunc_800D3CC4_0_s01(s_SubCharacter* airScreamer);
-
-void sharedFunc_800D3DFC_0_s01(s_SubCharacter* chara);
 
 s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 posY, q19_12 dist);
 

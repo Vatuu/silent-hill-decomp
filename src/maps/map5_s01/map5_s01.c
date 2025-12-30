@@ -64,54 +64,6 @@ INCLUDE_ASM("asm/maps/map5_s01/nonmatchings/map5_s01", func_800CE180);
 
 #include "maps/shared/Player.h"
 
-#include "maps/shared/Ai_AirScreamer_Update.h" // 0x800D225C
-
-#include "maps/shared/sharedFunc_800D21E4_0_s01.h" // 0x800D22D0
-
-#include "maps/shared/sharedFunc_800D2200_0_s01.h" // 0x800D22EC
-
-#include "maps/shared/sharedFunc_800D2274_0_s01.h" // 0x800D2360
-
-#include "maps/shared/sharedFunc_800D2364_0_s01.h" // 0x800D2450
-
-#include "maps/shared/sharedFunc_800D2390_0_s01.h" // 0x800D247C
-
-#include "maps/shared/Ai_AirScreamer_Init.h" // 0x800D2A60
-
-#include "maps/shared/sharedFunc_800D2B00_0_s01.h" // 0x800D2BEC
-
-#include "maps/shared/sharedFunc_800D2B10_0_s01.h" // 0x800D2BFC
-
-#include "maps/shared/sharedFunc_800D2B28_0_s01.h" // 0x800D2C14
-
-#include "maps/shared/sharedFunc_800D2B4C_0_s01.h" // 0x800D2C38
-
-#include "maps/shared/Ai_AirScreamer_GroundWarp.h" // 0x800D2C9C
-
-#include "maps/shared/sharedFunc_800D2BE4_0_s01.h" // 0x800D2CD0
-
-#include "maps/shared/sharedFunc_800D2BF4_0_s01.h" // 0x800D2CE0
-
-#include "maps/shared/Chara_DamageTake.h" // 0x800D2CF8
-
-#include "maps/shared/sharedFunc_800D2E04_0_s01.h" // 0x800D2EFC
-
-#include "maps/shared/sharedFunc_800D2FB4_0_s01.h" // 0x800D30AC
-
-#include "maps/shared/sharedFunc_800D31D0_0_s01.h" // 0x800D32C8
-
-#include "maps/shared/sharedFunc_800D3430_0_s01.h" // 0x800D3528
-
-#include "maps/shared/sharedFunc_800D3508_0_s01.h" // 0x800D3600
-
-#include "maps/shared/sharedFunc_800D3630_0_s01.h" // 0x800D3728
-
-#include "maps/shared/sharedFunc_800D3758_0_s01.h" // 0x800D3850
-
-#include "maps/shared/sharedFunc_800D3814_0_s01.h" // 0x800D390C
-
-#include "maps/shared/sharedFunc_800D3928_0_s01.h" // 0x800D3A20
-
 INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CA7F0);
 
 INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CA7F4);
@@ -126,11 +78,9 @@ INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", D_800CA848);
 
 INCLUDE_RODATA("asm/maps/map5_s01/nonmatchings/map5_s01", sharedData_800CAA98_0_s01);
 
-#include "maps/shared/sharedSymbol_800D3B0C_0_s01.h" // 0x800D3AEC
-
-#include "maps/shared/sharedFunc_800D3CC4_0_s01.h" // 0x800D3D4C
-
-#include "maps/shared/sharedFunc_800D3DFC_0_s01.h" // 0x800D3E84
+// TODO: Move this line into separate `Chara_AirScreamer` split.
+// TODO: Most of the code below also belongs to `air_screamer.c`, move there once `INCLUDE_ASM` gaps are matched.
+#include "../src/maps/characters/air_screamer.c" // 0x800D225C
 
 #include "maps/shared/sharedFunc_800D3C24_2_s00.h" // 0x800D3F40
 

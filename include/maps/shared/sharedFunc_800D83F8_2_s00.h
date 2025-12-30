@@ -54,7 +54,7 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* chara)
     sharedFunc_800DE940_2_s00(chara);
     sharedFunc_800D5C90_0_s01(chara);
 
-    switch (Chara_DamageTake(chara, Q12(1.2f)))
+    switch (Ai_AirScreamer_DamageTake(chara, Q12(1.2f)))
     {
         case 0:
             if (var_s1)

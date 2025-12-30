@@ -43,7 +43,7 @@ void sharedFunc_800DBDEC_2_s00(s_SubCharacter* chara)
         sharedFunc_800D5638_0_s01(chara);
     }
 
-    Chara_DamageTake(chara, Q12(0.6f));
+    Ai_AirScreamer_DamageTake(chara, Q12(0.6f));
 
     if (cond)
     {

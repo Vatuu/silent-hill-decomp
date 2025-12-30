@@ -139,7 +139,7 @@ void sharedFunc_800D71A4_2_s00(s_SubCharacter* chara)
 
     sharedFunc_800D57C8_0_s01(chara);
 
-    damageType = Chara_DamageTake(chara, Q12(1.0f));
+    damageType = Ai_AirScreamer_DamageTake(chara, Q12(1.0f));
     switch (damageType)
     {
         case 0:

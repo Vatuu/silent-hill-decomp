@@ -14,4 +14,5 @@ INCLUDE_RODATA("asm/maps/map5_s02/nonmatchings/map5_s02", g_MapOverlayHeader);
 
 #include "maps/shared/Player.h"
 
+// TODO: Move this line into separate `Chara_Stalker` split.
 #include "../src/maps/characters/stalker.c" // 0x800CDC08

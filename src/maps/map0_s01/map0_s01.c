@@ -38,98 +38,6 @@ const VECTOR D_800CA5C8 = {};
 
 #include "maps/shared/Player.h"
 
-#include "maps/shared/Ai_AirScreamer_Update.h" // 0x800D2170
-
-#include "maps/shared/sharedFunc_800D21E4_0_s01.h" // 0x800D21E4
-
-#include "maps/shared/sharedFunc_800D2200_0_s01.h" // 0x800D2200
-
-#include "maps/shared/sharedFunc_800D2274_0_s01.h" // 0x800D2274
-
-#include "maps/shared/sharedFunc_800D2364_0_s01.h" // 0x800D2364
-
-#include "maps/shared/sharedFunc_800D2390_0_s01.h" // 0x800D2390
-
-#include "maps/shared/Ai_AirScreamer_Init.h" // 0x800D2974
-
-#include "maps/shared/sharedFunc_800D2B00_0_s01.h" // 0x800D2B00
-
-#include "maps/shared/sharedFunc_800D2B10_0_s01.h" // 0x800D2B10
-
-#include "maps/shared/sharedFunc_800D2B28_0_s01.h" // 0x800D2B28
-
-#include "maps/shared/sharedFunc_800D2B4C_0_s01.h" // 0x800D2B4C
-
-#include "maps/shared/Ai_AirScreamer_GroundWarp.h" // 0x800D2BB0
-
-#include "maps/shared/sharedFunc_800D2BE4_0_s01.h" // 0x800D2BE4
-
-#include "maps/shared/sharedFunc_800D2BF4_0_s01.h" // 0x800D2BF4
-
-#include "maps/shared/Chara_DamageTake.h" // 0x800D2C0C
-
-#include "maps/shared/sharedFunc_800D2E04_0_s01.h" // 0x800D2E04
-
-#include "maps/shared/sharedFunc_800D2FB4_0_s01.h" // 0x800D2FB4
-
-#include "maps/shared/sharedFunc_800D31D0_0_s01.h" // 0x800D31D0
-
-#include "maps/shared/sharedFunc_800D3430_0_s01.h" // 0x800D3430
-
-#include "maps/shared/sharedFunc_800D3508_0_s01.h" // 0x800D3508
-
-#include "maps/shared/sharedFunc_800D3630_0_s01.h" // 0x800D3630
-
-#include "maps/shared/sharedFunc_800D3758_0_s01.h" // 0x800D3758
-
-#include "maps/shared/sharedFunc_800D3814_0_s01.h" // 0x800D3814
-
-#include "maps/shared/sharedFunc_800D3928_0_s01.h" // 0x800D3928
-
-void func_800D39F4(s_SubCharacter* chara) // 0x800D39F4
-{
-    q19_12 animTime;
-
-    // TODO: `Character_AnimSet` doesn't match?
-    chara->model_0.anim_4.status_0 = ANIM_STATUS(19, true);
-    animTime = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
-    chara->model_0.stateStep_3 = 7;
-    chara->model_0.anim_4.keyframeIdx_8 = animTime;
-    chara->model_0.anim_4.time_4 = FP_TO(animTime, Q12_SHIFT);
-}
-
-void func_800D3A3C(s_SubCharacter* chara) // 0x800D3A3C
-{
-    q19_12 animTime;
-    s32    idx;
-
-    idx = g_CharaAnimInfoIdxs[chara->model_0.charaId_0];
-    Ai_AirScreamer_Update(chara, (&g_InitCharaDataAnimInfo[idx])->animFile1_8, (&g_InitCharaDataAnimInfo[idx])->npcCoords_14);
-
-    chara->model_0.anim_4.status_0 = ANIM_STATUS(17, true);
-    animTime = func_80044918(&chara->model_0.anim_4)->startKeyframeIdx_C;
-    chara->model_0.stateStep_3 = 3;
-    chara->model_0.anim_4.keyframeIdx_8 = animTime;
-    chara->model_0.anim_4.time_4 = FP_TO(animTime, Q12_SHIFT);
-}
-
-void func_800D3AC0(s_SubCharacter* chara)
-{
-    switch(chara->model_0.stateStep_3)
-    {
-        case 1:
-        case 3:
-        case 5:
-            chara->model_0.stateStep_3++;
-            break;
-
-        default:
-            break;
-    }
-}
-
-#include "maps/shared/sharedSymbol_800D3B0C_0_s01.h" // 0x800D3B0C
-
 INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CA9F0);
 
 INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CA9F4);
@@ -144,9 +52,9 @@ INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CAA48);
 
 INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", sharedData_800CAA98_0_s01);
 
-#include "maps/shared/sharedFunc_800D3CC4_0_s01.h" // 0x800D3CC4
-
-#include "maps/shared/sharedFunc_800D3DFC_0_s01.h" // 0x800D3DFC
+// TODO: Move this line into separate `Chara_AirScreamer` split.
+// TODO: Most of the code below also belongs to `air_screamer.c`, move there once `INCLUDE_ASM` gaps are matched.
+#include "../src/maps/characters/air_screamer.c" // 0x800D2170
 
 void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
 {
@@ -181,7 +89,7 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
 
             if (cond1)
             {
-                Chara_DamageTake(chara, Q12(0.0f));
+                Ai_AirScreamer_DamageTake(chara, Q12(0.0f));
 
                 chara->position_18.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(100.0f);
                 chara->position_18.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(100.0f);
@@ -192,7 +100,7 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
 
             if (cond0)
             {
-                Chara_DamageTake(chara, Q12(0.0f));
+                Ai_AirScreamer_DamageTake(chara, Q12(0.0f));
                 sharedFunc_800D2364_0_s01(chara);
 
                 chara->position_18.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(100.0f);
@@ -204,7 +112,7 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
 
             if (chara->health_B0 <= Q12(0.0f))
             {
-                Chara_DamageTake(chara, Q12(0.0f));
+                Ai_AirScreamer_DamageTake(chara, Q12(0.0f));
 
                 if (animStatus == ANIM_STATUS(26, true) && temp_s3 == 1)
                 {
@@ -222,7 +130,7 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
             {
                 chara->flags_3E |= CharaFlag_Unk2;
 
-                if (Chara_DamageTake(chara, Q12(1.0f)) == 4)
+                if (Ai_AirScreamer_DamageTake(chara, Q12(1.0f)) == 4)
                 {
                     if (chara->health_B0 <= Q12(0.0f))
                     {
@@ -250,11 +158,11 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
             break;
 
         case 1:
-            Chara_DamageTake(chara, Q12(0.0f));
+            Ai_AirScreamer_DamageTake(chara, Q12(0.0f));
             break;
 
         case 2:
-            Chara_DamageTake(chara, Q12(0.5f));
+            Ai_AirScreamer_DamageTake(chara, Q12(0.5f));
 
             if (activeAnimStatus != animStatus12)
             {
@@ -375,7 +283,7 @@ void func_800D426C(s_SubCharacter* chara) // 0x800D426C
     sharedFunc_800D529C_0_s01(chara, Q12(1.0f), func_80080478(&chara->position_18, &g_SysWork.playerWork_4C.player_0.position_18));
     sharedFunc_800D598C_0_s01(chara);
 
-    switch (Chara_DamageTake(chara, Q12(1.0f)))
+    switch (Ai_AirScreamer_DamageTake(chara, Q12(1.0f)))
     {
         case 0:
             if (!chara->properties_E4.unk0.properties_120.val32 ||
@@ -439,7 +347,7 @@ void func_800D4420(s_SubCharacter* chara) // 0x800D4420
     func_800D53AC(chara);
     sharedFunc_800D57C8_0_s01(chara);
 
-    switch (Chara_DamageTake(chara, Q12(1.0f)))
+    switch (Ai_AirScreamer_DamageTake(chara, Q12(1.0f)))
     {
         case 0:
             dist0 = NO_VALUE;
@@ -498,7 +406,7 @@ void func_800D45BC(s_SubCharacter* chara) // 0x800D45BC
     func_800D53AC(chara);
     sharedFunc_800D5B10_0_s01(chara);
 
-    temp_v0 = Chara_DamageTake(chara, Q12(1.0f));
+    temp_v0 = Ai_AirScreamer_DamageTake(chara, Q12(1.0f));
     switch (temp_v0)
     {
         case 0:
@@ -593,7 +501,7 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
     func_800D53AC(chara);
     sharedFunc_800D5C90_0_s01(chara);
 
-    switch (Chara_DamageTake(chara, Q12(1.2f)))
+    switch (Ai_AirScreamer_DamageTake(chara, Q12(1.2f)))
     {
         case 0: 
             if (cond0)
@@ -684,7 +592,7 @@ void func_800D4894(s_SubCharacter* chara)
 
     sharedFunc_800D5D80_0_s01(chara);
 
-    damageType = Chara_DamageTake(chara, Q12(0.6f));
+    damageType = Ai_AirScreamer_DamageTake(chara, Q12(0.6f));
     // TODO: Switch?
     if (damageType >= 0)
     {
@@ -751,7 +659,7 @@ void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
     }
 
     sharedFunc_800D5E14_0_s01(chara);
-    Chara_DamageTake(chara, Q12(0.6f));
+    Ai_AirScreamer_DamageTake(chara, Q12(0.6f));
 
     if (cond)
     {
