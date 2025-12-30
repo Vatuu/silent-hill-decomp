@@ -28,19 +28,8 @@ INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", g_MapOverlayHeader);
 
 #include "../src/maps/characters/player.c"
 
-#include "maps/shared/Ai_LarvalStalker_Update.h" // 0x800CE648
-
-#include "maps/shared/Ai_LarvalStalker_ControlUpdate.h" // 0x800CE760
-
-#include "maps/shared/sharedFunc_800D140C_1_s00.h" // 0x800D0A04
-
-#include "maps/shared/sharedFunc_800D1524_1_s00.h" // 0x800D0B1C
-
-#include "maps/shared/Ai_LarvalStalker_Init.h" // 0x800D0CF4
-
-#include "maps/shared/sharedFunc_800D17BC_1_s00.h" // 0x800D0DB4
-
-#include "maps/shared/sharedFunc_800D1DBC_1_s00.h" // 0x800D13B4
+// TODO: Move this line into separate `Chara_LarvalStalker` split.
+#include "../src/maps/characters/larval_stalker.c" // 0x800CE648
 
 // TODO: Move this line into separate `Chara_Stalker` split.
 #include "../src/maps/characters/stalker.c" // 0x800D1AF0
