@@ -1338,12 +1338,12 @@ typedef struct _PropertiesAirScreamer
     q19_12  groundHeight_124;
 } s_PropertiesAirScreamer;
 
-/** @brief Alessa character properties. TODO: Copy of `s_PropertiesDahlia`. Fields are inaccurate. */
+/** @brief Alessa character properties. TODO: Copy of `s_PropertiesDahlia`. Fields not marked "correct" are filler. */
 typedef struct _PropertiesAlessa
 {
     s32        stateIdx0;
     u_Property properties_EC;
-    s32        field_F0;
+    s32        field_F0; // Correct
     u_Property properties_F4;
     s32        resetStateIdx0_F8;
     s32        field_FC;
@@ -1355,7 +1355,7 @@ typedef struct _PropertiesAlessa
     s32        flags_11C;
     u_Property properties_120;
     s16        field_124;
-    q3_12      moveDistance_126;
+    q3_12      moveSpeed_126; // Correct
 } s_PropertiesAlessa;
 
 /** @brief Bloodsucker character properties. */
