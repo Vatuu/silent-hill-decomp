@@ -1652,6 +1652,7 @@ extern u8 sharedData_800D5AAF_1_s05;
 extern u8      sharedData_800D5CF8_1_s05[];
 extern u8      sharedData_800D5D08_1_s05[];
 extern VECTOR3 sharedData_800D8618_1_s05[];
+extern SVECTOR3 sharedData_800D5A90_1_s05[];
 
 extern u8  sharedData_800D16E4_2_s01;
 

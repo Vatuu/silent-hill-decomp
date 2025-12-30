@@ -108,6 +108,7 @@ sharedData_800D5884_1_s05   = 0x800D5884; // type:s32
 SPLIT_HEAD_ANIM_INFOS       = 0x800D5888; // type:s32 unknown type
 g_Ai_SplitHead_ControlFuncs = 0x800D5A68;
 sharedData_800D5A8C_1_s05   = 0x800D5A8C;
+sharedData_800D5A90_1_s05   = 0x800D5A90;
 sharedData_800D5AAE_1_s05   = 0x800D5AAE;
 sharedData_800D5AAF_1_s05   = 0x800D5AAF;
 MAP_ROOM_IDXS               = 0x800D5C04; // type:u8

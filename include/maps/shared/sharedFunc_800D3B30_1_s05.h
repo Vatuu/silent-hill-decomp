@@ -15,41 +15,41 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
     splitHead->field_D4.field_0   = 0;
     splitHead->field_D8.offsetX_4 = 0;
     splitHead->field_D8.offsetZ_6 = 0;
-    splitHead->field_E0          &= ~0xF00;
-    splitHead->field_E0          |= 0x400;
+    splitHead->field_E1_0         = 0;
+    splitHead->field_E1_0         = 4;
 
-    sharedFunc_800D4408_1_s05(&D_800D8618[0], 0x11, D_800D5A90[0].vx, D_800D5A90[0].vy, D_800D5A90[0].vz);
-    sharedFunc_800D4408_1_s05(&D_800D8618[1], 0x15, (s16)((u16)D_800D5A90[0].vx * -1), D_800D5A90[0].vy, D_800D5A90[0].vz);
-    D_800D8618[0].vx = ((D_800D8618[0].vx + D_800D8618[1].vx) >> 1);
-    D_800D8618[0].vy = ((D_800D8618[0].vy + D_800D8618[1].vy) >> 1);
-    D_800D8618[0].vz = ((D_800D8618[0].vz + D_800D8618[1].vz) >> 1);
-    sharedFunc_800D4408_1_s05(&D_800D8618[1], 0x13, D_800D5A90[2].vx, D_800D5A90[2].vy, D_800D5A90[2].vz);
-    sharedFunc_800D4408_1_s05(&D_800D8618[2], 0x13, D_800D5A90[3].vx, D_800D5A90[3].vy, D_800D5A90[3].vz);
-    sharedFunc_800D4408_1_s05(&D_800D8618[3], 2, (s16)((u16)D_800D5A90[1].vx * -1), D_800D5A90[1].vy, D_800D5A90[1].vz);
-    sharedFunc_800D4408_1_s05(&D_800D8618[4], 3, D_800D5A90[4].vx, D_800D5A90[4].vy, D_800D5A90[4].vz);
-    sharedFunc_800D4408_1_s05(&D_800D8618[5], 7, (s16)((u16)D_800D5A90[4].vx * -1), D_800D5A90[4].vy, D_800D5A90[4].vz);
-    sharedFunc_800D4408_1_s05(&D_800D8618[6], 2, D_800D5A90[1].vx, D_800D5A90[1].vy, D_800D5A90[1].vz);
-    sharedFunc_800D4408_1_s05(&D_800D8618[7], 0x17, (s16)((u16)D_800D5A90[3].vx * -1), D_800D5A90[3].vy, D_800D5A90[3].vz);
-    sharedFunc_800D4408_1_s05(&D_800D8618[8], 0x17, (s16)((u16)D_800D5A90[2].vx * -1), D_800D5A90[2].vy, D_800D5A90[2].vz);
+    sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[0], 0x11, sharedData_800D5A90_1_s05[0].vx, sharedData_800D5A90_1_s05[0].vy, sharedData_800D5A90_1_s05[0].vz);
+    sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[1], 0x15, (s16)((u16)sharedData_800D5A90_1_s05[0].vx * -1), sharedData_800D5A90_1_s05[0].vy, sharedData_800D5A90_1_s05[0].vz);
+    sharedData_800D8618_1_s05[0].vx = ((sharedData_800D8618_1_s05[0].vx + sharedData_800D8618_1_s05[1].vx) >> 1);
+    sharedData_800D8618_1_s05[0].vy = ((sharedData_800D8618_1_s05[0].vy + sharedData_800D8618_1_s05[1].vy) >> 1);
+    sharedData_800D8618_1_s05[0].vz = ((sharedData_800D8618_1_s05[0].vz + sharedData_800D8618_1_s05[1].vz) >> 1);
+    sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[1], 0x13, sharedData_800D5A90_1_s05[2].vx, sharedData_800D5A90_1_s05[2].vy, sharedData_800D5A90_1_s05[2].vz);
+    sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[2], 0x13, sharedData_800D5A90_1_s05[3].vx, sharedData_800D5A90_1_s05[3].vy, sharedData_800D5A90_1_s05[3].vz);
+    sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[3], 2, (s16)((u16)sharedData_800D5A90_1_s05[1].vx * -1), sharedData_800D5A90_1_s05[1].vy, sharedData_800D5A90_1_s05[1].vz);
+    sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[4], 3, sharedData_800D5A90_1_s05[4].vx, sharedData_800D5A90_1_s05[4].vy, sharedData_800D5A90_1_s05[4].vz);
+    sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[5], 7, (s16)((u16)sharedData_800D5A90_1_s05[4].vx * -1), sharedData_800D5A90_1_s05[4].vy, sharedData_800D5A90_1_s05[4].vz);
+    sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[6], 2, sharedData_800D5A90_1_s05[1].vx, sharedData_800D5A90_1_s05[1].vy, sharedData_800D5A90_1_s05[1].vz);
+    sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[7], 0x17, (s16)((u16)sharedData_800D5A90_1_s05[3].vx * -1), sharedData_800D5A90_1_s05[3].vy, sharedData_800D5A90_1_s05[3].vz);
+    sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[8], 0x17, (s16)((u16)sharedData_800D5A90_1_s05[2].vx * -1), sharedData_800D5A90_1_s05[2].vy, sharedData_800D5A90_1_s05[2].vz);
 
     if (!(splitHead->properties_E4.splitHead.flags_E8 & 1))
     {
-        D_800D5AAE       = 2;
-        D_800D8618[8].vx = ((D_800D8618[8].vx + D_800D8618[1].vx) >> 1);
-        D_800D8618[8].vy = ((D_800D8618[8].vy + D_800D8618[1].vy) >> 1);
-        D_800D8618[8].vz = ((D_800D8618[8].vz + D_800D8618[1].vz) >> 1);
+        sharedData_800D5AAE_1_s05       = 2;
+        sharedData_800D8618_1_s05[8].vx = ((sharedData_800D8618_1_s05[8].vx + sharedData_800D8618_1_s05[1].vx) >> 1);
+        sharedData_800D8618_1_s05[8].vy = ((sharedData_800D8618_1_s05[8].vy + sharedData_800D8618_1_s05[1].vy) >> 1);
+        sharedData_800D8618_1_s05[8].vz = ((sharedData_800D8618_1_s05[8].vz + sharedData_800D8618_1_s05[1].vz) >> 1);
     }
     else
     {
-        D_800D5AAE = 0;
+        sharedData_800D5AAE_1_s05 = 0;
     }
 
-    D_800D5AAF = 0;
+    sharedData_800D5AAF_1_s05 = 0;
     sp48       = sharedData_800D8684_1_s05;
     sp4C       = sharedData_800D8688_1_s05;
     sharedFunc_800D3388_1_s05(splitHead, &sp48, &sp4C);
 
-    if (D_800D5AAF != 0)
+    if (sharedData_800D5AAF_1_s05 != 0)
     {
         sp38.vx = 0;
         sp38.vy = 0;
@@ -77,9 +77,9 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
         if (Q6_TO_Q12((SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ)))) < Q12(3.3f))
         {
             sharedFunc_800D4594_1_s05(&sp18, g_SysWork.playerWork_4C.player_0.position_18.vx,
-                                      g_SysWork.playerWork_4C.player_0.position_18.vz, &D_800D8618[0], &D_800D8618[1]);
+                                      g_SysWork.playerWork_4C.player_0.position_18.vz, &sharedData_800D8618_1_s05[0], &sharedData_800D8618_1_s05[1]);
             sharedFunc_800D4594_1_s05(&sp28, g_SysWork.playerWork_4C.player_0.position_18.vx,
-                                      g_SysWork.playerWork_4C.player_0.position_18.vz, &D_800D8618[0], &D_800D8618[8]);
+                                      g_SysWork.playerWork_4C.player_0.position_18.vz, &sharedData_800D8618_1_s05[0], &sharedData_800D8618_1_s05[8]);
 
             if (splitHead->model_0.anim_4.time_4 < Q12(31.0f))
             {
