@@ -124,7 +124,7 @@ INCLUDE_RODATA("asm/maps/map4_s02/nonmatchings/map4_s02", sharedData_800CAA98_0_
 
 #include "maps/shared/sharedFunc_800D98DC_2_s00.h" // 0x800D84C0
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800D8844);
+#include "maps/shared/sharedFunc_800D9C60_2_s00.h" // 0x800D8844
 
 #include "maps/shared/sharedFunc_800DA0D4_2_s00.h" // 0x800D8CB8
 
