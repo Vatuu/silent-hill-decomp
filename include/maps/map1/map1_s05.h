@@ -21,6 +21,11 @@ extern s16 D_800D86F8[2];
 extern u8  D_800D86FC[2];
 extern u8  D_800D86FE;
 
+extern VECTOR3  D_800D8618[];
+extern SVECTOR3 D_800D5A90[];
+extern u8       D_800D5AAE;
+extern u8       D_800D5AAF;
+
 void func_800D494C(void);
 
 void func_800D49AC(void);
