@@ -13,6 +13,8 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
     s32     dx_offset;
     s32     dz_offset;
 
+    #define splitHeadProps splitHead->properties_E4.splitHead
+
     sharedFunc_800D4408_1_s05(&sp20[0], 2, 0, -0x45, 0xFB);
     sharedFunc_800D4408_1_s05(&sp50[0], 2, 0, 0xED, 0xA6);
     sharedFunc_800D4408_1_s05(&sp20[1], 0x13, -0x24, 5, 0x71);
@@ -32,7 +34,7 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
         {
             if (ABS(sp98[1] - sp98[2]) >= 0x72)
             {
-                splitHead->properties_E4.splitHead.flags_E8 |= 1;
+                splitHeadProps.flags_E8 |= 1;
                 splitHead->field_C8.field_0                  = sp20[0].vy;
                 splitHead->field_C8.field_4                  = sp50[0].vy;
                 splitHead->field_D4.field_2                  = 0x999;
@@ -58,9 +60,9 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
         }
     }
 
-    if (dist > 0x2C00)
+    if (dist > Q12(2.75f))
     {
-        splitHead->properties_E4.splitHead.flags_E8 &= 0xFFFE;
+        splitHeadProps.flags_E8 &= ~(1 << 0);
     }
 
     sharedFunc_800D4408_1_s05(&sp20[3], 1, 0, -0x46, -0xB7);
@@ -111,8 +113,8 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
         sharedFunc_800D4408_1_s05(&sp50[3], 1, 0, 0x95, -0x13F);
     }
 
-    splitHead->field_C8.field_0 = FP_FROM(sp20[0].vy * (0x1000 - sp90[unkIdx]) + sp20[unkIdx].vy * sp90[unkIdx], Q12_SHIFT);
-    splitHead->field_C8.field_4 = FP_FROM(sp50[0].vy * (0x1000 - sp90[unkIdx]) + sp20[unkIdx + 4].vy * sp90[unkIdx], Q12_SHIFT);
+    splitHead->field_C8.field_0 = FP_FROM(sp20[0].vy * (Q12(1.0f) - sp90[unkIdx]) + sp20[unkIdx].vy * sp90[unkIdx], Q12_SHIFT);
+    splitHead->field_C8.field_4 = FP_FROM(sp50[0].vy * (Q12(1.0f) - sp90[unkIdx]) + sp20[unkIdx + 4].vy * sp90[unkIdx], Q12_SHIFT);
     splitHead->field_C8.field_6 = (splitHead->field_C8.field_0 + splitHead->field_C8.field_4) >> 1;
 
     if (unkIdx == 3)
@@ -121,9 +123,11 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
     }
     else
     {
-        splitHead->field_D4.field_2 = FP_FROM((0x1000 - sp90[unkIdx]) * 0x999 + sp90[unkIdx] * 0x599, Q12_SHIFT);
+        splitHead->field_D4.field_2 = FP_FROM((Q12(1.0f) - sp90[unkIdx]) * 0x999 + sp90[unkIdx] * 0x599, Q12_SHIFT);
     }
 
-    splitHead->field_D8.offsetX_0 = FP_FROM(sp20[0].vx * (0x1000 - sp90[unkIdx]) + sp20[unkIdx].vx * sp90[unkIdx], Q12_SHIFT) - splitHead->position_18.vx;
-    splitHead->field_D8.offsetZ_2 = FP_FROM(sp20[0].vz * (0x1000 - sp90[unkIdx]) + sp20[unkIdx].vz * sp90[unkIdx], Q12_SHIFT) - splitHead->position_18.vz;
+    splitHead->field_D8.offsetX_0 = FP_FROM(sp20[0].vx * (Q12(1.0f) - sp90[unkIdx]) + sp20[unkIdx].vx * sp90[unkIdx], Q12_SHIFT) - splitHead->position_18.vx;
+    splitHead->field_D8.offsetZ_2 = FP_FROM(sp20[0].vz * (Q12(1.0f) - sp90[unkIdx]) + sp20[unkIdx].vz * sp90[unkIdx], Q12_SHIFT) - splitHead->position_18.vz;
+
+    #undef splitHeadProps
 }

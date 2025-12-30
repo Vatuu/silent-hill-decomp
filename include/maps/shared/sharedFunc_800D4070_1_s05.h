@@ -10,16 +10,16 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
     s16     var_v1_2;
     int     new_var;
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != Q12(0.0f))
     {
-        new_var = 0x2000;
+        new_var = Q12(2.0f);
 
         animStatusIdx = ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0);
 
-        if ((ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) != 0xC) && animStatusIdx != 0xD)
+        if ((ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) != 12) && animStatusIdx != 13)
         {
-            if ((FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 0x14 || FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) > 0x23) &&
-                (FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) > 0xE && FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 0x14 ||
+            if ((FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 20 || FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) > 35) &&
+                (FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) > 14 && FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 20 ||
                  ((animStatusIdx == 1 || animStatusIdx == 9) && !Rng_TestProbabilityBits(2)) || !Rng_TestProbabilityBits(5)))
             {
                 if (splitHead->model_0.anim_4.status_0 == 7)
@@ -33,21 +33,21 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
 
                 sharedFunc_800D4408_1_s05(&sp20, sharedData_800D5AB0_1_s05[i].idx, sharedData_800D5AB0_1_s05[i].vec.vx, sharedData_800D5AB0_1_s05[i].vec.vy, sharedData_800D5AB0_1_s05[i].vec.vz);
 
-                sp30[0].vx = sp20.vx >> 4;
-                sp30[0].vy = sp20.vy >> 4;
-                sp30[0].vz = sp20.vz >> 4;
+                sp30[0].vx = Q12_TO_Q8(sp20.vx);
+                sp30[0].vy = Q12_TO_Q8(sp20.vy);
+                sp30[0].vz = Q12_TO_Q8(sp20.vz);
 
-                if (FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) >= 0xF &&
-                    FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 0x14)
+                if (FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) >= 15 &&
+                    FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 20)
                 {
                     var_v1_2 = new_var;
-                    if (sharedData_800D5AB0_1_s05[i].idx < 0x14)
+                    if (sharedData_800D5AB0_1_s05[i].idx < 20)
                     {
-                        var_v0_2 = splitHead->rotation_24.vy + 0x400;
+                        var_v0_2 = splitHead->rotation_24.vy + FP_ANGLE(90.0f);
                     }
                     else
                     {
-                        var_v0_2 = splitHead->rotation_24.vy - 0x400;
+                        var_v0_2 = splitHead->rotation_24.vy - FP_ANGLE(90.0f);
                     }
                 }
                 else
@@ -63,7 +63,7 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
                     {
                         temp_v1_2 = -temp_v1_2;
                         var_v1_2  = temp_v1_2 >> 1;
-                        var_v0_2  = splitHead->rotation_24.vy + 0x800;
+                        var_v0_2  = splitHead->rotation_24.vy + FP_ANGLE(180.0f);
                     }
                 }
 
@@ -91,9 +91,9 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
                     sharedFunc_800D4408_1_s05(&sp20, sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].idx, sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].vec.vx,
                                               sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].vec.vy, sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].vec.vz);
 
-                    sp30[j].vx = sp20.vx >> 4;
-                    sp30[j].vy = sp20.vy >> 4;
-                    sp30[j].vz = sp20.vz >> 4;
+                    sp30[j].vx = Q12_TO_Q8(sp20.vx);
+                    sp30[j].vy = Q12_TO_Q8(sp20.vy);
+                    sp30[j].vz = Q12_TO_Q8(sp20.vz);
                 }
 
                 sharedFunc_800CCE2C_1_s05(sharedData_800D5BE0_1_s05[i][2], splitHead->properties_E4.splitHead.field_EA,

@@ -6,6 +6,7 @@ typedef enum _SplitHeadFlags
 {
     SplitHeadFlag_None = 0,
     SplitHeadFlag_0    = 1 << 0,
+    SplitHeadFlag_1    = 1 << 1,
 
     SplitHeadFlag_3    = 1 << 3,
     SplitHeadFlag_4    = 1 << 4,
@@ -98,7 +99,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr);
 
 void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead);
 
-void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, s32*, s32*);
+void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_12* offsetZ);
 
 void sharedFunc_800D17BC_1_s05(s_SubCharacter* splitHead);
 

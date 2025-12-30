@@ -56,7 +56,7 @@ INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", sharedData_800CAA98_0_
 // TODO: Most of the code below also belongs to `air_screamer.c`, move there once `INCLUDE_ASM` gaps are matched.
 #include "../src/maps/characters/air_screamer.c" // 0x800D2170
 
-void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
+void func_800D3EB8(s_SubCharacter* airScreamer) // 0x800D3EB8
 {
     q19_12 damage;
     bool   cond1;
@@ -67,106 +67,106 @@ void func_800D3EB8(s_SubCharacter* chara) // 0x800D3EB8
     bool   activeAnimStatus;
     u32    stateStep;
 
-    animStatus = chara->model_0.anim_4.status_0;
+    animStatus = airScreamer->model_0.anim_4.status_0;
     animStatus12 = ANIM_STATUS(12, true);
 
-    sharedFunc_800D5638_0_s01(chara);
+    sharedFunc_800D5638_0_s01(airScreamer);
 
     activeAnimStatus = ANIM_STATUS(ANIM_STATUS_IDX_GET(animStatus), true);
 
-    stateStep = chara->model_0.stateStep_3;
+    stateStep = airScreamer->model_0.stateStep_3;
     switch (stateStep)
     {
         case 0:
-            temp_s3 = func_800D5F00(chara);
+            temp_s3 = func_800D5F00(airScreamer);
             cond0 = false;
-            cond1 = chara->position_18.vy >= Q12(8.0f);
+            cond1 = airScreamer->position_18.vy >= Q12(8.0f);
 
-            if (func_800808AC(chara->position_18.vx, chara->position_18.vz) == 7)
+            if (func_800808AC(airScreamer->position_18.vx, airScreamer->position_18.vz) == 7)
             {
-                cond0 = chara->position_18.vy >= Collision_GroundHeightGet(chara->position_18.vx, chara->position_18.vz);
+                cond0 = airScreamer->position_18.vy >= Collision_GroundHeightGet(airScreamer->position_18.vx, airScreamer->position_18.vz);
             }
 
             if (cond1)
             {
-                Ai_AirScreamer_DamageTake(chara, Q12(0.0f));
+                Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
 
-                chara->position_18.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(100.0f);
-                chara->position_18.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(100.0f);
+                airScreamer->position_18.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(100.0f);
+                airScreamer->position_18.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(100.0f);
 
-                sharedFunc_800D3DFC_0_s01(chara);
+                sharedFunc_800D3DFC_0_s01(airScreamer);
                 break;
             }
 
             if (cond0)
             {
-                Ai_AirScreamer_DamageTake(chara, Q12(0.0f));
-                sharedFunc_800D2364_0_s01(chara);
+                Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
+                sharedFunc_800D2364_0_s01(airScreamer);
 
-                chara->position_18.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(100.0f);
-                chara->position_18.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(100.0f);
+                airScreamer->position_18.vx = g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(100.0f);
+                airScreamer->position_18.vz = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(100.0f);
 
-                sharedFunc_800D3DFC_0_s01(chara);
+                sharedFunc_800D3DFC_0_s01(airScreamer);
                 break;
             }
 
-            if (chara->health_B0 <= Q12(0.0f))
+            if (airScreamer->health_B0 <= Q12(0.0f))
             {
-                Ai_AirScreamer_DamageTake(chara, Q12(0.0f));
+                Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
 
                 if (animStatus == ANIM_STATUS(26, true) && temp_s3 == 1)
                 {
-                    chara->health_B0 = NO_VALUE;
+                    airScreamer->health_B0 = NO_VALUE;
 
-                    func_800622B8(3, chara, ANIM_STATUS(4, true), 2);
+                    func_800622B8(3, airScreamer, ANIM_STATUS(4, true), 2);
 
-                    chara->model_0.stateStep_3 = temp_s3;
+                    airScreamer->model_0.stateStep_3 = temp_s3;
 
-                    sharedFunc_800D3DFC_0_s01(chara);
+                    sharedFunc_800D3DFC_0_s01(airScreamer);
                     break;
                 }
             }
             else
             {
-                chara->flags_3E |= CharaFlag_Unk2;
+                airScreamer->flags_3E |= CharaFlag_Unk2;
 
-                if (Ai_AirScreamer_DamageTake(chara, Q12(1.0f)) == 4)
+                if (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)) == 4)
                 {
-                    if (chara->health_B0 <= Q12(0.0f))
+                    if (airScreamer->health_B0 <= Q12(0.0f))
                     {
-                        chara->model_0.anim_4.status_0 = ANIM_STATUS(5, false);
-                        chara->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
+                        airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(5, false);
+                        airScreamer->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
                         break;
                     }
 
-                    chara->model_0.anim_4.status_0 = ANIM_STATUS(12, false);
-                    chara->model_0.stateStep_3 = 2;
-                    chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+                    airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(12, false);
+                    airScreamer->model_0.stateStep_3 = 2;
+                    airScreamer->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
                     break;
                 }
 
                 damage = g_DeltaTime0 * 10;
-                if (damage < chara->health_B0)
+                if (damage < airScreamer->health_B0)
                 {
-                    chara->health_B0 -= damage;
+                    airScreamer->health_B0 -= damage;
                 }
-                else if (chara->health_B0 > Q12(0.0f))
+                else if (airScreamer->health_B0 > Q12(0.0f))
                 {
-                    chara->health_B0 = Q12(0.0f);
+                    airScreamer->health_B0 = Q12(0.0f);
                 }
             }
             break;
 
         case 1:
-            Ai_AirScreamer_DamageTake(chara, Q12(0.0f));
+            Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
             break;
 
         case 2:
-            Ai_AirScreamer_DamageTake(chara, Q12(0.5f));
+            Ai_AirScreamer_DamageTake(airScreamer, Q12(0.5f));
 
             if (activeAnimStatus != animStatus12)
             {
-                chara->model_0.stateStep_3 = 0;
+                airScreamer->model_0.stateStep_3 = 0;
             }
             break;
     }
@@ -258,41 +258,41 @@ void func_800D425C(void) {}
 
 void func_800D4264(void) {}
 
-void func_800D426C(s_SubCharacter* chara) // 0x800D426C
+void func_800D426C(s_SubCharacter* airScreamer) // 0x800D426C
 {
     s32 animStatus;
 
-    animStatus = chara->model_0.anim_4.status_0;
+    animStatus = airScreamer->model_0.anim_4.status_0;
 
-    if (chara->model_0.stateStep_3 != 1)
+    if (airScreamer->model_0.stateStep_3 != 1)
     {
-        if (chara->model_0.stateStep_3 == 0 && animStatus == ANIM_STATUS(2, true) && chara->model_0.anim_4.keyframeIdx_8 < 8204)
+        if (airScreamer->model_0.stateStep_3 == 0 && animStatus == ANIM_STATUS(2, true) && airScreamer->model_0.anim_4.keyframeIdx_8 < 8204)
         {
-            chara->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
-            chara->model_0.stateStep_3 = 1;
-            chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk5;
-            chara->flags_3E |= CharaFlag_Unk3;
+            airScreamer->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
+            airScreamer->model_0.stateStep_3 = 1;
+            airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk5;
+            airScreamer->flags_3E |= CharaFlag_Unk3;
         }
     }
     else if (ANIM_STATUS(ANIM_STATUS_IDX_GET(animStatus), true) == ANIM_STATUS(19, true))
     {
-        chara->model_0.stateStep_3 = 2;
-        chara->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
+        airScreamer->model_0.stateStep_3 = 2;
+        airScreamer->properties_E4.unk0.properties_120.val32 = Q12(4.0f);
     }
 
-    sharedFunc_800D529C_0_s01(chara, Q12(1.0f), func_80080478(&chara->position_18, &g_SysWork.playerWork_4C.player_0.position_18));
-    sharedFunc_800D598C_0_s01(chara);
+    sharedFunc_800D529C_0_s01(airScreamer, Q12(1.0f), func_80080478(&airScreamer->position_18, &g_SysWork.playerWork_4C.player_0.position_18));
+    sharedFunc_800D598C_0_s01(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(chara, Q12(1.0f)))
+    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case 0:
-            if (!chara->properties_E4.unk0.properties_120.val32 ||
-                chara == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353] ||
-                Math_Distance2dGet(&chara->position_18, &g_SysWork.playerWork_4C.player_0.position_18) > Q12(6.5f))
+            if (!airScreamer->properties_E4.unk0.properties_120.val32 ||
+                airScreamer == &g_SysWork.npcs_1A0[g_SysWork.targetNpcIdx_2353] ||
+                Math_Distance2dGet(&airScreamer->position_18, &g_SysWork.playerWork_4C.player_0.position_18) > Q12(6.5f))
             {
-                chara->model_0.controlState_2 = 47;
-                chara->model_0.stateStep_3 = 0;
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
+                airScreamer->model_0.controlState_2 = 47;
+                airScreamer->model_0.stateStep_3 = 0;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
                 return;
             }
 
@@ -301,120 +301,120 @@ void func_800D426C(s_SubCharacter* chara) // 0x800D426C
 
         case 1:
         case 2:
-            chara->model_0.controlState_2 = 50;
-            chara->model_0.stateStep_3 = 0;
-            chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            airScreamer->model_0.controlState_2 = 50;
+            airScreamer->model_0.stateStep_3 = 0;
+            airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             return;
 
         case 3:
         case 4:
-            chara->model_0.controlState_2 = 51;
-            chara->model_0.stateStep_3 = 0;
-            if (chara->health_B0 <= 0)
+            airScreamer->model_0.controlState_2 = 51;
+            airScreamer->model_0.stateStep_3 = 0;
+            if (airScreamer->health_B0 <= 0)
             {
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }
             else
             {
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
     }
 }
 
-void func_800D4420(s_SubCharacter* chara) // 0x800D4420
+void func_800D4420(s_SubCharacter* airScreamer) // 0x800D4420
 {
     q19_12 dist0;
     q19_12 deltaY;
     q19_12 angle;
     q19_12 dist;
 
-    switch (chara->model_0.stateStep_3)
+    switch (airScreamer->model_0.stateStep_3)
     {
         case 0:
-            chara->properties_E4.unk0.properties_120.val32 = Q12(1.5f);
-            chara->model_0.stateStep_3 = 1;
+            airScreamer->properties_E4.unk0.properties_120.val32 = Q12(1.5f);
+            airScreamer->model_0.stateStep_3 = 1;
             break;
 
         case 1:
-            if (Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8) < Q12(0.5f))
+            if (Math_Distance2dGet(&airScreamer->position_18, &airScreamer->properties_E4.unk0.field_F8) < Q12(0.5f))
             {
-                chara->model_0.stateStep_3 = 0;
+                airScreamer->model_0.stateStep_3 = 0;
             }
             break;
     }
 
-    func_800D53AC(chara);
-    sharedFunc_800D57C8_0_s01(chara);
+    func_800D53AC(airScreamer);
+    sharedFunc_800D57C8_0_s01(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(chara, Q12(1.0f)))
+    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case 0:
             dist0 = NO_VALUE;
-            deltaY = chara->properties_E4.unk0.field_F8.vy - chara->position_18.vy;
+            deltaY = airScreamer->properties_E4.unk0.field_F8.vy - airScreamer->position_18.vy;
             if (deltaY > Q12(-0.2f) && deltaY < Q12(0.8f))
             {
-                dist0 = chara->field_D4.field_0 + Q12(0.15f);
+                dist0 = airScreamer->field_D4.field_0 + Q12(0.15f);
             }
 
-            dist = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
+            dist = Math_Distance2dGet(&airScreamer->position_18, &airScreamer->properties_E4.unk0.field_F8);
             if (dist < dist0)
             {
-                angle = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8) - chara->rotation_24.vy);
+                angle = FP_ANGLE_NORM_S(func_80080478(&airScreamer->position_18, &airScreamer->properties_E4.unk0.field_F8) - airScreamer->rotation_24.vy);
                 if (angle >= FP_ANGLE(-8.0f) && angle < FP_ANGLE(8.0f))
                 {
-                    chara->model_0.controlState_2 = 49;
-                    chara->model_0.stateStep_3 = 0;
+                    airScreamer->model_0.controlState_2 = 49;
+                    airScreamer->model_0.stateStep_3 = 0;
                 }
             }
             break;
 
         case 1:
         case 2:
-            chara->model_0.controlState_2 = 50;
-            chara->model_0.stateStep_3 = 0;
-            chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+            airScreamer->model_0.controlState_2 = 50;
+            airScreamer->model_0.stateStep_3 = 0;
+            airScreamer->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
             break;
 
         case 3:
         case 4:
-            chara->model_0.controlState_2 = 51;
-            chara->model_0.stateStep_3 = 0;
+            airScreamer->model_0.controlState_2 = 51;
+            airScreamer->model_0.stateStep_3 = 0;
 
-            if (chara->health_B0 <= Q12(0.0f))
+            if (airScreamer->health_B0 <= Q12(0.0f))
             {
-                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
+                airScreamer->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
             }
             else
             {
-                chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+                airScreamer->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
             }
             break;
     }
 }
 
-void func_800D45BC(s_SubCharacter* chara) // 0x800D45BC
+void func_800D45BC(s_SubCharacter* airScreamer) // 0x800D45BC
 {
     u32 temp_v0;
 
-    if (!chara->model_0.stateStep_3)
+    if (!airScreamer->model_0.stateStep_3)
     {
-        chara->properties_E4.unk0.properties_120.val32 = Q12(2.0f);
-        chara->model_0.stateStep_3 = 1;
+        airScreamer->properties_E4.unk0.properties_120.val32 = Q12(2.0f);
+        airScreamer->model_0.stateStep_3 = 1;
     }
 
-    func_800D53AC(chara);
-    sharedFunc_800D5B10_0_s01(chara);
+    func_800D53AC(airScreamer);
+    sharedFunc_800D5B10_0_s01(airScreamer);
 
-    temp_v0 = Ai_AirScreamer_DamageTake(chara, Q12(1.0f));
+    temp_v0 = Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f));
     switch (temp_v0)
     {
         case 0:
-            if (!chara->properties_E4.unk0.properties_120.val32 ||
-                Math_Distance2dGet(&chara->position_18, &g_SysWork.playerWork_4C.player_0.position_18) > Q12(2.0f))
+            if (!airScreamer->properties_E4.unk0.properties_120.val32 ||
+                Math_Distance2dGet(&airScreamer->position_18, &g_SysWork.playerWork_4C.player_0.position_18) > Q12(2.0f))
             {
-                chara->model_0.controlState_2 = 47;
-                chara->model_0.stateStep_3 = 0;
+                airScreamer->model_0.controlState_2 = 47;
+                airScreamer->model_0.stateStep_3 = 0;
                 break;
             }
 
@@ -423,56 +423,56 @@ void func_800D45BC(s_SubCharacter* chara) // 0x800D45BC
 
         case 1:
         case 2:
-            chara->model_0.controlState_2 = 50;
-            chara->model_0.stateStep_3 = 0;
-            chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+            airScreamer->model_0.controlState_2 = 50;
+            airScreamer->model_0.stateStep_3 = 0;
+            airScreamer->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
             break;
 
         case 3:
         case 4:
-            chara->model_0.controlState_2 = 51;
-            chara->model_0.stateStep_3 = 0;
+            airScreamer->model_0.controlState_2 = 51;
+            airScreamer->model_0.stateStep_3 = 0;
 
-            if (chara->health_B0 <= Q12(0.0f))
+            if (airScreamer->health_B0 <= Q12(0.0f))
             {
-                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
+                airScreamer->properties_E4.player.flags_11C |= PlayerFlag_Unk6;
             }
             else
             {
-                chara->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
+                airScreamer->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
             }
             break;
     }
 }
 
-void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
+void func_800D46C4(s_SubCharacter* airScreamer) // 0x800D46C4
 {
     bool cond0;
     bool cond1;
     s32  animStatus;
 
     cond0 = false;
-    animStatus = chara->model_0.anim_4.status_0;
+    animStatus = airScreamer->model_0.anim_4.status_0;
     cond1 = false;
 
-    switch (chara->model_0.stateStep_3)
+    switch (airScreamer->model_0.stateStep_3)
     {
         case 0:
-            chara->model_0.stateStep_3 = 1;
+            airScreamer->model_0.stateStep_3 = 1;
 
         case 1:
             if (animStatus == ANIM_STATUS(19, true))
             {
-                chara->model_0.stateStep_3 = 2;
-                chara->model_0.anim_4.status_0 = 4;
+                airScreamer->model_0.stateStep_3 = 2;
+                airScreamer->model_0.anim_4.status_0 = 4;
             }
             break;
 
         case 2:
-            if (animStatus == ANIM_STATUS(2, true) && chara->model_0.anim_4.keyframeIdx_8 < 8192)
+            if (animStatus == ANIM_STATUS(2, true) && airScreamer->model_0.anim_4.keyframeIdx_8 < 8192)
             {
-                chara->model_0.stateStep_3 = 3;
-                chara->properties_E4.player.flags_11C |= PlayerFlag_Unk5;
+                airScreamer->model_0.stateStep_3 = 3;
+                airScreamer->properties_E4.player.flags_11C |= PlayerFlag_Unk5;
             }
             break;
 
@@ -481,11 +481,11 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
             {
                 cond0 = true;
             }
-            else if (chara->field_44.field_8 == NO_VALUE)
+            else if (airScreamer->field_44.field_8 == NO_VALUE)
             {
                 cond0 = true;
                 cond1 = true;
-                chara->model_0.stateStep_3 = 4;
+                airScreamer->model_0.stateStep_3 = 4;
             }
             break;
 
@@ -498,10 +498,10 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
             break;
     }
 
-    func_800D53AC(chara);
-    sharedFunc_800D5C90_0_s01(chara);
+    func_800D53AC(airScreamer);
+    sharedFunc_800D5C90_0_s01(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(chara, Q12(1.2f)))
+    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.2f)))
     {
         case 0: 
             if (cond0)
@@ -510,19 +510,19 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
                 {
                     if (Rng_RandQ12() >= FP_ANGLE(180.0f))
                     {
-                        chara->model_0.controlState_2 = 47;
+                        airScreamer->model_0.controlState_2 = 47;
                     }
                     else
                     {
-                        chara->model_0.controlState_2 = 48;
+                        airScreamer->model_0.controlState_2 = 48;
                     }
                 }
                 else
                 {
-                    chara->model_0.controlState_2 = 48;
+                    airScreamer->model_0.controlState_2 = 48;
                 }
 
-                chara->model_0.stateStep_3 = 0;
+                airScreamer->model_0.stateStep_3 = 0;
                 break;
             }
 
@@ -531,37 +531,37 @@ void func_800D46C4(s_SubCharacter* chara) // 0x800D46C4
 
         case 1: 
         case 2: 
-            chara->model_0.controlState_2 = 50;
-            chara->model_0.stateStep_3 = 0;
-            chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            airScreamer->model_0.controlState_2 = 50;
+            airScreamer->model_0.stateStep_3 = 0;
+            airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 3: 
         case 4: 
-            chara->model_0.controlState_2 = 51;
-            chara->model_0.stateStep_3 = 0;
+            airScreamer->model_0.controlState_2 = 51;
+            airScreamer->model_0.stateStep_3 = 0;
 
-            if (chara->health_B0 <= Q12(0.0f))
+            if (airScreamer->health_B0 <= Q12(0.0f))
             {
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }
             else
             {
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
     }
 }
 
-void func_800D4894(s_SubCharacter* chara)
+void func_800D4894(s_SubCharacter* airScreamer)
 {
     s32  damageType;
     s32  animStatus;
     u32  stateStep;
     bool cond;
 
-    stateStep  = chara->model_0.stateStep_3;
-    animStatus = chara->model_0.anim_4.status_0;
+    stateStep  = airScreamer->model_0.stateStep_3;
+    animStatus = airScreamer->model_0.anim_4.status_0;
     cond       = false;
 
     switch (stateStep)
@@ -569,16 +569,16 @@ void func_800D4894(s_SubCharacter* chara)
         case 0:
             if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
-                chara->model_0.stateStep_3     = 1;
+                airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
+                airScreamer->model_0.stateStep_3     = 1;
             }
             break;
 
         case 1:
             if (animStatus != ANIM_STATUS(7, false))
             {
-                chara->model_0.stateStep_3 = 2;
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamer->model_0.stateStep_3 = 2;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
 
@@ -590,9 +590,9 @@ void func_800D4894(s_SubCharacter* chara)
             break;
     }
 
-    sharedFunc_800D5D80_0_s01(chara);
+    sharedFunc_800D5D80_0_s01(airScreamer);
 
-    damageType = Ai_AirScreamer_DamageTake(chara, Q12(0.6f));
+    damageType = Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f));
     // TODO: Switch?
     if (damageType >= 0)
     {
@@ -600,36 +600,36 @@ void func_800D4894(s_SubCharacter* chara)
         {
             if (cond)
             {
-                chara->model_0.controlState_2 = ANIM_STATUS(23, true);
-                chara->model_0.stateStep_3 = 0;
-                chara->properties_E4.unk0.field_E8_8 = 3;
+                airScreamer->model_0.controlState_2 = ANIM_STATUS(23, true);
+                airScreamer->model_0.stateStep_3 = 0;
+                airScreamer->properties_E4.unk0.field_E8_8 = 3;
             }
         }
         else if (damageType < 5)
         {
-            chara->model_0.controlState_2     = ANIM_STATUS(25, true);
-            chara->model_0.stateStep_3 = 0;
+            airScreamer->model_0.controlState_2     = ANIM_STATUS(25, true);
+            airScreamer->model_0.stateStep_3 = 0;
 
-            if (chara->health_B0 <= Q12(0.0f))
+            if (airScreamer->health_B0 <= Q12(0.0f))
             {
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }
             else
             {
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
         }
     }
 }
 
-void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
+void func_800D49B0(s_SubCharacter* airScreamer) // 0x800D49B0
 {
     s32  animStatus;
     u32  stateStep;
     bool cond;
 
-    stateStep  = chara->model_0.stateStep_3;
-    animStatus = chara->model_0.anim_4.status_0;
+    stateStep  = airScreamer->model_0.stateStep_3;
+    animStatus = airScreamer->model_0.anim_4.status_0;
     cond       = false;
 
     switch (stateStep)
@@ -637,16 +637,16 @@ void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
         case 0:
             if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(10, false);
-                chara->model_0.stateStep_3 = 1;
+                airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(10, false);
+                airScreamer->model_0.stateStep_3 = 1;
             }
             break;
 
         case 1:
             if (animStatus != ANIM_STATUS(10, false))
             {
-                chara->model_0.stateStep_3 = 2;
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamer->model_0.stateStep_3 = 2;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
 
@@ -658,14 +658,14 @@ void func_800D49B0(s_SubCharacter* chara) // 0x800D49B0
             break;
     }
 
-    sharedFunc_800D5E14_0_s01(chara);
-    Ai_AirScreamer_DamageTake(chara, Q12(0.6f));
+    sharedFunc_800D5E14_0_s01(airScreamer);
+    Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f));
 
     if (cond)
     {
-        chara->model_0.controlState_2 = 2;
-        chara->model_0.stateStep_3 = 0;
-        chara->properties_E4.unk0.field_E8_8 = 1;
+        airScreamer->model_0.controlState_2 = 2;
+        airScreamer->model_0.stateStep_3 = 0;
+        airScreamer->properties_E4.unk0.field_E8_8 = 1;
     }
 }
 

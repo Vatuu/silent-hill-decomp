@@ -1338,6 +1338,26 @@ typedef struct _PropertiesAirScreamer
     q19_12  groundHeight_124;
 } s_PropertiesAirScreamer;
 
+/** @brief Alessa character properties. TODO: Copy of `s_PropertiesDahlia`. Fields are inaccurate. */
+typedef struct _PropertiesAlessa
+{
+    s32        stateIdx0;
+    u_Property properties_EC;
+    s32        field_F0;
+    u_Property properties_F4;
+    s32        resetStateIdx0_F8;
+    s32        field_FC;
+    s32        field_100;
+    u_Property properties_104;
+    u_Property properties_108;
+    u_Property properties_10C;
+    VECTOR3    field_110;
+    s32        flags_11C;
+    u_Property properties_120;
+    s16        field_124;
+    q3_12      moveDistance_126;
+} s_PropertiesAlessa;
+
 /** @brief Bloodsucker character properties. */
 typedef struct _PropertiesBloodsucker
 {
@@ -1620,6 +1640,7 @@ typedef struct _SubCharacter
         s_PropertiesNpc             npc;
 
         s_PropertiesAirScreamer     airScreamer;
+        s_PropertiesAlessa          alessa;
         s_PropertiesBloodsucker     bloodsucker;
         s_PropertiesCreeper         creeper;
         s_PropertiesDahlia          dahlia;

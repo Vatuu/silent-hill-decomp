@@ -1,6 +1,6 @@
 // Very similar to `sharedFunc_800D6504_2_s00`, changes here should be copied there.
 
-void sharedFunc_800DB9B8_2_s00(s_SubCharacter* chara)
+void sharedFunc_800DB9B8_2_s00(s_SubCharacter* airScreamer)
 {
     s32    animStatus;
     bool   field14C_2;
@@ -9,27 +9,27 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* chara)
     s32    var_a0;
     q19_12 var_s1;
 
-    animStatus       = chara->model_0.anim_4.status_0;
+    animStatus       = airScreamer->model_0.anim_4.status_0;
     field14C_2_tmp   = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
-    chara->flags_3E |= CharaFlag_Unk3;
+    airScreamer->flags_3E |= CharaFlag_Unk3;
     field14C_2       = field14C_2_tmp;
     cond             = false;
 
-    switch ((u32)chara->model_0.stateStep_3)
+    switch ((u32)airScreamer->model_0.stateStep_3)
     {
         case 0:
             if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(8, false);
-                chara->model_0.stateStep_3     = 1;
+                airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(8, false);
+                airScreamer->model_0.stateStep_3     = 1;
             }
             break;
 
         case 1:
             if (animStatus != ANIM_STATUS(8, false))
             {
-                chara->model_0.stateStep_3           = 2;
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamer->model_0.stateStep_3           = 2;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
 
@@ -41,9 +41,9 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* chara)
             break;
     }
 
-    sharedFunc_800E041C_2_s00(chara);
+    sharedFunc_800E041C_2_s00(airScreamer);
 
-    switch (Ai_AirScreamer_DamageTake(chara, Q12(0.6f)))
+    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f)))
     {
         case 0:
         case 1:
@@ -53,76 +53,76 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* chara)
                 break;
             }
 
-            var_s1 = chara->properties_E4.unk0.field_E8_4 ? Q12(0.1f) : Q12(0.0f);
+            var_s1 = airScreamer->properties_E4.unk0.field_E8_4 ? Q12(0.1f) : Q12(0.0f);
 
-            if (chara->properties_E4.unk0.field_E8_0 == 3)
+            if (airScreamer->properties_E4.unk0.field_E8_0 == 3)
             {
-                sharedFunc_800DD13C_2_s00(chara, chara->field_40 + 1, Q12(0.7f));
+                sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->field_40 + 1, Q12(0.7f));
             }
 
             if (field14C_2)
             {
-                if (chara->properties_E4.unk0.field_E8_8 == 5)
+                if (airScreamer->properties_E4.unk0.field_E8_8 == 5)
                 {
-                    chara->model_0.controlState_2     = 42;
-                    chara->model_0.stateStep_3 = 0;
+                    airScreamer->model_0.controlState_2     = 42;
+                    airScreamer->model_0.stateStep_3 = 0;
 
-                    if (Rng_RandQ12() < ((FP_TO(chara->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1 * 2)))
+                    if (Rng_RandQ12() < ((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1 * 2)))
                     {
-                        chara->properties_E4.unk0.field_E8_8 = 3;
+                        airScreamer->properties_E4.unk0.field_E8_8 = 3;
                     }
                     break;
                 }
                 else
                 {
-                    chara->model_0.controlState_2     = 38;
-                    chara->model_0.stateStep_3 = 0;
+                    airScreamer->model_0.controlState_2     = 38;
+                    airScreamer->model_0.stateStep_3 = 0;
 
-                    if (Rng_RandQ12() <= ((FP_TO(chara->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1 * 2)))
+                    if (Rng_RandQ12() <= ((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1 * 2)))
                     {
-                        chara->properties_E4.unk0.field_E8_8 = 3;
+                        airScreamer->properties_E4.unk0.field_E8_8 = 3;
                     }
                     else
                     {
-                        chara->properties_E4.unk0.field_E8_8 = 5;
+                        airScreamer->properties_E4.unk0.field_E8_8 = 5;
                     }
                 }
                 break;
             }
 
-            switch (chara->properties_E4.unk0.field_E8_8)
+            switch (airScreamer->properties_E4.unk0.field_E8_8)
             {
                 case 3:
-                    chara->model_0.controlState_2     = 41;
-                    chara->model_0.stateStep_3 = 0;
+                    airScreamer->model_0.controlState_2     = 41;
+                    airScreamer->model_0.stateStep_3 = 0;
 
                     if (Rng_RandQ12() < ((Q12(0.5f) - (var_s1 * 3))))
                     {
-                        chara->properties_E4.unk0.field_E8_8 = 2;
+                        airScreamer->properties_E4.unk0.field_E8_8 = 2;
                     }
                     break;
 
                 case 2:
-                    chara->model_0.controlState_2     = 36;
-                    chara->model_0.stateStep_3 = 0;
+                    airScreamer->model_0.controlState_2     = 36;
+                    airScreamer->model_0.stateStep_3 = 0;
 
-                    if (Rng_RandQ12() > (FP_TO(chara->health_B0, Q12_SHIFT) / Q12(380.0f) + (var_s1 * 2)))
+                    if (Rng_RandQ12() > (FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f) + (var_s1 * 2)))
                     {
-                        chara->properties_E4.unk0.field_E8_8 = 5;
+                        airScreamer->properties_E4.unk0.field_E8_8 = 5;
                     }
                     else if (Rng_RandQ12() < Q12(0.3f) + (var_s1 * 3))
                     {
-                        chara->properties_E4.unk0.field_E8_8 = 3;
+                        airScreamer->properties_E4.unk0.field_E8_8 = 3;
                     }
                     break;
 
                 case 5:
-                    chara->model_0.controlState_2     = 42;
-                    chara->model_0.stateStep_3 = 0;
+                    airScreamer->model_0.controlState_2     = 42;
+                    airScreamer->model_0.stateStep_3 = 0;
 
-                    if (Rng_RandQ12() < FP_TO(chara->health_B0, Q12_SHIFT) / Q12(380.0f))
+                    if (Rng_RandQ12() < FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f))
                     {
-                        chara->properties_E4.unk0.field_E8_8 = 3;
+                        airScreamer->properties_E4.unk0.field_E8_8 = 3;
                     }
                     break;
 
@@ -130,14 +130,14 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* chara)
                 case 4:
                     if (Rng_RandQ12() < (Q12(0.2f) + (var_s1 * 5)))
                     {
-                        chara->model_0.controlState_2 = 36;
+                        airScreamer->model_0.controlState_2 = 36;
                     }
                     else
                     {
-                        chara->model_0.controlState_2 = 42;
+                        airScreamer->model_0.controlState_2 = 42;
                     }
 
-                    chara->model_0.stateStep_3 = 0;
+                    airScreamer->model_0.stateStep_3 = 0;
 
                     if (Rng_RandQ12() < (Q12(0.5f) + (var_s1 * 3)))
                     {
@@ -148,26 +148,26 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* chara)
                         var_a0 = 5;
                     }
 
-                    chara->properties_E4.unk0.field_E8_8 = var_a0;
+                    airScreamer->properties_E4.unk0.field_E8_8 = var_a0;
                     break;
 
                 case 0:
                 default:
-                    if (chara->properties_E4.unk0.field_E8_0 == 3)
+                    if (airScreamer->properties_E4.unk0.field_E8_0 == 3)
                     {
                         var_s1 = Q12(1.0f);
                     }
 
                     if (Rng_RandQ12() < (Q12(0.4f) + (var_s1 * 3)))
                     {
-                        chara->model_0.controlState_2 = 36;
+                        airScreamer->model_0.controlState_2 = 36;
                     }
                     else
                     {
-                        chara->model_0.controlState_2 = 42;
+                        airScreamer->model_0.controlState_2 = 42;
                     }
 
-                    chara->model_0.stateStep_3 = 0;
+                    airScreamer->model_0.stateStep_3 = 0;
 
                     if (Rng_RandQ12() < (Q12(0.6f) + (var_s1 * 2)))
                     {
@@ -178,23 +178,23 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* chara)
                         var_a0 = 5;
                     }
 
-                    chara->properties_E4.unk0.field_E8_8 = var_a0;
+                    airScreamer->properties_E4.unk0.field_E8_8 = var_a0;
                     break;
             }
             break;
 
         case 3:
         case 4:
-            chara->model_0.controlState_2     = 45;
-            chara->model_0.stateStep_3 = 0;
+            airScreamer->model_0.controlState_2     = 45;
+            airScreamer->model_0.stateStep_3 = 0;
 
-            if (chara->health_B0 <= Q12(0.0f))
+            if (airScreamer->health_B0 <= Q12(0.0f))
             {
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }
             else
             {
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
     }

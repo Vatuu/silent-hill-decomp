@@ -6,10 +6,10 @@
 #include "maps/characters/air_screamer.h"
 
 // NOTES: 
-// - M0S01 includes extra functions missing entirely from other maps, in the `defined(MAP0_S01)` block below.
+// - M0S01 includes extra functions missing entirely from other maps in the `defined(MAP0_S01)` block below.
 //
-// - There might still be a _lot_ of extra air screamer code not added here yet.
-//   In MAP2_S00, all the code from the `air_screamer.c` include up to `Ai_Groaner_Update` seems to be air screamer related?
+// - There might still be a _lot_ of extra Air Screamer code not added here yet.
+//   In MAP2_S00, all the code from the `air_screamer.c` include up to `Ai_Groaner_Update` seems to be Air Screamer related?
 //   (140+ funcs... this includes the 25+ different func variants that all made use of `field_14C.bits.field_14C_2` etc)
 //   Since there's `INCLUDE_ASM` gaps those can't really be moved here yet.
 //   (MAP0_S01 also seems to share the same funcs, but most look ifdef'd out there, would need to make sure those are shared properly there first)
@@ -40,7 +40,6 @@ bool sharedFunc_800D21E4_0_s01(s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
     return true;
 }
 
-/** Probes collision and sets 1airScreamerProps.groundHeight_124`. */
 void sharedFunc_800D2200_0_s01(s_SubCharacter* airScreamer)
 {
     s32 count;

@@ -94,6 +94,28 @@ typedef enum _StalkerControl
     StalkerControl_13   = 13
 } e_StalkerControl;
 
+typedef enum _StalkerStateStep
+{
+    StalkerStateStep_0  = 0,
+    StalkerStateStep_1  = 1,
+    StalkerStateStep_2  = 2,
+    StalkerStateStep_3  = 3,
+    StalkerStateStep_4  = 4,
+    StalkerStateStep_5  = 5,
+    StalkerStateStep_6  = 6,
+    StalkerStateStep_7  = 7,
+    StalkerStateStep_8  = 8,
+    StalkerStateStep_9  = 9,
+    StalkerStateStep_10 = 10,
+    StalkerStateStep_11 = 11,
+    StalkerStateStep_12 = 12,
+    StalkerStateStep_13 = 13,
+    StalkerStateStep_14 = 14,
+    StalkerStateStep_15 = 15,
+    StalkerStateStep_16 = 16,
+    StalkerStateStep_17 = 17
+} e_StalkerStateStep;
+
 /*s_AnimInfo STALKER_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, 0, 0 },

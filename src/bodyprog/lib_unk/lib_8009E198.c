@@ -736,7 +736,7 @@ s_SysWork_2514_18* func_8009ECCC(s_SysWork_2514* arg0, s32 key) // 0x8009ECCC
     node = arg0->field_10;
     head = &arg0->head_18;
 
-    if (!node)
+    if (node == NULL)
     {
         return NULL;
     }
@@ -749,7 +749,6 @@ s_SysWork_2514_18* func_8009ECCC(s_SysWork_2514* arg0, s32 key) // 0x8009ECCC
     prev = tmp;
 
     midpoint = (next->key_8.value + prev->key_8.value) >> 1;
-
     if (midpoint <= key)
     {
         prev = head;

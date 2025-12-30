@@ -1,28 +1,28 @@
-void sharedFunc_800DBDEC_2_s00(s_SubCharacter* chara)
+void sharedFunc_800DBDEC_2_s00(s_SubCharacter* airScreamer)
 {
     bool cond;
     s32  animStatus;
 
     cond       = false;
-    animStatus = chara->model_0.anim_4.status_0;
+    animStatus = airScreamer->model_0.anim_4.status_0;
 
-    chara->flags_3E |= CharaFlag_Unk3;
+    airScreamer->flags_3E |= CharaFlag_Unk3;
 
-    switch ((u32)chara->model_0.stateStep_3)
+    switch ((u32)airScreamer->model_0.stateStep_3)
     {
         case 0:
             if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunForwardStumble, false);
-                chara->model_0.stateStep_3     = 1;
+                airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunForwardStumble, false);
+                airScreamer->model_0.stateStep_3     = 1;
             }
             break;
 
         case 1:
             if (animStatus != ANIM_STATUS(HarryAnim_RunForwardStumble, false))
             {
-                chara->model_0.stateStep_3           = 2;
-                chara->properties_E4.unk0.flags_11C |= PlayerFlag_WallStopRight;
+                airScreamer->model_0.stateStep_3           = 2;
+                airScreamer->properties_E4.unk0.flags_11C |= PlayerFlag_WallStopRight;
             }
             break;
 
@@ -34,22 +34,22 @@ void sharedFunc_800DBDEC_2_s00(s_SubCharacter* chara)
             break;
     }
 
-    if (sharedFunc_800D4A80_0_s01(chara) == 3)
+    if (sharedFunc_800D4A80_0_s01(airScreamer) == 3)
     {
-        sharedFunc_800E04B0_2_s00(chara);
+        sharedFunc_800E04B0_2_s00(airScreamer);
     }
     else
     {
-        sharedFunc_800D5638_0_s01(chara);
+        sharedFunc_800D5638_0_s01(airScreamer);
     }
 
-    Ai_AirScreamer_DamageTake(chara, Q12(0.6f));
+    Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f));
 
     if (cond)
     {
-        chara->model_0.controlState_2     = 2;
-        chara->model_0.stateStep_3 = 0;
+        airScreamer->model_0.controlState_2     = 2;
+        airScreamer->model_0.stateStep_3 = 0;
 
-        chara->properties_E4.unk0.field_E8_8 = 1;
+        airScreamer->properties_E4.unk0.field_E8_8 = 1;
     }
 }

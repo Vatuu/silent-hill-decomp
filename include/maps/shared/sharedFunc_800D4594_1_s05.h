@@ -1,4 +1,4 @@
-void sharedFunc_800D4594_1_s05(s_sharedFunc_800D4594_1_s05* arg0, s32 posX, s32 posZ, VECTOR3* vec0, VECTOR3* vec1)
+void sharedFunc_800D4594_1_s05(s_sharedFunc_800D4594_1_s05* arg0, q19_12 posX, q19_12 posZ, VECTOR3* vec0, VECTOR3* vec1)
 {
     q3_12 angle;
     q3_12 angle1;
