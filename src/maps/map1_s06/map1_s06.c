@@ -48,53 +48,8 @@ INCLUDE_RODATA("asm/maps/map1_s06/nonmatchings/map1_s06", g_MapOverlayHeader);
 
 #include "maps/shared/Player.h"
 
-#include "maps/shared/Ai_SplitHead_Update.h" // 0x800D02CC
-
-#include "maps/shared/Ai_SplitHead_Init.h" // 0x800D038C
-
-#include "maps/shared/sharedFunc_800CF990_1_s05.h" // 0x800D0444
-
-#include "maps/shared/Ai_SplitHead_DamageTake.h" // 0x800D0948
-
-#include "maps/shared/Ai_SplitHead_ControlUpdate.h" // 0x800D0B08
-
-#include "maps/shared/sharedFunc_800D00D0_1_s05.h" // 0x800D0B84
-
-#include "maps/shared/sharedFunc_800D0948_1_s05.h" // 0x800D13FC
-
-#include "maps/shared/sharedFunc_800D11A0_1_s05.h" // 0x800D1C54
-
-#include "maps/shared/sharedFunc_800D17BC_1_s05.h" // 0x800D2270
-
-#include "maps/shared/sharedFunc_800D19B8_1_s05.h" // 0x800D246C
-
-#include "maps/shared/sharedFunc_800D2214_1_s05.h" // 0x800D2CC8
-
-#include "maps/shared/sharedFunc_800D2444_1_s05.h" // 0x800D2EF8
-
-#include "maps/shared/sharedFunc_800D263C_1_s05.h" // 0x800D30F0
-
-#include "maps/shared/sharedFunc_800D267C_1_s05.h" // 0x800D3130
-
-#include "maps/shared/sharedFunc_800D274C_1_s05.h" // 0x800D3200
-
-#include "maps/shared/sharedFunc_800D2D74_1_s05.h" // 0x800D3828
-
-#include "maps/shared/sharedFunc_800D3388_1_s05.h" // 0x800D3E3C
-
-#include "maps/shared/sharedFunc_800D3AFC_1_s05.h" // 0x800D45B0
-
-#include "maps/shared/sharedFunc_800D3B30_1_s05.h" // 0x800D45E4
-
-#include "maps/shared/sharedFunc_800D4070_1_s05.h" // 0x800D4B24
-
-#include "maps/shared/sharedFunc_800D4408_1_s05.h" // 0x800D4EBC
-
-#include "maps/shared/sharedFunc_800D450C_1_s05.h" // 0x800D4FC0
-
-#include "maps/shared/sharedFunc_800D4530_1_s05.h" // 0x800D4FE4
-
-#include "maps/shared/sharedFunc_800D4594_1_s05.h" // 0x800D5048
+// TODO: Move this line into separate `Chara_SplitHead` split.
+#include "../src/maps/characters/split_head.c" // 0x800D02CC
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D5350
 

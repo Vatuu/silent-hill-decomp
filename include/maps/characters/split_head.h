@@ -50,6 +50,17 @@ typedef enum _SplitHeadControl
     SplitHeadControl_8    = 8
 } e_SplitHeadControl;
 
+typedef struct
+{
+    s32  field_0; // Distance/Magnitude?
+    s32  field_4; // X
+    s32  field_8; // Z
+    u8   field_C; // 0 / 1 / 2
+    u8   field_D; // `bool`
+    u8   field_E;
+    s8   unk_F;
+} s_sharedFunc_800D4594_1_s05;
+
 /*s_AnimInfo SPLIT_HEAD_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, 0, 0 },
@@ -119,5 +130,7 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead);
 void sharedFunc_800D450C_1_s05(s32 arg0, s32 arg1);
 
 bool sharedFunc_800D4530_1_s05(s_SubCharacter* splitHead);
+
+void sharedFunc_800D4594_1_s05(s_sharedFunc_800D4594_1_s05* arg0, q19_12 posX, q19_12 posZ, VECTOR3* vec0, VECTOR3* vec1);
 
 #endif
