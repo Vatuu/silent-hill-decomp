@@ -285,7 +285,7 @@ void sharedFunc_800D633C_0_s01(s_SubCharacter* airScreamer);
 void sharedFunc_800D63A4_0_s01(s_SubCharacter* airScreamer);
 void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer);
 
-s32 sharedFunc_800D7120_0_s01(s32, s32, s32);
+s32 sharedFunc_800D7120_0_s01(s32 arg0, s32 arg1, s32 arg2);
 s32 sharedFunc_800D71F0_0_s01(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 
 s32 sharedFunc_800D7440_0_s01(s_800C4590* arg0, VECTOR* vec1, s_SubCharacter* airScreamer);

@@ -71,13 +71,13 @@ INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", g_MapOverlayHeader);
 
 #include "maps/shared/Ai_PuppetNurse_Control9.h"
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800CF600);
+INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CF600_3_s03);
 
 #include "maps/shared/sharedFunc_800CF7F4_3_s03.h" // 0x800CF7F4
 
 #include "maps/shared/sharedFunc_800CF90C_3_s03.h" // 0x800CF90C
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", Ai_PuppetNurse_Control12);
+#include "maps/shared/Ai_PuppetNurse_Control12.h"
 
 #include "maps/shared/Ai_PuppetNurse_Control10.h"
 

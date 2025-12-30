@@ -70,13 +70,13 @@ INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04", g_MapOverlayHeader);
 
 #include "maps/shared/Ai_PuppetNurse_Control9.h" // 0x800CF270
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", func_800CF4C4);
+INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", sharedFunc_800CF600_3_s03); // 0x800CF4C4
 
 #include "maps/shared/sharedFunc_800CF7F4_3_s03.h" // 0x800CF6B8
 
 #include "maps/shared/sharedFunc_800CF90C_3_s03.h" // 0x800CF7D0
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", Ai_PuppetNurse_Control12); // 0x800CF8BC
+#include "maps/shared/Ai_PuppetNurse_Control12.h" // 0x800CF8BC
 
 #include "maps/shared/Ai_PuppetNurse_Control10.h" // 0x800CFBDC
 

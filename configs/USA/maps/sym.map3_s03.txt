@@ -82,6 +82,7 @@ sharedFunc_800CEEE0_3_s03     = 0x800CEEE0; // type:func
 sharedFunc_800CF0B4_3_s03     = 0x800CF0B4; // type:func
 sharedFunc_800CF294_3_s03     = 0x800CF294; // type:func
 Ai_PuppetNurse_Control9       = 0x800CF3AC; // type:func
+sharedFunc_800CF600_3_s03     = 0x800CF600; // type:func
 sharedFunc_800CF7F4_3_s03     = 0x800CF7F4; // type:func
 sharedFunc_800CF90C_3_s03     = 0x800CF90C; // type:func
 Ai_PuppetNurse_Control12      = 0x800CF9F8; // type:func

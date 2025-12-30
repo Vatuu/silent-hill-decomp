@@ -77,13 +77,13 @@ const VECTOR D_800CA5C8 = {};
 
 #include "maps/shared/Ai_PuppetNurse_Control9.h" // 0x800D33A0
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", func_800D35F4);
+INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CF600_3_s03); // 0x800D35F4
 
 #include "maps/shared/sharedFunc_800CF7F4_3_s03.h" // 0x800D37E8
 
 #include "maps/shared/sharedFunc_800CF90C_3_s03.h" // 0x800D3900
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", Ai_PuppetNurse_Control12); // 0x800D39EC
+#include "maps/shared/Ai_PuppetNurse_Control12.h" // 0x800D39EC
 
 #include "maps/shared/Ai_PuppetNurse_Control10.h" // 0x800D3D0C
 
