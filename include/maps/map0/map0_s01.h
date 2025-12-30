@@ -128,8 +128,6 @@ void func_800D3EB8(s_SubCharacter* chara);
 
 void func_800D46C4(s_SubCharacter* chara);
 
-void func_800D53AC(s_SubCharacter*);
-
 s32 func_800D5F00(s_SubCharacter* chara);
 
 void sharedFunc_800D2364_0_s01(s_SubCharacter* chara);

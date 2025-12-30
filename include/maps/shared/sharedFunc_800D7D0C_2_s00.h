@@ -22,7 +22,7 @@ void sharedFunc_800D7D0C_2_s00(s_SubCharacter* airScreamer) // 0x800D7D0C
     field14C_2     = field14C_2_tmp;
     temp_s6        = sharedFunc_800DC50C_2_s00(airScreamer);
 
-    sharedFunc_800DE940_2_s00(airScreamer);
+    sharedFunc_800D53AC_0_s01(airScreamer);
     switch (airScreamer->model_0.stateStep_3)
     {
         case 0:

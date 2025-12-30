@@ -51,7 +51,7 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* airScreamer)
             break;
     }
 
-    sharedFunc_800DE940_2_s00(airScreamer);
+    sharedFunc_800D53AC_0_s01(airScreamer);
     sharedFunc_800D5C90_0_s01(airScreamer);
 
     switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.2f)))

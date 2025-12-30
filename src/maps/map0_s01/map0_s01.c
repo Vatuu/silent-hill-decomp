@@ -344,7 +344,7 @@ void func_800D4420(s_SubCharacter* airScreamer) // 0x800D4420
             break;
     }
 
-    func_800D53AC(airScreamer);
+    sharedFunc_800D53AC_0_s01(airScreamer);
     sharedFunc_800D57C8_0_s01(airScreamer);
 
     switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
@@ -403,7 +403,7 @@ void func_800D45BC(s_SubCharacter* airScreamer) // 0x800D45BC
         airScreamer->model_0.stateStep_3 = 1;
     }
 
-    func_800D53AC(airScreamer);
+    sharedFunc_800D53AC_0_s01(airScreamer);
     sharedFunc_800D5B10_0_s01(airScreamer);
 
     temp_v0 = Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f));
@@ -498,7 +498,7 @@ void func_800D46C4(s_SubCharacter* airScreamer) // 0x800D46C4
             break;
     }
 
-    func_800D53AC(airScreamer);
+    sharedFunc_800D53AC_0_s01(airScreamer);
     sharedFunc_800D5C90_0_s01(airScreamer);
 
     switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.2f)))
@@ -679,7 +679,7 @@ void func_800D49B0(s_SubCharacter* airScreamer) // 0x800D49B0
 
 #include "maps/shared/sharedFunc_800D529C_0_s01.h" // 0x800D529C
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D53AC);
+#include "maps/shared/sharedFunc_800D53AC_0_s01.h" // 0x800D53AC
 
 #include "maps/shared/sharedFunc_800D5638_0_s01.h" // 0x800D5638
 
