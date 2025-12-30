@@ -12,6 +12,8 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* airScreamer)
     s32    temp_s0;
     s32    temp_s2;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     animStatus  = airScreamer->model_0.anim_4.status_0;
     switchCond1 = 0;
     var_s7      = Q12(0.0f);
@@ -193,4 +195,6 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* airScreamer)
             }
             break;
     }
+
+    #undef airScreamerProps
 }

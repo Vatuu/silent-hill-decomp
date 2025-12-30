@@ -3,31 +3,34 @@ void sharedFunc_800DBDEC_2_s00(s_SubCharacter* airScreamer)
     bool cond;
     s32  animStatus;
 
+    #define airScreamerFlags airScreamer->properties_E4.airScreamer
+
     cond       = false;
     animStatus = airScreamer->model_0.anim_4.status_0;
 
     airScreamer->flags_3E |= CharaFlag_Unk3;
 
+    // Handle state step. TODO: Cast necessary?
     switch ((u32)airScreamer->model_0.stateStep_3)
     {
-        case 0:
+        case AirScreamerStateStep_0:
             if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
-                airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(HarryAnim_RunForwardStumble, false);
-                airScreamer->model_0.stateStep_3     = 1;
+                airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(AirScreamerAnim_11, false);
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_1;
             }
             break;
 
-        case 1:
-            if (animStatus != ANIM_STATUS(HarryAnim_RunForwardStumble, false))
+        case AirScreamerStateStep_1:
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_11, false))
             {
-                airScreamer->model_0.stateStep_3           = 2;
-                airScreamer->properties_E4.unk0.flags_11C |= PlayerFlag_WallStopRight;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_2;
+                airScreamerFlags.flags_11C |= AirScreamerFlag_3;
             }
             break;
 
-        case 2:
-            if (animStatus != ANIM_STATUS(HarryAnim_RunForwardStumble, true))
+        case AirScreamerStateStep_2:
+            if (animStatus != ANIM_STATUS(AirScreamerAnim_11, true))
             {
                 cond = true;
             }
@@ -47,9 +50,8 @@ void sharedFunc_800DBDEC_2_s00(s_SubCharacter* airScreamer)
 
     if (cond)
     {
-        airScreamer->model_0.controlState_2     = 2;
-        airScreamer->model_0.stateStep_3 = 0;
-
-        airScreamer->properties_E4.unk0.field_E8_8 = 1;
+        airScreamer->model_0.controlState_2 = AirScreamerControl_2;
+        airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
+        airScreamerFlags.field_E8_8 = 1;
     }
 }
