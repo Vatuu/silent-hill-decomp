@@ -352,6 +352,52 @@ void func_800D525C(void) // 0x800D525C
     SD_Call(Sfx_Unk1478);
 }
 
-INCLUDE_ASM("asm/maps/map1_s05/nonmatchings/map1_s05", func_800D5400);
+void func_800D5400(void) // 0x800D5400
+{
+    s32 sp18[2];
+    s32 i;
 
-INCLUDE_RODATA("asm/maps/map1_s05/nonmatchings/map1_s05", D_800CAAC4);
+    if (Savegame_EventFlagGet(EventFlag_129))
+    {
+        D_800D86F8[0] += g_DeltaTime0;
+        if ((D_800D86F8[0] * D_800D86FC[0]) >= Q12(SQUARE(8.0f)))
+        {
+            D_800D86F8[0] = 0;
+            D_800D86FC[0] = Rng_GenerateUInt(32, 95);
+            D_800D86FE    = Rng_GenerateUInt(32, 63);
+        }
+
+        sp18[0] = FP_MULTIPLY(D_800D86FE, Math_Sin(D_800D86F8[1]), Q12_SHIFT);
+
+        D_800D86F8[1] += g_DeltaTime0;
+
+        sp18[1] = (D_800D86F8[1] * D_800D86FC[1]) >> 6;
+
+        if (sp18[1] >= Q12(1.0f))
+        {
+            D_800D86F8[1] = 0;
+            D_800D86FC[1] = Rng_GenerateUInt(32, 95);
+            sp18[1]       = Q12_FRACT(sp18[1]);
+        }
+
+        // TODO: Why doesn't `FP_MULTIPLY_FLOAT_PRECISE(sp18[0], 0.6f, Q12_SHIFT)` work here?
+        g_SysWork.field_2378 = Q12(1.35f) + (((Q12(0.9f) + FP_MULTIPLY_PRECISE(sp18[0], Q12(0.6f), Q12_SHIFT)) * Math_Sin(sp18[1])) >> 15);
+    }
+
+    g_WorldObject0.rotation_28.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(-90.0f), Q12_SHIFT);
+    g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &g_WorldObject0.rotation_28);
+
+    g_WorldObject1.rotation_28.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+    g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
+
+    i = 0;
+    while (1)
+    {
+        if (++i >= ARRAY_SIZE(sharedData_800DFB7C_0_s00))
+        {
+            break;
+        }
+    }
+
+    func_8005DE0C(Sfx_Unk1478, &QVECTOR3(19.7f, -1.5f, -19.1f), Q8_CLAMPED(0.5f) - FP_MULTIPLY_PRECISE(D_800D8578, Q8_CLAMPED(0.5f), Q12_SHIFT), Q12(16.0f), 0);
+}

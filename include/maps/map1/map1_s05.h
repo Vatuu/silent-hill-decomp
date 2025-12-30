@@ -12,13 +12,14 @@ extern u8 D_800D5C3C;
 
 extern u8 D_800D5D11;
 
+extern s16 D_800D8578;
+
 extern s_WorldObjectDesc g_WorldObject0; // 0x800D8698
 extern s_WorldObjectDesc g_WorldObject1; // 0x800D86C8
 
-extern u16 D_800D86F8[2];
+extern s16 D_800D86F8[2];
 extern u8  D_800D86FC[2];
-
-extern s8 D_800D86FE;
+extern u8  D_800D86FE;
 
 void func_800D494C(void);
 
@@ -27,5 +28,7 @@ void func_800D49AC(void);
 void func_800D4D1C(void);
 
 void func_800D525C(void);
+
+void func_800D5400(void);
 
 #endif

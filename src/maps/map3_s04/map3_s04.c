@@ -82,7 +82,7 @@ INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", Ai_PuppetNurse_Control12)
 
 #include "maps/shared/Ai_PuppetNurse_Control11.h" // 0x800CFC98
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04", Ai_PuppetNurse_Control13); // 0x800CFFD4
+#include "maps/shared/Ai_PuppetNurse_Control13.h" // 0x800CFFD4
 
 INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04", g_NursePuppet_SfxOffsets);
 
