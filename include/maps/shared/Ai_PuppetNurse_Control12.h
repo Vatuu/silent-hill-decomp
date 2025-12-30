@@ -2,7 +2,6 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
 {
     s32             angleDeltaToPlayer;
     s16             angleDeltaAbs;
-    s32             a;
     s32             distToPlayer;
     s32             cond;
     s32             animStatus;

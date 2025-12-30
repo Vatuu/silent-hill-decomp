@@ -299,7 +299,7 @@ INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800E0698_2_s00
 
 #include "maps/shared/sharedFunc_800D6EC4_0_s01.h"
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800D7120_0_s01); // 0x800E18B8
+#include "maps/shared/sharedFunc_800D7120_0_s01.h" // 0x800E18B8
 
 #include "maps/shared/sharedFunc_800D71F0_0_s01.h" // 0x800E1988
 

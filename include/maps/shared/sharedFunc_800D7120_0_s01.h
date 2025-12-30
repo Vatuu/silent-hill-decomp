@@ -29,7 +29,7 @@ s32 sharedFunc_800D7120_0_s01(s32 arg0, s32 arg1, s32 arg2)
         {
             if (temp_v1 > 0)
             {
-                var_a3 += FP_MULTIPLY_PRECISE(g_DeltaTime0, var_a1, 12);
+                var_a3 += FP_MULTIPLY_PRECISE(g_DeltaTime0, var_a1, Q12_SHIFT);
                 if (new_var2 < var_a3)
                 {
                     var_a3 = new_var2;
@@ -38,7 +38,7 @@ s32 sharedFunc_800D7120_0_s01(s32 arg0, s32 arg1, s32 arg2)
         }
         else if (temp_v1 < 0)
         {
-            var_a3 += FP_MULTIPLY_PRECISE(g_DeltaTime0, var_a1, 12);
+            var_a3 += FP_MULTIPLY_PRECISE(g_DeltaTime0, var_a1, Q12_SHIFT);
             if (var_a3 < new_var2)
             {
                 var_a3 = new_var2;
