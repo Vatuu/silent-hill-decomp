@@ -87,29 +87,8 @@ void Ai_Stalker_Control_2(s_SubCharacter* chara) {} // 0x800D3934
 
 #include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D79E4
 
-#include "maps/shared/Ai_Creeper_Update.h" // 0x800D7B98
-
-#include "maps/shared/Ai_Creeper_Init.h" // 0x800D7C28
-
-#include "maps/shared/sharedFunc_800D7EE8_1_s02.h" // 0x800D7EE8
-
-#include "maps/shared/sharedFunc_800D8244_1_s02.h" // 0x800D8244
-
-#include "maps/shared/Ai_Creeper_Control_1.h" // 0x800D82F0
-
-#include "maps/shared/Ai_Creeper_Control_2.h" // 0x800D8684
-
-#include "maps/shared/Ai_Creeper_Control_3.h" // 0x800D8F30
-
-#include "maps/shared/Ai_Creeper_Control_4.h" // 0x800D9528
-
-#include "maps/shared/Ai_Creeper_Control_5.h" // 0x800D9774
-
-#include "maps/shared/sharedFunc_800D983C_1_s02.h" // 0x800D983C
-
-#include "maps/shared/sharedFunc_800D9960_1_s02.h" // 0x800D9960
-
-#include "maps/shared/sharedFunc_800D99D0_1_s02.h" // 0x800D99D0
+// TODO: Move this line into separate `Chara_Creeper` split.
+#include "../src/maps/characters/creeper.c" // 0x800D7B98
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D9E0C
 

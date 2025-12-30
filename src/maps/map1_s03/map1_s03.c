@@ -263,29 +263,8 @@ void Ai_Stalker_Control_2(s_SubCharacter* chara) {} // 0x800D3DAC
 
 #include "maps/shared/sharedFunc_800D7E04_0_s00.h" // 0x800D7E5C
 
-#include "maps/shared/Ai_Creeper_Update.h" // 0x800D8010
-
-#include "maps/shared/Ai_Creeper_Init.h" // 0x800D80A0
-
-#include "maps/shared/sharedFunc_800D7EE8_1_s02.h" // 0x800D8360
-
-#include "maps/shared/sharedFunc_800D8244_1_s02.h" // 0x800D86BC
-
-#include "maps/shared/Ai_Creeper_Control_1.h" // 0x800D8768
-
-#include "maps/shared/Ai_Creeper_Control_2.h" // 0x800D8AFC
-
-#include "maps/shared/Ai_Creeper_Control_3.h" // 0x800D93A8
-
-#include "maps/shared/Ai_Creeper_Control_4.h" // 0x800D99A0
-
-#include "maps/shared/Ai_Creeper_Control_5.h" // 0x800D9BEC
-
-#include "maps/shared/sharedFunc_800D983C_1_s02.h" // 0x800D9CB4
-
-#include "maps/shared/sharedFunc_800D9960_1_s02.h" // 0x800D9DD8
-
-#include "maps/shared/sharedFunc_800D99D0_1_s02.h" // 0x800D9E48
+// TODO: Move this line into separate `Chara_Creeper` split.
+#include "../src/maps/characters/creeper.c" // 0x800D8010
 
 void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DA284
 {

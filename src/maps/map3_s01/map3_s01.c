@@ -36,29 +36,8 @@ INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", g_MapOverlayHeader);
 
 #include "maps/shared/Player.h"
 
-#include "maps/shared/Ai_Creeper_Update.h" // 0x800CEE4C
-
-#include "maps/shared/Ai_Creeper_Init.h" // 0x800CEEDC
-
-#include "maps/shared/sharedFunc_800D7EE8_1_s02.h" // 0x800CF19C
-
-#include "maps/shared/sharedFunc_800D8244_1_s02.h" // 0x800CF4F8
-
-#include "maps/shared/Ai_Creeper_Control_1.h" // 0x800CF5A4
-
-#include "maps/shared/Ai_Creeper_Control_2.h" // 0x800CF938
-
-#include "maps/shared/Ai_Creeper_Control_3.h" // 0x800D01E4
-
-#include "maps/shared/Ai_Creeper_Control_4.h" // 0x800D07DC
-
-#include "maps/shared/Ai_Creeper_Control_5.h" // 0x800D0A28
-
-#include "maps/shared/sharedFunc_800D983C_1_s02.h" // 0x800D0AF0
-
-#include "maps/shared/sharedFunc_800D9960_1_s02.h" // 0x800D0C14
-
-#include "maps/shared/sharedFunc_800D99D0_1_s02.h" // 0x800D0C84
+// TODO: Move this line into separate `Chara_Creeper` split.
+#include "../src/maps/characters/creeper.c" // 0x800CEE4C
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D10C0
 
