@@ -111,6 +111,8 @@ sharedData_800D5A8C_1_s05   = 0x800D5A8C;
 sharedData_800D5A90_1_s05   = 0x800D5A90;
 sharedData_800D5AAE_1_s05   = 0x800D5AAE;
 sharedData_800D5AAF_1_s05   = 0x800D5AAF;
+sharedData_800D5AB0_1_s05   = 0x800D5AB0;
+sharedData_800D5BE0_1_s05   = 0x800D5BE0;
 MAP_ROOM_IDXS               = 0x800D5C04; // type:u8
 
 //---------------------------------------------------------------

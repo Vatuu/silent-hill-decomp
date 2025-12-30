@@ -1,4 +1,4 @@
-void sharedFunc_800CCE2C_1_s05(u8 arg0, u8 arg1, s32 posX0, s32 posY0, s32 posZ0, s32 posX1, s32 posY1, s32 posZ1)
+void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1, s32 posX0, s32 posY0, s32 posZ0, s32 posX1, s32 posY1, s32 posZ1)
 {
     s32 idx0;
     s32 idx1;

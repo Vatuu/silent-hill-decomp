@@ -1520,6 +1520,12 @@ typedef struct
     u16 vol;
 } s_SfxPair;
 
+typedef struct
+{
+    SVECTOR3 vec;
+    s16      idx;
+} s_sharedData_800D5AB0_1_s05;
+
 extern s_MapOverlayHeader_94 sharedData_800E30C8_1_s02;
 
 // TODO: Ideally this should use some kind of `MAP_FIELD_4C_COUNT` define from each map .h file.
@@ -1653,6 +1659,9 @@ extern u8      sharedData_800D5CF8_1_s05[];
 extern u8      sharedData_800D5D08_1_s05[];
 extern VECTOR3 sharedData_800D8618_1_s05[];
 extern SVECTOR3 sharedData_800D5A90_1_s05[];
+
+extern s_sharedData_800D5AB0_1_s05 sharedData_800D5AB0_1_s05[];
+extern s16                         sharedData_800D5BE0_1_s05[6][3];
 
 extern u8  sharedData_800D16E4_2_s01;
 
@@ -1907,7 +1916,7 @@ void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 
 void sharedFunc_800CCDD4_1_s05(POLY_FT4** poly, s32 idx); // Unknown arg types.
 
-void sharedFunc_800CCE2C_1_s05(u8 arg0, u8 arg1, s32 posX0, s32 posY0, s32 posZ0, s32 posX1, s32 posY1, s32 posZ1);
+void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1, s32 posX0, s32 posY0, s32 posZ0, s32 posX1, s32 posY1, s32 posZ1);
 
 void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, s32 posX, s32 posY, s32 posZ);
 
