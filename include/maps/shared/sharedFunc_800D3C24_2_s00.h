@@ -2,7 +2,7 @@ void sharedFunc_800D3C24_2_s00(s_SubCharacter* airScreamer)
 {
     bool cond0;
     bool isBelowGround;
-    s32  stateStep;
+    bool cond1;
     s32  animStatus;
     s32  animState;
     s32  animStatusCheck;
@@ -21,7 +21,7 @@ void sharedFunc_800D3C24_2_s00(s_SubCharacter* airScreamer)
     switch (step)
     {
         case 0:
-            stateStep = sharedFunc_800E0698_2_s00(airScreamer);
+            cond1         = sharedFunc_800D5F00_0_s01(airScreamer);
             isBelowGround = false;
             cond0 = airScreamer->position_18.vy >= Q12(8.0f);
 
@@ -57,12 +57,12 @@ void sharedFunc_800D3C24_2_s00(s_SubCharacter* airScreamer)
             {
                 Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
 
-                if (animStatus == ANIM_STATUS(AirScreamerAnim_26, true) && stateStep == AirScreamerStateStep_1)
+                if (animStatus == ANIM_STATUS(AirScreamerAnim_26, true) && cond1 == true)
                 {
                     airScreamer->health_B0 = NO_VALUE;
                     func_800622B8(3, airScreamer, ANIM_STATUS(AirScreamerAnim_4, true), 2);
 
-                    airScreamer->model_0.stateStep_3 = stateStep;
+                    airScreamer->model_0.stateStep_3 = AirScreamerStateStep_1;
                     sharedFunc_800D3DFC_0_s01(airScreamer);
                 }
             }

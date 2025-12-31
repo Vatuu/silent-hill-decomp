@@ -61,7 +61,7 @@ void func_800D3EB8(s_SubCharacter* airScreamer) // 0x800D3EB8
     q19_12 damage;
     bool   cond1;
     bool   cond0;
-    s32    temp_s3;
+    bool   temp_s3;
     u32    animStatus;
     s32    animStatus12;
     bool   activeAnimStatus;
@@ -78,7 +78,7 @@ void func_800D3EB8(s_SubCharacter* airScreamer) // 0x800D3EB8
     switch (stateStep)
     {
         case 0:
-            temp_s3 = func_800D5F00(airScreamer);
+            temp_s3 = sharedFunc_800D5F00_0_s01(airScreamer);
             cond0 = false;
             cond1 = airScreamer->position_18.vy >= Q12(8.0f);
 
@@ -114,13 +114,13 @@ void func_800D3EB8(s_SubCharacter* airScreamer) // 0x800D3EB8
             {
                 Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
 
-                if (animStatus == ANIM_STATUS(26, true) && temp_s3 == 1)
+                if (animStatus == ANIM_STATUS(26, true) && temp_s3 == true)
                 {
                     airScreamer->health_B0 = NO_VALUE;
 
                     func_800622B8(3, airScreamer, ANIM_STATUS(4, true), 2);
 
-                    airScreamer->model_0.stateStep_3 = temp_s3;
+                    airScreamer->model_0.stateStep_3 = 1;
 
                     sharedFunc_800D3DFC_0_s01(airScreamer);
                     break;
@@ -699,7 +699,7 @@ void func_800D49B0(s_SubCharacter* airScreamer) // 0x800D49B0
 
 #include "maps/shared/sharedFunc_800D5E78_0_s01.h" // 0x800D5E78
 
-INCLUDE_ASM("asm/maps/map0_s01/nonmatchings/map0_s01", func_800D5F00);
+#include "maps/shared/sharedFunc_800D5F00_0_s01.h" // 0x800D5F00
 
 #include "maps/shared/sharedFunc_800D62D8_0_s01.h" // 0x800D62D8
 

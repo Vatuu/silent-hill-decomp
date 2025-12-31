@@ -2088,7 +2088,7 @@ void sharedFunc_800E04B0_2_s00(s_SubCharacter* chara);
 void sharedFunc_800E0514_2_s00(s_SubCharacter*); // Assumed return type.
 
 /** Air Screamer state step getter. */
-u32 sharedFunc_800E0698_2_s00(s_SubCharacter*);
+bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const chara);
 
 void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3);
 
