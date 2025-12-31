@@ -1495,7 +1495,8 @@ typedef struct _PropertiesSplitHead
     s8      unk_EB;
     q3_12   angle_EC;
     q3_12   field_EE;
-    s8      unk_F0[4];
+    q4_12   angle_F0;
+    q4_12   timer_F2;
     q4_12   timer_F4;
     s8      unk_F8[2];
     q19_12  animTime_F8;

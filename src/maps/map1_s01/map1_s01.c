@@ -1268,7 +1268,7 @@ void func_800D9EC4(void) // 0x800D9EC4
                     D_800DD57C = MIN(D_800DD57C, 0);
                 }
             }
-            else if (g_WorldObject1.rotation_28.vy < -FP_ANGLE(1.8f))
+            else if (g_WorldObject1.rotation_28.vy < FP_ANGLE(-1.8f))
             {
                 func_8005DC1C(Sfx_Unk1435, &soundPos, Q8_CLAMPED(0.5f), 0);
 
@@ -1283,7 +1283,7 @@ void func_800D9EC4(void) // 0x800D9EC4
     }
     else
     {
-        g_WorldObject1.rotation_28.vy = -FP_ANGLE(2.9f);
+        g_WorldObject1.rotation_28.vy = FP_ANGLE(-2.9f);
     }
 
     g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);

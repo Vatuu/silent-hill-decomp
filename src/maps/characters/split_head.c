@@ -5,9 +5,6 @@
 #include "maps/shared.h"
 #include "maps/characters/split_head.h"
 
-// TODO:
-// - Some funcs still taking `s_SubCharacter chara` instead of `splitHead`, and some still use `properties_E4.dummy`.
-
 #define splitHeadProps splitHead->properties_E4.splitHead
 
 void Ai_SplitHead_Update(s_SubCharacter* splitHead, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
@@ -284,38 +281,38 @@ void Ai_SplitHead_ControlUpdate(s_SubCharacter* splitHead)
     }
 }
 
-void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
+void sharedFunc_800D00D0_1_s05(s_SubCharacter* splitHead)
 {
     VECTOR unkPos;
     q3_12  angleDeltaToPlayer;
     q19_12 distToPlayer;
     
-    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
-                                             g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
-    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
-                                       chara->rotation_24.vy);
+    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx,
+                                             g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz);
+    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                                       splitHead->rotation_24.vy);
 
-    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(11, true))
+    if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_11, true))
     {
         if (distToPlayer > Q12(3.5f))
         {
-            Chara_MoveSpeedUpdate3(chara, Q12(2.4f), Q12(2.4f));
+            Chara_MoveSpeedUpdate3(splitHead, Q12(2.4f), Q12(2.4f));
         }
         else
         {
             if (ABS(angleDeltaToPlayer) > FP_ANGLE(90.0f) || distToPlayer > Q12(5.0f))
             {
-                chara->model_0.controlState_2 = 5;
+                splitHead->model_0.controlState_2 = SplitHeadControl_5;
             }
             else
             {
-                chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 3;
-                Chara_MoveSpeedUpdate(chara, Q12(4.8f));
+                splitHeadProps.flags_E8 |= SplitHeadFlag_3;
+                Chara_MoveSpeedUpdate(splitHead, Q12(4.8f));
 
-                if (sharedFunc_800D4530_1_s05(chara) != false)
+                if (sharedFunc_800D4530_1_s05(splitHead) != false)
                 {
-                    chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
-                    func_8005DC1C(Sfx_Unk1475, &chara->position_18, Q8(0.5f), 0);
+                    splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_2, false);
+                    func_8005DC1C(Sfx_Unk1475, &splitHead->position_18, Q8(0.5f), 0);
                 }
             }
         }
@@ -324,72 +321,72 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
             }
             else
             {
-                chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
             }
         }
         else
         {
-            chara->rotation_24.vy = Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18);
+            splitHead->rotation_24.vy = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
         }
     }
-    else if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) == ANIM_STATUS(2, false))
+    else if (ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) == SplitHeadAnim_4)
     {
-        Chara_MoveSpeedUpdate(chara, Q12(4.8f));
+        Chara_MoveSpeedUpdate(splitHead, Q12(4.8f));
     }
-    else if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) == ANIM_STATUS(5, false))
+    else if (ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) == SplitHeadAnim_10)
     {
-        Chara_MoveSpeedUpdate(chara, Q12(4.8f));
+        Chara_MoveSpeedUpdate(splitHead, Q12(4.8f));
 
-        if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 6))
+        if (splitHeadProps.flags_E8 & SplitHeadFlag_6)
         {
-            chara->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 6);
+            splitHeadProps.flags_E8 &= ~SplitHeadFlag_6;
 
             if (!(Rng_Rand16() & 0x3))
             {
-                chara->model_0.controlState_2  = 7;
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(9, false);
+                splitHead->model_0.controlState_2  = SplitHeadControl_7;
+                splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_9, false);
             }
             else
             {
-                chara->model_0.anim_4.status_0 = ANIM_STATUS(4, false);
+                splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_4, false);
             }
         }
-        else if (chara->model_0.anim_4.status_0 == ANIM_STATUS(10, true) && !Rng_TestProbabilityBits(5))
+        else if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_10, true) && !Rng_TestProbabilityBits(5))
         {
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(11, false);
-            chara->model_0.controlState_2  = 5;
+            splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_11, false);
+            splitHead->model_0.controlState_2  = SplitHeadControl_5;
         }
     }
-    else if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 1))
+    else if (splitHeadProps.flags_E8 & SplitHeadFlag_1)
     {
-        if (chara->model_0.anim_4.status_0 == ANIM_STATUS(2, true))
+        if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_2, true))
         {
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(14, false);
+            splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_14, false);
         }
 
-        Chara_MoveSpeedUpdate3(chara, Q12(1.2f), Q12(0.0f));
+        Chara_MoveSpeedUpdate3(splitHead, Q12(1.2f), Q12(0.0f));
 
         if (TIMESTEP_ANGLE_1 < ABS(angleDeltaToPlayer))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
             }
             else
             {
-                chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
             }
         }
         else
         {
-            chara->rotation_24.vy = Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18);
+            splitHead->rotation_24.vy = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
         }
 
-        if (FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT) == 35)
+        if (FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) == 35)
         {
             unkPos.vx = (g_SysWork.playerWork_4C.player_0.position_18.vx + Rng_TestProbabilityBits(10)) - Q12(0.25f);
             unkPos.vy = (g_SysWork.playerWork_4C.player_0.position_18.vy - Rng_TestProbabilityBits(11)) - Q12(1.0f);
@@ -401,33 +398,32 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* chara)
     {
         if (distToPlayer < Q12(2.8f))
         {
-            Chara_MoveSpeedUpdate(chara, Q12(1.2f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(1.2f));
         }
         else
         {
-            Chara_MoveSpeedUpdate3(chara, Q12(1.2f), Q12(0.6f));
+            Chara_MoveSpeedUpdate3(splitHead, Q12(1.2f), Q12(0.6f));
         }
 
         if (TIMESTEP_ANGLE_1 < ABS(angleDeltaToPlayer))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
             }
             else
             {
-                chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
             }
         }
         else
         {
-            chara->rotation_24.vy = Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18);
+            splitHead->rotation_24.vy = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
         }
     }
 }
 
-// `Ai_*_Move`
-void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
+void sharedFunc_800D0948_1_s05(s_SubCharacter* splitHead)
 {
     s_func_800700F8_2 sp10;
     VECTOR3           sp30;
@@ -442,23 +438,23 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
     s32               angleMult;
     s32               var_v1;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
-                                       g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx,
+                                       g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz);
 
-    if ((u16)chara->properties_E4.dummy.properties_E8[2].val16[1] > Q12(0.6f))
+    if (splitHeadProps.timer_F2 > Q12(0.6f))
     {
         angle = FP_ANGLE(0.0f);
-        angleToPlayer = Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18);
+        angleToPlayer = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
 
-        if (chara->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 2))
+        if (splitHeadProps.flags_E8 & SplitHeadFlag_2)
         {
             angleMult                                               = 1;
-            chara->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 2);
+            splitHeadProps.flags_E8 &= ~SplitHeadFlag_2;
         }
         else
         {
             angleMult                                               = NO_VALUE;
-            chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 2;
+            splitHeadProps.flags_E8 |= SplitHeadFlag_2;
         }
 
         for (i = 0; i < 16; i++)
@@ -503,11 +499,11 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
             sp30.vy = Q12(0.0f);
             sp30.vz = FP_MULTIPLY(var_s1, Math_Cos((angleToPlayer + angle) + angle1), Q12_SHIFT);
 
-            func_8006DB3C(&sp10, &chara->position_18, &sp30, chara);
+            func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
 
             if (sp10.field_0 == 0 || sp10.field_10 != 0)
             {
-                chara->properties_E4.dummy.properties_E8[2].val16[0] = angle1 + (angleToPlayer + angle);
+                splitHeadProps.angle_F0 = angle1 + (angleToPlayer + angle);
                 break;
             }
 
@@ -519,101 +515,101 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* chara)
 
         if (i != 16)
         {
-            chara->properties_E4.dummy.properties_E8[2].val16[1] = 0;
+            splitHeadProps.timer_F2 = Q12(0.0f);
         }
     }
 
-    chara->properties_E4.dummy.properties_E8[2].val16[1] += g_DeltaTime0;
+    splitHeadProps.timer_F2 += g_DeltaTime0;
 
-    angleToPlayer = func_8005BF38((chara->properties_E4.dummy.properties_E8[2].val16[0] - chara->rotation_24.vy));
+    angleToPlayer = func_8005BF38((splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
     if (TIMESTEP_ANGLE_2 < ABS(angleToPlayer))
     {
         if (angleToPlayer > FP_ANGLE(0.0f))
         {
-            chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
+            splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
         }
         else
         {
-            chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
+            splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
         }
     }
     else
     {
-        chara->rotation_24.vy = chara->properties_E4.dummy.properties_E8[2].val16[0];
+        splitHead->rotation_24.vy = splitHeadProps.angle_F0;
     }
 
-    angleToPlayer      = ABS(func_8005BF38(chara->properties_E4.dummy.properties_E8[2].val16[0] - chara->rotation_24.vy));
-    angleDeltaToPlayer = ABS(func_8005BF38(Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
-                                           chara->rotation_24.vy));
+    angleToPlayer      = ABS(func_8005BF38(splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
+    angleDeltaToPlayer = ABS(func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                                           splitHead->rotation_24.vy));
 
     if (ABS(angleToPlayer - angleDeltaToPlayer) < FP_ANGLE(15.0f))
     {
         if (distToPlayer <= Q12(5.75f) && angleToPlayer < FP_ANGLE(60.0f))
         {
-            Chara_MoveSpeedUpdate3(chara, Q12(0.8f), -Q12(1.2f));
+            Chara_MoveSpeedUpdate3(splitHead, Q12(0.8f), Q12(-1.2f));
         }
         else if ((distToPlayer <= Q12(5.75f) && angleToPlayer > FP_ANGLE(60.0f)) ||
                  (distToPlayer >  Q12(5.75f) && angleToPlayer > FP_ANGLE(90.0f)))
         {
-            Chara_MoveSpeedUpdate(chara, Q12(0.8f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(0.8f));
         }
         else
         {
-            Chara_MoveSpeedUpdate3(chara, Q12(0.8f), Q12(1.2f));
+            Chara_MoveSpeedUpdate3(splitHead, Q12(0.8f), Q12(1.2f));
         }
     }
     else
     {
         if (angleToPlayer < FP_ANGLE(30.0f))
         {
-            Chara_MoveSpeedUpdate3(chara, Q12(0.8f), Q12(1.2f));
+            Chara_MoveSpeedUpdate3(splitHead, Q12(0.8f), Q12(1.2f));
         }
         else
         {
-            Chara_MoveSpeedUpdate(chara, Q12(0.8f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(0.8f));
         }
     }
 
-    angleToPlayer2 = Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18);
+    angleToPlayer2 = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
     sp30.vx = FP_MULTIPLY(distToPlayer, Math_Sin(angleToPlayer2), Q12_SHIFT);
     sp30.vy = Q12(0.0f);
     sp30.vz = FP_MULTIPLY(distToPlayer, Math_Cos(angleToPlayer2), Q12_SHIFT);
 
-    func_8006DB3C(&sp10, &chara->position_18, &sp30, chara);
+    func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
 
     if (distToPlayer < Q12(6.4f) &&
         (angleDeltaToPlayer < FP_ANGLE(7.5f) || distToPlayer > Q12(3.2f) && angleDeltaToPlayer < FP_ANGLE(15.0f)) &&
         (sp10.field_0 == 0 || sp10.field_10 != 0))
     {
-        chara->model_0.controlState_2 = 3;
+        splitHead->model_0.controlState_2 = SplitHeadControl_3;
     }
 
     if (!Rng_TestProbabilityBits(7))
     {
-        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 8;
+        splitHeadProps.flags_E8 |= SplitHeadFlag_8;
     }
 
     if (!Rng_TestProbabilityBits(6))
     {
-        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 7;
+        splitHeadProps.flags_E8 |= SplitHeadFlag_7;
     }
 }
 
-void sharedFunc_800D11A0_1_s05(s_SubCharacter* chara)
+void sharedFunc_800D11A0_1_s05(s_SubCharacter* splitHead)
 {
     q3_12  angleDeltaToPlayer;
     q19_12 distToPlayer;
 
-    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
-                                             g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
-    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
-                                       chara->rotation_24.vy);
+    distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx,
+                                             g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz);
+    angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                                       splitHead->rotation_24.vy);
 
-    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(11, true))
+    if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_11, true))
     {
         if (distToPlayer > Q12(4.0f))
         {
-            Chara_MoveSpeedUpdate3(chara, Q12(4.0f), Q12(2.4f));
+            Chara_MoveSpeedUpdate3(splitHead, Q12(4.0f), Q12(2.4f));
         }
         else
         {
@@ -621,17 +617,17 @@ void sharedFunc_800D11A0_1_s05(s_SubCharacter* chara)
                 distToPlayer > Q12(8.0f) ||
                 (distToPlayer < Q12(3.2f) && ABS(angleDeltaToPlayer) > FP_ANGLE(22.5f)))
             {
-                chara->model_0.controlState_2 = 2;
+                splitHead->model_0.controlState_2 = SplitHeadControl_2;
             }
             else
             {
-                chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 3;
-                Chara_MoveSpeedUpdate(chara, Q12(16.0f));
+                splitHeadProps.flags_E8 |= SplitHeadFlag_3;
+                Chara_MoveSpeedUpdate(splitHead, Q12(16.0f));
 
-                if (sharedFunc_800D4530_1_s05(chara))
+                if (sharedFunc_800D4530_1_s05(splitHead))
                 {
-                    chara->model_0.anim_4.status_0 = ANIM_STATUS(3, false);
-                    func_8005DC1C(Sfx_Unk1471, &chara->position_18, Q8(0.5f), 0);
+                    splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_3, false);
+                    func_8005DC1C(Sfx_Unk1471, &splitHead->position_18, Q8(0.5f), 0);
                 }
             }
         }
@@ -640,57 +636,57 @@ void sharedFunc_800D11A0_1_s05(s_SubCharacter* chara)
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
             }
             else
             {
-                chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
             }
         }
         else
         {
-            chara->rotation_24.vy = Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18);
+            splitHead->rotation_24.vy = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
         }
     }
-    else if (ANIM_STATUS_IDX_GET(chara->model_0.anim_4.status_0) == 10)
+    else if (ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) == SplitHeadAnim_10)
     {
-        Chara_MoveSpeedUpdate(chara, 0x1998); // TODO
+        Chara_MoveSpeedUpdate(splitHead, 0x1998); // TODO
 
         sharedData_800D5A8C_1_s05 += g_DeltaTime0;
 
-        if (chara->model_0.anim_4.status_0 == ANIM_STATUS(10, true) &&
+        if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_10, true) &&
             (!Rng_TestProbabilityBits(6) || sharedData_800D5A8C_1_s05 > Q12(4.0f)))
         {
             sharedData_800D5A8C_1_s05      = 0;
-            chara->model_0.anim_4.status_0 = ANIM_STATUS(11, false);
-            chara->model_0.controlState_2  = 2;
+            splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_11, false);
+            splitHead->model_0.controlState_2  = SplitHeadControl_2;
         }
     }
     else
     {
         if (distToPlayer < Q12(6.4f))
         {
-            Chara_MoveSpeedUpdate(chara, Q12(4.0f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(4.0f));
         }
         else
         {
-            Chara_MoveSpeedUpdate3(chara, Q12(4.0f), Q12(2.4f));
+            Chara_MoveSpeedUpdate3(splitHead, Q12(4.0f), Q12(2.4f));
         }
 
         if (TIMESTEP_ANGLE_1 < ABS(angleDeltaToPlayer))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
             }
             else
             {
-                chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
             }
         }
         else
         {
-            chara->rotation_24.vy = Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18);
+            splitHead->rotation_24.vy = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
         }
     }
 }
@@ -705,23 +701,23 @@ void sharedFunc_800D17BC_1_s05(s_SubCharacter* splitHead)
     Chara_MoveSpeedUpdate(splitHead, Q12(1.5997f));
     switch (splitHead->model_0.anim_4.status_0)
     {
-        case ANIM_STATUS(11, false):
-        case ANIM_STATUS(11, true):
-            splitHead->properties_E4.splitHead.flags_E8 |= 1 << 3;
+        case ANIM_STATUS(SplitHeadAnim_11, false):
+        case ANIM_STATUS(SplitHeadAnim_11, true):
+            splitHeadProps.flags_E8 |= SplitHeadFlag_3;
 
             if (!sharedFunc_800D4530_1_s05(splitHead))
             {
                 break;
             }
 
-        case ANIM_STATUS(10, true):
-            splitHead->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
+        case ANIM_STATUS(SplitHeadAnim_10, true):
+            splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_1, false);
             SD_Call(Sfx_Unk1477);
             break;
 
-        case ANIM_STATUS(1, false):
-        case ANIM_STATUS(1, true):
-            timer0      = splitHead->properties_E4.splitHead.timer_F4;
+        case ANIM_STATUS(SplitHeadAnim_1, false):
+        case ANIM_STATUS(SplitHeadAnim_1, true):
+            timer0      = splitHeadProps.timer_F4;
             timer1      = sharedData_800D5880_1_s05;
             timer1_div6 = timer1 / 6;
 
@@ -740,23 +736,23 @@ void sharedFunc_800D17BC_1_s05(s_SubCharacter* splitHead)
 
             func_8005DE0C(Sfx_Unk1477, &splitHead->position_18, vol, Q12(16.0f), 0);
 
-            if (splitHead->properties_E4.splitHead.timer_F4 > sharedData_800D5880_1_s05)
+            if (splitHeadProps.timer_F4 > sharedData_800D5880_1_s05)
             {
                 sharedData_800D5880_1_s05                   = Q12(3.8f);
                 splitHead->model_0.controlState_2           = SplitHeadControl_5;
-                splitHead->properties_E4.splitHead.timer_F4 = Q12(0.0f);
-                splitHead->model_0.anim_4.status_0          = ANIM_STATUS(11, false);
+                splitHeadProps.timer_F4 = Q12(0.0f);
+                splitHead->model_0.anim_4.status_0          = ANIM_STATUS(SplitHeadAnim_11, false);
 
                 Sd_SfxStop(Sfx_Unk1477);
                 break;
             }
 
-            splitHead->properties_E4.splitHead.timer_F4 += g_DeltaTime0;
+            splitHeadProps.timer_F4 += g_DeltaTime0;
             break;
     }
 }
 
-void sharedFunc_800D19B8_1_s05(s_SubCharacter* chara)
+void sharedFunc_800D19B8_1_s05(s_SubCharacter* splitHead)
 {
     s_func_800700F8_2 sp10;
     VECTOR3           sp30;
@@ -766,33 +762,33 @@ void sharedFunc_800D19B8_1_s05(s_SubCharacter* chara)
     q3_12             angle;
     q3_12             angleToPlayer;
     q19_12            distToPlayer;
-    s32               distMax;
+    q19_12            distMax;
     s32               i;
     s32               angleMult;
     q19_12            activeDistMax;
 
-    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
-                                       g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
+    distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx,
+                                       g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz);
 
-    if ((u16)chara->properties_E4.dummy.properties_E8[2].val16[1] > 0x666)
+    if (splitHeadProps.timer_F2 > Q12(0.4f))
     {
         angle = FP_ANGLE(0.0f);
-        angleToPlayer = Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18);
+        angleToPlayer = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
 
-        if (chara->properties_E4.dummy.properties_E8[0].val16[0] & 4)
+        if (splitHeadProps.flags_E8 & SplitHeadFlag_2)
         {
             angleMult                                               = 1;
-            chara->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 2);
+            splitHeadProps.flags_E8 &= ~SplitHeadFlag_2;
         }
         else
         {
             angleMult                                               = NO_VALUE;
-            chara->properties_E4.dummy.properties_E8[0].val16[0] |= 4;
+            splitHeadProps.flags_E8 |= SplitHeadFlag_2;
         }
 
         for (i = 0; i < 16; i++)
         {
-            if (i != 0 && i != 0xF)
+            if (i != 0 && i != 15)
             {
                 angle1 = Rng_TestProbabilityBits(7) - FP_ANGLE(5.625f);
                 if (i & 0x1)
@@ -806,7 +802,7 @@ void sharedFunc_800D19B8_1_s05(s_SubCharacter* chara)
             }
             else
             {
-                angle3 = 0;
+                angle3 = FP_ANGLE(0.0f);
             }
 
             if (angle < FP_ANGLE(90.0f))
@@ -832,11 +828,11 @@ void sharedFunc_800D19B8_1_s05(s_SubCharacter* chara)
             sp30.vy = Q12(0.0f);
             sp30.vz = FP_MULTIPLY(distMax, Math_Cos((angleToPlayer + angle) + angle3), Q12_SHIFT);
 
-            func_8006DB3C(&sp10, &chara->position_18, &sp30, chara);
+            func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
 
             if (sp10.field_0 == 0 || sp10.field_10 != 0)
             {
-                chara->properties_E4.dummy.properties_E8[2].val16[0] = angle3 + (angleToPlayer + angle);
+                splitHeadProps.angle_F0 = angle3 + (angleToPlayer + angle);
                 break;
             }
 
@@ -848,88 +844,88 @@ void sharedFunc_800D19B8_1_s05(s_SubCharacter* chara)
 
         if (i != 16)
         {
-            chara->properties_E4.dummy.properties_E8[2].val16[1] = 0;
+            splitHeadProps.timer_F2 = 0;
         }
     }
 
-    chara->properties_E4.dummy.properties_E8[2].val16[1] += g_DeltaTime0;
+    splitHeadProps.timer_F2 += g_DeltaTime0;
 
-    angleToPlayer = func_8005BF38((chara->properties_E4.dummy.properties_E8[2].val16[0] - chara->rotation_24.vy));
+    angleToPlayer = func_8005BF38((splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
 
     if (TIMESTEP_ANGLE_0 < ABS(angleToPlayer))
     {
         if (angleToPlayer > FP_ANGLE(0.0f))
         {
-            chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
+            splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
         }
         else
         {
-            chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
+            splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
         }
     }
     else
     {
-        chara->rotation_24.vy = chara->properties_E4.dummy.properties_E8[2].val16[0];
+        splitHead->rotation_24.vy = splitHeadProps.angle_F0;
     }
 
-    angleToPlayer   = ABS(func_8005BF38(chara->properties_E4.dummy.properties_E8[2].val16[0] - chara->rotation_24.vy));
-    angle2 = ABS(func_8005BF38(Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18) - chara->rotation_24.vy));
+    angleToPlayer   = ABS(func_8005BF38(splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
+    angle2 = ABS(func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) - splitHead->rotation_24.vy));
 
     if (ABS(angleToPlayer - angle2) < FP_ANGLE(15.0f))
     {
         if (distToPlayer <= Q12(4.8f) && angle2 > FP_ANGLE(3.75f) && angleToPlayer < FP_ANGLE(60.0f))
         {
-            Chara_MoveSpeedUpdate3(chara, Q12(2.4f), Q12(-2.4f));
+            Chara_MoveSpeedUpdate3(splitHead, Q12(2.4f), Q12(-2.4f));
         }
         else if ((distToPlayer <= Q12(4.8f) && angleToPlayer > FP_ANGLE(60.0f)) ||
                  (distToPlayer >  Q12(4.8f) && angleToPlayer > FP_ANGLE(90.0f)))
         {
-            Chara_MoveSpeedUpdate(chara, Q12(2.4f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(2.4f));
         }
         else
         {
-            Chara_MoveSpeedUpdate3(chara, Q12(2.4f), Q12(2.4f));
+            Chara_MoveSpeedUpdate3(splitHead, Q12(2.4f), Q12(2.4f));
         }
     }
     else
     {
         if (angleToPlayer < FP_ANGLE(30.0f))
         {
-            Chara_MoveSpeedUpdate3(chara, Q12(2.4f), Q12(2.4f));
+            Chara_MoveSpeedUpdate3(splitHead, Q12(2.4f), Q12(2.4f));
         }
         else
         {
-            Chara_MoveSpeedUpdate(chara, Q12(2.4f));
+            Chara_MoveSpeedUpdate(splitHead, Q12(2.4f));
         }
     }
 
-    angle1 = Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18);
+    angle1 = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
 
     sp30.vx = FP_MULTIPLY(distToPlayer, Math_Sin(angle1), Q12_SHIFT);
     sp30.vy = Q12(0.0f);
     sp30.vz = FP_MULTIPLY(distToPlayer, Math_Cos(angle1), Q12_SHIFT);
 
-    func_8006DB3C(&sp10, &chara->position_18, &sp30, chara);
+    func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
 
     if (distToPlayer > Q12(2.85f) && distToPlayer < Q12(4.0f) &&
         angle2 < FP_ANGLE(15.0f) &&
         (sp10.field_0 == 0 || sp10.field_10 != 0))
     {
-        chara->model_0.controlState_2 = 1;
+        splitHead->model_0.controlState_2 = SplitHeadControl_1;
         if (!Rng_TestProbabilityBits(3))
         {
-            chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 8;
+            splitHeadProps.flags_E8 |= SplitHeadFlag_8;
         }
     }
 
     if (!Rng_TestProbabilityBits(7))
     {
-        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 8;
+        splitHeadProps.flags_E8 |= SplitHeadFlag_8;
     }
 
     if (!Rng_TestProbabilityBits(6))
     {
-        chara->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 7;
+        splitHeadProps.flags_E8 |= SplitHeadFlag_7;
     }
 }
 
@@ -937,7 +933,7 @@ void sharedFunc_800D2214_1_s05(s_SubCharacter* splitHead)
 {
     switch (splitHead->model_0.anim_4.status_0)
     {
-        case 23:
+        case ANIM_STATUS(SplitHeadAnim_11, true):
             Chara_MoveSpeedUpdate(splitHead, Q12(0.5f));
 
             if (!sharedFunc_800D4530_1_s05(splitHead))
@@ -945,26 +941,26 @@ void sharedFunc_800D2214_1_s05(s_SubCharacter* splitHead)
                 break;
             }
 
-        case 2:
-        case 3:
-        case 20:
-        case 21:
-        case 22:
-            splitHead->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
+        case ANIM_STATUS(SplitHeadAnim_1, false):
+        case ANIM_STATUS(SplitHeadAnim_1, true):
+        case ANIM_STATUS(SplitHeadAnim_10, false):
+        case ANIM_STATUS(SplitHeadAnim_10, true):
+        case ANIM_STATUS(SplitHeadAnim_11, false):
+            splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_7, false);
             Chara_MoveSpeedUpdate(splitHead, Q12(1.0f));
             break;
 
         default:
             break;
 
-        case 14:
-        case 15:
-        case 16:
-        case 17:
-        case 24:
-        case 25:
-        case 26:
-        case 27:
+        case ANIM_STATUS(SplitHeadAnim_7, false):
+        case ANIM_STATUS(SplitHeadAnim_7, true):
+        case ANIM_STATUS(SplitHeadAnim_8, false):
+        case ANIM_STATUS(SplitHeadAnim_8, true):
+        case ANIM_STATUS(SplitHeadAnim_12, false):
+        case ANIM_STATUS(SplitHeadAnim_12, true):
+        case ANIM_STATUS(SplitHeadAnim_13, false):
+        case ANIM_STATUS(SplitHeadAnim_13, true):
             Chara_MoveSpeedUpdate(splitHead, Q12(1.0f));
 
             if (!Savegame_EventFlagGet(EventFlag_131))
@@ -1118,7 +1114,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
                         } 
                         else if (splitHead->moveSpeed_38 < Q12(0.0f))
                         {
-                            splitHeadProps.flags_E8 &= ~(1 << 5);
+                            splitHeadProps.flags_E8 &= ~SplitHeadFlag_5;
                         }
                     }
                     else
@@ -1265,11 +1261,11 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
     s16     sp98[3];
     q19_12  deltaX;
     q19_12  deltaZ;
-    s32     dist;
+    q19_12  dist;
     s32     i;
     s32     unkIdx;
-    s32     dx_offset;
-    s32     dz_offset;
+    q19_12  offsetX;
+    q19_12  offsetZ;
 
     sharedFunc_800D4408_1_s05(&sp20[0], 2, 0, -0x45, 0xFB);
     sharedFunc_800D4408_1_s05(&sp50[0], 2, 0, 0xED, 0xA6);
@@ -1286,31 +1282,31 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
 
     if (sp98[1] < 0x400 && sp98[2] > -0x400)
     {
-        if ((sp98[1] >= 0 && sp98[2] <= 0) || (dist > 0x2C00 && sp98[1] >= -0x40 && sp98[2] <= 0x40))
+        if ((sp98[1] >= 0 && sp98[2] <= 0) || (dist > Q12(2.75f) && sp98[1] >= -0x40 && sp98[2] <= 0x40))
         {
             if (ABS(sp98[1] - sp98[2]) >= 0x72)
             {
-                splitHeadProps.flags_E8 |= 1;
+                splitHeadProps.flags_E8 |= SplitHeadFlag_0;
                 splitHead->field_C8.field_0                  = sp20[0].vy;
                 splitHead->field_C8.field_4                  = sp50[0].vy;
                 splitHead->field_D4.field_2                  = Q12(0.6f);
 
-                dx_offset = (sp20[0].vx - splitHead->position_18.vx) * 3;
+                offsetX = (sp20[0].vx - splitHead->position_18.vx) * 3;
 
-                if (dx_offset < 0)
+                if (offsetX < 0)
                 {
-                    dx_offset += 3;
+                    offsetX += 3;
                 }
-                splitHead->field_D8.offsetX_0 = (dx_offset >> 2);
+                splitHead->field_D8.offsetX_0 = (offsetX >> 2);
 
-                dz_offset = (sp20[0].vz - splitHead->position_18.vz) * 3;
+                offsetZ = (sp20[0].vz - splitHead->position_18.vz) * 3;
 
-                if (dz_offset < 0)
+                if (offsetZ < 0)
                 {
-                    dz_offset += 3;
+                    offsetZ += 3;
                 }
 
-                splitHead->field_D8.offsetZ_2 = dz_offset >> 2;
+                splitHead->field_D8.offsetZ_2 = offsetZ >> 2;
                 return;
             }
         }
@@ -1318,7 +1314,7 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
 
     if (dist > Q12(2.75f))
     {
-        splitHeadProps.flags_E8 &= ~(1 << 0);
+        splitHeadProps.flags_E8 &= ~SplitHeadFlag_0;
     }
 
     sharedFunc_800D4408_1_s05(&sp20[3], 1, 0, -0x46, -0xB7);
@@ -1406,7 +1402,7 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
 
     k = 0;
 
-    if (splitHead->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 1))
+    if (splitHeadProps.flags_E8 & SplitHeadFlag_1)
     {
         *offsetZ = 0;
         *offsetX = 0;
@@ -1625,7 +1621,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
     sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[7], 23, (s16)((u16)sharedData_800D5A90_1_s05[3].vx * -1), sharedData_800D5A90_1_s05[3].vy, sharedData_800D5A90_1_s05[3].vz);
     sharedFunc_800D4408_1_s05(&sharedData_800D8618_1_s05[8], 23, (s16)((u16)sharedData_800D5A90_1_s05[2].vx * -1), sharedData_800D5A90_1_s05[2].vy, sharedData_800D5A90_1_s05[2].vz);
 
-    if (!(splitHead->properties_E4.splitHead.flags_E8 & 1))
+    if (!(splitHeadProps.flags_E8 & SplitHeadFlag_0))
     {
         sharedData_800D5AAE_1_s05       = 2;
         sharedData_800D8618_1_s05[8].vx = ((sharedData_800D8618_1_s05[8].vx + sharedData_800D8618_1_s05[1].vx) >> 1);
@@ -1663,7 +1659,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
 
     sharedFunc_800D2E8C_0_s00(sp48 + sharedData_800D8684_1_s05, sp4C + sharedData_800D8688_1_s05, &sp38);
 
-    if (splitHead->properties_E4.splitHead.flags_E8 & (1 << 0))
+    if (splitHeadProps.flags_E8 & SplitHeadFlag_0)
     {
         deltaX = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx);
         deltaZ = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz);
@@ -1695,10 +1691,10 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
 
             if (sp18.field_0 < var_v1_3 &&
                 sp28.field_0 < var_v1_3 &&
-                !(splitHead->properties_E4.splitHead.flags_E8 & 0x200))
+                !(splitHeadProps.flags_E8 & SplitHeadFlag_9))
             {
                 (&g_SysWork.playerWork_4C)->player_0.attackReceived_41 = 47;
-                splitHead->properties_E4.splitHead.flags_E8           |= 0x202;
+                splitHeadProps.flags_E8           |= SplitHeadFlag_1 | SplitHeadFlag_9;
                 func_8005DC1C(Sfx_Unk1473, &g_SysWork.playerWork_4C.player_0.position_18, Q8(0.999f), 2);
             }
         }
@@ -1713,7 +1709,7 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
     u32     temp_v1_2;
     s32     j;
     s16     var_v0_2;
-    s32     animStatusIdx;
+    s32     animIdx;
     s16     var_v1_2;
     int     new_var;
 
@@ -1721,13 +1717,13 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
     {
         new_var = Q12(2.0f);
 
-        animStatusIdx = ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0);
+        animIdx = ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0);
 
-        if ((ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) != 12) && animStatusIdx != 13)
+        if ((ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) != SplitHeadAnim_12) && animIdx != SplitHeadAnim_13)
         {
             if ((FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 20 || FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) > 35) &&
                 (FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) > 14 && FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 20 ||
-                 ((animStatusIdx == 1 || animStatusIdx == 9) && !Rng_TestProbabilityBits(2)) || !Rng_TestProbabilityBits(5)))
+                 ((animIdx == SplitHeadAnim_1 || animIdx == SplitHeadAnim_9) && !Rng_TestProbabilityBits(2)) || !Rng_TestProbabilityBits(5)))
             {
                 if (splitHead->model_0.anim_4.status_0 == 7)
                 {
@@ -1785,7 +1781,7 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
         case 17:
         case 26:
         case 27:
-            splitHead->properties_E4.splitHead.field_EA = MAX(0, splitHead->properties_E4.splitHead.field_EA - g_DeltaTime0 / 68);
+            splitHeadProps.field_EA = MAX(0, splitHeadProps.field_EA - g_DeltaTime0 / 68);
 
         case 3:
         case 5:
@@ -1803,7 +1799,7 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
                     sp30[j].vz = Q12_TO_Q8(sp20.vz);
                 }
 
-                sharedFunc_800CCE2C_1_s05(sharedData_800D5BE0_1_s05[i][2], splitHead->properties_E4.splitHead.field_EA,
+                sharedFunc_800CCE2C_1_s05(sharedData_800D5BE0_1_s05[i][2], splitHeadProps.field_EA,
                                           sp30[0].vx, sp30[0].vy, sp30[0].vz, sp30[1].vx, sp30[1].vy, sp30[1].vz);
             }
             break;
