@@ -2087,7 +2087,7 @@ void sharedFunc_800E04B0_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800E0514_2_s00(s_SubCharacter*); // Assumed return type.
 
-/** Air Screamer state step getter. */
+/** Air Screamer state step getter. `const` is required for match. */
 bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const chara);
 
 void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3);
@@ -2425,6 +2425,7 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 radius, s32 angle);
 
+// Probably specific to Air Screamer.
 void sharedFunc_800D53AC_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800CE934_0_s02(void);
