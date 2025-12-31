@@ -237,7 +237,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 g_SysWork.playerWork_4C.player_0.moveSpeed_38 <= ((larvalStalkerProps.field_EA * Q12(1.5f) )+ Q12(0.5f)))
             {
                 if (FP_ANGLE(45.0f) > ABS(angleDeltaToPlayer) && 
-                    (distToTarget < ((larvalStalker->field_D4.field_0 + Q12(0.05f)) + g_SysWork.playerWork_4C.player_0.field_D4.field_0)))
+                    (distToTarget < ((larvalStalker->field_D4.radius_0 + Q12(0.05f)) + g_SysWork.playerWork_4C.player_0.field_D4.radius_0)))
                 {
                     if (!Rng_GenerateInt(0, 7)) // 1 in 8 chance.
                     {
@@ -385,7 +385,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             }
             else
             {
-                if (distToTarget < ((larvalStalker->field_D4.field_0 + Q12(0.02f)) + g_SysWork.playerWork_4C.player_0.field_D4.field_0))
+                if (distToTarget < ((larvalStalker->field_D4.radius_0 + Q12(0.02f)) + g_SysWork.playerWork_4C.player_0.field_D4.radius_0))
                 {
                     Chara_MoveSpeedUpdate(larvalStalker, Q12(1.5f));
                 }
@@ -1107,7 +1107,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
                                               \
     __temp = data.field_12;                   \
     arg0->field_D8.offsetZ_6 = __temp;        \
-    arg0->field_D4.field_0   = data.field_8;  \
+    arg0->field_D4.radius_0   = data.field_8;  \
     arg0->field_D8.offsetX_0 = data.field_C;  \
                                               \
     __temp = data.field_E;                    \
@@ -1456,7 +1456,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
             larvalStalker->field_C8.field_0   = Q12(-0.72f);
             larvalStalker->field_C8.field_4   = Q12(-0.2f);
             larvalStalker->field_C8.field_6   = Q12(-0.66f);
-            larvalStalker->field_D4.field_0   = Q12(0.12f);
+            larvalStalker->field_D4.radius_0   = Q12(0.12f);
             larvalStalker->field_D8.offsetZ_2 = Q12(0.02f);
             larvalStalker->field_D4.field_2   = Q12(0.11f);
             larvalStalker->field_C8.field_2   = Q12(0.0f);

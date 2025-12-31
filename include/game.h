@@ -1597,7 +1597,7 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter_C8, 12);
 
 typedef struct _SubCharacter_D4
 {
-    q3_12 field_0; // Y position offset?
+    q3_12 radius_0;
     q3_12 field_2;
 } s_SubCharacter_D4;
 STATIC_ASSERT_SIZEOF(s_SubCharacter_D4, 4);
@@ -1626,7 +1626,7 @@ typedef struct _SubCharacter
 
     // Fields seen used inside maps (eg. `map0_s00` `func_800D923C`)
     s_SubCharacter_C8 field_C8;
-    s_SubCharacter_D4 field_D4;
+    s_SubCharacter_D4 field_D4; // Contains collision radius and somethign else.
     s_SubCharacter_D8 field_D8; // Translation data?
     u8                field_E0; // Related to collision. If the player collides with the only enemy in memory and the enemy is knocked down, this is set to 1.
     s8                field_E1_0 : 4; // State.

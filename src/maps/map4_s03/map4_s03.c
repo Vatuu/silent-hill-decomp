@@ -217,7 +217,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     localChara->properties_E4.dummy.properties_E8[13].val32 = -1;
 
-    chara->field_D4.field_0 = Q12(0.3f);
+    chara->field_D4.radius_0 = Q12(0.3f);
 
     chara->model_0.anim_4.alpha_A = Q12(0.0f);
 
@@ -522,7 +522,7 @@ void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5904
     }
 
     chara->field_C8.field_4 = unkBasePosY + Q12(0.25f);
-    chara->field_D4.field_0 = Q12(0.5f);
+    chara->field_D4.radius_0 = Q12(0.5f);
     chara->field_C8.field_6 = unkBasePosY;
     chara->field_D4.field_2 = Q12(0.4f);
     sharedFunc_800CD920_3_s03(chara, posX, posZ);

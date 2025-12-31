@@ -1,4 +1,4 @@
-void sharedFunc_800DACA8_2_s00(s_SubCharacter* chara)
+void sharedFunc_800DACA8_2_s00(s_SubCharacter* airScreamer)
 {
     s32  sp10;
     s32  temp_a0;
@@ -12,68 +12,68 @@ void sharedFunc_800DACA8_2_s00(s_SubCharacter* chara)
     bool new_var;
     s32  temp_s8;
 
-    temp_s6 = chara->model_0.anim_4.status_0;
+    temp_s6 = airScreamer->model_0.anim_4.status_0;
     var_s4  = 0;
-    temp_v0 = sharedFunc_800D4A80_0_s01(chara);
+    temp_v0 = sharedFunc_800D4A80_0_s01(airScreamer);
     new_var = sharedData_800E21D0_0_s01.field_14C.bits32.field_14C_2;
     sp10    = new_var;
 
     temp_s5   = sharedData_800E21D0_0_s01.distance_150;
     temp_s7   = sharedData_800E21D0_0_s01.angle_154;
     temp_s8   = temp_v0;
-    temp_s3   = Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
-    temp_s0_2 = FP_ANGLE_NORM_S(func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8) - chara->rotation_24.vy);
-    temp_a0   = sharedFunc_800DC438_2_s00(chara);
+    temp_s3   = Math_Distance2dGet(&airScreamer->position_18, &airScreamer->properties_E4.unk0.field_F8);
+    temp_s0_2 = FP_ANGLE_NORM_S(func_80080478(&airScreamer->position_18, &airScreamer->properties_E4.unk0.field_F8) - airScreamer->rotation_24.vy);
+    temp_a0   = sharedFunc_800DC438_2_s00(airScreamer);
 
-    switch (chara->model_0.stateStep_3)
+    switch (airScreamer->model_0.stateStep_3)
     {
         case 0:
-            sharedFunc_800DF24C_2_s00(chara);
-            Math_Distance2dGet(&chara->position_18, &chara->properties_E4.unk0.field_F8);
+            sharedFunc_800DF24C_2_s00(airScreamer);
+            Math_Distance2dGet(&airScreamer->position_18, &airScreamer->properties_E4.unk0.field_F8);
 
-            if (temp_s5 > 0x6000)
+            if (temp_s5 > Q12(6.0f))
             {
-                temp_s3 = 0x6000;
+                temp_s3 = Q12(6.0f);
             }
-            else if (temp_s5 > 0x2000)
+            else if (temp_s5 > Q12(2.0f))
             {
-                temp_s3 = 0xC000 - temp_s5;
+                temp_s3 = Q12(12.0f) - temp_s5;
             }
             else
             {
-                temp_s3 = 0xA000;
+                temp_s3 = Q12(10.0f);
             }
 
             temp_s3  += Rng_RandQ12() * 2;
-            temp_s0_2 = FP_ANGLE_NORM_S((temp_s7 + 0x800) - chara->rotation_24.vy) / 2 + chara->rotation_24.vy;
+            temp_s0_2 = FP_ANGLE_NORM_S((temp_s7 + 0x800) - airScreamer->rotation_24.vy) / 2 + airScreamer->rotation_24.vy;
 
-            sharedFunc_800DEC84_2_s00(chara, temp_s3, temp_s0_2 + (Rng_RandQ12() - 0x800) / 8);
-            chara->properties_E4.unk0.properties_120.val32 = 0x5000;
-            chara->model_0.stateStep_3                     = 1;
+            sharedFunc_800DEC84_2_s00(airScreamer, temp_s3, temp_s0_2 + (Rng_RandQ12() - 0x800) / 8);
+            airScreamer->properties_E4.unk0.properties_120.val32 = Q12(5.0f);
+            airScreamer->model_0.stateStep_3                     = 1;
             break;
 
         case 1:
             if (temp_a0 == 2)
             {
-                chara->model_0.stateStep_3 = 2;
+                airScreamer->model_0.stateStep_3 = 2;
             }
             else if (temp_a0 == 1)
             {
-                chara->model_0.stateStep_3 = 4;
+                airScreamer->model_0.stateStep_3 = 4;
             }
-            else if (temp_s3 < 0x2000 || Math_CheckSignedRange(temp_s0_2, 0x400) ||
-                     chara->properties_E4.unk0.properties_120.val32 == 0)
+            else if (temp_s3 < Q12(2.0f) || Math_CheckSignedRange(temp_s0_2, 0x400) ||
+                     airScreamer->properties_E4.unk0.properties_120.val32 == 0)
             {
                 var_s4 = 1;
             }
             break;
 
         case 2:
-            if (temp_s6 == 0x23)
+            if (temp_s6 == 35)
             {
                 var_s4                         = 2;
-                chara->model_0.anim_4.status_0 = 0x20;
-                chara->model_0.stateStep_3     = 3;
+                airScreamer->model_0.anim_4.status_0 = 32;
+                airScreamer->model_0.stateStep_3     = 3;
             }
             break;
 
@@ -82,11 +82,11 @@ void sharedFunc_800DACA8_2_s00(s_SubCharacter* chara)
             break;
 
         case 4:
-            if (temp_s6 == 0x23)
+            if (temp_s6 == 35)
             {
                 var_s4                         = 3;
-                chara->model_0.anim_4.status_0 = 0x1E;
-                chara->model_0.stateStep_3     = 5;
+                airScreamer->model_0.anim_4.status_0 = 30;
+                airScreamer->model_0.stateStep_3     = 5;
             }
             break;
 
@@ -95,9 +95,9 @@ void sharedFunc_800DACA8_2_s00(s_SubCharacter* chara)
             break;
     }
 
-    sharedFunc_800E021C_2_s00(chara, 2, 0);
+    sharedFunc_800E021C_2_s00(airScreamer, 2, 0);
 
-    switch (Ai_AirScreamer_DamageTake(chara, 0x1000))
+    switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case 0:
             switch (var_s4)
@@ -106,61 +106,61 @@ void sharedFunc_800DACA8_2_s00(s_SubCharacter* chara)
                 case 1:
                     if (sp10 != 0)
                     {
-                        if (temp_s5 > 0x7000)
+                        if (temp_s5 > Q12(7.0f))
                         {
-                            chara->model_0.controlState_2 = 0x26;
-                            chara->model_0.stateStep_3    = 0;
+                            airScreamer->model_0.controlState_2 = 38;
+                            airScreamer->model_0.stateStep_3    = 0;
                             break;
                         }
                     }
 
                     if (var_s4 == 1)
                     {
-                        if (chara->properties_E4.unk0.field_E8_8 != 3)
+                        if (airScreamer->properties_E4.unk0.field_E8_8 != 3)
                         {
-                            chara->properties_E4.unk0.field_E8_8 = 2;
+                            airScreamer->properties_E4.unk0.field_E8_8 = 2;
                         }
-                        chara->model_0.controlState_2 = 0x29;
-                        chara->model_0.stateStep_3    = 0;
+                        airScreamer->model_0.controlState_2 = 41;
+                        airScreamer->model_0.stateStep_3    = 0;
                     }
                     break;
 
                 case 2:
                     if (temp_s8 == 1)
                     {
-                        chara->model_0.controlState_2 = 0xD;
-                        chara->model_0.stateStep_3    = 0;
+                        airScreamer->model_0.controlState_2 = 13;
+                        airScreamer->model_0.stateStep_3    = 0;
                     }
                     break;
 
                 case 3:
                     if (temp_s8 == 2)
                     {
-                        chara->model_0.controlState_2 = 0x1A;
-                        chara->model_0.stateStep_3    = 0;
+                        airScreamer->model_0.controlState_2 = 26;
+                        airScreamer->model_0.stateStep_3    = 0;
                     }
                     break;
             }
             break;
         case 1:
         case 2:
-            chara->model_0.controlState_2        = 0x2C;
-            chara->model_0.stateStep_3           = 0;
-            chara->properties_E4.unk0.flags_11C |= 8;
+            airScreamer->model_0.controlState_2        = 44;
+            airScreamer->model_0.stateStep_3           = 0;
+            airScreamer->properties_E4.unk0.flags_11C |= 8;
             break;
 
         case 3:
         case 4:
-            chara->model_0.controlState_2 = 0x2D;
-            chara->model_0.stateStep_3    = 0;
+            airScreamer->model_0.controlState_2 = 45;
+            airScreamer->model_0.stateStep_3    = 0;
 
-            if (chara->health_B0 <= Q12(0.0f))
+            if (airScreamer->health_B0 <= Q12(0.0f))
             {
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
             }
             else
             {
-                chara->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
     }

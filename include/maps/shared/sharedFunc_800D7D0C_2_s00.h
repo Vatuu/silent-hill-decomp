@@ -54,7 +54,7 @@ void sharedFunc_800D7D0C_2_s00(s_SubCharacter* airScreamer) // 0x800D7D0C
             if (airScreamer->properties_E4.unk0.field_F8.vy - airScreamer->position_18.vy > Q12(-0.2f) &&
                 airScreamer->properties_E4.unk0.field_F8.vy - airScreamer->position_18.vy < Q12(0.8f))
             {
-                distTest = airScreamer->field_D4.field_0 + Q12(0.15f);
+                distTest = airScreamer->field_D4.radius_0 + Q12(0.15f);
             }
 
             dist1    = Math_Distance2dGet(&airScreamer->position_18, &airScreamer->properties_E4.unk0.field_F8);

@@ -740,7 +740,7 @@ extern s_func_80070400_1 sharedData_800E11BC_1_s02;
                                               \
     __temp                   = data.field_12; \
     arg0->field_D8.offsetZ_6 = __temp;        \
-    arg0->field_D4.field_0   = data.field_8;  \
+    arg0->field_D4.radius_0   = data.field_8;  \
     arg0->field_D8.offsetX_0 = data.field_C;  \
                                               \
     __temp                   = data.field_E;  \

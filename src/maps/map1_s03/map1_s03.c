@@ -277,7 +277,7 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
     chara->field_D8.offsetX_0 = Q12(0.0f);
     chara->field_D8.offsetZ_2 = Q12(0.0f);
     chara->field_D4.field_2   = Q12(0.0f);
-    chara->field_D4.field_0   = Q12(0.33f);
+    chara->field_D4.radius_0   = Q12(0.33f);
 
     func_8005C814(&chara->field_D8, chara);
 }

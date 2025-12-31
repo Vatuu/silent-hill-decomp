@@ -32,7 +32,7 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
             {
                 s32 rotAmt = FP_ANGLE(45.0f); // @hack? Should probably be part of the `FP_MULTIPLY_PRECISE`.
                 rotAmt     = FP_MULTIPLY_PRECISE(g_DeltaTime0, rotAmt, Q12_SHIFT);
-                if (angleDeltaToPlayer > 0)
+                if (angleDeltaToPlayer > FP_ANGLE(0.0f))
                 {
                     nurse->rotation_24.vy += rotAmt;
                 }
@@ -82,12 +82,12 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
             {
                 if (!(g_SysWork.playerWork_4C.player_0.flags_3E & 8))
                 {
-                    nurseCpy->properties_E4.dummy.properties_E8[0xD].val16[1] = 0; // nurseCpy+0x11E
+                    nurseCpy->properties_E4.dummy.properties_E8[0xD].val16[1] = 0; // nurseCpy + 0x11E
                     nurse->model_0.controlState_2                             = 1;
                 }
                 else
                 {
-                    nurseCpy->properties_E4.dummy.properties_E8[0xD].val16[1] = 1; // nurseCpy+0x11E
+                    nurseCpy->properties_E4.dummy.properties_E8[0xD].val16[1] = 1; // nurseCpy + 0x11E
                     nurse->model_0.controlState_2                             = 1;
                 }
 

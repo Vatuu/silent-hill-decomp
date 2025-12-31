@@ -8172,7 +8172,7 @@ s32 func_80069FFC(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0
 
     sp28.rotation_C.vy = chara->field_C8.field_0;
     sp28.rotation_C.vx = chara->field_C8.field_2;
-    sp28.rotation_C.vz = chara->field_D4.field_0;
+    sp28.rotation_C.vz = chara->field_D4.radius_0;
 
     sp28.field_12 = chara->field_E1_0;
 
@@ -8354,7 +8354,7 @@ s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 
         for (curChara = charas; curChara < &charas[charaCount]; curChara++)
         {
             chara  = *curChara;
-            var_a0 = (chara->field_D4.field_0 >> 4) + sp18.field_4.field_28;
+            var_a0 = (chara->field_D4.radius_0 >> 4) + sp18.field_4.field_28;
 
             if (chara->field_E1_0 < (u32)sp18.field_4.field_0)
             {
@@ -8480,7 +8480,7 @@ void func_8006A940(VECTOR3* offset, s_func_8006AB50* arg1, s_SubCharacter** char
         posZ = (curChara->position_18.vz + curChara->field_D8.offsetZ_6) - arg1->position_0.vz;
 
         temp2 = Vc_VectorMagnitudeCalc(posX, Q12(0.0f), posZ);
-        if (((curChara->field_D4.field_0 + arg1->rotation_C.vz) + FP_ANGLE(36.0f)) < temp2)
+        if (((curChara->field_D4.radius_0 + arg1->rotation_C.vz) + FP_ANGLE(36.0f)) < temp2)
         {
             continue;
         }
@@ -10809,7 +10809,7 @@ void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* chara) //
 
     if (arg1 == 1)
     {
-        arg0->field_C = Q12_TO_Q8(chara->field_D4.field_0);
+        arg0->field_C = Q12_TO_Q8(chara->field_D4.radius_0);
         offsetX       = chara->field_D8.offsetX_4;
         offsetZ       = chara->field_D8.offsetZ_6;
         unkY          = chara->position_18.vy + chara->field_C8.field_2;
@@ -11588,7 +11588,7 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     chara->field_C8.field_6   = FP_FROM((arg1->field_6 * invAlpha) + (arg2->field_6 * alpha), Q12_SHIFT);
     chara->field_D8.offsetX_4 = FP_FROM((arg1->field_10 * invAlpha) + (arg2->field_10 * alpha), Q12_SHIFT);
     chara->field_D8.offsetZ_6 = FP_FROM((arg1->field_12 * invAlpha) + (arg2->field_12 * alpha), Q12_SHIFT);
-    chara->field_D4.field_0   = FP_FROM((arg1->field_8 * invAlpha) + (arg2->field_8 * alpha), Q12_SHIFT);
+    chara->field_D4.radius_0   = FP_FROM((arg1->field_8 * invAlpha) + (arg2->field_8 * alpha), Q12_SHIFT);
     chara->field_D8.offsetX_0 = FP_FROM((arg1->field_C * invAlpha) + (arg2->field_C * alpha), Q12_SHIFT);
     chara->field_D8.offsetZ_2 = FP_FROM((arg1->field_E * invAlpha) + (arg2->field_E * alpha), Q12_SHIFT);
     chara->field_D4.field_2   = FP_FROM((arg1->field_A * invAlpha) + (arg2->field_A * alpha), Q12_SHIFT);

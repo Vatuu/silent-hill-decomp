@@ -282,7 +282,7 @@ void sharedFunc_800D0F28_3_s03(s_SubCharacter* bloodsucker, s_AnmHeader* anmHdr,
     bloodsucker->field_D4.field_2   = Q12(0.05f);
     bloodsucker->field_D8.offsetX_4 = scratchData->field_28.vx - bloodsucker->position_18.vx;
     bloodsucker->field_D8.offsetZ_6 = scratchData->field_28.vz - bloodsucker->position_18.vz;
-    bloodsucker->field_D4.field_0   = Q12(0.05f);
+    bloodsucker->field_D4.radius_0   = Q12(0.05f);
     Math_SetSVectorFast(&scratchData->field_20, 0, -22, 0);
 
     gte_ldv0(&scratchData->field_20);

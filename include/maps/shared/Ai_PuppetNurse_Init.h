@@ -17,7 +17,7 @@ void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor)
     nurse->field_E1_0                  = 3;
     nurse->headingAngle_3C             = nurse->rotation_24.vy;
     nurseProps.position_E8 = nurse->position_18;
-    nurse->field_D4.field_0                                  = Q12(0.3f);
+    nurse->field_D4.radius_0                                  = Q12(0.3f);
     nurseProps.damage_F4.position_0.vx = Q12(0.0f);
     nurseProps.damage_F4.position_0.vy = Q12(0.0f);
     nurseProps.damage_F4.position_0.vz = Q12(0.0f);

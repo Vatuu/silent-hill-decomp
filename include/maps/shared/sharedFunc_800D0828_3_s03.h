@@ -56,9 +56,9 @@ void sharedFunc_800D0828_3_s03(s_SubCharacter* harry, GsCOORDINATE2* coords)
     deltaX = unkPos.vx - harry->position_18.vx;
     deltaY = unkPos.vz - harry->position_18.vz;
 
-    unkQ12                    = sharedFunc_800CD940_3_s03(unkQ12 + Q12(0.05f), harry->field_D4.field_0);
+    unkQ12                    = sharedFunc_800CD940_3_s03(unkQ12 + Q12(0.05f), harry->field_D4.radius_0);
     harry->field_D4.field_2   = unkQ12 - Q12(0.05f);
-    harry->field_D4.field_0   = unkQ12;
+    harry->field_D4.radius_0   = unkQ12;
     harry->field_D8.offsetX_0 = deltaX;
     harry->field_D8.offsetZ_2 = deltaY;
 

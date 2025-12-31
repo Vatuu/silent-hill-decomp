@@ -354,7 +354,7 @@ void func_800D4420(s_SubCharacter* airScreamer) // 0x800D4420
             deltaY = airScreamer->properties_E4.unk0.field_F8.vy - airScreamer->position_18.vy;
             if (deltaY > Q12(-0.2f) && deltaY < Q12(0.8f))
             {
-                dist0 = airScreamer->field_D4.field_0 + Q12(0.15f);
+                dist0 = airScreamer->field_D4.radius_0 + Q12(0.15f);
             }
 
             dist = Math_Distance2dGet(&airScreamer->position_18, &airScreamer->properties_E4.unk0.field_F8);

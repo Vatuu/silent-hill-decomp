@@ -45,5 +45,6 @@ s32 sharedFunc_800D7120_0_s01(s32 arg0, s32 arg1, s32 arg2)
             }
         }
     }
+
     return var_a3;
 }

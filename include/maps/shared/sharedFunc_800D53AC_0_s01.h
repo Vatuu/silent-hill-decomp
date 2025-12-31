@@ -1,7 +1,7 @@
-void sharedFunc_800D53AC_0_s01(s_SubCharacter* chara)
+void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer)
 {
-    #define PLAYER_ANGLE_RANGE FP_ANGLE(60.0f)
-    #define CHARA_ANGLE_RANGE  FP_ANGLE(90.0f)
+    #define PLAYER_ANGLE_RANGE       FP_ANGLE(60.0f)
+    #define AIR_SCREAMER_ANGLE_RANGE FP_ANGLE(90.0f)
     
     q19_12 targetPosX;
     q19_12 targetPosY;
@@ -21,30 +21,35 @@ void sharedFunc_800D53AC_0_s01(s_SubCharacter* chara)
     q19_12 deltaZ;
     q19_12 distToPlayer;
     q19_12 angleToPlayer;
-    q19_12 angleDelta;
+    q19_12 angleDeltaToPlayer;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
+    // Set player parameters.
     playerPosX         = g_SysWork.playerWork_4C.player_0.position_18.vx;
     playerPosY         = g_SysWork.playerWork_4C.player_0.position_18.vy;
     playerPosZ         = g_SysWork.playerWork_4C.player_0.position_18.vz;
     playerHeadingAngle = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
-    playerRadius       = g_SysWork.playerWork_4C.player_0.field_D4.field_0;
+    playerRadius       = g_SysWork.playerWork_4C.player_0.field_D4.radius_0;
 
-    charaPosX         = chara->position_18.vx;
-    charaPosY         = chara->position_18.vy;
-    charaPosZ         = chara->position_18.vz;
-    charaHeadingAngle = chara->rotation_24.vy;
-    charaRadius       = chara->field_D4.field_0;
+    // Set Air Screamer parameters.
+    charaPosX         = airScreamer->position_18.vx;
+    charaPosY         = airScreamer->position_18.vy;
+    charaPosZ         = airScreamer->position_18.vz;
+    charaHeadingAngle = airScreamer->rotation_24.vy;
+    charaRadius       = airScreamer->field_D4.radius_0;
 
+    // Compute relations.
     deltaX        = playerPosX - charaPosX;
     deltaZ        = playerPosZ - charaPosZ;
     distToPlayer  = SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT));
     angleToPlayer = ratan2(deltaX, deltaZ);
 
     // Adjust angle depending on distance and heading. Some sort of avoidance handling?
-    angleDelta = FP_ANGLE_NORM_S(angleToPlayer - charaHeadingAngle);
-    if ((playerRadius + (charaRadius * 2)) < distToPlayer && Math_CheckSignedRange(angleDelta, PLAYER_ANGLE_RANGE))
+    angleDeltaToPlayer = FP_ANGLE_NORM_S(angleToPlayer - charaHeadingAngle);
+    if ((playerRadius + (charaRadius * 2)) < distToPlayer && Math_CheckSignedRange(angleDeltaToPlayer, PLAYER_ANGLE_RANGE))
     {
-        angleToPlayer += (angleDelta > FP_ANGLE(0.0f)) ? FP_ANGLE(-60.0f) : FP_ANGLE(60.0f);
+        angleToPlayer += (angleDeltaToPlayer > FP_ANGLE(0.0f)) ? FP_ANGLE(-60.0f) : FP_ANGLE(60.0f);
     }
     else
     {
@@ -52,7 +57,7 @@ void sharedFunc_800D53AC_0_s01(s_SubCharacter* chara)
     }
 
     // Compute target position based on player heading angle.
-    if (Math_CheckSignedRange(FP_ANGLE_NORM_S(angleToPlayer - playerHeadingAngle), CHARA_ANGLE_RANGE))
+    if (Math_CheckSignedRange(FP_ANGLE_NORM_S(angleToPlayer - playerHeadingAngle), AIR_SCREAMER_ANGLE_RANGE))
     {
         targetPosX = playerPosX + FP_MULTIPLY_PRECISE(playerRadius, Math_Sin(angleToPlayer), Q12_SHIFT);
         targetPosY = playerPosY + g_SysWork.playerWork_4C.player_0.field_C8.field_6;
@@ -67,21 +72,22 @@ void sharedFunc_800D53AC_0_s01(s_SubCharacter* chara)
 
     // Clamp to ground. TODO: Doesn't match with `MAX` macro.
     groundHeight = Collision_GroundHeightGet(targetPosX, targetPosZ);
-    groundHeight = MIN(chara->properties_E4.dummy.properties_E8[15].val32, groundHeight);
+    groundHeight = MIN(airScreamerProps.groundHeight_124, groundHeight);
     if (groundHeight < sharedFunc_800D5274_0_s01())
     {
         groundHeight = sharedFunc_800D5274_0_s01();
     }
     targetPosY = MAX(groundHeight - Q12(2.0f), targetPosY);
 
-    // Set character position to target.
-    chara->properties_E4.npc.field_F8 = targetPosX;
-    chara->properties_E4.npc.field_FC = targetPosY;
-    chara->properties_E4.npc.field_100 = targetPosZ;
+    // Set Air Screamer position to target.
+    airScreamerProps.position_F8.vx = targetPosX;
+    airScreamerProps.position_F8.vy = targetPosY;
+    airScreamerProps.position_F8.vz = targetPosZ;
 
     // Additional processing.
-    sharedFunc_800D4E84_0_s01(chara);
+    sharedFunc_800D4E84_0_s01(airScreamer);
 
     #undef PLAYER_ANGLE_RANGE
-    #undef CHARA_ANGLE_RANGE
+    #undef AIR_SCREAMER_ANGLE_RANGE
+    #undef airScreamerProps
 }

@@ -30,7 +30,7 @@ void sharedFunc_800D57C8_0_s01(s_SubCharacter* chara)
     var_t4 = 0;
     posY   = tmp - chara->position_18.vy;
 
-    if (dist > (chara->field_D4.field_0 + Q12(0.05f)) && (angle + FP_ANGLE(45.0f)) < (u32)FP_ANGLE(90.0f))
+    if (dist > (chara->field_D4.radius_0 + Q12(0.05f)) && (angle + FP_ANGLE(45.0f)) < (u32)FP_ANGLE(90.0f))
     {
         idx0 = 5;
         idx1 = 33;

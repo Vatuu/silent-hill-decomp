@@ -1560,7 +1560,7 @@ bool sharedFunc_800D2E94_0_s00(void)
             npcChara->model_0.controlState_2++;
             npcChara->field_C8.field_0   = Q12(-0.2f);
             npcChara->field_C8.field_2   = Q12(0.2f);
-            npcChara->field_D4.field_0   = Q12(0.05f);
+            npcChara->field_D4.radius_0   = Q12(0.05f);
             npcChara->field_D4.field_2   = Q12(0.5f);
             npcChara->field_40           = 0;
             npcChara->field_C8.field_6   = 0;

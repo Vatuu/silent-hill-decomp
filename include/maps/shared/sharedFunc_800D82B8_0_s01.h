@@ -105,14 +105,14 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
 
         airScreamer->field_E1_0       = 3;
         airScreamer->field_C8.field_2 = new_var;
-        airScreamer->field_D4.field_0 = new_var2;
+        airScreamer->field_D4.radius_0 = new_var2;
     }
     else
     {
         new_var3 = sharedData_800CAA98_0_s01.field_D70[0][0];
         new_var4 = sharedData_800CAA98_0_s01.field_D70[0][1];
 
-        airScreamer->field_D4.field_0 = new_var4;
+        airScreamer->field_D4.radius_0 = new_var4;
         airScreamer->field_D4.field_2 = 0;
 
         airScreamer->field_C8.field_4 = Q12(0.0f);

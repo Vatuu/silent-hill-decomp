@@ -19,7 +19,7 @@ void sharedFunc_800D8714_0_s01(s_SubCharacter* airScreamer, q19_12 angle0, q19_1
     {
         airScreamer->field_D8.offsetX_4 = Q12(0.0f);
         airScreamer->field_D8.offsetZ_6 = Q12(0.0f);
-        airScreamer->field_D4.field_0   = temp_v0;
+        airScreamer->field_D4.radius_0   = temp_v0;
         return;
     }
 
@@ -39,5 +39,5 @@ void sharedFunc_800D8714_0_s01(s_SubCharacter* airScreamer, q19_12 angle0, q19_1
 
     airScreamer->field_D8.offsetX_4 = offsetX;
     airScreamer->field_D8.offsetZ_6 = offsetZ;
-    airScreamer->field_D4.field_0   = Q12(0.4f);
+    airScreamer->field_D4.radius_0   = Q12(0.4f);
 }

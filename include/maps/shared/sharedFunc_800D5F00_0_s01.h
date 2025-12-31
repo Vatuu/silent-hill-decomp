@@ -24,7 +24,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const chara)
 
     posY = Collision_GroundHeightGet(x, z);
 
-    if (chara->moveSpeed_38 != 0)
+    if (chara->moveSpeed_38 != Q12(0.0f))
     {
         return false;
     }
@@ -130,7 +130,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const chara)
 
     sharedFunc_800D81D0_0_s01(chara);
 
-    chara->field_D4.field_0 = 0;
+    chara->field_D4.radius_0 = 0;
 
     func_80069B24(&sharedData_800E2350_0_s01, &sharedData_800DE1D0_0_s01, chara);
 

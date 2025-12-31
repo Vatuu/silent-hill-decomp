@@ -457,7 +457,7 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 
     chara->moveSpeed_38       = 0;
     chara->headingAngle_3C    = chara->rotation_24.vy;
-    chara->field_D4.field_0   = Q12(0.3f);
+    chara->field_D4.radius_0   = Q12(0.3f);
     chara->field_E1_0         = 4;
     chara->field_D8.offsetX_4 = Q12(0.0f);
     chara->field_D8.offsetZ_6 = Q12(0.0f);
@@ -766,7 +766,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     }
 
     chara->moveSpeed_38       = 0;
-    chara->field_D4.field_0   = Q12(0.3f);
+    chara->field_D4.radius_0   = Q12(0.3f);
     chara->field_D8.offsetX_4 = Q12(0.0f);
     chara->field_D8.offsetZ_6 = Q12(0.0f);
     chara->field_E1_0         = 4;

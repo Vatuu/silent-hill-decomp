@@ -130,7 +130,7 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
 
 void func_800D8A90(s_SubCharacter* chara) // 0x800D8A90
 {
-    chara->field_D4.field_0 = Q12(0.3f);
+    chara->field_D4.radius_0 = Q12(0.3f);
     chara->field_D4.field_2 = Q12(0.23f);
     chara->field_C8.field_0 = Q12(-1.6f);
     chara->field_C8.field_6 = Q12(-1.05f);

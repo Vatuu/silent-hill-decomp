@@ -1048,7 +1048,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
             g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
             func_8007FB94(chara, extra, animStatus);
-            chara->field_D4.field_0 = Q12(0.25f);
+            chara->field_D4.radius_0 = Q12(0.25f);
             chara->field_D4.field_2 = Q12(0.0f);
 
             if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
@@ -1264,7 +1264,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                             break;
                     }
 
-                    chara->field_D4.field_0                        = 0;
+                    chara->field_D4.radius_0                        = 0;
                     g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
                     g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
                     g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
@@ -1658,7 +1658,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                         chara->model_0.controlState_2                                      = ModelState_Uninitialized;
                         extra->model_0.stateStep_3                                  = 0;
                         extra->model_0.controlState_2                                      = ModelState_Uninitialized;
-                        g_SysWork.playerWork_4C.player_0.field_D4.field_0                = Q12(0.3f);
+                        g_SysWork.playerWork_4C.player_0.field_D4.radius_0                = Q12(0.3f);
                         g_SysWork.playerWork_4C.player_0.field_D4.field_2                = Q12(0.23f);
                         g_SysWork.playerWork_4C.player_0.field_C8.field_0                = Q12(-1.6f);
                         g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_None;
@@ -1686,11 +1686,11 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
                     if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
                     {
-                        chara->field_D4.field_0 = ((chara->model_0.anim_4.keyframeIdx_8 - g_MapOverlayHeader.field_38[D_800AF220].time_4) * 0x4CC) / 21;
+                        chara->field_D4.radius_0 = ((chara->model_0.anim_4.keyframeIdx_8 - g_MapOverlayHeader.field_38[D_800AF220].time_4) * 0x4CC) / 21;
                     }
                     else
                     {
-                        chara->field_D4.field_0 = 0;
+                        chara->field_D4.radius_0 = 0;
                     }
 
                     if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
@@ -1719,7 +1719,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                                 break;
                         }
 
-                        g_SysWork.playerWork_4C.player_0.field_D4.field_0   = Q12(0.3f);
+                        g_SysWork.playerWork_4C.player_0.field_D4.radius_0   = Q12(0.3f);
                         g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
                         g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
                         g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
@@ -1750,7 +1750,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                         extra->model_0.controlState_2                                      = ModelState_Uninitialized;
                         g_SysWork.playerWork_4C.extra_128.upperBodyState_20             = PlayerUpperBodyState_None;
                         g_SysWork.playerWork_4C.extra_128.lowerBodyState_24             = PlayerLowerBodyState_None;
-                        chara->field_D4.field_0                                     = Q12(0.3f);
+                        chara->field_D4.radius_0                                     = Q12(0.3f);
                         g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6              = Q12(0.0f);
                         g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4              = Q12(0.0f);
                         g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2              = Q12(0.0f);
@@ -1815,7 +1815,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                             g_SysWork.playerWork_4C.player_0.field_C8.field_0 = Q12(-1.6f);
                             g_SysWork.playerWork_4C.player_0.field_C8.field_2 = Q12(0.0f);
                             g_SysWork.playerWork_4C.player_0.field_C8.field_6 = Q12(-1.1f);
-                            chara->field_D4.field_0                      = Q12(0.3f);
+                            chara->field_D4.radius_0                      = Q12(0.3f);
                         }
                     }
                     else
@@ -1854,7 +1854,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                             g_SysWork.playerWork_4C.player_0.field_C8.field_0 = Q12(-1.6f);
                             g_SysWork.playerWork_4C.player_0.field_C8.field_2 = Q12(0.0f);
                             g_SysWork.playerWork_4C.player_0.field_C8.field_6 = Q12(-1.1f);
-                            chara->field_D4.field_0                      = Q12(0.3f);
+                            chara->field_D4.radius_0                      = Q12(0.3f);
                         }
                     }
                     break;
@@ -1959,7 +1959,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                 g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
                 g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = FP_MULTIPLY(temp_s0_3, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
                 g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = FP_MULTIPLY(temp_s0_3, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
-                chara->field_D4.field_0                        = Q12(0.3f);
+                chara->field_D4.radius_0                        = Q12(0.3f);
             }
 
             if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
@@ -7795,7 +7795,7 @@ void func_8007E5AC(void) // 0x8007E5AC
 
     g_SysWork.playerWork_4C.player_0.model_0.charaId_0   = Chara_Harry;
     g_SysWork.playerWork_4C.extra_128.model_0.charaId_0 = Chara_Harry;
-    g_SysWork.playerWork_4C.player_0.field_D4.field_0    = Q12(0.3f);
+    g_SysWork.playerWork_4C.player_0.field_D4.radius_0    = Q12(0.3f);
     g_SysWork.playerWork_4C.player_0.field_D4.field_2    = Q12(0.23f);
 
     extraModel = &g_SysWork.playerWork_4C.player_0.model_0;
@@ -7913,7 +7913,7 @@ void func_8007E8C0(void) // 0x8007E8C0
     g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
     g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
     g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
-    chara->field_D4.field_0                        = Q12(0.3f);
+    chara->field_D4.radius_0                        = Q12(0.3f);
     chara->field_D4.field_2                        = Q12(0.23f);
     g_GameWork.mapAnimIdx_5B1                      = NO_VALUE;
 
@@ -8604,7 +8604,7 @@ void func_8007FD4C(bool cond) // 0x8007FD4C
 
     if (cond) 
     {
-        g_SysWork.playerWork_4C.player_0.field_D4.field_0   = Q12(0.3f);
+        g_SysWork.playerWork_4C.player_0.field_D4.radius_0   = Q12(0.3f);
         g_SysWork.playerWork_4C.player_0.field_D4.field_2   = Q12(0.23f);
         g_SysWork.playerWork_4C.player_0.field_C8.field_0   = Q12(-1.6f);
         g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
