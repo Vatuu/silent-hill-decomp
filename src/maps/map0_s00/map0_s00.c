@@ -712,11 +712,11 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
     }
     else
     {
-        switch (g_SysWork.timer_1C & 7)
+        switch (g_SysWork.timer_1C & 0x7)
         {
             case 0:
             case 1:
-                switch (arg0 & 3)
+                switch (arg0 & 0x3)
                 {
                     case 0:
                         setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);

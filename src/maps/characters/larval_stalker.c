@@ -309,7 +309,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
                 if (larvalStalkerProps.timer_EC > Q12(1.8f)) 
                 {
-                    if (!(Rng_Rand16() & 0x7))
+                    if (!Rng_GenerateInt(0, 7)) // 1 in 8 chance.
                     {
                         func_8005DC1C(0, &larvalStalker->position_18, Q8(0.5f), 0);
                         larvalStalkerProps.timer_EC = Q12(0.0f);
@@ -548,7 +548,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
             Chara_TurnModulate(func_8005BF38(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), FP_ANGLE(1.5f), 682);
 
-            if ((larvalStalker->moveSpeed_38 >= Q12(0.9004f)) && !(Rng_Rand16() & 0x3F))
+            if ((larvalStalker->moveSpeed_38 >= Q12(0.9004f)) && !Rng_GenerateInt(0, 63)) // 1 in 64 chance.
             {
                 larvalStalker->model_0.anim_4.status_0 = ANIM_STATUS(LarvalStalkerAnim_6, false);
                 larvalStalkerProps.timer_EC = Q12(0.0f);
@@ -561,7 +561,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             if (!(larvalStalkerProps.flags_E8 & LarvalStalkerFlag_7))
             {
                 larvalStalkerProps.timer_F0 += g_DeltaTime0;
-                if (larvalStalkerProps.timer_F0 > Q12(5.0f) && !(Rng_Rand16() & 0x3F))
+                if (larvalStalkerProps.timer_F0 > Q12(5.0f) && !Rng_GenerateInt(0, 63)) // 1 in 64 chance.
                 {
                     larvalStalkerProps.timer_F0 = Q12(0.0f);
                     larvalStalkerProps.timer_EC = Q12(0.0f);
@@ -619,7 +619,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             }
 
             if (larvalStalker->model_0.anim_4.status_0 == ANIM_STATUS(LarvalStalkerAnim_16, true) &&
-                larvalStalker->moveSpeed_38 == Q12(0.0f) && !(Rng_Rand16() & 0x7)) 
+                larvalStalker->moveSpeed_38 == Q12(0.0f) && !Rng_GenerateInt(0, 7)) // 1 in 8 chance.
             {
                 larvalStalker->model_0.anim_4.status_0 = ANIM_STATUS(LarvalStalkerAnim_6, true);
             }
@@ -630,13 +630,13 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             }
 
             if (larvalStalker->model_0.anim_4.status_0 == ANIM_STATUS(LarvalStalkerAnim_15, true) &&
-                larvalStalker->moveSpeed_38 == Q12(0.0f) && !(Rng_Rand16() & 0x7))
+                larvalStalker->moveSpeed_38 == Q12(0.0f) && !Rng_GenerateInt(0, 7)) // 1 in 8 chance.
             {
                 larvalStalker->model_0.anim_4.status_0 = ANIM_STATUS(LarvalStalkerAnim_5, true);
             }
 
             if (ANIM_STATUS_IDX_GET(larvalStalker->model_0.anim_4.status_0) == LarvalStalkerAnim_10 &&
-                !(Rng_Rand16() & 0x7))
+                !Rng_GenerateInt(0, 7)) // 1 in 8 chance.
             {
                 larvalStalker->model_0.anim_4.status_0 = ANIM_STATUS(LarvalStalkerAnim_12, false);
                 larvalStalker->model_0.controlState_2 = LarvalStalkerControl_8;

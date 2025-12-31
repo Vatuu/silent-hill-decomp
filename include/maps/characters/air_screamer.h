@@ -263,7 +263,7 @@ bool sharedFunc_800D3430_0_s01(s_SubCharacter* airScreamer, q19_12* dist, q19_12
 /** Pecking distance getter? */
 s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer);
 
-bool sharedFunc_800D31D0_0_s01(s_SubCharacter* airScreamer, VECTOR3* pos, s32 arg2);
+bool sharedFunc_800D31D0_0_s01(s_SubCharacter* airScreamer, const VECTOR3* pos, s32 arg2);
 
 bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer);
 
@@ -271,7 +271,8 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D3CC4_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D3DFC_0_s01(s_SubCharacter* chara);
+/** Probability query. */
+void sharedFunc_800D3DFC_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D62D8_0_s01(s_SubCharacter* airScreamer);
 

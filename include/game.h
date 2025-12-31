@@ -1619,7 +1619,7 @@ typedef struct _SubCharacter
     s16      flags_3E;     /** `e_CharaFlags` */
     s8       field_40;     // In player: Index of the NPC attacking the player.
                            // In NPCs: Unknown.
-    s8  attackReceived_41; // Indicates what attack has been performed to the character. For enemies, based on `e_EquippedWeaponId`.
+    s8  attackReceived_41; // Packed weapon attack indicating what attack has been performed to the character. See `WEAPON_ATTACK`.
     s8  unk_42[2];         // Most likely padding.
     s_SubCharacter_44  field_44;
     q19_12  health_B0;

@@ -2681,10 +2681,12 @@ void GameState_InGame_Update(void) // 0x80038BD4
     {
         func_80040014();
         vcMoveAndSetCamera(false, false, false, false, false, false, false, false);
+
         if (g_MapOverlayHeader.func_44 != NULL)
         {
             g_MapOverlayHeader.func_44();
         }
+
         Demo_DemoRandSeedRestore();
 
         player = &g_SysWork.playerWork_4C.player_0;
@@ -2699,6 +2701,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
         }
 
         Demo_DemoRandSeedRestore();
+
         if (player->model_0.anim_4.flags_2 & AnimFlag_Visible)
         {
             func_8003DA9C(Chara_Harry, g_SysWork.playerBoneCoords_890, 1, g_SysWork.playerWork_4C.player_0.timer_C6, 0);
@@ -2719,14 +2722,14 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
 void SysState_Gameplay_Update(void) // 0x80038BD4
 {
-    s_SubCharacter* playerChara;
+    s_SubCharacter* player;
 
-    playerChara = &g_SysWork.playerWork_4C.player_0;
+    player = &g_SysWork.playerWork_4C.player_0;
 
-    Event_Update(playerChara->attackReceived_41 != NO_VALUE);
+    Event_Update(player->attackReceived_41 != NO_VALUE);
     Savegame_MapRoomIdxSet();
 
-    switch (FP_ROUND_SCALED(playerChara->health_B0, 10, Q12_SHIFT))
+    switch (FP_ROUND_SCALED(player->health_B0, 10, Q12_SHIFT))
     {
         case 0:
             func_800892A4(17);
@@ -2806,7 +2809,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
 void SysState_GamePaused_Update(void) // 0x800391E8
 {
     D_800A9A68 += g_DeltaTime1;
-    if (((D_800A9A68 >> 11) & (1 << 0)) == 0)
+    if (!((D_800A9A68 >> 11) & (1 << 0)))
     {
         Gfx_StringSetPosition(SCREEN_POSITION_X(39.25f), SCREEN_POSITION_Y(43.5f));
         Gfx_StringDraw("\x07PAUSED", DEFAULT_MAP_MESSAGE_LENGTH);
@@ -2967,7 +2970,6 @@ void SysState_StatusMenu_Update(void) // 0x80039568
     gameState = g_GameWork.gameState_594;
 
     g_GameWork.gameState_594 = GameState_LoadStatusScreen;
-
     g_SysWork.timer_1C = 0;
     g_SysWork.timer_20 = 0;
 
