@@ -3805,7 +3805,7 @@ bool func_80064334(POLY_FT4** poly, s32 idx);
 /** Displays gun shooting effects. */
 void func_8006342C(s32 weaponAttack, q3_12 angle0, s16 angle1, GsCOORDINATE2* coord);
 
-s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 x, q3_12 z);
+s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 offsetX, q3_12 offsetZ);
 
 /** Computes something for a targeted NPC. */
 bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* unkOffset, u32 npxIdx, q19_12 angleConstraint);

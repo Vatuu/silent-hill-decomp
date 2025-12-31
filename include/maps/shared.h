@@ -1634,8 +1634,8 @@ extern s_AnimInfo HANGED_SCRATCHER_ANIM_INFOS[];
 
 // Three variables used by `Ai_SplitHead_Init`.
 extern s_AnimInfo SPLIT_HEAD_ANIM_INFOS[];
-extern s16 sharedData_800D8614_1_s05; // These two `s16`s could be `DVECTOR`?
-extern s16 sharedData_800D8616_1_s05;
+extern q3_12 sharedData_800D8614_1_s05; // Offset X.
+extern q3_12 sharedData_800D8616_1_s05; // Offset Z.
 
 extern s32 sharedData_800D5884_1_s05;
 

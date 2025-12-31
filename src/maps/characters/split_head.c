@@ -53,8 +53,8 @@ void Ai_SplitHead_Init(s_SubCharacter* splitHead)
     Character_AnimSet(splitHead, ANIM_STATUS(SplitHeadAnim_10, true), 162);
     ModelAnim_AnimInfoSet(&splitHead->model_0.anim_4, SPLIT_HEAD_ANIM_INFOS);
 
-    sharedData_800D8614_1_s05 = 0;
-    sharedData_800D8616_1_s05 = 0;
+    sharedData_800D8614_1_s05 = Q12(0.0f);
+    sharedData_800D8616_1_s05 = Q12(0.0f);
 
     Chara_DamageClear(splitHead);
 
@@ -281,7 +281,7 @@ void Ai_SplitHead_ControlUpdate(s_SubCharacter* splitHead)
     }
 }
 
-void sharedFunc_800D00D0_1_s05(s_SubCharacter* splitHead)
+void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
 {
     VECTOR unkPos;
     q3_12  angleDeltaToPlayer;
@@ -423,7 +423,7 @@ void sharedFunc_800D00D0_1_s05(s_SubCharacter* splitHead)
     }
 }
 
-void sharedFunc_800D0948_1_s05(s_SubCharacter* splitHead)
+void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
 {
     s_func_800700F8_2 sp10;
     VECTOR3           sp30;
@@ -595,7 +595,7 @@ void sharedFunc_800D0948_1_s05(s_SubCharacter* splitHead)
     }
 }
 
-void sharedFunc_800D11A0_1_s05(s_SubCharacter* splitHead)
+void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
 {
     q3_12  angleDeltaToPlayer;
     q19_12 distToPlayer;
@@ -691,7 +691,7 @@ void sharedFunc_800D11A0_1_s05(s_SubCharacter* splitHead)
     }
 }
 
-void sharedFunc_800D17BC_1_s05(s_SubCharacter* splitHead)
+void Ai_SplitHead_Control_4(s_SubCharacter* splitHead)
 {
     s32 vol;
     s32 timer0;
@@ -752,7 +752,7 @@ void sharedFunc_800D17BC_1_s05(s_SubCharacter* splitHead)
     }
 }
 
-void sharedFunc_800D19B8_1_s05(s_SubCharacter* splitHead)
+void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
 {
     s_func_800700F8_2 sp10;
     VECTOR3           sp30;
@@ -929,7 +929,7 @@ void sharedFunc_800D19B8_1_s05(s_SubCharacter* splitHead)
     }
 }
 
-void sharedFunc_800D2214_1_s05(s_SubCharacter* splitHead)
+void Ai_SplitHead_Control_6(s_SubCharacter* splitHead)
 {
     switch (splitHead->model_0.anim_4.status_0)
     {
@@ -973,7 +973,7 @@ void sharedFunc_800D2214_1_s05(s_SubCharacter* splitHead)
     }
 }
 
-void sharedFunc_800D2444_1_s05(s_SubCharacter* splitHead)
+void Ai_SplitHead_Control_7(s_SubCharacter* splitHead)
 {
     q3_12 angleDeltaToPlayer;
 
@@ -1005,7 +1005,7 @@ void sharedFunc_800D2444_1_s05(s_SubCharacter* splitHead)
     }
 }
 
-void sharedFunc_800D263C_1_s05(s_SubCharacter* splitHead)
+void Ai_SplitHead_Control_8(s_SubCharacter* splitHead)
 {
     if (!Savegame_EventFlagGet(EventFlag_130))
     {
@@ -1044,8 +1044,8 @@ void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead)
 
     func_8005CB20(splitHead, &sp18, sharedData_800D8614_1_s05, sharedData_800D8616_1_s05);
 
-    sharedData_800D8614_1_s05 = 0;
-    sharedData_800D8616_1_s05 = 0;
+    sharedData_800D8614_1_s05 = Q12(0.0f);
+    sharedData_800D8616_1_s05 = Q12(0.0f);
 }
 
 void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr) 
@@ -1836,10 +1836,10 @@ void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, s32 posX, s32 posY, s32 po
     pos->vz = Q8_TO_Q12(scratch->field_28.vz);
 }
 
-void sharedFunc_800D450C_1_s05(s32 arg0, s32 arg1)
+void sharedFunc_800D450C_1_s05(q19_12 offsetX, q19_12 offsetZ)
 {
-    sharedData_800D8614_1_s05 += arg0;
-    sharedData_800D8616_1_s05 += arg1;
+    sharedData_800D8614_1_s05 += offsetX;
+    sharedData_800D8616_1_s05 += offsetZ;
 }
 
 bool sharedFunc_800D4530_1_s05(s_SubCharacter* splitHead)

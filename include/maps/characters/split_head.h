@@ -105,10 +105,12 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead);
 
 void Ai_SplitHead_ControlUpdate(s_SubCharacter* splitHead);
 
-void sharedFunc_800D00D0_1_s05(s_SubCharacter* splitHead);
+void Ai_SplitHead_Control_1(s_SubCharacter* splitHead);
 
 // `Ai_AirScreamer_MovementUpdate`
-void sharedFunc_800D0948_1_s05(s_SubCharacter* airScreamer);
+void Ai_SplitHead_Control_2(s_SubCharacter* airScreamer);
+
+void Ai_SplitHead_Control_3(s_SubCharacter* splitHead);
 
 void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead);
 
@@ -118,15 +120,15 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead);
 
 void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_12* offsetZ);
 
-void sharedFunc_800D17BC_1_s05(s_SubCharacter* splitHead);
+void Ai_SplitHead_Control_4(s_SubCharacter* splitHead);
 
-void sharedFunc_800D19B8_1_s05(s_SubCharacter* splitHead);
+void Ai_SplitHead_Control_5(s_SubCharacter* splitHead);
 
-void sharedFunc_800D2214_1_s05(s_SubCharacter* splitHead);
+void Ai_SplitHead_Control_6(s_SubCharacter* splitHead);
 
-void sharedFunc_800D2444_1_s05(s_SubCharacter* splitHead);
+void Ai_SplitHead_Control_7(s_SubCharacter* splitHead);
 
-void sharedFunc_800D263C_1_s05(s_SubCharacter* splitHead);
+void Ai_SplitHead_Control_8(s_SubCharacter* splitHead);
 
 void sharedFunc_800D3AFC_1_s05(s_SubCharacter* splitHead);
 
@@ -134,8 +136,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead);
 
 void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead);
 
-/** Probably takes X and Z position values. Specific to Split Head? */
-void sharedFunc_800D450C_1_s05(s32 arg0, s32 arg1);
+void sharedFunc_800D450C_1_s05(q19_12 offsetX, q19_12 offsetZ);
 
 bool sharedFunc_800D4530_1_s05(s_SubCharacter* splitHead);
 
