@@ -1647,7 +1647,7 @@ extern u8 sharedData_800D5AAF_1_s05;
 extern u8      sharedData_800D5CF8_1_s05[];
 extern u8      sharedData_800D5D08_1_s05[];
 extern VECTOR3 sharedData_800D8618_1_s05[];
-extern SVECTOR3 sharedData_800D5A90_1_s05[];
+extern SVECTOR3 sharedData_800D5A90_1_s05[]; // Q7.8
 
 extern s_sharedData_800D5AB0_1_s05 sharedData_800D5AB0_1_s05[];
 extern s16                         sharedData_800D5BE0_1_s05[6][3];
@@ -1846,7 +1846,7 @@ extern SVECTOR sharedData_800DE220_0_s01;
 
 extern MATRIX sharedData_800DE230_0_s01;
 
-extern s32 g_PuppetNurseHurtSfxIdx[4];
+extern s32 g_PuppetNurseHurtSfxIdxs[4];
 
 extern s_SfxPair g_NursePuppetSfxs[18];
 
@@ -1901,13 +1901,13 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx);
 
 bool sharedFunc_800CB884_1_s05(POLY_FT4** poly, s32 idx);
 
-void sharedFunc_800CBE7C_1_s05(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+void sharedFunc_800CBE7C_1_s05(q23_8 posX, q23_8 posY, q23_8 posZ, s32 arg3, s32 arg4);
 
 void sharedFunc_800CCDD4_1_s05(POLY_FT4** poly, s32 idx); // Unknown arg types.
 
-void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1, s32 posX0, s32 posY0, s32 posZ0, s32 posX1, s32 posY1, s32 posZ1);
+void sharedFunc_800CCE2C_1_s05(s32 arg0, s32 arg1, q23_8 posX0, q23_8 posY0, q23_8 posZ0, q23_8 posX1, q23_8 posY1, q23_8 posZ1);
 
-void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, s32 posX, s32 posY, s32 posZ);
+void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, q23_8 posX, q23_8 posY, q23_8 posZ);
 
 q19_12 sharedFunc_800D7714_0_s01(s_SubCharacter* chara);
 

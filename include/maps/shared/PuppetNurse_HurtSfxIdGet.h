@@ -12,7 +12,7 @@ s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse)
         weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Multitap))
     {
         idx = D_800AD4C8[weaponAttack].field_10;
-        return g_PuppetNurseHurtSfxIdx[idx];
+        return g_PuppetNurseHurtSfxIdxs[idx];
     }
 
     return NO_VALUE;

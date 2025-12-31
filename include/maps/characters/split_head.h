@@ -107,8 +107,7 @@ void Ai_SplitHead_ControlUpdate(s_SubCharacter* splitHead);
 
 void Ai_SplitHead_Control_1(s_SubCharacter* splitHead);
 
-// `Ai_AirScreamer_MovementUpdate`
-void Ai_SplitHead_Control_2(s_SubCharacter* airScreamer);
+void Ai_SplitHead_Control_2(s_SubCharacter* splitHead);
 
 void Ai_SplitHead_Control_3(s_SubCharacter* splitHead);
 
@@ -136,6 +135,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead);
 
 void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead);
 
+/** Accumulates an unknown XZ offset. */
 void sharedFunc_800D450C_1_s05(q19_12 offsetX, q19_12 offsetZ);
 
 bool sharedFunc_800D4530_1_s05(s_SubCharacter* splitHead);

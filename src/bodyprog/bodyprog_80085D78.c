@@ -1147,7 +1147,7 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
 
 void func_80087EA8(s32 cmd) // 0x80087EA8
 {
-    if (!Bgm_IsCurBgmTargetCheck(cmd))
+    if (!Bgm_IsCurrentBgmTargetCheck(cmd))
     {
         return;
     }
@@ -1165,7 +1165,7 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
-            if (Bgm_IsCurBgmTargetCheck(arg0) == false)
+            if (!Bgm_IsCurrentBgmTargetCheck(arg0))
             {
                 SysWork_StateStepSet(1, 3);
                 break;

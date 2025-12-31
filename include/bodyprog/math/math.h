@@ -145,7 +145,7 @@
     *(s32*)&((vec)->vx) = (s32)((x) & 0xFFFF) | (s32)((y) << 16); \
     *(s16*)&((vec)->vz) = (z)
 
-/** @brief Sets the sum of an `SVECTOR` using a fast bitwise method. TODO: Need more accurate description.
+/** @brief Sets an `SVECTOR` using a fast bitwise method. Variant of `Math_SetSVectorFast`.
  *
  * @param vec Vector to set.
  * @param x X component.

@@ -592,7 +592,7 @@ s32 Bgm_Init(void) // 0x80035780
             g_GameWork.gameStateStep_598[1]++;
 
         case 1:
-            if (Bgm_IsCurBgmTargetCheck(g_MapOverlayHeader.field_14) == false)
+            if (Bgm_IsCurrentBgmTargetCheck(g_MapOverlayHeader.field_14) == false)
             {
                 g_GameWork.gameStateStep_598[1] += 2;
             }
@@ -620,7 +620,7 @@ s32 Bgm_Init(void) // 0x80035780
     return 1;
 }
 
-bool Bgm_IsCurBgmTargetCheck(s32 bgmIdx) // 0x800358A8
+bool Bgm_IsCurrentBgmTargetCheck(s32 bgmIdx) // 0x800358A8
 {
     if (bgmIdx == 0)
     {
@@ -648,7 +648,7 @@ void Bgm_AudioSet(s32 bgmIdx) // 0x800358DC
     }
 
     g_GameWork.bgmIdx_5B2 = bgmIdx;
-    SD_Call(g_BgmTaskLoadTable[bgmIdx]);
+    SD_Call(g_BgmTaskLoadCmds[bgmIdx]);
 }
 
 void Bgm_BgmChannelSet(void) // 0x80035924
@@ -663,7 +663,7 @@ void Bgm_BgmChannelSet(void) // 0x80035924
         return;
     }
 
-    SD_Call(g_BgmChannelSetTaskTable[g_GameWork.bgmIdx_5B2]);
+    SD_Call(g_BgmChannelSetTaskCmds[g_GameWork.bgmIdx_5B2]);
 }
 
 void func_8003596C(void) // 0x8003596C
@@ -724,7 +724,7 @@ s32 func_80035AB0(s32 arg0) // 0x80035AB0
 void func_80035AC8(s32 idx) // 0x80035AC8
 {
     g_GameWork.ambientIdx_5B4 = idx;
-    SD_Call(g_AmbientVabTaskLoadTable[idx]);
+    SD_Call(g_AmbientVabTaskLoadCmds[idx]);
 }
 
 // ========================================

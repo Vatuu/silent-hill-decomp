@@ -3611,9 +3611,9 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
     temp_s0_2       = temp_s0 >> temp_s3;
     temp_v0         = sinHeadingAngle >> temp_s3;
 
-    offset.vx = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0, Q12_SHIFT) << temp_s2;
-    offset.vz = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, Math_Cos(headingAngle) >> temp_s3, Q12_SHIFT) << temp_s2;
-    offset.vy = (s32)FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->field_34, Q12_SHIFT);
+    offset.vx = FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0, Q12_SHIFT) << temp_s2;
+    offset.vz = FP_MULTIPLY_PRECISE(temp_s0_2, Math_Cos(headingAngle) >> temp_s3, Q12_SHIFT) << temp_s2;
+    offset.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->field_34, Q12_SHIFT);
 
     ret = func_80069B24(&sp10, &offset, chara);
 
@@ -3635,7 +3635,7 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
     return ret;
 }
 
-s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 x, q3_12 z) // 0x8005CB20
+s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 offsetX, q3_12 offsetZ) // 0x8005CB20
 {
     s_800C4590 sp10;
     VECTOR3    offset; // Q19.12
@@ -3663,9 +3663,9 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 x, q3_12 z) // 
     offset.vz = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0_4, Q12_SHIFT) << temp_s2;
 
     sinHeadingAngle = chara->field_34;
-    offset.vx += x;
+    offset.vx += offsetX;
     offset.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, sinHeadingAngle, Q12_SHIFT);
-    offset.vz += z;
+    offset.vz += offsetZ;
 
     ret = func_80069B24(&sp10, &offset, chara);
 

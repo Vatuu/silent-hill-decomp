@@ -1141,7 +1141,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
     s32 keyframeIdx1;
     s32 keyframeIdx2;
     s32 var_a0;
-    s32 var_a1;
+    s32 relKeyframeIdx;
     s32 var_a2;
     s32 var_a3;
 
@@ -1157,16 +1157,16 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
                     break;
                 } 
 
-                var_a1 = keyframeIdx1;
-                if (var_a1 < 15) 
+                relKeyframeIdx = keyframeIdx1;
+                if (relKeyframeIdx < 15) 
                 {
-                    keyframeIdx0 = var_a1 - (var_a1 >= 11);
+                    keyframeIdx0 = relKeyframeIdx - (relKeyframeIdx >= 11);
                 } 
                 else 
                 {
-                    if ((var_a1 - 24) >= 0) 
+                    if ((relKeyframeIdx - 24) >= 0) 
                     {
-                        keyframeIdx0 = var_a1 - 10;
+                        keyframeIdx0 = relKeyframeIdx - 10;
                     }
                     else
                     {
@@ -1230,11 +1230,11 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
         case ANIM_STATUS(LarvalStalkerAnim_5, true):
         case ANIM_STATUS(LarvalStalkerAnim_15, true):
             var_a0 = FP_FROM(larvalStalker->model_0.anim_4.time_4, Q12_SHIFT);
-            var_a1 = var_a0 - 41;
-            if (var_a1 < 15) 
+            relKeyframeIdx = var_a0 - 41;
+            if (relKeyframeIdx < 15) 
             {
-                keyframeIdx0 = var_a1 - (var_a1 >= 11);
-                keyframeIdx1 = (var_a0 - 40) - (var_a1 >= 10);
+                keyframeIdx0 = relKeyframeIdx - (relKeyframeIdx >= 11);
+                keyframeIdx1 = (var_a0 - 40) - (relKeyframeIdx >= 10);
             } 
             else 
             {
@@ -1268,24 +1268,24 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
                 break;
             }
 
-            var_a1 = larvalStalker->properties_E4.dummy.properties_E8[3].val16[1];
-            keyframeIdx0 = ((var_a1 - 7) - (var_a1 >= 23)) - (var_a1 >= 24);
+            relKeyframeIdx = larvalStalker->properties_E4.dummy.properties_E8[3].val16[1];
+            keyframeIdx0 = ((relKeyframeIdx - 7) - (relKeyframeIdx >= 23)) - (relKeyframeIdx >= 24);
             func_80070400(larvalStalker, &sharedData_800DAC34_1_s00[keyframeIdx0], &sharedData_800DAC34_1_s00[keyframeIdx2]);
             break;
 
         case ANIM_STATUS(LarvalStalkerAnim_6, true):
         case ANIM_STATUS(LarvalStalkerAnim_16, true):
             var_a2 = FP_FROM(larvalStalker->model_0.anim_4.time_4, Q12_SHIFT);
-            var_a1 = var_a2 - 86;
-            if (var_a1 < 15) 
+            relKeyframeIdx = var_a2 - 86;
+            if (relKeyframeIdx < 15) 
             {
-                keyframeIdx0 = MIN(8, var_a1);
+                keyframeIdx0 = MIN(8, relKeyframeIdx);
                 keyframeIdx1 = MIN(8, var_a2 - 85);
             } 
             else 
             {
-                keyframeIdx0 = var_a2 - 93 - (var_a1 >= 23) - (var_a1 >= 24);
-                keyframeIdx1 = var_a2 - 92 - (var_a1 >= 22) - (var_a1 >= 23) - (var_a1 >= 33);
+                keyframeIdx0 = (var_a2 - 93) - (relKeyframeIdx >= 23) - (relKeyframeIdx >= 24);
+                keyframeIdx1 = (var_a2 - 92) - (relKeyframeIdx >= 22) - (relKeyframeIdx >= 23) - (relKeyframeIdx >= 33);
             }
 
             func_80070400(larvalStalker, &sharedData_800DAC34_1_s00[keyframeIdx0], &sharedData_800DAC34_1_s00[keyframeIdx1]);
@@ -1298,16 +1298,16 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
                 break;
             }
             
-            var_a1 = larvalStalker->properties_E4.dummy.properties_E8[3].val16[1];
-            if (var_a1 < 15) 
+            relKeyframeIdx = larvalStalker->properties_E4.dummy.properties_E8[3].val16[1];
+            if (relKeyframeIdx < 15) 
             {
-                keyframeIdx0 = var_a1 - (var_a1 >= 11);
+                keyframeIdx0 = relKeyframeIdx - (relKeyframeIdx >= 11);
             } 
             else 
             {
-                if ((var_a1 - 24) >= 0) 
+                if ((relKeyframeIdx - 24) >= 0) 
                 {
-                    keyframeIdx0 = var_a1 - 10;
+                    keyframeIdx0 = relKeyframeIdx - 10;
                 }
                 else
                 {
@@ -1323,10 +1323,10 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
             larvalStalker->properties_E4.dummy.properties_E8[3].val16[1] = -2;
             keyframeIdx1 = FP_FROM(larvalStalker->model_0.anim_4.time_4, Q12_SHIFT);
 
-            var_a1 = keyframeIdx1 - 121;
-            if (var_a1 < 11) 
+            relKeyframeIdx = keyframeIdx1 - 121;
+            if (relKeyframeIdx < 11) 
             {
-                if (var_a1 < 16) 
+                if (relKeyframeIdx < 16) 
                 {
                     goto block_48;
                 } 
@@ -1340,7 +1340,7 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
                 if ((keyframeIdx1 - 122) < 16) 
                 {
     block_48:
-                    keyframeIdx0 = var_a1 - (var_a1 > 10);
+                    keyframeIdx0 = relKeyframeIdx - (relKeyframeIdx > 10);
                 } 
                 else 
                 {
@@ -1348,9 +1348,9 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
                 }
             }
             
-            if (var_a1 > 9) 
+            if (relKeyframeIdx > 9) 
             {
-                if (var_a1 < 16) 
+                if (relKeyframeIdx < 16) 
                 {
                     goto block_54;
                 } 
@@ -1361,11 +1361,11 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
             } 
             else 
             {
-                keyframeIdx1 = var_a1 + 1;
+                keyframeIdx1 = relKeyframeIdx + 1;
                 if (keyframeIdx1 < 16) 
                 {
     block_54:
-                    keyframeIdx1 = var_a1 + (var_a1 < 10);
+                    keyframeIdx1 = relKeyframeIdx + (relKeyframeIdx < 10);
                 }
                 else
                 {
@@ -1383,14 +1383,14 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
                 break;
             }
 
-            var_a1 = larvalStalker->properties_E4.dummy.properties_E8[3].val16[1];
-            if (var_a1 < 15) 
+            relKeyframeIdx = larvalStalker->properties_E4.dummy.properties_E8[3].val16[1];
+            if (relKeyframeIdx < 15) 
             {
-                keyframeIdx0 = MIN(8, var_a1);
+                keyframeIdx0 = MIN(8, relKeyframeIdx);
             } 
             else 
             {
-                keyframeIdx0 = ((var_a1 - 7) - (var_a1 >= 23)) - (var_a1 >= 24);
+                keyframeIdx0 = ((relKeyframeIdx - 7) - (relKeyframeIdx >= 23)) - (relKeyframeIdx >= 24);
             }
 
             keyframeIdx1 = larvalStalker->properties_E4.dummy.properties_E8[3].val16[0];
@@ -1400,9 +1400,9 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
         case ANIM_STATUS(LarvalStalkerAnim_8, true):
             larvalStalker->properties_E4.dummy.properties_E8[3].val16[1] = -2;
             var_a0 = FP_FROM(larvalStalker->model_0.anim_4.time_4, Q12_SHIFT);
-            var_a1 = var_a0 - 143;
+            relKeyframeIdx = var_a0 - 143;
 
-            keyframeIdx0 = MIN(7, var_a1);
+            keyframeIdx0 = MIN(7, relKeyframeIdx);
             keyframeIdx1 = MIN(7, var_a0 - 142);
             func_80070400(larvalStalker, &sharedData_800DAF68_1_s00[keyframeIdx0], &sharedData_800DAF68_1_s00[keyframeIdx1]);
             break;
@@ -1420,14 +1420,14 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
                 break;
             }
 
-            var_a1 = keyframeIdx1;
-            if (var_a1 < 15) 
+            relKeyframeIdx = keyframeIdx1;
+            if (relKeyframeIdx < 15) 
             {
-                keyframeIdx0 = MIN(8, var_a1);
+                keyframeIdx0 = MIN(8, relKeyframeIdx);
             } 
             else 
             {
-                keyframeIdx0 = var_a1 - 7;
+                keyframeIdx0 = relKeyframeIdx - 7;
             }
 
             func_80070400(larvalStalker, &sharedData_800DAC34_1_s00[keyframeIdx0], &sharedData_800DB008_1_s00);

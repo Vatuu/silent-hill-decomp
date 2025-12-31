@@ -397,7 +397,7 @@ void (*g_GameStateUpdateFuncs[])(void) = {
     GameState_Options_Update,
     GameState_LoadStatusScreen_Update,
     GameState_LoadMapScreen_Update,
-    GameState_Unk15_Update,
+    GameState_Unk15_Update
 };
 
 u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
@@ -414,8 +414,8 @@ s8 D_800A97E2 = 0;
 s8 D_800A97E3 = 0;
 u32 D_800A97E4[8] = {};
 
-/** @brief Task number for `SD_Call` to load BGM KDT and VAB files. */
-u16 g_BgmTaskLoadTable[] = {
+/** @brief Task commands for `SD_Call` to load BGM KDT and VAB files. */
+u16 g_BgmTaskLoadCmds[] = {
     0,
     0,
     32,
@@ -460,8 +460,8 @@ u16 g_BgmTaskLoadTable[] = {
     63
 };
 
-/** @brief Task number for `SD_Call` to set current BGM channels to be used. */
-u16 g_BgmChannelSetTaskTable[] = {
+/** @brief Task commands for `SD_Call` to set current BGM channels to be used. */
+u16 g_BgmChannelSetTaskCmds[] = {
     0,
     0,
     769,
@@ -472,42 +472,42 @@ u16 g_BgmChannelSetTaskTable[] = {
     774,
     775,
     776,
-    0x309,
-    0x30A,
-    0x30B,
-    0x30C,
-    0x30D,
-    0x30F,
-    0x310,
-    0x311,
-    0x312,
-    0x313,
-    0x314,
-    0x315,
-    0x316,
-    0x317,
-    0x318,
-    0x319,
-    0x31A,
-    0x31B,
-    0x31C,
-    0x31D,
-    0x31E,
-    0x31F,
-    0x321,
-    0x322,
-    0x323,
-    0x324,
-    0x325,
-    0x326,
-    0x30E,
-    0x327,
-    0x328,
-    0x320
+    777,
+    778,
+    779,
+    780,
+    781,
+    783,
+    784,
+    785,
+    786,
+    787,
+    788,
+    789,
+    790,
+    791,
+    792,
+    793,
+    794,
+    795,
+    796,
+    797,
+    798,
+    799,
+    801,
+    802,
+    803,
+    804,
+    805,
+    806,
+    782,
+    807,
+    808,
+    800
 };
 
-/** @brief Task number for `SD_Call` to load ambient VAB files. */
-u16 g_AmbientVabTaskLoadTable[] = {
+/** @brief Task commands for `SD_Call` to load ambient VAB files. */
+u16 g_AmbientVabTaskLoadCmds[] = {
     0,
     162,
     170,

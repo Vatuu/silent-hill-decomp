@@ -237,7 +237,7 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
     {
         if (ANIM_STATUS_IDX_GET(splitHead->model_0.anim_4.status_0) == SplitHeadAnim_2)
         {
-            splitHead->model_0.anim_4.status_0 = ANIM_STATUS(8, false);
+            splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_8, false);
         }
         else if (splitHead->moveSpeed_38 > Q12(0.0f))
         {
@@ -433,10 +433,10 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
     q3_12             angle;
     q3_12             angleToPlayer;
     q19_12            distToPlayer;
-    s32               var_s1;
+    q19_12            distMax;
+    q19_12            activeDistMax;
     s32               i;
     s32               angleMult;
-    s32               var_v1;
 
     distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx,
                                        g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz);
@@ -478,26 +478,26 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
 
             if (angle < FP_ANGLE(90.0f))
             {
-                var_s1 = Q12(1.8f);
+                distMax = Q12(1.8f);
             }
             else
             {
-                var_s1 = FP_FROM((distToPlayer * Math_Cos(angle)) + (Math_Sin(angle) * Q12(1.8f)), Q12_SHIFT);
+                distMax = FP_FROM((distToPlayer * Math_Cos(angle)) + (Math_Sin(angle) * Q12(1.8f)), Q12_SHIFT);
             }
 
-            if (distToPlayer < var_s1)
+            if (distToPlayer < distMax)
             {
-                var_v1 = var_s1;
+                activeDistMax = distMax;
             }
             else
             {
-                var_v1 = distToPlayer;
+                activeDistMax = distToPlayer;
             }
-            var_s1 = var_v1;
+            distMax = activeDistMax;
 
-            sp30.vx = FP_MULTIPLY(var_s1, Math_Sin((angleToPlayer + angle) + angle1), Q12_SHIFT);
+            sp30.vx = FP_MULTIPLY(distMax, Math_Sin((angleToPlayer + angle) + angle1), Q12_SHIFT);
             sp30.vy = Q12(0.0f);
-            sp30.vz = FP_MULTIPLY(var_s1, Math_Cos((angleToPlayer + angle) + angle1), Q12_SHIFT);
+            sp30.vz = FP_MULTIPLY(distMax, Math_Cos((angleToPlayer + angle) + angle1), Q12_SHIFT);
 
             func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
 
@@ -1024,7 +1024,7 @@ void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead)
 
     splitHead->headingAngle_3C = splitHead->rotation_24.vy;
 
-    sharedFunc_800D4408_1_s05(&pos, 2, 0, -57, 3);
+    sharedFunc_800D4408_1_s05(&pos, 2, Q8(0.0f), -57, 3);
 
     splitHead->field_D8.offsetX_4 = pos.vx - splitHead->position_18.vx;
     splitHead->field_C8.field_0   = pos.vy;
@@ -1267,8 +1267,8 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
     q19_12  offsetX;
     q19_12  offsetZ;
 
-    sharedFunc_800D4408_1_s05(&sp20[0], 2, 0, -0x45, 0xFB);
-    sharedFunc_800D4408_1_s05(&sp50[0], 2, 0, 0xED, 0xA6);
+    sharedFunc_800D4408_1_s05(&sp20[0], 2, Q8(0.0f), -0x45, 0xFB);
+    sharedFunc_800D4408_1_s05(&sp50[0], 2, Q8(0.0f), 0xED, 0xA6);
     sharedFunc_800D4408_1_s05(&sp20[1], 0x13, -0x24, 5, 0x71);
     sharedFunc_800D4408_1_s05(&sp20[2], 0x17, 0x24, 5, 0x71);
 
@@ -1338,9 +1338,9 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
 
     if (unkIdx < 3)
     {
-        if (sp90[0] > 0xD99)
+        if (sp90[0] > Q12(0.85f))
         {
-            sp90[unkIdx] = 0xD99;
+            sp90[unkIdx] = Q12(0.85f);
         }
         else
         {
@@ -1358,9 +1358,9 @@ void sharedFunc_800D2D74_1_s05(s_SubCharacter* splitHead)
     }
     else
     {
-        if (sp90[3] > 0xE66)
+        if (sp90[3] > Q12(0.9f))
         {
-            sp90[3] = 0xE66;
+            sp90[3] = Q12(0.9f);
         }
         sharedFunc_800D4408_1_s05(&sp50[3], 1, 0, 0x95, -0x13F);
     }
@@ -1521,8 +1521,8 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
                         (j == 4 && sharedData_800D5CF8_1_s05[sp38[i].field_E] != 2 &&
                          (sharedData_800D5D08_1_s05[sp38[i].field_E] != 0 || sharedData_800D5D08_1_s05[new_var] != 0)))
                     {
-                        ptr0 = &sp18[i * 16] + 0x20;
-                        ptr1 = &sp18[k * 16] + 0x20;
+                        ptr0 = &sp18[i * 16] + 32;
+                        ptr1 = &sp18[k * 16] + 32;
 
                         ptr1->field_0 = ptr0->field_0;
                         ptr1->field_4 = ptr0->field_4;
@@ -1646,14 +1646,14 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
     }
     else
     {
-        temp_v0 = ABS(sp48) - 0x20;
-        var_v1  = (temp_v0 < 0) ? 0 : temp_v0 >> 4;
+        temp_v0 = ABS(sp48) - 32;
+        var_v1  = (temp_v0 < 0) ? 0 : (temp_v0 >> 4);
         sp38.vx = (sp48 <= 0) ? (var_v1 * -var_v1) : SQUARE(var_v1);
 
         sp38.vy = 0;
 
-        temp_v0 = ABS(sp4C) - 0x20;
-        var_v1  = (temp_v0 < 0) ? 0 : temp_v0 >> 4;
+        temp_v0 = ABS(sp4C) - 32;
+        var_v1  = (temp_v0 < 0) ? 0 : (temp_v0 >> 4);
         sp38.vz = (sp4C <= 0) ? (var_v1 * -var_v1) : SQUARE(var_v1);
     }
 
@@ -1693,7 +1693,7 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
                 sp28.field_0 < var_v1_3 &&
                 !(splitHeadProps.flags_E8 & SplitHeadFlag_9))
             {
-                (&g_SysWork.playerWork_4C)->player_0.attackReceived_41 = 47;
+                (&g_SysWork.playerWork_4C)->player_0.attackReceived_41 = WEAPON_ATTACK(EquippedWeaponId_Unk37, AttackInputType_Hold);
                 splitHeadProps.flags_E8           |= SplitHeadFlag_1 | SplitHeadFlag_9;
                 func_8005DC1C(Sfx_Unk1473, &g_SysWork.playerWork_4C.player_0.position_18, Q8(0.999f), 2);
             }
@@ -1703,14 +1703,14 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
 
 void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
 {
-    VECTOR3 sp20;
-    VECTOR  sp30[2];
+    VECTOR3 unkPos;  // Q19.12
+    VECTOR  sp30[2]; // Q23.8
     s32     i;
-    u32     temp_v1_2;
     s32     j;
-    s16     var_v0_2;
+    q20_12  moveSpeed;
+    q3_12   moveSpeedDiv2;
+    q3_12   headingAngle;
     s32     animIdx;
-    s16     var_v1_2;
     int     new_var;
 
     if (g_DeltaTime0 != Q12(0.0f))
@@ -1725,7 +1725,7 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
                 (FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) > 14 && FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 20 ||
                  ((animIdx == SplitHeadAnim_1 || animIdx == SplitHeadAnim_9) && !Rng_TestProbabilityBits(2)) || !Rng_TestProbabilityBits(5)))
             {
-                if (splitHead->model_0.anim_4.status_0 == 7)
+                if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_3, true))
                 {
                     i = Rng_GenerateInt(0, 37);
                 }
@@ -1734,69 +1734,68 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
                     i = Rng_GenerateInt(0, 21);
                 }
 
-                sharedFunc_800D4408_1_s05(&sp20, sharedData_800D5AB0_1_s05[i].idx, sharedData_800D5AB0_1_s05[i].vec.vx, sharedData_800D5AB0_1_s05[i].vec.vy, sharedData_800D5AB0_1_s05[i].vec.vz);
+                sharedFunc_800D4408_1_s05(&unkPos, sharedData_800D5AB0_1_s05[i].idx, sharedData_800D5AB0_1_s05[i].vec.vx, sharedData_800D5AB0_1_s05[i].vec.vy, sharedData_800D5AB0_1_s05[i].vec.vz);
 
-                sp30[0].vx = Q12_TO_Q8(sp20.vx);
-                sp30[0].vy = Q12_TO_Q8(sp20.vy);
-                sp30[0].vz = Q12_TO_Q8(sp20.vz);
+                sp30[0].vx = Q12_TO_Q8(unkPos.vx);
+                sp30[0].vy = Q12_TO_Q8(unkPos.vy);
+                sp30[0].vz = Q12_TO_Q8(unkPos.vz);
 
-                if (FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) >= 15 &&
-                    FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 20)
+                if (ANIM_TIME_RANGE_CHECK(splitHead->model_0.anim_4.time_4, 15, 19))
                 {
-                    var_v1_2 = new_var;
+                    moveSpeedDiv2 = new_var;
                     if (sharedData_800D5AB0_1_s05[i].idx < 20)
                     {
-                        var_v0_2 = splitHead->rotation_24.vy + FP_ANGLE(90.0f);
+                        headingAngle = splitHead->rotation_24.vy + FP_ANGLE(90.0f);
                     }
                     else
                     {
-                        var_v0_2 = splitHead->rotation_24.vy - FP_ANGLE(90.0f);
+                        headingAngle = splitHead->rotation_24.vy - FP_ANGLE(90.0f);
                     }
                 }
                 else
                 {
-                    temp_v1_2 = splitHead->moveSpeed_38;
+                    moveSpeed = splitHead->moveSpeed_38;
 
-                    if (splitHead->moveSpeed_38 > 0)
+                    if (splitHead->moveSpeed_38 > Q12(0.0f))
                     {
-                        var_v0_2 = splitHead->rotation_24.vy;
-                        var_v1_2 = temp_v1_2 >> 1;
+                        headingAngle = splitHead->rotation_24.vy;
+                        moveSpeedDiv2 = moveSpeed >> 1;
                     }
                     else
                     {
-                        temp_v1_2 = -temp_v1_2;
-                        var_v1_2  = temp_v1_2 >> 1;
-                        var_v0_2  = splitHead->rotation_24.vy + FP_ANGLE(180.0f);
+                        moveSpeed = -moveSpeed;
+                        moveSpeedDiv2  = moveSpeed >> 1;
+                        headingAngle  = splitHead->rotation_24.vy + FP_ANGLE(180.0f);
                     }
                 }
 
-                sharedFunc_800CBE7C_1_s05(sp30[0].vx, sp30[0].vy, sp30[0].vz, var_v1_2, var_v0_2 & 0xFFF);
+                sharedFunc_800CBE7C_1_s05(sp30[0].vx, sp30[0].vy, sp30[0].vz, moveSpeedDiv2, Q12_FRACT(headingAngle));
             }
         }
     }
 
     switch (splitHead->model_0.anim_4.status_0)
     {
-        case 16:
-        case 17:
-        case 26:
-        case 27:
+        case ANIM_STATUS(SplitHeadAnim_8, false):
+        case ANIM_STATUS(SplitHeadAnim_8, true):
+        case ANIM_STATUS(SplitHeadAnim_13, false):
+        case ANIM_STATUS(SplitHeadAnim_13, true):
             splitHeadProps.field_EA = MAX(0, splitHeadProps.field_EA - g_DeltaTime0 / 68);
 
-        case 3:
-        case 5:
-        case 28:
-        case 29:
+        case ANIM_STATUS(SplitHeadAnim_1, true):
+        case ANIM_STATUS(SplitHeadAnim_2, true):
+        case ANIM_STATUS(SplitHeadAnim_14, false):
+        case ANIM_STATUS(SplitHeadAnim_14, true):
             for (i = 0; i < 6; i++)
             {
                 for (j = 0; j < 2; j++)
                 {
-                    sharedFunc_800D4408_1_s05(&sp20, sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].idx, sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].vec.vx,
+                    sharedFunc_800D4408_1_s05(&unkPos, sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].idx, sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].vec.vx,
                                               sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].vec.vy, sharedData_800D5AB0_1_s05[sharedData_800D5BE0_1_s05[i][j]].vec.vz);
 
-                    sp30[j].vx = Q12_TO_Q8(sp20.vx);
-                    sp30[j].vy = Q12_TO_Q8(sp20.vy);
-                    sp30[j].vz = Q12_TO_Q8(sp20.vz);
+                    sp30[j].vx = Q12_TO_Q8(unkPos.vx);
+                    sp30[j].vy = Q12_TO_Q8(unkPos.vy);
+                    sp30[j].vz = Q12_TO_Q8(unkPos.vz);
                 }
 
                 sharedFunc_800CCE2C_1_s05(sharedData_800D5BE0_1_s05[i][2], splitHeadProps.field_EA,
@@ -1806,11 +1805,11 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
     }
 }
 
-void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, s32 posX, s32 posY, s32 posZ)
+void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, q23_8 posX, q23_8 posY, q23_8 posZ)
 {
     typedef struct
     {
-        MATRIX  mtx_0;
+        MATRIX  mat_0;
         SVECTOR field_20;
         VECTOR3 field_28;
     } s_ScratchData;
@@ -1822,10 +1821,10 @@ void sharedFunc_800D4408_1_s05(VECTOR3* pos, s32 idx, s32 posX, s32 posY, s32 po
     Math_SetSVectorFastSum(&scratch->field_20, posX, posY, posZ);
     scratch->field_20.vz = posZ; // @hack Needed for match.
 
-    Vw_CoordHierarchyMatrixCompute(&sharedData_800D8610_1_s05[idx], &scratch->mtx_0);
+    Vw_CoordHierarchyMatrixCompute(&sharedData_800D8610_1_s05[idx], &scratch->mat_0);
 
-    gte_SetRotMatrix(&scratch->mtx_0);
-    gte_SetTransMatrix(&scratch->mtx_0);
+    gte_SetRotMatrix(&scratch->mat_0);
+    gte_SetTransMatrix(&scratch->mat_0);
 
     gte_ldv0(&scratch->field_20);
     gte_rt();
@@ -1847,7 +1846,7 @@ bool sharedFunc_800D4530_1_s05(s_SubCharacter* splitHead)
     q19_12 animTime;
 
     animTime = splitHeadProps.animTime_F8;
-    return ((animTime < Q12(0.0f) || animTime > Q12(198.0f)) && splitHead->model_0.anim_4.time_4 < Q12(175.0f)) ||
+    return ((animTime <  Q12(0.0f) || animTime > Q12(198.0f)) && splitHead->model_0.anim_4.time_4 < Q12(175.0f)) ||
            ((animTime >= Q12(0.0f) && animTime < Q12(175.0f)) && splitHead->model_0.anim_4.time_4 > Q12(198.0f));
 }
 

@@ -737,6 +737,8 @@ typedef enum _EquippedWeaponId
     EquippedWeaponId_Shotgun        = 34,
     EquippedWeaponId_HyperBlaster   = 35,
 
+    EquippedWeaponId_Unk37          = 37,
+
     EquippedWeaponId_HandgunBullets = 64,
     EquippedWeaponId_RifleShells    = 65,
     EquippedWeaponId_ShotgunShells  = 66,
@@ -1169,7 +1171,7 @@ typedef struct _GameWork
     s8                 unk_5B0;
     s8                 mapAnimIdx_5B1;
     s8                 bgmIdx_5B2;   // Index of ``.
-    s8                 ambientIdx_5B4; // Index of `g_AmbientVabTaskLoadTable`.
+    s8                 ambientIdx_5B4; // Index of `g_AmbientVabTaskLoadCmds`.
     s_AnalogController rawController_5B4;
     s8                 unk_5BC[28];
 } s_GameWork;

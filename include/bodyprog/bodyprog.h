@@ -1571,7 +1571,7 @@ typedef struct _MapOverlayHeader
     s32                    (*func_C)();
     void                   (*func_10)();
     s8                     field_14; // Flags? Music related.
-    u8                     ambientAudioIdx_15; // Ambient file idx from `g_AmbientVabTaskLoadTable`.
+    u8                     ambientAudioIdx_15; // Ambient file index from `g_AmbientVabTaskLoadCmds`.
     s8                     field_16; // Used for switch case in `func_8003EBF4`.
     s8                     field_17;
     void                   (**loadingScreenFuncs_18)();
@@ -2158,7 +2158,7 @@ extern s_StructUnk3 D_800A952C;
 
 extern u16 D_800A9774[];
 
-extern u16 g_BgmChannelSetTaskTable[];
+extern u16 g_BgmChannelSetTaskCmds[];
 
 extern s32 D_800A9A20;
 
@@ -2188,9 +2188,9 @@ extern s32 g_UnknownFrameCounter;
 extern void (*g_GameStateUpdateFuncs[])(void);
 
 /** Related to sound commands. */
-extern u16 g_BgmTaskLoadTable[];
+extern u16 g_BgmTaskLoadCmds[];
 
-extern u16 g_AmbientVabTaskLoadTable[];
+extern u16 g_AmbientVabTaskLoadCmds[];
 
 /** @brief Stores a loaded character's animation data information. */
 extern s_CharaAnimDataInfo g_InitCharaDataAnimInfo[];
@@ -4101,7 +4101,7 @@ void func_8003569C(void);
 s32 Bgm_Init(void);
 
 /** @brief Checks if currently assigned song is the same as target. */
-bool Bgm_IsCurBgmTargetCheck(s32 bgmIdx);
+bool Bgm_IsCurrentBgmTargetCheck(s32 bgmIdx);
 
 void Bgm_AudioSet(s32 bgmIdx);
 
