@@ -1435,7 +1435,7 @@ typedef struct _PropertiesLarvalStalker
     q19_12     timer_EC;
     q20_12     timer_F0;
     s16        keyframeIdx_F4; // Relative keyframe?
-    s16        field_F8;
+    s16        keyframeIdx_F8; // Relative keyframe?
     q19_12     targetPositionX;
     q19_12     targetPositionZ;
     q3_12      angle_100;
