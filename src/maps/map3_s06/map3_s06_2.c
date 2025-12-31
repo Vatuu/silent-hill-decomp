@@ -203,7 +203,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 7:
-            if (!func_8003599C())
+            if (!Sd_AmbientSfxInit())
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -342,7 +342,7 @@ void func_800D0C14(void) // 0x800D0C14
             break;
 
         case 32:
-            if (func_8003599C() == 0)
+            if (Sd_AmbientSfxInit() == 0)
             {
                 SysWork_StateStepIncrement(0);
             }
