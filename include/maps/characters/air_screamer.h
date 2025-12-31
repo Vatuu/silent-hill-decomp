@@ -152,6 +152,16 @@ typedef enum _AirScreamerStateStep
     AirScreamerStateStep_67 = 67
 } e_AirScreamerStateStep;
 
+/** @brief Air Screamer or Night Flutter character damage types. */
+typedef enum _AirScreamerDamage
+{
+    AirScreamerDamage_None = 0,
+    AirScreamerDamage_1    = 1,
+    AirScreamerDamage_2    = 2,
+    AirScreamerDamage_3    = 3,
+    AirScreamerDamage_4    = 4
+} e_AirScreamerDamage;
+
 /*s_AnimInfo AIR_SCREAMER_ANIM_INFOS[] = {
     { Anim_Update2, ANIM_STATUS(0, false), false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },
     { Anim_Update1, ANIM_STATUS(0, true), false, NO_VALUE, { Q12(10) }, NO_VALUE, NO_VALUE },

@@ -486,14 +486,14 @@ s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
     q19_12 damage1;
     s32    animStatus;
     s32    attack;
-    u32    ret;
+    u32    damageType;
     u8     temp_a1;
     q19_12 angle;
 
     damage0     = airScreamer->damage_B4.amount_C;
     animStatus = airScreamer->model_0.anim_4.status_0;
     attack     = airScreamer->attackReceived_41;
-    ret        = 0;
+    damageType        = AirScreamerDamage_None;
 
     if (airScreamerProps.field_E8_0 == 3)
     {
@@ -556,34 +556,34 @@ s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
         {
             if (damage0 > Q12(5.0f))
             {
-                ret = 4;
+                damageType = AirScreamerDamage_4;
             }
             else
             {
-                ret = 3;
+                damageType = AirScreamerDamage_3;
             }
         }
         else if (airScreamerProps.field_E8_0 != 3 && temp_a1 == 2 && Math_CheckSignedRange(angle, FP_ANGLE(120.0f)))
         {
-            ret = 2;
+            damageType = AirScreamerDamage_2;
         }
         else if (airScreamerProps.field_E8_0 == 3)
         {
             if (damage0 > Q12(45.0f) || temp_a1 == 1)
             {
-                ret = 1;
+                damageType = AirScreamerDamage_1;
             }
         }
         else
         {
             if (damage0 > Q12(20.0f) || temp_a1 == 1)
             {
-                ret = 1;
+                damageType = AirScreamerDamage_1;
             }
         }
     }
 
-    return ret;
+    return damageType;
 }
 
 bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, q19_12* outDist, q19_12* outAngle)

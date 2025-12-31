@@ -140,7 +140,7 @@ void sharedFunc_800D4A9C_2_s00(s_SubCharacter* airScreamer)
 
     switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
-        case 0:
+        case AirScreamerDamage_None:
             switch (switchCond)
             {
                 case 0:
@@ -202,15 +202,15 @@ void sharedFunc_800D4A9C_2_s00(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 1:
-        case 2:
+        case AirScreamerDamage_1:
+        case AirScreamerDamage_2:
             airScreamer->model_0.controlState_2        = AirScreamerControl_16;
             airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
             airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_3:
+        case AirScreamerDamage_4:
             airScreamer->model_0.controlState_2 = AirScreamerControl_17;
             airScreamer->model_0.stateStep_3    = AirScreamerStateStep_0;
 
