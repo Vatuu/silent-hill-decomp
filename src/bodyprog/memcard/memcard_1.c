@@ -159,7 +159,7 @@ void func_8002E7BC(void) // 0x8002E7BC
 
 void func_8002E830(void) // 0x8002E830
 {
-    if (D_800B5480[0]) 
+    if (D_800B5480[0])
     {
         D_800B5480[0] = false;
         Savegame_CardEventsClose();

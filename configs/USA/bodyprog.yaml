@@ -121,7 +121,7 @@ segments:
       - [0x22FC4,   c, sound/sd_snd]
       - [0x23A50,   c, sound/bodyprog_nullsub_800485B0]
       - [0x23A78,   c, sound/bodyprog_800485D8]
-      - [0x23A78,   c, sound/sd_data]
+      - [0x23A78,   c, sound/sd_data] # Data
       - [0x23ED8,   c, view/vw_main]
       - [0x243C8,   c, view/vw_calc] # Contains part of SH2's `vb_main`?
       - [0x25D1C,   c, screen/text_draw]

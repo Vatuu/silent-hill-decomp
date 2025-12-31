@@ -7,7 +7,7 @@ void sharedFunc_800D09D4_3_s00(void)
     mapRoomIdx = g_SavegamePtr->mapRoomIdx_A5;
     var        = Q12(0.15f);
 
-    switch (g_GameWork.soundCmd_5B2)
+    switch (g_GameWork.bgmIdx_5B2)
     {
         case 16:
             flags = sharedData_800D21E8_3_s00[mapRoomIdx];

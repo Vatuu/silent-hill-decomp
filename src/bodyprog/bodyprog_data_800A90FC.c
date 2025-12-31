@@ -414,8 +414,8 @@ s8 D_800A97E2 = 0;
 s8 D_800A97E3 = 0;
 u32 D_800A97E4[8] = {};
 
-/** Related to game music. */
-u16 g_UnknownBgmTable0[] = {
+/** @brief Task number for `SD_Call` to load BGM KDT and VAB files. */
+u16 g_BgmTaskLoadTable[] = {
     0,
     0,
     32,
@@ -460,7 +460,8 @@ u16 g_UnknownBgmTable0[] = {
     63
 };
 
-u16 g_UnknownBgmTable1[] = {
+/** @brief Task number for `SD_Call` to set current BGM channels to be used. */
+u16 g_BgmChannelSetTaskTable[] = {
     0,
     0,
     769,
@@ -505,7 +506,8 @@ u16 g_UnknownBgmTable1[] = {
     0x320
 };
 
-u16 g_UnknownBgmTable2[] = {
+/** @brief Task number for `SD_Call` to load ambient VAB files. */
+u16 g_AmbientVabTaskLoadTable[] = {
     0,
     162,
     170,

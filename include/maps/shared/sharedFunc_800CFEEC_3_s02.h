@@ -11,12 +11,12 @@ void sharedFunc_800CFEEC_3_s02(void)
     dataPtr = sharedData_800D1D14_3_s02;
     roomIdx = g_SavegamePtr->mapRoomIdx_A5;
 
-    if (g_GameWork.soundCmd_5B2 == 8)
+    if (g_GameWork.bgmIdx_5B2 == 8)
     {
         fArg1 = Q12(240.0f);
         flags = 0xFE;
     }
-    else if (g_GameWork.soundCmd_5B2 == 32)
+    else if (g_GameWork.bgmIdx_5B2 == 32)
     {
         fArg1 = Q12(0.15f);
         if (Savegame_EventFlagGet(EventFlag_338))
@@ -115,7 +115,7 @@ void sharedFunc_800CFEEC_3_s02(void)
                 break;
 
             case 3:
-                if (g_GameWork.soundCmd_5B2 == 31)
+                if (g_GameWork.bgmIdx_5B2 == 31)
                 {
                     data    = D_800CA70C;
                     dataPtr = &data;

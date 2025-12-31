@@ -82,7 +82,7 @@ void func_800DA7FC(void) // 0x800DA7FC
             var1 = Q12(240.0f);
 
             // FMV has just played and unknown.
-            if (Savegame_EventFlagGet(EventFlag_39) && g_GameWork.soundCmd_5B2 == 9)
+            if (Savegame_EventFlagGet(EventFlag_39) && g_GameWork.bgmIdx_5B2 == 9)
             {
                 flags = BgmFlag_Unk1;
             }

@@ -1147,12 +1147,12 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
 
 void func_80087EA8(s32 cmd) // 0x80087EA8
 {
-    if (!func_800358A8(cmd))
+    if (!Bgm_IsCurBgmTargetCheck(cmd))
     {
         return;
     }
 
-    func_800358DC(cmd);
+    Bgm_AudioSet(cmd);
 }
 
 void func_80087EDC(s32 arg0) // 0x80087EDC
@@ -1165,7 +1165,7 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
-            if (!func_800358A8(arg0))
+            if (Bgm_IsCurBgmTargetCheck(arg0) == false)
             {
                 SysWork_StateStepSet(1, 3);
                 break;
@@ -1187,7 +1187,7 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
             
             if (!func_80045BC8())
             {
-                func_800358DC(arg0);
+                Bgm_AudioSet(arg0);
 
                 SysWork_StateStepIncrement(1);
             }

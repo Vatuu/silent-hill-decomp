@@ -1168,8 +1168,8 @@ typedef struct _GameWork
     s32                field_5AC;
     s8                 unk_5B0;
     s8                 mapAnimIdx_5B1;
-    s8                 soundCmd_5B2;
-    s8                 field_5B3;
+    s8                 bgmIdx_5B2;   // Index of ``.
+    s8                 ambientIdx_5B4; // Index of `g_AmbientVabTaskLoadTable`.
     s_AnalogController rawController_5B4;
     s8                 unk_5BC[28];
 } s_GameWork;

@@ -60,7 +60,7 @@ void sharedFunc_800CE934_0_s02(void)
             break;
 
         case 18:
-            var_a2 = g_GameWork.soundCmd_5B2 == 7 ? sharedData_800CFB34_0_s02 : sharedData_800CFB3C_0_s02;
+            var_a2 = g_GameWork.bgmIdx_5B2 == 7 ? sharedData_800CFB34_0_s02 : sharedData_800CFB3C_0_s02;
 
             if (Savegame_EventFlagGet(EventFlag_379))
             {
@@ -91,7 +91,7 @@ void sharedFunc_800CE934_0_s02(void)
         case 7:
         case 8:
         case 9:
-            if (g_GameWork.soundCmd_5B2 == 34)
+            if (g_GameWork.bgmIdx_5B2 == 34)
             {
                 if (Savegame_EventFlagGet(EventFlag_391))
                 {
@@ -121,7 +121,7 @@ void sharedFunc_800CE934_0_s02(void)
 
         case 19:
         case 20:
-            if (g_GameWork.soundCmd_5B2 == 23)
+            if (g_GameWork.bgmIdx_5B2 == 23)
             {
                 var_a2 = sharedData_800CFB4C_0_s02;
                 var_a1 = Q12(0.25f);

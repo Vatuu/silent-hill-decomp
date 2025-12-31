@@ -1418,7 +1418,7 @@ bool func_80043830(void) // 0x80043830
             continue;
         }
 
-        if (!func_80043B34(curChunk, &g_Map))
+        if (func_80043B34(curChunk, &g_Map) == false)
         {
             continue;
         }

@@ -8,7 +8,7 @@ void sharedFunc_800E12D0_6_s04(void)
     u8*    dataPtr;
 
     fArg1    = Q12(0.2f);
-    soundCmd = g_GameWork.soundCmd_5B2;
+    soundCmd = g_GameWork.bgmIdx_5B2;
     if (soundCmd == 36)
     {
         dataPtr = &sharedData_800EB738_6_s04;

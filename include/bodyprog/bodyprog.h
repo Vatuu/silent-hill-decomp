@@ -1571,7 +1571,7 @@ typedef struct _MapOverlayHeader
     s32                    (*func_C)();
     void                   (*func_10)();
     s8                     field_14; // Flags? Music related.
-    u8                     field_15;
+    u8                     ambientAudioIdx_15; // Ambient file idx from `g_AmbientVabTaskLoadTable`.
     s8                     field_16; // Used for switch case in `func_8003EBF4`.
     s8                     field_17;
     void                   (**loadingScreenFuncs_18)();
@@ -2158,7 +2158,7 @@ extern s_StructUnk3 D_800A952C;
 
 extern u16 D_800A9774[];
 
-extern u16 g_UnknownBgmTable1[];
+extern u16 g_BgmChannelSetTaskTable[];
 
 extern s32 D_800A9A20;
 
@@ -2188,9 +2188,9 @@ extern s32 g_UnknownFrameCounter;
 extern void (*g_GameStateUpdateFuncs[])(void);
 
 /** Related to sound commands. */
-extern u16 g_UnknownBgmTable0[];
+extern u16 g_BgmTaskLoadTable[];
 
-extern u16 g_UnknownBgmTable2[];
+extern u16 g_AmbientVabTaskLoadTable[];
 
 /** @brief Stores a loaded character's animation data information. */
 extern s_CharaAnimDataInfo g_InitCharaDataAnimInfo[];
@@ -4062,9 +4062,9 @@ void GameFs_MapStartup(void); // 0x80034964
 /** Draws the loading screen with Harry running. */
 void Gfx_LoadingScreenDraw(void); // 0x80034E58
 
-void func_80034EC8(void); // 0x80034EC8
+void Game_NpcClear(void); // 0x80034EC8
 
-void func_80034F18(void); // 0x80034F18
+void Game_NpcInit(void); // 0x80034F18
 
 /** Crucial for getting in-game.
  * Removing it breaks the camera, inventory's 3D elements, effects
@@ -4098,19 +4098,19 @@ void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
 
 void func_8003569C(void);
 
-s32 func_80035780(void);
+s32 Bgm_Init(void);
 
-/** Sets sound command. */
-bool func_800358A8(s32 cmd);
+/** @brief Checks if currently assigned song is the same as target. */
+bool Bgm_IsCurBgmTargetCheck(s32 bgmIdx);
 
-void func_800358DC(s32 cmd);
+void Bgm_AudioSet(s32 bgmIdx);
 
 /** Executes sound command. */
-void func_80035924(void);
+void Bgm_BgmChannelSet(void);
 
 void func_8003596C(void);
 
-s32 func_8003599C(void);
+s32 Sd_AmbientSfxInit(void); 
 
 s32 func_80035AB0(s32 arg0);
 
@@ -4135,7 +4135,7 @@ void Gfx_LoadingScreen_BackgroundTexture(void);
 
 void Gfx_LoadingScreen_PlayerRun(void);
 
-void func_80035DB4(s32);
+void func_80035DB4(bool);
 
 void Bgm_MuteBgmLayers(void);
 
@@ -4258,7 +4258,11 @@ void SysState_LoadArea_Update(void);
 
 void AreaLoad_UpdatePlayerPosition(void);
 
-void func_80039F54(void);
+/** @brief Plays door sound when transitioning areas.
+ * Reduntant code. `SysState_LoadArea_Update` also performs this same code
+ * in the exact way this function is doing it.
+ */
+void AreaLoad_TransitionSound(void);
 
 s8 func_80039F90(void);
 
