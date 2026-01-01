@@ -265,6 +265,7 @@ sharedData_800F21BC_2_s00           = 0x800F0280; // type:VECTOR3 size:0xC
 sharedData_800F21CC_2_s00 = 0x800F0290; // type:VECTOR3 size:0xC
 sharedData_800F21DC_2_s00           = 0x800F02A0; // type:VECTOR3 size:0xC
 sharedData_800F21EC_2_s00           = 0x800F02B0; // type:VECTOR3 size:0xC
+sharedData_800F21FC_2_s00 = 0x800F02C0; // type:VECTOR3 size:0xC
 sharedData_800DE1D0_0_s01           = 0x800F02D0; // type:VECTOR3 size:0xC
 sharedData_800DE1E0_0_s01           = 0x800F02E0; // type:VECTOR3 size:0xC
 sharedData_800DE1F0_0_s01           = 0x800F02F0; // type:VECTOR3 size:0xC

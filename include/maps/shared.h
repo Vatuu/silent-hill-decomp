@@ -1840,6 +1840,8 @@ extern VECTOR3 sharedData_800F21DC_2_s00;
 
 extern VECTOR3 sharedData_800F21EC_2_s00;
 
+extern VECTOR3 sharedData_800F21FC_2_s00;
+
 extern VECTOR sharedData_800DE200_0_s01;
 
 extern VECTOR3 sharedData_800DE210_0_s01;

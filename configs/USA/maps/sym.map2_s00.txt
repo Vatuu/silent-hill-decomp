@@ -304,6 +304,7 @@ sharedData_800F21BC_2_s00     = 0x800F21BC; // type:VECTOR3 size:0xC
 sharedData_800F21CC_2_s00     = 0x800F21CC; // type:VECTOR3 size:0xC
 sharedData_800F21DC_2_s00     = 0x800F21DC; // type:VECTOR3 size:0xC
 sharedData_800F21EC_2_s00     = 0x800F21EC; // type:VECTOR3 size:0xC
+sharedData_800F21FC_2_s00     = 0x800F21FC; // type:VECTOR3 size:0xC
 sharedData_800DE1D0_0_s01     = 0x800F220C; // type:VECTOR3 size:0xC
 sharedData_800DE1E0_0_s01     = 0x800F221C; // type:VECTOR3 size:0xC
 sharedData_800DE1F0_0_s01     = 0x800F222C; // type:VECTOR3 size:0xC
