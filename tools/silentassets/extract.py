@@ -189,6 +189,30 @@ def _decryptOverlay(data: bytes):
 
     return output
 
+# Weird packing/compression over the BG/HP_SAFE1.BIN and BG/S__SAFE2.BIN files.
+# Possibly used by .CMP files too (but those use more control codes?)
+def _decompressSafeOverlay(data: bytes) -> bytes:
+    # Read the expected output size from the first 4 bytes
+    expected_size = int.from_bytes(data[0:4], byteorder='little')
+    
+    result = bytearray()
+    i = 4  # Start after the size header
+    
+    while len(result) < expected_size and i < len(data):
+        b = data[i]
+        i += 1
+        
+        if b == 0xFF:  # Copy 8 bytes
+            result.extend(data[i:i + 8])
+            i += 8
+        elif b == 0x0F:  # Copy 4 bytes
+            result.extend(data[i:i + 4])
+            i += 4
+        else:  # Copy single byte
+            logging.info(f"  _decompressSafeOverlay: unknown control byte 0x{b:X}")
+    
+    return bytes(result)
+
 def _extract(entries:Iterable[TableEntry], output: Path, file: BinaryIO, sectorSize: int, releaseFlags: int):
     index = 0
     for i in entries:
@@ -210,8 +234,11 @@ def _extract(entries:Iterable[TableEntry], output: Path, file: BinaryIO, sectorS
         data = file.read(size)
         if i.type == "BIN" and (releaseFlags & Flags.ENCRYPTED_1ST_FOLDER):
             if i.path.startswith("1ST"):
-                logging.info("\tDecrypting Overlay...")
+                logging.info(f"\tDecrypting {i.path}...")
                 data = _decryptOverlay(data)
+            elif "HP_SAFE1" in i.path or "S__SAFE2" in i.path:
+                logging.info(f"\tDecompressing/decrypting {i.path}...")
+                data = _decryptOverlay(_decompressSafeOverlay(data))
         with outputPath.open("wb") as _file:
             _file.write(data)
         index = index + 1
