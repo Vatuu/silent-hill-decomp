@@ -35,7 +35,7 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* airScreamer)
             {
                 airScreamer->model_0.anim_4.status_0       = ANIM_STATUS(13, false);
                 airScreamer->model_0.stateStep_3           = AirScreamerStateStep_8;
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk2;
+                airScreamerProps.flags_11C |= AirScreamerFlag_2;
             }
             break;
 
@@ -86,11 +86,11 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* airScreamer)
                                 airScreamer->model_0.controlState_2 = AirScreamerControl_10;
                                 airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
                                 airScreamer->flags_3E                     |= CharaFlag_Unk3;
-                                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk4;
+                                airScreamerProps.flags_11C |= AirScreamerFlag_4;
                                 airScreamerProps.field_E8_8 = 3;
                             }
                         }
-                        else if (airScreamerProps.flags_11C & CharaUnk0Flag_Unk31 ||
+                        else if (airScreamerProps.flags_11C & AirScreamerFlag_31 ||
                                  sharedData_800E21D0_0_s01.field_14C.bits.field_14C_1 ||
                                  sharedData_800E21D0_0_s01.field_15C > Q12(10.0f))
                         {
@@ -115,7 +115,7 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* airScreamer)
         case 2:
             airScreamer->model_0.controlState_2 = AirScreamerControl_16;
             airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
-            airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
+            airScreamerProps.flags_11C |= AirScreamerFlag_3;
             return;
 
         case 3:
@@ -125,11 +125,11 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* airScreamer)
 
             if (airScreamer->health_B0 <= Q12(0.0f))
             {
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk6;
+                airScreamerProps.flags_11C |= AirScreamerFlag_6;
             }
             else
             {
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamerProps.flags_11C |= AirScreamerFlag_3;
             }
             break;
     }

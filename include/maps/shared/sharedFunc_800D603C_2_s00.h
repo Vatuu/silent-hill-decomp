@@ -62,7 +62,7 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
             {
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_4;
             }
-            else if (distFieldF8 < Q12(2.0f) || (airScreamerProps.flags_11C & CharaUnk0Flag_Unk31))
+            else if (distFieldF8 < Q12(2.0f) || (airScreamerProps.flags_11C & AirScreamerFlag_31))
             {
                 var_s6 = sharedFunc_800DE578_2_s00(airScreamer);
             }
@@ -114,7 +114,7 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
                         airScreamer->model_0.controlState_2               = 10;
                         airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
                         airScreamerProps.field_E8_8 = 3;
-                        airScreamerProps.flags_11C |= CharaUnk0Flag_Unk4;
+                        airScreamerProps.flags_11C |= AirScreamerFlag_4;
                     }
                     else if (dist > Q12(30.0f) && distFieldF8 < Q12(1.0f))
                     {
@@ -145,7 +145,7 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
         case 2:
             airScreamer->model_0.controlState_2               = 16;
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
-            airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
+            airScreamerProps.flags_11C |= AirScreamerFlag_3;
             break;
 
         case 3:
@@ -155,11 +155,11 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
 
             if (airScreamer->health_B0 <= Q12(0.0f))
             {
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk6;
+                airScreamerProps.flags_11C |= AirScreamerFlag_6;
             }
             else
             {
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamerProps.flags_11C |= AirScreamerFlag_3;
             }
             break;
     }

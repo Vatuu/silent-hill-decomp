@@ -36,7 +36,7 @@ void sharedFunc_800D3E44_2_s00(s_SubCharacter* airScreamer)
             }
             else
             {
-                if (airScreamerProps.flags_11C & CharaUnk0Flag_Unk31)
+                if (airScreamerProps.flags_11C & AirScreamerFlag_31)
                 {
                     airScreamer->model_0.controlState_2 = AirScreamerControl_7;
                     airScreamer->model_0.stateStep_3    = AirScreamerStateStep_0;

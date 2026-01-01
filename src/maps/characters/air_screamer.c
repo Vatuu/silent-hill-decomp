@@ -1201,7 +1201,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
 
     if (controlState == AirScreamerControl_1)
     {
-        airScreamerProps.flags_11C = CharaUnk0Flag_Unk16;
+        airScreamerProps.flags_11C = AirScreamerFlag_16;
     }
 
     if (animStatus != NO_VALUE && animStatus != airScreamer->model_0.anim_4.status_0)

@@ -1014,7 +1014,7 @@ void Ai_SplitHead_Control_8(s_SubCharacter* splitHead)
 
     splitHead->model_0.controlState_2  = SplitHeadControl_2;
     splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_11, false);
-    splitHeadProps.flags_E8           |= CharaUnk0Flag_Unk8;
+    splitHeadProps.flags_E8           |= SplitHeadFlag_8;
 }
 
 void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead)

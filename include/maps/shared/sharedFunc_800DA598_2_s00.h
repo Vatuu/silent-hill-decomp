@@ -133,13 +133,13 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* airScreamer)
 
                         airScreamer->model_0.controlState_2               = AirScreamerControl_38;
                         airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
-                        airScreamerProps.flags_11C |= CharaUnk0Flag_Unk4;
+                        airScreamerProps.flags_11C |= AirScreamerFlag_4;
                     }
                     else if (Rng_RandQ12() < temp_s2)
                     {
                         airScreamer->model_0.controlState_2               = AirScreamerControl_42;
                         airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
-                        airScreamerProps.flags_11C |= CharaUnk0Flag_Unk4;
+                        airScreamerProps.flags_11C |= AirScreamerFlag_4;
                     }
                     break;
             }
@@ -149,7 +149,7 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* airScreamer)
         case AirScreamerDamage_2:
             airScreamer->model_0.controlState_2               = AirScreamerControl_44;
             airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
-            airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
+            airScreamerProps.flags_11C |= AirScreamerFlag_3;
             break;
 
         case AirScreamerDamage_3:
@@ -159,11 +159,11 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* airScreamer)
 
             if (airScreamer->health_B0 <= Q12(0.0f))
             {
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk6;
+                airScreamerProps.flags_11C |= AirScreamerFlag_6;
             }
             else
             {
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamerProps.flags_11C |= AirScreamerFlag_3;
             }
             break;
     }

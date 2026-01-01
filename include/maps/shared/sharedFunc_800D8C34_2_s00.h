@@ -28,13 +28,13 @@ void sharedFunc_800D8C34_2_s00(s_SubCharacter* airScreamer)
         case 1:
             airScreamer->model_0.controlState_2 = AirScreamerControl_29;
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
-            airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
+            airScreamerProps.flags_11C |= AirScreamerFlag_3;
             return;
 
         case 2:
             airScreamer->model_0.controlState_2 = AirScreamerControl_30;
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
-            airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
+            airScreamerProps.flags_11C |= AirScreamerFlag_3;
             break;
 
         case 3:
@@ -44,11 +44,11 @@ void sharedFunc_800D8C34_2_s00(s_SubCharacter* airScreamer)
 
             if (airScreamer->health_B0 <= Q12(0.0f))
             {
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk6;
+                airScreamerProps.flags_11C |= AirScreamerFlag_6;
             }
             else
             {
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamerProps.flags_11C |= AirScreamerFlag_3;
             }
             break;
     }

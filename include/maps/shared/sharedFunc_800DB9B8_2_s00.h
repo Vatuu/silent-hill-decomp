@@ -32,7 +32,7 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* airScreamer)
             if (animStatus != ANIM_STATUS(AirScreamerAnim_8, false))
             {
                 airScreamer->model_0.stateStep_3           = AirScreamerStateStep_2;
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamerProps.flags_11C |= AirScreamerFlag_3;
             }
             break;
 
@@ -194,11 +194,11 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* airScreamer)
 
             if (airScreamer->health_B0 <= Q12(0.0f))
             {
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk6;
+                airScreamerProps.flags_11C |= AirScreamerFlag_6;
             }
             else
             {
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamerProps.flags_11C |= AirScreamerFlag_3;
             }
             break;
     }

@@ -85,7 +85,7 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
 
                 if (func_8008A3E0(airScreamer) != 0)
                 {
-                    airScreamerProps.flags_11C |= CharaUnk0Flag_Unk1;
+                    airScreamerProps.flags_11C |= AirScreamerFlag_1;
                 }
                 break;
         }

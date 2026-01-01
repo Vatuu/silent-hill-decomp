@@ -34,7 +34,9 @@ typedef enum _AirScreamerFlags
     AirScreamerFlag_26   = 1 << 26,
     AirScreamerFlag_27   = 1 << 27,
     AirScreamerFlag_28   = 1 << 28,
-    AirScreamerFlag_29   = 1 << 29
+    AirScreamerFlag_29   = 1 << 29,
+
+    AirScreamerFlag_31   = 1 << 31
 } e_AirScreamerFlags;
 
 /** @brief Air Screamer character animation indices. */

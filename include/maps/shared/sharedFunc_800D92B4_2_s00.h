@@ -32,7 +32,7 @@ void sharedFunc_800D92B4_2_s00(s_SubCharacter* airScreamer)
 
         case 1:
         case 2:
-            airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
+            airScreamerProps.flags_11C |= AirScreamerFlag_3;
             break;
 
         case 3:
@@ -41,11 +41,11 @@ void sharedFunc_800D92B4_2_s00(s_SubCharacter* airScreamer)
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
             if (airScreamer->health_B0 <= 0)
             {
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk6;
+                airScreamerProps.flags_11C |= AirScreamerFlag_6;
             }
             else
             {
-                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamerProps.flags_11C |= AirScreamerFlag_3;
             }
             break;
     }

@@ -26,7 +26,7 @@ void sharedFunc_800D69A0_2_s00(s_SubCharacter* airScreamer)
             if (animStatus != ANIM_STATUS(4, false))
             {
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_2;
-                airScreamer->properties_E4.player.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamer->properties_E4.player.flags_11C |= AirScreamerFlag_3;
             }
             break;
 

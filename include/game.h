@@ -782,30 +782,6 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk31          = 1 << 31
 } e_PlayerFlags;
 
-/** @brief Unk0 character flags. TODO: Remove. These are just Air Screamer flags and there's an enum for them already (`e_AirScreamerFlags`). */
-typedef enum _CharaUnk0Flags
-{
-    CharaUnk0Flag_None  = 0,
-    CharaUnk0Flag_Unk0  = 1 << 0,
-    CharaUnk0Flag_Unk1  = 1 << 1,
-    CharaUnk0Flag_Unk2  = 1 << 2,
-    CharaUnk0Flag_Unk3  = 1 << 3,
-    CharaUnk0Flag_Unk4  = 1 << 4,
-    CharaUnk0Flag_Unk5  = 1 << 5,
-    CharaUnk0Flag_Unk6  = 1 << 6,
-    CharaUnk0Flag_Unk7  = 1 << 7,
-    CharaUnk0Flag_Unk8  = 1 << 8,
-    CharaUnk0Flag_Unk9  = 1 << 9,
-    CharaUnk0Flag_Unk10 = 1 << 10,
-    CharaUnk0Flag_Unk11 = 1 << 11,
-    CharaUnk0Flag_Unk12 = 1 << 12,
-    CharaUnk0Flag_Unk13 = 1 << 13,
-    CharaUnk0Flag_Unk14 = 1 << 14,
-    CharaUnk0Flag_Unk15 = 1 << 15,
-    CharaUnk0Flag_Unk16 = 1 << 16,
-    CharaUnk0Flag_Unk31 = 1 << 31
-} e_CharaUnk0Flags;
-
 /** @brief Character IDs. The `CHARA_FILE_INFOS` array associates each character ID with animimation, model, and texture files. */
 typedef enum _CharacterId
 {
