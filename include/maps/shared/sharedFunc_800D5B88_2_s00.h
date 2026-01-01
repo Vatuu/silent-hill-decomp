@@ -60,9 +60,9 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* airScreamer)
         case 0:
             if (cond0)
             {
-                if (airScreamer->properties_E4.unk0.field_E8_8 == 3)
+                if (airScreamerProps.field_E8_8 == 3)
                 {
-                    airScreamer->properties_E4.unk0.field_E8_8 = 2;
+                    airScreamerProps.field_E8_8 = 2;
 
                     if (cond1 && Rng_RandQ12() < FP_ANGLE(180.0f))
                     {

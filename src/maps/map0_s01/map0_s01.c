@@ -628,7 +628,7 @@ void func_800D4894(s_SubCharacter* airScreamer)
             {
                 airScreamer->model_0.controlState_2 = AirScreamerControl_47;
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
-                airScreamer->properties_E4.unk0.field_E8_8 = 3;
+                airScreamerProps.field_E8_8 = 3;
             }
         }
         else if (damageType < 5)
@@ -696,7 +696,7 @@ void func_800D49B0(s_SubCharacter* airScreamer) // 0x800D49B0
     {
         airScreamer->model_0.controlState_2 = AirScreamerControl_2;
         airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
-        airScreamer->properties_E4.unk0.field_E8_8 = 1;
+        airScreamerProps.field_E8_8 = 1;
     }
 
     #undef airScreamerProps

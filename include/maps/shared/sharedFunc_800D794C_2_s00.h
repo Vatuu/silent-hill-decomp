@@ -20,7 +20,7 @@ void sharedFunc_800D794C_2_s00(s_SubCharacter* airScreamer)
     angle0     = sharedData_800E21D0_0_s01.angle_154;
     field14C_2 = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
 
-    if (airScreamer->properties_E4.unk0.field_E8_4)
+    if (airScreamerProps.field_E8_4)
     {
         angleAdd = Q12(0.1f);
     }
@@ -145,7 +145,7 @@ void sharedFunc_800D794C_2_s00(s_SubCharacter* airScreamer)
                     angle2 = sharedFunc_800DC6E4_2_s00(airScreamer, dist0);
                     if (Rng_RandQ12() < angle1)
                     {
-                        if (airScreamer->properties_E4.unk0.field_E8_0 == 3)
+                        if (airScreamerProps.field_E8_0 == 3)
                         {
                             sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->field_40 + 1, Q12(0.6f));
                         }

@@ -1,4 +1,4 @@
-void sharedFunc_800DD588_2_s00(s_SubCharacter* chara)
+void sharedFunc_800DD588_2_s00(s_SubCharacter* airScreamer)
 {
     #define ANGLE_STEP_COUNT 16
 
@@ -14,6 +14,8 @@ void sharedFunc_800DD588_2_s00(s_SubCharacter* chara)
     q19_12 angleStep;
     q19_12 sinRotY;
     s32    i;
+
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
 
     posX = g_SysWork.playerWork_4C.player_0.position_18.vx;
     posY = g_SysWork.playerWork_4C.player_0.position_18.vy;
@@ -53,19 +55,19 @@ void sharedFunc_800DD588_2_s00(s_SubCharacter* chara)
             continue;
         }
 
-        chara->position_18.vx = curPosX;
-        chara->position_18.vy = curPosY;
-        chara->position_18.vz = curPosZ;
+        airScreamer->position_18.vx = curPosX;
+        airScreamer->position_18.vy = curPosY;
+        airScreamer->position_18.vz = curPosZ;
 
         newAngle = ((Rng_RandQ12() - FP_ANGLE(180.0f)) >> 4) + FP_ANGLE(180.0f);
-        chara->rotation_24.vy = curAngle + newAngle;
-        sinRotY = Math_Sin(chara->rotation_24.vy);
+        airScreamer->rotation_24.vy = curAngle + newAngle;
+        sinRotY = Math_Sin(airScreamer->rotation_24.vy);
 
-        chara->properties_E4.unk0.field_F8.vy = curPosY;
-        chara->properties_E4.unk0.field_F8.vx = curPosX + FP_MULTIPLY_PRECISE(sinRotY, Q12(30.0f), Q12_SHIFT);
-        chara->properties_E4.unk0.field_F8.vz = curPosX + FP_MULTIPLY_PRECISE(Math_Cos(chara->rotation_24.vy), Q12(30.0f), Q12_SHIFT);
+        airScreamerProps.targetPosition_F8.vy = curPosY;
+        airScreamerProps.targetPosition_F8.vx = curPosX + FP_MULTIPLY_PRECISE(sinRotY, Q12(30.0f), Q12_SHIFT);
+        airScreamerProps.targetPosition_F8.vz = curPosX + FP_MULTIPLY_PRECISE(Math_Cos(airScreamer->rotation_24.vy), Q12(30.0f), Q12_SHIFT);
 
-        if (sharedFunc_800D4AEC_0_s01(chara, NULL, &chara->properties_E4.unk0.field_F8, NULL))
+        if (sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &airScreamerProps.targetPosition_F8, NULL))
         {
             break;
         }
@@ -73,12 +75,14 @@ void sharedFunc_800DD588_2_s00(s_SubCharacter* chara)
 
     if (i == ANGLE_STEP_COUNT)
     {
-        chara->position_18.vx = posX + Q12(50.0f);
-        chara->position_18.vy = sharedFunc_800D5274_0_s01() * 2;
-        chara->position_18.vz = posZ + Q12(50.0f);
+        airScreamer->position_18.vx = posX + Q12(50.0f);
+        airScreamer->position_18.vy = sharedFunc_800D5274_0_s01() * 2;
+        airScreamer->position_18.vz = posZ + Q12(50.0f);
         return;
     }
 
-    chara->moveSpeed_38 = sharedData_800CAA98_0_s01.unk_380[9][0];
-    chara->properties_E4.dummy.properties_E8[14].val32 = Q12(10.0f);    
+    airScreamer->moveSpeed_38 = sharedData_800CAA98_0_s01.unk_380[9][0];
+    airScreamer->properties_E4.dummy.properties_E8[14].val32 = Q12(10.0f);
+
+    #undef airScreamerProps   
 }

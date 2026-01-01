@@ -161,7 +161,7 @@ void sharedFunc_800D46C8_2_s00(s_SubCharacter* airScreamer)
                         s32 randVal = Rng_RandQ12();
                         s32 var_a0  = Q12(0.0f);
 
-                        if (airScreamer->properties_E4.unk0.field_E8_8 == 1)
+                        if (airScreamerProps.field_E8_8 == 1)
                         {
                             var_a0 = Q12(0.1f);
                         }

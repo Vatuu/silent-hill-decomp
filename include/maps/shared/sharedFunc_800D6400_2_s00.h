@@ -10,7 +10,7 @@ void sharedFunc_800D6400_2_s00(s_SubCharacter* airScreamer)
     switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)))
     {
         case 0:
-            switch ((u32)airScreamer->properties_E4.unk0.field_E8_0)
+            switch ((u32)airScreamerProps.field_E8_0)
             {
                 case 0:
                     airScreamer->model_0.controlState_2 = AirScreamerControl_4;

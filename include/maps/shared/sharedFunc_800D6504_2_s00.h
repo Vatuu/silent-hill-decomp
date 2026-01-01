@@ -69,23 +69,23 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
                 break;
             }
 
-            var_s1 = airScreamer->properties_E4.unk0.field_E8_4 ? Q12(0.1f) : Q12(0.0f);
+            var_s1 = airScreamerProps.field_E8_4 ? Q12(0.1f) : Q12(0.0f);
 
-            if (airScreamer->properties_E4.unk0.field_E8_0 == 3)
+            if (airScreamerProps.field_E8_0 == 3)
             {
                 sharedFunc_800DD13C_2_s00(airScreamer, airScreamer->field_40 + 1, Q12(0.7f));
             }
 
             if (field14C_2)
             {
-                if (airScreamer->properties_E4.unk0.field_E8_8 == 5)
+                if (airScreamerProps.field_E8_8 == 5)
                 {
                     airScreamer->model_0.controlState_2 = AirScreamerControl_14;
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
                     if (Rng_RandQ12() < ((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1 * 2)))
                     {
-                        airScreamer->properties_E4.unk0.field_E8_8 = 3;
+                        airScreamerProps.field_E8_8 = 3;
                     }
                 }
                 else
@@ -95,17 +95,17 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
 
                     if (Rng_RandQ12() <= ((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1 * 2)))
                     {
-                        airScreamer->properties_E4.unk0.field_E8_8 = 3;
+                        airScreamerProps.field_E8_8 = 3;
                     }
                     else
                     {
-                        airScreamer->properties_E4.unk0.field_E8_8 = 5;
+                        airScreamerProps.field_E8_8 = 5;
                     }
                 }
                 break;
             }
 
-            switch (airScreamer->properties_E4.unk0.field_E8_8)
+            switch (airScreamerProps.field_E8_8)
             {
                 case 3:
                     airScreamer->model_0.controlState_2 = AirScreamerControl_13;
@@ -113,7 +113,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
 
                     if (Rng_RandQ12() < ((Q12(0.5f) - (var_s1 * 3))))
                     {
-                        airScreamer->properties_E4.unk0.field_E8_8 = 2;
+                        airScreamerProps.field_E8_8 = 2;
                     }
                     break;
 
@@ -123,11 +123,11 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
 
                     if (Rng_RandQ12() > (FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f) + (var_s1 * 2)))
                     {
-                        airScreamer->properties_E4.unk0.field_E8_8 = 5;
+                        airScreamerProps.field_E8_8 = 5;
                     }
                     else if (Rng_RandQ12() < Q12(0.3f) + (var_s1 * 3))
                     {
-                        airScreamer->properties_E4.unk0.field_E8_8 = 3;
+                        airScreamerProps.field_E8_8 = 3;
                     }
                     break;
 
@@ -137,7 +137,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
 
                     if (Rng_RandQ12() < FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f))
                     {
-                        airScreamer->properties_E4.unk0.field_E8_8 = 3;
+                        airScreamerProps.field_E8_8 = 3;
                     }
                     break;
 
@@ -163,12 +163,12 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
                         var_a0 = 5;
                     }
 
-                    airScreamer->properties_E4.unk0.field_E8_8 = var_a0;
+                    airScreamerProps.field_E8_8 = var_a0;
                     break;
 
                 case 0:
                 default:
-                    if (airScreamer->properties_E4.unk0.field_E8_0 == 3)
+                    if (airScreamerProps.field_E8_0 == 3)
                     {
                         var_s1 = Q12(1.0f);
                     }
@@ -193,7 +193,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
                         var_a0 = 5;
                     }
 
-                    airScreamer->properties_E4.unk0.field_E8_8 = var_a0;
+                    airScreamerProps.field_E8_8 = var_a0;
                     break;
             }
             break;

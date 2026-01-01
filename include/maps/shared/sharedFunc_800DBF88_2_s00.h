@@ -10,13 +10,15 @@ bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, s32 arg1)
     s32      unkPosY;
     VECTOR3* unkVec;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     if (sharedData_800E21D0_0_s01.flags_0 & (1 << 27))
     {
-        unkVec = &airScreamer->properties_E4.unk0.pos_110;
+        unkVec = &airScreamerProps.position_110;
     }
     else
     {
-        unkVec = &airScreamer->properties_E4.unk0.field_F8;
+        unkVec = &airScreamerProps.targetPosition_F8;
     }
 
     posX = airScreamer->position_18.vx;
@@ -52,4 +54,6 @@ bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, s32 arg1)
     }
 
     return false;
+
+    #undef airScreamerProps
 }

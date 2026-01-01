@@ -156,7 +156,7 @@ void sharedFunc_800D71A4_2_s00(s_SubCharacter* airScreamer)
                             rngAngle0     = Rng_RandQ12();
                             angleSubtract = FP_ANGLE(0.0f);
 
-                            if (airScreamer->properties_E4.unk0.field_E8_8 == switchCond)
+                            if (airScreamerProps.field_E8_8 == switchCond)
                             {
                                 angleSubtract = FP_ANGLE(36.0f);
                             }

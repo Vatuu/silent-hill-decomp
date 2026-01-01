@@ -3,15 +3,17 @@ s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
     s32    result;
     q19_12 mult;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     mult = Q12(0.0f);
-    if (airScreamer->properties_E4.unk0.field_E8_4 != 0)
+    if (airScreamerProps.field_E8_4 != 0)
     {
         mult = Q12(0.1f);
     }
 
     result = 0;
 
-    switch ((u32)airScreamer->properties_E4.unk0.field_E8_8)
+    switch ((u32)airScreamerProps.field_E8_8)
     {
         case 0:
         case 1:
@@ -31,7 +33,7 @@ s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
         result /= 2;
     }
 
-    switch ((u32)airScreamer->properties_E4.unk0.field_E8_0)
+    switch ((u32)airScreamerProps.field_E8_0)
     {
         case 3:
             result = 0;

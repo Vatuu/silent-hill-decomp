@@ -22,27 +22,32 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 
     // @bug This loops 32 times, but `npcs_1A0` only has 6 entries. Only accesses `npcs_1A0` when bit is set inside `flags_2290` first.
     for (i = 0; i < 32; i++)
     {
-        if (flags & (1 << i))
+        if (!(flags & (1 << i)))
         {
-            bitsSet++;
+            continue;
+        }
 
-            if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == airScreamer->model_0.charaId_0)
-            {
-                switch (g_SysWork.npcs_1A0[i].model_0.controlState_2)
-                {
-                    case 2:
-                    case 17:
-                    case 30:
-                    case 32:
-                    case 45:
-                        counter += 2;
-                        break;
+        bitsSet++;
 
-                    default:
-                        counter += 3;
-                        break;
-                }
-            }
+        // Check if character is Air Screamer.
+        if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != airScreamer->model_0.charaId_0)
+        {
+            continue;
+        }
+
+        switch (g_SysWork.npcs_1A0[i].model_0.controlState_2)
+        {
+            case AirScreamerControl_2:
+            case AirScreamerControl_17:
+            case AirScreamerControl_30:
+            case AirScreamerControl_32:
+            case AirScreamerControl_45:
+                counter += 2;
+                break;
+
+            default:
+                counter += 3;
+                break;
         }
     }
 

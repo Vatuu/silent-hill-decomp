@@ -1,4 +1,4 @@
-s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 vecY, q19_12 dist)
+s32 sharedFunc_800D569C_0_s01(s_SubCharacter* airScreamer, q19_12 vecY, q19_12 dist)
 {
     q19_12 posY;
     s32    someY;
@@ -8,16 +8,18 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 vecY, q19_12 dist)
     q19_12 vec_x;
     q19_12 vec_z;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     vecYCpy      = vecY;
-    posY         = chara->position_18.vy;
+    posY         = airScreamer->position_18.vy;
     distCpy      = dist;
-    groundHeight = Collision_GroundHeightGet(chara->position_18.vx, chara->position_18.vz);
+    groundHeight = Collision_GroundHeightGet(airScreamer->position_18.vx, airScreamer->position_18.vz);
 
     // @hack: Unions shouldn't be mixed (NPC vs. Larval Stalker).
-    someY = chara->properties_E4.npc.field_124;
+    someY = airScreamer->properties_E4.npc.field_124;
 
-    vec_x = chara->properties_E4.unk0.pos_110.vx;
-    vec_z = chara->properties_E4.unk0.pos_110.vz;
+    vec_x = airScreamerProps.position_110.vx;
+    vec_z = airScreamerProps.position_110.vz;
 
     if (someY < groundHeight)
     {
@@ -53,4 +55,6 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* chara, q19_12 vecY, q19_12 dist)
     }
 
     return vecYCpy;
+
+    #undef airScreamerProps
 }

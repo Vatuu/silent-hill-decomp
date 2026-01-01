@@ -71,7 +71,7 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* airScreamer)
                     {
                         if (sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2)
                         {
-                            if (!airScreamer->properties_E4.unk0.field_E8_8)
+                            if (!airScreamerProps.field_E8_8)
                             {
                                 cond1 = sharedFunc_800D3814_0_s01(airScreamer) >= Q12(2.0f);
                             }
@@ -87,7 +87,7 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* airScreamer)
                                 airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
                                 airScreamer->flags_3E                     |= CharaFlag_Unk3;
                                 airScreamerProps.flags_11C |= CharaUnk0Flag_Unk4;
-                                airScreamer->properties_E4.unk0.field_E8_8 = 3;
+                                airScreamerProps.field_E8_8 = 3;
                             }
                         }
                         else if (airScreamerProps.flags_11C & CharaUnk0Flag_Unk31 ||
@@ -97,7 +97,7 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* airScreamer)
                             airScreamer->model_0.anim_4.status_0       = ANIM_STATUS(23, false);
                             airScreamer->model_0.controlState_2 = AirScreamerControl_7;
                             airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
-                            airScreamer->properties_E4.unk0.field_E8_8 = 3;
+                            airScreamerProps.field_E8_8 = 3;
                         }
                     }
                     break;

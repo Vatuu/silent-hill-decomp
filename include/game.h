@@ -782,7 +782,7 @@ typedef enum _PlayerFlags
     PlayerFlag_Unk31          = 1 << 31
 } e_PlayerFlags;
 
-/** @brief Unk0 character flags. */
+/** @brief Unk0 character flags. TODO: Remove. These are just Air Screamer flags and there's an enum for them already (`e_AirScreamerFlags`). */
 typedef enum _CharaUnk0Flags
 {
     CharaUnk0Flag_None  = 0,
@@ -1311,7 +1311,7 @@ typedef struct _PropertiesAirScreamer
     s32     field_F4;
     VECTOR3 targetPosition_F8; /** Q19.12 */
     VECTOR3 position_104;      /** Q19.12 | Set to either Air Screamer position with slight offset toward player or player position. */
-    s8      unk_110[12];
+    VECTOR3 position_110;
     s32     flags_11C; /** `e_AirScreamerFlags` */
     q19_12  timer_120;
     q19_12  groundHeight_124;
@@ -1516,24 +1516,6 @@ typedef struct _PropertiesStalker
     q4_12  timer_116;
 } s_PropertiesStalker;
 
-typedef struct _PropertiesUnk0
-{
-    u32        field_E8_0 : 4;
-    u32        field_E8_4 : 4;
-    u32        field_E8_8 : 4;
-    u32        field_E8_C : 20;
-    u_Property properties_EC;
-    u_Property properties_F0;
-    u_Property properties_F4;
-    VECTOR3    field_F8; // Q19.12 | Position or offset.
-    VECTOR3    pos_104;  /** Q19.12 */
-    VECTOR3    pos_110;
-    s32        flags_11C; /** `e_CharaUnk0Flags` */
-    u_Property properties_120;
-    u_Property properties_124;
-} s_PropertiesUnk0;
-STATIC_ASSERT_SIZEOF(s_PropertiesUnk0, 64);
-
 /** Offsets for translation? */
 typedef struct
 {
@@ -1630,7 +1612,6 @@ typedef struct _SubCharacter
         s_PropertiesRomper          romper;
         s_PropertiesSplitHead       splitHead;
         s_PropertiesStalker         stalker;
-        s_PropertiesUnk0            unk0;
     } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);

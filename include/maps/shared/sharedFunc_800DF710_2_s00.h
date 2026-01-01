@@ -1,4 +1,4 @@
-void sharedFunc_800DF710_2_s00(s_SubCharacter* chara)
+void sharedFunc_800DF710_2_s00(s_SubCharacter* airScreamer)
 {
     q19_12                       angle0;
     q19_12                       angle1;
@@ -12,9 +12,11 @@ void sharedFunc_800DF710_2_s00(s_SubCharacter* chara)
     s32                          element2;
     s_sharedData_800E21D0_0_s01* base;
 
-    animStatus = chara->model_0.anim_4.status_0 | 1; // TODO: Use macro for this.
-    angle0     = func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8);
-    angle0     = FP_ANGLE_NORM_S(angle0 - chara->rotation_24.vy);
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
+    animStatus = airScreamer->model_0.anim_4.status_0 | 1; // TODO: Use macro for this.
+    angle0     = func_80080478(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
+    angle0     = FP_ANGLE_NORM_S(angle0 - airScreamer->rotation_24.vy);
 
     if (animStatus == ANIM_STATUS(22, true))
     {
@@ -61,5 +63,7 @@ void sharedFunc_800DF710_2_s00(s_SubCharacter* chara)
     base->field_B4[idx][3] = angle0;
     base->field_B4[idx][0] = 1;
 
-    sharedFunc_800D5E78_0_s01(chara, angle0 / 2);
+    sharedFunc_800D5E78_0_s01(airScreamer, angle0 / 2);
+
+    #undef airScreamerProps
 }

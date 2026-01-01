@@ -5,7 +5,9 @@ void sharedFunc_800DDE14_2_s00(s_SubCharacter* airScreamer)
     q19_12 distMin;
     q19_12 distMax;
 
-    if (airScreamer->properties_E4.unk0.field_E8_4 != 0)
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
+    if (airScreamerProps.field_E8_4 != 0)
     {
         distMax = Q12(5.0f);
         distMin = Q12(3.0f);
@@ -30,4 +32,6 @@ void sharedFunc_800DDE14_2_s00(s_SubCharacter* airScreamer)
 
     sharedFunc_800DE034_2_s00(airScreamer, &sharedData_800F21BC_2_s00, distMax);
     sharedFunc_800D4E84_0_s01(airScreamer);
+
+    #undef airScreamerProps
 }

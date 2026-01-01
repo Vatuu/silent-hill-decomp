@@ -113,7 +113,7 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
                     {
                         airScreamer->model_0.controlState_2               = 10;
                         airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
-                        airScreamer->properties_E4.unk0.field_E8_8 = 3;
+                        airScreamerProps.field_E8_8 = 3;
                         airScreamerProps.flags_11C |= CharaUnk0Flag_Unk4;
                     }
                     else if (dist > Q12(30.0f) && distFieldF8 < Q12(1.0f))

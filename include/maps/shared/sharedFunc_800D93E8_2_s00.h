@@ -55,7 +55,7 @@ void sharedFunc_800D93E8_2_s00(s_SubCharacter* airScreamer)
         airScreamer->model_0.controlState_2 = AirScreamerControl_2;
         airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
-        airScreamer->properties_E4.unk0.field_E8_8 = 1;
+        airScreamerProps.field_E8_8 = 1;
     }
 
     #undef airScreamerProps

@@ -118,9 +118,9 @@ void sharedFunc_800DACA8_2_s00(s_SubCharacter* airScreamer)
 
                     if (var_s4 == 1)
                     {
-                        if (airScreamer->properties_E4.unk0.field_E8_8 != 3)
+                        if (airScreamerProps.field_E8_8 != 3)
                         {
-                            airScreamer->properties_E4.unk0.field_E8_8 = 2;
+                            airScreamerProps.field_E8_8 = 2;
                         }
                         airScreamer->model_0.controlState_2 = AirScreamerControl_41;
                         airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;

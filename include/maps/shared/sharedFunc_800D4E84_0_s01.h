@@ -25,12 +25,14 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
     s32      var_s5;
     s32      var_s7;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     dist3 = Q12(8.0f);
 
     pos = &airScreamer->position_18;
 
-    dist0   = Math_Distance2dGet(pos, &airScreamer->properties_E4.unk0.field_F8);
-    temp_v0 = func_80080478(pos, &airScreamer->properties_E4.unk0.field_F8);
+    dist0   = Math_Distance2dGet(pos, &airScreamerProps.targetPosition_F8);
+    temp_v0 = func_80080478(pos, &airScreamerProps.targetPosition_F8);
 
     rotY = airScreamer->rotation_24.vy;
 
@@ -39,11 +41,11 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
     posZ = airScreamer->position_18.vz;
 
     angle = FP_ANGLE_NORM_S(temp_v0 - rotY);
-    vecF8Y  = airScreamer->properties_E4.unk0.field_F8.vy;
+    vecF8Y  = airScreamerProps.targetPosition_F8.vy;
 
-    if (sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &airScreamer->properties_E4.unk0.field_F8, &sharedData_800DE1B0_0_s01))
+    if (sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &airScreamerProps.targetPosition_F8, &sharedData_800DE1B0_0_s01))
     {
-        airScreamer->properties_E4.unk0.pos_110 = sharedData_800DE1B0_0_s01;
+        airScreamerProps.position_110 = sharedData_800DE1B0_0_s01;
         return;
     }
 
@@ -57,9 +59,9 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
 
         if (func_8006DB3C(&sharedData_800E2330_0_s01, pos, &sharedData_800DE1C0_0_s01, airScreamer) && sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.field_18)
         {
-            airScreamer->properties_E4.unk0.pos_110.vx = sharedData_800E2330_0_s01.field_4.vx;
-            airScreamer->properties_E4.unk0.pos_110.vy = sharedData_800E2330_0_s01.field_18 - Q12(1.5f);
-            airScreamer->properties_E4.unk0.pos_110.vz = sharedData_800E2330_0_s01.field_4.vz;
+            airScreamerProps.position_110.vx = sharedData_800E2330_0_s01.field_4.vx;
+            airScreamerProps.position_110.vy = sharedData_800E2330_0_s01.field_18 - Q12(1.5f);
+            airScreamerProps.position_110.vz = sharedData_800E2330_0_s01.field_4.vz;
             return;
         }
     }
@@ -85,7 +87,7 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
             dist1 = Q12(8.0f);
         }
 
-        dist3   = Math_Distance2dGet(&sharedData_800DE1B0_0_s01, &airScreamer->properties_E4.unk0.field_F8);
+        dist3   = Math_Distance2dGet(&sharedData_800DE1B0_0_s01, &airScreamerProps.targetPosition_F8);
         temp_a0 = FP_MULTIPLY_PRECISE(new_var - dist1, dist3, Q12_SHIFT);
 
         temp_v0_3 = FP_ANGLE_NORM_S(curAngle - rotY);
@@ -98,24 +100,26 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
         {
             var_s5                            = temp_a0;
             var_s7                            = dist2_1_2;
-            airScreamer->properties_E4.unk0.pos_110 = sharedData_800DE1B0_0_s01;
+            airScreamerProps.position_110 = sharedData_800DE1B0_0_s01;
         }
     }
 
-    dist1 = Math_Distance2dGet(&airScreamer->properties_E4.unk0.pos_110, &airScreamer->position_18);
-    dist4 = Math_Distance2dGet(&airScreamer->properties_E4.unk0.pos_110, &airScreamer->properties_E4.unk0.field_F8);
+    dist1 = Math_Distance2dGet(&airScreamerProps.position_110, &airScreamer->position_18);
+    dist4 = Math_Distance2dGet(&airScreamerProps.position_110, &airScreamerProps.targetPosition_F8);
 
     dist5 = dist1 + dist4;
     if (dist5 == Q12(0.0f))
     {
-        airScreamer->properties_E4.unk0.pos_110.vy = vecF8Y;
+        airScreamerProps.position_110.vy = vecF8Y;
         return;
     }
 
-    airScreamer->properties_E4.unk0.pos_110.vy = FP_TO(FP_MULTIPLY_PRECISE(vecF8Y, dist1, Q12_SHIFT) +
+    airScreamerProps.position_110.vy = FP_TO(FP_MULTIPLY_PRECISE(vecF8Y, dist1, Q12_SHIFT) +
                                                  FP_MULTIPLY_PRECISE(posY, dist4, Q12_SHIFT),
                                                  Q12_SHIFT) /
                                            dist5;
 
     sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &sharedData_800DE1B0_0_s01, &sharedData_800DE1B0_0_s01);
+
+    #undef airScreamerProps
 }

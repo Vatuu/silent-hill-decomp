@@ -1,4 +1,4 @@
-void sharedFunc_800D5B10_0_s01(s_SubCharacter* chara)
+void sharedFunc_800D5B10_0_s01(s_SubCharacter* airScreamer)
 {
     q19_12                       angle;
     q19_12                       dist;
@@ -21,15 +21,17 @@ void sharedFunc_800D5B10_0_s01(s_SubCharacter* chara)
     VECTOR3*                     pos;
     s_sharedData_800E21D0_0_s01* base;
 
-    pos   = &chara->position_18;
-    pos0  = &chara->properties_E4.unk0.field_F8;
-    dist  = Math_Distance2dGet(pos, pos0);
-    angle = FP_ANGLE_NORM_S(func_80080478(pos, pos0) - chara->rotation_24.vy);
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
 
-    tmp        = sharedFunc_800D569C_0_s01(chara, chara->properties_E4.unk0.field_F8.vy, dist);
+    pos   = &airScreamer->position_18;
+    pos0  = &airScreamerProps.targetPosition_F8;
+    dist  = Math_Distance2dGet(pos, pos0);
+    angle = FP_ANGLE_NORM_S(func_80080478(pos, pos0) - airScreamer->rotation_24.vy);
+
+    tmp        = sharedFunc_800D569C_0_s01(airScreamer, airScreamerProps.targetPosition_F8.vy, dist);
     cond       = false;
-    posY       = tmp - chara->position_18.vy;
-    animStatus = chara->model_0.anim_4.status_0;
+    posY       = tmp - airScreamer->position_18.vy;
+    animStatus = airScreamer->model_0.anim_4.status_0;
 
     animStatus0 = ANIM_STATUS(22, true);
     if (animStatus == animStatus0)
@@ -100,5 +102,7 @@ void sharedFunc_800D5B10_0_s01(s_SubCharacter* chara)
     base->field_B4[idx3][0] =
     tmp                     = 1;
 
-    sharedFunc_800D5E78_0_s01(chara, angle / 2);
+    sharedFunc_800D5E78_0_s01(airScreamer, angle / 2);
+
+    #undef airScreamerProps
 }

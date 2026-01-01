@@ -10,6 +10,8 @@ void sharedFunc_800DD2C4_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
     q19_12 unkDeltaAngle;
     s32    i;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     newPosX = airScreamer->position_18.vx;
     newPosZ = airScreamer->position_18.vz;
     playerPosX = g_SysWork.playerWork_4C.player_0.position_18.vx;
@@ -20,8 +22,8 @@ void sharedFunc_800DD2C4_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
     angleStep = unkDeltaAngle > FP_ANGLE(0.0f);
     angleStep = (arg2 != angleStep) ? FP_ANGLE(45.0f) : FP_ANGLE(-45.0f);
 
-    airScreamer->properties_E4.unk0.field_F8.vx = playerPosX;
-    airScreamer->properties_E4.unk0.field_F8.vz = playerPosZ;
+    airScreamerProps.targetPosition_F8.vx = playerPosX;
+    airScreamerProps.targetPosition_F8.vz = playerPosZ;
 
     for (i = 8; i > 0; i--, headingAngle += angleStep)
     {
@@ -35,10 +37,10 @@ void sharedFunc_800DD2C4_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
         airScreamer->position_18.vy                 = unkDeltaAngle + arg1;
         airScreamer->position_18.vx                 = newPosX;
         airScreamer->position_18.vz                 = newPosZ;
-        airScreamer->properties_E4.unk0.field_F8.vy = airScreamer->position_18.vy;
+        airScreamerProps.targetPosition_F8.vy = airScreamer->position_18.vy;
 
         if (func_8008F914(newPosX, newPosZ) && func_800808AC(newPosX, newPosZ) &&
-            sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &airScreamer->properties_E4.unk0.field_F8, NULL))
+            sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &airScreamerProps.targetPosition_F8, NULL))
         {
             break;
         }
@@ -50,4 +52,6 @@ void sharedFunc_800DD2C4_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
         airScreamer->position_18.vy = sharedFunc_800D5274_0_s01() * 2;
         airScreamer->position_18.vz = playerPosZ + Q12(50.0f);
     }
+
+    #undef airScreamerProps
 }

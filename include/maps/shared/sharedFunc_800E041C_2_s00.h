@@ -1,12 +1,14 @@
-void sharedFunc_800E041C_2_s00(s_SubCharacter* chara)
+void sharedFunc_800E041C_2_s00(s_SubCharacter* airScreamer)
 {
     q19_12           angle0;
     q19_12           angle1;
     s32              idx;
     s_func_800D2E04* src;
 
-    angle0 = func_80080478(&chara->position_18, &chara->properties_E4.unk0.field_F8);
-    angle1 = FP_ANGLE_NORM_S(angle0 - chara->rotation_24.vy);
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
+    angle0 = func_80080478(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
+    angle1 = FP_ANGLE_NORM_S(angle0 - airScreamer->rotation_24.vy);
 
     src = &sharedData_800CAA98_0_s01;
 
@@ -29,5 +31,7 @@ void sharedFunc_800E041C_2_s00(s_SubCharacter* chara)
         angle1 += FP_ANGLE(0.3f);
     }
 
-    sharedFunc_800D5E78_0_s01(chara, angle1 >> 2);
+    sharedFunc_800D5E78_0_s01(airScreamer, angle1 >> 2);
+
+    #undef airScreamerProps
 }
