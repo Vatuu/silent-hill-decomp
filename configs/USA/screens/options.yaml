@@ -7,12 +7,12 @@ options:
   platform: psx
   compiler: GCC
 
-  asm_path: asm/screens/options
+  asm_path: asm/USA/screens/options
   src_path: src/screens/options
-  asset_path: asm/screens/options
-  build_path: build/
+  asset_path: asm/USA/screens/options
+  build_path: build/USA/
 
-  ld_script_path: linkers/screens/options.ld
+  ld_script_path: linkers/USA/screens/options.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -35,8 +35,8 @@ options:
   reloc_addrs_path:
     - configs/USA/screens/rel.options.txt
 
-  undefined_funcs_auto_path: linkers/screens/undefined_funcs_auto.options.txt
-  undefined_syms_auto_path: linkers/screens/undefined_syms_auto.options.txt
+  undefined_funcs_auto_path: linkers/USA/screens/undefined_funcs_auto.options.txt
+  undefined_syms_auto_path: linkers/USA/screens/undefined_syms_auto.options.txt
 
   extensions_path: tools/splat_ext
 

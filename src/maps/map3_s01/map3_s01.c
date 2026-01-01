@@ -6,9 +6,9 @@
 #include "maps/map3/map3_s01.h"
 #include "maps/characters/creeper.h"
 
-INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800C9578);
+INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", D_800C9578);
 
-INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", g_MapOverlayHeader);
+INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CB214
 
@@ -130,13 +130,13 @@ void func_800D1524(void) // 0x800D1524
     Savegame_EventFlagSet(EventFlag_M3S01_BasementDoorOpen);
 }
 
-INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB088);
+INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", D_800CB088);
 
-INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB094);
+INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", D_800CB094);
 
-INCLUDE_RODATA("asm/maps/map3_s01/nonmatchings/map3_s01", D_800CB0A0);
+INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", D_800CB0A0);
 
-INCLUDE_ASM("asm/maps/map3_s01/nonmatchings/map3_s01", func_800D15F0);
+INCLUDE_ASM("maps/map3_s01/nonmatchings/map3_s01", func_800D15F0);
 
 void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
 {

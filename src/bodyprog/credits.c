@@ -1053,4 +1053,4 @@ void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     D_800AFE24.field_54 = Q12_MULT_PRECISE(temp_lo_4, temp_t2);
 }
 
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/credits", D_8002B5CC);
+INCLUDE_RODATA("bodyprog/nonmatchings/credits", D_8002B5CC);

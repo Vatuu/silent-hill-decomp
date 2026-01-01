@@ -4,9 +4,9 @@
 #include "maps/shared.h"
 #include "maps/map4/map4_s00.h"
 
-INCLUDE_RODATA("asm/maps/map4_s00/nonmatchings/map4_s00", D_800C9578);
+INCLUDE_RODATA("maps/map4_s00/nonmatchings/map4_s00", D_800C9578);
 
-INCLUDE_RODATA("asm/maps/map4_s00/nonmatchings/map4_s00", g_MapOverlayHeader);
+INCLUDE_RODATA("maps/map4_s00/nonmatchings/map4_s00", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CA8D4
 
@@ -24,4 +24,4 @@ void func_800CCA90(void) {}
 
 void func_800CCA98(void) {}
 
-INCLUDE_RODATA("asm/maps/map4_s00/nonmatchings/map4_s00", D_800CA618);
+INCLUDE_RODATA("maps/map4_s00/nonmatchings/map4_s00", D_800CA618);

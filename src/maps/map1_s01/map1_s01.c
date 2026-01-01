@@ -12,9 +12,9 @@
 #include "maps/characters/larval_stalker.h"
 #include "maps/characters/stalker.h"
 
-INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", D_800C9578);
+INCLUDE_RODATA("maps/map1_s01/nonmatchings/map1_s01", D_800C9578);
 
-INCLUDE_RODATA("asm/maps/map1_s01/nonmatchings/map1_s01", g_MapOverlayHeader);
+INCLUDE_RODATA("maps/map1_s01/nonmatchings/map1_s01", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CB7F4_1_s01.h" // 0x800CB7F4
 

@@ -95,9 +95,9 @@ const char* MAP_MESSAGES[] = {
     "\tA_sound_is_heard ~N\n\tfrom_beyond_the_door. ~E "
 };
 
-INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04_2", D_800CB1E0);
+INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", D_800CB1E0);
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04_2", func_800D21C4);
+INCLUDE_ASM("maps/map3_s04/nonmatchings/map3_s04_2", func_800D21C4);
 
 void func_800D2470(void) // 0x800D2470
 {
@@ -138,7 +138,7 @@ void func_800D2470(void) // 0x800D2470
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04_2", func_800D250C);
+INCLUDE_ASM("maps/map3_s04/nonmatchings/map3_s04_2", func_800D250C);
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D25D0
 
@@ -384,11 +384,11 @@ void func_800D2E58(void) // 0x800D2E58
     Event_ItemTake(InventoryItemId_PlateOfQueen, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S04_PickupPlateOfQueen, 47);
 }
 
-INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04_2", D_800CB2A8);
+INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", D_800CB2A8);
 
-INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04_2", D_800CB2B4);
+INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", D_800CB2B4);
 
-INCLUDE_ASM("asm/maps/map3_s04/nonmatchings/map3_s04_2", func_800D2E84);
+INCLUDE_ASM("maps/map3_s04/nonmatchings/map3_s04_2", func_800D2E84);
 
 void Map_WorldObjectsInit(void) // 0x800D3BD0
 {
@@ -545,8 +545,8 @@ void func_800D43B8(void) // 0x800D43B8
     }
 }
 
-INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04_2", D_800CB35C);
+INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", D_800CB35C);
 
-INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04_2", D_800CB364);
+INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", D_800CB364);
 
-INCLUDE_RODATA("asm/maps/map3_s04/nonmatchings/map3_s04_2", D_800CB370);
+INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", D_800CB370);

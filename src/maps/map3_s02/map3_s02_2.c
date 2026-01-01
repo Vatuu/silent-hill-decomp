@@ -144,14 +144,14 @@ void func_800D03FC(void) // 0x800D03FC
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D0570
 
-INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02_2", func_800D0608);
+INCLUDE_ASM("maps/map3_s02/nonmatchings/map3_s02_2", func_800D0608);
 
 void func_800D0F8C(void) // 0x800D0F8C
 {
     D_800D3154 = 1;
 }
 
-INCLUDE_ASM("asm/maps/map3_s02/nonmatchings/map3_s02_2", func_800D0F9C);
+INCLUDE_ASM("maps/map3_s02/nonmatchings/map3_s02_2", func_800D0F9C);
 
 s16 func_800D1354(void) // 0x800D1354
 {
@@ -189,4 +189,4 @@ s16 func_800D1354(void) // 0x800D1354
     return Q8(16.0f);
 }
 
-INCLUDE_RODATA("asm/maps/map3_s02/nonmatchings/map3_s02_2", D_800CAB4C);
+INCLUDE_RODATA("maps/map3_s02/nonmatchings/map3_s02_2", D_800CAB4C);

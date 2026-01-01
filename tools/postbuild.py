@@ -3,13 +3,13 @@ import sys
 # Patch random/uninitialized bytes in .bss section back into BODYPROG.BIN / STREAM.BIN
 
 if __name__ == "__main__":
-    if sys.argv[1] == "screens/stream" or sys.argv[1] == "build/out/VIN/STREAM.BIN":
-        overlayFile = open("build/out/VIN/STREAM.BIN", "r+b")
+    if sys.argv[1] == "screens/stream" or sys.argv[1] == "build/USA/out/VIN/STREAM.BIN":
+        overlayFile = open("build/USA/out/VIN/STREAM.BIN", "r+b")
         overlayFile.seek(0x12AE4)
         overlayFile.write(b'\xE4\x73\x40\xAC')
         overlayFile.close()
-    elif sys.argv[1] == "bodyprog" or sys.argv[1] == "build/out/1ST/BODYPROG.BIN":
-        overlayFile = open("build/out/1ST/BODYPROG.BIN", "r+b")
+    elif sys.argv[1] == "bodyprog" or sys.argv[1] == "build/USA/out/1ST/BODYPROG.BIN":
+        overlayFile = open("build/USA/out/1ST/BODYPROG.BIN", "r+b")
         overlayFile.seek(0xA23DC)
         overlayFile.write(b'\x0A\x09\x2E\x62')
         overlayFile.seek(0xA24CC)
@@ -67,32 +67,32 @@ if __name__ == "__main__":
         overlayFile.seek(0x98220)
         overlayFile.write(b'\x00\x00\x00\x00')
         overlayFile.close()
-    elif sys.argv[1] == "screens/b_konami" or sys.argv[1] == "build/out/1ST/B_KONAMI.BIN":
+    elif sys.argv[1] == "screens/b_konami" or sys.argv[1] == "build/USA/out/1ST/B_KONAMI.BIN":
         # Random pad bytes between b_konami.c .data and lzss.c .data.
         overlayFile = open("build/out/1ST/B_KONAMI.BIN", "r+b")
         overlayFile.seek(0xF79)
         overlayFile.write(b'\x1F\xCE\xF3')
-    elif sys.argv[1] == "maps/map3_s06" or sys.argv[1] == "build/out/VIN/MAP3_S06.BIN":
+    elif sys.argv[1] == "maps/map3_s06" or sys.argv[1] == "build/USA/out/VIN/MAP3_S06.BIN":
         # Random bytes at end of rodata section, linker artifact?
-        overlayFile = open("build/out/VIN/MAP3_S06.BIN", "r+b")
+        overlayFile = open("build/USA/out/VIN/MAP3_S06.BIN", "r+b")
         overlayFile.seek(0x1D65)
         overlayFile.write(b'\x65\x74\x5F')
         overlayFile.close()
-    elif sys.argv[1] == "maps/map4_s05" or sys.argv[1] == "build/out/VIN/MAP4_S05.BIN":
+    elif sys.argv[1] == "maps/map4_s05" or sys.argv[1] == "build/USA/out/VIN/MAP4_S05.BIN":
         # Random bytes at end of rodata section, linker artifact?
-        overlayFile = open("build/out/VIN/MAP4_S05.BIN", "r+b")
+        overlayFile = open("build/USA/out/VIN/MAP4_S05.BIN", "r+b")
         overlayFile.seek(0x1729)
         overlayFile.write(b'\x65\x5F\x77')
         overlayFile.close()
-    elif sys.argv[1] == "maps/map5_s01" or sys.argv[1] == "build/out/VIN/MAP5_S01.BIN":
+    elif sys.argv[1] == "maps/map5_s01" or sys.argv[1] == "build/USA/out/VIN/MAP5_S01.BIN":
         # Random bytes at end of rodata section, linker artifact?
-        overlayFile = open("build/out/VIN/MAP5_S01.BIN", "r+b")
+        overlayFile = open("build/USA/out/VIN/MAP5_S01.BIN", "r+b")
         overlayFile.seek(0x3515)
         overlayFile.write(b'\x9C\x03\x08')
         overlayFile.close()
-    elif sys.argv[1] == "maps/map6_s01" or sys.argv[1] == "build/out/VIN/MAP6_S01.BIN":
+    elif sys.argv[1] == "maps/map6_s01" or sys.argv[1] == "build/USA/out/VIN/MAP6_S01.BIN":
         # Random bytes at end of rodata section, linker artifact?
-        overlayFile = open("build/out/VIN/MAP6_S01.BIN", "r+b")
+        overlayFile = open("build/USA/out/VIN/MAP6_S01.BIN", "r+b")
         overlayFile.seek(0x25e6)
         overlayFile.write(b'\x40\x14')
         overlayFile.close()

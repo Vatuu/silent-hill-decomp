@@ -7,9 +7,9 @@
 #include "maps/map7/map7_s01.h"
 #include "maps/characters/puppet_nurse.h"
 
-INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", D_800C9578);
+INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01", D_800C9578);
 
-INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", g_MapOverlayHeader);
+INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01", g_MapOverlayHeader);
 
 const VECTOR D_800CA5C8 = {};
 
@@ -77,7 +77,7 @@ const VECTOR D_800CA5C8 = {};
 
 #include "maps/shared/Ai_PuppetNurse_Control9.h" // 0x800D33A0
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CF600_3_s03); // 0x800D35F4
+INCLUDE_ASM("maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CF600_3_s03); // 0x800D35F4
 
 #include "maps/shared/sharedFunc_800CF7F4_3_s03.h" // 0x800D37E8
 
@@ -91,15 +91,15 @@ INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800CF600_3_s03
 
 #include "maps/shared/Ai_PuppetNurse_Control13.h" // 0x800D4104
 
-INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", g_NursePuppet_SfxOffsets);
+INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01", g_NursePuppet_SfxOffsets);
 
-INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01", g_PuppetNurse_ModelStates0);
+INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01", g_PuppetNurse_ModelStates0);
 
 #include "maps/shared/Ai_PuppetNurse_Control.h" // 0x800D41C4
 
 #include "maps/shared/sharedFunc_800D02E4_3_s03.h" // 0x800D42D8
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D03E4_3_s03); // 0x800D43D8
+INCLUDE_ASM("maps/map7_s01/nonmatchings/map7_s01", sharedFunc_800D03E4_3_s03); // 0x800D43D8
 
 #include "maps/shared/Ai_PuppetNurse_AnimUpdate.h" // 0x800D46A0
 

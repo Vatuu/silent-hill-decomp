@@ -38,19 +38,19 @@ const VECTOR D_800CA5C8 = {};
 
 #include "../src/maps/characters/player.c"
 
-INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CA9F0);
+INCLUDE_RODATA("maps/map0_s01/nonmatchings/map0_s01", D_800CA9F0);
 
-INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CA9F4);
+INCLUDE_RODATA("maps/map0_s01/nonmatchings/map0_s01", D_800CA9F4);
 
-INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CAA00);
+INCLUDE_RODATA("maps/map0_s01/nonmatchings/map0_s01", D_800CAA00);
 
-INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CAA18);
+INCLUDE_RODATA("maps/map0_s01/nonmatchings/map0_s01", D_800CAA18);
 
-INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CAA30);
+INCLUDE_RODATA("maps/map0_s01/nonmatchings/map0_s01", D_800CAA30);
 
-INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", D_800CAA48);
+INCLUDE_RODATA("maps/map0_s01/nonmatchings/map0_s01", D_800CAA48);
 
-INCLUDE_RODATA("asm/maps/map0_s01/nonmatchings/map0_s01", sharedData_800CAA98_0_s01);
+INCLUDE_RODATA("maps/map0_s01/nonmatchings/map0_s01", sharedData_800CAA98_0_s01);
 
 // TODO: Move this line into separate `Chara_AirScreamer` split.
 // TODO: Most of the code below also belongs to `air_screamer.c`, move there once `INCLUDE_ASM` gaps are matched.

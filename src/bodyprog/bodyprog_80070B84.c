@@ -9080,4 +9080,4 @@ s32 Math_MagnitudeShiftGet(s32 mag) // 0x800808F8
     return shift;
 }
 
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80070B84", hack_D_8002A844_fix);
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80070B84", hack_D_8002A844_fix);

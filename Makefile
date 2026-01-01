@@ -27,21 +27,54 @@ GAME_FILE_EXE    := SLUS_007.07
 GAME_FILE_SILENT := SILENT.
 GAME_FILE_HILL   := HILL.
 
+else ifeq ($(GAME_VERSION), JAP0)
+
+# Version - Retail NTSC-J (1.0)
+
+GAME_NAME        := SLPM-86192
+GAME_VERSION_DIR := JAP0
+GAME_FILE_EXE    := SLPM_861.92
+GAME_FILE_SILENT := SILENT.
+GAME_FILE_HILL   := HILL.
+
+else ifeq ($(GAME_VERSION), JAP1)
+
+# Version - Retail NTSC-J (1.1)
+
+GAME_NAME        := SLPM-86498
+GAME_VERSION_DIR := JAP1
+GAME_FILE_EXE    := SLPM_861.92
+GAME_FILE_SILENT := SILENT.
+GAME_FILE_HILL   := HILL.
+
+else ifeq ($(GAME_VERSION), JAP2)
+
+# Version - Retail NTSC-J (1.2)
+
+GAME_NAME        := SLPM-87029
+GAME_VERSION_DIR := JAP2
+GAME_FILE_EXE    := SLPM_861.92
+GAME_FILE_SILENT := SILENT.
+GAME_FILE_HILL   := HILL.
+
 endif
 
-ROM_DIR      := rom
-CONFIG_DIR   := configs/$(GAME_VERSION_DIR)
-LINKER_DIR   := linkers
-IMAGE_DIR    := $(ROM_DIR)/image
-BUILD_DIR    := build
-OUT_DIR      := $(BUILD_DIR)/out
-TOOLS_DIR    := tools
-OBJDIFF_DIR  := $(TOOLS_DIR)/objdiff
-PERMUTER_DIR := permuter
-ASSETS_DIR   := assets
-ASM_DIR      := asm
-C_DIR        := src
-EXPECTED_DIR := expected
+ROM_DIR         := rom
+CONFIG_DIR      := configs/$(GAME_VERSION_DIR)
+LINKER_BASE_DIR := linkers
+LINKER_DIR      := $(LINKER_BASE_DIR)/$(GAME_VERSION_DIR)
+IMAGE_DIR       := $(ROM_DIR)/image
+BUILD_BASE_DIR  := build
+BUILD_DIR       := $(BUILD_BASE_DIR)/$(GAME_VERSION_DIR)
+OUT_DIR         := $(BUILD_DIR)/out
+TOOLS_DIR       := tools
+OBJDIFF_DIR     := $(TOOLS_DIR)/objdiff
+PERMUTER_DIR    := permuter
+ASSETS_DIR      := assets
+ASM_BASE_DIR    := asm
+ASM_DIR         := $(ASM_BASE_DIR)/$(GAME_VERSION_DIR)
+C_DIR           := src
+EXPECTED_DIR    := expected
 
 # Tools
 # Note: CPP stands for `C Pre-Processor` not `C++`
@@ -73,7 +106,7 @@ OPT_FLAGS           := -O2
 ENDIAN              := -EL
 INCLUDE_FLAGS       := -Iinclude -I $(BUILD_DIR) -Iinclude/psyq
 DEFINE_FLAGS        := -D_LANGUAGE_C -DUSE_INCLUDE_ASM
-CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MMD -MP -undef -Wall -lang-c -nostdinc
+CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MMD -MP -undef -Wall -lang-c -nostdinc -DVER_${GAME_VERSION}
 LD_FLAGS            := $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
@@ -87,11 +120,16 @@ MKPSXISO_FLAGS      := -y -q "$(ROM_DIR)/$(GAME_VERSION)/rebuild.xml"
 SILENT_ASSETS_FLAGS := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_SILENT)" -fh "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_HILL)" "$(ASSETS_DIR)/$(GAME_VERSION)"
 INSERT_OVLS_FLAGS   := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_SILENT)" -ftb "$(ASSETS_DIR)/$(GAME_VERSION)/filetable.c.inc" -b $(OUT_DIR) -xml "$(ROM_DIR)/$(GAME_VERSION)/layout.xml" -o $(ROM_DIR)
 
+ifeq ($(GAME_VERSION), USA)
+
 # Targets that will run tools/prebuild.sh after splat has finished, before being built.
 TARGET_PREBUILD  := main bodyprog screens/stream
 
 # Targets that will run tools/postbuild.py after being linked & extracted from ELF.
 TARGET_POSTBUILD := bodyprog screens/b_konami screens/stream maps/map3_s06 maps/map4_s05 maps/map5_s01 maps/map6_s01
+
+#endif GAME_VERSION
+endif
 
 # Adjusts compiler and assembler flags based on source file location.
 # - Files under main executable paths use -G8; overlay files use -G0.
@@ -111,7 +149,7 @@ define FlagsSwitch
 		$(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) --run-assembler --expand-div $(AS_FLAGS)), \
 		$(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) --run-assembler $(AS_FLAGS)))
 
-	$(eval _rel_path := $(patsubst build/src/maps/%,%,$(patsubst build/${asm}/maps/%,%,$(1))))
+	$(eval _rel_path := $(patsubst $(BUILD_DIR)/src/maps/%,%,$(patsubst build/${asm}/maps/%,%,$(1))))
 	$(eval _map_name := $(shell echo $(word 1, $(subst /, ,$(_rel_path))) | tr a-z A-Z))
 	$(if $(and $(findstring MAP,$(_map_name)),$(findstring _S,$(_map_name))), \
 		$(eval OVL_FLAGS := -D$(_map_name)), \
@@ -413,12 +451,12 @@ clean-rom:
 	find $(ROM_DIR)/$(GAME_VERSION_DIR) -maxdepth 1 -type f -delete
 
 clean:
-	rm -rf $(BUILD_DIR)
+	rm -rf $(BUILD_BASE_DIR)
 	rm -rf $(PERMUTER_DIR)
 
 reset: clean
-	rm -rf $(ASM_DIR)
-	rm -rf $(LINKER_DIR)
+	rm -rf $(ASM_BASE_DIR)
+	rm -rf $(LINKER_BASE_DIR)
 
 # Rules - Misc.
 

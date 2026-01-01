@@ -7,9 +7,9 @@
 #include "maps/characters/creeper.h"
 #include "maps/characters/puppet_nurse.h"
 
-INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800C9578);
+INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", D_800C9578);
 
-INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", g_MapOverlayHeader);
+INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CAAD0_1_s05.h" // 0x800CB5F4
 
@@ -82,7 +82,7 @@ INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", g_MapOverlayHeader);
 
 #include "maps/shared/Ai_PuppetNurse_Control9.h" // 0x800D3E1C
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800CF600_3_s03); // 0x800D4070
+INCLUDE_ASM("maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800CF600_3_s03); // 0x800D4070
 
 #include "maps/shared/sharedFunc_800CF7F4_3_s03.h" // 0x800D4264
 
@@ -96,15 +96,15 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800CF600_3_s03
 
 #include "maps/shared/Ai_PuppetNurse_Control13.h" // 0x800D4B80
 
-INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", g_NursePuppet_SfxOffsets);
+INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", g_NursePuppet_SfxOffsets);
 
-INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", g_PuppetNurse_ModelStates0);
+INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", g_PuppetNurse_ModelStates0);
 
 #include "maps/shared/Ai_PuppetNurse_Control.h" // 0x800D4C40
 
 #include "maps/shared/sharedFunc_800D02E4_3_s03.h" // 0x800D4D54
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800D03E4_3_s03); // 0x800D4E54
+INCLUDE_ASM("maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800D03E4_3_s03); // 0x800D4E54
 
 #include "maps/shared/Ai_PuppetNurse_AnimUpdate.h" // 0x800D511C
 
@@ -124,7 +124,7 @@ INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", sharedFunc_800D03E4_3_s03
 
 void func_800D57E0(void) {}
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D57E8);
+INCLUDE_ASM("maps/map3_s05/nonmatchings/map3_s05", func_800D57E8);
 
 #include "maps/shared/MapEvent_DoorLocked.h" // 0x800D58A0
 
@@ -191,7 +191,7 @@ void func_800D5934(void) // 0x800D5934
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D59D4);
+INCLUDE_ASM("maps/map3_s05/nonmatchings/map3_s05", func_800D59D4);
 
 void func_800D5A98(void) // 0x800D5A98
 {
@@ -254,7 +254,7 @@ void func_800D5A98(void) // 0x800D5A98
     }
 }
 
-INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB35C);
+INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", D_800CB35C);
 
 extern VECTOR3 D_800CB35C; // TODO: Move to funcs once all are decomped.
 
@@ -470,11 +470,11 @@ void func_800D63C4(void) // 0x800D63C4
     }
 }
 
-INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB3E0);
+INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", D_800CB3E0);
 
-INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB3EC);
+INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", D_800CB3EC);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D64E0);
+INCLUDE_ASM("maps/map3_s05/nonmatchings/map3_s05", func_800D64E0);
 
 void func_800D6BB4(void) // 0x800D6BB4
 {
@@ -764,11 +764,11 @@ void func_800D72AC(void) // 0x800D72AC
     }
 }
 
-INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB4F0);
+INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", D_800CB4F0);
 
-INCLUDE_RODATA("asm/maps/map3_s05/nonmatchings/map3_s05", D_800CB4FC);
+INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", D_800CB4FC);
 
-INCLUDE_ASM("asm/maps/map3_s05/nonmatchings/map3_s05", func_800D76D8);
+INCLUDE_ASM("maps/map3_s05/nonmatchings/map3_s05", func_800D76D8);
 
 void func_800D8424(void) // 0x800D8424
 {

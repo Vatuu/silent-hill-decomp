@@ -7,12 +7,12 @@ options:
   platform: psx
   compiler: GCC
 
-  asm_path: asm/main
+  asm_path: asm/USA/main
   src_path: src/main
-  build_path: build/
+  build_path: build/USA/
   # create_asm_dependencies: True
 
-  ld_script_path: linkers/main.ld
+  ld_script_path: linkers/USA/main.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -33,8 +33,8 @@ options:
   reloc_addrs_path:
     - configs/USA/rel.main.txt
 
-  undefined_funcs_auto_path: linkers/undefined_funcs_auto.main.txt
-  undefined_syms_auto_path: linkers/undefined_syms_auto.main.txt
+  undefined_funcs_auto_path: linkers/USA/undefined_funcs_auto.main.txt
+  undefined_syms_auto_path: linkers/USA/undefined_syms_auto.main.txt
 
   extensions_path: tools/splat_ext
 
@@ -62,7 +62,7 @@ segments:
       # .rodata section
       - [0x800, .rodata, main]
       - [0x808, .rodata, fsqueue_3]
-      - [0x814, pad, fsqueue_3] # Extra padding for some reason.
+      - [0x814, pad] # Extra padding for some reason.
       - [0x818, .rodata, fsqueue_2] # jtbl
       - [0x830, lib, libspu, spu, .rdata]
       - [0x880, lib, libetc, vsync, .rdata]

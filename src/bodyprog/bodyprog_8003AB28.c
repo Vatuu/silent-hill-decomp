@@ -3231,4 +3231,4 @@ void func_80040014(void) // 0x80040014
     func_80069860(g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz, g_WorldGfx.heldItem_1BAC.bone_18.next_14);
 };
 
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_8003AB28", D_80025BE4);
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_8003AB28", D_80025BE4);

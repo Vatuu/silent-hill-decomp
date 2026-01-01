@@ -1,0 +1,66 @@
+name: Video stream logic overlay (STREAM)
+sha1: EDB2DFCFCD7240466616408901259D1475BD49BB
+options:
+  basename: STREAM.BIN
+  target_path: assets/JAP0/VIN/STREAM.BIN
+  base_path: ../../..
+  platform: psx
+  compiler: GCC
+
+  asm_path: asm/JAP0/screens/stream
+  src_path: src/screens/stream
+  asset_path: asm/JAP0/screens/stream
+  build_path: build/JAP0
+
+  ld_script_path: linkers/JAP0/screens/stream.ld
+
+  find_file_boundaries: False
+  gp_value: 0x80022BB0
+  global_vram_start: 0x80010000
+  global_vram_end: 0x80200000
+
+  o_as_suffix: False
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+
+  section_order: [".rodata", ".text", ".data", ".bss"]
+
+  symbol_addrs_path:
+    - configs/JAP0/screens/sym.stream.txt
+    - configs/JAP0/sym.bodyprog.txt
+    - configs/JAP0/sym.main.txt
+  reloc_addrs_path:
+    - configs/JAP0/screens/rel.stream.txt
+
+  undefined_funcs_auto_path: linkers/JAP0/screens/undefined_funcs_auto.stream.txt
+  undefined_syms_auto_path: linkers/JAP0/screens/undefined_syms_auto.stream.txt
+
+  extensions_path: tools/splat_ext
+
+  subalign: 4
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+  - name: stream
+    type: code
+    start: 0
+    vram: 0x801E2600
+    align: 4
+    subalign: 4
+    subsegments:
+      # .rodata section
+      - [0x0, rodata]
+
+      # .text section
+      - [0x54, asm, stream]
+
+      # .data section
+      - [0x1988, data]
+  
+  - [0x12C00]

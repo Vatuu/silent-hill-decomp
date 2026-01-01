@@ -7,9 +7,9 @@
 #include "maps/characters/bloodsucker.h"
 #include "maps/characters/puppet_nurse.h"
 
-INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800C9578);
+INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", D_800C9578);
 
-INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", g_MapOverlayHeader);
+INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CB460
 
@@ -71,7 +71,7 @@ INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", g_MapOverlayHeader);
 
 #include "maps/shared/Ai_PuppetNurse_Control9.h"
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CF600_3_s03);
+INCLUDE_ASM("maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CF600_3_s03);
 
 #include "maps/shared/sharedFunc_800CF7F4_3_s03.h" // 0x800CF7F4
 
@@ -85,15 +85,15 @@ INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CF600_3_s03
 
 #include "maps/shared/Ai_PuppetNurse_Control13.h"
 
-INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", g_NursePuppet_SfxOffsets);
+INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", g_NursePuppet_SfxOffsets);
 
-INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", g_PuppetNurse_ModelStates0);
+INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", g_PuppetNurse_ModelStates0);
 
 #include "maps/shared/Ai_PuppetNurse_Control.h" // 0x800D01D0
 
 #include "maps/shared/sharedFunc_800D02E4_3_s03.h"
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D03E4_3_s03);
+INCLUDE_ASM("maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D03E4_3_s03);
 
 #include "maps/shared/Ai_PuppetNurse_AnimUpdate.h"
 
@@ -228,9 +228,9 @@ void func_800D17CC(void) // 0x800D17CC
     Event_ItemTake(InventoryItemId_PlateOfTurtle, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupPlateOfTurtle, 17);
 }
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D17F8);
+INCLUDE_ASM("maps/map3_s03/nonmatchings/map3_s03", func_800D17F8);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D1A58);
+INCLUDE_ASM("maps/map3_s03/nonmatchings/map3_s03", func_800D1A58);
 
 void func_800D26D0(void) // 0x800D26D0
 {
@@ -503,11 +503,11 @@ void func_800D3128(void) // 0x800D3128
     MapMsg_DisplayWithTexture(FILE_TIM_ELCWIRE0_TIM, Q12(0.0f), Q12(0.0f), 55);
 }
 
-INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800CB304);
+INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", D_800CB304);
 
-INCLUDE_RODATA("asm/maps/map3_s03/nonmatchings/map3_s03", D_800CB310);
+INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", D_800CB310);
 
-INCLUDE_ASM("asm/maps/map3_s03/nonmatchings/map3_s03", func_800D3160);
+INCLUDE_ASM("maps/map3_s03/nonmatchings/map3_s03", func_800D3160);
 
 void Map_WorldObjectsInit(void) // 0x800D3EAC
 {

@@ -87,7 +87,7 @@ void func_800D68F8(void) // 0x800D68F8
     func_8003640C(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
 }
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800D6938);
+INCLUDE_ASM("maps/map7_s01/nonmatchings/map7_s01_2", func_800D6938);
 
 void func_800D71BC(void) {}
 
@@ -1866,7 +1866,7 @@ void func_800DB3D0(void) // 0x800DB3D0
     }
 }
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800DB60C);
+INCLUDE_ASM("maps/map7_s01/nonmatchings/map7_s01_2", func_800DB60C);
 
 void func_800DBDE0(void) // 0x800DBDE0
 {
@@ -1958,13 +1958,13 @@ void func_800DC080(void) // 0x800DC080
     Event_ItemTake(InventoryItemId_BirdCageKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupBirdCageKey, 54);
 }
 
-INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01_2", D_800CC794);
+INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01_2", D_800CC794);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800DC0AC);
+INCLUDE_ASM("maps/map7_s01/nonmatchings/map7_s01_2", func_800DC0AC);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800DCE20);
+INCLUDE_ASM("maps/map7_s01/nonmatchings/map7_s01_2", func_800DCE20);
 
-INCLUDE_ASM("asm/maps/map7_s01/nonmatchings/map7_s01_2", func_800DD348);
+INCLUDE_ASM("maps/map7_s01/nonmatchings/map7_s01_2", func_800DD348);
 
 void Map_WorldObjectsInit(void) // 0x800DD368
 {
@@ -2532,8 +2532,8 @@ void func_800DEDA4(void) // 0x800DEDA4
     }
 }
 
-INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01_2", D_800CC984);
+INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01_2", D_800CC984);
 
-INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01_2", D_800CC990);
+INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01_2", D_800CC990);
 
-INCLUDE_RODATA("asm/maps/map7_s01/nonmatchings/map7_s01_2", D_800CC998);
+INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01_2", D_800CC998);

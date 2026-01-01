@@ -39,13 +39,13 @@
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800CE87C
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800CE88C);
+INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800CE88C);
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800CEA88);
+INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800CEA88);
 
 void func_800CED6C(void) {}
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800CED74);
+INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800CED74);
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800CEF88
 
@@ -901,9 +901,9 @@ void func_800D0500(void) // 0x800D0500
     }
 }
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1040);
+INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D1040);
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1330);
+INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D1330);
 
 void Map_WorldObjectsInit(void) // 0x800D1658
 {
@@ -1000,7 +1000,7 @@ void func_800D1718(void) // 0x800D1718
     func_8006982C(flags);
 }
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1AE4);
+INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D1AE4);
 
 s32 func_800D1D40(void) // 0x800D1D40
 {
@@ -1056,7 +1056,7 @@ s32 func_800D1D40(void) // 0x800D1D40
     return (1 << D_800D4E6C) + 0x80;
 }
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D1EB8);
+INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D1EB8);
 
 void func_800D2170(s32 arg0) // 0x800D2170
 {
@@ -1124,10 +1124,10 @@ void func_800D2170(s32 arg0) // 0x800D2170
     }
 }
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D2364);
+INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D2364);
 
-INCLUDE_ASM("asm/maps/map6_s02/nonmatchings/map6_s02_2", func_800D32D0);
+INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D32D0);
 
-INCLUDE_RODATA("asm/maps/map6_s02/nonmatchings/map6_s02_2", D_800CAB90);
+INCLUDE_RODATA("maps/map6_s02/nonmatchings/map6_s02_2", D_800CAB90);
 
-INCLUDE_RODATA("asm/maps/map6_s02/nonmatchings/map6_s02_2", D_800CAB98);
+INCLUDE_RODATA("maps/map6_s02/nonmatchings/map6_s02_2", D_800CAB98);

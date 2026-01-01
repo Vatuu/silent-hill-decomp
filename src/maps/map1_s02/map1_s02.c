@@ -7,9 +7,9 @@
 #include "maps/characters/creeper.h"
 #include "maps/characters/stalker.h"
 
-INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", D_800C9578);
+INCLUDE_RODATA("maps/map1_s02/nonmatchings/map1_s02", D_800C9578);
 
-INCLUDE_RODATA("asm/maps/map1_s02/nonmatchings/map1_s02", g_MapOverlayHeader);
+INCLUDE_RODATA("maps/map1_s02/nonmatchings/map1_s02", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CBA4C_1_s02.h" // 0x800CBA4C
 
