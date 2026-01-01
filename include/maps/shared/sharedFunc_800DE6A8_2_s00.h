@@ -1,4 +1,4 @@
-void sharedFunc_800DE6A8_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist)
+void sharedFunc_800DE6A8_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12 dist)
 {
     q19_12 scaledRadius;
     q19_12 headingAngle;
@@ -12,7 +12,7 @@ void sharedFunc_800DE6A8_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist)
     newPosZ      = vec->vz + FP_MULTIPLY_PRECISE(scaledRadius, Math_Cos(headingAngle), Q12_SHIFT);
 
     newPosY  = Collision_GroundHeightGet(newPosX, newPosZ);
-    newPosY  = MIN(chara->properties_E4.unk0.properties_124.val32, newPosY);
+    newPosY  = MIN(airScreamer->properties_E4.unk0.properties_124.val32, newPosY);
     newPosY -= Q12(1.5f) + (Rng_RandQ12() / 2);
 
     // `posY = MAX(posY, sharedFunc_800D5274_0_s01())`? Doesn't currently match.
@@ -21,9 +21,9 @@ void sharedFunc_800DE6A8_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist)
         newPosY = sharedFunc_800D5274_0_s01();
     }
 
-    chara->properties_E4.unk0.field_F8.vx = newPosX;
-    chara->properties_E4.unk0.field_F8.vy = newPosY;
-    chara->properties_E4.unk0.field_F8.vz = newPosZ;
+    airScreamer->properties_E4.unk0.field_F8.vx = newPosX;
+    airScreamer->properties_E4.unk0.field_F8.vy = newPosY;
+    airScreamer->properties_E4.unk0.field_F8.vz = newPosZ;
 
-    sharedFunc_800D4E84_0_s01(chara);
+    sharedFunc_800D4E84_0_s01(airScreamer);
 }

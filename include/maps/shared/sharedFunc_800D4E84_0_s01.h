@@ -1,4 +1,4 @@
-void sharedFunc_800D4E84_0_s01(s_SubCharacter* chara)
+void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
 {
     q19_12   dist0;
     q19_12   posX;
@@ -27,23 +27,23 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* chara)
 
     dist3 = Q12(8.0f);
 
-    pos = &chara->position_18;
+    pos = &airScreamer->position_18;
 
-    dist0   = Math_Distance2dGet(pos, &chara->properties_E4.unk0.field_F8);
-    temp_v0 = func_80080478(pos, &chara->properties_E4.unk0.field_F8);
+    dist0   = Math_Distance2dGet(pos, &airScreamer->properties_E4.unk0.field_F8);
+    temp_v0 = func_80080478(pos, &airScreamer->properties_E4.unk0.field_F8);
 
-    rotY = chara->rotation_24.vy;
+    rotY = airScreamer->rotation_24.vy;
 
-    posX = chara->position_18.vx;
-    posY = chara->position_18.vy;
-    posZ = chara->position_18.vz;
+    posX = airScreamer->position_18.vx;
+    posY = airScreamer->position_18.vy;
+    posZ = airScreamer->position_18.vz;
 
     angle = FP_ANGLE_NORM_S(temp_v0 - rotY);
-    vecF8Y  = chara->properties_E4.unk0.field_F8.vy;
+    vecF8Y  = airScreamer->properties_E4.unk0.field_F8.vy;
 
-    if (sharedFunc_800D4AEC_0_s01(chara, NULL, &chara->properties_E4.unk0.field_F8, &sharedData_800DE1B0_0_s01))
+    if (sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &airScreamer->properties_E4.unk0.field_F8, &sharedData_800DE1B0_0_s01))
     {
-        chara->properties_E4.unk0.pos_110 = sharedData_800DE1B0_0_s01;
+        airScreamer->properties_E4.unk0.pos_110 = sharedData_800DE1B0_0_s01;
         return;
     }
 
@@ -55,16 +55,16 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* chara)
         sharedData_800DE1C0_0_s01.vy = Q12(0.0f);
         sharedData_800DE1C0_0_s01.vz = Math_Cos(rotY) * 2;
 
-        if (func_8006DB3C(&sharedData_800E2330_0_s01, pos, &sharedData_800DE1C0_0_s01, chara) && sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.field_18)
+        if (func_8006DB3C(&sharedData_800E2330_0_s01, pos, &sharedData_800DE1C0_0_s01, airScreamer) && sharedFunc_800D5274_0_s01() < sharedData_800E2330_0_s01.field_18)
         {
-            chara->properties_E4.unk0.pos_110.vx = sharedData_800E2330_0_s01.field_4.vx;
-            chara->properties_E4.unk0.pos_110.vy = sharedData_800E2330_0_s01.field_18 - Q12(1.5f);
-            chara->properties_E4.unk0.pos_110.vz = sharedData_800E2330_0_s01.field_4.vz;
+            airScreamer->properties_E4.unk0.pos_110.vx = sharedData_800E2330_0_s01.field_4.vx;
+            airScreamer->properties_E4.unk0.pos_110.vy = sharedData_800E2330_0_s01.field_18 - Q12(1.5f);
+            airScreamer->properties_E4.unk0.pos_110.vz = sharedData_800E2330_0_s01.field_4.vz;
             return;
         }
     }
 
-    dist2 = dist0 - Math_Distance2dGet(&chara->position_18, &sharedData_800DE1B0_0_s01) + dist3;
+    dist2 = dist0 - Math_Distance2dGet(&airScreamer->position_18, &sharedData_800DE1B0_0_s01) + dist3;
 
     var_s5 = INT_MAX;
     var_s7 = Q12(1.0f);
@@ -76,16 +76,16 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* chara)
         sharedData_800DE1B0_0_s01.vz = posZ + FP_MULTIPLY_PRECISE(Math_Cos(curAngle), Q12(8.0f), Q12_SHIFT);
 
         new_var = dist2;
-        if (!sharedFunc_800D4AEC_0_s01(chara, NULL, &sharedData_800DE1B0_0_s01, &sharedData_800DE1B0_0_s01))
+        if (!sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &sharedData_800DE1B0_0_s01, &sharedData_800DE1B0_0_s01))
         {
-            dist1 = Math_Distance2dGet(&chara->position_18, &sharedData_800DE1B0_0_s01);
+            dist1 = Math_Distance2dGet(&airScreamer->position_18, &sharedData_800DE1B0_0_s01);
         }
         else
         {
             dist1 = Q12(8.0f);
         }
 
-        dist3   = Math_Distance2dGet(&sharedData_800DE1B0_0_s01, &chara->properties_E4.unk0.field_F8);
+        dist3   = Math_Distance2dGet(&sharedData_800DE1B0_0_s01, &airScreamer->properties_E4.unk0.field_F8);
         temp_a0 = FP_MULTIPLY_PRECISE(new_var - dist1, dist3, Q12_SHIFT);
 
         temp_v0_3 = FP_ANGLE_NORM_S(curAngle - rotY);
@@ -98,24 +98,24 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* chara)
         {
             var_s5                            = temp_a0;
             var_s7                            = dist2_1_2;
-            chara->properties_E4.unk0.pos_110 = sharedData_800DE1B0_0_s01;
+            airScreamer->properties_E4.unk0.pos_110 = sharedData_800DE1B0_0_s01;
         }
     }
 
-    dist1 = Math_Distance2dGet(&chara->properties_E4.unk0.pos_110, &chara->position_18);
-    dist4 = Math_Distance2dGet(&chara->properties_E4.unk0.pos_110, &chara->properties_E4.unk0.field_F8);
+    dist1 = Math_Distance2dGet(&airScreamer->properties_E4.unk0.pos_110, &airScreamer->position_18);
+    dist4 = Math_Distance2dGet(&airScreamer->properties_E4.unk0.pos_110, &airScreamer->properties_E4.unk0.field_F8);
 
     dist5 = dist1 + dist4;
     if (dist5 == Q12(0.0f))
     {
-        chara->properties_E4.unk0.pos_110.vy = vecF8Y;
+        airScreamer->properties_E4.unk0.pos_110.vy = vecF8Y;
         return;
     }
 
-    chara->properties_E4.unk0.pos_110.vy = FP_TO(FP_MULTIPLY_PRECISE(vecF8Y, dist1, Q12_SHIFT) +
+    airScreamer->properties_E4.unk0.pos_110.vy = FP_TO(FP_MULTIPLY_PRECISE(vecF8Y, dist1, Q12_SHIFT) +
                                                  FP_MULTIPLY_PRECISE(posY, dist4, Q12_SHIFT),
                                                  Q12_SHIFT) /
                                            dist5;
 
-    sharedFunc_800D4AEC_0_s01(chara, NULL, &sharedData_800DE1B0_0_s01, &sharedData_800DE1B0_0_s01);
+    sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &sharedData_800DE1B0_0_s01, &sharedData_800DE1B0_0_s01);
 }

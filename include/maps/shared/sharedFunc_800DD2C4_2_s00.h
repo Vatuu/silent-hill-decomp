@@ -1,44 +1,44 @@
-void sharedFunc_800DD2C4_2_s00(s_SubCharacter* arg0, s32 arg1, s32 arg2)
+void sharedFunc_800DD2C4_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
 {
-    s32 temp_fp;
-    s32 temp_s0;
-    s32 temp_s1;
-    s32 temp_s2;
-    s32 temp_s7;
-    s32 var_s4;
-    s32 i;
-    s32 var_s6;
-    s32 var_v0;
+    q19_12 playerPosX;
+    q19_12 playerPosZ;
+    q19_12 newPosX;
+    q19_12 newPosZ;
+    q19_12 dist;
+    q19_12 headingAngle;
+    q19_12 angleStep;
+    q19_12 unkDeltaAngle;
+    s32    i;
 
-    temp_s2 = arg0->position_18.vx;
-    temp_s1 = arg0->position_18.vz;
-    temp_s7 = g_SysWork.playerWork_4C.player_0.position_18.vx;
-    temp_fp = g_SysWork.playerWork_4C.player_0.position_18.vz;
+    newPosX = airScreamer->position_18.vx;
+    newPosZ = airScreamer->position_18.vz;
+    playerPosX = g_SysWork.playerWork_4C.player_0.position_18.vx;
+    playerPosZ = g_SysWork.playerWork_4C.player_0.position_18.vz;
 
-    var_v0 = FP_ANGLE_NORM_S(arg0->rotation_24.vy - ratan2(temp_s2 - temp_s7, temp_s1 - temp_fp));
-    var_s4 = arg0->rotation_24.vy + 0x800;
-    var_s6 = var_v0 > 0;
-    var_s6 = arg2 != var_s6 ? 0x200 : -0x200;
+    unkDeltaAngle = FP_ANGLE_NORM_S(airScreamer->rotation_24.vy - ratan2(newPosX - playerPosX, newPosZ - playerPosZ));
+    headingAngle = airScreamer->rotation_24.vy + FP_ANGLE(180.0f);
+    angleStep = unkDeltaAngle > FP_ANGLE(0.0f);
+    angleStep = (arg2 != angleStep) ? FP_ANGLE(45.0f) : FP_ANGLE(-45.0f);
 
-    arg0->properties_E4.unk0.field_F8.vx = temp_s7;
-    arg0->properties_E4.unk0.field_F8.vz = temp_fp;
+    airScreamer->properties_E4.unk0.field_F8.vx = playerPosX;
+    airScreamer->properties_E4.unk0.field_F8.vz = playerPosZ;
 
-    for (i = 8; i > 0; i--, var_s4 += var_s6)
+    for (i = 8; i > 0; i--, headingAngle += angleStep)
     {
-        temp_s0 = FP_MULTIPLY_PRECISE(Rng_RandQ12(), 0x6000, Q12_SHIFT) + 0x13000;
-        temp_s2 = temp_s7 + FP_MULTIPLY_PRECISE(temp_s0, Math_Sin(var_s4), Q12_SHIFT);
-        temp_s1 = temp_fp + FP_MULTIPLY_PRECISE(temp_s0, Math_Cos(var_s4), Q12_SHIFT);
+        dist = FP_MULTIPLY_PRECISE(Rng_RandQ12(), Q12(6.0f), Q12_SHIFT) + Q12(19.0f);
+        newPosX = playerPosX + FP_MULTIPLY_PRECISE(dist, Math_Sin(headingAngle), Q12_SHIFT);
+        newPosZ = playerPosZ + FP_MULTIPLY_PRECISE(dist, Math_Cos(headingAngle), Q12_SHIFT);
 
-        var_v0 = Collision_GroundHeightGet(temp_s2, temp_s1);
-        var_v0 = MIN(var_v0, 0);
+        unkDeltaAngle = Collision_GroundHeightGet(newPosX, newPosZ);
+        unkDeltaAngle = MIN(unkDeltaAngle, 0);
 
-        arg0->position_18.vy                 = var_v0 + arg1;
-        arg0->position_18.vx                 = temp_s2;
-        arg0->position_18.vz                 = temp_s1;
-        arg0->properties_E4.unk0.field_F8.vy = arg0->position_18.vy;
+        airScreamer->position_18.vy                 = unkDeltaAngle + arg1;
+        airScreamer->position_18.vx                 = newPosX;
+        airScreamer->position_18.vz                 = newPosZ;
+        airScreamer->properties_E4.unk0.field_F8.vy = airScreamer->position_18.vy;
 
-        if (func_8008F914(temp_s2, temp_s1) && func_800808AC(temp_s2, temp_s1) &&
-            sharedFunc_800D4AEC_0_s01(arg0, NULL, &arg0->properties_E4.unk0.field_F8, NULL))
+        if (func_8008F914(newPosX, newPosZ) && func_800808AC(newPosX, newPosZ) &&
+            sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &airScreamer->properties_E4.unk0.field_F8, NULL))
         {
             break;
         }
@@ -46,8 +46,8 @@ void sharedFunc_800DD2C4_2_s00(s_SubCharacter* arg0, s32 arg1, s32 arg2)
 
     if (i == 0)
     {
-        arg0->position_18.vx = temp_s7 + 0x32000;
-        arg0->position_18.vy = sharedFunc_800D5274_0_s01() * 2;
-        arg0->position_18.vz = temp_fp + 0x32000;
+        airScreamer->position_18.vx = playerPosX + Q12(50.0f);
+        airScreamer->position_18.vy = sharedFunc_800D5274_0_s01() * 2;
+        airScreamer->position_18.vz = playerPosZ + Q12(50.0f);
     }
 }

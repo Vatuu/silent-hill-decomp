@@ -1,4 +1,4 @@
-void sharedFunc_800DE034_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist)
+void sharedFunc_800DE034_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12 dist)
 {
     q19_12 scaledRadius;
     q19_12 angle;
@@ -12,9 +12,9 @@ void sharedFunc_800DE034_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist)
     posZ         = vec->vz + FP_MULTIPLY_PRECISE(scaledRadius, Math_Cos(angle), Q12_SHIFT);
 
     posY                                  = Collision_GroundHeightGet(posX, posZ);
-    chara->properties_E4.unk0.field_F8.vx = posX;
-    chara->properties_E4.unk0.field_F8.vy = posY;
-    chara->properties_E4.unk0.field_F8.vz = posZ;
+    airScreamer->properties_E4.unk0.field_F8.vx = posX;
+    airScreamer->properties_E4.unk0.field_F8.vy = posY;
+    airScreamer->properties_E4.unk0.field_F8.vz = posZ;
 
-    sharedFunc_800D4E84_0_s01(chara);
+    sharedFunc_800D4E84_0_s01(airScreamer);
 }

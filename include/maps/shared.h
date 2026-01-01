@@ -1938,7 +1938,9 @@ void sharedFunc_800D46C8_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D4A9C_2_s00(s_SubCharacter* chara);
 
-bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
+// Probably all Air Screamer section below. Unsure about functions above.
+
+bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
 
 void sharedFunc_800D4E78_2_s00(s_SubCharacter* chara);
 
@@ -1984,8 +1986,7 @@ void sharedFunc_800D91A0_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800D92B4_2_s00(s_SubCharacter* chara);
 
-/** Player func. */
-void sharedFunc_800D93E8_2_s00(s_SubCharacter* chara);
+void sharedFunc_800D93E8_2_s00(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D94EC_2_s00(s_SubCharacter* chara);
 
@@ -2013,11 +2014,11 @@ bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, s32 arg1);
 /** Checks if an Air Screamer is below the ground with a slight height intolerance. */
 bool sharedFunc_800DC0A8_2_s00(s_SubCharacter* airScreamer);
 
-bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* chara, s32 speedMult);
+bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, s32 speedMult);
 
-bool sharedFunc_800DC200_2_s00(s_SubCharacter* chara);
+bool sharedFunc_800DC200_2_s00(s_SubCharacter* airScreamer);
 
-bool sharedFunc_800DC30C_2_s00(s_SubCharacter* chara);
+bool sharedFunc_800DC30C_2_s00(s_SubCharacter* airScreamer);
 
 /** Checks if an Air Screamer is near the ground? */
 bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* airScreamer);
@@ -2025,51 +2026,51 @@ bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* airScreamer);
 /** State step getter. */
 s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer);
 
-bool sharedFunc_800DC50C_2_s00(s_SubCharacter* chara);
+bool sharedFunc_800DC50C_2_s00(s_SubCharacter* airScreamer);
 
-s32 sharedFunc_800DC598_2_s00(s_SubCharacter* chara);
+s32 sharedFunc_800DC598_2_s00(s_SubCharacter* airScreamer);
 
-bool sharedFunc_800DC67C_2_s00(s_SubCharacter* chara);
+bool sharedFunc_800DC67C_2_s00(s_SubCharacter* airScreamer);
 
-s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* chara, q19_12 arg1);
+s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* airScreamer, q19_12 arg1);
 
-q19_12 sharedFunc_800DC894_2_s00(s_SubCharacter*, s32);
+q19_12 sharedFunc_800DC894_2_s00(s_SubCharacter* airScreamer, s32);
 
-void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnChance);
+void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 spawnChance);
 
-void sharedFunc_800DD2C4_2_s00(s_SubCharacter*, s32, s32); // Assumed void return type.
+void sharedFunc_800DD2C4_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2); // Assumed void return type.
 
-void sharedFunc_800DD4A4_2_s00(s_SubCharacter* chara);
+void sharedFunc_800DD4A4_2_s00(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DD4EC_2_s00(s_SubCharacter* chara);
+void sharedFunc_800DD4EC_2_s00(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DD534_2_s00(s_SubCharacter* chara);
+void sharedFunc_800DD534_2_s00(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DDA80_2_s00(s_SubCharacter*); // Assumed void return type.
+void sharedFunc_800DDA80_2_s00(s_SubCharacter* airScreamer); // Assumed void return type.
 
-void sharedFunc_800DDE14_2_s00(s_SubCharacter* chara);
+void sharedFunc_800DDE14_2_s00(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DDF74_2_s00(s_SubCharacter* chara, s32 mulX, q19_12 headingAngle);
+void sharedFunc_800DDF74_2_s00(s_SubCharacter* airScreamer, q19_12 dist, q19_12 headingAngle);
 
-void sharedFunc_800DE034_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist);
+void sharedFunc_800DE034_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12 dist);
 
-void sharedFunc_800DE11C_2_s00(s_SubCharacter* chara);
+void sharedFunc_800DE11C_2_s00(s_SubCharacter* airScreamer);
 
-s32 sharedFunc_800DE250_2_s00(s_SubCharacter*); // Assumed return type.
+s32 sharedFunc_800DE250_2_s00(s_SubCharacter* airScreamer); // Assumed return type.
 
-s32 sharedFunc_800DE578_2_s00(s_SubCharacter* chara);
+s32 sharedFunc_800DE578_2_s00(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DE6A8_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist);
+void sharedFunc_800DE6A8_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12 dist);
 
-void sharedFunc_800DE7E0_2_s00(s_SubCharacter* chara);
+void sharedFunc_800DE7E0_2_s00(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DEBCC_2_s00(s_SubCharacter* chara);
+void sharedFunc_800DEBCC_2_s00(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DECC4_2_s00(s_SubCharacter* chara);
+void sharedFunc_800DECC4_2_s00(s_SubCharacter* airScreamer);
 
 q19_12 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DF358_2_s00(s_SubCharacter*); // Assumed return type.
+void sharedFunc_800DF358_2_s00(s_SubCharacter* airScreamer); // Assumed return type.
 
 /** Condition is probably to differentiate between an Air Screamer and Night Flutter. */
 void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond); // Assumed return type.
@@ -2424,9 +2425,9 @@ void sharedFunc_800D5638_0_s01(s_SubCharacter* chara);
 
 void sharedFunc_800DF2D0_2_s00(s_SubCharacter* chara);
 
-void sharedFunc_800D4E84_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D529C_0_s01(s_SubCharacter* chara, s32 radius, s32 angle);
+void sharedFunc_800D529C_0_s01(s_SubCharacter* airScreamer, q19_12 radius, q19_12 headingAngle);
 
 void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer);
 
@@ -2462,7 +2463,7 @@ void sharedFunc_800CBC98_1_s02(void);
 
 void sharedFunc_800CBD58_1_s02(void);
 
-void sharedFunc_800DE1F8_2_s00(s_SubCharacter* chara);
+void sharedFunc_800DE1F8_2_s00(s_SubCharacter* airScreamer);
 
 s32 sharedFunc_800DEC64_2_s00(s_SubCharacter* chara);
 

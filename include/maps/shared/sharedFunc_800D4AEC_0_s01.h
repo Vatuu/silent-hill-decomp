@@ -1,4 +1,4 @@
-bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3)
+bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3)
 {
     bool     cond;
     s32      temp_v1;
@@ -21,7 +21,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
     
     if (arg1 == NULL)
     {
-        var_s0 = &chara->position_18;
+        var_s0 = &airScreamer->position_18;
     }
     else
     {
@@ -38,7 +38,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
     sharedData_800DE1A0_0_s01.vx = offsetX;
     sharedData_800DE1A0_0_s01.vz = offsetZ;
 
-    if (sharedFunc_800D4A80_0_s01(chara) == 1)
+    if (sharedFunc_800D4A80_0_s01(airScreamer) == 1)
     {
         i                            = 0;
         sharedData_800DE1A0_0_s01.vy = Q12(0.0f);
@@ -53,7 +53,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
 
     g_SysWork.playerWork_4C.player_0.field_E1_0 = 0;
 
-    cond = func_8006DB3C(&sharedData_800E2330_0_s01, var_s0, &sharedData_800DE1A0_0_s01, chara);
+    cond = func_8006DB3C(&sharedData_800E2330_0_s01, var_s0, &sharedData_800DE1A0_0_s01, airScreamer);
 
     g_SysWork.playerWork_4C.player_0.field_E1_0 = temp_s0;
     offsetX                                = sharedData_800E2330_0_s01.field_4.vx - posX;
@@ -62,7 +62,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
     func_8006F250(sharedData_800E2370_0_s01, posX, posZ, offsetX, offsetZ);
 
     var_a0    = sharedData_800E2370_0_s01[1];
-    temp_v1   = chara->field_C8.field_0;
+    temp_v1   = airScreamer->field_C8.field_0;
     temp_v0_2 = 1;
 
     if (i < 0 && var_a0 < (posY + temp_v1))
@@ -116,12 +116,12 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* chara, VECTOR3* arg1, VECTOR3* ar
             }
             else
             {
-                groundHeight  = Collision_GroundHeightGet(chara->position_18.vx, chara->position_18.vz);
+                groundHeight  = Collision_GroundHeightGet(airScreamer->position_18.vx, airScreamer->position_18.vz);
                 groundOffset  = (Rng_RandQ12() / 2) + Q12(1.5f);
                 groundHeight -= groundOffset;
 
                 groundOffset                         = (Rng_RandQ12() / 2) - Q12(0.25f);
-                sharedData_800E2330_0_s01.field_4.vy = chara->position_18.vy - groundOffset;
+                sharedData_800E2330_0_s01.field_4.vy = airScreamer->position_18.vy - groundOffset;
 
                 if (groundHeight < sharedData_800E2330_0_s01.field_4.vy)
                 {

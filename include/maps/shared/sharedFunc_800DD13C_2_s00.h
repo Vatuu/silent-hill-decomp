@@ -1,4 +1,4 @@
-void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnChance)
+void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 spawnChance)
 {
     u32 flags;
     s32 i;
@@ -26,7 +26,7 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnC
         {
             bitsSet++;
 
-            if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == chara->model_0.charaId_0)
+            if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == airScreamer->model_0.charaId_0)
             {
                 switch (g_SysWork.npcs_1A0[i].model_0.controlState_2)
                 {
@@ -55,7 +55,7 @@ void sharedFunc_800DD13C_2_s00(s_SubCharacter* chara, s32 npcSlot, q19_12 spawnC
             s32 selectNpcSlot = npcSlot & 0x1F;
             CLEAR_FLAG(g_SysWork.field_228C, selectNpcSlot);
 
-            Chara_Spawn(chara->model_0.charaId_0,
+            Chara_Spawn(airScreamer->model_0.charaId_0,
                         selectNpcSlot,
                         g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(20.0f),
                         g_SysWork.playerWork_4C.player_0.position_18.vz, FP_ANGLE(0.0f),

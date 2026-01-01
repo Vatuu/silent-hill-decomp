@@ -1,6 +1,10 @@
-void sharedFunc_800DD4A4_2_s00(s_SubCharacter* chara)
+void sharedFunc_800DD4A4_2_s00(s_SubCharacter* airScreamer)
 {
-    sharedFunc_800DD2C4_2_s00(chara, Q12(0.0f), 0);
-    sharedFunc_800DDF74_2_s00(chara, Q12(30.0f), chara->rotation_24.vy);
-    chara->properties_E4.dummy.properties_E8[14].val32 = Q12(15.0f);
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
+    sharedFunc_800DD2C4_2_s00(airScreamer, Q12(0.0f), 0);
+    sharedFunc_800DDF74_2_s00(airScreamer, Q12(30.0f), airScreamer->rotation_24.vy);
+    airScreamerProps.timer_120 = Q12(15.0f);
+
+    #undef airScreamerProps
 }
