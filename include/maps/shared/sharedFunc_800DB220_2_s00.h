@@ -34,8 +34,8 @@ void sharedFunc_800DB220_2_s00(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_2:
-            unkDist = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8);
-            unkDeltaAngle  = FP_ANGLE_NORM_S(func_80080478(&airScreamer->position_18, &airScreamerProps.position_F8) - airScreamer->rotation_24.vy);
+            unkDist = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
+            unkDeltaAngle  = FP_ANGLE_NORM_S(func_80080478(&airScreamer->position_18, &airScreamerProps.targetPosition_F8) - airScreamer->rotation_24.vy);
 
             if (temp_s4 == 2)
             {

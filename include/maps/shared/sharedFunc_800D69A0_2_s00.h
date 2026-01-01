@@ -43,7 +43,7 @@ void sharedFunc_800D69A0_2_s00(s_SubCharacter* airScreamer)
 
     if (cond)
     {
-        airScreamer->model_0.controlState_2= AirScreamerControl_2;
+        airScreamer->model_0.controlState_2 = AirScreamerControl_2;
         airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
         airScreamer->properties_E4.unk0.field_E8_8 = 1;
     }

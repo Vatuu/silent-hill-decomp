@@ -352,7 +352,7 @@ void func_800D4420(s_SubCharacter* airScreamer) // 0x800D4420
             break;
 
         case AirScreamerStateStep_1:
-            if (Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8) < Q12(0.5f))
+            if (Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.targetPosition_F8) < Q12(0.5f))
             {
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
             }
@@ -366,16 +366,16 @@ void func_800D4420(s_SubCharacter* airScreamer) // 0x800D4420
     {
         case AirScreamerDamage_None:
             dist0 = NO_VALUE;
-            deltaY = airScreamerProps.position_F8.vy - airScreamer->position_18.vy;
+            deltaY = airScreamerProps.targetPosition_F8.vy - airScreamer->position_18.vy;
             if (deltaY > Q12(-0.2f) && deltaY < Q12(0.8f))
             {
                 dist0 = airScreamer->field_D4.radius_0 + Q12(0.15f);
             }
 
-            dist = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8);
+            dist = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
             if (dist < dist0)
             {
-                unkAngleDelta = FP_ANGLE_NORM_S(func_80080478(&airScreamer->position_18, &airScreamerProps.position_F8) - airScreamer->rotation_24.vy);
+                unkAngleDelta = FP_ANGLE_NORM_S(func_80080478(&airScreamer->position_18, &airScreamerProps.targetPosition_F8) - airScreamer->rotation_24.vy);
                 if (unkAngleDelta >= FP_ANGLE(-8.0f) && unkAngleDelta < FP_ANGLE(8.0f))
                 {
                     airScreamer->model_0.controlState_2 = AirScreamerControl_49;

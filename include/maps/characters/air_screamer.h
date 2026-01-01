@@ -33,40 +33,41 @@ typedef enum _AirScreamerFlags
     AirScreamerFlag_25   = 1 << 25,
     AirScreamerFlag_26   = 1 << 26,
     AirScreamerFlag_27   = 1 << 27,
-    AirScreamerFlag_28   = 1 << 28
+    AirScreamerFlag_28   = 1 << 28,
+    AirScreamerFlag_29   = 1 << 29
 } e_AirScreamerFlags;
 
 /** @brief Air Screamer character animation indices. */
 typedef enum _AirScreamerAnim
 {
     AirScreamerAnim_Still = 0,
-    AirScreamerAnim_1     = 1,
-    AirScreamerAnim_2     = 2,
-    AirScreamerAnim_3     = 3,
-    AirScreamerAnim_4     = 4,
-    AirScreamerAnim_5     = 5,
-    AirScreamerAnim_6     = 6,
-    AirScreamerAnim_7     = 7,
-    AirScreamerAnim_8     = 8,
-    AirScreamerAnim_9     = 9,
-    AirScreamerAnim_10    = 10,
-    AirScreamerAnim_11    = 11,
-    AirScreamerAnim_12    = 12,
-    AirScreamerAnim_13    = 13,
-    AirScreamerAnim_14    = 14,
-    AirScreamerAnim_15    = 15,
-    AirScreamerAnim_16    = 16,
-    AirScreamerAnim_17    = 17,
-    AirScreamerAnim_18    = 18,
-    AirScreamerAnim_19    = 19,
-    AirScreamerAnim_20    = 20,
-    AirScreamerAnim_21    = 21,
+    AirScreamerAnim_1     = 1, // StandAttack
+    AirScreamerAnim_2     = 2, // FlyAttack
+    AirScreamerAnim_3     = 3, // GlideAttack
+    AirScreamerAnim_4     = 4, // StandKnockout
+    AirScreamerAnim_5     = 5, // Death
+    AirScreamerAnim_6     = 6, // StandDamageRecoil
+    AirScreamerAnim_7     = 7, // FlyDamageRecoil
+    AirScreamerAnim_8     = 8, // GlideDamageRecoil
+    AirScreamerAnim_9     = 9, // FlyPeckAttack 2?
+    AirScreamerAnim_10    = 10, // FlyKnockout
+    AirScreamerAnim_11    = 11, // GlideKnockout
+    AirScreamerAnim_12    = 12, // Knockout crawl/attack?
+    AirScreamerAnim_13    = 13, // Stand eat look up?
+    AirScreamerAnim_14    = 14, // Stand eat?
+    AirScreamerAnim_15    = 15, // Glide attack start?
+    AirScreamerAnim_16    = 16, // Glide to stand
+    AirScreamerAnim_17    = 17, // Glide flap
+    AirScreamerAnim_18    = 18, // Fly to glide
+    AirScreamerAnim_19    = 19, // FlyIdle
+    AirScreamerAnim_20    = 20, // Near death die
+    AirScreamerAnim_21    = 21, // near death?
     AirScreamerAnim_22    = 22,
-    AirScreamerAnim_23    = 23, // Fly idle?
-    AirScreamerAnim_24    = 24,
-    AirScreamerAnim_25    = 25,
-    AirScreamerAnim_26    = 26,
-    AirScreamerAnim_27    = 27
+    AirScreamerAnim_23    = 23, // StandIdle
+    AirScreamerAnim_24    = 24, // TakeOff
+    AirScreamerAnim_25    = 25, // WalkForward
+    AirScreamerAnim_26    = 26, // Death end?
+    AirScreamerAnim_27    = 27 // FlyIdle duplicate
 } e_AirScreamerAnim;
 
 /** @brief Air Screamer or Night Flutter character control states. */

@@ -13,33 +13,33 @@ void sharedFunc_800D8C34_2_s00(s_SubCharacter* airScreamer)
             switch ((u32)airScreamer->properties_E4.unk0.field_E8_0)
             {
                 case 0:
-                    airScreamer->model_0.controlState_2= AirScreamerControl_18;
+                    airScreamer->model_0.controlState_2 = AirScreamerControl_18;
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
                     break;
 
                 case 1:
                 case 3:
-                    airScreamer->model_0.controlState_2= AirScreamerControl_19;
+                    airScreamer->model_0.controlState_2 = AirScreamerControl_19;
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
                     break;
             }
             break;
 
         case 1:
-            airScreamer->model_0.controlState_2= AirScreamerControl_29;
+            airScreamer->model_0.controlState_2 = AirScreamerControl_29;
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
             airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
             return;
 
         case 2:
-            airScreamer->model_0.controlState_2= AirScreamerControl_30;
+            airScreamer->model_0.controlState_2 = AirScreamerControl_30;
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
             airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 3:
         case 4:
-            airScreamer->model_0.controlState_2= AirScreamerControl_32;
+            airScreamer->model_0.controlState_2 = AirScreamerControl_32;
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
             if (airScreamer->health_B0 <= Q12(0.0f))

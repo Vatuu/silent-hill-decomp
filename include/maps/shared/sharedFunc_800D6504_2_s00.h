@@ -28,7 +28,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
             else
             {
                 sharedFunc_800DDF74_2_s00(airScreamer, Q12(4.0f), func_80080478(&airScreamer->position_18, &g_SysWork.playerWork_4C.player_0.position_18));
-                airScreamerProps.position_104 = airScreamerProps.position_F8;
+                airScreamerProps.position_104 = airScreamerProps.targetPosition_F8;
             }
 
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_1;
@@ -80,7 +80,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
             {
                 if (airScreamer->properties_E4.unk0.field_E8_8 == 5)
                 {
-                    airScreamer->model_0.controlState_2= AirScreamerControl_14;
+                    airScreamer->model_0.controlState_2 = AirScreamerControl_14;
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
                     if (Rng_RandQ12() < ((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1 * 2)))
@@ -90,7 +90,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
                 }
                 else
                 {
-                    airScreamer->model_0.controlState_2= AirScreamerControl_10;
+                    airScreamer->model_0.controlState_2 = AirScreamerControl_10;
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
                     if (Rng_RandQ12() <= ((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1 * 2)))
@@ -108,7 +108,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
             switch (airScreamer->properties_E4.unk0.field_E8_8)
             {
                 case 3:
-                    airScreamer->model_0.controlState_2= AirScreamerControl_13;
+                    airScreamer->model_0.controlState_2 = AirScreamerControl_13;
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
                     if (Rng_RandQ12() < ((Q12(0.5f) - (var_s1 * 3))))
@@ -118,7 +118,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
                     break;
 
                 case 2:
-                    airScreamer->model_0.controlState_2= AirScreamerControl_7;
+                    airScreamer->model_0.controlState_2 = AirScreamerControl_7;
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
                     if (Rng_RandQ12() > (FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f) + (var_s1 * 2)))
@@ -132,7 +132,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
                     break;
 
                 case 5:
-                    airScreamer->model_0.controlState_2= AirScreamerControl_14;
+                    airScreamer->model_0.controlState_2 = AirScreamerControl_14;
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
                     if (Rng_RandQ12() < FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f))
@@ -145,11 +145,11 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
                 case 4:
                     if (Rng_RandQ12() < (Q12(0.2f) + (var_s1 * 5)))
                     {
-                        airScreamer->model_0.controlState_2= AirScreamerControl_7;
+                        airScreamer->model_0.controlState_2 = AirScreamerControl_7;
                     }
                     else
                     {
-                        airScreamer->model_0.controlState_2= AirScreamerControl_14;
+                        airScreamer->model_0.controlState_2 = AirScreamerControl_14;
                     }
 
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
@@ -175,11 +175,11 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
 
                     if (Rng_RandQ12() < (Q12(0.4f) + (var_s1 * 3)))
                     {
-                        airScreamer->model_0.controlState_2= AirScreamerControl_7;
+                        airScreamer->model_0.controlState_2 = AirScreamerControl_7;
                     }
                     else
                     {
-                        airScreamer->model_0.controlState_2= AirScreamerControl_14;
+                        airScreamer->model_0.controlState_2 = AirScreamerControl_14;
                     }
 
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
@@ -200,7 +200,7 @@ void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer)
 
         case 3:
         case 4:
-            airScreamer->model_0.controlState_2= AirScreamerControl_17;
+            airScreamer->model_0.controlState_2 = AirScreamerControl_17;
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
             if (airScreamer->health_B0 <= Q12(0.0f))

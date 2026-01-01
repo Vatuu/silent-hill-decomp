@@ -61,7 +61,7 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* airScreamer)
             {
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_8;
             }
-            else if (Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8) < Q12(1.0f))
+            else if (Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.targetPosition_F8) < Q12(1.0f))
             {
                 if (cond)
                 {

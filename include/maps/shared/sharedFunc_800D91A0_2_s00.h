@@ -44,14 +44,14 @@ void sharedFunc_800D91A0_2_s00(s_SubCharacter* airScreamer) // 0x800D91A0
         case 2:
             if (cond)
             {
-                airScreamer->model_0.controlState_2= AirScreamerControl_31;
+                airScreamer->model_0.controlState_2 = AirScreamerControl_31;
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
             }
             break;
 
         case 3:
         case 4:
-            airScreamer->model_0.controlState_2= AirScreamerControl_32;
+            airScreamer->model_0.controlState_2 = AirScreamerControl_32;
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
             if (airScreamer->health_B0 <= Q12(0.0f))

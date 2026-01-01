@@ -2008,9 +2008,10 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* chara);
 /** Player func. */
 void sharedFunc_800DBDEC_2_s00(s_SubCharacter* chara);
 
-bool sharedFunc_800DBF88_2_s00(s_SubCharacter* chara, s32 arg1);
+bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, s32 arg1);
 
-bool sharedFunc_800DC0A8_2_s00(s_SubCharacter* chara);
+/** Checks if an Air Screamer is below the ground with a slight height intolerance. */
+bool sharedFunc_800DC0A8_2_s00(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* chara, s32 speedMult);
 
@@ -2018,9 +2019,11 @@ bool sharedFunc_800DC200_2_s00(s_SubCharacter* chara);
 
 bool sharedFunc_800DC30C_2_s00(s_SubCharacter* chara);
 
-bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* chara);
+/** Checks if an Air Screamer is near the ground? */
+bool sharedFunc_800DC3BC_2_s00(s_SubCharacter* airScreamer);
 
-s32 sharedFunc_800DC438_2_s00(s_SubCharacter* chara);
+/** State step getter. */
+s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800DC50C_2_s00(s_SubCharacter* chara);
 
@@ -2064,7 +2067,7 @@ void sharedFunc_800DEBCC_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DECC4_2_s00(s_SubCharacter* chara);
 
-s32 sharedFunc_800DEE24_2_s00(s_SubCharacter*);  // Assumed return type.
+q19_12 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer);
 
 void sharedFunc_800DF358_2_s00(s_SubCharacter*); // Assumed return type.
 

@@ -80,9 +80,9 @@ void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer)
     targetPosY = MAX(groundHeight - Q12(2.0f), targetPosY);
 
     // Set Air Screamer position to target.
-    airScreamerProps.position_F8.vx = targetPosX;
-    airScreamerProps.position_F8.vy = targetPosY;
-    airScreamerProps.position_F8.vz = targetPosZ;
+    airScreamerProps.targetPosition_F8.vx = targetPosX;
+    airScreamerProps.targetPosition_F8.vy = targetPosY;
+    airScreamerProps.targetPosition_F8.vz = targetPosZ;
 
     // Additional processing.
     sharedFunc_800D4E84_0_s01(airScreamer);

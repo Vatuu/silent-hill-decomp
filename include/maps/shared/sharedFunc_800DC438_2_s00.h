@@ -1,35 +1,37 @@
-s32 sharedFunc_800DC438_2_s00(s_SubCharacter* chara)
+s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer)
 {
-    // TODO: Wrong `properties_E4` union member.
-    s32 result;
+    s32 stateStep;
 
-    result = 0;
+    #define airScreamerProps airScreamer->properties_E4.player
 
-    if (chara->model_0.anim_4.status_0 != ANIM_STATUS(HarryAnim_LookAround, true))
+    stateStep = AirScreamerStateStep_0;
+    if (airScreamer->model_0.anim_4.status_0 != ANIM_STATUS(AirScreamerAnim_17, true))
     {
-        return result;
+        return stateStep;
     }
 
-    if (!(chara->properties_E4.player.flags_11C & PlayerFlag_Unk29) &&
+    if (!(airScreamerProps.flags_11C & AirScreamerFlag_29) &&
         (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)) ||
-         (g_SavegamePtr->gameDifficulty_260 > GameDifficulty_Normal && chara->model_0.charaId_0 != Chara_AirScreamer)))
+         (g_SavegamePtr->gameDifficulty_260 > GameDifficulty_Normal && airScreamer->model_0.charaId_0 != Chara_AirScreamer)))
     {
-        if (sharedFunc_800DC3BC_2_s00(chara) && (sharedFunc_800DC0A8_2_s00(chara) || sharedFunc_800DBF88_2_s00(chara, Q12(2.0f))))
+        if (sharedFunc_800DC3BC_2_s00(airScreamer) && (sharedFunc_800DC0A8_2_s00(airScreamer) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(2.0f))))
         {
-            if (sharedFunc_800DC0E4_2_s00(chara, Q12(1.0f)))
+            if (sharedFunc_800DC0E4_2_s00(airScreamer, Q12(1.0f)))
             {
-                result = 1;
+                stateStep = AirScreamerStateStep_1;
             }
             else
             {
-                result = 2;
+                stateStep = AirScreamerStateStep_2;
             }
         }
     }
     else
     {
-        result = 1;
+        stateStep = AirScreamerStateStep_1;
     }
 
-    return result;
+    return stateStep;
+
+    #undef airScreamerProps
 }

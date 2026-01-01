@@ -22,7 +22,7 @@ void sharedFunc_800D8888_2_s00(s_SubCharacter* airScreamer)
     angle          = sharedData_800E21D0_0_s01.angle_154;
     field14C_2     = field14C_2_tmp;
 
-    distFieldF8 = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8);
+    distFieldF8 = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
     var_s6      = 0;
     cond        = sharedFunc_800DC50C_2_s00(airScreamer);
 
@@ -31,7 +31,7 @@ void sharedFunc_800D8888_2_s00(s_SubCharacter* airScreamer)
     {
         case AirScreamerStateStep_0:
             var_s6      = sharedFunc_800DEC64_2_s00(airScreamer);
-            distFieldF8 = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8);
+            distFieldF8 = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
             angleDiff   = FP_ANGLE_NORM_S(angle - airScreamer->rotation_24.vy);
 
             if (sharedFunc_800DC200_2_s00(airScreamer) && airScreamer->moveSpeed_38 > Q12(1.5f) &&

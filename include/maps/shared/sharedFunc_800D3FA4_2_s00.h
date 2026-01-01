@@ -38,7 +38,7 @@ void sharedFunc_800D3FA4_2_s00(s_SubCharacter* airScreamer)
 
         case AirScreamerStateStep_0:
             sharedFunc_800DDF74_2_s00(airScreamer, Q12(4.0f), airScreamer->rotation_24.vy);
-            sharedFunc_800DE034_2_s00(airScreamer, &airScreamerProps.position_F8, Q12(3.0f));
+            sharedFunc_800DE034_2_s00(airScreamer, &airScreamerProps.targetPosition_F8, Q12(3.0f));
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_1;
             break;
 
@@ -48,8 +48,8 @@ void sharedFunc_800D3FA4_2_s00(s_SubCharacter* airScreamer)
             airScreamer->model_0.stateStep_3                          = AirScreamerStateStep_2;
 
         case AirScreamerStateStep_2:
-            distToTarget = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8);
-            temp_s1_2 = FP_ANGLE_NORM_S(func_80080478(&airScreamer->position_18, &airScreamerProps.position_F8) - airScreamer->rotation_24.vy);
+            distToTarget = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
+            temp_s1_2 = FP_ANGLE_NORM_S(func_80080478(&airScreamer->position_18, &airScreamerProps.targetPosition_F8) - airScreamer->rotation_24.vy);
             temp_v0   = sharedFunc_800DC598_2_s00(airScreamer);
 
             if (temp_v0 == 1)
@@ -81,7 +81,7 @@ void sharedFunc_800D3FA4_2_s00(s_SubCharacter* airScreamer)
                     {
                         // @hack This check should be `if (diff >= Q12(-1.0f) && diff < Q12(1.0f))`,
                         // but that results in `sltiu 0x2000` instead of the `li 0x2000/sltu` needed.
-                        if (Math_CheckSignedRange(airScreamerProps.position_F8.vy - airScreamer->position_18.vy, Q12(1.0f)))
+                        if (Math_CheckSignedRange(airScreamerProps.targetPosition_F8.vy - airScreamer->position_18.vy, Q12(1.0f)))
                         {
                             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_3;
                         }

@@ -16,7 +16,7 @@ void sharedFunc_800D92B4_2_s00(s_SubCharacter* airScreamer)
 
         case 1:
             if (airScreamerProps.timer_120 == Q12(0.0f) ||
-                Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8) < Q12(2.0f))
+                Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.targetPosition_F8) < Q12(2.0f))
             {
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
             }
@@ -37,7 +37,7 @@ void sharedFunc_800D92B4_2_s00(s_SubCharacter* airScreamer)
 
         case 3:
         case 4:
-            airScreamer->model_0.controlState_2= AirScreamerControl_32;
+            airScreamer->model_0.controlState_2 = AirScreamerControl_32;
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
             if (airScreamer->health_B0 <= 0)
             {

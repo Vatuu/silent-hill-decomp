@@ -83,7 +83,7 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* airScreamer)
                             if (cond1)
                             {
                                 airScreamer->model_0.anim_4.status_0       = ANIM_STATUS(23, false);
-                                airScreamer->model_0.controlState_2= AirScreamerControl_10;
+                                airScreamer->model_0.controlState_2 = AirScreamerControl_10;
                                 airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
                                 airScreamer->flags_3E                     |= CharaFlag_Unk3;
                                 airScreamerProps.flags_11C |= CharaUnk0Flag_Unk4;
@@ -95,7 +95,7 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* airScreamer)
                                  sharedData_800E21D0_0_s01.field_15C > Q12(10.0f))
                         {
                             airScreamer->model_0.anim_4.status_0       = ANIM_STATUS(23, false);
-                            airScreamer->model_0.controlState_2= AirScreamerControl_7;
+                            airScreamer->model_0.controlState_2 = AirScreamerControl_7;
                             airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
                             airScreamer->properties_E4.unk0.field_E8_8 = 3;
                         }
@@ -104,7 +104,7 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* airScreamer)
 
                 case 1:
                     airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(23, false);
-                    airScreamer->model_0.controlState_2= AirScreamerControl_15;
+                    airScreamer->model_0.controlState_2 = AirScreamerControl_15;
                     airScreamer->model_0.stateStep_3     = AirScreamerStateStep_0;
                     sharedFunc_800D3DFC_0_s01(airScreamer);
                     break;
@@ -113,14 +113,14 @@ void sharedFunc_800D5268_2_s00(s_SubCharacter* airScreamer)
 
         case 1:
         case 2:
-            airScreamer->model_0.controlState_2= AirScreamerControl_16;
+            airScreamer->model_0.controlState_2 = AirScreamerControl_16;
             airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
             airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
             return;
 
         case 3:
         case 4:
-            airScreamer->model_0.controlState_2= AirScreamerControl_17;
+            airScreamer->model_0.controlState_2 = AirScreamerControl_17;
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
             if (airScreamer->health_B0 <= Q12(0.0f))

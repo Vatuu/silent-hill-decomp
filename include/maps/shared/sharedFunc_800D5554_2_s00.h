@@ -52,7 +52,7 @@ void sharedFunc_800D5554_2_s00(s_SubCharacter* airScreamer)
 
             temp_s1_2 = sharedFunc_800DC598_2_s00(airScreamer);
             temp_s5   = Q12(0.6f);
-            temp_fp   = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8);
+            temp_fp   = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
 
             if (temp_s1_2 == 1)
             {
@@ -69,7 +69,7 @@ void sharedFunc_800D5554_2_s00(s_SubCharacter* airScreamer)
                 temp_s3_2 = g_SysWork.playerWork_4C.player_0.field_C8.field_4;
                 temp_s7   = g_SysWork.playerWork_4C.player_0.field_C8.field_0;
 
-                temp_s4_2 = FP_ANGLE_NORM_S(func_80080478(&airScreamer->position_18, &airScreamerProps.position_F8) - airScreamer->rotation_24.vy);
+                temp_s4_2 = FP_ANGLE_NORM_S(func_80080478(&airScreamer->position_18, &airScreamerProps.targetPosition_F8) - airScreamer->rotation_24.vy);
 
                 if (sharedFunc_800DC30C_2_s00(airScreamer))
                 {

@@ -21,7 +21,7 @@ void sharedFunc_800DB54C_2_s00(s_SubCharacter* airScreamer)
     angle      = sharedData_800E21D0_0_s01.angle_154;
     field14C   = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
     temp_s7    = new_var;
-    var_s3     = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8);
+    var_s3     = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
     temp_a0    = sharedFunc_800DC438_2_s00(airScreamer);
     var_s5     = 0;
 
@@ -30,7 +30,7 @@ void sharedFunc_800DB54C_2_s00(s_SubCharacter* airScreamer)
     {
         case AirScreamerStateStep_0:
             var_s5     = sharedFunc_800DF24C_2_s00(airScreamer);
-            var_s3     = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8);
+            var_s3     = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
             angleDelta = FP_ANGLE_NORM_S(angle - airScreamer->rotation_24.vy);
             if (!sharedFunc_800DC30C_2_s00(airScreamer) || (angleDelta < FP_ANGLE(-30.0f) || angleDelta >= FP_ANGLE(30.0f)))
             {
