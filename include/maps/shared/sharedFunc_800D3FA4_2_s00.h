@@ -81,7 +81,7 @@ void sharedFunc_800D3FA4_2_s00(s_SubCharacter* airScreamer)
                     {
                         // @hack This check should be `if (diff >= Q12(-1.0f) && diff < Q12(1.0f))`,
                         // but that results in `sltiu 0x2000` instead of the `li 0x2000/sltu` needed.
-                        if (Math_CheckSignedRange(airScreamer->properties_E4.unk0.field_F8.vy - airScreamer->position_18.vy, Q12(1.0f)))
+                        if (Math_CheckSignedRange(airScreamerProps.position_F8.vy - airScreamer->position_18.vy, Q12(1.0f)))
                         {
                             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_3;
                         }

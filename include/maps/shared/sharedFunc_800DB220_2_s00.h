@@ -63,7 +63,7 @@ void sharedFunc_800DB220_2_s00(s_SubCharacter* airScreamer)
 
             if (airScreamerProps.timer_120 == Q12(0.0f))
             {
-                sharedFunc_800DECA4_2_s00(airScreamer, &airScreamer->properties_E4.unk0.pos_104, Q12(2.5f));
+                sharedFunc_800DECA4_2_s00(airScreamer, &airScreamerProps.position_104, Q12(2.5f));
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_1;
             }
             break;

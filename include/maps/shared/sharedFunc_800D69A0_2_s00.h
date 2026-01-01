@@ -4,6 +4,8 @@ void sharedFunc_800D69A0_2_s00(s_SubCharacter* airScreamer)
     s32  animStatus;
     u32  modelStep;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     cond = false;
 
     modelStep        = airScreamer->model_0.stateStep_3;
@@ -16,14 +18,14 @@ void sharedFunc_800D69A0_2_s00(s_SubCharacter* airScreamer)
             if (ANIM_STATUS_IS_ACTIVE(animStatus))
             {
                 airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(4, false);
-                airScreamer->model_0.stateStep_3     = 1;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_1;
             }
             break;
 
         case 1:
             if (animStatus != ANIM_STATUS(4, false))
             {
-                airScreamer->model_0.stateStep_3             = 2;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_2;
                 airScreamer->properties_E4.player.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
@@ -41,8 +43,10 @@ void sharedFunc_800D69A0_2_s00(s_SubCharacter* airScreamer)
 
     if (cond)
     {
-        airScreamer->model_0.controlState_2               = 2;
-        airScreamer->model_0.stateStep_3           = 0;
+        airScreamer->model_0.controlState_2= AirScreamerControl_2;
+        airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
         airScreamer->properties_E4.unk0.field_E8_8 = 1;
     }
+
+    #undef airScreamerProps
 }

@@ -14,6 +14,8 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
     q19_12 angleDelta;
     s32    temp_v0;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     animStatus     = airScreamer->model_0.anim_4.status_0;
     switchCond     = 0;
     temp_s7_tmp    = sharedFunc_800D4A80_0_s01(airScreamer);
@@ -22,26 +24,26 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
     field14C_2_tmp = sharedData_800E21D0_0_s01.field_14C.bits.field_14C_2;
     temp_s7        = temp_s7_tmp;
     field14C_2     = field14C_2_tmp;
-    distFieldF8    = Math_Distance2dGet(&airScreamer->position_18, &airScreamer->properties_E4.unk0.field_F8);
+    distFieldF8    = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8);
     var_s6         = 0;
 
     switch (airScreamer->model_0.stateStep_3)
     {
         case 0:
             var_s6      = sharedFunc_800DE578_2_s00(airScreamer);
-            distFieldF8 = Math_Distance2dGet(&airScreamer->position_18, &airScreamer->properties_E4.unk0.field_F8);
+            distFieldF8 = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8);
             angleDelta  = FP_ANGLE_NORM_S(angle - airScreamer->rotation_24.vy);
 
             if (sharedFunc_800DC200_2_s00(airScreamer) &&
                 (Math_CheckSignedRange(angleDelta, FP_ANGLE(120.0f)) ||
                  (dist < Q12(5.0f) && Math_CheckSignedRange(angleDelta, FP_ANGLE(60.0f)))))
             {
-                airScreamer->model_0.stateStep_3 = 4;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_4;
             }
             else if (!sharedFunc_800DC30C_2_s00(airScreamer) || (dist >= val2_0 && Rng_RandQ12() >= Q12(0.4f)))
             {
-                airScreamer->properties_E4.unk0.properties_120.val32 = Q12(2.0f);
-                airScreamer->model_0.stateStep_3                     = 1;
+                airScreamerProps.timer_120 = Q12(2.0f);
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_1;
             }
             else
             {
@@ -58,15 +60,15 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
             }
             else if (temp_v0 == 2)
             {
-                airScreamer->model_0.stateStep_3 = 4;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_4;
             }
-            else if (distFieldF8 < Q12(2.0f) || (airScreamer->properties_E4.unk0.flags_11C & CharaUnk0Flag_Unk31))
+            else if (distFieldF8 < Q12(2.0f) || (airScreamerProps.flags_11C & CharaUnk0Flag_Unk31))
             {
                 var_s6 = sharedFunc_800DE578_2_s00(airScreamer);
             }
-            else if (airScreamer->properties_E4.unk0.properties_120.val32 == 0)
+            else if (airScreamerProps.timer_120 == Q12(0.0f))
             {
-                airScreamer->model_0.stateStep_3 = 0;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
             }
             break;
 
@@ -75,7 +77,7 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
             {
                 switchCond                     = 1;
                 airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(22, false);
-                airScreamer->model_0.stateStep_3     = 3;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_3;
             }
             break;
 
@@ -88,7 +90,7 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
             {
                 switchCond                     = 2;
                 airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(24, false);
-                airScreamer->model_0.stateStep_3     = 5;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_5;
             }
             break;
 
@@ -105,19 +107,19 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
             switch (switchCond)
             {
                 case 0:
-                    distFieldF8 = Math_Distance2dGet(&airScreamer->position_18, &airScreamer->properties_E4.unk0.field_F8);
+                    distFieldF8 = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.position_F8);
 
                     if (var_s6 || (((field14C_2 != 0 && dist < Q12(15.0f)) || dist < Q12(4.0f)) && distFieldF8 < Q12(1.5f)))
                     {
                         airScreamer->model_0.controlState_2               = 10;
-                        airScreamer->model_0.stateStep_3           = 0;
+                        airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
                         airScreamer->properties_E4.unk0.field_E8_8 = 3;
-                        airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk4;
+                        airScreamerProps.flags_11C |= CharaUnk0Flag_Unk4;
                     }
                     else if (dist > Q12(30.0f) && distFieldF8 < Q12(1.0f))
                     {
                         airScreamer->model_0.controlState_2     = 7;
-                        airScreamer->model_0.stateStep_3 = 0;
+                        airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
                     }
                     break;
 
@@ -125,7 +127,7 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
                     if (temp_s7 == 2)
                     {
                         airScreamer->model_0.controlState_2     = 27;
-                        airScreamer->model_0.stateStep_3 = 0;
+                        airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
                     }
                     break;
 
@@ -133,7 +135,7 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
                     if (temp_s7 == 3)
                     {
                         airScreamer->model_0.controlState_2     = 42;
-                        airScreamer->model_0.stateStep_3 = 0;
+                        airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
                     }
                     break;
             }
@@ -142,23 +144,25 @@ void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer) // 0x800D603C
         case 1:
         case 2:
             airScreamer->model_0.controlState_2               = 16;
-            airScreamer->model_0.stateStep_3           = 0;
-            airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+            airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
+            airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
             break;
 
         case 3:
         case 4:
             airScreamer->model_0.controlState_2     = 17;
-            airScreamer->model_0.stateStep_3 = 0;
+            airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
             if (airScreamer->health_B0 <= Q12(0.0f))
             {
-                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk6;
+                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk6;
             }
             else
             {
-                airScreamer->properties_E4.unk0.flags_11C |= CharaUnk0Flag_Unk3;
+                airScreamerProps.flags_11C |= CharaUnk0Flag_Unk3;
             }
             break;
     }
+
+    #undef airScreamerProps
 }

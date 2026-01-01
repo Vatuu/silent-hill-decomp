@@ -9,7 +9,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const chara)
     s32 temp_s0;
     s32 temp_v0_3;
     s32 var_fp;
-    s32 var_s2;
+    s32 i;
     s32 var_s3;
     s32 var_s4;
     s32 var_s5;
@@ -72,20 +72,20 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const chara)
     {
         var_s5 = posY + (var_fp << 7);
 
-        for (var_s2 = 0, var_s3 = 0; var_s2 < 8; var_s2++, var_s3 += 0x200)
+        for (i = 0, var_s3 = 0; i < 8; i++, var_s3 += 0x200)
         {
             temp_s0   = x + FP_MULTIPLY_PRECISE(var_s4, Math_Sin(var_s3), Q12_SHIFT);
             temp_v0_3 = Collision_GroundHeightGet(temp_s0, FP_MULTIPLY_PRECISE(var_s4, Math_Cos(var_s3), Q12_SHIFT) + z);
 
             if (var_s5 < temp_v0_3)
             {
-                var_s7 = (1 << var_s2);
+                var_s7 = (1 << i);
                 var_s6 = 1;
                 var_s5 = temp_v0_3;
             }
             else if (temp_v0_3 == var_s5)
             {
-                var_s7 |= (1 << var_s2);
+                var_s7 |= (1 << i);
                 var_s6 += 1;
             }
         }
@@ -94,10 +94,9 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const chara)
         {
             var_v1 = FP_MULTIPLY(Rng_RandQ12(), var_s6, Q12_SHIFT);
 
-            for (var_s2 = 0; var_s2 < 8; var_s2++)
+            for (i = 0; i < 8; i++)
             {
-                temp = (1 << var_s2);
-
+                temp = 1 << i;
                 if (!(var_s7 & temp))
                 {
                     continue;
@@ -111,7 +110,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const chara)
                 var_v1--;
             }
 
-            var_s3 = var_s2 << 9;
+            var_s3 = i << 9;
             break;
         }
     }

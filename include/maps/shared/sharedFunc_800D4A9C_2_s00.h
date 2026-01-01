@@ -67,7 +67,7 @@ void sharedFunc_800D4A9C_2_s00(s_SubCharacter* airScreamer)
             {
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_1;
             }
-            else if (airScreamerProps.timer_120 == 0)
+            else if (airScreamerProps.timer_120 == Q12(0.0f))
             {
                 if (var_s5)
                 {

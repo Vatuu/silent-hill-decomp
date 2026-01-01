@@ -4,6 +4,8 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* airScreamer)
     bool var_s2;
     s32  animStatus;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     var_s1     = false;
     var_s2     = false;
     animStatus = airScreamer->model_0.anim_4.status_0;
@@ -11,12 +13,12 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* airScreamer)
     switch (airScreamer->model_0.stateStep_3)
     {
         case 0:
-            airScreamer->model_0.stateStep_3 = 1;
+            airScreamer->model_0.stateStep_3 = AirScreamerStateStep_1;
 
         case 1:
             if (animStatus == ANIM_STATUS(19, true))
             {
-                airScreamer->model_0.stateStep_3     = 2;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_2;
                 airScreamer->model_0.anim_4.status_0 = 4;
             }
             break;
@@ -24,8 +26,8 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* airScreamer)
         case 2:
             if (animStatus == ANIM_STATUS(2, true) && airScreamer->model_0.anim_4.keyframeIdx_8 < 8192)
             {
-                airScreamer->model_0.stateStep_3           = 3;
-                airScreamer->properties_E4.unk0.flags_11C |= 1 << 5;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_3;
+                airScreamerProps.flags_11C |= 1 << 5;
             }
             break;
 
@@ -38,7 +40,7 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* airScreamer)
             {
                 var_s1                     = true;
                 var_s2                     = true;
-                airScreamer->model_0.stateStep_3 = 4;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_4;
             }
             break;
 
@@ -65,56 +67,58 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* airScreamer)
 
                     if (var_s2 && Rng_RandQ12() < FP_ANGLE(180.0f))
                     {
-                        airScreamer->model_0.controlState_2 = 24;
+                        airScreamer->model_0.controlState_2= AirScreamerControl_24;
                     }
                     else
                     {
-                        airScreamer->model_0.controlState_2 = 23;
+                        airScreamer->model_0.controlState_2= AirScreamerControl_23;
                     }
                 }
                 else
                 {
                     if (var_s2)
                     {
-                        airScreamer->model_0.controlState_2 = 24;
+                        airScreamer->model_0.controlState_2= AirScreamerControl_24;
                     }
                     else if (Rng_RandQ12() < FP_ANGLE(180.0f))
                     {
-                        airScreamer->model_0.controlState_2 = 24;
+                        airScreamer->model_0.controlState_2= AirScreamerControl_24;
                     }
                     else
                     {
-                        airScreamer->model_0.controlState_2 = 23;
+                        airScreamer->model_0.controlState_2= AirScreamerControl_23;
                     }
                 }
-                airScreamer->model_0.stateStep_3 = 0;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
             }
             break;
 
         case 1:
-            airScreamer->model_0.controlState_2               = 29;
-            airScreamer->model_0.stateStep_3           = 0;
-            airScreamer->properties_E4.unk0.flags_11C |= 1 << 3;
+            airScreamer->model_0.controlState_2= AirScreamerControl_29;
+            airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
+            airScreamerProps.flags_11C |= 1 << 3;
             break;
 
         case 2:
-            airScreamer->model_0.controlState_2               = 30;
-            airScreamer->model_0.stateStep_3           = 0;
-            airScreamer->properties_E4.unk0.flags_11C |= 1 << 3;
+            airScreamer->model_0.controlState_2= AirScreamerControl_30;
+            airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
+            airScreamerProps.flags_11C |= 1 << 3;
             break;
 
         case 3:
         case 4:
-            airScreamer->model_0.controlState_2     = 32;
-            airScreamer->model_0.stateStep_3 = 0;
+            airScreamer->model_0.controlState_2= AirScreamerControl_32;
+            airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
             if (airScreamer->health_B0 <= 0)
             {
-                airScreamer->properties_E4.unk0.flags_11C |= 1 << 6;
+                airScreamerProps.flags_11C |= 1 << 6;
             }
             else
             {
-                airScreamer->properties_E4.unk0.flags_11C |= 1 << 3;
+                airScreamerProps.flags_11C |= 1 << 3;
             }
             break;
     }
+
+    #undef airScreamerProps
 }

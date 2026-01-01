@@ -80,7 +80,7 @@ void func_800D3EB8(s_SubCharacter* airScreamer) // 0x800D3EB8
     stateStep = airScreamer->model_0.stateStep_3;
     switch (stateStep)
     {
-        case 0:
+        case AirScreamerStateStep_0:
             temp_s3 = sharedFunc_800D5F00_0_s01(airScreamer);
             cond0 = false;
             cond1 = airScreamer->position_18.vy >= Q12(8.0f);
@@ -160,11 +160,11 @@ void func_800D3EB8(s_SubCharacter* airScreamer) // 0x800D3EB8
             }
             break;
 
-        case 1:
+        case AirScreamerStateStep_1:
             Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
             break;
 
-        case 2:
+        case AirScreamerStateStep_2:
             Ai_AirScreamer_DamageTake(airScreamer, Q12(0.5f));
 
             if (activeAnimStatus != animStatus12)

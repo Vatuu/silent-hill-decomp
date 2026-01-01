@@ -4,6 +4,8 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* airScreamer)
     bool cond1;
     s32  animStatus;
 
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
+
     cond0     = false;
     cond1     = false;
     animStatus = airScreamer->model_0.anim_4.status_0;
@@ -11,12 +13,12 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* airScreamer)
     switch (airScreamer->model_0.stateStep_3)
     {
         case 0:
-            airScreamer->model_0.stateStep_3 = 1;
+            airScreamer->model_0.stateStep_3 = AirScreamerStateStep_1;
 
         case 1:
             if (animStatus == ANIM_STATUS(25, true) || animStatus == ANIM_STATUS(23, true))
             {
-                airScreamer->model_0.stateStep_3     = 2;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_2;
                 airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
             }
             break;
@@ -24,7 +26,7 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* airScreamer)
         case 2:
             if (animStatus == ANIM_STATUS(1, true) && airScreamer->model_0.anim_4.keyframeIdx_8 < 8192)
             {
-                airScreamer->model_0.stateStep_3             = 3;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_3;
                 airScreamer->properties_E4.player.flags_11C |= PlayerFlag_Unk5;
             }
             break;
@@ -38,7 +40,7 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* airScreamer)
             {
                 cond0                      = true;
                 cond1                      = true;
-                airScreamer->model_0.stateStep_3 = 4;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_4;
             }
             break;
 
@@ -64,44 +66,44 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* airScreamer)
 
                     if (cond1 && Rng_RandQ12() < FP_ANGLE(180.0f))
                     {
-                        airScreamer->model_0.controlState_2 = 11;
+                        airScreamer->model_0.controlState_2= AirScreamerControl_11;
                     }
                     else
                     {
-                        airScreamer->model_0.controlState_2 = 10;
+                        airScreamer->model_0.controlState_2= AirScreamerControl_10;
                     }
                 }
                 else
                 {
                     if (cond1)
                     {
-                        airScreamer->model_0.controlState_2 = 11;
+                        airScreamer->model_0.controlState_2= AirScreamerControl_11;
                     }
                     else if (Rng_RandQ12() < FP_ANGLE(180.0f))
                     {
-                        airScreamer->model_0.controlState_2 = 11;
+                        airScreamer->model_0.controlState_2= AirScreamerControl_11;
                     }
                     else
                     {
-                        airScreamer->model_0.controlState_2 = 10;
+                        airScreamer->model_0.controlState_2= AirScreamerControl_10;
                     }
                 }
 
-                airScreamer->model_0.stateStep_3 = 0;
+                airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
             }
             break;
 
         case 1:
         case 2:
-            airScreamer->model_0.controlState_2                 = 16;
-            airScreamer->model_0.stateStep_3             = 0;
+            airScreamer->model_0.controlState_2= AirScreamerControl_16;
+            airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
             airScreamer->properties_E4.player.flags_11C |= PlayerFlag_WallStopRight;
             break;
 
         case 3:
         case 4:
-            airScreamer->model_0.controlState_2     = 17;
-            airScreamer->model_0.stateStep_3 = 0;
+            airScreamer->model_0.controlState_2= AirScreamerControl_17;
+            airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
             if (airScreamer->health_B0 <= Q12(0.0f))
             {
@@ -113,4 +115,6 @@ void sharedFunc_800D5B88_2_s00(s_SubCharacter* airScreamer)
             }
             break;
     }
+
+    #undef airScreamerProps
 }
