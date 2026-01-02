@@ -1,18 +1,18 @@
 name: Video stream logic overlay (STREAM)
-sha1: 57994EA4ABE00442A73C39368B2E618195B00808
+sha1: 1230ed958342a6b1dd94a245e3664093c2da32f3
 options:
   basename: STREAM.BIN
-  target_path: assets/JAP2/VIN/STREAM.BIN
+  target_path: assets/JAP1/VIN/STREAM.BIN
   base_path: ../../..
   platform: psx
   compiler: GCC
 
-  asm_path: asm/JAP2/screens/stream
+  asm_path: asm/JAP1/screens/stream
   src_path: src/screens/stream
-  asset_path: asm/JAP2/screens/stream
-  build_path: build/JAP2
+  asset_path: asm/JAP1/screens/stream
+  build_path: build/JAP1
 
-  ld_script_path: linkers/JAP2/screens/stream.ld
+  ld_script_path: linkers/JAP1/screens/stream.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -29,14 +29,14 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/JAP2/screens/sym.stream.txt
-    - configs/JAP2/sym.bodyprog.txt
-    - configs/JAP2/sym.main.txt
+    - configs/JAP1/screens/sym.stream.txt
+    - configs/JAP1/sym.bodyprog.txt
+    - configs/JAP1/sym.main.txt
   reloc_addrs_path:
-    - configs/JAP2/screens/rel.stream.txt
+    - configs/JAP1/screens/rel.stream.txt
 
-  undefined_funcs_auto_path: linkers/JAP2/screens/undefined_funcs_auto.stream.txt
-  undefined_syms_auto_path: linkers/JAP2/screens/undefined_syms_auto.stream.txt
+  undefined_funcs_auto_path: linkers/JAP1/screens/undefined_funcs_auto.stream.txt
+  undefined_syms_auto_path: linkers/JAP1/screens/undefined_syms_auto.stream.txt
 
   extensions_path: tools/splat_ext
 

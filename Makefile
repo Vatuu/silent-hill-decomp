@@ -15,6 +15,7 @@ SKIP_ASM       ?= 0
 # Retail:
 # USA
 # Japanese REV 0
+# Japanese REV 1
 # Japanese REV 2
 
 GAME_VERSION = USA
@@ -420,6 +421,8 @@ objdiff-config-all:
 	mkdir -p $(EXPECTED_DIR)
 	$(MAKE) GAME_VERSION=USA objdiff-generate
 	$(MAKE) GAME_VERSION=JAP0 objdiff-generate
+	$(MAKE) GAME_VERSION=JAP1 objdiff-generate
+	$(MAKE) GAME_VERSION=JAP2 objdiff-generate
 	$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config-retail.yaml ALL
 
 objdiff-generate:
