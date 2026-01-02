@@ -1832,6 +1832,8 @@ extern const char* MAP_MESSAGES[]; // 0x800DF6B8
 
 extern s_MapOverlayHeader_7C sharedData_800DEE50_1_s01;
 
+extern u8 sharedData_800EEAC4_2_s00[][4][4];
+
 extern VECTOR3 sharedData_800F216C_2_s00;
 
 extern VECTOR3 sharedData_800F217C_2_s00;
