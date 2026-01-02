@@ -13,22 +13,6 @@ typedef struct
 
 extern s_800CA4F0 D_800CA4F0;
 
-extern u8* D_800CA4F4;
-
-extern s32 D_800CA4F8;
-
-extern s32 D_800CA4FC; // Boolean value
-
-extern u8* D_800CA500;
-
-extern u8* D_800CA504;
-
-extern s32 D_800CA508;
-
-extern u8* D_800CA50C;
-
-extern s32 D_800CA510;
-
 /** Displays the Konami logo and starts loading base hero animations. */
 void GameState_KonamiLogo_Update(void);
 
@@ -44,14 +28,38 @@ void Gfx_KonamiScreenDraw(void);
 
 void Gfx_KcetScreenDraw(void);
 
-void func_800CA234(void);
+// Resumable LZSS decompression routines.
+// Used in JP release for decompressing SAFEx.BIN overlays, unused in other releases.
 
-s32 func_800CA240(s32* arg0);
+/* @brief Resets LZSS decompressor state. */
+void Lzss_Reset(void);
 
-void func_800CA24C(s32 arg0, s32 arg1, s32 arg2);
+/* @brief Fetches the decompressed size from an LZSS-compressed buffer.
+ *
+ * @param inData Compressed buffer pointer.
+ * @return Size of decompressed data.
+ */
+s32 Lzss_DecompressedSizeGet(u8* inData);
 
-s32 func_800CA2B8(void);
+/* @brief Initializes the decompressor.
+ *
+ * @param inData Compressed buffer pointer.
+ * @param outData Output decompressed buffer pointer.
+ * @param inDataLen Maximum length of compressed data to parse.
+ */
+void Lzss_Init(u8* inData, u8* outData, s32 inDataLen);
 
-void func_800CA2C8(s32 arg0);
+/* @brief Returns whether LZSS decompressor is still active / has data to parse.
+ *
+ * @return Active state of decompressor.
+ */
+bool Lzss_IsActive(void);
+
+/* @brief Begins decoding LZSS compressed data. Optionally pauses decoding after a certain time limit.
+ * Can be resumed by calling `Lzss_Decode` later on.
+ *
+ * @param timeLimit Maximum time to spend decompressing, in 60Hz frames. `NO_VALUE` for no time limit.
+ */
+void Lzss_Decode(s32 timeLimit);
 
 #endif

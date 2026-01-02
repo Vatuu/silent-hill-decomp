@@ -27,3 +27,26 @@ GameState_KcetLogo_Update      = 0x800C99A4; // type:func
 Gfx_BootScreenImageSegmentDraw = 0x800C9E6C; // type:func
 Gfx_KonamiScreenDraw           = 0x800C9FB8; // type:func
 Gfx_KcetScreenDraw             = 0x800CA120; // type:func
+Lzss_Reset                     = 0x800CA234; // type:func
+Lzss_DecompressedSizeGet       = 0x800CA240; // type:func
+Lzss_Init                      = 0x800CA24C; // type:func
+Lzss_IsActive                  = 0x800CA2B8; // type:func
+Lzss_Decode                    = 0x800CA2C8; // type:func
+
+
+
+//================================================
+//=== .data section
+//================================================
+
+
+//---------------------------------------------------------------
+//--- PA: 0x000F78   VA: 0x800CA4F0   subsegment: .data, b_konami
+//---------------------------------------------------------------
+g_Lzss_Window                  = 0x800CA4F4; // type:s32
+g_Lzss_IsActive                = 0x800CA4FC; // type:s32
+g_Lzss_CurPosition             = 0x800CA500; // type:s32
+g_Lzss_OutPosition             = 0x800CA504; // type:s32
+g_Lzss_WindowOffset            = 0x800CA508; // type:s32
+g_Lzss_EndPosition             = 0x800CA50C; // type:s32
+g_Lzss_CurFlag                 = 0x800CA510; // type:s32
