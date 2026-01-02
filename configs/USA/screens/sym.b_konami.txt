@@ -10,6 +10,10 @@
 //--- PA: 0x000008   VA: 0x800C9580   subsegment: .rodata, b_konami
 //-----------------------------------------------------------------
 
+//-------------------------------------------------------------
+//--- PA: 0x00002C   VA: 0x800C95A4   subsegment: .rodata, lzss
+//-------------------------------------------------------------
+
 
 
 //================================================
@@ -28,6 +32,10 @@ GameState_KcetLogo_Update       = 0x800C99A4; // type:func
 Gfx_BootScreenImageSegmentDraw  = 0x800C9E6C; // type:func
 Gfx_KonamiScreenDraw            = 0x800C9FB8; // type:func
 Gfx_KcetScreenDraw              = 0x800CA120; // type:func
+
+//-------------------------------------------------------
+//--- PA: 0x000CBC   VA: 0x800CA234   subsegment: c, lzss
+//-------------------------------------------------------
 Lzss_Reset                      = 0x800CA234; // type:func
 Lzss_DecompressedSizeGet        = 0x800CA240; // type:func
 Lzss_Init                       = 0x800CA24C; // type:func
@@ -44,6 +52,11 @@ Lzss_Decode                     = 0x800CA2C8; // type:func
 //---------------------------------------------------------------
 //--- PA: 0x000F78   VA: 0x800CA4F0   subsegment: .data, b_konami
 //---------------------------------------------------------------
+nextGameState                   = 0x800CA4F0; // type:u8 - 3 random pad bytes follow.
+
+//-----------------------------------------------------------
+//--- PA: 0x000F7C   VA: 0x800CA4F4   subsegment: .data, lzss
+//-----------------------------------------------------------
 g_Lzss_Window                   = 0x800CA4F4; // type:s32
 g_Lzss_IsActive                 = 0x800CA4FC; // type:s32
 g_Lzss_CurPosition              = 0x800CA500; // type:s32

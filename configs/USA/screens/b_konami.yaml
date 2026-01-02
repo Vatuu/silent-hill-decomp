@@ -58,12 +58,16 @@ segments:
       # .rodata section
       - [0x0, pad]
       - [0x8, .rodata, b_konami]
+      - [0x28, pad]
+      - [0x2C, .rodata, lzss]
 
       # .text section
       - [0x34, c, b_konami]
+      - [0xCBC, c, lzss]
 
       # .data section
       - [0xF78, .data, b_konami]
+      - [0xF7C, .data, lzss]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data
