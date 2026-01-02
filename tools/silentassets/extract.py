@@ -189,29 +189,67 @@ def _decryptOverlay(data: bytes):
 
     return output
 
-# Weird packing/compression over the BG/HP_SAFE1.BIN and BG/S__SAFE2.BIN files.
-# Possibly used by .CMP files too (but those use more control codes?)
-def _decompressSafeOverlay(data: bytes) -> bytes:
+# LZSS decompressor based on JP1.0 0x800CC924 code.
+# Used (pointlessly) to compress the encrypted HP_SAFE1.BIN / S__SAFE2.BIN files, making them larger than the uncompressed versions.
+# Also used (pointlessly) to compress the .CMP files in TEST folder, which also have the uncompressed versions alongside them.
+def _decompressLzssFile(data: bytes) -> bytes:
     # Read the expected output size from the first 4 bytes
     expected_size = int.from_bytes(data[0:4], byteorder='little')
     
-    result = bytearray()
-    i = 4  # Start after the size header
+    input_ptr = 4 # Start after the size header
+    output = bytearray()
     
-    while len(result) < expected_size and i < len(data):
-        b = data[i]
-        i += 1
+    # Ring buffer (Sliding Window)
+    window = bytearray([0] * 4096)
+    window_ptr = 0xFEE # Standard initial window pointer
+    
+    tag_register = 0 
+    
+    while input_ptr < len(data) and expected_size > len(output):
+        # "Tag Reload" Trick
+        # Shift the register; if the 'sentinel' bit at 0x100 is gone, 
+        # we've processed 8 bits and need a new tag byte.
+        tag_register >>= 1
         
-        if b == 0xFF:  # Copy 8 bytes
-            result.extend(data[i:i + 8])
-            i += 8
-        elif b == 0x0F:  # Copy 4 bytes
-            result.extend(data[i:i + 4])
-            i += 4
-        else:  # Copy single byte
-            logging.info(f"  _decompressSafeOverlay: unknown control byte 0x{b:X}")
-    
-    return bytes(result)
+        if (tag_register & 0x100) == 0:
+            if input_ptr >= len(data): break
+            # Load new tag and set the sentinel bit at the 9th position
+            tag_register = data[input_ptr] | 0xFF00
+            input_ptr += 1
+            
+        # The LSB now contains our current flag
+        if tag_register & 1:
+            # 1 = Literal byte
+            if input_ptr >= len(data): break
+            byte = data[input_ptr]
+            input_ptr += 1
+            
+            output.append(byte)
+            window[window_ptr] = byte
+            window_ptr = (window_ptr + 1) & 0xFFF
+        else:
+            # 0 = Reference (2 bytes)
+            if input_ptr + 1 >= len(data): break
+            
+            b1 = data[input_ptr]
+            b2 = data[input_ptr + 1]
+            input_ptr += 2
+            
+            offset = b1 | ((b2 & 0xF0) << 4)
+            length = (b2 & 0x0F) + 3
+            
+            for _ in range(length):
+                byte = window[offset]
+                output.append(byte)
+                
+                # Write to window and move window_ptr
+                window[window_ptr] = byte
+                window_ptr = (window_ptr + 1) & 0xFFF
+                
+                # Move reference offset forward (circularly)
+                offset = (offset + 1) & 0xFFF
+                    
+    return bytes(output)
 
 def _extract(entries:Iterable[TableEntry], output: Path, file: BinaryIO, sectorSize: int, releaseFlags: int):
     index = 0
@@ -238,7 +276,14 @@ def _extract(entries:Iterable[TableEntry], output: Path, file: BinaryIO, sectorS
                 data = _decryptOverlay(data)
             elif "HP_SAFE1" in i.path or "S__SAFE2" in i.path:
                 logging.info(f"\tDecompressing/decrypting {i.path}...")
-                data = _decryptOverlay(_decompressSafeOverlay(data))
+                data = _decryptOverlay(_decompressLzssFile(data))
+        elif i.type == "CMP":
+            logging.info(f"\tDecompressing {i.path}...")
+            decData = _decompressLzssFile(data)
+            outputDecPath = outputPath.with_name(outputPath.name + ".dec")
+            with outputDecPath.open("wb") as _file:
+                _file.write(decData)
+
         with outputPath.open("wb") as _file:
             _file.write(data)
         index = index + 1
