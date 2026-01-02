@@ -228,14 +228,14 @@ void func_800DD240(VECTOR3* vec);
 void func_800DD67C(VECTOR3*, s_SubCharacter*, GsCOORDINATE2*);
 void func_800DD7D0(VECTOR3*);
 void func_800DD868(void);
-u8   func_800DD964(void);
+s32  func_800DD964(void);
 void func_800DD98C(s32 arg0); // Assumed void return type.
 void func_800DD98C(s32);
 void func_800DD9B0(s_SubCharacter* chara);
 void func_800DD9D4(s_SubCharacter* chara);
 void func_800DD9F8(s_SubCharacter* chara);
 bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void func_800DDBBC(s_SubCharacter*);
+void func_800DDBBC(s_SubCharacter* incubus);
 void func_800DDDB0(s_SubCharacter* chara);
 void func_800DDEEC(s_SubCharacter* chara);
 void func_800DDF14(s_SubCharacter* chara);

@@ -289,7 +289,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponAttack); // 0x8004C088
  * ending requires the handgun to be out of ammo too. This function is also triggered
  * during the boss fight.
  */
-bool func_8004C328(void); // 0x8004C328
+bool func_8004C328(bool unused); // 0x8004C328
 
 /** @brief Used to check if the Hyper Blaster can be added to the inventory.
  *

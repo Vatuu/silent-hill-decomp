@@ -3,6 +3,7 @@
 #include "bodyprog/credits.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/sound_system.h"
+#include "bodyprog/item_screens.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map7/map7_s03.h"
@@ -384,7 +385,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD868);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD8CC);
 
-u8 func_800DD964(void) // 0x8007F250
+s32 func_800DD964(void) // 0x8007F250
 {
     u8 sp10;
 
@@ -503,7 +504,47 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDB68);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDBA4);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDBBC);
+void func_800DDBBC(s_SubCharacter* incubus) 
+{
+    q19_12 hp;
+
+    if (!incubus->properties_E4.incubus.someState_F0)
+    {
+        if (incubus->properties_E4.incubus.bossFightTimer_F4 < Q12(0.0f))
+        {
+            incubus->health_B0 = Q12(0.0f);
+            incubus->damage_B4.amount_C = 1;
+        }
+        if (!func_8004C328(false))
+        {
+            incubus->properties_E4.incubus.bossFightTimer_F4 -= g_DeltaTime0;
+        }
+        if (!(incubus->flags_3E & 4))
+        {
+            incubus->damage_B4.amount_C *= 10;
+        }
+        if (incubus->damage_B4.amount_C > 0)
+        {
+            hp = incubus->health_B0 - incubus->damage_B4.amount_C;
+            if (hp < Q12(0.0f))
+            {
+                hp = Q12(0.0f);
+            }
+            incubus->health_B0 = hp;
+            if (hp < Q12(20.0f) && !func_800DD964())
+            {
+                incubus->health_B0 = Q12(0.0f);
+                incubus->model_0.controlState_2 = 12;
+                incubus->model_0.stateStep_3 = 0;
+                incubus->properties_E4.incubus.someState_F0++;
+            }
+        }
+    }
+    incubus->damage_B4.amount_C = 0;
+    incubus->damage_B4.position_0.vz = Q12(0.0f);
+    incubus->damage_B4.position_0.vy = Q12(0.0f);
+    incubus->damage_B4.position_0.vx = Q12(0.0f);
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDCC4);
 

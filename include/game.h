@@ -1492,6 +1492,15 @@ typedef struct _PropertiesStalker
     q4_12  timer_116;
 } s_PropertiesStalker;
 
+/** @brief Could be Incubus or Incubator. */
+typedef struct _PropertiesIncubus
+{
+    u_Property dummy_E8[2];
+    s32        someState_F0;
+    q19_12     bossFightTimer_F4;
+    u_Property dummy_F8[12];
+} s_PropertiesIncubus;
+
 /** Offsets for translation? */
 typedef struct
 {
@@ -1588,6 +1597,7 @@ typedef struct _SubCharacter
         s_PropertiesRomper          romper;
         s_PropertiesSplitHead       splitHead;
         s_PropertiesStalker         stalker;
+        s_PropertiesIncubus         incubus;
     } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);

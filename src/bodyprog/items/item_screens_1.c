@@ -125,7 +125,7 @@ void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
     func_8004C040();
 }
 
-bool func_8004C328(void) // 0x8004C328
+bool func_8004C328(bool unused) // 0x8004C328
 {
     u32 itemIdx;
     u8  itemId;
