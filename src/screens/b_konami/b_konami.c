@@ -495,29 +495,29 @@ void Lzss_Decode(s32 timeLimit) // 0x800CA2C8
         }
 
         // Pause decompression if we've passed the time limit.
-        // State vars will be written to globals after breaking, allowing func to be ran again in next frame.
+        // State vars will be written to globals after breaking, allowing the func to ran again on the next tick.
         // (SH only seems to pass `NO_VALUE` to this, so this pause code goes unused.)
-        // TODO: Not sure why it checks (1 << 9) is unset yet.
+        // TODO: Not sure why it checks `(1 << 9)` is unset yet.
         if (!(flag & (1 << 9)) && VSync(SyncMode_Immediate) > expectedTime && timeLimit != NO_VALUE)
         {
             break;
         }
 
-        // Shift the register; if the 'sentinel' bit at bit 8 is gone, 
-        // we've processed 8 bits and need to read a new flag byte.
+        // Shift register. If 'sentinel' bit at bit 8 is gone, 
+        // 8 bits have been processed and need to read new flag byte.
         flag = flag >> 1;
 
         if (!(flag & (1 << 8)))
         {
-            // Load new flag and set sentinel bits above the 8th bit.
+            // Load new flag and set sentinel bits above 8th bit.
             flag = *curPos++;
             flag |= 0xFF00;
         }
 
-        // The LSB now contains our current flag.
+        // LSB now contains current flag.
         if (flag & 1)
         {
-            // Flag 1 = Copy literal byte
+            // Flag 1 = Copy literal byte.
             windowPos  = &g_Lzss_Window[windowOffset];
             temp_v1    = *curPos++;
             *windowPos = temp_v1;
@@ -527,7 +527,7 @@ void Lzss_Decode(s32 timeLimit) // 0x800CA2C8
         }
         else
         {
-            // Flag 0 = Copy reference (2 bytes)
+            // Flag 0 = Copy reference (2 bytes).
             if (curPos == (endPos - 1))
             {
                 // Not enough room for LZSS reference, end decoding.
