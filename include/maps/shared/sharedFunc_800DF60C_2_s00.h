@@ -4,10 +4,10 @@ void sharedFunc_800DF60C_2_s00(s_SubCharacter* airScreamer)
     s32 temp_t1;
     s32 var_t2;
     s32 var_t3;
-    s32 var_t4;
+    s32 idx1;
     s32 temp3;
     s32 temp4;
-    s32 idx;
+    s32 idx0;
 
     temp_s0 = airScreamer->model_0.anim_4.status_0 | 1;
     temp_t1 = func_80080478(&airScreamer->position_18, &airScreamer->properties_E4.airScreamer.targetPosition_F8);
@@ -15,11 +15,11 @@ void sharedFunc_800DF60C_2_s00(s_SubCharacter* airScreamer)
 
     if (temp_s0 == 45)
     {
-        var_t4 = 12;
+        idx1 = 12;
     }
     else
     {
-        var_t4 = 11;
+        idx1 = 11;
     }
 
     var_t2 = sharedData_800CAA98_0_s01.unk_380[30][0];
@@ -44,18 +44,18 @@ void sharedFunc_800DF60C_2_s00(s_SubCharacter* airScreamer)
     sharedData_800E21D0_0_s01.field_B4[0][2] = sharedData_800CAA98_0_s01.unk_380[2][0];
     sharedData_800E21D0_0_s01.field_B4[0][1] = sharedData_800CAA98_0_s01.unk_380[2][1];
 
-    temp3 = sharedData_800CAA98_0_s01.unk_380[var_t4][0];
-    temp4 = sharedData_800CAA98_0_s01.unk_380[var_t4][1];
+    temp3 = sharedData_800CAA98_0_s01.unk_380[idx1][0];
+    temp4 = sharedData_800CAA98_0_s01.unk_380[idx1][1];
 
-    idx                                        = 3;
-    sharedData_800E21D0_0_s01.field_B4[idx][2] = var_t2;
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = var_t3;
-    sharedData_800E21D0_0_s01.field_B4[idx][3] = temp_t1;
-    sharedData_800E21D0_0_s01.field_B4[idx][0] = 1;
+    idx0                                        = 3;
+    sharedData_800E21D0_0_s01.field_B4[idx0][2] = var_t2;
+    sharedData_800E21D0_0_s01.field_B4[idx0][1] = var_t3;
+    sharedData_800E21D0_0_s01.field_B4[idx0][3] = temp_t1;
+    sharedData_800E21D0_0_s01.field_B4[idx0][0] = 1;
 
-    idx                                        = 1;
-    sharedData_800E21D0_0_s01.field_B4[idx][2] = temp3;
-    sharedData_800E21D0_0_s01.field_B4[idx][1] = temp4;
+    idx0                                        = 1;
+    sharedData_800E21D0_0_s01.field_B4[idx0][2] = temp3;
+    sharedData_800E21D0_0_s01.field_B4[idx0][1] = temp4;
 
     sharedFunc_800D5E78_0_s01(airScreamer, temp_t1 / 2);
 }

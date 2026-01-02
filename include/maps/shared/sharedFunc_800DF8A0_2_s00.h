@@ -6,7 +6,8 @@ void sharedFunc_800DF8A0_2_s00(s_SubCharacter* airScreamer)
     s32 temp3;
     s32 temp4;
 
-    if (airScreamer->model_0.anim_4.status_0 == 9 && airScreamer->model_0.anim_4.time_4 > Q12(64.0f))
+    if (airScreamer->model_0.anim_4.status_0 == ANIM_STATUS(AirScreamerAnim_4, true) &&
+        airScreamer->model_0.anim_4.time_4 > Q12(64.0f))
     {
         idx0 = 4;
         var_a3 = 32;

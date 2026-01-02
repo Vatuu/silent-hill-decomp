@@ -237,7 +237,13 @@ void func_800DD9B0(s_SubCharacter* chara);
 void func_800DD9D4(s_SubCharacter* chara);
 void func_800DD9F8(s_SubCharacter* chara);
 bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
+
+void func_800DDB68(s_SubCharacter* chara, s32 soundIdx);
+
+s32 func_800DDBA4(s32 idx);
+
 void func_800DDBBC(s_SubCharacter* incubus);
+
 void func_800DDDB0(s_SubCharacter* chara);
 void func_800DDEEC(s_SubCharacter* chara);
 void func_800DDF14(s_SubCharacter* chara);
@@ -338,9 +344,5 @@ void func_800E9874(void);
 void func_800E98EC(void);
 
 void func_800E9AC8(void);
-
-s32 func_800DDBA4(s32 idx);
-
-void func_800DDB68(s_SubCharacter *chara, s32 soundIdx);
 
 #endif

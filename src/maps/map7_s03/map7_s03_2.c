@@ -1,9 +1,9 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/credits.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/sound_system.h"
-#include "bodyprog/item_screens.h"
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/map7/map7_s03.h"
@@ -500,48 +500,48 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDB3C);
 
-void func_800DDB68(s_SubCharacter* chara, s32 soundIdx)
+void func_800DDB68(s_SubCharacter* chara, s32 soundIdx) // 0x800DDB68
 {
-    func_8005DC1C(D_800EC8C8[soundIdx].id_0,
-                  &chara->position_18,
-                  D_800EC8C8[soundIdx].volume_2.val16,
-                  0
-    );
+    func_8005DC1C(D_800EC8C8[soundIdx].id_0, &chara->position_18, D_800EC8C8[soundIdx].volume_2.val16, 0);
 }
 
-s32 func_800DDBA4(s32 idx)
+s32 func_800DDBA4(s32 idx) // 0x800DDBA4
 {
     return D_800EC8FC[idx];
 }
 
-void func_800DDBBC(s_SubCharacter* incubus) 
+void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
 {
-    q19_12 hp;
+    q19_12 health;
 
-    if (!incubus->properties_E4.incubus.someState_F0)
+    if (incubus->properties_E4.incubus.someState_F0 == 0)
     {
         if (incubus->properties_E4.incubus.bossFightTimer_F4 < Q12(0.0f))
         {
             incubus->health_B0 = Q12(0.0f);
             incubus->damage_B4.amount_C = 1;
         }
+
         if (!func_8004C328(false))
         {
             incubus->properties_E4.incubus.bossFightTimer_F4 -= g_DeltaTime0;
         }
-        if (!(incubus->flags_3E & 4))
+
+        if (!(incubus->flags_3E & (1 << 2)))
         {
             incubus->damage_B4.amount_C *= 10;
         }
-        if (incubus->damage_B4.amount_C > 0)
+    
+        if (incubus->damage_B4.amount_C > Q12(0.0f))
         {
-            hp = incubus->health_B0 - incubus->damage_B4.amount_C;
-            if (hp < Q12(0.0f))
+            health = incubus->health_B0 - incubus->damage_B4.amount_C;
+            if (health < Q12(0.0f))
             {
-                hp = Q12(0.0f);
+                health = Q12(0.0f);
             }
-            incubus->health_B0 = hp;
-            if (hp < Q12(20.0f) && !func_800DD964())
+            incubus->health_B0 = health;
+
+            if (health < Q12(20.0f) && func_800DD964() == 0)
             {
                 incubus->health_B0 = Q12(0.0f);
                 incubus->model_0.controlState_2 = 12;
@@ -550,7 +550,8 @@ void func_800DDBBC(s_SubCharacter* incubus)
             }
         }
     }
-    incubus->damage_B4.amount_C = 0;
+
+    incubus->damage_B4.amount_C = Q12(0.0f);
     incubus->damage_B4.position_0.vz = Q12(0.0f);
     incubus->damage_B4.position_0.vy = Q12(0.0f);
     incubus->damage_B4.position_0.vx = Q12(0.0f);

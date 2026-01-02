@@ -1429,15 +1429,15 @@ typedef struct
 STATIC_ASSERT_SIZEOF(s_func_800CB560, 96);
 
 /** @brief Stores SFX ID and volume.
- *  Volume union required becase one function reads the value as u16, another as u8.
- *  Actual value fits into u8 (8 bit volume control).
+ *  Volume union required becase one function reads the value as `u16`, another as `u8`.
+ *  Actual value fits into `u8` (8 bit volume control).
  */
 typedef struct _SfxVolume
 {
     u16 id_0;
     union
     {
-        u8 val8;
+        u8  val8;
         u16 val16;
     } volume_2;
 } s_SfxVolume;
