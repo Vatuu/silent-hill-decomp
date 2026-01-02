@@ -502,7 +502,10 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDB3C);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDB68);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDBA4);
+s32 func_800DDBA4(s32 idx)
+{
+    return D_800EC8FC[idx];
+}
 
 void func_800DDBBC(s_SubCharacter* incubus) 
 {
