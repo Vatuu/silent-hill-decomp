@@ -500,7 +500,14 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDB3C);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDB68);
+void func_800DDB68(s_SubCharacter* chara, s32 soundIdx)
+{
+    func_8005DC1C(D_800EC8C8[soundIdx].id_0,
+                  &chara->position_18,
+                  D_800EC8C8[soundIdx].volume_2.val16,
+                  0
+    );
+}
 
 s32 func_800DDBA4(s32 idx)
 {

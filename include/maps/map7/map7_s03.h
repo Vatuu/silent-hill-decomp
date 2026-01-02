@@ -135,6 +135,7 @@ extern u8 D_800F481A;
 extern u8 D_800F481B;
 extern u8 D_800F481C;
 extern u8 D_800EC8FC[340];
+extern s_SfxVolume D_800EC8C8[13];
 
 extern q19_12 D_800F4820; // Time.
 
@@ -339,5 +340,7 @@ void func_800E98EC(void);
 void func_800E9AC8(void);
 
 s32 func_800DDBA4(s32 idx);
+
+void func_800DDB68(s_SubCharacter *chara, s32 soundIdx);
 
 #endif

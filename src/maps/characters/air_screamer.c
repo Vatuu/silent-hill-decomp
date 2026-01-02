@@ -102,7 +102,7 @@ bool sharedFunc_800D2274_0_s01(s_SubCharacter* airScreamer)
         {
             if (flags & (1 << i))
             {
-                func_8005DC1C(data->sfxVolumes_CE8[i].id_0, &airScreamer->position_18, data->sfxVolumes_CE8[i].volume_2, 0);
+                func_8005DC1C(data->sfxVolumes_CE8[i].id_0, &airScreamer->position_18, data->sfxVolumes_CE8[i].volume_2.val8, 0);
             }
         }
     }
