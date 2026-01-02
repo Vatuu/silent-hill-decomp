@@ -14,6 +14,7 @@ SKIP_ASM       ?= 0
 #
 # Retail:
 # USA
+# Japanese REV 0
 
 GAME_VERSION = USA
 
@@ -60,7 +61,8 @@ GAME_FILE_HILL   := HILL.
 endif
 
 ROM_DIR         := rom
-CONFIG_DIR      := configs/$(GAME_VERSION_DIR)
+CONFIG_BASE_DIR := configs
+CONFIG_DIR      := $(CONFIG_BASE_DIR)/$(GAME_VERSION_DIR)
 LINKER_BASE_DIR := linkers
 LINKER_DIR      := $(LINKER_BASE_DIR)/$(GAME_VERSION_DIR)
 IMAGE_DIR       := $(ROM_DIR)/image
@@ -408,11 +410,21 @@ generate: $(LD_FILES)
 
 objdiff-config:
 	rm -rf $(EXPECTED_DIR)
+	mkdir -p $(EXPECTED_DIR)
+	$(MAKE) objdiff-generate
+	$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config-retail.yaml $(GAME_VERSION_DIR)
+
+objdiff-config-all:
+	rm -rf $(EXPECTED_DIR)
+	mkdir -p $(EXPECTED_DIR)
+	$(MAKE) GAME_VERSION=USA objdiff-generate
+	$(MAKE) GAME_VERSION=JAP0 objdiff-generate
+	$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config-retail.yaml ALL
+
+objdiff-generate:
 	$(MAKE) GEN_COMP_TU=1 regenerate
 	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
-	mkdir -p $(EXPECTED_DIR)
-	mv $(BUILD_DIR)/asm $(EXPECTED_DIR)/asm
-	$(PYTHON) $(OBJDIFF_DIR)/objdiff_generate.py $(OBJDIFF_DIR)/config.yaml
+	mv $(BUILD_DIR)/$(ASM_DIR) $(EXPECTED_DIR)
 
 report:
 	$(MAKE) BUILD_EXE=1 BUILD_ENGINE=1 BUILD_SCREENS=1 BUILD_MAPS=1 objdiff-config
@@ -427,10 +439,10 @@ reset-progress:
 	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build $(TARGET_OUT)
 
 # Rules - Rom handling (Extraction/Insertion)
-# TODO: Allow to insert any files to the game Files
+# TODO: Allow to insert any files to the game files
 # At the moment only overlays have been handled
 
-setup: reset
+setup: reset-root
 	rm -rf $(EXPECTED_DIR)
 	$(MAKE) extract
 	$(MAKE) generate
@@ -451,10 +463,18 @@ clean-rom:
 	find $(ROM_DIR)/$(GAME_VERSION_DIR) -maxdepth 1 -type f -delete
 
 clean:
-	rm -rf $(BUILD_BASE_DIR)
+	rm -rf $(BUILD_DIR)
 	rm -rf $(PERMUTER_DIR)
 
 reset: clean
+	rm -rf $(ASM_DIR)
+	rm -rf $(LINKER_DIR)
+
+clean-root:
+	rm -rf $(BUILD_BASE_DIR)
+	rm -rf $(PERMUTER_DIR)
+
+reset-root: clean-root
 	rm -rf $(ASM_BASE_DIR)
 	rm -rf $(LINKER_BASE_DIR)
 

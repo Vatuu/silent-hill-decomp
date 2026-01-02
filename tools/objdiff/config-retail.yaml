@@ -254,7 +254,12 @@ categories:
       - maps/map7_s03
 
 expected_paths:
-  asm: expected/asm
+  ALL:  expected/
+  USA:  expected/USA
+  EUR:  expected/EUR
+  JAP0: expected/JAP0
+  JAP1: expected/JAP1
+  JAP2: expected/JAP2
 
 ignored_files:
   - main/header

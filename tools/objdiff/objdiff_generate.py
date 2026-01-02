@@ -39,6 +39,7 @@ class Config:
 def _create_config():
     parser = ArgumentParser()
     parser.add_argument("config", type = Path)
+    parser.add_argument("version", type = str)
     parser.add_argument("--ninja", action="store_true")
     args = parser.parse_args()
 
@@ -47,6 +48,9 @@ def _create_config():
 
     global is_ninja
     is_ninja = (args.ninja) or False
+    
+    global game_version
+    game_version = (args.version)
     
     with open(args.config) as stream:
         try:
@@ -95,37 +99,48 @@ def _collect_objects(path: Path, config) -> list[Path]:
     ]
 
 def _determine_categories(path: Path, config) -> tuple[UnitMetadata, str]:
-    if path.name.endswith(".s.o"):
-        modified_path = path.relative_to(config["expected_paths"]["asm"]).as_posix()
-    else:
-        modified_path = path.relative_to(config["expected_paths"]["src"]).as_posix()
+    modified_path = path.relative_to(config["expected_paths"][game_version]).as_posix()
+    if game_version == "ALL":
+        modified_path = re.sub(r"^(USA|EUR|JAP[0-2])/", "", str(modified_path))
 
     categories = []
     for category in config["categories"]:
         for prefix in category["paths"]:
             if str(modified_path).startswith(prefix):
                 categories.append(category["id"])
-    return (UnitMetadata(categories, f"src/{re.sub( '.s.o', '.c', modified_path)}"), str(modified_path))
+    fixed_ext = re.sub( r'\.(s|c).o$', '', modified_path)
+    
+    if game_version != "ALL":
+        return (UnitMetadata(categories, f"src/{fixed_ext}.c"), fixed_ext, "")
+    else:
+        return (UnitMetadata(categories, f"src/{fixed_ext}.c"), fixed_ext, re.search(r"/(USA|EUR|JAP[0-2])/", str(path))[0])
 
 def main():
     logging.basicConfig(level = logging.INFO)
     config = _create_config()
     
-    expected_objects = _collect_objects(Path(config["expected_paths"]["asm"]), config)
+    expected_objects = _collect_objects(Path(config["expected_paths"][game_version]), config)
+    
+    ignore_base_paths = ["."]
     
     logging.info(f"Accounting for {len(expected_objects)} objects.")
     units = []
     build_method = str
     for file in expected_objects:
         processed_path = _determine_categories(file, config)
-        input_path = Path(processed_path[1].removesuffix(".s.o").removesuffix(".c.o")).as_posix()
-        base_path = "build/src/" + input_path + ".c.o"
+        input_path = Path(processed_path[1]).as_posix()
+        if game_version != "ALL":
+            base_path = f"build/{game_version}/src/{input_path}.c.o"
+        else:
+            base_path = f"build{processed_path[2]}src/{input_path}.c.o"
+            input_path = f"{processed_path[2][1:]}{input_path}"
+            
         
         # Create mappings for clone/disambiguation symbol suffixes in base object
         # (disabled as objdiff report doesn't appear to support symbol mappings right now)
         #symbol_mappings = _normalize_suffixed_symbols(base_path) if Path(base_path).exists() else {}
         symbol_mappings = {}
-
+        
         if is_ninja:
             unit = Unit(
                 input_path,
@@ -137,7 +152,7 @@ def main():
         else:
             unit = Unit(
                 input_path,
-                base_path if Path(base_path).exists() else None,
+                base_path,
                 str(file),
                 processed_path[0],
                 symbol_mappings)
@@ -149,7 +164,7 @@ def main():
         categories.append(ProgressCategory(category["id"], category["name"]))
     
     with (Path(config["output"])).open("w") as json_file:
-        json.dump(asdict(Config(False, False, build_method, ["progress"] if build_method != "ninja" else None, units, categories)), json_file, indent=2)
+        json.dump(asdict(Config(False, False, build_method, ["progress", f"GAME_VERSION={game_version}"] if build_method != "ninja" and game_version != "ALL" else None, units, categories)), json_file, indent=2)
 
 if __name__ == "__main__":
     main()
