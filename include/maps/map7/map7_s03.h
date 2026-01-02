@@ -153,6 +153,7 @@ extern u8 D_800F481B;
 extern u8 D_800F481C;
 extern u8 D_800EC8FC[340];
 extern s_SfxVolume D_800EC8C8[13];
+extern s32 D_800F3D98[4];
 
 extern q19_12 D_800F4820; // Time.
 
@@ -371,5 +372,7 @@ void func_800D952C(void);
 void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* coords);
+
+void func_800DBABC(void);
 
 #endif

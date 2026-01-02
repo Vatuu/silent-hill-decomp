@@ -310,7 +310,15 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DB6D0);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DBA08);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DBABC);
+void func_800DBABC(void)
+{
+    s32 val = 0x1000;
+    s32 i;
+    for (i = 4; i >= 0; i--)
+    {
+        D_800F3D98[i] = val;
+    }
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DBAE8);
 
