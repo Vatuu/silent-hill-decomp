@@ -11,12 +11,26 @@ typedef struct
     u8 field_3;
 } s_800CA4F0;
 
+// Used by both `GameState_KcetLogo_MemCardCheck` and `GameState_KcetLogo_Update`.
+typedef enum
+{
+    KcetLogoStateStep_Init,
+    KcetLogoStateStep_CheckMemCards,
+    KcetLogoStateStep_NoMemCard,
+    KcetLogoStateStep_NoMemCardFreeSpace,
+    KcetLogoStateStep_NoSaveGame,
+    KcetLogoStateStep_HasSaveGame,
+    KcetLogoStateStep_LogoDelay,
+    KcetLogoStateStep_FinishAfterFade,
+} e_KcetLogoStateStep;
+
 extern s_800CA4F0 D_800CA4F0;
 
 /** Displays the Konami logo and starts loading base hero animations. */
 void GameState_KonamiLogo_Update(void);
 
-s32 func_800C9874(void);
+/** Checks memory cards for free space & existing savegames. */
+e_KcetLogoStateStep GameState_KcetLogo_MemCardCheck(void);
 
 /** Displays the KCET logo and starts loading various things. */
 void GameState_KcetLogo_Update(void);
@@ -28,8 +42,9 @@ void Gfx_KonamiScreenDraw(void);
 
 void Gfx_KcetScreenDraw(void);
 
-// Resumable LZSS decompression routines.
-// Used in JP release for decompressing SAFEx.BIN overlays, unused in other releases.
+/* Resumable LZSS decompression routines.
+ * Used in JP release for decompressing SAFEx.BIN overlays, unused in other releases.
+ */
 
 /* @brief Resets LZSS decompressor state. */
 void Lzss_Reset(void);

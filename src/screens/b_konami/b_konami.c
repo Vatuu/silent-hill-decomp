@@ -24,12 +24,13 @@ s_800CA4F0 D_800CA4F0 = {
 
 void GameState_KonamiLogo_Update(void) // 0x800C95AC
 {
-    s32 idx;
-
-    if (g_GameWork.gameState_594 != GameState_KonamiLogo)
+    typedef enum
     {
-        return;
-    }
+        KonamiLogoStateStep_Init,
+        KonamiLogoStateStep_WaitForFade,
+        KonamiLogoStateStep_LogoDelay,
+        KonamiLogoStateStep_FinishAfterFade
+    } e_KonamiLogoStateStep;
 
     while (g_GameWork.gameState_594 == GameState_KonamiLogo)
     {
@@ -37,7 +38,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
 
         switch (g_GameWork.gameStateStep_598[0])
         {
-            case 0:
+            case KonamiLogoStateStep_Init:
                 Screen_Init(SCREEN_WIDTH * 2, true);
 
                 ScreenFade_Start(true, true, false);
@@ -56,23 +57,23 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
                 g_GameWork.gameStateStep_598[0]++;
                 break;
 
-            case 1:
-                if (g_Screen_FadeStatus == g_GameWork.gameStateStep_598[0])
+            case KonamiLogoStateStep_WaitForFade:
+                if (ScreenFade_IsNone())
                 {
-                    g_GameWork.gameStateStep_598[0] = 2;
+                    g_GameWork.gameStateStep_598[0] = KonamiLogoStateStep_LogoDelay;
                 }
                 break;
 
-            case 2:
-                if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C >= 181)
+            case KonamiLogoStateStep_LogoDelay:
+                if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C > 180)
                 {
                     ScreenFade_Start(false, false, false);
                     g_ScreenFadeTimestep            = Q12(0.2f);
-                    g_GameWork.gameStateStep_598[0] = 3;
+                    g_GameWork.gameStateStep_598[0] = KonamiLogoStateStep_FinishAfterFade;
                 }
                 break;
 
-            case 3:
+            case KonamiLogoStateStep_FinishAfterFade:
                 if (ScreenFade_IsFinished())
                 {
                     Fs_QueueWaitForEmpty();
@@ -91,23 +92,22 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
         GsSwapDispBuff();
         GsDrawOt(&g_OrderingTable2[g_ActiveBufferIdx]);
 
-        idx = GsGetActiveBuff();
-        g_ActiveBufferIdx = idx;
-        GsOUT_PACKET_P   = (PACKET*)(TEMP_MEMORY_ADDR + (idx << 15));
+        g_ActiveBufferIdx = GsGetActiveBuff();
+        GsOUT_PACKET_P   = (PACKET*)(TEMP_MEMORY_ADDR + (g_ActiveBufferIdx << 15));
 
-        GsClearOt(0, 0, &g_OrderingTable0[idx]);
+        GsClearOt(0, 0, &g_OrderingTable0[g_ActiveBufferIdx]);
         GsClearOt(0, 0, &g_OrderingTable2[g_ActiveBufferIdx]);
     }
 }
 
-s32 func_800C9874(void) // 0x800C9874
+e_KcetLogoStateStep GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
 {
     s32 saveEntryType0;
     s32 saveEntryType1;
 
-    if (func_80033548() == 0)
+    if (!func_80033548())
     {
-        return 1;
+        return KcetLogoStateStep_CheckMemCards;
     }
 
     g_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_BUFFER_0;
@@ -119,15 +119,17 @@ s32 func_800C9874(void) // 0x800C9874
     // No memory cards.
     if (saveEntryType0 == SavegameEntryType_NoMemCard && saveEntryType1 == SavegameEntryType_NoMemCard)
     {
-        return 2;
+        return KcetLogoStateStep_NoMemCard;
     }
 
+    // No free space on any card.
     if ((saveEntryType0 == SavegameEntryType_OutOfBlocks && (saveEntryType1 == SavegameEntryType_OutOfBlocks || saveEntryType1 == SavegameEntryType_NoMemCard)) ||
         (saveEntryType0 == SavegameEntryType_NoMemCard && saveEntryType1 == SavegameEntryType_OutOfBlocks)) 
     {
-        return 3;
+        return KcetLogoStateStep_NoMemCardFreeSpace;
     }
-    else if (saveEntryType0 == SavegameEntryType_Save || saveEntryType1 == SavegameEntryType_Save)
+
+    if (saveEntryType0 == SavegameEntryType_Save || saveEntryType1 == SavegameEntryType_Save)
     {
         g_ActiveSavegameEntry = GetActiveSavegameEntry(g_SelectedSaveSlotIdx);
         g_ActiveSavegameEntry = &g_ActiveSavegameEntry[g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]];
@@ -135,10 +137,11 @@ s32 func_800C9874(void) // 0x800C9874
         D_800BCD40        = g_ActiveSavegameEntry->field_5;
         g_SelectedFileIdx = g_ActiveSavegameEntry->fileIdx_6;
         g_SelectedSaveIdx = g_ActiveSavegameEntry->elementIdx_7;
-        return 5;
+
+        return KcetLogoStateStep_HasSaveGame;
     }
-    
-    return 4;
+
+    return KcetLogoStateStep_NoSaveGame;
 }
 
 void GameState_KcetLogo_Update(void) // 0x800C99A4
@@ -149,7 +152,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 
         switch (g_GameWork.gameStateStep_598[0])
         {
-            case 0:
+            case KcetLogoStateStep_Init:
                 Settings_RestoreDefaults();
 
                 ScreenFade_Start(true, true, false);
@@ -161,53 +164,92 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 g_GameWork.gameStateStep_598[0]++;
                 break;
 
-            case 1:
+            case KcetLogoStateStep_CheckMemCards:
                 if (ScreenFade_IsNone())
                 {
+                    s32 curTime;
+
                     Fs_QueueWaitForEmpty();
-                    while (g_GameWork.gameStateStep_598[0] < 2)
+
+#if defined(VERSION_NTSCJ)
+                    // WIP: Anti-modchip code from NTSC-J releases, not checked if matching yet.
+                    // TODO:
+                    // - `CdDiskReady` and `CdGetDiskType` are part of `libcd/type.o`, not included in US release, need conversion from SDK libs.
+                    // - Add `FS_BUFFER_` constants for the addresses used here.
+                    // - Split `SAFEx.BIN` and make function symbol for `0x801E7EB4`
+
+                    while (CdDiskReady(false) != CdlComplete || CdGetDiskType() == CdlStatShellOpen)
                     {
-                        g_GameWork.gameStateStep_598[0] = func_800C9874();
+                        VSync(0);
+                    }
+
+                    // Decompress the `HP_SAFE1/S__SAFE2` overlays.
+                    Lzss_Init(FS_BUFFER_5, FS_BUFFER_21, 3000); // Larger than actual `HP_SAFE1` size?
+                    Lzss_Decode(NO_VALUE);
+                    Lzss_Init(FS_BUFFER_6, (void*)0x801E6600, 3000);
+                    Lzss_Decode(NO_VALUE);
+
+                    // Decrypt `S__SAFE2` and run `SafetyCheck`
+                    Fs_DecryptOverlay((void*)0x801E7600, (void*)0x801E6600, 4096);
+                    curTime = g_SysWork.timer_1C;
+
+                    // TODO: call 0x801E7EB4 here.
+
+                    // Decrypt `HP_SAFE1` and run `SafetyCheck` if enough time has passed.
+                    Fs_DecryptOverlay((void*)0x801E7600, FS_BUFFER_21, 4096);
+                    if (g_SysWork.timer_1C - curTime > 100)
+                    {
+                        // TODO: call 0x801E7EB4 here.
+                    }
+
+                    // Reset drive & sound driver
+                    CdReset(1);
+                    sd_work_init();
+#endif
+
+                    while (g_GameWork.gameStateStep_598[0] < KcetLogoStateStep_NoMemCard)
+                    {
+                        g_GameWork.gameStateStep_598[0] = GameState_KcetLogo_MemCardCheck();
                         func_8002EB88();
                         VSync(SyncMode_Wait);
                     }
                 }
                 break;
-                
-            case 2:
+
+            case KcetLogoStateStep_NoMemCard:
                 Fs_QueueStartReadTim(FILE_1ST_NO_MCD_E_TIM, FS_BUFFER_1, &D_800A900C);
                 GameFs_StreamBinLoad();
                 D_800CA4F0.field_0 = 3;
 
-                g_GameWork.gameStateStep_598[0] = 6u;
+                g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
 
-            case 3:
+            case KcetLogoStateStep_NoMemCardFreeSpace:
                 Fs_QueueStartReadTim(FILE_1ST_NO_BLK_E_TIM, FS_BUFFER_1, &D_800A900C);
                 GameFs_StreamBinLoad();
                 D_800CA4F0.field_0 = 3;
 
-                g_GameWork.gameStateStep_598[0] = 6u;
+                g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
 
-            case 4:
+            case KcetLogoStateStep_NoSaveGame:
                 GameFs_StreamBinLoad();
                 GameFs_TitleGfxSeek();
                 D_800CA4F0.field_0 = 6;
 
-                g_GameWork.gameStateStep_598[0] = 6u;
+                g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
 
-            case 5:
+            case KcetLogoStateStep_HasSaveGame:
                 while (g_GameWork.gameStateStep_598[1] < 3)
                 {
                     switch (g_GameWork.gameStateStep_598[1])
@@ -249,13 +291,13 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     VSync(SyncMode_Wait);
                 }
 
-                g_GameWork.gameStateStep_598[0] = 6;
+                g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
                 g_SysWork.timer_20              = 0;
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
                 break;
 
-            case 6:
+            case KcetLogoStateStep_LogoDelay:
                 if (g_Controller0->btnsHeld_C != 0 || g_SysWork.timer_1C > 180)
                 {
                     ScreenFade_Start(false, false, false);
@@ -264,7 +306,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 }
                 break;
 
-            case 7:
+            case KcetLogoStateStep_FinishAfterFade:
                 if (ScreenFade_IsFinished())
                 {
                     Settings_ScreenAndVolUpdate();
@@ -300,7 +342,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     g_GameWork.gameStateStep_598[0] = g_GameWork.gameState_594;
                     g_GameWork.gameState_594        = D_800CA4F0.field_0;
                     g_GameWork.gameStatePrev_590    = g_GameWork.gameStateStep_598[0];
-                    g_GameWork.gameStateStep_598[0] = 0u;
+                    g_GameWork.gameStateStep_598[0] = 0;
                 }
                 break;
         }
