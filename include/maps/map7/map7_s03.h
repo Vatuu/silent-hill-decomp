@@ -2,7 +2,9 @@
 #define _MAPS_MAP7_S03_H
 
 #include "game.h"
-#include "libgs.h"
+
+#include <psyq/libgs.h>
+
 #define HAS_PlayerState_Unk51
 #define HAS_PlayerState_Unk131
 #define HAS_PlayerState_Unk52
@@ -51,15 +53,15 @@ STATIC_ASSERT_SIZEOF(s_800ED7E0_ptr, 60);
 
 typedef struct
 {
-    s32 posX_0;
-    s32 posZ_4;
-    u8  unk_8[32];
+    q19_12          positionX_0;
+    q19_12          positionZ_4;
+    u8              unk_8[32];
     s_SubCharacter* field_28;
-    GsCOORDINATE2* coords_2C;
-    VECTOR3 playerPos_30;
-    u8  unk_3C[8];
-    s32 field_44;
-    s32 field_48;
+    GsCOORDINATE2*  coords_2C;
+    VECTOR3         playerPosition_30;
+    u8              unk_3C[8];
+    s32             field_44;
+    s32             field_48;
 } s_D_800F48A8;
 
 extern s_D_800F48A8 D_800F48A8;
@@ -233,6 +235,8 @@ void func_800D9394(void);
 
 void func_800D947C(void);
 
+void func_800D952C(void);
+
 void func_800DA774(s_800ED7E0_ptr*);
 
 void func_800DAD54(void);
@@ -243,39 +247,48 @@ void func_800DB288(void);
 
 void func_800DB608(void);
 
+void func_800DCF94(void);
+
 void func_800DD240(VECTOR3* vec);
+
+void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s32 arg3);
+
+void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void func_800DD67C(VECTOR3*, s_SubCharacter*, GsCOORDINATE2*);
 void func_800DD7D0(VECTOR3*);
 void func_800DD868(void);
 s32  func_800DD964(void);
-void func_800DD98C(s32 arg0); // Assumed void return type.
-void func_800DD98C(s32);
+void func_800DD98C(bool disableDamage);
 void func_800DD9B0(s_SubCharacter* chara);
 void func_800DD9D4(s_SubCharacter* chara);
 void func_800DD9F8(s_SubCharacter* chara);
-bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
+bool Ai_Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords);
+
+void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void func_800DDB68(s_SubCharacter* chara, s32 soundIdx);
 
 s32 func_800DDBA4(s32 idx);
 
+void func_800DBABC(void);
+
 void func_800DDBBC(s_SubCharacter* incubus);
 
-void func_800DDDB0(s_SubCharacter* chara);
-void func_800DDEEC(s_SubCharacter* chara);
-void func_800DDF14(s_SubCharacter* chara);
-void func_800DEA54(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void func_800DEAF4(s_SubCharacter* chara);
-void func_800DEC38(s_SubCharacter* chara);
-void func_800DEC74(s_SubCharacter*, GsCOORDINATE2*);
-void func_800DED68(s_SubCharacter*, GsCOORDINATE2*);
-void func_800DEE44(s_SubCharacter* chara);
-void func_800DEE90(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
-void func_800DEFE8(s_SubCharacter* chara, GsCOORDINATE2* coord);
-void func_800DF044(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void func_800DF074(s_SubCharacter* chara);
-void Ai_Incubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void func_800DDDB0(s_SubCharacter* incubus);
+void func_800DDEEC(s_SubCharacter* incubus);
+void func_800DDF14(s_SubCharacter* incubus);
+void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* coords);
+void func_800DEAF4(s_SubCharacter* incubus);
+void func_800DEC38(s_SubCharacter* incubus);
+void func_800DEC74(s_SubCharacter* incubus, GsCOORDINATE2* coord);
+void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* coord);
+void func_800DEE44(s_SubCharacter* incubus);
+void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr,  GsCOORDINATE2* coord);
+void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coord);
+void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* coords);
+void func_800DF074(s_SubCharacter* incubus);
+void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800DFA14(void);
 s32 func_800DFB04(void);
@@ -362,17 +375,5 @@ void func_800E9874(void);
 void func_800E98EC(void);
 
 void func_800E9AC8(void);
-
-void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s32 arg3);
-
-void func_800DCF94(void);
-
-void func_800D952C(void);
-
-void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
-
-void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* coords);
-
-void func_800DBABC(void);
 
 #endif

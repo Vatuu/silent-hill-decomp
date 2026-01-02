@@ -310,10 +310,13 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DB6D0);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DBA08);
 
-void func_800DBABC(void)
+void func_800DBABC(void) // 0x800DBABC
 {
-    s32 val = 0x1000;
-    s32 i;
+    q19_12 val;
+    s32    i;
+    
+    val = Q12(1.0f);
+
     for (i = 4; i >= 0; i--)
     {
         D_800F3D98[i] = val;
@@ -377,32 +380,35 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD464);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD4CC);
 
-void func_800DD594(VECTOR3* pos, s_SubCharacter *chara, GsCOORDINATE2* coords, s32 arg3)
+void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s32 arg3) // 0x800DD594
 {
-    s32 z;
-    s32 x;
-    s_D_800F48A8 * ptr = &D_800F48A8;
+    q19_12        newPosX;
+    q19_12        newPosZ;
+    s_D_800F48A8* ptr;
 
-    x = pos->vx;
-    if (x < 0)
+    ptr = &D_800F48A8;
+
+    newPosX = pos->vx;
+    if (newPosX < Q12(0.0f))
     {
-        x += Q12(64.0f)-1;
+        newPosX += Q12(64.0f) - 1;
     }
-    x = (x >> 18) << 18;
+    newPosX = (newPosX >> 18) << 18;
 
-    z = pos->vz;
-    if (z < 0)
+    newPosZ = pos->vz;
+    if (newPosZ < Q12(0.0f))
     {
-        z += Q12(64.0f)-1;
+        newPosZ += Q12(64.0f) - 1;
     }
 
-    ptr->posX_0 = x;
-    ptr->posZ_4 = (z >> 18) << 18;
+    ptr->positionX_0 = newPosX;
+    ptr->positionZ_4 = (newPosZ >> 18) << 18;
     ptr->field_28 = chara;
     ptr->coords_2C = coords;
-    ptr->playerPos_30 = g_SysWork.playerWork_4C.player_0.position_18;
+    ptr->playerPosition_30 = g_SysWork.playerWork_4C.player_0.position_18;
     ptr->field_44 = 0;
     ptr->field_48 = arg3;
+
     func_800DCF94();
 }
 
@@ -432,11 +438,11 @@ s32 func_800DD964(void) // 0x8007F250
     return sp10;
 }
 
-void func_800DD98C(s32 arg0) // 0x800DD98C
+void func_800DD98C(bool disableDamage) // 0x800DD98C
 {
     u8 sp10;
 
-    func_8007F250(&sp10, arg0);
+    func_8007F250(&sp10, disableDamage);
 }
 
 void func_800DD9B0(s_SubCharacter* chara) // 0x800DD9B0
@@ -478,61 +484,60 @@ void func_800DD9F8(s_SubCharacter* chara) // 0x800DD9F8
     }
 }
 
-bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
+bool Ai_Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDA1C
 {
     u8              activeStateStep;
-    s_SubCharacter* localChara; // TODO: Not sure why this is needed here, could be an inline in this func.
+    s_SubCharacter* localIncubus; // TODO: Not sure why this is needed here, could be an inline in this func.
 
-    chara->model_0.anim_4.alpha_A = Q12(0.0f);
-    localChara                    = chara;
+    incubus->model_0.anim_4.alpha_A = Q12(0.0f);
+    localIncubus                    = incubus;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        chara->health_B0 = Q12(30000.0f);
+        incubus->health_B0 = Q12(30000.0f);
     }
     else
     {
-        chara->health_B0 = Q12(40000.0f);
+        incubus->health_B0 = Q12(40000.0f);
     }
 
-    chara->moveSpeed_38       = 0;
-    chara->headingAngle_3C    = chara->rotation_24.vy;
-    chara->field_D4.radius_0   = Q12(0.3f);
-    chara->field_E1_0         = 4;
-    chara->field_D8.offsetX_4 = Q12(0.0f);
-    chara->field_D8.offsetZ_6 = Q12(0.0f);
-    chara->flags_3E          |= CharaFlag_Unk3;
+    incubus->moveSpeed_38       = Q12(0.0f);
+    incubus->headingAngle_3C    = incubus->rotation_24.vy;
+    incubus->field_D4.radius_0   = Q12(0.3f);
+    incubus->field_E1_0         = 4;
+    incubus->field_D8.offsetX_4 = Q12(0.0f);
+    incubus->field_D8.offsetZ_6 = Q12(0.0f);
+    incubus->flags_3E          |= CharaFlag_Unk3;
 
-    localChara->properties_E4.dummy.properties_E8[2].val32 = 0;
-    localChara->properties_E4.dummy.properties_E8[1].val32 = 0;
+    localIncubus->properties_E4.dummy.properties_E8[2].val32 = 0;
+    localIncubus->properties_E4.dummy.properties_E8[1].val32 = 0;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        localChara->properties_E4.dummy.properties_E8[3].val32 = Q12(300.0f);
+        localIncubus->properties_E4.dummy.properties_E8[3].val32 = Q12(300.0f);
     }
     else
     {
-        localChara->properties_E4.dummy.properties_E8[3].val32 = Q12(30.0f);
+        localIncubus->properties_E4.dummy.properties_E8[3].val32 = Q12(30.0f);
     }
 
-    activeStateStep = chara->model_0.stateStep_3;
+    activeStateStep = incubus->model_0.stateStep_3;
     if (activeStateStep != 0)
     {
-        chara->model_0.stateStep_3 = 0;
-        chara->model_0.controlState_2     = activeStateStep;
+        incubus->model_0.stateStep_3 = 0;
+        incubus->model_0.controlState_2     = activeStateStep;
     }
     else
     {
-        chara->model_0.controlState_2     = 1;
-        chara->model_0.stateStep_3 = 0;
+        incubus->model_0.controlState_2     = 1;
+        incubus->model_0.stateStep_3 = 0;
     }
 
-    Character_AnimSet(chara, ANIM_STATUS(3, false), 338);
-    ModelAnim_AnimInfoSet(&chara->model_0.anim_4, INCUBUS_ANIM_INFOS);
+    Character_AnimSet(incubus, ANIM_STATUS(3, false), 338);
+    ModelAnim_AnimInfoSet(&incubus->model_0.anim_4, INCUBUS_ANIM_INFOS);
 
-    Chara_DamageClear(chara);
-
-    chara->flags_3E |= CharaFlag_Unk9;
+    Chara_DamageClear(incubus);
+    incubus->flags_3E |= CharaFlag_Unk9;
 
     return true;
 }
@@ -554,7 +559,7 @@ s32 func_800DDBA4(s32 idx) // 0x800DDBA4
 
 void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
 {
-    q19_12 health;
+    q19_12 newHealth;
 
     if (incubus->properties_E4.incubus.someState_F0 == 0)
     {
@@ -576,14 +581,14 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
     
         if (incubus->damage_B4.amount_C > Q12(0.0f))
         {
-            health = incubus->health_B0 - incubus->damage_B4.amount_C;
-            if (health < Q12(0.0f))
+            newHealth = incubus->health_B0 - incubus->damage_B4.amount_C;
+            if (newHealth < Q12(0.0f))
             {
-                health = Q12(0.0f);
+                newHealth = Q12(0.0f);
             }
-            incubus->health_B0 = health;
+            incubus->health_B0 = newHealth;
 
-            if (health < Q12(20.0f) && func_800DD964() == 0)
+            if (newHealth < Q12(20.0f) && func_800DD964() == 0)
             {
                 incubus->health_B0 = Q12(0.0f);
                 incubus->model_0.controlState_2 = 12;
@@ -601,32 +606,32 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDCC4);
 
-void func_800DDDB0(s_SubCharacter* chara) // 0x800DDDB0
+void func_800DDDB0(s_SubCharacter* incubus) // 0x800DDDB0
 {
-    if (chara->model_0.stateStep_3 == 0)
+    if (incubus->model_0.stateStep_3 == 0)
     {
-        chara->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
-        chara->model_0.stateStep_3++;
+        incubus->model_0.anim_4.status_0 = ANIM_STATUS(1, false);
+        incubus->model_0.stateStep_3++;
     }
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDDD8);
 
-void func_800DDEEC(s_SubCharacter* chara) // 0x800DDEEC
+void func_800DDEEC(s_SubCharacter* incubus) // 0x800DDEEC
 {
-    if (chara->model_0.stateStep_3 == 0)
+    if (incubus->model_0.stateStep_3 == 0)
     {
-        chara->model_0.anim_4.status_0 = ANIM_STATUS(4, false);
-        chara->model_0.stateStep_3++;
+        incubus->model_0.anim_4.status_0 = ANIM_STATUS(4, false);
+        incubus->model_0.stateStep_3++;
     }
 }
 
-void func_800DDF14(s_SubCharacter* chara) // 0x800DDF14
+void func_800DDF14(s_SubCharacter* incubus) // 0x800DDF14
 {
-    if (chara->model_0.stateStep_3 == 0)
+    if (incubus->model_0.stateStep_3 == 0)
     {
-        chara->model_0.anim_4.status_0 = ANIM_STATUS(4, false);
-        chara->model_0.stateStep_3++;
+        incubus->model_0.anim_4.status_0 = ANIM_STATUS(4, false);
+        incubus->model_0.stateStep_3++;
     }
 }
 
@@ -638,62 +643,60 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DE2A4);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DE68C);
 
-void func_800DEA54(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DEA54
+void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEA54
 {
-    func_800DDB3C(chara, coords);
+    func_800DDB3C(incubus, coords);
 
-    chara->model_0.controlState_2     = ANIM_STATUS(5, true);
-    chara->model_0.stateStep_3 = 0;
-
-    // TODO: Wrong union member used here.
-    chara->properties_E4.player.positionY_EC |= 4;
+    incubus->model_0.controlState_2     = ANIM_STATUS(5, true);
+    incubus->model_0.stateStep_3 = 0;
+    incubus->properties_E4.player.positionY_EC |= 1 << 2;
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DEA90);
 
-void func_800DEAF4(s_SubCharacter* chara) // 0x800DEAF4
+void func_800DEAF4(s_SubCharacter* incubus) // 0x800DEAF4
 {
     // TODO: Wrong union members used here.
 
-    if (chara->model_0.stateStep_3 == 0)
+    if (incubus->model_0.stateStep_3 == 0)
     {
-        chara->properties_E4.player.afkTimer_E8 = func_800DEA90();
-        chara->model_0.stateStep_3++;
+        incubus->properties_E4.player.afkTimer_E8 = func_800DEA90();
+        incubus->model_0.stateStep_3++;
         return;
     }
 
-    func_800DDCC4(chara);
+    func_800DDCC4(incubus);
 
-    switch (chara->model_0.stateStep_3)
+    switch (incubus->model_0.stateStep_3)
     {
         case 1:
-            if (chara->properties_E4.player.afkTimer_E8 <= Q12(0.0f))
+            if (incubus->properties_E4.player.afkTimer_E8 <= Q12(0.0f))
             {
-                chara->model_0.stateStep_3 = 2;
+                incubus->model_0.stateStep_3 = 2;
             }
             break;
 
         case 2:
-            chara->model_0.controlState_2     = 7;
-            chara->model_0.stateStep_3 = 0;
+            incubus->model_0.controlState_2     = 7;
+            incubus->model_0.stateStep_3 = 0;
             break;
     }
 
-    chara->properties_E4.player.afkTimer_E8 -= g_DeltaTime0;
+    incubus->properties_E4.player.afkTimer_E8 -= g_DeltaTime0;
 }
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DEBA8);
 
-void func_800DEC38(s_SubCharacter* chara) // 0x800DEC38
+void func_800DEC38(s_SubCharacter* incubus) // 0x800DEC38
 {
-    if (chara->model_0.stateStep_3 == 0)
+    if (incubus->model_0.stateStep_3 == 0)
     {
-        if (chara->model_0.anim_4.status_0 != 7)
+        if (incubus->model_0.anim_4.status_0 != ANIM_STATUS(3, true))
         {
-            chara->model_0.anim_4.status_0 = 6;
+            incubus->model_0.anim_4.status_0 = ANIM_STATUS(3, false);
         }
 
-        chara->model_0.stateStep_3++;
+        incubus->model_0.stateStep_3++;
     }
 }
 
@@ -752,27 +755,28 @@ void func_800DF074(s_SubCharacter* chara) // 0x800DF074
     }
 }
 
-void Ai_Incubus_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DF0D8
+void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DF0D8
 {
-    if ((chara->model_0.controlState_2 != 0 || Ai_Incubus_Init(chara, coords)) && chara->model_0.controlState_2 != 1)
+    if ((incubus->model_0.controlState_2 != 0 || Ai_Incubus_Init(incubus, coords)) &&
+        incubus->model_0.controlState_2 != 1)
     {
         if (g_DeltaTime0 != Q12(0.0f))
         {
-            func_800DDBBC(chara);
-            func_800DEC74(chara, coords);
-            func_800DF044(chara, coords);
-            func_800DEE44(chara);
-            func_800DEE90(chara, anmHdr, coords);
-            func_800DEFE8(chara, coords);
-            func_800DED68(chara, coords);
-            func_800DF074(chara);
-            func_800DD98C(chara->flags_3E & CharaFlag_Unk2);
+            func_800DDBBC(incubus);
+            func_800DEC74(incubus, coords);
+            func_800DF044(incubus, coords);
+            func_800DEE44(incubus);
+            func_800DEE90(incubus, anmHdr, coords);
+            func_800DEFE8(incubus, coords);
+            func_800DED68(incubus, coords);
+            func_800DF074(incubus);
+            func_800DD98C(incubus->flags_3E & CharaFlag_Unk2);
         }
         else
         {
-            func_800DEE90(chara, anmHdr, coords);
+            func_800DEE90(incubus, anmHdr, coords);
             func_800DB608();
-            func_800DF074(chara);
+            func_800DF074(incubus);
         }
     }
 }
