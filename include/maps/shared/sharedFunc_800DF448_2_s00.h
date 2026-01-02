@@ -14,6 +14,7 @@ void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond)
     s32 temp3;
     s32 temp4;
     s32 idx;
+    s_func_800D2E04* ptr;
 
     temp_s2 = func_80080478(&airScreamer->position_18, &airScreamer->properties_E4.airScreamer.position_110);
     temp_t3 = Math_Distance2dGet(&airScreamer->position_18, &airScreamer->properties_E4.airScreamer.position_110);
@@ -104,8 +105,10 @@ void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond)
         sharedData_800E21D0_0_s01.field_B4[0][0] = 1;
     }
 
-    temp3 = sharedData_800CAA98_0_s01.unk_380[var_a2][0];
-    temp4 = sharedData_800CAA98_0_s01.unk_380[var_a2][1];
+    ptr = &sharedData_800CAA98_0_s01;
+
+    temp3 = ptr->unk_380[var_a2][0];
+    temp4 = ptr->unk_380[var_a2][1];
 
     idx                                        = 3;
     sharedData_800E21D0_0_s01.field_B4[idx][2] = var_t1;

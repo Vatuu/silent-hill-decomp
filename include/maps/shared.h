@@ -1628,7 +1628,7 @@ extern s8 sharedData_800E57CC_1_s02;
 
 extern s_sharedData_800E21D0_0_s01 sharedData_800E21D0_0_s01;
 
-extern s_func_800D2E04 sharedData_800CAA98_0_s01; // Used by `Ai_AirScreamer_Init` / `sharedFunc_800D2BF4_0_s01`
+extern s_func_800D2E04 const sharedData_800CAA98_0_s01; // Used by `Ai_AirScreamer_Init` / `sharedFunc_800D2BF4_0_s01`
 
 extern s_AnimInfo ROPMER_ANIM_INFOS[];
 

@@ -10,9 +10,9 @@ void sharedFunc_800DF710_2_s00(s_SubCharacter* airScreamer)
     s32                          element4;
     s32                          element3;
     s32                          element2;
-    s_sharedData_800E21D0_0_s01* base;
+    s_func_800D2E04*             ptr;
 
-    #define airScreamerProps airScreamer->properties_E4.airScreamer
+#define airScreamerProps airScreamer->properties_E4.airScreamer
 
     animStatus = airScreamer->model_0.anim_4.status_0 | 1; // TODO: Use macro for this.
     angle0     = func_80080478(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
@@ -45,23 +45,24 @@ void sharedFunc_800DF710_2_s00(s_SubCharacter* airScreamer)
     }
 
     element2 = sharedData_800CAA98_0_s01.unk_380[1][0];
-    base     = &sharedData_800E21D0_0_s01;
 
     idx                    = 0;
-    base->field_B4[idx][2] = element2;
-    base->field_B4[idx][1] = sharedData_800CAA98_0_s01.unk_380[1][1];
+    sharedData_800E21D0_0_s01.field_B4[idx][2] = element2;
+    sharedData_800E21D0_0_s01.field_B4[idx][1] = sharedData_800CAA98_0_s01.unk_380[1][1];
+
+    ptr = &sharedData_800CAA98_0_s01;
 
     idx                    = 1;
-    element3               = sharedData_800CAA98_0_s01.unk_380[animIdx][0];
-    element4               = sharedData_800CAA98_0_s01.unk_380[animIdx][1];
-    base->field_B4[idx][2] = element3;
-    base->field_B4[idx][1] = element4;
+    element3                                   = ptr->unk_380[animIdx][0];
+    element4                                   = ptr->unk_380[animIdx][1];
+    sharedData_800E21D0_0_s01.field_B4[idx][2] = element3;
+    sharedData_800E21D0_0_s01.field_B4[idx][1] = element4;
 
     idx                    = 3;
-    base->field_B4[idx][2] = element0;
-    base->field_B4[idx][1] = element1;
-    base->field_B4[idx][3] = angle0;
-    base->field_B4[idx][0] = 1;
+    sharedData_800E21D0_0_s01.field_B4[idx][2] = element0;
+    sharedData_800E21D0_0_s01.field_B4[idx][1] = element1;
+    sharedData_800E21D0_0_s01.field_B4[idx][3] = angle0;
+    sharedData_800E21D0_0_s01.field_B4[idx][0] = 1;
 
     sharedFunc_800D5E78_0_s01(airScreamer, angle0 / 2);
 

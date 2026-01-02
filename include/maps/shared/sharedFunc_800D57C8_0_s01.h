@@ -19,9 +19,9 @@ void sharedFunc_800D57C8_0_s01(s_SubCharacter* airScreamer)
     s32                          tmp;
     VECTOR3*                     pos0;
     VECTOR3*                     pos;
-    s_sharedData_800E21D0_0_s01* base;
+    s_func_800D2E04*             ptr;
 
-    #define airScreamerProps airScreamer->properties_E4.airScreamer
+#define airScreamerProps airScreamer->properties_E4.airScreamer
 
     pos   = &airScreamer->position_18;
     pos0  = &airScreamerProps.position_110;
@@ -86,33 +86,34 @@ void sharedFunc_800D57C8_0_s01(s_SubCharacter* airScreamer)
         }
     }
 
-    element2 = sharedData_800CAA98_0_s01.unk_380[idx0][0];
-    element3 = sharedData_800CAA98_0_s01.unk_380[idx0][1];
-    base     = &sharedData_800E21D0_0_s01;
+    ptr = &sharedData_800CAA98_0_s01;
+
+    element2 = ptr->unk_380[idx0][0];
+    element3 = ptr->unk_380[idx0][1];
 
     idx3                    = 0;
-    base->field_B4[idx3][2] = element2;
-    base->field_B4[idx3][1] = element3;
-    base->field_B4[idx3][3] = dist;
-    base->field_B4[idx3][0] = 1;
+    sharedData_800E21D0_0_s01.field_B4[idx3][2] = element2;
+    sharedData_800E21D0_0_s01.field_B4[idx3][1] = element3;
+    sharedData_800E21D0_0_s01.field_B4[idx3][3] = dist;
+    sharedData_800E21D0_0_s01.field_B4[idx3][0] = 1;
 
-    element4 = sharedData_800CAA98_0_s01.unk_380[idx2][0];
-    element5 = sharedData_800CAA98_0_s01.unk_380[idx2][1];
+    element4 = ptr->unk_380[idx2][0];
+    element5 = ptr->unk_380[idx2][1];
 
     idx3                    = 1;
-    base->field_B4[idx3][2] = element4;
-    base->field_B4[idx3][1] = element5;
+    sharedData_800E21D0_0_s01.field_B4[idx3][2] = element4;
+    sharedData_800E21D0_0_s01.field_B4[idx3][1] = element5;
     if (var_t4)
     {
-        base->field_B4[idx3][3] = posY;
-        base->field_B4[idx3][0] = 1;
+        sharedData_800E21D0_0_s01.field_B4[idx3][3] = posY;
+        sharedData_800E21D0_0_s01.field_B4[idx3][0] = 1;
     }
 
     idx3                    = 3;
-    base->field_B4[idx3][2] = element0;
-    base->field_B4[idx3][1] = element1;
-    base->field_B4[idx3][3] = angle;
-    base->field_B4[idx3][0] = 1;
+    sharedData_800E21D0_0_s01.field_B4[idx3][2] = element0;
+    sharedData_800E21D0_0_s01.field_B4[idx3][1] = element1;
+    sharedData_800E21D0_0_s01.field_B4[idx3][3] = angle;
+    sharedData_800E21D0_0_s01.field_B4[idx3][0] = 1;
 
     idx0 = angle / 2;
     sharedFunc_800D5E78_0_s01(airScreamer, idx0);
