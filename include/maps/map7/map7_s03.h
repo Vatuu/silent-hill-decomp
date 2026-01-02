@@ -1,6 +1,8 @@
 #ifndef _MAPS_MAP7_S03_H
 #define _MAPS_MAP7_S03_H
 
+#include "game.h"
+#include "libgs.h"
 #define HAS_PlayerState_Unk51
 #define HAS_PlayerState_Unk131
 #define HAS_PlayerState_Unk52
@@ -53,7 +55,7 @@ typedef struct
     s32 posZ_4;
     u8  unk_8[32];
     s_SubCharacter* field_28;
-    s32 field_2C;
+    GsCOORDINATE2* coords_2C;
     VECTOR3 playerPos_30;
     u8  unk_3C[8];
     s32 field_44;
@@ -262,7 +264,7 @@ void func_800DDBBC(s_SubCharacter* incubus);
 void func_800DDDB0(s_SubCharacter* chara);
 void func_800DDEEC(s_SubCharacter* chara);
 void func_800DDF14(s_SubCharacter* chara);
-void func_800DEA54(s_SubCharacter* chara);
+void func_800DEA54(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DEAF4(s_SubCharacter* chara);
 void func_800DEC38(s_SubCharacter* chara);
 void func_800DEC74(s_SubCharacter*, GsCOORDINATE2*);
@@ -360,8 +362,14 @@ void func_800E98EC(void);
 
 void func_800E9AC8(void);
 
-void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, s32 arg2, s32 arg3);
+void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s32 arg3);
 
 void func_800DCF94(void);
+
+void func_800D952C(void);
+
+void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
+
+void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 #endif

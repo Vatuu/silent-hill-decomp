@@ -369,7 +369,7 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD464);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD4CC);
 
-void func_800DD594(VECTOR3* pos, s_SubCharacter *chara, s32 arg2, s32 arg3)
+void func_800DD594(VECTOR3* pos, s_SubCharacter *chara, GsCOORDINATE2* coords, s32 arg3)
 {
     s32 z;
     s32 x;
@@ -391,14 +391,18 @@ void func_800DD594(VECTOR3* pos, s_SubCharacter *chara, s32 arg2, s32 arg3)
     ptr->posX_0 = x;
     ptr->posZ_4 = (z >> 18) << 18;
     ptr->field_28 = chara;
-    ptr->field_2C = arg2;
+    ptr->coords_2C = coords;
     ptr->playerPos_30 = g_SysWork.playerWork_4C.player_0.position_18;
     ptr->field_44 = 0;
     ptr->field_48 = arg3;
     func_800DCF94();
 }
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD62C);
+void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords)
+{
+    func_800D952C();
+    func_800DD594(pos, chara, coords, 0);
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD67C);
 
@@ -525,7 +529,10 @@ bool Ai_Incubus_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DDA1C
     return true;
 }
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DDB3C);
+void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* coords)
+{
+    func_800DD62C(&chara->position_18, chara, coords);
+}
 
 void func_800DDB68(s_SubCharacter* chara, s32 soundIdx) // 0x800DDB68
 {
@@ -623,9 +630,9 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DE2A4);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DE68C);
 
-void func_800DEA54(s_SubCharacter* chara) // 0x800DEA54
+void func_800DEA54(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DEA54
 {
-    func_800DDB3C();
+    func_800DDB3C(chara, coords);
 
     chara->model_0.controlState_2     = ANIM_STATUS(5, true);
     chara->model_0.stateStep_3 = 0;
