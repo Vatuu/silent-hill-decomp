@@ -1,18 +1,17 @@
-name: Boot screen overlay (B_KONAMI)
-sha1: 33091576CC27EE3B64081EE8DC5A83FAADF1C4F2
+name: The MAP1_S00 map overlay (MAP1_S00)
+sha1: 2A346ED051DB5B1E84E557C23A5C0896F5507129
 options:
-  basename: B_KONAMI.BIN
-  target_path: assets/JAP2/1ST/B_KONAMI.BIN
+  basename: MAP1_S00.BIN
+  target_path: assets/JAP2/VIN/MAP1_S00.BIN
   base_path: ../../..
   platform: psx
   compiler: GCC
 
-  asm_path: asm/JAP2/screens/b_konami
-  src_path: src/screens/b_konami
-  asset_path: asm/JAP2/screens/b_konami
+  asm_path: asm/JAP2/maps/map1_s00
+  src_path: src/maps/map1_s00
   build_path: build/JAP2
 
-  ld_script_path: linkers/JAP2/screens/b_konami.ld
+  ld_script_path: linkers/JAP2/maps/map1_s00.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -29,15 +28,16 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/JAP2/screens/sym.b_konami.txt
-    - configs/JAP2/screens/sym.stream.txt
+    - configs/JAP2/maps/sym.map1_s00.txt
     - configs/JAP2/sym.bodyprog.txt
     - configs/JAP2/sym.main.txt
   reloc_addrs_path:
-    - configs/JAP2/screens/rel.b_konami.txt
+    - configs/JAP2/maps/rel.map1_s00.txt
 
-  undefined_funcs_auto_path: linkers/JAP2/screens/undefined_funcs_auto.b_konami.txt
-  undefined_syms_auto_path: linkers/JAP2/screens/undefined_syms_auto.b_konami.txt
+  undefined_funcs_auto_path: linkers/JAP2/maps/undefined_funcs_auto.map1_s00.txt
+  undefined_syms_auto_path: linkers/JAP2/maps/undefined_syms_auto.map1_s00.txt
+
+  extensions_path: tools/splat_ext
 
   subalign: 4
 
@@ -46,7 +46,7 @@ options:
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
 segments:
-  - name: b_konami
+  - name: map1_s00
     type: code
     start: 0
     vram: 0x800CBBD0
@@ -54,6 +54,6 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
-      - [0x34, asm, b_konami]
-      - [0x10A4, data, b_konami]
-  - [0x1100]
+      - [0x2188, asm, map1_s00]
+      - [0x10E2C, data]
+  - [0x17D00]

@@ -15,6 +15,7 @@ SKIP_ASM       ?= 0
 # Retail:
 # USA
 # Japanese REV 0
+# Japanese REV 2
 
 GAME_VERSION = USA
 
