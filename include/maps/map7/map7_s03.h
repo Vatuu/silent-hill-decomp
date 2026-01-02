@@ -47,6 +47,21 @@ typedef struct
 } s_800ED7E0_ptr;
 STATIC_ASSERT_SIZEOF(s_800ED7E0_ptr, 60);
 
+typedef struct
+{
+    s32 posX_0;
+    s32 posZ_4;
+    u8  unk_8[32];
+    s_SubCharacter* field_28;
+    s32 field_2C;
+    VECTOR3 playerPos_30;
+    u8  unk_3C[8];
+    s32 field_44;
+    s32 field_48;
+} s_D_800F48A8;
+
+extern s_D_800F48A8 D_800F48A8;
+
 extern s32 D_800ED73C; // } RNG related values?
 extern s32 D_800ED740; // }
 
@@ -344,5 +359,9 @@ void func_800E9874(void);
 void func_800E98EC(void);
 
 void func_800E9AC8(void);
+
+void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, s32 arg2, s32 arg3);
+
+void func_800DCF94(void);
 
 #endif

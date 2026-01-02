@@ -369,7 +369,34 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD464);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD4CC);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD594);
+void func_800DD594(VECTOR3* pos, s_SubCharacter *chara, s32 arg2, s32 arg3)
+{
+    s32 z;
+    s32 x;
+    s_D_800F48A8 * ptr = &D_800F48A8;
+
+    x = pos->vx;
+    if (x < 0)
+    {
+        x += Q12(64.0f)-1;
+    }
+    x = (x >> 18) << 18;
+
+    z = pos->vz;
+    if (z < 0)
+    {
+        z += Q12(64.0f)-1;
+    }
+
+    ptr->posX_0 = x;
+    ptr->posZ_4 = (z >> 18) << 18;
+    ptr->field_28 = chara;
+    ptr->field_2C = arg2;
+    ptr->playerPos_30 = g_SysWork.playerWork_4C.player_0.position_18;
+    ptr->field_44 = 0;
+    ptr->field_48 = arg3;
+    func_800DCF94();
+}
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD62C);
 
