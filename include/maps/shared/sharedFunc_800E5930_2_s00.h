@@ -17,8 +17,9 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    // NOTE: Reads `chara->field_E8` both as word and a half.
-    if (!(groaner->properties_E4.player.afkTimer_E8 & 0x44) && groaner->moveSpeed_38 == Q12(0.0f))
+    // TODO: Groaner property at E8 is treated as `s32`.
+    if (!(groaner->properties_E4.player.afkTimer_E8 & 0x44) &&
+        groaner->moveSpeed_38 == Q12(0.0f))
     {
         animStatus    = ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0);
         newAnimStatus = ANIM_STATUS(GroanerAnim_Still, false);
