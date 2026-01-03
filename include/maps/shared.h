@@ -2378,17 +2378,17 @@ void Ai_Groaner_Init(s_SubCharacter* groaner); // `map2_s00` has extra block at 
 
 void sharedFunc_800E7914_2_s00(void);
 
-void sharedFunc_800E554C_2_s00(s_SubCharacter* chara);
+void sharedFunc_800E554C_2_s00(s_SubCharacter* groaner);
 
-void sharedFunc_800E55B0_2_s00(s_SubCharacter* chara);
+void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner);
 
-void sharedFunc_800E33DC_2_s00(s_SubCharacter*);
+void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner);
 
 void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner); // `map2_s00` has different version to the other 4 maps which share this, shared sym is needed to share `Ai_Groaner_Update`.
 
-void sharedFunc_800E4830_2_s00(s_SubCharacter* chara);
+void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner);
 
-void sharedFunc_800E5930_2_s00(s_SubCharacter* chara);
+void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner);
 
 void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner);
 

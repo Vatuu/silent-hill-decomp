@@ -1,169 +1,174 @@
-void sharedFunc_800E33DC_2_s00(s_SubCharacter* arg0)
+void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
 {
-    s_Collision sp10;
-    s16         temp_s2;
-    s32         temp_s3;
+    s_Collision coll;
+    q3_12       newHeadingAngle;
+    q3_12       unkAngle;
+    q19_12      unkDist;
     s32         temp_v0;
-    s16         var_s1;
-    s32         temp_s4;
+    s32         prevControlState;
 
-    if (arg0->health_B0 > 0)
+    if (groaner->health_B0 > Q12(0.0f))
     {
-        Collision_Get(&sp10, arg0->position_18.vx, arg0->position_18.vz);
+        Collision_Get(&coll, groaner->position_18.vx, groaner->position_18.vz);
 
-        if (sp10.field_8 == 0xC && Rng_GenerateInt(0x4000, 0x6FFF) < arg0->position_18.vy)
+        if (coll.field_8 == 12 && Rng_GenerateInt(Q12(4.0f), Q12(7.0f) - 1) < groaner->position_18.vy)
         {
-            arg0->damage_B4.amount_C = 0x3E8000;
+            groaner->damage_B4.amount_C = Q12(1000.0f);
         }
     }
 
-    if (arg0->damage_B4.amount_C == 0)
+    if (groaner->damage_B4.amount_C == Q12(0.0f))
     {
         return;
     }
 
-    if (arg0->health_B0 < 0)
+    if (groaner->health_B0 < Q12(0.0f))
     {
         return;
     }
 
-    temp_s4 = arg0->model_0.controlState_2;
+    prevControlState = groaner->model_0.controlState_2;
 
-    if (arg0->health_B0 > 0)
+    if (groaner->health_B0 > Q12(0.0f))
     {
-        arg0->properties_E4.dummy.properties_E8[9].val8[3] = 4;
+        groaner->properties_E4.dummy.properties_E8[9].val8[3] = 4;
     }
 
-    arg0->properties_E4.dummy.properties_E8[3].val32     = g_SysWork.playerWork_4C.player_0.position_18.vx;
-    arg0->properties_E4.dummy.properties_E8[4].val32     = g_SysWork.playerWork_4C.player_0.position_18.vz;
-    arg0->properties_E4.dummy.properties_E8[0].val16[0] |= 0x80;
+    groaner->properties_E4.dummy.properties_E8[3].val32     = g_SysWork.playerWork_4C.player_0.position_18.vx;
+    groaner->properties_E4.dummy.properties_E8[4].val32     = g_SysWork.playerWork_4C.player_0.position_18.vz;
+    groaner->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 7;
 
-    arg0->health_B0 = MAX(arg0->health_B0 - arg0->damage_B4.amount_C, 0);
-    temp_s3         = Math_Vector2MagCalc(arg0->damage_B4.position_0.vx, arg0->damage_B4.position_0.vz);
+    groaner->health_B0 = MAX(groaner->health_B0 - groaner->damage_B4.amount_C, Q12(0.0f));
+    unkDist         = Math_Vector2MagCalc(groaner->damage_B4.position_0.vx, groaner->damage_B4.position_0.vz);
 
-    if (arg0->damage_B4.position_0.vx != 0 || arg0->damage_B4.position_0.vz != 0)
+    // Set new heading angle.
+    if (groaner->damage_B4.position_0.vx != Q12(0.0f) ||
+        groaner->damage_B4.position_0.vz != Q12(0.0f))
     {
-        var_s1 = ratan2(arg0->damage_B4.position_0.vx, arg0->damage_B4.position_0.vz);
+        newHeadingAngle = ratan2(groaner->damage_B4.position_0.vx, groaner->damage_B4.position_0.vz);
     }
     else
     {
-        var_s1 = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
+        newHeadingAngle = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
     }
 
-    temp_s2 = func_8005BF38(var_s1 - arg0->rotation_24.vy + 0x800);
+    unkAngle = func_8005BF38((newHeadingAngle - groaner->rotation_24.vy) + FP_ANGLE(180.0f));
 
-    arg0->properties_E4.dummy.properties_E8[5].val16[1] = CLAMP_LOW(temp_s3 >> 2, 0x400);
+    groaner->properties_E4.dummy.properties_E8[5].val16[1] = CLAMP_LOW(unkDist >> 2, FP_ANGLE(90.0f));
 
-    temp_v0 = FP_TO(arg0->damage_B4.position_0.vy, Q12_SHIFT);
+    temp_v0 = FP_TO(groaner->damage_B4.position_0.vy, Q12_SHIFT);
 
-    arg0->headingAngle_3C = var_s1;
+    groaner->headingAngle_3C = newHeadingAngle;
+    groaner->damage_B4.amount_C                             = Q12(0.0f);
+    groaner->damage_B4.position_0.vz                        = Q12(0.0f);
+    groaner->damage_B4.position_0.vy                        = Q12(0.0f);
+    groaner->damage_B4.position_0.vx                        = Q12(0.0f);
+    groaner->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 1;
+    groaner->moveSpeed_38                                   = FP_TO(unkDist, Q12_SHIFT) / Q12(1.2f);
+    groaner->field_34                                      += temp_v0 / Q12(1.2f);
 
-    arg0->damage_B4.amount_C                             = 0;
-    arg0->damage_B4.position_0.vz                        = 0;
-    arg0->damage_B4.position_0.vy                        = 0;
-    arg0->damage_B4.position_0.vx                        = 0;
-    arg0->properties_E4.dummy.properties_E8[0].val16[0] |= 2;
-    arg0->moveSpeed_38                                   = FP_TO(temp_s3, Q12_SHIFT) / 4915;
-    arg0->field_34                                      += temp_v0 / 4915;
-
-    if (arg0->properties_E4.dummy.properties_E8[0].val16[0] & 8)
+    if (groaner->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 3))
     {
-        arg0->properties_E4.dummy.properties_E8[5].val16[1] = 0;
+        groaner->properties_E4.dummy.properties_E8[5].val16[1] = 0;
 
-        if (arg0->health_B0 != 0)
+        if (groaner->health_B0 != Q12(0.0f))
         {
-            if (arg0->model_0.anim_4.status_0 >> 1 == 4)
+            if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == ANIM_STATUS(2, false))
             {
-                if (arg0->model_0.anim_4.status_0 != 9)
+                if (groaner->model_0.anim_4.status_0 != ANIM_STATUS(4, true))
                 {
-                    arg0->properties_E4.dummy.properties_E8[6].val16[0] = 0;
+                    groaner->properties_E4.dummy.properties_E8[6].val16[0] = 0;
                 }
                 else
                 {
-                    arg0->properties_E4.dummy.properties_E8[6].val16[0] = FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) - 0x4E;
+                    groaner->properties_E4.dummy.properties_E8[6].val16[0] = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 78;
                 }
-                arg0->model_0.anim_4.status_0 = 0x2A;
+
+                groaner->model_0.anim_4.status_0 = ANIM_STATUS(21, false);
             }
-            else if (arg0->model_0.anim_4.status_0 >> 1 == 8)
+            else if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == 8)
             {
-                if (arg0->model_0.anim_4.status_0 != 0x11)
+                if (groaner->model_0.anim_4.status_0 != ANIM_STATUS(8, true))
                 {
-                    arg0->properties_E4.dummy.properties_E8[6].val16[0] = 0;
+                    groaner->properties_E4.dummy.properties_E8[6].val16[0] = 0;
                 }
                 else
                 {
-                    arg0->properties_E4.dummy.properties_E8[6].val16[0] = FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) - 0xA5;
+                    groaner->properties_E4.dummy.properties_E8[6].val16[0] = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 165;
                 }
-                arg0->model_0.anim_4.status_0 = 0x2C;
+
+                groaner->model_0.anim_4.status_0 = ANIM_STATUS(22, false);
             }
-            else if (arg0->model_0.anim_4.status_0 >> 1 == 14)
+            else if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == ANIM_STATUS(7, false))
             {
-                if (arg0->model_0.anim_4.status_0 != 0x1D)
+                if (groaner->model_0.anim_4.status_0 != ANIM_STATUS(14, true))
                 {
-                    arg0->properties_E4.dummy.properties_E8[6].val16[0] = 0;
+                    groaner->properties_E4.dummy.properties_E8[6].val16[0] = 0;
                 }
                 else
                 {
-                    arg0->properties_E4.dummy.properties_E8[6].val16[0] = FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) - 0x13F;
+                    groaner->properties_E4.dummy.properties_E8[6].val16[0] = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 319;
                 }
-                arg0->model_0.anim_4.status_0 = 0x2E;
+
+                groaner->model_0.anim_4.status_0 = ANIM_STATUS(23, false);
             }
         }
     }
-    else if (arg0->health_B0 > 0x64000)
+    else if (groaner->health_B0 > Q12(100.0f))
     {
-        if (!(arg0->properties_E4.dummy.properties_E8[0].val16[0] & 0x400))
+        if (!(groaner->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 10)))
         {
-            if (ABS(temp_s2) < 0x200)
+            if (ABS(unkAngle) < FP_ANGLE(45.0f))
             {
-                if ((arg0->model_0.anim_4.status_0 >> 1) != 2)
+                if ((ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0)) != 2)
                 {
-                    arg0->model_0.anim_4.status_0 = 4;
+                    groaner->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
                 }
             }
             else
             {
-                if (temp_s2 > 0)
+                if (unkAngle > FP_ANGLE(0.0f))
                 {
-                    if ((arg0->model_0.anim_4.status_0 >> 1) != 6)
+                    if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) != 6)
                     {
-                        arg0->model_0.anim_4.status_0 = 0xC;
+                        groaner->model_0.anim_4.status_0 = ANIM_STATUS(6, false);
                     }
                 }
-                else if ((arg0->model_0.anim_4.status_0 >> 1) != 0xC)
+                else if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) != 12)
                 {
-                    arg0->model_0.anim_4.status_0 = 0x18;
+                    groaner->model_0.anim_4.status_0 = ANIM_STATUS(12, false);
                 }
             }
-            arg0->model_0.controlState_2 = 5;
+
+            groaner->model_0.controlState_2 = 5;
         }
     }
     else
     {
-        func_80037DC4(arg0);
+        func_80037DC4(groaner);
 
-        arg0->flags_3E                                      |= 2;
-        arg0->properties_E4.dummy.properties_E8[0].val16[0] |= 0x1008;
+        groaner->flags_3E                                      |= CharaFlag_Unk2;
+        groaner->properties_E4.dummy.properties_E8[0].val16[0] |= 0x1008;
 
-        if (ABS(temp_s2) < 0x200)
+        if (ABS(unkAngle) < FP_ANGLE(45.0f))
         {
-            arg0->model_0.anim_4.status_0 = 6;
-            arg0->model_0.controlState_2  = 6;
+            groaner->model_0.anim_4.status_0 = ANIM_STATUS(3, false);
+            groaner->model_0.controlState_2  = 6;
         }
-        else if (temp_s2 > 0)
+        else if (unkAngle > 0)
         {
-            arg0->model_0.anim_4.status_0 = 0xE;
-            arg0->model_0.controlState_2  = 7;
+            groaner->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
+            groaner->model_0.controlState_2  = 7;
         }
         else
         {
-            arg0->model_0.anim_4.status_0 = 0x1A;
-            arg0->model_0.controlState_2  = 8;
+            groaner->model_0.anim_4.status_0 = ANIM_STATUS(13, false);
+            groaner->model_0.controlState_2  = 8;
         }
     }
 
-    if (temp_s4 != arg0->model_0.controlState_2 && temp_s4 == 3)
+    if (prevControlState != groaner->model_0.controlState_2 && prevControlState == 3)
     {
-        g_SysWork.field_2284[3] &= 0xFFFD;
+        g_SysWork.field_2284[3] &= ~(1 << 1);
     }
 }
