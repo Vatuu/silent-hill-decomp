@@ -46,6 +46,8 @@ OverlayAddrs = {
     "saveload": 0x801E2600,
     "stf_roll": 0x801E2600,
     "stream": 0x801E2600,
+    "hp_safe1": 0x801E7600,
+    "s__safe2": 0x801E7600
 }
 
 OverlayFileNames = [
@@ -54,7 +56,9 @@ OverlayFileNames = [
     "VIN/OPTION.BIN",
     "VIN/SAVELOAD.BIN",
     "VIN/STF_ROLL.BIN",
-    "VIN/STREAM.BIN"
+    "VIN/STREAM.BIN",
+    "BG/HP_SAFE1.BIN",
+    "BG/S__SAFE2.BIN"
 ]
 
 def askForFile():
@@ -70,6 +74,36 @@ def askForFile():
     if result == JFileChooser.APPROVE_OPTION:
         return chooser.getSelectedFile().getAbsolutePath()
     return None
+
+def readOverlayAddressesFromExe():
+    # bodyprog/b_konami/map addresses change between releases, luckily game seems to always store them at 0x80010000/0x80010004
+    # We'll try reading out those addresses before we start reading in overlays.
+
+    mem = currentProgram.getMemory()
+    address_factory = currentProgram.getAddressFactory()
+    default_space = address_factory.getDefaultAddressSpace()
+    
+    print("Reading overlay addresses from executable:")
+
+    try:
+        # Read b_konami/map address from 0x80010000
+        addr_80010000 = default_space.getAddress(0x80010000)
+        map_addr = mem.getInt(addr_80010000) & 0xFFFFFFFF
+        print("  b_konami/map address: 0x{:08X}".format(map_addr))
+        
+        # Read bodyprog address from 0x80010004
+        addr_80010004 = default_space.getAddress(0x80010004)
+        bodyprog_addr = mem.getInt(addr_80010004) & 0xFFFFFFFF
+        print("  bodyprog address: 0x{:08X}".format(bodyprog_addr))
+        
+        OverlayAddrs["b_konami"] = map_addr
+        OverlayAddrs["map"] = map_addr
+        OverlayAddrs["bodyprog"] = bodyprog_addr
+        
+    except Exception as e:
+        printerr("Error reading overlay addresses from executable: {}".format(e))
+        printerr("Using default addresses instead.")
+
 
 def carveMemoryBlock(mem, start_addr, length):
     end_addr = start_addr.add(length - 1)
@@ -235,6 +269,7 @@ def tryLoadKnownOvl(ovl_path):
         print("File not found: {}".format(ovl_path))
 
 # Entry point
+readOverlayAddressesFromExe()
 filepath = askForFile()
 
 if filepath:
