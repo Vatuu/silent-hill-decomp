@@ -30,6 +30,16 @@ GAME_FILE_EXE    := SLUS_007.07
 GAME_FILE_SILENT := SILENT.
 GAME_FILE_HILL   := HILL.
 
+else ifeq ($(GAME_VERSION), EUR)
+
+# Version - Retail European (1.0)
+
+GAME_NAME        := SLES-01514
+GAME_VERSION_DIR := EUR
+GAME_FILE_EXE    := SLES_015.14
+GAME_FILE_SILENT := SILENT.
+GAME_FILE_HILL   := HILL.
+
 else ifeq ($(GAME_VERSION), JAP0)
 
 # Version - Retail NTSC-J (1.0)

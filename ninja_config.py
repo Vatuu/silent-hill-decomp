@@ -41,8 +41,17 @@ GAMEVERSIONS = (
     GAMEVERSIONINFO(0, "USA",
         GAMEVERSIONSETUPINFO("SLUS-00707", "USA", "SLUS_007.07", f"SILENT{GAMEFILE_EXTENSION}", f"HILL{GAMEFILE_EXTENSION}")
     ),
-    GAMEVERSIONINFO(3, "JAP2",
-        GAMEVERSIONSETUPINFO("SLPM-86192", "JAP-2", "SLPM_861.92", f"SILENT{GAMEFILE_EXTENSION}", f"HILL{GAMEFILE_EXTENSION}")
+    GAMEVERSIONINFO(1, "EUR",
+        GAMEVERSIONSETUPINFO("SLES-01514", "EUR", "SLES_015.14", f"SILENT{GAMEFILE_EXTENSION}", f"HILL{GAMEFILE_EXTENSION}")
+    ),
+    GAMEVERSIONINFO(2, "JAP0",
+        GAMEVERSIONSETUPINFO("SLPM-86192", "JAP0", "SLPM_861.92", f"SILENT{GAMEFILE_EXTENSION}", f"HILL{GAMEFILE_EXTENSION}")
+    ),
+    GAMEVERSIONINFO(3, "JAP1",
+        GAMEVERSIONSETUPINFO("SLPM-86498", "JAP1", "SLPM_861.92", f"SILENT{GAMEFILE_EXTENSION}", f"HILL{GAMEFILE_EXTENSION}")
+    ),
+    GAMEVERSIONINFO(4, "JAP2",
+        GAMEVERSIONSETUPINFO("SLPM-87029", "JAP2", "SLPM_861.92", f"SILENT{GAMEFILE_EXTENSION}", f"HILL{GAMEFILE_EXTENSION}")
     )
 )
 
@@ -206,7 +215,7 @@ OBJDUMP_FLAGS = f"--disassemble-all --reloc --disassemble-zeroes -Mreg-names=32"
 
 TARGETS_POSTBUILD = ["1ST/BODYPROG.BIN", "VIN/STREAM.BIN", "VIN/MAP3_S06.BIN", "VIN/MAP4_S05.BIN", "VIN/MAP5_S01.BIN"]
 
-def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, objdiff_file, non_matching_enabled):
+def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, objdiff_file, non_matching_enabled, game_version_idx: int):
     
     skipAsm = ""
     nonMatching = ""
@@ -252,6 +261,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
         ninjaFile.build(
             outputs=f"{target_path}.i", rule="cpp", inputs=source_path,
             variables={
+                "VERSION": f"-DVER_{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}",
                 "MAPIDFLAG": f"-D{mapId}",
                 "SKIPASMFLAG": skipAsm,
                 "NONMATCHINGFLAG": nonMatching
@@ -262,6 +272,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
         ninjaFile.build(
             outputs=f"{target_path}.i", rule="cpp", inputs=source_path,
             variables={
+                "VERSION": f"-DVER_{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}",
                 "MAPIDFLAG": "",
                 "SKIPASMFLAG": skipAsm,
                 "NONMATCHINGFLAG": nonMatching
@@ -383,7 +394,7 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
     
     ninjaRulesFile.rule(
         "cpp", description="cpp $in",
-        command=f"{CPP} -P -MMD -MP -MT $out -MF $out.d {CPP_FLAGS} $MAPIDFLAG $SKIPASMFLAG $NONMATCHINGFLAG -o $out $in",
+        command=f"{CPP} -P -MMD -MP -MT $out -MF $out.d {CPP_FLAGS} $VERSION $MAPIDFLAG $SKIPASMFLAG $NONMATCHINGFLAG -o $out $in",
         depfile="$out.d"
     )
 
@@ -406,11 +417,16 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
         "ld", description="link $out",
         command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -r -b binary -o $out $in",
     )
-    
-    ninjaRulesFile.rule(
-        "elf", description="elf $out",
-        command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -Map $out.map -T $in -T $undef_sym_path -T $undef_fun_path -T {CONFIG_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}/lib_externs.ld -o $out",
-    )
+    if game_version_idx == 0:
+        ninjaRulesFile.rule(
+            "elf", description="elf $out",
+            command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -Map $out.map -T $in -T $undef_sym_path -T $undef_fun_path -T {CONFIG_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}/lib_externs.ld -o $out",
+        )
+    else:
+        ninjaRulesFile.rule(
+            "elf", description="elf $out",
+            command=f"{LD} {ENDIAN} {OPT_FLAGS} -nostdlib --no-check-sections -Map $out.map -T $in -T $undef_sym_path -T $undef_fun_path -o $out",
+        )
     
     ninjaRulesFile.rule(
         "objcopy", description="objcopy $out",
@@ -445,13 +461,14 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
     
     # Build all the objects
     for split_config in split_entries:
-        match split_config.SPLIT_BASENAME:
-            case "main":
-                os.system(f"{PREBUILD} main")
-            case "BODYPROG.BIN":
-                os.system(f"{PREBUILD} bodyprog")
-            case "STREAM.BIN":
-                os.system(f"{PREBUILD} stream")
+        if game_version_idx == 0:
+            match split_config.SPLIT_BASENAME:
+                case "main":
+                    os.system(f"{PREBUILD} main")
+                case "BODYPROG.BIN":
+                    os.system(f"{PREBUILD} bodyprog")
+                case "STREAM.BIN":
+                    os.system(f"{PREBUILD} stream")
         
         for split_entry in split_config.SPLIT_ENTRIES:
             for entry in split_entry:
@@ -481,7 +498,7 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
                                 }
                             )
                     case "c":
-                        ninja_setup_list_add_source(target_path.removesuffix(".c.o"), source_path, ninjaFile, None, non_matching)
+                        ninja_setup_list_add_source(target_path.removesuffix(".c.o"), source_path, ninjaFile, None, non_matching, game_version_idx)
                         
                         if objdiff_mode:
                             if sys.platform == "linux" or sys.platform == "linux2":
@@ -489,7 +506,7 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
                             elif sys.platform == "win32":
                                 expected_path = re.sub(r"^build\\src", r"expected\\asm", f"{target_path}.s.o")
                             
-                            tempVar = [ninja_setup_list_add_source(target_path.removesuffix(".c.o"), source_path, ninjaNonmatchingFile, ninjaDiffFile, True)]
+                            tempVar = [ninja_setup_list_add_source(target_path.removesuffix(".c.o"), source_path, ninjaNonmatchingFile, ninjaDiffFile, True, game_version_idx)]
                             if tempVar != [None]:
                                 objdiffConfigRequirements += tempVar
                     case "bin":
@@ -516,9 +533,9 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
         
         
         if split_config.SPLIT_BASENAME == "main":
-            output = f"{BUILD_DIR}/out/SLUS_007.07"
+            output = f"{BUILD_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}/out/SLUS_007.07"
         else:
-            output = f"{BUILD_DIR}/out/{split_config.SPLIT_BASENAME}"
+            output = f"{BUILD_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}/out/{split_config.SPLIT_BASENAME}"
         
         ninjaFile.build(
             outputs=f"{output}.elf",
@@ -564,7 +581,7 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
             checksumTarget = f"{CONFIG_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}"
         
         ninjaFile.build(
-            outputs=f"{BUILD_DIR}/out/checksum.ok",
+            outputs=f"{BUILD_DIR}/{GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR}/out/checksum.ok",
             rule="sha256sum",
             inputs=checksumTarget,
             implicit=checksumBuildRequirements
@@ -622,15 +639,16 @@ def ninja_append(split_entries, skip_checksum: bool, non_matching: bool, game_ve
                 else:
                     checksumBuildRequirements[i] = fixedStr
                 
-                if "SLUS" in fixedStr:
-                    os.system(f"{PREBUILD} main")
-                elif "BODYPROG.BIN" in fixedStr:
-                    os.system(f"{PREBUILD} bodyprog")
-                elif "STREAM.BIN" in fixedStr:
-                    os.system(f"{PREBUILD} stream")
+                if game_version_idx == 0:
+                    if "SLUS" in fixedStr:
+                        os.system(f"{PREBUILD} main")
+                    elif "BODYPROG.BIN" in fixedStr:
+                        os.system(f"{PREBUILD} bodyprog")
+                    elif "STREAM.BIN" in fixedStr:
+                        os.system(f"{PREBUILD} stream")
     
     for split_config in split_entries:
-        if objdiff_mode != True:
+        if objdiff_mode != True and game_version_idx == 0:
             match split_config.SPLIT_BASENAME:
                 case "main":
                     os.system(f"{PREBUILD} main")
@@ -659,7 +677,7 @@ def ninja_append(split_entries, skip_checksum: bool, non_matching: bool, game_ve
                         continue
                     else:
                         if seg.type == "c":
-                            tempVar = [ninja_setup_list_add_source(target_path, source_path, ninjaFileSyntax, objdiffFileSyntax, True)]
+                            tempVar = [ninja_setup_list_add_source(target_path, source_path, ninjaFileSyntax, objdiffFileSyntax, True, game_version_idx)]
                             if tempVar != [None]:
                                 objdiffConfigRequirements += tempVar
                 else:
@@ -683,7 +701,7 @@ def ninja_append(split_entries, skip_checksum: bool, non_matching: bool, game_ve
                                     }
                                 )
                         case "c":
-                            ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninjaFileSyntax, None, non_matching)
+                            ninja_setup_list_add_source(str(entry.object_path).removesuffix(".c.o"), str(entry.src_paths[0]), ninjaFileSyntax, None, non_matching, game_version_idx)
                         case "bin":
                             ninjaFileSyntax.build(outputs=str(entry.object_path), rule="ld", inputs=str(entry.src_paths[0]))
                         case "lib":
@@ -713,7 +731,7 @@ def ninja_append(split_entries, skip_checksum: bool, non_matching: bool, game_ve
             else:
                 output = f"{BUILD_DIR}/out/SLUS_007.07"
             
-            if split_config.SPLIT_BASENAME == "1ST/BODYPROG.BIN" or split_config.SPLIT_BASENAME == "VIN/STREAM.BIN":
+            if split_config.SPLIT_BASENAME == "1ST/BODYPROG.BIN" and game_version_idx == 0 or split_config.SPLIT_BASENAME == "VIN/STREAM.BIN" and game_version_idx == 0:
                 checksumBuildRequirements += [f"{output}.fix"]
             else:
                 checksumBuildRequirements += [output]
@@ -735,13 +753,14 @@ def ninja_append(split_entries, skip_checksum: bool, non_matching: bool, game_ve
                 implicit=f"{output}.elf"
             )
             
-            if split_config.SPLIT_BASENAME == "1ST/BODYPROG.BIN" or split_config.SPLIT_BASENAME == "VIN/STREAM.BIN":
-                ninjaFileSyntax.build(
-                    outputs=f"{output}.fix",
-                    rule="postbuild",
-                    inputs=output,
-                    implicit=output
-                )
+            if game_version_idx == 0:
+                if split_config.SPLIT_BASENAME == "1ST/BODYPROG.BIN" or split_config.SPLIT_BASENAME == "VIN/STREAM.BIN":
+                    ninjaFileSyntax.build(
+                        outputs=f"{output}.fix",
+                        rule="postbuild",
+                        inputs=output,
+                        implicit=output
+                    )
             
                     
     
@@ -875,9 +894,6 @@ def main():
         extract_files(gameVersionOption)
         return
     
-    if gameVersionOption != 0:
-        print("Support for other versions of the game haven't been implemented as we are still focused on the USA retail release.")
-        sys.exit(1)
     
     if args.setup == None:
         yamlsPaths.extend(YAML_EXECUTABLE)
