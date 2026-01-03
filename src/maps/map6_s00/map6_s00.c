@@ -343,7 +343,7 @@ INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800DC894_2_s00
 
 #include "maps/shared/Ai_Groaner_Init.h" // 0x800E2A30
 
-INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800E33DC_2_s00); // 0x800E2C30
+#include "maps/shared/sharedFunc_800E33DC_2_s00.h" // 0x800E2C30
 
 INCLUDE_ASM("asm/maps/map6_s00/nonmatchings/map6_s00", sharedFunc_800E384C_2_s00); // 0x800E30A0
 
