@@ -65,7 +65,7 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* airScreamer)
                 {
                     airScreamerProps.field_E8_8 = 2;
 
-                    if (var_s2 && Rng_RandQ12() < FP_ANGLE(180.0f))
+                    if (var_s2 && Rng_TestProbability(Q12(0.5f)))
                     {
                         airScreamer->model_0.controlState_2 = AirScreamerControl_24;
                     }
@@ -80,7 +80,7 @@ void sharedFunc_800D83F8_2_s00(s_SubCharacter* airScreamer)
                     {
                         airScreamer->model_0.controlState_2 = AirScreamerControl_24;
                     }
-                    else if (Rng_RandQ12() < FP_ANGLE(180.0f))
+                    else if (Rng_TestProbability(Q12(0.5f)))
                     {
                         airScreamer->model_0.controlState_2 = AirScreamerControl_24;
                     }

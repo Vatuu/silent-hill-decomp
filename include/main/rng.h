@@ -14,6 +14,10 @@ extern u32 g_RngSeed;
  * operation with a mask that has the specified number of consecutive
  * low bits set to 1.
  *
+ * TODO: Deprecated. While this is a common bitwise pattern for efficient probability checks,
+ * `Rng_GenerateInt(0, bits - 1)` calls with comments next to them in the following style are preferred:
+ * `// 1 in * chance.`
+ *
  * @note
  * Bits | Mask   | Chance     | Percent
  * -----|--------|------------|---------
@@ -39,6 +43,14 @@ extern u32 g_RngSeed;
  */
 #define Rng_TestProbabilityBits(bits) \
     (Rng_Rand16() & ((1 << (bits)) - 1))
+
+/** @brief Tests if a normalized fixed-point Q*.12, integer range `[0, 4096]` probability is met.
+ *
+ * @param chance Normalized probability value, integer range `[0, 4096]`.
+ * @return `true` if the probability is met, `false` otherwise.
+ */
+#define Rng_TestProbability(chance) \
+    (Rng_RandQ12() < (chance))
 
 /** @brief Generates an integer in the range `[low, high]` from a random input.
  *

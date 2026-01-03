@@ -22,7 +22,7 @@ void sharedFunc_800DD588_2_s00(s_SubCharacter* airScreamer)
     posZ = g_SysWork.playerWork_4C.player_0.position_18.vz;
     rotY = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
     
-    if (Rng_RandQ12() < FP_ANGLE(180.0f))
+    if (Rng_TestProbability(Q12(0.5f)))
     {
         angleStep = FP_ANGLE(360.0f / ANGLE_STEP_COUNT);
     }

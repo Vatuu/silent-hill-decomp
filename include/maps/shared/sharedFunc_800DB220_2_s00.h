@@ -47,7 +47,7 @@ void sharedFunc_800DB220_2_s00(s_SubCharacter* airScreamer)
             }
             else if (unkDist < Q12(0.5f))
             {
-                if (sharedFunc_800DC30C_2_s00(airScreamer) && Rng_RandQ12() < Q12(0.3f))
+                if (sharedFunc_800DC30C_2_s00(airScreamer) && Rng_TestProbability(Q12(0.3f)))
                 {
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_5;
                 }

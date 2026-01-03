@@ -48,7 +48,7 @@ bool sharedFunc_800DE250_2_s00(s_SubCharacter* airScreamer)
     sp28    = SquareRoot12(FP_SQUARE_PRECISE(deltaX, Q12_SHIFT) + FP_SQUARE_PRECISE(deltaZ, Q12_SHIFT));
     unkDist = (Rng_RandQ12() * 4) + Q12(4.0f);
 
-    if (Rng_RandQ12() < Q12(0.5f))
+    if (Rng_TestProbability(Q12(0.5f)))
     {
         angleStep = FP_ANGLE(22.5f);
     }

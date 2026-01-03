@@ -71,7 +71,7 @@ void sharedFunc_800D8D44_2_s00(s_SubCharacter* airScreamer)
                         airScreamer->model_0.controlState_2 = AirScreamerControl_27;
                         airScreamer->model_0.stateStep_3    = AirScreamerStateStep_0;
 
-                        if (Rng_RandQ12() < ((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1_2 * 2)))
+                        if (Rng_TestProbability((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1_2 * 2)))
                         {
                             airScreamer->properties_E4.airScreamer.field_E8_8 = 3;
                         }
@@ -98,7 +98,7 @@ void sharedFunc_800D8D44_2_s00(s_SubCharacter* airScreamer)
                         airScreamer->model_0.controlState_2 = AirScreamerControl_26;
                         airScreamer->model_0.stateStep_3    = AirScreamerStateStep_0;
 
-                        if (Rng_RandQ12() < (Q12(0.5f) - (var_s1_2 * 3)))
+                        if (Rng_TestProbability(Q12(0.5f) - (var_s1_2 * 3)))
                         {
                             airScreamer->properties_E4.airScreamer.field_E8_8 = 2;
                         }
@@ -108,11 +108,12 @@ void sharedFunc_800D8D44_2_s00(s_SubCharacter* airScreamer)
                         airScreamer->model_0.controlState_2 = AirScreamerControl_21;
                         airScreamer->model_0.stateStep_3    = AirScreamerStateStep_0;
 
+                        // TODO: Will `Rng_TestProbability` fit?
                         if (Rng_RandQ12() > ((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1_2 * 2)))
                         {
                             airScreamer->properties_E4.airScreamer.field_E8_8 = 5;
                         }
-                        else if (Rng_RandQ12() < ((var_s1_2 * 3) + Q12(0.3f)))
+                        else if (Rng_TestProbability((var_s1_2 * 3) + Q12(0.3f)))
                         {
                             airScreamer->properties_E4.airScreamer.field_E8_8 = 3;
                         }
@@ -122,7 +123,7 @@ void sharedFunc_800D8D44_2_s00(s_SubCharacter* airScreamer)
                         airScreamer->model_0.controlState_2 = AirScreamerControl_27;
                         airScreamer->model_0.stateStep_3    = AirScreamerStateStep_0;
 
-                        if (Rng_RandQ12() < FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f))
+                        if (Rng_TestProbability(FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)))
                         {
                             airScreamer->properties_E4.airScreamer.field_E8_8 = 3;
                         }
@@ -130,6 +131,7 @@ void sharedFunc_800D8D44_2_s00(s_SubCharacter* airScreamer)
 
                     case 1:
                     case 4:
+                        // TODO: Will `Rng_TestProbability` fit?
                         if (Rng_RandQ12() >= ((var_s1_2 * 5) + Q12(0.2f)))
                         {
                             airScreamer->model_0.controlState_2 = AirScreamerControl_27;
@@ -141,7 +143,7 @@ void sharedFunc_800D8D44_2_s00(s_SubCharacter* airScreamer)
 
                         airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
-                        if (Rng_RandQ12() < ((var_s1_2 * 3) + Q12(0.5f)))
+                        if (Rng_TestProbability((var_s1_2 * 3) + Q12(0.5f)))
                         {
                             var_a0 = 2;
                         }
@@ -171,7 +173,7 @@ void sharedFunc_800D8D44_2_s00(s_SubCharacter* airScreamer)
 
                         airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
-                        if (Rng_RandQ12() < ((var_s1_2 * 2) + Q12(0.6f)))
+                        if (Rng_TestProbability((var_s1_2 * 2) + Q12(0.6f)))
                         {
                             var_a0 = 2;
                         }

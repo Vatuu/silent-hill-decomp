@@ -5,8 +5,8 @@ void sharedFunc_800D794C_2_s00(s_SubCharacter* airScreamer)
     q19_12 dist0;
     q19_12 angle0;
     bool   field14C_2;
-    q19_12 angle1;
-    q19_12 angle2;
+    q19_12 chance0;
+    q19_12 chance1;
     bool   temp_s3;
     s32    var_s5;
     q19_12 angleAdd;
@@ -39,7 +39,7 @@ void sharedFunc_800D794C_2_s00(s_SubCharacter* airScreamer)
         case AirScreamerStateStep_1:
             sharedFunc_800D529C_0_s01(airScreamer, dist0 / 2, angle0);
 
-            if (Rng_RandQ12() < ((angleAdd * 2) + FP_ANGLE(72.0f)))
+            if (Rng_TestProbability((angleAdd * 2) + FP_ANGLE(72.0f)))
             {
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_2;
             }
@@ -93,10 +93,10 @@ void sharedFunc_800D794C_2_s00(s_SubCharacter* airScreamer)
             break;
 
         case AirScreamerStateStep_4:
-            if (animStatus == ANIM_STATUS(19, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_19, true))
             {
                 switchCond                     = 2;
-                airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(27, false);
+                airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(AirScreamerAnim_27, false);
                 airScreamer->model_0.stateStep_3     = AirScreamerStateStep_5;
             }
             break;
@@ -129,21 +129,22 @@ void sharedFunc_800D794C_2_s00(s_SubCharacter* airScreamer)
                     break;
 
                 case 2:
-                    if (animStatus == ANIM_STATUS(23, true) || animStatus == ANIM_STATUS(25, true))
+                    if (animStatus == ANIM_STATUS(AirScreamerAnim_23, true) ||
+                        animStatus == ANIM_STATUS(AirScreamerAnim_25, true))
                     {
                         airScreamer->model_0.controlState_2 = AirScreamerControl_8;
                         airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
                     }
                     else if (sharedFunc_800DC0A8_2_s00(airScreamer))
                     {
-                        airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(23, false);
+                        airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(AirScreamerAnim_23, false);
                     }
                     break;
 
                 case 1:
-                    angle1 = sharedFunc_800DC894_2_s00(airScreamer, dist0);
-                    angle2 = sharedFunc_800DC6E4_2_s00(airScreamer, dist0);
-                    if (Rng_RandQ12() < angle1)
+                    chance0 = sharedFunc_800DC894_2_s00(airScreamer, dist0);
+                    chance1 = sharedFunc_800DC6E4_2_s00(airScreamer, dist0);
+                    if (Rng_TestProbability(chance0))
                     {
                         if (airScreamerProps.field_E8_0 == 3)
                         {
@@ -154,7 +155,7 @@ void sharedFunc_800D794C_2_s00(s_SubCharacter* airScreamer)
                         airScreamer->model_0.stateStep_3             = AirScreamerStateStep_0;
                         airScreamer->properties_E4.player.flags_11C |= CharaFlag_Unk5;
                     }
-                    else if (Rng_RandQ12() < angle2)
+                    else if (Rng_TestProbability(chance1))
                     {
                         airScreamer->model_0.controlState_2 = AirScreamerControl_27;
                         airScreamer->model_0.stateStep_3             = AirScreamerStateStep_0;

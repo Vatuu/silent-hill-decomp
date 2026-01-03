@@ -1,6 +1,6 @@
-s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
+q19_12 sharedFunc_800DC6E4_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
 {
-    s32    result;
+    q19_12 chance;
     q19_12 mult;
 
     #define airScreamerProps airScreamer->properties_E4.airScreamer
@@ -11,8 +11,7 @@ s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
         mult = Q12(0.1f);
     }
 
-    result = 0;
-
+    chance = Q12(0.0f);
     switch ((u32)airScreamerProps.field_E8_8)
     {
         case 0:
@@ -23,41 +22,41 @@ s32 sharedFunc_800DC6E4_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
             break;
 
         case 5:
-            result  = MAX((Q12(10.0f) - arg1) / 128, 0);
-            result += (sharedFunc_800D3814_0_s01(airScreamer) / 5) - (mult * 2);
+            chance  = MAX((Q12(10.0f) - arg1) / 128, Q12(0.0f));
+            chance += (sharedFunc_800D3814_0_s01(airScreamer) / 5) - (mult * 2);
             break;
     }
 
     if (airScreamer->health_B0 > Q12(300.0f))
     {
-        result /= 2;
+        chance /= 2;
     }
 
     switch ((u32)airScreamerProps.field_E8_0)
     {
         case 3:
-            result = 0;
+            chance = Q12(0.0f);
             break;
 
         case 1:
             // TODO: Not sure what this is trying to do, getting index into `npcs_1A0` in strange way?
-            if (!((g_SysWork.npcs_1A0 - airScreamer) & 1))
+            if (!((g_SysWork.npcs_1A0 - airScreamer) & 0x1))
             {
-                result = 0;
+                chance = Q12(0.0f);
             }
             else
             {
-                result /= 2;
+                chance /= 2;
             }
             break;
 
         case 0:
-            if (!((g_SysWork.npcs_1A0 - airScreamer) & 1))
+            if (!((g_SysWork.npcs_1A0 - airScreamer) & 0x1))
             {
-                result /= 2;
+                chance /= 2;
             }
             break;
     }
 
-    return result;
+    return chance;
 }

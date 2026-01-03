@@ -71,7 +71,7 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* airScreamer)
                     airScreamer->model_0.controlState_2     = AirScreamerControl_42;
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
-                    if (Rng_RandQ12() < ((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1 * 2)))
+                    if (Rng_TestProbability((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1 * 2)))
                     {
                         airScreamerProps.field_E8_8 = 3;
                     }
@@ -82,6 +82,7 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* airScreamer)
                     airScreamer->model_0.controlState_2     = AirScreamerControl_38;
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
+                    // TODO: Can `Rng_TestProbability` fit?
                     if (Rng_RandQ12() <= ((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1 * 2)))
                     {
                         airScreamerProps.field_E8_8 = 3;
@@ -100,7 +101,7 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* airScreamer)
                     airScreamer->model_0.controlState_2     = AirScreamerControl_41;
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
-                    if (Rng_RandQ12() < ((Q12(0.5f) - (var_s1 * 3))))
+                    if (Rng_TestProbability(((Q12(0.5f) - (var_s1 * 3)))))
                     {
                         airScreamerProps.field_E8_8 = 2;
                     }
@@ -114,7 +115,7 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* airScreamer)
                     {
                         airScreamerProps.field_E8_8 = 5;
                     }
-                    else if (Rng_RandQ12() < Q12(0.3f) + (var_s1 * 3))
+                    else if (Rng_TestProbability(Q12(0.3f) + (var_s1 * 3)))
                     {
                         airScreamerProps.field_E8_8 = 3;
                     }
@@ -124,7 +125,7 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* airScreamer)
                     airScreamer->model_0.controlState_2     = AirScreamerControl_42;
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
-                    if (Rng_RandQ12() < FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f))
+                    if (Rng_TestProbability(FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)))
                     {
                         airScreamerProps.field_E8_8 = 3;
                     }
@@ -132,7 +133,7 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* airScreamer)
 
                 case 1:
                 case 4:
-                    if (Rng_RandQ12() < (Q12(0.2f) + (var_s1 * 5)))
+                    if (Rng_TestProbability(Q12(0.2f) + (var_s1 * 5)))
                     {
                         airScreamer->model_0.controlState_2 = AirScreamerControl_36;
                     }
@@ -143,7 +144,7 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* airScreamer)
 
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
-                    if (Rng_RandQ12() < (Q12(0.5f) + (var_s1 * 3)))
+                    if (Rng_TestProbability(Q12(0.5f) + (var_s1 * 3)))
                     {
                         var_a0 = 2;
                     }
@@ -162,7 +163,7 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* airScreamer)
                         var_s1 = Q12(1.0f);
                     }
 
-                    if (Rng_RandQ12() < (Q12(0.4f) + (var_s1 * 3)))
+                    if (Rng_TestProbability(Q12(0.4f) + (var_s1 * 3)))
                     {
                         airScreamer->model_0.controlState_2 = AirScreamerControl_36;
                     }
@@ -173,7 +174,7 @@ void sharedFunc_800DB9B8_2_s00(s_SubCharacter* airScreamer)
 
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
 
-                    if (Rng_RandQ12() < (Q12(0.6f) + (var_s1 * 2)))
+                    if (Rng_TestProbability(Q12(0.6f) + (var_s1 * 2)))
                     {
                         var_a0 = 2;
                     }

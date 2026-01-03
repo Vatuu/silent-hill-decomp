@@ -9,8 +9,8 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* airScreamer)
     bool   field14C_2;
     s32    temp_s3;
     s32    switchCond0;
-    s32    temp_s0;
-    s32    temp_s2;
+    s32    chance0;
+    s32    chance1;
 
     #define airScreamerProps airScreamer->properties_E4.airScreamer
 
@@ -43,7 +43,7 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* airScreamer)
 
             if (!sharedFunc_800DC30C_2_s00(airScreamer) || Rng_RandQ12() >= Q12(0.3f))
             {
-                if (Rng_RandQ12() < (Q12(0.2f) + (var_s7 * 2)))
+                if (Rng_TestProbability(Q12(0.2f) + (var_s7 * 2)))
                 {
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_2;
                 }
@@ -100,7 +100,8 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* airScreamer)
             #undef angleDiff
 
         case AirScreamerStateStep_4:
-            if (animStatus == ANIM_STATUS(AirScreamerAnim_25, true) || animStatus == ANIM_STATUS(AirScreamerAnim_23, true))
+            if (animStatus == ANIM_STATUS(AirScreamerAnim_25, true) ||
+                animStatus == ANIM_STATUS(AirScreamerAnim_23, true))
             {
                 switchCond1                    = 2;
                 airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(AirScreamerAnim_22, false);
@@ -142,10 +143,10 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* airScreamer)
                     break;
 
                 case 1:
-                    temp_s0 = sharedFunc_800DC894_2_s00(airScreamer, unkDist);
-                    temp_s2 = sharedFunc_800DC6E4_2_s00(airScreamer, unkDist);
+                    chance0 = sharedFunc_800DC894_2_s00(airScreamer, unkDist);
+                    chance1 = sharedFunc_800DC6E4_2_s00(airScreamer, unkDist);
 
-                    if (Rng_RandQ12() < temp_s0)
+                    if (Rng_TestProbability(chance0))
                     {
                         if (airScreamerProps.field_E8_0 == 3)
                         {
@@ -156,7 +157,7 @@ void sharedFunc_800D4E78_2_s00(s_SubCharacter* airScreamer)
                         airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
                         airScreamerProps.flags_11C |= AirScreamerFlag_4;
                     }
-                    else if (Rng_RandQ12() < temp_s2)
+                    else if (Rng_TestProbability(chance1))
                     {
                         airScreamer->model_0.controlState_2               = AirScreamerControl_14;
                         airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;

@@ -66,7 +66,7 @@ void sharedFunc_800D6E28_2_s00(s_SubCharacter* airScreamer)
                     {
                         airScreamer->model_0.stateStep_3 = AirScreamerStateStep_5;
                     }
-                    else if (sharedFunc_800DC3BC_2_s00(airScreamer) && distFieldF8 < Q12(2.0f) && Rng_RandQ12() < Q12(0.5f))
+                    else if (sharedFunc_800DC3BC_2_s00(airScreamer) && distFieldF8 < Q12(2.0f) && Rng_TestProbability(Q12(0.5f)))
                     {
                         airScreamer->model_0.stateStep_3 = AirScreamerStateStep_3;
                     }

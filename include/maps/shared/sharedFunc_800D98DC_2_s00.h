@@ -51,7 +51,7 @@ void sharedFunc_800D98DC_2_s00(s_SubCharacter* airScreamer)
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_4;
             }
             else if (sharedFunc_800DC3BC_2_s00(airScreamer) && cond == true && distFieldF8 < Q12(4.0f) &&
-                     (angFieldF8 >= FP_ANGLE(-30.0f) && angFieldF8 <= FP_ANGLE(30.0f)) && Rng_RandQ12() < Q12(0.7f))
+                     (angFieldF8 >= FP_ANGLE(-30.0f) && angFieldF8 <= FP_ANGLE(30.0f)) && Rng_TestProbability(Q12(0.7f)))
             {
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_2;
             }

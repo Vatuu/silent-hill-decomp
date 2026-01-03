@@ -77,7 +77,7 @@ void sharedFunc_800D8618_2_s00(s_SubCharacter* airScreamer)
                     else if (!field14C_2)
                     {
                         if (airScreamerProps.timer_120 == Q12(0.0f) && !field14C_1 &&
-                            Rng_RandQ12() < Q12(0.5f))
+                            Rng_TestProbability(Q12(0.5f)))
                         {
                             airScreamer->model_0.controlState_2 = AirScreamerControl_21;
                         }

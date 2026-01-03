@@ -18,7 +18,7 @@ void sharedFunc_800D80EC_2_s00(s_SubCharacter* airScreamer)
     {
         case 0:
             airScreamerProps.timer_120 = Q12(2.0f);
-            if (Rng_RandQ12() < Q12(0.7f))
+            if (Rng_TestProbability(Q12(0.7f)))
             {
                 switchCond = 2;
                 sharedFunc_800D529C_0_s01(airScreamer, Q12(8.0f), airScreamer->rotation_24.vy);

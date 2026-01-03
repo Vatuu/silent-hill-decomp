@@ -27,7 +27,7 @@ void sharedFunc_800D5DAC_2_s00(s_SubCharacter* airScreamer)
 
         case 1:
             airScreamerProps.timer_120 = Q12(4.0f);
-            if (sharedFunc_800DC30C_2_s00(airScreamer) && Rng_RandQ12() < Q12(0.4f))
+            if (sharedFunc_800DC30C_2_s00(airScreamer) && Rng_TestProbability(Q12(0.4f)))
             {
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_3;
             }
@@ -81,7 +81,7 @@ void sharedFunc_800D5DAC_2_s00(s_SubCharacter* airScreamer)
                     {
                         if (field14C_2 == 0)
                         {
-                            if (airScreamerProps.timer_120 == Q12(0.0f) && !field14C_1 && Rng_RandQ12() < Q12(0.5f))
+                            if (airScreamerProps.timer_120 == Q12(0.0f) && !field14C_1 && Rng_TestProbability(Q12(0.5f)))
                             {
                                 airScreamer->model_0.controlState_2 = AirScreamerControl_7;
                                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;

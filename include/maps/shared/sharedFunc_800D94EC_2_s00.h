@@ -66,7 +66,7 @@ void sharedFunc_800D94EC_2_s00(s_SubCharacter* airScreamer)
                      cond == true && 
                      distFieldF8 < Q12(4.0f) && 
                      (angleDiff >= FP_ANGLE(-30.0f) && angleDiff <= FP_ANGLE(30.0f)) && 
-                     Rng_RandQ12() < Q12(0.7f))
+                     Rng_TestProbability(Q12(0.7f)))
             {
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_2;
             }

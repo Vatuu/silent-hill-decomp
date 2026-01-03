@@ -34,7 +34,7 @@ void sharedFunc_800DA0D4_2_s00(s_SubCharacter* airScreamer)
     switch (airScreamer->model_0.stateStep_3)
     {
         case AirScreamerStateStep_0:
-            if (sharedFunc_800DC30C_2_s00(airScreamer) && Rng_RandQ12() < Q12(0.1f))
+            if (sharedFunc_800DC30C_2_s00(airScreamer) && Rng_TestProbability(Q12(0.1f)))
             {
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_8;
             }

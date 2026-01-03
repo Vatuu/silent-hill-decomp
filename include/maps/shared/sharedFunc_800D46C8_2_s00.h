@@ -156,7 +156,7 @@ void sharedFunc_800D46C8_2_s00(s_SubCharacter* airScreamer)
                         airScreamer->model_0.controlState_2 = AirScreamerControl_7;
                         airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
                     }
-                    else if (switchCond == 1 && (Rng_RandQ12() < Q12(0.5f)))
+                    else if (switchCond == 1 && Rng_TestProbability(Q12(0.5f)))
                     {
                         s32 randVal = Rng_RandQ12();
                         s32 var_a0  = Q12(0.0f);

@@ -9,8 +9,8 @@ void sharedFunc_800D6A7C_2_s00(s_SubCharacter* airScreamer)
     bool   field14C_0_tmp;
     bool   field14C_1_tmp;
     bool   field14C_2_tmp;
-    q19_12 distFieldF8;
-    q19_12 angFieldF8;
+    q19_12 distToTarget;
+    q19_12 angleDeltaToTarget;
     s32    temp_s5;
     bool   cond; // TODO: Why does moving this decl cause mismatch?
 
@@ -49,12 +49,12 @@ void sharedFunc_800D6A7C_2_s00(s_SubCharacter* airScreamer)
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_2;
 
         case 2:
-            distFieldF8 = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
-            angFieldF8  = FP_ANGLE_NORM_S(func_80080478(&airScreamer->position_18, &airScreamerProps.targetPosition_F8) - airScreamer->rotation_24.vy);
+            distToTarget = Math_Distance2dGet(&airScreamer->position_18, &airScreamerProps.targetPosition_F8);
+            angleDeltaToTarget  = FP_ANGLE_NORM_S(func_80080478(&airScreamer->position_18, &airScreamerProps.targetPosition_F8) - airScreamer->rotation_24.vy);
 
             if (!temp_s5)
             {
-                if ((distFieldF8 < Q12(1.0f) && (angFieldF8 >= FP_ANGLE(-5.0f) && angFieldF8 <= FP_ANGLE(5.0f))) ||
+                if ((distToTarget < Q12(1.0f) && (angleDeltaToTarget >= FP_ANGLE(-5.0f) && angleDeltaToTarget <= FP_ANGLE(5.0f))) ||
                     airScreamer->properties_E4.player.flags_11C < 0)
                 {
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
@@ -67,11 +67,11 @@ void sharedFunc_800D6A7C_2_s00(s_SubCharacter* airScreamer)
                     }
                     else if (cond)
                     {
-                        if (sharedFunc_800DC200_2_s00(airScreamer) && distFieldF8 > Q12(7.0f))
+                        if (sharedFunc_800DC200_2_s00(airScreamer) && distToTarget > Q12(7.0f))
                         {
                             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_5;
                         }
-                        else if (sharedFunc_800DC3BC_2_s00(airScreamer) && distFieldF8 < Q12(3.0f) && Rng_RandQ12() < FP_ANGLE(252.0f))
+                        else if (sharedFunc_800DC3BC_2_s00(airScreamer) && distToTarget < Q12(3.0f) && Rng_TestProbability(Q12(0.7f)))
                         {
                             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_3;
                         }

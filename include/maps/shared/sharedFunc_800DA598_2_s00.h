@@ -1,13 +1,13 @@
 void sharedFunc_800DA598_2_s00(s_SubCharacter* airScreamer)
 {
     s32    temp_a0;
-    q19_12 temp_s2;
+    q19_12 chance1;
     q19_12 dist;
     s32    temp_s4;
     bool   field14C;
     q19_12 angle;
     s32    switchCond;
-    q19_12 temp_s1;
+    q19_12 chance0;
     s32    animStatus;
     s32    new_var;
 
@@ -114,17 +114,17 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* airScreamer)
                     break;
 
                 case 1:
-                    temp_s1 = sharedFunc_800DC894_2_s00(airScreamer, dist);
-                    temp_s2 = sharedFunc_800DC6E4_2_s00(airScreamer, dist);
+                    chance0 = sharedFunc_800DC894_2_s00(airScreamer, dist);
 
+                    chance1 = sharedFunc_800DC6E4_2_s00(airScreamer, dist);
                     if (FP_ANGLE_NORM_S(angle - airScreamer->rotation_24.vy) >= FP_ANGLE(-22.5f) &&
                         FP_ANGLE_NORM_S(angle - airScreamer->rotation_24.vy) <  FP_ANGLE(22.5f) &&
                         dist > Q12(4.0f) && dist < Q12(8.0f))
                     {
-                        temp_s1 += Q12(0.2f);
+                        chance0 += Q12(0.2f);
                     }
 
-                    if (Rng_RandQ12() < temp_s1)
+                    if (Rng_TestProbability(chance0))
                     {
                         if (airScreamerProps.field_E8_0 == 3)
                         {
@@ -135,7 +135,7 @@ void sharedFunc_800DA598_2_s00(s_SubCharacter* airScreamer)
                         airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
                         airScreamerProps.flags_11C |= AirScreamerFlag_4;
                     }
-                    else if (Rng_RandQ12() < temp_s2)
+                    else if (Rng_TestProbability(chance1))
                     {
                         airScreamer->model_0.controlState_2               = AirScreamerControl_42;
                         airScreamer->model_0.stateStep_3           = AirScreamerStateStep_0;
