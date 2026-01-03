@@ -133,7 +133,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
         groaner->model_0.anim_4.status_0                        = ANIM_STATUS(GroanerAnim_16, true);
         groaner->model_0.anim_4.time_4                          = Q12(363.0f);
         groaner->model_0.anim_4.keyframeIdx_8                   = 363;
-        groanerProps.flags_E8 &= ~(1 << 9);
+        groanerProps.flags_E8 &= ~GroanerFlag_9;
     }
 
     #undef groanerProps

@@ -330,18 +330,28 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
                 func_8005DC1C(Sfx_Unk1427, &creeper->position_18, Q8_CLAMPED(0.5f), 0);
                 creeperProps.timer_104 = Q12(0.0f);
 
+                // Update other Creepers.
                 for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
                 {
-                    if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == Chara_Creeper &&
-                        g_SysWork.npcs_1A0[i].field_40 != creeper->field_40 &&
-                        (g_SysWork.npcs_1A0[i].properties_E4.creeper.flags_E8 & CreeperFlag_6) &&
-                        g_SysWork.npcs_1A0[i].model_0.controlState_2 == 1 &&
-                        !Math_Distance2dCheck(&creeper->position_18, &g_SysWork.npcs_1A0[i].position_18, Q12(16.0f)))
+                    #define curNpc g_SysWork.npcs_1A0[i]
+
+                    // Check if NPC is Creeper.
+                    if (curNpc.model_0.charaId_0 != Chara_Creeper)
                     {
-                        g_SysWork.npcs_1A0[i].properties_E4.creeper.timer_104 = Q12(0.0f);
-                        sharedData_800E57CC_1_s02++;
-                        g_SysWork.npcs_1A0[i].properties_E4.creeper.flags_E8 |= CreeperFlag_7;
+                        continue;
                     }
+
+                    if (curNpc.field_40 != creeper->field_40 &&
+                        (curNpc.properties_E4.creeper.flags_E8 & CreeperFlag_6) &&
+                        curNpc.model_0.controlState_2 == CreeperControl_1 &&
+                        !Math_Distance2dCheck(&creeper->position_18, &curNpc.position_18, Q12(16.0f)))
+                    {
+                        curNpc.properties_E4.creeper.timer_104 = Q12(0.0f);
+                        sharedData_800E57CC_1_s02++;
+                        curNpc.properties_E4.creeper.flags_E8 |= CreeperFlag_7;
+                    }
+
+                    #undef curNpc
                 }
             }
             else if (!Rng_GenerateUInt(0, 63) && creeperProps.timer_104 > Q12(2.0f)) // 1 in 64 chance.

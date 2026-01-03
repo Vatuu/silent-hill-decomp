@@ -3692,7 +3692,7 @@ INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028544);
 // Important for combat.
 INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005CD38); // 0x8005CD38
 
-bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* unkOffset, u32 npxIdx, q19_12 angleConstraint) // 0x8005D50C
+bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* unkOffset, u32 npcIdx, q19_12 angleConstraint) // 0x8005D50C
 {
     s_func_800700F8_2 sp10;
     VECTOR3           unkPos;
@@ -3704,36 +3704,41 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
     q19_12            mag1;
     s32               i;
 
+    #define npc g_SysWork.npcs_1A0[npcIdx]
+
     // Check if NPC index is valid.
-    if (npxIdx >= ARRAY_SIZE(g_SysWork.npcs_1A0))
+    if (npcIdx >= ARRAY_SIZE(g_SysWork.npcs_1A0))
     {
         return false;
     }
 
-    unkPos.vx = (g_SysWork.npcs_1A0[npxIdx].position_18.vx + g_SysWork.npcs_1A0[npxIdx].field_D8.offsetX_0) - unkOffset->vx;
-    unkPos.vy = (g_SysWork.npcs_1A0[npxIdx].position_18.vy + g_SysWork.npcs_1A0[npxIdx].field_C8.field_6) - unkOffset->vy;
-    unkPos.vz = (g_SysWork.npcs_1A0[npxIdx].position_18.vz + g_SysWork.npcs_1A0[npxIdx].field_D8.offsetZ_2) - unkOffset->vz;
+    unkPos.vx = (npc.position_18.vx + npc.field_D8.offsetX_0) - unkOffset->vx;
+    unkPos.vy = (npc.position_18.vy + npc.field_C8.field_6) - unkOffset->vy;
+    unkPos.vz = (npc.position_18.vz + npc.field_D8.offsetZ_2) - unkOffset->vz;
 
     mag0 = Math_Vector2MagCalc(unkPos.vx, unkPos.vz);
     angle0 = ratan2(unkPos.vx, unkPos.vz);
     angle1 = ratan2(mag0, unkPos.vy);
 
-    *targetNpcIdx = npxIdx;
+    *targetNpcIdx = npcIdx;
     *outAngle0 = angle1;
     *outAngle1 = angle0;
 
     // Run through NPCs.
     for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
     {
+        #define curNpc g_SysWork.npcs_1A0[i]
+
         // Check if NPC is valid.
-        if (g_SysWork.npcs_1A0[i].model_0.charaId_0 == Chara_None || g_SysWork.npcs_1A0[i].health_B0 < Q12(0.0f) || i == npxIdx)
+        if (curNpc.model_0.charaId_0 == Chara_None ||
+            curNpc.health_B0 < Q12(0.0f) || i == npcIdx)
         {
             continue;
         }
 
-        unkPos.vx = (g_SysWork.npcs_1A0[i].position_18.vx + g_SysWork.npcs_1A0[i].field_D8.offsetX_0) - unkOffset->vx;
-        unkPos.vy = (g_SysWork.npcs_1A0[i].position_18.vy + g_SysWork.npcs_1A0[i].field_C8.field_6) - unkOffset->vy;
-        unkPos.vz = (g_SysWork.npcs_1A0[i].position_18.vz + g_SysWork.npcs_1A0[i].field_D8.offsetZ_2) - unkOffset->vz;
+        unkPos.vx = (curNpc.position_18.vx + curNpc.field_D8.offsetX_0) - unkOffset->vx;
+        unkPos.vy = (curNpc.position_18.vy + curNpc.field_C8.field_6) - unkOffset->vy;
+        unkPos.vz = (curNpc.position_18.vz + curNpc.field_D8.offsetZ_2) - unkOffset->vz;
 
         angle2 = ratan2(unkPos.vx, unkPos.vz);
         if (angleConstraint < ABS(func_8005BF38(angle0 - angle2)))
@@ -3760,9 +3765,13 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
             mag0 = mag1;
             *outAngle1  = angle2;
         }
+
+        #undef curNpc
     }
 
     return true;
+
+    #undef npc
 }
 
 s32 func_8005D86C(s32 arg0) // 0x8005D86C

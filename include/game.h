@@ -802,9 +802,9 @@ typedef enum _CharacterId
     Chara_SplitHead        = 14,
     Chara_Floatstinger     = 15,
     Chara_PuppetNurse      = 16,
-    Chara_DummyNurse       = 17, /** Uses dummy anim file without model/texture, but uses same update funcptr as `Chara_PuppetNurse`. */
+    Chara_DummyNurse       = 17, /** Uses dummy anim file without model/texture, but the same update funcptr as `Chara_PuppetNurse`. */
     Chara_PuppetDoctor     = 18,
-    Chara_DummyDoctor      = 19, /** Uses dummy anim file without model/texture, but uses same update funcptr as `Chara_PuppetDoctor`. */
+    Chara_DummyDoctor      = 19, /** Uses dummy anim file without model/texture, but the same update funcptr as `Chara_PuppetDoctor`. */
     Chara_Twinfeeler       = 20,
     Chara_Bloodsucker      = 21,
     Chara_Incubus          = 22,

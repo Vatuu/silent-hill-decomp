@@ -3418,7 +3418,7 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
                      (g_SysWork.playerCombat_38.weaponAttack_F == WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap) &&
                       extra->model_0.anim_4.status_0 == ANIM_STATUS(HarryAnim_HandgunAim, true) &&
                       extra->model_0.anim_4.keyframeIdx_8 >= (D_800C44F0[0].field_4 + 9))) &&
-                    !(g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C & 4))
+                    !(g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C & PlayerFlag_Unk2))
                 {
                     g_SysWork.playerWork_4C.player_0.properties_E4.player.gasWeaponPowerTimer_114 = Q12(60.0f);
 
@@ -5564,7 +5564,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             {
                 if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120, chara->rotation_24.vy) < (((g_DeltaTime0 * 24) >> 4) + FP_ANGLE(180.0f)))
                 {
-                    chara->rotation_24.vy                                                   = g_SysWork.playerWork_4C.player_0.properties_E4.npc.field_120 + FP_ANGLE(180.0f);
+                    chara->rotation_24.vy                                                   = g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120 + FP_ANGLE(180.0f);
                     g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(1.4f);
                     D_800C454C                                                              = Q12(0.0f);
 
@@ -5687,7 +5687,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
             {
                 if (ABS_DIFF(g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120, chara->rotation_24.vy) < (((g_DeltaTime0 * 24) >> 4) + FP_ANGLE(180.0f)))
                 {
-                    chara->rotation_24.vy                                                   = g_SysWork.playerWork_4C.player_0.properties_E4.npc.field_120 + FP_ANGLE(180.0f);
+                    chara->rotation_24.vy                                                   = g_SysWork.playerWork_4C.player_0.properties_E4.player.quickTurnHeadingAngle_120 + FP_ANGLE(180.0f);
                     g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(1.4f);
                     D_800C454C                                                              = Q12(0.0f);
 
@@ -7206,7 +7206,7 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
             }
             else
             {
-                g_Player_FlexRotationX = g_SysWork.playerWork_4C.player_0.properties_E4.npc.field_122 - FP_ANGLE(90.0f);
+                g_Player_FlexRotationX = g_SysWork.playerWork_4C.player_0.properties_E4.player.field_122 - FP_ANGLE(90.0f);
 
                 if (ABS(chara->field_2A - chara->rotation_24.vy) > FP_ANGLE(180.0f))
                 {
@@ -7227,7 +7227,7 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
                 if (chara->properties_E4.player.field_100 != 0 || g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimStartTargetLock ||
                     g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_AimTargetLockSwitch)
                 {
-                    if (g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C & (1 << 8))
+                    if (g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C & PlayerFlag_Unk8)
                     {
                         var_v1 = FP_ANGLE(0.0f);
                     }

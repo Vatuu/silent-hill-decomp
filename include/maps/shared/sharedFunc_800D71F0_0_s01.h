@@ -1,11 +1,11 @@
-s32 sharedFunc_800D71F0_0_s01(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
+q19_12 sharedFunc_800D71F0_0_s01(q19_12 moveSpeed, s32 arg1, s32 arg2, s32 arg3)
 {
     s32 var_v1;
     s32 arg2Sqr;
 
     if (arg1 == 0)
     {
-        return arg0;
+        return moveSpeed;
     }
 
     if (arg2 != 0)
@@ -48,5 +48,5 @@ s32 sharedFunc_800D71F0_0_s01(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
         }
     }
 
-    return sharedFunc_800D7120_0_s01(arg0, arg1, arg2);
+    return sharedFunc_800D7120_0_s01(moveSpeed, arg1, arg2);
 }

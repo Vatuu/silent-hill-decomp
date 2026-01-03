@@ -1,16 +1,16 @@
-s32 sharedFunc_800D7120_0_s01(s32 arg0, s32 arg1, s32 arg2)
+q19_12 sharedFunc_800D7120_0_s01(q19_12 moveSpeed, s32 arg1, s32 arg2)
 {
     s32 temp_t0;
     s32 temp_v1;
     s32 var_a1;
-    s32 var_a3;
+    s32 adjMoveSpeed;
     s32 temp_t1;
     s32 temp_a0;
     s32 new_var2;
 
     var_a1  = arg1;
-    var_a3  = arg0;
-    temp_v1 = arg2 - var_a3;
+    adjMoveSpeed  = moveSpeed;
+    temp_v1 = arg2 - adjMoveSpeed;
 
     if (var_a1 != 0 && temp_v1 != 0)
     {
@@ -29,22 +29,22 @@ s32 sharedFunc_800D7120_0_s01(s32 arg0, s32 arg1, s32 arg2)
         {
             if (temp_v1 > 0)
             {
-                var_a3 += FP_MULTIPLY_PRECISE(g_DeltaTime0, var_a1, Q12_SHIFT);
-                if (new_var2 < var_a3)
+                adjMoveSpeed += FP_MULTIPLY_PRECISE(g_DeltaTime0, var_a1, Q12_SHIFT);
+                if (new_var2 < adjMoveSpeed)
                 {
-                    var_a3 = new_var2;
+                    adjMoveSpeed = new_var2;
                 }
             }
         }
         else if (temp_v1 < 0)
         {
-            var_a3 += FP_MULTIPLY_PRECISE(g_DeltaTime0, var_a1, Q12_SHIFT);
-            if (var_a3 < new_var2)
+            adjMoveSpeed += FP_MULTIPLY_PRECISE(g_DeltaTime0, var_a1, Q12_SHIFT);
+            if (adjMoveSpeed < new_var2)
             {
-                var_a3 = new_var2;
+                adjMoveSpeed = new_var2;
             }
         }
     }
 
-    return var_a3;
+    return adjMoveSpeed;
 }
