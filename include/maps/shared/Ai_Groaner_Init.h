@@ -41,14 +41,14 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
     ModelAnim_AnimInfoSet(&groaner->model_0.anim_4, GROANER_ANIM_INFOS);
     Chara_DamageClear(groaner);
 
-    if (groaner->model_0.stateStep_3 == 3)
+    if (groaner->model_0.stateStep_3 == GroanerStateStep_3)
     {
         groaner->model_0.controlState_2 = 1;
         Character_AnimSet(groaner, ANIM_STATUS(GroanerAnim_17, true), 371);
         groaner->properties_E4.dummy.properties_E8[0].val16[0] |= 1 << 5;
     }
 
-    groaner->model_0.stateStep_3 = 0;
+    groaner->model_0.stateStep_3 = GroanerStateStep_0;
 
     groaner->properties_E4.dummy.properties_E8[3].val32 = groaner->position_18.vx;
     groaner->properties_E4.dummy.properties_E8[4].val32 = groaner->position_18.vz;

@@ -26,9 +26,10 @@ void sharedFunc_800E6758_2_s02(s_SubCharacter* groaner)
     speed               = groaner->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(15.0f), Q12_SHIFT);
     groaner->moveSpeed_38 = MAX(speed, Q12(0.0f));
 
-    if (groaner->model_0.anim_4.status_0 == ANIM_STATUS(12, true) && (Rng_GenerateUInt(0, 4095) == 0 || var)) // 1 in 4096 chance.
+    if (groaner->model_0.anim_4.status_0 == ANIM_STATUS(GroanerAnim_12, true) &&
+        (Rng_GenerateUInt(0, 4095) == 0 || var)) // 1 in 4096 chance.
     {
         groaner->model_0.controlState_2         = 2;
-        groaner->model_0.anim_4.status_0 = ANIM_STATUS(15, false);
+        groaner->model_0.anim_4.status_0 = ANIM_STATUS(GroanerAnim_15, false);
     }
 }

@@ -47,7 +47,8 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
     else
     {
         animTime = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT);
-        if ((animTime >= 134 && animTime < 157) || (animTime >= 288 && animTime < 311))
+        if ((animTime >= 134 && animTime < 157) ||
+            (animTime >= 288 && animTime < 311))
         {
             groaner->properties_E4.splitHead.flags_E8 |= (1 << 4);
         }
@@ -68,7 +69,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
                 groaner->properties_E4.dummy.properties_E8[2].val16[0] = FP_FROM(timeScaled * Math_Sin(groaner->rotation_24.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
                 groaner->properties_E4.dummy.properties_E8[2].val16[1] = FP_FROM(timeScaled * Math_Cos(groaner->rotation_24.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
 
-                if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) != 8)
+                if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) != GroanerAnim_8)
                 {
                     return;
                 }
@@ -78,7 +79,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
                 groaner->properties_E4.dummy.properties_E8[2].val16[0] = FP_FROM(timeScaled * Math_Sin(groaner->rotation_24.vy + FP_ANGLE(90.0f)), Q12_SHIFT);
                 groaner->properties_E4.dummy.properties_E8[2].val16[1] = FP_FROM(timeScaled * Math_Cos(groaner->rotation_24.vy + FP_ANGLE(90.0f)), Q12_SHIFT);
 
-                if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) != 14)
+                if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) != GroanerAnim_14)
                 {
                     return;
                 }
@@ -92,20 +93,20 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
         newAnimStatus    = ANIM_STATUS((animStatusIdx == 4) ? 1 : 0, false);
         groaner->flags_3E &= ~CharaFlag_Unk2;
 
-        if (animStatusIdx == 8)
+        if (animStatusIdx == GroanerAnim_8)
         {
-            newAnimStatus = ANIM_STATUS(5, false);
+            newAnimStatus = ANIM_STATUS(GroanerAnim_5, false);
         }
-        if (animStatusIdx == 14)
+        if (animStatusIdx == GroanerAnim_14)
         {
-            newAnimStatus = ANIM_STATUS(11, false);
+            newAnimStatus = ANIM_STATUS(GroanerAnim_11, false);
         }
 
-        if (newAnimStatus != 0)
+        if (newAnimStatus != GroanerAnim_Still)
         {
             groaner->properties_E4.dummy.properties_E8[6].val16[0] = 0;
             groaner->model_0.anim_4.status_0                               = newAnimStatus;
-            groaner->model_0.controlState_2                                       = 9;
+            groaner->model_0.controlState_2                                       = GroanerControl_9;
         }
     }
 }

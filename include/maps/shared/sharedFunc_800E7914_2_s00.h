@@ -34,7 +34,7 @@ void sharedFunc_800E7914_2_s00(void)
             break;
     }
 
-    if (flags & 8)
+    if (flags & (1 << 3))
     {
         s8 tmp                       = func_800364BC();
         sharedData_800F06D4_2_s00[3] = tmp;

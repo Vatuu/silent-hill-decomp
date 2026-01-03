@@ -1364,6 +1364,13 @@ typedef struct _SubCharPropertiesDahlia
 } s_PropertiesDahlia;
 STATIC_ASSERT_SIZEOF(s_PropertiesDahlia, 64);
 
+/** @brief Groaner character properties. */
+typedef struct _PropertiesGroaner
+{
+    s16    flags_E8; /** `e_GroanerFlags` */
+
+} e_PropertiesGroaner;
+
 /** @brief Hanged Scratcher character properties. */
 typedef struct _PropertiesHangedScratcher
 {
@@ -1439,7 +1446,7 @@ STATIC_ASSERT_SIZEOF(s_PropertiesPuppetNurse, 64);
 /** @brief Romper character properties. */
 typedef struct _PropertiesRomper
 {
-    s32    field_E4;
+    s32    field_E4; // TODO: Remove this.
     s8     unk_E8[4];
     s16    field_EC;
     q3_12  rotationY_EE;
@@ -1592,6 +1599,7 @@ typedef struct _SubCharacter
         s_PropertiesBloodsucker     bloodsucker;
         s_PropertiesCreeper         creeper;
         s_PropertiesDahlia          dahlia;
+        e_PropertiesGroaner         groaner;
         s_PropertiesHangedScratcher hangedScratcher;
         s_PropertiesIncubus         incubus;
         s_PropertiesLarvalStalker   larvalStalker;

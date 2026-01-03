@@ -2250,15 +2250,15 @@ void sharedFunc_800CDA88_3_s03(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_UpdateMain(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void func_800CDB5C(s_SubCharacter*, s32);
+void func_800CDB5C(s_SubCharacter* nurse, s32);
 
-void Ai_PuppetNurse_Init(s_SubCharacter* chara, bool isPuppetDoctor);
+void Ai_PuppetNurse_Init(s_SubCharacter* nurse, bool isPuppetDoctor);
 
-void Ai_PuppetNurse_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_PuppetNurse_Update(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void Ai_PuppetDoctor_Update(s_SubCharacter* doctor, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-void Ai_PuppetNurse_DamageHandle(s_SubCharacter*);
+void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse);
 
 s32 PuppetNurse_HurtSfxIdGet(s_SubCharacter* nurse);
 
@@ -2271,7 +2271,8 @@ bool Ai_PuppetNurse_SomeAngleCheck(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_Move(s_SubCharacter* nurse);
 
-bool sharedFunc_800CE398_3_s03(s32 arg0);
+/** Checks if some special animation is set. */
+bool sharedFunc_800CE398_3_s03(s32 animStatus);
 
 void Ai_PuppetNurse_Control1(s_SubCharacter* nurse);
 
@@ -2289,9 +2290,9 @@ s32 sharedFunc_800CEEAC_3_s03(void);
 
 void Ai_PuppetNurse_Control9(s_SubCharacter* nurse);
 
-void sharedFunc_800CF7F4_3_s03(s_SubCharacter* chara);
+void sharedFunc_800CF7F4_3_s03(s_SubCharacter* nurse);
 
-bool sharedFunc_800CF90C_3_s03(s_SubCharacter* chara);
+bool sharedFunc_800CF90C_3_s03(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_Control12(s_SubCharacter* nurse);
 
@@ -2309,6 +2310,7 @@ void sharedFunc_800D03E4_3_s03(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+// Not Harry?
 void sharedFunc_800D0828_3_s03(s_SubCharacter* harry, GsCOORDINATE2* coords);
 
 void sharedFunc_800D0968_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords);
@@ -2333,7 +2335,7 @@ void Ai_Creeper_Control_5(s_SubCharacter* creeper);
 
 void sharedFunc_800D983C_1_s02(s_SubCharacter* creeper);
 
-void sharedFunc_800D9960_1_s02(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void sharedFunc_800D9960_1_s02(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void sharedFunc_800D99D0_1_s02(s_SubCharacter* creeper);
 

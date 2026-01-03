@@ -3,8 +3,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
     s32 newAnimStatus;
     u32 animStatus;
 
-    // NOTE: This code reads `chara->field_E8` both as word and a half... (half here).
-    if (!(groaner->properties_E4.splitHead.flags_E8 & AirScreamerFlag_1))
+    if (!(groaner->properties_E4.groaner.flags_E8 & GroanerFlag_1))
     {
         Chara_MoveSpeedUpdate(groaner, Q12(1.8f));
     }
@@ -22,24 +21,24 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
     if (!(groaner->properties_E4.player.afkTimer_E8 & 0x44) && groaner->moveSpeed_38 == Q12(0.0f))
     {
         animStatus    = ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0);
-        newAnimStatus = ANIM_STATUS(0, false);
-        if (animStatus == ANIM_STATUS(9, false))
+        newAnimStatus = ANIM_STATUS(GroanerAnim_Still, false);
+        if (animStatus == ANIM_STATUS(GroanerAnim_9, false))
         {
-            newAnimStatus = ANIM_STATUS(2, true);
+            newAnimStatus = ANIM_STATUS(GroanerAnim_2, true);
         }
-        if (animStatus == ANIM_STATUS(9, true))
+        if (animStatus == ANIM_STATUS(GroanerAnim_9, true))
         {
-            newAnimStatus = ANIM_STATUS(3, false);
+            newAnimStatus = ANIM_STATUS(GroanerAnim_3, false);
         }
-        if (animStatus == ANIM_STATUS(10, false))
+        if (animStatus == ANIM_STATUS(GroanerAnim_10, false))
         {
-            newAnimStatus = ANIM_STATUS(3, true);
+            newAnimStatus = ANIM_STATUS(GroanerAnim_3, true);
         }
 
-        if (newAnimStatus != ANIM_STATUS(0, false))
+        if (newAnimStatus != ANIM_STATUS(GroanerAnim_Still, false))
         {
             func_800622B8(3, groaner, newAnimStatus, 6);
-            groaner->properties_E4.splitHead.flags_E8 |= AirScreamerFlag_6;
+            groaner->properties_E4.groaner.flags_E8 |= AirScreamerFlag_6;
         }
     }
 }

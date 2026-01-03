@@ -1,6 +1,25 @@
 #ifndef _MAPS_CHARACTERS_GROANER_H
 #define _MAPS_CHARACTERS_GROANER_H
 
+/** @brief Groaner character flags. */
+typedef enum _GroanerFlags
+{
+    GroanerFlag_None = 0,
+    GroanerFlag_0    = 1 << 0,
+    GroanerFlag_1    = 1 << 1,
+    GroanerFlag_2    = 1 << 2,
+    GroanerFlag_3    = 1 << 3,
+    GroanerFlag_4    = 1 << 4,
+    GroanerFlag_5    = 1 << 5,
+    GroanerFlag_6    = 1 << 6,
+    GroanerFlag_7    = 1 << 7,
+    GroanerFlag_8    = 1 << 8,
+    GroanerFlag_9    = 1 << 9,
+    GroanerFlag_10   = 1 << 10,
+    GroanerFlag_11   = 1 << 11,
+    GroanerFlag_12   = 1 << 12
+} e_GroanerFlags;
+
 /** @brief Groaner character animation indices. */
 typedef enum _GroanerAnim
 {
@@ -29,6 +48,30 @@ typedef enum _GroanerAnim
     GroanerAnim_22    = 22,
     GroanerAnim_23    = 23
 } e_GroanerAnim;
+
+/** @brief Groaner character control states. */
+typedef enum _GroanerControl
+{
+    GroanerControl_0 = 0,
+    GroanerControl_1 = 1,
+    GroanerControl_2 = 2,
+    GroanerControl_3 = 3,
+    GroanerControl_4 = 4,
+    GroanerControl_5 = 5,
+    GroanerControl_6 = 6,
+    GroanerControl_7 = 7,
+    GroanerControl_8 = 8,
+    GroanerControl_9 = 9
+} e_GroanerControl;
+
+/** @brief Groaner character state steps. */
+typedef enum _GroanerStateStep
+{
+    GroanerStateStep_0 = 0,
+    GroanerStateStep_1 = 1,
+    GroanerStateStep_2 = 2,
+    GroanerStateStep_3 = 3
+} e_GroanerStateStep;
 
 /*s_AnimInfo GROANER_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },

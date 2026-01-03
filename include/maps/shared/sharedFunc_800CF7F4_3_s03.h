@@ -1,10 +1,10 @@
-void sharedFunc_800CF7F4_3_s03(s_SubCharacter* chara)
+void sharedFunc_800CF7F4_3_s03(s_SubCharacter* nurse)
 {
     int angle; // TODO: Type
 
     if ((Rng_Rand16() & Q8_CLAMPED(1.0f)) >= Q8(0.5f))
     {
-        chara->properties_E4.dummy.properties_E8[13].val16[0] = Chara_HeadingAngleGet(chara,
+        nurse->properties_E4.dummy.properties_E8[13].val16[0] = Chara_HeadingAngleGet(nurse,
                                                                                       Q12(1.0f),
                                                                                       g_SysWork.playerWork_4C.player_0.position_18.vx,
                                                                                       g_SysWork.playerWork_4C.player_0.position_18.vz,
@@ -12,16 +12,16 @@ void sharedFunc_800CF7F4_3_s03(s_SubCharacter* chara)
                                                                                       true);
     }
 
-    angle = func_8005BF38(chara->properties_E4.dummy.properties_E8[13].val16[0] - chara->rotation_24.vy);
+    angle = func_8005BF38(nurse->properties_E4.dummy.properties_E8[13].val16[0] - nurse->rotation_24.vy);
     if (ABS(angle) > FP_ANGLE(5.0f))
     {
         if (angle > FP_ANGLE(0.0f))
         {
-            chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f), Q12_SHIFT);
+            nurse->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f), Q12_SHIFT);
         }
         else
         {
-            chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f), Q12_SHIFT);
+            nurse->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f), Q12_SHIFT);
         }
     }
 }

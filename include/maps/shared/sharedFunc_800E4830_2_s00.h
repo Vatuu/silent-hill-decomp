@@ -9,7 +9,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
     q19_12  deltaZ;
     s32     temp_v0_4;
     s32     temp_v1;
-    s32     temp_v1_2;
+    q19_12  rotMax;
     s32     var_v0;
     s32     temp1;
     s32     temp2;
@@ -22,7 +22,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
     angleDeltaToPlayer0 = func_8005BF38(Math_AngleBetweenPositionsGet(groaner->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                         groaner->rotation_24.vy);
 
-    if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == 15 ||
+    if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == GroanerAnim_15 ||
         ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model_0.anim_4.time_4, 214) < 9u)
     {
         temp_v1 = TIMESTEP_ANGLE_4;
@@ -42,9 +42,9 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
             angleDeltaToPlayer1 = func_8005BF38(Math_AngleBetweenPositionsGet(groaner->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                                 groaner->rotation_24.vy);
 
-            temp_v1_2 = TIMESTEP_ANGLE_4;
-            if ((angleDeltaToPlayer1 >= FP_ANGLE(0.0f) && temp_v1_2 <  angleDeltaToPlayer1) ||
-                (angleDeltaToPlayer1 <  FP_ANGLE(0.0f) && temp_v1_2 < -angleDeltaToPlayer1))
+            rotMax = TIMESTEP_ANGLE_4;
+            if ((angleDeltaToPlayer1 >= FP_ANGLE(0.0f) && rotMax <  angleDeltaToPlayer1) ||
+                (angleDeltaToPlayer1 <  FP_ANGLE(0.0f) && rotMax < -angleDeltaToPlayer1))
             {
                 if (angleDeltaToPlayer1 > FP_ANGLE(0.0f))
                 {
@@ -82,15 +82,15 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == 15)
+    if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == GroanerAnim_15)
     {
         Chara_MoveSpeedUpdate3(groaner, Q12(9.5f), Q12(0.0f));
     }
-    else if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == 10)
+    else if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == GroanerAnim_10)
     {
-        if (!(groaner->properties_E4.dummy.properties_E8[0].val16[0] & (1 << 9)))
+        if (!(groaner->properties_E4.groaner.flags_E8 & GroanerFlag_9))
         {
-            groaner->properties_E4.dummy.properties_E8[0].val16[0] |= (1 << 9);
+            groaner->properties_E4.groaner.flags_E8 |= GroanerFlag_9;
             var_v0                                                = g_SysWork.playerWork_4C.player_0.field_D4.field_2 + 573;
             var_v0                                                = (distToPlayer - var_v0) << 1;
             groaner->moveSpeed_38                                   = MIN(var_v0, Q12(4.5f));
@@ -122,15 +122,15 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
         Chara_MoveSpeedUpdate3(groaner, Q12(1.2f), Q12(0.0f));
     }
 
-    if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == 16)
+    if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == GroanerAnim_16)
     {
-        groaner->model_0.controlState_2                         = 4;
+        groaner->model_0.controlState_2                         = GroanerControl_4;
         groaner->rotation_24.vy                                += Q12(0.125f);
         groaner->properties_E4.dummy.properties_E8[1].val16[0] += Q12(0.125f);
         g_SysWork.field_2284[3]                              &= ~(1 << 1);
-        groaner->model_0.anim_4.status_0                        = ANIM_STATUS(16, true);
+        groaner->model_0.anim_4.status_0                        = ANIM_STATUS(GroanerAnim_16, true);
         groaner->model_0.anim_4.time_4                          = Q12(363.0f);
         groaner->model_0.anim_4.keyframeIdx_8                   = 363;
-        groaner->properties_E4.dummy.properties_E8[0].val16[0] &= ~(1 << 9);
+        groaner->properties_E4.groaner.flags_E8 &= ~(1 << 9);
     }
 }

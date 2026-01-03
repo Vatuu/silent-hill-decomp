@@ -1,4 +1,7 @@
-bool sharedFunc_800CE398_3_s03(s32 arg0)
+bool sharedFunc_800CE398_3_s03(s32 animStatus)
 {
-    return arg0 == 36 || arg0 == 34 || arg0 == 37 || arg0 == 35;
+    return animStatus == ANIM_STATUS(PuppetNurseAnim_18, false) ||
+           animStatus == ANIM_STATUS(PuppetNurseAnim_17, false) ||
+           animStatus == ANIM_STATUS(PuppetNurseAnim_18, true) ||
+           animStatus == ANIM_STATUS(PuppetNurseAnim_17, true);
 }
