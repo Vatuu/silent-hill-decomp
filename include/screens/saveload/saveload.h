@@ -194,7 +194,7 @@ extern s32 g_SaveWriteOption; // `false` - Overwrite, `true` - Format.
 
 extern bool g_IsSaveSelected; // `false` - User has `New save` selected, `true` - User has a save selected.
 
-extern void (*g_GameState_DeathLoadScreen_Funcs[])(void);
+extern void (*g_GameState_AutoLoadSavegame_Funcs[])(void);
 
 extern s32 D_801E7554;
 
@@ -330,7 +330,7 @@ void Gfx_SaveScreen(void); // 0x801E70C8
 
 /** @brief Handles the text that shows when formatting, saving, or loading a file.
  *
- *  Used in: `GameState_SaveScreen_Update` and `GameState_DeathLoadScreen_Update`.
+ *  Used in: `GameState_SaveScreen_Update` and `GameState_AutoLoadSavegame_Update`.
  */
 void Gfx_MemCardState(void);
 
@@ -343,7 +343,7 @@ void Gfx_SaveSlotBorderDraw(void); // 0x801E4010
 void Gfx_WriteOptionSave(s32 arg0, s32 optionIdx);
 
 /** Updates the death load screen. */
-void GameState_DeathLoadScreen_Update(void);
+void GameState_AutoLoadSavegame_Update(void);
 
 void func_801E737C(void);
 

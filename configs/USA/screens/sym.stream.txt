@@ -25,7 +25,7 @@
 //--- PA: 0x000054   VA: 0x801E2654   subsegment: c, stream
 //---------------------------------------------------------
 // Handlers for movie-related GameStates
-GameState_StartMovieIntro_Update     = 0x801E2654; // type:func
+GameState_MovieIntroFadeIn_Update    = 0x801E2654; // type:func
 GameState_MovieIntro_Update          = 0x801E279C; // type:func
 GameState_MovieOpening_Update        = 0x801E2838; // type:func
 GameState_ExitMovie_Update           = 0x801E28B0; // type:func

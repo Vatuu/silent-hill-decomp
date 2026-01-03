@@ -57,7 +57,7 @@ typedef struct
 
 // Handlers for movie-related GameStates
 
-void GameState_StartMovieIntro_Update(void);
+void GameState_MovieIntroFadeIn_Update(void);
 void GameState_MovieIntro_Update(void);
 void GameState_MovieOpening_Update(void);
 void GameState_ExitMovie_Update(void);

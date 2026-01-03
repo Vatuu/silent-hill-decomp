@@ -76,8 +76,8 @@ s32 g_SaveWriteOption = 0;
 
 bool g_IsSaveSelected = false;
 
-// Only used in `GameState_DeathLoadScreen_Update`.
-void (*g_GameState_DeathLoadScreen_Funcs[])() = {
+// Only used in `GameState_AutoLoadSavegame_Update`.
+void (*g_GameState_AutoLoadSavegame_Funcs[])() = {
     Savegame_ScreenInit,
     func_801E737C,
     Savegame_LoadLogic,
@@ -1617,7 +1617,7 @@ void Savegame_ScreenInit(void) // 0x801E63C0
     g_GameWork.background2dColor_B_58E = 0;
 
     D_800BCD39 = 0;
-    if (g_GameWork.gameState_594 == GameState_DeathLoadScreen || g_GameWork.gameState_594 == GameState_SaveScreen)
+    if (g_GameWork.gameState_594 == GameState_AutoLoadSavegame || g_GameWork.gameState_594 == GameState_SaveScreen)
     {
         if (D_800A97D8 != 0)
         {
@@ -2105,7 +2105,7 @@ void Gfx_SaveScreen(void) // 0x801E70C8
             g_ActiveSavegameEntry++;
         }
 
-        if (g_GameWork.gameState_594 == GameState_DeathLoadScreen)
+        if (g_GameWork.gameState_594 == GameState_AutoLoadSavegame)
         {
             Gfx_SaveSelectedDisplacement(i, g_SavegameCount);
         }
@@ -2144,14 +2144,14 @@ void Gfx_WriteOptionSave(s32 arg0, s32 optionIdx) // 0x801E72DC
     Gfx_WriteOptionSaveDraw(arg0, optionIdx);
 }
 
-void GameState_DeathLoadScreen_Update(void) // 0x801E72FC
+void GameState_AutoLoadSavegame_Update(void) // 0x801E72FC
 {
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
-        g_GameState_DeathLoadScreen_Funcs[0]();
+        g_GameState_AutoLoadSavegame_Funcs[0]();
     }
 
-    g_GameState_DeathLoadScreen_Funcs[g_GameWork.gameStateStep_598[0]]();
+    g_GameState_AutoLoadSavegame_Funcs[g_GameWork.gameStateStep_598[0]]();
 
     Gfx_SaveBackgroundDraw();
     Gfx_MemCardState();

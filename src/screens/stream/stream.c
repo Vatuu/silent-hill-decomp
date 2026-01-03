@@ -13,7 +13,7 @@
 #include "main/fileinfo.h"
 #include "screens/stream/stream.h"
 
-void GameState_StartMovieIntro_Update(void) // 0x801E2654
+void GameState_MovieIntroFadeIn_Update(void) // 0x801E2654
 {
     switch (g_GameWork.gameStateStep_598[0])
     {

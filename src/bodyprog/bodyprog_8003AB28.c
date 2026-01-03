@@ -36,7 +36,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
     s32 NEXT_GAME_STATES[MAIN_MENU_GAME_STATE_COUNT] = // 0x80025480
     {
         GameState_SaveScreen, 
-        GameState_DeathLoadScreen,
+        GameState_AutoLoadSavegame,
         GameState_MovieOpening,
         GameState_OptionScreen,
         GameState_MovieIntro

@@ -97,7 +97,7 @@ e_KcetLogoStateStep GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
     s32 saveEntryType0;
     s32 saveEntryType1;
 
-    // Memory cards not inited yet, rerun this on next frame.
+    // Memory cards not ready yet, rerun this on next frame.
     if (!func_80033548())
     {
         return KcetLogoStateStep_CheckMemCards;
@@ -214,7 +214,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
             case KcetLogoStateStep_NoMemCard:
                 Fs_QueueStartReadTim(FILE_1ST_NO_MCD_E_TIM, FS_BUFFER_1, &D_800A900C);
                 GameFs_StreamBinLoad();
-                nextGameState = GameState_StartMovieIntro;
+                nextGameState = GameState_MovieIntroFadeIn;
 
                 g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
                 g_SysWork.timer_20              = 0;
@@ -225,7 +225,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
             case KcetLogoStateStep_NoMemCardFreeSpace:
                 Fs_QueueStartReadTim(FILE_1ST_NO_BLK_E_TIM, FS_BUFFER_1, &D_800A900C);
                 GameFs_StreamBinLoad();
-                nextGameState = GameState_StartMovieIntro;
+                nextGameState = GameState_MovieIntroFadeIn;
 
                 g_GameWork.gameStateStep_598[0] = KcetLogoStateStep_LogoDelay;
                 g_SysWork.timer_20              = 0;
@@ -267,7 +267,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                             {
                                 Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
                                 Fs_QueueStartSeek(FILE_TIM_SAVELOAD_TIM);
-                                nextGameState = GameState_DeathLoadScreen; // TODO: Rename this state, probably just AutoLoad.
+                                nextGameState = GameState_AutoLoadSavegame;
                             }
                             else
                             {
@@ -309,11 +309,11 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
 
                     switch (nextGameState)
                     {
-                        case GameState_DeathLoadScreen:
+                        case GameState_AutoLoadSavegame:
                             Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_7, &g_ItemInspectionImg);
                             break;
 
-                        case GameState_StartMovieIntro:
+                        case GameState_MovieIntroFadeIn:
                             break;
 
                         case GameState_MovieIntroAlternate:

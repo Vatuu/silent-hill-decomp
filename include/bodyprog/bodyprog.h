@@ -4609,8 +4609,8 @@ void func_800348C0(void);
 bool func_8008B474(s32 arg0, s32 vol, s32 soundType);
 
 void GameState_Boot_Update(void);
-void GameState_StartMovieIntro_Update(void);
-void GameState_DeathLoadScreen_Update(void);
+void GameState_MovieIntroFadeIn_Update(void);
+void GameState_AutoLoadSavegame_Update(void);
 void GameState_MovieIntroAlternate_Update(void);
 void GameState_MovieIntro_Update(void);
 void GameState_MainMenu_Update(void);
