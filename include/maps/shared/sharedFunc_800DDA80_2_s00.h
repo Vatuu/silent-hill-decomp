@@ -1,39 +1,41 @@
-void sharedFunc_800DDA80_2_s00(s_SubCharacter* arg0)
+void sharedFunc_800DDA80_2_s00(s_SubCharacter* airScreamer)
 {
-    s32 temp_a1;
-    s32 temp_a2;
-    s32 temp_s3;
-    s32 temp_s4;
-    s32 temp_v0;
-    s32 var_a0;
-    s32 var_s0;
-    s32 var_s1;
-    s32 var_s2;
-    s32 var_v1;
+    q19_12 posX;
+    q19_12 posZ;
+    q19_12 playerPosZ;
+    q19_12 playerPosX;
+    q19_12 quadrantAngle;
+    s32    var_a0;
+    s32    quadrant;
+    q19_12 newPosX;
+    q19_12 newPosZ;
+    s32    var_v1;
 
-    var_s0 = 0;
+    #define airScreamerProps airScreamer->properties_E4.airScreamer
 
-    temp_a1 = arg0->position_18.vx;
-    temp_a2 = arg0->position_18.vz;
+    quadrant = Quadrant_South;
 
-    temp_s4 = g_SysWork.playerWork_4C.player_0.position_18.vx;
-    temp_s3 = g_SysWork.playerWork_4C.player_0.position_18.vz;
+    posX = airScreamer->position_18.vx;
+    posZ = airScreamer->position_18.vz;
 
-    var_s1 = temp_a1;
-    var_s2 = temp_a2;
+    playerPosX = g_SysWork.playerWork_4C.player_0.position_18.vx;
+    playerPosZ = g_SysWork.playerWork_4C.player_0.position_18.vz;
 
-    if (temp_s4 > 0x10000)
+    newPosX = posX;
+    newPosZ = posZ;
+
+    if (playerPosX > Q12(16.0f))
     {
         var_v1 = 2;
     }
     else
     {
-        var_v1 = !(temp_s4 < -0x8000);
+        var_v1 = !(playerPosX < Q12(-8.0f));
     }
 
-    if (temp_s3 <= 0x8000)
+    if (playerPosZ <= Q12(8.0f))
     {
-        var_a0 = !(temp_s3 < -0x8000);
+        var_a0 = !(playerPosZ < Q12(-8.0f));
     }
     else
     {
@@ -43,189 +45,190 @@ void sharedFunc_800DDA80_2_s00(s_SubCharacter* arg0)
     switch (var_v1 + (var_a0 * 3))
     {
         case 8:
-            var_s0 = !(temp_s4 - 0x10000 > temp_s3 - 0x8000) * 2;
+            quadrant = !((playerPosX - Q12(16.0f)) > (playerPosZ - Q12(8.0f))) * 2;
             break;
 
         case 6:
-            if (-0x8000 - temp_s4 > temp_s3 - 0x8000)
+            if ((Q12(-8.0f) - playerPosX) > (playerPosZ - Q12(8.0f)))
             {
-                var_s0 = 0;
+                quadrant = Quadrant_South;
             }
             else
             {
-                var_s0 = 3;
+                quadrant = Quadrant_East;
             }
             break;
 
         case 7:
-            var_s0 = 0;
+            quadrant = Quadrant_South;
             break;
 
         case 5:
-            var_s0 = 2;
+            quadrant = Quadrant_West;
             break;
 
         case 4:
-            temp_v0 = (g_SysWork.playerWork_4C.player_0.rotation_24.vy - 0x200) & 0xFFF;
-            switch (temp_v0 / 0x400)
+            quadrantAngle = Q12_FRACT(g_SysWork.playerWork_4C.player_0.rotation_24.vy - FP_ANGLE(45.0f));
+            switch (quadrantAngle / FP_ANGLE(90.0f))
             {
                 case 1:
-                    var_s0 = 3;
+                    quadrant = Quadrant_East;
                     break;
 
                 case 2:
-                    var_s0 = 0;
+                    quadrant = Quadrant_South;
                     break;
 
                 case 3:
-                    var_s0 = 2;
+                    quadrant = Quadrant_West;
                     break;
 
                 default:
                 case 0:
-                    var_s0 = 1;
+                    quadrant = Quadrant_North;
                     break;
             }
             break;
 
         case 3:
-            var_s0 = 3;
+            quadrant = Quadrant_East;
             break;
 
         case 1:
-            var_s0 = 1;
+            quadrant = Quadrant_North;
             break;
 
         case 2:
-            if (temp_s4 - 0x10000 > -0x8000 - temp_s3)
+            if ((playerPosX - Q12(16.0f)) > (Q12(-8.0f) - playerPosZ))
             {
-                var_s0 = 1;
+                quadrant = Quadrant_North;
             }
             else
             {
-                var_s0 = 2;
+                quadrant = Quadrant_West;
             }
             break;
 
         case 0:
-            if (-0x8000 - temp_s4 > -0x8000 - temp_s3)
+            if ((Q12(-8.0f) - playerPosX) > (Q12(-8.0f) - playerPosZ))
             {
-                var_s0 = 1;
+                quadrant = Quadrant_North;
             }
             else
             {
-                var_s0 = 3;
+                quadrant = Quadrant_East;
             }
             break;
     }
 
-    switch (var_s0)
+    switch (quadrant)
     {
-        case 0:
-        case 1:
-            var_s1 = (temp_a1 + temp_s4) / 2;
-            if (var_s1 > 0x10000)
+        case Quadrant_South:
+        case Quadrant_North:
+            newPosX = (posX + playerPosX) / 2;
+            if (newPosX > Q12(16.0f))
             {
-                var_s1 = 0x10000;
+                newPosX = Q12(16.0f);
             }
-            else if (var_s1 < -0x8000)
+            else if (newPosX < Q12(-8.0f))
             {
-                var_s1 = -0x8000;
+                newPosX = Q12(-8.0f);
             }
 
-            var_s2 = 0x190000 - FP_SQUARE_PRECISE(var_s1 - temp_s4, Q12_SHIFT);
-            if (var_s2 < 0)
+            newPosZ = Q12(400.0f) - FP_SQUARE_PRECISE(newPosX - playerPosX, Q12_SHIFT);
+            if (newPosZ < Q12(0.0f))
             {
-                var_s2 = temp_s3;
+                newPosZ = playerPosZ;
 
-                if (var_s1 < temp_s4)
+                if (newPosX < playerPosX)
                 {
-                    var_s0 = 2;
+                    quadrant = Quadrant_West;
                 }
                 else
                 {
-                    var_s0 = 3;
+                    quadrant = Quadrant_East;
                 }
             }
             else
             {
-                var_s2 = SquareRoot12(var_s2);
-                if (var_s0 == 0)
+                newPosZ = SquareRoot12(newPosZ);
+                if (quadrant == Quadrant_South)
                 {
-                    var_s2 = var_s2 + temp_s3;
+                    newPosZ = newPosZ + playerPosZ;
                 }
                 else
                 {
-                    var_s2 = temp_s3 - var_s2;
+                    newPosZ = playerPosZ - newPosZ;
                 }
             }
             break;
 
-        case 2:
-        case 3:
-            var_s2 = (temp_a2 + temp_s3) / 2;
-
-            if (var_s2 > 0x8000)
+        case Quadrant_West:
+        case Quadrant_East:
+            newPosZ = (posZ + playerPosZ) / 2;
+            if (newPosZ > Q12(8.0f))
             {
-                var_s2 = 0x8000;
+                newPosZ = Q12(8.0f);
             }
-            else if (var_s2 < -0x8000)
+            else if (newPosZ < Q12(-8.0f))
             {
-                var_s2 = -0x8000;
+                newPosZ = Q12(-8.0f);
             }
 
-            var_s1 = 0x190000 - FP_SQUARE_PRECISE(var_s2 - temp_s3, Q12_SHIFT);
+            newPosX = Q12(400.0f) - FP_SQUARE_PRECISE(newPosZ - playerPosZ, Q12_SHIFT);
 
-            if (var_s1 < 0)
+            if (newPosX < 0)
             {
-                var_s1 = temp_s4;
-                var_s0 = (var_s2 < temp_s3) ^ 1;
+                newPosX = playerPosX;
+                quadrant = (newPosZ < playerPosZ) ^ 1;
             }
             else
             {
-                var_s1 = SquareRoot12(var_s1);
-                if (var_s0 == 2)
+                newPosX = SquareRoot12(newPosX);
+                if (quadrant == Quadrant_West)
                 {
-                    var_s1 = var_s1 + temp_s4;
+                    newPosX = newPosX + playerPosX;
                 }
                 else
                 {
-                    var_s1 = temp_s4 - var_s1;
+                    newPosX = playerPosX - newPosX;
                 }
             }
             break;
     }
 
-    switch (var_s0)
+    switch (quadrant)
     {
-        case 0:
-            arg0->rotation_24.vy = 0x800;
-            arg0->position_18.vy = -0x2000;
+        case Quadrant_South:
+            airScreamer->rotation_24.vy = FP_ANGLE(180.0f);
+            airScreamer->position_18.vy = Q12(-2.0f);
             break;
 
-        case 1:
-            arg0->rotation_24.vy = 0;
+        case Quadrant_North:
+            airScreamer->rotation_24.vy = FP_ANGLE(0.0f);
 
         default:
-            arg0->position_18.vy = -0x2000;
+            airScreamer->position_18.vy = Q12(-2.0f);
             break;
 
-        case 2:
-            arg0->rotation_24.vy = 0xC00;
-            arg0->position_18.vy = -0x2000;
+        case Quadrant_West:
+            airScreamer->rotation_24.vy = FP_ANGLE(270.0f);
+            airScreamer->position_18.vy = Q12(-2.0f);
             break;
 
-        case 3:
-            arg0->rotation_24.vy = 0x400;
-            arg0->position_18.vy = -0x2000;
+        case Quadrant_East:
+            airScreamer->rotation_24.vy = FP_ANGLE(90.0f);
+            airScreamer->position_18.vy = Q12(-2.0f);
             break;
     }
 
-    arg0->moveSpeed_38                                 = sharedData_800CAA98_0_s01.unk_380[9][0];
-    arg0->position_18.vx                               = var_s1;
-    arg0->position_18.vz                               = var_s2;
-    arg0->properties_E4.dummy.properties_E8[0xE].val32 = 0xA000;
+    airScreamer->moveSpeed_38                                 = sharedData_800CAA98_0_s01.unk_380[9][0];
+    airScreamer->position_18.vx                               = newPosX;
+    airScreamer->position_18.vz                               = newPosZ;
+    airScreamerProps.timer_120 = Q12(10.0f);
 
-    sharedFunc_800DEC84_2_s00(arg0, 0x1E000, arg0->rotation_24.vy + ((Rng_RandQ12() - 0x800) >> 7));
-    sharedFunc_800D4E84_0_s01(arg0);
+    sharedFunc_800DEC84_2_s00(airScreamer, Q12(30.0f), airScreamer->rotation_24.vy + ((Rng_RandQ12() - FP_ANGLE(180.0f)) >> 7));
+    sharedFunc_800D4E84_0_s01(airScreamer);
+
+    #undef airScreamer
 }

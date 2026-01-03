@@ -1,13 +1,13 @@
 void sharedFunc_800DF60C_2_s00(s_SubCharacter* airScreamer)
 {
-    s32 temp_s0;
-    s32 temp_t1;
-    s32 var_t2;
-    s32 var_t3;
-    s32 idx1;
-    s32 temp3;
-    s32 temp4;
-    s32 idx0;
+    s32              temp_s0;
+    s32              temp_t1;
+    s32              var_t2;
+    s32              var_t3;
+    s32              idx1;
+    s32              temp3;
+    s32              temp4;
+    s32              idx0;
     s_func_800D2E04* ptr;
 
     temp_s0 = airScreamer->model_0.anim_4.status_0 | 1;

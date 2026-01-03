@@ -1,130 +1,127 @@
-s32 sharedFunc_800DE250_2_s00(s_SubCharacter* arg0)
+bool sharedFunc_800DE250_2_s00(s_SubCharacter* airScreamer)
 {
-    s32 sp10;
-    s32 sp14;
-    s32 sp18;
-    s32 sp1C;
-    s32 sp20;
-    s32 sp24;
-    s32 sp28;
-    s32 sp2C;
-    s32 sp30;
-    s32 sp34;
-    s32 temp_a1;
-    s32 temp_a2;
-    s32 temp_s1;
-    s32 temp_s2;
-    s32 temp_s6;
-    u32 temp_v1;
-    s32 var_fp;
-    s32 var_s0;
-    s32 var_s0_2;
-    s32 var_s0_3;
-    s32 var_s3;
-    s32 var_s5;
-    s32 var_s7;
-    s32 temp;
-    s32 temp2;
+    q19_12 posX;
+    q19_12 posZ;
+    q19_12 groundHeight;
+    q19_12 unkPosX;
+    q19_12 unkPosZ;
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    q19_12 newPosZ;
+    q19_12 newPosX;
+    q19_12 targetPosX;
+    q19_12 targetPosY;
+    q19_12 angleToUnk;
+    s32    sp28;
+    bool   retCond;
+    q19_12 angleStep;
+    bool   cond;
+    q19_12 unkDist;
+    u32    cond1;
+    q19_12 targetPosZ;
+    q19_12 groundHeight1;
+    q19_12 curAngle;
+    s32    i;
+    q19_12 dist;
+    q19_12 distToUnk1;
+    q19_12 unkDist1;
 
-    sp1C   = 0;
-    var_fp = 0;
-    sp20   = 0;
-    sp2C   = 0;
-    var_s7 = -1;
+    targetPosX = Q12(0.0f);
+    targetPosZ = Q12(0.0f);
+    targetPosY = Q12(0.0f);
+    retCond = false;
+    dist = NO_VALUE;
 
-    sp10 = arg0->position_18.vx;
-    sp14 = arg0->position_18.vz;
-    sp18 = arg0->properties_E4.airScreamer.groundHeight_124;
+    posX = airScreamer->position_18.vx;
+    posZ = airScreamer->position_18.vz;
+    groundHeight = airScreamer->properties_E4.airScreamer.groundHeight_124;
 
-    var_s0  = arg0->properties_E4.airScreamer.position_104.vx;
-    temp_s1 = arg0->properties_E4.airScreamer.position_104.vz;
+    unkPosX  = airScreamer->properties_E4.airScreamer.position_104.vx;
+    unkPosZ = airScreamer->properties_E4.airScreamer.position_104.vz;
 
-    sp34 = sharedFunc_800D4A80_0_s01(arg0) == 1;
+    cond = sharedFunc_800D4A80_0_s01(airScreamer) == 1;
 
-    temp_s2  = sp10 - var_s0;
-    var_s0_3 = sp14 - temp_s1;
+    deltaX = posX - unkPosX;
+    deltaZ = posZ - unkPosZ;
+    angleToUnk = ratan2(deltaX, deltaZ);
 
-    sp24    = ratan2(temp_s2, var_s0_3);
-    sp28    = SquareRoot12(FP_SQUARE_PRECISE(temp_s2, Q12_SHIFT) + FP_SQUARE_PRECISE(var_s0_3, Q12_SHIFT));
-    temp_s6 = (Rng_RandQ12() * 4) + 0x4000;
+    sp28    = SquareRoot12(FP_SQUARE_PRECISE(deltaX, Q12_SHIFT) + FP_SQUARE_PRECISE(deltaZ, Q12_SHIFT));
+    unkDist = (Rng_RandQ12() * 4) + Q12(4.0f);
 
-    if (Rng_RandQ12() < 0x800)
+    if (Rng_RandQ12() < Q12(0.5f))
     {
-        sp30 = 0x100;
+        angleStep = FP_ANGLE(22.5f);
     }
     else
     {
-        sp30 = -0x100;
+        angleStep = FP_ANGLE(-22.5f);
     }
 
-    for (var_s5 = 0, var_s3 = sp24; var_s5 < 0x10; var_s5++, var_s3 += sp30)
+    for (i = 0, curAngle = angleToUnk; i < 16; i++, curAngle += angleStep)
     {
-        // same as
-        // if (FP_ANGLE_NORM_S(var_s3 - sp24) >= 0x6AA || FP_ANGLE_NORM_S(var_s3 - sp24) < -0x6AA)
-        // but that uses sltiu instead of sltu..
-        temp_v1 = 0xD54;
-        temp_v1 = temp_v1 < FP_ANGLE_NORM_S(var_s3 - sp24) + 0x6AA;
-
-        if (!temp_v1)
+        // TODO: Same as
+        // if (FP_ANGLE_NORM_S(var_s3 - sp24) >= FP_ANGLE(150.0f) || FP_ANGLE_NORM_S(var_s3 - sp24) < FP_ANGLE(-150.0f))
+        // but that uses `sltiu` instead of `sltu`.
+        cond1 = FP_ANGLE(300.0f) - 1;
+        cond1 = cond1 < (FP_ANGLE_NORM_S(curAngle - angleToUnk) + FP_ANGLE(150.0f));
+        if (!cond1)
         {
-            temp_s2 = FP_MULTIPLY_PRECISE(temp_s6, Math_Sin(var_s3), Q12_SHIFT);
-            temp_a1 = FP_MULTIPLY_PRECISE(temp_s6, Math_Cos(var_s3), Q12_SHIFT);
+            deltaX = FP_MULTIPLY_PRECISE(unkDist, Math_Sin(curAngle), Q12_SHIFT);
+            newPosZ = FP_MULTIPLY_PRECISE(unkDist, Math_Cos(curAngle), Q12_SHIFT);
 
-            temp_a2                      = sp10 + temp_s2;
-            sharedData_800F21CC_2_s00.vx = temp_a2;
+            newPosX                      = posX + deltaX;
+            sharedData_800F21CC_2_s00.vx = newPosX;
 
-            temp_a1                     += sp14;
-            sharedData_800F21CC_2_s00.vz = temp_a1;
+            newPosZ                     += posZ;
+            sharedData_800F21CC_2_s00.vz = newPosZ;
 
-            if (sp34 == 0)
+            if (!cond)
             {
-                var_s0_2 = Collision_GroundHeightGet(temp_a2, temp_a1);
-
-                if (sp18 < var_s0_2)
+                groundHeight1 = Collision_GroundHeightGet(newPosX, newPosZ);
+                if (groundHeight < groundHeight1)
                 {
-                    var_s0_2 = sp18;
+                    groundHeight1 = groundHeight;
                 }
 
-                var_s0_2 -= 0x1800 + (Rng_RandQ12() / 2);
-
-                if (var_s0_2 < sharedFunc_800D5274_0_s01())
+                groundHeight1 -= Q12(1.5f) + (Rng_RandQ12() / 2);
+                if (groundHeight1 < sharedFunc_800D5274_0_s01())
                 {
-                    var_s0_2 = sharedFunc_800D5274_0_s01();
+                    groundHeight1 = sharedFunc_800D5274_0_s01();
                 }
-                sharedData_800F21CC_2_s00.vy = var_s0_2;
+                sharedData_800F21CC_2_s00.vy = groundHeight1;
             }
 
-            sharedFunc_800D4AEC_0_s01(arg0, NULL, &sharedData_800F21CC_2_s00, &sharedData_800F21CC_2_s00);
+            sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &sharedData_800F21CC_2_s00, &sharedData_800F21CC_2_s00);
 
-            temp  = Math_Distance2dGet(&arg0->properties_E4.airScreamer.position_104, &sharedData_800F21CC_2_s00);
-            temp2 = temp + (Math_Distance2dGet(&arg0->position_18, &sharedData_800F21CC_2_s00) * 2);
+            distToUnk1  = Math_Distance2dGet(&airScreamer->properties_E4.airScreamer.position_104, &sharedData_800F21CC_2_s00);
+            unkDist1 = distToUnk1 + (Math_Distance2dGet(&airScreamer->position_18, &sharedData_800F21CC_2_s00) * 2);
 
-            if (var_s7 < temp2)
+            if (dist < unkDist1)
             {
-                var_s0_3 = temp;
-                sp2C     = var_s0_3 < sp28;
-                var_s7   = temp2 + 0x199;
+                deltaZ = distToUnk1;
+                retCond     = deltaZ < sp28;
+                dist   = unkDist1 + Q12(0.1f);
 
-                sp1C   = sharedData_800F21CC_2_s00.vx;
-                sp20   = sharedData_800F21CC_2_s00.vy;
-                var_fp = sharedData_800F21CC_2_s00.vz;
+                targetPosX   = sharedData_800F21CC_2_s00.vx;
+                targetPosY   = sharedData_800F21CC_2_s00.vy;
+                targetPosZ = sharedData_800F21CC_2_s00.vz;
             }
         }
     }
 
-    arg0->properties_E4.airScreamer.targetPosition_F8.vx = sp1C;
-    arg0->properties_E4.airScreamer.targetPosition_F8.vz = var_fp;
-
-    if (sp34 != 0)
+    // Set new target position.
+    airScreamer->properties_E4.airScreamer.targetPosition_F8.vx = targetPosX;
+    airScreamer->properties_E4.airScreamer.targetPosition_F8.vz = targetPosZ;
+    if (cond)
     {
-        arg0->properties_E4.airScreamer.targetPosition_F8.vy = Collision_GroundHeightGet(sp1C, var_fp);
+        airScreamer->properties_E4.airScreamer.targetPosition_F8.vy = Collision_GroundHeightGet(targetPosX, targetPosZ);
     }
     else
     {
-        arg0->properties_E4.airScreamer.targetPosition_F8.vy = sp20;
+        airScreamer->properties_E4.airScreamer.targetPosition_F8.vy = targetPosY;
     }
 
-    sharedFunc_800D4E84_0_s01(arg0);
+    sharedFunc_800D4E84_0_s01(airScreamer);
 
-    return sp2C;
+    return retCond;
 }

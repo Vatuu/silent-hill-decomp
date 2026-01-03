@@ -1392,13 +1392,22 @@ typedef enum
     SnowType_HeavyWindy = 3
 } e_SnowType;
 
+/** @brief Heading angle quadrants. TODO: Order uncertain. North/South and East/West could be swapped. */
+typedef enum _Quadrant
+{
+    Quadrant_South = 0,
+    Quadrant_North = 1,
+    Quadrant_West  = 2,
+    Quadrant_East  = 3
+} e_Quadrant;
+
 typedef struct
 {
-    VECTOR3     position0_0;  // Snow: position, Rain: streak start (bottom)
-    VECTOR3     position1_C;  // Snow: unused, Rain: streak end (top)
-    SVECTOR3    movement_18;  // Snow: random accumulation, Rain: Y accumulation (affects streak length).
-    u8          stateStep_1E; /** `e_ParticleState` */
-    u8          type_1F;      /** `e_ParticleType` */
+    VECTOR3  position0_0;  // Snow: position, Rain: streak start (bottom)
+    VECTOR3  position1_C;  // Snow: unused, Rain: streak end (top)
+    SVECTOR3 movement_18;  // Snow: random accumulation, Rain: Y accumulation (affects streak length).
+    u8       stateStep_1E; /** `e_ParticleState` */
+    u8       type_1F;      /** `e_ParticleType` */
 } s_Particle;
 
 typedef struct
@@ -2055,7 +2064,7 @@ void sharedFunc_800DD4EC_2_s00(s_SubCharacter* airScreamer);
 
 void sharedFunc_800DD534_2_s00(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DDA80_2_s00(s_SubCharacter* airScreamer); // Assumed void return type.
+void sharedFunc_800DDA80_2_s00(s_SubCharacter* airScreamer);
 
 void sharedFunc_800DDE14_2_s00(s_SubCharacter* airScreamer);
 
@@ -2065,9 +2074,9 @@ void sharedFunc_800DE034_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12
 
 void sharedFunc_800DE11C_2_s00(s_SubCharacter* airScreamer);
 
-s32 sharedFunc_800DE250_2_s00(s_SubCharacter* airScreamer); // Assumed return type.
+bool sharedFunc_800DE250_2_s00(s_SubCharacter* airScreamer);
 
-s32 sharedFunc_800DE578_2_s00(s_SubCharacter* airScreamer);
+bool sharedFunc_800DE578_2_s00(s_SubCharacter* airScreamer);
 
 void sharedFunc_800DE6A8_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12 dist);
 
@@ -2090,9 +2099,9 @@ void sharedFunc_800DF80C_2_s00(s_SubCharacter* airScreamer);
 
 void sharedFunc_800DF8A0_2_s00(s_SubCharacter* airScreamer);
 
-void sharedFunc_800E012C_2_s00(s_SubCharacter* airScreamer); // Assumed return type.
+void sharedFunc_800E012C_2_s00(s_SubCharacter* airScreamer);
 
-void sharedFunc_800E021C_2_s00(s_SubCharacter* airScreamer, s32, s32); // Assumed void return type.
+void sharedFunc_800E021C_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2);
 
 void sharedFunc_800E041C_2_s00(s_SubCharacter* airScreamer);
 
@@ -2476,7 +2485,7 @@ void sharedFunc_800CBD58_1_s02(void);
 
 void sharedFunc_800DE1F8_2_s00(s_SubCharacter* airScreamer);
 
-s32 sharedFunc_800DEC64_2_s00(s_SubCharacter* chara);
+bool sharedFunc_800DEC64_2_s00(s_SubCharacter* chara);
 
 void sharedFunc_800DEC84_2_s00(s_SubCharacter* chara, q19_12 radius, q19_12 angle);
 
@@ -2484,7 +2493,7 @@ void sharedFunc_800DECA4_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist)
 
 void sharedFunc_800DF22C_2_s00(s_SubCharacter* chara);
 
-s32 sharedFunc_800DF24C_2_s00(s_SubCharacter* chara);
+bool sharedFunc_800DF24C_2_s00(s_SubCharacter* chara);
 
 bool sharedFunc_800D2FB4_0_s01(s_SubCharacter* airScreamer, VECTOR3* playerPos, s32 playerField10C);
 
