@@ -25,7 +25,7 @@ void Ai_AirScreamer_Update(s_SubCharacter* airScreamer, s_AnmHeader* anmHdr, GsC
 
     sharedFunc_800D2274_0_s01(airScreamer);
     sharedFunc_800D2390_0_s01(airScreamer);
-    sharedFunc_800D3928_0_s01(airScreamer);
+    Ai_AirScreamer_Control(airScreamer);
     sharedFunc_800D62D8_0_s01(airScreamer);
     sharedFunc_800D7AB0_0_s01(airScreamer);
     sharedFunc_800D7EBC_0_s01(airScreamer);
@@ -398,7 +398,7 @@ bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
     }
 
     sharedFunc_800D2BF4_0_s01(airScreamer);
-    sharedSymbol_800D3B0C_0_s01(airScreamer);
+    Ai_AirScreamerControl_0(airScreamer);
     sharedFunc_800D2390_0_s01(airScreamer);
     sharedFunc_800D2390_0_s01(airScreamer);
     sharedFunc_800D2B00_0_s01(airScreamer);
@@ -944,7 +944,7 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer)
     return dist;
 }
 
-bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer)
+bool Ai_AirScreamer_Control(s_SubCharacter* airScreamer)
 {
     q20_12 someTime;
     q19_12 deltaTime;
@@ -1032,7 +1032,7 @@ void func_800D3AC0(s_SubCharacter* airScreamer)
 }
 #endif
 
-void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
+void Ai_AirScreamerControl_0(s_SubCharacter* airScreamer)
 {
     s32 keyframeIdx;
     s32 var0;
@@ -1214,7 +1214,7 @@ void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer)
     }
 }
 
-void sharedFunc_800D3CC4_0_s01(s_SubCharacter* airScreamer)
+void Ai_AirScreamerControl_1(s_SubCharacter* airScreamer)
 {
     u32  keyframeIdx;
     bool setAnim;
@@ -1262,7 +1262,7 @@ void sharedFunc_800D3CC4_0_s01(s_SubCharacter* airScreamer)
         case AirScreamerStateStep_7:
             airScreamer->model_0.controlState_2 = AirScreamerControl_None;
             airScreamer->model_0.stateStep_3    = AirScreamerStateStep_13;
-            sharedSymbol_800D3B0C_0_s01(airScreamer);
+            Ai_AirScreamerControl_0(airScreamer);
             break;
     }
 

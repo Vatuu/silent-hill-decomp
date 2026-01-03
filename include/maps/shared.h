@@ -1949,83 +1949,83 @@ void sharedFunc_800D5D80_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D5E14_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D3C24_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_2(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D3E44_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_3(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D4358_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_5(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D46C8_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_6(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D4A9C_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_7(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTOR3* arg2, VECTOR3* arg3);
 
-void sharedFunc_800D4E78_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_8(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D5268_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_9(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D5974_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_11(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D5B88_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_12(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D5DAC_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_13(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D603C_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_14(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D6400_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_15(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D6504_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_16(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D69A0_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_17(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D6A7C_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_18(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D6E28_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_19(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D71A4_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_20(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D756C_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_21(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D794C_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_22(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D7D0C_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_23(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D80EC_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_24(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D83F8_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_25(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D8618_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_26(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D8888_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_27(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D8C34_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_28(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D91A0_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_30(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D92B4_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_31(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D93E8_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_32(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D94EC_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_33(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D98DC_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_34(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DA0D4_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_36(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DA598_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_37(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DB038_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_40(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DB220_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_41(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DB54C_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_42(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DB8AC_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_43(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DB9B8_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_44(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DBDEC_2_s00(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_45(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800DBF88_2_s00(s_SubCharacter* airScreamer, s32 arg1);
 

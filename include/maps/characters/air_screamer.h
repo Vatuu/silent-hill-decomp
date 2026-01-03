@@ -278,11 +278,11 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D31D0_0_s01(s_SubCharacter* airScreamer, const VECTOR3* pos, s32 arg2);
 
-bool sharedFunc_800D3928_0_s01(s_SubCharacter* airScreamer);
+bool Ai_AirScreamer_Control(s_SubCharacter* airScreamer);
 
-void sharedSymbol_800D3B0C_0_s01(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_0(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D3CC4_0_s01(s_SubCharacter* airScreamer);
+void Ai_AirScreamerControl_1(s_SubCharacter* airScreamer);
 
 /** Probability query. */
 void sharedFunc_800D3DFC_0_s01(s_SubCharacter* airScreamer);

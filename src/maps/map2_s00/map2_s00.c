@@ -55,93 +55,93 @@ INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", sharedData_800CAA98_0_
 // TODO: Most of the code below also belongs to `air_screamer.c`, move there once `INCLUDE_ASM` gaps are matched.
 #include "../src/maps/characters/air_screamer.c" // 0x800D1F40
 
-#include "maps/shared/sharedFunc_800D3C24_2_s00.h" // 0x800D3C24
+#include "maps/shared/Ai_AirScreamerControl_2.h" // 0x800D3C24
 
-#include "maps/shared/sharedFunc_800D3E44_2_s00.h" // 0x800D3E44
+#include "maps/shared/Ai_AirScreamerControl_3.h" // 0x800D3E44
 
-#include "maps/shared/sharedFunc_800D3FA4_2_s00.h" // 0x800D3FA4
+#include "maps/shared/Ai_AirScreamerControl_4.h" // 0x800D3FA4
 
-#include "maps/shared/sharedFunc_800D4358_2_s00.h" // 0x800D4358
+#include "maps/shared/Ai_AirScreamerControl_5.h" // 0x800D4358
 
-#include "maps/shared/sharedFunc_800D46C8_2_s00.h" // 0x800D46C8
+#include "maps/shared/Ai_AirScreamerControl_6.h" // 0x800D46C8
 
-#include "maps/shared/sharedFunc_800D4A9C_2_s00.h" // 0x800D4A9C
+#include "maps/shared/Ai_AirScreamerControl_7.h" // 0x800D4A9C
 
-#include "maps/shared/sharedFunc_800D4E78_2_s00.h" // 0x800D4E78
+#include "maps/shared/Ai_AirScreamerControl_8.h" // 0x800D4E78
 
-#include "maps/shared/sharedFunc_800D5268_2_s00.h" // 0x800D5268
+#include "maps/shared/Ai_AirScreamerControl_9.h" // 0x800D5268
 
-#include "maps/shared/sharedFunc_800D5554_2_s00.h" // 0x800D5554
+#include "maps/shared/Ai_AirScreamerControl_10.h" // 0x800D5554
 
-#include "maps/shared/sharedFunc_800D5974_2_s00.h" // 0x800D5974
+#include "maps/shared/Ai_AirScreamerControl_11.h" // 0x800D5974
 
-#include "maps/shared/sharedFunc_800D5B88_2_s00.h" // 0x800D5B88
+#include "maps/shared/Ai_AirScreamerControl_12.h" // 0x800D5B88
 
-#include "maps/shared/sharedFunc_800D5DAC_2_s00.h" // 0x800D5DAC
+#include "maps/shared/Ai_AirScreamerControl_13.h" // 0x800D5DAC
 
-#include "maps/shared/sharedFunc_800D603C_2_s00.h" // 0x800D603C
+#include "maps/shared/Ai_AirScreamerControl_14.h" // 0x800D603C
 
-#include "maps/shared/sharedFunc_800D6400_2_s00.h" // 0x800D6400
+#include "maps/shared/Ai_AirScreamerControl_15.h" // 0x800D6400
 
-#include "maps/shared/sharedFunc_800D6504_2_s00.h" // 0x800D6504
+#include "maps/shared/Ai_AirScreamerControl_16.h" // 0x800D6504
 
-#include "maps/shared/sharedFunc_800D69A0_2_s00.h" // 0x800D69A0
+#include "maps/shared/Ai_AirScreamerControl_17.h" // 0x800D69A0
 
-#include "maps/shared/sharedFunc_800D6A7C_2_s00.h" // 0x800D6A7C
+#include "maps/shared/Ai_AirScreamerControl_18.h" // 0x800D6A7C
 
-#include "maps/shared/sharedFunc_800D6E28_2_s00.h" // 0x800D6E28
+#include "maps/shared/Ai_AirScreamerControl_19.h" // 0x800D6E28
 
-#include "maps/shared/sharedFunc_800D71A4_2_s00.h" // 0x800D71A4
+#include "maps/shared/Ai_AirScreamerControl_20.h" // 0x800D71A4
 
-#include "maps/shared/sharedFunc_800D756C_2_s00.h" // 0x800D756C
+#include "maps/shared/Ai_AirScreamerControl_21.h" // 0x800D756C
 
-#include "maps/shared/sharedFunc_800D794C_2_s00.h" // 0x800D794C
+#include "maps/shared/Ai_AirScreamerControl_22.h" // 0x800D794C
 
-#include "maps/shared/sharedFunc_800D7D0C_2_s00.h" // 0x800D7D0C
+#include "maps/shared/Ai_AirScreamerControl_23.h" // 0x800D7D0C
 
-#include "maps/shared/sharedFunc_800D80EC_2_s00.h" // 0x800D80EC
+#include "maps/shared/Ai_AirScreamerControl_24.h" // 0x800D80EC
 
-#include "maps/shared/sharedFunc_800D83F8_2_s00.h" // 0x800D83F8
+#include "maps/shared/Ai_AirScreamerControl_25.h" // 0x800D83F8
 
-#include "maps/shared/sharedFunc_800D8618_2_s00.h" // 0x800D8618
+#include "maps/shared/Ai_AirScreamerControl_26.h" // 0x800D8618
 
-#include "maps/shared/sharedFunc_800D8888_2_s00.h" // 0x800D8888
+#include "maps/shared/Ai_AirScreamerControl_27.h" // 0x800D8888
 
-#include "maps/shared/sharedFunc_800D8C34_2_s00.h" // 0x800D8C34
+#include "maps/shared/Ai_AirScreamerControl_28.h" // 0x800D8C34
 
-#include "maps/shared/sharedFunc_800D8D44_2_s00.h" // 0x800D8D44
+#include "maps/shared/Ai_AirScreamerControl_29.h" // 0x800D8D44
 
-#include "maps/shared/sharedFunc_800D91A0_2_s00.h" // 0x800D91A0
+#include "maps/shared/Ai_AirScreamerControl_30.h" // 0x800D91A0
 
-#include "maps/shared/sharedFunc_800D92B4_2_s00.h" // 0x800D92B4
+#include "maps/shared/Ai_AirScreamerControl_31.h" // 0x800D92B4
 
-#include "maps/shared/sharedFunc_800D93E8_2_s00.h" // 0x800D93E8
+#include "maps/shared/Ai_AirScreamerControl_32.h" // 0x800D93E8
 
-#include "maps/shared/sharedFunc_800D94EC_2_s00.h" // 0x800D94EC
+#include "maps/shared/Ai_AirScreamerControl_33.h" // 0x800D94EC
 
-#include "maps/shared/sharedFunc_800D98DC_2_s00.h" // 0x800D98DC
+#include "maps/shared/Ai_AirScreamerControl_34.h" // 0x800D98DC
 
-#include "maps/shared/sharedFunc_800D9C60_2_s00.h" // 0x800D9C60
+#include "maps/shared/Ai_AirScreamerControl_35.h" // 0x800D9C60
 
-#include "maps/shared/sharedFunc_800DA0D4_2_s00.h" // 0x800DA0D4
+#include "maps/shared/Ai_AirScreamerControl_36.h" // 0x800DA0D4
 
-#include "maps/shared/sharedFunc_800DA598_2_s00.h" // 0x800DA598
+#include "maps/shared/Ai_AirScreamerControl_37.h" // 0x800DA598
 
-#include "maps/shared/sharedFunc_800DA900_2_s00.h" // 0x800DA900
+#include "maps/shared/Ai_AirScreamerControl_38.h" // 0x800DA900
 
-#include "maps/shared/sharedFunc_800DACA8_2_s00.h" // 0x800DACA8
+#include "maps/shared/Ai_AirScreamerControl_39.h" // 0x800DACA8
 
-#include "maps/shared/sharedFunc_800DB038_2_s00.h" // 0x800DB038
+#include "maps/shared/Ai_AirScreamerControl_40.h" // 0x800DB038
 
-#include "maps/shared/sharedFunc_800DB220_2_s00.h" // 0x800DB220
+#include "maps/shared/Ai_AirScreamerControl_41.h" // 0x800DB220
 
-#include "maps/shared/sharedFunc_800DB54C_2_s00.h" // 0x800DB54C
+#include "maps/shared/Ai_AirScreamerControl_42.h" // 0x800DB54C
 
-#include "maps/shared/sharedFunc_800DB8AC_2_s00.h" // 0x800DB8AC
+#include "maps/shared/Ai_AirScreamerControl_43.h" // 0x800DB8AC
 
-#include "maps/shared/sharedFunc_800DB9B8_2_s00.h" // 0x800DB9B8
+#include "maps/shared/Ai_AirScreamerControl_44.h" // 0x800DB9B8
 
-#include "maps/shared/sharedFunc_800DBDEC_2_s00.h" // 0x800DBDEC
+#include "maps/shared/Ai_AirScreamerControl_45.h" // 0x800DBDEC
 
 void func_800DBEEC(void) {}
 
