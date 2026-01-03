@@ -1382,10 +1382,11 @@ typedef struct _PropertiesHangedScratcher
 /** @brief Could be Incubus or Incubator. */
 typedef struct _PropertiesIncubus
 {
-    u_Property dummy_E8[2];
-    s32        someState_F0;
-    q19_12     bossFightTimer_F4;
-    u_Property dummy_F8[12];
+    s32    field_E8;
+    s32    field_EC;
+    s32    someState_F0;
+    q19_12 bossFightTimer_F4;
+    s8     unk_F8[48];
 } s_PropertiesIncubus;
 
 /** @brief Larval Stalker character properties. */
