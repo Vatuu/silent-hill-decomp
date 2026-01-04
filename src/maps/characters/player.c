@@ -1,9 +1,9 @@
 // Player-related functions kept inside map overlay for some reason.
 //
 // TODO:
-//  - This should be a separate .c file/split in each map overlay, but for now keeping in single .h works.
+//  - This should be a separate .c file/split in each map overlay, but for now #including this .c works.
 //  - The first few funcs here (up until `sharedFunc_800CDAA8_0_s02`) don't appear to be player-related, might be a separate split that all maps included.
-//  - Declarations of these funcs should be moved out of `shared.h` and into actual `Player.h` header. This file could be moved to `Player_Impl.h`
+//  - Declarations of these funcs should be moved out of `shared.h` and into actual `player.h` header.
 //
 // NOTES:
 //  - All functions are declared in every map, but some function bodies are only included in specific maps.
@@ -13,6 +13,8 @@
 #include "inline_no_dmpsx.h"
 #include "bodyprog/player_logic.h"
 
+// TODO: Figure out what these maps have in common.
+// `sharedData_800E32D0_0_s00` writes and `sharedFunc_800D0CB8_0_s00` are gated behind `SET_800E32D0`.
 #if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || \
     defined(MAP4_S02) || defined(MAP4_S03) || defined(MAP4_S04) || \
     defined(MAP4_S05) || defined(MAP5_S00) || defined(MAP6_S00) || defined(MAP6_S03)
@@ -115,10 +117,6 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
     sharedData_800E0CAC_0_s00 = var_s0;
 }
 
-#ifdef SET_800E32D0
-#undef SET_800E32D0
-#endif
-
 void sharedFunc_800D0A60_0_s00(s32 caseArg)
 {
     s32 var0;
@@ -208,11 +206,7 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0)
             case 2:
                 sharedData_800DFB70_0_s00 = 1;
 
-// TODO: Do these maps have anything in common?
-#if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || \
-    defined(MAP4_S02) || defined(MAP4_S03) || defined(MAP4_S04) || \
-    defined(MAP4_S05) || defined(MAP5_S00) || defined(MAP6_S00) || \
-    defined(MAP6_S03)
+#ifdef SET_800E32D0
                 sharedData_800E32D0_0_s00 = 0;
 #endif
                 break;
@@ -267,10 +261,7 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0)
     return false;
 }
 
-#if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
-    defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || defined(MAP5_S00) || \
-    defined(MAP6_S00) || defined(MAP6_S03)
-
+#ifdef SET_800E32D0
 void sharedFunc_800D0CB8_0_s00(void)
 {
     u8 unkValDiv4;
@@ -312,6 +303,10 @@ void sharedFunc_800D0CB8_0_s00(void)
             }
     }
 }
+#endif
+
+#ifdef SET_800E32D0
+#undef SET_800E32D0
 #endif
 
 void sharedFunc_800D0E04_0_s00(void)

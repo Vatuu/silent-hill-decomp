@@ -2054,7 +2054,7 @@ bool sharedFunc_800DC67C_2_s00(s_SubCharacter* airScreamer);
 q19_12 sharedFunc_800DC6E4_2_s00(s_SubCharacter* airScreamer, q19_12 arg1);
 
 /** Chance getter? */
-q19_12 sharedFunc_800DC894_2_s00(s_SubCharacter* airScreamer, s32);
+q19_12 sharedFunc_800DC894_2_s00(s_SubCharacter* airScreamer, q19_12 dist);
 
 void sharedFunc_800DD13C_2_s00(s_SubCharacter* airScreamer, s32 npcSlot, q19_12 spawnChance);
 
