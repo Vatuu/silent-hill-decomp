@@ -360,7 +360,7 @@ INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", func_800E3900);
 
 #include "maps/shared/sharedFunc_800E5930_2_s00.h" // 0x800E43AC
 
-INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800E5AA4_2_s00); // 0x800E4520
+#include "maps/shared/sharedFunc_800E5AA4_2_s00.h" // 0x800E4520
 
 INCLUDE_ASM("asm/maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800E5EC4_2_s00); // 0x800E4940
 
