@@ -90,9 +90,9 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
     }
     else if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == GroanerAnim_10)
     {
-        if (!(groanerProps.flags_E8 & GroanerFlag_9))
+        if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_9))
         {
-            groanerProps.flags_E8 |= GroanerFlag_9;
+            groanerProps.flags_E8.val16[0]                         |= GroanerFlag_9;
             var_v0                                                = g_SysWork.playerWork_4C.player_0.field_D4.field_2 + 573;
             var_v0                                                = (distToPlayer - var_v0) << 1;
             groaner->moveSpeed_38                                   = MIN(var_v0, Q12(4.5f));
@@ -133,7 +133,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
         groaner->model_0.anim_4.status_0                        = ANIM_STATUS(GroanerAnim_16, true);
         groaner->model_0.anim_4.time_4                          = Q12(363.0f);
         groaner->model_0.anim_4.keyframeIdx_8                   = 363;
-        groanerProps.flags_E8 &= ~GroanerFlag_9;
+        groanerProps.flags_E8.val16[0]                         &= ~GroanerFlag_9;
     }
 
     #undef groanerProps

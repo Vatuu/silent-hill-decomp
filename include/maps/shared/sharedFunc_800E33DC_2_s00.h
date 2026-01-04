@@ -38,7 +38,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
 
     groanerProps.targetPositionX_F4     = g_SysWork.playerWork_4C.player_0.position_18.vx;
     groanerProps.targetPositionZ_F8     = g_SysWork.playerWork_4C.player_0.position_18.vz;
-    groanerProps.flags_E8 |= GroanerFlag_7;
+    groanerProps.flags_E8.val16[0]     |= GroanerFlag_7;
 
     groaner->health_B0 = MAX(groaner->health_B0 - groaner->damage_B4.amount_C, Q12(0.0f));
     unkDist         = Math_Vector2MagCalc(groaner->damage_B4.position_0.vx, groaner->damage_B4.position_0.vz);
@@ -66,11 +66,11 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     groaner->damage_B4.position_0.vz                        = Q12(0.0f);
     groaner->damage_B4.position_0.vy                        = Q12(0.0f);
     groaner->damage_B4.position_0.vx                        = Q12(0.0f);
-    groanerProps.flags_E8 |= GroanerFlag_1;
+    groanerProps.flags_E8.val16[0]                         |= GroanerFlag_1;
     groaner->moveSpeed_38                                   = FP_TO(unkDist, Q12_SHIFT) / Q12(1.2f);
     groaner->field_34                                      += temp_v0 / Q12(1.2f);
 
-    if (groanerProps.flags_E8 & GroanerFlag_3)
+    if (groanerProps.flags_E8.val16[0] & GroanerFlag_3)
     {
         groanerProps.field_FE = 0;
 
@@ -119,7 +119,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     }
     else if (groaner->health_B0 > Q12(100.0f))
     {
-        if (!(groanerProps.flags_E8 & GroanerFlag_10))
+        if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_10))
         {
             if (ABS(unkAngle) < FP_ANGLE(45.0f))
             {
@@ -151,7 +151,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
         func_80037DC4(groaner);
 
         groaner->flags_3E                                      |= CharaFlag_Unk2;
-        groanerProps.flags_E8 |= GroanerFlag_3 | GroanerFlag_12;
+        groanerProps.flags_E8.val16[0]                         |= GroanerFlag_3 | GroanerFlag_12;
 
         if (ABS(unkAngle) < FP_ANGLE(45.0f))
         {

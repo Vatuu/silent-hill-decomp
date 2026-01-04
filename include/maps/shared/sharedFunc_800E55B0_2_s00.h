@@ -7,27 +7,27 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
 
     #define groanerProps groaner->properties_E4.groaner
 
-    if (!(groanerProps.flags_E8 & GroanerFlag_1))
+    if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_1))
     {
         Chara_MoveSpeedUpdate(groaner, Q12(1.8f));
     }
 
-    if (!(groanerProps.flags_E8 & GroanerFlag_2))
+    if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_2))
     {
-        groanerProps.flags_E8 &= ~GroanerFlag_4;
+        groanerProps.flags_E8.val16[0] &= ~GroanerFlag_4;
     }
 
     if (groaner->model_0.controlState_2 == GroanerControl_6)
     {
         if (ANIM_TIME_RANGE_CHECK(groaner->model_0.anim_4.time_4, 39, 48))
         {
-            groanerProps.flags_E8 |= GroanerFlag_4;
+            groanerProps.flags_E8.val16[0] |= GroanerFlag_4;
         }
 
-        if (groanerProps.flags_E8 & GroanerFlag_4)
+        if (groanerProps.flags_E8.val16[0] & GroanerFlag_4)
         {
             // TODO: Uncleanr float.
-            if (groanerProps.flags_E8 & GroanerFlag_5)
+            if (groanerProps.flags_E8.val16[0] & GroanerFlag_5)
             {
                 timeScaled = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 5.3333f, Q12_SHIFT);
             }
@@ -51,12 +51,12 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
         if ((animTime >= 134 && animTime < 157) ||
             (animTime >= 288 && animTime < 311))
         {
-            groanerProps.flags_E8 |= GroanerFlag_4;
+            groanerProps.flags_E8.val16[0] |= GroanerFlag_4;
         }
 
-        if (groanerProps.flags_E8 & GroanerFlag_4)
+        if (groanerProps.flags_E8.val16[0] & GroanerFlag_4)
         {
-            if (groanerProps.flags_E8 & GroanerFlag_5)
+            if (groanerProps.flags_E8.val16[0] & GroanerFlag_5)
             {
                 timeScaled = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.6954f, Q12_SHIFT);
             }
@@ -88,7 +88,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    if (!(groanerProps.flags_E8 & GroanerFlag_2) && groaner->health_B0 == Q12(0.0f))
+    if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_2) && groaner->health_B0 == Q12(0.0f))
     {
         animIdx       = ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0);
         newAnimStatus = ANIM_STATUS((animIdx == GroanerAnim_4) ? GroanerAnim_1 : GroanerAnim_Still, false);

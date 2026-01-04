@@ -3,7 +3,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
     s32 newAnimStatus;
     u32 animStatus;
 
-    if (!(groaner->properties_E4.groaner.flags_E8 & GroanerFlag_1))
+    if (!(groaner->properties_E4.groaner.flags_E8.val16[0] & GroanerFlag_1))
     {
         Chara_MoveSpeedUpdate(groaner, Q12(1.8f));
     }
@@ -39,7 +39,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
         if (newAnimStatus != ANIM_STATUS(GroanerAnim_Still, false))
         {
             func_800622B8(3, groaner, newAnimStatus, 6);
-            groaner->properties_E4.groaner.flags_E8 |= AirScreamerFlag_6;
+            groaner->properties_E4.groaner.flags_E8.val16[0] |= AirScreamerFlag_6;
         }
     }
 }

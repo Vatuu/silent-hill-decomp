@@ -2588,6 +2588,9 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
 #define APPROACH(current, target, step) \
     ((current) > (target) ? MAX((current) - (step), (target)) : MIN((target), (current) + (step)))
 
+#define APPROACH_ALT(current, target, step) \
+    ((current) > (target) ? MAX((current) - (step), (target)) : CLAMP_HIGH((current) + (step), (target)))
+
 /** @brief Updates the move speed of a character.
  *
  * @param chara Character to update.
@@ -2654,5 +2657,8 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
         }                                                                                             \
         chara->moveSpeed_38 = newMoveSpeed;                                                           \
     }
+
+#define Chara_MoveSpeedUpdate5(chara, speed, limit) \
+    chara->moveSpeed_38 = APPROACH_ALT(chara->moveSpeed_38, limit, FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT))
 
 #endif
