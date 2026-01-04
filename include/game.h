@@ -1369,7 +1369,7 @@ typedef struct _PropertiesGroaner
 {
     u_Property flags_E8; /** `e_GroanerFlags` TODO: One weird exception where it's accessed as `s32`. */
     q3_12      angle_EC;
-    s8         unk_EE[2];
+    s16        field_EE;
     q3_12      field_F0;
     q3_12      field_F2;
     q19_12     targetPositionX_F4;
