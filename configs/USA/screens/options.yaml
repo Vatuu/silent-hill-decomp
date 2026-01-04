@@ -10,7 +10,7 @@ options:
   asm_path: asm/USA/screens/options
   src_path: src/screens/options
   asset_path: asm/USA/screens/options
-  build_path: build/USA/
+  build_path: build/USA
 
   ld_script_path: linkers/USA/screens/options.ld
 

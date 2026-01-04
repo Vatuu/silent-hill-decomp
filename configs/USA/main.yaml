@@ -9,7 +9,7 @@ options:
 
   asm_path: asm/USA/main
   src_path: src/main
-  build_path: build/USA/
+  build_path: build/USA
   # create_asm_dependencies: True
 
   ld_script_path: linkers/USA/main.ld

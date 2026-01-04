@@ -10,7 +10,7 @@ options:
   asm_path: asm/USA/screens/stream
   src_path: src/screens/stream
   asset_path: asm/USA/screens/stream
-  build_path: build/USA/
+  build_path: build/USA
 
   ld_script_path: linkers/USA/screens/stream.ld
 

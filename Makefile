@@ -1,9 +1,12 @@
 # Configuration
 
+# BUILD_ITEMS only available for the European release.
+
 BUILD_EXE      ?= 1
 BUILD_ENGINE   ?= 1
 BUILD_SCREENS  ?= 1
 BUILD_MAPS     ?= 1
+BUILD_ITEMS    ?= 1
 CHECKSUM       ?= 1
 NON_MATCHING   ?= 0
 SKIP_ASM       ?= 0
@@ -32,7 +35,7 @@ GAME_FILE_HILL   := HILL.
 
 else ifeq ($(GAME_VERSION), EUR)
 
-# Version - Retail European (1.0)
+# Version - Retail PAL (1.0)
 
 GAME_NAME        := SLES-01514
 GAME_VERSION_DIR := EUR
@@ -111,6 +114,7 @@ MKPSXISO        := $(TOOLS_DIR)/psxiso/mkpsxiso
 SILENT_ASSETS   := $(PYTHON) $(TOOLS_DIR)/silentassets/extract.py
 INSERT_OVLS     := $(PYTHON) $(TOOLS_DIR)/silentassets/insertovl.py
 GET_YAML_TARGET := $(PYTHON) $(TOOLS_DIR)/get_yaml_target.py
+GET_O_FILES     := $(PYTHON) $(TOOLS_DIR)/get_o_files.py
 PREBUILD        := $(TOOLS_DIR)/prebuild.sh
 POSTBUILD       := $(PYTHON) $(TOOLS_DIR)/postbuild.py
 COMPTEST        := $(TOOLS_DIR)/compilationTest.sh
@@ -189,6 +193,8 @@ find_s_files = $(shell find $(ASM_DIR)/$(strip $1) -type f -path "*.s" -not -pat
 # Function to find matching .c files for a target name.
 find_c_files = $(shell find $(C_DIR)/$(strip $1) -type f -path "*.c" 2> /dev/null)
 
+get_o_files = $(shell $(GET_O_FILES) $1 $(GAME_VERSION_DIR) $2)
+
 # Function to generate matching .o files for target name in build directory.
 gen_o_files = $(addprefix $(BUILD_DIR)/, \
 							$(patsubst %.s, %.s.o, $(call find_s_files, $1)) \
@@ -214,7 +220,7 @@ ifeq ($(SKIP_ASM),1)
 define make_elf_target
 $2: $2.elf
 
-$2.elf: $(call gen_o_files, $1)
+$2.elf: $(call get_o_files, $1, $(GEN_COMP_TU))
 #endef make_elf_target
 endef
 
@@ -231,7 +237,7 @@ ifneq (,$(filter $1,$(TARGET_POSTBUILD)))
 	-$(POSTBUILD) $1
 endif
 
-$2.elf: $(call gen_o_files, $1)
+$2.elf: $(call get_o_files, $1, $(GEN_COMP_TU))
 	@mkdir -p $(dir $2)
 	$(LD) $(LD_FLAGS) \
 		-Map $2.map \
@@ -247,7 +253,7 @@ else
 $2: $2.elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $$< $$@
 
-$2.elf: $(call gen_o_files, $1)
+$2.elf: $(call get_o_files, $1, $(GEN_COMP_TU))
 	@mkdir -p $(dir $2)
 	$(LD) $(LD_FLAGS) \
 		-Map $2.map \
@@ -267,10 +273,11 @@ endif
 
 # Targets
 
-TARGET_SCREENS_SRC_DIR := screens
-TARGET_MAPS_SRC_DIR := maps
+TARGET_SCREENS_SRC_DIR   := screens
+TARGET_MAPS_SRC_DIR      := maps
+TARGET_SCREENS_ITEMS_DIR := items
 
-ifeq ($(EXE)$(ENG)$(BKO)$(CRE)$(OPT)$(SAV)$(FMV)$(M00)$(M01)$(M02)$(M10)$(M11)$(M12)$(M13)$(M14)$(M15)$(M16)$(M20)$(M21)$(M22)$(M23)$(M24)$(M30)$(M31)$(M32)$(M33)$(M34)$(M35)$(M36)$(M40)$(M41)$(M42)$(M43)$(M44)$(M45)$(M46)$(M50)$(M51)$(M52)$(M53)$(M60)$(M61)$(M62)$(M63)$(M64)$(M65)$(M70)$(M71)$(M72)$(M73)$(M0X)$(M1X)$(M2X)$(M3X)$(M4X)$(M5X)$(M6X)$(M7X)$(SCR)$(STR)$(MAP),)
+ifeq ($(EXE)$(ENG)$(BKO)$(CRE)$(OPT)$(SAV)$(FMV)$(M00)$(M01)$(M02)$(M10)$(M11)$(M12)$(M13)$(M14)$(M15)$(M16)$(M20)$(M21)$(M22)$(M23)$(M24)$(M30)$(M31)$(M32)$(M33)$(M34)$(M35)$(M36)$(M40)$(M41)$(M42)$(M43)$(M44)$(M45)$(M46)$(M50)$(M51)$(M52)$(M53)$(M60)$(M61)$(M62)$(M63)$(M64)$(M65)$(M70)$(M71)$(M72)$(M73)$(M0X)$(M1X)$(M2X)$(M3X)$(M4X)$(M5X)$(M6X)$(M7X)$(SCR)$(STR)$(MAP)$(ITE)$(ITG)$(ITF)$(ITI)$(ITS)$(ITM),)
 
 ifeq ($(BUILD_EXE), 1)
 
@@ -313,7 +320,19 @@ TARGET_MAPS				:= $(addprefix $(TARGET_MAPS_SRC_DIR)/,$(TARGET_MAPS))
 #endif BUILD_MAPS
 endif
 
-TARGET_IN  := $(TARGET_MAIN) $(TARGET_BODYPROG) $(TARGET_SCREENS) $(TARGET_MAPS)
+
+ifeq ($(GAME_VERSION), EUR)
+ifeq ($(BUILD_ITEMS), 1)
+
+TARGET_ITEMS := item_eng item_ger item_frn item_itl item_ger item_spn
+TARGET_ITEMS := $(addprefix $(TARGET_SCREENS_ITEMS_DIR)/,$(TARGET_ITEMS))
+
+#endif BUILD_ITEMS
+endif
+#endif GAME_VERSION
+endif
+
+TARGET_IN := $(TARGET_MAIN) $(TARGET_BODYPROG) $(TARGET_SCREENS) $(TARGET_MAPS) $(TARGET_ITEMS)
 
 else
 # Specific overlay compilation/generation
@@ -382,7 +401,16 @@ TARGET_M71_$(M71)$(M7X)       := $(TARGET_MAPS_SRC_DIR)/map7_s01
 TARGET_M72_$(M72)$(M7X)       := $(TARGET_MAPS_SRC_DIR)/map7_s02
 TARGET_M73_$(M73)$(M7X)       := $(TARGET_MAPS_SRC_DIR)/map7_s03
 
-TARGET_IN := $(TARGET_EXE_1) $(TARGET_ENG_1) $(TARGET_BKO_1) $(TARGET_CRE_1) $(TARGET_OPT_1) $(TARGET_SAV_1) $(TARGET_FMV_1) $(TARGET_M00_1) $(TARGET_M01_1) $(TARGET_M02_1) $(TARGET_M10_1) $(TARGET_M11_1) $(TARGET_M12_1) $(TARGET_M13_1) $(TARGET_M14_1) $(TARGET_M15_1) $(TARGET_M16_1) $(TARGET_M20_1) $(TARGET_M21_1) $(TARGET_M22_1) $(TARGET_M23_1) $(TARGET_M24_1) $(TARGET_M30_1) $(TARGET_M31_1) $(TARGET_M32_1) $(TARGET_M33_1) $(TARGET_M34_1) $(TARGET_M35_1) $(TARGET_M36_1) $(TARGET_M40_1) $(TARGET_M41_1) $(TARGET_M42_1) $(TARGET_M43_1) $(TARGET_M44_1) $(TARGET_M45_1) $(TARGET_M46_1) $(TARGET_M50_1) $(TARGET_M51_1) $(TARGET_M52_1) $(TARGET_M53_1) $(TARGET_M60_1) $(TARGET_M61_1) $(TARGET_M62_1) $(TARGET_M63_1) $(TARGET_M64_1) $(TARGET_M65_1) $(TARGET_M70_1) $(TARGET_M71_1) $(TARGET_M72_1) $(TARGET_M73_1) $(TARGET_MAP_1)
+ifeq ($(GAME_VERSION), EUR)
+TARGET_ITE_$(ITE)$(ITM)       := $(TARGET_SCREENS_ITEMS_DIR)/item_eng
+TARGET_ITG_$(ITG)$(ITM)       := $(TARGET_SCREENS_ITEMS_DIR)/item_ger
+TARGET_ITF_$(ITF)$(ITM)       := $(TARGET_SCREENS_ITEMS_DIR)/item_frn
+TARGET_ITL_$(ITI)$(ITM)       := $(TARGET_SCREENS_ITEMS_DIR)/item_itl
+TARGET_ITS_$(ITS)$(ITM)       := $(TARGET_SCREENS_ITEMS_DIR)/item_spn
+#endif GAME_VERSION
+endif
+
+TARGET_IN := $(TARGET_EXE_1) $(TARGET_ENG_1) $(TARGET_BKO_1) $(TARGET_CRE_1) $(TARGET_OPT_1) $(TARGET_SAV_1) $(TARGET_FMV_1) $(TARGET_M00_1) $(TARGET_M01_1) $(TARGET_M02_1) $(TARGET_M10_1) $(TARGET_M11_1) $(TARGET_M12_1) $(TARGET_M13_1) $(TARGET_M14_1) $(TARGET_M15_1) $(TARGET_M16_1) $(TARGET_M20_1) $(TARGET_M21_1) $(TARGET_M22_1) $(TARGET_M23_1) $(TARGET_M24_1) $(TARGET_M30_1) $(TARGET_M31_1) $(TARGET_M32_1) $(TARGET_M33_1) $(TARGET_M34_1) $(TARGET_M35_1) $(TARGET_M36_1) $(TARGET_M40_1) $(TARGET_M41_1) $(TARGET_M42_1) $(TARGET_M43_1) $(TARGET_M44_1) $(TARGET_M45_1) $(TARGET_M46_1) $(TARGET_M50_1) $(TARGET_M51_1) $(TARGET_M52_1) $(TARGET_M53_1) $(TARGET_M60_1) $(TARGET_M61_1) $(TARGET_M62_1) $(TARGET_M63_1) $(TARGET_M64_1) $(TARGET_M65_1) $(TARGET_M70_1) $(TARGET_M71_1) $(TARGET_M72_1) $(TARGET_M73_1) $(TARGET_MAP_1) $(TARGET_ITS_1) $(TARGET_ITL_1) $(TARGET_ITF_1) $(TARGET_ITG_1) $(TARGET_ITE_1)
 
 endif
 
@@ -437,7 +465,7 @@ objdiff-config-all:
 
 objdiff-generate:
 	$(MAKE) GEN_COMP_TU=1 regenerate
-	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 build
+	$(MAKE) NON_MATCHING=1 SKIP_ASM=1 GEN_COMP_TU=1 build
 	mv $(BUILD_DIR)/$(ASM_DIR) $(EXPECTED_DIR)
 
 report:

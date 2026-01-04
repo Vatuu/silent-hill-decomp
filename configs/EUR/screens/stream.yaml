@@ -10,7 +10,7 @@ options:
   asm_path: asm/EUR/screens/stream
   src_path: src/screens/stream
   asset_path: asm/EUR/screens/stream
-  build_path: build/EUR/
+  build_path: build/EUR
 
   ld_script_path: linkers/EUR/screens/stream.ld
 

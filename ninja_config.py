@@ -73,6 +73,13 @@ YAML_SCREENS = [
     "screens/credits.yaml",
     "screens/saveload.yaml"
 ]
+YAML_ITEMS = [
+    "items/item_eng.yaml",
+    "items/item_ger.yaml",
+    "items/item_frn.yaml",
+    "items/item_itl.yaml",
+    "items/item_spa.yaml"
+]
 YAML_MAPS_0 = [
     "maps/map0_s00.yaml",
     "maps/map0_s01.yaml",
@@ -907,6 +914,8 @@ def main():
         yamlsPaths.extend(YAML_MAPS_5)
         yamlsPaths.extend(YAML_MAPS_6)
         yamlsPaths.extend(YAML_MAPS_7)
+        if args.game_version == 1:
+            yamlsPaths.extend(YAML_ITEMS)
     else:
         matchSet = ""
         if len(args.setup) == 3:
@@ -933,6 +942,12 @@ def main():
                 yamlsPaths.extend([YAML_SCREENS[4]])
             case "scr":
                 yamlsPaths.extend(YAML_SCREENS)
+            case "itm":
+                if gameVersionOption == 1:
+                    yamlsPaths.extend(YAML_ITEMS)
+                else:
+                    print("Overlays only available for the European release.")
+                    sys.exit(1)
             case "map":
                 yamlsPaths.extend(YAML_MAPS_0)
                 yamlsPaths.extend(YAML_MAPS_1)
@@ -952,7 +967,7 @@ def main():
                         print("No recognizable overlay has been assigned.")
                         sys.exit(1)
                 except:
-                    print("Map overlay(s) not found.")
+                    print("Overlay(s) not found.")
                     sys.exit(1)
     
     if regenMode == False:

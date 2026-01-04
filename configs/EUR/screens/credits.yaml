@@ -10,7 +10,7 @@ options:
   asm_path: asm/EUR/screens/credits
   src_path: src/screens/credits
   asset_path: asm/EUR/screens/credits
-  build_path: build/EUR/
+  build_path: build/EUR
 
   ld_script_path: linkers/EUR/screens/credits.ld
 

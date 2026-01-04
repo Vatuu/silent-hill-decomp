@@ -1,18 +1,17 @@
-name: Save/Load screen overlay (SAVELOAD)
-sha1: 1a5134b617da338e71ef9ac67d270e5a8c128add
+name: Item description and names overlay for English (ITEM_ENG)
+sha1: 07034da6aa4d1b34254b2ad408b00622e11c25bf
 options:
-  basename: SAVELOAD.BIN
-  target_path: assets/EUR/VIN/SAVELOAD.BIN
+  basename: ITEM_ENG.BIN
+  target_path: assets/EUR/VIN/ITEM_ENG.BIN
   base_path: ../../..
   platform: psx
   compiler: GCC
 
-  asm_path: asm/EUR/screens/saveload
-  src_path: src/screens/saveload
-  asset_path: asm/EUR/screens/saveload
+  asm_path: asm/EUR/bodyprog/items
+  src_path: src/bodyprog/items
   build_path: build/EUR
 
-  ld_script_path: linkers/EUR/screens/saveload.ld
+  ld_script_path: linkers/EUR/items/item_eng.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -29,14 +28,14 @@ options:
   section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
-    - configs/EUR/screens/sym.saveload.txt
+    - configs/EUR/items/sym.item_eng.txt
     - configs/EUR/sym.bodyprog.txt
     - configs/EUR/sym.main.txt
   reloc_addrs_path:
-    - configs/EUR/screens/rel.saveload.txt
+    - configs/EUR/items/rel.item_eng.txt
 
-  undefined_funcs_auto_path: linkers/EUR/screens/undefined_funcs_auto.saveload.txt
-  undefined_syms_auto_path: linkers/EUR/screens/undefined_syms_auto.saveload.txt
+  undefined_funcs_auto_path: linkers/EUR/items/undefined_funcs_auto.item_eng.txt
+  undefined_syms_auto_path: linkers/EUR/items/undefined_syms_auto.item_eng.txt
 
   subalign: 4
 
@@ -45,14 +44,14 @@ options:
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
 segments:
-  - name: saveload
+  - name: item_eng
     type: code
     start: 0
-    vram: 0x801E2600
+    vram: 0x800C8B68
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, rodata]
-      - [0x78C, asm, saveload]
-      - [0x4F10, data]
-  - [0x5200]
+      - [0x0, rodata, item_eng]
+      #- [0x61C, c, item_eng]
+      - [0x61C, data, item_eng]
+  - [0x1C00]

@@ -10,7 +10,7 @@ options:
   asm_path: asm/USA/bodyprog
   src_path: src/bodyprog
   asset_path: asm/USA/bodyprog
-  build_path: build/USA/
+  build_path: build/USA
 
   ld_script_path: linkers/USA/bodyprog.ld
 

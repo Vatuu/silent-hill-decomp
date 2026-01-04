@@ -10,7 +10,7 @@ options:
   asm_path: asm/USA/screens/saveload
   src_path: src/screens/saveload
   asset_path: asm/USA/screens/saveload
-  build_path: build/USA/
+  build_path: build/USA
 
   ld_script_path: linkers/USA/screens/saveload.ld
 

@@ -10,7 +10,7 @@ options:
   asm_path: asm/EUR/screens/options
   src_path: src/screens/options
   asset_path: asm/EUR/screens/options
-  build_path: build/EUR/
+  build_path: build/EUR
 
   ld_script_path: linkers/EUR/screens/options.ld
 
