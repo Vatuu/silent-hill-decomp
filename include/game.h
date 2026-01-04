@@ -1367,18 +1367,18 @@ STATIC_ASSERT_SIZEOF(s_PropertiesDahlia, 64);
 /** @brief Groaner character properties. */
 typedef struct _PropertiesGroaner
 {
-    u_Property flags_E8; /** `e_GroanerFlags` */
-    q3_12  angle_EC;
-    s8     unk_EE[2];
-    q3_12  field_F0;
-    q3_12  field_F2;
-    q19_12 targetPositionX_F4;
-    q19_12 targetPositionZ_F8;
-    s16        field_FC;
-    q3_12  field_FE;
-    s16    relKeyframeIdx_100;
-    s8     unk_100[10];
-    s8     field_10C[4];
+    u_Property flags_E8; /** `e_GroanerFlags` TODO: One weird exception where it's accessed as `s32`. */
+    q3_12      angle_EC;
+    s8         unk_EE[2];
+    q3_12      field_F0;
+    q3_12      field_F2;
+    q19_12     targetPositionX_F4;
+    q19_12     targetPositionZ_F8;
+    q3_12      angle_FC;
+    q3_12      field_FE;
+    s16        relKeyframeIdx_100;
+    s8         unk_100[10];
+    s8         field_10C[4];
     s8         unk_110[4];
     s16        field_114;
 } e_PropertiesGroaner;

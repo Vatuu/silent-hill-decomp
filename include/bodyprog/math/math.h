@@ -82,6 +82,7 @@
 #define TIMESTEP_ANGLE_2 ((((g_DeltaTime0) / 3) >> 3) + 1)
 #define TIMESTEP_ANGLE_3 ((g_DeltaTime0 >> 2) + 1)
 #define TIMESTEP_ANGLE_4 ((g_DeltaTime0 >> 3) + 1)
+#define TIMESTEP_ANGLE_5 (((g_DeltaTime0 / 3) >> 2) + 1)
 
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
  * using a 64-bit intermediate via `Math_MulFixed` for higher precision.
