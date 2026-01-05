@@ -98,6 +98,7 @@ Ai_Stalker_Control_7                = 0x800D34D8; // type:func
 Ai_Stalker_Control_8                = 0x800D35F4; // type:func
 Ai_Stalker_Control_9                = 0x800D395C; // type:func
 Ai_Stalker_Control_10               = 0x800D3D60; // type:func
+Ai_Stalker_Control_11               = 0x800D3F2C; // type:func
 Ai_Stalker_Control_12               = 0x800D3F34; // type:func
 Ai_Stalker_Control_13               = 0x800D40EC; // type:func
 sharedFunc_800D67FC_0_s00           = 0x800D41DC; // type:func
