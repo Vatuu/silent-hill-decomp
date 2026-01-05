@@ -7,6 +7,10 @@
 
 #define BASE_ASM_PATH "USA"
 
+#elif VER_EUR
+
+#define BASE_ASM_PATH "EUR"
+
 #elif VER_JAP0
 
 #define BASE_ASM_PATH "JAP0"

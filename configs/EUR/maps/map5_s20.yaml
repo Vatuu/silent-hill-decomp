@@ -11,7 +11,7 @@ options:
   build_path: build/EUR
   ld_script_path: linkers/EUR/maps/map5_s20.ld
   find_file_boundaries: false
-  gp_value: 2147628724
+  gp_value: 0x800236B4
   global_vram_start: 0x80010000
   global_vram_end: 0x80200000
   o_as_suffix: false
