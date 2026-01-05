@@ -4,7 +4,6 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* arg0)
     s16           angle0;
     s16           angle1;
     s32           headingAngle;
-    s32           temp_a0_2;
     s32           temp_s2;
     s32           temp_s4;
     s32           mag0;
@@ -14,7 +13,6 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* arg0)
     s32           i;
     s_PlayerWork* player;
     s32           temp;
-    s32           pad[5];
 
     if (arg0->properties_E4.groaner.flags_E8.val16[0] & 2)
     {
@@ -127,8 +125,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* arg0)
     else
     {
         temp_v0_10 = 0x1000 - (((angle1 - 0xE3) * 3) >> 1);
-        temp_a0_2  = FP_MULTIPLY_PRECISE(arg0->properties_E4.groaner.field_114, 0x3999, Q12_SHIFT);
-        Chara_MoveSpeedUpdate5(arg0, 0x9800, FP_MULTIPLY_PRECISE(temp_a0_2, temp_v0_10, Q12_SHIFT));
+        Chara_MoveSpeedUpdate5(arg0, 0x9800, FP_MULTIPLY_PRECISE(FP_MULTIPLY_PRECISE(arg0->properties_E4.groaner.field_114, 0x3999, Q12_SHIFT), temp_v0_10, Q12_SHIFT));
     }
 
     if (mag0 > 0x3000)

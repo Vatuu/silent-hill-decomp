@@ -1379,7 +1379,7 @@ typedef struct _PropertiesGroaner
     s16        relKeyframeIdx_100;
     s8         unk_102[2];
     s32        field_104;
-    s8         unk_108[4];
+    u32        field_108;
     s8         field_10C[4];
     s8         unk_110[4];
     s16        field_114;
