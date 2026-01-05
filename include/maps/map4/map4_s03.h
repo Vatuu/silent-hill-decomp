@@ -47,6 +47,21 @@ typedef struct
 } s_800E0698;
 STATIC_ASSERT_SIZEOF(s_800E0698, 0x254);
 
+typedef struct
+{
+    s32 field_0;
+    s32 chara_4;
+    VECTOR3 position_8;
+    s32 funcptr_14;
+} s_SubD_800E0930;
+typedef struct
+{
+    s32 field_0;
+    s_SubD_800E0930 sub_4;
+} s_D_800E0930;
+
+extern s_D_800E0930 D_800E0930[3];
+
 extern s_800DB7D4 D_800DB7D4;
 extern s_800DB7D4 D_800DB7E4[3][3];
 
@@ -202,5 +217,7 @@ void func_800D9BB0(void);
 void func_800D326C(void);
 
 void func_800D3504(s_SubCharacter* chara);
+
+s_D_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)());
 
 #endif

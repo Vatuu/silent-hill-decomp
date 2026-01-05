@@ -151,7 +151,34 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D33D0);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3428);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D344C);
+s_D_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)())
+{
+    s_Collision coll;
+
+    s32 i;
+    s_SubD_800E0930* node;
+    s32 *marker;
+    s_D_800E0930 *temp;
+    temp = D_800E0930;
+    for (i = 0; i < 3; i++, temp++)
+    {
+        marker = &temp->field_0;
+        node = &temp->sub_4;
+        if (!node->funcptr_14)
+        {
+            Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
+            node->chara_4 = chara;
+            node->position_8.vx = chara->position_18.vx;
+            node->position_8.vy = coll.groundHeight_0;
+            node->position_8.vz = chara->position_18.vz;
+            node->funcptr_14 = funcptr;
+            node->field_0 = 0;
+            *marker = 0;
+            return temp;
+        }
+    }
+    return NULL;
+}
 
 void func_800D3504(s_SubCharacter* chara)
 {
