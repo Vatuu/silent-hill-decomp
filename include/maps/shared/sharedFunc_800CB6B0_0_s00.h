@@ -263,7 +263,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             g_Particle_PrevPosition.vz = Q12(0.0f);
             g_Particle_PrevPosition.vx = Q12(0.0f);
 
-            g_SysWork.field_234A = 1;
+            g_SysWork.field_234A = true;
             sharedData_800DFB4C_0_s00 = arg2;
 
             sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);
@@ -454,7 +454,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                 if (sharedData_800DD598_0_s00 >= 0x200)
                 {
                     sharedData_800DD598_0_s00 = 0;
-                    g_SysWork.field_234A = 1;
+                    g_SysWork.field_234A = true;
                     sharedData_800E0CB6_0_s00 = sharedData_800E0CB4_0_s00;
 
                     switch ((sharedData_800E0CB8_0_s00 & 0xF) >> 2)

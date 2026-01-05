@@ -276,7 +276,7 @@ void Game_NpcInit(void) // 0x80034F18
     vcSetCameraUseWarp(&g_SysWork.playerWork_4C.player_0.position_18, g_SysWork.cameraAngleY_237A);
     func_8005E70C();
 
-    if (g_SysWork.field_234A != false)
+    if (g_SysWork.field_234A)
     {
         g_MapOverlayHeader.func_16C(g_SysWork.field_2349, 127);
         g_MapOverlayHeader.func_168(0, g_SavegamePtr->mapOverlayId_A4, 0);

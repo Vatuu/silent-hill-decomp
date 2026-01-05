@@ -1034,14 +1034,14 @@ void func_800D3AC0(s_SubCharacter* airScreamer)
 
 void Ai_AirScreamerControl_0(s_SubCharacter* airScreamer)
 {
-    s32 keyframeIdx;
-    s32 var0;
-    s32 var1;
-    s32 var2;
-    u32 controlState;
-    u32 stateStep;
-    s32 field40;
-    u32 animStatus;
+    s32  keyframeIdx;
+    s32  var0;
+    bool var1;
+    s32  var2;
+    u32  controlState;
+    u32  stateStep;
+    s32  field40;
+    u32  animStatus;
 
     field40 = airScreamer->field_40;
     switch (field40 % 0x3)
@@ -1064,11 +1064,11 @@ void Ai_AirScreamerControl_0(s_SubCharacter* airScreamer)
     {
         case 0:
         default:
-            var1 = 1;
+            var1 = true;
             break;
 
         case 1:
-            var1 = 0;
+            var1 = false;
             break;
     }
 
@@ -1079,7 +1079,7 @@ void Ai_AirScreamerControl_0(s_SubCharacter* airScreamer)
         case AirScreamerStateStep_12:
         default:
             var0 = 4;
-            var1 = 1;
+            var1 = true;
             var2 = 3;
             animStatus = NO_VALUE;
             controlState = AirScreamerControl_1;
@@ -1091,7 +1091,7 @@ void Ai_AirScreamerControl_0(s_SubCharacter* airScreamer)
             if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S01)
             {
                 var0 = 2;
-                var1 = 1;
+                var1 = true;
                 var2 = 2;
                 animStatus = ANIM_STATUS(AirScreamerAnim_2, true);
                 controlState = AirScreamerControl_46;

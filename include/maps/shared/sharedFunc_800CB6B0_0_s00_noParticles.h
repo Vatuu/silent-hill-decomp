@@ -25,7 +25,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             }
 
             sharedData_800DD598_0_s00 = 0;
-            g_SysWork.field_234A      = 1;
+            g_SysWork.field_234A      = true;
             sharedData_800DFB4C_0_s00 = arg2;
 
             sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);

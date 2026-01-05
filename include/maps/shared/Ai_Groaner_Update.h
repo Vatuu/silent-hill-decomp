@@ -2,6 +2,9 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
 {
     u8 prevControlState;
 
+    #define groanerProps groaner->properties_E4.groaner
+
+    // Initialize.
     if (groaner->model_0.controlState_2 == ModelState_Uninitialized)
     {
         Ai_Groaner_Init(groaner);
@@ -25,12 +28,14 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
 
         if (groaner->model_0.controlState_2 != prevControlState)
         {
-            *(u16*)&groaner->properties_E4.player.afkTimer_E8 &= ~(1 << 8);
+            groanerProps.flags_E8.val16[0] &= ~GroanerFlag_8;
         }
 
-        if ((u16)groaner->properties_E4.player.afkTimer_E8 & (1 << 7))
+        if (groanerProps.flags_E8.val16[0] & GroanerFlag_7)
         {
             groaner->flags_3E |= CharaFlag_Unk3;
         }
     }
+
+    #undef groanerProps
 }

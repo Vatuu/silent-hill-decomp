@@ -1278,7 +1278,7 @@ STATIC_ASSERT_SIZEOF(s_PropertiesNpc, 64);
 typedef struct _PropertiesAirScreamer
 {
     u32     field_E8_0 : 4;
-    u32     field_E8_4 : 4;
+    u32     field_E8_4 : 4; /** `bool` */
     u32     field_E8_8 : 4;
     u32     unk_E8_C   : 20;
     s32     field_EC;
@@ -1755,7 +1755,7 @@ typedef struct _SysWork
     GsCOORDINATE2   coord_22F8;    // Likely related to above.
     s8              field_2348   : 8;
     s8              field_2349   : 8; // Particle spawn multiplier?
-    u8              field_234A   : 8;
+    u8              field_234A   : 8; /** `bool` */
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;
     s32             mapMsgTimer_234C;

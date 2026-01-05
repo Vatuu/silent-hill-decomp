@@ -6,7 +6,7 @@ q19_12 sharedFunc_800DC6E4_2_s00(s_SubCharacter* airScreamer, q19_12 arg1)
     #define airScreamerProps airScreamer->properties_E4.airScreamer
 
     mult = Q12(0.0f);
-    if (airScreamerProps.field_E8_4 != 0)
+    if (airScreamerProps.field_E8_4)
     {
         mult = Q12(0.1f);
     }

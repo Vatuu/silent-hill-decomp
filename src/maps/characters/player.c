@@ -174,7 +174,7 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0)
     s32 temp_a0_2;
     u16 temp;
 
-    if (g_SysWork.field_234A != 0)
+    if (g_SysWork.field_234A)
     {
         g_SysWork.field_2349 = arg0;
         g_SysWork.field_2348 = arg0;
@@ -232,7 +232,7 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0)
 
         if (sharedData_800E0CB4_0_s00 != sharedData_800E0CB6_0_s00)
         {
-            g_SysWork.field_234A = 0;
+            g_SysWork.field_234A = false;
         }
 
 // TODO: Do these maps have anything in common?
@@ -306,7 +306,7 @@ void sharedFunc_800D0CB8_0_s00(void)
 #endif
 
 #ifdef SET_800E32D0
-#undef SET_800E32D0
+    #undef SET_800E32D0
 #endif
 
 void sharedFunc_800D0E04_0_s00(void)

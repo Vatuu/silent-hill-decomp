@@ -7,7 +7,7 @@ void sharedFunc_800DECC4_2_s00(s_SubCharacter* airScreamer)
 
     #define airScreamerProps airScreamer->properties_E4.airScreamer
 
-    if (airScreamerProps.field_E8_4 != 0)
+    if (airScreamerProps.field_E8_4)
     {
         distMax = Q12(8.0f);
         distMin = Q12(5.0f);

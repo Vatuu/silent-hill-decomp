@@ -49,11 +49,11 @@ void Ai_AirScreamerControl_29(s_SubCharacter* airScreamer)
     // Handle damage.
     switch (Ai_AirScreamer_DamageTake(airScreamer, Q12(0.6f)))
     {
-        case 0:
-        case 1:
+        case AirScreamerDamage_None:
+        case AirScreamerDamage_1:
             if (var_s1 != 0)
             {
-                var_s1_2 = 0;
+                var_s1_2 = Q12(0.0f);
                 if (airScreamer->properties_E4.airScreamer.field_E8_4)
                 {
                     var_s1_2 = Q12(0.1f);
@@ -188,14 +188,14 @@ void Ai_AirScreamerControl_29(s_SubCharacter* airScreamer)
             }
             break;
 
-        case 2:
+        case AirScreamerDamage_2:
             airScreamer->model_0.controlState_2                        = AirScreamerControl_30;
             airScreamer->model_0.stateStep_3                           = AirScreamerStateStep_0;
             airScreamerProps.flags_11C |= AirScreamerFlag_3;
             break;
 
-        case 3:
-        case 4:
+        case AirScreamerDamage_3:
+        case AirScreamerDamage_4:
             airScreamer->model_0.controlState_2 = AirScreamerControl_32;
             airScreamer->model_0.stateStep_3    = AirScreamerStateStep_0;
 
