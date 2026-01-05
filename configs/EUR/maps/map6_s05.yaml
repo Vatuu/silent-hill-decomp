@@ -37,8 +37,6 @@ options:
   undefined_funcs_auto_path: linkers/EUR/maps/undefined_funcs_auto.map6_s05.txt
   undefined_syms_auto_path: linkers/EUR/maps/undefined_syms_auto.map6_s05.txt
 
-  extensions_path: tools/splat_ext
-
   subalign: 4
 
   string_encoding: ASCII
