@@ -1677,8 +1677,8 @@ void func_800E3F30(void) // 0x800E3F30
             setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
             setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
             scratchData->sprt_0->u0 = 0;
-            scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) << 5;
-            setWH(scratchData->sprt_0, i == 0 ? 256 : 64, 224);
+            scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) ? 32 : 0;
+            setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, 224);
             addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
 
             scratchData->sprt_0++;

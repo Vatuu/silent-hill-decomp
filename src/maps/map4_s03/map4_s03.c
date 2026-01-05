@@ -1070,9 +1070,42 @@ void func_800D7450(void) // 0x800D7450
     }
 }
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7548);
+void func_800D7548(void) // 0x800D7548
+{
+    s32 i;
+    s32 j;
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D761C);
+    func_800D761C(&D_800E0698.field_8[9], &D_800DB7D4, 1, 0);
+
+    for (i = 0; i < 3; i++)
+    {
+        for (j = 0; j < 3; j++)
+        {
+            func_800D761C(&D_800E0698.field_8[(i * 3) + j], &D_800DB7E4[i][j], 0, 0);
+        }
+    }
+}
+
+void func_800D761C(s_800E06A0* arg0, s_800DB7D4* arg1, s8 arg2, s32 arg3) // 0x800D761C
+{
+    arg0->field_20    = arg2;
+    arg0->field_22    = 0;
+    arg0->field_24    = 0;
+    arg0->field_23    = 0;
+    arg0->field_2C    = 0;
+    arg0->field_21    = 0;
+
+    arg0->field_0     = arg1->field_0;
+    arg0->field_18    = arg1->field_8;
+
+    // Switches `vy` to the other arg1 field?
+    arg0->field_8.vx  = arg1->field_8.vx;
+    arg0->field_8.vy  = arg1->field_0.vy;
+    arg0->field_8.vz  = arg1->field_8.vz;
+    arg0->field_10.vx = arg1->field_0.vx;
+    arg0->field_10.vy = arg1->field_8.vy;
+    arg0->field_10.vz = arg1->field_0.vz;
+}
 
 void func_800D76BC(s32 arg0) // 0x800D76BC
 {
@@ -1277,7 +1310,7 @@ void func_800D8FC0(void) // 0x800D8FC0
 
     // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        (g_SysWork.sysStateStep_C[0] > 0) && (g_SysWork.sysStateStep_C[0] < 5))
+        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 5)
     {
         SysWork_StateStepSet(0, 5);
     }
@@ -1312,8 +1345,8 @@ void func_800D8FC0(void) // 0x800D8FC0
                 setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
                 setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
                 scratchData->sprt_0->u0 = 0;
-                scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_C == 0) << 5;
-                setWH(scratchData->sprt_0, i == 0 ? 256 : 64, 224);
+                scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_C == 0) ? 32 : 0;
+                setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, 224);
                 addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
 
                 scratchData->sprt_0++;

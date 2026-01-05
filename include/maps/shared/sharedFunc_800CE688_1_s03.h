@@ -47,8 +47,8 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
             setCodeWord(scratchData->sprt_12C, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
             setXY0Fast(scratchData->sprt_12C, ((i << 8) - 160), -112);
             scratchData->sprt_12C->u0 = 0;
-            scratchData->sprt_12C->v0 = (scratchData->field_148.u8[1] == 0) << 5;
-            setWH(scratchData->sprt_12C, i == 0 ? 256 : 64, 224);
+            scratchData->sprt_12C->v0 = (scratchData->field_148.u8[1] == 0) ? 32 : 0;
+            setWH(scratchData->sprt_12C, (i == 0) ? 256 : 64, 224);
             addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_12C, 4);
 
             scratchData->sprt_12C++;

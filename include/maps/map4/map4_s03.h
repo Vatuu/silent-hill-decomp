@@ -14,15 +14,27 @@
 
 typedef struct
 {
-    u8 unk_0[0x21];
-    u8 field_21;
-    u8 unk_22[2];
-    s32 field_24;
-    s32 field_28;
-    u8 unk_2C[4];
-    s32 field_30;
-    s16 field_34;
-    s16 field_36;
+    SVECTOR field_0; // } Note: not sure if these are actually SVECTOR.
+    SVECTOR field_8; // } That struct fits and works with some copy code, but could be a custom struct of 4 u16s.
+} s_800DB7D4;
+STATIC_ASSERT_SIZEOF(s_800DB7D4, 0x10);
+
+typedef struct
+{
+    SVECTOR field_0;  // Values copied from `s_800DB7D4::field_0`.
+    SVECTOR field_8;  // Values copied from `s_800DB7D4::field_8`, with `vy` from `s_800DB7D4::field_0`.
+    SVECTOR field_10; // Values copied from `s_800DB7D4::field_0`, with `vy` from `s_800DB7D4::field_8`.
+    SVECTOR field_18; // Values copied from `s_800DB7D4::field_8`.
+    s8      field_20;
+    u8      field_21;
+    u8      field_22;
+    u8      field_23;
+    s32     field_24;
+    s32     field_28;
+    s32     field_2C;
+    s32     field_30;
+    s16     field_34;
+    s16     field_36;
 } s_800E06A0;
 STATIC_ASSERT_SIZEOF(s_800E06A0, 0x38);
 
@@ -34,6 +46,9 @@ typedef struct
     s_WorldObject_0 objRef_238;
 } s_800E0698;
 STATIC_ASSERT_SIZEOF(s_800E0698, 0x254);
+
+extern s_800DB7D4 D_800DB7D4;
+extern s_800DB7D4 D_800DB7E4[3][3];
 
 extern s_AnimInfo TWINFEELER_ANIM_INFOS[];
 
@@ -151,6 +166,10 @@ s32 func_800D7394(void);
 void func_800D7408(void);
 
 void func_800D7450(void);
+
+void func_800D7548(void);
+
+void func_800D761C(s_800E06A0* arg0, s_800DB7D4* arg1, s8 arg2, s32 arg3);
 
 void func_800D76BC(s32 arg0);
 

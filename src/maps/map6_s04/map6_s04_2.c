@@ -1200,7 +1200,7 @@ void func_800E3EF4(void) // 0x800E3EF4
     scratchData = PSX_SCRATCH_ADDR(0);
 
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
-        (g_SysWork.sysStateStep_C[0] >= 4) && (g_SysWork.sysStateStep_C[0] < 63))
+        g_SysWork.sysStateStep_C[0] >= 4 && g_SysWork.sysStateStep_C[0] < 63)
     {
         func_800E01F4();
         SysWork_StateStepSet(0, 65);
@@ -1640,8 +1640,8 @@ void func_800E3EF4(void) // 0x800E3EF4
             setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
             setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
             scratchData->sprt_0->u0 = 0;
-            scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) << 5;
-            setWH(scratchData->sprt_0, i == 0 ? 256 : 64, 224);
+            scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) ? 32 : 0;
+            setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, 224);
             addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
 
             scratchData->sprt_0++;
@@ -1728,7 +1728,7 @@ void func_800E558C(void) // 0x800E558C
     scratchData = PSX_SCRATCH_ADDR(0);
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4 &&
-        (g_SysWork.sysStateStep_C[0] >= 2) && (g_SysWork.sysStateStep_C[0] < 6))
+        g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] < 6)
     {
         SysWork_StateStepSet(0, 6);
     }
@@ -1826,8 +1826,8 @@ void func_800E558C(void) // 0x800E558C
             setCodeWord(scratchData->sprt_0, PRIM_RECT | RECT_BLEND | RECT_TEXTURE, PACKED_COLOR(128, 128, 128, 0));
             setXY0Fast(scratchData->sprt_0, ((i << 8) - 160), -112);
             scratchData->sprt_0->u0 = 0;
-            scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) << 5;
-            setWH(scratchData->sprt_0, i == 0 ? 256 : 64, 224);
+            scratchData->sprt_0->v0 = (scratchData->activeBufferIdx_14 == 0) ? 32 : 0;
+            setWH(scratchData->sprt_0, (i == 0) ? 256 : 64, 224);
             addPrimFast(&g_OrderingTable2[g_ActiveBufferIdx].org[15], scratchData->sprt_0, 4);
 
             scratchData->sprt_0++;
