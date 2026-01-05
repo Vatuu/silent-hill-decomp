@@ -11262,7 +11262,7 @@ void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8
     *outZ = posZ - maxZ;
 }
 
-q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0x8006F99C
+q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0x8006F99C
 {
     q3_12 curAngleOffset;
     q3_12 angleOffset;
@@ -11306,7 +11306,7 @@ q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0
     return FP_ANGLE(360.0f);
 }
 
-q3_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPosX, q19_12 targetPosZ, q3_12 spanAngle, bool isClockwise) // 0x8006FAFC
+q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPosX, q19_12 targetPosZ, q3_12 spanAngle, bool isClockwise) // 0x8006FAFC
 {
     s16    spanAngleDiv3;
     q3_12  curAngle;

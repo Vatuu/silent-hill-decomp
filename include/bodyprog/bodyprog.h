@@ -3997,12 +3997,12 @@ s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3);
 
 void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8FC* arg4);
 
-q3_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
+q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 
 /** Angle getter. Something to do with the direction from a character to a target position, probably for NPC AI.
  * Unsure if `spanAngle` is an angle.
  */
-q3_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPosX, q19_12 targetPosZ, q3_12 spanAngle, bool cond);
+q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPosX, q19_12 targetPosZ, q3_12 spanAngle, bool cond);
 
 bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 distStep);
 

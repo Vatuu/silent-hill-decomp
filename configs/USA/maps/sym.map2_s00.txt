@@ -230,6 +230,7 @@ Ai_Groaner_Init               = 0x800E3074; // type:func - `map2_s00` includes e
 sharedFunc_800E33DC_2_s00     = 0x800E33DC; // type:func
 sharedFunc_800E384C_2_s00     = 0x800E384C; // type:func - `map2_s00` version differs to the 4 other maps which share `Ai_Groaner_Update`.
 sharedFunc_800E39D8_2_s00     = 0x800E39D8; // type:func
+sharedFunc_800E3E94_2_s00     = 0x800E3E94; // type:func
 sharedFunc_800E4830_2_s00     = 0x800E4830; // type:func
 sharedFunc_800E554C_2_s00     = 0x800E554C; // type:func
 sharedFunc_800E55B0_2_s00     = 0x800E55B0; // type:func
