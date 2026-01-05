@@ -1,0 +1,44 @@
+name: The MAP2_S34 map overlay Spanish (MAP2_S34)
+sha1: 6fac283a13ab3333610db17b5e08f3c740ff12ce
+options:
+  basename: MAP2_S34.bin
+  target_path: assets/EUR/VIN4/MAP2_S34.BIN
+  base_path: ../../..
+  platform: psx
+  compiler: GCC
+  asm_path: asm/EUR/maps/map2_s34
+  src_path: src/maps/map2_s04
+  build_path: build/EUR
+  ld_script_path: linkers/EUR/maps/map2_s34.ld
+  find_file_boundaries: false
+  gp_value: 0x800236B4
+  global_vram_start: 0x80010000
+  global_vram_end: 0x80200000
+  o_as_suffix: false
+  use_legacy_include_asm: false
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  section_order: [.rodata, .text, .data, .bss]
+  symbol_addrs_path: [configs/EUR/sym.main.txt, configs/EUR/sym.bodyprog.txt, configs/EUR/maps/sym.map2_s34.txt]
+  reloc_addrs_path: [configs/EUR/maps/rel.map2_s34.txt]
+  undefined_funcs_auto_path: linkers/EUR/maps/undefined_funcs_auto.map2_s34.txt
+  undefined_syms_auto_path: linkers/EUR/maps/undefined_syms_auto.map2_s34.txt
+  extensions_path: tools/splat_ext
+  subalign: 4
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+- name: map2_s34
+  type: code
+  start: 0
+  vram: 0x800CB370
+  align: 4
+  subalign: 4
+  subsegments:
+  - [0, rodata]
+  - [0x16bc, asm, map2_s04]
+  - [0x3d9c, data]
+- [0x5f00]

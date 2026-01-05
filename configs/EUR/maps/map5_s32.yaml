@@ -1,0 +1,44 @@
+name: The MAP5_S32 map overlay Spanish (MAP5_S32)
+sha1: 1f22df128b3f2b7106fea07d63eddfc8c46c0770
+options:
+  basename: MAP5_S32.bin
+  target_path: assets/EUR/VIN4/MAP5_S32.BIN
+  base_path: ../../..
+  platform: psx
+  compiler: GCC
+  asm_path: asm/EUR/maps/map5_s32
+  src_path: src/maps/map5_s02
+  build_path: build/EUR
+  ld_script_path: linkers/EUR/maps/map5_s32.ld
+  find_file_boundaries: false
+  gp_value: 2147628724
+  global_vram_start: 0x80010000
+  global_vram_end: 0x80200000
+  o_as_suffix: false
+  use_legacy_include_asm: false
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  section_order: [.rodata, .text, .data, .bss]
+  symbol_addrs_path: [configs/EUR/sym.main.txt, configs/EUR/sym.bodyprog.txt, configs/EUR/maps/sym.map5_s32.txt]
+  reloc_addrs_path: [configs/EUR/maps/rel.map5_s32.txt]
+  undefined_funcs_auto_path: linkers/EUR/maps/undefined_funcs_auto.map5_s32.txt
+  undefined_syms_auto_path: linkers/EUR/maps/undefined_syms_auto.map5_s32.txt
+  extensions_path: tools/splat_ext
+  subalign: 4
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+- name: map5_s32
+  type: code
+  start: 0
+  vram: 0x800CB370
+  align: 4
+  subalign: 4
+  subsegments:
+  - [0, rodata]
+  - [0x216c, asm, map5_s02]
+  - [0xd9d8, data]
+- [0x11500]

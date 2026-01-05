@@ -15,7 +15,7 @@ options:
   ld_script_path: linkers/EUR/bodyprog.ld
 
   find_file_boundaries: False
-  gp_value: 0x80022BB0
+  gp_value: 0x800236B4
   global_vram_start: 0x80010000
   global_vram_end: 0x80200000
 

@@ -1,59 +1,45 @@
 name: The MAP0_S11 map overlay German (MAP0_S11)
-sha1: 211E71DDE15F7FB43538E27158FA68D7A8F70A27
+sha1: 211e71dde15f7fb43538e27158fa68d7a8f70a27
 options:
-  basename: MAP0_S11.BIN
-  target_path: assets/EUR/VIN/MAP0_S11.BIN
+  basename: MAP0_S11.bin
+  target_path: assets/EUR/VIN2/MAP0_S11.BIN
   base_path: ../../..
   platform: psx
   compiler: GCC
-
   asm_path: asm/EUR/maps/map0_s11
-  src_path: src/maps/map0_s11
+  src_path: src/maps/map0_s01
   build_path: build/EUR
-
   ld_script_path: linkers/EUR/maps/map0_s11.ld
-
-  find_file_boundaries: False
-  gp_value: 0x80022BB0
-  global_vram_start: 0x80110000
+  find_file_boundaries: false
+  gp_value: 0x800236B4
+  global_vram_start: 0x80010000
   global_vram_end: 0x80200000
-
-  o_as_suffix: False
-  use_legacy_include_asm: False
-
+  o_as_suffix: false
+  use_legacy_include_asm: false
   asm_function_macro: glabel
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
-
-  section_order: [".rodata", ".text", ".data", ".bss"]
-
-  symbol_addrs_path:
-    - configs/EUR/maps/sym.map0_s11.txt
-    - configs/EUR/sym.bodyprog.txt
-    - configs/EUR/sym.main.txt
-  reloc_addrs_path:
-    - configs/EUR/maps/rel.map0_s11.txt
-
+  section_order: [.rodata, .text, .data, .bss]
+  symbol_addrs_path: [configs/EUR/maps/sym.map0_s11.txt, configs/EUR/sym.bodyprog.txt,
+    configs/EUR/sym.main.txt]
+  reloc_addrs_path: [configs/EUR/maps/rel.map0_s11.txt]
   undefined_funcs_auto_path: linkers/EUR/maps/undefined_funcs_auto.map0_s11.txt
   undefined_syms_auto_path: linkers/EUR/maps/undefined_syms_auto.map0_s11.txt
-
   extensions_path: tools/splat_ext
-
   subalign: 4
-
   string_encoding: ASCII
   data_string_encoding: ASCII
   rodata_string_guesser_level: 2
   data_string_guesser_level: 2
 segments:
-  - name: map0_s11
-    type: code
-    start: 0
-    vram: 0x800CB370
-    align: 4
-    subalign: 4
-    subsegments:
-      - [0x0, rodata]
-      - [0x372C, asm, map0_s01]
-      - [0x13FD0, data]
-  - [0x19200]
+- name: map0_s11
+  type: code
+  start: 0
+  vram: 0x800CB370
+  align: 4
+  subalign: 4
+  subsegments:
+  - [0, rodata]
+  - [0x372c, asm, map0_s01]
+  - [0x13fd0, data]
+- [0x19200]

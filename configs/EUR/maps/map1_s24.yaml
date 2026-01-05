@@ -1,0 +1,44 @@
+name: The MAP1_S24 map overlay French (MAP1_S24)
+sha1: 0896c3c21a3413aa43d5c95c23d938b30e1ae374
+options:
+  basename: MAP1_S24.bin
+  target_path: assets/EUR/VIN3/MAP1_S24.BIN
+  base_path: ../../..
+  platform: psx
+  compiler: GCC
+  asm_path: asm/EUR/maps/map1_s24
+  src_path: src/maps/map1_s04
+  build_path: build/EUR
+  ld_script_path: linkers/EUR/maps/map1_s24.ld
+  find_file_boundaries: false
+  gp_value: 0x800236B4
+  global_vram_start: 0x80010000
+  global_vram_end: 0x80200000
+  o_as_suffix: false
+  use_legacy_include_asm: false
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  section_order: [.rodata, .text, .data, .bss]
+  symbol_addrs_path: [configs/EUR/sym.main.txt, configs/EUR/sym.bodyprog.txt, configs/EUR/maps/sym.map1_s24.txt]
+  reloc_addrs_path: [configs/EUR/maps/rel.map1_s24.txt]
+  undefined_funcs_auto_path: linkers/EUR/maps/undefined_funcs_auto.map1_s24.txt
+  undefined_syms_auto_path: linkers/EUR/maps/undefined_syms_auto.map1_s24.txt
+  extensions_path: tools/splat_ext
+  subalign: 4
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+- name: map1_s24
+  type: code
+  start: 0
+  vram: 0x800CB370
+  align: 4
+  subalign: 4
+  subsegments:
+  - [0, rodata]
+  - [0x1404, asm, map1_s04]
+  - [0x3958, data]
+- [0x4b00]
