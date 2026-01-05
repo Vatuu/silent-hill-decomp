@@ -14,16 +14,26 @@
 
 typedef struct
 {
-    u8 unk0[56];
-} s_D_800E06A0;
+    u8 unk_0[0x21];
+    u8 field_21;
+    u8 unk_22[2];
+    s32 field_24;
+    s32 field_28;
+    u8 unk_2C[4];
+    s32 field_30;
+    s16 field_34;
+    s16 field_36;
+} s_800E06A0;
+STATIC_ASSERT_SIZEOF(s_800E06A0, 0x38);
 
 typedef struct
 {
-    s_SubCharacter* chara_0;
+    s32             field_0;
     s32             field_4;
-    s_D_800E06A0    unk_8[10];
+    s_800E06A0      field_8[10];
     s_WorldObject_0 objRef_238;
-} s_D_800E0698;
+} s_800E0698;
+STATIC_ASSERT_SIZEOF(s_800E0698, 0x254);
 
 extern s_AnimInfo TWINFEELER_ANIM_INFOS[];
 
@@ -57,11 +67,15 @@ extern s8 D_800E05E0;
 extern s8 D_800E05E1;
 extern s8 D_800E05E2;
 
-extern s_D_800E0698 D_800E0698;
+extern s_800E0698 D_800E0698;
+
+extern VECTOR3 D_800E08F0;
 
 void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 
 void func_800D19AC(VECTOR3* vec);
+
+void func_800D19CC(VECTOR3* vec);
 
 void Ai_Twinfeeler_TextureLoad(void);
 
@@ -138,17 +152,23 @@ void func_800D7408(void);
 
 void func_800D7450(void);
 
-void func_800D76BC(s_SubCharacter* chara);
+void func_800D76BC(s32 arg0);
 
-s32 func_800D76E8(void); // Assumed return type.
+bool func_800D76E8(void); // Assumed return type.
 
 void func_800D7718(void);
 
-void func_800D7808(s_D_800E06A0*, s32); // Assumed types.
+void func_800D7808(s_800E06A0* arg0, s32 arg1); // Assumed types.
 
-void func_800D78D4(void* arg0); // Unknown arg type.
+bool func_800D78D4(s_800E06A0* arg0);
 
-void func_800D88C8(s_D_800E06A0*, u8); // Assumed types.
+bool func_800D81FC(s_800E06A0* arg0, s32 arg1);
+
+bool func_800D8230(s_800E06A0* arg0, s32 arg1, s32 arg2);
+
+bool func_800D826C(s_800E06A0* arg0, s32 arg1, s32 arg2);
+
+void func_800D88C8(s_800E06A0*, u8); // Assumed types.
 
 void func_800D8FC0(void);
 

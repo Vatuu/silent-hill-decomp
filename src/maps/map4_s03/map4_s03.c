@@ -94,7 +94,12 @@ void func_800D19AC(VECTOR3* vec) // 0x800D19AC
     func_800D1900(vec, 3);
 }
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D19CC);
+void func_800D19CC(VECTOR3* vec) // 0x800D19CC
+{
+    D_800E08F0.vx = vec->vx;
+    D_800E08F0.vy = vec->vy;
+    D_800E08F0.vz = vec->vz;
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D19F0);
 
@@ -1016,7 +1021,7 @@ s32 func_800D7394(void) // 0x800D7394
 
 void func_800D7408(void) // 0x800D7408
 {
-    D_800E0698.chara_0 = NULL;
+    D_800E0698.field_0 = 0;
     D_800E0698.field_4 = 0;
 
     func_800D7450();
@@ -1069,30 +1074,43 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7548);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D761C);
 
-void func_800D76BC(s_SubCharacter* chara) // 0x800D76BC
+void func_800D76BC(s32 arg0) // 0x800D76BC
 {
-    D_800E0698.chara_0 = chara;
+    D_800E0698.field_0 = arg0;
     D_800E0698.field_4 = 0;
 
     func_800D7548();
 }
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D76E8);
+bool func_800D76E8(void) // 0x800D76E8
+{
+    s32 i;
+    bool result;
+
+    result = true;
+    
+    for(i = 0; i < ARRAY_SIZE(D_800E0698.field_8); i++)
+    {
+        result &= D_800E0698.field_8[i].field_21;
+    }
+    
+    return result;
+}
 
 void func_800D7718(void) // 0x800D7718
 {
-    MATRIX        mat;
-    s16           temp_v0;
-    s32           var_s2;
-    s32           i;
-    s_D_800E06A0* ptr;
+    MATRIX      mat;
+    s16         temp_v0;
+    s32         var_s2;
+    s32         i;
+    s_800E06A0* ptr;
 
     func_80049C2C(&mat, Q12(160.0f), Q12(0.0f), Q12(40.0f));
     SetRotMatrix(&mat);
     SetTransMatrix(&mat);
 
     var_s2 = 188;
-    if (D_800E0698.chara_0 != NULL)
+    if (D_800E0698.field_0 != 0)
     {
         if (g_DeltaTime0 != Q12(0.0f))
         {
@@ -1106,18 +1124,53 @@ void func_800D7718(void) // 0x800D7718
         g_WorldGfx_ObjectAdd(&D_800E0698.objRef_238, &D_800DB7C8, (SVECTOR3*)&D_800DB924);
     }
 
-    for (i = 0; i < ARRAY_SIZE(D_800E0698.unk_8); i++)
+    for (i = 0; i < ARRAY_SIZE(D_800E0698.field_8); i++)
     {
-        func_800D7808(&D_800E0698.unk_8[i], i);
-        func_800D88C8(&D_800E0698.unk_8[i], var_s2);
+        func_800D7808(&D_800E0698.field_8[i], i);
+        func_800D88C8(&D_800E0698.field_8[i], var_s2);
     }
 }
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7808);
-
-void func_800D78D4(void* arg0) // 0x800D78D4
+void func_800D7808(s_800E06A0* arg0, s32 arg1) // 0x800D7808
 {
-    func_800D81FC(arg0, 0);
+    // TODO: `arg1` unused, but might be passed to one of these funcs.
+    s32 temp;
+
+    if (g_DeltaTime0 == 0)
+    {
+        return;
+    }
+
+    temp = D_800E0698.field_0;
+    switch (D_800E0698.field_0)
+    {
+        case 0:
+            func_800D78D4(arg0);
+            break;
+
+        case 1:
+            if (func_800D78F4(arg0) != 0)
+            {
+                arg0->field_21 = temp;
+            }
+            break;
+
+        case 2:
+            if (func_800D7AE0(arg0) != 0)
+            {
+                func_800D76BC(3);
+            }
+            break;
+
+        case 3:
+            func_800D7F1C(arg0);
+            break;
+    }
+}
+
+bool func_800D78D4(s_800E06A0* arg0) // 0x800D78D4
+{
+    return func_800D81FC(arg0, 0);
 }
 
 INCLUDE_RODATA("asm/maps/map4_s03/nonmatchings/map4_s03", D_800CACA8);
@@ -1128,11 +1181,70 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7AE0);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D7F1C);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D81FC);
+bool func_800D81FC(s_800E06A0* arg0, s32 arg1) // 0x800D81FC
+{
+    if (arg0->field_24 == 0)
+    {
+        arg0->field_28 = arg1;
+    }
+    
+    arg0->field_30 = 0;
+    arg0->field_34 = 0;
+    arg0->field_36 = 0;
+    
+    return arg0->field_24 >= arg0->field_28;
+}
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D8230);
+bool func_800D8230(s_800E06A0* arg0, s32 arg1, s32 arg2) // 0x800D8230
+{
+    if (arg0->field_24 == 0)
+    {
+        arg0->field_28 = arg2;
+    }
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D826C);
+    arg0->field_30 = arg1 + 6;
+    arg0->field_36 = 0;
+    arg0->field_34 = 0;
+
+    return arg0->field_24 >= arg0->field_28;
+}
+
+bool func_800D826C(s_800E06A0* arg0, s32 arg1, s32 arg2) // 0x800D826C
+{
+    if (arg0->field_24 == 0)
+    {
+        arg0->field_28 = arg2;
+    }
+    
+    arg0->field_30 = 4;
+    arg0->field_34 = 0;
+
+    switch (arg1)
+    {
+        default:
+        case 0:
+            arg0->field_36 = 0;
+            break;
+
+        case 1:
+            arg0->field_36 = 64;
+            break;
+
+        case 2:
+            arg0->field_36 = 32;
+            break;
+
+        case 4:
+            arg0->field_36 = (u32)((MIN(arg2, arg0->field_24) << 12) / arg2) >> 6; // Weird shifts, not sure if these are FP related?
+            break;
+
+        case 3:
+            arg0->field_36 = 64 - ((((MIN(arg2, arg0->field_24) << 12) / arg2) << 6) >> 12);
+            break;
+    }
+
+    return arg0->field_24 >= arg0->field_28;
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D8354);
 

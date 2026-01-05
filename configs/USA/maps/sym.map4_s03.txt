@@ -148,4 +148,4 @@ g_WorldObject_UnkPos      = 0x800E0590; // type:VECTOR3 size:0xC
 g_WorldObject_UnkRot      = 0x800E05A0; // type:SVECTOR3 size:0x8
 g_WorldObject_SavePad     = 0x800E05B0; // type:WorldObjectDesc size:0x2C
 g_CommonWorldObjects      = 0x800E05F0; // type:WorldObject_0 size:0x90
-D_800E0698                = 0x800E0698; // type:D_800E0698 size:0x260
+D_800E0698                = 0x800E0698; // type:D_800E0698 size:0x254
