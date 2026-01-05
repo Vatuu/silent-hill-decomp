@@ -199,4 +199,8 @@ void Map_WorldObjectsInit(void);
 
 void func_800D9BB0(void);
 
+void func_800D326C(void);
+
+void func_800D3504(s_SubCharacter* chara);
+
 #endif

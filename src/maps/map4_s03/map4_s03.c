@@ -153,7 +153,10 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3428);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D344C);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3504);
+void func_800D3504(s_SubCharacter* chara)
+{
+    func_800D344C(chara, &func_800D326C);
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3528);
 
