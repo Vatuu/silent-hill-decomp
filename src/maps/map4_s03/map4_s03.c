@@ -139,7 +139,12 @@ void Ai_Twinfeeler_TextureLoad(void) // 0x800D3038
     Fs_QueueStartReadTim(FILE_TEST_WARMTEST_TIM, FS_BUFFER_1, &D_800A9094);
 }
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3068);
+void Math_Vec3AddPolarOffsetXZ(VECTOR3* outVec, VECTOR3* inVec, s32 angle, s32 distance)
+{
+    outVec->vx = inVec->vx + FP_MULTIPLY_PRECISE(Math_Sin(angle), distance, Q12_SHIFT);
+    outVec->vy = inVec->vy;
+    outVec->vz = inVec->vz + FP_MULTIPLY_PRECISE(Math_Cos(angle), distance, Q12_SHIFT);
+}
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3114);
 

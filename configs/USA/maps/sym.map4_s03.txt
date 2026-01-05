@@ -70,6 +70,7 @@ sharedFunc_800CD7F8_3_s03 = 0x800D0604; // type:func
 sharedFunc_800CD920_3_s03 = 0x800D072C; // type:func
 sharedFunc_800CD940_3_s03 = 0x800D074C; // type:func
 Ai_Twinfeeler_TextureLoad = 0x800D3038; // type:func
+Math_Vec3AddPolarOffsetXZ = 0x800D3068; // type:func
 Ai_Twinfeeler_Init        = 0x800D3CD4; // type:func
 Ai_Twinfeeler_Update      = 0x800D5F28; // type:func
 sharedFunc_800D929C_0_s00 = 0x800D606C; // type:func

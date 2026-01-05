@@ -220,4 +220,6 @@ void func_800D3504(s_SubCharacter* chara);
 
 s_D_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)());
 
+void Math_Vec3AddPolarOffsetXZ(VECTOR3* outVec, VECTOR3* inVec, s32 angle, s32 distance);
+
 #endif
