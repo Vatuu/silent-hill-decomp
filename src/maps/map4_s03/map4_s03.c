@@ -198,7 +198,10 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D35DC);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3694);
 
-INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3AE0);
+void func_800D3AE0(s_SubCharacter* chara, s32 soundIdx)
+{
+    func_8005DC1C(D_800DB1F8[soundIdx].id_0, &chara->position_18, D_800DB1F8[soundIdx].volume_2.val16, 0);
+}
 
 u8 func_800D3B1C(void) // 0x800D3B1C
 {

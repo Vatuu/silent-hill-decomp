@@ -101,6 +101,8 @@ extern s_800E0698 D_800E0698;
 
 extern VECTOR3 D_800E08F0;
 
+extern s_SfxVolume D_800DB1F8[6];
+
 void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 
 void func_800D19AC(VECTOR3* vec);
@@ -221,5 +223,7 @@ void func_800D3504(s_SubCharacter* chara);
 s_D_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)());
 
 void Math_Vec3AddPolarOffsetXZ(VECTOR3* outVec, VECTOR3* inVec, s32 angle, s32 distance);
+
+void func_800D3AE0(s_SubCharacter* chara, s32 soundIdx);
 
 #endif
