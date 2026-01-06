@@ -78,7 +78,7 @@ YAML_ITEMS = [
     "items/item_ger.yaml",
     "items/item_frn.yaml",
     "items/item_itl.yaml",
-    "items/item_spa.yaml"
+    "items/item_spn.yaml"
 ]
 YAML_MAPS_0 = [
     "maps/map0_s00.yaml",
@@ -879,6 +879,7 @@ def main():
     nonMatchingOption     = (args.non_matching) or False
     gameVersionOption     = 0 # USA by default
     yamlsPaths            = []
+    yamlMaps              = []
     splitsYamlInfo        = []
     regenMode             = False
     
@@ -906,16 +907,21 @@ def main():
         yamlsPaths.extend(YAML_EXECUTABLE)
         yamlsPaths.extend(YAML_ENGINE)
         yamlsPaths.extend(YAML_SCREENS)
-        yamlsPaths.extend(YAML_MAPS_0)
-        yamlsPaths.extend(YAML_MAPS_1)
-        yamlsPaths.extend(YAML_MAPS_2)
-        yamlsPaths.extend(YAML_MAPS_3)
-        yamlsPaths.extend(YAML_MAPS_4)
-        yamlsPaths.extend(YAML_MAPS_5)
-        yamlsPaths.extend(YAML_MAPS_6)
-        yamlsPaths.extend(YAML_MAPS_7)
-        if args.game_version == 1:
+        yamlMaps.extend(YAML_MAPS_0)
+        yamlMaps.extend(YAML_MAPS_1)
+        yamlMaps.extend(YAML_MAPS_2)
+        yamlMaps.extend(YAML_MAPS_3)
+        yamlMaps.extend(YAML_MAPS_4)
+        yamlMaps.extend(YAML_MAPS_5)
+        yamlMaps.extend(YAML_MAPS_6)
+        yamlMaps.extend(YAML_MAPS_7)
+        if gameVersionOption == 1:
             yamlsPaths.extend(YAML_ITEMS)
+            for yamlMap in yamlMaps:
+                for x in range(1,4):
+                    yamlsPaths.extend([f"{yamlMap[:-7]}{x}{yamlMap[-6:]}"])
+        else:
+            yamlsPaths.extend(yamlMaps)
     else:
         matchSet = ""
         if len(args.setup) == 3:
@@ -949,14 +955,20 @@ def main():
                     print("Overlays only available for the European release.")
                     sys.exit(1)
             case "map":
-                yamlsPaths.extend(YAML_MAPS_0)
-                yamlsPaths.extend(YAML_MAPS_1)
-                yamlsPaths.extend(YAML_MAPS_2)
-                yamlsPaths.extend(YAML_MAPS_3)
-                yamlsPaths.extend(YAML_MAPS_4)
-                yamlsPaths.extend(YAML_MAPS_5)
-                yamlsPaths.extend(YAML_MAPS_6)
-                yamlsPaths.extend(YAML_MAPS_7)
+                yamlMaps.extend(YAML_MAPS_0)
+                yamlMaps.extend(YAML_MAPS_1)
+                yamlMaps.extend(YAML_MAPS_2)
+                yamlMaps.extend(YAML_MAPS_3)
+                yamlMaps.extend(YAML_MAPS_4)
+                yamlMaps.extend(YAML_MAPS_5)
+                yamlMaps.extend(YAML_MAPS_6)
+                yamlMaps.extend(YAML_MAPS_7)
+                if gameVersionOption == 1:
+                    for yamlMap in yamlMaps:
+                        for x in range(1,4):
+                            yamlsPaths.extend([f"{yamlMap[:-7]}{x}{yamlMap[-6:]}"])
+                else:
+                    yamlsPaths.extend(yamlMaps)
             case _:
                 try:
                     if re.match(r"m\d\dr?", matchSet):
