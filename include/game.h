@@ -1378,7 +1378,7 @@ typedef struct _PropertiesGroaner
     q19_12     targetPositionZ_F8;
     q3_12      angle_FC;
     q3_12      field_FE;
-    s16        relKeyframeIdx_100;
+    u16        relKeyframeIdx_100;
     s8         unk_102[2];
     s32        field_104;
     u32        field_108;

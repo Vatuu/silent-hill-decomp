@@ -1323,54 +1323,10 @@ void sharedFunc_800D1DBC_1_s00(s_SubCharacter* larvalStalker)
             keyframeIdx1 = FP_FROM(larvalStalker->model_0.anim_4.time_4, Q12_SHIFT);
 
             relKeyframeIdx = keyframeIdx1 - 121;
-            if (relKeyframeIdx < 11) 
-            {
-                if (relKeyframeIdx < 16) 
-                {
-                    goto block_48;
-                } 
-                else 
-                {
-                    keyframeIdx0 = 15;
-                }
-            } 
-            else 
-            {
-                if ((keyframeIdx1 - 122) < 16) 
-                {
-    block_48:
-                    keyframeIdx0 = relKeyframeIdx - (relKeyframeIdx > 10);
-                } 
-                else 
-                {
-                    keyframeIdx0 = 15;
-                }
-            }
-            
-            if (relKeyframeIdx > 9) 
-            {
-                if (relKeyframeIdx < 16) 
-                {
-                    goto block_54;
-                } 
-                else 
-                {
-                    keyframeIdx1 = 15;
-                }
-            } 
-            else 
-            {
-                keyframeIdx1 = relKeyframeIdx + 1;
-                if (keyframeIdx1 < 16) 
-                {
-    block_54:
-                    keyframeIdx1 = relKeyframeIdx + (relKeyframeIdx < 10);
-                }
-                else
-                {
-                    keyframeIdx1 = 15;
-                }
-            }
+            keyframeIdx0   = relKeyframeIdx - (relKeyframeIdx > 10) < 16 ? relKeyframeIdx - (relKeyframeIdx > 10) : 15;
+
+            keyframeIdx1 = relKeyframeIdx + 1;
+            keyframeIdx1 = relKeyframeIdx + (relKeyframeIdx < 10) < 16 ? relKeyframeIdx + (relKeyframeIdx < 10) : 15;
 
             func_80070400(larvalStalker, &sharedData_800DAE28_1_s00[keyframeIdx0], &sharedData_800DAE28_1_s00[keyframeIdx1]);
             break;
