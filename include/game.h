@@ -1475,7 +1475,8 @@ typedef struct _PropertiesRomper
     q19_12 positionZ_100;
     s8     unk_104[4];
     q19_12 positionX_108;
-    s8     unk_10C[4];
+    s8     unk_10C[2];
+    s16    field_10E;
     q19_12 positionZ_110;
     u8     field_114;
     u8     field_115;
