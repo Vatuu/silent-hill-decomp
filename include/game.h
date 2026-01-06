@@ -1466,17 +1466,24 @@ STATIC_ASSERT_SIZEOF(s_PropertiesPuppetNurse, 64);
 /** @brief Romper character properties. */
 typedef struct _PropertiesRomper
 {
-    s32    field_E4; // TODO: Remove this.
-    s8     unk_E8[4];
-    s16    field_EC;
-    q3_12  rotationY_EE;
-    s8     unk_F0[8];
-    q19_12 positionX_F8;
-    q19_12 positionZ_FC;
-    s8     unk_100[4];
-    q19_12 positionX_104;
-    s8     unk_108[4];
-    q19_12 positionZ_10C;
+    s32    field_E8;
+    s8     unk_EC[4];
+    s16    field_F0;
+    q3_12  rotationY_F2;
+    s8     unk_F4[8];
+    q19_12 positionX_FC;
+    q19_12 positionZ_100;
+    s8     unk_104[4];
+    q19_12 positionX_108;
+    s8     unk_10C[4];
+    q19_12 positionZ_110;
+    u8     field_114;
+    u8     field_115;
+    s16    field_116;
+    s16    field_118;
+    u8     field_11A;
+    s8     unk_11B;
+    s16    field_11C;
 } s_PropertiesRomper;
 
 /** @brief Split Head character properties. */

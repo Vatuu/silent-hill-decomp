@@ -9,7 +9,7 @@ void Ai_Romper_Init(s_SubCharacter* romper)
 
     #define romperProps romper->properties_E4.romper
 
-    romperProps.field_E4 = 0;
+    romperProps.field_E8           = 0;
     romper->model_0.anim_4.alpha_A = Q12(0.0f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
@@ -44,19 +44,19 @@ void Ai_Romper_Init(s_SubCharacter* romper)
     romper->model_0.controlState_2 = 2;
     Character_AnimSet(romper, ANIM_STATUS(RomperAnim_15, true), 147);
 
-    romperProps.field_EC = 6;
-    romperProps.rotationY_EE = romper->rotation_24.vy;
+    romperProps.field_F0     = 6;
+    romperProps.rotationY_F2 = romper->rotation_24.vy;
     romper->moveSpeed_38 = Q12(0.02175f);
 
     ModelAnim_AnimInfoSet(&romper->model_0.anim_4, ROPMER_ANIM_INFOS);
     Chara_DamageClear(romper);
 
-    romperProps.positionX_F8  =
-    romperProps.positionZ_10C = romper->position_18.vx;
-    romperProps.positionZ_FC  =
-    romperProps.positionX_104 = romper->position_18.vz;
+    romperProps.positionX_FC =
+        romperProps.positionZ_110 = romper->position_18.vx;
+    romperProps.positionZ_100 =
+        romperProps.positionX_108 = romper->position_18.vz;
 
-    #undef ROMPER_HEALTH_BASE
+#undef ROMPER_HEALTH_BASE
     #undef ROMPER_HEALTH_BONUS_MAX
     #undef romperProps
 }
