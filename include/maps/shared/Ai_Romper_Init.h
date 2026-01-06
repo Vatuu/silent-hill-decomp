@@ -32,7 +32,7 @@ void Ai_Romper_Init(s_SubCharacter* romper)
             }
 
             // TODO: Shifts are equivalent to `var_v0_2 % Q12(0.5f)`.
-            romper->health_B0 = FP_MULTIPLY_PRECISE(((temp_a0 - ((var_v0 >> 11) << 11)) + Q12(1.5f)), ROMPER_HEALTH_BASE, Q12_SHIFT);
+            romper->health_B0 = Q12_MULT_PRECISE(((temp_a0 - ((var_v0 >> 11) << 11)) + Q12(1.5f)), ROMPER_HEALTH_BASE);
         }
     }
 

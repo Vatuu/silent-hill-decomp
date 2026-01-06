@@ -23,8 +23,8 @@ void sharedFunc_800DD834_2_s00(s_SubCharacter* airScreamer)
     curAngle = Rng_RandQ12();
     for (i = 0; i < ANGLE_STEP_COUNT; i++, curAngle += FP_ANGLE(360.0f / ANGLE_STEP_COUNT))
     {
-        curPosX = posX + FP_MULTIPLY_PRECISE(Math_Sin(curAngle), Q12(20.0f), Q12_SHIFT);
-        curPosZ = posZ + FP_MULTIPLY_PRECISE(Math_Cos(curAngle), Q12(20.0f), Q12_SHIFT);
+        curPosX = posX + Q12_MULT_PRECISE(Math_Sin(curAngle), Q12(20.0f));
+        curPosZ = posZ + Q12_MULT_PRECISE(Math_Cos(curAngle), Q12(20.0f));
         curPosY = Collision_GroundHeightGet(curPosX, curPosZ) - Q12(2.0f);
 
         if (curPosY < (posY - Q12(2.0f)) || posY < curPosY || curPosY < sharedFunc_800D5274_0_s01() ||
@@ -42,8 +42,8 @@ void sharedFunc_800DD834_2_s00(s_SubCharacter* airScreamer)
 
         sinRotY = Math_Sin(airScreamer->rotation_24.vy);
         airScreamerProps.targetPosition_F8.vy = curPosY;
-        airScreamerProps.targetPosition_F8.vx = curPosX + FP_MULTIPLY_PRECISE(sinRotY,                         RADIUS, Q12_SHIFT);
-        airScreamerProps.targetPosition_F8.vz = curPosX + FP_MULTIPLY_PRECISE(Math_Cos(airScreamer->rotation_24.vy), RADIUS, Q12_SHIFT);
+        airScreamerProps.targetPosition_F8.vx = curPosX + Q12_MULT_PRECISE(sinRotY, RADIUS);
+        airScreamerProps.targetPosition_F8.vz = curPosX + Q12_MULT_PRECISE(Math_Cos(airScreamer->rotation_24.vy), RADIUS);
 
         if (sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &airScreamerProps.targetPosition_F8, NULL))
         {

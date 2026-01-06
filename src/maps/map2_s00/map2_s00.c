@@ -894,13 +894,13 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
             // Decrement zoom counter.
             D_800F228C -= 0x40;
 
-            func_800692A4(0x48 - FP_MULTIPLY_PRECISE(D_800F228C, 0x48, Q12_SHIFT),
-                          0x10 - FP_MULTIPLY_PRECISE(D_800F228C, 0x10, Q12_SHIFT),
+            func_800692A4(0x48 - Q12_MULT_PRECISE(D_800F228C, 0x48),
+                          0x10 - Q12_MULT_PRECISE(D_800F228C, 0x10),
                           (D_800F228C >> 1) + Q12(0.5f));
 
             func_80068E0C(1, 1, 0, 0,
-                          0x48 - FP_MULTIPLY_PRECISE(D_800F228C, 0x48, Q12_SHIFT),
-                          0x10 - FP_MULTIPLY_PRECISE(D_800F228C, 0x10, Q12_SHIFT),
+                          0x48 - Q12_MULT_PRECISE(D_800F228C, 0x48),
+                          0x10 - Q12_MULT_PRECISE(D_800F228C, 0x10),
                           (D_800F228C >> 1) + Q12(0.5f));
 
             curve = (FP_TO(D_800F228C, 12) / (D_800F228C + Q12(1.0f))) * -1;
@@ -1678,7 +1678,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
         case 1:
             g_SysWork.field_28 += g_DeltaTime0;
             tmp = Q12(1.0f) - Math_Cos(g_SysWork.field_28/12);
-            D_800F1A24 = FP_MULTIPLY_PRECISE(tmp, Q12(60.0f), Q12_SHIFT) + Q12(40.0f);
+            D_800F1A24 = Q12_MULT_PRECISE(tmp, Q12(60.0f)) + Q12(40.0f);
 
             if (g_SysWork.field_28 > Q12(1.5f) && g_SysWork.field_28 < Q12(4.5f))
             {
@@ -1870,7 +1870,7 @@ void func_800EA960(void) // 0x800EA960
 
             Sd_SfxAttributesUpdate(Sfx_Unk1484, balance, vol, 0);
 
-            D_800F5344.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x88, Q12_SHIFT);
+            D_800F5344.vz += Q12_MULT_PRECISE(g_DeltaTime0, 0x88);
             if (D_800F5344.vz > 0)
             {
                 D_800F5344.vz = 0;
@@ -1977,7 +1977,7 @@ void func_800EAD2C(void) // 0x800EAD2C
 
             Sd_SfxAttributesUpdate(Sfx_Unk1484, balance, vol, 0);
 
-            D_800F5344.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.1f / 3.0f), Q12_SHIFT);
+            D_800F5344.vz += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.1f / 3.0f));
             if (D_800F5344.vz > 0)
             {
                 D_800F5344.vz = 0;
@@ -2157,10 +2157,10 @@ void func_800EB3F4(void) // 0x800EB3F4
             SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
 
             // TODO: Odd float values, maybe using different Q format for `s16`?
-            D_800F22AE += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0277f), Q12_SHIFT);
+            D_800F22AE += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.0277f));
             D_800F22AE  = MAX(Q12(-0.0137f), D_800F22AE);
 
-            D_800F538C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800F22AE, Q12_SHIFT);
+            D_800F538C.vy += Q12_MULT_PRECISE(g_DeltaTime0, D_800F22AE);
             if (D_800F538C.vy < Q12(-0.02222f)) // TODO: `MAX`? Currently doesn't match.
             {
                 D_800F538C.vy = Q12(-0.02222f);
@@ -2562,7 +2562,7 @@ void func_800EC080(void) // 0x800EC080
                 }
                 else if (D_800F534C == NO_VALUE)
                 {
-                    D_800F5350 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.25f), Q12_SHIFT);
+                    D_800F5350 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f));
                     if (D_800F5350 > Q12(0.75f))
                     {
                         D_800F5350 = Q12(0.75f);

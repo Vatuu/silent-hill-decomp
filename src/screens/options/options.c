@@ -951,9 +951,9 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
     // Draw active selection highlight.
     highlightLine.vertex0_0.vx = HIGHLIGHT_OFFSET_X;
     highlightLine.vertex1_4.vx = g_ExtraOptions_SelectionHighlightFrom.vx +
-                                 FP_MULTIPLY(g_ExtraOptions_SelectionHighlightTo.vx - g_ExtraOptions_SelectionHighlightFrom.vx, interpAlpha, Q12_SHIFT);
+                                 Q12_MULT(g_ExtraOptions_SelectionHighlightTo.vx - g_ExtraOptions_SelectionHighlightFrom.vx, interpAlpha);
     highlightLine.vertex1_4.vy = g_ExtraOptions_SelectionHighlightFrom.vy +
-                                 FP_MULTIPLY(g_ExtraOptions_SelectionHighlightTo.vy - g_ExtraOptions_SelectionHighlightFrom.vy, interpAlpha, Q12_SHIFT) +
+                                 Q12_MULT(g_ExtraOptions_SelectionHighlightTo.vy - g_ExtraOptions_SelectionHighlightFrom.vy, interpAlpha) +
                                  LINE_OFFSET_Y;
     highlightLine.vertex0_0.vy = highlightLine.vertex1_4.vy;
     Options_Selection_HighlightDraw(&highlightLine, true, false);

@@ -705,7 +705,7 @@ void func_800D72AC(void) // 0x800D72AC
             SysWork_StateStepIncrement(0);
 
         case 6:
-            tmp0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.23f), Q12_SHIFT);
+            tmp0 = Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.23f));
             distAdd = tmp0;
             g_SysWork.playerWork_4C.player_0.position_18.vx += distAdd;
             g_WorldObject0.position_1C.vx += distAdd;
@@ -726,7 +726,7 @@ void func_800D72AC(void) // 0x800D72AC
             break;
 
         case 7:
-            tmp0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.23f), Q12_SHIFT);
+            tmp0 = Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.23f));
             distAdd = tmp0;
             g_SysWork.playerWork_4C.player_0.position_18.vx += distAdd;
             g_WorldObject0.position_1C.vx += distAdd;

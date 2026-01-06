@@ -10,9 +10,9 @@ bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult
     posZ         = airScreamer->position_18.vz;
     headingAngle = airScreamer->headingAngle_3C;
 
-    moveSpeed = FP_MULTIPLY_PRECISE(moveSpeed, moveSpeedMult, Q12_SHIFT);
-    posX     += FP_MULTIPLY_PRECISE(Math_Sin(headingAngle), moveSpeed, Q12_SHIFT);
-    posZ     += FP_MULTIPLY_PRECISE(Math_Cos(headingAngle), moveSpeed, Q12_SHIFT);
+    moveSpeed = Q12_MULT_PRECISE(moveSpeed, moveSpeedMult);
+    posX     += Q12_MULT_PRECISE(Math_Sin(headingAngle), moveSpeed);
+    posZ     += Q12_MULT_PRECISE(Math_Cos(headingAngle), moveSpeed);
 
     switch (func_800808AC(posX, posZ))
     {

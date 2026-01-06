@@ -535,7 +535,7 @@ void func_800D6578(void) // 0x800D6578
 
         if (!Savegame_EventFlagGet(EventFlag_142))
         {
-            D_800DAF78 = FP_MULTIPLY_FLOAT_PRECISE(g_SysWork.playerWork_4C.player_0.position_18.vy, -0.2f, Q12_SHIFT) + Q12(0.25f);
+            D_800DAF78 = Q12_MULT_FLOAT_PRECISE(g_SysWork.playerWork_4C.player_0.position_18.vy, -0.2f) + Q12(0.25f);
         }
     }
     else
@@ -552,7 +552,7 @@ void func_800D6578(void) // 0x800D6578
     
         if (Savegame_EventFlagGet(EventFlag_142))
         {
-            D_800DAF78 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.2f, Q12_SHIFT);
+            D_800DAF78 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.2f);
             if (D_800DAF78 < Q12(0.0f))
             {
                 D_800DAF78 = Q12(0.0f);

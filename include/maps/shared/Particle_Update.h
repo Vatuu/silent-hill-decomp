@@ -47,8 +47,8 @@ bool Particle_Update(s_Particle* partHead)
     
     GsInitCoordinate2(0, &g_SysWork.coord_22A8);
 
-    g_Particle_Position.vx = g_ParticleVectors0.viewPosition_C.vx + FP_MULTIPLY(Math_Sin(g_ParticleVectors0.viewRotation_20.vy), Q12(3.0), Q12_SHIFT);
-    g_Particle_Position.vz = g_ParticleVectors0.viewPosition_C.vz + FP_MULTIPLY(Math_Cos(g_ParticleVectors0.viewRotation_20.vy), Q12(3.0), Q12_SHIFT);
+    g_Particle_Position.vx = g_ParticleVectors0.viewPosition_C.vx + Q12_MULT(Math_Sin(g_ParticleVectors0.viewRotation_20.vy), Q12(3.0));
+    g_Particle_Position.vz = g_ParticleVectors0.viewPosition_C.vz + Q12_MULT(Math_Cos(g_ParticleVectors0.viewRotation_20.vy), Q12(3.0));
 #if defined(MAP1_S06)
     g_Particle_Position.vy = Q12(-10.0);
 #else

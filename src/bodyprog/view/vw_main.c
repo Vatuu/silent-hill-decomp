@@ -77,9 +77,9 @@ void vwSetCoordRefAndEntou(GsCOORDINATE2* parent_p, q19_12 ref_x, q19_12 ref_y, 
 
     Math_RotMatrixZxyNegGte(&view_ang, view_mtx);
 
-    view_mtx->t[0] = Q12_TO_Q8(ref_x) + FP_MULTIPLY(Q12_TO_Q8(cam_xz_r), Math_Sin(cam_ang_y), Q12_SHIFT);
+    view_mtx->t[0] = Q12_TO_Q8(ref_x) + Q12_MULT(Q12_TO_Q8(cam_xz_r), Math_Sin(cam_ang_y));
     view_mtx->t[1] = Q12_TO_Q8(ref_y) + Q12_TO_Q8(cam_y);
-    view_mtx->t[2] = Q12_TO_Q8(ref_z) + FP_MULTIPLY(Q12_TO_Q8(cam_xz_r), Math_Cos(cam_ang_y), Q12_SHIFT);
+    view_mtx->t[2] = Q12_TO_Q8(ref_z) + Q12_MULT(Q12_TO_Q8(cam_xz_r), Math_Cos(cam_ang_y));
 }
 
 void vwSetViewInfoDirectMatrix(GsCOORDINATE2* pcoord, const MATRIX* cammat) // 0x80048CF0
@@ -191,7 +191,7 @@ s16 func_80048E3C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) // 0x80048E3
     else
     {
         temp_lo = FP_FROM(arg2 << 16, Q4_SHIFT) / arg1;
-        temp_a0 = FP_MULTIPLY(arg0, temp_lo, Q12_SHIFT);
+        temp_a0 = Q12_MULT(arg0, temp_lo);
 
         if (temp_a0 < arg3 || arg4 < temp_a0)
         {

@@ -34,10 +34,10 @@ void sharedFunc_800D7560_0_s01(s_SubCharacter* airScreamer)
     else
     {
         sinHeadingAngle = Math_Sin(headingAngle);
-        offsetX         = FP_MULTIPLY_PRECISE(sinHeadingAngle, Q12(-0.17f), Q12_SHIFT);
+        offsetX         = Q12_MULT_PRECISE(sinHeadingAngle, Q12(-0.17f));
 
         cosHeadingAngle = Math_Cos(headingAngle);
-        offsetZ         = FP_MULTIPLY_PRECISE(cosHeadingAngle, Q12(-0.17f), Q12_SHIFT);
+        offsetZ         = Q12_MULT_PRECISE(cosHeadingAngle, Q12(-0.17f));
     }
 
     mat->t[0] = Q12_TO_Q8(airScreamer->position_18.vx + offsetX);

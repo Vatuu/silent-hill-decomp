@@ -70,7 +70,7 @@ void Ai_Stalker_Init(s_SubCharacter* stalker)
     // Set health to 1.5x when not on easy difficulty.
     if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
     {
-        stalker->health_B0 = FP_MULTIPLY_FLOAT_PRECISE(sharedData_800E3A20_0_s00, 1.5f, Q12_SHIFT);
+        stalker->health_B0 = Q12_MULT_FLOAT_PRECISE(sharedData_800E3A20_0_s00, 1.5f);
     }
 #endif
 
@@ -171,7 +171,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
     q19_12 var_a0;
     q20_12 newHealth;
 
-    var_a0 = stalkerProps.timer_10C - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(20.0f), Q12_SHIFT);
+    var_a0 = stalkerProps.timer_10C - Q12_MULT_PRECISE(g_DeltaTime0, Q12(20.0f));
     stalkerProps.timer_10C = MAX(var_a0, Q12(0.0f));
 
     if (stalker->damage_B4.amount_C > Q12(0.0f) && stalker->health_B0 > Q12(0.0f))
@@ -187,7 +187,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
 
     if (stalker->health_B0 > Q12(0.0f))
     {
-        newHealth          = stalker->health_B0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800E3A28_0_s00, Q12_SHIFT);
+        newHealth          = stalker->health_B0 + Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800E3A28_0_s00);
         stalker->health_B0 = MIN(newHealth, stalkerProps.health_110);
     }
 
@@ -199,8 +199,8 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
             stalkerProps.health_110 -= stalker->damage_B4.amount_C >> 2;
             stalkerProps.flags_E8   |= StalkerFlag_0 | StalkerFlag_10;
 
-            stalker->damage_B4.position_0.vx += FP_MULTIPLY(stalker->moveSpeed_38, Math_Sin(stalker->headingAngle_3C), Q12_SHIFT) >> 3;
-            stalker->damage_B4.position_0.vz += FP_MULTIPLY(stalker->moveSpeed_38, Math_Cos(stalker->headingAngle_3C), Q12_SHIFT) >> 3;
+            stalker->damage_B4.position_0.vx += Q12_MULT(stalker->moveSpeed_38, Math_Sin(stalker->headingAngle_3C)) >> 3;
+            stalker->damage_B4.position_0.vz += Q12_MULT(stalker->moveSpeed_38, Math_Cos(stalker->headingAngle_3C)) >> 3;
 
             if (stalkerProps.flags_E8 & StalkerFlag_6)
             {
@@ -701,11 +701,11 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
             {
                 if (angleDeltaToPlayer > FP_ANGLE(0.0f))
                 {
-                    stalker->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(180.0f), Q12_SHIFT);
+                    stalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(180.0f));
                 }
                 else
                 {
-                    stalker->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(180.0f), Q12_SHIFT);
+                    stalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(180.0f));
                 }
 
                 angleDeltaToPlayer = func_8005BF38(ratan2(sharedData_800E3A18_0_s00 - stalker->position_18.vx,
@@ -838,11 +838,11 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
             {
                 if (angleDeltaToTargetHeading > FP_ANGLE(0.0f))
                 {
-                    stalker->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(180.0f), Q12_SHIFT);
+                    stalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(180.0f));
                 }
                 else
                 {
-                    stalker->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(180.0f), Q12_SHIFT);
+                    stalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(180.0f));
                 }
             }
         }
@@ -961,11 +961,11 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
                 {
                     if (angleDeltaToPlayer > FP_ANGLE(0.0f))
                     {
-                        stalker->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f), Q12_SHIFT);
+                        stalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
                     }
                     else
                     {
-                        stalker->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f), Q12_SHIFT);
+                        stalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
                     }
 
                     angleDeltaToPlayer = func_8005BF38(ratan2(sharedData_800E3A18_0_s00 - stalker->position_18.vx,
@@ -1097,11 +1097,11 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
             {
                 if (angleDeltaToTargetHeading > FP_ANGLE(0.0f))
                 {
-                    stalker->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f), Q12_SHIFT);
+                    stalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
                 }
                 else
                 {
-                    stalker->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f), Q12_SHIFT);
+                    stalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
                 }
             }
         }
@@ -1219,11 +1219,11 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
     {
         if (angle > FP_ANGLE(0.0f))
         {
-            stalker->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
+            stalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
         }
         else
         {
-            stalker->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
+            stalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
         }
     }
     else
@@ -1345,11 +1345,11 @@ void Ai_Stalker_Control_5(s_SubCharacter* stalker)
             {
                 if (angleDeltaToPlayer > FP_ANGLE(0.0f))
                 {
-                    stalker->rotation_24.vy = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.0833f, Q12_SHIFT) + stalker->rotation_24.vy;
+                    stalker->rotation_24.vy = Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.0833f) + stalker->rotation_24.vy;
                 }
                 else
                 {
-                    stalker->rotation_24.vy = stalker->rotation_24.vy - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.0833f, Q12_SHIFT);
+                    stalker->rotation_24.vy = stalker->rotation_24.vy - Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.0833f);
                 }
             }
         }
@@ -1360,7 +1360,7 @@ void Ai_Stalker_Control_5(s_SubCharacter* stalker)
             {
                 if (stalker->moveSpeed_38 > MOVE_SPEED_MAX)
                 {
-                    newMoveSpeed0 = stalker->moveSpeed_38 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
+                    newMoveSpeed0 = stalker->moveSpeed_38 - Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.0f);
                     if (newMoveSpeed0 < MOVE_SPEED_MAX)
                     {
                         newMoveSpeed0 = MOVE_SPEED_MAX;
@@ -1369,7 +1369,7 @@ void Ai_Stalker_Control_5(s_SubCharacter* stalker)
                 else
                 {
                     newMoveSpeed0 = MOVE_SPEED_MAX;
-                    newMoveSpeed1 = stalker->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
+                    newMoveSpeed1 = stalker->moveSpeed_38 + Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.0f);
                     if (newMoveSpeed1 <= MOVE_SPEED_MAX)
                     {
                         newMoveSpeed0 = newMoveSpeed1;
@@ -1384,7 +1384,7 @@ void Ai_Stalker_Control_5(s_SubCharacter* stalker)
             {
                 if (stalker->moveSpeed_38 > -MOVE_SPEED_MAX)
                 {
-                    newMoveSpeed0 = stalker->moveSpeed_38 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
+                    newMoveSpeed0 = stalker->moveSpeed_38 - Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.0f);
                     if (newMoveSpeed0 < -MOVE_SPEED_MAX)
                     {
                         newMoveSpeed0 = -MOVE_SPEED_MAX;
@@ -1393,7 +1393,7 @@ void Ai_Stalker_Control_5(s_SubCharacter* stalker)
                 else
                 {
                     newMoveSpeed0 = -MOVE_SPEED_MAX;
-                    newMoveSpeed1 = stalker->moveSpeed_38 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
+                    newMoveSpeed1 = stalker->moveSpeed_38 + Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.0f);
                     if (newMoveSpeed1 <= -MOVE_SPEED_MAX)
                     {
                         newMoveSpeed0 = newMoveSpeed1;
@@ -1437,11 +1437,11 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
     {
         if (stalker->model_0.anim_4.status_0 == ANIM_STATUS(StalkerAnim_34, true) && distToPlayer > Q12(0.53f))
         {
-            moveSpeed = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
+            moveSpeed = Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.0f));
         }
         else if (stalker->model_0.anim_4.status_0 == ANIM_STATUS(StalkerAnim_35, true) && distToPlayer > Q12(0.38f))
         {
-            moveSpeed = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT);
+            moveSpeed = Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.0f));
         }
     }
 
@@ -1451,11 +1451,11 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                stalker->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
+                stalker->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
             }
             else
             {
-                stalker->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
+                stalker->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
             }
         }
 
@@ -1470,7 +1470,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
         {
             if (distToPlayer < Q12(0.52f) || distToPlayer > Q12(0.54f))
             {
-                moveSpeed = CLAMP_HIGH(FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT), distToPlayer - Q12(0.53f));
+                moveSpeed = CLAMP_HIGH(Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.0f)), distToPlayer - Q12(0.53f));
             }
 
             stalkerProps.relAnimTime_104 = stalker->model_0.anim_4.time_4 - Q12(83.0f);
@@ -1479,7 +1479,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
         {
             if (distToPlayer < Q12(0.37f) || distToPlayer > Q12(0.39f))
             {
-                moveSpeed = CLAMP_HIGH(FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.0f), Q12_SHIFT), distToPlayer - Q12(0.38f));
+                moveSpeed = CLAMP_HIGH(Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.0f)), distToPlayer - Q12(0.38f));
             }
 
             stalkerProps.relAnimTime_104 = stalker->model_0.anim_4.time_4 - Q12(70.0f);
@@ -1560,8 +1560,8 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
 
     if (g_DeltaTime0 != Q12(0.0f))
     {
-        stalkerProps.offset_EC = FP_MULTIPLY(moveSpeed, Math_Sin(stalker->rotation_24.vy), Q12_SHIFT);
-        stalkerProps.offset_EE = FP_MULTIPLY(moveSpeed, Math_Cos(stalker->rotation_24.vy), Q12_SHIFT);
+        stalkerProps.offset_EC = Q12_MULT(moveSpeed, Math_Sin(stalker->rotation_24.vy));
+        stalkerProps.offset_EE = Q12_MULT(moveSpeed, Math_Cos(stalker->rotation_24.vy));
     }
 }
 
@@ -1638,10 +1638,10 @@ void Ai_Stalker_Control_8(s_SubCharacter* stalker)
     {
         animDiv  = FP_TO(animDivTmp, Q12_SHIFT);
         duration = STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant;
-        step     = (FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT) * animMult) / animDiv;
+        step     = (Q12_MULT_PRECISE(duration, g_DeltaTime0) * animMult) / animDiv;
 
-        stalkerProps.offset_EC = FP_MULTIPLY(step, Math_Sin(stalker->rotation_24.vy), Q12_SHIFT);
-        stalkerProps.offset_EE = FP_MULTIPLY(step, Math_Cos(stalker->rotation_24.vy), Q12_SHIFT);
+        stalkerProps.offset_EC = Q12_MULT(step, Math_Sin(stalker->rotation_24.vy));
+        stalkerProps.offset_EE = Q12_MULT(step, Math_Cos(stalker->rotation_24.vy));
     }
 
     if (stalkerProps.flags_E8 & StalkerFlag_7)
@@ -1784,11 +1784,11 @@ void Ai_Stalker_Control_9(s_SubCharacter* stalker)
 
     if (dist != Q12(0.0f))
     {
-        dist = (s32)(dist * (u32)FP_MULTIPLY_PRECISE(STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant, g_DeltaTime0, Q12_SHIFT)) /
+        dist = (s32)(dist * (u32)Q12_MULT_PRECISE(STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant, g_DeltaTime0)) /
                FP_TO(distDiv, Q12_SHIFT);
 
-        stalkerProps.offset_EC = FP_MULTIPLY(dist, Math_Sin(stalker->rotation_24.vy + angleOffset), Q12_SHIFT);
-        stalkerProps.offset_EE = FP_MULTIPLY(dist, Math_Cos(stalker->rotation_24.vy + angleOffset), Q12_SHIFT);
+        stalkerProps.offset_EC = Q12_MULT(dist, Math_Sin(stalker->rotation_24.vy + angleOffset));
+        stalkerProps.offset_EE = Q12_MULT(dist, Math_Cos(stalker->rotation_24.vy + angleOffset));
     }
 
     if (stalker->model_0.anim_4.status_0 == ANIM_STATUS(StalkerAnim_26, true) ||
@@ -1850,7 +1850,7 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
         curMoveSpeed = stalker->moveSpeed_38;
         if (curMoveSpeed > Q12(0.0f))
         {
-            newMoveSpeed = curMoveSpeed - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.5f, Q12_SHIFT);
+            newMoveSpeed = curMoveSpeed - Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.5f);
             if (newMoveSpeed < Q12(0.0f))
             {
                 newMoveSpeed = Q12(0.0f);
@@ -1858,7 +1858,7 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
         }
         else
         {
-            newMoveSpeed = curMoveSpeed + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.5f, Q12_SHIFT);
+            newMoveSpeed = curMoveSpeed + Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.5f);
             if (newMoveSpeed > Q12(0.0f))
             {
                 newMoveSpeed = Q12(0.0f);
@@ -1906,7 +1906,7 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
 #if defined(MAP5_S02) || defined(MAP7_S02)
     if (stalkerProps.flags_E8 & (1 << 9))
     {
-        stalker->timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
+        stalker->timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f);
         if (stalker->timer_C6 > Q12(1.0f))
         {
             stalker->model_0.charaId_0 = Chara_None;
@@ -2107,16 +2107,16 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
             }
             else
             {
-                STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant = FP_MULTIPLY_PRECISE(MAX(stalker->moveSpeed_38, Q12(0.1f)), Q12(30.67f), Q12_SHIFT);
+                STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant = Q12_MULT_PRECISE(MAX(stalker->moveSpeed_38, Q12(0.1f)), Q12(30.67f));
             }
             break;
 
         case ANIM_STATUS(StalkerAnim_37, true):
-            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant = FP_MULTIPLY_PRECISE(MAX(stalker->moveSpeed_38, Q12(1.5f)), Q12(30.67f), Q12_SHIFT);
+            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant = Q12_MULT_PRECISE(MAX(stalker->moveSpeed_38, Q12(1.5f)), Q12(30.67f));
             break;
 
         case ANIM_STATUS(StalkerAnim_30, true):
-            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant = FP_MULTIPLY_PRECISE(MAX(stalker->moveSpeed_38, Q12(0.1f)), Q12(30.67f), Q12_SHIFT);
+            STALKER_ANIM_INFOS[stalker->model_0.anim_4.status_0].duration_8.constant = Q12_MULT_PRECISE(MAX(stalker->moveSpeed_38, Q12(0.1f)), Q12(30.67f));
             break;
 
         case ANIM_STATUS(StalkerAnim_1, false):
@@ -2218,11 +2218,11 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
             {
                 if (ptr->angle_46 > FP_ANGLE(0.0f))
                 {
-                    ptr->angle_44 = CLAMP_HIGH(ptr->angle_46, ptr->angle_44 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT));
+                    ptr->angle_44 = CLAMP_HIGH(ptr->angle_46, ptr->angle_44 + Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f)));
                 }
                 else
                 {
-                    ptr->angle_44 = MAX(ptr->angle_46, ptr->angle_44 - FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT));
+                    ptr->angle_44 = MAX(ptr->angle_46, ptr->angle_44 - Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f)));
                 }
             }
         }
@@ -2230,11 +2230,11 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
         {
             if (ptr->angle_44 > FP_ANGLE(0.0f))
             {
-                ptr->angle_44 = CLAMP_LOW(ptr->angle_44 - FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT), FP_ANGLE(0.0f));
+                ptr->angle_44 = CLAMP_LOW(ptr->angle_44 - Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f)), FP_ANGLE(0.0f));
             }
             else
             {
-                ptr->angle_44 = MIN(ptr->angle_44 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT), FP_ANGLE(0.0f));
+                ptr->angle_44 = MIN(ptr->angle_44 + Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f)), FP_ANGLE(0.0f));
             }
         }
     }
@@ -2242,11 +2242,11 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
     {
         if (ptr->angle_44 > FP_ANGLE(0.0f))
         {
-            ptr->angle_44 = CLAMP_LOW(ptr->angle_44 - FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT), FP_ANGLE(0.0f));
+            ptr->angle_44 = CLAMP_LOW(ptr->angle_44 - Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f)), FP_ANGLE(0.0f));
         }
         else
         {
-            ptr->angle_44 = MIN(ptr->angle_44 + FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT), FP_ANGLE(0.0f));
+            ptr->angle_44 = MIN(ptr->angle_44 + Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f)), FP_ANGLE(0.0f));
         }
     }
 

@@ -17,9 +17,9 @@ void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* chara, s32 arg2, VE
         y = arg0->vy;
         z = arg0->vz;
 
-        sqr  = FP_MULTIPLY_PRECISE(x, x, Q12_SHIFT);
-        sqr += FP_MULTIPLY_PRECISE(y, y, Q12_SHIFT);
-        sqr += FP_MULTIPLY_PRECISE(z, z, Q12_SHIFT);
+        sqr  = Q12_MULT_PRECISE(x, x);
+        sqr += Q12_MULT_PRECISE(y, y);
+        sqr += Q12_MULT_PRECISE(z, z);
         sqr  = SquareRoot12(sqr);
         
         chara->damage_B4.amount_C += Math_PreservedSignSubtract(sqr, Q12(5.0f));
@@ -28,14 +28,14 @@ void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* chara, s32 arg2, VE
             sqr = Q12(Math_PreservedSignSubtract(sqr, Q12(6.0f))) / sqr;
         }
 
-        x = FP_MULTIPLY_PRECISE(x, sqr, Q12_SHIFT);
-        y = FP_MULTIPLY_PRECISE(y, sqr, Q12_SHIFT);
-        z = FP_MULTIPLY_PRECISE(z, sqr, Q12_SHIFT);
+        x = Q12_MULT_PRECISE(x, sqr);
+        y = Q12_MULT_PRECISE(y, sqr);
+        z = Q12_MULT_PRECISE(z, sqr);
         if (x | y | z)
         {
-            chara->damage_B4.position_0.vx += FP_MULTIPLY_PRECISE(x, Q12(0.8f), Q12_SHIFT);
-            chara->damage_B4.position_0.vy += FP_MULTIPLY_PRECISE(y, Q12(0.8f), Q12_SHIFT);
-            chara->damage_B4.position_0.vz += FP_MULTIPLY_PRECISE(z, Q12(0.8f), Q12_SHIFT);
+            chara->damage_B4.position_0.vx += Q12_MULT_PRECISE(x, Q12(0.8f));
+            chara->damage_B4.position_0.vy += Q12_MULT_PRECISE(y, Q12(0.8f));
+            chara->damage_B4.position_0.vz += Q12_MULT_PRECISE(z, Q12(0.8f));
         }
     }
 

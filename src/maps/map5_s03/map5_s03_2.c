@@ -627,7 +627,7 @@ void func_800D2674(void) // 0x800D2674
 
         case 5:
         case 6:
-            moveAmt                                     = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.14f, Q12_SHIFT);
+            moveAmt                                     = Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.14f);
             g_SysWork.playerWork_4C.player_0.position_18.vz += moveAmt;
             g_WorldObject_Movaches.position_1C.vz      += moveAmt;
 

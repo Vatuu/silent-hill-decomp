@@ -9,7 +9,7 @@ void Ai_AirScreamerControl_31(s_SubCharacter* airScreamer)
 
             sharedFunc_800D529C_0_s01(airScreamer,
                                       Q12(4.0f),
-                                      airScreamer->rotation_24.vy + FP_MULTIPLY_PRECISE(Rng_RandQ12() - FP_ANGLE(180.0f), FP_ANGLE(45.0f), Q12_SHIFT));
+                                      airScreamer->rotation_24.vy + Q12_MULT_PRECISE(Rng_RandQ12() - FP_ANGLE(180.0f), FP_ANGLE(45.0f)));
 
             airScreamer->model_0.stateStep_3 = AirScreamerStateStep_1;
             break;

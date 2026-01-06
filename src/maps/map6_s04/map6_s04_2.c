@@ -1733,7 +1733,7 @@ void func_800E558C(void) // 0x800E558C
         SysWork_StateStepSet(0, 6);
     }
 
-    D_800ED5F0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, 64, Q12_SHIFT);
+    D_800ED5F0 += Q12_MULT_PRECISE(g_DeltaTime0, 64);
     if (D_800ED5F0 >= 128)
     {
         D_800ED5F0 = 128;
@@ -1772,7 +1772,7 @@ void func_800E558C(void) // 0x800E558C
             SysWork_StateStepIncrement(0);
 
         case 2:
-            g_DeltaTime0 = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.65f, Q12_SHIFT);
+            g_DeltaTime0 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.65f);
             SysWork_StateStepIncrementAfterTime(&D_800ED5B0, Q12(10.0f), Q12(0.0f), Q12(22.0f), true, true);
             break;
 

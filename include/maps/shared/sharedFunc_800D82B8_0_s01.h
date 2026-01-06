@@ -125,14 +125,14 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
 
     if (airScreamerProps.field_E8_0 == 3)
     {
-        airScreamer->field_C8.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_C8.field_2, Q12(1.125f), Q12_SHIFT);
-        airScreamer->field_D4.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_D4.field_2, Q12(1.125f), Q12_SHIFT);
+        airScreamer->field_C8.field_2 = Q12_MULT_PRECISE(airScreamer->field_C8.field_2, Q12(1.125f));
+        airScreamer->field_D4.field_2 = Q12_MULT_PRECISE(airScreamer->field_D4.field_2, Q12(1.125f));
     }
 
     if (airScreamerProps.flags_11C & PlayerFlag_Unk12)
     {
-        airScreamer->field_C8.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_C8.field_2, Q12(0.875f), Q12_SHIFT);
-        airScreamer->field_D4.field_2 = FP_MULTIPLY_PRECISE(airScreamer->field_D4.field_2, Q12(0.875f), Q12_SHIFT);
+        airScreamer->field_C8.field_2 = Q12_MULT_PRECISE(airScreamer->field_C8.field_2, Q12(0.875f));
+        airScreamer->field_D4.field_2 = Q12_MULT_PRECISE(airScreamer->field_D4.field_2, Q12(0.875f));
     }
 
     airScreamer->field_D8.offsetX_0 = Q12(0.0f);

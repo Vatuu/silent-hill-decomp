@@ -30,12 +30,12 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
     rotY      = airScreamer->rotation_24.vy;
     moveSpeed = airScreamer->moveSpeed_38;
 
-    playerOffsetX = FP_MULTIPLY_PRECISE(playerMoveSpeed, Math_Sin(playerheadingAngle), Q12_SHIFT);
-    playerOffsetZ = FP_MULTIPLY_PRECISE(playerMoveSpeed, Math_Cos(playerheadingAngle), Q12_SHIFT);
+    playerOffsetX = Q12_MULT_PRECISE(playerMoveSpeed, Math_Sin(playerheadingAngle));
+    playerOffsetZ = Q12_MULT_PRECISE(playerMoveSpeed, Math_Cos(playerheadingAngle));
 
     sharedData_800F21FC_2_s00.vy = Q12(0.0f);
-    sharedData_800F21FC_2_s00.vx = FP_MULTIPLY_PRECISE(g_DeltaTime0, playerOffsetX, Q12_SHIFT);
-    sharedData_800F21FC_2_s00.vz = FP_MULTIPLY_PRECISE(g_DeltaTime0, playerOffsetZ, Q12_SHIFT);
+    sharedData_800F21FC_2_s00.vx = Q12_MULT_PRECISE(g_DeltaTime0, playerOffsetX);
+    sharedData_800F21FC_2_s00.vz = Q12_MULT_PRECISE(g_DeltaTime0, playerOffsetZ);
 
     if (g_DeltaTime0 != Q12(0.0f) &&
         func_80069B24(&sharedData_800E2350_0_s01, &sharedData_800F21FC_2_s00, &g_SysWork.playerWork_4C.player_0))
@@ -53,7 +53,7 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
     playerOffsetX = playerPosX - posX;
     playerOffsetZ = playerPosZ - posZ;
 
-    var_s2    = moveSpeed - FP_MULTIPLY_PRECISE(playerMoveSpeed, temp_v0_2, Q12_SHIFT);
+    var_s2    = moveSpeed - Q12_MULT_PRECISE(playerMoveSpeed, temp_v0_2);
     temp_v0_2 = FP_ANGLE_NORM_S(ratan2(playerOffsetX, playerOffsetZ) - rotY);
 
     if (temp_v0_2 > -0x2AB && temp_v0_2 < 0x2AA)
@@ -66,9 +66,9 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
         }
 
         var_s2 = FP_TO(playerOffsetZ, Q12_SHIFT) / var_s2;
-        playerOffsetZ = FP_MULTIPLY_PRECISE(playerMoveSpeed, var_s2, Q12_SHIFT);
-        playerOffsetX = FP_MULTIPLY_PRECISE(playerOffsetZ, Math_Sin(playerheadingAngle), Q12_SHIFT);
-        playerOffsetZ = FP_MULTIPLY_PRECISE(playerOffsetZ, Math_Cos(playerheadingAngle), Q12_SHIFT);
+        playerOffsetZ = Q12_MULT_PRECISE(playerMoveSpeed, var_s2);
+        playerOffsetX = Q12_MULT_PRECISE(playerOffsetZ, Math_Sin(playerheadingAngle));
+        playerOffsetZ = Q12_MULT_PRECISE(playerOffsetZ, Math_Cos(playerheadingAngle));
     }
     else
     {

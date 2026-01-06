@@ -210,7 +210,7 @@ void func_800CED88(void) // 0x800CED88
                 break;
             }
 
-            g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(5.0f), Q12_SHIFT);
+            g_Timer0 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(5.0f));
             if (g_Timer0 > Q12(23.0f))
             {
                 g_Timer0 = Q12(23.0f);
@@ -226,7 +226,7 @@ void func_800CED88(void) // 0x800CED88
                 break;
             }
 
-            g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(5.0f), Q12_SHIFT);
+            g_Timer0 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(5.0f));
             if (g_Timer0 > Q12(23.0f))
             {
                 g_Timer0 = Q12(23.0f);
@@ -283,7 +283,7 @@ void func_800CED88(void) // 0x800CED88
 
             if (g_Timer0 >= Q12(142.0f))
             {
-                g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(10.0f), Q12_SHIFT);
+                g_Timer0 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
         
                 if (g_Timer0 > Q12(165.0f))
                 {
@@ -304,7 +304,7 @@ void func_800CED88(void) // 0x800CED88
                 break;
             }
 
-            g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(10.0f), Q12_SHIFT);
+            g_Timer0 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
             if (g_Timer0 > Q12(165.0f))
             {
                 g_Timer0 = Q12(165.0f);
@@ -320,7 +320,7 @@ void func_800CED88(void) // 0x800CED88
 
             if (g_Timer0 >= Q12(166.0f))
             {
-                g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(15.0f), Q12_SHIFT);
+                g_Timer0 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f));
 
                 if (g_Timer0 > Q12(180.0f))
                 {
@@ -345,7 +345,7 @@ void func_800CED88(void) // 0x800CED88
                 break;
             }
 
-            g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(15.0f), Q12_SHIFT);
+            g_Timer0 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f));
             if (g_Timer0 > Q12(253.0f))
             {
                 g_Timer0 = Q12(253.0f);
@@ -359,7 +359,7 @@ void func_800CED88(void) // 0x800CED88
             } 
             else
             {
-                g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(15.0f), Q12_SHIFT);
+                g_Timer0 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f));
                 if (g_Timer0 > Q12(253.0f))
                 {
                     g_Timer0 = Q12(253.0f);
@@ -429,7 +429,7 @@ void func_800CED88(void) // 0x800CED88
             }
             else
             {
-                g_Timer0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(10.0f), Q12_SHIFT);
+                g_Timer0 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
                 if (g_Timer0 > Q12(141.0f))
                 {
                     g_Timer0 = Q12(141.0f);

@@ -91,7 +91,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
             {
                 return Q12(24.0f);
             }
-            return FP_MULTIPLY_PRECISE(airScreamer->field_34, Q12(-2.0f), Q12_SHIFT) + Q12(20.0f);
+            return Q12_MULT_PRECISE(airScreamer->field_34, Q12(-2.0f)) + Q12(20.0f);
 
         case ANIM_STATUS(AirScreamerAnim_17, true):
             if (isNotControlState1)
@@ -103,8 +103,8 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
             var_v1  = airScreamer->moveSpeed_38 - Q12(4.0f);
 
             ret  = Q12(20.0f);
-            ret += FP_MULTIPLY_PRECISE(ABS(var_v1), Q12(1.5f), Q12_SHIFT);
-            ret += FP_MULTIPLY_PRECISE(temp_a0, Q12(-1.5f), Q12_SHIFT);
+            ret += Q12_MULT_PRECISE(ABS(var_v1), Q12(1.5f));
+            ret += Q12_MULT_PRECISE(temp_a0, Q12(-1.5f));
             return ret;
 
         case ANIM_STATUS(AirScreamerAnim_9, true):
@@ -140,7 +140,7 @@ q19_12 sharedFunc_800D77D0_0_s01(s_SubCharacter* airScreamer)
                 }
 
                 temp_lo  = FP_TO(ret_3 - animTime, Q12_SHIFT) / distToGround;
-                speed1 = FP_MULTIPLY_PRECISE(speed_2, temp_lo, Q12_SHIFT);
+                speed1 = Q12_MULT_PRECISE(speed_2, temp_lo);
             }
 
             if (speed1 < Q12(0.3f))

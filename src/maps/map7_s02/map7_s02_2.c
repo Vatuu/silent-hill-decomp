@@ -881,7 +881,7 @@ void func_800DBB34(void) // 0x800DBB34
             break;
 
         case 12:
-            g_SysWork.npcs_1A0[0].timer_C6 += FP_MULTIPLY_PRECISE(Q12(0.25f), g_DeltaTime0, Q12_SHIFT);
+            g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_PRECISE(Q12(0.25f), g_DeltaTime0);
             if (g_SysWork.npcs_1A0[0].timer_C6 > Q12(1.0f))
             {
                 func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
@@ -1021,8 +1021,8 @@ void func_800DC14C(void) // 0x800DC14C
             floorHitCount = 0;
             for (i = 0; i < 16; i++)
             {
-                g_WorldObject_Beans[i].position_1C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E9ED0 + FP_FROM(D_800EBA14[i] * Math_Sin(D_800EB9F4[i]), Q12_SHIFT), Q12_SHIFT);
-                g_WorldObject_Beans[i].position_1C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_FROM(D_800EBA14[i] * Math_Cos(D_800EB9F4[i]), Q12_SHIFT), Q12_SHIFT);
+                g_WorldObject_Beans[i].position_1C.vy += Q12_MULT_PRECISE(g_DeltaTime0, D_800E9ED0 + FP_FROM(D_800EBA14[i] * Math_Sin(D_800EB9F4[i]), Q12_SHIFT));
+                g_WorldObject_Beans[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, FP_FROM(D_800EBA14[i] * Math_Cos(D_800EB9F4[i]), Q12_SHIFT));
 
                 if (g_WorldObject_Beans[i].position_1C.vy > 0)
                 {
@@ -1035,7 +1035,7 @@ void func_800DC14C(void) // 0x800DC14C
 
             if (D_800E9ED4 < 0)
             {
-                D_800E9ED4 += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E9ED0, Q12_SHIFT);
+                D_800E9ED4 += Q12_MULT_PRECISE(g_DeltaTime0, D_800E9ED0);
                 if (D_800E9ED4 > 0)
                 {
                     func_8005DC1C(Sfx_Unk1651, &QVECTOR3(62.3f, 0.0f, -61.07f), Q8_CLAMPED(0.5f), 0);
@@ -1800,8 +1800,8 @@ void func_800DF21C(void) // 0x800DF21C
             break;
 
         case 10:
-            g_SysWork.npcs_1A0[1].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
-            g_SysWork.npcs_1A0[0].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
+            g_SysWork.npcs_1A0[1].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f);
+            g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f);
             if (g_SysWork.npcs_1A0[0].timer_C6 > Q12(1.0f))
             {
                 g_SysWork.npcs_1A0[0].timer_C6 = Q12(1.0f);
@@ -2265,9 +2265,9 @@ void func_800DFDDC(void) // 0x800DFDDC
                     break;
 
                 case 3:
-                    D_800EBB64.rotation_28.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), Q12_SHIFT);
-                    D_800EBB64.position_1C.vy  = FP_MULTIPLY(Math_Cos(D_800EBB64.rotation_28.vz), Q12(0.15f), Q12_SHIFT) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
-                    D_800EBB64.position_1C.vz  = FP_MULTIPLY(Math_Sin(D_800EBB64.rotation_28.vz), Q12(-0.15f), Q12_SHIFT) - Q12(140.5f);
+                    D_800EBB64.rotation_28.vz += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.0694f));
+                    D_800EBB64.position_1C.vy  = Q12_MULT(Math_Cos(D_800EBB64.rotation_28.vz), Q12(0.15f)) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
+                    D_800EBB64.position_1C.vz  = Q12_MULT(Math_Sin(D_800EBB64.rotation_28.vz), Q12(-0.15f)) - Q12(140.5f);
 
                     g_SysWork.field_28 += g_DeltaTime0;
                     if (g_SysWork.field_28 > Q12(0.5f))
@@ -2279,9 +2279,9 @@ void func_800DFDDC(void) // 0x800DFDDC
 
                 case 4:
                     D_800EA492                           += g_DeltaTime2;
-                    D_800EBB64.rotation_28.vz            += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), Q12_SHIFT);
-                    D_800EBB64.position_1C.vy            += FP_MULTIPLY_PRECISE(D_800EA492, g_DeltaTime0, Q12_SHIFT);
-                    D_800EBB64.position_1C.vz            += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), Q12_SHIFT);
+                    D_800EBB64.rotation_28.vz            += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.3333f));
+                    D_800EBB64.position_1C.vy            += Q12_MULT_PRECISE(D_800EA492, g_DeltaTime0);
+                    D_800EBB64.position_1C.vz            += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.3f));
 
                     if (D_800EBB64.position_1C.vy > 0)
                     {

@@ -2599,68 +2599,68 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
  * @param speed Move speed (Q*.12).
  */
 #define Chara_MoveSpeedUpdate(chara, speed) \
-    chara->moveSpeed_38 = APPROACH(chara->moveSpeed_38, Q12(0.0f), FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT))
+    chara->moveSpeed_38 = APPROACH(chara->moveSpeed_38, Q12(0.0f), Q12_MULT_PRECISE(g_DeltaTime0, speed))
 
 // TODO: Is it possible to merge these macros?
-#define Chara_MoveSpeedUpdate2(chara, speed, limit)                                                  \
-{                                                                                                    \
-    q19_12 moveSpeed;                                                                                \
-    q19_12 newSpeed;                                                                                 \
-    q19_12 newMoveSpeed;                                                                             \
-                                                                                                     \
-    moveSpeed = chara->moveSpeed_38;                                                                 \
-    if (moveSpeed > limit)                                                                           \
-    {                                                                                                \
-        newMoveSpeed = limit;                                                                        \
-        limit        = Q12(0.0f);                                                                    \
-        newSpeed     = moveSpeed - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT);              \
-        if (newMoveSpeed < newSpeed)                                                                 \
-        {                                                                                            \
-            newMoveSpeed = newSpeed;                                                                 \
-        }                                                                                            \
-    }                                                                                                \
-    else                                                                                             \
-    {                                                                                                \
-        newMoveSpeed = limit;                                                                        \
-        newSpeed     = moveSpeed + FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT);              \
-        if (newMoveSpeed >= newSpeed)                                                                \
-        {                                                                                            \
-            newMoveSpeed = newSpeed;                                                                 \
-        }                                                                                            \
-    }                                                                                                \
-    chara->moveSpeed_38 = newMoveSpeed;                                                              \
+#define Chara_MoveSpeedUpdate2(chara, speed, limit)                       \
+{                                                                         \
+    q19_12 moveSpeed;                                                     \
+    q19_12 newSpeed;                                                      \
+    q19_12 newMoveSpeed;                                                  \
+                                                                          \
+    moveSpeed = chara->moveSpeed_38;                                      \
+    if (moveSpeed > limit)                                                \
+    {                                                                     \
+        newMoveSpeed = limit;                                             \
+        limit        = Q12(0.0f);                                         \
+        newSpeed     = moveSpeed - Q12_MULT_PRECISE(g_DeltaTime0, speed); \
+        if (newMoveSpeed < newSpeed)                                      \
+        {                                                                 \
+            newMoveSpeed = newSpeed;                                      \
+        }                                                                 \
+    }                                                                     \
+    else                                                                  \
+    {                                                                     \
+        newMoveSpeed = limit;                                             \
+        newSpeed     = moveSpeed + Q12_MULT_PRECISE(g_DeltaTime0, speed); \
+        if (newMoveSpeed >= newSpeed)                                     \
+        {                                                                 \
+            newMoveSpeed = newSpeed;                                      \
+        }                                                                 \
+    }                                                                     \
+    chara->moveSpeed_38 = newMoveSpeed;                                   \
 }
 
 #define Chara_MoveSpeedUpdate3(chara, speed, limit) \
-    chara->moveSpeed_38 = APPROACH(chara->moveSpeed_38, limit, FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT))
+    chara->moveSpeed_38 = APPROACH(chara->moveSpeed_38, limit, Q12_MULT_PRECISE(g_DeltaTime0, speed))
 
-#define Chara_MoveSpeedUpdate4(chara, speed, limit)                                                   \
-    {                                                                                                 \
-        q19_12 newSpeed;                                                                              \
-        q19_12 newMoveSpeed;                                                                          \
-                                                                                                      \
-        if (chara->moveSpeed_38 > limit)                                                              \
-        {                                                                                             \
-            newMoveSpeed = limit;                                                                     \
-            newSpeed     = chara->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT); \
-            if (newMoveSpeed < newSpeed)                                                              \
-            {                                                                                         \
-                newMoveSpeed = newSpeed;                                                              \
-            }                                                                                         \
-        }                                                                                             \
-        else                                                                                          \
-        {                                                                                             \
-            newMoveSpeed = limit;                                                                     \
-            newSpeed     = chara->moveSpeed_38 + FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT); \
-            if (newMoveSpeed >= newSpeed)                                                             \
-            {                                                                                         \
-                newMoveSpeed = newSpeed;                                                              \
-            }                                                                                         \
-        }                                                                                             \
-        chara->moveSpeed_38 = newMoveSpeed;                                                           \
+#define Chara_MoveSpeedUpdate4(chara, speed, limit)                                     \
+    {                                                                                   \
+        q19_12 newSpeed;                                                                \
+        q19_12 newMoveSpeed;                                                            \
+                                                                                        \
+        if (chara->moveSpeed_38 > limit)                                                \
+        {                                                                               \
+            newMoveSpeed = limit;                                                       \
+            newSpeed     = chara->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, speed); \
+            if (newMoveSpeed < newSpeed)                                                \
+            {                                                                           \
+                newMoveSpeed = newSpeed;                                                \
+            }                                                                           \
+        }                                                                               \
+        else                                                                            \
+        {                                                                               \
+            newMoveSpeed = limit;                                                       \
+            newSpeed     = chara->moveSpeed_38 + Q12_MULT_PRECISE(g_DeltaTime0, speed); \
+            if (newMoveSpeed >= newSpeed)                                               \
+            {                                                                           \
+                newMoveSpeed = newSpeed;                                                \
+            }                                                                           \
+        }                                                                               \
+        chara->moveSpeed_38 = newMoveSpeed;                                             \
     }
 
 #define Chara_MoveSpeedUpdate5(chara, speed, limit) \
-    chara->moveSpeed_38 = APPROACH_ALT(chara->moveSpeed_38, limit, FP_MULTIPLY_PRECISE(g_DeltaTime0, speed, Q12_SHIFT))
+    chara->moveSpeed_38 = APPROACH_ALT(chara->moveSpeed_38, limit, Q12_MULT_PRECISE(g_DeltaTime0, speed))
 
 #endif

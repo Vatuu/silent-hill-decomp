@@ -46,7 +46,7 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* airScreamer, q19_12 vecY, q19_12 d
     else if (distCpy > Q12(4.0f))
     {
         someY    = FP_TO(distCpy - Q12(4.0f), Q12_SHIFT) / Q12(8.0f);
-        vecYCpy += FP_MULTIPLY_PRECISE((groundHeight - vecYCpy), someY, Q12_SHIFT);
+        vecYCpy += Q12_MULT_PRECISE((groundHeight - vecYCpy), someY);
     }
 
     if (vecYCpy < sharedFunc_800D5274_0_s01())

@@ -51,9 +51,9 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* char
         }
         else
         {
-            vec2X = FP_MULTIPLY_PRECISE(vec0X, time, Q12_SHIFT);
+            vec2X = Q12_MULT_PRECISE(vec0X, time);
             vec2->vx = vec2X;
-            vec2Z = FP_MULTIPLY_PRECISE(vec0Z, time, Q12_SHIFT);
+            vec2Z = Q12_MULT_PRECISE(vec0Z, time);
             vec2->vz = vec2Z;
         }
 

@@ -10,7 +10,7 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
 
     #define groanerProps groaner->properties_E4.groaner
 
-    Chara_MoveSpeedUpdate5(groaner, Q12(6.0f), FP_MULTIPLY_PRECISE(groanerProps.field_114, Q12(0.5f), Q12_SHIFT));
+    Chara_MoveSpeedUpdate5(groaner, Q12(6.0f), Q12_MULT_PRECISE(groanerProps.field_114, Q12(0.5f)));
 
     if (groanerProps.flags_E8.val16[0] & GroanerFlag_0)
     {
@@ -19,11 +19,11 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
         {
             if (unkAngleDelta > FP_ANGLE(0.0f))
             {
-                groaner->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(60.0f), Q12_SHIFT);
+                groaner->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(60.0f));
             }
             else
             {
-                groaner->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(60.0f), Q12_SHIFT);
+                groaner->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(60.0f));
             }
         }
         else

@@ -955,7 +955,7 @@ void func_800DBB7C(void) // 0x800DBB7C
             {
                 if (D_800E1EE8 - Q12(1.0f) <= Q12(6.0f))
                 {
-                    angleAdd = FP_MULTIPLY_PRECISE(D_800E1EE8 - Q12(1.0f), FP_ANGLE(5.0f), Q12_SHIFT) - FP_ANGLE(35.0f);
+                    angleAdd = Q12_MULT_PRECISE(D_800E1EE8 - Q12(1.0f), FP_ANGLE(5.0f)) - FP_ANGLE(35.0f);
                 }
                 else
                 {
@@ -968,7 +968,7 @@ void func_800DBB7C(void) // 0x800DBB7C
                 SysWork_StateStepIncrement(0);
             }
 
-            g_WorldObject1.rotation_28.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, angleAdd, Q12_SHIFT);
+            g_WorldObject1.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime0, angleAdd);
             if (g_WorldObject1.rotation_28.vy < FP_ANGLE(-112.5f))
             {
                 g_WorldObject1.rotation_28.vy = FP_ANGLE(-112.5f);
@@ -1141,11 +1141,11 @@ void func_800DC1E0(void) // 0x800DC1E0
 
             if (D_800E1FDC.vx < Q12(0.25f)) 
             {
-                D_800E1FE0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.1666f), Q12_SHIFT);
+                D_800E1FE0 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.1666f));
             } 
             else 
             {
-                D_800E1FE0 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.1666f), Q12_SHIFT);
+                D_800E1FE0 -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.1666f));
                 D_800E1FE0 = MAX(D_800E1FE0, 170); // TODO: Float.
             }
 
@@ -1153,7 +1153,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             {
                 if (Savegame_EventFlagGet(EventFlag_118)) 
                 {
-                    rotY0 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT);
+                    rotY0 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)));
                     if ((D_800E1FDC.vx - rotY0) > FP_ANGLE(180.0f)) 
                     {
                         rotY0 = D_800E1FDC.vx - FP_ANGLE(180.0f);
@@ -1164,7 +1164,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                         D_800E1FDC.vx -= rotY0;
                     }
 
-                    rotY1 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT) >> 1;
+                    rotY1 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f))) >> 1;
                     if ((D_800E1FDC.vy - rotY1) > FP_ANGLE(90.0f)) 
                     {
                         rotY1 = D_800E1FDC.vy - FP_ANGLE(90.0f);
@@ -1177,7 +1177,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                 } 
                 else 
                 {
-                    rotY1 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT);
+                    rotY1 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)));
                     if ((D_800E1FDC.vx - rotY1) > FP_ANGLE(180.0f)) 
                     {
                         rotY1 = D_800E1FDC.vx - FP_ANGLE(180.0f);
@@ -1188,7 +1188,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                         D_800E1FDC.vx -= rotY1;
                     }
     
-                    rotY0 = -FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT) >> 1;
+                    rotY0 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f))) >> 1;
                     if ((D_800E1FDC.vy - rotY0) > FP_ANGLE(90.0f))
                     {
                         rotY0 = D_800E1FDC.vy - FP_ANGLE(90.0f);
@@ -1202,7 +1202,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             } 
             else if (Savegame_EventFlagGet(EventFlag_118)) 
             {
-                rotY0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT);
+                rotY0 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)));
                 if ((D_800E1FDC.vx + rotY0) > FP_ANGLE(180.0f)) 
                 {
                     rotY0 = FP_ANGLE(180.0f) - D_800E1FDC.vx;
@@ -1213,7 +1213,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                     D_800E1FDC.vx += rotY0;
                 }
                 
-                rotY1 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT) >> 1;
+                rotY1 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f))) >> 1;
                 if ((D_800E1FDC.vy + rotY1) > FP_ANGLE(90.0f)) 
                 {
                     rotY1 = FP_ANGLE(90.0f) - D_800E1FDC.vy;
@@ -1226,7 +1226,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             } 
             else 
             {
-                rotY1 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT);
+                rotY1 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)));
                 if ((D_800E1FDC.vx + rotY1) > FP_ANGLE(180.0f)) 
                 {
                     rotY1 = FP_ANGLE(180.0f) - D_800E1FDC.vx;
@@ -1237,7 +1237,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                     D_800E1FDC.vx += rotY1;
                 }
     
-                rotY0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)), Q12_SHIFT) >> 1;
+                rotY0 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f))) >> 1;
                 if ((D_800E1FDC.vy + rotY0) > FP_ANGLE(90.0f))
                 {
                     rotY0 = FP_ANGLE(90.0f) - D_800E1FDC.vy;
@@ -1317,7 +1317,7 @@ void func_800DCF00(void) // 0x800DCF00
         case 5:
             SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
 
-            g_ScreenFadeTimestep += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.1f, Q12_SHIFT);
+            g_ScreenFadeTimestep += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.1f);
             g_ScreenFadeTimestep  = MIN(g_ScreenFadeTimestep, Q12(3.0f));
             break;
 
@@ -1340,12 +1340,12 @@ void func_800DCF00(void) // 0x800DCF00
 
         func_8005DE0C(Sfx_Unk1451, &g_WorldObject0.position_1C, (D_800E1FE4 + Q12(0.1f)) >> 4, Q12(32.0f), 0);
 
-        var_t0     = D_800E1FE4 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
+        var_t0     = D_800E1FE4 + Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.0f);
         var_t0     = MIN(var_t0, Q12(0.4f));
         D_800E1FE4 = var_t0;
 
-        g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E1FE4, Q12_SHIFT);
-        g_WorldObject0.position_1C.vy                  += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E1FE4, Q12_SHIFT);
+        g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime0, D_800E1FE4);
+        g_WorldObject0.position_1C.vy                  += Q12_MULT_PRECISE(g_DeltaTime0, D_800E1FE4);
     }
 }
 
@@ -1551,12 +1551,12 @@ void func_800DDA84(void) // 0x800DDA84
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))
     {
         rng0 = -0x800 - (Rng_Rand16() & 0x1FF);
-        g_ObjRotC[0].vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, rng0, Q12_SHIFT);
+        g_ObjRotC[0].vz += Q12_MULT_PRECISE(g_DeltaTime0, rng0);
 
         g_WorldGfx_ObjectAdd(&g_WorldObjectC, g_ObjPosC, (SVECTOR3* ) g_ObjRotC);
 
         rng1 = -0x91C - (Rng_Rand16() & 0x1FF);
-        g_ObjRotC[1].vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, rng1, Q12_SHIFT);
+        g_ObjRotC[1].vz += Q12_MULT_PRECISE(g_DeltaTime0, rng1);
 
         g_WorldGfx_ObjectAdd(&g_WorldObjectC, &g_ObjPosC[1], (SVECTOR3* ) &g_ObjRotC[1]);
 

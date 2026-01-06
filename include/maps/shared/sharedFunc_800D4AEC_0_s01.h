@@ -88,8 +88,8 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
             }
 
             cond  = true;
-            temp3 = FP_MULTIPLY_PRECISE(offsetX, var_v1, Q12_SHIFT);
-            temp2 = FP_MULTIPLY_PRECISE(i, var_v1, Q12_SHIFT);
+            temp3 = Q12_MULT_PRECISE(offsetX, var_v1);
+            temp2 = Q12_MULT_PRECISE(i, var_v1);
 
             sharedData_800E2330_0_s01.field_14   = temp;
             sharedData_800E2330_0_s01.field_0    = temp_v0_2;
@@ -97,7 +97,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
             sharedData_800E2330_0_s01.field_4.vy = temp2 + posY;
             sharedData_800E2330_0_s01.field_18   = sharedData_800E2330_0_s01.field_4.vy;
 
-            temp2                                 = FP_MULTIPLY_PRECISE(offsetZ, var_v1, Q12_SHIFT);
+            temp2                                 = Q12_MULT_PRECISE(offsetZ, var_v1);
             sharedData_800E2330_0_s01.field_4.vz  = temp2 + posZ;
             sharedData_800E2330_0_s01.field_4.vy += Q12(0.0f); // @hack
         }

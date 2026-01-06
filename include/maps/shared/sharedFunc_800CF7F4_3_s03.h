@@ -17,11 +17,11 @@ void sharedFunc_800CF7F4_3_s03(s_SubCharacter* nurse)
     {
         if (angle > FP_ANGLE(0.0f))
         {
-            nurse->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f), Q12_SHIFT);
+            nurse->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
         }
         else
         {
-            nurse->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f), Q12_SHIFT);
+            nurse->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
         }
     }
 }

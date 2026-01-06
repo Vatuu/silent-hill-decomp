@@ -129,7 +129,7 @@ void Screen_FadeUpdate(void) // 0x8003260C
                 timestep = Q12(3.0f) / (queueLength + 1);
             }
 
-            g_ScreenFadeProgress += FP_MULTIPLY_PRECISE(timestep, g_DeltaTime1, Q12_SHIFT);
+            g_ScreenFadeProgress += Q12_MULT_PRECISE(timestep, g_DeltaTime1);
             if (g_ScreenFadeProgress >= (Q12(1.0f) - 1))
             {
                 g_ScreenFadeProgress = Q12(1.0f) - 1;
@@ -171,7 +171,7 @@ void Screen_FadeUpdate(void) // 0x8003260C
                 timestep = Q12(3.0f);
             }
 
-            g_ScreenFadeProgress -= FP_MULTIPLY_PRECISE(timestep, g_DeltaTime1, Q12_SHIFT);
+            g_ScreenFadeProgress -= Q12_MULT_PRECISE(timestep, g_DeltaTime1);
 
             if (g_ScreenFadeProgress <= Q12(0.0f))
             {
@@ -253,7 +253,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
             g_SysWork.field_30++;
 
         case 19:
-            D_800A8F40 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
+            D_800A8F40 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.0f);
 
             if (D_800A8F40 >= 0xFFF)
             {
@@ -274,7 +274,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
             break;
 
         case 23:
-            D_800A8F40 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 1.0f, Q12_SHIFT);
+            D_800A8F40 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 1.0f);
 
             if (D_800A8F40 <= 0)
             {
@@ -303,7 +303,7 @@ void Screen_CutsceneCameraStateUpdate(void) // 0x80032904
 
     if (!(g_SysWork.flags_22A4 & SysFlag2_3))
     {
-        vcChangeProjectionValue(g_GameWork.gsScreenHeight_58A + FP_MULTIPLY(377 - g_GameWork.gsScreenHeight_58A, D_800A8F40, Q12_SHIFT));
+        vcChangeProjectionValue(g_GameWork.gsScreenHeight_58A + Q12_MULT(377 - g_GameWork.gsScreenHeight_58A, D_800A8F40));
     }
 }
 

@@ -34,11 +34,11 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
         {
             if (angleDeltaToPlayer0 > FP_ANGLE(0.0f))
             {
-                groaner->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.25f), Q12_SHIFT);
+                groaner->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f));
             }
             else
             {
-                groaner->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.25f), Q12_SHIFT);
+                groaner->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f));
             }
 
             angleDeltaToPlayer1 = func_8005BF38(Math_AngleBetweenPositionsGet(groaner->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
@@ -50,11 +50,11 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
             {
                 if (angleDeltaToPlayer1 > FP_ANGLE(0.0f))
                 {
-                    groaner->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.25f), Q12_SHIFT);
+                    groaner->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f));
                 }
                 else
                 {
-                    groaner->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.25f), Q12_SHIFT);
+                    groaner->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f));
                 }
             }
             else
@@ -72,11 +72,11 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
     {
         // TODO: Convert 771. Maybe some fraction?
         temp1 = groaner->rotation_24.vy + Q12(0.125f);
-        temp2 = groaner->headingAngle_3C + FP_MULTIPLY_PRECISE(g_DeltaTime0, 771, Q12_SHIFT);
+        temp2 = groaner->headingAngle_3C + Q12_MULT_PRECISE(g_DeltaTime0, 771);
 
         if (temp2 < temp1)
         {
-            groaner->headingAngle_3C += FP_MULTIPLY_PRECISE(g_DeltaTime0, 771, Q12_SHIFT);
+            groaner->headingAngle_3C += Q12_MULT_PRECISE(g_DeltaTime0, 771);
         }
         else
         {
@@ -100,7 +100,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
             deltaY                                           = g_SysWork.playerWork_4C.player_0.position_18.vy - groaner->position_18.vy;
             groaner->field_44.field_0                             = 1;
             groanerProps.field_10C[3] = 2;
-            groaner->field_34                                     = FP_MULTIPLY_PRECISE(deltaY - Q12(1.4f), Q12(2.35f), Q12_SHIFT);
+            groaner->field_34                                     = Q12_MULT_PRECISE(deltaY - Q12(1.4f), Q12(2.35f));
         }
     }
 

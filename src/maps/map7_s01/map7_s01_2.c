@@ -1488,9 +1488,9 @@ void func_800D9C9C(void) // 0x800D9C9C
                     break;
 
                 case 3:
-                    g_WorldObject_Stone0.rotation_28.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.0694f), Q12_SHIFT);
-                    g_WorldObject_Stone0.position_1C.vy  = FP_MULTIPLY(Math_Cos(g_WorldObject_Stone0.rotation_28.vz), Q12(0.15f), Q12_SHIFT) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
-                    g_WorldObject_Stone0.position_1C.vz  = FP_MULTIPLY(Math_Sin(g_WorldObject_Stone0.rotation_28.vz), Q12(-0.15f), Q12_SHIFT) - Q12(140.5f);
+                    g_WorldObject_Stone0.rotation_28.vz += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.0694f));
+                    g_WorldObject_Stone0.position_1C.vy  = Q12_MULT(Math_Cos(g_WorldObject_Stone0.rotation_28.vz), Q12(0.15f)) - (Q12(1.2f) - 1); // TODO: Why `- 1`?
+                    g_WorldObject_Stone0.position_1C.vz  = Q12_MULT(Math_Sin(g_WorldObject_Stone0.rotation_28.vz), Q12(-0.15f)) - Q12(140.5f);
 
                     g_SysWork.field_28                   += g_DeltaTime0;
                     if (g_SysWork.field_28 > Q12(0.5f))
@@ -1502,9 +1502,9 @@ void func_800D9C9C(void) // 0x800D9C9C
 
                 case 4:
                     D_800E168E                          += g_DeltaTime2;
-                    g_WorldObject_Stone0.rotation_28.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3333f), Q12_SHIFT);
-                    g_WorldObject_Stone0.position_1C.vy += FP_MULTIPLY_PRECISE(D_800E168E, g_DeltaTime0, Q12_SHIFT);
-                    g_WorldObject_Stone0.position_1C.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), Q12_SHIFT);
+                    g_WorldObject_Stone0.rotation_28.vz += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.3333f));
+                    g_WorldObject_Stone0.position_1C.vy += Q12_MULT_PRECISE(D_800E168E, g_DeltaTime0);
+                    g_WorldObject_Stone0.position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.3f));
 
                     if (g_WorldObject_Stone0.position_1C.vy > 0)
                     {
@@ -2181,7 +2181,7 @@ void func_800DDCD4(void) // 0x800DDCD4
                 }
                 else if (D_800E33A4 > 0)
                 {
-                    D_800E33A4 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.6f), Q12_SHIFT);
+                    D_800E33A4 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.6f));
                     npcTimer = D_800E33A4;
                 }
     
@@ -2236,7 +2236,7 @@ void func_800DDCD4(void) // 0x800DDCD4
         case PACKED_CELL_XZ(18, 15):
             if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_GhostChildAlessa)
             {
-                g_SysWork.npcs_1A0[0].timer_C6 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.2f), Q12_SHIFT);
+                g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.2f));
 
                 if (g_SysWork.npcs_1A0[0].timer_C6 > Q12(1.0f)) 
                 {

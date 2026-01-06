@@ -76,14 +76,14 @@ void Ai_Dahlia_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
     unused       = chara->position_18;
     moveSpeed    = chara->moveSpeed_38;
     headingAngle = chara->headingAngle_3C;
-    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+    moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime0);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    offset.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    offset.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    offset.vx = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vy = Q12_MULT_PRECISE(chara->field_34, g_DeltaTime0);
 
     func_80069B24(&sharedData_800E39BC_0_s00, &offset, chara);
 

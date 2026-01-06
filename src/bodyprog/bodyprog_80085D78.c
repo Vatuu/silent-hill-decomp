@@ -512,7 +512,7 @@ s32 func_8008694C(s32 arg0, s16 arg1, s16 arg2, s32 arg3, s32 idx)
 {
     D_800C4710[idx] += g_DeltaTime0;
     D_800C4710[idx] = (arg3 < D_800C4710[idx]) ? arg3 : D_800C4710[idx];
-    return FP_MULTIPLY(arg0, Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3)), Q12_SHIFT);
+    return Q12_MULT(arg0, Math_Sin(arg1 + ((arg2 * D_800C4710[idx]) / arg3)));
 }
 
 void Map_MessageWithAudio(s32 mapMsgIdx, u8* soundIdx, u16* soundsIdxs) // 0x800869E4
@@ -1320,14 +1320,14 @@ void func_80088370(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s
         iVar1   = iVar4;
         temp_v0 = 0x1000 - iVar1;
 
-        uVar6[0] = FP_MULTIPLY_PRECISE(arg1, temp_v0, Q12_SHIFT) + FP_MULTIPLY_PRECISE(arg5, iVar1, Q12_SHIFT);
-        sVar5[0] = FP_MULTIPLY_PRECISE(arg2, temp_v0, Q12_SHIFT) + FP_MULTIPLY_PRECISE(arg6, iVar1, Q12_SHIFT);
+        uVar6[0] = Q12_MULT_PRECISE(arg1, temp_v0) + Q12_MULT_PRECISE(arg5, iVar1);
+        sVar5[0] = Q12_MULT_PRECISE(arg2, temp_v0) + Q12_MULT_PRECISE(arg6, iVar1);
 
-        temp2    = uVar6[0] + FP_MULTIPLY_PRECISE(arg3, temp_v0, Q12_SHIFT);
-        uVar6[1] = FP_MULTIPLY_PRECISE(arg7, iVar1, Q12_SHIFT) + temp2;
+        temp2    = uVar6[0] + Q12_MULT_PRECISE(arg3, temp_v0);
+        uVar6[1] = Q12_MULT_PRECISE(arg7, iVar1) + temp2;
 
-        temp2    = sVar5[0] + FP_MULTIPLY_PRECISE(arg4, temp_v0, Q12_SHIFT);
-        sVar5[1] = FP_MULTIPLY_PRECISE(arg8, iVar1, Q12_SHIFT) + temp2;
+        temp2    = sVar5[0] + Q12_MULT_PRECISE(arg4, temp_v0);
+        sVar5[1] = Q12_MULT_PRECISE(arg8, iVar1) + temp2;
 
         setLineF3(line);
         setXY0Fast(line, uVar6[0], sVar5[0]);
@@ -2824,8 +2824,8 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 }
 
                 temp_v1 = FP_TO(var_a0_2 - 0x800, Q12_SHIFT) / 6144;
-                var_s2  = FP_MULTIPLY_PRECISE(temp_v1, -0x1800, Q12_SHIFT) + 0x1C00;
-                var_s2  = FP_MULTIPLY_PRECISE(var_s2, sp48, Q12_SHIFT);
+                var_s2  = Q12_MULT_PRECISE(temp_v1, -0x1800) + 0x1C00;
+                var_s2  = Q12_MULT_PRECISE(var_s2, sp48);
 
                 if (var_s2 < 0xAA)
                 {
@@ -2870,8 +2870,8 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                                 temp_v0_5 = chara->position_18.vy - temp_s1_2->position_18.vy;
                                 temp_v0_6 = chara->position_18.vz - temp_s1_2->position_18.vz;
 
-                                temp6   = FP_MULTIPLY_PRECISE(temp_v0_4, temp_v0_4, Q12_SHIFT) + FP_MULTIPLY_PRECISE(temp_v0_5, temp_v0_5, Q12_SHIFT);
-                                temp_s0 = FP_MULTIPLY_PRECISE(temp_v0_6, temp_v0_6, Q12_SHIFT) + temp6;
+                                temp6   = Q12_MULT_PRECISE(temp_v0_4, temp_v0_4) + Q12_MULT_PRECISE(temp_v0_5, temp_v0_5);
+                                temp_s0 = Q12_MULT_PRECISE(temp_v0_6, temp_v0_6) + temp6;
 
                                 sp30 = SquareRoot12(temp_s0);
 
@@ -2889,7 +2889,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                                         {
                                             temp_v0_10 += 0xFFFF;
                                         }
-                                        var_s2 = FP_MULTIPLY_PRECISE(var_s2, temp_v0_10 >> 0x10, Q12_SHIFT);
+                                        var_s2 = Q12_MULT_PRECISE(var_s2, temp_v0_10 >> 0x10);
                                     }
                                 }
 
@@ -2926,10 +2926,10 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 }
 
             j_584:
-                sp48 = FP_MULTIPLY_PRECISE(var_s2, Rng_RandQ12(), Q12_SHIFT);
+                sp48 = Q12_MULT_PRECISE(var_s2, Rng_RandQ12());
             }
 
-            var_s6 = FP_MULTIPLY(sp4C, sp10 - 2, Q12_SHIFT);
+            var_s6 = Q12_MULT(sp4C, sp10 - 2);
 
             for (i = i + sp34;
                  sp3C != 0 && sp40 < sp38 && sp28 >= i;
@@ -2938,21 +2938,21 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 for (j = charaId; j > 0; j--)
                 {
                     temp_v0_10 = Rng_RandQ12();
-                    temp_s2_2  = FP_MULTIPLY_PRECISE(sp48, temp_v0_10, Q12_SHIFT);
+                    temp_s2_2  = Q12_MULT_PRECISE(sp48, temp_v0_10);
 
                     temp_v0_10 = Rng_RandQ12() - FP_ANGLE(180.0f);
-                    angle  = var_s6 + FP_MULTIPLY_PRECISE(sp50, temp_v0_10, Q12_SHIFT);
+                    angle  = var_s6 + Q12_MULT_PRECISE(sp50, temp_v0_10);
 
-                    temp3     = sp20 + FP_MULTIPLY(temp_s2_2, Math_Sin(angle), Q12_SHIFT);
-                    temp_s0_7 = sp24 + FP_MULTIPLY(temp_s2_2, Math_Cos(angle), Q12_SHIFT);
+                    temp3     = sp20 + Q12_MULT(temp_s2_2, Math_Sin(angle));
+                    temp_s0_7 = sp24 + Q12_MULT(temp_s2_2, Math_Cos(angle));
                     temp2     = Math_Cos(temp_s0_7);
                     temp_s0_8 = Math_Sin(temp_s0_7);
-                    temp_s1_4 = FP_MULTIPLY(temp_s0_8, Math_Sin(temp3), Q12_SHIFT);
-                    temp_s0_9 = FP_MULTIPLY(temp_s0_8, Math_Cos(temp3), Q12_SHIFT);
+                    temp_s1_4 = Q12_MULT(temp_s0_8, Math_Sin(temp3));
+                    temp_s0_9 = Q12_MULT(temp_s0_8, Math_Cos(temp3));
 
-                    chara->field_44.field_48[0].vx = FP_MULTIPLY(sp54, temp_s1_4, Q12_SHIFT);
-                    chara->field_44.field_48[0].vy = FP_MULTIPLY(sp54, temp2, Q12_SHIFT);
-                    chara->field_44.field_48[0].vz = FP_MULTIPLY(sp54, temp_s0_9, Q12_SHIFT);
+                    chara->field_44.field_48[0].vx = Q12_MULT(sp54, temp_s1_4);
+                    chara->field_44.field_48[0].vy = Q12_MULT(sp54, temp2);
+                    chara->field_44.field_48[0].vz = Q12_MULT(sp54, temp_s0_9);
 
                     var_s6 += sp4C;
 
@@ -3044,14 +3044,14 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
             sp7C = Math_Cos(temp_s0_10);
             sp80 = Math_Sin(temp_s0_10);
 
-            sp78 = FP_MULTIPLY(sp80, Math_Sin(temp_s1_5), Q12_SHIFT);
-            sp80 = FP_MULTIPLY(sp80, Math_Cos(temp_s1_5), Q12_SHIFT);
+            sp78 = Q12_MULT(sp80, Math_Sin(temp_s1_5));
+            sp80 = Q12_MULT(sp80, Math_Cos(temp_s1_5));
 
             sp88 = Math_Cos(sp24);
             sp8C = Math_Sin(sp24);
 
-            sp84 = FP_MULTIPLY(sp8C, Math_Sin(sp20), Q12_SHIFT);
-            sp8C = FP_MULTIPLY(sp8C, Math_Cos(sp20), Q12_SHIFT);
+            sp84 = Q12_MULT(sp8C, Math_Sin(sp20));
+            sp8C = Q12_MULT(sp8C, Math_Cos(sp20));
             sp90 = 0;
             sp94 = 0;
 
@@ -3300,27 +3300,27 @@ void func_8008B1DC(s_SubCharacter* chara, q19_12 angle0, q19_12 angle1) // 0x800
     cosAngle1 = Math_Cos(angle1);
     sinAngle1 = Math_Sin(angle1);
 
-    temp_s3   = FP_MULTIPLY(sinAngle1, Math_Sin(angle0), Q12_SHIFT);
-    temp_v1_2 = FP_MULTIPLY(sinAngle1, Math_Cos(angle0), Q12_SHIFT);
+    temp_s3   = Q12_MULT(sinAngle1, Math_Sin(angle0));
+    temp_v1_2 = Q12_MULT(sinAngle1, Math_Cos(angle0));
 
     temp_s2 -= temp_s0;
 
-    vx2                          += FP_MULTIPLY(temp_s0, temp_s3, Q12_SHIFT);
+    vx2                          += Q12_MULT(temp_s0, temp_s3);
     chara->field_44.field_24[0].vx = vx2;
 
-    vy2                          += FP_MULTIPLY(temp_s0, cosAngle1, Q12_SHIFT);
+    vy2                          += Q12_MULT(temp_s0, cosAngle1);
     chara->field_44.field_24[0].vy = vy2;
 
-    vz2                          += FP_MULTIPLY(temp_s0, temp_v1_2, Q12_SHIFT);
+    vz2                          += Q12_MULT(temp_s0, temp_v1_2);
     chara->field_44.field_24[0].vz = vz2;
 
-    vx                            = FP_MULTIPLY(temp_s2, temp_s3, Q12_SHIFT);
+    vx                            = Q12_MULT(temp_s2, temp_s3);
     chara->field_44.field_48[0].vx = vx;
 
-    vy                            = FP_MULTIPLY(temp_s2, cosAngle1, Q12_SHIFT);
+    vy                            = Q12_MULT(temp_s2, cosAngle1);
     chara->field_44.field_48[0].vy = vy;
 
-    vz                            = FP_MULTIPLY(temp_s2, temp_v1_2, Q12_SHIFT);
+    vz                            = Q12_MULT(temp_s2, temp_v1_2);
     chara->field_44.field_48[0].vz = vz;
 }
 
@@ -3661,7 +3661,7 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
         var_v1 += 3;
     }
 
-    var_s4 = FP_MULTIPLY_PRECISE(new_var, var_v1 >> 2, Q12_SHIFT);
+    var_s4 = Q12_MULT_PRECISE(new_var, var_v1 >> 2);
 
     switch (weaponAttack)
     {
@@ -3695,8 +3695,8 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
             if (var_s1 == 1)
             {
-                var_s4 = FP_MULTIPLY_PRECISE(var_s4, var_s2, Q12_SHIFT);
-                var_s7 = FP_MULTIPLY_PRECISE(var_s7, var_s2, Q12_SHIFT);
+                var_s4 = Q12_MULT_PRECISE(var_s4, var_s2);
+                var_s7 = Q12_MULT_PRECISE(var_s7, var_s2);
             }
 
             // TODO: Doesn't match.
@@ -3775,9 +3775,9 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
                 }
 
                 var_v1   = 0x01000000 / var_v1;
-                var_s0_2 = FP_MULTIPLY_PRECISE(var_s0_2, var_v1, Q12_SHIFT);
-                var_s1   = FP_MULTIPLY_PRECISE(var_s1, var_v1, Q12_SHIFT);
-                var_s2   = FP_MULTIPLY_PRECISE(var_s2, var_v1, Q12_SHIFT);
+                var_s0_2 = Q12_MULT_PRECISE(var_s0_2, var_v1);
+                var_s1   = Q12_MULT_PRECISE(var_s1, var_v1);
+                var_s2   = Q12_MULT_PRECISE(var_s2, var_v1);
             }
             break;
     }
@@ -3789,11 +3789,11 @@ s32 func_8008B714(s_SubCharacter* attacker, s_SubCharacter* target, VECTOR3* arg
 
     if (var_s7 != 0)
     {
-        temp              = FP_MULTIPLY_PRECISE(var_s7, var_s0_2, Q12_SHIFT);
+        temp              = Q12_MULT_PRECISE(var_s7, var_s0_2);
         target->damage_B4.position_0.vx += temp;
-        temp              = FP_MULTIPLY_PRECISE(var_s7, var_s1, Q12_SHIFT);
+        temp              = Q12_MULT_PRECISE(var_s7, var_s1);
         target->damage_B4.position_0.vy += temp;
-        temp              = FP_MULTIPLY_PRECISE(var_s7, var_s2, Q12_SHIFT);
+        temp              = Q12_MULT_PRECISE(var_s7, var_s2);
         target->damage_B4.position_0.vz += temp;
     }
 
@@ -3984,10 +3984,10 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     var_s7           = chara->field_44.field_48[0].vy;
     D_800C4788[1].vy = var_s7;
 
-    temp_t4          = FP_MULTIPLY_PRECISE(sp34, cosAngle, Q12_SHIFT) - FP_MULTIPLY_PRECISE(var_fp, sinAngle, Q12_SHIFT);
+    temp_t4          = Q12_MULT_PRECISE(sp34, cosAngle) - Q12_MULT_PRECISE(var_fp, sinAngle);
     D_800C4788[1].vx = temp_t4;
 
-    temp_a0          = FP_MULTIPLY_PRECISE(sp34, sinAngle, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_fp, cosAngle, Q12_SHIFT);
+    temp_a0          = Q12_MULT_PRECISE(sp34, sinAngle) + Q12_MULT_PRECISE(var_fp, cosAngle);
     D_800C4788[1].vz = temp_a0;
 
     temp4 = var_s7;
@@ -4109,14 +4109,14 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
 
         temp_v0_5 = ratan2(temp_s1 - posX, temp_s2 - posZ);
         temp_v0_6 = Math_Sin(temp_v0_5);
-        temp_s0   = FP_MULTIPLY_PRECISE(temp_s3, temp_v0_6, Q12_SHIFT);
+        temp_s0   = Q12_MULT_PRECISE(temp_s3, temp_v0_6);
 
         var_s1 = Math_Cos(temp_v0_5);
 
         posX = temp_s1 - temp_s0;
 
         D_800C47C8[1].vx = posX;
-        posZ             = temp_s2 - FP_MULTIPLY_PRECISE(temp_s3, var_s1, Q12_SHIFT);
+        posZ             = temp_s2 - Q12_MULT_PRECISE(temp_s3, var_s1);
 
         D_800C47C8[1].vz = posZ;
         var_v1           = func_8006D90C(&D_800C47F8, &D_800C47C8[0], &D_800C47C8[1]);
@@ -4145,8 +4145,8 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         temp_s5 = chara1->field_C8.field_0;
 
         j   = sp58 - countY;
-        temp_t2   = FP_MULTIPLY_PRECISE(var_v1, cosAngle, Q12_SHIFT) - FP_MULTIPLY_PRECISE(temp_v0_8, sinAngle, Q12_SHIFT);
-        temp_a0_3 = FP_MULTIPLY_PRECISE(var_v1, sinAngle, Q12_SHIFT) + FP_MULTIPLY_PRECISE(temp_v0_8, cosAngle, Q12_SHIFT);
+        temp_t2   = Q12_MULT_PRECISE(var_v1, cosAngle) - Q12_MULT_PRECISE(temp_v0_8, sinAngle);
+        temp_a0_3 = Q12_MULT_PRECISE(var_v1, sinAngle) + Q12_MULT_PRECISE(temp_v0_8, cosAngle);
 
         if ((j < (sp48 - temp_s6)) || ((sp3C - temp_s5) < j))
         {
@@ -4196,8 +4196,8 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
                 }
                 else
                 {
-                    var_v0_3 = FP_MULTIPLY_PRECISE(var_a1_2, var_a1_2, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_v1, var_v1, Q12_SHIFT);
-                    if (FP_MULTIPLY_PRECISE(temp_s3, temp_s3, Q12_SHIFT) < var_v0_3)
+                    var_v0_3 = Q12_MULT_PRECISE(var_a1_2, var_a1_2) + Q12_MULT_PRECISE(var_v1, var_v1);
+                    if (Q12_MULT_PRECISE(temp_s3, temp_s3) < var_v0_3)
                     {
                         continue;
                     }
@@ -4250,25 +4250,25 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
             {
                 temp_lo_5 = FP_TO(temp_s3, Q12_SHIFT) / var_t1;
                 var_t1    = temp_s3;
-                temp_s2   = FP_MULTIPLY_PRECISE(temp_lo_5, temp_s2, Q12_SHIFT);
-                temp_s0   = FP_MULTIPLY_PRECISE(temp_lo_5, temp_s0, Q12_SHIFT);
-                var_s1    = FP_MULTIPLY_PRECISE(temp_lo_5, var_s1, Q12_SHIFT);
+                temp_s2   = Q12_MULT_PRECISE(temp_lo_5, temp_s2);
+                temp_s0   = Q12_MULT_PRECISE(temp_lo_5, temp_s0);
+                var_s1    = Q12_MULT_PRECISE(temp_lo_5, var_s1);
             }
             else if (var_t2 < temp_s0)
             {
                 temp_lo_5 = FP_TO(var_t2, Q12_SHIFT) / temp_s0;
                 temp_s0   = var_t2;
-                var_t1    = FP_MULTIPLY_PRECISE(temp_lo_5, var_t1, Q12_SHIFT);
-                temp_s2   = FP_MULTIPLY_PRECISE(temp_lo_5, temp_s2, Q12_SHIFT);
-                var_s1    = FP_MULTIPLY_PRECISE(temp_lo_5, var_s1, Q12_SHIFT);
+                var_t1    = Q12_MULT_PRECISE(temp_lo_5, var_t1);
+                temp_s2   = Q12_MULT_PRECISE(temp_lo_5, temp_s2);
+                var_s1    = Q12_MULT_PRECISE(temp_lo_5, var_s1);
             }
             else if (temp_s0 < -var_t2)
             {
                 temp_lo_5 = FP_TO(-var_t2, Q12_SHIFT) / temp_s0;
                 temp_s0   = -var_t2;
-                var_t1    = FP_MULTIPLY_PRECISE(temp_lo_5, var_t1, Q12_SHIFT);
-                temp_s2   = FP_MULTIPLY_PRECISE(temp_lo_5, temp_s2, Q12_SHIFT);
-                var_s1    = FP_MULTIPLY_PRECISE(temp_lo_5, var_s1, Q12_SHIFT);
+                var_t1    = Q12_MULT_PRECISE(temp_lo_5, var_t1);
+                temp_s2   = Q12_MULT_PRECISE(temp_lo_5, temp_s2);
+                var_s1    = Q12_MULT_PRECISE(temp_lo_5, var_s1);
             }
         }
 
@@ -4391,9 +4391,9 @@ void Dms_CharacterGetPosRotByIdx(VECTOR3* pos, SVECTOR3* rot, s32 charaIdx, q19_
 void Dms_CharacterKeyframeInterpolate(s_DmsKeyframeCharacter* result, s_DmsKeyframeCharacter* frame0, s_DmsKeyframeCharacter* frame1, s32 alpha) // 0x8008CC98
 {
     // Low-precision lerp between positions?
-    result->position_0.vx = frame0->position_0.vx + FP_MULTIPLY_PRECISE(frame1->position_0.vx - frame0->position_0.vx, alpha, Q12_SHIFT);
-    result->position_0.vy = frame0->position_0.vy + FP_MULTIPLY_PRECISE(frame1->position_0.vy - frame0->position_0.vy, alpha, Q12_SHIFT);
-    result->position_0.vz = frame0->position_0.vz + FP_MULTIPLY_PRECISE(frame1->position_0.vz - frame0->position_0.vz, alpha, Q12_SHIFT);
+    result->position_0.vx = frame0->position_0.vx + Q12_MULT_PRECISE(frame1->position_0.vx - frame0->position_0.vx, alpha);
+    result->position_0.vy = frame0->position_0.vy + Q12_MULT_PRECISE(frame1->position_0.vy - frame0->position_0.vy, alpha);
+    result->position_0.vz = frame0->position_0.vz + Q12_MULT_PRECISE(frame1->position_0.vz - frame0->position_0.vz, alpha);
 
     // Higher-precision lerp between rotations?
     result->rotation_6.vx = Math_LerpFixed12(frame0->rotation_6.vx, frame1->rotation_6.vx, alpha);
@@ -4453,16 +4453,16 @@ bool func_8008CF54(SVECTOR3* rot0, SVECTOR3* rot1) // 0x8008CF54
 
 s32 Dms_CameraKeyframeInterpolate(s_DmsKeyframeCamera* result, const s_DmsKeyframeCamera* frame0, const s_DmsKeyframeCamera* frame1, s32 alpha) // 0x8008CFEC
 {
-    result->positionTarget_0.vx = frame0->positionTarget_0.vx + FP_MULTIPLY_PRECISE(frame1->positionTarget_0.vx - frame0->positionTarget_0.vx, alpha, Q12_SHIFT);
-    result->positionTarget_0.vy = frame0->positionTarget_0.vy + FP_MULTIPLY_PRECISE(frame1->positionTarget_0.vy - frame0->positionTarget_0.vy, alpha, Q12_SHIFT);
-    result->positionTarget_0.vz = frame0->positionTarget_0.vz + FP_MULTIPLY_PRECISE(frame1->positionTarget_0.vz - frame0->positionTarget_0.vz, alpha, Q12_SHIFT);
+    result->positionTarget_0.vx = frame0->positionTarget_0.vx + Q12_MULT_PRECISE(frame1->positionTarget_0.vx - frame0->positionTarget_0.vx, alpha);
+    result->positionTarget_0.vy = frame0->positionTarget_0.vy + Q12_MULT_PRECISE(frame1->positionTarget_0.vy - frame0->positionTarget_0.vy, alpha);
+    result->positionTarget_0.vz = frame0->positionTarget_0.vz + Q12_MULT_PRECISE(frame1->positionTarget_0.vz - frame0->positionTarget_0.vz, alpha);
 
-    result->lookAtTarget_6.vx = frame0->lookAtTarget_6.vx + FP_MULTIPLY_PRECISE(frame1->lookAtTarget_6.vx - frame0->lookAtTarget_6.vx, alpha, Q12_SHIFT);
-    result->lookAtTarget_6.vy = frame0->lookAtTarget_6.vy + FP_MULTIPLY_PRECISE(frame1->lookAtTarget_6.vy - frame0->lookAtTarget_6.vy, alpha, Q12_SHIFT);
-    result->lookAtTarget_6.vz = frame0->lookAtTarget_6.vz + FP_MULTIPLY_PRECISE(frame1->lookAtTarget_6.vz - frame0->lookAtTarget_6.vz, alpha, Q12_SHIFT);
+    result->lookAtTarget_6.vx = frame0->lookAtTarget_6.vx + Q12_MULT_PRECISE(frame1->lookAtTarget_6.vx - frame0->lookAtTarget_6.vx, alpha);
+    result->lookAtTarget_6.vy = frame0->lookAtTarget_6.vy + Q12_MULT_PRECISE(frame1->lookAtTarget_6.vy - frame0->lookAtTarget_6.vy, alpha);
+    result->lookAtTarget_6.vz = frame0->lookAtTarget_6.vz + Q12_MULT_PRECISE(frame1->lookAtTarget_6.vz - frame0->lookAtTarget_6.vz, alpha);
 
     result->field_C[0] = Math_LerpFixed12(frame0->field_C[0], frame1->field_C[0], alpha);
-    result->field_C[1] = frame0->field_C[1] + FP_MULTIPLY_PRECISE(frame1->field_C[1] - frame0->field_C[1], alpha, Q12_SHIFT);
+    result->field_C[1] = frame0->field_C[1] + Q12_MULT_PRECISE(frame1->field_C[1] - frame0->field_C[1], alpha);
 
     return result->field_C[1];
 }
@@ -4572,7 +4572,7 @@ s32 func_8008D330(s32 arg0, s_DmsEntry* camEntry) // 0x8008D330
 
 s32 Math_LerpFixed12(s16 from, s16 to, q19_12 alpha) // 0x8008D3D4
 {
-    return FP_ANGLE_NORM_S((s32)(FP_MULTIPLY_PRECISE(FP_ANGLE_NORM_S(to - from), alpha, Q12_SHIFT)) + from);
+    return FP_ANGLE_NORM_S((s32)(Q12_MULT_PRECISE(FP_ANGLE_NORM_S(to - from), alpha)) + from);
 }
 
 void func_8008D41C(void) // 0x8008D41C
@@ -4798,7 +4798,7 @@ s32 func_8008D8C0(s16 x0, s32 x1, s32 x2) // 0x8008D8C0
     temp0 = vwOresenHokan(&Y_ARRAY_0, ARRAY_SIZE(Y_ARRAY_0), x0, 0, Q8(16.0f));
     temp1 = vwOresenHokan(&Y_ARRAY_1, ARRAY_SIZE(Y_ARRAY_1), x1, Q8(0.8f), Q8(13.0f));
     res   = FP_MULTIPLY(vwOresenHokan(&Y_ARRAY_2, ARRAY_SIZE(Y_ARRAY_2), x2, Q8(3.335f), Q8(7.425f)), // Yucky floats, maybe these aren't distances?
-                        FP_MULTIPLY(temp0, temp1, Q12_SHIFT),
+                        Q12_MULT(temp0, temp1),
                         Q12_SHIFT);
 
     return (res > Q8(24.0f)) ? Q8(24.0f) : res;
@@ -4868,8 +4868,8 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
         return;
     }
 
-    temp_s1   = FP_MULTIPLY(Math_Sin(arg4), Math_Cos(arg3), Q12_SHIFT);
-    temp_s0_3 = FP_MULTIPLY(Math_Sin(arg4), Math_Sin(arg3), Q12_SHIFT);
+    temp_s1   = Q12_MULT(Math_Sin(arg4), Math_Cos(arg3));
+    temp_s0_3 = Q12_MULT(Math_Sin(arg4), Math_Sin(arg3));
 
     poly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -4885,12 +4885,12 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
 
     temp_a1 = (arg1 + 0x3000) >> 2;
 
-    setRGB0(poly, FP_MULTIPLY(temp_a1, 0x28, Q12_SHIFT), FP_MULTIPLY(temp_a1, 0x28, Q12_SHIFT), FP_MULTIPLY(temp_a1, 0x28, Q12_SHIFT));
+    setRGB0(poly, Q12_MULT(temp_a1, 0x28), Q12_MULT(temp_a1, 0x28), Q12_MULT(temp_a1, 0x28));
     setSemiTrans(poly, 1);
 
-    temp_a2   = arg2->vx + FP_MULTIPLY(temp_s1, 5, Q12_SHIFT);
-    temp_a0   = FP_MULTIPLY(temp_a1, 0x1E, Q12_SHIFT);
-    temp_a1_2 = arg2->vy + FP_MULTIPLY(temp_s0_3, 5, Q12_SHIFT);
+    temp_a2   = arg2->vx + Q12_MULT(temp_s1, 5);
+    temp_a0   = Q12_MULT(temp_a1, 0x1E);
+    temp_a1_2 = arg2->vy + Q12_MULT(temp_s0_3, 5);
 
     setXY4(poly,
            temp_a2 - temp_a0, temp_a1_2 - temp_a0,
@@ -4955,7 +4955,7 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     SetPolyFT4(poly);
     setSemiTrans(poly, 1);
 
-    temp_v0_5 = FP_MULTIPLY(MIN(arg1 * 2, 0x1000), 0x30, Q12_SHIFT);
+    temp_v0_5 = Q12_MULT(MIN(arg1 * 2, 0x1000), 0x30);
     setRGB0(poly, temp_v0_5, temp_v0_5, temp_v0_5);
 
     poly->tpage = 0x2C;
@@ -4964,7 +4964,7 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     setUV4(poly, 0, 0, 0x3F, 0, 0, 0x3F, 0x3F, 0x3F);
 
     temp_t0   = arg2->vx + FP_MULTIPLY(temp_s1, 9, Q12_SHIFT - 1);
-    temp_a2_3 = FP_MULTIPLY((arg1 + 0x3000) >> 2, 0x30, Q12_SHIFT);
+    temp_a2_3 = Q12_MULT((arg1 + 0x3000) >> 2, 0x30);
     temp_a3_2 = arg2->vy + FP_MULTIPLY(temp_s0_3, 9, Q12_SHIFT - 1);
 
     setXY4(poly,
@@ -4989,7 +4989,7 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     {
         temp_v0_7 = D_800AFD7C[i] + sp20;
 
-        var_s3 = FP_MULTIPLY((Math_Cos(temp_v0_7 - arg3) + 0x1B33), (Math_Cos((temp_v0_7 * 0xC) + sp24) + 0x1000) >> 1, Q12_SHIFT);
+        var_s3 = Q12_MULT((Math_Cos(temp_v0_7 - arg3) + 0x1B33), (Math_Cos((temp_v0_7 * 0xC) + sp24) + 0x1000) >> 1);
         var_s3 = MIN(var_s3, 0x1800);
 
         temp_s1   = Math_Sin(temp_v0_7);
@@ -5028,7 +5028,7 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
 
     SetPolyFT4(poly);
 
-    setRGB0(poly, FP_MULTIPLY(arg1, 32, Q12_SHIFT), FP_MULTIPLY(arg1, 0x30, Q12_SHIFT), FP_MULTIPLY(arg1, 32, Q12_SHIFT));
+    setRGB0(poly, Q12_MULT(arg1, 32), Q12_MULT(arg1, 0x30), Q12_MULT(arg1, 32));
 
     poly->tpage = 0x2C;
     poly->clut  = 0x1CC;
@@ -5037,10 +5037,10 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     setSemiTrans(poly, 1);
 
     temp_s2_2 = (arg1 + 0x3000) >> 2;
-    temp_a1_5 = FP_MULTIPLY(temp_s2_2, 0x10, Q12_SHIFT);
-    temp_a0_5 = FP_MULTIPLY(arg2->vx, 0x333, Q12_SHIFT);
+    temp_a1_5 = Q12_MULT(temp_s2_2, 0x10);
+    temp_a0_5 = Q12_MULT(arg2->vx, 0x333);
     setSemiTrans(poly, 1);
-    temp_v1_8 = FP_MULTIPLY(arg2->vy, 0x333, Q12_SHIFT);
+    temp_v1_8 = Q12_MULT(arg2->vy, 0x333);
 
     setXY4(poly,
            temp_a0_5 - temp_a1_5, temp_v1_8 - temp_a1_5,
@@ -5053,7 +5053,7 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
 
     SetPolyFT4(poly);
 
-    temp_s0_6 = FP_MULTIPLY(arg1, 0x18, Q12_SHIFT);
+    temp_s0_6 = Q12_MULT(arg1, 0x18);
     setRGB0(poly, ((u32)arg1 * 7) >> 9, ((u32)arg1 * 0x13) >> 0xB, temp_s0_6);
 
     poly->tpage = 0x2C;
@@ -5062,14 +5062,14 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     setUV4(poly, 0x40, 0, 0x7F, 0, 0x40, 0x3F, 0x7F, 0x3F);
     setSemiTrans(poly, 1);
 
-    temp_v1_10 = FP_MULTIPLY(arg2->vx, -0x4CC, Q12_SHIFT);
-    temp_v0_11 = FP_MULTIPLY(arg2->vy, -0x4CC, Q12_SHIFT);
+    temp_v1_10 = Q12_MULT(arg2->vx, -0x4CC);
+    temp_v0_11 = Q12_MULT(arg2->vy, -0x4CC);
 
     setXY4(poly,
-           temp_v1_10 - FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT), temp_v0_11 - FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT),
-           temp_v1_10 + FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT), temp_v0_11 - FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT),
-           temp_v1_10 - FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT), temp_v0_11 + FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT),
-           temp_v1_10 + FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT), temp_v0_11 + FP_MULTIPLY(temp_s2_2, 0x1C, Q12_SHIFT));
+           temp_v1_10 - Q12_MULT(temp_s2_2, 0x1C), temp_v0_11 - Q12_MULT(temp_s2_2, 0x1C),
+           temp_v1_10 + Q12_MULT(temp_s2_2, 0x1C), temp_v0_11 - Q12_MULT(temp_s2_2, 0x1C),
+           temp_v1_10 - Q12_MULT(temp_s2_2, 0x1C), temp_v0_11 + Q12_MULT(temp_s2_2, 0x1C),
+           temp_v1_10 + Q12_MULT(temp_s2_2, 0x1C), temp_v0_11 + Q12_MULT(temp_s2_2, 0x1C));
 
     addPrim(temp_s7, poly);
     poly++;
@@ -5358,10 +5358,10 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
         sp28[0].vz = FP_MULTIPLY((s16)temp_s2, 0x33, 10) + 0x133;
         sp28[1].vx = FP_MULTIPLY((s16)temp_s0_2, 0x33, 10);
         sp28[1].vz = FP_MULTIPLY((s16)temp_v0_2, 0x33, 10) + 0x133;
-        sp28[2].vx = FP_MULTIPLY((s16)temp_s1, 0x233, Q12_SHIFT);
-        sp28[2].vz = FP_MULTIPLY((s16)temp_s2, 0x233, Q12_SHIFT) + 0x180;
-        sp28[3].vx = FP_MULTIPLY((s16)temp_s0_2, 0x233, Q12_SHIFT);
-        sp28[3].vz = FP_MULTIPLY((s16)temp_v0_2, 0x233, Q12_SHIFT) + 0x180;
+        sp28[2].vx = Q12_MULT((s16)temp_s1, 0x233);
+        sp28[2].vz = Q12_MULT((s16)temp_s2, 0x233) + 0x180;
+        sp28[3].vx = Q12_MULT((s16)temp_s0_2, 0x233);
+        sp28[3].vz = Q12_MULT((s16)temp_v0_2, 0x233) + 0x180;
 
         poly = packet;
 

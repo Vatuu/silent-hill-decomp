@@ -48,8 +48,8 @@ void vwRenewalXZVelocityToTargetPos(q19_12* velo_x, q19_12* velo_z, const VECTOR
     ratan2(*velo_x, *velo_z);
 
     add_spd = Math_MulFixed(accel, g_DeltaTime0, Q12_SHIFT);
-    *velo_x += FP_MULTIPLY(add_spd, Math_Sin(cam2tgt_ang_y), Q12_SHIFT);
-    *velo_z += FP_MULTIPLY(add_spd, Math_Cos(cam2tgt_ang_y), Q12_SHIFT);
+    *velo_x += Q12_MULT(add_spd, Math_Sin(cam2tgt_ang_y));
+    *velo_z += Q12_MULT(add_spd, Math_Cos(cam2tgt_ang_y));
 
     lim_spd = Vc_VectorMagnitudeCalc(*velo_x, Q12(0.0f), *velo_z);
     if (total_max_spd < lim_spd)
@@ -177,7 +177,7 @@ s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2)
     s32 range;
     s32 arange;
 
-    range  = FP_MULTIPLY_PRECISE(arg2, g_DeltaTime0, Q12_SHIFT);
+    range  = Q12_MULT_PRECISE(arg2, g_DeltaTime0);
     arange = arg1 - arg0;
     arange = CLAMP(arange, -range, range);
 
@@ -837,10 +837,10 @@ void vwAngleToVector(SVECTOR* vec, const SVECTOR* ang, s32 r) // 0x8004A66C
 {
     s32 entou_r; // 2D radius on XZ plane.
     
-    entou_r = FP_MULTIPLY(r, Math_Cos(ang->vx), Q12_SHIFT);
-    vec->vy = FP_MULTIPLY(-r, Math_Sin(ang->vx), Q12_SHIFT);
-    vec->vx = FP_MULTIPLY(entou_r, Math_Sin(ang->vy), Q12_SHIFT);
-    vec->vz = FP_MULTIPLY(entou_r, Math_Cos(ang->vy), Q12_SHIFT);
+    entou_r = Q12_MULT(r, Math_Cos(ang->vx));
+    vec->vy = Q12_MULT(-r, Math_Sin(ang->vx));
+    vec->vx = Q12_MULT(entou_r, Math_Sin(ang->vy));
+    vec->vz = Q12_MULT(entou_r, Math_Cos(ang->vy));
 }
 
 q19_12 vwVectorToAngle(SVECTOR* ang, const SVECTOR* vec) // 0x8004A714

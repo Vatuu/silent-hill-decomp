@@ -42,7 +42,7 @@ void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer)
     // Compute relations.
     deltaX        = playerPosX - charaPosX;
     deltaZ        = playerPosZ - charaPosZ;
-    distToPlayer  = SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT));
+    distToPlayer  = SquareRoot12(Q12_MULT_PRECISE(deltaX, deltaX) + Q12_MULT_PRECISE(deltaZ, deltaZ));
     angleToPlayer = ratan2(deltaX, deltaZ);
 
     // Adjust angle depending on distance and heading. Some sort of avoidance handling?
@@ -59,15 +59,15 @@ void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer)
     // Compute target position based on player heading angle.
     if (Math_CheckSignedRange(FP_ANGLE_NORM_S(angleToPlayer - playerHeadingAngle), AIR_SCREAMER_ANGLE_RANGE))
     {
-        targetPosX = playerPosX + FP_MULTIPLY_PRECISE(playerRadius, Math_Sin(angleToPlayer), Q12_SHIFT);
+        targetPosX = playerPosX + Q12_MULT_PRECISE(playerRadius, Math_Sin(angleToPlayer));
         targetPosY = playerPosY + g_SysWork.playerWork_4C.player_0.field_C8.field_6;
-        targetPosZ = playerPosZ + FP_MULTIPLY_PRECISE(playerRadius, Math_Cos(angleToPlayer), Q12_SHIFT);
+        targetPosZ = playerPosZ + Q12_MULT_PRECISE(playerRadius, Math_Cos(angleToPlayer));
     }
     else
     {
-        targetPosX = playerPosX + FP_MULTIPLY_PRECISE(playerRadius / 4, Math_Sin(angleToPlayer), Q12_SHIFT);
+        targetPosX = playerPosX + Q12_MULT_PRECISE(playerRadius / 4, Math_Sin(angleToPlayer));
         targetPosY = playerPosY + g_SysWork.playerWork_4C.player_0.field_C8.field_0;
-        targetPosZ = playerPosZ + FP_MULTIPLY_PRECISE(playerRadius / 4, Math_Cos(angleToPlayer), Q12_SHIFT);
+        targetPosZ = playerPosZ + Q12_MULT_PRECISE(playerRadius / 4, Math_Cos(angleToPlayer));
     }
 
     // Clamp to ground. TODO: Doesn't match with `MAX` macro.

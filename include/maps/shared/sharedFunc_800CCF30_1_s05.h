@@ -83,8 +83,8 @@ bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx)
             ptr->field_0.field_2C / ptr->field_134,
         1);
 
-    ptr->field_144.vx = FP_MULTIPLY(ptr->field_14C, Math_Sin(ptr->field_148), Q12_SHIFT);
-    ptr->field_144.vy = FP_MULTIPLY(ptr->field_14C, Math_Cos(ptr->field_148), Q12_SHIFT);
+    ptr->field_144.vx = Q12_MULT(ptr->field_14C, Math_Sin(ptr->field_148));
+    ptr->field_144.vy = Q12_MULT(ptr->field_14C, Math_Cos(ptr->field_148));
 
     setXY0Fast(*poly, (u16)ptr->field_13C.vx - (u16)ptr->field_144.vx, ptr->field_13C.vy - ptr->field_144.vy);
     setXY1Fast(*poly, (u16)ptr->field_140.vx - (u16)ptr->field_144.vx, ptr->field_140.vy - ptr->field_144.vy);

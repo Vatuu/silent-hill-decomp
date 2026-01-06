@@ -322,7 +322,7 @@ void func_800D6BC0(void) // 0x800D6BC0
 
     if (g_SysWork.sysStateStep_C[0] >= 10)
     {
-        D_800D7D70 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
+        D_800D7D70 -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.5f));
         if (D_800D7D70 < 0)
         {
             D_800D7D70 = 0;
@@ -332,7 +332,7 @@ void func_800D6BC0(void) // 0x800D6BC0
     }
     else if (g_SysWork.sysStateStep_C[0] > 0)
     {
-        D_800D7D70 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.25f), Q12_SHIFT);
+        D_800D7D70 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f));
         if (D_800D7D70 > Q12(0.9961f))
         {
             D_800D7D70 = Q12(0.9961f);
@@ -421,7 +421,7 @@ void func_800D6BC0(void) // 0x800D6BC0
             {
                 if (D_800D7D95 != 0)
                 {
-                    D_800D7D88.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(3.5f), Q12_SHIFT);
+                    D_800D7D88.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(3.5f));
                     if (D_800D7D88.vy < Q12(-17.5f))
                     {
                         D_800D7D95 = 0;
@@ -429,7 +429,7 @@ void func_800D6BC0(void) // 0x800D6BC0
                 }
                 else
                 {
-                    D_800D7D88.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(3.5f), Q12_SHIFT);
+                    D_800D7D88.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(3.5f));
                     if (D_800D7D88.vy > Q12(-14.5f))
                     {
                         D_800D7D95 = 1;
@@ -439,7 +439,7 @@ void func_800D6BC0(void) // 0x800D6BC0
 
             if (g_SysWork.field_28 > Q12(0.5f))
             {
-                D_800D7D88.vx -= FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(2.5f), Q12_SHIFT);
+                D_800D7D88.vx -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(2.5f));
             }
 
             if (g_SysWork.field_28 > Q12(6.0f))

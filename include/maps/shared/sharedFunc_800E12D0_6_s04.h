@@ -120,7 +120,7 @@ void sharedFunc_800E12D0_6_s04(void)
                 }
                 else
                 {
-                    dist = Q12(0.03125f) - FP_MULTIPLY_PRECISE(dist - Q12(10.0f), Q12(0.004f), Q12_SHIFT);
+                    dist = Q12(0.03125f) - Q12_MULT_PRECISE(dist - Q12(10.0f), Q12(0.004f));
                     if (dist < Q12(0.0f))
                     {
                         dist = Q12(0.0f);

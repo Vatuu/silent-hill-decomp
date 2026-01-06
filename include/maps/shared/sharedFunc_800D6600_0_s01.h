@@ -13,9 +13,9 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
     q20_12 angle3;
     s32    temp;
 
-    newPosX = FP_MULTIPLY_PRECISE(airScreamer->damage_B4.position_0.vx, Q12(3.0f), Q12_SHIFT);
-    newPosY = FP_MULTIPLY_PRECISE(airScreamer->damage_B4.position_0.vy, Q12(3.0f), Q12_SHIFT);
-    newPosZ = FP_MULTIPLY_PRECISE(airScreamer->damage_B4.position_0.vz, Q12(3.0f), Q12_SHIFT);
+    newPosX = Q12_MULT_PRECISE(airScreamer->damage_B4.position_0.vx, Q12(3.0f));
+    newPosY = Q12_MULT_PRECISE(airScreamer->damage_B4.position_0.vy, Q12(3.0f));
+    newPosZ = Q12_MULT_PRECISE(airScreamer->damage_B4.position_0.vz, Q12(3.0f));
 
     airScreamer->damage_B4.position_0.vx = Q12(0.0f);
     airScreamer->damage_B4.position_0.vy = Q12(0.0f);
@@ -37,8 +37,8 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
     }
     else
     {
-        posY   = FP_MULTIPLY_PRECISE(angle2, Math_Sin(angle0), Q12_SHIFT);
-        angle0 = FP_MULTIPLY_PRECISE(angle2, Math_Cos(angle0), Q12_SHIFT);
+        posY   = Q12_MULT_PRECISE(angle2, Math_Sin(angle0));
+        angle0 = Q12_MULT_PRECISE(angle2, Math_Cos(angle0));
 
         if (angle0 < FP_ANGLE(0.0f))
         {
@@ -46,8 +46,8 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
             angle1 ^= 0x800;
         }
 
-        posX = FP_MULTIPLY_PRECISE(angle0, Math_Sin(angle1), Q12_SHIFT);
-        posZ = FP_MULTIPLY_PRECISE(angle0, Math_Cos(angle1), Q12_SHIFT);
+        posX = Q12_MULT_PRECISE(angle0, Math_Sin(angle1));
+        posZ = Q12_MULT_PRECISE(angle0, Math_Cos(angle1));
     }
 
     if (sp1C > 0)
@@ -69,9 +69,9 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
     sharedData_800DE210_0_s01.vy = posY;
     sharedData_800DE210_0_s01.vz = posZ;
 
-    sharedData_800DE200_0_s01.vx = FP_MULTIPLY_PRECISE(g_DeltaTime0, posX, Q12_SHIFT);
-    sharedData_800DE200_0_s01.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, posY, Q12_SHIFT);
-    sharedData_800DE200_0_s01.vz = FP_MULTIPLY_PRECISE(g_DeltaTime0, posZ, Q12_SHIFT);
+    sharedData_800DE200_0_s01.vx = Q12_MULT_PRECISE(g_DeltaTime0, posX);
+    sharedData_800DE200_0_s01.vy = Q12_MULT_PRECISE(g_DeltaTime0, posY);
+    sharedData_800DE200_0_s01.vz = Q12_MULT_PRECISE(g_DeltaTime0, posZ);
 
     temp = sharedFunc_800D7440_0_s01(&sharedData_800E2350_0_s01, &sharedData_800DE200_0_s01, airScreamer);
     temp = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset_0, &sharedData_800DE210_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.field_128);
@@ -84,7 +84,7 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
     angle0 = SquareRoot12(angle0);
     angle2 = SquareRoot12(angle2);
     angle0 = ratan2(posY, angle0);
-    angle3 = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(6.0f), Q12_SHIFT);
+    angle3 = Q12_MULT_PRECISE(g_DeltaTime0, Q12(6.0f));
 
     if (angle2 < angle3)
     {

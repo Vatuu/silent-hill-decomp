@@ -140,16 +140,16 @@ void func_80070DF0(s_PlayerExtra* extra, s_SubCharacter* chara, s32 weaponAttack
 
     if (animStatus == ANIM_STATUS(HarryAnim_Kick, true) && ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
     {
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 =  FP_MULTIPLY(D_800AF014[chara->model_0.anim_4.keyframeIdx_8 - 457], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = -FP_MULTIPLY(D_800AF014[chara->model_0.anim_4.keyframeIdx_8 - 457], Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 =  Q12_MULT(D_800AF014[chara->model_0.anim_4.keyframeIdx_8 - 457], Math_Cos(chara->rotation_24.vy));
+        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = -Q12_MULT(D_800AF014[chara->model_0.anim_4.keyframeIdx_8 - 457], Math_Sin(chara->rotation_24.vy));
         g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
         g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
     }
 
     if (animStatus == ANIM_STATUS(HarryAnim_Stomp, true) && ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0)) 
     {
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 =  FP_MULTIPLY(D_800AF04C[chara->model_0.anim_4.keyframeIdx_8 - 485], Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
-        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = -FP_MULTIPLY(D_800AF04C[chara->model_0.anim_4.keyframeIdx_8 - 485], Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+        g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 =  Q12_MULT(D_800AF04C[chara->model_0.anim_4.keyframeIdx_8 - 485], Math_Cos(chara->rotation_24.vy));
+        g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = -Q12_MULT(D_800AF04C[chara->model_0.anim_4.keyframeIdx_8 - 485], Math_Sin(chara->rotation_24.vy));
         g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
         g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12(0.0f);
     }
@@ -1056,8 +1056,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                 temp_s0 = -D_800AF1FC[chara->model_0.anim_4.keyframeIdx_8 - g_MapOverlayHeader.field_38[D_800AF220].time_4];
                 g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
                 g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = FP_MULTIPLY(temp_s0, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = FP_MULTIPLY(temp_s0, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
+                g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12_MULT(temp_s0, Math_Sin(chara->rotation_24.vy));
+                g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12_MULT(temp_s0, Math_Cos(chara->rotation_24.vy));
             }
 
             if (ABS(headingAngle0) < FP_ANGLE(11.25f))
@@ -1202,9 +1202,9 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                             break;
                     }
 
-                    chara->field_D4.field_2 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.27f), Q12_SHIFT);
-                    chara->field_C8.field_0 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.2f), Q12_SHIFT);
-                    chara->field_C8.field_6 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.9f), Q12_SHIFT);
+                    chara->field_D4.field_2 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.27f));
+                    chara->field_C8.field_0 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.2f));
+                    chara->field_C8.field_6 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.9f));
 
                     chara->field_D4.field_2 = CLAMP(chara->field_D4.field_2, Q12(0.23f), Q12(0.5f));
                     chara->field_C8.field_0 = CLAMP(chara->field_C8.field_0, Q12(-1.6f), Q12(-0.4));
@@ -1954,11 +1954,11 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     var_v1_5 = temp_a2;
                 }
 
-                temp_s0_3                                    = temp_a2 + FP_MULTIPLY(var_v1_5 - temp_a2, Q12_FRACT(chara->model_0.anim_4.time_4), Q12_SHIFT);
+                temp_s0_3                                    = temp_a2 + Q12_MULT(var_v1_5 - temp_a2, Q12_FRACT(chara->model_0.anim_4.time_4));
                 g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
                 g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = FP_MULTIPLY(temp_s0_3, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
-                g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = FP_MULTIPLY(temp_s0_3, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
+                g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12_MULT(temp_s0_3, Math_Sin(chara->rotation_24.vy));
+                g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_6 = Q12_MULT(temp_s0_3, Math_Cos(chara->rotation_24.vy));
                 chara->field_D4.radius_0                        = Q12(0.3f);
             }
 
@@ -6487,16 +6487,16 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
 
     Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
 
-    temp_s3 = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
-    temp_s2 = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
+    temp_s3 = Q12_MULT(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C));
+    temp_s2 = Q12_MULT(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C));
 
     temp_s0 = Math_Cos(ABS(coll.field_4) >> 3);
     temp_v0 = Math_Cos(ABS(coll.field_6) >> 3);
 
-    temp_v1 = FP_MULTIPLY(FP_MULTIPLY(temp_s3, temp_s0, Q12_SHIFT), temp_s0, Q12_SHIFT);
-    someAngle = FP_MULTIPLY(FP_MULTIPLY(temp_s2, temp_v0, Q12_SHIFT), temp_v0, Q12_SHIFT);
+    temp_v1 = Q12_MULT(Q12_MULT(temp_s3, temp_s0), temp_s0);
+    someAngle = Q12_MULT(Q12_MULT(temp_s2, temp_v0), temp_v0);
 
-    if (chara->moveSpeed_38 >= 0)
+    if (chara->moveSpeed_38 >= Q12(0.0f))
     {
         chara->moveSpeed_38 = SquareRoot0(SQUARE(temp_v1) + SQUARE(someAngle));
     }
@@ -6505,20 +6505,20 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
         chara->moveSpeed_38 = -SquareRoot0(SQUARE(temp_v1) + SQUARE(someAngle));
     }
 
-    temp_s0_2 = FP_MULTIPLY_PRECISE(chara->moveSpeed_38, g_DeltaTime0, Q12_SHIFT);
+    temp_s0_2 = Q12_MULT_PRECISE(chara->moveSpeed_38, g_DeltaTime0);
 
     temp_v0_3 = chara->headingAngle_3C;
     temp      = temp_s0_2 + SHRT_MAX;
     temp_s2_2 = (temp > (SHRT_MAX * 2)) * 4;
     temp_s3_2 = temp_s2_2 >> 1;
 
-    offset.vx = FP_MULTIPLY_PRECISE((temp_s0_2 >> temp_s3_2), Math_Sin(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
+    offset.vx = Q12_MULT_PRECISE((temp_s0_2 >> temp_s3_2), Math_Sin(temp_v0_3) >> temp_s3_2);
     offset.vx <<= temp_s2_2;
 
-    offset.vz = FP_MULTIPLY_PRECISE((temp_s0_2 >> temp_s3_2), Math_Cos(temp_v0_3) >> temp_s3_2, Q12_SHIFT);
+    offset.vz = Q12_MULT_PRECISE((temp_s0_2 >> temp_s3_2), Math_Cos(temp_v0_3) >> temp_s3_2);
     offset.vz <<= temp_s2_2;
 
-    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    offset.vy = Q12_MULT_PRECISE(chara->field_34, g_DeltaTime0);
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP1_S05)
     {
@@ -7424,10 +7424,10 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
     temp_s1  = Q12(-0.6f);
     temp_s1 -= g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 >> 4;
 
-    temp_s4 = FP_MULTIPLY(Math_Cos(chara->headingAngle_3C), Q12(0.2f), Q12_SHIFT); // Maybe meters?
-    temp_s3 = FP_MULTIPLY(Math_Sin(chara->headingAngle_3C), Q12(0.2f), Q12_SHIFT); // Maybe meters?
-    temp_s5 = FP_MULTIPLY(temp_s0, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
-    temp_lo = FP_MULTIPLY(temp_s0, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
+    temp_s4 = Q12_MULT(Math_Cos(chara->headingAngle_3C), Q12(0.2f)); // Maybe meters?
+    temp_s3 = Q12_MULT(Math_Sin(chara->headingAngle_3C), Q12(0.2f)); // Maybe meters?
+    temp_s5 = Q12_MULT(temp_s0, Math_Sin(chara->headingAngle_3C));
+    temp_lo = Q12_MULT(temp_s0, Math_Cos(chara->headingAngle_3C));
 
     temp_s1 -= Q12(0.4f);
 
@@ -7602,45 +7602,45 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                         switch (WEAPON_ATTACK_ID_GET(g_SysWork.playerCombat_38.weaponAttack_F))
                         {
                             case EquippedWeaponId_KitchenKnife:
-                                Math_SetSVectorFastSum(&sp90, FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT),
+                                Math_SetSVectorFastSum(&sp90, Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF),
                                                         -FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x4B, Q12_SHIFT - 1),
-                                                         FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x4B, Q12_SHIFT) >> 1);
+                                                         Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x4B) >> 1);
                                 break;
 
                             case EquippedWeaponId_SteelPipe:
-                                Math_SetSVectorFastSum(&sp90, FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT),
-                                                        -(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xE1, Q12_SHIFT) >> 1),
+                                Math_SetSVectorFastSum(&sp90, Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF),
+                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xE1) >> 1),
                                                          FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT - 2));
                                 break;
 
                             case EquippedWeaponId_Chainsaw:
-                                Math_SetSVectorFastSum(&sp90, FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1,
-                                                        -(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x87, Q12_SHIFT) >> 1),
-                                                         (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x1EF, Q12_SHIFT) >> 1));
+                                Math_SetSVectorFastSum(&sp90, Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF) >> 1,
+                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x87) >> 1),
+                                                         (Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x1EF) >> 1));
                                 break;
 
                             case EquippedWeaponId_RockDrill:
                                 Math_SetSVectorFastSum(&sp90, 0,
-                                                        -(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT)),
+                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x2D)),
                                                          FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x2D, Q12_SHIFT - 2));
                                 break;
 
                             case EquippedWeaponId_Axe:
                                 Math_SetSVectorFastSum(&sp90, 0,
-                                                        -(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x2C1, Q12_SHIFT) >> 1),
-                                                         FP_MULTIPLY((u32)D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xC3, Q12_SHIFT));
+                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x2C1) >> 1),
+                                                         Q12_MULT((u32)D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xC3));
                                 break;
 
                             case EquippedWeaponId_Hammer:
-                                Math_SetSVectorFastSum(&sp90, (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1),
-                                                        -(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x69, Q12_SHIFT)),
-                                                         FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x13B, Q12_SHIFT) >> 1);
+                                Math_SetSVectorFastSum(&sp90, (Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF) >> 1),
+                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x69)),
+                                                         Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x13B) >> 1);
                                 break;
 
                             case EquippedWeaponId_Katana:
-                                Math_SetSVectorFastSum(&sp90, (FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT) >> 1),
-                                                        -(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x13B, Q12_SHIFT) >> 1),
-                                                         FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF, Q12_SHIFT));
+                                Math_SetSVectorFastSum(&sp90, (Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF) >> 1),
+                                                        -(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0x13B) >> 1),
+                                                         Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, 0xF));
                                 break;
                         }
 
@@ -8780,9 +8780,9 @@ q19_12 Math_DistanceGet(const VECTOR3* posFrom, const VECTOR3* posTo) // 0x80080
     deltaX = posTo->vx - posFrom->vx;
     deltaY = posTo->vy - posFrom->vy;
     deltaZ = posTo->vz - posFrom->vz;
-    return SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
-                        FP_MULTIPLY_PRECISE(deltaY, deltaY, Q12_SHIFT) +
-                        FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT));
+    return SquareRoot12(Q12_MULT_PRECISE(deltaX, deltaX) +
+                        Q12_MULT_PRECISE(deltaY, deltaY) +
+                        Q12_MULT_PRECISE(deltaZ, deltaZ));
 }
 
 q19_12 Math_Distance2dGet(const VECTOR3* posFrom, const VECTOR3* posTo) // 0x8008037C
@@ -8792,8 +8792,8 @@ q19_12 Math_Distance2dGet(const VECTOR3* posFrom, const VECTOR3* posTo) // 0x800
 
     deltaX = posTo->vx - posFrom->vx;
     deltaZ = posTo->vz - posFrom->vz;
-    return SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
-                        FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT));
+    return SquareRoot12(Q12_MULT_PRECISE(deltaX, deltaX) +
+                        Q12_MULT_PRECISE(deltaZ, deltaZ));
 }
 
 void func_800803FC(VECTOR3* pos, s32 idx) // 0x800803FC

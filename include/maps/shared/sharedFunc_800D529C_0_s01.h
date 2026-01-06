@@ -9,8 +9,8 @@ void sharedFunc_800D529C_0_s01(s_SubCharacter* airScreamer, q19_12 radius, q19_1
     newPosX = airScreamer->position_18.vx;
     newPosZ = airScreamer->position_18.vz;
 
-    newPosX = newPosX + FP_MULTIPLY_PRECISE(radius, Math_Sin(headingAngle), Q12_SHIFT);
-    newPosZ = newPosZ + FP_MULTIPLY_PRECISE(radius, Math_Cos(headingAngle), Q12_SHIFT);
+    newPosX = newPosX + Q12_MULT_PRECISE(radius, Math_Sin(headingAngle));
+    newPosZ = newPosZ + Q12_MULT_PRECISE(radius, Math_Cos(headingAngle));
 
     newPosY  = Collision_GroundHeightGet(newPosX, newPosZ);
     newPosY  = MIN(airScreamerProps.groundHeight_124, newPosY);

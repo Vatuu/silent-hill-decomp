@@ -25,8 +25,8 @@ void sharedFunc_800CBA4C_1_s02(s32 idx, s32 arg1, s32 arg2)
     {
         if (arg1 == 2)
         {
-            sharedData_800DFB7C_0_s00[idx].field_0.vx_0 += FP_MULTIPLY(sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0, Math_Sin(sharedData_800E30C8_1_s02.field_34[var_s2]), Q12_SHIFT);
-            sharedData_800DFB7C_0_s00[idx].field_4.vz_4 += FP_MULTIPLY(sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0, Math_Cos(sharedData_800E30C8_1_s02.field_34[var_s2]), Q12_SHIFT);
+            sharedData_800DFB7C_0_s00[idx].field_0.vx_0 += Q12_MULT(sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0, Math_Sin(sharedData_800E30C8_1_s02.field_34[var_s2]));
+            sharedData_800DFB7C_0_s00[idx].field_4.vz_4 += Q12_MULT(sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0, Math_Cos(sharedData_800E30C8_1_s02.field_34[var_s2]));
         }
 
         sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = ((sharedData_800E30C8_1_s02.field_6c[var_s2] * (Rng_TestProbabilityBits(6) + 0x60)) >> 7);

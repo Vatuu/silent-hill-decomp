@@ -71,7 +71,7 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* arg1, GsCOO
                     var_a3 = 0x1000;
                 }
             }
-            var_a3                                                                   = FP_TO(var_a3 * 20, Q12_SHIFT) / FP_MULTIPLY_PRECISE(groaner->properties_E4.groaner.field_114, 0x3999, Q12_SHIFT);
+            var_a3                                                                   = FP_TO(var_a3 * 20, Q12_SHIFT) / Q12_MULT_PRECISE(groaner->properties_E4.groaner.field_114, 0x3999);
             GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = var_a3;
             break;
     }
@@ -87,7 +87,7 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* arg1, GsCOO
     {
         case 34:
         case 35:
-            temp_v0_5 = FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x400, Q12_SHIFT);
+            temp_v0_5 = Q12_MULT_PRECISE(g_DeltaTime0, 0x400);
             var_s0    = 0x180;
             break;
 
@@ -97,12 +97,12 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* arg1, GsCOO
         case 31:
         case 32:
         case 33:
-            temp_v0_5 = FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x600, Q12_SHIFT);
+            temp_v0_5 = Q12_MULT_PRECISE(g_DeltaTime0, 0x600);
             var_s0    = 0x280;
             break;
 
         default:
-            temp_v0_5 = FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x600, Q12_SHIFT);
+            temp_v0_5 = Q12_MULT_PRECISE(g_DeltaTime0, 0x600);
             var_s0    = 0;
             break;
     }

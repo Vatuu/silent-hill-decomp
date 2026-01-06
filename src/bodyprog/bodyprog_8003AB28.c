@@ -630,7 +630,7 @@ void Gfx_MainMenu_FogRandomize(void) // 0x8003BAC4
     ptr   = D_800BCDE0;
     ptr1  = ptr + 441;
     RAND += Rng_GenerateInt(4, 11u);
-    val   = FP_MULTIPLY(Math_Sin(RAND), 10, Q12_SHIFT) - 122;
+    val   = Q12_MULT(Math_Sin(RAND), 10) - 122;
     ptr2  = ptr + 461;
 
     for (i = 20; i >= 0; i--)
@@ -1012,8 +1012,8 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
     moveAmt = (chara->moveSpeed_38 * Q12(5.5f)) / 16015; // TODO: `Q12(3.91f)`? What's this doing?
     moveAmt = CLAMP(moveAmt, Q12(0.0f), Q12(5.5f));
 
-    pos0.vx += FP_MULTIPLY_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
-    pos0.vz += FP_MULTIPLY_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
+    pos0.vx += Q12_MULT_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C));
+    pos0.vz += Q12_MULT_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C));
 
     if (g_WorldGfx.mapInfo_0 == &MAP_INFOS[MapType_THR] &&
         chara->position_18.vx >= Q12(-40.0f) && chara->position_18.vx <= Q12(40.0f) &&
@@ -1030,17 +1030,17 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         flagsCpy = g_WorldGfx.mapInfo_0->flags_6;
         if (!(flagsCpy & MapFlag_Interior) || !(flagsCpy & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
         {
-            var_s1 = FP_MULTIPLY(Math_Cos(ang.vx), Q12(9.0f), Q12_SHIFT);
+            var_s1 = Q12_MULT(Math_Cos(ang.vx), Q12(9.0f));
         }
         else
         {
             var_s1 = Q12(0.0f);
         }
         
-        temp_s0_2 = FP_MULTIPLY(var_s1, Math_Sin(ang.vy), Q12_SHIFT);
+        temp_s0_2 = Q12_MULT(var_s1, Math_Sin(ang.vy));
         temp_s0_2 = CLAMP(temp_s0_2, Q12(-6.0f), Q12(6.0f));
 
-        temp_v1_4 = FP_MULTIPLY(var_s1, Math_Cos(ang.vy), Q12_SHIFT);
+        temp_v1_4 = Q12_MULT(var_s1, Math_Cos(ang.vy));
         temp_v1_4 = CLAMP(temp_v1_4, Q12(-6.0f), Q12(6.0f));
 
         pos1.vx += temp_s0_2;
@@ -1049,8 +1049,8 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         if (Vc_VectorMagnitudeCalc(pos1.vx - chara->position_18.vx, 0, pos1.vz - chara->position_18.vz) > 0x10000)
         {
             var_s1  = Q12(14.0f);
-            pos1.vx = chara->position_18.vx + FP_MULTIPLY(Math_Sin(ang.vy), var_s1, Q12_SHIFT);
-            pos1.vz = chara->position_18.vz + FP_MULTIPLY(Math_Cos(ang.vy), var_s1, Q12_SHIFT);
+            pos1.vx = chara->position_18.vx + Q12_MULT(Math_Sin(ang.vy), var_s1);
+            pos1.vz = chara->position_18.vz + Q12_MULT(Math_Cos(ang.vy), var_s1);
         }
     }
     else
@@ -1921,9 +1921,9 @@ void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, s16 ar
         tintColor = D_800C4168.worldTintColor_28;
 
         func_80055330(D_800C4168.field_0, D_800C4168.field_20, D_800C4168.field_3,
-                      FP_MULTIPLY_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.r, Q12_SHIFT) << 5,
-                      FP_MULTIPLY_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.g, Q12_SHIFT) << 5,
-                      FP_MULTIPLY_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.b, Q12_SHIFT) << 5,
+                      Q12_MULT_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.r) << 5,
+                      Q12_MULT_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.g) << 5,
+                      Q12_MULT_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.b) << 5,
                       D_800C4168.screenBrightness_8);
     }
 
@@ -2447,8 +2447,8 @@ void func_8003E740(void) // 0x8003E740
     sp38.vx = 1;
     sp38.vy = -7;
     sp38.vz = 33;
-    sp38.vx = FP_MULTIPLY(Math_AngleNormalize(D_800BCDE8[idx++]), 5, Q12_SHIFT) + 1;
-    sp38.vz = FP_MULTIPLY(Math_AngleNormalize(D_800BCDE8[idx++]), 5, Q12_SHIFT) + 33;
+    sp38.vx = Q12_MULT(Math_AngleNormalize(D_800BCDE8[idx++]), 5) + 1;
+    sp38.vz = Q12_MULT(Math_AngleNormalize(D_800BCDE8[idx++]), 5) + 33;
 
     poly = (POLY_FT4*)GsOUT_PACKET_P;
 
@@ -2766,11 +2766,11 @@ void func_8003F170(void) // 0x8003F170
 
     if (g_SysWork.field_2388.isFlashlightOn_15)
     {
-        g_SysWork.field_2388.flashlightIntensity_18 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 4.0f, Q12_SHIFT);
+        g_SysWork.field_2388.flashlightIntensity_18 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 4.0f);
     }
     else
     {
-        g_SysWork.field_2388.flashlightIntensity_18 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 4.0f, Q12_SHIFT);
+        g_SysWork.field_2388.flashlightIntensity_18 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 4.0f);
     }
 
     g_SysWork.field_2388.flashlightIntensity_18 = CLAMP(g_SysWork.field_2388.flashlightIntensity_18, Q12(0.0f), Q12(1.0f));
@@ -2822,7 +2822,7 @@ void func_8003F170(void) // 0x8003F170
     ptr->field_10 = func_8003FEC0(&ptr2->field_0);
     func_8003FF2C(ptr2);
 
-    temp = FP_MULTIPLY(func_8003F4DC(&coord, &rot, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.field_2378, Q12_SHIFT);
+    temp = Q12_MULT(func_8003F4DC(&coord, &rot, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.field_2378);
 
     func_800554C4(temp, ptr2->field_2C, coord, g_SysWork.field_235C, &rot, 
                   g_SysWork.cutsceneLightPos_2360.vx, g_SysWork.cutsceneLightPos_2360.vy, g_SysWork.cutsceneLightPos_2360.vz,
@@ -2908,8 +2908,8 @@ q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg
 
     rot->vy = -Math_Sin(rot0.vx);
     temp    = Math_Cos(rot0.vx);
-    rot->vz = FP_MULTIPLY(temp, Math_Cos(rot0.vy), Q12_SHIFT);
-    rot->vx = FP_MULTIPLY(temp, Math_Sin(rot0.vy), Q12_SHIFT);
+    rot->vz = Q12_MULT(temp, Math_Cos(rot0.vy));
+    rot->vx = Q12_MULT(temp, Math_Sin(rot0.vy));
     return alphaCpy;
 }
 
@@ -3072,7 +3072,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
     {
         if (weight < Q12(5.0f / 6.0f))
         {
-            weight2                                 = FP_MULTIPLY(weight, Q12(1.2f), Q12_SHIFT);
+            weight2                                 = Q12_MULT(weight, Q12(1.2f));
             weight2                                 = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
             arg0->field_0.field_0.s_field_0.field_2 = arg1->field_0.field_0.s_field_0.field_2;
             arg0->field_0.field_4                   = Math_WeightedAverageGet(arg1->field_0.field_4, 0, weight2);
@@ -3097,7 +3097,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
         }
         else
         {
-            weight2                                 = FP_MULTIPLY(weight - Q12(1.0f / 6.0f), Q12(1.2f), Q12_SHIFT);
+            weight2                                 = Q12_MULT(weight - Q12(1.0f / 6.0f), Q12(1.2f));
             weight2                                 = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
             arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
             arg0->field_0.field_4                   = Math_WeightedAverageGet(Q12(0.0f), arg2->field_0.field_4, weight2);
@@ -3209,7 +3209,7 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     s32   temp_v1;
     q23_8 brightness;
 
-    temp_v1    = FP_MULTIPLY(arg0->field_2E, (g_GameWork.config_0.optBrightness_22 * 8) + 4, Q12_SHIFT);
+    temp_v1    = Q12_MULT(arg0->field_2E, (g_GameWork.config_0.optBrightness_22 * 8) + 4);
     brightness = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
     func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, brightness);

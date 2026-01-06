@@ -69,11 +69,11 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* chara)
         {
             if (temp_a3 > FP_ANGLE(0.0f))
             {
-                chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x400, Q12_SHIFT);
+                chara->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, 0x400);
             }
             else
             {
-                chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x400, Q12_SHIFT);
+                chara->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, 0x400);
             }
         }
         else
@@ -86,12 +86,12 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* chara)
 
     if (chara->properties_E4.groaner.field_104 >= 0)
     {
-        Chara_MoveSpeedUpdate5(chara, 0x9800, FP_MULTIPLY_PRECISE(chara->properties_E4.groaner.field_114, 0x3999, Q12_SHIFT));
+        Chara_MoveSpeedUpdate5(chara, 0x9800, Q12_MULT_PRECISE(chara->properties_E4.groaner.field_114, 0x3999));
     }
     else
     {
         temp_a3 = 0x1000 - (((temp_a3 - 0xE3) * 3) >> 1);
-        Chara_MoveSpeedUpdate5(chara, 0x9800, FP_MULTIPLY_PRECISE(temp_a3, FP_MULTIPLY_PRECISE(chara->properties_E4.groaner.field_114, 0x3999, Q12_SHIFT), Q12_SHIFT));
+        Chara_MoveSpeedUpdate5(chara, 0x9800, Q12_MULT_PRECISE(temp_a3, Q12_MULT_PRECISE(chara->properties_E4.groaner.field_114, 0x3999)));
     }
 
     var_s0_2                               = 0;
@@ -105,7 +105,7 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* chara)
         }
         else
         {
-            var_s0_2 = (FP_MULTIPLY_PRECISE(chara->properties_E4.groaner.field_108 - 0x6000, 0x1800, Q12_SHIFT) >> 2) + 0x400;
+            var_s0_2 = (Q12_MULT_PRECISE(chara->properties_E4.groaner.field_108 - 0x6000, 0x1800) >> 2) + 0x400;
         }
     }
 
@@ -120,7 +120,7 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* chara)
         }
         else
         {
-            var_s0_2 += 0x400 + (FP_MULTIPLY_PRECISE(temp_v1_8 - 0x3800, 0x1C00, Q12_SHIFT) >> 2);
+            var_s0_2 += 0x400 + (Q12_MULT_PRECISE(temp_v1_8 - 0x3800, 0x1C00) >> 2);
         }
     }
 

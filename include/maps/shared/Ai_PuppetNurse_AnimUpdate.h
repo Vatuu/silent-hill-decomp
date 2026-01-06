@@ -26,7 +26,7 @@ void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
     {
         for (j = 0; j < 3; j++)
         {
-            coord->coord.m[i][j] = FP_MULTIPLY_PRECISE(angle, coord->coord.m[i][j], Q12_SHIFT);
+            coord->coord.m[i][j] = Q12_MULT_PRECISE(angle, coord->coord.m[i][j]);
         }
     }
 

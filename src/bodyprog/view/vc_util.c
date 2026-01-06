@@ -38,9 +38,9 @@ void vcSetCameraUseWarp(const VECTOR3* chr_pos, q3_12 chr_ang_y) // 0x800400D4
     cam_ang.vz = FP_ANGLE(0.0f);
 
     // Set position.
-    cam_pos.vx = chr_pos->vx - FP_MULTIPLY(Math_Sin(chr_ang_y), RADIUS, Q12_SHIFT);
+    cam_pos.vx = chr_pos->vx - Q12_MULT(Math_Sin(chr_ang_y), RADIUS);
     cam_pos.vy = chr_pos->vy - HEIGHT;
-    cam_pos.vz = chr_pos->vz - FP_MULTIPLY(Math_Cos(chr_ang_y), RADIUS, Q12_SHIFT);
+    cam_pos.vz = chr_pos->vz - Q12_MULT(Math_Cos(chr_ang_y), RADIUS);
 
     vcSetFirstCamWork(&cam_pos, chr_ang_y, g_SysWork.flags_22A4 & SysFlag2_6);
     g_SysWork.flags_22A4 &= ~SysFlag2_6;
@@ -121,7 +121,7 @@ void vcMoveAndSetCamera(bool in_connect_f, bool change_debug_mode, bool for_f, b
             }
 
             hero_top_y    = hr_p->position_18.vy + Q12(-1.7f);
-            hero_bottom_y = hr_p->position_18.vy + FP_MULTIPLY(g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate, Q12(-0.5f), Q12_SHIFT);
+            hero_bottom_y = hr_p->position_18.vy + Q12_MULT(g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate, Q12(-0.5f));
 
             if (g_WorldGfx.vcCameraInternalInfo_1BDC.ev_cam_rate > Q12(0.0f))
             {
@@ -183,8 +183,8 @@ void vcMakeHeroHeadPos(VECTOR3* head_pos) // 0x8004047C
 
 void vcAddOfsToPos(VECTOR3* out_pos, const VECTOR3* in_pos, q3_12 ofs_xz_r, q3_12 ang_y, q19_12 ofs_y) // 0x80040518
 {
-    out_pos->vx = in_pos->vx + FP_MULTIPLY(ofs_xz_r, Math_Sin(ang_y), Q12_SHIFT);
-    out_pos->vz = in_pos->vz + FP_MULTIPLY(ofs_xz_r, Math_Cos(ang_y), Q12_SHIFT);
+    out_pos->vx = in_pos->vx + Q12_MULT(ofs_xz_r, Math_Sin(ang_y));
+    out_pos->vz = in_pos->vz + Q12_MULT(ofs_xz_r, Math_Cos(ang_y));
     out_pos->vy = in_pos->vy + ofs_y;
 }
 

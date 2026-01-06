@@ -44,7 +44,7 @@ void Ai_PuppetNurse_Move(s_SubCharacter* nurse)
     {
         tmpAngle = 2;
         tmpAngle = (absAngle * tmpAngle) + FP_ANGLE(45.0f);
-        addAngle = FP_MULTIPLY_PRECISE(g_DeltaTime0, tmpAngle, Q12_SHIFT);
+        addAngle = Q12_MULT_PRECISE(g_DeltaTime0, tmpAngle);
         if (angleDeltaToPlayer > FP_ANGLE(0.0f))
         {
             nurse->rotation_24.vy += addAngle;

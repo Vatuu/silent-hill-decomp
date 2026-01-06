@@ -66,8 +66,8 @@ bool sharedFunc_800DE250_2_s00(s_SubCharacter* airScreamer)
         cond1 = cond1 < (FP_ANGLE_NORM_S(curAngle - angleToUnk) + FP_ANGLE(150.0f));
         if (!cond1)
         {
-            deltaX = FP_MULTIPLY_PRECISE(unkDist, Math_Sin(curAngle), Q12_SHIFT);
-            newPosZ = FP_MULTIPLY_PRECISE(unkDist, Math_Cos(curAngle), Q12_SHIFT);
+            deltaX = Q12_MULT_PRECISE(unkDist, Math_Sin(curAngle));
+            newPosZ = Q12_MULT_PRECISE(unkDist, Math_Cos(curAngle));
 
             newPosX                      = posX + deltaX;
             sharedData_800F21CC_2_s00.vx = newPosX;

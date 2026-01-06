@@ -1018,7 +1018,7 @@ void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     temp_t1   = arg2 << 22;
     temp_lo   = temp_t1 / (arg6 >> 2);
     temp_lo_2 = arg9 * temp_t0;
-    temp_lo_4 = (arg6 + (s32)FP_MULTIPLY_PRECISE(arg3, temp_lo_2, Q12_SHIFT)) >> 2;
+    temp_lo_4 = (arg6 + (s32)Q12_MULT_PRECISE(arg3, temp_lo_2)) >> 2;
     temp_lo_4 = temp_t1 / temp_lo_4;
 
     D_800AFE24.sub_0.field_0  = 0;
@@ -1040,17 +1040,17 @@ void func_8009185C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s
     D_800AFE24.field_34 = arg7;
     D_800AFE24.field_38 = arg8;
     D_800AFE24.field_3C = arg9;
-    D_800AFE24.field_40 = FP_MULTIPLY_PRECISE(temp_lo, arg4, Q12_SHIFT);
-    D_800AFE24.field_44 = FP_MULTIPLY_PRECISE(temp_lo_4, arg4, Q12_SHIFT);
+    D_800AFE24.field_40 = Q12_MULT_PRECISE(temp_lo, arg4);
+    D_800AFE24.field_44 = Q12_MULT_PRECISE(temp_lo_4, arg4);
 
-    temp_v0             = arg4 + FP_MULTIPLY_PRECISE(arg3, arg7, Q12_SHIFT);
-    D_800AFE24.field_48 = FP_MULTIPLY_PRECISE(temp_lo, temp_v0, Q12_SHIFT) - D_800AFE24.field_40;
-    D_800AFE24.field_4C = FP_MULTIPLY_PRECISE(temp_lo_4, temp_v0, Q12_SHIFT) - D_800AFE24.field_44;
-    D_800AFE24.field_50 = FP_MULTIPLY_PRECISE(temp_lo, arg5, Q12_SHIFT);
+    temp_v0             = arg4 + Q12_MULT_PRECISE(arg3, arg7);
+    D_800AFE24.field_48 = Q12_MULT_PRECISE(temp_lo, temp_v0) - D_800AFE24.field_40;
+    D_800AFE24.field_4C = Q12_MULT_PRECISE(temp_lo_4, temp_v0) - D_800AFE24.field_44;
+    D_800AFE24.field_50 = Q12_MULT_PRECISE(temp_lo, arg5);
 
     temp_lo_7           = arg8 * temp_t0;
-    temp_t2             = arg5 + FP_MULTIPLY_PRECISE(arg3, temp_lo_7, Q12_SHIFT);
-    D_800AFE24.field_54 = FP_MULTIPLY_PRECISE(temp_lo_4, temp_t2, Q12_SHIFT);
+    temp_t2             = arg5 + Q12_MULT_PRECISE(arg3, temp_lo_7);
+    D_800AFE24.field_54 = Q12_MULT_PRECISE(temp_lo_4, temp_t2);
 }
 
 INCLUDE_RODATA("asm/bodyprog/nonmatchings/credits", D_8002B5CC);

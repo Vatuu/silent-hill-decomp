@@ -88,7 +88,7 @@ void Gfx_BackgroundSpritesTransition(s_FsImageDesc* image0, s_FsImageDesc* image
     for (i = 0; i < 3; i++)
     {
         image = (i > 0) ? image0 : image1;
-        color = (i < 2) ? FP_MULTIPLY_PRECISE(alpha, 128, Q12_SHIFT) : 128;
+        color = (i < 2) ? Q12_MULT_PRECISE(alpha, 128) : 128;
 
         for (j = 0; j < 3; j++)
         {

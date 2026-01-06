@@ -14,7 +14,7 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
     distToPlayer = Math_Vector2MagCalc((g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx),
                                        (g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz));
 
-    distToPlayer = FP_MULTIPLY_FLOAT_PRECISE(distToPlayer, 1.1f, Q12_SHIFT);
+    distToPlayer = Q12_MULT_FLOAT_PRECISE(distToPlayer, 1.1f);
     cond         = sharedFunc_800CF294_3_s03(nurse, distToPlayer);
 
     if (g_SysWork.playerWork_4C.player_0.health_B0 < Q12(0.0f) || !cond)
@@ -31,7 +31,7 @@ void Ai_PuppetNurse_Control12(s_SubCharacter* nurse)
             if (angleDeltaAbs >= FP_ANGLE(10.1f))
             {
                 s32 rotAmt = FP_ANGLE(45.0f); // @hack? Should probably be part of the `FP_MULTIPLY_PRECISE`.
-                rotAmt     = FP_MULTIPLY_PRECISE(g_DeltaTime0, rotAmt, Q12_SHIFT);
+                rotAmt     = Q12_MULT_PRECISE(g_DeltaTime0, rotAmt);
                 if (angleDeltaToPlayer > FP_ANGLE(0.0f))
                 {
                     nurse->rotation_24.vy += rotAmt;

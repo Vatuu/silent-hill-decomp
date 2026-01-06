@@ -29,7 +29,7 @@ q19_12 sharedFunc_800D7120_0_s01(q19_12 moveSpeed, s32 arg1, s32 arg2)
         {
             if (temp_v1 > 0)
             {
-                adjMoveSpeed += FP_MULTIPLY_PRECISE(g_DeltaTime0, var_a1, Q12_SHIFT);
+                adjMoveSpeed += Q12_MULT_PRECISE(g_DeltaTime0, var_a1);
                 if (new_var2 < adjMoveSpeed)
                 {
                     adjMoveSpeed = new_var2;
@@ -38,7 +38,7 @@ q19_12 sharedFunc_800D7120_0_s01(q19_12 moveSpeed, s32 arg1, s32 arg2)
         }
         else if (temp_v1 < 0)
         {
-            adjMoveSpeed += FP_MULTIPLY_PRECISE(g_DeltaTime0, var_a1, Q12_SHIFT);
+            adjMoveSpeed += Q12_MULT_PRECISE(g_DeltaTime0, var_a1);
             if (adjMoveSpeed < new_var2)
             {
                 adjMoveSpeed = new_var2;

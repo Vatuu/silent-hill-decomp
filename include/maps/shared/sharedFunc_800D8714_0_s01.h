@@ -34,8 +34,8 @@ void sharedFunc_800D8714_0_s01(s_SubCharacter* airScreamer, q19_12 moveSpeed, q1
         adjHeadingAngle ^= FP_ANGLE(180.0f);
     }
 
-    offsetX = FP_MULTIPLY_PRECISE(moveDist, Math_Sin(adjHeadingAngle), Q12_SHIFT);
-    offsetZ = FP_MULTIPLY_PRECISE(moveDist, Math_Cos(adjHeadingAngle), Q12_SHIFT);
+    offsetX = Q12_MULT_PRECISE(moveDist, Math_Sin(adjHeadingAngle));
+    offsetZ = Q12_MULT_PRECISE(moveDist, Math_Cos(adjHeadingAngle));
 
     airScreamer->field_D8.offsetX_4 = offsetX;
     airScreamer->field_D8.offsetZ_6 = offsetZ;

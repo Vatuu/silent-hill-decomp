@@ -395,7 +395,7 @@ void func_800D732C(void) // 0x800D732C
 
         case 1:
             // Move player.
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.4f, Q12_SHIFT);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.4f);
 
             SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
             break;
@@ -404,7 +404,7 @@ void func_800D732C(void) // 0x800D732C
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
 
             // Move player.
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.4f, Q12_SHIFT);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.4f);
             break;
 
         default:

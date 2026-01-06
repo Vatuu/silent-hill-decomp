@@ -17,13 +17,13 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter* airScreamer)
     posY                         = airScreamer->field_34;
     airScreamer->headingAngle_3C = headingAngle;
 
-    sharedData_800DE1F0_0_s01.vx = FP_MULTIPLY_PRECISE(moveSpeed, Math_Sin(headingAngle), Q12_SHIFT);
+    sharedData_800DE1F0_0_s01.vx = Q12_MULT_PRECISE(moveSpeed, Math_Sin(headingAngle));
     sharedData_800DE1F0_0_s01.vy = posY;
-    sharedData_800DE1F0_0_s01.vz = FP_MULTIPLY_PRECISE(moveSpeed, Math_Cos(headingAngle), Q12_SHIFT);
+    sharedData_800DE1F0_0_s01.vz = Q12_MULT_PRECISE(moveSpeed, Math_Cos(headingAngle));
 
-    sharedData_800DE1E0_0_s01.vx = FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vx, Q12_SHIFT);
-    sharedData_800DE1E0_0_s01.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vy, Q12_SHIFT);
-    sharedData_800DE1E0_0_s01.vz = FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vz, Q12_SHIFT);
+    sharedData_800DE1E0_0_s01.vx = Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vx);
+    sharedData_800DE1E0_0_s01.vy = Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vy);
+    sharedData_800DE1E0_0_s01.vz = Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800DE1F0_0_s01.vz);
 
     temp_s0 = sharedFunc_800D6A60_0_s01(&sharedData_800E2350_0_s01.offset_0,
                                         &sharedData_800DE1F0_0_s01,
@@ -42,7 +42,7 @@ void sharedFunc_800D63A4_0_s01(s_SubCharacter* airScreamer)
         posX = sharedData_800E21D0_0_s01.field_11C.vx;
         posZ = sharedData_800E21D0_0_s01.field_11C.vz;
 
-        magSqr = FP_MULTIPLY_PRECISE(posX, posX, Q12_SHIFT) + FP_MULTIPLY_PRECISE(posZ, posZ, Q12_SHIFT);
+        magSqr = Q12_MULT_PRECISE(posX, posX) + Q12_MULT_PRECISE(posZ, posZ);
         if (magSqr < Q12(0.49f))
         {
             airScreamerProps.flags_11C |= PlayerFlag_Unk29;

@@ -275,11 +275,11 @@ void func_80055648(s32 arg0, SVECTOR* arg1) // 0x80055648
 
         for (j = 0; j < ARRAY_SIZE(D_800AE1B4); j++)
         {
-            ptr->field_0[0][j].vy = ptr->field_0[1][j].vy = FP_MULTIPLY(D_800AE1B4[j].vy, arg0, Q12_SHIFT);
-            ptr->field_0[0][j].vx                         = FP_MULTIPLY(D_800AE1B4[j].vx, temp_t1, Q12_SHIFT);
-            ptr->field_0[1][j].vx                         = FP_MULTIPLY(D_800AE1B4[j].vx, temp_v1, Q12_SHIFT);
-            ptr->field_0[0][j].vz                         = FP_MULTIPLY(FP_MULTIPLY(D_800AE1B4[j].vz, temp_v0, Q12_SHIFT - 2), arg0, Q12_SHIFT);
-            ptr->field_0[1][j].vz                         = FP_MULTIPLY(FP_MULTIPLY(D_800AE1B4[j].vz, temp_lo, Q12_SHIFT - 2), arg0, Q12_SHIFT);
+            ptr->field_0[0][j].vy = ptr->field_0[1][j].vy = Q12_MULT(D_800AE1B4[j].vy, arg0);
+            ptr->field_0[0][j].vx                         = Q12_MULT(D_800AE1B4[j].vx, temp_t1);
+            ptr->field_0[1][j].vx                         = Q12_MULT(D_800AE1B4[j].vx, temp_v1);
+            ptr->field_0[0][j].vz                         = Q12_MULT(FP_MULTIPLY(D_800AE1B4[j].vz, temp_v0, Q12_SHIFT - 2), arg0);
+            ptr->field_0[1][j].vz                         = Q12_MULT(FP_MULTIPLY(D_800AE1B4[j].vz, temp_lo, Q12_SHIFT - 2), arg0);
         }
     }
 }
@@ -557,7 +557,7 @@ u8 func_80055D78(q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80055D78
                 ptr1++;
             }
 
-            temp_v1 = ptr1->vy + FP_MULTIPLY(ptr1->vz, tempX - ptr1->vx, Q12_SHIFT);
+            temp_v1 = ptr1->vy + Q12_MULT(ptr1->vz, tempX - ptr1->vx);
             if (temp_v1 < var_a3)
             {
                 var_a3 = temp_v1;
@@ -1155,9 +1155,9 @@ void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, G
         *(u32*)&poly->r0 =
         *(u32*)&poly->r1 =
         *(u32*)&poly->r2 =
-        *(u32*)&poly->r3 = FP_MULTIPLY(D_800C4168.fogColor_1C.r,  var_s0, Q12_SHIFT)       +
-                           (FP_MULTIPLY(D_800C4168.fogColor_1C.g, var_s0, Q12_SHIFT) << 8) +
-                           (FP_MULTIPLY(D_800C4168.fogColor_1C.b, var_s0, Q12_SHIFT) << 16);
+        *(u32*)&poly->r3 = Q12_MULT(D_800C4168.fogColor_1C.r, var_s0)       +
+                           (Q12_MULT(D_800C4168.fogColor_1C.g, var_s0) << 8) +
+                           (Q12_MULT(D_800C4168.fogColor_1C.b, var_s0) << 16);
 
         SetPolyG4(poly);
 
@@ -2704,7 +2704,7 @@ void func_8005A21C(s_ModelInfo* modelInfo, GsOT_TAG* otTag, void* arg2, MATRIX* 
 
 void func_8005A42C(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A42C
 {
-    q19_12 invAlpha = Q12(1.0f) - FP_MULTIPLY(alpha, D_800C4168.field_20, Q12_SHIFT);
+    q19_12 invAlpha = Q12(1.0f) - Q12_MULT(alpha, D_800C4168.field_20);
 
     gte_lddp(invAlpha);
     gte_ldrgb(&D_800C4168.worldTintColor_28);
@@ -2793,7 +2793,7 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
         var_s0 = D_800C4168.field_3;
     }
 
-    var_s0 = FP_MULTIPLY(var_s0, alpha, Q12_SHIFT);
+    var_s0 = Q12_MULT(var_s0, alpha);
 
     if (var_s0 < 0)
     {
@@ -2837,24 +2837,24 @@ void func_8005A478(s_GteScratchData* scratchData, q19_12 alpha) // 0x8005A478
         var_a1 = 64;
     }
 
-    SetBackColor(FP_MULTIPLY(D_800C4168.field_24 + ((D_800C4168.worldTintColor_28.r * var_a1) >> 7), alpha, Q12_SHIFT),
-                 FP_MULTIPLY(D_800C4168.field_25 + ((D_800C4168.worldTintColor_28.g * var_a1) >> 7), alpha, Q12_SHIFT),
-                 FP_MULTIPLY(D_800C4168.field_26 + ((D_800C4168.worldTintColor_28.b * var_a1) >> 7), alpha, Q12_SHIFT));
+    SetBackColor(Q12_MULT(D_800C4168.field_24 + ((D_800C4168.worldTintColor_28.r * var_a1) >> 7), alpha),
+                 Q12_MULT(D_800C4168.field_25 + ((D_800C4168.worldTintColor_28.g * var_a1) >> 7), alpha),
+                 Q12_MULT(D_800C4168.field_26 + ((D_800C4168.worldTintColor_28.b * var_a1) >> 7), alpha));
 }
 
 void func_8005A838(s_GteScratchData* scratchData, s32 scale) // 0x8005A838
 {
     SVECTOR3 vec;
 
-    vec.vx = FP_MULTIPLY(D_800C4168.field_74.vx, scale, Q12_SHIFT) >> 1;
-    vec.vy = FP_MULTIPLY(D_800C4168.field_74.vy, scale, Q12_SHIFT) >> 1;
-    vec.vz = FP_MULTIPLY(D_800C4168.field_74.vz, scale, Q12_SHIFT) >> 1;
+    vec.vx = Q12_MULT(D_800C4168.field_74.vx, scale) >> 1;
+    vec.vy = Q12_MULT(D_800C4168.field_74.vy, scale) >> 1;
+    vec.vz = Q12_MULT(D_800C4168.field_74.vz, scale) >> 1;
 
     gte_SetLightSVector(&vec);
 
-    SetBackColor(FP_MULTIPLY(D_800C4168.field_24, scale, Q12_SHIFT),
-                 FP_MULTIPLY(D_800C4168.field_25, scale, Q12_SHIFT),
-                 FP_MULTIPLY(D_800C4168.field_26, scale, Q12_SHIFT));
+    SetBackColor(Q12_MULT(D_800C4168.field_24, scale),
+                 Q12_MULT(D_800C4168.field_25, scale),
+                 Q12_MULT(D_800C4168.field_26, scale));
 }
 
 void func_8005A900(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat) // 0x8005A900
@@ -3287,8 +3287,8 @@ void func_8005B55C(GsCOORDINATE2* coord) // 0x8005B55C
         curPtr->field_10 = -Math_Cos(curPtr->field_4);
         curPtr->field_C  = -Math_Sin(curPtr->field_4);
         curPtr->field_E  = 0;
-        curPtr->field_18 = FP_MULTIPLY(curPtr->field_2, Math_Cos(curPtr->field_4), Q12_SHIFT);
-        curPtr->field_14 = FP_MULTIPLY(curPtr->field_2, Math_Sin(curPtr->field_4), Q12_SHIFT);
+        curPtr->field_18 = Q12_MULT(curPtr->field_2, Math_Cos(curPtr->field_4));
+        curPtr->field_14 = Q12_MULT(curPtr->field_2, Math_Sin(curPtr->field_4));
         curPtr->field_16 = curPtr->field_0;
     }
 }
@@ -3413,7 +3413,7 @@ s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
     temp_v0_6 = ratan2(arg8 - arg6, arg7 - arg5);
     temp_s1   = temp_s0 - temp_v0_6;
 
-    var_s0 = ABS(FP_MULTIPLY(temp_s2, Math_Sin(temp_s1), Q12_SHIFT));
+    var_s0 = ABS(Q12_MULT(temp_s2, Math_Sin(temp_s1)));
     if (arg4 < var_s0)
     {
         return 0;
@@ -3429,9 +3429,9 @@ s32 func_8005C1CC(s32* arg0, s32* arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, 
         else
         {
             temp_s0_2 = Math_Cos(temp_s0 - temp_v0_6);
-            temp_s0_3 = FP_MULTIPLY(temp_s2, temp_s0_2, Q12_SHIFT) - (SquareRoot0(SQUARE(arg4 >> 6) - SQUARE(var_s0 >> 6)) << 6);
-            *arg0     = arg5 + FP_MULTIPLY(temp_s0_3, Math_Cos(temp_v0_6), Q12_SHIFT);
-            *arg1     = arg6 + FP_MULTIPLY(temp_s0_3, Math_Sin(temp_v0_6), Q12_SHIFT);
+            temp_s0_3 = Q12_MULT(temp_s2, temp_s0_2) - (SquareRoot0(SQUARE(arg4 >> 6) - SQUARE(var_s0 >> 6)) << 6);
+            *arg0     = arg5 + Q12_MULT(temp_s0_3, Math_Cos(temp_v0_6));
+            *arg1     = arg6 + Q12_MULT(temp_s0_3, Math_Sin(temp_v0_6));
         }
     }
 
@@ -3460,11 +3460,11 @@ u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2) // 
 
     if ((mag0 * Math_Sin(angle0 - angle2)) < 0)
     {
-        sp10 = -FP_MULTIPLY(mag0, Math_Sin(angle0 - angle2), Q12_SHIFT);
+        sp10 = -Q12_MULT(mag0, Math_Sin(angle0 - angle2));
     }
     else
     {
-        sp10 = FP_MULTIPLY(mag0, Math_Sin(angle0 - angle2), Q12_SHIFT);
+        sp10 = Q12_MULT(mag0, Math_Sin(angle0 - angle2));
     }
 
     if (mag1 < mag0)
@@ -3494,20 +3494,20 @@ u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2) // 
         {
             if (mag0 * Math_Cos(angle0 - angle2) < 0)
             {
-                var_s1 = -FP_MULTIPLY(mag0, Math_Cos(angle0 - angle2), Q12_SHIFT);
+                var_s1 = -Q12_MULT(mag0, Math_Cos(angle0 - angle2));
             }
             else
             {
-                var_s1 = FP_MULTIPLY(mag0, Math_Cos(angle0 - angle2), Q12_SHIFT);
+                var_s1 = Q12_MULT(mag0, Math_Cos(angle0 - angle2));
             }
 
             if ((mag1 * Math_Cos(angle1 - angle2)) < 0)
             {
-                var_v0_4 = -FP_MULTIPLY(mag1, Math_Cos(angle1 - angle2), Q12_SHIFT);
+                var_v0_4 = -Q12_MULT(mag1, Math_Cos(angle1 - angle2));
             }
             else
             {
-                var_v0_4 = FP_MULTIPLY(mag1, Math_Cos(angle1 - angle2), Q12_SHIFT);
+                var_v0_4 = Q12_MULT(mag1, Math_Cos(angle1 - angle2));
             }
 
             temp  = var_s1 + var_v0_4;
@@ -3603,7 +3603,7 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
     s32        ret;
 
     headingAngle = chara->headingAngle_3C;
-    temp_s0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->moveSpeed_38, Q12_SHIFT);
+    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime0, chara->moveSpeed_38);
     temp_s2 = OVERFLOW_GUARD(temp_s0);
     temp_s3 = temp_s2 >> 1;
 
@@ -3611,9 +3611,9 @@ s32 func_8005C944(s_SubCharacter* chara, s_800C4590* arg1) // 0x8005C944
     temp_s0_2       = temp_s0 >> temp_s3;
     temp_v0         = sinHeadingAngle >> temp_s3;
 
-    offset.vx = FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0, Q12_SHIFT) << temp_s2;
-    offset.vz = FP_MULTIPLY_PRECISE(temp_s0_2, Math_Cos(headingAngle) >> temp_s3, Q12_SHIFT) << temp_s2;
-    offset.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->field_34, Q12_SHIFT);
+    offset.vx = Q12_MULT_PRECISE(temp_s0_2, temp_v0) << temp_s2;
+    offset.vz = Q12_MULT_PRECISE(temp_s0_2, Math_Cos(headingAngle) >> temp_s3) << temp_s2;
+    offset.vy = Q12_MULT_PRECISE(g_DeltaTime0, chara->field_34);
 
     ret = func_80069B24(&sp10, &offset, chara);
 
@@ -3650,21 +3650,21 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 offsetX, q3_12 
     s32        ret;
 
     headingAngle = chara->headingAngle_3C;
-    temp_s0 = FP_MULTIPLY_PRECISE(g_DeltaTime0, chara->moveSpeed_38, Q12_SHIFT);
+    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime0, chara->moveSpeed_38);
     temp_s2 = OVERFLOW_GUARD(temp_s0);
     temp_s3 = temp_s2 >> 1;
 
     sinHeadingAngle = Math_Sin(headingAngle);
     temp_s0_2 = temp_s0 >> temp_s3;
     temp_v0_2 = sinHeadingAngle >> temp_s3;
-    offset.vx = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0_2, Q12_SHIFT) << temp_s2;
+    offset.vx = (s32)Q12_MULT_PRECISE(temp_s0_2, temp_v0_2) << temp_s2;
 
     temp_v0_4 = Math_Cos(headingAngle) >> temp_s3;
-    offset.vz = (s32)FP_MULTIPLY_PRECISE(temp_s0_2, temp_v0_4, Q12_SHIFT) << temp_s2;
+    offset.vz = (s32)Q12_MULT_PRECISE(temp_s0_2, temp_v0_4) << temp_s2;
 
     sinHeadingAngle = chara->field_34;
     offset.vx += offsetX;
-    offset.vy = FP_MULTIPLY_PRECISE(g_DeltaTime0, sinHeadingAngle, Q12_SHIFT);
+    offset.vy = Q12_MULT_PRECISE(g_DeltaTime0, sinHeadingAngle);
     offset.vz += offsetZ;
 
     ret = func_80069B24(&sp10, &offset, chara);
@@ -3820,7 +3820,7 @@ s32 func_8005D86C(s32 arg0) // 0x8005D86C
             var_v1 <<= -temp_a1;
         }
 
-        var_a0 = FP_MULTIPLY_PRECISE(var_a0, Q12(1.0f) - temp_a2, Q12_SHIFT) + FP_MULTIPLY_PRECISE(var_v1, temp_a2, Q12_SHIFT);
+        var_a0 = Q12_MULT_PRECISE(var_a0, Q12(1.0f) - temp_a2) + Q12_MULT_PRECISE(var_v1, temp_a2);
     }
 
     return var_a0;
@@ -3859,9 +3859,9 @@ s32 func_8005D9B8(VECTOR3* pos, q23_8 vol) // 0x8005D9B8
     deltaX = D_800C42C0.vx - D_800C42CC->vx;
     deltaY = D_800C42C0.vy - D_800C42CC->vy;
     deltaZ = D_800C42C0.vz - D_800C42CC->vz;
-    var_s0 = func_8005D974((SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
-                                         FP_MULTIPLY_PRECISE(deltaY, deltaY, Q12_SHIFT) +
-                                         FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT)) - Q12(2.5f)) / 10);
+    var_s0 = func_8005D974((SquareRoot12(Q12_MULT_PRECISE(deltaX, deltaX) +
+                                         Q12_MULT_PRECISE(deltaY, deltaY) +
+                                         Q12_MULT_PRECISE(deltaZ, deltaZ)) - Q12(2.5f)) / 10);
     if (var_s0 > Q12(1.0f))
     {
         var_s0 = Q12(1.0f);
@@ -3870,11 +3870,11 @@ s32 func_8005D9B8(VECTOR3* pos, q23_8 vol) // 0x8005D9B8
     deltaX  = D_800C42CC->vx - pos->vx;
     deltaY  = D_800C42CC->vy - pos->vy;
     deltaZ  = D_800C42CC->vz - pos->vz;
-    temp_v0 = func_8005D974((SquareRoot12(FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) +
-                                          FP_MULTIPLY_PRECISE(deltaY, deltaY, Q12_SHIFT) +
-                                          FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT)) - Q12(6.0f)) / 4);
+    temp_v0 = func_8005D974((SquareRoot12(Q12_MULT_PRECISE(deltaX, deltaX) +
+                                          Q12_MULT_PRECISE(deltaY, deltaY) +
+                                          Q12_MULT_PRECISE(deltaZ, deltaZ)) - Q12(6.0f)) / 4);
 
-    var_v0 = FP_MULTIPLY_PRECISE(var_s0, temp_v0, Q12_SHIFT);
+    var_v0 = Q12_MULT_PRECISE(var_s0, temp_v0);
     if (var_v0 > Q12(2.0f))
     {
         var_v0 = Q12(2.0f);
@@ -3884,7 +3884,7 @@ s32 func_8005D9B8(VECTOR3* pos, q23_8 vol) // 0x8005D9B8
         var_v0 = Q12(0.0f);
     }
 
-    var_v0 = FP_MULTIPLY_PRECISE(vol, var_v0, Q12_SHIFT);
+    var_v0 = Q12_MULT_PRECISE(vol, var_v0);
     if (var_v0 > Q8_CLAMPED(1.0f))
     {
         var_v0 = Q8_CLAMPED(1.0f);
@@ -4340,7 +4340,7 @@ void func_8005E89C(void) // 0x8005E89C
 
     if (D_800C4414 & 0x1)
     {
-        ptr->field_C4 = FP_MULTIPLY_PRECISE(g_DeltaTime0, g_MapOverlayHeader.field_5C->field_E, Q12_SHIFT);
+        ptr->field_C4 = Q12_MULT_PRECISE(g_DeltaTime0, g_MapOverlayHeader.field_5C->field_E);
         ptr->field_C8 = g_MapOverlayHeader.field_5C->field_4 * 16;
         ptr->field_CA = g_MapOverlayHeader.field_5C->field_5 * 16;
         ptr->field_CC = (0x100 - g_MapOverlayHeader.field_5C->field_5) * 16;
@@ -4407,7 +4407,7 @@ void func_8005E89C(void) // 0x8005E89C
         }
         else
         {
-            g_MapOverlayHeader.field_7C->field_10 = FP_MULTIPLY_PRECISE(g_DeltaTime0, g_MapOverlayHeader.field_7C->field_E, Q12_SHIFT) +
+            g_MapOverlayHeader.field_7C->field_10 = Q12_MULT_PRECISE(g_DeltaTime0, g_MapOverlayHeader.field_7C->field_E) +
                                                     g_MapOverlayHeader.field_7C->field_10;
             g_MapOverlayHeader.field_7C->field_10 = MIN(g_MapOverlayHeader.field_7C->field_10, Q12(0.25f));
         }
@@ -4427,10 +4427,10 @@ void func_8005E89C(void) // 0x8005E89C
             }
             else
             {
-                ptr->u_field_EC.field_0[i].vx = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
-                ptr->u_field_EC.field_0[i].vy = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy + FP_ANGLE(90.0f)), Q12_SHIFT);
-                ptr->u_field_FC.field_0[i].vx = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy - FP_ANGLE(90.0f)), Q12_SHIFT);
-                ptr->u_field_FC.field_0[i].vy = FP_MULTIPLY(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy + FP_ANGLE(90.0f)), Q12_SHIFT);
+                ptr->u_field_EC.field_0[i].vx = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy - FP_ANGLE(90.0f)));
+                ptr->u_field_EC.field_0[i].vy = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy + FP_ANGLE(90.0f)));
+                ptr->u_field_FC.field_0[i].vx = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy - FP_ANGLE(90.0f)));
+                ptr->u_field_FC.field_0[i].vy = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy + FP_ANGLE(90.0f)));
             }
         }
 
@@ -4454,18 +4454,18 @@ void func_8005E89C(void) // 0x8005E89C
 
             ptr->field_34[i] = CLAMP_CUSTOM((chara->position_18.vx + chara->field_D8.offsetX_0) - D_800C42E8[i].field_4,
                                             (chara->position_18.vx + chara->field_D8.offsetX_0) - curPtr->field_4,
-                                            -FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT),
-                                             FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT));
+                                            -Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)),
+                                             Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)));
 
             ptr->field_64[i] = CLAMP_CUSTOM((chara->position_18.vy + chara->field_C8.field_6) - D_800C42E8[i].field_2,
                                             (chara->position_18.vy + chara->field_C8.field_6) - curPtr->field_2,
-                                            -FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT) >> 4,
-                                            FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT));
+                                            -Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)) >> 4,
+                                            Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)));
 
             ptr->field_94[i] = CLAMP_CUSTOM((chara->position_18.vz + chara->field_D8.offsetZ_2) - D_800C42E8[i].field_8,
                                             (chara->position_18.vz + chara->field_D8.offsetZ_2) - curPtr->field_8,
-                                            -FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT),
-                                             FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(1.25f), Q12_SHIFT));
+                                            -Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)),
+                                             Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)));
 
             D_800C42E8[i].field_4 += ptr->field_34[i];
             D_800C42E8[i].field_2 += ptr->field_64[i];
@@ -5717,12 +5717,12 @@ void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) 
         temp_s2 = Rng_Rand16() % D_800AE5F0[(temp_s0 * 4) + 2] + D_800AE5F0[(temp_s0 * 4) + 3];
 
         g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = chara->position_18.vx +
-                                                            FP_MULTIPLY(temp_s3, Math_Sin(chara->rotation_24.vy), Q12_SHIFT) -
-                                                            FP_MULTIPLY(temp_s2, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
+                                                            Q12_MULT(temp_s3, Math_Sin(chara->rotation_24.vy)) -
+                                                            Q12_MULT(temp_s2, Math_Cos(chara->rotation_24.vy));
         g_MapOverlayHeader.unkTable1_4C[idx].vy_8 = chara->position_18.vy;
         g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = chara->position_18.vz +
-                                                            FP_MULTIPLY(temp_s3, Math_Cos(chara->rotation_24.vy), Q12_SHIFT) +
-                                                            FP_MULTIPLY(temp_s2, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+                                                            Q12_MULT(temp_s3, Math_Cos(chara->rotation_24.vy)) +
+                                                            Q12_MULT(temp_s2, Math_Sin(chara->rotation_24.vy));
 
         Collision_Get(&coll, g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
 
@@ -6259,8 +6259,8 @@ bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
     {
         ptr->field_1D0 = g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 + (FP_TO(ptr->field_1D4, Q12_SHIFT) / 6);
 
-        *(s32*)&ptr->field_14C[0].vx = ((((u16)g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0 + FP_MULTIPLY(ptr->field_1E8, Math_Cos(ptr->field_1D0), Q12_SHIFT)) - FP_ANGLE(90.0f)) & 0xFFFF) +
-                                       ((g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 + FP_MULTIPLY(ptr->field_1E8, Math_Sin(ptr->field_1D0), Q12_SHIFT)) << 16);
+        *(s32*)&ptr->field_14C[0].vx = ((((u16)g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0 + Q12_MULT(ptr->field_1E8, Math_Cos(ptr->field_1D0))) - FP_ANGLE(90.0f)) & 0xFFFF) +
+                                       ((g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 + Q12_MULT(ptr->field_1E8, Math_Sin(ptr->field_1D0))) << 16);
 
         ptr->field_14C[0].vz = ptr->field_1D0;
 
@@ -6359,7 +6359,7 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
 
     ptr = PSX_SCRATCH;
 
-    temp_s4 = FP_MULTIPLY_PRECISE(g_DeltaTime0, Rng_GenerateInt(Q12(0.8f), Q12(1.2f) - 2), Q12_SHIFT);
+    temp_s4 = Q12_MULT_PRECISE(g_DeltaTime0, Rng_GenerateInt(Q12(0.8f), Q12(1.2f) - 2));
 
     if (g_MapOverlayHeader.unkTable1_4C[idx].field_A == 20)
     {
@@ -6474,10 +6474,10 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
     if (ptr->field_164 < ptr->field_158)
     {
         temp_v1_5 = Math_Sin(g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0);
-        temp_s0   = FP_MULTIPLY_PRECISE(temp_s4, Q12(0.1f), Q12_SHIFT);
+        temp_s0   = Q12_MULT_PRECISE(temp_s4, Q12(0.1f));
 
-        g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += FP_MULTIPLY(temp_s0, temp_v1_5, Q12_SHIFT);
-        g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += FP_MULTIPLY(temp_s0, Math_Cos(g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0), Q12_SHIFT);
+        g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += Q12_MULT(temp_s0, temp_v1_5);
+        g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += Q12_MULT(temp_s0, Math_Cos(g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0));
 
         if (*g_MapOverlayHeader.data_190 != 0)
         {
@@ -6593,11 +6593,11 @@ void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4
     {
         var_s1           = ((arg2 >> 4) + 0x80) * i;
         temp             = 0x1000;
-        ptr->field_54[i] = -FP_MULTIPLY_PRECISE(CLAMP_LOW((temp - FP_MULTIPLY(var_s1, Math_Sin(arg2 >> 2), Q12_SHIFT)) - Math_Cos(arg2 >> 2), 0),
+        ptr->field_54[i] = -FP_MULTIPLY_PRECISE(CLAMP_LOW((temp - Q12_MULT(var_s1, Math_Sin(arg2 >> 2))) - Math_Cos(arg2 >> 2), 0),
                                                 0x2800,
                                                 Q12_SHIFT);
         temp             = 0x80;
-        ptr->field_60[i] = FP_MULTIPLY_PRECISE(CLAMP_LOW(arg2 - (FP_MULTIPLY(var_s1, Math_Cos(arg2 >> 2), Q12_SHIFT) - temp), 0),
+        ptr->field_60[i] = FP_MULTIPLY_PRECISE(CLAMP_LOW(arg2 - (Q12_MULT(var_s1, Math_Cos(arg2 >> 2)) - temp), 0),
                                                0x2800,
                                                Q12_SHIFT);
     }
@@ -6608,11 +6608,11 @@ void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4
     {
         for (j = 0; j < 3; j++)
         {
-            *(s32*)&ptr->field_8[j] = ((((arg0->vx + FP_FROM(FP_MULTIPLY(ptr->field_60[j], Math_Sin(ptr->field_50), Q12_SHIFT) * Math_Cos(arg1) -
+            *(s32*)&ptr->field_8[j] = ((((arg0->vx + FP_FROM(Q12_MULT(ptr->field_60[j], Math_Sin(ptr->field_50)) * Math_Cos(arg1) -
                                         ptr->field_54[j] * Math_Sin(arg1), Q12_SHIFT)) >> 4) - (u16)ptr->field_40.vx) & 0xFFFF) +
-                                      ((((arg0->vy + FP_MULTIPLY(ptr->field_60[j], Math_Cos(ptr->field_50), Q12_SHIFT)) >> 4) - ptr->field_40.vy) << 16);
+                                      ((((arg0->vy + Q12_MULT(ptr->field_60[j], Math_Cos(ptr->field_50))) >> 4) - ptr->field_40.vy) << 16);
 
-            (&ptr->field_8[j])->vz = ((arg0->vz + (((FP_MULTIPLY(ptr->field_60[j], Math_Sin(ptr->field_50), Q12_SHIFT) * Math_Sin(arg1)) +
+            (&ptr->field_8[j])->vz = ((arg0->vz + (((Q12_MULT(ptr->field_60[j], Math_Sin(ptr->field_50)) * Math_Sin(arg1)) +
                                      (ptr->field_54[j] * Math_Cos(arg1))) >> Q12_SHIFT)) >> 4) - ptr->field_40.vz;
         }
 
@@ -6722,7 +6722,7 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
     *(u16*)&ptr->field_0->u3 = 0x5F3F;
     setSemiTrans(ptr->field_0, true);
 
-    temp_fp = ptr->field_38 * (s32)FP_MULTIPLY_PRECISE((arg1 >> 1) + 0x800, 0x100, Q12_SHIFT) / ptr->field_40;
+    temp_fp = ptr->field_38 * (s32)Q12_MULT_PRECISE((arg1 >> 1) + 0x800, 0x100) / ptr->field_40;
 
     for (i = 0; i < 8; i++)
     {
@@ -6733,13 +6733,13 @@ void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
             D_800C4438[i] = (Math_Cos(Rng_GenerateUInt(0, 2047)) >> 1) + 0x1000;
         }
 
-        temp_s0 = FP_MULTIPLY_PRECISE(temp_fp, D_800C4438[i], Q12_SHIFT);
+        temp_s0 = Q12_MULT_PRECISE(temp_fp, D_800C4438[i]);
 
-        ptr->field_44.vx = FP_MULTIPLY(temp_s0, Math_Sin(D_800C4428[i]), Q12_SHIFT);
-        ptr->field_44.vy = FP_MULTIPLY(temp_s0, Math_Sin(D_800C4428[i] + FP_ANGLE(90.0f)), Q12_SHIFT);
+        ptr->field_44.vx = Q12_MULT(temp_s0, Math_Sin(D_800C4428[i]));
+        ptr->field_44.vy = Q12_MULT(temp_s0, Math_Sin(D_800C4428[i] + FP_ANGLE(90.0f)));
 
-        ptr->field_48.vx = FP_MULTIPLY(-temp_s0, Math_Cos(D_800C4428[i]), Q12_SHIFT);
-        ptr->field_48.vy = FP_MULTIPLY(-temp_s0, Math_Cos(D_800C4428[i] + FP_ANGLE(90.0f)), Q12_SHIFT);
+        ptr->field_48.vx = Q12_MULT(-temp_s0, Math_Cos(D_800C4428[i]));
+        ptr->field_48.vy = Q12_MULT(-temp_s0, Math_Cos(D_800C4428[i] + FP_ANGLE(90.0f)));
 
         setXY0Fast(ptr->field_0, (u16)ptr->field_3C.vx, ptr->field_3C.vy);
         setXY1Fast(ptr->field_0, (u16)ptr->field_3C.vx + (u16)ptr->field_44.vx, ptr->field_3C.vy + ptr->field_48.vx);
@@ -6980,10 +6980,10 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
             }
             else
             {
-                temp   = D_800C444C - FP_MULTIPLY_PRECISE(D_800C4454, D_800C444C, Q12_SHIFT);
+                temp   = D_800C444C - Q12_MULT_PRECISE(D_800C4454, D_800C444C);
                 var_s6 = FP_FROM(temp, Q12_SHIFT);
 
-                temp2  = D_800C4450 - FP_MULTIPLY_PRECISE(D_800C4454, D_800C4450, Q12_SHIFT);
+                temp2  = D_800C4450 - Q12_MULT_PRECISE(D_800C4454, D_800C4450);
                 var_s5 = FP_FROM(temp2, Q12_SHIFT);
             }
 
@@ -7140,9 +7140,9 @@ void GameState_MapScreen_Update(void) // 0x80066EB0
             break;
 
         case 4:
-            temp3   = D_800C444C - FP_MULTIPLY_PRECISE(D_800C4454, D_800C444C, Q12_SHIFT);
+            temp3   = D_800C444C - Q12_MULT_PRECISE(D_800C4454, D_800C444C);
             var_s6  = FP_FROM(temp3, Q12_SHIFT);
-            temp4   = D_800C4450 - FP_MULTIPLY_PRECISE(D_800C4454, D_800C4450, Q12_SHIFT);
+            temp4   = D_800C4450 - Q12_MULT_PRECISE(D_800C4454, D_800C4450);
             temp_s4 = (D_800C4454 >> 1) + 0x800;
             var_s5  = FP_FROM(temp4, Q12_SHIFT);
 
@@ -7626,12 +7626,12 @@ s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
 
     temp_a0 = SCREEN_WIDTH / 2;
     temp3   = ((var_a3 - (arg1 - temp_a0)) * SCREEN_WIDTH);
-    temp    = FP_MULTIPLY_PRECISE(arg3, SCREEN_WIDTH, Q12_SHIFT);
+    temp    = Q12_MULT_PRECISE(arg3, SCREEN_WIDTH);
     temp_s2 = (temp3 / temp) - (SCREEN_WIDTH / 2);
 
     temp_a0 = SCREEN_HEIGHT / 2;
     temp4   = ((mapCoordIdxZ - (arg2 - temp_a0)) * SCREEN_HEIGHT);
-    temp2   = FP_MULTIPLY_PRECISE(arg3, SCREEN_HEIGHT, Q12_SHIFT);
+    temp2   = Q12_MULT_PRECISE(arg3, SCREEN_HEIGHT);
     temp_s1 = (temp4 / temp2) - (SCREEN_HEIGHT / 2);
 
     temp_v0_7 = func_8005BF38(angle);
@@ -8049,8 +8049,8 @@ s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 
             for (i = 0, var_s6 = 12; i < POINT_COUNT; i++)
             {
                 Collision_Get(&coll,
-                              chara->position_18.vx + FP_MULTIPLY(Math_Sin(i * ANGLE_STEP), Q12(0.2f), Q12_SHIFT),
-                              chara->position_18.vz + FP_MULTIPLY(Math_Cos(i * ANGLE_STEP), Q12(0.2f), Q12_SHIFT));
+                              chara->position_18.vx + Q12_MULT(Math_Sin(i * ANGLE_STEP), Q12(0.2f)),
+                              chara->position_18.vz + Q12_MULT(Math_Cos(i * ANGLE_STEP), Q12(0.2f)));
 
                 switch (collType)
                 {
@@ -8157,8 +8157,8 @@ void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3) // 0x8006
     }
 
     angle = ((var_s0 + var_a0) << 8) >> 1;
-    arg0->offset_0.vx = FP_MULTIPLY_PRECISE(Math_Sin(angle), Q12(1.0f / 16.0f), Q12_SHIFT);
-    arg0->offset_0.vz = FP_MULTIPLY_PRECISE(Math_Cos(angle), Q12(1.0f / 16.0f), Q12_SHIFT);
+    arg0->offset_0.vx = Q12_MULT_PRECISE(Math_Sin(angle), Q12(1.0f / 16.0f));
+    arg0->offset_0.vz = Q12_MULT_PRECISE(Math_Cos(angle), Q12(1.0f / 16.0f));
 }
 
 s32 func_80069FFC(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0x80069FFC
@@ -8494,7 +8494,7 @@ void func_8006A940(VECTOR3* offset, s_func_8006AB50* arg1, s_SubCharacter** char
             continue;
         }
 
-        var_a0 = FP_MULTIPLY(Math_Cos(ratan2(posX, posZ) - angle), Q12(1.5f), Q12_SHIFT);
+        var_a0 = Q12_MULT(Math_Cos(ratan2(posX, posZ) - angle), Q12(1.5f));
 
         var_v0 = MAX(var_a0, 0);
         var_a0 = var_v0;
@@ -8514,8 +8514,8 @@ void func_8006A940(VECTOR3* offset, s_func_8006AB50* arg1, s_SubCharacter** char
 
     var_s4 = MAX(var_s4, Q12(0.4f));
 
-    offset->vx = FP_MULTIPLY(var_s4, offset->vx, Q12_SHIFT);
-    offset->vz = FP_MULTIPLY(var_s4, offset->vz, Q12_SHIFT);
+    offset->vx = Q12_MULT(var_s4, offset->vx);
+    offset->vz = Q12_MULT(var_s4, offset->vz);
 }
 
 void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3) // 0x8006AB50
@@ -9278,12 +9278,12 @@ void func_8006BF88(s_func_8006CC44* arg0, SVECTOR3* arg1) // 0x8006BF88
     {
         arg0->field_38 = temp_v0;
         arg0->field_34 = 2;
-        temp2          = arg0->field_98.vec_0.vx + FP_MULTIPLY(arg0->field_4.field_C.vx, temp_v0, Q12_SHIFT);
+        temp2          = arg0->field_98.vec_0.vx + Q12_MULT(arg0->field_4.field_C.vx, temp_v0);
         arg0->field_3A = (arg0->field_4.field_8 * temp_v0) >> 8;
         arg0->field_40 = (u8*)arg0->field_CC.ipdCollisionData_0 + (arg0->field_CC.field_4 + 52);
 
         arg0->field_3C = temp2 - arg1->vx;
-        temp3          = arg0->field_98.vec_0.vz + FP_MULTIPLY(arg0->field_4.field_C.vz, temp_v0, Q12_SHIFT);
+        temp3          = arg0->field_98.vec_0.vz + Q12_MULT(arg0->field_4.field_C.vz, temp_v0);
         arg0->field_3E = temp3 - arg1->vz;
     }
 }
@@ -9520,11 +9520,11 @@ void func_8006C45C(s_func_8006CC44* arg0) // 0x8006C45C
     {
         arg0->field_38 = var_s2;
         arg0->field_34 = 1;
-        temp           = arg0->field_98.vec_0.vx + FP_MULTIPLY(arg0->field_4.field_C.vx, var_s2, Q12_SHIFT);
+        temp           = arg0->field_98.vec_0.vx + Q12_MULT(arg0->field_4.field_C.vx, var_s2);
         arg0->field_3A = (arg0->field_4.field_8 * var_s2) >> 8;
         arg0->field_40 = (u8*)arg0->field_CC.ipdCollisionData_0 + (arg0->field_CC.field_4 + 52);
         arg0->field_3C = temp - arg0->field_CC.field_6.vx;
-        temp2          = arg0->field_98.vec_0.vz + FP_MULTIPLY(arg0->field_4.field_C.vz, var_s2, Q12_SHIFT);
+        temp2          = arg0->field_98.vec_0.vz + Q12_MULT(arg0->field_4.field_C.vz, var_s2);
         arg0->field_3E = temp2 - arg0->field_CC.field_6.vz;
     }
 }
@@ -9673,8 +9673,8 @@ s32 func_8006CC44(q23_8 x, q23_8 z, s_func_8006CC44* arg2) // 0x8006CC44
 {
     if (arg2->field_94 != 12)
     {
-        return FP_MULTIPLY(arg2->field_88, x - arg2->field_80, Q12_SHIFT) +
-               FP_MULTIPLY(arg2->field_8C, z - arg2->field_84, Q12_SHIFT) +
+        return Q12_MULT(arg2->field_88, x - arg2->field_80) +
+               Q12_MULT(arg2->field_8C, z - arg2->field_84) +
                arg2->field_7C;
     }
 
@@ -9741,7 +9741,7 @@ void func_8006CC9C(s_func_8006CC44* arg0) // 0x8006CC9C
     else if (arg0->field_0_8 && arg0->field_44.field_0.field_0 == 0 && func_8006C1B8(1, temp_v0, arg0))
     {
         temp2 = (arg0->field_4.positionZ_1C - arg0->field_9C.field_0);
-        temp5 = FP_MULTIPLY(temp_v0, arg0->field_4.field_C.vz, Q12_SHIFT);
+        temp5 = Q12_MULT(temp_v0, arg0->field_4.field_C.vz);
 
         arg0->field_40 = arg0->field_A0.s_1.field_8;
         arg0->field_38 = temp_v0;
@@ -9749,7 +9749,7 @@ void func_8006CC9C(s_func_8006CC44* arg0) // 0x8006CC9C
         arg0->field_34 = 1;
 
         temp  = (arg0->field_4.positionX_18 - arg0->field_98.field_0);
-        temp4 = FP_MULTIPLY(temp_v0, arg0->field_4.field_C.vx, Q12_SHIFT);
+        temp4 = Q12_MULT(temp_v0, arg0->field_4.field_C.vx);
 
         arg0->field_3A = (arg0->field_4.field_8 * temp_v0) >> 8; // TODO: Conversion to Q4?
         arg0->field_3C = temp + temp4;
@@ -9796,8 +9796,8 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3
     s32     temp_a0;
     s32     temp_v0;
 
-    sp10.vx = FP_MULTIPLY(arg1->vx, arg2, Q12_SHIFT);
-    sp10.vz = FP_MULTIPLY(arg1->vz, arg2, Q12_SHIFT);
+    sp10.vx = Q12_MULT(arg1->vx, arg2);
+    sp10.vz = Q12_MULT(arg1->vz, arg2);
 
     if (arg3->field_44.field_0.field_0 || arg3->field_44.field_30.field_0)
     {
@@ -9825,8 +9825,8 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3
         return;
     }
 
-    arg0->vx = FP_MULTIPLY(arg1->vx, arg3->field_38, Q12_SHIFT);
-    arg0->vz = FP_MULTIPLY(arg1->vz, arg3->field_38, Q12_SHIFT);
+    arg0->vx = Q12_MULT(arg1->vx, arg3->field_38);
+    arg0->vz = Q12_MULT(arg1->vz, arg3->field_38);
     arg1->vx = sp10.vx - arg0->vx;
     arg1->vz = sp10.vz - arg0->vz;
 
@@ -9848,8 +9848,8 @@ void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3
     }
 
     temp_v0  = FP_FROM((arg1->vx * temp_s1) + (arg1->vz * -temp_s0), Q12_SHIFT);
-    arg1->vx = FP_MULTIPLY(temp_v0, temp_s1, Q12_SHIFT);
-    arg1->vz = FP_MULTIPLY(temp_v0, -temp_s0, Q12_SHIFT);
+    arg1->vx = Q12_MULT(temp_v0, temp_s1);
+    arg1->vz = Q12_MULT(temp_v0, -temp_s0);
 
     if (temp_s0 > Q12(1.0f / 3.0f))
     {
@@ -10057,9 +10057,9 @@ void func_8006D600(VECTOR3* pos, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80
         arg4 = 0x100;
     }
 
-    x      = FP_MULTIPLY(arg4, Math_Cos(temp_s0), Q12_SHIFT);
+    x      = Q12_MULT(arg4, Math_Cos(temp_s0));
     var_s0 = temp;
-    z      = FP_MULTIPLY(arg4, Math_Sin(temp_s0), Q12_SHIFT);
+    z      = Q12_MULT(arg4, Math_Sin(temp_s0));
     deltaX = pos->vx - x;
     deltaZ = pos->vz - z;
     angle  = Q12_FRACT(ratan2(deltaZ, deltaX));
@@ -10084,15 +10084,15 @@ void func_8006D600(VECTOR3* pos, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x80
 
         temp_s0_2 = Math_Sin(var_s0);
         temp_v0   = Math_Cos(var_s0);
-        var_v0_2  = FP_MULTIPLY(deltaX, temp_v0, Q12_SHIFT) + FP_MULTIPLY(deltaZ, temp_s0_2, Q12_SHIFT);
+        var_v0_2  = Q12_MULT(deltaX, temp_v0) + Q12_MULT(deltaZ, temp_s0_2);
 
         if (var_v0_2 < 0)
         {
             var_v0_2 = 0;
         }
 
-        pos->vx = x + FP_MULTIPLY(var_v0_2, temp_v0, Q12_SHIFT);
-        pos->vz = z + FP_MULTIPLY(var_v0_2, temp_s0_2, Q12_SHIFT);
+        pos->vx = x + Q12_MULT(var_v0_2, temp_v0);
+        pos->vz = z + Q12_MULT(var_v0_2, temp_s0_2);
     }
 }
 
@@ -10480,7 +10480,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
         sp18.vy   = temp_a0_3;
     }
 
-    if (subroutine_arg4.vx + arg1.vx < FP_MULTIPLY(arg0->field_18, sp18.vx, Q12_SHIFT))
+    if (subroutine_arg4.vx + arg1.vx < Q12_MULT(arg0->field_18, sp18.vx))
     {
         sp18.vx = Q12(subroutine_arg4.vx + arg1.vx) / arg0->field_18;
     }
@@ -10490,7 +10490,7 @@ void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E
     sp28.vz = Q12(1.0f);
 
     sp28.pad  = Q12(arg2.vx) / arg1.vx;
-    temp_lo_4 = FP_MULTIPLY(sp28.pad, Q12_FRACT(sp28.vx), Q12_SHIFT);
+    temp_lo_4 = Q12_MULT(sp28.pad, Q12_FRACT(sp28.vx));
 
     if (FP_FROM(sp18.vx, Q12_SHIFT) < FP_FROM(sp28.vx, Q12_SHIFT))
     {
@@ -10893,13 +10893,13 @@ void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara) // 0x8006EEB8
         return;
     }
 
-    temp_v0_2 = FP_MULTIPLY(arg0->field_5C, temp_v0, Q12_SHIFT);
+    temp_v0_2 = Q12_MULT(arg0->field_5C, temp_v0);
     if (temp_v0_2 >= arg0->field_8)
     {
         return;
     }
 
-    sp18.vy = arg0->field_2C.vy + (FP_MULTIPLY(arg0->field_50.vy, temp_v0, Q12_SHIFT));
+    sp18.vy = arg0->field_2C.vy + (Q12_MULT(arg0->field_50.vy, temp_v0));
     if (((sp18.vy + arg0->field_4E) < arg0->field_6C.field_8) || (arg0->field_6C.field_A < (sp18.vy + arg0->field_4C)))
     {
         if (arg0->field_50.vy == 0)
@@ -10926,8 +10926,8 @@ void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara) // 0x8006EEB8
             sp18.vy = arg0->field_6C.field_A - arg0->field_4C;
         }
 
-        sp18.vx = arg0->field_2C.vx + FP_MULTIPLY(arg0->field_50.vx, var_v1, Q12_SHIFT);
-        sp18.vz = arg0->field_2C.vz + FP_MULTIPLY(arg0->field_50.vz, var_v1, Q12_SHIFT);
+        sp18.vx = arg0->field_2C.vx + Q12_MULT(arg0->field_50.vx, var_v1);
+        sp18.vz = arg0->field_2C.vz + Q12_MULT(arg0->field_50.vz, var_v1);
         if ((SQUARE(arg0->field_6C.field_0 - sp18.vx) + SQUARE(arg0->field_6C.field_4 - sp18.vz)) >= SQUARE(arg0->field_6C.field_C))
         {
             return;
@@ -10935,8 +10935,8 @@ void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara) // 0x8006EEB8
     }
     else
     {
-        sp18.vx = arg0->field_2C.vx + FP_MULTIPLY(arg0->field_50.vx, temp_v0, Q12_SHIFT);
-        sp18.vz = arg0->field_2C.vz + FP_MULTIPLY(arg0->field_50.vz, temp_v0, Q12_SHIFT);
+        sp18.vx = arg0->field_2C.vx + Q12_MULT(arg0->field_50.vx, temp_v0);
+        sp18.vz = arg0->field_2C.vz + Q12_MULT(arg0->field_50.vz, temp_v0);
     }
 
     arg0->field_8  = temp_v0_2;
@@ -11349,8 +11349,8 @@ q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPo
             curAngle = (chara->rotation_24.vy + ((i - 3) * spanAngleDiv3) + ((Rng_Rand16() % spanAngleDiv3) >> 1)) - (spanAngleDiv3 >> 2);
         }
 
-        curPosX = chara->position_18.vx + FP_MULTIPLY(dist, Math_Sin(curAngle), Q12_SHIFT);
-        curPosZ = chara->position_18.vz + FP_MULTIPLY(dist, Math_Cos(curAngle), Q12_SHIFT);
+        curPosX = chara->position_18.vx + Q12_MULT(dist, Math_Sin(curAngle));
+        curPosZ = chara->position_18.vz + Q12_MULT(dist, Math_Cos(curAngle));
 
         if (!func_80070030(chara, curPosX, chara->position_18.vy, curPosZ))
         {
@@ -11402,12 +11402,12 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
 
     for (i = distMult; count > 0; count--)
     {
-        distMult = FP_MULTIPLY_PRECISE(distMult, i, Q12_SHIFT);
+        distMult = Q12_MULT_PRECISE(distMult, i);
     }
 
     dist = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
                                g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
-    distMax = baseDistMax + FP_MULTIPLY_PRECISE(distStep, distMult, Q12_SHIFT);
+    distMax = baseDistMax + Q12_MULT_PRECISE(distStep, distMult);
     if (distMax < dist)
     {
         return false;
@@ -11489,11 +11489,11 @@ bool func_80070184(s_SubCharacter* chara, s32 arg1, q3_12 rotY) // 0x80070184
     q19_12 cosRotY;
 
     sinRotY = Math_Sin(rotY);
-    posX    = chara->position_18.vx + FP_MULTIPLY(arg1, sinRotY, Q12_SHIFT);
+    posX    = chara->position_18.vx + Q12_MULT(arg1, sinRotY);
 
     cosRotY = Math_Cos(rotY);
     posY    = chara->position_18.vy;
-    posZ    = chara->position_18.vz + FP_MULTIPLY(arg1, cosRotY, Q12_SHIFT);
+    posZ    = chara->position_18.vz + Q12_MULT(arg1, cosRotY);
 
     // The calls to this often have a return, so assumed it just passes return of `func_80070084`.
     return func_80070084(chara, posX, posY, posZ);
@@ -11505,9 +11505,9 @@ bool func_80070208(s_SubCharacter* chara, q19_12 dist) // 0x80070208
     VECTOR3           offset; // Q19.12
     bool              cond;
 
-    offset.vx = FP_MULTIPLY(dist, Math_Sin(chara->rotation_24.vy), Q12_SHIFT);
+    offset.vx = Q12_MULT(dist, Math_Sin(chara->rotation_24.vy));
     offset.vy = Q12(0.0f);
-    offset.vz = FP_MULTIPLY(dist, Math_Cos(chara->rotation_24.vy), Q12_SHIFT);
+    offset.vz = Q12_MULT(dist, Math_Cos(chara->rotation_24.vy));
 
     cond = false;
     if (func_8006DB3C(&var, &chara->position_18, &offset, chara))
@@ -11522,9 +11522,9 @@ s32 func_8007029C(s_SubCharacter* chara, q19_12 dist, q3_12 rotY) // 0x8007029C
     s_func_800700F8_2 var;
     VECTOR3           offset; // Q19.12
 
-    offset.vx = FP_MULTIPLY(dist, Math_Sin(rotY), Q12_SHIFT);
+    offset.vx = Q12_MULT(dist, Math_Sin(rotY));
     offset.vy = Q12(0.0f);
-    offset.vz = FP_MULTIPLY(dist, Math_Cos(rotY), Q12_SHIFT);
+    offset.vz = Q12_MULT(dist, Math_Cos(rotY));
 
     return func_8006DB3C(&var, &chara->position_18, &offset, chara);
 }
@@ -11565,7 +11565,7 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80
     }
 
     // TODO: Why `>> 8`?
-    result = FP_MULTIPLY(arg2, g_SysWork.playerWork_4C.player_0.properties_E4.player.field_10C, Q12_SHIFT) - (dist >> 8);
+    result = Q12_MULT(arg2, g_SysWork.playerWork_4C.player_0.properties_E4.player.field_10C) - (dist >> 8);
     if (result < 0)
     {
         result = 0;
@@ -11619,7 +11619,7 @@ void func_800705E4(GsCOORDINATE2* coord, s32 idx, q19_12 scaleX, q19_12 scaleY, 
         {
             for (row = 0; row < 3; row++)
             {
-                coord[idx].coord.m[row][col] = FP_MULTIPLY_PRECISE(scales[col], coord[idx].coord.m[row][col], Q12_SHIFT);
+                coord[idx].coord.m[row][col] = Q12_MULT_PRECISE(scales[col], coord[idx].coord.m[row][col]);
             }
         }
     }

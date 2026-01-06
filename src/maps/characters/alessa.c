@@ -69,14 +69,14 @@ void Ai_Alessa_MovementUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
     unused       = alessa->position_18;
     moveSpeed    = alessa->moveSpeed_38;
     headingAngle = alessa->headingAngle_3C;
-    moveDist     = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+    moveDist     = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime0);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveDist);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    offset.vx = (u32)FP_MULTIPLY_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    offset.vz = (u32)FP_MULTIPLY_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    offset.vy = FP_MULTIPLY_PRECISE(alessa->field_34, g_DeltaTime0, Q12_SHIFT);
+    offset.vx = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vz = (u32)Q12_MULT_PRECISE(moveDist >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vy = Q12_MULT_PRECISE(alessa->field_34, g_DeltaTime0);
 
     alessa->position_18.vx += offset.vx;
     alessa->position_18.vy = Q12(0.0f);

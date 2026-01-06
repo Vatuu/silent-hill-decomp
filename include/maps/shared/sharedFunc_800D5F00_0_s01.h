@@ -76,8 +76,8 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
 
         for (i = 0, var_s3 = 0; i < 8; i++, var_s3 += 0x200)
         {
-            temp_s0   = posX + FP_MULTIPLY_PRECISE(var_s4, Math_Sin(var_s3), Q12_SHIFT);
-            temp_v0_3 = Collision_GroundHeightGet(temp_s0, FP_MULTIPLY_PRECISE(var_s4, Math_Cos(var_s3), Q12_SHIFT) + posZ);
+            temp_s0   = posX + Q12_MULT_PRECISE(var_s4, Math_Sin(var_s3));
+            temp_v0_3 = Collision_GroundHeightGet(temp_s0, Q12_MULT_PRECISE(var_s4, Math_Cos(var_s3)) + posZ);
 
             if (var_s5 < temp_v0_3)
             {
@@ -94,7 +94,7 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
 
         if (var_s6)
         {
-            var_v1 = FP_MULTIPLY(Rng_RandQ12(), var_s6, Q12_SHIFT);
+            var_v1 = Q12_MULT(Rng_RandQ12(), var_s6);
 
             for (i = 0; i < 8; i++)
             {
@@ -123,11 +123,11 @@ bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer)
     }
 
     sharedData_800E21D0_0_s01.flags_0 |= 0x20000000;
-    var_s4                             = FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
+    var_s4                             = Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.5f));
 
-    sharedData_800DE1D0_0_s01.vx = FP_MULTIPLY_PRECISE(var_s4, Math_Sin(var_s3), Q12_SHIFT);
+    sharedData_800DE1D0_0_s01.vx = Q12_MULT_PRECISE(var_s4, Math_Sin(var_s3));
     sharedData_800DE1D0_0_s01.vy = var_s4;
-    sharedData_800DE1D0_0_s01.vz = FP_MULTIPLY_PRECISE(var_s4, Math_Cos(var_s3), Q12_SHIFT);
+    sharedData_800DE1D0_0_s01.vz = Q12_MULT_PRECISE(var_s4, Math_Cos(var_s3));
 
     sharedFunc_800D81D0_0_s01(airScreamer);
 

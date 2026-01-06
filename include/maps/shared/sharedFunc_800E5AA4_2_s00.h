@@ -46,7 +46,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
 
             if (func_8005BF38(groaner->headingAngle_3C - (groaner->rotation_24.vy + angleDeltaToHeading)) > FP_ANGLE(0.0f))
             {
-                groaner->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, groanerProps.field_FE, Q12_SHIFT);
+                groaner->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, groanerProps.field_FE);
 
                 if (func_8005BF38(groaner->headingAngle_3C - (groaner->rotation_24.vy + angleDeltaToHeading)) <= FP_ANGLE(0.0f))
                 {
@@ -56,7 +56,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
             }
             else
             {
-                groaner->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, groanerProps.field_FE, Q12_SHIFT);
+                groaner->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, groanerProps.field_FE);
 
                 if (func_8005BF38(groaner->headingAngle_3C - (groaner->rotation_24.vy + angleDeltaToHeading)) >= FP_ANGLE(0.0f))
                 {

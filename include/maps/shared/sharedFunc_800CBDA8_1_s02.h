@@ -51,12 +51,12 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
 
     if (sharedData_800E30C8_1_s02.field_30[idx0] == 0)
     {
-        temp_s4 = FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2, Q12_SHIFT);
+        temp_s4 = Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2);
 
         if ((sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0 + temp_s4) < sharedData_800E30C8_1_s02.field_28[idx0])
         {
-            sharedData_800DFB7C_0_s00[idx].field_0.vx_0 += FP_MULTIPLY(temp_s4, ptr->field_0.field_DC[idx0], Q12_SHIFT);
-            sharedData_800DFB7C_0_s00[idx].field_4.vz_4 += FP_MULTIPLY(temp_s4, ptr->field_0.field_E4[idx0], Q12_SHIFT);
+            sharedData_800DFB7C_0_s00[idx].field_0.vx_0 += Q12_MULT(temp_s4, ptr->field_0.field_DC[idx0]);
+            sharedData_800DFB7C_0_s00[idx].field_4.vz_4 += Q12_MULT(temp_s4, ptr->field_0.field_E4[idx0]);
         }
         else if ((sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0 + temp_s4) >= (sharedData_800E30C8_1_s02.field_28[idx0] + sharedData_800E30C8_1_s02.field_64[idx0]))
         {
@@ -124,19 +124,19 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
 
             var_s1 = FP_TO(CLAMP_MAX(sharedData_800E30C8_1_s02.field_28[idx0], temp_s4) - temp_v1_5, Q12_SHIFT) / sharedData_800E30C8_1_s02.field_28[sharedData_800E30C8_1_s02.field_78];
 
-            ptr->field_180 = FP_MULTIPLY_PRECISE(var_s3 >> 5, Math_Cos(var_s1 >> 2), Q12_SHIFT);
+            ptr->field_180 = Q12_MULT_PRECISE(var_s3 >> 5, Math_Cos(var_s1 >> 2));
 
-            ptr->field_178 = FP_MULTIPLY_PRECISE(Q12(1.0f) - var_s1, sharedData_800E30C8_1_s02.field_5C[idx0] >> 1, Q12_SHIFT) +
-                             FP_MULTIPLY_PRECISE(var_s1, sharedData_800E30C8_1_s02.field_5C[idx0 + 1] >> 1, Q12_SHIFT);
+            ptr->field_178 = Q12_MULT_PRECISE(Q12(1.0f) - var_s1, sharedData_800E30C8_1_s02.field_5C[idx0] >> 1) +
+                             Q12_MULT_PRECISE(var_s1, sharedData_800E30C8_1_s02.field_5C[idx0 + 1] >> 1);
 
-            ptr->field_17A = FP_MULTIPLY_PRECISE(Q12(1.0f) - var_s1, sharedData_800E30C8_1_s02.field_64[idx0], Q12_SHIFT) +
-                             FP_MULTIPLY_PRECISE(var_s1, sharedData_800E30C8_1_s02.field_64[idx0 + 1], Q12_SHIFT);
+            ptr->field_17A = Q12_MULT_PRECISE(Q12(1.0f) - var_s1, sharedData_800E30C8_1_s02.field_64[idx0]) +
+                             Q12_MULT_PRECISE(var_s1, sharedData_800E30C8_1_s02.field_64[idx0 + 1]);
 
             ptr->field_164 = ptr->field_178 * Math_Sin(sharedData_800E30C8_1_s02.field_34[idx0]);
             ptr->field_168 = ptr->field_178 * Math_Cos(sharedData_800E30C8_1_s02.field_34[idx0]);
 
-            ptr->field_16C = FP_MULTIPLY_PRECISE(var_s3, ptr->field_17A * Math_Sin(sharedData_800E30C8_1_s02.field_34[idx0]), Q12_SHIFT);
-            ptr->field_170 = FP_MULTIPLY_PRECISE(var_s3, ptr->field_17A * Math_Cos(sharedData_800E30C8_1_s02.field_34[idx0]), Q12_SHIFT);
+            ptr->field_16C = Q12_MULT_PRECISE(var_s3, ptr->field_17A * Math_Sin(sharedData_800E30C8_1_s02.field_34[idx0]));
+            ptr->field_170 = Q12_MULT_PRECISE(var_s3, ptr->field_17A * Math_Cos(sharedData_800E30C8_1_s02.field_34[idx0]));
         }
         else
         {
@@ -145,8 +145,8 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
             ptr->field_164 = ptr->field_0.u_field_EC.raw_0[idx0];
             ptr->field_168 = ptr->field_0.u_field_FC.raw_0[idx0];
 
-            ptr->field_16C = FP_MULTIPLY_PRECISE(var_s3, ptr->field_0.field_10C[idx0], Q12_SHIFT);
-            ptr->field_170 = FP_MULTIPLY_PRECISE(var_s3, ptr->field_0.field_11C[idx0], Q12_SHIFT);
+            ptr->field_16C = Q12_MULT_PRECISE(var_s3, ptr->field_0.field_10C[idx0]);
+            ptr->field_170 = Q12_MULT_PRECISE(var_s3, ptr->field_0.field_11C[idx0]);
         }
 
         if (idx0 < (sharedData_800E30C8_1_s02.field_78 - 1))
@@ -154,7 +154,7 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
 
             if (sharedData_800E30C8_1_s02.field_30[idx0 + 1] == 0)
             {
-                var_s1 = ABS(FP_MULTIPLY(sharedData_800E30C8_1_s02.field_5C[idx0 + 1], Math_Sin(sharedData_800E30C8_1_s02.field_34[idx0] - sharedData_800E30C8_1_s02.field_34[idx0 + 1]), Q12_SHIFT));
+                var_s1 = ABS(Q12_MULT(sharedData_800E30C8_1_s02.field_5C[idx0 + 1], Math_Sin(sharedData_800E30C8_1_s02.field_34[idx0] - sharedData_800E30C8_1_s02.field_34[idx0 + 1])));
                 var_v1 = sharedData_800E30C8_1_s02.field_28[idx0] - temp_s4;
 
                 if (var_v1 < var_s1)
@@ -168,7 +168,7 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
                         var_v1 = 0;
                     }
 
-                    ptr->field_180 = FP_MULTIPLY_PRECISE(var_v1, ptr->field_180, Q12_SHIFT);
+                    ptr->field_180 = Q12_MULT_PRECISE(var_v1, ptr->field_180);
                 }
             }
         }
@@ -192,7 +192,7 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
 
                 if (temp_s4 < var_s1)
                 {
-                    ptr->field_180 = FP_MULTIPLY_PRECISE(FP_TO(temp_s4, Q12_SHIFT) / var_s1, ptr->field_180, Q12_SHIFT);
+                    ptr->field_180 = Q12_MULT_PRECISE(FP_TO(temp_s4, Q12_SHIFT) / var_s1, ptr->field_180);
                 }
             }
         }
@@ -220,7 +220,7 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
         sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 = MIN(sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_2 + ((g_DeltaTime2 * sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_2) >> 7),
                                                                  Q12(6.0f));
 
-        temp_s4 = FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_2, Q12_SHIFT);
+        temp_s4 = Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800DFB7C_0_s00[idx].field_C.s_2.field_2);
 
         if (sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0 + temp_s4 >= (sharedData_800E30C8_1_s02.field_28[idx0] + sharedData_800E30C8_1_s02.field_64[idx0]))
         {
@@ -259,7 +259,7 @@ bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx)
         }
 
         ptr->field_180 = var_s3 >> 5;
-        ptr->field_16C = FP_MULTIPLY_PRECISE(var_s3, sharedData_800E30C8_1_s02.field_64[idx0], Q12_SHIFT);
+        ptr->field_16C = Q12_MULT_PRECISE(var_s3, sharedData_800E30C8_1_s02.field_64[idx0]);
 
         setPolyFT4(*poly);
 

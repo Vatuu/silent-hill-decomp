@@ -55,17 +55,17 @@ void sharedFunc_800CCE60_1_s02(void)
         {
             ptr->field_25C       = Math_Sin(sharedData_800E30C8_1_s02.field_34[sp20]);
             ptr->field_25E       = Math_Cos(sharedData_800E30C8_1_s02.field_34[sp20]);
-            ptr->field_264[0][0] = FP_MULTIPLY(temp_s0, ptr->field_25E, Q12_SHIFT);
+            ptr->field_264[0][0] = Q12_MULT(temp_s0, ptr->field_25E);
             ptr->field_264[0][1] = -ptr->field_264[0][0];
-            ptr->field_264[1][0] = FP_MULTIPLY(-temp_s0, ptr->field_25C, Q12_SHIFT);
+            ptr->field_264[1][0] = Q12_MULT(-temp_s0, ptr->field_25C);
             ptr->field_264[1][1] = -ptr->field_264[1][0];
         }
         else
         {
-            ptr->field_264[0][0] = FP_MULTIPLY(temp_s0, Math_Sin(ptr->field_0.field_30.vy - 0x400), Q12_SHIFT);
-            ptr->field_264[1][0] = FP_MULTIPLY(temp_s0, Math_Cos(ptr->field_0.field_30.vy - 0x400), Q12_SHIFT);
-            ptr->field_264[0][1] = FP_MULTIPLY(temp_s0, Math_Sin(ptr->field_0.field_30.vy + 0x400), Q12_SHIFT);
-            ptr->field_264[1][1] = FP_MULTIPLY(temp_s0, Math_Cos(ptr->field_0.field_30.vy + 0x400), Q12_SHIFT);
+            ptr->field_264[0][0] = Q12_MULT(temp_s0, Math_Sin(ptr->field_0.field_30.vy - 0x400));
+            ptr->field_264[1][0] = Q12_MULT(temp_s0, Math_Cos(ptr->field_0.field_30.vy - 0x400));
+            ptr->field_264[0][1] = Q12_MULT(temp_s0, Math_Sin(ptr->field_0.field_30.vy + 0x400));
+            ptr->field_264[1][1] = Q12_MULT(temp_s0, Math_Cos(ptr->field_0.field_30.vy + 0x400));
         }
 
         if (sp20 == (sharedData_800E30C8_1_s02.field_78 - 1))
@@ -105,12 +105,12 @@ void sharedFunc_800CCE60_1_s02(void)
                 {
                     var_s2 = FP_TO(var_s4 - ptr->field_26E, Q12_SHIFT) / sharedData_800E30C8_1_s02.field_28[sharedData_800E30C8_1_s02.field_78];
 
-                    temp_s0 = FP_MULTIPLY_PRECISE(0x1000 - var_s2, sharedData_800E30C8_1_s02.field_3C[sp20] >> 1, Q12_SHIFT) +
-                              FP_MULTIPLY_PRECISE(var_s2, sharedData_800E30C8_1_s02.field_3C[sp20 + 1] >> 1, Q12_SHIFT);
+                    temp_s0 = Q12_MULT_PRECISE(0x1000 - var_s2, sharedData_800E30C8_1_s02.field_3C[sp20] >> 1) +
+                              Q12_MULT_PRECISE(var_s2, sharedData_800E30C8_1_s02.field_3C[sp20 + 1] >> 1);
 
-                    ptr->field_264[0][0] = FP_MULTIPLY(temp_s0, ptr->field_25E, Q12_SHIFT);
+                    ptr->field_264[0][0] = Q12_MULT(temp_s0, ptr->field_25E);
                     ptr->field_264[0][1] = -ptr->field_264[0][0];
-                    ptr->field_264[1][0] = FP_MULTIPLY(-temp_s0, ptr->field_25C, Q12_SHIFT);
+                    ptr->field_264[1][0] = Q12_MULT(-temp_s0, ptr->field_25C);
                     ptr->field_264[1][1] = -ptr->field_264[1][0];
                 }
             }
@@ -119,9 +119,9 @@ void sharedFunc_800CCE60_1_s02(void)
             {
                 if (sharedData_800E30C8_1_s02.field_30[sp20] == 0)
                 {
-                    var_fp = sharedData_800E30C8_1_s02.field_0[sp20] + ptr->field_264[0][var_s3] + FP_MULTIPLY(var_s4, ptr->field_25C, Q12_SHIFT);
+                    var_fp = sharedData_800E30C8_1_s02.field_0[sp20] + ptr->field_264[0][var_s3] + Q12_MULT(var_s4, ptr->field_25C);
                     sp18   = ptr->field_26C;
-                    sp1C   = sharedData_800E30C8_1_s02.field_18[sp20] + ptr->field_264[1][var_s3] + FP_MULTIPLY(var_s4, ptr->field_25E, Q12_SHIFT);
+                    sp1C   = sharedData_800E30C8_1_s02.field_18[sp20] + ptr->field_264[1][var_s3] + Q12_MULT(var_s4, ptr->field_25E);
                 }
                 else
                 {
@@ -130,7 +130,7 @@ void sharedFunc_800CCE60_1_s02(void)
                     sp1C   = sharedData_800E30C8_1_s02.field_18[sp20] + ptr->field_264[1][var_s3];
                 }
 
-                ptr->field_23C[var_t5][var_s3] = FP_MULTIPLY_PRECISE(Math_Cos(var_s2 >> 2), func_80055D78(var_fp, sp18, sp1C), Q12_SHIFT);
+                ptr->field_23C[var_t5][var_s3] = Q12_MULT_PRECISE(Math_Cos(var_s2 >> 2), func_80055D78(var_fp, sp18, sp1C));
 
                 if (sp20 < (sharedData_800E30C8_1_s02.field_78 - 1) && sharedData_800E30C8_1_s02.field_30[sp20] == 0)
                 {
@@ -139,7 +139,7 @@ void sharedFunc_800CCE60_1_s02(void)
                     if (temp_s0 == 0)
                     {
                         temp_v0_8 = Math_Sin(sharedData_800E30C8_1_s02.field_34[sp20] - sharedData_800E30C8_1_s02.field_34[sp20 + 1]);
-                        var_s2    = FP_MULTIPLY(sharedData_800E30C8_1_s02.field_5C[sp20 + 1], temp_v0_8, Q12_SHIFT);
+                        var_s2    = Q12_MULT(sharedData_800E30C8_1_s02.field_5C[sp20 + 1], temp_v0_8);
 
                         if (var_s3 == 0)
                         {
@@ -150,7 +150,7 @@ void sharedFunc_800CCE60_1_s02(void)
 
                         if (temp_v1_3 < var_s2)
                         {
-                            ptr->field_23C[var_t5][var_s3] = FP_MULTIPLY_PRECISE(temp_v1_3 >= 0 ? FP_TO(temp_v1_3, Q12_SHIFT) / var_s2 : temp_s0 / var_s2, ptr->field_23C[var_t5][var_s3], Q12_SHIFT);
+                            ptr->field_23C[var_t5][var_s3] = Q12_MULT_PRECISE(temp_v1_3 >= 0 ? FP_TO(temp_v1_3, Q12_SHIFT) / var_s2 : temp_s0 / var_s2, ptr->field_23C[var_t5][var_s3]);
                         }
                     }
                 }
@@ -169,7 +169,7 @@ void sharedFunc_800CCE60_1_s02(void)
 
                         if (var_s4 < var_s2)
                         {
-                            ptr->field_23C[var_t5][var_s3] = FP_MULTIPLY_PRECISE(FP_TO(var_s4, Q12_SHIFT) / var_s2, ptr->field_23C[var_t5][var_s3], Q12_SHIFT);
+                            ptr->field_23C[var_t5][var_s3] = Q12_MULT_PRECISE(FP_TO(var_s4, Q12_SHIFT) / var_s2, ptr->field_23C[var_t5][var_s3]);
                         }
                     }
                 }
@@ -253,7 +253,7 @@ void sharedFunc_800CCE60_1_s02(void)
             poly++;
         }
 
-        sharedData_800E30C8_1_s02.field_54[sp20] += FP_MULTIPLY_PRECISE(g_DeltaTime0, sharedData_800E30C8_1_s02.field_4C[sp20], Q12_SHIFT);
+        sharedData_800E30C8_1_s02.field_54[sp20] += Q12_MULT_PRECISE(g_DeltaTime0, sharedData_800E30C8_1_s02.field_4C[sp20]);
 
         while (sharedData_800E30C8_1_s02.field_54[sp20] >= sharedData_800E30C8_1_s02.field_44[sp20])
         {

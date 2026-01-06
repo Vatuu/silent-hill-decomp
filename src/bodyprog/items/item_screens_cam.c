@@ -123,7 +123,7 @@ void func_8004BD74(s32 displayItemIdx, GsDOBJ2* arg1, s32 arg2)  // 0x8004BD74
         {
             for (j = 0; j < 3; j++)
             {
-                sp10.m[i][j] -= FP_MULTIPLY(sp10.m[i][j], Math_Sin((g_Items_Coords[displayItemIdx].coord.t[2] + 0x400) >> 2), Q12_SHIFT);
+                sp10.m[i][j] -= Q12_MULT(sp10.m[i][j], Math_Sin((g_Items_Coords[displayItemIdx].coord.t[2] + 0x400) >> 2));
             }
         }
     }

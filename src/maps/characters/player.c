@@ -351,9 +351,9 @@ void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     gte_SetRotMatrix(&worldMat);
     gte_SetTransMatrix(&worldMat);
 
-    beamDirY      = FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, Math_Cos(*rotY), Q12_SHIFT);
-    beamDirX      = FP_MULTIPLY(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, Math_Sin(*rotY), Q12_SHIFT), Math_Sin(*rotX), Q12_SHIFT);
-    beamDirZ      = FP_MULTIPLY(FP_MULTIPLY(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, Math_Sin(*rotY), Q12_SHIFT), Math_Cos(*rotX), Q12_SHIFT);
+    beamDirY      = Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, Math_Cos(*rotY));
+    beamDirX      = Q12_MULT(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, Math_Sin(*rotY)), Math_Sin(*rotX));
+    beamDirZ      = Q12_MULT(Q12_MULT(D_800AD4C8[g_SysWork.playerCombat_38.weaponAttack_F].field_0, Math_Sin(*rotY)), Math_Cos(*rotX));
     beamStart.vx  = vec0->vx;
     beamStart.vy  = vec0->vy;
     beamStart.vz  = vec0->vz;
@@ -794,20 +794,20 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
         Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
 
         temp_s2 = Math_Sin(chara->headingAngle_3C);
-        temp_s2 = FP_MULTIPLY(chara->moveSpeed_38, temp_s2, Q12_SHIFT);
+        temp_s2 = Q12_MULT(chara->moveSpeed_38, temp_s2);
         temp_s0 = Math_Cos(chara->headingAngle_3C);
-        temp_s0 = FP_MULTIPLY(chara->moveSpeed_38, temp_s0, Q12_SHIFT);
+        temp_s0 = Q12_MULT(chara->moveSpeed_38, temp_s0);
 
         temp_s3 = Math_Cos(ABS(coll.field_4) >> 3); // `/ 8`.
         temp_v0 = Math_Cos(ABS(coll.field_6) >> 3); // `/ 8`.
 
-        var_s0 = FP_MULTIPLY(FP_MULTIPLY(temp_s2, temp_s3, Q12_SHIFT), temp_s3, Q12_SHIFT);
-        var_v1 = FP_MULTIPLY(FP_MULTIPLY(temp_s0, temp_v0, Q12_SHIFT), temp_v0, Q12_SHIFT);
+        var_s0 = Q12_MULT(Q12_MULT(temp_s2, temp_s3), temp_s3);
+        var_v1 = Q12_MULT(Q12_MULT(temp_s0, temp_v0), temp_v0);
     }
     else
     {
-        var_s0 = FP_MULTIPLY(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
-        var_v1 = FP_MULTIPLY(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
+        var_s0 = Q12_MULT(chara->moveSpeed_38, Math_Sin(chara->headingAngle_3C));
+        var_v1 = Q12_MULT(chara->moveSpeed_38, Math_Cos(chara->headingAngle_3C));
     }
 
     if (chara->moveSpeed_38 >= 0)
@@ -821,14 +821,14 @@ void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCO
 
     moveSpeed    = chara->moveSpeed_38;
     headingAngle = chara->headingAngle_3C;
-    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+    moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime0);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    offset.vx = FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    offset.vz = FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    offset.vx = Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vz = Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vy = Q12_MULT_PRECISE(chara->field_34, g_DeltaTime0);
 
     if (cond)
     {
@@ -1102,7 +1102,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             break;
 
         case 3:
-            playerVecDist = SquareRoot0(FP_2D_DISTANCE_SQR(localVec[0], playerChara->position_18));
+            playerVecDist = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[0], playerChara->position_18));
             if (ABS((int)playerVecDist) < Q8(0.15f)) // @hack Needs to be `int` for `ABS` to match?
             {
                 Player_ExtraStateSet(playerChara, playerExtra, PlayerState_Unk52);
@@ -1140,7 +1140,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
                 sharedData_800E39E2_0_s00 = sharedData_800E39E0_0_s00;
             }
 
-            sharedData_800DD5A0_0_s00 = SquareRoot0(FP_2D_DISTANCE_SQR(localVec[sharedData_800DD5A4_0_s00], playerChara->position_18));
+            sharedData_800DD5A0_0_s00 = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[sharedData_800DD5A4_0_s00], playerChara->position_18));
             D_800C4588                = 5;
 
             Math_ShortestAngleGet(playerChara->rotation_24.vy, sharedData_800E39E2_0_s00, &g_Player_FlexRotationY);
@@ -1185,7 +1185,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
 
             playerChara->rotation_24.vy = FP_ANGLE_ABS(playerChara->rotation_24.vy);
 
-            playerVecDist = SquareRoot0(FP_2D_DISTANCE_SQR(localVec[sharedData_800DD5A4_0_s00], playerChara->position_18));
+            playerVecDist = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[sharedData_800DD5A4_0_s00], playerChara->position_18));
 
             // Uses `playerExtraState` index to work out distance to check against? Odd.
             if (playerVecDist < Q12_TO_Q8((playerExtraState - 53) * Q12(0.15f) + Q12(0.15f)) ||
@@ -1193,7 +1193,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             {
                 sharedData_800DD5A4_0_s00++;
 
-                playerVecDist = SquareRoot0(FP_2D_DISTANCE_SQR(localVec[sharedData_800DD5A4_0_s00], playerChara->position_18));
+                playerVecDist = SquareRoot0(Q12_2D_DISTANCE_SQR(localVec[sharedData_800DD5A4_0_s00], playerChara->position_18));
 
                 if (sharedData_800DD5A4_0_s00 == vecCount)
                 {
@@ -1683,7 +1683,7 @@ void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle)
 
     vec.vx = D_800C4610.vx - g_SysWork.playerWork_4C.player_0.position_18.vx;
     vec.vz = D_800C4610.vz - g_SysWork.playerWork_4C.player_0.position_18.vz;
-    vec.vy = FP_MULTIPLY_PRECISE(g_SysWork.playerWork_4C.player_0.field_34, g_DeltaTime0, Q12_SHIFT);
+    vec.vy = Q12_MULT_PRECISE(g_SysWork.playerWork_4C.player_0.field_34, g_DeltaTime0);
 
     func_80069B24(&D_800C4590, &vec, &g_SysWork.playerWork_4C.player_0);
 

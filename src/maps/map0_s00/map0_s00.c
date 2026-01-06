@@ -140,15 +140,15 @@ s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
 
     for (i = 0; i < 6; i++)
     {
-        sp50[i].vx = FP_MULTIPLY(temp_a0, Math_Sin((i * 0x3C000) / 360), Q12_SHIFT);
-        sp50[i].vy = FP_MULTIPLY(temp_a0, Math_Cos((i * 0x3C000) / 360), Q12_SHIFT);
+        sp50[i].vx = Q12_MULT(temp_a0, Math_Sin((i * 0x3C000) / 360));
+        sp50[i].vy = Q12_MULT(temp_a0, Math_Cos((i * 0x3C000) / 360));
         sp50[i].vz = -temp_s4;
     }
 
     for (i = 0; i < 6; i++)
     {
-        sp50[i + 6].vx = FP_MULTIPLY(temp_s5, Math_Sin((i * 0x3C000) / 360), Q12_SHIFT);
-        sp50[i + 6].vy = FP_MULTIPLY(temp_s5, Math_Cos((i * 0x3C000) / 360), Q12_SHIFT);
+        sp50[i + 6].vx = Q12_MULT(temp_s5, Math_Sin((i * 0x3C000) / 360));
+        sp50[i + 6].vy = Q12_MULT(temp_s5, Math_Cos((i * 0x3C000) / 360));
         sp50[i + 6].vz = temp_s7;
     }
 
@@ -315,8 +315,8 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
             arg2->field_C.vy += Rng_GenerateInt(-4, 4);
             limitRange(arg2->field_C.vy, -16, 16);
 
-            arg2->field_C.vx += FP_MULTIPLY(Math_Sin((arg2->field_16 + arg0) << 5), Q12(0.01f), Q12_SHIFT);
-            arg2->field_C.vz += FP_MULTIPLY(Math_Cos((arg2->field_16 + arg0) << 5), Q12(0.01f), Q12_SHIFT);
+            arg2->field_C.vx += Q12_MULT(Math_Sin((arg2->field_16 + arg0) << 5), Q12(0.01f));
+            arg2->field_C.vz += Q12_MULT(Math_Cos((arg2->field_16 + arg0) << 5), Q12(0.01f));
 
             var_s0 = arg2->field_16;
 
@@ -341,8 +341,8 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
             arg2->field_C.vy += Rng_GenerateInt(-4, 4);
             limitRange(arg2->field_C.vy, -16, 16);
 
-            arg2->field_C.vx += FP_MULTIPLY(Math_Sin((arg2->field_16 + arg0) << 5), Q12(0.01f), Q12_SHIFT);
-            arg2->field_C.vz += FP_MULTIPLY(Math_Cos((arg2->field_16 + arg0) << 6), Q12(0.01f), Q12_SHIFT);
+            arg2->field_C.vx += Q12_MULT(Math_Sin((arg2->field_16 + arg0) << 5), Q12(0.01f));
+            arg2->field_C.vz += Q12_MULT(Math_Cos((arg2->field_16 + arg0) << 6), Q12(0.01f));
 
             var_s0 = arg2->field_16;
 
@@ -412,9 +412,9 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
             angle0    = ratan2(pos.vx, pos.vz);
             angle1    = ratan2(pos.vy, temp_s0_3);
 
-            arg2->field_C.vx += FP_MULTIPLY(Math_Sin(angle0), Q12(0.02f) - 1, Q12_SHIFT);
-            arg2->field_C.vz += FP_MULTIPLY(Math_Cos(angle0), Q12(0.02f) - 1, Q12_SHIFT);
-            arg2->field_C.vy += FP_MULTIPLY(Math_Sin(angle1), Q12(0.01f),     Q12_SHIFT);
+            arg2->field_C.vx += Q12_MULT(Math_Sin(angle0), Q12(0.02f) - 1);
+            arg2->field_C.vz += Q12_MULT(Math_Cos(angle0), Q12(0.02f) - 1);
+            arg2->field_C.vy += Q12_MULT(Math_Sin(angle1), Q12(0.01f));
 
             var_s0 = arg2->field_16;
 

@@ -42,7 +42,7 @@ void sharedFunc_800D72E8_0_s01(s_SubCharacter* chara, s32 angle0, s32 angle1)
     s32 var_v1;
 
     // TODO: Not sure what these are multiplying with. Different speeds?
-    var_v1 = FP_MULTIPLY_PRECISE(angle0, Q12(-0.02f), Q12_SHIFT);
+    var_v1 = Q12_MULT_PRECISE(angle0, Q12(-0.02f));
     if (var_v1 > FP_ANGLE(45.0f))
     {
         var_v1 = FP_ANGLE(45.0f);
@@ -53,7 +53,7 @@ void sharedFunc_800D72E8_0_s01(s_SubCharacter* chara, s32 angle0, s32 angle1)
     }
     sharedFunc_800D72E8_0_s01_subfunc(var_v1 - chara->rotation_24.vx, 2);
 
-    var_v1 = FP_MULTIPLY_PRECISE(angle1, Q12(0.15f), Q12_SHIFT);
+    var_v1 = Q12_MULT_PRECISE(angle1, Q12(0.15f));
     if (var_v1 > FP_ANGLE(45.0f))
     {
         var_v1 = FP_ANGLE(45.0f);

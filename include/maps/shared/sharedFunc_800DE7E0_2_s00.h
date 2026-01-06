@@ -23,12 +23,12 @@ void sharedFunc_800DE7E0_2_s00(s_SubCharacter* airScreamer)
     radius = Math_Distance2dGet(&sharedData_800F21DC_2_s00, &airScreamer->position_18);
 
     angle  = func_80080478(&sharedData_800F21DC_2_s00, &airScreamer->position_18);
-    angle += FP_MULTIPLY_PRECISE(Rng_RandQ12() - FP_ANGLE(180.0f), FP_ANGLE(120.0f), Q12_SHIFT);
+    angle += Q12_MULT_PRECISE(Rng_RandQ12() - FP_ANGLE(180.0f), FP_ANGLE(120.0f));
 
     radius = (radius - distMin) / 2;
 
-    sharedData_800F21DC_2_s00.vx += FP_MULTIPLY_PRECISE(radius, Math_Sin(angle), Q12_SHIFT);
-    sharedData_800F21DC_2_s00.vz += FP_MULTIPLY_PRECISE(radius, Math_Cos(angle), Q12_SHIFT);
+    sharedData_800F21DC_2_s00.vx += Q12_MULT_PRECISE(radius, Math_Sin(angle));
+    sharedData_800F21DC_2_s00.vz += Q12_MULT_PRECISE(radius, Math_Cos(angle));
 
     sharedFunc_800DE6A8_2_s00(airScreamer, &sharedData_800F21DC_2_s00, distMax);
     sharedFunc_800D4E84_0_s01(airScreamer);

@@ -182,7 +182,7 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             SysWork_StateStepIncrement(0);
 
         case 4:
-            time = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(10.0f), Q12_SHIFT);
+            time = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
             g_Timer0 = MIN(time, Q12(22.0f));
             if (g_Timer0 >= Q12(22.0f))
             {
@@ -195,7 +195,7 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             SysWork_StateStepIncrement(0);
 
         case 6:
-            time = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(8.0f), Q12_SHIFT);
+            time = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(8.0f));
             g_Timer0 = MIN(time, Q12(26.0f));
             if (g_Timer0 >= Q12(26.0f))
             {
@@ -204,22 +204,22 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
             break;
 
         case 7:
-            g_Timer0 = MIN((g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(4.0f), Q12_SHIFT)), Q12(72.0f));
+            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(4.0f))), Q12(72.0f));
             MapMsg_DisplayAndHandleSelection(false, 15, false, false, 0, false);
             break;
 
         case 8:
-            g_Timer0 = MIN((g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(4.0f), Q12_SHIFT)), Q12(72.0f));
+            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(4.0f))), Q12(72.0f));
             SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
         case 9:
-            g_Timer0 = MIN((g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(4.0f), Q12_SHIFT)), Q12(72.0f));
+            g_Timer0 = MIN((g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(4.0f))), Q12(72.0f));
             MapMsg_DisplayAndHandleSelection(false, 16, false, false, 0, false);
             break;
 
         case 10:
-            time = g_Timer0 + FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(4.0f), Q12_SHIFT);
+            time = g_Timer0 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(4.0f));
             g_Timer0 = MIN(time, Q12(72.0f));
             if (g_Timer0 >= Q12(72.0f))
             {
@@ -754,12 +754,12 @@ void func_800DAEFC(void) // 0x800DAEFC
         case 6:
             func_800866D4(54, 1, false);
          
-            offsetY = FP_MULTIPLY(Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy), Q12(0.6f), Q12_SHIFT) - Q12(1.84f);
-            temp = FP_MULTIPLY(Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy), Q12(2.0f), Q12_SHIFT) + Q12(4.0f);
+            offsetY = Q12_MULT(Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy), Q12(0.6f)) - Q12(1.84f);
+            temp = Q12_MULT(Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy), Q12(2.0f)) + Q12(4.0f);
 
             if ((g_SysWork.playerWork_4C.player_0.position_18.vz + temp) < Q12(130.0f))
             {
-                temp2 = FP_MULTIPLY(Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy), Q12(2.0f), Q12_SHIFT) + Q12(4.0f);
+                temp2 = Q12_MULT(Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy), Q12(2.0f)) + Q12(4.0f);
                 offsetZ = g_SysWork.playerWork_4C.player_0.position_18.vz + temp2;
             } 
             else 
@@ -1156,7 +1156,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
         if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) && 
             (PLAYER_IN_MAP_CHUNK(vz, 1, 6, -1, 6) || PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7)))
         {
-            D_800E3AAC.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, (-0x400 - (Rng_Rand16() & 0x1FF)), Q12_SHIFT);
+            D_800E3AAC.vz += Q12_MULT_PRECISE(g_DeltaTime0, (-0x400 - (Rng_Rand16() & 0x1FF)));
             g_WorldGfx_ObjectAdd(&D_800E3A5C[0], &D_800E3A9C, &D_800E3AAC);
             g_WorldGfx_ObjectAdd(&D_800E3A5C[1], &D_800E3A9C, &D_800E3AAC);
         
@@ -1263,7 +1263,7 @@ block7:
         else if (D_800DFAD0 > Q12(1.8f))
         {
             var_a2 = Q12(1.8f);
-            temp_v1 = D_800DFAD0 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, Q12_SHIFT);
+            temp_v1 = D_800DFAD0 - Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
             if (temp_v1 >= Q12(1.8f))
             {
                 var_a2 = temp_v1;
@@ -1272,7 +1272,7 @@ block7:
         }
         else
         {
-            var_v1_2 = D_800DFAD0 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, Q12_SHIFT);
+            var_v1_2 = D_800DFAD0 + Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
             if (var_v1_2 > Q12(1.8f))
             {
                 var_v1_2 = Q12(1.8f);
@@ -1328,7 +1328,7 @@ block7:
             }
         }
 
-        temp_a0_2 = FP_MULTIPLY(g_SysWork.playerWork_4C.player_0.moveSpeed_38, Math_Cos(g_SysWork.playerWork_4C.player_0.headingAngle_3C + FP_ANGLE(180.0f)), Q12_SHIFT);
+        temp_a0_2 = Q12_MULT(g_SysWork.playerWork_4C.player_0.moveSpeed_38, Math_Cos(g_SysWork.playerWork_4C.player_0.headingAngle_3C + FP_ANGLE(180.0f)));
         if (temp_a0_2 > Q12(1.8f))
         {
             D_800DFAD4 = temp_a0_2 + Q12(0.6f);
@@ -1336,7 +1336,7 @@ block7:
         else if (D_800DFAD4 > Q12(1.8f))
         {
             var_a2 = Q12(1.8f);
-            temp_v1 = D_800DFAD4 - FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, Q12_SHIFT);
+            temp_v1 = D_800DFAD4 - Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
             if (temp_v1 >= Q12(1.8f))
             {
                 var_a2 = temp_v1;
@@ -1345,7 +1345,7 @@ block7:
         }
         else
         {
-            var_v1 = D_800DFAD4 + FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, Q12_SHIFT);
+            var_v1 = D_800DFAD4 + Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
             if (var_v1 > Q12(1.8f))
             {
                 var_v1 = Q12(1.8f);
@@ -1430,9 +1430,9 @@ void func_800DCA30(void) // 0x800DCA30
         {
             four = 4.0f;
 
-            offsetY = FP_MULTIPLY(Math_Cos(rotY), Q12(0.2f), Q12_SHIFT) - Q12(1.8f);
+            offsetY = Q12_MULT(Math_Cos(rotY), Q12(0.2f)) - Q12(1.8f);
             offsetZ = posZ;
-            offsetZ += FP_MULTIPLY(Math_Cos(rotY), Q12(2.0f), Q12_SHIFT) + Q12(four);
+            offsetZ += Q12_MULT(Math_Cos(rotY), Q12(2.0f)) + Q12(four);
             offsetX = MAX(MIN(Q12(-61.5f), posX), Q12(-63.5f));
 
             Camera_PositionSet(NULL, offsetX, offsetY, offsetZ, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), !g_WarpCamera);
@@ -1521,7 +1521,7 @@ s32 func_800DCDA8(void) // 0x800DCDA8
         }
     }
 
-    return FP_MULTIPLY_PRECISE(D_800DFAE0[var_s2 + 1].vz - D_800DFAE0[var_s2].vz, var_s5, Q12_SHIFT) + D_800DFAE0[var_s2].vz;
+    return Q12_MULT_PRECISE(D_800DFAE0[var_s2 + 1].vz - D_800DFAE0[var_s2].vz, var_s5) + D_800DFAE0[var_s2].vz;
 }
 
 s32 func_800DCF38(s32 arg0) // 0x800DCF38
@@ -1549,7 +1549,7 @@ s32 func_800DCF38(s32 arg0) // 0x800DCF38
                               g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz,
                               D_800DFB28[0].vx, D_800DFB28[0].vy, D_800DFB28[1].vx, D_800DFB28[1].vy);
 
-                var_v0 = FP_MULTIPLY_PRECISE(D_800DFB28[1].vz - D_800DFB28[0].vz, sp20, Q12_SHIFT) + Q12(60.0f);
+                var_v0 = Q12_MULT_PRECISE(D_800DFB28[1].vz - D_800DFB28[0].vz, sp20) + Q12(60.0f);
                 var_t0 = D_800DFB28[0].vz + var_v0;
             }
 
@@ -1557,7 +1557,7 @@ s32 func_800DCF38(s32 arg0) // 0x800DCF38
         }
     }
 
-    return FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(9.0f), Q12_SHIFT) + arg0;
+    return Q12_MULT_PRECISE(g_DeltaTime0, Q12(9.0f)) + arg0;
 }
 
 void func_800DD0CC(void) // 0x800DD0CC
@@ -1581,7 +1581,7 @@ void func_800DD0CC(void) // 0x800DD0CC
         vecs[0]           &= Q12_FRACT(vecs[0]);
     }
 
-    vecs[0] = FP_MULTIPLY(D_800DFB48.field_1, Math_Sin(D_800DFB44.field_2), Q12_SHIFT);
+    vecs[0] = Q12_MULT(D_800DFB48.field_1, Math_Sin(D_800DFB44.field_2));
     D_800DFB44.field_2 += g_DeltaTime0;
 
     vecs[1] = FP_MULTIPLY(D_800DFB44.field_2, D_800DFB48.field_2, 6);
@@ -1592,5 +1592,5 @@ void func_800DD0CC(void) // 0x800DD0CC
         vecs[1]           &= Q12_FRACT(vecs[1]);
     }
 
-    D_800DFB40 = MAX(Q12(0.0f), FP_MULTIPLY((FP_MULTIPLY(vecs[0], Q12(4.5f), 6) + Q12(2.5f)), Math_Sin(vecs[1]), Q12_SHIFT) + Q12(4.0f));
+    D_800DFB40 = MAX(Q12(0.0f), Q12_MULT((FP_MULTIPLY(vecs[0], Q12(4.5f), 6) + Q12(2.5f)), Math_Sin(vecs[1])) + Q12(4.0f));
 }

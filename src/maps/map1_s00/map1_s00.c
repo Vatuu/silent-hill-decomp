@@ -504,11 +504,11 @@ void func_800D85D8(void)
 
         case 3:
             SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), Q12_SHIFT);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.3f));
             break;
 
         case 4:
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.3f), Q12_SHIFT);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.3f));
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             break;
 
@@ -597,11 +597,11 @@ void func_800D8948(void) // 0x800D8948
             SysWork_StateStepIncrementDelayed(Q12(3.5f), false);
 
             g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(0.0f);
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3f), Q12_SHIFT);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.3f));
             break;
 
         case 5:
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.3f), Q12_SHIFT);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.3f));
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
             break;
         default:
@@ -912,7 +912,7 @@ void Map_WorldObjectsUpdate(void)
             {
                 if (Savegame_EventFlagGet(EventFlag_83))
                 {
-                    D_800E1182 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.15f), Q12_SHIFT);
+                    D_800E1182 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.15f));
                     if (D_800E1182 > Q12(1.0f))
                     {
                         D_800E1182 = Q12(1.0f);

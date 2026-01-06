@@ -656,7 +656,7 @@ void func_800D2658(void) // 0x800D2658
 
     if (g_SysWork.sysStateStep_C[0] >= 10)
     {
-        D_800D41B0 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.5f, Q12_SHIFT);
+        D_800D41B0 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
         if (D_800D41B0 < Q12(0.0f))
         {
             D_800D41B0 = Q12(0.0f);
@@ -665,7 +665,7 @@ void func_800D2658(void) // 0x800D2658
     }
     else if (g_SysWork.sysStateStep_C[0] > 0)
     {
-        D_800D41B0 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
+        D_800D41B0 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f);
         if (D_800D41B0 > Q12(0.9961f))
         {
             D_800D41B0 = Q12(0.9961f);
@@ -769,10 +769,10 @@ void func_800D2658(void) // 0x800D2658
 
                 for (i = 0; i < 5; i++)
                 {
-                    temp_a0_4         = FP_MULTIPLY_PRECISE(var_s4, D_800D4114[i].vy, Q12_SHIFT) + D_800D4114[i].vy;
-                    temp_a0_4         = FP_MULTIPLY_FLOAT_PRECISE(temp_a0_4, 1.2f, Q12_SHIFT);
-                    D_800D4174[i].vx += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_MULTIPLY(temp_a0_4, Math_Sin(FP_TO(i, Q12_SHIFT) / 5), Q12_SHIFT), Q12_SHIFT);
-                    D_800D4174[i].vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_MULTIPLY(temp_a0_4, Math_Cos(FP_TO(i, Q12_SHIFT) / 5), Q12_SHIFT), Q12_SHIFT);
+                    temp_a0_4         = Q12_MULT_PRECISE(var_s4, D_800D4114[i].vy) + D_800D4114[i].vy;
+                    temp_a0_4         = Q12_MULT_FLOAT_PRECISE(temp_a0_4, 1.2f);
+                    D_800D4174[i].vx += Q12_MULT_PRECISE(g_DeltaTime0, Q12_MULT(temp_a0_4, Math_Sin(FP_TO(i, Q12_SHIFT) / 5)));
+                    D_800D4174[i].vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12_MULT(temp_a0_4, Math_Cos(FP_TO(i, Q12_SHIFT) / 5)));
                 }
             }
 

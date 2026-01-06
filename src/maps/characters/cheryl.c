@@ -32,7 +32,7 @@ void Ai_Cheryl_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
 
     if (dahliaProps.stateIdx0 == 1)
     {
-        D_800DF1CC = FP_MULTIPLY_PRECISE(chara->moveSpeed_38, Q12(30.2f), Q12_SHIFT);
+        D_800DF1CC = Q12_MULT_PRECISE(chara->moveSpeed_38, Q12(30.2f));
     }
 
     moveSpeed           = MIN(chara->moveSpeed_38, Q12(2.5f));
@@ -43,7 +43,7 @@ void Ai_Cheryl_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
         animInfo = CHERYL_ANIM_INFOS;
         if (moveSpeed <= Q12(1.5f))
         {
-            animDur = FP_MULTIPLY_PRECISE(moveSpeed, Q12(18.6f), Q12_SHIFT);
+            animDur = Q12_MULT_PRECISE(moveSpeed, Q12(18.6f));
         }
         else
         {
@@ -72,14 +72,14 @@ void Ai_Cheryl_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x
     pos          = chara->position_18;
     moveSpeed    = chara->moveSpeed_38;
     headingAngle = chara->headingAngle_3C;
-    moveAmt      = FP_MULTIPLY_PRECISE(moveSpeed, g_DeltaTime0, Q12_SHIFT);
+    moveAmt      = Q12_MULT_PRECISE(moveSpeed, g_DeltaTime0);
 
     scaleRestoreShift = OVERFLOW_GUARD(moveAmt);
     scaleReduceShift  = scaleRestoreShift >> 1;
 
-    offset.vx = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    offset.vz = (u32)FP_MULTIPLY_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift, Q12_SHIFT) << scaleRestoreShift;
-    offset.vy = FP_MULTIPLY_PRECISE(chara->field_34, g_DeltaTime0, Q12_SHIFT);
+    offset.vx = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Sin(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vz = (u32)Q12_MULT_PRECISE(moveAmt >> scaleReduceShift, Math_Cos(headingAngle) >> scaleReduceShift) << scaleRestoreShift;
+    offset.vy = Q12_MULT_PRECISE(chara->field_34, g_DeltaTime0);
 
     func_80069B24(&sharedData_800E39BC_0_s00, &offset, chara);
 

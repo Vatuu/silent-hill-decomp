@@ -73,9 +73,9 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
 
     for (i = 0, curAngle = (rotY + angle / 2) - FP_ANGLE(90.0f); i < 9; i++, curAngle += FP_ANGLE(22.5f))
     {
-        sharedData_800DE1B0_0_s01.vx = posX + FP_MULTIPLY_PRECISE(Math_Sin(curAngle), Q12(8.0f), Q12_SHIFT);
+        sharedData_800DE1B0_0_s01.vx = posX + Q12_MULT_PRECISE(Math_Sin(curAngle), Q12(8.0f));
         sharedData_800DE1B0_0_s01.vy = vecF8Y;
-        sharedData_800DE1B0_0_s01.vz = posZ + FP_MULTIPLY_PRECISE(Math_Cos(curAngle), Q12(8.0f), Q12_SHIFT);
+        sharedData_800DE1B0_0_s01.vz = posZ + Q12_MULT_PRECISE(Math_Cos(curAngle), Q12(8.0f));
 
         new_var = dist2;
         if (!sharedFunc_800D4AEC_0_s01(airScreamer, NULL, &sharedData_800DE1B0_0_s01, &sharedData_800DE1B0_0_s01))
@@ -88,7 +88,7 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
         }
 
         dist3   = Math_Distance2dGet(&sharedData_800DE1B0_0_s01, &airScreamerProps.targetPosition_F8);
-        temp_a0 = FP_MULTIPLY_PRECISE(new_var - dist1, dist3, Q12_SHIFT);
+        temp_a0 = Q12_MULT_PRECISE(new_var - dist1, dist3);
 
         temp_v0_3 = FP_ANGLE_NORM_S(curAngle - rotY);
 
@@ -114,8 +114,8 @@ void sharedFunc_800D4E84_0_s01(s_SubCharacter* airScreamer)
         return;
     }
 
-    airScreamerProps.position_110.vy = FP_TO(FP_MULTIPLY_PRECISE(vecF8Y, dist1, Q12_SHIFT) +
-                                                 FP_MULTIPLY_PRECISE(posY, dist4, Q12_SHIFT),
+    airScreamerProps.position_110.vy = FP_TO(Q12_MULT_PRECISE(vecF8Y, dist1) +
+                                                 Q12_MULT_PRECISE(posY, dist4),
                                                  Q12_SHIFT) /
                                            dist5;
 

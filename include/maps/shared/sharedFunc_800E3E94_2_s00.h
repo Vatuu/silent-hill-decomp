@@ -102,11 +102,11 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* chara)
         {
             if (angle0 > FP_ANGLE(0.0f))
             {
-                chara->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x400, Q12_SHIFT);
+                chara->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, 0x400);
             }
             else
             {
-                chara->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, 0x400, Q12_SHIFT);
+                chara->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, 0x400);
             }
         }
         else
@@ -119,12 +119,12 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* chara)
 
     if (angle1 < 0xE3)
     {
-        Chara_MoveSpeedUpdate5(chara, 0x9800, FP_MULTIPLY_PRECISE(chara->properties_E4.groaner.field_114, 0x3999, Q12_SHIFT));
+        Chara_MoveSpeedUpdate5(chara, 0x9800, Q12_MULT_PRECISE(chara->properties_E4.groaner.field_114, 0x3999));
     }
     else
     {
         temp_v0_10 = 0x1000 - (((angle1 - 0xE3) * 3) >> 1);
-        Chara_MoveSpeedUpdate5(chara, 0x9800, FP_MULTIPLY_PRECISE(FP_MULTIPLY_PRECISE(chara->properties_E4.groaner.field_114, 0x3999, Q12_SHIFT), temp_v0_10, Q12_SHIFT));
+        Chara_MoveSpeedUpdate5(chara, 0x9800, Q12_MULT_PRECISE(Q12_MULT_PRECISE(chara->properties_E4.groaner.field_114, 0x3999), temp_v0_10));
     }
 
     if (mag0 > 0x3000)

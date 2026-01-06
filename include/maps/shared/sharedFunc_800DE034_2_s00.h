@@ -8,10 +8,10 @@ void sharedFunc_800DE034_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12
 
     #define airScreamerProps airScreamer->properties_E4.airScreamer
 
-    scaledRadius = FP_MULTIPLY_PRECISE(dist, Rng_RandQ12(), Q12_SHIFT);
+    scaledRadius = Q12_MULT_PRECISE(dist, Rng_RandQ12());
     angle        = Rng_RandQ12();
-    posX         = vec->vx + FP_MULTIPLY_PRECISE(scaledRadius, Math_Sin(angle), Q12_SHIFT);
-    posZ         = vec->vz + FP_MULTIPLY_PRECISE(scaledRadius, Math_Cos(angle), Q12_SHIFT);
+    posX         = vec->vx + Q12_MULT_PRECISE(scaledRadius, Math_Sin(angle));
+    posZ         = vec->vz + Q12_MULT_PRECISE(scaledRadius, Math_Cos(angle));
 
     posY                                  = Collision_GroundHeightGet(posX, posZ);
     airScreamerProps.targetPosition_F8.vx = posX;

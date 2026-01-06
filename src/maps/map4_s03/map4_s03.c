@@ -141,9 +141,9 @@ void Ai_Twinfeeler_TextureLoad(void) // 0x800D3038
 
 void Math_Vector3Translate(VECTOR3* outVec, const VECTOR3* inVec, q19_12 headingAngle, q19_12 dist) // 0x800D3068
 {
-    outVec->vx = inVec->vx + FP_MULTIPLY_PRECISE(Math_Sin(headingAngle), dist, Q12_SHIFT);
+    outVec->vx = inVec->vx + Q12_MULT_PRECISE(Math_Sin(headingAngle), dist);
     outVec->vy = inVec->vy;
-    outVec->vz = inVec->vz + FP_MULTIPLY_PRECISE(Math_Cos(headingAngle), dist, Q12_SHIFT);
+    outVec->vz = inVec->vz + Q12_MULT_PRECISE(Math_Cos(headingAngle), dist);
 }
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3114);
@@ -394,8 +394,8 @@ s32 func_800D4924(VECTOR3* vec, q19_12 angle) // 0x800D4924
     q19_12 posX;
     q19_12 posZ;
 
-    posX = vec->vx + FP_MULTIPLY_FLOAT_PRECISE(Math_Sin(angle), 1.0f, Q12_SHIFT);
-    posZ = vec->vz + FP_MULTIPLY_FLOAT_PRECISE(Math_Cos(angle), 1.0f, Q12_SHIFT);
+    posX = vec->vx + Q12_MULT_FLOAT_PRECISE(Math_Sin(angle), 1.0f);
+    posZ = vec->vz + Q12_MULT_FLOAT_PRECISE(Math_Cos(angle), 1.0f);
 
     return func_800D48CC(Q12_TO_Q8(posX), Q12_TO_Q8(posZ));
 }
@@ -1630,12 +1630,12 @@ void func_800D9BB0(void) // 0x800D9BB0
 
             var = ratan2(FP_ANGLE(360.0f), FP_FROM(g_DeltaTime2 * Math_Cos(g_WorldObject_Fence.rotation_28.vx), Q12_SHIFT));
             var_a0 = MAX(Q12(0.0f), Q12(1.0f) - (D_800E05A8 * 2));
-            D_800E05AC = FP_MULTIPLY_PRECISE(var_a0, D_800E05AC + var, Q12_SHIFT);
-            g_WorldObject_Fence.rotation_28.vx += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E05AC, Q12_SHIFT);
+            D_800E05AC = Q12_MULT_PRECISE(var_a0, D_800E05AC + var);
+            g_WorldObject_Fence.rotation_28.vx += Q12_MULT_PRECISE(g_DeltaTime0, D_800E05AC);
 
             D_800E05AE = MIN(Q12(15.0f), (D_800E05AE + g_DeltaTime2) + (g_DeltaTime2 >> 4));
 
-            g_WorldObject_Fence.position_1C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E05AE, Q12_SHIFT);
+            g_WorldObject_Fence.position_1C.vy += Q12_MULT_PRECISE(g_DeltaTime0, D_800E05AE);
             if (g_WorldObject_Fence.rotation_28.vx > FP_ANGLE(90.0f))
             {
                 g_WorldObject_Fence.rotation_28.vx = FP_ANGLE(90.0f);

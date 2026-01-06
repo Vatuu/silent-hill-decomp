@@ -168,7 +168,7 @@ void func_800D7F98(void) // 0x800D7F98
                     }
                     else
                     {
-                        dist0 = Q8(0.313f) - FP_MULTIPLY_PRECISE((dist0 - Q12(5.0f)), 3, Q12_SHIFT); 
+                        dist0 = Q8(0.313f) - Q12_MULT_PRECISE((dist0 - Q12(5.0f)), 3); 
                         if (dist0 < Q12(0.0f)) 
                         {
                             dist0 = Q12(0.0f);
@@ -192,7 +192,7 @@ void func_800D7F98(void) // 0x800D7F98
                     }
                     else
                     {
-                        dist1 = Q8(0.313f) - FP_MULTIPLY_PRECISE(dist1, 3, Q12_SHIFT);
+                        dist1 = Q8(0.313f) - Q12_MULT_PRECISE(dist1, 3);
                         if (dist1 < Q12(0.0f))
                         {
                             dist1 = Q12(0.0f);
@@ -208,7 +208,7 @@ void func_800D7F98(void) // 0x800D7F98
                     }
                     else
                     {
-                        dist2 = Q8(0.313f) - FP_MULTIPLY_PRECISE(dist2, 5, Q12_SHIFT);
+                        dist2 = Q8(0.313f) - Q12_MULT_PRECISE(dist2, 5);
                         if (dist2 < Q12(0.0f))
                         {
                             dist2 = Q12(0.0f);
@@ -310,13 +310,13 @@ void func_800D822C(void) // 0x800D822C
             SysWork_StateStepIncrement(0);
 
         case 3:
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.4f, Q12_SHIFT);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.4f);
             SysWork_StateStepIncrementDelayed(Q12(3.8f), false);
             break;
 
         case 4:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
-            g_SysWork.playerWork_4C.player_0.position_18.vy += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.4f, Q12_SHIFT);
+            g_SysWork.playerWork_4C.player_0.position_18.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.4f);
             break;
 
         default:

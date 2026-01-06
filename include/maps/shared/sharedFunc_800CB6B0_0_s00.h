@@ -296,8 +296,8 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                     sharedData_800DD598_0_s00++;
                 }
 
-                temp_s0_2 = FP_MULTIPLY(Math_Sin(FP_ANGLE(270.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2), Q12_SHIFT) + (PARTICLE_COUNT_MAX / 2);
-                temp_a2   = FP_MULTIPLY(Math_Sin(FP_ANGLE(180.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2), Q12_SHIFT) + (PARTICLE_COUNT_MAX / 2);
+                temp_s0_2 = Q12_MULT(Math_Sin(FP_ANGLE(270.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2)) + (PARTICLE_COUNT_MAX / 2);
+                temp_a2   = Q12_MULT(Math_Sin(FP_ANGLE(180.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2)) + (PARTICLE_COUNT_MAX / 2);
                 temp_t0 = sharedData_800E0CB6_0_s00 >> 14;
 
                 for (i = 0; i < 2; i++)

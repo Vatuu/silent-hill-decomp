@@ -518,7 +518,7 @@ s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
     {
         if (animStatus == ANIM_STATUS(AirScreamerAnim_21, true))
         {
-            damage1 = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
+            damage1 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f);
             if (damage1 < airScreamer->health_B0)
             {
                 airScreamer->health_B0 -= damage1;
@@ -532,7 +532,7 @@ s32 Ai_AirScreamer_DamageTake(s_SubCharacter* airScreamer, q19_12 mult)
         airScreamer->damage_B4.amount_C = Q12(0.0f);
         angle                     = mult; // @hack
 
-        damage0 = FP_MULTIPLY_PRECISE(damage0, angle, Q12_SHIFT);
+        damage0 = Q12_MULT_PRECISE(damage0, angle);
         if (damage0 < airScreamer->health_B0)
         {
             airScreamer->health_B0 -= damage0;
@@ -677,11 +677,11 @@ bool sharedFunc_800D2FB4_0_s01(s_SubCharacter* airScreamer, VECTOR3* playerPos, 
     }
 
     rotY    = airScreamer->rotation_24.vy;
-    offsetY = playerPos->vx - (airScreamer->position_18.vx + FP_MULTIPLY_PRECISE(dist, Math_Sin(rotY), Q12_SHIFT));
-    offsetZ = playerPos->vz - (airScreamer->position_18.vz + FP_MULTIPLY_PRECISE(dist, Math_Cos(rotY), Q12_SHIFT));
+    offsetY = playerPos->vx - (airScreamer->position_18.vx + Q12_MULT_PRECISE(dist, Math_Sin(rotY)));
+    offsetZ = playerPos->vz - (airScreamer->position_18.vz + Q12_MULT_PRECISE(dist, Math_Cos(rotY)));
 
     roughDist = FP_SQUARE_PRECISE(offsetY, Q12_SHIFT) + FP_SQUARE_PRECISE(offsetZ, Q12_SHIFT);
-    if (roughDist > FP_SQUARE_PRECISE(FP_MULTIPLY_PRECISE(var_s1, playerField10C, Q12_SHIFT), Q12_SHIFT))
+    if (roughDist > FP_SQUARE_PRECISE(Q12_MULT_PRECISE(var_s1, playerField10C), Q12_SHIFT))
     {
         return false;
     }
@@ -727,12 +727,12 @@ bool sharedFunc_800D31D0_0_s01(s_SubCharacter* airScreamer, const VECTOR3* pos, 
     }
 
     offsetHeadingAngle = airScreamer->rotation_24.vy;
-    offsetX            = pos->vx - (airScreamer->position_18.vx + FP_MULTIPLY_PRECISE(offsetDist, Math_Sin(offsetHeadingAngle), Q12_SHIFT));
-    offsetZ            = pos->vz - (airScreamer->position_18.vz + FP_MULTIPLY_PRECISE(offsetDist, Math_Cos(offsetHeadingAngle), Q12_SHIFT));
+    offsetX            = pos->vx - (airScreamer->position_18.vx + Q12_MULT_PRECISE(offsetDist, Math_Sin(offsetHeadingAngle)));
+    offsetZ            = pos->vz - (airScreamer->position_18.vz + Q12_MULT_PRECISE(offsetDist, Math_Cos(offsetHeadingAngle)));
 
     roughDist = FP_SQUARE_PRECISE(offsetX, Q12_SHIFT) + FP_SQUARE_PRECISE(offsetZ, Q12_SHIFT);
     distMax   = FP_SQUARE_PRECISE(var_s1, Q12_SHIFT);
-    distMax   = FP_MULTIPLY_PRECISE(distMax, arg2, Q12_SHIFT);
+    distMax   = Q12_MULT_PRECISE(distMax, arg2);
     if (roughDist > distMax)
     {
         return false;
@@ -808,9 +808,9 @@ bool sharedFunc_800D3508_0_s01(s_SubCharacter* airScreamer, q19_12* dist)
             while (false);
         }
 
-        angleToPlayer = FP_MULTIPLY_PRECISE(offsetDist, Math_Sin(angleToPlayerCpy), Q12_SHIFT);
+        angleToPlayer = Q12_MULT_PRECISE(offsetDist, Math_Sin(angleToPlayerCpy));
         offsetX = angleToPlayer;
-        offsetZ = FP_MULTIPLY_PRECISE(offsetDist, Math_Cos(angleToPlayerCpy), Q12_SHIFT);
+        offsetZ = Q12_MULT_PRECISE(offsetDist, Math_Cos(angleToPlayerCpy));
 
         airScreamerProps.position_104.vx = airScreamer->position_18.vx + offsetX;
         airScreamerProps.position_104.vy = g_SysWork.playerWork_4C.player_0.position_18.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_6;
@@ -845,8 +845,8 @@ bool sharedFunc_800D3630_0_s01(s_SubCharacter* airScreamer, q19_12* dist)
 
         // Compute extra offset.
         angleToPlayer = Math_AngleBetweenPositionsGet(airScreamer->position_18, g_SysWork.playerWork_4C.player_0.position_18);
-        offsetX = FP_MULTIPLY_PRECISE(offsetDist, Math_Sin(angleToPlayer), Q12_SHIFT);
-        offsetZ = FP_MULTIPLY_PRECISE(offsetDist, Math_Cos(angleToPlayer), Q12_SHIFT);
+        offsetX = Q12_MULT_PRECISE(offsetDist, Math_Sin(angleToPlayer));
+        offsetZ = Q12_MULT_PRECISE(offsetDist, Math_Cos(angleToPlayer));
 
         // Set target position slightly ahead of Air Screamer.
         airScreamerProps.position_104.vx = airScreamer->position_18.vx + offsetX;

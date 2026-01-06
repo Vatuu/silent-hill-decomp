@@ -115,9 +115,46 @@
  * @param to Second position.
  * @param return 2D distance between two positions.
  */
-#define FP_2D_DISTANCE_SQR(from, to)          \
+#define Q12_2D_DISTANCE_SQR(from, to)         \
     (SQUARE(Q12_TO_Q8((to).vx - (from).vx)) + \
      SQUARE(Q12_TO_Q8((to).vz - (from).vz)))
+
+/** @brief Multiplies two integers in Q*.12 fixed-point.
+ *
+ * @param a First Q*.12 fixed-point factor.
+ * @param b Second Q*.12 fixed-point factor.
+ * @return Q*.12 product of `a` and `b`.
+ */
+#define Q12_MULT(a, b) \
+    FP_MULTIPLY(a, b, Q12_SHIFT)
+
+/** @brief Multiplies two integers in Q*.12 fixed-point, using 64-bit intermediates for higher precision.
+ *
+ * @param a First Q*.12 fixed-point factor.
+ * @param b Second Q*.12 fixed-point factor.
+ * @return Precise Q*.12 product of `a` and `b`.
+ */
+#define Q12_MULT_PRECISE(a, b) \
+    FP_MULTIPLY_PRECISE(a, b, Q12_SHIFT)
+
+/** @brief Multiplies an integer in Q*.12 fixed-point by a float converted to Q*.12 fixed-point.
+ *
+ * @param a First Q*.12 fixed-point factor.
+ * @param b Second floating-point factor.
+ * @return Q*.12 product of `a` and `b`.
+ */
+#define Q12_MULT_FLOAT(a, b) \
+    FP_MULTIPLY_FLOAT(a, b, Q12_SHIFT)
+
+/** @brief Multiplies an integer in Q*.12 fixed-point by a float converted to Q*.12 fixed-point,
+ * using 64-bit intermediates for higher precision.
+ *
+ * @param a First Q*.12 fixed-point factor.
+ * @param b Second floating-point factor.
+ * @return Precise Q*.12 product of `a` and `b`.
+ */
+#define Q12_MULT_FLOAT_PRECISE(a, b) \
+    FP_MULTIPLY_FLOAT_PRECISE(a, b, Q12_SHIFT)
 
 // ==================================
 // RAW Q FORMAT CONVERSION AND UTILS

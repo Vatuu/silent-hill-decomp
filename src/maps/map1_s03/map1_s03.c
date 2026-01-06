@@ -156,7 +156,7 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
 
     setPolyFT4(*poly);
 
-    var_a2 = (FP_FROM(FP_MULTIPLY_PRECISE(D_800E3A40[idx2].field_E * sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_3, Math_Sin(var_lo >> 2), Q12_SHIFT), Q12_SHIFT) * scratch->field_0.field_2C) / scratch->field_138;
+    var_a2 = (FP_FROM(Q12_MULT_PRECISE(D_800E3A40[idx2].field_E * sharedData_800DFB7C_0_s00[idx].field_C.s_1.field_3, Math_Sin(var_lo >> 2)), Q12_SHIFT) * scratch->field_0.field_2C) / scratch->field_138;
     var_a1 = (var_a2 * (0x800 - ABS(scratch->field_0.field_30.vx))) >> 10;
 
     setXY0Fast(*poly, (u16)scratch->field_134.vx - var_a2, scratch->field_134.vy - var_a1);
@@ -173,11 +173,11 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
 
     if (var_lo < 0x800)
     {
-        rgbColor = FP_MULTIPLY_PRECISE((var_lo * 2), 0x80, Q12_SHIFT);
+        rgbColor = Q12_MULT_PRECISE((var_lo * 2), 0x80);
     }
     else
     {
-        rgbColor = 0x80 - FP_MULTIPLY_PRECISE(((var_lo - 0x800) * 2), 0x80, Q12_SHIFT);
+        rgbColor = 0x80 - Q12_MULT_PRECISE(((var_lo - 0x800) * 2), 0x80);
     }
 
     rgbColor = (rgbColor * func_80055D78(sharedData_800DFB7C_0_s00[idx].field_0.vx_0, sharedData_800DFB7C_0_s00[idx].vy_8, sharedData_800DFB7C_0_s00[idx].field_4.vz_4)) >> 7;
@@ -1062,12 +1062,12 @@ void func_800DAF18(void) // 0x800DAF18
             }
             else
             {
-                var_v0_2 = FP_MULTIPLY_PRECISE(D_800E20FC, 0x1000 - (FP_TO(var_v0_2 - 0x1000, Q12_SHIFT) / 0x10000), Q12_SHIFT);
+                var_v0_2 = Q12_MULT_PRECISE(D_800E20FC, 0x1000 - (FP_TO(var_v0_2 - 0x1000, Q12_SHIFT) / 0x10000));
             }
         }
 
         var_v0_2 = ~(var_v0_2 >> 4);
-        Sd_SfxAttributesUpdate(0x5B9, temp_s0_2, var_v0_2, 0);
+        Sd_SfxAttributesUpdate(1465, temp_s0_2, var_v0_2, 0);
     }
 }
 
@@ -1505,7 +1505,7 @@ void func_800DCDDC(void) // 0x800DCDDC
 
     if (g_SysWork.sysStateStep_C[0] >= 10)
     {
-        D_800E2018 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
+        D_800E2018 -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.5f));
         if (D_800E2018 < 0)
         {
             D_800E2018 = 0;
@@ -1515,7 +1515,7 @@ void func_800DCDDC(void) // 0x800DCDDC
     }
     else if (g_SysWork.sysStateStep_C[0] > 0)
     {
-        D_800E2018 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.25f), Q12_SHIFT);
+        D_800E2018 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f));
         if (D_800E2018 > Q12(0.9961f))
         {
             D_800E2018 = Q12(0.9961f);
@@ -1594,8 +1594,8 @@ void func_800DCDDC(void) // 0x800DCDDC
             g_SysWork.field_28 += g_DeltaTime0;
             if (g_SysWork.field_28 > Q12(4.0f))
             {
-                D_800E200C.vx += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-1.2f), Q12_SHIFT);
-                D_800E200C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(-0.4f), Q12_SHIFT);
+                D_800E200C.vx += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-1.2f));
+                D_800E200C.vy += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.4f));
             }
 
             if (g_SysWork.field_28 > Q12(6.0f))
@@ -1786,7 +1786,7 @@ void func_800DD688(void) // 0x800DD688
         }
         else if (x < Q12(-99.0f)) 
         {
-            D_800E638C += FP_MULTIPLY_PRECISE(g_DeltaTime0, (x + Q12(100.0f)), Q12_SHIFT);
+            D_800E638C += Q12_MULT_PRECISE(g_DeltaTime0, (x + Q12(100.0f)));
         }
 
         if ((D_800E6388 == 0 && D_800E638C > Q12(2.5f)) ||
@@ -2123,7 +2123,7 @@ void func_800DE828(void) // 0x800DE828
 
                 case 4:
                 case 5:
-                    D_800E20E8 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(4.0f), Q12_SHIFT);
+                    D_800E20E8 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(4.0f));
                     if (D_800E20E8 <= Q12(-2.0f))
                     {
                         tmp0 = D_800E20E8;

@@ -50,7 +50,7 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer)
     }
     airScreamer->rotationSpeed_2C.vy = moveSpeed;
 
-    airScreamer->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, moveSpeed, Q12_SHIFT); 
+    airScreamer->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, moveSpeed); 
     if (sharedFunc_800D4A80_0_s01(airScreamer) == 3) 
     {
         sharedFunc_800D72E8_0_s01(airScreamer, airScreamer->field_34, airScreamer->rotationSpeed_2C.vy);
@@ -63,14 +63,14 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer)
     tmp0 = sharedFunc_800D71F0_0_s01(airScreamer->rotationSpeed_2C.vx, sharedData_800E21D0_0_s01.field_B4[2][1], sharedData_800E21D0_0_s01.field_B4[2][2], sharedData_800E21D0_0_s01.field_B4[2][3]);
     moveSpeed = tmp0;
     airScreamer->rotationSpeed_2C.vx = tmp0;
-    airScreamer->rotation_24.vx += FP_MULTIPLY_PRECISE(g_DeltaTime0, moveSpeed, Q12_SHIFT);
+    airScreamer->rotation_24.vx += Q12_MULT_PRECISE(g_DeltaTime0, moveSpeed);
     element1 = sharedFunc_800D71F0_0_s01(airScreamer->rotationSpeed_2C.vz, sharedData_800E21D0_0_s01.field_B4[4][1], sharedData_800E21D0_0_s01.field_B4[4][2], sharedData_800E21D0_0_s01.field_B4[4][3]);
     moveSpeed = element1;
     airScreamer->rotationSpeed_2C.vz = moveSpeed;
 
-    airScreamer->rotation_24.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, moveSpeed, Q12_SHIFT);
+    airScreamer->rotation_24.vz += Q12_MULT_PRECISE(g_DeltaTime0, moveSpeed);
     moveSpeed                  = sharedFunc_800D71F0_0_s01(airScreamer->field_32, sharedData_800E21D0_0_s01.field_B4[5][1], sharedData_800E21D0_0_s01.field_B4[5][2], sharedData_800E21D0_0_s01.field_B4[5][3]);
     tmp1 = moveSpeed;
     airScreamer->field_32        = tmp1;
-    airScreamer->field_2A       += FP_MULTIPLY_PRECISE(g_DeltaTime0, tmp1, Q12_SHIFT);
+    airScreamer->field_2A       += Q12_MULT_PRECISE(g_DeltaTime0, tmp1);
 }

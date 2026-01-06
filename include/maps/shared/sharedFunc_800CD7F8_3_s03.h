@@ -12,7 +12,7 @@ void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ, 
     deltaZ = chara->field_D8.offsetZ_6 - posZ;
 
     deltaSqr = FP_SQUARE_PRECISE(deltaX, Q12_SHIFT) + FP_SQUARE_PRECISE(deltaZ, Q12_SHIFT);
-    if (deltaSqr > FP_MULTIPLY_PRECISE(range, 4, Q12_SHIFT))
+    if (deltaSqr > Q12_MULT_PRECISE(range, 4))
     {
         rootDeltaSqr = SquareRoot12(deltaSqr);
         scale        = FP_TO(rootDeltaSqr - 128, Q12_SHIFT) / rootDeltaSqr;

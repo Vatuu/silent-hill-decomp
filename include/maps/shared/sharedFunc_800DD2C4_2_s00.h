@@ -27,9 +27,9 @@ void sharedFunc_800DD2C4_2_s00(s_SubCharacter* airScreamer, s32 arg1, s32 arg2)
 
     for (i = 8; i > 0; i--, headingAngle += angleStep)
     {
-        dist = FP_MULTIPLY_PRECISE(Rng_RandQ12(), Q12(6.0f), Q12_SHIFT) + Q12(19.0f);
-        newPosX = playerPosX + FP_MULTIPLY_PRECISE(dist, Math_Sin(headingAngle), Q12_SHIFT);
-        newPosZ = playerPosZ + FP_MULTIPLY_PRECISE(dist, Math_Cos(headingAngle), Q12_SHIFT);
+        dist = Q12_MULT_PRECISE(Rng_RandQ12(), Q12(6.0f)) + Q12(19.0f);
+        newPosX = playerPosX + Q12_MULT_PRECISE(dist, Math_Sin(headingAngle));
+        newPosZ = playerPosZ + Q12_MULT_PRECISE(dist, Math_Cos(headingAngle));
 
         unkDeltaAngle = Collision_GroundHeightGet(newPosX, newPosZ);
         unkDeltaAngle = MIN(unkDeltaAngle, 0);

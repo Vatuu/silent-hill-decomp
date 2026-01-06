@@ -53,7 +53,7 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
                 sharedFunc_800CF0B4_3_s03(nurse);
 
                 somePtr = localNurse->properties_E4.npc.field_124;
-                if (dist < FP_MULTIPLY_PRECISE(somePtr->field_8, Q12(3.0f), Q12_SHIFT) &&
+                if (dist < Q12_MULT_PRECISE(somePtr->field_8, Q12(3.0f)) &&
                     angleAbs < FP_ANGLE(60.0f) && g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
                 {
                     nurse->model_0.controlState_2 = PuppetNurseControl_12;

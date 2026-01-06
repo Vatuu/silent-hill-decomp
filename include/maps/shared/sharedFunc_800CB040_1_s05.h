@@ -63,18 +63,18 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
     var_s1 = (sharedData_800D8568_1_s05.field_8 * sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_1) >> 8;
 
     ptr->field_134 = sharedData_800DFB7C_0_s00[idx].field_0.vx_0 +
-                     FP_MULTIPLY(Math_Sin(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2), var_s1, Q12_SHIFT);
+                     Q12_MULT(Math_Sin(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2), var_s1);
 
     ptr->field_138 = sharedData_800DFB7C_0_s00[idx].field_4.vz_4 +
-                     FP_MULTIPLY(Math_Cos(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2), var_s1, Q12_SHIFT);
+                     Q12_MULT(Math_Cos(sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2), var_s1);
 
     if ((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 < (u16)ptr->field_0.field_C8)
     {
         s32 angle = func_8005C7B0(0x400 - (((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 << 6) / sharedData_800D8568_1_s05.field_4)); // TODO: `FP_ANGLE` for 0x400?
-        var_s1    = FP_MULTIPLY((u16)ptr->field_0.field_CA, Math_Sin(angle), Q12_SHIFT) + (u16)ptr->field_0.field_CC;
+        var_s1    = Q12_MULT((u16)ptr->field_0.field_CA, Math_Sin(angle)) + (u16)ptr->field_0.field_CC;
 
-        ptr->field_134 = FP_MULTIPLY(ptr->field_134, var_s1, Q12_SHIFT);
-        ptr->field_138 = FP_MULTIPLY(ptr->field_138, var_s1, Q12_SHIFT);
+        ptr->field_134 = Q12_MULT(ptr->field_134, var_s1);
+        ptr->field_138 = Q12_MULT(ptr->field_138, var_s1);
     }
 
     ptr->field_134 += ptr->field_0.field_D0;
@@ -86,11 +86,11 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
 
     if (sharedData_800DFB7C_0_s00[idx].field_B & 1)
     {
-        sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 += FP_MULTIPLY_PRECISE(g_DeltaTime0, ((u16)sharedData_800D8568_1_s05.field_A * sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0) >> 8, Q12_SHIFT);
+        sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 += Q12_MULT_PRECISE(g_DeltaTime0, ((u16)sharedData_800D8568_1_s05.field_A * sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0) >> 8);
     }
     else
     {
-        sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 -= FP_MULTIPLY_PRECISE(g_DeltaTime0, ((u16)sharedData_800D8568_1_s05.field_A * sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0) >> 8, Q12_SHIFT);
+        sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 -= Q12_MULT_PRECISE(g_DeltaTime0, ((u16)sharedData_800D8568_1_s05.field_A * sharedData_800DFB7C_0_s00[idx].field_10.s_2.field_0) >> 8);
     }
 
     sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += ptr->field_0.field_CE;

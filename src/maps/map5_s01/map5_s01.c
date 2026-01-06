@@ -665,7 +665,7 @@ void func_800EC42C(void) // 0x800EC42C
 
     if (g_SysWork.sysStateStep_C[0] >= 10)
     {
-        D_800F035E -= FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.5f), Q12_SHIFT);
+        D_800F035E -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.5f));
         if (D_800F035E < 0)
         {
             D_800F035E = 0;
@@ -675,7 +675,7 @@ void func_800EC42C(void) // 0x800EC42C
     }
     else if (g_SysWork.sysStateStep_C[0] > 0)
     {
-        D_800F035E += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(0.25f), Q12_SHIFT);
+        D_800F035E += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f));
         if (D_800F035E > Q12(0.9961f))
         {
             D_800F035E = Q12(0.9961f);
@@ -870,8 +870,8 @@ void func_800EC42C(void) // 0x800EC42C
                     break;
             }
 
-            D_800F0180.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, mulX * 4, Q12_SHIFT);
-            D_800F0180.vz += FP_MULTIPLY_PRECISE(g_DeltaTime0, mulZ * 4, Q12_SHIFT);
+            D_800F0180.vy += Q12_MULT_PRECISE(g_DeltaTime0, mulX * 4);
+            D_800F0180.vz += Q12_MULT_PRECISE(g_DeltaTime0, mulZ * 4);
 
             sharedFunc_800CE5D4_1_s03(&D_800F0180, Q12(0.5f), Q12(0.05f), 0);
             break;

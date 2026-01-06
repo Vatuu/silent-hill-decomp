@@ -21,7 +21,7 @@ bool sharedFunc_800CF294_3_s03(s_SubCharacter* arg0, q19_12 dist)
     temp_a0 = arg0->properties_E4.npc.field_124->field_8;
 
     ret = false;
-    if (func_8006FD90(arg0, 1, FP_MULTIPLY_PRECISE(temp_v1, temp_a0, Q12_SHIFT), FP_MULTIPLY_PRECISE(somePtr->field_4, temp_a0, Q12_SHIFT)) ||
+    if (func_8006FD90(arg0, 1, Q12_MULT_PRECISE(temp_v1, temp_a0), Q12_MULT_PRECISE(somePtr->field_4, temp_a0)) ||
         arg0->properties_E4.npc.field_11A > 0)
     {
         ret = true;

@@ -952,7 +952,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
 
         if (i == temp_s7) 
         {
-            var_t0 = FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime1, 0.25f, Q12_SHIFT);
+            var_t0 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime1, 0.25f);
             if (g_SysWork.sysFlags_22A0 & SysFlag_1)
             {
                 var_a0 = Q12(1.0f);
@@ -975,7 +975,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
             } 
             else
             {
-                var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT);
+                var_t0 = Q12_MULT(g_DeltaTime1, arg1);
                 var_a0 = Q12(0.0f);
             }
         }
@@ -1011,10 +1011,10 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
 
         if (i == 0) 
         {
-            layerVol1 = FP_MULTIPLY_PRECISE(layerVol1, temp_v0, Q12_SHIFT);
+            layerVol1 = Q12_MULT_PRECISE(layerVol1, temp_v0);
         }
 
-        layerVol1 = FP_MULTIPLY_PRECISE(layerVol1, Q12(0.0312f), Q12_SHIFT);
+        layerVol1 = Q12_MULT_PRECISE(layerVol1, Q12(0.0312f));
         if (layerVol1 > Q12(0.0312f)) 
         {
             layerVol1 = Q12(0.0312f);
@@ -1734,8 +1734,8 @@ void Chara_PositionUpdateFromParams(s_MapPoint2d* mapPoint) // 0x800371E8
 
     if (mapPoint->data.areaLoad.field_4_24 >= 2)
     {
-        g_SysWork.playerWork_4C.player_0.position_18.vx += FP_MULTIPLY_FLOAT_PRECISE(Math_Sin(rotY), 0.4f, Q12_SHIFT);
-        g_SysWork.playerWork_4C.player_0.position_18.vz += FP_MULTIPLY_FLOAT_PRECISE(Math_Cos(rotY), 0.4f, Q12_SHIFT);
+        g_SysWork.playerWork_4C.player_0.position_18.vx += Q12_MULT_FLOAT_PRECISE(Math_Sin(rotY), 0.4f);
+        g_SysWork.playerWork_4C.player_0.position_18.vz += Q12_MULT_FLOAT_PRECISE(Math_Cos(rotY), 0.4f);
     }
 
     g_SysWork.loadingScreenIdx_2281 = mapPoint->data.areaLoad.loadingScreenId_4_9;
@@ -2583,8 +2583,8 @@ bool Math_Distance2dCheck(const VECTOR3* posFrom, const VECTOR3* posTo, q19_12 r
     }
 
     // Check distance.
-    sum       = FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT);
-    radiusSqr = FP_MULTIPLY_PRECISE(radius, radius, Q12_SHIFT);
+    sum       = Q12_MULT_PRECISE(deltaX, deltaX) + Q12_MULT_PRECISE(deltaZ, deltaZ);
+    radiusSqr = Q12_MULT_PRECISE(radius, radius);
     return sum > radiusSqr;
 }
 
@@ -2597,7 +2597,7 @@ s32 Camera_Distance2dGet(const VECTOR3* pos) // 0x80038B44
     vwGetViewPosition(&camPos);
     deltaX = Q12_TO_Q6(camPos.vx - pos->vx);
     deltaZ = Q12_TO_Q6(camPos.vz - pos->vz);
-    return FP_MULTIPLY_PRECISE(deltaX, deltaX, Q12_SHIFT) + FP_MULTIPLY_PRECISE(deltaZ, deltaZ, Q12_SHIFT);
+    return Q12_MULT_PRECISE(deltaX, deltaX) + Q12_MULT_PRECISE(deltaZ, deltaZ);
 }
 
 // ========================================

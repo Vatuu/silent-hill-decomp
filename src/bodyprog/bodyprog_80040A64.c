@@ -332,7 +332,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     }
 
     var_s0 = ((var_v0 >> 12) << 10) / arg1->vz;
-    var_v1 = var_s0 * (0x3000 - FP_MULTIPLY(var_s1, Math_Cos(arg4), Q12_SHIFT));
+    var_v1 = var_s0 * (0x3000 - Q12_MULT(var_s1, Math_Cos(arg4)));
     var_s0 = var_v1 / 16384;
 
     sp10[0] = (var_s0 / 5);
@@ -1994,7 +1994,7 @@ static inline q19_12 Anim_TimestepGet(s_Model* model, s_AnimInfo* animInfo)
     if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
         duration = Anim_DurationGet(model, animInfo);
-        return FP_MULTIPLY_PRECISE(duration, g_DeltaTime0, Q12_SHIFT);
+        return Q12_MULT_PRECISE(duration, g_DeltaTime0);
     }
 
     return Q12(0.0f);
@@ -2197,7 +2197,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
         timeDelta = Anim_DurationGet(model, animInfo);
-        timestep  = FP_MULTIPLY_PRECISE(timeDelta, g_DeltaTime0, Q12_SHIFT);
+        timestep  = Q12_MULT_PRECISE(timeDelta, g_DeltaTime0);
     }
     else
     {

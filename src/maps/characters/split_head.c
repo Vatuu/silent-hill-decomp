@@ -321,11 +321,11 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
             }
             else
             {
-                splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
             }
         }
         else
@@ -374,11 +374,11 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
             }
             else
             {
-                splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
             }
         }
         else
@@ -409,11 +409,11 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
             }
             else
             {
-                splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
             }
         }
         else
@@ -495,9 +495,9 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
             }
             distMax = activeDistMax;
 
-            sp30.vx = FP_MULTIPLY(distMax, Math_Sin((angleToPlayer + angle) + angle1), Q12_SHIFT);
+            sp30.vx = Q12_MULT(distMax, Math_Sin((angleToPlayer + angle) + angle1));
             sp30.vy = Q12(0.0f);
-            sp30.vz = FP_MULTIPLY(distMax, Math_Cos((angleToPlayer + angle) + angle1), Q12_SHIFT);
+            sp30.vz = Q12_MULT(distMax, Math_Cos((angleToPlayer + angle) + angle1));
 
             func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
 
@@ -526,11 +526,11 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
     {
         if (angleToPlayer > FP_ANGLE(0.0f))
         {
-            splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
+            splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
         }
         else
         {
-            splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
+            splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
         }
     }
     else
@@ -571,9 +571,9 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
     }
 
     angleToPlayer2 = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
-    sp30.vx = FP_MULTIPLY(distToPlayer, Math_Sin(angleToPlayer2), Q12_SHIFT);
+    sp30.vx = Q12_MULT(distToPlayer, Math_Sin(angleToPlayer2));
     sp30.vy = Q12(0.0f);
-    sp30.vz = FP_MULTIPLY(distToPlayer, Math_Cos(angleToPlayer2), Q12_SHIFT);
+    sp30.vz = Q12_MULT(distToPlayer, Math_Cos(angleToPlayer2));
 
     func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
 
@@ -636,11 +636,11 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
             }
             else
             {
-                splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
             }
         }
         else
@@ -677,11 +677,11 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
             }
             else
             {
-                splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
             }
         }
         else
@@ -824,9 +824,9 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
             }
             distMax = activeDistMax;
 
-            sp30.vx = FP_MULTIPLY(distMax, Math_Sin((angleToPlayer + angle) + angle3), Q12_SHIFT);
+            sp30.vx = Q12_MULT(distMax, Math_Sin((angleToPlayer + angle) + angle3));
             sp30.vy = Q12(0.0f);
-            sp30.vz = FP_MULTIPLY(distMax, Math_Cos((angleToPlayer + angle) + angle3), Q12_SHIFT);
+            sp30.vz = Q12_MULT(distMax, Math_Cos((angleToPlayer + angle) + angle3));
 
             func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
 
@@ -856,11 +856,11 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
     {
         if (angleToPlayer > FP_ANGLE(0.0f))
         {
-            splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
+            splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
         }
         else
         {
-            splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f), Q12_SHIFT);
+            splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
         }
     }
     else
@@ -901,9 +901,9 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
 
     angle1 = Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18);
 
-    sp30.vx = FP_MULTIPLY(distToPlayer, Math_Sin(angle1), Q12_SHIFT);
+    sp30.vx = Q12_MULT(distToPlayer, Math_Sin(angle1));
     sp30.vy = Q12(0.0f);
-    sp30.vz = FP_MULTIPLY(distToPlayer, Math_Cos(angle1), Q12_SHIFT);
+    sp30.vz = Q12_MULT(distToPlayer, Math_Cos(angle1));
 
     func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
 
@@ -987,11 +987,11 @@ void Ai_SplitHead_Control_7(s_SubCharacter* splitHead)
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
-                splitHead->rotation_24.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
             }
             else
             {
-                splitHead->rotation_24.vy -= FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f), Q12_SHIFT);
+                splitHead->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(30.0f));
             }
         }
         else
@@ -1087,7 +1087,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
             {
                 case SplitHeadControl_2:
                 case SplitHeadControl_7:
-                    sharedData_800D5884_1_s05 = FP_MULTIPLY_PRECISE(splitHead->moveSpeed_38, Q12(9.3f), Q12_SHIFT);
+                    sharedData_800D5884_1_s05 = Q12_MULT_PRECISE(splitHead->moveSpeed_38, Q12(9.3f));
 
                     if (splitHead->rotation_24.vy != splitHeadProps.angle_EC)
                     {
@@ -1106,7 +1106,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
                 case SplitHeadControl_3:
                     if (!(splitHeadProps.flags_E8 & SplitHeadFlag_3))
                     {
-                        sharedData_800D5884_1_s05 = CLAMP_LOW(FP_MULTIPLY_PRECISE(splitHead->moveSpeed_38, Q12(9.3f), Q12_SHIFT), Q12(12.0f));
+                        sharedData_800D5884_1_s05 = CLAMP_LOW(Q12_MULT_PRECISE(splitHead->moveSpeed_38, Q12(9.3f)), Q12(12.0f));
 
                         if (splitHead->moveSpeed_38 > Q12(0.0f))
                         {
@@ -1133,7 +1133,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
                 case SplitHeadControl_4:
                     if (!(splitHeadProps.flags_E8 & SplitHeadFlag_3))
                     {
-                        sharedData_800D5884_1_s05 = CLAMP_LOW(FP_MULTIPLY_PRECISE(splitHead->moveSpeed_38, Q12(9.3f), Q12_SHIFT), Q12(12.0f));
+                        sharedData_800D5884_1_s05 = CLAMP_LOW(Q12_MULT_PRECISE(splitHead->moveSpeed_38, Q12(9.3f)), Q12(12.0f));
                     }
                     else
                     {
@@ -1150,7 +1150,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
                     break;
 
                 case SplitHeadControl_5:
-                    sharedData_800D5884_1_s05 = FP_MULTIPLY_PRECISE(splitHead->moveSpeed_38, Q12(9.3f), Q12_SHIFT);
+                    sharedData_800D5884_1_s05 = Q12_MULT_PRECISE(splitHead->moveSpeed_38, Q12(9.3f));
 
                     if (splitHead->rotation_24.vy != splitHeadProps.angle_EC)
                     {
@@ -1166,7 +1166,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
                     break;
 
                 case SplitHeadControl_6:
-                    sharedData_800D5884_1_s05 = FP_MULTIPLY_PRECISE(splitHead->moveSpeed_38, Q12(9.3f), Q12_SHIFT);
+                    sharedData_800D5884_1_s05 = Q12_MULT_PRECISE(splitHead->moveSpeed_38, Q12(9.3f));
 
                     if (splitHeadProps.flags_E8 & SplitHeadFlag_5)
                     {
@@ -1211,22 +1211,22 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
         if ((splitHeadProps.angle_EC   < splitHead->rotation_24.vy && splitHead->moveSpeed_38 >= Q12(0.0f)) ||
             (splitHead->rotation_24.vy < splitHeadProps.angle_EC   && splitHead->moveSpeed_38 <  Q12(0.0f)))
         {
-            splitHeadProps.field_EE = CLAMP_LOW(splitHeadProps.field_EE - FP_MULTIPLY_PRECISE(g_DeltaTime0, 160, Q12_SHIFT), -192);
+            splitHeadProps.field_EE = CLAMP_LOW(splitHeadProps.field_EE - Q12_MULT_PRECISE(g_DeltaTime0, 160), -192);
         }
         else
         {
-            splitHeadProps.field_EE = MIN(splitHeadProps.field_EE + FP_MULTIPLY_PRECISE(g_DeltaTime0, 160, Q12_SHIFT), 192);
+            splitHeadProps.field_EE = MIN(splitHeadProps.field_EE + Q12_MULT_PRECISE(g_DeltaTime0, 160), 192);
         }
     }
     else
     {
         if (splitHeadProps.field_EE > Q12(0.0f))
         {
-            splitHeadProps.field_EE = CLAMP_LOW(splitHeadProps.field_EE - FP_MULTIPLY_PRECISE(g_DeltaTime0, 160, Q12_SHIFT), Q12(0.0f));
+            splitHeadProps.field_EE = CLAMP_LOW(splitHeadProps.field_EE - Q12_MULT_PRECISE(g_DeltaTime0, 160), Q12(0.0f));
         }
         else
         {
-            splitHeadProps.field_EE = MIN(splitHeadProps.field_EE + FP_MULTIPLY_PRECISE(g_DeltaTime0, 160, Q12_SHIFT), Q12(0.0f));
+            splitHeadProps.field_EE = MIN(splitHeadProps.field_EE + Q12_MULT_PRECISE(g_DeltaTime0, 160), Q12(0.0f));
         }
     }
 
@@ -1561,8 +1561,8 @@ void sharedFunc_800D3388_1_s05(s_SubCharacter* splitHead, q19_12* offsetX, q19_1
 
     for (i = 0; i < k; i++)
     {
-        *offsetX += FP_MULTIPLY(sp38[i].field_0, Math_Sin(spC8[i]), Q12_SHIFT);
-        *offsetZ += FP_MULTIPLY(sp38[i].field_0, Math_Cos(spC8[i]), Q12_SHIFT);
+        *offsetX += Q12_MULT(sp38[i].field_0, Math_Sin(spC8[i]));
+        *offsetZ += Q12_MULT(sp38[i].field_0, Math_Cos(spC8[i]));
 
         if (FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) > 13 && FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 34 &&
             (sp38[i].field_E < 2 || sp38[i].field_E > 6))

@@ -58,11 +58,11 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
     {
         if (!Savegame_EventFlagGet(EventFlag_134))
         {
-            groaner->properties_E4.dummy.properties_E8[11].val16[0] = FP_MULTIPLY_FLOAT_PRECISE(groaner->properties_E4.dummy.properties_E8[11].val16[0], 0.8f, Q12_SHIFT);
+            groaner->properties_E4.dummy.properties_E8[11].val16[0] = Q12_MULT_FLOAT_PRECISE(groaner->properties_E4.dummy.properties_E8[11].val16[0], 0.8f);
         }
         else
         {
-            groaner->properties_E4.dummy.properties_E8[11].val16[0] = FP_MULTIPLY_FLOAT_PRECISE(groaner->properties_E4.dummy.properties_E8[11].val16[0], 0.9f, Q12_SHIFT);
+            groaner->properties_E4.dummy.properties_E8[11].val16[0] = Q12_MULT_FLOAT_PRECISE(groaner->properties_E4.dummy.properties_E8[11].val16[0], 0.9f);
         }
     }
 #endif

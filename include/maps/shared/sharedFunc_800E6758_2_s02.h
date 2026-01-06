@@ -23,7 +23,7 @@ void sharedFunc_800E6758_2_s02(s_SubCharacter* groaner)
         var += func_80070360(groaner, Q12(0.0f), Q12(0.4f));
     }
 
-    speed               = groaner->moveSpeed_38 - FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(15.0f), Q12_SHIFT);
+    speed               = groaner->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f));
     groaner->moveSpeed_38 = MAX(speed, Q12(0.0f));
 
     if (groaner->model_0.anim_4.status_0 == ANIM_STATUS(GroanerAnim_12, true) &&

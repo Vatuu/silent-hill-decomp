@@ -249,9 +249,9 @@ void MainLoop(void) // 0x80032EE0
         }
 
         // Update delta time.
-        g_DeltaTime0 = FP_MULTIPLY(vCount, H_BLANKS_FP_TO_SEC_SCALE, Q12_SHIFT);
-        g_DeltaTime1 = FP_MULTIPLY(vCountCopy, H_BLANKS_FP_TO_SEC_SCALE, Q12_SHIFT);
-        g_DeltaTime2 = FP_MULTIPLY(vCount, H_BLANKS_UNKNOWN_SCALE, Q12_SHIFT); // TODO: Unknown time scale.
+        g_DeltaTime0 = Q12_MULT(vCount, H_BLANKS_FP_TO_SEC_SCALE);
+        g_DeltaTime1 = Q12_MULT(vCountCopy, H_BLANKS_FP_TO_SEC_SCALE);
+        g_DeltaTime2 = Q12_MULT(vCount, H_BLANKS_UNKNOWN_SCALE); // TODO: Unknown time scale.
         GsClearVcount();
 
         // Draw objects?

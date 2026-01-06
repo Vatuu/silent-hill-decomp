@@ -120,7 +120,7 @@ void func_800D49AC(void) // 0x800D49AC
             break;
 
         case 4:
-            g_SysWork.field_2378 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.225f, Q12_SHIFT);
+            g_SysWork.field_2378 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.225f);
             if (g_SysWork.field_2378 > Q12(2.25f))
             {
                 g_SysWork.field_2378 = Q12(2.25f);
@@ -129,7 +129,7 @@ void func_800D49AC(void) // 0x800D49AC
             break;
 
         case 5:
-            g_SysWork.field_2378 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.45f, Q12_SHIFT);
+            g_SysWork.field_2378 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.45f);
             if (g_SysWork.field_2378 < Q12(1.3843f))
             {
                 Savegame_EventFlagSet(EventFlag_129);
@@ -213,7 +213,7 @@ void func_800D4D1C(void) // 0x800D4D1C
         case 1:
             SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
 
-            g_SysWork.field_2378 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.2f, Q12_SHIFT);
+            g_SysWork.field_2378 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.2f);
             if (g_SysWork.field_2378 > Q12(3.0f))
             {
                 g_SysWork.field_2378 = Q12(3.0f);
@@ -322,7 +322,7 @@ void func_800D5400(void) // 0x800D5400
             D_800D86FE    = Rng_GenerateUInt(32, 63);
         }
 
-        sp18[0] = FP_MULTIPLY(D_800D86FE, Math_Sin(D_800D86F8[1]), Q12_SHIFT);
+        sp18[0] = Q12_MULT(D_800D86FE, Math_Sin(D_800D86F8[1]));
 
         D_800D86F8[1] += g_DeltaTime0;
 
@@ -335,14 +335,14 @@ void func_800D5400(void) // 0x800D5400
             sp18[1]       = Q12_FRACT(sp18[1]);
         }
 
-        // TODO: Why doesn't `FP_MULTIPLY_FLOAT_PRECISE(sp18[0], 0.6f, Q12_SHIFT)` work here?
-        g_SysWork.field_2378 = Q12(1.35f) + (((Q12(0.9f) + FP_MULTIPLY_PRECISE(sp18[0], Q12(0.6f), Q12_SHIFT)) * Math_Sin(sp18[1])) >> 15);
+        // TODO: Why doesn't `Q12_MULT_FLOAT_PRECISE(sp18[0], 0.6f)` work here?
+        g_SysWork.field_2378 = Q12(1.35f) + (((Q12(0.9f) + Q12_MULT_PRECISE(sp18[0], Q12(0.6f))) * Math_Sin(sp18[1])) >> 15);
     }
 
-    g_WorldObject0.rotation_28.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(-90.0f), Q12_SHIFT);
+    g_WorldObject0.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(-90.0f));
     g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &g_WorldObject0.rotation_28);
 
-    g_WorldObject1.rotation_28.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f), Q12_SHIFT);
+    g_WorldObject1.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
     g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
 
     i = 0;
@@ -354,5 +354,5 @@ void func_800D5400(void) // 0x800D5400
         }
     }
 
-    func_8005DE0C(Sfx_Unk1478, &QVECTOR3(19.7f, -1.5f, -19.1f), Q8_CLAMPED(0.5f) - FP_MULTIPLY_PRECISE(D_800D8578, Q8_CLAMPED(0.5f), Q12_SHIFT), Q12(16.0f), 0);
+    func_8005DE0C(Sfx_Unk1478, &QVECTOR3(19.7f, -1.5f, -19.1f), Q8_CLAMPED(0.5f) - Q12_MULT_PRECISE(D_800D8578, Q8_CLAMPED(0.5f)), Q12(16.0f), 0);
 }
