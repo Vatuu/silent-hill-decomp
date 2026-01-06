@@ -71,7 +71,7 @@ void Ai_AirScreamerControl_29(s_SubCharacter* airScreamer)
                         airScreamer->model_0.controlState_2 = AirScreamerControl_27;
                         airScreamer->model_0.stateStep_3    = AirScreamerStateStep_0;
 
-                        if (Rng_TestProbability((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1_2 * 2)))
+                        if (Rng_TestProbability(Q12_DIV(airScreamer->health_B0, Q12(380.0f)) + (var_s1_2 * 2)))
                         {
                             airScreamer->properties_E4.airScreamer.field_E8_8 = 3;
                         }
@@ -81,7 +81,7 @@ void Ai_AirScreamerControl_29(s_SubCharacter* airScreamer)
                     airScreamer->model_0.controlState_2 = AirScreamerControl_23;
                     airScreamer->model_0.stateStep_3    = AirScreamerStateStep_0;
 
-                    if (Rng_RandQ12() > ((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1_2 * 2)))
+                    if (Rng_RandQ12() > (Q12_DIV(airScreamer->health_B0, Q12(380.0f)) + (var_s1_2 * 2)))
                     {
                         airScreamer->properties_E4.airScreamer.field_E8_8 = 5;
                     }
@@ -109,7 +109,7 @@ void Ai_AirScreamerControl_29(s_SubCharacter* airScreamer)
                         airScreamer->model_0.stateStep_3    = AirScreamerStateStep_0;
 
                         // TODO: Will `Rng_TestProbability` fit?
-                        if (Rng_RandQ12() > ((FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)) + (var_s1_2 * 2)))
+                        if (Rng_RandQ12() > (Q12_DIV(airScreamer->health_B0, Q12(380.0f)) + (var_s1_2 * 2)))
                         {
                             airScreamer->properties_E4.airScreamer.field_E8_8 = 5;
                         }
@@ -123,7 +123,7 @@ void Ai_AirScreamerControl_29(s_SubCharacter* airScreamer)
                         airScreamer->model_0.controlState_2 = AirScreamerControl_27;
                         airScreamer->model_0.stateStep_3    = AirScreamerStateStep_0;
 
-                        if (Rng_TestProbability(FP_TO(airScreamer->health_B0, Q12_SHIFT) / Q12(380.0f)))
+                        if (Rng_TestProbability(Q12_DIV(airScreamer->health_B0, Q12(380.0f))))
                         {
                             airScreamer->properties_E4.airScreamer.field_E8_8 = 3;
                         }

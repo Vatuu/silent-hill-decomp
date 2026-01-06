@@ -50,7 +50,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
         if (nurse->properties_E4.puppetNurse.field_104 >= Q12(1.5f))
         {
             // TODO: `D_800AD4C8` indexes different weapon attacks, but `WEAPON_ATTACK` macro can't match 56 with current `EquippedWeaponId`/`AttackInputType` enums?
-            g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += FP_TO(D_800AD4C8[56].field_4, Q12_SHIFT);
+            g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += Q12(D_800AD4C8[56].field_4);
             nurse->properties_E4.puppetNurse.field_104 = 0;
         }
     }

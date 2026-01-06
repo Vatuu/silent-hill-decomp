@@ -99,6 +99,15 @@
 #define FP_MULTIPLY_FLOAT_PRECISE(aInt, bFlt, shift) \
     FP_MULTIPLY((s64)(aInt), (s64)TO_FIXED(bFlt, shift), shift)
 
+/** @brief Divides an integer in a fixed-point Q format by another.
+ *
+ * @param a Fixed-point numerator.
+ * @param b Fixed-point divisor.
+ * @return Fixed-point result of `a` divided by `b`.
+ */
+#define FP_DIVIDE(a, b, shift) \
+    (((a) << shift) / (b))
+
 /** @brief Squares a fixed-point value, using 64-bit intermediates for higher precision.
  *
  * @param x Fixed-point value to be squared.
@@ -107,17 +116,6 @@
  */
 #define FP_SQUARE_PRECISE(x, shift) \
     FP_MULTIPLY_PRECISE(x, x, shift)
-
-/** @brief Computes the square 2D distance between two positions in Q19.12 fixed-point,
- * using Q21.8 fixed-point intermediates to avoid overflow.
- *
- * @param from First position.
- * @param to Second position.
- * @param return 2D distance between two positions.
- */
-#define Q12_2D_DISTANCE_SQR(from, to)         \
-    (SQUARE(Q12_TO_Q8((to).vx - (from).vx)) + \
-     SQUARE(Q12_TO_Q8((to).vz - (from).vz)))
 
 /** @brief Multiplies two integers in Q*.12 fixed-point.
  *
@@ -155,6 +153,26 @@
  */
 #define Q12_MULT_FLOAT_PRECISE(a, b) \
     FP_MULTIPLY_FLOAT_PRECISE(a, b, Q12_SHIFT)
+
+/** @brief Divides an integer in Q*.12 fixed-point by another.
+ *
+ * @param a Q*.12 fixed-point numerator.
+ * @param b Q*.12 fixed-point divisor.
+ * @return Q*.12 result of `a` divided by `b`.
+ */
+#define Q12_DIV(a, b) \
+    FP_DIVIDE(a, b, Q12_SHIFT)
+
+/** @brief Computes the square 2D distance between two positions in Q19.12 fixed-point,
+ * using Q21.8 fixed-point intermediates to avoid overflow.
+ *
+ * @param from First position.
+ * @param to Second position.
+ * @param return 2D distance between two positions.
+ */
+#define Q12_2D_DISTANCE_SQR(from, to)         \
+    (SQUARE(Q12_TO_Q8((to).vx - (from).vx)) + \
+     SQUARE(Q12_TO_Q8((to).vz - (from).vz)))
 
 // ==================================
 // RAW Q FORMAT CONVERSION AND UTILS
