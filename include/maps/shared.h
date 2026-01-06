@@ -1900,6 +1900,8 @@ extern u8 sharedData_800ED430_2_s02[];
 
 extern u8 sharedData_800ED43C_2_s02[];
 
+extern void (*sharedData_800ECC14_2_s02[])(s_SubCharacter* romper);
+
 bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx);
 
 void sharedFunc_800E9B38_2_s02(void);

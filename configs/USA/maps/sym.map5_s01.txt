@@ -311,6 +311,7 @@ sharedData_800F0268_2_s00           = 0x800EEE58;
 sharedData_800F03A8_2_s00           = 0x800EEF98;
 sharedData_800F04C0_2_s00           = 0x800EF0B0;
 ROPMER_ANIM_INFOS                   = 0x800EF1CC; // type:s32 unknown type
+sharedData_800ECC14_2_s02           = 0x800EF48C;
 MAP_POINTS                          = 0x800EFCBC; // type:MapPoint2d
 
 //---------------------------------------------------------------

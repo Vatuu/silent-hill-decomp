@@ -304,6 +304,7 @@ sharedData_800F0268_2_s00     = 0x800EC5E0;
 sharedData_800F03A8_2_s00     = 0x800EC720;
 sharedData_800F04C0_2_s00     = 0x800EC838;
 ROPMER_ANIM_INFOS             = 0x800EC954; // type:s32 unknown type
+sharedData_800ECC14_2_s02     = 0x800ECC14;
 MAP_ROOM_IDXS                 = 0x800ED3C4; // type:u8
 sharedData_800ED430_2_s02     = 0x800ED430;
 sharedData_800ED43C_2_s02     = 0x800ED43C; // type:u8 size:8

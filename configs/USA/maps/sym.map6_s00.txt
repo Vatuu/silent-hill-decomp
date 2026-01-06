@@ -305,6 +305,7 @@ sharedData_800F0268_2_s00           = 0x800EEED8;
 sharedData_800F03A8_2_s00           = 0x800EF018;
 sharedData_800F04C0_2_s00           = 0x800EF130;
 ROPMER_ANIM_INFOS                   = 0x800EF24C; // type:s32 unknown type
+sharedData_800ECC14_2_s02           = 0x800EF50C;
 
 //---------------------------------------------------------------
 //--- PA: 0x026934   VA: 0x800EFEAC   subsegment: .data, map6_s00
