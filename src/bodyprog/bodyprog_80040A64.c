@@ -911,8 +911,8 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     geomZ = Q12_TO_Q8(posZ);
 
     // Compute cell coordinates.
-    cellX = FLOOR_TO_STEP(geomX, Q8(40.0f));
-    cellZ = FLOOR_TO_STEP(geomZ, Q8(40.0f));
+    cellX = FLOOR_TO_STEP(geomX, Q12_TO_Q8(CHUNK_CELL_SIZE));
+    cellZ = FLOOR_TO_STEP(geomZ, Q12_TO_Q8(CHUNK_CELL_SIZE));
 
     // Run through active chunks.
     for (curChunk = g_Map.ipdActive_15C; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++)
@@ -972,8 +972,8 @@ s32 func_8004287C(s_WorldObjectModel* arg0, s_WorldObjectMetadata* metadata, q19
         return 2;
     }
 
-    cellX = FLOOR_TO_STEP(geomX, Q8(40.0f));
-    cellZ = FLOOR_TO_STEP(geomZ, Q8(40.0f));
+    cellX = FLOOR_TO_STEP(geomX, Q12_TO_Q8(CHUNK_CELL_SIZE));
+    cellZ = FLOOR_TO_STEP(geomZ, Q12_TO_Q8(CHUNK_CELL_SIZE));
 
     for (curChunk = g_Map.ipdActive_15C, chunkIdx = 0;
          curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158];
@@ -1099,8 +1099,6 @@ q19_12 Ipd_PaddedDistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cell
 
 q19_12 Ipd_DistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ) // 0x80042E2C
 {
-    #define IPD_CHUNK_SIZE Q8(40.0f)
-
     #define OUTSIDE_DIST(val, min, max) \
         (((val) < (min)) ? ((min) - (val)) : (((max) <= (val)) ? ((val) - (max)) : 0))
 
@@ -1110,11 +1108,11 @@ q19_12 Ipd_DistanceToEdgeGet(q19_12 posX, q19_12 posZ, s32 cellX, s32 cellZ) // 
     s32 z;
 
     // Compute cell boundary position.
-    cellBoundX = cellX * IPD_CHUNK_SIZE;
-    cellBoundZ = cellZ * IPD_CHUNK_SIZE;
+    cellBoundX = cellX * Q12_TO_Q8(CHUNK_CELL_SIZE);
+    cellBoundZ = cellZ * Q12_TO_Q8(CHUNK_CELL_SIZE);
 
-    x = OUTSIDE_DIST(posX, cellBoundX, cellBoundX + IPD_CHUNK_SIZE);
-    z = OUTSIDE_DIST(posZ, cellBoundZ, cellBoundZ + IPD_CHUNK_SIZE);
+    x = OUTSIDE_DIST(posX, cellBoundX, cellBoundX + Q12_TO_Q8(CHUNK_CELL_SIZE));
+    z = OUTSIDE_DIST(posZ, cellBoundZ, cellBoundZ + Q12_TO_Q8(CHUNK_CELL_SIZE));
     return Vc_VectorMagnitudeCalc(x, 0, z);
 }
 
@@ -1136,10 +1134,10 @@ s32 Map_ChunkLoad(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 p
 
     queueIdx = NO_VALUE;
 
-    cellX0 = FLOOR_TO_STEP(Q12_TO_Q8(posX0), Q8(40.0f));
-    cellZ0 = FLOOR_TO_STEP(Q12_TO_Q8(posZ0), Q8(40.0f));
-    cellX1 = FLOOR_TO_STEP(Q12_TO_Q8(posX1), Q8(40.0f));
-    cellZ1 = FLOOR_TO_STEP(Q12_TO_Q8(posZ1), Q8(40.0f));
+    cellX0 = FLOOR_TO_STEP(Q12_TO_Q8(posX0), Q12_TO_Q8(CHUNK_CELL_SIZE));
+    cellZ0 = FLOOR_TO_STEP(Q12_TO_Q8(posZ0), Q12_TO_Q8(CHUNK_CELL_SIZE));
+    cellX1 = FLOOR_TO_STEP(Q12_TO_Q8(posX1), Q12_TO_Q8(CHUNK_CELL_SIZE));
+    cellZ1 = FLOOR_TO_STEP(Q12_TO_Q8(posZ1), Q12_TO_Q8(CHUNK_CELL_SIZE));
 
     map->cellX_580 = cellX1;
     map->cellZ_584 = cellZ1;
@@ -1437,8 +1435,8 @@ bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
     s32 cellX;
     s32 cellZ;
 
-    cellX = FLOOR_TO_STEP(Q12_TO_Q8(posX), Q8(40.0f));
-    cellZ = FLOOR_TO_STEP(Q12_TO_Q8(posZ), Q8(40.0f));
+    cellX = FLOOR_TO_STEP(Q12_TO_Q8(posX), Q12_TO_Q8(CHUNK_CELL_SIZE));
+    cellZ = FLOOR_TO_STEP(Q12_TO_Q8(posZ), Q12_TO_Q8(CHUNK_CELL_SIZE));
     
     if (g_Map.isExterior_588)
     {
@@ -1679,12 +1677,14 @@ void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ) // 0x80044044
 
     ipd->cellX_2                       = cellX;
     ipd->cellZ_3                       = cellZ;
-    ipd->collisionData_54.positionX_0 += (cellX - prevCellX) * Q8(40.0f);
-    ipd->collisionData_54.positionZ_4 += (cellZ - prevCellZ) * Q8(40.0f);
+    ipd->collisionData_54.positionX_0 += (cellX - prevCellX) * Q12_TO_Q8(CHUNK_CELL_SIZE);
+    ipd->collisionData_54.positionZ_4 += (cellZ - prevCellZ) * Q12_TO_Q8(CHUNK_CELL_SIZE);
 }
 
 void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, void* arg4) // 0x80044090
 {
+    #define CHUNK_SUBCELL_SIZE Q8(8.0f)
+
     s_ModelInfo         modelInfo;
     GsCOORDINATE2       coord;
     MATRIX              sp78;
@@ -1706,12 +1706,12 @@ void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, v
     geomY = Q12_TO_Q8(posZ);
 
     // Compute cell boundary position.
-    cellBoundX = ipdHdr->cellX_2 * Q8(40.0f);
-    cellBoundZ = ipdHdr->cellZ_3 * Q8(40.0f);
+    cellBoundX = ipdHdr->cellX_2 * Q12_TO_Q8(CHUNK_CELL_SIZE);
+    cellBoundZ = ipdHdr->cellZ_3 * Q12_TO_Q8(CHUNK_CELL_SIZE);
 
     // Compute subcells.
-    subcellX = FLOOR_TO_STEP(geomX - cellBoundX, Q8(8.0f));
-    subcellZ = FLOOR_TO_STEP(geomY - cellBoundZ, Q8(8.0f));
+    subcellX = FLOOR_TO_STEP(geomX - cellBoundX, CHUNK_SUBCELL_SIZE);
+    subcellZ = FLOOR_TO_STEP(geomY - cellBoundZ, CHUNK_SUBCELL_SIZE);
     subcellX = MAX(subcellX, 0);
     subcellZ = MAX(subcellZ, 0);
     subcellX = MIN(subcellX, 4);
@@ -1758,6 +1758,8 @@ void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, v
             }
         }
     }
+
+    #undef CHUNK_SUBCELL_SIZE
 }
 
 bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_8 z) // 0x80044420

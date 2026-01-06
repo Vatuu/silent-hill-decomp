@@ -2253,7 +2253,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
 
                         if (var_s3 < -3 || var_s3 > 3)
                         {
-                            g_Items_Coords[i].coord.t[0] = Q8(40.0f);
+                            g_Items_Coords[i].coord.t[0] = Q12_TO_Q8(CHUNK_CELL_SIZE);
                         }
                     }
                 }
