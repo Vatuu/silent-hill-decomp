@@ -152,7 +152,7 @@ def main():
         else:
             unit = Unit(
                 input_path,
-                base_path,
+                base_path if Path(base_path).exists() else None,
                 str(file),
                 processed_path[0],
                 symbol_mappings)

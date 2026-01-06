@@ -236,9 +236,9 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
             source_target_path = re.sub(r"^src", fr"asm\\{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}", source_path)
         source_target_path = re.sub(r".c$", r".s", source_target_path)
         if sys.platform == "linux" or sys.platform == "linux2":
-            expected_path = re.sub(fr"^build/{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}/src", fr"expected/{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}/asm", target_path)
+            expected_path = re.sub(fr"^build/{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}/src", fr"expected/{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}", target_path)
         elif sys.platform == "win32":
-            expected_path = re.sub(fr"^build\\{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}\\src", fr"expected\\{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}\\asm", target_path)
+            expected_path = re.sub(fr"^build\\{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}\\src", fr"expected\\{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}", target_path)
         
         if os.path.exists(source_target_path):
             if re.search("^asm.(USA|EUR|JAP0|JAP1|JAP2).main.*", source_path):
@@ -314,7 +314,7 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
         ninjaFile.build(
             outputs=f"{target_path}.c.s", rule="cc272", inputs=f"{target_path}.i",
             variables={
-                "DLFLAG": DL_EXE_FLAGS
+                "DLFLAG": DL_OVL_FLAGS
             }
         )
     else:
