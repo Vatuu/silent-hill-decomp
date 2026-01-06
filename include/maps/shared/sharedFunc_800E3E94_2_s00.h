@@ -119,12 +119,12 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* chara)
 
     if (angle1 < 0xE3)
     {
-        Chara_MoveSpeedUpdate5(chara, 0x9800, Q12_MULT_PRECISE(chara->properties_E4.groaner.field_114, 0x3999));
+        Chara_MoveSpeedUpdate4(chara, 0x9800, Q12_MULT_PRECISE(chara->properties_E4.groaner.field_114, 0x3999));
     }
     else
     {
         temp_v0_10 = 0x1000 - (((angle1 - 0xE3) * 3) >> 1);
-        Chara_MoveSpeedUpdate5(chara, 0x9800, Q12_MULT_PRECISE(Q12_MULT_PRECISE(chara->properties_E4.groaner.field_114, 0x3999), temp_v0_10));
+        Chara_MoveSpeedUpdate4(chara, 0x9800, Q12_MULT_PRECISE(Q12_MULT_PRECISE(chara->properties_E4.groaner.field_114, 0x3999), temp_v0_10));
     }
 
     if (mag0 > 0x3000)

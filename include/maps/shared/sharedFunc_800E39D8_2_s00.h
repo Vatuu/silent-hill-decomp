@@ -10,7 +10,7 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
 
     #define groanerProps groaner->properties_E4.groaner
 
-    Chara_MoveSpeedUpdate5(groaner, Q12(6.0f), Q12_MULT_PRECISE(groanerProps.field_114, Q12(0.5f)));
+    Chara_MoveSpeedUpdate4(groaner, Q12(6.0f), Q12_MULT_PRECISE(groanerProps.field_114, Q12(0.5f)));
 
     if (groanerProps.flags_E8.val16[0] & GroanerFlag_0)
     {

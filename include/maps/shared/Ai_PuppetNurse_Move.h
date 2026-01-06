@@ -1,19 +1,3 @@
-static void inline GetNewSpeed(s_SubCharacter* nurse, q19_12 dist)
-{
-    q19_12 limit;
-
-    if (dist > Q12(0.0f))
-    {
-        limit = 0;
-    }
-    else
-    {
-        limit = Q12(-0.02f);
-    }
-
-    Chara_MoveSpeedUpdate2(nurse, Q12(4.0f), limit);
-}
-
 void Ai_PuppetNurse_Move(s_SubCharacter* nurse)
 {
     q3_12  angleDeltaToPlayer;
@@ -22,6 +6,7 @@ void Ai_PuppetNurse_Move(s_SubCharacter* nurse)
     q19_12 distToPlayer;
     q19_12 addAngle;
     q19_12 distAbs;
+    q19_12 limit;
 
     distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - nurse->position_18.vx,
                                        g_SysWork.playerWork_4C.player_0.position_18.vz - nurse->position_18.vz) - Q12(0.76f);
@@ -33,7 +18,16 @@ void Ai_PuppetNurse_Move(s_SubCharacter* nurse)
 
     if (distAbs > Q12(0.03f))
     {
-        GetNewSpeed(nurse, distToPlayer);
+        if (distToPlayer > Q12(0.0f))
+        {
+            limit = 0;
+        }
+        else
+        {
+            limit = Q12(-0.02f);
+        }
+
+        Chara_MoveSpeedUpdate2(nurse, Q12(4.0f), limit);
     }
     else
     {

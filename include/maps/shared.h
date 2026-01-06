@@ -2634,33 +2634,7 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
 #define Chara_MoveSpeedUpdate3(chara, speed, limit) \
     chara->moveSpeed_38 = APPROACH(chara->moveSpeed_38, limit, Q12_MULT_PRECISE(g_DeltaTime0, speed))
 
-#define Chara_MoveSpeedUpdate4(chara, speed, limit)                                     \
-    {                                                                                   \
-        q19_12 newSpeed;                                                                \
-        q19_12 newMoveSpeed;                                                            \
-                                                                                        \
-        if (chara->moveSpeed_38 > limit)                                                \
-        {                                                                               \
-            newMoveSpeed = limit;                                                       \
-            newSpeed     = chara->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, speed); \
-            if (newMoveSpeed < newSpeed)                                                \
-            {                                                                           \
-                newMoveSpeed = newSpeed;                                                \
-            }                                                                           \
-        }                                                                               \
-        else                                                                            \
-        {                                                                               \
-            newMoveSpeed = limit;                                                       \
-            newSpeed     = chara->moveSpeed_38 + Q12_MULT_PRECISE(g_DeltaTime0, speed); \
-            if (newMoveSpeed >= newSpeed)                                               \
-            {                                                                           \
-                newMoveSpeed = newSpeed;                                                \
-            }                                                                           \
-        }                                                                               \
-        chara->moveSpeed_38 = newMoveSpeed;                                             \
-    }
-
-#define Chara_MoveSpeedUpdate5(chara, speed, limit) \
+#define Chara_MoveSpeedUpdate4(chara, speed, limit) \
     chara->moveSpeed_38 = APPROACH_ALT(chara->moveSpeed_38, limit, Q12_MULT_PRECISE(g_DeltaTime0, speed))
 
 #endif

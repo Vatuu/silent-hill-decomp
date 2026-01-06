@@ -86,12 +86,12 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* chara)
 
     if (chara->properties_E4.groaner.field_104 >= 0)
     {
-        Chara_MoveSpeedUpdate5(chara, 0x9800, Q12_MULT_PRECISE(chara->properties_E4.groaner.field_114, 0x3999));
+        Chara_MoveSpeedUpdate4(chara, 0x9800, Q12_MULT_PRECISE(chara->properties_E4.groaner.field_114, 0x3999));
     }
     else
     {
         temp_a3 = 0x1000 - (((temp_a3 - 0xE3) * 3) >> 1);
-        Chara_MoveSpeedUpdate5(chara, 0x9800, Q12_MULT_PRECISE(temp_a3, Q12_MULT_PRECISE(chara->properties_E4.groaner.field_114, 0x3999)));
+        Chara_MoveSpeedUpdate4(chara, 0x9800, Q12_MULT_PRECISE(temp_a3, Q12_MULT_PRECISE(chara->properties_E4.groaner.field_114, 0x3999)));
     }
 
     var_s0_2                               = 0;
