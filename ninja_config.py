@@ -191,7 +191,7 @@ elif sys.platform == "win32":
     OBJDUMP           = f"{CROSS}-objdump.exe"
     CPP               = f"{TOOLS_DIR}/win-build/mcpp/mcpp.exe"
     CC                = f"{TOOLS_DIR}/win-build/gcc-psx/cc1psx.exe"
-    CC272             = f"{TOOLS_DIR}/win-build/gcc-psx/cc1psx.exe"
+    CC272             = f"{TOOLS_DIR}/win-build/gcc-2.7.2-win/cc1psx.exe"
     OBJDIFF           = f"{OBJDIFF_DIR}\\objdiff.exe"
     OBJDIFF_GENSCRIPT = f"{OBJDIFF_DIR}\\objdiff_generate.py"
     PREBUILD          = f"cmd.exe /c {TOOLS_DIR}\\prebuild.bat"
@@ -230,15 +230,18 @@ def ninja_setup_list_add_source(target_path: str, source_path: str, ninjaFile, o
     if objdiff_file != None:
         skipAsm = "-DSKIP_ASM"
         nonMatching = "-DNON_MATCHING"
-        source_target_path = re.sub(r"^src", r"asm", source_path)
+        if sys.platform == "linux" or sys.platform == "linux2":
+            source_target_path = re.sub(r"^src", fr"asm/{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}", source_path)
+        elif sys.platform == "win32":
+            source_target_path = re.sub(r"^src", fr"asm\\{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}", source_path)
         source_target_path = re.sub(r".c$", r".s", source_target_path)
         if sys.platform == "linux" or sys.platform == "linux2":
-            expected_path = re.sub(r"^build/src", r"expected/asm", target_path)
+            expected_path = re.sub(fr"^build/{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}/src", fr"expected/{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}/asm", target_path)
         elif sys.platform == "win32":
-            expected_path = re.sub(r"^build\\src", r"expected\\asm", target_path)
+            expected_path = re.sub(fr"^build\\{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}\\src", fr"expected\\{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}\\asm", target_path)
         
         if os.path.exists(source_target_path):
-            if re.search("^asm.main.*", source_path):
+            if re.search("^asm.(USA|EUR|JAP0|JAP1|JAP2).main.*", source_path):
                 objdiff_file.build(outputs=f"{expected_path}.o", rule="as", inputs=source_target_path,
                     variables={
                         "DLFLAG": DL_EXE_FLAGS
@@ -458,7 +461,7 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
     
     ninjaRulesFile.rule(
         "objdiff-config", description="objdiff-config",
-        command=f"{PYTHON} {OBJDIFF_GENSCRIPT} --ninja $in",
+        command=f"{PYTHON} {OBJDIFF_GENSCRIPT} --ninja $in $version",
     )
     
     elfBuildRequirements = []
@@ -492,7 +495,7 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
                 
                 match seg.type:
                     case "asm" | "data" | "sdata" | "bss" | "sbss" | "rodata" | "header":
-                        if re.search("^asm.main.*", source_path):
+                        if re.search("^asm.(USA|EUR|JAP0|JAP1|JAP2).main.*", source_path):
                             ninjaFile.build(outputs=target_path, rule="as", inputs=source_path,
                                 variables={
                                     "DLFLAG": DL_EXE_FLAGS
@@ -509,9 +512,9 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
                         
                         if objdiff_mode:
                             if sys.platform == "linux" or sys.platform == "linux2":
-                                expected_path = re.sub(r"^build/src", r"expected/asm", f"{target_path}.s.o")
+                                expected_path = re.sub(fr"^build/{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}/src", fr"expected/{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}/asm", f"{target_path}.s.o")
                             elif sys.platform == "win32":
-                                expected_path = re.sub(r"^build\\src", r"expected\\asm", f"{target_path}.s.o")
+                                expected_path = re.sub(fr"^build\\{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}\\src", fr"expected\\{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}\\asm", f"{target_path}.s.o")
                             
                             tempVar = [ninja_setup_list_add_source(target_path.removesuffix(".c.o"), source_path, ninjaNonmatchingFile, ninjaDiffFile, True, game_version_idx)]
                             if tempVar != [None]:
@@ -573,9 +576,10 @@ def ninja_build(split_entries, game_version_idx: int, objdiff_mode: bool, skip_c
     
     if objdiff_mode:
         if sys.platform == "linux" or sys.platform == "linux2":
-            ninjaDiffFile.build(outputs=f"{EXPECTED_DIR}/objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}/config.yaml", implicit=objdiffConfigRequirements)
+            ninjaDiffFile.build(outputs=f"{EXPECTED_DIR}/{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}/objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}/config-retail.yaml", variables={ "version": GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR }, implicit=objdiffConfigRequirements)
         elif sys.platform == "win32":
-            ninjaDiffFile.build(outputs=f"{EXPECTED_DIR}\\objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}\\config.yaml", implicit=objdiffConfigRequirements)
+            ninjaDiffFile.build(outputs=f"{EXPECTED_DIR}\\{GAMEVERSIONS[game_version_idx].GAME_NAME_VERSION}\\objdiff.ok", rule="objdiff-config", inputs=f"{OBJDIFF_DIR}\\config-retail.yaml",
+            variables={ "version": GAMEVERSIONS[game_version_idx].GAME_SETUP_INFO.GAME_VERSION_DIR }, implicit=objdiffConfigRequirements)
     
     if skip_checksum != True:
         for s in range(len(checksumBuildRequirements)):
