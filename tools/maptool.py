@@ -372,7 +372,7 @@ def clean_file(content, funcName):
 def find_similar_functions(func1_path, maxDistance):
     print(f"Searching for functions similar to {func1_path} (max distance: {maxDistance})")
 
-    maps_base_path = os.path.join("asm", "maps")
+    maps_base_path = os.path.join("asm/USA", "maps")
 
     func1_fname = os.path.basename(func1_path)
     func1_name = os.path.splitext(func1_fname)[0]
@@ -392,15 +392,15 @@ def find_similar_functions(func1_path, maxDistance):
     for map_name in map_names:
         map_path = os.path.join(maps_base_path, map_name)
         if os.path.isdir(map_path):
-            # asm/maps/[map]/...
+            # asm/USA/maps/[map]/...
             for match_type in os.listdir(map_path):
                 match_path = os.path.join(map_path, match_type)
                 if os.path.isdir(match_path):
-                    # asm/maps/[map]/[matchings]/
+                    # asm/USA/maps/[map]/[matchings]/
                     for tu_name in os.listdir(match_path):
                         tu_path = os.path.join(match_path, tu_name)
                         if os.path.isdir(tu_path):
-                            # asm/maps/[map]/[matchings]/[tu]...
+                            # asm/USA/maps/[map]/[matchings]/[tu]...
                             for asm_file in os.listdir(tu_path):
                                 if asm_file.endswith('.s'):
                                     asm_path = os.path.join(tu_path, asm_file)
@@ -556,12 +556,12 @@ def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm,
                         if addr not in sharedFuncSymbols:
                             sharedFuncSymbols[addr] = funcname_file1
 
-                        include_search = f'INCLUDE_ASM("asm/maps/{map2}/nonmatchings/{tu_file2}", {funcname_file2});'
+                        include_search = f'INCLUDE_ASM("maps/{map2}/nonmatchings/{tu_file2}", {funcname_file2});'
                         sharedFilePath = f"maps/shared/{funcname_file1}.h"
                         if os.path.exists("include/" + sharedFilePath):
                             include_replace = f'#include "{sharedFilePath}" // 0x{addr:08X}'
                         else:
-                            include_replace = f'INCLUDE_ASM("asm/maps/{map2}/nonmatchings/{tu_file2}", {funcname_file1}); // 0x{addr:08X}'
+                            include_replace = f'INCLUDE_ASM("maps/{map2}/nonmatchings/{tu_file2}", {funcname_file1}); // 0x{addr:08X}'
 
                         includeLines += "\n" + include_replace
                         replacements[include_search] = include_replace

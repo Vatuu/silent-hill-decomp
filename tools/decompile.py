@@ -38,7 +38,7 @@ def get_all_c_files(src_dir):
 
 # global variables
 root_dir = get_root_dir()
-asm_dir = os.path.join(root_dir, "asm")
+asm_dir = os.path.join(root_dir, "asm/USA")
 src_dir = os.path.join(root_dir, "src")
 src_files = get_all_c_files(src_dir)
 
