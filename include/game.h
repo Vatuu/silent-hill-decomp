@@ -1382,8 +1382,12 @@ typedef struct _PropertiesGroaner
     s8         unk_102[2];
     s32        field_104;
     u32        field_108;
-    s8         field_10C[4];
-    s8         unk_110[4];
+    s16        field_10C;
+    u8         field_10E;
+    u8         field_10F;
+    u8         field_110;
+    u8         field_111;
+    s8         unk_112[2];
     s16        field_114;
 } e_PropertiesGroaner;
 

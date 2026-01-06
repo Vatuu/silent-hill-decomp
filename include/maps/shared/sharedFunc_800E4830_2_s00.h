@@ -99,7 +99,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
 
             deltaY                                           = g_SysWork.playerWork_4C.player_0.position_18.vy - groaner->position_18.vy;
             groaner->field_44.field_0                             = 1;
-            groanerProps.field_10C[3] = 2;
+            groanerProps.field_10F                                = 2;
             groaner->field_34                                     = Q12_MULT_PRECISE(deltaY - Q12(1.4f), Q12(2.35f));
         }
     }

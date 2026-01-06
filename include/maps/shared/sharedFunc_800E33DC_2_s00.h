@@ -33,7 +33,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
 
     if (groaner->health_B0 > Q12(0.0f))
     {
-        groanerProps.field_10C[3] = 4;
+        groanerProps.field_10F = 4;
     }
 
     groanerProps.targetPositionX_F4     = g_SysWork.playerWork_4C.player_0.position_18.vx;
