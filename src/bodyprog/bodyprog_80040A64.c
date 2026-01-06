@@ -1477,7 +1477,7 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     {
         if (IpdHeader_LoadStateGet(curChunk) >= StaticModelLoadState_Loaded && func_80043B34(curChunk, &g_Map))
         {
-            func_80044090(curChunk->ipdHdr_0, g_Map.positionX_578, g_Map.positionX_57C, ot, arg1);
+            Gfx_IpdChunkDraw(curChunk->ipdHdr_0, g_Map.positionX_578, g_Map.positionX_57C, ot, arg1);
         }
     }
 }
@@ -1683,7 +1683,7 @@ void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ) // 0x80044044
     ipd->collisionData_54.positionZ_4 += (cellZ - prevCellZ) * Q8(40.0f);
 }
 
-void func_80044090(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, void* arg4) // 0x80044090
+void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, void* arg4) // 0x80044090
 {
     s_ModelInfo         modelInfo;
     GsCOORDINATE2       coord;

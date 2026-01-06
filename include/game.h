@@ -1096,6 +1096,8 @@ typedef struct _SaveUserConfigContainer
     s_SavegameFooter footer_7C;
 } s_SaveUserConfigContainer;
 
+/** @brief Game workspace. Stores miscellaneous gameplay-related data.
+ */
 typedef struct _GameWork
 {
     s_SaveUserConfig   config_0;
@@ -1722,6 +1724,7 @@ typedef struct
 } s_SysWork_2288;
 STATIC_ASSERT_SIZEOF(s_SysWork_2288, 392);
 
+/** @brief Main engine system workspace. Stores key engine data. */
 typedef struct _SysWork
 {
     s8              unk_0[8];

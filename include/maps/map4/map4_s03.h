@@ -111,7 +111,14 @@ void func_800D19CC(VECTOR3* vec);
 
 void Ai_Twinfeeler_TextureLoad(void);
 
-void Math_Vec3AddPolarOffsetXZ(VECTOR3* outVec, const VECTOR3* inVec, q19_12 headingAngle, q19_12 dist);
+/** @brief Translates a vector in the direction of a given Y axis heading angle along the XZ plane.
+ *
+ * @param outVec Output vector (Q19.12).
+ * @param inVec Input vector (Q19.12).
+ * @param headingAngle Y axis heading angle.
+ * @param dist Translation distance.
+ */
+void Math_Vector3Translate(VECTOR3* outVec, const VECTOR3* inVec, q19_12 headingAngle, q19_12 dist);
 
 void func_800D326C(void);
 

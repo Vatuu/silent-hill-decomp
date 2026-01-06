@@ -1161,7 +1161,8 @@ typedef struct _HeldItem
     s_Bone        bone_18;
 } s_HeldItem;
 
-typedef struct _WorldGfx
+/** @brief World GFX workspace. TODO: Could be `s_RendererWorkspace`? Will depend on where other data resides. */
+typedef struct _WorldGfxWork
 {
     s_MapType*        type_0;
     u8                useStoredPoint_4; /** `bool` */
@@ -1171,15 +1172,15 @@ typedef struct _WorldGfx
     s_CharaModel*     registeredCharaModels_18[Chara_Count];
     s_CharaModel      charaModels_CC[GROUP_CHARA_COUNT];
     s_CharaModel      harryModel_164C;
-    s_HeldItem        heldItem_1BAC; /** The item held by the player. */
+    s_HeldItem        heldItem_1BAC;             /** The item held by the player. */
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
     s_LmHeader        itemLmHdr_1BE4;
     u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // Retail game uses 2.75kb file, but they allocate 4kb for it.
     s32               itemLmQueueIdx_2BE4;
     s32               objectCount_2BE8;                     /** `objects_2BEC` size. */
     s_WorldObject     objects_2BEC[WORLD_OBJECT_COUNT_MAX]; /** World objects to draw. */
-} s_WorldGfx;
-STATIC_ASSERT_SIZEOF(s_WorldGfx, 11708);
+} s_WorldGfxWork;
+STATIC_ASSERT_SIZEOF(s_WorldGfxWork, 11708);
 
 // IPD data?
 typedef struct
@@ -2546,7 +2547,8 @@ extern s16 D_800BCDE8[];
 
 extern u16 D_800BCE14;
 
-extern s_WorldGfx g_WorldGfx;
+// TODO: Rename to `g_WorldGfxWork`.
+extern s_WorldGfxWork g_WorldGfx;
 
 extern s_IpdCollisionData* D_800C1010[];
 
@@ -2919,7 +2921,7 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0);
 
 void func_8003FF2C(s_StructUnk3* arg0);
 
-void func_80040004(s_WorldGfx* worldGfx);
+void func_80040004(s_WorldGfxWork* worldGfxWork);
 
 void func_80040014(void);
 
@@ -3120,8 +3122,15 @@ void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* i
 /** Sets IPD collision data chunk cells? */
 void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ);
 
-/** Draws an IPD chunk. */
-void func_80044090(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, void* arg4);
+/** @brief Draws an IPD chunk.
+ *
+ * @param ipdHdr Header of the IPD chunk to draw.
+ * @param posX X world position.
+ * @param posZ Z world position.
+ * @param ot Ordering table.
+ * @param arg4 TODO
+ */
+void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, void* arg4);
 
 bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_8 z);
 
@@ -4372,14 +4381,23 @@ void Ipd_CloseRangeChunksInit(void);
 
 void func_8003C878(s32);
 
-/** Clears the count of world objects to draw. */
-void func_8003CB3C(s_WorldGfx* worldGfx);
+/** @brief Clears the array containing world objects to draw by resetting its size variable.
+ *
+ * @param worldGfx World GFX workspace.
+ */
+void Gfx_WorldObjectsClear(s_WorldGfxWork* worldGfxWork);
 
-/** Draws world objects. */
-void func_8003CB44(s_WorldGfx* worldGfx);
+/** @brief Draws all world objects submitted for the current tick.
+ *
+ * @param worldGfxWork World GFX workspace.
+ */
+void Gfx_WorldObjectsDraw(s_WorldGfxWork* worldGfxWork);
 
-/** Draws a world object. */
-void func_8003CBA4(s_WorldObject* obj);
+/** @brief Draws a world object.
+ *
+ * @param obj World object.
+ */
+void Gfx_WorldObjectDraw(s_WorldObject* obj);
 
 void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2);
 

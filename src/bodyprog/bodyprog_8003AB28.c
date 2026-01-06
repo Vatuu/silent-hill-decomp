@@ -857,7 +857,7 @@ void func_8003C048(void) // 0x8003C048
 
     func_8003EBA0();
     func_8005B55C(vwGetViewCoord());
-    func_8003CB3C(&g_WorldGfx);
+    Gfx_WorldObjectsClear(&g_WorldGfx);
 }
 
 void func_8003C0C0(void) // 0x8003C0C0
@@ -1096,7 +1096,7 @@ s32 Ipd_ChunkInitCheck(void) // 0x8003C850
 
 void func_8003C878(s32 arg0) // 0x8003C878
 {
-    func_8003CB44(&g_WorldGfx);
+    Gfx_WorldObjectsDraw(&g_WorldGfx);
 
     while (func_80043830())
     {
@@ -1193,25 +1193,25 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
     }
 }
 
-void func_8003CB3C(s_WorldGfx* worldGfx) // 0x8003CB3C
+void Gfx_WorldObjectsClear(s_WorldGfxWork* worldGfxWork) // 0x8003CB3C
 {
-    worldGfx->objectCount_2BE8 = 0;
+    worldGfxWork->objectCount_2BE8 = 0;
 }
 
-void func_8003CB44(s_WorldGfx* worldGfx) // 0x8003CB44
+void Gfx_WorldObjectsDraw(s_WorldGfxWork* worldGfxWork) // 0x8003CB44
 {
     s_WorldObject* curObj;
 
     // Run through world objects to draw.
-    for (curObj = &worldGfx->objects_2BEC[0]; curObj < &worldGfx->objects_2BEC[worldGfx->objectCount_2BE8]; curObj++)
+    for (curObj = &worldGfxWork->objects_2BEC[0]; curObj < &worldGfxWork->objects_2BEC[worldGfxWork->objectCount_2BE8]; curObj++)
     {
-        func_8003CBA4(curObj);
+        Gfx_WorldObjectDraw(curObj);
     }
 
-    worldGfx->objectCount_2BE8 = 0;
+    worldGfxWork->objectCount_2BE8 = 0;
 }
 
-void func_8003CBA4(s_WorldObject* obj) // 0x8003CBA4
+void Gfx_WorldObjectDraw(s_WorldObject* obj) // 0x8003CBA4
 {
     GsCOORDINATE2 coord;
     SVECTOR       rot; // Q3_12
@@ -1540,18 +1540,18 @@ void func_8003D058(void) // 0x8003D058
 
 void WorldGfx_HarryCharaLoad(void) // 0x8003D160
 {
-    s_FsImageDesc image;
-    s32           queueIdx;
-    s_WorldGfx*   worldGfx;
-    s_CharaModel* harryModel;
-    s_LmHeader*   harryLmHdr;
+    s_FsImageDesc   image;
+    s32             queueIdx;
+    s_WorldGfxWork* worldGfxWork;
+    s_CharaModel*   harryModel;
+    s_LmHeader*     harryLmHdr;
 
     harryLmHdr = HARRY_LM_BUFFER;
 
     Chara_FsImageCalc(&image, Chara_Harry, 0);
 
-    worldGfx                                         = &g_WorldGfx;
-    harryModel                                       = &worldGfx->harryModel_164C;
+    worldGfxWork                                     = &g_WorldGfx;
+    harryModel                                       = &worldGfxWork->harryModel_164C;
     g_WorldGfx.registeredCharaModels_18[Chara_Harry] = harryModel;
 
     Fs_QueueStartRead(CHARA_FILE_INFOS[Chara_Harry].modelFileIdx, harryLmHdr);
@@ -3221,9 +3221,9 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     func_800553E0(arg0->field_0.field_18, arg0->field_0.field_19.r, arg0->field_0.field_19.g, arg0->field_0.field_19.b, arg0->field_0.field_1D.r, arg0->field_0.field_1D.g, arg0->field_0.field_1D.b);
 }
 
-void func_80040004(s_WorldGfx* worldGfx) // 0x80040004
+void func_80040004(s_WorldGfxWork* worldGfxWork) // 0x80040004
 {
-    g_WorldGfx.heldItem_1BAC.bone_18.next_14 = &worldGfx->charaModels_CC[2].skeleton_14.bones_C[16];
+    g_WorldGfx.heldItem_1BAC.bone_18.next_14 = &worldGfxWork->charaModels_CC[2].skeleton_14.bones_C[16];
 }
 
 void func_80040014(void) // 0x80040014
