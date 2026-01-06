@@ -46,14 +46,14 @@ extern s_WorldObjectDesc g_WorldObject3; // 0x800DEFD0
 extern VECTOR3 D_800DF000;
 extern VECTOR3 D_800DF010;
 
-extern s_WorldObject_0 g_WorldObject4; // 0x800DF020
-extern s_WorldObject_0 g_WorldObject5; // 0x800DF040
-extern s_WorldObject_0 g_WorldObject6; // 0x800DF060
+extern s_WorldObjectModel g_WorldObject4; // 0x800DF020
+extern s_WorldObjectModel g_WorldObject5; // 0x800DF040
+extern s_WorldObjectModel g_WorldObject6; // 0x800DF060
 extern VECTOR3  D_800DF080;
 extern s_WorldObjectDesc g_WorldObject7; // 0x800DF090
 extern s_WorldObjectDesc g_WorldObject8; // 0x800DF0C0
 extern s_WorldObjectDesc g_WorldObject9; // 0x800DF0F0
-extern s_WorldObject_0   g_CommonWorldObjects[6]; // 0x800DF120
+extern s_WorldObjectModel   g_CommonWorldObjects[6]; // 0x800DF120
 
 void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 

@@ -65,18 +65,18 @@ extern s32 D_800ED58C;
 
 extern s_WorldObjectDesc g_WorldObject_SFlauros;
 
-extern s_WorldObject_0 g_WorldObject0[2];
-extern s_WorldObject_0 g_WorldObject1[3];
-extern s_WorldObject_0 g_WorldObject2;
-extern s_WorldObject_0 g_WorldObject3;
-extern s_WorldObject_0 g_WorldObject4[2];
-extern s_WorldObject_0 g_WorldObject5;
+extern s_WorldObjectModel g_WorldObject0[2];
+extern s_WorldObjectModel g_WorldObject1[3];
+extern s_WorldObjectModel g_WorldObject2;
+extern s_WorldObjectModel g_WorldObject3;
+extern s_WorldObjectModel g_WorldObject4[2];
+extern s_WorldObjectModel g_WorldObject5;
 
 extern VECTOR3 D_800ED740;
 
-extern s_WorldObject_0 g_WorldObject6[3];
-extern s_WorldObject_0 g_WorldObject7[2];
-extern s_WorldObject_0 g_WorldObject8;
+extern s_WorldObjectModel g_WorldObject6[3];
+extern s_WorldObjectModel g_WorldObject7[2];
+extern s_WorldObjectModel g_WorldObject8;
 extern s_WorldObjectDesc g_WorldObject9;
 
 extern u8 D_800ED5AD;

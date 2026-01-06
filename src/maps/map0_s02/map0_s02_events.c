@@ -79,9 +79,9 @@ void MapEvent_ChannelingStoneItemTake(void) // 0x800CECDC
     Event_ItemTake(InventoryItemId_ChannelingStone, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M0S02_PickupChannelingStone, 21);
 }
 
-extern s_WorldObject_0 g_WorldObject_Winr[4][2];
+extern s_WorldObjectModel g_WorldObject_Winr[4][2];
 extern VECTOR3 g_WorldObjectPose_Winr;
-extern s_WorldObject_0 g_WorldObject_SavePad;
+extern s_WorldObjectModel g_WorldObject_SavePad;
 extern s_WorldObjectPose g_WorldObjectPose_SavePad0;
 extern s_WorldObjectPose g_WorldObjectPose_SavePad1;
 extern s_WorldObjectPose g_WorldObjectPose_SavePad2;
@@ -89,7 +89,7 @@ extern s_WorldObjectDesc g_WorldObject_Gas;
 extern s_WorldObjectDesc g_WorldObject_Katana;
 extern u8 D_800D3474;
 extern s_WorldObjectDesc g_WorldObject_Cosmo;
-extern s_WorldObject_0 g_CommonWorldObjects[6];
+extern s_WorldObjectModel g_CommonWorldObjects[6];
 extern s_WorldObjectPose g_CommonWorldObjectPoses[7];
 
 void Map_WorldObjectsInit(void)

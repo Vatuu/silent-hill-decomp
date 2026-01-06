@@ -62,7 +62,7 @@ extern s_WorldObjectDescNoRot g_WorldObject4; // 0x800E6240
 extern s_WorldObjectDescNoRot g_WorldObject6; // 0x800E6270
 extern s_WorldObjectDesc g_WorldObject7; // 0x800E62A0
 extern u8 D_800E62D0;
-extern s_WorldObject_0   g_CommonWorldObjects[6]; // 0x800E62E0
+extern s_WorldObjectModel   g_CommonWorldObjects[6]; // 0x800E62E0
 
 extern u8 D_800E6388;
 extern q19_12 D_800E638C; // Time?

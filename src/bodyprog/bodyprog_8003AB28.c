@@ -716,7 +716,7 @@ void func_8003BCF4(void) // 0x8003BCF4
 
 s32 Map_TypeGet(void) // 0x8003BD2C
 {
-    return g_WorldGfx.type_0 - MAP_TYPES;
+    return g_WorldGfx.mapInfo_0 - MAP_INFOS;
 }
 
 void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
@@ -825,9 +825,9 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
         return SpeedZoneType_Normal;
     }
 
-    if (g_WorldGfx.type_0->speedZones_C != NULL)
+    if (g_WorldGfx.mapInfo_0->speedZones_C != NULL)
     {
-        curZone = g_WorldGfx.type_0->speedZones_C;
+        curZone = g_WorldGfx.mapInfo_0->speedZones_C;
         while (curZone->type_0 != NO_VALUE)
         {
             if (posX >= Q4_TO_Q12(curZone->minX_2) && Q4_TO_Q12(curZone->maxX_4) >= posX &&
@@ -869,7 +869,7 @@ void func_8003C0C0(void) // 0x8003C0C0
     heldItem->itemId_0 = NO_VALUE;
     heldItem->lmHdr_14 = HELD_ITEM_LM_BUFFER;
     heldItem->bone_18.modelInfo_0.field_0 = 0;
-    heldItem->bone_18.modelInfo_0.field_4 = NULL;
+    heldItem->bone_18.modelInfo_0.coord_4 = NULL;
     heldItem->bone_18.modelInfo_0.modelHdr_8 = NULL;
 }
 
@@ -909,16 +909,16 @@ void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerP
 {
     s32        activeIpdCount;
     u8         flags;
-    s_MapType* mapType;
+    s_MapInfo* mapInfo;
 
-    g_WorldGfx.type_0 = mapHdr->type_0;
+    g_WorldGfx.mapInfo_0 = mapHdr->mapInfo_0;
 
-    flags = mapHdr->type_0->flags_6;
-    if (flags & MapTypeFlag_OneActiveChunk)
+    flags = mapHdr->mapInfo_0->flags_6;
+    if (flags & MapFlag_OneActiveChunk)
     {
         activeIpdCount = 1;
     } 
-    else if (flags & MapTypeFlag_TwoActiveChunks)
+    else if (flags & MapFlag_TwoActiveChunks)
     {
         activeIpdCount = 2;
     }
@@ -927,10 +927,10 @@ void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerP
         activeIpdCount = 4;
     }
 
-    mapType = mapHdr->type_0;
-    Ipd_MapFileInfoSet(mapType->tag_2, mapType->plmFileIdx_0, activeIpdCount, CHECK_FLAG(mapType->flags_6, MapTypeFlag_Interior, false), 0, 0);
+    mapInfo = mapHdr->mapInfo_0;
+    Ipd_MapFileInfoSet(mapInfo->tag_2, mapInfo->plmFileIdx_0, activeIpdCount, CHECK_FLAG(mapInfo->flags_6, MapFlag_Interior, false), 0, 0);
 
-    if (mapHdr->type_0 == &MAP_TYPES[MapType_THR])
+    if (mapHdr->mapInfo_0 == &MAP_INFOS[MapType_THR])
     {
         Map_PlaceIpdAtCell(FILE_BG_THR05FD_IPD, -1, 8);
     }
@@ -947,8 +947,8 @@ void Map_WorldClear(void) // 0x8003C30C
 {
     u8 flags;
 
-    flags = g_WorldGfx.type_0->flags_6;
-    if ((flags & MapTypeFlag_Interior) && (flags & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks))) 
+    flags = g_WorldGfx.mapInfo_0->flags_6;
+    if ((flags & MapFlag_Interior) && (flags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks))) 
     {
         Map_WorldClearReset();
         return;
@@ -1015,7 +1015,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
     pos0.vx += FP_MULTIPLY_PRECISE(moveAmt, Math_Sin(chara->headingAngle_3C), Q12_SHIFT);
     pos0.vz += FP_MULTIPLY_PRECISE(moveAmt, Math_Cos(chara->headingAngle_3C), Q12_SHIFT);
 
-    if (g_WorldGfx.type_0 == &MAP_TYPES[MapType_THR] &&
+    if (g_WorldGfx.mapInfo_0 == &MAP_INFOS[MapType_THR] &&
         chara->position_18.vx >= Q12(-40.0f) && chara->position_18.vx <= Q12(40.0f) &&
         chara->position_18.vz >= Q12(200.0f) && chara->position_18.vz <= Q12(240.0f))
     {
@@ -1027,8 +1027,8 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&ang);
 
-        flagsCpy = g_WorldGfx.type_0->flags_6;
-        if (!(flagsCpy & MapTypeFlag_Interior) || !(flagsCpy & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
+        flagsCpy = g_WorldGfx.mapInfo_0->flags_6;
+        if (!(flagsCpy & MapFlag_Interior) || !(flagsCpy & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
         {
             var_s1 = FP_MULTIPLY(Math_Cos(ang.vx), Q12(9.0f), Q12_SHIFT);
         }
@@ -1060,8 +1060,8 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         pos1.vz += FP_FROM(FP_TO(Math_Cos(chara->rotation_24.vy), Q12_SHIFT), Q12_SHIFT);
     }
 
-    flagsCpy = g_WorldGfx.type_0->flags_6;
-    if ((flagsCpy & MapTypeFlag_Interior) && (flagsCpy & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
+    flagsCpy = g_WorldGfx.mapInfo_0->flags_6;
+    if ((flagsCpy & MapFlag_Interior) && (flagsCpy & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
         var_a1 = chara->position_18.vx / Q12(2.5f);
         if (chara->position_18.vx < Q12(0.0f))
@@ -1108,17 +1108,17 @@ void func_8003C878(s32 arg0) // 0x8003C878
     func_800550D0();
 }
 
-void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr) // 0x8003C8F8
+void WorldObject_ModelNameSet(s_WorldObjectModel* arg0, char* newStr) // 0x8003C8F8
 {
-    arg0->field_10.lmIdx_9 = 0;
+    arg0->metadata_10.lmIdx_9 = 0;
     arg0->modelInfo_0.field_0  = 0;
 
-    StringCopy(arg0->field_10.name_0.str, newStr);
+    StringCopy(arg0->metadata_10.name_0.str, newStr);
 
-    arg0->field_10.field_8 = 0;
+    arg0->metadata_10.field_8 = 0;
 }
 
-void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
+void g_WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
 {
     q23_8          geomPosX;
     q23_8          geomPosY;
@@ -1133,14 +1133,14 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
     // Check if array of world objects to draw is full.
     if (g_WorldGfx.objectCount_2BE8 < ARRAY_SIZE(g_WorldGfx.objects_2BEC))
     {
-        if (arg0->field_10.lmIdx_9 == 0)
+        if (arg0->metadata_10.lmIdx_9 == 0)
         {
             func_8003BED0();
 
-            lmIdx = func_8004287C(arg0, &arg0->field_10, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
+            lmIdx = func_8004287C(arg0, &arg0->metadata_10, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
             if (lmIdx == 0)
             {
-                if (!Lm_ModelFind(arg0, &g_WorldGfx.itemLmHdr_1BE4, &arg0->field_10))
+                if (!Lm_ModelFind(arg0, &g_WorldGfx.itemLmHdr_1BE4, &arg0->metadata_10))
                 {
                     return;
                 }
@@ -1150,7 +1150,7 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
                 }
             }
 
-            arg0->field_10.lmIdx_9 = lmIdx;
+            arg0->metadata_10.lmIdx_9 = lmIdx;
         } 
 
         // Compute geometry position and rotation.
@@ -1166,7 +1166,7 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
         {
             obj = &g_WorldGfx.objects_2BEC[i];
 
-            if (arg0 == obj->field_0 &&
+            if (arg0 == obj->model_0 &&
                 geomPosX == obj->positionX_4 &&
                 geomPosZ == obj->positionZ_8 &&
                 geomPosY == obj->positionY_4 &&
@@ -1184,7 +1184,7 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
         obj->rotationY_C = geomRotZ;
         if (obj->positionZ_8) {} // @hack Required for match.
         obj->rotationZ_C = geomRotY;
-        obj->field_0     = arg0;
+        obj->model_0     = arg0;
         obj->positionX_4 = geomPosX;
         obj->positionY_4 = geomPosY;
         obj->positionZ_8 = geomPosZ;
@@ -1232,35 +1232,35 @@ void Gfx_WorldObjectDraw(s_WorldObject* obj) // 0x8003CBA4
 
     Math_RotMatrixZxyNeg(&rot, &coord.coord);
     func_80049B6C(&coord, &mats[1], &mats[0]);
-    func_8003CC7C(obj->field_0, &mats[0], &mats[1]);
+    func_8003CC7C(obj->model_0, &mats[0], &mats[1]);
 }
 
-void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C
+void func_8003CC7C(s_WorldObjectModel* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C
 {
     s8                  lmIdx;
-    s_WorldObject_0_10* temp_s1;
+    s_WorldObjectMetadata* temp_s1;
     s_ModelHeader*      modelHdr;
 
-    lmIdx = arg0->field_10.lmIdx_9;
+    lmIdx = arg0->metadata_10.lmIdx_9;
     if (!lmIdx)
     {
         return;
     }
 
     modelHdr = arg0->modelInfo_0.modelHdr_8;
-    temp_s1 = &arg0->field_10;
+    temp_s1 = &arg0->metadata_10;
 
     if (lmIdx >= 3 && lmIdx < 7)
     {
         if (!IpdHeader_IsLoaded(lmIdx - 3))
         {
-            arg0->field_10.lmIdx_9 = 0;
+            arg0->metadata_10.lmIdx_9 = 0;
         }
     }
 
     if (COMPARE_FILENAMES(&temp_s1->name_0, &modelHdr->name_0))
     {
-        arg0->field_10.lmIdx_9 = 0;
+        arg0->metadata_10.lmIdx_9 = 0;
         return;
     }
 
@@ -2574,11 +2574,11 @@ void func_8003EBF4(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
     u8          flags;
     s_800A9F80* ptr;
 
-    flags          = mapHdr->type_0->flags_6;
+    flags          = mapHdr->mapInfo_0->flags_6;
     hasActiveChunk = false;
-    if (flags & MapTypeFlag_Interior)
+    if (flags & MapFlag_Interior)
     {
-        hasActiveChunk = (flags & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)) > 0;
+        hasActiveChunk = (flags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)) > 0;
     }
 
     switch (mapHdr->field_16)
@@ -2826,7 +2826,7 @@ void func_8003F170(void) // 0x8003F170
 
     func_800554C4(temp, ptr2->field_2C, coord, g_SysWork.field_235C, &rot, 
                   g_SysWork.cutsceneLightPos_2360.vx, g_SysWork.cutsceneLightPos_2360.vy, g_SysWork.cutsceneLightPos_2360.vz,
-                  g_WorldGfx.type_0->waterZones_8);
+                  g_WorldGfx.mapInfo_0->waterZones_8);
     func_80055814(ptr2->field_30);
 
     if (ptr->field_154.field_0.field_0.s_field_0.field_0 & (1 << 3))

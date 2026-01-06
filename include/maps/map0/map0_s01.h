@@ -58,10 +58,10 @@ extern u8 g_MapMsgSoundIdx; // 0x800E23A0
 
 extern u8 D_800E23A1;
 
-extern s_WorldObject_0 D_800E23B0[1];
-extern s_WorldObject_0 D_800E23D0[1];
-extern s_WorldObject_0 D_800E23F0[3];
-extern s_WorldObject_0 D_800E2450[2];
+extern s_WorldObjectModel D_800E23B0[1];
+extern s_WorldObjectModel D_800E23D0[1];
+extern s_WorldObjectModel D_800E23F0[3];
+extern s_WorldObjectModel D_800E2450[2];
 
 extern VECTOR3 g_CutscenePosition; // 0x800E2490
 extern s_WorldObjectDesc g_EventThing_KitchenKnife; // 0x800E24A0
@@ -71,7 +71,7 @@ extern s_WorldObjectDesc g_EventThing_PocketRadio; // 0x800E2530
 
 extern s16 D_800E2560;
 
-extern s_WorldObject_0 g_CommonWorldObjects[]; // 0x800E2570
+extern s_WorldObjectModel g_CommonWorldObjects[]; // 0x800E2570
 
 /** `arg0` is a struct pointer, might be `s_SubCharacter`. */
 void func_800D2364(s_SubCharacter* chara);

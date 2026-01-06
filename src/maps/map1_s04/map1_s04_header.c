@@ -31,7 +31,7 @@ void (*g_MapEventFuncs[])() =
 };
 
 const s_MapOverlayHeader g_MapOverlayHeader = {
-    .type_0                   = &MAP_TYPES[MapType_SU],
+    .mapInfo_0                = &MAP_INFOS[MapType_SU],
     .getMapRoomIdxFunc_4      = Map_RoomIdxGet,
     .field_8                  = 0,
     .unk_9                    = { 0, 0, 0 },

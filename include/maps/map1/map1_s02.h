@@ -56,7 +56,7 @@ extern s_WorldObjectDesc            g_WorldObject5; // 0x800E5838
 extern s_WorldObjectDesc            g_WorldObject6; // 0x800E5868
 extern s_WorldObjectDesc            g_WorldObject7; // 0x800E5898
 extern s_WorldObjectDescNoRot       g_WorldObject0; // 0x800E58C8 "BOX_HIDE", TODO: `g_WorldObject_Box`
-extern s_WorldObject_0              g_WorldObjectC; // 0x800E58F8
+extern s_WorldObjectModel              g_WorldObjectC; // 0x800E58F8
 extern VECTOR3                      g_ObjPosC[2]; // 0x800E5918
 extern SVECTOR                      g_ObjRotC[2]; // 0x800E5938
 extern s_WorldObjectDesc            g_WorldObject3; // 0x800E5948
@@ -70,7 +70,7 @@ extern s_WorldObjectDesc            g_WorldObject2; // 0x800E5A68
 extern u8 D_800E5A98;
 extern u8 D_800E5A99;
 
-extern s_WorldObject_0              g_CommonWorldObjects[6]; // 0x800E5AA8
+extern s_WorldObjectModel              g_CommonWorldObjects[6]; // 0x800E5AA8
 
 void func_800D9EBC(void);
 

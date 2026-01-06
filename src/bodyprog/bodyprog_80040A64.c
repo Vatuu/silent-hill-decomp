@@ -943,19 +943,19 @@ s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ) // 0x800426E4
     }
 }
 
-s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32 posZ) // 0x8004287C
+s32 func_8004287C(s_WorldObjectModel* arg0, s_WorldObjectMetadata* metadata, q19_12 posX, q19_12 posZ) // 0x8004287C
 {
     s_IpdChunk* chunks[4];
-    s32         sp20[4];
-    s32         geomX;
-    s32         geomZ;
+    q19_12      distsToEdges[4];
+    q23_8       geomX;
+    q23_8       geomZ;
     s32         cellX;
     s32         cellZ;
-    s32         temp_t0;
+    q19_12      distToEdge;
     s32         i;
     s32         j;
     s32         k;
-    s32         idx;
+    s32         chunkIdx;
     s_IpdChunk* curChunk;
     s_GlobalLm* globalLm;
 
@@ -967,7 +967,7 @@ s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32
 
     if (Fs_QueueEntryLoadStatusGet(globalLm->queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
         globalLm->lmHdr_0->isLoaded_2 &&
-        Lm_ModelFind(arg0, g_Map.globalLm_138.lmHdr_0, arg1))
+        Lm_ModelFind(arg0, g_Map.globalLm_138.lmHdr_0, metadata))
     {
         return 2;
     }
@@ -975,7 +975,7 @@ s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32
     cellX = FLOOR_TO_STEP(geomX, Q8(40.0f));
     cellZ = FLOOR_TO_STEP(geomZ, Q8(40.0f));
 
-    for (curChunk = g_Map.ipdActive_15C, idx = 0;
+    for (curChunk = g_Map.ipdActive_15C, chunkIdx = 0;
          curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158];
          curChunk++)
     {
@@ -993,8 +993,8 @@ s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32
         {
             if (curChunk->cellX_8 == cellX && curChunk->cellZ_A == cellZ)
             {
-                chunks[idx] = curChunk;
-                idx++;
+                chunks[chunkIdx] = curChunk;
+                chunkIdx++;
                 break;
             }
         }
@@ -1003,32 +1003,32 @@ s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32
             if (curChunk->cellX_8 >= (cellX - 1) && (cellX + 1) >= curChunk->cellX_8 &&
                 curChunk->cellZ_A >= (cellZ - 1) && (cellZ + 1) >= curChunk->cellZ_A)
             {
-                temp_t0 = Ipd_DistanceToEdgeGet(geomX, geomZ, curChunk->cellX_8, curChunk->cellZ_A);
-                for (i = 0; i < idx; i++)
+                distToEdge = Ipd_DistanceToEdgeGet(geomX, geomZ, curChunk->cellX_8, curChunk->cellZ_A);
+                for (i = 0; i < chunkIdx; i++)
                 {
-                    if (temp_t0 < sp20[i])
+                    if (distToEdge < distsToEdges[i])
                     {
                         break;
                     }
                 }
 
-                for (j = idx; j >= (i + 1); j--)
+                for (j = chunkIdx; j >= (i + 1); j--)
                 {
-                    sp20[j] = sp20[j - 1];
-                    chunks[j] = chunks[j - 1];
+                    distsToEdges[j] = distsToEdges[j - 1];
+                    chunks[j]       = chunks[j - 1];
                 }
 
-                idx++;
-                sp20[j] = temp_t0;
-                chunks[j] = curChunk;
+                chunkIdx++;
+                distsToEdges[j] = distToEdge;
+                chunks[j]       = curChunk;
             }
         }
     }
 
-    for (k = 0; k < idx; k++)
+    for (k = 0; k < chunkIdx; k++)
     {
         curChunk = chunks[k];
-        if (Lm_ModelFind(arg0, curChunk->ipdHdr_0->lmHdr_4, arg1))
+        if (Lm_ModelFind(arg0, curChunk->ipdHdr_0->lmHdr_4, metadata))
         {
             return (curChunk - g_Map.ipdActive_15C) + 3;
         }
@@ -1717,7 +1717,7 @@ void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, v
     subcellX = MIN(subcellX, 4);
     subcellZ = MIN(subcellZ, 4);
 
-    modelInfo.field_4 = &coord;
+    modelInfo.coord_4 = &coord;
     coord.flg         = true;
     modelInfo.field_0 = 0;
     coord.super       = NULL;

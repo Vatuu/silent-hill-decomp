@@ -117,7 +117,7 @@ extern u8 D_800E34EC;
 
 extern u8 D_800E39AC;
 
-extern s_WorldObject_0 D_800E3A5C[2];
+extern s_WorldObjectModel D_800E3A5C[2];
 
 extern VECTOR3 D_800E3A9C;
 

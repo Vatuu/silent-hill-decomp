@@ -8,7 +8,7 @@
 
 extern s_WorldObjectDescNoRot g_WorldObject_Kidn04;
 
-extern s_WorldObject_0 g_WorldObject_Fan0;
+extern s_WorldObjectModel g_WorldObject_Fan0;
 
 extern u8 D_800F13AC;
 

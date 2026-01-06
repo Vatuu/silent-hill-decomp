@@ -173,9 +173,9 @@ extern s32 D_800F4838;
 
 extern s32 D_800F483C;
 
-extern s_WorldObject_0 g_WorldObject_Real;
-extern s_WorldObject_0 g_WorldObject_Ura;
-extern s_WorldObject_0 g_WorldObject_Under;
+extern s_WorldObjectModel g_WorldObject_Real;
+extern s_WorldObjectModel g_WorldObject_Ura;
+extern s_WorldObjectModel g_WorldObject_Under;
 
 extern s32 D_800F48A4;
 

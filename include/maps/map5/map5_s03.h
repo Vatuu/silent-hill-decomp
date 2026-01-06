@@ -28,12 +28,12 @@ extern s_WorldObjectPose      g_WorldObjectPose_ShotgunShells;
 extern s_WorldObjectPose      g_WorldObjectPose_HealthDrink1;
 extern s_WorldObjectDescNoRot g_WorldObject_Movaches;
 extern s32                    D_800D6F8C;
-extern s_WorldObject_0        g_WorldObject_SavePad;
+extern s_WorldObjectModel        g_WorldObject_SavePad;
 extern s_WorldObjectPose      g_WorldObjectPose_SavePad[2];
 extern s_WorldObjectDesc      g_WorldObject_Mag;
-extern s_WorldObject_0        g_CommonWorldObjects[6];
-extern s_WorldObject_0        g_WorldObject_HealthDrink;
-extern s_WorldObject_0        g_WorldObject_ShotgunShells;
+extern s_WorldObjectModel        g_CommonWorldObjects[6];
+extern s_WorldObjectModel        g_WorldObject_HealthDrink;
+extern s_WorldObjectModel        g_WorldObject_ShotgunShells;
 
 extern u16 D_800D3BDC;
 

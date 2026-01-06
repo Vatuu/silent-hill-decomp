@@ -27,13 +27,13 @@ extern s_WorldObjectDesc      g_WorldObject_Blood0;
 extern s_WorldObjectDesc      g_WorldObject_Lighter;
 extern s_WorldObjectDescNoRot g_WorldObject_Alcohol;
 extern s_WorldObjectDescNoRot g_WorldObject_Key;
-extern s_WorldObject_0        g_WorldObject_Colors[4];
+extern s_WorldObjectModel        g_WorldObject_Colors[4];
 extern s_WorldObjectDesc      g_WorldObject_SavePad;
 extern u8                     D_800D8428;
 extern u8                     D_800D8490;
 extern s_WorldObjectDesc      g_WorldObject_Blood1;
 extern s_WorldObjectDescNoRot g_WorldObject_Blood2;
-extern s_WorldObject_0        g_CommonWorldObjects[6];
+extern s_WorldObjectModel        g_CommonWorldObjects[6];
 extern s_WorldObjectPose      g_CommonWorldObjectPoses[5];
 
 void func_800D151C(void);

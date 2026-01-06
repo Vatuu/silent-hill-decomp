@@ -6,11 +6,11 @@
 #define HAS_PlayerState_Unk88
 
 extern s_WorldObjectPose      g_CommonWorldObjectPoses[3]; // D_800DBEE4
-extern s_WorldObject_0        g_WorldObject0[2];           // D_800DFE70
+extern s_WorldObjectModel        g_WorldObject0[2];           // D_800DFE70
 extern VECTOR3                g_WorldObjectPos0;           // D_800DFEB0
 extern s_WorldObjectDesc      g_WorldObject1;              // D_800DFEC0
 extern s_WorldObjectDescNoRot g_WorldObject2;              // D_800DFF00
-extern s_WorldObject_0        g_CommonWorldObjects[6];     // D_800DFF30
+extern s_WorldObjectModel        g_CommonWorldObjects[6];     // D_800DFF30
 
 extern s16 D_800DFEF0;
 extern s16 D_800DFEF2;

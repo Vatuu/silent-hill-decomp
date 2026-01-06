@@ -24,9 +24,9 @@ extern s_WorldObjectDesc      g_WorldObject6;
 extern s_WorldObjectDesc      g_WorldObject7;
 extern s_WorldObjectDesc      g_WorldObject8;
 extern s_WorldObjectDesc      g_WorldObject9;
-extern s_WorldObject_0        g_WorldObjectA;
+extern s_WorldObjectModel        g_WorldObjectA;
 extern s_WorldObjectPose      g_WorldObjectAPos;
-extern s_WorldObject_0        g_CommonWorldObjects[6];
+extern s_WorldObjectModel        g_CommonWorldObjects[6];
 
 extern VECTOR3 D_800D4CE4; // Used by `func_800D2E54` only. For some reason it's not in RODATA.
 extern u8 g_GeneratorMakeNoise; /** `bool` */

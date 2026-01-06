@@ -49,10 +49,10 @@ extern s_WorldObjectDescNoRot g_WorldObject1[6];
 extern s_WorldObjectDesc      g_WorldObject2;
 extern s_WorldObjectDesc      g_WorldObject3;
 extern s_WorldObjectDesc      g_WorldObject4;
-extern s_WorldObject_0        g_WorldObject5;
-extern s_WorldObject_0        g_WorldObject6;
+extern s_WorldObjectModel        g_WorldObject5;
+extern s_WorldObjectModel        g_WorldObject6;
 extern s_WorldObjectDesc      g_WorldObject7;
-extern s_WorldObject_0   g_CommonWorldObjects[6];
+extern s_WorldObjectModel   g_CommonWorldObjects[6];
 extern s_WorldObjectPose g_CommonWorldObjectPoses[4];
 extern VECTOR3 D_800DACD4;
 

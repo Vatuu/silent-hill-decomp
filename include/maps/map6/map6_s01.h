@@ -56,7 +56,7 @@ extern s_WorldObjectDesc D_800D5374;
 
 extern s_WorldObjectDesc D_800D53A4[7];
 
-extern s_WorldObject_0 g_CommonWorldObjects[6];
+extern s_WorldObjectModel g_CommonWorldObjects[6];
 extern s_WorldObjectPose  g_CommonWorldObjectPoses[3]; // 0x800D4128
 
 void func_800D0E78(s32 arg0);

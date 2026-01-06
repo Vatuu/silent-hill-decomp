@@ -21,7 +21,7 @@
 extern s_WorldObjectDescNoRot g_WorldObject_Dr[6];
 extern s_WorldObjectDescNoRot g_WorldObject_Plate;
 extern s_WorldObjectDesc      g_WorldObject_SavePad;
-extern s_WorldObject_0        g_CommonWorldObjects[6];
+extern s_WorldObjectModel        g_CommonWorldObjects[6];
 extern s_WorldObjectPose      g_CommonWorldObjectPoses[2];
 
 extern u16 D_800D599C;

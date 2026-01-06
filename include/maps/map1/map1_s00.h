@@ -46,7 +46,7 @@ extern s16 D_800E1182;
 
 extern s_WorldObjectDesc g_WorldObject9; // 0x800E1190
 
-extern s_WorldObject_0   g_CommonWorldObjects[6]; // 0x800E11C0
+extern s_WorldObjectModel   g_CommonWorldObjects[6]; // 0x800E11C0
 
 void func_800D7AC4(void);
 

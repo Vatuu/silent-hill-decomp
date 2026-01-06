@@ -40,16 +40,16 @@ extern s32 D_800DA6EC;
 
 extern s_WorldObjectDesc g_WorldObject_BDoor1;
 extern s_WorldObjectDesc g_WorldObject_06LBag;
-extern s_WorldObject_0   g_WorldObject_SavePad;
+extern s_WorldObjectModel   g_WorldObject_SavePad;
 extern s_WorldObjectPose g_WorldObject_UnkPose0;
-extern s_WorldObject_0   g_WorldObject_Box[4];
+extern s_WorldObjectModel   g_WorldObject_Box[4];
 extern VECTOR3           g_WorldObject_UnkPos[2];
 extern s_WorldObjectDesc g_WorldObject_Key;
 extern s_WorldObjectDesc g_WorldObject_Daly;
-extern s_WorldObject_0   g_WorldObject_Drug;
+extern s_WorldObjectModel   g_WorldObject_Drug;
 extern s_WorldObjectPose g_WorldObject_UnkPose1[3];
 extern s_WorldObjectDesc g_WorldObject_Obj00;
-extern s_WorldObject_0   g_CommonWorldObjects[6];
+extern s_WorldObjectModel   g_CommonWorldObjects[6];
 extern s_WorldObjectPose  g_CommonWorldObjectPoses[4]; // 0x800D949C
 
 void func_800D45B4(s32 arg0);

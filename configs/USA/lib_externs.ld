@@ -50,8 +50,8 @@ StMode                = 0x800231E8;
 DsReadyCallback       = 0x801E34E0;
 DsDataCallback        = 0x801E3508;
 
-# @hack Fix for splat/spimdisasm not recognizing `MAP_TYPES` as referenced in certain maps, which only make use of later elements in the array.
-MAP_TYPES    = 0x8002500C;
+# @hack Fix for splat/spimdisasm not recognizing `MAP_INFOS` as referenced in certain maps, which only make use of later elements in the array.
+MAP_INFOS    = 0x8002500C;
 
 # @hack map1_s04 `func_800CCA2C` treats `D_800CD768` as both a `s32` and a `u16[]`
 # Can only get code match if the `u16[]` is treated as a different symbol under the same address.

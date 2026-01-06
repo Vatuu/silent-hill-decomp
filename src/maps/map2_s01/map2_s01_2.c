@@ -469,7 +469,7 @@ void func_800CF7C4(void) // 0x800CF7C4
 }
 
 extern u8 D_800D177C;
-extern s_WorldObject_0 g_CommonWorldObjects[6];
+extern s_WorldObjectModel g_CommonWorldObjects[6];
 extern s_WorldObjectDesc g_WorldObject_SavePad;
 extern s_WorldObjectDesc g_WorldObject_Key;
 extern s_WorldObjectDesc g_WorldObject_Item;

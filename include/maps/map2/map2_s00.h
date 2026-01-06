@@ -65,7 +65,7 @@ extern q3_12 D_800F534E;
 
 extern s16 D_800F5350;
 
-extern s_WorldObject_0        D_800F535C;
+extern s_WorldObjectModel        D_800F535C;
 extern VECTOR3                D_800F537C;
 extern SVECTOR3               D_800F538C;
 extern s_WorldObjectDesc      g_WorldObject0; // 0x800F539C
@@ -74,20 +74,20 @@ extern s_WorldObjectDesc      g_WorldObject2; // 0x800F53FC
 extern s_WorldObjectDesc      g_WorldObject3; // 0x800F542C
 extern s_WorldObjectDescNoRot g_WorldObjectB[3]; // 0x800F545C
 extern s_WorldObjectDesc      g_WorldObject4[3]; // 0x800F54DC
-extern s_WorldObject_0        g_WorldObject5[4]; // 0x800F556C
+extern s_WorldObjectModel        g_WorldObject5[4]; // 0x800F556C
 extern VECTOR3                D_800F55DC[2];
-extern s_WorldObject_0        g_WorldObject6[3]; // 0x800F55FC
-extern s_WorldObject_0        g_WorldObject7[4]; // 0x800F565C
+extern s_WorldObjectModel        g_WorldObject6[3]; // 0x800F55FC
+extern s_WorldObjectModel        g_WorldObject7[4]; // 0x800F565C
 extern VECTOR3                D_800F56CC[2];
 extern u8                     D_800F56E4;
-extern s_WorldObject_0        D_800F56EC;
+extern s_WorldObjectModel        D_800F56EC;
 extern s_WorldObjectPose      D_800F570C;
 extern s_WorldObjectPose      D_800F572C;
 extern s_WorldObjectPose      D_800F574C;
 extern s_WorldObjectDesc      g_WorldObject8; // 0x800F576C
 extern s_WorldObjectDesc      g_WorldObject9; // 0x800F579C
 extern s_WorldObjectDesc      g_WorldObjectA; // 0x800F57CC
-extern s_WorldObject_0        g_CommonWorldObjects[6]; // 0x800F57FC
+extern s_WorldObjectModel        g_CommonWorldObjects[6]; // 0x800F57FC
 
 void func_800D756C(s_SubCharacter* chara);
 

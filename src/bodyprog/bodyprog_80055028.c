@@ -1044,7 +1044,7 @@ void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx)
     }
 }
 
-bool Lm_ModelFind(s_WorldObject_0* arg0, s_LmHeader* lmHdr, s_WorldObject_0_10* arg2) // 0x80056CB4
+bool Lm_ModelFind(s_WorldObjectModel* arg0, s_LmHeader* lmHdr, s_WorldObjectMetadata* metadata) // 0x80056CB4
 {
     u_Filename     sp10;
     s32            modelHdrCount;
@@ -1054,7 +1054,7 @@ bool Lm_ModelFind(s_WorldObject_0* arg0, s_LmHeader* lmHdr, s_WorldObject_0_10* 
 
     result = false;
 
-    StringCopy(sp10.str, arg2->name_0.str);
+    StringCopy(sp10.str, metadata->name_0.str);
 
     modelHdrCount = lmHdr->modelCount_8;
 

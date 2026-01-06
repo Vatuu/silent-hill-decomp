@@ -43,7 +43,7 @@ typedef struct
     s32             field_0;
     s32             field_4;
     s_800E06A0      field_8[10];
-    s_WorldObject_0 objRef_238;
+    s_WorldObjectModel objRef_238;
 } s_800E0698;
 STATIC_ASSERT_SIZEOF(s_800E0698, 0x254);
 
@@ -79,12 +79,12 @@ extern u8  D_800DB9E2;
 
 extern s_WorldObjectDesc g_WorldObject_Fence;
 extern s_WorldObjectDesc g_WorldObject_Mal5_21;
-extern s_WorldObject_0   g_WorldObject_Mal6[2];
+extern s_WorldObjectModel   g_WorldObject_Mal6[2];
 extern VECTOR3           g_WorldObject_UnkPos;
 extern SVECTOR3          g_WorldObject_UnkRot;
 extern s_WorldObjectDesc g_WorldObject_SavePad;
-extern s_WorldObject_0   g_CommonWorldObjects[6];
-extern s_WorldObject_0   D_800E08D0;
+extern s_WorldObjectModel   g_CommonWorldObjects[6];
+extern s_WorldObjectModel   D_800E08D0;
 extern s_WorldObjectPose g_CommonWorldObjectPoses[3]; // 0x800DB930
 extern VECTOR3 D_800DB7C8;
 extern SVECTOR D_800DB924;

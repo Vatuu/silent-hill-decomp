@@ -27,7 +27,7 @@ g_SavegamePtr                               = 0x80024D48; // type:u32
 g_Controller0                               = 0x80024D4C; // type:u32
 g_Controller1                               = 0x80024D50; // type:u32
 g_GameWorkPtr                               = 0x80024D54; // type:u32
-MAP_TYPES                                   = 0x8002500C; // type:MapType size:0xF0
+MAP_INFOS                                   = 0x8002500C; // type:MapType size:0xF0
 
 //-----------------------------------------------------------------------------------
 //--- PA: 0x0005AC   VA: 0x8002510C   subsegment: .rodata, saveload/bodyprog_80032D1C

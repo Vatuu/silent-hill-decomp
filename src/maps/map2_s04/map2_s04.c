@@ -112,7 +112,7 @@ void MapEvent_ShotgunTake(void) // 0x800CD0F8
 }
 
 extern u8 D_800CF280;
-extern s_WorldObject_0 g_CommonWorldObjects[8];
+extern s_WorldObjectModel g_CommonWorldObjects[8];
 extern s_WorldObjectDesc g_WorldObject_Map;
 extern s_WorldObjectDesc g_WorldObject_SavePad0;
 extern s_WorldObjectDesc g_WorldObject_SavePad1;

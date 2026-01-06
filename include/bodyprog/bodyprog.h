@@ -71,19 +71,20 @@ typedef enum _CollisionType
     CollisionType_Unk2 = 2
 } e_CollisionType;
 
-typedef enum _MapTypeFlags
+/** Map flags. */
+typedef enum _MapFlags
 {
-    MapTypeFlag_FourActiveChunks = 0,      /** Used by exterior maps. */
-    MapTypeFlag_OneActiveChunk   = 1 << 0,
-    MapTypeFlag_TwoActiveChunks  = 1 << 1,
-    MapTypeFlag_Interior         = 1 << 2,
-    MapTypeFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
-} e_MapTypeFlags;   
+    MapFlag_FourActiveChunks = 0,      /** Used by exterior maps. */
+    MapFlag_OneActiveChunk   = 1 << 0,
+    MapFlag_TwoActiveChunks  = 1 << 1,
+    MapFlag_Interior         = 1 << 2,
+    MapFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
+} e_MapFlags;   
 
-/** @brief Used as index into `MAP_TYPES` array.
+/** @brief Used as index into `MAP_INFOS` array.
  * TODO: Add descriptions for which areas are included in each type?
 */
-typedef enum _e_MapType // TODO: Naming conflict with `_MapType`.
+typedef enum _MapType
 {
     MapType_THR = 0,
     MapType_SC  = 1,
@@ -100,7 +101,7 @@ typedef enum _e_MapType // TODO: Naming conflict with `_MapType`.
     MapType_DRU = 12,
     MapType_HP  = 13,
     MapType_HU  = 14,
-    MapType_XXX = 15,
+    MapType_XXX = 15 /** @unused */
 } e_MapType;
 
 typedef enum _BoneHierarchy
@@ -986,7 +987,7 @@ typedef struct _GlobalLm
 typedef struct
 {
     s32            field_0; // Bone flags?
-    GsCOORDINATE2* field_4;
+    GsCOORDINATE2* coord_4;
     s_ModelHeader* modelHdr_8;
     s32            modelIdx_C;
 } s_ModelInfo;
@@ -1113,41 +1114,43 @@ typedef struct
 } s_CharaModel;
 STATIC_ASSERT_SIZEOF(s_CharaModel, 1376);
 
-typedef struct _MapType
+typedef struct _MapInfo
 {
     s16                plmFileIdx_0;
     char               tag_2[4];
-    u8                 flags_6; /** `e_MapTypeFlags` */
+    u8                 flags_6; /** `e_MapFlags` */
     // 1 byte of padding.
     const s_WaterZone* waterZones_8;
     const s_SpeedZone* speedZones_C;
-} s_MapType;
+} s_MapInfo;
 
-typedef struct
+// Rough name.
+typedef struct _WorldObjectMetadata
 {
     u_Filename name_0;
     s8         field_8;
     s8         lmIdx_9; /** Set to 2 when found in `g_Map.globalLm_138.lmHdr_0` and 3-6 if found in `g_Map.ipdActive_15C[i] (i + 3)`. */
-} s_WorldObject_0_10;
+} s_WorldObjectMetadata;
 
-typedef struct
+// Rough name.
+typedef struct _WorldObjectModel
 {
-    s_ModelInfo        modelInfo_0;
-    s_WorldObject_0_10 field_10;
-} s_WorldObject_0;
-STATIC_ASSERT_SIZEOF(s_WorldObject_0, 28);
+    s_ModelInfo           modelInfo_0;
+    s_WorldObjectMetadata metadata_10;
+} s_WorldObjectModel;
+STATIC_ASSERT_SIZEOF(s_WorldObjectModel, 28);
 
 /** @brief Geometry space world object to draw. */
-typedef struct
+typedef struct _WorldObject
 {
-    s_WorldObject_0* field_0;
-    s32              positionX_4 : 18; /** Q9.8 */
-    s32              positionY_4 : 14; /** Q5.8 */
-    s32              positionZ_8 : 18; /** Q9.8 */
-    s32              pad_8_18    : 14;
-    s32              rotationX_C : 10; /** Q0.10 */
-    s32              rotationY_C : 12; /** Q0.12 */
-    s32              rotationZ_C : 10; /** Q0.10 */
+    s_WorldObjectModel* model_0;
+    s32                 positionX_4 : 18; /** Q9.8 */
+    s32                 positionY_4 : 14; /** Q5.8 */
+    s32                 positionZ_8 : 18; /** Q9.8 */
+    s32                 pad_8_18    : 14;
+    s32                 rotationX_C : 10; /** Q0.10 */
+    s32                 rotationY_C : 12; /** Q0.12 */
+    s32                 rotationZ_C : 10; /** Q0.10 */
 } s_WorldObject;
 STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 
@@ -1161,10 +1164,10 @@ typedef struct _HeldItem
     s_Bone        bone_18;
 } s_HeldItem;
 
-/** @brief World GFX workspace. TODO: Could be `s_RendererWorkspace`? Will depend on where other data resides. */
+/** @brief World GFX workspace. TODO: Could be `s_RendererWork`? Will depend on where other data resides. */
 typedef struct _WorldGfxWork
 {
-    s_MapType*        type_0;
+    s_MapInfo*        mapInfo_0;
     u8                useStoredPoint_4; /** `bool` */
     u8                unk_5[3];
     VECTOR3           ipdSamplePoint_8; /** Used by IPD logic to sample which chunks to load or unload. */
@@ -1568,7 +1571,7 @@ typedef struct
  */
 typedef struct _MapOverlayHeader
 {
-    s_MapType*             type_0;
+    s_MapInfo*             mapInfo_0;
     u8                     (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
     s8                     field_8;
     s8                     unk_9[3];
@@ -2094,7 +2097,7 @@ typedef struct
 
 extern s_FsImageDesc g_MainImg0; // 0x80022C74 - TODO: Part of main exe, move to `main/` headers?
 
-extern const s_MapType MAP_TYPES[16];
+extern const s_MapInfo MAP_INFOS[16];
 
 extern char D_80028544[16];
 
@@ -2830,10 +2833,10 @@ s32 Ipd_ChunkInitCheck(void);
 /** `arg0` should be `void*`? */
 void func_8003C878(s32 arg0);
 
-void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr);
+void WorldObject_ModelNameSet(s_WorldObjectModel* arg0, char* newStr);
 
 /** Submits a world object to draw. */
-void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
+void g_WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVECTOR3* rot);
 
 /** Returns held item ID. */
 s32 func_8003CD5C(void);
@@ -3011,7 +3014,7 @@ s_IpdCollisionData** func_800425D8(s32* collDataIdx);
 
 s_IpdCollisionData* func_800426E4(s32 posX, s32 posZ);
 
-s32 func_8004287C(s_WorldObject_0* arg0, s_WorldObject_0_10* arg1, s32 posX, s32 posZ);
+s32 func_8004287C(s_WorldObjectModel* arg0, s_WorldObjectMetadata* metadata, q19_12 posX, q19_12 posZ);
 
 /** @brief Gets the load state of an LM file.
  *
@@ -3352,7 +3355,7 @@ s32 LmHeader_ModelCountGet(s_LmHeader* lmHdr);
 
 void Bone_ModelAssign(s_Bone* bone, s_LmHeader* lmHdr, s32 modelHdrIdx);
 
-bool Lm_ModelFind(s_WorldObject_0* arg0, s_LmHeader* lmHdr, s_WorldObject_0_10* arg2);
+bool Lm_ModelFind(s_WorldObjectModel* arg0, s_LmHeader* lmHdr, s_WorldObjectMetadata* metadata);
 
 void StringCopy(char* prevStr, char* newStr);
 
@@ -4399,7 +4402,7 @@ void Gfx_WorldObjectsDraw(s_WorldGfxWork* worldGfxWork);
  */
 void Gfx_WorldObjectDraw(s_WorldObject* obj);
 
-void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2);
+void func_8003CC7C(s_WorldObjectModel* arg0, MATRIX* arg1, MATRIX* arg2);
 
 /** @brief Advanced a character model LM buffer.
  *

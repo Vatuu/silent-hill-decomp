@@ -2357,9 +2357,9 @@ void func_80038354(void) // 0x80038354
                           FP_SQUARE_PRECISE((npc->position_18.vz >> 6) - posZShift6, Q12_SHIFT);
                 var_t5 = 0;
 
-                if (g_MapOverlayHeader.type_0->flags_6 & MapTypeFlag_Interior)
+                if (g_MapOverlayHeader.mapInfo_0->flags_6 & MapFlag_Interior)
                 {
-                    var_t5 = (g_MapOverlayHeader.type_0->flags_6 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)) > 0;
+                    var_t5 = (g_MapOverlayHeader.mapInfo_0->flags_6 & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)) > 0;
                 }
 
                 for (j = 0; j < 3; j++)
@@ -2522,8 +2522,8 @@ void func_80038354(void) // 0x80038354
         else
         {
             var_s3 = 0;
-            if (!(g_MapOverlayHeader.type_0->flags_6 & MapTypeFlag_Interior) ||
-                !(g_MapOverlayHeader.type_0->flags_6 & (MapTypeFlag_OneActiveChunk | MapTypeFlag_TwoActiveChunks)))
+            if (!(g_MapOverlayHeader.mapInfo_0->flags_6 & MapFlag_Interior) ||
+                !(g_MapOverlayHeader.mapInfo_0->flags_6 & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
             {
                 var_s3 = 1;
             }
