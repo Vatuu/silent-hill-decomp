@@ -211,6 +211,14 @@
 #define Q8_TO_Q4(x) \
     ((x) >> 4)
 
+/** @brief Converts a fixed-point value from Q*.10 to Q*.12.
+ *
+ * @param x Q*.10 fixed-point value to convert.
+ * @return `x` converted to Q*.12 fixed-point.
+ */
+#define Q10_TO_Q12(x) \
+    ((x) << 2)
+
 /** @brief Converts a fixed-point value from Q*.12 to Q*.4.
  *
  * @param x Q*.12 fixed-point value to convert.
@@ -234,6 +242,14 @@
  */
 #define Q12_TO_Q8(x) \
     ((x) >> 4)
+
+/** @brief Converts a fixed-point value from Q*.12 to Q*.10.
+ *
+ * @param x Q*.12 fixed-point value to convert.
+ * @return `x` converted to Q*.10 fixed-point.
+ */
+#define Q12_TO_Q10(x) \
+    ((x) >> 2)
 
 /** @brief Extracts the fractional part of a value in Q*.12 fixed-point.
  *

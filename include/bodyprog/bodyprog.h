@@ -1137,16 +1137,17 @@ typedef struct
 } s_WorldObject_0;
 STATIC_ASSERT_SIZEOF(s_WorldObject_0, 28);
 
+/** @brief Geometry space world object to draw. */
 typedef struct
 {
     s_WorldObject_0* field_0;
-    s32              gsCoordinate0_4 : 18; // Q8 | Used as `GsCOORDINATE2::coord.t[0].`
-    s32              gsCoordinate1_4 : 14; // Q8 | Used as `GsCOORDINATE2::coord.t[1].`
-    s32              gsCoordinate2_8 : 18; // Q8 | Used as `GsCOORDINATE2::coord.t[2].`
-    s32              unk_8_18        : 14; // Padding.
-    s32              vx_C            : 10; // Q10? } Rotation. X and Z axes require less precision than Y.
-    s32              vy_C            : 12; // Q12  }
-    s32              vz_C            : 10; // Q10? }
+    s32              positionX_4 : 18; /** Q9.8 */
+    s32              positionY_4 : 14; /** Q5.8 */
+    s32              positionZ_8 : 18; /** Q9.8 */
+    s32              pad_8_18    : 14;
+    s32              rotationX_C : 10; /** Q0.10 */
+    s32              rotationY_C : 12; /** Q0.12 */
+    s32              rotationZ_C : 10; /** Q0.10 */
 } s_WorldObject;
 STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 
