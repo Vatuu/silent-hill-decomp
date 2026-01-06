@@ -18,6 +18,8 @@
 // CONSTANTS
 // ==========
 
+#define WORLD_OBJECT_COUNT_MAX 29
+
 #define OPT_SOUND_VOLUME_MIN   0
 #define OPT_SOUND_VOLUME_MAX   128
 #define OPT_VIBRATION_DISABLED 0
@@ -1138,13 +1140,13 @@ STATIC_ASSERT_SIZEOF(s_WorldObject_0, 28);
 typedef struct
 {
     s_WorldObject_0* field_0;
-    s32              gsCoordinate0_4 : 18; // Used as `GsCOORDINATE2::coord.t[0].`
-    s32              gsCoordinate1_4 : 14; // Used as `GsCOORDINATE2::coord.t[1].`
-    s32              gsCoordinate2_8 : 18; // Used as `GsCOORDINATE2::coord.t[2].`
-    s32              unk_8_18        : 14;
-    s32              vx_C            : 10; // } Rotation?
-    s32              vy_C            : 12; // }
-    s32              vz_C            : 10; // }
+    s32              gsCoordinate0_4 : 18; // Q8 | Used as `GsCOORDINATE2::coord.t[0].`
+    s32              gsCoordinate1_4 : 14; // Q8 | Used as `GsCOORDINATE2::coord.t[1].`
+    s32              gsCoordinate2_8 : 18; // Q8 | Used as `GsCOORDINATE2::coord.t[2].`
+    s32              unk_8_18        : 14; // Padding.
+    s32              vx_C            : 10; // Q10? } Rotation. X and Z axes require less precision than Y.
+    s32              vy_C            : 12; // Q12  }
+    s32              vz_C            : 10; // Q10? }
 } s_WorldObject;
 STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 
@@ -1173,8 +1175,8 @@ typedef struct _WorldGfx
     s_LmHeader        itemLmHdr_1BE4;
     u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // Retail game uses 2.75kb file, but they allocate 4kb for it.
     s32               itemLmQueueIdx_2BE4;
-    s32               objectCount_2BE8;
-    s_WorldObject     objects_2BEC[29]; // Size based on the check in `g_WorldGfx_ObjectAdd`.
+    s32               objectCount_2BE8;                     /** `objects_2BEC` size. */
+    s_WorldObject     objects_2BEC[WORLD_OBJECT_COUNT_MAX]; /** World objects to draw. */
 } s_WorldGfx;
 STATIC_ASSERT_SIZEOF(s_WorldGfx, 11708);
 
@@ -2827,6 +2829,7 @@ void func_8003C878(s32 arg0);
 
 void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr);
 
+/** Submits a world object to draw. */
 void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot);
 
 /** Returns held item ID. */
@@ -3116,7 +3119,8 @@ void IpdHeader_ModelBufferLinkObjectLists(s_IpdHeader* ipdHdr, s_IpdModelInfo* i
 /** Sets IPD collision data chunk cells? */
 void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ);
 
-void func_80044090(s_IpdHeader* ipdHdr, s32 posX, s32 posZ, GsOT* ot, void* arg4);
+/** Draws an IPD chunk. */
+void func_80044090(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, void* arg4);
 
 bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_8 z);
 
@@ -3363,6 +3367,7 @@ void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 
 void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
+/** Main quad rendering func? */
 void func_8005801C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3);
 
 /** `arg4` unused. */
@@ -4366,10 +4371,13 @@ void Ipd_CloseRangeChunksInit(void);
 
 void func_8003C878(s32);
 
+/** Clears the count of world objects to draw. */
 void func_8003CB3C(s_WorldGfx* worldGfx);
 
+/** Draws world objects. */
 void func_8003CB44(s_WorldGfx* worldGfx);
 
+/** Draws a world object. */
 void func_8003CBA4(s_WorldObject* obj);
 
 void func_8003CC7C(s_WorldObject_0* arg0, MATRIX* arg1, MATRIX* arg2);

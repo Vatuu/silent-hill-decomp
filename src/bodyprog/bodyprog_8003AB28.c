@@ -1120,17 +1120,18 @@ void WorldObject_ModelNameSet(s_WorldObject_0* arg0, char* newStr) // 0x8003C8F8
 
 void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
 {
-    s32            vy;
-    s32            vx;
-    s32            vz;
-    q23_8          coordX; // Q23.8
-    q23_8          coordY; // Q23.8
-    q23_8          coordZ; // Q23.8
+    q23_8          geomPosX;
+    q23_8          geomPosY;
+    q23_8          geomPosZ;
+    s32            geomRotX;
+    s32            geomRotY;
+    s32            geomRotZ;
     s32            i;
     s32            lmIdx;
     s_WorldObject* obj;
 
-    if (g_WorldGfx.objectCount_2BE8 < 29)
+    // Check if array of world objects to draw is full.
+    if (g_WorldGfx.objectCount_2BE8 < ARRAY_SIZE(g_WorldGfx.objects_2BEC))
     {
         if (arg0->field_10.lmIdx_9 == 0)
         {
@@ -1152,42 +1153,42 @@ void g_WorldGfx_ObjectAdd(s_WorldObject_0* arg0, const VECTOR3* pos, const SVECT
             arg0->field_10.lmIdx_9 = lmIdx;
         } 
 
-        coordX = Q12_TO_Q8(pos->vx);
-        coordY = Q12_TO_Q8(pos->vy);
-        coordZ = Q12_TO_Q8(pos->vz);
-        vx     = rot->vx >> 2;
-        vz     = rot->vz >> 2;
-        vy     = rot->vy;
+        // Compute geometry position and rotation.
+        geomPosX = Q12_TO_Q8(pos->vx);
+        geomPosY = Q12_TO_Q8(pos->vy);
+        geomPosZ = Q12_TO_Q8(pos->vz);
+        geomRotX = rot->vx >> 2;
+        geomRotY = rot->vz >> 2;
+        geomRotZ = rot->vy;
 
+        // Check if world object to draw was already submitted?
         for (i = 0; i < g_WorldGfx.objectCount_2BE8; i++)
         {
             obj = &g_WorldGfx.objects_2BEC[i];
-    
+
             if (arg0 == obj->field_0 &&
-                coordX == obj->gsCoordinate0_4 &&
-                coordZ == obj->gsCoordinate2_8 &&
-                coordY == obj->gsCoordinate1_4 &&
-                vx == obj->vx_C &&
-                vy == obj->vy_C &&
-                vz == obj->vz_C)
+                geomPosX == obj->gsCoordinate0_4 &&
+                geomPosZ == obj->gsCoordinate2_8 &&
+                geomPosY == obj->gsCoordinate1_4 &&
+                geomRotX == obj->vx_C &&
+                geomRotZ == obj->vy_C &&
+                geomRotY == obj->vz_C)
             {
                 return;
             }
         }
 
+        // Submit world object to draw.
         obj = &g_WorldGfx.objects_2BEC[g_WorldGfx.objectCount_2BE8];
-
-        obj->vx_C = vx;
-        obj->vy_C = vy;
-
-        // TODO: Required for match.
-        if (obj->gsCoordinate2_8) {}
-
-        obj->vz_C            = vz;
+        obj->vx_C = geomRotX;
+        obj->vy_C = geomRotZ;
+        if (obj->gsCoordinate2_8) {} // @hack Required for match.
+        obj->vz_C            = geomRotY;
         obj->field_0         = arg0;
-        obj->gsCoordinate0_4 = coordX;
-        obj->gsCoordinate1_4 = coordY;
-        obj->gsCoordinate2_8 = coordZ;
+        obj->gsCoordinate0_4 = geomPosX;
+        obj->gsCoordinate1_4 = geomPosY;
+        obj->gsCoordinate2_8 = geomPosZ;
+
         g_WorldGfx.objectCount_2BE8++;
     }
 }
@@ -1201,6 +1202,7 @@ void func_8003CB44(s_WorldGfx* worldGfx) // 0x8003CB44
 {
     s_WorldObject* curObj;
 
+    // Run through world objects to draw.
     for (curObj = &worldGfx->objects_2BEC[0]; curObj < &worldGfx->objects_2BEC[worldGfx->objectCount_2BE8]; curObj++)
     {
         func_8003CBA4(curObj);
@@ -1212,22 +1214,23 @@ void func_8003CB44(s_WorldGfx* worldGfx) // 0x8003CB44
 void func_8003CBA4(s_WorldObject* obj) // 0x8003CBA4
 {
     GsCOORDINATE2 coord;
-    SVECTOR       vec;
+    SVECTOR       rot; // Q3_12
     MATRIX        mats[2];
 
     coord.flg   = false;
     coord.super = NULL;
 
+    // Set geometry position.
     coord.coord.t[0] = obj->gsCoordinate0_4;
     coord.coord.t[1] = obj->gsCoordinate1_4;
     coord.coord.t[2] = obj->gsCoordinate2_8;
 
-    // Unpack XYZ bitfield (TODO: Was this used anywhere else?)
-    vec.vx = obj->vx_C << 2;
-    vec.vy = obj->vy_C;
-    vec.vz = obj->vz_C << 2;
+    // Compute world rotation.
+    rot.vx = obj->vx_C << 2;
+    rot.vy = obj->vy_C;
+    rot.vz = obj->vz_C << 2;
 
-    Math_RotMatrixZxyNeg(&vec, &coord.coord);
+    Math_RotMatrixZxyNeg(&rot, &coord.coord);
     func_80049B6C(&coord, &mats[1], &mats[0]);
     func_8003CC7C(obj->field_0, &mats[0], &mats[1]);
 }

@@ -139,11 +139,11 @@ void Ai_Twinfeeler_TextureLoad(void) // 0x800D3038
     Fs_QueueStartReadTim(FILE_TEST_WARMTEST_TIM, FS_BUFFER_1, &D_800A9094);
 }
 
-void Math_Vec3AddPolarOffsetXZ(VECTOR3* outVec, VECTOR3* inVec, s32 angle, s32 distance)
+void Math_Vec3AddPolarOffsetXZ(VECTOR3* outVec, const VECTOR3* inVec, q19_12 headingAngle, q19_12 dist) // 0x800D3068
 {
-    outVec->vx = inVec->vx + FP_MULTIPLY_PRECISE(Math_Sin(angle), distance, Q12_SHIFT);
+    outVec->vx = inVec->vx + FP_MULTIPLY_PRECISE(Math_Sin(headingAngle), dist, Q12_SHIFT);
     outVec->vy = inVec->vy;
-    outVec->vz = inVec->vz + FP_MULTIPLY_PRECISE(Math_Cos(angle), distance, Q12_SHIFT);
+    outVec->vz = inVec->vz + FP_MULTIPLY_PRECISE(Math_Cos(headingAngle), dist, Q12_SHIFT);
 }
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3114);
@@ -156,36 +156,41 @@ INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D33D0);
 
 INCLUDE_ASM("asm/maps/map4_s03/nonmatchings/map4_s03", func_800D3428);
 
-s_D_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)())
+s_D_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)()) // 0x800D344C
 {
-    s_Collision coll;
-
-    s32 i;
+    s_Collision      coll;
+    s32              i;
     s_SubD_800E0930* node;
-    s32 *marker;
-    s_D_800E0930 *temp;
+    s32*             marker;
+    s_D_800E0930*    temp;
+    
     temp = D_800E0930;
+
     for (i = 0; i < 3; i++, temp++)
     {
         marker = &temp->field_0;
         node = &temp->sub_4;
+
         if (!node->funcptr_14)
         {
             Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
+
             node->chara_4 = chara;
             node->position_8.vx = chara->position_18.vx;
             node->position_8.vy = coll.groundHeight_0;
             node->position_8.vz = chara->position_18.vz;
             node->funcptr_14 = funcptr;
             node->field_0 = 0;
+
             *marker = 0;
             return temp;
         }
     }
+
     return NULL;
 }
 
-void func_800D3504(s_SubCharacter* chara)
+void func_800D3504(s_SubCharacter* chara) // 0x800D3504
 {
     func_800D344C(chara, &func_800D326C);
 }
@@ -1155,7 +1160,7 @@ void func_800D76BC(s32 arg0) // 0x800D76BC
 
 bool func_800D76E8(void) // 0x800D76E8
 {
-    s32 i;
+    s32  i;
     bool result;
 
     result = true;
@@ -1164,7 +1169,7 @@ bool func_800D76E8(void) // 0x800D76E8
     {
         result &= D_800E0698.field_8[i].field_21;
     }
-    
+
     return result;
 }
 
@@ -1204,7 +1209,7 @@ void func_800D7718(void) // 0x800D7718
 
 void func_800D7808(s_800E06A0* arg0, s32 arg1) // 0x800D7808
 {
-    // TODO: `arg1` unused, but might be passed to one of these funcs.
+    // TODO: `arg1` is unused, but might be passed to one of these funcs.
     s32 temp;
 
     if (g_DeltaTime0 == 0)
@@ -1286,7 +1291,7 @@ bool func_800D826C(s_800E06A0* arg0, s32 arg1, s32 arg2) // 0x800D826C
     {
         arg0->field_28 = arg2;
     }
-    
+
     arg0->field_30 = 4;
     arg0->field_34 = 0;
 
@@ -1306,7 +1311,7 @@ bool func_800D826C(s_800E06A0* arg0, s32 arg1, s32 arg2) // 0x800D826C
             break;
 
         case 4:
-            arg0->field_36 = (u32)((MIN(arg2, arg0->field_24) << 12) / arg2) >> 6; // Weird shifts, not sure if these are FP related?
+            arg0->field_36 = (u32)((MIN(arg2, arg0->field_24) << 12) / arg2) >> 6; // TODO: Weird shifts, not sure if these are FP related?
             break;
 
         case 3:

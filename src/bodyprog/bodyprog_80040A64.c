@@ -1683,7 +1683,7 @@ void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ) // 0x80044044
     ipd->collisionData_54.positionZ_4 += (cellZ - prevCellZ) * Q8(40.0f);
 }
 
-void func_80044090(s_IpdHeader* ipdHdr, s32 posX, s32 posZ, GsOT* ot, void* arg4) // 0x80044090
+void func_80044090(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, void* arg4) // 0x80044090
 {
     s_ModelInfo         modelInfo;
     GsCOORDINATE2       coord;
@@ -1691,13 +1691,13 @@ void func_80044090(s_IpdHeader* ipdHdr, s32 posX, s32 posZ, GsOT* ot, void* arg4
     MATRIX              sp98;
     s32                 geomX;
     s32                 geomY;
-    s32                 cellBoundZ;
-    s32                 cellBoundX;
+    q23_8               cellBoundZ;
+    q23_8               cellBoundX;
     s32                 subcellZ;
     s32                 subcellX;
     s32                 i;
     s_IpdModelBuffer*   ipdModelBuf;
-    s_IpdModelBuffer_C* var_s0;
+    s_IpdModelBuffer_C* curBufC;
     u8*                 temp_fp;
     SVECTOR*            var_s1;
 
@@ -1723,18 +1723,18 @@ void func_80044090(s_IpdHeader* ipdHdr, s32 posX, s32 posZ, GsOT* ot, void* arg4
     coord.super       = NULL;
 
     temp_fp = &ipdHdr->textureCount_1C + (subcellZ * 10) + (subcellX * 2);
-    for (i = temp_fp[0]; i < temp_fp[1] + temp_fp[0]; i++)
+    for (i = temp_fp[0]; i < (temp_fp[1] + temp_fp[0]); i++)
     {
         ipdModelBuf = &ipdHdr->modelBuffers_18[ipdHdr->modelOrderList_50[i]];
 
         if (func_80044420(ipdModelBuf, geomX - cellBoundX, geomY - cellBoundZ, cellBoundX, cellBoundZ))
         {
-            for (var_s0 = ipdModelBuf->field_C; var_s0 < &ipdModelBuf->field_C[ipdModelBuf->field_0]; var_s0++)
+            for (curBufC = ipdModelBuf->field_C; curBufC < &ipdModelBuf->field_C[ipdModelBuf->field_0]; curBufC++)
             {
-                modelInfo.modelHdr_8 = var_s0->modelHdr_0;
+                modelInfo.modelHdr_8 = curBufC->modelHdr_0;
                 if (modelInfo.modelHdr_8 != NULL)
                 {
-                    coord.workm       = var_s0->field_4;
+                    coord.workm       = curBufC->field_4;
                     coord.workm.t[0] += cellBoundX;
                     coord.workm.t[2] += cellBoundZ;
 

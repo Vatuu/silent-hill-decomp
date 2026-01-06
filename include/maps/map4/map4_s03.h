@@ -14,8 +14,8 @@
 
 typedef struct
 {
-    SVECTOR field_0; // } Note: not sure if these are actually SVECTOR.
-    SVECTOR field_8; // } That struct fits and works with some copy code, but could be a custom struct of 4 u16s.
+    SVECTOR field_0; // } Note: Not sure if these are actually `SVECTOR`.
+    SVECTOR field_8; // } That struct fits and works with some copy code, but could be a custom struct of 4 `u16`s.
 } s_800DB7D4;
 STATIC_ASSERT_SIZEOF(s_800DB7D4, 0x10);
 
@@ -49,14 +49,14 @@ STATIC_ASSERT_SIZEOF(s_800E0698, 0x254);
 
 typedef struct
 {
-    s32 field_0;
-    s32 chara_4;
+    s32     field_0;
+    s32     chara_4;
     VECTOR3 position_8;
-    s32 funcptr_14;
+    s32     funcptr_14;
 } s_SubD_800E0930;
 typedef struct
 {
-    s32 field_0;
+    s32             field_0;
     s_SubD_800E0930 sub_4;
 } s_D_800E0930;
 
@@ -111,9 +111,19 @@ void func_800D19CC(VECTOR3* vec);
 
 void Ai_Twinfeeler_TextureLoad(void);
 
+void Math_Vec3AddPolarOffsetXZ(VECTOR3* outVec, const VECTOR3* inVec, q19_12 headingAngle, q19_12 dist);
+
+void func_800D326C(void);
+
+s_D_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)());
+
+void func_800D3504(s_SubCharacter* chara);
+
 void func_800D354C(VECTOR3*);
 
 void func_800D3694(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+
+void func_800D3AE0(s_SubCharacter* chara, s32 soundIdx);
 
 u8 func_800D3B1C(void);
 
@@ -215,15 +225,5 @@ void func_800D9824(void);
 void Map_WorldObjectsInit(void);
 
 void func_800D9BB0(void);
-
-void func_800D326C(void);
-
-void func_800D3504(s_SubCharacter* chara);
-
-s_D_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)());
-
-void Math_Vec3AddPolarOffsetXZ(VECTOR3* outVec, VECTOR3* inVec, s32 angle, s32 distance);
-
-void func_800D3AE0(s_SubCharacter* chara, s32 soundIdx);
 
 #endif
