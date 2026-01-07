@@ -7,18 +7,18 @@ void Ai_AirScreamerControl_2(s_SubCharacter* airScreamer)
     s32  animState;
     s32  animStatusCheck;
     u32  tmp0;
-    u32  step;
+    u32  stateStep;
 
     #define airScreamerProps airScreamer->properties_E4.airScreamer
 
     animStatus = airScreamer->model_0.anim_4.status_0;
     sharedFunc_800D5638_0_s01(airScreamer);
-    step      = airScreamer->model_0.stateStep_3;
-    animState = ANIM_STATUS(12, true);
+    stateStep      = airScreamer->model_0.stateStep_3;
+    animState = ANIM_STATUS(AirScreamerAnim_12, true);
 
     animStatusCheck = animStatus | 1; // TODO: Use macro.
 
-    switch (step)
+    switch (stateStep)
     {
         case 0:
             cond1         = sharedFunc_800D5F00_0_s01(airScreamer);

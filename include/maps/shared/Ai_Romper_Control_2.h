@@ -1,4 +1,4 @@
-void sharedFunc_800E6878_2_s02(s_SubCharacter* romper)
+void Ai_Romper_Control_2(s_SubCharacter* romper)
 {
     q3_12  moveDist;
     q3_12  angleDeltaToTarget;
