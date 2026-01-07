@@ -239,23 +239,18 @@ void func_800D82AC(void* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800D82AC
 {
     s32 val1;
     s32 val2;
-    s16 arg1Cpy;
-    s16 arg2Cpy;
-
-    arg1Cpy = (s16)arg1;
-    arg2Cpy = (s16)arg2;
 
     val1 = Q12_MULT_PRECISE(arg3, 3000);
     val2 = Q12_MULT_PRECISE(arg3, 5000);
 
-    func_800D7F2C(arg0, 16, D_800EBC14, val2, val1, arg1Cpy, arg2Cpy, 0x141414);
-    func_800D7F2C(arg0, 12, 0,          val2, val1, arg1Cpy, arg2Cpy, 0x141414);
+    func_800D7F2C(arg0, 16, D_800EBC14, val2, val1, arg1, arg2, 0x141414);
+    func_800D7F2C(arg0, 12, 0, val2, val1, arg1, arg2, 0x141414);
 
     D_800EBC14 += 4;
 
     func_800D7F2C(arg0, 4, -512,
                   Q12_MULT_PRECISE(arg3, 15000), Q12_MULT_PRECISE(arg3, 1500),
-                  arg1Cpy, arg2Cpy, 0x102020);
+                  arg1, arg2, 0x102020);
 }
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8438);

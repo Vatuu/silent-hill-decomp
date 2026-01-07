@@ -225,6 +225,8 @@ PACKET* func_800D7F10(void);
 
 void func_800D7F20(u8* arg0);
 
+void func_800D7F2C(void*, s32, s32, s32, s32, s16, s16, s32);
+
 void func_800D82AC(void* arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void func_800D8858(s32);
