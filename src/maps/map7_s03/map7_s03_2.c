@@ -45,6 +45,8 @@
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D5B68
 
+extern s32 D_800EBC14;
+
 void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5BC8
 {
     s32         temp_s0;
@@ -139,7 +141,48 @@ void func_800D71A4(s32 arg0) // 0x800D71A4
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D71B0);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D74F4);
+void func_800D74F4(s32 x, s32 z, s32 val)
+{
+    u8* base_ptr = (u8*)0x80167600;
+    s16 x_idx;
+    s16 z_calc;
+
+    s16 sx = x + 164;
+    s16 sz = z + 100;
+
+    sx += (sx > 0) ? 4 : -4;
+    x_idx = sx / 8;
+
+    sz += (sz > 0) ? 4 : -4;
+    z_calc = sz / 8;
+
+    if ((u16)(x_idx - 1) < 40 && z_calc > 0 && z_calc < 25)
+    {
+        s32 offset_acc;
+        s32 z_term;
+        u8* dst_ptr;
+        s32 final_val;
+
+        offset_acc = (s16)x_idx;
+        z_term = z_calc * 41;
+        offset_acc = offset_acc + z_term;
+        offset_acc = offset_acc + 93;
+
+        dst_ptr = base_ptr + offset_acc;
+
+        final_val = val >> 4;
+
+        if (final_val < 0x100)
+        {
+            *dst_ptr = (u8)final_val;
+        }
+        else
+        {
+            *dst_ptr = 0xFF;
+        }
+    }
+}
+
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D75D0);
 
@@ -195,7 +238,36 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7F2C);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D822C);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D82AC);
+
+void func_800D82AC(void* arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    s32 val1;
+    s32 val2;
+    s16 s_arg1;
+    s16 s_arg2;
+
+    s_arg1 = (s16)arg1;
+    s_arg2 = (s16)arg2;
+
+    val1 = FP_MULTIPLY_PRECISE(arg3, 3000, Q12_SHIFT);
+    val2 = FP_MULTIPLY_PRECISE(arg3, 5000, Q12_SHIFT);
+
+    func_800D7F2C(arg0, 16, D_800EBC14, val2, val1, s_arg1, s_arg2, 0x141414);
+    func_800D7F2C(arg0, 12, 0,          val2, val1, s_arg1, s_arg2, 0x141414);
+
+    D_800EBC14 += 4;
+
+    func_800D7F2C(
+        arg0,
+        4,
+        -512,
+        FP_MULTIPLY_PRECISE(arg3, 15000, Q12_SHIFT),
+        FP_MULTIPLY_PRECISE(arg3, 1500, Q12_SHIFT),
+        s_arg1,
+        s_arg2,
+        0x102020
+    );
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8438);
 
@@ -375,7 +447,22 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD2C8);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD32C);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD3D4);
+
+void func_800DD3D4(void* arg0, s32 scaleX, s32 scaleY, s32 scaleZ)
+{
+    VECTOR3 local_vec;    // sp + 0x10
+    MATRIX  local_matrix; // sp + 0x20
+
+    Vw_CoordHierarchyMatrixCompute((void*)((u8*)&g_SysWork + 0x8E0), &local_matrix);
+
+    // This works because the built-in MATRIX struct has 't' (translation) at offset 0x14
+    local_vec.vx = (local_matrix.t[0] << 4) + scaleX;
+    local_vec.vy = (local_matrix.t[1] << 4) + scaleY;
+    local_vec.vz = (local_matrix.t[2] << 4) + scaleZ;
+
+    func_800DD32C(arg0, &local_vec);
+}
+
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD464);
 
