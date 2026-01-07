@@ -1908,6 +1908,10 @@ extern u8 sharedData_800ED43C_2_s02[];
 
 extern s_sharedData_800ED2D4_2_s02 sharedData_800ED2D4_2_s02[];
 
+extern s32 sharedData_800EC950_2_s02;
+
+extern s_sharedData_800ED2D4_2_s02 sharedData_800ED314_2_s02[];
+
 extern void (*g_Romper_ControlFuncs[])(s_SubCharacter* romper);
 
 bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx);
@@ -2384,6 +2388,8 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader*, GsCOORDINAT
 void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper);
 
 s32 sharedFunc_800E939C_2_s02(s_SubCharacter* romper);
+
+s32 sharedFunc_800E94B4_2_s02(s_SubCharacter* romper);
 
 void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
