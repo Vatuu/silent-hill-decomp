@@ -359,7 +359,42 @@ void func_800D0F8C(void) // 0x800D0F8C
     D_800D3154 = 1;
 }
 
-INCLUDE_ASM("maps/map3_s02/nonmatchings/map3_s02_2", func_800D0F9C);
+void func_800D0F9C(void) // 0x800D0F9C
+{
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+
+    if (D_800D3154)
+    {
+        if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
+        {
+            D_800D1FBC = MAX(D_800D1FBC, Q12(10.0f));
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
+    {
+        if (D_800D3154)
+        {
+            D_800D1FBC = MAX(D_800D1FBC, Q12_MULT_PRECISE(func_800D1354(), Q12(24.0f)) + Q12(25.0f));
+        }
+
+        if (!Savegame_EventFlagGet(EventFlag_233) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-129.0f))
+        {
+            Savegame_EventFlagSet(EventFlag_233);
+            func_8005DC1C(Sfx_Unk1523, &D_800CAAF8, Q8_CLAMPED(0.5f), 0);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -4, -1, -4))
+    {
+
+        if (!Savegame_EventFlagGet(EventFlag_234) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(67.0f))
+        {
+            Savegame_EventFlagSet(EventFlag_234);
+            func_8005DC1C(Sfx_Unk1523, &QVECTOR3(69.6f, -1.2f, -138.4f), Q8_CLAMPED(0.5f), 0);
+        }
+    }
+}
 
 s16 func_800D1354(void) // 0x800D1354
 {
@@ -396,5 +431,3 @@ s16 func_800D1354(void) // 0x800D1354
 
     return Q8(16.0f);
 }
-
-INCLUDE_RODATA("maps/map3_s02/nonmatchings/map3_s02_2", D_800CAB4C);
