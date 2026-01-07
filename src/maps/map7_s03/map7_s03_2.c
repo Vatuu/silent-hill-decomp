@@ -3190,7 +3190,7 @@ void func_800E7380(void) // 0x800E7380
         case 6:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(12.0f), Q12(145.0f), Q12(201.0f), true, true);
 
-            g_SysWork.npcs_1A0[4].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
+            g_SysWork.npcs_1A0[4].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f);
             if (g_SysWork.npcs_1A0[4].timer_C6 > Q12(1.0f))
             {
                 g_SysWork.npcs_1A0[4].timer_C6 = Q12(1.0f);
