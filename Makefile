@@ -735,5 +735,5 @@ $(LINKER_DIR)/%.ld: $(CONFIG_DIR)/%.yaml
 
 ### Settings
 .SECONDARY:
-.PHONY: clean default
+.PHONY: clean default build
 SHELL = /bin/bash -e -o pipefail
