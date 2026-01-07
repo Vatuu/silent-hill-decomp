@@ -687,7 +687,7 @@ void Sd_StopBgmStep(void) // 0x80046B78
 u8 Sd_BgmLayerVolumeGet(u8 layerIdx) // 0x80046BB4
 {
     u32 i;
-    u8  ret;
+    u8  vol;
 
     if (layerIdx == 0)
     {
@@ -699,18 +699,18 @@ u8 Sd_BgmLayerVolumeGet(u8 layerIdx) // 0x80046BB4
         return 0;
     }
 
-    ret = 0;
+    vol = 0;
 
     for (i = 0; i < 15; i++)
     {
         if (D_800AA604[(u8)g_Sd_AudioWork.field_E][i] == layerIdx)
         {
-            ret = SdGetMidiVol(0, i);
+            vol = SdGetMidiVol(0, i);
             break;
         }
     }
 
-    return ret;
+    return vol;
 }
 
 void Sd_BgmLayerVolumeSet(u8 layerIdx, u8 vol) // 0x80046C54

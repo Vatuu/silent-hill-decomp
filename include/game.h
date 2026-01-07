@@ -41,6 +41,8 @@ struct _Model;
 
 #define CHUNK_CELL_SIZE Q12(40.0f)
 
+#define BGM_LAYER_COUNT 9
+
 /** @brief Unknown packed data used for something to do with character model bones.
  *
  * @param a First value.
@@ -1663,6 +1665,7 @@ typedef struct _PlayerWork
 } s_PlayerWork;
 STATIC_ASSERT_SIZEOF(s_PlayerWork, 340);
 
+/** @brief Player combat info. */
 typedef struct _PlayerCombat
 {
     VECTOR3 field_0; // Q19.12 position offset?
@@ -1778,10 +1781,10 @@ typedef struct _SysWork
     u8              field_234B_0 : 4;
     u8              field_234B_4 : 4;
     s32             mapMsgTimer_234C;
-    u8              enableHighResGlyphs_2350_0      : 4; /** `bool` */
-    u8              silentYesSelection_2350_4       : 4; /** `bool` */
-    u32             inventoryItemSelectedIdx_2351   : 8;
-    u32             flags_2352                      : 8;
+    u8              enableHighResGlyphs_2350_0    : 4; /** `bool` */
+    u8              silentYesSelection_2350_4     : 4; /** `bool` */
+    u32             inventoryItemSelectedIdx_2351 : 8;
+    u32             flags_2352                    : 8;
     s8              targetNpcIdx_2353; /** Index of the NPC being targeted by the player. */
     s8              npcIdxs_2354[4];
     u8              field_2358;          /** `bool` */
@@ -1793,8 +1796,8 @@ typedef struct _SysWork
     GsCOORDINATE2*  field_236C;            // }
     SVECTOR         cutsceneLightRot_2370; // }
     s16             field_2378;
-    s16             cameraAngleY_237A;
-    s16             cameraAngleZ_237C;
+    q3_12           cameraAngleY_237A;
+    q3_12           cameraAngleZ_237C;
     s16             field_237E;
     q19_12          cameraRadiusXz_2380;
     q19_12          cameraY_2384;
@@ -1802,7 +1805,7 @@ typedef struct _SysWork
     s32             field_2510;
     s_SysWork_2514  field_2514;
     u8              unk_254C[508];
-    s16             bgmLayerVolumes_2748[9]; // Some fixed point value.
+    q3_12           bgmLayerVolumes_2748[BGM_LAYER_COUNT];
     u8              unk_275A[2];
     q19_12          field_275C;
     s32             field_2760;

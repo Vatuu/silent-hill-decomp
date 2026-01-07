@@ -832,9 +832,10 @@ void Bgm_MuteBgmLayers(void) // 0x80035E1C
 {
     s32 i;
 
+    // Reset all BGM layer volumes.
     for (i = 0; i < ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748); i++)
     {
-        g_SysWork.bgmLayerVolumes_2748[i] = 0;
+        g_SysWork.bgmLayerVolumes_2748[i] = Q12(0.0f);
     }
 }
 
@@ -845,7 +846,7 @@ bool func_80035E44(void) // 0x80035E44
     
     for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
     {
-        if (g_SysWork.bgmLayerVolumes_2748[i] != 0) 
+        if (g_SysWork.bgmLayerVolumes_2748[i] != Q12(0.0f)) 
         {
             return false;
         }
@@ -863,7 +864,7 @@ bool func_80035E44(void) // 0x80035E44
 
     for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++) 
     {
-        if (Sd_BgmLayerVolumeGet(i))
+        if (Sd_BgmLayerVolumeGet(i) != 0)
         {
             return false;
         }
@@ -878,7 +879,7 @@ void func_80035ED0(void) // 0x80035ED0
 
     for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
     {
-        g_SysWork.bgmLayerVolumes_2748[i] = Sd_BgmLayerVolumeGet(i) << 5;
+        g_SysWork.bgmLayerVolumes_2748[i] = Sd_BgmLayerVolumeGet(i) << 5; // Conversion to Q12.
     }
 
     if (!func_80045BC8())
@@ -886,30 +887,30 @@ void func_80035ED0(void) // 0x80035ED0
         g_SysWork.bgmLayerVolumes_2748[0] = Q12(1.0f);
     }
 
-    g_SysWork.bgmLayerVolumes_2748[ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1] = 0;
+    g_SysWork.bgmLayerVolumes_2748[ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1] = Q12(0.0f);
 }
 
 void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) // 0x80035F4C
 {
-    s16  temp_v0;
-    s32  var_a0;
-    s32  var_a2;
-    s32  layerVol0;
-    s32  layerVol1;
-    s32  temp_s2;
-    s32  i;
-    s32  flagsCpy;
-    s32  areBgmLayersActive;
-    bool musicIsPlaying;
-    s32  var_t0;
-    bool cond0;
-    s32  temp_s7;
-    s16* bgmLaterVolumesPtr;
-    u8*  bgmLayerLimitCpy;
+    s16    temp_v0;
+    s32    var_a0;
+    s32    var_a2;
+    q19_12 curLayerVol;
+    q19_12 curLayerVol1;
+    s32    temp_s2;
+    s32    i;
+    s32    flagsCpy;
+    bool   isBgmLayerActive;
+    bool   isMusicPlayer;
+    q19_12 var_t0;
+    bool   cond0;
+    s32    endLayerIdx;
+    q3_12* bgmLayerVols;
+    u8*    bgmLayerLimitCpy;
 
     flagsCpy           = flags;
     bgmLayerLimitCpy   = bgmLayerLimitPtr;
-    bgmLaterVolumesPtr = g_SysWork.bgmLayerVolumes_2748;
+    bgmLayerVols = g_SysWork.bgmLayerVolumes_2748;
 
     if (bgmLayerLimitCpy == NULL)
     {
@@ -946,11 +947,13 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
         flagsCpy ^= BgmFlag_Unk0;
     }
 
-    for (i = 0, temp_s7 = 8; i < 9; i++)
+    for (i = 0, endLayerIdx = (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1);
+         i < ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748);
+         i++)
     {
-        layerVol0 = bgmLaterVolumesPtr[i];
+        curLayerVol = bgmLayerVols[i];
 
-        if (i == temp_s7) 
+        if (i == endLayerIdx) 
         {
             var_t0 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime1, 0.25f);
             if (g_SysWork.sysFlags_22A0 & SysFlag_1)
@@ -980,62 +983,61 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
             }
         }
 
-        var_a2 = var_a0 - layerVol0;
-
-        if (layerVol0 != var_a0) 
+        var_a2 = var_a0 - curLayerVol;
+        if (curLayerVol != var_a0) 
         {
             if (var_t0 < var_a2) 
             {
-                layerVol0 += var_t0;
+                curLayerVol += var_t0;
             } 
             else if (var_a2 >= -var_t0) 
             {
-                layerVol0 = var_a0;
+                curLayerVol = var_a0;
             }
             else
             {
-                layerVol0 -= var_t0;
+                curLayerVol -= var_t0;
             }
         }
 
-        bgmLaterVolumesPtr[i] = layerVol0;
+        bgmLayerVols[i] = curLayerVol;
     }
 
-    areBgmLayersActive = 0;
-    temp_v0            = Q12(1.0f) - bgmLaterVolumesPtr[8];
+    isBgmLayerActive = false;
+    temp_v0          = Q12(1.0f) - bgmLayerVols[8];
 
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
     {
-        layerVol1           = bgmLaterVolumesPtr[i];
-        areBgmLayersActive |= layerVol1 != 0;
+        curLayerVol1        = bgmLayerVols[i];
+        isBgmLayerActive |= curLayerVol1 != Q12(0.0f);
 
         if (i == 0) 
         {
-            layerVol1 = Q12_MULT_PRECISE(layerVol1, temp_v0);
+            curLayerVol1 = Q12_MULT_PRECISE(curLayerVol1, temp_v0);
         }
 
-        layerVol1 = Q12_MULT_PRECISE(layerVol1, Q12(0.0312f));
-        if (layerVol1 > Q12(0.0312f)) 
+        curLayerVol1 = Q12_MULT_PRECISE(curLayerVol1, Q12(0.0312f));
+        if (curLayerVol1 > Q12(0.0312f)) 
         {
-            layerVol1 = Q12(0.0312f);
+            curLayerVol1 = Q12(0.0312f);
         }
 
-        layerVol1 = (layerVol1 * bgmLayerLimitCpy[i]) >> 7;
-        if (layerVol1 > Q12(0.0312f)) 
+        curLayerVol1 = (curLayerVol1 * bgmLayerLimitCpy[i]) >> 7;
+        if (curLayerVol1 > Q12(0.0312f)) 
         {
-            layerVol1 = Q12(0.0312f);
+            curLayerVol1 = Q12(0.0312f);
         }
 
-        bgmLayerVolumes[i] = layerVol1;
+        bgmLayerVolumes[i] = curLayerVol1;
     }
 
-    musicIsPlaying = false;
+    isMusicPlayer = false;
     temp_s2        = func_80045BC8();
 
     cond0 = temp_s2;
     cond0 = temp_s2 != 0 && cond0 != 0xFFFF;
 
-    if (areBgmLayersActive) 
+    if (isBgmLayerActive) 
     {
         switch (D_800A99A0) 
         {
@@ -1072,7 +1074,7 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
                 break;
 
             case 0:
-                musicIsPlaying = true;
+                isMusicPlayer = true;
                 break;
         }
     } 
@@ -1086,14 +1088,14 @@ void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) //
     } 
     else if (D_800A99A0 == 0) 
     {
-        musicIsPlaying = true;
+        isMusicPlayer = true;
     }
 
-    if (musicIsPlaying)
+    if (isMusicPlayer)
     {
         if (cond0) 
         {
-            for (i = 0; i < 8; i++)
+            for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
             {
                 Sd_BgmLayerVolumeSet(i, bgmLayerVolumes[i]);
             }

@@ -399,7 +399,7 @@ void Sd_StopBgm(void);
 
 void Sd_StopBgmStep(void);
 
-/** Returns the current BGM audio layer volume based on the PSX's MIDI channel. */
+/** Returns the current BGM audio layer volume based on the PSX's MIDI channel. Returns Q7 value?? */
 u8 Sd_BgmLayerVolumeGet(u8 layerIdx);
 
 /** Manipulates the BGM audio layer volume. */
