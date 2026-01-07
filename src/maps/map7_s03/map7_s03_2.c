@@ -2731,7 +2731,7 @@ void func_800E62CC(void) // 0x800E62CC
         case 8:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(176.0f), Q12(253.0f), true, true);
 
-            g_SysWork.npcs_1A0[2].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.15f, 12);
+            g_SysWork.npcs_1A0[2].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.15f, 12);
             if (g_SysWork.npcs_1A0[2].timer_C6 > Q12(1.0f))
             {
                 g_SysWork.npcs_1A0[2].timer_C6 = Q12(1.0f);
