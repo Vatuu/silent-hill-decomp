@@ -247,7 +247,7 @@ Ai_Romper_Init                      = 0x800E6FAC; // type:func
 sharedFunc_800E5FC8_2_s02           = 0x800E719C; // type:func
 sharedFunc_800E60FC_2_s02           = 0x800E72D0; // type:func
 sharedFunc_800E6420_2_s02           = 0x800E75F4; // type:func
-sharedFunc_800E66E8_2_s02           = 0x800E78BC; // type:func
+Ai_Romper_Control           = 0x800E78BC; // type:func
 sharedFunc_800E6758_2_s02           = 0x800E792C; // type:func
 sharedFunc_800E83D4_2_s02           = 0x800E95A8; // type:func
 sharedFunc_800E8478_2_s02           = 0x800E964C; // type:func
@@ -305,7 +305,7 @@ sharedData_800F0268_2_s00           = 0x800EEED8;
 sharedData_800F03A8_2_s00           = 0x800EF018;
 sharedData_800F04C0_2_s00           = 0x800EF130;
 ROPMER_ANIM_INFOS                   = 0x800EF24C; // type:s32 unknown type
-sharedData_800ECC14_2_s02           = 0x800EF50C;
+g_Romper_ControlFuncs           = 0x800EF50C;
 
 //---------------------------------------------------------------
 //--- PA: 0x026934   VA: 0x800EFEAC   subsegment: .data, map6_s00

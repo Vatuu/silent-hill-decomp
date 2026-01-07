@@ -378,7 +378,7 @@ INCLUDE_ASM("maps/map4_s02/nonmatchings/map4_s02", sharedFunc_800E384C_2_s00); /
 
 #include "maps/shared/sharedFunc_800E6420_2_s02.h" // 0x800E681C
 
-#include "maps/shared/sharedFunc_800E66E8_2_s02.h" // 0x800E6AE4
+#include "maps/shared/Ai_Romper_Control.h" // 0x800E6AE4
 
 #include "maps/shared/sharedFunc_800E6758_2_s02.h" // 0x800E6B54
 

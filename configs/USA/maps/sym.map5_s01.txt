@@ -251,7 +251,7 @@ Ai_Romper_Init                      = 0x800E790C; // type:func
 sharedFunc_800E5FC8_2_s02           = 0x800E7AFC; // type:func
 sharedFunc_800E60FC_2_s02           = 0x800E7C30; // type:func
 sharedFunc_800E6420_2_s02           = 0x800E7F54; // type:func
-sharedFunc_800E66E8_2_s02           = 0x800E821C; // type:func
+Ai_Romper_Control           = 0x800E821C; // type:func
 sharedFunc_800E6758_2_s02           = 0x800E828C; // type:func
 sharedFunc_800E83D4_2_s02           = 0x800E9F08; // type:func
 sharedFunc_800E8478_2_s02           = 0x800E9FAC; // type:func
@@ -311,7 +311,7 @@ sharedData_800F0268_2_s00           = 0x800EEE58;
 sharedData_800F03A8_2_s00           = 0x800EEF98;
 sharedData_800F04C0_2_s00           = 0x800EF0B0;
 ROPMER_ANIM_INFOS                   = 0x800EF1CC; // type:s32 unknown type
-sharedData_800ECC14_2_s02           = 0x800EF48C;
+g_Romper_ControlFuncs           = 0x800EF48C;
 MAP_POINTS                          = 0x800EFCBC; // type:MapPoint2d
 
 //---------------------------------------------------------------

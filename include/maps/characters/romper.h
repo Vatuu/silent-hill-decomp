@@ -26,6 +26,17 @@ typedef enum _RomperAnim
     RomperAnim_19    = 19
 } e_RomperAnim;
 
+/** @brief Romper character control states. */
+typedef enum _RomperControl
+{
+    RomperControl_0 = 0,
+    RomperControl_1 = 1,
+    RomperControl_2 = 2,
+    RomperControl_3 = 3,
+    RomperControl_4 = 4,
+    RomperControl_5 = 5
+} e_RomperControl;
+
 /*s_AnimInfo ROMPER_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(0, false), { Q12(0) }, NO_VALUE, 0 },
     { NULL, ANIM_STATUS(0, false), false, ANIM_STATUS(0, false), { Q12(0) }, 0, 0 },
