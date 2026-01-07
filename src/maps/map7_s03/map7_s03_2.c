@@ -3473,12 +3473,12 @@ void func_800E787C(void) // 0x800E787C
 
         case 21:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(155.0f), Q12(224.0f), true, true);
-            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 3.0f, Q12_SHIFT);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 3.0f);
             break;
 
         case 22:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
-            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 3.0f, Q12_SHIFT);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 3.0f);
             break;
 
         case 23:
