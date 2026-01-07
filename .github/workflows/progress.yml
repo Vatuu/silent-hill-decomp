@@ -44,6 +44,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
             name: ${{ matrix.game_id }}_report
-            path: ./build/progress.json
+            path: ./build/USA/progress.json
       
 

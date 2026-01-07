@@ -1,0 +1,57 @@
+name: The MAP3_S13 map overlay German (MAP3_S13)
+sha1: d4e14f0c2a58f8fd9f9f3344641c626e4da1d308
+options:
+  basename: MAP3_S13.bin
+  target_path: assets/EUR/VIN2/MAP3_S13.BIN
+  base_path: ../../..
+  platform: psx
+  compiler: GCC
+
+  asm_path: asm/EUR/maps/map3_s13
+  src_path: src/maps/map3_s03
+  build_path: build/EUR
+
+  ld_script_path: linkers/EUR/maps/map3_s13.ld
+
+  find_file_boundaries: False
+  gp_value: 0x800236B4
+  global_vram_start: 0x80010000
+  global_vram_end: 0x80200000
+
+  o_as_suffix: False
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+
+  section_order: [".rodata", ".text", ".data", ".bss"]
+
+  symbol_addrs_path:
+  - configs/EUR/maps/sym.main.txt
+  - configs/EUR/maps/sym.bodyprog.txt
+  - configs/EUR/maps/sym.map3_s13.txt
+  reloc_addrs_path:
+  - configs/EUR/maps/rel.map3_s13.txt
+  
+  undefined_funcs_auto_path: linkers/EUR/maps/undefined_funcs_auto.map3_s13.txt
+  undefined_syms_auto_path: linkers/EUR/maps/undefined_syms_auto.map3_s13.txt
+
+  subalign: 4
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+- name: map3_s13
+  type: code
+  start: 0
+  vram: 0x800CB370
+  align: 4
+  subalign: 4
+  subsegments:
+  - [0, rodata]
+  - [0x1fc0, asm, map3_s03]
+  - [0xae28, data]
+- [0xf100]

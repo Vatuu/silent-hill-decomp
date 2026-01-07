@@ -89,7 +89,7 @@ void func_800D98E4(void) // 0x800D98E4
     func_8003640C(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
 }
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800D9924);
+INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800D9924);
 
 void func_800DA1A8(void) {}
 
@@ -1687,9 +1687,9 @@ void func_800DDEC8(void) // 0x800DDEC8
     }
 }
 
-INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02_2", D_800CD734);
+INCLUDE_RODATA("maps/map7_s02/nonmatchings/map7_s02_2", D_800CD734);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800DE1FC);
+INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800DE1FC);
 
 void func_800DF1E8(void) {}
 
@@ -2619,7 +2619,7 @@ void func_800E1398(void) // 0x800E1398
     }
 }
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800E15D4);
+INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800E15D4);
 
 void func_800E1DAC(void) // 0x800E1DAC
 {
@@ -2706,9 +2706,9 @@ void func_800E1FF4(void) // 0x800E1FF4
     func_80087540(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 22, 23);
 }
 
-INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02_2", D_800CD944);
+INCLUDE_RODATA("maps/map7_s02/nonmatchings/map7_s02_2", D_800CD944);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800E204C);
+INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800E204C);
 
 void func_800E2DC0(void) // 0x800E2DC0
 {
@@ -2866,7 +2866,7 @@ void func_800E2DEC(void) // 0x800E2DEC
     }
 }
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800E32E0);
+INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800E32E0);
 
 void Map_WorldObjectsInit(void) // 0x800E3804
 {
@@ -3006,10 +3006,10 @@ void Map_WorldObjectsInit(void) // 0x800E3804
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800E4528);
+INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800E4528);
 
-INCLUDE_ASM("asm/maps/map7_s02/nonmatchings/map7_s02_2", func_800E5628);
+INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800E5628);
 
-INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02_2", D_800CDC4C);
+INCLUDE_RODATA("maps/map7_s02/nonmatchings/map7_s02_2", D_800CDC4C);
 
-INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02_2", D_800CDC58);
+INCLUDE_RODATA("maps/map7_s02/nonmatchings/map7_s02_2", D_800CDC58);

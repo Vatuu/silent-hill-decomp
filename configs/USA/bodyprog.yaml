@@ -7,12 +7,12 @@ options:
   platform: psx
   compiler: GCC
 
-  asm_path: asm/bodyprog
+  asm_path: asm/USA/bodyprog
   src_path: src/bodyprog
-  asset_path: asm/bodyprog
-  build_path: build/
+  asset_path: asm/USA/bodyprog
+  build_path: build/USA
 
-  ld_script_path: linkers/bodyprog.ld
+  ld_script_path: linkers/USA/bodyprog.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -39,8 +39,8 @@ options:
   reloc_addrs_path:
     - configs/USA/rel.bodyprog.txt
 
-  undefined_funcs_auto_path: linkers/undefined_funcs_auto.bodyprog.txt
-  undefined_syms_auto_path: linkers/undefined_syms_auto.bodyprog.txt
+  undefined_funcs_auto_path: linkers/USA/undefined_funcs_auto.bodyprog.txt
+  undefined_syms_auto_path: linkers/USA/undefined_syms_auto.bodyprog.txt
 
   extensions_path: tools/splat_ext
 

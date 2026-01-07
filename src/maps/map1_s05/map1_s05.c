@@ -6,9 +6,9 @@
 #include "maps/map1/map1_s05.h"
 #include "maps/characters/split_head.h"
 
-INCLUDE_RODATA("asm/maps/map1_s05/nonmatchings/map1_s05", D_800C9578);
+INCLUDE_RODATA("maps/map1_s05/nonmatchings/map1_s05", D_800C9578);
 
-INCLUDE_RODATA("asm/maps/map1_s05/nonmatchings/map1_s05", g_MapOverlayHeader);
+INCLUDE_RODATA("maps/map1_s05/nonmatchings/map1_s05", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CAAD0_1_s05.h" // 0x800CAAD0
 

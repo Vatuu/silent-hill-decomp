@@ -85,7 +85,7 @@ void func_800D00D0(void) // 0x800D00D0
     func_8003640C(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
 }
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00_2", func_800D0110);
+INCLUDE_ASM("maps/map7_s00/nonmatchings/map7_s00_2", func_800D0110);
 
 void func_800D0994(void) {}
 
@@ -391,7 +391,7 @@ void func_800D0B64(void) // 0x800D0B64
     }
 }
 
-INCLUDE_ASM("asm/maps/map7_s00/nonmatchings/map7_s00_2", func_800D1604);
+INCLUDE_ASM("maps/map7_s00/nonmatchings/map7_s00_2", func_800D1604);
 
 void func_800D2700(void) // 0x800D2700
 {
@@ -460,4 +460,4 @@ void func_800D286C(void) // 0x800D286C
     }
 }
 
-INCLUDE_RODATA("asm/maps/map7_s00/nonmatchings/map7_s00_2", D_800CB61C);
+INCLUDE_RODATA("maps/map7_s00/nonmatchings/map7_s00_2", D_800CB61C);

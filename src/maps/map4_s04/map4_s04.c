@@ -5,9 +5,9 @@
 #include "maps/shared.h"
 #include "maps/map4/map4_s04.h"
 
-INCLUDE_RODATA("asm/maps/map4_s04/nonmatchings/map4_s04", D_800C9578);
+INCLUDE_RODATA("maps/map4_s04/nonmatchings/map4_s04", D_800C9578);
 
-INCLUDE_RODATA("asm/maps/map4_s04/nonmatchings/map4_s04", g_MapOverlayHeader);
+INCLUDE_RODATA("maps/map4_s04/nonmatchings/map4_s04", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CBC60
 

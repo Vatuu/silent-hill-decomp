@@ -47,7 +47,7 @@ s_SysWork_2510 D_800B142C = {
     .func_C  = func_8009E9D0,
 };
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E198);
+INCLUDE_ASM("bodyprog/nonmatchings/lib_unk/lib_8009E198", func_8009E198);
 
 s32 func_8009E230(s_SysWork_2514* arg0) // 0x8009E230
 {

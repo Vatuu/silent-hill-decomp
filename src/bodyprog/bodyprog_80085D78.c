@@ -5428,4 +5428,4 @@ void func_8008EA68(SVECTOR* arg0, VECTOR3* posXz, q19_12 posY) // 0x8008EA68
 
 void func_8008EF18(void) {} // 0x8008EF18
 
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80085D78", D_8002B2CC);
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80085D78", D_8002B2CC);

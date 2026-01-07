@@ -1,0 +1,62 @@
+name: Main Game Logic Overlay (BODYPROG)
+sha1: f748528af6da66184978a08c4bcbf924a306eaba
+options:
+  basename: BODYPROG.BIN
+  target_path: assets/EUR/1ST/BODYPROG.BIN
+  base_path: ../..
+  platform: psx
+  compiler: GCC
+
+  asm_path: asm/EUR/bodyprog
+  src_path: src/bodyprog
+  asset_path: asm/EUR/bodyprog
+  build_path: build/EUR
+
+  ld_script_path: linkers/EUR/bodyprog.ld
+
+  find_file_boundaries: False
+  gp_value: 0x800236B4
+  global_vram_start: 0x80010000
+  global_vram_end: 0x80200000
+
+  o_as_suffix: False
+  use_legacy_include_asm: False
+
+  asm_function_macro: glabel
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+
+  section_order: [".rodata", ".text", ".data", ".bss"]
+
+  symbol_addrs_path:
+    - configs/EUR/screens/sym.b_konami.txt
+    - configs/EUR/screens/sym.stream.txt
+    - configs/EUR/screens/sym.saveload.txt
+    - configs/EUR/screens/sym.options.txt
+    - configs/EUR/screens/sym.credits.txt
+    - configs/EUR/sym.bodyprog.txt
+    - configs/EUR/sym.main.txt
+  reloc_addrs_path:
+    - configs/EUR/rel.bodyprog.txt
+
+  undefined_funcs_auto_path: linkers/EUR/undefined_funcs_auto.bodyprog.txt
+  undefined_syms_auto_path: linkers/EUR/undefined_syms_auto.bodyprog.txt
+
+  subalign: 4
+
+  string_encoding: ASCII
+  data_string_encoding: ASCII
+  rodata_string_guesser_level: 2
+  data_string_guesser_level: 2
+segments:
+  - name: bodyprog
+    type: code
+    start: 0x0
+    vram: 0x80025690
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0,     rodata]
+      - [0x8678,  asm, bodyprog]
+      - [0x832e4, data]
+  - [0xA3500]

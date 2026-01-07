@@ -7,12 +7,12 @@ options:
   platform: psx
   compiler: GCC
 
-  asm_path: asm/screens/saveload
+  asm_path: asm/USA/screens/saveload
   src_path: src/screens/saveload
-  asset_path: asm/screens/saveload
-  build_path: build/
+  asset_path: asm/USA/screens/saveload
+  build_path: build/USA
 
-  ld_script_path: linkers/screens/saveload.ld
+  ld_script_path: linkers/USA/screens/saveload.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -35,8 +35,8 @@ options:
   reloc_addrs_path:
     - configs/USA/screens/rel.saveload.txt
 
-  undefined_funcs_auto_path: linkers/screens/undefined_funcs_auto.saveload.txt
-  undefined_syms_auto_path: linkers/screens/undefined_syms_auto.saveload.txt
+  undefined_funcs_auto_path: linkers/USA/screens/undefined_funcs_auto.saveload.txt
+  undefined_syms_auto_path: linkers/USA/screens/undefined_syms_auto.saveload.txt
 
   extensions_path: tools/splat_ext
 

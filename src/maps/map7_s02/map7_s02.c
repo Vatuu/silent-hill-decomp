@@ -6,9 +6,9 @@
 #include "maps/map7/map7_s02.h"
 #include "maps/characters/stalker.h"
 
-INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", D_800C9578);
+INCLUDE_RODATA("maps/map7_s02/nonmatchings/map7_s02", D_800C9578);
 
-INCLUDE_RODATA("asm/maps/map7_s02/nonmatchings/map7_s02", g_MapOverlayHeader);
+INCLUDE_RODATA("maps/map7_s02/nonmatchings/map7_s02", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CDC64
 

@@ -3293,7 +3293,7 @@ void func_8005B55C(GsCOORDINATE2* coord) // 0x8005B55C
     }
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005B62C); // 0x8005B62C
+INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_80055028", func_8005B62C); // 0x8005B62C
 
 void func_8005BF0C(s16 unused, s16 x, s16 y) // 0x8005BF0C
 {
@@ -3687,10 +3687,10 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 offsetX, q3_12 
     return ret;
 }
 
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028544);
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", D_80028544);
 
 // Important for combat.
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_8005CD38); // 0x8005CD38
+INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_80055028", func_8005CD38); // 0x8005CD38
 
 bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* unkOffset, u32 npcIdx, q19_12 angleConstraint) // 0x8005D50C
 {
@@ -6926,9 +6926,9 @@ void func_80066E7C(void) // 0x80066E7C
     DrawSync(SyncMode_Wait);
 }
 
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", hack_D_80028A18_fix);
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", hack_D_80028A18_fix);
 
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028A20);
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", D_80028A20);
 
 void GameState_MapScreen_Update(void) // 0x80066EB0
 {
@@ -7834,7 +7834,7 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u
     return true;
 }
 
-INCLUDE_ASM("asm/bodyprog/nonmatchings/bodyprog_80055028", func_800692A4); // 0x800692A4
+INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_80055028", func_800692A4); // 0x800692A4
 
 void func_800697EC(void) // 0x800697EC
 {
@@ -7986,9 +7986,9 @@ s32 func_80069B24(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0
     return var1; 
 }
 
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028B2C);
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", D_80028B2C);
 
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_80028B34);
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", D_80028B34);
 
 s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 arg4) // 0x80069BA8
 {
@@ -11804,4 +11804,4 @@ const s_AnimInfo D_80028B94[] = {
 /* 149 */ { Anim_Update0, ANIM_STATUS(36, true), false, ANIM_STATUS(36, true), { Q12(20.0f) }, 574, 579 }
 };
 
-INCLUDE_RODATA("asm/bodyprog/nonmatchings/bodyprog_80055028", D_800294F4);
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", D_800294F4);

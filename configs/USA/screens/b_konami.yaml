@@ -7,12 +7,12 @@ options:
   platform: psx
   compiler: GCC
 
-  asm_path: asm/screens/b_konami
+  asm_path: asm/USA/screens/b_konami
   src_path: src/screens/b_konami
-  asset_path: asm/screens/b_konami
-  build_path: build
+  asset_path: asm/USA/screens/b_konami
+  build_path: build/USA
 
-  ld_script_path: linkers/screens/b_konami.ld
+  ld_script_path: linkers/USA/screens/b_konami.ld
 
   find_file_boundaries: False
   gp_value: 0x80022BB0
@@ -36,8 +36,8 @@ options:
   reloc_addrs_path:
     - configs/USA/screens/rel.b_konami.txt
 
-  undefined_funcs_auto_path: linkers/screens/undefined_funcs_auto.b_konami.txt
-  undefined_syms_auto_path: linkers/screens/undefined_syms_auto.b_konami.txt
+  undefined_funcs_auto_path: linkers/USA/screens/undefined_funcs_auto.b_konami.txt
+  undefined_syms_auto_path: linkers/USA/screens/undefined_syms_auto.b_konami.txt
 
   extensions_path: tools/splat_ext
 
