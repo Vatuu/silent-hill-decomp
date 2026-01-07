@@ -3567,7 +3567,7 @@ void func_800E787C(void) // 0x800E787C
 
         case 32:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(225.0f), Q12(259.0f), true, true);
-            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f);
             if (D_800F483C > Q12(100.0f))
             {
                 D_800F483C = Q12(100.0f);
@@ -3577,7 +3577,7 @@ void func_800E787C(void) // 0x800E787C
         case 33:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(260.0f), Q12(325.0f), false, true);
 
-            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f);
             if (D_800F483C > Q12(100.0f))
             {
                 D_800F483C = Q12(100.0f);
@@ -3775,7 +3775,7 @@ void func_800E86BC(void) // 0x800E86BC
 
         case 9:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(161.0f), Q12(291.0f), true, true);
-            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f);
             if (D_800F483C > Q12(100.0f))
             {
                 D_800F483C = Q12(100.0f);
