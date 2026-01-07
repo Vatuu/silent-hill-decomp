@@ -69,7 +69,7 @@ if __name__ == "__main__":
         overlayFile.close()
     elif sys.argv[1] == "screens/b_konami" or sys.argv[1] == "build/USA/out/1ST/B_KONAMI.BIN":
         # Random pad bytes between b_konami.c .data and lzss.c .data.
-        overlayFile = open("build/out/1ST/B_KONAMI.BIN", "r+b")
+        overlayFile = open("build/USA/out/1ST/B_KONAMI.BIN", "r+b")
         overlayFile.seek(0xF79)
         overlayFile.write(b'\x1F\xCE\xF3')
     elif sys.argv[1] == "maps/map3_s06" or sys.argv[1] == "build/USA/out/VIN/MAP3_S06.BIN":

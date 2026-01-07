@@ -7,9 +7,9 @@
 #include "maps/characters/air_screamer.h"
 #include "maps/characters/groaner.h"
 
-INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800C9578);
+INCLUDE_RODATA("maps/map2_s00/nonmatchings/map2_s00", D_800C9578);
 
-INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", g_MapOverlayHeader);
+INCLUDE_RODATA("maps/map2_s00/nonmatchings/map2_s00", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CD5C0
 
@@ -37,19 +37,19 @@ INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", g_MapOverlayHeader);
 
 #include "../src/maps/characters/player.c"
 
-INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CA860);
+INCLUDE_RODATA("maps/map2_s00/nonmatchings/map2_s00", D_800CA860);
 
-INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CA864);
+INCLUDE_RODATA("maps/map2_s00/nonmatchings/map2_s00", D_800CA864);
 
-INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CA870);
+INCLUDE_RODATA("maps/map2_s00/nonmatchings/map2_s00", D_800CA870);
 
-INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CA888);
+INCLUDE_RODATA("maps/map2_s00/nonmatchings/map2_s00", D_800CA888);
 
-INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CA8A0);
+INCLUDE_RODATA("maps/map2_s00/nonmatchings/map2_s00", D_800CA8A0);
 
-INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", D_800CA8B8);
+INCLUDE_RODATA("maps/map2_s00/nonmatchings/map2_s00", D_800CA8B8);
 
-INCLUDE_RODATA("asm/maps/map2_s00/nonmatchings/map2_s00", sharedData_800CAA98_0_s01);
+INCLUDE_RODATA("maps/map2_s00/nonmatchings/map2_s00", sharedData_800CAA98_0_s01);
 
 // TODO: Move this line into separate `Chara_AirScreamer` split.
 // TODO: Most of the code below also belongs to `air_screamer.c`, move there once `INCLUDE_ASM` gaps are matched.
@@ -341,7 +341,7 @@ void func_800DBF14(void) {}
 
 #include "maps/shared/sharedFunc_800E33DC_2_s00.h" // 0x800E33DC
 
-INCLUDE_ASM("asm/maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800E384C_2_s00); // 0x800E384C - `map2_s00` version differs to the 4 other maps which share `Ai_Groaner_Update`.
+INCLUDE_ASM("maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800E384C_2_s00); // 0x800E384C - `map2_s00` version differs to the 4 other maps which share `Ai_Groaner_Update`.
 
 #include "maps/shared/sharedFunc_800E39D8_2_s00.h" // 0x800E39D8
 
