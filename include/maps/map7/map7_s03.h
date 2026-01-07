@@ -207,6 +207,8 @@ void func_800D7144(VECTOR3*);
 
 void func_800D71A4(s32 arg0);
 
+void func_800D74F4(s32 x, s32 z, s32 val);
+
 void func_800D7CEC(void);
 
 void func_800D7CF8(void);
@@ -222,6 +224,8 @@ void func_800D7EF0(void);
 PACKET* func_800D7F10(void);
 
 void func_800D7F20(u8* arg0);
+
+void func_800D82AC(void* arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void func_800D8858(s32);
 

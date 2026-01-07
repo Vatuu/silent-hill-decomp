@@ -1964,12 +1964,12 @@ INCLUDE_ASM("maps/map7_s01/nonmatchings/map7_s01_2", func_800DC0AC);
 
 INCLUDE_ASM("maps/map7_s01/nonmatchings/map7_s01_2", func_800DCE20);
 
-void func_800DD348(void* arg0, s32 index, u8 value)
+void func_800DD348(void* unused, s32 idx, u8 val) // 0x800DD348
 {
     s32 offset;
 
-    offset = index * 12;
-    ((u8*)((u8*)&g_MapOverlayHeader + 0x252))[offset] = value;
+    offset = idx * 12;
+    ((u8*)((u8*)&g_MapOverlayHeader + 0x252))[offset] = val;
 }
 
 void Map_WorldObjectsInit(void) // 0x800DD368

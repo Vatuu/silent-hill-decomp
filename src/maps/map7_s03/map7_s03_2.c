@@ -141,48 +141,46 @@ void func_800D71A4(s32 arg0) // 0x800D71A4
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D71B0);
 
-void func_800D74F4(s32 x, s32 z, s32 val)
+void func_800D74F4(s32 x, s32 z, s32 val) // 0x800D74F4
 {
-    u8* base_ptr = (u8*)0x80167600;
-    s16 x_idx;
-    s16 z_calc;
+    u8* basePtr = (u8*)0x80167600;
+    s16 idxX;
+    s16 newZDiv8;
+    s16 newX = x + 164;
+    s16 newZ = z + 100;
 
-    s16 sx = x + 164;
-    s16 sz = z + 100;
+    newX += (newX > 0) ? 4 : -4;
+    idxX = newX / 8;
 
-    sx += (sx > 0) ? 4 : -4;
-    x_idx = sx / 8;
+    newZ += (newZ > 0) ? 4 : -4;
+    newZDiv8 = newZ / 8;
 
-    sz += (sz > 0) ? 4 : -4;
-    z_calc = sz / 8;
-
-    if ((u16)(x_idx - 1) < 40 && z_calc > 0 && z_calc < 25)
+    if ((u16)(idxX - 1) < 40 && newZDiv8 > 0 && newZDiv8 < 25)
     {
-        s32 offset_acc;
-        s32 z_term;
-        u8* dst_ptr;
-        s32 final_val;
+        s32 offsetAcc;
+        s32 termZ;
+        u8* destPtr;
+        s32 finalVal;
 
-        offset_acc = (s16)x_idx;
-        z_term = z_calc * 41;
-        offset_acc = offset_acc + z_term;
-        offset_acc = offset_acc + 93;
+        offsetAcc = (s16)idxX;
+        termZ = newZDiv8 * 41;
+        offsetAcc = offsetAcc + termZ;
+        offsetAcc = offsetAcc + 93;
 
-        dst_ptr = base_ptr + offset_acc;
+        destPtr = basePtr + offsetAcc;
 
-        final_val = val >> 4;
+        finalVal = val >> 4;
 
-        if (final_val < 0x100)
+        if (finalVal < 0x100)
         {
-            *dst_ptr = (u8)final_val;
+            *destPtr = (u8)finalVal;
         }
         else
         {
-            *dst_ptr = 0xFF;
+            *destPtr = 0xFF;
         }
     }
 }
-
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D75D0);
 
@@ -238,35 +236,27 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7F2C);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D822C);
 
-
-void func_800D82AC(void* arg0, s32 arg1, s32 arg2, s32 arg3)
+void func_800D82AC(void* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800D82AC
 {
     s32 val1;
     s32 val2;
-    s16 s_arg1;
-    s16 s_arg2;
+    s16 arg1Cpy;
+    s16 arg2Cpy;
 
-    s_arg1 = (s16)arg1;
-    s_arg2 = (s16)arg2;
+    arg1Cpy = (s16)arg1;
+    arg2Cpy = (s16)arg2;
 
-    val1 = FP_MULTIPLY_PRECISE(arg3, 3000, Q12_SHIFT);
-    val2 = FP_MULTIPLY_PRECISE(arg3, 5000, Q12_SHIFT);
+    val1 = Q12_MULT_PRECISE(arg3, 3000);
+    val2 = Q12_MULT_PRECISE(arg3, 5000);
 
-    func_800D7F2C(arg0, 16, D_800EBC14, val2, val1, s_arg1, s_arg2, 0x141414);
-    func_800D7F2C(arg0, 12, 0,          val2, val1, s_arg1, s_arg2, 0x141414);
+    func_800D7F2C(arg0, 16, D_800EBC14, val2, val1, arg1Cpy, arg2Cpy, 0x141414);
+    func_800D7F2C(arg0, 12, 0,          val2, val1, arg1Cpy, arg2Cpy, 0x141414);
 
     D_800EBC14 += 4;
 
-    func_800D7F2C(
-        arg0,
-        4,
-        -512,
-        FP_MULTIPLY_PRECISE(arg3, 15000, Q12_SHIFT),
-        FP_MULTIPLY_PRECISE(arg3, 1500, Q12_SHIFT),
-        s_arg1,
-        s_arg2,
-        0x102020
-    );
+    func_800D7F2C(arg0, 4, -512,
+                  Q12_MULT_PRECISE(arg3, 15000), Q12_MULT_PRECISE(arg3, 1500),
+                  arg1Cpy, arg2Cpy, 0x102020);
 }
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8438);
