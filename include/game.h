@@ -1470,12 +1470,12 @@ typedef struct _PropertiesRomper
 {
     s32    flags_E8; /** `e_RomperFlags` */
     s8     unk_EC[4];
-    s16    field_F0;
+    q3_12  field_F0; // Move speed accumulation for this tick.
     q3_12  rotationY_F2;
-    s32    field_F4;
+    q19_12 field_F4; // Relative anim time?
     s8     unk_F8[4];
-    q19_12 positionX_FC;
-    q19_12 positionZ_100;
+    q19_12 positionX_FC;  // } Target position?
+    q19_12 positionZ_100; // }
     s8     unk_104[4];
     q19_12 positionX_108;
     u8     field_10C;

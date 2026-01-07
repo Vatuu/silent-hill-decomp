@@ -1833,8 +1833,8 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
+    q19_12 field_0; // Relative anim time?
+    s32    field_4;
 } s_sharedData_800ED2D4_2_s02;
 
 extern s_MapHeader_field_5C sharedData_800D8568_1_s05;
@@ -2369,14 +2369,13 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper);
 
 void Ai_Romper_Control(s_SubCharacter* romper);
 
-// Or romper?
-void sharedFunc_800E6758_2_s02(s_SubCharacter* groaner);
+void Ai_Romper_Control_1(s_SubCharacter* romper);
 
-void sharedFunc_800E83D4_2_s02(s_SubCharacter* chara);
+void Ai_Romper_Control_8(s_SubCharacter* romper);
 
-void sharedFunc_800E8478_2_s02(s_SubCharacter* chara);
+void Ai_Romper_Control_9(s_SubCharacter* romper);
 
-void sharedFunc_800E86C0_2_s02(s_SubCharacter* chara);
+void Ai_Romper_Control_11(s_SubCharacter* romper);
 
 void sharedFunc_800E8730_2_s02(s_SubCharacter* romper);
 

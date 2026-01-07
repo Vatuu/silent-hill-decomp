@@ -47,14 +47,18 @@ typedef enum _RomperAnim
 /** @brief Romper character control states. */
 typedef enum _RomperControl
 {
-    RomperControl_0 = 0,
-    RomperControl_1 = 1,
-    RomperControl_2 = 2,
-    RomperControl_3 = 3,
-    RomperControl_4 = 4,
-    RomperControl_5 = 5,
-    RomperControl_6 = 6,
-    RomperControl_7 = 7
+    RomperControl_None = 0, // Assigned function is `NULL`, different from other charas. Check.
+    RomperControl_1    = 1,
+    RomperControl_2    = 2,
+    RomperControl_3    = 3,
+    RomperControl_4    = 4,
+    RomperControl_5    = 5,
+    RomperControl_6    = 6,
+    RomperControl_7    = 7,
+    RomperControl_8    = 8,
+    RomperControl_9    = 9,
+    RomperControl_10   = 10,
+    RomperControl_11   = 11
 } e_RomperControl;
 
 /*s_AnimInfo ROMPER_ANIM_INFOS[] = {

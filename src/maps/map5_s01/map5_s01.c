@@ -404,7 +404,7 @@ INCLUDE_ASM("maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800E384C_2_s00); /
 
 #include "maps/shared/Ai_Romper_Control.h" // 0x800E821C
 
-#include "maps/shared/sharedFunc_800E6758_2_s02.h" // 0x800E828C
+#include "maps/shared/Ai_Romper_Control_1.h" // 0x800E828C
 
 #include "maps/shared/sharedFunc_800E6878_2_s02.h" // 0x800E83AC
 
@@ -418,13 +418,13 @@ INCLUDE_ASM("maps/map5_s01/nonmatchings/map5_s01", func_800E9B70);
 
 INCLUDE_ASM("maps/map5_s01/nonmatchings/map5_s01", func_800E9C8C);
 
-#include "maps/shared/sharedFunc_800E83D4_2_s02.h" // 0x800E9F08
+#include "maps/shared/Ai_Romper_Control_8.h" // 0x800E9F08
 
-#include "maps/shared/sharedFunc_800E8478_2_s02.h" // 0x800E9FAC
+#include "maps/shared/Ai_Romper_Control_9.h" // 0x800E9FAC
 
 INCLUDE_ASM("maps/map5_s01/nonmatchings/map5_s01", func_800E9FB4);
 
-#include "maps/shared/sharedFunc_800E86C0_2_s02.h" // 0x800EA1F4
+#include "maps/shared/Ai_Romper_Control_11.h" // 0x800EA1F4
 
 INCLUDE_ASM("maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800E8730_2_s02); // 0x800EA264
 
