@@ -1466,7 +1466,7 @@ STATIC_ASSERT_SIZEOF(s_PropertiesPuppetNurse, 64);
 /** @brief Romper character properties. */
 typedef struct _PropertiesRomper
 {
-    s32    field_E8;
+    s32    flags_E8; /** `e_RomperFlags` */
     s8     unk_EC[4];
     s16    field_F0;
     q3_12  rotationY_F2;
@@ -1480,11 +1480,11 @@ typedef struct _PropertiesRomper
     q19_12 positionZ_110;
     u8     field_114;
     u8     field_115;
-    s16    field_116;
-    s16    field_118;
+    q3_12  field_116;
+    q3_12  timer_118;
     u8     field_11A;
     s8     unk_11B;
-    s16    field_11C;
+    q3_12  timer_11C;
     s8     unk_11E[2];
     s32    field_120;
 } s_PropertiesRomper;

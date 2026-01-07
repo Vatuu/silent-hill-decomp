@@ -32,7 +32,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
     prevControlState = romper->model_0.controlState_2;
 
     romper->health_B0 = MAX(romper->health_B0 - romper->damage_B4.amount_C, Q12(0.0f));
-    romperProps.field_E8 |= RomperFlag_7;
+    romperProps.flags_E8 |= RomperFlag_7;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
@@ -120,11 +120,11 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
                 break;
         }
     }
-    else if (!(romperProps.field_E8 & RomperFlag_2))
+    else if (!(romperProps.flags_E8 & RomperFlag_2))
     {
         romper->model_0.controlState_2         = RomperControl_7;
         romper->model_0.anim_4.status_0        = ANIM_STATUS(RomperAnim_11, false);
-        romperProps.field_E8 |= RomperFlag_2;
+        romperProps.flags_E8 |= RomperFlag_2;
     }
 
     romperProps.field_10E    = 0;
@@ -136,9 +136,9 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
 
     if (prevControlState != romper->model_0.controlState_2)
     {
-        if (romperProps.field_E8 & RomperFlag_11)
+        if (romperProps.flags_E8 & RomperFlag_11)
         {
-            romperProps.field_E8 &= ~RomperFlag_11;
+            romperProps.flags_E8 &= ~RomperFlag_11;
             g_SysWork.field_2284[3] &= 0xFFFC;
         }
     }

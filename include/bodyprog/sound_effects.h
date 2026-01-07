@@ -106,7 +106,11 @@ typedef enum _SfxId
     Sfx_Unk1397 = 1397, // }
     Sfx_Unk1398 = 1398, // } Pair.
     Sfx_Unk1399 = 1399, // }
+    Sfx_Unk1400 = 1400,
+    Sfx_Unk1401 = 1401,
+    Sfx_Unk1402 = 1402,
 
+    Sfx_Unk1404 = 1404,
     Sfx_Unk1405 = 1405,
 
     Sfx_Unk1416 = 1416,

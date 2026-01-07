@@ -170,7 +170,6 @@ void func_800D74F4(s32 x, s32 z, s32 val) // 0x800D74F4
         destPtr = basePtr + offsetAcc;
 
         finalVal = val >> 4;
-
         if (finalVal < 0x100)
         {
             *destPtr = (u8)finalVal;

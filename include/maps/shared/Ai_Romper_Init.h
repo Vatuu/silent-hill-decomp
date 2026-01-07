@@ -9,7 +9,7 @@ void Ai_Romper_Init(s_SubCharacter* romper)
 
     #define romperProps romper->properties_E4.romper
 
-    romperProps.field_E8           = 0;
+    romperProps.flags_E8           = RomperFlag_None;
     romper->model_0.anim_4.alpha_A = Q12(0.0f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
