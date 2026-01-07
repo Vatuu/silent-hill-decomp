@@ -1,15 +1,15 @@
 void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
 {
-    s_Collision sp10;
+    s_Collision coll;
     s32         temp_v1_3;
     s32         var_a1;
-    s32         temp_s1;
+    s32         prevControlState;
 
-    if (romper->health_B0 > 0)
+    if (romper->health_B0 > Q12(0.0f))
     {
-        Collision_Get(&sp10, romper->position_18.vx, romper->position_18.vz);
+        Collision_Get(&coll, romper->position_18.vx, romper->position_18.vz);
 
-        if (sp10.field_8 == 0xC)
+        if (coll.field_8 == 12)
         {
             if (Rng_GenerateInt(0x4000, 0x7FFF) < romper->position_18.vy)
             {
@@ -18,19 +18,18 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
         }
     }
 
-    if (romper->damage_B4.amount_C == 0 || romper->health_B0 <= 0)
+    if (romper->damage_B4.amount_C == Q12(0.0f) || romper->health_B0 <= Q12(0.0f))
     {
-        romper->damage_B4.amount_C      = 0;
-        romper->damage_B4.position_0.vz = 0;
-        romper->damage_B4.position_0.vy = 0;
-        romper->damage_B4.position_0.vx = 0;
+        romper->damage_B4.amount_C      = Q12(0.0f);
+        romper->damage_B4.position_0.vz = Q12(0.0f);
+        romper->damage_B4.position_0.vy = Q12(0.0f);
+        romper->damage_B4.position_0.vx = Q12(0.0f);
         return;
     }
 
-    temp_s1 = romper->model_0.controlState_2;
+    prevControlState = romper->model_0.controlState_2;
 
-    romper->health_B0 = MAX(romper->health_B0 - romper->damage_B4.amount_C, 0);
-
+    romper->health_B0 = MAX(romper->health_B0 - romper->damage_B4.amount_C, Q12(0.0f));
     romper->properties_E4.romper.field_E8 |= 0x80;
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
@@ -58,33 +57,33 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
                 romper->model_0.anim_4.time_4 = 0x6D000;
 
             case 27:
-                temp_v1_3 = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 0x6D;
+                temp_v1_3 = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 109;
 
                 if (temp_v1_3 > 0)
                 {
                     if (temp_v1_3 < 7)
                     {
-                        romper->model_0.anim_4.status_0 = 0x25;
+                        romper->model_0.anim_4.status_0 = 37;
                     }
-                    else if (temp_v1_3 < 0xB)
+                    else if (temp_v1_3 < 11)
                     {
-                        romper->model_0.anim_4.status_0 = 0x10;
+                        romper->model_0.anim_4.status_0 = 16;
                     }
-                    else if (temp_v1_3 > 0x11)
+                    else if (temp_v1_3 > 17)
                     {
-                        romper->model_0.anim_4.status_0 = 0xE;
+                        romper->model_0.anim_4.status_0 = 14;
                     }
                     else
                     {
-                        romper->model_0.anim_4.status_0 = 0x23;
+                        romper->model_0.anim_4.status_0 = 35;
                     }
                 }
                 else
                 {
-                    romper->model_0.anim_4.status_0 = 0xE;
+                    romper->model_0.anim_4.status_0 = 14;
                 }
 
-                if (!(romper->model_0.anim_4.status_0 & 1))
+                if (!(romper->model_0.anim_4.status_0 & 0x1))
                 {
                     romper->model_0.controlState_2 = 6;
                 }
@@ -94,19 +93,19 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
                 romper->model_0.anim_4.time_4 = 0x93000;
 
             case 31:
-                temp_v1_3 = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 0x93;
+                temp_v1_3 = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 147;
 
                 if (temp_v1_3 < 2)
                 {
-                    romper->model_0.anim_4.status_0 = 0xE;
+                    romper->model_0.anim_4.status_0 = 14;
                 }
-                else if (temp_v1_3 >= 0xA)
+                else if (temp_v1_3 >= 10)
                 {
-                    romper->model_0.anim_4.status_0 = 0xE;
+                    romper->model_0.anim_4.status_0 = 14;
                 }
                 else
                 {
-                    romper->model_0.anim_4.status_0 = 0x10;
+                    romper->model_0.anim_4.status_0 = 16;
                 }
 
                 romper->model_0.controlState_2 = 6;
@@ -117,25 +116,25 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
             case 28:
             case 29:
                 romper->model_0.controlState_2  = 6;
-                romper->model_0.anim_4.status_0 = 0xE;
+                romper->model_0.anim_4.status_0 = 14;
                 break;
         }
     }
     else if (!(romper->properties_E4.romper.field_E8 & 4))
     {
         romper->model_0.controlState_2         = 7;
-        romper->model_0.anim_4.status_0        = 0x16;
+        romper->model_0.anim_4.status_0        = 22;
         romper->properties_E4.romper.field_E8 |= 4;
     }
 
     romper->properties_E4.romper.field_10E    = 0;
     romper->properties_E4.romper.rotationY_F2 = 0x1000;
-    romper->damage_B4.amount_C                = 0;
-    romper->damage_B4.position_0.vz           = 0;
-    romper->damage_B4.position_0.vy           = 0;
-    romper->damage_B4.position_0.vx           = 0;
+    romper->damage_B4.amount_C                = Q12(0.0f);
+    romper->damage_B4.position_0.vz           = Q12(0.0f);
+    romper->damage_B4.position_0.vy           = Q12(0.0f);
+    romper->damage_B4.position_0.vx           = Q12(0.0f);
 
-    if (temp_s1 != romper->model_0.controlState_2)
+    if (prevControlState != romper->model_0.controlState_2)
     {
         if (romper->properties_E4.romper.field_E8 & 0x800)
         {

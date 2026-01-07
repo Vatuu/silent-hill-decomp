@@ -106,7 +106,7 @@
  * @return Fixed-point result of `a` divided by `b`.
  */
 #define FP_DIVIDE(a, b, shift) \
-    (((a) << shift) / (b))
+    (((a) << (shift)) / (b))
 
 /** @brief Squares a fixed-point value, using 64-bit intermediates for higher precision.
  *

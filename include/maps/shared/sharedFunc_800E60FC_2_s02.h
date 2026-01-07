@@ -13,22 +13,22 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
             break;
 
         case 9:
-            sharedFunc_800E5FC8_2_s02(romper, 0xF, 2, &romper->properties_E4.romper.field_114);
+            sharedFunc_800E5FC8_2_s02(romper, 15, 2, &romper->properties_E4.romper.field_114);
             break;
 
         case 23:
-            sharedFunc_800E5FC8_2_s02(romper, 0x5D, 2, &romper->properties_E4.romper.field_115);
-            sharedFunc_800E5FC8_2_s02(romper, 0x5D, 3, &romper->properties_E4.romper.field_114);
+            sharedFunc_800E5FC8_2_s02(romper, 93, 2, &romper->properties_E4.romper.field_115);
+            sharedFunc_800E5FC8_2_s02(romper, 93, 3, &romper->properties_E4.romper.field_114);
             break;
 
         case 27:
-            sharedFunc_800E5FC8_2_s02(romper, 0x6D, 7, &romper->properties_E4.romper.field_115);
-            sharedFunc_800E5FC8_2_s02(romper, 0x6D, 0x14, &romper->properties_E4.romper.field_114);
+            sharedFunc_800E5FC8_2_s02(romper, 109, 7, &romper->properties_E4.romper.field_115);
+            sharedFunc_800E5FC8_2_s02(romper, 109, 20, &romper->properties_E4.romper.field_114);
             break;
 
         case 29:
-            sharedFunc_800E5FC8_2_s02(romper, 0x83, 8, &romper->properties_E4.romper.field_115);
-            sharedFunc_800E5FC8_2_s02(romper, 0x83, 0xF, &romper->properties_E4.romper.field_114);
+            sharedFunc_800E5FC8_2_s02(romper, 131, 8, &romper->properties_E4.romper.field_115);
+            sharedFunc_800E5FC8_2_s02(romper, 131, 15, &romper->properties_E4.romper.field_114);
             break;
 
         default:
@@ -37,12 +37,12 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
             break;
     }
 
-    if (romper->properties_E4.romper.field_116 != 0)
+    if (romper->properties_E4.romper.field_116 != Q12(0.0f))
     {
         romper->properties_E4.romper.field_116 -= g_DeltaTime0;
-        if (romper->properties_E4.romper.field_116 < 0)
+        if (romper->properties_E4.romper.field_116 < Q12(0.0f))
         {
-            romper->properties_E4.romper.field_116 = 0;
+            romper->properties_E4.romper.field_116 = Q12(0.0f);
         }
     }
     else if (romper->properties_E4.romper.field_E8 & 0x80)
@@ -53,7 +53,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
 
     romper->properties_E4.romper.field_E8 &= ~0x80;
 
-    if (romper->model_0.anim_4.status_0 == 0xB)
+    if (romper->model_0.anim_4.status_0 == 11)
     {
         if (romper->properties_E4.romper.field_118 == 0)
         {
@@ -81,7 +81,9 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
         romper->properties_E4.romper.field_11A = 0;
     }
 
-    if (romper->model_0.anim_4.status_0 != 0xB && romper->properties_E4.romper.field_116 == 0 && romper->health_B0 > 0)
+    if (romper->model_0.anim_4.status_0 != 11 &&
+        romper->properties_E4.romper.field_116 == 0 &&
+        romper->health_B0 > Q12(0.0f))
     {
         if (romper->properties_E4.romper.field_11C != 0)
         {
@@ -99,10 +101,10 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
             }
             else
             {
-                var_s1 = 0x78;
+                var_s1 = 120;
             }
-            func_8005DC1C(0x57C, &romper->position_18, (var_s1 + Rng_TestProbabilityBits(4)) >> 1, 0);
 
+            func_8005DC1C(0x57C, &romper->position_18, (var_s1 + Rng_TestProbabilityBits(4)) >> 1, 0);
             romper->properties_E4.romper.field_11C = Rng_GenerateInt(0x4800, 0x67FF);
         }
     }

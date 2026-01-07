@@ -20,32 +20,32 @@ extern s_func_80070400_1 sharedData_800F0268_2_s00[];
 extern s_func_80070400_1 sharedData_800F03A8_2_s00[];
 extern s_func_80070400_1 sharedData_800F04C0_2_s00[];
 
-#define CopyData(arg0, data)                      \
-    {                                             \
-        s32 __temp;                               \
-        s32 __temp2;                              \
-                                                  \
-        arg0->field_C8.field_0 = data.field_0;    \
-                                                  \
-        __temp                 = data.field_2;    \
-        arg0->field_C8.field_2 = __temp;          \
-        arg0->field_C8.field_4 = data.field_4;    \
-                                                  \
-        __temp                   = data.field_6;  \
-        arg0->field_C8.field_6   = __temp;        \
-        arg0->field_D8.offsetX_4 = data.field_10; \
-                                                  \
-        __temp                   = data.field_12; \
-        arg0->field_D8.offsetZ_6 = __temp;        \
-        arg0->field_D4.radius_0  = data.field_8;  \
-        arg0->field_D8.offsetX_0 = data.field_C;  \
-                                                  \
-        __temp                   = data.field_E;  \
-        arg0->field_D8.offsetZ_2 = __temp;        \
-                                                  \
-        __temp2                = data.field_A;    \
-        arg0->field_D4.field_2 = __temp2;         \
-    }
+#define CopyData(arg0, data)                  \
+{                                             \
+    s32 __temp;                               \
+    s32 __temp2;                              \
+                                              \
+    arg0->field_C8.field_0 = data.field_0;    \
+                                              \
+    __temp                 = data.field_2;    \
+    arg0->field_C8.field_2 = __temp;          \
+    arg0->field_C8.field_4 = data.field_4;    \
+                                              \
+    __temp                   = data.field_6;  \
+    arg0->field_C8.field_6   = __temp;        \
+    arg0->field_D8.offsetX_4 = data.field_10; \
+                                              \
+    __temp                   = data.field_12; \
+    arg0->field_D8.offsetZ_6 = __temp;        \
+    arg0->field_D4.radius_0  = data.field_8;  \
+    arg0->field_D8.offsetX_0 = data.field_C;  \
+                                              \
+    __temp                   = data.field_E;  \
+    arg0->field_D8.offsetZ_2 = __temp;        \
+                                              \
+    __temp2                = data.field_A;    \
+    arg0->field_D4.field_2 = __temp2;         \
+}
 
 #define ANIM_INDEX_FROM_KEYFRAME(offset, keyframe, max, count) \
     ((offset) - ((keyframe) > (count)) < (max) ? ((offset) - ((keyframe) > (count))) : ((max) - 1))
@@ -75,22 +75,24 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case 19:
-            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0xBF;
-            keyframeIdx0 = !(temp_s0 < 5) + !(temp_s0 < 0xC);
-            keyframeIdx1 = !(temp_s0 < 4) + !(temp_s0 < 0xB);
-            if (temp_s0 == 0xF)
+            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 191;
+            keyframeIdx0 = !(temp_s0 < 5) + !(temp_s0 < 12);
+            keyframeIdx1 = !(temp_s0 < 4) + !(temp_s0 < 11);
+
+            if (temp_s0 == 15)
             {
                 keyframeIdx1 -= 2;
             }
+
             func_80070400(groaner, &sharedData_800EF250_2_s00[keyframeIdx0], &sharedData_800EF250_2_s00[keyframeIdx1]);
             groaner->properties_E4.groaner.relKeyframeIdx_100 = temp_s0;
             break;
 
         case 34:
-            if (groaner->properties_E4.groaner.relKeyframeIdx_100 != 0x64)
+            if (groaner->properties_E4.groaner.relKeyframeIdx_100 != 100)
             {
                 temp_s0      = groaner->properties_E4.groaner.relKeyframeIdx_100;
-                keyframeIdx0 = !(temp_s0 < 5) + !(temp_s0 < 0xC);
+                keyframeIdx0 = !(temp_s0 < 5) + !(temp_s0 < 12);
                 func_80070400(groaner, &sharedData_800EF250_2_s00[keyframeIdx0], &sharedData_800EF28C_2_s00[0]);
             }
             else
@@ -100,9 +102,9 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case 35:
-            temp_s0 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x173;
+            temp_s0 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 371;
 
-            if (temp_s0 < 0xC)
+            if (temp_s0 < 12)
             {
                 if (temp_s0 < 9)
                 {
@@ -120,9 +122,9 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                     keyframeIdx0 = 4;
                 }
             }
-            else if (temp_s0 < 0x16)
+            else if (temp_s0 < 22)
             {
-                if ((temp_s0 >> 1) - 1 < 8)
+                if (((temp_s0 >> 1) - 1) < 8)
                 {
                     keyframeIdx0 = (temp_s0 >> 1) - 1;
                 }
@@ -133,14 +135,14 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             }
             else
             {
-                keyframeIdx0 = temp_s0 - 14 - !(temp_s0 < 0x18);
+                keyframeIdx0 = temp_s0 - 14 - !(temp_s0 < 24);
             }
 
-            if (temp_s0 < 0xB)
+            if (temp_s0 < 11)
             {
                 if (temp_s0 < 8)
                 {
-                    if (temp_s0 + 1 < 4)
+                    if ((temp_s0 + 1) < 4)
                     {
                         keyframeIdx1 = temp_s0 + 1;
                     }
@@ -154,9 +156,9 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                     keyframeIdx1 = 4;
                 }
             }
-            else if (temp_s0 < 0x15)
+            else if (temp_s0 < 21)
             {
-                if ((temp_s0 - 1) >> 1 < 8)
+                if (((temp_s0 - 1) >> 1) < 8)
                 {
                     keyframeIdx1 = (temp_s0 - 1) >> 1;
                 }
@@ -165,14 +167,15 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                     keyframeIdx1 = 7;
                 }
             }
-            else if (temp_s0 != 0x19)
+            else if (temp_s0 != 25)
             {
-                keyframeIdx1 = temp_s0 - 0xD - !(temp_s0 < 0x17);
+                keyframeIdx1 = (temp_s0 - 13) - !(temp_s0 < 23);
             }
             else
             {
                 keyframeIdx1 = 0;
             }
+
             func_80070400(groaner, &sharedData_800EF28C_2_s00[keyframeIdx0], &sharedData_800EF28C_2_s00[keyframeIdx1]);
             break;
 
@@ -181,10 +184,11 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case 5:
-            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x10;
-            keyframeIdx0 = (temp_s0 - (temp_s0 > 0)) - !(temp_s0 < 0xA);
-            keyframeIdx1 = (temp_s0 - !(temp_s0 < 9)) - !(temp_s0 < 0x13);
+            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 16;
+            keyframeIdx0 = (temp_s0 - (temp_s0 > 0)) - !(temp_s0 < 10);
+            keyframeIdx1 = (temp_s0 - !(temp_s0 < 9)) - !(temp_s0 < 19);
             func_80070400(groaner, &sharedData_800EF368_2_s00[keyframeIdx0], &sharedData_800EF368_2_s00[keyframeIdx1]);
+
             groaner->properties_E4.groaner.relKeyframeIdx_100 = 5;
             break;
 
@@ -193,11 +197,12 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case 13:
-            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x6F;
-            keyframeIdx0 = (temp_s0 - (temp_s0 > 0)) - !(temp_s0 < 0xB);
-            keyframeIdx1 = temp_s0 - !(temp_s0 < 0xA);
+            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 111;
+            keyframeIdx0 = (temp_s0 - (temp_s0 > 0)) - !(temp_s0 < 11);
+            keyframeIdx1 = temp_s0 - !(temp_s0 < 10);
             func_80070400(groaner, &sharedData_800EF4D0_2_s00[keyframeIdx0], &sharedData_800EF4D0_2_s00[keyframeIdx1]);
-            groaner->properties_E4.groaner.relKeyframeIdx_100 = 0xD;
+
+            groaner->properties_E4.groaner.relKeyframeIdx_100 = 13;
             break;
 
         case 24:
@@ -205,10 +210,11 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case 25:
-            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x109;
+            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 265;
             keyframeIdx0 = (temp_s0 - !(temp_s0 < 9));
-            keyframeIdx1 = (FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x108) - !(temp_s0 < 8);
+            keyframeIdx1 = (FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 264) - !(temp_s0 < 8);
             func_80070400(groaner, &sharedData_800EF638_2_s00[keyframeIdx0], &sharedData_800EF638_2_s00[keyframeIdx1]);
+         
             groaner->properties_E4.groaner.relKeyframeIdx_100 = 0x19;
             break;
 
@@ -217,9 +223,9 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case 7:
-            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x25;
-            keyframeIdx0 = ((FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x27) - !(temp_s0 < 0x11)) - !(temp_s0 < 0x26);
-            keyframeIdx1 = (((FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x26) - !(temp_s0 < 0x10)) - !(temp_s0 < 0x25)) - !(temp_s0 < 0x27);
+            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 37;
+            keyframeIdx0 = ((FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 39) - !(temp_s0 < 17)) - !(temp_s0 < 38);
+            keyframeIdx1 = (((FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 38) - !(temp_s0 < 16)) - !(temp_s0 < 37)) - !(temp_s0 < 39);
             func_80070400(groaner, &sharedData_800EF7B4_2_s00[keyframeIdx0], &sharedData_800EF7B4_2_s00[keyframeIdx1]);
             break;
 
@@ -239,9 +245,9 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case 27:
-            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x11D;
-            keyframeIdx0 = (temp_s0 - (temp_s0 > 0)) - !(temp_s0 < 0x1F);
-            keyframeIdx1 = (temp_s0 - !(temp_s0 < 0x1E)) - !(temp_s0 < 0x20);
+            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 285;
+            keyframeIdx0 = (temp_s0 - (temp_s0 > 0)) - !(temp_s0 < 31);
+            keyframeIdx1 = (temp_s0 - !(temp_s0 < 30)) - !(temp_s0 < 32);
             func_80070400(groaner, &sharedData_800EFCDC_2_s00[keyframeIdx0], &sharedData_800EFCDC_2_s00[keyframeIdx1]);
             break;
 
@@ -250,8 +256,8 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case 9:
-            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x4E;
-            keyframeIdx0 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x52;
+            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 78;
+            keyframeIdx0 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 82;
 
             if (temp_s0 < 9)
             {
@@ -279,7 +285,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
             }
 
-            if (temp_s0 != 0xF)
+            if (temp_s0 != 15)
             {
                 if (temp_s0 < 8)
                 {
@@ -310,8 +316,8 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case 17:
-            temp_s0 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0xA5;
-            if (temp_s0 < 0xA)
+            temp_s0 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 165;
+            if (temp_s0 < 10)
             {
                 if (temp_s0 < 6)
                 {
@@ -334,7 +340,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             }
             else
             {
-                if (temp_s0 >= 0x12)
+                if (temp_s0 >= 18)
                 {
                     keyframeIdx0 = 8;
                     keyframeIdx1 = (temp_s0 >> 1) - 3;
@@ -349,7 +355,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
             }
 
-            if (temp_s0 < 0x11)
+            if (temp_s0 < 17)
             {
                 if (temp_s0 < 5)
                 {
@@ -369,9 +375,9 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             }
             else
             {
-                if (temp_s0 != 0x19)
+                if (temp_s0 != 25)
                 {
-                    if (((temp_s0 - 1) >> 1) - 2 < 9)
+                    if ((((temp_s0 - 1) >> 1) - 2) < 9)
                     {
                         keyframeIdx1 = ((temp_s0 - 1) >> 1) - 2;
                     }
@@ -385,6 +391,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                     keyframeIdx1 = 0;
                 }
             }
+
             func_80070400(groaner, &sharedData_800F0038_2_s00[keyframeIdx0], &sharedData_800F0038_2_s00[keyframeIdx1]);
             break;
 
@@ -393,18 +400,18 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case 29:
-            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x13F;
+            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 319;
             keyframeIdx0 = temp_s0 >> 1;
 
             if (temp_s0 >= 7)
             {
-                if (temp_s0 < 0x10)
+                if (temp_s0 < 16)
                 {
                     keyframeIdx0 = ANIM_INDEX_FROM_KEYFRAME(temp_s0 - 3, temp_s0, 9, 9);
                 }
                 else
                 {
-                    keyframeIdx0 = temp_s0 - 7 - !(temp_s0 < 0x14);
+                    keyframeIdx0 = temp_s0 - 7 - !(temp_s0 < 20);
                 }
             }
 
@@ -414,9 +421,8 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             }
             else
             {
-                if (temp_s0 < 0xF)
+                if (temp_s0 < 15)
                 {
-
                     if (temp_s0 - 5 < 9)
                     {
                         keyframeIdx1 = temp_s0 - 5;
@@ -428,9 +434,9 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
                 else
                 {
-                    if (temp_s0 != 0x1A)
+                    if (temp_s0 != 26)
                     {
-                        keyframeIdx1 = temp_s0 - 6 - !(temp_s0 < 0x13);
+                        keyframeIdx1 = (temp_s0 - 6) - !(temp_s0 < 19);
                     }
                     else
                     {
@@ -438,6 +444,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                     }
                 }
             }
+
             func_80070400(groaner, &sharedData_800F00EC_2_s00[keyframeIdx0], &sharedData_800F00EC_2_s00[keyframeIdx1]);
             break;
 
@@ -452,6 +459,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             {
                 keyframeIdx0 = temp_s0 - 4;
             }
+
             func_80070400(groaner, &sharedData_800EFF48_2_s00[keyframeIdx0], &sharedData_800F0268_2_s00[0]);
             break;
 
@@ -470,7 +478,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
         case 10:
         case 44:
             temp_s0 = groaner->properties_E4.groaner.relKeyframeIdx_100;
-            if (temp_s0 < 0xA)
+            if (temp_s0 < 10)
             {
                 if (temp_s0 < 6)
                 {
@@ -491,7 +499,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                     }
                 }
             }
-            else if (temp_s0 >= 0x12)
+            else if (temp_s0 >= 18)
             {
                 keyframeIdx0 = 8;
                 keyframeIdx1 = (temp_s0 >> 1) - 3;
@@ -510,9 +518,9 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
 
         case 11:
         case 45:
-            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x5E;
-            keyframeIdx0 = (temp_s0 - !(temp_s0 < 0xD)) - !(temp_s0 < 0xF);
-            keyframeIdx1 = (((FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x5D) - !(temp_s0 < 0xC)) - !(temp_s0 < 0xE)) - !(temp_s0 < 0xF);
+            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 94;
+            keyframeIdx0 = (temp_s0 - !(temp_s0 < 13)) - !(temp_s0 < 15);
+            keyframeIdx1 = (((FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 93) - !(temp_s0 < 12)) - !(temp_s0 < 14)) - !(temp_s0 < 15);
             func_80070400(groaner, &sharedData_800F03A8_2_s00[keyframeIdx0], &sharedData_800F03A8_2_s00[keyframeIdx1]);
             break;
 
@@ -527,29 +535,30 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             keyframeIdx0 = temp_s0 >> 1;
             if (temp_s0 >= 7)
             {
-                if (temp_s0 < 0x10)
+                if (temp_s0 < 16)
                 {
                     keyframeIdx0 = ANIM_INDEX_FROM_KEYFRAME(temp_s0 - 3, temp_s0, 9, 9);
                 }
                 else
                 {
-                    keyframeIdx0 = temp_s0 - 7 - !(temp_s0 < 0x14);
+                    keyframeIdx0 = (temp_s0 - 7) - !(temp_s0 < 20);
                 }
             }
+
             func_80070400(groaner, &sharedData_800F00EC_2_s00[keyframeIdx0], &sharedData_800F04C0_2_s00[0]);
             break;
 
         case 23:
         case 47:
-            temp_s0 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0xF4;
-            if (temp_s0 < 0xC)
+            temp_s0 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 244;
+            if (temp_s0 < 12)
             {
                 keyframeIdx0 = (temp_s0 - (temp_s0 > 0)) - !(temp_s0 < 9);
             }
             else
             {
-                temp = (temp_s0 >> 1);
-                if (temp_s0 >= 0x10)
+                temp = temp_s0 >> 1;
+                if (temp_s0 >= 16)
                 {
                     keyframeIdx0 = temp + 3;
                 }
@@ -559,14 +568,14 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                 }
             }
 
-            if (temp_s0 < 0xC)
+            if (temp_s0 < 12)
             {
                 keyframeIdx1 = temp_s0 - !(temp_s0 < 8);
             }
             else
             {
                 temp = (temp_s0 - 1) >> 1;
-                if (temp_s0 >= 0xF)
+                if (temp_s0 >= 15)
                 {
                     keyframeIdx1 = temp + 4;
                 }
@@ -575,6 +584,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
                     keyframeIdx1 = temp + 5;
                 }
             }
+
             func_80070400(groaner, &sharedData_800F04C0_2_s00[keyframeIdx0], &sharedData_800F04C0_2_s00[keyframeIdx1]);
             break;
 
@@ -588,8 +598,8 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case 33:
-            keyframeIdx0 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x16B;
-            func_80070400(groaner, &sharedData_800EF1B0_2_s00[keyframeIdx0], &sharedData_800EF1B0_2_s00[(FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x16A) & 7]);
+            keyframeIdx0 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 363;
+            func_80070400(groaner, &sharedData_800EF1B0_2_s00[keyframeIdx0], &sharedData_800EF1B0_2_s00[(FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 362) & 0x7]);
             break;
 
         case 30:
@@ -597,9 +607,9 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case 31:
-            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x15A;
-            keyframeIdx0 = (((temp_s0 - !(temp_s0 < 3)) - !(temp_s0 < 9)) - !(temp_s0 < 0xC)) - !(temp_s0 < 0xD);
-            keyframeIdx1 = ((((FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0x159) - !(temp_s0 < 2)) - !(temp_s0 < 8)) - !(temp_s0 < 0xB)) - !(temp_s0 < 0xC);
+            temp_s0      = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 346;
+            keyframeIdx0 = (((temp_s0 - !(temp_s0 < 3)) - !(temp_s0 < 9)) - !(temp_s0 < 12)) - !(temp_s0 < 13);
+            keyframeIdx1 = ((((FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 345) - !(temp_s0 < 2)) - !(temp_s0 < 8)) - !(temp_s0 < 11)) - !(temp_s0 < 12);
             func_80070400(groaner, &sharedData_800EF0AC_2_s00[keyframeIdx0], &sharedData_800EF0AC_2_s00[keyframeIdx1]);
             break;
 
@@ -608,9 +618,10 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             break;
 
         case 21:
-            keyframeIdx0 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0xD6;
-            keyframeIdx1 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 0xD5;
+            keyframeIdx0 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 214;
+            keyframeIdx1 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 213;
             func_80070400(groaner, &sharedData_800EEE54_2_s00[keyframeIdx0], &sharedData_800EEE54_2_s00[keyframeIdx1]);
+
             groaner->field_C8.field_8 = -0xCCC;
             break;
     }

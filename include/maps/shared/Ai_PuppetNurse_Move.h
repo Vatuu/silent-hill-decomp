@@ -20,7 +20,7 @@ void Ai_PuppetNurse_Move(s_SubCharacter* nurse)
     {
         if (distToPlayer > Q12(0.0f))
         {
-            limit = 0;
+            limit = Q12(0.0f);
         }
         else
         {
