@@ -4158,7 +4158,7 @@ void func_800E98EC(void) // 0x800E98EC
 
     if (D_800F4819 != 2)
     {
-        D_800F48A4 += FP_MULTIPLY_PRECISE(g_DeltaTime0, Q12(2.67f), Q12_SHIFT);
+        D_800F48A4 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(2.67f));
     }
 
     if (D_800F48A4 > Q12(20.0f))
