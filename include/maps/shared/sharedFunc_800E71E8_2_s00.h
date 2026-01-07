@@ -1,106 +1,116 @@
 void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
 {
-    s32 temp_s1;
-    s32 temp_s3;
-    s32 temp_s2;
-    s32 temp_a0;
+    s32    keyframeIdx;
+    q19_12 sfxVol;
+    s32    sfxPitch;
+    s32    temp_a0;
 
-    if (groaner->properties_E4.groaner.field_10C > 0)
+    #define groanerProps groaner->properties_E4.groaner
+
+    if (groanerProps.timer_10C > Q12(0.0f))
     {
-        groaner->properties_E4.groaner.field_10C -= g_DeltaTime0;
-        if (groaner->properties_E4.groaner.field_10C <= 0)
+        groanerProps.timer_10C -= g_DeltaTime0;
+        if (groanerProps.timer_10C <= Q12(0.0f))
         {
-            groaner->properties_E4.groaner.field_10C = 0;
-            groaner->properties_E4.groaner.field_10E = 0;
+            groanerProps.timer_10C = Q12(0.0f);
+            groanerProps.field_10E = 0;
         }
     }
-    else if (groaner->properties_E4.groaner.field_10C < 0)
+    else if (groanerProps.timer_10C < Q12(0.0f))
     {
-        groaner->properties_E4.groaner.field_10C += g_DeltaTime0;
-        if (groaner->properties_E4.groaner.field_10C >= 0)
+        groanerProps.timer_10C += g_DeltaTime0;
+        if (groanerProps.timer_10C >= Q12(0.0f))
         {
-            func_8005DC1C(0x583, &groaner->position_18, 0x80, 0);
-            groaner->properties_E4.groaner.field_10C = 0x2000;
+            func_8005DC1C(Sfx_Unk1411, &groaner->position_18, Q8(0.5f), 0);
+            groanerProps.timer_10C = Q12(2.0f);
         }
     }
 
-    switch (groaner->properties_E4.groaner.field_10E)
+    switch (groanerProps.field_10E)
     {
         default:
-            temp_a0 = groaner->properties_E4.groaner.field_10F;
+            temp_a0 = groanerProps.field_10F;
             if (temp_a0 == 4)
             {
-                groaner->properties_E4.groaner.field_10C = 0x1000;
-                groaner->properties_E4.groaner.field_10E = temp_a0;
+                groanerProps.timer_10C = Q12(1.0f);
+                groanerProps.field_10E = temp_a0;
 
-                if (groaner->health_B0 > 0 && (groaner->properties_E4.groaner.flags_E8.val32 & 0x1008) == 8)
+                if (groaner->health_B0 > Q12(0.0f) &&
+                    (groanerProps.flags_E8.val32 & (GroanerFlag_3 | GroanerFlag_12)) == GroanerFlag_3)
                 {
-                    func_8005DC1C(0x581, &groaner->position_18, 0x80, 0);
+                    func_8005DC1C(Sfx_Unk1409, &groaner->position_18, Q8(0.5f), 0);
                 }
                 else
                 {
-                    func_8005DC1C(0x586, &groaner->position_18, 0x80, 0);
+                    func_8005DC1C(Sfx_Unk1414, &groaner->position_18, Q8(0.5f), 0);
                 }
-                groaner->properties_E4.groaner.flags_E8.val16[0] &= 0xEFFF;
+
+                groanerProps.flags_E8.val16[0] &= ~GroanerFlag_12;
                 break;
             }
-            else if (groaner->properties_E4.groaner.field_10E != 2 && temp_a0 == 2)
+            else if (groanerProps.field_10E != 2 && temp_a0 == 2)
             {
-                groaner->properties_E4.groaner.field_10C = -0x4CC;
-                groaner->properties_E4.groaner.field_10E = temp_a0;
+                groanerProps.timer_10C = Q12(-0.3f);
+                groanerProps.field_10E = temp_a0;
                 break;
             }
 
         case 4:
-            // these 10E/10F checks load word from 0x10C and ANDs the upper 16 bits, not even a bitfield, weird
-            if (groaner->properties_E4.groaner.field_10E == 0 && groaner->properties_E4.groaner.field_10F == 0 &&
-                (groaner->health_B0 > 0))
+            // TODO: These 10E/10F checks load word from 0x10C and ANDs the upper 16 bits, not even a bitfield, weird.
+            if (groanerProps.field_10E == 0 && groanerProps.field_10F == 0 &&
+                (groaner->health_B0 > Q12(0.0f)))
             {
-                if (groaner->model_0.anim_4.status_0 == 0x21)
+                if (groaner->model_0.anim_4.status_0 == 33)
                 {
-                    func_8005DC1C(0x582, &groaner->position_18, 0x40, 0);
-                    groaner->properties_E4.groaner.field_10C = Rng_GenerateInt(0x800, 0x998);
-                    groaner->properties_E4.groaner.field_10E = 3;
+                    func_8005DC1C(Sfx_Unk1410, &groaner->position_18, Q8(0.25f), 0);
+                    groanerProps.timer_10C = Rng_GenerateInt(Q12(0.5f), Q12(0.6f) - 1);
+                    groanerProps.field_10E = 3;
                 }
-                else if (groaner->model_0.anim_4.status_0 >> 1 != 0xA && groaner->model_0.anim_4.status_0 >> 1 != 0xF && !Rng_TestProbabilityBits(4))
+                else if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) != GroanerAnim_10 &&
+                         ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) != GroanerAnim_15 &&
+                         !Rng_TestProbabilityBits(4))
                 {
-                    func_8005DC1C(0x57E, &groaner->position_18, ((FP_TO(groaner->health_B0, Q12_SHIFT) / 0x118000) >> 7) + 0x20, 0);
-                    groaner->properties_E4.groaner.field_10C = Rng_GenerateInt(0x4CCC, 0x7FFE);
-                    groaner->properties_E4.groaner.field_10E = 1;
+                    func_8005DC1C(Sfx_Unk1406, &groaner->position_18, (Q12_DIV(groaner->health_B0, Q12(280.0f)) >> 7) + 32, 0);
+                    groanerProps.timer_10C = Rng_GenerateInt(Q12(4.8f), Q12(8.0f) - 2);
+                    groanerProps.field_10E = 1;
                 }
             }
             break;
     }
 
-    groaner->properties_E4.groaner.field_10F = 0;
+    groanerProps.field_10F = 0;
 
-    temp_s1 = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT);
-    temp_s3 = (FP_TO(groaner->moveSpeed_38, Q12_SHIFT) / FP_MULTIPLY_PRECISE(groaner->properties_E4.groaner.field_114, 0x3999, Q12_SHIFT) >> 6) + 0x40;
-    temp_s2 = (FP_TO(groaner->moveSpeed_38, Q12_SHIFT) / FP_MULTIPLY_PRECISE(groaner->properties_E4.groaner.field_114, 0x3999, Q12_SHIFT) >> 7) + Rng_TestProbabilityBits(3);
+    keyframeIdx = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT);
+    sfxVol      = (Q12_DIV(groaner->moveSpeed_38, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f))) >> 6) + 64;
+    sfxPitch    = (Q12_DIV(groaner->moveSpeed_38, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f))) >> 7) + Rng_TestProbabilityBits(3);
 
-    if ((temp_s1 > 0x16D && temp_s1 < 0x172) || (temp_s1 > 0x176 && temp_s1 < 0x17E))
+    if ((keyframeIdx > 365 && keyframeIdx < 370) ||
+        (keyframeIdx > 374 && keyframeIdx < 382))
     {
-        if (groaner->properties_E4.groaner.field_110 == 0)
+        if (groanerProps.field_110 == 0)
         {
-            func_8005DD44(0x585, &groaner->position_18, temp_s3, temp_s2);
-            groaner->properties_E4.groaner.field_110 += 1;
+            func_8005DD44(Sfx_Unk1413, &groaner->position_18, sfxVol, sfxPitch);
+            groanerProps.field_110++;
         }
     }
     else
     {
-        groaner->properties_E4.groaner.field_110 = 0;
+        groanerProps.field_110 = 0;
     }
 
-    if ((temp_s1 > 0x16F && temp_s1 < 0x175) || (temp_s1 > 0x186 && temp_s1 < 0x18D))
+    if ((keyframeIdx > 367 && keyframeIdx < 373) ||
+        (keyframeIdx > 390 && keyframeIdx < 397))
     {
-        if (groaner->properties_E4.groaner.field_111 == 0)
+        if (groanerProps.field_111 == 0)
         {
-            func_8005DD44(0x585, &groaner->position_18, temp_s3, temp_s2);
-            groaner->properties_E4.groaner.field_111 += 1;
+            func_8005DD44(Sfx_Unk1413, &groaner->position_18, sfxVol, sfxPitch);
+            groanerProps.field_111++;
         }
     }
     else
     {
-        groaner->properties_E4.groaner.field_111 = 0;
+        groanerProps.field_111 = 0;
     }
+
+    #undef groanerProps
 }

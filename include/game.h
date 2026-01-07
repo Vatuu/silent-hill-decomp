@@ -1382,7 +1382,7 @@ typedef struct _PropertiesGroaner
     s8         unk_102[2];
     s32        field_104;
     u32        field_108;
-    s16        field_10C;
+    q3_12      timer_10C;
     u8         field_10E;
     u8         field_10F;
     u8         field_110;
