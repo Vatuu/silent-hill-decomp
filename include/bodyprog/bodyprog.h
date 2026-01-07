@@ -3135,7 +3135,7 @@ void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ);
  */
 void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, void* arg4);
 
-bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_8 z);
+bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 posX, q23_8 posZ);
 
 /** Loads anim file? */
 void Anim_BoneInit(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords);
@@ -3146,7 +3146,13 @@ void Anim_BoneUpdate(s_AnmHeader* anmHdr, GsCOORDINATE2* boneCoords, s32 keyfram
 
 void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
-q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim);
+/** @brief Gets the duration of an animation. A duration can be constant or variable.
+ *
+ * @param unused @unused
+ * @param animInfo Animation info from which to get the duration.
+ * @return Animation duration.
+ */
+q19_12 Anim_DurationGet(s_Model* unused, s_AnimInfo* animInfo);
 
 /** Updates a character's animation, variant 0. First param might be `s_SubCharacter` instead.
  * Used for anim init?

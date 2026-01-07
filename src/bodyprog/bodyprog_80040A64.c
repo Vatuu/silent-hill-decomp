@@ -1699,7 +1699,7 @@ void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, v
     s_IpdModelBuffer*   ipdModelBuf;
     s_IpdModelBuffer_C* curBufC;
     u8*                 temp_fp;
-    SVECTOR*            var_s1;
+    SVECTOR*            curUnk;
 
     // Convert position to geometry space.
     geomX = Q12_TO_Q8(posX);
@@ -1743,16 +1743,16 @@ void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, v
                 }
             }
 
-            for (var_s1 = ipdModelBuf->field_10; var_s1 < &ipdModelBuf->field_10[ipdModelBuf->field_1]; var_s1++)
+            for (curUnk = ipdModelBuf->field_10; curUnk < &ipdModelBuf->field_10[ipdModelBuf->field_1]; curUnk++)
             {
-                switch ((s8)var_s1->pad) // TODO: Must be another field.
+                switch ((s8)curUnk->pad) // TODO: Must be another field.
                 {
                     case 0:
-                        func_8005B62C(1, (var_s1->vx + cellBoundX) * 16, var_s1->vy * 16, (var_s1->vz + cellBoundZ) * 16, ot, arg4);
+                        func_8005B62C(1, Q8_TO_Q12(curUnk->vx + cellBoundX), Q8_TO_Q12(curUnk->vy), Q8_TO_Q12(curUnk->vz + cellBoundZ), ot, arg4);
                         break;
 
                     case 1:
-                        func_8005B62C(2, (var_s1->vx + cellBoundX) * 16, var_s1->vy * 16, (var_s1->vz + cellBoundZ) * 16, ot, arg4);
+                        func_8005B62C(2, Q8_TO_Q12(curUnk->vx + cellBoundX), Q8_TO_Q12(curUnk->vy), Q8_TO_Q12(curUnk->vz + cellBoundZ), ot, arg4);
                         break;
                 }
             }
@@ -1762,7 +1762,7 @@ void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, v
     #undef CHUNK_SUBCELL_SIZE
 }
 
-bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_8 z) // 0x80044420
+bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 posX, q23_8 posZ) // 0x80044420
 {
     GsCOORDINATE2 coord;
     MATRIX        mat;
@@ -1770,7 +1770,8 @@ bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_
 
     for (ptr = modelBuf->field_14; ptr < &modelBuf->field_14[modelBuf->field_2]; ptr++)
     {
-        if (ptr->vx < arg1 && arg1 < ptr->vy &&
+        if (ptr->vx < arg1 &&
+            arg1 < ptr->vy &&
             ptr->vz < arg2)
         {
             if (arg2 < ptr->pad)
@@ -1779,9 +1780,9 @@ bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 x, q23_
                 coord.super = NULL;
                 coord.workm = GsIDMATRIX;
 
-                coord.workm.t[0] = x;
-                coord.workm.t[1] = 0;
-                coord.workm.t[2] = z;
+                coord.workm.t[0] = posX;
+                coord.workm.t[1] = Q8(0.0f);
+                coord.workm.t[2] = posZ;
 
                 func_80049AF8(&coord, &mat);
                 return Vw_AabbVisibleInFrustumCheck(&mat, modelBuf->field_4, -0x800, modelBuf->field_8, modelBuf->field_6, 0x400, modelBuf->field_A, 0x1900, g_GameWork.gsScreenHeight_58A);
@@ -1976,21 +1977,27 @@ void func_80044950(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
 }
 
-q19_12 Anim_DurationGet(s_Model* model, s_AnimInfo* anim) // 0x800449AC
+q19_12 Anim_DurationGet(s_Model* unused, s_AnimInfo* animInfo) // 0x800449AC
 {
-    if (!anim->hasVariableDuration_5)
+    if (!animInfo->hasVariableDuration_5)
     {
-        return anim->duration_8.constant;
+        return animInfo->duration_8.constant;
     }
 
-    return anim->duration_8.variableFunc();
+    return animInfo->duration_8.variableFunc();
 }
 
-/** @brief Computes the timestep of the target animation. */
+/** @brief Computes the timestep of the target animation for the current tick.
+ *
+ * @param model Character model.
+ * @param animInfo Animation info.
+ * @return Animation timestep for the current tick.
+ */
 static inline q19_12 Anim_TimestepGet(s_Model* model, s_AnimInfo* animInfo)
 {
     q19_12 duration;
 
+    // Check if animation is unlocked.
     if (model->anim_4.flags_2 & AnimFlag_Unlocked)
     {
         duration = Anim_DurationGet(model, animInfo);
