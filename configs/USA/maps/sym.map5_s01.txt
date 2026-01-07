@@ -259,6 +259,7 @@ sharedFunc_800E86C0_2_s02           = 0x800EA1F4; // type:func
 sharedFunc_800E8730_2_s02           = 0x800EA264; // type:func
 sharedFunc_800E8A40_2_s02           = 0x800EA574; // type:func
 sharedFunc_800E8DFC_2_s02           = 0x800EA930; // type:func
+sharedFunc_800E939C_2_s02           = 0x800EAED0; // type:func
 sharedFunc_800D929C_0_s00           = 0x800EB460; // type:func
 MapEvent_DoorJammed                 = 0x800EB87C; // type:func
 MapEvent_DoorLocked                 = 0x800EB910; // type:func
@@ -312,6 +313,7 @@ sharedData_800F03A8_2_s00           = 0x800EEF98;
 sharedData_800F04C0_2_s00           = 0x800EF0B0;
 ROPMER_ANIM_INFOS                   = 0x800EF1CC; // type:s32 unknown type
 g_Romper_ControlFuncs               = 0x800EF48C;
+sharedData_800ED2D4_2_s02           = 0x800EFB4C;
 MAP_POINTS                          = 0x800EFCBC; // type:MapPoint2d
 
 //---------------------------------------------------------------

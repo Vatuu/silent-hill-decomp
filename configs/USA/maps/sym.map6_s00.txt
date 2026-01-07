@@ -255,6 +255,7 @@ sharedFunc_800E86C0_2_s02           = 0x800E9894; // type:func
 sharedFunc_800E8730_2_s02           = 0x800E9904; // type:func
 sharedFunc_800E8A40_2_s02           = 0x800E9C14; // type:func
 sharedFunc_800E8DFC_2_s02           = 0x800E9FD0; // type:func
+sharedFunc_800E939C_2_s02           = 0x800EA570; // type:func
 sharedFunc_800D929C_0_s00           = 0x800EAB00; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800EAFF8; // type:func
 MapEvent_CommonItemTake             = 0x800EB090; // type:func
@@ -306,6 +307,7 @@ sharedData_800F03A8_2_s00           = 0x800EF018;
 sharedData_800F04C0_2_s00           = 0x800EF130;
 ROPMER_ANIM_INFOS                   = 0x800EF24C; // type:s32 unknown type
 g_Romper_ControlFuncs               = 0x800EF50C;
+sharedData_800ED2D4_2_s02           = 0x800EFBCC;
 
 //---------------------------------------------------------------
 //--- PA: 0x026934   VA: 0x800EFEAC   subsegment: .data, map6_s00

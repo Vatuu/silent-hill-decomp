@@ -1831,6 +1831,12 @@ typedef struct
     s16 vz;
 } s_sharedData_800DFB10_0_s01;
 
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+} s_sharedData_800ED2D4_2_s02;
+
 extern s_MapHeader_field_5C sharedData_800D8568_1_s05;
 
 extern s_800E330C sharedData_800E330C_0_s00[20];
@@ -1899,6 +1905,8 @@ extern s_sharedData_800DFB10_0_s01 sharedData_800DFB10_0_s01[];
 extern u8 sharedData_800ED430_2_s02[];
 
 extern u8 sharedData_800ED43C_2_s02[];
+
+extern s_sharedData_800ED2D4_2_s02 sharedData_800ED2D4_2_s02[];
 
 extern void (*g_Romper_ControlFuncs[])(s_SubCharacter* romper);
 

@@ -1472,7 +1472,8 @@ typedef struct _PropertiesRomper
     s8     unk_EC[4];
     s16    field_F0;
     q3_12  rotationY_F2;
-    s8     unk_F4[8];
+    s32    field_F4;
+    s8     unk_F8[4];
     q19_12 positionX_FC;
     q19_12 positionZ_100;
     s8     unk_104[4];
