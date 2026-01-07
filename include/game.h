@@ -1380,7 +1380,7 @@ typedef struct _PropertiesGroaner
     q3_12      field_FE;
     u16        relKeyframeIdx_100;
     s8         unk_102[2];
-    s32        field_104;
+    q19_12     timer_104;
     u32        field_108;
     q3_12      timer_10C;
     u8         field_10E;
