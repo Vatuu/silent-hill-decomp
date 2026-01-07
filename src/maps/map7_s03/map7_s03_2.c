@@ -45,6 +45,9 @@
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D5B68
 
+
+extern s32 D_800EBC14;
+
 void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5BC8
 {
     s32         temp_s0;
@@ -195,16 +198,22 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800D7F2C);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800D822C);
 
+
 void func_800D82AC(void* arg0, s32 arg1, s32 arg2, s32 arg3)
 {
-    s32 s0;
-    s32 s2;
+    s32 val1;
+    s32 val2;
+    s16 s_arg1;
+    s16 s_arg2;
 
-    s0 = FP_MULTIPLY_PRECISE(arg3, 3000, Q12_SHIFT);
-    s2 = FP_MULTIPLY_PRECISE(arg3, 5000, Q12_SHIFT);
+    s_arg1 = (s16)arg1;
+    s_arg2 = (s16)arg2;
 
-    func_800D7F2C(arg0, 16, D_800EBC14, s2, s0, arg1, arg2, 0x141414);
-    func_800D7F2C(arg0, 12, 0, s2, s0, arg1, arg2, 0x141414);
+    val1 = FP_MULTIPLY_PRECISE(arg3, 3000, Q12_SHIFT);
+    val2 = FP_MULTIPLY_PRECISE(arg3, 5000, Q12_SHIFT);
+
+    func_800D7F2C(arg0, 16, D_800EBC14, val2, val1, s_arg1, s_arg2, 0x141414);
+    func_800D7F2C(arg0, 12, 0,          val2, val1, s_arg1, s_arg2, 0x141414);
 
     D_800EBC14 += 4;
 
@@ -214,11 +223,12 @@ void func_800D82AC(void* arg0, s32 arg1, s32 arg2, s32 arg3)
         -512,
         FP_MULTIPLY_PRECISE(arg3, 15000, Q12_SHIFT),
         FP_MULTIPLY_PRECISE(arg3, 1500, Q12_SHIFT),
-        arg1,
-        arg2,
+        s_arg1,
+        s_arg2,
         0x102020
     );
 }
+
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800D8438);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800D8454);
@@ -397,18 +407,20 @@ INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD2C8);
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800DD32C);
 
+
 void func_800DD3D4(void* arg0, s32 scaleX, s32 scaleY, s32 scaleZ)
 {
-    IVec3            local_vec_2;  // sp + 0x10
-    TempMatrixResult local_result; // sp + 0x20
+    VECTOR3 local_vec;    // sp + 0x10
+    MATRIX  local_matrix; // sp + 0x20
 
-    Vw_CoordHierarchyMatrixCompute((void*)((u8*)&g_SysWork + 0x8E0), &local_result);
+    Vw_CoordHierarchyMatrixCompute((void*)((u8*)&g_SysWork + 0x8E0), &local_matrix);
 
-    local_vec_2.x = (local_result.x << 4) + scaleX;
-    local_vec_2.y = (local_result.y << 4) + scaleY;
-    local_vec_2.z = (local_result.z << 4) + scaleZ;
+    // This works because the built-in MATRIX struct has 't' (translation) at offset 0x14
+    local_vec.vx = (local_matrix.t[0] << 4) + scaleX;
+    local_vec.vy = (local_matrix.t[1] << 4) + scaleY;
+    local_vec.vz = (local_matrix.t[2] << 4) + scaleZ;
 
-    func_800DD32C(arg0, &local_vec_2);
+    func_800DD32C(arg0, &local_vec);
 }
 
 
