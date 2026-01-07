@@ -2116,7 +2116,7 @@ void func_800DDCD4(void) // 0x800DDCD4
     s32              temp_v0_5;
     s32              v1;
     s32              i;
-    s_WorldObject_0* objPtr;
+    s_WorldObjectModel* objPtr;
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     cellZ0 = g_SysWork.playerWork_4C.player_0.position_18.vz / CHUNK_CELL_SIZE;
