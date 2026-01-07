@@ -2242,7 +2242,7 @@ void func_800DDCD4(void) // 0x800DDCD4
         case PACKED_CELL_XZ(18, 15):
             if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_GhostChildAlessa)
             {
-                g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.2f), Q12_SHIFT);
+                g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.2f));
 
                 if (g_SysWork.npcs_1A0[0].timer_C6 > Q12(1.0f)) 
                 {
