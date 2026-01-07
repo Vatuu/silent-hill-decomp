@@ -2187,7 +2187,7 @@ void func_800DDCD4(void) // 0x800DDCD4
                 }
                 else if (D_800E33A4 > 0)
                 {
-                    D_800E33A4 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.6f), Q12_SHIFT);
+                    D_800E33A4 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.6f));
                     npcTimer = D_800E33A4;
                 }
     
