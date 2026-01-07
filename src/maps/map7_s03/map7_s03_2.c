@@ -45,7 +45,6 @@
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D5B68
 
-
 extern s32 D_800EBC14;
 
 void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5BC8
@@ -142,7 +141,48 @@ void func_800D71A4(s32 arg0) // 0x800D71A4
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800D71B0);
 
-INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800D74F4);
+void func_800D74F4(s32 x, s32 z, s32 val)
+{
+    u8* base_ptr = (u8*)0x80167600;
+    s16 x_idx;
+    s16 z_calc;
+
+    s16 sx = x + 164;
+    s16 sz = z + 100;
+
+    sx += (sx > 0) ? 4 : -4;
+    x_idx = sx / 8;
+
+    sz += (sz > 0) ? 4 : -4;
+    z_calc = sz / 8;
+
+    if ((u16)(x_idx - 1) < 40 && z_calc > 0 && z_calc < 25)
+    {
+        s32 offset_acc;
+        s32 z_term;
+        u8* dst_ptr;
+        s32 final_val;
+
+        offset_acc = (s16)x_idx;
+        z_term = z_calc * 41;
+        offset_acc = offset_acc + z_term;
+        offset_acc = offset_acc + 93;
+
+        dst_ptr = base_ptr + offset_acc;
+
+        final_val = val >> 4;
+
+        if (final_val < 0x100)
+        {
+            *dst_ptr = (u8)final_val;
+        }
+        else
+        {
+            *dst_ptr = 0xFF;
+        }
+    }
+}
+
 
 INCLUDE_ASM("asm/maps/map7_s03/nonmatchings/map7_s03_2", func_800D75D0);
 
