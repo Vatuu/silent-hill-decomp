@@ -1502,9 +1502,9 @@ void func_800D9C9C(void) // 0x800D9C9C
 
                 case 4:
                     D_800E168E                          += g_DeltaTime2;
-                    g_WorldObject_Stone0.rotation_28.vz += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.3333f), Q12_SHIFT);
-                    g_WorldObject_Stone0.position_1C.vy += Q12_MULT_PRECISE(D_800E168E, g_DeltaTime0, Q12_SHIFT);
-                    g_WorldObject_Stone0.position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.3f), Q12_SHIFT);
+                    g_WorldObject_Stone0.rotation_28.vz += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-0.3333f));
+                    g_WorldObject_Stone0.position_1C.vy += Q12_MULT_PRECISE(D_800E168E, g_DeltaTime0);
+                    g_WorldObject_Stone0.position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.3f));
 
                     if (g_WorldObject_Stone0.position_1C.vy > 0)
                     {
