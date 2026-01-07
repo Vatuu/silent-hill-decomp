@@ -63,7 +63,7 @@ void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOO
         D_800EDA00 = 0;
     }
 
-    D_800EDA00 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
+    D_800EDA00 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
     var_a2 = FP_TO(D_800EDA00, Q12_SHIFT) / Q12(80.0f);
 
     temp_s0 = var_a2;
@@ -2522,7 +2522,7 @@ void func_800E514C(void) // 0x800E514C
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(418.0f), Q12(498.0f), true, true);
 
             g_SysWork.field_28             += g_DeltaTime0;
-            g_SysWork.npcs_1A0[5].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.0625f, 12);
+            g_SysWork.npcs_1A0[5].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.0625f, 12);
 
             if (g_SysWork.field_28 > Q12(0.3f))
             {
@@ -2731,7 +2731,7 @@ void func_800E62CC(void) // 0x800E62CC
         case 8:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(176.0f), Q12(253.0f), true, true);
 
-            g_SysWork.npcs_1A0[2].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.15f, 12);
+            g_SysWork.npcs_1A0[2].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.15f, 12);
             if (g_SysWork.npcs_1A0[2].timer_C6 > Q12(1.0f))
             {
                 g_SysWork.npcs_1A0[2].timer_C6 = Q12(1.0f);
@@ -2761,7 +2761,7 @@ void func_800E62CC(void) // 0x800E62CC
         case 10:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(254.0f), Q12(314.0f), true, true);
 
-            g_SysWork.npcs_1A0[5].timer_C6 -= FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
+            g_SysWork.npcs_1A0[5].timer_C6 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
             if (g_SysWork.npcs_1A0[5].timer_C6 < 0)
             {
                 g_SysWork.npcs_1A0[5].timer_C6 = 0;
@@ -3190,7 +3190,7 @@ void func_800E7380(void) // 0x800E7380
         case 6:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(12.0f), Q12(145.0f), Q12(201.0f), true, true);
 
-            g_SysWork.npcs_1A0[4].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
+            g_SysWork.npcs_1A0[4].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.25f, Q12_SHIFT);
             if (g_SysWork.npcs_1A0[4].timer_C6 > Q12(1.0f))
             {
                 g_SysWork.npcs_1A0[4].timer_C6 = Q12(1.0f);
@@ -3473,12 +3473,12 @@ void func_800E787C(void) // 0x800E787C
 
         case 21:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(155.0f), Q12(224.0f), true, true);
-            D_800F483C += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 3.0f, Q12_SHIFT);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 3.0f, Q12_SHIFT);
             break;
 
         case 22:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
-            D_800F483C += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 3.0f, Q12_SHIFT);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 3.0f, Q12_SHIFT);
             break;
 
         case 23:
@@ -3567,7 +3567,7 @@ void func_800E787C(void) // 0x800E787C
 
         case 32:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(225.0f), Q12(259.0f), true, true);
-            D_800F483C += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
             if (D_800F483C > Q12(100.0f))
             {
                 D_800F483C = Q12(100.0f);
@@ -3577,7 +3577,7 @@ void func_800E787C(void) // 0x800E787C
         case 33:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(260.0f), Q12(325.0f), false, true);
 
-            D_800F483C += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
             if (D_800F483C > Q12(100.0f))
             {
                 D_800F483C = Q12(100.0f);
@@ -3775,7 +3775,7 @@ void func_800E86BC(void) // 0x800E86BC
 
         case 9:
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(161.0f), Q12(291.0f), true, true);
-            D_800F483C += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
+            D_800F483C += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 10.0f, Q12_SHIFT);
             if (D_800F483C > Q12(100.0f))
             {
                 D_800F483C = Q12(100.0f);
