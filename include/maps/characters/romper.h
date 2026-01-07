@@ -1,6 +1,24 @@
 #ifndef _MAPS_CHARACTERS_ROMPER_H
 #define _MAPS_CHARACTERS_ROMPER_H
 
+/** @brief Romper character flags. */
+typedef enum _RomperFlags
+{
+    RomperFlag_None = 0,
+    RomperFlag_0    = 1 << 0,
+    RomperFlag_1    = 1 << 1,
+    RomperFlag_2    = 1 << 2,
+    RomperFlag_3    = 1 << 3,
+    RomperFlag_4    = 1 << 4,
+    RomperFlag_5    = 1 << 5,
+    RomperFlag_6    = 1 << 6,
+    RomperFlag_7    = 1 << 7,
+    RomperFlag_8    = 1 << 8,
+    RomperFlag_9    = 1 << 9,
+    RomperFlag_10   = 1 << 10,
+    RomperFlag_11   = 1 << 11
+} e_RomperFlags;
+
 /** @brief Romper character animation indices. */
 typedef enum _RomperAnim
 {
@@ -34,7 +52,9 @@ typedef enum _RomperControl
     RomperControl_2 = 2,
     RomperControl_3 = 3,
     RomperControl_4 = 4,
-    RomperControl_5 = 5
+    RomperControl_5 = 5,
+    RomperControl_6 = 6,
+    RomperControl_7 = 7
 } e_RomperControl;
 
 /*s_AnimInfo ROMPER_ANIM_INFOS[] = {
