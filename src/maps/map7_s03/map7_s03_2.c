@@ -2522,7 +2522,7 @@ void func_800E514C(void) // 0x800E514C
             SysWork_StateStepIncrementAfterTime(&D_800F47F0, Q12(10.0f), Q12(418.0f), Q12(498.0f), true, true);
 
             g_SysWork.field_28             += g_DeltaTime0;
-            g_SysWork.npcs_1A0[5].timer_C6 += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.0625f, 12);
+            g_SysWork.npcs_1A0[5].timer_C6 += FP_MULTIPLY_FLOAT_PRECISE(g_DeltaTime0, 0.0625f, 12);
 
             if (g_SysWork.field_28 > Q12(0.3f))
             {
