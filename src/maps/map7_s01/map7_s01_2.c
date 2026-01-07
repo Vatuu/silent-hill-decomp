@@ -1473,7 +1473,7 @@ void func_800D9C9C(void) // 0x800D9C9C
 
                     if (g_WorldObject_Stone0.position_1C.vy < Q12(-1.05f))
                     {
-                        g_WorldObject_Stone0.position_1C.vy += Q12_MULT_PRECISE(g_DeltaTime0, D_800E168E, 12);
+                        g_WorldObject_Stone0.position_1C.vy += FP_MULTIPLY_PRECISE(g_DeltaTime0, D_800E168E, 12);
                         if (g_WorldObject_Stone0.position_1C.vy > Q12(-1.05f))
                         {
                             g_WorldObject_Stone0.position_1C.vy = Q12(-1.05f);
