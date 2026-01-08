@@ -53,5 +53,4 @@ INCLUDE_RODATA("maps/map0_s01/nonmatchings/map0_s01", D_800CAA48);
 INCLUDE_RODATA("maps/map0_s01/nonmatchings/map0_s01", sharedData_800CAA98_0_s01);
 
 // TODO: Move this line into separate `Chara_AirScreamer` split.
-// TODO: Most of the code below also belongs to `air_screamer.c`, move there once `INCLUDE_ASM` gaps are matched.
 #include "../src/maps/characters/air_screamer.c" // 0x800D2170

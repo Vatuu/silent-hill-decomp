@@ -79,7 +79,6 @@ INCLUDE_RODATA("maps/map5_s01/nonmatchings/map5_s01", D_800CA848);
 INCLUDE_RODATA("maps/map5_s01/nonmatchings/map5_s01", sharedData_800CAA98_0_s01);
 
 // TODO: Move this line into separate `Chara_AirScreamer` split.
-// TODO: Most of the code below also belongs to `air_screamer.c`, move there once `INCLUDE_ASM` gaps are matched.
 #include "../src/maps/characters/air_screamer.c" // 0x800D225C
 
 #include "maps/shared/Ai_Groaner_Update.h" // 0x800E3294

@@ -6,13 +6,13 @@
 #include "maps/characters/air_screamer.h"
 
 // NOTES: 
-// - M0S01 includes extra functions missing entirely from other maps in the `defined(MAP0_S01)` block below.
+// - M0S01 includes some extra functions missing from other maps, but also removes the body of most `Ai_AirScreamerControl_X` functions.
+//  (also seems to remove the funcs that those removed control funcs would have called into)
+//  See `#ifdef MAP0_S01` and `#ifndef MAP0_S01` blocks below.
 //
-// - There might still be a _lot_ of extra Air Screamer code not added here yet.
-//   In MAP2_S00, all the code from the `air_screamer.c` include up to `Ai_Groaner_Update` seems to be Air Screamer related?
-//   (140+ funcs... this includes the 25+ different func variants that all made use of `field_14C.bits.field_14C_2` etc)
-//   Since there's `INCLUDE_ASM` gaps those can't really be moved here yet.
-//   (MAP0_S01 also seems to share the same funcs, but most look ifdef'd out there, would need to make sure those are shared properly there first)
+// - M0S01 also includes an odd `Model_AnimDurationGet` func in between some of the AirScreamer funcs.
+//  Seems to get used in some event code instead of being called by AirScreamer functions.
+//  Might indicate a split there where M0S01 included some small .c file?
 
 #define airScreamerProps airScreamer->properties_E4.airScreamer
 
@@ -987,7 +987,7 @@ bool Ai_AirScreamer_Control(s_SubCharacter* airScreamer)
     return true;
 }
 
-#if defined(MAP0_S01)
+#ifdef MAP0_S01
 void func_800D39F4(s_SubCharacter* airScreamer) // 0x800D39F4
 {
     q19_12 animTime;
@@ -1075,7 +1075,7 @@ void Ai_AirScreamerControl_0(s_SubCharacter* airScreamer)
     stateStep = AirScreamerStateStep_0;
     switch (airScreamer->model_0.stateStep_3)
     {
-#if defined(MAP0_S01)
+#ifdef MAP0_S01
         case AirScreamerStateStep_12:
         default:
             var0 = 4;
