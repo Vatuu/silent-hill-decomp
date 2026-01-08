@@ -1576,11 +1576,12 @@ typedef struct
     VECTOR3 field_48[3];
 } s_SubCharacter_44;
 
+// Maybe AABB, or some basic parameters.
 typedef struct _SubCharacter_C8
 {
-    q3_12 field_0; // } Y anim root offset? Set to player head position in `sharedFunc_800D0828_3_s03`.
-    q3_12 field_2; // } } Computed as Y offsets in `sharedFunc_800D0828_3_s03`.
-    q3_12 field_4; // } }
+    q3_12 field_0; // Top abs height? Set to player head position in `sharedFunc_800D0828_3_s03`.
+    q3_12 field_2; // Bottom abs height? Computed as Y offsets in `sharedFunc_800D0828_3_s03`.
+    q3_12 field_4; // Height from top to bottom?
     q3_12 field_6; // Some kind of Y offset.
     s16   field_8; // Q3.12? Maybe weapon range?
     s16   field_A;

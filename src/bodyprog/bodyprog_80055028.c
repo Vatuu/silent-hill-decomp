@@ -11573,7 +11573,7 @@ q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80
     return result;
 }
 
-void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_80070400_1* arg2) // 0x80070400
+void func_80070400(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1) // 0x80070400
 {
     q19_12 alpha;
     q19_12 invAlpha;
@@ -11591,16 +11591,16 @@ void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_800704
     // Compute inverse alpha.
     invAlpha = Q12(1.0f) - alpha;
 
-    chara->field_C8.field_0   = FP_FROM((arg1->field_0 * invAlpha) + (arg2->field_0 * alpha), Q12_SHIFT);
-    chara->field_C8.field_2   = FP_FROM((arg1->field_2 * invAlpha) + (arg2->field_2 * alpha), Q12_SHIFT);
-    chara->field_C8.field_4   = FP_FROM((arg1->field_4 * invAlpha) + (arg2->field_4 * alpha), Q12_SHIFT);
-    chara->field_C8.field_6   = FP_FROM((arg1->field_6 * invAlpha) + (arg2->field_6 * alpha), Q12_SHIFT);
-    chara->field_D8.offsetX_4 = FP_FROM((arg1->field_10 * invAlpha) + (arg2->field_10 * alpha), Q12_SHIFT);
-    chara->field_D8.offsetZ_6 = FP_FROM((arg1->field_12 * invAlpha) + (arg2->field_12 * alpha), Q12_SHIFT);
-    chara->field_D4.radius_0   = FP_FROM((arg1->field_8 * invAlpha) + (arg2->field_8 * alpha), Q12_SHIFT);
-    chara->field_D8.offsetX_0 = FP_FROM((arg1->field_C * invAlpha) + (arg2->field_C * alpha), Q12_SHIFT);
-    chara->field_D8.offsetZ_2 = FP_FROM((arg1->field_E * invAlpha) + (arg2->field_E * alpha), Q12_SHIFT);
-    chara->field_D4.field_2   = FP_FROM((arg1->field_A * invAlpha) + (arg2->field_A * alpha), Q12_SHIFT);
+    chara->field_C8.field_0   = FP_FROM((keyframe0->field_0 * invAlpha) + (keyframe1->field_0 * alpha), Q12_SHIFT);
+    chara->field_C8.field_2   = FP_FROM((keyframe0->field_2 * invAlpha) + (keyframe1->field_2 * alpha), Q12_SHIFT);
+    chara->field_C8.field_4   = FP_FROM((keyframe0->field_4 * invAlpha) + (keyframe1->field_4 * alpha), Q12_SHIFT);
+    chara->field_C8.field_6   = FP_FROM((keyframe0->field_6 * invAlpha) + (keyframe1->field_6 * alpha), Q12_SHIFT);
+    chara->field_D8.offsetX_4 = FP_FROM((keyframe0->field_10 * invAlpha) + (keyframe1->field_10 * alpha), Q12_SHIFT);
+    chara->field_D8.offsetZ_6 = FP_FROM((keyframe0->field_12 * invAlpha) + (keyframe1->field_12 * alpha), Q12_SHIFT);
+    chara->field_D4.radius_0  = FP_FROM((keyframe0->field_8 * invAlpha) + (keyframe1->field_8 * alpha), Q12_SHIFT);
+    chara->field_D8.offsetX_0 = FP_FROM((keyframe0->field_C * invAlpha) + (keyframe1->field_C * alpha), Q12_SHIFT);
+    chara->field_D8.offsetZ_2 = FP_FROM((keyframe0->field_E * invAlpha) + (keyframe1->field_E * alpha), Q12_SHIFT);
+    chara->field_D4.field_2   = FP_FROM((keyframe0->field_A * invAlpha) + (keyframe1->field_A * alpha), Q12_SHIFT);
 }
 
 void func_800705E4(GsCOORDINATE2* coord, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0x800705E4

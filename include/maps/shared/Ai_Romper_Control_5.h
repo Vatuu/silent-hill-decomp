@@ -1,4 +1,4 @@
-void sharedFunc_800E79D8_2_s02(s_SubCharacter* romper)
+void Ai_Romper_Control_5(s_SubCharacter* romper)
 {
     s_Collision sp20;
     VECTOR3     sp30;
@@ -96,7 +96,7 @@ void sharedFunc_800E79D8_2_s02(s_SubCharacter* romper)
         {
             if (!(romper->properties_E4.romper.flags_E8 & 0x200))
             {
-                func_8005DC1C(0x57B, &romper->position_18, 0x80, 0);
+                func_8005DC1C(1403, &romper->position_18, 0x80, 0);
                 romper->properties_E4.romper.flags_E8 |= 0x200;
             }
 
@@ -104,10 +104,10 @@ void sharedFunc_800E79D8_2_s02(s_SubCharacter* romper)
             sp30.vy = romper->position_18.vy;
             sp30.vz = romper->position_18.vz;
 
-            if (func_8008A0E4(1, 0x36, romper, &sp30, &g_SysWork.playerWork_4C.player_0, romper->rotation_24.vy, 0x400) != -1)
+            if (func_8008A0E4(1, 54, romper, &sp30, &g_SysWork.playerWork_4C.player_0, romper->rotation_24.vy, 0x400) != -1)
             {
                 romper->model_0.anim_4.status_0 = 6;
-                romper->model_0.controlState_2  = 0xA;
+                romper->model_0.controlState_2  = 10;
                 sharedFunc_800E9714_2_s02(romper);
                 romper->properties_E4.romper.flags_E8 |= 0x400;
             }

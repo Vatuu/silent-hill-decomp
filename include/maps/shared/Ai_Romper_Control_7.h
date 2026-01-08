@@ -1,4 +1,4 @@
-void sharedFunc_800E8158_2_s02(s_SubCharacter* romper)
+void Ai_Romper_Control_7(s_SubCharacter* romper)
 {
     s16 temp_s0;
 
@@ -11,8 +11,8 @@ void sharedFunc_800E8158_2_s02(s_SubCharacter* romper)
         romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, 0xF000), 0);
     }
 
-    if (romper->model_0.anim_4.status_0 == 0x16 || (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) > 0x5C &&
-                                                    FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) < 0x61))
+    if (romper->model_0.anim_4.status_0 == 22 || (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) > 92 &&
+                                                    FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) < 97))
     {
         temp_s0 = Q12_MULT_PRECISE(sharedData_800ECACC_2_s02, g_DeltaTime0) * 0x1666 / 0x7000;
 
@@ -20,15 +20,15 @@ void sharedFunc_800E8158_2_s02(s_SubCharacter* romper)
         romper->properties_E4.romper.field_FA = Q12_MULT(temp_s0, Math_Cos(romper->rotation_24.vy));
     }
 
-    if ((romper->model_0.anim_4.status_0 >> 1) == 0xA)
+    if ((romper->model_0.anim_4.status_0 >> 1) == 10)
     {
         romper->flags_3E |= 2;
     }
 
-    if (romper->health_B0 == 0 && romper->model_0.anim_4.status_0 == 0x15)
+    if (romper->health_B0 == Q12(0.0f) && romper->model_0.anim_4.status_0 == 21)
     {
         romper->model_0.controlState_2  = 8;
-        romper->model_0.anim_4.status_0 = 0xC;
+        romper->model_0.anim_4.status_0 = 12;
         romper->flags_3E               &= 0xFFFD;
 
         func_80037DC4(romper);

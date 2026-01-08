@@ -1,24 +1,24 @@
-extern s_func_80070400_1 sharedData_800EEE54_2_s00[];
-extern s_func_80070400_1 sharedData_800EF0AC_2_s00[];
-extern s_func_80070400_1 sharedData_800EF19C_2_s00;
-extern s_func_80070400_1 sharedData_800EF1B0_2_s00[];
-extern s_func_80070400_1 sharedData_800EF250_2_s00[];
-extern s_func_80070400_1 sharedData_800EF28C_2_s00[];
-extern s_func_80070400_1 sharedData_800EF368_2_s00[];
-extern s_func_80070400_1 sharedData_800EF4BC_2_s00;
-extern s_func_80070400_1 sharedData_800EF4D0_2_s00[];
-extern s_func_80070400_1 sharedData_800EF624_2_s00;
-extern s_func_80070400_1 sharedData_800EF638_2_s00[];
-extern s_func_80070400_1 sharedData_800EF7A0_2_s00;
-extern s_func_80070400_1 sharedData_800EF7B4_2_s00[];
-extern s_func_80070400_1 sharedData_800EFA84_2_s00[];
-extern s_func_80070400_1 sharedData_800EFCDC_2_s00[];
-extern s_func_80070400_1 sharedData_800EFF48_2_s00[];
-extern s_func_80070400_1 sharedData_800F0038_2_s00[];
-extern s_func_80070400_1 sharedData_800F00EC_2_s00[];
-extern s_func_80070400_1 sharedData_800F0268_2_s00[];
-extern s_func_80070400_1 sharedData_800F03A8_2_s00[];
-extern s_func_80070400_1 sharedData_800F04C0_2_s00[];
+extern s_Keyframe sharedData_800EEE54_2_s00[];
+extern s_Keyframe sharedData_800EF0AC_2_s00[];
+extern s_Keyframe sharedData_800EF19C_2_s00;
+extern s_Keyframe sharedData_800EF1B0_2_s00[];
+extern s_Keyframe sharedData_800EF250_2_s00[];
+extern s_Keyframe sharedData_800EF28C_2_s00[];
+extern s_Keyframe sharedData_800EF368_2_s00[];
+extern s_Keyframe sharedData_800EF4BC_2_s00;
+extern s_Keyframe sharedData_800EF4D0_2_s00[];
+extern s_Keyframe sharedData_800EF624_2_s00;
+extern s_Keyframe sharedData_800EF638_2_s00[];
+extern s_Keyframe sharedData_800EF7A0_2_s00;
+extern s_Keyframe sharedData_800EF7B4_2_s00[];
+extern s_Keyframe sharedData_800EFA84_2_s00[];
+extern s_Keyframe sharedData_800EFCDC_2_s00[];
+extern s_Keyframe sharedData_800EFF48_2_s00[];
+extern s_Keyframe sharedData_800F0038_2_s00[];
+extern s_Keyframe sharedData_800F00EC_2_s00[];
+extern s_Keyframe sharedData_800F0268_2_s00[];
+extern s_Keyframe sharedData_800F03A8_2_s00[];
+extern s_Keyframe sharedData_800F04C0_2_s00[];
 
 #define CopyData(arg0, data)                  \
 {                                             \

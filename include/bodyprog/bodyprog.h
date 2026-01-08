@@ -546,8 +546,10 @@ typedef struct
     s_func_8006E490_20 field_20[2];
 } s_func_8006E490;
 
-// Something associated with anim keyframes.
-typedef struct
+/** @brief Animation keyframe? Doesn't hold bone data, but something gameplay-related
+ * which is derived from here.
+ */
+typedef struct _Keyframe
 {
     q3_12 field_0;
     q3_12 field_2;
@@ -559,7 +561,7 @@ typedef struct
     q3_12 field_E;
     q3_12 field_10; // X offset?
     q3_12 field_12; // Z offset?
-} s_func_80070400_1;
+} s_Keyframe;
 
 // ========
 // STRUCTS
@@ -4043,7 +4045,15 @@ bool func_80070320(void);
 /** TODO: Return type uncertain. */
 q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2);
 
-void func_80070400(s_SubCharacter* chara, s_func_80070400_1* arg1, s_func_80070400_1* arg2);
+/** @brief Sets a character's interpolated animation pose for the current tick.
+ * TODO: Not really the pose, but frame-derived data. Need to deobfuscate more of
+ * the structs to name an ddocument this properly.
+ *
+ * @param chara Character to update.
+ * @param keyframe0 First keyframe.
+ * @param keyframe1 Second keyframe.
+ */
+void func_80070400(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1);
 
 bool func_80070208(s_SubCharacter* chara, q19_12 dist);
 

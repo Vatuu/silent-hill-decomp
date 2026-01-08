@@ -1,4 +1,4 @@
-void sharedFunc_800E7540_2_s02(s_SubCharacter* romper)
+void Ai_Romper_Control_4(s_SubCharacter* romper)
 {
     s32 temp_v0_5;
     s32 temp_s0;
@@ -112,7 +112,7 @@ void sharedFunc_800E7540_2_s02(s_SubCharacter* romper)
     if (!func_8007029C(romper, 0x2800, romper->rotation_24.vy) && (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) > 0x82 &&
                                                                    FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) < 0x85))
     {
-        romper->model_0.anim_4.status_0 = 0x28;
+        romper->model_0.anim_4.status_0 = 40;
         romper->moveSpeed_38            = 0;
         return;
     }

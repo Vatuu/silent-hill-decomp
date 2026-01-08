@@ -719,19 +719,19 @@ void sharedFunc_800D9960_1_s02(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsC
     animInfo->updateFunc_0(&creeper->model_0, anmHdr, coords, animInfo);
 }
 
-extern s_func_80070400_1 sharedData_800E0F78_1_s02[];
-extern s_func_80070400_1 sharedData_800E0FC8_1_s02;
-extern s_func_80070400_1 sharedData_800E0FDC_1_s02;
-extern s_func_80070400_1 sharedData_800E0FF0_1_s02;
-extern s_func_80070400_1 sharedData_800E1004_1_s02[]; // Creeper keyframe data?
-extern s_func_80070400_1 sharedData_800E10CC_1_s02;
-extern s_func_80070400_1 sharedData_800E10E0_1_s02[];
-extern s_func_80070400_1 sharedData_800E1158_1_s02;
-extern s_func_80070400_1 sharedData_800E116C_1_s02;
-extern s_func_80070400_1 sharedData_800E1180_1_s02;
-extern s_func_80070400_1 sharedData_800E1194_1_s02;
-extern s_func_80070400_1 sharedData_800E11A8_1_s02;
-extern s_func_80070400_1 sharedData_800E11BC_1_s02;
+extern s_Keyframe sharedData_800E0F78_1_s02[];
+extern s_Keyframe sharedData_800E0FC8_1_s02;
+extern s_Keyframe sharedData_800E0FDC_1_s02;
+extern s_Keyframe sharedData_800E0FF0_1_s02;
+extern s_Keyframe sharedData_800E1004_1_s02[]; // Creeper keyframe data?
+extern s_Keyframe sharedData_800E10CC_1_s02;
+extern s_Keyframe sharedData_800E10E0_1_s02[];
+extern s_Keyframe sharedData_800E1158_1_s02;
+extern s_Keyframe sharedData_800E116C_1_s02;
+extern s_Keyframe sharedData_800E1180_1_s02;
+extern s_Keyframe sharedData_800E1194_1_s02;
+extern s_Keyframe sharedData_800E11A8_1_s02;
+extern s_Keyframe sharedData_800E11BC_1_s02;
 
 #define CopyData(arg0, data)                  \
 {                                             \

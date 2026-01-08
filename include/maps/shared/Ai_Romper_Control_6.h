@@ -1,4 +1,4 @@
-void sharedFunc_800E803C_2_s02(s_SubCharacter* romper)
+void Ai_Romper_Control_6(s_SubCharacter* romper)
 {
     s16 temp_s0;
 

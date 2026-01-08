@@ -1,25 +1,24 @@
 s32 sharedFunc_800E94B4_2_s02(s_SubCharacter* romper)
 {
     s32 i;
-    s32 temp_a0;
+    s32 relAnimTime;
     u32 var_t4;
 
-    if (romper->model_0.anim_4.time_4 < 0x6D000 || romper->model_0.anim_4.time_4 > 0x82FFF)
+    if (romper->model_0.anim_4.time_4 <  Q12(109.0f) ||
+        romper->model_0.anim_4.time_4 >= Q12(131.0f))
     {
         return 0;
     }
 
-    temp_a0 = romper->model_0.anim_4.time_4 - 0x6D000;
-
-    if (temp_a0 < romper->properties_E4.romper.field_F4)
+    relAnimTime = romper->model_0.anim_4.time_4 - Q12(109.0f);
+    if (relAnimTime < romper->properties_E4.romper.field_F4)
     {
         romper->properties_E4.romper.field_F0 = -0x194;
-        romper->properties_E4.romper.field_F4 = 0;
-        romper->moveSpeed_38                  = -0x418;
+        romper->properties_E4.romper.field_F4 = Q12(0.0f);
+        romper->moveSpeed_38                  = Q12(-0.256f);
     }
 
     var_t4 = 0;
-
     for (i = 0; i < 22; i++)
     {
         if (romper->properties_E4.romper.field_F4 < FP_TO(i, Q12_SHIFT) ||
@@ -28,7 +27,7 @@ s32 sharedFunc_800E94B4_2_s02(s_SubCharacter* romper)
             continue;
         }
 
-        if (temp_a0 >= FP_TO(i + 1, Q12_SHIFT))
+        if (relAnimTime >= FP_TO(i + 1, Q12_SHIFT))
         {
             switch (i + 1)
             {
@@ -49,7 +48,7 @@ s32 sharedFunc_800E94B4_2_s02(s_SubCharacter* romper)
                 case 7:
                     var_t4                                = 0;
                     romper->properties_E4.romper.field_F0 = 0x112;
-                    romper->moveSpeed_38                  = 0x1449;
+                    romper->moveSpeed_38                  = Q12(1.268f);
                     break;
 
                 case 18:
@@ -67,22 +66,23 @@ s32 sharedFunc_800E94B4_2_s02(s_SubCharacter* romper)
         }
         else
         {
-            var_t4               += Q12_MULT_PRECISE(temp_a0 - romper->properties_E4.romper.field_F4, sharedData_800ED314_2_s02[i].field_0);
-            romper->moveSpeed_38 += Q12_MULT_PRECISE(temp_a0 - romper->properties_E4.romper.field_F4, sharedData_800ED314_2_s02[i].field_4);
+            var_t4               += Q12_MULT_PRECISE(relAnimTime - romper->properties_E4.romper.field_F4, sharedData_800ED314_2_s02[i].field_0);
+            romper->moveSpeed_38 += Q12_MULT_PRECISE(relAnimTime - romper->properties_E4.romper.field_F4, sharedData_800ED314_2_s02[i].field_4);
             break;
         }
     }
 
-    romper->properties_E4.romper.field_F4 = temp_a0;
+    romper->properties_E4.romper.field_F4 = relAnimTime;
 
-    if ((temp_a0 > 0xFFF && temp_a0 < 0x7000) || (temp_a0 > 0xAFFF && temp_a0 < 0x12000))
+    if ((relAnimTime >= Q12(1.0f) && relAnimTime < Q12(7.0f)) ||
+        (relAnimTime >= Q12(11.0f) && relAnimTime < Q12(18.0f)))
     {
-        sharedData_800EC950_2_s02 = 0xC000;
+        sharedData_800EC950_2_s02 = Q12(12.0f);
     }
     else
     {
-        sharedData_800EC950_2_s02 = 0x18000;
+        sharedData_800EC950_2_s02 = Q12(24.0f);
     }
 
-    return (var_t4 >> 0x1F) + var_t4;
+    return (var_t4 >> 31) + var_t4;
 }

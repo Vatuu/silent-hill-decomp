@@ -2261,31 +2261,31 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
 
 
 // TODO: Size of arrays may be incorrect. One big array doesn't match.
-extern s_func_80070400_1 sharedData_800DDBA8_0_s00;
-extern s_func_80070400_1 sharedData_800DDBBC_0_s00[9];
-extern s_func_80070400_1 sharedData_800DDC70_0_s00[7];
-extern s_func_80070400_1 sharedData_800DDCFC_0_s00[7];
-extern s_func_80070400_1 sharedData_800DDD88_0_s00[16];
-extern s_func_80070400_1 sharedData_800DDEC8_0_s00[5];
-extern s_func_80070400_1 sharedData_800DDF2C_0_s00[11];
-extern s_func_80070400_1 sharedData_800DE008_0_s00[11];
-extern s_func_80070400_1 sharedData_800DE0E4_0_s00[13];
-extern s_func_80070400_1 sharedData_800DE1E8_0_s00[11];
-extern s_func_80070400_1 sharedData_800DE2C4_0_s00;
-extern s_func_80070400_1 sharedData_800DE2D8_0_s00;
-extern s_func_80070400_1 sharedData_800DE2EC_0_s00;
-extern s_func_80070400_1 sharedData_800DE300_0_s00[16];
-extern s_func_80070400_1 sharedData_800DE440_0_s00[16];
-extern s_func_80070400_1 sharedData_800DE580_0_s00[42]; // Stalker anim data?
-extern s_func_80070400_1 sharedData_800DE8C8_0_s00[29];
-extern s_func_80070400_1 sharedData_800DEB0C_0_s00[18]; // Stalker anim data? Index is keyframe index.
-extern s_func_80070400_1 sharedData_800DEC74_0_s00[3];
-extern s_func_80070400_1 sharedData_800DECB0_0_s00[12];
-extern s_func_80070400_1 sharedData_800DEDA0_0_s00[5];
-extern s_func_80070400_1 sharedData_800DEE04_0_s00[3];
-extern s_func_80070400_1 sharedData_800DEE40_0_s00[2];
-extern s_func_80070400_1 sharedData_800DEE68_0_s00[9];
-extern s_func_80070400_1 sharedData_800DEF1C_0_s00[30];
+extern s_Keyframe sharedData_800DDBA8_0_s00;
+extern s_Keyframe sharedData_800DDBBC_0_s00[9];
+extern s_Keyframe sharedData_800DDC70_0_s00[7];
+extern s_Keyframe sharedData_800DDCFC_0_s00[7];
+extern s_Keyframe sharedData_800DDD88_0_s00[16];
+extern s_Keyframe sharedData_800DDEC8_0_s00[5];
+extern s_Keyframe sharedData_800DDF2C_0_s00[11];
+extern s_Keyframe sharedData_800DE008_0_s00[11];
+extern s_Keyframe sharedData_800DE0E4_0_s00[13];
+extern s_Keyframe sharedData_800DE1E8_0_s00[11];
+extern s_Keyframe sharedData_800DE2C4_0_s00;
+extern s_Keyframe sharedData_800DE2D8_0_s00;
+extern s_Keyframe sharedData_800DE2EC_0_s00;
+extern s_Keyframe sharedData_800DE300_0_s00[16];
+extern s_Keyframe sharedData_800DE440_0_s00[16];
+extern s_Keyframe sharedData_800DE580_0_s00[42]; // Stalker anim data?
+extern s_Keyframe sharedData_800DE8C8_0_s00[29];
+extern s_Keyframe sharedData_800DEB0C_0_s00[18]; // Stalker anim data? Index is keyframe index.
+extern s_Keyframe sharedData_800DEC74_0_s00[3];
+extern s_Keyframe sharedData_800DECB0_0_s00[12];
+extern s_Keyframe sharedData_800DEDA0_0_s00[5];
+extern s_Keyframe sharedData_800DEE04_0_s00[3];
+extern s_Keyframe sharedData_800DEE40_0_s00[2];
+extern s_Keyframe sharedData_800DEE68_0_s00[9];
+extern s_Keyframe sharedData_800DEF1C_0_s00[30];
 
 #define CopyData(arg0, data)                  \
 {                                             \

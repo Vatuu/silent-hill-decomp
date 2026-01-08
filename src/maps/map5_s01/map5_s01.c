@@ -408,21 +408,21 @@ INCLUDE_ASM("maps/map5_s01/nonmatchings/map5_s01", sharedFunc_800E384C_2_s00); /
 
 #include "maps/shared/Ai_Romper_Control_2.h" // 0x800E83AC
 
-#include "maps/shared/sharedFunc_800E6C40_2_s02.h" // 0x800E8774
+#include "maps/shared/Ai_Romper_Control_3.h" // 0x800E8774
 
-#include "maps/shared/sharedFunc_800E7540_2_s02.h" // 0x800E9074
+#include "maps/shared/Ai_Romper_Control_4.h" // 0x800E9074
 
-#include "maps/shared/sharedFunc_800E79D8_2_s02.h" // 0x800E950C
+#include "maps/shared/Ai_Romper_Control_5.h" // 0x800E950C
 
-#include "maps/shared/sharedFunc_800E803C_2_s02.h" // 0x800E9B70
+#include "maps/shared/Ai_Romper_Control_6.h" // 0x800E9B70
 
-#include "maps/shared/sharedFunc_800E8158_2_s02.h" // 0x800E9C8C
+#include "maps/shared/Ai_Romper_Control_7.h" // 0x800E9C8C
 
 #include "maps/shared/Ai_Romper_Control_8.h" // 0x800E9F08
 
 #include "maps/shared/Ai_Romper_Control_9.h" // 0x800E9FAC
 
-#include "maps/shared/sharedFunc_800E8480_2_s02.h" // 0x800E9FB4
+#include "maps/shared/Ai_Romper_Control_10.h" // 0x800E9FB4
 
 #include "maps/shared/Ai_Romper_Control_11.h" // 0x800EA1F4
 

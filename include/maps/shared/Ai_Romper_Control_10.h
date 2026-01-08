@@ -1,4 +1,4 @@
-void sharedFunc_800E8480_2_s02(s_SubCharacter* romper)
+void Ai_Romper_Control_10(s_SubCharacter* romper)
 {
     VECTOR          sp10;
     s_SubCharacter* player;
@@ -10,7 +10,7 @@ void sharedFunc_800E8480_2_s02(s_SubCharacter* romper)
                                                            romper->properties_E4.romper.positionZ_100 - romper->position_18.vz);
     }
 
-    if (romper->model_0.anim_4.status_0 == 0xB)
+    if (romper->model_0.anim_4.status_0 == 11)
     {
         romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, romper->properties_E4.romper.field_124 * 4), 0);
     }
@@ -21,7 +21,7 @@ void sharedFunc_800E8480_2_s02(s_SubCharacter* romper)
 
     romper->field_E1_0 = 0;
 
-    if (romper->model_0.anim_4.status_0 == 0xB)
+    if (romper->model_0.anim_4.status_0 == 11)
     {
         romper->properties_E4.romper.field_104 = romper->model_0.anim_4.time_4 - 0x14000;
     }
@@ -32,10 +32,10 @@ void sharedFunc_800E8480_2_s02(s_SubCharacter* romper)
 
     player = &g_SysWork.playerWork_4C.player_0;
 
-    if (player->attackReceived_41 == -1)
+    if (player->attackReceived_41 == NO_VALUE)
     {
-        romper->model_0.anim_4.status_0 = 0x12;
-        romper->model_0.controlState_2  = 0xB;
+        romper->model_0.anim_4.status_0 = 18;
+        romper->model_0.controlState_2  = 11;
         romper->field_E1_0              = 0;
         romper->field_E1_0              = 3;
     }

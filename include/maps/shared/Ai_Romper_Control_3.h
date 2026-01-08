@@ -1,4 +1,4 @@
-void sharedFunc_800E6C40_2_s02(s_SubCharacter* romper)
+void Ai_Romper_Control_3(s_SubCharacter* romper)
 {
     s16             var_s3;
     s32             temp_s0;
@@ -111,7 +111,7 @@ void sharedFunc_800E6C40_2_s02(s_SubCharacter* romper)
         if (romper->properties_E4.romper.field_10E > 0x1000 && !Rng_TestProbabilityBits(4))
         {
             romper->model_0.controlState_2            = 1;
-            romper->model_0.anim_4.status_0           = 0x18;
+            romper->model_0.anim_4.status_0           = 24;
             romper->properties_E4.romper.rotationY_F2 = romper->rotation_24.vy;
         }
         else if (temp_s0 != 0 || romper->properties_E4.romper.rotationY_F2 == 0x1000 ||
@@ -125,7 +125,7 @@ void sharedFunc_800E6C40_2_s02(s_SubCharacter* romper)
             if (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) < 0x73 || FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) > 0x78)
             {
                 romper->model_0.controlState_2         = 4;
-                romper->model_0.anim_4.status_0        = 0x1C;
+                romper->model_0.anim_4.status_0        = 28;
                 romper->properties_E4.romper.field_10C = 0;
                 romper->moveSpeed_38                   = 0;
                 romper->properties_E4.romper.field_120 = 0;
@@ -173,7 +173,7 @@ void sharedFunc_800E6C40_2_s02(s_SubCharacter* romper)
         }
     }
 
-    if (g_SysWork.playerWork_4C.player_0.health_B0 <= 0)
+    if (g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f))
     {
         return;
     }
