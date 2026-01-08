@@ -58,93 +58,93 @@ INCLUDE_RODATA("maps/map0_s01/nonmatchings/map0_s01", sharedData_800CAA98_0_s01)
 
 #include "maps/shared/Ai_AirScreamerControl_2.h" // 0x800D3EB8
 
-void func_800D4114(void) {}
+void Ai_AirScreamerControl_3(s_SubCharacter* airScreamer) {}
 
-void func_800D411C(void) {}
+void Ai_AirScreamerControl_4(s_SubCharacter* airScreamer) {}
 
-void func_800D4124(void) {}
+void Ai_AirScreamerControl_5(s_SubCharacter* airScreamer) {}
 
-void func_800D412C(void) {}
+void Ai_AirScreamerControl_6(s_SubCharacter* airScreamer) {}
 
-void func_800D4134(void) {}
+void Ai_AirScreamerControl_7(s_SubCharacter* airScreamer) {}
 
-void func_800D413C(void) {}
+void Ai_AirScreamerControl_8(s_SubCharacter* airScreamer) {}
 
-void func_800D4144(void) {}
+void Ai_AirScreamerControl_9(s_SubCharacter* airScreamer) {}
 
-void func_800D414C(void) {}
+void Ai_AirScreamerControl_10(s_SubCharacter* airScreamer) {}
 
-void func_800D4154(void) {}
+void Ai_AirScreamerControl_11(s_SubCharacter* airScreamer) {}
 
-void func_800D415C(void) {}
+void Ai_AirScreamerControl_12(s_SubCharacter* airScreamer) {}
 
-void func_800D4164(void) {}
+void Ai_AirScreamerControl_13(s_SubCharacter* airScreamer) {}
 
-void func_800D416C(void) {}
+void Ai_AirScreamerControl_14(s_SubCharacter* airScreamer) {}
 
-void func_800D4174(void) {}
+void Ai_AirScreamerControl_15(s_SubCharacter* airScreamer) {}
 
-void func_800D417C(void) {}
+void Ai_AirScreamerControl_16(s_SubCharacter* airScreamer) {}
 
-void func_800D4184(void) {}
+void Ai_AirScreamerControl_17(s_SubCharacter* airScreamer) {}
 
-void func_800D418C(void) {}
+void Ai_AirScreamerControl_18(s_SubCharacter* airScreamer) {}
 
-void func_800D4194(void) {}
+void Ai_AirScreamerControl_19(s_SubCharacter* airScreamer) {}
 
-void func_800D419C(void) {}
+void Ai_AirScreamerControl_20(s_SubCharacter* airScreamer) {}
 
-void func_800D41A4(void) {}
+void Ai_AirScreamerControl_21(s_SubCharacter* airScreamer) {}
 
-void func_800D41AC(void) {}
+void Ai_AirScreamerControl_22(s_SubCharacter* airScreamer) {}
 
-void func_800D41B4(void) {}
+void Ai_AirScreamerControl_23(s_SubCharacter* airScreamer) {}
 
-void func_800D41BC(void) {}
+void Ai_AirScreamerControl_24(s_SubCharacter* airScreamer) {}
 
-void func_800D41C4(void) {}
+void Ai_AirScreamerControl_25(s_SubCharacter* airScreamer) {}
 
-void func_800D41CC(void) {}
+void Ai_AirScreamerControl_26(s_SubCharacter* airScreamer) {}
 
-void func_800D41D4(void) {}
+void Ai_AirScreamerControl_27(s_SubCharacter* airScreamer) {}
 
-void func_800D41DC(void) {}
+void Ai_AirScreamerControl_28(s_SubCharacter* airScreamer) {}
 
-void func_800D41E4(void) {}
+void Ai_AirScreamerControl_29(s_SubCharacter* airScreamer) {}
 
-void func_800D41EC(void) {}
+void Ai_AirScreamerControl_30(s_SubCharacter* airScreamer) {}
 
-void func_800D41F4(void) {}
+void Ai_AirScreamerControl_31(s_SubCharacter* airScreamer) {}
 
-void func_800D41FC(void) {}
+void Ai_AirScreamerControl_32(s_SubCharacter* airScreamer) {}
 
-void func_800D4204(void) {}
+void Ai_AirScreamerControl_33(s_SubCharacter* airScreamer) {}
 
-void func_800D420C(void) {}
+void Ai_AirScreamerControl_34(s_SubCharacter* airScreamer) {}
 
-void func_800D4214(void) {}
+void Ai_AirScreamerControl_35(s_SubCharacter* airScreamer) {}
 
-void func_800D421C(void) {}
+void Ai_AirScreamerControl_36(s_SubCharacter* airScreamer) {}
 
-void func_800D4224(void) {}
+void Ai_AirScreamerControl_37(s_SubCharacter* airScreamer) {}
 
-void func_800D422C(void) {}
+void Ai_AirScreamerControl_38(s_SubCharacter* airScreamer) {}
 
-void func_800D4234(void) {}
+void Ai_AirScreamerControl_39(s_SubCharacter* airScreamer) {}
 
-void func_800D423C(void) {}
+void Ai_AirScreamerControl_40(s_SubCharacter* airScreamer) {}
 
-void func_800D4244(void) {}
+void Ai_AirScreamerControl_41(s_SubCharacter* airScreamer) {}
 
-void func_800D424C(void) {}
+void Ai_AirScreamerControl_42(s_SubCharacter* airScreamer) {}
 
-void func_800D4254(void) {}
+void Ai_AirScreamerControl_43(s_SubCharacter* airScreamer) {}
 
-void func_800D425C(void) {}
+void Ai_AirScreamerControl_44(s_SubCharacter* airScreamer) {}
 
-void func_800D4264(void) {}
+void Ai_AirScreamerControl_45(s_SubCharacter* airScreamer) {}
 
-void func_800D426C(s_SubCharacter* airScreamer) // 0x800D426C
+void Ai_AirScreamerControl_46(s_SubCharacter* airScreamer) // 0x800D426C
 {
     s32 animStatus;
 
@@ -215,7 +215,7 @@ void func_800D426C(s_SubCharacter* airScreamer) // 0x800D426C
     #undef airScreamerProps
 }
 
-void func_800D4420(s_SubCharacter* airScreamer) // 0x800D4420
+void Ai_AirScreamerControl_47(s_SubCharacter* airScreamer) // 0x800D4420
 {
     q19_12 dist0;
     q19_12 deltaY;
@@ -291,7 +291,7 @@ void func_800D4420(s_SubCharacter* airScreamer) // 0x800D4420
     #undef airScreamerProps
 }
 
-void func_800D45BC(s_SubCharacter* airScreamer) // 0x800D45BC
+void Ai_AirScreamerControl_48(s_SubCharacter* airScreamer) // 0x800D45BC
 {
     #define airScreamerProps airScreamer->properties_E4.airScreamer
 
@@ -344,7 +344,7 @@ void func_800D45BC(s_SubCharacter* airScreamer) // 0x800D45BC
     #undef airScreamerProps
 }
 
-void func_800D46C4(s_SubCharacter* airScreamer) // 0x800D46C4
+void Ai_AirScreamerControl_49(s_SubCharacter* airScreamer) // 0x800D46C4
 {
     bool cond0;
     bool cond1;
@@ -457,7 +457,7 @@ void func_800D46C4(s_SubCharacter* airScreamer) // 0x800D46C4
     #undef airScreamerProps
 }
 
-void func_800D4894(s_SubCharacter* airScreamer)
+void Ai_AirScreamerControl_50(s_SubCharacter* airScreamer)
 {
     s32  damageType;
     s32  animStatus;
@@ -531,7 +531,7 @@ void func_800D4894(s_SubCharacter* airScreamer)
     #undef airScreamerProps
 }
 
-void func_800D49B0(s_SubCharacter* airScreamer) // 0x800D49B0
+void Ai_AirScreamerControl_51(s_SubCharacter* airScreamer) // 0x800D49B0
 {
     s32  animStatus;
     u32  stateStep;
