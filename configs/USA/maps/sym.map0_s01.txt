@@ -118,6 +118,7 @@ Ai_AirScreamer_Control              = 0x800D3928; // type:func
 Ai_AirScreamerControl_0             = 0x800D3B0C; // type:func
 Ai_AirScreamerControl_1             = 0x800D3CC4; // type:func
 sharedFunc_800D3DFC_0_s01           = 0x800D3DFC; // type:func
+Ai_AirScreamerControl_2             = 0x800D3EB8; // type:func
 sharedFunc_800D4A80_0_s01           = 0x800D4A80; // type:func
 sharedFunc_800D4AEC_0_s01           = 0x800D4AEC; // type:func
 sharedFunc_800D4E84_0_s01           = 0x800D4E84; // type:func

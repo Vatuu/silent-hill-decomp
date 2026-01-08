@@ -1,36 +1,36 @@
-void Ai_AirScreamerControl_2(s_SubCharacter* airScreamer)
+void Ai_AirScreamerControl_2(s_SubCharacter* airScreamer) // 0x800D3EB8
 {
-    bool cond0;
-    bool isBelowGround;
-    bool cond1;
-    s32  animStatus;
-    s32  animState;
-    s32  animStatusCheck;
-    u32  tmp0;
-    u32  stateStep;
+    q19_12 damage;
+    bool   cond1;
+    bool   isBelowGround;
+    bool   temp_s3;
+    u32    animStatus;
+    s32    animStatus12;
+    bool   activeAnimStatus;
 
     #define airScreamerProps airScreamer->properties_E4.airScreamer
 
     animStatus = airScreamer->model_0.anim_4.status_0;
+    animStatus12 = ANIM_STATUS(AirScreamerAnim_12, true);
+
     sharedFunc_800D5638_0_s01(airScreamer);
-    stateStep      = airScreamer->model_0.stateStep_3;
-    animState = ANIM_STATUS(AirScreamerAnim_12, true);
 
-    animStatusCheck = animStatus | 1; // TODO: Use macro.
+    activeAnimStatus = ANIM_STATUS(ANIM_STATUS_IDX_GET(animStatus), true);
 
-    switch (stateStep)
+    // Handle state step.
+    switch ((u32)airScreamer->model_0.stateStep_3)
     {
-        case 0:
-            cond1         = sharedFunc_800D5F00_0_s01(airScreamer);
+        case AirScreamerStateStep_0:
+            temp_s3 = sharedFunc_800D5F00_0_s01(airScreamer);
             isBelowGround = false;
-            cond0 = airScreamer->position_18.vy >= Q12(8.0f);
+            cond1 = airScreamer->position_18.vy >= Q12(8.0f);
 
             if (func_800808AC(airScreamer->position_18.vx, airScreamer->position_18.vz) == 7)
             {
                 isBelowGround = airScreamer->position_18.vy >= Collision_GroundHeightGet(airScreamer->position_18.vx, airScreamer->position_18.vz);
             }
 
-            if (cond0)
+            if (cond1)
             {
                 Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
 
@@ -57,20 +57,23 @@ void Ai_AirScreamerControl_2(s_SubCharacter* airScreamer)
             {
                 Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
 
-                if (animStatus == ANIM_STATUS(AirScreamerAnim_26, true) && cond1 == true)
+                if (animStatus == ANIM_STATUS(AirScreamerAnim_26, true) && temp_s3 == true)
                 {
                     airScreamer->health_B0 = NO_VALUE;
+
                     func_800622B8(3, airScreamer, ANIM_STATUS(AirScreamerAnim_4, true), 2);
 
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_1;
+
                     sharedFunc_800D3DFC_0_s01(airScreamer);
+                    break;
                 }
             }
             else
             {
                 airScreamer->flags_3E |= CharaFlag_Unk2;
 
-                if (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)) == 4)
+                if (Ai_AirScreamer_DamageTake(airScreamer, Q12(1.0f)) == AirScreamerDamage_4)
                 {
                     if (airScreamer->health_B0 <= Q12(0.0f))
                     {
@@ -82,18 +85,30 @@ void Ai_AirScreamerControl_2(s_SubCharacter* airScreamer)
                     airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(AirScreamerAnim_12, false);
                     airScreamer->model_0.stateStep_3 = AirScreamerStateStep_2;
                     airScreamerProps.flags_11C |= PlayerFlag_WallStopRight;
+                    break;
                 }
+#ifdef MAP0_S01
+                damage = g_DeltaTime0 * 10;
+                if (damage < airScreamer->health_B0)
+                {
+                    airScreamer->health_B0 -= damage;
+                }
+                else if (airScreamer->health_B0 > Q12(0.0f))
+                {
+                    airScreamer->health_B0 = Q12(0.0f);
+                }
+#endif
             }
             break;
 
-        case 1:
+        case AirScreamerStateStep_1:
             Ai_AirScreamer_DamageTake(airScreamer, Q12(0.0f));
             break;
 
-        case 2:
+        case AirScreamerStateStep_2:
             Ai_AirScreamer_DamageTake(airScreamer, Q12(0.5f));
 
-            if (animStatusCheck != animState)
+            if (activeAnimStatus != animStatus12)
             {
                 airScreamer->model_0.stateStep_3 = AirScreamerStateStep_0;
             }

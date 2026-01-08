@@ -124,8 +124,6 @@ void Map_WorldObjectsUpdate(void);
 
 void CutsceneObjects_Add(s32 arg0);
 
-void func_800D3EB8(s_SubCharacter* chara);
-
 void func_800D46C4(s_SubCharacter* chara);
 
 void func_800D5638(s_SubCharacter* chara);
