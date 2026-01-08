@@ -1164,12 +1164,12 @@ STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 
 typedef struct
 {
-    s32 field_0_0  : 1;  // End of array marker.
-    s32 field_0_1  : 10; // X
-    s32 field_0_11 : 10; // Z
-    u32 field_0_21 : 4;  // X
-    u32 field_0_25 : 4;  // Z
-    u32 field_0_29 : 3;
+    s32 endOfArray_0_0 : 1; // End of array marker.
+    s32 posX_0_1  : 10; // X
+    s32 posZ_0_11 : 10; // Z
+    u32 sizeX_0_21 : 4; // X size
+    u32 sizeZ_0_25 : 4; // Z size
+    u32 field_0_29 : 3; // Related to ground height? Used to set `s_func_8006F338::field_2C` which then gets copied by `func_8006F250`, that func has only been seen called by AirScreamer?
 } s_func_8006F8FC;
 STATIC_ASSERT_SIZEOF(s_func_8006F8FC, 4);
 
