@@ -1491,6 +1491,7 @@ typedef struct _PropertiesRomper
     q3_12  timer_11C;
     s8     unk_11E[2];
     s32    field_120;
+    s32    field_124;
 } s_PropertiesRomper;
 
 /** @brief Split Head character properties. */

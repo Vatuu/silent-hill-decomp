@@ -258,6 +258,7 @@ sharedFunc_800E8A40_2_s02     = 0x800E8A40; // type:func
 sharedFunc_800E8DFC_2_s02     = 0x800E8DFC; // type:func
 sharedFunc_800E939C_2_s02     = 0x800E939C; // type:func
 sharedFunc_800E94B4_2_s02     = 0x800E94B4; // type:func
+sharedFunc_800E9714_2_s02     = 0x800E9714; // type:func
 sharedFunc_800D929C_0_s00     = 0x800E992C; // type:func
 Map_RoomIdxGet                = 0x800E993C; // type:func
 sharedFunc_800E9B38_2_s02     = 0x800E9B38; // type:func

@@ -2391,6 +2391,8 @@ s32 sharedFunc_800E939C_2_s02(s_SubCharacter* romper);
 
 s32 sharedFunc_800E94B4_2_s02(s_SubCharacter* romper);
 
+void sharedFunc_800E9714_2_s02(s_SubCharacter* romper);
+
 void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void Ai_Groaner_Init(s_SubCharacter* groaner); // `map2_s00` has extra block at end of func compared to other maps.
