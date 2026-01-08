@@ -417,8 +417,8 @@ def find_similar_functions(func1_path, maxDistance):
 
 
 def find_equal_asm_files(searchType, map1, map2, maxdistance, replaceIncludeAsm, updateSymTxtFile, funcToMatchBeforeUpdating):
-    map1_asm_path = os.path.join("asm", "maps", map1)
-    map2_asm_path = os.path.join("asm", "maps", map2)
+    map1_asm_path = os.path.join("asm/USA", "maps", map1)
+    map2_asm_path = os.path.join("asm/USA", "maps", map2)
 
     path1_base = os.path.join(map1_asm_path, searchType)
     path2_base = os.path.join(map2_asm_path, "nonmatchings")
