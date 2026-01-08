@@ -136,7 +136,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Purpose</td>
           </tr>
           <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a><br/>23/43 matched.</td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a><br/>27/43 matched.</td>
             <td colspan=2>Map and character code.</td>
           </tr>
           <tr>
@@ -208,7 +208,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Location</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s00"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map2_s00&label=MAP2_S00"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s00"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map2_s00&label=MAP2_S00&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Old Silent Hill.</td>
         </tr>
         <tr>
@@ -217,7 +217,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td><a href="https://github.com/Vatuu/silent-hill-decomp/commit/5921aa73fb75645a75ae9c6fa0fdc30a0e4d58b2">Third fully decompiled and matching</br>map overlay!</a></td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map2_s02&label=MAP2_S02"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map2_s02&label=MAP2_S02&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Central Silent Hill.</td>
         </tr>
             <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map2_s03"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map2_s03&label=MAP2_S03&color=rgb(255,215,0)"/></a></td>
@@ -244,7 +244,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Hospital 1st and basement floors after meeting with Kaufmann.</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map3_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map3_s02&label=MAP3_S02"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map3_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map3_s02&label=MAP3_S02&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Green Lion Antique Shop cutscene in the Hospital.</td>
         </tr>
         <tr>
@@ -279,7 +279,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Green Lion Antique Shop in Central Silent Hill and Otherworld.</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map4_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map4_s02&label=MAP4_S02"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map4_s02"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map4_s02&label=MAP4_S02&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Central Silent Hill in Otherworld.</td>
         </tr>
         <tr>
