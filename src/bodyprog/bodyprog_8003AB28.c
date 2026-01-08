@@ -753,7 +753,7 @@ void func_8003BE28(void) // 0x8003BE28
     func_80069820(D_800BCE14);
 }
 
-s_Bone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId) // 0x8003BE50
+s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId) // 0x8003BE50
 {
     return g_WorldGfx.registeredCharaModels_18[charaId]->skeleton_14.bones_C;
 }
@@ -3221,14 +3221,14 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     func_800553E0(arg0->field_0.field_18, arg0->field_0.field_19.r, arg0->field_0.field_19.g, arg0->field_0.field_19.b, arg0->field_0.field_1D.r, arg0->field_0.field_1D.g, arg0->field_0.field_1D.b);
 }
 
-void func_80040004(s_WorldGfxWork* worldGfxWork) // 0x80040004
+void func_80040004(s_MapOverlayHeader* overlayHeader) // 0x80040004
 {
-    g_WorldGfx.heldItem_1BAC.bone_18.next_14 = &worldGfxWork->charaModels_CC[2].skeleton_14.bones_C[16];
+    g_WorldGfx.field_1BD8 = &overlayHeader->field_D2C[0];
 }
 
 void func_80040014(void) // 0x80040014
 {
-    func_80069860(g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz, g_WorldGfx.heldItem_1BAC.bone_18.next_14);
+    func_80069860(g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz, g_WorldGfx.field_1BD8);
 };
 
 INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_8003AB28", D_80025BE4);

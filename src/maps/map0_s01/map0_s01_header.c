@@ -203,5 +203,8 @@ const s_MapOverlayHeader g_MapOverlayHeader = {
     },
     .unk_84C = {
 #include "header_last_unknown_chunk.h"
-    }
+    },
+    .field_D2C = {
+#include "header_field_D2C.h"
+    },
 };

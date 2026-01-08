@@ -1183,7 +1183,7 @@ void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, G
     }
 }
 
-void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
+void func_80057090(s_ModelInfo* modelInfo, GsOT* arg1, s32 arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5) // 0x80057090
 {
     s32            temp_a0;
     GsOT_TAG*      otTag;
@@ -2486,7 +2486,7 @@ __block19CC:
     GsOUT_PACKET_P = poly4;
 }
 
-void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, GsOT_TAG* tag) // 0x80059D50
+void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, s32 arg3, GsOT_TAG* tag) // 0x80059D50
 {
     s_GteScratchData* scratchData;
     s_MeshHeader*     curMeshHdr;

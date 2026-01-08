@@ -999,9 +999,15 @@ typedef struct _Bone
     s_ModelInfo   modelInfo_0;
     s8            field_10;
     s8            unk_11[3];
-    struct _Bone* next_14;
 } s_Bone;
-STATIC_ASSERT_SIZEOF(s_Bone, 24);
+STATIC_ASSERT_SIZEOF(s_Bone, 20);
+
+typedef struct _LinkedBone
+{
+    s_Bone bone_0;
+    struct _LinkedBone* next_14;
+} s_LinkedBone;
+STATIC_ASSERT_SIZEOF(s_LinkedBone, 24);
 
 typedef struct
 {
@@ -1009,9 +1015,9 @@ typedef struct
     u8      boneIdx_1;
     u8      field_2;
     s8      field_3;
-    s_Bone* bones_4;
-    s_Bone* bones_8;
-    s_Bone  bones_C[56];
+    s_LinkedBone* bones_4;
+    s_LinkedBone* bones_8;
+    s_LinkedBone  bones_C[56];
 } s_Skeleton;
 STATIC_ASSERT_SIZEOF(s_Skeleton, 1356);
 
@@ -1156,15 +1162,27 @@ typedef struct _WorldObject
 } s_WorldObject;
 STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 
+typedef struct
+{
+    s32 field_0_0  : 1;  // End of array marker.
+    s32 field_0_1  : 10; // X
+    s32 field_0_11 : 10; // Z
+    u32 field_0_21 : 4;  // X
+    u32 field_0_25 : 4;  // Z
+    u32 field_0_29 : 3;
+} s_func_8006F8FC;
+STATIC_ASSERT_SIZEOF(s_func_8006F8FC, 4);
+
 typedef struct _HeldItem
 {
-    s32           itemId_0; /** `e_InventoryItemId` */
-    s32           queueIdx_4;
-    char*         textureName_8;
-    s_FsImageDesc imageDesc_C;
-    s_LmHeader*   lmHdr_14;
-    s_Bone        bone_18;
+    s32              itemId_0; /** `e_InventoryItemId` */
+    s32              queueIdx_4;
+    char*            textureName_8;
+    s_FsImageDesc    imageDesc_C;
+    s_LmHeader*      lmHdr_14;
+    s_Bone           bone_18;
 } s_HeldItem;
+STATIC_ASSERT_SIZEOF(s_HeldItem, 0x2C);
 
 /** @brief World GFX workspace. TODO: Could be `s_RendererWork`? Will depend on where other data resides. */
 typedef struct _WorldGfxWork
@@ -1178,6 +1196,7 @@ typedef struct _WorldGfxWork
     s_CharaModel      charaModels_CC[GROUP_CHARA_COUNT];
     s_CharaModel      harryModel_164C;
     s_HeldItem        heldItem_1BAC;             /** The item held by the player. */
+    s_func_8006F8FC*  field_1BD8;
     VC_CAMERA_INTINFO vcCameraInternalInfo_1BDC; /** Debug camera info. */
     s_LmHeader        itemLmHdr_1BE4;
     u8                itemLmData_1BF4[4096 - sizeof(s_LmHeader)]; // Retail game uses 2.75kb file, but they allocate 4kb for it.
@@ -1293,16 +1312,6 @@ typedef struct
     u8            unk_CD[127];
     u16           field_14C;
 } s_800C4168;
-
-typedef struct
-{
-    s32 field_0_0  : 1;
-    s32 field_0_1  : 10; // X
-    s32 field_0_11 : 10; // Z
-    u32 field_0_21 : 4;  // X
-    u32 field_0_25 : 4;  // Z
-    u32 field_0_29 : 3;
-} s_func_8006F8FC;
 
 typedef struct
 {
@@ -1684,9 +1693,10 @@ typedef struct _MapOverlayHeader
     s8                     charaGroupIds_248[GROUP_CHARA_COUNT];                              /** `e_CharacterId` values where if `s_MapPoint2d::data.spawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_MapPoint2d           charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
     VC_ROAD_DATA           roadDataList_3CC[48];
-    u32                    unk_84C[512];
+    u32                    unk_84C[0x138];
+    s_func_8006F8FC        field_D2C[200];
 } s_MapOverlayHeader;
-STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 4172); // Size incomplete.
+STATIC_ASSERT_SIZEOF(s_MapOverlayHeader, 0x104C);
 
 typedef struct
 {
@@ -2926,7 +2936,7 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0);
 
 void func_8003FF2C(s_StructUnk3* arg0);
 
-void func_80040004(s_WorldGfxWork* worldGfxWork);
+void func_80040004(s_MapOverlayHeader* overlayHeader);
 
 void func_80040014(void);
 
@@ -3135,7 +3145,7 @@ void func_80044044(s_IpdHeader* ipd, s32 cellX, s32 cellZ);
  * @param ot Ordering table.
  * @param arg4 TODO
  */
-void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, void* arg4);
+void Gfx_IpdChunkDraw(s_IpdHeader* ipdHdr, q19_12 posX, q19_12 posZ, GsOT* ot, s32 arg4);
 
 bool func_80044420(s_IpdModelBuffer* modelBuf, s16 arg1, s16 arg2, q23_8 posX, q23_8 posZ);
 
@@ -3182,7 +3192,7 @@ void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q3_12 rotY);
 s8 Bone_ModelIdxGet(s8* ptr, bool arg1);
 
 /** Skeleton setup? Assigns bones pointer for the skeleton and resets fields. */
-void Skeleton_Init(s_Skeleton* skel, s_Bone* bones, u8 boneCount);
+void Skeleton_Init(s_Skeleton* skel, s_LinkedBone* bones, u8 boneCount);
 
 /** Clears skeleton bone flags/mask. Called by `Skeleton_Init`. */
 void func_80045014(s_Skeleton* skel);
@@ -3197,7 +3207,7 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3);
 void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2);
 
 /** Anim func. Param names are rough. */
-void func_80045258(s_Bone** boneOrd, s_Bone* bones, s32 boneIdx, s_LmHeader* lmHdr);
+void func_80045258(s_LinkedBone** boneOrd, s_LinkedBone* bones, s32 boneIdx, s_LmHeader* lmHdr);
 
 /** Anim func. */
 void func_800452EC(s_Skeleton* skel);
@@ -3299,7 +3309,7 @@ void func_80056244(s_LmHeader* lmHdr, bool unkFlag);
 s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
 
 /** TODO: Unknown `arg3` type. */
-void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, void* arg3, GsOT_TAG* tag);
+void func_80059D50(s32 arg0, s_ModelInfo* modelInfo, MATRIX* mat, s32 arg3, GsOT_TAG* tag);
 
 void func_80059E34(u32 arg0, s_MeshHeader* meshHdr, s_GteScratchData* scratchData, s32 arg3, GsOT_TAG* tag);
 
@@ -3369,7 +3379,7 @@ void StringCopy(char* prevStr, char* newStr);
 
 void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* arg6, s32 arg7);
 
-void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, void* arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
+void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
 
 s32 func_800571D0(u32 arg0);
 
@@ -4353,7 +4363,7 @@ void func_8003BE28(void);
  * @param charaId ID of the character for which to get the skeleton bones (`e_CharacterId`).
  * @return Character model bones or `NULL` if the character model is unregistered.
  */
-s_Bone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId);
+s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId);
 
 void GameFs_BgEtcGfxLoad(void);
 
