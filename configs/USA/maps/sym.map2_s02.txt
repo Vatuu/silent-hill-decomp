@@ -250,6 +250,7 @@ Ai_Romper_Control_1           = 0x800E6758; // type:func
 Ai_Romper_Control_2           = 0x800E6878; // type:func
 sharedFunc_800E6C40_2_s02     = 0x800E6C40; // type:func
 sharedFunc_800E7540_2_s02     = 0x800E7540; // type:func
+sharedFunc_800E79D8_2_s02     = 0x800E79D8; // type:func
 Ai_Romper_Control_8           = 0x800E83D4; // type:func
 Ai_Romper_Control_9           = 0x800E8478; // type:func
 Ai_Romper_Control_11          = 0x800E86C0; // type:func
