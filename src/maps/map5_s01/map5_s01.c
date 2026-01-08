@@ -81,81 +81,11 @@ INCLUDE_RODATA("maps/map5_s01/nonmatchings/map5_s01", sharedData_800CAA98_0_s01)
 // TODO: Move this line into separate `Chara_AirScreamer` split.
 #include "../src/maps/characters/air_screamer.c" // 0x800D225C
 
-#include "maps/shared/Ai_Groaner_Update.h" // 0x800E3294
+// TODO: Move this line into separate `Chara_Groaner` split.
+#include "../src/maps/characters/groaner.c" // 0x800E3294
 
-#include "maps/shared/Ai_Groaner_Init.h" // 0x800E3390
-
-#include "maps/shared/sharedFunc_800E33DC_2_s00.h" // 0x800E3590
-
-#include "maps/shared/sharedFunc_800E384C_2_s00.h" // 0x800E3A00
-
-#include "maps/shared/sharedFunc_800E39D8_2_s00.h" // 0x800E3B8C
-
-#include "maps/shared/sharedFunc_800E3E94_2_s00.h" // 0x800E4048
-
-#include "maps/shared/sharedFunc_800E4830_2_s00.h" // 0x800E49E4
-
-#include "maps/shared/sharedFunc_800E4E84_2_s00.h" // 0x800E5038
-
-#include "maps/shared/sharedFunc_800E554C_2_s00.h" // 0x800E5700
-
-#include "maps/shared/sharedFunc_800E55B0_2_s00.h" // 0x800E5764
-
-#include "maps/shared/sharedFunc_800E5930_2_s00.h" // 0x800E5AE4
-
-#include "maps/shared/sharedFunc_800E5AA4_2_s00.h" // 0x800E5C58
-
-#include "maps/shared/sharedFunc_800E5EC4_2_s00.h" // 0x800E6078
-
-#include "maps/shared/sharedFunc_800E6338_2_s00.h" // 0x800E64EC
-
-#include "maps/shared/sharedFunc_800E71E8_2_s00.h" // 0x800E739C
-
-#include "maps/shared/Ai_Romper_Update.h" // 0x800E786C
-
-#include "maps/shared/Ai_Romper_Init.h" // 0x800E790C
-
-#include "maps/shared/sharedFunc_800E5FC8_2_s02.h" // 0x800E7AFC
-
-#include "maps/shared/sharedFunc_800E60FC_2_s02.h" // 0x800E7C30
-
-#include "maps/shared/sharedFunc_800E6420_2_s02.h" // 0x800E7F54
-
-#include "maps/shared/Ai_Romper_Control.h" // 0x800E821C
-
-#include "maps/shared/Ai_Romper_Control_1.h" // 0x800E828C
-
-#include "maps/shared/Ai_Romper_Control_2.h" // 0x800E83AC
-
-#include "maps/shared/Ai_Romper_Control_3.h" // 0x800E8774
-
-#include "maps/shared/Ai_Romper_Control_4.h" // 0x800E9074
-
-#include "maps/shared/Ai_Romper_Control_5.h" // 0x800E950C
-
-#include "maps/shared/Ai_Romper_Control_6.h" // 0x800E9B70
-
-#include "maps/shared/Ai_Romper_Control_7.h" // 0x800E9C8C
-
-#include "maps/shared/Ai_Romper_Control_8.h" // 0x800E9F08
-
-#include "maps/shared/Ai_Romper_Control_9.h" // 0x800E9FAC
-
-#include "maps/shared/Ai_Romper_Control_10.h" // 0x800E9FB4
-
-#include "maps/shared/Ai_Romper_Control_11.h" // 0x800EA1F4
-
-#include "maps/shared/sharedFunc_800E8730_2_s02.h" // 0x800EA264
-
-#include "maps/shared/sharedFunc_800E8A40_2_s02.h" // 0x800EA574
-
-#include "maps/shared/sharedFunc_800E8DFC_2_s02.h" // 0x800EA930
-
-#include "maps/shared/sharedFunc_800E939C_2_s02.h" // 0x800EAED0
-
-#include "maps/shared/sharedFunc_800E94B4_2_s02.h" // 0x800EAFE8
-
-#include "maps/shared/sharedFunc_800E9714_2_s02.h" // 0x800EB248
+// TODO: Move this line into separate `Chara_Romper` split.
+#include "../src/maps/characters/romper.c" // 0x800E786C
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800EB460
 

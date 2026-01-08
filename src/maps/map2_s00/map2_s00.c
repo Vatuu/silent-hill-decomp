@@ -54,35 +54,8 @@ INCLUDE_RODATA("maps/map2_s00/nonmatchings/map2_s00", sharedData_800CAA98_0_s01)
 // TODO: Move this line into separate `Chara_AirScreamer` split.
 #include "../src/maps/characters/air_screamer.c" // 0x800D1F40
 
-#include "maps/shared/Ai_Groaner_Update.h" // 0x800E2F78
-
-#include "maps/shared/Ai_Groaner_Init.h" // 0x800E3074 - `map2_s00` includes extra block at end of function compared to other maps.
-
-#include "maps/shared/sharedFunc_800E33DC_2_s00.h" // 0x800E33DC
-
-#include "maps/shared/sharedFunc_800E384C_2_s00.h" // 0x800E384C
-
-#include "maps/shared/sharedFunc_800E39D8_2_s00.h" // 0x800E39D8
-
-#include "maps/shared/sharedFunc_800E3E94_2_s00.h" // 0x800E3E94
-
-#include "maps/shared/sharedFunc_800E4830_2_s00.h" // 0x800E4830
-
-#include "maps/shared/sharedFunc_800E4E84_2_s00.h" // 0x800E4E84
-
-#include "maps/shared/sharedFunc_800E554C_2_s00.h" // 0x800E554C
-
-#include "maps/shared/sharedFunc_800E55B0_2_s00.h" // 0x800E55B0
-
-#include "maps/shared/sharedFunc_800E5930_2_s00.h" // 0x800E5930
-
-#include "maps/shared/sharedFunc_800E5AA4_2_s00.h" // 0x800E5AA4
-
-#include "maps/shared/sharedFunc_800E5EC4_2_s00.h" // 0x800E5EC4
-
-#include "maps/shared/sharedFunc_800E6338_2_s00.h" // 0x800E6338
-
-#include "maps/shared/sharedFunc_800E71E8_2_s00.h" // 0x800E71E8
+// TODO: Move this line into separate `Chara_Groaner` split.
+#include "../src/maps/characters/groaner.c" // 0x800E2F78
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800E76B8
 
