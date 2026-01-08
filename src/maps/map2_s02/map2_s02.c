@@ -143,17 +143,17 @@ INCLUDE_RODATA("maps/map2_s02/nonmatchings/map2_s02", sharedData_800CAA98_0_s01)
 
 #include "maps/shared/Ai_AirScreamerControl_45.h" // 0x800DA5D4
 
-void func_800DA6D4(void) {}
+void Ai_AirScreamerControl_46(s_SubCharacter* airScreamer) {}
 
-void func_800DA6DC(void) {}
+void Ai_AirScreamerControl_47(s_SubCharacter* airScreamer) {}
 
-void func_800DA6E4(void) {}
+void Ai_AirScreamerControl_48(s_SubCharacter* airScreamer) {}
 
-void func_800DA6EC(void) {}
+void Ai_AirScreamerControl_49(s_SubCharacter* airScreamer) {}
 
-void func_800DA6F4(void) {}
+void Ai_AirScreamerControl_50(s_SubCharacter* airScreamer) {}
 
-void func_800DA6FC(void) {}
+void Ai_AirScreamerControl_51(s_SubCharacter* airScreamer) {}
 
 #include "maps/shared/sharedFunc_800D4A80_0_s01.h" // 0x800DA704
 
