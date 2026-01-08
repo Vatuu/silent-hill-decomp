@@ -1914,6 +1914,12 @@ extern s32 sharedData_800ECA4C_2_s02;
 
 extern s32 sharedData_800ECACC_2_s02;
 
+extern s16 sharedData_800ECB22_2_s02;
+
+extern s16 sharedData_800ECBC2_2_s02;
+
+extern s16 sharedData_800ECBD0_2_s02;
+
 extern s_sharedData_800ED2D4_2_s02 sharedData_800ED314_2_s02[];
 
 extern void (*g_Romper_ControlFuncs[])(s_SubCharacter* romper);
