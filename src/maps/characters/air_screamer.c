@@ -7201,7 +7201,6 @@ void Ai_AirScreamerControl_38(s_SubCharacter* airScreamer)
     s32           var_v0_2;
     bool          new_var;
     s32           temp_s6;
-    s_PlayerWork* playerWork;
 
     temp_s7 = airScreamer->model_0.anim_4.status_0;
     var_s4  = 0;
@@ -7323,9 +7322,7 @@ void Ai_AirScreamerControl_38(s_SubCharacter* airScreamer)
                     break;
 
                 case 1:
-                    playerWork = &g_SysWork.playerWork_4C;
-
-                    if (!((u16)playerWork->player_0.flags_3E & 8) &&
+                    if (!Character_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
                         (g_SysWork.npcIdxs_2354[0] == NO_VALUE && g_SysWork.npcIdxs_2354[1] == NO_VALUE) &&
                         temp_s7 == 0x23)
                     {
@@ -13035,14 +13032,11 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
     VECTOR3*           vec;
     GsCOORDINATE2*     coords;
     s_SubCharacter_44* temp_s1;
-    s_PlayerWork*      player;
-
-    player = &g_SysWork.playerWork_4C;
 
     animStatus = airScreamer->model_0.anim_4.status_0;
     temp_s1    = &airScreamer->field_44;
 
-    if (!(player->player_0.flags_3E & CharaFlag_Unk4) &&
+    if (!Character_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
         g_SysWork.npcIdxs_2354[0] == NO_VALUE && g_SysWork.npcIdxs_2354[1] == NO_VALUE &&
         airScreamer->model_0.controlState_2 != AirScreamerControl_12 && airScreamer->model_0.controlState_2 != AirScreamerControl_25 &&
         airScreamer->model_0.controlState_2 != AirScreamerControl_40 && airScreamer->model_0.controlState_2 != AirScreamerControl_49)

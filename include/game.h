@@ -2118,6 +2118,10 @@ static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 
     chara->model_0.anim_4.keyframeIdx_8 = keyframeIdx;
 }
 
+/** @brief Checks if the `s_SubCharacter*` has the given `flags_3E` value set. */
+#define Character_HasFlag(chara, flag) \
+    ((chara)->flags_3E & (flag))
+
 /** @brief Sets given animation flags for a model.
  *
  * @param model `s_Model` to update.

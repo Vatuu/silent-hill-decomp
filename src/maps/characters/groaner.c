@@ -436,7 +436,6 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
     s32           var_a1;
     s32           i;
     q19_12        distToPlayerMax;
-    s_PlayerWork* playerWork;
 
     if (groanerProps.flags_E8.val16[0] & GroanerFlag_1)
     {
@@ -561,9 +560,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 
     if (cond && !temp_s6)
     {
-        playerWork = &g_SysWork.playerWork_4C;
-
-        if (!(playerWork->player_0.flags_3E & CharaFlag_Unk4) &&
+        if (!Character_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
             !(g_SysWork.field_2284[3] & 2) &&
             g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f) &&
             g_SysWork.sysState_8 == 0 &&
@@ -586,8 +583,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 
     if (distToPlayer < Q12(1.2f))
     {
-        playerWork = &g_SysWork.playerWork_4C;
-        if ((playerWork->player_0.flags_3E & CharaFlag_Unk4) ||
+        if (Character_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) ||
             (g_SysWork.field_2284[3] & 2) ||
             g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f) ||
             g_SysWork.sysState_8 != 0 ||

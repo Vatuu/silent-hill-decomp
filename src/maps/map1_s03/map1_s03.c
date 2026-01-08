@@ -666,8 +666,6 @@ void func_800DAF18(void) // 0x800DAF18
     s32           var_v0;
     s32           var_v0_2;
     s32           var_v1;
-    s_PlayerWork* player;
-    s_PlayerWork* player2;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
@@ -831,8 +829,7 @@ void func_800DAF18(void) // 0x800DAF18
                 func_800CE0CC(2);
             }
 
-            player                                   = &g_SysWork.playerWork_4C;
-            player->player_0.model_0.anim_4.flags_2 &= 0xFFFD;
+            Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, AnimFlag_Visible);
 
             func_8008D438();
             Camera_PositionSet(NULL, D_800E1F88[0].vx, D_800E1F88[0].vy, D_800E1F88[0].vz, 0, 0, 0, 0, true);
@@ -927,8 +924,7 @@ void func_800DAF18(void) // 0x800DAF18
             break;
 
         case 11:
-            player2                                   = &g_SysWork.playerWork_4C;
-            player2->player_0.model_0.anim_4.flags_2 |= AnimFlag_Visible;
+            Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, AnimFlag_Visible);
 
             func_8008D448();
             func_8003EBA0();

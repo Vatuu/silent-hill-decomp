@@ -369,7 +369,6 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
     q3_12         angleDeltaToPlayer;
     q19_12        distToPlayer;
     q19_12        distToTarget;
-    s_PlayerWork* playerWork;
 
     angleDeltaToPlayer = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - creeper->position_18.vx,
                                                g_SysWork.playerWork_4C.player_0.position_18.vz - creeper->position_18.vz) -
@@ -394,8 +393,6 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
     if (distToTarget < Q12(1.2f) && !(creeperProps.flags_E8 & CreeperFlag_0) &&
         !func_800700F8(creeper, &g_SysWork.playerWork_4C.player_0))
     {
-        playerWork = &g_SysWork.playerWork_4C;
-
         if (distToPlayer > Q12(1.2f))
         {
             //if ((creeperProps.flags_E8 & (CreeperFlag_4 | CreeperFlag_5)) == CreeperFlag_4) // TODO: Doesn't match?
@@ -412,7 +409,7 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
                 creeperProps.timer_F0            = Q12(0.0f);
             }
         }
-        else if (!(g_SysWork.field_2284[3] & (1 << 1)) && !(playerWork->player_0.flags_3E & CharaFlag_Unk4) &&
+        else if (!(g_SysWork.field_2284[3] & (1 << 1)) && !Character_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
                  distToPlayer < Q12(0.5f) && ABS(angleDeltaToPlayer) < FP_ANGLE(10.0f) &&
                  g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
         {
