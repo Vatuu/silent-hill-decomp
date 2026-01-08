@@ -289,6 +289,8 @@ typedef enum _EventFlag
     EventFlag_312             = 312,
     EventFlag_313             = 313,
 
+    EventFlag_314 = 314,
+
     EventFlag_316 = 316,
     EventFlag_317 = 317,
 
@@ -306,6 +308,8 @@ typedef enum _EventFlag
 
     EventFlag_332 = 332,
     EventFlag_333 = 333,
+
+    EventFlag_334 = 334,
 
     EventFlag_335 = 335,
     EventFlag_336 = 336,
