@@ -341,7 +341,7 @@ void func_800DBF14(void) {}
 
 #include "maps/shared/sharedFunc_800E33DC_2_s00.h" // 0x800E33DC
 
-INCLUDE_ASM("maps/map2_s00/nonmatchings/map2_s00", sharedFunc_800E384C_2_s00); // 0x800E384C - `map2_s00` version differs to the 4 other maps which share `Ai_Groaner_Update`.
+#include "maps/shared/sharedFunc_800E384C_2_s00.h" // 0x800E384C
 
 #include "maps/shared/sharedFunc_800E39D8_2_s00.h" // 0x800E39D8
 

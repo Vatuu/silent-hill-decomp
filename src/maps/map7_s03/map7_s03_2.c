@@ -431,22 +431,19 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD2C8);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD32C);
 
-
-void func_800DD3D4(void* arg0, s32 scaleX, s32 scaleY, s32 scaleZ)
+void func_800DD3D4(void* arg0, s32 scaleX, s32 scaleY, s32 scaleZ) // 0x800DD3D4
 {
-    VECTOR3 local_vec;    // sp + 0x10
-    MATRIX  local_matrix; // sp + 0x20
+    VECTOR3 local_vec;
+    MATRIX  local_matrix;
 
-    Vw_CoordHierarchyMatrixCompute((void*)((u8*)&g_SysWork + 0x8E0), &local_matrix);
+    Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords_890[HarryBone_Torso], &local_matrix);
 
-    // This works because the built-in MATRIX struct has 't' (translation) at offset 0x14
     local_vec.vx = (local_matrix.t[0] << 4) + scaleX;
     local_vec.vy = (local_matrix.t[1] << 4) + scaleY;
     local_vec.vz = (local_matrix.t[2] << 4) + scaleZ;
 
     func_800DD32C(arg0, &local_vec);
 }
-
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD464);
 

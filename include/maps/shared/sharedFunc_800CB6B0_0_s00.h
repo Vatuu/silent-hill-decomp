@@ -272,7 +272,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 
             temp_s0 = SetSp(0x1F8003D8);
 
-            sharedFunc_800CBC94_0_s00(&sharedData_800E0CBC_0_s00);
+            sharedFunc_800CBC94_0_s00(sharedData_800E0CBC_0_s00);
 #if defined(MAP0_S00)
             func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, sharedData_800DFB4C_0_s00);
 #endif

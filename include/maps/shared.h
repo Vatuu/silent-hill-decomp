@@ -2415,7 +2415,7 @@ void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner);
 
 void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner);
 
-void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner); // `map2_s00` has different version to the other 4 maps which share this, shared sym is needed to share `Ai_Groaner_Update`.
+void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner);
 
 void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner);
 
