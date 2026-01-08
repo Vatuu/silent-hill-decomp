@@ -1477,7 +1477,7 @@ typedef struct _PropertiesRomper
     s16    field_FA;
     q19_12 positionX_FC;  // } Target position?
     q19_12 positionZ_100; // }
-    s8     unk_104[4];
+    s32    field_104;
     q19_12 positionX_108;
     u8     field_10C;
     s8     unk_10D;
