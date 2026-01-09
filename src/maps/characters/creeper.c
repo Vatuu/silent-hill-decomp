@@ -409,7 +409,7 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
                 creeperProps.timer_F0            = Q12(0.0f);
             }
         }
-        else if (!(g_SysWork.field_2284[3] & (1 << 1)) && !Character_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
+        else if (!(g_SysWork.field_2284[3] & (1 << 1)) && !Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
                  distToPlayer < Q12(0.5f) && ABS(angleDeltaToPlayer) < FP_ANGLE(10.0f) &&
                  g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f))
         {

@@ -2381,7 +2381,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper);
 
 void sharedFunc_800E6420_2_s02(s_SubCharacter* romper);
 
-void Ai_Romper_Control(s_SubCharacter* romper);
+void Ai_Romper_ControlUpdate(s_SubCharacter* romper);
 
 void Ai_Romper_Control_1(s_SubCharacter* romper);
 
@@ -2393,7 +2393,7 @@ void Ai_Romper_Control_11(s_SubCharacter* romper);
 
 void sharedFunc_800E8730_2_s02(s_SubCharacter* romper);
 
-void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader*, GsCOORDINATE2*);
+void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper);
 
@@ -2472,15 +2472,16 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* airScreamer, q19_12 posY, q19_12 d
 
 void sharedFunc_800D57C8_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D5E78_0_s01(s_SubCharacter* chara, q19_12 angle);
+void sharedFunc_800D5E78_0_s01(s_SubCharacter* airScreamer, q19_12 angle);
 
-s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara, s32 arg3, VECTOR3* vec2);
+s32 sharedFunc_800D6A60_0_s01(VECTOR3* offset, VECTOR3* vec1, s_SubCharacter* airScreamer, s32 arg3, VECTOR3* vec2);
 
-void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* chara, s32 arg2, VECTOR3* arg3);
+void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* airScreamer, s32 arg2, VECTOR3* arg3);
 
-void sharedFunc_800D2364_0_s01(s_SubCharacter* chara);
+/** Plays SFX. */
+void sharedFunc_800D2364_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800D5638_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D5638_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800DF2D0_2_s00(s_SubCharacter* airScreamer);
 
@@ -2524,21 +2525,21 @@ void sharedFunc_800CBD58_1_s02(void);
 
 void sharedFunc_800DE1F8_2_s00(s_SubCharacter* airScreamer);
 
-bool sharedFunc_800DEC64_2_s00(s_SubCharacter* chara);
+bool sharedFunc_800DEC64_2_s00(s_SubCharacter* airScreamer);
 
-void sharedFunc_800DEC84_2_s00(s_SubCharacter* chara, q19_12 radius, q19_12 angle);
+void sharedFunc_800DEC84_2_s00(s_SubCharacter* airScreamer, q19_12 radius, q19_12 angle);
 
-void sharedFunc_800DECA4_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist);
+void sharedFunc_800DECA4_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12 dist);
 
-void sharedFunc_800DF22C_2_s00(s_SubCharacter* chara);
+void sharedFunc_800DF22C_2_s00(s_SubCharacter* airScreamer);
 
-bool sharedFunc_800DF24C_2_s00(s_SubCharacter* chara);
+bool sharedFunc_800DF24C_2_s00(s_SubCharacter* airScreamer);
 
 bool sharedFunc_800D2FB4_0_s01(s_SubCharacter* airScreamer, VECTOR3* playerPos, s32 playerField10C);
 
-void sharedFunc_800D72E8_0_s01(s_SubCharacter* chara, s32 field_34, s32 rotSpeedY);
+void sharedFunc_800D72E8_0_s01(s_SubCharacter* airScreamer, q19_12 angle0, q19_12 rotSpeedY);
 
-void sharedFunc_800D6EC4_0_s01(s_SubCharacter* chara);
+void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer);
 
 /** @brief Handles the jammed door event. */
 void MapEvent_DoorJammed(void);

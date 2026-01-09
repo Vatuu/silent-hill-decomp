@@ -47,8 +47,8 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
 
 void Ai_Groaner_Init(s_SubCharacter* groaner)
 {
-    #define GROANER_HEALTH_BASE      Q12(210.0f)
-    #define GROANER_HEALTH_BONUS_MAX Q12(70.0f)
+    #define HEALTH_BASE      Q12(210.0f)
+    #define HEALTH_BONUS_MAX Q12(70.0f)
 
     s32 i;
 
@@ -56,7 +56,7 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
     groanerProps.flags_E8.val16[0]  = 0;
     groaner->model_0.anim_4.alpha_A = Q12(0.0f);
 
-    groaner->health_B0 = GROANER_HEALTH_BASE + (Rng_Rand16() % GROANER_HEALTH_BONUS_MAX);
+    groaner->health_B0 = HEALTH_BASE + (Rng_Rand16() % HEALTH_BONUS_MAX);
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal &&
         Rng_GenerateInt(0, 7) == 0) // 1 in 8 chance.
     {
@@ -113,6 +113,9 @@ void Ai_Groaner_Init(s_SubCharacter* groaner)
         }
     }
 #endif
+
+    #undef HEALTH_BASE
+    #undef HEALTH_BONUS_MAX
 }
 
 void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
@@ -300,24 +303,25 @@ typedef struct
 extern s_800EEE3C sharedData_800EEE3C_2_s00[];
 
 #if defined(MAP2_S00)
-#define UNK_VAL Q12(0.6f)
+    #define UNK_VAL Q12(0.6f)
 #else
-#define UNK_VAL Q12(1.0f)
+    #define UNK_VAL Q12(1.0f)
 #endif
 
 void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner)
 {
     extern void (*sharedData_800EEE14_2_s00[])(s_SubCharacter* chara);
 
-    #define getIndex() (((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3) == 0) * 2 + ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3) == 2))
+    #define getIndex() \
+        ((((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3) == 0) * 2) + ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 2))
 
     if (func_80070360(groaner, Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - groaner->position_18.vx, 
             g_SysWork.playerWork_4C.player_0.position_18.vz - groaner->position_18.vz), UNK_VAL) != 0 ||
         func_8006FD90(groaner, 1, sharedData_800EEE3C_2_s00[getIndex()].field_0, sharedData_800EEE3C_2_s00[getIndex()].field_4))
     {
-        groanerProps.flags_E8.val16[0] |= (1 << 7);
+        groanerProps.flags_E8.val16[0] |= GroanerFlag_7;
 
-        if (groanerProps.flags_E8.val16[0] & (1 << 5))
+        if (groanerProps.flags_E8.val16[0] & GroanerFlag_5)
         {
             groanerProps.targetPositionX_F4 = g_SysWork.playerWork_4C.player_0.position_18.vx;
             groanerProps.targetPositionZ_F8 = g_SysWork.playerWork_4C.player_0.position_18.vz;
@@ -325,10 +329,10 @@ void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner)
     }
     else
     {
-        groanerProps.flags_E8.val16[0] &= ~(1 << 7);
+        groanerProps.flags_E8.val16[0] &= ~GroanerFlag_7;
     }
 
-    if (groaner->model_0.anim_4.status_0 != ANIM_STATUS(10, true))
+    if (groaner->model_0.anim_4.status_0 != ANIM_STATUS(GroanerAnim_10, true))
     {
         groaner->field_44.field_0 = 0;
     }
@@ -426,7 +430,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 {
     s16           temp_v0_10;
     q3_12         angle0;
-    q3_12         angle1;
+    q3_12         angleDeltaToTarget;
     q19_12        headingAngle;
     s32           temp_s2;
     s32           temp_s4;
@@ -533,15 +537,14 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    angle1 = func_8005BF38(groanerProps.angle_FC - groaner->rotation_24.vy);
-
-    if (angle1 < 0xE3)
+    angleDeltaToTarget = func_8005BF38(groanerProps.angle_FC - groaner->rotation_24.vy);
+    if (angleDeltaToTarget < FP_ANGLE(20.0f))
     {
         Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)));
     }
     else
     {
-        temp_v0_10 = Q12(1.0f) - (((angle1 - 0xE3) * 3) >> 1);
+        temp_v0_10 = Q12(1.0f) - (((angleDeltaToTarget - FP_ANGLE(20.0f)) * 3) >> 1);
         Chara_MoveSpeedUpdate4(groaner, Q12(9.5f), Q12_MULT_PRECISE(Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)), temp_v0_10));
     }
 
@@ -560,7 +563,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 
     if (cond && !temp_s6)
     {
-        if (!Character_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
+        if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
             !(g_SysWork.field_2284[3] & 2) &&
             g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f) &&
             g_SysWork.sysState_8 == 0 &&
@@ -583,18 +586,18 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 
     if (distToPlayer < Q12(1.2f))
     {
-        if (Character_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) ||
+        if (Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) ||
             (g_SysWork.field_2284[3] & 2) ||
             g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f) ||
             g_SysWork.sysState_8 != 0 ||
-            !Rng_TestProbabilityBits(4))
+            !Rng_GenerateInt(0, 15)) // 1 in 16 chance.
         {
             groaner->model_0.controlState_2 = GroanerControl_4;
             return;
         }
     }
 
-    if (!(groanerProps.flags_E8.val16[0] & 0x80) &&
+    if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_7) &&
         (distToPlayer > Q12(12.0f) || (!Rng_TestProbabilityBits(7) && distToPlayer > Q12(6.0f))))
     {
         groaner->model_0.controlState_2                         = GroanerControl_1;
@@ -734,9 +737,8 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
         groaner->rotation_24.vy                                += Q12(0.125f);
         groanerProps.angle_EC += Q12(0.125f);
         g_SysWork.field_2284[3]                              &= ~(1 << 1);
-        groaner->model_0.anim_4.status_0                        = ANIM_STATUS(GroanerAnim_16, true);
-        groaner->model_0.anim_4.time_4                          = Q12(363.0f);
-        groaner->model_0.anim_4.keyframeIdx_8                   = 363;
+
+        Character_AnimSet(groaner, ANIM_STATUS(GroanerAnim_16, true), 363);
         groanerProps.flags_E8.val16[0]                         &= ~GroanerFlag_9;
     }
 }
@@ -806,7 +808,7 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
     for (i = 0; i < 2; i++)
     {
         temp_a3 = func_8005BF38((groanerProps.angle_FC - groaner->rotation_24.vy));
-        if ((g_DeltaTime0 >> 3) + 1 < ABS(temp_a3))
+        if (((g_DeltaTime0 >> 3) + 1) < ABS(temp_a3))
         {
             if (temp_a3 > FP_ANGLE(0.0f))
             {
@@ -867,7 +869,7 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
     // TODO: Wrong RNG macro.
     if (Rng_TestProbabilityBits(12) < var_s0_2)
     {
-        groaner->model_0.controlState_2 = 2;
+        groaner->model_0.controlState_2 = GroanerControl_2;
     }
 }
 
@@ -1013,8 +1015,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    // TODO: Groaner property at E8 is treated as `s32`.
-    if (!(groanerProps.flags_E8.val32 & 0x44) &&
+    if (!(groanerProps.flags_E8.val32 & (GroanerFlag_2 | GroanerFlag_6)) &&
         groaner->moveSpeed_38 == Q12(0.0f))
     {
         animStatus    = ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0);
@@ -1035,7 +1036,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
         if (newAnimStatus != ANIM_STATUS(GroanerAnim_Still, false))
         {
             func_800622B8(3, groaner, newAnimStatus, 6);
-            groanerProps.flags_E8.val16[0] |= AirScreamerFlag_6;
+            groanerProps.flags_E8.val16[0] |= GroanerFlag_6;
         }
     }
 }

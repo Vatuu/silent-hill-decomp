@@ -1372,8 +1372,8 @@ STATIC_ASSERT_SIZEOF(s_PropertiesDahlia, 64);
 typedef struct _PropertiesGroaner
 {
     u_Property flags_E8; /** `e_GroanerFlags` TODO: One weird exception where it's accessed as `s32`. */
-    q3_12      angle_EC;
-    s16        field_EE;
+    q3_12      angle_EC; // Target heading angle?
+    q3_12      field_EE; // Angle?
     q3_12      field_F0;
     q3_12      field_F2;
     q19_12     targetPositionX_F4;
@@ -1469,18 +1469,18 @@ STATIC_ASSERT_SIZEOF(s_PropertiesPuppetNurse, 64);
 typedef struct _PropertiesRomper
 {
     s32    flags_E8; /** `e_RomperFlags` */
-    s16    field_EC;
+    q3_12  angle_EC; // Target heading angle?
     s16    field_EE;
     q3_12  field_F0; // Move speed accumulation for this tick.
     q3_12  rotationY_F2;
     q19_12 field_F4; // Relative anim time?
-    s16    field_F8;
-    s16    field_FA;
-    q19_12 positionX_FC;  // } Target position?
-    q19_12 positionZ_100; // }
+    q3_12  offsetX_F8; // } Move offset?
+    q3_12  offsetZ_FA; // }
+    q19_12 targetPositionX_FC;
+    q19_12 targetPositionZ_100;
     s32    field_104;
     q19_12 positionX_108;
-    u8     field_10C;
+    u8     field_10C; // Relative keyframe index?
     s8     unk_10D;
     u16    field_10E;
     q19_12 positionZ_110;
@@ -1492,8 +1492,8 @@ typedef struct _PropertiesRomper
     s8     unk_11B;
     q3_12  timer_11C;
     s8     unk_11E[2];
-    s32    field_120;
-    s32    field_124;
+    q19_12 distance_120; // Distance?
+    q19_12 field_124; // Move speed step?
 } s_PropertiesRomper;
 
 /** @brief Split Head character properties. */
@@ -2119,7 +2119,7 @@ static inline void Character_AnimSet(s_SubCharacter* chara, s32 animStatus, s32 
 }
 
 /** @brief Checks if the `s_SubCharacter*` has the given `flags_3E` value set. */
-#define Character_HasFlag(chara, flag) \
+#define Chara_HasFlag(chara, flag) \
     ((chara)->flags_3E & (flag))
 
 /** @brief Sets given animation flags for a model.

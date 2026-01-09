@@ -7322,7 +7322,7 @@ void Ai_AirScreamerControl_38(s_SubCharacter* airScreamer)
                     break;
 
                 case 1:
-                    if (!Character_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
+                    if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
                         (g_SysWork.npcIdxs_2354[0] == NO_VALUE && g_SysWork.npcIdxs_2354[1] == NO_VALUE) &&
                         temp_s7 == 0x23)
                     {
@@ -10352,19 +10352,19 @@ void sharedFunc_800DEBCC_2_s00(s_SubCharacter* airScreamer)
     sharedFunc_800D4E84_0_s01(airScreamer);
 }
 
-bool sharedFunc_800DEC64_2_s00(s_SubCharacter* chara)
+bool sharedFunc_800DEC64_2_s00(s_SubCharacter* airScreamer)
 {
-    return sharedFunc_800DE250_2_s00(chara);
+    return sharedFunc_800DE250_2_s00(airScreamer);
 }
 
-void sharedFunc_800DEC84_2_s00(s_SubCharacter* chara, q19_12 radius, q19_12 angle)
+void sharedFunc_800DEC84_2_s00(s_SubCharacter* airScreamer, q19_12 radius, q19_12 angle)
 {
-    sharedFunc_800D529C_0_s01(chara, radius, angle);
+    sharedFunc_800D529C_0_s01(airScreamer, radius, angle);
 }
 
-void sharedFunc_800DECA4_2_s00(s_SubCharacter* chara, VECTOR3* vec, q19_12 dist)
+void sharedFunc_800DECA4_2_s00(s_SubCharacter* airScreamer, VECTOR3* vec, q19_12 dist)
 {
-    sharedFunc_800DE6A8_2_s00(chara, vec, dist);
+    sharedFunc_800DE6A8_2_s00(airScreamer, vec, dist);
 }
 
 void sharedFunc_800DECC4_2_s00(s_SubCharacter* airScreamer)
@@ -10512,19 +10512,19 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
     return var_s2;
 }
 
-void sharedFunc_800DF22C_2_s00(s_SubCharacter* chara)
+void sharedFunc_800DF22C_2_s00(s_SubCharacter* airScreamer)
 {
-    sharedFunc_800DEBCC_2_s00(chara);
+    sharedFunc_800DEBCC_2_s00(airScreamer);
 }
 
-bool sharedFunc_800DF24C_2_s00(s_SubCharacter* chara)
+bool sharedFunc_800DF24C_2_s00(s_SubCharacter* airScreamer)
 {
-    return sharedFunc_800DE250_2_s00(chara);
+    return sharedFunc_800DE250_2_s00(airScreamer);
 }
 
 #endif
 
-void sharedFunc_800D5638_0_s01(s_SubCharacter* chara)
+void sharedFunc_800D5638_0_s01(s_SubCharacter* airScreamer)
 {
     s32                          idx0;
     s_sharedData_800E21D0_0_s01* dst;
@@ -10547,7 +10547,7 @@ void sharedFunc_800D5638_0_s01(s_SubCharacter* chara)
     idx0                   = 3;
     dst->field_B4[idx0][1] = src->unk_380[30][1];
 
-    sharedFunc_800D5E78_0_s01(chara, FP_ANGLE(0.0f));
+    sharedFunc_800D5E78_0_s01(airScreamer, FP_ANGLE(0.0f));
 }
 
 #ifndef MAP0_S01
@@ -10966,7 +10966,7 @@ void sharedFunc_800DF8A0_2_s00(s_SubCharacter* airScreamer)
 s32 sharedFunc_800D569C_0_s01(s_SubCharacter* airScreamer, q19_12 vecY, q19_12 dist)
 {
     q19_12 posY;
-    s32    someY;
+    s32    prevGroundHeight;
     q19_12 groundHeight;
     q19_12 vecYCpy;
     q19_12 distCpy;
@@ -10978,23 +10978,22 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* airScreamer, q19_12 vecY, q19_12 d
     distCpy      = dist;
     groundHeight = Collision_GroundHeightGet(airScreamer->position_18.vx, airScreamer->position_18.vz);
 
-    // @hack: Unions shouldn't be mixed (NPC vs. Larval Stalker).
-    someY = airScreamer->properties_E4.npc.field_124;
+    // TODO: Not used as ground height in this func?
+    prevGroundHeight = airScreamerProps.groundHeight_124;
 
     vec_x = airScreamerProps.position_110.vx;
     vec_z = airScreamerProps.position_110.vz;
 
-    if (someY < groundHeight)
+    if (prevGroundHeight < groundHeight)
     {
-        groundHeight = someY;
+        groundHeight = prevGroundHeight;
     }
 
     groundHeight -= Q12(1.7f);
-    someY         = func_800808AC(vec_x, vec_z); // Collision type? This returns `caseVar` from `Collision_Fill`.
-
-    if (someY == 12 || someY == 0 || someY == 7)
+    prevGroundHeight         = func_800808AC(vec_x, vec_z); // Collision type? This returns `caseVar` from `Collision_Fill`.
+    if (prevGroundHeight == 12 || prevGroundHeight == 0 || prevGroundHeight == 7)
     {
-        distCpy = 0;
+        distCpy = Q12(0.0f);
     }
 
     if (posY < groundHeight)
@@ -11008,8 +11007,8 @@ s32 sharedFunc_800D569C_0_s01(s_SubCharacter* airScreamer, q19_12 vecY, q19_12 d
     }
     else if (distCpy > Q12(4.0f))
     {
-        someY    = FP_TO(distCpy - Q12(4.0f), Q12_SHIFT) / Q12(8.0f);
-        vecYCpy += Q12_MULT_PRECISE((groundHeight - vecYCpy), someY);
+        prevGroundHeight    = Q12_DIV(distCpy - Q12(4.0f), Q12(8.0f));
+        vecYCpy += Q12_MULT_PRECISE((groundHeight - vecYCpy), prevGroundHeight);
     }
 
     if (vecYCpy < sharedFunc_800D5274_0_s01())
@@ -11776,7 +11775,7 @@ void sharedFunc_800E0514_2_s00(s_SubCharacter* airScreamer)
 
 #endif
 
-void sharedFunc_800D5E78_0_s01(s_SubCharacter* chara, q19_12 angle) // 0x800D5E78
+void sharedFunc_800D5E78_0_s01(s_SubCharacter* airScreamer, q19_12 angle) // 0x800D5E78
 {
     q19_12                       angleDelta;
     q19_12                       angleCpy;
@@ -11785,7 +11784,6 @@ void sharedFunc_800D5E78_0_s01(s_SubCharacter* chara, q19_12 angle) // 0x800D5E7
     s32                          idx0;
 
     angleCpy = angle;
-
     if (angleCpy > FP_ANGLE(60.0f))
     {
         angleCpy = FP_ANGLE(60.0f);
@@ -11795,8 +11793,7 @@ void sharedFunc_800D5E78_0_s01(s_SubCharacter* chara, q19_12 angle) // 0x800D5E7
         angleCpy = FP_ANGLE(-60.0f);
     }
 
-    angleDelta = angleCpy - chara->field_2A;
-
+    angleDelta = angleCpy - airScreamer->field_2A;
     if (angleDelta > FP_ANGLE(0.5f))
     {
         angleDelta -= FP_ANGLE(0.5f);
@@ -12162,10 +12159,10 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
     airScreamerProps.field_F2 = angle1;
 }
 
-s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* chara, s32 arg3, VECTOR3* vec2)
+s32 sharedFunc_800D6A60_0_s01(VECTOR3* offset, VECTOR3* vec1, s_SubCharacter* airScreamer, s32 arg3, VECTOR3* vec2)
 {
-    s32      vec0X;
-    s32      vec0Z;
+    q19_12   offsetX;
+    q19_12   offsetZ;
     s32      vec0Y;
     s32      vec1X;
     s32      vec1Y;
@@ -12180,18 +12177,18 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* char
     s32      ret;
     s32      retCode1;
     s32      flags;
-    VECTOR3* vec0Cpy;
+    VECTOR3* localOffset; // Q19.12
 
-    flags   = chara->properties_E4.player.flags_11C;
-    vec0Cpy = vec0;
+    flags   = airScreamerProps.flags_11C;
+    localOffset = offset;
 
-    vec0X = vec0Cpy->vx;
-    vec0Z = vec0Cpy->vz;
+    offsetX = localOffset->vx;
+    offsetZ = localOffset->vz;
 
     ret = arg3;
 
-    chara->position_18.vx += vec0X;
-    chara->position_18.vz += vec0Z;
+    airScreamer->position_18.vx += offsetX;
+    airScreamer->position_18.vz += offsetZ;
 
     if (ret == 0)
     {
@@ -12204,20 +12201,20 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* char
     else
     {
         flags |= PlayerFlag_Unk31;
-        time   = 0x01000000 / g_DeltaTime0;
+        time   = Q12(4096.0f) / g_DeltaTime0;
 
-        if (!(vec0X | vec0Z))
+        if (!(offsetX | offsetZ))
         {
-            vec2X    = 0;
-            vec2Z    = 0;
-            vec2->vx = 0;
-            vec2->vz = 0;
+            vec2X    = Q12(0.0f);
+            vec2Z    = Q12(0.0f);
+            vec2->vx = Q12(0.0f);
+            vec2->vz = Q12(0.0f);
         }
         else
         {
-            vec2X    = Q12_MULT_PRECISE(vec0X, time);
+            vec2X    = Q12_MULT_PRECISE(offsetX, time);
             vec2->vx = vec2X;
-            vec2Z    = Q12_MULT_PRECISE(vec0Z, time);
+            vec2Z    = Q12_MULT_PRECISE(offsetZ, time);
             vec2->vz = vec2Z;
         }
 
@@ -12227,25 +12224,25 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* char
 
     vec1->vx = vec1X;
     vec1->vz = vec1Z;
-    posY     = chara->position_18.vy;
+    posY     = airScreamer->position_18.vy;
     vec1Y    = vec1->vy;
-    vec0Y    = vec0Cpy->vy;
+    vec0Y    = localOffset->vy;
 
-    groundHeight                        = Collision_GroundHeightGet(chara->position_18.vx, chara->position_18.vz);
+    groundHeight                        = Collision_GroundHeightGet(airScreamer->position_18.vx, airScreamer->position_18.vz);
     sharedData_800E21D0_0_s01.field_114 = groundHeight;
     retCode1                            = 1;
 
-    if (!(chara->field_E1_0))
+    if (!(airScreamer->field_E1_0))
     {
-        newVec2Y = 0;
-        newVec1Y = 0;
+        newVec2Y = Q12(0.0f);
+        newVec1Y = Q12(0.0f);
     }
     else if (posY >= groundHeight && vec0Y >= Q12(0.0f))
     {
         flags   &= ~PlayerFlag_Unk30;
         posY     = groundHeight;
-        newVec2Y = 0;
-        newVec1Y = 0;
+        newVec2Y = Q12(0.0f);
+        newVec1Y = Q12(0.0f);
     }
     else
     {
@@ -12254,7 +12251,7 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* char
         {
             flags   |= PlayerFlag_Unk30;
             ret      = retCode1;
-            newVec2Y = 0;
+            newVec2Y = Q12(0.0f);
             newVec1Y = -vec1Y;
             posY     = groundHeight;
         }
@@ -12262,61 +12259,61 @@ s32 sharedFunc_800D6A60_0_s01(VECTOR3* vec0, VECTOR3* vec1, s_SubCharacter* char
         {
             flags   &= ~PlayerFlag_Unk30;
             newVec2Y = vec1Y;
-            newVec1Y = 0;
+            newVec1Y = Q12(0.0f);
         }
     }
 
-    chara->position_18.vy                 = posY;
+    airScreamer->position_18.vy                 = posY;
     vec2->vy                              = newVec2Y;
     vec1->vy                              = newVec1Y;
-    chara->properties_E4.player.flags_11C = flags;
+    airScreamer->properties_E4.player.flags_11C = flags;
     return ret;
 }
 
-void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* chara, s32 arg2, VECTOR3* arg3)
+void sharedFunc_800D6C7C_0_s01(VECTOR* arg0, s_SubCharacter* airScreamer, s32 arg2, VECTOR3* arg3)
 {
-    s32 sqr;
-    s32 z;
-    s32 y;
-    s32 x;
+    s32    sqr;
+    q19_12 offsetX;
+    q19_12 offsetY;
+    q19_12 offsetZ;
 
     if (arg2 == 0)
     {
-        x = 0;
-        y = 0;
-        z = 0;
+        offsetX = Q12(0.0f);
+        offsetY = Q12(0.0f);
+        offsetZ = Q12(0.0f);
     }
     else
     {
-        x = arg0->vx;
-        y = arg0->vy;
-        z = arg0->vz;
+        offsetX = arg0->vx;
+        offsetY = arg0->vy;
+        offsetZ = arg0->vz;
 
-        sqr  = Q12_MULT_PRECISE(x, x);
-        sqr += Q12_MULT_PRECISE(y, y);
-        sqr += Q12_MULT_PRECISE(z, z);
+        sqr  = Q12_MULT_PRECISE(offsetX, offsetX);
+        sqr += Q12_MULT_PRECISE(offsetY, offsetY);
+        sqr += Q12_MULT_PRECISE(offsetZ, offsetZ);
         sqr  = SquareRoot12(sqr);
 
-        chara->damage_B4.amount_C += Math_PreservedSignSubtract(sqr, Q12(5.0f));
+        airScreamer->damage_B4.amount_C += Math_PreservedSignSubtract(sqr, Q12(5.0f));
         if (sqr != Q12(0.0f))
         {
             sqr = Q12(Math_PreservedSignSubtract(sqr, Q12(6.0f))) / sqr;
         }
 
-        x = Q12_MULT_PRECISE(x, sqr);
-        y = Q12_MULT_PRECISE(y, sqr);
-        z = Q12_MULT_PRECISE(z, sqr);
-        if (x | y | z)
+        offsetX = Q12_MULT_PRECISE(offsetX, sqr);
+        offsetY = Q12_MULT_PRECISE(offsetY, sqr);
+        offsetZ = Q12_MULT_PRECISE(offsetZ, sqr);
+        if (offsetX | offsetY | offsetZ)
         {
-            chara->damage_B4.position_0.vx += Q12_MULT_PRECISE(x, Q12(0.8f));
-            chara->damage_B4.position_0.vy += Q12_MULT_PRECISE(y, Q12(0.8f));
-            chara->damage_B4.position_0.vz += Q12_MULT_PRECISE(z, Q12(0.8f));
+            airScreamer->damage_B4.position_0.vx += Q12_MULT_PRECISE(offsetX, Q12(0.8f));
+            airScreamer->damage_B4.position_0.vy += Q12_MULT_PRECISE(offsetY, Q12(0.8f));
+            airScreamer->damage_B4.position_0.vz += Q12_MULT_PRECISE(offsetZ, Q12(0.8f));
         }
     }
 
-    arg3->vx = x;
-    arg3->vy = y;
-    arg3->vz = z;
+    arg3->vx = offsetX;
+    arg3->vy = offsetY;
+    arg3->vz = offsetZ;
 }
 
 void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer)
@@ -12327,7 +12324,7 @@ void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer)
     s32 element2;
     s32 moveSpeed;
 
-    sharedData_800E21D0_0_s01.flags_0 &= ~0x2B;
+    sharedData_800E21D0_0_s01.flags_0 &= ~0x2B; // TODO: What flags are these?
 
     element1  = sharedData_800E21D0_0_s01.field_B4[0][1];
     element2  = sharedData_800E21D0_0_s01.field_B4[0][2];
@@ -12500,71 +12497,71 @@ q19_12 sharedFunc_800D71F0_0_s01(q19_12 moveSpeed, s32 arg1, s32 arg2, s32 arg3)
     return sharedFunc_800D7120_0_s01(moveSpeed, arg1, arg2);
 }
 
-static void inline sharedFunc_800D72E8_0_s01_subfunc(s32 var_a0, s32 idx)
+static void inline sharedFunc_800D72E8_0_s01_subfunc(q19_12 angle, s32 idx)
 {
-    s32 var_v1;
+    q19_12 angle1;
 
-    if (var_a0 >= 6)
+    if (angle > FP_ANGLE(0.5f))
     {
-        var_a0 -= 5;
+        angle -= FP_ANGLE(0.5f);
     }
     else
     {
-        if (var_a0 < -5)
+        if (angle < FP_ANGLE(-0.5f))
         {
-            var_a0 += 5;
+            angle += FP_ANGLE(0.5f);
         }
         else
         {
-            var_a0 = 0;
+            angle = FP_ANGLE(0.0f);
         }
     }
 
-    if (var_a0 > 0)
+    if (angle > FP_ANGLE(0.0f))
     {
-        var_v1 = Q12(0.3333f);
+        angle1 = FP_ANGLE(120.0f);
     }
-    else if (var_a0 < 0)
+    else if (angle < FP_ANGLE(0.0f))
     {
-        var_v1 = Q12(-0.3333f);
+        angle1 = FP_ANGLE(-120.0f);
     }
     else
     {
-        var_v1 = 0;
+        angle1 = FP_ANGLE(0.0f);
     }
 
-    sharedData_800E21D0_0_s01.field_B4[idx][2] = var_v1;
+    sharedData_800E21D0_0_s01.field_B4[idx][2] = angle1;
     sharedData_800E21D0_0_s01.field_B4[idx][1] = Q12(1.3333f);
-    sharedData_800E21D0_0_s01.field_B4[idx][3] = var_a0;
+    sharedData_800E21D0_0_s01.field_B4[idx][3] = angle;
     sharedData_800E21D0_0_s01.field_B4[idx][0] = 1;
 }
 
-void sharedFunc_800D72E8_0_s01(s_SubCharacter* chara, s32 angle0, s32 angle1)
+void sharedFunc_800D72E8_0_s01(s_SubCharacter* airScreamer, q19_12 angle0, q19_12 rotSpeedY)
 {
-    s32 var_v1;
+    s32 angle1;
 
     // TODO: Not sure what these are multiplying with. Different speeds?
-    var_v1 = Q12_MULT_PRECISE(angle0, Q12(-0.02f));
-    if (var_v1 > FP_ANGLE(45.0f))
+    angle1 = Q12_MULT_PRECISE(angle0, Q12(-0.02f));
+    if (angle1 > FP_ANGLE(45.0f))
     {
-        var_v1 = FP_ANGLE(45.0f);
+        angle1 = FP_ANGLE(45.0f);
     }
-    else if (var_v1 < FP_ANGLE(-45.0f))
+    else if (angle1 < FP_ANGLE(-45.0f))
     {
-        var_v1 = FP_ANGLE(-45.0f);
+        angle1 = FP_ANGLE(-45.0f);
     }
-    sharedFunc_800D72E8_0_s01_subfunc(var_v1 - chara->rotation_24.vx, 2);
+    sharedFunc_800D72E8_0_s01_subfunc(angle1 - airScreamer->rotation_24.vx, 2);
 
-    var_v1 = Q12_MULT_PRECISE(angle1, Q12(0.15f));
-    if (var_v1 > FP_ANGLE(45.0f))
+    angle1 = Q12_MULT_PRECISE(rotSpeedY, Q12(0.15f));
+    if (angle1 > FP_ANGLE(45.0f))
     {
-        var_v1 = FP_ANGLE(45.0f);
+        angle1 = FP_ANGLE(45.0f);
     }
-    else if (var_v1 < FP_ANGLE(-45.0f))
+    else if (angle1 < FP_ANGLE(-45.0f))
     {
-        var_v1 = FP_ANGLE(-45.0f);
+        angle1 = FP_ANGLE(-45.0f);
     }
-    sharedFunc_800D72E8_0_s01_subfunc(var_v1 - chara->rotation_24.vz, 4);
+    sharedFunc_800D72E8_0_s01_subfunc(angle1 - airScreamer->rotation_24.vz, 4);
 }
 
 s32 sharedFunc_800D7440_0_s01(s_800C4590* arg0, VECTOR* offset, s_SubCharacter* airScreamer)
@@ -13033,7 +13030,7 @@ bool sharedFunc_800D7EBC_0_s01(s_SubCharacter* airScreamer)
     animStatus = airScreamer->model_0.anim_4.status_0;
     temp_s1    = &airScreamer->field_44;
 
-    if (!Character_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
+    if (!Chara_HasFlag(&g_SysWork.playerWork_4C.player_0, CharaFlag_Unk4) &&
         g_SysWork.npcIdxs_2354[0] == NO_VALUE && g_SysWork.npcIdxs_2354[1] == NO_VALUE &&
         airScreamer->model_0.controlState_2 != AirScreamerControl_12 && airScreamer->model_0.controlState_2 != AirScreamerControl_25 &&
         airScreamer->model_0.controlState_2 != AirScreamerControl_40 && airScreamer->model_0.controlState_2 != AirScreamerControl_49)

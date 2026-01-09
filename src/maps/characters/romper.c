@@ -16,7 +16,7 @@ void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2
     else if (g_DeltaTime0 != Q12(0.0f))
     {
         sharedFunc_800E6420_2_s02(romper);
-        Ai_Romper_Control(romper);
+        Ai_Romper_ControlUpdate(romper);
         sharedFunc_800E8730_2_s02(romper);
         sharedFunc_800E8DFC_2_s02(romper);
     }
@@ -27,8 +27,8 @@ void Ai_Romper_Update(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2
 
 void Ai_Romper_Init(s_SubCharacter* romper)
 {
-    #define ROMPER_HEALTH_BASE      Q12(450.0f)
-    #define ROMPER_HEALTH_BONUS_MAX Q12(112.5f)
+    #define HEALTH_BASE      Q12(450.0f)
+    #define HEALTH_BONUS_MAX Q12(112.5f)
 
     s32 i;
     s32 temp_a0;
@@ -39,13 +39,13 @@ void Ai_Romper_Init(s_SubCharacter* romper)
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        romper->health_B0 = ROMPER_HEALTH_BASE - ((s32)Rng_Rand16() % ROMPER_HEALTH_BONUS_MAX);
+        romper->health_B0 = HEALTH_BASE - ((s32)Rng_Rand16() % HEALTH_BONUS_MAX);
     }
     else
     {
         if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Normal)
         {
-            romper->health_B0 = ROMPER_HEALTH_BASE + ((s32)Rng_Rand16() % ROMPER_HEALTH_BONUS_MAX);
+            romper->health_B0 = HEALTH_BASE + ((s32)Rng_Rand16() % HEALTH_BONUS_MAX);
         }
         else
         {
@@ -57,7 +57,7 @@ void Ai_Romper_Init(s_SubCharacter* romper)
             }
 
             // TODO: Shifts are equivalent to `var_v0_2 % Q12(0.5f)`.
-            romper->health_B0 = Q12_MULT_PRECISE(((temp_a0 - ((var_v0 >> 11) << 11)) + Q12(1.5f)), ROMPER_HEALTH_BASE);
+            romper->health_B0 = Q12_MULT_PRECISE(((temp_a0 - ((var_v0 >> 11) << 11)) + Q12(1.5f)), HEALTH_BASE);
         }
     }
 
@@ -66,7 +66,7 @@ void Ai_Romper_Init(s_SubCharacter* romper)
     romper->headingAngle_3C = romper->rotation_24.vy;
     Chara_PropertiesClear(romper);
 
-    romper->model_0.controlState_2 = 2;
+    romper->model_0.controlState_2 = RomperControl_2;
     Character_AnimSet(romper, ANIM_STATUS(RomperAnim_15, true), 147);
 
     romperProps.field_F0     = 6;
@@ -76,13 +76,11 @@ void Ai_Romper_Init(s_SubCharacter* romper)
     ModelAnim_AnimInfoSet(&romper->model_0.anim_4, ROPMER_ANIM_INFOS);
     Chara_DamageClear(romper);
 
-    romperProps.positionX_FC =
-        romperProps.positionZ_110 = romper->position_18.vx;
-    romperProps.positionZ_100 =
-        romperProps.positionX_108 = romper->position_18.vz;
+    romperProps.targetPositionX_FC = romperProps.positionZ_110 = romper->position_18.vx;
+    romperProps.targetPositionZ_100 = romperProps.positionX_108 = romper->position_18.vz;
 
-#undef ROMPER_HEALTH_BASE
-    #undef ROMPER_HEALTH_BONUS_MAX
+    #undef HEALTH_BASE
+    #undef HEALTH_BONUS_MAX
 }
 
 void sharedFunc_800E5FC8_2_s02(s_SubCharacter* chara, s16 arg1, s16 arg2, u8* arg3)
@@ -139,7 +137,7 @@ void sharedFunc_800E5FC8_2_s02(s_SubCharacter* chara, s16 arg1, s16 arg2, u8* ar
 
 void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
 {
-    s32 var_s1;
+    q19_12 var_s1;
 
     switch (romper->model_0.anim_4.status_0)
     {
@@ -297,9 +295,8 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
 
     if (unkHealth < romper->health_B0)
     {
-        romperProps.positionX_FC = g_SysWork.playerWork_4C.player_0.position_18.vx;
-
-        romperProps.positionZ_100 = g_SysWork.playerWork_4C.player_0.position_18.vz;
+        romperProps.targetPositionX_FC  = g_SysWork.playerWork_4C.player_0.position_18.vx;
+        romperProps.targetPositionZ_100 = g_SysWork.playerWork_4C.player_0.position_18.vz;
         romperProps.field_10E     = 0;
 
         romperProps.rotationY_F2 = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - romper->position_18.vx,
@@ -338,7 +335,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
 
                 if (!ANIM_STATUS_IS_ACTIVE(romper->model_0.anim_4.status_0))
                 {
-                    romper->model_0.controlState_2 = 6;
+                    romper->model_0.controlState_2 = RomperControl_6;
                 }
                 break;
 
@@ -396,7 +393,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
     }
 }
 
-void Ai_Romper_Control(s_SubCharacter* romper)
+void Ai_Romper_ControlUpdate(s_SubCharacter* romper)
 {
     u8 controlState;
 
@@ -410,7 +407,7 @@ void Ai_Romper_Control(s_SubCharacter* romper)
     g_Romper_ControlFuncs[controlState](romper);
     if (romper->model_0.controlState_2 != controlState)
     {
-        romperProps.field_120 = 0;
+        romperProps.distance_120 = 0;
     }
 }
 
@@ -477,25 +474,25 @@ void Ai_Romper_Control_2(s_SubCharacter* romper)
 
     if (romper->rotation_24.vy == romperProps.rotationY_F2 || func_8007029C(romper, Q12(1.0f), romper->rotation_24.vy))
     {
-        angleDeltaToTarget = func_8005BF38(romper->rotation_24.vy - ratan2(romperProps.positionX_FC  - romper->position_18.vx,
-                                                                           romperProps.positionZ_100 - romper->position_18.vz));
+        angleDeltaToTarget = func_8005BF38(romper->rotation_24.vy - ratan2(romperProps.targetPositionX_FC  - romper->position_18.vx,
+                                                                           romperProps.targetPositionZ_100 - romper->position_18.vz));
         if (ABS(angleDeltaToTarget) > FP_ANGLE(15.0f))
         {
-            if (!Rng_TestProbabilityBits(4))
+            if (!Rng_GenerateInt(0, 15)) // 1 in 16 chance.
             {
-                romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, Q12(1.0f), romperProps.positionX_FC,
-                                                                                  romperProps.positionZ_100, FP_ANGLE(360.0f), true);
+                romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, Q12(1.0f), romperProps.targetPositionX_FC,
+                                                                                  romperProps.targetPositionZ_100, FP_ANGLE(360.0f), true);
             }
         }
     }
 
-    if (Math_Vector2MagCalc(romper->position_18.vx - romperProps.positionX_FC,
-                            romper->position_18.vz - romperProps.positionZ_100) < Q12(1.0f))
+    if (Math_Vector2MagCalc(romper->position_18.vx - romperProps.targetPositionX_FC,
+                            romper->position_18.vz - romperProps.targetPositionZ_100) < Q12(1.0f))
     {
         moveDist                                   = Rng_GenerateInt(Q12(0.0f), Q12(5.0f) - 1);
         headingAngle                               = Rng_TestProbabilityBits(12); // TODO: Wrong macro.
-        romperProps.positionX_FC  = romperProps.positionZ_110 + Q12_MULT(moveDist, Math_Sin(headingAngle));
-        romperProps.positionZ_100 = romperProps.positionX_108 + Q12_MULT(moveDist, Math_Cos(headingAngle));
+        romperProps.targetPositionX_FC  = romperProps.positionZ_110 + Q12_MULT(moveDist, Math_Sin(headingAngle));
+        romperProps.targetPositionZ_100 = romperProps.positionX_108 + Q12_MULT(moveDist, Math_Cos(headingAngle));
     }
 
     romperProps.field_F0 += sharedFunc_800E939C_2_s02(romper);
@@ -534,22 +531,22 @@ void Ai_Romper_Control_2(s_SubCharacter* romper)
             romperProps.field_10C = 18;
         }
 
-        romper->flags_3E |= 4;
+        romper->flags_3E |= RomperFlag_2;
     }
 }
 
 void Ai_Romper_Control_3(s_SubCharacter* romper)
 {
-    s16             var_s3;
+    q3_12           angleDeltaToTarget;
     s32             temp_s0;
-    s32             temp_s4;
-    s32             temp_s5;
+    bool            cond;
+    q19_12          distToTarget;
     s32             temp_v1_2;
-    s32             var_a1;
+    s32             unkDist1;
     s32             var_s0;
     s32             i;
-    s16             var_s2;
-    s32             temp;
+    q3_12           angleToTarget;
+    q19_12          unkDist;
     s_SubCharacter* player;
 
     romperProps.field_F0 += sharedFunc_800E94B4_2_s02(romper);
@@ -558,28 +555,28 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
     temp_v1_2 = g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3;
     if (temp_v1_2 == 0)
     {
-        var_s0 = func_8006FD90(romper, 0, 0x2800, 0x6000);
+        var_s0 = func_8006FD90(romper, 0, Q12(2.5f), Q12(6.0f));
     }
     else if (temp_v1_2 == 2)
     {
-        var_s0 = func_8006FD90(romper, 0, 0x3000, 0x8000);
+        var_s0 = func_8006FD90(romper, 0, Q12(3.0f), Q12(8.0f));
     }
     else
     {
-        var_s0 = func_8006FD90(romper, 0, 0xCCC, 0x2000);
+        var_s0 = func_8006FD90(romper, 0, Q12(0.8f), Q12(2.0f));
     }
 
     if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
     {
-        var_s0 |= func_80070360(romper, 0, 0x333);
+        var_s0 |= func_80070360(romper, 0, Q12(0.2f));
     }
 
     if (var_s0)
     {
-        romperProps.positionX_FC = g_SysWork.playerWork_4C.player_0.position_18.vx +
+        romperProps.targetPositionX_FC = g_SysWork.playerWork_4C.player_0.position_18.vx +
                                                     (Q12_MULT(g_SysWork.playerWork_4C.player_0.moveSpeed_38, Math_Sin(g_SysWork.playerWork_4C.player_0.headingAngle_3C)) >> 1);
 
-        romperProps.positionZ_100 = g_SysWork.playerWork_4C.player_0.position_18.vz +
+        romperProps.targetPositionZ_100 = g_SysWork.playerWork_4C.player_0.position_18.vz +
                                                      (Q12_MULT(g_SysWork.playerWork_4C.player_0.moveSpeed_38, Math_Cos(g_SysWork.playerWork_4C.player_0.headingAngle_3C)) >> 1);
         romperProps.field_10E = 0;
     }
@@ -588,104 +585,102 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
         romperProps.field_10E += g_DeltaTime0;
     }
 
-    if ((FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) > 0x6F && FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) < 0x73) ||
-        (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) > 0x78 && FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) < 0x7F))
+    if (ANIM_TIME_RANGE_CHECK(romper->model_0.anim_4.time_4, 112, 114) ||
+        ANIM_TIME_RANGE_CHECK(romper->model_0.anim_4.time_4, 121, 126))
     {
-        romperProps.flags_E8 &= ~8;
-        romperProps.flags_E8 &= ~0x100;
+        romperProps.flags_E8 &= ~RomperFlag_3;
+        romperProps.flags_E8 &= ~RomperFlag_8;
         return;
     }
 
-    if (!(romperProps.flags_E8 & 0x100))
+    if (!(romperProps.flags_E8 & RomperFlag_8))
     {
-        romperProps.flags_E8 |= 0x100;
+        romperProps.flags_E8 |= RomperFlag_8;
         return;
     }
 
-    temp_s5 = Math_Vector2MagCalc(romper->position_18.vx - romperProps.positionX_FC,
-                                  romper->position_18.vz - romperProps.positionZ_100);
+    distToTarget = Math_Vector2MagCalc(romper->position_18.vx - romperProps.targetPositionX_FC,
+                                       romper->position_18.vz - romperProps.targetPositionZ_100);
 
-    temp_s4 = func_800700F8(romper, &g_SysWork.playerWork_4C.player_0);
+    cond = func_800700F8(romper, &g_SysWork.playerWork_4C.player_0);
 
-    if (!(romperProps.flags_E8 & 8))
+    if (!(romperProps.flags_E8 & RomperFlag_3))
     {
-        romperProps.flags_E8 |= 8;
+        romperProps.flags_E8 |= RomperFlag_3;
 
-        var_s2 = ratan2(romperProps.positionX_FC - romper->position_18.vx,
-                        romperProps.positionZ_100 - romper->position_18.vz);
+        angleToTarget = ratan2(romperProps.targetPositionX_FC - romper->position_18.vx,
+                               romperProps.targetPositionZ_100 - romper->position_18.vz);
+        angleDeltaToTarget = ABS(func_8005BF38(angleToTarget - romper->rotation_24.vy));
+        unkDist   = Q12_MULT_PRECISE(angleDeltaToTarget * 2, Q12(4.0f));
 
-        var_s3 = ABS(func_8005BF38(var_s2 - romper->rotation_24.vy));
-        temp   = Q12_MULT_PRECISE(var_s3 * 2, 0x4000);
-
-        if (!(romperProps.flags_E8 & 0x10) && temp < temp_s5)
+        if (!(romperProps.flags_E8 & RomperFlag_4) && unkDist < distToTarget)
         {
-            if (var_s3 < 0x2AA && temp_s5 < 0x6000 && !temp_s4)
+            if (angleDeltaToTarget < FP_ANGLE(60.0f) && distToTarget < Q12(6.0f) && !cond)
             {
-                romperProps.rotationY_F2 = var_s2;
+                romperProps.rotationY_F2 = angleToTarget;
             }
             else
             {
-                var_a1 = Q12_MULT_PRECISE(Rng_TestProbabilityBits(9) + 0xF00, CLAMP_MIN_THEN_LOW(temp_s5 - 0x333, 0x333, 0x2800));
+                unkDist1 = Q12_MULT_PRECISE(Rng_TestProbabilityBits(9) + 0xF00, CLAMP_MIN_THEN_LOW(distToTarget - Q12(0.2f), Q12(0.2f), Q12(2.5f)));
 
-                romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, var_a1,
-                                                                                  romperProps.positionX_FC, romperProps.positionZ_100, 0x1000, true);
+                romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, unkDist1, romperProps.targetPositionX_FC, romperProps.targetPositionZ_100, FP_ANGLE(360.0f), true);
             }
         }
         else
         {
-            var_a1 = Q12_MULT_PRECISE(Rng_TestProbabilityBits(9) + 0xF00, 0x2800);
-
-            romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, var_a1,
-                                                                              romperProps.positionX_FC, romperProps.positionZ_100, 0x1000, false);
+            unkDist1 = Q12_MULT_PRECISE(Rng_TestProbabilityBits(9) + 0xF00, Q12(2.5f));
+            romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, unkDist1, romperProps.targetPositionX_FC, romperProps.targetPositionZ_100, FP_ANGLE(360.0f), false);
         }
 
-        if (romperProps.rotationY_F2 == var_s2)
+        if (romperProps.rotationY_F2 == angleToTarget)
         {
-            temp_s0 = func_8007029C(romper, CLAMP_HIGH(temp_s5, 0x1AAA), romper->rotation_24.vy);
+            temp_s0 = func_8007029C(romper, CLAMP_HIGH(distToTarget, 0x1AAA), romper->rotation_24.vy);
         }
         else
         {
             temp_s0 = func_8007029C(romper, 0x1AAA, romper->rotation_24.vy);
         }
 
-        if (romperProps.field_10E > 0x1000 && !Rng_TestProbabilityBits(4))
+        if (romperProps.field_10E > Q12(1.0f) && !Rng_TestProbabilityBits(4))
         {
-            romper->model_0.controlState_2            = 1;
-            romper->model_0.anim_4.status_0           = 24;
+            romper->model_0.controlState_2            = RomperControl_1;
+            romper->model_0.anim_4.status_0           = ANIM_STATUS(RomperAnim_12, false);
             romperProps.rotationY_F2 = romper->rotation_24.vy;
         }
-        else if (temp_s0 != 0 || romperProps.rotationY_F2 == 0x1000 ||
-                 temp_s5 < Q12_MULT_PRECISE(0x1000 - Math_Cos(var_s3 >> 1), 0x2800))
+        else if (temp_s0 != 0 || romperProps.rotationY_F2 == FP_ANGLE(360.0f) ||
+                 distToTarget < Q12_MULT_PRECISE(Q12(1.0f) - Math_Cos(angleDeltaToTarget >> 1), Q12(2.5f)))
         {
-            if (romperProps.rotationY_F2 == 0x1000)
+            if (romperProps.rotationY_F2 == FP_ANGLE(360.0f))
             {
-                romperProps.rotationY_F2 = romper->rotation_24.vy + 0x800;
+                romperProps.rotationY_F2 = romper->rotation_24.vy + FP_ANGLE(180.0f);
             }
 
-            if (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) < 0x73 || FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) > 0x78)
+            // TODO: `ANIM_TIME_RANGE_CHECK` doesn't match?
+            if (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) < 115 ||
+                FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) > 120)
             {
-                romper->model_0.controlState_2         = 4;
-                romper->model_0.anim_4.status_0        = 28;
+                romper->model_0.controlState_2         = RomperControl_4;
+                romper->model_0.anim_4.status_0        = ANIM_STATUS(RomperAnim_14, false);
                 romperProps.field_10C = 0;
-                romper->moveSpeed_38                   = 0;
-                romperProps.field_120 = 0;
+                romper->moveSpeed_38                   = Q12(0.0f);
+                romperProps.distance_120 = 0;
             }
         }
     }
 
     for (i = 0; i < 3; i++)
     {
-        var_s2 = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
+        angleToTarget = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
 
-        if (TIMESTEP_ANGLE_4 < ABS(var_s2))
+        if (TIMESTEP_ANGLE_4 < ABS(angleToTarget))
         {
-            if (var_s2 > 0)
+            if (angleToTarget > FP_ANGLE(0.0f))
             {
-                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, 0x400);
+                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
             }
             else
             {
-                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, 0x400);
+                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
             }
         }
         else
@@ -695,17 +690,18 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
         }
     }
 
-    if (romperProps.flags_E8 & 0x10)
+    if (romperProps.flags_E8 & RomperFlag_4)
     {
-        romperProps.field_120 += g_DeltaTime0;
-        if (temp_s5 > 0x1CCC || romperProps.field_120 > 0x1CCC)
+        romperProps.distance_120 += g_DeltaTime0;
+        if (distToTarget > Q12(1.8f) || romperProps.distance_120 > Q12(1.8f))
         {
-            romperProps.field_120 = 0;
-            romperProps.flags_E8 &= ~0x10;
+            romperProps.distance_120 = 0;
+            romperProps.flags_E8 &= ~RomperFlag_4;
         }
     }
 
-    for (i = 0; i < 6; i++)
+    // @hack Required for match.
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
     {
         if (&g_SysWork.npcs_1A0[i] == romper)
         {
@@ -720,24 +716,24 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
 
     player = &g_SysWork.playerWork_4C.player_0;
 
-    if (player->flags_3E & 8)
+    if (player->flags_3E & RomperFlag_3)
     {
         return;
     }
 
-    if (g_SysWork.sysState_8 != 0 || g_SysWork.field_2284[3] & 3)
+    if (g_SysWork.sysState_8 != SysState_Gameplay || g_SysWork.field_2284[3] & 0x3)
     {
         return;
     }
 
-    if (romper->field_34 != 0 || temp_s5 <= 0x4CC || temp_s5 >= 0x3333 ||
-        romper->position_18.vy - g_SysWork.playerWork_4C.player_0.position_18.vy >= 0x1000 ||
-        romper->position_18.vy - g_SysWork.playerWork_4C.player_0.position_18.vy <= -0x1333)
+    if (romper->field_34 != Q12(0.0f) || distToTarget <= Q12(0.3f) || distToTarget >= Q12(3.2f) ||
+        (romper->position_18.vy - g_SysWork.playerWork_4C.player_0.position_18.vy) >= Q12(1.0f) ||
+        (romper->position_18.vy - g_SysWork.playerWork_4C.player_0.position_18.vy) <= Q12(-1.2f))
     {
         return;
     }
 
-    if (romperProps.flags_E8 & 0x10)
+    if (romperProps.flags_E8 & RomperFlag_4)
     {
         return;
     }
@@ -746,46 +742,46 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
                                  g_SysWork.playerWork_4C.player_0.position_18.vz - romper->position_18.vz) -
                           romper->rotation_24.vy)) < 0x155)
     {
-        romper->model_0.controlState_2         = 5;
-        romper->model_0.anim_4.status_0        = 4;
+        romper->model_0.controlState_2         = RomperControl_5;
+        romper->model_0.anim_4.status_0        = ANIM_STATUS(RomperAnim_2, false);
         romper->field_44.field_0               = 1;
         g_SysWork.field_2284[3]               |= 3;
-        romperProps.flags_E8 |= 0x810;
+        romperProps.flags_E8 |= RomperFlag_4 | RomperFlag_11;
     }
 }
 
 void Ai_Romper_Control_4(s_SubCharacter* romper)
 {
-    s32 temp_v0_5;
-    s32 temp_s0;
-    s32 temp_v1;
-    s32 var_s0;
-    s32 i;
-    s32 var_v0_5;
+    q19_12 angle0;
+    s32    temp_s0;
+    s32    flags;
+    s32    var_s0;
+    s32    i;
+    s32    angle1;
 
-    temp_v1 = g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3;
-    if (temp_v1 == 0)
+    flags = g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3;
+    if (flags == 0)
     {
-        var_s0 = func_8006FD90(romper, 0, 0x2800, 0x6000);
+        var_s0 = func_8006FD90(romper, 0, Q12(2.5f), Q12(6.0f));
     }
-    else if (temp_v1 == 2)
+    else if (flags == 2)
     {
-        var_s0 = func_8006FD90(romper, 0, 0x3000, 0x8000);
+        var_s0 = func_8006FD90(romper, 0, Q12(3.0f), Q12(8.0f));
     }
     else
     {
-        var_s0 = func_8006FD90(romper, 0, 0xCCC, 0x2000);
+        var_s0 = func_8006FD90(romper, 0, Q12(0.8f), Q12(2.0f));
     }
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
-        var_s0 |= func_80070360(romper, 0, 0x333);
+        var_s0 |= func_80070360(romper, 0, Q12(0.2f));
     }
 
     if (var_s0 != false)
     {
-        romperProps.positionX_FC  = g_SysWork.playerWork_4C.player_0.position_18.vx;
-        romperProps.positionZ_100 = g_SysWork.playerWork_4C.player_0.position_18.vz;
+        romperProps.targetPositionX_FC  = g_SysWork.playerWork_4C.player_0.position_18.vx;
+        romperProps.targetPositionZ_100 = g_SysWork.playerWork_4C.player_0.position_18.vz;
         romperProps.field_10E     = 0;
     }
     else
@@ -793,70 +789,68 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
         romperProps.field_10E += g_DeltaTime0;
     }
 
-    temp_s0 = func_8007029C(romper, 0x2800, romper->rotation_24.vy);
-
-    if (romperProps.field_120 == 0 ||
-        (temp_s0 != 0 && romperProps.field_120 >= 0))
+    temp_s0 = func_8007029C(romper, Q12(2.5f), romper->rotation_24.vy);
+    if (romperProps.distance_120 == Q12(0.0f) ||
+        (temp_s0 != 0 && romperProps.distance_120 >= Q12(0.0f)))
     {
-        romperProps.rotationY_F2 = 0;
+        romperProps.rotationY_F2 = FP_ANGLE(0.0f);
 
         if (Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - romper->position_18.vx,
-                                g_SysWork.playerWork_4C.player_0.position_18.vz - romper->position_18.vz) >= 0x800)
+                                g_SysWork.playerWork_4C.player_0.position_18.vz - romper->position_18.vz) >= FP_ANGLE(180.0f))
         {
-            romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, 0x2800, romperProps.positionX_FC,
-                                                                              romperProps.positionZ_100, 0x1000, true);
+            romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, Q12(2.5f), romperProps.targetPositionX_FC,
+                                                                              romperProps.targetPositionZ_100, Q12(1.0f), true);
         }
         else
         {
-            romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, 0x2800, romperProps.positionX_FC,
-                                                                              romperProps.positionZ_100, 0x1000, false);
+            romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, Q12(2.5f), romperProps.targetPositionX_FC,
+                                                                              romperProps.targetPositionZ_100, Q12(1.0f), false);
         }
 
-        if (romperProps.rotationY_F2 == 0x1000)
+        if (romperProps.rotationY_F2 == FP_ANGLE(360.0f))
         {
-            romperProps.rotationY_F2 = func_8006F99C(romper, 0x2800, romper->rotation_24.vy);
+            romperProps.rotationY_F2 = func_8006F99C(romper, Q12(2.5f), romper->rotation_24.vy);
         }
 
         if (temp_s0 != 0)
         {
-            romperProps.field_120 = -(Rng_Rand16() % 0x1000 + 0x1000);
+            romperProps.distance_120 = -((Rng_Rand16() % Q12(1.0f)) + Q12(1.0f));
         }
         else
         {
-            romperProps.field_120 = Rng_Rand16() % 0x2000 + 0x1000;
+            romperProps.distance_120 = (Rng_Rand16() % Q12(2.0f)) + Q12(1.0f);
         }
     }
 
-    if (romperProps.field_120 > 0)
+    if (romperProps.distance_120 > Q12(0.0f))
     {
-        romperProps.field_120 -= g_DeltaTime0;
-        if (romperProps.field_120 < 0)
+        romperProps.distance_120 -= g_DeltaTime0;
+        if (romperProps.distance_120 < Q12(0.0f))
         {
-            romperProps.field_120 = 0;
+            romperProps.distance_120 = Q12(0.0f);
         }
     }
     else
     {
-        romperProps.field_120 += g_DeltaTime0;
-        if (romperProps.field_120 > 0)
+        romperProps.distance_120 += g_DeltaTime0;
+        if (romperProps.distance_120 > Q12(0.0f))
         {
-            romperProps.field_120 = 0;
+            romperProps.distance_120 = Q12(0.0f);
         }
     }
 
     for (i = 0; i < 3; i++)
     {
-        temp_v0_5 = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
-
-        if (TIMESTEP_ANGLE_0 < ABS(temp_v0_5))
+        angle0 = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
+        if (TIMESTEP_ANGLE_0 < ABS(angle0))
         {
-            if (temp_v0_5 > 0)
+            if (angle0 > 0)
             {
-                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, 0x200);
+                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
             }
             else
             {
-                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, 0x200);
+                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
             }
         }
         else
@@ -865,36 +859,35 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
         }
     }
 
-    if (!func_8007029C(romper, 0x2800, romper->rotation_24.vy) && (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) > 0x82 &&
-                                                                   FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) < 0x85))
+    if (!func_8007029C(romper, Q12(2.5f), romper->rotation_24.vy) && ANIM_TIME_RANGE_CHECK(romper->model_0.anim_4.time_4, 131, 132))
     {
-        romper->model_0.anim_4.status_0 = 40;
-        romper->moveSpeed_38            = 0;
+        romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_20, false);
+        romper->moveSpeed_38            = Q12(0.0f);
         return;
     }
 
-    temp_v0_5 = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
-    if (temp_v0_5 >= 0)
+    angle0 = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
+    if (angle0 >= FP_ANGLE(0.0f))
     {
-        var_v0_5 = 0x800 - temp_v0_5;
+        angle1 = FP_ANGLE(180.0f) - angle0;
     }
     else
     {
-        var_v0_5 = temp_v0_5 + 0x800;
+        angle1 = angle0 + FP_ANGLE(180.0f);
     }
 
-    Chara_MoveSpeedUpdate4(romper, 0x1333, Q12_MULT_PRECISE(var_v0_5 * 2, 0x2666));
+    Chara_MoveSpeedUpdate4(romper, Q12(1.2f), Q12_MULT_PRECISE(angle1 * 2, Q12(2.4f)));
 }
 
 void Ai_Romper_Control_5(s_SubCharacter* romper)
 {
-    s_Collision sp20;
+    s_Collision coll;
     VECTOR3     sp30;
     s16         temp_v0_4;
-    s16         temp_v0_5;
+    q3_12       unkAngle1;
     s16         var_s3;
     s32         temp_a1;
-    s32         temp_s2;
+    q19_12      unkAngle;
     s32         temp_v0;
     s32         temp_v0_3;
     s32         temp_v1_5;
@@ -902,164 +895,165 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
     s32         i;
     s16         temp;
 
-    if (romper->model_0.anim_4.status_0 == 5)
+    if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_2, true))
     {
-        if (romper->model_0.anim_4.time_4 > 0x5000)
+        if (romper->model_0.anim_4.time_4 > Q12(5.0f))
         {
-            var_s3 = 0;
+            var_s3 = Q12(0.0f);
         }
         else
         {
-            var_s3 = 0x800 - (FP_TO(romper->model_0.anim_4.time_4 - 0x2000, Q12_SHIFT) / 0x3000 >> 1);
+            var_s3 = Q12(0.5f) - (Q12_DIV(romper->model_0.anim_4.time_4 - Q12(2.0f), Q12(3.0f)) >> 1);
         }
     }
     else
     {
-        var_s3 = 0x800;
+        var_s3 = Q12(0.5f);
     }
 
     temp_v0                                   = Q12_MULT(g_SysWork.playerWork_4C.player_0.moveSpeed_38, Math_Sin(g_SysWork.playerWork_4C.player_0.headingAngle_3C));
-    romperProps.positionX_FC = g_SysWork.playerWork_4C.player_0.position_18.vx + Q12_MULT_PRECISE(temp_v0, var_s3);
+    romperProps.targetPositionX_FC = g_SysWork.playerWork_4C.player_0.position_18.vx + Q12_MULT_PRECISE(temp_v0, var_s3);
 
     temp_a1                                    = Q12_MULT(g_SysWork.playerWork_4C.player_0.moveSpeed_38, Math_Cos(g_SysWork.playerWork_4C.player_0.headingAngle_3C));
-    romperProps.positionZ_100 = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12_MULT_PRECISE(temp_a1, var_s3);
+    romperProps.targetPositionZ_100 = g_SysWork.playerWork_4C.player_0.position_18.vz + Q12_MULT_PRECISE(temp_a1, var_s3);
 
-    temp_v0_3 = ratan2(romperProps.positionX_FC - romper->position_18.vx, romperProps.positionZ_100 - romper->position_18.vz);
-    temp_s2   = temp_v0_3;
+    temp_v0_3 = ratan2(romperProps.targetPositionX_FC - romper->position_18.vx, romperProps.targetPositionZ_100 - romper->position_18.vz);
+    unkAngle   = temp_v0_3;
 
-    if (romper->model_0.anim_4.status_0 == 4)
+    if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_2, false))
     {
-        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, 0xF000), 0);
+        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f)), Q12(0.0f));
 
         for (i = 0; i < 4; i++)
         {
-            temp_v0_4 = func_8005BF38(temp_s2 - romper->rotation_24.vy);
+            temp_v0_4 = func_8005BF38(unkAngle - romper->rotation_24.vy);
 
-            if (((g_DeltaTime0 >> 3) + 1) >> 1 < ABS(temp_v0_4))
+            if ((((g_DeltaTime0 >> 3) + 1) >> 1) < ABS(temp_v0_4))
             {
                 if (temp_v0_4 > 0)
                 {
-                    romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, 0x400) >> 1;
+                    romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f)) >> 1;
                 }
                 else
                 {
-                    romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, 0x400) >> 1;
+                    romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f)) >> 1;
                 }
             }
             else
             {
-                romper->rotation_24.vy = temp_s2;
+                romper->rotation_24.vy = unkAngle;
             }
         }
     }
-    else if (romper->model_0.anim_4.status_0 == 5)
+    else if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_2, true))
     {
-        temp_v0_5 = func_8005BF38(temp_v0_3 - romper->rotation_24.vy);
-
-        if (TIMESTEP_ANGLE_0 < ABS(temp_v0_5))
+        unkAngle1 = func_8005BF38(temp_v0_3 - romper->rotation_24.vy);
+        if (TIMESTEP_ANGLE_0 < ABS(unkAngle1))
         {
-            if (temp_v0_5 > 0)
+            if (unkAngle1 > FP_ANGLE(0.0f))
             {
-                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, 0x200);
+                romper->rotation_24.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
             }
             else
             {
-                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, 0x200);
+                romper->rotation_24.vy -= Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(45.0f));
             }
         }
 
-        if (romper->model_0.anim_4.time_4 == 0x2000)
+        if (romper->model_0.anim_4.time_4 == Q12(2.0f))
         {
-            temp_v1_5 = Math_Vector2MagCalc(romperProps.positionX_FC - romper->position_18.vx,
-                                            romperProps.positionZ_100 - romper->position_18.vz);
+            temp_v1_5 = Math_Vector2MagCalc(romperProps.targetPositionX_FC - romper->position_18.vx,
+                                            romperProps.targetPositionZ_100 - romper->position_18.vz);
 
-            var_a0_2             = CLAMP_LOW(temp_v1_5, 0x4CC);
+            var_a0_2             = CLAMP_LOW(temp_v1_5, Q12(0.3f));
             romper->moveSpeed_38 = var_a0_2 << 1;
-            Collision_Get(&sp20, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
-            temp                                   = sp20.groundHeight_0 - 0xCCC;
-            romper->field_34                       = (temp << 1) - 0x2733;
-            romperProps.flags_E8 &= ~0x200;
+            Collision_Get(&coll, g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz);
+            temp                                   = coll.groundHeight_0 - Q12(0.8f);
+            romper->field_34                       = (temp << 1) - Q12(2.45f);
+            romperProps.flags_E8 &= ~RomperFlag_9;
         }
-        else if (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) == 5 || FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) == 6)
+        else if (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) == 5 ||
+                 FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) == 6)
         {
-            if (!(romperProps.flags_E8 & 0x200))
+            if (!(romperProps.flags_E8 & RomperFlag_9))
             {
-                func_8005DC1C(1403, &romper->position_18, 0x80, 0);
-                romperProps.flags_E8 |= 0x200;
+                func_8005DC1C(1403, &romper->position_18, Q8(0.5f), 0);
+                romperProps.flags_E8 |= RomperFlag_9;
             }
 
             sp30.vx = romper->position_18.vx;
             sp30.vy = romper->position_18.vy;
             sp30.vz = romper->position_18.vz;
 
-            if (func_8008A0E4(1, 54, romper, &sp30, &g_SysWork.playerWork_4C.player_0, romper->rotation_24.vy, 0x400) != -1)
+            if (func_8008A0E4(1, 54, romper, &sp30, &g_SysWork.playerWork_4C.player_0, romper->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
             {
-                romper->model_0.anim_4.status_0 = 6;
-                romper->model_0.controlState_2  = 10;
+                romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_3, false);
+                romper->model_0.controlState_2  = RomperControl_10;
+
                 sharedFunc_800E9714_2_s02(romper);
-                romperProps.flags_E8 |= 0x400;
+                romperProps.flags_E8 |= RomperFlag_10;
             }
         }
     }
     else
     {
-        if (romperProps.flags_E8 & 1)
+        if (romperProps.flags_E8 & RomperFlag_0)
         {
-            Chara_MoveSpeedUpdate(romper, Q12_MULT_PRECISE(romper->moveSpeed_38, 0x3000) + 0x3000);
+            Chara_MoveSpeedUpdate(romper, Q12_MULT_PRECISE(romper->moveSpeed_38, Q12(3.0f)) + Q12(3.0f));
         }
         else
         {
-            romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, 0xF000), 0);
+            romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f)), Q12(0.0f));
         }
     }
 }
 
 void Ai_Romper_Control_6(s_SubCharacter* romper)
 {
-    s16 temp_s0;
+    q3_12 moveDist;
 
-    romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, 0xF000), 0);
+    romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f)), Q12(0.0f));
 
-    if ((romper->model_0.anim_4.status_0 >> 1) == 7 || (romper->model_0.anim_4.status_0 >> 1) == 8)
+    if (ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_7 ||
+        ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_8)
     {
-        temp_s0                               = Q12_MULT_PRECISE(sharedData_800ECA4C_2_s02, g_DeltaTime0) * 0x999 / 0xA000;
-        romperProps.field_F8 = Q12_MULT(temp_s0, Math_Sin(romper->rotation_24.vy));
-        romperProps.field_FA = Q12_MULT(temp_s0, Math_Cos(romper->rotation_24.vy));
+        moveDist                               = (Q12_MULT_PRECISE(sharedData_800ECA4C_2_s02, g_DeltaTime0) * Q12(0.6f)) / Q12(10.0f);
+        romperProps.offsetX_F8 = Q12_MULT(moveDist, Math_Sin(romper->rotation_24.vy));
+        romperProps.offsetZ_FA = Q12_MULT(moveDist, Math_Cos(romper->rotation_24.vy));
     }
 }
 
 void Ai_Romper_Control_7(s_SubCharacter* romper)
 {
-    s16 temp_s0;
+    q3_12 moveDist;
 
-    if (romperProps.flags_E8 & 1)
+    if (romperProps.flags_E8 & RomperFlag_0)
     {
-        Chara_MoveSpeedUpdate(romper, Q12_MULT_PRECISE(romper->moveSpeed_38, 0x3000) + 0x3000);
+        Chara_MoveSpeedUpdate(romper, Q12_MULT_PRECISE(romper->moveSpeed_38, Q12(3.0f)) + Q12(3.0f));
     }
     else
     {
-        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, 0xF000), 0);
+        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f)), Q12(0.0f));
     }
 
-    if (romper->model_0.anim_4.status_0 == 22 || (FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) > 92 &&
-                                                    FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) < 97))
+    if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_11, false) ||
+        ANIM_TIME_RANGE_CHECK(romper->model_0.anim_4.time_4, 93, 96))
     {
-        temp_s0 = Q12_MULT_PRECISE(sharedData_800ECACC_2_s02, g_DeltaTime0) * 0x1666 / 0x7000;
-
-        romperProps.field_F8 = Q12_MULT(temp_s0, Math_Sin(romper->rotation_24.vy));
-        romperProps.field_FA = Q12_MULT(temp_s0, Math_Cos(romper->rotation_24.vy));
+        moveDist = (Q12_MULT_PRECISE(sharedData_800ECACC_2_s02, g_DeltaTime0) * Q12(1.4f)) / Q12(7.0f);
+        romperProps.offsetX_F8 = Q12_MULT(moveDist, Math_Sin(romper->rotation_24.vy));
+        romperProps.offsetZ_FA = Q12_MULT(moveDist, Math_Cos(romper->rotation_24.vy));
     }
 
-    if ((romper->model_0.anim_4.status_0 >> 1) == 10)
+    if (ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_10)
     {
         romper->flags_3E |= 2;
     }
 
-    if (romper->health_B0 == Q12(0.0f) && romper->model_0.anim_4.status_0 == 21)
+    if (romper->health_B0 == Q12(0.0f) && romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_10, true))
     {
-        romper->model_0.controlState_2  = 8;
-        romper->model_0.anim_4.status_0 = 12;
-        romper->flags_3E               &= 0xFFFD;
+        romper->model_0.controlState_2  = RomperControl_8;
+        romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_6, false);
+        romper->flags_3E               &= ~CharaFlag_Unk2;
 
         func_80037DC4(romper);
     }
@@ -1091,27 +1085,26 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
     VECTOR          sp10;
     s_SubCharacter* player;
 
-    if (romper->position_18.vx != romperProps.positionX_FC ||
-        romper->position_18.vz != romperProps.positionZ_100)
+    if (romper->position_18.vx != romperProps.targetPositionX_FC ||
+        romper->position_18.vz != romperProps.targetPositionZ_100)
     {
-        romperProps.rotationY_F2 = ratan2(romperProps.positionX_FC - romper->position_18.vx,
-                                                           romperProps.positionZ_100 - romper->position_18.vz);
+        romperProps.rotationY_F2 = ratan2(romperProps.targetPositionX_FC - romper->position_18.vx,
+                                          romperProps.targetPositionZ_100 - romper->position_18.vz);
     }
 
     if (romper->model_0.anim_4.status_0 == 11)
     {
-        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, romperProps.field_124 * 4), 0);
+        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, romperProps.field_124 * 4), Q12(0.0f));
     }
     else
     {
-        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, romperProps.field_124), 0);
+        romper->moveSpeed_38 = MAX(romper->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, romperProps.field_124), Q12(0.0f));
     }
 
     romper->field_E1_0 = 0;
-
-    if (romper->model_0.anim_4.status_0 == 11)
+    if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_5, true))
     {
-        romperProps.field_104 = romper->model_0.anim_4.time_4 - 0x14000;
+        romperProps.field_104 = romper->model_0.anim_4.time_4 - Q12(20.0f);
     }
     else
     {
@@ -1122,24 +1115,24 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
 
     if (player->attackReceived_41 == NO_VALUE)
     {
-        romper->model_0.anim_4.status_0 = 18;
-        romper->model_0.controlState_2  = 11;
+        romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_9, false);
+        romper->model_0.controlState_2  = RomperControl_11;
         romper->field_E1_0              = 0;
         romper->field_E1_0              = 3;
     }
-    else if (romper->model_0.anim_4.time_4 <= 0x17FFF)
+    else if (romper->model_0.anim_4.time_4 < Q12(24.0f))
     {
-        romperProps.flags_E8 |= 0x40;
+        romperProps.flags_E8 |= RomperFlag_6;
     }
-    else if (romperProps.flags_E8 & 0x40)
+    else if (romperProps.flags_E8 & RomperFlag_6)
     {
-        romperProps.flags_E8 &= ~0x40;
+        romperProps.flags_E8 &= ~RomperFlag_6;
 
         g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += FP_TO(D_800AD4C8[55].field_4, Q12_SHIFT) *
                                                                (Rng_TestProbabilityBits(5) + 0x55) / 100;
 
         sp10.vx = romper->position_18.vx + FP_FROM(FP_TO(Math_Sin(romper->rotation_24.vy) >> 1, Q12_SHIFT), Q12_SHIFT);
-        sp10.vy = romper->position_18.vy - 0x199;
+        sp10.vy = romper->position_18.vy - Q12(0.1f);
         sp10.vz = romper->position_18.vz + FP_FROM(FP_TO(Math_Cos(romper->rotation_24.vy) >> 1, Q12_SHIFT), Q12_SHIFT);
 
         func_8005F6B0(&g_SysWork.playerWork_4C.player_0, &sp10, 4, 9);
@@ -1151,7 +1144,7 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
 void Ai_Romper_Control_11(s_SubCharacter* romper)
 {
     if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_12, true) &&
-        (Rng_Rand16() % 8) == 0)
+        !Rng_GenerateInt(0, 7)) // 1 in 8 chance.
     {
         g_SysWork.field_2284[3]                  &= ~((1 << 0) | (1 << 1));
         romper->model_0.controlState_2                   = RomperControl_1;
@@ -1162,7 +1155,7 @@ void Ai_Romper_Control_11(s_SubCharacter* romper)
 void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
 {
     s_800C4590 sp10;
-    VECTOR3    sp30;
+    VECTOR3    pos; // Q19.12
     s16        temp_s4;
     s32        temp_s0;
     s32        temp_s2;
@@ -1171,7 +1164,8 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
 
     romper->field_34 += g_DeltaTime2;
 
-    if ((romper->model_0.anim_4.status_0 >> 1) == 3 || (romper->model_0.anim_4.status_0 >> 1) == 5)
+    if (ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_3 ||
+        ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) == RomperAnim_5)
     {
         romper->headingAngle_3C = romperProps.rotationY_F2;
     }
@@ -1180,7 +1174,7 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
         romper->headingAngle_3C = romper->rotation_24.vy;
     }
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         temp_s4 = romper->headingAngle_3C;
         temp_s0 = Q12_MULT_PRECISE(g_DeltaTime0, romper->moveSpeed_38);
@@ -1189,42 +1183,40 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
         temp_s3 = temp_s2 >> 1;
         temp_s0 = temp_s0 >> temp_s3;
 
-        sp30.vx = Q12_MULT_PRECISE(temp_s0, temp_v0 >> temp_s3) << temp_s2;
-        sp30.vz = Q12_MULT_PRECISE(temp_s0, Math_Cos(temp_s4) >> temp_s3) << temp_s2;
-        sp30.vy = Q12_MULT_PRECISE(g_DeltaTime0, romper->field_34);
+        pos.vx = Q12_MULT_PRECISE(temp_s0, temp_v0 >> temp_s3) << temp_s2;
+        pos.vz = Q12_MULT_PRECISE(temp_s0, Math_Cos(temp_s4) >> temp_s3) << temp_s2;
+        pos.vy = Q12_MULT_PRECISE(g_DeltaTime0, romper->field_34);
 
-        sp30.vx += romperProps.field_F8;
-        sp30.vz += romperProps.field_FA;
+        pos.vx += romperProps.offsetX_F8;
+        pos.vz += romperProps.offsetZ_FA;
 
-        func_80069B24(&sp10, &sp30, romper);
+        func_80069B24(&sp10, &pos, romper);
 
         romper->position_18.vx += sp10.offset_0.vx;
         romper->position_18.vz += sp10.offset_0.vz;
 
-        if (romperProps.flags_E8 & 0x400)
+        if (romperProps.flags_E8 & RomperFlag_10)
         {
-            if (romper->model_0.controlState_2 != 0xA && romper->position_18.vy <= sp10.field_C)
+            if (romper->model_0.controlState_2 != RomperControl_10 && romper->position_18.vy <= sp10.field_C)
             {
-                romperProps.flags_E8 &= ~0x400;
+                romperProps.flags_E8 &= ~RomperFlag_10;
             }
 
-            if (romperProps.flags_E8 & 0x400)
+            if (romperProps.flags_E8 & RomperFlag_10)
             {
-                if (romper->model_0.controlState_2 == 0xA)
+                if (romper->model_0.controlState_2 == RomperControl_10)
                 {
                     romper->position_18.vy += sp10.offset_0.vy;
-
                     if (g_SysWork.playerWork_4C.player_0.position_18.vy < romper->position_18.vy)
                     {
                         romper->position_18.vy = g_SysWork.playerWork_4C.player_0.position_18.vy;
-                        romper->field_34       = 0;
+                        romper->field_34       = Q12(0.0f);
                     }
                 }
                 else
                 {
-                    romper->position_18.vy -= Q12_MULT_PRECISE(g_DeltaTime0, 0x266);
-                    romper->field_34        = 0;
-
+                    romper->position_18.vy -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.15f));
+                    romper->field_34        = Q12(0.0f);
                     if (sp10.field_C >= romper->position_18.vy)
                     {
                         romper->position_18.vy = sp10.field_C;
@@ -1234,42 +1226,40 @@ void sharedFunc_800E8730_2_s02(s_SubCharacter* romper)
             else
             {
                 romper->position_18.vy += sp10.offset_0.vy;
-
                 if (sp10.field_C < romper->position_18.vy)
                 {
                     romper->position_18.vy = sp10.field_C;
-                    romper->field_34       = 0;
+                    romper->field_34       = Q12(0.0f);
                 }
             }
         }
         else
         {
             romper->position_18.vy += sp10.offset_0.vy;
-
             if (sp10.field_C < romper->position_18.vy)
             {
                 romper->position_18.vy = sp10.field_C;
-                romper->field_34       = 0;
+                romper->field_34       = Q12(0.0f);
             }
         }
 
-        romperProps.field_FA = 0;
-        romperProps.field_F8 = 0;
+        romperProps.offsetZ_FA = Q12(0.0f);
+        romperProps.offsetX_F8 = Q12(0.0f);
     }
 
     romper->rotation_24.vy = func_8005BF38(romper->rotation_24.vy);
 
-    if (romper->field_34 != 0)
+    if (romper->field_34 != Q12(0.0f))
     {
-        romperProps.flags_E8 |= 1;
+        romperProps.flags_E8 |= RomperFlag_0;
     }
     else
     {
-        romperProps.flags_E8 &= ~1;
+        romperProps.flags_E8 &= ~RomperFlag_0;
     }
 }
 
-void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* arg1, GsCOORDINATE2* arg2)
+void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     typedef struct
     {
@@ -1277,136 +1267,134 @@ void sharedFunc_800E8A40_2_s02(s_SubCharacter* romper, s_AnmHeader* arg1, GsCOOR
         SVECTOR field_20;
     } s_sharedFunc_800E8A40_2_s02;
 
-    s32                          temp_v0_3;
-    s32                          var_a1;
+    q19_12                       angleDeltaToTarget;
+    q19_12                       unkAngle;
     s32                          temp_v0_4;
-    s_AnimInfo*                  anim;
+    s_AnimInfo*                  animInfo;
     s_sharedFunc_800E8A40_2_s02* ptr;
 
     ptr = PSX_SCRATCH;
 
     switch (romper->model_0.anim_4.status_0)
     {
-        case 27:
-        case 35:
-        case 37:
+        case ANIM_STATUS(RomperAnim_13, true):
+        case ANIM_STATUS(RomperAnim_17, true):
+        case ANIM_STATUS(RomperAnim_18, true):
             ROPMER_ANIM_INFOS[romper->model_0.anim_4.status_0].duration_8.constant = sharedData_800EC950_2_s02;
             break;
 
-        case 28:
-            sharedData_800ECB22_2_s02 = romperProps.field_10C + 0x83;
+        case ANIM_STATUS(RomperAnim_14, false):
+            sharedData_800ECB22_2_s02 = romperProps.field_10C + 131;
             break;
 
-        case 29:
-            ROPMER_ANIM_INFOS[29].startKeyframeIdx_C                               = romperProps.field_10C + 0x83;
+        case ANIM_STATUS(RomperAnim_14, true):
+            ROPMER_ANIM_INFOS[29].startKeyframeIdx_C                               = romperProps.field_10C + 131;
             romperProps.field_10C                                 = 0;
-            ROPMER_ANIM_INFOS[romper->model_0.anim_4.status_0].duration_8.constant = Q12_MULT_PRECISE(MAX(romper->moveSpeed_38, 0x1800), 0x851E);
+            ROPMER_ANIM_INFOS[romper->model_0.anim_4.status_0].duration_8.constant = Q12_MULT_PRECISE(MAX(romper->moveSpeed_38, Q12(1.5f)), Q12(8.32f));
             break;
 
-        case 38:
-            sharedData_800ECBC2_2_s02 = romperProps.field_10C + 0x6D;
+        case ANIM_STATUS(RomperAnim_19, false):
+            sharedData_800ECBC2_2_s02 = romperProps.field_10C + 109;
             break;
 
-        case 39:
-            sharedData_800ECBD0_2_s02 = romperProps.field_10C + 0x6D;
+        case ANIM_STATUS(RomperAnim_19, true):
+            sharedData_800ECBD0_2_s02 = romperProps.field_10C + 109;
             break;
     }
 
-    Math_MatrixTransform(&romper->position_18, (SVECTOR*)&romper->rotation_24, arg2);
+    Math_MatrixTransform(&romper->position_18, (SVECTOR*)&romper->rotation_24, coords);
 
-    anim = &ROPMER_ANIM_INFOS[romper->model_0.anim_4.status_0];
-    anim->updateFunc_0(&romper->model_0, arg1, arg2, anim);
+    animInfo = &ROPMER_ANIM_INFOS[romper->model_0.anim_4.status_0];
+    animInfo->updateFunc_0(&romper->model_0, anmHdr, coords, animInfo);
 
     switch (romper->model_0.anim_4.status_0)
     {
-        case 14:
-            romper->model_0.controlState_2 = 6;
-            if (romper->model_0.anim_4.time_4 == 0x7F000)
+        case ANIM_STATUS(RomperAnim_7, false):
+            romper->model_0.controlState_2 = RomperControl_6;
+            if (romper->model_0.anim_4.time_4 == Q12(127.0f))
             {
-                romper->model_0.anim_4.status_0 = 0xF;
-                romper->model_0.anim_4.time_4   = 0x27000;
+                romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_7, true);
+                romper->model_0.anim_4.time_4   = Q12(39.0f);
             }
             break;
 
-        case 16:
-            romper->model_0.controlState_2 = 6;
-            if (romper->model_0.anim_4.time_4 == 0x74000)
+        case ANIM_STATUS(RomperAnim_8, false):
+            romper->model_0.controlState_2 = RomperControl_6;
+            if (romper->model_0.anim_4.time_4 == Q12(116.0f))
             {
-                romper->model_0.anim_4.status_0 = 0x11;
-                romper->model_0.anim_4.time_4   = 0x32000;
+                romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_8, true);
+                romper->model_0.anim_4.time_4   = Q12(50.0f);
             }
             break;
 
-        case 26:
-            if (romper->model_0.controlState_2 == 5)
+        case ANIM_STATUS(RomperAnim_13, false):
+            if (romper->model_0.controlState_2 == RomperControl_5)
             {
-                romperProps.flags_E8 &= ~0x800;
+                romperProps.flags_E8 &= ~RomperFlag_11;
                 g_SysWork.field_2284[3]               &= 0xFFFC;
             }
 
-            romper->model_0.controlState_2        = 3;
-            romperProps.field_F4 = 0x15FFF;
+            romper->model_0.controlState_2        = RomperControl_3;
+            romperProps.field_F4 = Q12(22.0f) - 1;
 
-            if (romper->model_0.anim_4.time_4 == 0x31000)
+            if (romper->model_0.anim_4.time_4 == Q12(49.0f))
             {
-                romper->model_0.anim_4.status_0       = 0x1B;
-                romperProps.field_F4 = 0xFFF;
-                romper->model_0.anim_4.time_4         = 0x6E000;
-                romperProps.field_F0 = 0x477;
+                romper->model_0.anim_4.status_0       = ANIM_STATUS(RomperAnim_13, true);
+                romperProps.field_F4 = Q12(1.0f) - 1;
+                romper->model_0.anim_4.time_4         = Q12(110.0f);
+                romperProps.field_F0 = 1143;
                 romper->moveSpeed_38                  = 0;
             }
-            else if (romper->model_0.anim_4.time_4 == 0x3C000)
+            else if (romper->model_0.anim_4.time_4 == Q12(60.0f))
             {
-                romper->model_0.anim_4.status_0       = 0x1B;
-                romperProps.field_F4 = 0xAFFF;
-                romperProps.field_F0 = 0x79;
-                romper->model_0.anim_4.time_4         = 0x78000;
-                romper->moveSpeed_38                  = 0x1333;
+                romper->model_0.anim_4.status_0       = ANIM_STATUS(RomperAnim_13, true);
+                romperProps.field_F4 = Q12(11.0f) - 1;
+                romperProps.field_F0 = 121;
+                romper->model_0.anim_4.time_4         = Q12(120.0f);
+                romper->moveSpeed_38                  = Q12(1.2f);
             }
             break;
 
-        case 39:
-        case 41:
-            romper->model_0.controlState_2        = 3;
-            romper->model_0.anim_4.status_0       = 0x1B;
-            romperProps.field_F4 = romper->model_0.anim_4.time_4 - 0x6D001;
+        case ANIM_STATUS(RomperAnim_19, true):
+        case ANIM_STATUS(RomperAnim_20, true):
+            romper->model_0.controlState_2        = RomperControl_3;
+            romper->model_0.anim_4.status_0       = ANIM_STATUS(RomperAnim_13, true);
+            romperProps.field_F4 = romper->model_0.anim_4.time_4 - (Q12(109.0f) + 1);
             break;
     }
 
-    temp_v0_3 = func_8005BF38(romperProps.field_EC - romper->rotation_24.vy);
-
-    if (temp_v0_3 == 0)
+    angleDeltaToTarget = func_8005BF38(romperProps.angle_EC - romper->rotation_24.vy);
+    if (angleDeltaToTarget == FP_ANGLE(0.0f))
     {
-        var_a1 = 0;
+        unkAngle = FP_ANGLE(0.0f);
     }
     else
     {
-        var_a1 = 0xC4;
+        unkAngle = FP_ANGLE(17.25f);
     }
 
-    if (temp_v0_3 < 0)
+    if (angleDeltaToTarget < FP_ANGLE(0.0f))
     {
-        var_a1 = -var_a1;
+        unkAngle = -unkAngle;
     }
 
-    temp_v0_4 = Q12_MULT_PRECISE(g_DeltaTime0, 0x100);
-
-    if (var_a1 < romperProps.field_EE)
+    temp_v0_4 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.0625f);
+    if (unkAngle < romperProps.field_EE)
     {
-        romperProps.field_EE = MAX(var_a1, romperProps.field_EE - temp_v0_4);
+        romperProps.field_EE = MAX(unkAngle, romperProps.field_EE - temp_v0_4);
     }
     else
     {
-        romperProps.field_EE = CLAMP_HIGH(var_a1, romperProps.field_EE + temp_v0_4);
+        romperProps.field_EE = CLAMP_HIGH(unkAngle, romperProps.field_EE + temp_v0_4);
     }
 
     *(s32*)&ptr->field_20 = romperProps.field_EE << 16;
     ptr->field_20.vz      = 0;
 
     Math_RotMatrixZxyNegGte(&ptr->field_20, &ptr->field_0);
-    MulMatrix2(&ptr->field_0, &arg2[2].coord);
+    MulMatrix2(&ptr->field_0, &coords[2].coord);
 
-    romperProps.field_EC = romper->rotation_24.vy;
+    romperProps.angle_EC = romper->rotation_24.vy;
 }
 
 extern s_Keyframe sharedData_800ECC44_2_s02;
@@ -1422,135 +1410,154 @@ extern s_Keyframe sharedData_800ED018_2_s02[];
 extern s_Keyframe sharedData_800ED1D0_2_s02[];
 extern s_Keyframe sharedData_800ED2C0_2_s02;
 
-#define CopyData(arg0, data)                      \
-    {                                             \
-        s32 __temp;                               \
-        s32 __temp2;                              \
-                                                  \
-        arg0->field_C8.field_0 = data.field_0;    \
-                                                  \
-        __temp                 = data.field_2;    \
-        arg0->field_C8.field_2 = __temp;          \
-        arg0->field_C8.field_4 = data.field_4;    \
-                                                  \
-        __temp                   = data.field_6;  \
-        arg0->field_C8.field_6   = __temp;        \
-        arg0->field_D8.offsetX_4 = data.field_10; \
-                                                  \
-        __temp                   = data.field_12; \
-        arg0->field_D8.offsetZ_6 = __temp;        \
-        arg0->field_D4.radius_0  = data.field_8;  \
-        arg0->field_D8.offsetX_0 = data.field_C;  \
-                                                  \
-        __temp                   = data.field_E;  \
-        arg0->field_D8.offsetZ_2 = __temp;        \
-                                                  \
-        __temp2                = data.field_A;    \
-        arg0->field_D4.field_2 = __temp2;         \
-    }
+#define CopyData(arg0, data)                  \
+{                                             \
+    s32 __temp;                               \
+    s32 __temp2;                              \
+                                              \
+    arg0->field_C8.field_0 = data.field_0;    \
+                                              \
+    __temp                 = data.field_2;    \
+    arg0->field_C8.field_2 = __temp;          \
+    arg0->field_C8.field_4 = data.field_4;    \
+                                              \
+    __temp                   = data.field_6;  \
+    arg0->field_C8.field_6   = __temp;        \
+    arg0->field_D8.offsetX_4 = data.field_10; \
+                                              \
+    __temp                   = data.field_12; \
+    arg0->field_D8.offsetZ_6 = __temp;        \
+    arg0->field_D4.radius_0  = data.field_8;  \
+    arg0->field_D8.offsetX_0 = data.field_C;  \
+                                              \
+    __temp                   = data.field_E;  \
+    arg0->field_D8.offsetZ_2 = __temp;        \
+                                              \
+    __temp2                = data.field_A;    \
+    arg0->field_D4.field_2 = __temp2;         \
+}
 
 void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
 {
-    s32 sp10[2];
-    s32 var_a1;
+    s32 keyframeIdxs[2];
+    s32 keyframeIdx;
     s32 i;
 
     switch (romper->model_0.anim_4.status_0)
     {
-        case 5:
-            for (i = 0, var_a1 = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 2; i < 2; i++, var_a1++)
+        case ANIM_STATUS(RomperAnim_2, true):
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 2; i < 2; i++, keyframeIdx++)
             {
-                sp10[i] = var_a1 - !(var_a1 < 5);
+                keyframeIdxs[i] = keyframeIdx - !(keyframeIdx < 5);
             }
-            func_80070400(romper, &sharedData_800ECC58_2_s02[sp10[0]], &sharedData_800ECC58_2_s02[sp10[1]]);
+
+            func_80070400(romper, &sharedData_800ECC58_2_s02[keyframeIdxs[0]], &sharedData_800ECC58_2_s02[keyframeIdxs[1]]);
             break;
 
-        case 6:
-        case 7:
-        case 10:
-        case 11:
+        case ANIM_STATUS(RomperAnim_3, false):
+        case ANIM_STATUS(RomperAnim_3, true):
+        case ANIM_STATUS(RomperAnim_5, false):
+        case ANIM_STATUS(RomperAnim_5, true):
             CopyData(romper, sharedData_800ECCBC_2_s02);
             break;
 
-        case 9:
-            for (i = 0, var_a1 = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 0xF; i < 2; i++, var_a1++)
+        case ANIM_STATUS(RomperAnim_4, true):
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 15;
+                 i < 2;
+                 i++, keyframeIdx++)
             {
-                sp10[i] = var_a1;
+                keyframeIdxs[i] = keyframeIdx;
             }
-            func_80070400(romper, &sharedData_800ECCD0_2_s02[sp10[0]], &sharedData_800ECCD0_2_s02[sp10[1]]);
+
+            func_80070400(romper, &sharedData_800ECCD0_2_s02[keyframeIdxs[0]], &sharedData_800ECCD0_2_s02[keyframeIdxs[1]]);
             break;
 
-        case 15:
-            for (i = 0, var_a1 = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 0x27; i < 2; i++, var_a1++)
+        case ANIM_STATUS(RomperAnim_7, true):
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 39;
+                 i < 2;
+                 i++, keyframeIdx++)
             {
-                sp10[i] = var_a1;
+                keyframeIdxs[i] = keyframeIdx;
             }
-            func_80070400(romper, &sharedData_800ECD48_2_s02[sp10[0]], &sharedData_800ECD48_2_s02[sp10[1]]);
+
+            func_80070400(romper, &sharedData_800ECD48_2_s02[keyframeIdxs[0]], &sharedData_800ECD48_2_s02[keyframeIdxs[1]]);
             break;
 
-        case 17:
-            for (i = 0, var_a1 = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 0x32; i < 2; i++, var_a1++)
+        case ANIM_STATUS(RomperAnim_8, true):
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 50;
+                 i < 2;
+                 i++, keyframeIdx++)
             {
-                sp10[i] = var_a1;
+                keyframeIdxs[i] = keyframeIdx;
             }
-            func_80070400(romper, &sharedData_800ECE24_2_s02[sp10[0]], &sharedData_800ECE24_2_s02[sp10[1]]);
+
+            func_80070400(romper, &sharedData_800ECE24_2_s02[keyframeIdxs[0]], &sharedData_800ECE24_2_s02[keyframeIdxs[1]]);
             break;
 
-        case 12:
-        case 13:
-        case 20:
-        case 21:
-        case 32:
-        case 33:
+        case ANIM_STATUS(RomperAnim_6, false):
+        case ANIM_STATUS(RomperAnim_6, true):
+        case ANIM_STATUS(RomperAnim_10, false):
+        case ANIM_STATUS(RomperAnim_10, true):
+        case ANIM_STATUS(RomperAnim_16, false):
+        case ANIM_STATUS(RomperAnim_16, true):
             CopyData(romper, sharedData_800ECF00_2_s02[4]);
             break;
 
-        case 22:
+        case ANIM_STATUS(RomperAnim_11, false):
             CopyData(romper, sharedData_800ECF00_2_s02[0]);
             break;
 
-        case 23:
-            for (i = 0, var_a1 = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 0x5D; i < 2; i++, var_a1++)
+        case ANIM_STATUS(RomperAnim_11, true):
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 93;
+                i < 2;
+                i++, keyframeIdx++)
             {
-                sp10[i] = var_a1 >= 4 ? 4 : var_a1;
+                keyframeIdxs[i] = keyframeIdx >= 4 ? 4 : keyframeIdx;
             }
-            func_80070400(romper, &sharedData_800ECF00_2_s02[sp10[0]], &sharedData_800ECF00_2_s02[sp10[1]]);
+
+            func_80070400(romper, &sharedData_800ECF00_2_s02[keyframeIdxs[0]], &sharedData_800ECF00_2_s02[keyframeIdxs[1]]);
             break;
 
-        case 25:
-            for (i = 0, var_a1 = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 0x64; i < 2;
-                 i++, var_a1   = (var_a1 + 1) % 9)
+        case ANIM_STATUS(RomperAnim_12, true):
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 100;
+                 i < 2;
+                 i++, keyframeIdx   = (keyframeIdx + 1) % 9)
             {
-                sp10[i] = var_a1;
+                keyframeIdxs[i] = keyframeIdx;
             }
-            func_80070400(romper, &sharedData_800ECF64_2_s02[sp10[0]], &sharedData_800ECF64_2_s02[sp10[1]]);
+
+            func_80070400(romper, &sharedData_800ECF64_2_s02[keyframeIdxs[0]], &sharedData_800ECF64_2_s02[keyframeIdxs[1]]);
             break;
 
-        case 27:
-            for (i = 0, var_a1 = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 0x6D; i < 2;
-                 i++, var_a1   = (var_a1 + 1) % 22)
+        case ANIM_STATUS(RomperAnim_13, true):
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 109;
+                 i < 2;
+                 i++, keyframeIdx = (keyframeIdx + 1) % 22)
             {
-                sp10[i] = var_a1;
+                keyframeIdxs[i] = keyframeIdx;
             }
-            func_80070400(romper, &sharedData_800ED018_2_s02[sp10[0]], &sharedData_800ED018_2_s02[sp10[1]]);
+
+            func_80070400(romper, &sharedData_800ED018_2_s02[keyframeIdxs[0]], &sharedData_800ED018_2_s02[keyframeIdxs[1]]);
             break;
 
-        case 29:
+        case ANIM_STATUS(RomperAnim_14, true):
             CopyData(romper, sharedData_800ED2C0_2_s02);
             break;
 
-        case 31:
-            for (i = 0, var_a1 = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 0x93; i < 2;
-                 i++, var_a1   = (var_a1 + 1) % 16)
+        case ANIM_STATUS(RomperAnim_15, true):
+            for (i = 0, keyframeIdx = FP_FROM(romper->model_0.anim_4.time_4, Q12_SHIFT) - 147;
+                 i < 2;
+                 i++, keyframeIdx = (keyframeIdx + 1) % 16)
             {
-                sp10[i] = var_a1 - (var_a1 > 0) - !(var_a1 < 4) - !(var_a1 < 8) - !(var_a1 < 0xC);
+                keyframeIdxs[i] = keyframeIdx - (keyframeIdx > 0) - !(keyframeIdx < 4) - !(keyframeIdx < 8) - !(keyframeIdx < 12);
             }
-            func_80070400(romper, &sharedData_800ED1D0_2_s02[sp10[0]], &sharedData_800ED1D0_2_s02[sp10[1]]);
+
+            func_80070400(romper, &sharedData_800ED1D0_2_s02[keyframeIdxs[0]], &sharedData_800ED1D0_2_s02[keyframeIdxs[1]]);
             break;
 
-        case 19:
+        case ANIM_STATUS(RomperAnim_9, true):
             CopyData(romper, sharedData_800ECD34_2_s02);
-            romper->field_D4.radius_0 = (romper->model_0.anim_4.time_4 - 0x3D000) / 100;
+            romper->field_D4.radius_0 = (romper->model_0.anim_4.time_4 - Q12(61.0f)) / 100;
             break;
 
         default:
@@ -1560,7 +1567,7 @@ void sharedFunc_800E8DFC_2_s02(s_SubCharacter* romper)
 
     func_8005C814(&romper->field_D8, romper);
 
-    if ((romper->model_0.anim_4.status_0 >> 1) != 2)
+    if (ANIM_STATUS_IDX_GET(romper->model_0.anim_4.status_0) != RomperAnim_2)
     {
         romper->field_44.field_0 = 0;
     }
@@ -1615,6 +1622,8 @@ s32 sharedFunc_800E94B4_2_s02(s_SubCharacter* romper)
     s32 relAnimTime;
     u32 var_t4;
 
+    // TODO: Demagic hex values in this func. Some of the resulting floats are awkward.
+
     if (romper->model_0.anim_4.time_4 <  Q12(109.0f) ||
         romper->model_0.anim_4.time_4 >= Q12(131.0f))
     {
@@ -1624,7 +1633,7 @@ s32 sharedFunc_800E94B4_2_s02(s_SubCharacter* romper)
     relAnimTime = romper->model_0.anim_4.time_4 - Q12(109.0f);
     if (relAnimTime < romperProps.field_F4)
     {
-        romperProps.field_F0 = -0x194;
+        romperProps.field_F0 = -404;
         romperProps.field_F4 = Q12(0.0f);
         romper->moveSpeed_38                  = Q12(-0.256f);
     }
@@ -1700,54 +1709,55 @@ s32 sharedFunc_800E94B4_2_s02(s_SubCharacter* romper)
 
 void sharedFunc_800E9714_2_s02(s_SubCharacter* romper)
 {
-    s32 sp10;
-    s32 sp14;
-    s16 sp18;
-    s32 temp_s3;
-    s32 temp_v0;
-    s32 temp_v0_4;
-    s32 temp_v0_5;
-    s32 var_s0;
+    q19_12 newPosX;
+    q19_12 newPosZ;
+    q3_12  headingAngle;
+    q19_12 moveSpeed;
+    q19_12 temp_v0;
+    q19_12 temp_v0_4;
+    q19_12 moveDist;
+    q19_12 moveSpeedStep;
 
-    temp_s3   = romper->moveSpeed_38;
-    var_s0    = 0x8000;
-    temp_v0   = FP_TO(temp_s3, Q12_SHIFT) / var_s0;
-    temp_v0_4 = temp_s3 - Q12_MULT_PRECISE(temp_v0, 0x4000);
-    sp18      = romper->rotation_24.vy;
-    temp_v0_5 = Q12_MULT_PRECISE(temp_v0_4, temp_v0);
+    // TODO: Document this.
+    moveSpeed     = romper->moveSpeed_38;
+    moveSpeedStep = Q12(8.0f);
+    temp_v0       = Q12_DIV(moveSpeed, moveSpeedStep);
+    temp_v0_4     = moveSpeed - Q12_MULT_PRECISE(temp_v0, Q12(4.0f));
+    headingAngle  = romper->rotation_24.vy;
+    moveDist      = Q12_MULT_PRECISE(temp_v0_4, temp_v0);
 
-    if (temp_v0_5 >= Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - romper->position_18.vx,
-                                         g_SysWork.playerWork_4C.player_0.position_18.vz - romper->position_18.vz))
+    if (moveDist >= Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - romper->position_18.vx,
+                                        g_SysWork.playerWork_4C.player_0.position_18.vz - romper->position_18.vz))
     {
-        sp10 = romper->position_18.vx + Q12_MULT(temp_v0_5, Math_Sin(sp18));
-        sp14 = romper->position_18.vz + Q12_MULT(temp_v0_5, Math_Cos(sp18));
+        newPosX = romper->position_18.vx + Q12_MULT(moveDist, Math_Sin(headingAngle));
+        newPosZ = romper->position_18.vz + Q12_MULT(moveDist, Math_Cos(headingAngle));
     }
     else
     {
-        sp10 = g_SysWork.playerWork_4C.player_0.position_18.vx;
-        sp14 = g_SysWork.playerWork_4C.player_0.position_18.vz;
+        newPosX = g_SysWork.playerWork_4C.player_0.position_18.vx;
+        newPosZ = g_SysWork.playerWork_4C.player_0.position_18.vz;
     }
 
-    sharedFunc_800D2E9C_0_s00(&sp10, &sp14, &sp18);
+    sharedFunc_800D2E9C_0_s00(&newPosX, &newPosZ, &headingAngle);
 
-    temp_v0 = (FP_TO(Math_Vector2MagCalc(sp10 - romper->position_18.vx, sp14 - romper->position_18.vz), Q12_SHIFT) << 1) / temp_s3;
-    var_s0  = FP_TO(temp_s3, Q12_SHIFT) / temp_v0;
+    temp_v0 = (FP_TO(Math_Vector2MagCalc(newPosX - romper->position_18.vx, newPosZ - romper->position_18.vz), Q12_SHIFT) << 1) / moveSpeed;
+    moveSpeedStep  = FP_TO(moveSpeed, Q12_SHIFT) / temp_v0;
 
-    if (var_s0 < 0)
+    if (moveSpeedStep < Q12(0.0f))
     {
-        var_s0 = 0x4000;
+        moveSpeedStep = Q12(4.0f);
     }
 
-    if (var_s0 > 0x20000)
+    if (moveSpeedStep > Q12(32.0f))
     {
-        var_s0 = 0x20000;
+        moveSpeedStep = Q12(32.0f);
     }
 
     romperProps.rotationY_F2  = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - romper->position_18.vx,
-                                                        g_SysWork.playerWork_4C.player_0.position_18.vz - romper->position_18.vz);
-    romperProps.field_124     = var_s0;
-    romperProps.positionX_FC  = sp10;
-    romperProps.positionZ_100 = sp14;
+                                       g_SysWork.playerWork_4C.player_0.position_18.vz - romper->position_18.vz);
+    romperProps.field_124     = moveSpeedStep;
+    romperProps.targetPositionX_FC  = newPosX;
+    romperProps.targetPositionZ_100 = newPosZ;
 }
 
 #undef romperProps

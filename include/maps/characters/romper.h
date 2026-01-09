@@ -41,7 +41,8 @@ typedef enum _RomperAnim
     RomperAnim_16    = 16,
     RomperAnim_17    = 17,
     RomperAnim_18    = 18,
-    RomperAnim_19    = 19
+    RomperAnim_19    = 19,
+    RomperAnim_20    = 20 // Doesn't exist in table?
 } e_RomperAnim;
 
 /** @brief Romper character control states. */
