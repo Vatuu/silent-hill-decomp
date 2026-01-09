@@ -37,6 +37,9 @@ extern VbRVIEW       D_800F1570;
 extern s8            D_800F1598[];
 extern u8            D_800F159C;
 extern s32           D_800F15A0;
+extern s32           D_800F1590;
+extern s8            D_800F1594[];
+extern s8            D_800F159D;
 
 void func_800CD818(void);
 
@@ -63,7 +66,7 @@ void func_800CDB14(s32, s32);
 
 void func_800CDB98();
 
-void func_800CE180(s32, s32*);
+void func_800CE180();
 
 // Same as `func_800E6758` in MAP2_S02.
 void func_800E828C(s_SubCharacter* chara);
