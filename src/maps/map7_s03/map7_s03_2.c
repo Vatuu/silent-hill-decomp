@@ -431,18 +431,18 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD2C8);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD32C);
 
-void func_800DD3D4(void* arg0, s32 scaleX, s32 scaleY, s32 scaleZ) // 0x800DD3D4
+void func_800DD3D4(void* arg0, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0x800DD3D4
 {
-    VECTOR3 local_vec;
-    MATRIX  local_matrix;
+    VECTOR3 pos;
+    MATRIX  mat;
 
-    Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords_890[HarryBone_Torso], &local_matrix);
+    Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords_890[HarryBone_Torso], &mat);
 
-    local_vec.vx = (local_matrix.t[0] << 4) + scaleX;
-    local_vec.vy = (local_matrix.t[1] << 4) + scaleY;
-    local_vec.vz = (local_matrix.t[2] << 4) + scaleZ;
+    pos.vx = Q8_TO_Q12(mat.t[0]) + scaleX;
+    pos.vy = Q8_TO_Q12(mat.t[1]) + scaleY;
+    pos.vz = Q8_TO_Q12(mat.t[2]) + scaleZ;
 
-    func_800DD32C(arg0, &local_vec);
+    func_800DD32C(arg0, &pos);
 }
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD464);

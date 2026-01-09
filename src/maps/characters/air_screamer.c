@@ -6,7 +6,7 @@
 #include "maps/characters/air_screamer.h"
 
 // NOTES: 
-// - M0S01 includes some extra functions missing from other maps, but also removes the body of most `Ai_AirScreamerControl_X` functions.
+// - M0S01 includes some extra functions missing from other maps, but also removes the body of most `Ai_AirScreamer_Control_X` functions.
 //  (also seems to remove the funcs that those removed control funcs would have called into)
 //  See `#ifdef MAP0_S01` and `#ifndef MAP0_S01` blocks below.
 //
@@ -398,7 +398,7 @@ bool Ai_AirScreamer_Init(s_SubCharacter* airScreamer)
     }
 
     sharedFunc_800D2BF4_0_s01(airScreamer);
-    Ai_AirScreamerControl_0(airScreamer);
+    Ai_AirScreamer_Control_0(airScreamer);
     sharedFunc_800D2390_0_s01(airScreamer);
     sharedFunc_800D2390_0_s01(airScreamer);
     sharedFunc_800D2B00_0_s01(airScreamer);
@@ -1032,7 +1032,7 @@ void func_800D3AC0(s_SubCharacter* airScreamer) // 0x800D3AC0
 }
 #endif
 
-void Ai_AirScreamerControl_0(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer)
 {
     s32  keyframeIdx;
     s32  var0;
@@ -1214,7 +1214,7 @@ void Ai_AirScreamerControl_0(s_SubCharacter* airScreamer)
     }
 }
 
-void Ai_AirScreamerControl_1(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_1(s_SubCharacter* airScreamer)
 {
     u32  keyframeIdx;
     bool setAnim;
@@ -1262,7 +1262,7 @@ void Ai_AirScreamerControl_1(s_SubCharacter* airScreamer)
         case AirScreamerStateStep_7:
             airScreamer->model_0.controlState_2 = AirScreamerControl_None;
             airScreamer->model_0.stateStep_3    = AirScreamerStateStep_13;
-            Ai_AirScreamerControl_0(airScreamer);
+            Ai_AirScreamer_Control_0(airScreamer);
             break;
     }
 
@@ -1313,7 +1313,7 @@ void sharedFunc_800D3DFC_0_s01(s_SubCharacter* airScreamer)
     }
 }
 
-void Ai_AirScreamerControl_2(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_2(s_SubCharacter* airScreamer)
 {
     q19_12 damage;
     bool   cond1;
@@ -1429,7 +1429,7 @@ void Ai_AirScreamerControl_2(s_SubCharacter* airScreamer)
     }
 }
 
-void Ai_AirScreamerControl_3(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_3(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond;
@@ -1498,8 +1498,8 @@ void Ai_AirScreamerControl_3(s_SubCharacter* airScreamer)
     }
 #endif
 }
-// Similar to `Ai_AirScreamerControl_5`
-void Ai_AirScreamerControl_4(s_SubCharacter* airScreamer)
+// Similar to `Ai_AirScreamer_Control_5`
+void Ai_AirScreamer_Control_4(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    temp_fp;
@@ -1694,7 +1694,7 @@ void Ai_AirScreamerControl_4(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_5(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_5(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -1878,10 +1878,10 @@ void Ai_AirScreamerControl_5(s_SubCharacter* airScreamer)
 #endif
 }
 
-// Note: Very close match to `Ai_AirScreamerControl_7` other than some checks being removed.
+// Note: Very close match to `Ai_AirScreamer_Control_7` other than some checks being removed.
 // Changes here should be copied over there.
 
-void Ai_AirScreamerControl_6(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_6(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  animStatus;
@@ -2095,9 +2095,9 @@ void Ai_AirScreamerControl_6(s_SubCharacter* airScreamer)
 #endif
 }
 
-// Note: Very close match to `Ai_AirScreamerControl_6` other than some checks being removed.
+// Note: Very close match to `Ai_AirScreamer_Control_6` other than some checks being removed.
 // Changes here should be copied over there.
-void Ai_AirScreamerControl_7(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_7(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  animStatus;
@@ -2323,7 +2323,7 @@ void Ai_AirScreamerControl_7(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_8(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_8(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -2524,7 +2524,7 @@ void Ai_AirScreamerControl_8(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_9(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_9(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond0;
@@ -2661,7 +2661,7 @@ void Ai_AirScreamerControl_9(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_10(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_10(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -2872,7 +2872,7 @@ void Ai_AirScreamerControl_10(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_11(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_11(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32 bit3;
@@ -2998,7 +2998,7 @@ void Ai_AirScreamerControl_11(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_12(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_12(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond0;
@@ -3117,7 +3117,7 @@ void Ai_AirScreamerControl_12(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_13(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_13(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool field14C_2;
@@ -3261,7 +3261,7 @@ void Ai_AirScreamerControl_13(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_14(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_14(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -3428,7 +3428,7 @@ void Ai_AirScreamerControl_14(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_15(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_15(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     sharedFunc_800DDF74_2_s00(airScreamer, Q12(0.5f), airScreamer->rotation_24.vy);
@@ -3483,8 +3483,8 @@ void Ai_AirScreamerControl_15(s_SubCharacter* airScreamer)
 #endif
 }
 
-// Very similar to `Ai_AirScreamerControl_44`, changes here should be copied there.
-void Ai_AirScreamerControl_16(s_SubCharacter* airScreamer)
+// Very similar to `Ai_AirScreamer_Control_44`, changes here should be copied there.
+void Ai_AirScreamer_Control_16(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -3701,7 +3701,7 @@ void Ai_AirScreamerControl_16(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_17(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_17(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond;
@@ -3753,7 +3753,7 @@ void Ai_AirScreamerControl_17(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_18(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_18(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -3950,7 +3950,7 @@ void Ai_AirScreamerControl_18(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_19(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_19(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -4139,7 +4139,7 @@ void Ai_AirScreamerControl_19(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_20(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_20(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -4371,7 +4371,7 @@ void Ai_AirScreamerControl_20(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_21(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_21(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    switch3;
@@ -4618,7 +4618,7 @@ void Ai_AirScreamerControl_21(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_22(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_22(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    switchCond;
@@ -4814,7 +4814,7 @@ void Ai_AirScreamerControl_22(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_23(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_23(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    temp_fp;
@@ -5013,7 +5013,7 @@ void Ai_AirScreamerControl_23(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_24(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_24(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool temp_a0;
@@ -5190,7 +5190,7 @@ void Ai_AirScreamerControl_24(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_25(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_25(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool var_s1;
@@ -5313,7 +5313,7 @@ void Ai_AirScreamerControl_25(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_26(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_26(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  animStatus;
@@ -5460,7 +5460,7 @@ void Ai_AirScreamerControl_26(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_27(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_27(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -5625,7 +5625,7 @@ void Ai_AirScreamerControl_27(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_28(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_28(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     sharedFunc_800D529C_0_s01(airScreamer, Q12(0.5f), airScreamer->rotation_24.vy);
@@ -5681,7 +5681,7 @@ void Ai_AirScreamerControl_28(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_29(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_29(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  temp_s2;
@@ -5894,7 +5894,7 @@ void Ai_AirScreamerControl_29(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_30(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_30(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond;
@@ -5962,7 +5962,7 @@ void Ai_AirScreamerControl_30(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_31(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_31(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     switch (airScreamer->model_0.stateStep_3)
@@ -6015,7 +6015,7 @@ void Ai_AirScreamerControl_31(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_32(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_32(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond;
@@ -6076,7 +6076,7 @@ void Ai_AirScreamerControl_32(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_33(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_33(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  animStatus;
@@ -6269,7 +6269,7 @@ void Ai_AirScreamerControl_33(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_34(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_34(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -6415,7 +6415,7 @@ void Ai_AirScreamerControl_34(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_35(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_35(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  temp_a0;
@@ -6707,7 +6707,7 @@ void Ai_AirScreamerControl_35(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_36(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_36(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  animStatus;
@@ -7014,7 +7014,7 @@ void Ai_AirScreamerControl_36(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_37(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_37(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    temp_a0;
@@ -7185,7 +7185,7 @@ void Ai_AirScreamerControl_37(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_38(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_38(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32           sp10;
@@ -7374,7 +7374,7 @@ void Ai_AirScreamerControl_38(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_39(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_39(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32  sp10;
@@ -7544,7 +7544,7 @@ void Ai_AirScreamerControl_39(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_40(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_40(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond0;
@@ -7648,7 +7648,7 @@ void Ai_AirScreamerControl_40(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_41(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_41(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -7835,7 +7835,7 @@ void Ai_AirScreamerControl_41(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_42(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_42(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    temp_a0;
@@ -7991,7 +7991,7 @@ void Ai_AirScreamerControl_42(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_43(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_43(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     sharedFunc_800DEC84_2_s00(airScreamer, Q12(0.5f), airScreamer->rotation_24.vy);
@@ -8043,8 +8043,8 @@ void Ai_AirScreamerControl_43(s_SubCharacter* airScreamer)
 #endif
 }
 
-// Very similar to `Ai_AirScreamerControl_16`, changes here should be copied there.
-void Ai_AirScreamerControl_44(s_SubCharacter* airScreamer)
+// Very similar to `Ai_AirScreamer_Control_16`, changes here should be copied there.
+void Ai_AirScreamer_Control_44(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     s32    animStatus;
@@ -8249,7 +8249,7 @@ void Ai_AirScreamerControl_44(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_45(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_45(s_SubCharacter* airScreamer)
 {
 #ifndef MAP0_S01
     bool cond;
@@ -8311,7 +8311,7 @@ void Ai_AirScreamerControl_45(s_SubCharacter* airScreamer)
 
 // Control 46+ are only included in MAP0_S01
 
-void Ai_AirScreamerControl_46(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_46(s_SubCharacter* airScreamer)
 {
 #ifdef MAP0_S01
     s32 animStatus;
@@ -8380,7 +8380,7 @@ void Ai_AirScreamerControl_46(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_47(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_47(s_SubCharacter* airScreamer)
 {
 #ifdef MAP0_S01
     q19_12 dist0;
@@ -8454,7 +8454,7 @@ void Ai_AirScreamerControl_47(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_48(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_48(s_SubCharacter* airScreamer)
 {
 #ifdef MAP0_S01
     if (!airScreamer->model_0.stateStep_3)
@@ -8505,7 +8505,7 @@ void Ai_AirScreamerControl_48(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_49(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_49(s_SubCharacter* airScreamer)
 {
 #ifdef MAP0_S01
     bool cond0;
@@ -8616,7 +8616,7 @@ void Ai_AirScreamerControl_49(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_50(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_50(s_SubCharacter* airScreamer)
 {
 #ifdef MAP0_S01
     s32  damageType;
@@ -8688,7 +8688,7 @@ void Ai_AirScreamerControl_50(s_SubCharacter* airScreamer)
 #endif
 }
 
-void Ai_AirScreamerControl_51(s_SubCharacter* airScreamer)
+void Ai_AirScreamer_Control_51(s_SubCharacter* airScreamer)
 {
 #ifdef MAP0_S01
     s32  animStatus;

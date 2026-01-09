@@ -257,6 +257,8 @@ void func_800DCF94(void);
 
 void func_800DD240(VECTOR3* vec);
 
+void func_800DD3D4(void* arg0, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
+
 void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s32 arg3);
 
 void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);

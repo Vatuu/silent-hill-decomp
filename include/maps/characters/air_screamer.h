@@ -280,9 +280,9 @@ bool sharedFunc_800D31D0_0_s01(s_SubCharacter* airScreamer, const VECTOR3* pos, 
 
 bool Ai_AirScreamer_Control(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamerControl_0(s_SubCharacter* airScreamer);
+void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer);
 
-void Ai_AirScreamerControl_1(s_SubCharacter* airScreamer);
+void Ai_AirScreamer_Control_1(s_SubCharacter* airScreamer);
 
 /** Probability query. */
 void sharedFunc_800D3DFC_0_s01(s_SubCharacter* airScreamer);

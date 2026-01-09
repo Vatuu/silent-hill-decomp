@@ -882,7 +882,7 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
 void Ai_Romper_Control_5(s_SubCharacter* romper)
 {
     s_Collision coll;
-    VECTOR3     sp30;
+    VECTOR3     pos; // Q19.12
     s16         temp_v0_4;
     q3_12       unkAngle1;
     s16         var_s3;
@@ -977,15 +977,15 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
         {
             if (!(romperProps.flags_E8 & RomperFlag_9))
             {
-                func_8005DC1C(1403, &romper->position_18, Q8(0.5f), 0);
+                func_8005DC1C(Sfx_Unk1403, &romper->position_18, Q8(0.5f), 0);
                 romperProps.flags_E8 |= RomperFlag_9;
             }
 
-            sp30.vx = romper->position_18.vx;
-            sp30.vy = romper->position_18.vy;
-            sp30.vz = romper->position_18.vz;
+            pos.vx = romper->position_18.vx;
+            pos.vy = romper->position_18.vy;
+            pos.vz = romper->position_18.vz;
 
-            if (func_8008A0E4(1, 54, romper, &sp30, &g_SysWork.playerWork_4C.player_0, romper->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
+            if (func_8008A0E4(1, WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Multitap), romper, &pos, &g_SysWork.playerWork_4C.player_0, romper->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
             {
                 romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_3, false);
                 romper->model_0.controlState_2  = RomperControl_10;
