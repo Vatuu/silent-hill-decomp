@@ -1,0 +1,8 @@
+Gfx_BackgroundSpriteDraw = 0x800311d4; // type:func
+MainLoop = 0x80032bc8; // type:func
+func_80035560 = 0x80035230; // type:func
+D_800C489C = 0x800c6dcc;
+Ipd_ChunkInitCheck = 0x8003c584; // type:func
+func_800892A4 = 0x8008ace0; // type:func
+func_80089128 = 0x8008ab64; // type:func
+CHARA_FILE_INFOS = 0x800ab498;

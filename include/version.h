@@ -17,7 +17,7 @@
 #define VERSION_DATE_PAL_1_0   990607
 #define VERSION_DATE_NTSCJ_1_2 990616
 
-#if defined(VER_JPN0)
+#if defined(VER_JAP0)
     // Silent Hill (JP) v1.0
     #define VERSION_NTSCJ 1
     #define VERSION_DATE VERSION_DATE_NTSCJ_1_0
@@ -27,7 +27,7 @@
     #define VERSION_NTSC 1
     #define VERSION_DATE VERSION_DATE_NTSC_1_1
     #define VERSION_SERIAL "SLUS-00707"
-#elif defined(VER_JPN1)
+#elif defined(VER_JAP1)
     // Silent Hill (JP) v1.01
     #define VERSION_NTSCJ 1
     #define VERSION_DATE VERSION_DATE_NTSCJ_1_1
@@ -37,7 +37,7 @@
     #define VERSION_PAL 1
     #define VERSION_DATE VERSION_DATE_PAL_1_0
     #define VERSION_SERIAL "SLES-01514"
-#elif defined(VER_JPN2)
+#elif defined(VER_JAP2)
     // Silent Hill (JP) v1.1
     #define VERSION_NTSCJ 1
     #define VERSION_DATE VERSION_DATE_NTSCJ_1_2

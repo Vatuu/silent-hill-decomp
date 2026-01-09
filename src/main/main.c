@@ -14,7 +14,13 @@
 // @hack Explicit rodata here because these need to be referenced externally to end up in .rodata,
 // otherwise they'll go into .sdata because they're small; can't wrap them in a struct either because
 // `main` accesses them individually and not with a common base.
+
+#ifdef VER_JAP0
+void* SECTION(".rodata") g_OvlDynamic = (void*)0x800CBAA8;
+#else
 void* SECTION(".rodata") g_OvlDynamic = (void*)0x800C9578;
+#endif
+
 void* SECTION(".rodata") g_OvlBodyprog = (void*)0x80024B60;
 
 s_FsImageDesc g_MainImg0 = {
@@ -75,7 +81,11 @@ int main(void)
     SpuInit();
 
     // Load `1ST/2ZANKO_E.TIM` ("There are violent and disturbing images...").
+#if defined(VERSION_NTSCJ)
+    Fs_QueueStartReadTim(FILE_1ST_2ZANKO80_TIM, FS_BUFFER_0, &g_MainImg0);
+#else
     Fs_QueueStartReadTim(FILE_1ST_2ZANKO_E_TIM, FS_BUFFER_0, &g_MainImg0);
+#endif
     while (Fs_QueueGetLength() > 0)
     {
         Fs_QueueUpdate();
