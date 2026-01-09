@@ -57,7 +57,30 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, rodata]
-      
+      - [0x4,    .rodata, memcard/memcard_1]
+      - [0x13C,  .rodata, screen/screen_fade]
+      - [0x1DC,  .rodata, globals]
+      - [0x598,  .rodata, saveload/bodyprog_80032D1C]
+      - [0x5A8,  .rodata, settings_reset]
+      - [0x604,  .rodata, memcard/memcard_2]
+      - [0x68C,  .rodata, bodyprog_800348C0]
+      - [0x908,  .rodata, bodyprog_8003AB28]
+      - [0x1080, .rodata, sound/sd_call]
+      - [0x1188, .rodata, sound/sd_snd]
+      - [0x11C8, .rodata, sound/bodyprog_800485D8]
+      - [0x11F4, .rodata, screen/text_draw]
+      - [0x1454, .rodata, items/item_screens_1]
+      - [0x1474, .rodata, items/item_screens_2]
+      - [0x18CC, .rodata, items/item_screens_3]
+      - [0x36EC, .rodata, bodyprog_80055028]
+      - [0x490C,  rodata]
+      - [0x4910, .rodata, bodyprog_800706E4]
+      - [0x4978, .rodata, bodyprog_80070B84]
+      - [0x5A10, .rodata, view/vc_main]
+      - [0x5CBC, .rodata, bodyprog_80085D78]
+      - [0x6438, .rodata, demo]
+      - [0x6458, .rodata, credits]
+      - [0x6734, rodata] # SDK libs, lib_unk
       #- [0x97F0, asm, bodyprog] # Data
       #- [0x97F0, asm, globals] # Data
       #- [0x97F0, asm, syswork_functable] # Data

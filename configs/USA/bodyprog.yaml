@@ -74,7 +74,7 @@ segments:
       - [0x1208, .rodata, screen/text_draw]
       - [0x1330, .rodata, items/item_screens_1]
       - [0x1350, .rodata, items/item_screens_2]
-      - [0x1770, .rodata, items/item_screens_3]
+      - [0x179C, .rodata, items/item_screens_3]
       - [0x39CC, .rodata, bodyprog_80055028]
       - [0x4BEC,  rodata]
       - [0x4BF0, .rodata, bodyprog_800706E4]
