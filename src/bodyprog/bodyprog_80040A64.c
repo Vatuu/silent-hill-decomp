@@ -2509,7 +2509,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
     s32            var_v0_4;
     s32            var_v0_5;
     s_FsImageDesc* curImage;
-    s_LinkedBone* curBone;
+    s_LinkedBone*  curBone;
 
     var_s5 = SHRT_MAX;
     var_s6 = SHRT_MAX;

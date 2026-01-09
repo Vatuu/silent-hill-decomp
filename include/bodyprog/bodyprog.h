@@ -1004,17 +1004,17 @@ STATIC_ASSERT_SIZEOF(s_Bone, 20);
 
 typedef struct _LinkedBone
 {
-    s_Bone bone_0;
+    s_Bone              bone_0;
     struct _LinkedBone* next_14;
 } s_LinkedBone;
 STATIC_ASSERT_SIZEOF(s_LinkedBone, 24);
 
 typedef struct
 {
-    u8      boneCount_0;
-    u8      boneIdx_1;
-    u8      field_2;
-    s8      field_3;
+    u8            boneCount_0;
+    u8            boneIdx_1;
+    u8            field_2;
+    s8            field_3;
     s_LinkedBone* bones_4;
     s_LinkedBone* bones_8;
     s_LinkedBone  bones_C[56];
@@ -1164,23 +1164,23 @@ STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 
 typedef struct
 {
-    u8 endOfArray_0_0 : 1; // End of array marker.
-    s32 posX_0_1  : 10; // X
-    s32 posZ_0_11 : 10; // Z
-    u32 sizeX_0_21 : 4; // X size
-    u32 sizeZ_0_25 : 4; // Z size
-    u32 field_0_29 : 3; // Related to ground height? Used to set `s_func_8006F338::field_2C` which then gets copied by `func_8006F250`, that func has only been seen called by AirScreamer?
+    u8  endOfArray_0_0 : 1;  // End of array marker.
+    s32 positionX_0_1  : 10; // X
+    s32 positionZ_0_11 : 10; // Z
+    u32 sizeX_0_21     : 4;  // X size
+    u32 sizeZ_0_25     : 4;  // Z size
+    u32 field_0_29     : 3;  // Related to ground height? Used to set `s_func_8006F338::field_2C` which then gets copied by `func_8006F250`, that func has only been seen called by AirScreamer?
 } s_func_8006F8FC;
 STATIC_ASSERT_SIZEOF(s_func_8006F8FC, 4);
 
 typedef struct _HeldItem
 {
-    s32              itemId_0; /** `e_InventoryItemId` */
-    s32              queueIdx_4;
-    char*            textureName_8;
-    s_FsImageDesc    imageDesc_C;
-    s_LmHeader*      lmHdr_14;
-    s_Bone           bone_18;
+    s32           itemId_0; /** `e_InventoryItemId` */
+    s32           queueIdx_4;
+    char*         textureName_8;
+    s_FsImageDesc imageDesc_C;
+    s_LmHeader*   lmHdr_14;
+    s_Bone        bone_18;
 } s_HeldItem;
 STATIC_ASSERT_SIZEOF(s_HeldItem, 0x2C);
 
@@ -2936,7 +2936,7 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0);
 
 void func_8003FF2C(s_StructUnk3* arg0);
 
-void func_80040004(s_MapOverlayHeader* overlayHeader);
+void func_80040004(s_MapOverlayHeader* overlayHdr);
 
 void func_80040014(void);
 

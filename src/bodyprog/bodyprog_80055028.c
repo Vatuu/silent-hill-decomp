@@ -7878,10 +7878,10 @@ void func_80069860(s32 arg0, s32 arg1, s_func_8006F8FC* arg2) // 0x80069860
 
     for (ptr = arg2; !ptr->endOfArray_0_0; ptr++)
     {
-        minX = FP_TO(ptr->posX_0_1, Q12_SHIFT);
-        maxX = FP_TO(ptr->posX_0_1 + ptr->sizeX_0_21, Q12_SHIFT);
-        minZ = FP_TO(ptr->posZ_0_11, Q12_SHIFT);
-        maxZ = FP_TO(ptr->posZ_0_11 + ptr->sizeZ_0_25, Q12_SHIFT);
+        minX = FP_TO(ptr->positionX_0_1, Q12_SHIFT);
+        maxX = FP_TO(ptr->positionX_0_1 + ptr->sizeX_0_21, Q12_SHIFT);
+        minZ = FP_TO(ptr->positionZ_0_11, Q12_SHIFT);
+        maxZ = FP_TO(ptr->positionZ_0_11 + ptr->sizeZ_0_25, Q12_SHIFT);
 
         minX -= Q12(16.0f);
         maxX += Q12(16.0f);
@@ -11032,10 +11032,10 @@ bool func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1) // 0x8006F3C4
     s32    var_v0;
     s32    var_v0_2;
 
-    minX = Q12(arg1->posX_0_1);
-    maxX = Q12(arg1->posX_0_1 + arg1->sizeX_0_21);
-    minZ = Q12(arg1->posZ_0_11);
-    maxZ = Q12(arg1->posZ_0_11 + arg1->sizeZ_0_25);
+    minX = Q12(arg1->positionX_0_1);
+    maxX = Q12(arg1->positionX_0_1 + arg1->sizeX_0_21);
+    minZ = Q12(arg1->positionZ_0_11);
+    maxZ = Q12(arg1->positionZ_0_11 + arg1->sizeZ_0_25);
 
     if ((minX >= arg0->field_1C || arg0->field_18 >= maxX) &&
         (minZ >= arg0->field_24 || arg0->field_20 >= maxZ))
@@ -11225,10 +11225,10 @@ void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8
     q19_12 maxZ;
 
     // TODO: Using `Q12` doesn't match? There's an identical block in `func_8006F3C4`.
-    minX = FP_TO(arg4->posX_0_1, Q12_SHIFT);
-    maxX = FP_TO(arg4->posX_0_1 + arg4->sizeX_0_21, Q12_SHIFT);
-    minZ = FP_TO(arg4->posZ_0_11, Q12_SHIFT);
-    maxZ = FP_TO(arg4->posZ_0_11 + arg4->sizeZ_0_25, Q12_SHIFT);
+    minX = FP_TO(arg4->positionX_0_1, Q12_SHIFT);
+    maxX = FP_TO(arg4->positionX_0_1 + arg4->sizeX_0_21, Q12_SHIFT);
+    minZ = FP_TO(arg4->positionZ_0_11, Q12_SHIFT);
+    maxZ = FP_TO(arg4->positionZ_0_11 + arg4->sizeZ_0_25, Q12_SHIFT);
 
     if (posX < minX)
     {

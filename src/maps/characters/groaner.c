@@ -1135,7 +1135,7 @@ void sharedFunc_800E5AA4_2_s00(s_SubCharacter* groaner)
     }
 }
 
-void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* arg1, GsCOORDINATE2* arg2)
+void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
 {
     typedef struct
     {
@@ -1143,139 +1143,139 @@ void sharedFunc_800E5EC4_2_s00(s_SubCharacter* groaner, s_AnmHeader* arg1, GsCOO
         MATRIX  field_8;
     } s_sharedFunc_800E5EC4_2_s00;
 
-    s16                          temp_v0_5;
-    s16                          temp_v0_6;
-    s16                          var_s0;
-    s32                          var_a3;
-    s_AnimInfo*                  temp_a3;
+    q3_12                        angle1;
+    q3_12                        angleDeltaToTarget;
+    q3_12                        angle0;
+    q19_12                       constantDur;
+    s_AnimInfo*                  animInfo;
     s_sharedFunc_800E5EC4_2_s00* ptr;
 
     switch (groaner->model_0.anim_4.status_0)
     {
-        case 21:
-            if (FP_FROM(groaner->model_0.anim_4.time_4, 0xC) > 0xCE && FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) < 0xDC)
+        case ANIM_STATUS(GroanerAnim_10, true):
+            if (ANIM_TIME_RANGE_CHECK(groaner->model_0.anim_4.time_4, 207, 219))
             {
-                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = 0x18000;
+                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = Q12(24.0f);
             }
 
-            if (FP_FROM(groaner->model_0.anim_4.time_4, 0xC) > 0xDB && FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) < 0xE2)
+            if (ANIM_TIME_RANGE_CHECK(groaner->model_0.anim_4.time_4, 220, 225))
             {
-                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = 0x18000;
+                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = Q12(24.0f);
             }
 
-            if (FP_FROM(groaner->model_0.anim_4.time_4, 0xC) > 0xE1 && FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) < 0xF4)
+            if (ANIM_TIME_RANGE_CHECK(groaner->model_0.anim_4.time_4, 226, 243))
             {
-                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = 0x1E000;
+                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = Q12(30.0f);
             }
             break;
 
-        case 7:
-            if (groanerProps.flags_E8.val16[0] & 0x20)
+        case ANIM_STATUS(GroanerAnim_3, true):
+            if (groanerProps.flags_E8.val16[0] & GroanerFlag_5)
             {
-                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = 0x20000;
+                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = Q12(32.0f);
             }
             else
             {
-                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = 0x19C00;
+                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = Q12(25.75f);
             }
             break;
 
-        case 15:
-        case 27:
-            if (groanerProps.flags_E8.val16[0] & 0x20)
+        case ANIM_STATUS(GroanerAnim_7, true):
+        case ANIM_STATUS(GroanerAnim_13, true):
+            if (groanerProps.flags_E8.val16[0] & GroanerFlag_5)
             {
-                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = 0x1E000;
+                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = Q12(30.0f);
             }
             else
             {
-                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = 0x16800;
+                GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = Q12(22.5f);
             }
             break;
 
-        case 33:
+        case ANIM_STATUS(GroanerAnim_16, true):
             if (groanerProps.angle_EC == groaner->rotation_24.vy)
             {
-                var_a3 = groaner->moveSpeed_38;
+                constantDur = groaner->moveSpeed_38;
             }
             else
             {
-                if (groaner->moveSpeed_38 >= 0x1000)
+                if (groaner->moveSpeed_38 >= Q12(1.0f))
                 {
-                    var_a3 = groaner->moveSpeed_38;
+                    constantDur = groaner->moveSpeed_38;
                 }
                 else
                 {
-                    var_a3 = 0x1000;
+                    constantDur = Q12(1.0f);
                 }
             }
-            var_a3                                                                   = FP_TO(var_a3 * 20, Q12_SHIFT) / Q12_MULT_PRECISE(groanerProps.field_114, 0x3999);
-            GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = var_a3;
+
+            constantDur                                                              = Q12_DIV(constantDur * 20, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f)));
+            GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0].duration_8.constant = constantDur;
             break;
     }
 
-    Math_MatrixTransform(&groaner->position_18, (SVECTOR*)&groaner->rotation_24, arg2);
+    Math_MatrixTransform(&groaner->position_18, (SVECTOR*)&groaner->rotation_24, coords);
 
-    temp_a3 = &GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0];
-    temp_a3->updateFunc_0(&groaner->model_0, arg1, arg2, temp_a3);
+    animInfo = &GROANER_ANIM_INFOS[groaner->model_0.anim_4.status_0];
+    animInfo->updateFunc_0(&groaner->model_0, anmHdr, coords, animInfo);
 
     ptr = PSX_SCRATCH;
 
     switch (groaner->model_0.anim_4.status_0)
     {
-        case 34:
-        case 35:
-            temp_v0_5 = Q12_MULT_PRECISE(g_DeltaTime0, 0x400);
-            var_s0    = 0x180;
+        case ANIM_STATUS(GroanerAnim_17, false):
+        case ANIM_STATUS(GroanerAnim_17, true):
+            angle1 = Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(90.0f));
+            angle0    = FP_ANGLE(33.75f);
             break;
 
-        case 20:
-        case 21:
-        case 30:
-        case 31:
-        case 32:
-        case 33:
-            temp_v0_5 = Q12_MULT_PRECISE(g_DeltaTime0, 0x600);
-            var_s0    = 0x280;
+        case ANIM_STATUS(GroanerAnim_10, false):
+        case ANIM_STATUS(GroanerAnim_10, true):
+        case ANIM_STATUS(GroanerAnim_15, false):
+        case ANIM_STATUS(GroanerAnim_15, true):
+        case ANIM_STATUS(GroanerAnim_16, false):
+        case ANIM_STATUS(GroanerAnim_16, true):
+            angle1 = Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(135.0f));
+            angle0    = FP_ANGLE(56.25f);
             break;
 
         default:
-            temp_v0_5 = Q12_MULT_PRECISE(g_DeltaTime0, 0x600);
-            var_s0    = 0;
+            angle1 = Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(135.0f));
+            angle0    = FP_ANGLE(0.0f);
             break;
     }
 
-    temp_v0_6 = func_8005BF38(groanerProps.angle_EC - groaner->rotation_24.vy);
-
-    if (temp_v0_6 == 0)
+    angleDeltaToTarget = func_8005BF38(groanerProps.angle_EC - groaner->rotation_24.vy);
+    if (angleDeltaToTarget == FP_ANGLE(0.0f))
     {
-        var_s0 = 0;
+        angle0 = FP_ANGLE(0.0f);
     }
-    else if (temp_v0_6 < 0)
+    else if (angleDeltaToTarget < FP_ANGLE(0.0f))
     {
-        var_s0 = -var_s0;
+        angle0 = -angle0;
     }
 
-    if (groanerProps.field_EE > var_s0)
+    if (groanerProps.field_EE > angle0)
     {
-        groanerProps.field_EE = MAX(var_s0, groanerProps.field_EE - temp_v0_5);
+        groanerProps.field_EE = MAX(angle0, groanerProps.field_EE - angle1);
     }
     else
     {
-        groanerProps.field_EE = CLAMP_HIGH(var_s0, groanerProps.field_EE + temp_v0_5);
+        groanerProps.field_EE = CLAMP_HIGH(angle0, groanerProps.field_EE + angle1);
     }
 
     *(s32*)&ptr->field_0 = (groanerProps.field_EE >> 2) << 16;
     ptr->field_0.vz      = 0;
 
     Math_RotMatrixZxyNegGte(&ptr->field_0, &ptr->field_8);
-    MulMatrix(&arg2[3].coord, &ptr->field_8);
-    MulMatrix(&arg2[4].coord, &ptr->field_8);
+    MulMatrix(&coords[3].coord, &ptr->field_8);
+    MulMatrix(&coords[4].coord, &ptr->field_8);
 
     *(s32*)&ptr->field_0.vx = groanerProps.field_EE << 16;
     ptr->field_0.vz         = 0;
 
     Math_RotMatrixZxyNegGte(&ptr->field_0, &ptr->field_8);
-    MulMatrix(&arg2[1].coord, &ptr->field_8);
+    MulMatrix(&coords[1].coord, &ptr->field_8);
 
     groaner->rotation_24.vy                 = func_8005BF38(groaner->rotation_24.vy);
     groanerProps.angle_EC = groaner->rotation_24.vy;
