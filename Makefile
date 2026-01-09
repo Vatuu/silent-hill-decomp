@@ -139,10 +139,10 @@ MKPSXISO_FLAGS      := -y -q "$(ROM_DIR)/$(GAME_VERSION)/rebuild.xml"
 SILENT_ASSETS_FLAGS := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_SILENT)" -fh "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_HILL)" "$(ASSETS_DIR)/$(GAME_VERSION)"
 INSERT_OVLS_FLAGS   := -exe "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_EXE)" -fs "$(ROM_DIR)/$(GAME_VERSION)/$(GAME_FILE_SILENT)" -ftb "$(ASSETS_DIR)/$(GAME_VERSION)/filetable.c.inc" -b $(OUT_DIR) -xml "$(ROM_DIR)/$(GAME_VERSION)/layout.xml" -o $(ROM_DIR)
 
-ifeq ($(GAME_VERSION), USA)
-
 # Targets that will run tools/prebuild.sh after splat has finished, before being built.
 TARGET_PREBUILD  := main bodyprog screens/stream
+
+ifeq ($(GAME_VERSION), USA)
 
 # Targets that will run tools/postbuild.py after being linked & extracted from ELF.
 TARGET_POSTBUILD := bodyprog screens/b_konami screens/stream maps/map3_s06 maps/map4_s05 maps/map5_s01 maps/map6_s01

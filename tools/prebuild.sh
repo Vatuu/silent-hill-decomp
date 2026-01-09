@@ -8,6 +8,7 @@
 
 if [ "$1" == "main" ]; then
     sed -i 's/\.a:/\//g' linkers/USA/main.ld
+    sed -i 's/\.a:/\//g' linkers/JAP0/main.ld
 elif [ "$1" == "bodyprog" ]; then
     sed -i 's/\.a:/\//g' linkers/USA/bodyprog.ld
 elif [ "$1" == "screens/stream" ] || [ "$1" == "stream" ]; then
