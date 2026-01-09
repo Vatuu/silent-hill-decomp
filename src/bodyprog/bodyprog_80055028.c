@@ -6913,6 +6913,10 @@ void func_80066D90(void) // 0x80066D90
     Fs_QueueWaitForEmpty();
 }
 
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", hack_D_80028A18_fix);
+
+const RECT D_80028A20 = { SCREEN_WIDTH, 256, 192, SCREEN_HEIGHT };
+
 void func_80066E40(void) // 0x80066E40
 {
     DrawSync(SyncMode_Wait);
@@ -6925,10 +6929,6 @@ void func_80066E7C(void) // 0x80066E7C
     LoadImage(&D_80028A20, FS_BUFFER_3);
     DrawSync(SyncMode_Wait);
 }
-
-INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", hack_D_80028A18_fix);
-
-INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", D_80028A20);
 
 void GameState_MapScreen_Update(void) // 0x80066EB0
 {
@@ -7834,6 +7834,10 @@ bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u
     return true;
 }
 
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", D_80028B2C);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", D_80028B34);
+
 INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_80055028", func_800692A4); // 0x800692A4
 
 void func_800697EC(void) // 0x800697EC
@@ -7872,7 +7876,7 @@ void func_80069860(s32 arg0, s32 arg1, s_func_8006F8FC* arg2) // 0x80069860
 
     D_800C4478.field_2 = 0;
 
-    for (ptr = arg2; !(ptr->endOfArray_0_0 & 1); ptr++)
+    for (ptr = arg2; !ptr->endOfArray_0_0; ptr++)
     {
         minX = FP_TO(ptr->posX_0_1, Q12_SHIFT);
         maxX = FP_TO(ptr->posX_0_1 + ptr->sizeX_0_21, Q12_SHIFT);
@@ -7985,10 +7989,6 @@ s32 func_80069B24(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0
     SetSp(var0);
     return var1; 
 }
-
-INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", D_80028B2C);
-
-INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", D_80028B34);
 
 s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 arg4) // 0x80069BA8
 {
@@ -11802,4 +11802,5 @@ const s_AnimInfo D_80028B94[] = {
 /* 149 */ { Anim_Update0, ANIM_STATUS(36, true), false, ANIM_STATUS(36, true), { Q12(20.0f) }, 574, 579 }
 };
 
+// Unused data?
 INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", D_800294F4);

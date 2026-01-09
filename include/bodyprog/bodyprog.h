@@ -1164,7 +1164,7 @@ STATIC_ASSERT_SIZEOF(s_WorldObject, 16);
 
 typedef struct
 {
-    s32 endOfArray_0_0 : 1; // End of array marker.
+    u8 endOfArray_0_0 : 1; // End of array marker.
     s32 posX_0_1  : 10; // X
     s32 posZ_0_11 : 10; // Z
     u32 sizeX_0_21 : 4; // X size
