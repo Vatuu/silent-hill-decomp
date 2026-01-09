@@ -660,12 +660,12 @@ reset: clean
 	rm -rf $(LINKER_DIR)
 
 clean-root:
-	rm -rf $(BUILD_BASE_DIR)
+	rm -rf $(BUILD_DIR)
 	rm -rf $(PERMUTER_DIR)
 
 reset-root: clean-root
-	rm -rf $(ASM_BASE_DIR)
-	rm -rf $(LINKER_BASE_DIR)
+	rm -rf $(ASM_DIR)
+	rm -rf $(LINKER_DIR)
 
 # Rules - Misc.
 

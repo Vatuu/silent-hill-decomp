@@ -1,6 +1,8 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+#include "version.h"
+
 #include "event_flags.h"
 #include "gpu.h"
 #include "types.h"

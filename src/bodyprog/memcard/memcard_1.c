@@ -1171,7 +1171,7 @@ void Savegame_FilenameGenerate(char* dest, s32 saveIdx) // 0x80030000
     char buf[3];
 
     strcpy(dest, "BA");
-    strcat(dest, "SLUS-00707");
+    strcat(dest, VERSION_SERIAL);
     strcat(dest, "SILENT");
 
     buf[0] = '0' + (saveIdx / 10);
@@ -1198,8 +1198,14 @@ void Savegame_SaveBlockInit(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveId
     saveIdxStr[1] += (saveIdx + 1) / 10;
     saveIdxStr[3] += (saveIdx + 1) % 10;
 
+#if defined(VERSION_NTSC)
     strcpy(saveBlock->titleNameShiftJis_4, "ＳＩＬＥＮＴ　ＨＩＬＬ");
     strcat(saveBlock->titleNameShiftJis_4, "　　ＦＩＬＥ");
+#elif defined(VERSION_NTSCJ)
+    strcpy(saveBlock->titleNameShiftJis_4, "サイレントヒル");
+    strcat(saveBlock->titleNameShiftJis_4, "　ファイル");
+#endif
+
     strcat(saveBlock->titleNameShiftJis_4, saveIdxStr);
 
     bzero(saveBlock->field_44, 0x1C);
