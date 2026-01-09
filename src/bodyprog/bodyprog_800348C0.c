@@ -21,9 +21,9 @@
 
 const s16 rodataPad_800251FC = 0;
 
-void func_800348C0(void) // 0x800348C0
+void Anim_CharaTypeAnimInfoClear(void) // 0x800348C0
 {
-    bzero(&g_InitCharaDataAnimInfo[1], 0x48);
+    bzero(&g_CharaTypeAnimInfo[1], 72);
 }
 
 void GameState_LoadScreen_Update(void) // 0x800348E8
@@ -221,7 +221,7 @@ void GameFs_MapStartup(void) // 0x80034964
                     AreaLoad_TransitionSound();
                 }
 
-                func_8002E830(); // Likely close the access to memory card.
+                Savegame_CardDisable();
                 g_GameWork.gameStateStep_598[0]++;
             }
             break;
@@ -283,8 +283,8 @@ void Game_NpcInit(void) // 0x80034F18
     }
 
     Game_NpcClear();
-    func_80037F24(false);
-    func_80037334();
+    Game_NpcRoomInitSpawn(false);
+    Game_PlayerHeightUpdate();
 }
 
 void Game_InGameInit(void) // 0x80034FB8
@@ -297,7 +297,7 @@ void Game_InGameInit(void) // 0x80034FB8
 
     vcSetCameraUseWarp(&g_SysWork.playerWork_4C.player_0.position_18, g_SysWork.cameraAngleY_237A);
     func_80040004(&g_MapOverlayHeader);
-    func_80035B58(0);
+    Gfx_MapEffectsEnviromentSet(0);
     WorldGfx_CharaModelProcessAllLoads();
     func_8003EBA0();
 
@@ -310,8 +310,8 @@ void Game_InGameInit(void) // 0x80034FB8
     func_8005E650(mapOvlId);
     func_80037124();
     func_8007E8C0();
-    func_80037F24(false);
-    func_80037334();
+    Game_NpcRoomInitSpawn(false);
+    Game_PlayerHeightUpdate();
     func_8003569C();
     func_8007EBBC();
     GameFs_Tim00TIMLoad();
@@ -330,7 +330,7 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 
     difficulty = CLAMP(difficulty, GameDifficulty_Easy, GameDifficulty_Hard);
 
-    var = g_SavegamePtr->field_B0;
+    var = g_SavegamePtr->ovlEnemiesState_B0;
 
     g_SavegamePtr->gameDifficulty_260 = difficulty;
     g_SavegamePtr->paperMapIdx_A9     = PaperMapIdx_OldTown;
@@ -363,8 +363,8 @@ void Game_PlayerInit(void) // 0x80035178
         Game_TurnFlashlightOn();
     }
 
-    g_InitCharaDataAnimInfo[0].animBufferSize2_10 = 0x2E630;
-    g_InitCharaDataAnimInfo[0].animBufferSize1_C  = 0x2E630;
+    g_CharaTypeAnimInfo[0].animBufferSize2_10 = 0x2E630;
+    g_CharaTypeAnimInfo[0].animBufferSize1_C  = 0x2E630;
     func_8007E5AC();
 }
 
@@ -400,8 +400,8 @@ bool func_8003528C(s32 charaDataAnimInfoIdx0, s32 charaDataAnimInfoIdx1) // 0x80
     s_CharaAnimDataInfo* animDataInfo0;
     s_CharaAnimDataInfo* animDataInfo1;
 
-    animDataInfo0 = &g_InitCharaDataAnimInfo[charaDataAnimInfoIdx0];
-    animDataInfo1 = &g_InitCharaDataAnimInfo[charaDataAnimInfoIdx1];
+    animDataInfo0 = &g_CharaTypeAnimInfo[charaDataAnimInfoIdx0];
+    animDataInfo1 = &g_CharaTypeAnimInfo[charaDataAnimInfoIdx1];
     tempField_4   = animDataInfo0->animFile0_4;
     tempField_8   = animDataInfo1->animFile1_8;
 
@@ -420,7 +420,7 @@ s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId) // 0x800352F8
 
     for (i = 1; (i < GROUP_CHARA_COUNT); i++)
     {
-        if (g_InitCharaDataAnimInfo[i].charaId1_1 == charaId)
+        if (g_CharaTypeAnimInfo[i].charaId1_1 == charaId)
         {
             return i;
         }
@@ -437,7 +437,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
     s_CharaAnimDataInfo* npcAnimDataInfo;
 
     localAnimFile    = animFile;
-    initAnimDataInfo = &g_InitCharaDataAnimInfo[idx];
+    initAnimDataInfo = &g_CharaTypeAnimInfo[idx];
 
     if (charaId == Chara_None)
     {
@@ -450,7 +450,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
         localAnimFile = npcAnimDataInfo->animFile0_4 + npcAnimDataInfo->animBufferSize1_C;
     }
 
-    // If the target character ID matches with the selected element from `g_InitCharaDataAnimInfo`
+    // If the target character ID matches with the selected element from `g_CharaTypeAnimInfo`
     // then it ensures the animation buffer pointer matches with the previously estimated one, but
     // if the estimated pointer is in a position behind of the currently saved one then it moves
     // data to the position of the estimated pointer.
@@ -469,7 +469,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
         {
             initAnimDataInfo->animFile0_4 = localAnimFile;
 
-            Mem_Move32(localAnimFile, g_InitCharaDataAnimInfo[idx].animFile1_8, g_InitCharaDataAnimInfo[idx].animBufferSize2_10);
+            Mem_Move32(localAnimFile, g_CharaTypeAnimInfo[idx].animFile1_8, g_CharaTypeAnimInfo[idx].animBufferSize2_10);
             func_80035560(idx, charaId, localAnimFile, coord);
             return;
         }
@@ -487,7 +487,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
 
     if (i > 0)
     {
-        Mem_Move32(g_InitCharaDataAnimInfo[idx].animFile0_4, g_InitCharaDataAnimInfo[i].animFile1_8, g_InitCharaDataAnimInfo[i].animBufferSize2_10);
+        Mem_Move32(g_CharaTypeAnimInfo[idx].animFile0_4, g_CharaTypeAnimInfo[i].animFile1_8, g_CharaTypeAnimInfo[i].animBufferSize2_10);
         func_80035560(idx, charaId, initAnimDataInfo->animFile0_4, coord);
     }
     else
@@ -497,9 +497,9 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
 
     for (i = 1; i < GROUP_CHARA_COUNT; i++)
     {
-        if (i != idx && g_InitCharaDataAnimInfo[i].charaId1_1 != Chara_None && func_8003528C(idx, i) != false)
+        if (i != idx && g_CharaTypeAnimInfo[i].charaId1_1 != Chara_None && func_8003528C(idx, i) != false)
         {
-            bzero(&g_InitCharaDataAnimInfo[i], sizeof(s_CharaAnimDataInfo));
+            bzero(&g_CharaTypeAnimInfo[i], sizeof(s_CharaAnimDataInfo));
         }
     }
 }
@@ -511,7 +511,7 @@ void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
     s_CharaAnimDataInfo* animDataInfo;
 
     localCoord   = coord;
-    animDataInfo = &g_InitCharaDataAnimInfo[idx];
+    animDataInfo = &g_CharaTypeAnimInfo[idx];
 
     if (localCoord == NULL)
     {
@@ -521,8 +521,8 @@ void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
         }
         else if (idx >= 2)
         {
-            idx0        = g_InitCharaDataAnimInfo[idx - 1].animFile1_8->boneCount_6;
-            localCoord  = g_InitCharaDataAnimInfo[idx - 1].npcCoords_14;
+            idx0        = g_CharaTypeAnimInfo[idx - 1].animFile1_8->boneCount_6;
+            localCoord  = g_CharaTypeAnimInfo[idx - 1].npcCoords_14;
             localCoord += idx0 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
@@ -553,9 +553,9 @@ void func_8003569C(void) // 0x8003569C
     {
         if (g_MapOverlayHeader.charaGroupIds_248[i] != Chara_None)
         {
-            coord    = g_InitCharaDataAnimInfo[i].npcCoords_14;
-            animFile = g_InitCharaDataAnimInfo[i + 1].animFile1_8;
-            coord   += g_InitCharaDataAnimInfo[i].animFile1_8->boneCount_6 + 1;
+            coord    = g_CharaTypeAnimInfo[i].npcCoords_14;
+            animFile = g_CharaTypeAnimInfo[i + 1].animFile1_8;
+            coord   += g_CharaTypeAnimInfo[i].animFile1_8->boneCount_6 + 1;
 
             // Check for end of `g_SysWork.npcCoords_FC0` array.
             if ((&coord[animFile->boneCount_6] + 1) >= &g_SysWork.npcCoords_FC0[NPC_BONE_COUNT_MAX])
@@ -563,7 +563,7 @@ void func_8003569C(void) // 0x8003569C
                 coord = g_MapOverlayHeader.field_28;
             }
 
-            g_InitCharaDataAnimInfo[i + 1].npcCoords_14 = coord;
+            g_CharaTypeAnimInfo[i + 1].npcCoords_14 = coord;
             Anim_BoneInit(animFile, coord);
         }
     }
@@ -741,7 +741,7 @@ void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0
     Math_RotMatrixZxyNegGte(rot, (MATRIX*)&coord->coord);
 }
 
-void func_80035B58(s32 arg0) // 0x80035B58
+void Gfx_MapEffectsEnviromentSet(s32 arg0) // 0x80035B58
 {
     func_8003EBF4(&g_MapOverlayHeader);
     g_MapOverlayHeader.func_16C(g_MapOverlayHeader.field_17, g_MapOverlayHeader.field_16);
@@ -806,7 +806,7 @@ void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
 
     Anim_Update1(model, (s_Skeleton*)FS_BUFFER_0, boneCoords, &D_800A998C);
     vcMoveAndSetCamera(true, false, false, false, false, false, false, false);
-    func_8003F170();
+    Gfx_FlashlightUpdate();
     func_8003DA9C(Chara_Harry, boneCoords, 1, g_SysWork.playerWork_4C.player_0.timer_C6, 0);
 }
 
@@ -1126,7 +1126,7 @@ void func_8003640C(s32 arg0) // 0x8003640C
 }
 
 // ========================================
-// UNKNOWN
+// CURRENT ROOM RELATED
 // ========================================
 
 void Savegame_MapRoomIdxSet(void) // 0x80036420
@@ -1160,6 +1160,10 @@ s32 func_80036498(void) // 80036498
     return !(g_SavegamePtr->mapRoomIdx_A5 > g_MapOverlayHeader.field_8);
 }
 
+// ========================================
+// UNKNOWN
+// ========================================
+
 u32 func_800364BC(void) // 0x800364BC
 {
     u32 var0;
@@ -1192,6 +1196,10 @@ void func_8003652C(void) // 0x8003652C
 
     LoadImage(&rect, VALS);
 }
+
+// ========================================
+// MAP MESSAGE DISPLAY
+// ========================================
 
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
 {
@@ -1503,6 +1511,10 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
     return mapMsgCode;
 }
 
+// ========================================
+// UNKNOWN
+// ========================================
+
 const s32 RodataPad_800252B8 = 0;
 
 /** @brief SFX pairs.
@@ -1537,7 +1549,7 @@ s_AreaLoadSfx const SfxPairs[25] = {
     { Sfx_Unk1487, Sfx_Base }
 };
 
-// These are referenced by pointers at `0x800A99E8`, which are then used by `func_800D3EAC`.
+// These are referenced by pointers at `0x800A99E8`, which are then used by `Map_WorldObjectsInit`.
 // Maybe meant to be separate .c file with .h externs.
 const char g_80025320[] = "SHOT_NEA";
 const char g_8002532C[] = "SHELL_NE";
@@ -1689,12 +1701,20 @@ void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
     } 
 }
 
+// ========================================
+// UNKNOWN
+// ========================================
+
 void func_80037124(void) // 0x80037124
 {
     g_MapMsg_Select.maxIdx_0 = NO_VALUE;
     func_8003652C();
     DrawSync(SyncMode_Wait);
 }
+
+// ========================================
+// RADIO SFX
+// ========================================
 
 void func_80037154(void) // 0x80037154
 {
@@ -1723,7 +1743,11 @@ void Game_RadioSoundStop(void) // 0x80037188
     }
 }
 
-void Chara_PositionUpdateFromParams(s_MapPoint2d* mapPoint) // 0x800371E8
+// ========================================
+// COLLISIONS RELATED?
+// ========================================
+
+void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
 {
     s32 rotY;
 
@@ -1757,11 +1781,11 @@ void Chara_PositionUpdateFromParams(s_MapPoint2d* mapPoint) // 0x800371E8
     Savegame_MapRoomIdxSet();
 }
 
-void func_80037334(void) // 0x80037334
+void Game_PlayerHeightUpdate(void) // 0x80037334
 {
     s_Collision coll;
 
-    if (g_MapOverlayHeader.worldObjectsUpdate_40 != 0)
+    if (g_MapOverlayHeader.worldObjectsUpdate_40 != NULL)
     {
         g_MapOverlayHeader.worldObjectsUpdate_40();
     }
@@ -2142,11 +2166,15 @@ bool Event_CheckTouchObb(s_MapPoint2d* mapPoint) // 0x80037C5C
     }
 }
 
+// ========================================
+// NPC RELATED - UPDATE?
+// ========================================
+
 void func_80037DC4(s_SubCharacter* chara) // 0x80037DC4
 {
     if (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || Rng_RandQ12() >= FP_ANGLE(108.0f))
     {
-        g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4] &= ~(1 << chara->field_40);
+        g_SavegamePtr->ovlEnemiesState_B0[g_SavegamePtr->mapOverlayId_A4] &= ~(1 << chara->field_40);
     }
 }
 
@@ -2181,23 +2209,23 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
     }
 }
 
-void func_80037F24(bool cond) // 0x80037F24
+void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 {
     s_Collision     coll;
     s32             charaId0;
     s32             charaId1;
     s32             npcIdx;
     s32             i;
-    s32*            temp_a0;
+    s32*            ovlEnemiesStatePtr;
     s_MapPoint2d*   curCharaSpawn;
     s_SubCharacter* chara;
     VECTOR3*        pos;
 
-    npcIdx        = 0;
-    curCharaSpawn = g_MapOverlayHeader.charaSpawns_24C[0];
-    temp_a0       = &g_SavegamePtr->field_B0[g_SavegamePtr->mapOverlayId_A4];
+    npcIdx             = 0;
+    curCharaSpawn      = g_MapOverlayHeader.charaSpawns_24C[0];
+    ovlEnemiesStatePtr = &g_SavegamePtr->ovlEnemiesState_B0[g_SavegamePtr->mapOverlayId_A4];
 
-    if (!cond)
+    if (cond == false)
     {
         func_80037154();
 
@@ -2219,7 +2247,7 @@ void func_80037F24(bool cond) // 0x80037F24
 
         pos = (VECTOR3*)curCharaSpawn;
 
-        if (!(g_SysWork.flags_22A4 & SysFlag2_4) && HAS_FLAG(temp_a0, i) && !HAS_FLAG(g_SysWork.field_228C, i) &&
+        if (!(g_SysWork.flags_22A4 & SysFlag2_4) && HAS_FLAG(ovlEnemiesStatePtr, i) && !HAS_FLAG(g_SysWork.field_228C, i) &&
             curCharaSpawn->data.spawnInfo.flags_6 != 0 && g_SavegamePtr->gameDifficulty_260 >= curCharaSpawn->data.spawnInfo.field_7_0 &&
             func_8008F914(curCharaSpawn->positionX_0, curCharaSpawn->positionZ_8) &&
             !Math_Distance2dCheck(&g_SysWork.playerWork_4C.player_0.position_18, pos, Q12(22.0f)) &&
@@ -2433,13 +2461,13 @@ void func_80038354(void) // 0x80038354
             npc->model_0.anim_4.flags_2 |= AnimFlag_Unlocked;
 
             tempAnimDataInfoIdx = g_CharaAnimInfoIdxs[npc->model_0.charaId_0];
-            coord               = g_InitCharaDataAnimInfo[tempAnimDataInfoIdx].npcCoords_14;
+            coord               = g_CharaTypeAnimInfo[tempAnimDataInfoIdx].npcCoords_14;
 
             func_8008A384(npc);
             func_80037E40(npc);
             func_8003BD48(npc);
 
-            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model_0.charaId_0](npc, g_InitCharaDataAnimInfo[tempAnimDataInfoIdx].animFile1_8, coord);
+            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model_0.charaId_0](npc, g_CharaTypeAnimInfo[tempAnimDataInfoIdx].animFile1_8, coord);
 
             func_8003BE28();
             func_80037E78(npc);
@@ -2695,7 +2723,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
         Player_Update(player, FS_BUFFER_0, g_SysWork.playerBoneCoords_890);
 
         Demo_DemoRandSeedRestore();
-        func_8003F170();
+        Gfx_FlashlightUpdate();
 
         if (g_SavegamePtr->mapOverlayId_A4 != MapOverlayId_MAP7_S03)
         {
@@ -2713,7 +2741,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
         }
 
         Demo_DemoRandSeedRestore();
-        func_80037F24(true);
+        Game_NpcRoomInitSpawn(true);
         func_80038354();
         func_8005E89C();
         Ipd_CloseRangeChunksInit();
@@ -3211,7 +3239,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
 
 void AreaLoad_UpdatePlayerPosition(void) // 0x80039F30
 {
-    Chara_PositionUpdateFromParams(&D_800BCDB0);
+    Chara_PositionSet(&D_800BCDB0);
 }
 
 void AreaLoad_TransitionSound(void) // 0x80039F54

@@ -62,7 +62,7 @@ segments:
       # .rodata section
       - [0x800, .rodata, main]
       - [0x808, .rodata, fsqueue_3]
-      - [0x814, pad] # Extra padding for some reason.
+      - [0x814, pad]
       - [0x818, .rodata, fsqueue_2] # jtbl
       - [0x830, lib, libspu, spu, .rdata]
       - [0x880, lib, libetc, vsync, .rdata]
@@ -126,7 +126,7 @@ segments:
       - [0xB90C, lib, libapi, c73] # GPU_cw
 
       # .data section
-      - [0xB91C, .data, fileinfo]
+      - [0xB91C,  .data, fileinfo]
       - [0x11ADC, .data, main]
       - [0x11B4C, lib, libspu, s_ini, .data]
       - [0x11BCC, lib, libspu, spu, .data]
@@ -146,10 +146,10 @@ segments:
 
       # .sdata section
       - [0x133B0, .sdata, fileinfo]
-      - [0x13468, pad, fileinfo]
+      - [0x13468, pad]
       - [0x1346C, sdata, start]
       - [0x13474, .sdata, main]
-      - [0x13488, pad, main]
+      - [0x13488, pad]
       - [0x13490, .sdata, rng]
 
       # .sbss section
@@ -159,12 +159,12 @@ segments:
       - [0x13498, .bss, fsqueue_1]
       - [0x138C0, .bss, fsmem]
       - [0x139A0, lib, libspu, spu, .bss]
-      - [0x139B4, bss, psyq_unk]
+      - [0x139B4, pad]
       - [0x139B8, lib, libcd, event, .bss]
       - [0x139B8, lib, libcd, sys, .bss]
       - [0x139B8, lib, libcd, bios, .bss]
       - [0x139B8, lib, libcd, cdread, .bss]
-      - [0x139EC, bss, psyq_unk2]
+      - [0x139EC, pad]
       - [0x139F0, lib, libgpu, tmd, .bss]
       - [0x13A10, lib, libgpu, sys, .bss] # Resized sys.o .bss section to 0x5F0.
   - [0x14000]

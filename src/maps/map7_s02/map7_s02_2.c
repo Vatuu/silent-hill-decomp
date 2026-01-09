@@ -268,7 +268,7 @@ void func_800DA248(void) // 0x800DA248
 
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
             D_800EB6B4 = 0;
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
 
             Chara_Load(0, Chara_Lisa, g_SysWork.npcCoords_FC0, CHARA_FORCE_FREE_ALL, NULL, NULL);
 
@@ -576,7 +576,7 @@ void func_800DAA4C(void) // 0x800DAA4C
             Game_TurnFlashlightOn();
             sharedFunc_800D2EF4_0_s00();
             func_8003D01C();
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
             SysWork_StateStepIncrementAfterFade(0, false, false, Q12(1.0f), false);
             break;
     }
@@ -801,7 +801,7 @@ void func_800DBB34(void) // 0x800DBB34
     {
         case 0:
             Player_ControlFreeze();
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_GhostChildAlessa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
 
             g_SysWork.field_30 = 20;
@@ -916,7 +916,7 @@ void func_800DBB34(void) // 0x800DBB34
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, AnimFlag_Visible);
             func_8008D448();
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
             break;
     }
 }
@@ -1398,7 +1398,7 @@ void func_800DD2D4(void) // 0x800DD2D4
             g_SysWork.field_30    = 20;
             g_SysWork.flags_22A4 |= SysFlag2_3;
 
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_Bloodsucker, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 144, false);
 
@@ -1728,7 +1728,7 @@ void func_800DF21C(void) // 0x800DF21C
 
             D_800EB6B4 = 0;
 
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_GhostChildAlessa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_FsImageCalc(&charaTex, Chara_Dahlia, 2);
             Chara_Load(1, Chara_Dahlia, &g_SysWork.npcCoords_FC0[30], 0, (s_LmHeader*)0x8019E600, &charaTex);
@@ -1826,7 +1826,7 @@ void func_800DF21C(void) // 0x800DF21C
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             func_80088F94(&g_SysWork.npcs_1A0[1], 0, 0);
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
             func_8008D448();
             func_8003EBA0();
 

@@ -1814,7 +1814,7 @@ void Savegame_ScreenLogic(void) // 0x801E649C
                 {
                     if (D_800BCD38 == gameStateStep)
                     {
-                        func_8002E830();
+                        Savegame_CardDisable();
                         Game_StateSetNext(GameState_InGame);
                     }
                     else
@@ -2026,7 +2026,7 @@ void Savegame_ContinueLogic(void) // 0x801E6F38
     switch (g_GameWork.gameStateStep_598[1])
     {
         case ContinueState_0:
-            func_8002E830();
+            Savegame_CardDisable();
 
             D_800A97D7             = 1;
             g_GameWork.autosave_90 = g_GameWork.savegame_30C;

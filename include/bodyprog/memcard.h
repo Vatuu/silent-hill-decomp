@@ -199,7 +199,8 @@ extern s_MemCardInfo_BasicSaveInfo g_MemCard_2_BasicSaveInfo[CARD_DEVICE_FILE_CO
 
 extern s_MemCardInfo_BasicSaveInfo D_800B4580[CARD_DEVICE_FILE_COUNT];
 
-extern bool D_800B5480[2];
+/** @brief Defines if the game can use the memory card. */
+extern bool g_MemCardAvailibityStatus[2];
 
 extern s_CardWork g_CardWork; // 0x800B5488
 
@@ -263,7 +264,7 @@ bool Savegame_CardFilesAreAllUnused(s32 deviceId);
 
 void func_8002E7BC(void);
 
-void func_8002E830(void);
+void Savegame_CardDisable(void);
 
 void func_8002E85C(void);
 

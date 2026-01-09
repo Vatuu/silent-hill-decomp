@@ -201,7 +201,7 @@ void func_800D725C(void) // 0x800D725C
 
             DmsHeader_FixOffsets((s_DmsHeader*)FS_BUFFER_11);
             D_800E2C68 = 0;
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
 
             Chara_Load(0, Chara_Lisa, g_SysWork.npcCoords_FC0, CHARA_FORCE_FREE_ALL, NULL, NULL);
 
@@ -507,7 +507,7 @@ void func_800D7A60(void) // 0x800D7A60
             Game_TurnFlashlightOn();
             sharedFunc_800D2EF4_0_s00();
             func_8003D01C();
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
             SysWork_StateStepIncrementAfterFade(0, false, false, Q12(1.0f), false);
             break;
     }
@@ -2490,7 +2490,7 @@ void func_800DEDA4(void) // 0x800DEDA4
     {
         if (D_800A9945 != Chara_GhostChildAlessa || !func_80040B74(Chara_GhostChildAlessa))
         {
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_GhostChildAlessa, g_SysWork.npcCoords_FC0, CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
         }
@@ -2501,7 +2501,7 @@ void func_800DEDA4(void) // 0x800DEDA4
         {
             g_MapOverlayHeader.charaGroupIds_248[0] = Chara_PuppetNurse;
 
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcCoords_FC0, CHARA_FORCE_FREE_ALL, NULL, NULL);
             Chara_ProcessLoads();
         }
@@ -2510,7 +2510,7 @@ void func_800DEDA4(void) // 0x800DEDA4
     {
         g_MapOverlayHeader.charaGroupIds_248[0] = Chara_PuppetNurse;
 
-        func_800348C0();
+        Anim_CharaTypeAnimInfoClear();
         Chara_Load(0, Chara_PuppetNurse, g_SysWork.npcCoords_FC0, CHARA_FORCE_FREE_ALL, NULL, NULL);
         Chara_ProcessLoads();
     }

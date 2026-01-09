@@ -4594,7 +4594,7 @@ void func_8005E89C(void) // 0x8005E89C
         g_MapOverlayHeader.func_A8();
     }
 
-    if (g_SysWork.field_2388.field_16 != 0 && g_SysWork.sysState_8 == 0)
+    if (g_SysWork.field_2388.isFlashlightNotAvailable_16 != 0 && g_SysWork.sysState_8 == 0)
     {
         Game_TurnFlashlightOff();
     }
@@ -5756,12 +5756,12 @@ void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
         return;
     }
 
-    g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0            = arg0->vx;
-    g_MapOverlayHeader.unkTable1_4C[idx].vy_8     = arg0->vy;
-    g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4            = arg0->vz;
-    g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2     = arg1;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0        = arg0->vx;
+    g_MapOverlayHeader.unkTable1_4C[idx].vy_8                = arg0->vy;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4        = arg0->vz;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 = arg1;
     g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 = var;
-    g_MapOverlayHeader.unkTable1_4C[idx].field_B  = Rng_GenerateUInt(0, 3);
+    g_MapOverlayHeader.unkTable1_4C[idx].field_B             = Rng_GenerateUInt(0, 3);
     g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = 6;
     g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0    = arg3 * Q12(5.0f);
 }

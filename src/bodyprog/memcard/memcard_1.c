@@ -11,7 +11,7 @@
 s_MemCardInfo_BasicSaveInfo g_MemCard_1_BasicSaveInfo[CARD_DEVICE_FILE_COUNT];
 s_MemCardInfo_BasicSaveInfo g_MemCard_2_BasicSaveInfo[CARD_DEVICE_FILE_COUNT];
 s_MemCardInfo_BasicSaveInfo D_800B4580[CARD_DEVICE_FILE_COUNT];
-bool D_800B5480[2]; // @hack
+bool g_MemCardAvailibityStatus[2]; // @hack
 s_CardWork g_CardWork;
 s_800B5508 D_800B5508;
 
@@ -71,7 +71,7 @@ void Savegame_CardCleanInit(void) // 0x8002E630
 
     Savegame_CardInit();
 
-    D_800B5480[0] = false;
+    g_MemCardAvailibityStatus[0] = false;
 
     // Clear arrays.
     bzero(&D_800B5508, sizeof(s_800B5508));
@@ -144,12 +144,12 @@ bool Savegame_CardFilesAreAllUnused(s32 deviceId) // 0x8002E76C
 
 void func_8002E7BC(void) // 0x8002E7BC
 {
-    if (D_800B5480[0] == true)
+    if (g_MemCardAvailibityStatus[0] == true)
     {
         return;
     }
 
-    D_800B5480[0] = true;
+    g_MemCardAvailibityStatus[0] = true;
     func_8002E8E4();
     Savegame_CardEventsInit();
 
@@ -157,11 +157,11 @@ void func_8002E7BC(void) // 0x8002E7BC
     s_800B55E8_Init(&D_800B5508.field_E0[1], 0, 0, 0, 0, 0, CardResult_NotConnected); // `D_800B5600`
 }
 
-void func_8002E830(void) // 0x8002E830
+void Savegame_CardDisable(void) // 0x8002E830
 {
-    if (D_800B5480[0])
+    if (g_MemCardAvailibityStatus[0] != false)
     {
-        D_800B5480[0] = false;
+        g_MemCardAvailibityStatus[0] = false;
         Savegame_CardEventsClose();
     }
 }
@@ -313,7 +313,7 @@ void func_8002EB88(void) // 0x8002EB88
 {
     s_800B55E8* ptr;
 
-    if (!D_800B5480[0])
+    if (g_MemCardAvailibityStatus[0] == false)
     {
         return;
     }

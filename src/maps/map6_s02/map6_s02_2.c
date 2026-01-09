@@ -541,7 +541,7 @@ void func_800D0500(void) // 0x800D0500
         case 1:
             Sd_SfxStop(Sfx_Unk1467);
             Fs_QueueWaitForEmpty();
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
             Fs_QueueStartReadTim(FILE_TIM_UFO2_TIM, FS_BUFFER_1, &D_800D3B44[2]);
             Fs_QueueStartReadTim(FILE_TIM_UFO3_TIM, FS_BUFFER_1, &D_800D3B44[3]);
             Fs_QueueStartReadTim(FILE_TIM_UFO7_TIM, FS_BUFFER_1, &D_800D3B44[4]);

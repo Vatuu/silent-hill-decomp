@@ -183,6 +183,7 @@ Savegame_CardCleanInit                      = 0x8002E630; // type:func
 Savegame_GameMemDataClear                   = 0x8002E6E4; // type:func
 Savegame_CardFileUsageClear                 = 0x8002E730; // type:func
 Savegame_CardFilesAreAllUnused              = 0x8002E76C; // type:func
+Savegame_CardDisable                        = 0x8002E830;
 Savegame_CardFilesGetUsageBits              = 0x8002E9A0; // type:func
 Savegame_MetadataGet                        = 0x8002E9EC; // type:func
 Savegame_CardFileUsageCount                 = 0x8002EA28; // type:func
@@ -314,6 +315,7 @@ ControllerData_AnalogToDigital              = 0x80034670; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x00FD60   VA: 0x800348C0   subsegment: c, bodyprog_800348C0
 //--------------------------------------------------------------------
+Anim_CharaTypeAnimInfoClear                 = 0x800348C0;
 GameState_LoadScreen_Update                 = 0x800348E8; // type:func
 GameFs_MapStartup                           = 0x80034964; // type:func
 Gfx_LoadingScreenDraw                       = 0x80034E58; // type:func
@@ -334,6 +336,7 @@ Bgm_BgmChannelSet                           = 0x80035924;
 func_8003596C                               = 0x8003596C;
 Sd_AmbientSfxInit                           = 0x8003599C;
 Math_MatrixTransform                        = 0x80035B04; // type:func
+Gfx_MapEffectsEnviromentSet                 = 0x80035B58;
 Gfx_LoadingScreen_BackgroundTexture         = 0x80035BBC; // type:func
 Gfx_LoadingScreen_PlayerRun                 = 0x80035BE0; // type:func
 Bgm_MuteBgmLayers                           = 0x80035E1C;
@@ -341,12 +344,14 @@ Savegame_MapRoomIdxSet                      = 0x80036420; // type:func
 Gfx_MapMsg_Draw                             = 0x800365B8; // type:func
 Gfx_MapMsg_SelectionUpdate                  = 0x80036B5C; // type:func
 Game_RadioSoundStop                         = 0x80037188;
-Chara_PositionUpdateFromParams              = 0x800371E8; // type:func
+Chara_PositionSet                           = 0x800371E8; // type:func
+Game_PlayerHeightUpdate                     = 0x80037334;
 Event_ItemTriggersClear.0                   = 0x80037388; // filename:Event_ItemTriggersClear type:func - Compiler adds suffix to end of nested func names.
 Event_Update                                = 0x800373CC; // type:func
 Event_CheckTouchFacing                      = 0x800378D4; // type:func
 Event_CheckTouchObbFacing                   = 0x80037A4C; // type:func
 Event_CheckTouchObb                         = 0x80037C5C; // type:func
+Game_NpcRoomInitSpawn                       = 0x80037F24;
 func_800382B0.0                             = 0x800382B0; // filename:func_800382B0 type:func - Compiler adds suffix to end of nested func names.
 func_800382EC.0                             = 0x800382EC; // filename:func_800382EC type:func - Compiler adds suffix to end of nested func names.
 Math_Distance2dCheck                        = 0x80038A6C; // type:func
@@ -422,6 +427,7 @@ Game_TurnFlashlightOn                       = 0x8003ECBC; // type:func
 Game_TurnFlashlightOff                      = 0x8003ECE4; // type:func
 Game_FlashlightToggle                       = 0x8003ED08; // type:func
 Game_FlashlightIsOn                         = 0x8003ED64; // type:func
+Gfx_FlashlightUpdate                        = 0x8003F170;
 Math_WeightedAverageGet                     = 0x8003F7E4; // type:func
 
 //---------------------------------------------------------------
@@ -2187,7 +2193,7 @@ g_BgmTaskLoadCmds                           = 0x800A9804;
 g_BgmChannelSetTaskCmds                     = 0x800A9858; // type:u16
 g_AmbientVabTaskLoadCmds                    = 0x800A98AC;
 g_CharaAnimInfoIdxs                         = 0x800A98FC;
-g_InitCharaDataAnimInfo                     = 0x800A992C;
+g_CharaTypeAnimInfo                         = 0x800A992C;
 D_800A998C                                  = 0x800A998C; // type:AnimInfo size:0x10
 D_800A99A0                                  = 0x800A99A0;
 g_Sd_BgmLayerLimits                         = 0x800A99A4;
@@ -2594,6 +2600,7 @@ chantype                                    = 0x800B25C8; // type:s32 static for
 //-----------------------------------------------------------------------
 g_MemCard_1_BasicSaveInfo                   = 0x800B2780;
 g_MemCard_2_BasicSaveInfo                   = 0x800B3680;
+g_MemCardAvailibityStatus                   = 0x800B5480;
 // D_800B4580                                  = 0x800B4580;
 g_CardWork                                  = 0x800B5488; // size:0x80
 D_800B5508                                  = 0x800B5508; // size:0x718

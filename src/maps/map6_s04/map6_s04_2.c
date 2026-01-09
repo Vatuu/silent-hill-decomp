@@ -343,7 +343,7 @@ void func_800E1D50(void) // 0x800E1D50
             g_SysWork.field_236C = NULL;
             g_SysWork.field_2378 = Q12(1.0f);
 
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_MonsterCybil, g_SysWork.npcCoords_FC0, -1, NULL, NULL);
 
             g_SysWork.field_30 = 20;
@@ -620,7 +620,7 @@ void func_800E2724(void) // 0x800E2724
 
             D_800A9938 = 0x38630;
 
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
 
             // Load Monster Cybil character.
             Chara_Load(0, Chara_MonsterCybil, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
@@ -1758,7 +1758,7 @@ void func_800E558C(void) // 0x800E558C
 
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
             Chara_Load(0, Chara_Alessa, &g_SysWork.npcCoords_FC0[0], CHARA_FORCE_FREE_ALL, NULL, NULL);
 
             D_800ED5AD = 2;

@@ -970,7 +970,11 @@ typedef struct _Savegame
     u8              equippedWeapon_AA;        /** `e_InventoryItemId` | Affects the visible player weapon model. */
     u8              inventorySlotCount_AB;    /** Item slots. */
     u32             itemToggleFlags_AC;       /** `e_ItemToggleFlags` */
-    s32             field_B0[45];             // Flags related to map points?
+    s32             ovlEnemiesState_B0[45];   /** Flags indicating the state of enemies in the current overlay.
+                                               * Each bit of an element represent the state of enemies. By default the game
+                                               * turn them all on (1), and as soon as the player fully kills an enemy, based on
+                                               * some currently unknown index value, a bit get turn off (0).
+                                               */
     s32             hasMapsFlags_164;         // See Sparagas' `HasMapsFlags` struct for details of every bit.
     u32             eventFlags_168[27];       // Can be accessed through `Savegame_EventFlagGet` / `Savegame_EventFlagSet`, only tested a few, but seems all are related to events and pick-up flags, grouped by location and not item types.
     s32             mapMarkingFlags_1D4[25];  // See Sparagas' `MapMarkingsFlags` struct for details of every bit.
@@ -1609,6 +1613,9 @@ typedef struct _SubCharacter
     s16      flags_3E;     /** `e_CharaFlags` */
     s8       field_40;     // In player: Index of the NPC attacking the player.
                            // In NPCs: Unknown.
+                           // Possibly `Game_NpcRoomInitSpawn` may have the answer, likely indicating
+                           // that is meant to be use for indicating the index of the NPC in
+                           // `s_Savegame::ovlEnemiesState_B0`.
     s8  attackReceived_41; // Packed weapon attack indicating what attack has been performed to the character. See `WEAPON_ATTACK`.
     s8  unk_42[2];         // Most likely padding.
     s_SubCharacter_44  field_44;
@@ -1700,13 +1707,15 @@ typedef struct
 {
     u_Unk0  field_0;
     q3_12   field_4; // FP alpha.
-    s16     field_6;
-    s16     field_8; // } World tint color.
-    s16     field_A; // }
-    s16     field_C; // }
+    s16     field_6; // Defines intensity of the world tint colors. q3_12?
+    s16     field_8; // R } World tint color. q3_12?
+    s16     field_A; // G }
+    s16     field_C; // B }
     u8      field_E; // Fog enabled if not set to 0, `func_8003F08C` checks for values 0/1/2/3.
+                     // Sets the transparent grey layer that overlay the characters and enviroment
+                     // to be displayed.
     s8      unk_F;
-    s32     field_10;
+    q19_12  fogDistance_10;
     CVECTOR fogColor_14;
     u8      field_18; // `bool`?
     CVECTOR field_19;
@@ -1735,8 +1744,8 @@ typedef struct
     s32             field_C; // }
     s32             field_10;
     u8              field_14;
-    u8              isFlashlightOn_15; /** `bool` */
-    u8              field_16;          /** `bool` */
+    u8              isFlashlightOn_15;           /** `bool` */
+    u8              isFlashlightNotAvailable_16; /** `bool` */
     s8              unk_17; // Most likely padding.
     q3_12           flashlightIntensity_18; // Alpha.
     u16             field_1A;
@@ -1744,8 +1753,8 @@ typedef struct
     s_StructUnk3    field_84[2];
     s_StructUnk3    field_EC[2];
     s_StructUnk3    field_154;
-} s_SysWork_2288;
-STATIC_ASSERT_SIZEOF(s_SysWork_2288, 392);
+} s_SysWork_2388;
+STATIC_ASSERT_SIZEOF(s_SysWork_2388, 392);
 
 /** @brief Main engine system workspace. Stores key engine data. */
 typedef struct _SysWork
@@ -1771,7 +1780,8 @@ typedef struct _SysWork
     s8              loadingScreenIdx_2281;
     s8              field_2282;    /** `e_EventParamUnkCutsceneState` */
     s8              field_2283;    // Index into `SfxPairs`.
-    u16             field_2284[4]; // Flags.
+    u16             field_2284[4]; // Flags. Flags for character types?
+                                   // Enabling a flag for larva stalkers causes them to die.
     s32             field_228C[1];
     s32             npcFlags_2290; // Flags related to NPCs. Each bit corresponds to `npcs_1A0` index.
     s8              unk_2294[4];   // Padding?
@@ -1807,7 +1817,7 @@ typedef struct _SysWork
     s16             field_237E;
     q19_12          cameraRadiusXz_2380;
     q19_12          cameraY_2384;
-    s_SysWork_2288  field_2388;
+    s_SysWork_2388  field_2388;
     s32             field_2510;
     s_SysWork_2514  field_2514;
     u8              unk_254C[508];

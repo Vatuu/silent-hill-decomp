@@ -278,6 +278,7 @@ typedef struct
     char pad[12];
 } s_func_8005B424;
 
+// Something related to enemies attacks.
 typedef struct
 {
     union
@@ -1461,7 +1462,7 @@ typedef struct _MapPoint2d
         {
             u32   mapIdx_4_0          : 5; /** `e_PaperMapIdx`? */
             u32   field_4_5           : 4;
-            u32   loadingScreenId_4_9 : 3; /** `e_LoadingScreenId`` */
+            u32   loadingScreenId_4_9 : 3; /** `e_LoadingScreenId` */
             u32   field_4_12          : 4;
             q24_8 rotationY_4_16      : 8;
             u32   field_4_24          : 8;
@@ -1691,7 +1692,7 @@ typedef struct _MapOverlayHeader
     s32*                   data_190;
     void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
     s8                     charaGroupIds_248[GROUP_CHARA_COUNT];                              /** `e_CharacterId` values where if `s_MapPoint2d::data.spawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
-    s_MapPoint2d           charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `func_80037F24`. */
+    s_MapPoint2d           charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     VC_ROAD_DATA           roadDataList_3CC[48];
     u32                    unk_84C[0x138];
     s_func_8006F8FC        field_D2C[200];
@@ -2187,7 +2188,7 @@ extern s32 D_800A9A24;
 /** Z. */
 extern s32 D_800A9A28;
 
-/** Loaded NPC types in memory and their `g_InitCharaDataAnimInfo` indices. */
+/** Loaded NPC types in memory and their `g_CharaTypeAnimInfo` indices. */
 extern s8 g_CharaAnimInfoIdxs[Chara_Count];
 
 extern s32 D_800A9EB0;
@@ -2212,7 +2213,7 @@ extern u16 g_BgmTaskLoadCmds[];
 extern u16 g_AmbientVabTaskLoadCmds[];
 
 /** @brief Stores a loaded character's animation data information. */
-extern s_CharaAnimDataInfo g_InitCharaDataAnimInfo[];
+extern s_CharaAnimDataInfo g_CharaTypeAnimInfo[];
 
 extern s32 D_800A9938;
 
@@ -2824,7 +2825,10 @@ void func_80032D1C(void);
 /** Bodyprog entrypoint. Called by `main`. */
 void MainLoop(void);
 
-void Chara_PositionUpdateFromParams(s_MapPoint2d* mapPoint);
+/** @brief Set player position.
+ * Used for setting the position of the player when transitioning in from rooms.
+ */
+void Chara_PositionSet(s_MapPoint2d* mapPoint);
 
 void func_8003943C(void);
 
@@ -2909,7 +2913,7 @@ void func_8003EF10(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData,
 
 q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 arg4, s_SysWork* sysWork);
 
-u32 func_8003F654(s_SysWork_2288* arg0);
+u32 func_8003F654(s_SysWork_2388* arg0);
 
 s32 func_8003F6F0(s32 arg0, s32 arg1, s32 arg2);
 
@@ -4127,7 +4131,7 @@ void GameFs_MapLoad(s32 mapIdx);
 
 bool func_8003528C(s32 idx0, s32 idx1);
 
-/** @brief Finds for the index of the character animation data in `g_InitCharaDataAnimInfo`.
+/** @brief Finds for the index of the character animation data in `g_CharaTypeAnimInfo`.
  *
  * @param charaId ID of the character for which to find the animation data.
  * @return Animation data index.
@@ -4137,7 +4141,7 @@ s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId);
 /** Allocates and adjust where is animation data allocated. */
 void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coords);
 
-/** Called by `Fs_QueuePostLoadAnm`. Assigns data to `g_InitCharaDataAnimInfo` and initializes NPC bones. */
+/** Called by `Fs_QueuePostLoadAnm`. Assigns data to `g_CharaTypeAnimInfo` and initializes NPC bones. */
 void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord);
 
 void func_8003569C(void);
@@ -4168,7 +4172,8 @@ void func_80035AC8(s32 idx);
  */
 void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
 
-void func_80035B58(s32 arg0);
+/** @brief Set environment effects. */
+void Gfx_MapEffectsEnviromentSet(s32 arg0);
 
 void func_80035B98(void);
 
@@ -4197,10 +4202,13 @@ void func_8003640C(s32 arg0);
 /** `Savegame_MapRoomIdxSet` */
 void Savegame_MapRoomIdxSet(void);
 
+/** @Unused */
 s32 func_8003647C(void);
 
+/** @Unused */
 s32 func_80036498(void);
 
+/** @Unused */
 u32 func_800364BC(void);
 
 void func_8003652C(void);
@@ -4209,6 +4217,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx);
 
 s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1);
 
+/** @Unused */
 void func_80036E48(u16* arg0, s16* arg1);
 
 void func_8003708C(s16* ptr0, u16* ptr1);
@@ -4221,7 +4230,7 @@ void func_80037154(void);
 void Game_RadioSoundStop(void);
 
 /** Finds the ground hight and warps the player to it? */
-void func_80037334(void);
+void Game_PlayerHeightUpdate(void);
 
 bool Event_CheckTouchFacing(s_MapPoint2d* mapPoint);
 
@@ -4277,7 +4286,7 @@ bool Math_Distance2dCheck(const VECTOR3* posFrom, const VECTOR3* posTo, q19_12 r
 s32 Camera_Distance2dGet(const VECTOR3* pos);
 
 /** Responsible for loading NPCs on the map. */
-void func_80037F24(bool cond);
+void Game_NpcRoomInitSpawn(bool cond);
 
 /** @brief Main NPC update function. Runs through each NPC and calls `g_MapOverlayHeader.charaUpdateFuncs_194` for them. */
 void func_80038354(void);
@@ -4523,7 +4532,7 @@ void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, e_PrimitiveTy
 
 void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1);
 
-void func_8003F170(void);
+void Gfx_FlashlightUpdate(void);
 
 /** Resets player info such as the inventory, health, and playtime in the savegame buffer. */
 void Game_SavegameResetPlayer(void);
@@ -4660,7 +4669,7 @@ s32 Math_MagnitudeShiftGet(s32 mag);
 
 u32 func_8008A2E0(s32 arg0);
 
-void func_800348C0(void);
+void Anim_CharaTypeAnimInfoClear(void);
 
 bool func_8008B474(s32 arg0, s32 vol, s32 soundType);
 

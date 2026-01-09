@@ -1006,7 +1006,7 @@ void func_800D3A3C(s_SubCharacter* airScreamer) // 0x800D3A3C
     s32    idx;
 
     idx = g_CharaAnimInfoIdxs[airScreamer->model_0.charaId_0];
-    Ai_AirScreamer_Update(airScreamer, (&g_InitCharaDataAnimInfo[idx])->animFile1_8, (&g_InitCharaDataAnimInfo[idx])->npcCoords_14);
+    Ai_AirScreamer_Update(airScreamer, (&g_CharaTypeAnimInfo[idx])->animFile1_8, (&g_CharaTypeAnimInfo[idx])->npcCoords_14);
 
     airScreamer->model_0.anim_4.status_0 = ANIM_STATUS(AirScreamerAnim_17, true);
     animTime = func_80044918(&airScreamer->model_0.anim_4)->startKeyframeIdx_C;

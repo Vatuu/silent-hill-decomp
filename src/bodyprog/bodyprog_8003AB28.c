@@ -313,10 +313,10 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
                 if (g_MainMenu_SelectedEntry == MainMenuEntry_Start)
                 {
-                    Chara_PositionUpdateFromParams(&g_MapOverlayHeader.mapPointsOfInterest_1C[0]);
+                    Chara_PositionSet(&g_MapOverlayHeader.mapPointsOfInterest_1C[0]);
                 }
 
-                func_8002E830();
+                Savegame_CardDisable();
 
                 prevState                       = g_GameWork.gameState_594;
                 g_GameWork.gameStateStep_598[0] = prevState;
@@ -808,7 +808,7 @@ void func_8003BED0(void) // 0x8003BED0
 }
 
 // ========================================
-// UNKNOWN
+// GRAPHIC RELATED
 // ========================================
 
 extern s_800C4168 const D_800C4168;
@@ -2651,7 +2651,7 @@ bool Game_FlashlightIsOn(void) // 0x8003ED64
 void func_8003ED74(s32 arg0, s32 arg1) // 0x8003ED74
 {
     func_8003EF10(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
-    func_8003F170();
+    Gfx_FlashlightUpdate();
 }
 
 void func_8003EDA8(void) // 0x8003EDA8
@@ -2679,7 +2679,7 @@ void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3) // 0x8003EE30
 void func_8003EEDC(s32 arg0, s32 arg1) // 0x8003EEDC
 {
     func_8003EF10(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
-    func_8003F170();
+    Gfx_FlashlightUpdate();
 }
 
 void func_8003EF10(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF10
@@ -2691,11 +2691,11 @@ void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, e_PrimitiveTy
 {
     if (arg0 == arg1)
     {
-        g_SysWork.field_2388.field_16 = true;
+        g_SysWork.field_2388.isFlashlightNotAvailable_16 = true;
     }
     else
     {
-        g_SysWork.field_2388.field_16 = false;
+        g_SysWork.field_2388.isFlashlightNotAvailable_16 = false;
     }
 
     g_SysWork.field_2388.field_4 = primData;
@@ -2737,7 +2737,7 @@ void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1) // 0x8003F08C
     {
         case 0:
         case 1:
-            arg0->field_30 = arg1->field_10;
+            arg0->field_30 = arg1->fogDistance_10;
             break;
 
         case 2:
@@ -2745,12 +2745,12 @@ void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1) // 0x8003F08C
             break;
 
         case 3:
-            arg0->field_30 = arg1->field_10;
+            arg0->field_30 = arg1->fogDistance_10;
             break;
     }
 }
 
-void func_8003F170(void) // 0x8003F170
+void Gfx_FlashlightUpdate(void) // 0x8003F170
 {
     MATRIX          mat;
     VECTOR          sp48;
@@ -2760,7 +2760,7 @@ void func_8003F170(void) // 0x8003F170
     s32             temp;
     GsCOORDINATE2*  coord;
     s_StructUnk3*   ptr2;
-    s_SysWork_2288* ptr;
+    s_SysWork_2388* ptr;
 
     ptr = &g_SysWork.field_2388;
 
@@ -2913,7 +2913,7 @@ q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg
     return alphaCpy;
 }
 
-u32 func_8003F654(s_SysWork_2288* arg0)
+u32 func_8003F654(s_SysWork_2388* arg0)
 {
     switch (arg0->field_0)
     {
@@ -3154,9 +3154,9 @@ void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
         arg0->field_2E = arg2->field_2E;
     }
 
-    arg0->field_30         = Math_WeightedAverageGet(arg1->field_30, arg2->field_30, weight0);
-    arg0->field_0.field_10 = Math_WeightedAverageGet(arg1->field_0.field_10, arg2->field_0.field_10, weight1);
-    arg0->field_0.field_6  = Math_WeightedAverageGet(arg1->field_0.field_6, arg2->field_0.field_6, weight0);
+    arg0->field_30               = Math_WeightedAverageGet(arg1->field_30, arg2->field_30, weight0);
+    arg0->field_0.fogDistance_10 = Math_WeightedAverageGet(arg1->field_0.fogDistance_10, arg2->field_0.fogDistance_10, weight1);
+    arg0->field_0.field_6        = Math_WeightedAverageGet(arg1->field_0.field_6, arg2->field_0.field_6, weight0);
 
     LoadAverageCol(&arg1->field_0.fogColor_14.r, &arg2->field_0.fogColor_14.r, Q12(1.0f) - alphaTo, alphaTo, &arg0->field_0.fogColor_14.r);
 }
@@ -3192,7 +3192,7 @@ s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
 
     if (D_800C4168.isFogEnabled_1)
     {
-        return arg0->field_10;
+        return arg0->fogDistance_10;
     }
 
     if (D_800C4168.field_0 == 1)
@@ -3215,7 +3215,7 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, brightness);
     Gfx_FogParamsSet(arg0->field_0.field_E != 0, arg0->field_0.fogColor_14.r, arg0->field_0.fogColor_14.g, arg0->field_0.fogColor_14.b);
 
-    temp_a0 = arg0->field_0.field_10;
+    temp_a0 = arg0->field_0.fogDistance_10;
 
     func_80055840(temp_a0, temp_a0 + Q12(1.0f));
     func_800553E0(arg0->field_0.field_18, arg0->field_0.field_19.r, arg0->field_0.field_19.g, arg0->field_0.field_19.b, arg0->field_0.field_1D.r, arg0->field_0.field_1D.g, arg0->field_0.field_1D.b);

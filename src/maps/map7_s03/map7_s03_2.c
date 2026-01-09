@@ -1382,7 +1382,7 @@ void func_800E3390(void) // 0x800E3390
             D_800F481A = 0;
             D_800F481B = 0;
 
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
             WorldGfx_CharaLmBufferAssign(CHARA_FORCE_FREE_ALL);
 
             ScreenFade_ResetTimestep();
@@ -1402,7 +1402,7 @@ void func_800E3390(void) // 0x800E3390
             sharedFunc_800D2EB4_0_s00();
             func_800E94AC();
             func_800E94F4();
-            func_800348C0();
+            Anim_CharaTypeAnimInfoClear();
 
             Savegame_EventFlagSet(EventFlag_576);
             Savegame_EventFlagSet(EventFlag_591);
