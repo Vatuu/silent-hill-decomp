@@ -29,6 +29,14 @@ extern q19_12 D_800F0360;
 extern VECTOR3 D_800F3DF0;
 extern VECTOR3 D_800F3E00;
 extern q19_12 D_800F3E0C; // Time.
+extern s32           D_800ED5C8;
+extern GsF_LIGHT     D_800F1450[][2];
+extern GsCOORDINATE2 D_800F1510;
+extern SVECTOR       D_800F1560;
+extern VbRVIEW       D_800F1570;
+extern s8            D_800F1598[];
+extern u8            D_800F159C;
+extern s32           D_800F15A0;
 
 void func_800CD818(void);
 
@@ -48,6 +56,14 @@ void func_800EC42C(void);
 void func_800ECB58(void);
 
 void func_800ECC8C(void);
+
+void func_800CD51C(s32, s32);
+
+void func_800CDB14(s32, s32);
+
+void func_800CDB98();
+
+void func_800CE180(s32, s32*);
 
 // Same as `func_800E6758` in MAP2_S02.
 void func_800E828C(s_SubCharacter* chara);

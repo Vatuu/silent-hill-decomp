@@ -17,7 +17,91 @@ INCLUDE_RODATA("maps/map5_s01/nonmatchings/map5_s01", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CE688_1_s03.h" // 0x800CCB44
 
-INCLUDE_ASM("maps/map5_s01/nonmatchings/map5_s01", func_800CD20C);
+s16 func_800CD20C(void)                            // 0x800CD20C
+{
+    GsDOBJ2* itemModel;
+    s32      i;
+
+    if (D_800F159C == 1)
+    {
+        if (g_SysWork.sysStateStep_C[0] == 5)
+        {
+            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
+            {
+                D_800ED5C8 += 3;
+                Sd_PlaySfx(Sfx_MenuMove, 0, 0x40);
+            }
+
+            if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
+            {
+                D_800ED5C8 += 1;
+                Sd_PlaySfx(Sfx_MenuMove, 0, 0x40);
+            }
+
+            D_800ED5C8 &= 3;
+
+            if (g_Controller0->btnsHeld_C & ControllerFlag_LStickLeft)
+            {
+                Sd_PlaySfx(Sfx_Unk1589, 0, 0x40);
+
+                D_800F1598[D_800ED5C8]++;
+
+                if (D_800F1598[D_800ED5C8] == 8)
+                {
+                    D_800F1598[D_800ED5C8] = 0;
+                }
+            }
+
+            if (g_Controller0->btnsHeld_C & ControllerFlag_LStickRight)
+            {
+                Sd_PlaySfx(Sfx_Unk1589, 0, 0x40);
+
+                D_800F1598[D_800ED5C8]--;
+
+                if (D_800F1598[D_800ED5C8] == -1)
+                {
+                    D_800F1598[D_800ED5C8] = 7;
+                }
+            }
+        }
+    }
+
+    D_800F15A0 = D_800F1598[0] + D_800F1598[1] * 0xA + D_800F1598[2] * 0x64 + D_800F1598[3] * 0x3E8;
+
+    func_800CE180(D_800F15A0, &D_800F1598);
+
+    func_800CD51C(D_800F15A0, D_800ED5C8);
+    PushMatrix();
+    func_8004BBF4(&D_800F1570, &D_800F1510, &D_800F1560);
+
+    for (itemModel = g_Items_ItemsModelData, i = 0; i < 6; i++, itemModel++)
+    {
+        g_Items_Transforms[i].rotate.vx = 0x400;
+        g_Items_Transforms[i].rotate.vz = 0;
+
+        Gfx_Items_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
+
+        if (D_800F159C != 0)
+        {
+            func_800CDB14(i, D_800ED5C8);
+        }
+
+        GsSetFlatLight(0, &D_800F1450[i][0]);
+        func_8004BD74(i, itemModel, 0);
+    }
+
+    PopMatrix();
+    func_800CDB98();
+
+    if (D_800F159C == 1)
+    {
+        return D_800F15A0;
+    }
+    else
+    {
+        return 0;
+    }
+}
 
 INCLUDE_ASM("maps/map5_s01/nonmatchings/map5_s01", func_800CD51C);
 
