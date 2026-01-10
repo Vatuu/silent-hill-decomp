@@ -24,20 +24,6 @@ const VECTOR D_800CA5C8 = {};
 
 #include "maps/shared/sharedFunc_800CEB24_0_s00.h" // 0x800CEE2C
 
-#include "maps/shared/sharedFunc_800CF2A4_0_s01.h" // 0x800CF2A4
-
-#include "maps/shared/sharedFunc_800CEFD0_1_s02.h" // 0x800CF3F4
-
-#include "maps/shared/sharedFunc_800CFFF8_0_s00.h" // 0x800CF7BC
-
-#include "maps/shared/sharedFunc_800CE954_7_s03.h" // 0x800CF8E8
-
-#include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800CF8F0
-
-#include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800CF9A8
-
-#include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800CFA30
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

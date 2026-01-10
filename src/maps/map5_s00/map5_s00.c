@@ -27,20 +27,6 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800CB25C);
 
 #include "maps/shared/sharedFunc_800CEFF4_0_s00.h" // 0x800CCB3C
 
-#include "maps/shared/sharedFunc_800CF2A4_0_s01.h" // 0x800CD250
-
-#include "maps/shared/sharedFunc_800CEFD0_1_s02.h" // 0x800CD2EC
-
-#include "maps/shared/sharedFunc_800CFFF8_0_s00.h" // 0x800CD5C0
-
-#include "maps/shared/sharedFunc_800D0690_1_s03.h" // 0x800CD680
-
-#include "maps/shared/sharedFunc_800CE954_7_s03.h" // 0x800CD7CC
-
-#include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800CD7D4
-
-#include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800CD88C
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

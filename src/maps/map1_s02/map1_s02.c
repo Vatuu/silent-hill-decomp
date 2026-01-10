@@ -33,18 +33,6 @@ INCLUDE_RODATA("maps/map1_s02/nonmatchings/map1_s02", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CEFF4_0_s00.h" // 0x800CE844
 
-#include "maps/shared/sharedFunc_800CF2A4_0_s01.h" // 0x800CEF34
-
-#include "maps/shared/sharedFunc_800CEFD0_1_s02.h" // 0x800CEFD0
-
-#include "maps/shared/sharedFunc_800CFFF8_0_s00.h" // 0x800CF2B4
-
-#include "maps/shared/sharedFunc_800CE954_7_s03.h" // 0x800CF374
-
-#include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800CF37C
-
-#include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800CF434
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

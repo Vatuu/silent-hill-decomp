@@ -1592,12 +1592,6 @@ extern s32 sharedData_800DF1F4_0_s00;
 extern s16 sharedData_800DF1F8_0_s00;
 extern s16 sharedData_800DF1FA_0_s00;
 
-extern s16 g_Particle_RotationY;
-
-extern VECTOR3 g_Particle_Position;     // Q19_12
-extern VECTOR3 g_Particle_PrevPosition; // Q19_12
-extern q3_12   g_Particle_PrevRotationY;
-
 /** Something related to rotation. */
 extern s32 sharedData_800E39D8_0_s00;
 
@@ -1660,7 +1654,6 @@ extern s_AnimInfo BLOODSUCKER_ANIM_INFOS[];
 
 extern u8 sharedData_800DD591_0_s00;
 extern u8 sharedData_800DD584_0_s00;
-extern u8 sharedData_800DD592_0_s00;
 
 /** `g_ParticlesAddedCounts`. Tracks how many total particles have been added. */
 extern s32 sharedData_800DD588_0_s00[2];
@@ -1687,15 +1680,6 @@ extern u16 sharedData_800D21E8_3_s00[];
 extern s_func_800CB560 sharedData_800E326C_0_s00;
 
 extern u16 sharedData_800E32D4_0_s00;
-
-/** TODO: Rename to `g_Particles` after funcs have been shared. */
-extern s_Particle sharedData_800E0CBC_0_s00[PARTICLE_COUNT_MAX];
-
-extern s_ParticleVectors g_ParticleVectors0;
-
-extern s_ParticleVectors g_ParticleVectors1;
-
-extern u8 sharedData_800DD592_0_s00;
 
 extern s32 sharedData_800DD598_0_s00;
 
@@ -2129,8 +2113,6 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3);
 
 bool sharedFunc_800CBBBC_0_s00(void);
 
-void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
-
 /** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data). */
 void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond);
 
@@ -2162,23 +2144,11 @@ void sharedFunc_800D923C_0_s00(s_SubCharacter* chara);
 /** Snow effect init. */
 void sharedFunc_800CBC94_0_s00(s_Particle* particles);
 
-/** Snow particle update. */
-void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime);
-
-/** Snow particle init. */
-void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand);
-
 bool Particle_Update(s_Particle* partHead);
 
 void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1);
 
 void sharedFunc_800CEB24_0_s00(s_Particle* part);
-
-void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand); // TODO: Make this match for `s_Particle`.
-
-void sharedFunc_800D0690_1_s03(s32 pass, s_Particle* part, s16* rand, q19_12* deltaTime);
-
-void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, q19_12* deltaTime);
 
 void SysWork_StateStepIncrementAfterTime(q19_12* timer, q19_12 inc, q19_12 timeMin, q19_12 timeMax, bool setTimerToMax, bool incStateStep);
 
@@ -2189,9 +2159,6 @@ void sharedFunc_800CB8A0_1_s01(s32 idx);
 bool sharedFunc_800CBA38_1_s01(s32 idx);
 
 bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx);
-
-// TODO: Make this match for `s_Particle`.
-void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* deltaTime);
 
 /** @brief Sets a map overlay value based on a whether a game event flag is set. */
 void sharedFunc_800D0994_3_s00(void);
@@ -2386,8 +2353,6 @@ void sharedFunc_800E12D0_6_s04(void);
 s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara);
 
 bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfxId);
-
-void sharedFunc_800D0700_0_s00(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd, s32 flag);
 
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch);
 

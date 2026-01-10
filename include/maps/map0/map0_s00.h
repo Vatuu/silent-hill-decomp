@@ -39,20 +39,6 @@ typedef struct
 
 typedef struct
 {
-    DVECTOR field_0;
-    u8      field_4;
-    u8      field_5;
-    u8      field_6;
-    u8      field_7;
-} s_func_800CC8FC_0;
-
-typedef struct
-{
-    s_func_800CC8FC_0 field_0[8];
-} s_func_800CC8FC;
-
-typedef struct
-{
     s32 field_0;
 } s_800E0C74;
 
@@ -139,23 +125,9 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId);
 
 void func_800D0124(void);
 
-/** Collision space distance check. @hack Guessed types. */
-bool func_800D012C(VECTOR3* pos, s_func_800CC8FC* unused0, s32* unused1);
-
 void func_800CF7AC(s32 arg0, s_Particle* part, u16* arg2, s32* deltaTime);
 
 void func_800D0274(s32 arg0, s_Particle* part, u16* arg2);
-
-/** @brief 2D player distance check on XZ plane.
- *
- * Checks against a constant 2D distance of `CHUNK_CELL_SIZE` between the player and two positions.
- * This is a lazy check, i.e.
- * instead of: `(SQUARE(x1 - x2) + SQUARE(z1 - z2)) < SQUARE(d)`
- * it does:    `(ABS(x1 - x2) + ABS(z1 - z2)) < d`.
- *
- * @return `true` if the player distance from either position is `< CHUNK_CELL_SIZE`, otherwise `false`.
- */
-bool func_800D0600(void);
 
 void func_800D94F8(void);
 
@@ -217,8 +189,6 @@ void func_800DB26C(void);
 void func_800DB514(void);
 
 void func_800DB870(void);
-
-void func_800D0394(s32 count, VECTOR3* vecs);
 
 void func_800DADD4(void);
 
