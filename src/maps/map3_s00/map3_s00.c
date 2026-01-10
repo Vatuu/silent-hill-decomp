@@ -11,16 +11,6 @@ INCLUDE_RODATA("maps/map3_s00/nonmatchings/map3_s00", D_800C9578);
 
 INCLUDE_RODATA("maps/map3_s00/nonmatchings/map3_s00", g_MapOverlayHeader);
 
-#include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CB408
-
-#include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CB9D4
-
-#include "maps/shared/sharedFunc_800CBC94_0_s00.h" // 0x800CBAAC
-
-#include "maps/shared/Particle_Update.h" // 0x800CBDB8
-
-#include "maps/shared/sharedFunc_800CEB24_0_s00.h" // 0x800CC388
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

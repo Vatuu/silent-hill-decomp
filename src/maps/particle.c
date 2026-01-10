@@ -6,8 +6,8 @@
 // TODO:
 //  - This should be a separate .c file/split in each map overlay, but for now #including this .c works.
 //  - sharedData and structs that are only used in this file need to be moved from `shared.h` into `particle.h`
-//  - A lot more particle funcs that can be merged here, but the funcs included in each map varies a lot, will
-//    likely need a lot of `#ifdef MAPX_SXX`.
+//  - Some funcs here only get included in MAP0_S00, guess they're particle-related since they're between
+//    other particle functions, does MAP0_S00 have some unique particle effect?
 
 #if defined(MAP1_S01) || defined(MAP1_S04) || defined(MAP1_S05) || defined(MAP2_S01) || \
     defined(MAP2_S03) || defined(MAP2_S04) || defined(MAP3_S02) || defined(MAP3_S03) || \
@@ -20,23 +20,3052 @@
     #define MAP_USE_PARTICLES 1
 #endif
 
-#if defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || defined(MAP4_S03) || \
-    defined(MAP4_S04) || defined(MAP4_S05) || defined(MAP5_S00) || defined(MAP6_S03)
-    #define MAP_PARTICLE_HAS_CASE_0 0
-#else
+#if defined(MAP0_S00) || defined(MAP0_S01) || defined(MAP0_S02) || defined(MAP1_S00) || \
+    defined(MAP1_S06) || defined(MAP2_S00) || defined(MAP2_S02) || defined(MAP3_S00) || \
+    defined(MAP3_S01) || defined(MAP3_S06) || defined(MAP5_S01) || defined(MAP5_S03) || \
+    defined(MAP6_S00) || defined(MAP7_S03)
     #define MAP_PARTICLE_HAS_CASE_0 1
+#else
+    #define MAP_PARTICLE_HAS_CASE_0 0
 #endif
 
 // `sharedData_800E32D0_0_s00` writes and `sharedFunc_800D0CB8_0_s00` are gated behind `MAP_PARTICLE_HAS_CASE_1`.
-#if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || \
-    defined(MAP4_S02) || defined(MAP4_S03) || defined(MAP4_S04) || \
-    defined(MAP4_S05) || defined(MAP5_S00) || defined(MAP6_S00) || defined(MAP6_S03)
+#if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
+    defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || defined(MAP5_S00) || \
+    defined(MAP6_S00) || defined(MAP6_S03)
     #define MAP_PARTICLE_HAS_CASE_1 1
 #else
     #define MAP_PARTICLE_HAS_CASE_1 0
 #endif
 
-#if MAP_USE_PARTICLES
+#if !MAP_USE_PARTICLES
+
+/** Barebones version of `sharedFunc_800CB6B0_0_s00`, missing calls to `Particle_Update` and other particle-related code. */
+void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
+{
+    s32 temp_s0;
+
+    func_80055434(&g_ParticleVectors0.vector_0);
+    g_ParticleVectors0.field_28 = func_8005545C(&g_ParticleVectors0.svec_18);
+
+    vwGetViewPosition(&g_ParticleVectors0.viewPosition_C);
+    vwGetViewAngle(&g_ParticleVectors0.viewRotation_20);
+
+    switch (arg3)
+    {
+        case 0:
+        case -1:
+            if (arg3 == NO_VALUE)
+            {
+                g_SysWork.field_2349 = g_MapOverlayHeader.field_17;
+                g_SysWork.field_2348 = g_MapOverlayHeader.field_17;
+            }
+
+            sharedData_800DD598_0_s00 = 0;
+            g_SysWork.field_234A      = true;
+            sharedData_800DFB4C_0_s00 = arg2;
+
+            sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);
+            sharedData_800E0CB6_0_s00 = sharedData_800E0CB0_0_s00;
+            sharedData_800E0CB4_0_s00 = sharedData_800E0CB0_0_s00;
+
+            temp_s0 = SetSp(0x1F8003D8);
+            SetSp(temp_s0);
+            break;
+
+        default:
+            sharedData_800DD584_0_s00 = g_DeltaTime0 == Q12(0.0f);
+
+            sharedData_800CD77C_1_s04 = arg2;
+
+            temp_s0 = SetSp(0x1F8003D8);
+            SetSp(temp_s0);
+            break;
+    }
+
+    g_ParticleVectors1 = g_ParticleVectors0;
+}
+
+#else /* MAP_USE_PARTICLES */
+
+/** Full version of `sharedFunc_800CB6B0_0_s00` used by most maps. */
+void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
+{
+    s32 temp_a2;
+    s32 temp_s0;
+    s32 temp_s0_2;
+    s32 temp_s0_3;
+    s32 temp_v0;
+    s32 i;
+    s32 var_v0;
+    s32 var_v0_3;
+    u32 temp_t0;
+    u32 temp_v1_2;
+    u16 temp_v1_3;
+
+#if defined(MAP5_S01)
+    if (g_MapEventIdx == 7 && g_SysWork.sysStateStep_C[0] == 8)
+    {
+        return;
+    }
+#endif
+
+#if MAP_PARTICLE_HAS_CASE_1
+    sharedFunc_800D0CB8_0_s00();
+#endif
+
+    func_80055434(&g_ParticleVectors0.vector_0);
+    g_ParticleVectors0.field_28 = func_8005545C(&g_ParticleVectors0.svec_18);
+
+    vwGetViewPosition(&g_ParticleVectors0.viewPosition_C);
+    vwGetViewAngle(&g_ParticleVectors0.viewRotation_20);
+
+#if defined(MAP5_S01)
+    g_Particle_SpeedX = 0;
+#endif
+
+    switch (arg3)
+    {
+        case 0:
+        case -1:
+#if defined(MAP0_S00)
+            sharedData_800DD591_0_s00 = 1;
+
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-5.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vy = Q12(-4.5f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(211.0f);
+
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(15.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vy = Q12(-4.5f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(211.0f);
+#elif defined(MAP0_S01)
+            sharedData_800DD591_0_s00 = 1;
+
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-0.30f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(275.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-0.30f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(265.0f);
+#elif defined(MAP1_S06)
+            switch (g_SavegamePtr->mapRoomIdx_A5)
+            {
+                case 12:
+                    sharedData_800DD591_0_s00             = 1;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(105.5f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(67.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(105.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(50.0f);
+                    break;
+
+                case 13:
+                    sharedData_800DD591_0_s00             = 1;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(145.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(24.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(132.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(24.0f);
+                    break;
+
+                case 9:
+                    sharedData_800DD591_0_s00             = 1;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(55.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(137.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(62.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(137.0f);
+                    break;
+
+                case 14:
+                    sharedData_800DD591_0_s00             = 2;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(96.5f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(15.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(103.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(15.0f);
+                    break;
+            }
+#elif defined(MAP2_S00)
+            switch (g_SavegamePtr->mapRoomIdx_A5)
+            {
+                case 38:
+                    sharedData_800DD591_0_s00                 = 10;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(120.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(303.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(110.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(303.5f);
+                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(128.3f);
+                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(295.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(128.3f);
+                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(305.0f);
+                    sharedData_800E326C_0_s00.corners_0[4].vx = Q12(111.3f);
+                    sharedData_800E326C_0_s00.corners_0[4].vz = Q12(298.0f);
+                    sharedData_800E326C_0_s00.corners_0[5].vx = Q12(111.3f);
+                    sharedData_800E326C_0_s00.corners_0[5].vz = Q12(295.0f);
+                    break;
+
+                case 23:
+                    sharedData_800DD591_0_s00                 = 1;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-186.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(301.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-188.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(301.0f);
+                    break;
+
+                case 37:
+                    sharedData_800DD591_0_s00                 = 9;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(121.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(223.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(114.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(223.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(128.3f);
+                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(215.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(128.3f);
+                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(220.0f);
+                    break;
+
+                case 40:
+                    sharedData_800DD591_0_s00                 = 11;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-48.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(349.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-48.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(343.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-39.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(343.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-39.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(349.0f);
+                    sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-39.0f);
+                    sharedData_800E326C_0_s00.corners_0[4].vz = Q12(349.0f);
+                    sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-48.0f);
+                    sharedData_800E326C_0_s00.corners_0[5].vz = Q12(349.0f);
+                    sharedData_800E326C_0_s00.corners_0[6].vx = Q12(-48.0f);
+                    sharedData_800E326C_0_s00.corners_0[6].vz = Q12(343.0f);
+                    sharedData_800E326C_0_s00.corners_0[7].vx = Q12(-39.0f);
+                    sharedData_800E326C_0_s00.corners_0[7].vz = Q12(343.0f);
+                    break;
+
+                default:
+                    sharedData_800DD591_0_s00 = 0;
+                    break;
+            }
+#elif defined(MAP2_S02)
+            sharedData_800DD591_0_s00                 = 0;
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-31.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-8.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-31.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-11.0f);
+            sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-25.5f);
+            sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-8.0f);
+            sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-31.0f);
+            sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-8.0f);
+            sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-25.5f);
+            sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-11.0f);
+            sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-25.5f);
+            sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-8.0f);
+#elif defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06)
+            switch (g_SavegamePtr->mapRoomIdx_A5)
+            {
+                case 3:
+                    sharedData_800DD591_0_s00                 = 2;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(101.5f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(100.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(101.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(105.0f);
+                    break;
+
+                case 5:
+                    sharedData_800DD591_0_s00                 = 1;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(17.7f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(30.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(17.7f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(17.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(17.5f);
+                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(15.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(15.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(15.0f);
+                    break;
+
+                case 8:
+                    sharedData_800DD591_0_s00                 = 2;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(63.5f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(57.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(63.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(63.0f);
+                    break;
+
+                case 9:
+                    sharedData_800DD591_0_s00                 = 2;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(104.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(56.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(104.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(61.5f);
+                    break;
+
+                case 11:
+                    sharedData_800DD591_0_s00                 = 2;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(143.8f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(18.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(143.8f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(22.0f);
+                    break;
+
+                default:
+                    sharedData_800DD591_0_s00 = 0;
+                    break;
+            }
+#elif defined(MAP4_S03)
+            if (g_SavegamePtr->mapRoomIdx_A5 == 20)
+            {
+                sharedData_800DD591_0_s00                 = 1;
+                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(133.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(130.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(133.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(150.0f);
+            }
+
+#elif defined(MAP5_S03)
+            sharedData_800DD591_0_s00 = 2;
+#endif
+
+#if MAP_PARTICLE_HAS_CASE_1
+    #if defined(MAP5_S00) || defined(MAP6_S03)
+        sharedData_800E32D4_0_s00 = 3;
+    #else
+        sharedData_800E32D4_0_s00 = 30;
+    #endif
+#endif
+
+#if !MAP_PARTICLE_HAS_CASE_1 || defined(MAP0_S00) || defined(MAP6_S00)
+    sharedData_800DD592_0_s00 = 1;
+#endif
+
+            if (arg3 == NO_VALUE)
+            {
+                g_SysWork.field_2349 = g_MapOverlayHeader.field_17;
+                g_SysWork.field_2348 = g_MapOverlayHeader.field_17;
+            }
+
+            sharedData_800DD598_0_s00 = 0;
+#if defined(MAP7_S03)
+            D_800F23D4 = 0;
+#endif
+            g_Particle_PrevPosition.vz = Q12(0.0f);
+            g_Particle_PrevPosition.vx = Q12(0.0f);
+
+            g_SysWork.field_234A = true;
+            sharedData_800DFB4C_0_s00 = arg2;
+
+            sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);
+            sharedData_800E0CB6_0_s00 = sharedData_800E0CB0_0_s00;
+            sharedData_800E0CB4_0_s00 = sharedData_800E0CB0_0_s00;
+
+            temp_s0 = SetSp(0x1F8003D8);
+
+            sharedFunc_800CBC94_0_s00(sharedData_800E0CBC_0_s00);
+#if defined(MAP0_S00)
+            func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, sharedData_800DFB4C_0_s00);
+#endif
+            SetSp(temp_s0);
+            break;
+
+        default:
+#if defined(MAP7_S03)
+            sharedData_800DD584_0_s00 = 0;
+            D_800F23D4               += g_DeltaTime0;
+#else
+            sharedData_800DD584_0_s00 = g_DeltaTime0 == Q12(0.0f);
+#endif
+
+            func_8003EDB8(&sharedData_800E3258_0_s00, &sharedData_800E325C_0_s00);
+
+            if (sharedData_800E0CB6_0_s00 != sharedData_800E0CB4_0_s00)
+            {
+                if (sharedData_800DD584_0_s00 == 0)
+                {
+                    sharedData_800DD598_0_s00++;
+                }
+
+                temp_s0_2 = Q12_MULT(Math_Sin(FP_ANGLE(270.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2)) + (PARTICLE_COUNT_MAX / 2);
+                temp_a2   = Q12_MULT(Math_Sin(FP_ANGLE(180.0f) + (sharedData_800DD598_0_s00 * 2)), (PARTICLE_COUNT_MAX / 2)) + (PARTICLE_COUNT_MAX / 2);
+                temp_t0 = sharedData_800E0CB6_0_s00 >> 14;
+
+                for (i = 0; i < 2; i++)
+                {
+                    temp_v1_2 = (sharedData_800E0CB4_0_s00 >> ((1 - i) * 6)) & 0x3F;
+                    temp_v1_3 = (sharedData_800E0CB4_0_s00 >> 6) & 0x3F;
+                    temp_v0 = temp_v1_3;
+
+                    switch (temp_v1_2)
+                    {
+                        case 4:
+                        case 6:
+                            sharedData_800DD588_0_s00[i] = temp_s0_2;
+                            break;
+
+                        case 5:
+                        case 7:
+                            var_v0 = temp_s0_2 * 2;
+                            sharedData_800DD588_0_s00[i] = var_v0;
+                            break;
+
+                        case 32:
+                        case 48:
+                            sharedData_800DD588_0_s00[i] = temp_a2;
+                            break;
+
+                        case 37:
+                        case 39:
+                        case 53:
+                        case 55:
+                            var_v0                       = temp_s0_2 + (PARTICLE_COUNT_MAX / 2);
+                            sharedData_800DD588_0_s00[i] = var_v0;
+                            break;
+
+                        case 40:
+                        case 56:
+                            var_v0 = temp_a2 * 2;
+                            sharedData_800DD588_0_s00[i] = var_v0;
+                            break;
+
+                        case 44:
+                        case 46:
+                        case 60:
+                        case 62:
+                            var_v0                       = temp_a2 + (PARTICLE_COUNT_MAX / 2);
+                            sharedData_800DD588_0_s00[i] = var_v0;
+                            break;
+
+                        case 0:
+                            sharedData_800DD588_0_s00[i] = 0;
+                            break;
+
+                        case 36:
+                        case 38:
+                        case 52:
+                        case 54:
+                            var_v0                       = PARTICLE_COUNT_MAX / 2;
+                            sharedData_800DD588_0_s00[i] = var_v0;
+                            break;
+
+                        case 45:
+                        case 47:
+                        case 61:
+                        case 63:
+                            var_v0                       = PARTICLE_COUNT_MAX;
+                            sharedData_800DD588_0_s00[i] = var_v0;
+                            break;
+                    }
+
+#if MAP_PARTICLE_HAS_CASE_0
+                    if (i == 0)
+                    {
+                        if (temp_t0 < 2)
+                        {
+                            if (temp_t0 != 1 || (sharedData_800E0CB4_0_s00 >> 14) < 2)
+                            {
+                                sharedData_800DD592_0_s00 = 1;
+                                continue;
+                            }
+                        }
+
+                        switch (temp_v0)
+                        {
+                            case 4:
+                            case 6:
+                            case 32:
+                            case 48:
+                                var_v0_3                  = sharedData_800DD588_0_s00[i] < ((PARTICLE_COUNT_MAX / 4) + 1);
+                                sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
+                                break;
+
+                            case 5:
+                            case 7:
+                            case 40:
+                            case 56:
+                                var_v0_3                  = sharedData_800DD588_0_s00[i] < ((PARTICLE_COUNT_MAX / 2) + 1);
+                                sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
+                                break;
+
+                            case 8:
+                            case 9:
+                            case 10:
+                            case 11:
+                            case 12:
+                            case 13:
+                            case 14:
+                            case 15:
+                            case 16:
+                            case 17:
+                            case 18:
+                            case 19:
+                            case 20:
+                            case 21:
+                            case 22:
+                            case 23:
+                            case 24:
+                            case 25:
+                            case 26:
+                            case 27:
+                            case 28:
+                            case 29:
+                            case 30:
+                            case 31:
+                            case 33:
+                            case 34:
+                            case 35:
+                            case 36:
+                            case 37:
+                            case 38:
+                            case 39:
+                            case 41:
+                            case 42:
+                            case 43:
+                            case 44:
+                            case 45:
+                            case 46:
+                            case 47:
+                            case 49:
+                            case 50:
+                            case 51:
+                            case 52:
+                            case 53:
+                            case 54:
+                            case 55:
+                            default:
+                                sharedData_800DD592_0_s00 = 1;
+                                break;
+                        }
+                    }
+#endif
+                }
+
+                if (sharedData_800DD598_0_s00 >= 0x200)
+                {
+                    sharedData_800DD598_0_s00 = 0;
+                    g_SysWork.field_234A = true;
+                    sharedData_800E0CB6_0_s00 = sharedData_800E0CB4_0_s00;
+
+                    switch ((sharedData_800E0CB8_0_s00 & 0xF) >> 2)
+                    {
+                        case 0:
+                            sharedData_800DFB6C_0_s00 = 0;
+                            sharedData_800DFB70_0_s00 = 0;
+                            break;
+
+                        case 1:
+                            sharedData_800DFB6C_0_s00 = 1;
+                            sharedData_800DFB70_0_s00 = 0;
+                            break;
+
+                        case 2:
+                            sharedData_800DFB6C_0_s00 = 0;
+                            sharedData_800DFB70_0_s00 = 1;
+                            break;
+                    }
+                }
+            }
+
+            sharedData_800DFB50_0_s00 = arg2;
+            temp_s0_3 = SetSp(0x1F8003D8);
+
+            Particle_Update(sharedData_800E0CBC_0_s00);
+#if defined(MAP0_S00)
+            func_800CC6E8(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, sharedData_800DFB50_0_s00);
+#endif
+            SetSp(temp_s0_3);
+
+            for (i = sharedData_800DD588_0_s00[0] + sharedData_800DD588_0_s00[1]; i < PARTICLE_COUNT_MAX; i++)
+            {
+                sharedData_800E0CBC_0_s00[i].stateStep_1E = 0;
+            }
+            break;
+    }
+
+    g_ParticleVectors1 = g_ParticleVectors0;
+}
+
+bool sharedFunc_800CBBBC_0_s00(void)
+{
+    q19_12 dist;
+    q19_12 rotY;
+
+    dist = SquareRoot0(SQUARE(ABS_DIFF(g_Particle_Position.vx, g_Particle_PrevPosition.vx)) +
+                       SQUARE(ABS_DIFF(g_Particle_Position.vz, g_Particle_PrevPosition.vz)));
+    rotY = ABS_DIFF(g_Particle_PrevRotationY, g_Particle_RotationY);
+    if (dist > 10000 || rotY > FP_ANGLE(45.0f))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+// TODO: Refine comments and names, it's still kind of unclear.
+/** @brief Spawns snow particles. Called once when the map overlay is loaded.
+ *
+ * Spawns and updates snow particles.
+ * This avoids having all the snow particles starting in the sky at the same time.
+ *
+ * The spawn loop works as follows (pseudocode):
+ *
+ * particlesAdded = 0;
+ * toAddPerTick   = 1 or 3;
+ * 
+ * // Perform spawn tick.
+ * while (particlesAdded < SNOW_SPAWN_COUNT_MAX)
+ * {
+ *     // Start at 0 to update all previously added particles by one step.
+ *     for (i = 0; i < particlesAdded; i++)
+ *     {
+ *        updateParticle(i); // These particles will re-add below if they expire.
+ *     }
+ 
+ *     // Add new particles.
+ *     for (i = 0; i < toAddPerTick; i++)
+ *     {
+ *         addParticle();
+ *         particlesAdded++;
+ *     }
+ * }
+ */
+void sharedFunc_800CBC94_0_s00(s_Particle* parts)
+{
+    #define SNOW_COUNT_MAX       PARTICLE_COUNT_MAX
+    #define SNOW_SPAWN_COUNT_MAX (PARTICLE_COUNT_MAX/2)
+    #define SNOW_REST_TICKS_MAX  16
+
+    s32         i;
+    s32         j;
+    s16         rand;
+    s32         density;
+    s32         spawnMult;
+    u16         settingsState; // TODO: Rename.
+    u16         snowType;
+    s32         deltaTime;
+    s_Particle* part;
+
+    deltaTime = Q12(0.1f / 3.0f);
+
+    GsInitCoordinate2(NULL, &g_SysWork.coord_22A8);
+
+    // Reset states.
+    for (i = 0, part = parts; i < SNOW_COUNT_MAX; i++, part++)
+    {
+        part->stateStep_1E = 0;
+    }
+
+    // Reset counts. NOTE: One is unused.
+    sharedData_800DD588_0_s00[1] = 0;
+    sharedData_800DD588_0_s00[0] = 0;
+
+    // Settings byte holds state and snow type. Can be 0-2. 1 enables snow. TODO: Move doc.
+    settingsState = (sharedData_800E0CB8_0_s00 & 0xC) >> 2;
+    if (((sharedData_800E0CB8_0_s00 & 0xC) >> 2) == 1)
+    {
+        for (i = 0, part = parts; i < SNOW_COUNT_MAX; i++, part++)
+        {
+            part->type_1F = SnowType_Light;
+        }
+
+        density = (g_SysWork.field_2349 == 1) ? 1 : 3;
+    }
+    else
+    {
+        for (i = 0, part = parts; i < SNOW_COUNT_MAX; i++, part++)
+        {
+            part->type_1F = settingsState;
+        }
+
+#if defined(MAP5_S00) || defined(MAP6_S03)
+        density = 1;
+#else
+        density = 10;
+#endif
+    }
+
+    if (settingsState)
+    {
+        snowType = sharedData_800E0CB8_0_s00 & 0x3;
+        settingsState--;
+
+        // Set wind speed on XZ plane.
+        if (snowType >= SnowType_LightWindy)
+        {
+            g_Particle_SpeedZ = SNOW_COUNT_LIGHT_MAX * 2;
+            g_Particle_SpeedX = SNOW_COUNT_LIGHT_MAX * 2;
+        }
+        else
+        {
+            g_Particle_SpeedZ = 0;
+            g_Particle_SpeedX = 0;
+        }
+
+        // Set start position.
+#if defined(MAP1_S06)
+        g_Particle_Position.vy = Q12(-10.0f);
+#else
+        g_Particle_Position.vy = Q12(-6.0f);
+#endif
+
+        // Particle type determines particle multiplier for spawn loop.
+        spawnMult = (snowType == SnowType_Light || snowType == SnowType_LightWindy) ? 1 : 2;
+
+        // Spawn and update.
+        for (j = 0; j < SNOW_SPAWN_COUNT_MAX; j++)
+        {
+            // Reset how many particles to spawn this iteration.
+            sharedData_800E2156_0_s01 = 0;
+
+            rand                                      = Rng_Rand16();
+            sharedData_800DD588_0_s00[settingsState] += spawnMult;
+
+            // Clamp spawn count.
+            if (snowType == SnowType_Light || snowType == SnowType_LightWindy)
+            {
+                limitRange(sharedData_800DD588_0_s00[settingsState], 0, SNOW_SPAWN_COUNT_MAX);
+            }
+            else
+            {
+                limitRange(sharedData_800DD588_0_s00[settingsState], 0, SNOW_COUNT_MAX);
+            }
+
+            for (i = 0, part = parts; i < sharedData_800DD588_0_s00[settingsState]; i++, part++)
+            {
+                switch (part->stateStep_1E)
+                {
+                    case ParticleState_Spawn:
+                        // Throttle spawning.
+                        if (sharedData_800E2156_0_s01 < density)
+                        {
+                            sharedData_800E2156_0_s01++;
+                            sharedFunc_800CF9A8_0_s01(settingsState, part, &rand);
+                        }
+                        break;
+
+                    case ParticleState_Active:
+                        sharedFunc_800CF2A4_0_s01(settingsState, part, &rand, &deltaTime);
+                        
+                        // Step to rest state when Y position reaches 0.
+                        if (part->position0_0.vy == 0)
+                        {
+#if defined(MAP1_S06)
+                            part->stateStep_1E = 0;
+#else
+                            part->stateStep_1E++;
+#endif
+                        }
+                        break;
+
+                    default: // `ParticleState_Rest`
+                        part->stateStep_1E++;
+                        if (part->stateStep_1E >= SNOW_REST_TICKS_MAX)
+                        {
+                            part->stateStep_1E = 0;
+                        }
+                        break;
+                }
+            }
+        }
+    }
+#if MAP_PARTICLE_HAS_CASE_1
+    sharedData_800E32CC_0_s00 = sharedData_800DD58C_0_s00;
+#endif
+}
+
+#if defined(MAP0_S00)
+void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CBFB0
+{
+    VECTOR3 vecs[4] = {
+        VECTOR3(-258.0f, -1.4f, 244.1f),
+        VECTOR3(-254.5f,  0.0f, 220.5f),
+        VECTOR3(-249.4f,  0.0f, 219.5f),
+        VECTOR3(-250.5f,  0.0f, 217.7f)
+    };
+
+    GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
+    D_800DD594 = true;
+    D_800DD593 = true;
+    D_800E34EC = ARRAY_SIZE(sharedData_800E330C_0_s00);
+    D_800E39AC = ARRAY_SIZE(sharedData_800E34FC_0_s00);
+    func_800D0394(2, vecs);
+}
+#endif
+
+bool Particle_Update(s_Particle* partHead)
+{
+    #define SNOW_REST_TICKS_UPDATE_MAX 32
+
+#if MAP_PARTICLE_HAS_CASE_1 
+    s32 sp64;
+#endif
+    MATRIX      mat0;
+    MATRIX      mat1;
+    VECTOR3     prevPos;
+    s16         rand;
+    s32         pass;
+    s32         density;
+    s32         updateCount;
+    s32         updatePrev;
+    s_Particle* curPart;
+
+    density = 0;
+
+#if MAP_PARTICLE_HAS_CASE_1
+    if (sharedData_800E32D0_0_s00 < 27000)
+    {
+        sp64 = 3;
+    }
+    else
+    {
+        if (sharedData_800E32D0_0_s00 < 135000)
+        {
+            sp64 = 4;
+        }
+        else
+        {
+            sp64 = 5;
+        }
+    }
+#endif
+    
+    GsInitCoordinate2(0, &g_SysWork.coord_22A8);
+
+    g_Particle_Position.vx = g_ParticleVectors0.viewPosition_C.vx + Q12_MULT(Math_Sin(g_ParticleVectors0.viewRotation_20.vy), Q12(3.0));
+    g_Particle_Position.vz = g_ParticleVectors0.viewPosition_C.vz + Q12_MULT(Math_Cos(g_ParticleVectors0.viewRotation_20.vy), Q12(3.0));
+#if defined(MAP1_S06)
+    g_Particle_Position.vy = Q12(-10.0);
+#else
+    g_Particle_Position.vy = Q12(-6.0);
+#endif
+
+    curPart = partHead;
+
+    prevPos = g_Particle_Position;
+    if (g_Particle_PrevPosition.vx == Q12(0.0f) && g_Particle_PrevPosition.vz == Q12(0.0f))
+    {
+        g_Particle_PrevPosition.vx = prevPos.vx;
+        g_Particle_PrevPosition.vz = prevPos.vz;
+    }
+
+    sharedData_800DF158_1_s02 = sharedFunc_800CBBBC_0_s00();
+
+    g_SysWork.coord_22A8.coord.t[1] = Q8(0.0f);
+    g_SysWork.coord_22A8.coord.t[0] = Q12_TO_Q8(g_Particle_Position.vx);
+    g_SysWork.coord_22A8.coord.t[2] = Q12_TO_Q8(g_Particle_Position.vz);
+    
+    g_SysWork.coord_22A8.flg = false;
+    func_80049B6C(&g_SysWork.coord_22A8, &mat1, &mat0);
+    gte_SetRotMatrix(&mat0);
+    gte_SetTransMatrix(&mat0);
+
+    // Get starting random value to use later.
+    rand = Rng_Rand16();
+    updatePrev = 0;
+
+    // Update wind speed.
+    if (sharedData_800E0CAC_0_s00 >= 2)
+    {
+        // Wind is active.
+        // Ramp up the speed to 200, then add some randomness once fast enough.
+
+        // Modulate X-axis speed.
+        if (g_Particle_SpeedX < 200)
+        {
+            g_Particle_SpeedX++;
+        }
+        else
+        {
+            g_Particle_SpeedX += Rng_GenerateInt(-8, 8);
+            limitRange(g_Particle_SpeedX, 200, 800);
+        }
+
+        // Modulate Z-axis speed.
+        if (g_Particle_SpeedZ < 200)
+        {
+            g_Particle_SpeedZ++;
+        }
+        else
+        {
+            g_Particle_SpeedZ += Rng_GenerateInt(-8, 8);
+            limitRange(g_Particle_SpeedZ, 20, 800); // Might be a dev mistake? Makes more sense to be 200 like above.
+        }
+    }
+    // Wind is disabled, ramp speed down to 0.
+    else
+    {
+        // X.
+        if (g_Particle_SpeedX != 0)
+        {
+            g_Particle_SpeedX--;
+        }
+
+        // Z.
+        if (g_Particle_SpeedZ != 0)
+        {
+            g_Particle_SpeedZ--;
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    // Reset how many particles to spawn this tick.
+    sharedData_800E2156_0_s01 = 0;
+
+#if defined(MAP0_S00)
+    if (g_SavegamePtr->mapRoomIdx_A5 == 3 && g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(200.0f))
+    {
+        sharedData_800DD591_0_s00 = 1;
+    }
+    else
+    {
+        sharedData_800DD591_0_s00 = 0;
+    }
+
+#elif defined(MAP0_S02)
+    sharedData_800DD591_0_s00 = 2;
+
+    switch (g_SavegamePtr->mapRoomIdx_A5)
+    {
+        case 2:
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-101.5f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(23.8f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-101.5f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(17.0f);
+            sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-98.5f);
+            sharedData_800E326C_0_s00.corners_0[2].vz = Q12(17.0f);
+            sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-98.5f);
+            sharedData_800E326C_0_s00.corners_0[3].vz = Q12(23.8f);
+            sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-98.5f);
+            sharedData_800E326C_0_s00.corners_0[4].vz = Q12(23.8f);
+            sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-101.5f);
+            sharedData_800E326C_0_s00.corners_0[5].vz = Q12(23.8f);
+            sharedData_800E326C_0_s00.corners_0[6].vx = Q12(-101.5f);
+            sharedData_800E326C_0_s00.corners_0[6].vz = Q12(17.0f);
+            sharedData_800E326C_0_s00.corners_0[7].vx = Q12(-98.5f);
+            sharedData_800E326C_0_s00.corners_0[7].vz = Q12(17.0f);
+            break;
+
+        case 3:
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-145.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(15.5f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-135.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(15.5f);
+            break;
+
+        case 4:
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-184.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(23.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-184.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(16.0f);
+            break;
+    }
+
+#elif defined(MAP1_S06)
+    switch (g_SavegamePtr->mapRoomIdx_A5)
+    {
+        case 9:
+        case 12:
+        case 13:
+        case 14:
+            break;
+
+        default:
+            return false;
+    }
+
+#elif defined(MAP2_S00)
+    switch (g_SavegamePtr->mapRoomIdx_A5)
+    {
+        case 3:
+            if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(200.0f))
+            {
+                sharedData_800DD591_0_s00 = 1;
+                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-5.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vy = Q12(-4.5f);
+                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(211.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(15.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vy = Q12(-4.5f);
+                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(211.0f);
+            }
+            else
+            {
+                sharedData_800DD591_0_s00 = 0;
+            }
+            break;
+
+        case 7:
+            if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-55.0f) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-33.0f) && 
+                g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-14.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(0.0f))
+            {
+                    sharedData_800DD591_0_s00 = 10;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-44.5f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-11.2f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-44.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-13.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-43.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-13.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-43.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-11.2f);
+                    sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-43.0f);
+                    sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-11.2f);
+                    sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-44.5f);
+                    sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-11.2f);
+            }
+            else if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-90.0f) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-56.0f) && 
+                     g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-14.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(0.0f))
+            {
+                    sharedData_800DD591_0_s00 = 10;
+                    sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-79.0f);
+                    sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-10.5f);
+                    sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-79.0f);
+                    sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-13.0f);
+                    sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-66.5f);
+                    sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-13.0f);
+                    sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-66.5f);
+                    sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-10.5f);
+                    sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-66.5f);
+                    sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-10.5f);
+                    sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-79.0f);
+                    sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-10.5f);
+            }
+            else
+            {
+                sharedData_800DD591_0_s00 = 0;
+            }
+            break;
+
+        case 1:
+            if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-240.0f) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-226.0f) && 
+                g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(136.0f))
+            {
+                sharedData_800DD591_0_s00 = 10;
+                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-232.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(151.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-229.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(151.0f);
+                sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-232.0f);
+                sharedData_800E326C_0_s00.corners_0[2].vz = Q12(158.0f);
+                sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-232.0f);
+                sharedData_800E326C_0_s00.corners_0[3].vz = Q12(151.0f);
+                sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-228.0f);
+                sharedData_800E326C_0_s00.corners_0[4].vz = Q12(151.0f);
+                sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-228.0f);
+                sharedData_800E326C_0_s00.corners_0[5].vz = Q12(158.0f);
+            }
+            else if (g_SysWork.playerWork_4C.player_0.position_18.vx <= Q12(-240.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(133.0f))
+            {
+                sharedData_800DD591_0_s00 = 9;
+                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-251.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(142.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-248.2f);
+                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(142.0f);
+                sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-248.2f);
+                sharedData_800E326C_0_s00.corners_0[2].vz = Q12(142.0f);
+                sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-248.2f);
+                sharedData_800E326C_0_s00.corners_0[3].vz = Q12(147.0f);
+            }
+            else
+            {
+                sharedData_800DD591_0_s00 = 0;
+            }
+            break;
+
+        case 6:
+            if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-225.0f) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-195.0f) && 
+                g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-100.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-72.0f))
+            {
+                sharedData_800DD591_0_s00 = 10;
+                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-208.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-93.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-208.0f);
+                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-91.0f);
+                sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-212.0f);
+                sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-91.0f);
+                sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-212.0f);
+                sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-93.0f);
+                sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-208.0f);
+                sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-91.0f);
+                sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-212.0f);
+                sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-91.0f);
+            }
+            else
+            {
+                sharedData_800DD591_0_s00 = 0;
+            }
+            break;
+
+        case 27:
+            if (g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-275.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-175.0f))
+            {
+                sharedData_800DD591_0_s00 = 0xA;
+                sharedData_800E326C_0_s00.corners_0[0].vx = Q12(-287.0f);
+                sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-182.5f);
+                sharedData_800E326C_0_s00.corners_0[1].vx = Q12(-285.5f);
+                sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-182.5f);
+                sharedData_800E326C_0_s00.corners_0[2].vx = Q12(-285.5f);
+                sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-177.5f);
+                sharedData_800E326C_0_s00.corners_0[3].vx = Q12(-287.0f);
+                sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-177.5f);
+                sharedData_800E326C_0_s00.corners_0[4].vx = Q12(-285.5f);
+                sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-181.5f);
+                sharedData_800E326C_0_s00.corners_0[5].vx = Q12(-285.5f);
+                sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-178.4f);
+            }
+            else
+            {
+                sharedData_800DD591_0_s00 = 0;
+            }
+            break;
+    }
+
+#elif defined(MAP2_S02)
+    if (g_SavegamePtr->mapRoomIdx_A5 == 17)
+    {
+        return false;
+    }
+
+    sharedData_800DD591_0_s00 = 0;
+
+#elif defined(MAP3_S00)
+    switch (g_SavegamePtr->mapRoomIdx_A5)
+    {
+        case 3:
+        case 5:
+        case 8:
+        case 9:
+        case 11:
+            break;
+
+        default:
+            return false;
+    }
+
+#elif defined(MAP3_S01)
+    switch (g_SavegamePtr->mapRoomIdx_A5)
+    {
+        case 3:
+        case 5:
+        case 8:
+        case 9:
+        case 11:
+            break;
+
+        default:
+            return false;
+    }
+
+#elif defined(MAP3_S06)
+    switch (g_SavegamePtr->mapRoomIdx_A5)
+    {
+        case 3:
+        case 5:
+        case 8:
+        case 9:
+        case 11:
+            break;
+
+        default:
+            return false;
+    }
+
+#elif defined(MAP4_S02)
+    if (g_SavegamePtr->mapRoomIdx_A5 == 17)
+    {
+        return false;
+    }
+
+#elif defined(MAP4_S03)
+    if (g_SavegamePtr->mapRoomIdx_A5 != 20)
+    {
+        return false;
+    }
+
+#elif defined(MAP5_S01)
+    sharedData_800DD591_0_s00 = 1;
+
+    if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-33.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-20.0f) &&
+        g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(13.0f) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(44.0f))
+    {
+        sharedData_800E326C_0_s00.corners_0[0].vx = Q12(24.0f);
+        sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-19.0f);
+        sharedData_800E326C_0_s00.corners_0[1].vx = Q12(24.0f);
+        sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-21.5f);
+        sharedData_800E326C_0_s00.corners_0[2].vx = Q12(31.5f);
+        sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-21.5f);
+        sharedData_800E326C_0_s00.corners_0[3].vx = Q12(31.5f);
+        sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-19.0f);
+        sharedData_800E326C_0_s00.corners_0[4].vx = Q12(24.0f);
+        sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-21.5f);
+        sharedData_800E326C_0_s00.corners_0[5].vx = Q12(31.5f);
+        sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-21.5f);
+    }
+    else if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-82.0f) && g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-56.0f) &&
+             g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(43.0f) && g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(70.0f))
+    {
+        sharedData_800E326C_0_s00.corners_0[0].vx = Q12(58.7f);
+        sharedData_800E326C_0_s00.corners_0[0].vz = Q12(-70.5f);
+        sharedData_800E326C_0_s00.corners_0[1].vx = Q12(58.7f);
+        sharedData_800E326C_0_s00.corners_0[1].vz = Q12(-68.0f);
+        sharedData_800E326C_0_s00.corners_0[2].vx = Q12(54.5f);
+        sharedData_800E326C_0_s00.corners_0[2].vz = Q12(-68.0f);
+        sharedData_800E326C_0_s00.corners_0[3].vx = Q12(54.5f);
+        sharedData_800E326C_0_s00.corners_0[3].vz = Q12(-70.5f);
+        sharedData_800E326C_0_s00.corners_0[4].vx = Q12(54.5f);
+        sharedData_800E326C_0_s00.corners_0[4].vz = Q12(-70.5f);
+        sharedData_800E326C_0_s00.corners_0[5].vx = Q12(58.7f);
+        sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-70.5f);
+    }
+    else
+    {
+        sharedData_800DD591_0_s00 = 0;
+    }
+
+#elif defined(MAP5_S03)
+    sharedData_800DD591_0_s00 = 2;
+
+    switch (g_SavegamePtr->mapRoomIdx_A5)
+    {
+        case 7:
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(55.5f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(63.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(55.5f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(58.0f);
+            break;
+
+        case 8:
+            sharedData_800E326C_0_s00.corners_0[0].vx = Q12(100.0f);
+            sharedData_800E326C_0_s00.corners_0[0].vz = Q12(56.5f);
+            sharedData_800E326C_0_s00.corners_0[1].vx = Q12(104.0f);
+            sharedData_800E326C_0_s00.corners_0[1].vz = Q12(56.5f);
+            break;
+
+        default:
+            return false;
+    }
+#endif
+
+    for (pass = 0; pass < 2; pass++)
+    {
+        // Set particle density.
+        switch (pass)
+        {
+            case 0:
+            #if MAP_PARTICLE_HAS_CASE_0
+                density = (g_SysWork.field_2349 == 1) ? 1 : 3;
+            #endif
+                break;
+
+            default:
+            #if MAP_PARTICLE_HAS_CASE_1
+                #if defined(MAP5_S00) || defined(MAP6_S03)
+                    density = 1;
+                #else
+                    density = 10;
+                #endif
+            #endif
+                break;
+        }
+        
+        // Handle particles in this state.
+        for (updateCount = updatePrev;
+             updateCount < (updatePrev + sharedData_800DD588_0_s00[pass]);
+             updateCount++, curPart++)
+        {
+            // Keep only the lower 4 bits.
+            // NOTE: &= 0xF would be faster, but this is what they've done.
+            curPart->type_1F %= 0xF0;
+
+            switch (pass)
+            {
+                case 0:
+                #if MAP_PARTICLE_HAS_CASE_0
+                    if (curPart->type_1F >= 2)
+                    {
+                        curPart->stateStep_1E = 0;
+                        curPart->type_1F = 0;
+                    }
+                #endif
+                    break;
+
+                case 1:
+                #if MAP_PARTICLE_HAS_CASE_1
+                    if (curPart->type_1F < 2 || curPart->type_1F > 3)
+                    {
+                        curPart->stateStep_1E = 0;
+                        curPart->type_1F = 2;
+                    }
+                #endif
+                    break;
+            }
+
+        #if defined(MAP7_S03)
+            D_800F23D0 = (g_DeltaTime0 * 10936) / Q12(1.0f);
+        #endif
+
+            if (sharedData_800DD584_0_s00 != 0)
+            {
+                // NOTE: This function only has a body in `MAP07_S03` and everything else calls an empty function.
+                sharedFunc_800CE954_7_s03(pass, curPart, &rand, &g_DeltaTime0);
+            }
+            else
+            {
+                switch (curPart->stateStep_1E)
+                {
+                    case ParticleState_Spawn:
+                        if (sharedData_800E2156_0_s01 < density)
+                        {
+                            sharedData_800E2156_0_s01++;
+                            sharedFunc_800CF9A8_0_s01(pass, curPart, &rand);
+                        }
+                        break;
+
+                    case ParticleState_Active:
+                        sharedFunc_800CEFD0_1_s02(pass, curPart, &rand, &g_DeltaTime0);
+                        break;
+
+                    default: // `ParticleState_Rest`
+                        curPart->stateStep_1E++;
+                        if (curPart->stateStep_1E < SNOW_REST_TICKS_UPDATE_MAX)
+                        {
+                            sharedFunc_800CFFF8_0_s00(pass, curPart, &rand);
+                        }
+                        #if defined(MAP1_S03) || \
+                            defined(MAP4_S02) || defined(MAP4_S04) || defined(MAP4_S05) || \
+                            defined(MAP5_S00) || \
+                            defined(MAP6_S00) || defined(MAP6_S03)
+                        else
+                        {
+                            sharedFunc_800D0690_1_s03(pass, curPart, &rand, &g_DeltaTime0);
+                        }
+                        #endif
+                        break;
+                }
+            }
+        }
+        updatePrev += sharedData_800DD588_0_s00[pass];
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    curPart = partHead;
+    updatePrev = 0;
+    for (pass = 0; pass < 2; pass++)
+    {
+    #if MAP_PARTICLE_HAS_CASE_1
+        if (pass != 0)
+        {
+            sharedData_800E32D0_0_s00 += sharedData_800DD588_0_s00[pass];
+            limitRange(sharedData_800E32D0_0_s00, 0, 135000);
+        }
+    #endif
+        for (updateCount = updatePrev;
+             updateCount < (updatePrev + sharedData_800DD588_0_s00[pass]);
+             updateCount++, curPart++)
+        {
+            switch (pass)
+            {
+                default:
+                #if MAP_PARTICLE_HAS_CASE_1
+                    sharedFunc_800CEFF4_0_s00(curPart, sp64);
+                #endif
+                    break;
+
+                case 0:
+                #if MAP_PARTICLE_HAS_CASE_0
+                    sharedFunc_800CEB24_0_s00(curPart);
+                #endif
+                    break;
+            }
+        }
+
+        updatePrev += sharedData_800DD588_0_s00[pass];
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    // Likely previous position for next particle system update.
+    // Stores XZ position and Y rotation.
+    g_Particle_PrevPosition.vx = prevPos.vx;
+    g_Particle_PrevPosition.vz = prevPos.vz;
+    g_Particle_PrevRotationY   = g_Particle_RotationY;
+    return false;
+}
+
+#if defined(MAP0_S00)
+bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
+{
+    MATRIX      sp10;
+    MATRIX      sp30;
+    s_func_800CC8FC sp50;
+    VECTOR3         sp90[12];
+    s32         sp120[32]; // @hack Unknown type, it's passed to `func_800CC8FC` but it's an unused parameter. 
+    s32         temp_s4;
+    s32         i;
+    s_800E330C* curArg1;
+    s_800E34FC* curArg0;
+
+    if (g_SysWork.field_234B_4 == 0)
+    {
+        return false;
+    }
+
+    if (g_SysWork.field_234B_4 == 2 && !func_800D0600())
+    {
+        return false;
+    }
+
+    curArg0 = arg0;
+    curArg1 = arg1;
+
+    if (!Game_FlashlightIsOn())
+    {
+        D_800E0C64 = -0x400;
+    }
+
+    temp_s4 = func_800CC8FC(&sp90, &sp120, &sp50);
+    GsInitCoordinate2(NULL, &g_SysWork.coord_22F8);
+
+    g_SysWork.coord_22F8.coord.t[2] = Q8(0.0f);
+    g_SysWork.coord_22F8.coord.t[1] = Q8(0.0f);
+    g_SysWork.coord_22F8.coord.t[0] = Q8(0.0f);
+    g_SysWork.coord_22F8.flg        = false;
+
+    func_80049B6C(&g_SysWork.coord_22F8, &sp10, &sp30);
+    gte_SetRotMatrix(&sp30);
+    gte_SetTransMatrix(&sp30);
+
+    if (D_800DD593)
+    {
+        for (i = 0; i < D_800E39AC; i++, curArg0++)
+        {
+            func_800CE02C(i, func_800D012C(&curArg0->field_0, &sp50, temp_s4), curArg0, mapId);
+        }
+    }
+
+    if (D_800DD594)
+    {
+        for (i = 0; i < D_800E34EC; i++, curArg1++)
+        {
+            func_800CD8E8(i, (s32)(Rng_Rand16() % 65) >> 6, curArg1);
+        }
+    }
+
+    return false;
+}
+
+s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2) // 0x800CC8FC
+{
+    SVECTOR            sp10;
+    SVECTOR            offset0; // Q23.8
+    SVECTOR            offset1; // Q23.8
+    DVECTOR            sp28;
+    DVECTOR            sp30[8];
+    SVECTOR            sp50[12];
+    MATRIX             mat;
+    s32                temp_a0;
+    s32                temp_s4;
+    s32                temp_s5;
+    s32                temp_s7;
+    s32                j;
+    s32                i;
+    s32                count;
+    VECTOR3*           unkPos;
+    s_func_800CC8FC_0* ptr;
+    DVECTOR*           dVecPtr;
+
+    s16 D_800CA7CC[18][2] = {
+        { 0x00, 0x06 },
+        { 0x01, 0x07 },
+        { 0x02, 0x08 },
+        { 0x03, 0x09 },
+        { 0x04, 0x0A },
+        { 0x05, 0x0B },
+        { 0x00, 0x01 },
+        { 0x01, 0x02 },
+        { 0x02, 0x03 },
+        { 0x03, 0x04 },
+        { 0x04, 0x05 },
+        { 0x05, 0x00 },
+        { 0x06, 0x07 },
+        { 0x07, 0x08 },
+        { 0x08, 0x09 },
+        { 0x09, 0x0A },
+        { 0x0A, 0x0B },
+        { 0x0B, 0x06 },
+    };
+
+    temp_s4 = D_800E0C74.field_0 >> 6;
+    temp_s7 = D_800E0C74.field_0 >> 3;
+    temp_a0 = D_800E0C74.field_0 / 20;
+    temp_s5 = D_800E0C74.field_0 / 12;
+
+    for (i = 0; i < 6; i++)
+    {
+        sp50[i].vx = Q12_MULT(temp_a0, Math_Sin((i * 0x3C000) / 360));
+        sp50[i].vy = Q12_MULT(temp_a0, Math_Cos((i * 0x3C000) / 360));
+        sp50[i].vz = -temp_s4;
+    }
+
+    for (i = 0; i < 6; i++)
+    {
+        sp50[i + 6].vx = Q12_MULT(temp_s5, Math_Sin((i * 0x3C000) / 360));
+        sp50[i + 6].vy = Q12_MULT(temp_s5, Math_Cos((i * 0x3C000) / 360));
+        sp50[i + 6].vz = temp_s7;
+    }
+
+    count = 0;
+    Math_RotMatrixZxyNegGte(&g_ParticleVectors0.svec_18, &mat);
+
+    for (j = 0; j < 18; j++)
+    {
+        sp10 = sp50[D_800CA7CC[j][0]];
+
+        PushMatrix();
+        ApplyMatrixSV(&mat, &sp10, &offset0);
+        PopMatrix();
+
+        unkPos = &arg0[D_800CA7CC[j][0]];
+
+        unkPos->vx = Q8_TO_Q12(offset0.vx) + (g_ParticleVectors0.vector_0.vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+        unkPos->vy = Q8_TO_Q12(offset0.vy) + (g_ParticleVectors0.vector_0.vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+        unkPos->vz = Q8_TO_Q12(offset0.vz) + (g_ParticleVectors0.vector_0.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
+
+        offset0.vx += Q12_TO_Q8(g_ParticleVectors0.vector_0.vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+        offset0.vy += Q12_TO_Q8(g_ParticleVectors0.vector_0.vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+        offset0.vz += Q12_TO_Q8(g_ParticleVectors0.vector_0.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
+
+        gte_ldv0(&offset0);
+        gte_rtps();
+
+        sp10 = sp50[D_800CA7CC[j][1]];
+
+        PushMatrix();
+        ApplyMatrixSV(&mat, &sp10, &offset1);
+        PopMatrix();
+
+        unkPos = &arg0[D_800CA7CC[j][1]];
+
+        unkPos->vx = Q8_TO_Q12(offset1.vx) + (g_ParticleVectors0.vector_0.vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+        unkPos->vy = Q8_TO_Q12(offset1.vy) + (g_ParticleVectors0.vector_0.vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+        unkPos->vz = Q8_TO_Q12(offset1.vz) + (g_ParticleVectors0.vector_0.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
+
+        offset1.vx += Q12_TO_Q8(g_ParticleVectors0.vector_0.vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+        offset1.vy += Q12_TO_Q8(g_ParticleVectors0.vector_0.vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+        offset1.vz += Q12_TO_Q8(g_ParticleVectors0.vector_0.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
+
+        if ((offset0.vy >= Q8(0.0f) && offset1.vy <  Q8(0.0f)) ||
+            (offset0.vy <  Q8(0.0f) && offset1.vy >= Q8(0.0f)))
+        {
+            sp30[count].vx = offset0.vx - (offset0.vy * (offset1.vx - offset0.vx)) / (offset1.vy - offset0.vy);
+            sp30[count].vy = offset0.vz - (offset0.vy * (offset1.vz - offset0.vz)) / (offset1.vy - offset0.vy);
+            count++;
+        }
+    }
+
+    if (count == 0)
+    {
+        return 0;
+    }
+
+    for (i = 0; i < (count - 1); i++)
+    {
+        for (j = i + 1; j < count; j++)
+        {
+            if (sp30[i].vx > sp30[j].vx)
+            {
+                sp28    = sp30[i];
+                sp30[i] = sp30[j];
+                sp30[j] = sp28;
+            }
+        }
+    }
+
+    ptr = arg2->field_0;
+
+    for (j = 0; j < 3; j++)
+    {
+        ptr[j].field_0 = sp30[j];
+    }
+
+    if ((ptr[1].field_0.vx - ptr[0].field_0.vx) * (ptr[2].field_0.vy - ptr[0].field_0.vy) <=
+        (ptr[1].field_0.vy - ptr[0].field_0.vy) * (ptr[2].field_0.vx - ptr[0].field_0.vx))
+    {
+        sp28           = ptr[1].field_0;
+        ptr[1].field_0 = ptr[2].field_0;
+        ptr[2].field_0 = sp28;
+    }
+
+    for (j = 0; j < 3; j++)
+    {
+        ptr[j].field_4 = j - 1;
+        ptr[j].field_5 = j + 1;
+    }
+
+    ptr[0].field_4 = 2;
+    ptr[2].field_5 = 0;
+
+    ptr = arg2->field_0;
+
+    for (i = 3; i < count; i++)
+    {
+        dVecPtr = &sp10;
+
+        j = 0;
+
+        while ((ptr[ptr[j].field_5].field_0.vx - ptr[j].field_0.vx) * (dVecPtr[i + 8].vy - ptr[j].field_0.vy) >
+               (ptr[ptr[j].field_5].field_0.vy - ptr[j].field_0.vy) * (dVecPtr[i + 8].vx - ptr[j].field_0.vx))
+        {
+            j = ptr[j].field_5;
+        }
+
+        ptr[i].field_7 = j;
+
+        j = 0;
+
+        while ((ptr[j].field_0.vx - ptr[ptr[j].field_4].field_0.vx) * (dVecPtr[i + 8].vy - ptr[ptr[j].field_4].field_0.vy) >
+               (ptr[j].field_0.vy - ptr[ptr[j].field_4].field_0.vy) * (dVecPtr[i + 8].vx - ptr[ptr[j].field_4].field_0.vx))
+        {
+            j = ptr[j].field_5;
+        }
+
+        ptr[i].field_6 = j;
+
+        ptr[ptr[i].field_7].field_5 = i;
+        ptr[ptr[i].field_6].field_4 = i;
+
+        ptr[i].field_5 = ptr[i].field_6;
+        ptr[i].field_4 = ptr[i].field_7;
+
+        ptr[i].field_0 = sp30[i];
+    }
+
+    D_800DFB54 = 1;
+
+    for (i = 0; ptr[i].field_5 != 0; D_800DFB54++)
+    {
+        i = ptr[i].field_5;
+    }
+
+    return D_800DFB54;
+}
+
+void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
+{
+    VECTOR3 pos; // Q23.8
+    q3_12   angle0;
+    q3_12   angle1;
+    s32     temp_s0_3;
+    s32     var_s0;
+
+    if (sharedData_800DD584_0_s00 != 0)
+    {
+        return;
+    }
+
+    arg2->field_0.vx += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_C.vx);
+    arg2->field_0.vy += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_C.vy);
+    arg2->field_0.vz += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_C.vz);
+
+    limitRange(arg2->field_C.vx, -0x100, 0xFF);
+    limitRange(arg2->field_C.vy, -0xFF, 0xFF);
+    limitRange(arg2->field_C.vz, -0xFF, 0xFF);
+
+    switch (arg2->field_15)
+    {
+        case 1:
+            arg2->field_C.vy += Rng_GenerateInt(-4, 4);
+            limitRange(arg2->field_C.vy, -16, 16);
+
+            arg2->field_C.vx += Q12_MULT(Math_Sin((arg2->field_16 + arg0) << 5), Q12(0.01f));
+            arg2->field_C.vz += Q12_MULT(Math_Cos((arg2->field_16 + arg0) << 5), Q12(0.01f));
+
+            var_s0 = arg2->field_16;
+
+            if (Rng_GenerateUInt(128, 159) < var_s0)
+            {
+                arg2->field_15 = Rng_GenerateInt(1, 3);
+                arg2->field_16 = 0;
+            }
+            else
+            {
+                arg2->field_16++;
+            }
+
+            if (arg1 != 0)
+            {
+                arg2->field_15 = 5;
+                arg2->field_16 = 0;
+            }
+            break;
+
+        case 2:
+            arg2->field_C.vy += Rng_GenerateInt(-4, 4);
+            limitRange(arg2->field_C.vy, -16, 16);
+
+            arg2->field_C.vx += Q12_MULT(Math_Sin((arg2->field_16 + arg0) << 5), Q12(0.01f));
+            arg2->field_C.vz += Q12_MULT(Math_Cos((arg2->field_16 + arg0) << 6), Q12(0.01f));
+
+            var_s0 = arg2->field_16;
+
+            if (Rng_GenerateUInt(128, 191) < var_s0)
+            {
+                arg2->field_15 = Rng_GenerateInt(1, 3);
+                arg2->field_16 = 0;
+            }
+            else
+            {
+                arg2->field_16++;
+            }
+
+            if (arg1 != 0)
+            {
+                arg2->field_15 = 5;
+                arg2->field_16 = 0;
+            }
+            break;
+
+        case 3:
+            arg2->field_C.vy += Rng_GenerateInt(-4, 4);
+            limitRange(arg2->field_C.vy, -16, 16);
+
+            if (arg2->field_16 == 0)
+            {
+                angle0 = Rng_GenerateInt(0, Q12(1.0f) - 1);
+
+                arg2->field_C.vx = (u32)(Math_Sin(angle0) * 5) >> 7;
+                arg2->field_C.vz = (u32)(Math_Sin(angle0) * 5) >> 7;
+            }
+
+            var_s0 = arg2->field_16;
+
+            if (Rng_GenerateUInt(100, 227) < var_s0)
+            {
+                arg2->field_15 = Rng_GenerateInt(1, 3);
+                arg2->field_16 = 0;
+            }
+            else
+            {
+                arg2->field_16++;
+            }
+
+            if (arg1 != 0)
+            {
+                arg2->field_15 = 5;
+                arg2->field_16 = 0;
+            }
+            break;
+
+        case 5:
+            if (arg0 < Rng_GenerateInt(10, 19) || g_SysWork.field_2358 == 0)
+            {
+                pos.vx = Q12_TO_Q8(D_800E32DC->vx - arg2->field_0.vx);
+                pos.vy = Q12_TO_Q8(D_800E32DC->vy - arg2->field_0.vy);
+                pos.vz = Q12_TO_Q8(D_800E32DC->vz - arg2->field_0.vz);
+            }
+            else
+            {
+                pos.vx = g_SysWork.playerBoneCoords_890[HarryBone_RightHand].workm.t[0] - Q12_TO_Q8(arg2->field_0.vx);
+                pos.vy = g_SysWork.playerBoneCoords_890[HarryBone_RightHand].workm.t[1] - Q12_TO_Q8(arg2->field_0.vy);
+                pos.vz = g_SysWork.playerBoneCoords_890[HarryBone_RightHand].workm.t[2] - Q12_TO_Q8(arg2->field_0.vz);
+            }
+
+            temp_s0_3 = SquareRoot0(SQUARE(pos.vx) + SQUARE(pos.vz));
+            angle0    = ratan2(pos.vx, pos.vz);
+            angle1    = ratan2(pos.vy, temp_s0_3);
+
+            arg2->field_C.vx += Q12_MULT(Math_Sin(angle0), Q12(0.02f) - 1);
+            arg2->field_C.vz += Q12_MULT(Math_Cos(angle0), Q12(0.02f) - 1);
+            arg2->field_C.vy += Q12_MULT(Math_Sin(angle1), Q12(0.01f));
+
+            var_s0 = arg2->field_16;
+
+            if (Rng_GenerateUInt(80, 143) < var_s0 || (arg1 != 0 && arg2->field_16 > 80))
+            {
+                arg2->field_16 = 0;
+                arg2->field_15 = Rng_GenerateInt(1, 3);
+            }
+            else
+            {
+                arg2->field_16++;
+            }
+            break;
+    }
+}
+
+void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD8E8
+{
+    SVECTOR   pos; // Q23.8
+    s32       depth;
+    u8        temp_v0;
+    POLY_FT4* poly;
+
+    func_800CD1F4(arg0, arg1, arg2);
+
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
+
+    // Set as `POLY_FT4` with `tpage = 44`.
+    setPolyFT4TPage(poly, 44);
+
+    poly->clut = 12;
+
+    if (sharedData_800DD584_0_s00 != 0)
+    {
+        switch (arg0 & 3)
+        {
+            case 0:
+                setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                break;
+
+            case 1:
+                setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                break;
+
+            case 2:
+                setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                break;
+
+            case 3:
+                setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                break;
+        }
+    }
+    else
+    {
+        switch (g_SysWork.timer_1C & 0x7)
+        {
+            case 0:
+            case 1:
+                switch (arg0 & 3)
+                {
+                    case 0:
+                        setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                        break;
+
+                    case 1:
+                        setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                        break;
+
+                    case 2:
+                        setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                        break;
+
+                    case 3:
+                        setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                        break;
+                }
+                break;
+
+            case 2:
+            case 3:
+                switch (arg0 & 0x3)
+                {
+                    case 0:
+                        setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                        break;
+
+                    case 1:
+                        setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                        break;
+
+                    case 2:
+                        setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                        break;
+
+                    case 3:
+                        setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                        break;
+                }
+                break;
+
+            case 4:
+            case 5:
+                switch (arg0 & 0x3)
+                {
+                    case 0:
+                        setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                        break;
+
+                    case 1:
+                        setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                        break;
+
+                    case 2:
+                        setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                        break;
+
+                    case 3:
+                        setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                        break;
+                }
+                break;
+
+            case 6:
+            case 7:
+                switch (arg0 & 0x3)
+                {
+                    case 0:
+                        setUV4(poly, 48, 240, 48, 255, 64, 240, 64, 255);
+                        break;
+
+                    case 1:
+                        setUV4(poly, 0, 240, 0, 255, 16, 240, 16, 255);
+                        break;
+
+                    case 2:
+                        setUV4(poly, 16, 240, 16, 255, 32, 240, 32, 255);
+                        break;
+
+                    case 3:
+                        setUV4(poly, 32, 240, 32, 255, 48, 240, 48, 255);
+                        break;
+                }
+                break;
+        }
+    }
+
+    if (Game_FlashlightIsOn())
+    {
+        temp_v0 = func_80055D78(g_SysWork.playerWork_4C.player_0.position_18.vx + arg2->field_0.vx,
+                                g_SysWork.playerWork_4C.player_0.position_18.vy + arg2->field_0.vy,
+                                g_SysWork.playerWork_4C.player_0.position_18.vz + arg2->field_0.vz);
+
+        temp_v0 = (temp_v0 != 0) ? ((temp_v0 >= 0 && temp_v0 <= 176) ? temp_v0 : 176) : 1;
+
+        switch (D_800C39A0)
+        {
+            case 1:
+            case 4:
+            case 10:
+                poly->r0 = temp_v0 + sharedData_800E3258_0_s00.r;
+                poly->g0 = temp_v0 + sharedData_800E3258_0_s00.g;
+                poly->b0 = temp_v0 + sharedData_800E3258_0_s00.b;
+                break;
+
+            default:
+                temp_v0 = func_80055D78(g_SysWork.playerWork_4C.player_0.position_18.vx + arg2->field_0.vx,
+                                        g_SysWork.playerWork_4C.player_0.position_18.vy + arg2->field_0.vy,
+                                        g_SysWork.playerWork_4C.player_0.position_18.vz + arg2->field_0.vz);
+                temp_v0 = (temp_v0 != 0) ? ((temp_v0 >= 0 && temp_v0 <= 176) ? temp_v0 : 176) : 1;
+
+                temp_v0 >>= 3;
+                poly->r0  = sharedData_800E3258_0_s00.r + temp_v0;
+                poly->g0  = sharedData_800E3258_0_s00.g + temp_v0;
+                poly->b0  = sharedData_800E3258_0_s00.b + temp_v0;
+                break;
+
+            case 7:
+            case 9:
+            case 11:
+                poly->r0 = sharedData_800E3258_0_s00.r;
+                poly->g0 = sharedData_800E3258_0_s00.g;
+                poly->b0 = sharedData_800E3258_0_s00.b;
+                break;
+        }
+    }
+    else
+    {
+        switch (D_800C39A0)
+        {
+            case 1:
+            case 4:
+            case 10:
+                temp_v0 = func_80055D78(g_SysWork.playerWork_4C.player_0.position_18.vx + arg2->field_0.vx,
+                                        g_SysWork.playerWork_4C.player_0.position_18.vy + arg2->field_0.vy,
+                                        g_SysWork.playerWork_4C.player_0.position_18.vz + arg2->field_0.vz);
+                temp_v0 = (temp_v0 != 0) ? ((temp_v0 >= 0 && temp_v0 <= 176) ? temp_v0 : 176) : 1;
+
+                poly->r0 = temp_v0 + sharedData_800E3258_0_s00.r;
+                poly->g0 = temp_v0 + sharedData_800E3258_0_s00.g;
+                poly->b0 = temp_v0 + sharedData_800E3258_0_s00.b;
+                break;
+
+            default:
+                poly->r0 = sharedData_800E3258_0_s00.r;
+                poly->g0 = sharedData_800E3258_0_s00.g;
+                poly->b0 = sharedData_800E3258_0_s00.b;
+                break;
+        }
+    }
+
+    pos.vx = Q12_TO_Q8(arg2->field_0.vx);
+    pos.vy = Q12_TO_Q8(arg2->field_0.vy);
+    pos.vz = Q12_TO_Q8(arg2->field_0.vz);
+
+    gte_ldv0(&pos);
+    gte_rtps();
+    gte_stsxy(&poly->x0);
+    gte_stszotz(&depth);
+
+    depth = depth >> 1;
+
+    if (depth >= 1 && depth < (ORDERING_TABLE_SIZE / 2) - 1)
+    {
+        u8 temp_a1;
+
+        if ((depth >> 3) >= 13)
+        {
+            temp_a1 = 3;
+        }
+        else
+        {
+            temp_a1 = 16 - (depth >> 3);
+        }
+
+        if (temp_a1 < 0 || temp_a1 >= 3)
+        {
+            if (temp_a1 > 16)
+            {
+                temp_a1 = 16;
+            }
+        }
+        else
+        {
+            temp_a1 = 3;
+        }
+
+        poly->x1 = poly->x0;
+        poly->x2 = poly->x3 = poly->x0 + temp_a1;
+        poly->y2            = poly->y0;
+        poly->y1 = poly->y3 = poly->y0 + temp_a1;
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[depth], poly);
+
+        GsOUT_PACKET_P = poly + 1;
+    }
+}
+
+void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId) // 0x800CE02C
+{
+    SVECTOR3  posQ8;
+    POLY_FT4* poly;
+    s32       depth;
+    s32       depthDiv16;
+
+    func_800CE544(arg0, arg1, pos);
+
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
+    setPolyFT4(poly);
+    setSemiTrans(poly, true);
+
+    poly->tpage = 76;
+    poly->clut  = 76;
+
+    if (sharedData_800DD584_0_s00 != 0)
+    {
+        switch (arg0 & 3)
+        {
+            case 0:
+                setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
+                break;
+
+            case 1:
+                setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
+                break;
+
+            case 2:
+                setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
+                break;
+
+            case 3:
+                setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
+                break;
+        }
+    }
+    else
+    {
+        switch (g_SysWork.timer_1C & 0x7)
+        {
+            case 0:
+            case 1:
+                switch (arg0 & 0x3)
+                {
+                    case 0:
+                        setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
+                        break;
+
+                    case 1:
+                        setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
+                        break;
+
+                    case 2:
+                        setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
+                        break;
+
+                    case 3:
+                        setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
+                        break;
+                }
+                break;
+
+            case 2:
+            case 3:
+                switch (arg0 & 3)
+                {
+                    case 0:
+                        setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
+                        break;
+
+                    case 1:
+                        setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
+                        break;
+
+                    case 2:
+                        setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
+                        break;
+
+                    case 3:
+                        setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
+                        break;
+                }
+                break;
+
+            case 4:
+            case 5:
+                switch (arg0 & 3)
+                {
+                    case 0:
+                        setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
+                        break;
+
+                    case 1:
+                        setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
+                        break;
+
+                    case 2:
+                        setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
+                        break;
+
+                    case 3:
+                        setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
+                        break;
+                }
+                break;
+
+            case 6:
+            case 7:
+                switch (arg0 & 3)
+                {
+                    case 0:
+                        setUV4(poly, 112, 240, 112, 255, 128, 240, 128, 255);
+                        break;
+
+                    case 1:
+                        setUV4(poly, 64, 240, 64, 255, 80, 240, 80, 255);
+                        break;
+
+                    case 2:
+                        setUV4(poly, 80, 240, 80, 255, 96, 240, 96, 255);
+                        break;
+
+                    case 3:
+                        setUV4(poly, 96, 240, 96, 255, 112, 240, 112, 255);
+                        break;
+                }
+        }
+    }
+
+    poly->b0 = poly->g0 = poly->r0 = 0x80;
+
+    posQ8.vx = Q12_TO_Q8(pos->field_0.vx);
+    posQ8.vy = Q12_TO_Q8(pos->field_0.vy);
+    posQ8.vz = Q12_TO_Q8(pos->field_0.vz);
+
+    gte_ldv0(&posQ8);
+    gte_rtps();
+    gte_stsxy(&poly->x0);
+    gte_stszotz(&depth);
+
+    depthDiv16 = depth >> 4;
+    depth      = depth >> 1;
+
+    if (depth > 32 && depth < (ORDERING_TABLE_SIZE / 2) - 1)
+    {
+        u8 var_a1;
+
+        if (depthDiv16 >= 13)
+        {
+            var_a1 = 3;
+        }
+        else
+        {
+            var_a1 = 16 - depthDiv16;
+        }
+
+        if (var_a1 >= 3)
+        {
+            if (var_a1 >= 17)
+            {
+                var_a1 = 16;
+            }
+        }
+        else
+        {
+            var_a1 = 3;
+        }
+
+        poly->x1 = poly->x0;
+        poly->x2 = poly->x3 = poly->x0 + var_a1;
+        poly->y2            = poly->y0;
+        poly->y1 = poly->y3 = poly->y0 + var_a1;
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[depth], poly);
+
+        GsOUT_PACKET_P = (PACKET*)&poly[1];
+    }
+}
+
+void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
+{
+    s16     rng0;
+    q3_12   angle;
+    s32     someMax;
+    s32     someMin;
+    VECTOR3 vecCpy;
+
+    if (sharedData_800DD584_0_s00 == 0)
+    {
+        arg2->field_0.vx += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_C);
+        arg2->field_0.vz += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_E);
+
+        switch (arg2->field_11)
+        {
+            case 1:
+                arg2->field_12++;
+                if (arg1)
+                {
+                    if (Rng_GenerateUInt(0, 1) != 0) // 1 in 2 chance.
+                    {
+                        arg2->field_11 = 5;
+                        arg2->field_12 = 0;
+                    }
+                    else
+                    {
+                        arg2->field_11 = 6;
+                    }
+                }
+
+                if (arg2->field_12 > Rng_GenerateUInt(100, 227))
+                {
+                    arg2->field_11 = (Rng_GenerateUInt(0, 1) * 3) + 1;
+                    arg2->field_12 = 0;
+                }
+
+                arg2->field_C += Rng_GenerateInt(-4, 4);
+                arg2->field_E += Rng_GenerateInt(-4, 4);
+                break;
+
+            case 2:
+                arg2->field_12++;
+                if (arg1)
+                {
+                    arg2->field_11 = 5;
+                    arg2->field_12 = 0;
+                }
+
+                arg2->field_C += Rng_GenerateInt(-4, 4);
+                arg2->field_E += Rng_GenerateInt(-4, 4);
+
+                if (arg2->field_12 > Rng_GenerateUInt(100, 227))
+                {
+                    arg2->field_11 = Rng_GenerateUInt(3, 4);
+                    arg2->field_12 = 0;
+                    rng0 = Rng_GenerateInt(0, 0xfff);
+                    arg2->field_C = (u32)(Math_Sin(rng0) * 3) / 0x100;
+                    arg2->field_E = (u32)(Math_Cos(rng0) * 3) / 0x100;
+                }
+                break;
+
+            case 3:
+                arg2->field_12++;
+
+                if (arg2->field_12 > Rng_GenerateUInt(100, 227))
+                {
+                    arg2->field_11 = 2;
+                    arg2->field_E = 0;
+                    arg2->field_C = 0;
+                    arg2->field_12 = 0;
+                }
+
+                if (arg1)
+                {
+                    arg2->field_11 = 5;
+                    arg2->field_12 = 0;
+                }
+                break;
+
+            case 4:
+                arg2->field_12++;
+
+                vecCpy.vx = D_800E32DC[(idx0 / 20) + 1].vx - arg2->field_0.vx;
+                vecCpy.vz = D_800E32DC[(idx0 / 20) + 1].vz - arg2->field_0.vz;
+                vecCpy.vy = 0;
+
+                angle = ratan2(vecCpy.vx, vecCpy.vz);
+                arg2->field_C = (u32)(Math_Sin(angle) * 3) / 0x100;
+                arg2->field_E = (u32)(Math_Cos(angle) * 3) / 0x100;
+
+                if (arg1)
+                {
+                    arg2->field_11 = Rng_GenerateUInt(5, 6);
+                    arg2->field_12 = 0;
+                }
+
+                if (arg2->field_12 > 192)
+                {
+                    arg2->field_11 = Rng_GenerateUInt(1, 2);
+                    arg2->field_E = 0;
+                    arg2->field_C = 0;
+                    arg2->field_12 = 0;
+                }
+                break;
+
+            case 5:
+                if (arg2->field_12 == 0)
+                {
+                    vecCpy.vx = (arg2->field_0.vx - g_SysWork.playerWork_4C.player_0.position_18.vx) >> 4;
+                    vecCpy.vz = (arg2->field_0.vz - g_SysWork.playerWork_4C.player_0.position_18.vz) >> 4;
+                    angle = ratan2(vecCpy.vx, vecCpy.vz);
+                    arg2->field_C = (u32)(Math_Sin(angle) * 3) / 0x10;
+                    arg2->field_E = (u32)(Math_Cos(angle) * 3) / 0x10;
+                }
+
+                if (arg1)
+                {
+                    arg2->field_12 = 0;
+                }
+
+                if (arg2->field_12 > 16)
+                {
+                    arg2->field_11 = 2;
+                    arg2->field_12 = 0;
+                }
+
+                arg2->field_12++;
+                break;
+
+            case 6:
+                arg2->field_12++;
+
+                if (arg2->field_12 > Rng_GenerateUInt(20, 21))
+                {
+                    if (arg1)
+                    {
+                        arg2->field_11 = Rng_GenerateUInt(5, 6);
+                        arg2->field_12 = 0;
+                    }
+                    else
+                    {
+                        arg2->field_11 = (Rng_GenerateUInt(0, 1) * 3) + 1;
+                    }
+                }
+
+                arg2->field_C += Rng_GenerateInt(-4, 4);
+                arg2->field_E += Rng_GenerateInt(-4, 4);
+                break;
+        }
+
+        someMin = (arg2->field_11 == 5) ? -64 : -20;
+        someMax = (arg2->field_11 == 5) ?  64 :  20;
+        arg2->field_C = CLAMP(arg2->field_C, someMin, someMax);
+        arg2->field_E = CLAMP(arg2->field_E, someMin, someMax);
+    }
+}
+#endif
+
+#if MAP_PARTICLE_HAS_CASE_0
+#include "inline_no_dmpsx.h"
+
+#if !defined(PARTICLE_CASE_COUNT)
+    #define PARTICLE_CASE_COUNT 1
+    #define HAS_PARTICLE_FALLBACK_CASE
+#endif
+
+/** Particle case switch handling.
+ *
+ * Maps define one or more HAS_PARTICLE_CASE_X flags to include their
+ * respective switch cases.
+ * When only a single case is present (`PARTICLE_CASE_COUNT == 1`), the 
+ * macro below replaces `case N:` with `default:` so that the compiler
+ * collapses the switch into a direct block, matching single-case maps 
+ * that skip checking the case entirely.
+ */
+#if PARTICLE_CASE_COUNT > 1
+    #define PARTICLE_CASE(id) case id
+#else
+    #define PARTICLE_CASE(id) default
+#endif
+
+void sharedFunc_800CEB24_0_s00(s_Particle* part)
+{
+#if !defined(MAP1_S00) && !defined(MAP6_S00) && !defined(MAP7_S03)
+    VECTOR3     particlePos;
+#endif
+
+#if defined(HAS_PARTICLE_CASE_1)
+    VECTOR3     partCorners[2];
+#endif
+
+    SVECTOR3    particlePosQ8;
+    s32         zScreenStart;
+
+    u8          primColorG;
+    u8          primColorB;
+    u8          primColorR;
+    
+    s_Particle* localPart;
+    POLY_FT3*   polyFt3;
+
+    localPart = part;
+    polyFt3   = (POLY_FT3*)GsOUT_PACKET_P;
+
+    if (part->type_1F >= 240)
+    {
+        part->type_1F += 16;
+        if (part->stateStep_1E < 0 || part->stateStep_1E >= 31)
+        {
+            part->stateStep_1E = 0;
+            return;
+        }
+    }
+    else if (part->stateStep_1E != 0)
+    {
+#if !defined(MAP1_S00) && !defined(MAP6_S00) && !defined(MAP7_S03)
+        if (sharedData_800DD591_0_s00 != 0)
+        {
+            particlePos = part->position0_0;
+
+            // TODO: Check value of `sharedData_800DD591_0_s00` on each map, some of the `#if defined(MAPX)` changes in the switch below could be separate cases.
+            // (fallback case might also have its own value too)
+            switch (sharedData_800DD591_0_s00)
+            {
+#ifdef HAS_PARTICLE_CASE_1
+                PARTICLE_CASE(1):
+                    if (part->position0_0.vy < sharedData_800E326C_0_s00.corners_0[0].vy)
+                    {
+                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                    }
+                    else
+                    {
+                        s32 temp_v1;
+                        partCorners[0].vx = sharedData_800E326C_0_s00.corners_0[0].vx;
+                        partCorners[1].vx = sharedData_800E326C_0_s00.corners_0[1].vx;
+                        temp_v1           = sharedData_800E326C_0_s00.corners_0[0].vz + 0x1400;
+                        temp_v1          += part->position0_0.vy >> 2;
+                        partCorners[1].vz = temp_v1;
+                        partCorners[0].vz = temp_v1;
+
+                        sharedFunc_800D0700_0_s00(&particlePos, &partCorners[0], &partCorners[1], 0);
+                    }
+                    break;
+#endif
+
+#ifdef HAS_PARTICLE_CASE_9
+                PARTICLE_CASE(9):
+#if defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06)
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                    if (g_SavegamePtr->mapRoomIdx_A5 == 5)
+#else
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
+                    if (particlePos.vy == 0)
+#endif
+                    {
+                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 0);
+                    }
+                    break;
+#endif
+
+#ifdef HAS_PARTICLE_CASE_10
+                PARTICLE_CASE(10):
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
+                    if (particlePos.vy == 0)
+                    {
+                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
+                        if (particlePos.vy == 0)
+                        {
+                            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 0);
+                        }
+                    }
+                    break;
+#endif
+
+#ifdef HAS_PARTICLE_CASE_11
+                PARTICLE_CASE(11):
+#if defined(MAP0_S02)
+                    if (g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-120.0f))
+                    {
+                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                        break;
+                    }
+#endif
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
+                    if (particlePos.vy == 0)
+                    {
+                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
+                        if (particlePos.vy == 0)
+                        {
+                            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 1);
+                            if (particlePos.vy == 0)
+                            {
+                                sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[6], &sharedData_800E326C_0_s00.corners_0[7], 0);
+                            }
+                        }
+                    }
+                    break;
+#endif
+
+#ifdef HAS_PARTICLE_FALLBACK_CASE
+                default:
+                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                    break;
+#endif
+            }
+
+            particlePosQ8.vx = Q12_TO_Q8(particlePos.vx);
+            particlePosQ8.vy = Q12_TO_Q8(localPart->position0_0.vy);
+            particlePosQ8.vz = Q12_TO_Q8(particlePos.vz);
+        }
+        else
+#endif
+        {
+            particlePosQ8.vx = Q12_TO_Q8(localPart->position0_0.vx);
+            particlePosQ8.vy = Q12_TO_Q8(localPart->position0_0.vy);
+            particlePosQ8.vz = Q12_TO_Q8(localPart->position0_0.vz);
+        }
+
+        gte_ldv0(&particlePosQ8);
+        gte_rtps();
+
+        polyFt3->tpage = 44;
+        polyFt3->u0    = 0;
+        polyFt3->v0    = 112;
+        polyFt3->u1    = 0;
+        polyFt3->v1    = 115;
+        polyFt3->u2    = 3;
+        polyFt3->v2    = 112;
+
+        setPolyFT3(polyFt3);
+
+        gte_stsxy(&polyFt3->x0);
+        gte_stszotz(&zScreenStart);
+
+        if (D_800C39A0 == 1 || D_800C39A0 == 4)
+        {
+            primColorG = primColorB = primColorR = sharedData_800E3258_0_s00.r - (func_80055A50(zScreenStart) >> 2);
+        }
+        else
+        {
+            primColorR = sharedData_800E3258_0_s00.r;
+            primColorG = sharedData_800E3258_0_s00.g;
+            primColorB = sharedData_800E3258_0_s00.b;
+        }
+
+        zScreenStart = zScreenStart >> 1;
+
+        if (localPart->stateStep_1E >= 2)
+        {
+            if (localPart->stateStep_1E < 31)
+            {
+                primColorR -= (primColorR * localPart->stateStep_1E) >> 5;
+                primColorG -= (primColorG * localPart->stateStep_1E) >> 5;
+                primColorB -= (primColorB * localPart->stateStep_1E) >> 5;
+            }
+            else
+            {
+                localPart->stateStep_1E = 0;
+                return;
+            }
+        }
+
+        polyFt3->r0 = primColorR;
+        polyFt3->g0 = primColorG;
+        polyFt3->b0 = primColorB;
+
+        if (zScreenStart > 32 && zScreenStart < ORDERING_TABLE_SIZE - 1)
+        {
+            setSemiTrans(polyFt3, true);
+            polyFt3->x1 = polyFt3->x0;
+            polyFt3->y2 = polyFt3->y0;
+
+            if (zScreenStart < 64)
+            {
+                if (Game_FlashlightIsOn())
+                {
+                    // @unused Optimized out code that makes use of `D_800C39A0`
+                    // Unknown what it was actually used for.
+                    if (D_800C39A0 == 1 || D_800C39A0 == 4)
+                    {
+                        primColorB = primColorR;
+                    }
+                }
+
+                polyFt3->clut = 0x1830;
+                polyFt3->u0   = 3;
+                polyFt3->v0   = 112;
+                polyFt3->u1   = 3;
+                polyFt3->v1   = 116;
+                polyFt3->u2   = 7;
+                polyFt3->v2   = 112;
+                polyFt3->x2   = polyFt3->x0 + 4;
+                polyFt3->y1   = polyFt3->y0 + 4;
+            }
+            else if (zScreenStart >= 256)
+            {
+                if (Game_FlashlightIsOn())
+                {
+                    // @unused Optimized out code that makes use of `D_800C39A0`
+                    // Unknown what it was actually used for.
+                    if (D_800C39A0 == 1 || D_800C39A0 == 4)
+                    {
+                        primColorB = primColorR;
+                    }
+                }
+
+                polyFt3->clut = 0x19F0;
+                polyFt3->x2   = polyFt3->x0 + 1;
+                polyFt3->y1   = polyFt3->y0 + 1;
+            }
+            else
+            {
+                s32 clutBase;
+                if (Game_FlashlightIsOn())
+                {
+                    // @unused Optimized out code that makes use of `D_800C39A0`, unknown what code actually used it for.
+                    if (D_800C39A0 == 1 || D_800C39A0 == 4)
+                    {
+                        primColorB = primColorR;
+                    }
+                }
+
+                clutBase = ((zScreenStart >> 5) + 96) << 6;
+
+                do {} while (false); // @hack
+
+                polyFt3->clut = clutBase | 0x30;
+                polyFt3->x2   = polyFt3->x0 + 3;
+                polyFt3->y1   = polyFt3->y0 + 3;
+            }
+
+#if defined(MAP1_S00) || defined(MAP6_S00)
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[zScreenStart], polyFt3);
+#elif defined(MAP7_S03)
+            if (zScreenStart > 64 && D_800F23D4 > Q12(7.0f))
+            {
+                zScreenStart = 64;
+            }
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[zScreenStart], polyFt3);
+#else
+            switch (sharedData_800DD591_0_s00)
+            {
+                case 2:
+                    if ((zScreenStart + 256) < ORDERING_TABLE_SIZE - 1)
+                    {
+                        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[zScreenStart + 256], polyFt3);
+                    }
+                    break;
+
+                default:
+                    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[zScreenStart], polyFt3);
+                    break;
+            }
+#endif
+            GsOUT_PACKET_P = (PACKET*)&polyFt3[1];
+        }
+    }
+}
+#endif
+
+#if MAP_PARTICLE_HAS_CASE_1
+void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
+{
+#if defined(MAP0_S00) || defined(MAP4_S02) || defined(MAP4_S03)
+    VECTOR3 sp10;
+#endif
+    SVECTOR     sp20;
+    SVECTOR     sp28;
+    SVECTOR     sp30;
+    SVECTOR     sp38;
+    s32         depth;
+    s32         colorComp;
+    s32         test;
+    u8          color;
+    u32         step;
+    u8          r;
+    u8          g;
+    u8          b;
+    s32         rScaled;
+    s32         gScaled;
+    s32         bScaled;
+    POLY_FT4*   poly;
+    s_Particle* localPart;
+
+    localPart = part;
+    poly      = (POLY_FT4*)GsOUT_PACKET_P;
+
+#if defined(MAP4_S02)
+    g = 0;
+    b = 0;
+#endif
+
+#if defined(MAP0_S00) || defined(MAP4_S02) || defined(MAP4_S03)
+    if (localPart->stateStep_1E != 0 && sharedData_800DD591_0_s00 != 0)
+    {
+        sp10    = localPart->position0_0;
+        sp10.vy = -1;
+
+        sharedFunc_800D0700_0_s00(&sp10, sharedData_800E326C_0_s00.corners_0, &sharedData_800E326C_0_s00.corners_0[1], 0);
+
+        localPart->position0_0.vx = sp10.vx;
+        localPart->position0_0.vz = sp10.vz;
+
+        if (sp10.vy == 0)
+        {
+            localPart->stateStep_1E = 0;
+            return;
+        }
+    }
+#endif
+
+    switch (localPart->stateStep_1E)
+    {
+        case 0:
+            return;
+
+        case 1:
+            sp20.vx = Q12_TO_Q8(localPart->position1_C.vx);
+            sp20.vy = Q12_TO_Q8(localPart->position1_C.vy);
+            sp20.vz = Q12_TO_Q8(localPart->position1_C.vz);
+
+            gte_ldv0(&sp20);
+            gte_rtps();
+
+            sp28.vx = Q12_TO_Q8(localPart->position0_0.vx);
+            sp28.vy = Q12_TO_Q8(localPart->position0_0.vy);
+            sp28.vz = Q12_TO_Q8(localPart->position0_0.vz);
+
+            gte_stsxy(&poly->x0);
+            gte_stszotz(&depth);
+            gte_ldv0(&sp28);
+            gte_rtps();
+
+            if (D_800C39A0 == 1 || D_800C39A0 == 4)
+            {
+                color = sharedData_800E325C_0_s00.r - (func_80055A50(depth) >> 5);
+                r     = color;
+                b     = color;
+                g     = color;
+            }
+            else
+            {
+#if defined(MAP5_S00) || defined(MAP6_S03)
+                r = (sharedData_800E325C_0_s00.r * 3) >> 1;
+                g = (sharedData_800E325C_0_s00.g * 3) >> 1;
+                b = (sharedData_800E325C_0_s00.b * 3) >> 1;
+#else
+                r = sharedData_800E325C_0_s00.r;
+                g = sharedData_800E325C_0_s00.g;
+                b = sharedData_800E325C_0_s00.b;
+#endif
+            }
+
+            depth = depth >> 1;
+
+            gte_stsxy(&poly->x1);
+
+            if (depth > 32 && depth < ORDERING_TABLE_SIZE - 1)
+            {
+                setPolyFT4(poly);
+                setSemiTrans(poly, 1);
+
+#if !defined(MAP4_S02)
+                poly->tpage = 44;
+#endif
+
+#if defined(MAP0_S00)
+                if (g_SysWork.field_2358 != 0)
+                {
+                    setRGB0(poly, 0x12, 8, 8);
+                }
+                else
+                {
+                    setRGB0(poly, r, g, b);
+                }
+#elif defined(MAP4_S02)
+                if (localPart->movement_18.vx == 5)
+                {
+                    poly->tpage = 0x4C;
+                    setRGB0(poly, (r * 2) / 3, (g * 2) / 3, b);
+                }
+                else
+                {
+                    poly->tpage = 44;
+                    setRGB0(poly, r, g, b);
+                }
+#else
+                setRGB0(poly, r, g, b);
+#endif
+
+                setUV4(poly, 10, 112, 10, 128, 13, 112, 13, 128);
+
+                if (!(depth > 63 && depth < 256))
+                {
+                    poly->clut = 0x1A30;
+                }
+                else
+                {
+                    poly->clut = (((depth >> 5) + 0x68) << 6) | 0x30;
+                }
+
+                poly->x2 = poly->x0 + 1;
+                poly->y2 = poly->y0;
+
+                poly->x3 = poly->x1 + 1;
+                poly->y3 = poly->y1;
+
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[depth], poly);
+                GsOUT_PACKET_P = (PACKET*)(poly + 1);
+            }
+
+            return;
+    }
+
+    switch (localPart->type_1F)
+    {
+        case 2:
+        case 242:
+#if defined(MAP4_S02)
+            if (localPart->movement_18.vx == 5)
+            {
+                if (localPart->stateStep_1E < 25)
+                {
+                    colorComp = 0xA3;
+                }
+                else
+                {
+                    localPart->stateStep_1E = 0;
+                    return;
+                }
+            }
+            else
+#endif
+            {
+                if (localPart->stateStep_1E < 17)
+                {
+                    colorComp = localPart->stateStep_1E;
+                    colorComp = colorComp << arg1;
+
+                    if (localPart->position0_0.vy == INT_MAX)
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    localPart->stateStep_1E = 0;
+                    return;
+                }
+            }
+
+            sp20.vx = Q12_TO_Q8(localPart->position0_0.vx - colorComp);
+            sp20.vy = Q12_TO_Q8(localPart->position0_0.vy);
+            sp20.vz = Q12_TO_Q8(localPart->position0_0.vz - colorComp);
+
+            gte_ldv0(&sp20);
+            gte_rtps();
+
+            sp28.vx = sp20.vx;
+            sp28.vy = sp20.vy;
+            sp28.vz = (localPart->position0_0.vz + colorComp) >> 4;
+
+            gte_stsxy(&poly->x0);
+            gte_stszotz(&depth);
+
+            sp30.vx = (localPart->position0_0.vx + colorComp) >> 4;
+            sp30.vy = sp20.vy;
+            sp30.vz = sp20.vz;
+
+            sp38.vx = sp30.vx;
+            sp38.vy = sp20.vy;
+            sp38.vz = sp28.vz;
+
+            gte_ldv3(&sp28, &sp30, &sp38);
+            gte_rtpt();
+
+            depth = depth >> 1;
+
+#if defined(MAP4_S02)
+            if (localPart->movement_18.vx == 5)
+            {
+                color = localPart->stateStep_1E;
+
+                if (color >= 9U)
+                {
+                    r = 0x40 - ((color - 8) * 4);
+                }
+                else
+                {
+                    r = 0x40;
+                }
+
+                setUV4(poly, 0x20, 0x70, 0x20, 0x7F, 0x2F, 0x70, 0x2F, 0x7F);
+                poly->tpage = 0x4C;
+            }
+            else
+#endif
+            {
+                colorComp >>= (arg1 - 3);
+                colorComp   = 0x80 - colorComp;
+
+                if ((D_800C39A0 == 2 || D_800C39A0 == 6))
+                {
+                    if (Game_FlashlightIsOn())
+                    {
+                        r = colorComp * 2;
+                    }
+                    else
+                    {
+                        r = colorComp;
+                    }
+
+                    g = b = colorComp;
+                }
+                else
+                {
+                    r = g = b = colorComp;
+                }
+
+                step = localPart->stateStep_1E;
+
+                setUV4(poly, 16, 112, 16, 127, 31, 112, 31, 127);
+
+                poly->tpage = 44;
+
+                rScaled = r * step;
+                r      -= rScaled >> 4;
+
+                gScaled = g * step;
+                g      -= gScaled >> 4;
+
+                bScaled = b * step;
+                b      -= bScaled >> 4;
+            }
+
+            gte_stsxy3(&poly->x1, &poly->x2, &poly->x3);
+
+            if (depth > 32 && depth < ORDERING_TABLE_SIZE - 1)
+            {
+                setPolyFT4(poly);
+                setSemiTrans(poly, 1);
+
+#if !defined(MAP4_S02)
+                if (!(depth > 0x3F && depth < 0x100))
+                {
+                    poly->clut = 0x1A30;
+                }
+                else
+                {
+                    poly->clut = (((depth >> 5) + 0x68) << 6) | 0x30;
+                }
+#endif
+
+#if defined(MAP0_S00)
+                if (g_SysWork.field_2358 != 0)
+                {
+                    setRGB0(poly, r + 0xA, g, b);
+                }
+                else
+                {
+                    setRGB0(poly, r, g, b);
+                }
+
+#elif defined(MAP4_S02)
+                if (localPart->movement_18.vx == 5)
+                {
+                    poly->clut = (((depth >> 5) + 0x68) << 6) | 0x30;
+                    setRGB0(poly, r, r, r);
+                }
+                else
+                {
+                    if (!(depth > 0x3F && depth < 0x100))
+                    {
+                        poly->clut = 0x1A30;
+                    }
+                    else
+                    {
+                        poly->clut = (((depth >> 5) + 0x68) << 6) | 0x30;
+                    }
+
+                    setRGB0(poly, r, g, b);
+                }
+#else
+                setRGB0(poly, r, g, b);
+#endif
+
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[depth], poly);
+                GsOUT_PACKET_P = (PACKET*)(poly + 1);
+            }
+
+            return;
+    }
+
+    if (localPart->stateStep_1E < 31)
+    {
+        colorComp = localPart->stateStep_1E;
+    }
+    else
+    {
+        colorComp = 0x20;
+    }
+
+    if (localPart->stateStep_1E >= 49)
+    {
+        localPart->stateStep_1E = 0;
+        return;
+    }
+
+    sp20.vx = Q12_TO_Q8(localPart->position1_C.vx);
+    sp20.vy = Q12_TO_Q8(localPart->position1_C.vy);
+    sp20.vz = Q12_TO_Q8(localPart->position1_C.vz);
+
+    gte_ldv0(&sp20);
+    gte_rtps();
+
+    sp28.vx = Q12_TO_Q8(localPart->position0_0.vx);
+    sp28.vy = Q12_TO_Q8(localPart->position0_0.vy);
+    sp28.vz = Q12_TO_Q8(localPart->position0_0.vz);
+
+    gte_stsxy(&poly->x0);
+    gte_stszotz(&depth);
+    gte_ldv0(&sp28);
+    gte_rtps();
+
+    depth = depth >> 1;
+
+    gte_stsxy(&poly->x1);
+
+    if (depth > 32 && depth < ORDERING_TABLE_SIZE - 1)
+    {
+        setPolyFT4(poly);
+        setSemiTrans(poly, 1);
+        setUV4(poly, 10, 112, 10, 128, 13, 112, 13, 128);
+        setRGB0(poly, colorComp, colorComp, colorComp + 0x18);
+
+        poly->tpage = 44;
+
+        if (!(depth > 0x3F && depth < 0x100))
+        {
+            poly->clut = 0x1A30;
+        }
+        else
+        {
+            poly->clut = (((depth >> 5) + 0x68) << 6) | 0x30;
+        }
+
+        poly->x2 = poly->x0 + 1;
+        poly->y2 = poly->y0;
+        poly->x3 = poly->x1 + 1;
+        poly->y1++;
+        poly->y3 = poly->y1;
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[depth], poly);
+        GsOUT_PACKET_P = (PACKET*)(poly + 1);
+    }
+}
+#endif
 
 void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime)
 {
@@ -112,14 +3141,9 @@ void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* delta
     #define UNK_VAL 5
 #endif
 
-#if defined(MAP0_S00) || defined(MAP0_S01) || defined(MAP0_S02) || defined(MAP1_S00) || \
-    defined(MAP1_S06) || defined(MAP2_S00) || defined(MAP2_S02) || defined(MAP3_S00) || \
-    defined(MAP3_S01) || defined(MAP3_S06) || defined(MAP5_S01) || defined(MAP5_S03) || \
-    defined(MAP6_S00) || defined(MAP7_S03)
-
+#if MAP_PARTICLE_HAS_CASE_0
     xDeltaCase0 = g_Particle_PrevPosition.vx - g_Particle_Position.vx;
     zDeltaCase0 = g_Particle_PrevPosition.vz - g_Particle_Position.vz;
-
 #elif defined(MAP5_S00) || defined(MAP6_S03)
     xDeltaCase1 = g_Particle_PrevPosition.vx - g_Particle_Position.vx;
     zDeltaCase1 = g_Particle_PrevPosition.vz - g_Particle_Position.vz;
@@ -877,15 +3901,7 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0)
             g_SysWork.field_234A = false;
         }
 
-// TODO: Do these maps have anything in common?
-#if defined(MAP0_S00) || defined(MAP0_S01) || defined(MAP0_S02) || \
-    defined(MAP1_S00) || defined(MAP1_S02) || defined(MAP1_S03) || \
-    defined(MAP1_S06) || defined(MAP2_S00) || defined(MAP2_S02) || \
-    defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06) || \
-    defined(MAP4_S02) || defined(MAP4_S03) || defined(MAP4_S04) || \
-    defined(MAP4_S05) || defined(MAP5_S00) || defined(MAP5_S01) || \
-    defined(MAP5_S03) || defined(MAP6_S00) || defined(MAP6_S03) || \
-    defined(MAP7_S03)
+#if MAP_PARTICLE_HAS_CASE_0 || MAP_PARTICLE_HAS_CASE_1
         if (sharedData_800E0CAC_0_s00 == 0 || sharedData_800E0CAC_0_s00 == 2)
         {
             g_Particle_PrevPosition.vy = Q12(0.0005f);

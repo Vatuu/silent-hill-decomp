@@ -456,16 +456,6 @@ void func_800CE180(void) // 0x800CE180
     }
 }
 
-#include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CE2B4
-
-#include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CE76C
-
-#include "maps/shared/sharedFunc_800CBC94_0_s00.h" // 0x800CE844
-
-#include "maps/shared/Particle_Update.h" // 0x800CEB50
-
-#include "maps/shared/sharedFunc_800CEB24_0_s00.h" // 0x800CF250
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

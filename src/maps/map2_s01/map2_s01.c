@@ -8,8 +8,6 @@
 #include "maps/characters/player.h"
 #include "maps/map2/map2_s01.h"
 
-#include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CB010
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

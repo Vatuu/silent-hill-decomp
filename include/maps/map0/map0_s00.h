@@ -109,20 +109,6 @@ extern VECTOR3 D_800E3A9C;
 
 extern SVECTOR3 D_800E3AAC;
 
-void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
-
-bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
-
-s32 func_800CC8FC(VECTOR3* arg0, s32* arg1, s_func_800CC8FC* arg2);
-
-void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2);
-
-// arg0 = value from 0 - 3 (enum?)
-void func_800CD8E8(s32 arg0, s32 arg1, s_800E330C* arg2);
-
-// arg0 = value from 0 - 3 (enum?)
-void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId);
-
 void func_800D0124(void);
 
 void func_800CF7AC(s32 arg0, s_Particle* part, u16* arg2, s32* deltaTime);
@@ -191,8 +177,6 @@ void func_800DB514(void);
 void func_800DB870(void);
 
 void func_800DADD4(void);
-
-void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2);
 
 void MapEvent_OpeningCutscene(void);
 

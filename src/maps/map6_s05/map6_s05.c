@@ -10,8 +10,6 @@ INCLUDE_RODATA("maps/map6_s05/nonmatchings/map6_s05", D_800C9578);
 
 INCLUDE_RODATA("maps/map6_s05/nonmatchings/map6_s05", g_MapOverlayHeader);
 
-#include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CA8E8
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

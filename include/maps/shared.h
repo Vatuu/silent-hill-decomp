@@ -1363,35 +1363,6 @@
     { Anim_Update2, ANIM_STATUS(2, false), false, ANIM_STATUS(2, true),  { Q12(5)  }, NO_VALUE, 24 }
 };*/
 
-#if defined(MAP7_S03)
-#define PARTICLE_COUNT_MAX 450
-#else
-#define PARTICLE_COUNT_MAX 300
-#endif
-#define SNOW_COUNT_LIGHT_MAX 300
-
-typedef enum
-{
-    ParticleState_Spawn  = 0,
-    ParticleState_Active = 1,
-    ParticleState_Rest   = 2  
-} e_ParticleState;
-
-typedef enum
-{
-    ParticleType_Snow = 0,
-    ParticleType_Unk1 = 1,
-    ParticleType_Rain = 2
-} e_ParticleType;
-
-typedef enum
-{
-    SnowType_Light      = 0,
-    SnowType_Heavy      = 1,
-    SnowType_LightWindy = 2,
-    SnowType_HeavyWindy = 3
-} e_SnowType;
-
 /** @brief Heading angle quadrants. TODO: Order uncertain. North/South and East/West could be swapped. */
 typedef enum _Quadrant
 {
@@ -1403,28 +1374,10 @@ typedef enum _Quadrant
 
 typedef struct
 {
-    VECTOR3  position0_0;  // Snow: position, Rain: streak start (bottom)
-    VECTOR3  position1_C;  // Snow: unused, Rain: streak end (top)
-    SVECTOR3 movement_18;  // Snow: random accumulation, Rain: Y accumulation (affects streak length).
-    u8       stateStep_1E; /** `e_ParticleState` */
-    u8       type_1F;      /** `e_ParticleType` */
-} s_Particle;
-
-typedef struct
-{
     char unk_0[3420];
     u16  field_D5C;
     s16  field_D5E;
 } s_func_800D8714;
-
-typedef struct
-{
-    VECTOR3 vector_0;
-    VECTOR3 viewPosition_C; // Q19.12
-    SVECTOR svec_18;
-    SVECTOR viewRotation_20;
-    s32     field_28;
-} s_ParticleVectors;
 
 /** Seems to be custom boundaries for snow/rain particle systems.
  * Only used in a small handful of maps, and not all fields are populated.
@@ -1655,19 +1608,10 @@ extern s_AnimInfo BLOODSUCKER_ANIM_INFOS[];
 extern u8 sharedData_800DD591_0_s00;
 extern u8 sharedData_800DD584_0_s00;
 
-/** `g_ParticlesAddedCounts`. Tracks how many total particles have been added. */
-extern s32 sharedData_800DD588_0_s00[2];
-
-/** `g_ParticleSpawnCount`. Tracks how many particles have been added per call. */
-extern u8 sharedData_800E2156_0_s01;
-
 extern s_AnimInfo MONSTER_CYBIL_ANIM_INFOS[];
 extern s_AnimInfo BLOODY_INCUBATOR_ANIM_INFOS[];
 extern s_AnimInfo INCUBATOR_ANIM_INFOS[];
 extern s_AnimInfo GHOST_DOCTOR_ANIM_INFOS[];
-
-extern s32 g_Particle_SpeedX;
-extern s32 g_Particle_SpeedZ;
 
 extern s32 sharedData_800DFB6C_0_s00;
 extern s32 sharedData_800DFB70_0_s00;
@@ -1686,8 +1630,6 @@ extern s32 sharedData_800DD598_0_s00;
 extern s32 sharedData_800DFB4C_0_s00;
 
 extern s32 sharedData_800DFB50_0_s00;
-
-extern s32 sharedData_800CD77C_1_s04; // Used by `sharedFunc_800CB6B0_0_s00` only in MAP1_S04 and MAP4_S00? Similar usage to `sharedData_800DFB50_0_s00`?
 
 extern CVECTOR sharedData_800E3258_0_s00;
 
@@ -2109,10 +2051,6 @@ void sharedFunc_800E0514_2_s00(s_SubCharacter* airScreamer);
 /** Air Screamer state step getter. `const` is required for match. */
 bool sharedFunc_800D5F00_0_s01(s_SubCharacter* const airScreamer);
 
-void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3);
-
-bool sharedFunc_800CBBBC_0_s00(void);
-
 /** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data). */
 void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond);
 
@@ -2140,15 +2078,6 @@ s32 Anim_StartKeyframeIdxGet(s_SubCharacter* chara);
 
 /** Humanoid init function? */
 void sharedFunc_800D923C_0_s00(s_SubCharacter* chara);
-
-/** Snow effect init. */
-void sharedFunc_800CBC94_0_s00(s_Particle* particles);
-
-bool Particle_Update(s_Particle* partHead);
-
-void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1);
-
-void sharedFunc_800CEB24_0_s00(s_Particle* part);
 
 void SysWork_StateStepIncrementAfterTime(q19_12* timer, q19_12 inc, q19_12 timeMin, q19_12 timeMax, bool setTimerToMax, bool incStateStep);
 

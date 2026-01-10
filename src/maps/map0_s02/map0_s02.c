@@ -6,16 +6,6 @@
 #include "maps/characters/player.h"
 #include "maps/map0/map0_s02.h"
 
-#include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CACF0
-
-#include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CB17C
-
-#include "maps/shared/sharedFunc_800CBC94_0_s00.h" // 0x800CB254
-
-#include "maps/shared/Particle_Update.h" // 0x800CB560
-
-#include "maps/shared/sharedFunc_800CEB24_0_s00.h" // 0x800CBBF4
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

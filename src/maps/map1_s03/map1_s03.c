@@ -197,16 +197,6 @@ bool func_800CE164(POLY_FT4** poly, s32 idx) // 0x800CE164
 
 #include "maps/shared/sharedFunc_800CE688_1_s03.h" // 0x800CE688
 
-#include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CED50
-
-#include "maps/shared/sharedFunc_800CBBBC_0_s00.h" // 0x800CF144
-
-#include "maps/shared/sharedFunc_800CBC94_0_s00.h" // 0x800CF21C
-
-#include "maps/shared/Particle_Update.h" // 0x800CF538
-
-#include "maps/shared/sharedFunc_800CEFF4_0_s00.h" // 0x800CFB60
-
 #include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"
