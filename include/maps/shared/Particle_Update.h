@@ -562,8 +562,7 @@ bool Particle_Update(s_Particle* partHead)
                         curPart->stateStep_1E++;
                         if (curPart->stateStep_1E < SNOW_REST_TICKS_UPDATE_MAX)
                         {
-                            // TODO: This should pass `s_Particle*` but the matcher is struggling with that atm.
-                            sharedFunc_800CFFF8_0_s00(pass, (s_func_800CFFF8*)curPart, &rand);
+                            sharedFunc_800CFFF8_0_s00(pass, curPart, &rand);
                         }
                         #if defined(MAP1_S03) || \
                             defined(MAP4_S02) || defined(MAP4_S04) || defined(MAP4_S05) || \

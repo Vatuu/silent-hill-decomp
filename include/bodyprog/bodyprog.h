@@ -485,15 +485,6 @@ typedef struct
     s_func_8006DCE0_8C field_8C[1]; // Unknown size.
 } s_func_8006DCE0;
 
-typedef struct
-{
-    VECTOR3 field_0;
-    VECTOR3 field_C;
-    s8      unk_18[6];
-    u8      field_1E;
-    u8      field_1F;
-} s_func_800CFFF8;
-
 // Function from lib_unk
 typedef struct _func_8009ECCC
 {

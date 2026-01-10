@@ -47,9 +47,9 @@ extern s16 D_800F23D0; // MAP7_S03 extern, TODO: Might be sharedData?
 /** @brief Adds a random offset to a snow particle movement vector. Moves particle vertically, clamps Y to 0. */
 void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime);
 
-void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* deltaTime); // TODO: Make this match for `s_Particle`.
+void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* deltaTime);
 
-void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand); // TODO: Make this match for `s_Particle`.
+void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand);
 
 void sharedFunc_800D0690_1_s03(s32 pass, s_Particle* part, s16* rand, q19_12* deltaTime);
 

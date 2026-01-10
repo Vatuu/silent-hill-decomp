@@ -201,10 +201,7 @@ void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* delta
             break;
 
         case 1:
-#if !defined(MAP0_S01) && !defined(MAP0_S02) && !defined(MAP1_S00) && !defined(MAP2_S00) && \
-    !defined(MAP2_S02) && !defined(MAP3_S00) && !defined(MAP3_S01) && !defined(MAP3_S06) && \
-    !defined(MAP5_S01) && !defined(MAP5_S03) && !defined(MAP1_S06) && !defined(MAP7_S03)
-
+#if MAP_PARTICLE_HAS_CASE_1
 #if !defined(MAP5_S00) && !defined(MAP6_S03)
             xDeltaCase1 = g_ParticleVectors1.viewPosition_C.vx - g_ParticleVectors0.viewPosition_C.vx;
             zDeltaCase1 = g_ParticleVectors1.viewPosition_C.vz - g_ParticleVectors0.viewPosition_C.vz;
@@ -282,8 +279,7 @@ void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* delta
     }
 }
 
-// TODO: Change `s_func_800CFFF8` to `s_Particle`.
-void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand)
+void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand)
 {
     s32 absX;
     s32 threshold;
@@ -296,60 +292,47 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_func_800CFFF8* part, s16* rand)
     #define PASS_ADD 5
 #endif
 
-    #if !defined(MAP1_S03) && !defined(MAP1_S02) && !defined(MAP4_S04) && \
-        !defined(MAP4_S02) && !defined(MAP4_S05) && !defined(MAP4_S03) && \
-        !defined(MAP5_S00) && !defined(MAP6_S03)
-        #define CODE_BLOCK1
-    #endif
+    part->position0_0.vx += g_Particle_PrevPosition.vx - g_Particle_Position.vx;
+    part->position0_0.vz += g_Particle_PrevPosition.vz - g_Particle_Position.vz;
 
-    #if !defined(MAP7_S03) && !defined(MAP1_S03) && !defined(MAP1_S00) && \
-        !defined(MAP1_S02) && !defined(MAP4_S04) && !defined(MAP4_S05) && \
-        !defined(MAP5_S00) && !defined(MAP6_S00) && !defined(MAP6_S03)
-        #define CODE_BLOCK2
-    #endif
-
-    part->field_0.vx += g_Particle_PrevPosition.vx - g_Particle_Position.vx;
-    part->field_0.vz += g_Particle_PrevPosition.vz - g_Particle_Position.vz;
 #if defined(MAP7_S03)
-    part->field_0.vz += ((g_Particle_PrevPosition.vz - g_Particle_Position.vz) - D_800F23D0);
+    part->position0_0.vz += ((g_Particle_PrevPosition.vz - g_Particle_Position.vz) - D_800F23D0);
 #endif
 
-#if defined(CODE_BLOCK1)
+#if MAP_PARTICLE_HAS_CASE_0
     if (pass == 0 && sharedData_800E0CAC_0_s00 == 3)
     {
-        part->field_0.vx += FP_FROM(g_Particle_SpeedX, Q4_SHIFT);
-        part->field_0.vz += FP_FROM(g_Particle_SpeedZ, Q4_SHIFT);
+        part->position0_0.vx += FP_FROM(g_Particle_SpeedX, Q4_SHIFT);
+        part->position0_0.vz += FP_FROM(g_Particle_SpeedZ, Q4_SHIFT);
     }
 #endif
 
-#if defined(CODE_BLOCK2)
+#if !defined(MAP1_S00) && !defined(MAP1_S02) && !defined(MAP1_S03) && !defined(MAP4_S04) && \
+    !defined(MAP4_S05) && !defined(MAP5_S00) && !defined(MAP6_S00) && !defined(MAP6_S03) && \
+    !defined(MAP7_S03)
     if (sharedData_800DD591_0_s00 != 0)
     {
         return;
     }
 #endif
 
-    absX = abs(part->field_0.vx);
+    absX = abs(part->position0_0.vx);
 
     // This helps match the original code: `threshold = threshold = ...` 
-    threshold = threshold = FP_TO(pass + PASS_ADD, Q12_SHIFT);
-
     // Also matches:
-    // threshold = FP_TO(pass + 5, Q12_SHIFT);
-    // threshold = threshold += 0;
+    // threshold = FP_TO(pass + 5, Q12_SHIFT); threshold = threshold += 0;
+    threshold = threshold = FP_TO(pass + PASS_ADD, Q12_SHIFT);
     
-    if (ABS_ADD(part->field_0.vz, absX) > threshold)
+    if (ABS_ADD(part->position0_0.vz, absX) > threshold)
     {
-        part->field_1E = 0;
+        part->stateStep_1E = 0;
     }
     
-    if (part->field_1F == 3 || part->field_1F == 0xF3)
+    if (part->type_1F == 3 || part->type_1F == 0xF3)
     {
-        part->field_C.vx = part->field_0.vx;
-        part->field_C.vz = part->field_0.vz;
+        part->position1_C.vx = part->position0_0.vx;
+        part->position1_C.vz = part->position0_0.vz;
     }
-    #undef CODE_BLOCK1
-    #undef CODE_BLOCK2
 }
 
 #if defined(MAP1_S03) || defined(MAP4_S02) || defined(MAP4_S04) || defined(MAP4_S05) || \
