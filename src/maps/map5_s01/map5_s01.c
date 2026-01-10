@@ -489,90 +489,86 @@ INCLUDE_ASM("maps/map5_s01/nonmatchings/map5_s01", func_800EB470);
 
 void func_800EB6B0(void) // 0x800EB6B0
 {
-    s32 temp_v0;
-    s32 var_a1;
-    s32 var_a2;
-    s32 var_s0_2;
-    s32 var_v1;
-    s32 temp_s1;
+    s32    temp_v0;
+    q19_12 posX;
+    q19_12 posZ;
+    q19_12 newPosComp;
+    s32    var_v1;
+    s32    temp_s1;
 
-    var_a1  = g_SysWork.playerWork_4C.player_0.position_18.vx;
-    var_a2  = g_SysWork.playerWork_4C.player_0.position_18.vz;
+    posX  = g_SysWork.playerWork_4C.player_0.position_18.vx;
+    posZ  = g_SysWork.playerWork_4C.player_0.position_18.vz;
     temp_s1 = D_800EFC80[g_SavegamePtr->mapRoomIdx_A5];
 
-    if (g_SavegamePtr->mapRoomIdx_A5 == 0xA)
+    if (g_SavegamePtr->mapRoomIdx_A5 == 10)
     {
-        var_a1 += 0x96000;
-        var_a2  = -0x19000 - var_a2;
-
-        if (var_a1 < var_a2)
+        posX += Q12(150.0f);
+        posZ  = Q12(-25.0f) - posZ;
+        if (posX < posZ)
         {
-            var_s0_2 = var_a1;
+            newPosComp = posX;
         }
         else
         {
-            var_s0_2 = var_a2;
+            newPosComp = posZ;
         }
 
-        var_s0_2 = var_s0_2 / 2;
+        newPosComp /= 2;
     }
     else
     {
-        if (var_a2 > -0x78000)
+        if (posZ > Q12(-120.0f))
         {
-            var_a1 = var_a1 - 0x10000;
-            var_a2 = -0x30000 - var_a2;
-
-            if (var_a1 < var_a2)
+            posX = posX - Q12(16.0f);
+            posZ = Q12(-48.0f) - posZ;
+            if (posX < posZ)
             {
-                var_s0_2 = var_a1;
+                newPosComp = posX;
             }
             else
             {
-                var_s0_2 = var_a2;
+                newPosComp = posZ;
             }
         }
         else
         {
-            if (var_a1 > 0)
+            if (posX > Q12(0.0f))
             {
-                var_a1 = var_a1 - 0x10000;
+                posX = posX - Q12(16.0f);
             }
             else
             {
-                var_a1 = -0x34000 - var_a1;
+                posX = Q12(-52.0f) - posX;
             }
 
-            var_a2 = -0x90000 - var_a2;
+            posZ = Q12(-144.0f) - posZ;
 
-            if (var_a2 < var_a1)
+            if (posZ < posX)
             {
-                var_s0_2 = var_a1;
+                newPosComp = posX;
             }
             else
             {
-                var_s0_2 = var_a2;
+                newPosComp = posZ;
             }
         }
     }
 
     D_800EFC7C += g_DeltaTime0;
-
-    if (var_s0_2 < 0)
+    if (newPosComp < Q12(0.0f))
     {
-        var_s0_2 = 0;
+        newPosComp = Q12(0.0f);
     }
-    else if (var_s0_2 > 0x1FFFF)
+    else if (newPosComp >= Q12(32.0f))
     {
-        var_s0_2 = 0x1FFFF;
+        newPosComp = Q12(32.0f) - 1;
     }
 
-    temp_v0 = (Math_Sin(D_800EFC7C / 12) + 0x2000) / 2;
-    var_v1  = Q12_MULT_PRECISE(var_s0_2, temp_v0);
+    temp_v0 = (Math_Sin(D_800EFC7C / 12) + Q12(2.0f)) / 2;
+    var_v1  = Q12_MULT_PRECISE(newPosComp, temp_v0);
 
-    D_800EFC74.field_0[4] = var_v1 / 0x800;
-
-    func_80035F4C(temp_s1, 0x333, &D_800EFC74);
+    D_800EFC74.field_0[4] = var_v1 / Q12(0.5f);
+    func_80035F4C(temp_s1, Q12(0.2f), &D_800EFC74);
 }
 
 void func_800EB874(void) {}
@@ -766,8 +762,8 @@ void MapEvent_MapTake(void) // 0x800EBF48
 
 void func_800EBF70(void) // 0x800EBF70
 {
-    VECTOR3 sp28;
-    VECTOR3 sp38;
+    VECTOR3 camPos;    // Q19.12
+    VECTOR3 canLookAt; // Q19.12
     s16     temp_v0;
     s16     temp;
 
@@ -783,27 +779,29 @@ void func_800EBF70(void) // 0x800EBF70
         case 0:
             Player_ControlFreeze();
             func_800CD818();
-            g_SysWork.field_30 = 0x14;
+
+            g_SysWork.field_30 = 20;
+
             SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
 
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(52.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-57.8f);
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12(0.299f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(107.6f);
 
-            sp28.vx = Q12(49.8f);
-            sp28.vy = Q12(-1.5f);
-            sp28.vz = Q12(-60.0f);
+            camPos.vx = Q12(49.8f);
+            camPos.vy = Q12(-1.5f);
+            camPos.vz = Q12(-60.0f);
 
-            sp38.vx = Q12(52.5f);
-            sp38.vy = Q12(-1.3f);
-            sp38.vz = Q12(-57.9f);
+            canLookAt.vx = Q12(52.5f);
+            canLookAt.vy = Q12(-1.3f);
+            canLookAt.vz = Q12(-57.9f);
 
-            Camera_PositionSet(&sp28, 0, 0, 0, 0, 0, 0, 0, true);
-            Camera_LookAtSet(&sp38, 0, 0, 0, 0, 0, 0, 0, true);
+            Camera_PositionSet(&camPos, 0, 0, 0, 0, 0, 0, 0, true);
+            Camera_LookAtSet(&canLookAt, 0, 0, 0, 0, 0, 0, 0, true);
             SysWork_StateStepIncrement(0);
 
         case 1:
-            SysWork_StateStepIncrementDelayed(0x1000, false);
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 2:
@@ -813,36 +811,39 @@ void func_800EBF70(void) // 0x800EBF70
         case 3:
             if (Fs_QueueDoThingWhenEmpty())
             {
-                g_SysWork.sysFlags_22A0 |= 1;
+                g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+
                 func_800CD860();
                 SysWork_StateStepIncrement(0);
             }
 
         case 4:
-            g_SysWork.sysFlags_22A0 |= 1;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
             break;
 
         case 5:
             Game_TimerUpdate();
-            g_SysWork.sysFlags_22A0 |= 1;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
 
             temp_v0 = func_800CD20C();
-
             if (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 if (temp != temp_v0)
                 {
                     break;
                 }
+
                 Savegame_EventFlagSet(EventFlag_371);
-                Sd_PlaySfx(Sfx_Unk1588, 0, 0x80);
+                Sd_PlaySfx(Sfx_Unk1588, 0, Q8(0.5f));
             }
+
             SysWork_StateStepIncrement(0);
             break;
 
         case 6:
-            g_SysWork.sysFlags_22A0 |= 1;
+            g_SysWork.sysFlags_22A0 |= SysFlag_Freeze;
+
             func_800CD20C();
             SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
             break;

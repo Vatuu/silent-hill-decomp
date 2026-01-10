@@ -41,7 +41,7 @@ extern s32           D_800F1590;
 extern s8            D_800F1594[];
 extern s8            D_800F159D;
 extern s_func_80035F4C D_800EFC74;
-extern s32             D_800EFC7C;
+extern q19_12          D_800EFC7C; // Timer.
 extern u16             D_800EFC80[];
 
 void func_800CD818(void);
@@ -54,6 +54,8 @@ void func_800EBA40(void);
 
 /** @brief Handles the ? map pickup event. */
 void MapEvent_MapTake(void);
+
+void func_800EBF70(void);
 
 void func_800EC2D8(void);
 
@@ -73,5 +75,7 @@ void func_800CE180();
 
 // Same as `func_800E6758` in MAP2_S02.
 void func_800E828C(s_SubCharacter* chara);
+
+void func_800EB6B0(void);
 
 #endif
