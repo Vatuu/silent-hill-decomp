@@ -4,21 +4,10 @@
 // Particle-related functions.
 //
 // TODO:
-//  - This should be a separate .c file/split in each map overlay, but for now #including this .c works.
+//  - This should be a separate split in each map overlay, but for now #including this .c works.
 //  - sharedData and structs that are only used in this file need to be moved from `shared.h` into `particle.h`
 //  - Some funcs here only get included in MAP0_S00, guess they're particle-related since they're between
 //    other particle functions, does MAP0_S00 have some unique particle effect?
-
-#if defined(MAP1_S01) || defined(MAP1_S04) || defined(MAP1_S05) || defined(MAP2_S01) || \
-    defined(MAP2_S03) || defined(MAP2_S04) || defined(MAP3_S02) || defined(MAP3_S03) || \
-    defined(MAP3_S04) || defined(MAP3_S05) || defined(MAP4_S00) || defined(MAP4_S01) || \
-    defined(MAP4_S06) || defined(MAP5_S02) || defined(MAP6_S01) || defined(MAP6_S02) || \
-    defined(MAP6_S04) || defined(MAP6_S05) || defined(MAP7_S00) || defined(MAP7_S01) || \
-    defined(MAP7_S02)
-    #define MAP_USE_PARTICLES 0
-#else
-    #define MAP_USE_PARTICLES 1
-#endif
 
 #if defined(MAP0_S00) || defined(MAP0_S01) || defined(MAP0_S02) || defined(MAP1_S00) || \
     defined(MAP1_S06) || defined(MAP2_S00) || defined(MAP2_S02) || defined(MAP3_S00) || \
@@ -29,7 +18,6 @@
     #define MAP_PARTICLE_HAS_CASE_0 0
 #endif
 
-// `sharedData_800E32D0_0_s00` writes and `sharedFunc_800D0CB8_0_s00` are gated behind `MAP_PARTICLE_HAS_CASE_1`.
 #if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
     defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || defined(MAP5_S00) || \
     defined(MAP6_S00) || defined(MAP6_S03)
@@ -37,6 +25,8 @@
 #else
     #define MAP_PARTICLE_HAS_CASE_1 0
 #endif
+
+#define MAP_USE_PARTICLES (MAP_PARTICLE_HAS_CASE_0 || MAP_PARTICLE_HAS_CASE_1)
 
 #if !MAP_USE_PARTICLES
 
@@ -2368,8 +2358,6 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
 #endif
 
 #if MAP_PARTICLE_HAS_CASE_0
-#include "inline_no_dmpsx.h"
-
 #if !defined(PARTICLE_CASE_COUNT)
     #define PARTICLE_CASE_COUNT 1
     #define HAS_PARTICLE_FALLBACK_CASE
@@ -3901,7 +3889,7 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0)
             g_SysWork.field_234A = false;
         }
 
-#if MAP_PARTICLE_HAS_CASE_0 || MAP_PARTICLE_HAS_CASE_1
+#if MAP_USE_PARTICLES
         if (sharedData_800E0CAC_0_s00 == 0 || sharedData_800E0CAC_0_s00 == 2)
         {
             g_Particle_PrevPosition.vy = Q12(0.0005f);
