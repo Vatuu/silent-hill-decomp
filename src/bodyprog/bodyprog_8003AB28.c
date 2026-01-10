@@ -2691,11 +2691,11 @@ void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, e_PrimitiveTy
 {
     if (arg0 == arg1)
     {
-        g_SysWork.field_2388.isFlashlightNotAvailable_16 = true;
+        g_SysWork.field_2388.isFlashlightUnavailable_16 = true;
     }
     else
     {
-        g_SysWork.field_2388.isFlashlightNotAvailable_16 = false;
+        g_SysWork.field_2388.isFlashlightUnavailable_16 = false;
     }
 
     g_SysWork.field_2388.field_4 = primData;

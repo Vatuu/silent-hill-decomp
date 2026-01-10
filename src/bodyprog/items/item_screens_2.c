@@ -582,7 +582,7 @@ void Inventory_Logic(void) // 0x8004D518
                      g_Gfx_Inventory_SelectionBordersDraw >= 8)
             {
                 if (g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flauros ||
-                    (g_SysWork.field_2388.isFlashlightNotAvailable_16 && g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flashlight))
+                    (g_SysWork.field_2388.isFlashlightUnavailable_16 && g_SavegamePtr->items_0[g_SysWork.inventoryItemSelectedIdx_2351].id_0 == InventoryItemId_Flashlight))
                 {
                     Sd_PlaySfx(Sfx_MenuError, 64, 64);
                 }
@@ -1215,7 +1215,7 @@ void Gfx_Inventory_CmdOptionsDraw(void) // 0x8004E864
     switch (g_SavegamePtr->items_0[idx].command_2)
     {
         case InventoryCmdId_OnOff:
-            if (!g_SysWork.field_2388.isFlashlightNotAvailable_16 || g_SavegamePtr->items_0[idx].id_0 != InventoryItemId_Flashlight)
+            if (!g_SysWork.field_2388.isFlashlightUnavailable_16 || g_SavegamePtr->items_0[idx].id_0 != InventoryItemId_Flashlight)
             {
                 Gfx_StringSetPosition(222, -42);
                 Gfx_StringDraw(STRS[5], 10);

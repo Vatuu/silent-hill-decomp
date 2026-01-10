@@ -4595,7 +4595,7 @@ void func_8005E89C(void) // 0x8005E89C
         g_MapOverlayHeader.func_A8();
     }
 
-    if (g_SysWork.field_2388.isFlashlightNotAvailable_16 != 0 && g_SysWork.sysState_8 == 0)
+    if (g_SysWork.field_2388.isFlashlightUnavailable_16 != 0 && g_SysWork.sysState_8 == 0)
     {
         Game_TurnFlashlightOff();
     }

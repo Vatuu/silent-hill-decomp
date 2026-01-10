@@ -486,9 +486,9 @@ void func_800D3DA4(void) // 0x800D3DA4
                 func_8005DC1C(Sfx_Unk1530, &D_800CB364, Q8_CLAMPED(1.0f), 2);
                 Savegame_EventFlagSet(EventFlag_300);
 
-                if (g_SavegamePtr->ovlEnemiesState_B0[g_SavegamePtr->mapOverlayId_A4] & (1 << 2))
+                if (g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapOverlayId_A4] & (1 << 2))
                 {
-                    g_SavegamePtr->ovlEnemiesState_B0[g_SavegamePtr->mapOverlayId_A4] &= ~(1 << 3);
+                    g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapOverlayId_A4] &= ~(1 << 3);
                 }
             }
         }

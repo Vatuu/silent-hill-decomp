@@ -17,10 +17,10 @@ INCLUDE_RODATA("maps/map5_s01/nonmatchings/map5_s01", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CE688_1_s03.h" // 0x800CCB44
 
-s16 func_800CD20C(void)                            // 0x800CD20C
+s16 func_800CD20C(void) // 0x800CD20C
 {
-    GsDOBJ2* itemModel;
     s32      i;
+    GsDOBJ2* itemModel;
 
     if (D_800F159C == 1)
     {
@@ -38,14 +38,13 @@ s16 func_800CD20C(void)                            // 0x800CD20C
                 Sd_PlaySfx(Sfx_MenuMove, 0, 0x40);
             }
 
-            D_800ED5C8 &= 3;
+            D_800ED5C8 &= 0x3;
 
             if (g_Controller0->btnsHeld_C & ControllerFlag_LStickLeft)
             {
                 Sd_PlaySfx(Sfx_Unk1589, 0, 0x40);
 
                 D_800F1598[D_800ED5C8]++;
-
                 if (D_800F1598[D_800ED5C8] == 8)
                 {
                     D_800F1598[D_800ED5C8] = 0;
@@ -57,7 +56,6 @@ s16 func_800CD20C(void)                            // 0x800CD20C
                 Sd_PlaySfx(Sfx_Unk1589, 0, 0x40);
 
                 D_800F1598[D_800ED5C8]--;
-
                 if (D_800F1598[D_800ED5C8] == -1)
                 {
                     D_800F1598[D_800ED5C8] = 7;
@@ -66,7 +64,7 @@ s16 func_800CD20C(void)                            // 0x800CD20C
         }
     }
 
-    D_800F15A0 = D_800F1598[0] + D_800F1598[1] * 0xA + D_800F1598[2] * 0x64 + D_800F1598[3] * 0x3E8;
+    D_800F15A0 = D_800F1598[0] + (D_800F1598[1] * 10) + (D_800F1598[2] * 100) + (D_800F1598[3] * 1000);
 
     func_800CE180();
 
@@ -76,8 +74,8 @@ s16 func_800CD20C(void)                            // 0x800CD20C
 
     for (itemModel = g_Items_ItemsModelData, i = 0; i < 6; i++, itemModel++)
     {
-        g_Items_Transforms[i].rotate.vx = 0x400;
-        g_Items_Transforms[i].rotate.vz = 0;
+        g_Items_Transforms[i].rotate.vx = FP_ANGLE(90.0f);
+        g_Items_Transforms[i].rotate.vz = FP_ANGLE(0.0f);
 
         Gfx_Items_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
 
@@ -119,9 +117,11 @@ void func_800CD51C(s32 arg0, s32 arg1) // 0x800CD51C
         case 0:
             for (i = 0; i < 6; i++)
             {
-                g_Items_Transforms[i].scale.vx = g_Items_Transforms[i].scale.vy = g_Items_Transforms[i].scale.vz = 0x2000;
+                g_Items_Transforms[i].scale.vx =
+                g_Items_Transforms[i].scale.vy =
+                g_Items_Transforms[i].scale.vz = Q12(2.0f);
 
-                temp_v0 = D_800F159D * 0xFF / 32;
+                temp_v0 = (D_800F159D * 0xFF) / 32;
 
                 D_800F1450[i][1].b = temp_v0;
                 D_800F1450[i][1].g = temp_v0;
@@ -133,7 +133,7 @@ void func_800CD51C(s32 arg0, s32 arg1) // 0x800CD51C
 
             D_800F159D++;
 
-            if (D_800F159D >= 0x20)
+            if (D_800F159D >= 32)
             {
                 D_800F159C = 1;
                 D_800F159D = 0;
@@ -151,21 +151,21 @@ void func_800CD51C(s32 arg0, s32 arg1) // 0x800CD51C
                 switch (i)
                 {
                     case 0:
-                        g_Items_Coords[i].coord.t[0] = 0;
-                        g_Items_Coords[i].coord.t[1] = -0x34;
-                        g_Items_Coords[i].coord.t[2] = -0x2080;
+                        g_Items_Coords[i].coord.t[0] = Q8(0.0f);
+                        g_Items_Coords[i].coord.t[1] = Q8(-0.204f);
+                        g_Items_Coords[i].coord.t[2] = Q8(-32.5f);
                         break;
 
                     case 5:
-                        g_Items_Coords[i].coord.t[0] = 0;
-                        g_Items_Coords[i].coord.t[1] = -0x14;
-                        g_Items_Coords[i].coord.t[2] = -0x2080;
+                        g_Items_Coords[i].coord.t[0] = Q8(0.0f);
+                        g_Items_Coords[i].coord.t[1] = Q8(-0.08f);
+                        g_Items_Coords[i].coord.t[2] = Q8(-32.5f);
                         break;
 
                     default:
-                        g_Items_Coords[i].coord.t[0] = 0;
-                        g_Items_Coords[i].coord.t[1] = 0x18E - i * 0x6A;
-                        g_Items_Coords[i].coord.t[2] = -0x2080;
+                        g_Items_Coords[i].coord.t[0] = Q8(0.0f);
+                        g_Items_Coords[i].coord.t[1] = Q8(1.555f) - (i * Q8(0.415f));
+                        g_Items_Coords[i].coord.t[2] = Q8(-32.5f);
                         break;
                 }
             }
@@ -184,7 +184,7 @@ void func_800CD51C(s32 arg0, s32 arg1) // 0x800CD51C
                 var_t1 = -1;
             }
 
-            if (D_800F159D >= 0x10)
+            if (D_800F159D >= 16)
             {
                 D_800F159C = 1;
                 D_800F159D = 0;
@@ -202,13 +202,12 @@ void func_800CD51C(s32 arg0, s32 arg1) // 0x800CD51C
 
     var_v0_2 = var_t1 * (D_800F159D << 9);
 
-    g_Items_Transforms[0].rotate.vy = 0xD00;
-    g_Items_Transforms[5].rotate.vy = 0xD00;
+    g_Items_Transforms[0].rotate.vy = FP_ANGLE(292.5f);
+    g_Items_Transforms[5].rotate.vy = FP_ANGLE(292.5f);
 
     for (i = 1; i < 5; i++)
     {
         temp_v1_2 = D_800F1594[i - 1];
-
         if (temp_v1_2 == D_800F1598[i - 1])
         {
             var_v0_3 = temp_v1_2 << 9;
@@ -217,7 +216,8 @@ void func_800CD51C(s32 arg0, s32 arg1) // 0x800CD51C
         {
             var_v0_3 = (temp_v1_2 << 9) + (var_v0_2 / 16);
         }
-        g_Items_Transforms[i].rotate.vy = var_v0_3 + 0xB00;
+
+        g_Items_Transforms[i].rotate.vy = var_v0_3 + FP_ANGLE(247.5f);
     }
 }
 

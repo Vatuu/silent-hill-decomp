@@ -330,7 +330,7 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 
     difficulty = CLAMP(difficulty, GameDifficulty_Easy, GameDifficulty_Hard);
 
-    var = g_SavegamePtr->ovlEnemiesState_B0;
+    var = g_SavegamePtr->ovlEnemyStates;
 
     g_SavegamePtr->gameDifficulty_260 = difficulty;
     g_SavegamePtr->paperMapIdx_A9     = PaperMapIdx_OldTown;
@@ -2174,7 +2174,7 @@ void func_80037DC4(s_SubCharacter* chara) // 0x80037DC4
 {
     if (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || Rng_RandQ12() >= FP_ANGLE(108.0f))
     {
-        g_SavegamePtr->ovlEnemiesState_B0[g_SavegamePtr->mapOverlayId_A4] &= ~(1 << chara->field_40);
+        g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapOverlayId_A4] &= ~(1 << chara->field_40);
     }
 }
 
@@ -2223,7 +2223,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 
     npcIdx             = 0;
     curCharaSpawn      = g_MapOverlayHeader.charaSpawns_24C[0];
-    ovlEnemiesStatePtr = &g_SavegamePtr->ovlEnemiesState_B0[g_SavegamePtr->mapOverlayId_A4];
+    ovlEnemiesStatePtr = &g_SavegamePtr->ovlEnemyStates[g_SavegamePtr->mapOverlayId_A4];
 
     if (cond == false)
     {
@@ -2240,7 +2240,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
 
     for (i = 0; i < 32 && g_VBlanks < 4; i++, curCharaSpawn++)
     {
-        if (g_SysWork.npcFlags_2290 == (1 << g_SysWork.npcId_2280) - 1) // TODO: Macro for this check?
+        if (g_SysWork.npcFlags_2290 == ((1 << g_SysWork.npcId_2280) - 1)) // TODO: Macro for this check?
         {
             break;
         }
