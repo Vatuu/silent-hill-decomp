@@ -40,6 +40,9 @@ extern s32           D_800F15A0;
 extern s32           D_800F1590;
 extern s8            D_800F1594[];
 extern s8            D_800F159D;
+extern s_func_80035F4C D_800EFC74;
+extern s32             D_800EFC7C;
+extern u16             D_800EFC80[];
 
 void func_800CD818(void);
 
