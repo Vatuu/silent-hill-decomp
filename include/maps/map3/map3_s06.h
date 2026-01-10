@@ -10,7 +10,7 @@
 #define HAS_Chara_Dahlia
 #define MAP_CHARA_COUNT 1
 
-#define HAS_PARTICLE_CASE_9
+#define HAS_PARTICLE_CASE_2
 #define PARTICLE_CASE_COUNT 1
 
 #define MAP_ROOM_MIN_X Q12(-40.0f)

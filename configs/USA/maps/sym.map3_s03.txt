@@ -151,8 +151,8 @@ MAP_MESSAGES                    = 0x800D63E4; // type:u32 size:0xFC
 //--- PA: 0x00CF68   VA: 0x800D64E0   subsegment: data
 //----------------------------------------------------
 g_CommonWorldObjectPoses        = 0x800D6B64; // type:WorldObjectPos size:0x64
-sharedData_800DFB4C_0_s00       = 0x800D6BC8;
-sharedData_800CD77C_1_s04       = 0x800D6BCC; // type:s32
+g_ParticleMapOverlayId0         = 0x800D6BC8;
+g_ParticleMapOverlayId1         = 0x800D6BCC; // type:s32
 sharedData_800DFB6C_0_s00       = 0x800D6BF4; // type:s32
 sharedData_800DFB70_0_s00       = 0x800D6BF8; // type:s32
 g_ParticleVectors0              = 0x800D80C8; // type:ParticleVectors

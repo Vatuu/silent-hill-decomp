@@ -269,8 +269,8 @@ MAP_MESSAGES                        = 0x800E8EA4; // type:u32 size:0x27C
 //----------------------------------------------------
 //--- PA: 0x01FBA8   VA: 0x800E9120   subsegment: data
 //----------------------------------------------------
-sharedData_800DFB4C_0_s00           = 0x800E9EC4;
-sharedData_800CD77C_1_s04           = 0x800E9EC8; // type:s32
+g_ParticleMapOverlayId0             = 0x800E9EC4;
+g_ParticleMapOverlayId1             = 0x800E9EC8; // type:s32
 D_800E9ED4                          = 0x800E9ED4; // size:1
 D_800E9ED8                          = 0x800E9ED8; // type:s16 size:2
 D_800EA490                          = 0x800EA490; // type:u8 size:1

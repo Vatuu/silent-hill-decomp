@@ -49,6 +49,17 @@ typedef struct
     s32     field_28;
 } s_ParticleVectors;
 
+/** Seems to be custom boundaries for snow/rain particle systems.
+ * Only used in a small handful of maps, and not all fields are populated.
+ *
+ * Maybe 8 `VECTOR3`s holding positions in Q19.12? Se4ms to be an inefficient AABB.
+ */
+typedef struct
+{
+    VECTOR3 corners_0[8];
+} s_func_800CB560;
+STATIC_ASSERT_SIZEOF(s_func_800CB560, 96);
+
 typedef struct
 {
     DVECTOR field_0;
@@ -86,9 +97,11 @@ extern u16 sharedData_800E0CB6_0_s00;
 extern u16 sharedData_800E0CB8_0_s00;
 extern s8  sharedData_800E0CBA_0_s00;
 
+extern s_func_800CB560 sharedData_800E326C_0_s00;
+
 extern s32 sharedData_800E32D0_0_s00;
 
-extern u8 sharedData_800DF158_1_s02;
+extern u8 g_ParticleCameraMoved;
 
 extern u8 sharedData_800DD592_0_s00;
 
@@ -100,9 +113,10 @@ extern q3_12   g_Particle_PrevRotationY;
 
 extern s16 D_800F23D0; // MAP7_S03 extern, TODO: Might be sharedData?
 
-extern s32 sharedData_800CD77C_1_s04; // Used by `Particle_SystemUpdate` only in MAP1_S04 and MAP4_S00? Similar usage to `sharedData_800DFB50_0_s00`?
+extern e_MapOverlayId g_ParticleMapOverlayId0;
+extern e_MapOverlayId g_ParticleMapOverlayId1;
 
-void Particle_SystemUpdate(s32 arg1, s32 arg2, s32 arg3);
+void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3);
 
 /** @brief Checks if the particle spawn origin has moved significantly since last frame.
  * 

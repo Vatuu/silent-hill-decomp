@@ -26,7 +26,7 @@
 #if !MAP_USE_PARTICLES
 
 /** Barebones version of `Particle_SystemUpdate`, missing calls to `Particle_Update` and other particle-related code. */
-void Particle_SystemUpdate(s32 arg1, s32 arg2, s32 arg3)
+void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3)
 {
     s32 temp_s0;
 
@@ -48,22 +48,22 @@ void Particle_SystemUpdate(s32 arg1, s32 arg2, s32 arg3)
 
             sharedData_800DD598_0_s00 = 0;
             g_SysWork.field_234A      = true;
-            sharedData_800DFB4C_0_s00 = arg2;
+            g_ParticleMapOverlayId0 = mapOverlayId;
 
             sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);
             sharedData_800E0CB6_0_s00 = sharedData_800E0CB0_0_s00;
             sharedData_800E0CB4_0_s00 = sharedData_800E0CB0_0_s00;
 
-            temp_s0 = SetSp(0x1F8003D8);
+            temp_s0 = SetSp(PSX_SCRATCH_ADDR(0x3D8));
             SetSp(temp_s0);
             break;
 
         default:
             sharedData_800DD584_0_s00 = g_DeltaTime0 == Q12(0.0f);
 
-            sharedData_800CD77C_1_s04 = arg2;
+            g_ParticleMapOverlayId1 = mapOverlayId;
 
-            temp_s0 = SetSp(0x1F8003D8);
+            temp_s0 = SetSp(PSX_SCRATCH_ADDR(0x3D8));
             SetSp(temp_s0);
             break;
     }
@@ -74,7 +74,7 @@ void Particle_SystemUpdate(s32 arg1, s32 arg2, s32 arg3)
 #else /* MAP_USE_PARTICLES */
 
 /** Full version of `Particle_SystemUpdate` used by most maps. */
-void Particle_SystemUpdate(s32 arg1, s32 arg2, s32 arg3)
+void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3)
 {
     s32 temp_a2;
     s32 temp_s0;
@@ -333,17 +333,17 @@ void Particle_SystemUpdate(s32 arg1, s32 arg2, s32 arg3)
             g_Particle_PrevPosition.vx = Q12(0.0f);
 
             g_SysWork.field_234A = true;
-            sharedData_800DFB4C_0_s00 = arg2;
+            g_ParticleMapOverlayId0 = mapOverlayId;
 
             sharedData_800E0CB8_0_s00 = FP_FROM(sharedData_800E0CB0_0_s00, Q12_SHIFT);
             sharedData_800E0CB6_0_s00 = sharedData_800E0CB0_0_s00;
             sharedData_800E0CB4_0_s00 = sharedData_800E0CB0_0_s00;
 
-            temp_s0 = SetSp(0x1F8003D8);
+            temp_s0 = SetSp(PSX_SCRATCH_ADDR(0x3D8));
 
             Particle_SnowInitialize(g_Particles);
 #if defined(MAP0_S00)
-            func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, sharedData_800DFB4C_0_s00);
+            func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, g_ParticleMapOverlayId0);
 #endif
             SetSp(temp_s0);
             break;
@@ -545,12 +545,12 @@ void Particle_SystemUpdate(s32 arg1, s32 arg2, s32 arg3)
                 }
             }
 
-            sharedData_800DFB50_0_s00 = arg2;
-            temp_s0_3 = SetSp(0x1F8003D8);
+            g_ParticleMapOverlayId1 = mapOverlayId;
+            temp_s0_3 = SetSp(PSX_SCRATCH_ADDR(0x3D8));
 
             Particle_Update(g_Particles);
 #if defined(MAP0_S00)
-            func_800CC6E8(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, sharedData_800DFB50_0_s00);
+            func_800CC6E8(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, g_ParticleMapOverlayId1);
 #endif
             SetSp(temp_s0_3);
 
@@ -827,7 +827,7 @@ bool Particle_Update(s_Particle* partHead)
         g_Particle_PrevPosition.vz = prevPos.vz;
     }
 
-    sharedData_800DF158_1_s02 = Particle_CameraMovedCheck();
+    g_ParticleCameraMoved = Particle_CameraMovedCheck();
 
     g_SysWork.coord_22A8.coord.t[1] = Q8(0.0f);
     g_SysWork.coord_22A8.coord.t[0] = Q12_TO_Q8(g_Particle_Position.vx);
@@ -2434,15 +2434,20 @@ void Particle_SnowRender(s_Particle* part)
                     break;
 #endif
 
-#ifdef HAS_PARTICLE_CASE_9
-                PARTICLE_CASE(9):
-#if defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06)
+#if defined(HAS_PARTICLE_CASE_2)
+                PARTICLE_CASE(2):
                     Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
                     if (g_SavegamePtr->mapRoomIdx_A5 == 5)
-#else
+                    {
+                        Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 0);
+                    }
+                    break;
+#endif
+
+#if defined(HAS_PARTICLE_CASE_9)
+                PARTICLE_CASE(9):
                     Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
                     if (particlePos.vy == 0)
-#endif
                     {
                         Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 0);
                     }
@@ -2465,7 +2470,7 @@ void Particle_SnowRender(s_Particle* part)
 
 #ifdef HAS_PARTICLE_CASE_11
                 PARTICLE_CASE(11):
-#if defined(MAP0_S02)
+#if defined(MAP0_S02) // TODO: MAP0_S02 uses value 2 instead of 11, code used in MAP0_S02 should probably be merged to case 2 above.
                     if (g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-120.0f))
                     {
                         Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
@@ -3161,7 +3166,7 @@ void Particle_MovementApply(s32 pass, s_Particle* part, u16* rand, s32* deltaTim
 
             if (ABS(localPart->position0_0.vx) + ABS(localPart->position0_0.vz) > Q12(UNK_VAL))
             {
-                if (sharedData_800DF158_1_s02 != 0)
+                if (g_ParticleCameraMoved != 0)
                 {
                     Particle_PositionRandomize(rand, &part->position0_0, UNK_VAL);
                 }
@@ -3229,7 +3234,7 @@ void Particle_MovementApply(s32 pass, s_Particle* part, u16* rand, s32* deltaTim
             localPart->position1_C.vz = localPart->position0_0.vz;
 #endif
 
-            if (sharedData_800DF158_1_s02 != 0)
+            if (g_ParticleCameraMoved != 0)
             {
                 localPart->position1_C.vx = localPart->position0_0.vx;
                 localPart->position1_C.vz = localPart->position0_0.vz;
@@ -3237,7 +3242,7 @@ void Particle_MovementApply(s32 pass, s_Particle* part, u16* rand, s32* deltaTim
 
             if (ABS(localPart->position0_0.vx) + ABS(localPart->position0_0.vz) > Q12(6.0))
             {
-                if (sharedData_800DF158_1_s02 != 0)
+                if (g_ParticleCameraMoved != 0)
                 {
                     Particle_PositionRandomize(rand, &part->position0_0, 6);
 
@@ -3381,7 +3386,7 @@ void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, q19_12* de
 
         if ((ABS(part->position0_0.vx) + ABS(part->position0_0.vz)) > Q12(8.0))
         {
-            if (sharedData_800DF158_1_s02 != 0)
+            if (g_ParticleCameraMoved != 0)
             {
                 Particle_PositionRandomize(rand, &part->position0_0, 8);
             }

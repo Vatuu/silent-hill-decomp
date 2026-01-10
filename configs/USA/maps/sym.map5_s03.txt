@@ -143,7 +143,7 @@ g_ParticlesAddedCount               = 0x800D3324; // type:s32
 //----------------------------------------------------
 //--- PA: 0x009DB0   VA: 0x800D3328   subsegment: data
 //----------------------------------------------------
-sharedData_800DF158_1_s02           = 0x800D332C; // type:u8
+g_ParticleCameraMoved               = 0x800D332C; // type:u8
 sharedData_800DD591_0_s00           = 0x800D332D; // type:u8
 sharedData_800DD592_0_s00           = 0x800D332E; // type:u8
 sharedData_800DD598_0_s00           = 0x800D3330;
@@ -181,8 +181,8 @@ MAP_MESSAGES                        = 0x800D38A4; // type:u32 size:0x110
 g_WorldObjectPose_HealthDrink0      = 0x800D3BFC; // type:WorldObjectPose size:0x14
 g_WorldObjectPose_ShotgunShells     = 0x800D3C10; // type:WorldObjectPose size:0x14
 g_WorldObjectPose_HealthDrink1      = 0x800D3C24; // type:WorldObjectPose size:0x14
-sharedData_800DFB4C_0_s00           = 0x800D3C38;
-sharedData_800DFB50_0_s00           = 0x800D3C3C;
+g_ParticleMapOverlayId0             = 0x800D3C38;
+g_ParticleMapOverlayId1             = 0x800D3C3C;
 g_Particle_SpeedX                   = 0x800D3C48; // type:s32
 g_Particle_SpeedZ                   = 0x800D3C4C; // type:s32
 sharedData_800DFB6C_0_s00           = 0x800D3C50; // type:s32

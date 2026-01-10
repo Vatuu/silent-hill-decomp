@@ -116,7 +116,7 @@ Map_WorldObjectsUpdate          = 0x800D9764; // type:func
 HARRY_M1S00_ANIM_INFOS          = 0x800DA44C;
 sharedData_800DD584_0_s00       = 0x800DA6B3; // type:u8
 g_ParticlesAddedCount           = 0x800DA6B4; // type:s32
-sharedData_800DF158_1_s02       = 0x800DA6BC; // type:u8
+g_ParticleCameraMoved           = 0x800DA6BC; // type:u8
 sharedData_800DD592_0_s00       = 0x800DA6BD; // type:u8
 sharedData_800DD598_0_s00       = 0x800DA6C0;
 sharedData_800DD59C_0_s00       = 0x800DA6C4; // type:u8
@@ -172,8 +172,8 @@ MAP_MESSAGES                    = 0x800DD1BC; // type:u32 size:0xA0
 //--- PA: 0x013CE4   VA: 0x800DD25C   subsegment: data
 //----------------------------------------------------
 g_CommonWorldObjectPoses        = 0x800DD71C; // type:WorldObjectPos size:0x64
-sharedData_800DFB4C_0_s00       = 0x800DD780;
-sharedData_800DFB50_0_s00       = 0x800DD784;
+g_ParticleMapOverlayId0         = 0x800DD780;
+g_ParticleMapOverlayId1         = 0x800DD784;
 g_Particle_SpeedX               = 0x800DD788; // type:s32
 g_Particle_SpeedZ               = 0x800DD78C; // type:s32
 sharedData_800DFB6C_0_s00       = 0x800DD790; // type:s32

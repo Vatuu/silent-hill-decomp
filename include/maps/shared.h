@@ -1379,17 +1379,6 @@ typedef struct
     s16  field_D5E;
 } s_func_800D8714;
 
-/** Seems to be custom boundaries for snow/rain particle systems.
- * Only used in a small handful of maps, and not all fields are populated.
- *
- * Maybe 8 `VECTOR3`s holding positions in Q19.12? Se4ms to be an inefficient AABB.
- */
-typedef struct
-{
-    VECTOR3 corners_0[8];
-} s_func_800CB560;
-STATIC_ASSERT_SIZEOF(s_func_800CB560, 96);
-
 /** @brief Stores SFX ID and volume.
  *  Volume union required becase one function reads the value as `u16`, another as `u8`.
  *  Actual value fits into `u8` (8 bit volume control).
@@ -1621,15 +1610,9 @@ extern s32 sharedData_800E32CC_0_s00;
 
 extern u16 sharedData_800D21E8_3_s00[];
 
-extern s_func_800CB560 sharedData_800E326C_0_s00;
-
 extern u16 sharedData_800E32D4_0_s00;
 
 extern s32 sharedData_800DD598_0_s00;
-
-extern s32 sharedData_800DFB4C_0_s00;
-
-extern s32 sharedData_800DFB50_0_s00;
 
 extern CVECTOR sharedData_800E3258_0_s00;
 

@@ -120,7 +120,7 @@ HARRY_M5S00_ANIM_INFOS           = 0x800D8EF8;
 sharedData_800DD584_0_s00        = 0x800D9189; // type:u8
 g_ParticlesAddedCount            = 0x800D918C; // type:s32
 sharedData_800DD58C_0_s00        = 0x800D9190; // type:s32
-sharedData_800DF158_1_s02        = 0x800D9194; // type:u8
+g_ParticleCameraMoved            = 0x800D9194; // type:u8
 sharedData_800DD598_0_s00        = 0x800D9198;
 sharedData_800DD59C_0_s00        = 0x800D919C; // type:u8
 HANGED_SCRATCHER_ANIM_INFOS      = 0x800D91A0; // type:s32 unknown type
@@ -147,8 +147,8 @@ MAP_MESSAGES                     = 0x800DA80C; // type:u32 size:0x54
 //----------------------------------------------------
 //--- PA: 0x0112E8   VA: 0x800DA860   subsegment: data
 //----------------------------------------------------
-sharedData_800DFB4C_0_s00        = 0x800DAB70;
-sharedData_800DFB50_0_s00        = 0x800DAB74;
+g_ParticleMapOverlayId0          = 0x800DAB70;
+g_ParticleMapOverlayId1          = 0x800DAB74;
 D_800DAB7C                       = 0x800DAB7C; // size:3
 g_Particle_SpeedX                = 0x800DAB80; // type:s32
 g_Particle_SpeedZ                = 0x800DAB84; // type:s32

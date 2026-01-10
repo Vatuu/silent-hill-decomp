@@ -109,7 +109,7 @@ u8 LOADABLE_INVENTORY_ITEMS[35] = {
 
 u8 sharedData_800DD584_0_s00 = 0;
 s32 g_ParticlesAddedCount[2] = {};
-s8 sharedData_800DF158_1_s02 = 0;
+s8 g_ParticleCameraMoved = 0;
 u8 sharedData_800DD591_0_s00 = 0;
 u8 sharedData_800DD592_0_s00 = 1;
 u8 __padding = 0;
