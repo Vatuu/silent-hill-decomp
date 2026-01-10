@@ -3,6 +3,8 @@
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
 #include "maps/map3/map3_s00.h"
 
 INCLUDE_RODATA("maps/map3_s00/nonmatchings/map3_s00", D_800C9578);
@@ -33,4 +35,7 @@ INCLUDE_RODATA("maps/map3_s00/nonmatchings/map3_s00", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800CCFD0
 
+#include "../src/maps/particle.c"
+
 #include "../src/maps/characters/player.c"
+

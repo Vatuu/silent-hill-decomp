@@ -3,9 +3,11 @@
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-#include "maps/map5/map5_s00.h"
+#include "maps/particle.h"
 #include "maps/characters/creeper.h"
+#include "maps/characters/player.h"
 #include "maps/characters/hanged_scratcher.h"
+#include "maps/map5/map5_s00.h"
 
 INCLUDE_RODATA("maps/map5_s00/nonmatchings/map5_s00", D_800C9578);
 
@@ -38,6 +40,8 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800CB25C);
 #include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800CD7D4
 
 #include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800CD88C
+
+#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"
 

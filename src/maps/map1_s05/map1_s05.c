@@ -3,8 +3,10 @@
 #include "bodyprog/sound_system.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-#include "maps/map1/map1_s05.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
 #include "maps/characters/split_head.h"
+#include "maps/map1/map1_s05.h"
 
 INCLUDE_RODATA("maps/map1_s05/nonmatchings/map1_s05", D_800C9578);
 
@@ -31,6 +33,8 @@ INCLUDE_RODATA("maps/map1_s05/nonmatchings/map1_s05", g_MapOverlayHeader);
 #include "maps/shared/sharedFunc_800CCF30_1_s05.h" // 0x800CCF30
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CD5EC
+
+#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"
 

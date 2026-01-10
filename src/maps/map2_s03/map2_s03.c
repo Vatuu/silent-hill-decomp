@@ -2,9 +2,13 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
 #include "maps/map2/map2_s03.h"
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CA904
+
+#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"
 

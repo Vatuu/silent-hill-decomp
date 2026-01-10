@@ -3,6 +3,8 @@
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
 #include "maps/map4/map4_s04.h"
 
 INCLUDE_RODATA("maps/map4_s04/nonmatchings/map4_s04", D_800C9578);
@@ -32,5 +34,7 @@ INCLUDE_RODATA("maps/map4_s04/nonmatchings/map4_s04", g_MapOverlayHeader);
 #include "maps/shared/sharedFunc_800D01BC_0_s00.h" // 0x800CD6F4
 
 #include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800CD7AC
+
+#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

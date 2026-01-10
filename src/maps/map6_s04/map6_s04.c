@@ -3,9 +3,11 @@
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-#include "maps/map6/map6_s04.h"
+#include "maps/particle.h"
 #include "maps/characters/larval_stalker.h"
+#include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
+#include "maps/map6/map6_s04.h"
 
 INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", D_800C9578);
 
@@ -20,6 +22,8 @@ INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04", g_MapOverlayHeader);
 #include "maps/shared/sharedFunc_800CBB30_1_s01.h" // 0x800CCB1C
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CD3AC
+
+#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"
 

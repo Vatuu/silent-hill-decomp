@@ -4,8 +4,10 @@
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-#include "maps/map7/map7_s01.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
 #include "maps/characters/puppet_nurse.h"
+#include "maps/map7/map7_s01.h"
 
 INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01", D_800C9578);
 
@@ -18,6 +20,8 @@ const VECTOR D_800CA5C8 = {};
 #include "maps/shared/sharedFunc_800CD1F8_0_s01.h" // 0x800CD010
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CDE18
+
+#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"
 

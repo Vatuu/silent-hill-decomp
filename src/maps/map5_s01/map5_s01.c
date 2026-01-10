@@ -4,10 +4,12 @@
 #include "bodyprog/sound_system.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-#include "maps/map5/map5_s01.h"
+#include "maps/particle.h"
 #include "maps/characters/air_screamer.h"
 #include "maps/characters/groaner.h"
+#include "maps/characters/player.h"
 #include "maps/characters/romper.h"
+#include "maps/map5/map5_s01.h"
 
 INCLUDE_RODATA("maps/map5_s01/nonmatchings/map5_s01", D_800C9578);
 
@@ -477,6 +479,8 @@ void func_800CE180(void) // 0x800CE180
 #include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800CFE24
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800CFEAC
+
+#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"
 

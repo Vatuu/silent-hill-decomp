@@ -2,10 +2,12 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-#include "maps/map2/map2_s02.h"
+#include "maps/particle.h"
 #include "maps/characters/air_screamer.h"
 #include "maps/characters/groaner.h"
+#include "maps/characters/player.h"
 #include "maps/characters/romper.h"
+#include "maps/map2/map2_s02.h"
 
 INCLUDE_RODATA("maps/map2_s02/nonmatchings/map2_s02", D_800C9578);
 
@@ -34,6 +36,8 @@ INCLUDE_RODATA("maps/map2_s02/nonmatchings/map2_s02", g_MapOverlayHeader);
 #include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800CE2F0
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800CE378
+
+#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"
 

@@ -1,7 +1,9 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
-#include "maps/map0/map0_s02.h"
 #include "maps/shared.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
+#include "maps/map0/map0_s02.h"
 
 #define BLOOD_SPLAT_COUNT_MAX 50
 

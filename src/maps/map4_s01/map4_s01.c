@@ -7,6 +7,8 @@
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
 #include "maps/map4/map4_s01.h"
 
 // TODO: Func declarations in header.
@@ -24,5 +26,7 @@ INCLUDE_RODATA("maps/map4_s01/nonmatchings/map4_s01", g_MapOverlayHeader);
 #include "maps/shared/sharedFunc_800CB884_1_s05.h" // 0x800CCF50
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00_noParticles.h" // 0x800CD548
+
+#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"

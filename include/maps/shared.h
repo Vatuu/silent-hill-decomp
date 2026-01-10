@@ -1585,17 +1585,6 @@ extern VECTOR3 sharedData_800DE190_0_s01;
 
 extern s_func_800700F8_2 sharedData_800E2330_0_s01;
 
-extern u8 sharedData_800DF158_1_s02;
-
-extern s32 sharedData_800E0CA8_0_s00;
-extern s32 sharedData_800E0CAC_0_s00;
-extern u32 sharedData_800E0CB0_0_s00;
-extern u16 sharedData_800E0CB4_0_s00;
-extern u16 sharedData_800E0CB6_0_s00;
-extern u16 sharedData_800E0CB8_0_s00;
-extern s8  sharedData_800E0CBA_0_s00;
-extern s32 sharedData_800E32D0_0_s00;
-
 /** Packed weapon attack. `See `WEAPON_ATTACK`. */
 extern s8 sharedData_800DD59C_0_s00;
 
@@ -1692,8 +1681,6 @@ extern s32 sharedData_800DFB70_0_s00;
 
 extern s32 sharedData_800DD58C_0_s00;
 extern s32 sharedData_800E32CC_0_s00;
-
-extern s32 sharedData_800D32A0_0_s02; // `sharedFunc_800CDAA8_0_s02`
 
 extern u16 sharedData_800D21E8_3_s00[];
 
@@ -2144,61 +2131,6 @@ bool sharedFunc_800CBBBC_0_s00(void);
 
 void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
 
-void sharedFunc_800D0A60_0_s00(s32 caseArg);
-
-bool sharedFunc_800D0B18_0_s00(s32 arg0);
-
-void sharedFunc_800D0CB8_0_s00(void);
-
-void sharedFunc_800D0E04_0_s00(void);
-
-void sharedFunc_800D1C38_0_s00(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
-
-void sharedFunc_800D209C_0_s00(void);
-
-void sharedFunc_800D20D8_0_s00(void);
-
-void Player_ControlFreeze(void);
-
-void Player_ControlUnfreeze(bool setIdle);
-
-bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount);
-
-void sharedFunc_800D2C7C_0_s00(s32 arg0);
-
-void sharedFunc_800D2D2C_0_s00(void);
-
-void sharedFunc_800D2D44_0_s00(void);
-
-s32 sharedFunc_800D2D6C_0_s00(void);
-
-void sharedFunc_800D2D84_0_s00(void);
-
-/** Triggers at specific points after the start of a cutscene or dialogue. */
-s32 sharedFunc_800D2E50_0_s00(void);
-
-void sharedFunc_800D2E60_0_s00(void);
-
-void sharedFunc_800D2E9C_0_s00(q19_12* offsetX, q19_12* offsetZ, q3_12* angle);
-
-void sharedFunc_800D2E6C_0_s00(void);
-
-void Player_FallBackward(void);
-
-void sharedFunc_800D2E7C_0_s00(void);
-
-void sharedFunc_800D2E84_0_s00(void);
-
-void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec);
-
-bool sharedFunc_800D2E94_0_s00(void);
-
-s32 sharedFunc_800D2EA4_0_s00(void);
-
-void sharedFunc_800D2EB4_0_s00(void);
-
-void sharedFunc_800D2EF4_0_s00(void);
-
 /** Among other things, sets the players's anim to anim 3 (which might actually be flags if the field packs more data). */
 void sharedFunc_800D88C0_0_s00(s_SubCharacter* player, bool cond);
 
@@ -2249,8 +2181,6 @@ void sharedFunc_800D0690_1_s03(s32 pass, s_Particle* part, s16* rand, q19_12* de
 void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, q19_12* deltaTime);
 
 void SysWork_StateStepIncrementAfterTime(q19_12* timer, q19_12 inc, q19_12 timeMin, q19_12 timeMax, bool setTimerToMax, bool incStateStep);
-
-void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra, GsCOORDINATE2* coord);
 
 void sharedFunc_800CB7F4_1_s01(void);
 
@@ -2452,17 +2382,12 @@ void sharedFunc_800E1290_6_s04(void);
 
 void sharedFunc_800E12D0_6_s04(void);
 
-/** Player anim func. Checks if the active keyframe is at the start or end of the anim's range. */
-s32 sharedFunc_800D2DAC_0_s00(void);
-
 /** NPC anim func. Checks if the active keyframe is at the start or end of the anim's range. */
 s32 sharedFunc_800D8964_0_s00(s_SubCharacter* chara);
 
 bool sharedFunc_800D9188_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx, s32 sfxId);
 
 void sharedFunc_800D0700_0_s00(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd, s32 flag);
-
-void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
 bool sharedFunc_800D908C_0_s00(s32 animStatus, s_SubCharacter* chara, s32 keyframeIdx0, s32 keyframeIdx1, s32 sfxId, s32 pitch);
 
@@ -2492,10 +2417,6 @@ void sharedFunc_800D529C_0_s01(s_SubCharacter* airScreamer, q19_12 radius, q19_1
 void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800CE934_0_s02(void);
-
-void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1);
-
-void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY);
 
 void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ, q19_12 range);
 

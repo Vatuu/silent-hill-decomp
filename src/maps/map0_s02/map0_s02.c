@@ -2,6 +2,8 @@
 #include "bodyprog/math/math.h"
 #include "main/rng.h"
 #include "maps/shared.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
 #include "maps/map0/map0_s02.h"
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CACF0
@@ -27,6 +29,8 @@
 #include "maps/shared/sharedFunc_800CF9A8_0_s01.h" // 0x800CC814
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800CC89C
+
+#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"
 

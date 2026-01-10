@@ -3,8 +3,10 @@
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
-#include "maps/map0/map0_s00.h"
+#include "maps/particle.h"
+#include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
+#include "maps/map0/map0_s00.h"
 
 #include "maps/shared/sharedFunc_800CB6B0_0_s00.h" // 0x800CB6B0
 
@@ -1114,6 +1116,8 @@ bool func_800D0600(void) // 0x800D0600
 }
 
 #include "maps/shared/sharedFunc_800D0700_0_s00.h" // 0x800D0700
+
+#include "../src/maps/particle.c"
 
 #include "../src/maps/characters/player.c"
 

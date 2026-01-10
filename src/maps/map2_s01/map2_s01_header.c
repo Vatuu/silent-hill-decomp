@@ -1,9 +1,11 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "maps/shared.h"
-#include "maps/map2/map2_s01.h"
+#include "maps/particle.h"
 #include "maps/characters/dahlia.h"
+#include "maps/characters/player.h"
 #include "maps/characters/stalker.h"
+#include "maps/map2/map2_s01.h"
 
 // TODO: Fix tabulation. Use 4 spaces not 2.
 
