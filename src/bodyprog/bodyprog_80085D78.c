@@ -4335,7 +4335,7 @@ void Dms_CharacterGetPosRot(VECTOR3* pos, SVECTOR3* rot, const char* charaName, 
 
         Gfx_DebugStringPosition(SCREEN_POSITION_X(15.75f), SCREEN_POSITION_Y(37.5f));
 
-#ifdef DEBUG
+#if VERSION_DATE <= VERSION_DATE_PROTO_981216
         // Code seen in 98-12-16 build.
         Gfx_DebugStringDraw(charName);
         Gfx_DebugStringDraw(" doesn't exist in dms.");

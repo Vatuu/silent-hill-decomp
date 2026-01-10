@@ -3172,7 +3172,8 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBu
         debugStr[12] = 0;
         Gfx_DebugStringPosition(100, 80);
         strncpy(&debugStr, &filename, 12);
-#ifdef DEBUG
+
+#if VERSION_DATE <= VERSION_DATE_PROTO_981216
         // Code seen in 98-12-16 build.
         Gfx_DebugStringDraw(debugStr);
 #endif

@@ -156,7 +156,7 @@ void func_800CCA2C(void) // 0x800CCA2C
 
             Gfx_DebugStringPosition(50, 50);
 
-#ifdef DEBUG
+#if VERSION_DATE <= VERSION_DATE_PROTO_981216
             // Code seen in 98-12-16 build.
             Gfx_DebugStringDraw("VS 0:");
             Gfx_DebugStringDraw(Math_IntegerToString(3, D_800CD768));

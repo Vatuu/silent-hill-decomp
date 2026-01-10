@@ -92,8 +92,8 @@ void GameState_DebugMoviePlayer_Update(void) // 0x801E2908
 
     Gfx_DebugStringPosition(SCREEN_POSITION_X(12.5f), SCREEN_POSITION_Y(16.75f));
 
-#ifdef DEBUG
-    // Recreated code from pre-Jan17 builds which include calls to display these (though `Gfx_DebugStringDraw` was nullsub in those builds).
+#if VERSION_DATE <= VERSION_DATE_PROTO_981216
+    // Code seen in 98-12-16 to display movie number selection (`Gfx_DebugStringDraw` was nullsub in those builds).
     Gfx_DebugStringDraw("MOVIE NO=");
     Gfx_DebugStringDraw(Math_IntegerToString(2, g_Debug_MoviePlayerIdx));
 #endif

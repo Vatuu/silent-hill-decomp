@@ -1198,7 +1198,7 @@ void Savegame_SaveBlockInit(s_PsxSaveBlock* saveBlock, s8 blockCount, s32 saveId
     saveIdxStr[1] += (saveIdx + 1) / 10;
     saveIdxStr[3] += (saveIdx + 1) % 10;
 
-#if defined(VERSION_NTSC)
+#if defined(VERSION_NTSC) || defined(VERSION_PAL)
     strcpy(saveBlock->titleNameShiftJis_4, "ＳＩＬＥＮＴ　ＨＩＬＬ");
     strcat(saveBlock->titleNameShiftJis_4, "　　ＦＩＬＥ");
 #elif defined(VERSION_NTSCJ)

@@ -87,7 +87,7 @@ void Gfx_DebugStringDraw(char* str);
 
 char* Math_IntegerToString(s32 widthMin, s32 val);
 
-#ifdef DEBUG
+#if VERSION_DATE <= VERSION_DATE_PROTO_981216
 void Gfx_DebugQ12Print(s32 offsetX, s32 fracDigits, q19_12 val);
 #endif
 

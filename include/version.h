@@ -11,6 +11,7 @@
 // that is tied to a particular regional build.
 
 // Version defines that code can test against.
+#define VERSION_DATE_PROTO_981216   981216
 #define VERSION_DATE_NTSCJ_1_0 990126
 #define VERSION_DATE_NTSC_1_1  990210
 #define VERSION_DATE_NTSCJ_1_1 990602

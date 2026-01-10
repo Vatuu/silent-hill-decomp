@@ -143,7 +143,7 @@ char* Math_IntegerToString(s32 widthMin, s32 val) // 0x80032154
     return str;
 }
 
-#ifdef DEBUG
+#if VERSION_DATE <= VERSION_DATE_PROTO_981216
 void Gfx_DebugQ12Print(s32 offsetX, s32 fracDigits, q19_12 val) // 0x8002BCAC in 98-12-16, not included in retail.
 {
     s32 i;

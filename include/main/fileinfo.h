@@ -8,7 +8,6 @@
 #define FS_SECTOR_SHIFT  11    /** For dividing by `FS_SECTOR_SIZE`. */
 #define FS_NAME_CHAR_MAX 8     /** Maximum amount of characters in a file name (excluding extension and path). */
 #define FS_INVALID_TYPE  0x0F  /** Unspecified file type (or empty extension). */
-#define FS_FILE_COUNT    2074  /** Number of files in `g_FileTable`. Probably depends on version. */
 
 /** @brief Enum containing the index of each game asset file for use with FS functions.
  *
@@ -21,6 +20,7 @@ typedef enum _FsFile
 #elif defined(VER_JAP0)
     #include "fileenum.h.JAP0.inc"
 #endif
+    FS_FILE_COUNT /** Number of files in `g_FileTable`. 2074 in USA/JAP0. */
 } e_FsFile;
  
 typedef enum _FileType
