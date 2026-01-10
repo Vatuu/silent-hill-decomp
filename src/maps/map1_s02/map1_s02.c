@@ -292,7 +292,7 @@ void func_800DA384(void) // 0x800DA384
             Player_ControlFreeze();
             Game_TurnFlashlightOn();
             sharedFunc_800D08B8_0_s00(6, 127);
-            sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
+            Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
 
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-13.3f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-68.1f);
@@ -1388,7 +1388,7 @@ void func_800DD420(void) // 0x800DD420
 {
     sharedFunc_800D08B8_0_s00(6, 127);
 
-    sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
+    Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
 
     Savegame_EventFlagClear(EventFlag_225);
 

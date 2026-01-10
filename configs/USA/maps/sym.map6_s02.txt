@@ -34,13 +34,13 @@
 //-----------------------------------------------------------
 sharedFunc_800CE5D4_1_s03           = 0x800CABA0; // type:func
 sharedFunc_800CE688_1_s03           = 0x800CAC54; // type:func
-sharedFunc_800CB6B0_0_s00           = 0x800CB31C; // type:func
+Particle_SystemUpdate               = 0x800CB31C; // type:func
 sharedFunc_800D08B8_0_s00           = 0x800CB484; // type:func
 sharedFunc_800D0A60_0_s00           = 0x800CB604; // type:func
 sharedFunc_800D0B18_0_s00           = 0x800CB6BC; // type:func
-sharedFunc_800D0E04_0_s00           = 0x800CB820; // type:func
-sharedFunc_800CFFD8_0_s01           = 0x800CB840; // type:func
-sharedFunc_800D0850_0_s01           = 0x800CC0B8; // type:func
+Particle_SoundStop                  = 0x800CB820; // type:func
+Particle_HyperBlasterBeamRender     = 0x800CB840; // type:func
+Particle_BeamRender                 = 0x800CC0B8; // type:func
 sharedFunc_800CDAA8_0_s02           = 0x800CC4A4; // type:func
 sharedFunc_800D1C38_0_s00           = 0x800CCCF4; // type:func
 sharedFunc_800D209C_0_s00           = 0x800CD120; // type:func

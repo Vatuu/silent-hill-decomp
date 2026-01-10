@@ -519,7 +519,7 @@ void func_800DA5A0(void) // 0x800DA5A0
             break;
 
         case 1:
-            sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
+            Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
             SysWork_StateStepIncrement(0);
 
         case 2:

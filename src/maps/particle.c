@@ -9,29 +9,24 @@
 //  - Some funcs here only get included in MAP0_S00, guess they're particle-related since they're between
 //    other particle functions, does MAP0_S00 have some unique particle effect?
 
-#if defined(MAP0_S00) || defined(MAP0_S01) || defined(MAP0_S02) || defined(MAP1_S00) || \
+#define MAP_PARTICLE_HAS_SNOW \
+    (defined(MAP0_S00) || defined(MAP0_S01) || defined(MAP0_S02) || defined(MAP1_S00) || \
     defined(MAP1_S06) || defined(MAP2_S00) || defined(MAP2_S02) || defined(MAP3_S00) || \
     defined(MAP3_S01) || defined(MAP3_S06) || defined(MAP5_S01) || defined(MAP5_S03) || \
-    defined(MAP6_S00) || defined(MAP7_S03)
-    #define MAP_PARTICLE_HAS_CASE_0 1
-#else
-    #define MAP_PARTICLE_HAS_CASE_0 0
-#endif
+    defined(MAP6_S00) || defined(MAP7_S03))
 
-#if defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
+#define MAP_PARTICLE_HAS_RAIN \
+    (defined(MAP0_S00) || defined(MAP1_S02) || defined(MAP1_S03) || defined(MAP4_S02) || \
     defined(MAP4_S03) || defined(MAP4_S04) || defined(MAP4_S05) || defined(MAP5_S00) || \
-    defined(MAP6_S00) || defined(MAP6_S03)
-    #define MAP_PARTICLE_HAS_CASE_1 1
-#else
-    #define MAP_PARTICLE_HAS_CASE_1 0
-#endif
+    defined(MAP6_S00) || defined(MAP6_S03))
 
-#define MAP_USE_PARTICLES (MAP_PARTICLE_HAS_CASE_0 || MAP_PARTICLE_HAS_CASE_1)
+#define MAP_USE_PARTICLES (MAP_PARTICLE_HAS_SNOW || MAP_PARTICLE_HAS_RAIN)
+#define MAP_PARTICLE_HAS_800D0690 (MAP_PARTICLE_HAS_RAIN && !defined(MAP0_S00) && !defined(MAP1_S02) && !defined(MAP4_S03))
 
 #if !MAP_USE_PARTICLES
 
-/** Barebones version of `sharedFunc_800CB6B0_0_s00`, missing calls to `Particle_Update` and other particle-related code. */
-void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
+/** Barebones version of `Particle_SystemUpdate`, missing calls to `Particle_Update` and other particle-related code. */
+void Particle_SystemUpdate(s32 arg1, s32 arg2, s32 arg3)
 {
     s32 temp_s0;
 
@@ -78,8 +73,8 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 
 #else /* MAP_USE_PARTICLES */
 
-/** Full version of `sharedFunc_800CB6B0_0_s00` used by most maps. */
-void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
+/** Full version of `Particle_SystemUpdate` used by most maps. */
+void Particle_SystemUpdate(s32 arg1, s32 arg2, s32 arg3)
 {
     s32 temp_a2;
     s32 temp_s0;
@@ -100,8 +95,8 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
     }
 #endif
 
-#if MAP_PARTICLE_HAS_CASE_1
-    sharedFunc_800D0CB8_0_s00();
+#if MAP_PARTICLE_HAS_RAIN
+    Particle_SoundUpdate();
 #endif
 
     func_80055434(&g_ParticleVectors0.vector_0);
@@ -312,7 +307,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             sharedData_800DD591_0_s00 = 2;
 #endif
 
-#if MAP_PARTICLE_HAS_CASE_1
+#if MAP_PARTICLE_HAS_RAIN
     #if defined(MAP5_S00) || defined(MAP6_S03)
         sharedData_800E32D4_0_s00 = 3;
     #else
@@ -320,7 +315,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
     #endif
 #endif
 
-#if !MAP_PARTICLE_HAS_CASE_1 || defined(MAP0_S00) || defined(MAP6_S00)
+#if !MAP_PARTICLE_HAS_RAIN || defined(MAP0_S00) || defined(MAP6_S00)
     sharedData_800DD592_0_s00 = 1;
 #endif
 
@@ -346,7 +341,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
 
             temp_s0 = SetSp(0x1F8003D8);
 
-            sharedFunc_800CBC94_0_s00(sharedData_800E0CBC_0_s00);
+            Particle_SnowInitialize(g_Particles);
 #if defined(MAP0_S00)
             func_800CBFB0(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, sharedData_800DFB4C_0_s00);
 #endif
@@ -384,18 +379,18 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                     {
                         case 4:
                         case 6:
-                            sharedData_800DD588_0_s00[i] = temp_s0_2;
+                            g_ParticlesAddedCount[i] = temp_s0_2;
                             break;
 
                         case 5:
                         case 7:
                             var_v0 = temp_s0_2 * 2;
-                            sharedData_800DD588_0_s00[i] = var_v0;
+                            g_ParticlesAddedCount[i] = var_v0;
                             break;
 
                         case 32:
                         case 48:
-                            sharedData_800DD588_0_s00[i] = temp_a2;
+                            g_ParticlesAddedCount[i] = temp_a2;
                             break;
 
                         case 37:
@@ -403,13 +398,13 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                         case 53:
                         case 55:
                             var_v0                       = temp_s0_2 + (PARTICLE_COUNT_MAX / 2);
-                            sharedData_800DD588_0_s00[i] = var_v0;
+                            g_ParticlesAddedCount[i] = var_v0;
                             break;
 
                         case 40:
                         case 56:
                             var_v0 = temp_a2 * 2;
-                            sharedData_800DD588_0_s00[i] = var_v0;
+                            g_ParticlesAddedCount[i] = var_v0;
                             break;
 
                         case 44:
@@ -417,11 +412,11 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                         case 60:
                         case 62:
                             var_v0                       = temp_a2 + (PARTICLE_COUNT_MAX / 2);
-                            sharedData_800DD588_0_s00[i] = var_v0;
+                            g_ParticlesAddedCount[i] = var_v0;
                             break;
 
                         case 0:
-                            sharedData_800DD588_0_s00[i] = 0;
+                            g_ParticlesAddedCount[i] = 0;
                             break;
 
                         case 36:
@@ -429,7 +424,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                         case 52:
                         case 54:
                             var_v0                       = PARTICLE_COUNT_MAX / 2;
-                            sharedData_800DD588_0_s00[i] = var_v0;
+                            g_ParticlesAddedCount[i] = var_v0;
                             break;
 
                         case 45:
@@ -437,11 +432,11 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                         case 61:
                         case 63:
                             var_v0                       = PARTICLE_COUNT_MAX;
-                            sharedData_800DD588_0_s00[i] = var_v0;
+                            g_ParticlesAddedCount[i] = var_v0;
                             break;
                     }
 
-#if MAP_PARTICLE_HAS_CASE_0
+#if MAP_PARTICLE_HAS_SNOW
                     if (i == 0)
                     {
                         if (temp_t0 < 2)
@@ -459,7 +454,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                             case 6:
                             case 32:
                             case 48:
-                                var_v0_3                  = sharedData_800DD588_0_s00[i] < ((PARTICLE_COUNT_MAX / 4) + 1);
+                                var_v0_3                  = g_ParticlesAddedCount[i] < ((PARTICLE_COUNT_MAX / 4) + 1);
                                 sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
                                 break;
 
@@ -467,7 +462,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
                             case 7:
                             case 40:
                             case 56:
-                                var_v0_3                  = sharedData_800DD588_0_s00[i] < ((PARTICLE_COUNT_MAX / 2) + 1);
+                                var_v0_3                  = g_ParticlesAddedCount[i] < ((PARTICLE_COUNT_MAX / 2) + 1);
                                 sharedData_800DD592_0_s00 = var_v0_3 ^ 1;
                                 break;
 
@@ -553,15 +548,15 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
             sharedData_800DFB50_0_s00 = arg2;
             temp_s0_3 = SetSp(0x1F8003D8);
 
-            Particle_Update(sharedData_800E0CBC_0_s00);
+            Particle_Update(g_Particles);
 #if defined(MAP0_S00)
             func_800CC6E8(&sharedData_800E34FC_0_s00, &sharedData_800E330C_0_s00, sharedData_800DFB50_0_s00);
 #endif
             SetSp(temp_s0_3);
 
-            for (i = sharedData_800DD588_0_s00[0] + sharedData_800DD588_0_s00[1]; i < PARTICLE_COUNT_MAX; i++)
+            for (i = g_ParticlesAddedCount[0] + g_ParticlesAddedCount[1]; i < PARTICLE_COUNT_MAX; i++)
             {
-                sharedData_800E0CBC_0_s00[i].stateStep_1E = 0;
+                g_Particles[i].stateStep_1E = 0;
             }
             break;
     }
@@ -569,7 +564,7 @@ void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3)
     g_ParticleVectors1 = g_ParticleVectors0;
 }
 
-bool sharedFunc_800CBBBC_0_s00(void)
+bool Particle_CameraMovedCheck(void)
 {
     q19_12 dist;
     q19_12 rotY;
@@ -613,7 +608,7 @@ bool sharedFunc_800CBBBC_0_s00(void)
  *     }
  * }
  */
-void sharedFunc_800CBC94_0_s00(s_Particle* parts)
+void Particle_SnowInitialize(s_Particle* parts)
 {
     #define SNOW_COUNT_MAX       PARTICLE_COUNT_MAX
     #define SNOW_SPAWN_COUNT_MAX (PARTICLE_COUNT_MAX/2)
@@ -640,8 +635,8 @@ void sharedFunc_800CBC94_0_s00(s_Particle* parts)
     }
 
     // Reset counts. NOTE: One is unused.
-    sharedData_800DD588_0_s00[1] = 0;
-    sharedData_800DD588_0_s00[0] = 0;
+    g_ParticlesAddedCount[1] = 0;
+    g_ParticlesAddedCount[0] = 0;
 
     // Settings byte holds state and snow type. Can be 0-2. 1 enables snow. TODO: Move doc.
     settingsState = (sharedData_800E0CB8_0_s00 & 0xC) >> 2;
@@ -699,36 +694,36 @@ void sharedFunc_800CBC94_0_s00(s_Particle* parts)
         for (j = 0; j < SNOW_SPAWN_COUNT_MAX; j++)
         {
             // Reset how many particles to spawn this iteration.
-            sharedData_800E2156_0_s01 = 0;
+            g_ParticleSpawnCount = 0;
 
             rand                                      = Rng_Rand16();
-            sharedData_800DD588_0_s00[settingsState] += spawnMult;
+            g_ParticlesAddedCount[settingsState] += spawnMult;
 
             // Clamp spawn count.
             if (snowType == SnowType_Light || snowType == SnowType_LightWindy)
             {
-                limitRange(sharedData_800DD588_0_s00[settingsState], 0, SNOW_SPAWN_COUNT_MAX);
+                limitRange(g_ParticlesAddedCount[settingsState], 0, SNOW_SPAWN_COUNT_MAX);
             }
             else
             {
-                limitRange(sharedData_800DD588_0_s00[settingsState], 0, SNOW_COUNT_MAX);
+                limitRange(g_ParticlesAddedCount[settingsState], 0, SNOW_COUNT_MAX);
             }
 
-            for (i = 0, part = parts; i < sharedData_800DD588_0_s00[settingsState]; i++, part++)
+            for (i = 0, part = parts; i < g_ParticlesAddedCount[settingsState]; i++, part++)
             {
                 switch (part->stateStep_1E)
                 {
                     case ParticleState_Spawn:
                         // Throttle spawning.
-                        if (sharedData_800E2156_0_s01 < density)
+                        if (g_ParticleSpawnCount < density)
                         {
-                            sharedData_800E2156_0_s01++;
-                            sharedFunc_800CF9A8_0_s01(settingsState, part, &rand);
+                            g_ParticleSpawnCount++;
+                            Particle_Spawn(settingsState, part, &rand);
                         }
                         break;
 
                     case ParticleState_Active:
-                        sharedFunc_800CF2A4_0_s01(settingsState, part, &rand, &deltaTime);
+                        Particle_SpawnMovementApply(settingsState, part, &rand, &deltaTime);
                         
                         // Step to rest state when Y position reaches 0.
                         if (part->position0_0.vy == 0)
@@ -752,7 +747,7 @@ void sharedFunc_800CBC94_0_s00(s_Particle* parts)
             }
         }
     }
-#if MAP_PARTICLE_HAS_CASE_1
+#if MAP_PARTICLE_HAS_RAIN
     sharedData_800E32CC_0_s00 = sharedData_800DD58C_0_s00;
 #endif
 }
@@ -780,7 +775,7 @@ bool Particle_Update(s_Particle* partHead)
 {
     #define SNOW_REST_TICKS_UPDATE_MAX 32
 
-#if MAP_PARTICLE_HAS_CASE_1 
+#if MAP_PARTICLE_HAS_RAIN 
     s32 sp64;
 #endif
     MATRIX      mat0;
@@ -795,7 +790,7 @@ bool Particle_Update(s_Particle* partHead)
 
     density = 0;
 
-#if MAP_PARTICLE_HAS_CASE_1
+#if MAP_PARTICLE_HAS_RAIN
     if (sharedData_800E32D0_0_s00 < 27000)
     {
         sp64 = 3;
@@ -832,7 +827,7 @@ bool Particle_Update(s_Particle* partHead)
         g_Particle_PrevPosition.vz = prevPos.vz;
     }
 
-    sharedData_800DF158_1_s02 = sharedFunc_800CBBBC_0_s00();
+    sharedData_800DF158_1_s02 = Particle_CameraMovedCheck();
 
     g_SysWork.coord_22A8.coord.t[1] = Q8(0.0f);
     g_SysWork.coord_22A8.coord.t[0] = Q12_TO_Q8(g_Particle_Position.vx);
@@ -894,7 +889,7 @@ bool Particle_Update(s_Particle* partHead)
     ////////////////////////////////////////////////////////////////////////////
 
     // Reset how many particles to spawn this tick.
-    sharedData_800E2156_0_s01 = 0;
+    g_ParticleSpawnCount = 0;
 
 #if defined(MAP0_S00)
     if (g_SavegamePtr->mapRoomIdx_A5 == 3 && g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(200.0f))
@@ -1235,13 +1230,13 @@ bool Particle_Update(s_Particle* partHead)
         switch (pass)
         {
             case 0:
-            #if MAP_PARTICLE_HAS_CASE_0
+            #if MAP_PARTICLE_HAS_SNOW
                 density = (g_SysWork.field_2349 == 1) ? 1 : 3;
             #endif
                 break;
 
             default:
-            #if MAP_PARTICLE_HAS_CASE_1
+            #if MAP_PARTICLE_HAS_RAIN
                 #if defined(MAP5_S00) || defined(MAP6_S03)
                     density = 1;
                 #else
@@ -1253,7 +1248,7 @@ bool Particle_Update(s_Particle* partHead)
         
         // Handle particles in this state.
         for (updateCount = updatePrev;
-             updateCount < (updatePrev + sharedData_800DD588_0_s00[pass]);
+             updateCount < (updatePrev + g_ParticlesAddedCount[pass]);
              updateCount++, curPart++)
         {
             // Keep only the lower 4 bits.
@@ -1263,7 +1258,7 @@ bool Particle_Update(s_Particle* partHead)
             switch (pass)
             {
                 case 0:
-                #if MAP_PARTICLE_HAS_CASE_0
+                #if MAP_PARTICLE_HAS_SNOW
                     if (curPart->type_1F >= 2)
                     {
                         curPart->stateStep_1E = 0;
@@ -1273,7 +1268,7 @@ bool Particle_Update(s_Particle* partHead)
                     break;
 
                 case 1:
-                #if MAP_PARTICLE_HAS_CASE_1
+                #if MAP_PARTICLE_HAS_RAIN
                     if (curPart->type_1F < 2 || curPart->type_1F > 3)
                     {
                         curPart->stateStep_1E = 0;
@@ -1297,15 +1292,15 @@ bool Particle_Update(s_Particle* partHead)
                 switch (curPart->stateStep_1E)
                 {
                     case ParticleState_Spawn:
-                        if (sharedData_800E2156_0_s01 < density)
+                        if (g_ParticleSpawnCount < density)
                         {
-                            sharedData_800E2156_0_s01++;
-                            sharedFunc_800CF9A8_0_s01(pass, curPart, &rand);
+                            g_ParticleSpawnCount++;
+                            Particle_Spawn(pass, curPart, &rand);
                         }
                         break;
 
                     case ParticleState_Active:
-                        sharedFunc_800CEFD0_1_s02(pass, curPart, &rand, &g_DeltaTime0);
+                        Particle_MovementApply(pass, curPart, &rand, &g_DeltaTime0);
                         break;
 
                     default: // `ParticleState_Rest`
@@ -1314,20 +1309,17 @@ bool Particle_Update(s_Particle* partHead)
                         {
                             sharedFunc_800CFFF8_0_s00(pass, curPart, &rand);
                         }
-                        #if defined(MAP1_S03) || \
-                            defined(MAP4_S02) || defined(MAP4_S04) || defined(MAP4_S05) || \
-                            defined(MAP5_S00) || \
-                            defined(MAP6_S00) || defined(MAP6_S03)
+                    #if MAP_PARTICLE_HAS_800D0690
                         else
                         {
                             sharedFunc_800D0690_1_s03(pass, curPart, &rand, &g_DeltaTime0);
                         }
-                        #endif
+                    #endif
                         break;
                 }
             }
         }
-        updatePrev += sharedData_800DD588_0_s00[pass];
+        updatePrev += g_ParticlesAddedCount[pass];
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -1336,34 +1328,34 @@ bool Particle_Update(s_Particle* partHead)
     updatePrev = 0;
     for (pass = 0; pass < 2; pass++)
     {
-    #if MAP_PARTICLE_HAS_CASE_1
+    #if MAP_PARTICLE_HAS_RAIN
         if (pass != 0)
         {
-            sharedData_800E32D0_0_s00 += sharedData_800DD588_0_s00[pass];
+            sharedData_800E32D0_0_s00 += g_ParticlesAddedCount[pass];
             limitRange(sharedData_800E32D0_0_s00, 0, 135000);
         }
     #endif
         for (updateCount = updatePrev;
-             updateCount < (updatePrev + sharedData_800DD588_0_s00[pass]);
+             updateCount < (updatePrev + g_ParticlesAddedCount[pass]);
              updateCount++, curPart++)
         {
             switch (pass)
             {
                 default:
-                #if MAP_PARTICLE_HAS_CASE_1
-                    sharedFunc_800CEFF4_0_s00(curPart, sp64);
+                #if MAP_PARTICLE_HAS_RAIN
+                    Particle_RainRender(curPart, sp64);
                 #endif
                     break;
 
                 case 0:
-                #if MAP_PARTICLE_HAS_CASE_0
-                    sharedFunc_800CEB24_0_s00(curPart);
+                #if MAP_PARTICLE_HAS_SNOW
+                    Particle_SnowRender(curPart);
                 #endif
                     break;
             }
         }
 
-        updatePrev += sharedData_800DD588_0_s00[pass];
+        updatePrev += g_ParticlesAddedCount[pass];
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -2357,7 +2349,7 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
 }
 #endif
 
-#if MAP_PARTICLE_HAS_CASE_0
+#if MAP_PARTICLE_HAS_SNOW
 #if !defined(PARTICLE_CASE_COUNT)
     #define PARTICLE_CASE_COUNT 1
     #define HAS_PARTICLE_FALLBACK_CASE
@@ -2378,7 +2370,7 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
     #define PARTICLE_CASE(id) default
 #endif
 
-void sharedFunc_800CEB24_0_s00(s_Particle* part)
+void Particle_SnowRender(s_Particle* part)
 {
 #if !defined(MAP1_S00) && !defined(MAP6_S00) && !defined(MAP7_S03)
     VECTOR3     particlePos;
@@ -2425,7 +2417,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
                 PARTICLE_CASE(1):
                     if (part->position0_0.vy < sharedData_800E326C_0_s00.corners_0[0].vy)
                     {
-                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                        Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
                     }
                     else
                     {
@@ -2437,7 +2429,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
                         partCorners[1].vz = temp_v1;
                         partCorners[0].vz = temp_v1;
 
-                        sharedFunc_800D0700_0_s00(&particlePos, &partCorners[0], &partCorners[1], 0);
+                        Particle_BoundaryClamp(&particlePos, &partCorners[0], &partCorners[1], 0);
                     }
                     break;
 #endif
@@ -2445,27 +2437,27 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
 #ifdef HAS_PARTICLE_CASE_9
                 PARTICLE_CASE(9):
 #if defined(MAP3_S00) || defined(MAP3_S01) || defined(MAP3_S06)
-                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                    Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
                     if (g_SavegamePtr->mapRoomIdx_A5 == 5)
 #else
-                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
+                    Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
                     if (particlePos.vy == 0)
 #endif
                     {
-                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 0);
+                        Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 0);
                     }
                     break;
 #endif
 
 #ifdef HAS_PARTICLE_CASE_10
                 PARTICLE_CASE(10):
-                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
+                    Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
                     if (particlePos.vy == 0)
                     {
-                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
+                        Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
                         if (particlePos.vy == 0)
                         {
-                            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 0);
+                            Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 0);
                         }
                     }
                     break;
@@ -2476,20 +2468,20 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
 #if defined(MAP0_S02)
                     if (g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-120.0f))
                     {
-                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                        Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
                         break;
                     }
 #endif
-                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
+                    Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 1);
                     if (particlePos.vy == 0)
                     {
-                        sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
+                        Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[2], &sharedData_800E326C_0_s00.corners_0[3], 1);
                         if (particlePos.vy == 0)
                         {
-                            sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 1);
+                            Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[4], &sharedData_800E326C_0_s00.corners_0[5], 1);
                             if (particlePos.vy == 0)
                             {
-                                sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[6], &sharedData_800E326C_0_s00.corners_0[7], 0);
+                                Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[6], &sharedData_800E326C_0_s00.corners_0[7], 0);
                             }
                         }
                     }
@@ -2498,7 +2490,7 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
 
 #ifdef HAS_PARTICLE_FALLBACK_CASE
                 default:
-                    sharedFunc_800D0700_0_s00(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
+                    Particle_BoundaryClamp(&particlePos, &sharedData_800E326C_0_s00.corners_0[0], &sharedData_800E326C_0_s00.corners_0[1], 0);
                     break;
 #endif
             }
@@ -2657,8 +2649,8 @@ void sharedFunc_800CEB24_0_s00(s_Particle* part)
 }
 #endif
 
-#if MAP_PARTICLE_HAS_CASE_1
-void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
+#if MAP_PARTICLE_HAS_RAIN
+void Particle_RainRender(s_Particle* part, s32 arg1)
 {
 #if defined(MAP0_S00) || defined(MAP4_S02) || defined(MAP4_S03)
     VECTOR3 sp10;
@@ -2695,7 +2687,7 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
         sp10    = localPart->position0_0;
         sp10.vy = -1;
 
-        sharedFunc_800D0700_0_s00(&sp10, sharedData_800E326C_0_s00.corners_0, &sharedData_800E326C_0_s00.corners_0[1], 0);
+        Particle_BoundaryClamp(&sp10, sharedData_800E326C_0_s00.corners_0, &sharedData_800E326C_0_s00.corners_0[1], 0);
 
         localPart->position0_0.vx = sp10.vx;
         localPart->position0_0.vz = sp10.vz;
@@ -3055,7 +3047,7 @@ void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1)
 }
 #endif
 
-void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime)
+void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime)
 {
     u16      localRand;
     s16      movement;
@@ -3066,7 +3058,7 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
     switch (arg0)
     {
         case 0:
-#if MAP_PARTICLE_HAS_CASE_0
+#if MAP_PARTICLE_HAS_SNOW
             // Random value has been generated in caller and `rand` argument.
             // Add random X offset.
             part->movement_18.vx += Rng_GenerateIntFromInput(*rand, -7, 7);
@@ -3087,7 +3079,7 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
             break;
 
         case 1:
-#if MAP_PARTICLE_HAS_CASE_1
+#if MAP_PARTICLE_HAS_RAIN
             part->position1_C.vx = pos->vx;
             part->position1_C.vz = pos->vz;
             part->position1_C.vy = pos->vy - part->movement_18.vy;
@@ -3110,7 +3102,7 @@ void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* delta
 #define Rng_GenerateIntFromInput(rand, low, high) \
     (s32)((rand) % (((high) - (low)) + 1)) + (low)
 
-void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* deltaTime)
+void Particle_MovementApply(s32 pass, s_Particle* part, u16* rand, s32* deltaTime)
 {
     s_Collision coll;
     q19_12      xDeltaCase0;
@@ -3129,7 +3121,7 @@ void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* delta
     #define UNK_VAL 5
 #endif
 
-#if MAP_PARTICLE_HAS_CASE_0
+#if MAP_PARTICLE_HAS_SNOW
     xDeltaCase0 = g_Particle_PrevPosition.vx - g_Particle_Position.vx;
     zDeltaCase0 = g_Particle_PrevPosition.vz - g_Particle_Position.vz;
 #elif defined(MAP5_S00) || defined(MAP6_S03)
@@ -3140,7 +3132,7 @@ void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* delta
     switch (pass)
     {
         case 0:
-#if MAP_PARTICLE_HAS_CASE_0
+#if MAP_PARTICLE_HAS_SNOW
             if (localPart->type_1F == 0)
             {
                 localPart->movement_18.vx += Rng_GenerateIntFromInput(*rand, -7, 7);
@@ -3154,7 +3146,7 @@ void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* delta
                 s32 localRand2 = Rng_Rand16();
                 s32 temp       = 12;
 
-                localPart->movement_18.vy += ((temp - g_Particle_PrevPosition.vy) - (g_Particle_PrevPosition.vy << 1) - (sharedData_800DD588_0_s00[0] >> 4)) + Rng_GenerateIntFromInput(localRand2, -2, 2);
+                localPart->movement_18.vy += ((temp - g_Particle_PrevPosition.vy) - (g_Particle_PrevPosition.vy << 1) - (g_ParticlesAddedCount[0] >> 4)) + Rng_GenerateIntFromInput(localRand2, -2, 2);
 
                 limitRange(localPart->movement_18.vy, 5, 1000);
             }
@@ -3171,7 +3163,7 @@ void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* delta
             {
                 if (sharedData_800DF158_1_s02 != 0)
                 {
-                    sharedFunc_800D01BC_0_s00(rand, &part->position0_0, UNK_VAL);
+                    Particle_PositionRandomize(rand, &part->position0_0, UNK_VAL);
                 }
                 else
                 {
@@ -3213,7 +3205,7 @@ void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* delta
             break;
 
         case 1:
-#if MAP_PARTICLE_HAS_CASE_1
+#if MAP_PARTICLE_HAS_RAIN
 #if !defined(MAP5_S00) && !defined(MAP6_S03)
             xDeltaCase1 = g_ParticleVectors1.viewPosition_C.vx - g_ParticleVectors0.viewPosition_C.vx;
             zDeltaCase1 = g_ParticleVectors1.viewPosition_C.vz - g_ParticleVectors0.viewPosition_C.vz;
@@ -3247,7 +3239,7 @@ void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* delta
             {
                 if (sharedData_800DF158_1_s02 != 0)
                 {
-                    sharedFunc_800D01BC_0_s00(rand, &part->position0_0, 6);
+                    Particle_PositionRandomize(rand, &part->position0_0, 6);
 
                     localPart->position1_C.vx = localPart->position0_0.vx;
                     localPart->position1_C.vz = localPart->position0_0.vz;
@@ -3311,7 +3303,7 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand)
     part->position0_0.vz += ((g_Particle_PrevPosition.vz - g_Particle_Position.vz) - D_800F23D0);
 #endif
 
-#if MAP_PARTICLE_HAS_CASE_0
+#if MAP_PARTICLE_HAS_SNOW
     if (pass == 0 && sharedData_800E0CAC_0_s00 == 3)
     {
         part->position0_0.vx += FP_FROM(g_Particle_SpeedX, Q4_SHIFT);
@@ -3347,8 +3339,7 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand)
     }
 }
 
-#if defined(MAP1_S03) || defined(MAP4_S02) || defined(MAP4_S04) || defined(MAP4_S05) || \
-    defined(MAP5_S00) || defined(MAP6_S00) || defined(MAP6_S03)
+#if MAP_PARTICLE_HAS_800D0690
 
 void sharedFunc_800D0690_1_s03(s32 pass, s_Particle* part, s16* rand, q19_12* deltaTime)
 {
@@ -3392,7 +3383,7 @@ void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, q19_12* de
         {
             if (sharedData_800DF158_1_s02 != 0)
             {
-                sharedFunc_800D01BC_0_s00(rand, &part->position0_0, 8);
+                Particle_PositionRandomize(rand, &part->position0_0, 8);
             }
             else
             {
@@ -3427,7 +3418,7 @@ bool func_800D012C(VECTOR3* pos, s_func_800CC8FC* unused0, s32* unused1) // 0x80
 }
 #endif
 
-void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2)
+void Particle_PositionRandomize(u16* arg0, VECTOR3* arg1, s32 arg2)
 {
     s32 temp_a0;
     s32 temp_s3;
@@ -3439,7 +3430,7 @@ void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2)
     arg1->vz = ((*arg0 % temp_s3) + (Rng_Rand16() % temp_s3)) - temp_s3;
 }
 
-void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
+void Particle_Spawn(s32 arg0, s_Particle* part, u16* rand)
 {
     #define SNOW_Y_START_SPEED  Q12(0.0245f)
     #define RAIN_XZ_SPAWN_RANGE 6
@@ -3458,7 +3449,7 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
     switch (arg0)
     {
         case 0:
-#if MAP_PARTICLE_HAS_CASE_0
+#if MAP_PARTICLE_HAS_SNOW
             if (sharedData_800DD592_0_s00 != 0)
             {
                 part->type_1F = ParticleType_Snow;
@@ -3477,7 +3468,7 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
             localPart->movement_18.vy = SNOW_Y_START_SPEED;
 
             // Set random start XZ position.
-            sharedFunc_800D01BC_0_s00(rand, part, SNOW_XZ_SPAWN_RANGE);
+            Particle_PositionRandomize(rand, part, SNOW_XZ_SPAWN_RANGE);
 
             // Second position unused for snow.
             localPart->position1_C.vz = Q12(0.0f);
@@ -3487,7 +3478,7 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
             break;
 
         case 1:
-#if MAP_PARTICLE_HAS_CASE_1
+#if MAP_PARTICLE_HAS_RAIN
             localPart->type_1F = ParticleType_Rain;
             
             // Set start position.
@@ -3502,7 +3493,7 @@ void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand)
 #endif
 
             // Set random start XZ position.
-            sharedFunc_800D01BC_0_s00(rand, part, RAIN_XZ_SPAWN_RANGE);
+            Particle_PositionRandomize(rand, part, RAIN_XZ_SPAWN_RANGE);
 
             // Copy random XZ to second position.
             localPart->position1_C.vx = localPart->position0_0.vx;
@@ -3591,7 +3582,7 @@ bool func_800D0600(void) // 0x800D0600
     defined(MAP2_S00) || defined(MAP2_S02) || defined(MAP3_S00) || defined(MAP3_S01) || \
     defined(MAP3_S06) || defined(MAP4_S02) || defined(MAP4_S03) || defined(MAP5_S01) || \
     defined(MAP5_S03)
-void sharedFunc_800D0700_0_s00(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd, s32 flag)
+void Particle_BoundaryClamp(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd, s32 flag)
 {
     VECTOR3 offset0;
     VECTOR3 offset1;
@@ -3696,7 +3687,7 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
 
     sharedData_800E0CBA_0_s00 = arg0;
 
-#if MAP_PARTICLE_HAS_CASE_1
+#if MAP_PARTICLE_HAS_RAIN
     sharedData_800E32D0_0_s00 = 0;
 #endif
 
@@ -3728,7 +3719,7 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
             var_s0                    = 0;
             sharedData_800DFB6C_0_s00 = 0;
             sharedData_800DFB70_0_s00 = 1;
-#if MAP_PARTICLE_HAS_CASE_1
+#if MAP_PARTICLE_HAS_RAIN
             sharedData_800E32D0_0_s00 = 135000;
 #endif
             break;
@@ -3738,7 +3729,7 @@ void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1)
             var_s0                    = 1;
             sharedData_800DFB6C_0_s00 = 0;
             sharedData_800DFB70_0_s00 = 1;
-#if MAP_PARTICLE_HAS_CASE_1
+#if MAP_PARTICLE_HAS_RAIN
             sharedData_800E32D0_0_s00 = 135000;
 #endif
             break;
@@ -3860,7 +3851,7 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0)
             case 2:
                 sharedData_800DFB70_0_s00 = 1;
 
-#if MAP_PARTICLE_HAS_CASE_1
+#if MAP_PARTICLE_HAS_RAIN
                 sharedData_800E32D0_0_s00 = 0;
 #endif
                 break;
@@ -3907,8 +3898,8 @@ bool sharedFunc_800D0B18_0_s00(s32 arg0)
     return false;
 }
 
-#if MAP_PARTICLE_HAS_CASE_1
-void sharedFunc_800D0CB8_0_s00(void)
+#if MAP_PARTICLE_HAS_RAIN
+void Particle_SoundUpdate(void)
 {
     u8 unkValDiv4;
 
@@ -3949,12 +3940,12 @@ void sharedFunc_800D0CB8_0_s00(void)
 }
 #endif
 
-void sharedFunc_800D0E04_0_s00(void)
+void Particle_SoundStop(void)
 {
     Sd_SfxStop(Sfx_Unk1360);
 }
 
-void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
+void Particle_HyperBlasterBeamRender(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
 {
 #if !defined(MAP0_S00)
     SVECTOR           startRelPos;
@@ -4187,7 +4178,7 @@ void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
 #endif
 }
 
-void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1)
+void Particle_BeamRender(VECTOR3* vec0, VECTOR3* vec1)
 {
 #if !defined(MAP0_S00)
     SVECTOR   vec0Delta;

@@ -40,13 +40,13 @@ g_PuppetNurse_ModelStates0          = 0x800CAD58; // type:u16 size:0x10
 //-----------------------------------------------------------
 sharedFunc_800CCB8C_0_s01           = 0x800CC9A4; // type:func
 sharedFunc_800CD1F8_0_s01           = 0x800CD010; // type:func
-sharedFunc_800CB6B0_0_s00           = 0x800CDE18; // type:func
+Particle_SystemUpdate               = 0x800CDE18; // type:func
 sharedFunc_800D08B8_0_s00           = 0x800CDF80; // type:func
 sharedFunc_800D0A60_0_s00           = 0x800CE100; // type:func
 sharedFunc_800D0B18_0_s00           = 0x800CE1B8; // type:func
-sharedFunc_800D0E04_0_s00           = 0x800CE31C; // type:func
-sharedFunc_800CFFD8_0_s01           = 0x800CE33C; // type:func
-sharedFunc_800D0850_0_s01           = 0x800CEBB4; // type:func
+Particle_SoundStop                  = 0x800CE31C; // type:func
+Particle_HyperBlasterBeamRender     = 0x800CE33C; // type:func
+Particle_BeamRender                 = 0x800CEBB4; // type:func
 sharedFunc_800CDAA8_0_s02           = 0x800CEFA0; // type:func
 sharedFunc_800D1C38_0_s00           = 0x800D03B8; // type:func
 sharedFunc_800D209C_0_s00           = 0x800D0808; // type:func

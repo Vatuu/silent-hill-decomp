@@ -63,18 +63,17 @@ typedef struct
     s_func_800CC8FC_0 field_0[8];
 } s_func_800CC8FC;
 
-/** TODO: Rename to `g_Particles` after funcs have been shared. */
-extern s_Particle sharedData_800E0CBC_0_s00[PARTICLE_COUNT_MAX];
+extern s_Particle g_Particles[PARTICLE_COUNT_MAX];
 
 extern s_ParticleVectors g_ParticleVectors0;
 
 extern s_ParticleVectors g_ParticleVectors1;
 
-/** `g_ParticlesAddedCounts`. Tracks how many total particles have been added. */
-extern s32 sharedData_800DD588_0_s00[2];
+/** Tracks how many total particles have been added. */
+extern s32 g_ParticlesAddedCount[2];
 
-/** `g_ParticleSpawnCount`. Tracks how many particles have been added per call. */
-extern u8 sharedData_800E2156_0_s01;
+/** Tracks how many particles have been added per call. */
+extern u8 g_ParticleSpawnCount;
 
 extern s32 g_Particle_SpeedX;
 extern s32 g_Particle_SpeedZ;
@@ -101,14 +100,21 @@ extern q3_12   g_Particle_PrevRotationY;
 
 extern s16 D_800F23D0; // MAP7_S03 extern, TODO: Might be sharedData?
 
-extern s32 sharedData_800CD77C_1_s04; // Used by `sharedFunc_800CB6B0_0_s00` only in MAP1_S04 and MAP4_S00? Similar usage to `sharedData_800DFB50_0_s00`?
+extern s32 sharedData_800CD77C_1_s04; // Used by `Particle_SystemUpdate` only in MAP1_S04 and MAP4_S00? Similar usage to `sharedData_800DFB50_0_s00`?
 
-void sharedFunc_800CB6B0_0_s00(s32 arg1, s32 arg2, s32 arg3);
+void Particle_SystemUpdate(s32 arg1, s32 arg2, s32 arg3);
 
-bool sharedFunc_800CBBBC_0_s00(void);
+/** @brief Checks if the particle spawn origin has moved significantly since last frame.
+ * 
+ * Returns `true` if position delta exceeds 10000 units (?) or Y rotation exceeds 45 degrees.
+ * Used to determine when particles need repositioning to follow the moving spawn origin.
+ * 
+ * @return `true` if spawn origin moved beyond threshold, `false` otherwise.
+ */
+bool Particle_CameraMovedCheck(void);
 
 /** Snow effect init. */
-void sharedFunc_800CBC94_0_s00(s_Particle* particles);
+void Particle_SnowInitialize(s_Particle* particles);
 
 /** M0S00 only. */
 void func_800CBFB0(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId);
@@ -133,14 +139,14 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId);
 /** M0S00 only. */
 void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2);
 
-void sharedFunc_800CEB24_0_s00(s_Particle* part);
+void Particle_SnowRender(s_Particle* part);
 
-void sharedFunc_800CEFF4_0_s00(s_Particle* part, s32 arg1);
+void Particle_RainRender(s_Particle* part, s32 arg1);
 
 /** @brief Adds a random offset to a snow particle movement vector. Moves particle vertically, clamps Y to 0. */
-void sharedFunc_800CF2A4_0_s01(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime);
+void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime);
 
-void sharedFunc_800CEFD0_1_s02(s32 pass, s_Particle* part, u16* rand, s32* deltaTime);
+void Particle_MovementApply(s32 pass, s_Particle* part, u16* rand, s32* deltaTime);
 
 void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand);
 
@@ -151,10 +157,10 @@ void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, q19_12* de
 /** M0S00: Collision space distance check. @hack Guessed types. */
 bool func_800D012C(VECTOR3* pos, s_func_800CC8FC* unused0, s32* unused1);
 
-void sharedFunc_800D01BC_0_s00(u16* arg0, VECTOR3* arg1, s32 arg2);
+void Particle_PositionRandomize(u16* arg0, VECTOR3* arg1, s32 arg2);
 
-/** @brief Reset function for a snow particle */
-void sharedFunc_800CF9A8_0_s01(s32 arg0, s_Particle* part, u16* rand);
+/** @brief Spawn function for a particle. */
+void Particle_Spawn(s32 arg0, s_Particle* part, u16* rand);
 
 /** M0S00 only. */
 void func_800D0394(s32 count, VECTOR3* vecs);
@@ -170,7 +176,7 @@ void func_800D0394(s32 count, VECTOR3* vecs);
  */
 bool func_800D0600(void);
 
-void sharedFunc_800D0700_0_s00(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd, s32 flag);
+void Particle_BoundaryClamp(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd, s32 flag);
 
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
@@ -178,12 +184,12 @@ void sharedFunc_800D0A60_0_s00(s32 caseArg);
 
 bool sharedFunc_800D0B18_0_s00(s32 arg0);
 
-void sharedFunc_800D0CB8_0_s00(void);
+void Particle_SoundUpdate(void);
 
-void sharedFunc_800D0E04_0_s00(void);
+void Particle_SoundStop(void);
 
-void sharedFunc_800CFFD8_0_s01(VECTOR3* vec0, q3_12* rotX, q3_12* rotY);
+void Particle_HyperBlasterBeamRender(VECTOR3* vec0, q3_12* rotX, q3_12* rotY);
 
-void sharedFunc_800D0850_0_s01(VECTOR3* vec0, VECTOR3* vec1);
+void Particle_BeamRender(VECTOR3* vec0, VECTOR3* vec1);
 
 #endif

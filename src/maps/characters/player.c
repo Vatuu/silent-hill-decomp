@@ -9,7 +9,6 @@
 //
 // NOTES:
 //  - All functions are declared in every map, but some function bodies are only included in specific maps.
-//   (`sharedFunc_800D0CB8_0_s00` is the only exception, missing entirely in most maps)
 //  - `sharedFunc_800CDAA8_0_s02` is the huge PlayerState function, probably best to keep that as separate file.
 
 // NOTE: Huge PlayerState anim function, kept as separate file for now.

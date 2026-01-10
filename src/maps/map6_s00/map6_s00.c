@@ -181,7 +181,7 @@ void func_800EB11C(void) // 0x800EB11C
             Game_TurnFlashlightOn();
 
             sharedFunc_800D08B8_0_s00(2, 127);
-            sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
+            Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
             sharedFunc_800D0B18_0_s00(6);
 
             SD_Call(Sfx_Unk1522);
@@ -233,7 +233,7 @@ void func_800EB11C(void) // 0x800EB11C
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 114, false);
             Savegame_EventFlagSet(EventFlag_402);
             sharedFunc_800D08B8_0_s00(6, 127);
-            sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
+            Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
             Savegame_EventFlagSet(EventFlag_414);
             D_800F0044 = Q12(3.4f);
             SysWork_StateStepIncrement(0);
@@ -300,7 +300,7 @@ void func_800EB11C(void) // 0x800EB11C
             Sd_SfxStop(Sfx_Unk1522);
             Sd_SfxStop(Sfx_Unk1599);
             sharedFunc_800D08B8_0_s00(6, 127);
-            sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, 0);
+            Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, 0);
             break;
     }
 

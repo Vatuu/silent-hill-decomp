@@ -3261,7 +3261,7 @@ void func_800E787C(void) // 0x800E787C
 
     if (g_SysWork.sysStateStep_C[0] >= 31)
     {
-        sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, g_SysWork.sysStateStep_C[0] != 31);
+        Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, g_SysWork.sysStateStep_C[0] != 31);
     }
 
     if (g_SysWork.sysStateStep_C[0] >= 1 && g_SysWork.sysStateStep_C[0] < 14)
@@ -3650,7 +3650,7 @@ void func_800E86BC(void) // 0x800E86BC
 
     if (g_SysWork.sysStateStep_C[0] >= 8)
     {
-        sharedFunc_800CB6B0_0_s00(0, g_SavegamePtr->mapOverlayId_A4, g_SysWork.sysStateStep_C[0] != 8);
+        Particle_SystemUpdate(0, g_SavegamePtr->mapOverlayId_A4, g_SysWork.sysStateStep_C[0] != 8);
     }
 
     if (g_SysWork.sysStateStep_C[0] >= 1 && g_SysWork.sysStateStep_C[0] < 6)
