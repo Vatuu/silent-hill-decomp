@@ -73,7 +73,7 @@ INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", g_MapOverlayHeader);
 
 #include "maps/shared/Ai_PuppetNurse_Control9.h"
 
-INCLUDE_ASM("maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800CF600_3_s03);
+#include "maps/shared/sharedFunc_800CF600_3_s03.h" // 0x800CF600
 
 #include "maps/shared/sharedFunc_800CF7F4_3_s03.h" // 0x800CF7F4
 
@@ -95,7 +95,7 @@ INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", g_PuppetNurse_ModelStates0
 
 #include "maps/shared/sharedFunc_800D02E4_3_s03.h"
 
-INCLUDE_ASM("maps/map3_s03/nonmatchings/map3_s03", sharedFunc_800D03E4_3_s03);
+#include "maps/shared/sharedFunc_800D03E4_3_s03.h" // 0x800D03E4
 
 #include "maps/shared/Ai_PuppetNurse_AnimUpdate.h"
 

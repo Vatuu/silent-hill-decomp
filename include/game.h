@@ -1205,7 +1205,9 @@ typedef struct
     s32         idx_1C;
     s32         field_20;
     s_AnimInfo* animInfo_24;
-    s8          unk_28[12];
+    s8          unk_28[4];
+    s32         field_2C;
+    s8          unk_30[4];
 } s_800D5710;
 STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
 
@@ -1457,7 +1459,7 @@ typedef struct _PropertiesPuppetNurse
     q19_12           field_104;
     s32              field_108;
     s32              field_10C;
-    s8               unk_110[4];
+    s32              field_110;
     s32              field_114;
     u8               field_118;
     u8               modelVariation_119;
