@@ -1307,7 +1307,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
 
     if (Savegame_EventFlagGet(EventFlag_159) && !Savegame_EventFlagGet(EventFlag_134))
     {
-        func_8003ED74(6, 3);
+        Gfx_MapEffectsUpdate_MapInit(6, 3);
     }
 
     g_Timer0 = Q12(0.0f);

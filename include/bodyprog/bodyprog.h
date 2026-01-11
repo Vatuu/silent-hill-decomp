@@ -1582,7 +1582,7 @@ typedef struct _MapOverlayHeader
     void                   (*func_10)();
     s8                     field_14; // Flags? Music related.
     u8                     ambientAudioIdx_15; // Ambient file index from `g_AmbientVabTaskLoadCmds`.
-    s8                     field_16; // Used for switch case in `func_8003EBF4`.
+    s8                     field_16; // Used for switch case in `Gfx_MapEffectsDetermine`.
     s8                     field_17;
     void                   (**loadingScreenFuncs_18)();
     s_MapPoint2d*          mapPointsOfInterest_1C;
@@ -2163,7 +2163,7 @@ extern s_FsImageDesc g_Font24AtlasImg; // 0x800A909C
 /** Array containg file IDs used for each `e_CharacterId`, used in `Fs_QueueStartReadAnm`. */
 extern s_CharaFileInfo CHARA_FILE_INFOS[45]; // 0x800A90FC
 
-extern s_sub_StructUnk3 D_800A93CC[];
+extern s_MapEffectsInfo D_800A93CC[21];
 
 extern s_StructUnk3 D_800A952C;
 
@@ -2896,11 +2896,11 @@ void func_8003DD80(e_CharacterId charaId, s32 arg1); // Called by some chara ini
 
 void func_8003E740(void);
 
-void func_8003ED74(s32 arg0, s32 arg1);
+void Gfx_MapEffectsUpdate_MapInit(s32 arg0, s32 arg1);
 
 void func_8003EDA8(void);
 
-void func_8003EF10(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
+void Gfx_MapEffectsUpdate(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
 
 q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg3, u32 arg4, s_SysWork* sysWork);
 
@@ -2921,13 +2921,13 @@ s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
  */
 q19_12 Math_WeightedAverageGet(s32 a, s32 b, q19_12 weight);
 
-void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, q19_12 alphaTo);
+void func_8003FCB0(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, s_MapEffectsInfo* arg2, q19_12 alphaTo);
 
 void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q19_12 weight0, q19_12 weight1, q19_12 alphaTo);
 
-void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, q19_12 alphaTo);
+void func_8003FE04(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, s_MapEffectsInfo* arg2, q19_12 alphaTo);
 
-s32 func_8003FEC0(s_sub_StructUnk3* arg0);
+s32 func_8003FEC0(s_MapEffectsInfo* arg0);
 
 void func_8003FF2C(s_StructUnk3* arg0);
 
@@ -4163,8 +4163,13 @@ void func_80035AC8(s32 idx);
  */
 void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
 
-/** @brief Set environment effects. */
-void Gfx_MapEffectsEnviromentSet(s32 arg0);
+/** @brief Set general environmental effects.
+ * General effects as lighting, fog, screen fx are set by this function.
+ *
+ * @note Some specific effect for enviroments like snow, rain and ending's fire rain
+ * are set by code only found withing the overlay of the map.
+ */
+void Gfx_MapEffectsSet(s32 arg0);
 
 void func_80035B98(void);
 
@@ -4503,7 +4508,10 @@ void GameFs_FlameGfxLoad(void);
 
 void func_8003EB54(void);
 
-void func_8003EBF4(s_MapOverlayHeader* mapHdr);
+/** @brief Determines what enviroment effects data from `D_800A93CC` will select
+ * based on the value of `s_MapOverlayHeader::field_16`.
+ */
+void Gfx_MapEffectsDetermine(s_MapOverlayHeader* mapHdr);
 
 void func_8003EBA0(void);
 
@@ -4517,11 +4525,11 @@ void func_8003EDB8(CVECTOR* color0, CVECTOR* color1);
 
 void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3);
 
-void func_8003EEDC(s32 arg0, s32 arg1);
+void Gfx_MapEffectsUpdate_LoadScreen(s32 arg0, s32 arg1);
 
-void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
+void Gfx_MapEffectsStepUpdate(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
 
-void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1);
+void Gfx_FogParametersSet(s_StructUnk3* arg0, s_MapEffectsInfo* arg1);
 
 void Gfx_FlashlightUpdate(void);
 

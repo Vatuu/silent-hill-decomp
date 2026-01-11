@@ -805,7 +805,7 @@ void func_800D6774(void) // 0x800D6774
             g_SysWork.field_2378 = Q12(1.0f);
             Game_TurnFlashlightOn();
 
-            func_8003ED74(6, 3);
+            Gfx_MapEffectsUpdate_MapInit(6, 3);
 
             if (Savegame_EventFlagGet(EventFlag_322))
             {

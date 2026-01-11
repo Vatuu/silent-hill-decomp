@@ -856,7 +856,7 @@ void func_800D3420(void) // 0x800D3420
             D_800D5AF9 = 0;
             Sd_SfxStop(Sfx_Unk1540);
             D_800D5AFC = Q12(140.0f);
-            func_8003ED74(7, 4);
+            Gfx_MapEffectsUpdate_MapInit(7, 4);
 
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
@@ -1101,7 +1101,7 @@ void func_800D4410(void) // 0x800D4410
             g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
             g_SysWork.field_2378 = Q12(1.0f);
 
-            func_8003ED74(14, 14);
+            Gfx_MapEffectsUpdate_MapInit(14, 14);
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement(0);
@@ -1178,7 +1178,7 @@ void func_800D4410(void) // 0x800D4410
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            func_8003ED74(7, 4);
+            Gfx_MapEffectsUpdate_MapInit(7, 4);
             func_8008D448();
             func_8003EBA0();
 

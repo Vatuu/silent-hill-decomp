@@ -2568,7 +2568,7 @@ void func_8003EBA0(void) // 0x8003EBA0
     Math_SVectorSet(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-15.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
-void func_8003EBF4(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
+void Gfx_MapEffectsDetermine(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
 {
     bool        hasActiveChunk;
     u8          flags;
@@ -2614,7 +2614,7 @@ void func_8003EBF4(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
             break;
     }
 
-    func_8003ED74(ptr->field_0, ptr->field_1);
+    Gfx_MapEffectsUpdate_MapInit(ptr->field_0, ptr->field_1);
 }
 
 void Game_TurnFlashlightOn(void) // 0x8003ECBC
@@ -2648,9 +2648,9 @@ bool Game_FlashlightIsOn(void) // 0x8003ED64
     return g_SysWork.field_2388.isFlashlightOn_15;
 }
 
-void func_8003ED74(s32 arg0, s32 arg1) // 0x8003ED74
+void Gfx_MapEffectsUpdate_MapInit(s32 arg0, s32 arg1) // 0x8003ED74
 {
-    func_8003EF10(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
+    Gfx_MapEffectsUpdate(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
     Gfx_FlashlightUpdate();
 }
 
@@ -2676,18 +2676,18 @@ void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3) // 0x8003EE30
     g_SysWork.field_2388.field_EC[1] = g_SysWork.field_2388.field_1C[1];
 }
 
-void func_8003EEDC(s32 arg0, s32 arg1) // 0x8003EEDC
+void Gfx_MapEffectsUpdate_LoadScreen(s32 arg0, s32 arg1) // 0x8003EEDC
 {
-    func_8003EF10(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
+    Gfx_MapEffectsUpdate(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
     Gfx_FlashlightUpdate();
 }
 
-void func_8003EF10(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF10
+void Gfx_MapEffectsUpdate(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF10
 {
-    func_8003EF74(&D_800A93CC[idx0], &D_800A93CC[idx1], primType, primData, arg4, arg5);
+    Gfx_MapEffectsStepUpdate(&D_800A93CC[idx0], &D_800A93CC[idx1], primType, primData, arg4, arg5);
 }
 
-void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF74
+void Gfx_MapEffectsStepUpdate(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF74
 {
     if (arg0 == arg1)
     {
@@ -2706,17 +2706,16 @@ void func_8003EF74(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, e_PrimitiveTy
     g_SysWork.field_2388.field_EC[0] = g_SysWork.field_2388.field_1C[0];
     g_SysWork.field_2388.field_EC[1] = g_SysWork.field_2388.field_1C[1];
 
-    func_8003F08C(&g_SysWork.field_2388.field_84[0], arg0);
-    func_8003F08C(&g_SysWork.field_2388.field_84[1], arg1);
+    Gfx_FogParametersSet(&g_SysWork.field_2388.field_84[0], arg0);
+    Gfx_FogParametersSet(&g_SysWork.field_2388.field_84[1], arg1);
 }
 
-void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1) // 0x8003F08C
+void Gfx_FogParametersSet(s_StructUnk3* arg0, s_MapEffectsInfo* arg1) // 0x8003F08C
 {
     arg0->field_0 = *arg1;
 
     if (arg1->field_0.s_field_0.field_0 & (1 << 2))
     {
-        arg0->field_2E = Q12(1.0f);
         arg0->field_2E = Q12(1.0f);
     }
     else
@@ -2741,7 +2740,7 @@ void func_8003F08C(s_StructUnk3* arg0, s_sub_StructUnk3* arg1) // 0x8003F08C
             break;
 
         case 2:
-            arg0->field_30 = 0;
+            arg0->field_30 = Q12(0.0f);
             break;
 
         case 3:
@@ -2811,7 +2810,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
         if (flags & (1 << 0))
         {
-            func_8003F08C(ptr2, &D_800A952C.field_0);
+            Gfx_FogParametersSet(ptr2, &D_800A93CC[8]);
         }
         else if (flags & (1 << 1))
         {
@@ -3134,7 +3133,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
     }
 }
 
-void func_8003FCB0(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, q19_12 alphaTo) // 0x8003FCB0
+void func_8003FCB0(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, s_MapEffectsInfo* arg2, q19_12 alphaTo) // 0x8003FCB0
 {
     q19_12 alphaFrom;
     
@@ -3161,16 +3160,16 @@ void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
     LoadAverageCol(&arg1->field_0.fogColor_14.r, &arg2->field_0.fogColor_14.r, Q12(1.0f) - alphaTo, alphaTo, &arg0->field_0.fogColor_14.r);
 }
 
-void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructUnk3* arg2, q19_12 alphaTo) // 0x8003FE04
+void func_8003FE04(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, s_MapEffectsInfo* arg2, q19_12 alphaTo) // 0x8003FE04
 {
     q19_12 alphaFrom;
 
     alphaFrom = Q12(1.0f) - alphaTo;
     LoadAverageCol(&arg1->field_19.r, &arg2->field_19.r, alphaFrom, alphaTo, &arg0->field_19.r);
-    LoadAverageCol(&arg1->field_1D.r, &arg2->field_1D.r, alphaFrom, alphaTo, &arg0->field_1D.r);
+    LoadAverageCol(&arg1->screenTint_1D.r, &arg2->screenTint_1D.r, alphaFrom, alphaTo, &arg0->screenTint_1D.r);
 
     if ((arg0->field_19.r || arg0->field_19.g || arg0->field_19.b) ||
-        (arg0->field_1D.r || arg0->field_1D.g || arg0->field_1D.b))
+        (arg0->screenTint_1D.r || arg0->screenTint_1D.g || arg0->screenTint_1D.b))
     {
         arg0->field_18 = 1;
     }
@@ -3180,7 +3179,7 @@ void func_8003FE04(s_sub_StructUnk3* arg0, s_sub_StructUnk3* arg1, s_sub_StructU
     }
 }
 
-s32 func_8003FEC0(s_sub_StructUnk3* arg0) // 0x8003FEC0
+s32 func_8003FEC0(s_MapEffectsInfo* arg0) // 0x8003FEC0
 {
     static q19_12 Y_ARRAY[5] = {
         Q12(1.75f),
@@ -3218,7 +3217,7 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     temp_a0 = arg0->field_0.fogDistance_10;
 
     func_80055840(temp_a0, temp_a0 + Q12(1.0f));
-    func_800553E0(arg0->field_0.field_18, arg0->field_0.field_19.r, arg0->field_0.field_19.g, arg0->field_0.field_19.b, arg0->field_0.field_1D.r, arg0->field_0.field_1D.g, arg0->field_0.field_1D.b);
+    func_800553E0(arg0->field_0.field_18, arg0->field_0.field_19.r, arg0->field_0.field_19.g, arg0->field_0.field_19.b, arg0->field_0.screenTint_1D.r, arg0->field_0.screenTint_1D.g, arg0->field_0.screenTint_1D.b);
 }
 
 void func_80040004(s_MapOverlayHeader* overlayHeader) // 0x80040004

@@ -413,7 +413,7 @@ void func_800D2E54(void) // 0x800D2E54
     {
         if (D_800D8734 != 1)
         {
-            func_8003ED74(7, 4);
+            Gfx_MapEffectsUpdate_MapInit(7, 4);
             Game_TurnFlashlightOff();
             D_800D8734 = 1;
         }
@@ -424,7 +424,7 @@ void func_800D2E54(void) // 0x800D2E54
     {
         if (D_800D8734 != 2)
         {
-            func_8003ED74(13, 13);
+            Gfx_MapEffectsUpdate_MapInit(13, 13);
             Game_TurnFlashlightOff();
             D_800D8734 = 2;
         }
@@ -434,7 +434,7 @@ void func_800D2E54(void) // 0x800D2E54
     {
         if (D_800D8734 != 3)
         {
-            func_8003ED74(2, 2);
+            Gfx_MapEffectsUpdate_MapInit(2, 2);
             D_800D8734 = 3;
         }
     }
@@ -445,7 +445,7 @@ void func_800D2E54(void) // 0x800D2E54
         {
             D_800D8734 = 4;
 
-            func_8003ED74(4, 4);
+            Gfx_MapEffectsUpdate_MapInit(4, 4);
 
             g_SysWork.field_235C = NULL;
             g_SysWork.cutsceneLightPos_2360.vx = Q12(59.1f);
@@ -485,7 +485,7 @@ void func_800D2E54(void) // 0x800D2E54
     {
         if (D_800D8734 != 5)
         {
-            func_8003ED74(2, 2);
+            Gfx_MapEffectsUpdate_MapInit(2, 2);
             D_800D8734 = 5;
         }
     }
@@ -494,7 +494,7 @@ void func_800D2E54(void) // 0x800D2E54
     {
         if (D_800D8734 != 6)
         {
-            func_8003ED74(2, 2);
+            Gfx_MapEffectsUpdate_MapInit(2, 2);
             D_800D8734 = 6;
         }
     }

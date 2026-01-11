@@ -1708,30 +1708,30 @@ typedef struct
     u_Unk0  field_0;
     q3_12   field_4; // FP alpha.
     s16     field_6; // Defines intensity of the world tint colors. Q3.12?
-    s16     field_8; // R } World tint color. q3_12?
-    s16     field_A; // G }
-    s16     field_C; // B }
-    u8      field_E; // Fog enabled if not set to 0, `func_8003F08C` checks for values 0/1/2/3.
+    s16     field_8; // worldTint_R_8; // R } World tint color. q3_12?
+    s16     field_A; // worldTint_G_A; // G }
+    s16     field_C; // worldTint_B_C; // B }
+    u8      field_E; // Fog enabled if not set to 0, `Gfx_FogParametersSet` checks for values 0/1/2/3.
                      // Sets the transparent grey layer overlaid on characters and the enviroment.
     s8      unk_F;
     q19_12  fogDistance_10;
     CVECTOR fogColor_14;
     u8      field_18; // `bool`?
     CVECTOR field_19;
-    CVECTOR field_1D;
-    CVECTOR field_21;
+    CVECTOR screenTint_1D; // Screen tint. Uses CMP color pallete instead of RGB.
+    CVECTOR field_21; // Particle effect related. Only the first value affects snow transparency.
     CVECTOR field_25;
     u8      unk_29;
     s16     unk_2A;
-} s_sub_StructUnk3;
-STATIC_ASSERT_SIZEOF(s_sub_StructUnk3, 44);
+} s_MapEffectsInfo;
+STATIC_ASSERT_SIZEOF(s_MapEffectsInfo, 44);
 
 typedef struct
 {
-    s_sub_StructUnk3 field_0;
-    s16              field_2C; // FP alpha.
-    s16              field_2E; // FP alpha.
-    s32              field_30;
+    s_MapEffectsInfo field_0;
+    s16              field_2C; // FP alpha. q3_12?
+    s16              field_2E; // FP alpha. q3_12?
+    q19_12           field_30; // Stores fog.
 } s_StructUnk3;
 STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 

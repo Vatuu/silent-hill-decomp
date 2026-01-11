@@ -297,7 +297,7 @@ void Game_InGameInit(void) // 0x80034FB8
 
     vcSetCameraUseWarp(&g_SysWork.playerWork_4C.player_0.position_18, g_SysWork.cameraAngleY_237A);
     func_80040004(&g_MapOverlayHeader);
-    Gfx_MapEffectsEnviromentSet(0);
+    Gfx_MapEffectsSet(0);
     WorldGfx_CharaModelProcessAllLoads();
     func_8003EBA0();
 
@@ -741,9 +741,9 @@ void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0
     Math_RotMatrixZxyNegGte(rot, (MATRIX*)&coord->coord);
 }
 
-void Gfx_MapEffectsEnviromentSet(s32 arg0) // 0x80035B58
+void Gfx_MapEffectsSet(s32 arg0) // 0x80035B58
 {
-    func_8003EBF4(&g_MapOverlayHeader);
+    Gfx_MapEffectsDetermine(&g_MapOverlayHeader);
     g_MapOverlayHeader.func_16C(g_MapOverlayHeader.field_17, g_MapOverlayHeader.field_16);
 }
 
@@ -790,7 +790,7 @@ void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
 
         vcUserCamTarget(&camLookAt, NULL, true);
         func_8003EB54();
-        func_8003EEDC(0, 0);
+        Gfx_MapEffectsUpdate_LoadScreen(0, 0);
 
         model->anim_4.flags_2                                 |= AnimFlag_Visible;
         g_SysWork.playerWork_4C.extra_128.disabledAnimBones_18 = 0;

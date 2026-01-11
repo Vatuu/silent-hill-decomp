@@ -1335,7 +1335,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
     {
         case 0:
             Player_ControlFreeze();
-            func_8003ED74(1, 1);
+            Gfx_MapEffectsUpdate_MapInit(1, 1);
             func_8003EF10(6, 6, PrimitiveType_S32, &D_800F1A24, 0, Q12(100.0f));
 
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(147.7f);
@@ -1372,7 +1372,7 @@ void MapEvent_DoorOfEclipseEnter(void) // 0x800EA444
             break;
 
         case 4:
-            func_8003ED74(6, 3);
+            Gfx_MapEffectsUpdate_MapInit(6, 3);
             Game_TurnFlashlightOn();
             SysWork_StateStepIncrement(0);
 
@@ -2304,7 +2304,7 @@ void func_800EC080(void) // 0x800EC080
         case PACKED_CELL_XZ(22, 25):
             if (D_800F56E4 != 2)
             {
-                func_8003ED74(6, 3);
+                Gfx_MapEffectsUpdate_MapInit(6, 3);
                 D_800F56E4 = 2;
                 Game_TurnFlashlightOff();
             }
@@ -2316,7 +2316,7 @@ void func_800EC080(void) // 0x800EC080
             {
                 if (D_800F56E4 != 1)
                 {
-                    func_8003ED74(6, 3);
+                    Gfx_MapEffectsUpdate_MapInit(6, 3);
                     D_800F56E4 = 1;
                 }
             }
@@ -2324,7 +2324,7 @@ void func_800EC080(void) // 0x800EC080
             {
                 if (D_800F56E4 != 3)
                 {
-                    func_8003ED74(13, 13);
+                    Gfx_MapEffectsUpdate_MapInit(13, 13);
                     D_800F56E4 = 3;
                 }
             }
@@ -2334,7 +2334,7 @@ void func_800EC080(void) // 0x800EC080
         case PACKED_CELL_XZ(20, 24):
             if (D_800F56E4 != 3)
             {
-                func_8003ED74(13, 13);
+                Gfx_MapEffectsUpdate_MapInit(13, 13);
                 D_800F56E4 = 3;
             }
             break;
@@ -2357,12 +2357,12 @@ void func_800EC080(void) // 0x800EC080
             {
                 if (Savegame_EventFlagGet(EventFlag_134) || !Savegame_EventFlagGet(EventFlag_159))
                 {
-                    func_8003ED74(1, 1);
+                    Gfx_MapEffectsUpdate_MapInit(1, 1);
                     Game_TurnFlashlightOff();
                 }
                 else
                 {
-                    func_8003ED74(6, 3);
+                    Gfx_MapEffectsUpdate_MapInit(6, 3);
                 }
 
                 D_800F56E4 = 1;

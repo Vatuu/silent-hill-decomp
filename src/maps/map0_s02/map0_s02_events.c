@@ -97,7 +97,7 @@ void Map_WorldObjectsInit(void)
     D_800D3474 = 0;
     if (!Savegame_EventFlagGet(EventFlag_131) && Savegame_EventFlagGet(EventFlag_159))
     {
-        func_8003ED74(7, 4);
+        Gfx_MapEffectsUpdate_MapInit(7, 4);
     }
 
     WorldObject_ModelNameSet(&g_WorldObject_Winr[0][0], "WINR_0_N");
@@ -172,7 +172,7 @@ void Map_WorldObjectsUpdate(void)
         {
             if (Savegame_EventFlagGet(EventFlag_134) || !Savegame_EventFlagGet(EventFlag_159))
             {
-                func_8003ED74(13, 13);
+                Gfx_MapEffectsUpdate_MapInit(13, 13);
                 D_800D3474 = 1;
             }
         }

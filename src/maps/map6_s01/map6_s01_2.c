@@ -225,7 +225,7 @@ void func_800D13D8(void) // 0x800D13D8
             g_SysWork.field_236C = NULL;
             g_SysWork.field_2378 = Q12(0.6f);
 
-            func_8003ED74(16, 16);
+            Gfx_MapEffectsUpdate_MapInit(16, 16);
             func_8008D438();
             SysWork_StateStepIncrement(0);
 
@@ -513,7 +513,7 @@ void func_800D13D8(void) // 0x800D13D8
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
             Game_TurnFlashlightOn();
-            func_8003ED74(7, 4);
+            Gfx_MapEffectsUpdate_MapInit(7, 4);
             func_8008D448();
             func_8003EBA0();
 

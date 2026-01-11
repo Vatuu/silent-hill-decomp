@@ -497,7 +497,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
     {
         if (D_800DB9B0 == 0)
         {
-            func_8003ED74(6, 12);
+            Gfx_MapEffectsUpdate_MapInit(6, 12);
             D_800DB9B0++;
         }
 
