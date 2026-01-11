@@ -232,7 +232,343 @@ void func_800D17CC(void) // 0x800D17CC
 
 INCLUDE_ASM("maps/map3_s03/nonmatchings/map3_s03", func_800D17F8);
 
-INCLUDE_ASM("maps/map3_s03/nonmatchings/map3_s03", func_800D1A58);
+void func_800D1A58(void) // 0x800D1A58
+{
+    VECTOR3 sp30;
+    s32     temp_a2_2;
+    s32     temp_v1_8;
+    s32     j;
+    s32     i;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+
+            for (i = 0; i < 16; i++)
+            {
+                if (Savegame_EventFlagGet(EventFlag_265 + i))
+                {
+                    break;
+                }
+            }
+
+            if (g_MapEventLastUsedItem != InventoryItemId_Unequipped || i != 16)
+            {
+                SysWork_StateStepSet(0, 4);
+            }
+            else
+            {
+                SysWork_StateStepIncrement(0);
+            }
+            break;
+
+        case 1:
+
+            sp30.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
+            sp30.vy = Q12(-1.2f);
+            sp30.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
+
+            func_8005DC1C(Sfx_DoorLocked, &sp30, 0x80, 0);
+            SysWork_StateStepIncrement(0);
+
+        case 2:
+            SysWork_StateStepIncrementDelayed(0x333, false);
+            break;
+
+        case 3:
+            MapMsg_DisplayAndHandleSelection(false, 0xC, false, false, 0, false);
+            break;
+
+        case 4:
+            SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
+            break;
+
+        case 5:
+            g_SysWork.sysFlags_22A0 |= 1;
+
+            Fs_QueueStartReadTim(FILE_TIM_COLORS_TIM, (void*)0x801D2600, &g_ItemInspectionImg);
+
+            for (i = 0, Fs_QueueWaitForEmpty(), D_800D8145 = 0; i < 4; i++)
+            {
+                for (j = 0; j < 4; j++)
+                {
+                    if (Savegame_EventFlagGet((EventFlag_265 + i) + j * 4))
+                    {
+                        D_800D8140[i] = j;
+                        D_800D8145   += 1;
+                        break;
+                    }
+                }
+
+                if (j == 4)
+                {
+                    D_800D8140[i] = 8;
+                }
+            }
+
+            D_800D6BD0 = 0;
+            D_800D6BD4 = 0;
+            D_800D8144 = 8;
+
+            SysWork_StateStepIncrement(0);
+
+        case 6:
+            SysWork_StateStepIncrementAfterFade(2, false, false, false, false);
+            func_800D17F8(8, 0);
+
+            if (g_SysWork.sysStateStep_C[0] != 6)
+            {
+                if (g_MapEventLastUsedItem != InventoryItemId_Unequipped)
+                {
+                    SysWork_StateStepSet(0, 7);
+                    D_800D8144 = g_MapEventLastUsedItem - 0x67;
+                }
+                else if (D_800D8145 == 0)
+                {
+                    SysWork_StateStepSet(0, 15);
+                }
+                else
+                {
+                    SysWork_StateStepSet(0, 11);
+                }
+            }
+            break;
+
+        case 7:
+            func_800D17F8(8, 0);
+            MapMsg_DisplayAndHandleSelection(false, 0x2F, false, false, 0, false);
+            break;
+
+        case 8:
+            func_800D17F8(8, 0);
+
+            D_800D6BD0 += (g_Controller0->sticks_24.sticks_0.leftX << 0xE) / 75;
+            D_800D6BD0  = CLAMP_RANGE(D_800D6BD0, -0x64000, 0x64000);
+
+            D_800D6BD4 += (g_Controller0->sticks_24.sticks_0.leftY << 0xE) / 75;
+            D_800D6BD4  = CLAMP_RANGE(D_800D6BD4, -0x64000, 0x64000);
+
+            Game_TimerUpdate();
+
+            func_800881B8((s16)(FP_FROM(D_800D6BD0, Q12_SHIFT) + 8), FP_FROM(D_800D6BD4, Q12_SHIFT) + 8,
+                          8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
+
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            {
+                for (i = 0; i < 8; i++)
+                {
+                    if (D_800D6B40[i][0] - 0xA0 > FP_FROM(D_800D6BD0, Q12_SHIFT))
+                    {
+                        continue;
+                    }
+
+                    if (D_800D6B40[i][0] - 0x84 <= FP_FROM(D_800D6BD0, Q12_SHIFT))
+                    {
+                        continue;
+                    }
+
+                    if (D_800D6B40[i][1] - 0x78 > FP_FROM(D_800D6BD4, Q12_SHIFT))
+                    {
+                        continue;
+                    }
+
+                    if (D_800D6B40[i][1] - 0x5C <= FP_FROM(D_800D6BD4, Q12_SHIFT))
+                    {
+                        continue;
+                    }
+
+                    if ((i >= 4) || (D_800D8140[i] != 8))
+                    {
+                        SysWork_StateStepSet(0, 10);
+                        break;
+                    }
+
+                    D_800D8140[i] = D_800D8144;
+
+                    temp_a2_2 = EventFlag_265;
+
+                    Savegame_EventFlagSet((D_800D8144 * 4) + (i + temp_a2_2));
+
+                    D_800D8144 = i;
+                    D_800D6BD8 = 0;
+
+                    SD_Call(Sfx_Unk1524);
+
+                    SysWork_StateStepSet(0, 9);
+
+                    for (j = 0; j < 4; j++)
+                    {
+                        if (D_800D8140[j] != j)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (j == 4)
+                    {
+                        Savegame_MapMarkingSet(MapMarkFlag_713);
+                    }
+
+                    break;
+                }
+            }
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            {
+                func_80086470(3, D_800D8144 + 0x67, 1, false);
+                SysWork_StateStepSet(0, 16);
+            }
+            break;
+
+        case 9:
+            func_800D17F8(D_800D8144, D_800D6BD8);
+            D_800D6BD8 += 0x40;
+
+            if (D_800D6BD8 >= 0x1333)
+            {
+                if (Savegame_MapMarkingGet(MapMarkFlag_713))
+                {
+                    SD_Call(Sfx_Unk1343);
+                }
+                SysWork_StateStepSet(0, 16);
+            }
+            break;
+
+        case 10:
+            func_800D17F8(8, 0);
+            MapMsg_DisplayAndHandleSelection(false, 0x30, false, false, 0, false);
+            if (g_SysWork.sysStateStep_C[0] != 0xA)
+            {
+                SysWork_StateStepSet(0, 8);
+            }
+            break;
+
+        case 11:
+            func_800D17F8(8, 0);
+            MapMsg_DisplayAndHandleSelection(false, 0x31, false, false, 0, false);
+            break;
+
+        case 12:
+            func_800D17F8(8, 0);
+
+            D_800D6BD0 += (g_Controller0->sticks_24.sticks_0.leftX << 0xE) / 75;
+            D_800D6BD0  = CLAMP_RANGE(D_800D6BD0, -0x64000, 0x64000);
+
+            D_800D6BD4 += (g_Controller0->sticks_24.sticks_0.leftY << 0xE) / 75;
+            D_800D6BD4  = CLAMP_RANGE(D_800D6BD4, -0x64000, 0x64000);
+
+            Game_TimerUpdate();
+
+            func_800881B8((s16)(FP_FROM(D_800D6BD0, Q12_SHIFT) + 8), FP_FROM(D_800D6BD4, Q12_SHIFT) + 8,
+                          8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
+
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            {
+                for (i = 0; i < 8; i++)
+                {
+                    if (D_800D6B40[i][0] - 0xA0 > FP_FROM(D_800D6BD0, Q12_SHIFT))
+                    {
+                        continue;
+                    }
+
+                    if (D_800D6B40[i][0] - 0x84 <= FP_FROM(D_800D6BD0, Q12_SHIFT))
+                    {
+                        continue;
+                    }
+                    if (D_800D6B40[i][1] - 0x78 > FP_FROM(D_800D6BD4, Q12_SHIFT))
+                    {
+                        continue;
+                    }
+                    if (D_800D6B40[i][1] - 0x5C <= FP_FROM(D_800D6BD4, Q12_SHIFT))
+                    {
+                        continue;
+                    }
+
+                    if (i >= 4)
+                    {
+                        SysWork_StateStepSet(0, 14);
+                    }
+                    else
+                    {
+                        if (D_800D8140[i] == 8)
+                        {
+                            break;
+                        }
+
+                        if (D_800D8140[i] == 0)
+                        {
+                            func_80086470(3, InventoryItemId_PlateOfTurtle, 1, false);
+                        }
+                        else if (D_800D8140[i] == 1)
+                        {
+                            func_80086470(3, InventoryItemId_PlateOfHatter, 1, false);
+                        }
+                        else if (D_800D8140[i] == 2)
+                        {
+                            func_80086470(3, InventoryItemId_PlateOfCat, 1, false);
+                        }
+                        else if (D_800D8140[i] == 3)
+                        {
+                            func_80086470(3, InventoryItemId_PlateOfQueen, 1, false);
+                        }
+
+                        temp_v1_8 = EventFlag_265;
+
+                        Savegame_EventFlagClear(D_800D8140[i] * 4 + (i + temp_v1_8));
+
+                        D_800D8144 = i;
+                        D_800D6BD8 = 0x1000;
+
+                        SysWork_StateStepSet(0, 13);
+
+                        SD_Call(Sfx_Unk1524);
+                    }
+                    break;
+                }
+            }
+            else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            {
+                SysWork_StateStepSet(0, 16);
+            }
+            break;
+
+        case 13:
+            func_800D17F8(D_800D8144, D_800D6BD8);
+            D_800D6BD8 -= 0x40;
+
+            if (D_800D6BD8 < -0x332)
+            {
+                D_800D8140[D_800D8144] = 8;
+                SysWork_StateStepSet(0, 16);
+            }
+            break;
+
+        case 14:
+            func_800D17F8(8, 0);
+            MapMsg_DisplayAndHandleSelection(false, 0x32, false, false, 0, false);
+            if (g_SysWork.sysStateStep_C[0] != 14)
+            {
+                SysWork_StateStepSet(0, 12);
+            }
+            break;
+
+        case 15:
+            MapMsg_DisplayAndHandleSelection(false, 0x33, false, false, 0, false);
+            func_800D17F8(8, 0);
+            break;
+
+        case 16:
+            func_800D17F8(8, 0);
+            SysWork_StateStepIncrementAfterFade(2, true, false, false, false);
+            break;
+
+        default:
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            SysWork_StateStepIncrementAfterFade(0, false, false, false, false);
+            break;
+    }
+}
 
 void func_800D26D0(void) // 0x800D26D0
 {

@@ -321,6 +321,7 @@ typedef enum _MapMarkingFlag
     MapMarkFlag_AltHospital2F_Room203Broken             = 705,
     MapMarkFlag_AltHospital2F_Room204Arrows             = 708,
     MapMarkFlag_AltHospital2F_NurseCenterLeftArrows     = 710,
+    MapMarkFlag_713                                     = 713,
     MapMarkFlag_AltHospital3F_NearElevatorLocked        = 725,
     MapMarkFlag_AltHospital3F_NearElevatorArrows        = 726,
     MapMarkFlag_AltHospital3F_Room307Broken             = 727,
