@@ -433,8 +433,9 @@ void func_800EBEE0(void) // 0x800EBEE0
     {
         if (!Savegame_EventFlagGet(EventFlag_402))
         {
-            flags |= 2;
+            flags |= 1 << 1;
         }
+
         Gfx_DebugStringPosition(30, 30);
     }
 
@@ -496,23 +497,22 @@ static inline s32 inline_sub(s32 arg0, s32 arg1)
     return arg0 - arg1;
 }
 
-void func_800EC4B4(s32 arg0)
+void func_800EC4B4(s32 arg0) // 0x800EC4B4
 {
-    s32 posX;
-    s32 posZ;
-    s32 posY;
-    s32 temp_v1_14;
-    s32 var_a2;
-    s32 var_a3;
-    s32 var_a3_2;
-    s32 j;
-    s32 i;
-    s32 var_t0_2;
-    s32 var_t1_2;
-    s32 var_t2_2;
-    s32 var_t3;
-    s32 temp;
-
+    s32                posX;
+    s32                posZ;
+    s32                posY;
+    s32                temp_v1_14;
+    s32                var_a2;
+    s32                var_a3;
+    s32                var_a3_2;
+    s32                j;
+    s32                i;
+    s32                var_t0_2;
+    s32                var_t1_2;
+    s32                var_t2_2;
+    s32                var_t3;
+    s32                temp;
     s_func_800EC4B4*   ptr;
     s_func_800EC4B4_2* ptr2;
 
@@ -534,12 +534,12 @@ void func_800EC4B4(s32 arg0)
     gte_ReadGeomScreen(&ptr->field_84);
 
     ptr->field_24      = GsIDMATRIX;
-    ptr->field_24.t[0] = -0xC00;
-    ptr->field_24.t[2] = 0xF000;
-    ptr->field_24.t[1] = 0;
-    ptr->field_68.vx   = 0;
-    ptr->field_68.vy   = -0x1000;
-    ptr->field_68.vz   = 0;
+    ptr->field_24.t[0] = Q12(-0.75f); // TODO: Or Q8, since it's a `MATRIX`?
+    ptr->field_24.t[2] = Q12(15.0f);
+    ptr->field_24.t[1] = Q12(0.0f);
+    ptr->field_68.vx   = Q12(0.0f);
+    ptr->field_68.vy   = Q12(-1.0f);
+    ptr->field_68.vz   = Q12(0.0f);
 
     for (i = 0; i < 287; i += 3)
     {
@@ -672,21 +672,21 @@ void func_800EC4B4(s32 arg0)
                     {
                         if (ptr->field_90[i + var_a3][j + var_a2] == var_t2_2)
                         {
-                            ptr->field_74[var_a3 * 2 + var_a2].r = ptr2->field_908[i + var_a3][j + var_a2][0].r;
-                            ptr->field_74[var_a3 * 2 + var_a2].g = ptr2->field_908[i + var_a3][j + var_a2][0].g;
-                            ptr->field_74[var_a3 * 2 + var_a2].b = ptr2->field_908[i + var_a3][j + var_a2][0].b;
+                            ptr->field_74[(var_a3 * 2) + var_a2].r = ptr2->field_908[i + var_a3][j + var_a2][0].r;
+                            ptr->field_74[(var_a3 * 2) + var_a2].g = ptr2->field_908[i + var_a3][j + var_a2][0].g;
+                            ptr->field_74[(var_a3 * 2) + var_a2].b = ptr2->field_908[i + var_a3][j + var_a2][0].b;
                         }
                         else if ((ptr->field_90[i + var_a3][j + var_a2] + 1) == var_t2_2)
                         {
-                            ptr->field_74[var_a3 * 2 + var_a2].r = ptr2->field_908[i + var_a3][j + var_a2][1].r;
-                            ptr->field_74[var_a3 * 2 + var_a2].g = ptr2->field_908[i + var_a3][j + var_a2][1].g;
-                            ptr->field_74[var_a3 * 2 + var_a2].b = ptr2->field_908[i + var_a3][j + var_a2][1].b;
+                            ptr->field_74[(var_a3 * 2) + var_a2].r = ptr2->field_908[i + var_a3][j + var_a2][1].r;
+                            ptr->field_74[(var_a3 * 2) + var_a2].g = ptr2->field_908[i + var_a3][j + var_a2][1].g;
+                            ptr->field_74[(var_a3 * 2) + var_a2].b = ptr2->field_908[i + var_a3][j + var_a2][1].b;
                         }
                         else
                         {
-                            ptr->field_74[var_a3 * 2 + var_a2].r = 0;
-                            ptr->field_74[var_a3 * 2 + var_a2].g = 0;
-                            ptr->field_74[var_a3 * 2 + var_a2].b = 0;
+                            ptr->field_74[(var_a3 * 2) + var_a2].r = 0;
+                            ptr->field_74[(var_a3 * 2) + var_a2].g = 0;
+                            ptr->field_74[(var_a3 * 2) + var_a2].b = 0;
                         }
                     }
                 }

@@ -8,6 +8,8 @@
 #include "main/fsqueue.h"
 #include "types.h"
 
+// TODO: Inconsistent use or terms "render" and "draw" throughout codebase.
+
 /** @brief This header is used to declare any variable, struct, or
  * function of `BODYPROG.BIN` that has not been identified to
  * be related to a currently recognized and separated section of

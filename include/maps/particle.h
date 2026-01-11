@@ -101,6 +101,7 @@ extern s_func_800CB560 sharedData_800E326C_0_s00;
 
 extern s32 sharedData_800E32D0_0_s00;
 
+/** `bool` */
 extern u8 g_ParticleCameraMoved;
 
 extern u8 sharedData_800DD592_0_s00;
@@ -118,9 +119,9 @@ extern e_MapOverlayId g_ParticleMapOverlayId1;
 
 void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3);
 
-/** @brief Checks if the particle spawn origin has moved significantly since last frame.
+/** @brief Checks if the particle spawn origin has moved significantly since the last tick.
  * 
- * Returns `true` if position delta exceeds 10000 units (?) or Y rotation exceeds 45 degrees.
+ * Returns `true` if position delta exceeds 10000 units (?) or the Y rotation exceeds 45 degrees.
  * Used to determine when particles need repositioning to follow the moving spawn origin.
  * 
  * @return `true` if spawn origin moved beyond threshold, `false` otherwise.
@@ -160,7 +161,7 @@ void Particle_RainRender(s_Particle* part, s32 arg1);
 /** @brief Adds a random offset to a snow particle movement vector. Moves particle vertically, clamps Y to 0. */
 void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime);
 
-void Particle_MovementApply(s32 pass, s_Particle* part, u16* rand, s32* deltaTime);
+void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* deltaTime);
 
 void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand);
 

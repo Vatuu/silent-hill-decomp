@@ -16,7 +16,7 @@ typedef struct
     MATRIX    field_24;
     SVECTOR   field_44[3];
     VECTOR3   field_5C;
-    SVECTOR   field_68;
+    SVECTOR   field_68; // Q3.12
     CVECTOR   field_70;
     CVECTOR   field_74[4];
     s32       field_84;
@@ -62,5 +62,7 @@ void func_800EB11C(void);
 void Map_WorldObjectsInit(void);
 
 void func_800EBEE0(void);
+
+void func_800EC4B4(s32 arg0);
 
 #endif
