@@ -335,7 +335,7 @@ void func_800D0608(void) // 0x800D0608
             vcReturnPreAutoCamWork(true);
             D_800D1FEC = NO_VALUE;
             Gfx_MapEffectsUpdate_MapInit(2, 2);
-            func_8003EF10(7, 7, PrimitiveType_S32, &D_800D1FBC, 0, Q12(100.0f));
+            Gfx_MapEffectsUpdate(7, 7, PrimitiveType_S32, &D_800D1FBC, 0, Q12(100.0f));
             break;
     }
 

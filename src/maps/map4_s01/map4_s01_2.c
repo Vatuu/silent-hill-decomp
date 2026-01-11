@@ -766,7 +766,7 @@ void func_800D3420(void) // 0x800D3420
             g_SysWork.field_236C = NULL;
             Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-90.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 
-            func_8003EF10(11, 11, PrimitiveType_S32, &D_800D5B00, 0, Q12(100.0f));
+            Gfx_MapEffectsUpdate(11, 11, PrimitiveType_S32, &D_800D5B00, 0, Q12(100.0f));
             D_800D5B00 = 0;
             func_8008D438();
 

@@ -3443,7 +3443,7 @@ void func_800E787C(void) // 0x800E787C
             Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
-            func_8003EF10(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
+            Gfx_MapEffectsUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
 
             D_800F483C = Q12(40.0f);
             D_800F4838 = 1;
@@ -3541,7 +3541,7 @@ void func_800E787C(void) // 0x800E787C
 
             Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
             Gfx_MapEffectsUpdate_MapInit(9, 9);
-            func_8003EF10(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
+            Gfx_MapEffectsUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             D_800F483C = Q12(80.0f);
             SysWork_StateStepIncrement(0);
@@ -3751,7 +3751,7 @@ void func_800E86BC(void) // 0x800E86BC
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             D_800F483C = Q12(70.0f);
             Gfx_MapEffectsUpdate_MapInit(9, 9);
-            func_8003EF10(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
+            Gfx_MapEffectsUpdate(17, 17, PrimitiveType_S32, &D_800F483C, 0, Q12(100.0f));
             SysWork_StateStepIncrement(0);
 
         case 9:

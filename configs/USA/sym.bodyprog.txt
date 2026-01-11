@@ -430,6 +430,9 @@ Game_FlashlightToggle                       = 0x8003ED08; // type:func
 Game_FlashlightIsOn                         = 0x8003ED64; // type:func
 Gfx_MapEffectsUpdate_MapInit                = 0x8003ED74;
 Gfx_MapEffectsUpdate_LoadScreen             = 0x8003EEDC;
+Gfx_MapEffectsUpdate                        = 0x8003EF10;
+Gfx_MapEffectsStepUpdate                    = 0x8003EF74;
+Gfx_FogParametersSet                        = 0x8003F08C;
 Gfx_FlashlightUpdate                        = 0x8003F170;
 Math_WeightedAverageGet                     = 0x8003F7E4; // type:func
 
