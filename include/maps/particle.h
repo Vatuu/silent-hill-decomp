@@ -154,9 +154,9 @@ void func_800CE02C(s32 arg0, s32 arg1, s_800E34FC* pos, s32 mapId);
 /** M0S00 only. */
 void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2);
 
-void Particle_SnowRender(s_Particle* part);
+void Particle_SnowDraw(s_Particle* part);
 
-void Particle_RainRender(s_Particle* part, s32 arg1);
+void Particle_RainDraw(s_Particle* part, s32 arg1);
 
 /** @brief Adds a random offset to a snow particle movement vector. Moves particle vertically, clamps Y to 0. */
 void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* deltaTime);
@@ -203,8 +203,8 @@ void Particle_SoundUpdate(void);
 
 void Particle_SoundStop(void);
 
-void Particle_HyperBlasterBeamRender(VECTOR3* vec0, q3_12* rotX, q3_12* rotY);
+void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY);
 
-void Particle_BeamRender(VECTOR3* vec0, VECTOR3* vec1);
+void Particle_BeamDraw(VECTOR3* vec0, VECTOR3* vec1);
 
 #endif

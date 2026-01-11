@@ -350,7 +350,7 @@ void Gfx_Inventory_UnavailableMapText(s32 strIdx); // 0x8004F57C
 
 void Inventory_DirectionalInputSet(void); // 0x8004F5DC
 
-void Gfx_ItemScreens_RenderInit(u32* selectedItemId);
+void Gfx_ItemScreens_DrawInit(u32* selectedItemId);
 
 /** Draws some rectangle. */
 void func_8004FB0C(void);
@@ -388,11 +388,11 @@ void func_800539A4(s32 arg0, s32 arg1);
  */
 void func_800540A4(s8 arg0);
 
-/** Related to rendering items. */
-void Gfx_Items_Render(void); // 0x80054200
+/** Related to drawing items. */
+void Gfx_Items_Draw(void); // 0x80054200
 
 /** Rough name. Part of this function resets values related to visual elements of the inventory. */
-void Gfx_Items_RenderInit(void); // 0x80054558
+void Gfx_Items_DrawInit(void); // 0x80054558
 
 /** Used for correct reset of aiming animations when exiting the inventory screen.
  *

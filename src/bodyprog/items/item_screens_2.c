@@ -148,7 +148,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             g_GameWork.background2dColor_G_58D     = 0;
             g_GameWork.background2dColor_B_58E     = 0;
 
-            Gfx_Items_RenderInit();
+            Gfx_Items_DrawInit();
             func_8004EF48();
 
             g_GameWork.gameStateStep_598[1] = 1;
@@ -272,7 +272,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             g_GameWork.background2dColor_B_58E = 0;
             g_Inventory_SelectionId            = InventorySelectionId_Item;
 
-            Gfx_Items_RenderInit();
+            Gfx_Items_DrawInit();
             func_8008F94C();
 
             D_800C3994 = g_SavegamePtr->gameDifficulty_260;
@@ -357,7 +357,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             break;
     }
 
-    Gfx_ItemScreens_RenderInit(&g_Inventory_SelectionId);
+    Gfx_ItemScreens_DrawInit(&g_Inventory_SelectionId);
 
     if (g_GameWork.gameStateStep_598[1] < 21)
     {

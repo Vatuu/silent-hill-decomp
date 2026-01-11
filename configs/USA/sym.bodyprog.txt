@@ -651,7 +651,7 @@ Gfx_Inventory_UnavailableMapText            = 0x8004F57C; // type:func
 //--- PA: 0x02AA7C   VA: 0x8004F5DC   subsegment: c, items/item_screens_3
 //-----------------------------------------------------------------------
 Inventory_DirectionalInputSet               = 0x8004F5DC; // type:func
-Gfx_ItemScreens_RenderInit                  = 0x8004F764; // type:func
+Gfx_ItemScreens_DrawInit                    = 0x8004F764; // type:func
 Gfx_Inventory_2dBackgroundDraw              = 0x8004FBCC; // type:func
 Gfx_Inventory_HealthStatusDraw              = 0x80051020; // type:func
 Gfx_Inventory_ItemDescriptionDraw           = 0x8005192C; // type:func
@@ -663,8 +663,8 @@ GameFs_UniqueItemModelLoad                  = 0x80053B08; // type:func
 GameFs_Tim00TIMLoad                         = 0x80053DA0; // type:func
 GameFs_MapItemsModelLoad                    = 0x80053DFC; // type:func
 GameFs_MapItemsTextureLoad                  = 0x80054024; // type:func
-Gfx_Items_Render                            = 0x80054200; // type:func
-Gfx_Items_RenderInit                        = 0x80054558; // type:func
+Gfx_Items_Draw                              = 0x80054200; // type:func
+Gfx_Items_DrawInit                          = 0x80054558; // type:func
 Inventory_ExitAnimFixes                     = 0x80054634; // type:func
 Gfx_Items_Display                           = 0x80054720; // type:func
 Gfx_Items_SetAmbientLighting                = 0x80054928; // type:func

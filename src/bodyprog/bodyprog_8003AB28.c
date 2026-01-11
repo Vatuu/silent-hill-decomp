@@ -971,17 +971,17 @@ void WorldGfx_IpdSamplePointReset(void) // 0x8003C3A0
 
 void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
 {
-    VECTOR3         pos0; // Render distance?
-                          // Modifying `pos0.vz = Q12(200.0f);` makes the world to not render. In the void, the player becomes immovable.
+    VECTOR3         pos0; // Draw distance?
+                          // Modifying `pos0.vz = Q12(200.0f);` makes the world to not draw. In the void, the player becomes immovable.
                           //
                           // Most of the time, X and Z share the same value as
                           // the player player position or a position slightly ahead computed from the heading angle.
                           // 
                           // In Old Silent Hill (after Cafe 5to2) while standing still, this value is
                           // the same as `g_SysWork.playerWork_4C.player_0.position_18`.
-    VECTOR3         pos1; // Render distance?
+    VECTOR3         pos1; // Draw distance?
                           // If the conditional `if (D_800C4168.isFogEnabled_1)` is reversed
-                          // to run the `else` block, when fog is enabled, the render distance
+                          // to run the `else` block, when fog is enabled, the draw distance
                           // is slightly reduced.
                           //
                           // Similarly to `pos0`, when fog is disabled, it uses the player position.

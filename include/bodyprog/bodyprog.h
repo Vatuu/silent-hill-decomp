@@ -8,8 +8,6 @@
 #include "main/fsqueue.h"
 #include "types.h"
 
-// TODO: Inconsistent use or terms "render" and "draw" throughout codebase.
-
 /** @brief This header is used to declare any variable, struct, or
  * function of `BODYPROG.BIN` that has not been identified to
  * be related to a currently recognized and separated section of
@@ -3395,7 +3393,7 @@ void func_80057A3C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchD
 
 void func_80057B7C(s_MeshHeader* meshHdr, s32 offset, s_GteScratchData* scratchData, MATRIX* mat);
 
-/** Main quad rendering func? */
+/** Main quad drawing func? */
 void func_8005801C(s_MeshHeader* meshHdr, s_GteScratchData* scratchData, GsOT_TAG* tag, s32 arg3);
 
 /** `arg4` unused. */
@@ -4403,9 +4401,9 @@ void WorldGfx_IpdSamplePointStore(void);
 
 void WorldGfx_IpdSamplePointReset(void);
 
-/** Sets render distance, and loads map models.
+/** Sets draw distance, and loads map models.
  * Breaking the function doesn't causes the game to crash, but instead
- * the world won't render beyond what has been previously loaded. Some
+ * the world won't draw beyond what has been previously loaded. Some
  * circumstances can also cause the player to be unable to move.
  */
 void Ipd_CloseRangeChunksInit(void);

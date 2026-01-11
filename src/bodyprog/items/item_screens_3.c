@@ -961,7 +961,7 @@ void Inventory_DirectionalInputSet(void) // 0x8004F5DC
     }
 }
 
-void Gfx_ItemScreens_RenderInit(u32* selectedItemId) // 0x8004F764
+void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
 {
     #define LABEL_COUNT 8
 
@@ -3385,7 +3385,7 @@ void func_800540A4(s8 arg0) // 0x800540A4
     Fs_QueueStartReadTim(FILE_ITEM_HEROPIC2_TIM, FS_BUFFER_1, &g_HealthPortraitImg);
 }
 
-void Gfx_Items_Render(void) // 0x80054200
+void Gfx_Items_Draw(void) // 0x80054200
 {
     s32  temp_s5;
     s32  i;
@@ -3507,7 +3507,7 @@ void Gfx_Items_Render(void) // 0x80054200
     }
 }
 
-void Gfx_Items_RenderInit(void) // 0x80054558
+void Gfx_Items_DrawInit(void) // 0x80054558
 {
     s32 i;
 
@@ -3528,7 +3528,7 @@ void Gfx_Items_RenderInit(void) // 0x80054558
 
     g_Item_MapLoadableItems[i] = 0;
 
-    Gfx_Items_Render();
+    Gfx_Items_Draw();
     Gfx_Items_SetAmbientLighting();
 }
 

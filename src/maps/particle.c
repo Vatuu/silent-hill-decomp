@@ -1359,13 +1359,13 @@ bool Particle_Update(s_Particle* partHead)
             {
                 default:
                 #if MAP_PARTICLE_HAS_RAIN
-                    Particle_RainRender(curPart, sp64);
+                    Particle_RainDraw(curPart, sp64);
                 #endif
                     break;
 
                 case 0:
                 #if MAP_PARTICLE_HAS_SNOW
-                    Particle_SnowRender(curPart);
+                    Particle_SnowDraw(curPart);
                 #endif
                     break;
             }
@@ -2386,7 +2386,7 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
     #define PARTICLE_CASE(id) default
 #endif
 
-void Particle_SnowRender(s_Particle* part)
+void Particle_SnowDraw(s_Particle* part)
 {
 #if !defined(MAP1_S00) && !defined(MAP6_S00) && !defined(MAP7_S03)
     VECTOR3     particlePos;
@@ -2671,7 +2671,7 @@ void Particle_SnowRender(s_Particle* part)
 #endif
 
 #if MAP_PARTICLE_HAS_RAIN
-void Particle_RainRender(s_Particle* part, s32 arg1)
+void Particle_RainDraw(s_Particle* part, s32 arg1)
 {
 #if defined(MAP0_S00) || defined(MAP4_S02) || defined(MAP4_S03)
     VECTOR3 sp10;
@@ -3966,7 +3966,7 @@ void Particle_SoundStop(void)
     Sd_SfxStop(Sfx_Unk1360);
 }
 
-void Particle_HyperBlasterBeamRender(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
+void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
 {
 #if !defined(MAP0_S00)
     SVECTOR           startRelPos;
@@ -4199,7 +4199,7 @@ void Particle_HyperBlasterBeamRender(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
 #endif
 }
 
-void Particle_BeamRender(VECTOR3* vec0, VECTOR3* vec1)
+void Particle_BeamDraw(VECTOR3* vec0, VECTOR3* vec1)
 {
 #if !defined(MAP0_S00)
     SVECTOR   vec0Delta;
