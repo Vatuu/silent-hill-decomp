@@ -110,13 +110,13 @@ void func_800D1524(void) // 0x800D1524
     Savegame_EventFlagSet(EventFlag_M3S01_BasementDoorOpen);
 }
 
-INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", D_800CB088);
+INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", sharedData_800CB088_3_s01);
 
-INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", D_800CB094);
+INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", sharedData_800CB094_3_s01);
 
-INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", D_800CB0A0);
+INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", sharedData_800CB0A0_3_s01);
 
-INCLUDE_ASM("maps/map3_s01/nonmatchings/map3_s01", func_800D15F0);
+#include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800D15F0
 
 void MapEvent_UnknownLiquidInteract(void) // 0x800D23AC
 {
@@ -351,17 +351,17 @@ void func_800D2AF4(void) // 0x800D2AF4
 
     WorldObjectNoRotInit(&g_WorldObject3[1], "BT4_HIDE", 59.1f, 0.0f, 19.1f);
 
-    WorldObjectNoRotInit(&g_WorldObject0[0], "DR1L_HID", 59.1f, 0.0f, 19.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[0], "DR1L_HID", 59.1f, 0.0f, 19.1f);
 
-    WorldObjectNoRotInit(&g_WorldObject0[1], "DR1R_HID", 59.1f, 0.0f, 19.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[1], "DR1R_HID", 59.1f, 0.0f, 19.1f);
 
-    WorldObjectNoRotInit(&g_WorldObject0[2], "DR3L_HID", 59.1f, 0.0f, 19.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[2], "DR3L_HID", 59.1f, 0.0f, 19.1f);
 
-    WorldObjectNoRotInit(&g_WorldObject0[3], "DR3R_HID", 59.1f, 0.0f, 19.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[3], "DR3R_HID", 59.1f, 0.0f, 19.1f);
 
-    WorldObjectNoRotInit(&g_WorldObject0[4], "DR2L_HID", 59.1f, 0.0f, 19.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[4], "DR2L_HID", 59.1f, 0.0f, 19.1f);
 
-    WorldObjectNoRotInit(&g_WorldObject0[5], "DR2R_HID", 59.1f, 0.0f, 19.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[5], "DR2R_HID", 59.1f, 0.0f, 19.1f);
 
     WorldObjectInit(&g_WorldObject6, D_800A99E4.savePadName_4, 26.0f, -1.0198f, 144.5498f, 0.0f, 163.8f, 0.0f);
 
@@ -462,13 +462,13 @@ void func_800D2E54(void) // 0x800D2E54
             posZ = Q12(19.1f);
             for (i = 5; i >= 0; i--)
             {
-                g_WorldObject0[i].position_1C.vz = posZ;          
+                g_WorldObject_Dr[i].position_1C.vz = posZ;
             }
         }
 
-        for (i = 0; i < ARRAY_SIZE(g_WorldObject0); i++)
+        for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject0[i].object_0, &g_WorldObject0[i].position_1C, &(SVECTOR3){ 0, 0, 0 });
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
 
         if (Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_OperatingPrepRoomArrow) && Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_CorridorMidArrows))

@@ -23,6 +23,8 @@ g_PuppetNurse_ModelStates0          = 0x800CA61C; // type:u16 size:0x10
 //-------------------------------------------------------------------
 //--- PA: 0x001190   VA: 0x800CA708   subsegment: .rodata, map3_s04_2
 //-------------------------------------------------------------------
+sharedData_800CB088_3_s01           = 0x800CB2A8;
+sharedData_800CB094_3_s01           = 0x800CB2B4;
 
 
 
@@ -142,6 +144,7 @@ sharedFunc_800CFEAC_3_s02           = 0x800D1E58; // type:func
 sharedFunc_800CFEEC_3_s02           = 0x800D1E98; // type:func
 MapEvent_DoorJammed                 = 0x800D2130; // type:func
 SysWork_StateStepIncrementAfterTime = 0x800D25D0; // type:func
+sharedFunc_800D15F0_3_s01           = 0x800D2E84; // type:func
 Map_WorldObjectsInit                = 0x800D3BD0; // type:func
 
 
@@ -185,9 +188,14 @@ MAP_MESSAGES                        = 0x800D5644; // type:u32 size:0xDC
 //----------------------------------------------------
 //--- PA: 0x00C1A8   VA: 0x800D5720   subsegment: data
 //----------------------------------------------------
+sharedData_800D4CD4_3_s01           = 0x800D59DC;
 g_CommonWorldObjectPoses            = 0x800D59E8; // type:WorldObjectPos size:0x28
 g_ParticleMapOverlayId0             = 0x800D5A10;
 g_ParticleMapOverlayId1             = 0x800D5A14; // type:s32
+sharedData_800D4D0C_3_s01           = 0x800D5A50;
+sharedData_800D4D10_3_s01           = 0x800D5A54;
+sharedData_800D4D14_3_s01           = 0x800D5A58;
+sharedData_800D4D18_3_s01           = 0x800D5A5C;
 sharedData_800DFB6C_0_s00           = 0x800D5A68; // type:s32
 sharedData_800DFB70_0_s00           = 0x800D5A6C; // type:s32
 g_ParticleVectors0                  = 0x800D6B40; // type:ParticleVectors

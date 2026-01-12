@@ -766,11 +766,11 @@ void func_800D72AC(void) // 0x800D72AC
     }
 }
 
-INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", D_800CB4F0);
+INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", sharedData_800CB088_3_s01);
 
-INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", D_800CB4FC);
+INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", sharedData_800CB094_3_s01);
 
-INCLUDE_ASM("maps/map3_s05/nonmatchings/map3_s05", func_800D76D8);
+#include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800D76D8
 
 void func_800D8424(void) // 0x800D8424
 {
@@ -800,17 +800,17 @@ void func_800D8424(void) // 0x800D8424
     Math_SetSVectorFast(&D_800DD440, FP_ANGLE(0.0f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
     Math_SetSVectorFast(&D_800DD448, FP_ANGLE(58.05f), FP_ANGLE(180.0f), FP_ANGLE(0.0f));
 
-    WorldObjectNoRotInit(&g_WorldObject1[0], "DR1L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[0], "DR1L_HID", 19.1f, 0.0f, 59.1f);
 
-    WorldObjectNoRotInit(&g_WorldObject1[1], "DR1R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[1], "DR1R_HID", 19.1f, 0.0f, 59.1f);
 
-    WorldObjectNoRotInit(&g_WorldObject1[2], "DR3L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[2], "DR3L_HID", 19.1f, 0.0f, 59.1f);
 
-    WorldObjectNoRotInit(&g_WorldObject1[3], "DR3R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[3], "DR3R_HID", 19.1f, 0.0f, 59.1f);
 
-    WorldObjectNoRotInit(&g_WorldObject1[4], "DR2L_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[4], "DR2L_HID", 19.1f, 0.0f, 59.1f);
 
-    WorldObjectNoRotInit(&g_WorldObject1[5], "DR2R_HID", 19.1f, 0.0f, 59.1f);
+    WorldObjectNoRotInit(&g_WorldObject_Dr[5], "DR2R_HID", 19.1f, 0.0f, 59.1f);
 
     WorldObject_ModelNameSet(&g_CommonWorldObjects[0], D_800A99E4.firstAidKitName_8);
     WorldObject_ModelNameSet(&g_CommonWorldObjects[1], D_800A99E4.healthDrinkName_C);
@@ -926,18 +926,18 @@ void func_800D87AC(void) // 0x800D87AC
 
     if (projCellX == 1 && projCellZ == 2)
     {
-        if (g_SysWork.sysState_8 == SysState_Gameplay && g_WorldObject1->position_1C.vz != Q12(59.1f))
+        if (g_SysWork.sysState_8 == SysState_Gameplay && g_WorldObject_Dr->position_1C.vz != Q12(59.1f))
         {
             newZ = Q12(59.1f);
             for (i = 5; i >= 0; i--)
             {
-                g_WorldObject1[i].position_1C.vz = newZ;
+                g_WorldObject_Dr[i].position_1C.vz = newZ;
             }
         }
 
-        for (i = 0; i < ARRAY_SIZE(g_WorldObject1); i++)
+        for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject1[i].object_0, &g_WorldObject1[i].position_1C, &(SVECTOR3){ 0, 0, 0 });
+            g_WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
     }
 

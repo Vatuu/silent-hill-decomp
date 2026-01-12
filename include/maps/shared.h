@@ -1789,6 +1789,15 @@ extern u8  g_PuppetNurse_AnimStatus3[4];
 
 extern u8  g_PuppetNurse_AnimStatus4[4];
 
+extern u8      sharedData_800D4CD4_3_s01[][2];
+extern DVECTOR sharedData_800D4D0C_3_s01;
+extern VECTOR3 sharedData_800CB088_3_s01;
+extern VECTOR3 sharedData_800CB094_3_s01;
+extern VECTOR3 sharedData_800CB0A0_3_s01;
+extern s32     sharedData_800D4D10_3_s01;
+extern s32     sharedData_800D4D14_3_s01;
+extern s8      sharedData_800D4D18_3_s01;
+
 extern s_D_800D5A8C sharedData_800D5A8C_3_s03[3];
 
 extern u8 sharedData_800D1D14_3_s02[8];

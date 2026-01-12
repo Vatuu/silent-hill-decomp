@@ -844,11 +844,11 @@ void func_800D3128(void) // 0x800D3128
     MapMsg_DisplayWithTexture(FILE_TIM_ELCWIRE0_TIM, Q12(0.0f), Q12(0.0f), 55);
 }
 
-INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", D_800CB304);
+INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", sharedData_800CB088_3_s01);
 
-INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", D_800CB310);
+INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", sharedData_800CB094_3_s01);
 
-INCLUDE_ASM("maps/map3_s03/nonmatchings/map3_s03", func_800D3160);
+#include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800D3160
 
 void Map_WorldObjectsInit(void) // 0x800D3EAC
 {

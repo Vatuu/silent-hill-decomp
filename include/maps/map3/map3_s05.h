@@ -45,7 +45,7 @@ extern SVECTOR3 D_800DD448;
 extern s16 D_800DD52A;
 
 extern s_WorldObjectDesc      g_WorldObject0;
-extern s_WorldObjectDescNoRot g_WorldObject1[6];
+extern s_WorldObjectDescNoRot    g_WorldObject_Dr[6];
 extern s_WorldObjectDesc      g_WorldObject2;
 extern s_WorldObjectDesc      g_WorldObject3;
 extern s_WorldObjectDesc      g_WorldObject4;
