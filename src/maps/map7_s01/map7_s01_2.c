@@ -209,7 +209,7 @@ void func_800D725C(void) // 0x800D725C
             ScreenFade_ResetTimestep();
 
             g_SysWork.field_30    = 20;
-            g_SysWork.field_2378  = Q12(0.8f);
+            g_SysWork.pointLightIntensity_2378  = Q12(0.8f);
             g_SysWork.flags_22A4 |= SysFlag2_3;
 
             Game_TurnFlashlightOn();
@@ -404,27 +404,27 @@ void func_800D7A60(void) // 0x800D7A60
 
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
-            g_SysWork.field_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 
             func_8008D438();
             SysWork_StateStepIncrement(0);
 
         case 5:
             SysWork_StateStepIncrementAfterTime(&D_800E2C68, Q12(10.0f), Q12(60.0f), Q12(76.0f), true, true);
-            Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &rot, "LIGHT", D_800E2C68, (s_DmsHeader*)FS_BUFFER_11);
+            Dms_CharacterGetPosRot(&g_SysWork.pointLightPos_2360, &rot, "LIGHT", D_800E2C68, (s_DmsHeader*)FS_BUFFER_11);
             Dms_CharacterGetPosRot(&pos, &rot, "L_INT", D_800E2C68, (s_DmsHeader*)FS_BUFFER_11);
-            g_SysWork.cutsceneLightRot_2370.vx = -ratan2(pos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.cutsceneLightPos_2360.vx, pos.vz - g_SysWork.cutsceneLightPos_2360.vz));
-            g_SysWork.cutsceneLightRot_2370.vy = ratan2(pos.vx - g_SysWork.cutsceneLightPos_2360.vx, pos.vz - g_SysWork.cutsceneLightPos_2360.vz);
-            g_SysWork.cutsceneLightRot_2370.vz = 0;
+            g_SysWork.pointLightRot_2370.vx = -ratan2(pos.vy - g_SysWork.pointLightPos_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.pointLightPos_2360.vx, pos.vz - g_SysWork.pointLightPos_2360.vz));
+            g_SysWork.pointLightRot_2370.vy = ratan2(pos.vx - g_SysWork.pointLightPos_2360.vx, pos.vz - g_SysWork.pointLightPos_2360.vz);
+            g_SysWork.pointLightRot_2370.vz = 0;
             break;
 
         case 6:
             D_800E1671 = 1;
 
             func_8008D448();
-            func_8003EBA0();
+            Game_FlashlightAttributesFix();
 
-            g_SysWork.field_2378 = Q12(0.8f);
+            g_SysWork.pointLightIntensity_2378 = Q12(0.8f);
 
             func_8005DC1C(Sfx_Unk1336, &g_WorldObject_Door.position_1C, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
@@ -501,9 +501,9 @@ void func_800D7A60(void) // 0x800D7A60
             Savegame_EventFlagSet(EventFlag_484);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             func_8008D448();
-            func_8003EBA0();
+            Game_FlashlightAttributesFix();
 
-            g_SysWork.field_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 
             Game_TurnFlashlightOn();
             sharedFunc_800D2EF4_0_s00();

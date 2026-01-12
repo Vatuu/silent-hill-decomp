@@ -497,17 +497,17 @@ static inline void func_80071968_Switch0(void)
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(2, 2));
+                WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(2, 2));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(3, 2));
+                WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(3, 2));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(4, 2));
+                WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(4, 2));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Unk3, AttackInputType_Tap):
@@ -525,7 +525,7 @@ static inline void func_80071968_Switch0(void)
     }
     else
     {
-        func_8003DD80(Chara_Harry, UNK_PACKED_DATA(2, 2));
+        WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(2, 2));
     }
 }
 
@@ -556,17 +556,17 @@ static inline void func_80071968_Switch1(void)
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(2, 1));
+                WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(2, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(3, 1));
+                WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(3, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(4, 1));
+                WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(4, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Unk3,  AttackInputType_Tap):
@@ -584,7 +584,7 @@ static inline void func_80071968_Switch1(void)
     }
     else
     {
-        func_8003DD80(Chara_Harry, g_SysWork.field_2358 ? UNK_PACKED_DATA(2, 1) : UNK_PACKED_DATA(1, 1));
+        WorldGfx_HeldItemAttach(Chara_Harry, g_SysWork.lighterArmAnimEnabled_2358 ? UNK_PACKED_DATA(2, 1) : UNK_PACKED_DATA(1, 1));
     }
 }
 
@@ -7392,7 +7392,7 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
             break;
     }
 
-    if (g_SysWork.field_2358 && g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_Unk58)
+    if (g_SysWork.lighterArmAnimEnabled_2358 && g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_Unk58)
     {
         func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightUpperArm], FP_ANGLE(0.0f),   FP_ANGLE(63.3f), FP_ANGLE(-8.8f));
         func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightForearm],  FP_ANGLE(-14.1f), FP_ANGLE(22.5f), FP_ANGLE(-30.8f));
@@ -7784,7 +7784,7 @@ void Game_SavegameResetPlayer(void) // 0x8007E530
     g_SavegamePtr->add290Hours_25C_1     = 0;
 }
 
-void func_8007E5AC(void) // 0x8007E5AC
+void Game_PlayerInfoInit(void) // 0x8007E5AC
 {
     s32      i;
     u32      temp_t0;
@@ -7793,23 +7793,29 @@ void func_8007E5AC(void) // 0x8007E5AC
 
     SysWork_SavegameReadPlayer();
 
-    g_SysWork.playerWork_4C.player_0.model_0.charaId_0   = Chara_Harry;
+    g_SysWork.playerWork_4C.player_0.model_0.charaId_0  = Chara_Harry;
     g_SysWork.playerWork_4C.extra_128.model_0.charaId_0 = Chara_Harry;
-    g_SysWork.playerWork_4C.player_0.field_D4.radius_0    = Q12(0.3f);
-    g_SysWork.playerWork_4C.player_0.field_D4.field_2    = Q12(0.23f);
+    g_SysWork.playerWork_4C.player_0.field_D4.radius_0  = Q12(0.3f);
+    g_SysWork.playerWork_4C.player_0.field_D4.field_2   = Q12(0.23f);
 
     extraModel = &g_SysWork.playerWork_4C.player_0.model_0;
     model      = &g_SysWork.playerWork_4C.extra_128.model_0;
 
-    g_SysWork.field_2358 = false;
+    g_SysWork.lighterArmAnimEnabled_2358 = false;
 
     extraModel->anim_4.flags_2 |= AnimFlag_Unlocked | AnimFlag_Visible;
     model->anim_4.flags_2      |= AnimFlag_Unlocked | AnimFlag_Visible;
 
     g_SysWork.playerWork_4C.player_0.field_E1_0 = 3;
-    g_Inventory_EquippedItem               = g_SavegamePtr->equippedWeapon_AA;
-
+    g_Inventory_EquippedItem                    = g_SavegamePtr->equippedWeapon_AA;
+	
+	// Should be `g_SavegamePtr->equippedWeapon_AA / 32`, but causes swap register missmatch.
     temp_t0 = g_SavegamePtr->equippedWeapon_AA >> 5;
+	
+	// Assign weapon which the player was holding when saving.
+	//
+	// If temp_t0 is 4 then the weapon is in the range of melee weapons, if temp_t0 is 5 then it is a
+	// gun. Other values are non-equipable items.
     if (temp_t0 >= 4 && temp_t0 < 6)
     {
         for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX; i++);
@@ -7847,10 +7853,10 @@ void func_8007E5AC(void) // 0x8007E5AC
     }
 
     g_SysWork.playerCombat_38.isAiming_13 = false;
-    g_Player_GrabReleaseInputTimer            = Q12(0.0f);
-    D_800C4588                                = 0;
-    D_800C457C                                = 0;
-    g_Player_DisableControl                   = false;
+    g_Player_GrabReleaseInputTimer        = Q12(0.0f);
+    D_800C4588                            = 0;
+    D_800C457C                            = 0;
+    g_Player_DisableControl               = false;
 
     switch (g_SavegamePtr->gameDifficulty_260)
     {
@@ -7867,10 +7873,10 @@ void func_8007E5AC(void) // 0x8007E5AC
             break;
     }
 
-    g_Player_WeaponAttack1                = NO_VALUE;
-    g_GameWork.mapAnimIdx_5B1 = NO_VALUE;
+    g_Player_LastWeaponSelected = NO_VALUE;
+    g_GameWork.mapAnimIdx_5B1   = NO_VALUE;
 
-    g_SavegamePtr->inventorySlotCount_AB  = CLAMP(g_SavegamePtr->inventorySlotCount_AB, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
+    g_SavegamePtr->inventorySlotCount_AB       = CLAMP(g_SavegamePtr->inventorySlotCount_AB, INVENTORY_ITEM_COUNT_MAX / 5, INVENTORY_ITEM_COUNT_MAX);
     g_SysWork.playerWork_4C.player_0.health_B0 = CLAMP(g_SysWork.playerWork_4C.player_0.health_B0, 1, Q12(100.0f));
 }
 
@@ -7902,7 +7908,7 @@ void func_8007E8C0(void) // 0x8007E8C0
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S01)
     {
-        g_SysWork.field_2358 = false;
+        g_SysWork.lighterArmAnimEnabled_2358 = false;
     }
 
     chara->properties_E4.player.exhaustionTimer_FC = Q12(0.0f);
@@ -8002,7 +8008,7 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
     }
 }
 
-void func_8007EBBC(void) // 0x8007EBBC
+void GameFs_WeaponDataInfoUpdate(void) // 0x8007EBBC
 {
     s32 relAnimInfoIdx;
     s32 relKeyframeIdx;
@@ -8020,9 +8026,9 @@ void func_8007EBBC(void) // 0x8007EBBC
             return;
 
         case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
-            relAnimInfoIdx                               = 30;
-            relKeyframeIdx                               = 15;
-            g_Player_EquippedWeaponInfo          = D_800AFBF4[1];
+            relAnimInfoIdx                                    = 30;
+            relKeyframeIdx                                    = 15;
+            g_Player_EquippedWeaponInfo                       = D_800AFBF4[1];
             g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0x1030;
             break;
 
@@ -8030,9 +8036,9 @@ void func_8007EBBC(void) // 0x8007EBBC
             return;
 
         case WEAPON_ATTACK(EquippedWeaponId_Axe, AttackInputType_Tap):
-            relAnimInfoIdx                               = 0;
-            relKeyframeIdx                               = 0;
-            g_Player_EquippedWeaponInfo          = D_800AFBF4[3];
+            relAnimInfoIdx                                    = 0;
+            relKeyframeIdx                                    = 0;
+            g_Player_EquippedWeaponInfo                       = D_800AFBF4[3];
             g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0xFD0;
             break;
 
@@ -8056,51 +8062,51 @@ void func_8007EBBC(void) // 0x8007EBBC
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
-            relAnimInfoIdx                       = 50;
-            relKeyframeIdx                       = 25;
-            g_Player_EquippedWeaponInfo          = D_800AFBF4[4];
+            relAnimInfoIdx                                    = 50;
+            relKeyframeIdx                                    = 25;
+            g_Player_EquippedWeaponInfo                       = D_800AFBF4[4];
             g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0xE90;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
-            relAnimInfoIdx                       = 64;
-            relKeyframeIdx                       = 32;
-            g_Player_EquippedWeaponInfo          = D_800AFBF4[5];
+            relAnimInfoIdx                                    = 64;
+            relKeyframeIdx                                    = 32;
+            g_Player_EquippedWeaponInfo                       = D_800AFBF4[5];
             g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0x12E0;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Tap):
-            relAnimInfoIdx                       = 40;
-            relKeyframeIdx                       = 20;
-            g_Player_EquippedWeaponInfo          = D_800AFBF4[10];
+            relAnimInfoIdx                                    = 40;
+            relKeyframeIdx                                    = 20;
+            g_Player_EquippedWeaponInfo                       = D_800AFBF4[10];
             g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0xF20;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
-            relAnimInfoIdx                       = 78;
-            relKeyframeIdx                       = 39;
-            g_Player_EquippedWeaponInfo          = D_800AFBF4[6];
+            relAnimInfoIdx                                    = 78;
+            relKeyframeIdx                                    = 39;
+            g_Player_EquippedWeaponInfo                       = D_800AFBF4[6];
             g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0x1600;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-            relAnimInfoIdx                       = 96;
-            relKeyframeIdx                       = 48;
-            g_Player_EquippedWeaponInfo          = D_800AFBF4[7];
+            relAnimInfoIdx                                    = 96;
+            relKeyframeIdx                                    = 48;
+            g_Player_EquippedWeaponInfo                       = D_800AFBF4[7];
             g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0x1180;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
-            relAnimInfoIdx                       = 114;
-            relKeyframeIdx                       = 57;
-            g_Player_EquippedWeaponInfo          = D_800AFBF4[8];
+            relAnimInfoIdx                                    = 114;
+            relKeyframeIdx                                    = 57;
+            g_Player_EquippedWeaponInfo                       = D_800AFBF4[8];
             g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0x1600;
             break;
 
         case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-            relAnimInfoIdx                       = 132;
-            relKeyframeIdx                       = 66;
-            g_Player_EquippedWeaponInfo          = D_800AFBF4[9];
+            relAnimInfoIdx                                    = 132;
+            relKeyframeIdx                                    = 66;
+            g_Player_EquippedWeaponInfo                       = D_800AFBF4[9];
             g_SysWork.playerWork_4C.player_0.field_C8.field_8 = -0x1610;
             break;
     }
@@ -8115,51 +8121,51 @@ void func_8007EBBC(void) // 0x8007EBBC
         D_800C44F0[i] = D_800294F4[i + relKeyframeIdx];
     }
 
-    if (g_SysWork.playerCombat_38.weaponAttack_F != NO_VALUE && g_Player_WeaponAttack1 != g_SysWork.playerCombat_38.weaponAttack_F)
+    if (g_SysWork.playerCombat_38.weaponAttack_F != NO_VALUE && g_Player_LastWeaponSelected != g_SysWork.playerCombat_38.weaponAttack_F)
     {
-        g_Player_WeaponAttack1 = g_SysWork.playerCombat_38.weaponAttack_F;
+        g_Player_LastWeaponSelected = g_SysWork.playerCombat_38.weaponAttack_F;
         func_8007F14C(g_SysWork.playerCombat_38.weaponAttack_F);
 
         switch (g_SysWork.playerCombat_38.weaponAttack_F)
         {
-            case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
+            case EquippedWeaponId_KitchenKnife:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP3_ANM, FS_BUFFER_12);
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Axe, AttackInputType_Tap):
+            case EquippedWeaponId_Axe:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP1_ANM, FS_BUFFER_12);
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
-            case WEAPON_ATTACK(EquippedWeaponId_Hammer, AttackInputType_Tap):
+            case EquippedWeaponId_SteelPipe:
+            case EquippedWeaponId_Hammer:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP2_ANM, FS_BUFFER_12);
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
+            case EquippedWeaponId_Chainsaw:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP6_ANM, FS_BUFFER_12);
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
+            case EquippedWeaponId_RockDrill:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP8_ANM, FS_BUFFER_12);
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Katana, AttackInputType_Tap):
+            case EquippedWeaponId_Katana:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP9_ANM, FS_BUFFER_12);
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
+            case EquippedWeaponId_Handgun:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP4_ANM, FS_BUFFER_12);
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+            case EquippedWeaponId_HuntingRifle:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP51_ANM, FS_BUFFER_12);
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
+            case EquippedWeaponId_Shotgun:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP52_ANM, FS_BUFFER_12);
                 break;
 
-            case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
+            case EquippedWeaponId_HyperBlaster:
                 Fs_QueueStartRead(FILE_ANIM_HB_WEP53_ANM, FS_BUFFER_12);
                 break;
         }

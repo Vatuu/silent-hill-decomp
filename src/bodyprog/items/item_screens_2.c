@@ -209,7 +209,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
 
-                func_8007EBBC();
+                GameFs_WeaponDataInfoUpdate();
 
                 g_GameWork.gameStateStep_598[2] = prevGameState;
             }
@@ -248,7 +248,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
 
                 g_SavegamePtr->inventorySlotCount_AB = func_8004F190(g_SavegamePtr);
 
-                func_8003CD6C(&g_SysWork.playerCombat_38);
+                WorldGfx_PlayerHeldLastItem(&g_SysWork.playerCombat_38);
                 func_8003D01C();
                 Fs_QueueWaitForEmpty();
                 
@@ -616,7 +616,7 @@ void Inventory_Logic(void) // 0x8004D518
                 ScreenFade_Start(true, false, false);
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
-                func_8007EBBC();
+                GameFs_WeaponDataInfoUpdate();
 
                 g_GameWork.gameStateStep_598[2] = step;
             }
@@ -654,7 +654,7 @@ void Inventory_Logic(void) // 0x8004D518
                 ScreenFade_Start(true, false, false);
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
-                func_8007EBBC();
+                GameFs_WeaponDataInfoUpdate();
 
                 g_GameWork.gameStateStep_598[2] = step;
             }
@@ -689,7 +689,7 @@ void Inventory_Logic(void) // 0x8004D518
                 ScreenFade_Start(true, false, false);
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
-                func_8007EBBC();
+                GameFs_WeaponDataInfoUpdate();
 
                 g_GameWork.gameStateStep_598[2] = step;
             }
@@ -735,7 +735,7 @@ void Inventory_Logic(void) // 0x8004D518
                 ScreenFade_Start(true, false, false);
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
-                func_8007EBBC();
+                GameFs_WeaponDataInfoUpdate();
 
                 g_GameWork.gameStateStep_598[2] = step;
             }
@@ -795,7 +795,7 @@ void Inventory_Logic(void) // 0x8004D518
                 ScreenFade_Start(true, false, false);
                 g_GameWork.gameStateStep_598[1] = 20;
                 g_GameWork.gameStateStep_598[2] = 0;
-                func_8007EBBC();
+                GameFs_WeaponDataInfoUpdate();
 
                 g_GameWork.gameStateStep_598[2] = step;
             }

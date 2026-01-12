@@ -794,7 +794,7 @@ void func_800D2CDC(void) // 0x800D2CDC
             func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 110, 15, 0);
             func_800625F4(&QVECTOR3(-141.7f, 0.0f, 60.2f), 100, 15, 0);
             func_8003D03C();
-            func_8003CD6C(&g_SysWork.playerCombat_38);
+            WorldGfx_PlayerHeldLastItem(&g_SysWork.playerCombat_38);
 
             // Warp camera.
             Camera_PositionSet(NULL, Q12(-140.45f), Q12(0.03f), Q12(59.45f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);

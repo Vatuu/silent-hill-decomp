@@ -223,7 +223,7 @@ void func_800D13D8(void) // 0x800D13D8
 
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
-            g_SysWork.field_2378 = Q12(0.6f);
+            g_SysWork.pointLightIntensity_2378 = Q12(0.6f);
 
             Gfx_MapEffectsUpdate_MapInit(16, 16);
             func_8008D438();
@@ -515,9 +515,9 @@ void func_800D13D8(void) // 0x800D13D8
             Game_TurnFlashlightOn();
             Gfx_MapEffectsUpdate_MapInit(7, 4);
             func_8008D448();
-            func_8003EBA0();
+            Game_FlashlightAttributesFix();
 
-            g_SysWork.field_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -551,12 +551,12 @@ void func_800D13D8(void) // 0x800D13D8
         vcUserCamTarget(&D_800D5354, NULL, true);
         vcUserWatchTarget(&D_800D5364, NULL, true);
 
-        Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &rot, "LIGHT", D_800D4070, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.pointLightPos_2360, &rot, "LIGHT", D_800D4070, FS_BUFFER_15);
         Dms_CharacterGetPosRot(&pos, &rot, "L_INT", D_800D4070, FS_BUFFER_15);
 
-        g_SysWork.cutsceneLightRot_2370.vx = -ratan2(pos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.cutsceneLightPos_2360.vx, pos.vz - g_SysWork.cutsceneLightPos_2360.vz));
-        g_SysWork.cutsceneLightRot_2370.vy = ratan2(pos.vx - g_SysWork.cutsceneLightPos_2360.vx, pos.vz - g_SysWork.cutsceneLightPos_2360.vz);
-        g_SysWork.cutsceneLightRot_2370.vz = 0;
+        g_SysWork.pointLightRot_2370.vx = -ratan2(pos.vy - g_SysWork.pointLightPos_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.pointLightPos_2360.vx, pos.vz - g_SysWork.pointLightPos_2360.vz));
+        g_SysWork.pointLightRot_2370.vy = ratan2(pos.vx - g_SysWork.pointLightPos_2360.vx, pos.vz - g_SysWork.pointLightPos_2360.vz);
+        g_SysWork.pointLightRot_2370.vz = 0;
     }
 }
 

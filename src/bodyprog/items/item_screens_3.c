@@ -822,7 +822,7 @@ u32    D_800AF218                         = 0;
 s32    g_Player_TargetNpcIdx              = NO_VALUE;
 u8     D_800AF220                         = 0; // Keyframe index in map overlay header struct.
 // 3 bytes of padding.
-s32    g_Player_WeaponAttack1             = NO_VALUE;
+s32    g_Player_LastWeaponSelected        = NO_VALUE;
 
 // TODO: First element is modified at runtime. `func_8007E8C0` Suggests size is 76?
 s_AnimInfo HARRY_BASE_ANIM_INFOS[57] = {
@@ -3549,35 +3549,35 @@ void Inventory_ExitAnimFixes(void) // 0x80054634
         g_SysWork.playerCombat_38.isAiming_13    = false;
     }
 
-    func_800546A8(g_SysWork.playerCombat_38.weaponAttack_F);
+    Gfx_PlayerHeldItemAttach(g_SysWork.playerCombat_38.weaponAttack_F);
     Inventory_ExitAnimEquippedItemUpdate(&weaponAttack);
 }
 
-void func_800546A8(u8 weaponAttack) // 0x800546A8
+void Gfx_PlayerHeldItemAttach(u8 weaponAttack) // 0x800546A8
 {
     switch (weaponAttack)
     {
-        case WEAPON_ATTACK(EquippedWeaponId_KitchenKnife, AttackInputType_Tap):
-            func_8003DD80(Chara_Harry, UNK_PACKED_DATA(2, 2));
+        case EquippedWeaponId_KitchenKnife:
+            WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(2, 2));
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_SteelPipe, AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Hammer,    AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Katana,    AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Axe,       AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
-            func_8003DD80(Chara_Harry, UNK_PACKED_DATA(2, 2));
+        case EquippedWeaponId_SteelPipe:
+        case EquippedWeaponId_Hammer:
+        case EquippedWeaponId_Chainsaw:
+        case EquippedWeaponId_Katana:
+        case EquippedWeaponId_Axe:
+        case EquippedWeaponId_RockDrill:
+            WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(2, 2));
             break;
 
-        case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-        case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
-            func_8003DD80(Chara_Harry, UNK_PACKED_DATA(3, 1));
+        case EquippedWeaponId_Handgun:
+        case EquippedWeaponId_HuntingRifle:
+        case EquippedWeaponId_Shotgun:
+            WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(3, 1));
             break;
 
         default:
-            func_8003DD80(Chara_Harry, UNK_PACKED_DATA(1, 0));
+            WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(1, 0));
             break;
     }
 }

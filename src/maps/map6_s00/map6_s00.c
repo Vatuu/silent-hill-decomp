@@ -383,9 +383,9 @@ void Map_WorldObjectsInit(void) // 0x800EBCE8
     WorldObjectNoRotInit(&g_WorldObject_DrClose, "DRCLOSE_", -189.5f, 0.0f, 132.5f);
 
     func_8008D448();
-    func_8003EBA0();
+    Game_FlashlightAttributesFix();
 
-    g_SysWork.field_2378 = Q12(1.0f);
+    g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 
     switch (g_SavegamePtr->gameDifficulty_260)
     {

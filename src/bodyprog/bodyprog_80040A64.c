@@ -80,13 +80,13 @@ void func_80040BAC(void) // 0x80040BAC
     {
         if (i < 2)
         {
-            posTable[i].vx = g_GameWork.gsScreenWidth_588 >> 1;
-            posTable[i].vy = (g_GameWork.gsScreenHeight_58A >> 2) * i;
+            posTable[i].vx = g_GameWork.gsScreenWidth_588 / 2;
+            posTable[i].vy = (g_GameWork.gsScreenHeight_58A / 4) * i;
         }
         else if (i < 6)
         {
             posTable[i].vx = (g_GameWork.gsScreenWidth_588 >> 1) - (((g_GameWork.gsScreenWidth_588 >> 1) >> 1) * (i - 2));
-            posTable[i].vy = g_GameWork.gsScreenHeight_58A >> 1;
+            posTable[i].vy = g_GameWork.gsScreenHeight_58A / 2;
         }
         else if (i < 10)
         {
@@ -2314,7 +2314,7 @@ void func_8004506C(s_Skeleton* skel, s_LmHeader* lmHdr) // 0x8004506C
     s32 modelCount;
 
     modelCount = LmHeader_ModelCountGet(lmHdr);
-    sp10[0]   = 0;
+    sp10[0]    = 0;
 
     switch (modelCount)
     {

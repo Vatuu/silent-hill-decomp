@@ -853,27 +853,27 @@ void func_8003C048(void) // 0x8003C048
     Map_Init(GLOBAL_LM_BUFFER, IPD_BUFFER, 0x2C000);
     func_800697EC();
 
-    g_SysWork.field_2378 = Q12(1.0f);
+    g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 
-    func_8003EBA0();
+    Game_FlashlightAttributesFix();
     func_8005B55C(vwGetViewCoord());
     Gfx_WorldObjectsClear(&g_WorldGfx);
 }
 
-void func_8003C0C0(void) // 0x8003C0C0
+void Item_HeldItemModelFree(void) // 0x8003C0C0
 {
     s_HeldItem* heldItem;
 
     heldItem = &g_WorldGfx.heldItem_1BAC;
 
-    heldItem->itemId_0 = NO_VALUE;
-    heldItem->lmHdr_14 = HELD_ITEM_LM_BUFFER;
-    heldItem->bone_18.modelInfo_0.field_0 = 0;
-    heldItem->bone_18.modelInfo_0.coord_4 = NULL;
+    heldItem->itemId_0                       = NO_VALUE;
+    heldItem->lmHdr_14                       = HELD_ITEM_LM_BUFFER;
+    heldItem->bone_18.modelInfo_0.field_0    = 0;
+    heldItem->bone_18.modelInfo_0.coord_4    = NULL;
     heldItem->bone_18.modelInfo_0.modelHdr_8 = NULL;
 }
 
-void func_8003C110(void) // 0x8003C110
+void CharaModel_AllModelsFree(void) // 0x8003C110
 {
     s32           i;
     s_CharaModel* curModel;
@@ -1272,7 +1272,7 @@ s32 func_8003CD5C(void) // 0x8003CD5C
     return g_WorldGfx.heldItem_1BAC.itemId_0;
 }
 
-s32 func_8003CD6C(s_PlayerCombat* combat) // 0x8003CD6C
+s32 WorldGfx_PlayerHeldLastItem(s_PlayerCombat* combat) // 0x8003CD6C
 {
     s32 itemId;
     s8  weaponAttack;
@@ -1851,7 +1851,7 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
     return queueIdx;
 }
 
-void func_8003D938(void) // 0x8003D938
+void WorldGfx_PlayerModelProcessLoad(void) // 0x8003D938
 {
     WorldGfx_CharaModelProcessLoad(&g_WorldGfx.harryModel_164C);
 }
@@ -1941,7 +1941,7 @@ s32 func_8003DD74(e_CharacterId charaId, s32 arg1) // 0x8003DD74
     return ((s32)arg1 << 10) & 0xFC00;
 }
 
-void func_8003DD80(e_CharacterId charaId, s32 arg1) // 0x8003DD80
+void WorldGfx_HeldItemAttach(e_CharacterId charaId, s32 arg1) // 0x8003DD80
 {
     s_CharaModel* model;
 
@@ -2392,16 +2392,16 @@ void func_8003E5E8(s32 arg0) // 0x8003E5E8
     GsOUT_PACKET_P = packet;
 }
 
-static s_800A9F80 D_800A9F80 = { 1, 1  };
-static s_800A9F80 D_800A9F84 = { 2, 2  };
-static s_800A9F80 D_800A9F88 = { 6, 3  };
-static s_800A9F80 D_800A9F8C = { 7, 4  };
-static s_800A9F80 D_800A9F90 = { 6, 10 }; // @unused
-static s_800A9F80 D_800A9F94 = { 6, 5  }; // @unused
-static s_800A9F80 D_800A9F98 = { 9, 9  };
-static s_800A9F80 D_800A9F9C = { 6, 6  }; // @unused
-static s_800A9F80 D_800A9FA0 = { 3, 3  }; // @unused
-static s_800A9F80 D_800A9FA4 = { 5, 5  }; // @unused
+static s_MapEffectsPresetIdxs D_800A9F80 = { 1, 1  };
+static s_MapEffectsPresetIdxs D_800A9F84 = { 2, 2  };
+static s_MapEffectsPresetIdxs D_800A9F88 = { 6, 3  };
+static s_MapEffectsPresetIdxs D_800A9F8C = { 7, 4  };
+static s_MapEffectsPresetIdxs D_800A9F90 = { 6, 10 }; // @unused
+static s_MapEffectsPresetIdxs D_800A9F94 = { 6, 5  }; // @unused
+static s_MapEffectsPresetIdxs D_800A9F98 = { 9, 9  };
+static s_MapEffectsPresetIdxs D_800A9F9C = { 6, 6  }; // @unused
+static s_MapEffectsPresetIdxs D_800A9FA0 = { 3, 3  }; // @unused
+static s_MapEffectsPresetIdxs D_800A9FA4 = { 5, 5  }; // @unused
 
 void GameFs_FlameGfxLoad(void) // 0x8003E710
 {
@@ -2548,31 +2548,31 @@ void func_8003E740(void) // 0x8003E740
  */
 void func_8003EB54(void) // 0x8003EB54
 {
-    g_SysWork.field_2378 = Q12(1.0f);
+    g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
 
-    Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
-    Math_SVectorSet(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(10.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
+    Math_Vector3Set(&g_SysWork.pointLightPos_2360, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
+    Math_SVectorSet(&g_SysWork.pointLightRot_2370, FP_ANGLE(10.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
-void func_8003EBA0(void) // 0x8003EBA0
+void Game_FlashlightAttributesFix(void) // 0x8003EBA0
 {
-    g_SysWork.field_2378 = Q12(1.0f);
+    g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Torso];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
 
-    Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
-    Math_SVectorSet(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-15.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
+    Math_Vector3Set(&g_SysWork.pointLightPos_2360, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
+    Math_SVectorSet(&g_SysWork.pointLightRot_2370, FP_ANGLE(-15.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
 void Gfx_MapEffectsDetermine(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
 {
-    bool        hasActiveChunk;
-    u8          flags;
-    s_800A9F80* ptr;
+    bool                    hasActiveChunk;
+    u8                      flags;
+    s_MapEffectsPresetIdxs* presetIdxPtr;
 
     flags          = mapHdr->mapInfo_0->flags_6;
     hasActiveChunk = false;
@@ -2586,35 +2586,35 @@ void Gfx_MapEffectsDetermine(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
         case 1:
             if (hasActiveChunk)
             {
-                ptr = &D_800A9F84;
+                presetIdxPtr = &D_800A9F84;
             }
             else
             {
-                ptr = &D_800A9F80;
+                presetIdxPtr = &D_800A9F80;
             }
             break;
 
         case 2:
             if (hasActiveChunk)
             {
-                ptr = &D_800A9F8C;
+                presetIdxPtr = &D_800A9F8C;
             }
             else
             {
-                ptr = &D_800A9F88;
+                presetIdxPtr = &D_800A9F88;
             }
             break;
 
         case 3:
-            ptr = &D_800A9F98;
+            presetIdxPtr = &D_800A9F98;
             break;
 
         default:
-            ptr = &D_800A9F80;
+            presetIdxPtr = &D_800A9F80;
             break;
     }
 
-    Gfx_MapEffectsUpdate_MapInit(ptr->field_0, ptr->field_1);
+    Gfx_MapEffectsUpdate_MapInit(presetIdxPtr->presetIdx1_0, presetIdxPtr->presetIdx2_1);
 }
 
 void Game_TurnFlashlightOn(void) // 0x8003ECBC
@@ -2648,9 +2648,9 @@ bool Game_FlashlightIsOn(void) // 0x8003ED64
     return g_SysWork.field_2388.isFlashlightOn_15;
 }
 
-void Gfx_MapEffectsUpdate_MapInit(s32 arg0, s32 arg1) // 0x8003ED74
+void Gfx_MapEffectsUpdate_MapInit(s32 idx0, s32 idx1) // 0x8003ED74
 {
-    Gfx_MapEffectsUpdate(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
+    Gfx_MapEffectsUpdate(idx0, idx1, PrimitiveType_None, NULL, 0, 0);
     Gfx_FlashlightUpdate();
 }
 
@@ -2684,12 +2684,12 @@ void Gfx_MapEffectsUpdate_LoadScreen(s32 arg0, s32 arg1) // 0x8003EEDC
 
 void Gfx_MapEffectsUpdate(s32 idx0, s32 idx1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF10
 {
-    Gfx_MapEffectsStepUpdate(&D_800A93CC[idx0], &D_800A93CC[idx1], primType, primData, arg4, arg5);
+    Gfx_MapEffectsStepUpdate(&g_MapEffectsPresets[idx0], &g_MapEffectsPresets[idx1], primType, primData, arg4, arg5);
 }
 
-void Gfx_MapEffectsStepUpdate(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF74
+void Gfx_MapEffectsStepUpdate(s_MapEffectsInfo* preset0, s_MapEffectsInfo* preset1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5) // 0x8003EF74
 {
-    if (arg0 == arg1)
+    if (preset0 == preset1)
     {
         g_SysWork.field_2388.isFlashlightUnavailable_16 = true;
     }
@@ -2706,8 +2706,8 @@ void Gfx_MapEffectsStepUpdate(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, e_
     g_SysWork.field_2388.field_EC[0] = g_SysWork.field_2388.field_1C[0];
     g_SysWork.field_2388.field_EC[1] = g_SysWork.field_2388.field_1C[1];
 
-    Gfx_FogParametersSet(&g_SysWork.field_2388.field_84[0], arg0);
-    Gfx_FogParametersSet(&g_SysWork.field_2388.field_84[1], arg1);
+    Gfx_FogParametersSet(&g_SysWork.field_2388.field_84[0], preset0);
+    Gfx_FogParametersSet(&g_SysWork.field_2388.field_84[1], preset1);
 }
 
 void Gfx_FogParametersSet(s_StructUnk3* arg0, s_MapEffectsInfo* arg1) // 0x8003F08C
@@ -2725,11 +2725,11 @@ void Gfx_FogParametersSet(s_StructUnk3* arg0, s_MapEffectsInfo* arg1) // 0x8003F
 
     if (arg1->field_0.s_field_0.field_0 & (1 << 4))
     {
-        arg0->field_2C = Q12(1.0f);
+        arg0->flashlightLensFlareIntensity_2C = Q12(1.0f);
     }
     else
     {
-        arg0->field_2C = Q12(0.0f);
+        arg0->flashlightLensFlareIntensity_2C = Q12(0.0f);
     }
 
     switch (arg1->field_E)
@@ -2777,7 +2777,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_0.field_E == 3)
     {
         func_80049AF8(g_SysWork.field_235C, &mat);
-        ApplyMatrixLV(&mat, (VECTOR*)&g_SysWork.cutsceneLightPos_2360, &sp48); // Bug? `g_SysWork.cutsceneLightPos_2360` is `VECTOR3`.
+        ApplyMatrixLV(&mat, (VECTOR*)&g_SysWork.pointLightPos_2360, &sp48); // Bug? `g_SysWork.pointLightPos_2360` is `VECTOR3`.
         ptr->field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_30 = sp48.vz + (mat.t[2] * 16);
     }
 
@@ -2810,7 +2810,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
         if (flags & (1 << 0))
         {
-            Gfx_FogParametersSet(ptr2, &D_800A93CC[8]);
+            Gfx_FogParametersSet(ptr2, &g_MapEffectsPresets[8]);
         }
         else if (flags & (1 << 1))
         {
@@ -2821,10 +2821,10 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     ptr->field_10 = func_8003FEC0(&ptr2->field_0);
     func_8003FF2C(ptr2);
 
-    temp = Q12_MULT(func_8003F4DC(&coord, &rot, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.field_2378);
+    temp = Q12_MULT(func_8003F4DC(&coord, &rot, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.pointLightIntensity_2378);
 
-    func_800554C4(temp, ptr2->field_2C, coord, g_SysWork.field_235C, &rot, 
-                  g_SysWork.cutsceneLightPos_2360.vx, g_SysWork.cutsceneLightPos_2360.vy, g_SysWork.cutsceneLightPos_2360.vz,
+    func_800554C4(temp, ptr2->flashlightLensFlareIntensity_2C, coord, g_SysWork.field_235C, &rot, 
+                  g_SysWork.pointLightPos_2360.vx, g_SysWork.pointLightPos_2360.vy, g_SysWork.pointLightPos_2360.vz,
                   g_WorldGfx.mapInfo_0->waterZones_8);
     func_80055814(ptr2->field_30);
 
@@ -2871,7 +2871,7 @@ q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg
     {
         default:
         case 1:
-            rot0 = sysWork->cutsceneLightRot_2370;
+            rot0 = sysWork->pointLightRot_2370;
             break;
 
         case 0:
@@ -2998,13 +2998,13 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
 
     func_8003FCB0(&arg0->field_0, &arg1->field_0, &arg2->field_0, weight);
 
-    if (arg1->field_2C == Q12(0.0f))
+    if (arg1->flashlightLensFlareIntensity_2C == Q12(0.0f))
     {
-        arg0->field_2C = Math_WeightedAverageGet(0, arg2->field_2C, weight1);
+        arg0->flashlightLensFlareIntensity_2C = Math_WeightedAverageGet(0, arg2->flashlightLensFlareIntensity_2C, weight1);
     }
     else
     {
-        arg0->field_2C = Math_WeightedAverageGet(arg1->field_2C, arg2->field_2C, weight0);
+        arg0->flashlightLensFlareIntensity_2C = Math_WeightedAverageGet(arg1->flashlightLensFlareIntensity_2C, arg2->flashlightLensFlareIntensity_2C, weight0);
     }
 
     if (arg1->field_0.field_0.s_field_0.field_0 & (1 << 0))
@@ -3063,9 +3063,9 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
         func_8003FD38(arg0, arg1, arg2, weight, weight, weight);
     }
 
-    arg0->field_0.field_8 = Math_WeightedAverageGet(arg1->field_0.field_8, arg2->field_0.field_8, weight);
-    arg0->field_0.field_A = Math_WeightedAverageGet(arg1->field_0.field_A, arg2->field_0.field_A, weight);
-    arg0->field_0.field_C = Math_WeightedAverageGet(arg1->field_0.field_C, arg2->field_0.field_C, weight);
+    arg0->field_0.worldTint_R_8 = Math_WeightedAverageGet(arg1->field_0.worldTint_R_8, arg2->field_0.worldTint_R_8, weight);
+    arg0->field_0.worldTint_G_A = Math_WeightedAverageGet(arg1->field_0.worldTint_G_A, arg2->field_0.worldTint_G_A, weight);
+    arg0->field_0.worldTint_B_C = Math_WeightedAverageGet(arg1->field_0.worldTint_B_C, arg2->field_0.worldTint_B_C, weight);
 
     if (arg1->field_0.field_0.s_field_0.field_2 == 1 && arg2->field_0.field_0.s_field_0.field_2 == 2)
     {
@@ -3211,7 +3211,7 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     temp_v1    = Q12_MULT(arg0->field_2E, (g_GameWork.config_0.optBrightness_22 * 8) + 4);
     brightness = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
-    func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.field_8, arg0->field_0.field_A, arg0->field_0.field_C, brightness);
+    func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.worldTint_R_8, arg0->field_0.worldTint_G_A, arg0->field_0.worldTint_B_C, brightness);
     Gfx_FogParamsSet(arg0->field_0.field_E != 0, arg0->field_0.fogColor_14.r, arg0->field_0.fogColor_14.g, arg0->field_0.fogColor_14.b);
 
     temp_a0 = arg0->field_0.fogDistance_10;

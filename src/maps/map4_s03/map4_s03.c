@@ -800,9 +800,9 @@ void func_800D6774(void) // 0x800D6774
         case 0:
             Player_ControlFreeze();
             func_8008D448();
-            func_8003EBA0();
+            Game_FlashlightAttributesFix();
 
-            g_SysWork.field_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
             Game_TurnFlashlightOn();
 
             Gfx_MapEffectsUpdate_MapInit(6, 3);

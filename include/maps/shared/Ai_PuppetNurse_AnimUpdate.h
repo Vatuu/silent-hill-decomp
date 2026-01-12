@@ -13,7 +13,7 @@ void Ai_PuppetNurse_AnimUpdate(s_SubCharacter* nurse, s_AnmHeader* anmHdr, GsCOO
     animInfoBase = nurseProps.field_124->animInfo_24;
     sfxIdx0      = Ai_PuppetNurse_AnimSfxGet(FP_FROM(nurse->model_0.anim_4.time_4, Q12_SHIFT));
 
-    func_8003DD80(nurse->model_0.charaId_0, nurseProps.modelVariation_119);
+    WorldGfx_HeldItemAttach(nurse->model_0.charaId_0, nurseProps.modelVariation_119);
     Math_MatrixTransform(&nurse->position_18, &nurse->rotation_24, coord);
 
     if (nurse->model_0.anim_4.status_0 != ANIM_STATUS(0, false))

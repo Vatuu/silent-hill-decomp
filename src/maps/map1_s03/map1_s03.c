@@ -876,15 +876,15 @@ void func_800DAF18(void) // 0x800DAF18
                 Camera_LookAtSet(&sp38, 0, 0, 0, 0, 0, 0, 0, true);
 
                 g_SysWork.field_236C               = NULL;
-                g_SysWork.cutsceneLightRot_2370.vx = -ratan2(sp38.vy - sp28.vy,
+                g_SysWork.pointLightRot_2370.vx = -ratan2(sp38.vy - sp28.vy,
                                                              SquareRoot0(SQUARE((sp38.vx - sp28.vx) >> 6) + SQUARE((sp38.vz - sp28.vz) >> 6)) << 6);
 
-                g_SysWork.cutsceneLightRot_2370.vy = ratan2(sp38.vx - sp28.vx, sp38.vz - sp28.vz);
-                g_SysWork.cutsceneLightRot_2370.vz = 0;
+                g_SysWork.pointLightRot_2370.vy = ratan2(sp38.vx - sp28.vx, sp38.vz - sp28.vz);
+                g_SysWork.pointLightRot_2370.vz = 0;
                 g_SysWork.field_235C               = NULL;
-                g_SysWork.cutsceneLightPos_2360.vx = sp28.vx;
-                g_SysWork.cutsceneLightPos_2360.vy = MAX(-0x1800, sp28.vy);
-                g_SysWork.cutsceneLightPos_2360.vz = sp28.vz;
+                g_SysWork.pointLightPos_2360.vx = sp28.vx;
+                g_SysWork.pointLightPos_2360.vy = MAX(-0x1800, sp28.vy);
+                g_SysWork.pointLightPos_2360.vz = sp28.vz;
             }
             break;
 
@@ -907,7 +907,7 @@ void func_800DAF18(void) // 0x800DAF18
             Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, AnimFlag_Visible);
 
             func_8008D448();
-            func_8003EBA0();
+            Game_FlashlightAttributesFix();
             Camera_PositionSet(NULL, -0xC614, -0x1333, -0xE11E, 0, 0, 0, 0, true);
             Camera_LookAtSet(NULL, -0x93D7, -0xC28, -0xBA14, 0, 0, 0, 0, true);
             sharedFunc_800CBD58_1_s02();

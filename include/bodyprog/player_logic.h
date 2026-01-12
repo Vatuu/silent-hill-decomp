@@ -379,7 +379,10 @@ typedef enum _HarryAnim
 // STRUCTS
 // ========
 
-/** TODO: Maybe `s_PlayerAttack` fits. */
+/** TODO: Maybe `s_PlayerAttack` fits.
+ * - `s_WeaponDataInfo` fits better as this struct stores the information of the data
+ * used by weapons.
+ */
 typedef struct _800AFBF4
 {
     s16 attackSfx_0;
@@ -620,7 +623,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra);
 // Removing this function makes it impossible to run.
 s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1);
 
-void func_8007EBBC(void);
+void GameFs_WeaponDataInfoUpdate(void);
 
 void Game_PlayerMovementsReset(void);
 

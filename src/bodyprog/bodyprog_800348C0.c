@@ -278,8 +278,8 @@ void Game_NpcInit(void) // 0x80034F18
 
     if (g_SysWork.field_234A)
     {
-        g_MapOverlayHeader.func_16C(g_SysWork.field_2349, 127);
-        g_MapOverlayHeader.func_168(0, g_SavegamePtr->mapOverlayId_A4, 0);
+        g_MapOverlayHeader.ovlEnviromentSet_16C(g_SysWork.field_2349, 127);
+        g_MapOverlayHeader.ovlParticlesUpdate_168(0, g_SavegamePtr->mapOverlayId_A4, 0);
     }
 
     Game_NpcClear();
@@ -299,9 +299,9 @@ void Game_InGameInit(void) // 0x80034FB8
     func_80040004(&g_MapOverlayHeader);
     Gfx_MapEffectsSet(0);
     WorldGfx_CharaModelProcessAllLoads();
-    func_8003EBA0();
+    Game_FlashlightAttributesFix();
 
-    g_MapOverlayHeader.func_168(0, mapOvlId, NO_VALUE);
+    g_MapOverlayHeader.ovlParticlesUpdate_168(0, mapOvlId, NO_VALUE);
 
     Game_NpcClear();
 
@@ -313,7 +313,7 @@ void Game_InGameInit(void) // 0x80034FB8
     Game_NpcRoomInitSpawn(false);
     Game_PlayerHeightUpdate();
     func_8003569C();
-    func_8007EBBC();
+    GameFs_WeaponDataInfoUpdate();
     GameFs_Tim00TIMLoad();
     Fs_QueueWaitForEmpty();
     GameFs_MapItemsModelLoad(mapOvlId);
@@ -322,7 +322,7 @@ void Game_InGameInit(void) // 0x80034FB8
 void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 {
     s32  i;
-    s32* var;
+    s32* ovlEnemyStatesPtr;
 
     bzero(g_SavegamePtr, sizeof(s_Savegame));
 
@@ -330,15 +330,17 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 
     difficulty = CLAMP(difficulty, GameDifficulty_Easy, GameDifficulty_Hard);
 
-    var = g_SavegamePtr->ovlEnemyStates;
+    ovlEnemyStatesPtr = g_SavegamePtr->ovlEnemyStates;
 
     g_SavegamePtr->gameDifficulty_260 = difficulty;
     g_SavegamePtr->paperMapIdx_A9     = PaperMapIdx_OldTown;
 
+	// Defines all enemies from an overlay as alive.
+	// Odd code. Possibly a hack.
     for (i = 0; i < 45; i++)
     {
-        var[44] = NO_VALUE;
-        var--;
+        ovlEnemyStatesPtr[44] = NO_VALUE;
+        ovlEnemyStatesPtr--;
     }
 
     Game_SavegameResetPlayer();
@@ -347,10 +349,10 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 void Game_PlayerInit(void) // 0x80035178
 {
     func_8003C048();
-    func_8003C110();
-    func_8003C0C0();
+    CharaModel_AllModelsFree();
+    Item_HeldItemModelFree();
     Anim_BoneInit(FS_BUFFER_0, g_SysWork.playerBoneCoords_890); // Load player anim file?
-    func_8003D938();
+    WorldGfx_PlayerModelProcessLoad();
 
     g_SysWork.field_229C = NO_VALUE;
 
@@ -365,7 +367,7 @@ void Game_PlayerInit(void) // 0x80035178
 
     g_CharaTypeAnimInfo[0].animBufferSize2_10 = 0x2E630;
     g_CharaTypeAnimInfo[0].animBufferSize1_C  = 0x2E630;
-    func_8007E5AC();
+    Game_PlayerInfoInit();
 }
 
 void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
@@ -383,10 +385,10 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     if (g_SysWork.processFlags_2298 & (SysWorkProcessFlag_NewGame | SysWorkProcessFlag_LoadSave
                                        | SysWorkProcessFlag_Continue | SysWorkProcessFlag_BootDemo))
     {
-        func_8003CD6C(&g_SysWork.playerCombat_38);
+        WorldGfx_PlayerHeldLastItem(&g_SysWork.playerCombat_38);
     }
 
-    func_800546A8(g_SysWork.playerCombat_38.weaponAttack_F);
+    Gfx_PlayerHeldItemAttach(g_SysWork.playerCombat_38.weaponAttack_F);
 }
 
 // ========================================
@@ -741,10 +743,10 @@ void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0
     Math_RotMatrixZxyNegGte(rot, (MATRIX*)&coord->coord);
 }
 
-void Gfx_MapEffectsSet(s32 arg0) // 0x80035B58
+void Gfx_MapEffectsSet(s32 unused) // 0x80035B58
 {
     Gfx_MapEffectsDetermine(&g_MapOverlayHeader);
-    g_MapOverlayHeader.func_16C(g_MapOverlayHeader.field_17, g_MapOverlayHeader.field_16);
+    g_MapOverlayHeader.ovlEnviromentSet_16C(g_MapOverlayHeader.field_17, g_MapOverlayHeader.field_16);
 }
 
 void func_80035B98(void) // 0x80035B98
@@ -2727,7 +2729,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
         if (g_SavegamePtr->mapOverlayId_A4 != MapOverlayId_MAP7_S03)
         {
-            g_MapOverlayHeader.func_168(0, g_SavegamePtr->mapOverlayId_A4, 1);
+            g_MapOverlayHeader.ovlParticlesUpdate_168(0, g_SavegamePtr->mapOverlayId_A4, 1);
         }
 
         Demo_DemoRandSeedRestore();

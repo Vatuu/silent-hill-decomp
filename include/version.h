@@ -11,12 +11,12 @@
 // that is tied to a particular regional build.
 
 // Version defines that code can test against.
-#define VERSION_DATE_PROTO_981216   981216
-#define VERSION_DATE_NTSCJ_1_0 990126
-#define VERSION_DATE_NTSC_1_1  990210
-#define VERSION_DATE_NTSCJ_1_1 990602
-#define VERSION_DATE_PAL_1_0   990607
-#define VERSION_DATE_NTSCJ_1_2 990616
+#define VERSION_DATE_PROTO_981216  981216
+#define VERSION_DATE_NTSCJ_1_0     990126
+#define VERSION_DATE_NTSC_1_1      990210
+#define VERSION_DATE_NTSCJ_1_1     990602
+#define VERSION_DATE_PAL_1_0       990607
+#define VERSION_DATE_NTSCJ_1_2     990616
 
 #if defined(VER_JAP0)
     // Silent Hill (JP) v1.0

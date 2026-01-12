@@ -42,7 +42,7 @@ void func_80055028(void) // 0x80055028
 
     gte_SetFarColor(0, 0, 0);
 
-    func_80055840(0x20000, Q12(34.0f));
+    func_80055840(Q12(32.0f), Q12(34.0f));
 }
 
 void func_800550D0(void) // 0x800550D0
@@ -7844,7 +7844,7 @@ INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_80055028", func_800692A4); // 0x8006
 void func_800697EC(void) // 0x800697EC
 {
     func_80069820(1);
-    D_800C447A = 0;
+    D_800C4478.field_2 = 0;
 }
 
 u16 func_80069810(void) // 0x80069810

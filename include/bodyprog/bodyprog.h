@@ -1300,8 +1300,7 @@ typedef struct
     SVECTOR       field_74;
     SVECTOR       field_7C;
     s_800C4168_84 field_84[3];
-    u8            field_CC[1]; // Unknown size.
-    u8            unk_CD[127];
+    u8            field_CC[128]; // Lighting of vertices?
     u16           field_14C;
 } s_800C4168;
 
@@ -1580,10 +1579,15 @@ typedef struct _MapOverlayHeader
     s8                     unk_9[3];
     s32                    (*func_C)();
     void                   (*func_10)();
-    s8                     field_14; // Flags? Music related.
+    s8                     field_14;           // Flags? Music related.
     u8                     ambientAudioIdx_15; // Ambient file index from `g_AmbientVabTaskLoadCmds`.
-    s8                     field_16; // Used for switch case in `Gfx_MapEffectsDetermine`.
-    s8                     field_17;
+    s8                     field_16;           // Set tone ambient and render distance.
+                                               // Giving it a value of 3 will set the map as night and giving It
+                                               // the value of 2 will set the map to use a tone used during the hallaway
+                                               // intro.
+											   // Giving this and next variable a name will require further investigation
+											   // of `particle.c` code.
+    s8                     field_17;           // Set weather to play. Either being rain, a slightly heavier rain or snow.
     void                   (**loadingScreenFuncs_18)();
     s_MapPoint2d*          mapPointsOfInterest_1C;
     void                   (**mapEventFuncs_20)(); /** Points to array of event functions. */
@@ -1670,8 +1674,8 @@ typedef struct _MapOverlayHeader
     void                   (*func_15C)(); // func(?) only map5_s01.
     void                   (*func_160)(); // func(?) only map5_s01.
     void                   (*func_164)(); // func(?) only map5_s01.
-    void                   (*func_168)(s32, s32 mapId, s32);
-    void                   (*func_16C)(s8, u32);
+    void                   (*ovlParticlesUpdate_168)(s32, s32 mapId, s32);
+    void                   (*ovlEnviromentSet_16C)(s8, u32);
     void                   (*func_170)(); // func(?).
     void                   (*func_174)(); // func(?).
     void                   (*func_178)(VECTOR3* vec0, s16* rotX, s16* rotY);
@@ -1712,9 +1716,9 @@ STATIC_ASSERT_SIZEOF(s_800A99E4, 32);
 
 typedef struct
 {
-    u8 field_0;
-    u8 field_1;
-} s_800A9F80;
+    u8 presetIdx1_0;
+    u8 presetIdx2_1;
+} s_MapEffectsPresetIdxs;
 
 typedef struct
 {
@@ -2163,7 +2167,7 @@ extern s_FsImageDesc g_Font24AtlasImg; // 0x800A909C
 /** Array containg file IDs used for each `e_CharacterId`, used in `Fs_QueueStartReadAnm`. */
 extern s_CharaFileInfo CHARA_FILE_INFOS[45]; // 0x800A90FC
 
-extern s_MapEffectsInfo D_800A93CC[21];
+extern s_MapEffectsInfo g_MapEffectsPresets[21];
 
 extern s_StructUnk3 D_800A952C;
 
@@ -2354,15 +2358,15 @@ extern s32 D_800A9F78;
 
 extern s32 D_800A9F7C;
 
-extern s_800A9F80 D_800A9F80;
+extern s_MapEffectsPresetIdxs D_800A9F80;
 
-extern s_800A9F80 D_800A9F84;
+extern s_MapEffectsPresetIdxs D_800A9F84;
 
-extern s_800A9F80 D_800A9F88;
+extern s_MapEffectsPresetIdxs D_800A9F88;
 
-extern s_800A9F80 D_800A9F8C;
+extern s_MapEffectsPresetIdxs D_800A9F8C;
 
-extern s_800A9F80 D_800A9F98;
+extern s_MapEffectsPresetIdxs D_800A9F98;
 
 extern u32 D_800A9FB0;
 
@@ -2415,8 +2419,11 @@ extern q3_12 g_Player_FlexRotationX;
 /** Related to player. */
 extern u8 D_800AF220;
 
-/** Packed weapon attack. See `WEAPON_ATTACK`. */
-extern s32 g_Player_WeaponAttack1;
+/** @brief Last weapon selected. While it is being assigned the value of
+ * `g_SysWork::playerCombat_38::weaponAttack_F` this time it is used to determine
+ * the last weapon used in order to load the required animation data.
+ */
+extern s32 g_Player_LastWeaponSelected;
 
 extern s_AnimInfo HARRY_BASE_ANIM_INFOS[]; // Maybe part of bigger struct. 0x800AF228
 
@@ -2848,7 +2855,7 @@ void g_WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SV
 /** Returns held item ID. */
 s32 func_8003CD5C(void);
 
-s32 func_8003CD6C(s_PlayerCombat* combat);
+s32 WorldGfx_PlayerHeldLastItem(s_PlayerCombat* combat);
 
 /** @brief Loads and sets an item held by the player.
  *
@@ -2873,7 +2880,7 @@ bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId);
  */
 void WorldGfx_CharaModelMaterialSet(e_CharacterId charaId, s32 blendMode);
 
-/** Called by some chara init funcs, similar to `func_8003DD80`? */
+/** Called by some chara init funcs, similar to `WorldGfx_HeldItemAttach`? */
 void func_8003D468(e_CharacterId charaId, bool flag);
 
 void WorldGfx_CharaFree(s_CharaModel* model);
@@ -2892,11 +2899,11 @@ void WorldGfx_CharaLmBufferAssign(s8 forceFree);
 s32 func_8003DD74(e_CharacterId charaId, s32 arg1);
 
 /** `arg1` is packed data. Each byte is a separate value. */
-void func_8003DD80(e_CharacterId charaId, s32 arg1); // Called by some chara init funcs.
+void WorldGfx_HeldItemAttach(e_CharacterId charaId, s32 arg1); // Called by some chara init funcs.
 
 void func_8003E740(void);
 
-void Gfx_MapEffectsUpdate_MapInit(s32 arg0, s32 arg1);
+void Gfx_MapEffectsUpdate_MapInit(s32 idx0, s32 idx1);
 
 void func_8003EDA8(void);
 
@@ -3230,7 +3237,7 @@ void GameFs_UniqueItemModelLoad(u8 itemId);
 
 void GameFs_MapItemsTextureLoad(s32 mapId);
 
-void func_800546A8(u8 weaponAttack);
+void Gfx_PlayerHeldItemAttach(u8 weaponAttack);
 
 void func_8005487C(s32);
 
@@ -3438,6 +3445,7 @@ void Map_EffectTexturesLoad(s32 mapIdx);
 
 void func_8005E414(s32 orgIdx);
 
+/** @brief Does something with `unkTable1_4C`, clears blood splats and initialize drawn of objects. */
 void func_8005E650(s32 mapId);
 
 void func_8005E70C(void);
@@ -4169,7 +4177,7 @@ void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
  * @note Some specific effect for enviroments like snow, rain and ending's fire rain
  * are set by code only found withing the overlay of the map.
  */
-void Gfx_MapEffectsSet(s32 arg0);
+void Gfx_MapEffectsSet(s32 unused);
 
 void func_80035B98(void);
 
@@ -4207,6 +4215,7 @@ s32 func_80036498(void);
 /** @Unused */
 u32 func_800364BC(void);
 
+// Draws a pallete of colors in the frame buffer.
 void func_8003652C(void);
 
 s32 Gfx_MapMsg_Draw(s32 mapMsgIdx);
@@ -4390,10 +4399,10 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ);
 void func_8003C048(void);
 
 /** Something related to player model loading. */
-void func_8003C0C0(void);
+void Item_HeldItemModelFree(void);
 
 /** Allocates player model? */
-void func_8003C110(void);
+void CharaModel_AllModelsFree(void);
 
 void CharaModel_Free(s_CharaModel* model);
 
@@ -4466,7 +4475,7 @@ void WorldGfx_CharaLoad(e_CharacterId charaId, s32 modeIdx, s_LmHeader* lmHdr, s
 s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
 /** Something related to animations. */
-void func_8003D938(void);
+void WorldGfx_PlayerModelProcessLoad(void);
 
 void WorldGfx_CharaModelProcessAllLoads(void);
 
@@ -4508,12 +4517,13 @@ void GameFs_FlameGfxLoad(void);
 
 void func_8003EB54(void);
 
-/** @brief Determines what enviroment effects data from `D_800A93CC` will select
+/** @brief Determines what enviroment effects data from `g_MapEffectsPresets` will select
  * based on the value of `s_MapOverlayHeader::field_16`.
  */
 void Gfx_MapEffectsDetermine(s_MapOverlayHeader* mapHdr);
 
-void func_8003EBA0(void);
+/** @brief Adjust light point attributes to make it simile a flashlight. */
+void Game_FlashlightAttributesFix(void);
 
 void func_8003ECBC(void);
 
@@ -4527,16 +4537,16 @@ void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3);
 
 void Gfx_MapEffectsUpdate_LoadScreen(s32 arg0, s32 arg1);
 
-void Gfx_MapEffectsStepUpdate(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
+void Gfx_MapEffectsStepUpdate(s_MapEffectsInfo* preset0, s_MapEffectsInfo* preset1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
 
-void Gfx_FogParametersSet(s_StructUnk3* arg0, s_MapEffectsInfo* arg1);
+void Gfx_FogParametersSet(s_StructUnk3* arg0, s_MapEffectsInfo* preset);
 
 void Gfx_FlashlightUpdate(void);
 
 /** Resets player info such as the inventory, health, and playtime in the savegame buffer. */
 void Game_SavegameResetPlayer(void);
 
-void func_8007E5AC(void);
+void Game_PlayerInfoInit(void);
 
 void func_8007E860(void);
 

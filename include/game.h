@@ -1708,13 +1708,13 @@ typedef union
 typedef struct
 {
     u_Unk0  field_0;
-    q3_12   field_4; // FP alpha.
-    s16     field_6; // Defines intensity of the world tint colors. Q3.12?
-    s16     field_8; // worldTint_R_8; // R } World tint color. q3_12?
-    s16     field_A; // worldTint_G_A; // G }
-    s16     field_C; // worldTint_B_C; // B }
-    u8      field_E; // Fog enabled if not set to 0, `Gfx_FogParametersSet` checks for values 0/1/2/3.
-                     // Sets the transparent grey layer overlaid on characters and the enviroment.
+    q3_12   field_4;       // FP alpha.
+    s16     field_6;       // Defines intensity of the world tint colors. Q3.12?
+    s16     worldTint_R_8; // R } World tint color. q3_12?
+    s16     worldTint_G_A; // G }
+    s16     worldTint_B_C; // B }
+    u8      field_E;       // Fog enabled if not set to 0, `Gfx_FogParametersSet` checks for values 0/1/2/3.
+                           // Sets the transparent grey layer overlaid on characters and the enviroment.
     s8      unk_F;
     q19_12  fogDistance_10;
     CVECTOR fogColor_14;
@@ -1731,9 +1731,9 @@ STATIC_ASSERT_SIZEOF(s_MapEffectsInfo, 44);
 typedef struct
 {
     s_MapEffectsInfo field_0;
-    s16              field_2C; // FP alpha. q3_12?
-    s16              field_2E; // FP alpha. q3_12?
-    q19_12           field_30; // Stores fog.
+    s16              flashlightLensFlareIntensity_2C; // Stores flashlight lensflare intensity. q3_12?
+    s16              field_2E; // Some gamma or brightness layer. FP alpha. q3_12?
+    q19_12           field_30; // Stores fog distance.
 } s_StructUnk3;
 STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 
@@ -1771,7 +1771,7 @@ typedef struct _SysWork
     q19_12          timer_2C; // Cutscene message timer?
     s32             field_30;
     s8              unk_34[4]; // Padding?
-    s_PlayerCombat  playerCombat_38; // Something related to weapons and attack. This is a struct as `func_8003CD6C` requires one and `GameFs_MapLoad` input is pointing here.
+    s_PlayerCombat  playerCombat_38; // Information related to weapons and attack.
     s_PlayerWork    playerWork_4C;
     s_SubCharacter  npcs_1A0[NPC_COUNT_MAX];
     GsCOORDINATE2   playerBoneCoords_890[HarryBone_Count];
@@ -1787,7 +1787,7 @@ typedef struct _SysWork
     s32             npcFlags_2290; // Flags related to NPCs. Each bit corresponds to `npcs_1A0` index.
     s8              unk_2294[4];   // Padding?
     e_SysWorkProcessFlags processFlags_2298;
-    s32             field_229C;
+    s32             field_229C;    /** Dead code. It get assigned -1 when the player has been initalized and get 0 assigned when the player changes the area, beyond that, the code do not use this variable. */
     e_SysFlags      sysFlags_22A0; // Music related.
     e_SysFlags2     flags_22A4;    // `e_SysFlags2` | `SysFlag2_6` passed as "use through door cam" flag in `vcSetFirstCamWork`. Also `e_SysFlags` or different?
     GsCOORDINATE2   coord_22A8;    // For particles only?
@@ -1804,15 +1804,15 @@ typedef struct _SysWork
     u32             flags_2352                    : 8;
     s8              targetNpcIdx_2353; /** Index of the NPC being targeted by the player. */
     s8              npcIdxs_2354[4];
-    u8              field_2358;          /** `bool` */
+    u8              lighterArmAnimEnabled_2358; /** `bool` | Actives the animation that Harry performs when bringing the lighter at the beginning of the game. */
     s8              unk_2359[1];
     u8              playerStopFlags_235A; /** `e_PlayerStopFlags` */
     s8              unk_235B[1];
     GsCOORDINATE2*  field_235C;
-    VECTOR3         cutsceneLightPos_2360; // } Often gets set from DMS cutscene data. Unsure if this is cutscene-only or also used for light in-game.
-    GsCOORDINATE2*  field_236C;            // }
-    SVECTOR         cutsceneLightRot_2370; // }
-    s16             field_2378;
+    VECTOR3         pointLightPos_2360; // } Often gets set from DMS cutscene data.
+    GsCOORDINATE2*  field_236C;         // }
+    SVECTOR         pointLightRot_2370; // }
+    s16             pointLightIntensity_2378;
     q3_12           cameraAngleY_237A;
     q3_12           cameraAngleZ_237C;
     s16             field_237E;

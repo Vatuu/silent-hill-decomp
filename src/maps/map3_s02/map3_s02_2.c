@@ -288,7 +288,7 @@ void func_800D0608(void) // 0x800D0608
 
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
-            g_SysWork.field_2378 = Q12(0.7f);
+            g_SysWork.pointLightIntensity_2378 = Q12(0.7f);
 
             Model_AnimFlagsClear(&g_SysWork.playerWork_4C.player_0.model_0, 2);
 
@@ -325,9 +325,9 @@ void func_800D0608(void) // 0x800D0608
             Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
 
             func_8008D448();
-            func_8003EBA0();
+            Game_FlashlightAttributesFix();
 
-            g_SysWork.field_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
             g_SysWork.field_30   = 0;
 
             Savegame_EventFlagSet(EventFlag_237);
@@ -345,12 +345,12 @@ void func_800D0608(void) // 0x800D0608
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&cameraPos, &cameraTarget, NULL, D_800D1FEC, FS_BUFFER_24));
         vcUserCamTarget(&cameraPos, NULL, true);
         vcUserWatchTarget(&cameraTarget, NULL, true);
-        Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &unused, "LIGHT", D_800D1FEC, FS_BUFFER_24);
+        Dms_CharacterGetPosRot(&g_SysWork.pointLightPos_2360, &unused, "LIGHT", D_800D1FEC, FS_BUFFER_24);
         Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800D1FEC, FS_BUFFER_24);
 
-        g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz));
-        g_SysWork.cutsceneLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
-        g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPos_2360.vx, lightIntPos.vz - g_SysWork.pointLightPos_2360.vz));
+        g_SysWork.pointLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.pointLightPos_2360.vx, lightIntPos.vz - g_SysWork.pointLightPos_2360.vz);
+        g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
     }
 }
 

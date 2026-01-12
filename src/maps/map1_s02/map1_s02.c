@@ -820,7 +820,7 @@ void func_800DB368(void) // 0x800DB368
             sharedFunc_800D2EF4_0_s00();
             SD_Call(19);
 
-            D_800E1FD4 = func_8003CD6C(&g_SysWork.playerCombat_38);
+            D_800E1FD4 = WorldGfx_PlayerHeldLastItem(&g_SysWork.playerCombat_38);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             SD_Call(Sfx_Unk1457);
@@ -850,7 +850,7 @@ void func_800DB368(void) // 0x800DB368
                 sharedFunc_800D2EF4_0_s00();
             }
 
-            func_8003CD6C(&g_SysWork.playerCombat_38);
+            WorldGfx_PlayerHeldLastItem(&g_SysWork.playerCombat_38);
             func_8003D01C();
 
             // Warp camera.

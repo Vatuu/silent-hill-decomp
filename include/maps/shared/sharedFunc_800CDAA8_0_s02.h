@@ -104,24 +104,24 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch(void)
             case 25:
             case 26:
             case 27:
-                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(2, 1));
+                WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(2, 1));
                 break;
 
             case 32:
             case 34:
             case 35:
-                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(3, 1));
+                WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(3, 1));
                 break;
 
             case 33:
-                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(4, 1));
+                WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(4, 1));
                 break;
         }
     }
     else
     {
         func_8003D03C();
-        func_8003DD80(Chara_Harry, UNK_PACKED_DATA(1, 1));
+        WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(1, 1));
     }
 }
 
@@ -155,17 +155,17 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_PlayerExtra* extra)
             case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,     AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Katana,       AttackInputType_Multitap):
             case WEAPON_ATTACK(EquippedWeaponId_Axe,          AttackInputType_Multitap):
-                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(2, 1));
+                WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(2, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_Handgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_Shotgun,      AttackInputType_Tap):
             case WEAPON_ATTACK(EquippedWeaponId_HyperBlaster, AttackInputType_Tap):
-                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(3, 1));
+                WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(3, 1));
                 break;
 
             case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
-                func_8003DD80(Chara_Harry, UNK_PACKED_DATA(4, 1));
+                WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(4, 1));
                 break;
         }
     }
@@ -175,11 +175,11 @@ static inline void sharedFunc_800CDAA8_0_s02_Switch_Unk85(s_PlayerExtra* extra)
 
         if (extra->model_0.anim_4.keyframeIdx_8 >= 958)
         {
-            func_8003DD80(Chara_Harry, UNK_PACKED_DATA(5, 1));
+            WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(5, 1));
         }
         else
         {
-            func_8003DD80(Chara_Harry, UNK_PACKED_DATA(1, 1));
+            WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(1, 1));
         }
     }
 }
@@ -677,9 +677,9 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             func_8007FB94(playerChara, extra, 0x164);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
 
-            if (sharedFunc_800D2DAC_0_s00() == 1 && g_SysWork.field_2358 == 0)
+            if (sharedFunc_800D2DAC_0_s00() == 1 && g_SysWork.lighterArmAnimEnabled_2358 == false)
             {
-                g_SysWork.field_2358 = 1;
+                g_SysWork.lighterArmAnimEnabled_2358 = true;
                 func_8005DC1C(Sfx_Unk1356, &playerChara->position_18, Q8_CLAMPED(0.5f), 0);
             }
 
@@ -695,7 +695,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             func_8007FB94(playerChara, extra, 0x169);
 #ifdef MAP1_S03
             func_8003D03C();
-            func_8003DD80(Chara_Harry, UNK_PACKED_DATA(1, 1));
+            WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(1, 1));
 #else
             keyframeIdx = 949;
             sharedFunc_800CDAA8_0_s02_Switch_Unk85(extra);

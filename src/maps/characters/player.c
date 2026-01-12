@@ -221,7 +221,7 @@ void sharedFunc_800D209C_0_s00(void)
 
 void sharedFunc_800D20D8_0_s00(void)
 {
-    g_SysWork.field_2358 = false;
+    g_SysWork.lighterArmAnimEnabled_2358 = false;
 }
 
 void Player_ControlFreeze(void)
@@ -682,7 +682,7 @@ void sharedFunc_800D2E6C_0_s00(void)
 {
 #if defined(MAP0_S01)
     g_SysWork.playerCombat_38.weaponAttack_F = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap);
-    func_8003CD6C(&g_SysWork.playerCombat_38);
+    WorldGfx_PlayerHeldLastItem(&g_SysWork.playerCombat_38);
 
     g_SysWork.playerCombat_38.weaponAttack_F = NO_VALUE;
 
@@ -1045,7 +1045,7 @@ void sharedFunc_800D2EB4_0_s00(void)
     g_SysWork.playerCombat_38.weaponAttack_F = NO_VALUE;
     sharedData_800DD59C_0_s00 = prevVar;
 
-    func_8003DD80(Chara_Harry, UNK_PACKED_DATA(1, 1));
+    WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(1, 1));
 }
 
 void sharedFunc_800D2EF4_0_s00(void)

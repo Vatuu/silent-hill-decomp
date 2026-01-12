@@ -1749,7 +1749,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
             break;
 
         case 5:
-            if (arg0 < Rng_GenerateInt(10, 19) || g_SysWork.field_2358 == 0)
+            if (arg0 < Rng_GenerateInt(10, 19) || g_SysWork.lighterArmAnimEnabled_2358 == 0)
             {
                 pos.vx = Q12_TO_Q8(D_800E32DC->vx - arg2->field_0.vx);
                 pos.vy = Q12_TO_Q8(D_800E32DC->vy - arg2->field_0.vy);
@@ -2777,7 +2777,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
 #endif
 
 #if defined(MAP0_S00)
-                if (g_SysWork.field_2358 != 0)
+                if (g_SysWork.lighterArmAnimEnabled_2358 != 0)
                 {
                     setRGB0(poly, 0x12, 8, 8);
                 }
@@ -2964,7 +2964,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
 #endif
 
 #if defined(MAP0_S00)
-                if (g_SysWork.field_2358 != 0)
+                if (g_SysWork.lighterArmAnimEnabled_2358 != 0)
                 {
                     setRGB0(poly, r + 0xA, g, b);
                 }

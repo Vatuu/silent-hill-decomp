@@ -2086,7 +2086,7 @@ void sharedFunc_800D6970_0_s00(s_SubCharacter* stalker, s_AnmHeader* animHdr, Gs
     s_AnimInfo*                  animInfo;
     s_sharedFunc_800D6970_0_s00* ptr;
 
-    func_8003DD80(stalker->model_0.charaId_0, 2);
+    WorldGfx_HeldItemAttach(stalker->model_0.charaId_0, 2);
 
     switch (stalker->model_0.anim_4.status_0)
     {

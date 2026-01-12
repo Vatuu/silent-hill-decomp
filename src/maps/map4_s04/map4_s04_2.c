@@ -271,12 +271,12 @@ void func_800D1910(void) // 0x800D1910
             // TODO: Find correct order. Looking at other functions, seems to be random.
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
-            g_SysWork.field_2378 = Q12(1.0f);
-            Math_Vector3Set(&g_SysWork.cutsceneLightPos_2360, Q12(57.0f), Q12(-3.0f), Q12(141.8f));
+            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
+            Math_Vector3Set(&g_SysWork.pointLightPos_2360, Q12(57.0f), Q12(-3.0f), Q12(141.8f));
 
-            // TODO: `Math_SetSVectorFast(&g_SysWork.cutsceneLightRot_2370, FP_ANGLE(-90.0f), 0, 0);` doesn't match.
-            *(s32*)&g_SysWork.cutsceneLightRot_2370.vx = 0xFC00; // `FP_ANGLE(-90.0f)`
-            (&g_SysWork.cutsceneLightRot_2370)->vz     = 0;
+            // TODO: `Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, FP_ANGLE(-90.0f), 0, 0);` doesn't match.
+            *(s32*)&g_SysWork.pointLightRot_2370.vx = 0xFC00; // `FP_ANGLE(-90.0f)`
+            (&g_SysWork.pointLightRot_2370)->vz     = 0;
 
             func_8008D438();
 
@@ -429,7 +429,7 @@ void func_800D23E4(void) // 0x800D23E4
 
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
-            g_SysWork.field_2378 = Q12(1.2f);
+            g_SysWork.pointLightIntensity_2378 = Q12(1.2f);
 
             func_8008D438();
 
@@ -468,7 +468,7 @@ void func_800D23E4(void) // 0x800D23E4
 
         case 6:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 12, false);
-            g_SysWork.field_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
             SysWork_StateStepIncrement(0);
 
         case 7:
@@ -496,7 +496,7 @@ void func_800D23E4(void) // 0x800D23E4
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
 
-            g_SysWork.field_2378 = Q12(1.2f);
+            g_SysWork.pointLightIntensity_2378 = Q12(1.2f);
             D_800D6EF4           = Q12(55.0f);
 
             SysWork_StateStepIncrement(0);
@@ -527,13 +527,13 @@ void func_800D23E4(void) // 0x800D23E4
 
         case 16:
             D_800D6EF4           = Q12(57.0f);
-            g_SysWork.field_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
             Map_MessageWithAudio(70, &D_800D6EF8, &D_800D3778);
             break;
 
         case 17:
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 13, false);
-            g_SysWork.field_2378 = Q12(1.2f);
+            g_SysWork.pointLightIntensity_2378 = Q12(1.2f);
             SysWork_StateStepIncrement(0);
 
         case 18:
@@ -594,9 +594,9 @@ void func_800D23E4(void) // 0x800D23E4
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
             func_8008D448();
-            func_8003EBA0();
+            Game_FlashlightAttributesFix();
 
-            g_SysWork.field_2378 = Q12(1.0f);
+            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
             D_800D6EF4           = -1;
 
             vcReturnPreAutoCamWork(false);
@@ -614,15 +614,15 @@ void func_800D23E4(void) // 0x800D23E4
         vcUserWatchTarget(&D_800D6EE8, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterGetPosRot(&g_SysWork.cutsceneLightPos_2360, &unused, "LIGHT", D_800D6EF4, FS_BUFFER_15);
+        Dms_CharacterGetPosRot(&g_SysWork.pointLightPos_2360, &unused, "LIGHT", D_800D6EF4, FS_BUFFER_15);
 
         // "L_INT", interior light or intersection point?
         Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800D6EF4, FS_BUFFER_15);
 
         // Set light rotation.
-        g_SysWork.cutsceneLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.cutsceneLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz));
-        g_SysWork.cutsceneLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.cutsceneLightPos_2360.vx, lightIntPos.vz - g_SysWork.cutsceneLightPos_2360.vz);
-        g_SysWork.cutsceneLightRot_2370.vz = FP_ANGLE(0.0f);
+        g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPos_2360.vx, lightIntPos.vz - g_SysWork.pointLightPos_2360.vz));
+        g_SysWork.pointLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPos_2360.vx, lightIntPos.vz - g_SysWork.pointLightPos_2360.vz);
+        g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
     }
 }
 
