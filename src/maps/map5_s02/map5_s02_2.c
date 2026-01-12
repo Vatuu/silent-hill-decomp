@@ -669,7 +669,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
             D_800DA6EC = Q12(316.0f);
 
             sharedFunc_800D2EF4_0_s00();
-            WorldGfx_PlayerHeldLastItem(&g_SysWork.playerCombat_38);
+            WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement(0);
 
@@ -719,7 +719,7 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
 
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             sharedFunc_800D2EF4_0_s00();
-            WorldGfx_PlayerHeldLastItem(&g_SysWork.playerCombat_38);
+            WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
 
             D_800DA6EC = Q12(316.0f);
             SysWork_StateStepIncrement(0);
@@ -786,14 +786,14 @@ void MapEvent_KaufmannBarFightCutscene(void) // 0x800D5744
         vcUserWatchTarget(&D_800DA6DC, NULL, true);
 
         // "LIGHT", cutscene light position?
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPos_2360, &unused, "LIGHT", D_800DA6EC, FS_BUFFER_17);
+        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition_2360, &unused, "LIGHT", D_800DA6EC, FS_BUFFER_17);
 
         // "L_INT", interior light or intersection point?
         Dms_CharacterGetPosRot(&lightIntPos, &unused, "L_INT", D_800DA6EC, FS_BUFFER_17);
 
         // Set light rotation.
-        g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPos_2360.vx, lightIntPos.vz - g_SysWork.pointLightPos_2360.vz));
-        g_SysWork.pointLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPos_2360.vx, lightIntPos.vz - g_SysWork.pointLightPos_2360.vz);
+        g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz));
+        g_SysWork.pointLightRot_2370.vy =  ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
         g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
     }
 }

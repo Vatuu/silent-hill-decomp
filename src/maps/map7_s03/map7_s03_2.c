@@ -4034,9 +4034,9 @@ void Map_WorldObjectsInit(void) // 0x800E9528
     g_SysWork.field_235C = NULL;
 
     // Set light position.
-    g_SysWork.pointLightPos_2360.vx = Q12(139.7f);
-    g_SysWork.pointLightPos_2360.vy = Q12(-4.5f);
-    g_SysWork.pointLightPos_2360.vz = Q12(-98.1f);
+    g_SysWork.pointLightPosition_2360.vx = Q12(139.7f);
+    g_SysWork.pointLightPosition_2360.vy = Q12(-4.5f);
+    g_SysWork.pointLightPosition_2360.vz = Q12(-98.1f);
 
     g_SysWork.field_236C = NULL;
 

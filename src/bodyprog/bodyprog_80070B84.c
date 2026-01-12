@@ -7813,9 +7813,8 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     temp_t0 = g_SavegamePtr->equippedWeapon_AA >> 5;
 	
 	// Assign weapon which the player was holding when saving.
-	//
-	// If temp_t0 is 4 then the weapon is in the range of melee weapons, if temp_t0 is 5 then it is a
-	// gun. Other values are non-equipable items.
+	// `temp_t0` == 4 means melee weapon, 5 means gun weapon.
+    // Other values are non-equipable items.
     if (temp_t0 >= 4 && temp_t0 < 6)
     {
         for (i = 0; g_SavegamePtr->items_0[i].id_0 != g_SavegamePtr->equippedWeapon_AA && i < INVENTORY_ITEM_COUNT_MAX; i++);
@@ -8008,7 +8007,7 @@ void GameFs_PlayerMapAnimLoad(s32 mapIdx) // 0x8007EB64
     }
 }
 
-void GameFs_WeaponDataInfoUpdate(void) // 0x8007EBBC
+void GameFs_WeaponInfoUpdate(void) // 0x8007EBBC
 {
     s32 relAnimInfoIdx;
     s32 relKeyframeIdx;

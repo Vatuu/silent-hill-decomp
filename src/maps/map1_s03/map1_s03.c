@@ -882,9 +882,9 @@ void func_800DAF18(void) // 0x800DAF18
                 g_SysWork.pointLightRot_2370.vy = ratan2(sp38.vx - sp28.vx, sp38.vz - sp28.vz);
                 g_SysWork.pointLightRot_2370.vz = 0;
                 g_SysWork.field_235C               = NULL;
-                g_SysWork.pointLightPos_2360.vx = sp28.vx;
-                g_SysWork.pointLightPos_2360.vy = MAX(-0x1800, sp28.vy);
-                g_SysWork.pointLightPos_2360.vz = sp28.vz;
+                g_SysWork.pointLightPosition_2360.vx = sp28.vx;
+                g_SysWork.pointLightPosition_2360.vy = MAX(-0x1800, sp28.vy);
+                g_SysWork.pointLightPosition_2360.vz = sp28.vz;
             }
             break;
 

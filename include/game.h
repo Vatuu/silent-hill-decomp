@@ -1723,8 +1723,8 @@ typedef struct _MapEffectsInfo
     CVECTOR screenTint_1D; // Subtractive screen tint.
     CVECTOR field_21;      // Particle effect related. Only the first value affects snow transparency.
     CVECTOR field_25;
-    u8      unk_29;
-    s16     unk_2A;
+    u8      unk_29; // } Padding?
+    s16     unk_2A; // }
 } s_MapEffectsInfo;
 STATIC_ASSERT_SIZEOF(s_MapEffectsInfo, 44);
 
@@ -1732,8 +1732,8 @@ typedef struct
 {
     s_MapEffectsInfo effectsInfo_0;
     q3_12            flashlightLensFlareIntensity_2C; // Stores flashlight lens flare intensity alpha.
-    q3_12            field_2E; // Some gamma or brightness layer alpha.
-    q19_12           field_30; // Stores fog distance.
+    q3_12            field_2E;                        // Some gamma or brightness layer alpha.
+    q19_12           field_30;                        // Stores fog distance.
 } s_StructUnk3;
 STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 
@@ -1808,10 +1808,10 @@ typedef struct _SysWork
     s8              unk_2359[1];
     u8              playerStopFlags_235A; /** `e_PlayerStopFlags` */
     s8              unk_235B[1];
-    GsCOORDINATE2*  field_235C;
-    VECTOR3         pointLightPos_2360; // } Often gets set from DMS cutscene data.
-    GsCOORDINATE2*  field_236C;         // }
-    SVECTOR         pointLightRot_2370; // }
+    GsCOORDINATE2*  field_235C;              // Player torso bone.
+    VECTOR3         pointLightPosition_2360; //                   } Often gets set from DMS cutscene data.
+    GsCOORDINATE2*  field_236C;              // Player root bone. }
+    SVECTOR         pointLightRot_2370;      //                   }
     s16             pointLightIntensity_2378;
     q3_12           cameraAngleY_237A;
     q3_12           cameraAngleZ_237C;

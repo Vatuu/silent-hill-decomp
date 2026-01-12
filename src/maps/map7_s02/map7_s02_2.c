@@ -478,11 +478,11 @@ void func_800DAA4C(void) // 0x800DAA4C
 
         case 5:
             SysWork_StateStepIncrementAfterTime(&D_800EB6B4, Q12(10.0f), Q12(60.0f), Q12(76.0f), true, true);
-            Dms_CharacterGetPosRot(&g_SysWork.pointLightPos_2360, &rot, D_800CD4A4, D_800EB6B4, (s_DmsHeader*)FS_BUFFER_11);
+            Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition_2360, &rot, D_800CD4A4, D_800EB6B4, (s_DmsHeader*)FS_BUFFER_11);
             Dms_CharacterGetPosRot(&pos, &rot, D_800CD4AC, D_800EB6B4, (s_DmsHeader*)FS_BUFFER_11);
 
-            g_SysWork.pointLightRot_2370.vx = -ratan2(pos.vy - g_SysWork.pointLightPos_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.pointLightPos_2360.vx, pos.vz - g_SysWork.pointLightPos_2360.vz));
-            g_SysWork.pointLightRot_2370.vy = ratan2(pos.vx - g_SysWork.pointLightPos_2360.vx, pos.vz - g_SysWork.pointLightPos_2360.vz);
+            g_SysWork.pointLightRot_2370.vx = -ratan2(pos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(pos.vx - g_SysWork.pointLightPosition_2360.vx, pos.vz - g_SysWork.pointLightPosition_2360.vz));
+            g_SysWork.pointLightRot_2370.vy = ratan2(pos.vx - g_SysWork.pointLightPosition_2360.vx, pos.vz - g_SysWork.pointLightPosition_2360.vz);
             g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
             break;
 
@@ -1851,13 +1851,13 @@ void func_800DF21C(void) // 0x800DF21C
         Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[1].position_18, &g_SysWork.npcs_1A0[1].rotation_24, "DAHLIA", D_800EB6B4, FS_BUFFER_11);
 
         // TODO: D_800CD4A4 -> `LIGHT`
-        Dms_CharacterGetPosRot(&g_SysWork.pointLightPos_2360, &unused, D_800CD4A4, D_800EB6B4, FS_BUFFER_11);
+        Dms_CharacterGetPosRot(&g_SysWork.pointLightPosition_2360, &unused, D_800CD4A4, D_800EB6B4, FS_BUFFER_11);
 
         // TODO: D_800CD4AC -> `L_INT`
         Dms_CharacterGetPosRot(&lightIntPos, &unused, D_800CD4AC, D_800EB6B4, FS_BUFFER_11);
 
-        g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPos_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPos_2360.vx, lightIntPos.vz - g_SysWork.pointLightPos_2360.vz));
-        g_SysWork.pointLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.pointLightPos_2360.vx, lightIntPos.vz - g_SysWork.pointLightPos_2360.vz);
+        g_SysWork.pointLightRot_2370.vx = -ratan2(lightIntPos.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz));
+        g_SysWork.pointLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
         g_SysWork.pointLightRot_2370.vz = 0;
 
         vcChangeProjectionValue(Dms_CameraGetTargetPos(&D_800EB694, &D_800EB6A4, NULL, D_800EB6B4, FS_BUFFER_11));

@@ -960,7 +960,7 @@ void func_800D1718(void) // 0x800D1718
         if (!D_800D4E6D)
         {
             g_SysWork.pointLightIntensity_2378 = Q12(2.8f);
-            Math_Vector3Set(&g_SysWork.pointLightPos_2360, Q12(60.0f), Q12(-2.5f), Q12(-20.0f));
+            Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(60.0f), Q12(-2.5f), Q12(-20.0f));
             Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, FP_ANGLE(-90.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
             
             func_800D2170(false);

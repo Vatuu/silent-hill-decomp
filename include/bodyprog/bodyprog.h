@@ -2855,7 +2855,7 @@ void g_WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SV
 /** Returns held item ID. */
 s32 func_8003CD5C(void);
 
-s32 WorldGfx_PlayerHeldLastItem(s_PlayerCombat* combat);
+s32 WorldGfx_PlayerPrevHeldItem(s_PlayerCombat* combat);
 
 /** @brief Loads and sets an item held by the player.
  *

@@ -682,7 +682,7 @@ void sharedFunc_800D2E6C_0_s00(void)
 {
 #if defined(MAP0_S01)
     g_SysWork.playerCombat_38.weaponAttack_F = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap);
-    WorldGfx_PlayerHeldLastItem(&g_SysWork.playerCombat_38);
+    WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
 
     g_SysWork.playerCombat_38.weaponAttack_F = NO_VALUE;
 

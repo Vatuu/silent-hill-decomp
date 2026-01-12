@@ -185,7 +185,7 @@ void func_800D2668(void) // 0x800D2668
             g_SysWork.field_235C = NULL;
             g_SysWork.field_236C = NULL;
             g_SysWork.pointLightIntensity_2378 = Q12(0.7f);
-            Math_Vector3Set(&g_SysWork.pointLightPos_2360, Q12(58.34f), Q12(-1.93f), Q12(141.8f));
+            Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(58.34f), Q12(-1.93f), Q12(141.8f));
 
             // @hack 
             // Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, FP_ANGLE(-15.0f), FP_ANGLE(-177.0f), FP_ANGLE(0.0f));

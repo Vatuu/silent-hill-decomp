@@ -313,7 +313,7 @@ void Game_InGameInit(void) // 0x80034FB8
     Game_NpcRoomInitSpawn(false);
     Game_PlayerHeightUpdate();
     func_8003569C();
-    GameFs_WeaponDataInfoUpdate();
+    GameFs_WeaponInfoUpdate();
     GameFs_Tim00TIMLoad();
     Fs_QueueWaitForEmpty();
     GameFs_MapItemsModelLoad(mapOvlId);
@@ -385,7 +385,7 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     if (g_SysWork.processFlags_2298 & (SysWorkProcessFlag_NewGame | SysWorkProcessFlag_LoadSave
                                        | SysWorkProcessFlag_Continue | SysWorkProcessFlag_BootDemo))
     {
-        WorldGfx_PlayerHeldLastItem(&g_SysWork.playerCombat_38);
+        WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
     }
 
     Gfx_PlayerHeldItemAttach(g_SysWork.playerCombat_38.weaponAttack_F);

@@ -623,7 +623,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra);
 // Removing this function makes it impossible to run.
 s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1);
 
-void GameFs_WeaponDataInfoUpdate(void);
+void GameFs_WeaponInfoUpdate(void);
 
 void Game_PlayerMovementsReset(void);
 

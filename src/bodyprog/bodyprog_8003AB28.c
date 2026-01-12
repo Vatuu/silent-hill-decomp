@@ -1272,7 +1272,7 @@ s32 func_8003CD5C(void) // 0x8003CD5C
     return g_WorldGfx.heldItem_1BAC.itemId_0;
 }
 
-s32 WorldGfx_PlayerHeldLastItem(s_PlayerCombat* combat) // 0x8003CD6C
+s32 WorldGfx_PlayerPrevHeldItem(s_PlayerCombat* combat) // 0x8003CD6C
 {
     s32 itemId;
     s8  weaponAttack;
@@ -2553,7 +2553,7 @@ void func_8003EB54(void) // 0x8003EB54
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
 
-    Math_Vector3Set(&g_SysWork.pointLightPos_2360, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
+    Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(0.0f), Q12(-0.2f), Q12(-2.0f));
     Math_SVectorSet(&g_SysWork.pointLightRot_2370, FP_ANGLE(10.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
@@ -2564,7 +2564,7 @@ void Game_FlashlightAttributesFix(void) // 0x8003EBA0
     g_SysWork.field_235C = &g_SysWork.playerBoneCoords_890[HarryBone_Torso];
     g_SysWork.field_236C = &g_SysWork.playerBoneCoords_890[HarryBone_Root];
 
-    Math_Vector3Set(&g_SysWork.pointLightPos_2360, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
+    Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(-0.08f), Q12(-0.28f), Q12(0.12f));
     Math_SVectorSet(&g_SysWork.pointLightRot_2370, FP_ANGLE(-15.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
@@ -2777,7 +2777,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].effectsInfo_0.field_E == 3)
     {
         func_80049AF8(g_SysWork.field_235C, &mat);
-        ApplyMatrixLV(&mat, (VECTOR*)&g_SysWork.pointLightPos_2360, &sp48); // Bug? `g_SysWork.pointLightPos_2360` is `VECTOR3`.
+        ApplyMatrixLV(&mat, (VECTOR*)&g_SysWork.pointLightPosition_2360, &sp48); // Bug? `g_SysWork.pointLightPosition_2360` is `VECTOR3`.
         ptr->field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_30 = sp48.vz + (mat.t[2] * 16);
     }
 
@@ -2824,7 +2824,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
     temp = Q12_MULT(func_8003F4DC(&coord, &rot, ptr2->effectsInfo_0.field_4, ptr2->effectsInfo_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.pointLightIntensity_2378);
 
     func_800554C4(temp, ptr2->flashlightLensFlareIntensity_2C, coord, g_SysWork.field_235C, &rot, 
-                  g_SysWork.pointLightPos_2360.vx, g_SysWork.pointLightPos_2360.vy, g_SysWork.pointLightPos_2360.vz,
+                  g_SysWork.pointLightPosition_2360.vx, g_SysWork.pointLightPosition_2360.vy, g_SysWork.pointLightPosition_2360.vz,
                   g_WorldGfx.mapInfo_0->waterZones_8);
     func_80055814(ptr2->field_30);
 
