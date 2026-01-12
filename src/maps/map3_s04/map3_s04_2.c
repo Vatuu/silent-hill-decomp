@@ -95,9 +95,90 @@ const char* MAP_MESSAGES[] = {
     "\tA_sound_is_heard ~N\n\tfrom_beyond_the_door. ~E "
 };
 
-INCLUDE_RODATA("maps/map3_s04/nonmatchings/map3_s04_2", D_800CB1E0);
+const VECTOR3 D_800CB1E0 = { 0x0000E800, 0xFFFFF000, 0x0008BE66 };
 
-INCLUDE_ASM("maps/map3_s04/nonmatchings/map3_s04_2", func_800D21C4);
+void func_800D21C4(void) // 0x800D21C4
+{
+    VECTOR3 sp18;
+    VECTOR3 sp28;
+    s32     i;
+
+    do
+    {
+    } while (0); // @hack
+
+    sp28.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
+    sp28.vy = -0x1333;
+    sp28.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
+
+    sp18 = sp28;
+
+    if (!Savegame_EventFlagGet(EventFlag_232) && g_MapEventParam->field_5 == 5)
+    {
+        for (i = 0; i < 6; i++)
+        {
+            if ((g_SysWork.npcs_1A0[i].model_0.charaId_0 > 0 && g_SysWork.npcs_1A0[i].model_0.charaId_0 < 0x19) &&
+                g_SysWork.npcs_1A0[i].health_B0 > 0)
+            {
+                break;
+            }
+        }
+
+        if (i != 6)
+        {
+            g_DeltaTime0 = 0;
+        }
+
+        switch (g_SysWork.sysStateStep_C[0])
+        {
+            case 0:
+                Player_ControlFreeze();
+                func_8005DC1C(Sfx_DoorLocked, &sp18, 0x80, 0);
+                SysWork_StateStepIncrement(0);
+
+            case 1:
+                SysWork_StateStepIncrementDelayed(0x333, false);
+                break;
+
+            case 2:
+                MapMsg_DisplayAndHandleSelection(false, 0xC, false, false, 0, false);
+                break;
+
+            case 3:
+                SysWork_StateStepIncrement(0);
+
+            case 4:
+            case 6:
+                func_8005DC1C(Sfx_Unk1529, &D_800CB1E0, 0x80, 0);
+                SysWork_StateStepIncrement(0);
+
+            case 5:
+                SysWork_StateStepIncrementDelayed(0x333, false);
+                break;
+
+            case 7:
+                SysWork_StateStepIncrementDelayed(0xCCC, false);
+                break;
+
+            case 8:
+                MapMsg_DisplayAndHandleSelection(false, 0x36, false, false, 0, false);
+                break;
+
+            case 9:
+                SysWork_StateStepIncrement(0);
+
+            default:
+                Player_ControlUnfreeze(false);
+                SysWork_StateSetNext(SysState_Gameplay);
+                Savegame_EventFlagSet(EventFlag_232);
+                break;
+        }
+    }
+    else
+    {
+        Map_MessageWithSfx(0xC, Sfx_DoorLocked, &sp18);
+    }
+}
 
 void func_800D2470(void) // 0x800D2470
 {
