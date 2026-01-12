@@ -1206,7 +1206,7 @@ typedef struct
     s32         field_20;
     s_AnimInfo* animInfo_24;
     s8          unk_28[4];
-    s32         field_2C;
+    q19_12      field_2C;
     s8          unk_30[4];
 } s_800D5710;
 STATIC_ASSERT_SIZEOF(s_800D5710, 0x34);
@@ -1459,7 +1459,7 @@ typedef struct _PropertiesPuppetNurse
     q19_12           field_104;
     s32              field_108;
     s32              field_10C;
-    q19_12           field_110; // Move speed.
+    q19_12           moveSpeed_110;
     s32              field_114;
     u8               field_118;
     u8               modelVariation_119;
@@ -1708,14 +1708,14 @@ typedef union
 typedef struct _MapEffectsInfo
 {
     u_Unk0  field_0;
-    q3_12   field_4;       // FP alpha.
-    s16     field_6;       // Defines intensity of the world tint colors. Q3.12?
-    s16     worldTint_R_8; // R } World tint color. Q3.12?
-    s16     worldTint_G_A; // G }
-    s16     worldTint_B_C; // B }
-    u8      field_E;       // Fog enabled if not set to 0, `Gfx_FogParametersSet` checks for values 0/1/2/3.
-                           // Sets the transparent grey layer overlaid on characters and the enviroment.
-    s8      unk_F;
+    q3_12   field_4; // Alpha.
+    q3_12   field_6; // World tint color intensity.
+    q3_12   worldTintR_8;
+    q3_12   worldTintG_A;
+    q3_12   worldTintB_C;
+    u8      field_E; // Fog enabled if not set to 0, `Gfx_FogParametersSet` checks for values 0/1/2/3.
+                     // Sets the transparent grey layer overlaid on characters and the enviroment.
+    s8      unk_F; // Padding?
     q19_12  fogDistance_10;
     CVECTOR fogColor_14;
     u8      field_18; // `bool`?

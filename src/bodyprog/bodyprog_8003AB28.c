@@ -3064,9 +3064,9 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
         func_8003FD38(arg0, arg1, arg2, weight, weight, weight);
     }
 
-    arg0->effectsInfo_0.worldTint_R_8 = Math_WeightedAverageGet(arg1->effectsInfo_0.worldTint_R_8, arg2->effectsInfo_0.worldTint_R_8, weight);
-    arg0->effectsInfo_0.worldTint_G_A = Math_WeightedAverageGet(arg1->effectsInfo_0.worldTint_G_A, arg2->effectsInfo_0.worldTint_G_A, weight);
-    arg0->effectsInfo_0.worldTint_B_C = Math_WeightedAverageGet(arg1->effectsInfo_0.worldTint_B_C, arg2->effectsInfo_0.worldTint_B_C, weight);
+    arg0->effectsInfo_0.worldTintR_8 = Math_WeightedAverageGet(arg1->effectsInfo_0.worldTintR_8, arg2->effectsInfo_0.worldTintR_8, weight);
+    arg0->effectsInfo_0.worldTintG_A = Math_WeightedAverageGet(arg1->effectsInfo_0.worldTintG_A, arg2->effectsInfo_0.worldTintG_A, weight);
+    arg0->effectsInfo_0.worldTintB_C = Math_WeightedAverageGet(arg1->effectsInfo_0.worldTintB_C, arg2->effectsInfo_0.worldTintB_C, weight);
 
     if (arg1->effectsInfo_0.field_0.s_field_0.field_2 == 1 && arg2->effectsInfo_0.field_0.s_field_0.field_2 == 2)
     {
@@ -3212,7 +3212,7 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     temp_v1    = Q12_MULT(arg0->field_2E, (g_GameWork.config_0.optBrightness_22 * 8) + 4);
     brightness = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
-    func_80055330(arg0->effectsInfo_0.field_0.s_field_0.field_2, arg0->effectsInfo_0.field_6, arg0->effectsInfo_0.field_0.s_field_0.field_1, arg0->effectsInfo_0.worldTint_R_8, arg0->effectsInfo_0.worldTint_G_A, arg0->effectsInfo_0.worldTint_B_C, brightness);
+    func_80055330(arg0->effectsInfo_0.field_0.s_field_0.field_2, arg0->effectsInfo_0.field_6, arg0->effectsInfo_0.field_0.s_field_0.field_1, arg0->effectsInfo_0.worldTintR_8, arg0->effectsInfo_0.worldTintG_A, arg0->effectsInfo_0.worldTintB_C, brightness);
     Gfx_FogParamsSet(arg0->effectsInfo_0.field_E != 0, arg0->effectsInfo_0.fogColor_14.r, arg0->effectsInfo_0.fogColor_14.g, arg0->effectsInfo_0.fogColor_14.b);
 
     temp_a0 = arg0->effectsInfo_0.fogDistance_10;
