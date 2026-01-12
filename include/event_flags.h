@@ -242,6 +242,7 @@ typedef enum _EventFlag
     EventFlag_M3S03_PickupBasementStoreroomKey = 255,
 
     EventFlag_M3S05_PickupExaminationRoomKey = 257,
+    EventFlag_258                            = 258,
 
     EventFlag_260 = 260,
 

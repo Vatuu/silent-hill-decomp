@@ -219,7 +219,27 @@ void func_800D2470(void) // 0x800D2470
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_ASM("maps/map3_s04/nonmatchings/map3_s04_2", func_800D250C);
+void func_800D250C(void) // 0x800D250C
+{
+    VECTOR3 sp10;
+    VECTOR3 sp20;
+
+    do
+    {
+    } while (0); // @hack
+
+    sp20.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
+    sp20.vy = -0x1333;
+    sp20.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
+
+    sp10 = sp20;
+
+    Player_ItemRemove(0x4B, 1);
+    Map_MessageWithSfx(0x30, Sfx_UseKey, &sp10);
+
+    Savegame_EventFlagSet(EventFlag_258);
+    Savegame_MapMarkingSet(MapMarkFlag_AltHospital1F_WomensBathroomBroken);
+}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800D25D0
 
