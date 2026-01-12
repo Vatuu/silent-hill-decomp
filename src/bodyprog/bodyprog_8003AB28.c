@@ -2568,7 +2568,7 @@ void Game_FlashlightAttributesFix(void) // 0x8003EBA0
     Math_SVectorSet(&g_SysWork.pointLightRot_2370, FP_ANGLE(-15.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 }
 
-void Gfx_MapEffectsDetermine(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
+void Gfx_MapEffectsAssign(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
 {
     bool                    hasActiveChunk;
     u8                      flags;
@@ -2614,7 +2614,7 @@ void Gfx_MapEffectsDetermine(s_MapOverlayHeader* mapHdr) // 0x8003EBF4
             break;
     }
 
-    Gfx_MapEffectsUpdate_MapInit(presetIdxPtr->presetIdx1_0, presetIdxPtr->presetIdx2_1);
+    Gfx_MapInitMapEffectsUpdate(presetIdxPtr->presetIdx1_0, presetIdxPtr->presetIdx2_1);
 }
 
 void Game_TurnFlashlightOn(void) // 0x8003ECBC
@@ -2648,7 +2648,7 @@ bool Game_FlashlightIsOn(void) // 0x8003ED64
     return g_SysWork.field_2388.isFlashlightOn_15;
 }
 
-void Gfx_MapEffectsUpdate_MapInit(s32 idx0, s32 idx1) // 0x8003ED74
+void Gfx_MapInitMapEffectsUpdate(s32 idx0, s32 idx1) // 0x8003ED74
 {
     Gfx_MapEffectsUpdate(idx0, idx1, PrimitiveType_None, NULL, 0, 0);
     Gfx_FlashlightUpdate();
@@ -2661,14 +2661,14 @@ void func_8003EDA8(void) // 0x8003EDA8
 
 void func_8003EDB8(CVECTOR* color0, CVECTOR* color1) // 0x8003EDB8
 {
-    *color0 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_21;
-    *color1 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].field_0.field_25;
+    *color0 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].effectsInfo_0.field_21;
+    *color1 = g_SysWork.field_2388.field_1C[g_SysWork.field_2388.isFlashlightOn_15].effectsInfo_0.field_25;
 }
 
 void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3) // 0x8003EE30
 {
     g_SysWork.field_2388.field_4 = (s8*)arg1;
-    g_SysWork.field_2388.field_0 = PrimitiveType_S32;
+    g_SysWork.field_2388.primType_0 = PrimitiveType_S32;
     g_SysWork.field_2388.field_8 = arg2;
     g_SysWork.field_2388.field_C = arg3;
 
@@ -2676,7 +2676,7 @@ void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3) // 0x8003EE30
     g_SysWork.field_2388.field_EC[1] = g_SysWork.field_2388.field_1C[1];
 }
 
-void Gfx_MapEffectsUpdate_LoadScreen(s32 arg0, s32 arg1) // 0x8003EEDC
+void Gfx_LoadScreenMapEffectsUpdate(s32 arg0, s32 arg1) // 0x8003EEDC
 {
     Gfx_MapEffectsUpdate(arg0, arg1, PrimitiveType_None, NULL, 0, 0);
     Gfx_FlashlightUpdate();
@@ -2699,7 +2699,7 @@ void Gfx_MapEffectsStepUpdate(s_MapEffectsInfo* preset0, s_MapEffectsInfo* prese
     }
 
     g_SysWork.field_2388.field_4 = primData;
-    g_SysWork.field_2388.field_0 = primType;
+    g_SysWork.field_2388.primType_0 = primType;
     g_SysWork.field_2388.field_8 = arg4;
     g_SysWork.field_2388.field_C = arg5;
 
@@ -2710,11 +2710,11 @@ void Gfx_MapEffectsStepUpdate(s_MapEffectsInfo* preset0, s_MapEffectsInfo* prese
     Gfx_FogParametersSet(&g_SysWork.field_2388.field_84[1], preset1);
 }
 
-void Gfx_FogParametersSet(s_StructUnk3* arg0, s_MapEffectsInfo* arg1) // 0x8003F08C
+void Gfx_FogParametersSet(s_StructUnk3* arg0, s_MapEffectsInfo* effectsInfo) // 0x8003F08C
 {
-    arg0->field_0 = *arg1;
+    arg0->effectsInfo_0 = *effectsInfo;
 
-    if (arg1->field_0.s_field_0.field_0 & (1 << 2))
+    if (effectsInfo->field_0.s_field_0.field_0 & (1 << 2))
     {
         arg0->field_2E = Q12(1.0f);
     }
@@ -2723,7 +2723,7 @@ void Gfx_FogParametersSet(s_StructUnk3* arg0, s_MapEffectsInfo* arg1) // 0x8003F
         arg0->field_2E = Q12(0.0f);
     }
 
-    if (arg1->field_0.s_field_0.field_0 & (1 << 4))
+    if (effectsInfo->field_0.s_field_0.field_0 & (1 << 4))
     {
         arg0->flashlightLensFlareIntensity_2C = Q12(1.0f);
     }
@@ -2732,11 +2732,11 @@ void Gfx_FogParametersSet(s_StructUnk3* arg0, s_MapEffectsInfo* arg1) // 0x8003F
         arg0->flashlightLensFlareIntensity_2C = Q12(0.0f);
     }
 
-    switch (arg1->field_E)
+    switch (effectsInfo->field_E)
     {
         case 0:
         case 1:
-            arg0->field_30 = arg1->fogDistance_10;
+            arg0->field_30 = effectsInfo->fogDistance_10;
             break;
 
         case 2:
@@ -2744,7 +2744,7 @@ void Gfx_FogParametersSet(s_StructUnk3* arg0, s_MapEffectsInfo* arg1) // 0x8003F
             break;
 
         case 3:
-            arg0->field_30 = arg1->fogDistance_10;
+            arg0->field_30 = effectsInfo->fogDistance_10;
             break;
     }
 }
@@ -2774,14 +2774,14 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
     g_SysWork.field_2388.flashlightIntensity_18 = CLAMP(g_SysWork.field_2388.flashlightIntensity_18, Q12(0.0f), Q12(1.0f));
 
-    if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_0.field_E == 3)
+    if (g_SysWork.field_2388.field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].effectsInfo_0.field_E == 3)
     {
         func_80049AF8(g_SysWork.field_235C, &mat);
         ApplyMatrixLV(&mat, (VECTOR*)&g_SysWork.pointLightPos_2360, &sp48); // Bug? `g_SysWork.pointLightPos_2360` is `VECTOR3`.
         ptr->field_84[g_SysWork.field_2388.flashlightIntensity_18 != 0].field_30 = sp48.vz + (mat.t[2] * 16);
     }
 
-    if (ptr->field_0 == PrimitiveType_None)
+    if (ptr->primType_0 == PrimitiveType_None)
     {
         ptr->field_1C[0] = ptr->field_84[0];
         ptr->field_1C[1] = ptr->field_84[1];
@@ -2795,7 +2795,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
         if (temp_v0 >= Q12(1.0f))
         {
-            ptr->field_0 = PrimitiveType_None;
+            ptr->primType_0 = PrimitiveType_None;
         }
     }
 
@@ -2805,7 +2805,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
     if (ptr->field_14 != 0)
     {
-        flags         = ptr->field_154.field_0.field_0.s_field_0.field_0;
+        flags         = ptr->field_154.effectsInfo_0.field_0.s_field_0.field_0;
         ptr->field_14 = 0;
 
         if (flags & (1 << 0))
@@ -2814,21 +2814,21 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
         }
         else if (flags & (1 << 1))
         {
-            ptr2->field_0.field_4 += Q12(0.3f);
+            ptr2->effectsInfo_0.field_4 += Q12(0.3f);
         }
     }
 
-    ptr->field_10 = func_8003FEC0(&ptr2->field_0);
+    ptr->field_10 = func_8003FEC0(&ptr2->effectsInfo_0);
     func_8003FF2C(ptr2);
 
-    temp = Q12_MULT(func_8003F4DC(&coord, &rot, ptr2->field_0.field_4, ptr2->field_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.pointLightIntensity_2378);
+    temp = Q12_MULT(func_8003F4DC(&coord, &rot, ptr2->effectsInfo_0.field_4, ptr2->effectsInfo_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.pointLightIntensity_2378);
 
     func_800554C4(temp, ptr2->flashlightLensFlareIntensity_2C, coord, g_SysWork.field_235C, &rot, 
                   g_SysWork.pointLightPos_2360.vx, g_SysWork.pointLightPos_2360.vy, g_SysWork.pointLightPos_2360.vz,
                   g_WorldGfx.mapInfo_0->waterZones_8);
     func_80055814(ptr2->field_30);
 
-    if (ptr->field_154.field_0.field_0.s_field_0.field_0 & (1 << 3))
+    if (ptr->field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 3))
     {
         func_8003E740();
     }
@@ -2914,7 +2914,7 @@ q19_12 func_8003F4DC(GsCOORDINATE2** coords, SVECTOR* rot, q19_12 alpha, s32 arg
 
 u32 func_8003F654(s_SysWork_2388* arg0)
 {
-    switch (arg0->field_0)
+    switch (arg0->primType_0)
     {
         default:
         case PrimitiveType_None:
@@ -2989,14 +2989,14 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
 
     if (weight < Q12(0.5f))
     {
-        arg0->field_0.field_0.s_field_0.field_0 = arg1->field_0.field_0.s_field_0.field_0;
+        arg0->effectsInfo_0.field_0.s_field_0.field_0 = arg1->effectsInfo_0.field_0.s_field_0.field_0;
     }
     else
     {
-        arg0->field_0.field_0.s_field_0.field_0 = arg2->field_0.field_0.s_field_0.field_0;
+        arg0->effectsInfo_0.field_0.s_field_0.field_0 = arg2->effectsInfo_0.field_0.s_field_0.field_0;
     }
 
-    func_8003FCB0(&arg0->field_0, &arg1->field_0, &arg2->field_0, weight);
+    func_8003FCB0(&arg0->effectsInfo_0, &arg1->effectsInfo_0, &arg2->effectsInfo_0, weight);
 
     if (arg1->flashlightLensFlareIntensity_2C == Q12(0.0f))
     {
@@ -3007,129 +3007,130 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
         arg0->flashlightLensFlareIntensity_2C = Math_WeightedAverageGet(arg1->flashlightLensFlareIntensity_2C, arg2->flashlightLensFlareIntensity_2C, weight0);
     }
 
-    if (arg1->field_0.field_0.s_field_0.field_0 & (1 << 0))
+    if (arg1->effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))
     {
-        if (arg2->field_0.field_0.s_field_0.field_0 & (1 << 0))
+        if (arg2->effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))
         {
-            arg0->field_0.field_0.s_field_0.field_1 = Math_WeightedAverageGet(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, weight);
+            arg0->effectsInfo_0.field_0.s_field_0.field_1 = Math_WeightedAverageGet(arg1->effectsInfo_0.field_0.s_field_0.field_1, arg2->effectsInfo_0.field_0.s_field_0.field_1, weight);
         }
         else
         {
-            arg0->field_0.field_0.s_field_0.field_1 = Math_WeightedAverageGet(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, weight1);
+            arg0->effectsInfo_0.field_0.s_field_0.field_1 = Math_WeightedAverageGet(arg1->effectsInfo_0.field_0.s_field_0.field_1, arg2->effectsInfo_0.field_0.s_field_0.field_1, weight1);
         }
     }
     else
     {
-        if (arg2->field_0.field_0.s_field_0.field_0 & (1 << 0))
+        if (arg2->effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))
         {
-            arg0->field_0.field_0.s_field_0.field_1 = Math_WeightedAverageGet(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, weight0);
+            arg0->effectsInfo_0.field_0.s_field_0.field_1 = Math_WeightedAverageGet(arg1->effectsInfo_0.field_0.s_field_0.field_1, arg2->effectsInfo_0.field_0.s_field_0.field_1, weight0);
         }
         else
         {
-            arg0->field_0.field_0.s_field_0.field_1 = Math_WeightedAverageGet(arg1->field_0.field_0.s_field_0.field_1, arg2->field_0.field_0.s_field_0.field_1, weight);
+            arg0->effectsInfo_0.field_0.s_field_0.field_1 = Math_WeightedAverageGet(arg1->effectsInfo_0.field_0.s_field_0.field_1, arg2->effectsInfo_0.field_0.s_field_0.field_1, weight);
         }
     }
 
-    if (arg1->field_0.field_E == 0)
+    if (arg1->effectsInfo_0.field_E == 0)
     {
-        if (arg2->field_0.field_E != 0)
+        if (arg2->effectsInfo_0.field_E != 0)
         {
-            arg0->field_0.field_E = arg2->field_0.field_E;
+            arg0->effectsInfo_0.field_E = arg2->effectsInfo_0.field_E;
             func_8003FD38(arg0, arg1, arg2, weight, weight0, weight1);
         }
         else
         {
-            temp                  = arg2->field_0.field_E;
-            arg0->field_0.field_E = temp;
+            temp                  = arg2->effectsInfo_0.field_E;
+            arg0->effectsInfo_0.field_E = temp;
             func_8003FD38(arg0, arg1, arg2, weight, weight, weight);
         }
     }
-    else if (arg2->field_0.field_E == 0)
+    else if (arg2->effectsInfo_0.field_E == 0)
     {
         if (weight1 >= Q12(1.0f))
         {
-            arg0->field_0.field_E = arg2->field_0.field_E;
+            arg0->effectsInfo_0.field_E = arg2->effectsInfo_0.field_E;
         }
         else
         {
-            arg0->field_0.field_E = arg1->field_0.field_E;
+            arg0->effectsInfo_0.field_E = arg1->effectsInfo_0.field_E;
         }
+
         func_8003FD38(arg0, arg1, arg2, weight, weight1, weight0);
     }
     else
     {
-        temp                  = arg2->field_0.field_E;
-        arg0->field_0.field_E = temp;
+        temp                  = arg2->effectsInfo_0.field_E;
+        arg0->effectsInfo_0.field_E = temp;
         func_8003FD38(arg0, arg1, arg2, weight, weight, weight);
     }
 
-    arg0->field_0.worldTint_R_8 = Math_WeightedAverageGet(arg1->field_0.worldTint_R_8, arg2->field_0.worldTint_R_8, weight);
-    arg0->field_0.worldTint_G_A = Math_WeightedAverageGet(arg1->field_0.worldTint_G_A, arg2->field_0.worldTint_G_A, weight);
-    arg0->field_0.worldTint_B_C = Math_WeightedAverageGet(arg1->field_0.worldTint_B_C, arg2->field_0.worldTint_B_C, weight);
+    arg0->effectsInfo_0.worldTint_R_8 = Math_WeightedAverageGet(arg1->effectsInfo_0.worldTint_R_8, arg2->effectsInfo_0.worldTint_R_8, weight);
+    arg0->effectsInfo_0.worldTint_G_A = Math_WeightedAverageGet(arg1->effectsInfo_0.worldTint_G_A, arg2->effectsInfo_0.worldTint_G_A, weight);
+    arg0->effectsInfo_0.worldTint_B_C = Math_WeightedAverageGet(arg1->effectsInfo_0.worldTint_B_C, arg2->effectsInfo_0.worldTint_B_C, weight);
 
-    if (arg1->field_0.field_0.s_field_0.field_2 == 1 && arg2->field_0.field_0.s_field_0.field_2 == 2)
+    if (arg1->effectsInfo_0.field_0.s_field_0.field_2 == 1 && arg2->effectsInfo_0.field_0.s_field_0.field_2 == 2)
     {
         if (weight < Q12(5.0f / 6.0f))
         {
             weight2                                 = Q12_MULT(weight, Q12(1.2f));
             weight2                                 = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            arg0->field_0.field_0.s_field_0.field_2 = arg1->field_0.field_0.s_field_0.field_2;
-            arg0->field_0.field_4                   = Math_WeightedAverageGet(arg1->field_0.field_4, 0, weight2);
+            arg0->effectsInfo_0.field_0.s_field_0.field_2 = arg1->effectsInfo_0.field_0.s_field_0.field_2;
+            arg0->effectsInfo_0.field_4                   = Math_WeightedAverageGet(arg1->effectsInfo_0.field_4, 0, weight2);
         }
         else
         {
             weight2                                 = (weight - Q12(5.0f / 6.0f)) * 6;
             weight2                                 = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
-            weight0                                 = arg2->field_0.field_4;
-            arg0->field_0.field_4                   = Math_WeightedAverageGet(Q12(0.0f), weight0, weight2);
+            arg0->effectsInfo_0.field_0.s_field_0.field_2 = arg2->effectsInfo_0.field_0.s_field_0.field_2;
+            weight0                                 = arg2->effectsInfo_0.field_4;
+            arg0->effectsInfo_0.field_4                   = Math_WeightedAverageGet(Q12(0.0f), weight0, weight2);
         }
     }
-    else if (arg1->field_0.field_0.s_field_0.field_2 == 2 && arg2->field_0.field_0.s_field_0.field_2 == 1)
+    else if (arg1->effectsInfo_0.field_0.s_field_0.field_2 == 2 && arg2->effectsInfo_0.field_0.s_field_0.field_2 == 1)
     {
         if (weight < Q12(1.0f / 6.0f))
         {
             weight2                                 = weight * 6;
             weight2                                 = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            arg0->field_0.field_0.s_field_0.field_2 = arg1->field_0.field_0.s_field_0.field_2;
-            arg0->field_0.field_4                   = Math_WeightedAverageGet(arg1->field_0.field_4, Q12(0.0f), weight2);
+            arg0->effectsInfo_0.field_0.s_field_0.field_2 = arg1->effectsInfo_0.field_0.s_field_0.field_2;
+            arg0->effectsInfo_0.field_4                   = Math_WeightedAverageGet(arg1->effectsInfo_0.field_4, Q12(0.0f), weight2);
         }
         else
         {
             weight2                                 = Q12_MULT(weight - Q12(1.0f / 6.0f), Q12(1.2f));
             weight2                                 = CLAMP(weight2, Q12(0.0f), Q12(1.0f));
-            arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
-            arg0->field_0.field_4                   = Math_WeightedAverageGet(Q12(0.0f), arg2->field_0.field_4, weight2);
+            arg0->effectsInfo_0.field_0.s_field_0.field_2 = arg2->effectsInfo_0.field_0.s_field_0.field_2;
+            arg0->effectsInfo_0.field_4                   = Math_WeightedAverageGet(Q12(0.0f), arg2->effectsInfo_0.field_4, weight2);
         }
     }
     else
     {
-        if (arg1->field_0.field_0.s_field_0.field_2 != 0 && arg2->field_0.field_0.s_field_0.field_2 == 0)
+        if (arg1->effectsInfo_0.field_0.s_field_0.field_2 != 0 && arg2->effectsInfo_0.field_0.s_field_0.field_2 == 0)
         {
             if (weight >= Q12(1.0f))
             {
-                arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
+                arg0->effectsInfo_0.field_0.s_field_0.field_2 = arg2->effectsInfo_0.field_0.s_field_0.field_2;
             }
             else
             {
-                arg0->field_0.field_0.s_field_0.field_2 = arg1->field_0.field_0.s_field_0.field_2;
+                arg0->effectsInfo_0.field_0.s_field_0.field_2 = arg1->effectsInfo_0.field_0.s_field_0.field_2;
             }
         }
         else
         {
-            arg0->field_0.field_0.s_field_0.field_2 = arg2->field_0.field_0.s_field_0.field_2;
+            arg0->effectsInfo_0.field_0.s_field_0.field_2 = arg2->effectsInfo_0.field_0.s_field_0.field_2;
         }
 
-        arg0->field_0.field_4 = Math_WeightedAverageGet(arg1->field_0.field_4, arg2->field_0.field_4, weight);
+        arg0->effectsInfo_0.field_4 = Math_WeightedAverageGet(arg1->effectsInfo_0.field_4, arg2->effectsInfo_0.field_4, weight);
     }
 
-    if (arg1->field_0.field_18 == 0 && arg2->field_0.field_18 != 0)
+    if (arg1->effectsInfo_0.field_18 == 0 && arg2->effectsInfo_0.field_18 != 0)
     {
-        func_8003FE04(&arg0->field_0, &arg1->field_0, &arg2->field_0, weight1);
+        func_8003FE04(&arg0->effectsInfo_0, &arg1->effectsInfo_0, &arg2->effectsInfo_0, weight1);
     }
     else
     {
-        func_8003FE04(&arg0->field_0, &arg1->field_0, &arg2->field_0, weight);
+        func_8003FE04(&arg0->effectsInfo_0, &arg1->effectsInfo_0, &arg2->effectsInfo_0, weight);
     }
 }
 
@@ -3154,10 +3155,10 @@ void func_8003FD38(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
     }
 
     arg0->field_30               = Math_WeightedAverageGet(arg1->field_30, arg2->field_30, weight0);
-    arg0->field_0.fogDistance_10 = Math_WeightedAverageGet(arg1->field_0.fogDistance_10, arg2->field_0.fogDistance_10, weight1);
-    arg0->field_0.field_6        = Math_WeightedAverageGet(arg1->field_0.field_6, arg2->field_0.field_6, weight0);
+    arg0->effectsInfo_0.fogDistance_10 = Math_WeightedAverageGet(arg1->effectsInfo_0.fogDistance_10, arg2->effectsInfo_0.fogDistance_10, weight1);
+    arg0->effectsInfo_0.field_6        = Math_WeightedAverageGet(arg1->effectsInfo_0.field_6, arg2->effectsInfo_0.field_6, weight0);
 
-    LoadAverageCol(&arg1->field_0.fogColor_14.r, &arg2->field_0.fogColor_14.r, Q12(1.0f) - alphaTo, alphaTo, &arg0->field_0.fogColor_14.r);
+    LoadAverageCol(&arg1->effectsInfo_0.fogColor_14.r, &arg2->effectsInfo_0.fogColor_14.r, Q12(1.0f) - alphaTo, alphaTo, &arg0->effectsInfo_0.fogColor_14.r);
 }
 
 void func_8003FE04(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, s_MapEffectsInfo* arg2, q19_12 alphaTo) // 0x8003FE04
@@ -3211,13 +3212,13 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     temp_v1    = Q12_MULT(arg0->field_2E, (g_GameWork.config_0.optBrightness_22 * 8) + 4);
     brightness = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
-    func_80055330(arg0->field_0.field_0.s_field_0.field_2, arg0->field_0.field_6, arg0->field_0.field_0.s_field_0.field_1, arg0->field_0.worldTint_R_8, arg0->field_0.worldTint_G_A, arg0->field_0.worldTint_B_C, brightness);
-    Gfx_FogParamsSet(arg0->field_0.field_E != 0, arg0->field_0.fogColor_14.r, arg0->field_0.fogColor_14.g, arg0->field_0.fogColor_14.b);
+    func_80055330(arg0->effectsInfo_0.field_0.s_field_0.field_2, arg0->effectsInfo_0.field_6, arg0->effectsInfo_0.field_0.s_field_0.field_1, arg0->effectsInfo_0.worldTint_R_8, arg0->effectsInfo_0.worldTint_G_A, arg0->effectsInfo_0.worldTint_B_C, brightness);
+    Gfx_FogParamsSet(arg0->effectsInfo_0.field_E != 0, arg0->effectsInfo_0.fogColor_14.r, arg0->effectsInfo_0.fogColor_14.g, arg0->effectsInfo_0.fogColor_14.b);
 
-    temp_a0 = arg0->field_0.fogDistance_10;
+    temp_a0 = arg0->effectsInfo_0.fogDistance_10;
 
     func_80055840(temp_a0, temp_a0 + Q12(1.0f));
-    func_800553E0(arg0->field_0.field_18, arg0->field_0.field_19.r, arg0->field_0.field_19.g, arg0->field_0.field_19.b, arg0->field_0.screenTint_1D.r, arg0->field_0.screenTint_1D.g, arg0->field_0.screenTint_1D.b);
+    func_800553E0(arg0->effectsInfo_0.field_18, arg0->effectsInfo_0.field_19.r, arg0->effectsInfo_0.field_19.g, arg0->effectsInfo_0.field_19.b, arg0->effectsInfo_0.screenTint_1D.r, arg0->effectsInfo_0.screenTint_1D.g, arg0->effectsInfo_0.screenTint_1D.b);
 }
 
 void func_80040004(s_MapOverlayHeader* overlayHeader) // 0x80040004

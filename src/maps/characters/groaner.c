@@ -313,7 +313,7 @@ void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner)
     extern void (*sharedData_800EEE14_2_s00[])(s_SubCharacter* chara);
 
     #define getIndex() \
-        ((((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3) == 0) * 2) + ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 2))
+        ((((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 3) == 0) * 2) + ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) == 2))
 
     if (func_80070360(groaner, Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - groaner->position_18.vx, 
             g_SysWork.playerWork_4C.player_0.position_18.vz - groaner->position_18.vz), UNK_VAL) != 0 ||

@@ -598,7 +598,7 @@ bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, q19_
     q19_12 angle;
     q19_12 dist;
 
-    idxInfo = g_SysWork.field_2388.field_154.field_0.field_0.field_0;
+    idxInfo = g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0;
     idx     = (idxInfo & (1 << 1)) ? ((idxInfo & (1 << 0)) ? 2 : 3) : (sharedFunc_800D4A80_0_s01(airScreamer) == 3);
 
     deltaX = inVec->vx - airScreamer->position_18.vx;
@@ -794,7 +794,7 @@ bool sharedFunc_800D3508_0_s01(s_SubCharacter* airScreamer, q19_12* dist)
         angleToPlayer    = Math_AngleBetweenPositionsGet(airScreamer->position_18, g_SysWork.playerWork_4C.player_0.position_18);
         angleToPlayerCpy = angleToPlayer;
 
-        offsetZ = g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0;
+        offsetZ = g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0;
         if (!(offsetZ & 0x2))
         {
             // @hack Permuter find.
@@ -8861,7 +8861,7 @@ bool sharedFunc_800DC0E4_2_s00(s_SubCharacter* airScreamer, q19_12 moveSpeedMult
 
 bool sharedFunc_800DC200_2_s00(s_SubCharacter* airScreamer)
 {
-    if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 0x1) &&
+    if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 0x1) &&
         (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || airScreamer->model_0.charaId_0 == Chara_AirScreamer))
     {
         return false;
@@ -8913,7 +8913,7 @@ s32 sharedFunc_800DC438_2_s00(s_SubCharacter* airScreamer)
     }
 
     if (!(airScreamerProps.flags_11C & AirScreamerFlag_29) &&
-        (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)) ||
+        (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) ||
          (g_SavegamePtr->gameDifficulty_260 > GameDifficulty_Normal && airScreamer->model_0.charaId_0 != Chara_AirScreamer)))
     {
         if (sharedFunc_800DC3BC_2_s00(airScreamer) && (sharedFunc_800DC0A8_2_s00(airScreamer) || sharedFunc_800DBF88_2_s00(airScreamer, Q12(2.0f))))

@@ -417,7 +417,7 @@ void Ai_Romper_Control_1(s_SubCharacter* romper)
     q19_12 newMoveSpeed;
     s32    var;
 
-    flags = g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1));
+    flags = g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1));
     if (flags == 0)
     {
         var = func_8006FD90(romper, 1, Q12(1.8f), Q12(4.0f));
@@ -498,7 +498,7 @@ void Ai_Romper_Control_2(s_SubCharacter* romper)
     romperProps.field_F0 += sharedFunc_800E939C_2_s02(romper);
     romper->moveSpeed_38 += romperProps.field_F0;
 
-    flags = g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1));
+    flags = g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1));
     if (flags == 0)
     {
         cond = func_8006FD90(romper, 1, Q12(1.8f), Q12(4.0f));
@@ -552,7 +552,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
     romperProps.field_F0 += sharedFunc_800E94B4_2_s02(romper);
     romper->moveSpeed_38                  += romperProps.field_F0;
 
-    temp_v1_2 = g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 3;
+    temp_v1_2 = g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 3;
     if (temp_v1_2 == 0)
     {
         var_s0 = func_8006FD90(romper, 0, Q12(2.5f), Q12(6.0f));
@@ -759,7 +759,7 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
     s32    i;
     s32    angle1;
 
-    flags = g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3;
+    flags = g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3;
     if (flags == 0)
     {
         var_s0 = func_8006FD90(romper, 0, Q12(2.5f), Q12(6.0f));

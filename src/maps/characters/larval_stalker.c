@@ -107,7 +107,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
         larvalStalker->field_44.field_0 = 0;
     }
 
-    idxInfo = g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1));
+    idxInfo = g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1));
     if (idxInfo == 0)
     {
         baseDistMax = Q12(2.5f);

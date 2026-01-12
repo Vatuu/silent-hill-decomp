@@ -8,9 +8,9 @@ void Ai_HangedScratcher_Control_1(s_SubCharacter* scratcher)
     // TODO: Invert to return early instead?
     if (distToPlayer < Q12(1.0f) &&
         !func_800700F8(scratcher, &g_SysWork.playerWork_4C.player_0) &&
-        (((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) == 2 && func_8006FD90(scratcher, 1, Q12(2.0f), Q12(1.5f))) ||
-         ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) &&
-          (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)) &&
+        (((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) == 2 && func_8006FD90(scratcher, 1, Q12(2.0f), Q12(1.5f))) ||
+         ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) &&
+          (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) &&
           func_8006FD90(scratcher, 1, Q12(1.5f), Q12(0.3f)))))
     {
         scratcher->model_0.controlState_2  = HangedScratcherControl_3;

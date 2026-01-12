@@ -82,7 +82,7 @@ void func_800D5614(void) // 0x800D5614
     {
         case 0:
             Player_ControlFreeze();
-            Gfx_MapEffectsUpdate_MapInit(19, 4);
+            Gfx_MapInitMapEffectsUpdate(19, 4);
 
             g_SysWork.field_30 = 20;
             D_800D7760         = 0;
@@ -199,7 +199,7 @@ void func_800D5614(void) // 0x800D5614
         default:
             Savegame_EventFlagSet(EventFlag_134);
 
-            Gfx_MapEffectsUpdate_MapInit(7, 4);
+            Gfx_MapInitMapEffectsUpdate(7, 4);
 
             vcReturnPreAutoCamWork(false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -495,7 +495,7 @@ void func_800D6578(void) // 0x800D6578
 
         if (D_800D7761 != 1)
         {
-            Gfx_MapEffectsUpdate_MapInit(7, 4);
+            Gfx_MapInitMapEffectsUpdate(7, 4);
             D_800D7761 = 1;
         }
 
@@ -508,7 +508,7 @@ void func_800D6578(void) // 0x800D6578
     {
         if (D_800D7761 != 0)
         {
-            Gfx_MapEffectsUpdate_MapInit(2, 2);
+            Gfx_MapInitMapEffectsUpdate(2, 2);
             Game_TurnFlashlightOff();
             D_800D7761 = 0;
         }

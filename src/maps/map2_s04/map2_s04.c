@@ -167,7 +167,7 @@ void Map_WorldObjectsUpdate(void)
     {
         if (!D_800CF280)
         {
-            Gfx_MapEffectsUpdate_MapInit(7, 4);
+            Gfx_MapInitMapEffectsUpdate(7, 4);
             D_800CF280++;
         }
 

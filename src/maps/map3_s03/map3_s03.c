@@ -269,15 +269,15 @@ void func_800D1A58(void) // 0x800D1A58
             sp30.vy = Q12(-1.2f);
             sp30.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
 
-            func_8005DC1C(Sfx_DoorLocked, &sp30, 0x80, 0);
+            func_8005DC1C(Sfx_DoorLocked, &sp30, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 2:
-            SysWork_StateStepIncrementDelayed(0x333, false);
+            SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
             break;
 
         case 3:
-            MapMsg_DisplayAndHandleSelection(false, 0xC, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 12, false, false, 0, false);
             break;
 
         case 4:
@@ -296,7 +296,7 @@ void func_800D1A58(void) // 0x800D1A58
                     if (Savegame_EventFlagGet((EventFlag_265 + i) + j * 4))
                     {
                         D_800D8140[i] = j;
-                        D_800D8145   += 1;
+                        D_800D8145++;
                         break;
                     }
                 }
@@ -322,7 +322,7 @@ void func_800D1A58(void) // 0x800D1A58
                 if (g_MapEventLastUsedItem != InventoryItemId_Unequipped)
                 {
                     SysWork_StateStepSet(0, 7);
-                    D_800D8144 = g_MapEventLastUsedItem - 0x67;
+                    D_800D8144 = g_MapEventLastUsedItem - InventoryItemId_PlateOfTurtle;
                 }
                 else if (D_800D8145 == 0)
                 {
@@ -337,48 +337,48 @@ void func_800D1A58(void) // 0x800D1A58
 
         case 7:
             func_800D17F8(8, 0);
-            MapMsg_DisplayAndHandleSelection(false, 0x2F, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 47, false, false, 0, false);
             break;
 
         case 8:
             func_800D17F8(8, 0);
 
-            D_800D6BD0 += (g_Controller0->sticks_24.sticks_0.leftX << 0xE) / 75;
-            D_800D6BD0  = CLAMP_RANGE(D_800D6BD0, -0x64000, 0x64000);
+            D_800D6BD0 += (g_Controller0->sticks_24.sticks_0.leftX << 14) / 75;
+            D_800D6BD0  = CLAMP_RANGE(D_800D6BD0, Q12(-100.0f), Q12(100.0f));
 
-            D_800D6BD4 += (g_Controller0->sticks_24.sticks_0.leftY << 0xE) / 75;
-            D_800D6BD4  = CLAMP_RANGE(D_800D6BD4, -0x64000, 0x64000);
+            D_800D6BD4 += (g_Controller0->sticks_24.sticks_0.leftY << 14) / 75;
+            D_800D6BD4  = CLAMP_RANGE(D_800D6BD4, Q12(-100.0f), Q12(100.0f));
 
             Game_TimerUpdate();
 
             func_800881B8((s16)(FP_FROM(D_800D6BD0, Q12_SHIFT) + 8), FP_FROM(D_800D6BD4, Q12_SHIFT) + 8,
-                          8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
+                          8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 12);
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 for (i = 0; i < 8; i++)
                 {
-                    if (D_800D6B40[i][0] - 0xA0 > FP_FROM(D_800D6BD0, Q12_SHIFT))
+                    if ((D_800D6B40[i][0] - 160) > FP_FROM(D_800D6BD0, Q12_SHIFT))
                     {
                         continue;
                     }
 
-                    if (D_800D6B40[i][0] - 0x84 <= FP_FROM(D_800D6BD0, Q12_SHIFT))
+                    if ((D_800D6B40[i][0] - 132) <= FP_FROM(D_800D6BD0, Q12_SHIFT))
                     {
                         continue;
                     }
 
-                    if (D_800D6B40[i][1] - 0x78 > FP_FROM(D_800D6BD4, Q12_SHIFT))
+                    if ((D_800D6B40[i][1] - 120) > FP_FROM(D_800D6BD4, Q12_SHIFT))
                     {
                         continue;
                     }
 
-                    if (D_800D6B40[i][1] - 0x5C <= FP_FROM(D_800D6BD4, Q12_SHIFT))
+                    if ((D_800D6B40[i][1] - 92) <= FP_FROM(D_800D6BD4, Q12_SHIFT))
                     {
                         continue;
                     }
 
-                    if ((i >= 4) || (D_800D8140[i] != 8))
+                    if (i >= 4 || D_800D8140[i] != 8)
                     {
                         SysWork_StateStepSet(0, 10);
                         break;
@@ -394,7 +394,6 @@ void func_800D1A58(void) // 0x800D1A58
                     D_800D6BD8 = 0;
 
                     SD_Call(Sfx_Unk1524);
-
                     SysWork_StateStepSet(0, 9);
 
                     for (j = 0; j < 4; j++)
@@ -415,29 +414,31 @@ void func_800D1A58(void) // 0x800D1A58
             }
             else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
-                func_80086470(3, D_800D8144 + 0x67, 1, false);
+                func_80086470(3, D_800D8144 + InventoryItemId_PlateOfTurtle, 1, false);
                 SysWork_StateStepSet(0, 16);
             }
             break;
 
         case 9:
             func_800D17F8(D_800D8144, D_800D6BD8);
-            D_800D6BD8 += 0x40;
 
-            if (D_800D6BD8 >= 0x1333)
+            D_800D6BD8 += 0x40;
+            if (D_800D6BD8 >= Q12(1.2f))
             {
                 if (Savegame_MapMarkingGet(MapMarkFlag_713))
                 {
                     SD_Call(Sfx_Unk1343);
                 }
+
                 SysWork_StateStepSet(0, 16);
             }
             break;
 
         case 10:
             func_800D17F8(8, 0);
-            MapMsg_DisplayAndHandleSelection(false, 0x30, false, false, 0, false);
-            if (g_SysWork.sysStateStep_C[0] != 0xA)
+            MapMsg_DisplayAndHandleSelection(false, 48, false, false, 0, false);
+
+            if (g_SysWork.sysStateStep_C[0] != 10)
             {
                 SysWork_StateStepSet(0, 8);
             }
@@ -445,17 +446,17 @@ void func_800D1A58(void) // 0x800D1A58
 
         case 11:
             func_800D17F8(8, 0);
-            MapMsg_DisplayAndHandleSelection(false, 0x31, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 49, false, false, 0, false);
             break;
 
         case 12:
             func_800D17F8(8, 0);
 
-            D_800D6BD0 += (g_Controller0->sticks_24.sticks_0.leftX << 0xE) / 75;
-            D_800D6BD0  = CLAMP_RANGE(D_800D6BD0, -0x64000, 0x64000);
+            D_800D6BD0 += (g_Controller0->sticks_24.sticks_0.leftX << 14) / 75;
+            D_800D6BD0  = CLAMP_RANGE(D_800D6BD0, Q12(-100.0f), Q12(100.0f));
 
-            D_800D6BD4 += (g_Controller0->sticks_24.sticks_0.leftY << 0xE) / 75;
-            D_800D6BD4  = CLAMP_RANGE(D_800D6BD4, -0x64000, 0x64000);
+            D_800D6BD4 += (g_Controller0->sticks_24.sticks_0.leftY << 14) / 75;
+            D_800D6BD4  = CLAMP_RANGE(D_800D6BD4, Q12(-100.0f), Q12(100.0f));
 
             Game_TimerUpdate();
 
@@ -466,20 +467,20 @@ void func_800D1A58(void) // 0x800D1A58
             {
                 for (i = 0; i < 8; i++)
                 {
-                    if (D_800D6B40[i][0] - 0xA0 > FP_FROM(D_800D6BD0, Q12_SHIFT))
+                    if ((D_800D6B40[i][0] - 160) > FP_FROM(D_800D6BD0, Q12_SHIFT))
                     {
                         continue;
                     }
 
-                    if (D_800D6B40[i][0] - 0x84 <= FP_FROM(D_800D6BD0, Q12_SHIFT))
+                    if ((D_800D6B40[i][0] - 132) <= FP_FROM(D_800D6BD0, Q12_SHIFT))
                     {
                         continue;
                     }
-                    if (D_800D6B40[i][1] - 0x78 > FP_FROM(D_800D6BD4, Q12_SHIFT))
+                    if ((D_800D6B40[i][1] - 120) > FP_FROM(D_800D6BD4, Q12_SHIFT))
                     {
                         continue;
                     }
-                    if (D_800D6B40[i][1] - 0x5C <= FP_FROM(D_800D6BD4, Q12_SHIFT))
+                    if ((D_800D6B40[i][1] - 92) <= FP_FROM(D_800D6BD4, Q12_SHIFT))
                     {
                         continue;
                     }
@@ -520,7 +521,6 @@ void func_800D1A58(void) // 0x800D1A58
                         D_800D6BD8 = 0x1000;
 
                         SysWork_StateStepSet(0, 13);
-
                         SD_Call(Sfx_Unk1524);
                     }
                     break;
@@ -534,9 +534,9 @@ void func_800D1A58(void) // 0x800D1A58
 
         case 13:
             func_800D17F8(D_800D8144, D_800D6BD8);
-            D_800D6BD8 -= 0x40;
 
-            if (D_800D6BD8 < -0x332)
+            D_800D6BD8 -= 0x40;
+            if (D_800D6BD8 <= Q12(-0.2f))
             {
                 D_800D8140[D_800D8144] = 8;
                 SysWork_StateStepSet(0, 16);
@@ -545,7 +545,8 @@ void func_800D1A58(void) // 0x800D1A58
 
         case 14:
             func_800D17F8(8, 0);
-            MapMsg_DisplayAndHandleSelection(false, 0x32, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 50, false, false, 0, false);
+
             if (g_SysWork.sysStateStep_C[0] != 14)
             {
                 SysWork_StateStepSet(0, 12);
@@ -553,7 +554,7 @@ void func_800D1A58(void) // 0x800D1A58
             break;
 
         case 15:
-            MapMsg_DisplayAndHandleSelection(false, 0x33, false, false, 0, false);
+            MapMsg_DisplayAndHandleSelection(false, 51, false, false, 0, false);
             func_800D17F8(8, 0);
             break;
 
@@ -610,7 +611,9 @@ void func_800D27F4(void) // 0x800D27F4
         case 0:
             Player_ControlFreeze();
             func_800862F8(0, FILE_TIM_LISAVTR2_TIM, false);
+
             D_800D6BDA = 0;
+
             SysWork_StateStepIncrement(0);
 
         case 1:

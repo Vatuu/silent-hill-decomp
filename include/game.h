@@ -1459,7 +1459,7 @@ typedef struct _PropertiesPuppetNurse
     q19_12           field_104;
     s32              field_108;
     s32              field_10C;
-    s32              field_110;
+    q19_12           field_110; // Move speed.
     s32              field_114;
     u8               field_118;
     u8               modelVariation_119;
@@ -1705,12 +1705,12 @@ typedef union
     } s_field_0;
 } u_Unk0;
 
-typedef struct
+typedef struct _MapEffectsInfo
 {
     u_Unk0  field_0;
     q3_12   field_4;       // FP alpha.
     s16     field_6;       // Defines intensity of the world tint colors. Q3.12?
-    s16     worldTint_R_8; // R } World tint color. q3_12?
+    s16     worldTint_R_8; // R } World tint color. Q3.12?
     s16     worldTint_G_A; // G }
     s16     worldTint_B_C; // B }
     u8      field_E;       // Fog enabled if not set to 0, `Gfx_FogParametersSet` checks for values 0/1/2/3.
@@ -1720,8 +1720,8 @@ typedef struct
     CVECTOR fogColor_14;
     u8      field_18; // `bool`?
     CVECTOR field_19;
-    CVECTOR screenTint_1D; // Screen tint. Uses CMP color pallete instead of RGB.
-    CVECTOR field_21; // Particle effect related. Only the first value affects snow transparency.
+    CVECTOR screenTint_1D; // Subtractive screen tint.
+    CVECTOR field_21;      // Particle effect related. Only the first value affects snow transparency.
     CVECTOR field_25;
     u8      unk_29;
     s16     unk_2A;
@@ -1730,25 +1730,25 @@ STATIC_ASSERT_SIZEOF(s_MapEffectsInfo, 44);
 
 typedef struct
 {
-    s_MapEffectsInfo field_0;
-    s16              flashlightLensFlareIntensity_2C; // Stores flashlight lensflare intensity. q3_12?
-    s16              field_2E; // Some gamma or brightness layer. FP alpha. q3_12?
+    s_MapEffectsInfo effectsInfo_0;
+    q3_12            flashlightLensFlareIntensity_2C; // Stores flashlight lens flare intensity alpha.
+    q3_12            field_2E; // Some gamma or brightness layer alpha.
     q19_12           field_30; // Stores fog distance.
 } s_StructUnk3;
 STATIC_ASSERT_SIZEOF(s_StructUnk3, 52);
 
 typedef struct
 {
-    s32             field_0; /** `e_PrimitiveType` */
+    s32             primType_0; /** `e_PrimitiveType` */
     s8*             field_4; /** Points to different types of data depending on `field_0`. */
     s32             field_8; // } Q19.12?
     s32             field_C; // }
     s32             field_10;
     u8              field_14;
-    u8              isFlashlightOn_15;           /** `bool` */
+    u8              isFlashlightOn_15;          /** `bool` */
     u8              isFlashlightUnavailable_16; /** `bool` */
-    s8              unk_17; // Most likely padding.
-    q3_12           flashlightIntensity_18; // Alpha.
+    s8              unk_17;                     // Most likely padding.
+    q3_12           flashlightIntensity_18;     // Alpha.
     u16             field_1A;
     s_StructUnk3    field_1C[2];
     s_StructUnk3    field_84[2];

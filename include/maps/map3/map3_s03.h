@@ -25,12 +25,13 @@ extern s32 D_800D6BD0;
 
 extern s32 D_800D6BD4;
 
-extern s16 D_800D6BD8;
+extern q3_12 D_800D6BD8;
 
 extern u8 D_800D6BDA;
 
 extern u8 D_800D8140[];
 
+/** Relative inventory item ID since `InventoryItemId_PlateOfTurtle`. */
 extern u8 D_800D8144;
 
 extern u8 D_800D8145;
@@ -59,6 +60,8 @@ void func_800D1774(void);
 void func_800D17A0(void);
 
 void func_800D17CC(void);
+
+void func_800D1A58(void);
 
 void func_800D26D0(void);
 

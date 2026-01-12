@@ -225,7 +225,7 @@ void func_800D13D8(void) // 0x800D13D8
             g_SysWork.field_236C = NULL;
             g_SysWork.pointLightIntensity_2378 = Q12(0.6f);
 
-            Gfx_MapEffectsUpdate_MapInit(16, 16);
+            Gfx_MapInitMapEffectsUpdate(16, 16);
             func_8008D438();
             SysWork_StateStepIncrement(0);
 
@@ -513,7 +513,7 @@ void func_800D13D8(void) // 0x800D13D8
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
             Game_TurnFlashlightOn();
-            Gfx_MapEffectsUpdate_MapInit(7, 4);
+            Gfx_MapInitMapEffectsUpdate(7, 4);
             func_8008D448();
             Game_FlashlightAttributesFix();
 

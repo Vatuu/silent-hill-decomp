@@ -919,7 +919,7 @@ void Map_WorldObjectsInit(void) // 0x800D1658
     g_SysWork.field_236C = NULL;
 
     func_8008D438();
-    Gfx_MapEffectsUpdate_MapInit(4, 4);
+    Gfx_MapInitMapEffectsUpdate(4, 4);
 
     Savegame_EventFlagSet(EventFlag_428);
 }

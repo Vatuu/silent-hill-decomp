@@ -477,7 +477,7 @@ extern s_WorldObjectPose g_CommonWorldObjectPoses[1];
 
 void Map_WorldObjectsInit(void)
 {
-    Gfx_MapEffectsUpdate_MapInit(1, 1);
+    Gfx_MapInitMapEffectsUpdate(1, 1);
 
     WorldObjectNoRotInit(&g_WorldObject_Item, "ITEM_HID", 19.8289f, -1.3633f, 24.0735f);
 

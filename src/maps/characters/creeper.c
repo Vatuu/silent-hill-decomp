@@ -264,12 +264,12 @@ void Ai_Creeper_Control_1(s_SubCharacter* creeper)
     Chara_MoveSpeedUpdate3(creeper, Q12(4.0f), Q12(0.0f));
     creeperProps.timer_104 += g_DeltaTime0;
 
-    if ((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
+    if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
     {
         cond = func_8006FD90(creeper, 2, Q12(12.0f), Q12(8.0f));
     }
-    else if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) &&
-             (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)))
+    else if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) &&
+             (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
     {
         cond = func_8006FD90(creeper, 2, Q12(0.8f), Q12(0.4f));
     }
@@ -374,10 +374,10 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
                                                g_SysWork.playerWork_4C.player_0.position_18.vz - creeper->position_18.vz) -
                                         creeper->rotation_24.vy));
 
-    if (((g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1) && func_8006FD90(creeper, 0, Q12(12.0f), Q12(8.0f))) ||
-        ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) &&
-         (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 0)) && func_8006FD90(creeper, 2, Q12(0.8f), Q12(0.4f))) ||
-        (!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & ((1 << 0) | (1 << 1))) && func_8006FD90(creeper, 1, Q12(4.0f), Q12(12.0f))) ||
+    if (((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1) && func_8006FD90(creeper, 0, Q12(12.0f), Q12(8.0f))) ||
+        ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) &&
+         (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) && func_8006FD90(creeper, 2, Q12(0.8f), Q12(0.4f))) ||
+        (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) && func_8006FD90(creeper, 1, Q12(4.0f), Q12(12.0f))) ||
         (func_80070360(creeper, 0, Q12(0.5f)) || creeperProps.flags_E8 & CreeperFlag_Alerted))
     {
         creeperProps.targetPositionX_F4 = g_SysWork.playerWork_4C.player_0.position_18.vx;

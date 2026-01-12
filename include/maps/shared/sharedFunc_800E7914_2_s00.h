@@ -5,7 +5,7 @@ void sharedFunc_800E7914_2_s00(void)
     s32       mapRoomIdx;
 
     mapRoomIdx = g_SavegamePtr->mapRoomIdx_A5;
-    flags      = (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) ? (1 << 2) : (1 << 1);
+    flags      = (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) ? (1 << 2) : (1 << 1);
 
     switch (mapRoomIdx)
     {
@@ -21,7 +21,7 @@ void sharedFunc_800E7914_2_s00(void)
 
         case 37:
         case 38:
-            flags = (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) ? (1 << 1) : (1 << 0);
+            flags = (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) ? (1 << 1) : (1 << 0);
             break;
 
         case 27:

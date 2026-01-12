@@ -1581,13 +1581,13 @@ typedef struct _MapOverlayHeader
     void                   (*func_10)();
     s8                     field_14;           // Flags? Music related.
     u8                     ambientAudioIdx_15; // Ambient file index from `g_AmbientVabTaskLoadCmds`.
-    s8                     field_16;           // Set tone ambient and render distance.
-                                               // Giving it a value of 3 will set the map as night and giving It
-                                               // the value of 2 will set the map to use a tone used during the hallaway
+    s8                     field_16;           // Set ambient tint and render distance.
+                                               // A value of 3 sets the map to night.
+                                               // A value of 2 will sets the map to use a tint used during the hallaway
                                                // intro.
 											   // Giving this and next variable a name will require further investigation
 											   // of `particle.c` code.
-    s8                     field_17;           // Set weather to play. Either being rain, a slightly heavier rain or snow.
+    s8                     field_17;           // Set weather to play. Rain, heavy rain, or snow.
     void                   (**loadingScreenFuncs_18)();
     s_MapPoint2d*          mapPointsOfInterest_1C;
     void                   (**mapEventFuncs_20)(); /** Points to array of event functions. */
@@ -2903,7 +2903,7 @@ void WorldGfx_HeldItemAttach(e_CharacterId charaId, s32 arg1); // Called by some
 
 void func_8003E740(void);
 
-void Gfx_MapEffectsUpdate_MapInit(s32 idx0, s32 idx1);
+void Gfx_MapInitMapEffectsUpdate(s32 idx0, s32 idx1);
 
 void func_8003EDA8(void);
 
@@ -4171,11 +4171,10 @@ void func_80035AC8(s32 idx);
  */
 void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord);
 
-/** @brief Set general environmental effects.
- * General effects as lighting, fog, screen fx are set by this function.
+/** @brief Sets general environmental effects such as lighting, fog, and screen effects.
  *
- * @note Some specific effect for enviroments like snow, rain and ending's fire rain
- * are set by code only found withing the overlay of the map.
+ * @note Specific effect for enviroments like snow, rain, and the ending's fire rain
+ * are set by code only found in map overlays.
  */
 void Gfx_MapEffectsSet(s32 unused);
 
@@ -4517,10 +4516,10 @@ void GameFs_FlameGfxLoad(void);
 
 void func_8003EB54(void);
 
-/** @brief Determines what enviroment effects data from `g_MapEffectsPresets` will select
- * based on the value of `s_MapOverlayHeader::field_16`.
+/** @brief Determines what enviroment effects data from `g_MapEffectsPresets` will use
+ * based on `s_MapOverlayHeader::field_16`.
  */
-void Gfx_MapEffectsDetermine(s_MapOverlayHeader* mapHdr);
+void Gfx_MapEffectsAssign(s_MapOverlayHeader* mapHdr);
 
 /** @brief Adjust light point attributes to make it simile a flashlight. */
 void Game_FlashlightAttributesFix(void);
@@ -4535,7 +4534,7 @@ void func_8003EDB8(CVECTOR* color0, CVECTOR* color1);
 
 void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3);
 
-void Gfx_MapEffectsUpdate_LoadScreen(s32 arg0, s32 arg1);
+void Gfx_LoadScreenMapEffectsUpdate(s32 arg0, s32 arg1);
 
 void Gfx_MapEffectsStepUpdate(s_MapEffectsInfo* preset0, s_MapEffectsInfo* preset1, e_PrimitiveType primType, void* primData, s32 arg4, s32 arg5);
 

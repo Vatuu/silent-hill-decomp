@@ -17,7 +17,7 @@ void sharedFunc_800CE934_0_s02(void)
         case 2:
         case 3:
         case 4:
-            flags = (g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) ? 2 : 1;
+            flags = (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) ? 2 : 1;
             var_a2 = sharedData_800CFB1C_0_s02;
             break;
 

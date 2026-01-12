@@ -287,7 +287,7 @@ void func_800D1910(void) // 0x800D1910
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 117, false);
             D_800D37C0 = 0;
 
-            Gfx_MapEffectsUpdate_MapInit(15, 15);
+            Gfx_MapInitMapEffectsUpdate(15, 15);
             SysWork_StateStepIncrement(0);
             g_WorldObject0.position_1C.vz = Q12(141.0f);
             break;

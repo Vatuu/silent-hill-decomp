@@ -745,7 +745,7 @@ void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0
 
 void Gfx_MapEffectsSet(s32 unused) // 0x80035B58
 {
-    Gfx_MapEffectsDetermine(&g_MapOverlayHeader);
+    Gfx_MapEffectsAssign(&g_MapOverlayHeader);
     g_MapOverlayHeader.ovlEnviromentSet_16C(g_MapOverlayHeader.field_17, g_MapOverlayHeader.field_16);
 }
 
@@ -792,7 +792,7 @@ void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
 
         vcUserCamTarget(&camLookAt, NULL, true);
         func_8003EB54();
-        Gfx_MapEffectsUpdate_LoadScreen(0, 0);
+        Gfx_LoadScreenMapEffectsUpdate(0, 0);
 
         model->anim_4.flags_2                                 |= AnimFlag_Visible;
         g_SysWork.playerWork_4C.extra_128.disabledAnimBones_18 = 0;
@@ -1960,8 +1960,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // `TriggerActivationType_Button`: Only allow button activated events when area is lit up?
         if (mapEvent->activationType_4_4 == TriggerActivationType_Button)
         {
-            if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 2) && !g_SysWork.field_2388.isFlashlightOn_15 &&
-                ((g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & 1) || (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & 1)))
+            if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 2) && !g_SysWork.field_2388.isFlashlightOn_15 &&
+                ((g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & 1) || (g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & 1)))
             {
                 if (mapEvent->sysState_8_0 != SysState_LoadOverlay &&
                     (mapEvent->sysState_8_0 != SysState_LoadRoom && mapEvent->pointOfInterestIdx_8_5 > 1))
@@ -2447,8 +2447,8 @@ void func_80038354(void) // 0x80038354
                     continue;
                 }
 
-                if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 0x2 && temp_t3 > SQUARE(15)) ||
-                    (!(g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & 0x2) &&
+                if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 0x2 && temp_t3 > SQUARE(15)) ||
+                    (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 0x2) &&
                      Camera_Distance2dGet(&npc->position_18) > SQUARE(15)))
                 {
                     npc->model_0.anim_4.flags_2 &= ~AnimFlag_Visible;
@@ -2795,7 +2795,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     }
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.light_A &&
-        g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1))
+        g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1))
     {
         Game_FlashlightToggle();
     }
@@ -3057,9 +3057,9 @@ void SysState_MapScreen_Update(void) // 0x800396D4
             SysWork_StateSetNext(SysState_Gameplay);
         }
     }
-    else if ((g_SysWork.field_2388.field_154.field_0.field_0.s_field_0.field_0 & (1 << 1)) && !g_SysWork.field_2388.isFlashlightOn_15 &&
-             ((g_SysWork.field_2388.field_1C[0].field_0.field_0.s_field_0.field_0 & (1 << 0)) ||
-              (g_SysWork.field_2388.field_1C[1].field_0.field_0.s_field_0.field_0 & (1 << 0))))
+    else if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1)) && !g_SysWork.field_2388.isFlashlightOn_15 &&
+             ((g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)) ||
+              (g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))))
     {
         if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.map_18 ||
             Gfx_MapMsg_Draw(MapMsgIdx_TooDarkForMap) > MapMsgState_Idle)
@@ -3466,8 +3466,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if ((!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) >= 2u) ||
-                        ( (g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) <  2u))
+                    if ((!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) && (tipIdx - 13) >= 2u) ||
+                        ( (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) && (tipIdx - 13) <  2u))
                     {
                         randTipVal += 3;
                     }
@@ -3486,8 +3486,8 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             {
                 if (!Flags16b_IsSet(seenTipIdxs, tipIdx))
                 {
-                    if ((!(g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) >= 2u) ||
-                        ( (g_SysWork.field_2388.field_154.field_0.field_0.field_0 & 0x3) && (tipIdx - 13) <  2u))
+                    if ((!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) && (tipIdx - 13) >= 2u) ||
+                        ( (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) && (tipIdx - 13) <  2u))
                     {
                         if (randTipVal < 3)
                         {

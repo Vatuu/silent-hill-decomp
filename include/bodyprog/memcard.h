@@ -162,7 +162,7 @@ typedef struct
 {
     s_MemCardBasicInfo          devices_0[CARD_DEVICE_COUNT];
     s_800B55E8                  field_E0[2];
-    s32                         field_110; // Passed to `s_800B55E8_Init` as `lastCardResult`.
+    q19_12                      field_110; // Passed to `s_800B55E8_Init` as `lastCardResult`. Move speed store?
     u8                          unk_114[4];
     s_PsxSaveBlock              saveBlock_118;
     s_MemCardInfo_BasicSaveInfo saveInfo_318;
