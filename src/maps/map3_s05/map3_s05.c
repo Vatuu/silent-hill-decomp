@@ -216,7 +216,27 @@ void func_800D5934(void) // 0x800D5934
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_ASM("maps/map3_s05/nonmatchings/map3_s05", func_800D59D4);
+void func_800D59D4(void) // 0x800D59D4
+{
+    VECTOR3 sp10;
+    VECTOR3 sp20;
+
+    do
+    {
+    } while (0);
+
+    sp20.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
+    sp20.vy = -0x1333;
+    sp20.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
+
+    sp10 = sp20;
+
+    Player_ItemRemove(0x4A, 1);
+    Map_MessageWithSfx(0x1B, Sfx_UseKey, &sp10);
+
+    Savegame_MapMarkingSet(MapMarkFlag_FogHospital3F_NearElevatorBroken);
+    Savegame_EventFlagSet(EventFlag_256);
+}
 
 void func_800D5A98(void) // 0x800D5A98
 {
