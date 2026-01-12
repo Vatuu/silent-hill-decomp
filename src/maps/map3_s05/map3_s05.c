@@ -126,7 +126,30 @@ INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", g_PuppetNurse_ModelStates0
 
 void func_800D57E0(void) {}
 
-INCLUDE_ASM("maps/map3_s05/nonmatchings/map3_s05", func_800D57E8);
+void func_800D57E8(void) // 0x800D57E8
+{
+    VECTOR3 sp10;
+    VECTOR3 sp20;
+
+    do
+    {
+    } while (0); // @hack
+
+    sp20.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
+    sp20.vy = -0x1333;
+    sp20.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
+
+    sp10 = sp20;
+
+    if (g_MapEventParam->field_5 == 0x19)
+    {
+        Map_MessageWithSfx(0xB, 0x546, &sp10);
+    }
+    else
+    {
+        Map_MessageWithSfx(0xB, Sfx_DoorJammed, &sp10);
+    }
+}
 
 #include "maps/shared/MapEvent_DoorLocked.h" // 0x800D58A0
 
