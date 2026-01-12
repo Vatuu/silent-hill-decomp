@@ -216,12 +216,12 @@ void sharedFunc_800D209C_0_s00(void)
     g_SavegamePtr->equippedWeapon_AA         = InventoryItemId_Unequipped;
 
     Player_ControlFreeze();
-    sharedFunc_800D2C7C_0_s00(84);
+    sharedFunc_800D2C7C_0_s00(PlayerState_Unk84);
 }
 
-void sharedFunc_800D20D8_0_s00(void)
+void Player_MatchArmAnimDisable(void)
 {
-    g_SysWork.lighterArmAnimEnabled_2358 = false;
+    g_SysWork.enablePlayerMatchAnim_2358 = false;
 }
 
 void Player_ControlFreeze(void)
@@ -621,7 +621,7 @@ void sharedFunc_800D2D2C_0_s00(void)
     D_800C4606++;
 }
 
-void sharedFunc_800D2D44_0_s00(void)
+void Player_AnimLock(void)
 {
     Player_AnimFlagsClear(AnimFlag_Unlocked);
 }
@@ -631,7 +631,7 @@ s32 sharedFunc_800D2D6C_0_s00(void)
     return ~(g_SysWork.playerWork_4C.player_0.model_0.anim_4.flags_2 & AnimFlag_Unlocked);
 }
 
-void sharedFunc_800D2D84_0_s00(void)
+void Player_AnimUnlock(void)
 {
     Player_AnimFlagsSet(AnimFlag_Unlocked);
 }
@@ -668,7 +668,7 @@ s32 sharedFunc_800D2DAC_0_s00(void)
     }
 }
 
-s32 sharedFunc_800D2E50_0_s00(void)
+s32 Player_MoveDistanceClear(void)
 {
     return g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 == Q12(0.0f);
 }
@@ -711,7 +711,7 @@ void sharedFunc_800D2E7C_0_s00(void)
 {
 }
 
-void sharedFunc_800D2E84_0_s00(void)
+void Player_DamageFeetFront(void)
 {
 #if defined(MAP6_S04)
     s_SubCharacter* playerChara;

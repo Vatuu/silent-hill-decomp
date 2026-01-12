@@ -584,7 +584,7 @@ static inline void func_80071968_Switch1(void)
     }
     else
     {
-        WorldGfx_HeldItemAttach(Chara_Harry, g_SysWork.lighterArmAnimEnabled_2358 ? UNK_PACKED_DATA(2, 1) : UNK_PACKED_DATA(1, 1));
+        WorldGfx_HeldItemAttach(Chara_Harry, g_SysWork.enablePlayerMatchAnim_2358 ? UNK_PACKED_DATA(2, 1) : UNK_PACKED_DATA(1, 1));
     }
 }
 
@@ -1212,7 +1212,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
                     if (chara->health_B0 <= Q12(0.0f) && chara->properties_E4.player.afkTimer_E8 <= Q12(0.0f))
                     {
-                        g_MapOverlayHeader.func_DC();
+                        g_MapOverlayHeader.playerAnimLock_DC();
                         SysWork_StateSetNext(SysState_GameOver);
 
                         chara->health_B0                                                         = Q12(100.0f);
@@ -1304,7 +1304,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
                     if (chara->health_B0 <= Q12(0.0f) && chara->properties_E4.player.afkTimer_E8 <= Q12(0.0f))
                     {
-                        g_MapOverlayHeader.func_DC();
+                        g_MapOverlayHeader.playerAnimLock_DC();
 
                         SysWork_StateSetNext(SysState_GameOver);
 
@@ -1913,7 +1913,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
             if (chara->model_0.anim_4.keyframeIdx_8 == g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6)
             {
-                g_MapOverlayHeader.func_DC();
+                g_MapOverlayHeader.playerAnimLock_DC();
 
                 SysWork_StateSetNext(SysState_GameOver);
 
@@ -1966,7 +1966,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             {
                 if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S00)
                 {
-                    g_MapOverlayHeader.func_DC();
+                    g_MapOverlayHeader.playerAnimLock_DC();
                     Savegame_EventFlagSet(EventFlag_25);
 
                     func_8007E9C4();
@@ -1978,7 +1978,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     return;
                 }
 
-                g_MapOverlayHeader.func_DC();
+                g_MapOverlayHeader.playerAnimLock_DC();
 
                 SysWork_StateSetNext(SysState_GameOver);
 
@@ -2003,7 +2003,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
             if (chara->model_0.anim_4.keyframeIdx_8 == (g_MapOverlayHeader.field_38[D_800AF220].keyframeIdx_6 - 25))
             {
-                g_MapOverlayHeader.func_DC();
+                g_MapOverlayHeader.playerAnimLock_DC();
 
                 SysWork_StateSetNext(SysState_GameOver);
 
@@ -7392,7 +7392,7 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
             break;
     }
 
-    if (g_SysWork.lighterArmAnimEnabled_2358 && g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_Unk58)
+    if (g_SysWork.enablePlayerMatchAnim_2358 && g_SysWork.playerWork_4C.extra_128.state_1C < PlayerState_Unk58)
     {
         func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightUpperArm], FP_ANGLE(0.0f),   FP_ANGLE(63.3f), FP_ANGLE(-8.8f));
         func_80044F14(&g_SysWork.playerBoneCoords_890[HarryBone_RightForearm],  FP_ANGLE(-14.1f), FP_ANGLE(22.5f), FP_ANGLE(-30.8f));
@@ -7728,7 +7728,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                 sp40.vx = Q8_TO_Q12(sp80.vx);
                 sp40.vy = Q8_TO_Q12(sp80.vy);
                 sp40.vz = Q8_TO_Q12(sp80.vz);
-                g_MapOverlayHeader.func_17C(&sp30, &sp40);
+                g_MapOverlayHeader.particleBeamDraw_17C(&sp30, &sp40);
             }
         }
 
@@ -7801,7 +7801,7 @@ void Game_PlayerInfoInit(void) // 0x8007E5AC
     extraModel = &g_SysWork.playerWork_4C.player_0.model_0;
     model      = &g_SysWork.playerWork_4C.extra_128.model_0;
 
-    g_SysWork.lighterArmAnimEnabled_2358 = false;
+    g_SysWork.enablePlayerMatchAnim_2358 = false;
 
     extraModel->anim_4.flags_2 |= AnimFlag_Unlocked | AnimFlag_Visible;
     model->anim_4.flags_2      |= AnimFlag_Unlocked | AnimFlag_Visible;
@@ -7907,7 +7907,7 @@ void func_8007E8C0(void) // 0x8007E8C0
 
     if (g_SavegamePtr->mapOverlayId_A4 == MapOverlayId_MAP0_S01)
     {
-        g_SysWork.lighterArmAnimEnabled_2358 = false;
+        g_SysWork.enablePlayerMatchAnim_2358 = false;
     }
 
     chara->properties_E4.player.exhaustionTimer_FC = Q12(0.0f);

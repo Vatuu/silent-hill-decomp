@@ -1757,7 +1757,7 @@ typedef struct
 } s_SysWork_2388;
 STATIC_ASSERT_SIZEOF(s_SysWork_2388, 392);
 
-/** @brief Main engine system workspace. Stores key engine data. */
+/** @brief Main system workspace. Stores key engine data. */
 typedef struct _SysWork
 {
     s8              unk_0[8];
@@ -1804,7 +1804,7 @@ typedef struct _SysWork
     u32             flags_2352                    : 8;
     s8              targetNpcIdx_2353; /** Index of the NPC being targeted by the player. */
     s8              npcIdxs_2354[4];
-    u8              lighterArmAnimEnabled_2358; /** `bool` | Actives the animation that Harry performs when bringing the lighter at the beginning of the game. */
+    u8              enablePlayerMatchAnim_2358; /** `bool` | Activates the animation performed by Harry when lighting a match at the beginning of the game. */
     s8              unk_2359[1];
     u8              playerStopFlags_235A; /** `e_PlayerStopFlags` */
     s8              unk_235B[1];

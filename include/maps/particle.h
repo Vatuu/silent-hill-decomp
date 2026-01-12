@@ -117,7 +117,7 @@ extern s16 D_800F23D0; // MAP7_S03 extern, TODO: Might be sharedData?
 extern e_MapOverlayId g_ParticleMapOverlayId0;
 extern e_MapOverlayId g_ParticleMapOverlayId1;
 
-void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3);
+void Particle_SystemUpdate(s32 unused, e_MapOverlayId mapOverlayId, s32 arg3);
 
 /** @brief Checks if the particle spawn origin has moved significantly since the last tick.
  * 
@@ -193,6 +193,7 @@ bool func_800D0600(void);
 
 void Particle_BoundaryClamp(VECTOR3* point, VECTOR3* lineStart, VECTOR3* lineEnd, s32 flag);
 
+/** `Particle_EnvironmentSet`? */
 void sharedFunc_800D08B8_0_s00(s8 arg0, u32 arg1);
 
 void sharedFunc_800D0A60_0_s00(s32 caseArg);
@@ -205,6 +206,6 @@ void Particle_SoundStop(void);
 
 void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY);
 
-void Particle_BeamDraw(VECTOR3* vec0, VECTOR3* vec1);
+void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to);
 
 #endif

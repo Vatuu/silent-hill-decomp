@@ -27,7 +27,7 @@
 #if !MAP_USE_PARTICLES
 
 /** Barebones version of `Particle_SystemUpdate`, missing calls to `Particle_Update` and other particle-related code. */
-void Particle_SystemUpdate(s32 arg1, e_MapOverlayId mapOverlayId, s32 arg3)
+void Particle_SystemUpdate(s32 unused, e_MapOverlayId mapOverlayId, s32 arg3)
 {
     s32 temp_s0;
 
@@ -1749,7 +1749,7 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
             break;
 
         case 5:
-            if (arg0 < Rng_GenerateInt(10, 19) || g_SysWork.lighterArmAnimEnabled_2358 == 0)
+            if (arg0 < Rng_GenerateInt(10, 19) || g_SysWork.enablePlayerMatchAnim_2358 == 0)
             {
                 pos.vx = Q12_TO_Q8(D_800E32DC->vx - arg2->field_0.vx);
                 pos.vy = Q12_TO_Q8(D_800E32DC->vy - arg2->field_0.vy);
@@ -2777,7 +2777,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
 #endif
 
 #if defined(MAP0_S00)
-                if (g_SysWork.lighterArmAnimEnabled_2358 != 0)
+                if (g_SysWork.enablePlayerMatchAnim_2358 != 0)
                 {
                     setRGB0(poly, 0x12, 8, 8);
                 }
@@ -2964,7 +2964,7 @@ void Particle_RainDraw(s_Particle* part, s32 arg1)
 #endif
 
 #if defined(MAP0_S00)
-                if (g_SysWork.lighterArmAnimEnabled_2358 != 0)
+                if (g_SysWork.enablePlayerMatchAnim_2358 != 0)
                 {
                     setRGB0(poly, r + 0xA, g, b);
                 }
@@ -4199,11 +4199,11 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
 #endif
 }
 
-void Particle_BeamDraw(VECTOR3* vec0, VECTOR3* vec1)
+void Particle_BeamDraw(const VECTOR3* from, const VECTOR3* to)
 {
 #if !defined(MAP0_S00)
-    SVECTOR   vec0Delta;
-    SVECTOR   vec1Delta;
+    SVECTOR   fromDelta; // Q23.8
+    SVECTOR   toDelta;   // Q23.8
     MATRIX    matUnused0;
     MATRIX    worldMat;
     s32       depth;
@@ -4226,21 +4226,21 @@ void Particle_BeamDraw(VECTOR3* vec0, VECTOR3* vec1)
 
     prim = (POLY_FT4*)GsOUT_PACKET_P;
 
-    vec0Delta.vx = Q12_TO_Q8(vec0->vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
-    vec0Delta.vy = Q12_TO_Q8(vec0->vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
-    vec0Delta.vz = Q12_TO_Q8(vec0->vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
+    fromDelta.vx = Q12_TO_Q8(from->vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+    fromDelta.vy = Q12_TO_Q8(from->vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+    fromDelta.vz = Q12_TO_Q8(from->vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
 
-    gte_ldv0(&vec0Delta);
+    gte_ldv0(&fromDelta);
     gte_rtps();
 
-    vec1Delta.vx = Q12_TO_Q8(vec1->vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
-    vec1Delta.vy = Q12_TO_Q8(vec1->vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
-    vec1Delta.vz = Q12_TO_Q8(vec1->vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
+    toDelta.vx = Q12_TO_Q8(to->vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+    toDelta.vy = Q12_TO_Q8(to->vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+    toDelta.vz = Q12_TO_Q8(to->vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
 
     gte_stsxy(&prim->x0);
     gte_stszotz(&depth);
 
-    gte_ldv0(&vec1Delta);
+    gte_ldv0(&toDelta);
     gte_rtps();
     gte_stsxy(&prim->x1);
 

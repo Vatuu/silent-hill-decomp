@@ -1609,45 +1609,45 @@ typedef struct _MapOverlayHeader
     s8                     unk_5A[2];
     s_MapOverlayHeader_5C* field_5C;
     void                   (*func_60)(s32, s32);
-    s32                    (*func_64)(POLY_FT4**, s32);
-    s32                    (*func_68)(POLY_FT4**, s32);
+    s32                    (*func_64)(POLY_FT4** poly, s32);
+    s32                    (*func_68)(POLY_FT4** poly, s32);
     void                   (*func_6C)(); // func(?).
-    s32                    (*func_70)(POLY_FT4**, s32);
+    s32                    (*func_70)(POLY_FT4** poly, s32);
     void                   (*func_74)(); // func(?).
-    s32                    (*func_78)(POLY_FT4**, s32);
+    s32                    (*func_78)(POLY_FT4** poly, s32);
     s_MapOverlayHeader_7C* field_7C;     // only map1_s01, map6_s04.
     void                   (*func_80)(); // func(?).
-    s32                    (*func_84)(POLY_FT4**, s32);
-    s32*                   unk_88; // only map0_s01, map7_s01.
-    s32                    (*func_8C)(POLY_FT4**, s32); // func(?) only map0_s01, map7_s01.
-    s32                    (*func_90)(POLY_FT4**, s32); // func(?) only map5_s00.
+    s32                    (*func_84)(POLY_FT4** poly, s32);
+    s32*                   func_88; // only map0_s01, map7_s01.
+    s32                    (*func_8C)(POLY_FT4** poly, s32); // func(?) only map0_s01, map7_s01.
+    s32                    (*func_90)(POLY_FT4** poly, s32); // func(?) only map5_s00.
     s_MapOverlayHeader_94* field_94;                    // only map1_s02, map1_s03.
-    s32                    (*func_98)(POLY_FT4**, s32); // only map1_s02, map1_s03.
+    s32                    (*func_98)(POLY_FT4** poly, s32); // only map1_s02, map1_s03.
     void                   (*func_9C)();                // only map1_s02, map1_s03.
-    s32*                   unk_A0; // only map1_s03.
-    s32                    (*func_A4)(POLY_FT4**, s32); // func(?) only map1_s03.
+    s32*                   func_A0; // only map1_s03.
+    s32                    (*func_A4)(POLY_FT4** poly, s32); // func(?) only map1_s03.
     void                   (*func_A8)(); // func(?) only map6_s02.
-    s32                    (*func_AC)(POLY_FT4**, s32); // func(?) only map4_s03, map4_s05.
-    s32                    (*func_B0)(POLY_FT4**, s32); // func(?) only map4_s03, map4_s05.
-    s32                    (*func_B4)(POLY_FT4**, s32); // func(?) only map1_s03, map4_s05, map6_s01, map6_s02, map5_s01.
+    s32                    (*func_AC)(POLY_FT4** poly, s32); // func(?) only map4_s03, map4_s05.
+    s32                    (*func_B0)(POLY_FT4** poly, s32); // func(?) only map4_s03, map4_s05.
+    s32                    (*func_B4)(POLY_FT4** poly, s32); // func(?) only map1_s03, map4_s05, map6_s01, map6_s02, map5_s01.
     void                   (*func_B8)(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
     void                   (*func_BC)(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
     void                   (*func_C0)(); // func(?).
-    void                   (*func_C4)(); // func(?).
-    void                   (*freezePlayerControl_C8)();
-    void                   (*unfreezePlayerControl_CC)(bool);
+    void                   (*playerMatchArmAnimDisable_C4)(); // func(?).
+    void                   (*playerControlFreeze_C8)();
+    void                   (*playerControlUnfreeze_CC)(bool);
     s32                    (*func_D0)(s32 playerExtraState, VECTOR3* vec, q3_12 angle, s32 vecCount); // 0x800C964C
     s32                    (*func_D4)(s32);                  // Assumed return type.
     void                   (*func_D8)();                     // Assumed return type.
-    void                   (*func_DC)(void);
+    void                   (*playerAnimLock_DC)(void);
     void                   (*func_E0)(); // func(?).
-    s32                    (*func_E4)(s_SubCharacter*, s32); // Assumed return type.
+    s32                    (*playerAnimUnlock_E4)(s_SubCharacter*, s32); // Assumed return type.
     s64                    (*func_E8)(s_SubCharacter*);      // Is it really `s64`???
-    s32                    (*func_EC)();
+    s32                    (*playerMoveDistClear)();
     void                   (*func_F0)(); // func(?).
-    void                   (*func_F4)(); // func(?).
+    void                   (*playerFallBackward_F4)();
     void                   (*func_F8)(); // func(?).
-    void                   (*func_FC)(); // func(?).
+    void                   (*playerDamageFeetFront_FC)(); // func(?).
     void                   (*func_100)(); // func(?).
     void                   (*func_104)(); // func(?).
     s32                    (*func_108)();
@@ -1668,19 +1668,19 @@ typedef struct _MapOverlayHeader
     void                   (*func_144)(); // func(?).
     void                   (*func_148)(); // func(?).
     void                   (*func_14C)(); // func(?).
-    void                   (*func_150)(); // func(?).
+    void                   (*animStartKeyframeIdxGet_150)();
     void                   (*func_154)(); // func(?).
-    void                   (*func_158)(s32, s32); // only map1_s05, map1_s06.
+    void                   (*func_158)(q19_12 x, q19_12 z); // only map1_s05, map1_s06.
     void                   (*func_15C)(); // func(?) only map5_s01.
     void                   (*func_160)(); // func(?) only map5_s01.
     void                   (*func_164)(); // func(?) only map5_s01.
-    void                   (*ovlParticlesUpdate_168)(s32, s32 mapId, s32);
-    void                   (*ovlEnviromentSet_16C)(s8, u32);
+    void                   (*particlesUpdate_168)(s32 unused, s32 mapId, s32);
+    void                   (*enviromentSet_16C)(s8, u32);
     void                   (*func_170)(); // func(?).
     void                   (*func_174)(); // func(?).
-    void                   (*func_178)(VECTOR3* vec0, s16* rotX, s16* rotY);
-    void                   (*func_17C)(VECTOR3* vec0, VECTOR3* vec1);
-    void                   (*func_180)(); // func(?).
+    void                   (*func_178)(VECTOR3* vec0, q19_12* rotX, q19_12* rotY);
+    void                   (*particleBeamDraw_17C)(const VECTOR3* from, const VECTOR3* to);
+    void                   (*particleSoundStop_17C)();
     s32*                   windSpeedX_184;
     s32*                   windSpeedZ_188;
     s32*                   data_18C;

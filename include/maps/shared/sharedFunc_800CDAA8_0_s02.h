@@ -677,9 +677,9 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             func_8007FB94(playerChara, extra, 0x164);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
 
-            if (sharedFunc_800D2DAC_0_s00() == 1 && g_SysWork.lighterArmAnimEnabled_2358 == false)
+            if (sharedFunc_800D2DAC_0_s00() == 1 && g_SysWork.enablePlayerMatchAnim_2358 == false)
             {
-                g_SysWork.lighterArmAnimEnabled_2358 = true;
+                g_SysWork.enablePlayerMatchAnim_2358 = true;
                 func_8005DC1C(Sfx_Unk1356, &playerChara->position_18, Q8_CLAMPED(0.5f), 0);
             }
 

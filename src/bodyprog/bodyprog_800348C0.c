@@ -278,8 +278,8 @@ void Game_NpcInit(void) // 0x80034F18
 
     if (g_SysWork.field_234A)
     {
-        g_MapOverlayHeader.ovlEnviromentSet_16C(g_SysWork.field_2349, 127);
-        g_MapOverlayHeader.ovlParticlesUpdate_168(0, g_SavegamePtr->mapOverlayId_A4, 0);
+        g_MapOverlayHeader.enviromentSet_16C(g_SysWork.field_2349, 127);
+        g_MapOverlayHeader.particlesUpdate_168(0, g_SavegamePtr->mapOverlayId_A4, 0);
     }
 
     Game_NpcClear();
@@ -301,7 +301,7 @@ void Game_InGameInit(void) // 0x80034FB8
     WorldGfx_CharaModelProcessAllLoads();
     Game_FlashlightAttributesFix();
 
-    g_MapOverlayHeader.ovlParticlesUpdate_168(0, mapOvlId, NO_VALUE);
+    g_MapOverlayHeader.particlesUpdate_168(0, mapOvlId, NO_VALUE);
 
     Game_NpcClear();
 
@@ -746,7 +746,7 @@ void Math_MatrixTransform(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* coord) // 0
 void Gfx_MapEffectsSet(s32 unused) // 0x80035B58
 {
     Gfx_MapEffectsAssign(&g_MapOverlayHeader);
-    g_MapOverlayHeader.ovlEnviromentSet_16C(g_MapOverlayHeader.field_17, g_MapOverlayHeader.field_16);
+    g_MapOverlayHeader.enviromentSet_16C(g_MapOverlayHeader.field_17, g_MapOverlayHeader.field_16);
 }
 
 void func_80035B98(void) // 0x80035B98
@@ -2729,7 +2729,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
 
         if (g_SavegamePtr->mapOverlayId_A4 != MapOverlayId_MAP7_S03)
         {
-            g_MapOverlayHeader.ovlParticlesUpdate_168(0, g_SavegamePtr->mapOverlayId_A4, 1);
+            g_MapOverlayHeader.particlesUpdate_168(0, g_SavegamePtr->mapOverlayId_A4, 1);
         }
 
         Demo_DemoRandSeedRestore();
@@ -3292,7 +3292,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
 
     if (g_SysWork.isMgsStringSet_18 == 0)
     {
-        g_MapOverlayHeader.freezePlayerControl_C8();
+        g_MapOverlayHeader.playerControlFreeze_C8();
     }
 
     switch (Gfx_MapMsg_Draw(g_MapEventIdx)) 
@@ -3306,7 +3306,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
         case MapMsgState_SelectEntry0:
             Savegame_EventFlagSetAlt(g_MapEventParam->disabledEventFlag_2);
 
-            unfreezePlayerFunc = &g_MapOverlayHeader.unfreezePlayerControl_CC;
+            unfreezePlayerFunc = &g_MapOverlayHeader.playerControlUnfreeze_CC;
 
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -3443,7 +3443,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
-            g_MapOverlayHeader.freezePlayerControl_C8();
+            g_MapOverlayHeader.playerControlFreeze_C8();
             g_SysWork.field_28 = Q12(0.0f);
 
             if (g_GameWork.autosave_90.continueCount_27B < 99)
@@ -3586,7 +3586,7 @@ void SysState_GameOver_Update(void) // 0x8003A52C
             break;
 
         default:
-            g_MapOverlayHeader.unfreezePlayerControl_CC(0);
+            g_MapOverlayHeader.playerControlUnfreeze_CC(0);
             SysWork_StateSetNext(SysState_Gameplay);
             Game_WarmBoot();
             break;
