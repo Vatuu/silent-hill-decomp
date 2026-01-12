@@ -299,9 +299,7 @@ void func_800D5A98(void) // 0x800D5A98
     }
 }
 
-INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", D_800CB35C);
-
-extern VECTOR3 D_800CB35C; // TODO: Move to funcs once all are decomped.
+const VECTOR3 D_800CB35C = { 0x00015199, 0x00000000, 0xFFFEC000 };
 
 void func_800D5C98(void) // 0x800D5C98
 {
@@ -515,11 +513,193 @@ void func_800D63C4(void) // 0x800D63C4
     }
 }
 
-INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", D_800CB3E0);
+const VECTOR3 D_800CB3E0 = { 0x00015999, 0xFFFFFB34, 0xFFFEC000 };
 
-INCLUDE_RODATA("maps/map3_s05/nonmatchings/map3_s05", D_800CB3EC);
+const VECTOR3 D_800CB3EC = { 0x00015999, 0xFFFFF800, 0xFFFEC000 };
 
-INCLUDE_ASM("maps/map3_s05/nonmatchings/map3_s05", func_800D64E0);
+void func_800D64E0(void)
+{
+    s32 i;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            D_800DACEC = 0;
+            Gfx_MapEffectsUpdate(7, 9, PrimitiveType_S32, &D_800DACEC, 0, 0x64000);
+            break;
+
+        case 5:
+        case 7:
+        case 9:
+            D_800DACEC += Q12_MULT_PRECISE(g_DeltaTime0, 0x5000);
+            break;
+
+        case 11:
+        case 12:
+        case 13:
+            D_800DACEC += Q12_MULT_PRECISE(g_DeltaTime0, 0xA000);
+            break;
+
+        case 14:
+        case 15:
+            D_800DACEC -= Q12_MULT_PRECISE(g_DeltaTime0, 0x14000);
+            break;
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            SysWork_StateStepIncrementAfterFade(0, true, 2, 0, false);
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_80085DF0();
+            break;
+
+        case 2:
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(20.65f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-20.0f);
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12(0.25f);
+
+            g_SysWork.playerWork_4C.player_0.field_E1_0 = 0;
+            g_SysWork.playerWork_4C.player_0.field_E1_0 = 5;
+
+            Camera_PositionSet(NULL, 0x11266, -0x151E, -0x12B5C, 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, 0x14F5C, -0x1214, -0x13EE1, 0, 0, 0, 0, true);
+            func_8003D03C();
+            sharedFunc_800D2EB4_0_s00();
+            SysWork_StateStepIncrement(0);
+
+        case 3:
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 0x3B);
+            break;
+
+        case 4:
+            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, 0x80, 0);
+            SysWork_StateStepIncrement(0);
+
+        case 5:
+            SysWork_StateStepIncrementDelayed(0xCCC, false);
+            break;
+
+        case 6:
+            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, 0x80, 0);
+            SysWork_StateStepIncrement(0);
+            do {} while (0); // @hack
+            SysWork_StateStepIncrementDelayed(0x800, false);
+            break;
+
+        case 8:
+            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, 0x80, 0);
+            SysWork_StateStepIncrement(0);
+
+        case 9:
+            SysWork_StateStepIncrementDelayed(0xA66, false);
+            break;
+
+        case 10:
+            sharedData_800D8568_1_s05.field_1  = 3;
+            sharedData_800D8568_1_s05.flags_0  = 0x18;
+            sharedData_800D8568_1_s05.field_C  = 0x12C;
+            sharedData_800D8568_1_s05.field_12 = -0x333;
+            sharedData_800D8568_1_s05.field_14 = 0xCC;
+            sharedData_800D8568_1_s05.field_18 = 0x999;
+            sharedData_800D8568_1_s05.field_1A = 0x999;
+            sharedData_800D8568_1_s05.field_E  = -0x1000;
+            sharedData_800D8568_1_s05.field_20 = 0x15999;
+            sharedData_800D8568_1_s05.field_24 = -0x14000;
+            sharedData_800D8568_1_s05.field_3  = 0x20;
+            sharedData_800D8568_1_s05.field_4  = 0x40;
+            sharedData_800D8568_1_s05.field_6  = 0x2D;
+            sharedData_800D8568_1_s05.field_5  = 0x20;
+            sharedData_800D8568_1_s05.field_8  = 0x100;
+            sharedData_800D8568_1_s05.field_A  = 0x1000;
+            sharedData_800D8568_1_s05.field_2  = 8;
+
+            sharedFunc_800CAAD0_1_s05();
+            SD_Call(Sfx_Unk1533);
+            func_8008D438();
+            SysWork_StateStepIncrement(0);
+
+        case 11:
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 0x3C);
+            break;
+
+        case 12:
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 0x51);
+            Camera_PositionSet(NULL, 0x179C2, -0x2C7A, -0x12B0A, 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, 0x14A3D, -0xAB8, -0x14547, 0, 0, 0, 0, true);
+            break;
+
+        case 13:
+            SysWork_StateStepIncrementDelayed(0x3000, false);
+            break;
+
+        case 14:
+            sharedData_800D8568_1_s05.field_1 = 1;
+            sharedData_800D8568_1_s05.field_2 = 4;
+            SysWork_StateStepIncrementDelayed(0x800, false);
+            break;
+
+        case 15:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, 0, false);
+            break;
+
+        case 16:
+            Sd_SfxStop(Sfx_Unk1533);
+            SysWork_StateStepIncrement(0);
+
+        case 17:
+            SysWork_StateStepIncrementDelayed(0x1000, false);
+            break;
+
+        case 18:
+            func_8005DC1C(0x5FE, &D_800CB3E0, 0x80, 0);
+            SysWork_StateStepIncrement(0);
+
+        case 7:
+        case 19:
+            SysWork_StateStepIncrementDelayed(0x800, false);
+            break;
+
+        default:
+            Player_ControlUnfreeze(true);
+            SysWork_StateSetNext(SysState_Gameplay);
+
+            for (i = 0; i < 450; i++)
+            {
+                if (sharedData_800DFB7C_0_s00[i].field_A == 8 || sharedData_800DFB7C_0_s00[i].field_A == 0xB)
+                {
+                    sharedData_800DFB7C_0_s00[i].field_A = 0;
+                }
+            }
+
+            SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
+
+            Savegame_EventFlagSet(EventFlag_284);
+
+            Gfx_MapInitMapEffectsUpdate(7, 4);
+            func_8008D448();
+            vcReturnPreAutoCamWork(true);
+
+            g_SysWork.playerWork_4C.player_0.position_18.vx -= 0x1333;
+
+            SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
+
+            g_SysWork.playerWork_4C.player_0.field_E1_0 = 0;
+            g_SysWork.playerWork_4C.player_0.field_E1_0 = 3;
+
+            func_8003D01C();
+            sharedFunc_800D2EF4_0_s00();
+            break;
+    }
+
+    if (g_SysWork.sysStateStep_C[0] > 10 && g_SysWork.sysStateStep_C[0] < 16)
+    {
+        func_8005DE0C(0x5FD, &D_800CB3EC, 0x80 - Q12_MULT_PRECISE(D_800DD190, 0x80), 0x10000, 0);
+    }
+}
 
 void func_800D6BB4(void) // 0x800D6BB4
 {
