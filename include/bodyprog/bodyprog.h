@@ -1678,7 +1678,7 @@ typedef struct _MapOverlayHeader
     void                   (*enviromentSet_16C)(s8, u32);
     void                   (*func_170)(); // func(?).
     void                   (*func_174)(); // func(?).
-    void                   (*func_178)(VECTOR3* vec0, q19_12* rotX, q19_12* rotY);
+    void                   (*particleHyperBlasterBeamDraw_178)(VECTOR3* vec0, q19_12* rotX, q19_12* rotY);
     void                   (*particleBeamDraw_17C)(const VECTOR3* from, const VECTOR3* to);
     void                   (*particleSoundStop_17C)();
     s32*                   windSpeedX_184;
@@ -2725,6 +2725,7 @@ extern u8 D_800C4588;
 /** Player instance of this struct. */
 extern s_800C4590 D_800C4590;
 
+/** Q19.12 | Position. */
 extern VECTOR3 D_800C45B0; // Assumed type
 
 extern s_800C45C8 D_800C45C8;

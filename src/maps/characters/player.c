@@ -750,7 +750,7 @@ void sharedFunc_800D2E8C_0_s00(q19_12 posX, q19_12 posZ, VECTOR3* vec)
         g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118 = FP_ANGLE_ABS(ratan2(vec->vx, vec->vz));
     }
 
-    if (posX == 0 && posZ == 0)
+    if (posX == Q12(0.0f) && posZ == Q12(0.0f))
     {
         return;
     }

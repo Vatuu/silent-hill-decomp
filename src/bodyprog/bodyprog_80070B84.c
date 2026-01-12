@@ -7694,7 +7694,7 @@ void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
                     sp98.vx = chara->field_2A;
                 }
 
-                g_MapOverlayHeader.func_178(&sp20, &sp98.vx, &sp98.vy);
+                g_MapOverlayHeader.particleHyperBlasterBeamDraw_178(&sp20, &sp98.vx, &sp98.vy);
             }
         }
 
