@@ -678,6 +678,7 @@ GameFs_MapItemsTextureLoad                  = 0x80054024; // type:func
 Gfx_Items_Draw                              = 0x80054200; // type:func
 Gfx_Items_DrawInit                          = 0x80054558; // type:func
 Inventory_ExitAnimFixes                     = 0x80054634; // type:func
+Gfx_PlayerHeldItemAttach                    = 0x800546A8;
 Gfx_Items_Display                           = 0x80054720; // type:func
 Gfx_Items_SetAmbientLighting                = 0x80054928; // type:func
 Gfx_PickupItemAnimate                       = 0x80054AD8; // type:func
