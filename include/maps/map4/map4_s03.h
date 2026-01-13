@@ -107,6 +107,13 @@ extern u32 D_800DF568;
 extern u32 D_800DF56C;
 extern u32 D_800DF570;
 
+extern s32 D_800DAA44;
+extern s32 D_800DAA48;
+extern s32 D_800DAA4C;
+extern s32 D_800DAA50;
+extern s32 D_800DAA54;
+extern u16 D_800DB980[];
+
 extern s32 D_800E05A8;   // Angle?
 extern q3_12 D_800E05AC; // Angle?
 extern u16 D_800E05AE;

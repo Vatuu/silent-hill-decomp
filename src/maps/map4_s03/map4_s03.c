@@ -54,7 +54,149 @@ void func_800D078C(void) // 0x800D078C
     D_800DF570 = x >> 4;
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D0840);
+void func_800D0840(void) // 0x800D0840
+{
+    RECT sp10;
+    u16* ptr0;
+    u16* ptr1;
+    u16* ptr2;
+    s32  temp_s0;
+    s32  temp_s2;
+    s32  temp_s3;
+    s32  temp_t0;
+    s32  var_a0;
+    s32  var_a1_5;
+    s32  var_a2;
+    s32  i;
+    s32  var_v1;
+    s32  var_s6;
+
+    var_s6 = 7;
+
+    sp10.x = D_800DF570 * 16;
+    sp10.y = 1;
+    sp10.w = 16;
+    sp10.h = 1;
+
+    ptr0 = &D_800DB980;
+
+    StoreImage(&sp10, ptr0);
+    DrawSync(0);
+
+    temp_t0 = D_800DB980[7];
+
+    temp_s3 = (temp_t0 & 0x1F);
+    temp_s2 = ((temp_t0 >> 5) & 0x1F);
+    temp_s0 = ((temp_t0 >> 10) & 0x1F);
+
+    temp_s3 += D_800DAA4C;
+    temp_s2 += D_800DAA50;
+    temp_s0 += D_800DAA54;
+
+    ptr2 = &ptr0[16];
+    ptr1 = &ptr0[32];
+
+    Gfx_DebugStringPosition(0xA0, 0x5C);
+
+    for (i = 0; i < var_s6; i++)
+    {
+        ptr2[i] = 0;
+
+        temp_t0 = ptr0[i];
+
+        var_a2 = temp_t0 & 0x1F;
+        var_a0 = (temp_t0 >> 5) & 0x1F;
+        var_v1 = (temp_t0 >> 10) & 0x1F;
+
+        var_a2 = temp_s3 - var_a2;
+        var_a2 = MAX((var_a2 * D_800DAA44) >> 7, 0);
+        var_a2 = CLAMP_HIGH(var_a2, 0x1F);
+
+        var_a0 = temp_s2 - var_a0;
+        var_a0 = MAX((var_a0 * D_800DAA44) >> 7, 0);
+        var_a0 = CLAMP_HIGH(var_a0, 0x1F);
+
+        var_v1 = temp_s0 - var_v1;
+        var_v1 = MAX((var_v1 * D_800DAA44) >> 7, 0);
+        var_v1 = CLAMP_HIGH(var_v1, 0x1F);
+
+        if (temp_t0 != 0)
+        {
+            ptr1[i] = var_a2 | (var_a0 << 5) | (var_v1 << 10) | 0x8000;
+        }
+        else
+        {
+            ptr1[i] = 0;
+        }
+    }
+
+    for (; i < 16; i++)
+    {
+        temp_t0 = ptr0[i];
+
+        var_a2 = temp_t0 & 0x1F;
+        var_a0 = (temp_t0 >> 5) & 0x1F;
+        var_v1 = (temp_t0 >> 10) & 0x1F;
+
+        var_a2 = var_a2 - temp_s3;
+        var_a2 = MAX((var_a2 * D_800DAA48) >> 7, 0);
+        var_a2 = CLAMP_HIGH(var_a2, 0x1F);
+
+        var_a0 = var_a0 - temp_s2;
+        var_a0 = MAX((var_a0 * D_800DAA48) >> 7, 0);
+        var_a0 = CLAMP_HIGH(var_a0, 0x1F);
+
+        var_v1 = var_v1 - temp_s0;
+        var_v1 = MAX((var_v1 * D_800DAA48) >> 7, 0);
+        var_v1 = CLAMP_HIGH(var_v1, 0x1F);
+
+        if (temp_t0 != 0)
+        {
+            ptr2[i] = var_a2 | (var_a0 << 5) | (var_v1 << 10) | 0x8000;
+        }
+        else
+        {
+            ptr2[i] = 0;
+        }
+
+        ptr1[i] = 0;
+    }
+
+    sp10.y = 14;
+    sp10.h = 2;
+
+    LoadImage(&sp10, &D_800DB980[16]);
+    DrawSync(0);
+
+    D_800DB980[0] = 0;
+
+    ptr0 = &D_800DB980[1];
+
+    for (i = 1; i < 16; i++, ptr0++)
+    {
+        var_a2 = i * 2;
+        var_a2 = Q12_MULT_PRECISE(var_a2, 0x666);
+
+        var_a2 = MAX(var_a2, 0);
+        var_a2 = CLAMP_HIGH(var_a2, 0x1F);
+
+        temp_t0 = Q12_MULT_PRECISE(i * 2, 0x599);
+
+        var_a1_5 = MAX(temp_t0, 0);
+        var_a1_5 = CLAMP_HIGH(var_a1_5, 0x1F);
+
+        var_a0 = MAX(temp_t0, 0);
+        var_a0 = CLAMP_HIGH(var_a0, 0x1F);
+
+        *ptr0 = (var_a1_5 << 5) | (var_a0 << 10) | var_a2 | ~0x7FFF;
+    }
+
+    sp10.y = 13;
+    sp10.h = 1;
+
+    LoadImage(&sp10, &D_800DB980);
+    DrawSync(0);
+}
 
 void func_800D0C50(SVECTOR* rot, MATRIX* mat) // 0x800D0C50
 {
