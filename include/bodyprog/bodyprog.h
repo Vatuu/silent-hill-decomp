@@ -1722,14 +1722,14 @@ typedef struct
 
 typedef struct
 {
-    s8      field_0; /** `bool` */
-    u8      field_1;
-    s8      unk_2[2]; // Probably padding.
-    VECTOR3 field_4;  // Q19.12
+    s8              field_0; /** `bool` */
+    u8              field_1;
+    s8              unk_2[2]; // Probably padding.
+    VECTOR3         field_4;  // Q19.12
     s_SubCharacter* field_10;
-    s32     field_14;
-    s32     field_18;
-    q7_8    field_1C; // Angle.
+    s32             field_14;
+    s32             field_18;
+    q7_8            field_1C; // Angle.
 } s_func_800700F8_2;
 
 typedef struct

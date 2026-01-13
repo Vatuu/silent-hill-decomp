@@ -311,6 +311,7 @@ void func_800DB288(void);
 
 void func_800DB608(void);
 
+// Returns `bool`?
 s32 func_800DC6DC(s32*, s32*, VECTOR3*, s_800F3DAC*);
 
 void func_800DCD94(MATRIX* mat, VECTOR3* pos);

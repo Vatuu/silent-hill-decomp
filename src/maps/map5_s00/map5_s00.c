@@ -92,13 +92,13 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D631C);
 
 s32 func_800D63DC(s32* screenXy) // 0x800D63DC
 {
-    SVECTOR v;
+    SVECTOR vec;
     s32     p;
 
-    v.vx = 0;
-    v.vy = 0;
-    v.vz = 0;
-    return RotTransPers(&v, screenXy, &p, &p);
+    vec.vx = 0;
+    vec.vy = 0;
+    vec.vz = 0;
+    return RotTransPers(&vec, screenXy, &p, &p);
 }
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D6414);

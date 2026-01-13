@@ -31,12 +31,12 @@ INCLUDE_RODATA("maps/map4_s03/nonmatchings/map4_s03", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CD940_3_s03.h" // 0x800D074C
 
-void func_800D078C(void)                           // 0x800D078C
+void func_800D078C(void) // 0x800D078C
 {
-    s_Texture* tex;
     u32        tpage1;
     u16        x;
     u16        y;
+    s_Texture* tex;
 
     tex    = func_80042178("SPUM602F");
     tpage1 = tex->imageDesc_0.tPage[1];
@@ -48,9 +48,9 @@ void func_800D078C(void)                           // 0x800D078C
     D_800DF55C = tpage1 | 0x40;
 
     D_800DF560 = getClut(x, y + 1);
-    D_800DF564 = getClut(x, y + 0xE);
-    D_800DF568 = getClut(x, y + 0xF);
-    D_800DF56C = getClut(x, y + 0xD);
+    D_800DF564 = getClut(x, y + 14);
+    D_800DF568 = getClut(x, y + 15);
+    D_800DF56C = getClut(x, y + 13);
     D_800DF570 = x >> 4;
 }
 
@@ -780,13 +780,13 @@ bool func_800D5BF8(s32 arg0, s32 arg1, s32 arg2, u16* arg3) // 0x800D5BF8
     bool newBit;
     bool bitChanged;
 
-    prevBit    = (*arg3 >> arg0) & 1;
+    prevBit    = (*arg3 >> arg0) & 0x1;
     newBit     = (arg2 < arg1);
     bitChanged = prevBit ^ newBit;
 
     if (newBit)
     {
-        *arg3 |= (1 << arg0);
+        *arg3 |= 1 << arg0;
     }
     else
     {

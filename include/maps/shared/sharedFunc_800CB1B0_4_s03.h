@@ -2,7 +2,7 @@
 
 #include <psyq/gtemac.h>
 
-bool sharedFunc_800CB1B0_4_s03(POLY_FT4** arg0, s32 arg1)
+bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
 {
     typedef struct
     {
@@ -26,11 +26,11 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** arg0, s32 arg1)
     s_Collision       sp160;
     VECTOR3           sp170;
     VECTOR3           sp180;
-    POLY_FT4*         next;
     s16               temp_v0_9;
     s32               temp_a3;
     s32               temp_s1;
     s32               i;
+    POLY_FT4*         next;
     s_func_800CB1B0*  ptr;
     s_SubCharacter*   sub;
 
@@ -45,8 +45,8 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** arg0, s32 arg1)
 
     ptr->field_148 = Math_Sin(-sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_2);
     ptr->field_14A = Math_Cos(-sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_2);
-    ptr->field_14C = Math_Sin(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 + 0x800);
-    ptr->field_14E = Math_Cos(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 + 0x800);
+    ptr->field_14C = Math_Sin(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 + FP_ANGLE(180.0f));
+    ptr->field_14E = Math_Cos(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 + FP_ANGLE(180.0f));
 
     ptr->field_154 = ((D_800C4418.field_C - 1) *
                       CLAMP_HIGH(Q12_MULT_PRECISE(D_800C4418.field_0, D_800C4418.field_8 - sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0),
@@ -87,12 +87,12 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** arg0, s32 arg1)
                           ptr->field_144) >>
                          4;
 
-        setPolyFT4(*arg0);
+        setPolyFT4(*poly);
 
-        setXY0Fast(*arg0, (u16)ptr->field_140.vx - (u16)ptr->field_150, ptr->field_140.vy + ptr->field_150);
-        setXY1Fast(*arg0, (u16)ptr->field_140.vx + (u16)ptr->field_150, ptr->field_140.vy + ptr->field_150);
-        setXY2Fast(*arg0, (u16)ptr->field_140.vx - (u16)ptr->field_150, ptr->field_140.vy - ptr->field_150);
-        setXY3Fast(*arg0, (u16)ptr->field_140.vx + (u16)ptr->field_150, ptr->field_140.vy - ptr->field_150);
+        setXY0Fast(*poly, (u16)ptr->field_140.vx - (u16)ptr->field_150, ptr->field_140.vy + ptr->field_150);
+        setXY1Fast(*poly, (u16)ptr->field_140.vx + (u16)ptr->field_150, ptr->field_140.vy + ptr->field_150);
+        setXY2Fast(*poly, (u16)ptr->field_140.vx - (u16)ptr->field_150, ptr->field_140.vy - ptr->field_150);
+        setXY3Fast(*poly, (u16)ptr->field_140.vx + (u16)ptr->field_150, ptr->field_140.vy - ptr->field_150);
 
         ptr->field_15C = 0x80 - ((temp_a3 << 7) / (D_800C4418.field_C + 1));
         ptr->field_15C = (ptr->field_15C * func_80055D78(ptr->field_12C.vx, ptr->field_12C.vy, ptr->field_12C.vz)) >> 8;
@@ -109,27 +109,27 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** arg0, s32 arg1)
             sharedData_800DFB7C_0_s00[arg1].field_A = 0;
         }
 
-        setRGB0Fast(*arg0, ptr->field_15C >> 2, ptr->field_15C >> 2, ptr->field_15C >> 2);
-        setSemiTrans(*arg0, 1);
+        setRGB0Fast(*poly, ptr->field_15C >> 2, ptr->field_15C >> 2, ptr->field_15C >> 2);
+        setSemiTrans(*poly, 1);
 
-        *(s32*)&(*arg0)->u0 = ((i & 1) << 6) + ((i & 2) ? 0xE4000 : 0xE0000);
-        *(s32*)&(*arg0)->u1 = ((i & 1) ? 0x7F : 0x3F) + ((i & 2) ? 0x2D4000 : 0x2D0000);
-        *(u16*)&(*arg0)->u2 = (!(i & 1) ? 0 : 1 << 6) + ((i & 2) ? 0x7F00 : 0x3F00);
-        *(u16*)&(*arg0)->u3 = ((i & 1) ? 0x7F : 0x3F) + (!(i & 2) ? 0x3F00 : 0x7F00);
+        *(s32*)&(*poly)->u0 = ((i & 1) << 6) + ((i & 2) ? 0xE4000 : 0xE0000);
+        *(s32*)&(*poly)->u1 = ((i & 1) ? 0x7F : 0x3F) + ((i & 2) ? 0x2D4000 : 0x2D0000);
+        *(u16*)&(*poly)->u2 = (!(i & 1) ? 0 : 1 << 6) + ((i & 2) ? 0x7F00 : 0x3F00);
+        *(u16*)&(*poly)->u3 = ((i & 1) ? 0x7F : 0x3F) + (!(i & 2) ? 0x3F00 : 0x7F00);
 
-        next  = *arg0 + 1;
-        *next = *(*arg0);
+        next  = *poly + 1;
+        *next = *(*poly);
 
-        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_144 - 0x20) >> 3], *arg0);
-        *arg0 += 1;
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_144 - 0x20) >> 3], *poly);
+        *poly += 1;
 
-        setRGB0Fast(*arg0, ptr->field_15C, ptr->field_15C, ptr->field_15C);
+        setRGB0Fast(*poly, ptr->field_15C, ptr->field_15C, ptr->field_15C);
 
-        (*arg0)->tpage = 0x4D;
-        (*arg0)->clut  = 0x4E;
+        (*poly)->tpage = 77;
+        (*poly)->clut  = 78;
 
-        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_144 - 0x20) >> 3], *arg0);
-        *arg0 += 1;
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_144 - 0x20) >> 3], *poly);
+        *poly += 1;
     }
 
     sp10 = ptr->field_0;
@@ -184,13 +184,13 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** arg0, s32 arg1)
             sharedFunc_800CBE54_4_s03(&sp140.field_4, 1);
             sharedFunc_800CBE54_4_s03(&sp180, 1);
 
-            if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == 0xF)
+            if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_Floatstinger)
             {
-                sub->attackReceived_41 = 0x3C;
+                sub->attackReceived_41 = 60;
             }
-            else if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == 0x14)
+            else if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_Twinfeeler)
             {
-                sub->attackReceived_41 = 0x3E;
+                sub->attackReceived_41 = 62;
             }
         }
         else

@@ -2,7 +2,7 @@
 
 #include <psyq/gtemac.h>
 
-bool sharedFunc_800CC004_4_s03(POLY_FT4** arg0, s32 arg1)
+bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 arg1)
 {
     typedef struct
     {
@@ -21,7 +21,7 @@ bool sharedFunc_800CC004_4_s03(POLY_FT4** arg0, s32 arg1)
 
     sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 += g_DeltaTime0;
 
-    if (sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 > 0x1666)
+    if (sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 > Q12(1.4f))
     {
         sharedData_800DFB7C_0_s00[arg1].field_A = 0;
         return false;
@@ -45,39 +45,39 @@ bool sharedFunc_800CC004_4_s03(POLY_FT4** arg0, s32 arg1)
         return false;
     }
 
-    setPolyFT4(*arg0);
+    setPolyFT4(*poly);
 
     ptr->field_13C = (ptr->field_0.field_2C * Q12_MULT_PRECISE(sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_2, FP_TO(sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 >> 1, Q12_SHIFT) / 5734 + 0x800) / ptr->field_138) >> 4;
 
-    setXY0Fast(*arg0, (u16)ptr->field_134.vx - (u16)ptr->field_13C, ptr->field_134.vy + ptr->field_13C);
-    setXY1Fast(*arg0, (u16)ptr->field_134.vx + (u16)ptr->field_13C, ptr->field_134.vy + ptr->field_13C);
-    setXY2Fast(*arg0, (u16)ptr->field_134.vx - (u16)ptr->field_13C, ptr->field_134.vy - ptr->field_13C);
-    setXY3Fast(*arg0, (u16)ptr->field_134.vx + (u16)ptr->field_13C, ptr->field_134.vy - ptr->field_13C);
+    setXY0Fast(*poly, (u16)ptr->field_134.vx - (u16)ptr->field_13C, ptr->field_134.vy + ptr->field_13C);
+    setXY1Fast(*poly, (u16)ptr->field_134.vx + (u16)ptr->field_13C, ptr->field_134.vy + ptr->field_13C);
+    setXY2Fast(*poly, (u16)ptr->field_134.vx - (u16)ptr->field_13C, ptr->field_134.vy - ptr->field_13C);
+    setXY3Fast(*poly, (u16)ptr->field_134.vx + (u16)ptr->field_13C, ptr->field_134.vy - ptr->field_13C);
 
-    if (sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 > 0x666)
+    if (sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 > Q12(0.4f))
     {
-        ptr->field_140 = sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 - (sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 * (sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 - 0x666)) / 0x1000;
+        ptr->field_140 = sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 - (sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 * (sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0 - Q12(0.4f))) / Q12(1.0f);
     }
     else
     {
-        ptr->field_140 = (sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 * sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0) / 0x666;
+        ptr->field_140 = (sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 * sharedData_800DFB7C_0_s00[arg1].field_C.s_2.field_0) / Q12(0.4f);
     }
 
     ptr->field_140 = (ptr->field_140 * (func_80055D78(sharedData_800DFB7C_0_s00[arg1].field_0.vx_0, sharedData_800DFB7C_0_s00[arg1].vy_8, sharedData_800DFB7C_0_s00[arg1].field_4.vz_4))) >> 8;
 
-    setRGB0Fast(*arg0, ptr->field_140 >> 1, ptr->field_140 >> 1, ptr->field_140 >> 1);
-    setSemiTrans(*arg0, 1);
+    setRGB0Fast(*poly, ptr->field_140 >> 1, ptr->field_140 >> 1, ptr->field_140 >> 1);
+    setSemiTrans(*poly, 1);
 
-    *(s32*)&(*arg0)->u0 = (((sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 1) == 0) << 6) +
+    *(s32*)&(*poly)->u0 = (((sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 1) == 0) << 6) +
                           (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 2) ? 0xE4000 : 0xE0000);
 
-    *(s32*)&(*arg0)->u1 = (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 1) ? 0x7F : 0x3F) +
+    *(s32*)&(*poly)->u1 = (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 1) ? 0x7F : 0x3F) +
                           (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 2) ? 0x2D4000 : 0x2D0000);
 
-    *(u16*)&(*arg0)->u2 = (((sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 1) == 0) << 6) |
+    *(u16*)&(*poly)->u2 = (((sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 1) == 0) << 6) |
                           (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 2) ? 0x7F00 : 0x3F00);
 
-    *(u16*)&(*arg0)->u3 = (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 1) ? 0x7F : 0x3F) |
+    *(u16*)&(*poly)->u3 = (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 1) ? 0x7F : 0x3F) |
                           (!(sharedData_800DFB7C_0_s00[arg1].field_10.s_2.field_0 & 2) ? 0x7F00 : 0x3F00);
 
     if (sharedData_800DFB7C_0_s00[arg1].field_B != 0)
@@ -89,19 +89,19 @@ bool sharedFunc_800CC004_4_s03(POLY_FT4** arg0, s32 arg1)
         ptr->field_138 -= 0x10;
     }
 
-    next  = *arg0 + 1;
-    *next = *(*arg0);
+    next  = *poly + 1;
+    *next = *(*poly);
 
-    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_138 >> 3], *arg0);
-    *arg0 += 1;
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_138 >> 3], *poly);
+    *poly += 1;
 
-    setRGB0Fast(*arg0, ptr->field_140, ptr->field_140, ptr->field_140);
+    setRGB0Fast(*poly, ptr->field_140, ptr->field_140, ptr->field_140);
 
-    (*arg0)->tpage = 0x4D;
-    (*arg0)->clut  = 0x4E;
+    (*poly)->tpage = 77;
+    (*poly)->clut  = 78;
 
-    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_138 >> 3], *arg0);
-    *arg0 += 1;
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_138 >> 3], *poly);
+    *poly += 1;
 
     return true;
 }

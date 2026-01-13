@@ -5,9 +5,8 @@ void sharedFunc_800CBE54_4_s03(VECTOR3* arg0, s32 arg1)
 
     for (i = 0; i < 12; i++)
     {
-        idx = func_8005E7E0(0x22);
-
-        if (idx == -1)
+        idx = func_8005E7E0(34);
+        if (idx == NO_VALUE)
         {
             break;
         }

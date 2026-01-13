@@ -123,6 +123,8 @@ extern s32 D_800DAA58[];
 
 extern s_SfxVolume D_800DB1F8[6];
 
+void func_800D078C(void);
+
 void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 
 // TODO: Could be `SVECTOR3`, need to check callers.

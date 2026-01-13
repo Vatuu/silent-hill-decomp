@@ -449,11 +449,11 @@ void func_800DCDDC(s_800F3DAC* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800DCDDC
     VECTOR  sp28;
     SVECTOR sp38;
     VECTOR  sp40;
-    MATRIX* mat;
     s32     cond;
     s32     rand;
     s32     i;
     s32     randSum;
+    MATRIX* mat;
 
     randSum = 0;
     mat     = &arg0->mat_118[0];
@@ -482,6 +482,7 @@ void func_800DCDDC(s_800F3DAC* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800DCDDC
             arg0->field_14--;
             func_800DB6D0(mat, &sp18, &sp28, mat - 1, arg0->field_14);
         }
+
         SetRotMatrix(mat);
         func_800DCD94(mat, &sp18);
 
@@ -517,8 +518,8 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD044);
 
 s_800F3DAC* func_800DD090(void) // 0x800DD090
 {
-    s_800F3DAC* ptr;
     s32         i;
+    s_800F3DAC* ptr;
 
     ptr = D_800F3DAC;
 
