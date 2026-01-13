@@ -45,11 +45,11 @@ void func_800D0C50(SVECTOR* rot, MATRIX* mat) // 0x800D0C50
     SetMulRotMatrix(&outMat);
 }
 
-void func_800D0CA0(int yaw, SVECTOR* pos) // 0x800D0CA0
+void func_800D0CA0(q19_12 rotY, SVECTOR* pos) // 0x800D0CA0
 {
-    MATRIX      mtx;
+    MATRIX      mat;
     VECTOR      trans;
-    SVECTOR     rot;
+    SVECTOR     rot; // Q3.12
     s_800E0988* ptr;
 
     ptr = &D_800E0988;
@@ -63,50 +63,49 @@ void func_800D0CA0(int yaw, SVECTOR* pos) // 0x800D0CA0
     trans.vy += ptr->world_8.t[1];
     trans.vz += ptr->world_8.t[2];
 
-    TransMatrix(&mtx, &trans);
-    SetTransMatrix(&mtx);
+    TransMatrix(&mat, &trans);
+    SetTransMatrix(&mat);
 
-    rot.vx = 0;
-    rot.vy = yaw;
-    rot.vz = 0;
-    Math_RotMatrixZxyNeg(&rot, &mtx);
-    SetMulRotMatrix(&mtx);
+    rot.vx = FP_ANGLE(0.0f);
+    rot.vy = rotY;
+    rot.vz = FP_ANGLE(0.0f);
+    Math_RotMatrixZxyNeg(&rot, &mat);
+    SetMulRotMatrix(&mat);
 }
 
-void func_800D0D6C(MATRIX* out, SVECTOR* pos, short yaw) // 0x800D0D6C
+void func_800D0D6C(MATRIX* out, SVECTOR* pos, q3_12 rotY) // 0x800D0D6C
 {
-    SVECTOR     rot;
+    SVECTOR     rot; // Q3.12
     s_800E0988* ptr;
 
     ptr = &D_800E0988;
 
-    rot.vx = 0;
-    rot.vy = yaw;
-    rot.vz = 0;
-
+    rot.vx = FP_ANGLE(0.0f);
+    rot.vy = rotY;
+    rot.vz = FP_ANGLE(0.0f);
     Math_RotMatrixXyz(&rot, out);
 
-    out->t[0] = (ptr->x_0 >> 4) + pos->vx;
-    out->t[1] = 0;
-    out->t[2] = (ptr->z_4 >> 4) + pos->vz;
+    out->t[0] = Q12_TO_Q8(ptr->x_0) + pos->vx;
+    out->t[1] = Q12_TO_Q8(Q12(0.0f));
+    out->t[2] = Q12_TO_Q8(ptr->z_4) + pos->vz;
 }
 
-void func_800D0DE4(SVECTOR* out, VECTOR* in, int ang, int dist) // 0x800D0DE4
+void func_800D0DE4(SVECTOR* out, VECTOR* in, q19_12 headingAngle, q19_12 dist) // 0x800D0DE4
 {
-    int dx;
-    int dz;
-    int x;
-    int z;
+    q19_12 offsetX;
+    q19_12 offsetZ;
+    s32    x;
+    s32    z;
 
-    dx = Q12_MULT_PRECISE(Math_Sin(ang), dist);
-    dz = Q12_MULT_PRECISE(Math_Cos(ang), dist);
+    offsetX = Q12_MULT_PRECISE(Math_Sin(headingAngle), dist);
+    offsetZ = Q12_MULT_PRECISE(Math_Cos(headingAngle), dist);
 
     x = in->vx - D_800E0988.x_0;
     z = in->vz - D_800E0988.z_4;
 
-    out->vx = (x + dx) >> 4;
-    out->vy = in->vy >> 4;
-    out->vz = (z + dz) >> 4;
+    out->vx = Q12_TO_Q8(x + offsetX);
+    out->vy = Q12_TO_Q8(in->vy);
+    out->vz = Q12_TO_Q8(z + offsetZ);
 }
 
 void func_800D0EC0(u8* buf, s32 w, s32 h) // 0x800D0EC0
@@ -187,11 +186,13 @@ void func_800D13B4(u8* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800D13B4
     }
 }
 
-void func_800D1478(SVECTOR* arg0, s32 arg1, s32 ang, s32 mode, SVECTOR* arg4) // 0x800D1478
+void func_800D1478(SVECTOR* arg0, s32 arg1, q19_12 headingAgle, s32 mode, SVECTOR* arg4) // 0x800D1478
 {
-    s32 x, y, z;
-    s32 dist;
-    s32 add;
+    s32    x;
+    s32    y;
+    s32    z;
+    q19_12 dist;
+    q19_12 angleStep;
 
     x = 0;
     y = 0;
@@ -202,11 +203,11 @@ void func_800D1478(SVECTOR* arg0, s32 arg1, s32 ang, s32 mode, SVECTOR* arg4) //
         case 0:
         case 1:
             dist = (arg1 > Q12(0.75f)) ? 128 : 76;
-            add  = mode ? FP_ANGLE(-90.0f) : FP_ANGLE(90.0f);
-            ang += add;
+            angleStep  = mode ? FP_ANGLE(-90.0f) : FP_ANGLE(90.0f);
+            headingAgle += angleStep;
 
-            x = Q12_MULT_PRECISE(dist, Math_Sin(ang));
-            z = Q12_MULT_PRECISE(dist, Math_Cos(ang));
+            x = Q12_MULT_PRECISE(dist, Math_Sin(headingAgle));
+            z = Q12_MULT_PRECISE(dist, Math_Cos(headingAgle));
             y = (arg1 > Q12(0.75f)) ? 0x59 : 0x80;
             break;
 

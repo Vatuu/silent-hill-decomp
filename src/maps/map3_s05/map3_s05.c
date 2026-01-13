@@ -1,6 +1,6 @@
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/math/math.h"
 #include "bodyprog/item_screens.h"
+#include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
@@ -131,13 +131,13 @@ void func_800D57E8(void) // 0x800D57E8
 {
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    if (g_MapEventParam->field_5 == 0x19)
+    if (g_MapEventParam->field_5 == 25)
     {
-        Map_MessageWithSfx(0xB, Sfx_Unk1350, &sfxPos);
+        Map_MessageWithSfx(11, Sfx_Unk1350, &sfxPos);
     }
     else
     {
-        Map_MessageWithSfx(0xB, Sfx_DoorJammed, &sfxPos);
+        Map_MessageWithSfx(11, Sfx_DoorJammed, &sfxPos);
     }
 }
 
@@ -211,7 +211,7 @@ void func_800D59D4(void) // 0x800D59D4
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_BasementStoreroomKey, 1);
-    Map_MessageWithSfx(0x1B, Sfx_UseKey, &sfxPos);
+    Map_MessageWithSfx(27, Sfx_UseKey, &sfxPos);
 
     Savegame_MapMarkingSet(MapMarkFlag_FogHospital3F_NearElevatorBroken);
     Savegame_EventFlagSet(EventFlag_256);
@@ -496,7 +496,7 @@ const VECTOR3 D_800CB3E0 = { 0x00015999, 0xFFFFFB34, 0xFFFEC000 };
 
 const VECTOR3 D_800CB3EC = { 0x00015999, 0xFFFFF800, 0xFFFEC000 };
 
-void func_800D64E0(void)
+void func_800D64E0(void) // 0x800D64E0
 {
     s32 i;
 
@@ -510,18 +510,18 @@ void func_800D64E0(void)
         case 5:
         case 7:
         case 9:
-            D_800DACEC += Q12_MULT_PRECISE(g_DeltaTime0, 0x5000);
+            D_800DACEC += Q12_MULT_PRECISE(g_DeltaTime0, Q12(5.0f));
             break;
 
         case 11:
         case 12:
         case 13:
-            D_800DACEC += Q12_MULT_PRECISE(g_DeltaTime0, 0xA000);
+            D_800DACEC += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
             break;
 
         case 14:
         case 15:
-            D_800DACEC -= Q12_MULT_PRECISE(g_DeltaTime0, 0x14000);
+            D_800DACEC -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(20.0f));
             break;
     }
 
@@ -537,64 +537,66 @@ void func_800D64E0(void)
             break;
 
         case 2:
+            // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(20.65f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-20.0f);
             g_SysWork.playerWork_4C.player_0.rotation_24.vy = Q12(0.25f);
-
             g_SysWork.playerWork_4C.player_0.field_E1_0 = 0;
             g_SysWork.playerWork_4C.player_0.field_E1_0 = 5;
 
-            Camera_PositionSet(NULL, 0x11266, -0x151E, -0x12B5C, 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, 0x14F5C, -0x1214, -0x13EE1, 0, 0, 0, 0, true);
+            // Warp camera.
+            Camera_PositionSet(NULL, Q12(17.15f), Q12(-1.32f), Q12(-18.71f), 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, Q12(20.96f), Q12(-1.13f), -Q12(19.93f), 0, 0, 0, 0, true);
+
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement(0);
 
         case 3:
-            func_80086C58(&g_SysWork.playerWork_4C.player_0, 0x3B);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 59);
             break;
 
         case 4:
-            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 5:
-            SysWork_StateStepIncrementDelayed(0xCCC, false);
+            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
             break;
 
         case 6:
-            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 7:
-            SysWork_StateStepIncrementDelayed(0x800, false);
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 8:
-            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1532, &D_800CB35C, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 9:
-            SysWork_StateStepIncrementDelayed(0xA66, false);
+            SysWork_StateStepIncrementDelayed(Q12(0.65f), false);
             break;
 
         case 10:
             sharedData_800D8568_1_s05.field_1  = 3;
             sharedData_800D8568_1_s05.flags_0  = 0x18;
             sharedData_800D8568_1_s05.field_C  = 0x12C;
-            sharedData_800D8568_1_s05.field_12 = -0x333;
-            sharedData_800D8568_1_s05.field_14 = 0xCC;
-            sharedData_800D8568_1_s05.field_18 = 0x999;
-            sharedData_800D8568_1_s05.field_1A = 0x999;
-            sharedData_800D8568_1_s05.field_E  = -0x1000;
-            sharedData_800D8568_1_s05.field_20 = 0x15999;
-            sharedData_800D8568_1_s05.field_24 = -0x14000;
+            sharedData_800D8568_1_s05.field_12 = Q12(-0.2f);
+            sharedData_800D8568_1_s05.field_14 = Q12(0.05f);
+            sharedData_800D8568_1_s05.field_18 = Q12(0.6f);
+            sharedData_800D8568_1_s05.field_1A = Q12(0.6f);
+            sharedData_800D8568_1_s05.field_E  = Q12(-1.0f);
+            sharedData_800D8568_1_s05.field_20 = Q12(21.6f);
+            sharedData_800D8568_1_s05.field_24 = Q12(-20.0f);
             sharedData_800D8568_1_s05.field_3  = 0x20;
             sharedData_800D8568_1_s05.field_4  = 0x40;
             sharedData_800D8568_1_s05.field_6  = 0x2D;
             sharedData_800D8568_1_s05.field_5  = 0x20;
             sharedData_800D8568_1_s05.field_8  = 0x100;
-            sharedData_800D8568_1_s05.field_A  = 0x1000;
+            sharedData_800D8568_1_s05.field_A  = Q12(1.0f);
             sharedData_800D8568_1_s05.field_2  = 8;
 
             sharedFunc_800CAAD0_1_s05();
@@ -603,23 +605,26 @@ void func_800D64E0(void)
             SysWork_StateStepIncrement(0);
 
         case 11:
-            func_80086C58(&g_SysWork.playerWork_4C.player_0, 0x3C);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 60);
             break;
 
         case 12:
-            func_80086C58(&g_SysWork.playerWork_4C.player_0, 0x51);
-            Camera_PositionSet(NULL, 0x179C2, -0x2C7A, -0x12B0A, 0, 0, 0, 0, true);
-            Camera_LookAtSet(NULL, 0x14A3D, -0xAB8, -0x14547, 0, 0, 0, 0, true);
+            func_80086C58(&g_SysWork.playerWork_4C.player_0, 81);
+
+            // Warp camera.
+            Camera_PositionSet(NULL, Q12(23.61f), Q12(-2.78f), Q12(-18.69f), 0, 0, 0, 0, true);
+            Camera_LookAtSet(NULL, Q12(20.64f), Q12(-0.67f), Q12(-20.33f), 0, 0, 0, 0, true);
             break;
 
         case 13:
-            SysWork_StateStepIncrementDelayed(0x3000, false);
+            SysWork_StateStepIncrementDelayed(Q12(3.0f), false);
             break;
 
         case 14:
             sharedData_800D8568_1_s05.field_1 = 1;
             sharedData_800D8568_1_s05.field_2 = 4;
-            SysWork_StateStepIncrementDelayed(0x800, false);
+
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         case 15:
@@ -631,15 +636,15 @@ void func_800D64E0(void)
             SysWork_StateStepIncrement(0);
 
         case 17:
-            SysWork_StateStepIncrementDelayed(0x1000, false);
+            SysWork_StateStepIncrementDelayed(Q12(1.0f), false);
             break;
 
         case 18:
-            func_8005DC1C(0x5FE, &D_800CB3E0, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1534, &D_800CB3E0, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 19:
-            SysWork_StateStepIncrementDelayed(0x800, false);
+            SysWork_StateStepIncrementDelayed(Q12(0.5f), false);
             break;
 
         default:
@@ -648,21 +653,20 @@ void func_800D64E0(void)
 
             for (i = 0; i < 450; i++)
             {
-                if (sharedData_800DFB7C_0_s00[i].field_A == 8 || sharedData_800DFB7C_0_s00[i].field_A == 0xB)
+                if (sharedData_800DFB7C_0_s00[i].field_A == 8 || sharedData_800DFB7C_0_s00[i].field_A == 11)
                 {
                     sharedData_800DFB7C_0_s00[i].field_A = 0;
                 }
             }
 
             SysWork_StateStepIncrementAfterFade(0, false, 0, 0, false);
-
             Savegame_EventFlagSet(EventFlag_284);
 
             Gfx_MapInitMapEffectsUpdate(7, 4);
             func_8008D448();
             vcReturnPreAutoCamWork(true);
 
-            g_SysWork.playerWork_4C.player_0.position_18.vx -= 0x1333;
+            g_SysWork.playerWork_4C.player_0.position_18.vx -= Q12(1.2f);
 
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
 
@@ -676,7 +680,7 @@ void func_800D64E0(void)
 
     if (g_SysWork.sysStateStep_C[0] > 10 && g_SysWork.sysStateStep_C[0] < 16)
     {
-        func_8005DE0C(0x5FD, &D_800CB3EC, 0x80 - Q12_MULT_PRECISE(D_800DD190, 0x80), 0x10000, 0);
+        func_8005DE0C(Sfx_Unk1533, &D_800CB3EC, 0x80 - Q12_MULT_PRECISE(D_800DD190, 0x80), Q12(16.0f), 0);
     }
 }
 

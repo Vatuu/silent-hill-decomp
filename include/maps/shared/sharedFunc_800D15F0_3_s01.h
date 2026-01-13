@@ -6,6 +6,7 @@ void sharedFunc_800D15F0_3_s01(void)
     s32 temp;
     s32 temp2;
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 9 && g_SysWork.sysStateStep_C[0] < 17)
     {
@@ -18,6 +19,7 @@ void sharedFunc_800D15F0_3_s01(void)
 
             Player_ControlFreeze();
             SysWork_StateStepIncrementAfterFade(false, true, false, false, false);
+
             sharedData_800D4D14_3_s01 = 0;
             sharedData_800D4D10_3_s01 = 0;
 
@@ -30,7 +32,7 @@ void sharedFunc_800D15F0_3_s01(void)
             {
                 if (Savegame_EventFlagGet(EventFlag_212 + i))
                 {
-                    sharedData_800D4D14_3_s01 = (sharedData_800D4CD4_3_s01[i + 1][1] - 0x6E) << 12;
+                    sharedData_800D4D14_3_s01 = (sharedData_800D4CD4_3_s01[i + 1][1] - 110) << 12;
                     sharedData_800D4D18_3_s01 = i;
                 }
             }
@@ -42,14 +44,14 @@ void sharedFunc_800D15F0_3_s01(void)
             if (Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_OperatingPrepRoomArrow) &&
                 Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_CorridorMidArrows))
             {
-                func_800862F8(7, 0x731, false);
+                func_800862F8(7, Sfx_Unk1841, false);
             }
             else
             {
-                func_800862F8(7, 0x730, false);
+                func_800862F8(7, Sfx_Unk1840, false);
             }
 #else
-            func_800862F8(7, 0x733, false);
+            func_800862F8(7, Sfx_Unk1843, false);
 #endif
             break;
 
@@ -73,7 +75,6 @@ void sharedFunc_800D15F0_3_s01(void)
             Game_TimerUpdate();
 
             cursorX = FP_FROM(sharedData_800D4D10_3_s01, Q12_SHIFT) + 8;
-
             func_800881B8(cursorX, FP_FROM(sharedData_800D4D14_3_s01, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
@@ -94,7 +95,6 @@ void sharedFunc_800D15F0_3_s01(void)
 #endif
             {
                 temp = sharedData_800D4CD4_3_s01[i][0];
-
                 if ((temp - 160) > FP_FROM(sharedData_800D4D10_3_s01, Q12_SHIFT))
                 {
                     continue;
@@ -122,6 +122,7 @@ void sharedFunc_800D15F0_3_s01(void)
                 {
                     continue;
                 }
+
 #if defined(MAP3_S03) || defined(MAP3_S04) || defined(MAP3_S05)
                 SD_Call(Sfx_Unk1500);
 #endif
@@ -134,6 +135,7 @@ void sharedFunc_800D15F0_3_s01(void)
                         Savegame_EventFlagSet(EventFlag_224);
                         SysWork_StateStepSet(0, 5);
                         SD_Call(Sfx_Unk1500);
+
                         sharedData_800D4D10_3_s01 = 1;
                     }
 #endif
@@ -143,7 +145,7 @@ void sharedFunc_800D15F0_3_s01(void)
 #ifdef MAP3_S01
                     if (i != 6 && (i <= 0 || !Savegame_EventFlagGet(EventFlag_M3S01_GeneratorOn + i)))
 #else
-                    if ((i <= 0 || !Savegame_EventFlagGet(EventFlag_M3S01_GeneratorOn + i)))
+                    if (i <= 0 || !Savegame_EventFlagGet(EventFlag_M3S01_GeneratorOn + i))
 #endif
                     {
                         if (i != 0)
@@ -165,6 +167,7 @@ void sharedFunc_800D15F0_3_s01(void)
                                     break;
                                 }
                             }
+
                             sharedData_800D4D10_3_s01 = 0;
                             SysWork_StateStepSet(0, 5);
                         }
@@ -183,17 +186,18 @@ void sharedFunc_800D15F0_3_s01(void)
             {
                 Savegame_EventFlagClear(EventFlag_212 + i);
             }
+
             sharedData_800D4D0C_3_s01.vy = 0;
             sharedData_800D4D0C_3_s01.vx = 0;
 
 #ifdef MAP3_S01
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = -0x500;
-            g_SysWork.playerWork_4C.player_0.position_18.vx = 0x3A999;
-            g_SysWork.playerWork_4C.player_0.position_18.vz = 0x13666;
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-112.5f);
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(58.6f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(19.4f);
 #else
-            g_SysWork.playerWork_4C.player_0.rotation_24.vy = -0x600;
-            g_SysWork.playerWork_4C.player_0.position_18.vx = 0x12333;
-            g_SysWork.playerWork_4C.player_0.position_18.vz = 0x3BB33;
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-135.0f);
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(18.2f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(59.7f);
 #endif
             SysWork_StateStepSet(0, 8);
             break;
@@ -214,6 +218,7 @@ void sharedFunc_800D15F0_3_s01(void)
             {
                 SD_Call(Sfx_Unk1499);
             }
+
             SysWork_StateStepIncrement(0);
 
         case 9:
@@ -222,41 +227,40 @@ void sharedFunc_800D15F0_3_s01(void)
             if (sharedData_800D4D10_3_s01 != 0)
             {
                 g_SysWork.field_28 += g_DeltaTime0;
-
-                if (g_SysWork.field_28 > 0x1000)
+                if (g_SysWork.field_28 > Q12(1.0f))
                 {
-                    g_SysWork.field_28 = 0x1000;
+                    g_SysWork.field_28 = Q12(1.0f);
                 }
-                func_8005DE0C(0x5DB, &sharedData_800CB088_3_s01, g_SysWork.field_28 >> 5, 0x10000, 0);
 
-                SysWork_StateStepIncrementAfterFade(2, true, false, 0x1000, false);
+                func_8005DE0C(0x5DB, &sharedData_800CB088_3_s01, g_SysWork.field_28 >> 5, Q12(16.0f), 0);
+                SysWork_StateStepIncrementAfterFade(2, true, false, Q12(1.0f), false);
             }
             else
             {
-                SysWork_StateStepIncrementAfterFade(2, true, false, 0x2000, false);
+                SysWork_StateStepIncrementAfterFade(2, true, false, Q12(2.0f), false);
             }
             break;
 
         case 10:
             if (sharedData_800D4D10_3_s01 != 0)
             {
-                SysWork_StateStepIncrementAfterFade(2, false, false, 0x1000, false);
-                func_8005DE0C(0x5DB, &sharedData_800CB088_3_s01, 0x80, 0x10000, 0U);
+                SysWork_StateStepIncrementAfterFade(2, false, false, Q12(1.0f), false);
+                func_8005DE0C(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.5f), Q12(16.0f), 0u);
             }
             else
             {
-                SysWork_StateStepIncrementAfterFade(2, false, false, 0x2000, false);
+                SysWork_StateStepIncrementAfterFade(2, false, false, Q12(2.0f), false);
 
-                if (g_SysWork.sysStateStep_C[0] != 0xA)
+                if (g_SysWork.sysStateStep_C[0] != 10)
                 {
-                    func_8005DC1C(0x5DD, &sharedData_800CB094_3_s01, 0x80, 0);
+                    func_8005DC1C(Sfx_Unk1501, &sharedData_800CB094_3_s01, Q8(0.5f), 0);
                     SysWork_StateStepSet(0, 14);
                 }
             }
             break;
 
         case 11:
-            if (g_SysWork.field_28 > ((sharedData_800D4D18_3_s01 - 1) * 0xC00))
+            if (g_SysWork.field_28 > ((sharedData_800D4D18_3_s01 - 1) * Q12(0.75f)))
             {
                 SysWork_StateStepIncrement(0);
             }
@@ -267,48 +271,48 @@ void sharedFunc_800D15F0_3_s01(void)
             break;
 
         case 12:
-            func_8005DE0C(0x5DB, &sharedData_800CB088_3_s01, 0x80 - (g_SysWork.field_28 >> 5), 0x10000, 0);
-            g_SysWork.field_28 += g_DeltaTime0;
+            func_8005DE0C(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.5f) - (g_SysWork.field_28 >> 5), Q12(16.0f), 0);
 
-            if (g_SysWork.field_28 > 0x800)
+            g_SysWork.field_28 += g_DeltaTime0;
+            if (g_SysWork.field_28 > Q12(0.5f))
             {
-                func_8005DC1C(0x5DA, &sharedData_800CB088_3_s01, 0x80, 0);
+                func_8005DC1C(Sfx_Unk1498, &sharedData_800CB088_3_s01, Q8(0.5f), 0);
                 SysWork_StateStepIncrement(0);
             }
             break;
 
         case 13:
-            func_8005DE0C(0x5DB, &sharedData_800CB088_3_s01, 0x40 - (g_SysWork.field_28 >> 5), 0x10000, 0);
-            g_SysWork.field_28 += g_DeltaTime0;
+            func_8005DE0C(Sfx_Unk1499, &sharedData_800CB088_3_s01, Q8(0.25f) - (g_SysWork.field_28 >> 5), Q12(16.0f), 0);
 
-            if (g_SysWork.field_28 > 0x800)
+            g_SysWork.field_28 += g_DeltaTime0;
+            if (g_SysWork.field_28 > Q12(0.5f))
             {
                 SD_Call(Sfx_Unk1502);
 #if defined(MAP3_S03) || defined(MAP3_S04) || defined(MAP3_S05)
-                func_8005DC1C(0x5DD, &sharedData_800CB094_3_s01, 0x80, 0);
+                func_8005DC1C(Sfx_Unk1501, &sharedData_800CB094_3_s01, Q8(0.5f), 0);
 #else
-                func_8005DC1C(0x5DD, &sharedData_800CB0A0_3_s01, 0x80, 0);
+                func_8005DC1C(Sfx_Unk1501, &sharedData_800CB0A0_3_s01, Q8(0.5f), 0);
 #endif
-                Sd_SfxStop(0x5DB);
+                Sd_SfxStop(Sfx_Unk1499);
                 SysWork_StateStepIncrement(0);
             }
             break;
 
         case 14:
-            sharedData_800D4D0C_3_s01.vx = MIN(Q12_MULT_PRECISE(g_DeltaTime0, 0xCCC) + sharedData_800D4D0C_3_s01.vx, 0x599);
+            sharedData_800D4D0C_3_s01.vx = MIN(Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.8f)) + sharedData_800D4D0C_3_s01.vx, Q12(0.35f));
 
             for (i = 0; i < 4; i++)
             {
                 g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, (i & 1) ? sharedData_800D4D0C_3_s01.vx : -sharedData_800D4D0C_3_s01.vx);
             }
 
-            SysWork_StateStepIncrementDelayed(0x4CC, false);
+            SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
             break;
 
         case 15:
         case 16:
-            sharedData_800D4D0C_3_s01.vx = MIN(Q12_MULT_PRECISE(g_DeltaTime0, 0xCCC) + sharedData_800D4D0C_3_s01.vx, 0x599);
-            sharedData_800D4D0C_3_s01.vy = MIN(Q12_MULT_PRECISE(g_DeltaTime0, 0xCCC) + sharedData_800D4D0C_3_s01.vy, 0x599);
+            sharedData_800D4D0C_3_s01.vx = MIN(Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.8f)) + sharedData_800D4D0C_3_s01.vx, Q12(0.35f));
+            sharedData_800D4D0C_3_s01.vy = MIN(Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.8f)) + sharedData_800D4D0C_3_s01.vy, Q12(0.35f));
 
             for (i = 0; i < 4; i++)
             {
@@ -322,11 +326,11 @@ void sharedFunc_800D15F0_3_s01(void)
 
             if (g_SysWork.sysStateStep_C[0] == 15)
             {
-                SysWork_StateStepIncrementDelayed(0x4CC, false);
+                SysWork_StateStepIncrementDelayed(Q12(0.3f), false);
             }
             else
             {
-                SysWork_StateStepIncrementAfterFade(2, true, false, 0x1800, false);
+                SysWork_StateStepIncrementAfterFade(2, true, false, Q12(1.5f), false);
             }
             break;
 
@@ -337,14 +341,16 @@ void sharedFunc_800D15F0_3_s01(void)
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
 #ifdef MAP3_S01
             func_8008D448();
             Game_FlashlightAttributesFix();
-            g_SysWork.pointLightIntensity_2378 = 0x1000;
+            g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 #endif
-            Sd_SfxStop(0x5DB);
-            Sd_SfxStop(0x5DD);
-            Sd_SfxStop(0x5DA);
+
+            Sd_SfxStop(Sfx_Unk1499);
+            Sd_SfxStop(Sfx_Unk1501);
+            Sd_SfxStop(Sfx_Unk1498);
             break;
     }
 }

@@ -100,38 +100,37 @@ const VECTOR3 D_800CB1E0 = { 0x0000E800, 0xFFFFF000, 0x0008BE66 };
 void func_800D21C4(void) // 0x800D21C4
 {
     s32     i;
-
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     if (!Savegame_EventFlagGet(EventFlag_232) && g_MapEventParam->field_5 == 5)
     {
-        for (i = 0; i < 6; i++)
+        for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
-            if ((g_SysWork.npcs_1A0[i].model_0.charaId_0 > 0 && g_SysWork.npcs_1A0[i].model_0.charaId_0 < Chara_LockerDeadBody) &&
+            if ((g_SysWork.npcs_1A0[i].model_0.charaId_0 > Chara_None && g_SysWork.npcs_1A0[i].model_0.charaId_0 < Chara_LockerDeadBody) &&
                 g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
             {
                 break;
             }
         }
 
-        if (i != 6)
+        if (i != ARRAY_SIZE(g_SysWork.npcs_1A0))
         {
-            g_DeltaTime0 = 0;
+            g_DeltaTime0 = Q12(0.0f);
         }
 
         switch (g_SysWork.sysStateStep_C[0])
         {
             case 0:
                 Player_ControlFreeze();
-                func_8005DC1C(Sfx_DoorLocked, &sfxPos, 0x80, 0);
+                func_8005DC1C(Sfx_DoorLocked, &sfxPos, Q8(0.5f), 0);
                 SysWork_StateStepIncrement(0);
 
             case 1:
-                SysWork_StateStepIncrementDelayed(0x333, false);
+                SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
                 break;
 
             case 2:
-                MapMsg_DisplayAndHandleSelection(false, 0xC, false, false, 0, false);
+                MapMsg_DisplayAndHandleSelection(false, 12, false, false, 0, false);
                 break;
 
             case 3:
@@ -139,19 +138,19 @@ void func_800D21C4(void) // 0x800D21C4
 
             case 4:
             case 6:
-                func_8005DC1C(Sfx_Unk1529, &D_800CB1E0, 0x80, 0);
+                func_8005DC1C(Sfx_Unk1529, &D_800CB1E0, Q8(0.5f), 0);
                 SysWork_StateStepIncrement(0);
 
             case 5:
-                SysWork_StateStepIncrementDelayed(0x333, false);
+                SysWork_StateStepIncrementDelayed(Q12(0.2f), false);
                 break;
 
             case 7:
-                SysWork_StateStepIncrementDelayed(0xCCC, false);
+                SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
                 break;
 
             case 8:
-                MapMsg_DisplayAndHandleSelection(false, 0x36, false, false, 0, false);
+                MapMsg_DisplayAndHandleSelection(false, 54, false, false, 0, false);
                 break;
 
             case 9:
@@ -214,7 +213,7 @@ void func_800D250C(void) // 0x800D250C
     VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_ExaminationRoomKey, 1);
-    Map_MessageWithSfx(0x30, Sfx_UseKey, &sfxPos);
+    Map_MessageWithSfx(48, Sfx_UseKey, &sfxPos);
 
     Savegame_EventFlagSet(EventFlag_258);
     Savegame_MapMarkingSet(MapMarkFlag_AltHospital1F_WomensBathroomBroken);

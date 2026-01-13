@@ -2354,6 +2354,8 @@ void MapEvent_DoorJammed(void);
 /** @brief Handles the locked door event. */
 void MapEvent_DoorLocked(void);
 
+void sharedFunc_800D15F0_3_s01(void);
+
 /** @brief Handles the unlocked door event. */
 void MapEvent_DoorUnlocked(void);
 
