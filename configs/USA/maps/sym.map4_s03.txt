@@ -23,6 +23,7 @@
 sharedFunc_800CB0A4_4_s03     = 0x800CB0A4; // type:func
 sharedFunc_800CB1B0_4_s03     = 0x800CB1B0; // type:func
 sharedFunc_800CBE54_4_s03     = 0x800CBE54; // type:func
+sharedFunc_800CC004_4_s03     = 0x800CC004; // type:func
 Particle_SystemUpdate         = 0x800CC700; // type:func
 Particle_CameraMovedCheck     = 0x800CCB4C; // type:func
 Particle_SnowInitialize       = 0x800CCC24; // type:func
