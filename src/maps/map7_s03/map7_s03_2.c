@@ -451,7 +451,31 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DCFF8);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD044);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD090);
+s_800F3DAC* func_800DD090(void) // 0x800DD090
+{
+    s_800F3DAC* ptr;
+    s32         i;
+
+    ptr = D_800F3DAC;
+
+    for (i = 0; i < 30; i++, ptr++)
+    {
+        if (ptr->field_0 != 0)
+        {
+            continue;
+        }
+
+        ptr->field_0   = 1;
+        ptr->field_4E8 = 0;
+        ptr->field_1C  = 0;
+        ptr->field_10  = 0;
+        ptr->field_4F0 = 0;
+        ptr->field_4F4 = 0;
+        return ptr;
+    }
+
+    return NULL;
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD0EC);
 
