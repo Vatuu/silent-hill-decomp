@@ -53,6 +53,27 @@ STATIC_ASSERT_SIZEOF(s_800ED7E0_ptr, 60);
 
 typedef struct
 {
+    s32 field_0;
+    s16 field_4;
+    s16 field_6;
+    s32 field_8;
+    s16 field_C;
+    s16 field_E;
+    u8  unk_10[0x30];
+    s32 field_40;
+    u8  unk_44[8];
+} s_800F3D48_4;
+STATIC_ASSERT_SIZEOF(s_800F3D48_4, 0x4C);
+
+typedef struct
+{
+    u8           unk_0[4];
+    s_800F3D48_4 field_4;
+} s_800F3D48;
+STATIC_ASSERT_SIZEOF(s_800F3D48, 0x50);
+
+typedef struct
+{
     q19_12          positionX_0;
     q19_12          positionZ_4;
     u8              unk_8[32];
@@ -63,6 +84,10 @@ typedef struct
     s32             field_44;
     s32             field_48;
 } s_D_800F48A8;
+
+extern s32 D_800F2438; // Length of `D_800F3D48` array.
+
+extern s_800F3D48* D_800F3D48;
 
 extern s_D_800F48A8 D_800F48A8;
 
@@ -236,6 +261,8 @@ void func_800D88C4(void);
 void func_800D88CC(void);
 
 void func_800D88D8(void);
+
+s_800F3D48* func_800D905C(void);
 
 void func_800D9394(void);
 
