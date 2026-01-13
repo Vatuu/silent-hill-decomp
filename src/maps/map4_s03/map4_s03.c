@@ -31,7 +31,28 @@ INCLUDE_RODATA("maps/map4_s03/nonmatchings/map4_s03", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CD940_3_s03.h" // 0x800D074C
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D078C);
+void func_800D078C(void)                           // 0x800D078C
+{
+    s_Texture* tex;
+    u32        tpage1;
+    u16        x;
+    u16        y;
+
+    tex    = func_80042178("SPUM602F");
+    tpage1 = tex->imageDesc_0.tPage[1];
+    x      = tex->imageDesc_0.clutX;
+    y      = tex->imageDesc_0.clutY;
+
+    D_800DF554 = tpage1;
+    D_800DF558 = tpage1 | 0x20;
+    D_800DF55C = tpage1 | 0x40;
+
+    D_800DF560 = getClut(x, y + 1);
+    D_800DF564 = getClut(x, y + 0xE);
+    D_800DF568 = getClut(x, y + 0xF);
+    D_800DF56C = getClut(x, y + 0xD);
+    D_800DF570 = x >> 4;
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D0840);
 
