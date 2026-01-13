@@ -25,6 +25,8 @@
 //--- PA: 0x00172C   VA: 0x800CACA4   subsegment: c, map4_s05
 //-----------------------------------------------------------
 sharedFunc_800CB0A4_4_s03           = 0x800CACA4; // type:func
+sharedFunc_800CB1B0_4_s03           = 0x800CADB0; // type:func
+sharedFunc_800CBE54_4_s03           = 0x800CBA54; // type:func
 sharedFunc_800CE5D4_1_s03           = 0x800CC300; // type:func
 sharedFunc_800CE688_1_s03           = 0x800CC3B4; // type:func
 Particle_SystemUpdate               = 0x800CCA7C; // type:func

@@ -1,0 +1,203 @@
+#include "inline_no_dmpsx.h"
+
+#include <psyq/gtemac.h>
+
+bool sharedFunc_800CB1B0_4_s03(POLY_FT4** arg0, s32 arg1)
+{
+    typedef struct
+    {
+        s_func_8005E89C field_0;
+        VECTOR3         field_12C;
+        SVECTOR         field_138;
+        DVECTOR         field_140;
+        s32             field_144;
+        s16             field_148;
+        s16             field_14A;
+        s16             field_14C;
+        s16             field_14E;
+        s32             field_150;
+        s32             field_154;
+        s32             field_158;
+        s32             field_15C;
+    } s_func_800CB1B0;
+
+    s_func_8005E89C   sp10;
+    s_func_800700F8_2 sp140;
+    s_Collision       sp160;
+    VECTOR3           sp170;
+    VECTOR3           sp180;
+    POLY_FT4*         next;
+    s16               temp_v0_9;
+    s32               temp_a3;
+    s32               temp_s1;
+    s32               i;
+    s_func_800CB1B0*  ptr;
+    s_SubCharacter*   sub;
+
+    if (sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0 == 0 ||
+        sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_2 == 0)
+    {
+        sharedData_800DFB7C_0_s00[arg1].field_A = 0;
+        return false;
+    }
+
+    ptr = PSX_SCRATCH;
+
+    ptr->field_148 = Math_Sin(-sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_2);
+    ptr->field_14A = Math_Cos(-sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_2);
+    ptr->field_14C = Math_Sin(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 + 0x800);
+    ptr->field_14E = Math_Cos(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0 + 0x800);
+
+    ptr->field_154 = ((D_800C4418.field_C - 1) *
+                      CLAMP_HIGH(Q12_MULT_PRECISE(D_800C4418.field_0, D_800C4418.field_8 - sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0),
+                                 D_800C4418.field_A) /
+                      D_800C4418.field_A) +
+                     1;
+
+    for (i = 0; i < ptr->field_154; i++)
+    {
+        ptr->field_158 = (i * D_800C4418.field_A) / D_800C4418.field_C;
+
+        ptr->field_12C.vy = sharedData_800DFB7C_0_s00[arg1].vy_8 + Q12_MULT(ptr->field_158, ptr->field_148);
+        temp_s1           = Q12_MULT(ptr->field_158, ptr->field_14A);
+        ptr->field_12C.vx = sharedData_800DFB7C_0_s00[arg1].field_0.vx_0 + Q12_MULT(temp_s1, ptr->field_14C);
+        ptr->field_12C.vz = sharedData_800DFB7C_0_s00[arg1].field_4.vz_4 + Q12_MULT(temp_s1, ptr->field_14E);
+
+        Math_SetSVectorFastSum(&ptr->field_138, (ptr->field_12C.vx >> 4) - (u16)ptr->field_0.field_0.vx,
+                               (ptr->field_12C.vy >> 4) - ptr->field_0.field_0.vy, (ptr->field_12C.vz >> 4) - ptr->field_0.field_0.vz);
+
+        gte_ldv0(&ptr->field_138);
+        gte_rtps();
+        gte_stsxy(&ptr->field_140);
+        gte_stsz(&ptr->field_144);
+
+        if (ptr->field_144 <= 0 || (ptr->field_144 >> 3) >= ORDERING_TABLE_SIZE)
+        {
+            continue;
+        }
+
+        if (ABS(ptr->field_140.vx) > 200 || ABS(ptr->field_140.vy) > 160)
+        {
+            continue;
+        }
+
+        temp_a3        = (i + D_800C4418.field_C) - ptr->field_154;
+        ptr->field_150 = (((D_800C4418.field_2 * (D_800C4418.field_C - temp_a3) + D_800C4418.field_4 * temp_a3) /
+                           D_800C4418.field_C * ptr->field_0.field_2C) /
+                          ptr->field_144) >>
+                         4;
+
+        setPolyFT4(*arg0);
+
+        setXY0Fast(*arg0, (u16)ptr->field_140.vx - (u16)ptr->field_150, ptr->field_140.vy + ptr->field_150);
+        setXY1Fast(*arg0, (u16)ptr->field_140.vx + (u16)ptr->field_150, ptr->field_140.vy + ptr->field_150);
+        setXY2Fast(*arg0, (u16)ptr->field_140.vx - (u16)ptr->field_150, ptr->field_140.vy - ptr->field_150);
+        setXY3Fast(*arg0, (u16)ptr->field_140.vx + (u16)ptr->field_150, ptr->field_140.vy - ptr->field_150);
+
+        ptr->field_15C = 0x80 - ((temp_a3 << 7) / (D_800C4418.field_C + 1));
+        ptr->field_15C = (ptr->field_15C * func_80055D78(ptr->field_12C.vx, ptr->field_12C.vy, ptr->field_12C.vz)) >> 8;
+
+        if (sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0 < (D_800C4418.field_8 >> 1))
+        {
+            ptr->field_15C = (ptr->field_15C * sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0) / (D_800C4418.field_8 >> 1);
+        }
+
+        ptr->field_15C = Q12_MULT_PRECISE(ptr->field_15C, sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_2);
+
+        if (ptr->field_15C == 0)
+        {
+            sharedData_800DFB7C_0_s00[arg1].field_A = 0;
+        }
+
+        setRGB0Fast(*arg0, ptr->field_15C >> 2, ptr->field_15C >> 2, ptr->field_15C >> 2);
+        setSemiTrans(*arg0, 1);
+
+        *(s32*)&(*arg0)->u0 = ((i & 1) << 6) + ((i & 2) ? 0xE4000 : 0xE0000);
+        *(s32*)&(*arg0)->u1 = ((i & 1) ? 0x7F : 0x3F) + ((i & 2) ? 0x2D4000 : 0x2D0000);
+        *(u16*)&(*arg0)->u2 = (!(i & 1) ? 0 : 1 << 6) + ((i & 2) ? 0x7F00 : 0x3F00);
+        *(u16*)&(*arg0)->u3 = ((i & 1) ? 0x7F : 0x3F) + (!(i & 2) ? 0x3F00 : 0x7F00);
+
+        next  = *arg0 + 1;
+        *next = *(*arg0);
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_144 - 0x20) >> 3], *arg0);
+        *arg0 += 1;
+
+        setRGB0Fast(*arg0, ptr->field_15C, ptr->field_15C, ptr->field_15C);
+
+        (*arg0)->tpage = 0x4D;
+        (*arg0)->clut  = 0x4E;
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_144 - 0x20) >> 3], *arg0);
+        *arg0 += 1;
+    }
+
+    sp10 = ptr->field_0;
+
+    if (sharedData_800DFB7C_0_s00[arg1].field_B != 0)
+    {
+        temp_v0_9 = Q12_MULT_PRECISE(g_DeltaTime0, D_800C4418.field_0 >> 2);
+    }
+    else
+    {
+        temp_v0_9 = Q12_MULT_PRECISE(g_DeltaTime0, D_800C4418.field_0);
+    }
+
+    sp170.vy = Q12_MULT(temp_v0_9, Math_Sin(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_2));
+    temp_s1  = Q12_MULT(temp_v0_9, Math_Cos(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_2));
+    sp170.vx = Q12_MULT(temp_s1, Math_Sin(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0));
+    sp170.vz = Q12_MULT(temp_s1, Math_Cos(sharedData_800DFB7C_0_s00[arg1].field_C.s_0.field_0));
+
+    sharedData_800DFB7C_0_s00[arg1].field_0.vx_0 += sp170.vx;
+    sharedData_800DFB7C_0_s00[arg1].vy_8         += sp170.vy;
+    sharedData_800DFB7C_0_s00[arg1].field_4.vz_4 += sp170.vz;
+
+    sp180.vx = sharedData_800DFB7C_0_s00[arg1].field_0.vx_0;
+    sp180.vy = sharedData_800DFB7C_0_s00[arg1].vy_8;
+    sp180.vz = sharedData_800DFB7C_0_s00[arg1].field_4.vz_4;
+
+    sp170.vx = ptr->field_12C.vx - sharedData_800DFB7C_0_s00[arg1].field_0.vx_0;
+    sp170.vy = ptr->field_12C.vy - sharedData_800DFB7C_0_s00[arg1].vy_8;
+    sp170.vz = ptr->field_12C.vz - sharedData_800DFB7C_0_s00[arg1].field_4.vz_4;
+
+    func_8006DA08(&sp140, &sp180, &sp170, g_SysWork.npcs_1A0);
+    Collision_Get(&sp160, sp180.vx + sp170.vx, sp180.vz + sp170.vz);
+
+    ptr->field_0 = sp10;
+
+    gte_SetRotMatrix(&ptr->field_0.field_C);
+    gte_SetTransMatrix(&ptr->field_0.field_C);
+
+    sharedData_800DFB7C_0_s00[arg1].field_10.s_0.field_0 = CLAMP_LOW(sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_0 - g_DeltaTime0, 0);
+
+    if (sharedData_800DFB7C_0_s00[arg1].field_B != 0)
+    {
+        sharedData_800DFB7C_0_s00[arg1].field_10.s_0.field_2 = CLAMP_LOW(sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_2 - (g_DeltaTime0 << 2), 0);
+    }
+    else if (sp140.field_0 != 0 || sp160.groundHeight_0 < sharedData_800DFB7C_0_s00[arg1].vy_8)
+    {
+        sharedData_800DFB7C_0_s00[arg1].field_B++;
+
+        if (sp140.field_0 != 0 && sp140.field_10 == &g_SysWork.playerWork_4C.player_0)
+        {
+            sub = sp140.field_10;
+            sharedFunc_800CBE54_4_s03(&sp140.field_4, 1);
+            sharedFunc_800CBE54_4_s03(&sp180, 1);
+
+            if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == 0xF)
+            {
+                sub->attackReceived_41 = 0x3C;
+            }
+            else if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == 0x14)
+            {
+                sub->attackReceived_41 = 0x3E;
+            }
+        }
+        else
+        {
+            sharedFunc_800CBE54_4_s03(&sp180, 0);
+        }
+    }
+
+    return true;
+}

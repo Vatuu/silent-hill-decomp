@@ -1726,7 +1726,7 @@ typedef struct
     u8      field_1;
     s8      unk_2[2]; // Probably padding.
     VECTOR3 field_4;  // Q19.12
-    u32     field_10; // Maybe `bool`, not enough context.
+    s_SubCharacter* field_10;
     s32     field_14;
     s32     field_18;
     q7_8    field_1C; // Angle.
@@ -1893,9 +1893,9 @@ typedef struct
     s16 field_2;
     s16 field_4;
     s16 field_6;
-    s16 field_8;
-    s16 field_A;
-    s8  field_C;
+    u16 field_8;
+    u16 field_A;
+    u8  field_C;
 } s_800C4418;
 
 typedef struct

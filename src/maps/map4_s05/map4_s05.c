@@ -15,9 +15,9 @@ INCLUDE_RODATA("maps/map4_s05/nonmatchings/map4_s05", g_MapOverlayHeader);
 
 #include "maps/shared/sharedFunc_800CB0A4_4_s03.h" // 0x800CACA4
 
-INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800CADB0);
+#include "maps/shared/sharedFunc_800CB1B0_4_s03.h" // 0x800CADB0
 
-INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800CBA54);
+#include "maps/shared/sharedFunc_800CBE54_4_s03.h" // 0x800CBA54
 
 INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800CBC04);
 

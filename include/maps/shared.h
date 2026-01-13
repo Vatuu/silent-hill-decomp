@@ -2373,6 +2373,10 @@ bool sharedFunc_800CF294_3_s03(s_SubCharacter* nurse, q19_12 dist);
  */
 u8 Map_RoomIdxGet(s32 x, s32 z);
 
+void sharedFunc_800CBE54_4_s03(VECTOR3* arg0, s32 arg1);
+
+bool sharedFunc_800CB1B0_4_s03(POLY_FT4** arg0, s32 arg1);
+
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
     anim->animInfo_C  = animInfo;
