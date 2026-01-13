@@ -234,7 +234,7 @@ INCLUDE_ASM("maps/map3_s03/nonmatchings/map3_s03", func_800D17F8);
 
 void func_800D1A58(void) // 0x800D1A58
 {
-    VECTOR3 sp30;
+    VECTOR3 sfxPos;
     s32     temp_a2_2;
     s32     temp_v1_8;
     s32     j;
@@ -264,12 +264,11 @@ void func_800D1A58(void) // 0x800D1A58
             break;
 
         case 1:
+            sfxPos.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
+            sfxPos.vy = Q12(-1.2f);
+            sfxPos.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
 
-            sp30.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
-            sp30.vy = Q12(-1.2f);
-            sp30.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
-
-            func_8005DC1C(Sfx_DoorLocked, &sp30, Q8(0.5f), 0);
+            func_8005DC1C(Sfx_DoorLocked, &sfxPos, Q8(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 2:

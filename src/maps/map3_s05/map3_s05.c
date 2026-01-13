@@ -1,5 +1,6 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/item_screens.h"
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 #include "maps/shared.h"
@@ -128,26 +129,15 @@ void func_800D57E0(void) {}
 
 void func_800D57E8(void) // 0x800D57E8
 {
-    VECTOR3 sp10;
-    VECTOR3 sp20;
-
-    do
-    {
-    } while (0); // @hack
-
-    sp20.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
-    sp20.vy = -0x1333;
-    sp20.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
-
-    sp10 = sp20;
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     if (g_MapEventParam->field_5 == 0x19)
     {
-        Map_MessageWithSfx(0xB, 0x546, &sp10);
+        Map_MessageWithSfx(0xB, Sfx_Unk1350, &sfxPos);
     }
     else
     {
-        Map_MessageWithSfx(0xB, Sfx_DoorJammed, &sp10);
+        Map_MessageWithSfx(0xB, Sfx_DoorJammed, &sfxPos);
     }
 }
 
@@ -218,21 +208,10 @@ void func_800D5934(void) // 0x800D5934
 
 void func_800D59D4(void) // 0x800D59D4
 {
-    VECTOR3 sp10;
-    VECTOR3 sp20;
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    do
-    {
-    } while (0);
-
-    sp20.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
-    sp20.vy = -0x1333;
-    sp20.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
-
-    sp10 = sp20;
-
-    Player_ItemRemove(0x4A, 1);
-    Map_MessageWithSfx(0x1B, Sfx_UseKey, &sp10);
+    Player_ItemRemove(InventoryItemId_BasementStoreroomKey, 1);
+    Map_MessageWithSfx(0x1B, Sfx_UseKey, &sfxPos);
 
     Savegame_MapMarkingSet(MapMarkFlag_FogHospital3F_NearElevatorBroken);
     Savegame_EventFlagSet(EventFlag_256);
@@ -586,7 +565,8 @@ void func_800D64E0(void)
         case 6:
             func_8005DC1C(Sfx_Unk1532, &D_800CB35C, 0x80, 0);
             SysWork_StateStepIncrement(0);
-            do {} while (0); // @hack
+
+        case 7:
             SysWork_StateStepIncrementDelayed(0x800, false);
             break;
 
@@ -658,7 +638,6 @@ void func_800D64E0(void)
             func_8005DC1C(0x5FE, &D_800CB3E0, 0x80, 0);
             SysWork_StateStepIncrement(0);
 
-        case 7:
         case 19:
             SysWork_StateStepIncrementDelayed(0x800, false);
             break;

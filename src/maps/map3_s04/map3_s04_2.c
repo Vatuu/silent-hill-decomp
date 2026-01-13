@@ -99,26 +99,16 @@ const VECTOR3 D_800CB1E0 = { 0x0000E800, 0xFFFFF000, 0x0008BE66 };
 
 void func_800D21C4(void) // 0x800D21C4
 {
-    VECTOR3 sp18;
-    VECTOR3 sp28;
     s32     i;
 
-    do
-    {
-    } while (0); // @hack
-
-    sp28.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
-    sp28.vy = -0x1333;
-    sp28.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
-
-    sp18 = sp28;
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
     if (!Savegame_EventFlagGet(EventFlag_232) && g_MapEventParam->field_5 == 5)
     {
         for (i = 0; i < 6; i++)
         {
-            if ((g_SysWork.npcs_1A0[i].model_0.charaId_0 > 0 && g_SysWork.npcs_1A0[i].model_0.charaId_0 < 0x19) &&
-                g_SysWork.npcs_1A0[i].health_B0 > 0)
+            if ((g_SysWork.npcs_1A0[i].model_0.charaId_0 > 0 && g_SysWork.npcs_1A0[i].model_0.charaId_0 < Chara_LockerDeadBody) &&
+                g_SysWork.npcs_1A0[i].health_B0 > Q12(0.0f))
             {
                 break;
             }
@@ -133,7 +123,7 @@ void func_800D21C4(void) // 0x800D21C4
         {
             case 0:
                 Player_ControlFreeze();
-                func_8005DC1C(Sfx_DoorLocked, &sp18, 0x80, 0);
+                func_8005DC1C(Sfx_DoorLocked, &sfxPos, 0x80, 0);
                 SysWork_StateStepIncrement(0);
 
             case 1:
@@ -176,7 +166,7 @@ void func_800D21C4(void) // 0x800D21C4
     }
     else
     {
-        Map_MessageWithSfx(0xC, Sfx_DoorLocked, &sp18);
+        Map_MessageWithSfx(0xC, Sfx_DoorLocked, &sfxPos);
     }
 }
 
@@ -221,21 +211,10 @@ void func_800D2470(void) // 0x800D2470
 
 void func_800D250C(void) // 0x800D250C
 {
-    VECTOR3 sp10;
-    VECTOR3 sp20;
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    do
-    {
-    } while (0); // @hack
-
-    sp20.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
-    sp20.vy = -0x1333;
-    sp20.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
-
-    sp10 = sp20;
-
-    Player_ItemRemove(0x4B, 1);
-    Map_MessageWithSfx(0x30, Sfx_UseKey, &sp10);
+    Player_ItemRemove(InventoryItemId_ExaminationRoomKey, 1);
+    Map_MessageWithSfx(0x30, Sfx_UseKey, &sfxPos);
 
     Savegame_EventFlagSet(EventFlag_258);
     Savegame_MapMarkingSet(MapMarkFlag_AltHospital1F_WomensBathroomBroken);

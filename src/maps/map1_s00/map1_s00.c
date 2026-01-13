@@ -388,22 +388,15 @@ void func_800D81CC(void) // 0x800D81CC
 
 void func_800D8354(void) // 0x800D8354
 {
-    VECTOR3 soundPos;
-    VECTOR3 pos;
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
 
-    do {} while (false); // @hack Permuter find.
-
-    pos.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
-    pos.vy = Q12(-1.2f);
-    pos.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
     g_DeltaTime0 = Q12(0.0f);
-    soundPos = pos;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             Player_ControlFreeze();
-            func_8005DC1C(Sfx_DoorLocked, &soundPos, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_DoorLocked, &sfxPos, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 1:

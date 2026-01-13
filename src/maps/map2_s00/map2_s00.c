@@ -1715,17 +1715,17 @@ void func_800EB090(void) // 0x800EB090
 
 void func_800EB174(void) // 0x800EB174
 {
-    VECTOR3 soundPos;
+    VECTOR3 sfxPos;
 
     switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             Player_ControlFreeze();
-            soundPos.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
-            soundPos.vy = Q12(-1.2f);
-            soundPos.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
+            sfxPos.vx = MAP_POINTS[g_MapEventParam->field_5].positionX_0;
+            sfxPos.vy = Q12(-1.2f);
+            sfxPos.vz = MAP_POINTS[g_MapEventParam->field_5].positionZ_8;
 
-            func_8005DC1C(Sfx_Unk1349, &soundPos, Q8_CLAMPED(0.5f), 0);
+            func_8005DC1C(Sfx_Unk1349, &sfxPos, Q8_CLAMPED(0.5f), 0);
             SysWork_StateStepIncrement(0);
 
         case 1:
