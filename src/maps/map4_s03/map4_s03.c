@@ -753,7 +753,27 @@ void func_800D5BC8(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5BC8
     }
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D5BF8);
+bool func_800D5BF8(s32 arg0, s32 arg1, s32 arg2, u16* arg3) // 0x800D5BF8
+{
+    bool prevBit;
+    bool newBit;
+    bool bitChanged;
+
+    prevBit    = (*arg3 >> arg0) & 1;
+    newBit     = (arg2 < arg1);
+    bitChanged = prevBit ^ newBit;
+
+    if (newBit)
+    {
+        *arg3 |= (1 << arg0);
+    }
+    else
+    {
+        *arg3 &= ~(1 << arg0);
+    }
+
+    return bitChanged;
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D5C3C);
 

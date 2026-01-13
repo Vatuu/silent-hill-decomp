@@ -90,7 +90,16 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D62C8);
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D631C);
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D63DC);
+s32 func_800D63DC(s32* screenXy) // 0x800D63DC
+{
+    SVECTOR v;
+    s32     p;
+
+    v.vx = 0;
+    v.vy = 0;
+    v.vz = 0;
+    return RotTransPers(&v, screenXy, &p, &p);
+}
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D6414);
 

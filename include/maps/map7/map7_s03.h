@@ -243,6 +243,8 @@ void func_800D947C(void);
 
 void func_800D952C(void);
 
+void func_800DA4B4(s32* arg0, s32* arg1); // Assumed types.
+
 void func_800DA774(s_800ED7E0_ptr*);
 
 void func_800DAD54(void);
@@ -252,6 +254,8 @@ void func_800DB154(GsCOORDINATE2*);
 void func_800DB288(void);
 
 void func_800DB608(void);
+
+void func_800DCD94(MATRIX* mat, VECTOR3* pos);
 
 void func_800DCF94(void);
 

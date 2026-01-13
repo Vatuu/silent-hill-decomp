@@ -325,7 +325,10 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA1F4);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA420);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA4B4);
+void func_800DA4B4(s32* arg0, s32* arg1) // 0x800DA4B4
+{
+    arg0[0] += (arg1[0] * arg0[1]) / arg1[1];
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA4EC);
 
@@ -406,7 +409,12 @@ INCLUDE_RODATA("maps/map7_s03/nonmatchings/map7_s03_2", D_800CAE3C);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DC6DC);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DCD94);
+void func_800DCD94(MATRIX* mat, VECTOR3* pos) // 0x800DCD94
+{
+    mat->t[0] = Q12_TO_Q8(pos->vx - D_800F48A8.positionX_0);
+    mat->t[1] = Q12_TO_Q8(pos->vy);
+    mat->t[2] = Q12_TO_Q8(pos->vz - D_800F48A8.positionZ_4);
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DCDDC);
 

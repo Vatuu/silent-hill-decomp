@@ -209,6 +209,8 @@ void func_800D5B6C(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void func_800D5BC8(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
+bool func_800D5BF8(s32 arg0, s32 arg1, s32 arg2, u16* arg3);
+
 void func_800D5DF4(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void func_800D5E30(s_SubCharacter*, GsCOORDINATE2*);
