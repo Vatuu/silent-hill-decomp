@@ -443,7 +443,71 @@ void func_800DCD94(MATRIX* mat, VECTOR3* pos) // 0x800DCD94
     mat->t[2] = Q12_TO_Q8(pos->vz - D_800F48A8.positionZ_4);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DCDDC);
+void func_800DCDDC(s_800F3DAC* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800DCDDC
+{
+    VECTOR  sp18;
+    VECTOR  sp28;
+    SVECTOR sp38;
+    VECTOR  sp40;
+    MATRIX* mat;
+    s32     cond;
+    s32     rand;
+    s32     i;
+    s32     randSum;
+
+    randSum = 0;
+    mat     = &arg0->mat_118[0];
+
+    sp18.vx = arg1->vx;
+    sp18.vy = arg1->vy;
+    sp18.vz = arg1->vz;
+
+    if (arg2 != NULL)
+    {
+        sp28.vx = arg2->vx;
+        sp28.vy = arg2->vy;
+        sp28.vz = arg2->vz;
+    }
+
+    for (i = 0; i < ARRAY_SIZE(arg0->mat_118); i++, mat++)
+    {
+        cond = func_800DC6DC(&sp18, &sp28, arg2, arg0);
+        if (i == 0)
+        {
+            func_800DB6D0(mat, &sp18, &sp28, NULL, 0);
+        }
+        else
+        {
+            arg0->field_14++; // @hack Needed for reg match.
+            arg0->field_14--;
+            func_800DB6D0(mat, &sp18, &sp28, mat - 1, arg0->field_14);
+        }
+        SetRotMatrix(mat);
+        func_800DCD94(mat, &sp18);
+
+        sp38.vx = 0;
+        sp38.vy = 0;
+        sp38.vz = arg0->field_4D8;
+        ApplyRotMatrix(&sp38, &sp40);
+
+        sp18.vx += sp40.vx;
+        sp18.vy += sp40.vy;
+        sp18.vz += sp40.vz;
+
+        arg0->field_28[i] = 0xC0C0C0;
+
+        rand              = Rng_GenerateInt(-0x400, 0x400 - 1);
+        randSum          += rand;
+        arg0->field_A0[i] = randSum;
+
+        if (cond == 0)
+        {
+            break;
+        }
+    }
+
+    arg0->field_18 = i;
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DCF94);
 
@@ -484,7 +548,22 @@ void func_800DD240(VECTOR3* vec) // 0x800DD240
     func_800DD0EC(vec, 2);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD260);
+void func_800DD260(s32 arg0, s32 arg1) // 0x800DD260
+{
+    s_800F3DAC* ptr;
+
+    ptr = func_800DD090();
+    if (ptr != NULL)
+    {
+        ptr->field_4D8 = 0x1EB;
+        ptr->field_4E4 = 4;
+        ptr->field_C   = 0x800;
+        ptr->field_8   = 0x800;
+        ptr->field_14  = 0x200;
+
+        func_800DCDDC(ptr, arg0, arg1);
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD2C8);
 

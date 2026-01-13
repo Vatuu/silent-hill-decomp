@@ -74,16 +74,28 @@ STATIC_ASSERT_SIZEOF(s_800F3D48, 0x50);
 
 typedef struct
 {
-    s32 field_0;
-    u8  unk_4[0xC];
-    s32 field_10;
-    u8  unk_14[8];
-    s32 field_1C;
-    u8  unk_20[0x4C8];
-    s32 field_4E8;
-    u8  unk_4EC[4];
-    s32 field_4F0;
-    s32 field_4F4;
+    s32    field_0;
+    u8     unk_4[4];
+    s32    field_8;
+    s32    field_C;
+    s32    field_10;
+    s32    field_14;
+    s32    field_18;
+    s32    field_1C;
+    u8     unk_20[8];
+    s32    field_28[29];
+    u8     unk_9C[4];
+    s32    field_A0[29];
+    u8     unk_114[4];
+    MATRIX mat_118[29];
+    u8     unk_4B8[32];
+    s32    field_4D8;
+    u8     unk_4DC[8];
+    s32    field_4E4;
+    s32    field_4E8;
+    u8     unk_4EC[4];
+    s32    field_4F0;
+    s32    field_4F4;
 } s_800F3DAC;
 STATIC_ASSERT_SIZEOF(s_800F3DAC, 0x4F8);
 
@@ -299,13 +311,19 @@ void func_800DB288(void);
 
 void func_800DB608(void);
 
+s32 func_800DC6DC(s32*, s32*, VECTOR3*, s_800F3DAC*);
+
 void func_800DCD94(MATRIX* mat, VECTOR3* pos);
+
+void func_800DCDDC(s_800F3DAC* arg0, VECTOR3* arg1, VECTOR3* arg2);
 
 void func_800DCF94(void);
 
 s_800F3DAC* func_800DD090(void);
 
 void func_800DD240(VECTOR3* vec);
+
+void func_800DD260(s32 arg0, s32 arg1); // Unknown arg types.
 
 void func_800DD3D4(void* arg0, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
 
