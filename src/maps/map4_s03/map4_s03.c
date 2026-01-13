@@ -45,21 +45,185 @@ void func_800D0C50(SVECTOR* rot, MATRIX* mat) // 0x800D0C50
     SetMulRotMatrix(&outMat);
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D0CA0);
+void func_800D0CA0(int yaw, SVECTOR* pos) // 0x800D0CA0
+{
+    MATRIX      mtx;
+    VECTOR      trans;
+    SVECTOR     rot;
+    s_800E0988* ptr;
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D0D6C);
+    ptr = &D_800E0988;
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D0DE4);
+    SetRotMatrix(&ptr->world_8);
+    SetTransMatrix(&ptr->world_8);
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D0EC0);
+    ApplyRotMatrix(pos, &trans);
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D0F40);
+    trans.vx += ptr->world_8.t[0];
+    trans.vy += ptr->world_8.t[1];
+    trans.vz += ptr->world_8.t[2];
+
+    TransMatrix(&mtx, &trans);
+    SetTransMatrix(&mtx);
+
+    rot.vx = 0;
+    rot.vy = yaw;
+    rot.vz = 0;
+    Math_RotMatrixZxyNeg(&rot, &mtx);
+    SetMulRotMatrix(&mtx);
+}
+
+void func_800D0D6C(MATRIX* out, SVECTOR* pos, short yaw) // 0x800D0D6C
+{
+    SVECTOR     rot;
+    s_800E0988* ptr;
+
+    ptr = &D_800E0988;
+
+    rot.vx = 0;
+    rot.vy = yaw;
+    rot.vz = 0;
+
+    Math_RotMatrixXyz(&rot, out);
+
+    out->t[0] = (ptr->x_0 >> 4) + pos->vx;
+    out->t[1] = 0;
+    out->t[2] = (ptr->z_4 >> 4) + pos->vz;
+}
+
+void func_800D0DE4(SVECTOR* out, VECTOR* in, int ang, int dist) // 0x800D0DE4
+{
+    int dx;
+    int dz;
+    int x;
+    int z;
+
+    dx = Q12_MULT_PRECISE(Math_Sin(ang), dist);
+    dz = Q12_MULT_PRECISE(Math_Cos(ang), dist);
+
+    x = in->vx - D_800E0988.x_0;
+    z = in->vz - D_800E0988.z_4;
+
+    out->vx = (x + dx) >> 4;
+    out->vy = in->vy >> 4;
+    out->vz = (z + dz) >> 4;
+}
+
+void func_800D0EC0(u8* buf, s32 w, s32 h) // 0x800D0EC0
+{
+    s32 i, j;
+    s32 sum;
+
+    for (i = 0; i < h - 1; i++)
+    {
+        for (j = 0; j < w; j++)
+        {
+            sum   = buf[w + j];
+            sum  += buf[j - 1];
+            sum  += buf[j];
+            sum  += buf[j + 1];
+            sum >>= 2;
+
+            if (sum <= 0)
+            {
+                buf[j] = 0;
+            }
+            else
+            {
+                buf[j] = sum;
+            }
+        }
+
+        buf += w;
+    }
+}
+
+s32 func_800D0F40(s32 arg0, s32 arg1, s32 arg2) // 0x800D0F40
+{
+    s32 index;
+
+    index = (arg0 * arg1) >> 8;
+    if (index != 0 && g_DeltaTime0 != 0)
+    {
+        index += Rng_GenerateUInt(-2, 1);
+        // TODO: `CLAMP` doesn't match?
+        index = MIN(255, index);
+        index = MAX(index, 0);
+    }
+
+    // @hack Needed to match weird a2 usage.
+    if (arg2)
+    {
+        arg2++;
+        arg2--;
+    }
+
+    return D_800DAA58[index];
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D0FD4);
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D13B4);
+void func_800D13B4(u8* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800D13B4
+{
+    u8* buf;
+    s32 i;
+    s32 rnd;
+    s32 index;
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D1478);
+    buf = arg0 + (arg1 * (arg2 - 1));
+    memset(buf, 0, arg1);
+
+    if (arg3 > Q12(0.75f))
+    {
+        for (i = 0; i < 3; i++)
+        {
+            if (Rng_Rand16() & 0x70)
+            {
+                rnd            = Rng_Rand16() >> 2;
+                index          = (rnd % (arg1 / 4)) + (arg1 / 4);
+                buf[index + 1] = 0xff;
+            }
+        }
+    }
+}
+
+void func_800D1478(SVECTOR* arg0, s32 arg1, s32 ang, s32 mode, SVECTOR* arg4) // 0x800D1478
+{
+    s32 x, y, z;
+    s32 dist;
+    s32 add;
+
+    x = 0;
+    y = 0;
+    z = 0;
+
+    switch (mode)
+    {
+        case 0:
+        case 1:
+            dist = (arg1 > Q12(0.75f)) ? 128 : 76;
+            add  = mode ? FP_ANGLE(-90.0f) : FP_ANGLE(90.0f);
+            ang += add;
+
+            x = Q12_MULT_PRECISE(dist, Math_Sin(ang));
+            z = Q12_MULT_PRECISE(dist, Math_Cos(ang));
+            y = (arg1 > Q12(0.75f)) ? 0x59 : 0x80;
+            break;
+
+        case 2:
+            x = arg4->vx;
+            y = arg4->vy;
+            z = arg4->vz;
+            break;
+
+        case 3:
+            break;
+    }
+
+    arg0->vx += Q12_MULT_PRECISE(x, g_DeltaTime0);
+    arg0->vy += Q12_MULT_PRECISE(y, g_DeltaTime0);
+    arg0->vz += Q12_MULT_PRECISE(z, g_DeltaTime0);
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D1604);
 

@@ -60,7 +60,16 @@ typedef struct
     s_SubD_800E0930 sub_4;
 } s_D_800E0930;
 
+typedef struct
+{
+    int    x_0;
+    int    z_4;
+    MATRIX world_8;
+} s_800E0988;
+
 extern s_D_800E0930 D_800E0930[3];
+
+extern s_800E0988 D_800E0988;
 
 extern s_800DB7D4 D_800DB7D4;
 extern s_800DB7D4 D_800DB7E4[3][3];
@@ -101,9 +110,25 @@ extern s_800E0698 D_800E0698;
 
 extern VECTOR3 D_800E08F0;
 
+extern s32 D_800DAA58[];
+
 extern s_SfxVolume D_800DB1F8[6];
 
 void func_800D0C50(SVECTOR* rot, MATRIX* mat);
+
+void func_800D0CA0(int yaw, SVECTOR* pos);                       // TODO: Could be SVECTOR3, need to check callers.
+
+void func_800D0D6C(MATRIX* out, SVECTOR* pos, short yaw);        // TODO: Could be SVECTOR3, need to check callers.
+
+void func_800D0DE4(SVECTOR* out, VECTOR* in, int ang, int dist); // TODO: Could be SVECTOR3/VECTOR3, need to check callers.
+
+void func_800D0EC0(u8* buf, s32 w, s32 h);
+
+s32 func_800D0F40(s32 arg0, s32 arg1, s32 arg2);
+
+void func_800D13B4(u8* arg0, s32 arg1, s32 arg2, s32 arg3);
+
+void func_800D1478(SVECTOR* arg0, s32 arg1, s32 ang, s32 mode, SVECTOR* arg4); // TODO: Could be SVECTOR3, need to check callers.
 
 void func_800D19AC(VECTOR3* vec);
 
