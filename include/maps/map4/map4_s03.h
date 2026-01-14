@@ -191,11 +191,15 @@ void Ai_Twinfeeler_TextureLoad(void);
  */
 void Math_Vector3Translate(VECTOR3* outVec, const VECTOR3* inVec, q19_12 headingAngle, q19_12 dist);
 
+void func_800D3114(void); // Assumed args/return type.
+
 void func_800D326C(void);
 
 s_D_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)());
 
 void func_800D3504(s_SubCharacter* chara);
+
+void func_800D3528(s_SubCharacter* chara);
 
 void func_800D354C(VECTOR3*);
 
@@ -228,6 +232,8 @@ void func_800D4028(s_SubCharacter* chara);
 void func_800D46E0(VECTOR3* vec0, VECTOR3* vec1);
 
 s32 func_800D4924(VECTOR3* vec, q19_12 angle); // Assumed return type.
+
+void func_800D49C0(s_SubCharacter* chara);
 
 void func_800D4A34(s_SubCharacter* chara);
 

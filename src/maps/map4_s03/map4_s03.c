@@ -529,7 +529,7 @@ s_D_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)()) // 0x800D3
     s_SubD_800E0930* node;
     s32*             marker;
     s_D_800E0930*    temp;
-    
+
     temp = D_800E0930;
 
     for (i = 0; i < 3; i++, temp++)
@@ -561,7 +561,10 @@ void func_800D3504(s_SubCharacter* chara) // 0x800D3504
     func_800D344C(chara, &func_800D326C);
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D3528);
+void func_800D3528(s_SubCharacter* chara) // 0x800D3528
+{
+    func_800D344C(chara, &func_800D3114);
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D354C);
 
@@ -766,7 +769,21 @@ s32 func_800D4924(VECTOR3* vec, q19_12 angle) // 0x800D4924
     return func_800D48CC(Q12_TO_Q8(posX), Q12_TO_Q8(posZ));
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D49C0);
+void func_800D49C0(s_SubCharacter* chara) // 0x800D49C0
+{
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        chara->moveSpeed_38            = Q12(1.2f);
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(8, false);
+        func_800D3AE0(chara, 4);
+        chara->model_0.stateStep_3++;
+    }
+    else if (func_800D4924(&chara->position_18, chara->rotation_24.vy) != 0)
+    {
+        chara->model_0.controlState_2 = 4;
+        chara->model_0.stateStep_3    = 0;
+    }
+}
 
 void func_800D4A34(s_SubCharacter* chara) // 0x800D4A34
 {
@@ -779,8 +796,8 @@ void func_800D4A34(s_SubCharacter* chara) // 0x800D4A34
 
     if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
     {
-        chara->model_0.controlState_2     = 8;
-        chara->model_0.stateStep_3 = 0;
+        chara->model_0.controlState_2 = 8;
+        chara->model_0.stateStep_3    = 0;
     }
 }
 
@@ -918,7 +935,7 @@ void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5904
     {
         Vw_CoordHierarchyMatrixCompute(&coords[14], &mat);
     }
-    
+
     posY = chara->position_18.vy;
     posX = Q8_TO_Q12(mat.t[0]) - chara->position_18.vx;
     posZ = Q8_TO_Q12(mat.t[2]) - chara->position_18.vz;
@@ -940,7 +957,7 @@ void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5904
     chara->field_C8.field_6 = unkBasePosY;
     chara->field_D4.field_2 = Q12(0.4f);
     sharedFunc_800CD920_3_s03(chara, posX, posZ);
-        
+
     chara->field_D8.offsetX_0 = chara->field_D8.offsetX_4;
     chara->field_D8.offsetZ_2 = chara->field_D8.offsetZ_6;
 }
@@ -1550,7 +1567,7 @@ bool func_800D76E8(void) // 0x800D76E8
     bool result;
 
     result = true;
-    
+
     for(i = 0; i < ARRAY_SIZE(D_800E0698.field_8); i++)
     {
         result &= D_800E0698.field_8[i].field_21;
@@ -1649,11 +1666,11 @@ bool func_800D81FC(s_800E06A0* arg0, s32 arg1) // 0x800D81FC
     {
         arg0->field_28 = arg1;
     }
-    
+
     arg0->field_30 = 0;
     arg0->field_34 = 0;
     arg0->field_36 = 0;
-    
+
     return arg0->field_24 >= arg0->field_28;
 }
 
@@ -2001,7 +2018,7 @@ void func_800D9BB0(void) // 0x800D9BB0
     {
         if (Savegame_EventFlagGet(EventFlag_320))
         {
-            if (!D_800E05A8) 
+            if (!D_800E05A8)
             {
                 func_8005DC1C(Sfx_Unk1555, &QVECTOR3(130.5f, 0.0f, -93.0f), Q8(0.5f), 0);
 
