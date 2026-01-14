@@ -76,7 +76,7 @@ void func_800CC8C8(void) // 0x800CC8C8
             break;
     }
 
-    func_80035F4C(var_a3, var_a1, &D_800CCF54);
+    Bgm_Update(var_a3, var_a1, &D_800CCF54);
 }
 
 void Gfx_LoadingScreen_StageString(void) {} // 0x800CCA24

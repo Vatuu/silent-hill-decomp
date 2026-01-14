@@ -82,5 +82,5 @@ void sharedFunc_800D09D4_3_s00(void)
             break;
     }
 
-    func_80035F4C(flags, var, NULL);
+    Bgm_Update(flags, var, NULL);
 }

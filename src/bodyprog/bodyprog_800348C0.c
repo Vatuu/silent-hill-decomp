@@ -312,7 +312,7 @@ void Game_InGameInit(void) // 0x80034FB8
     func_8007E8C0();
     Game_NpcRoomInitSpawn(false);
     Game_PlayerHeightUpdate();
-    func_8003569C();
+    Fs_CharaAnimBoneInfoUpdate();
     GameFs_WeaponInfoUpdate();
     GameFs_Tim00TIMLoad();
     Fs_QueueWaitForEmpty();
@@ -395,20 +395,20 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
 // CHARACTER ANIMATIONS MEMORY ALLOC
 // ========================================
 
-bool func_8003528C(s32 charaDataAnimInfoIdx0, s32 charaDataAnimInfoIdx1) // 0x8003528C
+bool Fs_CharaAnimDataSizeCheck(s32 charaDataAnimInfoIdx0, s32 charaDataAnimInfoIdx1) // 0x8003528C
 {
-    u32                  tempField_8;
-    u32                  tempField_4;
+    u32                  animBufferAddress1;
+    u32                  animBufferAddress0;
     s_CharaAnimDataInfo* animDataInfo0;
     s_CharaAnimDataInfo* animDataInfo1;
 
-    animDataInfo0 = &g_CharaTypeAnimInfo[charaDataAnimInfoIdx0];
-    animDataInfo1 = &g_CharaTypeAnimInfo[charaDataAnimInfoIdx1];
-    tempField_4   = animDataInfo0->animFile0_4;
-    tempField_8   = animDataInfo1->animFile1_8;
+    animDataInfo0      = &g_CharaTypeAnimInfo[charaDataAnimInfoIdx0];
+    animDataInfo1      = &g_CharaTypeAnimInfo[charaDataAnimInfoIdx1];
+    animBufferAddress0 = animDataInfo0->animFile0_4;
+    animBufferAddress1 = animDataInfo1->animFile1_8;
 
-    if (tempField_4 >= (tempField_8 + animDataInfo1->animBufferSize2_10) ||
-        tempField_8 >= (tempField_4 + animDataInfo0->animBufferSize1_C))
+    if (animBufferAddress0 >= (animBufferAddress1 + animDataInfo1->animBufferSize2_10) ||
+        animBufferAddress1 >= (animBufferAddress0 + animDataInfo0->animBufferSize1_C))
     {
         return false;
     }
@@ -464,7 +464,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
     {
         if (idx == 1 || localAnimFile == initAnimDataInfo->animFile1_8)
         {
-            func_80035560(idx, charaId, initAnimDataInfo->animFile1_8, coord);
+            Fs_CharaAnimDataInfoUpdate(idx, charaId, initAnimDataInfo->animFile1_8, coord);
             return;
         }
         else if (localAnimFile < initAnimDataInfo->animFile1_8)
@@ -472,7 +472,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
             initAnimDataInfo->animFile0_4 = localAnimFile;
 
             Mem_Move32(localAnimFile, g_CharaTypeAnimInfo[idx].animFile1_8, g_CharaTypeAnimInfo[idx].animBufferSize2_10);
-            func_80035560(idx, charaId, localAnimFile, coord);
+            Fs_CharaAnimDataInfoUpdate(idx, charaId, localAnimFile, coord);
             return;
         }
     }
@@ -490,7 +490,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
     if (i > 0)
     {
         Mem_Move32(g_CharaTypeAnimInfo[idx].animFile0_4, g_CharaTypeAnimInfo[i].animFile1_8, g_CharaTypeAnimInfo[i].animBufferSize2_10);
-        func_80035560(idx, charaId, initAnimDataInfo->animFile0_4, coord);
+        Fs_CharaAnimDataInfoUpdate(idx, charaId, initAnimDataInfo->animFile0_4, coord);
     }
     else
     {
@@ -499,14 +499,14 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
 
     for (i = 1; i < GROUP_CHARA_COUNT; i++)
     {
-        if (i != idx && g_CharaTypeAnimInfo[i].charaId1_1 != Chara_None && func_8003528C(idx, i) != false)
+        if (i != idx && g_CharaTypeAnimInfo[i].charaId1_1 != Chara_None && Fs_CharaAnimDataSizeCheck(idx, i) != false)
         {
             bzero(&g_CharaTypeAnimInfo[i], sizeof(s_CharaAnimDataInfo));
         }
     }
 }
 
-void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord) // 0x80035560
+void Fs_CharaAnimDataInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord) // 0x80035560
 {
     s32                  idx0;
     GsCOORDINATE2*       localCoord;
@@ -545,7 +545,7 @@ void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOOR
     g_CharaAnimInfoIdxs[charaId] = idx;
 }
 
-void func_8003569C(void) // 0x8003569C
+void Fs_CharaAnimBoneInfoUpdate(void) // 0x8003569C
 {
     s32            i;
     GsCOORDINATE2* coord;
@@ -594,7 +594,7 @@ s32 Bgm_Init(void) // 0x80035780
             g_GameWork.gameStateStep_598[1]++;
 
         case 1:
-            if (Bgm_IsCurrentBgmTargetCheck(g_MapOverlayHeader.field_14) == false)
+            if (Bgm_IsCurrentBgmTargetCheck(g_MapOverlayHeader.bgmIdx_14) == false)
             {
                 g_GameWork.gameStateStep_598[1] += 2;
             }
@@ -610,7 +610,7 @@ s32 Bgm_Init(void) // 0x80035780
         case 2:
             if (func_80045BC8() == 0)
             {
-                Bgm_AudioSet(g_MapOverlayHeader.field_14);
+                Bgm_SongSet(g_MapOverlayHeader.bgmIdx_14);
                 g_GameWork.gameStateStep_598[1]++;
             }
             break;
@@ -637,7 +637,7 @@ bool Bgm_IsCurrentBgmTargetCheck(s32 bgmIdx) // 0x800358A8
     return g_GameWork.bgmIdx_5B2 != bgmIdx;
 }
 
-void Bgm_AudioSet(s32 bgmIdx) // 0x800358DC
+void Bgm_SongSet(s32 bgmIdx) // 0x800358DC
 {
     if (bgmIdx == 0)
     {
@@ -670,9 +670,9 @@ void Bgm_BgmChannelSet(void) // 0x80035924
 
 void func_8003596C(void) // 0x8003596C
 {
-    if (g_MapOverlayHeader.field_14 == 1)
+    if (g_MapOverlayHeader.bgmIdx_14 == 1)
     {
-        func_80035DB4(true);
+        Bgm_SongUpdate(true);
     }
 }
 
@@ -698,7 +698,7 @@ s32 Sd_AmbientSfxInit(void) // 0x8003599C
                 }
             }
 
-            if (func_80035AB0((s8)g_MapOverlayHeader.ambientAudioIdx_15) != 0)
+            if (Sd_IsCurrentAmbientTargetCheck((s8)g_MapOverlayHeader.ambientAudioIdx_15) != false)
             {
                 SD_Call(17);
                 g_GameWork.gameStateStep_598[1]++;
@@ -707,7 +707,7 @@ s32 Sd_AmbientSfxInit(void) // 0x8003599C
             break;
             
         case 1:
-            func_80035AC8((s8)g_MapOverlayHeader.ambientAudioIdx_15);
+            Sd_AmbientSfxSet((s8)g_MapOverlayHeader.ambientAudioIdx_15);
             g_GameWork.gameStateStep_598[1]++;
             return 1;
 
@@ -718,12 +718,12 @@ s32 Sd_AmbientSfxInit(void) // 0x8003599C
     return 0;
 }
 
-s32 func_80035AB0(s32 arg0) // 0x80035AB0
+s32 Sd_IsCurrentAmbientTargetCheck(s32 ambIdx) // 0x80035AB0
 {
-    return g_GameWork.ambientIdx_5B4 != arg0;
+    return g_GameWork.ambientIdx_5B4 != ambIdx;
 }
 
-void func_80035AC8(s32 idx) // 0x80035AC8
+void Sd_AmbientSfxSet(s32 idx) // 0x80035AC8
 {
     g_GameWork.ambientIdx_5B4 = idx;
     SD_Call(g_AmbientVabTaskLoadCmds[idx]);
@@ -791,7 +791,7 @@ void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
         camLookAt.vz -= temp * 2;
 
         vcUserCamTarget(&camLookAt, NULL, true);
-        func_8003EB54();
+        Game_SpotLightLoadScreenAttributesFix();
         Gfx_LoadScreenMapEffectsUpdate(0, 0);
 
         model->anim_4.flags_2                                 |= AnimFlag_Visible;
@@ -816,16 +816,16 @@ void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
 // IN-GAME MUSIC HANDLING RELATED
 // ========================================
 
-void func_80035DB4(bool arg0) // 0x80035DB4
+void Bgm_SongUpdate(bool arg0) // 0x80035DB4
 {
     D_800BCD5C = false;
 
-    if (g_MapOverlayHeader.func_10) // Checks if function exists.
+    if (g_MapOverlayHeader.bgmEvent_10 != NULL) // Checks if function exists.
     {
-        g_MapOverlayHeader.func_10(arg0);
+        g_MapOverlayHeader.bgmEvent_10(arg0);
         if (arg0 == false && D_800BCD5C == false)
         {
-            func_80035F4C(BgmFlag_Unk0, Q12(240.0f), 0);
+            Bgm_Update(BgmFlag_Unk0, Q12(240.0f), 0);
         }
     }
 }
@@ -892,7 +892,7 @@ void func_80035ED0(void) // 0x80035ED0
     g_SysWork.bgmLayerVolumes_2748[ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1] = Q12(0.0f);
 }
 
-void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr) // 0x80035F4C
+void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x80035F4C
 {
     s16    temp_v0;
     s32    var_a0;
@@ -1116,14 +1116,14 @@ void func_800363D0(void) // 0x800363D0
 {
     g_RadioPitchState        = 0;
     g_SysWork.sysFlags_22A0 |= SysFlag_3;
-    func_80035DB4(false);
+    Bgm_SongUpdate(false);
 }
 
-void func_8003640C(s32 arg0) // 0x8003640C
+void Bgm_SongChange(s32 idx) // 0x8003640C
 {
-    if (arg0 != 0)
+    if (idx != 0)
     {
-        g_MapOverlayHeader.field_14 = arg0;
+        g_MapOverlayHeader.bgmIdx_14 = idx;
     }
 }
 
@@ -2705,7 +2705,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
     }
 
     Screen_CutsceneCameraStateUpdate();
-    func_80035DB4(false);
+    Bgm_SongUpdate(false);
     Demo_DemoRandSeedRestore();
     Demo_DemoRandSeedRestore();
 
@@ -3211,7 +3211,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     else
     {
         g_SysWork.processFlags_2298 = SysWorkProcessFlag_RoomTransition;
-        func_8003640C(g_MapEventParam->mapOverlayIdx_8_25);
+        Bgm_SongChange(g_MapEventParam->mapOverlayIdx_8_25);
 
         if (g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->pointOfInterestIdx_8_5].data.areaLoad.field_4_5 != 0)
         {

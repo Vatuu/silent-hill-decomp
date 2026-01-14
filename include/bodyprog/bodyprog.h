@@ -1176,7 +1176,11 @@ typedef struct _HeldItem
 } s_HeldItem;
 STATIC_ASSERT_SIZEOF(s_HeldItem, 0x2C);
 
-/** @brief World GFX workspace. TODO: Could be `s_RendererWork`? Will depend on where other data resides. */
+/** @brief World GFX workspace.
+ * TODO: Could be `s_RendererWork`? Will depend on where other data resides.
+ * Will: `s_WorldModelWork` fits better, this is mainly in charge of handle model data, is `s_800C4168` which
+ * should have this name as it is used for general graphic effects.
+ */
 typedef struct _WorldGfxWork
 {
     s_MapInfo*        mapInfo_0;
@@ -1276,7 +1280,7 @@ typedef struct
     u8            field_0;        // `bool`?
     u8            isFogEnabled_1; /** `bool` */
     u8            field_2;
-    u8            field_3;
+    u8            field_3;        // Enviroment lighting.
     s_WaterZone*  waterZones_4;
     s32           screenBrightness_8;
     s32           field_C;
@@ -1284,8 +1288,8 @@ typedef struct
     s32           fogRelated_14;   // "FogThing1" from SHME, seems to affect distance where fog begins.
     s32           fogRelated_18;   // "FogThing2" from SHME.
     CVECTOR       fogColor_1C;
-    s32           field_20;
-    u8            field_24; // } RGB.
+    s32           field_20;        // Map lighting.
+    u8            field_24; // } RGB. Character color lighting.
     u8            field_25; // }
     u8            field_26; // }
     s8            unk_27;
@@ -1578,8 +1582,8 @@ typedef struct _MapOverlayHeader
     s8                     field_8;
     s8                     unk_9[3];
     s32                    (*func_C)();
-    void                   (*func_10)();
-    s8                     field_14;           // Flags? Music related.
+    void                   (*bgmEvent_10)();
+    s8                     bgmIdx_14;           // Flags? Music related.
     u8                     ambientAudioIdx_15; // Ambient file index from `g_AmbientVabTaskLoadCmds`.
     s8                     field_16;           // Set ambient tint and render distance.
                                                // A value of 3 sets the map to night.
@@ -1901,7 +1905,7 @@ typedef struct
 typedef struct
 {
     u8 field_0[8]; // TODO: Might be split into 8 different fields for specific things?
-} s_func_80035F4C;
+} s_Bgm_Update;
 
 typedef struct
 {
@@ -2870,7 +2874,7 @@ void func_8003D01C(void);
 void func_8003D03C(void);
 
 /** Loads the model of an item held by the player? */
-void func_8003D058(void);
+void WorldGfx_HeldItemLoad(void);
 
 bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId);
 
@@ -4129,7 +4133,10 @@ void Game_PlayerInit(void); // 0x80035178
 /** Loads a map file into `g_OvlDynamic`. */
 void GameFs_MapLoad(s32 mapIdx);
 
-bool func_8003528C(s32 idx0, s32 idx1);
+/** @brief Checks if the pointers of `g_CharaTypeAnimInfo` are overlapping each other.
+ * Returns false if the compared pointers aren't overlapping each other.
+ */
+bool Fs_CharaAnimDataSizeCheck(s32 idx0, s32 idx1);
 
 /** @brief Finds for the index of the character animation data in `g_CharaTypeAnimInfo`.
  *
@@ -4142,16 +4149,17 @@ s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId);
 void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coords);
 
 /** Called by `Fs_QueuePostLoadAnm`. Assigns data to `g_CharaTypeAnimInfo` and initializes NPC bones. */
-void func_80035560(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord);
+void Fs_CharaAnimDataInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord);
 
-void func_8003569C(void);
+/** @brief Update character type bone initialization cordinates and reinitialize them. */
+void Fs_CharaAnimBoneInfoUpdate(void);
 
 s32 Bgm_Init(void);
 
 /** @brief Checks if currently assigned song is the same as target. */
 bool Bgm_IsCurrentBgmTargetCheck(s32 bgmIdx);
 
-void Bgm_AudioSet(s32 bgmIdx);
+void Bgm_SongSet(s32 bgmIdx);
 
 /** Executes sound command. */
 void Bgm_BgmChannelSet(void);
@@ -4160,9 +4168,9 @@ void func_8003596C(void);
 
 s32 Sd_AmbientSfxInit(void); 
 
-s32 func_80035AB0(s32 arg0);
+s32 Sd_IsCurrentAmbientTargetCheck(s32 ambIdx);
 
-void func_80035AC8(s32 idx);
+void Sd_AmbientSfxSet(s32 idx);
 
 /** @brief Updates the translation and rotation (pose) of a matrix in a coordinate.
  *
@@ -4188,7 +4196,7 @@ void Gfx_LoadingScreen_BackgroundTexture(void);
 
 void Gfx_LoadingScreen_PlayerRun(void);
 
-void func_80035DB4(bool);
+void Bgm_SongUpdate(bool);
 
 void Bgm_MuteBgmLayers(void);
 
@@ -4197,11 +4205,11 @@ bool func_80035E44(void);
 void func_80035ED0(void);
 
 // Main music trigger and handler.
-void func_80035F4C(s32 flags, q19_12 arg1, s_func_80035F4C* bgmLayerLimitPtr);
+void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr);
 
 void func_800363D0(void);
 
-void func_8003640C(s32 arg0);
+void Bgm_SongChange(s32 idx);
 
 /** `Savegame_MapRoomIdxSet` */
 void Savegame_MapRoomIdxSet(void);
@@ -4515,7 +4523,7 @@ void func_8003E5E8(s32 arg0);
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad(void);
 
-void func_8003EB54(void);
+void Game_SpotLightLoadScreenAttributesFix(void);
 
 /** @brief Determines what enviroment effects data from `g_MapEffectsPresets` will use
  * based on `s_MapOverlayHeader::field_16`.

@@ -37,7 +37,7 @@ INCLUDE_RODATA("maps/map1_s06/nonmatchings/map1_s06", g_MapOverlayHeader);
 
 void func_800D5400(void) // 0x800D5400
 {
-    func_80035F4C(Savegame_EventFlagGet(EventFlag_133) ? 0xFE : 1, Q12(0.1f), D_800D71E8);
+    Bgm_Update(Savegame_EventFlagGet(EventFlag_133) ? 0xFE : 1, Q12(0.1f), D_800D71E8);
 }
 
 void func_800D5448(void) {}

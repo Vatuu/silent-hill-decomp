@@ -50,7 +50,7 @@ void func_800E9F34(void)
     s32              var_a0;
     s32              var_a1;
     s32              temp_a3;
-    s_func_80035F4C* var_a2;
+    s_Bgm_Update* var_a2;
 
     temp_a3 = g_SavegamePtr->mapRoomIdx_A5;
     var_a1  = 0x199;
@@ -210,7 +210,7 @@ void func_800E9F34(void)
         }
     }
 
-    func_80035F4C(var_a0, var_a1, var_a2);
+    Bgm_Update(var_a0, var_a1, var_a2);
 }
 
 void func_800EA208(void) {}

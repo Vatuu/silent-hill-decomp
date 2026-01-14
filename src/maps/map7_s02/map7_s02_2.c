@@ -81,12 +81,12 @@ void func_800D9864(void) // 0x800D9864
         var = 14;
     }
 
-    func_8003640C(var);
+    Bgm_SongChange(var);
 }
 
 void func_800D98E4(void) // 0x800D98E4
 {
-    func_8003640C(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
+    Bgm_SongChange(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
 }
 
 INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800D9924);
@@ -283,7 +283,7 @@ void func_800DA248(void) // 0x800DA248
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
             sharedFunc_800D2EB4_0_s00();
             func_8003D03C();
-            func_8003640C(4);
+            Bgm_SongChange(4);
             SysWork_StateStepIncrement(0);
 
         case 1:

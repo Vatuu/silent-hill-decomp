@@ -35,5 +35,5 @@ void sharedFunc_800E9B38_2_s02(void) // 0x800CC99C
         sharedData_800ED43C_2_s02[3] = temp_v0;
     }
 
-    func_80035F4C(flags, Q12(0.1f), sharedData_800ED43C_2_s02);
+    Bgm_Update(flags, Q12(0.1f), sharedData_800ED43C_2_s02);
 }

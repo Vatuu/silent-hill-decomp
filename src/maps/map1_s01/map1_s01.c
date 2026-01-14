@@ -126,7 +126,7 @@ void func_800D6FE4(void) // 0x800D6FE4
         flags = D_800DCA04[g_SavegamePtr->mapRoomIdx_A5];
     }
 
-    func_80035F4C(flags, Q12(0.1f), &D_800DC9FC);
+    Bgm_Update(flags, Q12(0.1f), &D_800DC9FC);
 }
 
 void func_800D7050(void) {}

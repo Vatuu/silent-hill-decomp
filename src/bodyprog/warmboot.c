@@ -102,7 +102,7 @@ void Game_WarmBoot(void) // 0x80034264
     Fs_QueueReset();
     Fs_QueueWaitForEmpty();
     sd_work_init();
-    func_80035AC8(1);
+    Sd_AmbientSfxSet(1);
 
     while (Sd_AudioStreamingCheck())
     {

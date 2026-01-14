@@ -1,11 +1,11 @@
 void sharedFunc_800CFEEC_3_s02(void)
 {
-    const static s_func_80035F4C D_800CA70C = { { 0x80, 0x70, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00 } };
+    const static s_Bgm_Update D_800CA70C = { { 0x80, 0x70, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00 } };
 
     u16              flags;
     q19_12           fArg1;
-    s_func_80035F4C* dataPtr;
-    s_func_80035F4C  data;
+    s_Bgm_Update* dataPtr;
+    s_Bgm_Update  data;
     s32              roomIdx;
 
     dataPtr = sharedData_800D1D14_3_s02;
@@ -164,5 +164,5 @@ void sharedFunc_800CFEEC_3_s02(void)
         }
     }
 
-    func_80035F4C(flags, fArg1, dataPtr);
+    Bgm_Update(flags, fArg1, dataPtr);
 }

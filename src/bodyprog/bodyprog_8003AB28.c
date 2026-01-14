@@ -1497,7 +1497,7 @@ void func_8003D03C(void) // 0x8003D03C
     g_WorldGfx.heldItem_1BAC.bone_18.modelInfo_0.field_0 |= 1 << 31;
 }
 
-void func_8003D058(void) // 0x8003D058
+void WorldGfx_HeldItemLoad(void) // 0x8003D058
 {
     MATRIX         mat0;
     MATRIX         mat1;
@@ -1911,7 +1911,7 @@ void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, s16 ar
     // Something to do with items held by player.
     if (charaId == Chara_Harry)
     {
-        func_8003D058();
+        WorldGfx_HeldItemLoad();
     }
 
     ret = func_8003DD74(charaId, arg4);
@@ -2546,7 +2546,7 @@ void func_8003E740(void) // 0x8003E740
 /**
  * TODO: Please investigate me!
  */
-void func_8003EB54(void) // 0x8003EB54
+void Game_SpotLightLoadScreenAttributesFix(void) // 0x8003EB54
 {
     g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 

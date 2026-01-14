@@ -57,7 +57,7 @@ void func_800D494C(void) // 0x800D494C
         }
     }
 
-    func_80035F4C(var_a0, Q12(0.1f), &D_800D5C3C);
+    Bgm_Update(var_a0, Q12(0.1f), &D_800D5C3C);
 }
 
 void func_800D49A4(void) {}

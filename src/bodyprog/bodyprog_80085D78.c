@@ -1152,7 +1152,7 @@ void func_80087EA8(s32 cmd) // 0x80087EA8
         return;
     }
 
-    Bgm_AudioSet(cmd);
+    Bgm_SongSet(cmd);
 }
 
 void func_80087EDC(s32 arg0) // 0x80087EDC
@@ -1187,7 +1187,7 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
             
             if (!func_80045BC8())
             {
-                Bgm_AudioSet(arg0);
+                Bgm_SongSet(arg0);
 
                 SysWork_StateStepIncrement(1);
             }

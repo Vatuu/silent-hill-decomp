@@ -210,7 +210,7 @@ void func_800D7F98(void) // 0x800D7F98
         }
     }
 
-    func_80035F4C(flags, fArg1, &D_800DBCDC);
+    Bgm_Update(flags, fArg1, &D_800DBCDC);
 }
 
 void func_800D81A4(void) {}

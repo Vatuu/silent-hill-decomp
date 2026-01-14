@@ -70,7 +70,7 @@ void func_800D94F8(void) // 0x800D94F8
         var1 = Q12(0.3f);
     }
 
-    func_80035F4C(flags, var1, &D_800DF2F8);
+    Bgm_Update(flags, var1, &D_800DF2F8);
 }
 
 void Gfx_LoadingScreen_StageString(void) // 0x800D95D4

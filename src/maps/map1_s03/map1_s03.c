@@ -326,7 +326,7 @@ void func_800DA4D4(void) // 0x800DA4D4
             break;
     }
 
-    func_80035F4C(flags, fArg1, &D_800E14C8);
+    Bgm_Update(flags, fArg1, &D_800E14C8);
 }
 
 void func_800DA630(void) {}

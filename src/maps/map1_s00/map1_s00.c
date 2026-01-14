@@ -45,7 +45,7 @@ void func_800D77F8(void) // 0x800D77F8
         flags = D_800DCC54[g_SavegamePtr->mapRoomIdx_A5];
     }
 
-    func_80035F4C(flags, Q12(0.1f), &D_800DCC4C);
+    Bgm_Update(flags, Q12(0.1f), &D_800DCC4C);
 }
 
 void func_800D7864(void) {}

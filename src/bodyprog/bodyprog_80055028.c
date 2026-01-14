@@ -799,10 +799,10 @@ void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, e_FsFile fileIdx, s_FsImageDesc*
 
 void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 blendMode) // 0x80056504
 {
-    char sp10[8];
+    char strCpy[8];
 
-    StringCopy(sp10, newStr);
-    Lm_MaterialFsImageApply(lmHdr, sp10, image, blendMode);
+    StringCopy(strCpy, newStr);
+    Lm_MaterialFsImageApply(lmHdr, strCpy, image, blendMode);
 }
 
 bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 blendMode) // 0x80056558

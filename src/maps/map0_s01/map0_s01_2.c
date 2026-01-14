@@ -65,7 +65,7 @@ void func_800DA7AC(void) // 0x800DA7AC
         var = 6;
     }
 
-    func_8003640C(var);
+    Bgm_SongChange(var);
 }
 
 void func_800DA7FC(void) // 0x800DA7FC
@@ -115,7 +115,7 @@ void func_800DA7FC(void) // 0x800DA7FC
         flags = BgmFlag_Unk0;
     }
 
-    func_80035F4C(flags, var1, NULL);
+    Bgm_Update(flags, var1, NULL);
 }
 
 void Gfx_LoadingScreen_StageString(void) // 0x800DA8A4

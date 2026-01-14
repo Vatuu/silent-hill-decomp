@@ -14,15 +14,15 @@ extern u8 D_800F13AC;
 
 extern u16 D_800ED8B0[16];
 
-extern s_func_80035F4C D_800ED418;
+extern s_Bgm_Update D_800ED418;
 
 extern s32 D_800ED420;
 
-extern s_func_80035F4C D_800ED424;
+extern s_Bgm_Update D_800ED424;
 
 extern u16 D_800ED42C[];
 
-extern s_func_80035F4C D_800ED458;
+extern s_Bgm_Update D_800ED458;
 
 void Map_WorldObjectsInit(void);
 

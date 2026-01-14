@@ -143,5 +143,5 @@ void sharedFunc_800E12D0_6_s04(void)
         sharedData_800EB74A_6_s04 = dist;
     }
 
-    func_80035F4C(flags, fArg1, dataPtr);
+    Bgm_Update(flags, fArg1, dataPtr);
 }

@@ -98,7 +98,7 @@ void func_800D9EBC(void) // same as `func_800DA4D4` in map1_s03
             break;
     }
 
-    func_80035F4C(flags, fArg1, D_800E1208);
+    Bgm_Update(flags, fArg1, D_800E1208);
 }
 
 void func_800DA018(void) {}

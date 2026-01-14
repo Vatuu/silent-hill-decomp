@@ -1620,7 +1620,7 @@ extern CVECTOR sharedData_800E325C_0_s00;
 
 extern s32 sharedData_800E2370_0_s01[2];
 
-// Each of these holds 8 bytes, passed to `func_80035F4C` which loops through each byte.
+// Each of these holds 8 bytes, passed to `Bgm_Update` which loops through each byte.
 extern u8 sharedData_800CFB14_0_s02[8];
 extern u8 sharedData_800CFB1C_0_s02[8];
 extern u8 sharedData_800CFB24_0_s02[8];
