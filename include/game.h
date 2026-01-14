@@ -1250,7 +1250,7 @@ typedef struct _PropertiesPlayer
     u8            field_10C;    // Player SFX pitch?
     u8            field_10D;
     s8            unk_10E[2];
-    s32           field_110;
+    q19_12        timer_110; // Increases when `flags_3E & CharaFlag_Unk4` is set, reset when reaches `D_800C45EC`.
     q19_12        gasWeaponPowerTimer_114; // Timer for the rock drill and chainsaw power.
     s16           field_118;
     s8            unk_11A[2];

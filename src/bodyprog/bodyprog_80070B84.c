@@ -854,12 +854,12 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
     if (chara->flags_3E & CharaFlag_Unk4)
     {
-        chara->properties_E4.dummy.properties_E8[10].val32 += g_DeltaTime0;
+        chara->properties_E4.player.timer_110 += g_DeltaTime0;
     }
 
-    if (chara->properties_E4.dummy.properties_E8[10].val32 > D_800C45EC)
+    if (chara->properties_E4.player.timer_110 > D_800C45EC)
     {
-        chara->properties_E4.dummy.properties_E8[10].val32 = 0;
+        chara->properties_E4.player.timer_110 = Q12(0.0f);
         chara->flags_3E &= ~CharaFlag_Unk4;
     }
 
@@ -953,7 +953,7 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
 
             if (!(chara->attackReceived_41 >= 68 && chara->attackReceived_41 < 70))
             {
-                g_Player_HeadingAngle                                                   = ratan2(chara->damage_B4.position_0.vx, chara->damage_B4.position_0.vz) - chara->rotation_24.vy;
+                g_Player_HeadingAngle                                                  = ratan2(chara->damage_B4.position_0.vx, chara->damage_B4.position_0.vz) - chara->rotation_24.vy;
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = SQUARE(chara->damage_B4.position_0.vx) + SQUARE(chara->damage_B4.position_0.vz) + SQUARE(chara->damage_B4.position_0.vy);
             }
 
@@ -1168,8 +1168,8 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             playeGrabFree_RequiredInputCount                                        = 0;
             enemyGrabReleaseState                                                   = PlayerState_None;
             unkDistThreshold                                                        = Q12(0.0f);
-            g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
-            npcDist                                                                    = Q12(0.0f);
+            g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126  = Q12(0.0f);
+            npcDist                                                                 = Q12(0.0f);
 
             // Accommodates player position (for pinned enemy gram and Romper attack) and establishes required input count to get free.
             switch (g_SysWork.playerWork_4C.extra_128.state_1C)
@@ -2062,14 +2062,14 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
             switch (g_SysWork.playerWork_4C.extra_128.state_1C)
             {
                 case PlayerState_DamagePushBack:
-                    Math_ShortestAngleGet(chara->rotation_24.vy, g_SysWork.playerWork_4C.player_0.properties_E4.dummy.properties_E8[0xC].val16[0], &sp1C);
+                    Math_ShortestAngleGet(chara->rotation_24.vy, g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118, &sp1C);
 
-                    if (ABS(sp1C) >= 0x400)
+                    if (ABS(sp1C) >= FP_ANGLE(90.0f))
                     {
                         break;
                     }
 
-                    if (ABS(sp1C) < 0x40)
+                    if (ABS(sp1C) < FP_ANGLE(5.7f))
                     {
                         chara->rotation_24.vy = g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118;
                     }
@@ -2080,14 +2080,14 @@ void Player_LogicUpdate(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINAT
                     break;
 
                 case PlayerState_DamagePushFront:
-                    Math_ShortestAngleGet(chara->rotation_24.vy, g_SysWork.playerWork_4C.player_0.properties_E4.dummy.properties_E8[12].val16[0], &sp1E);
+                    Math_ShortestAngleGet(chara->rotation_24.vy, g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118, &sp1E);
 
-                    if (ABS(sp1E) < 0x400)
+                    if (ABS(sp1E) < FP_ANGLE(90.0f))
                     {
                         break;
                     }
 
-                    if (ABS(sp1E) >= 0x7C0)
+                    if (ABS(sp1E) >= FP_ANGLE(174.4f))
                     {
                         chara->rotation_24.vy = FP_ANGLE_NORM_U(g_SysWork.playerWork_4C.player_0.properties_E4.player.field_118 + FP_ANGLE(180.0f));
                     }
@@ -7244,7 +7244,7 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
                             flexRotMax = chara->properties_E4.player.field_100 * TIMESTEP_SCALE(g_DeltaTime0, var_a2 + chara->properties_E4.player.field_100);
                             if (flexRotMax < flexRotStep)
                             {
-                                g_Player_FlexRotationX = chara->properties_E4.dummy.properties_E8[3].val16[0] - flexRotMax;
+                                g_Player_FlexRotationX = chara->properties_E4.player.field_F4 - flexRotMax;
                             }
                         }
                         else
@@ -7252,7 +7252,7 @@ void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
                             flexRotMax = -(chara->properties_E4.player.field_100 * TIMESTEP_SCALE(g_DeltaTime0, var_a2 + chara->properties_E4.player.field_100));
                             if (flexRotStep < flexRotMax)
                             {
-                                g_Player_FlexRotationX = chara->properties_E4.dummy.properties_E8[3].val16[0] - flexRotMax;
+                                g_Player_FlexRotationX = chara->properties_E4.player.field_F4 - flexRotMax;
                             }
                         }
                     }
@@ -7956,15 +7956,15 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_Player_IsShooting     = false;
     g_Player_IsAttacking    = false;
 
-    chara->properties_E4.player.afkTimer_E8            = Q12(0.0f);
-    chara->properties_E4.player.field_F4               = 0;
-    chara->properties_E4.player.runTimer_F8            = Q12(0.0f);
-    chara->properties_E4.player.field_100              = 0;
-    chara->properties_E4.player.field_104              = 0;
-    chara->properties_E4.player.runTimer_108           = Q12(0.0f);
-    chara->properties_E4.dummy.properties_E8[10].val32 = 0;
-    chara->properties_E4.player.flags_11C              = 0;
-    chara->properties_E4.player.moveDistance_126       = 0;
+    chara->properties_E4.player.afkTimer_E8      = Q12(0.0f);
+    chara->properties_E4.player.field_F4         = 0;
+    chara->properties_E4.player.runTimer_F8      = Q12(0.0f);
+    chara->properties_E4.player.field_100        = 0;
+    chara->properties_E4.player.field_104        = 0;
+    chara->properties_E4.player.runTimer_108     = Q12(0.0f);
+    chara->properties_E4.player.timer_110        = 0;
+    chara->properties_E4.player.flags_11C        = 0;
+    chara->properties_E4.player.moveDistance_126 = 0;
 
     Chara_DamageClear(chara);
 
