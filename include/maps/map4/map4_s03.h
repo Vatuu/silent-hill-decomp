@@ -52,15 +52,11 @@ STATIC_ASSERT_SIZEOF(s_800E0698, 0x264);
 typedef struct
 {
     s32     field_0;
-    s32     chara_4;
-    VECTOR3 position_8;
-    s32     funcptr_14;
-} s_SubD_800E0930;
-typedef struct
-{
-    s32             field_0;
-    s_SubD_800E0930 sub_4;
-} s_D_800E0930;
+    s32     field_4;
+    s32     chara_8;
+    VECTOR3 position_C;
+    void    (*funcptr_18)(struct s_800E0930*);
+} s_800E0930;
 
 typedef struct
 {
@@ -88,11 +84,21 @@ typedef struct
     s32     field_D4;
 } s_800DF580;
 
+typedef struct
+{
+    s32     field_0;
+    s32     field_4;
+    SVECTOR field_8;
+    s8      unk_10[4];
+} s_800E0300;
+
+extern s_800E0300 D_800E0300[];
+
 extern s_800DF580 D_800DF580[];
 
-extern s_D_800E0930 D_800E0930[3];
+extern s_800E0930 D_800E0930[3];
 
-extern s_800E0988 D_800E0988;
+extern s_800E0988 D_800E0988[];
 
 extern s_800DB7D4 D_800DB7D4;
 extern s_800DB7D4 D_800DB7E4[3][3];
@@ -194,6 +200,12 @@ void func_800D1AFC(void);
 
 void func_800D1C48(void);
 
+void func_800D1FF4(GsOT_TAG* arg0);
+
+void func_800D35DC(SVECTOR* arg0);
+
+void func_800D33D0(void);
+
 void Ai_Twinfeeler_TextureLoad(void);
 
 /** @brief Translates a vector in the direction of a given Y axis heading angle along the XZ plane.
@@ -209,7 +221,7 @@ void func_800D3114(void); // Assumed args/return type.
 
 void func_800D326C(void);
 
-s_D_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)());
+s_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)());
 
 void func_800D3504(s_SubCharacter* chara);
 

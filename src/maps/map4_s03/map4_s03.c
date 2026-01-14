@@ -263,8 +263,8 @@ void func_800D0DE4(SVECTOR* out, VECTOR* in, q19_12 headingAngle, q19_12 dist) /
     offsetX = Q12_MULT_PRECISE(Math_Sin(headingAngle), dist);
     offsetZ = Q12_MULT_PRECISE(Math_Cos(headingAngle), dist);
 
-    x = in->vx - D_800E0988.x_0;
-    z = in->vz - D_800E0988.z_4;
+    x = in->vx - D_800E0988[0].x_0;
+    z = in->vz - D_800E0988[0].z_4;
 
     out->vx = Q12_TO_Q8(x + offsetX);
     out->vy = Q12_TO_Q8(in->vy);
@@ -570,7 +570,42 @@ void func_800D1C48(void) // 0x800D1C48
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D1D3C);
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D1FF4);
+void func_800D1FF4(GsOT_TAG* arg0) // 0x800D1FF4
+{
+    SVECTOR     sp10 = { 0 };
+    MATRIX      sp18;
+    s32         i;
+    s_800E0300* ptr1;
+    s_800E0988* ptr0;
+
+    ptr1 = D_800E0300;
+
+    func_800D0D6C(&sp18, &sp10, 0);
+
+    ptr0 = &D_800E0988;
+
+    SetRotMatrix(&ptr0->world_8);
+    SetTransMatrix(&ptr0->world_8);
+
+    for (i = 0; i < 0x10; i++, ptr1++)
+    {
+        if (ptr1->field_0 > 0)
+        {
+            if (ptr1->field_0 > 0x1333)
+            {
+                ptr1->field_4 = 0x1000;
+            }
+            else
+            {
+                ptr1->field_4 -= Q12_MULT_PRECISE(g_DeltaTime0, 0x4CC);
+                ptr1->field_4  = MAX(ptr1->field_4, 0);
+            }
+
+            func_800D1D3C(arg0, &ptr1->field_8, &sp18, ptr1->field_4);
+            ptr1->field_0 -= g_DeltaTime0;
+        }
+    }
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2120);
 
@@ -613,41 +648,47 @@ INCLUDE_RODATA("maps/map4_s03/nonmatchings/map4_s03", D_800CA788);
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D326C);
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D33D0);
+void func_800D33D0(void) // 0x800D33D0
+{
+    s32         i;
+    s_800E0930* ptr;
+
+    ptr = D_800E0930;
+
+    for (i = 0; i < 3; i++, ptr++)
+    {
+        if (ptr->funcptr_18 != NULL)
+        {
+            ptr->funcptr_18(ptr);
+        }
+    }
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D3428);
 
-s_D_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)()) // 0x800D344C
+s_800E0930* func_800D344C(s_SubCharacter* chara, void (*funcptr)(s_800E0930*)) // 0x800D344C
 {
-    s_Collision      coll;
-    s32              i;
-    s_SubD_800E0930* node;
-    s32*             marker;
-    s_D_800E0930*    temp;
+    s_Collision coll;
+    s32         i;
+    s_800E0930* ptr;
 
-    temp = D_800E0930;
+    ptr = D_800E0930;
 
-    for (i = 0; i < 3; i++, temp++)
+    for (i = 0; i < 3; i++, ptr++)
     {
-        marker = &temp->field_0;
-        node = &temp->sub_4;
-
-        if (!node->funcptr_14)
+        if (!ptr->funcptr_18)
         {
             Collision_Get(&coll, chara->position_18.vx, chara->position_18.vz);
-
-            node->chara_4 = chara;
-            node->position_8.vx = chara->position_18.vx;
-            node->position_8.vy = coll.groundHeight_0;
-            node->position_8.vz = chara->position_18.vz;
-            node->funcptr_14 = funcptr;
-            node->field_0 = 0;
-
-            *marker = 0;
-            return temp;
+            ptr->chara_8       = chara;
+            ptr->position_C.vx = chara->position_18.vx;
+            ptr->position_C.vy = coll.groundHeight_0;
+            ptr->position_C.vz = chara->position_18.vz;
+            ptr->funcptr_18    = funcptr;
+            ptr->field_4       = 0;
+            ptr->field_0       = 0;
+            return ptr;
         }
     }
-
     return NULL;
 }
 
@@ -663,7 +704,29 @@ void func_800D3528(s_SubCharacter* chara) // 0x800D3528
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D354C);
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D35DC);
+void func_800D35DC(SVECTOR* arg0) // 0x800D35DC
+{
+    GsOT_TAG*   ot;
+    s_800E0988* ptr;
+    s32         idx;
+
+    ptr = D_800E0988;
+
+    if (g_DeltaTime0 != 0)
+    {
+        func_800D33D0();
+    }
+
+    idx = g_ActiveBufferIdx;
+
+    ot = g_OrderingTable0[idx].org;
+
+    func_80049C2C(&ptr->world_8, ptr->x_0, 0, ptr->z_4);
+    func_800D0C50(arg0, &ptr->world_8);
+    func_800D1604(ot, arg0->vy);
+    func_800D1FF4(ot);
+    func_800D2ED0(ot);
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D3694);
 
