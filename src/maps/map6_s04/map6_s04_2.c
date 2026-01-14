@@ -108,7 +108,11 @@ INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE380);
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE5CC);
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE62C);
+void func_800DE62C(void) // 0x800DE62C
+{
+    // TODO: Find which `FS_BUFFER_x` this is zeroing part of.
+    memset((void*)0x801E8701, 0, 0x214);
+}
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE658);
 
@@ -143,7 +147,11 @@ INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DEDEC);
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DEF50);
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DF134);
+void func_800DF134(void) // 0x800DF134
+{
+    func_800DEAA8(1);
+    D_800ED588++;
+}
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DF160);
 
@@ -941,7 +949,7 @@ void func_800E3244(void) // 0x800E3244
             WorldGfx_PlayerHeldItemSet(InventoryItemId_CutscenePlasticBottle);
             Fs_QueueWaitForEmpty();
             SysWork_StateStepIncrement(0);
-            
+
         case 1:
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 170, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 8, false);
@@ -1140,7 +1148,7 @@ void func_800E3244(void) // 0x800E3244
             Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, (1<<1));
             break;
     }
-    
+
     if (g_SysWork.sysStateStep_C[0] >= 22 && g_SysWork.sysStateStep_C[0] <= 27)
     {
         posX = FP_FROM(Math_Sin(D_800ED5B6) * Q12(5.2f), Q12_SHIFT) + Q12(20.0f);
@@ -1935,7 +1943,7 @@ void func_800E5F54(void) // 0x800E5F54
     else
     {
         projCellX0 = cellX0 + 15;
-    } 
+    }
 
     if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(0.0f))
     {

@@ -120,11 +120,15 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
 
 void func_800DE26C(void);
 
+void func_800DE62C(void);
+
 void func_800DEA94(s32* arg0);
 
 void func_800DEC3C(VECTOR3*, SVECTOR3*); // Assumed return type.
 
 void func_800DED30(void);
+
+void func_800DF134(void);
 
 void func_800DEF50(VECTOR3*, GsCOORDINATE2*, s32*); // Assumed return type.
 
