@@ -507,7 +507,42 @@ s32 func_800D19F0(s_800DF580* arg0) // 0x800D19F0
     return 1;
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D1AFC);
+void func_800D1AFC(void) // 0x800D1AFC
+{
+    VECTOR      sp10;
+    s32         var_s1;
+    s32         i;
+    s_800DF580* ptr;
+    VECTOR3*    vec;
+
+    var_s1 = Rng_Rand16();
+
+    for (i = 0; i < 5; i++)
+    {
+        vec = &D_800E0698.field_258;
+
+        sp10.vx = vec->vx;
+        sp10.vy = vec->vy;
+        sp10.vz = vec->vz;
+
+        ptr = func_800D1900(&sp10, 2);
+
+        if (ptr != NULL)
+        {
+            var_s1       += Rng_TestProbabilityBits(8) - 0x80;
+            ptr->field_C  = Q12_MULT_PRECISE(Math_Sin(var_s1), 0x99);
+            ptr->field_E  = Rng_TestProbabilityBits(5) + 0x70;
+            ptr->field_10 = Q12_MULT_PRECISE(Math_Cos(var_s1), 0x99);
+            ptr->field_8  = 0x1E66;
+            ptr->field_D4 = Rng_TestProbabilityBits(8);
+            ptr->field_CC = 0x4CC;
+            ptr->field_D0 = 0;
+            ptr->field_C8 = func_800D19F0;
+            ptr->field_3C = 1;
+        }
+        var_s1 += 0x333;
+    }
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D1C48);
 

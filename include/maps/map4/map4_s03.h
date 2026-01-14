@@ -40,12 +40,14 @@ STATIC_ASSERT_SIZEOF(s_800E06A0, 0x38);
 
 typedef struct
 {
-    s32             field_0;
-    s32             field_4;
-    s_800E06A0      field_8[10];
+    s32                field_0;
+    s32                field_4;
+    s_800E06A0         field_8[10];
     s_WorldObjectModel objRef_238;
+    s8                 unk_254[4];
+    VECTOR3            field_258;
 } s_800E0698;
-STATIC_ASSERT_SIZEOF(s_800E0698, 0x254);
+STATIC_ASSERT_SIZEOF(s_800E0698, 0x264);
 
 typedef struct
 {
@@ -184,6 +186,8 @@ void func_800D185C(s32 arg0, s32 arg1);
 s_800DF580* func_800D1900(VECTOR* arg0, s32 arg1);
 
 s32 func_800D19F0(s_800DF580* arg0);
+
+void func_800D1AFC(void);
 
 void Ai_Twinfeeler_TextureLoad(void);
 
