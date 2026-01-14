@@ -662,7 +662,7 @@ void Ai_Creeper_Control_5(s_SubCharacter* creeper)
     if (creeper->moveSpeed_38 == Q12(0.0f) && !(creeper->properties_E4.player.afkTimer_E8 & 0xC))
     {
         creeper->properties_E4.creeper.flags_E8 |= CreeperFlag_3;
-        func_80037DC4(creeper);
+        Savegame_EnemyStateUpdate(creeper);
 
         if (creeper->model_0.anim_4.status_0 == ANIM_STATUS(CreeperAnim_14, true))
         {

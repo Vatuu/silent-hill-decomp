@@ -1578,7 +1578,7 @@ typedef struct
 typedef struct _MapOverlayHeader
 {
     s_MapInfo*             mapInfo_0;
-    u8                     (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxSet`.
+    u8                     (*getMapRoomIdxFunc_4)(s32 x, s32 y); // Called by `Savegame_MapRoomIdxUpdate`.
     s8                     field_8;
     s8                     unk_9[3];
     s32                    (*func_C)();
@@ -4198,21 +4198,23 @@ void Gfx_LoadingScreen_PlayerRun(void);
 
 void Bgm_SongUpdate(bool);
 
-void Bgm_MuteBgmLayers(void);
+void Bgm_AllLayersMute(void);
 
-bool func_80035E44(void);
+/** @unused. */
+bool Bgm_LayerOnCheck(void);
 
-void func_80035ED0(void);
+void Bgm_GlobalLayersVariablesUpdate(void);
 
 // Main music trigger and handler.
 void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr);
 
+/** @brief Updates the song idx and disables radio effects. */
 void func_800363D0(void);
 
 void Bgm_SongChange(s32 idx);
 
-/** `Savegame_MapRoomIdxSet` */
-void Savegame_MapRoomIdxSet(void);
+/** `Savegame_MapRoomIdxUpdate` */
+void Savegame_MapRoomIdxUpdate(void);
 
 /** @Unused */
 s32 func_8003647C(void);
@@ -4251,7 +4253,7 @@ bool Event_CheckTouchObbFacing(s_MapPoint2d* mapPoint);
 
 bool Event_CheckTouchObb(s_MapPoint2d* mapPoint);
 
-void func_80037DC4(s_SubCharacter* chara);
+void Savegame_EnemyStateUpdate(s_SubCharacter* chara);
 
 void Event_Update(bool disableButtonEvents);
 

@@ -266,7 +266,7 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     }
     else
     {
-        func_80037DC4(groaner);
+        Savegame_EnemyStateUpdate(groaner);
 
         groaner->flags_3E                                      |= CharaFlag_Unk2;
         groanerProps.flags_E8.val16[0]                         |= GroanerFlag_3 | GroanerFlag_12;

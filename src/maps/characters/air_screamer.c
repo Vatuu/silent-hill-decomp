@@ -1308,7 +1308,7 @@ void sharedFunc_800D3DFC_0_s01(s_SubCharacter* airScreamer)
 
         if (Rng_RandQ12() >= chance)
         {
-            func_80037DC4(airScreamer);
+            Savegame_EnemyStateUpdate(airScreamer);
         }
     }
 }

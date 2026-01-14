@@ -7910,7 +7910,7 @@ void func_8007E8C0(void) // 0x8007E8C0
         g_SysWork.enablePlayerMatchAnim_2358 = false;
     }
 
-    chara->properties_E4.player.exhaustionTimer_FC = Q12(0.0f);
+    chara->properties_E4.player.exhaustionTimer_FC      = Q12(0.0f);
     g_SysWork.playerWork_4C.player_0.field_C8.field_0   = Q12(-1.6f);
     g_SysWork.playerWork_4C.player_0.field_C8.field_2   = Q12(0.0f);
     g_SysWork.playerWork_4C.player_0.field_C8.field_6   = Q12(-1.1f);
@@ -7918,9 +7918,9 @@ void func_8007E8C0(void) // 0x8007E8C0
     g_SysWork.playerWork_4C.player_0.field_D8.offsetX_4 = Q12(0.0f);
     g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 = Q12(0.0f);
     g_SysWork.playerWork_4C.player_0.field_D8.offsetX_0 = Q12(0.0f);
-    chara->field_D4.radius_0                        = Q12(0.3f);
-    chara->field_D4.field_2                        = Q12(0.23f);
-    g_GameWork.mapAnimIdx_5B1                      = NO_VALUE;
+    chara->field_D4.radius_0                            = Q12(0.3f);
+    chara->field_D4.field_2                             = Q12(0.23f);
+    g_GameWork.mapAnimIdx_5B1                           = NO_VALUE;
 
     func_8007E9C4();
 }
@@ -7931,19 +7931,19 @@ void func_8007E9C4(void) // 0x8007E9C4
 
     chara = &g_SysWork.playerWork_4C.player_0;
 
-    g_Player_IsInWalkToRunTransition                  = false;
-    g_SysWork.playerWork_4C.extra_128.state_1C            = PlayerState_None;
-    g_SysWork.playerWork_4C.extra_128.upperBodyState_20   = PlayerUpperBodyState_None;
-    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24   = PlayerLowerBodyState_None;
-    g_SysWork.playerWork_4C.extra_128.model_0.stateStep_3 = 0;
-    g_SysWork.playerWork_4C.extra_128.model_0.controlState_2     = ModelState_Uninitialized;
+    g_Player_IsInWalkToRunTransition                         = false;
+    g_SysWork.playerWork_4C.extra_128.state_1C               = PlayerState_None;
+    g_SysWork.playerWork_4C.extra_128.upperBodyState_20      = PlayerUpperBodyState_None;
+    g_SysWork.playerWork_4C.extra_128.lowerBodyState_24      = PlayerLowerBodyState_None;
+    g_SysWork.playerWork_4C.extra_128.model_0.stateStep_3    = 0;
+    g_SysWork.playerWork_4C.extra_128.model_0.controlState_2 = ModelState_Uninitialized;
 
-    chara->model_0.stateStep_3                = 0;
-    chara->model_0.controlState_2                    = ModelState_Uninitialized;
-    g_SysWork.playerStopFlags_235A            = PlayerStopFlag_None;
-    g_Player_FlexRotationY                    = FP_ANGLE(0.0f);
-    g_Player_FlexRotationX                    = FP_ANGLE(0.0f);
-    D_800C4560                                = NO_VALUE;
+    chara->model_0.stateStep_3            = 0;
+    chara->model_0.controlState_2         = ModelState_Uninitialized;
+    g_SysWork.playerStopFlags_235A        = PlayerStopFlag_None;
+    g_Player_FlexRotationY                = FP_ANGLE(0.0f);
+    g_Player_FlexRotationX                = FP_ANGLE(0.0f);
+    D_800C4560                            = NO_VALUE;
     g_SysWork.playerCombat_38.isAiming_13 = false;
 
     func_8004C564(0, NO_VALUE);
@@ -7956,15 +7956,15 @@ void func_8007E9C4(void) // 0x8007E9C4
     g_Player_IsShooting     = false;
     g_Player_IsAttacking    = false;
 
-    chara->properties_E4.player.afkTimer_E8                    = Q12(0.0f);
-    chara->properties_E4.player.field_F4                       = 0;
-    chara->properties_E4.player.runTimer_F8                    = Q12(0.0f);
-    chara->properties_E4.player.field_100                      = 0;
-    chara->properties_E4.player.field_104                      = 0;
-    chara->properties_E4.player.runTimer_108                   = Q12(0.0f);
+    chara->properties_E4.player.afkTimer_E8            = Q12(0.0f);
+    chara->properties_E4.player.field_F4               = 0;
+    chara->properties_E4.player.runTimer_F8            = Q12(0.0f);
+    chara->properties_E4.player.field_100              = 0;
+    chara->properties_E4.player.field_104              = 0;
+    chara->properties_E4.player.runTimer_108           = Q12(0.0f);
     chara->properties_E4.dummy.properties_E8[10].val32 = 0;
-    chara->properties_E4.player.flags_11C                      = 0;
-    chara->properties_E4.player.moveDistance_126         = 0;
+    chara->properties_E4.player.flags_11C              = 0;
+    chara->properties_E4.player.moveDistance_126       = 0;
 
     Chara_DamageClear(chara);
 

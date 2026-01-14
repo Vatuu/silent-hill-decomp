@@ -1214,7 +1214,7 @@ void func_80088048(void) // 0x80088048
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
-            Bgm_MuteBgmLayers();
+            Bgm_AllLayersMute();
             SD_Call(18);
             SysWork_StateStepIncrement(1);
             break;
@@ -1241,7 +1241,7 @@ void func_800880F0(s32 arg0) // 0x800880F0
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
-            Bgm_MuteBgmLayers();
+            Bgm_AllLayersMute();
 
             if (arg0 == 0)
             {

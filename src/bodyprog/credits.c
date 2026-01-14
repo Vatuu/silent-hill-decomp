@@ -854,7 +854,7 @@ void func_800914C4(s32 arg0, u32 value) // 0x800914C4
 
     if (arg0 == 0) 
     {
-        g_SavegamePtr->meleeKillCount_25D = value;
+        g_SavegamePtr->meleeKillCount_25D  = value;
         g_SavegamePtr->meleeKillCountB_25E = (g_SavegamePtr->meleeKillCountB_25E & 0xF0) | ((value >> 8) & 0x0F);
     } 
     else 

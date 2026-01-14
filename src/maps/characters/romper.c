@@ -1055,7 +1055,7 @@ void Ai_Romper_Control_7(s_SubCharacter* romper)
         romper->model_0.anim_4.status_0 = ANIM_STATUS(RomperAnim_6, false);
         romper->flags_3E               &= ~CharaFlag_Unk2;
 
-        func_80037DC4(romper);
+        Savegame_EnemyStateUpdate(romper);
     }
 }
 

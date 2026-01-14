@@ -601,7 +601,7 @@ s32 Bgm_Init(void) // 0x80035780
             else
             {
                 SD_Call(18);
-                Bgm_MuteBgmLayers();
+                Bgm_AllLayersMute();
         
                 g_GameWork.gameStateStep_598[1]++;
             }
@@ -830,7 +830,7 @@ void Bgm_SongUpdate(bool arg0) // 0x80035DB4
     }
 }
 
-void Bgm_MuteBgmLayers(void) // 0x80035E1C
+void Bgm_AllLayersMute(void) // 0x80035E1C
 {
     s32 i;
 
@@ -841,7 +841,7 @@ void Bgm_MuteBgmLayers(void) // 0x80035E1C
     }
 }
 
-bool func_80035E44(void) // 0x80035E44
+bool Bgm_LayerOnCheck(void) // 0x80035E44
 {
     s32 i;
     u16 val;
@@ -875,7 +875,7 @@ bool func_80035E44(void) // 0x80035E44
     return true;
 }
 
-void func_80035ED0(void) // 0x80035ED0
+void Bgm_GlobalLayersVariablesUpdate(void) // 0x80035ED0
 {
     s32 i;
 
@@ -884,7 +884,7 @@ void func_80035ED0(void) // 0x80035ED0
         g_SysWork.bgmLayerVolumes_2748[i] = Sd_BgmLayerVolumeGet(i) << 5; // Conversion to Q12.
     }
 
-    if (!func_80045BC8())
+    if (func_80045BC8() == 0)
     {
         g_SysWork.bgmLayerVolumes_2748[0] = Q12(1.0f);
     }
@@ -1044,7 +1044,7 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
         switch (D_800A99A0) 
         {
             case 3:
-                Bgm_MuteBgmLayers();
+                Bgm_AllLayersMute();
 
                 if (cond0) 
                 {
@@ -1058,18 +1058,18 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
                 break;
 
             case 2:
-                Bgm_MuteBgmLayers();
+                Bgm_AllLayersMute();
                 D_800A99A0 = 1;
                 break;
 
             case 1:
                 if (cond0) 
                 {
-                    func_80035ED0();
+                    Bgm_GlobalLayersVariablesUpdate();
                 } 
                 else 
                 {
-                    Bgm_MuteBgmLayers();
+                    Bgm_AllLayersMute();
                 }
 
                 D_800A99A0 = 0;
@@ -1104,7 +1104,7 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
         } 
         else 
         {
-            Bgm_MuteBgmLayers();
+            Bgm_AllLayersMute();
             D_800A99A0 = 3;
         }
     }
@@ -1131,7 +1131,7 @@ void Bgm_SongChange(s32 idx) // 0x8003640C
 // CURRENT ROOM RELATED
 // ========================================
 
-void Savegame_MapRoomIdxSet(void) // 0x80036420
+void Savegame_MapRoomIdxUpdate(void) // 0x80036420
 {
     s32 x;
     s32 z;
@@ -1514,7 +1514,7 @@ s32 Gfx_MapMsg_SelectionUpdate(u8 mapMsgIdx, s32* arg1) // 0x80036B5C
 }
 
 // ========================================
-// UNKNOWN
+// UNKNOWN - UNUSED
 // ========================================
 
 const s32 RodataPad_800252B8 = 0;
@@ -1703,10 +1703,6 @@ void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
     } 
 }
 
-// ========================================
-// UNKNOWN
-// ========================================
-
 void func_80037124(void) // 0x80037124
 {
     g_MapMsg_Select.maxIdx_0 = NO_VALUE;
@@ -1780,7 +1776,7 @@ void Chara_PositionSet(s_MapPoint2d* mapPoint) // 0x800371E8
     g_SysWork.cameraAngleY_237A = rotY;
 
     func_8007E9C4();
-    Savegame_MapRoomIdxSet();
+    Savegame_MapRoomIdxUpdate();
 }
 
 void Game_PlayerHeightUpdate(void) // 0x80037334
@@ -2169,10 +2165,10 @@ bool Event_CheckTouchObb(s_MapPoint2d* mapPoint) // 0x80037C5C
 }
 
 // ========================================
-// NPC RELATED - UPDATE?
+// NPC RELATED - UPDATES
 // ========================================
 
-void func_80037DC4(s_SubCharacter* chara) // 0x80037DC4
+void Savegame_EnemyStateUpdate(s_SubCharacter* chara) // 0x80037DC4
 {
     if (g_SavegamePtr->gameDifficulty_260 <= GameDifficulty_Normal || Rng_RandQ12() >= FP_ANGLE(108.0f))
     {
@@ -2652,7 +2648,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
         case 1:
             DrawSync(SyncMode_Wait);
             func_80037154();
-            Savegame_MapRoomIdxSet();
+            Savegame_MapRoomIdxUpdate();
             func_800892A4(1);
 
             g_IntervalVBlanks = 2;
@@ -2759,7 +2755,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     player = &g_SysWork.playerWork_4C.player_0;
 
     Event_Update(player->attackReceived_41 != NO_VALUE);
-    Savegame_MapRoomIdxSet();
+    Savegame_MapRoomIdxUpdate();
 
     switch (FP_ROUND_SCALED(player->health_B0, 10, Q12_SHIFT))
     {

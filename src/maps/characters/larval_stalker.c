@@ -42,7 +42,7 @@ void Ai_LarvalStalker_Update(s_SubCharacter* larvalStalker, s_AnmHeader* anmHdr,
 
     if (*mapOverlayPtr == 37 || !Rng_GenerateInt(0, 3)) // 1 in 4 chance.
     {
-        func_80037DC4(larvalStalker);
+        Savegame_EnemyStateUpdate(larvalStalker);
     }
 }
 
@@ -654,7 +654,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             {
                 larvalStalker->model_0.controlState_2 = LarvalStalkerControl_13;
                 larvalStalker->model_0.anim_4.status_0 = ANIM_STATUS(LarvalStalkerAnim_4, false);
-                func_80037DC4(larvalStalker);
+                Savegame_EnemyStateUpdate(larvalStalker);
             }
 
             if (larvalStalkerProps.flags_E8 & LarvalStalkerFlag_1)
@@ -703,7 +703,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 larvalStalker->flags_3E &= ~CharaFlag_Unk2;
                 larvalStalker->model_0.controlState_2 = LarvalStalkerControl_13;
                 larvalStalker->model_0.anim_4.status_0 = ANIM_STATUS(LarvalStalkerAnim_3, false);
-                func_80037DC4(larvalStalker);
+                Savegame_EnemyStateUpdate(larvalStalker);
             }
 
             Chara_MoveSpeedUpdate3(larvalStalker, Q12(1.5f), Q12(0.0f));
@@ -992,7 +992,7 @@ void sharedFunc_800D17BC_1_s00(s_SubCharacter* larvalStalker)
         {
             if (Rng_GenerateInt(0, 7) == 0) // 1 in 8 chance.
             {
-                func_80037DC4(larvalStalker);
+                Savegame_EnemyStateUpdate(larvalStalker);
             }
 
             if (angle < FP_ANGLE(90.0f))

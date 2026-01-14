@@ -44,7 +44,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
 
                     if (!nurse->health_B0)
                     {
-                        func_80037DC4(nurse);
+                        Savegame_EnemyStateUpdate(nurse);
                     }
                 }
                 else
@@ -65,7 +65,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                 {
                     Ai_PuppetNurse_SfxPlay(nurse, 1);
                     nurse->health_B0 = Q12(0.0f);
-                    func_80037DC4(nurse);
+                    Savegame_EnemyStateUpdate(nurse);
 
                     if (nurse->model_0.anim_4.status_0 == ANIM_STATUS(14, true))
                     {

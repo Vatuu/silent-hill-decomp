@@ -1811,7 +1811,7 @@ void Ai_Stalker_Control_9(s_SubCharacter* stalker)
             }
 
             stalker->model_0.controlState_2 = StalkerControl_10;
-            func_80037DC4(stalker);
+            Savegame_EnemyStateUpdate(stalker);
         }
 
         if (stalker->health_B0 > sharedData_800E3A24_0_s00 &&
