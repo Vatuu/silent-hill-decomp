@@ -401,7 +401,7 @@ void func_800DBABC(void) // 0x800DBABC
 {
     q19_12 val;
     s32    i;
-    
+
     val = Q12(1.0f);
 
     for (i = 4; i >= 0; i--)
@@ -620,13 +620,17 @@ void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s
     func_800DCF94();
 }
 
-void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords)
+void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DD62C
 {
     func_800D952C();
     func_800DD594(pos, chara, coords, 0);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD67C);
+void func_800DD67C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DD67C
+{
+    func_800D952C();
+    func_800DD594(pos, chara, coords, 1);
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD6CC);
 
@@ -786,7 +790,7 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
         {
             incubus->damage_B4.amount_C *= 10;
         }
-    
+
         if (incubus->damage_B4.amount_C > Q12(0.0f))
         {
             newHealth = incubus->health_B0 - incubus->damage_B4.amount_C;
@@ -1079,7 +1083,7 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     }
 
     chara->moveSpeed_38       = 0;
-    chara->field_D4.radius_0   = Q12(0.3f);
+    chara->field_D4.radius_0  = Q12(0.3f);
     chara->field_D8.offsetX_4 = Q12(0.0f);
     chara->field_D8.offsetZ_6 = Q12(0.0f);
     chara->field_E1_0         = 4;
@@ -1090,13 +1094,13 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
 
     if (chara->model_0.stateStep_3 == 0)
     {
-        chara->model_0.controlState_2     = 1;
-        chara->model_0.stateStep_3 = 0;
+        chara->model_0.controlState_2 = 1;
+        chara->model_0.stateStep_3    = 0;
     }
     else
     {
-        chara->model_0.controlState_2     = chara->model_0.stateStep_3;
-        chara->model_0.stateStep_3 = 0;
+        chara->model_0.controlState_2 = chara->model_0.stateStep_3;
+        chara->model_0.stateStep_3    = 0;
     }
 
     Character_AnimSet(chara, ANIM_STATUS(2, false), 115);
@@ -1120,7 +1124,47 @@ bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFB
     return true;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DFCE4);
+void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
+{
+    // TODO: Unknown23Props
+    if (chara->properties_E4.dummy.properties_E8[2].val32 == 0)
+    {
+        if (chara->properties_E4.dummy.properties_E8[3].val32 < 0)
+        {
+            chara->health_B0          = 0;
+            chara->damage_B4.amount_C = 1;
+        }
+
+        if (!func_8004C328(false))
+        {
+            chara->properties_E4.dummy.properties_E8[3].val32 -= g_DeltaTime0;
+        }
+
+        if (!(chara->flags_3E & CharaFlag_Unk3))
+        {
+            chara->damage_B4.amount_C *= 10;
+        }
+
+        if (chara->damage_B4.amount_C > Q12(0.0f))
+        {
+            chara->health_B0 = MAX(Q12(0.0f), chara->health_B0 - chara->damage_B4.amount_C);
+            if (chara->health_B0 <= Q12(0.0f) && func_800DFB04() == 0)
+            {
+                Savegame_EventFlagSet(EventFlag_582);
+                chara->model_0.controlState_2 = 5;
+                chara->model_0.stateStep_3    = 0;
+                chara->health_B0              = NO_VALUE;
+                chara->flags_3E              |= CharaFlag_Unk2;
+                chara->properties_E4.dummy.properties_E8[2].val32++;
+            }
+        }
+    }
+
+    chara->damage_B4.amount_C      = 0;
+    chara->damage_B4.position_0.vz = 0;
+    chara->damage_B4.position_0.vy = 0;
+    chara->damage_B4.position_0.vx = 0;
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DFE10);
 

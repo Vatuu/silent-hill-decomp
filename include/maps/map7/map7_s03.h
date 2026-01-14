@@ -332,7 +332,8 @@ void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s
 
 void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
 
-void func_800DD67C(VECTOR3*, s_SubCharacter*, GsCOORDINATE2*);
+void func_800DD67C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
+
 void func_800DD7D0(VECTOR3*);
 void func_800DD868(void);
 s32  func_800DD964(void);
@@ -373,7 +374,7 @@ void func_800DFB2C(bool disableDamage);
 void func_800DFB50(s_SubCharacter* chara);
 void func_800DFB74(s_SubCharacter* chara);
 bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void func_800DFCE4(s_SubCharacter*);
+void func_800DFCE4(s_SubCharacter* chara);
 void func_800DFEF0(s_SubCharacter* chara);
 void func_800DFF28(s_SubCharacter* chara);
 void func_800DFF44(s_SubCharacter* chara);

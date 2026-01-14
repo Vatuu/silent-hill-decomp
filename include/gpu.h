@@ -106,6 +106,7 @@ typedef struct
     ((((tp) & 0x3) << 7) | (((abr) & 0x3) << 5) | (((yn) & 0x1) << 4) | ((xn) & 0xF))
 
 /** @brief Wrapper for `getTPageN`. Takes a `g_OrderingTable0` buffer index and unknown `i` idx. */
+#if !defined(M2CTX)
 #define getTPageFromBuffer(tp, abr, bufferIdx, i)                                                         \
 ({                                                                                                        \
     int tpage = getTPageN((tp), (abr), ((bufferIdx) * 16) + ((i) * 4), (((bufferIdx) << 4) & 0x10) >> 4); \
@@ -115,6 +116,13 @@ typedef struct
     __asm__ __volatile__("" : "+r"(tpage));                                                               \
     tpage;                                                                                                \
 })
+#else
+#define getTPageFromBuffer(tp, abr, bufferIdx, i)                                                         \
+({                                                                                                        \
+    int tpage = getTPageN((tp), (abr), ((bufferIdx) * 16) + ((i) * 4), (((bufferIdx) << 4) & 0x10) >> 4); \
+    tpage;                                                                                                \
+})
+#endif
 
 /** @brief Same as `setRECT`, but uses 2x 32-bit stores instead of 4x 16-bit stores. */
 #define setRECTFast(r, x, y, w, h)        \
