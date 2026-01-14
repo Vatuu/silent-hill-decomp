@@ -580,6 +580,8 @@ void func_800D2408(void) // 0x800D2408
         g_SysWork.pointLightRot_2370.vy = ratan2(lightIntPos.vx - g_SysWork.pointLightPosition_2360.vx, lightIntPos.vz - g_SysWork.pointLightPosition_2360.vz);
         g_SysWork.pointLightRot_2370.vz = 0;
     }
+
+    #undef soundPos
 }
 
 void func_800D2F74(void) // 0x800D2F74

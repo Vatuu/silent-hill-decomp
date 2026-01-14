@@ -160,6 +160,8 @@ void func_800D9864(void);
 
 void func_800D98E4(void);
 
+void func_800DA1A8(void);
+
 void func_800DA248(void);
 
 /** Cutscene. */
@@ -189,6 +191,10 @@ void func_800DC14C(void);
 
 void func_800DC778(void);
 
+void func_800DC94C(void);
+
+void func_800DC954(void);
+
 void func_800DCD00(void);
 
 void func_800DD2D4(void);
@@ -196,6 +202,8 @@ void func_800DD2D4(void);
 void func_800DD9E8(void);
 
 void func_800DDEC8(void);
+
+void func_800DF1E8(void);
 
 /** @brief Handles the Disk of Ouroboros item pickup event. */
 void MapEvent_DiskOfOuroborosTake(void);
@@ -243,5 +251,7 @@ void func_800E1FF4(void);
 void func_800E2DC0(void);
 
 void func_800E2DEC(void);
+
+void Map_WorldObjectsInit(void);
 
 #endif

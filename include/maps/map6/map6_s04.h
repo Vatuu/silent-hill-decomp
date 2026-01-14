@@ -118,6 +118,8 @@ void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2
 
 void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+void func_800DE26C(void);
+
 void func_800DEA94(s32* arg0);
 
 void func_800DEC3C(VECTOR3*, SVECTOR3*); // Assumed return type.
@@ -149,6 +151,8 @@ void func_800E10F8(void);
 void func_800E15FC(s_PlayerWork* playerWork, s_SubCharacter* npc, bool);
 
 void func_800E1CA0(void);
+
+void func_800E1D48(void);
 
 /** Cutscene. */
 void func_800E1D50(void);

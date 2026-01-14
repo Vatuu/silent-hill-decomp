@@ -243,9 +243,6 @@ void sharedFunc_800D67FC_0_s00(s_SubCharacter* stalker);
 
 void sharedFunc_800D7E04_0_s00(s_SubCharacter* stalker, s32 sfxId);
 
-/** Unsure, but likely takes a Stalker. */
-void sharedFunc_800D88AC_0_s00(s_SubCharacter* stalker);
-
 void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void Ai_Stalker_Init(s_SubCharacter* stalker); // Matches across all maps except `map6_s03`.

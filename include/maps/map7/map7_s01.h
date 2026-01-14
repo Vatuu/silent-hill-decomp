@@ -143,10 +143,18 @@ void func_800D6878(void);
 
 void func_800D68F8(void);
 
+void func_800D71BC(void);
+
 void func_800D725C(void);
 
 /** Cutscene. */
 void func_800D7A60(void);
+
+void func_800D8230(void);
+
+void func_800D82C4(void);
+
+void func_800D8358(void);
 
 /** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Shotgun Shells item pickup event. */
 void MapEvent_CommonItemTake(void);

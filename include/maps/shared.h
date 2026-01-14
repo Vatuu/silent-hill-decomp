@@ -2086,6 +2086,9 @@ void sharedFunc_800D0994_3_s00(void);
 
 void sharedFunc_800D09D4_3_s00(void);
 
+/** Unsure which character this takes, stalker doesn't fit? */
+void sharedFunc_800D88AC_0_s00(s_SubCharacter* stalker);
+
 // MAP3_S03 puppet nurse/doctor funcs
 
 void sharedFunc_800CDA88_3_s03(s_SubCharacter* nurse);
@@ -2122,6 +2125,8 @@ void Ai_PuppetNurse_Control2(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor);
 
+bool sharedFunc_800CE7C8_3_s03(s_SubCharacter* nurse);
+
 void Ai_PuppetNurse_Control5(s_SubCharacter* nurse);
 
 void Ai_PuppetNurse_Control6_7(s_SubCharacter* nurse, bool isDoctor);
@@ -2131,6 +2136,8 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse);
 s32 sharedFunc_800CEEAC_3_s03(void);
 
 void Ai_PuppetNurse_Control9(s_SubCharacter* nurse);
+
+s32 sharedFunc_800CF600_3_s03(s_SubCharacter* nurse);
 
 void sharedFunc_800CF7F4_3_s03(s_SubCharacter* nurse);
 
