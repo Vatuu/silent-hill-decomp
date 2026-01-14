@@ -402,7 +402,7 @@ void func_800D17FC(void) // 0x800D17FC
     {
         ptr->field_8  = 0;
         ptr->field_D0 = 0;
-        ptr->field_C8 = 0;
+        ptr->field_C8 = NULL;
 
         memset(&ptr->field_40, 0, sizeof(ptr->field_40));
     }
@@ -420,7 +420,7 @@ void func_800D185C(s32 arg0, s32 arg1) // 0x800D185C
         ptr->field_0  = arg1;
         ptr->field_8  = 0x1000;
         ptr->field_3C = 1;
-        ptr->field_C8 = 0;
+        ptr->field_C8 = NULL;
         ptr->field_D0 = 0;
         ptr->field_CC = 0x1000;
 
@@ -440,7 +440,7 @@ s_800DF580* func_800D1900(VECTOR* arg0, s32 arg1) // 0x800D1900
     {
         if (ptr->field_8 <= 0)
         {
-            ptr->field_C8 = 0;
+            ptr->field_C8 = NULL;
             ptr->field_D0 = 0;
             ptr->field_0  = i;
             ptr->field_8  = 0x1000;
@@ -467,7 +467,45 @@ void func_800D19CC(VECTOR3* vec) // 0x800D19CC
     D_800E08F0.vz = vec->vz;
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D19F0);
+s32 func_800D19F0(s_800DF580* arg0) // 0x800D19F0
+{
+    switch (arg0->field_D0)
+    {
+        case 0:
+            if (arg0->field_D4 < 0)
+            {
+                arg0->field_D0 = 1;
+            }
+            arg0->field_D4 -= g_DeltaTime0;
+            return 0;
+
+        case 1:
+            if (arg0->field_8 > 0x999)
+            {
+                if (arg0->field_CC < 0xA66)
+                {
+                    arg0->field_CC += Q12_MULT_PRECISE(g_DeltaTime0, 0x570);
+                }
+                else
+                {
+                    arg0->field_CC = 0xA66;
+                }
+            }
+            else
+            {
+                if (arg0->field_CC > 0)
+                {
+                    arg0->field_CC -= Q12_MULT_PRECISE(g_DeltaTime0, 0x400);
+                }
+                else
+                {
+                    arg0->field_CC = 0;
+                }
+            }
+            break;
+    }
+    return 1;
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D1AFC);
 

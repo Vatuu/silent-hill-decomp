@@ -72,15 +72,18 @@ typedef struct
     s32     field_0;
     s32     field_4;
     s32     field_8;
-    s8      unk_C[8];
+    s16     field_C;
+    s16     field_E;
+    s16     field_10;
+    s8      unk_12[2];
     SVECTOR field_14;
     s8      unk_1C[32];
     s32     field_3C;
     u8      field_40[133]; // Type assumed.
-    s32     field_C8;
+    s32     (*field_C8)(struct s_800DF580*);
     s32     field_CC;
     s32     field_D0;
-    s8      unk_D4[4];
+    s32     field_D4;
 } s_800DF580;
 
 extern s_800DF580 D_800DF580[];
@@ -179,6 +182,8 @@ void func_800D17FC(void);
 void func_800D185C(s32 arg0, s32 arg1);
 
 s_800DF580* func_800D1900(VECTOR* arg0, s32 arg1);
+
+s32 func_800D19F0(s_800DF580* arg0);
 
 void Ai_Twinfeeler_TextureLoad(void);
 
