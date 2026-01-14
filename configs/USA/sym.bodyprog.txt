@@ -329,6 +329,7 @@ Fs_CharaAnimDataSizeCheck                   = 0x8003528C;
 Fs_CharaAnimDataInfoIdxGet                  = 0x800352F8;
 Fs_CharaAnimDataAlloc                       = 0x80035338;
 Fs_CharaAnimDataInfoUpdate                  = 0x80035560;
+Fs_CharaAnimBoneInfoUpdate                  = 0x8003569C; // type:func
 Bgm_Init                                    = 0x80035780;
 Bgm_IsCurrentBgmTargetCheck                 = 0x800358A8;
 Bgm_SongSet                                 = 0x800358DC;
