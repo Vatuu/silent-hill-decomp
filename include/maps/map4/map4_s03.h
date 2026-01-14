@@ -153,6 +153,8 @@ extern s8 D_800E05E2;
 
 extern s_800E0698 D_800E0698;
 
+extern SVECTOR3 D_800DAE58;
+
 // Q19.12
 extern VECTOR3 D_800E08F0;
 
