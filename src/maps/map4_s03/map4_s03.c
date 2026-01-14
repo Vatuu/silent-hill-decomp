@@ -544,7 +544,28 @@ void func_800D1AFC(void) // 0x800D1AFC
     }
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D1C48);
+void func_800D1C48(void) // 0x800D1C48
+{
+    VECTOR      sp10;
+    s_800DF580* ptr;
+
+    if (!(Rng_Rand16() & 0x30))
+    {
+        sp10.vx = D_800E08F0.vx;
+        sp10.vy = D_800E08F0.vy + 0x333;
+        sp10.vz = D_800E08F0.vz;
+
+        ptr = func_800D1900(&sp10, 2);
+
+        if (ptr != NULL)
+        {
+            ptr->field_C  = Rng_Rand16() % 0x99 - 0x4C;
+            ptr->field_E  = -0x4C;
+            ptr->field_10 = Rng_Rand16() % 0x99 - 0x4C;
+            ptr->field_3C = 1;
+        }
+    }
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D1D3C);
 

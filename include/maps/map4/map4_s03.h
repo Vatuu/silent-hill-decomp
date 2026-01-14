@@ -189,6 +189,8 @@ s32 func_800D19F0(s_800DF580* arg0);
 
 void func_800D1AFC(void);
 
+void func_800D1C48(void);
+
 void Ai_Twinfeeler_TextureLoad(void);
 
 /** @brief Translates a vector in the direction of a given Y axis heading angle along the XZ plane.
