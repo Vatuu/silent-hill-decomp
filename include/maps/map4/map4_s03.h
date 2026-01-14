@@ -67,6 +67,24 @@ typedef struct
     MATRIX world_8;
 } s_800E0988;
 
+typedef struct
+{
+    s32     field_0;
+    s32     field_4;
+    s32     field_8;
+    s8      unk_C[8];
+    SVECTOR field_14;
+    s8      unk_1C[32];
+    s32     field_3C;
+    u8      field_40[133]; // Type assumed.
+    s32     field_C8;
+    s32     field_CC;
+    s32     field_D0;
+    s8      unk_D4[4];
+} s_800DF580;
+
+extern s_800DF580 D_800DF580[];
+
 extern s_D_800E0930 D_800E0930[3];
 
 extern s_800E0988 D_800E0988;
@@ -155,6 +173,12 @@ void func_800D1478(SVECTOR* arg0, s32 arg1, q19_12 headingAngle, s32 mode, SVECT
 void func_800D19AC(VECTOR3* vec);
 
 void func_800D19CC(VECTOR3* vec);
+
+void func_800D17FC(void);
+
+void func_800D185C(s32 arg0, s32 arg1);
+
+s_800DF580* func_800D1900(VECTOR* arg0, s32 arg1);
 
 void Ai_Twinfeeler_TextureLoad(void);
 

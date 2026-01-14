@@ -391,11 +391,69 @@ void func_800D1478(SVECTOR* arg0, s32 arg1, q19_12 headingAgle, s32 mode, SVECTO
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D1604);
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D17FC);
+void func_800D17FC(void) // 0x800D17FC
+{
+    s32         i;
+    s_800DF580* ptr;
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D185C);
+    ptr = D_800DF580;
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D1900);
+    for (i = 0; i < 16; i++, ptr++)
+    {
+        ptr->field_8  = 0;
+        ptr->field_D0 = 0;
+        ptr->field_C8 = 0;
+
+        memset(&ptr->field_40, 0, sizeof(ptr->field_40));
+    }
+}
+
+void func_800D185C(s32 arg0, s32 arg1) // 0x800D185C
+{
+    s_800DF580* ptr;
+
+    ptr = &D_800DF580[arg1];
+
+    if (ptr->field_8 <= 0)
+    {
+        ptr->field_4  = arg1 & 1;
+        ptr->field_0  = arg1;
+        ptr->field_8  = 0x1000;
+        ptr->field_3C = 1;
+        ptr->field_C8 = 0;
+        ptr->field_D0 = 0;
+        ptr->field_CC = 0x1000;
+
+        memset(&ptr->field_40, 0, sizeof(ptr->field_40));
+        func_800D0DE4(&ptr->field_14, arg0, 0, 0);
+    }
+}
+
+s_800DF580* func_800D1900(VECTOR* arg0, s32 arg1) // 0x800D1900
+{
+    s32         i;
+    s_800DF580* ptr;
+
+    ptr = D_800DF580;
+
+    for (i = 0; i < 16; i++, ptr++)
+    {
+        if (ptr->field_8 <= 0)
+        {
+            ptr->field_C8 = 0;
+            ptr->field_D0 = 0;
+            ptr->field_0  = i;
+            ptr->field_8  = 0x1000;
+            ptr->field_4  = arg1;
+            ptr->field_3C = 1;
+
+            func_800D0DE4(&ptr->field_14, arg0, 0, 0);
+            memset(&ptr->field_40, 0, sizeof(ptr->field_40));
+            return ptr;
+        }
+    }
+    return NULL;
+}
 
 void func_800D19AC(VECTOR3* vec) // 0x800D19AC
 {
