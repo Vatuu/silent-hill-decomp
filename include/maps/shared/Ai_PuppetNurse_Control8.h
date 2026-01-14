@@ -3,7 +3,11 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
     u16          modelStates[8];
     s32          controlState;
     q19_12       speed;
+#if !defined(M2CTX)
     register s32 angle asm("v1"); // @hack forced register for a match. Doesn't affect code logic.
+#else
+    s32 angle;
+#endif
 
     switch (nurse->model_0.stateStep_3)
     {
