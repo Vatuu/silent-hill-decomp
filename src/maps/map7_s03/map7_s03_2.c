@@ -1160,10 +1160,10 @@ void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
         }
     }
 
-    chara->damage_B4.amount_C      = 0;
-    chara->damage_B4.position_0.vz = 0;
-    chara->damage_B4.position_0.vy = 0;
-    chara->damage_B4.position_0.vx = 0;
+    chara->damage_B4.amount_C      = Q12(0.0f);
+    chara->damage_B4.position_0.vz = Q12(0.0f);
+    chara->damage_B4.position_0.vy = Q12(0.0f);
+    chara->damage_B4.position_0.vx = Q12(0.0f);
 }
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DFE10);
@@ -1381,12 +1381,12 @@ void func_800E0B90(void) // 0x800E0B90
         var_a0 = 14;
     }
 
-    Bgm_SongChange(var_a0);
+    Bgm_TrackChange(var_a0);
 }
 
 void func_800E0C10(void) // 0x800E0C10
 {
-    Bgm_SongChange(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
+    Bgm_TrackChange(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
 }
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E0C50);

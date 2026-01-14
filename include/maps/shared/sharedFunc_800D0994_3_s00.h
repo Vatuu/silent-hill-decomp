@@ -6,5 +6,5 @@ void sharedFunc_800D0994_3_s00(void)
     s32 mapOverlayVal;
 
     mapOverlayVal = !Savegame_EventFlagGet(EventFlag_295) ? OVERLAY_VAL_OFF : OVERLAY_VAL_ON;
-    Bgm_SongChange(mapOverlayVal);
+    Bgm_TrackChange(mapOverlayVal);
 }

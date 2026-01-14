@@ -1152,10 +1152,10 @@ void func_80087EA8(s32 cmd) // 0x80087EA8
         return;
     }
 
-    Bgm_SongSet(cmd);
+    Bgm_TrackSet(cmd);
 }
 
-void func_80087EDC(s32 arg0) // 0x80087EDC
+void func_80087EDC(s32 cmd) // 0x80087EDC
 {
     if (Sd_AudioStreamingCheck() || !Fs_QueueDoThingWhenEmpty())
     {
@@ -1165,7 +1165,7 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
     switch (g_SysWork.sysStateStep_C[1])
     {
         case 0:
-            if (!Bgm_IsCurrentBgmTargetCheck(arg0))
+            if (!Bgm_IsCurrentBgmTargetCheck(cmd))
             {
                 SysWork_StateStepSet(1, 3);
                 break;
@@ -1187,7 +1187,7 @@ void func_80087EDC(s32 arg0) // 0x80087EDC
             
             if (!func_80045BC8())
             {
-                Bgm_SongSet(arg0);
+                Bgm_TrackSet(cmd);
 
                 SysWork_StateStepIncrement(1);
             }

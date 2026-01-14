@@ -845,22 +845,22 @@ u32 func_8009146C(s32 arg0) // 0x8009146C
     return res;
 }
 
-void func_800914C4(s32 arg0, u32 value) // 0x800914C4
+void func_800914C4(s32 arg0, u32 val) // 0x800914C4
 {
-    if (value > 4000) 
+    if (val > 4000) 
     {
-        value = 4000;
+        val = 4000;
     }
 
     if (arg0 == 0) 
     {
-        g_SavegamePtr->meleeKillCount_25D  = value;
-        g_SavegamePtr->meleeKillCountB_25E = (g_SavegamePtr->meleeKillCountB_25E & 0xF0) | ((value >> 8) & 0x0F);
+        g_SavegamePtr->meleeKillCount_25D  = val;
+        g_SavegamePtr->meleeKillCountB_25E = (g_SavegamePtr->meleeKillCountB_25E & 0xF0) | ((val >> 8) & 0x0F);
     } 
     else 
     {
-        g_SavegamePtr->rangedKillCount_25F = value;
-        g_SavegamePtr->meleeKillCountB_25E = (g_SavegamePtr->meleeKillCountB_25E & 0x0F) | ((value >> 4) & 0xF0);
+        g_SavegamePtr->rangedKillCount_25F = val;
+        g_SavegamePtr->meleeKillCountB_25E = (g_SavegamePtr->meleeKillCountB_25E & 0x0F) | ((val >> 4) & 0xF0);
     }
 }
 

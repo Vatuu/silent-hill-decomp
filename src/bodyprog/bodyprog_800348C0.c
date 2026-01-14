@@ -610,7 +610,7 @@ s32 Bgm_Init(void) // 0x80035780
         case 2:
             if (func_80045BC8() == 0)
             {
-                Bgm_SongSet(g_MapOverlayHeader.bgmIdx_14);
+                Bgm_TrackSet(g_MapOverlayHeader.bgmIdx_14);
                 g_GameWork.gameStateStep_598[1]++;
             }
             break;
@@ -637,7 +637,7 @@ bool Bgm_IsCurrentBgmTargetCheck(s32 bgmIdx) // 0x800358A8
     return g_GameWork.bgmIdx_5B2 != bgmIdx;
 }
 
-void Bgm_SongSet(s32 bgmIdx) // 0x800358DC
+void Bgm_TrackSet(s32 bgmIdx) // 0x800358DC
 {
     if (bgmIdx == 0)
     {
@@ -672,7 +672,7 @@ void func_8003596C(void) // 0x8003596C
 {
     if (g_MapOverlayHeader.bgmIdx_14 == 1)
     {
-        Bgm_SongUpdate(true);
+        Bgm_TrackUpdate(true);
     }
 }
 
@@ -791,7 +791,7 @@ void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
         camLookAt.vz -= temp * 2;
 
         vcUserCamTarget(&camLookAt, NULL, true);
-        Game_SpotLightLoadScreenAttributesFix();
+        Game_SpotlightLoadScreenAttribsFix();
         Gfx_LoadScreenMapEffectsUpdate(0, 0);
 
         model->anim_4.flags_2                                 |= AnimFlag_Visible;
@@ -816,7 +816,7 @@ void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
 // IN-GAME MUSIC HANDLING RELATED
 // ========================================
 
-void Bgm_SongUpdate(bool arg0) // 0x80035DB4
+void Bgm_TrackUpdate(bool arg0) // 0x80035DB4
 {
     D_800BCD5C = false;
 
@@ -875,7 +875,7 @@ bool Bgm_LayerOnCheck(void) // 0x80035E44
     return true;
 }
 
-void Bgm_GlobalLayersVariablesUpdate(void) // 0x80035ED0
+void Bgm_GlobalLayerVariablesUpdate(void) // 0x80035ED0
 {
     s32 i;
 
@@ -1065,7 +1065,7 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
             case 1:
                 if (cond0) 
                 {
-                    Bgm_GlobalLayersVariablesUpdate();
+                    Bgm_GlobalLayerVariablesUpdate();
                 } 
                 else 
                 {
@@ -1116,10 +1116,10 @@ void func_800363D0(void) // 0x800363D0
 {
     g_RadioPitchState        = 0;
     g_SysWork.sysFlags_22A0 |= SysFlag_3;
-    Bgm_SongUpdate(false);
+    Bgm_TrackUpdate(false);
 }
 
-void Bgm_SongChange(s32 idx) // 0x8003640C
+void Bgm_TrackChange(s32 idx) // 0x8003640C
 {
     if (idx != 0)
     {
@@ -1909,21 +1909,21 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
                 break;
 
             case TriggerType_TouchFacing:
-                if (!Event_CheckTouchFacing(mapPoint))
+                if (!Event_CollideFacingCheck(mapPoint))
                 {
                     continue;
                 }
                 break;
 
             case TriggerType_TouchObbFacing:
-                if (!Event_CheckTouchObbFacing(mapPoint))
+                if (!Event_CollideObbFacingCheck(mapPoint))
                 {
                     continue;
                 }
                 break;
 
             case TriggerType_TouchObb:
-                if (!Event_CheckTouchObb(mapPoint))
+                if (!Event_CollideObbCheck(mapPoint))
                 {
                     continue;
                 }
@@ -1989,7 +1989,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
     g_MapEventIdx      = 0;
 }
 
-bool Event_CheckTouchFacing(s_MapPoint2d* mapPoint) // 0x800378D4
+bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint) // 0x800378D4
 {
     q19_12 deltaX;
     q19_12 deltaZ;
@@ -2037,7 +2037,7 @@ bool Event_CheckTouchFacing(s_MapPoint2d* mapPoint) // 0x800378D4
     }
 }
 
-bool Event_CheckTouchObbFacing(s_MapPoint2d* mapPoint) // 0x80037A4C
+bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint) // 0x80037A4C
 {
     s32    temp_a0_2;
     s32    temp_a2;
@@ -2115,7 +2115,7 @@ bool Event_CheckTouchObbFacing(s_MapPoint2d* mapPoint) // 0x80037A4C
     return false;
 }
 
-bool Event_CheckTouchObb(s_MapPoint2d* mapPoint) // 0x80037C5C
+bool Event_CollideObbCheck(s_MapPoint2d* mapPoint) // 0x80037C5C
 {
     q19_12 sinAngle;
     q19_12 cosAngle;
@@ -2701,7 +2701,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
     }
 
     Screen_CutsceneCameraStateUpdate();
-    Bgm_SongUpdate(false);
+    Bgm_TrackUpdate(false);
     Demo_DemoRandSeedRestore();
     Demo_DemoRandSeedRestore();
 
@@ -3207,7 +3207,7 @@ void SysState_LoadArea_Update(void) // 0x80039C40
     else
     {
         g_SysWork.processFlags_2298 = SysWorkProcessFlag_RoomTransition;
-        Bgm_SongChange(g_MapEventParam->mapOverlayIdx_8_25);
+        Bgm_TrackChange(g_MapEventParam->mapOverlayIdx_8_25);
 
         if (g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->pointOfInterestIdx_8_5].data.areaLoad.field_4_5 != 0)
         {

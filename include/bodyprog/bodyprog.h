@@ -1178,8 +1178,8 @@ STATIC_ASSERT_SIZEOF(s_HeldItem, 0x2C);
 
 /** @brief World GFX workspace.
  * TODO: Could be `s_RendererWork`? Will depend on where other data resides.
- * Will: `s_WorldModelWork` fits better, this is mainly in charge of handle model data, is `s_800C4168` which
- * should have this name as it is used for general graphic effects.
+ * Will: `s_WorldModelWork` fits better, this is mainly responsible for handling model data.
+ * `s_800C4168` should have this name as it is used for general GFX.
  */
 typedef struct _WorldGfxWork
 {
@@ -3661,7 +3661,7 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 /** Sets sound command. */
 void func_80087EA8(s32 cmd);
 
-void func_80087EDC(s32 arg0);
+void func_80087EDC(s32 cmd);
 
 /** Calls a state handler. */
 void func_80088028(void);
@@ -4133,8 +4133,8 @@ void Game_PlayerInit(void); // 0x80035178
 /** Loads a map file into `g_OvlDynamic`. */
 void GameFs_MapLoad(s32 mapIdx);
 
-/** @brief Checks if the pointers of `g_CharaTypeAnimInfo` are overlapping each other.
- * Returns false if the compared pointers aren't overlapping each other.
+/** @brief Checks if the pointers of `g_CharaTypeAnimInfo` overlap each other.
+ * Returns `false` if the compared pointers don't overlap.
  */
 bool Fs_CharaAnimDataSizeCheck(s32 idx0, s32 idx1);
 
@@ -4148,10 +4148,12 @@ s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId);
 /** Allocates and adjust where is animation data allocated. */
 void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coords);
 
-/** Called by `Fs_QueuePostLoadAnm`. Assigns data to `g_CharaTypeAnimInfo` and initializes NPC bones. */
+/** Called by `Fs_QueuePostLoadAnm`. Assigns data to `g_CharaTypeAnimInfo` and initializes NPC bones.
+ * TODO: Data or info? Can only be one.
+ */
 void Fs_CharaAnimDataInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord);
 
-/** @brief Update character type bone initialization cordinates and reinitialize them. */
+/** @brief Updates character type bone initialization coordinates and reinitializes them. */
 void Fs_CharaAnimBoneInfoUpdate(void);
 
 s32 Bgm_Init(void);
@@ -4159,7 +4161,7 @@ s32 Bgm_Init(void);
 /** @brief Checks if currently assigned song is the same as target. */
 bool Bgm_IsCurrentBgmTargetCheck(s32 bgmIdx);
 
-void Bgm_SongSet(s32 bgmIdx);
+void Bgm_TrackSet(s32 bgmIdx);
 
 /** Executes sound command. */
 void Bgm_BgmChannelSet(void);
@@ -4196,22 +4198,22 @@ void Gfx_LoadingScreen_BackgroundTexture(void);
 
 void Gfx_LoadingScreen_PlayerRun(void);
 
-void Bgm_SongUpdate(bool);
+void Bgm_TrackUpdate(bool);
 
 void Bgm_AllLayersMute(void);
 
 /** @unused. */
 bool Bgm_LayerOnCheck(void);
 
-void Bgm_GlobalLayersVariablesUpdate(void);
+void Bgm_GlobalLayerVariablesUpdate(void);
 
 // Main music trigger and handler.
 void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr);
 
-/** @brief Updates the song idx and disables radio effects. */
+/** @brief Updates the track index and disables radio effects. */
 void func_800363D0(void);
 
-void Bgm_SongChange(s32 idx);
+void Bgm_TrackChange(s32 idx);
 
 /** `Savegame_MapRoomIdxUpdate` */
 void Savegame_MapRoomIdxUpdate(void);
@@ -4247,11 +4249,11 @@ void Game_RadioSoundStop(void);
 /** Finds the ground hight and warps the player to it? */
 void Game_PlayerHeightUpdate(void);
 
-bool Event_CheckTouchFacing(s_MapPoint2d* mapPoint);
+bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint);
 
-bool Event_CheckTouchObbFacing(s_MapPoint2d* mapPoint);
+bool Event_CollideObbFacingCheck(s_MapPoint2d* mapPoint);
 
-bool Event_CheckTouchObb(s_MapPoint2d* mapPoint);
+bool Event_CollideObbCheck(s_MapPoint2d* mapPoint);
 
 void Savegame_EnemyStateUpdate(s_SubCharacter* chara);
 
@@ -4525,7 +4527,8 @@ void func_8003E5E8(s32 arg0);
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad(void);
 
-void Game_SpotLightLoadScreenAttributesFix(void);
+/** TODO: Please investigate me! */
+void Game_SpotlightLoadScreenAttribsFix(void);
 
 /** @brief Determines what enviroment effects data from `g_MapEffectsPresets` will use
  * based on `s_MapOverlayHeader::field_16`.

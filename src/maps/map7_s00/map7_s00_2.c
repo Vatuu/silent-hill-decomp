@@ -77,12 +77,12 @@ void func_800D0050(void) // 0x800D0050
         var_a0 = 14;
     }
 
-    Bgm_SongChange(var_a0);
+    Bgm_TrackChange(var_a0);
 }
 
 void func_800D00D0(void) // 0x800D00D0
 {
-    Bgm_SongChange(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
+    Bgm_TrackChange(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
 }
 
 INCLUDE_ASM("maps/map7_s00/nonmatchings/map7_s00_2", func_800D0110);

@@ -65,7 +65,7 @@ void func_800DA7AC(void) // 0x800DA7AC
         var = 6;
     }
 
-    Bgm_SongChange(var);
+    Bgm_TrackChange(var);
 }
 
 void func_800DA7FC(void) // 0x800DA7FC

@@ -127,7 +127,7 @@ void func_80091464(void);
 
 u32 func_8009146C(s32 arg0);
 
-void func_800914C4(s32 arg0, u32 value);
+void func_800914C4(s32 arg0, u32 val);
 
 void GameFs_StfRollBinLoad(void);
 

@@ -58,11 +58,11 @@ void func_800D0EAC(void) // 0x800D0EAC
 {
     if (!Savegame_EventFlagGet(EventFlag_424) || (Savegame_EventFlagGet(EventFlag_425) && !Savegame_EventFlagGet(EventFlag_426)))
     {
-        Bgm_SongChange(23);
+        Bgm_TrackChange(23);
     }
     else
     {
-        Bgm_SongChange(20);
+        Bgm_TrackChange(20);
     }
 }
 

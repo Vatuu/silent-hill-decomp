@@ -1,4 +1,4 @@
 void sharedFunc_800CFEAC_3_s02(void)
 {
-    Bgm_SongChange(!Savegame_EventFlagGet(EventFlag_237) ? 8 : 2);
+    Bgm_TrackChange(!Savegame_EventFlagGet(EventFlag_237) ? 8 : 2);
 }

@@ -611,7 +611,7 @@ void Gfx_MainMenu_FogDraw(void) // 0x8003BA08
 
     tag    = g_OrderingTable2[g_ActiveBufferIdx].org;
     packet = Gfx_MainMenu_FogPacketGet(&tag[6], GsOUT_PACKET_P);
-    SetDrawMode((DR_MODE*)packet, 0, 1, 0x2A, NULL);
+    SetDrawMode((DR_MODE*)packet, 0, 1, 42, NULL);
     addPrim(&tag[6], packet);
     GsOUT_PACKET_P = packet + sizeof(DR_MODE);
 }
@@ -2543,10 +2543,7 @@ void func_8003E740(void) // 0x8003E740
     }
 }
 
-/**
- * TODO: Please investigate me!
- */
-void Game_SpotLightLoadScreenAttributesFix(void) // 0x8003EB54
+void Game_SpotlightLoadScreenAttribsFix(void) // 0x8003EB54
 {
     g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 

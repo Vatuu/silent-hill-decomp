@@ -73,7 +73,7 @@ typedef struct
 {
     s32     field_0;
     s32     field_4;
-    s32     field_8;
+    q19_12  field_8;
     s16     field_C;
     s16     field_E;
     s16     field_10;
@@ -83,7 +83,7 @@ typedef struct
     s32     field_3C;
     u8      field_40[133]; // Type assumed.
     s32     (*field_C8)(struct s_800DF580*);
-    s32     field_CC;
+    q19_12  field_CC;
     s32     field_D0;
     s32     field_D4;
 } s_800DF580;
@@ -147,6 +147,7 @@ extern s8 D_800E05E2;
 
 extern s_800E0698 D_800E0698;
 
+// Q19.12
 extern VECTOR3 D_800E08F0;
 
 extern s32 D_800DAA58[];
@@ -154,6 +155,8 @@ extern s32 D_800DAA58[];
 extern s_SfxVolume D_800DB1F8[6];
 
 void func_800D078C(void);
+
+void func_800D0840(void);
 
 void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 
@@ -185,7 +188,7 @@ void func_800D185C(s32 arg0, s32 arg1);
 
 s_800DF580* func_800D1900(VECTOR* arg0, s32 arg1);
 
-s32 func_800D19F0(s_800DF580* arg0);
+bool func_800D19F0(s_800DF580* arg0);
 
 void func_800D1AFC(void);
 

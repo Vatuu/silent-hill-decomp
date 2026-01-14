@@ -57,9 +57,6 @@ void func_800D078C(void) // 0x800D078C
 void func_800D0840(void) // 0x800D0840
 {
     RECT sp10;
-    u16* ptr0;
-    u16* ptr1;
-    u16* ptr2;
     s32  temp_s0;
     s32  temp_s2;
     s32  temp_s3;
@@ -70,6 +67,9 @@ void func_800D0840(void) // 0x800D0840
     s32  i;
     s32  var_v1;
     s32  var_s6;
+    u16* ptr0;
+    u16* ptr1;
+    u16* ptr2;
 
     var_s6 = 7;
 
@@ -96,7 +96,7 @@ void func_800D0840(void) // 0x800D0840
     ptr2 = &ptr0[16];
     ptr1 = &ptr0[32];
 
-    Gfx_DebugStringPosition(0xA0, 0x5C);
+    Gfx_DebugStringPosition(160, 92);
 
     for (i = 0; i < var_s6; i++)
     {
@@ -175,12 +175,12 @@ void func_800D0840(void) // 0x800D0840
     for (i = 1; i < 16; i++, ptr0++)
     {
         var_a2 = i * 2;
-        var_a2 = Q12_MULT_PRECISE(var_a2, 0x666);
+        var_a2 = Q12_MULT_PRECISE(var_a2, Q12(0.4f));
 
         var_a2 = MAX(var_a2, 0);
         var_a2 = CLAMP_HIGH(var_a2, 0x1F);
 
-        temp_t0 = Q12_MULT_PRECISE(i * 2, 0x599);
+        temp_t0 = Q12_MULT_PRECISE(i * 2, Q12(0.35f));
 
         var_a1_5 = MAX(temp_t0, 0);
         var_a1_5 = CLAMP_HIGH(var_a1_5, 0x1F);
@@ -397,7 +397,6 @@ void func_800D17FC(void) // 0x800D17FC
     s_800DF580* ptr;
 
     ptr = D_800DF580;
-
     for (i = 0; i < 16; i++, ptr++)
     {
         ptr->field_8  = 0;
@@ -413,16 +412,15 @@ void func_800D185C(s32 arg0, s32 arg1) // 0x800D185C
     s_800DF580* ptr;
 
     ptr = &D_800DF580[arg1];
-
     if (ptr->field_8 <= 0)
     {
         ptr->field_4  = arg1 & 1;
         ptr->field_0  = arg1;
-        ptr->field_8  = 0x1000;
+        ptr->field_8  = Q12(1.0f);
         ptr->field_3C = 1;
         ptr->field_C8 = NULL;
         ptr->field_D0 = 0;
-        ptr->field_CC = 0x1000;
+        ptr->field_CC = Q12(1.0f);
 
         memset(&ptr->field_40, 0, sizeof(ptr->field_40));
         func_800D0DE4(&ptr->field_14, arg0, 0, 0);
@@ -435,23 +433,23 @@ s_800DF580* func_800D1900(VECTOR* arg0, s32 arg1) // 0x800D1900
     s_800DF580* ptr;
 
     ptr = D_800DF580;
-
     for (i = 0; i < 16; i++, ptr++)
     {
-        if (ptr->field_8 <= 0)
+        if (ptr->field_8 <= Q12(0.0f))
         {
             ptr->field_C8 = NULL;
             ptr->field_D0 = 0;
             ptr->field_0  = i;
-            ptr->field_8  = 0x1000;
+            ptr->field_8  = Q12(1.0f);
             ptr->field_4  = arg1;
             ptr->field_3C = 1;
 
-            func_800D0DE4(&ptr->field_14, arg0, 0, 0);
+            func_800D0DE4(&ptr->field_14, arg0, FP_ANGLE(0.0f), Q12(0.0f));
             memset(&ptr->field_40, 0, sizeof(ptr->field_40));
             return ptr;
         }
     }
+
     return NULL;
 }
 
@@ -467,7 +465,7 @@ void func_800D19CC(VECTOR3* vec) // 0x800D19CC
     D_800E08F0.vz = vec->vz;
 }
 
-s32 func_800D19F0(s_800DF580* arg0) // 0x800D19F0
+bool func_800D19F0(s_800DF580* arg0) // 0x800D19F0
 {
     switch (arg0->field_D0)
     {
@@ -476,41 +474,43 @@ s32 func_800D19F0(s_800DF580* arg0) // 0x800D19F0
             {
                 arg0->field_D0 = 1;
             }
+
             arg0->field_D4 -= g_DeltaTime0;
-            return 0;
+            return false;
 
         case 1:
-            if (arg0->field_8 > 0x999)
+            if (arg0->field_8 > Q12(0.6f))
             {
-                if (arg0->field_CC < 0xA66)
+                if (arg0->field_CC < Q12(0.65f))
                 {
-                    arg0->field_CC += Q12_MULT_PRECISE(g_DeltaTime0, 0x570);
+                    arg0->field_CC += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.34f));
                 }
                 else
                 {
-                    arg0->field_CC = 0xA66;
+                    arg0->field_CC = Q12(0.65f);
                 }
             }
             else
             {
-                if (arg0->field_CC > 0)
+                if (arg0->field_CC > Q12(0.0f))
                 {
-                    arg0->field_CC -= Q12_MULT_PRECISE(g_DeltaTime0, 0x400);
+                    arg0->field_CC -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f));
                 }
                 else
                 {
-                    arg0->field_CC = 0;
+                    arg0->field_CC = Q12(0.0f);
                 }
             }
             break;
     }
-    return 1;
+
+    return true;
 }
 
 void func_800D1AFC(void) // 0x800D1AFC
 {
     VECTOR      sp10;
-    s32         var_s1;
+    q19_12      var_s1;
     s32         i;
     s_800DF580* ptr;
     VECTOR3*    vec;
@@ -533,26 +533,27 @@ void func_800D1AFC(void) // 0x800D1AFC
             ptr->field_C  = Q12_MULT_PRECISE(Math_Sin(var_s1), 0x99);
             ptr->field_E  = Rng_TestProbabilityBits(5) + 0x70;
             ptr->field_10 = Q12_MULT_PRECISE(Math_Cos(var_s1), 0x99);
-            ptr->field_8  = 0x1E66;
+            ptr->field_8  = Q12(1.9f);
             ptr->field_D4 = Rng_TestProbabilityBits(8);
-            ptr->field_CC = 0x4CC;
+            ptr->field_CC = Q12(0.3f);
             ptr->field_D0 = 0;
             ptr->field_C8 = func_800D19F0;
             ptr->field_3C = 1;
         }
-        var_s1 += 0x333;
+
+        var_s1 += Q12(0.2f);
     }
 }
 
 void func_800D1C48(void) // 0x800D1C48
 {
-    VECTOR      sp10;
+    VECTOR      sp10; // Q19.12
     s_800DF580* ptr;
 
     if (!(Rng_Rand16() & 0x30))
     {
         sp10.vx = D_800E08F0.vx;
-        sp10.vy = D_800E08F0.vy + 0x333;
+        sp10.vy = D_800E08F0.vy + Q12(0.2f);
         sp10.vz = D_800E08F0.vz;
 
         ptr = func_800D1900(&sp10, 2);
@@ -859,7 +860,6 @@ s32 func_800D4924(VECTOR3* vec, q19_12 angle) // 0x800D4924
 
     posX = vec->vx + Q12_MULT_FLOAT_PRECISE(Math_Sin(angle), 1.0f);
     posZ = vec->vz + Q12_MULT_FLOAT_PRECISE(Math_Cos(angle), 1.0f);
-
     return func_800D48CC(Q12_TO_Q8(posX), Q12_TO_Q8(posZ));
 }
 
@@ -869,7 +869,9 @@ void func_800D49C0(s_SubCharacter* chara) // 0x800D49C0
     {
         chara->moveSpeed_38            = Q12(1.2f);
         chara->model_0.anim_4.status_0 = ANIM_STATUS(8, false);
+
         func_800D3AE0(chara, 4);
+
         chara->model_0.stateStep_3++;
     }
     else if (func_800D4924(&chara->position_18, chara->rotation_24.vy) != 0)
