@@ -92,6 +92,21 @@ typedef struct
     s8      unk_10[4];
 } s_800E0300;
 
+typedef struct
+{
+    s32     field_0;
+    SVECTOR field_4;
+    s32     field_C;
+    s32     field_10;
+    s8      unk_14[8];
+} s_800E0440;
+
+extern SVECTOR3 D_800DAE60;
+
+extern u8 D_800DAE68[];
+
+extern s_800E0440 D_800E0440[];
+
 extern s_800E0300 D_800E0300[16];
 
 extern s_800DF580 D_800DF580[];
@@ -204,9 +219,13 @@ void func_800D1FF4(GsOT_TAG* arg0);
 
 void func_800D2150(VECTOR* arg0, s32 arg1);
 
+void func_800D21AC(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3);
+
 void func_800D35DC(SVECTOR* arg0);
 
 void func_800D33D0(void);
+
+void func_800D2ED0(GsOT_TAG* arg0);
 
 void Ai_Twinfeeler_TextureLoad(void);
 

@@ -621,7 +621,170 @@ void func_800D2150(VECTOR* arg0, s32 arg1) // 0x800D2150
     }
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D21AC);
+void func_800D21AC(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21AC
+{
+#define COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, n) \
+    {                                                 \
+        u16* ptr4 = &(ptr0)[(idx)];                   \
+        s32* ptr5 = &(ptr1)[(idx)];                   \
+        s32* ptr6 = &(ptr2)[(idx)];                   \
+                                                      \
+        *(u16*)&(poly)->u##n = *ptr4;                 \
+        *(s32*)&(poly)->x##n = *ptr5;                 \
+        *(s32*)&(poly)->r##n = *ptr6;                 \
+    }
+
+    SVECTOR   sp20[9];
+    DVECTOR   sp68[9];
+    CVECTOR   sp90[9];
+    u16       spB8[9];
+    s32       spD0;
+    SVECTOR*  var_s0;
+    s32       temp_v0;
+    s32       temp_v0_2;
+    s32       temp_v1;
+    s32       k;
+    s32       i;
+    s32       j;
+    s32       var_s4;
+    s32       var_v0;
+    s32       var_v0_2;
+    DVECTOR*  var_s1;
+    CVECTOR*  var_s1_2;
+    u16*      var_a0_3;
+    s32       idx;
+    u8*       var_t4;
+    GsOT_TAG* temp_v0_3;
+    GsOT_TAG* ot;
+    POLY_GT4* poly;
+    POLY_GT4* poly2;
+    u16*      ptr0;
+    s32*      ptr1;
+    s32*      ptr2;
+
+    var_s4 = 0;
+    var_s0 = sp20;
+
+    temp_v0 = Q12_MULT_PRECISE(arg3, 0x100);
+    temp_v1 = temp_v0;
+
+    for (i = -1; i < 2; i++)
+    {
+        for (k = -1; k < 2; k++)
+        {
+            var_s0->vx = temp_v0 * k;
+            var_s0->vy = 0;
+            var_s0->vz = temp_v1 * i;
+            var_s0++;
+        }
+    }
+
+    PushMatrix();
+
+    var_s0   = sp20;
+    var_s1_2 = sp90;
+
+    for (j = 0; j < 9; j++)
+    {
+        temp_v0_2 = func_80055F08(var_s0, &D_800DAE60, arg1);
+
+        func_80055E90(var_s1_2, Q12_MULT_PRECISE(temp_v0_2, arg2));
+        var_s1_2++;
+        var_s0++;
+    }
+
+    PopMatrix();
+
+    var_a0_3 = &spB8[0];
+
+    for (i = 0; i < 3; i++)
+    {
+        var_v0 = (-0x80 + i * 0x20) & 0xFF;
+
+        if (i == 2)
+        {
+            var_v0 -= 1;
+        }
+
+        for (k = 0; k < 3; k++)
+        {
+            var_v0_2 = (0x40 + k * 0x20) & 0xFF;
+            if (k == 2)
+            {
+                var_v0_2 -= 1;
+            }
+            *var_a0_3 = (var_v0_2 & 0xFF) | ((var_v0 & 0xFF) << 8);
+            var_a0_3++;
+        }
+    }
+
+    var_s0 = sp20;
+    var_s1 = sp68;
+
+    for (j = 0; j < 3; j++)
+    {
+        temp_v1 = RotTransPers3(&var_s0[0], &var_s0[1], &var_s0[2],
+                                &var_s1[0], &var_s1[1], &var_s1[2], &spD0, &spD0);
+        if (j == 2)
+        {
+            var_s4 = temp_v1;
+        }
+        var_s0 += 3;
+        var_s1 += 3;
+    }
+
+    temp_v0_3 = &arg0[var_s4 >> 1];
+    ot        = &temp_v0_3[25];
+
+    poly = (POLY_GT4*)GsOUT_PACKET_P;
+
+    var_t4 = D_800DAE68;
+
+    for (j = 0; j < 4; j++, var_t4 += 4)
+    {
+        ptr0 = (u16*)&spB8;
+        ptr1 = (s32*)&sp68;
+        ptr2 = (s32*)&sp90;
+
+        idx = var_t4[0];
+        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 0);
+        idx = var_t4[1];
+        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 1);
+        idx = var_t4[2];
+        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 2);
+        idx = var_t4[3];
+        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 3);
+
+        poly->tpage = D_800DF558;
+        poly->clut  = D_800DF564;
+
+        setPolyGT4(poly);
+        setSemiTrans(poly, 1);
+
+        addPrim(ot, poly);
+        poly++;
+
+        idx = var_t4[0];
+        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 0);
+        idx = var_t4[1];
+        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 1);
+        idx = var_t4[2];
+        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 2);
+        idx = var_t4[3];
+        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 3);
+
+        poly->tpage = D_800DF55C;
+        poly->clut  = D_800DF568;
+
+        setPolyGT4(poly);
+        setSemiTrans(poly, 1);
+
+        addPrim(ot, poly);
+        poly++;
+    }
+
+    GsOUT_PACKET_P = (PACKET*)poly;
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2684);
 
@@ -635,7 +798,40 @@ INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2CEC);
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2D28);
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2ED0);
+void func_800D2ED0(GsOT_TAG* arg0) // 0x800D2ED0
+{
+    MATRIX      sp10;
+    s32         i;
+    s_800E0440* ptr;
+
+    ptr = D_800E0440;
+
+    for (i = 0; i < 3; i++, ptr++)
+    {
+        if (ptr->field_0 > 0)
+        {
+            ptr->field_10 += Q12_MULT_PRECISE(g_DeltaTime0, 0x800);
+            ptr->field_10  = MIN(0x1000, ptr->field_10);
+
+            if (ptr->field_0 > 0x2B33)
+            {
+                ptr->field_C = 0x1000;
+            }
+            else
+            {
+                ptr->field_C -= Q12_MULT_PRECISE(g_DeltaTime0, 0x666);
+                ptr->field_C  = MAX(ptr->field_C, 0);
+            }
+            func_800D0D6C(&sp10, &ptr->field_4, 0);
+            func_800D0CA0(0, &ptr->field_4);
+            func_800D21AC(arg0, &sp10, ptr->field_C, ptr->field_10);
+
+            ptr->field_0 -= g_DeltaTime0;
+        }
+    }
+
+    func_800D2D28(arg0);
+}
 
 void Ai_Twinfeeler_TextureLoad(void) // 0x800D3038
 {
