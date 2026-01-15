@@ -587,29 +587,39 @@ void func_800D1FF4(GsOT_TAG* arg0) // 0x800D1FF4
     SetRotMatrix(&ptr0->world_8);
     SetTransMatrix(&ptr0->world_8);
 
-    for (i = 0; i < 0x10; i++, ptr1++)
+    for (i = 0; i < ARRAY_SIZE(D_800E0300); i++, ptr1++)
     {
-        if (ptr1->field_0 > 0)
+        if (ptr1->timer_0 > 0)
         {
-            if (ptr1->field_0 > 0x1333)
+            if (ptr1->timer_0 > Q12(1.2f))
             {
-                ptr1->field_4 = 0x1000;
+                ptr1->field_4 = Q12(1.0f);
             }
             else
             {
-                ptr1->field_4 -= Q12_MULT_PRECISE(g_DeltaTime0, 0x4CC);
-                ptr1->field_4  = MAX(ptr1->field_4, 0);
+                ptr1->field_4 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.3f);
+                ptr1->field_4  = MAX(ptr1->field_4, Q12(0.0f));
             }
 
             func_800D1D3C(arg0, &ptr1->field_8, &sp18, ptr1->field_4);
-            ptr1->field_0 -= g_DeltaTime0;
+            ptr1->timer_0 -= g_DeltaTime0;
         }
     }
 }
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2120);
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2150);
+void func_800D2150(VECTOR* arg0, s32 arg1) // 0x800D2150
+{
+    s_800E0300* ptr;
+
+    ptr = &D_800E0300[arg1];
+    if (ptr->timer_0 <= Q12(0.0f))
+    {
+        ptr->timer_0 = Q12(3.0f);
+        func_800D0DE4(&ptr->field_8, arg0, 0, 0);
+    }
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D21AC);
 

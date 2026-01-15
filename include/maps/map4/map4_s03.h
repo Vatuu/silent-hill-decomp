@@ -86,13 +86,13 @@ typedef struct
 
 typedef struct
 {
-    s32     field_0;
-    s32     field_4;
+    q19_12  timer_0;
+    q19_12  field_4;
     SVECTOR field_8;
     s8      unk_10[4];
 } s_800E0300;
 
-extern s_800E0300 D_800E0300[];
+extern s_800E0300 D_800E0300[16];
 
 extern s_800DF580 D_800DF580[];
 
@@ -201,6 +201,8 @@ void func_800D1AFC(void);
 void func_800D1C48(void);
 
 void func_800D1FF4(GsOT_TAG* arg0);
+
+void func_800D2150(VECTOR* arg0, s32 arg1);
 
 void func_800D35DC(SVECTOR* arg0);
 

@@ -136,11 +136,11 @@ void func_800DF134(void); // Assumed return type.
 
 void func_800DF5B0(VECTOR3*, VECTOR3*); // Assumed return type.
 
-void func_800DF618(void); // Assumed return type.
+void func_800DF618(void);
 
 void func_800DFC94(s32*); // Assumed return type.
 
-void func_800DFD08(void); // Assumed return type.
+void func_800DFD08(void);
 
 void func_800E01F4(void);
 
