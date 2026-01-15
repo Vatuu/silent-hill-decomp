@@ -110,11 +110,11 @@ INCLUDE_RODATA("maps/map3_s03/nonmatchings/map3_s03", g_PuppetNurse_ModelStates0
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D1178
 
-#include "maps/shared/sharedFunc_800CFE78_3_s02.h" // 0x800D1210
+#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D1210
 
-#include "maps/shared/sharedFunc_800CFEAC_3_s02.h" // 0x800D1244
+#include "maps/shared/Map_RoomBgmInit_3_s02_CondTrue.h" // 0x800D1244
 
-#include "maps/shared/sharedFunc_800CFEEC_3_s02.h" // 0x800D1284
+#include "maps/shared/Map_RoomBgmInit_3_s02_CondFalse.h" // 0x800D1284
 
 void func_800D1514(void) {}
 

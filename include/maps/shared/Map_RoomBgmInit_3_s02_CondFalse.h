@@ -1,4 +1,4 @@
-void sharedFunc_800CFEEC_3_s02(void)
+void Map_RoomBgmInit_CondFalse(void)
 {
     const static s_Bgm_Update D_800CA70C = { { 0x80, 0x70, 0x80, 0x80, 0x00, 0x00, 0x00, 0x00 } };
 

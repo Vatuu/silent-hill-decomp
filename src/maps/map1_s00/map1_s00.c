@@ -28,7 +28,7 @@ INCLUDE_RODATA("maps/map1_s00/nonmatchings/map1_s00", g_MapOverlayHeader);
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D7758
 
-void func_800D77F8(void) // 0x800D77F8
+void Map_RoomBgmInit(bool arg0) // 0x800D77F8
 {
     u16 flags;
 

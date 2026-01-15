@@ -35,7 +35,7 @@ INCLUDE_RODATA("maps/map1_s06/nonmatchings/map1_s06", g_MapOverlayHeader);
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D5360
 
-void func_800D5400(void) // 0x800D5400
+void Map_RoomBgmInit(bool arg0) // 0x800D5400
 {
     Bgm_Update(Savegame_EventFlagGet(EventFlag_133) ? 0xFE : 1, Q12(0.1f), D_800D71E8);
 }

@@ -115,8 +115,6 @@ void func_800CF7AC(s32 arg0, s_Particle* part, u16* arg2, s32* deltaTime);
 
 void func_800D0274(s32 arg0, s_Particle* part, u16* arg2);
 
-void func_800D94F8(void);
-
 /** Debug function? */
 void Gfx_LoadingScreen_StageString(void);
 

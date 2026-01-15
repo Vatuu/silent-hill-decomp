@@ -1,4 +1,4 @@
-void sharedFunc_800CE8B8_0_s02(void)
+void Map_RoomBgmInit_CondTrue(void)
 {
     switch (g_SavegamePtr->mapRoomIdx_A5)
     {

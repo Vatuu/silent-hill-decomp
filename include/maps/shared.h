@@ -1662,6 +1662,9 @@ extern VECTOR3 sharedData_800EB750_6_s04;
 
 extern s16 sharedData_800D5880_1_s05;
 
+extern u8 sharedData_800E1208_1_s02[8];
+extern u16 sharedData_800E1210_1_s02[42]; // Flags.
+
 typedef struct
 {
     VECTOR3 field_0; // Rotation?
@@ -1831,15 +1834,13 @@ extern void (*g_Romper_ControlFuncs[])(s_SubCharacter* romper);
 
 bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx);
 
-void sharedFunc_800E9B38_2_s02(void);
-
 bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx);
 
-void sharedFunc_800CFE78_3_s02(s32 arg0);
+void Map_RoomBgmInit(bool arg0);
 
-void sharedFunc_800CFEAC_3_s02(void);
+void Map_RoomBgmInit_CondTrue(void);
 
-void sharedFunc_800CFEEC_3_s02(void);
+void Map_RoomBgmInit_CondFalse(void);
 
 void sharedFunc_800CAAD0_1_s05(void);
 
@@ -1995,6 +1996,10 @@ void sharedFunc_800DD4EC_2_s00(s_SubCharacter* airScreamer);
 
 void sharedFunc_800DD534_2_s00(s_SubCharacter* airScreamer);
 
+void sharedFunc_800DD588_2_s00(s_SubCharacter* airScreamer);
+
+void sharedFunc_800DD834_2_s00(s_SubCharacter* airScreamer);
+
 void sharedFunc_800DDA80_2_s00(s_SubCharacter* airScreamer);
 
 void sharedFunc_800DDE14_2_s00(s_SubCharacter* airScreamer);
@@ -2023,6 +2028,8 @@ void sharedFunc_800DF358_2_s00(s_SubCharacter* airScreamer);
 
 /** Condition is probably to differentiate between an Air Screamer and Night Flutter. */
 void sharedFunc_800DF448_2_s00(s_SubCharacter* airScreamer, bool cond);
+
+void sharedFunc_800DF60C_2_s00(s_SubCharacter* airScreamer);
 
 void sharedFunc_800DF710_2_s00(s_SubCharacter* airScreamer);
 
@@ -2080,11 +2087,6 @@ void sharedFunc_800CB8A0_1_s01(s32 idx);
 bool sharedFunc_800CBA38_1_s01(s32 idx);
 
 bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx);
-
-/** @brief Sets a map overlay value based on a whether a game event flag is set. */
-void sharedFunc_800D0994_3_s00(void);
-
-void sharedFunc_800D09D4_3_s00(void);
 
 bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx);
 
@@ -2242,8 +2244,6 @@ void Ai_Groaner_Update(s_SubCharacter* groaner, s_AnmHeader* anmHdr, GsCOORDINAT
 
 void Ai_Groaner_Init(s_SubCharacter* groaner); // `map2_s00` has extra block at end of func compared to other maps.
 
-void sharedFunc_800E7914_2_s00(void);
-
 void sharedFunc_800E554C_2_s00(s_SubCharacter* groaner);
 
 void sharedFunc_800E55B0_2_s00(s_SubCharacter* groaner);
@@ -2319,8 +2319,6 @@ void sharedFunc_800D529C_0_s01(s_SubCharacter* airScreamer, q19_12 radius, q19_1
 
 void sharedFunc_800D53AC_0_s01(s_SubCharacter* airScreamer);
 
-void sharedFunc_800CE934_0_s02(void);
-
 void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ, q19_12 range);
 
 void sharedFunc_800CD920_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ);
@@ -2334,10 +2332,6 @@ q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center);
 void sharedFunc_800D6EC4_0_s01(s_SubCharacter* airScreamer);
 
 void sharedFunc_800D7B14_0_s01(s_SubCharacter*, GsCOORDINATE2*);
-
-void sharedFunc_800CE884_0_s02(s32 arg0);
-
-void sharedFunc_800CE8B8_0_s02(void);
 
 void sharedFunc_800CE5D4_1_s03(VECTOR3* arg0, u16 arg1, u16 arg2, u32 arg3);
 

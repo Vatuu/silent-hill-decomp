@@ -40,12 +40,9 @@
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800DA52C
 
-void func_800DA778(s32 arg0) // 0x800DA778
-{
-    (arg0 != 0) ? func_800DA7AC() : func_800DA7FC();
-}
+#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800DA778
 
-void func_800DA7AC(void) // 0x800DA7AC
+void Map_RoomBgmInit_CondTrue(void) // 0x800DA7AC
 {
     s32 var;
 
@@ -68,7 +65,7 @@ void func_800DA7AC(void) // 0x800DA7AC
     Bgm_TrackChange(var);
 }
 
-void func_800DA7FC(void) // 0x800DA7FC
+void Map_RoomBgmInit_CondFalse(void) // 0x800DA7FC
 {
     s32    flags;
     q19_12 var1;

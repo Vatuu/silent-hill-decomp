@@ -38,8 +38,6 @@ extern u8 D_800D256C;
 
 void func_800CCE88();
 
-void func_800D0960(s32 arg0);
-
 void func_800D0994();
 
 void func_800D09D4();

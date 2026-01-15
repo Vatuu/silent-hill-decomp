@@ -42,7 +42,7 @@
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D92AC
 
-void func_800D94F8(void) // 0x800D94F8
+void Map_RoomBgmInit(bool arg0) // 0x800D94F8
 {
     s32    i;
     q19_12 var1;

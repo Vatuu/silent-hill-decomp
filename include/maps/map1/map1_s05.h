@@ -21,8 +21,6 @@ extern s16 D_800D86F8[2];
 extern u8  D_800D86FC[2];
 extern u8  D_800D86FE;
 
-void func_800D494C(void);
-
 void func_800D49A4(void);
 
 void func_800D49AC(void);

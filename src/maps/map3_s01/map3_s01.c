@@ -23,21 +23,11 @@ INCLUDE_RODATA("maps/map3_s01/nonmatchings/map3_s01", g_MapOverlayHeader);
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D10D0
 
-void func_800D1178(s32 arg0) // 0x800D1178
-{
-    if (arg0 != 0)
-    {
-        sharedFunc_800D0994_3_s00();
-    }
-    else
-    {
-        sharedFunc_800D09D4_3_s00();
-    }
-}
+#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D1178
 
-#include "maps/shared/sharedFunc_800D0994_3_s00.h" // 0x800D11AC
+#include "maps/shared/Map_RoomBgmInit_3_s00_CondTrue.h" // 0x800D11AC
 
-#include "maps/shared/sharedFunc_800D09D4_3_s00.h" // 0x800D11EC
+#include "maps/shared/Map_RoomBgmInit_3_s00_CondFalse.h" // 0x800D11EC
 
 void func_800D138C(void) {}
 

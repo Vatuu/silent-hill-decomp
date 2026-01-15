@@ -77,9 +77,9 @@ sharedFunc_800D2EB4_0_s00        = 0x800CE788; // type:func
 sharedFunc_800D2EF4_0_s00        = 0x800CE7C8; // type:func
 sharedFunc_800D929C_0_s00        = 0x800CE7DC; // type:func
 Map_RoomIdxGet                   = 0x800CE7EC; // type:func
-sharedFunc_800CE884_0_s02        = 0x800CE884; // type:func
-sharedFunc_800CE8B8_0_s02        = 0x800CE8B8; // type:func
-sharedFunc_800CE934_0_s02        = 0x800CE934; // type:func
+Map_RoomBgmInit                  = 0x800CE884; // type:func
+Map_RoomBgmInit_CondTrue         = 0x800CE8B8; // type:func
+Map_RoomBgmInit_CondFalse        = 0x800CE934; // type:func
 Gfx_LoadingScreen_StageString    = 0x800CEBC0; // type:func
 
 //------------------------------------------------------------------

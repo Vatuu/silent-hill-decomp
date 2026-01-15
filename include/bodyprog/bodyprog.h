@@ -1582,7 +1582,7 @@ typedef struct _MapOverlayHeader
     s8                     field_8;
     s8                     unk_9[3];
     s32                    (*func_C)();
-    void                   (*bgmEvent_10)();
+    void                   (*bgmEvent_10)(bool);
     s8                     bgmIdx_14;           // Flags? Music related.
     u8                     ambientAudioIdx_15; // Ambient file index from `g_AmbientVabTaskLoadCmds`.
     s8                     field_16;           // Set ambient tint and render distance.

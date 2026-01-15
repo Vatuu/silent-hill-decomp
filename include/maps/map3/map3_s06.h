@@ -42,8 +42,6 @@ extern s_WorldObjectDesc g_WorldObject_Map2; // D_800D5F38;
 extern s_WorldObjectDesc g_WorldObject_Key; // D_800D5F68;
 extern s_WorldObjectDesc g_WorldObject_FirstAidKit; // D_800D5F98;
 
-void func_800D07A0(s32 arg0);
-
 /** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Shotgun Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
 

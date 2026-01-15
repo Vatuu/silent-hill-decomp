@@ -23,9 +23,6 @@
 #define MAP_ROOM_MIN_Z Q12(-80.0f)
 #define MAP_ROOM_MAX_Z Q12(200.0f)
 
-extern u8 D_800E1208[8];
-extern u16 D_800E1210[42]; // Flags.
-
 extern u16 D_800E1EDC;
 
 extern u8 D_800E1EE2;
@@ -71,8 +68,6 @@ extern u8 D_800E5A98;
 extern u8 D_800E5A99;
 
 extern s_WorldObjectModel              g_CommonWorldObjects[6]; // 0x800E5AA8
-
-void func_800D9EBC(void);
 
 void func_800DA018(void);
 

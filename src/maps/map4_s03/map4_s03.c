@@ -1238,7 +1238,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D607C
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D6278);
+INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", Map_RoomBgmInit); // 0x800D6278
 
 void func_800D654C(void) {}
 

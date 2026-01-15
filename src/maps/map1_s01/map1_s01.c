@@ -109,7 +109,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D6F44
 
-void func_800D6FE4(void) // 0x800D6FE4
+void Map_RoomBgmInit(bool arg0) // 0x800D6FE4
 {
     u16 flags;
 

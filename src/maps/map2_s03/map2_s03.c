@@ -14,7 +14,7 @@
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800CC7D0
 
-#include "maps/shared/sharedFunc_800E7914_2_s00.h" // 0x800CCA1C
+#include "maps/shared/Map_RoomBgmInit_2_s00.h" // 0x800CCA1C
 
 void Gfx_LoadingScreen_StageString(void) {} // 0x800CCB24
 

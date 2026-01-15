@@ -54,7 +54,7 @@ sharedFunc_800D2EB4_0_s00     = 0x800CC73C; // type:func
 sharedFunc_800D2EF4_0_s00     = 0x800CC77C; // type:func
 sharedFunc_800D929C_0_s00     = 0x800CC790; // type:func
 Map_RoomIdxGet                = 0x800CC7A0; // type:func
-sharedFunc_800E9B38_2_s02     = 0x800CC99C; // type:func
+Map_RoomBgmInit               = 0x800CC99C; // type:func
 
 
 

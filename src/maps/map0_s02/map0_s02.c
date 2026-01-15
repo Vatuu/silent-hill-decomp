@@ -14,10 +14,10 @@
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800CE7EC
 
-#include "maps/shared/sharedFunc_800CE884_0_s02.h" // 0x800CE884
+#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800CE884
 
-#include "maps/shared/sharedFunc_800CE8B8_0_s02.h" // 0x800CE8B8
+#include "maps/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800CE8B8
 
-#include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800CE934
+#include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800CE934
 
 void Gfx_LoadingScreen_StageString(void) {}

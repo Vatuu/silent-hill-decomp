@@ -40,20 +40,11 @@
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D08B8
 
-void func_800D0960(s32 arg0) // 0x800D0960
-{
-    if (arg0 != 0)
-    {
-        sharedFunc_800D0994_3_s00();
-        return;
-    }
+#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D0960
 
-    sharedFunc_800D09D4_3_s00();
-}
+#include "maps/shared/Map_RoomBgmInit_3_s00_CondTrue.h" // 0x800D0994
 
-#include "maps/shared/sharedFunc_800D0994_3_s00.h" // 0x800D0994
-
-#include "maps/shared/sharedFunc_800D09D4_3_s00.h" // 0x800D0994
+#include "maps/shared/Map_RoomBgmInit_3_s00_CondFalse.h" // 0x800D0994
 
 void func_800D0B74(void) {}
 

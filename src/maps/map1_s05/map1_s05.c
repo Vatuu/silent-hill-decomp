@@ -43,7 +43,7 @@ INCLUDE_RODATA("maps/map1_s05/nonmatchings/map1_s05", g_MapOverlayHeader);
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D48AC
 
-void func_800D494C(void) // 0x800D494C
+void Map_RoomBgmInit(bool arg0) // 0x800D494C
 {
     s32 var_a0;
 

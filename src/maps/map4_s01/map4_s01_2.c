@@ -40,11 +40,11 @@
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D1AE0
 
-#include "maps/shared/sharedFunc_800CE884_0_s02.h" // 0x800D1B78
+#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D1B78
 
-#include "maps/shared/sharedFunc_800CE8B8_0_s02.h" // 0x800D1BAC
+#include "maps/shared/Map_RoomBgmInit_0_s02_CondTrue.h" // 0x800D1BAC
 
-#include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800D1C28
+#include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D1C28
 
 void func_800D1EB4(void) {}
 

@@ -42,19 +42,9 @@
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D0DE0
 
-void func_800D0E78(s32 arg0) // 0x800D0E78
-{
-    if (arg0 != 0)
-    {
-        func_800D0EAC();
-    }
-    else
-    {
-        sharedFunc_800CE934_0_s02();
-    }
-}
+#include "maps/shared/Map_RoomBgmInit_CheckCond.h" // 0x800D0E78
 
-void func_800D0EAC(void) // 0x800D0EAC
+void Map_RoomBgmInit_CondTrue(void) // 0x800D0EAC
 {
     if (!Savegame_EventFlagGet(EventFlag_424) || (Savegame_EventFlagGet(EventFlag_425) && !Savegame_EventFlagGet(EventFlag_426)))
     {
@@ -66,7 +56,7 @@ void func_800D0EAC(void) // 0x800D0EAC
     }
 }
 
-#include "maps/shared/sharedFunc_800CE934_0_s02.h" // 0x800D0EF8
+#include "maps/shared/Map_RoomBgmInit_0_s02_CondFalse.h" // 0x800D0EF8
 
 void func_800D1184(void) {}
 

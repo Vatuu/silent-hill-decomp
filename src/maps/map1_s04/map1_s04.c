@@ -16,7 +16,7 @@
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800CC828
 
-void func_800CC8C8(void) // 0x800CC8C8
+void Map_RoomBgmInit(bool arg0) // 0x800CC8C8
 {
     s32 var_a1;
     s32 mapRoomIdx;

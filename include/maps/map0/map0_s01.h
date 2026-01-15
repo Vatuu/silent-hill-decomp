@@ -84,12 +84,6 @@ void func_800D45BC(s_SubCharacter* chara);
 
 q19_12 Model_AnimDurationGet(s_Model* model);
 
-void func_800DA778(s32 arg0);
-
-void func_800DA7AC(void);
-
-void func_800DA7FC(void);
-
 void Gfx_LoadingScreen_StageString(void);
 
 /** @brief Handles the Air Screamer cutscene in the cafe. */

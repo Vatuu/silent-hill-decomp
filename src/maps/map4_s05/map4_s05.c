@@ -168,7 +168,7 @@ INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D4A3C);
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800D5B0C
 
-INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D5D08);
+INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", Map_RoomBgmInit); // 0x800D5D08
 
 void func_800D5FDC(void) {}
 

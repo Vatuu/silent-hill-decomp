@@ -45,7 +45,7 @@ INCLUDE_RODATA("maps/map4_s02/nonmatchings/map4_s02", sharedData_800CAA98_0_s01)
 
 #include "maps/shared/Map_RoomIdxGet.h" // 0x800E9D38
 
-void func_800E9F34(void)
+void Map_RoomBgmInit(bool arg0) // 0x800E9F34
 {
     s32              var_a0;
     s32              var_a1;

@@ -23,9 +23,6 @@
 
 extern s_AnimInfo LOCKER_DEAD_BODY_ANIM_INFOS[8]; // 0x800E1410
 
-extern u8 D_800E14C8;
-extern u16 D_800E14D0[];
-
 extern SVECTOR D_800E1F74;
 extern u16     D_800E1F7C[];
 
@@ -91,8 +88,6 @@ void func_800CE0CC(s32 arg0);
 bool func_800CE164(POLY_FT4** poly, s32 idx);
 
 void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
-
-void func_800DA4D4(void);
 
 void func_800DA630(void);
 
