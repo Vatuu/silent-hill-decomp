@@ -1555,9 +1555,13 @@ typedef struct _PropertiesStalker
 
 typedef struct _PropertiesTwinfeeler
 {
-    s32        field_E8;
-    u_Property properties_EC[10];
-    s32        field_114;
+    s32           field_E8;
+    s_CharaDamage field_EC;
+    s32           field_FC;
+    u_Property    properties_100[3];
+    s32           field_10C;
+    s8            unk_110[4];
+    s32           field_114;
     u_Property properties_118[4];
 } s_PropertiesTwinfeeler;
 STATIC_ASSERT_SIZEOF(s_PropertiesTwinfeeler, 64);

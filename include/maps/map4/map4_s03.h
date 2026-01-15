@@ -122,17 +122,17 @@ typedef struct
     s8      unk_14[4];
 } s_800E0900;
 
-extern s_800E0900 D_800E0900[];
-
 extern SVECTOR3 D_800DAE60;
 
 extern u8 D_800DAE68[];
 
-extern s_800E0440 D_800E0440[];
+extern s_800DF580 D_800DF580[];
 
 extern s_800E0300 D_800E0300[16];
 
-extern s_800DF580 D_800DF580[];
+extern s_800E0440 D_800E0440[];
+
+extern s_800E0900 D_800E0900[];
 
 extern s_800E0930 D_800E0930[3];
 
@@ -209,6 +209,8 @@ extern s16 D_800DB1E0[];
 extern s16 D_800DB1E8[];
 
 extern s16 D_800DB1F0[];
+
+extern u8 D_800DB190[];
 
 void func_800D078C(void);
 
@@ -315,7 +317,7 @@ void func_800D3694(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
 
 void func_800D3AE0(s_SubCharacter* chara, s32 soundIdx);
 
-u8 func_800D3B1C(void);
+u32 func_800D3B1C(void);
 
 void func_800D3B44(bool disableDamage);
 
@@ -327,7 +329,7 @@ void func_800D3CBC(s_SubCharacter* chara);
 
 bool Ai_Twinfeeler_Init(s_SubCharacter* chara);
 
-void func_800D3E58(s_SubCharacter*);
+void func_800D3E58(s_SubCharacter* arg0);
 
 void func_800D3FB0(s_SubCharacter* chara);
 
@@ -346,6 +348,12 @@ void func_800D49C0(s_SubCharacter* chara);
 void func_800D4A34(s_SubCharacter* chara);
 
 u32 func_800D4DD8(void);
+
+void func_800D4078(s_SubCharacter* arg0);
+
+void func_800D4248(s_SubCharacter* arg0);
+
+void func_800D43AC(s_SubCharacter* arg0, s32 arg1);
 
 void func_800D50D8(s_SubCharacter* chara);
 
