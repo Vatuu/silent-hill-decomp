@@ -236,7 +236,7 @@ void func_800D0CA0(q19_12 rotY, SVECTOR* pos) // 0x800D0CA0
     SetMulRotMatrix(&mat);
 }
 
-void func_800D0D6C(MATRIX* out, SVECTOR* pos, q3_12 rotY) // 0x800D0D6C
+void func_800D0D6C(MATRIX* out, SVECTOR* pos, s32 rotY) // 0x800D0D6C
 {
     SVECTOR     rot; // Q3.12
     s_800E0988* ptr;
@@ -607,7 +607,19 @@ void func_800D1FF4(GsOT_TAG* arg0) // 0x800D1FF4
     }
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2120);
+void func_800D2120(void) // 0x800D2120
+{
+    s32         i;
+    s_800E0300* ptr;
+
+    ptr = D_800E0300;
+
+    for (i = 0; i < 16; i++, ptr++)
+    {
+        ptr->timer_0 = 0;
+        ptr->field_4 = 0x800;
+    }
+}
 
 void func_800D2150(VECTOR* arg0, s32 arg1) // 0x800D2150
 {
@@ -786,9 +798,48 @@ void func_800D21AC(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2684);
+void func_800D2684(VECTOR* arg0, s32 arg1) // 0x800D2684
+{
+    s32         i;
+    s_800E0900* ptr;
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D26FC);
+    ptr = D_800E0900;
+
+    for (i = 0; i < 2; i++, ptr++)
+    {
+        if (ptr->field_0 <= 0)
+        {
+            ptr->field_0  = 0x4800;
+            ptr->field_C  = 0x800;
+            ptr->field_10 = 0x666;
+            func_800D0DE4(&ptr->field_4, arg0, 0, 0);
+            return;
+        }
+    }
+}
+
+void func_800D26FC(VECTOR* arg0, s32 arg1) // 0x800D26FC
+{
+    s32         i;
+    s_800E0440* ptr;
+
+    ptr = D_800E0440;
+
+    for (i = 0; i < 3; i++, ptr++)
+    {
+        if (ptr->field_0 <= 0)
+        {
+            ptr->field_0  = 0x8000;
+            ptr->field_C  = 0;
+            ptr->field_10 = 0;
+            ptr->field_14 = arg1;
+            func_800D0DE4(&ptr->field_4, arg0, 0, 0);
+            break;
+        }
+    }
+
+    func_800D2684(arg0, arg1);
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2790);
 
@@ -796,7 +847,51 @@ INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2CC8);
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2CEC);
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2D28);
+void func_800D2D28(GsOT_TAG* arg0)
+{
+    MATRIX      sp10;
+    SVECTOR     sp30;
+    s32         temp_s4;
+    s32         var_a0;
+    s32         i;
+    s_800E0900* ptr;
+
+    ptr = D_800E0900;
+    vwGetViewAngle(&sp30);
+    temp_s4 = sp30.vy + 0x800;
+
+    for (i = 0; i < 2; i++, ptr++)
+    {
+        if (ptr->field_0 > 0)
+        {
+            ptr->field_10 += Q12_MULT_PRECISE(g_DeltaTime0, 0xB33);
+            ptr->field_10  = MIN(0x1000, ptr->field_10);
+
+            if (ptr->field_0 > 0x2B33)
+            {
+                var_a0 = ptr->field_C + Q12_MULT_PRECISE(g_DeltaTime0, 0x800);
+                if (var_a0 > 0x1000)
+                {
+                    ptr->field_C = 0x1000;
+                }
+                else
+                {
+                    ptr->field_C = var_a0;
+                }
+            }
+            else
+            {
+                ptr->field_C -= Q12_MULT_PRECISE(g_DeltaTime0, 0x666);
+                ptr->field_C  = MAX(ptr->field_C, 0);
+            }
+
+            func_800D0D6C(&sp10, &ptr->field_4, temp_s4);
+            func_800D0CA0(temp_s4, &ptr->field_4);
+            func_800D2790(arg0, &sp10, ptr->field_C, ptr->field_10);
+            ptr->field_0 -= g_DeltaTime0;
+        }
+    }
+}
 
 void func_800D2ED0(GsOT_TAG* arg0) // 0x800D2ED0
 {

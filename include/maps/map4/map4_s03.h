@@ -98,8 +98,20 @@ typedef struct
     SVECTOR field_4;
     s32     field_C;
     s32     field_10;
-    s8      unk_14[8];
+    s32     field_14;
+    s8      unk_18[4];
 } s_800E0440;
+
+typedef struct
+{
+    s32     field_0;
+    SVECTOR field_4;
+    s32     field_C;
+    s32     field_10;
+    s8      unk_14[4];
+} s_800E0900;
+
+extern s_800E0900 D_800E0900[];
 
 extern SVECTOR3 D_800DAE60;
 
@@ -185,7 +197,7 @@ void func_800D0C50(SVECTOR* rot, MATRIX* mat);
 void func_800D0CA0(q19_12 rotY, SVECTOR* pos);
 
 // TODO: Could be `SVECTOR3`, need to check callers.
-void func_800D0D6C(MATRIX* out, SVECTOR* pos, q3_12 rotY);
+void func_800D0D6C(MATRIX* out, SVECTOR* pos, s32 rotY);
 
 // TODO: Could be `SVECTOR3`/VECTOR3`, need to check callers.
 void func_800D0DE4(SVECTOR* out, VECTOR* in, q19_12 headingAngle, q19_12 dist);
@@ -226,6 +238,14 @@ void func_800D35DC(SVECTOR* arg0);
 void func_800D33D0(void);
 
 void func_800D2ED0(GsOT_TAG* arg0);
+
+void func_800D2D28(GsOT_TAG* arg0);
+
+void func_800D2120(void);
+
+void func_800D2684(VECTOR* arg0, s32 arg1);
+
+void func_800D26FC(VECTOR* arg0, s32 arg1);
 
 void Ai_Twinfeeler_TextureLoad(void);
 
