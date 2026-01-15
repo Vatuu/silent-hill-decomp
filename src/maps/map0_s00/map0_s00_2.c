@@ -1158,8 +1158,8 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
             (PLAYER_IN_MAP_CHUNK(vz, 1, 6, -1, 6) || PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7)))
         {
             D_800E3AAC.vz += Q12_MULT_PRECISE(g_DeltaTime0, (-0x400 - (Rng_Rand16() & 0x1FF)));
-            g_WorldGfx_ObjectAdd(&D_800E3A5C[0], &D_800E3A9C, &D_800E3AAC);
-            g_WorldGfx_ObjectAdd(&D_800E3A5C[1], &D_800E3A9C, &D_800E3AAC);
+            WorldGfx_ObjectAdd(&D_800E3A5C[0], &D_800E3A9C, &D_800E3AAC);
+            WorldGfx_ObjectAdd(&D_800E3A5C[1], &D_800E3A9C, &D_800E3AAC);
         
             if (g_SysWork.sysFlags_22A0 & SysFlag_6)
             {

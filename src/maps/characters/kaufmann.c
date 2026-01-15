@@ -441,6 +441,6 @@ void Ai_Kaufmann_Init(s_SubCharacter* chara)
 #endif
 
 #ifdef MAP7_S02
-    func_8003D468(Chara_Kaufmann, true);
+    WorldGfx_CharaModelTransparentSet(Chara_Kaufmann, true);
 #endif
 }

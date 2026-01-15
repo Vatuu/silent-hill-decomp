@@ -7480,7 +7480,7 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
     return PlayerLowerBodyState_None;
 }
 
-void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
+void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 {
     VECTOR   sp20; // Q19.12
     VECTOR   sp30; // Q19.12

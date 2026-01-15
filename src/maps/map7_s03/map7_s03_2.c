@@ -2524,7 +2524,7 @@ void func_800E514C(void) // 0x800E514C
             func_800E9444(Chara_BloodyIncubator, &g_SysWork.npcs_1A0[5]);
             Model_AnimFlagsClear(&g_SysWork.npcs_1A0[5].model_0, 2);
             func_80085EB8(0, &g_SysWork.npcs_1A0[4], 2, false);
-            func_8003D468(Chara_BloodyIncubator, false);
+            WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, false);
 
             g_SysWork.pointLightIntensity_2378 = Q12(0.6f);
 
@@ -2675,7 +2675,7 @@ void func_800E514C(void) // 0x800E514C
 
             D_800F480E = 1;
 
-            func_8003D468(Chara_BloodyIncubator, true);
+            WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, true);
             Savegame_EventFlagSet(EventFlag_576);
 
             g_SysWork.pointLightIntensity_2378 = Q12(0.5f);
@@ -2878,7 +2878,7 @@ void func_800E62CC(void) // 0x800E62CC
 
         case 5:
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 183, false);
-            func_8003D468(Chara_Incubus, true);
+            WorldGfx_CharaModelTransparentSet(Chara_Incubus, true);
             func_800E1788(11);
             SysWork_StateStepIncrement(0);
 
@@ -2907,7 +2907,7 @@ void func_800E62CC(void) // 0x800E62CC
             Model_AnimFlagsSet(&g_SysWork.npcs_1A0[5].model_0, 2);
 
             func_80085EB8(0, &g_SysWork.npcs_1A0[5], 6, false);
-            func_8003D468(Chara_BloodyIncubator, true);
+            WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, true);
 
             g_SysWork.npcs_1A0[5].timer_C6 = Q12(0.751f); // TODO: Odd value, possibly bad Q format.
 
@@ -2935,7 +2935,7 @@ void func_800E62CC(void) // 0x800E62CC
         case 11:
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 174, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[5], 7, false);
-            func_8003D468(Chara_BloodyIncubator, false);
+            WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, false);
 
             SysWork_StateStepIncrement(0);
 
@@ -2982,7 +2982,7 @@ void func_800E62CC(void) // 0x800E62CC
         case 19:
             Fs_QueueWaitForEmpty();
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 179, false);
-            func_8003D468(Chara_BloodyIncubator, true);
+            WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, true);
             WorldGfx_CharaModelMaterialSet(Chara_BloodyIncubator, 0);
 
             D_800F4812 = 0;
@@ -3587,7 +3587,7 @@ void func_800E787C(void) // 0x800E787C
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[0], 5, false);
             func_80085EB8(0, &g_SysWork.npcs_1A0[5], 9, false);
-            func_8003D468(Chara_BloodyIncubator, true);
+            WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, true);
 
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(140.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-100.0f);
@@ -3867,7 +3867,7 @@ void func_800E86BC(void) // 0x800E86BC
             D_800F4838 = 1;
 
             GameFs_StfRollBinLoad();
-            func_8003D468(Chara_BloodyIncubator, true);
+            WorldGfx_CharaModelTransparentSet(Chara_BloodyIncubator, true);
             SysWork_StateStepIncrement(0);
 
         case 2:
@@ -4260,18 +4260,18 @@ void func_800E972C(void) // 0x800E972C
         *(s32*)&(g_WorldObject_Bin.rotation_28.vx) = (u16)D_800F482C;
         *(s16*)&(g_WorldObject_Bin.rotation_28.vz) = 0;
 
-        g_WorldGfx_ObjectAdd(&g_WorldObject_Bin.object_0, &g_WorldObject_Bin.position_1C, &g_WorldObject_Bin.rotation_28);
+        WorldGfx_ObjectAdd(&g_WorldObject_Bin.object_0, &g_WorldObject_Bin.position_1C, &g_WorldObject_Bin.rotation_28);
         D_800F482C -= (FP_TO(g_DeltaTime0, Q12_SHIFT) / Q12(3.6f));
     }
 
     if (D_800F4811)
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObject_Nu.object_0, &g_WorldObject_Nu.position_1C, &g_WorldObject_Nu.rotation_28);
+        WorldGfx_ObjectAdd(&g_WorldObject_Nu.object_0, &g_WorldObject_Nu.position_1C, &g_WorldObject_Nu.rotation_28);
     }
 
     if (D_800F4812)
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObject_Baby.object_0, &g_WorldObject_Baby.position_1C, &g_WorldObject_Baby.rotation_28);
+        WorldGfx_ObjectAdd(&g_WorldObject_Baby.object_0, &g_WorldObject_Baby.position_1C, &g_WorldObject_Baby.rotation_28);
     }
 
     if (Savegame_EventFlagGet(EventFlag_577) && !Savegame_EventFlagGet(EventFlag_578) && !Savegame_EventFlagGet(EventFlag_582))
@@ -4349,17 +4349,17 @@ void func_800E98EC(void) // 0x800E98EC
 
         if (D_800F4818)
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Real, &objPos, &D_800CD168);
+            WorldGfx_ObjectAdd(&g_WorldObject_Real, &objPos, &D_800CD168);
         }
 
         if (D_800F4819)
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Ura, &objPos, &D_800CD168);
+            WorldGfx_ObjectAdd(&g_WorldObject_Ura, &objPos, &D_800CD168);
         }
 
         if (D_800F481A)
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Under, &objPos, &D_800CD168);
+            WorldGfx_ObjectAdd(&g_WorldObject_Under, &objPos, &D_800CD168);
         }
     }
 

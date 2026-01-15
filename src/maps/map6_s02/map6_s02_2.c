@@ -186,7 +186,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             g_SysWork.playerWork_4C.player_0.rotation_24.vy = ratan2(g_SysWork.npcs_1A0[0].position_18.vx - g_SysWork.playerWork_4C.player_0.position_18.vx,
                                                                 g_SysWork.npcs_1A0[0].position_18.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
 
-            func_8003D468(Chara_Alessa, true);
+            WorldGfx_CharaModelTransparentSet(Chara_Alessa, true);
             Savegame_EventFlagSet(EventFlag_412);
             SysWork_StateStepIncrement(0);
 
@@ -935,7 +935,7 @@ void func_800D1718(void) // 0x800D1718
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
     {
         flags = func_800D1D40();
-        g_WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);
+        WorldGfx_ObjectAdd(&g_WorldObject_SavePad.object_0, &g_WorldObject_SavePad.position_1C, &g_WorldObject_SavePad.rotation_28);
     }
     else
     {

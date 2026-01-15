@@ -268,7 +268,7 @@ void func_800EA3F0(void) // 0x800EA3F0
     if ((PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3)) ||
         (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3)))
     {
-        g_WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object_0, &g_WorldObject_Kidn04.position_1C, &(SVECTOR3){ 0, 0, 0 });
+        WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object_0, &g_WorldObject_Kidn04.position_1C, &(SVECTOR3){ 0, 0, 0 });
         func_8006982C(2);
     }
 
@@ -339,7 +339,7 @@ void func_800EA3F0(void) // 0x800EA3F0
         
         if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Fan0, &objPos, &objRot);
+            WorldGfx_ObjectAdd(&g_WorldObject_Fan0, &objPos, &objRot);
         }
 
         audioBalance += Sound_StereoBalanceGet(&objPos);

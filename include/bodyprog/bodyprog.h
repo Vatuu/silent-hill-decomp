@@ -1689,7 +1689,7 @@ typedef struct _MapOverlayHeader
     s32*                   windSpeedZ_188;
     s32*                   data_18C;
     s32*                   data_190;
-    void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `func_80038354`. */
+    void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
     s8                     charaGroupIds_248[GROUP_CHARA_COUNT];                              /** `e_CharacterId` values where if `s_MapPoint2d::data.spawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_MapPoint2d           charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     VC_ROAD_DATA           roadDataList_3CC[48];
@@ -2850,15 +2850,15 @@ void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerP
 s32 Ipd_ChunkInitCheck(void);
 
 /** `arg0` should be `void*`? */
-void func_8003C878(s32 arg0);
+void Gfx_InGameDraw(s32 arg0);
 
 void WorldObject_ModelNameSet(s_WorldObjectModel* arg0, char* newStr);
 
 /** Submits a world object to draw. */
-void g_WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVECTOR3* rot);
+void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVECTOR3* rot);
 
-/** Returns held item ID. */
-s32 func_8003CD5C(void);
+/** @unused Returns held item ID. */
+s32 WorldGfx_HeldItemIdGet(void);
 
 s32 WorldGfx_PlayerPrevHeldItem(s_PlayerCombat* combat);
 
@@ -2874,7 +2874,7 @@ void func_8003D01C(void);
 void func_8003D03C(void);
 
 /** Loads the model of an item held by the player? */
-void WorldGfx_HeldItemLoad(void);
+void WorldGfx_HeldItemDraw(void);
 
 bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId);
 
@@ -2885,8 +2885,8 @@ bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId);
  */
 void WorldGfx_CharaModelMaterialSet(e_CharacterId charaId, s32 blendMode);
 
-/** Called by some chara init funcs, similar to `WorldGfx_HeldItemAttach`? */
-void func_8003D468(e_CharacterId charaId, bool flag);
+/** @brief Makes character be transparent. */
+void WorldGfx_CharaModelTransparentSet(e_CharacterId charaId, bool enableTransparency);
 
 void WorldGfx_CharaFree(s_CharaModel* model);
 
@@ -3109,9 +3109,9 @@ bool func_80043830(void);
 /** Checks if a position is within the current map chunk. */
 bool func_8004393C(q19_12 posX, q19_12 posZ);
 
-void func_80043A24(GsOT* ot, s32 arg1);
+void Ipd_ChunkCheckDraw(GsOT* ot, s32 arg1);
 
-bool func_80043B34(s_IpdChunk* chunk, s_Map* map);
+bool Ipd_CellPositionMatchCheck(s_IpdChunk* chunk, s_Map* map);
 
 /** Checks if PLM texture is loaded? */
 bool IpdHeader_IsTextureLoaded(s_IpdHeader* ipdHdr);
@@ -3259,7 +3259,8 @@ void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx
 
 void func_80055028(void);
 
-void func_800550D0(void);
+/** @brief Draws 2D screen effects as flashlight's lens flare and brightness.*/
+void Gfx_2dEffectsDraw(void);
 
 /** Sets visual world parameters. */
 void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness);
@@ -3311,7 +3312,7 @@ void LmHeader_FixOffsets(s_LmHeader* lmHdr);
 
 void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr);
 
-void func_80056244(s_LmHeader* lmHdr, bool unkFlag);
+void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool transparency);
 
 s32 Lm_MaterialCountGet(bool (*filterFunc)(s_Material* mat), s_LmHeader* lmHdr);
 
@@ -3357,7 +3358,7 @@ void func_800563E8(s_LmHeader* lmHdr, s32 arg1, s32 arg2, s32 arg3);
 
 void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, e_FsFile fileIdx, s_FsImageDesc* image, s32 blendMode);
 
-void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 blendMode);
+void Lm_MaterialFsImageApply1(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 blendMode);
 
 bool Lm_MaterialFsImageApply(s_LmHeader* lmHdr, char* fileName, s_FsImageDesc* image, s32 blendMode);
 
@@ -3386,6 +3387,7 @@ void StringCopy(char* prevStr, char* newStr);
 
 void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* arg6, s32 arg7);
 
+/** Crucial 3D drawing function. */
 void func_80057090(s_ModelInfo* modelInfo, GsOT* otTag, s32 arg2, MATRIX* mat0, MATRIX* mat1, u16 arg5);
 
 s32 func_800571D0(u32 arg0);
@@ -4148,10 +4150,10 @@ s32 Fs_CharaAnimDataInfoIdxGet(e_CharacterId charaId);
 /** Allocates and adjust where is animation data allocated. */
 void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coords);
 
-/** Called by `Fs_QueuePostLoadAnm`. Assigns data to `g_CharaTypeAnimInfo` and initializes NPC bones.
- * TODO: Data or info? Can only be one.
+/** Called by `Fs_QueuePostLoadAnm`. Assigns information about animation data to `g_CharaTypeAnimInfo`
+ * and initializes NPC bones.
  */
-void Fs_CharaAnimDataInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord);
+void Fs_CharaAnimInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord);
 
 /** @brief Updates character type bone initialization coordinates and reinitializes them. */
 void Fs_CharaAnimBoneInfoUpdate(void);
@@ -4259,7 +4261,7 @@ void Savegame_EnemyStateUpdate(s_SubCharacter* chara);
 
 void Event_Update(bool disableButtonEvents);
 
-void func_80037E40(s_SubCharacter* chara);
+void Chara_DamageFlagUpdate(s_SubCharacter* chara);
 
 void func_80037E78(s_SubCharacter* chara);
 
@@ -4306,7 +4308,7 @@ s32 Camera_Distance2dGet(const VECTOR3* pos);
 void Game_NpcRoomInitSpawn(bool cond);
 
 /** @brief Main NPC update function. Runs through each NPC and calls `g_MapOverlayHeader.charaUpdateFuncs_194` for them. */
-void func_80038354(void);
+void Game_NpcUpdate(void);
 
 void SysState_Gameplay_Update(void);
 
@@ -4358,7 +4360,7 @@ void MainMenu_SelectedOptionIdxReset(void);
 
 void Gfx_MainMenu_MainTextDraw(void);
 
-void Gfx_MainMenu_DifficultyTextDraw(s32 arg0);
+void Gfx_MainMenu_DifficultyTextDraw(s32 idx);
 
 void Gfx_MainMenu_BackgroundDraw(void);
 
@@ -4408,7 +4410,7 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ);
 /** Used in map loading. Something related to screen.
  * Removing it causes the game to get stuck at the loading screen.
  */
-void func_8003C048(void);
+void WorldGfx_MapInit(void);
 
 /** Something related to player model loading. */
 void Item_HeldItemModelFree(void);
@@ -4433,8 +4435,6 @@ void WorldGfx_IpdSamplePointReset(void);
  * circumstances can also cause the player to be unable to move.
  */
 void Ipd_CloseRangeChunksInit(void);
-
-void func_8003C878(s32);
 
 /** @brief Clears the array containing world objects to draw by resetting its size variable.
  *
@@ -4522,12 +4522,11 @@ void func_8003E4A0(s_Skeleton* skel, s32 arg1);
 /** Something for Puppet Doctor. */
 void func_8003E544(s_Skeleton* skel, s32 arg1);
 
-void func_8003E5E8(s32 arg0);
+void Options_BrightnessMenu_LinesDraw(s32 arg0);
 
 /** Loads a flame graphic. */
 void GameFs_FlameGfxLoad(void);
 
-/** TODO: Please investigate me! */
 void Game_SpotlightLoadScreenAttribsFix(void);
 
 /** @brief Determines what enviroment effects data from `g_MapEffectsPresets` will use
@@ -4546,6 +4545,7 @@ void func_8003EDA8(void);
 
 void func_8003EDB8(CVECTOR* color0, CVECTOR* color1);
 
+/** @unused */
 void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3);
 
 void Gfx_LoadScreenMapEffectsUpdate(s32 arg0, s32 arg1);
@@ -4585,7 +4585,7 @@ void func_8007C0D8(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* c
 
 void func_8007D090(s_SubCharacter* chara, s_PlayerExtra* extra, GsCOORDINATE2* coords);
 
-void func_8007D970(s_SubCharacter* chara, GsCOORDINATE2* coord);
+void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord);
 
 /** Player func. */
 void func_8007E9C4(void);

@@ -503,12 +503,12 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
 
         if (Savegame_EventFlagGet(EventFlag_348))
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Kidn05.object_0, &g_WorldObject_Kidn05.position_1C, &(SVECTOR3){ FP_ANGLE(0.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f) });
+            WorldGfx_ObjectAdd(&g_WorldObject_Kidn05.object_0, &g_WorldObject_Kidn05.position_1C, &(SVECTOR3){ FP_ANGLE(0.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f) });
             func_8006982C(4);
         }
         else
         {
-            g_WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object_0, &g_WorldObject_Kidn04.position_1C, &(SVECTOR3){ FP_ANGLE(0.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f) });
+            WorldGfx_ObjectAdd(&g_WorldObject_Kidn04.object_0, &g_WorldObject_Kidn04.position_1C, &(SVECTOR3){ FP_ANGLE(0.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f) });
             func_8006982C(2);
         }
     }

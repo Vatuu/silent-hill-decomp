@@ -204,7 +204,7 @@ void func_80041074(GsOT* arg0, s32 arg1, SVECTOR* arg2, VECTOR3* arg3) // 0x8004
     func_800414E0(arg0, &sp18, arg1, sp28, sp2C);
 }
 
-void func_800410D8(VECTOR3* pos0, s32* arg1, s32* arg2, SVECTOR* rot, VECTOR3* pos1)
+void func_800410D8(VECTOR3* pos0, s32* arg1, s32* arg2, SVECTOR* rot, VECTOR3* pos1) // 0x800410D8
 {
     MATRIX        mat;
     SVECTOR       vec0;
@@ -1416,7 +1416,7 @@ bool func_80043830(void) // 0x80043830
             continue;
         }
 
-        if (!func_80043B34(curChunk, &g_Map))
+        if (!Ipd_CellPositionMatchCheck(curChunk, &g_Map))
         {
             continue;
         }
@@ -1452,7 +1452,7 @@ bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
     return false;
 }
 
-void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
+void Ipd_ChunkCheckDraw(GsOT* ot, s32 arg1) // 0x80043A24
 {
     s32         queueState;
     s_IpdChunk* curChunk;
@@ -1473,14 +1473,14 @@ void func_80043A24(GsOT* ot, s32 arg1) // 0x80043A24
     curChunk = &g_Map.ipdActive_15C[0];
     for (; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++)
     {
-        if (IpdHeader_LoadStateGet(curChunk) >= StaticModelLoadState_Loaded && func_80043B34(curChunk, &g_Map))
+        if (IpdHeader_LoadStateGet(curChunk) >= StaticModelLoadState_Loaded && Ipd_CellPositionMatchCheck(curChunk, &g_Map))
         {
             Gfx_IpdChunkDraw(curChunk->ipdHdr_0, g_Map.positionX_578, g_Map.positionX_57C, ot, arg1);
         }
     }
 }
 
-bool func_80043B34(s_IpdChunk* chunk, s_Map* map)
+bool Ipd_CellPositionMatchCheck(s_IpdChunk* chunk, s_Map* map)
 {
     if (map->cellX_580 == chunk->cellX_8 &&
         map->cellZ_584 == chunk->cellZ_A)

@@ -1030,7 +1030,7 @@ void func_800DC14C(void) // 0x800DC14C
                     floorHitCount++;
                 }
 
-                g_WorldGfx_ObjectAdd(&g_WorldObject_Beans[i].object_0, &g_WorldObject_Beans[i].position_1C, &g_WorldObject_Beans[i].rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_Beans[i].object_0, &g_WorldObject_Beans[i].position_1C, &g_WorldObject_Beans[i].rotation_28);
             }
 
             if (D_800E9ED4 < 0)

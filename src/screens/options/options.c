@@ -1787,7 +1787,7 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
         Gfx_BackgroundSpriteDraw(&g_BrightnessScreenImg1);
     }
 
-    func_8003E5E8(g_GameWork.config_0.optBrightness_22);
+    Options_BrightnessMenu_LinesDraw(g_GameWork.config_0.optBrightness_22);
     Options_BrightnessMenu_ArrowsDraw();
     Options_BrightnessMenu_ConfigDraw();
 }

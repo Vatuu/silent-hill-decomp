@@ -29,14 +29,14 @@ void func_80055028(void) // 0x80055028
     D_800C4168.worldTintColor_28.b = 128;
 
     D_800C4168.isFogEnabled_1 = false;
-    D_800C4168.field_2 = 0;
+    D_800C4168.field_2        = 0;
 
     D_800C4168.fogColor_1C.r = 255;
     D_800C4168.fogColor_1C.g = 255;
     D_800C4168.fogColor_1C.b = 255;
 
-    D_800C4168.field_4C = 0;
-    D_800C4168.field_50 = 0;
+    D_800C4168.field_4C      = 0;
+    D_800C4168.field_50      = 0;
     D_800C4168.waterZones_4  = 0;
     D_800C4168.fogRelated_18 = 0;
 
@@ -45,7 +45,7 @@ void func_80055028(void) // 0x80055028
     func_80055840(Q12(32.0f), Q12(34.0f));
 }
 
-void func_800550D0(void) // 0x800550D0
+void Gfx_2dEffectsDraw(void) // 0x800550D0
 {
     s32      color0;
     s32      color2;
@@ -713,7 +713,7 @@ void ModelHeader_FixOffsets(s_ModelHeader* modelHdr, s_LmHeader* lmHdr) // 0x800
     }
 }
 
-void func_80056244(s_LmHeader* lmHdr, bool unkFlag) // 0x80056244
+void Lm_TransparentPrimSet(s_LmHeader* lmHdr, bool transparency) // 0x80056244
 {
     s_ModelHeader* modelHdrs;
     s_ModelHeader* curModelHdr;
@@ -728,7 +728,7 @@ void func_80056244(s_LmHeader* lmHdr, bool unkFlag) // 0x80056244
         {
             for (prim = &curMeshHdr->primitives_4[0]; prim < &curMeshHdr->primitives_4[curMeshHdr->primitiveCount_0]; prim++)
             {
-                prim->field_6.bits.field_6_15 = unkFlag;
+                prim->field_6.bits.field_6_15 = transparency;
             }
         }
     }
@@ -797,7 +797,7 @@ void Lm_MaterialFileIdxApply(s_LmHeader* lmHdr, e_FsFile fileIdx, s_FsImageDesc*
     Lm_MaterialFsImageApply(lmHdr, sp10, image, blendMode);
 }
 
-void func_80056504(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 blendMode) // 0x80056504
+void Lm_MaterialFsImageApply1(s_LmHeader* lmHdr, char* newStr, s_FsImageDesc* image, s32 blendMode) // 0x80056504
 {
     char strCpy[8];
 
@@ -4595,7 +4595,7 @@ void func_8005E89C(void) // 0x8005E89C
         g_MapOverlayHeader.func_A8();
     }
 
-    if (g_SysWork.field_2388.isFlashlightUnavailable_16 != 0 && g_SysWork.sysState_8 == 0)
+    if (g_SysWork.field_2388.isFlashlightUnavailable_16 != false && g_SysWork.sysState_8 == 0)
     {
         Game_TurnFlashlightOff();
     }

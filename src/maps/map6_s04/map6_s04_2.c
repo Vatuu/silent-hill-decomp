@@ -1988,7 +1988,7 @@ void func_800E5F54(void) // 0x800E5F54
             break;
 
         case PACKED_CELL_XZ(15, 15):
-            g_WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C, &g_WorldObject9.rotation_28);
+            WorldGfx_ObjectAdd(&g_WorldObject9.object_0, &g_WorldObject9.position_1C, &g_WorldObject9.rotation_28);
 
         default:
             if (!Savegame_EventFlagGet(EventFlag_452) &&
@@ -2010,7 +2010,7 @@ void func_800E5F54(void) // 0x800E5F54
 
             if (Savegame_EventFlagGet(EventFlag_454))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObject_SFlauros.object_0, &g_WorldObject_SFlauros.position_1C, &g_WorldObject_SFlauros.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject_SFlauros.object_0, &g_WorldObject_SFlauros.position_1C, &g_WorldObject_SFlauros.rotation_28);
             }
 
             if (!D_800ED840)

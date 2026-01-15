@@ -118,7 +118,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                     g_MainMenu_SelectedEntry = MainMenuEntry_Continue;
                 }
             }
-            // Mo savegames exist but did previously (e.g. memory card removed before player death).
+            // Mo savegames exist, but did previously (e.g. memory card removed before player death).
             else if (g_PrevSavegameCount > 0)
             {
                 while(!(g_MainMenu_VisibleEntryFlags & (1 << g_MainMenu_SelectedEntry)))
@@ -144,16 +144,12 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
             {
                 g_MainMenu_SelectedEntry += MAIN_MENU_OPTION_COUNT;
-                while(!(g_MainMenu_VisibleEntryFlags & (1 << --g_MainMenu_SelectedEntry)))
-                {
-                }
+                while(!(g_MainMenu_VisibleEntryFlags & (1 << --g_MainMenu_SelectedEntry)));
             }
 
             if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
-            {                
-                while(!(g_MainMenu_VisibleEntryFlags & (1 << ++g_MainMenu_SelectedEntry)))
-                {
-                }
+            {
+                while(!(g_MainMenu_VisibleEntryFlags & (1 << ++g_MainMenu_SelectedEntry)));
             }
 
             // Wrap selection.
@@ -204,7 +200,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
                     case MainMenuEntry_Start:
                         ScreenFade_Reset();
-                        g_MainMenuState     = MenuState_DifficultySelector;
+                        g_MainMenuState = MenuState_DifficultySelector;
                         break;
 
                     case MainMenuEntry_Option:
@@ -379,11 +375,15 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         Gfx_MainMenu_DifficultyTextDraw(g_MainMenu_NewGameSelectedDifficultyIdx);
         return;
     }
+	else
+	{
+		*(s32*)0x1F800000 = 0x200000;
+		*(s32*)0x1F800004 = 0x01C00140;
+		ClearImage2((RECT*)0x1F800000, 0u, 0u, 0u);
+		Screen_Init(SCREEN_WIDTH, false);
+		return;
+	}
 
-    *(s32*)0x1F800000 = 0x200000;
-    *(s32*)0x1F800004 = 0x01C00140;
-    ClearImage2((RECT*)0x1F800000, 0u, 0u, 0u);
-    Screen_Init(SCREEN_WIDTH, false);
 }
 
 void MainMenu_SelectedOptionIdxReset(void) // 0x8003B550
@@ -449,7 +449,7 @@ static const char* DIFFICULTY_MENU_ENTRY_STRINGS[] = {
     "HARD"
 };
 
-void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
+void Gfx_MainMenu_DifficultyTextDraw(s32 idx) // 0x8003B678
 {
     #define DIFFICULTY_MENU_SELECTION_COUNT 3
     #define COLUMN_POS_X                    158
@@ -467,7 +467,7 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
         Gfx_StringSetPosition(COLUMN_POS_X - STR_OFFSETS_X[i], COLUMN_POS_Y + (i * STR_OFFSET_Y));
         Gfx_StringSetColor(StringColorId_White);
 
-        if (i == arg0)
+        if (i == idx)
         {
             Gfx_StringDraw("[", DEFAULT_MAP_MESSAGE_LENGTH);
         }
@@ -478,7 +478,7 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 arg0) // 0x8003B678
 
         Gfx_StringDraw(DIFFICULTY_MENU_ENTRY_STRINGS[i], DEFAULT_MAP_MESSAGE_LENGTH);
 
-        if (i == arg0)
+        if (i == idx)
         {
             Gfx_StringDraw("]", DEFAULT_MAP_MESSAGE_LENGTH);
         }
@@ -711,7 +711,7 @@ void func_8003BCF4(void) // 0x8003BCF4
 }
 
 // ========================================
-// UNKNOWN - IN-GAME LOOP RELATED
+// UNKNOWN - IN-GAME RELATED
 // ========================================
 
 s32 Map_TypeGet(void) // 0x8003BD2C
@@ -759,8 +759,10 @@ s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId) // 0x8003BE50
 }
 
 // ========================================
-// BOOT LOADING FILES
+// MAP GRAPHIC INITALIZATION
 // ========================================
+
+extern s_800C4168 const D_800C4168;
 
 void GameFs_BgEtcGfxLoad(void) // 0x8003BE6C
 {
@@ -802,16 +804,10 @@ void func_8003BED0(void) // 0x8003BED0
     }
 
     LmHeader_FixOffsets(&g_WorldGfx.itemLmHdr_1BE4);
-    func_80056504(&g_WorldGfx.itemLmHdr_1BE4, "TIM00", &IMAGE_TIM, 1);
-    func_80056504(&g_WorldGfx.itemLmHdr_1BE4, "BG_ETC", &IMAGE_ETC, 1);
+    Lm_MaterialFsImageApply1(&g_WorldGfx.itemLmHdr_1BE4, "TIM00", &IMAGE_TIM, 1);
+    Lm_MaterialFsImageApply1(&g_WorldGfx.itemLmHdr_1BE4, "BG_ETC", &IMAGE_ETC, 1);
     Lm_MaterialFlagsApply(&g_WorldGfx.itemLmHdr_1BE4);
 }
-
-// ========================================
-// GRAPHIC RELATED
-// ========================================
-
-extern s_800C4168 const D_800C4168;
 
 s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
 {
@@ -844,7 +840,7 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
     return zoneType;
 }
 
-void func_8003C048(void) // 0x8003C048
+void WorldGfx_MapInit(void) // 0x8003C048
 {
     func_80055028();
 
@@ -1094,7 +1090,7 @@ s32 Ipd_ChunkInitCheck(void) // 0x8003C850
     return Ipd_AreChunksLoaded();
 }
 
-void func_8003C878(s32 arg0) // 0x8003C878
+void Gfx_InGameDraw(s32 arg0) // 0x8003C878
 {
     Gfx_WorldObjectsDraw(&g_WorldGfx);
 
@@ -1104,9 +1100,13 @@ void func_8003C878(s32 arg0) // 0x8003C878
         Fs_QueueWaitForEmpty();
     }
 
-    func_80043A24(&g_OrderingTable0[g_ActiveBufferIdx], arg0);
-    func_800550D0();
+    Ipd_ChunkCheckDraw(&g_OrderingTable0[g_ActiveBufferIdx], arg0);
+    Gfx_2dEffectsDraw();
 }
+
+// ========================================
+// OBJECTS DRAW
+// ========================================
 
 void WorldObject_ModelNameSet(s_WorldObjectModel* arg0, char* newStr) // 0x8003C8F8
 {
@@ -1118,7 +1118,7 @@ void WorldObject_ModelNameSet(s_WorldObjectModel* arg0, char* newStr) // 0x8003C
     arg0->metadata_10.field_8 = 0;
 }
 
-void g_WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
+void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVECTOR3* rot) // 0x8003C92C
 {
     q23_8          geomPosX;
     q23_8          geomPosY;
@@ -1237,18 +1237,18 @@ void Gfx_WorldObjectDraw(s_WorldObject* obj) // 0x8003CBA4
 
 void func_8003CC7C(s_WorldObjectModel* arg0, MATRIX* arg1, MATRIX* arg2) // 0x8003CC7C
 {
-    s8                  lmIdx;
-    s_WorldObjectMetadata* temp_s1;
-    s_ModelHeader*      modelHdr;
+    s8                     lmIdx;
+    s_WorldObjectMetadata* objMetaCpy;
+    s_ModelHeader*         modelHdr;
 
     lmIdx = arg0->metadata_10.lmIdx_9;
-    if (!lmIdx)
+    if (lmIdx == 0)
     {
         return;
     }
 
-    modelHdr = arg0->modelInfo_0.modelHdr_8;
-    temp_s1 = &arg0->metadata_10;
+    modelHdr   = arg0->modelInfo_0.modelHdr_8;
+    objMetaCpy = &arg0->metadata_10;
 
     if (lmIdx >= 3 && lmIdx < 7)
     {
@@ -1258,7 +1258,7 @@ void func_8003CC7C(s_WorldObjectModel* arg0, MATRIX* arg1, MATRIX* arg2) // 0x80
         }
     }
 
-    if (COMPARE_FILENAMES(&temp_s1->name_0, &modelHdr->name_0))
+    if (COMPARE_FILENAMES(&objMetaCpy->name_0, &modelHdr->name_0))
     {
         arg0->metadata_10.lmIdx_9 = 0;
         return;
@@ -1267,7 +1267,11 @@ void func_8003CC7C(s_WorldObjectModel* arg0, MATRIX* arg1, MATRIX* arg2) // 0x80
     func_80057090(&arg0->modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, arg1, arg2, 0);
 }
 
-s32 func_8003CD5C(void) // 0x8003CD5C
+// ========================================
+// HELD ITEM DRAW
+// ========================================
+
+s32 WorldGfx_HeldItemIdGet(void) // 0x8003CD5C
 {
     return g_WorldGfx.heldItem_1BAC.itemId_0;
 }
@@ -1314,62 +1318,62 @@ s32 WorldGfx_PlayerHeldItemSet(e_InventoryItemId itemId) // 0x8003CDA0
         case InventoryItemId_Handgun:
         case InventoryItemId_HuntingRifle:
         case InventoryItemId_Shotgun:
-            fileIdx               = NO_VALUE;
+            fileIdx                 = NO_VALUE;
             heldItem->textureName_8 = "HERO";
             break;
 
         case InventoryItemId_SteelPipe:
-            fileIdx               = FILE_ITEM_PIPE_TIM;
+            fileIdx                 = FILE_ITEM_PIPE_TIM;
             heldItem->textureName_8 = "PIPE";
             break;
 
         case InventoryItemId_CutscenePhone:
-            fileIdx               = FILE_ITEM_PHONE_TIM;
+            fileIdx                 = FILE_ITEM_PHONE_TIM;
             heldItem->textureName_8 = "PHONE";
             break;
 
         case InventoryItemId_CutsceneFlauros:
-            fileIdx               = FILE_ITEM_FLAUROS_TIM;
+            fileIdx                 = FILE_ITEM_FLAUROS_TIM;
             heldItem->textureName_8 = "FLAUROS";
             break;
 
         case InventoryItemId_CutsceneAglaophotis:
-            fileIdx               = FILE_ITEM_AGLA_TIM;
+            fileIdx                 = FILE_ITEM_AGLA_TIM;
             heldItem->textureName_8 = "AGLA";
             break;
 
         case InventoryItemId_CutscenePlasticBottle:
-            fileIdx               = FILE_ITEM_BOTL_TIM;
+            fileIdx                 = FILE_ITEM_BOTL_TIM;
             heldItem->textureName_8 = "BOTL";
             break;
 
         case InventoryItemId_CutsceneBaby:
-            fileIdx               = FILE_ITEM_BABY_TIM;
+            fileIdx                 = FILE_ITEM_BABY_TIM;
             heldItem->textureName_8 = "BABY";
             break;
 
         case InventoryItemId_CutsceneBloodPack:
-            fileIdx               = FILE_ITEM_BLOOD_TIM;
+            fileIdx                 = FILE_ITEM_BLOOD_TIM;
             heldItem->textureName_8 = "BLOOD";
             break;
 
         case InventoryItemId_Chainsaw:
-            fileIdx               = FILE_ITEM_CSAW_TIM;
+            fileIdx                 = FILE_ITEM_CSAW_TIM;
             heldItem->textureName_8 = "CSAW";
             break;
 
         case InventoryItemId_HyperBlaster:
-            fileIdx               = FILE_ITEM_HPRGUN_TIM;
+            fileIdx                 = FILE_ITEM_HPRGUN_TIM;
             heldItem->textureName_8 = "HPRGUN";
             break;
 
         case InventoryItemId_RockDrill:
-            fileIdx               = FILE_ITEM_DRILL_TIM;
+            fileIdx                 = FILE_ITEM_DRILL_TIM;
             heldItem->textureName_8 = "DRILL";
             break;
 
         case InventoryItemId_Katana:
-            fileIdx               = FILE_ITEM_KATANA_TIM;
+            fileIdx                 = FILE_ITEM_KATANA_TIM;
             heldItem->textureName_8 = "KATANA";
             break;
     }
@@ -1497,7 +1501,7 @@ void func_8003D03C(void) // 0x8003D03C
     g_WorldGfx.heldItem_1BAC.bone_18.modelInfo_0.field_0 |= 1 << 31;
 }
 
-void WorldGfx_HeldItemLoad(void) // 0x8003D058
+void WorldGfx_HeldItemDraw(void) // 0x8003D058
 {
     MATRIX         mat0;
     MATRIX         mat1;
@@ -1528,7 +1532,7 @@ void WorldGfx_HeldItemLoad(void) // 0x8003D058
         if (!lmHdr->isLoaded_2)
         {
             LmHeader_FixOffsets(lmHdr);
-            func_80056504(lmHdr, heldItem->textureName_8, &heldItem->imageDesc_C, BlendMode_Additive);
+            Lm_MaterialFsImageApply1(lmHdr, heldItem->textureName_8, &heldItem->imageDesc_C, BlendMode_Additive);
             Lm_MaterialFlagsApply(lmHdr);
             Bone_ModelAssign(&heldItem->bone_18, heldItem->lmHdr_14, 0);
         }
@@ -1537,6 +1541,10 @@ void WorldGfx_HeldItemLoad(void) // 0x8003D058
         func_80057090(&heldItem->bone_18.modelInfo_0, &g_OrderingTable0[g_ActiveBufferIdx], 1, &mat0, &mat1, 0);
     }
 }
+
+// ========================================
+// CHARACTER LOAD AND DRAW
+// ========================================
 
 void WorldGfx_HarryCharaLoad(void) // 0x8003D160
 {
@@ -1679,7 +1687,7 @@ bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId) // 0x8003D444
 
 void func_8003D460(void) {} // 0x8003D460
 
-void func_8003D468(e_CharacterId charaId, bool flag) // 0x8003D468
+void WorldGfx_CharaModelTransparentSet(e_CharacterId charaId, bool enableTransparency) // 0x8003D468
 {
     s16           data[256];
     RECT          rect;
@@ -1689,7 +1697,7 @@ void func_8003D468(e_CharacterId charaId, bool flag) // 0x8003D468
     s_CharaModel* model;
 
     model = g_WorldGfx.registeredCharaModels_18[charaId];
-    func_80056244(model->lmHdr_8, flag);
+    Lm_TransparentPrimSet(model->lmHdr_8, enableTransparency);
 
     rect.x = model->texture_C.clutX;
     rect.y = model->texture_C.clutY;
@@ -1703,7 +1711,7 @@ void func_8003D468(e_CharacterId charaId, bool flag) // 0x8003D468
     {
         for (x = 0; x < 16; x++, i++)
         {
-            if (!flag)
+            if (!enableTransparency)
             {
                 data[i] &= SHRT_MAX;
             }
@@ -1911,7 +1919,7 @@ void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, s16 ar
     // Something to do with items held by player.
     if (charaId == Chara_Harry)
     {
-        WorldGfx_HeldItemLoad();
+        WorldGfx_HeldItemDraw();
     }
 
     ret = func_8003DD74(charaId, arg4);
@@ -1940,6 +1948,10 @@ s32 func_8003DD74(e_CharacterId charaId, s32 arg1) // 0x8003DD74
 {
     return ((s32)arg1 << 10) & 0xFC00;
 }
+
+// ========================================
+// ITEM ATTACHMENT
+// ========================================
 
 void WorldGfx_HeldItemAttach(e_CharacterId charaId, s32 arg1) // 0x8003DD80
 {
@@ -2353,7 +2365,13 @@ void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
     }
 }
 
-void func_8003E5E8(s32 arg0) // 0x8003E5E8
+// ========================================
+// OPTIONS (Read below)
+// ========================================
+// Possibly the options overlay was at some point part of the engine just as `SAVELOAD.BIN`
+// was.
+
+void Options_BrightnessMenu_LinesDraw(s32 arg0) // 0x8003E5E8
 {
     s32       i;
     u8        color;
@@ -2391,6 +2409,10 @@ void func_8003E5E8(s32 arg0) // 0x8003E5E8
 
     GsOUT_PACKET_P = packet;
 }
+
+// ========================================
+// EFFECTS (FOG AND LIGHTING)
+// ========================================
 
 static s_MapEffectsPresetIdxs D_800A9F80 = { 1, 1  };
 static s_MapEffectsPresetIdxs D_800A9F84 = { 2, 2  };
@@ -2664,10 +2686,10 @@ void func_8003EDB8(CVECTOR* color0, CVECTOR* color1) // 0x8003EDB8
 
 void func_8003EE30(s32 arg0, s32* arg1, s32 arg2, s32 arg3) // 0x8003EE30
 {
-    g_SysWork.field_2388.field_4 = (s8*)arg1;
+    g_SysWork.field_2388.field_4    = (s8*)arg1;
     g_SysWork.field_2388.primType_0 = PrimitiveType_S32;
-    g_SysWork.field_2388.field_8 = arg2;
-    g_SysWork.field_2388.field_C = arg3;
+    g_SysWork.field_2388.field_8    = arg2;
+    g_SysWork.field_2388.field_C    = arg3;
 
     g_SysWork.field_2388.field_EC[0] = g_SysWork.field_2388.field_1C[0];
     g_SysWork.field_2388.field_EC[1] = g_SysWork.field_2388.field_1C[1];
@@ -3217,6 +3239,10 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     func_80055840(temp_a0, temp_a0 + Q12(1.0f));
     func_800553E0(arg0->effectsInfo_0.field_18, arg0->effectsInfo_0.field_19.r, arg0->effectsInfo_0.field_19.g, arg0->effectsInfo_0.field_19.b, arg0->effectsInfo_0.screenTint_1D.r, arg0->effectsInfo_0.screenTint_1D.g, arg0->effectsInfo_0.screenTint_1D.b);
 }
+
+// ========================================
+// UNKNOWN
+// ========================================
 
 void func_80040004(s_MapOverlayHeader* overlayHeader) // 0x80040004
 {

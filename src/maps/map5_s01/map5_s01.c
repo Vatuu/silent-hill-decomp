@@ -1175,7 +1175,7 @@ void func_800ECC8C(void) // 0x800ECC8C
     {
             if (!Savegame_EventFlagGet(EventFlag_M5S01_PickupMap))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &(SVECTOR3){ 0, 0, 0 });
+                WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &(SVECTOR3){ 0, 0, 0 });
             }
     }
 
@@ -1183,7 +1183,7 @@ void func_800ECC8C(void) // 0x800ECC8C
     {
             if (!Savegame_EventFlagGet(EventFlag_371))
             {
-                g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
+                WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
             }
     }
 
@@ -1191,7 +1191,7 @@ void func_800ECC8C(void) // 0x800ECC8C
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_RifleShells0))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
         }
     }
 
@@ -1199,7 +1199,7 @@ void func_800ECC8C(void) // 0x800ECC8C
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_HandgunBullets))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position_0, &g_CommonWorldObjectPoses[1].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position_0, &g_CommonWorldObjectPoses[1].rotation_C);
         }
     }
 
@@ -1207,7 +1207,7 @@ void func_800ECC8C(void) // 0x800ECC8C
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_FirstAidKit))
         {
-            g_WorldGfx_ObjectAdd(g_CommonWorldObjects, &g_CommonWorldObjectPoses[2].position_0, &g_CommonWorldObjectPoses[2].rotation_C);
+            WorldGfx_ObjectAdd(g_CommonWorldObjects, &g_CommonWorldObjectPoses[2].position_0, &g_CommonWorldObjectPoses[2].rotation_C);
         }
     }
 
@@ -1215,7 +1215,7 @@ void func_800ECC8C(void) // 0x800ECC8C
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_HealthDrink))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[3].position_0, &g_CommonWorldObjectPoses[3].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[3].position_0, &g_CommonWorldObjectPoses[3].rotation_C);
         }
     }
 
@@ -1223,7 +1223,7 @@ void func_800ECC8C(void) // 0x800ECC8C
     {
         if (!Savegame_EventFlagGet(EventFlag_M5S01_RifleShells1))
         {
-            g_WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[4].position_0, &g_CommonWorldObjectPoses[4].rotation_C);
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &g_CommonWorldObjectPoses[4].position_0, &g_CommonWorldObjectPoses[4].rotation_C);
         }
     }
 }

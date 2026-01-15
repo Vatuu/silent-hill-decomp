@@ -263,6 +263,6 @@ bool Fs_QueuePostLoadTim(s_FsQueueEntry* entry)
 
 bool Fs_QueuePostLoadAnm(s_FsQueueEntry* entry)
 {
-    Fs_CharaAnimDataInfoUpdate(entry->extra.anm.field_0, entry->extra.anm.charaId_4, entry->externalData, entry->extra.anm.coords_8);
+    Fs_CharaAnimInfoUpdate(entry->extra.anm.field_0, entry->extra.anm.charaId_4, entry->externalData, entry->extra.anm.coords_8);
     return true;
 }

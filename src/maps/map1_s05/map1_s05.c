@@ -342,10 +342,10 @@ void func_800D5400(void) // 0x800D5400
     }
 
     g_WorldObject0.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(-90.0f));
-    g_WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &g_WorldObject0.rotation_28);
+    WorldGfx_ObjectAdd(&g_WorldObject0.object_0, &g_WorldObject0.position_1C, &g_WorldObject0.rotation_28);
 
     g_WorldObject1.rotation_28.vy += Q12_MULT_PRECISE(g_DeltaTime0, FP_ANGLE(15.0f));
-    g_WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
+    WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
 
     i = 0;
     while (1)

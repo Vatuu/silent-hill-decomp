@@ -348,7 +348,7 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
 
 void Game_PlayerInit(void) // 0x80035178
 {
-    func_8003C048();
+    WorldGfx_MapInit();
     CharaModel_AllModelsFree();
     Item_HeldItemModelFree();
     Anim_BoneInit(FS_BUFFER_0, g_SysWork.playerBoneCoords_890); // Load player anim file?
@@ -464,7 +464,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
     {
         if (idx == 1 || localAnimFile == initAnimDataInfo->animFile1_8)
         {
-            Fs_CharaAnimDataInfoUpdate(idx, charaId, initAnimDataInfo->animFile1_8, coord);
+            Fs_CharaAnimInfoUpdate(idx, charaId, initAnimDataInfo->animFile1_8, coord);
             return;
         }
         else if (localAnimFile < initAnimDataInfo->animFile1_8)
@@ -472,7 +472,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
             initAnimDataInfo->animFile0_4 = localAnimFile;
 
             Mem_Move32(localAnimFile, g_CharaTypeAnimInfo[idx].animFile1_8, g_CharaTypeAnimInfo[idx].animBufferSize2_10);
-            Fs_CharaAnimDataInfoUpdate(idx, charaId, localAnimFile, coord);
+            Fs_CharaAnimInfoUpdate(idx, charaId, localAnimFile, coord);
             return;
         }
     }
@@ -490,7 +490,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
     if (i > 0)
     {
         Mem_Move32(g_CharaTypeAnimInfo[idx].animFile0_4, g_CharaTypeAnimInfo[i].animFile1_8, g_CharaTypeAnimInfo[i].animBufferSize2_10);
-        Fs_CharaAnimDataInfoUpdate(idx, charaId, initAnimDataInfo->animFile0_4, coord);
+        Fs_CharaAnimInfoUpdate(idx, charaId, initAnimDataInfo->animFile0_4, coord);
     }
     else
     {
@@ -506,7 +506,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
     }
 }
 
-void Fs_CharaAnimDataInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord) // 0x80035560
+void Fs_CharaAnimInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile, GsCOORDINATE2* coord) // 0x80035560
 {
     s32                  idx0;
     GsCOORDINATE2*       localCoord;
@@ -2176,7 +2176,7 @@ void Savegame_EnemyStateUpdate(s_SubCharacter* chara) // 0x80037DC4
     }
 }
 
-void func_80037E40(s_SubCharacter* chara) // 0x80037E40
+void Chara_DamageFlagUpdate(s_SubCharacter* chara) // 0x80037E40
 {
     if (chara->damage_B4.amount_C > Q12(0.0f))
     {
@@ -2287,7 +2287,7 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
     }
 }
 
-void func_80038354(void) // 0x80038354
+void Game_NpcUpdate(void) // 0x80038354
 {
     typedef struct
     {
@@ -2319,7 +2319,7 @@ void func_80038354(void) // 0x80038354
     u8                 temp_a2;
     u32                new_var;
     s32                l;
-    s32                tempAnimDataInfoIdx;
+    s32                animDataInfoIdx;
     s32                temp2;
     GsCOORDINATE2*     coord;
     s_SubCharacter*    npc;
@@ -2458,14 +2458,14 @@ void func_80038354(void) // 0x80038354
 
             npc->model_0.anim_4.flags_2 |= AnimFlag_Unlocked;
 
-            tempAnimDataInfoIdx = g_CharaAnimInfoIdxs[npc->model_0.charaId_0];
-            coord               = g_CharaTypeAnimInfo[tempAnimDataInfoIdx].npcCoords_14;
+            animDataInfoIdx = g_CharaAnimInfoIdxs[npc->model_0.charaId_0];
+            coord           = g_CharaTypeAnimInfo[animDataInfoIdx].npcCoords_14;
 
             func_8008A384(npc);
-            func_80037E40(npc);
+            Chara_DamageFlagUpdate(npc);
             func_8003BD48(npc);
 
-            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model_0.charaId_0](npc, g_CharaTypeAnimInfo[tempAnimDataInfoIdx].animFile1_8, coord);
+            g_MapOverlayHeader.charaUpdateFuncs_194[npc->model_0.charaId_0](npc, g_CharaTypeAnimInfo[animDataInfoIdx].animFile1_8, coord);
 
             func_8003BE28();
             func_80037E78(npc);
@@ -2734,16 +2734,16 @@ void GameState_InGame_Update(void) // 0x80038BD4
         {
             func_8003DA9C(Chara_Harry, g_SysWork.playerBoneCoords_890, 1, g_SysWork.playerWork_4C.player_0.timer_C6, 0);
             func_8008A384(&g_SysWork.playerWork_4C.player_0);
-            func_8007D970(&g_SysWork.playerWork_4C, g_SysWork.playerBoneCoords_890);
+            Player_CombatUpdate(&g_SysWork.playerWork_4C, g_SysWork.playerBoneCoords_890);
             func_8008A3AC(&g_SysWork.playerWork_4C.player_0);
         }
 
         Demo_DemoRandSeedRestore();
         Game_NpcRoomInitSpawn(true);
-        func_80038354();
+        Game_NpcUpdate();
         func_8005E89C();
         Ipd_CloseRangeChunksInit();
-        func_8003C878(1);
+        Gfx_InGameDraw(1);
         Demo_DemoRandSeedAdvance();
     }
 }

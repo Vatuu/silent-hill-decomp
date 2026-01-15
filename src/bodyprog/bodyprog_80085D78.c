@@ -5100,7 +5100,7 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
 
 void func_8008E4EC(s_LmHeader* lmHdr) // 0x8008E4EC
 {
-    func_80056504(lmHdr, D_8002B2CC.str, &img0, 1);
+    Lm_MaterialFsImageApply1(lmHdr, D_8002B2CC.str, &img0, 1);
 }
 
 s_WaterZone* Map_WaterZoneGet(q27_4 posX, q27_4 posZ, s_WaterZone* waterZones)
