@@ -635,17 +635,6 @@ void func_800D2150(VECTOR* arg0, s32 arg1) // 0x800D2150
 
 void func_800D21AC(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21AC
 {
-#define COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, n) \
-    {                                                 \
-        u16* ptr4 = &(ptr0)[(idx)];                   \
-        s32* ptr5 = &(ptr1)[(idx)];                   \
-        s32* ptr6 = &(ptr2)[(idx)];                   \
-                                                      \
-        *(u16*)&(poly)->u##n = *ptr4;                 \
-        *(s32*)&(poly)->x##n = *ptr5;                 \
-        *(s32*)&(poly)->r##n = *ptr6;                 \
-    }
-
     SVECTOR   sp20[9];
     DVECTOR   sp68[9];
     CVECTOR   sp90[9];
@@ -670,9 +659,6 @@ void func_800D21AC(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21
     GsOT_TAG* ot;
     POLY_GT4* poly;
     POLY_GT4* poly2;
-    u16*      ptr0;
-    s32*      ptr1;
-    s32*      ptr2;
 
     var_s4 = 0;
     var_s0 = sp20;
@@ -754,18 +740,14 @@ void func_800D21AC(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21
 
     for (j = 0; j < 4; j++, var_t4 += 4)
     {
-        ptr0 = (u16*)&spB8;
-        ptr1 = (s32*)&sp68;
-        ptr2 = (s32*)&sp90;
-
         idx = var_t4[0];
-        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 0);
+        COPY_GT4_DATA(poly, idx, (u16*)&spB8, (s32*)&sp68, (s32*)&sp90, 0);
         idx = var_t4[1];
-        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 1);
+        COPY_GT4_DATA(poly, idx, (u16*)&spB8, (s32*)&sp68, (s32*)&sp90, 1);
         idx = var_t4[2];
-        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 2);
+        COPY_GT4_DATA(poly, idx, (u16*)&spB8, (s32*)&sp68, (s32*)&sp90, 2);
         idx = var_t4[3];
-        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 3);
+        COPY_GT4_DATA(poly, idx, (u16*)&spB8, (s32*)&sp68, (s32*)&sp90, 3);
 
         poly->tpage = D_800DF558;
         poly->clut  = D_800DF564;
@@ -777,13 +759,13 @@ void func_800D21AC(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21
         poly++;
 
         idx = var_t4[0];
-        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 0);
+        COPY_GT4_DATA(poly, idx, (u16*)&spB8, (s32*)&sp68, (s32*)&sp90, 0);
         idx = var_t4[1];
-        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 1);
+        COPY_GT4_DATA(poly, idx, (u16*)&spB8, (s32*)&sp68, (s32*)&sp90, 1);
         idx = var_t4[2];
-        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 2);
+        COPY_GT4_DATA(poly, idx, (u16*)&spB8, (s32*)&sp68, (s32*)&sp90, 2);
         idx = var_t4[3];
-        COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, 3);
+        COPY_GT4_DATA(poly, idx, (u16*)&spB8, (s32*)&sp68, (s32*)&sp90, 3);
 
         poly->tpage = D_800DF55C;
         poly->clut  = D_800DF568;
@@ -841,7 +823,179 @@ void func_800D26FC(VECTOR* arg0, s32 arg1) // 0x800D26FC
     func_800D2684(arg0, arg1);
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2790);
+void func_800D2790(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D2790
+{
+    SVECTOR   sp20[9];
+    DVECTOR   sp68[9];
+    CVECTOR   sp90[9];
+    u16       spB8[9];
+    u16       spD0[9];
+    s32       spE8;
+    SVECTOR*  var_s0;
+    s32       temp_v0;
+    s32       temp_v0_2;
+    s32       temp_v1;
+    s32       k;
+    s32       i;
+    s32       j;
+    s32       l;
+    s32       var_s4;
+    s32       var_v0;
+    s32       var_v0_2;
+    DVECTOR*  var_s1;
+    CVECTOR*  var_s1_2;
+    u16*      var_a0_3;
+    s32       idx;
+    u8*       var_t4;
+    GsOT_TAG* temp_v0_3;
+    GsOT_TAG* ot;
+    POLY_GT4* poly;
+    POLY_GT4* poly2;
+    u16*      var_v1_2;
+    s32       var_a1_2;
+
+    var_s4 = 0;
+    var_s0 = sp20;
+
+    temp_v0 = Q12_MULT_PRECISE(arg3, 0xCC);
+    temp_v1 = temp_v0;
+
+    for (i = -1; i < 2; i++)
+    {
+        for (k = -1; k < 2; k++)
+        {
+            var_s0->vx = temp_v0 * k;
+            var_s0->vy = 0;
+            var_s0->vz = temp_v1 * i;
+            var_s0++;
+        }
+    }
+
+    PushMatrix();
+
+    var_s0   = sp20;
+    var_s1_2 = sp90;
+
+    for (l = 0; l < 9; l++)
+    {
+        temp_v0_2 = func_80055F08(var_s0, &D_800DAE78, arg1);
+        var_a1_2  = CLAMP_HIGH(Q12_MULT_PRECISE(temp_v0_2, arg2), 0xFF);
+
+        func_80055E90(var_s1_2, var_a1_2);
+        var_s1_2++;
+        var_s0++;
+    }
+
+    PopMatrix();
+
+    var_a0_3 = spB8;
+
+    for (i = 0; i < 3; i++)
+    {
+        var_v0 = (-0x80 + i * 0x20) & 0xFF;
+
+        if (i == 2)
+        {
+            var_v0 -= 1;
+        }
+
+        for (k = 0; k < 3; k++)
+        {
+            var_v0_2 = (k << 5) & 0xFF;
+            if (k == 2)
+            {
+                var_v0_2 -= 1;
+            }
+            *var_a0_3 = (var_v0_2 & 0xFF) | ((var_v0 & 0xFF) << 8);
+            var_a0_3++;
+        }
+    }
+
+    var_v1_2 = spD0;
+
+    for (i = 0; i < 3; i++)
+    {
+        var_v0 = (-0x40 + i * 0x20) & 0xFF;
+        if (i == 2)
+        {
+            var_v0 -= 1;
+        }
+
+        for (k = 0; k < 3; k++)
+        {
+            var_v0_2 = (k << 5) & 0xFF;
+            if (k == 2)
+            {
+                var_v0_2 -= 1;
+            }
+            *var_v1_2 = (var_v0_2 & 0xFF) | ((var_v0 & 0xFF) << 8);
+            var_v1_2++;
+        }
+    }
+
+    var_s0 = sp20;
+    var_s1 = sp68;
+
+    for (l = 0; l < 3; l++)
+    {
+        temp_v1 = RotTransPers3(&var_s0[0], &var_s0[1], &var_s0[2],
+                                &var_s1[0], &var_s1[1], &var_s1[2], &spE8, &spE8);
+        if (l == 2)
+        {
+            var_s4 = temp_v1;
+        }
+        var_s0 += 3;
+        var_s1 += 3;
+    }
+
+    temp_v0_3 = &arg0[var_s4 >> 1];
+    ot        = &temp_v0_3[25];
+
+    poly = (POLY_GT4*)GsOUT_PACKET_P;
+
+    var_t4 = D_800DAE80;
+
+    for (l = 0; l < 4; l++, var_t4 += 4)
+    {
+        idx = var_t4[0];
+        COPY_GT4_DATA(poly, idx, (u16*)&spB8, (s32*)&sp68, (s32*)&sp90, 0);
+        idx = var_t4[1];
+        COPY_GT4_DATA(poly, idx, (u16*)&spB8, (s32*)&sp68, (s32*)&sp90, 1);
+        idx = var_t4[2];
+        COPY_GT4_DATA(poly, idx, (u16*)&spB8, (s32*)&sp68, (s32*)&sp90, 2);
+        idx = var_t4[3];
+        COPY_GT4_DATA(poly, idx, (u16*)&spB8, (s32*)&sp68, (s32*)&sp90, 3);
+
+        poly->tpage = 0x4D;
+        poly->clut  = D_800DF56C;
+
+        setPolyGT4(poly);
+        setSemiTrans(poly, 1);
+
+        addPrim(ot, poly);
+        poly++;
+
+        idx = var_t4[0];
+        COPY_GT4_DATA(poly, idx, (u16*)&spD0, (s32*)&sp68, (s32*)&sp90, 0);
+        idx = var_t4[1];
+        COPY_GT4_DATA(poly, idx, (u16*)&spD0, (s32*)&sp68, (s32*)&sp90, 1);
+        idx = var_t4[2];
+        COPY_GT4_DATA(poly, idx, (u16*)&spD0, (s32*)&sp68, (s32*)&sp90, 2);
+        idx = var_t4[3];
+        COPY_GT4_DATA(poly, idx, (u16*)&spD0, (s32*)&sp68, (s32*)&sp90, 3);
+
+        poly->tpage = 0x4D;
+        poly->clut  = D_800DF56C;
+
+        setPolyGT4(poly);
+        setSemiTrans(poly, 1);
+
+        addPrim(ot - 25, poly);
+        poly++;
+    }
+
+    GsOUT_PACKET_P = (PACKET*)poly;
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2CC8);
 

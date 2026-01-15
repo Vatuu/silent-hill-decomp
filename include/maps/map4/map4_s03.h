@@ -12,6 +12,17 @@
 #define MAP_ROOM_MIN_Z Q12(-120.0f)
 #define MAP_ROOM_MAX_Z Q12(240.0f)
 
+#define COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, n) \
+    {                                                 \
+        u16* ptr4 = &(ptr0)[(idx)];                   \
+        s32* ptr5 = &(ptr1)[(idx)];                   \
+        s32* ptr6 = &(ptr2)[(idx)];                   \
+                                                      \
+        *(u16*)&(poly)->u##n = *ptr4;                 \
+        *(s32*)&(poly)->x##n = *ptr5;                 \
+        *(s32*)&(poly)->r##n = *ptr6;                 \
+    }
+
 typedef struct
 {
     SVECTOR field_0; // } Note: Not sure if these are actually `SVECTOR`.
@@ -187,6 +198,10 @@ extern s32 D_800DAA58[];
 
 extern s_SfxVolume D_800DB1F8[6];
 
+extern SVECTOR3 D_800DAE78;
+
+extern u8 D_800DAE80[];
+
 void func_800D078C(void);
 
 void func_800D0840(void);
@@ -246,6 +261,8 @@ void func_800D2120(void);
 void func_800D2684(VECTOR* arg0, s32 arg1);
 
 void func_800D26FC(VECTOR* arg0, s32 arg1);
+
+void func_800D2790(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3);
 
 void Ai_Twinfeeler_TextureLoad(void);
 
