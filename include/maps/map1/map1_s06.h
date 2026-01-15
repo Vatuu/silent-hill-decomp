@@ -51,6 +51,12 @@ extern s_WorldObjectDesc D_800DB064;
 
 void func_800D5400(void);
 
+void func_800D5448(void);
+
+void func_800D560C(void);
+
+void func_800D5614(void);
+
 void func_800D5B98(void);
 
 void func_800D5D6C(u16 arg0);

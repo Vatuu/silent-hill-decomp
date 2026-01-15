@@ -55,7 +55,7 @@ def try_decompile(func_name: str, func_path: Path = None):
     """Try to decompile one function and log success if it works."""
     subprocess.run(["git", "restore", "src/"], check=False)
     # Clear build folders for everything except main EXE, faster than using make clean, and we keep main intact for quicker build iterations
-    subprocess.run(["rm", "-rf", "build/asm/bodyprog", "build/asm/maps", "build/asm/screens", "build/out/1ST", "build/out/VIN", "build/src/bodyprog", "build/src/maps", "build/src/screens"], check=False) # faster than make clean
+    subprocess.run(["rm", "-rf", "build/USA/asm/bodyprog", "build/USA/asm/maps", "build/USA/asm/screens", "build/USA/out/1ST", "build/USA/out/VIN", "build/USA/src/bodyprog", "build/USA/src/maps", "build/USA/src/screens"], check=False) # faster than make clean
     try:
         result = decompile.decompile(str(func_path.resolve()), force=True, resolve_jtbl=False)
     except Exception as e:
@@ -134,6 +134,7 @@ def main():
 
     count = 0
     for func_name, func_path in funcs:
+        #if "map6_s04_2" in str(func_path):
         print(f"=== ({count+1}/{len(funcs)}/{len(succeeded_paths)}) Decompiling {'/'.join(func_path.parts[-2:])} ===")
         count = count + 1
         if try_decompile(func_name, func_path):

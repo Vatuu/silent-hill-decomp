@@ -94,9 +94,13 @@ void Ai_LockerDeadBody_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOOR
 
 void func_800DA4D4(void);
 
+void func_800DA630(void);
+
 void func_800DA7F4(void);
 
 void func_800DA8B0(void);
+
+void func_800DA950(void);
 
 void func_800DAA28(void);
 

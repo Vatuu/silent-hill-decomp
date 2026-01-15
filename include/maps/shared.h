@@ -2086,6 +2086,16 @@ void sharedFunc_800D0994_3_s00(void);
 
 void sharedFunc_800D09D4_3_s00(void);
 
+bool sharedFunc_800CBDA8_1_s02(POLY_FT4** poly, s32 idx);
+
+void sharedFunc_800CCE60_1_s02(void);
+
+bool sharedFunc_800CBF74_1_s05(POLY_FT4** poly, s32 idx);
+
+bool sharedFunc_800CC618_1_s05(POLY_FT4** poly, s32 idx);
+
+bool sharedFunc_800CCF30_1_s05(POLY_FT4** poly, s32 idx);
+
 /** Unsure which character this takes, stalker doesn't fit? */
 void sharedFunc_800D88AC_0_s00(s_SubCharacter* stalker);
 
