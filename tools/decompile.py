@@ -331,7 +331,7 @@ def decompile(func_name: str, number_occurrence: int = None, force: bool = False
     ctx = get_c_context(func.src_path)
 
     # silent-hill-decomp chara func hack
-    ctx = ctx + f"\r\nvoid {func.name}(s_SubCharacter*);\r\n"
+    #ctx = ctx + f"\r\nvoid {func.name}(s_SubCharacter*);\r\n"
 
     dec = run_m2c(func, ctx)
     dec_res = guess_unknown_type(dec)
