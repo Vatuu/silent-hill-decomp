@@ -997,9 +997,35 @@ void func_800D2790(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D27
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2CC8);
+void func_800D2CC8(void) // 0x800D2CC8
+{
+    s32         i;
+    s_800E0900* ptr;
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D2CEC);
+    ptr = D_800E0900;
+
+    for (i = 1; i >= 0; i--)
+    {
+        ptr->field_0 = 0;
+        ptr++;
+    }
+}
+
+void func_800D2CEC(void) // 0x800D2CEC
+{
+    s32         i;
+    s_800E0440* ptr;
+
+    ptr = D_800E0440;
+
+    for (i = 2; i >= 0; i--)
+    {
+        ptr->field_0 = 0;
+        ptr++;
+    }
+
+    func_800D2CC8();
+}
 
 void func_800D2D28(GsOT_TAG* arg0)
 {

@@ -264,6 +264,10 @@ void func_800D26FC(VECTOR* arg0, s32 arg1);
 
 void func_800D2790(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3);
 
+void func_800D2CC8(void);
+
+void func_800D2CEC(void);
+
 void Ai_Twinfeeler_TextureLoad(void);
 
 /** @brief Translates a vector in the direction of a given Y axis heading angle along the XZ plane.
