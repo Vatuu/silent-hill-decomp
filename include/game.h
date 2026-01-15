@@ -1553,6 +1553,15 @@ typedef struct _PropertiesStalker
     q4_12  timer_116;
 } s_PropertiesStalker;
 
+typedef struct _PropertiesTwinfeeler
+{
+    s32        field_E8;
+    u_Property properties_EC[10];
+    s32        field_114;
+    u_Property properties_118[4];
+} s_PropertiesTwinfeeler;
+STATIC_ASSERT_SIZEOF(s_PropertiesTwinfeeler, 64);
+
 /** Offsets for translation? */
 typedef struct
 {
@@ -1654,6 +1663,7 @@ typedef struct _SubCharacter
         s_PropertiesRomper          romper;
         s_PropertiesSplitHead       splitHead;
         s_PropertiesStalker         stalker;
+        s_PropertiesTwinfeeler      twinfeeler;
     } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);

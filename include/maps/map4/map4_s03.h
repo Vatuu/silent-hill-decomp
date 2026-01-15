@@ -64,7 +64,7 @@ typedef struct
 {
     s32     field_0;
     s32     field_4;
-    s32     chara_8;
+    s_SubCharacter* chara_8;
     VECTOR3 position_C;
     void    (*funcptr_18)(struct s_800E0930*);
 } s_800E0930;
@@ -202,6 +202,14 @@ extern SVECTOR3 D_800DAE78;
 
 extern u8 D_800DAE80[];
 
+extern s16 D_800DB1D8[];
+
+extern s16 D_800DB1E0[];
+
+extern s16 D_800DB1E8[];
+
+extern s16 D_800DB1F0[];
+
 void func_800D078C(void);
 
 void func_800D0840(void);
@@ -267,6 +275,18 @@ void func_800D2790(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3);
 void func_800D2CC8(void);
 
 void func_800D2CEC(void);
+
+void func_800D3114(void);
+
+void func_800D326C(void);
+
+void func_800D3428(void);
+
+void func_800D354C(VECTOR3* arg0);
+
+void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* arg1, GsCOORDINATE2* arg2);
+
+void func_800D3B98(s_SubCharacter* arg0);
 
 void Ai_Twinfeeler_TextureLoad(void);
 
