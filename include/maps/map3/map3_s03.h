@@ -61,6 +61,8 @@ void func_800D17A0(void);
 
 void func_800D17CC(void);
 
+void func_800D17F8(s32 arg0, s32 arg1);
+
 void func_800D1A58(void);
 
 void func_800D26D0(void);

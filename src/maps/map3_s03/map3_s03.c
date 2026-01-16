@@ -230,7 +230,83 @@ void func_800D17CC(void) // 0x800D17CC
     Event_ItemTake(InventoryItemId_PlateOfTurtle, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M3S03_PickupPlateOfTurtle, 17);
 }
 
-INCLUDE_ASM("maps/map3_s03/nonmatchings/map3_s03", func_800D17F8);
+void func_800D17F8(s32 arg0, s32 arg1) // 0x800D17F8
+{
+    s32       idx;
+    s32       i;
+    SPRT*     sprt;
+    DR_TPAGE* tpage;
+
+    func_800862F8(2, 0, false);
+
+    sprt = GsOUT_PACKET_P;
+
+    for (i = 0; (arg1 > 0) ? (i < 5) : (i < 4); i++)
+    {
+        if (D_800D8140[i] == 8)
+        {
+            continue;
+        }
+
+        if ((i == arg0 || i == 4) && arg1 < 0x1000)
+        {
+            if (arg1 <= 0)
+            {
+                continue;
+            }
+            setRGBC0(sprt, arg1 >> 5, arg1 >> 5, arg1 >> 5, 0x66);
+        }
+        else
+        {
+            setRGBC0(sprt, 0x80, 0x80, 0x80, 0x64);
+        }
+
+        idx = (i < 4) ? i : arg0;
+
+        setXY0Fast(sprt, D_800D6B40[idx][0] - 160, D_800D6B40[idx][1] - 120);
+
+        if (i < 4)
+        {
+            sprt->u0 = 64;
+            sprt->v0 = D_800D6B50[D_800D8140[idx]] + 16;
+        }
+        else
+        {
+            sprt->u0 = D_800D6B40[idx][0];
+            sprt->v0 = D_800D6B40[idx][1] + 16;
+        }
+
+        setWH(sprt, 28, 28);
+
+        if (i != 4)
+        {
+            sprt->clut = 0x3CE;
+        }
+        else
+        {
+            sprt->clut = 0x38E;
+        }
+
+        addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[1], sprt, 4);
+        sprt++;
+        tpage = sprt;
+
+        if (i < 4)
+        {
+            setDrawTPage(tpage, 0, 0, 167);
+        }
+        else
+        {
+            setDrawTPage(tpage, 0, 0, 197);
+        }
+
+        AddPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[1], tpage);
+        tpage++;
+        sprt = tpage;
+    }
+
+    GsOUT_PACKET_P = sprt;
+}
 
 void func_800D1A58(void) // 0x800D1A58
 {
