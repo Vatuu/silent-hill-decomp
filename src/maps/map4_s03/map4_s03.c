@@ -568,7 +568,123 @@ void func_800D1C48(void) // 0x800D1C48
     }
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D1D3C);
+void func_800D1D3C(GsOT_TAG* arg0, SVECTOR3* arg1, MATRIX* arg2, s32 arg3) 
+{
+    SVECTOR sp28;
+    SVECTOR sp30;
+    SVECTOR sp38;
+    SVECTOR sp40;
+    long sp48;
+    long sp4C;
+    long sp50;
+    long sp54;
+    long sp58;
+    long sp5C;
+    long sp60;
+    s32 temp_a3;
+    s32 temp_t0;
+    s32 temp_t1;
+    s32 temp_v0_3;
+    s32 temp_v1_2;
+    u32 temp_a1;
+    s32 temp_a2;
+    s32 temp_v0;
+    s32 var_a1;
+    GsOT_TAG* temp_a1_2;
+    POLY_FT4* poly;
+    POLY_FT4* poly2;
+
+    PushMatrix();
+    temp_v0 = func_80055F08(arg1, &D_800DAE58, arg2) & 0xFF;
+    temp_a2 = Q12_MULT_PRECISE(temp_v0, arg3);
+    if (temp_a2 < 0x100) 
+    {
+        var_a1 = temp_a2;
+    }
+    else
+    {
+        var_a1 = 0xFF;
+    }
+
+    func_80055E90((CVECTOR*)&sp48, var_a1 & 0xFF);
+    PopMatrix();
+
+    temp_t1 = arg1->vx - 0x80;
+    temp_a3 = arg1->vy;
+    temp_t0 = arg1->vz - 0x80;
+    temp_v0_3 = arg1->vx + 0x80;
+    temp_v1_2 = arg1->vz + 0x80;
+
+    sp28.vx = temp_t1;
+    sp28.vy = temp_a3;
+    sp28.vz = temp_t0;
+
+    sp30.vx = temp_v0_3;
+    sp30.vy = temp_a3;
+    sp30.vz = temp_t0;
+
+    sp38.vx = temp_t1;
+    sp38.vy = temp_a3;
+    sp38.vz = temp_v1_2;
+
+    sp40.vx = temp_v0_3;
+    sp40.vy = temp_a3;
+    sp40.vz = temp_v1_2;
+
+    temp_a1 = RotTransPers4(&sp28, &sp30, &sp38, &sp40, &sp4C, &sp50, &sp54, &sp58, &sp5C, &sp60);
+    poly = poly2 = (POLY_FT4*) GsOUT_PACKET_P;
+
+    if ((sp60 & 0x20000))
+    {
+        return;
+    }
+
+    poly2->tpage = D_800DF558;
+    poly2->clut = D_800DF564;
+
+    setUV4(poly2,
+           0xE0, 0xC0,
+           0xFF, 0xC0,
+           0xE0, 0xE0,
+           0xFF, 0xE0);
+
+    *(s32*)&poly2->x0 = *(s32*)&sp4C;
+    *(s32*)&poly2->x1 = *(s32*)&sp50;
+    *(s32*)&poly2->x2 = *(s32*)&sp54;
+    *(s32*)&poly2->x3 = *(s32*)&sp58;
+    *(s32*)&poly2->r0 = *(s32*)&sp48;
+
+    setPolyFT4(poly2);
+    setSemiTrans(poly2, true);
+
+    temp_a1_2 = &arg0[temp_a1 >> 1];
+    addPrim(&temp_a1_2[25], poly2);
+
+    poly = poly2 + 1;
+    poly->tpage = D_800DF55C;
+    poly->clut = D_800DF568;
+
+    setUV4(poly,
+           0xE0, 0xC0,
+           0xFF, 0xC0,
+           0xE0, 0xE0,
+           0xFF, 0xE0);
+
+    *(s32*)&poly->x0 = *(s32*)&sp4C;
+    *(s32*)&poly->x1 = *(s32*)&sp50;
+    *(s32*)&poly->x2 = *(s32*)&sp54;
+    *(s32*)&poly->x3 = *(s32*)&sp58;
+    *(s32*)&poly->r0 = *(s32*)&sp48;
+
+    setPolyFT4(poly);
+    setSemiTrans(poly, true);
+
+    temp_a1_2 = &arg0[temp_a1 >> 1];
+    addPrim(&temp_a1_2[25], poly);
+
+    poly++;
+    GsOUT_PACKET_P = (PACKET*)poly;
+}
 
 void func_800D1FF4(GsOT_TAG* arg0) // 0x800D1FF4
 {
