@@ -10082,19 +10082,19 @@ void func_8006D2B4(VECTOR3* arg0, s_func_8006CC44_44* arg1) // 0x8006D2B4
 
 void func_8006D600(VECTOR3* pos, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006D600
 {
-    s32 temp_a2;
-    s16 temp_s0;
-    s16 temp_s3;
-    s16 temp;
-    s32 temp_s0_2;
-    s32 deltaX;
-    s32 deltaZ;
-    s32 z;
-    s32 x;
-    s32 temp_v0;
-    s32 var_s0;
-    s32 var_v0_2;
-    s32 angle;
+    s32    temp_a2;
+    s16    temp_s0;
+    s16    temp_s3;
+    s16    temp;
+    s32    temp_s0_2;
+    s32    deltaX;
+    s32    deltaZ;
+    s32    z;
+    s32    x;
+    s32    temp_v0;
+    s32    var_s0;
+    s32    var_v0_2;
+    q19_12 angle;
 
     // TODO: Angles here.
 

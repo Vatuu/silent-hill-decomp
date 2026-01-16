@@ -1350,7 +1350,7 @@ void func_800D35DC(SVECTOR* arg0) // 0x800D35DC
     func_800D2ED0(ot);
 }
 
-void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* arg1, GsCOORDINATE2* arg2) // 0x800D3694
+void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D3694
 {
     typedef struct
     {
@@ -1369,42 +1369,42 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* arg1, GsCOORDINATE2*
     if (twinfeeler->model_0.controlState_2 == 0)
     {
         twinfeeler->model_0.controlState_2       = 1;
-        twinfeeler->model_0.anim_4.status_0      = 0xD;
-        twinfeeler->model_0.anim_4.keyframeIdx_8 = 0xA3;
+        twinfeeler->model_0.anim_4.status_0      = 13;
+        twinfeeler->model_0.anim_4.keyframeIdx_8 = 163;
         twinfeeler->health_B0                    = 1;
-        twinfeeler->model_0.anim_4.time_4        = 0xA3000;
+        twinfeeler->model_0.anim_4.time_4        = Q12(163.0f);
         twinfeeler->model_0.anim_4.alpha_A       = 0;
         twinfeeler->field_E1_0                   = 3;
-        twinfeeler->model_0.stateStep_3         -= 0x12;
+        twinfeeler->model_0.stateStep_3         -= 18;
         twinfeeler->rotation_24.vx               = D_800DB1E8[twinfeeler->model_0.stateStep_3];
         twinfeeler->rotation_24.vy               = D_800DB1F0[twinfeeler->model_0.stateStep_3];
     }
 
     if (twinfeeler->model_0.stateStep_3 == 1)
     {
-        twinfeeler->timer_C6 = 0xC00 - func_80055D78(twinfeeler->position_18.vx, twinfeeler->position_18.vy, twinfeeler->position_18.vz) * 16;
+        twinfeeler->timer_C6 = Q12(0.75f) - func_80055D78(twinfeeler->position_18.vx, twinfeeler->position_18.vy, twinfeeler->position_18.vz) * 16;
     }
     else
     {
-        twinfeeler->timer_C6 = 0x1000 - func_80055D78(twinfeeler->position_18.vx, twinfeeler->position_18.vy, twinfeeler->position_18.vz) * 16;
+        twinfeeler->timer_C6 = Q12(1.0f) - func_80055D78(twinfeeler->position_18.vx, twinfeeler->position_18.vy, twinfeeler->position_18.vz) * 16;
     }
 
-    if (twinfeeler->timer_C6 < 0)
+    if (twinfeeler->timer_C6 < Q12(0.0f))
     {
-        twinfeeler->timer_C6 = 0;
+        twinfeeler->timer_C6 = Q12(0.0f);
     }
-    else if (twinfeeler->timer_C6 > 0x1000)
+    else if (twinfeeler->timer_C6 > Q12(1.0f))
     {
-        twinfeeler->timer_C6 = 0x1000;
+        twinfeeler->timer_C6 = Q12(1.0f);
     }
 
-    if (twinfeeler->health_B0 > 0 && twinfeeler->damage_B4.amount_C > 0)
+    if (twinfeeler->health_B0 > Q12(0.0f) && twinfeeler->damage_B4.amount_C > Q12(0.0f))
     {
         twinfeeler->health_B0               = 0;
-        twinfeeler->model_0.anim_4.status_0 = 0xE;
+        twinfeeler->model_0.anim_4.status_0 = 14;
     }
 
-    if (twinfeeler->health_B0 > 0 && twinfeeler->properties_E4.twinfeeler.field_E8 == 0)
+    if (twinfeeler->health_B0 > Q12(0.0f) && twinfeeler->properties_E4.twinfeeler.field_E8 == 0)
     {
         if (Rng_TestProbabilityBits(2))
         {
@@ -1415,7 +1415,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* arg1, GsCOORDINATE2*
             var_a0 = Sfx_Unk1552;
         }
 
-        func_8005DC1C(var_a0, &twinfeeler->position_18, 0x80, 0);
+        func_8005DC1C(var_a0, &twinfeeler->position_18, Q8(0.5f), 0);
         twinfeeler->properties_E4.twinfeeler.field_E8 = Rng_GenerateInt(0x1000, 0x1CCB);
     }
     else
@@ -1427,36 +1427,36 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* arg1, GsCOORDINATE2*
         }
     }
 
-    if (twinfeeler->model_0.anim_4.status_0 == 0x29)
+    if (twinfeeler->model_0.anim_4.status_0 == 41)
     {
-        if (twinfeeler->health_B0 == 0)
+        if (twinfeeler->health_B0 == Q12(0.0f))
         {
             if (Chara_NpcIdxGet(twinfeeler) != g_SysWork.targetNpcIdx_2353)
             {
-                twinfeeler->health_B0  = -1;
+                twinfeeler->health_B0  = NO_VALUE;
                 twinfeeler->field_E1_0 = 0;
                 Savegame_EnemyStateUpdate(twinfeeler);
             }
         }
     }
 
-    Math_MatrixTransform(&twinfeeler->position_18, (SVECTOR*)&twinfeeler->rotation_24, arg2);
+    Math_MatrixTransform(&twinfeeler->position_18, (SVECTOR*)&twinfeeler->rotation_24, coords);
 
     anim = &TWINFEELER_ANIM_INFOS[twinfeeler->model_0.anim_4.status_0];
-    anim->updateFunc_0(&twinfeeler->model_0, arg1, arg2, anim);
+    anim->updateFunc_0(&twinfeeler->model_0, anmHdr, coords, anim);
 
     temp_s0 = D_800DB1D8[twinfeeler->model_0.stateStep_3];
-    func_800705E4(arg2, 0, temp_s0, temp_s0, temp_s0);
+    func_800705E4(coords, 0, temp_s0, temp_s0, temp_s0);
 
-    twinfeeler->field_C8.field_4   = 0;
-    twinfeeler->field_C8.field_2   = 0;
-    twinfeeler->field_D8.offsetZ_6 = 0;
-    twinfeeler->field_D8.offsetX_4 = 0;
-    twinfeeler->field_D4.radius_0  = 0;
+    twinfeeler->field_C8.field_4   = Q12(0.0f);
+    twinfeeler->field_C8.field_2   = Q12(0.0f);
+    twinfeeler->field_D8.offsetZ_6 = Q12(0.0f);
+    twinfeeler->field_D8.offsetX_4 = Q12(0.0f);
+    twinfeeler->field_D4.radius_0  = Q12(0.0f);
 
     ptr = PSX_SCRATCH;
 
-    Vw_CoordHierarchyMatrixCompute(&arg2[11], &ptr->field_0);
+    Vw_CoordHierarchyMatrixCompute(&coords[11], &ptr->field_0);
 
     gte_SetRotMatrix(&ptr->field_0);
     gte_SetTransMatrix(&ptr->field_0);
@@ -1500,48 +1500,47 @@ void func_800D3B68(s_SubCharacter* chara) // 0x800D3B68
 
 void func_800D3B74(s_SubCharacter* chara) // 0x800D3B74
 {
-    if (chara->health_B0 >= 0)
+    if (chara->health_B0 >= Q12(0.0f))
     {
         chara->properties_E4.npc.field_11C = chara->health_B0;
-        chara->health_B0                   = -1;
+        chara->health_B0                   = NO_VALUE;
     }
 }
 
-void func_800D3B98(s_SubCharacter* arg0) // 0x800D3B98
+void func_800D3B98(s_SubCharacter* chara) // 0x800D3B98
 {
-    s_Collision sp10;
-    s16         temp_s0;
-    s32         temp_s0_2;
-    s32         temp_s0_3;
-    s32         temp_s2;
+    s_Collision coll;
+    q3_12       headingAngle;
+    q19_12      dist;
+    q19_12      posX;
+    q19_12      posZ;
 
-    temp_s0   = arg0->rotation_24.vy;
-    temp_s0_2 = Q12_MULT_PRECISE(Math_Sin(temp_s0), 0x1000);
+    headingAngle   = chara->rotation_24.vy;
+    dist = Q12_MULT_PRECISE(Math_Sin(headingAngle), Q12(1.0f));
 
-    Collision_Get(&sp10, arg0->position_18.vx + temp_s0_2,
-                  Q12_MULT_PRECISE(Math_Cos(temp_s0), 0x1000) + arg0->position_18.vz);
+    Collision_Get(&coll, chara->position_18.vx + dist,
+                  Q12_MULT_PRECISE(Math_Cos(headingAngle), Q12(1.0f)) + chara->position_18.vz);
 
-    arg0->position_18.vy = sp10.groundHeight_0;
+    chara->position_18.vy = coll.groundHeight_0;
 
-    if (arg0->position_18.vy < -0x1000)
+    if (chara->position_18.vy < Q12(-1.0f))
     {
-        temp_s0_3 = arg0->position_18.vx;
-        temp_s2   = arg0->position_18.vz;
+        posX = chara->position_18.vx;
+        posZ = chara->position_18.vz;
+        Collision_Get(&coll, posX, posZ);
 
-        Collision_Get(&sp10, temp_s0_3, temp_s2);
-
-        arg0->position_18.vy = sp10.groundHeight_0;
-
-        if (arg0->position_18.vy < -0x1000)
+        chara->position_18.vy = coll.groundHeight_0;
+        if (chara->position_18.vy < Q12(-1.0f))
         {
-            arg0->position_18.vx = 0x76800;
-            arg0->position_18.vz = 0x89E66;
+            chara->position_18.vx = 0x76800;
+            chara->position_18.vz = 0x89E66;
 
-            Collision_Get(&sp10, temp_s0_3, temp_s2);
-            arg0->position_18.vy = sp10.groundHeight_0;
+            Collision_Get(&coll, posX, posZ);
+            chara->position_18.vy = coll.groundHeight_0;
         }
     }
-    arg0->properties_E4.twinfeeler.field_114 &= ~4;
+
+    chara->properties_E4.twinfeeler.field_114 &= ~(1 << 2);
 }
 
 void func_800D3CBC(s_SubCharacter* chara) // 0x800D3CBC

@@ -1285,8 +1285,8 @@ typedef struct
     s32           screenBrightness_8;
     s32           field_C;
     q23_8         drawDistance_10; // Name from SHME, "has no effect when fog is disabled".
-    s32           fogRelated_14;   // "FogThing1" from SHME. Affect distance where fog begins.
-    s32           fogRelated_18;   // "FogThing2" from SHME. Affect distance where fog begins.
+    s32           fogRelated_14;   // "FogThing1" from SHME. Affects the distance where fog begins.
+    s32           fogRelated_18;   // "FogThing2" from SHME. Affects the distance where fog begins.
     CVECTOR       fogColor_1C;
     s32           field_20;        // Map lighting.
     u8            field_24; // } RGB. Character color lighting.
@@ -2885,7 +2885,7 @@ bool WorldGfx_IsCharaModelPresent(e_CharacterId charaId);
  */
 void WorldGfx_CharaModelMaterialSet(e_CharacterId charaId, s32 blendMode);
 
-/** @brief Makes character be transparent. */
+/** @brief Makes a character transparent. */
 void WorldGfx_CharaModelTransparentSet(e_CharacterId charaId, bool enableTransparency);
 
 void WorldGfx_CharaFree(s_CharaModel* model);
@@ -3259,7 +3259,7 @@ void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx
 
 void func_80055028(void);
 
-/** @brief Draws 2D screen effects as flashlight's lens flare and brightness.*/
+/** @brief Draws 2D screen effects for the flashlight's lens flare and glow. */
 void Gfx_2dEffectsDraw(void);
 
 /** Sets visual world parameters. */

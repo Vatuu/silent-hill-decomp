@@ -13,15 +13,15 @@
 #define MAP_ROOM_MAX_Z Q12(240.0f)
 
 #define COPY_GT4_DATA(poly, idx, ptr0, ptr1, ptr2, n) \
-    {                                                 \
-        u16* ptr4 = &(ptr0)[(idx)];                   \
-        s32* ptr5 = &(ptr1)[(idx)];                   \
-        s32* ptr6 = &(ptr2)[(idx)];                   \
+{                                                     \
+    u16* ptr4 = &(ptr0)[(idx)];                       \
+    s32* ptr5 = &(ptr1)[(idx)];                       \
+    s32* ptr6 = &(ptr2)[(idx)];                       \
                                                       \
-        *(u16*)&(poly)->u##n = *ptr4;                 \
-        *(s32*)&(poly)->x##n = *ptr5;                 \
-        *(s32*)&(poly)->r##n = *ptr6;                 \
-    }
+    *(u16*)&(poly)->u##n = *ptr4;                     \
+    *(s32*)&(poly)->x##n = *ptr5;                     \
+    *(s32*)&(poly)->r##n = *ptr6;                     \
+}
 
 typedef struct
 {
@@ -204,7 +204,7 @@ extern u8 D_800DAE80[];
 
 extern s16 D_800DB1D8[];
 
-extern s16 D_800DB1E0[];
+extern q3_12 D_800DB1E0[]; // Y positions?
 
 extern s16 D_800DB1E8[];
 
@@ -252,7 +252,7 @@ void func_800D1AFC(void);
 
 void func_800D1C48(void);
 
-void func_800D1FF4(GsOT_TAG* arg0);
+void func_800D1FF4(GsOT_TAG* tag);
 
 void func_800D2150(VECTOR* arg0, s32 arg1);
 
@@ -288,7 +288,7 @@ void func_800D354C(VECTOR3* arg0);
 
 void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* arg1, GsCOORDINATE2* arg2);
 
-void func_800D3B98(s_SubCharacter* arg0);
+void func_800D3B98(s_SubCharacter* chara);
 
 void Ai_Twinfeeler_TextureLoad(void);
 
@@ -313,7 +313,7 @@ void func_800D3528(s_SubCharacter* chara);
 
 void func_800D354C(VECTOR3*);
 
-void func_800D3694(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*);
+void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800D3AE0(s_SubCharacter* chara, s32 soundIdx);
 
@@ -349,11 +349,11 @@ void func_800D4A34(s_SubCharacter* chara);
 
 u32 func_800D4DD8(void);
 
-void func_800D4078(s_SubCharacter* arg0);
+void func_800D4078(s_SubCharacter* chara);
 
-void func_800D4248(s_SubCharacter* arg0);
+void func_800D4248(s_SubCharacter* chara);
 
-void func_800D43AC(s_SubCharacter* arg0, s32 arg1);
+void func_800D43AC(s_SubCharacter* chara, s32 arg1);
 
 void func_800D50D8(s_SubCharacter* chara);
 

@@ -118,7 +118,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                     g_MainMenu_SelectedEntry = MainMenuEntry_Continue;
                 }
             }
-            // Mo savegames exist, but did previously (e.g. memory card removed before player death).
+            // No savegames exist, but did previously (e.g. memory card removed before player death).
             else if (g_PrevSavegameCount > 0)
             {
                 while(!(g_MainMenu_VisibleEntryFlags & (1 << g_MainMenu_SelectedEntry)))
@@ -2366,10 +2366,9 @@ void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
 }
 
 // ========================================
-// OPTIONS (Read below)
+// OPTIONS
 // ========================================
-// Possibly the options overlay was at some point part of the engine just as `SAVELOAD.BIN`
-// was.
+// Possibly the options overlay was at some point part of the engine like `SAVELOAD.BIN` was.
 
 void Options_BrightnessMenu_LinesDraw(s32 arg0) // 0x8003E5E8
 {
