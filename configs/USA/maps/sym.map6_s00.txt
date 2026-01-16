@@ -345,6 +345,10 @@ sharedData_800ED1D0_2_s02           = 0x800EFAC8;
 sharedData_800ED2C0_2_s02           = 0x800EFBB8;
 sharedData_800ED2D4_2_s02           = 0x800EFBCC;
 sharedData_800ED314_2_s02           = 0x800EFC0C;
+sharedData_800EFCFC_6_s00           = 0x800EFCFC; // type:u8 size:8
+sharedData_800EFD04_6_s00           = 0x800EFD04; // type:s32
+sharedData_800EFD08_6_s00           = 0x800EFD08;
+sharedData_800EFD34_6_s00           = 0x800EFD34;
 
 //---------------------------------------------------------------
 //--- PA: 0x026934   VA: 0x800EFEAC   subsegment: .data, map6_s00

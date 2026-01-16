@@ -38,11 +38,6 @@ typedef struct
     CVECTOR field_908[17][17][2];
 } s_func_800EC4B4_2;
 
-extern u8  D_800EFCFC[8];
-extern s32 D_800EFD04;
-extern u16 D_800EFD08[];
-extern u16 D_800EFD34[];
-
 extern u16     D_800F0038;
 extern s32     D_800F0040;
 extern s32     D_800F0044;
