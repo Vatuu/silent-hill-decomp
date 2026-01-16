@@ -122,6 +122,16 @@ typedef struct
     s8      unk_14[4];
 } s_800E0900;
 
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+} s_800DB210;
+
+extern s_800DB210 D_800DB210;
+
 extern SVECTOR3 D_800DAE60;
 
 extern u8 D_800DAE68[];
@@ -213,6 +223,10 @@ extern s16 D_800DB1E8[];
 extern s16 D_800DB1F0[];
 
 extern u8 D_800DB190[];
+
+extern u8 D_800DB1A8[];
+
+extern u8 D_800DB220[][3];
 
 void func_800D078C(void);
 
@@ -349,7 +363,19 @@ void func_800D49C0(s_SubCharacter* chara);
 
 void func_800D4A34(s_SubCharacter* chara);
 
+void func_800D4B28(s_SubCharacter* arg0);
+
+s32 func_800D4C0C(u32 row, s32 col);
+
+u16 func_800D4C5C(u8* arg0, s32 arg1, s32 arg2, s32 arg3);
+
+s32 func_800D4D80(s32 arg0, s32 arg1);
+
 u32 func_800D4DD8(void);
+
+s32 func_800D4E00(s32 arg0, s32 arg1, s32 arg2);
+
+s16 func_800D4488(VECTOR3*, u16);
 
 void func_800D4078(s_SubCharacter* chara);
 
@@ -362,6 +388,14 @@ void func_800D50D8(s_SubCharacter* chara);
 void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void func_800D54B4(s_SubCharacter*, GsCOORDINATE2*);
+
+s32 func_800D4558(s32 arg0, s32 arg1, s32 arg2);
+
+void func_800D45C4(s_SubCharacter* arg0);
+
+void func_800D4700(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
+
+s32 func_800D48CC(s32 arg0, s32 arg1);
 
 void func_800D55C8(s_SubCharacter*);
 
