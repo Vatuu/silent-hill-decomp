@@ -12,6 +12,26 @@
     !((low) <= (val) && (val) <= (high)); \
 })
 
+#ifdef MAP5_S01
+static inline u32 GetXIdx(q19_12 x, q19_12 z)
+{
+    if (CheckRange(x + Q12(38.5f), Q12(-16.5f), Q12(16.5f)) && z > Q12(-160.0f))
+    {
+        if (z < Q12(-120.0f) || (z < Q12(-24.0f) && x < Q12(-32.0f)) ||
+            CheckRange(x + Q12(40.0f), Q12(-12.0f), Q12(12.0f)))
+        {
+            return 1;
+        }
+    }
+
+    if (CheckRange(x + Q12(-38.0f), Q12(-6.0f), Q12(6.0f)) && z < Q12(-40.0f))
+    {
+        return 2;
+    }
+
+    return 0;
+}
+#else
 static inline s32 GetXIdx(q19_12 posX)
 {
     if (CheckRange(posX + Q12(240.0f), Q12(-24.0f), Q12(24.0f)))
@@ -36,6 +56,7 @@ static inline s32 GetXIdx(q19_12 posX)
 
     return 0;
 }
+#endif
 
 static inline s32 GetYIdx(q19_12 posX, q19_12 posY)
 {
@@ -128,6 +149,31 @@ u8 Map_RoomIdxGet(s32 x, s32 z)
 
     res = sharedData_800ED430_2_s02[(xIdx * 3) + yIdx];
 
+#elif defined(MAP5_S01)
+    xIdx = GetXIdx(x, z);
+
+    // TODO: Could this be a `GetYIdx` inline like one above? No luck changing it yet.
+    yIdx = 0;
+    if (CheckRange(z + Q12(163.0f), Q12(-18.0f), Q12(18.0f)))
+    {
+        yIdx = 1;
+    }
+    else if (x > Q12(-40.0f))
+    {
+        if (x > Q12(40.0f))
+        {
+            if (CheckRange(z + Q12(36.0f), Q12(-16.0f), Q12(16.0f)))
+            {
+                yIdx = 2;
+            }
+        }
+        else if (CheckRange(z + Q12(43.5f), Q12(-12.0f), Q12(12.0f)))
+        {
+            yIdx = 2;
+        }
+    }
+
+    res = sharedData_800ED430_2_s02[(xIdx * 3) + yIdx];
 #endif
 
     // If no match in primary grid, try fallback grid.

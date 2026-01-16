@@ -485,7 +485,7 @@ INCLUDE_RODATA("maps/map5_s01/nonmatchings/map5_s01", sharedData_800CAA98_0_s01)
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800EB460
 
-INCLUDE_ASM("maps/map5_s01/nonmatchings/map5_s01", func_800EB470);
+#include "maps/shared/Map_RoomIdxGet.h" // 0x800EB470
 
 void func_800EB6B0(void) // 0x800EB6B0
 {
