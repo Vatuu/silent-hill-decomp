@@ -652,7 +652,7 @@ void Ai_Creeper_Control_5(s_SubCharacter* creeper)
 {
     creeper->flags_3E &= ~CharaFlag_Unk2;
 
-    if (creeper->health_B0 == Q12(0.0f) && func_8005C7D0(creeper) != g_SysWork.targetNpcIdx_2353)
+    if (creeper->health_B0 == Q12(0.0f) && Chara_NpcIdxGet(creeper) != g_SysWork.targetNpcIdx_2353)
     {
         creeper->health_B0  = NO_VALUE;
         creeper->field_E1_0 = 0;

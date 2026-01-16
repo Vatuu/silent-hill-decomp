@@ -1285,8 +1285,8 @@ typedef struct
     s32           screenBrightness_8;
     s32           field_C;
     q23_8         drawDistance_10; // Name from SHME, "has no effect when fog is disabled".
-    s32           fogRelated_14;   // "FogThing1" from SHME, seems to affect distance where fog begins.
-    s32           fogRelated_18;   // "FogThing2" from SHME.
+    s32           fogRelated_14;   // "FogThing1" from SHME. Affect distance where fog begins.
+    s32           fogRelated_18;   // "FogThing2" from SHME. Affect distance where fog begins.
     CVECTOR       fogColor_1C;
     s32           field_20;        // Map lighting.
     u8            field_24; // } RGB. Character color lighting.
@@ -3007,7 +3007,7 @@ void Map_WorldClearReset(void);
 
 void Map_GlobalLmFree(void);
 
-s_Texture* func_80042178(char* texName);
+s_Texture* Texture_InfoGet(char* texName);
 
 void Ipd_MapFileInfoSet(char* mapTag, e_FsFile plmIdx, s32 activeIpdCount, bool isExterior, e_FsFile ipdFileIdx, e_FsFile texFileIdx);
 
@@ -3417,7 +3417,7 @@ void func_8005B55C(GsCOORDINATE2* coord);
 
 u32 func_8005C478(s16* arg0, s32 x0, s32 y0, s32 x1, s32 y1, s32 x2, s32 y2);
 
-s32 func_8005C7D0(s_SubCharacter* chara);
+s32 Chara_NpcIdxGet(s_SubCharacter* chara);
 
 void func_8005C814(s_SubCharacter_D8* arg0, s_SubCharacter* chara);
 
@@ -3459,6 +3459,7 @@ void func_8005E70C(void);
 
 s32 func_8005E7E0(s32 arg0);
 
+// Crucial for displaying particle effects. (Not general enviroments. Blood, shoot effects)
 void func_8005E89C(void);
 
 s32 func_8005F55C(s32 arg0);
@@ -3846,6 +3847,7 @@ bool func_80062708(POLY_FT4** poly, s32 idx);
 
 bool func_80063A50(POLY_FT4** poly, s32 idx);
 
+// Important for drawing gun smoke effect.
 bool func_80064334(POLY_FT4** poly, s32 idx);
 
 /** Displays gun shooting effects. */

@@ -1871,7 +1871,7 @@ void Ai_Stalker_Control_10(s_SubCharacter* stalker)
     {
         stalker->flags_3E &= ~CharaFlag_Unk2;
 
-        if (g_SysWork.targetNpcIdx_2353 != func_8005C7D0(stalker))
+        if (g_SysWork.targetNpcIdx_2353 != Chara_NpcIdxGet(stalker))
         {
             stalker->health_B0  = NO_VALUE;
             stalker->field_E1_0 = 0;

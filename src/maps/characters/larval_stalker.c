@@ -316,7 +316,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
                         if (g_SysWork.playerWork_4C.player_0.field_40 == NO_VALUE) 
                         {
-                            g_SysWork.playerWork_4C.player_0.field_40 = func_8005C7D0(larvalStalker);
+                            g_SysWork.playerWork_4C.player_0.field_40 = Chara_NpcIdxGet(larvalStalker);
                         }
 
                         g_SysWork.playerWork_4C.player_0.attackReceived_41 = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap);
@@ -712,7 +712,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
         case LarvalStalkerControl_13:
             larvalStalker->flags_3E &= ~CharaFlag_Unk2;
 
-            if (larvalStalker->health_B0 <= Q12(0.0f) && func_8005C7D0(larvalStalker) != g_SysWork.targetNpcIdx_2353)
+            if (larvalStalker->health_B0 <= Q12(0.0f) && Chara_NpcIdxGet(larvalStalker) != g_SysWork.targetNpcIdx_2353)
             {
                 larvalStalker->health_B0 = NO_VALUE;
                 larvalStalker->field_E1_0 = 0;

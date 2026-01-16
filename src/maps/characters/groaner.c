@@ -1008,7 +1008,7 @@ void sharedFunc_800E5930_2_s00(s_SubCharacter* groaner)
 
     if (groaner->health_B0 == Q12(0.0f))
     {
-        if (g_SysWork.targetNpcIdx_2353 != func_8005C7D0(groaner))
+        if (g_SysWork.targetNpcIdx_2353 != Chara_NpcIdxGet(groaner))
         {
             groaner->health_B0  = NO_VALUE;
             groaner->field_E1_0 = 0;

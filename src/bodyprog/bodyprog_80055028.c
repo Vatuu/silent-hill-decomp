@@ -13,6 +13,10 @@
 #include "bodyprog/sound_system.h"
 #include "main/rng.h"
 
+// ========================================
+// ENVIRONMENT AND SCREEN GFX 1
+// ========================================
+
 extern s_800C4168 D_800C4168;
 
 void func_80055028(void) // 0x80055028
@@ -673,6 +677,10 @@ u8 func_80055F08(SVECTOR3* arg0, SVECTOR3* arg1, MATRIX* mat) // 0x80055F08
     return ret;
 }
 
+// ========================================
+// WORLD INITIALIZATION 2
+// ========================================
+
 void LmHeader_FixOffsets(s_LmHeader* lmHdr) // 0x800560FC
 {
     s32 i;
@@ -1080,6 +1088,10 @@ void StringCopy(char* prevStr, char* newStr) // 0x80056D64
     *(s32*)&prevStr[0] = 0;
     strncpy(prevStr, newStr, 8);
 }
+
+// ========================================
+// ENVIRONMENT AND SCREEN GFX 2 (Drawing?)
+// ========================================
 
 void func_80056D8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, GsOT* arg6, s32 arg7) // 0x80056D8C
 {
@@ -3110,6 +3122,10 @@ void func_8005AC50(s_MeshHeader* meshHdr, s_GteScratchData2* scratchData, GsOT_T
     GsOUT_PACKET_P = poly.packet;
 }
 
+// ========================================
+// TEXTURE HANDLING
+// ========================================
+
 void Texture_Init(s_Texture* tex, char* texName, u8 tPage0, u8 tPage1, s32 u, s32 v, s16 clutX, s16 clutY) // 0x8005B1A0
 {
     tex->imageDesc_0.tPage[0] = tPage0;
@@ -3296,10 +3312,19 @@ void func_8005B55C(GsCOORDINATE2* coord) // 0x8005B55C
 
 INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_80055028", func_8005B62C); // 0x8005B62C
 
+// ========================================
+// UNUSED (Read below)
+// ========================================
+// Split from something related to debug feature that got cut?
+
 void func_8005BF0C(s16 unused, s16 x, s16 y) // 0x8005BF0C
 {
     Gfx_DebugStringPosition(x, y);
 }
+
+// ========================================
+// MATHS?
+// ========================================
 
 q3_12 func_8005BF38(q3_12 angle) // 0x8005BF38
 {
@@ -3541,7 +3566,11 @@ s32 func_8005C7B0(s32 arg0) // 0x8005C7B0
     return D_800AE520[arg0 >> 5];
 }
 
-s32 func_8005C7D0(s_SubCharacter* chara) // 0x8005C7D0
+// ========================================
+// COMBAT 1
+// ========================================
+
+s32 Chara_NpcIdxGet(s_SubCharacter* chara) // 0x8005C7D0
 {
     s32             i;
     s_SubCharacter* curNpc;
@@ -3665,7 +3694,7 @@ s32 func_8005CB20(s_SubCharacter* chara, s_800C4590* arg1, q3_12 offsetX, q3_12 
 
     sinHeadingAngle = chara->field_34;
     offset.vx += offsetX;
-    offset.vy = Q12_MULT_PRECISE(g_DeltaTime0, sinHeadingAngle);
+    offset.vy  = Q12_MULT_PRECISE(g_DeltaTime0, sinHeadingAngle);
     offset.vz += offsetZ;
 
     ret = func_80069B24(&sp10, &offset, chara);
@@ -3774,6 +3803,10 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
 
     #undef npc
 }
+
+// ========================================
+// 3D SOUND
+// ========================================
 
 s32 func_8005D86C(s32 arg0) // 0x8005D86C
 {
@@ -4043,6 +4076,10 @@ void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, q19_12 falloff, s8 pitc
 
     Sd_SfxAttributesUpdate(sfxId, balance, finalVol, pitch);
 }
+
+// ========================================
+// ENVIRONMENT EFFECTS HANDLING
+// ========================================
 
 void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
 {
@@ -4815,7 +4852,7 @@ void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x
         if (i != 24)
         {
             D_800C42E8[i].field_0 = 1;
-            D_800C42E8[i].field_1 = func_8005C7D0(chara);
+            D_800C42E8[i].field_1 = Chara_NpcIdxGet(chara);
             D_800C42E8[i].field_4 = chara->position_18.vx + chara->field_D8.offsetX_0;
             D_800C42E8[i].field_2 = chara->position_18.vy + chara->field_C8.field_6;
             D_800C42E8[i].field_8 = chara->position_18.vz + chara->field_D8.offsetZ_2;
@@ -5736,7 +5773,7 @@ void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) 
             g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
             g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 = arg3;
             g_MapOverlayHeader.unkTable1_4C[idx].field_B             = Rng_GenerateUInt(4, 7);
-            g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = func_8005C7D0(chara);
+            g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = Chara_NpcIdxGet(chara);
             g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0    = Rng_GenerateUInt(0, 8191);
         }
 
@@ -6887,6 +6924,10 @@ void func_80066184(void) // 0x80066184
     GsOUT_PACKET_P = (PACKET*)++ptr->field_0;
 }
 
+// ========================================
+// MAP
+// ========================================
+
 void func_80066D90(void) // 0x80066D90
 {
     s32       i;
@@ -7841,6 +7882,10 @@ INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80055028", D_80028B34);
 
 INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_80055028", func_800692A4); // 0x800692A4
 
+// ========================================
+// ENVIRONMENT AND SCREEN GFX 3
+// ========================================
+
 void func_800697EC(void) // 0x800697EC
 {
     func_80069820(1);
@@ -7897,6 +7942,10 @@ void func_80069860(s32 arg0, s32 arg1, s_func_8006F8FC* arg2) // 0x80069860
         }
     }
 }
+
+// ========================================
+// COLLISIONS HANDLING
+// ========================================
 
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
 {
@@ -10152,6 +10201,10 @@ void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2) // 0x800
     arg0->field_24     = arg0->positionZ_1C + arg0->field_C.vz;
 }
 
+// ========================================
+// COMBAT 2
+// ========================================
+
 bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* pos0, VECTOR3* pos1) // 0x8006D90C
 {
     s32     scratchPrev;
@@ -11260,6 +11313,10 @@ void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8
 
     *outZ = posZ - maxZ;
 }
+
+// ========================================
+// CHARACTERS ANIMATION RELATED
+// ========================================
 
 q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0x8006F99C
 {

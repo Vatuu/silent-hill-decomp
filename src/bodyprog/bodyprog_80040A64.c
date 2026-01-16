@@ -13,7 +13,9 @@
  * - Animation funcs
  */
 
-extern s_800C4168 const D_800C4168;
+// ========================================
+// SOUND
+// ========================================
 
 s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
 {
@@ -48,6 +50,10 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
 
 void func_80040B6C(void) {} // 0x80040B6C
 
+// ========================================
+// CHARACTERS
+// ========================================
+
 bool func_80040B74(e_CharacterId charaId) // 0x80040B74
 {
     s32 i;
@@ -62,6 +68,10 @@ bool func_80040B74(e_CharacterId charaId) // 0x80040B74
 
     return false;
 }
+
+// ========================================
+// WORLD RENDERING
+// ========================================
 
 void func_80040BAC(void) // 0x80040BAC
 {
@@ -463,6 +473,10 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     AddPrim(&arg0->org[1], &D_800BFBF0[g_ActiveBufferIdx]);
 }
 
+// ========================================
+// WORLD INITIALIZATION 1
+// ========================================
+
 u32 Fs_QueueEntryLoadStatusGet(s32 queueIdx) // 0x80041ADC
 {
     if (queueIdx == NO_VALUE)
@@ -691,7 +705,7 @@ void Map_GlobalLmFree(void) // 0x800420FC
     Lm_Init(&g_Map.globalLm_138, g_Map.globalLm_138.lmHdr_0);
 }
 
-s_Texture* func_80042178(char* texName) // 0x80042178
+s_Texture* Texture_InfoGet(char* texName) // 0x80042178
 {
     s_Texture* tex;
 
@@ -2245,6 +2259,10 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     model->anim_4.keyframeIdx_8 = FP_FROM(newTime, Q12_SHIFT);
 }
 
+// ========================================
+// BONES AND SKELETONS
+// ========================================
+
 void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q3_12 rotY) // 0x80044F14
 {
     *(q3_12*)0x1F800004 = rotZ;
@@ -2483,6 +2501,8 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
         modelIdx = Bone_ModelIdxGet(arg1, false);
     }
 }
+
+extern s_800C4168 const D_800C4168;
 
 void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images) // 0x80045534
 {

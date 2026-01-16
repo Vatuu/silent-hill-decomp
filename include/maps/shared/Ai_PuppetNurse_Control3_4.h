@@ -24,7 +24,7 @@ void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor)
     if (animStatus == ANIM_STATUS(PuppetNurseAnim_14, true) || animStatus == ANIM_STATUS(PuppetNurseAnim_5, true) ||
         animStatus == ANIM_STATUS(PuppetNurseAnim_5, false) || animStatus == ANIM_STATUS(PuppetNurseAnim_15, true))
     {
-        if (func_8005C7D0(nurse) != g_SysWork.targetNpcIdx_2353 && nurse->health_B0 == Q12(0.0f))
+        if (Chara_NpcIdxGet(nurse) != g_SysWork.targetNpcIdx_2353 && nurse->health_B0 == Q12(0.0f))
         {
             nurse->health_B0 = NO_VALUE;
             nurse->field_E1_0 = 0;

@@ -1063,7 +1063,7 @@ void Ai_Romper_Control_8(s_SubCharacter* romper)
 {
     if (romper->health_B0 == Q12(0.0f))
     {
-        if (g_SysWork.targetNpcIdx_2353 != func_8005C7D0(romper))
+        if (g_SysWork.targetNpcIdx_2353 != Chara_NpcIdxGet(romper))
         {
             romper->health_B0  = NO_VALUE;
             romper->field_E1_0 = 0;

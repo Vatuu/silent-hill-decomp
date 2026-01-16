@@ -531,7 +531,7 @@ typedef enum _AnimFlags
     AnimFlag_Visible  = 1 << 1
 } e_AnimFlags;
 
-/** @brief State IDs used by the main game loop. The values are used as indices into the 0x800A977C function array. */
+/** @brief State IDs used by the main game loop. The values are used as indices into the `g_GameStateUpdateFuncs` function array. */
 typedef enum _GameState
 {
     GameState_Init                = 0,

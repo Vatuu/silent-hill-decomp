@@ -38,7 +38,7 @@ void func_800D078C(void) // 0x800D078C
     u16        y;
     s_Texture* tex;
 
-    tex    = func_80042178("SPUM602F");
+    tex    = Texture_InfoGet("SPUM602F");
     tpage1 = tex->imageDesc_0.tPage[1];
     x      = tex->imageDesc_0.clutX;
     y      = tex->imageDesc_0.clutY;
@@ -1431,7 +1431,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* arg1, GsCOORDINATE2*
     {
         if (twinfeeler->health_B0 == 0)
         {
-            if (func_8005C7D0(twinfeeler) != g_SysWork.targetNpcIdx_2353)
+            if (Chara_NpcIdxGet(twinfeeler) != g_SysWork.targetNpcIdx_2353)
             {
                 twinfeeler->health_B0  = -1;
                 twinfeeler->field_E1_0 = 0;

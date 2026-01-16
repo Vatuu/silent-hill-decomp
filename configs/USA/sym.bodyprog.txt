@@ -94,10 +94,6 @@ hack_D_80028A18_fix                         = 0x80028A18; // type:s32
 //--------------------------------------------------------------------------
 //--- PA: 0x004BF0   VA: 0x80029750   subsegment: .rodata, bodyprog_800706E4
 //--------------------------------------------------------------------------
-
-//--------------------------------------------------------------------------
-//--- PA: 0x004C58   VA: 0x800297B8   subsegment: .rodata, bodyprog_80070B84
-//--------------------------------------------------------------------------
 hack_D_8002A844_fix                         = 0x8002A844; // type:s32
 
 //---------------------------------------------------------------------
@@ -496,6 +492,7 @@ Ipd_ActiveMapChunksClear                    = 0x80041FF0; // type:func
 Ipd_TexturesRefClear                        = 0x8004201C; // type:func
 Map_WorldClearReset                         = 0x800420C0; // type:func
 Map_GlobalLmFree                            = 0x800420FC; // type:func
+Texture_InfoGet                             = 0x80042178;
 Ipd_MapFileInfoSet                          = 0x800421D8; // type:func
 Ipd_ActiveChunksClear                       = 0x80042300; // type:func
 Map_MakeIpdGrid                             = 0x800423F4; // type:func
@@ -739,6 +736,7 @@ Material_TimFileNameGet                     = 0x8005B3BC; // type:func
 Textures_ActiveTex_CountReset               = 0x8005B46C; // type:func
 Textures_ActiveTex_PutTextures              = 0x8005B474; // type:func
 Textures_ActiveTex_FindTexture              = 0x8005B4BC; // type:func
+Chara_NpcIdxGet                             = 0x8005C7D0;
 Map_EffectTexturesLoad                      = 0x8005E0DC; // type:func
 func_8005E89C                               = 0x8005E89C;
 GameState_MapScreen_Update                  = 0x80066EB0; // type:func
@@ -748,10 +746,6 @@ Chara_HeadingAngleGet                       = 0x8006FAFC; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, bodyprog_800706E4
-//--------------------------------------------------------------------
-
-//--------------------------------------------------------------------
-//--- PA: 0x04C024   VA: 0x80070B84   subsegment: c, bodyprog_80070B84
 //--------------------------------------------------------------------
 Player_CharaTurn_0                          = 0x800711C4; // type:func
 Player_CharaTurn_1                          = 0x80071224; // type:func
