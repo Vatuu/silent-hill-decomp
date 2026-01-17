@@ -323,7 +323,124 @@ s32 func_800D0F40(s32 arg0, s32 arg1, s32 arg2) // 0x800D0F40
     return D_800DAA58[index];
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D0FD4);
+void func_800D0FD4(s32* ord, void* arg1, u8* arg2, MATRIX* arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 abr) // 0x800D0FD4
+{
+    SVECTOR   vtx = { 0 };
+    s32       sxy;
+    s32       w;
+    s32       h;
+    s32       x;
+    s32       y;
+    s32       xbase;
+    s32       ybase;
+    s32       p;
+    s32       flag;
+    s32       col;
+    s32*      ot;
+    s32       depth;
+    s16       sxy_l;
+    s16       sxy_h;
+    s32       sz;
+    PACKET*   pkt;
+    s32       i;
+    s32       j;
+    s32       col0;
+    s32       col1;
+    s32       col2;
+    s32       col3;
+    DR_TPAGE* tpage;
+    POLY_G4*  poly;
+    u8*       ptr0;
+    u8*       ptr1;
+
+    col = D_800DAA58[0];
+    sz  = RotTransPers(&vtx, &sxy, &p, &flag);
+
+    /* divide overflow */
+    if (flag & 0x20000)
+    {
+        return;
+    }
+
+    pkt = GsOUT_PACKET_P;
+    ot  = &ord[sz >> 1];
+
+    sxy_l = sxy;
+    sxy_h = sxy >> 16;
+    depth = ReadGeomScreen();
+
+    w = (depth * 8) / sz + 1;
+    h = (depth * 12) / sz + 1;
+
+    xbase = sxy_l - (arg5 / 2) * w;
+    ybase = sxy_h - arg6 * h;
+
+    for (i = 1; i < arg6 + 1; i++)
+    {
+        col3 = col;
+        col1 = col3;
+
+        ptr0 = arg2 + ((i - 1) * arg7);
+        ptr0 = ptr0 + 1;
+        ptr1 = arg2 + (i * arg7);
+        ptr1 = ptr1 + 1;
+
+        y = ((i - 1) * h) + ybase;
+
+        for (j = 1; j < arg5 + 1; j++)
+        {
+            poly = pkt;
+
+            col0 = col1;
+            col2 = col3;
+
+            if (j == arg5)
+            {
+                col3 = col;
+                col1 = col3;
+            }
+            else
+            {
+                col1 = func_800D0F40(*ptr0, arg4, abr);
+
+                if (i == arg6)
+                {
+                    col3 = col;
+                }
+                else
+                {
+                    col3 = func_800D0F40(*ptr1, arg4, abr);
+                }
+            }
+
+            if (col0 != col || col1 != col0 || col2 != col1 || col3 != col2)
+            {
+                x = (j - 1) * w + xbase;
+                setXYWH(poly, x, y, w, h);
+
+                *(s32*)&poly->r0 = col0;
+                *(s32*)&poly->r1 = col1;
+                *(s32*)&poly->r2 = col2;
+                *(s32*)&poly->r3 = col3;
+
+                setPolyG4(poly);
+                setSemiTrans(poly, 1);
+                addPrim(ot, pkt);
+            }
+
+            pkt += sizeof(POLY_G4);
+            ptr0++;
+            ptr1++;
+        }
+    }
+
+    tpage = pkt;
+
+    setDrawTPage(tpage, 0, 1, getTPage(0, abr, 320, 0));
+    addPrim(ot, tpage);
+    pkt           += sizeof(DR_TPAGE);
+    GsOUT_PACKET_P = pkt;
+}
 
 void func_800D13B4(u8* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800D13B4
 {
@@ -389,7 +506,50 @@ void func_800D1478(SVECTOR* arg0, s32 arg1, q19_12 headingAgle, s32 mode, SVECTO
     arg0->vz += Q12_MULT_PRECISE(z, g_DeltaTime0);
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D1604);
+void func_800D1604(GsOT_TAG* ot, int arg1) // 0x800D1604
+{
+    SVECTOR     sp28;
+    SVECTOR     sp30;
+    s_800DF580* iter;
+    int         i;
+    int         tick;
+    int         temp_s4;
+
+    sp28 = D_800CA788;
+
+    memset(&sp30, 0, sizeof(sp30));
+
+    iter = D_800DF580;
+
+    for (i = 0; i < 16; iter++, i++)
+    {
+        if (iter->field_8 <= 0)
+        {
+            continue;
+        }
+
+        tick = iter->field_C8 ? iter->field_C8(iter) : 1;
+
+        if (tick)
+        {
+            func_800D1478(&iter->field_14, iter->field_8, arg1, iter->field_4, &iter->field_C);
+            func_800D0D6C(&iter->field_1C, &iter->field_14, 0);
+
+            temp_s4 = func_80055F08(&sp30, &sp28, &iter->field_1C);
+
+            func_800D0CA0(0, &iter->field_14);
+
+            if (g_DeltaTime0 != 0)
+            {
+                func_800D13B4(&iter->field_40[1], 12, 11, iter->field_8);
+                func_800D0EC0(&iter->field_40[1], 12, 11);
+            }
+
+            func_800D0FD4(ot, &iter->field_14, &iter->field_40[1], &iter->field_1C, FP_MULTIPLY_PRECISE(temp_s4, iter->field_CC, 12), 11, 9, 12, iter->field_3C);
+            iter->field_8 -= g_DeltaTime0;
+        }
+    }
+}
 
 void func_800D17FC(void) // 0x800D17FC
 {

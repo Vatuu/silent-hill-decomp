@@ -86,7 +86,7 @@ typedef struct
     s16     field_10;
     s8      unk_12[2];
     SVECTOR field_14;
-    s8      unk_1C[32];
+    MATRIX  field_1C;
     s32     field_3C;
     u8      field_40[133]; // Type assumed.
     s32     (*field_C8)(struct s_800DF580*);
@@ -227,6 +227,8 @@ extern u8 D_800DB190[];
 extern u8 D_800DB1A8[];
 
 extern u8 D_800DB220[][3];
+
+extern SVECTOR D_800CA788;
 
 void func_800D078C(void);
 
@@ -463,5 +465,9 @@ void func_800D9824(void);
 void Map_WorldObjectsInit(void);
 
 void func_800D9BB0(void);
+
+void func_800D0FD4(s32* ord, void* arg1, u8* arg2, MATRIX* arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 abr);
+
+void func_800D1604(GsOT_TAG* ot, int arg1);
 
 #endif
