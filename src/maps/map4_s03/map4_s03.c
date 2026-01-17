@@ -341,13 +341,13 @@ void func_800D0FD4(s32* ord, void* arg1, u8* arg2, MATRIX* arg3, s32 arg4, s32 a
     s16       sxy_l;
     s16       sxy_h;
     s32       sz;
-    PACKET*   pkt;
     s32       i;
     s32       j;
     s32       col0;
     s32       col1;
     s32       col2;
     s32       col3;
+    PACKET*   packet;
     DR_TPAGE* tpage;
     POLY_G4*  poly;
     u8*       ptr0;
@@ -356,13 +356,13 @@ void func_800D0FD4(s32* ord, void* arg1, u8* arg2, MATRIX* arg3, s32 arg4, s32 a
     col = D_800DAA58[0];
     sz  = RotTransPers(&vtx, &sxy, &p, &flag);
 
-    /* divide overflow */
+    // Divide overflow.
     if (flag & 0x20000)
     {
         return;
     }
 
-    pkt = GsOUT_PACKET_P;
+    packet = GsOUT_PACKET_P;
     ot  = &ord[sz >> 1];
 
     sxy_l = sxy;
@@ -389,7 +389,7 @@ void func_800D0FD4(s32* ord, void* arg1, u8* arg2, MATRIX* arg3, s32 arg4, s32 a
 
         for (j = 1; j < arg5 + 1; j++)
         {
-            poly = pkt;
+            poly = packet;
 
             col0 = col1;
             col2 = col3;
@@ -425,21 +425,21 @@ void func_800D0FD4(s32* ord, void* arg1, u8* arg2, MATRIX* arg3, s32 arg4, s32 a
 
                 setPolyG4(poly);
                 setSemiTrans(poly, 1);
-                addPrim(ot, pkt);
+                addPrim(ot, packet);
             }
 
-            pkt += sizeof(POLY_G4);
+            packet += sizeof(POLY_G4);
             ptr0++;
             ptr1++;
         }
     }
 
-    tpage = pkt;
+    tpage = packet; 
 
     setDrawTPage(tpage, 0, 1, getTPage(0, abr, 320, 0));
     addPrim(ot, tpage);
-    pkt           += sizeof(DR_TPAGE);
-    GsOUT_PACKET_P = pkt;
+    packet           += sizeof(DR_TPAGE);
+    GsOUT_PACKET_P = packet;
 }
 
 void func_800D13B4(u8* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800D13B4
@@ -728,28 +728,28 @@ void func_800D1C48(void) // 0x800D1C48
     }
 }
 
-void func_800D1D3C(GsOT_TAG* arg0, SVECTOR3* arg1, MATRIX* arg2, s32 arg3) // 0x800D1D3C
+void func_800D1D3C(GsOT_TAG* tag, SVECTOR3* arg1, MATRIX* arg2, s32 arg3) // 0x800D1D3C
 {
-    SVECTOR sp28;
-    SVECTOR sp30;
-    SVECTOR sp38;
-    SVECTOR sp40;
-    long sp48;
-    long sp4C;
-    long sp50;
-    long sp54;
-    long sp58;
-    long sp5C;
-    long sp60;
-    s32 temp_a3;
-    s32 temp_t0;
-    s32 temp_t1;
-    s32 temp_v0_3;
-    s32 temp_v1_2;
-    u32 temp_a1;
-    s32 temp_a2;
-    s32 temp_v0;
-    s32 var_a1;
+    SVECTOR   sp28;
+    SVECTOR   sp30;
+    SVECTOR   sp38;
+    SVECTOR   sp40;
+    long      sp48;
+    long      sp4C;
+    long      sp50;
+    long      sp54;
+    long      sp58;
+    long      sp5C;
+    long      sp60;
+    s32       temp_a3;
+    s32       temp_t0;
+    s32       temp_t1;
+    s32       temp_v0_3;
+    s32       temp_v1_2;
+    u32       temp_a1;
+    s32       temp_a2;
+    s32       temp_v0;
+    s32       var_a1;
     GsOT_TAG* temp_a1_2;
     POLY_FT4* poly;
     POLY_FT4* poly2;
@@ -794,7 +794,7 @@ void func_800D1D3C(GsOT_TAG* arg0, SVECTOR3* arg1, MATRIX* arg2, s32 arg3) // 0x
     temp_a1 = RotTransPers4(&sp28, &sp30, &sp38, &sp40, &sp4C, &sp50, &sp54, &sp58, &sp5C, &sp60);
     poly = poly2 = (POLY_FT4*) GsOUT_PACKET_P;
 
-    if ((sp60 & 0x20000))
+    if (sp60 & 0x20000)
     {
         return;
     }
@@ -817,7 +817,7 @@ void func_800D1D3C(GsOT_TAG* arg0, SVECTOR3* arg1, MATRIX* arg2, s32 arg3) // 0x
     setPolyFT4(poly2);
     setSemiTrans(poly2, true);
 
-    temp_a1_2 = &arg0[temp_a1 >> 1];
+    temp_a1_2 = &tag[temp_a1 >> 1];
     addPrim(&temp_a1_2[25], poly2);
 
     poly = poly2 + 1;
@@ -839,7 +839,7 @@ void func_800D1D3C(GsOT_TAG* arg0, SVECTOR3* arg1, MATRIX* arg2, s32 arg3) // 0x
     setPolyFT4(poly);
     setSemiTrans(poly, true);
 
-    temp_a1_2 = &arg0[temp_a1 >> 1];
+    temp_a1_2 = &tag[temp_a1 >> 1];
     addPrim(&temp_a1_2[25], poly);
 
     poly++;
@@ -2068,12 +2068,15 @@ void func_800D4248(s_SubCharacter* arg0) // 0x800D4248
 {
     if (arg0->model_0.stateStep_3 == 0)
     {
-        arg0->position_18.vx  = 0x83000;
-        arg0->position_18.vz  = 0x8C000;
-        arg0->rotation_24.vy  = 0x400;
-        arg0->headingAngle_3C = 0x400;
+        arg0->position_18.vx  = Q12(131.0f);
+        arg0->position_18.vz  = Q12(140.0f);
+        arg0->rotation_24.vy  = FP_ANGLE(90.0f);
+        arg0->headingAngle_3C = FP_ANGLE(90.0f);
+
         func_800D3504(arg0);
+
         arg0->properties_E4.twinfeeler.field_FC = 0xB33;
+
         Savegame_EnemyStateUpdate(arg0);
         arg0->model_0.stateStep_3++;
     }
@@ -2084,32 +2087,36 @@ void func_800D4248(s_SubCharacter* arg0) // 0x800D4248
             if (arg0->properties_E4.twinfeeler.field_FC < 0)
             {
                 func_800D3B98(arg0);
-                arg0->model_0.anim_4.status_0 = 0x2E;
+
+                arg0->model_0.anim_4.status_0 = 46;
                 arg0->moveSpeed_38            = 0x1599;
+
                 func_800D3AE0(arg0, 5);
                 arg0->model_0.stateStep_3++;
             }
             break;
 
         case 2:
-            if (arg0->model_0.anim_4.status_0 == 0x24)
+            if (arg0->model_0.anim_4.status_0 == 36)
             {
                 arg0->moveSpeed_38 = 0xE34;
                 func_800D3AE0(arg0, 1);
+
                 arg0->model_0.anim_4.status_0 = 4;
                 arg0->model_0.stateStep_3++;
             }
             break;
 
         case 3:
-            if (arg0->model_0.anim_4.status_0 == 0x24)
+            if (arg0->model_0.anim_4.status_0 == 36)
             {
-                Sd_SfxStop(0x617);
-                arg0->model_0.controlState_2 = 0xB;
+                Sd_SfxStop(1559);
+                arg0->model_0.controlState_2 = 11;
                 arg0->model_0.stateStep_3    = 1;
             }
             break;
     }
+
     arg0->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
 }
 
@@ -2132,11 +2139,10 @@ void func_800D43AC(s_SubCharacter* arg0, s32 arg1) // 0x800D43AC
                                    g_SysWork.playerWork_4C.player_0.position_18.vz - arg0->position_18.vz) -
                             arg0->rotation_24.vy);
 
-    if ((u32)ABS(temp_v0) > 0x38) // TODO: needs casting to u32.
+    if ((u32)ABS(temp_v0) > 0x38) // TODO: Needs casting to `u32`.
     {
         temp_v0_2 = Q12_MULT_PRECISE(g_DeltaTime0, var_s1);
-
-        if (temp_v0 > 0)
+        if (temp_v0 > FP_ANGLE(0.0f))
         {
             arg0->rotation_24.vy += temp_v0_2;
         }
@@ -2186,7 +2192,7 @@ s32 func_800D4488(VECTOR3* arg0, s32 arg1) // 0x800D4488
     return temp_v0;
 }
 
-s32 func_800D4558(s32 arg0, s32 arg1, s32 arg2) // 0x800D4558
+s32 func_800D4558(q19_12 angle, s32 arg1, s32 arg2) // 0x800D4558
 {
     s_func_800700F8_2 sp10;
     VECTOR3           sp30;
@@ -2196,9 +2202,9 @@ s32 func_800D4558(s32 arg0, s32 arg1, s32 arg2) // 0x800D4558
     sp40.vy = -0x4CC;
     sp40.vz = arg2;
 
-    sp30.vx = Math_Sin(arg0);
-    sp30.vy = 0;
-    sp30.vz = Math_Cos(arg0);
+    sp30.vx = Math_Sin(angle);
+    sp30.vy = Q12(0.0f);
+    sp30.vz = Math_Cos(angle);
 
     if (func_8006DC18(&sp10, &sp40, &sp30))
     {
@@ -2230,10 +2236,12 @@ void func_800D45C4(s_SubCharacter* arg0)
             {
                 func_800D3B68(arg0);
                 func_800D3B98(arg0);
+
                 arg0->moveSpeed_38            = 0x1CCC;
                 arg0->model_0.anim_4.status_0 = 2;
+
                 func_800D3AE0(arg0, 5);
-                arg0->model_0.stateStep_3 += 1;
+                arg0->model_0.stateStep_3++;
             }
             break;
 
@@ -2244,10 +2252,10 @@ void func_800D45C4(s_SubCharacter* arg0)
 
     chara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
 
-    if (arg0->model_0.anim_4.status_0 == 0x24)
+    if (arg0->model_0.anim_4.status_0 == 36)
     {
         func_800D4558(arg0->rotation_24.vy, arg0->position_18.vx, arg0->position_18.vz);
-        arg0->model_0.controlState_2 = 0xA;
+        arg0->model_0.controlState_2 = 10;
         arg0->model_0.stateStep_3    = 0;
     }
 }
@@ -2284,10 +2292,12 @@ void func_800D4700(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D4700
             {
                 func_800D3B68(arg0);
                 func_800D3B98(arg0);
+
                 arg0->moveSpeed_38            = 0x1CCC;
                 arg0->model_0.anim_4.status_0 = 2;
+
                 func_800D3AE0(arg0, 5);
-                arg0->model_0.stateStep_3 += 1;
+                arg0->model_0.stateStep_3++;
             }
             break;
 
@@ -2296,14 +2306,16 @@ void func_800D4700(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D4700
             {
                 func_800D3AE0(arg0, 3);
                 Vw_CoordHierarchyMatrixCompute(&arg1[14], &sp10);
-                sp30.vx = sp10.t[0] * 0x10;
-                sp30.vy = sp10.t[1] * 0x10;
-                sp30.vz = sp10.t[2] * 0x10;
+
+                sp30.vx = Q8_TO_Q12(sp10.t[0]);
+                sp30.vy = Q8_TO_Q12(sp10.t[1]);
+                sp30.vz = Q8_TO_Q12(sp10.t[2]);
                 sp40.vx = g_SysWork.playerWork_4C.player_0.position_18.vx;
-                sp40.vy = g_SysWork.playerWork_4C.player_0.position_18.vy - 0x1000;
+                sp40.vy = g_SysWork.playerWork_4C.player_0.position_18.vy - Q12(1.0f);
                 sp40.vz = g_SysWork.playerWork_4C.player_0.position_18.vz;
+
                 func_800D46E0(&sp30, &sp40);
-                arg0->model_0.stateStep_3 += 1;
+                arg0->model_0.stateStep_3++;
             }
 
         case 3:
@@ -2311,15 +2323,16 @@ void func_800D4700(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D4700
             break;
     }
 
-    if (arg0->model_0.anim_4.status_0 == 0x24)
+    if (arg0->model_0.anim_4.status_0 == 36)
     {
-        arg0->model_0.controlState_2 = 0xA;
+        arg0->model_0.controlState_2 = 10;
         arg0->model_0.stateStep_3    = 0;
     }
+
     chara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
 }
 
-s32 func_800D48CC(s32 arg0, s32 arg1) // 0x800D48CC
+bool func_800D48CC(s32 arg0, s32 arg1) // 0x800D48CC
 {
     s32 temp_a0;
     s32 temp_a1;
@@ -2330,11 +2343,11 @@ s32 func_800D48CC(s32 arg0, s32 arg1) // 0x800D48CC
     if (temp_a0 > 0 && temp_a0 < D_800DB210.field_8 &&
         temp_a1 > 0 && temp_a1 < D_800DB210.field_C)
     {
-        return 0;
+        return false;
     }
     else
     {
-        return 1;
+        return true;
     }
 }
 
@@ -2385,74 +2398,78 @@ void func_800D4A34(s_SubCharacter* chara) // 0x800D4A34
 void func_800D4A78(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {
     MATRIX  sp10;
-    VECTOR3 sp30;
+    VECTOR3 pos; // Q19.12
 
     if (chara->model_0.stateStep_3 == 0)
     {
         func_800D3AE0(chara, 3);
-        chara->model_0.anim_4.status_0 = 0x18;
+        chara->model_0.anim_4.status_0 = 24;
 
         Vw_CoordHierarchyMatrixCompute(&coords[14], &sp10);
 
-        sp30.vx = sp10.t[0] << 4;
-        sp30.vy = sp10.t[1] << 4;
-        sp30.vz = sp10.t[2] << 4;
+        pos.vx = Q8_TO_Q12(sp10.t[0]);
+        pos.vy = Q8_TO_Q12(sp10.t[1]);
+        pos.vz = Q8_TO_Q12(sp10.t[2]);
 
-        func_800D46E0(&sp30, &g_SysWork.playerWork_4C.player_0.position_18);
+        func_800D46E0(&pos, &g_SysWork.playerWork_4C.player_0.position_18);
 
         chara->moveSpeed_38 = 0;
         chara->model_0.stateStep_3++;
     }
 
-    if (chara->model_0.anim_4.status_0 == 0x24)
+    if (chara->model_0.anim_4.status_0 == 36)
     {
         chara->model_0.controlState_2 = 10;
         chara->model_0.stateStep_3    = 0;
     }
 }
 
-void func_800D4B28(s_SubCharacter* arg0)
+void func_800D4B28(s_SubCharacter* chara)
 {
-    s_SubCharacter* chara;
+    s_SubCharacter* localChara;
 
-    chara = arg0;
+    localChara = chara;
 
-    if (arg0->model_0.stateStep_3 == 0)
+    if (chara->model_0.stateStep_3 == 0)
     {
-        func_800D3528(arg0);
-        arg0->properties_E4.twinfeeler.field_FC = 0;
-        func_800D3AE0(arg0, 1);
-        arg0->model_0.anim_4.status_0 = 4;
-        arg0->moveSpeed_38            = 0xE34;
-        arg0->model_0.stateStep_3++;
+        func_800D3528(chara);
+
+        chara->properties_E4.twinfeeler.field_FC = 0;
+
+        func_800D3AE0(chara, 1);
+
+        chara->model_0.anim_4.status_0 = 4;
+        chara->moveSpeed_38            = 0xE34;
+        chara->model_0.stateStep_3++;
     }
 
-    if (arg0->model_0.stateStep_3 == 1 && arg0->properties_E4.twinfeeler.field_FC >= 0x1000)
+    if (chara->model_0.stateStep_3 == 1 && chara->properties_E4.twinfeeler.field_FC >= Q12(1.0f))
     {
-        func_800D3B74(arg0);
-        arg0->model_0.stateStep_3++;
+        func_800D3B74(chara);
+        chara->model_0.stateStep_3++;
     }
 
-    if (arg0->model_0.anim_4.status_0 == 0x24)
+    if (chara->model_0.anim_4.status_0 == 36)
     {
-        Sd_SfxStop(0x617);
-        arg0->model_0.controlState_2 = 3;
-        arg0->model_0.stateStep_3    = 0;
+        Sd_SfxStop(1559);
+        chara->model_0.controlState_2 = 3;
+        chara->model_0.stateStep_3    = 0;
     }
 
-    chara->properties_E4.twinfeeler.field_FC += g_DeltaTime0;
+    localChara->properties_E4.twinfeeler.field_FC += g_DeltaTime0;
 }
 
-s32 func_800D4C0C(u32 row, s32 col) // 0x800D4C0C
+bool func_800D4C0C(u32 row, s32 col) // 0x800D4C0C
 {
     if (row < 9 && col >= 0 && col < 5)
     {
         if ((D_800DB1A8[row * 5 + col] & 1) == 0)
         {
-            return 1;
+            return true;
         }
     }
-    return 0;
+
+    return false;
 }
 
 u16 func_800D4C5C(u8* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800D4C5C
@@ -2601,48 +2618,49 @@ s32 func_800D4E78(s32 arg0, s32 arg1) // 0x800D4E78
     return func_800D4E00(var_s0, var_s2, 7 - func_800D4DD8());
 }
 
-void func_800D4FC0(s_SubCharacter* arg0) // 0x800D4FC0
+void func_800D4FC0(s_SubCharacter* chara) // 0x800D4FC0
 {
     s16 temp_v0;
     s16 var_v0;
     s16 var_v0_2;
 
-    if (arg0->model_0.stateStep_3 == 0)
+    if (chara->model_0.stateStep_3 == 0)
     {
-        arg0->properties_E4.twinfeeler.field_FC = 0x2000;
-        arg0->model_0.anim_4.status_0           = 0x10;
-        arg0->model_0.stateStep_3              += 1;
+        chara->properties_E4.twinfeeler.field_FC = Q12(2.0f);
+        chara->model_0.anim_4.status_0           = 16;
+        chara->model_0.stateStep_3++;
     }
 
-    func_800D3CBC(arg0);
+    func_800D3CBC(chara);
 
-    if (arg0->properties_E4.twinfeeler.field_FC < 0)
+    if (chara->properties_E4.twinfeeler.field_FC < 0)
     {
-        temp_v0 = func_800D4488(&arg0->position_18,
+        temp_v0 = func_800D4488(&chara->position_18,
                                 func_800D4E78(g_SysWork.playerWork_4C.player_0.moveSpeed_38, g_SysWork.playerWork_4C.player_0.headingAngle_3C) & 0xFFFF);
 
-        arg0->headingAngle_3C = temp_v0;
-        arg0->rotation_24.vy  = temp_v0;
+        chara->headingAngle_3C = temp_v0;
+        chara->rotation_24.vy  = temp_v0;
 
         var_v0 = func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx -
-                                           arg0->position_18.vx,
-                                       g_SysWork.playerWork_4C.player_0.position_18.vz - arg0->position_18.vz) -
+                                           chara->position_18.vx,
+                                       g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
                                 temp_v0));
 
         var_v0 = ABS(var_v0);
 
         if (var_v0 >= 0x200)
         {
-            arg0->model_0.controlState_2 = 5;
+            chara->model_0.controlState_2 = 5;
         }
         else
         {
-            arg0->model_0.controlState_2 = 6;
+            chara->model_0.controlState_2 = 6;
         }
 
-        arg0->model_0.stateStep_3 = 0;
+        chara->model_0.stateStep_3 = 0;
     }
-    arg0->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
+
+    chara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
 }
 
 void func_800D50D8(s_SubCharacter* chara) // 0x800D50D8
@@ -2661,94 +2679,97 @@ void func_800D50D8(s_SubCharacter* chara) // 0x800D50D8
     }
 }
 
-void func_800D511C(s_SubCharacter* arg0) // 0x800D511C
+void func_800D511C(s_SubCharacter* chara) // 0x800D511C
 {
     s32             temp_s1;
-    s_SubCharacter* chara;
+    s_SubCharacter* localChara;
 
-    chara = arg0;
+    localChara = chara;
 
-    if (arg0->model_0.stateStep_3 == 0)
+    if (chara->model_0.stateStep_3 == 0)
     {
-        Sd_SfxStop(0x617);
+        Sd_SfxStop(1559);
 
-        if (arg0->properties_E4.twinfeeler.field_118 == 0)
+        if (chara->properties_E4.twinfeeler.field_118 == 0)
         {
-            arg0->model_0.anim_4.status_0 = 0x22;
-            arg0->model_0.stateStep_3     = 1;
+            chara->model_0.anim_4.status_0 = 34;
+            chara->model_0.stateStep_3     = 1;
         }
         else
         {
-            func_800D3AE0(arg0, 0);
-            arg0->model_0.anim_4.status_0 = 0x20;
-            arg0->model_0.stateStep_3     = 2;
+            func_800D3AE0(chara, 0);
+            chara->model_0.anim_4.status_0 = 32;
+            chara->model_0.stateStep_3     = 2;
         }
     }
 
-    switch (arg0->model_0.stateStep_3)
+    switch (chara->model_0.stateStep_3)
     {
         case 1:
-            if (arg0->model_0.anim_4.status_0 == 0x24)
+            if (chara->model_0.anim_4.status_0 == 36)
             {
-                func_800D3AE0(arg0, 0);
-                arg0->model_0.anim_4.status_0 = 0x20;
-                arg0->model_0.stateStep_3++;
+                func_800D3AE0(chara, 0);
+                chara->model_0.anim_4.status_0 = 32;
+                chara->model_0.stateStep_3++;
             }
             break;
 
         case 2:
-            if (arg0->model_0.anim_4.status_0 == 0x2C)
+            if (chara->model_0.anim_4.status_0 == 44)
             {
-                chara->properties_E4.twinfeeler.field_FC = 0x5000;
-                arg0->model_0.stateStep_3++;
+                localChara->properties_E4.twinfeeler.field_FC = Q12(5.0f);
+                chara->model_0.stateStep_3++;
             }
             break;
 
         case 3:
-            if (chara->properties_E4.twinfeeler.field_FC < 0)
+            if (localChara->properties_E4.twinfeeler.field_FC < 0)
             {
-                arg0->model_0.anim_4.status_0 = 0x16;
-                arg0->model_0.stateStep_3++;
+                chara->model_0.anim_4.status_0 = 22;
+                chara->model_0.stateStep_3++;
             }
             break;
 
         case 4:
-            if (arg0->model_0.anim_4.status_0 == 0x24)
+            if (chara->model_0.anim_4.status_0 == 36)
             {
-                arg0->moveSpeed_38            = 0x1333;
-                arg0->model_0.anim_4.status_0 = 0x10;
-                arg0->model_0.stateStep_3++;
+                chara->moveSpeed_38            = Q12(1.2f);
+                chara->model_0.anim_4.status_0 = 16;
+                chara->model_0.stateStep_3++;
             }
             break;
 
         case 5:
-            temp_s1 = func_800D4558(arg0->rotation_24.vy, arg0->position_18.vx, arg0->position_18.vz);
-            if (func_800D4924(&arg0->position_18, arg0->rotation_24.vy) != 0 || temp_s1 < 0x2000)
+            temp_s1 = func_800D4558(chara->rotation_24.vy, chara->position_18.vx, chara->position_18.vz);
+            if (func_800D4924(&chara->position_18, chara->rotation_24.vy) != 0 || temp_s1 < Q12(2.0f))
             {
-                func_800D3528(arg0);
-                func_800D3AE0(arg0, 1);
-                arg0->model_0.anim_4.status_0 = 4;
-                arg0->moveSpeed_38            = 0xE34;
-                arg0->model_0.stateStep_3++;
+                func_800D3528(chara);
+                func_800D3AE0(chara, 1);
+
+                chara->model_0.anim_4.status_0 = 4;
+                chara->moveSpeed_38            = 0xE34;
+                chara->model_0.stateStep_3++;
             }
             break;
 
         case 6:
-            if (arg0->model_0.anim_4.status_0 == 0x24)
+            if (chara->model_0.anim_4.status_0 == 36)
             {
-                Sd_SfxStop(0x617);
+                Sd_SfxStop(1559);
+
                 Savegame_EventFlagSet(EventFlag_326);
-                arg0->model_0.controlState_2 = 0xB;
-                arg0->model_0.stateStep_3    = 0;
+                chara->model_0.controlState_2 = 11;
+                chara->model_0.stateStep_3    = 0;
             }
             break;
     }
 
-    if (arg0->model_0.stateStep_3 < 5)
+    if (chara->model_0.stateStep_3 < 5)
     {
-        Chara_MoveSpeedUpdate(arg0, 0x1000);
+        Chara_MoveSpeedUpdate(chara, Q12(1.0f));
     }
-    chara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
+
+    localChara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
 }
 
 void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D53B0
@@ -2805,20 +2826,20 @@ void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D53B0
     }
 }
 
-void func_800D54B4(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D54B4
+void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D54B4
 {
-    VECTOR3         sp20;
+    VECTOR3         pos; // Q19.12
     MATRIX          sp30;
-    s32             posX;
     s32             var_s0;
     s32             var_v0;
-    s_SubCharacter* chara;
-    s32             posY;
-    s32             posZ;
+    q19_12          posX;
+    q19_12          posY;
+    q19_12          posZ;
+    s_SubCharacter* localChara;
 
-    chara = arg0;
+    localChara = chara;
 
-    switch (arg0->model_0.controlState_2)
+    switch (chara->model_0.controlState_2)
     {
         case 5:
         case 6:
@@ -2841,90 +2862,91 @@ void func_800D54B4(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D54B4
 
     if (var_s0 != 0)
     {
-        Vw_CoordHierarchyMatrixCompute(&arg1[var_v0], &sp30);
+        Vw_CoordHierarchyMatrixCompute(&coords[var_v0], &sp30);
 
-        posX = sp30.t[1] * 0x10;
-        posY = sp30.t[0] * 0x10;
-        posZ = sp30.t[2] * 0x10;
+        posX = Q8_TO_Q12(sp30.t[1]);
+        posY = Q8_TO_Q12(sp30.t[0]);
+        posZ = Q8_TO_Q12(sp30.t[2]);
 
-        arg0->field_C8.field_8 = arg0->position_18.vy - posX;
+        chara->field_C8.field_8 = chara->position_18.vy - posX;
 
-        sp20.vx = posY;
-        sp20.vy = posX;
-        sp20.vz = posZ;
+        pos.vx = posY;
+        pos.vy = posX;
+        pos.vz = posZ;
 
-        if (func_8008A0E4(1, var_s0, arg0, &sp20, &g_SysWork.playerWork_4C.player_0, arg0->rotation_24.vy, 0x400) != -1)
+        if (func_8008A0E4(1, var_s0, chara, &pos, &g_SysWork.playerWork_4C.player_0, chara->rotation_24.vy, 0x400) != -1)
         {
-            chara->properties_E4.twinfeeler.field_114 |= 1;
+            localChara->properties_E4.twinfeeler.field_114 |= 1;
         }
     }
 }
 
-void func_800D55C8(s_SubCharacter* arg0) // 0x800D55C8
+void func_800D55C8(s_SubCharacter* chara) // 0x800D55C8
 {
     s_800C4590 sp10;
-    VECTOR     sp30;
+    VECTOR     unkPos; // Q19.12
     VECTOR     sp40;
     VECTOR     sp50;
-    s32        temp_s0;
+    q19_12     moveSpeed;
     s32        temp_s0_2;
-    s32        temp_s0_3;
+    q19_12     posComp;
     s32        temp_s2;
     s32        temp_v0;
 
-    sp30.vx = arg0->properties_E4.twinfeeler.field_EC.position_0.vx;
-    sp30.vz = arg0->properties_E4.twinfeeler.field_EC.position_0.vz;
-    sp30.vy = arg0->properties_E4.twinfeeler.field_EC.position_0.vy;
+    unkPos.vx = chara->properties_E4.twinfeeler.field_EC.position_0.vx;
+    unkPos.vz = chara->properties_E4.twinfeeler.field_EC.position_0.vz;
+    unkPos.vy = chara->properties_E4.twinfeeler.field_EC.position_0.vy;
 
-    temp_s0                                  = arg0->moveSpeed_38;
-    arg0->properties_E4.twinfeeler.field_108 = temp_s0;
+    moveSpeed                                  = chara->moveSpeed_38;
+    chara->properties_E4.twinfeeler.field_108 = moveSpeed;
 
-    sp40.vx = Math_Sin(arg0->rotation_24.vy);
-    sp40.vz = Math_Cos(arg0->rotation_24.vy);
-    sp40.vy = 0;
+    sp40.vx = Math_Sin(chara->rotation_24.vy);
+    sp40.vz = Math_Cos(chara->rotation_24.vy);
+    sp40.vy = Q12(0.0f);
 
-    temp_s2   = Q12_MULT_PRECISE(sp30.vx, 0x3800) + Q12_MULT_PRECISE(temp_s0, sp40.vx);
-    temp_v0   = Q12_MULT_PRECISE(sp30.vy, 0x3800);
-    temp_s0_2 = Q12_MULT_PRECISE(sp30.vz, 0x3800) + Q12_MULT_PRECISE(temp_s0, sp40.vz);
+    temp_s2   = Q12_MULT_PRECISE(unkPos.vx, Q12(3.5f)) + Q12_MULT_PRECISE(moveSpeed, sp40.vx);
+    temp_v0   = Q12_MULT_PRECISE(unkPos.vy, Q12(3.5f));
+    temp_s0_2 = Q12_MULT_PRECISE(unkPos.vz, Q12(3.5f)) + Q12_MULT_PRECISE(moveSpeed, sp40.vz);
 
     sp50.vx = temp_s2;
     sp50.vy = temp_v0;
     sp50.vz = temp_s0_2;
 
-    arg0->moveSpeed_38    = SquareRoot12(Q12_MULT_PRECISE(temp_s2, temp_s2) + Q12_MULT_PRECISE(temp_s0_2, temp_s0_2));
-    arg0->headingAngle_3C = ratan2(temp_s2, temp_s0_2);
-    arg0->field_34       += g_DeltaTime2;
+    chara->moveSpeed_38    = SquareRoot12(Q12_MULT_PRECISE(temp_s2, temp_s2) + Q12_MULT_PRECISE(temp_s0_2, temp_s0_2));
+    chara->headingAngle_3C = ratan2(temp_s2, temp_s0_2);
+    chara->field_34       += g_DeltaTime2;
 
-    if (!(arg0->properties_E4.twinfeeler.field_114 & 4))
+    if (!(chara->properties_E4.twinfeeler.field_114 & (1 << 2)))
     {
-        func_8005C944(arg0, &sp10);
+        func_8005C944(chara, &sp10);
     }
 
-    temp_s0_3                                             = arg0->properties_E4.twinfeeler.field_EC.position_0.vx;
-    arg0->moveSpeed_38                                    = arg0->properties_E4.twinfeeler.field_108;
-    arg0->properties_E4.twinfeeler.field_EC.position_0.vx = SquareRoot12(Q12_MULT_PRECISE(temp_s0_3, temp_s0_3) >> g_VBlanks);
+    posComp                                             = chara->properties_E4.twinfeeler.field_EC.position_0.vx;
+    chara->moveSpeed_38                                    = chara->properties_E4.twinfeeler.field_108;
+    chara->properties_E4.twinfeeler.field_EC.position_0.vx = SquareRoot12(Q12_MULT_PRECISE(posComp, posComp) >> g_VBlanks);
 
-    if (temp_s0_3 <= 0)
+    if (posComp <= Q12(0.0f))
     {
-        arg0->properties_E4.twinfeeler.field_EC.position_0.vx = -arg0->properties_E4.twinfeeler.field_EC.position_0.vx;
+        chara->properties_E4.twinfeeler.field_EC.position_0.vx = -chara->properties_E4.twinfeeler.field_EC.position_0.vx;
     }
 
-    temp_s0_3                                             = arg0->properties_E4.twinfeeler.field_EC.position_0.vy;
-    arg0->properties_E4.twinfeeler.field_EC.position_0.vy = SquareRoot12(Q12_MULT_PRECISE(temp_s0_3, temp_s0_3) >> g_VBlanks);
+    posComp                                             = chara->properties_E4.twinfeeler.field_EC.position_0.vy;
+    chara->properties_E4.twinfeeler.field_EC.position_0.vy = SquareRoot12(Q12_MULT_PRECISE(posComp, posComp) >> g_VBlanks);
 
-    if (temp_s0_3 <= 0)
+    if (posComp <= Q12(0.0f))
     {
-        arg0->properties_E4.twinfeeler.field_EC.position_0.vy = -arg0->properties_E4.twinfeeler.field_EC.position_0.vy;
+        chara->properties_E4.twinfeeler.field_EC.position_0.vy = -chara->properties_E4.twinfeeler.field_EC.position_0.vy;
     }
 
-    temp_s0_3                                             = arg0->properties_E4.twinfeeler.field_EC.position_0.vz;
-    arg0->properties_E4.twinfeeler.field_EC.position_0.vz = SquareRoot12(Q12_MULT_PRECISE(temp_s0_3, temp_s0_3) >> g_VBlanks);
+    posComp                                             = chara->properties_E4.twinfeeler.field_EC.position_0.vz;
+    chara->properties_E4.twinfeeler.field_EC.position_0.vz = SquareRoot12(Q12_MULT_PRECISE(posComp, posComp) >> g_VBlanks);
 
-    if (temp_s0_3 <= 0)
+    if (posComp <= Q12(0.0f))
     {
-        arg0->properties_E4.twinfeeler.field_EC.position_0.vz = -arg0->properties_E4.twinfeeler.field_EC.position_0.vz;
+        chara->properties_E4.twinfeeler.field_EC.position_0.vz = -chara->properties_E4.twinfeeler.field_EC.position_0.vz;
     }
-    arg0->rotation_24.vy = func_8005BF38(arg0->rotation_24.vy);
+
+    chara->rotation_24.vy = func_8005BF38(chara->rotation_24.vy);
 }
 
 void func_800D5888(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5888
@@ -2984,17 +3006,17 @@ void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5904
     chara->field_D8.offsetZ_2 = chara->field_D8.offsetZ_6;
 }
 
-void func_800D59C0(s_LinkedBone* arg0) // 0x800D59C0
+void func_800D59C0(s_LinkedBone* bone) // 0x800D59C0
 {
     s32 i;
 
-    for (i = 0; i < 0x38; i++)
+    for (i = 0; i < 56; i++)
     {
-        arg0[i].bone_0.modelInfo_0.field_0 &= ~1;
+        bone[i].bone_0.modelInfo_0.field_0 &= ~1;
     }
 }
 
-void func_800D59EC(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D59EC
+void func_800D59EC(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D59EC
 {
     u32           temp_v1;
     s32           temp_v1_3;
@@ -3002,21 +3024,21 @@ void func_800D59EC(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D59EC
     s32           i;
     s32           idx;
     s8*           ptr;
-    s_LinkedBone* bones;
     u32           temp_a0_3;
+    s_LinkedBone* bones;
     s_Bone*       bone;
 
     bones = WorldGfx_CharaModelBonesGet(Chara_Twinfeeler);
 
     func_800D59C0(bones);
 
-    temp_v1 = FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT);
+    temp_v1 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
 
     if (temp_v1 < 0x20)
     {
         temp_v1_3 = D_800DB27C[temp_v1];
 
-        for (i = temp_v1_3; i < 0xB; i++)
+        for (i = temp_v1_3; i < 11; i++)
         {
             ptr = D_800DB238[i];
 
@@ -3038,7 +3060,7 @@ void func_800D59EC(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D59EC
     {
         temp_a0_3 = temp_v1 - 0x20;
 
-        if (temp_a0_3 < 0x29)
+        if (temp_a0_3 < 41)
         {
             temp_v1_3 = D_800DB2FC[temp_a0_3];
 
@@ -3050,7 +3072,7 @@ void func_800D59EC(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D59EC
                 {
                     idx = *ptr;
 
-                    if (idx == -1)
+                    if (idx == NO_VALUE)
                     {
                         break;
                     }
@@ -3110,13 +3132,13 @@ bool func_800D5BF8(s32 arg0, s32 arg1, s32 arg2, u16* arg3) // 0x800D5BF8
     return bitChanged;
 }
 
-void func_800D5C3C(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D5C3C
+void func_800D5C3C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5C3C
 {
     s32             temp_s1;
     s32             temp_s2;
     s32             var_a1;
     s32             i;
-    s_SubCharacter* chara;
+    s_SubCharacter* localChara;
 
     u8 D_800CA814[16] = {
         0x1e, 0x20, 0x1c, 0x1a,
@@ -3133,25 +3155,25 @@ void func_800D5C3C(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D5C3C
     };
 
     MATRIX sp60;
-    VECTOR sp80;
+    VECTOR pos;
 
-    chara = arg0;
+    localChara = chara;
 
-    temp_s2  = chara->properties_E4.twinfeeler.field_114 >> 2;
+    temp_s2  = localChara->properties_E4.twinfeeler.field_114 >> 2;
     temp_s2 ^= 1;
     temp_s2 &= 1;
 
-    Gfx_DebugStringPosition(0xAA, 0x14);
+    Gfx_DebugStringPosition(170, 20);
 
     for (i = 0; i < 16; i++)
     {
-        Vw_CoordHierarchyMatrixCompute(&arg1[D_800CA814[i]], &sp60);
+        Vw_CoordHierarchyMatrixCompute(&coords[D_800CA814[i]], &sp60);
 
-        if (func_800D5BF8(i, sp60.t[1], D_800CA824[i], &chara->properties_E4.twinfeeler.field_E8.val16[1]))
+        if (func_800D5BF8(i, sp60.t[1], D_800CA824[i], &localChara->properties_E4.twinfeeler.field_E8.val16[1]))
         {
-            sp80.vx = sp60.t[0] * 0x10;
-            sp80.vy = 0;
-            sp80.vz = sp60.t[2] * 0x10;
+            pos.vx = Q8_TO_Q12(sp60.t[0]);
+            pos.vy = Q12(0.0f);
+            pos.vz = Q8_TO_Q12(sp60.t[2]);
 
             if (i < 0)
             {
@@ -3164,11 +3186,11 @@ void func_800D5C3C(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D5C3C
 
             temp_s1 = (var_a1 >> 2) + (i & 1);
 
-            func_800D185C(&sp80, temp_s1);
+            func_800D185C(&pos, temp_s1);
 
             if (func_800D48CC(sp60.t[0], sp60.t[2]) && temp_s2 != 0)
             {
-                func_800D2150(&sp80, temp_s1);
+                func_800D2150(&pos, temp_s1);
             }
         }
     }
@@ -3184,36 +3206,36 @@ void func_800D5DF4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5DF4
     func_800D35DC(&chara->rotation_24);
 }
 
-void func_800D5E30(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D5E30
+void func_800D5E30(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5E30
 {
     MATRIX           sp10;
     s32              i;
+    q19_12           posY;
+    q19_12           newPosX;
+    q19_12           newPosY;
+    q19_12           newPosZ;
     s_func_8006CF18* ptr;
-    s32              temp;
-    s32              posX;
-    s32              posY;
-    s32              posZ;
 
     ptr = &D_800E04A0;
 
-    arg0->field_E4   = &D_800E04A0;
-    arg0->field_E1_4 = 4;
+    chara->field_E4   = &D_800E04A0;
+    chara->field_E1_4 = 4;
 
     for (i = 0; i < 4; i++, ptr++)
     {
-        Vw_CoordHierarchyMatrixCompute(&arg1[D_800DB3A0[i]], &sp10);
+        Vw_CoordHierarchyMatrixCompute(&coords[D_800DB3A0[i]], &sp10);
 
-        temp = arg0->position_18.vy;
-        posX = sp10.t[0] * 0x10;
-        posY = sp10.t[1] * 0x10;
-        posZ = sp10.t[2] * 0x10;
+        posY    = chara->position_18.vy;
+        newPosX = Q8_TO_Q12(sp10.t[0]);
+        newPosY = Q8_TO_Q12(sp10.t[1]);
+        newPosZ = Q8_TO_Q12(sp10.t[2]);
 
         ptr->field_10      = 0x733;
-        ptr->field_E       = posY - 0x4CC;
-        ptr->field_C       = temp;
-        ptr->position_0.vx = posX;
-        ptr->position_0.vy = posY;
-        ptr->position_0.vz = posZ;
+        ptr->field_E       = newPosY - 0x4CC;
+        ptr->field_C       = posY;
+        ptr->position_0.vx = newPosX;
+        ptr->position_0.vy = newPosY;
+        ptr->position_0.vz = newPosZ;
         ptr->field_12      = 3;
     }
 }
@@ -3223,7 +3245,7 @@ void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINA
     if (chara->model_0.controlState_2 == ModelState_Uninitialized)
     {
         Ai_Twinfeeler_TextureLoad(); // Just calls `Fs_QueueStartReadTim`.
-        chara->model_0.controlState_2     = 1;
+        chara->model_0.controlState_2 = 1;
         chara->model_0.stateStep_3 = 0;
     }
 

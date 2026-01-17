@@ -3640,11 +3640,10 @@ void func_80086DA8(e_FsFile fileIdx, q19_12 fadeTimestep);
 void func_80086E50(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
 /** Odd code?
- * This function seems to be used to circumvent an issue with fading, this function
- * is used when the player is about to leave the screen of the clock tower marking certains
- * times, breaking it causes the image of the clock tower to dissapear and start the fade in
- * to the black screen that then start the fade out which finally throws back the player to
- * in-game.
+ * This function appears to circumvent an issue with fading.
+ * When the player is about to leave the clock tower screen marking certain
+ * times, breaking it causes the clock tower image to dissapear. It then fades in
+ * and out to the black screen before returning to gameplay.
  */
 void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
 
@@ -3656,12 +3655,12 @@ void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
  */
 void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos);
 
-void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
+void func_8008716C(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
-void MapMsg_DisplayWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
+void MapMsg_DisplayWithTexture(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
 
-/** @brief Display message with background texture that is darken after reading the first sentence. */
-void MapMsg_DisplayWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
+/** @brief Displays a message with a background texture that is darken after reading the first sentence. */
+void MapMsg_DisplayWithTexture1(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
 void Event_ItemTake(e_InventoryItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 

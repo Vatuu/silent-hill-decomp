@@ -248,7 +248,7 @@ void func_800D17F8(s32 arg0, s32 arg1) // 0x800D17F8
             continue;
         }
 
-        if ((i == arg0 || i == 4) && arg1 < 0x1000)
+        if ((i == arg0 || i == 4) && arg1 < Q12(1.0f))
         {
             if (arg1 <= 0)
             {

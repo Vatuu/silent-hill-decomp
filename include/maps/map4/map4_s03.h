@@ -280,6 +280,8 @@ void func_800D1AFC(void);
 
 void func_800D1C48(void);
 
+void func_800D1D3C(GsOT_TAG* tag, SVECTOR3* arg1, MATRIX* arg2, s32 arg3);
+
 void func_800D1FF4(GsOT_TAG* tag);
 
 void func_800D2150(VECTOR* arg0, s32 arg1);
@@ -375,9 +377,9 @@ void func_800D49C0(s_SubCharacter* chara);
 
 void func_800D4A34(s_SubCharacter* chara);
 
-void func_800D4B28(s_SubCharacter* arg0);
+void func_800D4B28(s_SubCharacter* chara);
 
-s32 func_800D4C0C(u32 row, s32 col);
+bool func_800D4C0C(u32 row, s32 col);
 
 u16 func_800D4C5C(u8* arg0, s32 arg1, s32 arg2, s32 arg3);
 
@@ -401,13 +403,13 @@ void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void func_800D54B4(s_SubCharacter*, GsCOORDINATE2*);
 
-s32 func_800D4558(s32 arg0, s32 arg1, s32 arg2);
+s32 func_800D4558(q19_12 angle, s32 arg1, s32 arg2);
 
 void func_800D45C4(s_SubCharacter* arg0);
 
 void func_800D4700(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
 
-s32 func_800D48CC(s32 arg0, s32 arg1);
+bool func_800D48CC(s32 arg0, s32 arg1);
 
 void func_800D55C8(s_SubCharacter*);
 
@@ -486,19 +488,19 @@ void func_800D4A78(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 s32 func_800D4E78(s32 arg0, s32 arg1);
 
-void func_800D511C(s_SubCharacter* arg0);
+void func_800D511C(s_SubCharacter* chara);
 
-void func_800D54B4(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
+void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
-void func_800D55C8(s_SubCharacter* arg0);
+void func_800D55C8(s_SubCharacter* chara);
 
-void func_800D59C0(s_LinkedBone* arg0);
+void func_800D59C0(s_LinkedBone* bone);
 
-void func_800D59EC(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
+void func_800D59EC(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
-void func_800D5C3C(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
+void func_800D5C3C(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
-void func_800D5E30(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
+void func_800D5E30(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 s32 func_800D78F4(s_800E06A0* arg0, s32 arg1);
 

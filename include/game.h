@@ -1557,7 +1557,7 @@ typedef struct _PropertiesTwinfeeler
 {
     u_Property    field_E8;
     s_CharaDamage field_EC;
-    s32           field_FC;
+    q19_12        field_FC; // Timer?
     u_Property    properties_100[2];
     s32           field_108;
     s32           field_10C;
