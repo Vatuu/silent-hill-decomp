@@ -4212,7 +4212,22 @@ void func_800E94C0(void) // 0x800E94C0
 #undef SET_ANIM_FILE_IDX
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E94F4);
+void func_800E94F4(void) // 0x800E94F4
+{
+#define SET_ANIM_FILE_IDX(ptr, val) ((ptr)->animFileIdx = (val))
+    // @hack Weird pointer arithmetic in this func.
+    // Tracking that separately lets it match, but there's probably still a cleaner way.
+    s_CharaFileInfo* ptr = &CHARA_FILE_INFOS[Chara_EndingCybil];
+
+    SET_ANIM_FILE_IDX(&CHARA_FILE_INFOS[Chara_EndingCybil], FILE_ANIM_SBL2_ANM);
+    ptr += 10;
+    SET_ANIM_FILE_IDX(&CHARA_FILE_INFOS[Chara_BloodyIncubator], FILE_ANIM_BAR_ANM);
+    ptr += 2;
+    SET_ANIM_FILE_IDX(&CHARA_FILE_INFOS[Chara_EndingKaufmann], FILE_ANIM_KAU2_ANM);
+    ptr -= 3;
+    SET_ANIM_FILE_IDX(&CHARA_FILE_INFOS[Chara_Incubator], FILE_ANIM_MAR_ANM);
+#undef SET_ANIM_FILE_IDX
+}
 
 void Map_WorldObjectsInit(void) // 0x800E9528
 {
