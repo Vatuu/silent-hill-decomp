@@ -2147,7 +2147,44 @@ void func_800D43AC(s_SubCharacter* arg0, s32 arg1) // 0x800D43AC
     }
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D4488);
+s32 func_800D4488(VECTOR3* arg0, s32 arg1) // 0x800D4488
+{
+    s32 temp_s0;
+    s32 temp_s3;
+    s32 temp_s4;
+    s32 temp_v0;
+    s32 temp_v1;
+    s32 temp;
+    s32 temp2;
+    s32 temp3;
+    s32 new_var;
+
+    temp_s4 = (arg1 >> 8) & 0xFF;
+    temp_s3 = arg1 & 0xFF;
+
+    temp    = ((Rng_Rand16() << 8) >> 0xF) + 0x7200;
+    temp_v1 = temp_s4 << 9;
+
+    new_var = 0x10;
+    temp_s4 = temp_v1 + temp;
+    temp_s4 = temp_s4 * new_var;
+
+    temp3   = temp_s3 << 9;
+    temp2   = ((Rng_Rand16() << 8) >> 0xF) + 0x8800;
+    temp_s3 = temp3 + temp2;
+    temp_s3 = temp_s3 * new_var;
+
+    temp_v0 = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - temp_s4,
+                     g_SysWork.playerWork_4C.player_0.position_18.vz - temp_s3);
+
+    temp_s0 = Math_Sin(temp_v0);
+    temp_v1 = temp_s3 - Math_Cos(temp_v0);
+
+    arg0->vx = temp_s4 - temp_s0;
+    arg0->vz = temp_v1;
+
+    return temp_v0;
+}
 
 s32 func_800D4558(s32 arg0, s32 arg1, s32 arg2) // 0x800D4558
 {
@@ -2581,8 +2618,9 @@ void func_800D4FC0(s_SubCharacter* arg0) // 0x800D4FC0
 
     if (arg0->properties_E4.twinfeeler.field_FC < 0)
     {
-        temp_v0               = func_800D4488(&arg0->position_18, func_800D4E78(g_SysWork.playerWork_4C.player_0.moveSpeed_38,
-                                                                                g_SysWork.playerWork_4C.player_0.headingAngle_3C));
+        temp_v0 = func_800D4488(&arg0->position_18,
+                                func_800D4E78(g_SysWork.playerWork_4C.player_0.moveSpeed_38, g_SysWork.playerWork_4C.player_0.headingAngle_3C) & 0xFFFF);
+
         arg0->headingAngle_3C = temp_v0;
         arg0->rotation_24.vy  = temp_v0;
 
@@ -3585,7 +3623,7 @@ void func_800D6F24(void) // 0x800D6F24
     }
 }
 
-s32 func_800D7394(void) // 0x800D7394
+s16 func_800D7394(void) // 0x800D7394
 {
     if (g_DeltaTime0 != Q12(0.0f))
     {
@@ -3743,7 +3781,6 @@ void func_800D7718(void) // 0x800D7718
 
 void func_800D7808(s_800E06A0* arg0, s32 arg1) // 0x800D7808
 {
-    // TODO: `arg1` is unused, but might be passed to one of these funcs.
     s32 temp;
 
     if (g_DeltaTime0 == 0)
@@ -3759,7 +3796,7 @@ void func_800D7808(s_800E06A0* arg0, s32 arg1) // 0x800D7808
             break;
 
         case 1:
-            if (func_800D78F4(arg0) != 0)
+            if (func_800D78F4(arg0, arg1) != 0)
             {
                 arg0->field_21 = temp;
             }
@@ -3783,13 +3820,366 @@ bool func_800D78D4(s_800E06A0* arg0) // 0x800D78D4
     return func_800D81FC(arg0, 0);
 }
 
-INCLUDE_RODATA("maps/map4_s03/nonmatchings/map4_s03", D_800CACA8);
+const u32 D_800CACA8[10] = {
+    0x00000B33,
+    0x00001E66,
+    0x00001999,
+    0x00001B33,
+    0x00002333,
+    0x00000E66,
+    0x00001E66,
+    0x00001800,
+    0x00001CCC,
+    0x000004CC,
+};
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D78F4);
+s32 func_800D78F4(s_800E06A0* arg0, s32 arg1) // 0x800D78F4
+{
+    u32 sp10[10];
+    s32 var_s0;
+    s32 var_s2;
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D7AE0);
+    var_s0 = 0;
+    var_s2 = 0;
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D7F1C);
+    switch (arg0->field_22)
+    {
+        case 0:
+        default:
+            memcpy(&sp10, &D_800CACA8, sizeof(D_800CACA8));
+            var_s0 = func_800D81FC(arg0, sp10[arg1] + 2048);
+            break;
+
+        case 1:
+            var_s0 = func_800D826C(arg0, 0, 409);
+            break;
+
+        case 2:
+            var_s0 = func_800D826C(arg0, 1, 409);
+            break;
+
+        case 3:
+            var_s0 = func_800D826C(arg0, 3, 955);
+            break;
+
+        case 4:
+            var_s0 = func_800D826C(arg0, 4, 546);
+            break;
+
+        case 5:
+            var_s0 = func_800D8620(arg0, 0, 6144);
+            break;
+
+        case 6:
+            var_s0 = func_800D826C(arg0, 2, 682);
+            break;
+
+        case 7:
+            var_s0 = func_800D8354(arg0, 1, 8192);
+            break;
+
+        case 8:
+            var_s0 = func_800D826C(arg0, 3, 1365);
+            break;
+
+        case 9:
+            var_s0 = func_800D84C0(arg0, 0, 9011);
+            break;
+
+        case 10:
+            var_s0 = func_800D826C(arg0, 4, 1365);
+            break;
+
+        case 11:
+            var_s0 = func_800D85E4(arg0, 409);
+            break;
+
+        case 12:
+            var_s0 = func_800D826C(arg0, 3, 1365);
+            break;
+
+        case 13:
+            var_s2 = func_800D84C0(arg0, 1, 2048);
+            break;
+    }
+
+    arg0->field_24 += g_DeltaTime0;
+
+    if (var_s0 != 0)
+    {
+        arg0->field_22++;
+        arg0->field_24 = 0;
+    }
+
+    return var_s2;
+}
+
+s32 func_800D7AE0(s_800E06A0* arg0) // 0x800D7AE0
+{
+    s32 var_s0;
+    s32 var_s2;
+
+    var_s0 = false;
+    var_s2 = false;
+
+    switch (arg0->field_22)
+    {
+        case 0:
+            var_s0 = func_800D84C0(arg0, 0, (func_800D7394() >> 5) + 0x1199);
+            break;
+
+        case 1:
+            var_s0 = func_800D826C(arg0, 4, (func_800D7394() >> 5) + 0x555);
+            break;
+
+        case 2:
+            var_s0 = func_800D8620(arg0, 1, (func_800D7394() >> 5) + 0x1800);
+            break;
+
+        case 3:
+            var_s0 = func_800D826C(arg0, 3, (func_800D7394() >> 5) + 0x555);
+            break;
+
+        case 4:
+            var_s0 = func_800D8230(arg0, 0, (func_800D7394() >> 5) + 0x2AA);
+            break;
+
+        case 5:
+            var_s0 = func_800D826C(arg0, 3, (func_800D7394() >> 5) + 0x555);
+            break;
+
+        case 6:
+            var_s0 = func_800D8230(arg0, 1, (func_800D7394() >> 5) + 0xAAA);
+            break;
+
+        case 7:
+            var_s0 = func_800D826C(arg0, 4, (func_800D7394() >> 5) + 0x555);
+            break;
+
+        case 8:
+            var_s0 = func_800D8230(arg0, 2, (func_800D7394() >> 5) + 0x1000);
+            break;
+
+        case 9:
+            var_s0 = func_800D826C(arg0, 3, (func_800D7394() >> 5) + 0x555);
+            break;
+
+        case 10:
+            var_s0 = func_800D8230(arg0, 3, (func_800D7394() >> 5) + 0xAAA);
+            break;
+
+        case 11:
+            var_s0 = func_800D826C(arg0, 4, (func_800D7394() >> 5) + 0x555);
+            break;
+
+        case 12:
+            var_s0 = func_800D8230(arg0, 4, (func_800D7394() >> 5) + 0x2AA);
+            break;
+
+        case 13:
+            var_s0 = func_800D8230(arg0, 5, (func_800D7394() >> 5) + 0xAAA);
+            break;
+
+        case 14:
+            var_s0 = func_800D826C(arg0, 3, (func_800D7394() >> 5) + 0x555);
+            break;
+
+        case 15:
+            var_s0 = func_800D8230(arg0, 6, (func_800D7394() >> 5) + 0x2AA);
+            break;
+
+        case 16:
+            var_s0 = func_800D826C(arg0, 4, (func_800D7394() >> 5) + 0x555);
+            break;
+
+        case 17:
+            var_s0 = func_800D8230(arg0, 7, (func_800D7394() >> 5) + 0xD55);
+            break;
+
+        case 18:
+            var_s0 = func_800D826C(arg0, 3, (func_800D7394() >> 5) + 0x555);
+            break;
+
+        case 19:
+            var_s0 = func_800D8230(arg0, 6, (func_800D7394() >> 5) + 0xAAA);
+            break;
+
+        case 20:
+            var_s0 = func_800D826C(arg0, 4, (func_800D7394() >> 5) + 0x555);
+            break;
+
+        case 21:
+            var_s0 = func_800D8230(arg0, 8, (func_800D7394() >> 5) + 0x1555);
+            break;
+
+        case 22:
+            var_s0 = func_800D826C(arg0, 4, (func_800D7394() >> 5) + 0x444);
+            break;
+
+        case 24:
+            var_s0 = func_800D8620(arg0, 2, (func_800D7394() >> 5) + 0x1800);
+            break;
+
+        case 25:
+            var_s0 = func_800D85E4(arg0, (func_800D7394() >> 5) + 0x199);
+            break;
+
+        case 26:
+            var_s0 = func_800D826C(arg0, 4, (func_800D7394() >> 5) + 0x444);
+            break;
+
+        case 23:
+        case 27:
+            var_s0 = func_800D826C(arg0, 3, (func_800D7394() >> 5) + 0x2AA);
+            break;
+
+        case 28:
+            var_s2 = func_800D8620(arg0, 0, (func_800D7394() >> 5) + 0x1800);
+            break;
+    }
+
+    arg0->field_24 += g_DeltaTime0;
+
+    if (var_s0)
+    {
+        arg0->field_24  = 0;
+        arg0->field_22 += 1;
+    }
+
+    return var_s2;
+}
+
+void func_800D7F1C(s_800E06A0* arg0) // 0x800D7F1C
+{
+    s32 var_s0;
+    s32 var_s2;
+
+    var_s0 = 0;
+    var_s2 = 0;
+
+    switch (arg0->field_22)
+    {
+        case 0:
+        default:
+            var_s0 = func_800D8620(arg0, -1, 0xAAA);
+            break;
+
+        case 0xA:
+            var_s0 = func_800D8620(arg0, -1, 0xAAA);
+            break;
+
+        case 0x14:
+            var_s0 = func_800D8620(arg0, -1, 0xD55);
+            break;
+
+        case 0x1E:
+            var_s0 = func_800D8620(arg0, -1, 0x1000);
+            break;
+
+        case 0x28:
+            var_s0 = func_800D8620(arg0, -1, 0x12AA);
+            break;
+
+        case 0x32:
+            var_s0 = func_800D8620(arg0, -1, 0x1555);
+            break;
+
+        case 0x3C:
+            var_s0 = func_800D8354(arg0, 0, 0x1AAA);
+            break;
+
+        case 0x46:
+            var_s0 = func_800D8354(arg0, 0, 0x1AAA);
+            break;
+
+        case 0x50:
+            var_s2 = func_800D826C(arg0, 4, 0x3BB);
+            break;
+
+        case 0x51:
+            var_s0 = func_800D8230(arg0, 0, 0x2AA);
+            break;
+
+        case 0x5A:
+            var_s2 = func_800D826C(arg0, 3, 0x444);
+            break;
+
+        case 0x5B:
+            var_s0 = func_800D8230(arg0, 1, 0xAAA);
+            break;
+
+        case 0x64:
+            var_s2 = func_800D826C(arg0, 4, 0x444);
+            break;
+
+        case 0x65:
+            var_s0 = func_800D8230(arg0, 2, 0x1000);
+            break;
+
+        case 0x6E:
+            var_s2 = func_800D826C(arg0, 3, 0x444);
+            break;
+
+        case 0x6F:
+            var_s0 = func_800D8230(arg0, 3, 0xAAA);
+            break;
+
+        case 0x78:
+            var_s2 = func_800D826C(arg0, 4, 0x444);
+            break;
+
+        case 0x79:
+            var_s2 = func_800D8230(arg0, 4, 0x2AA);
+            break;
+
+        case 0x7A:
+            var_s0 = func_800D8230(arg0, 5, 0xAAA);
+            break;
+
+        case 0x82:
+            var_s2 = func_800D826C(arg0, 3, 0x555);
+            break;
+
+        case 0x83:
+            var_s0 = func_800D8230(arg0, 6, 0x2AA);
+            break;
+
+        case 0x8D:
+            var_s0 = func_800D8230(arg0, 7, 0xD55);
+            break;
+
+        case 0x96:
+            var_s2 = func_800D826C(arg0, 3, 0x555);
+            break;
+
+        case 0x97:
+            var_s0 = func_800D8230(arg0, 6, 0xAAA);
+            break;
+
+        case 0x8C:
+        case 0xA0:
+            var_s2 = func_800D826C(arg0, 4, 0x555);
+            break;
+
+        case 0xA1:
+            var_s0 = func_800D8230(arg0, 8, 0x1000);
+            break;
+    }
+
+    arg0->field_24 += g_DeltaTime0;
+
+    if (var_s2 != 0)
+    {
+        arg0->field_22++;
+        arg0->field_24 = 0;
+    }
+
+    if (var_s0 != 0)
+    {
+        arg0->field_22 = (func_800D7394() % 17) * 10;
+        arg0->field_24 = 0;
+    }
+}
 
 bool func_800D81FC(s_800E06A0* arg0, s32 arg1) // 0x800D81FC
 {

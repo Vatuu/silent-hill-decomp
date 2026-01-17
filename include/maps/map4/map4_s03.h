@@ -387,7 +387,7 @@ u32 func_800D4DD8(void);
 
 u16 func_800D4E00(s32 arg0, s32 arg1, s32 arg2);
 
-s16 func_800D4488(VECTOR3*, u16);
+s32 func_800D4488(VECTOR3*, s32);
 
 void func_800D4078(s_SubCharacter* chara);
 
@@ -438,7 +438,7 @@ void func_800D6774(void);
 
 void func_800D6F24(void);
 
-s32 func_800D7394(void);
+s16 func_800D7394(void);
 
 void func_800D7408(void);
 
@@ -499,5 +499,11 @@ void func_800D59EC(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
 void func_800D5C3C(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
 
 void func_800D5E30(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
+
+s32 func_800D78F4(s_800E06A0* arg0, s32 arg1);
+
+s32 func_800D7AE0(s_800E06A0* arg0);
+
+void func_800D7F1C(s_800E06A0* arg0);
 
 #endif
