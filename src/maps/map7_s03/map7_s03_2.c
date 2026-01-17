@@ -4193,7 +4193,24 @@ void func_800E94AC(void) // 0x800E94AC
     g_MapOverlayHeader.charaUpdateFuncs_194[Chara_Incubator] = Ai_Incubator_Update;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E94C0);
+void func_800E94C0(void) // 0x800E94C0
+{
+    // @hack Weird pointer arithmetic in this func.
+    // Tracking that separately lets it match, but there's probably still a cleaner way.
+#define SET_ANIM_FILE_IDX(ptr, val) ((ptr)->animFileIdx = (val))
+
+    s_CharaFileInfo* ptr = &CHARA_FILE_INFOS[Chara_EndingCybil];
+
+    SET_ANIM_FILE_IDX(&CHARA_FILE_INFOS[Chara_EndingCybil], FILE_ANIM_SBL_LAST_ANM);
+    ptr += 10;
+    SET_ANIM_FILE_IDX(&CHARA_FILE_INFOS[Chara_BloodyIncubator], FILE_ANIM_BAR_LAST_ANM);
+    ptr += 2;
+    SET_ANIM_FILE_IDX(&CHARA_FILE_INFOS[Chara_EndingKaufmann], FILE_ANIM_KAU_LAST_ANM);
+    ptr -= 3;
+    SET_ANIM_FILE_IDX(&CHARA_FILE_INFOS[Chara_Incubator], FILE_ANIM_MAR_LAST_ANM);
+
+#undef SET_ANIM_FILE_IDX
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E94F4);
 

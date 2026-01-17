@@ -444,6 +444,8 @@ void func_800E9498(void);
 
 void func_800E94AC(void);
 
+void func_800E94C0(void);
+
 void func_800E94F4(void);
 
 void Map_WorldObjectsInit(void);
