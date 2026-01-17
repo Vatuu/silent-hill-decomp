@@ -728,7 +728,7 @@ void func_800D1C48(void) // 0x800D1C48
     }
 }
 
-void func_800D1D3C(GsOT_TAG* arg0, SVECTOR3* arg1, MATRIX* arg2, s32 arg3) 
+void func_800D1D3C(GsOT_TAG* arg0, SVECTOR3* arg1, MATRIX* arg2, s32 arg3) // 0x800D1D3C
 {
     SVECTOR sp28;
     SVECTOR sp30;
@@ -1680,7 +1680,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
         twinfeeler->model_0.anim_4.status_0 = 14;
     }
 
-    if (twinfeeler->health_B0 > Q12(0.0f) && twinfeeler->properties_E4.twinfeeler.field_E8 == 0)
+    if (twinfeeler->health_B0 > Q12(0.0f) && twinfeeler->properties_E4.twinfeeler.field_E8.val32 == 0)
     {
         if (Rng_TestProbabilityBits(2))
         {
@@ -1692,14 +1692,14 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
         }
 
         func_8005DC1C(var_a0, &twinfeeler->position_18, Q8(0.5f), 0);
-        twinfeeler->properties_E4.twinfeeler.field_E8 = Rng_GenerateInt(0x1000, 0x1CCB);
+        twinfeeler->properties_E4.twinfeeler.field_E8.val32 = Rng_GenerateInt(0x1000, 0x1CCB);
     }
     else
     {
-        twinfeeler->properties_E4.twinfeeler.field_E8 -= g_DeltaTime0;
-        if (twinfeeler->properties_E4.twinfeeler.field_E8 < 0)
+        twinfeeler->properties_E4.twinfeeler.field_E8.val32 -= g_DeltaTime0;
+        if (twinfeeler->properties_E4.twinfeeler.field_E8.val32 < 0)
         {
-            twinfeeler->properties_E4.twinfeeler.field_E8 = 0;
+            twinfeeler->properties_E4.twinfeeler.field_E8.val32 = 0;
         }
     }
 
@@ -1893,7 +1893,13 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
     return true;
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D3E18);
+void func_800D3E18(s_SubCharacter* chara) // 0x800D3E18
+{
+    *(u16*)&chara->properties_E4.twinfeeler.field_E8.val16[1] = -1;
+    Sd_SfxStop(0x61F);
+    Sd_SfxStop(0x617);
+    func_800D354C(&chara->position_18);
+}
 
 void func_800D3E58(s_SubCharacter* arg0) // 0x800D3E58
 {
@@ -1922,11 +1928,11 @@ void func_800D3E58(s_SubCharacter* arg0) // 0x800D3E58
         {
             if (!(temp_s1 & 2))
             {
-                arg0->properties_E4.twinfeeler.properties_118[0].val16[0] = 1;
+                arg0->properties_E4.twinfeeler.field_118 = 1;
             }
             else
             {
-                arg0->properties_E4.twinfeeler.properties_118[0].val16[0] = 0;
+                arg0->properties_E4.twinfeeler.field_118 = 0;
             }
 
             arg0->health_B0              = -1;
@@ -2339,7 +2345,34 @@ void func_800D4A34(s_SubCharacter* chara) // 0x800D4A34
     }
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D4A78);
+void func_800D4A78(s_SubCharacter* chara, GsCOORDINATE2* coords)
+{
+    MATRIX  sp10;
+    VECTOR3 sp30;
+
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        func_800D3AE0(chara, 3);
+        chara->model_0.anim_4.status_0 = 0x18;
+
+        Vw_CoordHierarchyMatrixCompute(&coords[14], &sp10);
+
+        sp30.vx = sp10.t[0] << 4;
+        sp30.vy = sp10.t[1] << 4;
+        sp30.vz = sp10.t[2] << 4;
+
+        func_800D46E0(&sp30, &g_SysWork.playerWork_4C.player_0.position_18);
+
+        chara->moveSpeed_38 = 0;
+        chara->model_0.stateStep_3++;
+    }
+
+    if (chara->model_0.anim_4.status_0 == 0x24)
+    {
+        chara->model_0.controlState_2 = 10;
+        chara->model_0.stateStep_3    = 0;
+    }
+}
 
 void func_800D4B28(s_SubCharacter* arg0)
 {
@@ -2454,7 +2487,7 @@ u32 func_800D4DD8(void) // 0x800D4DD8
     return var_v0 >> 9;
 }
 
-s32 func_800D4E00(s32 arg0, s32 arg1, s32 arg2) // 0x800D4E00
+u16 func_800D4E00(s32 arg0, s32 arg1, s32 arg2) // 0x800D4E00
 {
     u16 var_a0;
 
@@ -2466,7 +2499,70 @@ s32 func_800D4E00(s32 arg0, s32 arg1, s32 arg2) // 0x800D4E00
     return var_a0;
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D4E78);
+s32 func_800D4E78(s32 arg0, s32 arg1) // 0x800D4E78
+{
+    s32 temp_a3;
+    s32 temp_s0;
+    s32 temp_s2;
+    s32 var_a2;
+    s32 var_s0;
+    s32 var_s2;
+    s32 var_v0_2;
+    s32 var_v1;
+
+    temp_s0  = Q12_MULT_PRECISE(arg0, 0x2333);
+    temp_s2  = Q12_MULT_PRECISE(Math_Sin(arg1), temp_s0);
+    var_v0_2 = Q12_MULT_PRECISE(Math_Cos(arg1), temp_s0);
+
+    var_s2  = var_v0_2 + g_SysWork.playerWork_4C.player_0.position_18.vz;
+    var_s0  = g_SysWork.playerWork_4C.player_0.position_18.vx + temp_s2;
+    temp_a3 = var_s0 >> 4;
+
+    var_a2 = temp_a3 - 0x7100;
+
+    if (var_a2 < 0)
+    {
+        var_a2 = temp_a3 - 0x6F01;
+    }
+
+    var_s0 = var_a2 >> 9;
+
+    if (var_s0 < 0)
+    {
+        var_s0 = 0;
+    }
+
+    if (var_s0 < 9)
+    {
+        var_v1 = var_s0;
+    }
+    else
+    {
+        var_v1 = 8;
+    }
+
+    var_s0 = var_v1;
+
+    var_s2 = ((var_s2 >> 4) - 0x8700) / 0x200;
+
+    if (var_s2 < 0)
+    {
+        var_s2 = 0;
+    }
+
+    if (var_s2 < 5)
+    {
+        var_v1 = var_s2;
+    }
+    else
+    {
+        var_v1 = 4;
+    }
+
+    var_s2 = var_v1;
+
+    return func_800D4E00(var_s0, var_s2, 7 - func_800D4DD8());
+}
 
 void func_800D4FC0(s_SubCharacter* arg0) // 0x800D4FC0
 {
@@ -2527,7 +2623,95 @@ void func_800D50D8(s_SubCharacter* chara) // 0x800D50D8
     }
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D511C);
+void func_800D511C(s_SubCharacter* arg0) // 0x800D511C
+{
+    s32             temp_s1;
+    s_SubCharacter* chara;
+
+    chara = arg0;
+
+    if (arg0->model_0.stateStep_3 == 0)
+    {
+        Sd_SfxStop(0x617);
+
+        if (arg0->properties_E4.twinfeeler.field_118 == 0)
+        {
+            arg0->model_0.anim_4.status_0 = 0x22;
+            arg0->model_0.stateStep_3     = 1;
+        }
+        else
+        {
+            func_800D3AE0(arg0, 0);
+            arg0->model_0.anim_4.status_0 = 0x20;
+            arg0->model_0.stateStep_3     = 2;
+        }
+    }
+
+    switch (arg0->model_0.stateStep_3)
+    {
+        case 1:
+            if (arg0->model_0.anim_4.status_0 == 0x24)
+            {
+                func_800D3AE0(arg0, 0);
+                arg0->model_0.anim_4.status_0 = 0x20;
+                arg0->model_0.stateStep_3++;
+            }
+            break;
+
+        case 2:
+            if (arg0->model_0.anim_4.status_0 == 0x2C)
+            {
+                chara->properties_E4.twinfeeler.field_FC = 0x5000;
+                arg0->model_0.stateStep_3++;
+            }
+            break;
+
+        case 3:
+            if (chara->properties_E4.twinfeeler.field_FC < 0)
+            {
+                arg0->model_0.anim_4.status_0 = 0x16;
+                arg0->model_0.stateStep_3++;
+            }
+            break;
+
+        case 4:
+            if (arg0->model_0.anim_4.status_0 == 0x24)
+            {
+                arg0->moveSpeed_38            = 0x1333;
+                arg0->model_0.anim_4.status_0 = 0x10;
+                arg0->model_0.stateStep_3++;
+            }
+            break;
+
+        case 5:
+            temp_s1 = func_800D4558(arg0->rotation_24.vy, arg0->position_18.vx, arg0->position_18.vz);
+            if (func_800D4924(&arg0->position_18, arg0->rotation_24.vy) != 0 || temp_s1 < 0x2000)
+            {
+                func_800D3528(arg0);
+                func_800D3AE0(arg0, 1);
+                arg0->model_0.anim_4.status_0 = 4;
+                arg0->moveSpeed_38            = 0xE34;
+                arg0->model_0.stateStep_3++;
+            }
+            break;
+
+        case 6:
+            if (arg0->model_0.anim_4.status_0 == 0x24)
+            {
+                Sd_SfxStop(0x617);
+                Savegame_EventFlagSet(EventFlag_326);
+                arg0->model_0.controlState_2 = 0xB;
+                arg0->model_0.stateStep_3    = 0;
+            }
+            break;
+    }
+
+    if (arg0->model_0.stateStep_3 < 5)
+    {
+        Chara_MoveSpeedUpdate(arg0, 0x1000);
+    }
+    chara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
+}
 
 void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D53B0
 {
@@ -2583,9 +2767,127 @@ void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D53B0
     }
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D54B4);
+void func_800D54B4(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D54B4
+{
+    VECTOR3         sp20;
+    MATRIX          sp30;
+    s32             posX;
+    s32             var_s0;
+    s32             var_v0;
+    s_SubCharacter* chara;
+    s32             posY;
+    s32             posZ;
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D55C8);
+    chara = arg0;
+
+    switch (arg0->model_0.controlState_2)
+    {
+        case 5:
+        case 6:
+        case 8:
+            var_s0 = 0x3D;
+            var_v0 = 0xE;
+            break;
+
+        default:
+        case 2:
+        case 3:
+        case 4:
+        case 7:
+        case 9:
+        case 10:
+            var_s0 = 0;
+            var_v0 = 0;
+            break;
+    }
+
+    if (var_s0 != 0)
+    {
+        Vw_CoordHierarchyMatrixCompute(&arg1[var_v0], &sp30);
+
+        posX = sp30.t[1] * 0x10;
+        posY = sp30.t[0] * 0x10;
+        posZ = sp30.t[2] * 0x10;
+
+        arg0->field_C8.field_8 = arg0->position_18.vy - posX;
+
+        sp20.vx = posY;
+        sp20.vy = posX;
+        sp20.vz = posZ;
+
+        if (func_8008A0E4(1, var_s0, arg0, &sp20, &g_SysWork.playerWork_4C.player_0, arg0->rotation_24.vy, 0x400) != -1)
+        {
+            chara->properties_E4.twinfeeler.field_114 |= 1;
+        }
+    }
+}
+
+void func_800D55C8(s_SubCharacter* arg0) // 0x800D55C8
+{
+    s_800C4590 sp10;
+    VECTOR     sp30;
+    VECTOR     sp40;
+    VECTOR     sp50;
+    s32        temp_s0;
+    s32        temp_s0_2;
+    s32        temp_s0_3;
+    s32        temp_s2;
+    s32        temp_v0;
+
+    sp30.vx = arg0->properties_E4.twinfeeler.field_EC.position_0.vx;
+    sp30.vz = arg0->properties_E4.twinfeeler.field_EC.position_0.vz;
+    sp30.vy = arg0->properties_E4.twinfeeler.field_EC.position_0.vy;
+
+    temp_s0                                  = arg0->moveSpeed_38;
+    arg0->properties_E4.twinfeeler.field_108 = temp_s0;
+
+    sp40.vx = Math_Sin(arg0->rotation_24.vy);
+    sp40.vz = Math_Cos(arg0->rotation_24.vy);
+    sp40.vy = 0;
+
+    temp_s2   = Q12_MULT_PRECISE(sp30.vx, 0x3800) + Q12_MULT_PRECISE(temp_s0, sp40.vx);
+    temp_v0   = Q12_MULT_PRECISE(sp30.vy, 0x3800);
+    temp_s0_2 = Q12_MULT_PRECISE(sp30.vz, 0x3800) + Q12_MULT_PRECISE(temp_s0, sp40.vz);
+
+    sp50.vx = temp_s2;
+    sp50.vy = temp_v0;
+    sp50.vz = temp_s0_2;
+
+    arg0->moveSpeed_38    = SquareRoot12(Q12_MULT_PRECISE(temp_s2, temp_s2) + Q12_MULT_PRECISE(temp_s0_2, temp_s0_2));
+    arg0->headingAngle_3C = ratan2(temp_s2, temp_s0_2);
+    arg0->field_34       += g_DeltaTime2;
+
+    if (!(arg0->properties_E4.twinfeeler.field_114 & 4))
+    {
+        func_8005C944(arg0, &sp10);
+    }
+
+    temp_s0_3                                             = arg0->properties_E4.twinfeeler.field_EC.position_0.vx;
+    arg0->moveSpeed_38                                    = arg0->properties_E4.twinfeeler.field_108;
+    arg0->properties_E4.twinfeeler.field_EC.position_0.vx = SquareRoot12(Q12_MULT_PRECISE(temp_s0_3, temp_s0_3) >> g_VBlanks);
+
+    if (temp_s0_3 <= 0)
+    {
+        arg0->properties_E4.twinfeeler.field_EC.position_0.vx = -arg0->properties_E4.twinfeeler.field_EC.position_0.vx;
+    }
+
+    temp_s0_3                                             = arg0->properties_E4.twinfeeler.field_EC.position_0.vy;
+    arg0->properties_E4.twinfeeler.field_EC.position_0.vy = SquareRoot12(Q12_MULT_PRECISE(temp_s0_3, temp_s0_3) >> g_VBlanks);
+
+    if (temp_s0_3 <= 0)
+    {
+        arg0->properties_E4.twinfeeler.field_EC.position_0.vy = -arg0->properties_E4.twinfeeler.field_EC.position_0.vy;
+    }
+
+    temp_s0_3                                             = arg0->properties_E4.twinfeeler.field_EC.position_0.vz;
+    arg0->properties_E4.twinfeeler.field_EC.position_0.vz = SquareRoot12(Q12_MULT_PRECISE(temp_s0_3, temp_s0_3) >> g_VBlanks);
+
+    if (temp_s0_3 <= 0)
+    {
+        arg0->properties_E4.twinfeeler.field_EC.position_0.vz = -arg0->properties_E4.twinfeeler.field_EC.position_0.vz;
+    }
+    arg0->rotation_24.vy = func_8005BF38(arg0->rotation_24.vy);
+}
 
 void func_800D5888(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5888
 {
@@ -2644,9 +2946,84 @@ void func_800D5904(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5904
     chara->field_D8.offsetZ_2 = chara->field_D8.offsetZ_6;
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D59C0);
+void func_800D59C0(s_LinkedBone* arg0) // 0x800D59C0
+{
+    s32 i;
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D59EC);
+    for (i = 0; i < 0x38; i++)
+    {
+        arg0[i].bone_0.modelInfo_0.field_0 &= ~1;
+    }
+}
+
+void func_800D59EC(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D59EC
+{
+    u32           temp_v1;
+    s32           temp_v1_3;
+    s32           j;
+    s32           i;
+    s32           idx;
+    s8*           ptr;
+    s_LinkedBone* bones;
+    u32           temp_a0_3;
+    s_Bone*       bone;
+
+    bones = WorldGfx_CharaModelBonesGet(Chara_Twinfeeler);
+
+    func_800D59C0(bones);
+
+    temp_v1 = FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT);
+
+    if (temp_v1 < 0x20)
+    {
+        temp_v1_3 = D_800DB27C[temp_v1];
+
+        for (i = temp_v1_3; i < 0xB; i++)
+        {
+            ptr = D_800DB238[i];
+
+            for (j = 0; j < 6; j++, ptr++)
+            {
+                idx = *ptr;
+
+                if (idx == -1)
+                {
+                    break;
+                }
+
+                bone                       = &bones[idx - 1].bone_0;
+                bone->modelInfo_0.field_0 |= 1;
+            }
+        }
+    }
+    else
+    {
+        temp_a0_3 = temp_v1 - 0x20;
+
+        if (temp_a0_3 < 0x29)
+        {
+            temp_v1_3 = D_800DB2FC[temp_a0_3];
+
+            for (i = 0; i < temp_v1_3; i++)
+            {
+                ptr = D_800DB238[i];
+
+                for (j = 0; j < 6; j++, ptr++)
+                {
+                    idx = *ptr;
+
+                    if (idx == -1)
+                    {
+                        break;
+                    }
+
+                    bone                       = &bones[idx - 1].bone_0;
+                    bone->modelInfo_0.field_0 |= 1;
+                }
+            }
+        }
+    }
+}
 
 void func_800D5B6C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5B6C
 {
@@ -2695,7 +3072,69 @@ bool func_800D5BF8(s32 arg0, s32 arg1, s32 arg2, u16* arg3) // 0x800D5BF8
     return bitChanged;
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D5C3C);
+void func_800D5C3C(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D5C3C
+{
+    s32             temp_s1;
+    s32             temp_s2;
+    s32             var_a1;
+    s32             i;
+    s_SubCharacter* chara;
+
+    u8 D_800CA814[16] = {
+        0x1e, 0x20, 0x1c, 0x1a,
+        0x18, 0x16, 0x24, 0x22,
+        0x28, 0x26, 0x2c, 0x2a,
+        0x30, 0x2e, 0x34, 0x32
+    };
+
+    s32 D_800CA824[16] = {
+        0xFFFFFFE7, 0xFFFFFFE7, 0xFFFFFFE2, 0xFFFFFFE2,
+        0xFFFFFFD8, 0xFFFFFFD8, 0xFFFFFFBE, 0xFFFFFFBE,
+        0xFFFFFFE2, 0xFFFFFFE2, 0xFFFFFFEC, 0xFFFFFFEC,
+        0xFFFFFFE9, 0xFFFFFFE9, 0xFFFFFFE4, 0xFFFFFFE4
+    };
+
+    MATRIX sp60;
+    VECTOR sp80;
+
+    chara = arg0;
+
+    temp_s2  = chara->properties_E4.twinfeeler.field_114 >> 2;
+    temp_s2 ^= 1;
+    temp_s2 &= 1;
+
+    Gfx_DebugStringPosition(0xAA, 0x14);
+
+    for (i = 0; i < 16; i++)
+    {
+        Vw_CoordHierarchyMatrixCompute(&arg1[D_800CA814[i]], &sp60);
+
+        if (func_800D5BF8(i, sp60.t[1], D_800CA824[i], &chara->properties_E4.twinfeeler.field_E8.val16[1]))
+        {
+            sp80.vx = sp60.t[0] * 0x10;
+            sp80.vy = 0;
+            sp80.vz = sp60.t[2] * 0x10;
+
+            if (i < 0)
+            {
+                var_a1 = i + 3;
+            }
+            else
+            {
+                var_a1 = i;
+            }
+
+            temp_s1 = (var_a1 >> 2) + (i & 1);
+
+            func_800D185C(&sp80, temp_s1);
+
+            if (func_800D48CC(sp60.t[0], sp60.t[2]) && temp_s2 != 0)
+            {
+                func_800D2150(&sp80, temp_s1);
+            }
+        }
+    }
+}
 
 void func_800D5DF4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5DF4
 {
@@ -2707,7 +3146,39 @@ void func_800D5DF4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5DF4
     func_800D35DC(&chara->rotation_24);
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D5E30);
+void func_800D5E30(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D5E30
+{
+    MATRIX           sp10;
+    s32              i;
+    s_func_8006CF18* ptr;
+    s32              temp;
+    s32              posX;
+    s32              posY;
+    s32              posZ;
+
+    ptr = &D_800E04A0;
+
+    arg0->field_E4   = &D_800E04A0;
+    arg0->field_E1_4 = 4;
+
+    for (i = 0; i < 4; i++, ptr++)
+    {
+        Vw_CoordHierarchyMatrixCompute(&arg1[D_800DB3A0[i]], &sp10);
+
+        temp = arg0->position_18.vy;
+        posX = sp10.t[0] * 0x10;
+        posY = sp10.t[1] * 0x10;
+        posZ = sp10.t[2] * 0x10;
+
+        ptr->field_10      = 0x733;
+        ptr->field_E       = posY - 0x4CC;
+        ptr->field_C       = temp;
+        ptr->position_0.vx = posX;
+        ptr->position_0.vy = posY;
+        ptr->position_0.vz = posZ;
+        ptr->field_12      = 3;
+    }
+}
 
 void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5F28
 {
@@ -2758,28 +3229,6 @@ void func_800D654C(void) {}
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800D6554
 
 #include "maps/shared/MapEvent_DoorLocked.h" // 0x800D65E8
-
-INCLUDE_RODATA("maps/map4_s03/nonmatchings/map4_s03", D_800CA814);
-
-// Assumed type.
-const s32 D_800CA824[] = {
-    -25,
-    -25,
-    -30,
-    -30,
-    -40,
-    -40,
-    -66,
-    -66,
-    -30,
-    -30,
-    -20,
-    -20,
-    -23,
-    -23,
-    -28,
-    -28,
-};
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

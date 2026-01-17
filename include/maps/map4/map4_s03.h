@@ -230,6 +230,16 @@ extern u8 D_800DB220[][3];
 
 extern SVECTOR D_800CA788;
 
+extern s8 D_800DB238[][6];
+
+extern s32 D_800DB27C[];
+
+extern s32 D_800DB2FC[];
+
+extern u8 D_800DB3A0[];
+
+extern s_func_8006CF18 D_800E04A0;
+
 void func_800D078C(void);
 
 void func_800D0840(void);
@@ -375,7 +385,7 @@ s32 func_800D4D80(s32 arg0, s32 arg1);
 
 u32 func_800D4DD8(void);
 
-s32 func_800D4E00(s32 arg0, s32 arg1, s32 arg2);
+u16 func_800D4E00(s32 arg0, s32 arg1, s32 arg2);
 
 s16 func_800D4488(VECTOR3*, u16);
 
@@ -469,5 +479,25 @@ void func_800D9BB0(void);
 void func_800D0FD4(s32* ord, void* arg1, u8* arg2, MATRIX* arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 abr);
 
 void func_800D1604(GsOT_TAG* ot, int arg1);
+
+void func_800D3E18(s_SubCharacter* chara);
+
+void func_800D4A78(s_SubCharacter* chara, GsCOORDINATE2* coords);
+
+s32 func_800D4E78(s32 arg0, s32 arg1);
+
+void func_800D511C(s_SubCharacter* arg0);
+
+void func_800D54B4(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
+
+void func_800D55C8(s_SubCharacter* arg0);
+
+void func_800D59C0(s_LinkedBone* arg0);
+
+void func_800D59EC(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
+
+void func_800D5C3C(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
+
+void func_800D5E30(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
 
 #endif
