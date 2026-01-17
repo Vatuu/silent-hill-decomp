@@ -136,7 +136,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Purpose</td>
           </tr>
           <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a><br/>31/43 matched.</td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a><br/>32/43 matched.</td>
             <td colspan=2>Map and character code.</td>
           </tr>
           <tr>
@@ -248,7 +248,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Green Lion Antique Shop cutscene in the Hospital.</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map3_s03"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map3_s03&label=MAP3_S03"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map3_s03"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map3_s03&label=MAP3_S03&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Hospital third and second floor in Otherworld.</td>
         </tr>
         <tr>
