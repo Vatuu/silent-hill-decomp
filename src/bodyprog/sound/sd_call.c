@@ -49,7 +49,7 @@ void SD_Call(u32 cmd) // 0x80045A7C
             Sd_PlaySfx(cmd, 0, 0);
             return;
 
-        // Unknown. Range [1792, 2303].
+        // Stop SFX. Range [1792, 2303].
         case 7:
         case 8:
             Sd_SfxStopStep(cmd - 0x200);
@@ -154,13 +154,13 @@ void SD_BranchCTRL(u16 task) // 0x80045BD8
             Sd_XaAudioStopTaskAdd();
             break;
 
-        case 22: // Background music fade speed. Rarely used.
+        case 22:
             g_Sd_AudioWork.bgmFadeSpeed_14 = 1;
 
         default:
             break;
 
-        case 23: // Background music fade speed. Rarely used.
+        case 23:
             g_Sd_AudioWork.bgmFadeSpeed_14 = 2;
             break;
 

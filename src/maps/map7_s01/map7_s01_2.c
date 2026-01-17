@@ -1030,7 +1030,7 @@ void func_800D94DC(void) // 0x800D94DC
             D_800E2CAC  = CLAMP_RANGE(D_800E2CAC, Q12(-120.0f), Q12(120.0f));
 
             Game_TimerUpdate();
-            func_800881B8((s16)(FP_FROM(D_800E2CA8, Q12_SHIFT) + 8), FP_FROM(D_800E2CAC, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
+            Gfx_CursorDraw((s16)(FP_FROM(D_800E2CA8, Q12_SHIFT) + 8), FP_FROM(D_800E2CAC, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
@@ -1343,8 +1343,8 @@ void func_800D9C9C(void) // 0x800D9C9C
 
             Game_TimerUpdate();
 
-            // TODO: Should `func_800881B8` first args be `s16`?
-            func_800881B8((s16)(FP_FROM(D_800E2CA8, 12) + 8), (s16)FP_FROM(D_800E2CAC, 12) + 8, 8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
+            // TODO: Should `Gfx_CursorDraw` first args be `s16`?
+            Gfx_CursorDraw((s16)(FP_FROM(D_800E2CA8, 12) + 8), (s16)FP_FROM(D_800E2CAC, 12) + 8, 8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
@@ -1951,7 +1951,7 @@ void func_800DC028(void) // 0x800DC028
         func_8005DC1C(Sfx_Unk1464, &SFX_POS, Q8_CLAMPED(0.5f), 0);
     }
 
-    func_80087540(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 37, 38);
+    MapMsg_DisplayWithTexture1(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 37, 38);
 }
 
 void func_800DC080(void) // 0x800DC080

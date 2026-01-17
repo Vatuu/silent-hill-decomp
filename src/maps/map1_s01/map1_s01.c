@@ -390,7 +390,7 @@ void func_800D76F4(void) // 0x800D76F4
 
 void func_800D7830(void) // 0x800D7830
 {
-    func_80087540(FILE_TIM_SCORE_TIM, Q12(2.0f), Q12(1.5f), 31, 23);
+    MapMsg_DisplayWithTexture1(FILE_TIM_SCORE_TIM, Q12(2.0f), Q12(1.5f), 31, 23);
 }
 
 void func_800D7864(void) // 0x800D7864
@@ -614,7 +614,7 @@ void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
 
     cursorX = FP_FROM(g_PianoCursorX, Q12_SHIFT) + 8;
     cursorY = FP_FROM(g_PianoCursorY, Q12_SHIFT) + 8;
-    func_800881B8(cursorX, cursorY, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
+    Gfx_CursorDraw(cursorX, cursorY, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
     if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
     {

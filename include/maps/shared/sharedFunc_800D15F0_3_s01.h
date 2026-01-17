@@ -75,7 +75,7 @@ void sharedFunc_800D15F0_3_s01(void)
             Game_TimerUpdate();
 
             cursorX = FP_FROM(sharedData_800D4D10_3_s01, Q12_SHIFT) + 8;
-            func_800881B8(cursorX, FP_FROM(sharedData_800D4D14_3_s01, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
+            Gfx_CursorDraw(cursorX, FP_FROM(sharedData_800D4D14_3_s01, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {

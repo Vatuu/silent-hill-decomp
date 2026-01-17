@@ -3543,7 +3543,7 @@ void func_80085DF0(void);
 
 void SysWork_StateStepIncrementDelayed(q19_12 delay, bool reset);
 
-/** Unknown state handler. */
+/** @brief Updates character states during events/cutscenes. */
 void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset);
 
 /** @brief Sets `sysStateStep_C` depending on whether `eventFlagIdx` flag is set.
@@ -3639,6 +3639,13 @@ void func_80086DA8(e_FsFile fileIdx, q19_12 fadeTimestep);
 /** State handler. */
 void func_80086E50(e_FsFile fileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
+/** Odd code?
+ * This function seems to be used to circumvent an issue with fading, this function
+ * is used when the player is about to leave the screen of the clock tower marking certains
+ * times, breaking it causes the image of the clock tower to dissapear and start the fade in
+ * to the black screen that then start the fade out which finally throws back the player to
+ * in-game.
+ */
 void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
 
 /** @brief Displays a map message with SFX.
@@ -3649,11 +3656,12 @@ void func_80086F44(s32 fadeTimestep0, q19_12 fadeTimestep1);
  */
 void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos);
 
-void func_8008716C(e_InventoryItemId itemId, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
+void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1);
 
 void MapMsg_DisplayWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx);
 
-void func_80087540(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
+/** @brief Display message with background texture that is darken after reading the first sentence. */
+void MapMsg_DisplayWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1);
 
 void Event_ItemTake(e_InventoryItemId itemId, s32 itemCount, e_EventFlag eventFlagIdx, s32 mapMsgIdx);
 
@@ -3675,7 +3683,7 @@ void func_80088048(void);
 /** State handler. */
 void func_800880F0(s32 arg0);
 
-void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
+void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB);
 
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex);
 
@@ -4735,6 +4743,6 @@ bool Game_FlashlightIsOn(void);
 void func_80089034(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ);
 
 /* Does the map zoom in, red lines? Argument types guessed based on f`unc_800E83C0` in MAP2_S00. */
-void func_80088370(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s16 arg8);
+void Map_BoxOutlineDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s16 arg8);
 
 #endif

@@ -434,17 +434,17 @@ void func_800D8354(void) // 0x800D8354
 
 void func_800D853C(void) // 0x800D853C
 {
-    func_80087540(FILE_TIM_PAPER1_TIM, Q12(2.5f), Q12(1.5f), 25, 22);
+    MapMsg_DisplayWithTexture1(FILE_TIM_PAPER1_TIM, Q12(2.5f), Q12(1.5f), 25, 22);
 }
 
 void func_800D8570(void) // 0x800D8570
 {
-    func_80087540(FILE_TIM_PAPER2_TIM, Q12(2.5f), Q12(1.5f), 25, 23);
+    MapMsg_DisplayWithTexture1(FILE_TIM_PAPER2_TIM, Q12(2.5f), Q12(1.5f), 25, 23);
 }
 
 void func_800D85A4(void) // 0x800D85A4
 {
-    func_80087540(FILE_TIM_PAPER3_TIM, Q12(2.5f), Q12(1.5f), 25, 24);
+    MapMsg_DisplayWithTexture1(FILE_TIM_PAPER3_TIM, Q12(2.5f), Q12(1.5f), 25, 24);
 }
 
 void func_800D85D8(void)

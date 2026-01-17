@@ -554,7 +554,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
 
             D_800F228C += 0x20;
 
-            func_80088370(D_800F228C, -0xA0, -0xE0, 0x13F, 0x1BF, -0x58, -0xC0, 0x9F, 0xDF);
+            Map_BoxOutlineDraw(D_800F228C, -0xA0, -0xE0, 0x13F, 0x1BF, -0x58, -0xC0, 0x9F, 0xDF);
 
             if (D_800F228C == Q12(1.0f))
             {
@@ -577,7 +577,7 @@ void MapEvent_CutsceneExitCafe(void) // 0x800E83C0
 
             curve = (FP_TO(D_800F228C, 12) / (D_800F228C + Q12(1.0f))) * -1;
 
-            func_80088370(curve, -0xA0, -0xE0, 0x13F, 0x1BF, -0x10, -0xA0, 0, 0);
+            Map_BoxOutlineDraw(curve, -0xA0, -0xE0, 0x13F, 0x1BF, -0x10, -0xA0, 0, 0);
 
             if (D_800F228C == 0)
             {
@@ -762,7 +762,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
             func_800692A4(0, 0, Q12(1.0f));
             func_80068E0C(1, 1, 0, 0, 0, 0, Q12(1.0f));
             D_800F229C += 0x20;
-            func_80088370(D_800F229C, -0xA0, -0xE0, 0x13F, 0x1BF, -0xA0, 8, 0x9F, 0xDF);
+            Map_BoxOutlineDraw(D_800F229C, -0xA0, -0xE0, 0x13F, 0x1BF, -0xA0, 8, 0x9F, 0xDF);
 
             if (D_800F229C == Q12(1.0f))
             {
@@ -784,7 +784,7 @@ void MapEvent_CherylsSketchbook(void) // 0x800E8C0C
 
             curve = (FP_TO(D_800F229C, 12) / (D_800F229C + Q12(1.0f))) * -1;
 
-            func_80088370(curve, -0xA0, -0xE0, 0x13F, 0x1BF, -0xA0, 0xF0, 0, 0);
+            Map_BoxOutlineDraw(curve, -0xA0, -0xE0, 0x13F, 0x1BF, -0xA0, 0xF0, 0, 0);
 
             if (D_800F229C == 0)
             {

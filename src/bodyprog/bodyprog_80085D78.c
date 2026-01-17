@@ -11,6 +11,10 @@
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
 
+// ========================================
+// EVENT AND INTERACTIONS RELATED
+// ========================================
+
 u8 D_800AFD04 = 0;
 u8 D_800AFD05 = 0;
 // 2 bytes of padding.
@@ -798,7 +802,7 @@ void Map_MessageWithSfx(s32 mapMsgIdx, e_SfxId sfxId, VECTOR3* sfxPos) // 0x8008
     }
 }
 
-void func_8008716C(e_InventoryItemId itemId, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x8008716C
+void func_8008716C(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1) // 0x8008716C
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -808,7 +812,7 @@ void func_8008716C(e_InventoryItemId itemId, q19_12 fadeTimestep0, q19_12 fadeTi
             SysWork_StateStepIncrement(1);
 
         case 1:
-            func_800862F8(7, itemId, true);
+            func_800862F8(7, textureFileIdx, true);
             break;
 
         case 2:
@@ -883,7 +887,7 @@ void MapMsg_DisplayWithTexture(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q1
     }
 }
 
-void func_80087540(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
+void MapMsg_DisplayWithTexture1(e_FsFile textureFileIdx, q19_12 fadeTimestep0, q19_12 fadeTimestep1, s32 mapMsgIdx0, s32 mapMsgIdx1) // 0x80087540
 {
     switch (g_SysWork.sysStateStep_C[1])
     {
@@ -1145,6 +1149,10 @@ void Event_MapTake(s32 mapFlagIdx, e_EventFlag eventFlagIdx, s32 mapMsgIdx) // 0
     }
 }
 
+// ========================================
+// BGM RELATED
+// ========================================
+
 void func_80087EA8(s32 cmd) // 0x80087EA8
 {
     if (!Bgm_IsCurrentBgmTargetCheck(cmd))
@@ -1264,7 +1272,11 @@ void func_800880F0(s32 arg0) // 0x800880F0
     }
 }
 
-void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB) // 0x800881B8
+// ========================================
+// ADDITIONAL 2D GFX
+// ========================================
+
+void Gfx_CursorDraw(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6, s32 arg7, s32 arg8, u32 arg9, s16 argA, s32 argB) // 0x800881B8
 {
     POLY_FT4* poly;
 
@@ -1292,7 +1304,7 @@ void func_800881B8(s32 x0, s16 y0, s32 x1, s16 y1, s16 arg4, s16 arg5, s16 arg6,
     GsOUT_PACKET_P = (PACKET*)poly;
 }
 
-void func_80088370(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s16 arg8) // 0x80088370
+void Map_BoxOutlineDraw(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, s16 arg8) // 0x80088370
 {
     s32      iVar1;
     s16      iVar4;
@@ -1375,6 +1387,10 @@ void func_80088370(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s
 
     GsOUT_PACKET_P = line;
 }
+
+// ========================================
+// CHARACTER SPAWN RELATED
+// ========================================
 
 bool Chara_Load(s32 modelIdx, s8 charaId, GsCOORDINATE2* coords, s8 forceFree, s_LmHeader* lmHdr, s_FsImageDesc* tex) // 0x80088C7C
 {
@@ -1518,6 +1534,10 @@ void func_80089034(e_CharacterId charaId, s32 spawnIdx, q19_12 posX, q19_12 posZ
     mapPoint1              = &g_MapOverlayHeader.charaSpawns_24C[g_CharaAnimInfoIdxs[charaId] - 1][spawnIdx];
     mapPoint1->positionZ_8 = posZ;
 }
+
+// ========================================
+// VIBRATION HANDLING RELATED
+// ========================================
 
 void func_80089090(s32 arg0) // 0x80089090
 {
@@ -2351,6 +2371,13 @@ bool func_80089DF0(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* arg2
     return false;
 }
 
+// ========================================
+// COMBAT RELATED?
+// ========================================
+// Will: Possibly combat? I only found that breaking `func_8008A3E0` and `func_8008B714`
+// makes enemies unable to perform any attack. Also there are some sound related functions,
+// they seem to be specifically done for something related to weapons in the inventory.
+
 u32 func_8008A058(s32 arg0) // 0x8008A058
 {
     register s32  temp_t0 asm("t0");
@@ -2524,7 +2551,7 @@ s32 func_8008A0E4(s32 arg0, s32 weaponAttack, s_SubCharacter* chara, VECTOR3* po
 
 const s32 g_rodataPad_8002AF9C[2] = { 0, 0 }; // TODO: Might indicate split nearby?
 
-u32 func_8008A270(s32 idx)                    // 0x8008A270
+u32 func_8008A270(s32 idx) // 0x8008A270
 {
     switch (idx)
     {
@@ -2547,7 +2574,7 @@ u32 func_8008A270(s32 idx)                    // 0x8008A270
     return D_800AD4C8[idx].field_E;
 }
 
-u32 func_8008A2E0(s32 arg0)
+u32 func_8008A2E0(s32 arg0) // 0x8008A2E0
 {
     if (g_SysWork.field_275C > Q12(256.0f))
     {
@@ -4286,6 +4313,10 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
     return sp14;
 }
 
+// ========================================
+// DMS FILE HANDLING
+// ========================================
+
 void DmsHeader_FixOffsets(s_DmsHeader* dmsHdr) // 0x8008C9A0
 {
     s_DmsEntry* curEntry;
@@ -4574,6 +4605,10 @@ s32 Math_LerpFixed12(s16 from, s16 to, q19_12 alpha) // 0x8008D3D4
 {
     return FP_ANGLE_NORM_S((s32)(Q12_MULT_PRECISE(FP_ANGLE_NORM_S(to - from), alpha)) + from);
 }
+
+// ========================================
+// WATER EFFECT
+// ========================================
 
 void func_8008D41C(void) // 0x8008D41C
 {

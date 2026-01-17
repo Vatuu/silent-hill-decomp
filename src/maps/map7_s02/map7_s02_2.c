@@ -2121,8 +2121,8 @@ void func_800DFDDC(void) // 0x800DFDDC
 
             Game_TimerUpdate();
 
-            // TODO: Should `func_800881B8` first args be `s16`?
-            func_800881B8((s16)(FP_FROM(D_800EB68C, 12) + 8), (s16)FP_FROM(D_800EB690, 12) + 8, 8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
+            // TODO: Should `Gfx_CursorDraw` first args be `s16`?
+            Gfx_CursorDraw((s16)(FP_FROM(D_800EB68C, 12) + 8), (s16)FP_FROM(D_800EB690, 12) + 8, 8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
@@ -2703,7 +2703,7 @@ void func_800E1FF4(void) // 0x800E1FF4
         func_8005DC1C(Sfx_Unk1464, &SFX_POS, Q8_CLAMPED(0.5f), 0);
     }
 
-    func_80087540(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 22, 23);
+    MapMsg_DisplayWithTexture1(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 22, 23);
 }
 
 INCLUDE_RODATA("maps/map7_s02/nonmatchings/map7_s02_2", D_800CD944);

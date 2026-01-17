@@ -426,7 +426,7 @@ void func_800D1A58(void) // 0x800D1A58
 
             Game_TimerUpdate();
 
-            func_800881B8((s16)(FP_FROM(D_800D6BD0, Q12_SHIFT) + 8), FP_FROM(D_800D6BD4, Q12_SHIFT) + 8,
+            Gfx_CursorDraw((s16)(FP_FROM(D_800D6BD0, Q12_SHIFT) + 8), FP_FROM(D_800D6BD4, Q12_SHIFT) + 8,
                           8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 12);
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
@@ -535,7 +535,7 @@ void func_800D1A58(void) // 0x800D1A58
 
             Game_TimerUpdate();
 
-            func_800881B8((s16)(FP_FROM(D_800D6BD0, Q12_SHIFT) + 8), FP_FROM(D_800D6BD4, Q12_SHIFT) + 8,
+            Gfx_CursorDraw((s16)(FP_FROM(D_800D6BD0, Q12_SHIFT) + 8), FP_FROM(D_800D6BD4, Q12_SHIFT) + 8,
                           8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)

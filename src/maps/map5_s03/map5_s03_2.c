@@ -579,7 +579,7 @@ void func_800D1AF8(void) // 0x800D1AF8
 
 void func_800D2640(void) // 0x800D2640
 {
-    func_80087540(FILE_TIM_NEWSP2_TIM, Q12(0.0f), Q12(0.0f), 46, 48);
+    MapMsg_DisplayWithTexture1(FILE_TIM_NEWSP2_TIM, Q12(0.0f), Q12(0.0f), 46, 48);
 
     // @bug NTSC-U release is missing code to set `EventFlag_M5S03_SeenSecondNewspaper` here,
     // causing later newspaper in `M7S01` & `M7S02` not to appear.
