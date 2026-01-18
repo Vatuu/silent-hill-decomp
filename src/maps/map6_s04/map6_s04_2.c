@@ -280,7 +280,21 @@ INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E0D8C);
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E0DC4);
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E0F28);
+s32 func_800E0F28(q19_12 val0, q19_12 val1) // 0x800E0F28
+{
+    s32 integer;
+    s32 fraction;
+
+    integer  = Q12_MULT_PRECISE(val0, val1) / 0x1000;
+    fraction = Q12_MULT_PRECISE(val0, val1) % 0x1000;
+
+    if ((Rng_Rand16() / 8) < fraction)
+    {
+        integer++;
+    }
+
+    return integer;
+}
 
 INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CB728);
 
