@@ -1963,12 +1963,95 @@ INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01_2", D_800CC794);
 
 INCLUDE_ASM("maps/map7_s01/nonmatchings/map7_s01_2", func_800DC0AC);
 
-INCLUDE_ASM("maps/map7_s01/nonmatchings/map7_s01_2", func_800DCE20);
+void func_800DCE20(void) // 0x800DCE20
+{
+    s32 i;
+
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+        g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
+    {
+        SysWork_StateStepSet(0, 6);
+    }
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            ScreenFade_ResetTimestep();
+            g_SysWork.field_30 = 20;
+            SysWork_StateStepIncrement(0);
+            break;
+
+        case 1:
+            SysWork_StateStepIncrementAfterFade(0, false, 0, 0x999, false);
+            Camera_PositionSet(NULL, Q12(-19.47f), Q12(-2.18f), Q12(-23.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            Camera_LookAtSet(NULL, Q12(-22.32f), Q12(-0.95f), Q12(-20.64f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+            func_800865FC(true, 0, 0, FP_ANGLE(-90.0f), Q12(-26.0f), Q12(-20.9f));
+            SysWork_StateStepIncrement(0);
+
+        case 2:
+            D_800E16A8[0] = MIN(D_800E16A8[0] + Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f)), Q12(0.1f));
+
+            for (i = 0; i < 4; i++)
+            {
+                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, (i & 1) ? D_800E16A8[0] : -D_800E16A8[0]);
+            }
+
+            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
+            break;
+
+        case 5:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(1.5f), false);
+
+        case 4:
+            func_800866D4(53, 1, false);
+
+        case 3:
+            D_800E16A8[0] = MIN(D_800E16A8[0] + Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f)), Q12(0.1f));
+            D_800E16A8[1] = MIN(D_800E16A8[1] + Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f)), Q12(0.1f));
+
+            for (i = 0; i < 6; i++)
+            {
+                g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, (i & 1) ? D_800E16A8[i >= 4 ? 1 : 0] : -D_800E16A8[i >= 4 ? 1 : 0]);
+            }
+
+            if (g_SysWork.sysStateStep_C[0] == 3)
+            {
+                SysWork_StateStepIncrementDelayed(Q12(4.0f), false);
+            }
+            if (g_SysWork.sysStateStep_C[0] == 4)
+            {
+                SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
+            }
+            g_DeltaTime0 = g_DeltaTime0 >> 1;
+            break;
+
+        case 6:
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            g_DeltaTime0 = g_DeltaTime0 >> 1;
+            break;
+
+        default:
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+
+            Savegame_EventFlagSet(EventFlag_479);
+
+            for (i = 0; i < 6; i++)
+            {
+                Math_Vector3Set(&g_WorldObject_Dr[i].position_1C, Q12(-100.9f), Q12(0.0f), Q12(-60.9f));
+            }
+            break;
+    }
+}
 
 void func_800DD348(void* unused, s32 idx, u8 val) // 0x800DD348
 {
     s32 offset;
 
+    // @hack This sets `g_MapOverlayHeader.charaSpawns_24C[0][arg1].flags_6` but that doesn't work with our union struct.
+    // Might need to change `charaSpawns_24C` back to a separate struct instead.
     offset = idx * 12;
     ((u8*)((u8*)&g_MapOverlayHeader + 0x252))[offset] = val;
 }

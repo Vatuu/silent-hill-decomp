@@ -76,6 +76,8 @@ extern u16 D_800E168E;
 
 extern s_800E1690 D_800E1690;
 
+extern s16 D_800E16A8[2];
+
 extern VECTOR3 D_800E2C48;
 extern VECTOR3 D_800E2C58;
 
@@ -239,6 +241,8 @@ void func_800DBDE0(void);
 void func_800DC028(void);
 
 void func_800DC080(void);
+
+void func_800DCE20(void);
 
 void func_800DD348(void* unused, s32 idx, u8 val);
 
