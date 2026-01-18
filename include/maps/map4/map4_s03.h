@@ -508,4 +508,16 @@ s32 func_800D7AE0(s_800E06A0* arg0);
 
 void func_800D7F1C(s_800E06A0* arg0);
 
+bool func_800D8354(s_800E06A0* arg0, s32 arg1, s32 arg2);
+
+bool func_800D84C0(s_800E06A0* arg0, s32 arg1, s32 arg2);
+
+bool func_800D85E4(s_800E06A0* arg0, s32 arg1);
+
+bool func_800D8620(s_800E06A0* arg0, s32 arg1, s32 arg2);
+
+s32 func_800D87AC(s_800E06A0* arg0);
+
+s32 func_800D8874(void);
+
 #endif

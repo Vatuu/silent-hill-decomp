@@ -4268,17 +4268,228 @@ bool func_800D826C(s_800E06A0* arg0, s32 arg1, s32 arg2) // 0x800D826C
     return arg0->field_24 >= arg0->field_28;
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D8354);
+bool func_800D8354(s_800E06A0* arg0, s32 arg1, s32 arg2) // 0x800D8354
+{
+    s32 sp10[4];
+    s32 temp_a0;
+    s32 var_t0;
+    s32 var_v1;
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D84C0);
+    if (arg1 != 0)
+    {
+        var_t0 = 1;
+    }
+    else
+    {
+        var_t0 = (func_800D7394() & 0xFFF) < 0x199;
+    }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D85E4);
+    if (arg0->field_24 == 0)
+    {
+        arg0->field_28 = arg2;
+    }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D8620);
+    arg0->field_36 = 0;
+    arg0->field_34 = 0;
+    sp10[0]        = arg2 - 0x555;
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D87AC);
+    sp10[0] = CLAMP(sp10[0], 0, 0x111);
+    var_v1  = Q12_MULT(arg2, 0x4CC);
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D8874);
+    if (var_v1 > 0x5DD)
+    {
+        var_v1 = 0x5DD;
+    }
+
+    sp10[1] = var_v1 + sp10[0];
+    sp10[2] = sp10[1] + 0x3BB;
+    sp10[3] = sp10[1] + 0x45E;
+
+    var_v1 = arg0->field_24;
+
+    if (sp10[0] >= arg0->field_24)
+    {
+        arg0->field_30 = 2;
+        temp_a0        = sp10[0];
+
+        if (var_v1 <= temp_a0)
+        {
+            var_v1 = var_v1 << 0xC;
+        }
+        else
+        {
+            var_v1 = temp_a0 << 0xC;
+        }
+        arg0->field_36 = Q12_MULT(var_v1 / temp_a0, 0x19) - 0x20;
+    }
+    else
+    {
+        if (var_v1 < sp10[1])
+        {
+            arg0->field_30 = 2;
+        }
+        else if (var_v1 < sp10[2] || var_t0 == 0 || var_v1 >= sp10[3])
+        {
+            arg0->field_30 = 3;
+        }
+        else
+        {
+            arg0->field_30 = 2;
+        }
+    }
+    return arg0->field_24 >= arg2;
+}
+
+bool func_800D84C0(s_800E06A0* arg0, s32 arg1, s32 arg2) // 0x800D84C0
+{
+    if (arg0->field_24 == 0)
+    {
+        arg0->field_28 = arg2;
+    }
+
+    arg0->field_34 = 0;
+
+    switch (arg1)
+    {
+        case 0:
+        default:
+            arg0->field_30 = 5;
+            arg0->field_36 = (FP_TO(arg0->field_24 % 0xAAA, 0xC) / 0xAAA) >> 6;
+
+            if (arg0->field_36 > 0x18 && arg0->field_36 < 0x1D)
+            {
+                arg0->field_36 = 0x20;
+            }
+            break;
+
+        case 1:
+            arg0->field_30 = 5;
+            arg0->field_34 = func_800D7394() % 6;
+            arg0->field_36 = 0x20;
+            break;
+    }
+
+    return !(arg0->field_24 < arg0->field_28);
+}
+
+bool func_800D85E4(s_800E06A0* arg0, s32 arg1) // 0x800D85E4
+{
+    if (arg0->field_24 == 0)
+    {
+        arg0->field_28 = arg1;
+    }
+
+    arg0->field_30 = 0xF;
+    arg0->field_36 = 0;
+    arg0->field_34 = 0;
+
+    return arg0->field_24 >= arg0->field_28;
+}
+
+bool func_800D8620(s_800E06A0* arg0, s32 arg1, s32 arg2) // 0x800D8620
+{
+    if (arg0->field_24 == 0)
+    {
+        arg0->field_28 = arg2;
+    }
+
+    if (arg1 == -1)
+    {
+        arg1 = func_800D87AC(arg0);
+    }
+
+    switch (arg1 + 1)
+    {
+        default:
+        case 0:
+            arg0->field_30 = 1;
+            arg0->field_34 = 0;
+            arg0->field_36 = 0;
+            break;
+
+        case 2:
+            arg0->field_30 = 1;
+            arg0->field_34 = 0x32;
+            arg0->field_36 = 0x18;
+            break;
+
+        case 3:
+            arg0->field_30 = 1;
+            arg0->field_34 = 0x80;
+            arg0->field_36 = 0;
+            break;
+
+        case 4:
+            arg0->field_34 = 0;
+            arg0->field_30 = 4;
+            arg0->field_36 = FP_FROM(-((FP_TO(arg0->field_24 % 6144, 0xC) / 6144) * 0x50), 0xC) - 0x6C;
+            break;
+
+        case 5:
+            arg0->field_30 = 1;
+            arg0->field_34 = 0;
+            arg0->field_36 = 0;
+            arg0->field_36 = func_800D7394() % 320;
+            break;
+    }
+    return !(arg0->field_24 < arg0->field_28);
+}
+
+s32 func_800D87AC(s_800E06A0* arg0) // 0x800D87AC
+{
+    s32 temp_v1_2;
+    s32 var_s0;
+
+    var_s0 = 0;
+
+    if (arg0->field_24 == 0)
+    {
+        var_s0         = 1;
+        arg0->field_2C = func_800D8874();
+    }
+    else if (arg0->field_24 >= arg0->field_2C)
+    {
+        var_s0          = 1;
+        arg0->field_2C += func_800D8874();
+    }
+
+    if (var_s0 != 0)
+    {
+        temp_v1_2 = func_800D7394() & 0xFFF;
+        if (temp_v1_2 < 0x4CC)
+        {
+            arg0->field_23 = 0;
+        }
+        else if (temp_v1_2 < 0x800)
+        {
+            arg0->field_23 = 1;
+        }
+        else if (temp_v1_2 < 0xC51)
+        {
+            arg0->field_23 = 2;
+        }
+        else if (temp_v1_2 < 0xD47)
+        {
+            arg0->field_23 = 3;
+        }
+        else
+        {
+            arg0->field_23 = 4;
+        }
+    }
+    return arg0->field_23;
+}
+
+s32 func_800D8874(void) // 0x800D8874
+{
+    s16 temp;
+    s16 temp2;
+
+    temp2 = func_800D7394() & 0xFFF;
+    temp  = 0x800;
+
+    return Q12_MULT_PRECISE(temp, temp2) + 0x1000;
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D88C8);
 
