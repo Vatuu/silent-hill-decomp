@@ -3973,7 +3973,7 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     SVECTOR           endRelPos;
     MATRIX            matUnused;
     MATRIX            worldMat;
-    s_func_800700F8_2 sp60;
+    s_RayData sp60;
     VECTOR3           beamStart;
     VECTOR3           beamOffset;
     SVECTOR           polyFt3Pos;

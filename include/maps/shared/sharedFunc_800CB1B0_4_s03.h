@@ -22,7 +22,7 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
     } s_func_800CB1B0;
 
     s_func_8005E89C   sp10;
-    s_func_800700F8_2 sp140;
+    s_RayData sp140;
     s_Collision       sp160;
     VECTOR3           sp170;
     VECTOR3           sp180;
@@ -174,11 +174,11 @@ bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1)
     {
         sharedData_800DFB7C_0_s00[arg1].field_10.s_0.field_2 = CLAMP_LOW(sharedData_800DFB7C_0_s00[arg1].field_10.s_3.field_2 - (g_DeltaTime0 << 2), 0);
     }
-    else if (sp140.field_0 != 0 || sp160.groundHeight_0 < sharedData_800DFB7C_0_s00[arg1].vy_8)
+    else if (sp140.hit != 0 || sp160.groundHeight_0 < sharedData_800DFB7C_0_s00[arg1].vy_8)
     {
         sharedData_800DFB7C_0_s00[arg1].field_B++;
 
-        if (sp140.field_0 != 0 && sp140.field_10 == &g_SysWork.playerWork_4C.player_0)
+        if (sp140.hit != 0 && sp140.field_10 == &g_SysWork.playerWork_4C.player_0)
         {
             sub = sp140.field_10;
             sharedFunc_800CBE54_4_s03(&sp140.field_4, 1);

@@ -625,7 +625,7 @@ bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, q19_
         sharedData_800DE170_0_s01.vx = airScreamer->position_18.vx;
         sharedData_800DE170_0_s01.vy = airScreamer->position_18.vy + airScreamer->field_C8.field_0; // Head offset.
         sharedData_800DE170_0_s01.vz = airScreamer->position_18.vz;
-        return !func_8006D90C(&sharedData_800E2330_0_s01, &sharedData_800DE170_0_s01, inVec);
+        return !Ray_CheckLine(&sharedData_800E2330_0_s01, &sharedData_800DE170_0_s01, inVec);
     }
 
     return false;
@@ -9184,7 +9184,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
             temp2 = Q12_MULT_PRECISE(i, var_v1);
 
             sharedData_800E2330_0_s01.field_14   = temp;
-            sharedData_800E2330_0_s01.field_0    = temp_v0_2;
+            sharedData_800E2330_0_s01.hit    = temp_v0_2;
             sharedData_800E2330_0_s01.field_4.vx = temp3 + posX;
             sharedData_800E2330_0_s01.field_4.vy = temp2 + posY;
             sharedData_800E2330_0_s01.field_18   = sharedData_800E2330_0_s01.field_4.vy;

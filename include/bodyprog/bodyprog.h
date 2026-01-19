@@ -433,57 +433,58 @@ typedef struct
     q7_8  field_A; // Y??
     q7_8  field_C; // Some kind of bound or threshold?
     s16   field_E;
-} s_func_8006DCE0_6C; // Unknown size;
+} s_RayState_6C; // Unknown size;
 
 typedef struct
 {
     s16 field_0;
     s16 field_2;
-} s_func_8006DCE0_8C;
+} s_RayState_8C;
 
+// State for an in-progress ray trace.
 // Contains pointers to active characters among other things.
 typedef struct
 {
-    s32                field_0;
-    s16                field_4;
-    s16                field_6;
-    s16                field_8;
-    s8                 unk_A[2];
-    s32                field_C;  // } Q19.12 `VECTOR3`
-    s32                field_10; // }
-    s32                field_14; // }
-    s8                 unk_18[4];
-    s16                field_1C;
-    s8                 unk_1E[2];
-    s_SubCharacter*    field_20;
-    s16                field_24; // X } Q19.12
-    s16                field_26; // Z }
-    s32                field_28;
-    VECTOR3            field_2C; // Q23.8
-    s8                 unk_38[4];
-    s32                field_3C; // X  } Q23.8 `VECTOR3`?
-    s32                field_40; // Y? }
-    s32                field_44; // Z  }
-    s8                 unk_48[4];
-    s16                field_4C;
-    s16                field_4E;
-    SVECTOR            field_50; // Q23.8
-    u16                field_58;
-    s16                field_5A;
-    s16                field_5C;
-    s16                field_5E;
-    s16                field_60;
-    s8                 unk_62[2];
-    s_SubCharacter**   characters_64; // Active characters?
-    s32                characterCount_68;
-    s_func_8006DCE0_6C field_6C;
-    s32                field_7C;
-    s32                field_80;
-    u16                field_84;
-    u8                 unk_86[2];
-    s32                field_88;
-    s_func_8006DCE0_8C field_8C[1]; // Unknown size.
-} s_func_8006DCE0;
+    s32              field_0;
+    s16              field_4;
+    s16              field_6;
+    s16              field_8;
+    s8               unk_A[2];
+    s32              field_C;  // } Q19.12 `VECTOR3`
+    s32              field_10; // }
+    s32              field_14; // }
+    s8               unk_18[4];
+    s16              field_1C;
+    s8               unk_1E[2];
+    s_SubCharacter*  field_20;
+    s16              field_24; // X } Q19.12
+    s16              field_26; // Z }
+    s32              field_28;
+    VECTOR3          field_2C; // Q23.8
+    s8               unk_38[4];
+    s32              field_3C; // X  } Q23.8 `VECTOR3`?
+    s32              field_40; // Y? }
+    s32              field_44; // Z  }
+    s8               unk_48[4];
+    s16              field_4C;
+    s16              field_4E;
+    SVECTOR          field_50; // Q23.8
+    u16              field_58;
+    s16              field_5A;
+    s16              field_5C;
+    s16              field_5E;
+    s16              field_60;
+    s8               unk_62[2];
+    s_SubCharacter** characters_64; // Active characters?
+    s32              characterCount_68;
+    s_RayState_6C    field_6C;
+    s32              field_7C;
+    s32              field_80;
+    u16              field_84;
+    u8               unk_86[2];
+    s32              field_88;
+    s_RayState_8C    field_8C[1]; // Unknown size.
+} s_RayState;
 
 // Function from lib_unk
 typedef struct _func_8009ECCC
@@ -1724,9 +1725,10 @@ typedef struct
     u8 presetIdx2_1;
 } s_MapEffectsPresetIdxs;
 
+// User data for a finished ray trace.
 typedef struct
 {
-    s8              field_0; /** `bool` */
+    s8              hit; /** `bool` */
     u8              field_1;
     s8              unk_2[2]; // Probably padding.
     VECTOR3         field_4;  // Q19.12
@@ -1734,7 +1736,7 @@ typedef struct
     s32             field_14;
     s32             field_18;
     q7_8            field_1C; // Angle.
-} s_func_800700F8_2;
+} s_RayData;
 
 typedef struct
 {
@@ -2757,7 +2759,7 @@ extern q3_12 D_800C4700[];
 
 extern s16 D_800C4702;
 
-extern s_func_800700F8_2 D_800C4728;
+extern s_RayData D_800C4728;
 
 extern DVECTOR D_800C4748[];
 
@@ -2772,7 +2774,7 @@ extern VECTOR3 D_800C47C8[];
 
 extern VECTOR3 D_800C47E8;
 
-extern s_func_800700F8_2 D_800C47F8;
+extern s_RayData D_800C47F8;
 
 extern s_800C4818 D_800C4818;
 
@@ -4011,35 +4013,35 @@ void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2);
 /** `arg1` is likely Q23.8. */
 void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2);
 
-bool func_8006D90C(s_func_800700F8_2* arg0, VECTOR3* pos0, VECTOR3* pos1);
+bool Ray_CheckLine(s_RayData* ray, VECTOR3* from, VECTOR3* to);
 
-bool func_8006DA08(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, s_SubCharacter* chara);
+bool func_8006DA08(s_RayData* arg0, VECTOR3* pos, VECTOR3* offset, s_SubCharacter* chara);
 
-void func_8006DAE4(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, s32 arg3);
+void Ray_SetMiss(s_RayData* arg0, VECTOR3* pos, VECTOR3* dir, s32 arg3);
 
-bool func_8006DB3C(s_func_800700F8_2* arg0, VECTOR3* pos, VECTOR3* offset, s_SubCharacter* chara);
+bool func_8006DB3C(s_RayData* arg0, VECTOR3* pos, VECTOR3* offset, s_SubCharacter* chara);
 
-bool func_8006DC18(s_func_800700F8_2* arg0, VECTOR3* vec1, VECTOR3* vec2);
+bool func_8006DC18(s_RayData* arg0, VECTOR3* vec1, VECTOR3* vec2);
 
-bool func_8006DCE0(s_func_8006DCE0* arg0, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* offset, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount);
+bool Ray_SetupTrace(s_RayState* arg0, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* dir, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount);
 
-bool func_8006DEB0(s_func_800700F8_2* arg0, s_func_8006DCE0* arg1);
+bool Ray_RunTrace(s_RayData* ray, s_RayState* arg1);
 
-void func_8006E0AC(s_func_8006DCE0* arg0, s_IpdCollisionData* ipdColl);
+void func_8006E0AC(s_RayState* arg0, s_IpdCollisionData* ipdColl);
 
 void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2);
 
 void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ);
 
-void func_8006E53C(s_func_8006DCE0* arg0, s_IpdCollisionData_20* arg1, s_IpdCollisionData* arg2);
+void func_8006E53C(s_RayState* arg0, s_IpdCollisionData_20* arg1, s_IpdCollisionData* arg2);
 
-void func_8006E78C(s_func_8006DCE0* arg0, s_IpdCollisionData_14* arg1, SVECTOR3* arg2, s_IpdCollisionData_10* arg3, s32 arg4);
+void func_8006E78C(s_RayState* arg0, s_IpdCollisionData_14* arg1, SVECTOR3* arg2, s_IpdCollisionData_10* arg3, s32 arg4);
 
-void func_8006EB8C(s_func_8006DCE0* arg0, s_IpdCollisionData_18* arg1);
+void func_8006EB8C(s_RayState* arg0, s_IpdCollisionData_18* arg1);
 
-void func_8006EE0C(s_func_8006DCE0_6C* arg0, s32 arg1, s_SubCharacter* chara);
+void func_8006EE0C(s_RayState_6C* arg0, s32 arg1, s_SubCharacter* chara);
 
-void func_8006EEB8(s_func_8006DCE0* arg0, s_SubCharacter* chara);
+void func_8006EEB8(s_RayState* arg0, s_SubCharacter* chara);
 
 void func_8006F250(s32* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ);
 

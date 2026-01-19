@@ -2194,9 +2194,9 @@ s32 func_800D4488(VECTOR3* arg0, s32 arg1) // 0x800D4488
 
 s32 func_800D4558(q19_12 angle, s32 arg1, s32 arg2) // 0x800D4558
 {
-    s_func_800700F8_2 sp10;
-    VECTOR3           sp30;
-    VECTOR3           sp40;
+    s_RayData sp10;
+    VECTOR3   sp30;
+    VECTOR3   sp40;
 
     sp40.vx = arg1;
     sp40.vy = -0x4CC;

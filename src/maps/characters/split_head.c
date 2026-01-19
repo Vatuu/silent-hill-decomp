@@ -425,7 +425,7 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
 
 void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
 {
-    s_func_800700F8_2 sp10;
+    s_RayData sp10;
     VECTOR3           sp30;
     q3_12             angleToPlayer2;
     q3_12             angleDeltaToPlayer;
@@ -501,7 +501,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
 
             func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
 
-            if (sp10.field_0 == 0 || sp10.field_10 != 0)
+            if (sp10.hit == 0 || sp10.field_10 != 0)
             {
                 splitHeadProps.angle_F0 = angle1 + (angleToPlayer + angle);
                 break;
@@ -579,7 +579,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
 
     if (distToPlayer < Q12(6.4f) &&
         (angleDeltaToPlayer < FP_ANGLE(7.5f) || distToPlayer > Q12(3.2f) && angleDeltaToPlayer < FP_ANGLE(15.0f)) &&
-        (sp10.field_0 == 0 || sp10.field_10 != 0))
+        (sp10.hit == 0 || sp10.field_10 != 0))
     {
         splitHead->model_0.controlState_2 = SplitHeadControl_3;
     }
@@ -754,7 +754,7 @@ void Ai_SplitHead_Control_4(s_SubCharacter* splitHead)
 
 void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
 {
-    s_func_800700F8_2 sp10;
+    s_RayData sp10;
     VECTOR3           sp30;
     q3_12             angle1;
     q3_12             angle2;
@@ -830,7 +830,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
 
             func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
 
-            if (sp10.field_0 == 0 || sp10.field_10 != 0)
+            if (sp10.hit == 0 || sp10.field_10 != 0)
             {
                 splitHeadProps.angle_F0 = angle3 + (angleToPlayer + angle);
                 break;
@@ -909,7 +909,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
 
     if (distToPlayer > Q12(2.85f) && distToPlayer < Q12(4.0f) &&
         angle2 < FP_ANGLE(15.0f) &&
-        (sp10.field_0 == 0 || sp10.field_10 != 0))
+        (sp10.hit == 0 || sp10.field_10 != 0))
     {
         splitHead->model_0.controlState_2 = SplitHeadControl_1;
         if (!Rng_TestProbabilityBits(3))

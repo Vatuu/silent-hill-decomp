@@ -4146,7 +4146,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         posZ             = temp_s2 - Q12_MULT_PRECISE(temp_s3, var_s1);
 
         D_800C47C8[1].vz = posZ;
-        var_v1           = func_8006D90C(&D_800C47F8, &D_800C47C8[0], &D_800C47C8[1]);
+        var_v1           = Ray_CheckLine(&D_800C47F8, &D_800C47C8[0], &D_800C47C8[1]);
 
         if (var_v1 != false)
         {

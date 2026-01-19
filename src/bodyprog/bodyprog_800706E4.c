@@ -7551,17 +7551,17 @@ void Player_FlexRotationYReset(void) // 0x8007D6E0
 
 s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
 {
-    s_func_800700F8_2 sp10[2];
-    VECTOR3           vecs[4];
-    bool              ret[2];
-    s32               temp_lo;
-    s32               temp_s0;
-    s32               temp_s1;
-    s32               temp_s3;
-    s32               temp_s4;
-    s32               temp_s5;
-    q3_12             angle;
-    q4_12             angleDelta;
+    s_RayData sp10[2];
+    VECTOR3   vecs[4];
+    bool      ret[2];
+    s32       temp_lo;
+    s32       temp_s0;
+    s32       temp_s1;
+    s32       temp_s3;
+    s32       temp_s4;
+    s32       temp_s5;
+    q3_12     angle;
+    q4_12     angleDelta;
 
     temp_s0  = g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 >> 3;
     temp_s0 += Q12(0.75f);
@@ -7583,7 +7583,7 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
     vecs[2].vx = chara->position_18.vx + temp_s4;
     vecs[2].vz = chara->position_18.vz - temp_s3;
 
-    ret[0] = func_8006D90C(&sp10[0], &vecs[2], &vecs[0]);
+    ret[0] = Ray_CheckLine(&sp10[0], &vecs[2], &vecs[0]);
 
     if (ret[0])
     {
@@ -7594,7 +7594,7 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
         vecs[3].vx = chara->position_18.vx - temp_s4;
         vecs[3].vz = chara->position_18.vz + temp_s3;
 
-        ret[1] = func_8006D90C(&sp10[1], &vecs[3], &vecs[1]);
+        ret[1] = Ray_CheckLine(&sp10[1], &vecs[3], &vecs[1]);
 
         if (ret[1])
         {
