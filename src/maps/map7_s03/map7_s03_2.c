@@ -106,7 +106,16 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D663C);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6690);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6750);
+s32 func_800D6750(s32* sxy) // 0x800D6750
+{
+    SVECTOR sp10;
+    s32     sp18;
+
+    sp10.vx = 0;
+    sp10.vy = 0;
+    sp10.vz = 0;
+    return RotTransPers(&sp10, sxy, &sp18, &sp18);
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6788);
 
@@ -128,7 +137,16 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6FA0);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6FF4);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D70B4);
+s32 func_800D70B4(s32* sxy) // 0x800D70B4
+{
+    SVECTOR sp10;
+    s32     sp18;
+
+    sp10.vx = 0;
+    sp10.vy = 0;
+    sp10.vz = 0;
+    return RotTransPers(&sp10, sxy, &sp18, &sp18);
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D70EC);
 
@@ -193,7 +211,16 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7B78);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7BF4);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7CB4);
+s32 func_800D7CB4(s32* sxy) // 0x800D7CB4
+{
+    SVECTOR sp10;
+    s32     sp18;
+
+    sp10.vx = 0;
+    sp10.vy = 0;
+    sp10.vz = 0;
+    return RotTransPers(&sp10, sxy, &sp18, &sp18);
+}
 
 void func_800D7CEC(void) // 0x800D7CEC
 {
@@ -1016,7 +1043,16 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF7F8);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF84C);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF90C);
+s32 func_800DF90C(void) // 0x800DF90C
+{
+    SVECTOR sp10;
+    s32     sp18;
+
+    sp10.vx = 0;
+    sp10.vy = 0;
+    sp10.vz = 0;
+    return RotTransPers(&sp10, &sp18, &sp18, &sp18);
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF944);
 
@@ -1340,7 +1376,18 @@ void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINAT
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E0A34);
+void func_800E0A34(void) // 0x800E0A34
+{
+    s_FsImageDesc tex;
+
+    tex.tPage[0] = 0;
+    tex.tPage[1] = 21;
+    tex.u        = 0;
+    tex.v        = 0;
+    tex.clutX    = 48;
+    tex.clutY    = 0;
+    Fs_QueueStartReadTim(FILE_TIM_BOSEF00_TIM, FS_BUFFER_1, &tex);
+}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800E0A80
 
@@ -4176,7 +4223,14 @@ void func_800E941C(void) // 0x800E941C
     WorldGfx_CharaModelProcessAllLoads();
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E9444);
+void func_800E9444(e_CharacterId charaId, s_SubCharacter* chara) // 0x800E9444
+{
+    bzero(chara, sizeof(s_SubCharacter));
+
+    chara->model_0.charaId_0       = charaId;
+    chara->model_0.controlState_2  = 0;
+    chara->model_0.anim_4.flags_2 |= 2;
+}
 
 void func_800E9490(s_SubCharacter* chara) // 0x800E9490
 {

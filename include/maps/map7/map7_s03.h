@@ -251,6 +251,8 @@ void Ai_Incubator_Init(s_SubCharacter* incubator);
 
 void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+s32 func_800D6750(s32* sxy);
+
 void func_800D6788(void); // Assumed return type.
 
 void func_800D6804(VECTOR3*, VECTOR3*); // Assumed args/return type.
@@ -259,9 +261,13 @@ void func_800D70EC(void);
 
 void func_800D7144(VECTOR3*);
 
+s32 func_800D70B4(s32* sxy);
+
 void func_800D71A4(s32 arg0);
 
 void func_800D74F4(s32 x, s32 z, s32 val);
+
+s32 func_800D7CB4(s32* sxy);
 
 void func_800D7CEC(void);
 
@@ -368,6 +374,7 @@ void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DF074(s_SubCharacter* incubus);
 void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+s32  func_800DF90C(void);
 void func_800DFA14(void);
 s32 func_800DFB04(void);
 void func_800DFB2C(bool disableDamage);
@@ -436,7 +443,7 @@ void func_800E9260(e_CharacterId, s32);
 
 void func_800E941C(void);
 
-void func_800E9444(e_CharacterId, s_SubCharacter*);
+void func_800E9444(e_CharacterId charaId, s_SubCharacter* chara);
 
 void func_800E9490(s_SubCharacter* chara);
 
