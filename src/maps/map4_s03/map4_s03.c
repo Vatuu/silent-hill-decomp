@@ -1843,7 +1843,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     chara->health_B0 = Q12(3000.0f);
 
-    localChara->properties_E4.dummy.properties_E8[13].val32 = -1;
+    localChara->properties_E4.twinfeeler.field_120 = -1;
 
     chara->field_D4.radius_0 = Q12(0.3f);
 
@@ -1853,14 +1853,14 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->field_E1_0      = 4;
 
-    localChara->properties_E4.dummy.properties_E8[1].val32     = 0;
-    localChara->properties_E4.dummy.properties_E8[2].val32     = 0;
-    localChara->properties_E4.dummy.properties_E8[3].val32     = 0;
-    localChara->properties_E4.dummy.properties_E8[9].val32     = 0;
-    localChara->properties_E4.dummy.properties_E8[10].val16[0] = 0;
-    localChara->properties_E4.dummy.properties_E8[11].val32    = 0;
-    localChara->properties_E4.dummy.properties_E8[6].val32     = posX;
-    localChara->properties_E4.dummy.properties_E8[7].val32     = posZ;
+    localChara->properties_E4.twinfeeler.field_EC.position_0.vx = 0;
+    localChara->properties_E4.twinfeeler.field_EC.position_0.vy = 0;
+    localChara->properties_E4.twinfeeler.field_EC.position_0.vz = 0;
+    localChara->properties_E4.twinfeeler.field_10C              = 0;
+    localChara->properties_E4.twinfeeler.field_110              = 0;
+    localChara->properties_E4.twinfeeler.field_114              = 0;
+    localChara->properties_E4.twinfeeler.field_100              = posX;
+    localChara->properties_E4.twinfeeler.field_104              = posZ;
 
     func_800D3CBC(chara);
 
@@ -1879,7 +1879,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
         chara->model_0.stateStep_3 = 0;
     }
 
-    *(u16*)&localChara->properties_E4.dummy.properties_E8[0].val16[1] = -1;
+    *(u16*)&localChara->properties_E4.twinfeeler.field_E8.val16[1] = -1;
 
     func_800D3B74(chara);
 
