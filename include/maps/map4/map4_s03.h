@@ -522,4 +522,6 @@ s32 func_800D87AC(s_800E06A0* arg0);
 
 s32 func_800D8874(void);
 
+void func_800DA718(void);
+
 #endif

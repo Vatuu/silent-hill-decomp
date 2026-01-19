@@ -4923,4 +4923,19 @@ void func_800DA3E0(void) // 0x800DA3E0
     }
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800DA718);
+void func_800DA718(void) // 0x800DA718
+{
+    void** addr;
+
+    if (Savegame_EventFlagGet(EventFlag_323) && !Savegame_EventFlagGet(EventFlag_325))
+    {
+        addr  = &g_MapOverlayHeader.charaUpdateFuncs_194[Chara_Twinfeeler];
+        *addr = Ai_Twinfeeler_Update;
+
+        Savegame_EventFlagSet(EventFlag_325);
+
+        Fs_QueueStartReadTim(FILE_TIM_BLOOD_TIM, FS_BUFFER_1, &D_800A908C);
+        Fs_QueueStartReadTim(FILE_TEST_WARMTEST_TIM, FS_BUFFER_1, &D_800A9094);
+        Fs_QueueWaitForEmpty();
+    }
+}
