@@ -251,17 +251,21 @@ void Ai_Incubator_Init(s_SubCharacter* incubator);
 
 void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+void func_800D663C(void);
+
 s32 func_800D6750(s32* sxy);
 
 void func_800D6788(void); // Assumed return type.
 
 void func_800D6804(VECTOR3*, VECTOR3*); // Assumed args/return type.
 
+void func_800D6FA0(void);
+
+s32 func_800D70B4(s32* sxy);
+
 void func_800D70EC(void);
 
 void func_800D7144(VECTOR3*);
-
-s32 func_800D70B4(s32* sxy);
 
 void func_800D71A4(s32 arg0);
 
@@ -308,6 +312,8 @@ void func_800D952C(void);
 void func_800DA4B4(s32* arg0, s32* arg1); // Assumed types.
 
 void func_800DA774(s_800ED7E0_ptr*);
+
+void func_800DACFC(VECTOR3* vec, s32 arg1, s32 arg2);
 
 void func_800DAD54(void);
 
@@ -374,6 +380,7 @@ void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DF074(s_SubCharacter* incubus);
 void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+void func_800DF7F8(void);
 s32  func_800DF90C(void);
 void func_800DFA14(void);
 s32 func_800DFB04(void);

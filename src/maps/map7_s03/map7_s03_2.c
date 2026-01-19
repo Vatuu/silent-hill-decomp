@@ -102,7 +102,12 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D625C);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6548);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D663C);
+void func_800D663C(void) // 0x800D663C
+{
+    memset(FS_BUFFER_1 + 0x34, 0, 0x29);
+    memset(FS_BUFFER_1 + 0x5D, 0, 0x9C5);
+    memset(FS_BUFFER_1 + 0xA22, 0, 0x29);
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6690);
 
@@ -133,7 +138,12 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6C0C);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6EF8);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6FA0);
+void func_800D6FA0(void) // 0x800D6FA0
+{
+    memset(FS_BUFFER_1 + 0x34, 0, 0x31);
+    memset(FS_BUFFER_1 + 0x65, 0, 0x961);
+    memset(FS_BUFFER_1 + 0x9C6, 0, 0x31);
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6FF4);
 
@@ -398,7 +408,11 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DAB18);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DAC04);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DACFC);
+void func_800DACFC(VECTOR3* vec, s32 arg1, s32 arg2) // 0x800DACFC
+{
+    func_800DAB18(vec, arg2, 0, Q12(2.5f));
+    func_800DAC04(vec, arg1, arg2);
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DAD54);
 
@@ -1039,7 +1053,13 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF458);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF750);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF7F8);
+void func_800DF7F8(void) // 0x800DF7F8
+{
+    // TODO: FS_BUFFER?
+    memset(0x8018C634, 0, 0x29);
+    memset(0x8018C65D, 0, 0x4F7);
+    memset(0x8018CB54, 0, 0x29);
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF84C);
 
