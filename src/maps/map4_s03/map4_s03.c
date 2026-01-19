@@ -4861,10 +4861,66 @@ void func_800D9BB0(void) // 0x800D9BB0
     }
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800DA3E0);
+void func_800DA3E0(void) // 0x800DA3E0
+{
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+
+    if ((PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) || PLAYER_IN_MAP_CHUNK(vx, 1, 5, -1, 5)) &&
+        PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        func_800D7718();
+        if (D_800E05E0 == 0)
+        {
+            D_800E05E0++;
+            if (Savegame_EventFlagGet(EventFlag_332))
+            {
+                func_800D76BC(3);
+            }
+        }
+
+        if (Savegame_EventFlagGet(EventFlag_333))
+        {
+            if (D_800E05E1 == 0)
+            {
+                SD_Call(Sfx_Unk1563);
+                SD_Call(Sfx_Unk1564);
+                D_800E05E1++;
+            }
+
+            func_8005DE0C(Sfx_Unk1563, &QVECTOR3(162.5f, -1.125f, 51.45f), Q8(0.5f), Q12(48.0f), 0);
+            func_8005DE0C(Sfx_Unk1564, &QVECTOR3(166.421f, -2.0f, 52.578f), Q8(0.5f), Q12(48.0f), 0);
+        }
+    }
+    else
+    {
+        D_800E05E0 = 0;
+
+        if (D_800E05E1 != 0)
+        {
+            Sd_SfxStop(Sfx_Unk1563);
+            Sd_SfxStop(Sfx_Unk1564);
+        }
+
+        D_800E05E1 = 0;
+    }
+
+    if ((PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) || PLAYER_IN_MAP_CHUNK(vx, 1, 5, -1, 5)) &&
+        PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
+    {
+        if (vcRetCamMvSmoothF() == 0 && (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(125.8f) || D_800E05E2 == 1))
+        {
+            if (D_800E05E2 != 0)
+            {
+                Gfx_MapInitMapEffectsUpdate(6, 3);
+            }
+            else
+            {
+                Gfx_MapInitMapEffectsUpdate(6, 20);
+            }
+
+            D_800E05E2 ^= 1;
+        }
+    }
+}
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800DA718);
-
-INCLUDE_RODATA("maps/map4_s03/nonmatchings/map4_s03", D_800CB08C);
-
-INCLUDE_RODATA("maps/map4_s03/nonmatchings/map4_s03", D_800CB098);

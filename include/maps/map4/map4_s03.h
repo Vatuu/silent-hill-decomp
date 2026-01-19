@@ -195,9 +195,9 @@ extern s32 D_800E05A8;   // Angle?
 extern q3_12 D_800E05AC; // Angle?
 extern u16 D_800E05AE;
 
-extern s8 D_800E05E0;
-extern s8 D_800E05E1;
-extern s8 D_800E05E2;
+extern u8 D_800E05E0;
+extern u8 D_800E05E1;
+extern u8 D_800E05E2;
 
 extern s_800E0698 D_800E0698;
 
@@ -477,6 +477,8 @@ void func_800D9824(void);
 void Map_WorldObjectsInit(void);
 
 void func_800D9BB0(void);
+
+void func_800DA3E0(void);
 
 void func_800D0FD4(s32* ord, void* arg1, u8* arg2, MATRIX* arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, s32 abr);
 
