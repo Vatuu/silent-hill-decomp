@@ -2402,6 +2402,8 @@ bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 arg1);
 
 bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1);
 
+void sharedFunc_800CB0A4_4_s03(VECTOR3* arg0, VECTOR3* arg1);
+
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {
     anim->animInfo_C  = animInfo;

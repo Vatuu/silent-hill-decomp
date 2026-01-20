@@ -1572,6 +1572,23 @@ typedef struct _PropertiesTwinfeeler
 } s_PropertiesTwinfeeler;
 STATIC_ASSERT_SIZEOF(s_PropertiesTwinfeeler, 64);
 
+typedef struct _PropertiesFloatstinger
+{
+    s16        field_E8;
+    s8         unk_EA[2];
+    u_Property properties_EC[3];
+    u16        field_F8;
+    u16        field_FA;
+    u16        field_FC;
+    s8         unk_FE[2];
+    s32        field_100;
+    u8         field_104;
+    s8         unk_105[3];
+    s32        field_108;
+    u_Property properties_10C[7];
+} s_PropertiesFloatstinger;
+STATIC_ASSERT_SIZEOF(s_PropertiesFloatstinger, 64);
+
 /** Offsets for translation? */
 typedef struct
 {
@@ -1674,6 +1691,7 @@ typedef struct _SubCharacter
         s_PropertiesSplitHead       splitHead;
         s_PropertiesStalker         stalker;
         s_PropertiesTwinfeeler      twinfeeler;
+        s_PropertiesFloatstinger    floatstinger;
     } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
