@@ -1271,7 +1271,21 @@ void func_800DFF44(s_SubCharacter* chara) // 0x800DFF44
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DFF60);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E04C4);
+q19_12 func_800E04C4(void) // 0x800E04C4
+{
+    q19_12 base;
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    {
+        base = Q12(2.0f);
+    }
+    else
+    {
+        base = Q12(5.0f);
+    }
+
+    return base + Rng_GenerateInt(0, Q12(2.0f) - 1);
+}
 
 void func_800E0528(s_SubCharacter* chara) // 0x800E0528
 {

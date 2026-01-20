@@ -394,6 +394,7 @@ void func_800DFCE4(s_SubCharacter* chara);
 void func_800DFEF0(s_SubCharacter* chara);
 void func_800DFF28(s_SubCharacter* chara);
 void func_800DFF44(s_SubCharacter* chara);
+q19_12 func_800E04C4(void);
 void func_800E0528(s_SubCharacter* chara);
 void func_800E05DC(s_SubCharacter*, GsCOORDINATE2*);
 void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord);
