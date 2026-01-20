@@ -4524,6 +4524,37 @@ void func_800E9AC8(void) // 0x800E9AC8
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E9C28);
+void func_800E9C28(void) // 0x800E9C28
+{
+    g_Screen_FadeStatus = ScreenFadeState_FadeOutComplete;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            func_80085EB8(2, &g_SysWork.playerWork_4C.player_0, 0, false);
+            g_SysWork.sysStateStep_C[0]++;
+            break;
+
+        case 1:
+            func_80087EDC(5);
+            break;
+
+        case 2:
+            g_SavegamePtr->isNextFearMode_25C = true;
+
+            g_SavegamePtr->clearGameCount_24A++;
+            g_SavegamePtr->clearGameCount_24A = CLAMP(g_SavegamePtr->clearGameCount_24A, 1, 99);
+
+            g_SavegamePtr->field_27A                             = 1 << (D_800F481C - 1);
+            g_SavegamePtr->clearGameEndings_24B                 |= 1 << (D_800F481C - 1);
+            g_GameWorkConst->config_0.optExtraOptionsEnabled_27 |= 1 << (D_800F481C - 1);
+
+            g_SavegamePtr->locationId_A8 = SaveLocationId_NextFear;
+
+            SysWork_StateSetNext(SysState_StatusMenu);
+            break;
+    }
+}
 
 INCLUDE_RODATA("maps/map7_s03/nonmatchings/map7_s03_2", D_800CD168);
