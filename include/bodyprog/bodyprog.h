@@ -1179,7 +1179,7 @@ STATIC_ASSERT_SIZEOF(s_HeldItem, 0x2C);
 /** @brief World GFX workspace.
  * TODO: Could be `s_RendererWork`? Will depend on where other data resides.
  * Will: `s_WorldModelWork` fits better, this is mainly responsible for handling model data.
- * `s_800C4168` should have this name as it is used for general GFX.
+ * `s_WorldEnvWork` should have this name as it is used for general GFX.
  */
 typedef struct _WorldGfxWork
 {
@@ -1272,10 +1272,14 @@ typedef struct
 typedef struct
 {
     VECTOR3 field_0[2][1];
-} s_800C4168_84;
+} s_WorldEnvWork_84;
 
-/** World GFX struct? */
-typedef struct
+/** @brief World environment workspace.
+ *  Holds fog distances and ramps, lighting and color parameters,
+ *  water zone references, and other per-map environmental data
+ *  used during world rendering.
+ */
+typedef struct _WorldEnvWork
 {
     u8            field_0;        // `bool`?
     u8            isFogEnabled_1; /** `bool` */
@@ -1283,10 +1287,10 @@ typedef struct
     u8            field_3;        // Enviroment lighting.
     s_WaterZone*  waterZones_4;
     s32           screenBrightness_8;
-    s32           field_C;
-    q23_8         drawDistance_10; // Name from SHME, "has no effect when fog is disabled".
-    s32           fogRelated_14;   // "FogThing1" from SHME. Affects the distance where fog begins.
-    s32           fogRelated_18;   // "FogThing2" from SHME. Affects the distance where fog begins.
+    s32           fogNearDistance_C;
+    q23_8         fogFarDistance_10; // "DrawDistanmce" in SHME, "has no effect when fog is disabled".
+    s32           fogDepthShift_14;   // "FogThing1" from SHME. Affects the distance where fog begins.
+    s32           fogIntensity_18;   // "FogThing2" from SHME. Affects the distance where fog begins.
     CVECTOR       fogColor_1C;
     s32           field_20;        // Map lighting.
     u8            field_24; // } RGB. Character color lighting.
@@ -1303,10 +1307,10 @@ typedef struct
     SVECTOR       field_6C; // Player current angles?
     SVECTOR       field_74;
     SVECTOR       field_7C;
-    s_800C4168_84 field_84[3];
-    u8            field_CC[128]; // Lighting of vertices?
+    s_WorldEnvWork_84 field_84[3];
+    u8            fogRamp_CC[128]; // Fog-related values based on `fogNearDistance_C`/`fogFarDistance_10`.
     u16           field_14C;
-} s_800C4168;
+} s_WorldEnvWork;
 
 typedef struct
 {
@@ -2634,12 +2638,10 @@ extern GsF_LIGHT D_800C3A88[];
 
 extern u8 D_800C3E40;
 
-/** Functions from `bodyprog_8003AB28` access `D_800C4168` as constant, but some functions from `bodyprog_80055028` write to it.
- * It appears that D_800C4168 is intended to be defined inside `bodyprog_80055028` as writable and declared as read-only (`const`) outside of it.
+/** Functions from `bodyprog_8003AB28` access `g_WorldEnvWork` as constant, but some functions from `bodyprog_80055028` write to it.
+ * It appears that g_WorldEnvWork is intended to be defined inside `bodyprog_80055028` as writable and declared as read-only (`const`) outside of it.
  */
-// extern s_800C4168 D_800C4168;
-
-extern u16 D_800C42B4; // TODO: May be part of `s_800C4168`.
+// extern s_WorldEnvWork g_WorldEnvWork;
 
 extern GsCOORDINATE2* D_800C42B8;
 
@@ -2745,7 +2747,7 @@ extern VECTOR3 D_800C4610;
 
 extern s8 D_800C4560;
 
-extern u8 D_800C4561;
+extern u8 g_Player_IsDead;
 
 extern s_Collision D_800C4620;
 
@@ -3258,7 +3260,7 @@ bool Gfx_PickupItemAnimate(u8 itemId);
  */
 void Items_AmmoReloadCalculation(s32* currentAmmo, s32* availableAmmo, u8 gunIdx); // 0x80054FC0
 
-void func_80055028(void);
+void WorldEnv_Init(void);
 
 /** @brief Draws 2D screen effects for the flashlight's lens flare and glow. */
 void Gfx_2dEffectsDraw(void);
@@ -3266,7 +3268,7 @@ void Gfx_2dEffectsDraw(void);
 /** Sets visual world parameters. */
 void func_80055330(u8 arg0, s32 arg1, u8 arg2, s32 tintR, s32 tintG, s32 tintB, q23_8 brightness);
 
-void Gfx_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB);
+void WorldEnv_FogParamsSet(u8 isFogEnabled, u8 fogColorR, u8 fogColorG, u8 fogColorB);
 
 void func_800553E0(u32 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
 
@@ -3285,7 +3287,7 @@ s32 func_800557DC(void);
 
 void func_80055814(s32 arg0);
 
-void func_80055840(q19_12 arg0, q19_12 drawDist);
+void WorldEnv_FogDistanceSet(q19_12 nearDist, q19_12 farDist);
 
 s32 func_800559A8(s32 arg0);
 
@@ -3294,8 +3296,8 @@ u8 func_80055A50(s32 arg0);
 void func_80055A90(CVECTOR* arg0, CVECTOR* arg1, u8 arg2, s32 arg3);
 
 /** @brief Applies uniform lighting and fog shading to `color`, outputting to `result`.
- * The fog factor is derived from `arg2` via `D_800C4168.field_CC` and blends the lit color toward the far/fog color in `D_800C4168.field_1C/field_1D/field_1E`,
- * with lighting strength from `D_800C4168.field_20` applied equally on all axes.
+ * The fog factor is derived from `arg2` via `g_WorldEnvWork.fogRamp_CC` and blends the lit color toward the far/fog color in `g_WorldEnvWork.field_1C/field_1D/field_1E`,
+ * with lighting strength from `g_WorldEnvWork.field_20` applied equally on all axes.
  */
 void func_80055B74(CVECTOR* result, CVECTOR* color, s32 arg2);
 
@@ -4611,13 +4613,13 @@ void func_8007FB94(s_SubCharacter*, s_PlayerExtra*, s32);
 /** Resets several global variables to 0. */
 void func_8007F1CC(void);
 
-void func_8007F250(u8* ptr, u8 disableDamage);
+void Player_DisableDamage(u8* ptr, u8 disableDamage);
 
 /** Some kind of player anim state check. */
-bool func_8007F26C(void);
+bool Player_IsAttacking(void);
 
 /** Some kind of player anim state check. */
-bool func_8007F2AC(void);
+bool Player_IsBusy(void);
 
 /** Gets something from the player's current animation? */
 s16 Player_AnimGetSomething(void);

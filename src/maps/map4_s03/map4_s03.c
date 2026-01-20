@@ -1758,7 +1758,7 @@ u32 func_800D3B1C(void) // 0x800D3B1C
 {
     u8 sp10;
 
-    func_8007F250(&sp10, 0);
+    Player_DisableDamage(&sp10, 0);
     return sp10;
 }
 
@@ -1766,7 +1766,7 @@ void func_800D3B44(bool disableDamage)
 {
     u8 sp10;
 
-    func_8007F250(&sp10, disableDamage);
+    Player_DisableDamage(&sp10, disableDamage);
 }
 
 void func_800D3B68(s_SubCharacter* chara) // 0x800D3B68

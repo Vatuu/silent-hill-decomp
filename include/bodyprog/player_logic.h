@@ -553,7 +553,7 @@ void Player_CharaRotate(s32 speed);
 void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerBodyState lowerBodyState);
 
 /** Audio-related. */
-bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 keyframe1, s32 sfx, s8 pitch);
+bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 keyframe1, s32 sfx, s8 pitch);
 
 /** @brief Main update function for player functionality.
  *

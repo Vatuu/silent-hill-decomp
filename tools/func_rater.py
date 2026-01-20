@@ -334,6 +334,7 @@ def print_results(analyses: List[AsmFileAnalysis], show_data_refs: bool = False)
     total_undeclared = sum(len(a.undeclared_data_refs) for a in analyses)
     
     print(f"\nSummary:")
+    print(f"  Unmatched file count: {len(analyses)}")
     print(f"  Total lines of assembly: {total_lines}")
     print(f"  Average difficulty: {avg_difficulty:.1f}")
     print(f"  Files with GTE opcodes: {files_with_gte}")

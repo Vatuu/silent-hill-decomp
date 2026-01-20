@@ -762,7 +762,7 @@ s_LinkedBone* WorldGfx_CharaModelBonesGet(e_CharacterId charaId) // 0x8003BE50
 // MAP GRAPHIC INITALIZATION
 // ========================================
 
-extern s_800C4168 const D_800C4168;
+extern s_WorldEnvWork const g_WorldEnvWork;
 
 void GameFs_BgEtcGfxLoad(void) // 0x8003BE6C
 {
@@ -842,7 +842,7 @@ s32 Map_SpeedZoneTypeGet(q19_12 posX, q19_12 posZ) // 0x8003BF60
 
 void WorldGfx_MapInit(void) // 0x8003C048
 {
-    func_80055028();
+    WorldEnv_Init();
 
     g_WorldGfx.useStoredPoint_4 = false;
 
@@ -976,7 +976,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
                           // In Old Silent Hill (after Cafe 5to2) while standing still, this value is
                           // the same as `g_SysWork.playerWork_4C.player_0.position_18`.
     VECTOR3         pos1; // Draw distance?
-                          // If the conditional `if (D_800C4168.isFogEnabled_1)` is reversed
+                          // If the conditional `if (g_WorldEnvWork.isFogEnabled_1)` is reversed
                           // to run the `else` block, when fog is enabled, the draw distance
                           // is slightly reduced.
                           //
@@ -1018,7 +1018,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         pos0.vz = Q12(200.0f);
     }
 
-    if (D_800C4168.isFogEnabled_1)
+    if (g_WorldEnvWork.isFogEnabled_1)
     {
         vwGetViewPosition(&pos1);
         vwGetViewAngle(&ang);
@@ -1926,13 +1926,13 @@ void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, s16 ar
 
     if (arg3 != 0)
     {
-        tintColor = D_800C4168.worldTintColor_28;
+        tintColor = g_WorldEnvWork.worldTintColor_28;
 
-        func_80055330(D_800C4168.field_0, D_800C4168.field_20, D_800C4168.field_3,
-                      Q12_MULT_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.r) << 5,
-                      Q12_MULT_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.g) << 5,
-                      Q12_MULT_PRECISE(Q12(1.0f) - arg3, D_800C4168.worldTintColor_28.b) << 5,
-                      D_800C4168.screenBrightness_8);
+        func_80055330(g_WorldEnvWork.field_0, g_WorldEnvWork.field_20, g_WorldEnvWork.field_3,
+                      Q12_MULT_PRECISE(Q12(1.0f) - arg3, g_WorldEnvWork.worldTintColor_28.r) << 5,
+                      Q12_MULT_PRECISE(Q12(1.0f) - arg3, g_WorldEnvWork.worldTintColor_28.g) << 5,
+                      Q12_MULT_PRECISE(Q12(1.0f) - arg3, g_WorldEnvWork.worldTintColor_28.b) << 5,
+                      g_WorldEnvWork.screenBrightness_8);
     }
 
     func_80045534(&g_WorldGfx.registeredCharaModels_18[charaId]->skeleton_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
@@ -1940,7 +1940,7 @@ void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, s16 ar
 
     if (arg3 != 0)
     {
-        func_80055330(D_800C4168.field_0, D_800C4168.field_20, D_800C4168.field_3, tintColor.r << 5, tintColor.g << 5, tintColor.b << 5, D_800C4168.screenBrightness_8);
+        func_80055330(g_WorldEnvWork.field_0, g_WorldEnvWork.field_20, g_WorldEnvWork.field_3, tintColor.r << 5, tintColor.g << 5, tintColor.b << 5, g_WorldEnvWork.screenBrightness_8);
     }
 }
 
@@ -3208,12 +3208,12 @@ s32 func_8003FEC0(s_MapEffectsInfo* arg0) // 0x8003FEC0
         Q12(15.0f)
     };
 
-    if (D_800C4168.isFogEnabled_1)
+    if (g_WorldEnvWork.isFogEnabled_1)
     {
         return arg0->fogDistance_10;
     }
 
-    if (D_800C4168.field_0 == 1)
+    if (g_WorldEnvWork.field_0 == 1)
     {
         return vwOresenHokan(Y_ARRAY, ARRAY_SIZE(Y_ARRAY), arg0->field_4, 0, Q12(2.0f));
     }
@@ -3231,11 +3231,11 @@ void func_8003FF2C(s_StructUnk3* arg0) // 0x8003FF2C
     brightness = CLAMP(temp_v1, Q8_CLAMPED(0.0f), Q8_CLAMPED(1.0f));
 
     func_80055330(arg0->effectsInfo_0.field_0.s_field_0.field_2, arg0->effectsInfo_0.field_6, arg0->effectsInfo_0.field_0.s_field_0.field_1, arg0->effectsInfo_0.worldTintR_8, arg0->effectsInfo_0.worldTintG_A, arg0->effectsInfo_0.worldTintB_C, brightness);
-    Gfx_FogParamsSet(arg0->effectsInfo_0.field_E != 0, arg0->effectsInfo_0.fogColor_14.r, arg0->effectsInfo_0.fogColor_14.g, arg0->effectsInfo_0.fogColor_14.b);
+    WorldEnv_FogParamsSet(arg0->effectsInfo_0.field_E != 0, arg0->effectsInfo_0.fogColor_14.r, arg0->effectsInfo_0.fogColor_14.g, arg0->effectsInfo_0.fogColor_14.b);
 
     temp_a0 = arg0->effectsInfo_0.fogDistance_10;
 
-    func_80055840(temp_a0, temp_a0 + Q12(1.0f));
+    WorldEnv_FogDistanceSet(temp_a0, temp_a0 + Q12(1.0f));
     func_800553E0(arg0->effectsInfo_0.field_18, arg0->effectsInfo_0.field_19.r, arg0->effectsInfo_0.field_19.g, arg0->effectsInfo_0.field_19.b, arg0->effectsInfo_0.screenTint_1D.r, arg0->effectsInfo_0.screenTint_1D.g, arg0->effectsInfo_0.screenTint_1D.b);
 }
 

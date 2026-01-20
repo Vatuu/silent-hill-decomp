@@ -740,7 +740,7 @@ s32 func_800DD964(void) // 0x8007F250
 {
     u8 sp10;
 
-    func_8007F250(&sp10, 0);
+    Player_DisableDamage(&sp10, 0);
     return sp10;
 }
 
@@ -748,7 +748,7 @@ void func_800DD98C(bool disableDamage) // 0x800DD98C
 {
     u8 sp10;
 
-    func_8007F250(&sp10, disableDamage);
+    Player_DisableDamage(&sp10, disableDamage);
 }
 
 void func_800DD9B0(s_SubCharacter* chara) // 0x800DD9B0
@@ -1137,7 +1137,7 @@ s32 func_800DFB04(void) // 0x800DFB04
 {
     u8 sp10;
 
-    func_8007F250(&sp10, 0u);
+    Player_DisableDamage(&sp10, 0u);
     return sp10;
 }
 
@@ -1145,7 +1145,7 @@ void func_800DFB2C(bool disableDamage) // 0x800DFB2C
 {
     u8 sp10;
 
-    func_8007F250(&sp10, disableDamage);
+    Player_DisableDamage(&sp10, disableDamage);
 }
 
 void func_800DFB50(s_SubCharacter* chara) // 0x800DFB50

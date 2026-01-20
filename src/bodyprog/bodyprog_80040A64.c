@@ -2502,7 +2502,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
     }
 }
 
-extern s_800C4168 const D_800C4168;
+extern s_WorldEnvWork const g_WorldEnvWork;
 
 void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q3_12 arg4, u16 arg5, s_FsImageDesc* images) // 0x80045534
 {
@@ -2611,7 +2611,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
 
             func_80057090(&curBone->bone_0.modelInfo_0, ot, arg2, &mat0, &mat1, arg5);
 
-            if (D_800C4168.isFogEnabled_1)
+            if (g_WorldEnvWork.isFogEnabled_1)
             {
                 gte_SetRotMatrix(&mat0);
                 gte_SetTransMatrix(&mat0);
@@ -2654,7 +2654,7 @@ void func_80045534(s_Skeleton* skel, GsOT* ot, s32 arg2, GsCOORDINATE2* coord, q
         }
     }
 
-    if (D_800C4168.isFogEnabled_1)
+    if (g_WorldEnvWork.isFogEnabled_1)
     {
         temp_s1_2 = g_SysWork.playerBoneCoords_890[1].coord.t[1];
         temp_s1_2 = CLAMP(temp_s1_2, Q8(-2.0f), Q8(0.0f));

@@ -176,11 +176,11 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
     s32 damageAmt;
     s32 newHealth;
 
-    // `func_8007F250` sets first arg to `D_800C4561` value, which gets set to 1 by `Player_ReceiveDamage` when player health is 0 or below.
+    // `Player_DisableDamage` sets first arg to `g_Player_IsDead` value, which gets set to 1 by `Player_ReceiveDamage` when player health is 0 or below.
     // Second arg is used to set `g_Player_DisableDamage`.
     // `isPlayerDead` gets checked below. If it's set, Split Head health isn't allowed to go below 0.
     // Presumably this is used to prevent both player + Split Head from dying at the same moment?
-    func_8007F250(&isPlayerDead, splitHead->health_B0 == 0);
+    Player_DisableDamage(&isPlayerDead, splitHead->health_B0 == 0);
 
     // Return early if no damage or health is already 0.
     if (splitHead->damage_B4.amount_C == Q12(0.0f) || splitHead->health_B0 == 0) // TODO: Split Head health isn't Q12 going off checks below?
@@ -260,7 +260,7 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
     splitHead->damage_B4.position_0.vy = Q12(0.0f);
     splitHead->damage_B4.position_0.vx = Q12(0.0f);
 
-    func_8007F250(&isPlayerDead, splitHead->health_B0 == 0);
+    Player_DisableDamage(&isPlayerDead, splitHead->health_B0 == 0);
 }
 
 void Ai_SplitHead_ControlUpdate(s_SubCharacter* splitHead)

@@ -1879,9 +1879,9 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             return;
         }
 
-        // `TriggerActivationType_Button`: Only continue processing event when action button is pressed and `func_8007F2AC` returns false (maybe some IsBusy function?)
+        // `TriggerActivationType_Button`: Only continue processing event when action button is pressed and `Player_IsBusy` returns false.
         if (mapEvent->activationType_4_4 == TriggerActivationType_Button &&
-            (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.action_6) || disableButtonEvents || func_8007F2AC()))
+            (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.action_6) || disableButtonEvents || Player_IsBusy()))
         {
             continue;
         }
@@ -2804,7 +2804,7 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
     {
         SysWork_StateSetNext(SysState_GamePaused);
     }
-    else if (func_8007F26C() == true)
+    else if (Player_IsAttacking() == true)
     {
         return;
     }

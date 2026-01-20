@@ -2244,14 +2244,14 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk53
         case PlayerState_Unk53:
-            func_800713E8(5, playerChara, 18, 6, sfx, pitch0);
+            Player_FootstepSfxPlay(5, playerChara, 18, 6, sfx, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk54
         case PlayerState_Unk54:
-            if (func_800713E8(7, playerChara, 31, 41, sfx, pitch1) != false)
+            if (Player_FootstepSfxPlay(7, playerChara, 31, 41, sfx, pitch1) != false)
             {
                 playerChara->properties_E4.player.runTimer_F8++;
             }
@@ -2262,27 +2262,27 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk56
         case PlayerState_Unk56:
-            func_800713E8(27, playerChara, 204, 200, sfx, pitch0);
+            Player_FootstepSfxPlay(27, playerChara, 204, 200, sfx, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk57
         case PlayerState_Unk57:
-            func_800713E8(25, playerChara, 187, 191, sfx, pitch0);
+            Player_FootstepSfxPlay(25, playerChara, 187, 191, sfx, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk59
         case PlayerState_Unk59:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, 0, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, 0, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk60
         case PlayerState_Unk60:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 7, 0, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 7, 0, sfx, pitch0);
             break;
 #endif
 
@@ -2306,11 +2306,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk81:
             if ((keyframeIdx + 19) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 31, keyframeIdx + 19, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 31, keyframeIdx + 19, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 31, keyframeIdx + 40, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 31, keyframeIdx + 40, sfx, pitch0);
             }
 
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2319,28 +2319,28 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk87
         case PlayerState_Unk87:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 35, keyframeIdx + 17, Sfx_Unk1423, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 35, keyframeIdx + 17, Sfx_Unk1423, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk88
         case PlayerState_Unk88:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 15, keyframeIdx + 31, Sfx_Unk1423, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 15, keyframeIdx + 31, Sfx_Unk1423, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk91
         case PlayerState_Unk91:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 6, keyframeIdx + 6, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 6, keyframeIdx + 6, sfx, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk92
         case PlayerState_Unk92:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 9, keyframeIdx + 9, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 9, keyframeIdx + 9, sfx, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
@@ -2350,7 +2350,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             if (ANIM_STATUS_IS_ACTIVE(playerChara->model_0.anim_4.status_0))
             {
                 func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 6, Sfx_Unk1385);
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 18, 0, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 18, 0, sfx, pitch0);
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             }
             break;
@@ -2360,11 +2360,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk89:
             if ((keyframeIdx + 5) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, keyframeIdx + 16, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, keyframeIdx + 16, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 74, keyframeIdx + 77, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 74, keyframeIdx + 77, sfx, pitch0);
             }
 
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2375,11 +2375,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk97:
             if ((keyframeIdx + 4) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 10, keyframeIdx + 4, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 10, keyframeIdx + 4, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 10, keyframeIdx + 13, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 10, keyframeIdx + 13, sfx, pitch0);
             }
 
             func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 26, Sfx_Unk1456);
@@ -2388,7 +2388,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk105
         case PlayerState_Unk105:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfx, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 #endif
@@ -2397,11 +2397,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk113:
             if ((keyframeIdx + 5) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 5, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 5, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 21, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 21, sfx, pitch0);
             }
 
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2412,7 +2412,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk111:
             if (ANIM_STATUS_IS_ACTIVE(playerChara->model_0.anim_4.status_0))
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 11, keyframeIdx + 21, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 11, keyframeIdx + 21, sfx, pitch0);
             }
 
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2423,11 +2423,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk114:
             if ((keyframeIdx + 8) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 13, keyframeIdx + 8, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 13, keyframeIdx + 8, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 13, keyframeIdx + 18, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 13, keyframeIdx + 18, sfx, pitch0);
             }
 
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -2438,17 +2438,17 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk115:
             if ((keyframeIdx + 9) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 9, keyframeIdx + 33, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 9, keyframeIdx + 33, sfx, pitch0);
             }
             else
             {
                 if (keyframeIdx + 39 >= playerChara->model_0.anim_4.keyframeIdx_8)
                 {
-                    func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 39, keyframeIdx + 33, sfx, pitch0);
+                    Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 39, keyframeIdx + 33, sfx, pitch0);
                 }
                 else
                 {
-                    func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 46, keyframeIdx + 42, sfx, pitch0);
+                    Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 46, keyframeIdx + 42, sfx, pitch0);
                 }
             }
             break;
@@ -2456,7 +2456,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk117
         case PlayerState_Unk117:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 34, 0, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 34, 0, sfx, pitch0);
             break;
 #endif
 
@@ -2464,11 +2464,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk118:
             if ((keyframeIdx + 8) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 12, keyframeIdx + 8, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 12, keyframeIdx + 8, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 12, keyframeIdx + 16, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 12, keyframeIdx + 16, sfx, pitch0);
             }
 
             if (ANIM_STATUS_IS_ACTIVE(playerChara->model_0.anim_4.status_0))
@@ -2482,11 +2482,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk120:
             if ((keyframeIdx + 5) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 17, keyframeIdx + 5, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 17, keyframeIdx + 5, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 17, keyframeIdx + 25, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 17, keyframeIdx + 25, sfx, pitch0);
             }
             break;
 #endif
@@ -2495,15 +2495,15 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk121:
             if ((keyframeIdx + 5) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfx, pitch0);
             }
             else if ((keyframeIdx + 23) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 23, keyframeIdx + 12, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 23, keyframeIdx + 12, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, keyframeIdx + 29, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, keyframeIdx + 29, sfx, pitch0);
             }
             break;
 #endif
@@ -2512,11 +2512,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk122:
             if ((keyframeIdx + 9) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 9, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 9, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 19, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 19, sfx, pitch0);
             }
             break;
 #endif
@@ -2525,18 +2525,18 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk123:
             if ((keyframeIdx + 9) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 9, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 9, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 19, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 19, sfx, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk124
         case PlayerState_Unk124:
-            if (func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, 80, 87, sfx, pitch1))
+            if (Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, 80, 87, sfx, pitch1))
             {
                 playerChara->properties_E4.player.runTimer_F8++;
             }
@@ -2547,11 +2547,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk126:
             if ((keyframeIdx + 9) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 16, keyframeIdx + 9, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 16, keyframeIdx + 9, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 16, keyframeIdx + 22, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 16, keyframeIdx + 22, sfx, pitch0);
             }
             break;
 #endif
@@ -2560,18 +2560,18 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk127:
             if ((keyframeIdx + 5) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 17, keyframeIdx + 5, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 17, keyframeIdx + 5, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 17, keyframeIdx + 26, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 17, keyframeIdx + 26, sfx, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk133
         case PlayerState_Unk133:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, keyframeIdx + 5, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, keyframeIdx + 5, sfx, pitch0);
             break;
 #endif
 
@@ -2579,44 +2579,44 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk138:
             if (ANIM_STATUS_IS_ACTIVE(playerChara->model_0.anim_4.status_0))
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 18, keyframeIdx + 14, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 18, keyframeIdx + 14, sfx, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk140
         case PlayerState_Unk140:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 25, keyframeIdx + 25, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 25, keyframeIdx + 25, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk141
         case PlayerState_Unk141:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 46, keyframeIdx + 5, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 46, keyframeIdx + 5, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk142
         case PlayerState_Unk142:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 10, keyframeIdx + 10, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 10, keyframeIdx + 10, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk130
         case PlayerState_Unk130:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 14, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 14, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk146
         case PlayerState_Unk146:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 16, keyframeIdx + 10, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 16, keyframeIdx + 10, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk147
         case PlayerState_Unk147:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 11, keyframeIdx + 11, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 11, keyframeIdx + 11, sfx, pitch0);
             break;
 #endif
 
@@ -2650,11 +2650,11 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
             if ((keyframeIdx + 43) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 55, keyframeIdx + 43, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 55, keyframeIdx + 43, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 55, keyframeIdx + 59, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 55, keyframeIdx + 59, sfx, pitch0);
             }
             break;
 #endif
@@ -2668,15 +2668,15 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
             if (keyframeIdx + 8 >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 8, keyframeIdx + 11, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 8, keyframeIdx + 11, sfx, pitch0);
             }
             else if ((keyframeIdx + 14) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 11, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 14, keyframeIdx + 11, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 8, keyframeIdx + 16, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 8, keyframeIdx + 16, sfx, pitch0);
             }
 
             break;
@@ -2695,20 +2695,20 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
                     func_80071620(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 11, Sfx_Unk1619);
                 }
 
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 16, keyframeIdx + 16, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 16, keyframeIdx + 16, sfx, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk153
         case PlayerState_Unk153:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 5, keyframeIdx + 12, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk154
         case PlayerState_Unk154:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 7, keyframeIdx + 21, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 7, keyframeIdx + 21, sfx, pitch0);
             break;
 #endif
 
@@ -2718,27 +2718,27 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             {
                 if (keyframeIdx + 10 >= playerChara->model_0.anim_4.keyframeIdx_8)
                 {
-                    func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 10, keyframeIdx + 16, sfx, pitch0);
+                    Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 10, keyframeIdx + 16, sfx, pitch0);
                 }
                 else
                 {
                     if (keyframeIdx + 21 >= playerChara->model_0.anim_4.keyframeIdx_8)
                     {
-                        func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 21, keyframeIdx + 16, sfx, pitch0);
+                        Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 21, keyframeIdx + 16, sfx, pitch0);
                     }
                     else
                     {
-                        func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 28, keyframeIdx + 25, sfx, pitch0);
+                        Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 28, keyframeIdx + 25, sfx, pitch0);
                     }
                 }
             }
             else if ((keyframeIdx + 16) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 34, keyframeIdx + 38, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 34, keyframeIdx + 38, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 42, keyframeIdx + 46, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 42, keyframeIdx + 46, sfx, pitch0);
             }
             break;
 #endif
@@ -2749,42 +2749,42 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             {
                 if ((keyframeIdx + 9) >= playerChara->model_0.anim_4.keyframeIdx_8)
                 {
-                    func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 9, keyframeIdx + 22, sfx, pitch0);
+                    Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 9, keyframeIdx + 22, sfx, pitch0);
                 }
                 else
                 {
                     if ((keyframeIdx + 30) >= playerChara->model_0.anim_4.keyframeIdx_8)
                     {
-                        func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 30, keyframeIdx + 22, sfx, pitch0);
+                        Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 30, keyframeIdx + 22, sfx, pitch0);
                     }
                     else
                     {
-                        func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 52, keyframeIdx + 42, sfx, pitch0);
+                        Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 52, keyframeIdx + 42, sfx, pitch0);
                     }
                 }
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 59, keyframeIdx + 59, sfx, pitch1);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 59, keyframeIdx + 59, sfx, pitch1);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk157
         case PlayerState_Unk157:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 33, keyframeIdx + 25, sfx, pitch1);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 33, keyframeIdx + 25, sfx, pitch1);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk158
         case PlayerState_Unk158:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 12, keyframeIdx + 5, sfx, pitch1);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 12, keyframeIdx + 5, sfx, pitch1);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk159
         case PlayerState_Unk159:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 11, 0, sfx, pitch1);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 11, 0, sfx, pitch1);
             break;
 #endif
 
@@ -2792,30 +2792,30 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk160:
             if ((keyframeIdx + 33) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 42, keyframeIdx + 33, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 42, keyframeIdx + 33, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 42, keyframeIdx + 55, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 42, keyframeIdx + 55, sfx, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk161
         case PlayerState_Unk161:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 24, keyframeIdx + 22, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 24, keyframeIdx + 22, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk175
         case PlayerState_Unk175:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, 18, 6, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, 18, 6, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk186
         case PlayerState_Unk186:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, 0, keyframeIdx + 12, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, 0, keyframeIdx + 12, sfx, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 #endif
@@ -2835,7 +2835,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk163
         case PlayerState_Unk163:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 6, 0, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 6, 0, sfx, pitch0);
             break;
 #endif
 
@@ -2847,31 +2847,31 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
 
 #ifdef HAS_PlayerState_Unk167
         case PlayerState_Unk167:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 10, 0, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 10, 0, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk168
         case PlayerState_Unk168:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 38, keyframeIdx + 22, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 38, keyframeIdx + 22, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk172
         case PlayerState_Unk172:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 29, 0, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 29, 0, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk176
         case PlayerState_Unk176:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 8, keyframeIdx + 19, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 8, keyframeIdx + 19, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk179
         case PlayerState_Unk179:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 8, keyframeIdx + 44, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 8, keyframeIdx + 44, sfx, pitch0);
             break;
 #endif
 
@@ -2879,24 +2879,24 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
         case PlayerState_Unk183:
             if ((keyframeIdx + 11) >= playerChara->model_0.anim_4.keyframeIdx_8)
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 28, keyframeIdx + 11, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 28, keyframeIdx + 11, sfx, pitch0);
             }
             else
             {
-                func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 28, keyframeIdx + 55, sfx, pitch0);
+                Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 28, keyframeIdx + 55, sfx, pitch0);
             }
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk171
         case PlayerState_Unk171:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 9, keyframeIdx + 14, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 9, keyframeIdx + 14, sfx, pitch0);
             break;
 #endif
 
 #ifdef HAS_PlayerState_Unk185
         case PlayerState_Unk185:
-            func_800713E8(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 38, keyframeIdx + 22, sfx, pitch0);
+            Player_FootstepSfxPlay(playerChara->model_0.anim_4.status_0, playerChara, keyframeIdx + 38, keyframeIdx + 22, sfx, pitch0);
             break;
 #endif
 

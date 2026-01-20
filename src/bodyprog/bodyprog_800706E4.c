@@ -400,14 +400,14 @@ void Player_MovementStateReset(s_SubCharacter* chara, e_PlayerLowerBodyState low
     if (g_SysWork.playerWork_4C.extra_128.lowerBodyState_24 != lowerBodyState)
     {
         chara->model_0.stateStep_3              = 0;
-        chara->model_0.controlState_2                  = ModelState_Uninitialized;
+        chara->model_0.controlState_2           = ModelState_Uninitialized;
         chara->properties_E4.player.runTimer_F8 = Q12(0.0f);
         chara->properties_E4.player.afkTimer_E8 = Q12(0.0f);
         g_SysWork.playerStopFlags_235A          = PlayerStopFlag_None;
     }
 }
 
-bool func_800713E8(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 keyframe1, s32 sfx, s8 pitch)
+bool Player_FootstepSfxPlay(s32 animStatus, s_SubCharacter* chara, s32 keyframe0, s32 keyframe1, s32 sfx, s8 pitch)
 {
     if (chara->model_0.anim_4.status_0 != animStatus) 
     {
@@ -6398,12 +6398,12 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
             // Turn right.
             if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_TurnRight)
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_TurnRight, true), chara, 204, 200, sfx, pitch0);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_TurnRight, true), chara, 204, 200, sfx, pitch0);
             }
             // Turn left.
             else if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_TurnLeft)
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_TurnLeft, true), chara, 187, 191, sfx, pitch0);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_TurnLeft, true), chara, 187, 191, sfx, pitch0);
             }
 
             if ((g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C & PlayerFlag_Moving) &&
@@ -6432,18 +6432,18 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
 
         case PlayerLowerBodyState_WalkBackward:
         case PlayerLowerBodyState_AimWalkBackward:
-            func_800713E8(ANIM_STATUS(HarryAnim_WalkBackward, true), chara, 52, 63, sfx, pitch0);
+            Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_WalkBackward, true), chara, 52, 63, sfx, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_AimWalkForward:
         case PlayerLowerBodyState_WalkForward:
-            func_800713E8(ANIM_STATUS(HarryAnim_WalkForward, true), chara, 18, 6, sfx, pitch0);
+            Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_WalkForward, true), chara, 18, 6, sfx, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunForward:
-            if (func_800713E8(ANIM_STATUS(HarryAnim_RunForward, true), chara, 31, 41, sfx, pitch1))
+            if (Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunForward, true), chara, 31, 41, sfx, pitch1))
             {
                 chara->properties_E4.player.runTimer_F8++;
             }
@@ -6452,17 +6452,17 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
             break;
 
         case PlayerLowerBodyState_SidestepRight:
-            func_800713E8(ANIM_STATUS(HarryAnim_SidestepRight, true), chara, 118, 108, sfx, pitch0);
+            Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_SidestepRight, true), chara, 118, 108, sfx, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_SidestepLeft:
-            func_800713E8(ANIM_STATUS(HarryAnim_SidestepLeft, true), chara, 93, 83, sfx, pitch0);
+            Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_SidestepLeft, true), chara, 93, 83, sfx, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C |= PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_RunRight:
-            if (func_800713E8(ANIM_STATUS(HarryAnim_RunRight, true), chara, 145, 139, sfx, pitch1))
+            if (Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRight, true), chara, 145, 139, sfx, pitch1))
             {
                 chara->properties_E4.player.runTimer_F8++;
             }
@@ -6471,7 +6471,7 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
             break;
 
         case PlayerLowerBodyState_RunLeft:
-            if (func_800713E8(ANIM_STATUS(HarryAnim_RunLeft, true), chara, 131, 125, sfx, pitch1))
+            if (Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeft, true), chara, 131, 125, sfx, pitch1))
             {
                 chara->properties_E4.player.runTimer_F8++;
             }
@@ -6484,22 +6484,22 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
             {
                 if (chara->model_0.anim_4.keyframeIdx_8 < 152)
                 {
-                    func_800713E8(ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), chara, 151, 154, sfx, pitch1);
+                    Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), chara, 151, 154, sfx, pitch1);
                 }
                 else
                 {
-                    func_800713E8(ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), chara, 156, 154, sfx, pitch1);
+                    Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunForwardWallStopRight, true), chara, 156, 154, sfx, pitch1);
                 }
             }
             else
             {
                 if (chara->model_0.anim_4.keyframeIdx_8 < 162)
                 {
-                    func_800713E8(ANIM_STATUS(HarryAnim_RunForwardWallStopLeft, true), chara, 164, 161, sfx, pitch1);
+                    Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunForwardWallStopLeft, true), chara, 164, 161, sfx, pitch1);
                 }
                 else
                 {
-                    func_800713E8(ANIM_STATUS(HarryAnim_RunForwardWallStopLeft, true), chara, 164, 166, sfx, pitch1);
+                    Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunForwardWallStopLeft, true), chara, 164, 166, sfx, pitch1);
                 }
             }
 
@@ -6509,11 +6509,11 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_RunLeftWallStop:
             if (chara->model_0.anim_4.keyframeIdx_8 < 323)
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_RunLeftWallStop, true), chara, 322, 324, sfx, pitch1);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeftWallStop, true), chara, 322, 324, sfx, pitch1);
             }
             else
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_RunLeftWallStop, true), chara, 327, 324, sfx, pitch1);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeftWallStop, true), chara, 327, 324, sfx, pitch1);
             }
 
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -6522,11 +6522,11 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_RunRightWallStop:
             if (chara->model_0.anim_4.keyframeIdx_8 < 352)
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_RunRightWallStop, true), chara, 353, 351, sfx, pitch1);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRightWallStop, true), chara, 353, 351, sfx, pitch1);
             }
             else
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_RunRightWallStop, true), chara, 353, 356, sfx, pitch1);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRightWallStop, true), chara, 353, 356, sfx, pitch1);
             }
 
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -6535,11 +6535,11 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_Stumble:
             if (chara->model_0.anim_4.keyframeIdx_8 < 172)
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_RunForwardStumble, true), chara, 171, 174, sfx, pitch1);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunForwardStumble, true), chara, 171, 174, sfx, pitch1);
             }
             else
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_RunForwardStumble, true), chara, 176, 174, sfx, pitch1);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunForwardStumble, true), chara, 176, 174, sfx, pitch1);
             }
 
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -6548,15 +6548,15 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_RunLeftStumble:
             if (chara->model_0.anim_4.keyframeIdx_8 < 338)
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_RunLeftStumble, true), chara, 337, 341, sfx, pitch0);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeftStumble, true), chara, 337, 341, sfx, pitch0);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 < 344)
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_RunLeftStumble, true), chara, 343, 341, sfx, pitch0);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeftStumble, true), chara, 343, 341, sfx, pitch0);
             }
             else
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_RunLeftStumble, true), chara, 356, 346, sfx, pitch1);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunLeftStumble, true), chara, 356, 346, sfx, pitch1);
             }
 
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -6565,15 +6565,15 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
         case PlayerLowerBodyState_RunRightStumble:
             if (chara->model_0.anim_4.keyframeIdx_8 < 367)
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_RunRightStumble, true), chara, 366, 370, sfx, pitch0);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRightStumble, true), chara, 366, 370, sfx, pitch0);
             }
             else if (chara->model_0.anim_4.keyframeIdx_8 < 373)
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_RunRightStumble, true), chara, 372, 370, sfx, pitch0);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRightStumble, true), chara, 372, 370, sfx, pitch0);
             }
             else
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_RunRightStumble, true), chara, 385, 375, sfx, pitch1);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_RunRightStumble, true), chara, 385, 375, sfx, pitch1);
             }
 
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -6581,13 +6581,13 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
 
         case PlayerLowerBodyState_QuickTurnLeft:
         case PlayerLowerBodyState_AimQuickTurnLeft:
-            func_800713E8(ANIM_STATUS(HarryAnim_QuickTurnLeft, true), chara, 222, 224, sfx, pitch0);
+            Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_QuickTurnLeft, true), chara, 222, 224, sfx, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
         case PlayerLowerBodyState_QuickTurnRight:
         case PlayerLowerBodyState_AimQuickTurnRight:
-            func_800713E8(ANIM_STATUS(HarryAnim_QuickTurnRight, true), chara, 209, 211, sfx, pitch0);
+            Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_QuickTurnRight, true), chara, 209, 211, sfx, pitch0);
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
             break;
 
@@ -6600,7 +6600,7 @@ void func_8007B924(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007B924
 
             if (chara->position_18.vy == D_800C4590.field_C)
             {
-                func_800713E8(ANIM_STATUS(HarryAnim_JumpBackward, true), chara, 243, 245, sfx, pitch1);
+                Player_FootstepSfxPlay(ANIM_STATUS(HarryAnim_JumpBackward, true), chara, 243, 245, sfx, pitch1);
             }
 
             g_SysWork.playerWork_4C.player_0.properties_E4.player.flags_11C &= ~PlayerFlag_Moving;
@@ -7256,7 +7256,7 @@ void Player_ReceiveDamage(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x8007
         if (chara->health_B0 < Q12(0.0f))
         {
             chara->health_B0 = NO_VALUE;
-            D_800C4561       = 1;
+            g_Player_IsDead  = true;
         }
 
         func_800893D0(chara->damage_B4.amount_C);
@@ -8093,7 +8093,7 @@ void func_8007E9C4(void) // 0x8007E9C4
     func_8004C564(0, NO_VALUE);
 
     chara->field_2A         = FP_ANGLE(90.0f);
-    D_800C4561              = 0;
+    g_Player_IsDead         = false;
     g_Player_DisableDamage  = false;
     g_Player_HasActionInput = false;
     g_Player_HasMoveInput   = false;
@@ -8373,13 +8373,13 @@ void Game_PlayerMovementsReset(void) // 0x8007F1CC
     g_Player_IsInWalkToRunTransition = false;
 }
 
-void func_8007F250(u8* ptr, u8 disableDamage) // 0x8007F250
+void Player_DisableDamage(u8* playerIsDead, u8 disableDamage) // 0x8007F250
 {
-    *ptr                   = D_800C4561;
+    *playerIsDead          = g_Player_IsDead;
     g_Player_DisableDamage = disableDamage;
 }
 
-bool func_8007F26C(void) // 0x8007F26C
+bool Player_IsAttacking(void) // 0x8007F26C
 {
     if (g_SysWork.playerWork_4C.extra_128.upperBodyState_20 == PlayerUpperBodyState_Attack ||
         g_SysWork.playerWork_4C.extra_128.state_1C == PlayerState_KickEnemy ||
@@ -8391,7 +8391,7 @@ bool func_8007F26C(void) // 0x8007F26C
     return false;
 }
 
-bool func_8007F2AC(void) // 0x8007F2AC
+bool Player_IsBusy(void) // 0x8007F2AC
 {
     if (g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f) ||
         g_SysWork.playerCombat_38.isAiming_13 ||
