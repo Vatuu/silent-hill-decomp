@@ -122,6 +122,8 @@ void func_800DE26C(void);
 
 void func_800DE62C(void);
 
+void func_800DE8F0(MATRIX* mat, SVECTOR* arg1, SVECTOR3* result);
+
 void func_800DEA94(s32* arg0);
 
 void func_800DEC3C(VECTOR3*, SVECTOR3*); // Assumed return type.

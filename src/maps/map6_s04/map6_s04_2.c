@@ -116,7 +116,18 @@ void func_800DE62C(void) // 0x800DE62C
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE658);
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE8F0);
+void func_800DE8F0(MATRIX* mat, SVECTOR* arg1, SVECTOR3* result) // 0x800DE8F0
+{
+    s32 sxy;
+    s32 unused;
+
+    SetRotMatrix(mat);
+    SetTransMatrix(mat);
+
+    result->vz = RotTransPers(arg1, &sxy, &unused, &unused);
+    result->vx = sxy;
+    result->vy = sxy >> 16;
+}
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE95C);
 
