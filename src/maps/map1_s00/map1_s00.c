@@ -447,8 +447,9 @@ void func_800D85A4(void) // 0x800D85A4
     MapMsg_DisplayWithTexture1(FILE_TIM_PAPER3_TIM, Q12(2.5f), Q12(1.5f), 25, 24);
 }
 
-void func_800D85D8(void)
+void func_800D85D8(void) // 0x800D85D8
 {
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 5)
     {

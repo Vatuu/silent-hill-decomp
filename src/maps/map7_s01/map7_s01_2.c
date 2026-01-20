@@ -1967,6 +1967,7 @@ void func_800DCE20(void) // 0x800DCE20
 {
     s32 i;
 
+    // Skip.
     if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] > 0 && g_SysWork.sysStateStep_C[0] < 6)
     {
@@ -1983,7 +1984,7 @@ void func_800DCE20(void) // 0x800DCE20
             break;
 
         case 1:
-            SysWork_StateStepIncrementAfterFade(0, false, 0, 0x999, false);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.6f), false);
             Camera_PositionSet(NULL, Q12(-19.47f), Q12(-2.18f), Q12(-23.16f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(-22.32f), Q12(-0.95f), Q12(-20.64f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             func_800865FC(true, 0, 0, FP_ANGLE(-90.0f), Q12(-26.0f), Q12(-20.9f));
@@ -2010,7 +2011,7 @@ void func_800DCE20(void) // 0x800DCE20
             D_800E16A8[0] = MIN(D_800E16A8[0] + Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f)), Q12(0.1f));
             D_800E16A8[1] = MIN(D_800E16A8[1] + Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.25f)), Q12(0.1f));
 
-            for (i = 0; i < 6; i++)
+            for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
             {
                 g_WorldObject_Dr[i].position_1C.vz += Q12_MULT_PRECISE(g_DeltaTime0, (i & 1) ? D_800E16A8[i >= 4 ? 1 : 0] : -D_800E16A8[i >= 4 ? 1 : 0]);
             }
@@ -2019,10 +2020,12 @@ void func_800DCE20(void) // 0x800DCE20
             {
                 SysWork_StateStepIncrementDelayed(Q12(4.0f), false);
             }
+
             if (g_SysWork.sysStateStep_C[0] == 4)
             {
                 SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
             }
+
             g_DeltaTime0 = g_DeltaTime0 >> 1;
             break;
 
@@ -2038,7 +2041,7 @@ void func_800DCE20(void) // 0x800DCE20
 
             Savegame_EventFlagSet(EventFlag_479);
 
-            for (i = 0; i < 6; i++)
+            for (i = 0; i < ARRAY_SIZE(g_WorldObject_Dr); i++)
             {
                 Math_Vector3Set(&g_WorldObject_Dr[i].position_1C, Q12(-100.9f), Q12(0.0f), Q12(-60.9f));
             }

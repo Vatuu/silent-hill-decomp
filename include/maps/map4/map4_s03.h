@@ -359,7 +359,7 @@ void func_800D3CBC(s_SubCharacter* chara);
 
 bool Ai_Twinfeeler_Init(s_SubCharacter* chara);
 
-void func_800D3E58(s_SubCharacter* arg0);
+void func_800D3E58(s_SubCharacter* chara);
 
 void func_800D3FB0(s_SubCharacter* chara);
 
@@ -427,9 +427,9 @@ bool func_800D5BF8(s32 arg0, s32 arg1, s32 arg2, u16* arg3);
 
 void func_800D5DF4(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
-void func_800D5E30(s_SubCharacter*, GsCOORDINATE2*);
+void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords);
 
-void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Ai_Twinfeeler_Update(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** @brief Handles a First Aid Kit or Rifle Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
@@ -520,7 +520,7 @@ bool func_800D8620(s_800E06A0* arg0, s32 arg1, s32 arg2);
 
 s32 func_800D87AC(s_800E06A0* arg0);
 
-s32 func_800D8874(void);
+q19_12 func_800D8874(void);
 
 void func_800DA718(void);
 

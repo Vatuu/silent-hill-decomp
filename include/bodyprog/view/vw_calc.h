@@ -38,19 +38,19 @@ void func_80049AF8(GsCOORDINATE2* rootCoord, MATRIX* outMat);
 
 void func_80049B6C(GsCOORDINATE2* rootCoord, MATRIX* outMat0, MATRIX* outMat1);
 
-void func_80049C2C(MATRIX* mat, s32 x, s32 y, s32 z);
+void func_80049C2C(MATRIX* mat, q19_12 posX, q19_12 posY, q19_12 posZ);
 
 /** @brief Checks if an AABB is visible in the screen.
  *
  * @param minX AABB X minimum point.
- * @param minY AABB Y minimum point.
- * @param minZ AABB Z minimum point.
  * @param maxX AABB X maxiumum point.
+ * @param minY AABB Y minimum point.
  * @param maxY AABB Y maxiumum point.
+ * @param minZ AABB Z minimum point.
  * @param maxZ AABB Z maxiumum point.
  * @return `true` if the AABB is visible, `false` otherwise.
  */
-bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax);
+bool Vw_AabbVisibleInScreenCheck(s32 minX, s32 maxX, s32 minY, s32 maxY, s32 minZ, s32 maxZ);
 
 /** @brief Checks if an AABB is visible in a frustum.
  *

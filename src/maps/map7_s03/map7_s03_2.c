@@ -116,9 +116,9 @@ s32 func_800D6750(s32* sxy) // 0x800D6750
     SVECTOR sp10;
     s32     sp18;
 
-    sp10.vx = 0;
-    sp10.vy = 0;
-    sp10.vz = 0;
+    sp10.vx = Q8(0.0f);
+    sp10.vy = Q8(0.0f);
+    sp10.vz = Q8(0.0f);
     return RotTransPers(&sp10, sxy, &sp18, &sp18);
 }
 
@@ -152,9 +152,9 @@ s32 func_800D70B4(s32* sxy) // 0x800D70B4
     SVECTOR sp10;
     s32     sp18;
 
-    sp10.vx = 0;
-    sp10.vy = 0;
-    sp10.vz = 0;
+    sp10.vx = Q8(0.0f);
+    sp10.vy = Q8(0.0f);
+    sp10.vz = Q8(0.0f);
     return RotTransPers(&sp10, sxy, &sp18, &sp18);
 }
 
@@ -226,9 +226,9 @@ s32 func_800D7CB4(s32* sxy) // 0x800D7CB4
     SVECTOR sp10;
     s32     sp18;
 
-    sp10.vx = 0;
-    sp10.vy = 0;
-    sp10.vz = 0;
+    sp10.vx = Q8(0.0f);
+    sp10.vy = Q8(0.0f);
+    sp10.vz = Q8(0.0f);
     return RotTransPers(&sp10, sxy, &sp18, &sp18);
 }
 
@@ -357,7 +357,7 @@ void func_800D9114(s_800F3D48* arg0) // 0x800D9114
 {
     arg0->field_4.field_20 += Q12_MULT_PRECISE(arg0->field_4.field_8, g_DeltaTime0);
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         arg0->field_4.field_3C -= arg0->field_4.field_40;
         arg0->field_4.field_3C  = MAX(0, arg0->field_4.field_3C);
@@ -620,11 +620,11 @@ void func_800DD260(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD260
     ptr = func_800DD090();
     if (ptr != NULL)
     {
-        ptr->field_4D8 = 0x1EB;
+        ptr->field_4D8 = Q12(0.12f);
         ptr->field_4E4 = 4;
-        ptr->field_C   = 0x800;
-        ptr->field_8   = 0x800;
-        ptr->field_14  = 0x200;
+        ptr->field_C   = Q12(0.5f);
+        ptr->field_8   = Q12(0.5f);
+        ptr->field_14  = Q12(0.125f);
 
         func_800DCDDC(ptr, arg0, arg1);
     }
@@ -637,11 +637,11 @@ void func_800DD2C8(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD2C8
     ptr = func_800DD090();
     if (ptr != NULL)
     {
-        ptr->field_4D8 = 0x800;
+        ptr->field_4D8 = Q12(0.5f);
         ptr->field_4E4 = 4;
-        ptr->field_C   = 0x800;
-        ptr->field_8   = 0x800;
-        ptr->field_14  = 0x200;
+        ptr->field_C   = Q12(0.5f);
+        ptr->field_8   = Q12(0.5f);
+        ptr->field_14  = Q12(0.125f);
 
         func_800DCDDC(ptr, arg0, arg1);
     }
@@ -713,17 +713,17 @@ void func_800DD67C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords) /
 
 void func_800DD6CC(void) // 0x800DD6CC
 {
-    s32       posX;
-    s32       posZ;
-    s32       activeBuffer;
+    q19_12    posX;
+    q19_12    posZ;
+    s32       activeBufferIdx;
     GsOT_TAG* ot;
 
-    posX         = D_800F48A8.positionX_0;
-    posZ         = D_800F48A8.positionZ_4;
-    activeBuffer = g_ActiveBufferIdx;
-    ot           = g_OrderingTable0[activeBuffer].org;
+    posX            = D_800F48A8.positionX_0;
+    posZ            = D_800F48A8.positionZ_4;
+    activeBufferIdx = g_ActiveBufferIdx;
+    ot              = g_OrderingTable0[activeBufferIdx].org;
 
-    func_80049C2C(&D_800F48A8.mat_8, posX, 0, posZ);
+    func_80049C2C(&D_800F48A8.mat_8, posX, Q12(0.0f), posZ);
     func_800DC544(ot);
     func_800D917C();
 }
@@ -1121,9 +1121,9 @@ s32 func_800DF90C(void) // 0x800DF90C
     SVECTOR sp10;
     s32     sp18;
 
-    sp10.vx = 0;
-    sp10.vy = 0;
-    sp10.vz = 0;
+    sp10.vx = Q8(0.0f);
+    sp10.vy = Q8(0.0f);
+    sp10.vz = Q8(0.0f);
     return RotTransPers(&sp10, &sp18, &sp18, &sp18);
 }
 
@@ -1634,13 +1634,12 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E22AC);
 
 q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target) // 0x800E2444
 {
-    s32 delta;
-    s32 step;
-    s32 result;
+    q19_12 delta;
+    q19_12 step;
+    q19_12 result;
 
     delta = current - target;
     step  = Q12_MULT_PRECISE(dampingRate, g_DeltaTime0);
-
     if (step < delta)
     {
         result = current - step;
@@ -1653,6 +1652,7 @@ q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target) // 0x800
             result = target;
         }
     }
+
     return result;
 }
 
@@ -4360,7 +4360,8 @@ void func_800E94C0(void) // 0x800E94C0
 {
     // @hack Weird pointer arithmetic in this func.
     // Tracking that separately lets it match, but there's probably still a cleaner way.
-#define SET_ANIM_FILE_IDX(ptr, val) ((ptr)->animFileIdx = (val))
+    #define SET_ANIM_FILE_IDX(ptr, val) \
+        ((ptr)->animFileIdx = (val))
 
     s_CharaFileInfo* ptr = &CHARA_FILE_INFOS[Chara_EndingCybil];
 
@@ -4372,12 +4373,14 @@ void func_800E94C0(void) // 0x800E94C0
     ptr -= 3;
     SET_ANIM_FILE_IDX(&CHARA_FILE_INFOS[Chara_Incubator], FILE_ANIM_MAR_LAST_ANM);
 
-#undef SET_ANIM_FILE_IDX
+    #undef SET_ANIM_FILE_IDX
 }
 
 void func_800E94F4(void) // 0x800E94F4
 {
-#define SET_ANIM_FILE_IDX(ptr, val) ((ptr)->animFileIdx = (val))
+    #define SET_ANIM_FILE_IDX(ptr, val) \
+        ((ptr)->animFileIdx = (val))
+
     // @hack Weird pointer arithmetic in this func.
     // Tracking that separately lets it match, but there's probably still a cleaner way.
     s_CharaFileInfo* ptr = &CHARA_FILE_INFOS[Chara_EndingCybil];
@@ -4389,7 +4392,8 @@ void func_800E94F4(void) // 0x800E94F4
     SET_ANIM_FILE_IDX(&CHARA_FILE_INFOS[Chara_EndingKaufmann], FILE_ANIM_KAU2_ANM);
     ptr -= 3;
     SET_ANIM_FILE_IDX(&CHARA_FILE_INFOS[Chara_Incubator], FILE_ANIM_MAR_ANM);
-#undef SET_ANIM_FILE_IDX
+
+    #undef SET_ANIM_FILE_IDX
 }
 
 void Map_WorldObjectsInit(void) // 0x800E9528

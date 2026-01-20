@@ -417,14 +417,14 @@ void func_80049B6C(GsCOORDINATE2* rootCoord, MATRIX* outMat0, MATRIX* outMat1) /
     outMat0->t[2] += D_800C3868.t[2];
 }
 
-void func_80049C2C(MATRIX* outMat, s32 x, s32 y, s32 z) // 0x80049C2C
+void func_80049C2C(MATRIX* outMat, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80049C2C
 {
     VECTOR in; // Q23.8
     VECTOR out;
 
-    in.vx = Q12_TO_Q8(x);
-    in.vy = Q12_TO_Q8(y);
-    in.vz = Q12_TO_Q8(z);
+    in.vx = Q12_TO_Q8(posX);
+    in.vy = Q12_TO_Q8(posY);
+    in.vz = Q12_TO_Q8(posZ);
     ApplyMatrixLV(&GsWSMATRIX, &in, &out);
 
     // Copy matrix fields as 32-bit words. Maybe inlined `CopyMatrix` func?
@@ -439,7 +439,7 @@ void func_80049C2C(MATRIX* outMat, s32 x, s32 y, s32 z) // 0x80049C2C
     outMat->t[2] = out.vz + GsWSMATRIX.t[2];
 }
 
-bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMin, s32 zMax) // 0x80049D04
+bool Vw_AabbVisibleInScreenCheck(s32 minX, s32 maxX, s32 minY, s32 maxY, s32 minZ, s32 maxZ) // 0x80049D04
 {
     s32     i;
     MATRIX  worldMat;
@@ -455,7 +455,7 @@ bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMi
     s32     screenCenterY;
     u32     screenDepth;
 
-    func_80049C2C(&worldMat, xMin, yMin, zMin);
+    func_80049C2C(&worldMat, minX, minY, minZ);
     SetRotMatrix(&worldMat);
     SetTransMatrix(&worldMat);
     
@@ -466,9 +466,9 @@ bool Vw_AabbVisibleInScreenCheck(s32 xMin, s32 xMax, s32 yMin, s32 yMax, s32 zMi
 
     for (i = 0; i < BOX_VERT_COUNT; i++)
     {
-        vertOffset.vx = (i & (1 << 0)) ? Q12_TO_Q8(xMax - xMin) : Q8(0.0f);
-        vertOffset.vy = (i & (1 << 1)) ? Q12_TO_Q8(yMax - yMin) : Q8(0.0f);
-        vertOffset.vz = (i & (1 << 2)) ? Q12_TO_Q8(zMax - zMin) : Q8(0.0f);
+        vertOffset.vx = (i & (1 << 0)) ? Q12_TO_Q8(maxX - minX) : Q8(0.0f);
+        vertOffset.vy = (i & (1 << 1)) ? Q12_TO_Q8(maxY - minY) : Q8(0.0f);
+        vertOffset.vz = (i & (1 << 2)) ? Q12_TO_Q8(maxZ - minZ) : Q8(0.0f);
 
         screenDepth = RotTransPers(&vertOffset, &screenPos, &depthDmy, &depthDmy) - 1;
 

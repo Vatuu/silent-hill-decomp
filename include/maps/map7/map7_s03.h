@@ -59,9 +59,9 @@ typedef struct
     s32 field_8;
     s16 field_C;
     s16 field_E;
-    u8  unk_10[0x10];
+    u8  unk_10[16];
     s32 field_20;
-    u8  unk_24[0x18];
+    u8  unk_24[24];
     s32 field_3C;
     s32 field_40;
     u8  unk_44[8];

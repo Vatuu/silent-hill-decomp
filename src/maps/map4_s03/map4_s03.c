@@ -1843,7 +1843,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     chara->health_B0 = Q12(3000.0f);
 
-    localChara->properties_E4.twinfeeler.field_120 = -1;
+    localChara->properties_E4.twinfeeler.field_120 = NO_VALUE;
 
     chara->field_D4.radius_0 = Q12(0.3f);
 
@@ -1853,9 +1853,9 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->field_E1_0      = 4;
 
-    localChara->properties_E4.twinfeeler.field_EC.position_0.vx = 0;
-    localChara->properties_E4.twinfeeler.field_EC.position_0.vy = 0;
-    localChara->properties_E4.twinfeeler.field_EC.position_0.vz = 0;
+    localChara->properties_E4.twinfeeler.field_EC.position_0.vx = Q12(0.0f);
+    localChara->properties_E4.twinfeeler.field_EC.position_0.vy = Q12(0.0f);
+    localChara->properties_E4.twinfeeler.field_EC.position_0.vz = Q12(0.0f);
     localChara->properties_E4.twinfeeler.field_10C              = 0;
     localChara->properties_E4.twinfeeler.field_110              = 0;
     localChara->properties_E4.twinfeeler.field_114              = 0;
@@ -1879,7 +1879,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
         chara->model_0.stateStep_3 = 0;
     }
 
-    *(u16*)&localChara->properties_E4.twinfeeler.field_E8.val16[1] = -1;
+    *(u16*)&localChara->properties_E4.twinfeeler.field_E8.val16[1] = NO_VALUE;
 
     func_800D3B74(chara);
 
@@ -1895,57 +1895,58 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
 void func_800D3E18(s_SubCharacter* chara) // 0x800D3E18
 {
-    *(u16*)&chara->properties_E4.twinfeeler.field_E8.val16[1] = -1;
-    Sd_SfxStop(0x61F);
-    Sd_SfxStop(0x617);
+    *(u16*)&chara->properties_E4.twinfeeler.field_E8.val16[1] = NO_VALUE;
+
+    Sd_SfxStop(Sfx_Unk1567);
+    Sd_SfxStop(Sfx_Unk1559);
     func_800D354C(&chara->position_18);
 }
 
-void func_800D3E58(s_SubCharacter* arg0) // 0x800D3E58
+void func_800D3E58(s_SubCharacter* chara) // 0x800D3E58
 {
     s32 temp_v1;
     s32 var_a1;
     u8  temp_s1;
 
-    if (arg0->damage_B4.amount_C > 0 && arg0->health_B0 >= 0)
+    if (chara->damage_B4.amount_C > Q12(0.0f) && chara->health_B0 >= Q12(0.0f))
     {
-        arg0->properties_E4.twinfeeler.field_EC   = arg0->damage_B4;
-        arg0->properties_E4.twinfeeler.field_10C += arg0->damage_B4.amount_C;
-        arg0->health_B0                           = MAX(arg0->health_B0 - arg0->damage_B4.amount_C, 0);
+        chara->properties_E4.twinfeeler.field_EC   = chara->damage_B4;
+        chara->properties_E4.twinfeeler.field_10C += chara->damage_B4.amount_C;
+        chara->health_B0                           = MAX(chara->health_B0 - chara->damage_B4.amount_C, Q12(0.0f));
 
-        temp_s1 = D_800DB190[arg0->model_0.anim_4.status_0 >> 1];
+        temp_s1 = D_800DB190[chara->model_0.anim_4.status_0 >> 1];
 
-        if (arg0->health_B0 > 0x14000)
+        if (chara->health_B0 > Q12(20.0f))
         {
-            if (arg0->properties_E4.twinfeeler.field_10C > 0 && arg0->model_0.controlState_2 != 2 && !(temp_s1 & 1))
+            if (chara->properties_E4.twinfeeler.field_10C > 0 && chara->model_0.controlState_2 != 2 && !(temp_s1 & 1))
             {
-                arg0->properties_E4.twinfeeler.field_10C = 0;
-                arg0->model_0.controlState_2             = 2;
-                arg0->model_0.stateStep_3                = 0;
+                chara->properties_E4.twinfeeler.field_10C = 0;
+                chara->model_0.controlState_2             = 2;
+                chara->model_0.stateStep_3                = 0;
             }
         }
-        else if (func_800D3B1C() == 0 && arg0->model_0.controlState_2 != 9)
+        else if (func_800D3B1C() == 0 && chara->model_0.controlState_2 != 9)
         {
-            if (!(temp_s1 & 2))
+            if (!(temp_s1 & (1 << 1)))
             {
-                arg0->properties_E4.twinfeeler.field_118 = 1;
+                chara->properties_E4.twinfeeler.field_118 = 1;
             }
             else
             {
-                arg0->properties_E4.twinfeeler.field_118 = 0;
+                chara->properties_E4.twinfeeler.field_118 = 0;
             }
 
-            arg0->health_B0              = -1;
-            arg0->model_0.controlState_2 = 9;
-            arg0->model_0.stateStep_3    = 0;
-            arg0->flags_3E              |= 2;
+            chara->health_B0              = NO_VALUE;
+            chara->model_0.controlState_2 = 9;
+            chara->model_0.stateStep_3    = 0;
+            chara->flags_3E              |= 1 << 1;
         }
     }
 
-    arg0->damage_B4.amount_C      = 0;
-    arg0->damage_B4.position_0.vz = 0;
-    arg0->damage_B4.position_0.vy = 0;
-    arg0->damage_B4.position_0.vx = 0;
+    chara->damage_B4.amount_C      = Q12(0.0f);
+    chara->damage_B4.position_0.vz = Q12(0.0f);
+    chara->damage_B4.position_0.vy = Q12(0.0f);
+    chara->damage_B4.position_0.vx = Q12(0.0f);
 }
 
 void func_800D3FB0(s_SubCharacter* chara) // 0x800D3FB0
@@ -3206,7 +3207,7 @@ void func_800D5DF4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5DF4
     func_800D35DC(&chara->rotation_24);
 }
 
-void func_800D5E30(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5E30
+void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords) // 0x800D5E30
 {
     MATRIX           sp10;
     s32              i;
@@ -3218,14 +3219,14 @@ void func_800D5E30(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5E30
 
     ptr = &D_800E04A0;
 
-    chara->field_E4   = &D_800E04A0;
-    chara->field_E1_4 = 4;
+    twinfeeler->field_E4   = &D_800E04A0;
+    twinfeeler->field_E1_4 = 4;
 
     for (i = 0; i < 4; i++, ptr++)
     {
         Vw_CoordHierarchyMatrixCompute(&coords[D_800DB3A0[i]], &sp10);
 
-        posY    = chara->position_18.vy;
+        posY    = twinfeeler->position_18.vy;
         newPosX = Q8_TO_Q12(sp10.t[0]);
         newPosY = Q8_TO_Q12(sp10.t[1]);
         newPosZ = Q8_TO_Q12(sp10.t[2]);
@@ -3240,40 +3241,40 @@ void func_800D5E30(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5E30
     }
 }
 
-void Ai_Twinfeeler_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5F28
+void Ai_Twinfeeler_Update(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5F28
 {
-    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
+    if (twinfeeler->model_0.controlState_2 == ModelState_Uninitialized)
     {
         Ai_Twinfeeler_TextureLoad(); // Just calls `Fs_QueueStartReadTim`.
-        chara->model_0.controlState_2 = 1;
-        chara->model_0.stateStep_3 = 0;
+        twinfeeler->model_0.controlState_2 = 1;
+        twinfeeler->model_0.stateStep_3 = 0;
     }
 
-    if (chara->model_0.controlState_2 != 1 || Ai_Twinfeeler_Init(chara))
+    if (twinfeeler->model_0.controlState_2 != 1 || Ai_Twinfeeler_Init(twinfeeler))
     {
         if (g_DeltaTime0 != Q12(0.0f))
         {
-            func_800D3E58(chara);
-            func_800D53B0(chara, coords);
-            func_800D55C8(chara);
-            func_800D5BC8(chara, coords);
-            func_800D5888(chara, anmHdr, coords);
-            func_800D5B6C(chara, coords);
-            func_800D54B4(chara, coords);
-            func_800D5DF4(chara, coords);
-            func_800D59EC(chara, coords);
-            func_800D5E30(chara, coords);
-            func_800D3B44(chara->flags_3E & CharaFlag_Unk2);
+            func_800D3E58(twinfeeler);
+            func_800D53B0(twinfeeler, coords);
+            func_800D55C8(twinfeeler);
+            func_800D5BC8(twinfeeler, coords);
+            func_800D5888(twinfeeler, anmHdr, coords);
+            func_800D5B6C(twinfeeler, coords);
+            func_800D54B4(twinfeeler, coords);
+            func_800D5DF4(twinfeeler, coords);
+            func_800D59EC(twinfeeler, coords);
+            func_800D5E30(twinfeeler, coords);
+            func_800D3B44(twinfeeler->flags_3E & CharaFlag_Unk2);
 
-            if (chara->model_0.controlState_2 != 10)
+            if (twinfeeler->model_0.controlState_2 != 10)
             {
                 Sd_SfxStop(Sfx_Unk1567);
             }
         }
         else
         {
-            func_800D5888(chara, anmHdr, coords);
-            func_800D5DF4(chara, coords);
+            func_800D5888(twinfeeler, anmHdr, coords);
+            func_800D5DF4(twinfeeler, coords);
         }
     }
 }
@@ -3345,7 +3346,7 @@ void func_800D6704(void) // 0x800D6704
 
     if (i != 6)
     {
-        g_DeltaTime0 = 0;
+        g_DeltaTime0 = Q12(0.0f);
     }
 
     Event_ItemTake(InventoryItemId_HuntingRifle, RIFLE_AMMO_PICKUP_ITEM_COUNT, EventFlag_M4S03_PickupHuntingRifle, 17);
@@ -4354,18 +4355,18 @@ bool func_800D84C0(s_800E06A0* arg0, s32 arg1, s32 arg2) // 0x800D84C0
         case 0:
         default:
             arg0->field_30 = 5;
-            arg0->field_36 = (FP_TO(arg0->field_24 % 0xAAA, 0xC) / 0xAAA) >> 6;
+            arg0->field_36 = (FP_TO(arg0->field_24 % Q12((1.0f / 3.0f) * 2.0f), Q12_SHIFT) / Q12((1.0f / 3.0f) * 2.0f)) >> 6;
 
-            if (arg0->field_36 > 0x18 && arg0->field_36 < 0x1D)
+            if (arg0->field_36 > 24 && arg0->field_36 < 29)
             {
-                arg0->field_36 = 0x20;
+                arg0->field_36 = 32;
             }
             break;
 
         case 1:
             arg0->field_30 = 5;
             arg0->field_34 = func_800D7394() % 6;
-            arg0->field_36 = 0x20;
+            arg0->field_36 = 32;
             break;
     }
 
@@ -4379,7 +4380,7 @@ bool func_800D85E4(s_800E06A0* arg0, s32 arg1) // 0x800D85E4
         arg0->field_28 = arg1;
     }
 
-    arg0->field_30 = 0xF;
+    arg0->field_30 = 15;
     arg0->field_36 = 0;
     arg0->field_34 = 0;
 
@@ -4393,7 +4394,7 @@ bool func_800D8620(s_800E06A0* arg0, s32 arg1, s32 arg2) // 0x800D8620
         arg0->field_28 = arg2;
     }
 
-    if (arg1 == -1)
+    if (arg1 == NO_VALUE)
     {
         arg1 = func_800D87AC(arg0);
     }
@@ -4409,20 +4410,20 @@ bool func_800D8620(s_800E06A0* arg0, s32 arg1, s32 arg2) // 0x800D8620
 
         case 2:
             arg0->field_30 = 1;
-            arg0->field_34 = 0x32;
-            arg0->field_36 = 0x18;
+            arg0->field_34 = 50;
+            arg0->field_36 = 24;
             break;
 
         case 3:
             arg0->field_30 = 1;
-            arg0->field_34 = 0x80;
+            arg0->field_34 = 128;
             arg0->field_36 = 0;
             break;
 
         case 4:
             arg0->field_34 = 0;
             arg0->field_30 = 4;
-            arg0->field_36 = FP_FROM(-((FP_TO(arg0->field_24 % 6144, 0xC) / 6144) * 0x50), 0xC) - 0x6C;
+            arg0->field_36 = FP_FROM(-(Q12_DIV(arg0->field_24 % Q12(1.5f), Q12(1.5f)) * 80), Q12_SHIFT) - 108;
             break;
 
         case 5:
@@ -4432,43 +4433,43 @@ bool func_800D8620(s_800E06A0* arg0, s32 arg1, s32 arg2) // 0x800D8620
             arg0->field_36 = func_800D7394() % 320;
             break;
     }
+
     return !(arg0->field_24 < arg0->field_28);
 }
 
 s32 func_800D87AC(s_800E06A0* arg0) // 0x800D87AC
 {
-    s32 temp_v1_2;
-    s32 var_s0;
+    s32  temp_v1_2;
+    bool cond;
 
-    var_s0 = 0;
-
+    cond = false;
     if (arg0->field_24 == 0)
     {
-        var_s0         = 1;
+        cond           = true;
         arg0->field_2C = func_800D8874();
     }
     else if (arg0->field_24 >= arg0->field_2C)
     {
-        var_s0          = 1;
+        cond            = true;
         arg0->field_2C += func_800D8874();
     }
 
-    if (var_s0 != 0)
+    if (cond)
     {
-        temp_v1_2 = func_800D7394() & 0xFFF;
-        if (temp_v1_2 < 0x4CC)
+        temp_v1_2 = Q12_FRACT(func_800D7394());
+        if (temp_v1_2 < Q12(0.3f))
         {
             arg0->field_23 = 0;
         }
-        else if (temp_v1_2 < 0x800)
+        else if (temp_v1_2 < Q12(0.5f))
         {
             arg0->field_23 = 1;
         }
-        else if (temp_v1_2 < 0xC51)
+        else if (temp_v1_2 < Q12(0.77f))
         {
             arg0->field_23 = 2;
         }
-        else if (temp_v1_2 < 0xD47)
+        else if (temp_v1_2 < Q12(0.83f))
         {
             arg0->field_23 = 3;
         }
@@ -4477,18 +4478,19 @@ s32 func_800D87AC(s_800E06A0* arg0) // 0x800D87AC
             arg0->field_23 = 4;
         }
     }
+
     return arg0->field_23;
 }
 
-s32 func_800D8874(void) // 0x800D8874
+q19_12 func_800D8874(void) // 0x800D8874
 {
-    s16 temp;
-    s16 temp2;
+    q3_12 temp;
+    q3_12 temp2;
 
-    temp2 = func_800D7394() & 0xFFF;
-    temp  = 0x800;
+    temp2 = Q12_FRACT(func_800D7394());
+    temp  = Q12(0.5f);
 
-    return Q12_MULT_PRECISE(temp, temp2) + 0x1000;
+    return Q12_MULT_PRECISE(temp, temp2) + Q12(1.0f);
 }
 
 INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D88C8);
@@ -4872,6 +4874,7 @@ void func_800DA3E0(void) // 0x800DA3E0
         if (D_800E05E0 == 0)
         {
             D_800E05E0++;
+
             if (Savegame_EventFlagGet(EventFlag_332))
             {
                 func_800D76BC(3);

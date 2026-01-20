@@ -152,15 +152,15 @@ void func_800E02E0(void);
 
 void func_800E0FAC(s32); // Assumed return type.
 
-/** @brief Multiply two Q12 fixed-point numbers and return integer part with stochastic rounding.
+/** @brief Multiplies two fixed-point Q19.12 values and returns the integer part with stochastic rounding.
  *
  * The fractional part determines the probability of rounding up:
- * Fraction closer to 0 rarely rounds up, closer to 0x1000 almost always rounds up.
+ * Fractions closer to 0 rarely round up, fractions closer to 0x1000 almost always round up.
  * Prevents systematic bias and error accumulation over many operations.
  *
- * @param val0 First Q12 fixed-point value
- * @param val1 Second Q12 fixed-point value
- * @return Probabilistically rounded integer result of the multiplication
+ * @param val0 First value.
+ * @param val1 Second value.
+ * @return Probabilistically rounded integer result of the multiplication.
  */
 s32 func_800E0F28(q19_12 val0, q19_12 val1);
 
