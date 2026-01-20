@@ -604,7 +604,7 @@ void func_800DD240(VECTOR3* vec) // 0x800DD240
     func_800DD0EC(vec, 2);
 }
 
-void func_800DD260(s32 arg0, s32 arg1) // 0x800DD260
+void func_800DD260(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD260
 {
     s_800F3DAC* ptr;
 
@@ -621,7 +621,22 @@ void func_800DD260(s32 arg0, s32 arg1) // 0x800DD260
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD2C8);
+void func_800DD2C8(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD2C8
+{
+    s_800F3DAC* ptr;
+
+    ptr = func_800DD090();
+    if (ptr != NULL)
+    {
+        ptr->field_4D8 = 0x800;
+        ptr->field_4E4 = 4;
+        ptr->field_C   = 0x800;
+        ptr->field_8   = 0x800;
+        ptr->field_14  = 0x200;
+
+        func_800DCDDC(ptr, arg0, arg1);
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD32C);
 

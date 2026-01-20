@@ -338,7 +338,9 @@ s_800F3DAC* func_800DD090(void);
 
 void func_800DD240(VECTOR3* vec);
 
-void func_800DD260(s32 arg0, s32 arg1); // Unknown arg types.
+void func_800DD260(VECTOR3* arg0, VECTOR3* arg1);
+
+void func_800DD2C8(VECTOR3* arg0, VECTOR3* arg1);
 
 void func_800DD3D4(void* arg0, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
 
