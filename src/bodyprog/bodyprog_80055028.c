@@ -3724,15 +3724,15 @@ INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_80055028", func_8005CD38); // 0x8005
 
 bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR3* unkOffset, u32 npcIdx, q19_12 angleConstraint) // 0x8005D50C
 {
-    s_RayData sp10;
-    VECTOR3           unkPos;
-    q3_12             angle1;
-    q3_12             angle0;
-    q3_12             angle2;
-    q3_12             angle3;
-    q19_12            mag0;
-    q19_12            mag1;
-    s32               i;
+    s_RayData ray;
+    VECTOR3   unkPos;
+    q3_12     angle1;
+    q3_12     angle0;
+    q3_12     angle2;
+    q3_12     angle3;
+    q19_12    mag0;
+    q19_12    mag1;
+    s32       i;
 
     #define npc g_SysWork.npcs_1A0[npcIdx]
 
@@ -3788,7 +3788,7 @@ bool func_8005D50C(s32* targetNpcIdx, q3_12* outAngle0, q3_12* outAngle1, VECTOR
             continue;
         }
 
-        if (func_8006DA08(&sp10, unkOffset, &unkPos, &g_SysWork.playerWork_4C.player_0) && sp10.field_10 == &g_SysWork.npcs_1A0[i])
+        if (func_8006DA08(&ray, unkOffset, &unkPos, &g_SysWork.playerWork_4C.player_0) && ray.chara_10 == &g_SysWork.npcs_1A0[i])
         {
             *targetNpcIdx  = i;
             *outAngle0  = angle3;
@@ -10205,7 +10205,7 @@ void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2) // 0x800
 // COMBAT 2
 // ========================================
 
-bool Ray_CheckLine(s_RayData* ray, VECTOR3* from, VECTOR3* to) // 0x8006D90C
+bool Ray_LineCheck(s_RayData* ray, VECTOR3* from, VECTOR3* to) // 0x8006D90C
 {
     s32     scratchPrev;
     s32     scratchAddr;
@@ -10215,26 +10215,26 @@ bool Ray_CheckLine(s_RayData* ray, VECTOR3* from, VECTOR3* to) // 0x8006D90C
     dir.vy = to->vy - from->vy;
     dir.vz = to->vz - from->vz;
 
-    ray->hit = false;
+    ray->hasHit_0 = false;
 
-    if (Ray_SetupTrace((s32)PSX_SCRATCH, 0, 0, from, &dir, 0, 0, NULL, 0))
+    if (Ray_TraceSetup((s32)PSX_SCRATCH, 0, 0, from, &dir, 0, 0, NULL, 0))
     {
         scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(984));
         scratchAddr   = (s32)PSX_SCRATCH;
-        ray->hit = Ray_RunTrace(ray, PSX_SCRATCH_ADDR(0));
+        ray->hasHit_0 = Ray_TraceRun(ray, PSX_SCRATCH_ADDR(0));
 
         SetSp(scratchPrev);
     }
 
-    if (!ray->hit)
+    if (!ray->hasHit_0)
     {
-        Ray_SetMiss(ray, from, &dir, (s16)*(u16*)(&((u8*)scratchAddr)[92]));
+        Ray_MissSet(ray, from, &dir, (s16)*(u16*)(&((u8*)scratchAddr)[92]));
     }
 
-    return ray->hit;
+    return ray->hasHit_0;
 }
 
-bool func_8006DA08(s_RayData* ray, VECTOR3* pos, VECTOR3* offset, s_SubCharacter* chara) // 0x8006DA08
+bool func_8006DA08(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* chara) // 0x8006DA08
 {
     s32              sp28;
     s32              scratchPrev;
@@ -10243,43 +10243,43 @@ bool func_8006DA08(s_RayData* ray, VECTOR3* pos, VECTOR3* offset, s_SubCharacter
 
     charas = func_8006A1A4(&sp28, chara, false);
 
-    ray->hit = false;
-    if (Ray_SetupTrace((s32)PSX_SCRATCH, 0, 0, pos, offset, 0, 0, charas, sp28))
+    ray->hasHit_0 = false;
+    if (Ray_TraceSetup((s32)PSX_SCRATCH, 0, 0, from, dir, 0, 0, charas, sp28))
     {
         scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
         scratchAddr   = (s32)PSX_SCRATCH;
-        ray->hit = Ray_RunTrace(ray, PSX_SCRATCH_ADDR(0));
+        ray->hasHit_0 = Ray_TraceRun(ray, PSX_SCRATCH_ADDR(0));
 
         SetSp(scratchPrev);
     }
 
-    if (ray->hit == 0)
+    if (!ray->hasHit_0)
     {
-        Ray_SetMiss(ray, pos, offset, (s16)*(u16*)(&((u8*)scratchAddr)[92]));
+        Ray_MissSet(ray, from, dir, (s16)*(u16*)(&((u8*)scratchAddr)[92]));
     }
 
-    return ray->hit;
+    return ray->hasHit_0;
 }
 
-void Ray_SetMiss(s_RayData* ray, VECTOR3* pos, VECTOR3* dir, s32 arg3) // 0x8006DAE4
+void Ray_MissSet(s_RayData* ray, VECTOR3* from, VECTOR3* dir, q23_8 arg3) // 0x8006DAE4
 {
-    ray->hit        = 0;
+    ray->hasHit_0   = false;
     ray->field_1    = 0;
-    ray->field_4.vx = pos->vx + dir->vx;
-    ray->field_4.vy = pos->vy + dir->vy;
-    ray->field_4.vz = pos->vz + dir->vz;
-    ray->field_10   = 0;
-    ray->field_14   = arg3 * 16; // Q8 to Q12?
-    ray->field_18   = 0x1E00;
-    ray->field_1C   = 0;
+    ray->field_4.vx = from->vx + dir->vx;
+    ray->field_4.vy = from->vy + dir->vy;
+    ray->field_4.vz = from->vz + dir->vz;
+    ray->chara_10   = NULL;
+    ray->field_14   = Q8_TO_Q12(arg3);
+    ray->field_18   = Q12(1.875f);
+    ray->field_1C   = FP_ANGLE(0.0f);
 }
 
-static inline void func_8006DB3C_Inline(s_RayData* ray, VECTOR3* pos, VECTOR3* offset, u16* p)
+static inline void func_8006DB3C_Inline(s_RayData* ray, VECTOR3* dir, VECTOR3* offset, u16* ptr)
 {
-    Ray_SetMiss(ray, pos, offset, (short)*p);
+    Ray_MissSet(ray, dir, offset, (short)*ptr);
 }
 
-bool func_8006DB3C(s_RayData* ray, VECTOR3* pos, VECTOR3* offset, s_SubCharacter* chara) // 0x8006DB3C
+bool func_8006DB3C(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* chara) // 0x8006DB3C
 {
     s32              charaCount;
     s32              stackPtr;
@@ -10287,23 +10287,23 @@ bool func_8006DB3C(s_RayData* ray, VECTOR3* pos, VECTOR3* offset, s_SubCharacter
     s_SubCharacter** charas;
 
     charas       = func_8006A1A4(&charaCount, chara, true);
-    ray->hit = false;
+    ray->hasHit_0 = false;
 
-    if (Ray_SetupTrace((s32)PSX_SCRATCH, 1, 0, pos, offset, 0, 0, charas, charaCount))
+    if (Ray_TraceSetup((s32)PSX_SCRATCH, 1, 0, from, dir, 0, 0, charas, charaCount))
     {
         stackPtr      = SetSp((s32)PSX_SCRATCH_ADDR(984));
         scratchAddr   = (s32)PSX_SCRATCH;
-        ray->hit = Ray_RunTrace(ray, scratchAddr);
+        ray->hasHit_0 = Ray_TraceRun(ray, scratchAddr);
 
         SetSp(stackPtr);
     }
 
-    if (!ray->hit)
+    if (!ray->hasHit_0)
     {
-        func_8006DB3C_Inline(ray, pos, offset, &((u8*)scratchAddr)[92]);
+        func_8006DB3C_Inline(ray, from, dir, &((u8*)scratchAddr)[92]);
     }
 
-    return ray->hit;
+    return ray->hasHit_0;
 }
 
 bool func_8006DC18(s_RayData* ray, VECTOR3* vec1, VECTOR3* vec2) // 0x8006DC18
@@ -10311,25 +10311,25 @@ bool func_8006DC18(s_RayData* ray, VECTOR3* vec1, VECTOR3* vec2) // 0x8006DC18
     s32 scratchPrev;
     s32 scratchAddr;
 
-    ray->hit = false;
-    if (Ray_SetupTrace((s32)PSX_SCRATCH, 1, 76, vec1, vec2, 0, 0, NULL, 0))
+    ray->hasHit_0 = false;
+    if (Ray_TraceSetup((s32)PSX_SCRATCH, 1, 76, vec1, vec2, 0, 0, NULL, 0))
     {
         scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
         scratchAddr   = (s32)PSX_SCRATCH;
-        ray->hit = Ray_RunTrace(ray, PSX_SCRATCH_ADDR(0));
+        ray->hasHit_0 = Ray_TraceRun(ray, PSX_SCRATCH_ADDR(0));
 
         SetSp(scratchPrev);
     }
 
-    if (ray->hit == 0)
+    if (!ray->hasHit_0)
     {
-        Ray_SetMiss(ray, vec1, vec2, (s16) * (u16*)(&((u8*)scratchAddr)[92]));
+        Ray_MissSet(ray, vec1, vec2, (s16)*(u16*)(&((u8*)scratchAddr)[92]));
     }
 
-    return ray->hit;
+    return ray->hasHit_0;
 }
 
-bool Ray_SetupTrace(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* dir, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount)
+bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* dir, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount)
 {
     if (dir->vx == Q12(0.0f) && dir->vz == Q12(0.0f))
     {
@@ -10352,9 +10352,8 @@ bool Ray_SetupTrace(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3
 
     state->field_3C = state->field_2C.vx + state->field_50.vx;
 
-    // `Q12_TO_Q8`?
-    state->field_4C = FP_FROM(arg5, Q4_SHIFT);
-    state->field_4E = FP_FROM(arg6, Q4_SHIFT);
+    state->field_4C = Q12_TO_Q8(arg5);
+    state->field_4E = Q12_TO_Q8(arg6);
 
     state->field_40 = state->field_2C.vy + state->field_50.vy;
     state->field_44 = state->field_2C.vz + state->field_50.vz;
@@ -10385,7 +10384,7 @@ bool Ray_SetupTrace(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3
     return true;
 }
 
-bool Ray_RunTrace(s_RayData* ray, s_RayState* state) // 0x8006DEB0
+bool Ray_TraceRun(s_RayData* ray, s_RayState* state) // 0x8006DEB0
 {
     s32                  collDataIdx;
     s32                  temp_lo;
@@ -10421,15 +10420,14 @@ bool Ray_RunTrace(s_RayData* ray, s_RayState* state) // 0x8006DEB0
         func_8006EEB8(state, *curChara);
     }
 
-    // TODO: `* 16`s are Q8 to Q12?
     if (state->field_8 != SHRT_MAX)
     {
-        ray->field_4.vx = state->field_C * 16;
-        ray->field_4.vy = state->field_10 * 16;
-        ray->field_4.vz = state->field_14 * 16;
-        ray->field_10   = state->field_20;
-        ray->field_14   = state->field_8 * 16;
-        ray->field_18   = state->field_1C * 16;
+        ray->field_4.vx = Q8_TO_Q12(state->field_C);
+        ray->field_4.vy = Q8_TO_Q12(state->field_10);
+        ray->field_4.vz = Q8_TO_Q12(state->field_14);
+        ray->chara_10   = state->field_20;
+        ray->field_14   = Q8_TO_Q12(state->field_8);
+        ray->field_18   = Q8_TO_Q12(state->field_1C);
         ray->field_1C   = ratan2(state->field_24, state->field_26);
         ray->field_1    = state->field_28;
         return true;
@@ -11271,7 +11269,7 @@ s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3) // 0x
     return result;
 }
 
-void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8FC* arg4) // 0x8006F8FC
+void func_8006F8FC(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_func_8006F8FC* arg4) // 0x8006F8FC
 {
     q19_12 minX;
     q19_12 maxX;
@@ -11493,39 +11491,39 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
 
 bool func_80070030(s_SubCharacter* chara, q19_12 posX, q19_12 posY, q19_12 posZ)
 {
-    s_RayData temp;
-    VECTOR3           offset; // Q19.12
+    s_RayData ray;
+    VECTOR3   offset; // Q19.12
 
     offset.vx = posX - chara->position_18.vx;
     offset.vy = posY - chara->position_18.vy;
     offset.vz = posZ - chara->position_18.vz;
 
-    func_8006DB3C(&temp, &chara->position_18, &offset, chara);
+    func_8006DB3C(&ray, &chara->position_18, &offset, chara);
 }
 
-bool func_80070084(s_SubCharacter* chara, q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80070084
+bool func_80070084(s_SubCharacter* chara, q19_12 fromX, q19_12 fromY, q19_12 fromZ) // 0x80070084
 {
-    s_RayData var;
-    VECTOR3           offset; // Q19.12
-    bool              cond;
+    s_RayData ray;
+    VECTOR3   dir; // Q19.12
+    bool      isCharaMissed;
 
-    offset.vx = posX - chara->position_18.vx;
-    offset.vy = posY - chara->position_18.vy;
-    offset.vz = posZ - chara->position_18.vz;
+    dir.vx = fromX - chara->position_18.vx;
+    dir.vy = fromY - chara->position_18.vy;
+    dir.vz = fromZ - chara->position_18.vz;
 
-    cond = false;
-    if (func_8006DB3C(&var, &chara->position_18, &offset, chara))
+    isCharaMissed = false;
+    if (func_8006DB3C(&ray, &chara->position_18, &dir, chara))
     {
-        cond = var.field_10 == 0;
+        isCharaMissed = ray.chara_10 == NULL;
     }
-    return cond;
+    return isCharaMissed;
 }
 
 bool func_800700F8(s_SubCharacter* npc, s_SubCharacter* player) // 0x800700F8
 {
-    s_RayData sp10;
-    VECTOR3           pos;    // Q19.12
-    VECTOR3           offset; // Q19.12
+    s_RayData ray;
+    VECTOR3   pos;    // Q19.12
+    VECTOR3   offset; // Q19.12
 
     pos = npc->position_18;
 
@@ -11533,7 +11531,7 @@ bool func_800700F8(s_SubCharacter* npc, s_SubCharacter* player) // 0x800700F8
     offset.vy = Q12(-0.1f);
     offset.vz = player->position_18.vz - npc->position_18.vz;
 
-    return func_8006DB3C(&sp10, &pos, &offset, npc) && sp10.field_10 == 0;
+    return func_8006DB3C(&ray, &pos, &offset, npc) && ray.chara_10 == NULL;
 }
 
 bool func_80070184(s_SubCharacter* chara, s32 arg1, q3_12 rotY) // 0x80070184
@@ -11568,7 +11566,7 @@ bool func_80070208(s_SubCharacter* chara, q19_12 dist) // 0x80070208
     cond = false;
     if (func_8006DB3C(&var, &chara->position_18, &offset, chara))
     {
-        cond = var.field_10 > 0;
+        cond = var.chara_10 > 0;
     }
     return cond;
 }

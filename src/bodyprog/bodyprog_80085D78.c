@@ -2881,7 +2881,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
             j_3d8:
                 temp_t3_2 = sp54 / 3;
-                sp30      = -1;
+                sp30      = NO_VALUE;
 
                 if (g_SysWork.targetNpcIdx_2353 >= 0)
                 {
@@ -2989,7 +2989,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                     }
 
                     temp = func_8006DA08(&D_800C4728, &chara->field_44.field_18, &chara->field_44.field_48[0], chara);
-                    ptr  = D_800C4728.field_10;
+                    ptr  = D_800C4728.chara_10;
 
                     if (temp && ptr != NULL)
                     {
@@ -4146,7 +4146,7 @@ s32 func_8008BF84(s_SubCharacter* chara, q19_12 angle, s_800AD4C8* arg2, s32 arg
         posZ             = temp_s2 - Q12_MULT_PRECISE(temp_s3, var_s1);
 
         D_800C47C8[1].vz = posZ;
-        var_v1           = Ray_CheckLine(&D_800C47F8, &D_800C47C8[0], &D_800C47C8[1]);
+        var_v1           = Ray_LineCheck(&D_800C47F8, &D_800C47C8[0], &D_800C47C8[1]);
 
         if (var_v1 != false)
         {

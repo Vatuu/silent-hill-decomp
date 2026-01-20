@@ -625,7 +625,7 @@ bool sharedFunc_800D2E04_0_s01(s_SubCharacter* airScreamer, VECTOR3* inVec, q19_
         sharedData_800DE170_0_s01.vx = airScreamer->position_18.vx;
         sharedData_800DE170_0_s01.vy = airScreamer->position_18.vy + airScreamer->field_C8.field_0; // Head offset.
         sharedData_800DE170_0_s01.vz = airScreamer->position_18.vz;
-        return !Ray_CheckLine(&sharedData_800E2330_0_s01, &sharedData_800DE170_0_s01, inVec);
+        return !Ray_LineCheck(&sharedData_800E2330_0_s01, &sharedData_800DE170_0_s01, inVec);
     }
 
     return false;
@@ -9102,7 +9102,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
     s32      var_a0;
     s32      i;
     s32      var_v1;
-    s32      temp_v0_2;
+    bool     hasHit;
     q19_12   posX;
     q19_12   posY;
     q19_12   posZ;
@@ -9155,7 +9155,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
 
     var_a0    = sharedData_800E2370_0_s01[1];
     temp_v1   = airScreamer->field_C8.field_0;
-    temp_v0_2 = 1;
+    hasHit = true;
 
     if (i < 0 && var_a0 < (posY + temp_v1))
     {
@@ -9184,7 +9184,7 @@ bool sharedFunc_800D4AEC_0_s01(s_SubCharacter* airScreamer, VECTOR3* arg1, VECTO
             temp2 = Q12_MULT_PRECISE(i, var_v1);
 
             sharedData_800E2330_0_s01.field_14   = temp;
-            sharedData_800E2330_0_s01.hit    = temp_v0_2;
+            sharedData_800E2330_0_s01.hasHit_0   = hasHit;
             sharedData_800E2330_0_s01.field_4.vx = temp3 + posX;
             sharedData_800E2330_0_s01.field_4.vy = temp2 + posY;
             sharedData_800E2330_0_s01.field_18   = sharedData_800E2330_0_s01.field_4.vy;

@@ -3973,7 +3973,7 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     SVECTOR           endRelPos;
     MATRIX            matUnused;
     MATRIX            worldMat;
-    s_RayData sp60;
+    s_RayData         ray;
     VECTOR3           beamStart;
     VECTOR3           beamOffset;
     SVECTOR           polyFt3Pos;
@@ -4014,10 +4014,10 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
     beamOffset.vz = beamDirZ;
 
     PushMatrix();
-    cond = func_8006DA08(&sp60, &beamStart, &beamOffset, &g_SysWork.playerWork_4C.player_0);
+    cond = func_8006DA08(&ray, &beamStart, &beamOffset, &g_SysWork.playerWork_4C.player_0);
     PopMatrix();
 
-    primCount = cond ? (FP_FROM(sp60.field_14, Q12_SHIFT) + 1) : 16;
+    primCount = cond ? (FP_FROM(ray.field_14, Q12_SHIFT) + 1) : 16;
 
     for (i = 0; i < primCount; i++)
     {
@@ -4050,9 +4050,9 @@ void Particle_HyperBlasterBeamDraw(VECTOR3* vec0, q3_12* rotX, q3_12* rotY)
 
         if (i == (primCount - 1))
         {
-            endRelPos.vx = Q12_TO_Q8(sp60.field_4.vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
-            endRelPos.vy = Q12_TO_Q8(sp60.field_4.vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
-            endRelPos.vz = Q12_TO_Q8(sp60.field_4.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
+            endRelPos.vx = Q12_TO_Q8(ray.field_4.vx - g_SysWork.playerWork_4C.player_0.position_18.vx);
+            endRelPos.vy = Q12_TO_Q8(ray.field_4.vy - g_SysWork.playerWork_4C.player_0.position_18.vy);
+            endRelPos.vz = Q12_TO_Q8(ray.field_4.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
         }
 
         gte_ldv0(&endRelPos);

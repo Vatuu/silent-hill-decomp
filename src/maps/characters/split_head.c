@@ -425,18 +425,18 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
 
 void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
 {
-    s_RayData sp10;
-    VECTOR3           sp30;
-    q3_12             angleToPlayer2;
-    q3_12             angleDeltaToPlayer;
-    q3_12             angle1;
-    q3_12             angle;
-    q3_12             angleToPlayer;
-    q19_12            distToPlayer;
-    q19_12            distMax;
-    q19_12            activeDistMax;
-    s32               i;
-    s32               angleMult;
+    s_RayData ray;
+    VECTOR3   sp30;
+    q3_12     angleToPlayer2;
+    q3_12     angleDeltaToPlayer;
+    q3_12     angle1;
+    q3_12     angle;
+    q3_12     angleToPlayer;
+    q19_12    distToPlayer;
+    q19_12    distMax;
+    q19_12    activeDistMax;
+    s32       i;
+    s32       angleMult;
 
     distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx,
                                        g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz);
@@ -499,9 +499,9 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
             sp30.vy = Q12(0.0f);
             sp30.vz = Q12_MULT(distMax, Math_Cos((angleToPlayer + angle) + angle1));
 
-            func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
+            func_8006DB3C(&ray, &splitHead->position_18, &sp30, splitHead);
 
-            if (sp10.hit == 0 || sp10.field_10 != 0)
+            if (!ray.hasHit_0 || ray.chara_10 != NULL)
             {
                 splitHeadProps.angle_F0 = angle1 + (angleToPlayer + angle);
                 break;
@@ -575,11 +575,11 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
     sp30.vy = Q12(0.0f);
     sp30.vz = Q12_MULT(distToPlayer, Math_Cos(angleToPlayer2));
 
-    func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
+    func_8006DB3C(&ray, &splitHead->position_18, &sp30, splitHead);
 
     if (distToPlayer < Q12(6.4f) &&
         (angleDeltaToPlayer < FP_ANGLE(7.5f) || distToPlayer > Q12(3.2f) && angleDeltaToPlayer < FP_ANGLE(15.0f)) &&
-        (sp10.hit == 0 || sp10.field_10 != 0))
+        (!ray.hasHit_0 || ray.chara_10 != NULL))
     {
         splitHead->model_0.controlState_2 = SplitHeadControl_3;
     }
@@ -754,18 +754,18 @@ void Ai_SplitHead_Control_4(s_SubCharacter* splitHead)
 
 void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
 {
-    s_RayData sp10;
-    VECTOR3           sp30;
-    q3_12             angle1;
-    q3_12             angle2;
-    q3_12             angle3;
-    q3_12             angle;
-    q3_12             angleToPlayer;
-    q19_12            distToPlayer;
-    q19_12            distMax;
-    s32               i;
-    s32               angleMult;
-    q19_12            activeDistMax;
+    s_RayData ray;
+    VECTOR3   sp30;
+    q3_12     angle1;
+    q3_12     angle2;
+    q3_12     angle3;
+    q3_12     angle;
+    q3_12     angleToPlayer;
+    q19_12    distToPlayer;
+    q19_12    distMax;
+    s32       i;
+    s32       angleMult;
+    q19_12    activeDistMax;
 
     distToPlayer = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx,
                                        g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz);
@@ -828,9 +828,9 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
             sp30.vy = Q12(0.0f);
             sp30.vz = Q12_MULT(distMax, Math_Cos((angleToPlayer + angle) + angle3));
 
-            func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
+            func_8006DB3C(&ray, &splitHead->position_18, &sp30, splitHead);
 
-            if (sp10.hit == 0 || sp10.field_10 != 0)
+            if (!ray.hasHit_0 || ray.chara_10 != NULL)
             {
                 splitHeadProps.angle_F0 = angle3 + (angleToPlayer + angle);
                 break;
@@ -905,11 +905,11 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
     sp30.vy = Q12(0.0f);
     sp30.vz = Q12_MULT(distToPlayer, Math_Cos(angle1));
 
-    func_8006DB3C(&sp10, &splitHead->position_18, &sp30, splitHead);
+    func_8006DB3C(&ray, &splitHead->position_18, &sp30, splitHead);
 
     if (distToPlayer > Q12(2.85f) && distToPlayer < Q12(4.0f) &&
         angle2 < FP_ANGLE(15.0f) &&
-        (sp10.hit == 0 || sp10.field_10 != 0))
+        (!ray.hasHit_0 || ray.chara_10 != NULL))
     {
         splitHead->model_0.controlState_2 = SplitHeadControl_1;
         if (!Rng_TestProbabilityBits(3))

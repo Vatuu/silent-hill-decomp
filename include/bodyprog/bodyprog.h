@@ -441,20 +441,19 @@ typedef struct
     s16 field_2;
 } s_RayState_8C;
 
-// State for an in-progress ray trace.
-// Contains pointers to active characters among other things.
+/** @brief State for an in-progress ray trace. Contains pointers to active characters among other things. */
 typedef struct
 {
     s32              field_0;
     s16              field_4;
     s16              field_6;
-    s16              field_8;
+    q7_8             field_8; // Distance X?
     s8               unk_A[2];
-    s32              field_C;  // } Q19.12 `VECTOR3`
-    s32              field_10; // }
-    s32              field_14; // }
+    q23_8            field_C;  // } Q23.8 `VECTOR3`
+    q23_8            field_10; // }
+    q23_8            field_14; // }
     s8               unk_18[4];
-    s16              field_1C;
+    q7_8             field_1C; // Distance Z?
     s8               unk_1E[2];
     s_SubCharacter*  field_20;
     s16              field_24; // X } Q19.12
@@ -466,8 +465,8 @@ typedef struct
     s32              field_40; // Y? }
     s32              field_44; // Z  }
     s8               unk_48[4];
-    s16              field_4C;
-    s16              field_4E;
+    q7_8             field_4C; // X?
+    q7_8             field_4E; // Z?
     SVECTOR          field_50; // Q23.8
     u16              field_58;
     s16              field_5A;
@@ -1725,16 +1724,16 @@ typedef struct
     u8 presetIdx2_1;
 } s_MapEffectsPresetIdxs;
 
-// User data for a finished ray trace.
+/** @brief Line of sight data for finished ray trace. TODO: Could rename to `s_Los` to keep "ray" as a generic math term? */
 typedef struct
 {
-    s8              hit; /** `bool` */
+    s8              hasHit_0; /** `bool` */
     u8              field_1;
     s8              unk_2[2]; // Probably padding.
     VECTOR3         field_4;  // Q19.12
-    s_SubCharacter* field_10;
-    s32             field_14;
-    s32             field_18;
+    s_SubCharacter* chara_10;
+    q19_12          field_14; // Hit distance X?
+    q19_12          field_18; // Hit distance Z?
     q7_8            field_1C; // Angle.
 } s_RayData;
 
@@ -4013,35 +4012,37 @@ void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2);
 /** `arg1` is likely Q23.8. */
 void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2);
 
-bool Ray_CheckLine(s_RayData* ray, VECTOR3* from, VECTOR3* to);
+bool Ray_LineCheck(s_RayData* ray, VECTOR3* from, VECTOR3* to);
 
-bool func_8006DA08(s_RayData* arg0, VECTOR3* pos, VECTOR3* offset, s_SubCharacter* chara);
+/** Ray function. */
+bool func_8006DA08(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* chara);
 
-void Ray_SetMiss(s_RayData* arg0, VECTOR3* pos, VECTOR3* dir, s32 arg3);
+void Ray_MissSet(s_RayData* ray, VECTOR3* from, VECTOR3* dir, q23_8 arg3);
 
-bool func_8006DB3C(s_RayData* arg0, VECTOR3* pos, VECTOR3* offset, s_SubCharacter* chara);
+/** LOS function. */
+bool func_8006DB3C(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* chara);
 
-bool func_8006DC18(s_RayData* arg0, VECTOR3* vec1, VECTOR3* vec2);
+bool func_8006DC18(s_RayData* ray, VECTOR3* vec1, VECTOR3* vec2);
 
-bool Ray_SetupTrace(s_RayState* arg0, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* dir, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount);
+bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* dir, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount);
 
-bool Ray_RunTrace(s_RayData* ray, s_RayState* arg1);
+bool Ray_TraceRun(s_RayData* ray, s_RayState* arg1);
 
-void func_8006E0AC(s_RayState* arg0, s_IpdCollisionData* ipdColl);
+void func_8006E0AC(s_RayState* state, s_IpdCollisionData* ipdColl);
 
 void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2);
 
 void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ);
 
-void func_8006E53C(s_RayState* arg0, s_IpdCollisionData_20* arg1, s_IpdCollisionData* arg2);
+void func_8006E53C(s_RayState* state, s_IpdCollisionData_20* arg1, s_IpdCollisionData* arg2);
 
-void func_8006E78C(s_RayState* arg0, s_IpdCollisionData_14* arg1, SVECTOR3* arg2, s_IpdCollisionData_10* arg3, s32 arg4);
+void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg2, s_IpdCollisionData_10* arg3, s32 arg4);
 
-void func_8006EB8C(s_RayState* arg0, s_IpdCollisionData_18* arg1);
+void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1);
 
 void func_8006EE0C(s_RayState_6C* arg0, s32 arg1, s_SubCharacter* chara);
 
-void func_8006EEB8(s_RayState* arg0, s_SubCharacter* chara);
+void func_8006EEB8(s_RayState* state, s_SubCharacter* chara);
 
 void func_8006F250(s32* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ);
 
@@ -4052,7 +4053,7 @@ bool func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1);
 /** Translates something. */
 s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3);
 
-void func_8006F8FC(s32* outX, s32* outZ, s32 posX, s32 posZ, const s_func_8006F8FC* arg4);
+void func_8006F8FC(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_func_8006F8FC* arg4);
 
 q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle);
 
@@ -4065,6 +4066,7 @@ bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 
 
 bool func_80070030(s_SubCharacter* chara, q19_12 posX, q19_12 posY, q19_12 posZ);
 
+/** Checks for character ray miss? */
 bool func_80070084(s_SubCharacter* chara, q19_12 posX, q19_12 posY, q19_12 posZ);
 
 bool func_800700F8(s_SubCharacter* npc, s_SubCharacter* player);

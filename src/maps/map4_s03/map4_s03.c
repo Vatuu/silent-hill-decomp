@@ -2195,7 +2195,7 @@ s32 func_800D4488(VECTOR3* arg0, s32 arg1) // 0x800D4488
 
 s32 func_800D4558(q19_12 angle, s32 arg1, s32 arg2) // 0x800D4558
 {
-    s_RayData sp10;
+    s_RayData ray;
     VECTOR3   sp30;
     VECTOR3   sp40;
 
@@ -2207,9 +2207,9 @@ s32 func_800D4558(q19_12 angle, s32 arg1, s32 arg2) // 0x800D4558
     sp30.vy = Q12(0.0f);
     sp30.vz = Math_Cos(angle);
 
-    if (func_8006DC18(&sp10, &sp40, &sp30))
+    if (func_8006DC18(&ray, &sp40, &sp30))
     {
-        return sp10.field_14;
+        return ray.field_14;
     }
     else
     {

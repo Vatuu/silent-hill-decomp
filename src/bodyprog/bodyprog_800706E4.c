@@ -7551,7 +7551,7 @@ void Player_FlexRotationYReset(void) // 0x8007D6E0
 
 s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
 {
-    s_RayData sp10[2];
+    s_RayData rays[2];
     VECTOR3   vecs[4];
     bool      ret[2];
     s32       temp_lo;
@@ -7583,7 +7583,7 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
     vecs[2].vx = chara->position_18.vx + temp_s4;
     vecs[2].vz = chara->position_18.vz - temp_s3;
 
-    ret[0] = Ray_CheckLine(&sp10[0], &vecs[2], &vecs[0]);
+    ret[0] = Ray_LineCheck(&rays[0], &vecs[2], &vecs[0]);
 
     if (ret[0])
     {
@@ -7594,21 +7594,21 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
         vecs[3].vx = chara->position_18.vx - temp_s4;
         vecs[3].vz = chara->position_18.vz + temp_s3;
 
-        ret[1] = Ray_CheckLine(&sp10[1], &vecs[3], &vecs[1]);
+        ret[1] = Ray_LineCheck(&rays[1], &vecs[3], &vecs[1]);
 
         if (ret[1])
         {
-            arg1->field_14 = (sp10[0].field_14 + sp10[1].field_14) >> 1;
-            arg1->field_1  = sp10[0].field_1;
+            arg1->field_14 = (rays[0].field_14 + rays[1].field_14) >> 1;
+            arg1->field_1  = rays[0].field_1;
 
-            angle      = FP_ANGLE_NORM_U(((sp10[0].field_1C + sp10[1].field_1C) >> 1) + FP_ANGLE(360.0f));
+            angle      = FP_ANGLE_NORM_U(((rays[0].field_1C + rays[1].field_1C) >> 1) + FP_ANGLE(360.0f));
             angleDelta = ABS_DIFF(angle, chara->headingAngle_3C);
 
             if (angleDelta > FP_ANGLE(160.0f) && angleDelta < FP_ANGLE(200.0f))
             {
-                if ((chara->position_18.vy - Q12(1.3f)) < sp10[0].field_18 || sp10[0].field_1 == 0 || sp10[0].field_1 == 12)
+                if ((chara->position_18.vy - Q12(1.3f)) < rays[0].field_18 || rays[0].field_1 == 0 || rays[0].field_1 == 12)
                 {
-                    if ((chara->position_18.vy - Q12(0.3f)) >= sp10[0].field_18)
+                    if ((chara->position_18.vy - Q12(0.3f)) >= rays[0].field_18)
                     {
                         return PlayerLowerBodyState_RunForward;
                     }
