@@ -1565,7 +1565,29 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E20A4);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E22AC);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E2444);
+q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target) // 0x800E2444
+{
+    s32 delta;
+    s32 step;
+    s32 result;
+
+    delta = current - target;
+    step  = Q12_MULT_PRECISE(dampingRate, g_DeltaTime0);
+
+    if (step < delta)
+    {
+        result = current - step;
+    }
+    else
+    {
+        result = current + step;
+        if (delta >= -step)
+        {
+            result = target;
+        }
+    }
+    return result;
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E24A0);
 

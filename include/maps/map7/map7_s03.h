@@ -415,6 +415,8 @@ void func_800E14DC(s_PlayerWork*, s_SubCharacter*, bool);
 
 void func_800E1788(s32);
 
+q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target);
+
 // Some kind of RNG? Constants don't seem well known?
 s32 func_800E28F4(void);
 
