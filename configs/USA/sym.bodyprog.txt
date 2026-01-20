@@ -743,6 +743,10 @@ GameState_MapScreen_Update                  = 0x80066EB0; // type:func
 IpdCollData_FixOffsets                      = 0x8006993C; // type:func
 Collision_Get                               = 0x800699F8; // type:func
 Chara_HeadingAngleGet                       = 0x8006FAFC; // type:func
+Ray_CheckLine                               = 0x8006D90C; // type:func
+Ray_SetMiss                                 = 0x8006DAE4; // type:func
+Ray_SetupTrace                              = 0x8006DCE0; // type:func
+Ray_RunTrace                                = 0x8006DEB0; // type:func
 
 //--------------------------------------------------------------------
 //--- PA: 0x04BB84   VA: 0x800706E4   subsegment: c, bodyprog_800706E4

@@ -1525,7 +1525,7 @@ extern VECTOR3 sharedData_800DE170_0_s01;
 extern VECTOR3 sharedData_800DE180_0_s01; // Q19.12 player position relevant to Air Screamer.
 extern VECTOR3 sharedData_800DE190_0_s01;
 
-extern s_func_800700F8_2 sharedData_800E2330_0_s01;
+extern s_RayData sharedData_800E2330_0_s01;
 
 /** Packed weapon attack. `See `WEAPON_ATTACK`. */
 extern s8 sharedData_800DD59C_0_s00;
