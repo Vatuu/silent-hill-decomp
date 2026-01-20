@@ -702,7 +702,22 @@ void func_800DD67C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords) /
     func_800DD594(pos, chara, coords, 1);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD6CC);
+void func_800DD6CC(void) // 0x800DD6CC
+{
+    s32       posX;
+    s32       posZ;
+    s32       activeBuffer;
+    GsOT_TAG* ot;
+
+    posX         = D_800F48A8.positionX_0;
+    posZ         = D_800F48A8.positionZ_4;
+    activeBuffer = g_ActiveBufferIdx;
+    ot           = g_OrderingTable0[activeBuffer].org;
+
+    func_80049C2C(&D_800F48A8.mat_8, posX, 0, posZ);
+    func_800DC544(ot);
+    func_800D917C();
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD738);
 

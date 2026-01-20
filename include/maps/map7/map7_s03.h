@@ -103,7 +103,7 @@ typedef struct
 {
     q19_12          positionX_0;
     q19_12          positionZ_4;
-    u8              unk_8[32];
+    MATRIX          mat_8;
     s_SubCharacter* field_28;
     GsCOORDINATE2*  coords_2C;
     VECTOR3         playerPosition_30;
@@ -111,6 +111,7 @@ typedef struct
     s32             field_44;
     s32             field_48;
 } s_D_800F48A8;
+STATIC_ASSERT_SIZEOF(s_D_800F48A8, 0x4C); // Assumed size.
 
 extern s32 D_800F2438; // Length of `D_800F3D48` array.
 
@@ -349,6 +350,8 @@ void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s
 void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void func_800DD67C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
+
+void func_800DD6CC(void);
 
 void func_800DD7D0(VECTOR3*);
 void func_800DD868(void);
