@@ -550,7 +550,56 @@ INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D37E8);
 
 INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D3AD4);
 
-INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D3F84);
+void func_800D3F84(VECTOR3* arg0, s32 arg1, s32 arg2) // 0x800D3F84
+{
+    VECTOR  sp10;
+    MATRIX  sp20;
+    SVECTOR sp40;
+    VECTOR  sp48;
+    s32     sp58;
+    TILE*   tile;
+    s16     colR;
+    s16     colRG;
+
+    sp10.vx = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12_SHIFT));
+    sp10.vy = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT));
+    sp10.vz = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_SHIFT));
+
+    func_80049C2C(&sp20, sp10.vx, sp10.vy, sp10.vz);
+
+    gte_SetRotMatrix(&sp20);
+    gte_SetTransMatrix(&sp20);
+    gte_ReadGeomScreen(&sp58);
+
+    tile = GsOUT_PACKET_P;
+
+    Math_SetSVectorFastSum(&sp40, Q12_TO_Q8(arg0->vx - sp10.vx), Q12_TO_Q8(arg0->vy - sp10.vy), Q12_TO_Q8(arg0->vz - sp10.vz));
+    gte_ldv0(&sp40);
+    gte_rt();
+    gte_stlvnl(&sp48);
+
+    if (sp48.vz >= sp58)
+    {
+        s32 x = (sp48.vx * sp58) / sp48.vz;
+        s32 y = (sp48.vy * sp58) / sp48.vz;
+        setXY0(tile, x, y);
+
+        // `setTile(tile)` in reverse order?
+        setcode(tile, 0x60);
+        setlen(tile, 3);
+
+        setSemiTrans(tile, false);
+
+        setRGB0Fast(tile, (arg1 & 4) ? 0xC4 : 0, (arg1 & 2) ? 0xC4 : 0, (arg1 & 1) ? 0xC4 : 0);
+
+        tile->w = arg2;
+        tile->h = arg2;
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[12], tile);
+        tile++;
+        GsOUT_PACKET_P = tile;
+    }
+}
 
 INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D41F0);
 

@@ -89,4 +89,6 @@ void func_800D4A3C(s_SubCharacter*, VECTOR3*, s16);
 
 void func_800D1BF8(s_SubCharacter* arg0);
 
+void func_800D3F84(VECTOR3* arg0, s32 arg1, s32 arg2);
+
 #endif
