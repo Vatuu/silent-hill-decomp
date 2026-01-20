@@ -311,6 +311,8 @@ void func_800D952C(void);
 
 void func_800DA4B4(s32* arg0, s32* arg1); // Assumed types.
 
+s32 func_800DA4EC(s32 min, s32 max);
+
 void func_800DA774(s_800ED7E0_ptr*);
 
 void func_800DACFC(VECTOR3* vec, s32 arg1, s32 arg2);

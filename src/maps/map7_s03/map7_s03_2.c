@@ -394,7 +394,21 @@ void func_800DA4B4(s32* arg0, s32* arg1) // 0x800DA4B4
     arg0[0] += (arg1[0] * arg0[1]) / arg1[1];
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA4EC);
+s32 func_800DA4EC(s32 min, s32 max) // 0x800DA4EC
+{
+    s32 range;
+
+    if (max < min)
+    {
+        range = min;
+        min   = max;
+        max   = range;
+    }
+
+    range = max - min;
+    min  += Rng_Rand16() / ((0x7FFF / range) + 1);
+    return min;
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA550);
 
