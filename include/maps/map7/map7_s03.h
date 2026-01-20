@@ -59,7 +59,10 @@ typedef struct
     s32 field_8;
     s16 field_C;
     s16 field_E;
-    u8  unk_10[0x30];
+    u8  unk_10[0x10];
+    s32 field_20;
+    u8  unk_24[0x18];
+    s32 field_3C;
     s32 field_40;
     u8  unk_44[8];
 } s_800F3D48_4;
@@ -303,6 +306,8 @@ void func_800D88CC(void);
 void func_800D88D8(void);
 
 s_800F3D48* func_800D905C(void);
+
+void func_800D9114(s_800F3D48* arg0);
 
 void func_800D9394(void);
 

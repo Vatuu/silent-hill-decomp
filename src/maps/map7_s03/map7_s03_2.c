@@ -353,7 +353,16 @@ s_800F3D48* func_800D905C(void) // 0x800D905C
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D90C8);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D9114);
+void func_800D9114(s_800F3D48* arg0) // 0x800D9114
+{
+    arg0->field_4.field_20 += Q12_MULT_PRECISE(arg0->field_4.field_8, g_DeltaTime0);
+
+    if (g_DeltaTime0 != 0)
+    {
+        arg0->field_4.field_3C -= arg0->field_4.field_40;
+        arg0->field_4.field_3C  = MAX(0, arg0->field_4.field_3C);
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D917C);
 
