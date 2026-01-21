@@ -1,5 +1,3 @@
-extern q19_12 sharedData_800DE28C_5_s00;
-
 void Ai_HangedScratcher_Control_11(s_SubCharacter* scratcher)
 {
     if (scratcher->properties_E4.hangedScratcher.flags_E8 & HangedScratchedFlag_0)
