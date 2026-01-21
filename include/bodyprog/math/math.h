@@ -76,6 +76,15 @@
 #define TIMESTEP_SCALE(deltaTime, x) \
     (((x) * (deltaTime)) / TIMESTEP_30_FPS)
 
+/** @brief Scales a Q19.12 fixed-point value by a delta time relative to a 60 FPS time step.
+ *
+ * @param deltaTime Time delta.
+ * @param x Q19.12 fixed-point value to scale.
+ * @return Scaled Q19.12 fixed-point value.
+ */
+#define TIMESTEP_SCALE_60FPS(deltaTime, x) \
+    (((x) * (deltaTime)) / TIMESTEP_60_FPS)
+
 // TODO: Could these have been one common macro? Used as the maximum rotation allowed on the current tick with a minimum of 1.
 #define TIMESTEP_ANGLE_0 (((g_DeltaTime0) >> 4) + 1)
 #define TIMESTEP_ANGLE_1 ((((g_DeltaTime0) / 3) >> 4) + 1)

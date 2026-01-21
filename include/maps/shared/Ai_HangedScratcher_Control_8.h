@@ -20,9 +20,7 @@ void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher)
 
     if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 245, 256))
     {
-        // TODO: `TIMESTEP_SCALE(g_DeltaTime0, 45)` gives close match.
-        // but uses `sra a0, a2, 0x6` instead of `sra a0, a2, 0x5`?
-        scratcher->rotation_24.vz = MAX(0, scratcher->rotation_24.vz - ((g_DeltaTime0 * 45) / 68));
+        scratcher->rotation_24.vz = MAX(0, scratcher->rotation_24.vz - TIMESTEP_SCALE_60FPS(g_DeltaTime0, 45));
     }
 
     if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim_4.status_0) == 15)
