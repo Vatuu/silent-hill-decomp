@@ -14,12 +14,12 @@ void Ai_HangedScratcher_Control_6(s_SubCharacter* scratcher)
         if (playerDist < Q12(12.0f) && !Rng_GenerateInt(0, 127))
         {
             scratcher->model_0.controlState_2  = 7;
-            scratcher->model_0.anim_4.status_0 = 0x24;
+            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(18, false);
         }
         else if (playerDist < Q12(6.0f) && !Rng_GenerateInt(0, 15))
         {
             scratcher->model_0.controlState_2  = 7;
-            scratcher->model_0.anim_4.status_0 = 0x24;
+            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(18, false);
         }
     }
 
