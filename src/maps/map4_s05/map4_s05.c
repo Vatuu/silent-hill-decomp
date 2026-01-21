@@ -315,7 +315,7 @@ void func_800D1BF8(s_SubCharacter* arg0) // 0x800D1BF8
 
         sp48.vz = arg0->model_0.anim_4.status_0 == 3 ? temp_a2 + Q12_MULT(temp2 * 39, 0x3F) : temp_a2 + Q12_MULT(temp2, 0x1333);
 
-        func_800D4458(arg0, &sp48, temp_a2);
+        func_800D4458(arg0, &sp48);
 
         sp58.vx = sp48.vx + D_800DB898;
         sp58.vy = sp48.vy;
@@ -540,11 +540,116 @@ INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D2B90);
 
 void func_800D341C(void) {}
 
-INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D3424);
+void func_800D3424(s_SubCharacter* arg0) // 0x800D3424
+{
+    VECTOR3 sp10;
 
-INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D3564);
+    switch (arg0->model_0.stateStep_3)
+    {
+        case 0:
+            if (Savegame_EventFlagGet(EventFlag_349))
+            {
+                arg0->position_18.vx                       = Q12(-114.5f);
+                arg0->position_18.vy                       = Q12(2.0f);
+                arg0->position_18.vz                       = Q12(108.0f);
+                arg0->model_0.stateStep_3                  = 4;
+                arg0->model_0.controlState_2               = 0;
+                arg0->properties_E4.floatstinger.field_106 = 0x40;
+            }
+            else
+            {
+                arg0->position_18.vx          = Q12(-113.5f);
+                arg0->position_18.vy          = Q12(8.0f);
+                arg0->position_18.vz          = Q12(108.0f);
+                arg0->rotation_24.vy          = -0x400;
+                arg0->model_0.anim_4.flags_2 &= 0xFFFD;
+            }
+            break;
 
-INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D35F0);
+        case 2:
+            arg0->model_0.controlState_2 = 0;
+            arg0->model_0.stateStep_3    = 4;
+
+        case 1:
+            arg0->model_0.anim_4.flags_2 |= 2;
+            sp10.vx                       = arg0->position_18.vx;
+            sp10.vy                       = Q12(2.0f);
+            sp10.vz                       = arg0->position_18.vz;
+            func_800D4A3C(arg0, &sp10, -0x400);
+            break;
+    }
+
+    arg0->properties_E4.floatstinger.field_106++;
+
+    if (arg0->properties_E4.floatstinger.field_106 > 0x40)
+    {
+        arg0->properties_E4.floatstinger.field_106 = 0x40;
+    }
+}
+
+void func_800D3564(s_SubCharacter* arg0) // 0x800D3564
+{
+    VECTOR3 sp10;
+
+    D_800D7860                                = 0xD000;
+    arg0->properties_E4.floatstinger.field_EE = 0;
+    arg0->moveSpeed_38                        = 0;
+
+    if ((arg0->model_0.anim_4.status_0 >> 1) != 5 && (s32)g_SavegamePtr->eventFlags_168[0xA] < 0)
+    {
+        arg0->model_0.anim_4.status_0 = 0xA;
+        sp10.vx                       = arg0->position_18.vx;
+        sp10.vy                       = arg0->position_18.vy - Q12(3.5f);
+        sp10.vz                       = arg0->position_18.vz;
+        func_8005DC1C(0x625, &sp10, 0x80, 0);
+    }
+}
+
+void func_800D35F0(s_SubCharacter* arg0) // 0x800D35F0
+{
+    s_800C4590 sp10;
+    VECTOR3    sp30;
+    s16        temp_s4;
+    s32        temp_s0;
+    s32        temp_s2;
+    s32        temp_s3;
+    s32        temp;
+
+    temp_s4 = arg0->headingAngle_3C;
+    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime0, arg0->moveSpeed_38);
+    temp_s2 = (temp_s0 <= -0x8000 || temp_s0 >= 0x8000) * 4;
+    temp_s3 = temp_s2 >> 1;
+
+    sp30.vx = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Sin(temp_s4) >> temp_s3) << temp_s2;
+    sp30.vz = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Cos(temp_s4) >> temp_s3) << temp_s2;
+    sp30.vy = Q12_MULT_PRECISE(g_DeltaTime0, arg0->field_34);
+
+    func_80069B24(&sp10, &sp30, arg0);
+
+    temp = sp10.offset_0.vy;
+
+    arg0->position_18.vx += sp10.offset_0.vx;
+    arg0->position_18.vz += sp10.offset_0.vz;
+
+    func_800D4458(arg0, &arg0->position_18);
+
+    sp30.vy = 0;
+    sp30.vx = D_800DB898;
+    sp30.vz = D_800DB89C;
+
+    func_80069B24(&sp10, &sp30, arg0);
+    arg0->position_18.vx += sp10.offset_0.vx;
+    arg0->position_18.vz += sp10.offset_0.vz;
+
+    sp30.vx = arg0->position_18.vx;
+    sp30.vy = arg0->position_18.vy + temp;
+    sp30.vz = arg0->position_18.vz;
+
+    if (func_800D4458(arg0, &sp30) == 0)
+    {
+        arg0->position_18.vy += temp;
+    }
+}
 
 INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D37E8);
 

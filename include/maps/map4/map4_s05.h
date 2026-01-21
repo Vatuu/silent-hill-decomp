@@ -67,6 +67,8 @@ extern SVECTOR D_800D7A30;
 
 extern VECTOR3 D_800DB8C8[];
 
+extern s32 D_800D7860;
+
 void Ai_Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_Floatstinger_Init(s_SubCharacter* floatstinger);
 void func_800D1968(s_SubCharacter*);
@@ -83,12 +85,18 @@ void Map_WorldObjectsInit(void);
 
 void Map_WorldObjectsUpdate(void);
 
-void func_800D4458(s_SubCharacter*, VECTOR3*, s32);
+s32 func_800D4458(s_SubCharacter*, VECTOR3*);
 
 void func_800D4A3C(s_SubCharacter*, VECTOR3*, s16);
 
 void func_800D1BF8(s_SubCharacter* arg0);
 
 void func_800D3F84(VECTOR3* arg0, s32 arg1, s32 arg2);
+
+void func_800D3424(s_SubCharacter* arg0);
+
+void func_800D3564(s_SubCharacter* arg0);
+
+void func_800D35F0(s_SubCharacter* arg0);
 
 #endif
