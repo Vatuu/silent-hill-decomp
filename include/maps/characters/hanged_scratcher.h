@@ -164,6 +164,8 @@ void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher);
 
 void Ai_HangedScratcher_Control_9(s_SubCharacter* scratcher);
 
+void Ai_HangedScratcher_Control_13(s_SubCharacter* scratcher);
+
 void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher);
 
 void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader*, GsCOORDINATE2*);

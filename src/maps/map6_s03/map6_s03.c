@@ -54,7 +54,7 @@ INCLUDE_ASM("maps/map6_s03/nonmatchings/map6_s03", Ai_HangedScratcher_Control_7)
 
 INCLUDE_ASM("maps/map6_s03/nonmatchings/map6_s03", Ai_HangedScratcher_Control_12); // 0x800D64C4
 
-INCLUDE_ASM("maps/map6_s03/nonmatchings/map6_s03", Ai_HangedScratcher_Control_13); // 0x800D6680
+#include "maps/shared/Ai_HangedScratcher_Control_13.h" // 0x800D6680
 
 INCLUDE_ASM("maps/map6_s03/nonmatchings/map6_s03", Ai_HangedScratcher_Control_14); // 0x800D67C0
 
