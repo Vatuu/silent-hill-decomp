@@ -109,6 +109,7 @@ Ai_HangedScratcher_Control_15    = 0x800D6A20; // type:func
 sharedFunc_800D26D8_5_s00        = 0x800D6D18; // type:func
 sharedFunc_800D2844_5_s00        = 0x800D6E84; // type:func
 sharedFunc_800D2C18_5_s00        = 0x800D7258; // type:func
+sharedFunc_800D3214_5_s00        = 0x800D7854; // type:func
 sharedFunc_800D3300_5_s00        = 0x800D7998; // type:func
 sharedFunc_800D929C_0_s00        = 0x800D7F14; // type:func
 Map_RoomIdxGet                   = 0x800D7F24; // type:func

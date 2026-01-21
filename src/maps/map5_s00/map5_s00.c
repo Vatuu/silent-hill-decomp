@@ -41,7 +41,7 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_4)
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_5);
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_6);
+#include "maps/shared/Ai_HangedScratcher_Control_6.h"
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_7);
 
@@ -67,7 +67,7 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D2844_5_s00); /
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D2C18_5_s00); // 0x800D2C18
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D3214);
+INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D3214_5_s00); // 0x800D3214
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D3300_5_s00); // 0x800D3300
 

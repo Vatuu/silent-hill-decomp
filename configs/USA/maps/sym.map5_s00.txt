@@ -87,6 +87,7 @@ Ai_HangedScratcher_Control_15    = 0x800D23E0; // type:func
 sharedFunc_800D26D8_5_s00        = 0x800D26D8; // type:func
 sharedFunc_800D2844_5_s00        = 0x800D2844; // type:func
 sharedFunc_800D2C18_5_s00        = 0x800D2C18; // type:func
+sharedFunc_800D3214_5_s00        = 0x800D3214; // type:func
 sharedFunc_800D3300_5_s00        = 0x800D3300; // type:func
 Ai_Creeper_Update                = 0x800D387C; // type:func
 Ai_Creeper_Init                  = 0x800D390C; // type:func - extra code at end compared to 1_s02
