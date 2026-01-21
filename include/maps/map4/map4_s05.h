@@ -69,13 +69,25 @@ extern VECTOR3 D_800DB8C8[];
 
 extern s32 D_800D7860;
 
+extern u8 D_800D7848[];
+
+extern s32 D_800D7860;
+
+extern s32 D_800D799C;
+
+extern u8 D_800D7A58[];
+
+extern SVECTOR D_800D7A5C[];
+
+extern s32 D_800D7860;
+
 void Ai_Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+
 void Ai_Floatstinger_Init(s_SubCharacter* floatstinger);
+
 void func_800D1968(s_SubCharacter*);
+
 void func_800D1B98(s_SubCharacter*);
-void func_800D35F0(s_SubCharacter*);
-void func_800D37E8(s_SubCharacter*, s_AnmHeader*);
-void func_800D3AD4(s_SubCharacter*);
 
 void func_800D6800(void);
 
@@ -98,5 +110,13 @@ void func_800D3424(s_SubCharacter* arg0);
 void func_800D3564(s_SubCharacter* arg0);
 
 void func_800D35F0(s_SubCharacter* arg0);
+
+void func_800D37E8(s_SubCharacter* arg0, s_AnmHeader* arg1);
+
+void func_800D3AD4(s_SubCharacter* arg0);
+
+void func_800D41F0(s_SubCharacter* arg0);
+
+s32 func_800D48A4(s_SubCharacter* arg0, s16 arg1, s16 arg2);
 
 #endif
