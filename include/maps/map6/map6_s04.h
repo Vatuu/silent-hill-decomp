@@ -161,7 +161,7 @@ void func_800DFD08(void);
 
 void func_800E01F4(void);
 
-void func_800E0204(void); // Assumed types.
+void func_800E0204(void);
 
 void func_800E02E0(void);
 
