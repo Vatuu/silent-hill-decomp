@@ -61,7 +61,7 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_14
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_15);
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D26D8_5_s00); // 0x800D26D8
+#include "maps/shared/sharedFunc_800D26D8_5_s00.h" // 0x800D26D8
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D2844_5_s00); // 0x800D2844
 

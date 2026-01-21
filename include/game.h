@@ -1405,7 +1405,9 @@ typedef struct _PropertiesHangedScratcher
 {
     s16    flags_E8; /** `e_HangedScratcherFlags` */
     q3_12  field_EA;
-    s8     unk_EC[8];
+    s8     unk_EC[4];
+    q3_12  offsetX_F0; // } Offsets passed to `func_8005CB20`
+    q3_12  offsetZ_F2; // }
     q19_12 positionX_F4;
     q19_12 positionZ_F8;
     s8     unk_FC[8];
