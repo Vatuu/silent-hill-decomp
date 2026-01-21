@@ -8,6 +8,8 @@
 #include "maps/map6/map6_s04.h"
 #include "maps/characters/alessa.h"
 #include "maps/characters/dahlia.h"
+#include "inline_no_dmpsx.h"
+#include <psyq/gtemac.h>
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800DD5B8
 
@@ -2060,16 +2062,37 @@ INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E6CB8);
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E7204);
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E73B4);
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC7C0);
+
+INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC7CC);
+
+void func_800E73B4(q19_12 arg0) // 0x800E73B4
+{
+    MATRIX  sp10;
+    SVECTOR sp30 = { 10, -17, 30 };
+    VECTOR  sp38;
+    VECTOR  sp48;
+
+    if (arg0 > Q12(6.0f) && arg0 < Q12(8.0f))
+    {
+        Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords_890[HarryBone_RightHand], &sp10);
+
+        gte_SetRotMatrix(&sp10);
+        gte_SetTransMatrix(&sp10);
+        gte_ldv0(&sp30);
+        gte_rt();
+        gte_stlvnl(&sp38);
+
+        sp48.vx = Q8_TO_Q12(sp38.vx);
+        sp48.vy = Q8_TO_Q12(sp38.vy);
+        sp48.vz = Q8_TO_Q12(sp38.vz);
+
+        func_8005F6B0(&g_SysWork.npcs_1A0[0], &sp48, 9, 15);
+    }
+}
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E74C4);
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E75B8);
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E7944);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC7C0);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC7CC);
-
-INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CC7D8);

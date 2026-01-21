@@ -199,6 +199,8 @@ void func_800E6CB8(void); // Assumed types.
 
 void func_800E7204(void); // Assumed types.
 
+void func_800E73B4(q19_12 arg0);
+
 void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4); // Assumed types.
 
 #endif
