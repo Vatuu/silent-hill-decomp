@@ -29,6 +29,21 @@
 #define HAS_Chara_Alessa
 #define MAP_CHARA_COUNT 3
 
+typedef struct
+{
+    s32     field_0;
+    VECTOR3 vec_4;
+    char    unk_10[4];
+    VECTOR3 vec_14;
+    char    unk_20[4];
+    bool    slotInUse_24;
+    q19_12  field_28;
+    s32     field_2C;
+    void*   funcPtr_30;
+    s32     field_34;
+} s_func_800E030C;
+STATIC_ASSERT_SIZEOF(s_func_800E030C, 0x38);
+
 extern s_AnimInfo FLAUROS_ANIM_INFOS[];
 extern s_AnimInfo PARASITE_ANIM_INFOS[];
 
@@ -149,6 +164,12 @@ void func_800E01F4(void);
 void func_800E0204(void); // Assumed types.
 
 void func_800E02E0(void);
+
+s_func_800E030C* func_800E030C(void);
+
+void func_800E0358(void); // Unknown return type/args.
+
+void func_800E03C4(VECTOR3* vec0, VECTOR3* vec1, q19_12 arg2, s32 arg3);
 
 void func_800E0FAC(s32); // Assumed return type.
 

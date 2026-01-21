@@ -269,11 +269,56 @@ void func_800E02E0(void) // 0x800E02E0
     func_800DF64C();
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E030C);
+s_func_800E030C* func_800E030C(void) // 0x800E030C
+{
+    s32              i;
+    s_func_800E030C* ptr;
+
+    ptr = (s_func_800E030C*)((u8*)FS_BUFFER_1 + 0x494);
+
+    for (i = 0; i < 800; i++, ptr++)
+    {
+        if (!ptr->slotInUse_24)
+        {
+            ptr->slotInUse_24 = true;
+            return ptr;
+        }
+    }
+
+    return NULL;
+}
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E0358);
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E03C4);
+void func_800E03C4(VECTOR3* vec0, VECTOR3* vec1, q19_12 arg2, s32 arg3) // 0x800E03C4
+{
+    VECTOR           sp10;
+    VECTOR           sp20;
+    s_func_800E030C* ptr;
+
+    ptr = func_800E030C();
+    if (ptr != NULL)
+    {
+        ptr->vec_4.vx = vec0->vx;
+        ptr->vec_4.vy = vec0->vy;
+        ptr->vec_4.vz = vec0->vz;
+
+        sp10.vx = vec1->vx - vec0->vx;
+        sp10.vy = vec1->vy - vec0->vy;
+        sp10.vz = vec1->vz - vec0->vz;
+        VectorNormal(&sp10, &sp20);
+
+        ptr->vec_14.vx = Q12_MULT_PRECISE(sp20.vx, arg2);
+        ptr->vec_14.vy = Q12_MULT_PRECISE(sp20.vy, arg2);
+        ptr->vec_14.vz = Q12_MULT_PRECISE(sp20.vz, arg2);
+
+        ptr->field_0    = FP_TO(SquareRoot12(FP_SQUARE_PRECISE(sp10.vx, Q12_SHIFT) + FP_SQUARE_PRECISE(sp10.vy, Q12_SHIFT) + FP_SQUARE_PRECISE(sp10.vz, Q12_SHIFT)), Q12_SHIFT) / arg2;
+        ptr->field_28   = Q12(255.0f);
+        ptr->field_2C   = arg3 << 8;
+        ptr->funcPtr_30 = func_800E0358;
+        ptr->field_34   = 0;
+    }
+}
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E05C8);
 
