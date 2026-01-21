@@ -288,7 +288,29 @@ s_func_800E030C* func_800E030C(void) // 0x800E030C
     return NULL;
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E0358);
+void func_800E0358(s_func_800E030C* arg0) // 0x800E0358
+{
+    switch (arg0->field_34)
+    {
+        case 0:
+            if (arg0->field_0 < 0)
+            {
+                arg0->field_0   = 0;
+                arg0->vec_14.vx = 0;
+                arg0->vec_14.vy = 0;
+                arg0->vec_14.vz = 0;
+                arg0->field_34++;
+            }
+            break;
+
+        case 1:
+            if (arg0->field_0 < 0)
+            {
+                arg0->slotInUse_24 = false;
+            }
+            break;
+    }
+}
 
 void func_800E03C4(VECTOR3* vec0, VECTOR3* vec1, q19_12 arg2, s32 arg3) // 0x800E03C4
 {

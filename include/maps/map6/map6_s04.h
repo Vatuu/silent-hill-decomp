@@ -167,7 +167,7 @@ void func_800E02E0(void);
 
 s_func_800E030C* func_800E030C(void);
 
-void func_800E0358(void); // Unknown return type/args.
+void func_800E0358(s_func_800E030C* arg0); // Unknown return type/args.
 
 void func_800E03C4(VECTOR3* vec0, VECTOR3* vec1, q19_12 arg2, s32 arg3);
 
