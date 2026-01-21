@@ -53,7 +53,7 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_7)
 
 #include "maps/shared/Ai_HangedScratcher_Control_11.h" // 0x800D1CE4
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_12);
+#include "maps/shared/Ai_HangedScratcher_Control_12.h"
 
 #include "maps/shared/Ai_HangedScratcher_Control_13.h"
 

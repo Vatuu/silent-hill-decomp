@@ -1,0 +1,26 @@
+void Ai_HangedScratcher_Control_12(s_SubCharacter* scratcher)
+{
+    q19_12 animDuration;
+    q19_12 animDurationScaled;
+
+    Chara_MoveSpeedUpdate(scratcher, Q12(4.0f));
+
+    if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 192, 199))
+    {
+        animDuration       = HANGED_SCRATCHER_ANIM_INFOS[scratcher->model_0.anim_4.status_0].duration_8.constant;
+        animDurationScaled = (Q12_MULT_PRECISE(animDuration, g_DeltaTime0) * Q12(0.7f)) / Q12(7.0f);
+
+        scratcher->properties_E4.dummy.properties_E8[2].val16[0] += FP_FROM(animDurationScaled * Math_Sin(scratcher->rotation_24.vy), Q12_SHIFT);
+        scratcher->properties_E4.dummy.properties_E8[2].val16[1] += FP_FROM(animDurationScaled * Math_Cos(scratcher->rotation_24.vy), Q12_SHIFT);
+    }
+
+    if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(13, true))
+    {
+        scratcher->flags_3E |= CharaFlag_Unk2;
+        if (scratcher->health_B0 <= Q12(0.0f))
+        {
+            scratcher->model_0.controlState_2  = 13;
+            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
+        }
+    }
+}
