@@ -24,7 +24,7 @@ INCLUDE_RODATA("maps/map6_s03/nonmatchings/map6_s03", g_MapOverlayHeader);
 
 #include "maps/shared/Ai_HangedScratcher_Init.h" // 0x800D42E8
 
-INCLUDE_ASM("maps/map6_s03/nonmatchings/map6_s03", sharedFunc_800CFF74_5_s00); // 0x800D45B4
+#include "maps/shared/sharedFunc_800CFF74_5_s00.h" // 0x800D45B4
 
 #include "maps/shared/Ai_HangedScratcher_ControlUpdate.h" // 0x800D48DC
 

@@ -25,7 +25,7 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800CB25C);
 
 #include "maps/shared/Ai_HangedScratcher_Init.h" // 0x800CFCA8
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800CFF74_5_s00); // 0x800CFF74
+#include "maps/shared/sharedFunc_800CFF74_5_s00.h" // 0x800CFF74
 
 #include "maps/shared/Ai_HangedScratcher_ControlUpdate.h" // 0x800D029C
 
