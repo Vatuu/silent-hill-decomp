@@ -119,4 +119,6 @@ void func_800D41F0(s_SubCharacter* arg0);
 
 s32 func_800D48A4(s_SubCharacter* arg0, s16 arg1, s16 arg2);
 
+void func_800D61AC(void);
+
 #endif
