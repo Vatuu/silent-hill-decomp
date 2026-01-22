@@ -189,7 +189,7 @@ void sharedFunc_800D2844_5_s00(s_SubCharacter* scratcher, s_AnmHeader*, GsCOORDI
 
 void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher);
 
-void sharedFunc_800D3214_5_s00(void); // Unknown args/return type.
+s32 sharedFunc_800D3214_5_s00(s_SubCharacter*); // Unknown args/return type.
 
 void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher);
 

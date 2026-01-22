@@ -36,7 +36,7 @@ void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher)
         {
             scratcher->model_0.controlState_2                  = HangedScratcherControl_12;
             scratcher->model_0.anim_4.status_0                 = ANIM_STATUS(HangedScratcherAnim_11, false);
-            scratcher->properties_E4.hangedScratcher.unk_EC[2] = 31;
+            scratcher->properties_E4.hangedScratcher.field_EE  = 31;
         }
     }
 }
