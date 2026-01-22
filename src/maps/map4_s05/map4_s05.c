@@ -584,71 +584,71 @@ void func_800D3424(s_SubCharacter* floatstinger) // 0x800D3424
     }
 }
 
-void func_800D3564(s_SubCharacter* arg0) // 0x800D3564
+void func_800D3564(s_SubCharacter* floatstinger) // 0x800D3564
 {
     VECTOR3 sp10;
 
-    D_800D7860                                = 0xD000;
-    arg0->properties_E4.floatstinger.field_EE = 0;
-    arg0->moveSpeed_38                        = 0;
+    D_800D7860                                = Q12(13.0f);
+    floatstinger->properties_E4.floatstinger.field_EE = 0;
+    floatstinger->moveSpeed_38                        = 0;
 
-    if ((arg0->model_0.anim_4.status_0 >> 1) != 5 && (s32)g_SavegamePtr->eventFlags_168[0xA] < 0)
+    if ((floatstinger->model_0.anim_4.status_0 >> 1) != 5 && (s32)g_SavegamePtr->eventFlags_168[10] < 0)
     {
-        arg0->model_0.anim_4.status_0 = 0xA;
-        sp10.vx                       = arg0->position_18.vx;
-        sp10.vy                       = arg0->position_18.vy - Q12(3.5f);
-        sp10.vz                       = arg0->position_18.vz;
-        func_8005DC1C(0x625, &sp10, 0x80, 0);
+        floatstinger->model_0.anim_4.status_0 = ANIM_STATUS(5, false);
+        sp10.vx                       = floatstinger->position_18.vx;
+        sp10.vy                       = floatstinger->position_18.vy - Q12(3.5f);
+        sp10.vz                       = floatstinger->position_18.vz;
+
+        func_8005DC1C(Sfx_Unk1573, &sp10, Q8(0.5f), 0);
     }
 }
 
-void func_800D35F0(s_SubCharacter* arg0) // 0x800D35F0
+void func_800D35F0(s_SubCharacter* floatstinger) // 0x800D35F0
 {
     s_800C4590 sp10;
     VECTOR3    sp30;
-    s16        temp_s4;
+    q3_12      headingAngle;
     s32        temp_s0;
     s32        temp_s2;
     s32        temp_s3;
-    s32        temp;
+    q19_12     offsetY;
 
-    temp_s4 = arg0->headingAngle_3C;
-    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime0, arg0->moveSpeed_38);
-    temp_s2 = (temp_s0 <= -0x8000 || temp_s0 >= 0x8000) * 4;
+    headingAngle = floatstinger->headingAngle_3C;
+    temp_s0 = Q12_MULT_PRECISE(g_DeltaTime0, floatstinger->moveSpeed_38);
+    temp_s2 = (temp_s0 <= Q12(-8.0f) || temp_s0 >= Q12(8.0f)) * 4;
     temp_s3 = temp_s2 >> 1;
 
-    sp30.vx = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Sin(temp_s4) >> temp_s3) << temp_s2;
-    sp30.vz = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Cos(temp_s4) >> temp_s3) << temp_s2;
-    sp30.vy = Q12_MULT_PRECISE(g_DeltaTime0, arg0->field_34);
+    sp30.vx = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Sin(headingAngle) >> temp_s3) << temp_s2;
+    sp30.vz = Q12_MULT_PRECISE(temp_s0 >> temp_s3, Math_Cos(headingAngle) >> temp_s3) << temp_s2;
+    sp30.vy = Q12_MULT_PRECISE(g_DeltaTime0, floatstinger->field_34);
 
-    func_80069B24(&sp10, &sp30, arg0);
+    func_80069B24(&sp10, &sp30, floatstinger);
 
-    temp = sp10.offset_0.vy;
+    offsetY = sp10.offset_0.vy;
+    floatstinger->position_18.vx += sp10.offset_0.vx;
+    floatstinger->position_18.vz += sp10.offset_0.vz;
 
-    arg0->position_18.vx += sp10.offset_0.vx;
-    arg0->position_18.vz += sp10.offset_0.vz;
+    func_800D4458(floatstinger, &floatstinger->position_18);
 
-    func_800D4458(arg0, &arg0->position_18);
-
-    sp30.vy = 0;
+    sp30.vy = Q12(0.0f);
     sp30.vx = D_800DB898;
     sp30.vz = D_800DB89C;
 
-    func_80069B24(&sp10, &sp30, arg0);
-    arg0->position_18.vx += sp10.offset_0.vx;
-    arg0->position_18.vz += sp10.offset_0.vz;
+    func_80069B24(&sp10, &sp30, floatstinger);
+    floatstinger->position_18.vx += sp10.offset_0.vx;
+    floatstinger->position_18.vz += sp10.offset_0.vz;
 
-    sp30.vx = arg0->position_18.vx;
-    sp30.vy = arg0->position_18.vy + temp;
-    sp30.vz = arg0->position_18.vz;
+    sp30.vx = floatstinger->position_18.vx;
+    sp30.vy = floatstinger->position_18.vy + offsetY;
+    sp30.vz = floatstinger->position_18.vz;
 
-    if (func_800D4458(arg0, &sp30) == 0)
+    if (func_800D4458(floatstinger, &sp30) == 0)
     {
-        arg0->position_18.vy += temp;
+        floatstinger->position_18.vy += offsetY;
     }
 }
 
-void func_800D37E8(s_SubCharacter* arg0, s_AnmHeader* arg1) // 0x800D37E8
+void func_800D37E8(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr) // 0x800D37E8
 {
     typedef struct
     {
@@ -662,70 +662,73 @@ void func_800D37E8(s_SubCharacter* arg0, s_AnmHeader* arg1) // 0x800D37E8
     s_func_800D37E8* ptr;
     q19_12*          time;
 
-    switch (arg0->model_0.anim_4.status_0)
+    switch (floatstinger->model_0.anim_4.status_0)
     {
-        case 3:
-            if (FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) > 0 && FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) < 4)
+        case ANIM_STATUS(1, true):
+            if (FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) > 0 &&
+                FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) < 4)
             {
-                if (!(arg0->properties_E4.floatstinger.flags_E8 & 0x10))
+                if (!(floatstinger->properties_E4.floatstinger.flags_E8 & (1 << 4)))
                 {
-                    vec.vx = arg0->position_18.vx;
-                    vec.vy = arg0->position_18.vy - 0x4000;
-                    vec.vz = arg0->position_18.vz;
-                    func_8005DC1C(0x621, &vec, 0x20, 0);
-                    arg0->properties_E4.floatstinger.flags_E8 |= 0x10;
+                    vec.vx = floatstinger->position_18.vx;
+                    vec.vy = floatstinger->position_18.vy - Q12(4.0f);
+                    vec.vz = floatstinger->position_18.vz;
+
+                    func_8005DC1C(Sfx_Unk1569, &vec, 0x20, 0);
+                    floatstinger->properties_E4.floatstinger.flags_E8 |= 1 << 4;
                 }
             }
             else
             {
-                arg0->properties_E4.floatstinger.flags_E8 &= 0xFFEF;
+                floatstinger->properties_E4.floatstinger.flags_E8 &= ~(1 << 4);
             }
 
-            if (g_SavegamePtr->gameDifficulty_260 == -1)
+            if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
             {
-                FLOATSTINGER_ANIM_INFOS[arg0->model_0.anim_4.status_0].duration_8.constant = 0x1A000;
+                FLOATSTINGER_ANIM_INFOS[floatstinger->model_0.anim_4.status_0].duration_8.constant = Q12(26.0f);
             }
-            else if (g_SavegamePtr->gameDifficulty_260 == 1)
+            else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
             {
-                FLOATSTINGER_ANIM_INFOS[arg0->model_0.anim_4.status_0].duration_8.constant = 0x26000;
+                FLOATSTINGER_ANIM_INFOS[floatstinger->model_0.anim_4.status_0].duration_8.constant = Q12(38.0f);
             }
             else
             {
-                FLOATSTINGER_ANIM_INFOS[arg0->model_0.anim_4.status_0].duration_8.constant = 0x20000;
+                FLOATSTINGER_ANIM_INFOS[floatstinger->model_0.anim_4.status_0].duration_8.constant = Q12(32.0f);
             }
             break;
 
-        case 19:
+        case ANIM_STATUS(9, true):
             D_800D799C = D_800D7860;
 
-            time = &arg0->model_0.anim_4.time_4;
+            time = &floatstinger->model_0.anim_4.time_4;
 
-            if ((FP_FROM(*time, Q12_SHIFT) > 0xBE && FP_FROM(*time, Q12_SHIFT) < 0xC2) ||
-                (FP_FROM(*time, Q12_SHIFT) > 0xCE && FP_FROM(*time, Q12_SHIFT) < 0xD2))
+            if ((FP_FROM(*time, Q12_SHIFT) > 190 && FP_FROM(*time, Q12_SHIFT) < 194) ||
+                (FP_FROM(*time, Q12_SHIFT) > 206 && FP_FROM(*time, Q12_SHIFT) < 210))
             {
-                if (!(arg0->properties_E4.floatstinger.flags_E8 & 0x10))
+                if (!(floatstinger->properties_E4.floatstinger.flags_E8 & (1 << 4)))
                 {
-                    if (arg0->properties_E4.floatstinger.field_106 > 0)
+                    if (floatstinger->properties_E4.floatstinger.field_106 > 0)
                     {
-                        vec.vx = arg0->position_18.vx;
-                        vec.vy = arg0->position_18.vy - 0x4000;
-                        vec.vz = arg0->position_18.vz;
-                        func_8005DC1C(0x620, &vec, arg0->properties_E4.floatstinger.field_106 >> 1, 0);
-                        arg0->properties_E4.floatstinger.flags_E8 |= 0x10;
+                        vec.vx = floatstinger->position_18.vx;
+                        vec.vy = floatstinger->position_18.vy - Q12(4.0f);
+                        vec.vz = floatstinger->position_18.vz;
+
+                        func_8005DC1C(0x620, &vec, floatstinger->properties_E4.floatstinger.field_106 >> 1, 0);
+                        floatstinger->properties_E4.floatstinger.flags_E8 |= 1 << 4;
                     }
                 }
             }
             else
             {
-                arg0->properties_E4.floatstinger.flags_E8 &= 0xFFEF;
+                floatstinger->properties_E4.floatstinger.flags_E8 &= ~(1 << 4);
             }
             break;
     }
 
-    Math_MatrixTransform(&arg0->position_18, (SVECTOR*)&arg0->rotation_24, D_800DB928);
+    Math_MatrixTransform(&floatstinger->position_18, (SVECTOR*)&floatstinger->rotation_24, D_800DB928);
 
-    anim = &FLOATSTINGER_ANIM_INFOS[arg0->model_0.anim_4.status_0];
-    anim->updateFunc_0(&arg0->model_0, arg1, D_800DB928, anim);
+    anim = &FLOATSTINGER_ANIM_INFOS[floatstinger->model_0.anim_4.status_0];
+    anim->updateFunc_0(&floatstinger->model_0, anmHdr, D_800DB928, anim);
 
     ptr = PSX_SCRATCH;
 
@@ -749,7 +752,7 @@ void func_800D37E8(s_SubCharacter* arg0, s_AnmHeader* arg1) // 0x800D37E8
     }
 }
 
-void func_800D3AD4(s_SubCharacter* arg0) // 0x800D3AD4
+void func_800D3AD4(s_SubCharacter* floatstinger) // 0x800D3AD4
 {
     typedef struct
     {
@@ -774,84 +777,87 @@ void func_800D3AD4(s_SubCharacter* arg0) // 0x800D3AD4
         gte_rt();
         gte_stlvnl(&ptr->field_20[i]);
 
-        ptr->field_50[i].vx = ptr->field_20[i].vx * 0x10;
-        ptr->field_50[i].vy = ptr->field_20[i].vy * 0x10;
-        ptr->field_50[i].vz = ptr->field_20[i].vz * 0x10;
+        ptr->field_50[i].vx = Q8_TO_Q12(ptr->field_20[i].vx);
+        ptr->field_50[i].vy = Q8_TO_Q12(ptr->field_20[i].vy);
+        ptr->field_50[i].vz = Q8_TO_Q12(ptr->field_20[i].vz);
     }
 
-    if (g_SysWork.playerWork_4C.player_0.position_18.vy - 0x1599 < ptr->field_50[0].vy)
+    if ((g_SysWork.playerWork_4C.player_0.position_18.vy - Q12(1.35f)) < ptr->field_50[0].vy)
     {
-        arg0->field_C8.field_0   = ptr->field_50[1].vy - arg0->position_18.vy;
-        arg0->field_C8.field_4   = ptr->field_50[0].vy - arg0->position_18.vy;
-        arg0->field_D4.radius_0  = 0x666;
-        arg0->field_D4.field_2   = 0x666;
-        arg0->field_D8.offsetX_0 = ((ptr->field_50[0].vx + ptr->field_50[1].vx) >> 1) - arg0->position_18.vx;
-        arg0->field_D8.offsetX_4 = arg0->field_D8.offsetX_0;
-        arg0->field_D8.offsetZ_2 = (ptr->field_50[0].vz + ptr->field_50[1].vz >> 1) - arg0->position_18.vz;
-        arg0->field_D8.offsetZ_6 = arg0->field_D8.offsetZ_2;
+        floatstinger->field_C8.field_0   = ptr->field_50[1].vy - floatstinger->position_18.vy;
+        floatstinger->field_C8.field_4   = ptr->field_50[0].vy - floatstinger->position_18.vy;
+        floatstinger->field_D4.radius_0  = Q12(0.4f);
+        floatstinger->field_D4.field_2   = Q12(0.4f);
+        floatstinger->field_D8.offsetX_0 = ((ptr->field_50[0].vx + ptr->field_50[1].vx) >> 1) - floatstinger->position_18.vx;
+        floatstinger->field_D8.offsetX_4 = floatstinger->field_D8.offsetX_0;
+        floatstinger->field_D8.offsetZ_2 = (ptr->field_50[0].vz + ptr->field_50[1].vz >> 1) - floatstinger->position_18.vz;
+        floatstinger->field_D8.offsetZ_6 = floatstinger->field_D8.offsetZ_2;
     }
     else
     {
-        arg0->field_C8.field_0   = ptr->field_50[0].vy - arg0->position_18.vy;
-        arg0->field_C8.field_4   = ptr->field_50[2].vy - arg0->position_18.vy;
-        arg0->field_D4.radius_0  = 0x800;
-        arg0->field_D4.field_2   = 0x800;
-        arg0->field_D8.offsetX_0 = ((ptr->field_50[0].vx + ptr->field_50[2].vx) >> 1) - arg0->position_18.vx;
-        arg0->field_D8.offsetX_4 = arg0->field_D8.offsetX_0;
-        arg0->field_D8.offsetZ_2 = (ptr->field_50[0].vz + ptr->field_50[2].vz >> 1) - arg0->position_18.vz;
-        arg0->field_D8.offsetZ_6 = arg0->field_D8.offsetZ_2;
+        floatstinger->field_C8.field_0   = ptr->field_50[0].vy - floatstinger->position_18.vy;
+        floatstinger->field_C8.field_4   = ptr->field_50[2].vy - floatstinger->position_18.vy;
+        floatstinger->field_D4.radius_0  = Q12(0.5f);
+        floatstinger->field_D4.field_2   = Q12(0.5f);
+        floatstinger->field_D8.offsetX_0 = ((ptr->field_50[0].vx + ptr->field_50[2].vx) >> 1) - floatstinger->position_18.vx;
+        floatstinger->field_D8.offsetX_4 = floatstinger->field_D8.offsetX_0;
+        floatstinger->field_D8.offsetZ_2 = (ptr->field_50[0].vz + ptr->field_50[2].vz >> 1) - floatstinger->position_18.vz;
+        floatstinger->field_D8.offsetZ_6 = floatstinger->field_D8.offsetZ_2;
     }
 
-    if ((ptr->field_50[0].vy + ptr->field_50[1].vy) >> 1 > g_SysWork.playerWork_4C.player_0.position_18.vy - 0x1666)
+    if (((ptr->field_50[0].vy + ptr->field_50[1].vy) >> 1) > (g_SysWork.playerWork_4C.player_0.position_18.vy - Q12(1.4f)))
     {
-        arg0->field_C8.field_6 = ((ptr->field_50[0].vy + ptr->field_50[1].vy) >> 1) - arg0->position_18.vy;
+        floatstinger->field_C8.field_6 = ((ptr->field_50[0].vy + ptr->field_50[1].vy) >> 1) - floatstinger->position_18.vy;
     }
-    else if ((ptr->field_50[0].vy + ptr->field_50[2].vy) >> 1 < g_SysWork.playerWork_4C.player_0.position_18.vy - 0x1666)
+    else if (((ptr->field_50[0].vy + ptr->field_50[2].vy) >> 1) < (g_SysWork.playerWork_4C.player_0.position_18.vy - Q12(1.4f)))
     {
-        arg0->field_C8.field_6 = ((ptr->field_50[0].vy + ptr->field_50[2].vy) >> 1) - arg0->position_18.vy;
+        floatstinger->field_C8.field_6 = ((ptr->field_50[0].vy + ptr->field_50[2].vy) >> 1) - floatstinger->position_18.vy;
     }
     else
     {
-        var_v1                 = (arg0->position_18.vy + 0x1666);
-        arg0->field_C8.field_6 = g_SysWork.playerWork_4C.player_0.position_18.vy - var_v1;
+        var_v1                 = floatstinger->position_18.vy + Q12(1.4f);
+        floatstinger->field_C8.field_6 = g_SysWork.playerWork_4C.player_0.position_18.vy - var_v1;
     }
 
-    if (arg0->model_0.anim_4.status_0 == 3)
+    if (floatstinger->model_0.anim_4.status_0 == 3)
     {
-        if (FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) > 0xF && FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) < 0x1B)
+        if (FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) > 15 &&
+            FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) < 27)
         {
-            arg0->field_D4.radius_0 = Q12_MULT_PRECISE(arg0->field_D4.radius_0, 0x4CC);
+            floatstinger->field_D4.radius_0 = Q12_MULT_PRECISE(floatstinger->field_D4.radius_0, Q12(0.3f));
         }
-        else if (FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) > 0xB && FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) < 0x10)
+        else if (FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) > 11 &&
+                 FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) < 16)
         {
-            arg0->field_D4.radius_0 = Q12_MULT_PRECISE(arg0->field_D4.radius_0, 0x1000 - Q12_MULT_PRECISE((arg0->model_0.anim_4.time_4 - 0xC000) >> 2, 0xB33));
+            floatstinger->field_D4.radius_0 = Q12_MULT_PRECISE(floatstinger->field_D4.radius_0, Q12(1.0f) - Q12_MULT_PRECISE((floatstinger->model_0.anim_4.time_4 - Q12(12.0f)) >> 2, Q12(0.7f)));
         }
-        else if (FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) > 0x1A && FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) < 0x1F)
+        else if (FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) > 26 &&
+                 FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) < 31)
         {
-            arg0->field_D4.radius_0 = Q12_MULT_PRECISE(arg0->field_D4.radius_0, Q12_MULT_PRECISE((0x1F000 - arg0->model_0.anim_4.time_4) >> 2, 0xB33) + 0x4CC);
+            floatstinger->field_D4.radius_0 = Q12_MULT_PRECISE(floatstinger->field_D4.radius_0, Q12_MULT_PRECISE((Q12(31.0f) - floatstinger->model_0.anim_4.time_4) >> 2, Q12(0.7f)) + Q12(0.3f));
         }
     }
 
-    if (g_SysWork.playerWork_4C.player_0.health_B0 <= 0)
+    if (g_SysWork.playerWork_4C.player_0.health_B0 <= Q12(0.0f))
     {
-        arg0->field_C8.field_2 = -0x2000;
+        floatstinger->field_C8.field_2 = Q12(-2.0f);
     }
     else
     {
-        arg0->field_C8.field_2 = -0x175C;
+        floatstinger->field_C8.field_2 = Q12(-1.46f);
     }
 }
 
-void func_800D3F84(VECTOR3* arg0, s32 arg1, s32 arg2) // 0x800D3F84
+void func_800D3F84(VECTOR3* floatstinger, s32 arg1, s32 arg2) // 0x800D3F84
 {
     VECTOR  sp10;
     MATRIX  sp20;
     SVECTOR sp40;
     VECTOR  sp48;
     s32     sp58;
-    TILE*   tile;
     s16     colR;
     s16     colRG;
+    TILE*   tile;
 
     sp10.vx = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12_SHIFT));
     sp10.vy = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT));
@@ -865,7 +871,7 @@ void func_800D3F84(VECTOR3* arg0, s32 arg1, s32 arg2) // 0x800D3F84
 
     tile = GsOUT_PACKET_P;
 
-    Math_SetSVectorFastSum(&sp40, Q12_TO_Q8(arg0->vx - sp10.vx), Q12_TO_Q8(arg0->vy - sp10.vy), Q12_TO_Q8(arg0->vz - sp10.vz));
+    Math_SetSVectorFastSum(&sp40, Q12_TO_Q8(floatstinger->vx - sp10.vx), Q12_TO_Q8(floatstinger->vy - sp10.vy), Q12_TO_Q8(floatstinger->vz - sp10.vz));
     gte_ldv0(&sp40);
     gte_rt();
     gte_stlvnl(&sp48);
@@ -893,7 +899,7 @@ void func_800D3F84(VECTOR3* arg0, s32 arg1, s32 arg2) // 0x800D3F84
     }
 }
 
-void func_800D41F0(s_SubCharacter* arg0) // 0x800D41F0
+void func_800D41F0(s_SubCharacter* floatstinger) // 0x800D41F0
 {
     s16 temp_v1;
     s16 temp_s0;
@@ -903,23 +909,23 @@ void func_800D41F0(s_SubCharacter* arg0) // 0x800D41F0
     s32 var_v0;
     s16 temp_s1;
 
-    temp_s0 = Q12_MULT(arg0->moveSpeed_38, Math_Sin(arg0->headingAngle_3C));
-    temp_s1 = arg0->field_34;
-    temp_v0 = Q12_MULT(arg0->moveSpeed_38, Math_Cos(arg0->headingAngle_3C));
+    temp_s0 = Q12_MULT(floatstinger->moveSpeed_38, Math_Sin(floatstinger->headingAngle_3C));
+    temp_s1 = floatstinger->field_34;
+    temp_v0 = Q12_MULT(floatstinger->moveSpeed_38, Math_Cos(floatstinger->headingAngle_3C));
     temp_v1 = Math_Vector3MagCalc(temp_s0, temp_s1, temp_v0);
-    temp_t0 = (Q12_MULT_PRECISE(temp_v1, 0xF000 - temp_v1) >> 1) + 0xD000;
+    temp_t0 = (Q12_MULT_PRECISE(temp_v1, Q12(15.0f) - temp_v1) >> 1) + Q12(13.0f);
 
-    if (arg0->properties_E4.floatstinger.field_EE == 0)
+    if (floatstinger->properties_E4.floatstinger.field_EE == 0)
     {
-        var_v0 = 0xD000;
+        var_v0 = Q12(13.0f);
     }
-    else if (arg0->properties_E4.floatstinger.field_EE >= 0)
+    else if (floatstinger->properties_E4.floatstinger.field_EE >= 0)
     {
-        var_v0 = Q12_MULT_PRECISE(arg0->properties_E4.floatstinger.field_EE, 0x18000) + 0x15000;
+        var_v0 = Q12_MULT_PRECISE(floatstinger->properties_E4.floatstinger.field_EE, Q12(24.0f)) + Q12(21.0f);
     }
     else
     {
-        var_v0 = Q12_MULT_PRECISE(-arg0->properties_E4.floatstinger.field_EE, 0x18000) + 0x15000;
+        var_v0 = Q12_MULT_PRECISE(-floatstinger->properties_E4.floatstinger.field_EE, Q12(24.0f)) + Q12(21.0f);
     }
 
     if (var_v0 < temp_t0)
@@ -933,19 +939,19 @@ void func_800D41F0(s_SubCharacter* arg0) // 0x800D41F0
 
     if (var_a1 < D_800D7860)
     {
-        D_800D7860 = CLAMP_HIGH(var_a1, D_800D7860 + Q12_MULT_PRECISE(g_DeltaTime0, 0x6000));
+        D_800D7860 = CLAMP_HIGH(var_a1, D_800D7860 + Q12_MULT_PRECISE(g_DeltaTime0, Q12(6.0f)));
     }
     else
     {
-        D_800D7860 = MAX(var_a1, D_800D7860 - Q12_MULT_PRECISE(g_DeltaTime0, 0x6000));
+        D_800D7860 = MAX(var_a1, D_800D7860 - Q12_MULT_PRECISE(g_DeltaTime0, Q12(6.0f)));
     }
 }
 
 INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D4458);
 
-s32 func_800D48A4(s_SubCharacter* arg0, s16 arg1, s16 arg2) // 0x800D48A4
+s32 func_800D48A4(s_SubCharacter* floatstinger, s16 arg1, s16 arg2) // 0x800D48A4
 {
-    s_RayData sp10;
+    s_RayData ray;
     VECTOR3   sp30;
     VECTOR3   sp40;
     s16       var_s1;
@@ -956,11 +962,11 @@ s32 func_800D48A4(s_SubCharacter* arg0, s16 arg1, s16 arg2) // 0x800D48A4
     temp_s4 = Rng_Rand16() & 0xFF;
     temp_s4 = !(temp_s4 < 0x80);
 
-    sp30.vx = arg0->position_18.vx;
-    sp30.vy = arg0->position_18.vy + arg0->field_C8.field_2;
-    sp30.vz = arg0->position_18.vz;
+    sp30.vx = floatstinger->position_18.vx;
+    sp30.vy = floatstinger->position_18.vy + floatstinger->field_C8.field_2;
+    sp30.vz = floatstinger->position_18.vz;
 
-    for (i = temp_s4; i < temp_s4 + 8; i++)
+    for (i = temp_s4; i < (temp_s4 + 8); i++)
     {
         if (i & 1)
         {
@@ -977,7 +983,7 @@ s32 func_800D48A4(s_SubCharacter* arg0, s16 arg1, s16 arg2) // 0x800D48A4
         sp40.vy = 0;
         sp40.vz = Q12_MULT(arg1, Math_Cos(temp_s0));
 
-        if (func_8006DA08(&sp10, &sp30, &sp40, arg0) == false)
+        if (func_8006DA08(&ray, &sp30, &sp40, floatstinger) == false)
         {
             return func_8005BF38(arg2 + var_s1);
         }
@@ -1069,25 +1075,25 @@ void func_800D61AC(void) // 0x800D61AC
             break;
 
         case 3:
-            Camera_PositionSet(NULL, g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(4.0f), Q12(-1.12f), 0x71147, 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f), 0, 0, 0, 0, true);
             Camera_LookAtSet(&g_SysWork.playerWork_4C.player_0.position_18, 0, Q12(-1.5f), 0, 0, 0, 0, 0, true);
             SysWork_StateStepIncrement(0);
 
         case 4:
-            Camera_PositionSet(NULL, g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(4.0f), Q12(-1.12f), 0x71147, 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f), 0, 0, 0, 0, true);
             Camera_LookAtSet(&g_SysWork.playerWork_4C.player_0.position_18, 0, Q12(-1.5f), 0, 0, 0, 0, 0, false);
-            func_800866D4(0x35, 5, false);
+            func_800866D4(53, 5, false);
             break;
 
         case 5:
-            SysWork_StateStepIncrementDelayed(0xCCC, false);
-            func_800865FC(true, 0, 0, -0x500, Q12(-120.0f), 0x6D000);
+            SysWork_StateStepIncrementDelayed(Q12(0.8f), false);
+            func_800865FC(true, 0, 0, FP_ANGLE(-112.5f), Q12(-120.0f), Q12(109.0f));
             break;
 
         case 6:
-            Camera_PositionSet(NULL, g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(4.0f), Q12(-1.12f), 0x71147, 0, 0, 0, 0, true);
+            Camera_PositionSet(NULL, g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(4.0f), Q12(-1.12f), Q12(113.08f), 0, 0, 0, 0, true);
             Camera_LookAtSet(&g_SysWork.playerWork_4C.player_0.position_18, 0, Q12(-1.5f), 0, 0, 0, 0, 0, false);
-            func_800866D4(0x35, 1, false);
+            func_800866D4(53, 1, false);
             break;
 
         case 7:
