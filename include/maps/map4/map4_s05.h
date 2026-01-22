@@ -87,7 +87,7 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger);
 
 void func_800D1968(s_SubCharacter* floatstinger);
 
-void func_800D1B98(s_SubCharacter* floatstinger);
+void Ai_Floatstinger_ControlUpdate(s_SubCharacter* floatstinger);
 
 void func_800D1BF8(s_SubCharacter* floatstinger);
 

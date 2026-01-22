@@ -1,6 +1,17 @@
 #ifndef _MAPS_CHARACTERS_FLOATSTINGER_H
 #define _MAPS_CHARACTERS_FLOATSTINGER_H
 
+/** @brief Floatstinger character flags. */
+typedef enum _FloatstingerFlags
+{
+    FloatstingerFlag_None = 0,
+    FloatstingerFlag_0    = 1 << 0,
+    FloatstingerFlag_1    = 1 << 1,
+    FloatstingerFlag_2    = 1 << 2,
+    FloatstingerFlag_3    = 1 << 3,
+    FloatstingerFlag_4    = 1 << 4
+} e_FloatstingerFlags;
+
 /** @brief Floatstinger character animation indices. */
 typedef enum _FloatstingerAnim
 {
@@ -18,6 +29,15 @@ typedef enum _FloatstingerAnim
     FloatstingerAnim_11    = 11,
     FloatstingerAnim_12    = 12
 } e_FloatstingerAnim;
+
+/** @brief Floatstinger character control states. */
+typedef enum _FloatstingerControl
+{
+    FloatstingerControl_None = 0,
+    FloatstingerControl_2    = 2,
+    FloatstingerControl_3    = 3,
+    FloatstingerControl_5    = 5
+} e_FloatstingerControl;
 
 /*s_AnimInfo FLOATSTINGER_ANIM_INFOS[] = {
     { Anim_Update2, NO_VALUE, false, ANIM_STATUS(FloatstingerAnim_Still, false), { Q12(0) }, NO_VALUE, 0 },
