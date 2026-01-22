@@ -32,11 +32,8 @@ STATIC_ASSERT_SIZEOF(s_800DB7D4, 0x10);
 
 typedef struct
 {
-    SVECTOR field_0;  // Values copied from `s_800DB7D4::field_0`.
-    SVECTOR field_8;  // Values copied from `s_800DB7D4::field_8`, with `vy` from `s_800DB7D4::field_0`.
-    SVECTOR field_10; // Values copied from `s_800DB7D4::field_0`, with `vy` from `s_800DB7D4::field_8`.
-    SVECTOR field_18; // Values copied from `s_800DB7D4::field_8`.
-    s8      field_20;
+    SVECTOR field_0[4];
+    u8      field_20;
     u8      field_21;
     u8      field_22;
     u8      field_23;
@@ -129,6 +126,21 @@ typedef struct
     s32 field_8;
     s32 field_C;
 } s_800DB210;
+
+typedef struct
+{
+    u8  field_0;
+    s8  unk_1;
+    u16 field_2;
+    u8  field_4;
+    u8  field_5;
+    u8  field_6;
+    u8  field_7;
+    u8  field_8;
+    u8  field_9;
+} s_800DB874;
+
+extern s_800DB874 D_800DB874[];
 
 extern s_800DB210 D_800DB210;
 

@@ -3733,16 +3733,16 @@ void func_800D761C(s_800E06A0* arg0, s_800DB7D4* arg1, s8 arg2, s32 arg3) // 0x8
     arg0->field_2C    = 0;
     arg0->field_21    = 0;
 
-    arg0->field_0     = arg1->field_0;
-    arg0->field_18    = arg1->field_8;
+    arg0->field_0[0] = arg1->field_0;
+    arg0->field_0[3] = arg1->field_8;
 
     // Switches `vy` to the other arg1 field?
-    arg0->field_8.vx  = arg1->field_8.vx;
-    arg0->field_8.vy  = arg1->field_0.vy;
-    arg0->field_8.vz  = arg1->field_8.vz;
-    arg0->field_10.vx = arg1->field_0.vx;
-    arg0->field_10.vy = arg1->field_8.vy;
-    arg0->field_10.vz = arg1->field_0.vz;
+    arg0->field_0[1].vx = arg1->field_8.vx;
+    arg0->field_0[1].vy = arg1->field_0.vy;
+    arg0->field_0[1].vz = arg1->field_8.vz;
+    arg0->field_0[2].vx = arg1->field_0.vx;
+    arg0->field_0[2].vy = arg1->field_8.vy;
+    arg0->field_0[2].vz = arg1->field_0.vz;
 }
 
 void func_800D76BC(s32 arg0) // 0x800D76BC
@@ -4493,7 +4493,166 @@ q19_12 func_800D8874(void) // 0x800D8874
     return Q12_MULT_PRECISE(temp, temp2) + Q12(1.0f);
 }
 
-INCLUDE_ASM("maps/map4_s03/nonmatchings/map4_s03", func_800D88C8);
+void func_800D88C8(s_800E06A0* arg0, u8 arg1) // 0x800D88C8
+{
+    typedef struct
+    {
+        SVECTOR field_0;
+        u16     field_8;
+        u16     field_A;
+    } s_func_800D88C8;
+
+    SVECTOR         sp10[4];
+    s_func_800D88C8 sp30[3][3];
+    s32             spA0;
+    u16             spA8;
+    s32             spB0;
+    s32             j;
+    s32             temp_a2;
+    s32             i;
+    s32             var_t0;
+    s32             k;
+    s_800DB874*     temp_fp;
+    s32             temp_s4;
+    s32             temp_s6;
+    POLY_FT4*       poly;
+    POLY_FT4*       poly2;
+    s32             temp;
+
+    temp_fp = &D_800DB874[arg0->field_30];
+
+    spA8  = temp_fp->field_0 & 0x10;
+    temp  = (temp_fp->field_0 & 0xF) | 0x20;
+    spA8 |= temp;
+
+    temp_s6 = arg0->field_34 + temp_fp->field_4 + func_800D7394() % (temp_fp->field_8 + 1);
+    spB0    = arg0->field_34 + temp_fp->field_4 + func_800D7394() % (temp_fp->field_8 + 1) + temp_fp->field_6 - 1;
+    temp_s4 = arg0->field_36 + temp_fp->field_5 + func_800D7394() % (temp_fp->field_9 + 1);
+    var_t0  = temp_s4 + temp_fp->field_7 - 1;
+
+    for (i = 0; i < 4; i++)
+    {
+        sp10[i].vz = RotTransPers(&arg0->field_0[i], &sp10[i], &spA0, &spA0) * 4;
+    }
+
+    if (arg0->field_20 == 0)
+    {
+        temp_a2 = MAX(sp10[0].vz, sp10[1].vz);
+        temp_a2 = MAX(temp_a2, sp10[2].vz);
+        temp_a2 = MAX(temp_a2, sp10[3].vz) >> 3;
+
+        if (temp_a2 > 0 && temp_a2 < ORDERING_TABLE_SIZE - 1)
+        {
+            poly = GsOUT_PACKET_P;
+
+            setPolyFT4(poly);
+            setRGB0(poly, arg1, arg1, arg1);
+
+            *(s32*)&poly->x0 = *(s32*)&sp10[0];
+            *(s32*)&poly->x1 = *(s32*)&sp10[1];
+
+            do
+            {
+            } while (0); // @hack
+
+            *(s32*)&poly->x2 = *(s32*)&sp10[2];
+            *(s32*)&poly->x3 = *(s32*)&sp10[3];
+
+            setUV4(poly,
+                   temp_s6, temp_s4,
+                   spB0, temp_s4,
+                   temp_s6, var_t0,
+                   spB0, var_t0);
+
+            poly->tpage = spA8;
+            poly->clut  = temp_fp->field_2;
+            AddPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[temp_a2], poly);
+            GsOUT_PACKET_P = poly + 1;
+        }
+    }
+    else
+    {
+        sp30[0][0].field_0 = sp10[0];
+        sp30[0][0].field_8 = temp_s6;
+        sp30[0][0].field_A = temp_s4;
+
+        sp30[0][2].field_0 = sp10[1];
+        sp30[0][2].field_8 = spB0;
+        sp30[0][2].field_A = temp_s4;
+
+        sp30[2][0].field_0 = sp10[2];
+        sp30[2][0].field_8 = temp_s6;
+        sp30[2][0].field_A = var_t0;
+
+        sp30[2][2].field_0 = sp10[3];
+        sp30[2][2].field_8 = spB0;
+        sp30[2][2].field_A = var_t0;
+
+        sp30[0][1].field_0.vx = (sp30[0][0].field_0.vx + sp30[0][2].field_0.vx) >> 1;
+        sp30[0][1].field_0.vy = (sp30[0][0].field_0.vy + sp30[0][2].field_0.vy) >> 1;
+        sp30[0][1].field_0.vz = (sp30[0][0].field_0.vz + sp30[0][2].field_0.vz) >> 1;
+        sp30[0][1].field_8    = (sp30[0][0].field_8 + sp30[0][2].field_8) >> 1;
+        sp30[0][1].field_A    = (sp30[0][0].field_A + sp30[0][2].field_A) >> 1;
+
+        sp30[1][0].field_0.vx = (sp30[0][0].field_0.vx + sp30[2][0].field_0.vx) >> 1;
+        sp30[1][0].field_0.vy = (sp30[0][0].field_0.vy + sp30[2][0].field_0.vy) >> 1;
+        sp30[1][0].field_0.vz = (sp30[0][0].field_0.vz + sp30[2][0].field_0.vz) >> 1;
+        sp30[1][0].field_8    = (sp30[0][0].field_8 + sp30[2][0].field_8) >> 1;
+        sp30[1][0].field_A    = (sp30[0][0].field_A + sp30[2][0].field_A) >> 1;
+
+        sp30[1][2].field_0.vx = (sp30[0][2].field_0.vx + sp30[2][2].field_0.vx) >> 1;
+        sp30[1][2].field_0.vy = (sp30[0][2].field_0.vy + sp30[2][2].field_0.vy) >> 1;
+        sp30[1][2].field_0.vz = (sp30[0][2].field_0.vz + sp30[2][2].field_0.vz) >> 1;
+        sp30[1][2].field_8    = (sp30[0][2].field_8 + sp30[2][2].field_8) >> 1;
+        sp30[1][2].field_A    = (sp30[0][2].field_A + sp30[2][2].field_A) >> 1;
+
+        sp30[2][1].field_0.vx = (sp30[2][0].field_0.vx + sp30[2][2].field_0.vx) >> 1;
+        sp30[2][1].field_0.vy = (sp30[2][0].field_0.vy + sp30[2][2].field_0.vy) >> 1;
+        sp30[2][1].field_0.vz = (sp30[2][0].field_0.vz + sp30[2][2].field_0.vz) >> 1;
+        sp30[2][1].field_8    = (sp30[2][0].field_8 + sp30[2][2].field_8) >> 1;
+        sp30[2][1].field_A    = (sp30[2][0].field_A + sp30[2][2].field_A) >> 1;
+
+        sp30[1][1].field_0.vx = (sp30[1][0].field_0.vx + sp30[1][2].field_0.vx) >> 1;
+        sp30[1][1].field_0.vy = (sp30[1][0].field_0.vy + sp30[1][2].field_0.vy) >> 1;
+        sp30[1][1].field_0.vz = (sp30[1][0].field_0.vz + sp30[1][2].field_0.vz) >> 1;
+        sp30[1][1].field_8    = (sp30[1][0].field_8 + sp30[1][2].field_8) >> 1;
+        sp30[1][1].field_A    = (sp30[1][0].field_A + sp30[1][2].field_A) >> 1;
+
+        for (j = 0; j < 2; j++)
+        {
+            for (k = 0; k < 2; k++)
+            {
+                temp_a2 = MAX(sp30[j][k].field_0.vz, sp30[j][k + 1].field_0.vz);
+                temp_a2 = MAX(temp_a2, sp30[j + 1][k].field_0.vz);
+                temp_a2 = MAX(temp_a2, sp30[j + 1][k + 1].field_0.vz) >> 3;
+
+                if (temp_a2 > 0 && temp_a2 < ORDERING_TABLE_SIZE - 1)
+                {
+                    poly2 = GsOUT_PACKET_P;
+
+                    setPolyFT4(poly2);
+                    setRGB0(poly2, arg1, arg1, arg1);
+
+                    *(s32*)&poly2->x0 = *(s32*)&sp30[j][k];
+                    *(s32*)&poly2->x1 = *(s32*)&sp30[j][k + 1];
+                    *(s32*)&poly2->x2 = *(s32*)&sp30[j + 1][k];
+                    *(s32*)&poly2->x3 = *(s32*)&sp30[j + 1][k + 1];
+
+                    setUV4(poly2,
+                           sp30[j][k].field_8, sp30[j][k].field_A,
+                           sp30[j][k + 1].field_8, sp30[j][k + 1].field_A,
+                           sp30[j + 1][k].field_8, sp30[j + 1][k].field_A,
+                           sp30[j + 1][k + 1].field_8, sp30[j + 1][k + 1].field_A);
+
+                    poly2->tpage = spA8;
+                    poly2->clut  = temp_fp->field_2;
+                    AddPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[temp_a2], poly2);
+                    GsOUT_PACKET_P = poly2 + 1;
+                }
+            }
+        }
+    }
+}
 
 void func_800D8FC0(void) // 0x800D8FC0
 {
