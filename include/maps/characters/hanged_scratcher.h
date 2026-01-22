@@ -4,7 +4,11 @@
 /** @brief Hanged Scratcher character flags */
 typedef enum _HangedScratcherFlags
 {
-    HangedScratchedFlag_0 = 1 << 0
+    HangedScratchedFlag_0 = 1 << 0,
+
+    HangedScratcherFlag_6 = 1 << 6,
+    HangedScratcherFlag_7 = 1 << 7,
+    HangedScratcherFlag_8 = 1 << 8
 } e_HangedScratcherFlags;
 
 /** @brief Hanged Scratcher character animation indices. */

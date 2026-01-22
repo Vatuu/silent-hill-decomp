@@ -29,26 +29,26 @@ INCLUDE_RODATA("maps/map4_s05/nonmatchings/map4_s05", g_MapOverlayHeader);
 
 #include "../src/maps/characters/player.c"
 
-void Ai_Floatstinger_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D16FC
+void Ai_Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D16FC
 {
     D_800DB928 = coords;
 
-    if (chara->model_0.controlState_2 == ModelState_Uninitialized)
+    if (floatstinger->model_0.controlState_2 == ModelState_Uninitialized)
     {
-        Ai_Floatstinger_Init(chara);
+        Ai_Floatstinger_Init(floatstinger);
     }
 
     if (g_DeltaTime0 != Q12(0.0f))
     {
-        func_800D1968(chara);
-        func_800D1B98(chara);
-        func_800D35F0(chara);
+        func_800D1968(floatstinger);
+        func_800D1B98(floatstinger);
+        func_800D35F0(floatstinger);
     }
 
-    func_800D37E8(chara, anmHdr);
-    func_800D3AD4(chara);
+    func_800D37E8(floatstinger, anmHdr);
+    func_800D3AD4(floatstinger);
 
-    chara->properties_E4.dummy.properties_E8[1].val16[0] = chara->rotation_24.vy;
+    floatstinger->properties_E4.dummy.properties_E8[1].val16[0] = floatstinger->rotation_24.vy;
 }
 
 void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
@@ -66,17 +66,12 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
     }
     else
     {
-        
     }
 
     floatstinger->moveSpeed_38 = Q12(0.0f);
     floatstinger->field_34     = 0;
     floatstinger->field_E1_0   = 4;
-
-    for (i = 0; i < 16; i++)
-    {
-        floatstinger->properties_E4.dummy.properties_E8[i].val32 = 0;
-    }
+    Chara_PropertiesClear(floatstinger);
 
     switch (floatstinger->model_0.stateStep_3)
     {
@@ -99,14 +94,11 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
     }
 
     floatstinger->model_0.stateStep_3 = 0;
-
     ModelAnim_AnimInfoSet(&floatstinger->model_0.anim_4, FLOATSTINGER_ANIM_INFOS);
-
     Chara_DamageClear(floatstinger);
 
     D_800DB89C = 0;
     D_800DB898 = 0;
-
     floatstinger->headingAngle_3C = floatstinger->rotation_24.vy;
 
     for (i = 0; i < 15; i++)
@@ -134,109 +126,108 @@ void Ai_Floatstinger_Init(s_SubCharacter* floatstinger) // 0x800D1790
     }
 }
 
-void func_800D1968(s_SubCharacter* arg0) // 0x800D1968
+void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
 {
     VECTOR3 sp10;
     u8      sp20;
     s32     var_a1;
-    s32     var_v0;
+    q19_12  newHealth;
 
-    arg0->properties_E4.floatstinger.field_108 = MAX(arg0->properties_E4.floatstinger.field_108 -
-                                                         Q12_MULT_PRECISE(g_DeltaTime0, 0x96000),
-                                                     0);
+    floatstinger->properties_E4.floatstinger.field_108 = MAX(floatstinger->properties_E4.floatstinger.field_108 -
+                                                             Q12_MULT_PRECISE(g_DeltaTime0, Q12(150.0f)),
+                                                             Q12(0.0f));
 
-    if (arg0->damage_B4.amount_C > 0)
+    if (floatstinger->damage_B4.amount_C > Q12(0.0f))
     {
-        if (g_SavegamePtr->gameDifficulty_260 == -1)
+        if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
         {
-            var_a1 = 0x1F4000;
+            var_a1 = Q12(500.0f);
         }
         else
         {
-            var_a1 = 0x12C000;
+            var_a1 = Q12(300.0f);
         }
 
-        arg0->properties_E4.floatstinger.field_108 += arg0->damage_B4.amount_C;
+        floatstinger->properties_E4.floatstinger.field_108 += floatstinger->damage_B4.amount_C;
 
-        if (var_a1 < arg0->properties_E4.floatstinger.field_108)
+        if (var_a1 < floatstinger->properties_E4.floatstinger.field_108)
         {
-            arg0->damage_B4.amount_C                  -= arg0->properties_E4.floatstinger.field_108 - var_a1;
-            arg0->properties_E4.floatstinger.field_108 = var_a1;
-
-            if (arg0->damage_B4.amount_C < 0)
+            floatstinger->damage_B4.amount_C                  -= floatstinger->properties_E4.floatstinger.field_108 - var_a1;
+            floatstinger->properties_E4.floatstinger.field_108 = var_a1;
+            if (floatstinger->damage_B4.amount_C < Q12(0.0f))
             {
-                arg0->damage_B4.amount_C = 0;
+                floatstinger->damage_B4.amount_C = Q12(0.0f);
             }
         }
 
-        Player_DisableDamage(&sp20, 0U);
+        Player_DisableDamage(&sp20, 0u);
 
-        var_v0 = arg0->health_B0 - arg0->damage_B4.amount_C;
+        newHealth = floatstinger->health_B0 - floatstinger->damage_B4.amount_C;
 
         if (sp20 != 0)
         {
-            if (var_v0 <= 0)
+            if (newHealth <= Q12(0.0f))
             {
-                var_v0 = 1;
+                newHealth = 1;
             }
         }
-        else if (var_v0 < 0)
+        else if (newHealth < Q12(0.0f))
         {
-            var_v0 = 0;
+            newHealth = Q12(0.0f);
         }
-        arg0->health_B0 = var_v0;
+        floatstinger->health_B0 = newHealth;
 
-        arg0->properties_E4.floatstinger.field_F8 += (arg0->damage_B4.amount_C >> 0xC);
-        arg0->properties_E4.floatstinger.field_FA += (arg0->damage_B4.amount_C >> 0xC);
+        floatstinger->properties_E4.floatstinger.field_F8 += FP_FROM(floatstinger->damage_B4.amount_C, Q12_SHIFT);
+        floatstinger->properties_E4.floatstinger.field_FA += FP_FROM(floatstinger->damage_B4.amount_C, Q12_SHIFT);
 
-        func_8005DC1C(0x622, &sp10, 0x80, 0);
+        func_8005DC1C(Sfx_Unk1570, &sp10, Q8(0.5f), 0);
 
-        if (arg0->health_B0 == 0 || (arg0->properties_E4.floatstinger.field_F8 > 0x3E8 || arg0->properties_E4.floatstinger.field_FA > 0x4B0) &&
-                                        arg0->model_0.controlState_2 == 2 && arg0->model_0.anim_4.status_0 == 0x13)
+        if (floatstinger->health_B0 == 0 || (floatstinger->properties_E4.floatstinger.field_F8 > 1000 || floatstinger->properties_E4.floatstinger.field_FA > 1200) &&
+            floatstinger->model_0.controlState_2 == 2 && floatstinger->model_0.anim_4.status_0 == ANIM_STATUS(9, true))
         {
-            arg0->properties_E4.floatstinger.field_F8 = 0;
-            arg0->model_0.controlState_2              = 3;
+            floatstinger->properties_E4.floatstinger.field_F8 = 0;
+            floatstinger->model_0.controlState_2              = 3;
 
-            if (arg0->properties_E4.floatstinger.field_FA > 0x4B0)
+            if (floatstinger->properties_E4.floatstinger.field_FA > 1200)
             {
-                arg0->properties_E4.floatstinger.field_FA  = 0;
-                arg0->properties_E4.floatstinger.field_E8 |= 2;
+                floatstinger->properties_E4.floatstinger.field_FA  = 0;
+                floatstinger->properties_E4.floatstinger.field_E8 |= 1 << 1;
             }
         }
     }
 
-    if (arg0->properties_E4.floatstinger.field_FA > 0x4B0 && arg0->model_0.controlState_2 == 2 &&
-        arg0->model_0.anim_4.status_0 == 0x13)
+    if (floatstinger->properties_E4.floatstinger.field_FA > 1200 && floatstinger->model_0.controlState_2 == 2 &&
+        floatstinger->model_0.anim_4.status_0 == ANIM_STATUS(9, true))
     {
-        arg0->properties_E4.floatstinger.field_F8  = 0;
-        arg0->properties_E4.floatstinger.field_FA  = 0;
-        arg0->model_0.controlState_2               = 3;
-        arg0->properties_E4.floatstinger.field_E8 |= 2;
+        floatstinger->properties_E4.floatstinger.field_F8  = 0;
+        floatstinger->properties_E4.floatstinger.field_FA  = 0;
+        floatstinger->model_0.controlState_2               = 3;
+        floatstinger->properties_E4.floatstinger.field_E8 |= 1 << 1;
     }
 
-    arg0->damage_B4.amount_C      = 0;
-    arg0->damage_B4.position_0.vz = 0;
-    arg0->damage_B4.position_0.vy = 0;
-    arg0->damage_B4.position_0.vx = 0;
+    floatstinger->damage_B4.amount_C      = Q12(0.0f);
+    floatstinger->damage_B4.position_0.vz = Q12(0.0f);
+    floatstinger->damage_B4.position_0.vy = Q12(0.0f);
+    floatstinger->damage_B4.position_0.vx = Q12(0.0f);
 
-    Player_DisableDamage(&sp20, arg0->health_B0 == 0);
+    Player_DisableDamage(&sp20, floatstinger->health_B0 == Q12(0.0f));
 }
 
-void func_800D1B98(s_SubCharacter* arg0) // 0x800D1B98
+void func_800D1B98(s_SubCharacter* floatstinger) // 0x800D1B98
 {
-    if (arg0->model_0.anim_4.status_0 != 3)
+    if (floatstinger->model_0.anim_4.status_0 != ANIM_STATUS(1, true))
     {
-        arg0->field_44.field_0                     = 0;
-        arg0->properties_E4.floatstinger.field_E8 &= 0xFFFB;
+        floatstinger->field_44.field_0                     = 0;
+        floatstinger->properties_E4.floatstinger.field_E8 &= ~(1 << 2);
     }
 
-    if (D_800D7A04[arg0->model_0.controlState_2] != NULL)
+    if (D_800D7A04[floatstinger->model_0.controlState_2] != NULL)
     {
-        D_800D7A04[arg0->model_0.controlState_2]();
+        D_800D7A04[floatstinger->model_0.controlState_2]();
     }
 }
 
-void func_800D1BF8(s_SubCharacter* arg0) // 0x800D1BF8
+void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
 {
     typedef struct
     {
@@ -281,13 +272,13 @@ void func_800D1BF8(s_SubCharacter* arg0) // 0x800D1BF8
 
         temp_a0 = Math_Sin(temp_s2_2);
 
-        sp58.vx = arg0->model_0.anim_4.status_0 == 3 ? Q12_MULT(temp_v0_14 + 0x999, temp_a0) - 0x75800 : Q12_MULT(temp_v0_14 + 0x1333, temp_a0) - 0x75800;
+        sp58.vx = floatstinger->model_0.anim_4.status_0 == 3 ? Q12_MULT(temp_v0_14 + 0x999, temp_a0) - 0x75800 : Q12_MULT(temp_v0_14 + 0x1333, temp_a0) - 0x75800;
 
         sp58.vy = -0x1000;
 
         temp_a0 = Math_Cos(temp_s2_2);
 
-        sp58.vz = arg0->model_0.anim_4.status_0 == 3 ? Q12_MULT(temp_v0_14 + 0x999, temp_a0) + 0x64000 : Q12_MULT(temp_v0_14 + 0x1333, temp_a0) + 0x64000;
+        sp58.vz = floatstinger->model_0.anim_4.status_0 == 3 ? Q12_MULT(temp_v0_14 + 0x999, temp_a0) + 0x64000 : Q12_MULT(temp_v0_14 + 0x1333, temp_a0) + 0x64000;
     }
     else if (g_SysWork.playerWork_4C.player_0.position_18.vx > -0x79000 && g_SysWork.playerWork_4C.player_0.position_18.vx < -0x78000 &&
              (g_SysWork.playerWork_4C.player_0.position_18.vz > 0x60000 && g_SysWork.playerWork_4C.player_0.position_18.vz < 0x67000))
@@ -300,22 +291,22 @@ void func_800D1BF8(s_SubCharacter* arg0) // 0x800D1BF8
     else
     {
         var_s5    = 2;
-        temp_s2_2 = ratan2(arg0->position_18.vx - g_SysWork.playerWork_4C.player_0.position_18.vx,
-                           arg0->position_18.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
+        temp_s2_2 = ratan2(floatstinger->position_18.vx - g_SysWork.playerWork_4C.player_0.position_18.vx,
+                           floatstinger->position_18.vz - g_SysWork.playerWork_4C.player_0.position_18.vz);
 
         temp_a0 = Math_Sin(temp_s2_2);
         temp_a1 = g_SysWork.playerWork_4C.player_0.position_18.vx;
 
-        sp48.vx = arg0->model_0.anim_4.status_0 == 3 ? temp_a1 + Q12_MULT(temp_a0 * 39, 0x3F) : temp_a1 + Q12_MULT(temp_a0, 0x1333);
+        sp48.vx = floatstinger->model_0.anim_4.status_0 == 3 ? temp_a1 + Q12_MULT(temp_a0 * 39, 0x3F) : temp_a1 + Q12_MULT(temp_a0, 0x1333);
 
         sp48.vy = 0x2000;
 
         temp2   = Math_Cos(temp_s2_2);
         temp_a2 = g_SysWork.playerWork_4C.player_0.position_18.vz;
 
-        sp48.vz = arg0->model_0.anim_4.status_0 == 3 ? temp_a2 + Q12_MULT(temp2 * 39, 0x3F) : temp_a2 + Q12_MULT(temp2, 0x1333);
+        sp48.vz = floatstinger->model_0.anim_4.status_0 == 3 ? temp_a2 + Q12_MULT(temp2 * 39, 0x3F) : temp_a2 + Q12_MULT(temp2, 0x1333);
 
-        func_800D4458(arg0, &sp48);
+        func_800D4458(floatstinger, &sp48);
 
         sp58.vx = sp48.vx + D_800DB898;
         sp58.vy = sp48.vy;
@@ -325,74 +316,74 @@ void func_800D1BF8(s_SubCharacter* arg0) // 0x800D1BF8
     temp_a2_2 = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - sp58.vx,
                        g_SysWork.playerWork_4C.player_0.position_18.vz - sp58.vz);
 
-    if (arg0->model_0.anim_4.status_0 == 0x13)
+    if (floatstinger->model_0.anim_4.status_0 == 0x13)
     {
-        func_800D4A3C(arg0, &sp58, temp_a2_2);
+        func_800D4A3C(floatstinger, &sp58, temp_a2_2);
 
-        arg0->properties_E4.floatstinger.field_100 -= g_DeltaTime0;
+        floatstinger->properties_E4.floatstinger.field_100 -= g_DeltaTime0;
 
-        if (arg0->properties_E4.floatstinger.field_100 < 0)
+        if (floatstinger->properties_E4.floatstinger.field_100 < 0)
         {
-            arg0->properties_E4.floatstinger.field_100 = 0;
+            floatstinger->properties_E4.floatstinger.field_100 = 0;
         }
 
-        if (arg0->properties_E4.floatstinger.field_E8 & 8)
+        if (floatstinger->properties_E4.floatstinger.field_E8 & 8)
         {
-            temp_v1_2 = arg0->properties_E4.floatstinger.field_FC;
+            temp_v1_2 = floatstinger->properties_E4.floatstinger.field_FC;
 
-            arg0->properties_E4.floatstinger.field_FC = MAX(0, temp_v1_2 - g_DeltaTime0);
+            floatstinger->properties_E4.floatstinger.field_FC = MAX(0, temp_v1_2 - g_DeltaTime0);
 
-            if (!(arg0->properties_E4.floatstinger.field_FC & 0xFFFF))
+            if (!(floatstinger->properties_E4.floatstinger.field_FC & 0xFFFF))
             {
-                arg0->properties_E4.floatstinger.field_E8 &= 0xFFF7;
+                floatstinger->properties_E4.floatstinger.field_E8 &= 0xFFF7;
             }
         }
 
-        temp_s2_2 = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - arg0->position_18.vx,
-                           g_SysWork.playerWork_4C.player_0.position_18.vz - arg0->position_18.vz);
+        temp_s2_2 = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - floatstinger->position_18.vx,
+                           g_SysWork.playerWork_4C.player_0.position_18.vz - floatstinger->position_18.vz);
 
-        if (ABS(g_SysWork.playerWork_4C.player_0.position_18.vy - arg0->position_18.vy) < 0xCC &&
-            Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - arg0->position_18.vx,
-                                g_SysWork.playerWork_4C.player_0.position_18.vz - arg0->position_18.vz) < 0x1800 &&
+        if (ABS(g_SysWork.playerWork_4C.player_0.position_18.vy - floatstinger->position_18.vy) < 0xCC &&
+            Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - floatstinger->position_18.vx,
+                                g_SysWork.playerWork_4C.player_0.position_18.vz - floatstinger->position_18.vz) < 0x1800 &&
             ((var_s5 == 0 && Rng_TestProbabilityBits(2)) || (var_s5 == 2 && Rng_TestProbabilityBits(2))))
         {
-            if (g_SysWork.playerWork_4C.player_0.health_B0 > 0 && ABS(func_8005BF38(temp_s2_2 - arg0->headingAngle_3C)) < 0x400 &&
-                ABS(func_8005BF38(temp_s2_2 - arg0->rotation_24.vy)) < 0x155 && !(g_SysWork.playerWork_4C.player_0.flags_3E & 8) && !Rng_TestProbabilityBits(3))
+            if (g_SysWork.playerWork_4C.player_0.health_B0 > 0 && ABS(func_8005BF38(temp_s2_2 - floatstinger->headingAngle_3C)) < 0x400 &&
+                ABS(func_8005BF38(temp_s2_2 - floatstinger->rotation_24.vy)) < 0x155 && !(g_SysWork.playerWork_4C.player_0.flags_3E & 8) && !Rng_TestProbabilityBits(3))
             {
-                arg0->model_0.anim_4.status_0              = 2;
-                arg0->properties_E4.floatstinger.field_E8 &= 0xFFEF;
+                floatstinger->model_0.anim_4.status_0              = 2;
+                floatstinger->properties_E4.floatstinger.field_E8 &= 0xFFEF;
             }
         }
-        else if (!(arg0->properties_E4.floatstinger.field_E8 & 8) &&
-                 Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - arg0->position_18.vx,
-                                     g_SysWork.playerWork_4C.player_0.position_18.vz - arg0->position_18.vz) < 0x6800)
+        else if (!(floatstinger->properties_E4.floatstinger.field_E8 & 8) &&
+                 Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - floatstinger->position_18.vx,
+                                     g_SysWork.playerWork_4C.player_0.position_18.vz - floatstinger->position_18.vz) < 0x6800)
         {
-            if (ABS(func_8005BF38(temp_s2_2 - arg0->headingAngle_3C)) < 0x400 &&
-                ABS(func_8005BF38(temp_s2_2 - arg0->rotation_24.vy)) < 0xAA)
+            if (ABS(func_8005BF38(temp_s2_2 - floatstinger->headingAngle_3C)) < 0x400 &&
+                ABS(func_8005BF38(temp_s2_2 - floatstinger->rotation_24.vy)) < 0xAA)
             {
-                var_v1 = ABS(arg0->position_18.vy);
+                var_v1 = ABS(floatstinger->position_18.vy);
 
                 if (var_v1 < 0x8000 && !(g_SysWork.playerWork_4C.player_0.flags_3E & 8) && !Rng_TestProbabilityBits(2))
                 {
-                    arg0->model_0.anim_4.status_0 = 0x18;
+                    floatstinger->model_0.anim_4.status_0 = 0x18;
                 }
             }
         }
     }
-    else if (arg0->model_0.anim_4.status_0 == 3)
+    else if (floatstinger->model_0.anim_4.status_0 == 3)
     {
-        if (FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) > 0 && FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) < 0x12)
+        if (FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) > 0 && FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) < 0x12)
         {
-            func_800D4A3C(arg0, &sp58, temp_a2_2);
-            arg0->properties_E4.floatstinger.field_104 = 0;
+            func_800D4A3C(floatstinger, &sp58, temp_a2_2);
+            floatstinger->properties_E4.floatstinger.field_104 = 0;
         }
-        else if (FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) > 0x11 && FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) < 0x19)
+        else if (FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) > 0x11 && FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) < 0x19)
         {
-            arg0->moveSpeed_38 = 0;
-            if (!(arg0->properties_E4.floatstinger.field_E8 & 4))
+            floatstinger->moveSpeed_38 = 0;
+            if (!(floatstinger->properties_E4.floatstinger.field_E8 & 4))
             {
-                arg0->field_44.field_0++;
-                arg0->properties_E4.floatstinger.field_E8 |= 4;
+                floatstinger->field_44.field_0++;
+                floatstinger->properties_E4.floatstinger.field_E8 |= 4;
             }
 
             for (i = 0; i < 2; i++)
@@ -411,36 +402,36 @@ void func_800D1BF8(s_SubCharacter* arg0) // 0x800D1BF8
                 sp20[i].vz = (ptr->field_20[i].vz * 0x10);
             }
 
-            if (arg0->properties_E4.floatstinger.field_104 == 0)
+            if (floatstinger->properties_E4.floatstinger.field_104 == 0)
             {
-                sp68.vx = arg0->position_18.vx;
-                sp68.vy = arg0->position_18.vy - 0x1000;
-                sp68.vz = arg0->position_18.vz;
+                sp68.vx = floatstinger->position_18.vx;
+                sp68.vy = floatstinger->position_18.vy - 0x1000;
+                sp68.vz = floatstinger->position_18.vz;
 
                 func_8005DC1C(0x623, &sp68, 0x80, 0);
-                arg0->properties_E4.floatstinger.field_104++;
+                floatstinger->properties_E4.floatstinger.field_104++;
             }
 
-            func_8008A0E4(1, 0x3B, arg0, &sp20[0], &g_SysWork.playerWork_4C.player_0, ratan2(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz),
+            func_8008A0E4(1, 0x3B, floatstinger, &sp20[0], &g_SysWork.playerWork_4C.player_0, ratan2(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz),
                           ratan2(Math_Vector2MagCalc(sp20[1].vx - sp20[0].vx, sp20[1].vz - sp20[0].vz), sp20[1].vy - sp20[0].vy));
 
-            if (g_SavegamePtr->gameDifficulty_260 != 1 && arg0->properties_E4.floatstinger.field_100 == 0)
+            if (g_SavegamePtr->gameDifficulty_260 != 1 && floatstinger->properties_E4.floatstinger.field_100 == 0)
             {
-                arg0->properties_E4.floatstinger.field_E8 &= 0xFFFE;
+                floatstinger->properties_E4.floatstinger.field_E8 &= 0xFFFE;
             }
         }
     }
-    else if (arg0->model_0.anim_4.status_0 == 0x19)
+    else if (floatstinger->model_0.anim_4.status_0 == 0x19)
     {
-        if (FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) > 0 && FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT) < 0x12)
+        if (FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) > 0 && FP_FROM(floatstinger->model_0.anim_4.time_4, Q12_SHIFT) < 0x12)
         {
-            func_800D4A3C(arg0, &sp58, temp_a2_2);
+            func_800D4A3C(floatstinger, &sp58, temp_a2_2);
         }
         else
         {
-            arg0->moveSpeed_38 = 0;
+            floatstinger->moveSpeed_38 = 0;
 
-            if (!(arg0->properties_E4.floatstinger.field_E8 & 8))
+            if (!(floatstinger->properties_E4.floatstinger.field_E8 & 8))
             {
                 ptr = PSX_SCRATCH;
                 Vw_CoordHierarchyMatrixCompute(&D_800DB928[9], &ptr->field_0);
@@ -475,14 +466,14 @@ void func_800D1BF8(s_SubCharacter* arg0) // 0x800D1BF8
 
                 sp20[1].vy = MAX(g_SysWork.playerWork_4C.player_0.position_18.vy + temp_v0_4, -0x1000) <= 0x2000 ? temp_a2_2 + MAX(g_SysWork.playerWork_4C.player_0.position_18.vy + temp_v0_4, -0x1000) : temp_a2_2 + 0x2000;
 
-                sp68.vx = arg0->position_18.vx;
-                sp68.vy = arg0->position_18.vy - 0x3800;
-                sp68.vz = arg0->position_18.vz;
+                sp68.vx = floatstinger->position_18.vx;
+                sp68.vy = floatstinger->position_18.vy - 0x3800;
+                sp68.vz = floatstinger->position_18.vz;
 
                 func_8005DC1C(0x624, &sp68, 0x80, 0);
                 sharedFunc_800CB0A4_4_s03(&sp20[0], &sp20[1]);
 
-                if (arg0->properties_E4.floatstinger.field_E8 & 1)
+                if (floatstinger->properties_E4.floatstinger.field_E8 & 1)
                 {
                     for (i = 0; i < 2; i++)
                     {
@@ -491,13 +482,13 @@ void func_800D1BF8(s_SubCharacter* arg0) // 0x800D1BF8
                         temp_s0_4 = Math_Sin(temp_s2_2);
 
                         sp20[2].vx = sp20[1].vx + Q12_MULT(temp_s3_2, temp_s0_4) +
-                                     Math_Sin(arg0->rotation_24.vy + (i != 0 ? 0x400 : -0x400));
+                                     Math_Sin(floatstinger->rotation_24.vy + (i != 0 ? 0x400 : -0x400));
 
                         temp_a0   = temp_s2_2;
                         temp_s0_4 = Math_Cos(temp_a0);
 
                         sp20[2].vz = sp20[1].vz + Q12_MULT(temp_s3_2, temp_s0_4) +
-                                     Math_Cos(arg0->rotation_24.vy + (i != 0 ? 0x400 : -0x400));
+                                     Math_Cos(floatstinger->rotation_24.vy + (i != 0 ? 0x400 : -0x400));
 
                         temp3      = Rng_TestProbabilityBits(11) - 0x400;
                         temp_v1_12 = sp20[1].vy + temp3;
@@ -513,12 +504,12 @@ void func_800D1BF8(s_SubCharacter* arg0) // 0x800D1BF8
                     }
                 }
 
-                arg0->properties_E4.floatstinger.field_FC  = Q12_MULT_PRECISE(D_800D785C, Rng_TestProbabilityBits(10) + 0xC00);
-                arg0->properties_E4.floatstinger.field_E8 |= 8;
+                floatstinger->properties_E4.floatstinger.field_FC  = Q12_MULT_PRECISE(D_800D785C, Rng_TestProbabilityBits(10) + 0xC00);
+                floatstinger->properties_E4.floatstinger.field_E8 |= 8;
 
-                if (g_SavegamePtr->gameDifficulty_260 != 1 && arg0->properties_E4.floatstinger.field_100 == 0)
+                if (g_SavegamePtr->gameDifficulty_260 != 1 && floatstinger->properties_E4.floatstinger.field_100 == 0)
                 {
-                    arg0->properties_E4.floatstinger.field_E8 &= 0xFFFE;
+                    floatstinger->properties_E4.floatstinger.field_E8 &= 0xFFFE;
                 }
             }
         }

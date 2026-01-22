@@ -58,7 +58,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
             break;
 
         case HangedScratcherStateStep_17:
-            scratcher->properties_E4.hangedScratcher.field_EA = Q12(1.2f);
+            scratcher->properties_E4.hangedScratcher.timer_EA = Q12(1.2f);
 
         case HangedScratcherStateStep_6:
             scratcher->model_0.controlState_2 = HangedScratcherControl_6;

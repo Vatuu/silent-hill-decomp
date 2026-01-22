@@ -85,9 +85,9 @@ void Ai_Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, G
 
 void Ai_Floatstinger_Init(s_SubCharacter* floatstinger);
 
-void func_800D1968(s_SubCharacter*);
+void func_800D1968(s_SubCharacter* floatstinger);
 
-void func_800D1B98(s_SubCharacter*);
+void func_800D1B98(s_SubCharacter* floatstinger);
 
 void func_800D6800(void);
 
@@ -101,7 +101,7 @@ s32 func_800D4458(s_SubCharacter*, VECTOR3*);
 
 void func_800D4A3C(s_SubCharacter*, VECTOR3*, s16);
 
-void func_800D1BF8(s_SubCharacter* arg0);
+void func_800D1BF8(s_SubCharacter* floatstinger);
 
 void func_800D3F84(VECTOR3* arg0, s32 arg1, s32 arg2);
 

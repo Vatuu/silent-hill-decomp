@@ -1404,7 +1404,7 @@ typedef struct _PropertiesGroaner
 typedef struct _PropertiesHangedScratcher
 {
     s16    flags_E8; /** `e_HangedScratcherFlags` */
-    q4_12  field_EA;
+    q4_12  timer_EA;
     s8     unk_EC[4];
     q3_12  offsetX_F0; // } Offsets passed to `func_8005CB20`
     q3_12  offsetZ_F2; // }

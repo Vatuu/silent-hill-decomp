@@ -30,7 +30,7 @@ void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher)
         if (scratcher->health_B0 > Q12(100.0f))
         {
             scratcher->model_0.controlState_2                 = 6;
-            scratcher->properties_E4.hangedScratcher.field_EA = Q12(0.5f);
+            scratcher->properties_E4.hangedScratcher.timer_EA = Q12(0.5f);
         }
         else
         {
