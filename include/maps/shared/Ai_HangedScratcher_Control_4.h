@@ -1,9 +1,9 @@
 void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
 {
     VECTOR3 attackPos;
+    s32     playerDist;
     s16     playerDir;
     s16     playerDirAbs;
-    s32     playerDist;
 
     playerDist   = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - scratcher->position_18.vx,
                                        g_SysWork.playerWork_4C.player_0.position_18.vz - scratcher->position_18.vz);
@@ -14,7 +14,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
     {
         if (playerDirAbs > TIMESTEP_ANGLE_3)
         {
-            if (playerDir > 0)
+            if (playerDir > FP_ANGLE(0.0f))
             {
                 scratcher->rotation_24.vy += Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.5f);
             }
@@ -37,7 +37,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
     }
     else
     {
-        scratcher->moveSpeed_38 = 0;
+        scratcher->moveSpeed_38 = Q12(0.0f);
 
         if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 104, 105))
         {
