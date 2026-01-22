@@ -89,23 +89,9 @@ void func_800D1968(s_SubCharacter* floatstinger);
 
 void func_800D1B98(s_SubCharacter* floatstinger);
 
-void func_800D6800(void);
-
-void func_800D6BC0(void);
-
-void Map_WorldObjectsInit(void);
-
-void Map_WorldObjectsUpdate(void);
-
-s32 func_800D4458(s_SubCharacter*, VECTOR3*);
-
-void func_800D4A3C(s_SubCharacter*, VECTOR3*, s16);
-
 void func_800D1BF8(s_SubCharacter* floatstinger);
 
-void func_800D3F84(VECTOR3* arg0, s32 arg1, s32 arg2);
-
-void func_800D3424(s_SubCharacter* arg0);
+void func_800D3424(s_SubCharacter* floatstinger);
 
 void func_800D3564(s_SubCharacter* arg0);
 
@@ -115,10 +101,24 @@ void func_800D37E8(s_SubCharacter* arg0, s_AnmHeader* arg1);
 
 void func_800D3AD4(s_SubCharacter* arg0);
 
+void func_800D3F84(VECTOR3* arg0, s32 arg1, s32 arg2);
+
 void func_800D41F0(s_SubCharacter* arg0);
+
+s32 func_800D4458(s_SubCharacter*, VECTOR3*);
 
 s32 func_800D48A4(s_SubCharacter* arg0, s16 arg1, s16 arg2);
 
+void func_800D4A3C(s_SubCharacter*, VECTOR3*, s16);
+
 void func_800D61AC(void);
+
+void func_800D6800(void);
+
+void func_800D6BC0(void);
+
+void Map_WorldObjectsInit(void);
+
+void Map_WorldObjectsUpdate(void);
 
 #endif

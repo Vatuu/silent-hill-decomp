@@ -1576,7 +1576,7 @@ STATIC_ASSERT_SIZEOF(s_PropertiesTwinfeeler, 64);
 
 typedef struct _PropertiesFloatstinger
 {
-    s16        field_E8;
+    s16        flags_E8;
     s8         unk_EA[2];
     s8         unk_EC[2];
     s16        field_EE;
