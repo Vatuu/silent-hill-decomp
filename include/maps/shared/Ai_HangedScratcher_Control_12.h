@@ -14,13 +14,13 @@ void Ai_HangedScratcher_Control_12(s_SubCharacter* scratcher)
         scratcher->properties_E4.dummy.properties_E8[2].val16[1] += FP_FROM(animDurationScaled * Math_Cos(scratcher->rotation_24.vy), Q12_SHIFT);
     }
 
-    if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(13, true))
+    if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_13, true))
     {
         scratcher->flags_3E |= CharaFlag_Unk2;
         if (scratcher->health_B0 <= Q12(0.0f))
         {
-            scratcher->model_0.controlState_2  = 13;
-            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
+            scratcher->model_0.controlState_2  = HangedScratcherControl_13;
+            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_7, false);
         }
     }
 }

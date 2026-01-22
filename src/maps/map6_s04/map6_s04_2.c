@@ -1,3 +1,7 @@
+#include "inline_no_dmpsx.h"
+
+#include <psyq/gtemac.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/item_screens.h"
@@ -8,8 +12,6 @@
 #include "maps/map6/map6_s04.h"
 #include "maps/characters/alessa.h"
 #include "maps/characters/dahlia.h"
-#include "inline_no_dmpsx.h"
-#include <psyq/gtemac.h>
 
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800DD5B8
 
@@ -236,19 +238,19 @@ void func_800E0204(void) // 0x800E0204
         case 5:
         case 6:
             break;
-          
+
         case 2:
             func_800DE95C();
             func_800E0164();
             func_800DFB44();
             break;
-              
+
         case 3:
             func_800DE95C();
             func_800E0164();
             func_800DE5CC();
             break;
-              
+
         case 4:
             func_800DE95C();
             func_800E0164();
@@ -260,6 +262,7 @@ void func_800E0204(void) // 0x800E0204
 void func_800E02E0(void) // 0x800E02E0
 {
     D_800ED588 = 0;
+
     func_800DE26C();
     func_800DF64C();
 }
@@ -273,9 +276,9 @@ s_func_800E030C* func_800E030C(void) // 0x800E030C
 
     for (i = 0; i < 800; i++, ptr++)
     {
-        if (!ptr->slotInUse_24)
+        if (!ptr->isSlotInUse_24)
         {
-            ptr->slotInUse_24 = true;
+            ptr->isSlotInUse_24 = true;
             return ptr;
         }
     }
@@ -301,7 +304,7 @@ void func_800E0358(s_func_800E030C* arg0) // 0x800E0358
         case 1:
             if (arg0->field_0 < 0)
             {
-                arg0->slotInUse_24 = false;
+                arg0->isSlotInUse_24 = false;
             }
             break;
     }

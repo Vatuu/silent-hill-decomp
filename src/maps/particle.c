@@ -1655,9 +1655,9 @@ void func_800CD1F4(s32 arg0, s32 arg1, s_800E330C* arg2) // 0x800CD1F4
         return;
     }
 
-    arg2->field_0.vx += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_C.vx);
-    arg2->field_0.vy += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_C.vy);
-    arg2->field_0.vz += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_C.vz);
+    arg2->field_0.vx += TIMESTEP_SCALE_30FPS(g_DeltaTime0, arg2->field_C.vx);
+    arg2->field_0.vy += TIMESTEP_SCALE_30FPS(g_DeltaTime0, arg2->field_C.vy);
+    arg2->field_0.vz += TIMESTEP_SCALE_30FPS(g_DeltaTime0, arg2->field_C.vz);
 
     limitRange(arg2->field_C.vx, -0x100, 0xFF);
     limitRange(arg2->field_C.vy, -0xFF, 0xFF);
@@ -2217,8 +2217,8 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
 
     if (sharedData_800DD584_0_s00 == 0)
     {
-        arg2->field_0.vx += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_C);
-        arg2->field_0.vz += TIMESTEP_SCALE(g_DeltaTime0, arg2->field_E);
+        arg2->field_0.vx += TIMESTEP_SCALE_30FPS(g_DeltaTime0, arg2->field_C);
+        arg2->field_0.vz += TIMESTEP_SCALE_30FPS(g_DeltaTime0, arg2->field_E);
 
         switch (arg2->field_11)
         {
@@ -3095,7 +3095,7 @@ void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* del
             part->movement_18.vy += Rng_GenerateIntFromInput(*rand, -1, 3);
 
             // Apply movement to position over time.
-            part->position0_0.vy += TIMESTEP_SCALE(*deltaTime, (part->movement_18.vy >> 1) << 2);
+            part->position0_0.vy += TIMESTEP_SCALE_30FPS(*deltaTime, (part->movement_18.vy >> 1) << 2);
 #endif
             break;
 
@@ -3106,7 +3106,7 @@ void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* del
             part->position1_C.vy = pos->vy - part->movement_18.vy;
             part->movement_18.vy += sharedData_800E32D4_0_s00;
 
-            pos->vy += TIMESTEP_SCALE(*deltaTime, part->movement_18.vy << 2);
+            pos->vy += TIMESTEP_SCALE_30FPS(*deltaTime, part->movement_18.vy << 2);
 #endif
             break;
     }
@@ -3172,9 +3172,9 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
                 limitRange(localPart->movement_18.vy, 5, 1000);
             }
 
-            localPart->position0_0.vx += TIMESTEP_SCALE(*deltaTime, (localPart->movement_18.vx << 2) + g_Particle_SpeedX + deltaXCase0);
-            localPart->position0_0.vy += TIMESTEP_SCALE(*deltaTime, (localPart->movement_18.vy >> 1) << 2);
-            localPart->position0_0.vz += TIMESTEP_SCALE(*deltaTime, (localPart->movement_18.vz << 2) + g_Particle_SpeedZ + deltaZCase0);
+            localPart->position0_0.vx += TIMESTEP_SCALE_30FPS(*deltaTime, (localPart->movement_18.vx << 2) + g_Particle_SpeedX + deltaXCase0);
+            localPart->position0_0.vy += TIMESTEP_SCALE_30FPS(*deltaTime, (localPart->movement_18.vy >> 1) << 2);
+            localPart->position0_0.vz += TIMESTEP_SCALE_30FPS(*deltaTime, (localPart->movement_18.vz << 2) + g_Particle_SpeedZ + deltaZCase0);
 
 #if defined(MAP7_S03)
             localPart->position0_0.vz += (deltaZCase0 - D_800F23D0);
@@ -3235,15 +3235,15 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
             localPart->position1_C.vz = localPart->position0_0.vz;
             localPart->position1_C.vy = localPart->position0_0.vy - localPart->movement_18.vy;
 #endif
-            localPart->position0_0.vx += TIMESTEP_SCALE(*deltaTime, g_Particle_SpeedX + deltaXCase1);
+            localPart->position0_0.vx += TIMESTEP_SCALE_30FPS(*deltaTime, g_Particle_SpeedX + deltaXCase1);
             localPart->movement_18.vy += sharedData_800E32D4_0_s00;
-            localPart->position0_0.vy += TIMESTEP_SCALE(*deltaTime, localPart->movement_18.vy << 2);
+            localPart->position0_0.vy += TIMESTEP_SCALE_30FPS(*deltaTime, localPart->movement_18.vy << 2);
 
 #if defined(MAP5_S00) || defined(MAP6_S03)
             localPart->position1_C.vy = localPart->position0_0.vy - Q12(0.125f);
 #endif
 
-            localPart->position0_0.vz += TIMESTEP_SCALE(*deltaTime, g_Particle_SpeedZ + deltaZCase1);
+            localPart->position0_0.vz += TIMESTEP_SCALE_30FPS(*deltaTime, g_Particle_SpeedZ + deltaZCase1);
 
 #if defined(MAP5_S00) || defined(MAP6_S03)
             localPart->position1_C.vx = localPart->position0_0.vx;
@@ -3368,11 +3368,11 @@ void sharedFunc_800D0690_1_s03(s32 pass, s_Particle* part, s16* rand, q19_12* de
     q19_12 z = g_Particle_PrevPosition.vz - g_Particle_Position.vz;
 
     part->position1_C.vy  = part->position0_0.vy - part->movement_18.vy;
-    part->position0_0.vx += TIMESTEP_SCALE(*deltaTime, x);
+    part->position0_0.vx += TIMESTEP_SCALE_30FPS(*deltaTime, x);
     part->movement_18.vy += Q12(0.001f);
-    part->position0_0.vy += TIMESTEP_SCALE(*deltaTime, part->movement_18.vy << 2);
+    part->position0_0.vy += TIMESTEP_SCALE_30FPS(*deltaTime, part->movement_18.vy << 2);
     part->position1_C.vy  = part->position0_0.vy - Q12(1.0f / 32.0f);
-    part->position0_0.vz += TIMESTEP_SCALE(*deltaTime, z);
+    part->position0_0.vz += TIMESTEP_SCALE_30FPS(*deltaTime, z);
     part->position1_C.vx  = part->position0_0.vx;
     part->position1_C.vz  = part->position0_0.vz;
 

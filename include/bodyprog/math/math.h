@@ -73,7 +73,7 @@
  * @param x Q19.12 fixed-point value to scale.
  * @return Scaled Q19.12 fixed-point value.
  */
-#define TIMESTEP_SCALE(deltaTime, x) \
+#define TIMESTEP_SCALE_30FPS(deltaTime, x) \
     (((x) * (deltaTime)) / TIMESTEP_30_FPS)
 
 /** @brief Scales a Q19.12 fixed-point value by a delta time relative to a 60 FPS time step.

@@ -6517,18 +6517,18 @@ bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
 
         if (*g_MapOverlayHeader.data_190 != 0)
         {
-            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += TIMESTEP_SCALE(temp_s4, *g_MapOverlayHeader.windSpeedX_184) >> 2;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += TIMESTEP_SCALE(temp_s4, *g_MapOverlayHeader.windSpeedZ_188) >> 2;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += TIMESTEP_SCALE_30FPS(temp_s4, *g_MapOverlayHeader.windSpeedX_184) >> 2;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += TIMESTEP_SCALE_30FPS(temp_s4, *g_MapOverlayHeader.windSpeedZ_188) >> 2;
         }
         else if (*g_MapOverlayHeader.data_18C != 0)
         {
-            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += TIMESTEP_SCALE(temp_s4, *g_MapOverlayHeader.windSpeedX_184) >> 1;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += TIMESTEP_SCALE(temp_s4, *g_MapOverlayHeader.windSpeedZ_188) >> 1;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += TIMESTEP_SCALE_30FPS(temp_s4, *g_MapOverlayHeader.windSpeedX_184) >> 1;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += TIMESTEP_SCALE_30FPS(temp_s4, *g_MapOverlayHeader.windSpeedZ_188) >> 1;
         }
         else
         {
-            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += (TIMESTEP_SCALE(temp_s4, *g_MapOverlayHeader.windSpeedX_184) * 2) / 3;
-            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += (TIMESTEP_SCALE(temp_s4, *g_MapOverlayHeader.windSpeedZ_188) * 2) / 3;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += (TIMESTEP_SCALE_30FPS(temp_s4, *g_MapOverlayHeader.windSpeedX_184) * 2) / 3;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += (TIMESTEP_SCALE_30FPS(temp_s4, *g_MapOverlayHeader.windSpeedZ_188) * 2) / 3;
         }
     }
 

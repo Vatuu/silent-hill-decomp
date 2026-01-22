@@ -115,7 +115,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
         case 0:
             if (dahliaProps.moveDistance_126 != Q12(0.0f))
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);
@@ -145,7 +145,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
         case 3:
             if (dahliaProps.moveDistance_126 != Q12(0.0f))
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);
@@ -164,7 +164,7 @@ void Ai_Cheryl_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords) // 
         case 4:
             if (dahliaProps.moveDistance_126 != Q12(0.0f))
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);

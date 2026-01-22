@@ -106,7 +106,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 0:
             if (dahliaProps.moveDistance_126)
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);
@@ -120,7 +120,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 1:
             if (dahliaProps.moveDistance_126 > Q12(1.25f))
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.5f));
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.5f));
                 if (dahliaProps.moveDistance_126 < Q12(1.25f))
                 {
                     dahliaProps.moveDistance_126 = Q12(1.25f);
@@ -128,7 +128,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             }
             else if (dahliaProps.moveDistance_126 < Q12(1.25f))
             {
-                dahliaProps.moveDistance_126 += TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                dahliaProps.moveDistance_126 += TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.4f));
                 dahliaProps.moveDistance_126  = CLAMP(dahliaProps.moveDistance_126, 0, Q12(1.25f));
             }
 
@@ -143,7 +143,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 2:
             if (dahliaProps.moveDistance_126 > Q12(4.0f))
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f));
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.4f));
                 if (dahliaProps.moveDistance_126 < Q12(4.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(4.0f);
@@ -151,7 +151,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             }
             else if (dahliaProps.moveDistance_126 < Q12(4.0f))
             {
-                dahliaProps.moveDistance_126 += TIMESTEP_SCALE(g_DeltaTime0, Q12(0.75f));
+                dahliaProps.moveDistance_126 += TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.75f));
                 dahliaProps.moveDistance_126 = CLAMP(dahliaProps.moveDistance_126, Q12(0.0f), Q12(4.0f));
             }
 
@@ -164,7 +164,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 3:
             if (dahliaProps.moveDistance_126)
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);
@@ -180,7 +180,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 4:
             if (dahliaProps.moveDistance_126)
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);
@@ -196,7 +196,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 5:
             if (dahliaProps.moveDistance_126)
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);
@@ -210,7 +210,7 @@ void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
         case 12:
             if (dahliaProps.moveDistance_126)
             {
-                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE(g_DeltaTime0, Q12(0.4f)) * 2;
+                dahliaProps.moveDistance_126 -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (dahliaProps.moveDistance_126 < Q12(0.0f))
                 {
                     dahliaProps.moveDistance_126 = Q12(0.0f);

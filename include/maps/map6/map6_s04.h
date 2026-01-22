@@ -36,7 +36,7 @@ typedef struct
     char    unk_10[4];
     VECTOR3 vec_14;
     char    unk_20[4];
-    bool    slotInUse_24;
+    bool    isSlotInUse_24;
     q19_12  field_28;
     s32     field_2C;
     void*   funcPtr_30;

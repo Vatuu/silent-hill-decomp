@@ -9,30 +9,30 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
 
     switch (scratcher->model_0.controlState_2)
     {
-        case 5:
-        case 6:
-        case 7:
-        case 10:
-        case 12:
-        case 13:
+        case HangedScratcherControl_5:
+        case HangedScratcherControl_6:
+        case HangedScratcherControl_7:
+        case HangedScratcherControl_10:
+        case HangedScratcherControl_12:
+        case HangedScratcherControl_13:
             scratcher->field_34 += g_DeltaTime2;
             break;
     }
 
     func_8005CB20(scratcher, &sp10, scratcher->properties_E4.hangedScratcher.offsetX_F0, scratcher->properties_E4.hangedScratcher.offsetZ_F2);
 
-    scratcher->properties_E4.hangedScratcher.offsetZ_F2 = 0;
-    scratcher->properties_E4.hangedScratcher.offsetX_F0 = 0;
+    scratcher->properties_E4.hangedScratcher.offsetZ_F2 = Q12(0.0f);
+    scratcher->properties_E4.hangedScratcher.offsetX_F0 = Q12(0.0f);
 
-    flag1Val = scratcher->properties_E4.hangedScratcher.flags_E8 & 1;
+    flag1Val = scratcher->properties_E4.hangedScratcher.flags_E8 & HangedScratcherFlag_0;
 
     if (scratcher->position_18.vy == sp10.field_C)
     {
-        scratcher->properties_E4.hangedScratcher.flags_E8 &= ~1;
+        scratcher->properties_E4.hangedScratcher.flags_E8 &= ~HangedScratcherFlag_0;
 
         if (flag1Val)
         {
-            if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(10, true))
+            if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_10, true))
             {
                 Collision_Get(&coll, scratcher->position_18.vx, scratcher->position_18.vz);
                 if (coll.field_8 == 11)
@@ -44,7 +44,7 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
                     func_8005DC1C(Sfx_Unk1581, &scratcher->position_18, Q8(0.5f), 0);
                 }
             }
-            else if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(16, true))
+            else if (scratcher->model_0.anim_4.status_0 == ANIM_STATUS(HangedScratcherAnim_16, true))
             {
                 Collision_Get(&coll, scratcher->position_18.vx, scratcher->position_18.vz);
                 if (coll.field_8 == 11)
@@ -60,6 +60,6 @@ void sharedFunc_800D26D8_5_s00(s_SubCharacter* scratcher)
     }
     else
     {
-        scratcher->properties_E4.hangedScratcher.flags_E8 |= 1;
+        scratcher->properties_E4.hangedScratcher.flags_E8 |= HangedScratcherFlag_0;
     }
 }

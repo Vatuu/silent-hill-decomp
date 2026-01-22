@@ -1,6 +1,6 @@
 void Ai_HangedScratcher_Control_11(s_SubCharacter* scratcher)
 {
-    if (scratcher->properties_E4.hangedScratcher.flags_E8 & HangedScratchedFlag_0)
+    if (scratcher->properties_E4.hangedScratcher.flags_E8 & HangedScratcherFlag_0)
     {
         scratcher->field_34 += g_DeltaTime2 >> 1;
 
