@@ -2,7 +2,6 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
 {
     q19_12 distToPlayer;
     q3_12  angleDeltaToPlayer;
-    q4_12  moveSpeedLimit;
     q3_12  targetRotDelta;
     q19_12 playerPosYDelta;
 
@@ -16,21 +15,19 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
 
     if (angleDeltaToPlayer < TIMESTEP_ANGLE_3)
     {
-        moveSpeedLimit = scratcherProps.radiusMax_10C;
-        Chara_MoveSpeedUpdate4(scratcher, Q12(4.0f), moveSpeedLimit);
+        Chara_MoveSpeedUpdate4(scratcher, Q12(4.0f), scratcherProps.radiusMax_10C);
+
         scratcherProps.timer_EA = Q12(0.0f);
     }
     else
     {
         if (angleDeltaToPlayer < FP_ANGLE(60.0f) && distToPlayer > Q12(2.0f))
         {
-            moveSpeedLimit = scratcherProps.radiusMax_10C;
-            Chara_MoveSpeedUpdate4(scratcher, Q12(4.0f), moveSpeedLimit);
+            Chara_MoveSpeedUpdate4(scratcher, Q12(4.0f), scratcherProps.radiusMax_10C);
         }
         else if (angleDeltaToPlayer < FP_ANGLE(120.0f) && distToPlayer > Q12(4.0f))
         {
-            moveSpeedLimit = scratcherProps.radiusMax_10C;
-            Chara_MoveSpeedUpdate4(scratcher, Q12(4.0f), moveSpeedLimit >> 1);
+            Chara_MoveSpeedUpdate4(scratcher, Q12(4.0f), scratcherProps.radiusMax_10C / 2);
         }
         else
         {

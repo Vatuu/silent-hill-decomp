@@ -112,6 +112,6 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
 
     // TODO: Use `Rng_GenerateInt`.
     scratcher->properties_E4.hangedScratcher.radiusMax_10C = (Rng_Rand16() % (radiusMax >> 2)) + ((radiusMax * 3) >> 2);
-    scratcher->properties_E4.hangedScratcher.radiusMin_110= (Rng_Rand16() % (radiusMin >> 2)) + ((radiusMin * 3) >> 2);
+    scratcher->properties_E4.hangedScratcher.radiusMin_10E = (Rng_Rand16() % (radiusMin >> 2)) + ((radiusMin * 3) >> 2);
     scratcher->flags_3E                                   |= CharaFlag_Unk9 | CharaFlag_Unk3;
 }

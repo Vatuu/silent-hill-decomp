@@ -1415,8 +1415,8 @@ typedef struct _PropertiesHangedScratcher
     s8     unk_FC[8];
     s32    field_104;
     s8     unk_108[4];
-    q3_12  radiusMax_10C;
-    q3_12  radiusMin_110;
+    q4_12  radiusMax_10C; // } Used as `Chara_MoveSpeedUpdate` limit param, TODO: rename?
+    q4_12  radiusMin_10E; // }
 } s_PropertiesHangedScratcher;
 
 /** @brief Could be Incubus or Incubator. */

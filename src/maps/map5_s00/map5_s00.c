@@ -43,7 +43,7 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_5)
 
 #include "maps/shared/Ai_HangedScratcher_Control_6.h"
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_7);
+#include "maps/shared/Ai_HangedScratcher_Control_7.h"
 
 #include "maps/shared/Ai_HangedScratcher_Control_8.h"
 
