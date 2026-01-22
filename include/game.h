@@ -1412,7 +1412,8 @@ typedef struct _PropertiesHangedScratcher
     q3_12  offsetZ_F2; // }
     q19_12 positionX_F4;
     q19_12 positionZ_F8;
-    s8     unk_FC[8];
+    q3_12  field_FC;
+    s8     unk_FE[6];
     s32    field_104;
     s8     unk_108[4];
     q4_12  radiusMax_10C; // } Used as `Chara_MoveSpeedUpdate` limit param, TODO: rename?
