@@ -3497,40 +3497,41 @@ void func_800D6774(void) // 0x800D6774
 
         case 12:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+
             if (g_SysWork.sysStateStep_C[0] != 12)
             {
+                // Warp camera.
                 Camera_PositionSet(NULL, Q12(119.87f), Q12(-3.4f), Q12(138.71f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
                 Camera_LookAtSet(NULL, Q12(119.13f), Q12(-1.49f), Q12(142.15f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
+
                 func_800D3E18(&g_SysWork.npcs_1A0[0]);
                 func_800D4000(&g_SysWork.npcs_1A0[0]);
             }
             break;
 
         case 13:
+            // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(120.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(141.5f);
             g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-45.0f);
 
             Savegame_EventFlagSet(EventFlag_329);
 
+            // Return to gameplay.
             Player_ControlUnfreeze(true);
-
             SysWork_StateSetNext(SysState_Gameplay);
-
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             SysWork_StateStepIncrement(0);
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
-
             SysWork_StateSetNext(SysState_Gameplay);
-
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
+
             func_800D4000(&g_SysWork.npcs_1A0[0]);
-
             Savegame_EventFlagSet(EventFlag_324);
-
             func_8003A16C();
             break;
     }
@@ -3635,8 +3636,8 @@ void func_800D6F24(void) // 0x800D6F24
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
-
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(false);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
@@ -4512,12 +4513,12 @@ void func_800D88C8(s_800E06A0* arg0, u8 arg1) // 0x800D88C8
     s32             i;
     s32             var_t0;
     s32             k;
-    s_800DB874*     temp_fp;
     s32             temp_s4;
     s32             temp_s6;
+    s32             temp;
+    s_800DB874*     temp_fp;
     POLY_FT4*       poly;
     POLY_FT4*       poly2;
-    s32             temp;
 
     temp_fp = &D_800DB874[arg0->field_30];
 
@@ -4530,7 +4531,7 @@ void func_800D88C8(s_800E06A0* arg0, u8 arg1) // 0x800D88C8
     temp_s4 = arg0->field_36 + temp_fp->field_5 + func_800D7394() % (temp_fp->field_9 + 1);
     var_t0  = temp_s4 + temp_fp->field_7 - 1;
 
-    for (i = 0; i < 4; i++)
+    for (i = 0; i < ARRAY_SIZE(arg0->field_0); i++)
     {
         sp10[i].vz = RotTransPers(&arg0->field_0[i], &sp10[i], &spA0, &spA0) * 4;
     }
@@ -4551,9 +4552,7 @@ void func_800D88C8(s_800E06A0* arg0, u8 arg1) // 0x800D88C8
             *(s32*)&poly->x0 = *(s32*)&sp10[0];
             *(s32*)&poly->x1 = *(s32*)&sp10[1];
 
-            do
-            {
-            } while (0); // @hack
+            do {} while (0); // @hack
 
             *(s32*)&poly->x2 = *(s32*)&sp10[2];
             *(s32*)&poly->x3 = *(s32*)&sp10[3];
@@ -4687,7 +4686,9 @@ void func_800D8FC0(void) // 0x800D8FC0
             func_800868DC(4);
             func_800868DC(5);
             SysWork_StateStepIncrementAfterFade(0, true, 2, Q12(0.0f), false);
+
             Savegame_EventFlagSet(EventFlag_333);
+
             func_800D76BC(1);
             Game_TurnFlashlightOn();
             SysWork_StateStepIncrement(0);
@@ -4823,10 +4824,10 @@ void func_800D960C(void) // 0x800D960C
         default:
             Savegame_EventFlagSet(EventFlag_332);
 
+            // Return to gameplay.
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(false);
             Player_ControlUnfreeze(false);
-
             SysWork_StateSetNext(SysState_Gameplay);
             break;
     }
@@ -4852,9 +4853,9 @@ void func_800D9824(void) // 0x800D9824
         default:
             Savegame_EventFlagClear(EventFlag_335);
 
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             break;
     }
