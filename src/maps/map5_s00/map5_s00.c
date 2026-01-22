@@ -37,7 +37,7 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800CB25C);
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_3);
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_4);
+#include "maps/shared/Ai_HangedScratcher_Control_4.h"
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_5);
 
@@ -57,7 +57,7 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_7)
 
 #include "maps/shared/Ai_HangedScratcher_Control_13.h"
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_14);
+#include "maps/shared/Ai_HangedScratcher_Control_14.h"
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_15);
 

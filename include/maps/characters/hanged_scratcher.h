@@ -167,6 +167,8 @@ void Ai_HangedScratcher_Control_1(s_SubCharacter* scratcher);
 
 void Ai_HangedScratcher_Control_2(s_SubCharacter* scratcher);
 
+void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher);
+
 void Ai_HangedScratcher_Control_6(s_SubCharacter* scratcher);
 
 void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher);
