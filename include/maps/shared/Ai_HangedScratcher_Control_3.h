@@ -37,42 +37,41 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
         scratcherProps.timer_EA += g_DeltaTime0;
         if (distToPlayer > Q12(7.5f) && scratcherProps.timer_EA > Q12(1.8f))
         {
-            scratcherProps.targetRotY_EC = Chara_HeadingAngleGet(scratcher,
-                                                                                           Q12(5.0f),
-                                                                                           g_SysWork.playerWork_4C.player_0.position_18.vx,
-                                                                                           g_SysWork.playerWork_4C.player_0.position_18.vz,
-                                                                                           FP_ANGLE(360.0f),
-                                                                                           true);
-            if (scratcherProps.targetRotY_EC == FP_ANGLE(360.0f))
+            scratcherProps.targetHeadingAngle_EC = Chara_HeadingAngleGet(scratcher,
+                                                                         Q12(5.0f),
+                                                                         g_SysWork.playerWork_4C.player_0.position_18.vx,
+                                                                         g_SysWork.playerWork_4C.player_0.position_18.vz,
+                                                                         FP_ANGLE(360.0f),
+                                                                         true);
+            if (scratcherProps.targetHeadingAngle_EC == FP_ANGLE(360.0f))
             {
-                scratcherProps.targetRotY_EC = scratcher->rotation_24.vy;
+                scratcherProps.targetHeadingAngle_EC = scratcher->rotation_24.vy;
             }
 
             scratcherProps.timer_EA = Q12(0.0f);
         }
         else if (distToPlayer > Q12(3.0f) && scratcherProps.timer_EA > Q12(0.6f))
         {
-            scratcherProps.targetRotY_EC = Chara_HeadingAngleGet(scratcher,
-                Q12(1.5f),
-                                                                                          g_SysWork.playerWork_4C.player_0.position_18.vx,
-                                                                                          g_SysWork.playerWork_4C.player_0.position_18.vz,
-                                                                                          FP_ANGLE(360.0f),
-                                                                                          true);
-            if (scratcherProps.targetRotY_EC == FP_ANGLE(360.0f))
+            scratcherProps.targetHeadingAngle_EC = Chara_HeadingAngleGet(scratcher,
+                                                                         Q12(1.5f),
+                                                                         g_SysWork.playerWork_4C.player_0.position_18.vx,
+                                                                         g_SysWork.playerWork_4C.player_0.position_18.vz,
+                                                                         FP_ANGLE(360.0f),
+                                                                         true);
+            if (scratcherProps.targetHeadingAngle_EC == FP_ANGLE(360.0f))
             {
-                scratcherProps.targetRotY_EC = scratcher->rotation_24.vy;
+                scratcherProps.targetHeadingAngle_EC = scratcher->rotation_24.vy;
             }
 
             scratcherProps.timer_EA = Q12(0.0f);
         }
         else
         {
-            scratcherProps.targetRotY_EC = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - scratcher->position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz - scratcher->position_18.vz);
-
+            scratcherProps.targetHeadingAngle_EC = Math_AngleBetweenPositionsGet(scratcher->position_18, g_SysWork.playerWork_4C.player_0.position_18);
             scratcherProps.timer_EA = Q12(0.0f);
         }
 
-        targetRotDelta = func_8005BF38(scratcherProps.targetRotY_EC - scratcher->rotation_24.vy);
+        targetRotDelta = func_8005BF38(scratcherProps.targetHeadingAngle_EC - scratcher->rotation_24.vy);
         if (ABS(targetRotDelta) > TIMESTEP_ANGLE_3)
         {
             if (targetRotDelta > FP_ANGLE(0.0f))

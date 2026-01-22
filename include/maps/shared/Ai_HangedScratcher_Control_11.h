@@ -1,6 +1,8 @@
 void Ai_HangedScratcher_Control_11(s_SubCharacter* scratcher)
 {
-    if (scratcher->properties_E4.hangedScratcher.flags_E8 & HangedScratcherFlag_0)
+    #define scratcherProps scratcher->properties_E4.hangedScratcher
+
+    if (scratcherProps.flags_E8 & HangedScratcherFlag_0)
     {
         scratcher->field_34 += g_DeltaTime2 >> 1;
 
@@ -46,4 +48,6 @@ void Ai_HangedScratcher_Control_11(s_SubCharacter* scratcher)
             scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_6, false);
         }
     }
+
+    #undef scratcherProps
 }
