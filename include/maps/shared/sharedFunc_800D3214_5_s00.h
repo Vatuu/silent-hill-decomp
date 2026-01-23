@@ -21,6 +21,7 @@ bool sharedFunc_800D3214_5_s00(s_SubCharacter* scratcher)
                     {
                         return true;
                     }
+
                     return scratcher->position_18.vz < Q12(-14.0f);
                 }
             }
@@ -30,9 +31,10 @@ bool sharedFunc_800D3214_5_s00(s_SubCharacter* scratcher)
             return (scratcher->position_18.vx >= Q12(-89.0f));
         }
     }
+
     return false;
 #else
-    // M6S03 version
+    // M6S03 version.
     if (coll.field_8 != 7)
     {
         if (scratcher->position_18.vx < 0)
@@ -41,10 +43,12 @@ bool sharedFunc_800D3214_5_s00(s_SubCharacter* scratcher)
             {
                 return true;
             }
+
             if (scratcher->position_18.vz < Q12(57.0f))
             {
                 return false;
             }
+
             if (scratcher->position_18.vz <= Q12(63.0f))
             {
                 if (scratcher->position_18.vx >= Q12(-22.0f))
@@ -67,9 +71,11 @@ bool sharedFunc_800D3214_5_s00(s_SubCharacter* scratcher)
                     {
                         return scratcher->position_18.vx > Q12(22.0f);
                     }
+
                     return true;
                 }
             }
+
             return false;
         }
         else if (scratcher->position_18.vz <= Q12(23.0f))
@@ -80,6 +86,7 @@ bool sharedFunc_800D3214_5_s00(s_SubCharacter* scratcher)
                 {
                     return scratcher->position_18.vx > Q12(22.0f);
                 }
+
                 return true;
             }
 
