@@ -76,6 +76,7 @@ sharedFunc_800D2EB4_0_s00           = 0x800D16A8; // type:func
 sharedFunc_800D2EF4_0_s00           = 0x800D16E8; // type:func
 Ai_Floatstinger_Update              = 0x800D16FC; // type:func
 Ai_Floatstinger_Init                = 0x800D1790; // type:func
+Ai_Floatstinger_ControlUpdate       = 0x800D1B98; // type:func
 sharedFunc_800D929C_0_s00           = 0x800D5AFC; // type:func
 Map_RoomIdxGet                      = 0x800D5B0C; // type:func
 Map_RoomBgmInit                     = 0x800D5D08; // type:func

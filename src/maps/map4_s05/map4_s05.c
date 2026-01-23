@@ -1012,42 +1012,40 @@ s32 func_800D4458(s_SubCharacter* arg0, VECTOR3* arg1) // 0x800D4458
         }
     }
 
-    if ((u32)var_a1_2 < 9)
+    switch (var_a1_2)
     {
-        switch (var_a1_2)
-        {
-            case 0:
-            case 2:
-            case 6:
-            case 8:
-                var_s3 = Math_Vector2MagCalc(arg1->vx - D_800D780C[var_a2].field_0[var_a1_2 % 6 != 0],
-                                             arg1->vz - D_800D780C[var_a2].field_8[var_a1_2 > 2]);
+        case 0:
+        case 2:
+        case 6:
+        case 8:
+            var_s3 = Math_Vector2MagCalc(arg1->vx - D_800D780C[var_a2].field_0[var_a1_2 % 6 != 0],
+                                        arg1->vz - D_800D780C[var_a2].field_8[var_a1_2 > 2]);
 
-                var_s1 = ratan2(arg1->vx - D_800D780C[var_a2].field_0[var_a1_2 % 6 != 0],
-                                arg1->vz - D_800D780C[var_a2].field_8[var_a1_2 > 2]);
-                break;
+            var_s1 = ratan2(arg1->vx - D_800D780C[var_a2].field_0[var_a1_2 % 6 != 0],
+                            arg1->vz - D_800D780C[var_a2].field_8[var_a1_2 > 2]);
+            break;
 
-            case 1:
-                var_s1 = 0x800;
-                var_s3 = D_800D780C[var_a2].field_8[0] - arg1->vz;
-                break;
+        case 1:
+            var_s1 = 0x800;
+            var_s3 = D_800D780C[var_a2].field_8[0] - arg1->vz;
+            break;
 
-            case 3:
-                var_s1 = 0xC00;
-                var_s3 = D_800D780C[var_a2].field_0[0] - arg1->vx;
-                break;
+        case 3:
+            var_s1 = 0xC00;
+            var_s3 = D_800D780C[var_a2].field_0[0] - arg1->vx;
+            break;
 
-            case 5:
-                var_s1 = 0x400;
-                var_s3 = arg1->vx - D_800D780C[var_a2].field_0[1];
-                break;
+        case 5:
+            var_s1 = 0x400;
+            var_s3 = arg1->vx - D_800D780C[var_a2].field_0[1];
+            break;
 
-            case 7:
-                var_s1 = 0;
-                var_s3 = arg1->vz - D_800D780C[var_a2].field_8[1];
-                break;
-        }
+        case 7:
+            var_s1 = 0;
+            var_s3 = arg1->vz - D_800D780C[var_a2].field_8[1];
+            break;
     }
+    
 
     var_a0_2 = ABS(func_8005BF38(var_s1 - arg0->rotation_24.vy));
 
