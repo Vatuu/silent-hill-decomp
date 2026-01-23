@@ -1587,7 +1587,9 @@ typedef struct _PropertiesFloatstinger
     s8         unk_EA[2];
     s8         unk_EC[2];
     s16        field_EE;
-    u_Property properties_F0[2];
+    s32        field_F0;
+    s16        field_F4;
+    s8         unk_F6[2];
     u16        field_F8;
     u16        field_FA;
     u16        field_FC;
@@ -1597,7 +1599,9 @@ typedef struct _PropertiesFloatstinger
     s8         unk_105;
     s16        field_106;
     s32        field_108;
-    u_Property properties_10C[7];
+    s16        field_10C;
+    s16        field_10E;
+    u_Property properties_110[6];
 } s_PropertiesFloatstinger;
 STATIC_ASSERT_SIZEOF(s_PropertiesFloatstinger, 64);
 

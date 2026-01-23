@@ -2467,6 +2467,9 @@ STATIC_ASSERT_SIZEOF(s_WorldObjectDescNoRot, 40);
 #define APPROACH_ALT(current, target, step) \
     ((current) > (target) ? MAX((current) - (step), (target)) : CLAMP_HIGH((current) + (step), (target)))
 
+#define APPROACH_ALT2(current, target, step) \
+    ((current) > (target) ? CLAMP_LOW((current) - (step), (target)) : CLAMP_HIGH((target), (current) + (step)))
+
 /** @brief Updates the move speed of a character.
  *
  * @param chara Character to update.
