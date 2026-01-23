@@ -14,6 +14,13 @@
 #define MAP_ROOM_MIN_Z Q12(-120.0f)
 #define MAP_ROOM_MAX_Z Q12(240.0f)
 
+typedef struct
+{
+    s32 field_0[2];
+    s32 field_8[2];
+    s32 field_10;
+} s_func_800D4458;
+
 extern s32 D_800D7858;
 
 extern q3_12 D_800D785C;
@@ -80,6 +87,10 @@ extern u8 D_800D7A58[];
 extern SVECTOR D_800D7A5C[];
 
 extern s32 D_800D7860;
+
+extern s_func_800D4458 D_800D780C[];
+
+extern s16 D_800DB89A;
 
 void Ai_Floatstinger_Update(s_SubCharacter* floatstinger, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 

@@ -952,7 +952,134 @@ void func_800D41F0(s_SubCharacter* floatstinger) // 0x800D41F0
     }
 }
 
-INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D4458);
+s32 func_800D4458(s_SubCharacter* arg0, VECTOR3* arg1) // 0x800D4458
+{
+    s32 var_a0_2;
+    s32 var_v1_5;
+    s32 var_a2;
+    s32 var_s0;
+    s32 var_s1;
+    s32 var_s3;
+    s32 var_a1_2;
+
+    var_s3 = 0;
+    var_s1 = 0;
+
+    D_800DB898 = 0;
+    D_800DB89A = 0;
+    D_800DB89C = 0;
+
+    for (var_a2 = 0; var_a2 < 3; var_a2++)
+    {
+        if (arg1->vy + arg0->field_C8.field_2 >= D_800D780C[var_a2].field_10)
+        {
+            break;
+        }
+    }
+
+    if (var_a2 == 3)
+    {
+        return 0;
+    }
+
+    D_800DB89A = D_800D780C[var_a2].field_10 - (arg1->vy + arg0->field_C8.field_2);
+
+    if (D_800D780C[var_a2].field_0[0] <= arg1->vx)
+    {
+        if (D_800D780C[var_a2].field_0[1] < arg1->vx)
+        {
+            var_a1_2 = 2;
+        }
+        else
+        {
+            var_a1_2 = 1;
+        }
+    }
+    else
+    {
+        var_a1_2 = 0;
+    }
+
+    if (D_800D780C[var_a2].field_8[0] <= arg1->vz)
+    {
+        if (D_800D780C[var_a2].field_8[1] < arg1->vz)
+        {
+            var_a1_2 += 6;
+        }
+        else
+        {
+            var_a1_2 += 3;
+        }
+    }
+
+    if ((u32)var_a1_2 < 9)
+    {
+        switch (var_a1_2)
+        {
+            case 0:
+            case 2:
+            case 6:
+            case 8:
+                var_s3 = Math_Vector2MagCalc(arg1->vx - D_800D780C[var_a2].field_0[var_a1_2 % 6 != 0],
+                                             arg1->vz - D_800D780C[var_a2].field_8[var_a1_2 > 2]);
+
+                var_s1 = ratan2(arg1->vx - D_800D780C[var_a2].field_0[var_a1_2 % 6 != 0],
+                                arg1->vz - D_800D780C[var_a2].field_8[var_a1_2 > 2]);
+                break;
+
+            case 1:
+                var_s1 = 0x800;
+                var_s3 = D_800D780C[var_a2].field_8[0] - arg1->vz;
+                break;
+
+            case 3:
+                var_s1 = 0xC00;
+                var_s3 = D_800D780C[var_a2].field_0[0] - arg1->vx;
+                break;
+
+            case 5:
+                var_s1 = 0x400;
+                var_s3 = arg1->vx - D_800D780C[var_a2].field_0[1];
+                break;
+
+            case 7:
+                var_s1 = 0;
+                var_s3 = arg1->vz - D_800D780C[var_a2].field_8[1];
+                break;
+        }
+    }
+
+    var_a0_2 = ABS(func_8005BF38(var_s1 - arg0->rotation_24.vy));
+
+    if (0x400 - var_a0_2 < 0)
+    {
+        var_v1_5 = 0x800 - var_a0_2;
+    }
+    else
+    {
+        var_v1_5 = var_a0_2;
+    }
+
+    if (var_a0_2 > 0x400)
+    {
+        var_s0 = ((var_v1_5 << 0xD) >> 0xA) + 0x1000;
+    }
+    else
+    {
+        var_s0 = ((var_v1_5 << 0xC) >> 0xA) + 0x2000;
+    }
+
+    if (var_s3 < var_s0)
+    {
+        D_800DB898 = Q12_MULT(var_s0 - var_s3, Math_Sin(var_s1));
+        D_800DB89C = Q12_MULT(var_s0 - var_s3, Math_Cos(var_s1));
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
 
 s32 func_800D48A4(s_SubCharacter* floatstinger, s16 arg1, s16 arg2) // 0x800D48A4
 {
