@@ -1211,7 +1211,7 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 angle) // 0
 {
     VECTOR3 sp10;
     q19_12  dist;
-    s16     temp_v0_3;
+    q3_12   angle1;
     q3_12   rotY;
     s32     var_s0;
     s16     var_s3;
@@ -1237,31 +1237,30 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 angle) // 0
         rotY = angle - rotY;
     }
 
-    temp_v0_3 = func_8005BF38(rotY);
-
-    if (ABS(temp_v0_3) > ((floatstinger->properties_E4.floatstinger.flags_E8 & 1) ? ABS((Q12_MULT_PRECISE(floatstinger->properties_E4.floatstinger.field_EE, g_DeltaTime0) * 3 >> 4) + 1) : ABS((Q12_MULT_PRECISE(floatstinger->properties_E4.floatstinger.field_EE, g_DeltaTime0) >> 1) + 1)))
+    angle1 = func_8005BF38(rotY);
+    if (ABS(angle1) > ((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? ABS(((Q12_MULT_PRECISE(floatstingerProps.field_EE, g_DeltaTime0) * 3) >> 4) + 1) : ABS((Q12_MULT_PRECISE(floatstingerProps.field_EE, g_DeltaTime0) >> 1) + 1)))
     {
-        if (temp_v0_3 > 0)
+        if (angle1 > FP_ANGLE(0.0f))
         {
-            floatstinger->properties_E4.floatstinger.field_EE = CLAMP_HIGH((floatstinger->properties_E4.floatstinger.flags_E8 & 1) ? 0x600 : 0x400,
-                                                                   floatstinger->properties_E4.floatstinger.field_EE + ((floatstinger->properties_E4.floatstinger.flags_E8 & 1) ? Q12_MULT_PRECISE(g_DeltaTime0, 0x600) : Q12_MULT_PRECISE(g_DeltaTime0, 0x400)));
+            floatstingerProps.field_EE = CLAMP_HIGH((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? 0x600 : 0x400,
+                                                                   floatstingerProps.field_EE + ((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12_MULT_PRECISE(g_DeltaTime0, 0x600) : Q12_MULT_PRECISE(g_DeltaTime0, 0x400)));
         }
         else
         {
-            floatstinger->properties_E4.floatstinger.field_EE = MAX((floatstinger->properties_E4.floatstinger.flags_E8 & 1) ? -0x600 : -0x400,
-                                                            floatstinger->properties_E4.floatstinger.field_EE - ((floatstinger->properties_E4.floatstinger.flags_E8 & 1) ? Q12_MULT_PRECISE(g_DeltaTime0, 0x600) : Q12_MULT_PRECISE(g_DeltaTime0, 0x400)));
+            floatstingerProps.field_EE = MAX((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? -0x600 : -0x400,
+                                                            floatstingerProps.field_EE - ((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12_MULT_PRECISE(g_DeltaTime0, 0x600) : Q12_MULT_PRECISE(g_DeltaTime0, 0x400)));
         }
 
-        floatstinger->rotation_24.vy = func_8005BF38(Q12_MULT_PRECISE(g_DeltaTime0, floatstinger->properties_E4.floatstinger.field_EE) + floatstinger->rotation_24.vy);
+        floatstinger->rotation_24.vy = func_8005BF38(Q12_MULT_PRECISE(g_DeltaTime0, floatstingerProps.field_EE) + floatstinger->rotation_24.vy);
     }
     else
     {
         floatstinger->rotation_24.vy                      = angle;
-        floatstinger->properties_E4.floatstinger.field_EE = APPROACH_ALT2(floatstinger->properties_E4.floatstinger.field_EE, 0,
-                                                                  (floatstinger->properties_E4.floatstinger.flags_E8 & FloatstingerFlag_0) ? Q12_MULT_PRECISE(g_DeltaTime0, 0x600) * 2 : Q12_MULT_PRECISE(g_DeltaTime0, 0x400) * 2);
+        floatstingerProps.field_EE = APPROACH_ALT2(floatstingerProps.field_EE, 0,
+                                                                  (floatstingerProps.flags_E8 & FloatstingerFlag_0) ? (Q12_MULT_PRECISE(g_DeltaTime0, 0x600) * 2) : Q12_MULT_PRECISE(g_DeltaTime0, 0x400) * 2);
     }
 
-    if (floatstinger->properties_E4.floatstinger.field_F0 == Q12(0.0f) || dist < Q12(4.0f))
+    if (floatstingerProps.field_F0 == Q12(0.0f) || dist < Q12(4.0f))
     {
         var_s0 = MIN(dist, Q12(3.5f));
 
@@ -1269,40 +1268,40 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 angle) // 0
         sp10.vy = floatstinger->position_18.vy;
         sp10.vz = floatstinger->position_18.vz + Q12_MULT(var_s0, Math_Cos(unkAngle));
 
-        if (func_800D4458(floatstinger, &sp10) != 0)
+        if (func_800D4458(floatstinger, &sp10))
         {
-            if (floatstinger->properties_E4.floatstinger.field_10E != Q12(0.0f))
+            if (floatstingerProps.field_10E != Q12(0.0f))
             {
-                floatstinger->properties_E4.floatstinger.field_F4  = floatstinger->properties_E4.floatstinger.field_10C;
-                floatstinger->properties_E4.floatstinger.field_10E = CLAMP_LOW(floatstinger->properties_E4.floatstinger.field_10E - g_DeltaTime0, Q12(0.0f));
+                floatstingerProps.field_F4  = floatstingerProps.field_10C;
+                floatstingerProps.field_10E = CLAMP_LOW(floatstingerProps.field_10E - g_DeltaTime0, Q12(0.0f));
             }
             else
             {
-                floatstinger->properties_E4.floatstinger.field_F4  = func_800D48A4(floatstinger, var_s0, unkAngle);
-                floatstinger->properties_E4.floatstinger.field_10C = floatstinger->properties_E4.floatstinger.field_F4;
-                floatstinger->properties_E4.floatstinger.field_10E = Rng_GenerateInt(Q12(0.4f), Q12(1.0f) - 2);
+                floatstingerProps.field_F4  = func_800D48A4(floatstinger, var_s0, unkAngle);
+                floatstingerProps.field_10C = floatstingerProps.field_F4;
+                floatstingerProps.field_10E = Rng_GenerateInt(Q12(0.4f), Q12(1.0f) - 2);
             }
         }
         else
         {
-            floatstinger->properties_E4.floatstinger.field_F4  = unkAngle;
-            floatstinger->properties_E4.floatstinger.field_10E = Q12(0.0f);
+            floatstingerProps.field_F4  = unkAngle;
+            floatstingerProps.field_10E = Q12(0.0f);
         }
     }
     else
     {
-        floatstinger->properties_E4.floatstinger.field_F0 += g_DeltaTime0;
-        if (floatstinger->properties_E4.floatstinger.field_F0 > Q12(0.8f) && !Rng_TestProbabilityBits(4))
+        floatstingerProps.field_F0 += g_DeltaTime0;
+        if (floatstingerProps.field_F0 > Q12(0.8f) && !Rng_TestProbabilityBits(4))
         {
-            floatstinger->properties_E4.floatstinger.field_F0 = 0;
+            floatstingerProps.field_F0 = Q12(0.0f);
         }
     }
 
-    var_s4 = Q12_MULT(Math_Sin(floatstinger->properties_E4.floatstinger.field_F4),
-                      Q12_MULT_PRECISE(g_DeltaTime0, (floatstinger->properties_E4.floatstinger.flags_E8 & FloatstingerFlag_0 ? Q12(2.5f) : Q12(1.5f))));
+    var_s4 = Q12_MULT(Math_Sin(floatstingerProps.field_F4),
+                      Q12_MULT_PRECISE(g_DeltaTime0, (floatstingerProps.flags_E8 & FloatstingerFlag_0 ? Q12(2.5f) : Q12(1.5f))));
 
-    var_s3 = Q12_MULT(Math_Cos(floatstinger->properties_E4.floatstinger.field_F4),
-                      Q12_MULT_PRECISE(g_DeltaTime0, (floatstinger->properties_E4.floatstinger.flags_E8 & FloatstingerFlag_0 ? Q12(2.5f) : Q12(1.5f))));
+    var_s3 = Q12_MULT(Math_Cos(floatstingerProps.field_F4),
+                      Q12_MULT_PRECISE(g_DeltaTime0, (floatstingerProps.flags_E8 & FloatstingerFlag_0 ? Q12(2.5f) : Q12(1.5f))));
 
     if ((var_s4 * Math_Sin(floatstinger->headingAngle_3C)) > Q12(0.0f))
     {
@@ -1311,7 +1310,7 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 angle) // 0
     else
     {
         var_v0_11 = Q12_MULT(floatstinger->moveSpeed_38, Math_Sin(floatstinger->headingAngle_3C));
-        var_s4   += (floatstinger->properties_E4.floatstinger.flags_E8 & FloatstingerFlag_0) ? (var_v0_11 >> 3) : (var_v0_11 >> 2);
+        var_s4   += (floatstingerProps.flags_E8 & FloatstingerFlag_0) ? (var_v0_11 >> 3) : (var_v0_11 >> 2);
     }
 
     if ((var_s3 * Math_Cos(floatstinger->headingAngle_3C)) > Q12(0.0f))
@@ -1321,21 +1320,21 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 angle) // 0
     else
     {
         temp_v0_13 = Q12_MULT(floatstinger->moveSpeed_38, Math_Cos(floatstinger->headingAngle_3C));
-        var_s3    += (floatstinger->properties_E4.floatstinger.flags_E8 & FloatstingerFlag_0) ? (temp_v0_13 >> 3) : (temp_v0_13 >> 2);
+        var_s3    += (floatstingerProps.flags_E8 & FloatstingerFlag_0) ? (temp_v0_13 >> 3) : (temp_v0_13 >> 2);
     }
 
     floatstinger->headingAngle_3C = ratan2(var_s4, var_s3);
 
     temp_v0_14 = Math_Vector2MagCalc(var_s4, var_s3);
 
-    if (((floatstinger->properties_E4.floatstinger.flags_E8 & FloatstingerFlag_0) && temp_v0_14 > Q12(3.5f)) ||
-        (!(floatstinger->properties_E4.floatstinger.flags_E8 & FloatstingerFlag_0) && temp_v0_14 > Q12(2.0f)))
+    if (((floatstingerProps.flags_E8 & FloatstingerFlag_0) && temp_v0_14 > Q12(3.5f)) ||
+        (!(floatstingerProps.flags_E8 & FloatstingerFlag_0) && temp_v0_14 > Q12(2.0f)))
     {
         var_v1_4 = Math_Vector2MagCalc(var_s4, var_s3);
     }
     else
     {
-        if (floatstinger->properties_E4.floatstinger.flags_E8 & FloatstingerFlag_0)
+        if (floatstingerProps.flags_E8 & FloatstingerFlag_0)
         {
             var_v1_4 = Q12(3.5f);
         }
@@ -1373,12 +1372,12 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 angle) // 0
     {
         if (ABS(temp_t2) > 81)
         {
-            floatstinger->field_34 = MAX((floatstinger->properties_E4.floatstinger.flags_E8 & FloatstingerFlag_0) ? Q12(-5.0f) : Q12(-1.0f),
-                                 floatstinger->field_34 + Q12_MULT_PRECISE(g_DeltaTime0, floatstinger->properties_E4.floatstinger.flags_E8 & 1 ? Q12(-3.0f) : Q12(-0.8f)));
+            floatstinger->field_34 = MAX((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12(-5.0f) : Q12(-1.0f),
+                                 floatstinger->field_34 + Q12_MULT_PRECISE(g_DeltaTime0, floatstingerProps.flags_E8 & 1 ? Q12(-3.0f) : Q12(-0.8f)));
 
             if (ABS(temp_t2) < Q12(1.0f))
             {
-                floatstinger->field_34 = floatstinger->field_34 + (floatstinger->field_34 * ABS(temp_t2) / Q12(1.0f)) >> 1;
+                floatstinger->field_34 = floatstinger->field_34 + ((floatstinger->field_34 * ABS(temp_t2)) / Q12(1.0f)) >> 1;
             }
         }
         else
@@ -1389,10 +1388,10 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 angle) // 0
     }
     else
     {
-        if (ABS(temp_t2) > 0x51)
+        if (ABS(temp_t2) > 81)
         {
-            floatstinger->field_34 = CLAMP_HIGH((floatstinger->properties_E4.floatstinger.flags_E8 & FloatstingerFlag_0) ? Q12(9.0f) : Q12(3.0f),
-                                        floatstinger->field_34 + Q12_MULT_PRECISE(g_DeltaTime0, floatstinger->properties_E4.floatstinger.flags_E8 & 1 ? 0x4800 : 0x1CCC));
+            floatstinger->field_34 = CLAMP_HIGH((floatstingerProps.flags_E8 & FloatstingerFlag_0) ? Q12(9.0f) : Q12(3.0f),
+                                        floatstinger->field_34 + Q12_MULT_PRECISE(g_DeltaTime0, floatstingerProps.flags_E8 & 1 ? 0x4800 : 0x1CCC));
 
             if (ABS(temp_t2) < Q12(1.0f))
             {
@@ -1401,7 +1400,7 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 angle) // 0
         }
         else
         {
-            floatstinger->field_34       = 0;
+            floatstinger->field_34       = Q12(0.0f);
             floatstinger->position_18.vy = pos->vy;
         }
     }

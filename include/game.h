@@ -1586,7 +1586,7 @@ typedef struct _PropertiesFloatstinger
     s16        flags_E8;
     s8         unk_EA[2];
     s8         unk_EC[2];
-    s16        field_EE;
+    q3_12      field_EE; // Angle.
     q19_12     field_F0;
     s16        field_F4;
     s8         unk_F6[2];
