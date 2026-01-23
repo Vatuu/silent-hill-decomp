@@ -161,6 +161,24 @@ sharedData_800DEE40_0_s00        = 0x800DAE8C;
 sharedData_800DEE68_0_s00        = 0x800DAEB4;
 sharedData_800DEF1C_0_s00        = 0x800DAF68;
 HANGED_SCRATCHER_ANIM_INFOS      = 0x800DB1C0; // type:s32 unknown type
+sharedData_800D9500_5_s00        = 0x800DB520;
+sharedData_800D9654_5_s00        = 0x800DB674;
+sharedData_800D9668_5_s00        = 0x800DB688;
+sharedData_800D967C_5_s00        = 0x800DB69C;
+sharedData_800D96F4_5_s00        = 0x800DB714;
+sharedData_800D9708_5_s00        = 0x800DB728;
+sharedData_800D97F8_5_s00        = 0x800DB818;
+sharedData_800D980C_5_s00        = 0x800DB82C;
+sharedData_800D9820_5_s00        = 0x800DB840;
+sharedData_800D99D8_5_s00        = 0x800DB9F8;
+sharedData_800D99EC_5_s00        = 0x800DBA0C;
+sharedData_800D9A00_5_s00        = 0x800DBA20;
+sharedData_800D9A64_5_s00        = 0x800DBA84;
+sharedData_800D9A78_5_s00        = 0x800DBA98;
+sharedData_800D9AF0_5_s00        = 0x800DBB10;
+sharedData_800D9B04_5_s00        = 0x800DBB24;
+sharedData_800D9B18_5_s00        = 0x800DBB38;
+sharedData_800D9B2C_5_s00        = 0x800DBB4C;
 
 //---------------------------------------------------------------
 //--- PA: 0x012868   VA: 0x800DBDE0   subsegment: .data, map6_s03

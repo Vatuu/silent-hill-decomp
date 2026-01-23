@@ -64,7 +64,7 @@ INCLUDE_ASM("maps/map6_s03/nonmatchings/map6_s03", Ai_HangedScratcher_Control_5)
 
 #include "maps/shared/sharedFunc_800D2844_5_s00.h" // 0x800D6E84
 
-INCLUDE_ASM("maps/map6_s03/nonmatchings/map6_s03", sharedFunc_800D2C18_5_s00); // 0x800D7258
+#include "maps/shared/sharedFunc_800D2C18_5_s00.h" // 0x800D7258
 
 #include "maps/shared/sharedFunc_800D3214_5_s00.h" // 0x800D7854
 
