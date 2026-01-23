@@ -69,7 +69,7 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_5)
 
 #include "maps/shared/sharedFunc_800D3214_5_s00.h" // 0x800D3214
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", sharedFunc_800D3300_5_s00); // 0x800D3300
+#include "maps/shared/sharedFunc_800D3300_5_s00.h" // 0x800D3300
 
 // TODO: Move this line into separate `Chara_Creeper` split.
 #include "../src/maps/characters/creeper.c" // 0x800D387C

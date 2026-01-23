@@ -1413,9 +1413,13 @@ typedef struct _PropertiesHangedScratcher
     q19_12 positionX_F4;
     q19_12 positionZ_F8;
     q3_12  field_FC;
-    s8     unk_FE[6];
+    s8     unk_FE[2];
+    q3_12  timer_100;
+    u8     field_102;
+    u8     field_103;
     s32    field_104;
-    s8     unk_108[4];
+    q3_12  timer_108;
+    s8     unk_10A[2];
     q4_12  radiusMax_10C; // } Used as `Chara_MoveSpeedUpdate` limit param, TODO: rename?
     q4_12  radiusMin_10E; // }
 } s_PropertiesHangedScratcher;
