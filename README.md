@@ -5,7 +5,7 @@
 </picture>
 <div align="center">
 <br/>
-An in-progress decompilation of the 1.1 US release of <i>Silent Hill</i> on the Playstation 1.
+An in-progress decompilation of the 1.1 US release of <i>Silent Hill</i> on the PlayStation 1.
 </div>
 
 ## Progress
@@ -136,7 +136,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Purpose</td>
           </tr>
           <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a><br/>32/43 matched.</td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map"/></a><br/>33/43 matched.</td>
             <td colspan=2>Map and character code.</td>
           </tr>
           <tr>
@@ -283,7 +283,7 @@ Progress bars powered by [decomp.dev](https://decomp.dev)
             <td colspan=2>Central Silent Hill in Otherworld.</td>
         </tr>
         <tr>
-            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map4_s03"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&color=%23003cc7&measure=fuzzy_match&category=map.map4_s03&label=MAP4_S03"/></a></td>
+            <td align=center><a href="https://decomp.dev/Vatuu/silent-hill-decomp?category=map.map4_s03"><img src="https://decomp.dev/Vatuu/silent-hill-decomp.svg?mode=shield&measure=fuzzy_match&category=map.map4_s03&label=MAP4_S03&color=rgb(255,215,0)"/></a></td>
             <td colspan=2>Mall and boss fight.</td>
         </tr>
         <tr>
