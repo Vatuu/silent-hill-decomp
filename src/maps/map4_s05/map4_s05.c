@@ -539,7 +539,96 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
     D_800DB8C8[0].vz = g_SysWork.playerWork_4C.player_0.position_18.vz;
 }
 
-INCLUDE_ASM("maps/map4_s05/nonmatchings/map4_s05", func_800D2B90);
+void func_800D2B90(s_SubCharacter* arg0) // 0x800D2B90
+{
+    s32 temp_a0_6;
+    s32 var_a1;
+    s32 temp_s0;
+    s32 temp_v0;
+    s32 i;
+    s32 temp_v0_7;
+
+    if (arg0->health_B0 == 0)
+    {
+        Savegame_EventFlagSet(EventFlag_350);
+    }
+
+    D_800D7860 = 0xD000;
+
+    var_a1 = arg0->properties_E4.floatstinger.flags_E8 & 2 ? 0x999 : 0x666;
+
+    temp_v0 = D_800D7858;
+
+    if (((arg0->properties_E4.floatstinger.flags_E8 & 2) && var_a1 + 0x1000 < temp_v0) ||
+        (!(arg0->properties_E4.floatstinger.flags_E8 & 2) && var_a1 + 0xB33 < temp_v0))
+    {
+        D_800D7858 = 0;
+
+        for (i = 0xE; i >= 0; i--)
+        {
+            D_800DB8A8[i] = 0;
+        }
+
+        if (arg0->properties_E4.floatstinger.flags_E8 & 2)
+        {
+            arg0->properties_E4.floatstinger.field_100 = Rng_GenerateInt(0x18000, 0x27FFF);
+            arg0->properties_E4.floatstinger.flags_E8 &= 0xFFFD;
+            arg0->properties_E4.floatstinger.flags_E8 |= 1;
+        }
+
+        if (arg0->health_B0 != 0)
+        {
+            arg0->model_0.controlState_2 = 2;
+        }
+        else
+        {
+            arg0->model_0.controlState_2 = 6;
+        }
+    }
+    else
+    {
+        D_800D7858 += g_DeltaTime0;
+
+        arg0->moveSpeed_38 = CLAMP_LOW(arg0->moveSpeed_38 - Q12_MULT_PRECISE(g_DeltaTime0, arg0->properties_E4.floatstinger.flags_E8 & 1 ? 0x2800 : 0x1800), 0);
+
+        if (arg0->field_34 > 0)
+        {
+            arg0->field_34 = CLAMP_LOW(arg0->field_34 - Q12_MULT_PRECISE(g_DeltaTime0, arg0->properties_E4.floatstinger.flags_E8 & 1 ? 0x4800 : 0x1CCC), 0);
+        }
+        else
+        {
+            arg0->field_34 = MIN(arg0->field_34 - Q12_MULT_PRECISE(g_DeltaTime0, arg0->properties_E4.floatstinger.flags_E8 & 1 ? -0x3000 : -0xCCC), 0);
+        }
+
+        temp_v0 = D_800D7858;
+
+        if ((arg0->properties_E4.floatstinger.flags_E8 & 2 && temp_v0 < 0x999) ||
+            (!(arg0->properties_E4.floatstinger.flags_E8 & 2) && temp_v0 < 0x666))
+        {
+            for (i = 0; i < (temp_v0 = 15); i++) // @hack
+            {
+                temp_s0 = D_800D7A38[i] * D_800D7858;
+                var_a1  = D_800D7858 << 0xA;
+
+                D_800DB8A8[i] = ((arg0->properties_E4.floatstinger.flags_E8 & 2 ? temp_s0 / 2457 : temp_s0 / 1638) +
+                                 Q12_MULT(D_800D7A38[i], 0x1000 - Math_Cos(arg0->properties_E4.floatstinger.flags_E8 & 2 ? var_a1 / 2457 : var_a1 / 1638))) >> 1;
+            }
+        }
+        else
+        {
+            for (i = 0; i < (temp_v0 = 15); i++) // @hack
+            {
+                temp_s0 = D_800D7A38[i] * (arg0->properties_E4.floatstinger.flags_E8 & 2 ? D_800D7858 - 0x999 : D_800D7858 - 0x666);
+
+                var_a1        = (arg0->properties_E4.floatstinger.flags_E8 & 2 ? D_800D7858 - 0x999 : D_800D7858 - 0x666) << 0xA;
+                var_a1        = Q12_MULT(D_800D7A38[i], 0x1000 - Math_Cos(arg0->properties_E4.floatstinger.flags_E8 & 2 ? var_a1 / 0x1000 : var_a1 / 2867));
+                temp_v0_7     = D_800D7A38[i];
+                temp_a0_6     = (((arg0->properties_E4.floatstinger.flags_E8 & 2) ? temp_s0 / 0x1000 : temp_s0 / 2867) + var_a1) >> 1;
+                D_800DB8A8[i] = temp_v0_7 - temp_a0_6;
+            }
+        }
+    }
+}
 
 void func_800D341C(void) {}
 
