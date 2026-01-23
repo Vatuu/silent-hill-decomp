@@ -21,7 +21,7 @@ typedef struct
     s32 field_10;
 } s_func_800D4458;
 
-extern s32 D_800D7858;
+extern q19_12 D_800D7858;
 
 extern q3_12 D_800D785C;
 
@@ -53,9 +53,9 @@ extern s16 D_800D7D80;
 
 extern u8 D_800D7D82;
 
-extern s16 D_800DB898;
+extern q3_12 D_800DB898;
 
-extern s16 D_800DB89C;
+extern q3_12 D_800DB89C;
 
 extern s16 D_800DB8A8[];
 
@@ -114,13 +114,13 @@ void func_800D3F84(VECTOR3* floatstinger, s32 arg1, s32 arg2);
 
 void func_800D41F0(s_SubCharacter* floatstinger);
 
-s32 func_800D4458(s_SubCharacter* floatstinger, VECTOR3*);
+bool func_800D4458(s_SubCharacter* floatstinger, VECTOR3* arg1);
 
 s32 func_800D48A4(s_SubCharacter* floatstinger, s16 arg1, s16 arg2);
 
-void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3*, s16);
+void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 angle);
 
-void func_800D2B90(s_SubCharacter* arg0);
+void func_800D2B90(s_SubCharacter* floatstinger);
 
 void func_800D61AC(void);
 

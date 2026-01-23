@@ -1,6 +1,6 @@
 void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
 {
-#define animKeyframeIdx FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT)
+    #define animKeyframeIdx FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT)
 
     if (scratcher->properties_E4.hangedScratcher.timer_100 != Q12(0.0f))
     {
@@ -15,7 +15,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
         else
         {
             scratcher->properties_E4.hangedScratcher.timer_100 += g_DeltaTime0;
-            if (scratcher->properties_E4.hangedScratcher.timer_100 >= 0)
+            if (scratcher->properties_E4.hangedScratcher.timer_100 >= Q12(0.0f))
             {
                 scratcher->properties_E4.hangedScratcher.timer_100 = Q12(0.75f);
                 func_8005DC1C(Sfx_Unk1580, &scratcher->position_18, Q8(0.5f), 0);
@@ -51,7 +51,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
             case 16:
                 if (scratcher->properties_E4.hangedScratcher.timer_108 == Q12(0.0f))
                 {
-                    if (!Rng_GenerateInt(0, 511))
+                    if (!Rng_GenerateInt(0, 511)) // 1 in 512 chance.
                     {
                         if (Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - scratcher->position_18.vx,
                                                 g_SysWork.playerWork_4C.player_0.position_18.vz - scratcher->position_18.vz) > Q12(6.5f))
@@ -78,7 +78,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
             case 7:
                 if (scratcher->properties_E4.hangedScratcher.timer_108 == Q12(0.0f))
                 {
-                    if (!Rng_GenerateUInt(0, 255))
+                    if (!Rng_GenerateUInt(0, 255)) // 1 in 256 chance.
                     {
                         if (Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - scratcher->position_18.vx,
                                                 g_SysWork.playerWork_4C.player_0.position_18.vz - scratcher->position_18.vz) > Q12(4.5f))
@@ -102,7 +102,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
 
     scratcher->properties_E4.hangedScratcher.flags_E8 &= ~((1 << 4) | (1 << 5));
 
-    // TODO: Can the `+ 88` etc below be added into the Rng macro calls? (Couldn't match with that yet)
+    // TODO: Can the `+ 88` etc below be added into the Rng macro calls? Couldn't match with that yet.
     if (scratcher->model_0.anim_4.status_0 == 35)
     {
         if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 272, 273))
@@ -181,5 +181,5 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
         scratcher->properties_E4.hangedScratcher.field_103 = 0;
     }
 
-#undef animKeyframeIdx
+    #undef animKeyframeIdx
 }

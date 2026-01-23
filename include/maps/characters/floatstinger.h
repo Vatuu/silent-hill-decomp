@@ -34,9 +34,12 @@ typedef enum _FloatstingerAnim
 typedef enum _FloatstingerControl
 {
     FloatstingerControl_None = 0,
+
     FloatstingerControl_2    = 2,
     FloatstingerControl_3    = 3,
-    FloatstingerControl_5    = 5
+
+    FloatstingerControl_5    = 5,
+    FloatstingerControl_6    = 6
 } e_FloatstingerControl;
 
 /*s_AnimInfo FLOATSTINGER_ANIM_INFOS[] = {
