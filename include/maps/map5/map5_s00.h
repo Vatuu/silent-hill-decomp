@@ -12,6 +12,19 @@
 #define KEYFRAME_PlayerState_Unk87 857
 #define KEYFRAME_PlayerState_Unk88 894
 
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s16 field_8;
+    s8  unk_A;
+    u8  field_B;
+    u16 field_C;
+    u8  field_E;
+    s8  unk_F;
+    s8  unk_10[4];
+} s_800DAB90;
+
 extern s32 D_800DAB78;
 
 extern u8 D_800DAB7C[3];
@@ -20,6 +33,8 @@ extern s_WorldObjectDesc  g_WorldObject_Map;
 extern s_WorldObjectDesc  g_WorldObject_SavePad0;
 extern s_WorldObjectDesc  g_WorldObject_SavePad1;
 extern s_WorldObjectModel g_CommonWorldObjects[6];
+
+extern s_800DAB90 D_800DAB90[];
 
 void func_800CB0D8(void);
 
@@ -49,5 +64,7 @@ void func_800D7F88(void);
 void MapEvent_MapTake(void);
 
 void Map_WorldObjectsInit(void);
+
+bool func_800CB25C(POLY_FT4** arg0, s32 arg1);
 
 #endif

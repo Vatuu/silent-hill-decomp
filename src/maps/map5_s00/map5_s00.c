@@ -8,6 +8,9 @@
 #include "maps/characters/player.h"
 #include "maps/characters/hanged_scratcher.h"
 #include "maps/map5/map5_s00.h"
+#include "inline_no_dmpsx.h"
+
+#include <psyq/gtemac.h>
 
 INCLUDE_RODATA("maps/map5_s00/nonmatchings/map5_s00", D_800C9578);
 
@@ -15,7 +18,188 @@ INCLUDE_RODATA("maps/map5_s00/nonmatchings/map5_s00", g_MapOverlayHeader);
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800CB0D8);
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800CB25C);
+bool func_800CB25C(POLY_FT4** arg0, s32 arg1) // 0x800CB25C
+{
+    typedef struct
+    {
+        s_func_8005E89C field_0;
+        SVECTOR         field_12C[3];
+        DVECTOR         field_144;
+        VECTOR3         field_148;
+        s32             field_154;
+        s32             field_158;
+        s32             field_15C;
+        s32             field_160;
+    } s_func_800CB25C;
+
+    DVECTOR          sp10[5][5];
+    s32              sp78[5][5];
+    s32              j;
+    s32              i;
+    s32              var_v0_4;
+    s_func_800CB25C* ptr;
+
+    ptr = PSX_SCRATCH;
+
+    if (g_SysWork.playerWork_4C.player_0.position_18.vx > -0x50000)
+    {
+        return false;
+    }
+
+    if (g_SysWork.playerWork_4C.player_0.position_18.vz < 0)
+    {
+        return false;
+    }
+
+    if (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 2)
+    {
+        if (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 1)
+        {
+            return false;
+        }
+    }
+
+    if (D_800DAB90[arg1].field_B != 0)
+    {
+        D_800DAB90[arg1].field_C += Rng_TestProbabilityBits(6) - 0x20;
+        D_800DAB90[arg1].field_C  = CLAMP_MIN_THEN_LOW(D_800DAB90[arg1].field_C, 0, 0xFFF);
+
+        ptr->field_15C = Q12_MULT_PRECISE(D_800DAB90[arg1].field_C, 0x1800);
+
+        setPolyFT4(*arg0);
+
+        Math_SetSVectorFastSum(&ptr->field_12C[0], ((D_800DAB90[arg1].field_0 - ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
+                               ((D_800DAB90[arg1].field_8) >> 4) - ptr->field_0.field_0.vy,
+                               ((D_800DAB90[arg1].field_4 + ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
+
+        Math_SetSVectorFastSum(&ptr->field_12C[1], ((D_800DAB90[arg1].field_0 + ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
+                               ((D_800DAB90[arg1].field_8) >> 4) - ptr->field_0.field_0.vy,
+                               ((D_800DAB90[arg1].field_4 + ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
+
+        Math_SetSVectorFastSum(&ptr->field_12C[2], ((D_800DAB90[arg1].field_0 - ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
+                               ((D_800DAB90[arg1].field_8) >> 4) - ptr->field_0.field_0.vy,
+                               ((D_800DAB90[arg1].field_4 - ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
+
+        gte_ldv3c(&ptr->field_12C);
+        gte_rtpt();
+        gte_stsxy3_g3(*arg0);
+        gte_stsz3c(&ptr->field_148);
+
+        Math_SetSVectorFastSum(&ptr->field_12C[0], ((D_800DAB90[arg1].field_0 + ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
+                               ((D_800DAB90[arg1].field_8) >> 4) - ptr->field_0.field_0.vy,
+                               ((D_800DAB90[arg1].field_4 - ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
+
+        gte_ldv0(&ptr->field_12C);
+        gte_rtps();
+        gte_stsxy(&ptr->field_144);
+        gte_stsz(&ptr->field_154);
+
+        ptr->field_148.vx = (ptr->field_148.vx + ptr->field_148.vy + ptr->field_148.vz + ptr->field_154) >> 2;
+
+        if (ptr->field_148.vx <= 0 || (ptr->field_148.vx >> 3) >= ORDERING_TABLE_SIZE)
+        {
+            return false;
+        }
+
+        if (ABS(ptr->field_144.vx) > 200 || ABS(ptr->field_144.vy) > 160)
+        {
+            return false;
+        }
+
+        *(s32*)&(*arg0)->x3 = *(s32*)&ptr->field_144;
+        setSemiTrans(*arg0, 1);
+
+        if (CLAMP_LOW(Q12_MULT_PRECISE(0x1000 - D_800DAB90[arg1].field_C, 0x20), 0) < 0x10)
+        {
+            var_v0_4 = MAX(Q12_MULT_PRECISE(0x1000 - D_800DAB90[arg1].field_C, 0x20), 0);
+        }
+        else
+        {
+            var_v0_4 = 0x10;
+        }
+
+        ptr->field_160 = var_v0_4;
+
+        setUV0AndClutSum(*arg0, 0xE0, 0xA0 + (D_800DAB90[arg1].field_E << 5), 0x13);
+        setUV1AndTPageSum(*arg0, 0xFF, 0xA0 + (D_800DAB90[arg1].field_E << 5), 0x4B);
+        setUV2Sum(*arg0, 0xE0, 0xBF + (D_800DAB90[arg1].field_E << 5));
+        setUV3Sum(*arg0, 0xFF, 0xBF + (D_800DAB90[arg1].field_E << 5));
+
+        setRGB0Fast(*arg0, ptr->field_160, ptr->field_160, ptr->field_160);
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_148.vx + 0x80) >> 3], *arg0);
+        *arg0 += 1;
+    }
+    else
+    {
+        for (i = 0; i < 25; i += 3)
+        {
+            for (j = 0; j < 3; j++)
+            {
+                Math_SetSVectorFastSum(&ptr->field_12C[j], ((((((i + j) % 5) * 0x1800) >> 1) - 0x5D800) >> 4) - (u16)ptr->field_0.field_0.vx,
+                                       0x80 - ptr->field_0.field_0.vy,
+                                       ((0x9999 - ((i + j) / 5 * 0x1800 >> 1)) >> 4) - ptr->field_0.field_0.vz);
+            }
+
+            gte_ldv3c(&ptr->field_12C[0]);
+            gte_rtpt();
+            gte_stsxy3c(&sp10[i / 5][i % 5]);
+            gte_stsz3c(&sp78[i / 5][i % 5]);
+        }
+
+        Math_SetSVectorFastSum(&ptr->field_12C[0], -0x5A80 - (u16)ptr->field_0.field_0.vx,
+                               0x80 - ptr->field_0.field_0.vy,
+                               0x699 - ptr->field_0.field_0.vz);
+
+        gte_ldv0(&ptr->field_12C);
+        gte_rtps();
+        gte_stsxy(&sp10[4][4]);
+        gte_stsz(&sp78[4][4]);
+
+        ptr->field_160 = !(func_80055D78(-0x5C000, 0x800, 0x8199) < 0x81) * 8;
+
+        for (i = 0; i < 4; i++)
+        {
+            for (j = 0; j < 4; j++)
+            {
+                if (sp78[i][j] <= 0 || (sp78[i][j] >> 3) >= ORDERING_TABLE_SIZE)
+                {
+                    continue;
+                }
+
+                if (ABS(sp10[i][j].vx) > 200 || ABS(sp10[i][j].vy) > 160)
+                {
+                    continue;
+                }
+
+                setPolyFT4(*arg0);
+
+                setXY4(*arg0,
+                       sp10[i][j].vx, sp10[i][j].vy,
+                       sp10[i][j + 1].vx, sp10[i][j + 1].vy,
+                       sp10[i + 1][j].vx, sp10[i + 1][j].vy,
+                       sp10[i + 1][j + 1].vx, sp10[i + 1][j + 1].vy);
+
+                setSemiTrans(*arg0, 1);
+
+                *(u16*)&(*arg0)->r0 = ptr->field_160;
+                (*arg0)->b0         = 0;
+
+                setUV0AndClutSum(*arg0, 0xE0 + j * 8, i * 8 + 0xA0 + (D_800DAB90[arg1].field_E << 5), 0x0293);
+                setUV1AndTPageSum(*arg0, 0xE7 + j * 8, i * 8 + 0xA0 + (D_800DAB90[arg1].field_E << 5), 0x2B);
+                setUV2Sum(*arg0, 0xE0 + j * 8, i * 8 + 0xA0 + (D_800DAB90[arg1].field_E << 5) + 7);
+                setUV3Sum(*arg0, 0xE7 + j * 8, i * 8 + 0xA0 + (D_800DAB90[arg1].field_E << 5) + 7);
+
+                ptr->field_158 = (sp78[i][j] + sp78[i + 1][j] + sp78[i][j + 1] + sp78[i + 1][j + 1]) >> 2;
+
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_158 + 0x80) >> 3], *arg0);
+                *arg0 += 1;
+            }
+        }
+    }
+
+    return true;
+}
 
 #include "../src/maps/particle.c"
 

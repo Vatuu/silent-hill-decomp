@@ -116,8 +116,8 @@ bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx)
 
             setSemiTrans(*poly, true);
 
-            setUV0AndClutSum(*poly, 128, polyV, 768, 128);
-            setUV1AndClutSum(*poly, 255, polyV, 704, 0);
+            setUV0AndClutSum(*poly, 128, polyV, getClut(768, 128));
+            setUV1AndTPageSum(*poly, 255, polyV, 44);
             setUV2Sum(*poly, 128, polyV + 63);
             setUV3Sum(*poly, 255, polyV + 63);
 

@@ -151,16 +151,20 @@ typedef struct
     *(u32*)(&(p)->u0) = (((((cy) << 6) | (((cx) >> 4) & 0x3F)) << 16) | ((v) << 8) | (u))
 
 /** @brief Combines `setUV0` and `setClut` into a single 32-bit store, using ADD to combine `u` and `v`. */
-#define setUV0AndClutSum(p, u, v, cx, cy) *(u32*)(&(p)->u0) = ((((((cy) << 6) | (((cx) >> 4) & 0x3F)) << 16) | (u)) + ((v) << 8))
+#define setUV0AndClutSum(p, u, v, clut) \
+    *(u32*)(&(p)->u0) = ((u) + ((v) << 8) + ((clut) << 16))
 
 /** @brief Combines `setUV1` and `setClut` into a single 32-bit store, using ADD to combine `u` and `v`. */
-#define setUV1AndClutSum(p, u, v, cx, cy) *(u32*)(&(p)->u1) = ((((((cy) << 6) | (((cx) >> 4) & 0x3F)) << 16) | (u)) + ((v) << 8))
+#define setUV1AndTPageSum(p, u, v, tpage) \
+    *(u32*)(&(p)->u1) = ((u) + ((v) << 8) + ((tpage) << 16))
 
 /** @brief Same as `setUV2`, using ADD to combine `u` and `v`. */
-#define setUV2Sum(p, u, v) *(u16*)(&(p)->u2) = (((v) << 8) + (u))
+#define setUV2Sum(p, u, v) \
+    *(u16*)(&(p)->u2) = ((u) + ((v) << 8))
 
 /** @brief Same as `setUV3`, using ADD to combine `u` and `v`. */
-#define setUV3Sum(p, u, v) *(u16*)(&(p)->u3) = (((v) << 8) + (u))
+#define setUV3Sum(p, u, v) \
+    *(u16*)(&(p)->u3) = ((u) + ((v) << 8))
 
 /** @brief Combines `setcode` and `setRGB0`. */
 #define setCodeWord(p, code, rgb24) \
