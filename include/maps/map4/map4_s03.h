@@ -68,8 +68,8 @@ typedef struct
 
 typedef struct
 {
-    int    x_0;
-    int    z_4;
+    q19_12 x_0;
+    q19_12 z_4;
     MATRIX world_8;
 } s_800E0988;
 

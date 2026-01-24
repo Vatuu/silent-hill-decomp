@@ -102,6 +102,7 @@ typedef struct
 } s_800F3DAC;
 STATIC_ASSERT_SIZEOF(s_800F3DAC, 0x4F8);
 
+// Note: beginning is similar to M4S03 `s_800E0988`, that could be a substruct used here.
 typedef struct
 {
     q19_12          positionX_0;

@@ -732,7 +732,21 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD738);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD7D0);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD868);
+void func_800DD868(void) // 0x800DD868
+{
+    q19_12    posX;
+    q19_12    posZ;
+    s32       activeBufferIdx;
+    GsOT_TAG* ot;
+
+    posX            = D_800F48A8.positionX_0;
+    posZ            = D_800F48A8.positionZ_4;
+    activeBufferIdx = g_ActiveBufferIdx;
+    ot              = g_OrderingTable0[activeBufferIdx].org;
+
+    func_80049C2C(&D_800F48A8.mat_8, posX, Q12(0.0f), posZ);
+    func_800DC544(ot);
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD8CC);
 
