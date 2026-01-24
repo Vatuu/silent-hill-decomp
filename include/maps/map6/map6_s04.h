@@ -121,7 +121,7 @@ void func_800D8D7C(s_SubCharacter*, s_Model*, GsCOORDINATE2*);
 
 void func_800D9790(s_SubCharacter*, s_Model*);
 
-void func_800D99E4(s_SubCharacter*, s_Model*, s_AnmHeader*, GsCOORDINATE2*);
+void func_800D99E4(s_SubCharacter* chara, s_Model* modelUpper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800D9AAC(s_SubCharacter*, s_Model*);
 

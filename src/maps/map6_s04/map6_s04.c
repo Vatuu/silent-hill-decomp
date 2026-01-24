@@ -193,7 +193,24 @@ INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04", func_800D8D7C);
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04", func_800D9790);
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04", func_800D99E4);
+void func_800D99E4(s_SubCharacter* chara, s_Model* modelUpper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D99E4
+{
+    s_AnimInfo* animInfo;
+
+    coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
+    coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
+    coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
+    
+    anmHdr->activeBones_8 = HARRY_LOWER_BODY_BONE_MASK;
+
+    animInfo = &MONSTER_CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
+    animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
+    
+    anmHdr->activeBones_8 = HARRY_UPPER_BODY_BONE_MASK;
+    
+    animInfo = &MONSTER_CYBIL_ANIM_INFOS[modelUpper->anim_4.status_0];
+    animInfo->updateFunc_0(modelUpper, anmHdr, coords, animInfo);
+}
 
 void func_800D9AAC(s_SubCharacter* chara, s_Model* arg1) {}
 
