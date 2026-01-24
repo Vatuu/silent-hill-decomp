@@ -910,6 +910,32 @@ void Map_WorldObjectsInit(void) // 0x800D82A8
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D84D8);
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D8DFC);
+void func_800D8DFC(void) // 0x800D8DFC
+{
+    if (Savegame_EventFlagGet(EventFlag_354))
+    {
+        func_80088FF4(Chara_HangedScratcher, 0, 6);
+        func_80088FF4(Chara_HangedScratcher, 1, 6);
+        func_80088FF4(Chara_HangedScratcher, 2, 6);
+
+        if (g_SavegamePtr->gameDifficulty_260 != GameDifficulty_Easy)
+        {
+            func_80088FF4(Chara_HangedScratcher, 11, 6);
+        }
+
+        if (Savegame_MapMarkingGet(MapMarkFlag_527))
+        {
+            func_80089034(Chara_HangedScratcher, 12, Q12(-90.3f), Q12(-92.9f));
+        }
+
+        func_80088FF4(Chara_HangedScratcher, 12, 6);
+        func_80088FF4(Chara_HangedScratcher, 13, 6);
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_M5S00_PickupSewerKey))
+    {
+        func_80088FF4(Chara_HangedScratcher, 6, 9);
+    }
+}
 
 INCLUDE_RODATA("maps/map5_s00/nonmatchings/map5_s00", D_800CB0CC);

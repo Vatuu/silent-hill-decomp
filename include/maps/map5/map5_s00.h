@@ -38,6 +38,8 @@ extern s_800DAB90 D_800DAB90[];
 
 void func_800CB0D8(void);
 
+bool func_800CB25C(POLY_FT4** arg0, s32 arg1);
+
 s32 func_800D63DC(s32* screenXy);
 
 void func_800D6414(void);
@@ -65,6 +67,6 @@ void MapEvent_MapTake(void);
 
 void Map_WorldObjectsInit(void);
 
-bool func_800CB25C(POLY_FT4** arg0, s32 arg1);
+void func_800D8DFC(void);
 
 #endif

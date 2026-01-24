@@ -249,6 +249,9 @@ typedef enum _MapMarkingFlag
     MapMarkFlag_FogSewer2F_OuterLeftLocked              = 520,
     MapMarkFlag_FogSewer2F_OuterLeftArrows              = 521,
     MapMarkFlag_FogSewer2F_BigCross                     = 522,
+
+    MapMarkFlag_527                                     = 527,
+
     MapMarkFlag_AltSewer_BigCross                       = 529,
     MapMarkFlag_FogHospital1F_CorridorLeftBroken        = 539,
     MapMarkFlag_FogHospital1F_ExaminationRoomLeftArrows = 542,
