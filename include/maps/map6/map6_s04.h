@@ -129,6 +129,8 @@ void func_800DB4CC(s_SubCharacter*, s_Model*, GsCOORDINATE2*);
 
 void func_800DB6FC(VECTOR3* pos);
 
+void func_800DB748(s_SubCharacter* chara);
+
 void Ai_Flauros_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);

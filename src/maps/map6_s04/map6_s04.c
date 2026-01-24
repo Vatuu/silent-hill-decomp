@@ -200,14 +200,14 @@ void func_800D99E4(s_SubCharacter* chara, s_Model* modelUpper, s_AnmHeader* anmH
     coords->coord.t[0] = Q12_TO_Q8(chara->position_18.vx);
     coords->coord.t[1] = Q12_TO_Q8(chara->position_18.vy);
     coords->coord.t[2] = Q12_TO_Q8(chara->position_18.vz);
-    
+
     anmHdr->activeBones_8 = HARRY_LOWER_BODY_BONE_MASK;
 
     animInfo = &MONSTER_CYBIL_ANIM_INFOS[chara->model_0.anim_4.status_0];
     animInfo->updateFunc_0(&chara->model_0, anmHdr, coords, animInfo);
-    
+
     anmHdr->activeBones_8 = HARRY_UPPER_BODY_BONE_MASK;
-    
+
     animInfo = &MONSTER_CYBIL_ANIM_INFOS[modelUpper->anim_4.status_0];
     animInfo->updateFunc_0(modelUpper, anmHdr, coords, animInfo);
 }
@@ -227,7 +227,30 @@ void func_800DB6FC(VECTOR3* pos) // 0x800DB6FC
                                 pos->vz - Q12(0.5f), pos->vz + Q12(0.5f));
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04", func_800DB748);
+void func_800DB748(s_SubCharacter* chara) // 0x800DB748
+{
+    q3_12 angleToPlayer;
+    q3_12 shortest;
+
+    // TODO: Not sure if `Q12_TO_Q8` makes sense here, maybe this was just a divide by 16 for some reason.
+    angleToPlayer = FP_ANGLE_ABS(ratan2(Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx),
+                                        Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz)));
+
+    Math_ShortestAngleGet(chara->rotation_24.vy, angleToPlayer, &shortest);
+
+    if (ABS(shortest) < FP_ANGLE(11.3f))
+    {
+        chara->rotation_24.vy = angleToPlayer;
+    }
+    else if (shortest > FP_ANGLE(0.0f))
+    {
+        chara->rotation_24.vy += FP_ANGLE(11.3f);
+    }
+    else
+    {
+        chara->rotation_24.vy -= FP_ANGLE(11.3f);
+    }
+}
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04", func_800DB81C);
 
