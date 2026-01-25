@@ -363,6 +363,7 @@ void func_800D1910(void) // 0x800D1910
             break;
 
         default:
+            // Return to gameplay.
             func_80085EB8(3, &g_SysWork.playerWork_4C.player_0, 0, false);
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);

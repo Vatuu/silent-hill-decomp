@@ -38,7 +38,7 @@ extern s_800DAB90 D_800DAB90[];
 
 void func_800CB0D8(void);
 
-bool func_800CB25C(POLY_FT4** arg0, s32 arg1);
+bool func_800CB25C(POLY_FT4** poly, s32 arg1);
 
 s32 func_800D63DC(s32* screenXy);
 

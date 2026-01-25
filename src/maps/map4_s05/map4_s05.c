@@ -1550,6 +1550,7 @@ void func_800D61AC(void) // 0x800D61AC
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(false);

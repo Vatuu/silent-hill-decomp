@@ -747,6 +747,7 @@ void func_800EBA40(void) // 0x800EBA40
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
@@ -852,6 +853,7 @@ void func_800EBF70(void) // 0x800EBF70
             SysWork_StateStepIncrementAfterFade(2, false, 0, 0, false);
 
         default:
+            // Return to gameplay.
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);
             vcReturnPreAutoCamWork(true);
             Player_ControlUnfreeze(false);
@@ -1107,6 +1109,7 @@ void func_800EC42C(void) // 0x800EC42C
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, 0, false);

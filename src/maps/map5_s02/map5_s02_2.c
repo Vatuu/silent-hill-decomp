@@ -187,6 +187,7 @@ void func_800D4B58(void) // 0x800D4B58
             SysWork_StateStepIncrement(0);
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -286,6 +287,7 @@ void func_800D4E64(void) // 0x800D4E64
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);

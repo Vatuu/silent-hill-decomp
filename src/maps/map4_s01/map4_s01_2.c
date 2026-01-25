@@ -245,9 +245,11 @@ void func_800D1FF0(void) // 0x800D1FF0
             break;
 
         default:
+            // Return to gameplay.
             if (Savegame_EventFlagGet(EventFlag_302))
             {
                 Sd_SfxStop(Sfx_Unk1538);
+
                 SysWork_StateSetNext(SysState_Gameplay);
                 SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
                 break;

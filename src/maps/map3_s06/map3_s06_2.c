@@ -350,6 +350,8 @@ void func_800D0C14(void) // 0x800D0C14
 
         default:
             func_80085EB8(3, &g_SysWork.playerWork_4C.player_0, 0, false);
+
+            // Return to gameplay.
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
             vcReturnPreAutoCamWork(true);
@@ -362,6 +364,7 @@ void func_800D0C14(void) // 0x800D0C14
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             Savegame_EventFlagSet(EventFlag_295);
             SD_Call(19);
+
             func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
             Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
             Game_TurnFlashlightOff();

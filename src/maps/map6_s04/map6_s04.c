@@ -230,19 +230,19 @@ void func_800DB6FC(VECTOR3* pos) // 0x800DB6FC
 void func_800DB748(s_SubCharacter* chara) // 0x800DB748
 {
     q3_12 angleToPlayer;
-    q3_12 shortest;
+    q3_12 shortestAngle;
 
     // TODO: Not sure if `Q12_TO_Q8` makes sense here, maybe this was just a divide by 16 for some reason.
     angleToPlayer = FP_ANGLE_ABS(ratan2(Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx),
                                         Q12_TO_Q8(g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz)));
 
-    Math_ShortestAngleGet(chara->rotation_24.vy, angleToPlayer, &shortest);
+    Math_ShortestAngleGet(chara->rotation_24.vy, angleToPlayer, &shortestAngle);
 
-    if (ABS(shortest) < FP_ANGLE(11.3f))
+    if (ABS(shortestAngle) < FP_ANGLE(11.3f))
     {
         chara->rotation_24.vy = angleToPlayer;
     }
-    else if (shortest > FP_ANGLE(0.0f))
+    else if (shortestAngle > FP_ANGLE(0.0f))
     {
         chara->rotation_24.vy += FP_ANGLE(11.3f);
     }

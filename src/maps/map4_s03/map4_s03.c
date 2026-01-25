@@ -4774,7 +4774,9 @@ void func_800D8FC0(void) // 0x800D8FC0
             break;
 
         default:
+            // Return to gameplay.
             SysWork_StateSetNext(SysState_Gameplay);
+
             Savegame_EventFlagSet(EventFlag_330);
 
             // Warp player.

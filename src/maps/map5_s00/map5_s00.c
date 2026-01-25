@@ -18,7 +18,7 @@ INCLUDE_RODATA("maps/map5_s00/nonmatchings/map5_s00", g_MapOverlayHeader);
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800CB0D8);
 
-bool func_800CB25C(POLY_FT4** arg0, s32 arg1) // 0x800CB25C
+bool func_800CB25C(POLY_FT4** poly, s32 arg1) // 0x800CB25C
 {
     typedef struct
     {
@@ -41,19 +41,19 @@ bool func_800CB25C(POLY_FT4** arg0, s32 arg1) // 0x800CB25C
 
     ptr = PSX_SCRATCH;
 
-    if (g_SysWork.playerWork_4C.player_0.position_18.vx > -0x50000)
+    if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-80.0f))
     {
         return false;
     }
 
-    if (g_SysWork.playerWork_4C.player_0.position_18.vz < 0)
+    if (g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(0.0f))
     {
         return false;
     }
 
-    if (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 2)
+    if (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 1))
     {
-        if (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 1)
+        if (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))
         {
             return false;
         }
@@ -64,9 +64,9 @@ bool func_800CB25C(POLY_FT4** arg0, s32 arg1) // 0x800CB25C
         D_800DAB90[arg1].field_C += Rng_TestProbabilityBits(6) - 0x20;
         D_800DAB90[arg1].field_C  = CLAMP_MIN_THEN_LOW(D_800DAB90[arg1].field_C, 0, 0xFFF);
 
-        ptr->field_15C = Q12_MULT_PRECISE(D_800DAB90[arg1].field_C, 0x1800);
+        ptr->field_15C = Q12_MULT_PRECISE(D_800DAB90[arg1].field_C, Q12(1.5f));
 
-        setPolyFT4(*arg0);
+        setPolyFT4(*poly);
 
         Math_SetSVectorFastSum(&ptr->field_12C[0], ((D_800DAB90[arg1].field_0 - ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
                                ((D_800DAB90[arg1].field_8) >> 4) - ptr->field_0.field_0.vy,
@@ -82,7 +82,7 @@ bool func_800CB25C(POLY_FT4** arg0, s32 arg1) // 0x800CB25C
 
         gte_ldv3c(&ptr->field_12C);
         gte_rtpt();
-        gte_stsxy3_g3(*arg0);
+        gte_stsxy3_g3(*poly);
         gte_stsz3c(&ptr->field_148);
 
         Math_SetSVectorFastSum(&ptr->field_12C[0], ((D_800DAB90[arg1].field_0 + ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
@@ -106,8 +106,8 @@ bool func_800CB25C(POLY_FT4** arg0, s32 arg1) // 0x800CB25C
             return false;
         }
 
-        *(s32*)&(*arg0)->x3 = *(s32*)&ptr->field_144;
-        setSemiTrans(*arg0, 1);
+        *(s32*)&(*poly)->x3 = *(s32*)&ptr->field_144;
+        setSemiTrans(*poly, 1);
 
         if (CLAMP_LOW(Q12_MULT_PRECISE(0x1000 - D_800DAB90[arg1].field_C, 0x20), 0) < 0x10)
         {
@@ -120,15 +120,15 @@ bool func_800CB25C(POLY_FT4** arg0, s32 arg1) // 0x800CB25C
 
         ptr->field_160 = var_v0_4;
 
-        setUV0AndClutSum(*arg0, 0xE0, 0xA0 + (D_800DAB90[arg1].field_E << 5), 0x13);
-        setUV1AndTPageSum(*arg0, 0xFF, 0xA0 + (D_800DAB90[arg1].field_E << 5), 0x4B);
-        setUV2Sum(*arg0, 0xE0, 0xBF + (D_800DAB90[arg1].field_E << 5));
-        setUV3Sum(*arg0, 0xFF, 0xBF + (D_800DAB90[arg1].field_E << 5));
+        setUV0AndClutSum(*poly, 224, 160 + (D_800DAB90[arg1].field_E << 5), 0x13);
+        setUV1AndTPageSum(*poly, 255, 160 + (D_800DAB90[arg1].field_E << 5), 0x4B);
+        setUV2Sum(*poly, 224, 191 + (D_800DAB90[arg1].field_E << 5));
+        setUV3Sum(*poly, 255, 191 + (D_800DAB90[arg1].field_E << 5));
 
-        setRGB0Fast(*arg0, ptr->field_160, ptr->field_160, ptr->field_160);
+        setRGB0Fast(*poly, ptr->field_160, ptr->field_160, ptr->field_160);
 
-        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_148.vx + 0x80) >> 3], *arg0);
-        *arg0 += 1;
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_148.vx + 0x80) >> 3], *poly);
+        *poly += 1;
     }
     else
     {
@@ -136,9 +136,9 @@ bool func_800CB25C(POLY_FT4** arg0, s32 arg1) // 0x800CB25C
         {
             for (j = 0; j < 3; j++)
             {
-                Math_SetSVectorFastSum(&ptr->field_12C[j], ((((((i + j) % 5) * 0x1800) >> 1) - 0x5D800) >> 4) - (u16)ptr->field_0.field_0.vx,
+                Math_SetSVectorFastSum(&ptr->field_12C[j], ((((((i + j) % 5) * Q12(1.5f)) >> 1) - Q12(93.5f)) >> 4) - (u16)ptr->field_0.field_0.vx,
                                        0x80 - ptr->field_0.field_0.vy,
-                                       ((0x9999 - ((i + j) / 5 * 0x1800 >> 1)) >> 4) - ptr->field_0.field_0.vz);
+                                       ((0x9999 - ((i + j) / 5 * Q12(1.5f) >> 1)) >> 4) - ptr->field_0.field_0.vz);
             }
 
             gte_ldv3c(&ptr->field_12C[0]);
@@ -156,7 +156,7 @@ bool func_800CB25C(POLY_FT4** arg0, s32 arg1) // 0x800CB25C
         gte_stsxy(&sp10[4][4]);
         gte_stsz(&sp78[4][4]);
 
-        ptr->field_160 = !(func_80055D78(-0x5C000, 0x800, 0x8199) < 0x81) * 8;
+        ptr->field_160 = !(func_80055D78(Q12(-92.0f), Q12(0.5f), Q12(8.1f)) < 129) * 8;
 
         for (i = 0; i < 4; i++)
         {
@@ -172,28 +172,28 @@ bool func_800CB25C(POLY_FT4** arg0, s32 arg1) // 0x800CB25C
                     continue;
                 }
 
-                setPolyFT4(*arg0);
+                setPolyFT4(*poly);
 
-                setXY4(*arg0,
+                setXY4(*poly,
                        sp10[i][j].vx, sp10[i][j].vy,
                        sp10[i][j + 1].vx, sp10[i][j + 1].vy,
                        sp10[i + 1][j].vx, sp10[i + 1][j].vy,
                        sp10[i + 1][j + 1].vx, sp10[i + 1][j + 1].vy);
 
-                setSemiTrans(*arg0, 1);
+                setSemiTrans(*poly, 1);
 
-                *(u16*)&(*arg0)->r0 = ptr->field_160;
-                (*arg0)->b0         = 0;
+                *(u16*)&(*poly)->r0 = ptr->field_160;
+                (*poly)->b0         = 0;
 
-                setUV0AndClutSum(*arg0, 0xE0 + j * 8, i * 8 + 0xA0 + (D_800DAB90[arg1].field_E << 5), 0x0293);
-                setUV1AndTPageSum(*arg0, 0xE7 + j * 8, i * 8 + 0xA0 + (D_800DAB90[arg1].field_E << 5), 0x2B);
-                setUV2Sum(*arg0, 0xE0 + j * 8, i * 8 + 0xA0 + (D_800DAB90[arg1].field_E << 5) + 7);
-                setUV3Sum(*arg0, 0xE7 + j * 8, i * 8 + 0xA0 + (D_800DAB90[arg1].field_E << 5) + 7);
+                setUV0AndClutSum(*poly, 224 + (j * 8), (i * 8) + 160 + (D_800DAB90[arg1].field_E << 5), 0x0293);
+                setUV1AndTPageSum(*poly, 231 + (j * 8), (i * 8) + 160 + (D_800DAB90[arg1].field_E << 5), 0x2B);
+                setUV2Sum(*poly, 224 + (j * 8), (i * 8) + 160 + (D_800DAB90[arg1].field_E << 5) + 7);
+                setUV3Sum(*poly, 231 + (j * 8), (i * 8) + 160 + (D_800DAB90[arg1].field_E << 5) + 7);
 
                 ptr->field_158 = (sp78[i][j] + sp78[i + 1][j] + sp78[i][j + 1] + sp78[i + 1][j + 1]) >> 2;
 
-                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_158 + 0x80) >> 3], *arg0);
-                *arg0 += 1;
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_158 + 0x80) >> 3], *poly);
+                *poly += 1;
             }
         }
     }
@@ -521,6 +521,7 @@ void func_800D6B00(void) // 0x800D6B00
 
             g_SysWork.playerWork_4C.player_0.position_18.vz += Q12(-1.2f);
 
+            // Return to gameplay.
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -530,6 +531,7 @@ void func_800D6B00(void) // 0x800D6B00
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -581,6 +583,7 @@ void func_800D732C(void) // 0x800D732C
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -659,8 +662,10 @@ void func_800D75FC(void) // 0x800D75FC
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Savegame_EventFlagSet(EventFlag_356);
             Savegame_EventFlagClear(EventFlag_357);
             break;
@@ -792,8 +797,10 @@ void func_800D7C84(void) // 0x800D7C84
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Savegame_EventFlagSet(EventFlag_358);
             Savegame_EventFlagClear(EventFlag_359);
             break;
@@ -853,8 +860,10 @@ void func_800D7F88(void) // 0x800D7F88
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Savegame_EventFlagClear(EventFlag_360);
             Savegame_EventFlagClear(EventFlag_358);
             Savegame_EventFlagSet(EventFlag_359);
@@ -870,11 +879,9 @@ void MapEvent_MapTake(void) // 0x800D8280
 void Map_WorldObjectsInit(void) // 0x800D82A8
 {
     WorldObjectInit(&g_WorldObject_Map, "MAP_NEAR", 41.2f, -0.7f, -48.7f, 0.0f, -100.1f, 0.0f);
-
     func_800CB0D8();
 
     WorldObjectInit(&g_WorldObject_SavePad0, D_800A99E4.savePadName_4, 40.503f, -0.709f, -48.7925f, 0.0f, 5.7f, 0.0f);
-
     WorldObjectInit(&g_WorldObject_SavePad1, D_800A99E4.savePadName_4, -86.469f, -1.041f, -103.4905f, 0.0f, 206.3f, 0.0f);
 
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
@@ -884,15 +891,17 @@ void Map_WorldObjectsInit(void) // 0x800D82A8
         func_80088FF4(Chara_Creeper, 4, 0);
         func_80088FF4(Chara_Creeper, 7, 0);
         func_80088FF4(Chara_Creeper, 12, 0);
+
         g_SysWork.npcId_2280 = 3;
     }
     else if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        func_80088FF4(Chara_Creeper, 5, 12);
-        func_80088FF4(Chara_Creeper, 6, 12);
+        func_80088FF4(Chara_Creeper, 5, (1 << 2) | (1 << 3));
+        func_80088FF4(Chara_Creeper, 6, (1 << 2) | (1 << 3));
         func_80088FF4(Chara_Creeper, 7, 0);
-        func_80088FF4(Chara_Creeper, 8, 13);
-        func_80088FF4(Chara_Creeper, 9, 13);
+        func_80088FF4(Chara_Creeper, 8, (1 << 0) | (1 << 2) | (1 << 3));
+        func_80088FF4(Chara_Creeper, 9, (1 << 0) | (1 << 2) | (1 << 3));
+
         g_SysWork.npcId_2280 = 4;
     }
     else

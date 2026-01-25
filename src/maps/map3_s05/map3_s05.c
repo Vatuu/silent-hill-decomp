@@ -272,6 +272,7 @@ void func_800D5A98(void) // 0x800D5A98
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -448,8 +449,10 @@ void func_800D5FC4(void) // 0x800D5FC4
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
+
             Savegame_EventFlagSet(EventFlag_M3S05_AlcoholPouredOnVines);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
@@ -486,6 +489,7 @@ void func_800D63C4(void) // 0x800D63C4
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -648,6 +652,7 @@ void func_800D64E0(void) // 0x800D64E0
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -711,6 +716,7 @@ void func_800D6BE0(void) // 0x800D6BE0
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -820,6 +826,7 @@ void func_800D6D1C(void) // 0x800D6D1C
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
@@ -890,6 +897,7 @@ void func_800D72AC(void) // 0x800D72AC
             break;
 
         case EventState_DontPushCabinet:
+            // Return to gameplay.
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
             break;
@@ -962,8 +970,10 @@ void func_800D72AC(void) // 0x800D72AC
             break;
 
         default:
+            // Return to gameplay.
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
+
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
