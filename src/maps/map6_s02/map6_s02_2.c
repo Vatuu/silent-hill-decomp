@@ -903,7 +903,71 @@ void func_800D0500(void) // 0x800D0500
 
 INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D1040);
 
-INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D1330);
+void func_800D1330(s16 arg0) // 0x800D1330
+{
+    POLY_FT4* poly;
+    s32       temp_t8;
+    s32       temp_v0_5;
+    s32       var_t1;
+    s32       var_t2;
+    s32       var_t4;
+    s32       i;
+    s32       var_v1;
+    s32       temp_v0;
+    s32       temp_v0_2;
+    s32       temp_v0_4;
+    s32       var_a3;
+    s32       temp;
+
+    poly = GsOUT_PACKET_P;
+
+    temp_v0   = Q12_MULT_PRECISE(arg0, 0x4C) - 0x58;
+    temp_t8   = D_800D4E2D + temp_v0;
+    temp_v0_5 = D_800D4E2D - 8;
+
+    for (i = 0; i < 2; i++)
+    {
+        if (i == 0)
+        {
+            temp_v0_2 = D_800D4E2C + 0x12;
+            temp      = Q12_MULT_PRECISE(arg0, 0xA7) - 0xA0;
+            var_t1    = D_800D4E2C + temp;
+            var_v1    = temp_v0_2;
+            var_a3    = D_800D3B44[4].tPage[1];
+            var_t2    = 0;
+            var_t4    = 0xB2;
+        }
+        else
+        {
+            temp_v0_4 = Q12_MULT_PRECISE(arg0, 0x87) - 0xA0;
+            var_t1    = D_800D4E2C + 0x12;
+            var_v1    = D_800D4E2C - temp_v0_4;
+            var_a3    = D_800D3B44[4].tPage[1] + 1;
+            var_t2    = 0x32;
+            var_t4    = 0x8E;
+        }
+
+        setPolyFT4(poly);
+
+        setXY0Fast(poly, var_t1, temp_t8);
+        setXY1Fast(poly, var_v1, temp_t8);
+        setXY2Fast(poly, var_t1, temp_v0_5);
+        setXY3Fast(poly, var_v1, temp_v0_5);
+
+        setUV0AndClutSum(poly, var_t2, 0, getClut(D_800D3B44[4].clutX, D_800D3B44[4].clutY));
+        setUV1AndTPageSum(poly, var_t2 + var_t4, 0, getTPage(1, 0, var_a3 << 6, ((var_a3 >> 4) & 1) << 8));
+        setUV2Sum(poly, var_t2, 0x50);
+        setUV3Sum(poly, var_t2 + var_t4, 0x50);
+
+        setSemiTrans(poly, 0);
+        setRGB0Fast(poly, 0x80, 0x80, 0x80);
+
+        addPrim(g_OrderingTable0[g_ActiveBufferIdx].org, poly);
+        poly++;
+    }
+
+    GsOUT_PACKET_P = poly;
+}
 
 void Map_WorldObjectsInit(void) // 0x800D1658
 {
@@ -1000,7 +1064,54 @@ void func_800D1718(void) // 0x800D1718
     func_8006982C(flags);
 }
 
-INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D1AE4);
+void func_800D1AE4(void) // 0x800D1AE4
+{
+    s32      temp_s2;
+    s32      var_s0;
+    VECTOR3* vec;
+    SVECTOR* svec;
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, -1, -1) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
+    {
+        if (D_800D4E6E == 0)
+        {
+            Game_TurnFlashlightOn();
+            func_800CED74(&g_SysWork.playerWork_4C.player_0, 1);
+            D_800D4E6E = 1;
+        }
+
+        g_SysWork.pointLightIntensity_2378 = 0xB33;
+
+        if (g_SysWork.playerWork_4C.player_0.position_18.vy > 0x2D70)
+        {
+            var_s0                             = 0;
+            g_SysWork.pointLightIntensity_2378 = (((g_SysWork.playerWork_4C.player_0.position_18.vy - 0x2D70) * 0x666) / 4752) + 0xB33;
+        }
+        else
+        {
+            var_s0 = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx + 0x14000, g_SysWork.playerWork_4C.player_0.position_18.vz + 0x14000);
+        }
+
+        func_800CED74(&g_SysWork.playerWork_4C.player_0, 0);
+
+        temp_s2 = var_s0 + 0x31C;
+
+        vec = &g_SysWork.pointLightPosition_2360;
+
+        vec->vx = Q12_MULT(Math_Sin(temp_s2), 0x8CC) - 0x14000;
+        vec->vy = MIN(g_SysWork.playerWork_4C.player_0.position_18.vy - 0x1999, 0x800);
+        vec->vz = Q12_MULT(Math_Cos(temp_s2), 0x8CC) - 0x14000;
+
+        svec = &g_SysWork.pointLightRot_2370;
+
+        Math_SetSVectorFast(svec, 0xFE39, var_s0 - 0x6AA, 0);
+    }
+    else
+    {
+        D_800D4E6E = 0;
+    }
+}
 
 s32 func_800D1D40(void) // 0x800D1D40
 {
@@ -1056,7 +1167,139 @@ s32 func_800D1D40(void) // 0x800D1D40
     return (1 << D_800D4E6C) + 0x80;
 }
 
-INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D1EB8);
+void func_800D1EB8(s32 arg0, s32* arg1, s32* arg2) // 0x800D1EB8
+{
+    typedef struct
+    {
+        RECT field_0;
+        u8   field_8[128];
+        u8   field_88[128];
+        u8   field_108[128];
+    } s_func_800D1EB8;
+
+    s32              var_a0;
+    s32              j;
+    s32              i;
+    s32              var_t2;
+    s32              var_t3;
+    s32              var_t6;
+    s32*             ptr0;
+    s32*             ptr1;
+    s_func_800D1EB8* basePtr;
+
+    basePtr = PSX_SCRATCH;
+
+    ptr0 = basePtr->field_8;
+
+    for (i = 0x1F; i >= 0; i--, ptr0++)
+    {
+        *ptr0 = 0;
+    }
+
+    ptr1 = arg1;
+
+    for (i = 0; i < 0x40; i++, ptr0++, ptr1++)
+    {
+        *ptr0 = *ptr1;
+    }
+
+    var_t6 = 0;
+
+    for (i = 0; i < 0x100; i++)
+    {
+        ptr0 = arg2 + (i << 5);
+
+        for (j = 0, var_t3 = 1, var_t2 = -1; j < 0x100; var_t3++, j++, var_t2++)
+        {
+            var_a0 = 0;
+
+            if (j > 0)
+            {
+                var_a0 = (basePtr->field_88[var_t2 >> 1] >> (var_t2 & 1) * 4) & 0xF;
+            }
+
+            if (j < 0xFF)
+            {
+                var_a0 += (basePtr->field_88[var_t3 >> 1] >> (var_t3 & 1) * 4) & 0xF;
+            }
+
+            if (i > 0)
+            {
+                var_a0 += (basePtr->field_8[j >> 1] >> (j & 1) * 4) & 0xF;
+
+                if (j > 0)
+                {
+                    var_a0 += (basePtr->field_8[var_t2 >> 1] >> (var_t2 & 1) * 4) & 0xF;
+                }
+                if (j < 0xFF)
+                {
+                    var_a0 += (basePtr->field_8[var_t3 >> 1] >> (var_t3 & 1) * 4) & 0xF;
+                }
+            }
+
+            if (i < 0xFF)
+            {
+                var_a0 += (basePtr->field_108[j >> 1] >> (j & 1) * 4) & 0xF;
+
+                if (j > 0)
+                {
+                    var_a0 += (basePtr->field_108[var_t2 >> 1] >> (var_t2 & 1) * 4) & 0xF;
+                }
+
+                if (j < 0xFF)
+                {
+                    var_a0 += (basePtr->field_108[var_t3 >> 1] >> (var_t3 & 1) * 4) & 0xF;
+                }
+            }
+
+            var_t6 |= ((var_a0 + 7) >> 3) << (j & 7) * 4;
+
+            if ((j & 7) == 7)
+            {
+                *ptr0  = var_t6;
+                var_t6 = 0;
+                ptr0++;
+            }
+        }
+
+        ptr0 = basePtr->field_8;
+
+        if (i != 0xFF)
+        {
+            ptr1 = basePtr->field_88;
+
+            for (j = 0; j < 0x40; j++, ptr0++, ptr1++)
+            {
+                *ptr0 = *ptr1;
+            }
+
+            if (i == 0xFE)
+            {
+                for (j = 0x1F; j >= 0; j--, ptr0++)
+                {
+                    *ptr0 = 0;
+                }
+            }
+            else
+            {
+                ptr1 = arg1 + ((i + 2) << 5);
+
+                for (j = 0; j < 0x20; j++, ptr0++, ptr1++)
+                {
+                    *ptr0 = *ptr1;
+                }
+            }
+        }
+    }
+
+    basePtr->field_0.x = (arg0 & 0xF) << 6;
+    basePtr->field_0.y = (arg0 * 0x10) & 0x100;
+    basePtr->field_0.w = 0x40;
+    basePtr->field_0.h = 0x100;
+
+    LoadImage(&basePtr->field_0, arg2);
+    DrawSync(0);
+}
 
 void func_800D2170(s32 arg0) // 0x800D2170
 {
@@ -1126,7 +1369,33 @@ void func_800D2170(s32 arg0) // 0x800D2170
 
 INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D2364);
 
-INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800D32D0);
+void func_800D32D0(void) // 0x800D32D0
+{
+    g_Screen_FadeStatus = 5;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            func_80085EB8(2, &g_SysWork.playerWork_4C.player_0, 0, false);
+            g_SysWork.sysStateStep_C[0]++;
+            break;
+
+        case 1:
+            func_80087EDC(5);
+            break;
+
+        case 2:
+            g_SavegamePtr->clearGameCount_24A++;
+            g_SavegamePtr->clearGameCount_24A                    = CLAMP(g_SavegamePtr->clearGameCount_24A, 1, 0x63);
+            g_SavegamePtr->field_27A                             = 0x10;
+            g_SavegamePtr->clearGameEndings_24B                 |= 0x10;
+            g_GameWorkConst->config_0.optExtraOptionsEnabled_27 |= 0x10;
+            g_SavegamePtr->locationId_A8                         = 0x18;
+            SysWork_StateSetNext(SysState_StatusMenu);
+            break;
+    }
+}
 
 INCLUDE_RODATA("maps/map6_s02/nonmatchings/map6_s02_2", D_800CAB90);
 

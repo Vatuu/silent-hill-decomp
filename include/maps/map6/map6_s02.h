@@ -55,15 +55,19 @@ extern s8 D_800D4E2D;
 
 extern s8 D_800D4E6C;
 extern s8 D_800D4E6D;
-extern s8 D_800D4E6E;
+extern u8 D_800D4E6E;
 
 extern q3_12 D_800D4E70; // Angle.
 
 extern s_WorldObjectDesc g_WorldObject_SavePad;
 
 extern s_FsImageDesc D_800CAB90;
+
 extern RECT D_800CAB98;
+
 extern u8 D_800D3C74[8];
+
+extern s_FsImageDesc D_800D3B44[5];
 
 void func_800CF0B8(void);
 
@@ -81,5 +85,11 @@ void func_800D1718(void);
 s32 func_800D1D40(void);
 
 void func_800D2170(s32 arg0);
+
+void func_800D32D0(void);
+
+void func_800D1AE4(void);
+
+void func_800D1EB8(s32 arg0, s32* arg1, s32* arg2);
 
 #endif
