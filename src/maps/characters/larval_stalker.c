@@ -196,10 +196,10 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             if (larvalStalker->model_0.anim_4.status_0 == ANIM_STATUS(LarvalStalkerAnim_10, true)) 
             {
                 validStep = func_80070184(larvalStalker, Q12(0.6f), larvalStalker->rotation_24.vy);
-                if ((validStep && !Rng_GenerateInt(0, 3)) || // 1 in  chance.
+                if ((validStep && !Rng_GenerateInt(0, 3)) || // 1 in 4 chance.
                     !Rng_GenerateInt(0, 31))                 // 1 in 32 chance.
                 {
-                    larvalStalkerProps.angle_108 = Rng_TestProbabilityBits(11) - FP_ANGLE(90.0f); // -90 >< 90 angle.
+                    larvalStalkerProps.angle_108           = Rng_GenerateUInt(FP_ANGLE(-90.0f), FP_ANGLE(90.0f) - 1); // -90 >< 90 angle.
                     larvalStalker->model_0.anim_4.status_0 = ANIM_STATUS(LarvalStalkerAnim_11, false);
                 }
                 else if (!Rng_GenerateInt(0, 15)) // 1 in 16 chance.
@@ -428,7 +428,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
 
             Chara_TurnModulate(func_8005BF38(larvalStalkerProps.angle_108 - larvalStalker->rotation_24.vy), 33, 682);
 
-            if ((larvalStalker->moveSpeed_38 >= Q12(0.9004f)) && !Rng_TestProbabilityBits(8))
+            if (larvalStalker->moveSpeed_38 >= Q12(0.9004f) && !Rng_GenerateUInt(0, 255))
             {
                 larvalStalker->model_0.anim_4.status_0 = ANIM_STATUS(LarvalStalkerAnim_6, false);
                 larvalStalkerProps.timer_EC = Q12(0.0f);

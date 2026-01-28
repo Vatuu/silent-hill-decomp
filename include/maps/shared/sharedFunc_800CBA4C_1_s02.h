@@ -29,7 +29,7 @@ void sharedFunc_800CBA4C_1_s02(s32 idx, s32 arg1, s32 arg2)
             sharedData_800DFB7C_0_s00[idx].field_4.vz_4 += Q12_MULT(sharedData_800DFB7C_0_s00[idx].field_10.s_3.field_0, Math_Cos(sharedData_800E30C8_1_s02.field_34[var_s2]));
         }
 
-        sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = ((sharedData_800E30C8_1_s02.field_6c[var_s2] * (Rng_TestProbabilityBits(6) + 0x60)) >> 7);
+        sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = (sharedData_800E30C8_1_s02.field_6c[var_s2] * (Rng_GenerateUInt(96, 159))) >> 7;
     }
     else
     {
@@ -38,7 +38,7 @@ void sharedFunc_800CBA4C_1_s02(s32 idx, s32 arg1, s32 arg2)
             sharedData_800DFB7C_0_s00[idx].vy_8 += sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_0;
         }
 
-        sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = Rng_TestProbabilityBits(5) + 0x70;
+        sharedData_800DFB7C_0_s00[idx].field_10.s_0.field_2 = Rng_GenerateUInt(112, 143);
         sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2  = 0;
     }
 

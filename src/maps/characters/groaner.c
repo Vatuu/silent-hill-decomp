@@ -398,7 +398,7 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
             {
                 // TODO: Cleaner random angle generation.
                 if (ABS(func_8005BF38(groaner->rotation_24.vy - ratan2(groaner->position_18.vx - groanerProps.targetPositionX_F4,
-                                                                       groaner->position_18.vz - groanerProps.targetPositionZ_F8))) < (Rng_TestProbabilityBits(6) + FP_ANGLE(45.0f)))
+                                                                       groaner->position_18.vz - groanerProps.targetPositionZ_F8))) < (Rng_GenerateUInt(FP_ANGLE(45.0f), FP_ANGLE(50.7f) - 1)))
                 {
                     randTargetPosX        = groanerProps.targetPositionX_F4 + Rng_GenerateInt(Q12(-0.5f), Q12(0.5f) - 1);
                     groanerProps.angle_FC = Chara_HeadingAngleGet(groaner, FP_ANGLE(306.0f),
@@ -467,7 +467,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
 
         if ((groanerProps.timer_104 >= Q12(0.0f) && ((temp_s4 != 0 && (temp_s6 || distToPlayer < temp_s2)) ||
              groanerProps.timer_104 == Q12(0.0f))) ||
-            !Rng_TestProbabilityBits(5))
+            !Rng_GenerateUInt(0, 31))
         {
             if (temp_s4 != 0)
             {
@@ -597,7 +597,7 @@ void sharedFunc_800E3E94_2_s00(s_SubCharacter* groaner)
     }
 
     if (!(groanerProps.flags_E8.val16[0] & GroanerFlag_7) &&
-        (distToPlayer > Q12(12.0f) || (!Rng_TestProbabilityBits(7) && distToPlayer > Q12(6.0f))))
+        (distToPlayer > Q12(12.0f) || (!Rng_GenerateUInt(0, 127) && distToPlayer > Q12(6.0f))))
     {
         groaner->model_0.controlState_2                         = GroanerControl_1;
         groaner->model_0.anim_4.status_0                        = ANIM_STATUS(GroanerAnim_17, false);
@@ -766,7 +766,7 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
     // TODO: Cleaner random angle generation.
     temp_s4 = func_8007029C(groaner, Q12(0.9f) - Rng_GenerateInt(0, 920), groaner->rotation_24.vy);
 
-    if (groanerProps.timer_104 == Q12(0.0f) || !Rng_TestProbabilityBits(5) ||
+    if (groanerProps.timer_104 == Q12(0.0f) || !Rng_GenerateUInt(0, 31) ||
         (temp_s4 != 0 && groanerProps.timer_104 >= Q12(0.0f)))
     {
         temp_s1 = Q12(1.5f) - Rng_GenerateInt(0, 1535);
@@ -1979,7 +1979,7 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
                 }
                 else if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) != GroanerAnim_10 &&
                          ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) != GroanerAnim_15 &&
-                         !Rng_TestProbabilityBits(4))
+                         !Rng_GenerateUInt(0, 15))
                 {
                     func_8005DC1C(Sfx_Unk1406, &groaner->position_18, (Q12_DIV(groaner->health_B0, Q12(280.0f)) >> 7) + 32, 0);
                     groanerProps.timer_10C = Rng_GenerateInt(Q12(4.8f), Q12(8.0f) - 2);
@@ -1993,7 +1993,7 @@ void sharedFunc_800E71E8_2_s00(s_SubCharacter* groaner)
 
     keyframeIdx = FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT);
     sfxVol      = (Q12_DIV(groaner->moveSpeed_38, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f))) >> 6) + 64;
-    sfxPitch    = (Q12_DIV(groaner->moveSpeed_38, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f))) >> 7) + Rng_TestProbabilityBits(3);
+    sfxPitch    = (Q12_DIV(groaner->moveSpeed_38, Q12_MULT_PRECISE(groanerProps.field_114, Q12(3.6f))) >> 7) + Rng_GenerateUInt(0, 7);
 
     if ((keyframeIdx > 365 && keyframeIdx < 370) ||
         (keyframeIdx > 374 && keyframeIdx < 382))

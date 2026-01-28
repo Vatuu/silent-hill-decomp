@@ -913,7 +913,7 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
     {
         stalkerProps.timer_116 += g_DeltaTime0;
 
-        if (!Rng_TestProbabilityBits(9) || stalkerProps.timer_116 > Q12(1.2f))
+        if (!Rng_GenerateUInt(0, 511) || stalkerProps.timer_116 > Q12(1.2f))
         {
             stalkerProps.timer_116 = Q12(0.0f);
             stalkerProps.flags_E8 &= ~StalkerFlag_10;

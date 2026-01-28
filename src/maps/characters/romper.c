@@ -214,8 +214,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
 
     if (romperProps.field_11A != 0)
     {
-        // TODO: Wrong RNG macro.
-        func_8005DC1C(Sfx_Unk1402, &romper->position_18, Rng_TestProbabilityBits(4) + 120, 0);
+        func_8005DC1C(Sfx_Unk1402, &romper->position_18, Rng_GenerateUInt(120, 135), 0);
         romperProps.field_11A = 0;
     }
 
@@ -243,8 +242,7 @@ void sharedFunc_800E60FC_2_s02(s_SubCharacter* romper)
                 var_s1 = Q6(1.875f);
             }
 
-            // TODO: Wrong RNG macro.
-            func_8005DC1C(Sfx_Unk1404, &romper->position_18, (var_s1 + Rng_TestProbabilityBits(4)) >> 1, 0);
+            func_8005DC1C(Sfx_Unk1404, &romper->position_18, Rng_AddGeneratedUInt(var_s1, 0, 15) >> 1, 0);
             romperProps.timer_11C = Rng_GenerateInt(Q12(4.5f), Q12(6.5f) - 1);
         }
     }
@@ -616,14 +614,14 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
             }
             else
             {
-                unkDist1 = Q12_MULT_PRECISE(Rng_TestProbabilityBits(9) + 0xF00, CLAMP_MIN_THEN_LOW(distToTarget - Q12(0.2f), Q12(0.2f), Q12(2.5f)));
+                unkDist1 = Q12_MULT_PRECISE(Rng_GenerateUInt(0xF00, 0x1100 - 1), CLAMP_MIN_THEN_LOW(distToTarget - Q12(0.2f), Q12(0.2f), Q12(2.5f)));
 
                 romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, unkDist1, romperProps.targetPositionX_FC, romperProps.targetPositionZ_100, FP_ANGLE(360.0f), true);
             }
         }
         else
         {
-            unkDist1 = Q12_MULT_PRECISE(Rng_TestProbabilityBits(9) + 0xF00, Q12(2.5f));
+            unkDist1 = Q12_MULT_PRECISE(Rng_GenerateUInt(0xF00, 0x1100 - 1), Q12(2.5f));
             romperProps.rotationY_F2 = Chara_HeadingAngleGet(romper, unkDist1, romperProps.targetPositionX_FC, romperProps.targetPositionZ_100, FP_ANGLE(360.0f), false);
         }
 
@@ -636,7 +634,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
             temp_s0 = func_8007029C(romper, 0x1AAA, romper->rotation_24.vy);
         }
 
-        if (romperProps.field_10E > Q12(1.0f) && !Rng_TestProbabilityBits(4))
+        if (romperProps.field_10E > Q12(1.0f) && !Rng_GenerateUInt(0, 15))
         {
             romper->model_0.controlState_2            = RomperControl_1;
             romper->model_0.anim_4.status_0           = ANIM_STATUS(RomperAnim_12, false);
@@ -1123,8 +1121,8 @@ void Ai_Romper_Control_10(s_SubCharacter* romper)
     {
         romperProps.flags_E8 &= ~RomperFlag_6;
 
-        g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += FP_TO(D_800AD4C8[55].field_4, Q12_SHIFT) *
-                                                               (Rng_TestProbabilityBits(5) + 0x55) / 100;
+        g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += (FP_TO(D_800AD4C8[55].field_4, Q12_SHIFT) *
+                                                               Rng_GenerateUInt(85, 116)) / 100;
 
         sp10.vx = romper->position_18.vx + FP_FROM(FP_TO(Math_Sin(romper->rotation_24.vy) >> 1, Q12_SHIFT), Q12_SHIFT);
         sp10.vy = romper->position_18.vy - Q12(0.1f);

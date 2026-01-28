@@ -689,12 +689,12 @@ void func_800D1AFC(void) // 0x800D1AFC
 
         if (ptr != NULL)
         {
-            var_s1       += Rng_TestProbabilityBits(8) - 0x80;
+            var_s1       += Rng_GenerateUInt(-0x80, 0x80 - 1);
             ptr->field_C  = Q12_MULT_PRECISE(Math_Sin(var_s1), 0x99);
-            ptr->field_E  = Rng_TestProbabilityBits(5) + 0x70;
+            ptr->field_E  = Rng_GenerateUInt(0x70, 0x90 - 1);
             ptr->field_10 = Q12_MULT_PRECISE(Math_Cos(var_s1), 0x99);
             ptr->field_8  = Q12(1.9f);
-            ptr->field_D4 = Rng_TestProbabilityBits(8);
+            ptr->field_D4 = Rng_GenerateUInt(0, 255);
             ptr->field_CC = Q12(0.3f);
             ptr->field_D0 = 0;
             ptr->field_C8 = func_800D19F0;
@@ -1682,7 +1682,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
 
     if (twinfeeler->health_B0 > Q12(0.0f) && twinfeeler->properties_E4.twinfeeler.field_E8.val32 == 0)
     {
-        if (Rng_TestProbabilityBits(2))
+        if (Rng_GenerateUInt(0, 3) != 0)
         {
             var_a0 = Sfx_Unk1553;
         }

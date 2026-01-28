@@ -98,7 +98,7 @@ extern u32 g_RngSeed;
  * @param base Base number to be added to.
  * @param low Lower range (inclusive).
  * @param high Upper range (inclusive).
- * @return Random integer in the range `[low, high]` (`s32`).
+ * @return Random integer in the range `[base + low, base + high]` (`s32`).
 */
 #define Rng_AddGeneratedUInt(base, low, high) \
     (base + (s32)((u32)Rng_Rand16() % (((high) - (low)) + 1)) + (low))

@@ -352,7 +352,7 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
                 splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_4, false);
             }
         }
-        else if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_10, true) && !Rng_TestProbabilityBits(5))
+        else if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_10, true) && !Rng_GenerateUInt(0, 31))
         {
             splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_11, false);
             splitHead->model_0.controlState_2  = SplitHeadControl_5;
@@ -385,9 +385,9 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
 
         if (FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) == 35)
         {
-            unkPos.vx = (g_SysWork.playerWork_4C.player_0.position_18.vx + Rng_TestProbabilityBits(10)) - Q12(0.25f);
-            unkPos.vy = (g_SysWork.playerWork_4C.player_0.position_18.vy - Rng_TestProbabilityBits(11)) - Q12(1.0f);
-            unkPos.vz = (g_SysWork.playerWork_4C.player_0.position_18.vz + Rng_TestProbabilityBits(10)) - Q12(0.25f);
+            unkPos.vx = Rng_AddGeneratedUInt(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12(-0.25f), Q12(0.0f) - 1);
+            unkPos.vy = (g_SysWork.playerWork_4C.player_0.position_18.vy - Rng_GenerateUInt(0, Q12(0.5f) - 1)) - Q12(1.0f); // TODO: Doesn't match with `Rng_AddGeneratedUInt`?
+            unkPos.vz = Rng_AddGeneratedUInt(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12(-0.25f), Q12(0.0f) - 1);
             func_8005F6B0(&g_SysWork.playerWork_4C.player_0, &unkPos, 2, 7);
         }
     }
@@ -458,7 +458,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
         {
             if (i != 0 && i != 15)
             {
-                angleToPlayer2 = Rng_TestProbabilityBits(7) - 64;
+                angleToPlayer2 = Rng_GenerateUInt(FP_ANGLE(-5.7f), FP_ANGLE(5.7f) - 1);
                 if (i & 0x1)
                 {
                     angle1 = angleToPlayer2 * angleMult;
@@ -581,12 +581,12 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
         splitHead->model_0.controlState_2 = SplitHeadControl_3;
     }
 
-    if (!Rng_TestProbabilityBits(7))
+    if (!Rng_GenerateUInt(0, 127))
     {
         splitHeadProps.flags_E8 |= SplitHeadFlag_8;
     }
 
-    if (!Rng_TestProbabilityBits(6))
+    if (!Rng_GenerateUInt(0, 63))
     {
         splitHeadProps.flags_E8 |= SplitHeadFlag_7;
     }
@@ -652,7 +652,7 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
         sharedData_800D5A8C_1_s05 += g_DeltaTime0;
 
         if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_10, true) &&
-            (!Rng_TestProbabilityBits(6) || sharedData_800D5A8C_1_s05 > Q12(4.0f)))
+            (!Rng_GenerateUInt(0, 63) || sharedData_800D5A8C_1_s05 > Q12(4.0f)))
         {
             sharedData_800D5A8C_1_s05      = 0;
             splitHead->model_0.anim_4.status_0 = ANIM_STATUS(SplitHeadAnim_11, false);
@@ -787,7 +787,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
         {
             if (i != 0 && i != 15)
             {
-                angle1 = Rng_TestProbabilityBits(7) - FP_ANGLE(5.625f);
+                angle1 = Rng_GenerateUInt(FP_ANGLE(-5.7f), FP_ANGLE(5.7f) - 1);
                 if (i & 0x1)
                 {
                     angle3 = angle1 * angleMult;
@@ -909,18 +909,18 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
         (!ray.hasHit_0 || ray.chara_10 != NULL))
     {
         splitHead->model_0.controlState_2 = SplitHeadControl_1;
-        if (!Rng_TestProbabilityBits(3))
+        if (!Rng_GenerateUInt(0, 7))
         {
             splitHeadProps.flags_E8 |= SplitHeadFlag_8;
         }
     }
 
-    if (!Rng_TestProbabilityBits(7))
+    if (!Rng_GenerateUInt(0, 127))
     {
         splitHeadProps.flags_E8 |= SplitHeadFlag_8;
     }
 
-    if (!Rng_TestProbabilityBits(6))
+    if (!Rng_GenerateUInt(0, 63))
     {
         splitHeadProps.flags_E8 |= SplitHeadFlag_7;
     }
@@ -1720,7 +1720,7 @@ void sharedFunc_800D4070_1_s05(s_SubCharacter* splitHead)
         {
             if ((FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 20 || FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) > 35) &&
                 (FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) > 14 && FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 20 ||
-                 ((animIdx == SplitHeadAnim_1 || animIdx == SplitHeadAnim_9) && !Rng_TestProbabilityBits(2)) || !Rng_TestProbabilityBits(5)))
+                 ((animIdx == SplitHeadAnim_1 || animIdx == SplitHeadAnim_9) && !Rng_GenerateUInt(0, 3)) || !Rng_GenerateUInt(0, 31)))
             {
                 if (splitHead->model_0.anim_4.status_0 == ANIM_STATUS(SplitHeadAnim_3, true))
                 {

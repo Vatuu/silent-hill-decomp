@@ -90,7 +90,7 @@ bool func_800CB25C(POLY_FT4** poly, s32 arg1) // 0x800CB25C
 
     if (D_800DAB90[arg1].field_B != 0)
     {
-        D_800DAB90[arg1].field_C += Rng_TestProbabilityBits(6) - 0x20;
+        D_800DAB90[arg1].field_C += Rng_GenerateUInt(-0x20, 0x20 - 1);
         D_800DAB90[arg1].field_C  = CLAMP_MIN_THEN_LOW(D_800DAB90[arg1].field_C, 0, 0xFFF);
 
         ptr->field_15C = Q12_MULT_PRECISE(D_800DAB90[arg1].field_C, Q12(1.5f));
