@@ -155,7 +155,7 @@ typedef enum _HangedScratcherStateStep
     { Anim_Update1, ANIM_STATUS(26, true), false, NO_VALUE, { Q12(0) }, 97, 98 }
 };*/
 
-extern s32 sharedData_800DE28C_5_s00;
+extern q19_12 sharedData_800DE28C_5_s00;
 
 void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
@@ -175,6 +175,8 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher);
 
 void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher);
 
+void Ai_HangedScratcher_Control_5(s_SubCharacter* scratcher);
+
 void Ai_HangedScratcher_Control_6(s_SubCharacter* scratcher);
 
 void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher);
@@ -182,6 +184,10 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher);
 void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher);
 
 void Ai_HangedScratcher_Control_9(s_SubCharacter* scratcher);
+
+void Ai_HangedScratcher_Control_10(s_SubCharacter* scratcher);
+
+void Ai_HangedScratcher_Control_11(s_SubCharacter* scratcher);
 
 void Ai_HangedScratcher_Control_12(s_SubCharacter* scratcher);
 
