@@ -20,55 +20,8 @@ INCLUDE_RODATA("maps/map6_s03/nonmatchings/map6_s03", g_MapOverlayHeader);
 // TODO: Move this line into separate `Chara_Stalker` split.
 #include "../src/maps/characters/stalker.c" // 0x800CEFCC
 
-#include "maps/shared/Ai_HangedScratcher_Update.h" // 0x800D4264
-
-#include "maps/shared/Ai_HangedScratcher_Init.h" // 0x800D42E8
-
-#include "maps/shared/sharedFunc_800CFF74_5_s00.h" // 0x800D45B4
-
-#include "maps/shared/Ai_HangedScratcher_ControlUpdate.h" // 0x800D48DC
-
-#include "maps/shared/Ai_HangedScratcher_Control_16.h" // 0x800D4A38
-
-#include "maps/shared/Ai_HangedScratcher_Control_1.h" // 0x800D4A5C
-
-#include "maps/shared/Ai_HangedScratcher_Control_2.h" // 0x800D4B54
-
-#include "maps/shared/Ai_HangedScratcher_Control_3.h" // 0x800D4C7C
-
-#include "maps/shared/Ai_HangedScratcher_Control_4.h" // 0x800D5284
-
-#include "maps/shared/Ai_HangedScratcher_Control_5.h" // 0x800D5544
-
-#include "maps/shared/Ai_HangedScratcher_Control_6.h" // 0x800D56F8
-
-#include "maps/shared/Ai_HangedScratcher_Control_7.h" // 0x800D58B4
-
-#include "maps/shared/Ai_HangedScratcher_Control_8.h" // 0x800D5FEC
-
-#include "maps/shared/Ai_HangedScratcher_Control_9.h" // 0x800D6110
-
-#include "maps/shared/Ai_HangedScratcher_Control_10.h" // 0x800D624C
-
-#include "maps/shared/Ai_HangedScratcher_Control_11.h" // 0x800D6324
-
-#include "maps/shared/Ai_HangedScratcher_Control_12.h" // 0x800D64C4
-
-#include "maps/shared/Ai_HangedScratcher_Control_13.h" // 0x800D6680
-
-#include "maps/shared/Ai_HangedScratcher_Control_14.h" // 0x800D67C0
-
-#include "maps/shared/Ai_HangedScratcher_Control_15.h" // 0x800D6A20
-
-#include "maps/shared/sharedFunc_800D26D8_5_s00.h" // 0x800D6D18
-
-#include "maps/shared/sharedFunc_800D2844_5_s00.h" // 0x800D6E84
-
-#include "maps/shared/sharedFunc_800D2C18_5_s00.h" // 0x800D7258
-
-#include "maps/shared/sharedFunc_800D3214_5_s00.h" // 0x800D7854
-
-#include "maps/shared/sharedFunc_800D3300_5_s00.h" // 0x800D7998
+// TODO: Move this line into separate `Chara_HangedScratcher` split.
+#include "../src/maps/characters/hanged_scratcher.c" // 0x800D4264
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D7F14
 

@@ -234,55 +234,8 @@ bool func_800CB25C(POLY_FT4** poly, s32 arg1) // 0x800CB25C
 
 #include "../src/maps/characters/player.c"
 
-#include "maps/shared/Ai_HangedScratcher_Update.h" // 0x800CFC24
-
-#include "maps/shared/Ai_HangedScratcher_Init.h" // 0x800CFCA8
-
-#include "maps/shared/sharedFunc_800CFF74_5_s00.h" // 0x800CFF74
-
-#include "maps/shared/Ai_HangedScratcher_ControlUpdate.h" // 0x800D029C
-
-#include "maps/shared/Ai_HangedScratcher_Control_16.h" // 0x800D03F8
-
-#include "maps/shared/Ai_HangedScratcher_Control_1.h" // 0x800D041C
-
-#include "maps/shared/Ai_HangedScratcher_Control_2.h" // 0x800D0514
-
-#include "maps/shared/Ai_HangedScratcher_Control_3.h"
-
-#include "maps/shared/Ai_HangedScratcher_Control_4.h"
-
-#include "maps/shared/Ai_HangedScratcher_Control_5.h"
-
-#include "maps/shared/Ai_HangedScratcher_Control_6.h"
-
-#include "maps/shared/Ai_HangedScratcher_Control_7.h"
-
-#include "maps/shared/Ai_HangedScratcher_Control_8.h"
-
-#include "maps/shared/Ai_HangedScratcher_Control_9.h"
-
-#include "maps/shared/Ai_HangedScratcher_Control_10.h" // 0x800D1C0C
-
-#include "maps/shared/Ai_HangedScratcher_Control_11.h" // 0x800D1CE4
-
-#include "maps/shared/Ai_HangedScratcher_Control_12.h"
-
-#include "maps/shared/Ai_HangedScratcher_Control_13.h"
-
-#include "maps/shared/Ai_HangedScratcher_Control_14.h"
-
-#include "maps/shared/Ai_HangedScratcher_Control_15.h"
-
-#include "maps/shared/sharedFunc_800D26D8_5_s00.h" // 0x800D26D8
-
-#include "maps/shared/sharedFunc_800D2844_5_s00.h"
-
-#include "maps/shared/sharedFunc_800D2C18_5_s00.h" // 0x800D2C18
-
-#include "maps/shared/sharedFunc_800D3214_5_s00.h" // 0x800D3214
-
-#include "maps/shared/sharedFunc_800D3300_5_s00.h" // 0x800D3300
+// TODO: Move this line into separate `Chara_HangedScratcher` split.
+#include "../src/maps/characters/hanged_scratcher.c" // 0x800CFC24
 
 // TODO: Move this line into separate `Chara_Creeper` split.
 #include "../src/maps/characters/creeper.c" // 0x800D387C

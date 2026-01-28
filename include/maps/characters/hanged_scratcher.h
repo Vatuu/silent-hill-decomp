@@ -9,6 +9,8 @@ typedef enum _HangedScratcherFlags
     HangedScratcherFlag_1 = 1 << 1,
     HangedScratcherFlag_2 = 1 << 2,
 
+    HangedScratcherFlag_4 = 1 << 4,
+
     HangedScratcherFlag_5 = 1 << 5,
     HangedScratcherFlag_6 = 1 << 6,
     HangedScratcherFlag_7 = 1 << 7,
