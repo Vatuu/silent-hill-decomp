@@ -91,7 +91,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             }
 
             if ((g_SavegamePtr->field_27A & (1 << 6)) &&
-                g_GameWork.gameStatePrev_590 == GameState_Unk10)
+                g_GameWork.gameStatePrev_590 == GameState_SaveScreen)
             {
                 g_Demo_ReproducedCount = 0;
 
@@ -335,7 +335,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 Screen_Refresh(320, 0);
                 GameFs_SaveLoadBinLoad();
                 Fs_QueueWaitForEmpty();
-                Game_StateSetNext(GameState_Unk10);
+                Game_StateSetNext(GameState_SaveScreen);
                 return;
             }
             break;

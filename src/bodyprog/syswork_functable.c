@@ -28,4 +28,4 @@ u32 g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) | (1 << MainMenuEn
 s8 g_Demo_ReproducedCount = 0;
 // 3 bytes of padding.
 s32 g_MainMenu_NewGameSelectedDifficultyIdx = 1;
-s32 g_PrevSavegameCount = 0;
+s32 g_MemCard_PrevSavegameCount = 0;

@@ -5,10 +5,11 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/savegame.h"
+#include "bodyprog/memcard.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/memcard.h"
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
 #include "main/rng.h"
@@ -35,7 +36,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
     s32 NEXT_GAME_STATES[MAIN_MENU_GAME_STATE_COUNT] = // 0x80025480
     {
-        GameState_SaveScreen, 
+        GameState_LoadSavegameScreen, 
         GameState_AutoLoadSavegame,
         GameState_MovieOpening,
         GameState_OptionScreen,
@@ -109,17 +110,17 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             }
 
             // Memory card present and savegames exist.
-            if (g_SavegameCount > 0)
+            if (g_MemCard_SavegameCount > 0)
             {
                 g_MainMenu_VisibleEntryFlags |= (1 << MainMenuEntry_Load) | (1 << MainMenuEntry_Continue);
                 
-                if (g_PrevSavegameCount < g_SavegameCount && g_MainMenu_SelectedEntry != MainMenuEntry_Load)
+                if (g_MemCard_PrevSavegameCount < g_MemCard_SavegameCount && g_MainMenu_SelectedEntry != MainMenuEntry_Load)
                 {
                     g_MainMenu_SelectedEntry = MainMenuEntry_Continue;
                 }
             }
             // No savegames exist, but did previously (e.g. memory card removed before player death).
-            else if (g_PrevSavegameCount > 0)
+            else if (g_MemCard_PrevSavegameCount > 0)
             {
                 while(!(g_MainMenu_VisibleEntryFlags & (1 << g_MainMenu_SelectedEntry)))
                 {
@@ -212,7 +213,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 }
             }
 
-            g_PrevSavegameCount = g_SavegameCount;
+            g_MemCard_PrevSavegameCount = g_MemCard_SavegameCount;
 
         default:
             break;
@@ -304,7 +305,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
                 if (g_GameWork.autosave_90.playerHealth_240 > Q12(0.0f))
                 {
-                    NEXT_GAME_STATES[1] = 10;
+                    NEXT_GAME_STATES[1] = GameState_MainLoadScreen;
                 }
 
                 if (g_MainMenu_SelectedEntry == MainMenuEntry_Start)
@@ -312,7 +313,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                     Chara_PositionSet(&g_MapOverlayHeader.mapPointsOfInterest_1C[0]);
                 }
 
-                Savegame_CardDisable();
+                MemCard_Disable();
 
                 prevState                       = g_GameWork.gameState_594;
                 g_GameWork.gameStateStep_598[0] = prevState;

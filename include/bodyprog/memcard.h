@@ -1,21 +1,40 @@
-#ifndef _BODYPROG_MEMCARD_H
-#define _BODYPROG_MEMCARD_H
-
-#include "screens/saveload/saveload.h"
+#ifndef _MEMCARD_H
+#define _MEMCARD_H
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` identified to be related
- * to the savegame and memory card system (not from PSY-Q SDK).
+ * to the memory card system (not from PSY-Q SDK).
  */
+
+#define MEMCARD_UNK_STATE_SAVE 2
+#define MEMCARD_UNK_STATE_LOAD 3
 
 #define CARD_DEVICE_COUNT      8
 #define CARD_DEVICE_FILE_COUNT 15
 
-static inline void CardWork_ClearDirectoryFile(s32 idx);
+#define MemCard_StatusGet(status, deviceIdx) \
+    status >> (deviceIdx * 3) & 0x7
 
-// ======
-// ENUMS
-// ======
+#define MemCard_StatusStore(status, deviceIdx) \
+    status << (deviceIdx * 3)
+
+#define MemCard_FileStatusGet(status, deviceIdx) \
+    status >> (deviceIdx * 2) & 0x3
+
+#define MemCard_FileStatusStore(status, deviceIdx) \
+    status << (deviceIdx * 2)
+
+// ============
+// ENUMERATORS
+// ============
+
+typedef enum _FileState
+{
+    FileState_Unused  = 0,
+    FileState_Used    = 1,
+    FileState_Unk2    = 2,
+    FileState_Damaged = 3
+} e_FileState;
 
 typedef enum _CardState
 {
@@ -29,32 +48,32 @@ typedef enum _CardState
     CardState_FileReadWrite = 7
 } e_CardState;
 
-typedef enum _CardIoMode
+typedef enum _MemCardIoMode
 {
-    CardIoMode_Init    = 0,
-    CardIoMode_DirRead = 1, // TODO: Not sure if this is actual purpose yet.
-    CardIoMode_Read    = 2,
-    CardIoMode_Write   = 3,
-    CardIoMode_Create  = 4,
-} e_CardIoMode;
+    MemCardIoMode_Init    = 0,
+    MemCardIoMode_DirRead = 1, // TODO: Not sure if this is actual purpose yet.
+    MemCardIoMode_Read    = 2,
+    MemCardIoMode_Write   = 3,
+    MemCardIoMode_Create  = 4,
+} e_MemCardIoMode;
 
-typedef enum _CardResult
+typedef enum _MemCardResult
 {
-    CardResult_NotConnected    = 0,   /** "Card not connected". */
-    CardResult_Success         = 1,   /** Default code returned when no errors occur. */
-    CardResult_InitError       = 2,   /** `Savegame_CardState_Init` `EvSpNEW` "No writing after connection". */
-    CardResult_InitComplete    = 3,   /** `Savegame_CardState_Init` `EvSpIOE` "Connected". */
-    CardResult_LoadError       = 4,   /** `Savegame_CardState_Load` `EvSpNEW` "Uninitialized card". */
-    CardResult_NewDevice       = 5,   /** `Savegame_CardState_DirRead` when `g_CardWork.hasNewDevice_70`. */
-    CardResult_NoNewDevice     = 6,   /** `Savegame_CardState_DirRead` when `!g_CardWork.hasNewDevice_70`. */
-    CardResult_FileCreateError = 7,   /** `Savegame_CardState_FileCreate` after 15 retries. */
-    CardResult_FileOpenError   = 8,   /** `Savegame_CardState_FileOpen` after 15 retries. */
-    CardResult_FileSeekError   = 9,   /** `Savegame_CardState_FileReadWrite` after 15 retries. */
-    CardResult_FileIoError     = 10,  /** `Savegame_CardState_FileReadWrite` after 15 retries. */
-    CardResult_FileIoComplete  = 11,  /** `Savegame_CardState_FileReadWrite` `EvSpIOE` "Completed". */
-    CardResult_Full            = 100, /** Used outside main memcard code. */
-    CardResult_DamagedData     = 101  /** Used outside main memcard code. */
-} e_CardResult;
+    MemCardResult_NotConnected    = 0,   /** "Card not connected". */
+    MemCardResult_Success         = 1,   /** Default code returned when no errors occur. */
+    MemCardResult_InitError       = 2,   /** `Savegame_CardState_Init` `EvSpNEW` "No writing after connection". */
+    MemCardResult_InitComplete    = 3,   /** `Savegame_CardState_Init` `EvSpIOE` "Connected". */
+    MemCardResult_LoadError       = 4,   /** `Savegame_CardState_Load` `EvSpNEW` "Uninitialized card". */
+    MemCardResult_NewDevice       = 5,   /** `Savegame_CardState_DirRead` when `g_MemCardWork.hasNewDevice_70`. */
+    MemCardResult_NoNewDevice     = 6,   /** `Savegame_CardState_DirRead` when `!g_MemCardWork.hasNewDevice_70`. */
+    MemCardResult_FileCreateError = 7,   /** `Savegame_CardState_FileCreate` after 15 retries. */
+    MemCardResult_FileOpenError   = 8,   /** `Savegame_CardState_FileOpen` after 15 retries. */
+    MemCardResult_FileSeekError   = 9,   /** `Savegame_CardState_FileReadWrite` after 15 retries. */
+    MemCardResult_FileIoError     = 10,  /** `Savegame_CardState_FileReadWrite` after 15 retries. */
+    MemCardResult_FileIoComplete  = 11,  /** `Savegame_CardState_FileReadWrite` `EvSpIOE` "Completed". */
+    MemCardResult_Full            = 100, /** Used outside main memcard code. */
+    MemCardResult_DamagedData     = 101  /** Used outside main memcard code. */
+} e_MemCardResult;
 
 // ================
 // UNKNOWN STRUCTS
@@ -75,12 +94,12 @@ typedef struct
 
 typedef struct
 {
-    s32                field_0;
-    s_SavegameMetadata savegameMetadatas_4[11];
-    s8                 unk_88[116];
-    s_SavegameFooter   field_FC;
-} s_MemCardInfo_BasicSaveInfo;
-STATIC_ASSERT_SIZEOF(s_MemCardInfo_BasicSaveInfo, 256);
+    s32                 field_0;
+    s_Savegame_Metadata saveMetadata_4[11]; // SAVEGAME_SLOT_COUNT_MAX
+    s8                  unk_88[116];
+    s_Savegame_Footer   field_FC;
+} s_MemCard_BasicSaveInfo;
+STATIC_ASSERT_SIZEOF(s_MemCard_BasicSaveInfo, 256);
 
 typedef struct
 {
@@ -95,7 +114,7 @@ typedef struct
     s32 devicesPending_0; /** Bitfield of device IDs, each set bit index is an ID that must be read/initialized first. */
     s32 state_4;          /** `e_CardState` */
     s32 stateStep_8;
-    s32 stateResult_C;    /** `e_CardResult` */
+    s32 stateResult_C;    /** `e_MemCardResult` */
     s32 eventSwSpIOE_10;
     s32 eventSwSpERROR_14;
     s32 eventSwSpTIMOUT_18;
@@ -106,7 +125,7 @@ typedef struct
     s32 eventHwSpNEW_2C;
     s32 eventHwSpUNKNOWN_30;
     s32 lastEventHw_34;
-    s32 cardIoMode_38; /** `e_CardIoMode` */
+    s32 MemCardIoMode_38; /** `e_MemCardIoMode` */
     s32 deviceId_3C;
 
     s_CardDirectory* cardDirectory_40; /** Array of files on the card, pointer supplied by caller to `Savegame_CardRequest`. */
@@ -120,28 +139,29 @@ typedef struct
     s32   fileHandle_74;
     s32   retryCount_78;
     s32   field_7C;
-} s_CardWork;
-STATIC_ASSERT_SIZEOF(s_CardWork, 128);
+} s_MemCardWork;
+STATIC_ASSERT_SIZEOF(s_MemCardWork, 128);
 
 typedef struct
 {
-    s32                          memoryCardStatus_0;
-    s8                           isFileUsed_4[16];
-    s_MemCardInfo_BasicSaveInfo* basicSaveInfo_14;
-    s32                          field_18;
-} s_MemCardBasicInfo;
-STATIC_ASSERT_SIZEOF(s_MemCardBasicInfo, 28);
+    s32                      memoryCardStatus_0;
+    s8                       fileState_4[CARD_DEVICE_FILE_COUNT];
+    s_MemCard_BasicSaveInfo* basicSaveInfo_14;
+    s32                      memoryCardFileLimit_18;
+} s_MemCard_Info;
+STATIC_ASSERT_SIZEOF(s_MemCard_Info, 28);
 
+// Some memory card states information. Related to `s_Savegame_Entry`.
 typedef struct
 {
-    s32 field_0;
+    s32 field_0; /** Some state possibly same as `e_MemCardResult`. */
     s32 deviceId_4;
     s32 fileIdx_8;
-    s32 saveIdx_C;
+    s32 saveIdx_C; /** Index of the save in a determined file. */
     s32 field_10;
-    s32 lastCardResult_14; /** `e_CardResult` */
-} s_800B55E8;
-STATIC_ASSERT_SIZEOF(s_800B55E8, 24);
+    s32 lastMemCardResult_14; /** `e_MemCardResult` */
+} s_MemCard_Status;
+STATIC_ASSERT_SIZEOF(s_MemCard_Status, 24);
 
 // https://github.com/Sparagas/Silent-Hill/blob/1f24eb097a4b99129bc7c9793d23c82244848a27/010%20Editor%20-%20Binary%20Templates/ps1_memory_card.bt#L122C8-L122C17
 typedef struct
@@ -160,12 +180,12 @@ STATIC_ASSERT_SIZEOF(s_PsxSaveBlock, 512);
 // OPM16 has `MCM_FUNC_WORK` struct with size 0x6D8, close to this 0x718.
 typedef struct
 {
-    s_MemCardBasicInfo          devices_0[CARD_DEVICE_COUNT];
-    s_800B55E8                  field_E0[2];
-    q19_12                      field_110; // Passed to `s_800B55E8_Init` as `lastCardResult`. Move speed store?
-    u8                          unk_114[4];
+    s_MemCard_Info              devices_0[CARD_DEVICE_COUNT];
+    s_MemCard_Status            field_E0[2];
+    bool                        field_110;
+    s32                         unk_114;
     s_PsxSaveBlock              saveBlock_118;
-    s_MemCardInfo_BasicSaveInfo saveInfo_318;
+    s_MemCard_BasicSaveInfo saveInfo_318;
     s_SaveUserConfigContainer   userConfig_418;
     s_SavegameContainer         saveGame_498;
 } s_800B5508;
@@ -175,13 +195,13 @@ STATIC_ASSERT_SIZEOF(s_800B5508, 1816);
 // GLOBALS
 // ========
 
-extern u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT]; // 0 - Slot 1, 1 - Slot 2.
+extern u8 g_SlotElementSelectedIdx[2]; // 0 - Slot 1, 1 - Slot 2.
 
 extern s8 g_SelectedSaveSlotIdx; // 0 - Slot 1, 1 - Slot 2.
 
 extern s_FsImageDesc D_800A8D98;
 
-extern s8 D_800A97D7;
+extern u8 D_800A97D7;
 
 extern s8 D_800A97D8;
 
@@ -191,86 +211,55 @@ extern s32 D_800A97DC; // `e_SavegameEntryType`
 
 extern s8 D_800A97E0;
 
-extern u32 D_800A97E4[];
+extern u32 allFileStatus[];
 
-extern s_MemCardInfo_BasicSaveInfo g_MemCard_1_BasicSaveInfo[CARD_DEVICE_FILE_COUNT];
+extern s_MemCard_BasicSaveInfo g_MemCard_BasicSaveInfo1[CARD_DEVICE_FILE_COUNT];
 
-extern s_MemCardInfo_BasicSaveInfo g_MemCard_2_BasicSaveInfo[CARD_DEVICE_FILE_COUNT];
+extern s_MemCard_BasicSaveInfo g_MemCard_BasicSaveInfo2[CARD_DEVICE_FILE_COUNT];
 
-extern s_MemCardInfo_BasicSaveInfo D_800B4580[CARD_DEVICE_FILE_COUNT];
+extern s_MemCard_BasicSaveInfo g_MemCard_BasicSaveInfo3[CARD_DEVICE_FILE_COUNT];
 
 /** @brief Defines if the game can use the memory card. */
-extern bool g_MemCardAvailibityStatus[2];
+extern bool g_MemCard_AvailibityStatus;
 
-extern s_CardWork g_CardWork; // 0x800B5488
+extern s32 pad_bss_800B5484;
 
-/** Declaration of the struct takes 224 bytes (0xE0 bytes in hex).
- * It is possible that the full size of the struct
- * is `0x1C/28` bytes, as `func_8002E94C` accesses 8 elements,
- * and multiplying 8 by 28 gives 224.
- *
- * Additionally, investigating the RAM affirms that every
- * `0x1C/28` bytes is the start address of a new element,
- * which the decompiled code seems to point to.
- */
+extern s_MemCardWork g_MemCardWork; // 0x800B5488
+
 extern s_800B5508 D_800B5508;
 
-/** @brief Basic information required to draw information of elements in save slots.
- * Address access is based on the slot: slot 1 = 0x801E09E0, slot 2 = 0x801E1440.
- * 
- * @note Macros for its references are in `saveload.h`:
- * `SAVEGAME_ENTRY_BUFFER_0`
- * `SAVEGAME_ENTRY_BUFFER_1`
- */
-extern s_SavegameEntry* g_ActiveSavegameEntry; // 0x800BCD2C
+extern s32 g_MemCard_PrevSavegameCount;
 
-extern u8 g_MemCardElementCount[MEMORY_CARD_SLOT_COUNT]; // 0x800BCD30
-
-extern s32 D_800BCD18[2];
-
-extern s32 D_800BCD20[2];
-
-extern u32 D_800BCD34;
-
-// Likely inacurrate name. Most of the time it is on state 3, even if the memory card is not inserted.
-// If player saves, it changes to 2.
-// Possibly indicates if the game is trying to write or read the memory card.
-// 2 - Saving, 3 - Loading.
-extern s8 D_800BCD38; // 0x800BCD38
-
-extern s8 D_800BCD39;
-
-extern s16 g_MemCardsTotalElementCount; // Counts all elements of all inserted memory cards.
-
-extern s8 D_800BCD40;
-
-extern u8 g_SlotElementCount[MEMORY_CARD_SLOT_COUNT];
-
-extern u8 g_SelectedSaveIdx;
-
-extern s8 g_SelectedFileIdx;
+extern s16 g_MemCard_SavegameCount;
 
 // ==========
 // FUNCTIONS
 // ==========
 
-void Savegame_CardCleanInit(void);
+/** @brief Initializes memory card system.
+ * This Initializes the entire memory card handling system while
+ * `MemCard_Init` exclusively initalizes the memory cards.
+ */
+void MemCard_SysInit(void);
 
-void Savegame_GameMemDataClear(s32 deviceId);
+/** @brief Clear memory card data in RAM. */
+void MemCard_RamClear(s32 deviceId);
 
-void Savegame_CardFileUsageClear(s32 deviceId);
+/** @brief Clear all files status. */
+void MemCard_FileStatusClear(s32 deviceId);
 
 bool Savegame_CardFilesAreAllUnused(s32 deviceId);
 
-void func_8002E7BC(void);
+void MemCard_SysInit2(void);
 
-void Savegame_CardDisable(void);
+/** @brief Disables memory card. */
+void MemCard_Disable(void);
 
 void func_8002E85C(void);
 
 void func_8002E86C(void);
 
-s32 func_8002E898(void);
+s32 MemCard_AllMemCardsStatusGet(void);
 
 void func_8002E8D4(void);
 
@@ -285,29 +274,31 @@ bool func_8002E94C(s32 arg0, s32 deviceId, s32 fileIdx, s32 saveIdx);
  */
 s32 func_8002E990(void);
 
-s32 Savegame_CardFilesGetUsageBits(s32 deviceId);
+s32 MemCard_AllFilesStatusGet(s32 deviceId);
 
-s_SavegameMetadata* Savegame_MetadataGet(s32 deviceId, s32 fileIdx, s32 saveIdx);
+s_Savegame_Metadata* MemCard_SaveMetadataGet(s32 deviceId, s32 fileIdx, s32 saveIdx);
 
-s32 Savegame_CardFileUsageCount(s32 deviceId);
+/** @brief Returns the count of files used in the memory card. */
+s32 MemCard_UsedFileCount(s32 deviceId);
 
-s32 Savegame_CardFileUsageFreeCount(s32 deviceId);
+/** @brief Returns the count available files in the memory card. */
+s32 MemCard_FreeFilesCount(s32 deviceId);
 
 bool func_8002EABC(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx);
 
 void func_8002EB88(void); // Return type assumed.
 
-void func_8002ECE0(s_800B55E8* arg0);
+void func_8002ECE0(s_MemCard_Status* arg0);
 
-void func_8002ED7C(s_800B55E8* arg0);
+void func_8002ED7C(s_MemCard_Status* arg0);
 
 s32 func_8002F278(s32 deviceId, s_CardDirectory* dir);
 
-void func_8002F2C4(s_800B55E8* arg0);
+void func_8002F2C4(s_MemCard_Status* arg0);
 
-void func_8002F61C(s_800B55E8* arg0);
+void func_8002F61C(s_MemCard_Status* arg0);
 
-void func_8002FB64(s_MemCardInfo_BasicSaveInfo* saveInfo);
+void func_8002FB64(s_MemCard_BasicSaveInfo* saveInfo);
 
 /** Copies user config into an `s_SaveUserConfigContainer` and calculates footer checksum. */
 void Savegame_UserConfigCopyWithChecksum(s_SaveUserConfigContainer* dest, s_SaveUserConfig* src);
@@ -324,12 +315,12 @@ void func_8002FDB0(s32 deviceId, s32 fileIdx, s32 saveIdx);
 void func_8002FE70(s32 deviceId, s_func_8002FE70* result);
 
 /** Updates the footer with the checksum of the given data. */
-void Savegame_ChecksumUpdate(s_SavegameFooter* saveFooter, s8* saveData, s32 saveDataLength);
+void Savegame_ChecksumUpdate(s_Savegame_Footer* saveFooter, s8* saveData, s32 saveDataLength);
 
 /** Generates a checksum of the given saveData and compares it against the checksum value in the footer.
  * Returns 1 if the checksums match, otherwise 0.
  */
-s32 Savegame_ChecksumValidate(s_SavegameFooter* saveFooter, s8* saveData, s32 saveDataLength); // 0x8002FF74
+s32 Savegame_ChecksumValidate(s_Savegame_Footer* saveFooter, s8* saveData, s32 saveDataLength); // 0x8002FF74
 
 /** Generates an 8-bit XOR checksum over the given data, only appears used with s_Savegame data. */
 u8 Savegame_ChecksumGenerate(s8* saveData, s32 saveDataLength);
@@ -348,43 +339,43 @@ s32 Savegame_CardFileErase(s32 deviceId, char* fileName);
 
 s32 Savegame_CardFileRename(s32 deviceId, char* prevName, char* newName);
 
-void Savegame_CardInit(void);
+void MemCard_Init(void);
 
-void Savegame_CardEventsInit(void);
+void MemCard_EventsInit(void);
 
-void Savegame_CardStateInit(void);
+void MemCard_StateInit(void);
 
-void Savegame_CardSwEventsInit(void);
+void MemCard_SwEventsInit(void);
 
-void Savegame_CardHwEventsInit(void);
+void MemCard_HwEventsInit(void);
 
-void Savegame_CardEventsClose(void);
+void MemCard_EventsClose(void);
 
-void Savegame_CardSwEventsClose(void);
+void MemCard_SwEventsClose(void);
 
-void Savegame_CardHwEventsClose(void);
+void MemCard_HwEventsClose(void);
 
-s32 Savegame_CardSwEventsTest(void);
+s32 MemCard_SwEventsTest(void);
 
-void Savegame_CardSwEventsReset(void);
+void MemCard_SwEventsReset(void);
 
-s32 Savegame_CardHwEventsTest(void);
+s32 MemCard_HwEventsTest(void);
 
-void Savegame_CardHwEventsReset(void);
+void MemCard_HwEventsReset(void);
 
-void Savegame_CardHwEventSpIOE(void);
+void MemCard_HwEventSpIOE(void);
 
-void Savegame_CardHwEventSpERROR(void);
+void MemCard_HwEventSpERROR(void);
 
-void Savegame_CardHwEventSpNEW(void);
+void MemCard_HwEventSpNEW(void);
 
-void Savegame_CardHwEventSpTIMOUT(void);
+void MemCard_HwEventSpTIMOUT(void);
 
-void Savegame_CardHwEventSpUNKNOWN(void);
+void MemCard_HwEventSpUNKNOWN(void);
 
-s32 Savegame_CardResult(void); /** `e_CardResult` */
+s32 MemCard_StateResult(void); /** `e_MemCardResult` */
 
-bool Savegame_CardRequest(e_CardIoMode mode, s32 deviceId, s_CardDirectory* outDir, char* filename, s32 createBlockCount, s32 fileOffset, void* outBuf, s32 bufSize);
+bool Savegame_CardRequest(e_MemCardIoMode mode, s32 deviceId, s_CardDirectory* outDir, char* filename, s32 createBlockCount, s32 fileOffset, void* outBuf, s32 bufSize);
 
 s32 Savegame_CardIsIdle(void);
 
@@ -405,5 +396,10 @@ s32 Savegame_CardState_FileOpen(void);
 s32 Savegame_CardState_FileReadWrite(void);
 
 void Savegame_DevicePathGenerate(s32 deviceId, char* res);
+
+/** @brief Checks if any file is corrupted, unused or used.
+ * If any file is used then it return false.
+ */
+bool MemCard_FilesAreNotUsedCheck(s32 idx);
 
 #endif

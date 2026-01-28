@@ -98,16 +98,16 @@ e_KcetLogoStateStep GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
     s32 saveEntryType1;
 
     // Memory cards not ready yet, rerun this on next frame.
-    if (!func_80033548())
+    if (func_80033548() == false)
     {
         return KcetLogoStateStep_CheckMemCards;
     }
 
-    g_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_BUFFER_0;
-    saveEntryType0        = g_ActiveSavegameEntry->type_4;
+    g_MemCard_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_BUFFER_0;
+    saveEntryType0                = g_MemCard_ActiveSavegameEntry->type_4;
 
-    g_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_BUFFER_1;
-    saveEntryType1        = g_ActiveSavegameEntry->type_4;
+    g_MemCard_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_BUFFER_1;
+    saveEntryType1                = g_MemCard_ActiveSavegameEntry->type_4;
 
     // No memory cards.
     if (saveEntryType0 == SavegameEntryType_NoMemCard && saveEntryType1 == SavegameEntryType_NoMemCard)
@@ -124,12 +124,12 @@ e_KcetLogoStateStep GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
 
     if (saveEntryType0 == SavegameEntryType_Save || saveEntryType1 == SavegameEntryType_Save)
     {
-        g_ActiveSavegameEntry = GetActiveSavegameEntry(g_SelectedSaveSlotIdx);
-        g_ActiveSavegameEntry = &g_ActiveSavegameEntry[g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]];
+        g_MemCard_ActiveSavegameEntry = GetActiveSavegameEntry(g_SelectedSaveSlotIdx);
+        g_MemCard_ActiveSavegameEntry = &g_MemCard_ActiveSavegameEntry[g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]];
 
-        D_800BCD40        = g_ActiveSavegameEntry->field_5;
-        g_SelectedFileIdx = g_ActiveSavegameEntry->fileIdx_6;
-        g_SelectedSaveIdx = g_ActiveSavegameEntry->elementIdx_7;
+        D_800BCD40                    = g_MemCard_ActiveSavegameEntry->field_5;
+        g_SelectedFileIdx             = g_MemCard_ActiveSavegameEntry->fileIdx_6;
+        g_Savegame_SelectedElementIdx = g_MemCard_ActiveSavegameEntry->elementIdx_7;
 
         return KcetLogoStateStep_HasSaveGame;
     }

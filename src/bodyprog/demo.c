@@ -200,7 +200,7 @@ s32 Demo_StateGet(s32 gameState)
             {
                 return DemoState_Exit;
             }
-            else if (g_GameWork.gameStatePrev_590 == GameState_Unk10)
+            else if (g_GameWork.gameStatePrev_590 == GameState_SaveScreen)
             {
                 return DemoState_Exit;
             }

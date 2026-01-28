@@ -2277,8 +2277,6 @@ extern s8 g_Demo_ReproducedCount;
 
 extern s32 g_MainMenu_NewGameSelectedDifficultyIdx;
 
-extern s32 g_PrevSavegameCount;
-
 extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
 
 extern u32 D_800A9AAC[];
@@ -2508,8 +2506,6 @@ extern u16 D_800BCCB2;
  * 16    - Fades to black.
  */
 extern s32 g_Screen_FadeStatus;
-
-extern s16 g_SavegameCount;
 
 /** @brief Test if demo loading should be reinitialized.
  * This is used exclusively in `GameFs_MapStartup` with
@@ -4107,9 +4103,6 @@ void Settings_RestoreDefaults(void);
 void Settings_RestoreControlDefaults(s32 arg0);
 
 void nullsub_800334C8(void);
-
-// Possibly related to save functionallity.
-s32 func_800334D8(s32 idx);
 
 bool func_80033548(void);
 

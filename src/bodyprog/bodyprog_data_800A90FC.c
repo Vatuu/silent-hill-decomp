@@ -1,4 +1,7 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/savegame.h"
+#include "screens/saveload.h"
+#include "bodyprog/memcard.h"
 #include "bodyprog/math/math.h"
 #include "screens/b_konami/b_konami.h"
 
@@ -489,19 +492,19 @@ void (*g_GameStateUpdateFuncs[])(void) = {
     GameState_Unk15_Update
 };
 
-u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
+u8 g_SlotElementSelectedIdx[CARD_SLOT_COUNT] = { 0, 0 };
 s8 g_SelectedSaveSlotIdx = 0;
 u8 D_800A97D7 = 0;
-u8 D_800A97D8 = 0xFF;
+s8 D_800A97D8 = 0xFF;
 s8 D_800A97D9 = 0;
 s8 D_800A97DA = 0;
 s8 D_800A97DB = 0;
-s32 D_800A97DC = 0; /** `e_SavegameEntryType` */
-s8 D_800A97E0 = 0xFF;
+s32 D_800A97DC = 0; /** `e_SavegameEntryType` */  // Static variable. Remove when migrating data.
+s8 D_800A97E0 = 0xFF; // Static variable. Remove when migrating data.
 s8 D_800A97E1 = 0;
 s8 D_800A97E2 = 0;
 s8 D_800A97E3 = 0;
-u32 D_800A97E4[8] = {};
+u32 allFileStatus[8] = {}; // Static variable. Remove when migrating data.
 
 /** @brief Task commands for `SD_Call` to load BGM KDT and VAB files. */
 u16 g_BgmTaskLoadCmds[] = {

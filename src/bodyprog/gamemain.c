@@ -8,8 +8,11 @@
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/joy.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/memcard.h"
 #include "bodyprog/sound_system.h"
+
+#include "bodyprog/savegame.h"
+#include "screens/saveload.h"
+#include "bodyprog/memcard.h"
 
 // q19_12  g_DeltaTime2;
 // s32     g_MainLoop_FrameCount;
@@ -110,8 +113,8 @@ void MainLoop(void) // 0x80032EE0
 
     // Initialize engine.
     GsInitVcount();
-    Savegame_CardCleanInit();
-    func_8002E7BC();
+    MemCard_SysInit();
+    MemCard_SysInit2();
     func_8002E85C();
     Joy_Init();
     VSyncCallback(&Screen_VSyncCallback);

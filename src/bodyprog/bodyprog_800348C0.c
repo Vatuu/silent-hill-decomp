@@ -5,13 +5,13 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/savegame.h"
 #include "bodyprog/credits.h"
 #include "bodyprog/demo.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/memcard.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
@@ -221,7 +221,7 @@ void GameFs_MapStartup(void) // 0x80034964
                     AreaLoad_TransitionSound();
                 }
 
-                Savegame_CardDisable();
+                MemCard_Disable();
                 g_GameWork.gameStateStep_598[0]++;
             }
             break;
@@ -3381,7 +3381,7 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
 
                 gameState = g_GameWork.gameState_594;
 
-                g_GameWork.gameState_594 = GameState_Unk10;
+                g_GameWork.gameState_594 = GameState_SaveScreen;
 
                 g_SysWork.timer_1C = 0;
                 g_SysWork.timer_20 = 0;

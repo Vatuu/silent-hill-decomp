@@ -26,7 +26,7 @@ options:
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
 
-  section_order: [".rodata", ".text", ".data"]
+  section_order: [".rodata", ".text", ".data", ".bss"]
 
   symbol_addrs_path:
     - configs/USA/screens/sym.saveload.txt
@@ -62,7 +62,7 @@ segments:
 
       # .data section
       - [0x4EA8, .data, saveload]
-      - [0x4F84, data]
+      - [0x4F54, .bss, saveload]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data

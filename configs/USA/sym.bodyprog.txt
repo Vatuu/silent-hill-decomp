@@ -175,15 +175,16 @@ hack_vcSetWatchTgtXzPos_fix                 = 0x8002B2B4; // type:s32 - Some 0x8
 //--------------------------------------------------------------------
 //--- PA: 0x009AD0   VA: 0x8002E630   subsegment: c, memcard/memcard_1
 //--------------------------------------------------------------------
-Savegame_CardCleanInit                      = 0x8002E630; // type:func
-Savegame_GameMemDataClear                   = 0x8002E6E4; // type:func
-Savegame_CardFileUsageClear                 = 0x8002E730; // type:func
+MemCard_SysInit                      = 0x8002E630; // type:func
+MemCard_RamClear                   = 0x8002E6E4; // type:func
+MemCard_FileStatusClear                 = 0x8002E730; // type:func
 Savegame_CardFilesAreAllUnused              = 0x8002E76C; // type:func
-Savegame_CardDisable                        = 0x8002E830; // type:func
-Savegame_CardFilesGetUsageBits              = 0x8002E9A0; // type:func
-Savegame_MetadataGet                        = 0x8002E9EC; // type:func
-Savegame_CardFileUsageCount                 = 0x8002EA28; // type:func
-Savegame_CardFileUsageFreeCount             = 0x8002EA78; // type:func
+MemCard_Disable                        = 0x8002E830; // type:func
+g_SelectedDeviceId = 0x800BCD40;
+MemCard_AllFilesStatusGet              = 0x8002E9A0; // type:func
+MemCard_SaveMetadataGet                        = 0x8002E9EC; // type:func
+MemCard_UsedFileCount                 = 0x8002EA28; // type:func
+MemCard_FreeFilesCount             = 0x8002EA78; // type:func
 Savegame_UserConfigCopyWithChecksum         = 0x8002FBB4; // type:func
 Savegame_CopyWithChecksum                   = 0x8002FCCC; // type:func
 Savegame_ChecksumUpdate                     = 0x8002FF30; // type:func
@@ -195,24 +196,26 @@ Savegame_CardDeviceTest                     = 0x80030288; // type:func
 Savegame_CardDeviceFormat                   = 0x8003030C; // type:func
 Savegame_CardFileErase                      = 0x80030334; // type:func
 Savegame_CardFileRename                     = 0x80030370; // type:func
-Savegame_CardInit                           = 0x800303E4; // type:func
-Savegame_CardEventsInit                     = 0x80030414; // type:func
-Savegame_CardStateInit                      = 0x80030444; // type:func
-Savegame_CardSwEventsInit                   = 0x8003045C; // type:func
-Savegame_CardHwEventsInit                   = 0x80030530; // type:func
-Savegame_CardEventsClose                    = 0x80030640; // type:func
-Savegame_CardSwEventsClose                  = 0x80030668; // type:func
-Savegame_CardHwEventsClose                  = 0x800306C8; // type:func
-Savegame_CardSwEventsTest                   = 0x80030734; // type:func
-Savegame_CardSwEventsReset                  = 0x800307BC; // type:func
-Savegame_CardHwEventsTest                   = 0x80030810; // type:func
-Savegame_CardHwEventsReset                  = 0x80030820; // type:func
-Savegame_CardHwEventSpIOE                   = 0x80030884; // type:func
-Savegame_CardHwEventSpERROR                 = 0x80030894; // type:func
-Savegame_CardHwEventSpNEW                   = 0x800308A4; // type:func
-Savegame_CardHwEventSpTIMOUT                = 0x800308B4; // type:func
-Savegame_CardHwEventSpUNKNOWN               = 0x800308C4; // type:func
-Savegame_CardResult                         = 0x800308D4; // type:func
+MemCard_Init                           = 0x800303E4; // type:func
+MemCard_SysInit2 = 0x8002E7BC;
+func_8002E8E4 = 0x8002E8E4;
+MemCard_EventsInit                     = 0x80030414; // type:func
+MemCard_StateInit                      = 0x80030444; // type:func
+MemCard_SwEventsInit                   = 0x8003045C; // type:func
+MemCard_HwEventsInit                   = 0x80030530; // type:func
+MemCard_EventsClose                    = 0x80030640; // type:func
+MemCard_SwEventsClose                  = 0x80030668; // type:func
+MemCard_HwEventsClose                  = 0x800306C8; // type:func
+MemCard_SwEventsTest                   = 0x80030734; // type:func
+MemCard_SwEventsReset                  = 0x800307BC; // type:func
+MemCard_HwEventsTest                   = 0x80030810; // type:func
+MemCard_HwEventsReset                  = 0x80030820; // type:func
+MemCard_HwEventSpIOE                   = 0x80030884; // type:func
+MemCard_HwEventSpERROR                 = 0x80030894; // type:func
+MemCard_HwEventSpNEW                   = 0x800308A4; // type:func
+MemCard_HwEventSpTIMOUT                = 0x800308B4; // type:func
+MemCard_HwEventSpUNKNOWN               = 0x800308C4; // type:func
+MemCard_StateResult                         = 0x800308D4; // type:func
 Savegame_CardRequest                        = 0x800308E4; // type:func
 Savegame_CardIsIdle                         = 0x800309FC; // type:func
 Savegame_CardUpdate                         = 0x80030A0C; // type:func
@@ -2267,7 +2270,7 @@ g_MainMenu_SelectedEntry                    = 0x800A9A78;
 g_MainMenu_VisibleEntryFlags                = 0x800A9A7C;
 g_Demo_ReproducedCount                      = 0x800A9A80;
 g_MainMenu_NewGameSelectedDifficultyIdx     = 0x800A9A84;
-g_PrevSavegameCount                         = 0x800A9A88;
+g_MemCard_PrevSavegameCount                         = 0x800A9A88;
 
 //------------------------------------------------------------------------
 //--- PA: 0x084F2C   VA: 0x800A9A8C   subsegment: .data, bodyprog_8003AB28
@@ -2649,11 +2652,11 @@ chantype                                    = 0x800B25C8; // type:s32 static for
 //-----------------------------------------------------------------------
 //--- PA: 0x08DAB8   VA: 0x800B2618   subsegment: .bss, memcard/memcard_1
 //-----------------------------------------------------------------------
-g_MemCard_1_BasicSaveInfo                   = 0x800B2780;
-g_MemCard_2_BasicSaveInfo                   = 0x800B3680;
-g_MemCardAvailibityStatus                   = 0x800B5480;
-// D_800B4580                                  = 0x800B4580;
-g_CardWork                                  = 0x800B5488; // size:0x80
+g_MemCard_BasicSaveInfo1                   = 0x800B2780;
+g_MemCard_BasicSaveInfo2                   = 0x800B3680;
+g_MemCard_AvailibityStatus                   = 0x800B5480;
+g_MemCard_BasicSaveInfo3                                  = 0x800B4580;
+g_MemCardWork                                  = 0x800B5488; // size:0x80
 D_800B5508                                  = 0x800B5508; // size:0x718
 
 //----------------------------------------------------------------------------
@@ -2699,13 +2702,17 @@ g_Screen_FadeStatus                         = 0x800BCD0C;
 //----------------------------------------------------------------------
 //--- PA: 0x0981B8   VA: 0x800BCD18   subsegment: bss, memcard/memcard_2
 //----------------------------------------------------------------------
-g_SavegameCount                             = 0x800BCD28;
-g_ActiveSavegameEntry                       = 0x800BCD2C;
-g_MemCardElementCount                       = 0x800BCD30;
+g_MemCard_SavegameCount                             = 0x800BCD28;
+g_MemCard_ActiveSavegameEntry                       = 0x800BCD2C;
+g_Savegame_ElementCount0                       = 0x800BCD30;
+g_MemCard_AllMemCardsStatus                                  = 0x800BCD34;
 D_800BCD38                                  = 0x800BCD38;
-g_MemCardsTotalElementCount                 = 0x800BCD3A;
-g_SlotElementCount                          = 0x800BCD3C;
-g_SelectedSaveIdx                           = 0x800BCD3E;
+MemCard_FilesAreNotUsedCheck = 0x800334D8;
+allFileStatus = 0x800A97E4;
+MemCard_AllMemCardsStatusGet = 0x8002E898;
+g_MemCard_TotalElementsCount                 = 0x800BCD3A;
+g_Savegame_ElementCount1                          = 0x800BCD3C;
+g_Savegame_SelectedElementIdx                           = 0x800BCD3E;
 g_SelectedFileIdx                           = 0x800BCD3F;
 
 //---------------------------------------------------
