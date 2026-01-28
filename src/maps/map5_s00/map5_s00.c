@@ -252,7 +252,7 @@ bool func_800CB25C(POLY_FT4** poly, s32 arg1) // 0x800CB25C
 
 #include "maps/shared/Ai_HangedScratcher_Control_4.h"
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_5);
+#include "maps/shared/Ai_HangedScratcher_Control_5.h"
 
 #include "maps/shared/Ai_HangedScratcher_Control_6.h"
 
