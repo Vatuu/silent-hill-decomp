@@ -26,7 +26,6 @@ void Ai_HangedScratcher_Update(s_SubCharacter* scratcher, s_AnmHeader* anmHdr, G
 void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
 {
     s32    i;
-    q51_12 healthBaseHard;
     q19_12 radiusMax;
     q19_12 radiusMin;
 
@@ -36,9 +35,7 @@ void Ai_HangedScratcher_Init(s_SubCharacter* scratcher)
     scratcher->health_B0 = Q12(350.0f);
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
     {
-        // TODO: Weird health value, and not sure why `s64` is needed to match - maybe some `s64` multiply was optimized out?
-        healthBaseHard       = Q12(472.44873f);
-        scratcher->health_B0 = healthBaseHard;
+        scratcher->health_B0 = Q12_MULT_PRECISE(scratcher->health_B0, Q12(1.35f)); // 472.44873f
     }
 
     scratcher->moveSpeed_38    = Q12(0.0f);
