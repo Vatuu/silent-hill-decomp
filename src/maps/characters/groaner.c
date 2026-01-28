@@ -865,8 +865,7 @@ void sharedFunc_800E4E84_2_s00(s_SubCharacter* groaner)
         }
     }
 
-    // TODO: Wrong RNG macro.
-    if (Rng_TestProbabilityBits(12) < var_s0_2)
+    if (Rng_GenerateUInt(0, Q12(1.0f) - 1) < var_s0_2)
     {
         groaner->model_0.controlState_2 = GroanerControl_2;
     }

@@ -39,10 +39,10 @@ void func_800CB0D8(void) // 0x800CB0D8
         }
 
         D_800DAB90[idx].field_B = 1;
-        D_800DAB90[idx].field_0 = Rng_GenerateInt(0, 6143) - 0x5CC00;
+        D_800DAB90[idx].field_0 = Rng_GenerateInt(Q12(-92.75f), Q12(-91.25f) - 1);
         D_800DAB90[idx].field_8 = 0x800;
-        D_800DAB90[idx].field_4 = Rng_GenerateInt(0, 6143) + 0x7599;
-        D_800DAB90[idx].field_C = Rng_TestProbabilityBits(12);
+        D_800DAB90[idx].field_4 = Rng_GenerateInt(Q12(7.35f), Q12(8.85f) - 1);
+        D_800DAB90[idx].field_C = Rng_GenerateUInt(0, Q12(1.0f) - 1);
         D_800DAB90[idx].field_E = Rng_GenerateInt(0, 2);
     }
 }
@@ -381,7 +381,7 @@ void func_800D61D4(void) // 0x800D61D4
                 tab[j] = val;
             }
 
-            if (!Rng_TestProbabilityBits(12))
+            if (!Rng_GenerateUInt(0, 4095))
             {
                 tab[j] = 0;
             }

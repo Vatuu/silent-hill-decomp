@@ -460,7 +460,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                 temp_s0_3 = SquareRoot0(SQUARE((D_800DB8C8[7].vx - g_SysWork.playerWork_4C.player_0.position_18.vx) >> 6) +
                                         SQUARE((D_800DB8C8[7].vz - g_SysWork.playerWork_4C.player_0.position_18.vz) >> 6));
 
-                temp       = Rng_TestProbabilityBits(12) + Q12(1.0f);
+                temp       = Rng_GenerateUInt(Q12(1.0f), Q12(2.0f) - 1);
                 temp_s0_3  = temp_s0_3 << 6;
                 temp_v0_14 = Q12_MULT_PRECISE(temp_s0_3, temp);
 
@@ -469,7 +469,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                 sp20[1].vz = g_SysWork.playerWork_4C.player_0.position_18.vz + g_SysWork.playerWork_4C.player_0.field_D8.offsetZ_2 +
                              Q12_MULT(temp_v0_14, Math_Cos(temp_s1));
 
-                temp_v0_4 = Q12_MULT_PRECISE(g_SysWork.playerWork_4C.player_0.position_18.vy - D_800DB8C8[7].vy, Rng_TestProbabilityBits(12) + Q12(1.0f));
+                temp_v0_4 = Q12_MULT_PRECISE(g_SysWork.playerWork_4C.player_0.position_18.vy - D_800DB8C8[7].vy, Rng_GenerateUInt(Q12(1.0f), Q12(2.0f) - 1));
 
                 temp_a2_2 = g_SysWork.playerWork_4C.player_0.field_C8.field_6;
 
@@ -488,7 +488,7 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
                     for (i = 0; i < 2; i++)
                     {
                         temp_s3_2 = Rng_TestProbabilityBits(11);
-                        angle = Rng_TestProbabilityBits(12);
+                        angle = Rng_GenerateUInt(0, FP_ANGLE(360.0f) - 1);
                         temp_s0_4 = Math_Sin(angle);
 
                         sp20[2].vx = sp20[1].vx + Q12_MULT(temp_s3_2, temp_s0_4) +

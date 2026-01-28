@@ -416,7 +416,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                 larvalStalkerProps.angle_108 = Chara_HeadingAngleGet(larvalStalker, Q12(2.0f), larvalStalkerProps.targetPositionX, larvalStalkerProps.targetPositionZ, Q12(1.0f), false);
                 if (larvalStalkerProps.angle_108 == Q12(1.0f)) 
                 {
-                    larvalStalkerProps.angle_108 = Rng_TestProbabilityBits(12);
+                    larvalStalkerProps.angle_108 = Rng_GenerateUInt(0, FP_ANGLE(360.0f) - 1);
                 }
             }
 

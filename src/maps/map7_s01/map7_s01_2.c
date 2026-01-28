@@ -2062,7 +2062,7 @@ void func_800DD348(void* unused, s32 idx, u8 val) // 0x800DD348
 void Map_WorldObjectsInit(void) // 0x800DD368
 {
     D_800E2CE8 = 0;
-    D_800E33A0 = Rng_GenerateInt(0, 16383);
+    D_800E33A0 = Rng_GenerateInt(0, Q12(4.0f) - 1);
     D_800E33A4 = 0;
 
     WorldObjectInit(&g_WorldObject_Diary, "DIARY_HI", -180.0f, 0.0f, -140.755f, 0.0f, 180.0f, 0.0f);

@@ -1692,7 +1692,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
         }
 
         func_8005DC1C(var_a0, &twinfeeler->position_18, Q8(0.5f), 0);
-        twinfeeler->properties_E4.twinfeeler.field_E8.val32 = Rng_GenerateInt(0x1000, 0x1CCB);
+        twinfeeler->properties_E4.twinfeeler.field_E8.val32 = Rng_GenerateInt(Q12(1.0f), Q12(1.8f) - 1);
     }
     else
     {

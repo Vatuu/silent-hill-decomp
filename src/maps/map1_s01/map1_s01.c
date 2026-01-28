@@ -100,7 +100,7 @@ void Ai_Cat_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 
     if (cond)
     {
-        func_8005DD44(1447, &chara->position_18, Q8_CLAMPED(0.5f), Rng_GenerateInt(-7, 8u));
+        func_8005DD44(1447, &chara->position_18, Q8_CLAMPED(0.5f), Rng_GenerateUInt(-7, 8));
         chara->properties_E4.dummy.properties_E8[0].val8[0] ^= 1;
     }
 }

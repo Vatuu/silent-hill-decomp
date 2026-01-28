@@ -484,8 +484,8 @@ void Ai_Romper_Control_2(s_SubCharacter* romper)
     if (Math_Vector2MagCalc(romper->position_18.vx - romperProps.targetPositionX_FC,
                             romper->position_18.vz - romperProps.targetPositionZ_100) < Q12(1.0f))
     {
-        moveDist                                   = Rng_GenerateInt(Q12(0.0f), Q12(5.0f) - 1);
-        headingAngle                               = Rng_TestProbabilityBits(12); // TODO: Wrong macro.
+        moveDist                        = Rng_GenerateInt(Q12(0.0f), Q12(5.0f) - 1);
+        headingAngle                    = Rng_GenerateUInt(0, FP_ANGLE(360.0f) - 1);
         romperProps.targetPositionX_FC  = romperProps.positionZ_110 + Q12_MULT(moveDist, Math_Sin(headingAngle));
         romperProps.targetPositionZ_100 = romperProps.positionX_108 + Q12_MULT(moveDist, Math_Cos(headingAngle));
     }

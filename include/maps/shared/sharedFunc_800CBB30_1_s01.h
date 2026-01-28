@@ -71,7 +71,7 @@ bool sharedFunc_800CBB30_1_s01(POLY_FT4** poly, s32 idx)
 
     if (sharedData_800DFB7C_0_s00[idx].field_C.field_0 > Q12(1.0f) || sharedData_800DEE50_1_s01.field_10 == Q12(0.25f))
     {
-        if (sharedData_800DEE50_1_s01.field_1C == 0 && Math_Cos(sharedData_800DEE50_1_s01.field_10) < Rng_TestProbabilityBits(12))
+        if (sharedData_800DEE50_1_s01.field_1C == 0 && Math_Cos(sharedData_800DEE50_1_s01.field_10) < Rng_GenerateUInt(0, FP_ANGLE(360.0f) - 1))
         {
             sharedData_800DFB7C_0_s00[idx].field_A = 0;
         }
