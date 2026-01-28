@@ -501,10 +501,7 @@ void sharedFunc_800D3308_0_s00(s_SubCharacter* stalker)
         }
     }
 
-    stalker->damage_B4.amount_C      = Q12(0.0f);
-    stalker->damage_B4.position_0.vz = Q12(0.0f);
-    stalker->damage_B4.position_0.vy = Q12(0.0f);
-    stalker->damage_B4.position_0.vx = Q12(0.0f);
+    Chara_DamageClear(stalker);
 }
 
 void Ai_Stalker_ControlUpdate(s_SubCharacter* stalker)

@@ -220,10 +220,7 @@ void sharedFunc_800D7EE8_1_s02(s_SubCharacter* creeper)
 
     if (creeper->damage_B4.amount_C < Q12(200.0f) || creeper->health_B0 <= Q12(0.0f))
     {
-        creeper->damage_B4.amount_C      = Q12(0.0f);
-        creeper->damage_B4.position_0.vz = Q12(0.0f);
-        creeper->damage_B4.position_0.vy = Q12(0.0f);
-        creeper->damage_B4.position_0.vx = Q12(0.0f);
+        Chara_DamageClear(creeper);
     }
 }
 

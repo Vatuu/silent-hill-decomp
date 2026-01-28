@@ -272,10 +272,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
 
     if (romper->damage_B4.amount_C == Q12(0.0f) || romper->health_B0 <= Q12(0.0f))
     {
-        romper->damage_B4.amount_C      = Q12(0.0f);
-        romper->damage_B4.position_0.vz = Q12(0.0f);
-        romper->damage_B4.position_0.vy = Q12(0.0f);
-        romper->damage_B4.position_0.vx = Q12(0.0f);
+        Chara_DamageClear(romper);
         return;
     }
 
@@ -378,10 +375,8 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
 
     romperProps.field_10E    = 0;
     romperProps.rotationY_F2 = FP_ANGLE(360.0f);
-    romper->damage_B4.amount_C                = Q12(0.0f);
-    romper->damage_B4.position_0.vz           = Q12(0.0f);
-    romper->damage_B4.position_0.vy           = Q12(0.0f);
-    romper->damage_B4.position_0.vx           = Q12(0.0f);
+    
+    Chara_DamageClear(romper);
 
     if (prevControlState != romper->model_0.controlState_2)
     {

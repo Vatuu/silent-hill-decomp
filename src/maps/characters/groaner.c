@@ -180,13 +180,12 @@ void sharedFunc_800E33DC_2_s00(s_SubCharacter* groaner)
     temp_v0 = FP_TO(groaner->damage_B4.position_0.vy, Q12_SHIFT);
 
     groaner->headingAngle_3C = newHeadingAngle;
-    groaner->damage_B4.amount_C                             = Q12(0.0f);
-    groaner->damage_B4.position_0.vz                        = Q12(0.0f);
-    groaner->damage_B4.position_0.vy                        = Q12(0.0f);
-    groaner->damage_B4.position_0.vx                        = Q12(0.0f);
-    groanerProps.flags_E8.val16[0]                         |= GroanerFlag_1;
-    groaner->moveSpeed_38                                   = FP_TO(unkDist, Q12_SHIFT) / Q12(1.2f);
-    groaner->field_34                                      += temp_v0 / Q12(1.2f);
+
+    Chara_DamageClear(groaner);
+
+    groanerProps.flags_E8.val16[0] |= GroanerFlag_1;
+    groaner->moveSpeed_38           = FP_TO(unkDist, Q12_SHIFT) / Q12(1.2f);
+    groaner->field_34              += temp_v0 / Q12(1.2f);
 
     if (groanerProps.flags_E8.val16[0] & GroanerFlag_3)
     {

@@ -918,10 +918,7 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
         }
     }
 
-    incubus->damage_B4.amount_C = Q12(0.0f);
-    incubus->damage_B4.position_0.vz = Q12(0.0f);
-    incubus->damage_B4.position_0.vy = Q12(0.0f);
-    incubus->damage_B4.position_0.vx = Q12(0.0f);
+    Chara_DamageClear(incubus);
 }
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DDCC4);
@@ -1283,10 +1280,7 @@ void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
         }
     }
 
-    chara->damage_B4.amount_C      = Q12(0.0f);
-    chara->damage_B4.position_0.vz = Q12(0.0f);
-    chara->damage_B4.position_0.vy = Q12(0.0f);
-    chara->damage_B4.position_0.vx = Q12(0.0f);
+    Chara_DamageClear(chara);
 }
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DFE10);

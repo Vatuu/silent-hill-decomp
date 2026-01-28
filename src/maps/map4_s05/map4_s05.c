@@ -154,8 +154,8 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
 
         if (var_a1 < floatstingerProps.field_108)
         {
-            floatstinger->damage_B4.amount_C                  -= floatstingerProps.field_108 - var_a1;
-            floatstingerProps.field_108 = var_a1;
+            floatstinger->damage_B4.amount_C -= floatstingerProps.field_108 - var_a1;
+            floatstingerProps.field_108       = var_a1;
             if (floatstinger->damage_B4.amount_C < Q12(0.0f))
             {
                 floatstinger->damage_B4.amount_C = Q12(0.0f);
@@ -209,10 +209,7 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
         floatstingerProps.flags_E8 |= FloatstingerFlag_1;
     }
 
-    floatstinger->damage_B4.amount_C      = Q12(0.0f);
-    floatstinger->damage_B4.position_0.vz = Q12(0.0f);
-    floatstinger->damage_B4.position_0.vy = Q12(0.0f);
-    floatstinger->damage_B4.position_0.vx = Q12(0.0f);
+    Chara_DamageClear(floatstinger);
 
     Player_DisableDamage(&sp20, floatstinger->health_B0 == Q12(0.0f));
 }

@@ -170,15 +170,12 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
                 {
                     scratcher->health_B0 = 1;
 
-                    if ((Rng_Rand16() & 0xF) < 12)
+                    if (Rng_GenerateUInt(0, 15) < 12)
                     {
                         scratcher->moveSpeed_38    = prevMoveSpeed;
                         scratcher->headingAngle_3C = prevHeadingAngle;
 
-                        scratcher->damage_B4.amount_C      = Q12(0.0f);
-                        scratcher->damage_B4.position_0.vz = Q12(0.0f);
-                        scratcher->damage_B4.position_0.vy = Q12(0.0f);
-                        scratcher->damage_B4.position_0.vx = Q12(0.0f);
+                        Chara_DamageClear(scratcher);
                         return;
                     }
                 }
@@ -237,10 +234,7 @@ void sharedFunc_800CFF74_5_s00(s_SubCharacter* scratcher)
         scratcherProps.flags_E8 |= HangedScratcherFlag_4;
     }
 
-    scratcher->damage_B4.amount_C      = Q12(0.0f);
-    scratcher->damage_B4.position_0.vz = Q12(0.0f);
-    scratcher->damage_B4.position_0.vy = Q12(0.0f);
-    scratcher->damage_B4.position_0.vx = Q12(0.0f);
+    Chara_DamageClear(scratcher);
 }
 
 void Ai_HangedScratcher_ControlUpdate(s_SubCharacter* scratcher)

@@ -255,10 +255,7 @@ void Ai_SplitHead_DamageTake(s_SubCharacter* splitHead)
         splitHeadProps.flags_E8 |= SplitHeadFlag_6 | SplitHeadFlag_7;
     }
 
-    splitHead->damage_B4.amount_C      = Q12(0.0f);
-    splitHead->damage_B4.position_0.vz = Q12(0.0f);
-    splitHead->damage_B4.position_0.vy = Q12(0.0f);
-    splitHead->damage_B4.position_0.vx = Q12(0.0f);
+    Chara_DamageClear(splitHead);
 
     Player_DisableDamage(&isPlayerDead, splitHead->health_B0 == 0);
 }

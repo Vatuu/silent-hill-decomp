@@ -1943,10 +1943,7 @@ void func_800D3E58(s_SubCharacter* chara) // 0x800D3E58
         }
     }
 
-    chara->damage_B4.amount_C      = Q12(0.0f);
-    chara->damage_B4.position_0.vz = Q12(0.0f);
-    chara->damage_B4.position_0.vy = Q12(0.0f);
-    chara->damage_B4.position_0.vx = Q12(0.0f);
+    Chara_DamageClear(chara);
 }
 
 void func_800D3FB0(s_SubCharacter* chara) // 0x800D3FB0
