@@ -16,7 +16,36 @@ INCLUDE_RODATA("maps/map5_s00/nonmatchings/map5_s00", D_800C9578);
 
 INCLUDE_RODATA("maps/map5_s00/nonmatchings/map5_s00", g_MapOverlayHeader);
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800CB0D8);
+void func_800CB0D8(void) // 0x800CB0D8
+{
+    s32 idx;
+    s32 i;
+
+    idx = func_8005E7E0(32);
+    if (idx == -1)
+    {
+        return;
+    }
+
+    D_800DAB90[idx].field_B = 0;
+    D_800DAB90[idx].field_E = Rng_GenerateInt(0, 2);
+
+    for (i = 0; i < 12; i++)
+    {
+        idx = func_8005E7E0(32);
+        if (idx == -1)
+        {
+            break;
+        }
+
+        D_800DAB90[idx].field_B = 1;
+        D_800DAB90[idx].field_0 = Rng_GenerateInt(0, 6143) - 0x5CC00;
+        D_800DAB90[idx].field_8 = 0x800;
+        D_800DAB90[idx].field_4 = Rng_GenerateInt(0, 6143) + 0x7599;
+        D_800DAB90[idx].field_C = Rng_TestProbabilityBits(12);
+        D_800DAB90[idx].field_E = Rng_GenerateInt(0, 2);
+    }
+}
 
 bool func_800CB25C(POLY_FT4** poly, s32 arg1) // 0x800CB25C
 {
@@ -258,21 +287,188 @@ INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", Ai_HangedScratcher_Control_5)
 // TODO: Move this line into separate `Chara_Creeper` split.
 #include "../src/maps/characters/creeper.c" // 0x800D387C
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D5B00);
+void func_800D5B00(void)
+{
+    s32                  temp_s0;
+    s32                  temp_s1;
+    s32                  temp_v0_2;
+    s32                  var_s3;
+    s32                  i;
+    s_func_800D5B00_D94* ptr;
+    s32                  temp_lo;
+    s_func_800D5B00*     base;
+
+    base = (s_func_800D5B00*)FS_BUFFER_1;
+    ptr  = base->field_D94;
+
+    for (i = 0; i < 200; i++, ptr++)
+    {
+        ptr->field_34   = Rng_GenerateInt(0, 4914);
+        ptr->field_0.vx = 0;
+        ptr->field_0.vy = 0;
+        ptr->field_0.vz = 0;
+        ptr->field_30   = 0xFF;
+
+        temp_s0 = Rng_Rand16();
+
+        if (Math_Sin(temp_s0) < 0)
+        {
+            var_s3 = Math_Sin(temp_s0);
+        }
+        else
+        {
+            var_s3 = -Math_Sin(temp_s0);
+        }
+
+        temp_s1   = Math_Cos(temp_s0);
+        temp_v0_2 = Rng_Rand16();
+
+        temp_s0 = Q12_MULT(Math_Sin(temp_v0_2), temp_s1);
+        temp_lo = Q12_MULT(Math_Cos(temp_v0_2), temp_s1);
+
+        ptr->field_20.vx = Q12_MULT_PRECISE(temp_s0, 0x1CCC);
+        ptr->field_20.vy = Q12_MULT_PRECISE(var_s3, 0x4666);
+        ptr->field_20.vz = Q12_MULT_PRECISE(temp_lo, 0x1CCC);
+    }
+}
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D5CC4);
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D5D90);
+void func_800D5D90(void) // 0x800D5D90
+{
+    SVECTOR              sp10;
+    DVECTOR              sp18[2];
+    s32                  sp20;
+    s32                  i;
+    s_func_800D5B00_D94* ptr;
+    s_func_800D5B00*     base;
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D5EA8);
+    base = (s_func_800D5B00*)FS_BUFFER_1;
+    ptr  = base->field_D94;
+
+    for (i = 0; i < 200; i++, ptr++)
+    {
+        if (ptr->field_34 < 0)
+        {
+            sp10.vx = ptr->field_0.vx >> 8;
+            sp10.vy = ptr->field_0.vy >> 8;
+            sp10.vz = ptr->field_0.vz >> 8;
+
+            RotTransPers(&sp10, &sp18[0], &sp18[1], &sp20);
+            func_800D5CC4(sp18[0].vx, sp18[0].vy, ptr->field_30);
+
+            ptr->field_0.vx += ptr->field_20.vx;
+            ptr->field_0.vy  = ptr->field_0.vy + ptr->field_20.vy + 0x1333;
+            ptr->field_0.vz += ptr->field_20.vz;
+            ptr->field_30    = ptr->field_30 - 0x14;
+            ptr->field_30    = MAX(ptr->field_30, 0);
+        }
+        else
+        {
+            ptr->field_34 -= g_DeltaTime0;
+        }
+    }
+}
+
+s32 func_800D5EA8(s32 arg0, s32 arg1) // 0x800D5EA8
+{
+    s_func_800D5B00* buf = (s_func_800D5B00*)FS_BUFFER_1;
+
+    return D_800DA154[buf->field_5D[arg1 * 41 + arg0]];
+}
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D5EE8);
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D61D4);
+void func_800D61D4(void) // 0x800D61D4
+{
+    s_func_800D5B00* buf;
+    u8*              tab;
+    s32              i;
+    s32              j;
+    s32              val;
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D62C8);
+    buf = FS_BUFFER_1;
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D631C);
+    for (i = 0; i < 81; i++)
+    {
+        tab = &buf->field_5D[i * 41];
+
+        for (j = 0; j < 41; j++)
+        {
+            val = tab[j - 41];
+
+            if (j == 0)
+            {
+                val = 0;
+            }
+            else
+            {
+                val += tab[j - 1];
+            }
+
+            if (j == 40)
+            {
+                val = 0;
+            }
+            else
+            {
+                val = val + tab[j + 1];
+            }
+
+            val  += tab[j + 41];
+            val >>= 2;
+            val  -= 3;
+
+            if (val <= 0)
+            {
+                tab[j] = 0;
+            }
+            else
+            {
+                tab[j] = val;
+            }
+
+            if (!Rng_TestProbabilityBits(12))
+            {
+                tab[j] = 0;
+            }
+        }
+    }
+}
+
+void func_800D62C8(void)
+{
+    s_func_800D5B00* buf = FS_BUFFER_1;
+
+    memset(buf->field_34, 0, sizeof(buf->field_34));
+    memset(buf->field_5D, 0, sizeof(buf->field_5D));
+    memset(buf->field_D56, 0, sizeof(buf->field_D56));
+}
+
+void func_800D631C(VECTOR* arg0, s32 arg1) // 0x800D631C
+{
+    MATRIX  sp10;
+    VECTOR  sp30;
+    SVECTOR sp40;
+
+    SetRotMatrix(&GsWSMATRIX);
+    SetTransMatrix(&GsWSMATRIX);
+    ApplyRotMatrixLV(arg0, &sp30);
+
+    sp30.vx += GsWSMATRIX.t[0];
+    sp30.vy += GsWSMATRIX.t[1];
+    sp30.vz += GsWSMATRIX.t[2];
+
+    TransMatrix(&sp10, &sp30);
+    SetTransMatrix(&sp10);
+
+    sp40.vx = 0;
+    sp40.vy = arg1;
+    sp40.vz = 0;
+
+    Math_RotMatrixZxyNeg(&sp40, &sp10);
+    SetMulRotMatrix(&sp10);
+}
 
 s32 func_800D63DC(s32* screenXy) // 0x800D63DC
 {
@@ -285,21 +481,69 @@ s32 func_800D63DC(s32* screenXy) // 0x800D63DC
     return RotTransPers(&vec, screenXy, &p, &p);
 }
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D6414);
+void func_800D6414(void) // 0x800D6414
+{
+    s_func_800D5B00* buf = FS_BUFFER_1;
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D6490);
+    if (buf->field_D90 > 0)
+    {
+        buf->field_D90 -= g_DeltaTime0;
+        return;
+    }
+
+    func_800D631C(&buf->field_4, buf->field_D8C);
+    buf->field_D88 = func_800D63DC(&buf->field_D84);
+
+    func_800D5D90();
+    func_800D61D4();
+    func_800D5EE8();
+}
+
+void func_800D6490(VECTOR3* arg0) // 0x800D6490
+{
+    s_func_800D5B00* buf = FS_BUFFER_1;
+
+    buf->field_D8C  = 0;
+    buf->field_D90  = 9830;
+    buf->field_4.vx = Q12_TO_Q8(arg0->vx);
+    buf->field_4.vy = Q12_TO_Q8(arg0->vy);
+    buf->field_4.vz = Q12_TO_Q8(arg0->vz);
+
+    func_800D62C8();
+    func_800D5B00();
+}
 
 #include "maps/shared/sharedFunc_800D929C_0_s00.h" // 0x800D64F8
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D6508);
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D6790);
+void func_800D6790(void) // 0x800D6790
+{
+    u32 flags = D_800DA578[g_SavegamePtr->mapRoomIdx_A5];
+
+    if (Savegame_EventFlagGet(EventFlag_354))
+    {
+        flags |= (1 << 5) | (1 << 3) | (1 << 1);
+    }
+
+    Bgm_Update(flags, Q12(0.25f), &D_800DA570);
+}
 
 void func_800D67EC(void) {}
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D67F4);
+void func_800D67F4(void) // 0x800D67F4
+{
+    VECTOR3 pos = { D_800DA5B4[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800DA5B4[g_MapEventParam->field_5].vz };
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D6888);
+    Map_MessageWithSfx(MapMsgIdx_DoorJammed, 1576, &pos);
+}
+
+void func_800D6888(void) // 0x800D6888
+{
+    VECTOR3 pos = { D_800DA5B4[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800DA5B4[g_MapEventParam->field_5].vz };
+
+    Map_MessageWithSfx(MapMsgIdx_DoorLocked, 1576, &pos);
+}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"
@@ -365,7 +609,27 @@ void MapEvent_CommonItemTake(void) // 0x800D691C
     Event_CommonItemTake(pickupType, eventFlagIdx);
 }
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D69DC);
+void func_800D69DC(void) // 0x800D69DC
+{
+    VECTOR3 pos = { D_800DA5B4[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800DA5B4[g_MapEventParam->field_5].vz };
+
+    switch (g_MapEventParam->field_5)
+    {
+        case 10:
+            Player_ItemRemove(InventoryItemId_SewerKey, 1);
+            Map_MessageWithSfx(15, Sfx_UseKey, &pos);
+            break;
+
+        case 14:
+            Player_ItemRemove(InventoryItemId_SewerExitKey, 1);
+            Map_MessageWithSfx(16, Sfx_UseKey, &pos);
+            break;
+
+        default:
+            Map_MessageWithSfx(MapMsgIdx_DoorUnlocked, Sfx_DoorUnlocked, &pos);
+            break;
+    }
+}
 
 void MapEvent_SewerKeyTake(void) // 0x800D6AD4
 {
@@ -917,7 +1181,107 @@ void Map_WorldObjectsInit(void) // 0x800D82A8
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D84D8);
+void func_800D84D8(void) // 0x800D84D8
+{
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M5S00_PickupMap))
+        {
+            WorldGfx_ObjectAdd(&g_WorldObject_Map.object_0,
+                               &g_WorldObject_Map.position_1C,
+                               &g_WorldObject_Map.rotation_28);
+        }
+
+        WorldGfx_ObjectAdd(&g_WorldObject_SavePad0.object_0,
+                           &g_WorldObject_SavePad0.position_1C,
+                           &g_WorldObject_SavePad0.rotation_28);
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
+    {
+        WorldGfx_ObjectAdd(&g_WorldObject_SavePad1.object_0,
+                           &g_WorldObject_SavePad1.position_1C,
+                           &g_WorldObject_SavePad1.rotation_28);
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
+    {
+        if (!Savegame_EventFlagGet(368))
+        {
+            if (Savegame_EventFlagGet(EventFlag_354) && (g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-66.0f)))
+            {
+                func_8005DC1C(1585, &D_800CB0CC, 0xFF, 2);
+                Savegame_EventFlagSet(368);
+            }
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M5S00_ShotgunShells))
+        {
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[5], &D_800DAAD0.position_0, &D_800DAAD0.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M5S00_HealthDrink0))
+        {
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DAAE4.position_0, &D_800DAAE4.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M5S00_HandgunBullets0))
+        {
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &D_800DAAF8.position_0, &D_800DAAF8.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M5S00_RifleShells))
+        {
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[4], &D_800DAB0C.position_0, &D_800DAB0C.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M5S00_FirstAidKit0))
+        {
+            WorldGfx_ObjectAdd(g_CommonWorldObjects, &D_800DAB20.position_0, &D_800DAB20.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, 0, 0))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M5S00_FirstAidKit1))
+        {
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[0], &D_800DAB34.position_0, &D_800DAB34.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M5S00_HealthDrink1))
+        {
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &D_800DAB48.position_0, &D_800DAB48.rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, -3, -1, -3))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M5S00_HandgunBullets1))
+        {
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &D_800DAB5C.position_0, &D_800DAB5C.rotation_C);
+        }
+    }
+}
 
 void func_800D8DFC(void) // 0x800D8DFC
 {

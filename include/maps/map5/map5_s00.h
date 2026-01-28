@@ -25,6 +25,32 @@ typedef struct
     s8  unk_10[4];
 } s_800DAB90;
 
+typedef struct
+{
+    VECTOR3  field_0;
+    s8       unk_C[20];
+    SVECTOR3 field_20;
+    s8       unk_26[10];
+    s32      field_30;
+    s32      field_34;
+} s_func_800D5B00_D94;
+
+typedef struct
+{
+    s8                  unk_0[4];
+    VECTOR              field_4;
+    s8                  field_14[32];
+    s8                  field_34[41];
+    u8                  field_5D[81 * 41];
+    s8                  field_D56[41];
+    s8                  field_D7F[5];
+    s32                 field_D84;
+    s32                 field_D88;
+    s32                 field_D8C;
+    s32                 field_D90;
+    s_func_800D5B00_D94 field_D94[200];
+} s_func_800D5B00;
+
 extern s32 D_800DAB78;
 
 extern u8 D_800DAB7C[3];
@@ -35,6 +61,25 @@ extern s_WorldObjectDesc  g_WorldObject_SavePad1;
 extern s_WorldObjectModel g_CommonWorldObjects[6];
 
 extern s_800DAB90 D_800DAB90[];
+
+extern s32 D_800DA154[];
+
+extern s_Bgm_Update D_800DA570;
+
+extern u16 D_800DA578[];
+
+extern VECTOR3 D_800DA5B4[];
+
+extern VECTOR3 D_800CB0CC;
+
+extern s_WorldObjectPose D_800DAAD0;
+extern s_WorldObjectPose D_800DAAE4;
+extern s_WorldObjectPose D_800DAAF8;
+extern s_WorldObjectPose D_800DAB0C;
+extern s_WorldObjectPose D_800DAB20;
+extern s_WorldObjectPose D_800DAB34;
+extern s_WorldObjectPose D_800DAB48;
+extern s_WorldObjectPose D_800DAB5C;
 
 void func_800CB0D8(void);
 
@@ -68,5 +113,29 @@ void MapEvent_MapTake(void);
 void Map_WorldObjectsInit(void);
 
 void func_800D8DFC(void);
+
+void func_800D5B00(void);
+
+void func_800D5D90(void);
+
+s32 func_800D5EA8(s32 arg0, s32 arg1);
+
+void func_800D61D4(void);
+
+void func_800D62C8(void);
+
+void func_800D631C(VECTOR* arg0, s32 arg1);
+
+void func_800D6414(void);
+
+void func_800D6490(VECTOR3* arg0);
+
+void func_800D6790(void);
+
+void func_800D67F4(void);
+
+void func_800D6888(void);
+
+void func_800D69DC(void);
 
 #endif
