@@ -332,7 +332,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* arg1, GsCOORDINATE2*
 
 void func_800D3B98(s_SubCharacter* chara);
 
-void Ai_Twinfeeler_TextureLoad(void);
+void Twinfeeler_TextureLoad(void);
 
 /** @brief Translates a vector in the direction of a given Y axis heading angle along the XZ plane.
  *
@@ -369,15 +369,15 @@ void func_800D3B74(s_SubCharacter* twinfeeler);
 
 void func_800D3CBC(s_SubCharacter* twinfeeler);
 
-bool Ai_Twinfeeler_Init(s_SubCharacter* twinfeeler);
+bool Twinfeeler_Init(s_SubCharacter* twinfeeler);
 
-void func_800D3E58(s_SubCharacter* chara);
+void func_800D3E58(s_SubCharacter* twinfeeler);
 
-void func_800D3FB0(s_SubCharacter* chara);
+void func_800D3FB0(s_SubCharacter* twinfeeler);
 
-void func_800D3FD8(s_SubCharacter* chara);
+void func_800D3FD8(s_SubCharacter* twinfeeler);
 
-void func_800D4000(s_SubCharacter* chara);
+void func_800D4000(s_SubCharacter* twinfeeler);
 
 void Twinfeeler_Control_11(s_SubCharacter* twinfeeler);
 

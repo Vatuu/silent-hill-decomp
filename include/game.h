@@ -1574,7 +1574,7 @@ typedef struct _PropertiesTwinfeeler
     s32           field_10C;
     s16           field_110;
     s8            unk_112[2];
-    u32           field_114;
+    u32           field_114; // Flags.
     u16           field_118;
     s8            unk_11C[2];
     s32           field_120;

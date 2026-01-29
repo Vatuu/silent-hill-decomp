@@ -24,7 +24,10 @@ typedef enum _TwinfeelerAnim
     TwinfeelerAnim_17    = 17,
     TwinfeelerAnim_18    = 18,
     TwinfeelerAnim_19    = 19,
-    TwinfeelerAnim_20    = 20
+    TwinfeelerAnim_20    = 20,
+    TwinfeelerAnim_21    = 21,
+    TwinfeelerAnim_22    = 22,
+    TwinfeelerAnim_23    = 23
 } e_TwinfeelerAnim;
 
 /** @brief Twinfeeler control states. */
