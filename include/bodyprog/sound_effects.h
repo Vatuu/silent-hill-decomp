@@ -251,19 +251,16 @@ typedef enum _SfxId
     Sfx_Unk1564 = 1564,
     Sfx_Unk1565 = 1565,
 
+    Sfx_Unk1567 = 1567,
+
     Sfx_Unk1569 = 1569,
     Sfx_Unk1570 = 1570,
     Sfx_Unk1571 = 1571,
     Sfx_Unk1572 = 1572,
     Sfx_Unk1573 = 1573,
-
+    Sfx_Unk1574 = 1574,
     Sfx_Unk1575 = 1575,
     Sfx_Unk1576 = 1576,
-
-    Sfx_Unk1567 = 1567,
-
-    Sfx_Unk1574 = 1574,
-
     Sfx_Unk1577 = 1577,
     Sfx_Unk1578 = 1578,
     Sfx_Unk1579 = 1579,
@@ -381,11 +378,9 @@ typedef enum _SfxId
     Sfx_Unk1916 = 1916,
 
     /** Values starting from `4096` are XA files defined in `g_XaItemData` struct.
-     * In both `Sd_XaAudioPlayTaskAdd` (call through `SD_Call`) and `Sd_XaPreLoadAudioTaskAdd`
-     * (call through `Sd_XaPreLoadAudio`), when the command is assigned to
-     * `g_Sd_AudioWork.xaAudioIdxCheck_2` or `g_Sd_AudioWork.xaAudioIdxCheck_4`, is also masked with `0xFFF`.
-     * This make sense as `4096` in hexadecimal is `0x1000`, meaning that the fourth value (1) gets
-     * ignored and only the other values which start from 0 are considered.
+     * In both `Sd_XaAudioPlayTaskAdd` (called in `SD_Call`) and `Sd_XaPreLoadAudioTaskAdd`
+     * (called in `Sd_XaPreLoadAudio`), when the command is assigned to
+     * `g_Sd_AudioWork.xaAudioIdxCheck_2` or `g_Sd_AudioWork.xaAudioIdxCheck_4`, it is also masked with `0xFFF`.
      */
 
     Sfx_XaAudio12 = 4108,
