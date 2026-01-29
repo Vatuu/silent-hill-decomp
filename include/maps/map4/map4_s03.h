@@ -112,10 +112,10 @@ typedef struct
 
 typedef struct
 {
-    s32     field_0;
+    q19_12  field_0;
     SVECTOR field_4;
-    s32     field_C;
-    s32     field_10;
+    q19_12  field_C;
+    q19_12  field_10;
     s8      unk_14[4];
 } s_800E0900;
 
@@ -298,9 +298,9 @@ void func_800D1FF4(GsOT_TAG* tag);
 
 void func_800D2150(VECTOR* arg0, s32 arg1);
 
-void func_800D21AC(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3);
+void func_800D21AC(GsOT_TAG* ot, MATRIX* arg1, s32 arg2, s32 arg3);
 
-void func_800D35DC(SVECTOR* arg0);
+void func_800D35DC(SVECTOR* rot);
 
 void func_800D33D0(void);
 

@@ -584,7 +584,7 @@ void func_800D185C(s32 arg0, s32 arg1) // 0x800D185C
         ptr->field_CC = Q12(1.0f);
 
         memset(&ptr->field_40, 0, sizeof(ptr->field_40));
-        func_800D0DE4(&ptr->field_14, arg0, 0, 0);
+        func_800D0DE4(&ptr->field_14, arg0, FP_ANGLE(0.0f), Q12(0.0f));
     }
 }
 
@@ -906,11 +906,11 @@ void func_800D2150(VECTOR* arg0, s32 arg1) // 0x800D2150
     if (ptr->timer_0 <= Q12(0.0f))
     {
         ptr->timer_0 = Q12(3.0f);
-        func_800D0DE4(&ptr->field_8, arg0, 0, 0);
+        func_800D0DE4(&ptr->field_8, arg0, FP_ANGLE(0.0f), Q12(0.0f));
     }
 }
 
-void func_800D21AC(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21AC
+void func_800D21AC(GsOT_TAG* ot, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21AC
 {
     SVECTOR   sp20[9];
     DVECTOR   sp68[9];
@@ -933,7 +933,7 @@ void func_800D21AC(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21
     s32       idx;
     u8*       var_t4;
     GsOT_TAG* temp_v0_3;
-    GsOT_TAG* ot;
+    GsOT_TAG* ot1;
     POLY_GT4* poly;
     POLY_GT4* poly2;
 
@@ -1008,8 +1008,8 @@ void func_800D21AC(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21
         var_s1 += 3;
     }
 
-    temp_v0_3 = &arg0[var_s4 >> 1];
-    ot        = &temp_v0_3[25];
+    temp_v0_3 = &ot[var_s4 >> 1];
+    ot1        = &temp_v0_3[25];
 
     poly = (POLY_GT4*)GsOUT_PACKET_P;
 
@@ -1032,7 +1032,7 @@ void func_800D21AC(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21
         setPolyGT4(poly);
         setSemiTrans(poly, 1);
 
-        addPrim(ot, poly);
+        addPrim(ot1, poly);
         poly++;
 
         idx = var_t4[0];
@@ -1050,7 +1050,7 @@ void func_800D21AC(GsOT_TAG* arg0, MATRIX* arg1, s32 arg2, s32 arg3) // 0x800D21
         setPolyGT4(poly);
         setSemiTrans(poly, 1);
 
-        addPrim(ot, poly);
+        addPrim(ot1, poly);
         poly++;
     }
 
@@ -1066,12 +1066,13 @@ void func_800D2684(VECTOR* arg0, s32 arg1) // 0x800D2684
 
     for (i = 0; i < 2; i++, ptr++)
     {
-        if (ptr->field_0 <= 0)
+        if (ptr->field_0 <= Q12(0.0f))
         {
-            ptr->field_0  = 0x4800;
-            ptr->field_C  = 0x800;
-            ptr->field_10 = 0x666;
-            func_800D0DE4(&ptr->field_4, arg0, 0, 0);
+            ptr->field_0  = Q12(4.5f);
+            ptr->field_C  = Q12(0.5f);
+            ptr->field_10 = Q12(0.4f);
+
+            func_800D0DE4(&ptr->field_4, arg0, FP_ANGLE(0.0f), Q12(0.0f));
             return;
         }
     }
@@ -1086,13 +1087,14 @@ void func_800D26FC(VECTOR* arg0, s32 arg1) // 0x800D26FC
 
     for (i = 0; i < 3; i++, ptr++)
     {
-        if (ptr->field_0 <= 0)
+        if (ptr->field_0 <= Q12(0.0f))
         {
-            ptr->field_0  = 0x8000;
-            ptr->field_C  = 0;
-            ptr->field_10 = 0;
+            ptr->field_0  = Q12(8.0f);
+            ptr->field_C  = Q12(0.0f);
+            ptr->field_10 = Q12(0.0f);
             ptr->field_14 = arg1;
-            func_800D0DE4(&ptr->field_4, arg0, 0, 0);
+
+            func_800D0DE4(&ptr->field_4, arg0, FP_ANGLE(0.0f), Q12(0.0f));
             break;
         }
     }
@@ -1603,7 +1605,7 @@ void func_800D354C(VECTOR3* arg0) // 0x800D354C
     func_800D3428();
 }
 
-void func_800D35DC(SVECTOR* arg0) // 0x800D35DC
+void func_800D35DC(SVECTOR* rot) // 0x800D35DC
 {
     GsOT_TAG*   ot;
     s_800E0988* ptr;
@@ -1611,7 +1613,7 @@ void func_800D35DC(SVECTOR* arg0) // 0x800D35DC
 
     ptr = D_800E0988;
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         func_800D33D0();
     }
@@ -1621,8 +1623,8 @@ void func_800D35DC(SVECTOR* arg0) // 0x800D35DC
     ot = g_OrderingTable0[idx].org;
 
     func_80049C2C(&ptr->world_8, ptr->x_0, 0, ptr->z_4);
-    func_800D0C50(arg0, &ptr->world_8);
-    func_800D1604(ot, arg0->vy);
+    func_800D0C50(rot, &ptr->world_8);
+    func_800D1604(ot, rot->vy);
     func_800D1FF4(ot);
     func_800D2ED0(ot);
 }
@@ -1884,7 +1886,7 @@ bool Twinfeeler_Init(s_SubCharacter* twinfeeler) // 0x800D3CD4
 
     func_800D3B74(twinfeeler);
 
-    Character_AnimSet(twinfeeler, ANIM_STATUS(8, false), 258);
+    Character_AnimSet(twinfeeler, ANIM_STATUS(TwinfeelerAnim_8, false), 258);
     ModelAnim_AnimInfoSet(&twinfeeler->model_0.anim_4, TWINFEELER_ANIM_INFOS);
 
     Chara_DamageClear(twinfeeler);
@@ -2037,7 +2039,7 @@ void Twinfeeler_Control_12(s_SubCharacter* twinfeeler) // 0x800D4078
             {
                 twinfeeler->properties_E4.twinfeeler.field_FC = Q12(1.0f);
                 localTwinfeeler->moveSpeed_38                     = Q12(1.2f);
-                localTwinfeeler->model_0.anim_4.status_0          = ANIM_STATUS(8, false);
+                localTwinfeeler->model_0.anim_4.status_0          = ANIM_STATUS(TwinfeelerAnim_8, false);
 
                 func_800D3AE0(localTwinfeeler, 4);
                 localTwinfeeler->model_0.stateStep_3++;
@@ -2064,7 +2066,7 @@ void Twinfeeler_Control_12(s_SubCharacter* twinfeeler) // 0x800D4078
             {
                 twinfeeler->model_0.controlState_2 = TwinfeelerControl_11;
                 twinfeeler->model_0.stateStep_3    = 0;
-                Sd_SfxStop(0x617);
+                Sd_SfxStop(Sfx_Unk1559);
             }
             break;
     }
@@ -2117,7 +2119,7 @@ void Twinfeeler_Control_13(s_SubCharacter* twinfeeler) // 0x800D4248
         case 3:
             if (twinfeeler->model_0.anim_4.status_0 == ANIM_STATUS(TwinfeelerAnim_18, false))
             {
-                Sd_SfxStop(1559);
+                Sd_SfxStop(Sfx_Unk1559);
                 twinfeeler->model_0.controlState_2 = TwinfeelerControl_11;
                 twinfeeler->model_0.stateStep_3    = 1;
             }
