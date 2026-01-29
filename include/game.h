@@ -1375,6 +1375,31 @@ typedef struct _SubCharPropertiesDahlia
 } s_PropertiesDahlia;
 STATIC_ASSERT_SIZEOF(s_PropertiesDahlia, 64);
 
+/** @brief Floatstinger character properties. */
+typedef struct _PropertiesFloatstinger
+{
+    s16        flags_E8;
+    s8         unk_EA[2];
+    s8         unk_EC[2];
+    q3_12      field_EE; // Angle.
+    q19_12     field_F0;
+    s16        field_F4;
+    s8         unk_F6[2];
+    u16        field_F8;
+    u16        field_FA;
+    u16        field_FC;
+    s8         unk_FE[2];
+    s32        field_100;
+    u8         field_104;
+    s8         unk_105;
+    s16        field_106;
+    s32        field_108;
+    s16        field_10C;
+    q3_12      field_10E;
+    u_Property properties_110[6];
+} s_PropertiesFloatstinger;
+STATIC_ASSERT_SIZEOF(s_PropertiesFloatstinger, 64);
+
 /** @brief Groaner character properties. */
 typedef struct _PropertiesGroaner
 {
@@ -1459,6 +1484,38 @@ typedef struct _PropertiesLarvalStalker
     q3_12      moveDistance_126;
 } s_PropertiesLarvalStalker;
 STATIC_ASSERT_SIZEOF(s_PropertiesLarvalStalker, 64);
+
+/** @brief Monster Cybil character properties. */
+typedef struct _PropertiesMonsterCybil
+{   
+    s32    field_E8;
+    s16    field_EC;
+    s16    field_EE; // Anim index?
+    q19_12 field_F0; // Timer.
+    s32    field_F4;
+    q19_12 field_F8; // Timer.
+    s8     unk_FC[2];
+    q3_12  field_FE; // Angle?
+    q19_12 field_100;
+    s16    field_104;
+    s16    field_106;
+    s32    field_108;
+    q19_12 field_10C;
+    q19_12 field_110; // Distance?
+    u8     field_114;
+    u8     field_115;
+    u8     field_116;
+    s8     unk_117;
+    s16    field_118;
+    q3_12  field_11A; // Angle?
+    s16    field_11C;
+    s16    field_11E;
+    s16    field_120;
+    s16    field_122;
+    s8     unk_124[2];
+    s16    field_126;
+} s_PropertiesMonsterCybil;
+STATIC_ASSERT_SIZEOF(s_PropertiesMonsterCybil, 64);
 
 /** @brief Puppet Nurse or Pupper Doctor character properties. */
 typedef struct _PropertiesPuppetNurse
@@ -1582,62 +1639,6 @@ typedef struct _PropertiesTwinfeeler
 } s_PropertiesTwinfeeler;
 STATIC_ASSERT_SIZEOF(s_PropertiesTwinfeeler, 64);
 
-/** @brief Floatstinger character properties. */
-typedef struct _PropertiesFloatstinger
-{
-    s16        flags_E8;
-    s8         unk_EA[2];
-    s8         unk_EC[2];
-    q3_12      field_EE; // Angle.
-    q19_12     field_F0;
-    s16        field_F4;
-    s8         unk_F6[2];
-    u16        field_F8;
-    u16        field_FA;
-    u16        field_FC;
-    s8         unk_FE[2];
-    s32        field_100;
-    u8         field_104;
-    s8         unk_105;
-    s16        field_106;
-    s32        field_108;
-    s16        field_10C;
-    q3_12      field_10E;
-    u_Property properties_110[6];
-} s_PropertiesFloatstinger;
-STATIC_ASSERT_SIZEOF(s_PropertiesFloatstinger, 64);
-
-typedef struct _PropertiesMonsterCybil
-{
-    s32 field_E8;
-    s16 field_EC;
-    s16 field_EE;
-    s32 field_F0;
-    s32 field_F4;
-    s32 field_F8;
-    s8  unk_FC[2];
-    s16 field_FE;
-    s32 field_100;
-    s16 field_104;
-    s16 field_106;
-    s32 field_108;
-    s32 field_10C;
-    s32 field_110;
-    u8  field_114;
-    u8  field_115;
-    u8  field_116;
-    s8  unk_117;
-    s16 field_118;
-    s16 field_11A;
-    s16 field_11C;
-    s16 field_11E;
-    s16 field_120;
-    s16 field_122;
-    s8  unk_124[2];
-    s16 field_126;
-} s_PropertiesMonsterCybil;
-STATIC_ASSERT_SIZEOF(s_PropertiesMonsterCybil, 64);
-
 /** Offsets for translation? */
 typedef struct
 {
@@ -1731,17 +1732,17 @@ typedef struct _SubCharacter
         s_PropertiesBloodsucker     bloodsucker;
         s_PropertiesCreeper         creeper;
         s_PropertiesDahlia          dahlia;
+        s_PropertiesFloatstinger    floatstinger;
         e_PropertiesGroaner         groaner;
         s_PropertiesHangedScratcher hangedScratcher;
         s_PropertiesIncubus         incubus;
         s_PropertiesLarvalStalker   larvalStalker;
+        s_PropertiesMonsterCybil    monsterCybil;
         s_PropertiesPuppetNurse     puppetNurse;
         s_PropertiesRomper          romper;
         s_PropertiesSplitHead       splitHead;
         s_PropertiesStalker         stalker;
         s_PropertiesTwinfeeler      twinfeeler;
-        s_PropertiesFloatstinger    floatstinger;
-        s_PropertiesMonsterCybil    monsterCybil;
     } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);
