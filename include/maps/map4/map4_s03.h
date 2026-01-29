@@ -363,13 +363,13 @@ u32 func_800D3B1C(void);
 
 void func_800D3B44(bool disableDamage);
 
-void func_800D3B68(s_SubCharacter* chara);
+void func_800D3B68(s_SubCharacter* twinfeeler);
 
-void func_800D3B74(s_SubCharacter* chara);
+void func_800D3B74(s_SubCharacter* twinfeeler);
 
-void func_800D3CBC(s_SubCharacter* chara);
+void func_800D3CBC(s_SubCharacter* twinfeeler);
 
-bool Ai_Twinfeeler_Init(s_SubCharacter* chara);
+bool Ai_Twinfeeler_Init(s_SubCharacter* twinfeeler);
 
 void func_800D3E58(s_SubCharacter* chara);
 
@@ -379,17 +379,17 @@ void func_800D3FD8(s_SubCharacter* chara);
 
 void func_800D4000(s_SubCharacter* chara);
 
-void func_800D4028(s_SubCharacter* chara);
+void Twinfeeler_Control_11(s_SubCharacter* twinfeeler);
 
 void func_800D46E0(VECTOR3* vec0, VECTOR3* vec1);
 
 bool func_800D4924(VECTOR3* vec, q19_12 angle); // Assumed return type.
 
-void func_800D49C0(s_SubCharacter* chara);
+void Twinfeeler_Control_10(s_SubCharacter* twinfeeler);
 
-void func_800D4A34(s_SubCharacter* chara);
+void Twinfeeler_Control_7(s_SubCharacter* twinfeeler);
 
-void func_800D4B28(s_SubCharacter* chara);
+void Twinfeeler_Control_4(s_SubCharacter* twinfeeler);
 
 bool func_800D4C0C(u32 row, s32 col);
 
@@ -403,23 +403,23 @@ u16 func_800D4E00(s32 arg0, s32 arg1, s32 arg2);
 
 s32 func_800D4488(VECTOR3*, s32);
 
-void func_800D4078(s_SubCharacter* chara);
+void Twinfeeler_Control_12(s_SubCharacter* twinfeeler);
 
-void func_800D4248(s_SubCharacter* chara);
+void Twinfeeler_Control_13(s_SubCharacter* twinfeeler);
 
-void func_800D43AC(s_SubCharacter* chara, s32 arg1);
+void func_800D43AC(s_SubCharacter* twinfeeler, s32 arg1);
 
-void func_800D50D8(s_SubCharacter* chara);
+void Twinfeeler_Control_2(s_SubCharacter* twinfeeler);
 
-void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void Twinfeeler_ControlUpdate(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords);
 
 void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2*);
 
 s32 func_800D4558(q19_12 angle, s32 arg1, s32 arg2);
 
-void func_800D45C4(s_SubCharacter* chara);
+void Twinfeeler_Control_5(s_SubCharacter* twinfeeler);
 
-void func_800D4700(s_SubCharacter* chara, GsCOORDINATE2* arg1);
+void Twinfeeler_Control_6(s_SubCharacter* twinfeeler, GsCOORDINATE2* arg1);
 
 bool func_800D48CC(s32 arg0, s32 arg1);
 
@@ -441,7 +441,7 @@ void func_800D5DF4(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords);
 
-void Ai_Twinfeeler_Update(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void Twinfeeler_Update(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 /** @brief Handles a First Aid Kit or Rifle Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
@@ -498,11 +498,11 @@ void func_800D1604(GsOT_TAG* ot, int arg1);
 
 void func_800D3E18(s_SubCharacter* chara);
 
-void func_800D4A78(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void Twinfeeler_Control_8(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords);
 
 s32 func_800D4E78(s32 arg0, s32 arg1);
 
-void func_800D511C(s_SubCharacter* chara);
+void Twinfeeler_Control_9(s_SubCharacter* twinfeeler);
 
 void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2* coords);
 

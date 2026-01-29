@@ -85,14 +85,34 @@ void func_800CB0D8(void);
 
 bool func_800CB25C(POLY_FT4** poly, s32 idx);
 
+void func_800D5B00(void);
+
+void func_800D5D90(void);
+
+s32 func_800D5EA8(s32 arg0, s32 arg1);
+
+void func_800D61D4(void);
+
+void func_800D62C8(void);
+
+void func_800D631C(VECTOR* arg0, q19_12 rotY);
+
 s32 func_800D63DC(s32* screenXy);
 
 void func_800D6414(void);
 
-void func_800D6490(VECTOR3*);
+void func_800D6490(VECTOR3* arg0);
+
+void func_800D6790(void);
+
+void func_800D67F4(void);
+
+void func_800D6888(void);
 
 /** @brief Handles a First Aid Kit, Health Drink, Handgun Bullets, or Shotgun Shells item pickup event. */
 void MapEvent_CommonItemTake(void);
+
+void func_800D69DC(void);
 
 /** @brief Handles the Sewer Key item pickup event. */
 void MapEvent_SewerKeyTake(void);
@@ -113,29 +133,5 @@ void MapEvent_MapTake(void);
 void Map_WorldObjectsInit(void);
 
 void func_800D8DFC(void);
-
-void func_800D5B00(void);
-
-void func_800D5D90(void);
-
-s32 func_800D5EA8(s32 arg0, s32 arg1);
-
-void func_800D61D4(void);
-
-void func_800D62C8(void);
-
-void func_800D631C(VECTOR* arg0, q19_12 rotY);
-
-void func_800D6414(void);
-
-void func_800D6490(VECTOR3* arg0);
-
-void func_800D6790(void);
-
-void func_800D67F4(void);
-
-void func_800D6888(void);
-
-void func_800D69DC(void);
 
 #endif
