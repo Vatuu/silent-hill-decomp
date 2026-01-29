@@ -1498,9 +1498,9 @@ typedef struct _PropertiesMonsterCybil
     q3_12  field_FE; // Angle?
     q19_12 field_100;
     s16    field_104;
-    s16    field_106;
+    q3_12  field_106; // Angle.
     s32    field_108;
-    q19_12 field_10C;
+    q19_12 field_10C; // Timer.
     q19_12 field_110; // Distance?
     u8     field_114;
     u8     field_115;
