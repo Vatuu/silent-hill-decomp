@@ -1321,7 +1321,7 @@ void func_800D2D28(GsOT_TAG* arg0)
     {
         if (ptr->field_0 > 0)
         {
-            ptr->field_10 += Q12_MULT_PRECISE(g_DeltaTime0, 0xB33);
+            ptr->field_10 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.7f));
             ptr->field_10  = MIN(0x1000, ptr->field_10);
 
             if (ptr->field_0 > 0x2B33)
@@ -1850,7 +1850,7 @@ bool Ai_Twinfeeler_Init(s_SubCharacter* chara) // 0x800D3CD4
 
     chara->model_0.anim_4.alpha_A = Q12(0.0f);
 
-    chara->moveSpeed_38    = 0;
+    chara->moveSpeed_38    = Q12(0.0f);
     chara->headingAngle_3C = chara->rotation_24.vy;
     chara->field_E1_0      = 4;
 
@@ -1998,156 +1998,164 @@ void func_800D4028(s_SubCharacter* chara) // 0x800D4028
     func_800D3CBC(chara);
 }
 
-void func_800D4078(s_SubCharacter* arg0) // 0x800D4078
+void func_800D4078(s_SubCharacter* chara) // 0x800D4078
 {
-    s_SubCharacter* chara;
+    s_SubCharacter* localChara;
 
-    chara = arg0;
+    localChara = chara;
 
-    if (arg0->model_0.stateStep_3 == 0)
+    if (chara->model_0.stateStep_3 == 0)
     {
-        arg0->rotation_24.vy  = 0;
-        arg0->headingAngle_3C = 0;
-        arg0->position_18.vx  = 0x76800;
-        arg0->position_18.vz  = 0x89E66;
-        func_800D3504(arg0);
-        arg0->properties_E4.twinfeeler.field_FC = 0xB33;
-        arg0->model_0.stateStep_3++;
+        chara->rotation_24.vy  = FP_ANGLE(0.0f);
+        chara->headingAngle_3C = FP_ANGLE(0.0f);
+        chara->position_18.vx  = Q12(118.5f);
+        chara->position_18.vz  = Q12(137.9f);
+
+        func_800D3504(chara);
+
+        chara->properties_E4.twinfeeler.field_FC = Q12(0.7f);
+        chara->model_0.stateStep_3++;
     }
 
-    switch (arg0->model_0.stateStep_3)
+    switch (chara->model_0.stateStep_3)
     {
         case 1:
-            if (arg0->properties_E4.twinfeeler.field_FC < 0)
+            if (chara->properties_E4.twinfeeler.field_FC < Q12(0.0f))
             {
-                func_800D3B98(arg0);
-                arg0->moveSpeed_38            = 0x1CCC;
-                arg0->model_0.anim_4.status_0 = 2;
-                func_800D3AE0(arg0, 5);
-                arg0->model_0.stateStep_3++;
+                func_800D3B98(chara);
+
+                chara->moveSpeed_38            = Q12(1.8f);
+                chara->model_0.anim_4.status_0 = 2;
+
+                func_800D3AE0(chara, 5);
+                chara->model_0.stateStep_3++;
             }
 
         case 2:
-            if (chara->model_0.anim_4.status_0 == 0x24)
+            if (localChara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
             {
-                arg0->properties_E4.twinfeeler.field_FC = 0x1000;
-                chara->moveSpeed_38                     = 0x1333;
-                chara->model_0.anim_4.status_0          = 0x10;
-                func_800D3AE0(chara, 4);
-                chara->model_0.stateStep_3++;
+                chara->properties_E4.twinfeeler.field_FC = Q12(1.0f);
+                localChara->moveSpeed_38                     = Q12(1.2f);
+                localChara->model_0.anim_4.status_0          = ANIM_STATUS(8, false);
+
+                func_800D3AE0(localChara, 4);
+                localChara->model_0.stateStep_3++;
             }
             break;
 
         case 3:
-            if (arg0->properties_E4.twinfeeler.field_FC < 0)
+            if (chara->properties_E4.twinfeeler.field_FC < Q12(0.0f))
             {
-                arg0->moveSpeed_38 = 0xE34;
-                Sd_SfxStop(0x61F);
-                func_800D3AE0(arg0, 1);
-                arg0->model_0.anim_4.status_0 = 4;
-                func_800D3528(arg0);
-                arg0->model_0.stateStep_3++;
+                chara->moveSpeed_38 = Q12(0.8877f);
+
+                Sd_SfxStop(Sfx_Unk1567);
+                func_800D3AE0(chara, 1);
+
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
+                func_800D3528(chara);
+
+                chara->model_0.stateStep_3++;
             }
             break;
 
         case 4:
-            if (arg0->model_0.anim_4.status_0 == 0x24)
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
             {
-                arg0->model_0.controlState_2 = 0xB;
-                arg0->model_0.stateStep_3    = 0;
+                chara->model_0.controlState_2 = 11;
+                chara->model_0.stateStep_3    = 0;
                 Sd_SfxStop(0x617);
             }
             break;
     }
 
-    arg0->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
+    chara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
 }
 
-void func_800D4248(s_SubCharacter* arg0) // 0x800D4248
+void func_800D4248(s_SubCharacter* chara) // 0x800D4248
 {
-    if (arg0->model_0.stateStep_3 == 0)
+    if (chara->model_0.stateStep_3 == 0)
     {
-        arg0->position_18.vx  = Q12(131.0f);
-        arg0->position_18.vz  = Q12(140.0f);
-        arg0->rotation_24.vy  = FP_ANGLE(90.0f);
-        arg0->headingAngle_3C = FP_ANGLE(90.0f);
+        chara->position_18.vx  = Q12(131.0f);
+        chara->position_18.vz  = Q12(140.0f);
+        chara->rotation_24.vy  = FP_ANGLE(90.0f);
+        chara->headingAngle_3C = FP_ANGLE(90.0f);
 
-        func_800D3504(arg0);
+        func_800D3504(chara);
 
-        arg0->properties_E4.twinfeeler.field_FC = 0xB33;
+        chara->properties_E4.twinfeeler.field_FC = Q12(0.7f);
 
-        Savegame_EnemyStateUpdate(arg0);
-        arg0->model_0.stateStep_3++;
+        Savegame_EnemyStateUpdate(chara);
+        chara->model_0.stateStep_3++;
     }
 
-    switch (arg0->model_0.stateStep_3)
+    switch (chara->model_0.stateStep_3)
     {
         case 1:
-            if (arg0->properties_E4.twinfeeler.field_FC < 0)
+            if (chara->properties_E4.twinfeeler.field_FC < Q12(0.0f))
             {
-                func_800D3B98(arg0);
+                func_800D3B98(chara);
 
-                arg0->model_0.anim_4.status_0 = 46;
-                arg0->moveSpeed_38            = 0x1599;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(23, false);
+                chara->moveSpeed_38            = Q12(1.35f);
 
-                func_800D3AE0(arg0, 5);
-                arg0->model_0.stateStep_3++;
+                func_800D3AE0(chara, 5);
+                chara->model_0.stateStep_3++;
             }
             break;
 
         case 2:
-            if (arg0->model_0.anim_4.status_0 == 36)
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
             {
-                arg0->moveSpeed_38 = 0xE34;
-                func_800D3AE0(arg0, 1);
+                chara->moveSpeed_38 = Q12(0.8877f);
+                func_800D3AE0(chara, 1);
 
-                arg0->model_0.anim_4.status_0 = 4;
-                arg0->model_0.stateStep_3++;
+                chara->model_0.anim_4.status_0 = 4;
+                chara->model_0.stateStep_3++;
             }
             break;
 
         case 3:
-            if (arg0->model_0.anim_4.status_0 == 36)
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
             {
                 Sd_SfxStop(1559);
-                arg0->model_0.controlState_2 = 11;
-                arg0->model_0.stateStep_3    = 1;
+                chara->model_0.controlState_2 = 11;
+                chara->model_0.stateStep_3    = 1;
             }
             break;
     }
 
-    arg0->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
+    chara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
 }
 
-void func_800D43AC(s_SubCharacter* arg0, s32 arg1) // 0x800D43AC
+void func_800D43AC(s_SubCharacter* chara, s32 arg1) // 0x800D43AC
 {
     s32 temp_v0;
     s32 temp_v0_2;
     s32 var_s1;
 
-    if (arg1 < 0xF)
+    if (arg1 < 15)
     {
-        var_s1 = 0x200;
+        var_s1 = 512;
     }
     else
     {
-        var_s1 = 0xAA;
+        var_s1 = 170;
     }
 
-    temp_v0 = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - arg0->position_18.vx,
-                                   g_SysWork.playerWork_4C.player_0.position_18.vz - arg0->position_18.vz) -
-                            arg0->rotation_24.vy);
+    temp_v0 = func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                   g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
+                            chara->rotation_24.vy);
 
-    if ((u32)ABS(temp_v0) > 0x38) // TODO: Needs casting to `u32`.
+    if ((u32)ABS(temp_v0) > 56) // TODO: Needs casting to `u32`.
     {
         temp_v0_2 = Q12_MULT_PRECISE(g_DeltaTime0, var_s1);
         if (temp_v0 > FP_ANGLE(0.0f))
         {
-            arg0->rotation_24.vy += temp_v0_2;
+            chara->rotation_24.vy += temp_v0_2;
         }
         else
         {
-            arg0->rotation_24.vy -= temp_v0_2;
+            chara->rotation_24.vy -= temp_v0_2;
         }
     }
 }
@@ -2198,7 +2206,7 @@ s32 func_800D4558(q19_12 angle, s32 arg1, s32 arg2) // 0x800D4558
     VECTOR3   sp40;
 
     sp40.vx = arg1;
-    sp40.vy = -0x4CC;
+    sp40.vy = Q12(-0.3f);
     sp40.vz = arg2;
 
     sp30.vx = Math_Sin(angle);
@@ -2215,47 +2223,49 @@ s32 func_800D4558(q19_12 angle, s32 arg1, s32 arg2) // 0x800D4558
     }
 }
 
-void func_800D45C4(s_SubCharacter* arg0)
+void func_800D45C4(s_SubCharacter* chara)
 {
-    s_SubCharacter* chara;
+    s_SubCharacter* localChara;
 
-    chara = arg0;
+    localChara = chara;
 
-    if (arg0->model_0.stateStep_3 == 0)
+    if (chara->model_0.stateStep_3 == 0)
     {
-        arg0->properties_E4.twinfeeler.field_FC = 0xB33;
-        func_800D3504(arg0);
-        arg0->model_0.stateStep_3 += 1;
+        chara->properties_E4.twinfeeler.field_FC = Q12(0.7f);
+        func_800D3504(chara);
+
+        chara->model_0.stateStep_3++;
     }
 
-    switch (arg0->model_0.stateStep_3)
+    switch (chara->model_0.stateStep_3)
     {
         case 1:
-            if (arg0->properties_E4.twinfeeler.field_FC < 0)
+            if (chara->properties_E4.twinfeeler.field_FC < Q12(0.0f))
             {
-                func_800D3B68(arg0);
-                func_800D3B98(arg0);
+                func_800D3B68(chara);
+                func_800D3B98(chara);
 
-                arg0->moveSpeed_38            = 0x1CCC;
-                arg0->model_0.anim_4.status_0 = 2;
+                chara->moveSpeed_38            = Q12(1.8f);
+                chara->model_0.anim_4.status_0 = 2;
 
-                func_800D3AE0(arg0, 5);
-                arg0->model_0.stateStep_3++;
+                func_800D3AE0(chara, 5);
+                chara->model_0.stateStep_3++;
             }
             break;
 
         case 2:
-            func_800D43AC(arg0, FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT));
+            func_800D43AC(chara, FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT));
             break;
     }
 
-    chara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
+    localChara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
 
-    if (arg0->model_0.anim_4.status_0 == 36)
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
     {
-        func_800D4558(arg0->rotation_24.vy, arg0->position_18.vx, arg0->position_18.vz);
-        arg0->model_0.controlState_2 = 10;
-        arg0->model_0.stateStep_3    = 0;
+        func_800D4558(chara->rotation_24.vy, chara->position_18.vx, chara->position_18.vz);
+
+        chara->model_0.controlState_2 = 10;
+        chara->model_0.stateStep_3    = 0;
     }
 }
 
@@ -2264,46 +2274,47 @@ void func_800D46E0(VECTOR3* vec0, VECTOR3* vec1) // 0x800D46E0
     sharedFunc_800CB0A4_4_s03(vec0, vec1);
 }
 
-void func_800D4700(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D4700
+void func_800D4700(s_SubCharacter* chara, GsCOORDINATE2* arg1) // 0x800D4700
 {
     MATRIX          sp10;
     VECTOR3         sp30;
     VECTOR3         sp40;
-    s_SubCharacter* chara;
     s32             temp_s1;
+    s_SubCharacter* localChara;
 
-    chara = arg0;
+    localChara = chara;
 
-    temp_s1 = arg0->model_0.stateStep_3 == 0;
+    temp_s1 = chara->model_0.stateStep_3 == 0;
     if (temp_s1)
     {
-        arg0->properties_E4.twinfeeler.field_FC = 0xB33;
-        func_800D3504(arg0);
-        arg0->model_0.stateStep_3 += 1;
+        chara->properties_E4.twinfeeler.field_FC = Q12(0.7f);
+        func_800D3504(chara);
+
+        chara->model_0.stateStep_3++;
     }
 
-    temp_s1 = FP_FROM(arg0->model_0.anim_4.time_4, Q12_SHIFT);
+    temp_s1 = FP_FROM(chara->model_0.anim_4.time_4, Q12_SHIFT);
 
-    switch (arg0->model_0.stateStep_3)
+    switch (chara->model_0.stateStep_3)
     {
         case 1:
-            if (arg0->properties_E4.twinfeeler.field_FC < 0)
+            if (chara->properties_E4.twinfeeler.field_FC < Q12(0.0f))
             {
-                func_800D3B68(arg0);
-                func_800D3B98(arg0);
+                func_800D3B68(chara);
+                func_800D3B98(chara);
 
-                arg0->moveSpeed_38            = 0x1CCC;
-                arg0->model_0.anim_4.status_0 = 2;
+                chara->moveSpeed_38            = Q12(1.8f);
+                chara->model_0.anim_4.status_0 = 2;
 
-                func_800D3AE0(arg0, 5);
-                arg0->model_0.stateStep_3++;
+                func_800D3AE0(chara, 5);
+                chara->model_0.stateStep_3++;
             }
             break;
 
         case 2:
             if (temp_s1 > 5)
             {
-                func_800D3AE0(arg0, 3);
+                func_800D3AE0(chara, 3);
                 Vw_CoordHierarchyMatrixCompute(&arg1[14], &sp10);
 
                 sp30.vx = Q8_TO_Q12(sp10.t[0]);
@@ -2314,21 +2325,21 @@ void func_800D4700(s_SubCharacter* arg0, GsCOORDINATE2* arg1) // 0x800D4700
                 sp40.vz = g_SysWork.playerWork_4C.player_0.position_18.vz;
 
                 func_800D46E0(&sp30, &sp40);
-                arg0->model_0.stateStep_3++;
+                chara->model_0.stateStep_3++;
             }
 
         case 3:
-            func_800D43AC(chara, temp_s1);
+            func_800D43AC(localChara, temp_s1);
             break;
     }
 
-    if (arg0->model_0.anim_4.status_0 == 36)
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
     {
-        arg0->model_0.controlState_2 = 10;
-        arg0->model_0.stateStep_3    = 0;
+        chara->model_0.controlState_2 = 10;
+        chara->model_0.stateStep_3    = 0;
     }
 
-    chara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
+    localChara->properties_E4.twinfeeler.field_FC -= g_DeltaTime0;
 }
 
 bool func_800D48CC(s32 arg0, s32 arg1) // 0x800D48CC
@@ -2350,7 +2361,7 @@ bool func_800D48CC(s32 arg0, s32 arg1) // 0x800D48CC
     }
 }
 
-s32 func_800D4924(VECTOR3* vec, q19_12 angle) // 0x800D4924
+bool func_800D4924(VECTOR3* vec, q19_12 angle) // 0x800D4924
 {
     q19_12 posX;
     q19_12 posZ;
@@ -2371,7 +2382,7 @@ void func_800D49C0(s_SubCharacter* chara) // 0x800D49C0
 
         chara->model_0.stateStep_3++;
     }
-    else if (func_800D4924(&chara->position_18, chara->rotation_24.vy) != 0)
+    else if (func_800D4924(&chara->position_18, chara->rotation_24.vy))
     {
         chara->model_0.controlState_2 = 4;
         chara->model_0.stateStep_3    = 0;
@@ -2402,7 +2413,7 @@ void func_800D4A78(s_SubCharacter* chara, GsCOORDINATE2* coords)
     if (chara->model_0.stateStep_3 == 0)
     {
         func_800D3AE0(chara, 3);
-        chara->model_0.anim_4.status_0 = 24;
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(12, false);
 
         Vw_CoordHierarchyMatrixCompute(&coords[14], &sp10);
 
@@ -2416,7 +2427,7 @@ void func_800D4A78(s_SubCharacter* chara, GsCOORDINATE2* coords)
         chara->model_0.stateStep_3++;
     }
 
-    if (chara->model_0.anim_4.status_0 == 36)
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
     {
         chara->model_0.controlState_2 = 10;
         chara->model_0.stateStep_3    = 0;
@@ -2433,12 +2444,12 @@ void func_800D4B28(s_SubCharacter* chara)
     {
         func_800D3528(chara);
 
-        chara->properties_E4.twinfeeler.field_FC = 0;
+        chara->properties_E4.twinfeeler.field_FC = Q12(0.0f);
 
         func_800D3AE0(chara, 1);
 
-        chara->model_0.anim_4.status_0 = 4;
-        chara->moveSpeed_38            = 0xE34;
+        chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
+        chara->moveSpeed_38            = Q12(0.8877f);
         chara->model_0.stateStep_3++;
     }
 
@@ -2448,9 +2459,10 @@ void func_800D4B28(s_SubCharacter* chara)
         chara->model_0.stateStep_3++;
     }
 
-    if (chara->model_0.anim_4.status_0 == 36)
+    if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
     {
-        Sd_SfxStop(1559);
+        Sd_SfxStop(Sfx_Unk1559);
+
         chara->model_0.controlState_2 = 3;
         chara->model_0.stateStep_3    = 0;
     }
@@ -2506,6 +2518,7 @@ u16 func_800D4C5C(u8* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800D4C5C
             return ret;
         }
     }
+
     return 0xFFFF;
 }
 
@@ -2525,6 +2538,7 @@ s32 func_800D4D80(s32 arg0, s32 arg1) // 0x800D4D80
             ptr += 1;
         }
     }
+
     return func_800D4C5C(&sp10, 8, arg0, arg1);
 }
 
@@ -2537,6 +2551,7 @@ u32 func_800D4DD8(void) // 0x800D4DD8
     {
         var_v0 += 0x1FF;
     }
+
     return var_v0 >> 9;
 }
 
@@ -2549,6 +2564,7 @@ u16 func_800D4E00(s32 arg0, s32 arg1, s32 arg2) // 0x800D4E00
     {
         var_a0 = func_800D4D80(arg0, arg1);
     }
+
     return var_a0;
 }
 
@@ -2626,13 +2642,13 @@ void func_800D4FC0(s_SubCharacter* chara) // 0x800D4FC0
     if (chara->model_0.stateStep_3 == 0)
     {
         chara->properties_E4.twinfeeler.field_FC = Q12(2.0f);
-        chara->model_0.anim_4.status_0           = 16;
+        chara->model_0.anim_4.status_0           = ANIM_STATUS(8, false);
         chara->model_0.stateStep_3++;
     }
 
     func_800D3CBC(chara);
 
-    if (chara->properties_E4.twinfeeler.field_FC < 0)
+    if (chara->properties_E4.twinfeeler.field_FC < Q12(0.0f))
     {
         temp_v0 = func_800D4488(&chara->position_18,
                                 func_800D4E78(g_SysWork.playerWork_4C.player_0.moveSpeed_38, g_SysWork.playerWork_4C.player_0.headingAngle_3C) & 0xFFFF);
@@ -2647,7 +2663,7 @@ void func_800D4FC0(s_SubCharacter* chara) // 0x800D4FC0
 
         var_v0 = ABS(var_v0);
 
-        if (var_v0 >= 0x200)
+        if (var_v0 >= FP_ANGLE(45.0f))
         {
             chara->model_0.controlState_2 = 5;
         }
@@ -2691,13 +2707,13 @@ void func_800D511C(s_SubCharacter* chara) // 0x800D511C
 
         if (chara->properties_E4.twinfeeler.field_118 == 0)
         {
-            chara->model_0.anim_4.status_0 = 34;
+            chara->model_0.anim_4.status_0 = ANIM_STATUS(17, false);
             chara->model_0.stateStep_3     = 1;
         }
         else
         {
             func_800D3AE0(chara, 0);
-            chara->model_0.anim_4.status_0 = 32;
+            chara->model_0.anim_4.status_0 = ANIM_STATUS(16, false);
             chara->model_0.stateStep_3     = 2;
         }
     }
@@ -2705,16 +2721,16 @@ void func_800D511C(s_SubCharacter* chara) // 0x800D511C
     switch (chara->model_0.stateStep_3)
     {
         case 1:
-            if (chara->model_0.anim_4.status_0 == 36)
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
             {
                 func_800D3AE0(chara, 0);
-                chara->model_0.anim_4.status_0 = 32;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(16, false);
                 chara->model_0.stateStep_3++;
             }
             break;
 
         case 2:
-            if (chara->model_0.anim_4.status_0 == 44)
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(22, false))
             {
                 localChara->properties_E4.twinfeeler.field_FC = Q12(5.0f);
                 chara->model_0.stateStep_3++;
@@ -2722,42 +2738,43 @@ void func_800D511C(s_SubCharacter* chara) // 0x800D511C
             break;
 
         case 3:
-            if (localChara->properties_E4.twinfeeler.field_FC < 0)
+            if (localChara->properties_E4.twinfeeler.field_FC < Q12(0.0f))
             {
-                chara->model_0.anim_4.status_0 = 22;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(11, false);
                 chara->model_0.stateStep_3++;
             }
             break;
 
         case 4:
-            if (chara->model_0.anim_4.status_0 == 36)
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
             {
                 chara->moveSpeed_38            = Q12(1.2f);
-                chara->model_0.anim_4.status_0 = 16;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(8, false);
                 chara->model_0.stateStep_3++;
             }
             break;
 
         case 5:
             temp_s1 = func_800D4558(chara->rotation_24.vy, chara->position_18.vx, chara->position_18.vz);
-            if (func_800D4924(&chara->position_18, chara->rotation_24.vy) != 0 || temp_s1 < Q12(2.0f))
+            if (func_800D4924(&chara->position_18, chara->rotation_24.vy) ||
+                temp_s1 < Q12(2.0f))
             {
                 func_800D3528(chara);
                 func_800D3AE0(chara, 1);
 
-                chara->model_0.anim_4.status_0 = 4;
-                chara->moveSpeed_38            = 0xE34;
+                chara->model_0.anim_4.status_0 = ANIM_STATUS(2, false);
+                chara->moveSpeed_38            = Q12(0.8877f);
                 chara->model_0.stateStep_3++;
             }
             break;
 
         case 6:
-            if (chara->model_0.anim_4.status_0 == 36)
+            if (chara->model_0.anim_4.status_0 == ANIM_STATUS(18, false))
             {
-                Sd_SfxStop(1559);
-
+                Sd_SfxStop(Sfx_Unk1559);
                 Savegame_EventFlagSet(EventFlag_326);
-                chara->model_0.controlState_2 = 11;
+
+                chara->model_0.controlState_2 = ANIM_STATUS(5, true);
                 chara->model_0.stateStep_3    = 0;
             }
             break;
@@ -2843,8 +2860,8 @@ void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D54B4
         case 5:
         case 6:
         case 8:
-            var_s0 = 0x3D;
-            var_v0 = 0xE;
+            var_s0 = 61;
+            var_v0 = 14;
             break;
 
         default:
@@ -2873,7 +2890,7 @@ void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D54B4
         pos.vy = posX;
         pos.vz = posZ;
 
-        if (func_8008A0E4(1, var_s0, chara, &pos, &g_SysWork.playerWork_4C.player_0, chara->rotation_24.vy, 0x400) != -1)
+        if (func_8008A0E4(1, var_s0, chara, &pos, &g_SysWork.playerWork_4C.player_0, chara->rotation_24.vy, FP_ANGLE(90.0f)) != NO_VALUE)
         {
             localChara->properties_E4.twinfeeler.field_114 |= 1;
         }
@@ -3022,8 +3039,8 @@ void func_800D59EC(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D59EC
     s32           j;
     s32           i;
     s32           idx;
-    s8*           ptr;
     u32           temp_a0_3;
+    s8*           ptr;
     s_LinkedBone* bones;
     s_Bone*       bone;
 
@@ -3045,20 +3062,19 @@ void func_800D59EC(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D59EC
             {
                 idx = *ptr;
 
-                if (idx == -1)
+                if (idx == NO_VALUE)
                 {
                     break;
                 }
 
                 bone                       = &bones[idx - 1].bone_0;
-                bone->modelInfo_0.field_0 |= 1;
+                bone->modelInfo_0.field_0 |= 1 << 0;
             }
         }
     }
     else
     {
         temp_a0_3 = temp_v1 - 0x20;
-
         if (temp_a0_3 < 41)
         {
             temp_v1_3 = D_800DB2FC[temp_a0_3];
@@ -3077,7 +3093,7 @@ void func_800D59EC(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D59EC
                     }
 
                     bone                       = &bones[idx - 1].bone_0;
-                    bone->modelInfo_0.field_0 |= 1;
+                    bone->modelInfo_0.field_0 |= 1 << 0;
                 }
             }
         }
@@ -3088,7 +3104,7 @@ void func_800D5B6C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5B6C
 {
     q19_12 posY;
 
-    if (chara->model_0.anim_4.flags_2 & 2)
+    if (chara->model_0.anim_4.flags_2 & AnimFlag_Visible)
     {
         func_800D5904(chara, coords);
         return;
@@ -3140,10 +3156,10 @@ void func_800D5C3C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5C3C
     s_SubCharacter* localChara;
 
     u8 D_800CA814[16] = {
-        0x1e, 0x20, 0x1c, 0x1a,
+        0x1E, 0x20, 0x1C, 0x1A,
         0x18, 0x16, 0x24, 0x22,
-        0x28, 0x26, 0x2c, 0x2a,
-        0x30, 0x2e, 0x34, 0x32
+        0x28, 0x26, 0x2C, 0x2A,
+        0x30, 0x2E, 0x34, 0x32
     };
 
     s32 D_800CA824[16] = {
@@ -3183,7 +3199,7 @@ void func_800D5C3C(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800D5C3C
                 var_a1 = i;
             }
 
-            temp_s1 = (var_a1 >> 2) + (i & 1);
+            temp_s1 = (var_a1 >> 2) + (i & 0x1);
 
             func_800D185C(&pos, temp_s1);
 
@@ -3229,8 +3245,8 @@ void func_800D5E30(s_SubCharacter* twinfeeler, GsCOORDINATE2* coords) // 0x800D5
         newPosY = Q8_TO_Q12(sp10.t[1]);
         newPosZ = Q8_TO_Q12(sp10.t[2]);
 
-        ptr->field_10      = 0x733;
-        ptr->field_E       = newPosY - 0x4CC;
+        ptr->field_10      = Q12(0.45f);
+        ptr->field_E       = newPosY - Q12(0.3f);
         ptr->field_C       = posY;
         ptr->position_0.vx = newPosX;
         ptr->position_0.vy = newPosY;

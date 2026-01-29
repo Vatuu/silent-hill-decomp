@@ -383,7 +383,7 @@ void func_800D4028(s_SubCharacter* chara);
 
 void func_800D46E0(VECTOR3* vec0, VECTOR3* vec1);
 
-s32 func_800D4924(VECTOR3* vec, q19_12 angle); // Assumed return type.
+bool func_800D4924(VECTOR3* vec, q19_12 angle); // Assumed return type.
 
 void func_800D49C0(s_SubCharacter* chara);
 
@@ -413,13 +413,13 @@ void func_800D50D8(s_SubCharacter* chara);
 
 void func_800D53B0(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
-void func_800D54B4(s_SubCharacter*, GsCOORDINATE2*);
+void func_800D54B4(s_SubCharacter* chara, GsCOORDINATE2*);
 
 s32 func_800D4558(q19_12 angle, s32 arg1, s32 arg2);
 
-void func_800D45C4(s_SubCharacter* arg0);
+void func_800D45C4(s_SubCharacter* chara);
 
-void func_800D4700(s_SubCharacter* arg0, GsCOORDINATE2* arg1);
+void func_800D4700(s_SubCharacter* chara, GsCOORDINATE2* arg1);
 
 bool func_800D48CC(s32 arg0, s32 arg1);
 
