@@ -83,7 +83,7 @@ extern s_WorldObjectPose D_800DAB5C;
 
 void func_800CB0D8(void);
 
-bool func_800CB25C(POLY_FT4** poly, s32 arg1);
+bool func_800CB25C(POLY_FT4** poly, s32 idx);
 
 s32 func_800D63DC(s32* screenXy);
 
@@ -124,7 +124,7 @@ void func_800D61D4(void);
 
 void func_800D62C8(void);
 
-void func_800D631C(VECTOR* arg0, s32 arg1);
+void func_800D631C(VECTOR* arg0, q19_12 rotY);
 
 void func_800D6414(void);
 

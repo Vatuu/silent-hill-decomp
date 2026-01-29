@@ -1645,7 +1645,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     if (twinfeeler->model_0.controlState_2 == 0)
     {
         twinfeeler->model_0.controlState_2       = 1;
-        twinfeeler->model_0.anim_4.status_0      = 13;
+        twinfeeler->model_0.anim_4.status_0      = ANIM_STATUS(6, true);
         twinfeeler->model_0.anim_4.keyframeIdx_8 = 163;
         twinfeeler->health_B0                    = 1;
         twinfeeler->model_0.anim_4.time_4        = Q12(163.0f);
@@ -1677,12 +1677,12 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     if (twinfeeler->health_B0 > Q12(0.0f) && twinfeeler->damage_B4.amount_C > Q12(0.0f))
     {
         twinfeeler->health_B0               = 0;
-        twinfeeler->model_0.anim_4.status_0 = 14;
+        twinfeeler->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
     }
 
     if (twinfeeler->health_B0 > Q12(0.0f) && twinfeeler->properties_E4.twinfeeler.field_E8.val32 == 0)
     {
-        if (Rng_GenerateUInt(0, 3) != 0)
+        if (Rng_GenerateUInt(0, 3)) // 1 in 4 chance.
         {
             var_a0 = Sfx_Unk1553;
         }
@@ -1808,8 +1808,8 @@ void func_800D3B98(s_SubCharacter* chara) // 0x800D3B98
         chara->position_18.vy = coll.groundHeight_0;
         if (chara->position_18.vy < Q12(-1.0f))
         {
-            chara->position_18.vx = 0x76800;
-            chara->position_18.vz = 0x89E66;
+            chara->position_18.vx = Q12(118.5f);
+            chara->position_18.vz = Q12(137.9f);
 
             Collision_Get(&coll, posX, posZ);
             chara->position_18.vy = coll.groundHeight_0;

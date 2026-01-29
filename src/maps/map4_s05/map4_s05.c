@@ -343,18 +343,18 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
         }
 
         angle = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - floatstinger->position_18.vx,
-                           g_SysWork.playerWork_4C.player_0.position_18.vz - floatstinger->position_18.vz);
+                       g_SysWork.playerWork_4C.player_0.position_18.vz - floatstinger->position_18.vz);
 
         if (ABS(g_SysWork.playerWork_4C.player_0.position_18.vy - floatstinger->position_18.vy) < Q12(0.05f) &&
             Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - floatstinger->position_18.vx,
                                 g_SysWork.playerWork_4C.player_0.position_18.vz - floatstinger->position_18.vz) < Q12(1.5f) &&
-            ((var_s5 == 0 && Rng_GenerateUInt(0, 3) != 0) || (var_s5 == 2 && Rng_GenerateUInt(0, 3) != 0)))
+            ((var_s5 == 0 && Rng_GenerateUInt(0, 3)) || (var_s5 == 2 && Rng_GenerateUInt(0, 3)))) // 1 in 4 chance.
         {
-            if (g_SysWork.playerWork_4C.player_0.health_B0 > 0 &&
+            if (g_SysWork.playerWork_4C.player_0.health_B0 > Q12(0.0f) &&
                 ABS(func_8005BF38(angle - floatstinger->headingAngle_3C)) < FP_ANGLE(90.0f) &&
                 ABS(func_8005BF38(angle - floatstinger->rotation_24.vy)) < FP_ANGLE(30.0f) &&
                 !(g_SysWork.playerWork_4C.player_0.flags_3E & (1 << 3)) &&
-                !Rng_GenerateUInt(0, 7))
+                !Rng_GenerateUInt(0, 7)) // 1 in 8 chance.
             {
                 floatstinger->model_0.anim_4.status_0              = ANIM_STATUS(FloatstingerAnim_1, false);
                 floatstingerProps.flags_E8 &= ~FloatstingerFlag_4;
@@ -369,7 +369,8 @@ void func_800D1BF8(s_SubCharacter* floatstinger) // 0x800D1BF8
             {
                 var_v1 = ABS(floatstinger->position_18.vy);
 
-                if (var_v1 < Q12(8.0f) && !(g_SysWork.playerWork_4C.player_0.flags_3E & (1 << 3)) && !Rng_GenerateUInt(0, 3))
+                if (var_v1 < Q12(8.0f) && !(g_SysWork.playerWork_4C.player_0.flags_3E & (1 << 3)) &&
+                    !Rng_GenerateUInt(0, 3)) // 1 in 4 chance.
                 {
                     floatstinger->model_0.anim_4.status_0 = ANIM_STATUS(FloatstingerAnim_12, false);
                 }
@@ -1291,7 +1292,8 @@ void func_800D4A3C(s_SubCharacter* floatstinger, VECTOR3* pos, q3_12 newRotY) //
     else
     {
         floatstingerProps.field_F0 += g_DeltaTime0;
-        if (floatstingerProps.field_F0 > Q12(0.8f) && !Rng_GenerateUInt(0, 15))
+        if (floatstingerProps.field_F0 > Q12(0.8f) &&
+            !Rng_GenerateUInt(0, 15)) // 1 in 16 chance.
         {
             floatstingerProps.field_F0 = Q12(0.0f);
         }

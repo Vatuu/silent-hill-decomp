@@ -567,30 +567,32 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
 
 void Ai_HangedScratcher_Control_5(s_SubCharacter* scratcher)
 {
-#define MIN_OFF(a, neg, pos) ((((a) + (-neg)) <= ((a) + (pos))) ? ((a) - (neg)) : ((a) + (pos)))
-#define MAX_OFF(a, neg, pos) ((((a) - (neg)) > ((a) + (pos))) ? ((a) - (neg)) : ((a) + (pos)))
+    #define MIN_OFFSET(x, neg, pos) \
+        ((((x) + (-neg)) <= ((x) + (pos))) ? ((x) - (neg)) : ((x) + (pos)))
 
-    if (Vw_AabbVisibleInScreenCheck(
-            MIN_OFF(scratcher->position_18.vx, 0x800, 0x800),
-            MAX_OFF(scratcher->position_18.vx, 0x800, 0x800),
-            MIN_OFF(scratcher->position_18.vy, 0x1000, 0),
-            MAX_OFF(scratcher->position_18.vy, 0x1000, 0),
-            MIN_OFF(scratcher->position_18.vz, 0x800, 0x800),
-            MAX_OFF(scratcher->position_18.vz, 0x800, 0x800)) ||
-        (Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - scratcher->position_18.vx,
-                             g_SysWork.playerWork_4C.player_0.position_18.vz - scratcher->position_18.vz) < 0x1000))
+    #define MAX_OFFSET(x, neg, pos) \
+        ((((x) - (neg)) > ((x) + (pos))) ? ((x) - (neg)) : ((x) + (pos)))
+
+    if (Vw_AabbVisibleInScreenCheck(MIN_OFFSET(scratcher->position_18.vx, Q12(0.5f), Q12(0.5f)),
+                                    MAX_OFFSET(scratcher->position_18.vx, Q12(0.5f), Q12(0.5f)),
+                                    MIN_OFFSET(scratcher->position_18.vy, Q12(1.0f), Q12(0.0f)),
+                                    MAX_OFFSET(scratcher->position_18.vy, Q12(1.0f), Q12(0.0f)),
+                                    MIN_OFFSET(scratcher->position_18.vz, Q12(0.5f), Q12(0.5f)),
+                                    MAX_OFFSET(scratcher->position_18.vz, Q12(0.5f), Q12(0.5f))) ||
+        Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - scratcher->position_18.vx,
+                            g_SysWork.playerWork_4C.player_0.position_18.vz - scratcher->position_18.vz) < Q12(1.0f))
     {
         if (func_800700F8(scratcher, &g_SysWork.playerWork_4C.player_0))
         {
             return;
         }
 
-        if (((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 3) == 2 && func_8006FD90(scratcher, 1, 0x1800, 0x800)) ||
-            (((u8)g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 2) &&
-             ((u8)g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 1) && func_8006FD90(scratcher, 1, 0x1333, 0x4CC)))
+        if (((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) == 0x2 && func_8006FD90(scratcher, 1, Q12(1.5f), Q12(0.5f))) ||
+            (((u8)g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x2) &&
+             ((u8)g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x1) && func_8006FD90(scratcher, 1, Q12(1.2f), Q12(0.3f))))
         {
-            scratcher->model_0.controlState_2  = 7;
-            scratcher->model_0.anim_4.status_0 = 0x24;
+            scratcher->model_0.controlState_2  = HangedScratcherControl_7;
+            scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_18, false);
         }
     }
 }
@@ -733,7 +735,7 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
                                   scratcher->rotation_24.vy)) < FP_ANGLE(20.0f))
             {
                 scratcher->model_0.controlState_2  = HangedScratcherControl_15;
-                g_SysWork.field_2284[3]           |= 2;
+                g_SysWork.field_2284[3]           |= 1 << 1;
                 scratcherProps.timer_EA            = Q12(0.0f);
                 scratcher->model_0.anim_4.status_0 = ANIM_STATUS(HangedScratcherAnim_5, false);
             }
@@ -1325,31 +1327,31 @@ extern s_Keyframe sharedData_800D9B04_5_s00;
 extern s_Keyframe sharedData_800D9B18_5_s00;
 extern s_Keyframe sharedData_800D9B2C_5_s00[];
 
-#define CopyData(arg0, data)                      \
-    {                                             \
-        s32 __temp;                               \
-                                                  \
-        arg0->field_C8.field_0 = data.field_0;    \
-                                                  \
-        __temp                 = data.field_2;    \
-        arg0->field_C8.field_2 = __temp;          \
-        arg0->field_C8.field_4 = data.field_4;    \
-                                                  \
-        __temp                   = data.field_6;  \
-        arg0->field_C8.field_6   = __temp;        \
-        arg0->field_D8.offsetX_4 = data.field_10; \
-                                                  \
-        __temp                   = data.field_12; \
-        arg0->field_D8.offsetZ_6 = __temp;        \
-        arg0->field_D4.radius_0  = data.field_8;  \
-        arg0->field_D8.offsetX_0 = data.field_C;  \
-                                                  \
-        __temp                   = data.field_E;  \
-        arg0->field_D8.offsetZ_2 = __temp;        \
-                                                  \
-        __temp                 = data.field_A;    \
-        arg0->field_D4.field_2 = __temp;          \
-    }
+#define CopyData(arg0, data)                  \
+{                                             \
+    s32 __temp;                               \
+                                              \
+    arg0->field_C8.field_0 = data.field_0;    \
+                                              \
+    __temp                 = data.field_2;    \
+    arg0->field_C8.field_2 = __temp;          \
+    arg0->field_C8.field_4 = data.field_4;    \
+                                              \
+    __temp                   = data.field_6;  \
+    arg0->field_C8.field_6   = __temp;        \
+    arg0->field_D8.offsetX_4 = data.field_10; \
+                                              \
+    __temp                   = data.field_12; \
+    arg0->field_D8.offsetZ_6 = __temp;        \
+    arg0->field_D4.radius_0  = data.field_8;  \
+    arg0->field_D8.offsetX_0 = data.field_C;  \
+                                              \
+    __temp                   = data.field_E;  \
+    arg0->field_D8.offsetZ_2 = __temp;        \
+                                              \
+    __temp                 = data.field_A;    \
+    arg0->field_D4.field_2 = __temp;          \
+}
 
 void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
 {
@@ -1357,7 +1359,7 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
     s32 keyframeIdx0;
     s32 keyframeIdx1;
 
-#define animKeyframeIdx FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT)
+    #define animKeyframeIdx FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT)
 
     // Handle animation status.
     switch (scratcher->model_0.anim_4.status_0)
@@ -1610,7 +1612,7 @@ void sharedFunc_800D2C18_5_s00(s_SubCharacter* scratcher)
         }
     }
 
-#undef animKeyframeIdx
+    #undef animKeyframeIdx
 }
 
 bool sharedFunc_800D3214_5_s00(s_SubCharacter* scratcher)
@@ -1723,7 +1725,7 @@ bool sharedFunc_800D3214_5_s00(s_SubCharacter* scratcher)
 
 void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
 {
-#define animKeyframeIdx FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT)
+    #define animKeyframeIdx FP_FROM(scratcher->model_0.anim_4.time_4, Q12_SHIFT)
 
     if (scratcherProps.timer_100 != Q12(0.0f))
     {
@@ -1904,7 +1906,7 @@ void sharedFunc_800D3300_5_s00(s_SubCharacter* scratcher)
         scratcherProps.field_103 = 0;
     }
 
-#undef animKeyframeIdx
+    #undef animKeyframeIdx
 }
 
 #undef scratcherProps

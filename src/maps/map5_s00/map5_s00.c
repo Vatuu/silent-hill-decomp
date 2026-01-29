@@ -1,3 +1,8 @@
+
+#include "inline_no_dmpsx.h"
+
+#include <psyq/gtemac.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
@@ -8,9 +13,6 @@
 #include "maps/characters/player.h"
 #include "maps/characters/hanged_scratcher.h"
 #include "maps/map5/map5_s00.h"
-#include "inline_no_dmpsx.h"
-
-#include <psyq/gtemac.h>
 
 INCLUDE_RODATA("maps/map5_s00/nonmatchings/map5_s00", D_800C9578);
 
@@ -22,7 +24,7 @@ void func_800CB0D8(void) // 0x800CB0D8
     s32 i;
 
     idx = func_8005E7E0(32);
-    if (idx == -1)
+    if (idx == NO_VALUE)
     {
         return;
     }
@@ -33,21 +35,21 @@ void func_800CB0D8(void) // 0x800CB0D8
     for (i = 0; i < 12; i++)
     {
         idx = func_8005E7E0(32);
-        if (idx == -1)
+        if (idx == NO_VALUE)
         {
             break;
         }
 
         D_800DAB90[idx].field_B = 1;
         D_800DAB90[idx].field_0 = Rng_GenerateInt(Q12(-92.75f), Q12(-91.25f) - 1);
-        D_800DAB90[idx].field_8 = 0x800;
+        D_800DAB90[idx].field_8 = Q12(0.5f);
         D_800DAB90[idx].field_4 = Rng_GenerateInt(Q12(7.35f), Q12(8.85f) - 1);
         D_800DAB90[idx].field_C = Rng_GenerateUInt(0, Q12(1.0f) - 1);
         D_800DAB90[idx].field_E = Rng_GenerateInt(0, 2);
     }
 }
 
-bool func_800CB25C(POLY_FT4** poly, s32 arg1) // 0x800CB25C
+bool func_800CB25C(POLY_FT4** poly, s32 idx) // 0x800CB25C
 {
     typedef struct
     {
@@ -88,35 +90,35 @@ bool func_800CB25C(POLY_FT4** poly, s32 arg1) // 0x800CB25C
         }
     }
 
-    if (D_800DAB90[arg1].field_B != 0)
+    if (D_800DAB90[idx].field_B != 0)
     {
-        D_800DAB90[arg1].field_C += Rng_GenerateUInt(-0x20, 0x20 - 1);
-        D_800DAB90[arg1].field_C  = CLAMP_MIN_THEN_LOW(D_800DAB90[arg1].field_C, 0, 0xFFF);
+        D_800DAB90[idx].field_C += Rng_GenerateUInt(-0x20, 0x20 - 1);
+        D_800DAB90[idx].field_C  = CLAMP_MIN_THEN_LOW(D_800DAB90[idx].field_C, 0, 0xFFF);
 
-        ptr->field_15C = Q12_MULT_PRECISE(D_800DAB90[arg1].field_C, Q12(1.5f));
+        ptr->field_15C = Q12_MULT_PRECISE(D_800DAB90[idx].field_C, Q12(1.5f));
 
         setPolyFT4(*poly);
 
-        Math_SetSVectorFastSum(&ptr->field_12C[0], ((D_800DAB90[arg1].field_0 - ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
-                               ((D_800DAB90[arg1].field_8) >> 4) - ptr->field_0.field_0.vy,
-                               ((D_800DAB90[arg1].field_4 + ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
+        Math_SetSVectorFastSum(&ptr->field_12C[0], ((D_800DAB90[idx].field_0 - ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
+                               ((D_800DAB90[idx].field_8) >> 4) - ptr->field_0.field_0.vy,
+                               ((D_800DAB90[idx].field_4 + ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
 
-        Math_SetSVectorFastSum(&ptr->field_12C[1], ((D_800DAB90[arg1].field_0 + ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
-                               ((D_800DAB90[arg1].field_8) >> 4) - ptr->field_0.field_0.vy,
-                               ((D_800DAB90[arg1].field_4 + ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
+        Math_SetSVectorFastSum(&ptr->field_12C[1], ((D_800DAB90[idx].field_0 + ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
+                               ((D_800DAB90[idx].field_8) >> 4) - ptr->field_0.field_0.vy,
+                               ((D_800DAB90[idx].field_4 + ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
 
-        Math_SetSVectorFastSum(&ptr->field_12C[2], ((D_800DAB90[arg1].field_0 - ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
-                               ((D_800DAB90[arg1].field_8) >> 4) - ptr->field_0.field_0.vy,
-                               ((D_800DAB90[arg1].field_4 - ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
+        Math_SetSVectorFastSum(&ptr->field_12C[2], ((D_800DAB90[idx].field_0 - ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
+                               ((D_800DAB90[idx].field_8) >> 4) - ptr->field_0.field_0.vy,
+                               ((D_800DAB90[idx].field_4 - ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
 
         gte_ldv3c(&ptr->field_12C);
         gte_rtpt();
         gte_stsxy3_g3(*poly);
         gte_stsz3c(&ptr->field_148);
 
-        Math_SetSVectorFastSum(&ptr->field_12C[0], ((D_800DAB90[arg1].field_0 + ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
-                               ((D_800DAB90[arg1].field_8) >> 4) - ptr->field_0.field_0.vy,
-                               ((D_800DAB90[arg1].field_4 - ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
+        Math_SetSVectorFastSum(&ptr->field_12C[0], ((D_800DAB90[idx].field_0 + ptr->field_15C) >> 4) - (u16)ptr->field_0.field_0.vx,
+                               ((D_800DAB90[idx].field_8) >> 4) - ptr->field_0.field_0.vy,
+                               ((D_800DAB90[idx].field_4 - ptr->field_15C) >> 4) - ptr->field_0.field_0.vz);
 
         gte_ldv0(&ptr->field_12C);
         gte_rtps();
@@ -138,9 +140,9 @@ bool func_800CB25C(POLY_FT4** poly, s32 arg1) // 0x800CB25C
         *(s32*)&(*poly)->x3 = *(s32*)&ptr->field_144;
         setSemiTrans(*poly, 1);
 
-        if (CLAMP_LOW(Q12_MULT_PRECISE(0x1000 - D_800DAB90[arg1].field_C, 0x20), 0) < 0x10)
+        if (CLAMP_LOW(Q12_MULT_PRECISE(0x1000 - D_800DAB90[idx].field_C, 0x20), 0) < 0x10)
         {
-            var_v0_4 = MAX(Q12_MULT_PRECISE(0x1000 - D_800DAB90[arg1].field_C, 0x20), 0);
+            var_v0_4 = MAX(Q12_MULT_PRECISE(0x1000 - D_800DAB90[idx].field_C, 0x20), 0);
         }
         else
         {
@@ -149,10 +151,10 @@ bool func_800CB25C(POLY_FT4** poly, s32 arg1) // 0x800CB25C
 
         ptr->field_160 = var_v0_4;
 
-        setUV0AndClutSum(*poly, 224, 160 + (D_800DAB90[arg1].field_E << 5), 0x13);
-        setUV1AndTPageSum(*poly, 255, 160 + (D_800DAB90[arg1].field_E << 5), 0x4B);
-        setUV2Sum(*poly, 224, 191 + (D_800DAB90[arg1].field_E << 5));
-        setUV3Sum(*poly, 255, 191 + (D_800DAB90[arg1].field_E << 5));
+        setUV0AndClutSum(*poly, 224, 160 + (D_800DAB90[idx].field_E << 5), 0x13);
+        setUV1AndTPageSum(*poly, 255, 160 + (D_800DAB90[idx].field_E << 5), 0x4B);
+        setUV2Sum(*poly, 224, 191 + (D_800DAB90[idx].field_E << 5));
+        setUV3Sum(*poly, 255, 191 + (D_800DAB90[idx].field_E << 5));
 
         setRGB0Fast(*poly, ptr->field_160, ptr->field_160, ptr->field_160);
 
@@ -214,10 +216,10 @@ bool func_800CB25C(POLY_FT4** poly, s32 arg1) // 0x800CB25C
                 *(u16*)&(*poly)->r0 = ptr->field_160;
                 (*poly)->b0         = 0;
 
-                setUV0AndClutSum(*poly, 224 + (j * 8), (i * 8) + 160 + (D_800DAB90[arg1].field_E << 5), 0x0293);
-                setUV1AndTPageSum(*poly, 231 + (j * 8), (i * 8) + 160 + (D_800DAB90[arg1].field_E << 5), 0x2B);
-                setUV2Sum(*poly, 224 + (j * 8), (i * 8) + 160 + (D_800DAB90[arg1].field_E << 5) + 7);
-                setUV3Sum(*poly, 231 + (j * 8), (i * 8) + 160 + (D_800DAB90[arg1].field_E << 5) + 7);
+                setUV0AndClutSum(*poly, 224 + (j * 8), (i * 8) + 160 + (D_800DAB90[idx].field_E << 5), 0x0293);
+                setUV1AndTPageSum(*poly, 231 + (j * 8), (i * 8) + 160 + (D_800DAB90[idx].field_E << 5), 0x2B);
+                setUV2Sum(*poly, 224 + (j * 8), (i * 8) + 160 + (D_800DAB90[idx].field_E << 5) + 7);
+                setUV3Sum(*poly, 231 + (j * 8), (i * 8) + 160 + (D_800DAB90[idx].field_E << 5) + 7);
 
                 ptr->field_158 = (sp78[i][j] + sp78[i + 1][j] + sp78[i][j + 1] + sp78[i + 1][j + 1]) >> 2;
 
@@ -240,15 +242,15 @@ bool func_800CB25C(POLY_FT4** poly, s32 arg1) // 0x800CB25C
 // TODO: Move this line into separate `Chara_Creeper` split.
 #include "../src/maps/characters/creeper.c" // 0x800D387C
 
-void func_800D5B00(void)
+void func_800D5B00(void) // 0x800D5B00
 {
-    s32                  temp_s0;
-    s32                  temp_s1;
-    s32                  temp_v0_2;
-    s32                  var_s3;
+    q19_12               angle;
+    q19_12               cosAngle;
+    q19_12               randAngle;
+    q19_12               sinAngle;
+    q19_12               temp_lo;
     s32                  i;
     s_func_800D5B00_D94* ptr;
-    s32                  temp_lo;
     s_func_800D5B00*     base;
 
     base = (s_func_800D5B00*)FS_BUFFER_1;
@@ -260,28 +262,28 @@ void func_800D5B00(void)
         ptr->field_0.vx = 0;
         ptr->field_0.vy = 0;
         ptr->field_0.vz = 0;
-        ptr->field_30   = 0xFF;
+        ptr->field_30   = 255;
 
-        temp_s0 = Rng_Rand16();
+        angle = Rng_Rand16();
 
-        if (Math_Sin(temp_s0) < 0)
+        if (Math_Sin(angle) < Q12(0.0f))
         {
-            var_s3 = Math_Sin(temp_s0);
+            sinAngle = Math_Sin(angle);
         }
         else
         {
-            var_s3 = -Math_Sin(temp_s0);
+            sinAngle = -Math_Sin(angle);
         }
 
-        temp_s1   = Math_Cos(temp_s0);
-        temp_v0_2 = Rng_Rand16();
+        cosAngle   = Math_Cos(angle);
+        randAngle = Rng_Rand16();
 
-        temp_s0 = Q12_MULT(Math_Sin(temp_v0_2), temp_s1);
-        temp_lo = Q12_MULT(Math_Cos(temp_v0_2), temp_s1);
+        angle = Q12_MULT(Math_Sin(randAngle), cosAngle);
+        temp_lo = Q12_MULT(Math_Cos(randAngle), cosAngle);
 
-        ptr->field_20.vx = Q12_MULT_PRECISE(temp_s0, 0x1CCC);
-        ptr->field_20.vy = Q12_MULT_PRECISE(var_s3, 0x4666);
-        ptr->field_20.vz = Q12_MULT_PRECISE(temp_lo, 0x1CCC);
+        ptr->field_20.vx = Q12_MULT_PRECISE(angle, Q12(1.8f));
+        ptr->field_20.vy = Q12_MULT_PRECISE(sinAngle, Q12(4.4f));
+        ptr->field_20.vz = Q12_MULT_PRECISE(temp_lo, Q12(1.8f));
     }
 }
 
@@ -303,17 +305,17 @@ void func_800D5D90(void) // 0x800D5D90
     {
         if (ptr->field_34 < 0)
         {
-            sp10.vx = ptr->field_0.vx >> 8;
-            sp10.vy = ptr->field_0.vy >> 8;
-            sp10.vz = ptr->field_0.vz >> 8;
+            sp10.vx = Q12_TO_Q4(ptr->field_0.vx);
+            sp10.vy = Q12_TO_Q4(ptr->field_0.vy);
+            sp10.vz = Q12_TO_Q4(ptr->field_0.vz);
 
             RotTransPers(&sp10, &sp18[0], &sp18[1], &sp20);
             func_800D5CC4(sp18[0].vx, sp18[0].vy, ptr->field_30);
 
             ptr->field_0.vx += ptr->field_20.vx;
-            ptr->field_0.vy  = ptr->field_0.vy + ptr->field_20.vy + 0x1333;
+            ptr->field_0.vy  = (ptr->field_0.vy + ptr->field_20.vy) + Q12(1.2f);
             ptr->field_0.vz += ptr->field_20.vz;
-            ptr->field_30    = ptr->field_30 - 0x14;
+            ptr->field_30    = ptr->field_30 - 20;
             ptr->field_30    = MAX(ptr->field_30, 0);
         }
         else
@@ -325,20 +327,22 @@ void func_800D5D90(void) // 0x800D5D90
 
 s32 func_800D5EA8(s32 arg0, s32 arg1) // 0x800D5EA8
 {
-    s_func_800D5B00* buf = (s_func_800D5B00*)FS_BUFFER_1;
+    s_func_800D5B00* buf;
 
-    return D_800DA154[buf->field_5D[arg1 * 41 + arg0]];
+    buf = (s_func_800D5B00*)FS_BUFFER_1;
+
+    return D_800DA154[buf->field_5D[(arg1 * 41) + arg0]];
 }
 
 INCLUDE_ASM("maps/map5_s00/nonmatchings/map5_s00", func_800D5EE8);
 
 void func_800D61D4(void) // 0x800D61D4
 {
-    s_func_800D5B00* buf;
-    u8*              tab;
     s32              i;
     s32              j;
     s32              val;
+    s_func_800D5B00* buf;
+    u8*              tab;
 
     buf = FS_BUFFER_1;
 
@@ -381,7 +385,7 @@ void func_800D61D4(void) // 0x800D61D4
                 tab[j] = val;
             }
 
-            if (!Rng_GenerateUInt(0, 4095))
+            if (!Rng_GenerateUInt(0, 4095)) // 1 in 4096 chance.
             {
                 tab[j] = 0;
             }
@@ -398,11 +402,11 @@ void func_800D62C8(void)
     memset(buf->field_D56, 0, sizeof(buf->field_D56));
 }
 
-void func_800D631C(VECTOR* arg0, s32 arg1) // 0x800D631C
+void func_800D631C(VECTOR* arg0, q19_12 rotY) // 0x800D631C
 {
-    MATRIX  sp10;
+    MATRIX  mat;
     VECTOR  sp30;
-    SVECTOR sp40;
+    SVECTOR rot; // Q3.12
 
     SetRotMatrix(&GsWSMATRIX);
     SetTransMatrix(&GsWSMATRIX);
@@ -412,15 +416,15 @@ void func_800D631C(VECTOR* arg0, s32 arg1) // 0x800D631C
     sp30.vy += GsWSMATRIX.t[1];
     sp30.vz += GsWSMATRIX.t[2];
 
-    TransMatrix(&sp10, &sp30);
-    SetTransMatrix(&sp10);
+    TransMatrix(&mat, &sp30);
+    SetTransMatrix(&mat);
 
-    sp40.vx = 0;
-    sp40.vy = arg1;
-    sp40.vz = 0;
+    rot.vx = FP_ANGLE(0.0f);
+    rot.vy = rotY;
+    rot.vz = FP_ANGLE(0.0f);
 
-    Math_RotMatrixZxyNeg(&sp40, &sp10);
-    SetMulRotMatrix(&sp10);
+    Math_RotMatrixZxyNeg(&rot, &mat);
+    SetMulRotMatrix(&mat);
 }
 
 s32 func_800D63DC(s32* screenXy) // 0x800D63DC
@@ -488,14 +492,14 @@ void func_800D67F4(void) // 0x800D67F4
 {
     VECTOR3 pos = { D_800DA5B4[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800DA5B4[g_MapEventParam->field_5].vz };
 
-    Map_MessageWithSfx(MapMsgIdx_DoorJammed, 1576, &pos);
+    Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_Unk1576, &pos);
 }
 
 void func_800D6888(void) // 0x800D6888
 {
     VECTOR3 pos = { D_800DA5B4[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800DA5B4[g_MapEventParam->field_5].vz };
 
-    Map_MessageWithSfx(MapMsgIdx_DoorLocked, 1576, &pos);
+    Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_Unk1576, &pos);
 }
 
 const char* MAP_MESSAGES[] = {
