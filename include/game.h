@@ -1562,6 +1562,7 @@ typedef struct _PropertiesStalker
     q4_12  timer_116;
 } s_PropertiesStalker;
 
+/** @brief Twinfeeler character properties. */
 typedef struct _PropertiesTwinfeeler
 {
     u_Property    field_E8;
@@ -1581,6 +1582,7 @@ typedef struct _PropertiesTwinfeeler
 } s_PropertiesTwinfeeler;
 STATIC_ASSERT_SIZEOF(s_PropertiesTwinfeeler, 64);
 
+/** @brief Floatstinger character properties. */
 typedef struct _PropertiesFloatstinger
 {
     s16        flags_E8;

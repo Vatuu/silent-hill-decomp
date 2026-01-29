@@ -4,8 +4,9 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/particle.h"
-#include "maps/characters/player.h"
 #include "maps/map4/map4_s03.h"
+#include "maps/characters/player.h"
+#include "maps/characters/twinfeeler.h"
 
 INCLUDE_RODATA("maps/map4_s03/nonmatchings/map4_s03", D_800C9578);
 
@@ -1632,7 +1633,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
     {
         MATRIX  field_0;
         SVECTOR field_20;
-        VECTOR  field_28;
+        VECTOR  field_28; // Q23.8
     } s_func_800D3694;
 
     enum _SfxId      var_a0;
@@ -1642,14 +1643,14 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
 
     twinfeeler->position_18.vy = D_800DB1E0[twinfeeler->model_0.stateStep_3];
 
-    if (twinfeeler->model_0.controlState_2 == 0)
+    if (twinfeeler->model_0.controlState_2 == TwinfeelerControl_None)
     {
-        twinfeeler->model_0.controlState_2       = 1;
-        twinfeeler->model_0.anim_4.status_0      = ANIM_STATUS(6, true);
+        twinfeeler->model_0.controlState_2       = TwinfeelerControl_1;
+        twinfeeler->model_0.anim_4.status_0      = ANIM_STATUS(TwinfeelerAnim_6, true);
         twinfeeler->model_0.anim_4.keyframeIdx_8 = 163;
         twinfeeler->health_B0                    = 1;
         twinfeeler->model_0.anim_4.time_4        = Q12(163.0f);
-        twinfeeler->model_0.anim_4.alpha_A       = 0;
+        twinfeeler->model_0.anim_4.alpha_A       = Q12(0.0f);
         twinfeeler->field_E1_0                   = 3;
         twinfeeler->model_0.stateStep_3         -= 18;
         twinfeeler->rotation_24.vx               = D_800DB1E8[twinfeeler->model_0.stateStep_3];
@@ -1676,7 +1677,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
 
     if (twinfeeler->health_B0 > Q12(0.0f) && twinfeeler->damage_B4.amount_C > Q12(0.0f))
     {
-        twinfeeler->health_B0               = 0;
+        twinfeeler->health_B0               = Q12(0.0f);
         twinfeeler->model_0.anim_4.status_0 = ANIM_STATUS(7, false);
     }
 
@@ -1703,7 +1704,7 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
         }
     }
 
-    if (twinfeeler->model_0.anim_4.status_0 == 41)
+    if (twinfeeler->model_0.anim_4.status_0 == ANIM_STATUS(TwinfeelerAnim_20, true))
     {
         if (twinfeeler->health_B0 == Q12(0.0f))
         {
@@ -1736,17 +1737,17 @@ void func_800D3694(s_SubCharacter* twinfeeler, s_AnmHeader* anmHdr, GsCOORDINATE
 
     gte_SetRotMatrix(&ptr->field_0);
     gte_SetTransMatrix(&ptr->field_0);
-    Math_SetSVectorFast(&ptr->field_20, 0x40, 0x59, 0);
+    Math_SetSVectorFast(&ptr->field_20, 64, 89, 0);
 
     gte_ldv0(&ptr->field_20);
     gte_rt();
     gte_stlvnl(&ptr->field_28);
 
-    twinfeeler->field_C8.field_0   = Q12_MULT_PRECISE(ptr->field_28.vy * 16, temp_s0);
-    twinfeeler->field_C8.field_6   = twinfeeler->field_C8.field_0 + 0x7A;
-    twinfeeler->field_D8.offsetX_0 = Q12_MULT_PRECISE(twinfeeler->position_18.vx - (ptr->field_28.vx * 16), temp_s0);
-    twinfeeler->field_D8.offsetZ_2 = Q12_MULT_PRECISE(twinfeeler->position_18.vz - (ptr->field_28.vz * 16), temp_s0);
-    twinfeeler->field_D4.field_2   = 0xCC;
+    twinfeeler->field_C8.field_0   = Q12_MULT_PRECISE(Q8_TO_Q12(ptr->field_28.vy), temp_s0);
+    twinfeeler->field_C8.field_6   = twinfeeler->field_C8.field_0 + 122;
+    twinfeeler->field_D8.offsetX_0 = Q12_MULT_PRECISE(twinfeeler->position_18.vx - Q8_TO_Q12(ptr->field_28.vx), temp_s0);
+    twinfeeler->field_D8.offsetZ_2 = Q12_MULT_PRECISE(twinfeeler->position_18.vz - Q8_TO_Q12(ptr->field_28.vz), temp_s0);
+    twinfeeler->field_D4.field_2   = Q12(0.05f);
 }
 
 void func_800D3AE0(s_SubCharacter* chara, s32 soundIdx)
