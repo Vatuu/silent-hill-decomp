@@ -2263,7 +2263,7 @@ void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
 // BONES AND SKELETONS
 // ========================================
 
-void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q3_12 rotY) // 0x80044F14
+void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, s32 rotY) // 0x80044F14
 {
     *(q3_12*)0x1F800004 = rotZ;
     *(q3_12*)0x1F800002 = rotY;

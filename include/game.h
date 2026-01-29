@@ -1607,6 +1607,37 @@ typedef struct _PropertiesFloatstinger
 } s_PropertiesFloatstinger;
 STATIC_ASSERT_SIZEOF(s_PropertiesFloatstinger, 64);
 
+typedef struct _PropertiesMonsterCybil
+{
+    s32 field_E8;
+    s16 field_EC;
+    s16 field_EE;
+    s32 field_F0;
+    s32 field_F4;
+    s32 field_F8;
+    s8  unk_FC[2];
+    s16 field_FE;
+    s32 field_100;
+    s16 field_104;
+    s16 field_106;
+    s32 field_108;
+    s32 field_10C;
+    s32 field_110;
+    u8  field_114;
+    u8  field_115;
+    u8  field_116;
+    s8  unk_117;
+    s16 field_118;
+    s16 field_11A;
+    s16 field_11C;
+    s16 field_11E;
+    s16 field_120;
+    s16 field_122;
+    s8  unk_124[2];
+    s16 field_126;
+} s_PropertiesMonsterCybil;
+STATIC_ASSERT_SIZEOF(s_PropertiesMonsterCybil, 64);
+
 /** Offsets for translation? */
 typedef struct
 {
@@ -1710,6 +1741,7 @@ typedef struct _SubCharacter
         s_PropertiesStalker         stalker;
         s_PropertiesTwinfeeler      twinfeeler;
         s_PropertiesFloatstinger    floatstinger;
+        s_PropertiesMonsterCybil    monsterCybil;
     } properties_E4;
 } s_SubCharacter;
 STATIC_ASSERT_SIZEOF(s_SubCharacter, 296);

@@ -105,9 +105,39 @@ extern s16 D_800ED5B4;
 extern s8  D_800ED5B8;
 extern s16 D_800EA856;
 
+extern s32 D_800CB118[];
+extern s32 D_800CB178[];
+
+extern s16       D_800CB208[];
+extern s16       D_800CB2A0[];
+extern const s32 D_800CB2B4[];
+extern const s32 D_800CB2DC[];
+extern s16       D_800EA776;
+extern s16       D_800EA836;
+extern s16       D_800EA894;
+extern s16       D_800EA896;
+extern s16       D_800EBB48;
+extern s16       D_800EBB4A;
+extern VECTOR3   D_800ED570;
+
+extern s16 D_800CB238[];
+extern s16 D_800EA7D4;
+extern s16 D_800EA7D6;
+extern s16 D_800EA816;
+
+extern VECTOR D_800ED560;
+
+extern s32 D_800CB250[];
+extern s32 D_800CB278[];
+extern s16 D_800CB1D8[];
+
+extern const s32 D_800CB304[12][2];
+extern const s32 D_800CB364[12][2];
+extern const s32 D_800CB3A4[12][2];
+
 void func_800D87B0(s_SubCharacter* chara);
 
-void func_800D8848(s_SubCharacter* chara);
+void func_800D8848(s_Model* model);
 
 void Ai_MonsterCybil_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
@@ -127,7 +157,7 @@ void func_800D9AAC(s_SubCharacter*, s_Model*);
 
 void func_800DB4CC(s_SubCharacter*, s_Model*, GsCOORDINATE2*);
 
-void func_800DB6FC(VECTOR3* pos);
+s32 func_800DB6FC(VECTOR3* pos);
 
 void func_800DB748(s_SubCharacter* chara);
 
@@ -225,5 +255,25 @@ void func_800E7204(void); // Assumed types.
 void func_800E73B4(q19_12 arg0);
 
 void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4); // Assumed types.
+
+s32 func_800D8898(s_AnimInfo* arg0);
+
+void func_800D9AB4(s_SubCharacter* arg0, s_Model* arg1, GsCOORDINATE2* arg2);
+
+void func_800DA9C8(s_SubCharacter* arg0, s_Model* arg1, GsCOORDINATE2* arg2);
+
+s32 func_800DBD64(s_SubCharacter*);
+
+void func_800DB4CC(s_SubCharacter* chara, s_Model* model, GsCOORDINATE2* coord);
+
+s32 func_800DB81C(s_SubCharacter* chara);
+
+s32 func_800DB930(void);
+
+void func_800DBE5C(s_SubCharacter* chara);
+
+void func_800DC018(s_SubCharacter* chara);
+
+s32 func_800DBA48(s_SubCharacter* chara);
 
 #endif

@@ -3197,7 +3197,7 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
 void Anim_Update3(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_AnimInfo* animInfo);
 
 /** Something related to player weapon position. Takes coords to arm bones. */
-void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q3_12 rotY);
+void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, s32 rotY);
 
 s8 Bone_ModelIdxGet(s8* ptr, bool arg1);
 
