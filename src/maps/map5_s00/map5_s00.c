@@ -289,18 +289,20 @@ void func_800D5B00(void) // 0x800D5B00
 
 void func_800D5CC4(s32 x, s32 y, s32 val) // 0x800D5CC4
 {
+    s32              offsetX;
+    s32              offsetY;
+    s16              row;
+    s16              col;
     s_func_800D5B00* ptr;
-    s32              xoff, yoff;
-    s16              row, col;
     u8*              buf;
 
     ptr = FS_BUFFER_1;
 
-    xoff = ptr->field_D84 & 0xFFFF;
-    yoff = ptr->field_D84 >> 16;
+    offsetX = ptr->field_D84 & 0xFFFF;
+    offsetY = ptr->field_D84 >> 16;
 
-    col = x + 41 - xoff;
-    row = y + 81 - yoff;
+    col = (x + 41) - offsetX;
+    row = (y + 81) - offsetY;
 
     col += (col > 0) ? 1 : -1;
     col /= 2;
@@ -310,7 +312,7 @@ void func_800D5CC4(s32 x, s32 y, s32 val) // 0x800D5CC4
 
     if (col > 0 && col < 41 && row > 0 && row < 81)
     {
-        buf  = ptr->field_5D + (col + 41 * row);
+        buf  = ptr->field_5D + (col + (41 * row));
         *buf = val;
     }
 }
@@ -362,22 +364,23 @@ s32 func_800D5EA8(s32 arg0, s32 arg1) // 0x800D5EA8
 
 void func_800D5EE8(void) // 0x800D5EE8
 {
+    // TODO: Messy decl order matters.
     u32              sp18;
     s_func_800D5B00* ptr;
     GsOT_TAG*        ot;
     s32              x;
     s32              y;
-    s32              col_a;
-    s32              col_c;
-    s32              col_d;
+    s32              col0;
+    s32              col2;
+    s32              col3;
     s32              i;
     s32              j;
-    s32              col_b;
+    s32              col1;
     POLY_G4*         poly;
     DR_MODE*         mode;
     PACKET*          packet;
     s32              col;
-    s32              index;
+    s32              idx;
     int              code;
 
     ptr = 0x801E2600;
@@ -386,10 +389,10 @@ void func_800D5EE8(void) // 0x800D5EE8
     poly   = packet;
 
     x = (ptr->field_D84 & 0xFFFF) - 41;
-    y = ((u32)ptr->field_D84 >> 0x10) - 81;
+    y = ((u32)ptr->field_D84 >> 16) - 81;
 
-    index = g_ActiveBufferIdx;
-    ot    = g_OrderingTable0[index].org;
+    idx = g_ActiveBufferIdx;
+    ot    = g_OrderingTable0[idx].org;
     ot    = &ot[ptr->field_D88 >> 1];
 
     col  = 0x3A000000;
@@ -397,55 +400,55 @@ void func_800D5EE8(void) // 0x800D5EE8
 
     for (i = 1; i < 81; i++)
     {
-        col_b = func_800D5EA8(0, i - 1);
-        col_d = func_800D5EA8(0, i);
+        col1 = func_800D5EA8(0, i - 1);
+        col3 = func_800D5EA8(0, i);
 
         for (j = 1; j < 41; j++)
         {
             sp18 = ptr->field_5D[i * 41 + j];
 
-            col_a = col_b;
-            col_c = col_d;
-            col_b = func_800D5EA8(j, i - 1);
+            col0 = col1;
+            col2 = col3;
+            col1 = func_800D5EA8(j, i - 1);
 
-            col_d = func_800D5EA8(j, i);
+            col3 = func_800D5EA8(j, i);
 
-            if (col == col_a && col_a == col_b && col_a == col_c && col_c == col_d)
+            if (col == col0 && col0 == col1 && col0 == col2 && col2 == col3)
             {
                 continue;
             }
 
-            if ((j + i) & 1)
+            if ((j + i) & 0x1)
             {
-                poly->x0 = x + j * 2;
-                poly->y0 = y + i * 2;
-                poly->x1 = x + j * 2 + 2;
-                poly->y1 = y + i * 2;
-                poly->x2 = x + j * 2;
-                poly->y2 = y + i * 2 + 2;
-                poly->x3 = x + j * 2 + 2;
-                poly->y3 = y + i * 2 + 2;
+                poly->x0 = x + (j * 2);
+                poly->y0 = y + (i * 2);
+                poly->x1 = (x + (j * 2)) + 2;
+                poly->y1 = y + (i * 2);
+                poly->x2 = x + (j * 2);
+                poly->y2 = (y + (i * 2)) + 2;
+                poly->x3 = (x + (j * 2)) + 2;
+                poly->y3 = (y + (i * 2)) + 2;
 
-                *(s32*)&poly->r0 = col_a;
-                *(s32*)&poly->r1 = col_b;
-                *(s32*)&poly->r2 = col_c;
-                *(s32*)&poly->r3 = col_d;
+                *(s32*)&poly->r0 = col0;
+                *(s32*)&poly->r1 = col1;
+                *(s32*)&poly->r2 = col2;
+                *(s32*)&poly->r3 = col3;
             }
             else
             {
-                poly->x1 = x + j * 2;
-                poly->y1 = y + i * 2;
-                poly->x0 = x + j * 2 + 2;
-                poly->y0 = y + i * 2;
-                poly->x3 = x + j * 2;
-                poly->y3 = y + i * 2 + 2;
-                poly->x2 = x + j * 2 + 2;
-                poly->y2 = y + i * 2 + 2;
+                poly->x1 = x + (j * 2);
+                poly->y1 = y + (i * 2);
+                poly->x0 = (x + (j * 2)) + 2;
+                poly->y0 = y + (i * 2);
+                poly->x3 = x + (j * 2);
+                poly->y3 = (y + (i * 2)) + 2;
+                poly->x2 = (x + (j * 2)) + 2;
+                poly->y2 = (y + (i * 2)) + 2;
 
-                *(s32*)&poly->r0 = col_b;
-                *(s32*)&poly->r1 = col_a;
-                *(s32*)&poly->r2 = col_d;
-                *(s32*)&poly->r3 = col_c;
+                *(s32*)&poly->r0 = col1;
+                *(s32*)&poly->r1 = col0;
+                *(s32*)&poly->r2 = col3;
+                *(s32*)&poly->r3 = col2;
             }
 
             setPolyG4(poly);

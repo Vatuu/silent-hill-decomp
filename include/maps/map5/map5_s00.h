@@ -87,9 +87,13 @@ bool func_800CB25C(POLY_FT4** poly, s32 idx);
 
 void func_800D5B00(void);
 
+void func_800D5CC4(s32 x, s32 y, s32 val);
+
 void func_800D5D90(void);
 
 s32 func_800D5EA8(s32 arg0, s32 arg1);
+
+void func_800D5EE8(void);
 
 void func_800D61D4(void);
 
@@ -133,9 +137,5 @@ void MapEvent_MapTake(void);
 void Map_WorldObjectsInit(void);
 
 void func_800D8DFC(void);
-
-void func_800D5CC4(s32 x, s32 y, s32 val);
-
-void func_800D5EE8(void);
 
 #endif
