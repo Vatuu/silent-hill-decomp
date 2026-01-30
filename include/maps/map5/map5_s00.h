@@ -134,4 +134,8 @@ void Map_WorldObjectsInit(void);
 
 void func_800D8DFC(void);
 
+void func_800D5CC4(s32 x, s32 y, s32 val);
+
+void func_800D5EE8(void);
+
 #endif
