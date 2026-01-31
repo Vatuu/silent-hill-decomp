@@ -44,6 +44,49 @@ typedef struct
 } s_func_800E030C;
 STATIC_ASSERT_SIZEOF(s_func_800E030C, 0x38);
 
+typedef struct
+{
+    s32            field_0;
+    s32            field_4;
+    s32            field_8;
+    s32            field_C;
+    s32            field_10;
+    VECTOR3*       field_14;
+    SVECTOR*       field_18;
+    SVECTOR        field_1C;
+    s32            (*field_24)(struct s_800ED848*);
+    MATRIX         field_28;
+    s32            field_48;
+    s32*           field_4C;
+    s8             unk_50[8];
+    GsCOORDINATE2* field_58;
+    s32            field_5C;
+    s32            field_60;
+    s32            field_64;
+    VECTOR3*       field_68;
+} s_800ED848;
+
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+} s_800CB6AC;
+
+typedef struct
+{
+    SVECTOR field_0;
+    s32     field_8;
+    s32     field_C;
+} s_800CB69C;
+
+extern s_800CB69C D_800CB69C;
+
+extern s_800CB6AC D_800CB6AC[6];
+
+extern s_800ED848 D_800ED848[16];
+
 extern s_AnimInfo FLAUROS_ANIM_INFOS[];
 extern s_AnimInfo PARASITE_ANIM_INFOS[];
 
@@ -135,6 +178,8 @@ extern const s32 D_800CB304[12][2];
 extern const s32 D_800CB364[12][2];
 extern const s32 D_800CB3A4[12][2];
 
+extern MATRIX D_800C3868; // type assumed
+
 void func_800D87B0(s_SubCharacter* chara);
 
 void func_800D8848(s_Model* model);
@@ -191,7 +236,7 @@ void func_800DE62C(void);
 
 void func_800DE8F0(MATRIX* mat, SVECTOR* arg1, SVECTOR3* result);
 
-void func_800DEA94(s32* arg0);
+void func_800DEA94(s_800ED848* arg0);
 
 void func_800DEC3C(VECTOR3*, SVECTOR3*); // Assumed return type.
 
@@ -275,5 +320,23 @@ void func_800E7204(void); // Assumed types.
 void func_800E73B4(q19_12 arg0);
 
 void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4); // Assumed types.
+
+void func_800DE95C(void);
+
+void func_800DEAA8(s32 arg0);
+
+s32 func_800DEB1C(s_800ED848* arg0);
+
+void func_800DED50(MATRIX* arg0, GsCOORDINATE2* arg1, s32 arg2);
+
+s32 func_800DEDEC(s_800ED848* arg0);
+
+void func_800DF160(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2);
+
+s_800ED848* func_800DEA4C(void);
+
+void func_800DF2F0(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2);
+
+s32 func_800DF41C(s_800ED848* arg0);
 
 #endif

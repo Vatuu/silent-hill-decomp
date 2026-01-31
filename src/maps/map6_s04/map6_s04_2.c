@@ -133,34 +133,234 @@ void func_800DE8F0(MATRIX* mat, SVECTOR* arg1, SVECTOR3* result) // 0x800DE8F0
     result->vy = sxy >> 16;
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE95C);
-
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DEA4C);
-
-void func_800DEA94(s32* arg0) // 0x800DEA94
+void func_800DE95C(void) // 0x800DE95C
 {
-    if (arg0 != NULL)
+    SVECTOR3    sp18;
+    s32         temp_a0;
+    s32         i;
+    s_800ED848* ptr0;
+    u8*         ptr1;
+
+    ptr0 = D_800ED848;
+    ptr1 = 0x801E4600;
+
+    func_800DE62C();
+
+    for (i = 0; i < 16; i++, ptr0++)
     {
-        *arg0 = 0;
+        if (ptr0->field_0 != 0 && (ptr0->field_24 == NULL || ptr0->field_24(ptr0)))
+        {
+            func_800DE8F0(&ptr0->field_28, &ptr0->field_1C, &sp18);
+            temp_a0 = 0x1000 - (sp18.vz * 4);
+            func_800DE658(ptr1, sp18.vx, sp18.vy, Q12_MULT_PRECISE(ptr0->field_8 >> 8, temp_a0) >> 4, ptr0->field_10);
+        }
     }
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DEAA8);
+s_800ED848* func_800DEA4C(void) // 0x800DEA4C
+{
+    s_800ED848* ptr;
+    s32         i;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DEB1C);
+    ptr = &D_800ED848;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DEC3C);
+    for (i = 0; i < 16; i++)
+    {
+        if (ptr->field_0 == 0)
+        {
+            ptr->field_0  = 1;
+            ptr->field_5C = 0x1000;
+            return ptr;
+        }
+
+        ptr++;
+    }
+    return NULL;
+}
+
+void func_800DEA94(s_800ED848* arg0) // 0x800DEA94
+{
+    if (arg0 != NULL)
+    {
+        arg0->field_0 = 0;
+    }
+}
+
+void func_800DEAA8(s32 arg0) // 0x800DEAA8
+{
+    s32         i;
+    s_800ED848* ptr;
+
+    ptr = &D_800ED848;
+
+    for (i = 0; i < 16; i++)
+    {
+        if (ptr->field_0 != 0 && ptr->field_4 == arg0)
+        {
+            func_800DEA94(ptr);
+        }
+
+        ptr++;
+    }
+}
+
+s32 func_800DEB1C(s_800ED848* arg0) // 0x800DEB1C
+{
+    SVECTOR sp10;
+    VECTOR  sp18;
+
+    sp10.vx = arg0->field_14->vx >> 4;
+    sp10.vy = arg0->field_14->vy >> 4;
+    sp10.vz = arg0->field_14->vz >> 4;
+
+    SetRotMatrix(&GsWSMATRIX);
+    SetTransMatrix(&GsWSMATRIX);
+    ApplyRotMatrix(&sp10, &sp18);
+
+    sp18.vx += GsWSMATRIX.t[0];
+    sp18.vy += GsWSMATRIX.t[1];
+    sp18.vz += GsWSMATRIX.t[2];
+
+    TransMatrix(&arg0->field_28, &sp18);
+    SetTransMatrix(&arg0->field_28);
+    Math_RotMatrixZxyNeg(arg0->field_18, &arg0->field_28);
+    MulRotMatrix(&arg0->field_28);
+
+    arg0->field_8 += 0x1000;
+    arg0->field_8  = CLAMP_HIGH(arg0->field_C, arg0->field_8);
+
+    return 1;
+}
+
+void func_800DEC3C(VECTOR3* arg0, SVECTOR3* arg1) // 0x800DEC3C
+{
+    s_800CB69C  sp10[1];
+    s32         i;
+    s_800ED848* ptr;
+
+    sp10[0] = D_800CB69C;
+
+    for (i = 0; i <= 0; i++)
+    {
+        ptr = func_800DEA4C();
+
+        if (ptr != NULL)
+        {
+            ptr->field_14 = arg0;
+            ptr->field_18 = arg1;
+            ptr->field_1C = sp10[i].field_0;
+            ptr->field_8  = 0x4000;
+            ptr->field_C  = sp10[i].field_8;
+            ptr->field_10 = sp10[i].field_C;
+            ptr->field_24 = &func_800DEB1C;
+            ptr->field_4  = 0;
+        }
+    }
+}
 
 void func_800DED30(void) // 0x800DED30
 {
     func_800DEAA8(0);
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DED50);
+void func_800DED50(MATRIX* arg0, GsCOORDINATE2* arg1, s32 arg2) // 0x800DED50
+{
+    MATRIX sp10;
+    VECTOR sp30;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DEDEC);
+    Vw_CoordHierarchyMatrixCompute(arg1, &sp10);
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DEF50);
+    sp30.vx = arg2;
+    sp30.vy = arg2;
+    sp30.vz = arg2;
+
+    sp10.t[0] -= D_800C3868.t[0];
+    sp10.t[1] -= D_800C3868.t[1];
+    sp10.t[2] -= D_800C3868.t[2];
+
+    ScaleMatrix(&sp10, &sp30);
+    Vw_MultiplyAndTransformMatrix(&VbWvsMatrix, &sp10, arg0);
+}
+
+s32 func_800DEDEC(s_800ED848* arg0) // 0x800DEDEC
+{
+    switch (arg0->field_48)
+    {
+        case 0:
+            func_800DED50(&arg0->field_28, &arg0->field_58[1], arg0->field_5C);
+            arg0->field_5C += 0x50;
+            arg0->field_8   = arg0->field_60 + Q12_MULT_PRECISE(arg0->field_5C, arg0->field_C);
+            arg0->field_10 += 0x1E;
+            arg0->field_10  = CLAMP_HIGH(arg0->field_64, arg0->field_10);
+            if (*arg0->field_4C > 0x15E000)
+            {
+                arg0->field_48++;
+            }
+            break;
+
+        case 1:
+            func_800DED50(&arg0->field_28, &arg0->field_58[1], arg0->field_5C);
+            arg0->field_5C -= 0xC8;
+            arg0->field_5C  = MAX(arg0->field_5C, 0);
+            arg0->field_8   = arg0->field_60 + Q12_MULT_PRECISE(arg0->field_5C, arg0->field_C);
+            arg0->field_10 -= 0x1E;
+            arg0->field_10  = MAX(arg0->field_10, 0);
+            break;
+    }
+    return 1;
+}
+
+void func_800DEF50(VECTOR3* arg0, GsCOORDINATE2* arg1, s32* arg2) // 0x800DEF50
+{
+    s_800CB6AC  sp10[6];
+    s32         idx;
+    s_800ED848* ptr;
+    s32*        ptr1;
+    s32         i;
+
+    memcpy(&sp10, &D_800CB6AC, sizeof(D_800CB6AC));
+
+    ptr1 = 0x801E4600;
+
+    for (i = 0; i < 6; i++)
+    {
+        ptr = func_800DEA4C();
+
+        if (ptr != NULL)
+        {
+            ptr->field_14 = arg0;
+            ptr->field_58 = arg1;
+
+            idx = sp10[i].field_0;
+
+            if (idx != 0)
+            {
+                ptr->field_1C.vx = Q12_MULT_PRECISE(arg1[idx].coord.t[0], 0x3000);
+                ptr->field_1C.vy = Q12_MULT_PRECISE(arg1[idx].coord.t[1], 0x3000);
+                ptr->field_1C.vz = Q12_MULT_PRECISE(arg1[idx].coord.t[2], 0x3000);
+                ptr->field_60    = 0x28000;
+            }
+            else
+            {
+                ptr->field_1C.vx = 0;
+                ptr->field_1C.vy = 0;
+                ptr->field_1C.vz = 0;
+                ptr->field_60    = 0x64000;
+            }
+
+            ptr->field_C  = sp10[i].field_4;
+            ptr->field_8  = ptr->field_C;
+            ptr->field_10 = sp10[i].field_8;
+            ptr->field_64 = sp10[i].field_C;
+            ptr->field_24 = &func_800DEDEC;
+            ptr->field_4  = 1;
+            ptr1[0x10C6]  = 0;
+            ptr->field_5C = 0;
+            ptr->field_4C = arg2;
+            ptr->field_48 = 0;
+        }
+    }
+}
 
 void func_800DF134(void) // 0x800DF134
 {
@@ -168,13 +368,154 @@ void func_800DF134(void) // 0x800DF134
     D_800ED588++;
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DF160);
+void func_800DF160(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800DF160
+{
+    MATRIX sp10;
+    MATRIX sp30;
+    s32    temp_s1;
+    s32    temp_s2;
+    s32    temp_s3;
+    s32    temp_s4;
+    s32    temp_s5;
+    s32    temp_s6;
+    s32    temp_v0;
+    s32    temp_v0_2;
+    s32    var_a0;
+    s32    var_a1;
+    s32    var_a2;
+    s32    var_s1;
+    s32    var_s2;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DF2F0);
+    temp_s2 = arg2->vx - arg1->vx;
+    temp_s3 = arg2->vy - arg1->vy;
+    temp_s1 = arg2->vz - arg1->vz;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DF41C);
+    temp_s4 = Q12_MULT(temp_s2, temp_s2);
+    temp_s5 = Q12_MULT(temp_s1, temp_s1);
+    temp_s6 = Q12_MULT(temp_s3, temp_s3);
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DF5B0);
+    temp_v0 = SquareRoot12(temp_s4 + temp_s5);
+
+    if (temp_v0 != 0)
+    {
+        var_s2 = FP_TO(temp_s2, Q12_SHIFT) / temp_v0;
+        var_s1 = FP_TO(temp_s1, Q12_SHIFT) / temp_v0;
+    }
+    else
+    {
+        var_s2 = 0;
+        var_s1 = 0x1000;
+    }
+
+    var_a0    = temp_s6 + temp_s4;
+    temp_v0_2 = SquareRoot12(var_a0 + temp_s5);
+
+    if (temp_v0_2 != 0)
+    {
+        var_a2 = -FP_TO(temp_s3, Q12_SHIFT) / temp_v0_2;
+        var_a1 = FP_TO(temp_v0, Q12_SHIFT) / temp_v0_2;
+    }
+    else
+    {
+        var_a2 = 0;
+        var_a1 = 0x1000;
+    }
+
+    sp30.m[0][0] = var_s1;
+    sp30.m[0][1] = 0;
+    sp30.m[0][2] = var_s2;
+    sp30.m[1][0] = 0;
+    sp30.m[1][1] = 0x1000;
+    sp30.m[1][2] = 0;
+    sp30.m[2][0] = -var_s2;
+    sp30.m[2][1] = 0;
+    sp30.m[2][2] = var_s1;
+
+    sp10.m[0][0] = 0x1000;
+    sp10.m[0][1] = 0;
+    sp10.m[0][2] = 0;
+    sp10.m[1][0] = 0;
+    sp10.m[1][2] = -var_a2;
+    sp10.m[2][0] = 0;
+    sp10.m[1][1] = var_a1;
+    sp10.m[2][2] = var_a1;
+    sp10.m[2][1] = var_a2;
+
+    MulMatrix0(&sp30, &sp10, arg0);
+}
+
+void func_800DF2F0(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800DF2F0
+{
+    SVECTOR sp10;
+    VECTOR  sp18;
+    MATRIX  sp28;
+
+    sp10.vx = arg1->vx >> 4;
+    sp10.vy = arg1->vy >> 4;
+    sp10.vz = arg1->vz >> 4;
+
+    SetRotMatrix(&GsWSMATRIX);
+    SetTransMatrix(&GsWSMATRIX);
+    ApplyRotMatrix(&sp10, &sp18);
+
+    sp18.vx += GsWSMATRIX.t[0];
+    sp18.vy += GsWSMATRIX.t[1];
+    sp18.vz += GsWSMATRIX.t[2];
+
+    TransMatrix(arg0, &sp18);
+    func_800DF160(arg0, arg1, arg2);
+
+    sp10.vx = 0;
+    sp10.vy = 0;
+    sp10.vz = 0x355;
+
+    Math_RotMatrixXyz(&sp10, &sp28);
+    MulMatrix(arg0, &sp28);
+    SetRotMatrix(&GsWSMATRIX);
+    MulRotMatrix(arg0);
+    SetRotMatrix(arg0);
+    SetTransMatrix(arg0);
+}
+
+s32 func_800DF41C(s_800ED848* arg0) // 0x800DF41C
+{
+    MATRIX* temp_s0;
+    s32     i;
+    s32     var_v1;
+    u8*     ptr0;
+
+    ptr0 = 0x801E4600;
+
+    func_800DF2F0(&arg0->field_28, arg0->field_14, arg0->field_68);
+    SetRotMatrix(&arg0->field_28);
+    SetTransMatrix(&arg0->field_28);
+
+    arg0->field_8 += 0x1E;
+
+    for (i = 0; i < 50; i++)
+    {
+        var_v1 = 0x14C;
+        func_800DE658(ptr0, ((Rng_Rand16() % 332) / 4) + (arg0->field_8 - var_v1), ((Rng_Rand16() % 224) / 2) - 0x38, Rng_Rand16() % 0x40 + 0xA, Rng_Rand16() % 0x800);
+    }
+    return 0;
+}
+
+void func_800DF5B0(VECTOR3* arg0, VECTOR3* arg1) // 0x800DF5B0
+{
+    s_800ED848* ptr;
+
+    ptr = func_800DEA4C();
+
+    if (ptr != NULL)
+    {
+        ptr->field_24 = &func_800DF41C;
+        ptr->field_14 = arg0;
+        ptr->field_68 = arg1;
+        ptr->field_8  = 0;
+        ptr->field_4  = 2;
+        func_800DF2F0(&ptr->field_28, ptr->field_14, ptr->field_68);
+    }
+}
 
 void func_800DF618(void) // 0x800DF618
 {
