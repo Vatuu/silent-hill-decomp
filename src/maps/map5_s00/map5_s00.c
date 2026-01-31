@@ -405,7 +405,7 @@ void func_800D5EE8(void) // 0x800D5EE8
 
         for (j = 1; j < 41; j++)
         {
-            sp18 = ptr->field_5D[i * 41 + j];
+            sp18 = ptr->field_5D[(i * 41) + j];
 
             col0 = col1;
             col2 = col3;
@@ -413,7 +413,10 @@ void func_800D5EE8(void) // 0x800D5EE8
 
             col3 = func_800D5EA8(j, i);
 
-            if (col == col0 && col0 == col1 && col0 == col2 && col2 == col3)
+            if (col  == col0 &&
+                col0 == col1 &&
+                col0 == col2 &&
+                col2 == col3)
             {
                 continue;
             }

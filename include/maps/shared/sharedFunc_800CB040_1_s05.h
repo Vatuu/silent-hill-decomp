@@ -70,7 +70,7 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
 
     if ((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 < (u16)ptr->field_0.field_C8)
     {
-        s32 angle = func_8005C7B0(0x400 - (((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 << 6) / sharedData_800D8568_1_s05.field_4)); // TODO: `FP_ANGLE` for 0x400?
+        q19_12 angle = func_8005C7B0(FP_ANGLE(90.0f) - (((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 << 6) / sharedData_800D8568_1_s05.field_4));
         var_s1    = Q12_MULT((u16)ptr->field_0.field_CA, Math_Sin(angle)) + (u16)ptr->field_0.field_CC;
 
         ptr->field_134 = Q12_MULT(ptr->field_134, var_s1);
@@ -96,9 +96,9 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
     sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 += ptr->field_0.field_CE;
     sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_2 += ptr->field_0.field_CE;
 
-    if ((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 >= 0x1000)
+    if ((u16)sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 >= FP_ANGLE(360.0f))
     {
-        if (sharedData_800D8568_1_s05.flags_0 & 2 && sharedData_800DFB7C_0_s00[idx].field_A == 8)
+        if (sharedData_800D8568_1_s05.flags_0 & (1 << 1) && sharedData_800DFB7C_0_s00[idx].field_A == 8)
         {
             sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = (u16)sharedData_800D8568_1_s05.field_10 + Rng_GenerateUInt(0, 0xFFF);
             if ((sharedData_800D8568_1_s05.flags_0 & (1 << 3)) && 

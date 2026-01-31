@@ -32,7 +32,7 @@ typedef struct
     SVECTOR3 field_20;
     s8       unk_26[10];
     s32      field_30;
-    s32      field_34;
+    q19_12   field_34; // Timer?
 } s_func_800D5B00_D94;
 
 typedef struct
