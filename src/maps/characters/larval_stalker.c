@@ -737,10 +737,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
             break;
     }
 
-    larvalStalker->damage_B4.amount_C      = Q12(0.0f);
-    larvalStalker->damage_B4.position_0.vz = Q12(0.0f);
-    larvalStalker->damage_B4.position_0.vy = Q12(0.0f);
-    larvalStalker->damage_B4.position_0.vx = Q12(0.0f);
+    Chara_DamageClear(larvalStalker);
 }
 
 void sharedFunc_800D140C_1_s00(s_SubCharacter* larvalStalker, GsCOORDINATE2* coords)
