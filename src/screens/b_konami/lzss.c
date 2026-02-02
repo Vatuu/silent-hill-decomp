@@ -111,7 +111,7 @@ void Lzss_Decode(s32 timeLimit) // 0x800CA2C8
 
         // Pause decompression if we've passed the time limit.
         // State vars will be written to globals after breaking, allowing the func to run again on the next tick.
-        // Pausing is only allowed when bit 9 is clear (after 8 shifts), meaning that new flag is about to be read after the shift right below.
+        // Pausing is only allowed when bit 9 is clear (after 8 shifts), meaning a new flag is about to be read after the shift right below,
         // Ensuring it pauses at boundaries between flag bytes rather than mid-processing.
         // (NOTE: SH only seems to pass `NO_VALUE` to this, so this pause code goes unused.)
         if (!(flag & (1 << 9)) && VSync(SyncMode_Immediate) > expectedTime && timeLimit != NO_VALUE)

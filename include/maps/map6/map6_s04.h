@@ -208,6 +208,28 @@ extern s32 D_800EB338[];
 extern VECTOR3 D_800CB728;
 extern s32     D_800EBB54;
 
+void func_800E0164(void);
+
+void func_800E05C8(s32 x, s32 y, s32 val);
+
+void func_800E068C(void);
+
+s32 func_800E0878(s32 arg0, s32 arg1);
+
+void func_800E08B8(void);
+
+void func_800E0BB0(void);
+
+void func_800E0C58(void);
+
+void func_800E0CCC(VECTOR* arg0, s32 arg1);
+
+void func_800E0D8C(VECTOR3* arg0);
+
+void func_800E0DC4(s32 arg0, s32 arg1);
+
+void func_800E0FAC(s32 arg0);
+
 void func_800D87B0(s_SubCharacter* chara);
 
 void func_800D8848(s_Model* model);
@@ -260,29 +282,61 @@ void func_800DE26C(void);
 
 void func_800DBE5C(s_SubCharacter* chara);
 
+s32 func_800DE350(s32 arg0);
+
+PACKET* func_800DE380(GsOT_TAG* arg0, PACKET* arg1);
+
 void func_800DE62C(void);
 
 void func_800DE8F0(MATRIX* mat, SVECTOR* arg1, SVECTOR3* result);
 
+void func_800DE95C(void);
+
+s_800ED848* func_800DEA4C(void);
+
 void func_800DEA94(s_800ED848* arg0);
+
+void func_800DEAA8(s32 arg0);
+
+s32 func_800DEB1C(s_800ED848* arg0);
 
 void func_800DEC3C(VECTOR3*, SVECTOR3*); // Assumed return type.
 
 void func_800DED30(void);
 
-void func_800DF134(void);
+void func_800DED50(MATRIX* arg0, GsCOORDINATE2* arg1, s32 arg2);
+
+bool func_800DEDEC(s_800ED848* arg0);
 
 void func_800DEF50(VECTOR3*, GsCOORDINATE2*, s32*); // Assumed return type.
 
-void func_800DF134(void); // Assumed return type.
+void func_800DF134(void);
+
+void func_800DF160(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2);
+
+void func_800DF2F0(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2);
+
+bool func_800DF41C(s_800ED848* arg0);
 
 void func_800DF5B0(VECTOR3*, VECTOR3*); // Assumed return type.
 
 void func_800DF618(void);
 
-void func_800DFC94(s32*); // Assumed return type.
+void func_800DF64C(void);
+
+s32 func_800DF670(s32 arg0);
+
+PACKET* func_800DF6C4(GsOT_TAG* ot, PACKET* packet, MATRIX* mat);
+
+void func_800DFA38(MATRIX* mat);
+
+bool func_800DFBB0(s_800ED848* arg0);
+
+void func_800DFC94(s32* arg0);
 
 void func_800DFD08(void);
+
+PACKET* func_800DFD3C(GsOT_TAG* ot, PACKET* packet, MATRIX* mat, s32 arg3, s32 arg4);
 
 void func_800E01F4(void);
 
@@ -348,63 +402,5 @@ void func_800E7204(void); // Assumed types.
 void func_800E73B4(q19_12 arg0);
 
 void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4); // Assumed types.
-
-void func_800DE95C(void);
-
-void func_800DEAA8(s32 arg0);
-
-s32 func_800DEB1C(s_800ED848* arg0);
-
-void func_800DED50(MATRIX* arg0, GsCOORDINATE2* arg1, s32 arg2);
-
-s32 func_800DEDEC(s_800ED848* arg0);
-
-void func_800DF160(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2);
-
-s_800ED848* func_800DEA4C(void);
-
-void func_800DF2F0(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2);
-
-s32 func_800DF41C(s_800ED848* arg0);
-
-s32 func_800DE350(s32 arg0);
-
-PACKET* func_800DE380(GsOT_TAG* arg0, PACKET* arg1);
-
-void func_800DF64C(void);
-
-s32 func_800DF670(s32 arg0);
-
-PACKET* func_800DF6C4(GsOT_TAG* arg0, PACKET* arg1, MATRIX* arg2);
-
-void func_800DFA38(MATRIX* arg0);
-
-s32 func_800DFBB0(s_800ED848* arg0);
-
-void func_800DFC94(s32* arg0);
-
-PACKET* func_800DFD3C(GsOT_TAG* arg0, PACKET* arg1, MATRIX* arg2, s32 arg3, s32 arg4);
-
-void func_800E0164(void);
-
-void func_800E05C8(s32 x, s32 y, s32 val);
-
-void func_800E068C(void);
-
-s32 func_800E0878(s32 arg0, s32 arg1);
-
-void func_800E08B8(void);
-
-void func_800E0BB0(void);
-
-void func_800E0C58(void);
-
-void func_800E0CCC(VECTOR* arg0, s32 arg1);
-
-void func_800E0D8C(VECTOR3* arg0);
-
-void func_800E0DC4(s32 arg0, s32 arg1);
-
-void func_800E0FAC(s32 arg0);
 
 #endif

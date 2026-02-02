@@ -921,7 +921,7 @@ typedef struct _ControllerData
 } s_ControllerData;
 STATIC_ASSERT_SIZEOF(s_ControllerData, 44);
 
-/** @brief Controller key bindings for input actions. Bontains bitfield of button presses assigned to each action.
+/** @brief Controller key bindings for input actions. Contains bitfield of button presses assigned to each action.
  *
  * Bitfields only contain buttons. Analog directions and D-Pad aren't included.
  */
