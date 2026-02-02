@@ -74,7 +74,7 @@ void (*g_GameState_SaveScreen_Funcs[])() = {
 
 bool g_SaveScreen_IsFormatting = false;
 
-bool g_SaveScreen_IsSaveSelected = false;
+bool g_SaveScreen_IsNewSaveSelected = false;
 
 // Only used in `GameState_AutoLoadSavegame_Update`.
 void (*g_GameState_AutoLoadSavegame_Funcs[])() = {
@@ -474,7 +474,7 @@ void SaveScreen_SavesSlotDraw(s_Savegame_Entry* saveEntry, s32 saveIdx, s32 slot
     }
 }
 
-void SaveScreen_MemCardStateDraw(s32 saveScreenState, s32 memCardState) // 0x801E3910
+void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardState) // 0x801E3910
 {
     s32        strIdx;
 	static s32 D_801E7554;
@@ -503,10 +503,10 @@ void SaveScreen_MemCardStateDraw(s32 saveScreenState, s32 memCardState) // 0x801
         143, 114
     };
 
-    switch (saveScreenState)
+    switch (g_SaveScreen_SaveScreenState)
     {
         case SaveScreenState_Format:
-            strIdx = (memCardState == saveScreenState) ? 1 : 2;
+            strIdx = (memCardState == g_SaveScreen_SaveScreenState) ? 1 : 2;
             break;
 
         case SaveScreenState_Save:
@@ -594,7 +594,7 @@ void SaveScreen_MemCardStateDraw(s32 saveScreenState, s32 memCardState) // 0x801
             g_SaveScreen_MemCardStateDisplay++;
             
         case 1:
-            if (saveScreenState == SaveScreenState_Save && memCardState == MemCardResult_Success)
+            if (g_SaveScreen_SaveScreenState == SaveScreenState_Save && memCardState == MemCardResult_Success)
             {
                 g_SaveScreen_IsGameSaving = memCardState;
             }
@@ -1443,14 +1443,14 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
     GsOT*               ot;
     s32                 saveId;
     s32                 mins;
-    s32                 hasFlag;
+    s32                 beamColorFlag;
     s32                 sec;
     s32                 hours;
     s32                 saveDataIdx;
     s32                 i;
     s32                 digitCount;
     s32                 offset;
-    u32                 flags;
+    u32                 hyperBlasterBeamColor;
     u32                 timeInSec;
     s_Savegame_Metadata* ptr;
     POLY_G4*            poly;
@@ -1479,7 +1479,7 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         offset = ptr->add290Hours_B_1;
         hours  = (timeInSec / 3600) + offset * 290;
 
-        flags = ptr->pickedUpSpecialItemCount_B_3;
+        hyperBlasterBeamColor = ptr->pickedUpSpecialItemCount_B_3;
 
         mins = (timeInSec / 60) % 60;
         sec  = timeInSec % 60;
@@ -1532,7 +1532,7 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
         Gfx_StringSetPosition((digitCount * 10) + 254, 178);
         Gfx_StringDrawInt(2, sec);
 
-        if (!(flags & 0x18))
+        if (!(hyperBlasterBeamColor & 0x18)) // Checks if the player have no special hyper blaster beam color unlocked.
         {
             return;
         }
@@ -1548,12 +1548,12 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
             setPolyG4(poly);
             setSemiTrans(poly, true);
 
-            hasFlag = flags & 0x10;
+            beamColorFlag = hyperBlasterBeamColor & 0x10;
 
             if (i != 0)
             {
-                setRGB0(poly, (hasFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
-                setRGB2(poly, (hasFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
+                setRGB0(poly, (beamColorFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
+                setRGB2(poly, (beamColorFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
                 setRGB1(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
                 setRGB3(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
                 setXY4(poly, -30, 89, -30, 93, 120, 89, 120, 93);
@@ -1562,8 +1562,8 @@ void SaveScreen_ElementInfoDraw(s32 slotIdx, s32 selectedSaveIdx) // 0x801E5E18
             {
                 setRGB0(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
                 setRGB2(poly, FP_COLOR(0.0f), FP_COLOR(0.0f), FP_COLOR(0.0f));
-                setRGB1(poly, (hasFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
-                setRGB3(poly, (hasFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
+                setRGB1(poly, (beamColorFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
+                setRGB3(poly, (beamColorFlag > 0) ? FP_COLOR(0.0f) : FP_COLOR(1.0f), FP_COLOR(1.0f), FP_COLOR(0.0f));
                 setXY4(poly, -30, 85, -30, 89, 120, 85, 120, 89);
             }
 
@@ -1656,7 +1656,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
             if (g_MemCard_TotalElementsCount > 0)
             {
                 g_SaveScreen_IsFormatting     = false;
-                g_SaveScreen_IsSaveSelected   = false;
+                g_SaveScreen_IsNewSaveSelected   = false;
                 g_MemCard_ActiveSavegameEntry = GetActiveSavegameEntry(g_SelectedSaveSlotIdx);
 
                 // Move down savegame entry.
@@ -1684,25 +1684,29 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 g_SelectedDeviceId            = saveEntry->deviceId_5;
                 g_SelectedFileIdx             = saveEntry->fileIdx_6;
                 g_Savegame_SelectedElementIdx = saveEntry->elementIdx_7;
-
-                if (D_800BCD38 == 2) 
+				
+				// This code determines if the screen should show an "Yes/No" options.
+                if (g_SaveScreen_SaveScreenState == MEMCARD_UNK_STATE_SAVE) 
                 {
-                    if (saveEntry->currentScreenSessionSaves_0 == 31600)
+                    if (saveEntry->totalSavegameCount_0 == 31600)
                     {
                         g_SaveScreen_IsFormatting = true;
                     }
 
-                    // This is the code that defines if the selected element is the `New Save` option or a save game.
-                    if ((u16)(saveEntry->currentScreenSessionSaves_0 - 1) < 31099)
+                    // This is the code that defines if the selected element is the `New Save` option.
+					// @bug: While extreamly hard to get, it is possible that the player could reach
+					// the amount required for this value making impossible to select to overwrite or not
+					// files.
+                    if ((u16)(saveEntry->totalSavegameCount_0 - 1) < 31099)
                     {
-                        g_SaveScreen_IsSaveSelected = true;
+                        g_SaveScreen_IsNewSaveSelected = true;
                     }
                 }
 
                 // Overwrite or format savegame entry.
                 if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) 
                 {
-                    if (g_SaveScreen_IsFormatting | g_SaveScreen_IsSaveSelected)
+                    if (g_SaveScreen_IsFormatting | g_SaveScreen_IsNewSaveSelected)
                     {
                         isSaveWriteOptionSelected       = false;
                         g_GameWork.gameStateStep_598[2] = 0;
@@ -1713,7 +1717,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                         g_SysWork.timer_20               = 0;
                         g_GameWork.gameStateStep_598[1]  = 0;
                         g_GameWork.gameStateStep_598[2]  = 0;
-                        g_GameWork.gameStateStep_598[0] += D_800BCD38;
+                        g_GameWork.gameStateStep_598[0] += g_SaveScreen_SaveScreenState;
                     }
 
                     SD_Call(Sfx_MenuConfirm);
@@ -1772,7 +1776,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                     g_SysWork.timer_20              = 0;
                     g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;
-                    g_GameWork.gameStateStep_598[0] = g_SaveScreen_IsSaveSelected + 2;
+                    g_GameWork.gameStateStep_598[0] = g_SaveScreen_IsNewSaveSelected + 2;
                 }
                 SD_Call(Sfx_MenuConfirm);
             }
@@ -1807,7 +1811,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 }
                 else
                 {
-                    if (D_800BCD38 == gameStateStep)
+                    if (g_SaveScreen_SaveScreenState == gameStateStep)
                     {
                         MemCard_Disable();
                         Game_StateSetNext(GameState_InGame);
@@ -1829,28 +1833,28 @@ void SaveScreen_FormatCard(void) // 0x801E69E8
     // Handle memory card format state.
     switch (g_GameWork.gameStateStep_598[1])
     {
-        case FormatState_0:
+        case 0:
             g_SaveScreen_State                 = SaveScreenState_Format;
             g_SaveScreen_MemCardStateTextTimer = STR_TIMER_MAX;
-            g_GameWork.gameStateStep_598[1]    = FormatState_1;
+            g_GameWork.gameStateStep_598[1]    = 1;
             g_GameWork.gameStateStep_598[2]    = 0;
 
-        case FormatState_1:
+        case 1:
             g_GameWork.gameStateStep_598[1]++;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
 
-        case FormatState_2:
-            func_8002E94C(6, g_SelectedDeviceId, 0, 0);
+        case 2:
+            MemCard_ProcessSet(MemCardProcess_Format, g_SelectedDeviceId, 0, 0);
 
             g_GameWork.gameStateStep_598[1]++;
             g_GameWork.gameStateStep_598[2] = 0;
             break;
 
-        case FormatState_3:
-            switch (func_8002E990())
+        case 3:
+            switch (MemCard_LastMemCardResultGet())
             {
-                case 10:
+                case MemCardResult_FileIoError:
                     g_SaveScreen_MemCardStateTextTimer = STR_TIMER_MAX;
                     g_GameWork.gameStateStep_598[0]    = 1;
                     g_SysWork.timer_20                 = 0;
@@ -1858,10 +1862,10 @@ void SaveScreen_FormatCard(void) // 0x801E69E8
                     g_GameWork.gameStateStep_598[2]    = 0;
                     break;
 
-                case 11:
-                    g_SysWork.timer_20 = 0;
+                case MemCardResult_FileIoComplete:
+                    g_SysWork.timer_20              = 0;
                     g_GameWork.gameStateStep_598[0]++;
-                    g_GameWork.gameStateStep_598[1] = FormatState_0;
+                    g_GameWork.gameStateStep_598[1] = 0;
                     g_GameWork.gameStateStep_598[2] = 0;
                     break;
             }
@@ -1878,7 +1882,7 @@ void SaveScreen_SaveGame(void) // 0x801E6B18
     // Handle save state.
     switch (g_GameWork.gameStateStep_598[1])
     {
-        case SaveState_0:
+        case 0:
             g_SaveScreen_State = SaveScreenState_Save;
             saveEntry          = MemCard_SaveMetadataGet(g_SelectedDeviceId, g_SelectedFileIdx, g_Savegame_SelectedElementIdx);
 
@@ -1901,12 +1905,12 @@ void SaveScreen_SaveGame(void) // 0x801E6B18
             saveEntry->add290Hours_B_1              = g_SavegamePtr->add290Hours_25C_1;
             saveEntry->pickedUpSpecialItemCount_B_3 = g_SavegamePtr->pickedUpSpecialItemCount_25C_3;
 
-            func_8002E94C(5, g_SelectedDeviceId, g_SelectedFileIdx, g_Savegame_SelectedElementIdx);
+            MemCard_ProcessSet(MemCardProcess_Save_5, g_SelectedDeviceId, g_SelectedFileIdx, g_Savegame_SelectedElementIdx);
             g_GameWork.gameStateStep_598[1]++;
             g_GameWork.gameStateStep_598[2] = 0;
 
-        case SaveState_1:
-            switch (func_8002E990())
+        case 1:
+            switch (MemCard_LastMemCardResultGet())
             {
                 default:
                     g_GameWork.gameStateStep_598[0] = 1;
@@ -1915,26 +1919,26 @@ void SaveScreen_SaveGame(void) // 0x801E6B18
                     g_GameWork.gameStateStep_598[2] = 0;
                     break;
 
-                case 1:
+                case MemCardResult_Success:
                     g_SaveScreen_MemCardStateTextTimer = 30;
                     break;
 
-                case 11:
-                    func_8002E94C(3, g_SelectedDeviceId, g_SelectedFileIdx, 0);
+                case MemCardResult_FileIoComplete:
+                    MemCard_ProcessSet(MemCardProcess_Save_3, g_SelectedDeviceId, g_SelectedFileIdx, 0);
                     g_GameWork.gameStateStep_598[1]++;
                     g_GameWork.gameStateStep_598[2] = 0;
                     break;
             }
             break;
 
-        case SaveState_2:
-            switch (func_8002E990())
+        case 2:
+            switch (MemCard_LastMemCardResultGet())
             {
-                case 1:
+                case MemCardResult_Success:
                     g_SaveScreen_MemCardStateTextTimer = 30;
                     break;
 
-                case 11:
+                case MemCardResult_FileIoComplete:
                     g_GameWork.autosave_90 = g_GameWork.savegame_30C;
 
                 default:
@@ -1955,16 +1959,16 @@ void SaveScreen_LoadSave(void) // 0x801E6DB0
     // Handle load state.
     switch (g_GameWork.gameStateStep_598[1])
     {
-        case LoadState_0:
+        case 0:
             g_SaveScreen_State = SaveScreenState_Load;
 
-            func_8002E94C(4, g_SelectedDeviceId, g_SelectedFileIdx, g_Savegame_SelectedElementIdx);
+            MemCard_ProcessSet(MemCardProcess_Load_Settings, g_SelectedDeviceId, g_SelectedFileIdx, g_Savegame_SelectedElementIdx);
 
             g_GameWork.gameStateStep_598[1]++;
             g_GameWork.gameStateStep_598[2] = 0;
 
-        case LoadState_1:
-            memCardStateResult = func_8002E990();
+        case 1:
+            memCardStateResult = MemCard_LastMemCardResultGet();
             if (memCardStateResult != MemCardResult_Success)
             {
                 if (memCardStateResult != MemCardResult_FileIoComplete)
@@ -1977,7 +1981,7 @@ void SaveScreen_LoadSave(void) // 0x801E6DB0
                     break;
                 }
 
-                func_8002E94C(2, g_SelectedDeviceId, 0, 0);
+                MemCard_ProcessSet(MemCardProcess_Load_Game, g_SelectedDeviceId, 0, 0);
 
                 g_GameWork.gameStateStep_598[1]++;
                 g_GameWork.gameStateStep_598[2] = 0;
@@ -1987,8 +1991,8 @@ void SaveScreen_LoadSave(void) // 0x801E6DB0
             g_SaveScreen_MemCardStateTextTimer = 30;
             break;
 
-        case LoadState_2:
-            memCardStateResult = func_8002E990();
+        case 2:
+            memCardStateResult = MemCard_LastMemCardResultGet();
             if (memCardStateResult == MemCardResult_Success)
             {
                 g_SaveScreen_MemCardStateTextTimer = 30;
@@ -2073,7 +2077,7 @@ void SaveScreen_ScreenDraw(void) // 0x801E70C8
         // Run through savegame entries.
         for (j = 0; j < (s32)g_Savegame_ElementCount1[i]; j++)
         {
-            if (g_MemCard_ActiveSavegameEntry->currentScreenSessionSaves_0 >= 0)
+            if (g_MemCard_ActiveSavegameEntry->totalSavegameCount_0 >= 0)
             {
                 SaveScreen_FileIdxDraw(j, i, g_MemCard_ActiveSavegameEntry->fileIdx_6 + 1, g_MemCard_ActiveSavegameEntry->type_4);
             }
@@ -2128,7 +2132,7 @@ void SaveScreen_MemCardState(void) // 0x801E7244
 
         case SaveScreenState_Save:
         case SaveScreenState_Load:
-            SaveScreen_MemCardStateDraw(g_SaveScreen_State, func_8002E990());
+            SaveScreen_MemCardStateDraw(g_SaveScreen_State, MemCard_LastMemCardResultGet());
             break;
     }
 }

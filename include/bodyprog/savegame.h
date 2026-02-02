@@ -69,7 +69,7 @@ typedef enum _SaveLocationId
 
 typedef struct _Savegame_Metadata
 {
-    s32 field_0; // Same behavior as `totalSavegameCount_0` in `s_Savegame_Entry`.
+    s32 totalSavegameCount_0;
     u32 gameplayTimer_4;
     u16 savegameCount_8;
     u8  locationId_A;
@@ -79,45 +79,29 @@ typedef struct _Savegame_Metadata
 } s_Savegame_Metadata;
 STATIC_ASSERT_SIZEOF(s_Savegame_Metadata, 12);
 
-/** @note A new instance is written to memory each time a
- * new save is created in any slot.
- *
- * Also used for the `New save` entry.
- */
 typedef struct _Savegame_Entry
 {
-    /** @brief `currentScreenSessionSaves_0` is a counter
-     * incremented each time the user saves during the
-     * current save screen session.
-     *
-     * Behaviour seems to be buggy, as it
-     * doesn't consider circumstances where the
-     * user removes a memory card. For example:
-     * If the user saves to slot 1, the first save's
-     * value will be 1. If the user saves
-     * to slot 2, the value will be 2. If the
-     * user saves to slot 1 again, the value will be 3.
-     * The reason to believe this may be buggy
-     * is that by reproducing the previous example,
-     * after the user saves to slot 2, if instead of
-     * saving in slot 1 the user removes the memory
-     * card and save to slot 1, the value will
-     * be 2 instead of 3.
-     */
-    s16                 currentScreenSessionSaves_0;
-    s16                 savegameCount_2;
-    s8                  type_4;               /** `e_SavegameEntryType` */
-    s8                  deviceId_5;
-    s8                  fileIdx_6;
-    s8                  elementIdx_7;         // Index in file?
-    s8                  locationId_8;
-    s8                  unk_9[3]; // Probably padding.
+    s16                  totalSavegameCount_0; /** Counter that stores all the times the player have save throughout the entire game.
+	                                            * In order to get the set this value the code will go through all saves in the memory
+	                                            * card and check which have this variable with the biggest value.
+	                                            *
+	                                            * @bug: For some unknown reason, this counter it is used by the code uses to
+	                                            * determine if the player have selected the "New Save" element which will make
+	                                            * overwrites to not show the "Yes/No" message to show up.
+	                                            */
+    s16                  savegameCount_2;
+    s8                   type_4;               /** `e_SavegameEntryType` */
+    s8                   deviceId_5;
+    s8                   fileIdx_6;
+    s8                   elementIdx_7;         // Index in file?
+    s8                   locationId_8;
+    s8                   unk_9[3]; // Probably padding.
     s_Savegame_Metadata* saveMetadata_C;
 } s_Savegame_Entry;
 STATIC_ASSERT_SIZEOF(s_Savegame_Entry, 16);
 
 /** @brief Appended to `ShSavegame` and `ShSaveUserConfig` during game save. Contains 8-bit XOR checksum + magic.
- * Checksum generated via `Savegame_ChecksumGenerate`.
+ * Checksum generated via `MemCard_ChecksumGenerate`.
  */
 typedef struct _SavegameFooter
 {
@@ -129,18 +113,18 @@ STATIC_ASSERT_SIZEOF(s_Savegame_Footer, 4);
 /** @brief Contains `s_Savegame` data with the footer appended to the end containing the checksum + magic. */
 typedef struct _SavegameContainer
 {
-    s_Savegame       savegame_0;
+    s_Savegame        savegame_0;
     s_Savegame_Footer footer_27C;
-} s_SavegameContainer;
-STATIC_ASSERT_SIZEOF(s_SavegameContainer, 640);
+} s_Savegame_Container;
+STATIC_ASSERT_SIZEOF(s_Savegame_Container, 640);
 
 /** @brief Contains `s_SaveUserConfig` data padded to 128 bytes with a footer at the end containing checksum + magic. */
 typedef struct _SaveUserConfigContainer
 {
-    s_SaveUserConfig config_0;
-    u8               pad_38[68];
+    s_SaveUserConfig  config_0;
+    u8                pad_38[68];
     s_Savegame_Footer footer_7C;
-} s_SaveUserConfigContainer;
+} s_Savegame_UserConfigs;
 
 // ========
 // GLOBALS
@@ -175,7 +159,7 @@ extern u32 g_MemCard_AllMemCardsStatus;
 /** @brief Some determinator for the state of the save screen.
  * 2 - Saving, 3 - Loading.
  */
-extern s8 D_800BCD38;
+extern s8 g_SaveScreen_SaveScreenState;
 
 extern s8 D_800BCD39; // Boolean.
 

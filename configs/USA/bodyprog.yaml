@@ -60,10 +60,10 @@ segments:
     subsegments:
       # .rodata section
       - [0x0,    .rodata, bodyprog]
-      - [0x4,    .rodata, memcard/memcard_1]
+      - [0x4,    .rodata, memcard/memcard]
       - [0x140,  .rodata, screen/screen_fade]
       - [0x1E4,  .rodata, globals]
-      - [0x5AC,  .rodata, saveload/bodyprog_80032D1C]
+      - [0x5AC,  .rodata, bodyprog_80032D1C]
       - [0x5BC,  .rodata, settings_reset]
       - [0x618,  .rodata, memcard/memcard_2]
       - [0x69C,  .rodata, bodyprog_800348C0]
@@ -100,13 +100,13 @@ segments:
       - [0x9AD0,    c, bodyprog] # Data
       - [0x9AD0,    c, globals] # Data
       - [0x9AD0,    c, syswork_functable] # Data
-      - [0x9AD0,    c, memcard/memcard_1]
+      - [0x9AD0,    c, memcard/memcard]
       - [0xC98C,    c, screen/background_draw]
       - [0xD39C,    c, screen/text_draw_debug]
       - [0xD7F8,    c, screen/screen_draw]
       - [0xDA44,    c, screen/screen_fade]
       - [0xE070,    c, screen/fs_main_screen]
-      - [0xE188,    c, saveload/bodyprog_80032D1C]
+      - [0xE188,    c, bodyprog_80032D1C]
       - [0xE1BC,    c, gamemain] # Name from SH2 symbols. This name also applies for SH4 instance too.
       - [0xE86C,    c, settings_reset]
       - [0xE978,    c, memcard/memcard_2]
@@ -354,7 +354,7 @@ segments:
       
       # .bss section
       - [0x8DAB0, data, bodyprog_800B2610] # Unknown data.
-      - [0x8DAB8, .bss, memcard/memcard_1]
+      - [0x8DAB8, .bss, memcard/memcard]
       - [0x910C0, .bss, screen/text_draw_debug]
       - [0x910C8, .bss, screen/screen_draw]
       - [0x910CC,  pad]

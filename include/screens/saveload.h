@@ -136,7 +136,7 @@ extern void (*g_GameState_SaveScreen_Funcs[])(void);
 
 extern bool g_SaveScreen_IsFormatting; // `false` - Overwrite, `true` - Format.
 
-extern bool g_SaveScreen_IsSaveSelected; // `false` - User has `New save` selected, `true` - User has a save selected.
+extern bool g_SaveScreen_IsNewSaveSelected; // `false` - User has `New save` selected, `true` - User has a save selected.
 
 extern void (*g_GameState_AutoLoadSavegame_Funcs[])(void);
 
@@ -264,10 +264,10 @@ void SaveScreen_SavesSlotDraw(s_Savegame_Entry* saveEntry, s32 saveIdx, s32 slot
 
 /** @brief Draws memory card state.
  *
- * @param saveScreenState `e_SaveScreenState`
+ * @param g_SaveScreen_SaveScreenState `e_SaveScreenState`
  * @param memCardState `e_MemCardResult`
  */
-void SaveScreen_MemCardStateDraw(s32 saveScreenState, s32 memCardState);
+void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardState);
 
 /** @brief Draws options writing options when the
  * player is overwriting a save or is formatting

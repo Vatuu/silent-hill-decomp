@@ -69,7 +69,7 @@ g_SaveScreen_State                  = 0x801E751C; // type:s32
 g_SaveScreen_MemCardStateTextTimer  = 0x801E7520;
 g_GameState_SaveScreen_Funcs        = 0x801E7524;
 g_SaveScreen_IsFormatting           = 0x801E753C;
-g_SaveScreen_IsSaveSelected         = 0x801E7540;
+g_SaveScreen_IsNewSaveSelected      = 0x801E7540;
 g_GameState_AutoLoadSavegame_Funcs  = 0x801E7544;
 
 

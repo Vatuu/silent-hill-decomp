@@ -115,7 +115,7 @@ void MainLoop(void) // 0x80032EE0
     GsInitVcount();
     MemCard_SysInit();
     MemCard_SysInit2();
-    func_8002E85C();
+    MemCard_InitStatus();
     Joy_Init();
     VSyncCallback(&Screen_VSyncCallback);
     InitGeom();
@@ -173,7 +173,7 @@ void MainLoop(void) // 0x80032EE0
         }
 
         Screen_FadeUpdate();
-        func_8002EB88();
+        MemCard_Update();
         Sd_TaskPoolExecute();
 
         if (!Sd_AudioStreamingCheck())
