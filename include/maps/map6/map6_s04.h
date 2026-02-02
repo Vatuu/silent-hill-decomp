@@ -180,6 +180,17 @@ extern const s32 D_800CB3A4[12][2];
 
 extern MATRIX D_800C3868; // type assumed
 
+extern s32 D_800EAF20[];
+
+extern s32 D_800EB320;
+extern s32 D_800EB324;
+
+extern SVECTOR D_800EB328;
+extern SVECTOR D_800EB330;
+
+extern s32 D_800EBB4C;
+extern s32 D_800EBB50;
+
 void func_800D87B0(s_SubCharacter* chara);
 
 void func_800D8848(s_Model* model);
@@ -338,5 +349,25 @@ s_800ED848* func_800DEA4C(void);
 void func_800DF2F0(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2);
 
 s32 func_800DF41C(s_800ED848* arg0);
+
+s32 func_800DE350(s32 arg0);
+
+PACKET* func_800DE380(GsOT_TAG* arg0, PACKET* arg1);
+
+void func_800DF64C(void);
+
+s32 func_800DF670(s32 arg0);
+
+PACKET* func_800DF6C4(GsOT_TAG* arg0, PACKET* arg1, MATRIX* arg2);
+
+void func_800DFA38(MATRIX* arg0);
+
+s32 func_800DFBB0(s_800ED848* arg0);
+
+void func_800DFC94(s32* arg0);
+
+PACKET* func_800DFD3C(GsOT_TAG* arg0, PACKET* arg1, MATRIX* arg2, s32 arg3, s32 arg4);
+
+void func_800E0164(void);
 
 #endif

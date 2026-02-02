@@ -106,16 +106,82 @@ void func_800DE26C(void) {}
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE274);
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE350);
+s32 func_800DE350(s32 arg0) // 0x800DE350
+{
+    u8* ptr;
+    s32 idx;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE380);
+    ptr = (u8*)FS_BUFFER_6;
+
+    idx = ptr[0x4101 + arg0];
+
+    return D_800EAF20[idx] | 0x3A000000;
+}
+
+PACKET* func_800DE380(GsOT_TAG* arg0, PACKET* arg1) // 0x800DE380
+{
+    s32       i;
+    s32       temp_s0;
+    s32       temp_s4;
+    s32       var_a1;
+    s32       j;
+    s32       var_s7;
+    POLY_G4*  poly;
+    DR_TPAGE* tPage;
+
+    poly = arg1;
+
+    for (i = 1; i < 0x13; i++)
+    {
+        var_s7 = func_800DE350(0x1C * (i - 1));
+        var_a1 = func_800DE350(0x1C * i);
+
+        for (j = 1; j < 0x1C; j++)
+        {
+            temp_s4 = var_a1;
+            temp_s0 = var_s7;
+
+            var_s7 = func_800DE350(j + 0x1C * (i - 1));
+            var_a1 = func_800DE350(j + 0x1C * i);
+
+            setPolyG4(poly);
+
+            poly->x0 = -0xB2 + 0xC * j;
+            poly->y0 = (i - 1) * 0xC - 0x70;
+            poly->x1 = -0xA6 + 0xC * j;
+            poly->y1 = (i - 1) * 0xC - 0x70;
+            poly->x2 = -0xB2 + 0xC * j;
+            poly->y2 = (i - 1) * 0xC - 0x64;
+            poly->x3 = -0xA6 + 0xC * j;
+            poly->y3 = (i - 1) * 0xC - 0x64;
+
+            *(s32*)&poly->r0 = temp_s0;
+            *(s32*)&poly->r1 = var_s7;
+            *(s32*)&poly->r2 = temp_s4;
+            *(s32*)&poly->r3 = var_a1;
+
+            if ((temp_s0 << 8) != 0 || (var_s7 << 8) != 0 || (temp_s4 << 8) != 0 || (var_a1 << 8) != 0)
+            {
+                addPrim(arg0, poly);
+            }
+
+            poly++;
+        }
+    }
+
+    tPage = (DR_TPAGE*)poly;
+    setDrawTPage(tPage, 0, 1, getTPageN(0, 1, 5, 0));
+    addPrim(arg0, tPage);
+
+    return (PACKET*)(tPage + 1);
+}
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE5CC);
 
 void func_800DE62C(void) // 0x800DE62C
 {
     // TODO: Find which `FS_BUFFER_x` this is zeroing part of.
-    memset((void*)0x801E8701, 0, 0x214);
+    memset((void*)FS_BUFFER_6 + 0x4101, 0, 0x214);
 }
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE658);
@@ -142,7 +208,7 @@ void func_800DE95C(void) // 0x800DE95C
     u8*         ptr1;
 
     ptr0 = D_800ED848;
-    ptr1 = 0x801E4600;
+    ptr1 = FS_BUFFER_6;
 
     func_800DE62C();
 
@@ -320,7 +386,7 @@ void func_800DEF50(VECTOR3* arg0, GsCOORDINATE2* arg1, s32* arg2) // 0x800DEF50
 
     memcpy(&sp10, &D_800CB6AC, sizeof(D_800CB6AC));
 
-    ptr1 = 0x801E4600;
+    ptr1 = FS_BUFFER_6;
 
     for (i = 0; i < 6; i++)
     {
@@ -484,7 +550,7 @@ s32 func_800DF41C(s_800ED848* arg0) // 0x800DF41C
     s32     var_v1;
     u8*     ptr0;
 
-    ptr0 = 0x801E4600;
+    ptr0 = FS_BUFFER_6;
 
     func_800DF2F0(&arg0->field_28, arg0->field_14, arg0->field_68);
     SetRotMatrix(&arg0->field_28);
@@ -524,19 +590,203 @@ void func_800DF618(void) // 0x800DF618
     D_800ED588++;
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DF64C);
+void func_800DF64C(void) // 0x800DF64C
+{
+    s32         i;
+    s_800ED848* ptr;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DF670);
+    ptr = D_800ED848;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DF6C4);
+    for (i = 15; i >= 0; i--)
+    {
+        ptr->field_0 = 0;
+        ptr++;
+    }
+}
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DFA38);
+s32 func_800DF670(s32 arg0) // 0x800DF670
+{
+    s32 temp_a0;
+    s32 var_a0;
+    u8* ptr;
+
+    ptr     = FS_BUFFER_6;
+    var_a0  = ptr[arg0 + 0x4101];
+    temp_a0 = var_a0 > 0x64 ? 0xC8 - var_a0 : var_a0;
+    var_a0  = MAX(temp_a0, 0);
+
+    return D_800EAF20[var_a0] | 0x3A000000;
+}
+
+PACKET* func_800DF6C4(GsOT_TAG* arg0, PACKET* arg1, MATRIX* arg2) // 0x800DF6C4
+{
+    SVECTOR   sp28;
+    SVECTOR   sp30;
+    SVECTOR   sp38;
+    SVECTOR   sp40;
+    DVECTOR   sp48[4];
+    s32       sp58;
+    s32       sp5C;
+    s32       temp_s0;
+    s32       temp_s1;
+    s32       j;
+    s32       var_s5;
+    s32       var_s6;
+    s32       i;
+    GsOT_TAG* var_fp;
+    POLY_G4*  poly;
+    DR_TPAGE* tPage;
+    DR_TPAGE* tPage2;
+
+    poly   = arg1;
+    var_fp = arg0;
+
+    for (i = 1; i < 0x13; i++)
+    {
+        if (i >= 0xA)
+        {
+            var_fp = &arg0[0x12C];
+        }
+
+        var_s6 = func_800DF670(0x1C * (i - 1));
+        var_s5 = func_800DF670(0x1C * i);
+
+        for (j = 1; j < 0x1C; j++)
+        {
+            sp28.vx = (j * D_800EB320) - D_800EB320 * 0xE;
+            sp28.vy = (i * D_800EB324) - (D_800EB324 * 0x13) / 2;
+            sp28.vz = 0;
+
+            sp30.vx = ((j + 1) * D_800EB320) - D_800EB320 * 0xE;
+            sp30.vy = sp28.vy;
+            sp30.vz = 0;
+
+            sp38.vx = sp28.vx;
+            sp38.vy = ((i + 1) * D_800EB324) - (D_800EB324 * 0x13) / 2;
+            sp38.vz = 0;
+
+            sp40.vx = sp30.vx;
+            sp40.vy = sp38.vy;
+            sp40.vz = 0;
+
+            RotTransPers4(&sp28, &sp30, &sp38, &sp40, &sp48[0], &sp48[1], &sp48[2], &sp48[3], &sp58, &sp5C);
+
+            temp_s0 = var_s6;
+
+            var_s6  = func_800DF670(j + ((i - 1) * 0x1C));
+            temp_s1 = var_s5;
+            var_s5  = func_800DF670(j + 0x1C * i);
+
+            setPolyG4(poly);
+
+            *(s32*)&poly->x0 = *(s32*)&sp48[0];
+            *(s32*)&poly->x1 = *(s32*)&sp48[1];
+            *(s32*)&poly->x2 = *(s32*)&sp48[2];
+            *(s32*)&poly->x3 = *(s32*)&sp48[3];
+
+            *(s32*)&poly->r0 = temp_s0;
+            *(s32*)&poly->r1 = var_s6;
+            *(s32*)&poly->r2 = temp_s1;
+            *(s32*)&poly->r3 = var_s5;
+
+            if ((temp_s0 << 8) != 0 || (var_s6 << 8) != 0 || (temp_s1 << 8) != 0 || (var_s5 << 8) != 0)
+            {
+                addPrim(var_fp, poly);
+            }
+            poly++;
+        }
+    }
+
+    tPage  = (DR_TPAGE*)poly;
+    tPage2 = tPage + 1;
+
+    setDrawTPage(tPage, 0, 1, getTPageN(0, 2, 5, 0));
+    addPrim(arg0, tPage);
+
+    setDrawTPage(tPage2, 0, 1, getTPageN(0, 2, 5, 0));
+    addPrim(var_fp, tPage2);
+
+    return (PACKET*)(tPage + 2);
+}
+
+void func_800DFA38(MATRIX* arg0) // 0x800DFA38
+{
+    SVECTOR sp10;
+    VECTOR  sp18;
+
+    sp10 = D_800EB328;
+
+    SetRotMatrix(&GsWSMATRIX);
+    SetTransMatrix(&GsWSMATRIX);
+    ApplyRotMatrix(&sp10, &sp18);
+
+    sp18.vx += GsWSMATRIX.t[0];
+    sp18.vy += GsWSMATRIX.t[1];
+    sp18.vz += GsWSMATRIX.t[2];
+
+    TransMatrix(arg0, &sp18);
+    SetTransMatrix(arg0);
+
+    sp10 = D_800EB330;
+
+    Math_RotMatrixZxyNeg(&sp10, arg0);
+    SetMulRotMatrix(arg0);
+}
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DFB44);
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DFBB0);
+s32 func_800DFBB0(s_800ED848* arg0) // 0x800DFBB0
+{
+    u8* ptr;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DFC94);
+    ptr = FS_BUFFER_6;
+
+    switch (arg0->field_48)
+    {
+        case 0:
+            if (*arg0->field_4C > 0x76000)
+            {
+                func_8005DC1C(0x665, NULL, 0xFF, 3);
+                func_800892A4(8);
+                D_800EBB4C = 0xA;
+                D_800EBB50 = 0x3000;
+                arg0->field_48++;
+            }
+            break;
+
+        case 1:
+
+            func_800DE658(ptr, -0x6C, -0x14, D_800EBB4C, 0x1000);
+            D_800EBB4C += FP_FROM(D_800EBB50, Q12_SHIFT);
+            D_800EBB50 += 0x1800;
+            break;
+
+        case 2:
+            break;
+    }
+    return 0;
+}
+
+void func_800DFC94(s32* arg0) // 0x800DFC94
+{
+    s_800ED848* ptr;
+
+    ptr = func_800DEA4C();
+
+    func_800DE274();
+
+    if (ptr != NULL)
+    {
+        ptr->field_8  = 0x4000;
+        ptr->field_10 = 0x666;
+        ptr->field_24 = func_800DFBB0;
+        ptr->field_48 = 0;
+        ptr->field_4C = arg0;
+        ptr->field_4  = 4;
+    }
+
+    D_800ED588++;
+}
 
 void func_800DFD08(void) // 0x800DFD08
 {
@@ -545,11 +795,142 @@ void func_800DFD08(void) // 0x800DFD08
     D_800ED588++;
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DFD3C);
+PACKET* func_800DFD3C(GsOT_TAG* arg0, PACKET* arg1, MATRIX* arg2, s32 arg3, s32 arg4) // 0x800DFD3C
+{
+    SVECTOR   sp28;
+    SVECTOR   sp30;
+    SVECTOR   sp38;
+    SVECTOR   sp40;
+    DVECTOR   sp48[4];
+    s32       sp58;
+    s32       sp5C;
+    s32       i;
+    GsOT_TAG* sp64;
+    s32       temp_s0;
+    s32       temp_s1;
+    s32       j;
+    s32       var_s5;
+    s32       var_s6;
+    POLY_G4*  poly;
+    DR_TPAGE* tPage;
+    DR_TPAGE* tPage2;
+
+    poly = arg1;
+    sp64 = arg0;
+
+    for (i = 1; i < 0x13; i++)
+    {
+        if (i > 9)
+        {
+            sp64 = &arg0[0x12C];
+        }
+
+        j = 1;
+
+        var_s6 = func_800DE350((i - 1) * 0x1C);
+        var_s5 = func_800DE350(i * 0x1C);
+
+        sp28.vx = arg4 * i - arg4 * 0x13 / 2;
+        sp28.vy = 0;
+
+        sp30.vx = sp28.vx;
+        sp30.vy = 0;
+
+        sp38.vx = arg4 * (i + 1) - arg4 * 0x13 / 2;
+        sp38.vy = 0;
+
+        sp40.vx = sp38.vx;
+        sp40.vy = 0;
+
+        for (; j < 0x1C; j++)
+        {
+            sp28.vz = arg3 * j - arg3 * 7;
+            sp30.vz = arg3 * (j + 1) - arg3 * 7;
+            sp40.vz = sp30.vz;
+            sp38.vz = sp28.vz;
+
+            RotTransPers4(&sp28, &sp30, &sp38, &sp40, &sp48[0], &sp48[1], &sp48[2], &sp48[3], &sp58, &sp5C);
+
+            temp_s0 = var_s6;
+            var_s6  = func_800DE350(j + (i - 1) * 0x1C);
+            temp_s1 = var_s5;
+            var_s5  = func_800DE350(j + i * 0x1C);
+
+            setPolyG4(poly);
+
+            *(s32*)&poly->x0 = *(s32*)&sp48[0];
+            *(s32*)&poly->x1 = *(s32*)&sp48[1];
+            *(s32*)&poly->x2 = *(s32*)&sp48[2];
+            *(s32*)&poly->x3 = *(s32*)&sp48[3];
+
+            *(s32*)&poly->r0 = temp_s0;
+            *(s32*)&poly->r1 = var_s6;
+            *(s32*)&poly->r2 = temp_s1;
+            *(s32*)&poly->r3 = var_s5;
+
+            if ((temp_s0 << 8) != 0 || (var_s6 << 8) != 0 || (temp_s1 << 8) != 0 || (var_s5 << 8) != 0)
+            {
+                addPrim(sp64, poly);
+            }
+            poly++;
+        }
+    }
+
+    tPage  = (DR_TPAGE*)poly;
+    tPage2 = tPage + 1;
+
+    setDrawTPage(tPage, 0, 1, getTPageN(0, 1, 5, 0));
+    addPrim(arg0, tPage);
+
+    setDrawTPage(tPage2, 0, 1, getTPageN(0, 1, 5, 0));
+    addPrim(sp64, tPage2);
+
+    return (PACKET*)(tPage + 2);
+}
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E00F4);
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E0164);
+void func_800E0164(void) // 0x800E0164
+{
+    s32 val;
+    s32 i;
+    s32 temp2;
+    u8* ptr;
+    s32 temp;
+
+    ptr = (u8*)FS_BUFFER_6 + 0x4101;
+
+    for (i = 0; i < 0x214; i++)
+    {
+        val = *ptr;
+
+        if (val != 0)
+        {
+            temp = Rng_Rand16();
+
+            temp2 = val - 2;
+            val   = temp2 + ((temp & 0x30) >> 4);
+
+            if (val < 0)
+            {
+                val = 0;
+            }
+
+            if (val < 0x100)
+            {
+                temp2 = val;
+            }
+            else
+            {
+                temp2 = 0xFF;
+            }
+
+            *ptr = temp2;
+        }
+
+        ptr++;
+    }
+}
 
 void func_800E01F4(void) // 0x800E01F4
 {
