@@ -1062,23 +1062,314 @@ void func_800E03C4(VECTOR3* vec0, VECTOR3* vec1, q19_12 arg2, s32 arg3) // 0x800
     }
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E05C8);
+void func_800E05C8(s32 x, s32 y, s32 val) // 0x800E05C8
+{
+    s16              col;
+    s16              row;
+    s_func_800E05C8* ptr;
+    u8*              buf;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E068C);
+    ptr = FS_BUFFER_1;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E0878);
+    row = y + 96;
+    col = x + 160;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E08B8);
+    val >>= 0xC;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E0BB0);
+    col += (col > 0) ? 4 : -4;
+    col /= 8;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E0C58);
+    row += (row > 0) ? 4 : -4;
+    row /= 8;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E0CCC);
+    if (col > 0 && col < 41 && row > 0 && row < 25)
+    {
+        buf  = ptr->field_5D + (col + (41 * row));
+        *buf = val;
+    }
+}
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E0D8C);
+void func_800E068C(void) // 0x800E068C
+{
+    SVECTOR          sp10;
+    DVECTOR          sp18[2];
+    s32              sp20;
+    s32              i;
+    s_func_800E030C* ptr;
+    s_func_800E05C8* base;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E0DC4);
+    base = FS_BUFFER_1;
+    ptr  = base->field_494;
+
+    for (i = 0; i < 800; i++, ptr++)
+    {
+        if (ptr->isSlotInUse_24)
+        {
+            if (ptr->funcPtr_30 != NULL)
+            {
+                ptr->funcPtr_30(ptr);
+            }
+
+            sp10.vx = Q12_TO_Q8(ptr->vec_4.vx);
+            sp10.vy = Q12_TO_Q8(ptr->vec_4.vy);
+            sp10.vz = Q12_TO_Q8(ptr->vec_4.vz);
+
+            RotTransPers(&sp10, &sp18[0], &sp18[1], &sp20);
+            func_800E05C8(sp18[0].vx, sp18[0].vy, ptr->field_28);
+
+            ptr->vec_4.vx += Q12_MULT_PRECISE(ptr->vec_14.vx, g_DeltaTime0);
+            ptr->vec_4.vy += Q12_MULT_PRECISE(ptr->vec_14.vy, g_DeltaTime0);
+            ptr->vec_4.vz += Q12_MULT_PRECISE(ptr->vec_14.vz, g_DeltaTime0);
+            ptr->field_28 += Q12_MULT_PRECISE(ptr->field_2C, g_DeltaTime0);
+            ptr->field_28  = MAX(ptr->field_28, 0);
+            ptr->field_28  = MIN(ptr->field_28, 0xFF000);
+            ptr->field_0  -= g_DeltaTime0;
+        }
+    }
+}
+
+s32 func_800E0878(s32 arg0, s32 arg1) // 0x800E0878
+{
+    s_func_800E05C8* buf;
+
+    buf = (s_func_800E05C8*)FS_BUFFER_1;
+
+    return D_800EB338[buf->field_5D[(arg1 * 41) + arg0]];
+}
+
+void func_800E08B8(void) // 0x800E08B8
+{
+    u32              sp18;
+    s_func_800E05C8* ptr;
+    GsOT_TAG*        ot;
+    s32              col_d;
+    s32              col_c;
+    s32              col_b;
+    s32              i;
+    s32              j;
+    s32              col_a;
+    POLY_G4*         poly;
+    DR_MODE*         mode;
+    PACKET*          packet;
+    s32              col;
+    s32              index;
+    s32              code;
+
+    ptr = (s_func_800E05C8*)FS_BUFFER_1;
+
+    packet = GsOUT_PACKET_P;
+    poly   = packet;
+
+    index = g_ActiveBufferIdx;
+    ot    = g_OrderingTable0[index].org;
+    ot    = &ot[ptr->field_48C >> 1];
+
+    col  = 0x3A000000;
+    code = 0x3A;
+
+    for (i = 1; i < 25; i++)
+    {
+        col_a = func_800E0878(0, i - 1);
+        col_b = func_800E0878(0, i);
+
+        for (j = 1; j < 41; j++)
+        {
+            sp18 = ptr->field_5D[i * 41 + j];
+
+            col_c = col_b;
+            col_d = col_a;
+
+            col_a = func_800E0878(j, i - 1);
+            col_b = func_800E0878(j, i);
+
+            if (col == col_d && col_d == col_a && col_d == col_c && col_c == col_b)
+            {
+                continue;
+            }
+
+            if ((j + i) & 1)
+            {
+                poly->x0 = -0xA0 + j * 8;
+                poly->y0 = -0x60 + i * 8;
+                poly->x1 = -0x98 + j * 8;
+                poly->y1 = -0x60 + i * 8;
+                poly->x2 = -0xA0 + j * 8;
+                poly->y2 = -0x58 + i * 8;
+                poly->x3 = -0x98 + j * 8;
+                poly->y3 = -0x58 + i * 8;
+
+                *(s32*)&poly->r0 = col_d;
+                *(s32*)&poly->r1 = col_a;
+                *(s32*)&poly->r2 = col_c;
+                *(s32*)&poly->r3 = col_b;
+            }
+            else
+            {
+                poly->x1 = -0xA0 + j * 8;
+                poly->y1 = -0x60 + i * 8;
+                poly->x0 = -0x98 + j * 8;
+                poly->y0 = -0x60 + i * 8;
+                poly->x3 = -0xA0 + j * 8;
+                poly->y3 = -0x58 + i * 8;
+                poly->x2 = -0x98 + j * 8;
+                poly->y2 = -0x58 + i * 8;
+
+                *(s32*)&poly->r0 = col_a;
+                *(s32*)&poly->r1 = col_d;
+                *(s32*)&poly->r2 = col_b;
+                *(s32*)&poly->r3 = col_c;
+            }
+
+            setPolyG4(poly);
+            poly->code = (float)sp18; // @hack
+            poly->code = code;
+
+            addPrim(ot, poly);
+            poly++;
+        }
+    }
+
+    packet = poly;
+    mode   = packet;
+
+    SetDrawMode(mode, 0, 1, 0x2A, NULL);
+    addPrim(ot, mode);
+    packet         = mode + 1;
+    GsOUT_PACKET_P = packet;
+}
+
+void func_800E0BB0(void) // 0x800E0BB0
+{
+    s32              j;
+    s32              i;
+    s32              val;
+    s_func_800E05C8* buf;
+    u8*              tab;
+
+    buf = FS_BUFFER_1;
+
+    for (i = 0; i < 25; i++)
+    {
+        tab = &buf->field_5D[i * 41];
+
+        for (j = 0; j < 41; j++)
+        {
+            val = tab[j - 41];
+
+            if (j == 0)
+            {
+                val = 0;
+            }
+            else
+            {
+                val += tab[j - 1];
+            }
+
+            if (j == 40)
+            {
+                val = 0;
+            }
+            else
+            {
+                val = val + tab[j + 1];
+            }
+
+            val  += tab[j + 41];
+            val >>= 2;
+            val  -= 1;
+
+            if (val <= 0)
+            {
+                tab[j] = 0;
+            }
+            else
+            {
+                tab[j] = val;
+            }
+        }
+    }
+}
+
+void func_800E0C58(void) // 0x800E0C58
+{
+    s32              i;
+    s_func_800E030C* ptr;
+    s_func_800E05C8* base;
+
+    base = FS_BUFFER_1;
+    ptr  = base->field_494;
+
+    memset(base->field_34, 0, sizeof(base->field_34));
+    memset(base->field_5D, 0, sizeof(base->field_5D));
+    memset(base->field_45E, 0, sizeof(base->field_45E));
+
+    for (i = 799; i >= 0; i--)
+    {
+        ptr->isSlotInUse_24 = 0;
+        ptr++;
+    }
+}
+
+void func_800E0CCC(VECTOR* arg0, s32 arg1) // 0x800E0CCC
+{
+    MATRIX  sp10;
+    VECTOR  sp30;
+    SVECTOR sp40;
+
+    SetRotMatrix(&GsWSMATRIX);
+    SetTransMatrix(&GsWSMATRIX);
+    ApplyRotMatrixLV(arg0, &sp30);
+
+    sp30.vx += GsWSMATRIX.t[0];
+    sp30.vy += GsWSMATRIX.t[1];
+    sp30.vz += GsWSMATRIX.t[2];
+
+    TransMatrix(&sp10, &sp30);
+    SetTransMatrix(&sp10);
+
+    sp40.vx = 0;
+    sp40.vy = arg1;
+    sp40.vz = 0;
+
+    Math_RotMatrixZxyNeg(&sp40, &sp10);
+    SetMulRotMatrix(&sp10);
+}
+
+void func_800E0D8C(VECTOR3* arg0) // 0x800E0D8C
+{
+    s_func_800E05C8* buf = FS_BUFFER_1;
+    buf->field_4.vx      = arg0->vx >> 4;
+    buf->field_4.vy      = arg0->vy >> 4;
+    buf->field_4.vz      = arg0->vz >> 4;
+    buf->field_490       = 0;
+}
+
+void func_800E0DC4(s32 arg0, s32 arg1) // 0x800E0DC4
+{
+    VECTOR3 sp10;
+    VECTOR3 sp20;
+    s32     temp_s0;
+    s32     temp_s3;
+    s32     temp_s4;
+    s32     temp_v0;
+
+    temp_v0 = Rng_Rand16();
+    temp_s4 = Math_Sin(temp_v0);
+    temp_s3 = Math_Cos(temp_v0);
+    temp_v0 = Rng_Rand16();
+    temp_s0 = Q12_MULT_PRECISE(temp_s3, Math_Sin(temp_v0));
+    temp_v0 = Q12_MULT_PRECISE(temp_s3, Math_Cos(temp_v0));
+
+    sp10.vx = 0;
+    sp10.vy = 0;
+    sp10.vz = 0;
+
+    sp20.vx = Q12_MULT_PRECISE(temp_s0, arg0);
+    sp20.vy = Q12_MULT_PRECISE(temp_s4, arg0);
+    sp20.vz = Q12_MULT_PRECISE(temp_v0, arg0);
+
+    func_800E03C4(&sp20, &sp10, arg1, 0);
+}
 
 s32 func_800E0F28(q19_12 val0, q19_12 val1) // 0x800E0F28
 {
@@ -1098,7 +1389,52 @@ s32 func_800E0F28(q19_12 val0, q19_12 val1) // 0x800E0F28
 
 INCLUDE_RODATA("maps/map6_s04/nonmatchings/map6_s04_2", D_800CB728);
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E0FAC);
+void func_800E0FAC(s32 arg0) // 0x800E0FAC
+{
+    VECTOR3          sp10;
+    s32              temp_v0;
+    s32              i;
+    s_func_800E05C8* ptr;
+
+    ptr = FS_BUFFER_1;
+
+    switch (D_800ED58C)
+    {
+        case 0:
+            if (arg0 > 0x64000)
+            {
+                sp10 = D_800CB728;
+                D_800ED58C++;
+                func_800E0C58();
+                func_800E0D8C(&sp10);
+                D_800EBB54 = 0;
+                func_8005DC1C(Sfx_Unk1636, NULL, 0xFF, 3);
+                break;
+            }
+            return;
+
+        case 1:
+            D_800EBB54 += Q12_MULT_PRECISE(g_DeltaTime0, 0x1E000);
+            temp_v0     = func_800E0F28(D_800EBB54, g_DeltaTime0);
+
+            for (i = 0; i < temp_v0; i++)
+            {
+                func_800E0DC4(0x3000, 0x4000);
+            }
+            break;
+
+        case 2:
+            break;
+    }
+
+    func_800E0CCC(&ptr->field_4, ptr->field_490);
+
+    ptr->field_48C = 0;
+
+    func_800E068C();
+    func_800E0BB0();
+    func_800E08B8();
+}
 
 void func_800E10F8(void) // 0x800E10F8
 {

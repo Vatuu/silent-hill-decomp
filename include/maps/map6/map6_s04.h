@@ -32,17 +32,29 @@
 typedef struct
 {
     s32     field_0;
-    VECTOR3 vec_4;
-    char    unk_10[4];
-    VECTOR3 vec_14;
-    char    unk_20[4];
+    VECTOR  vec_4;
+    VECTOR  vec_14;
     bool    isSlotInUse_24;
     q19_12  field_28;
     s32     field_2C;
-    void*   funcPtr_30;
+    void    (*funcPtr_30)(struct s_func_800E030C*);
     s32     field_34;
 } s_func_800E030C;
 STATIC_ASSERT_SIZEOF(s_func_800E030C, 0x38);
+
+typedef struct
+{
+    s8              unk_0[4];
+    VECTOR          field_4;
+    s8              unk_14[32];
+    u8              field_34[41];
+    u8              field_5D[25 * 41];
+    u8              field_45E[41];
+    s8              unk_487[5];
+    s32             field_48C;
+    s32             field_490;
+    s_func_800E030C field_494[800];
+} s_func_800E05C8;
 
 typedef struct
 {
@@ -190,6 +202,11 @@ extern SVECTOR D_800EB330;
 
 extern s32 D_800EBB4C;
 extern s32 D_800EBB50;
+
+extern s32 D_800EB338[];
+
+extern VECTOR3 D_800CB728;
+extern s32     D_800EBB54;
 
 void func_800D87B0(s_SubCharacter* chara);
 
@@ -369,5 +386,25 @@ void func_800DFC94(s32* arg0);
 PACKET* func_800DFD3C(GsOT_TAG* arg0, PACKET* arg1, MATRIX* arg2, s32 arg3, s32 arg4);
 
 void func_800E0164(void);
+
+void func_800E05C8(s32 x, s32 y, s32 val);
+
+void func_800E068C(void);
+
+s32 func_800E0878(s32 arg0, s32 arg1);
+
+void func_800E08B8(void);
+
+void func_800E0BB0(void);
+
+void func_800E0C58(void);
+
+void func_800E0CCC(VECTOR* arg0, s32 arg1);
+
+void func_800E0D8C(VECTOR3* arg0);
+
+void func_800E0DC4(s32 arg0, s32 arg1);
+
+void func_800E0FAC(s32 arg0);
 
 #endif
