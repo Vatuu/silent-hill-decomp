@@ -1481,9 +1481,179 @@ void func_800E155C(void) {}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800E1564
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E15FC);
+void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x800E15FC
+{
+    VECTOR3 sp18;
+    VECTOR3 sp28;
+    VECTOR3 sp38;
+    s16     var_a2;
+    s32     temp_a0;
+    s32     temp_a0_2;
+    s32     temp_s0;
+    s32     temp_s0_2;
+    s32     temp_s0_3;
+    s32     temp_s1_2;
+    s32     temp_s2;
+    s32     temp_s3;
+    u32     temp_s5;
+    s32     temp_v1;
+    u32     temp_v1_2;
+    s32     var_s0;
+    s32     var_v0;
+    s32     temp;
+    s32     temp2;
+    u32     temp3;
+    s32     temp4;
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E1CA0);
+    temp3   = vcWork.flags_8;
+    temp3   = temp3 >> 9;
+    temp3   = temp3 & 1;
+    temp_s5 = temp3 ^ (g_GameWorkConst->config_0.optExtraViewCtrl_28 != 0);
+
+    Vc_VectorMagnitudeCalc(player->position_18.vx - npc->position_18.vx, 0, player->position_18.vz - npc->position_18.vz);
+    temp_s3 = ratan2(player->position_18.vx - 0x14000, player->position_18.vz - 0x64000);
+    temp_s2 = temp_s3 + 0x400;
+
+    if (temp_s5 != 0)
+    {
+        var_a2 = temp_s3 + Q12_MULT(Math_Cos(player->rotation_24.vy - temp_s2), -0x71);
+    }
+    else
+    {
+        if (arg2 || ((D_800EBB5A - temp_s3) << 0x14) > 0)
+        {
+            var_v0 = Q12_MULT(Math_Cos(player->rotation_24.vy - temp_s2), 0x100) + 0x1AA;
+        }
+        else
+        {
+            var_v0 = Q12_MULT(Math_Cos(player->rotation_24.vy - temp_s2), 0x100) - 0x1AA;
+        }
+        var_a2 = temp_s3 + var_v0;
+    }
+
+    if (arg2)
+    {
+        D_800EBB58.field_0 = 0;
+        D_800EBB58.field_2 = var_a2;
+    }
+    else
+    {
+        D_800EBB58.field_0  = vwRetNewAngSpdToTargetAng(D_800EBB58.field_0, D_800EBB58.field_2, var_a2, 0x800, 0xB33, 0x5000);
+        D_800EBB58.field_2 += Q12_MULT_PRECISE(D_800EBB58.field_0, g_DeltaTime0);
+    }
+
+    sp28.vx = Q12_MULT(Math_Sin(D_800EBB58.field_2), 0x5800) + 0x14000;
+    sp28.vz = Q12_MULT(Math_Cos(D_800EBB58.field_2), 0x5800) + 0x64000;
+    sp28.vy = -0x2666;
+
+    if (arg2)
+    {
+        sp38 = sp28;
+    }
+    else
+    {
+        vwGetViewPosition(&sp38);
+    }
+
+    if (temp_s5 != 0)
+    {
+        temp_s0 = player->position_18.vx + Q12_MULT(Math_Sin(player->rotation_24.vy), 0x8000);
+        temp    = player->position_18.vz + Q12_MULT(Math_Cos(player->rotation_24.vy), 0x8000);
+        var_s0  = ratan2(temp_s0 - sp38.vx, temp - sp38.vz);
+    }
+    else
+    {
+        sp38 = sp28;
+
+        temp_s1_2 = 0x666;
+        temp_s1_2 = FP_FROM(FP_TO(Math_Cos(player->rotation_24.vy - temp_s3), 0xC), 0xC) +
+                    (Vc_VectorMagnitudeCalc(player->position_18.vx - 0x14000, 0, player->position_18.vz - 0x64000) - temp_s1_2);
+
+        temp_s0_2 = temp_s3 + Q12_MULT(Math_Cos(player->rotation_24.vy - temp_s2), 0x11C);
+
+        temp_s0_3 = Q12_MULT(temp_s1_2, Math_Sin(temp_s0_2)) + 0x14000;
+
+        temp_s0_3 = temp_s0_3 - sp38.vx;
+        temp2     = Q12_MULT(temp_s1_2, Math_Cos(temp_s0_2)) + 0x64000;
+
+        var_s0 = ratan2(temp_s0_3, temp2 - sp38.vz);
+
+        temp_a0 = ratan2(sp38.vx - 0x14000, sp38.vz - 0x64000);
+        temp4   = temp_a0 + 0x400;
+        temp_v1 = FP_ANGLE_NORM_S(var_s0 - temp4);
+
+        if (((D_800EBB5A - temp_s3) << 0x14) > 0)
+        {
+            if ((temp_v1 - 0x600) << 0x14 < 0)
+            {
+                var_s0 = temp_a0 + 0xA00;
+            }
+        }
+        else if (((temp_v1 - 0x200) << 0x14) > 0)
+        {
+            var_s0 = temp_a0 + 0x600;
+        }
+    }
+
+    if (arg2)
+    {
+        D_800EBB58.field_6 = 0;
+        D_800EBB58.field_4 = var_s0;
+    }
+    else
+    {
+        D_800EBB58.field_6  = vwRetNewAngSpdToTargetAng(D_800EBB58.field_6, D_800EBB58.field_4, var_s0, 0x2000, 0x2000, 0x8000);
+        D_800EBB58.field_4 += Q12_MULT_PRECISE(D_800EBB58.field_6, g_DeltaTime0);
+    }
+
+    ratan2(player->position_18.vy + 0xE66, Vc_VectorMagnitudeCalc(player->position_18.vx - sp28.vx, 0, player->position_18.vz - sp28.vz));
+
+    sp18.vx = sp28.vx + Q12_MULT(Math_Sin(D_800EBB58.field_4), 0x3000);
+    sp18.vz = sp28.vz + Q12_MULT(Math_Cos(D_800EBB58.field_4), 0x3000);
+
+    sp18.vy = -Math_Sin(-0xE3) * 0x3000 / Math_Cos(-0xE3) - 0x2666;
+
+    if (temp_s5 != 0 && g_GameWorkConst->config_0.optExtraViewMode_29 != 0)
+    {
+        temp_v1_2 = vcWork.flags_8 >> 9;
+        temp_v1_2 = temp_v1_2 & 1;
+
+        if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 != 0 && (temp_v1_2 ^ 1) != 0) ||
+            (g_GameWorkConst->config_0.optExtraViewCtrl_28 == 0 && temp_v1_2 != 0))
+        {
+            temp_a0_2 = vcWork.flags_8 >> 0xA;
+            temp_a0_2 = temp_a0_2 & 1;
+
+            if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 != 0 && (temp_a0_2 ^ 1) == 0) ||
+                (g_GameWorkConst->config_0.optExtraViewCtrl_28 == 0 && temp_a0_2 == 0))
+            {
+                vcReturnPreAutoCamWork(true);
+                return;
+            }
+        }
+
+        vcReturnPreAutoCamWork(false);
+        return;
+    }
+
+    vcUserCamTarget(&sp28, NULL, true);
+    vcUserWatchTarget(&sp18, NULL, true);
+}
+
+void func_800E1CA0(void) // 0x800E1CA0
+{
+    s32 i;
+
+    for (i = 0; i < 8; i++)
+    {
+        g_MapOverlayHeader.animInfos_34[i + 16] = D_800CC424[i];
+    }
+
+    for (i = 0; i < 4; i++)
+    {
+        g_MapOverlayHeader.field_38[i + 8] = D_800CC4A4[i];
+    }
+}
 
 void func_800E1D48(void) {}
 
@@ -1567,7 +1737,7 @@ void func_800E1D50(void) // 0x800E1D50
             vcReturnPreAutoCamWork(true);
             Chara_ProcessLoads();
             Chara_Spawn(Chara_MonsterCybil, 0, Q12(26.5f), Q12(108.5f), Q12(0.03125f), 3);
-            func_800E15FC(&g_SysWork.playerWork_4C, &g_SysWork.npcs_1A0[0], true);
+            func_800E15FC(&g_SysWork.playerWork_4C.player_0, &g_SysWork.npcs_1A0[0], true);
             Savegame_EventFlagSet(EventFlag_441);
             break;
     }
@@ -1749,7 +1919,7 @@ void func_800E219C(void) // 0x800E219C
             g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[1].val16[1] = 1;
 
             vcReturnPreAutoCamWork(true);
-            func_800E15FC(&g_SysWork.playerWork_4C, &g_SysWork.npcs_1A0[0], true);
+            func_800E15FC(&g_SysWork.playerWork_4C.player_0, &g_SysWork.npcs_1A0[0], true);
             Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
@@ -1852,7 +2022,7 @@ void func_800E2724(void) // 0x800E2724
             SysWork_StateSetNext(SysState_Gameplay);
 
             vcReturnPreAutoCamWork(true);
-            func_800E15FC(&g_SysWork.playerWork_4C, &g_SysWork.npcs_1A0[0], true);
+            func_800E15FC(&g_SysWork.playerWork_4C.player_0, &g_SysWork.npcs_1A0[0], true);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
             break;
     }
@@ -1925,7 +2095,7 @@ void func_800E2950(void) // 0x800E2950
 
         default:
             vcReturnPreAutoCamWork(true);
-            func_800E15FC(&g_SysWork.playerWork_4C, &g_SysWork.npcs_1A0[0], true);
+            func_800E15FC(&g_SysWork.playerWork_4C.player_0, &g_SysWork.npcs_1A0[0], true);
             Player_ControlUnfreeze(false);
 
             SysWork_StateSetNext(SysState_Gameplay);
@@ -3150,7 +3320,7 @@ void func_800E5F54(void) // 0x800E5F54
 
                 if (g_SysWork.sysState_8 != SysState_EventCallFunc)
                 {
-                    func_800E15FC(&g_SysWork.playerWork_4C, &g_SysWork.npcs_1A0[0], false);
+                    func_800E15FC(&g_SysWork.playerWork_4C.player_0, &g_SysWork.npcs_1A0[0], false);
                 }
             }
 

@@ -93,6 +93,17 @@ typedef struct
     s32     field_C;
 } s_800CB69C;
 
+typedef struct
+{
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+    s16 field_6;
+} s_800EBB58;
+
+extern s_800EBB58 D_800EBB58;
+extern s16        D_800EBB5A;
+
 extern s_800CB69C D_800CB69C;
 
 extern s_800CB6AC D_800CB6AC[6];
@@ -207,6 +218,9 @@ extern s32 D_800EB338[];
 
 extern VECTOR3 D_800CB728;
 extern s32     D_800EBB54;
+
+extern s_AnimInfo      D_800CC424[];
+extern s_UnkStruct3_Mo D_800CC4A4[];
 
 void func_800E0164(void);
 
@@ -366,7 +380,7 @@ s32 func_800E0F28(q19_12 val0, q19_12 val1);
 
 void func_800E10F8(void);
 
-void func_800E15FC(s_PlayerWork* playerWork, s_SubCharacter* npc, bool);
+void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool);
 
 void func_800E1CA0(void);
 
@@ -402,5 +416,7 @@ void func_800E7204(void); // Assumed types.
 void func_800E73B4(q19_12 arg0);
 
 void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4); // Assumed types.
+
+void func_800E1CA0(void);
 
 #endif
