@@ -209,6 +209,7 @@ sharedData_800EB740_6_s04           = 0x800EB740; // type:u8 size:2
 sharedData_800EB748_6_s04           = 0x800EB748; // type:u8
 sharedData_800EB74A_6_s04           = 0x800EB74A; // type:u8
 sharedData_800EB750_6_s04           = 0x800EB750; // type:VECTOR3 size:0xC
+D_800EBB36                          = 0x800EBB36;
 
 //-----------------------------------------------------------------
 //--- PA: 0x0222A4   VA: 0x800EB81C   subsegment: .data, map6_s04_2

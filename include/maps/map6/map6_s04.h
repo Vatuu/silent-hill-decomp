@@ -225,6 +225,16 @@ extern s32 D_800EBAAC[10];
 extern s32 D_800EBAD4[10];
 extern s16 D_800EBAFC[10];
 
+extern s32 D_800EBB10[4];
+extern s32 D_800EBB20[4];
+extern u32 D_800EBB30;
+extern u8  D_800EBB34;
+
+extern s16 D_800EBB36;
+extern s16 D_800EBB38;
+
+extern u8 D_800EBB7C;
+
 void func_800E0164(void);
 
 void func_800E05C8(s32 x, s32 y, s32 val);
@@ -421,5 +431,9 @@ void func_800E73B4(q19_12 arg0);
 void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4); // Assumed types.
 
 void func_800E1CA0(void);
+
+void func_800E74C4(void);
+
+void func_800E7944(u32 arg0);
 
 #endif

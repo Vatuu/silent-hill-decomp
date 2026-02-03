@@ -220,6 +220,12 @@ struct _Model;
     (((g_SysWork.playerWork_4C.player_0.position_18.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.playerWork_4C.player_0.position_18.comp - Q12(base)) < Q12(tol)) : \
                                                                                  ((Q12(base) - g_SysWork.playerWork_4C.player_0.position_18.comp) < Q12(tol)))
 
+#define MIN_OFFSET(x, neg, pos) \
+    ((((x) + (-neg)) <= ((x) + (pos))) ? ((x) - (neg)) : ((x) + (pos)))
+
+#define MAX_OFFSET(x, neg, pos) \
+    ((((x) - (neg)) > ((x) + (pos))) ? ((x) - (neg)) : ((x) + (pos)))
+
 /** @brief Packs XZ cell coordinates in a single value.
  *
  * @param x X cell coordinate.

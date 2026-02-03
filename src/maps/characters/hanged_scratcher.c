@@ -567,12 +567,6 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
 
 void Ai_HangedScratcher_Control_5(s_SubCharacter* scratcher)
 {
-    #define MIN_OFFSET(x, neg, pos) \
-        ((((x) + (-neg)) <= ((x) + (pos))) ? ((x) - (neg)) : ((x) + (pos)))
-
-    #define MAX_OFFSET(x, neg, pos) \
-        ((((x) - (neg)) > ((x) + (pos))) ? ((x) - (neg)) : ((x) + (pos)))
-
     if (Vw_AabbVisibleInScreenCheck(MIN_OFFSET(scratcher->position_18.vx, Q12(0.5f), Q12(0.5f)),
                                     MAX_OFFSET(scratcher->position_18.vx, Q12(0.5f), Q12(0.5f)),
                                     MIN_OFFSET(scratcher->position_18.vy, Q12(1.0f), Q12(0.0f)),
