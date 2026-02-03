@@ -3374,7 +3374,203 @@ void func_800E5F54(void) // 0x800E5F54
     func_800E0204();
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E636C);
+void func_800E636C(void) // 0x800E636C
+{
+    VECTOR3  sp18;
+    SVECTOR3 sp28;
+    s32      sp30[8];
+    s32      sp50[8];
+    s32      temp_s0;
+    s32      temp_v0_4;
+    s32      temp_v0_6;
+    s32      var_a0_2;
+    s32      var_s0;
+    s32      i;
+    s32      var_s2_2;
+    s32      temp_t1;
+
+    if (!Savegame_EventFlagGet(EventFlag_443) || Savegame_EventFlagGet(EventFlag_467))
+    {
+        temp_t1 = D_800EBA30;
+
+        D_800ED5B6 += Q12_MULT_PRECISE(g_DeltaTime0, D_800EBA30);
+        D_800ED5B6  = (Q12_MULT_PRECISE(g_DeltaTime0, D_800ED5B4) + D_800ED5B6) & 0xFFF;
+
+        if (g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[0].val32 == 1)
+        {
+            if (D_800EBA30 == 0 && g_SysWork.npcs_1A0[0].health_B0 > 0)
+            {
+                SD_Call(Sfx_Unk1617);
+            }
+
+            if (g_SysWork.npcs_1A0[0].health_B0 > 0)
+            {
+                D_800EBA30 -= 0x32;
+            }
+            else
+            {
+                D_800EBA30 += 0x32;
+            }
+
+            D_800EBA30 = CLAMP(D_800EBA30, -0x1C7, 0);
+        }
+        else
+        {
+            if (g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[1].val16[0] == 0xC)
+            {
+                D_800EBA30 -= 0x32;
+
+                if (temp_t1 == 0 && D_800EBA30 < 0)
+                {
+                    if (g_SysWork.playerWork_4C.player_0.properties_E4.dummy.properties_E8[0xF].val16[1] >= 0x3001)
+                    {
+                        Player_DamageFeetFront();
+                    }
+                    SD_Call(Sfx_Unk1617);
+                    Savegame_EventFlagSet(EventFlag_455);
+                }
+            }
+            else
+            {
+                D_800EBA30 += 0x32;
+
+                if (temp_t1 < 0 && D_800EBA30 >= 0)
+                {
+                    if (g_SysWork.playerWork_4C.player_0.properties_E4.dummy.properties_E8[0xF].val16[1] >= 0x3001)
+                    {
+                        Player_DamageFeetFront();
+                    }
+                    Sd_SfxStop(Sfx_Unk1617);
+                    Savegame_EventFlagClear(EventFlag_455);
+                }
+            }
+
+            D_800EBA30 = CLAMP(D_800EBA30, -0xE3, 0);
+        }
+
+        if (D_800EBA30 != 0)
+        {
+            sp18.vx = 0x14000;
+            sp18.vy = 0x1000;
+            sp18.vz = 0x64000;
+
+            func_8005DE0C(Sfx_Unk1617, &sp18, ABS(D_800EBA30) >> 2, 0x10000, ABS(D_800EBA30) >> 2);
+        }
+
+        for (i = 0; i < 10; i++)
+        {
+            sp18.vx = D_800EBAAC[i] + D_800ED740.vx;
+            sp18.vz = D_800EBAD4[i] + D_800ED740.vz;
+
+            if (Vw_AabbVisibleInScreenCheck(sp18.vx - 0x1000, sp18.vx + 0x1000, -0x2000, 0, sp18.vz - 0x1000, sp18.vz + 0x1000))
+            {
+                if (i < 6)
+                {
+                    temp_v0_4 = Math_Sin((D_800ED5B6 * 4) + ((0x1000 * i) / 3));
+                    var_a0_2  = 1;
+                    sp18.vy   = (-0x1000 - temp_v0_4) / 5;
+                }
+                else
+                {
+                    var_s0    = 0x1000 * i;
+                    temp_v0_4 = Math_Sin((D_800ED5B6 * 4) + (var_s0 / 2) + 0x800);
+                    var_a0_2  = 0;
+                    sp18.vy   = (-0x1000 - temp_v0_4) / 5;
+                }
+
+                Math_SetSVectorFastSum(&sp28, 0, D_800EBAFC[i], 0);
+
+                WorldGfx_ObjectAdd(&g_WorldObject0[var_a0_2], &sp18, &sp28);
+
+                if (i == g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[5].val16[1])
+                {
+                    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[6].val32 = sp18.vy;
+                }
+            }
+        }
+
+        sp18.vy = 0x1000;
+        sp18.vx = D_800ED740.vx;
+        sp18.vz = D_800ED740.vz;
+
+        temp_s0   = Q12_MULT(Math_Sin(D_800ED5B6 + 0x800), 0x8000) + sp18.vx;
+        temp_v0_6 = Q12_MULT(Math_Cos(D_800ED5B6 + 0x800), 0x8000) + sp18.vz;
+
+        if (Vw_AabbVisibleInScreenCheck(temp_s0 - 0x4800, temp_s0 + 0x4800, -0x2000, 0, temp_v0_6 - 0x4800, temp_v0_6 + 0x4800))
+        {
+            Math_SetSVectorFastSum(&sp28, 0, D_800ED5B6, 0);
+            WorldGfx_ObjectAdd(g_WorldObject1, &sp18, &sp28);
+            sp28.vy += 0x80;
+            WorldGfx_ObjectAdd(&g_WorldObject1[1], &sp18, &sp28);
+        }
+
+        Math_SetSVectorFastSum(&sp28, 0, D_800ED5B6 + 0x400, 0);
+        sp18.vy = -0x4CC;
+
+        for (i = 0, var_s2_2 = 0x400; i < 8; i++)
+        {
+            sp30[i] = Q12_MULT(Math_Sin(sp28.vy + var_s2_2), 0x7800) + sp18.vx;
+            sp50[i] = Q12_MULT(Math_Cos(sp28.vy + var_s2_2), 0x7800) + sp18.vz;
+
+            var_s2_2 += 0x200;
+        }
+
+        for (i = 0; i < 8; i++)
+        {
+            if (Vw_AabbVisibleInScreenCheck(
+                    CLAMP_HIGH(sp30[i], sp30[(i + 1) & 7]) - 0x333,
+                    MAX(sp30[i], sp30[(i + 1) & 7]) + 0x333, -0x2000, 0,
+                    CLAMP_HIGH(sp50[i], sp50[(i + 1) & 7]) - 0x333,
+                    MAX(sp50[i], sp50[(i + 1) & 7]) + 0x333))
+            {
+                if (i != 0)
+                {
+                    WorldGfx_ObjectAdd(&g_WorldObject2, &sp18, &sp28);
+                }
+                else
+                {
+                    WorldGfx_ObjectAdd(&g_WorldObject1[2], &sp18, &sp28);
+                }
+            }
+            sp18.vy  = 0;
+            sp28.vy += 0x200;
+        }
+
+        Math_SetSVectorFastSum(&sp28, 0, D_800ED5B6, 0);
+
+        for (i = 0, var_s2_2 = 0x400; i < 4; i++)
+        {
+            sp30[i]   = Q12_MULT(Math_Sin(sp28.vy + var_s2_2), 0xCCC) + sp18.vx;
+            sp50[i]   = Q12_MULT(Math_Cos(sp28.vy + var_s2_2), 0xCCC) + sp18.vz;
+            var_s2_2 += 0x400;
+        }
+
+        for (i = 0; i < 4; i++)
+        {
+            if (Vw_AabbVisibleInScreenCheck(
+                    CLAMP_HIGH(sp30[i], sp30[(i + 1) & 3]) - 0x666,
+                    MAX(sp30[i], sp30[(i + 1) & 3]) + 0x666, -0x2000, 0,
+                    CLAMP_HIGH(sp50[i], sp50[(i + 1) & 3]) - 0x666,
+                    MAX(sp50[i], sp50[(i + 1) & 3]) + 0x666))
+            {
+                WorldGfx_ObjectAdd(g_WorldObject4, &D_800ED740, &sp28);
+                WorldGfx_ObjectAdd(&g_WorldObject4[1], &D_800ED740, &sp28);
+            }
+            sp28.vy += 0x400;
+        }
+
+        sp18.vx = 0x16CCC;
+        sp18.vy = 0;
+        sp18.vz = 0x60999;
+
+        Math_SetSVectorFastSum(&sp28, 0, 0xFE1F, 0);
+
+        if (D_800ED5B8 == 0)
+        {
+            WorldGfx_ObjectAdd(&g_WorldObject5, &sp18, &sp28);
+        }
+    }
+}
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E6CB8);
 

@@ -162,13 +162,12 @@ extern s_WorldObjectDesc g_WorldObject9;
 
 extern u8 D_800ED5AD;
 extern s16 D_800ED5B4;
-extern s8 D_800ED5B8;
+extern u8  D_800ED5B8;
 extern u8 D_800ED5F0;
 extern u8 D_800ED840;
 extern s8 D_800ED841;
 extern u16 D_800EBA34[23]; // `g_MapMsgSounds`
 extern s16 D_800ED5B4;
-extern s8  D_800ED5B8;
 extern s16 D_800EA856;
 
 extern s32 D_800CB118[];
@@ -221,6 +220,10 @@ extern s32     D_800EBB54;
 
 extern s_AnimInfo      D_800CC424[];
 extern s_UnkStruct3_Mo D_800CC4A4[];
+
+extern s32 D_800EBAAC[10];
+extern s32 D_800EBAD4[10];
+extern s16 D_800EBAFC[10];
 
 void func_800E0164(void);
 
