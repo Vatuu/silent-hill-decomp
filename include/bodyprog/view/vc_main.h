@@ -175,7 +175,7 @@ void vcSetDataToVwSystem(VC_WORK* w_p, VC_CAM_MV_TYPE cam_mv_type);
 
 s32 vcCamMatNoise(s32 noise_w, s32 ang_spd1, s32 ang_spd2, q19_12 vcSelfViewTimer);
 
-s32 Vc_VectorMagnitudeCalc(s32 x, s32 y, s32 z); // Q19.12
+s32 Vc_VectorMagnitudeCalc(q19_12 posX, q19_12 posY, q19_12 posZ);
 
 q19_12 vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, q19_12 chk_wld_x, q19_12 chk_wld_z,
                                  q19_12 lim_min_x, q19_12 lim_max_x, q19_12 lim_min_z, q19_12 lim_max_z, bool can_ret_minus_dist_f);

@@ -1486,65 +1486,66 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
     VECTOR3 sp18;
     VECTOR3 sp28;
     VECTOR3 sp38;
-    s16     var_a2;
-    s32     temp_a0;
+    q3_12   angle0;
+    q19_12  angle5;
     s32     temp_a0_2;
-    s32     temp_s0;
+    q19_12  newPosX;
     s32     temp_s0_2;
     s32     temp_s0_3;
-    s32     temp_s1_2;
-    s32     temp_s2;
-    s32     temp_s3;
+    q19_12  temp_s1_2;
+    q19_12  angle1;
+    q19_12  angle2;
     u32     temp_s5;
-    s32     temp_v1;
+    q19_12  angle7;
     u32     temp_v1_2;
-    s32     var_s0;
-    s32     var_v0;
-    s32     temp;
+    q19_12  angle4;
+    q19_12  angle3;
+    q19_12  newPosZ;
     s32     temp2;
     u32     temp3;
-    s32     temp4;
+    q19_12  angle6;
 
     temp3   = vcWork.flags_8;
     temp3   = temp3 >> 9;
     temp3   = temp3 & 1;
-    temp_s5 = temp3 ^ (g_GameWorkConst->config_0.optExtraViewCtrl_28 != 0);
+    temp_s5 = temp3 ^ (g_GameWorkConst->config_0.optExtraViewCtrl_28 != false);
 
-    Vc_VectorMagnitudeCalc(player->position_18.vx - npc->position_18.vx, 0, player->position_18.vz - npc->position_18.vz);
-    temp_s3 = ratan2(player->position_18.vx - 0x14000, player->position_18.vz - 0x64000);
-    temp_s2 = temp_s3 + 0x400;
+    Vc_VectorMagnitudeCalc(player->position_18.vx - npc->position_18.vx, Q12(0.0f), player->position_18.vz - npc->position_18.vz);
+    angle2 = ratan2(player->position_18.vx - Q12(20.0f), player->position_18.vz - Q12(100.0f));
+    angle1 = angle2 + FP_ANGLE(90.0f);
 
     if (temp_s5 != 0)
     {
-        var_a2 = temp_s3 + Q12_MULT(Math_Cos(player->rotation_24.vy - temp_s2), -0x71);
+        angle0 = angle2 + Q12_MULT(Math_Cos(player->rotation_24.vy - angle1), FP_ANGLE(-10.0f));
     }
     else
     {
-        if (arg2 || ((D_800EBB5A - temp_s3) << 0x14) > 0)
+        if (arg2 || ((D_800EBB5A - angle2) << 20) > 0)
         {
-            var_v0 = Q12_MULT(Math_Cos(player->rotation_24.vy - temp_s2), 0x100) + 0x1AA;
+            angle3 = Q12_MULT(Math_Cos(player->rotation_24.vy - angle1), FP_ANGLE(22.5f)) + FP_ANGLE(37.5f);
         }
         else
         {
-            var_v0 = Q12_MULT(Math_Cos(player->rotation_24.vy - temp_s2), 0x100) - 0x1AA;
+            angle3 = Q12_MULT(Math_Cos(player->rotation_24.vy - angle1), FP_ANGLE(22.5f)) - FP_ANGLE(37.5f);
         }
-        var_a2 = temp_s3 + var_v0;
+
+        angle0 = angle2 + angle3;
     }
 
     if (arg2)
     {
-        D_800EBB58.field_0 = 0;
-        D_800EBB58.field_2 = var_a2;
+        D_800EBB58.field_0 = FP_ANGLE(0.0f);
+        D_800EBB58.field_2 = angle0;
     }
     else
     {
-        D_800EBB58.field_0  = vwRetNewAngSpdToTargetAng(D_800EBB58.field_0, D_800EBB58.field_2, var_a2, 0x800, 0xB33, 0x5000);
+        D_800EBB58.field_0  = vwRetNewAngSpdToTargetAng(D_800EBB58.field_0, D_800EBB58.field_2, angle0, Q12(0.5f), Q12(0.7f), Q12(5.0f));
         D_800EBB58.field_2 += Q12_MULT_PRECISE(D_800EBB58.field_0, g_DeltaTime0);
     }
 
-    sp28.vx = Q12_MULT(Math_Sin(D_800EBB58.field_2), 0x5800) + 0x14000;
-    sp28.vz = Q12_MULT(Math_Cos(D_800EBB58.field_2), 0x5800) + 0x64000;
-    sp28.vy = -0x2666;
+    sp28.vx = Q12_MULT(Math_Sin(D_800EBB58.field_2), Q12(5.5f)) + Q12(20.0f);
+    sp28.vz = Q12_MULT(Math_Cos(D_800EBB58.field_2), Q12(5.5f)) + Q12(100.0f);
+    sp28.vy = Q12(-2.4f);
 
     if (arg2)
     {
@@ -1557,75 +1558,75 @@ void func_800E15FC(s_SubCharacter* player, s_SubCharacter* npc, bool arg2) // 0x
 
     if (temp_s5 != 0)
     {
-        temp_s0 = player->position_18.vx + Q12_MULT(Math_Sin(player->rotation_24.vy), 0x8000);
-        temp    = player->position_18.vz + Q12_MULT(Math_Cos(player->rotation_24.vy), 0x8000);
-        var_s0  = ratan2(temp_s0 - sp38.vx, temp - sp38.vz);
+        newPosX = player->position_18.vx + Q12_MULT(Math_Sin(player->rotation_24.vy), Q12(8.0f));
+        newPosZ = player->position_18.vz + Q12_MULT(Math_Cos(player->rotation_24.vy), Q12(8.0f));
+        angle4  = ratan2(newPosX - sp38.vx, newPosZ - sp38.vz);
     }
     else
     {
         sp38 = sp28;
 
-        temp_s1_2 = 0x666;
-        temp_s1_2 = FP_FROM(FP_TO(Math_Cos(player->rotation_24.vy - temp_s3), 0xC), 0xC) +
-                    (Vc_VectorMagnitudeCalc(player->position_18.vx - 0x14000, 0, player->position_18.vz - 0x64000) - temp_s1_2);
+        temp_s1_2 = Q12(0.4f);
+        temp_s1_2 = FP_FROM(FP_TO(Math_Cos(player->rotation_24.vy - angle2), Q12_SHIFT), Q12_SHIFT) +
+                    (Vc_VectorMagnitudeCalc(player->position_18.vx - Q12(20.0f), Q12(0.0f), player->position_18.vz - Q12(100.0f)) - temp_s1_2);
 
-        temp_s0_2 = temp_s3 + Q12_MULT(Math_Cos(player->rotation_24.vy - temp_s2), 0x11C);
+        temp_s0_2 = angle2 + Q12_MULT(Math_Cos(player->rotation_24.vy - angle1), FP_ANGLE(25.0f));
 
-        temp_s0_3 = Q12_MULT(temp_s1_2, Math_Sin(temp_s0_2)) + 0x14000;
+        temp_s0_3 = Q12_MULT(temp_s1_2, Math_Sin(temp_s0_2)) + Q12(20.0f);
 
         temp_s0_3 = temp_s0_3 - sp38.vx;
-        temp2     = Q12_MULT(temp_s1_2, Math_Cos(temp_s0_2)) + 0x64000;
+        temp2     = Q12_MULT(temp_s1_2, Math_Cos(temp_s0_2)) + Q12(100.0f);
 
-        var_s0 = ratan2(temp_s0_3, temp2 - sp38.vz);
+        angle4 = ratan2(temp_s0_3, temp2 - sp38.vz);
 
-        temp_a0 = ratan2(sp38.vx - 0x14000, sp38.vz - 0x64000);
-        temp4   = temp_a0 + 0x400;
-        temp_v1 = FP_ANGLE_NORM_S(var_s0 - temp4);
+        angle5 = ratan2(sp38.vx - Q12(20.0f), sp38.vz - Q12(100.0f));
+        angle6   = angle5 + FP_ANGLE(90.0f);
+        angle7 = FP_ANGLE_NORM_S(angle4 - angle6);
 
-        if (((D_800EBB5A - temp_s3) << 0x14) > 0)
+        if (((D_800EBB5A - angle2) << 20) > 0)
         {
-            if ((temp_v1 - 0x600) << 0x14 < 0)
+            if (((angle7 - FP_ANGLE(135.0f)) << 20) < 0)
             {
-                var_s0 = temp_a0 + 0xA00;
+                angle4 = angle5 + FP_ANGLE(225.0f);
             }
         }
-        else if (((temp_v1 - 0x200) << 0x14) > 0)
+        else if (((angle7 - FP_ANGLE(45.0f)) << 20) > 0)
         {
-            var_s0 = temp_a0 + 0x600;
+            angle4 = angle5 + FP_ANGLE(135.0f);
         }
     }
 
     if (arg2)
     {
-        D_800EBB58.field_6 = 0;
-        D_800EBB58.field_4 = var_s0;
+        D_800EBB58.field_6 = FP_ANGLE(0.0f);
+        D_800EBB58.field_4 = angle4;
     }
     else
     {
-        D_800EBB58.field_6  = vwRetNewAngSpdToTargetAng(D_800EBB58.field_6, D_800EBB58.field_4, var_s0, 0x2000, 0x2000, 0x8000);
+        D_800EBB58.field_6  = vwRetNewAngSpdToTargetAng(D_800EBB58.field_6, D_800EBB58.field_4, angle4, Q12(2.0f), Q12(2.0f), Q12(8.0f));
         D_800EBB58.field_4 += Q12_MULT_PRECISE(D_800EBB58.field_6, g_DeltaTime0);
     }
 
-    ratan2(player->position_18.vy + 0xE66, Vc_VectorMagnitudeCalc(player->position_18.vx - sp28.vx, 0, player->position_18.vz - sp28.vz));
+    ratan2(player->position_18.vy + Q12(0.9f), Vc_VectorMagnitudeCalc(player->position_18.vx - sp28.vx, Q12(0.0f), player->position_18.vz - sp28.vz));
 
-    sp18.vx = sp28.vx + Q12_MULT(Math_Sin(D_800EBB58.field_4), 0x3000);
-    sp18.vz = sp28.vz + Q12_MULT(Math_Cos(D_800EBB58.field_4), 0x3000);
+    sp18.vx = sp28.vx + Q12_MULT(Math_Sin(D_800EBB58.field_4), Q12(3.0f));
+    sp18.vz = sp28.vz + Q12_MULT(Math_Cos(D_800EBB58.field_4), Q12(3.0f));
 
-    sp18.vy = -Math_Sin(-0xE3) * 0x3000 / Math_Cos(-0xE3) - 0x2666;
+    sp18.vy = -Math_Sin(FP_ANGLE(-20.0f)) * Q12(3.0f) / Math_Cos(FP_ANGLE(-20.0f)) - Q12(2.4f);
 
-    if (temp_s5 != 0 && g_GameWorkConst->config_0.optExtraViewMode_29 != 0)
+    if (temp_s5 != 0 && g_GameWorkConst->config_0.optExtraViewMode_29)
     {
         temp_v1_2 = vcWork.flags_8 >> 9;
         temp_v1_2 = temp_v1_2 & 1;
 
-        if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 != 0 && (temp_v1_2 ^ 1) != 0) ||
-            (g_GameWorkConst->config_0.optExtraViewCtrl_28 == 0 && temp_v1_2 != 0))
+        if (( g_GameWorkConst->config_0.optExtraViewCtrl_28 && (temp_v1_2 ^ 1) != 0) ||
+            (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && temp_v1_2 != 0))
         {
-            temp_a0_2 = vcWork.flags_8 >> 0xA;
-            temp_a0_2 = temp_a0_2 & 1;
+            temp_a0_2 = vcWork.flags_8 >> 10;
+            temp_a0_2 = temp_a0_2 & 0x1;
 
-            if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 != 0 && (temp_a0_2 ^ 1) == 0) ||
-                (g_GameWorkConst->config_0.optExtraViewCtrl_28 == 0 && temp_a0_2 == 0))
+            if (( g_GameWorkConst->config_0.optExtraViewCtrl_28 && (temp_a0_2 ^ 1) == 0) ||
+                (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && temp_a0_2 == 0))
             {
                 vcReturnPreAutoCamWork(true);
                 return;
@@ -3376,17 +3377,17 @@ void func_800E5F54(void) // 0x800E5F54
 
 void func_800E636C(void) // 0x800E636C
 {
-    VECTOR3  sp18;
-    SVECTOR3 sp28;
+    VECTOR3  pos; // Q19.12
+    SVECTOR3 rot; // Q19.12
     s32      sp30[8];
     s32      sp50[8];
-    s32      temp_s0;
+    q19_12   temp_s0;
     s32      temp_v0_4;
-    s32      temp_v0_6;
+    q19_12   temp_v0_6;
     s32      var_a0_2;
     s32      var_s0;
     s32      i;
-    s32      var_s2_2;
+    q19_12   curAngle;
     s32      temp_t1;
 
     if (!Savegame_EventFlagGet(EventFlag_443) || Savegame_EventFlagGet(EventFlag_467))
@@ -3398,176 +3399,179 @@ void func_800E636C(void) // 0x800E636C
 
         if (g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[0].val32 == 1)
         {
-            if (D_800EBA30 == 0 && g_SysWork.npcs_1A0[0].health_B0 > 0)
+            if (D_800EBA30 == 0 && g_SysWork.npcs_1A0[0].health_B0 > Q12(0.0f))
             {
                 SD_Call(Sfx_Unk1617);
             }
 
             if (g_SysWork.npcs_1A0[0].health_B0 > 0)
             {
-                D_800EBA30 -= 0x32;
+                D_800EBA30 -= 50;
             }
             else
             {
-                D_800EBA30 += 0x32;
+                D_800EBA30 += 50;
             }
 
-            D_800EBA30 = CLAMP(D_800EBA30, -0x1C7, 0);
+            D_800EBA30 = CLAMP(D_800EBA30, -455, 0);
         }
         else
         {
-            if (g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[1].val16[0] == 0xC)
+            if (g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[1].val16[0] == 12)
             {
-                D_800EBA30 -= 0x32;
+                D_800EBA30 -= 50;
 
                 if (temp_t1 == 0 && D_800EBA30 < 0)
                 {
-                    if (g_SysWork.playerWork_4C.player_0.properties_E4.dummy.properties_E8[0xF].val16[1] >= 0x3001)
+                    if (g_SysWork.playerWork_4C.player_0.properties_E4.dummy.properties_E8[15].val16[1] > Q12(3.0f))
                     {
                         Player_DamageFeetFront();
                     }
+
                     SD_Call(Sfx_Unk1617);
                     Savegame_EventFlagSet(EventFlag_455);
                 }
             }
             else
             {
-                D_800EBA30 += 0x32;
+                D_800EBA30 += 50;
 
                 if (temp_t1 < 0 && D_800EBA30 >= 0)
                 {
-                    if (g_SysWork.playerWork_4C.player_0.properties_E4.dummy.properties_E8[0xF].val16[1] >= 0x3001)
+                    if (g_SysWork.playerWork_4C.player_0.properties_E4.dummy.properties_E8[15].val16[1] > Q12(3.0f))
                     {
                         Player_DamageFeetFront();
                     }
+
                     Sd_SfxStop(Sfx_Unk1617);
                     Savegame_EventFlagClear(EventFlag_455);
                 }
             }
 
-            D_800EBA30 = CLAMP(D_800EBA30, -0xE3, 0);
+            D_800EBA30 = CLAMP(D_800EBA30, -227, 0);
         }
 
         if (D_800EBA30 != 0)
         {
-            sp18.vx = 0x14000;
-            sp18.vy = 0x1000;
-            sp18.vz = 0x64000;
+            pos.vx = Q12(20.0f);
+            pos.vy = Q12(1.0f);
+            pos.vz = Q12(100.0f);
 
-            func_8005DE0C(Sfx_Unk1617, &sp18, ABS(D_800EBA30) >> 2, 0x10000, ABS(D_800EBA30) >> 2);
+            func_8005DE0C(Sfx_Unk1617, &pos, ABS(D_800EBA30) >> 2, Q12(16.0f), ABS(D_800EBA30) >> 2);
         }
 
         for (i = 0; i < 10; i++)
         {
-            sp18.vx = D_800EBAAC[i] + D_800ED740.vx;
-            sp18.vz = D_800EBAD4[i] + D_800ED740.vz;
+            pos.vx = D_800EBAAC[i] + D_800ED740.vx;
+            pos.vz = D_800EBAD4[i] + D_800ED740.vz;
 
-            if (Vw_AabbVisibleInScreenCheck(sp18.vx - 0x1000, sp18.vx + 0x1000, -0x2000, 0, sp18.vz - 0x1000, sp18.vz + 0x1000))
+            if (Vw_AabbVisibleInScreenCheck(pos.vx - Q12(1.0f), pos.vx + Q12(1.0f), Q12(-2.0f), 0, pos.vz - Q12(1.0f), pos.vz + Q12(1.0f)))
             {
                 if (i < 6)
                 {
-                    temp_v0_4 = Math_Sin((D_800ED5B6 * 4) + ((0x1000 * i) / 3));
+                    temp_v0_4 = Math_Sin((D_800ED5B6 * 4) + ((Q12(1.0f) * i) / 3));
                     var_a0_2  = 1;
-                    sp18.vy   = (-0x1000 - temp_v0_4) / 5;
+                    pos.vy   = (Q12(-1.0f) - temp_v0_4) / 5;
                 }
                 else
                 {
-                    var_s0    = 0x1000 * i;
-                    temp_v0_4 = Math_Sin((D_800ED5B6 * 4) + (var_s0 / 2) + 0x800);
+                    var_s0    = Q12(1.0f) * i;
+                    temp_v0_4 = Math_Sin((D_800ED5B6 * 4) + (var_s0 / 2) + Q12(0.5f));
                     var_a0_2  = 0;
-                    sp18.vy   = (-0x1000 - temp_v0_4) / 5;
+                    pos.vy   = (Q12(-1.0f) - temp_v0_4) / 5;
                 }
 
-                Math_SetSVectorFastSum(&sp28, 0, D_800EBAFC[i], 0);
-
-                WorldGfx_ObjectAdd(&g_WorldObject0[var_a0_2], &sp18, &sp28);
+                Math_SetSVectorFastSum(&rot, FP_ANGLE(0.0f), D_800EBAFC[i], FP_ANGLE(0.0f));
+                WorldGfx_ObjectAdd(&g_WorldObject0[var_a0_2], &pos, &rot);
 
                 if (i == g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[5].val16[1])
                 {
-                    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[6].val32 = sp18.vy;
+                    g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[6].val32 = pos.vy;
                 }
             }
         }
 
-        sp18.vy = 0x1000;
-        sp18.vx = D_800ED740.vx;
-        sp18.vz = D_800ED740.vz;
+        pos.vy = Q12(1.0f);
+        pos.vx = D_800ED740.vx;
+        pos.vz = D_800ED740.vz;
 
-        temp_s0   = Q12_MULT(Math_Sin(D_800ED5B6 + 0x800), 0x8000) + sp18.vx;
-        temp_v0_6 = Q12_MULT(Math_Cos(D_800ED5B6 + 0x800), 0x8000) + sp18.vz;
+        temp_s0   = Q12_MULT(Math_Sin(D_800ED5B6 + FP_ANGLE(180.0f)), Q12(8.0f)) + pos.vx;
+        temp_v0_6 = Q12_MULT(Math_Cos(D_800ED5B6 + FP_ANGLE(180.0f)), Q12(8.0f)) + pos.vz;
 
-        if (Vw_AabbVisibleInScreenCheck(temp_s0 - 0x4800, temp_s0 + 0x4800, -0x2000, 0, temp_v0_6 - 0x4800, temp_v0_6 + 0x4800))
+        if (Vw_AabbVisibleInScreenCheck(temp_s0 - Q12(4.5f), temp_s0 + Q12(4.5f), Q12(-2.0f), 0, temp_v0_6 - Q12(4.5f), temp_v0_6 + Q12(4.5f)))
         {
-            Math_SetSVectorFastSum(&sp28, 0, D_800ED5B6, 0);
-            WorldGfx_ObjectAdd(g_WorldObject1, &sp18, &sp28);
-            sp28.vy += 0x80;
-            WorldGfx_ObjectAdd(&g_WorldObject1[1], &sp18, &sp28);
+            Math_SetSVectorFastSum(&rot, FP_ANGLE(0.0f), D_800ED5B6, FP_ANGLE(0.0f));
+            WorldGfx_ObjectAdd(g_WorldObject1, &pos, &rot);
+
+            rot.vy += FP_ANGLE(11.25f);
+
+            WorldGfx_ObjectAdd(&g_WorldObject1[1], &pos, &rot);
         }
 
-        Math_SetSVectorFastSum(&sp28, 0, D_800ED5B6 + 0x400, 0);
-        sp18.vy = -0x4CC;
+        Math_SetSVectorFastSum(&rot, 0, D_800ED5B6 + FP_ANGLE(90.0f), 0);
+        pos.vy = Q12(-0.3f);
 
-        for (i = 0, var_s2_2 = 0x400; i < 8; i++)
+        for (i = 0, curAngle = FP_ANGLE(90.0f); i < 8; i++)
         {
-            sp30[i] = Q12_MULT(Math_Sin(sp28.vy + var_s2_2), 0x7800) + sp18.vx;
-            sp50[i] = Q12_MULT(Math_Cos(sp28.vy + var_s2_2), 0x7800) + sp18.vz;
+            sp30[i] = Q12_MULT(Math_Sin(rot.vy + curAngle), Q12(7.5f)) + pos.vx;
+            sp50[i] = Q12_MULT(Math_Cos(rot.vy + curAngle), Q12(7.5f)) + pos.vz;
 
-            var_s2_2 += 0x200;
+            curAngle += FP_ANGLE(45.0f);
         }
 
         for (i = 0; i < 8; i++)
         {
-            if (Vw_AabbVisibleInScreenCheck(
-                    CLAMP_HIGH(sp30[i], sp30[(i + 1) & 7]) - 0x333,
-                    MAX(sp30[i], sp30[(i + 1) & 7]) + 0x333, -0x2000, 0,
-                    CLAMP_HIGH(sp50[i], sp50[(i + 1) & 7]) - 0x333,
-                    MAX(sp50[i], sp50[(i + 1) & 7]) + 0x333))
+            if (Vw_AabbVisibleInScreenCheck(CLAMP_HIGH(sp30[i], sp30[(i + 1) & 0x7]) - Q12(0.2f),
+                                            MAX(sp30[i], sp30[(i + 1) & 0x7]) + Q12(0.2f), Q12(-2.0f), Q12(0.0f),
+                                            CLAMP_HIGH(sp50[i], sp50[(i + 1) & 0x7]) - Q12(0.2f),
+                                            MAX(sp50[i], sp50[(i + 1) & 0x7]) + Q12(0.2f)))
             {
                 if (i != 0)
                 {
-                    WorldGfx_ObjectAdd(&g_WorldObject2, &sp18, &sp28);
+                    WorldGfx_ObjectAdd(&g_WorldObject2, &pos, &rot);
                 }
                 else
                 {
-                    WorldGfx_ObjectAdd(&g_WorldObject1[2], &sp18, &sp28);
+                    WorldGfx_ObjectAdd(&g_WorldObject1[2], &pos, &rot);
                 }
             }
-            sp18.vy  = 0;
-            sp28.vy += 0x200;
+
+            pos.vy  = Q12(0.0f);
+            rot.vy += FP_ANGLE(45.0f);
         }
 
-        Math_SetSVectorFastSum(&sp28, 0, D_800ED5B6, 0);
+        Math_SetSVectorFastSum(&rot, FP_ANGLE(0.0f), D_800ED5B6, FP_ANGLE(0.0f));
 
-        for (i = 0, var_s2_2 = 0x400; i < 4; i++)
+        for (i = 0, curAngle = FP_ANGLE(90.0f); i < 4; i++)
         {
-            sp30[i]   = Q12_MULT(Math_Sin(sp28.vy + var_s2_2), 0xCCC) + sp18.vx;
-            sp50[i]   = Q12_MULT(Math_Cos(sp28.vy + var_s2_2), 0xCCC) + sp18.vz;
-            var_s2_2 += 0x400;
+            sp30[i]   = Q12_MULT(Math_Sin(rot.vy + curAngle), Q12(0.8f)) + pos.vx;
+            sp50[i]   = Q12_MULT(Math_Cos(rot.vy + curAngle), Q12(0.8f)) + pos.vz;
+            curAngle += FP_ANGLE(90.0f);
         }
 
         for (i = 0; i < 4; i++)
         {
-            if (Vw_AabbVisibleInScreenCheck(
-                    CLAMP_HIGH(sp30[i], sp30[(i + 1) & 3]) - 0x666,
-                    MAX(sp30[i], sp30[(i + 1) & 3]) + 0x666, -0x2000, 0,
-                    CLAMP_HIGH(sp50[i], sp50[(i + 1) & 3]) - 0x666,
-                    MAX(sp50[i], sp50[(i + 1) & 3]) + 0x666))
+            if (Vw_AabbVisibleInScreenCheck(CLAMP_HIGH(sp30[i], sp30[(i + 1) & 0x3]) - Q12(0.4f),
+                                            MAX(sp30[i], sp30[(i + 1) & 0x3]) + Q12(0.4f), Q12(-2.0f), Q12(0.0f),
+                                            CLAMP_HIGH(sp50[i], sp50[(i + 1) & 0x3]) - Q12(0.4f),
+                                            MAX(sp50[i], sp50[(i + 1) & 0x3]) + Q12(0.4f)))
             {
-                WorldGfx_ObjectAdd(g_WorldObject4, &D_800ED740, &sp28);
-                WorldGfx_ObjectAdd(&g_WorldObject4[1], &D_800ED740, &sp28);
+                WorldGfx_ObjectAdd(g_WorldObject4, &D_800ED740, &rot);
+                WorldGfx_ObjectAdd(&g_WorldObject4[1], &D_800ED740, &rot);
             }
-            sp28.vy += 0x400;
+
+            rot.vy += FP_ANGLE(90.0f);
         }
 
-        sp18.vx = 0x16CCC;
-        sp18.vy = 0;
-        sp18.vz = 0x60999;
+        pos.vx = Q12(22.8f);
+        pos.vy = Q12(0.0f);
+        pos.vz = Q12(96.6f);
 
-        Math_SetSVectorFastSum(&sp28, 0, 0xFE1F, 0);
+        Math_SetSVectorFastSum(&rot, 0, 0xFE1F, 0);
 
         if (D_800ED5B8 == 0)
         {
-            WorldGfx_ObjectAdd(&g_WorldObject5, &sp18, &sp28);
+            WorldGfx_ObjectAdd(&g_WorldObject5, &pos, &rot);
         }
     }
 }
@@ -3578,17 +3582,17 @@ void func_800E6CB8(void) // 0x800E6CB8
     SVECTOR3 sp28;
     VECTOR3  sp30;
     SVECTOR3 sp40;
-    s32      temp_v0;
+    q19_12   time;
     s32      j;
     s32      i;
     s32      var_s3;
 
-    temp_v0     = Q12_MULT_PRECISE(g_DeltaTime0, 0x2D82D);
-    D_800EBB30 += temp_v0;
+    time     = Q12_MULT_PRECISE(g_DeltaTime0, Q12(45.511f));
+    D_800EBB30 += time;
 
-    if (D_800EBB30 > 0x133333U)
+    if (D_800EBB30 > Q12(307.2f))
     {
-        D_800EBB30 -= 0x133333;
+        D_800EBB30 -= Q12(307.2f);
         D_800EBB34++;
 
         for (i = 3; i > 0; i--)
@@ -3605,22 +3609,21 @@ void func_800E6CB8(void) // 0x800E6CB8
     {
         if (D_800EBB20[i] == 0)
         {
-            D_800EBB10[i] += temp_v0;
-
-            if (D_800EBB10[i] > 0x2D82D && ((Rng_Rand16() % 186413) + 0x2D82D) < D_800EBB10[i])
+            D_800EBB10[i] += time;
+            if (D_800EBB10[i] > Q12(45.511f) && ((Rng_Rand16() % Q12(45.511f)) + Q12(45.511f)) < D_800EBB10[i])
             {
                 D_800EBB20[i]--;
             }
         }
         else if (D_800EBB10[i] > 0)
         {
-            D_800EBB20[i] += Q12_MULT_PRECISE(g_DeltaTime0, -0x44444);
-            D_800EBB20[i]  = MAX(D_800EBB20[i], -0x22222);
+            D_800EBB20[i] += Q12_MULT_PRECISE(g_DeltaTime0, Q12(-68.2667f));
+            D_800EBB20[i]  = MAX(D_800EBB20[i], Q12(-34.1334f));
             D_800EBB10[i] += Q12_MULT_PRECISE(g_DeltaTime0, D_800EBB20[i]);
 
             if (D_800EBB10[i] < 0)
             {
-                if (D_800EBB20[i] > -0x16C16)
+                if (D_800EBB20[i] > Q12(-22.7554f))
                 {
                     D_800EBB20[i] = 0;
                     D_800EBB10[i] = 0;
@@ -3633,13 +3636,13 @@ void func_800E6CB8(void) // 0x800E6CB8
         }
         else
         {
-            D_800EBB20[i] += Q12_MULT_PRECISE(g_DeltaTime0, 0x44444);
-            D_800EBB20[i]  = CLAMP_HIGH(D_800EBB20[i], 0x22222);
+            D_800EBB20[i] += Q12_MULT_PRECISE(g_DeltaTime0, Q12(68.2667f));
+            D_800EBB20[i]  = CLAMP_HIGH(D_800EBB20[i], Q12(34.1334f));
             D_800EBB10[i] += Q12_MULT_PRECISE(g_DeltaTime0, D_800EBB20[i]);
 
             if (D_800EBB10[i] > 0)
             {
-                if (D_800EBB20[i] < 0x16C16)
+                if (D_800EBB20[i] < Q12(22.7554f))
                 {
                     D_800EBB20[i] = 0;
                     D_800EBB10[i] = 0;
@@ -3652,67 +3655,66 @@ void func_800E6CB8(void) // 0x800E6CB8
         }
     }
 
-    Math_SetSVectorFastSum(&sp28, 0, 0, 0);
-    Math_SetSVectorFastSum(&sp40, 0, 0, 0);
+    Math_SetSVectorFastSum(&sp28, FP_ANGLE(0.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
+    Math_SetSVectorFastSum(&sp40, FP_ANGLE(0.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
 
-    for (i = 0, var_s3 = -0x41000; i < 5; i++)
+    for (i = 0, var_s3 = Q12(-65.0f); i < 5; i++)
     {
-        sp18.vx = 0x8B33;
+        sp18.vx = Q12(8.7f);
         sp28.vx = FP_FROM(D_800EBB30, Q12_SHIFT) + (var_s3 / 360);
-        sp18.vy = Q12_MULT(Math_Cos(sp28.vx), 0xA000) - 0xDCCC;
-        sp18.vz = Q12_MULT(Math_Sin(sp28.vx), 0xA000) - 0x1C000;
+        sp18.vy = Q12_MULT(Math_Cos(sp28.vx), Q12(10.0f)) - Q12(13.8f);
+        sp18.vz = Q12_MULT(Math_Sin(sp28.vx), Q12(10.0f)) - Q12(28.0f);
 
         for (j = 0; j < 3; j++)
         {
             WorldGfx_ObjectAdd(&g_WorldObject6[j], &sp18, &sp28);
         }
 
-        sp30.vx = 0x8B33;
-        sp30.vy = Q12_MULT(Math_Cos(sp28.vx), 0xB400) - 0xDCCC;
-        sp30.vz = Q12_MULT(Math_Sin(sp28.vx), 0xB400) - 0x1C000;
+        sp30.vx = Q12(8.7f);
+        sp30.vy = Q12_MULT(Math_Cos(sp28.vx), Q12(11.25f)) - Q12(13.8f);
+        sp30.vz = Q12_MULT(Math_Sin(sp28.vx), Q12(11.25f)) - Q12(28.0f);
         sp40.vx = FP_FROM(D_800EBB10[i], Q12_SHIFT);
 
-        if (Vw_AabbVisibleInScreenCheck(
-                MIN_OFFSET(sp30.vx, 0x1000, 0x1000),
-                MAX_OFFSET(sp30.vx, 0x1000, 0x1000),
-                MIN_OFFSET(sp30.vy, -0x2000, -0x333),
-                MAX_OFFSET(sp30.vy, -0x2000, -0x333),
-                MIN_OFFSET(sp30.vz, 0x1000, 0x1000),
-                MAX_OFFSET(sp30.vz, 0x1000, 0x1000)))
+        if (Vw_AabbVisibleInScreenCheck(MIN_OFFSET(sp30.vx, Q12(1.0f), Q12(1.0f)),
+                                        MAX_OFFSET(sp30.vx, Q12(1.0f), Q12(1.0f)),
+                                        MIN_OFFSET(sp30.vy, Q12(-2.0f), Q12(-0.2f)),
+                                        MAX_OFFSET(sp30.vy, Q12(-2.0f), Q12(-0.2f)),
+                                        MIN_OFFSET(sp30.vz, Q12(1.0f), Q12(1.0f)),
+                                        MAX_OFFSET(sp30.vz, Q12(1.0f), Q12(1.0f))))
         {
             WorldGfx_ObjectAdd(&g_WorldObject7[(D_800EBB34 + i) & 1], &sp30, &sp40);
         }
 
-        var_s3 += 0x1B000;
+        var_s3 += Q12(27.0f);
     }
 }
 
 void func_800E7204(void) // 0x800E7204
 {
-    VECTOR3  sp10;
-    SVECTOR3 sp20;
-    s16      temp_s1;
-    s32      temp_s0;
+    VECTOR3  pos; // 19.12
+    SVECTOR3 rot; // 19.12
+    q3_12    angle;
+    q19_12   temp_s0;
     s32      i;
 
-    D_800EBB36 += Q12_MULT_PRECISE(g_DeltaTime0, 0x327);
-    D_800EBB38 += Q12_MULT_PRECISE(g_DeltaTime0, 0x466);
+    D_800EBB36 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.197f) + 1);
+    D_800EBB38 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.275f));
 
     for (i = 0; i < 12; i++)
     {
-        temp_s1 = Math_Sin(D_800EBB36 + (i << 0xA)) / 30;
-        sp10.vy = Q12_MULT(Math_Sin(temp_s1), 0x4000) - 0x1800;
+        angle = Math_Sin(D_800EBB36 + (i << 10)) / 30;
+        pos.vy = Q12_MULT(Math_Sin(angle), Q12(4.0f)) - Q12(1.5f);
 
-        temp_s0 = Q12_MULT(Math_Cos(temp_s1), 0x4000);
+        temp_s0 = Q12_MULT(Math_Cos(angle), Q12(4.0f));
 
-        sp20.vy = D_800EBB38 + ((i << 0xC) / 12);
+        rot.vy = D_800EBB38 + ((i << 12) / 12);
 
-        sp10.vx = Q12_MULT(temp_s0, Math_Sin(sp20.vy)) - 0x10000;
-        sp10.vz = Q12_MULT(temp_s0, Math_Cos(sp20.vy)) - 0x40000;
-        sp20.vx = -temp_s1;
-        sp20.vz = 0;
+        pos.vx = Q12_MULT(temp_s0, Math_Sin(rot.vy)) - Q12(16.0f);
+        pos.vz = Q12_MULT(temp_s0, Math_Cos(rot.vy)) - Q12(64.0f);
+        rot.vx = -angle;
+        rot.vz = FP_ANGLE(0.0f);
 
-        WorldGfx_ObjectAdd(&g_WorldObject8, &sp10, &sp20);
+        WorldGfx_ObjectAdd(&g_WorldObject8, &pos, &rot);
     }
 }
 
@@ -3778,8 +3780,8 @@ void func_800E7944(u32 arg0) // 0x800E7944
     } s_func_800E7944;
 
     s32              i;
-    s_func_800E7944* ptr;
     s32              temp_a3;
+    s_func_800E7944* ptr;
 
     ptr = PSX_SCRATCH;
 
@@ -3787,12 +3789,12 @@ void func_800E7944(u32 arg0) // 0x800E7944
     {
         if (D_800EBB7C != 0)
         {
-            Math_SetSVectorFastSum(&ptr->field_20, 0, 0xFFF2, 0x14);
+            Math_SetSVectorFastSum(&ptr->field_20, 0, 0xFFF2, 20);
             Vw_CoordHierarchyMatrixCompute(&g_SysWork.npcCoords_FC0[0x1F], &ptr->field_0);
         }
         else
         {
-            Math_SetSVectorFastSum(&ptr->field_20, 0, 0xFFD7, -0x15);
+            Math_SetSVectorFastSum(&ptr->field_20, 0, 0xFFD7, -21);
             Vw_CoordHierarchyMatrixCompute(&g_SysWork.npcCoords_FC0[1], &ptr->field_0);
         }
 
@@ -3802,22 +3804,23 @@ void func_800E7944(u32 arg0) // 0x800E7944
         gte_rt();
         gte_stlvnl(&ptr->field_28);
 
-        sharedData_800DEE50_1_s01.field_14 = ptr->field_28.vx * 0x10;
-        sharedData_800DEE50_1_s01.field_18 = ptr->field_28.vz * 0x10;
-        temp_a3                            = (sharedData_800DEE50_1_s01.field_8 - (ptr->field_28.vy * 0x10)) >> 1;
+        sharedData_800DEE50_1_s01.field_14 = ptr->field_28.vx * 16;
+        sharedData_800DEE50_1_s01.field_18 = ptr->field_28.vz * 16;
+        temp_a3                            = (sharedData_800DEE50_1_s01.field_8 - (ptr->field_28.vy * 16)) >> 1;
 
         for (i = 0; i < 0x12C; i++)
         {
-            if (sharedData_800DFB7C_0_s00[i].field_A == 0xE)
+            if (sharedData_800DFB7C_0_s00[i].field_A == 14)
             {
                 sharedData_800DFB7C_0_s00[i].vy_8 -= temp_a3;
             }
         }
 
-        sharedData_800DEE50_1_s01.field_8 = (u16)ptr->field_28.vy * 0x10;
-        sharedData_800DEE50_1_s01.field_6 = sharedData_800DEE50_1_s01.field_8 - 0x333;
+        sharedData_800DEE50_1_s01.field_8 = (u16)ptr->field_28.vy * 16;
+        sharedData_800DEE50_1_s01.field_6 = sharedData_800DEE50_1_s01.field_8 - Q12(0.2f);
     }
 
+    // TODO: De-hexing.
     if (arg0 == 0)
     {
         sharedData_800DEE50_1_s01.field_0  = 1;
@@ -3829,6 +3832,7 @@ void func_800E7944(u32 arg0) // 0x800E7944
         sharedData_800DEE50_1_s01.field_E  = 0x51;
         sharedData_800DEE50_1_s01.field_1C = 0x8000;
         sharedData_800DEE50_1_s01.field_12 = -0x80;
+
         sharedFunc_800CB7F4_1_s01();
         D_800EBB7C = 0;
     }
@@ -3843,9 +3847,9 @@ void func_800E7944(u32 arg0) // 0x800E7944
     {
         D_800C4414 &= 0xFD;
 
-        for (i = 0; i < 0x12C; i++)
+        for (i = 0; i < 300; i++)
         {
-            if (sharedData_800DFB7C_0_s00[i].field_A == 0xD || sharedData_800DFB7C_0_s00[i].field_A == 0xE)
+            if (sharedData_800DFB7C_0_s00[i].field_A == 13 || sharedData_800DFB7C_0_s00[i].field_A == 14)
             {
                 sharedData_800DFB7C_0_s00[i].field_A = 0;
             }

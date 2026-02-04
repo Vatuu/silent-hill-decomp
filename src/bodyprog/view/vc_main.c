@@ -2867,17 +2867,17 @@ s32 vcCamMatNoise(s32 noise_w, s32 ang_spd1, s32 ang_spd2, q19_12 vcSelfViewTime
     return Q12_MULT(noise_w, noise);
 }
 
-s32 Vc_VectorMagnitudeCalc(s32 x, s32 y, s32 z) // 0x80085B1C
+s32 Vc_VectorMagnitudeCalc(q19_12 posX, q19_12 posY, q19_12 posZ) // 0x80085B1C
 {
-    s32 mag;
-    s32 shift;
+    q19_12 mag;
+    s32    shift;
 
-    mag   = MAX(MAX(ABS(x), ABS(y)), ABS(z));
+    mag   = MAX(MAX(ABS(posX), ABS(posY)), ABS(posZ));
     shift = Math_MagnitudeShiftGet(mag);
-    x   >>= shift;
-    y   >>= shift;
-    z   >>= shift;
-    return SquareRoot0(SQUARE(x) + SQUARE(y) + SQUARE(z)) << shift;
+    posX   >>= shift;
+    posY   >>= shift;
+    posZ   >>= shift;
+    return SquareRoot0(SQUARE(posX) + SQUARE(posY) + SQUARE(posZ)) << shift;
 }
 
 q19_12 vcGetXZSumDistFromLimArea(s32* out_vec_x_p, s32* out_vec_z_p, q19_12 chk_wld_x, q19_12 chk_wld_z,

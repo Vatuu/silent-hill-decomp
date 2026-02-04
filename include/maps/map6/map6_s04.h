@@ -95,10 +95,10 @@ typedef struct
 
 typedef struct
 {
-    s16 field_0;
-    s16 field_2;
-    s16 field_4;
-    s16 field_6;
+    q3_12 field_0; // } Angle.
+    q3_12 field_2; // }
+    q3_12 field_4; // }
+    q3_12 field_6; // }
 } s_800EBB58;
 
 extern s_800EBB58 D_800EBB58;
@@ -137,7 +137,7 @@ extern u8 D_800ED5AC; // g_MapMsgSoundIdx
 /** Time. */
 extern q19_12 D_800ED5B0;
 
-extern s16 D_800ED5B6;
+extern q3_12 D_800ED5B6; // Angle.
 
 extern s_Model g_Ai_MonsterCybil_ExtraModel; // Some kind of attachment or another `s_SubCharacter` instance?
 
@@ -223,12 +223,12 @@ extern s_UnkStruct3_Mo D_800CC4A4[];
 
 extern s32 D_800EBAAC[10];
 extern s32 D_800EBAD4[10];
-extern s16 D_800EBAFC[10];
+extern q3_12 D_800EBAFC[10]; // Angles.
 
-extern s32 D_800EBB10[4];
-extern s32 D_800EBB20[4];
-extern u32 D_800EBB30;
-extern u8  D_800EBB34;
+extern q19_12 D_800EBB10[4]; // Timers?
+extern q19_12 D_800EBB20[4];
+extern q20_12 D_800EBB30;    // Timer.
+extern u8  D_800EBB34;       // Counter.
 
 extern s16 D_800EBB36;
 extern s16 D_800EBB38;
@@ -422,17 +422,15 @@ void func_800E5F54(void);
 
 void func_800E636C(void); // Assumed types.
 
-void func_800E6CB8(void); // Assumed types.
+void func_800E6CB8(void);
 
 void func_800E7204(void); // Assumed types.
 
 void func_800E73B4(q19_12 arg0);
 
-void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4); // Assumed types.
-
-void func_800E1CA0(void);
-
 void func_800E74C4(void);
+
+void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4); // Assumed types.
 
 void func_800E7944(u32 arg0);
 
