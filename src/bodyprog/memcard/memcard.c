@@ -1,7 +1,6 @@
 #include "game.h"
 
 #include "main/fsqueue.h"
-#include "bodyprog/savegame.h"
 #include "bodyprog/memcard.h"
 
 #include <psyq/libapi.h>
@@ -9,11 +8,11 @@
 #include <psyq/strings.h>
 #include <psyq/sys/file.h>
 
-s_MemCard_SaveHeader g_MemCard_BasicSaveInfo1[CARD_DEVICE_FILE_COUNT];
+s_MemCard_SaveHeader g_MemCard_BasicSaveInfo1[MEMCARD_FILE_COUNT_MAX];
 
-s_MemCard_SaveHeader g_MemCard_BasicSaveInfo2[CARD_DEVICE_FILE_COUNT];
+s_MemCard_SaveHeader g_MemCard_BasicSaveInfo2[MEMCARD_FILE_COUNT_MAX];
 
-s_MemCard_SaveHeader g_MemCard_BasicSaveInfo3[CARD_DEVICE_FILE_COUNT];
+s_MemCard_SaveHeader g_MemCard_BasicSaveInfo3[MEMCARD_FILE_COUNT_MAX];
 
 bool g_MemCard_AvailibityStatus;
 
@@ -40,7 +39,7 @@ static inline void MemCard_SaveWork_SetParams(s_MemCard_Process* ptr, s32 proces
 }
 
 // ========================================
-// MEMCARD - INITIALIZATION
+// MEMORY CARD - INITIALIZATION
 // ========================================
 
 void MemCard_SysInit(void) // 0x8002E630
@@ -56,7 +55,7 @@ void MemCard_SysInit(void) // 0x8002E630
     bzero(&g_MemCard_SaveWork, sizeof(s_MemCard_SaveWork));
     bzero(g_MemCard_BasicSaveInfo1, sizeof(s_MemCard_SaveHeader) * 3);
 
-    for (i = 0; i < CARD_DEVICE_COUNT; i++)
+    for (i = 0; i < MEMCARD_DEVICE_COUNT_MAX; i++)
     {
         g_MemCard_SaveWork.devices_0[i].status_0 = 0;
 
@@ -88,7 +87,7 @@ void MemCard_RamClear(s32 deviceId) // 0x8002E6E4
     g_MemCard_SaveWork.devices_0[deviceId].status_0 = 0;
 
     MemCard_FileStatusClear(deviceId);
-    bzero(g_MemCard_SaveWork.devices_0[deviceId].saveHeader_14, sizeof(s_MemCard_SaveHeader) * CARD_DEVICE_FILE_COUNT);
+    bzero(g_MemCard_SaveWork.devices_0[deviceId].saveHeader_14, sizeof(s_MemCard_SaveHeader) * MEMCARD_FILE_COUNT_MAX);
 
     g_MemCard_SaveWork.devices_0[deviceId].fileLimit_18 = 0;
 }
@@ -97,7 +96,7 @@ void MemCard_FileStatusClear(s32 deviceId) // 0x8002E730
 {
     s32 i;
 
-    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
+    for (i = 0; i < MEMCARD_FILE_COUNT_MAX; i++)
     {
         g_MemCard_SaveWork.devices_0[deviceId].fileState_4[i] = FileState_Unused;
     }
@@ -109,7 +108,7 @@ bool MemCard_AreFilesAllNotUnused(s32 deviceId) // 0x8002E76C
     s32  i;
 
     result = true;
-    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
+    for (i = 0; i < MEMCARD_FILE_COUNT_MAX; i++)
     {
         if (g_MemCard_SaveWork.devices_0[deviceId].fileState_4[i] != FileState_Unused)
         {
@@ -163,7 +162,7 @@ s32 MemCard_AllMemCardsStatusGet(void) // 0x8002E898
     s32 i;
 
     ret = 0;
-    for (i = 0; i < CARD_DEVICE_COUNT; i++)
+    for (i = 0; i < MEMCARD_DEVICE_COUNT_MAX; i++)
     {
         ret |= MemCard_StatusStore(g_MemCard_SaveWork.devices_0[i].status_0, i);
     }
@@ -184,7 +183,7 @@ void MemCard_StatusInitSuccess(void) // 0x8002E8E4
 }
 
 // ========================================
-// MEMCARD - HELPERS
+// MEMORY CARD - HELPERS
 // ========================================
 
 s32 func_8002E914(void) // 0x8002E914
@@ -193,7 +192,7 @@ s32 func_8002E914(void) // 0x8002E914
     s32 i;
 
     ret = 0;
-    for (i = 0; i < CARD_DEVICE_COUNT; i++)
+    for (i = 0; i < MEMCARD_DEVICE_COUNT_MAX; i++)
     {
         ret |= MemCard_FileStatusStore(g_MemCard_SaveWork.devices_0[i].status_0, i);
     }
@@ -224,7 +223,7 @@ s32 MemCard_AllFilesStatusGet(s32 deviceId) // 0x8002E9A0
 
     ret = 0;
 
-    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
+    for (i = 0; i < MEMCARD_FILE_COUNT_MAX; i++)
     {
         ret |= MemCard_FileStatusStore(g_MemCard_SaveWork.devices_0[deviceId].fileState_4[i], i);
     }
@@ -232,7 +231,7 @@ s32 MemCard_AllFilesStatusGet(s32 deviceId) // 0x8002E9A0
     return ret;
 }
 
-s_Savegame_Metadata* MemCard_SaveMetadataGet(s32 deviceId, s32 fileIdx, s32 saveIdx) // 0x8002E9EC
+s_MemCard_SaveMetadata* MemCard_SaveMetadataGet(s32 deviceId, s32 fileIdx, s32 saveIdx) // 0x8002E9EC
 {
     return &g_MemCard_SaveWork.devices_0[deviceId].saveHeader_14[fileIdx].saveMetadata_4[saveIdx];
 }
@@ -244,7 +243,7 @@ s32 MemCard_UsedFileCount(s32 deviceId) // 0x8002EA28
 
     ret = 0;
 
-    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
+    for (i = 0; i < MEMCARD_FILE_COUNT_MAX; i++)
     {
         if (g_MemCard_SaveWork.devices_0[deviceId].fileState_4[i] != FileState_Unused)
         {
@@ -272,7 +271,7 @@ bool MemCard_NoSavesDoneCheck(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx
     *outFileIdx  = 0;
     *outSaveIdx  = 0;
 
-    for (i = 0; i < CARD_DEVICE_COUNT; i++)
+    for (i = 0; i < MEMCARD_DEVICE_COUNT_MAX; i++)
     {
         if (g_MemCard_SaveWork.devices_0[i].status_0 == 3)
         {
@@ -293,7 +292,7 @@ bool MemCard_NoSavesDoneCheck(s32* outDeviceId, s32* outFileIdx, s32* outSaveIdx
 }
 
 // ========================================
-// MEMCARD - PROCESSES
+// MEMORY CARD - PROCESSES
 // ========================================
 
 void MemCard_Update(void) // 0x8002EB88
@@ -373,7 +372,7 @@ void MemCard_Process_Format(s_MemCard_Process* statusPtr) // 0x8002ECE0
 
         MemCard_FileStatusClear(statusPtr->deviceId_4);
 
-        g_MemCard_SaveWork.devices_0[statusPtr->deviceId_4].fileLimit_18 = CARD_DEVICE_FILE_COUNT;
+        g_MemCard_SaveWork.devices_0[statusPtr->deviceId_4].fileLimit_18 = MEMCARD_FILE_COUNT_MAX;
     }
     else
     {
@@ -481,7 +480,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
             fileIdx = NO_VALUE;
 
             MemCard_FileStatusClear(statusPtr->deviceId_4);
-            bzero(g_MemCard_SaveWork.devices_0[statusPtr->deviceId_4].saveHeader_14, sizeof(s_MemCard_SaveHeader) * CARD_DEVICE_FILE_COUNT);
+            bzero(g_MemCard_SaveWork.devices_0[statusPtr->deviceId_4].saveHeader_14, sizeof(s_MemCard_SaveHeader) * MEMCARD_FILE_COUNT_MAX);
 
             statusPtr->processState_10 = 5;
 
@@ -489,11 +488,11 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
             fileIdx++;
 			checkSumValidationAttempts = 0;
 
-            for (fileIdx; fileIdx < CARD_DEVICE_FILE_COUNT; fileIdx++)
+            for (fileIdx; fileIdx < MEMCARD_FILE_COUNT_MAX; fileIdx++)
             {
                 MemCard_FilenameGenerate(filePath, fileIdx);
 
-                for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
+                for (i = 0; i < MEMCARD_FILE_COUNT_MAX; i++)
                 {
                     if (strcmp(directoryInfoCpy.filenames_0[i], filePath) == 0)
                     {
@@ -503,7 +502,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
                 }
             }
 
-            if (fileIdx == CARD_DEVICE_FILE_COUNT)
+            if (fileIdx == MEMCARD_FILE_COUNT_MAX)
             {
                 statusPtr->processState_10 = 9;
             }
@@ -592,9 +591,9 @@ s32 MemCard_FileLimitUpdate(s32 deviceId, s_MemCard_Directory* dir) // 0x8002F27
     s32 ret;
     s32 i;
 
-    ret = CARD_DEVICE_FILE_COUNT;
+    ret = MEMCARD_FILE_COUNT_MAX;
 
-    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
+    for (i = 0; i < MEMCARD_FILE_COUNT_MAX; i++)
     {
         ret -= dir->blockCounts_13B[i];
     }
@@ -1002,7 +1001,7 @@ void MemCard_SaveInfoClear(s_MemCard_SaveHeader* saveInfo) // 0x8002FB64
 
     bzero(saveInfo, sizeof(s_MemCard_SaveHeader));
 
-    for (i = 0; i < 11; i++) // SAVEGAME_SLOT_COUNT_MAX
+    for (i = 0; i < MEMCARD_SAVES_COUNT_MAX; i++)
     {
         saveInfo->saveMetadata_4[i].totalSavegameCount_0 = 0;
     }
@@ -1028,14 +1027,14 @@ s32 MemCard_BiggestTotalSavegameCountGet(s32 deviceId) // 0x8002FC3C
     fileIdxWithBiggestTotalSavegameCount = NO_VALUE;
     biggesttotalSavegameCount            = NO_VALUE;
 
-    for (fileIdx = 0; fileIdx < CARD_DEVICE_FILE_COUNT; fileIdx++)
+    for (fileIdx = 0; fileIdx < MEMCARD_FILE_COUNT_MAX; fileIdx++)
     {
         if (g_MemCard_SaveWork.devices_0[deviceId].fileState_4[fileIdx] != FileState_Used)
         {
             continue;
         }
 
-        for (saveIdx = 0; saveIdx < 11; saveIdx++) // SAVEGAME_SLOT_COUNT_MAX
+        for (saveIdx = 0; saveIdx < MEMCARD_SAVES_COUNT_MAX; saveIdx++)
         {
             totalSavegameCount = g_MemCard_SaveWork.devices_0[deviceId].saveHeader_14[fileIdx].saveMetadata_4[saveIdx].totalSavegameCount_0;
             if (biggesttotalSavegameCount < totalSavegameCount)
@@ -1073,7 +1072,7 @@ void MemCard_TotalSavegameCountStepUpdate(s32 deviceId, s32 fileIdx, s32 saveIdx
     s_MemCard_TotalSavesInfo saveInfo;
 
     totalSavegameCount = 0;
-    for (i = 0; i < CARD_DEVICE_COUNT; i++)
+    for (i = 0; i < MEMCARD_DEVICE_COUNT_MAX; i++)
     {
         MemCard_SaveWithBiggestTotalSavegameCountGet(i, &saveInfo);
 
@@ -1101,14 +1100,14 @@ void MemCard_SaveWithBiggestTotalSavegameCountGet(s32 deviceId, s_MemCard_TotalS
         return;
     }
 
-    for (fileIdx = 0; fileIdx < CARD_DEVICE_FILE_COUNT; fileIdx++)
+    for (fileIdx = 0; fileIdx < MEMCARD_FILE_COUNT_MAX; fileIdx++)
     {
         if (g_MemCard_SaveWork.devices_0[deviceId].fileState_4[fileIdx] != FileState_Used)
         {
             continue;
         }
 
-        for (saveIdx = 0; saveIdx < 11; saveIdx++) // SAVEGAME_SLOT_COUNT_MAX
+        for (saveIdx = 0; saveIdx < MEMCARD_SAVES_COUNT_MAX; saveIdx++)
         {
             totalSavegameCount = g_MemCard_SaveWork.devices_0[deviceId].saveHeader_14[fileIdx].saveMetadata_4[saveIdx].totalSavegameCount_0;
 
@@ -1123,7 +1122,7 @@ void MemCard_SaveWithBiggestTotalSavegameCountGet(s32 deviceId, s_MemCard_TotalS
 }
 
 // ========================================
-// MEMCARD - CHECKSUM
+// MEMORY CARD - CHECKSUM
 // ========================================
 
 void MemCard_ChecksumUpdate(s_Savegame_Footer* saveFooter, s8* saveData, s32 saveDataLength) // 0x8002FF30
@@ -1163,7 +1162,7 @@ u8 MemCard_ChecksumGenerate(s8* saveData, s32 saveDataLength) // 0x8002FFD0
 }
 
 // ========================================
-// MEMCARD - HELPERS 2
+// MEMORY CARD - HELPERS 2
 // ========================================
 
 void MemCard_FilenameGenerate(char* dest, s32 fileIdx) // 0x80030000
@@ -1279,7 +1278,7 @@ s32 MemCard_FileRename(s32 deviceId, char* prevName, char* newName) // 0x8003037
 }
 
 // ========================================
-// MEMCARD - EVENTS
+// MEMORY CARD - EVENTS
 // ========================================
 
 void MemCard_Init(void) // 0x800303E4
@@ -1298,7 +1297,7 @@ void MemCard_EventsInit(void) // 0x80030414
 
 void MemCard_StateInit(void) // 0x80030444
 {
-    g_MemCard_Work.state_4       = CardState_Idle;
+    g_MemCard_Work.state_4       = MemCardCardState_Idle;
     g_MemCard_Work.stateStep_8   = 0;
     g_MemCard_Work.stateResult_C = 0;
 }
@@ -1441,7 +1440,7 @@ void MemCard_HwEventSpUNKNOWN(void) // 0x800308C4
 }
 
 // ========================================
-// MEMCARD - STATES WORK
+// MEMORY CARD - STATES WORK
 // ========================================
 
 s32 MemCard_StateResult(void) // 0x800308D4
@@ -1462,18 +1461,18 @@ bool MemCard_WorkSet(e_MemCardIoMode mode, s32 deviceId, s_MemCard_Directory* ou
     {
         case MemCardIoMode_Init:
         case MemCardIoMode_DirRead:
-            g_MemCard_Work.state_4     = CardState_Init;
+            g_MemCard_Work.state_4     = MemCardCardState_Init;
             g_MemCard_Work.stateStep_8 = 0;
             break;
 
         case MemCardIoMode_Read:
         case MemCardIoMode_Write:
-            g_MemCard_Work.state_4     = CardState_FileOpen;
+            g_MemCard_Work.state_4     = MemCardCardState_FileOpen;
             g_MemCard_Work.stateStep_8 = 0;
             break;
 
         case MemCardIoMode_Create:
-            g_MemCard_Work.state_4     = CardState_FileCreate;
+            g_MemCard_Work.state_4     = MemCardCardState_FileCreate;
             g_MemCard_Work.stateStep_8 = 0;
             break;
 
@@ -1497,43 +1496,43 @@ bool MemCard_WorkSet(e_MemCardIoMode mode, s32 deviceId, s_MemCard_Directory* ou
 
 bool MemCard_MemCardIsIdle(void) // 0x800309FC
 {
-    return g_MemCard_Work.state_4 == CardState_Idle;
+    return g_MemCard_Work.state_4 == MemCardCardState_Idle;
 }
 
 void MemCard_StateUpdate(void) // 0x80030A0C
 {
     switch (g_MemCard_Work.state_4)
     {
-        case CardState_Idle:
+        case MemCardCardState_Idle:
             // @hack Probably some optimized out code here.
             g_MemCard_Work.stateResult_C += 0;
             break;
 
-        case CardState_Init:
+        case MemCardCardState_Init:
             g_MemCard_Work.stateResult_C = MemCard_State_Init();
             break;
 
-        case CardState_Check:
+        case MemCardCardState_Check:
             g_MemCard_Work.stateResult_C = MemCard_State_Check();
             break;
 
-        case CardState_Load:
+        case MemCardCardState_Load:
             g_MemCard_Work.stateResult_C = MemCard_State_Load();
             break;
 
-        case CardState_DirRead:
+        case MemCardCardState_DirRead:
             g_MemCard_Work.stateResult_C = MemCard_State_DirRead();
             break;
 
-        case CardState_FileCreate:
+        case MemCardCardState_FileCreate:
             g_MemCard_Work.stateResult_C = MemCard_State_FileCreate();
             break;
 
-        case CardState_FileOpen:
+        case MemCardCardState_FileOpen:
             g_MemCard_Work.stateResult_C = MemCard_State_FileOpen();
             break;
 
-        case CardState_FileReadWrite:
+        case MemCardCardState_FileReadWrite:
             g_MemCard_Work.stateResult_C = MemCard_State_FileReadWrite();
             break;
 
@@ -1577,17 +1576,17 @@ s32 MemCard_State_Init(void) // 0x80030AD8
                     if (g_MemCard_Work.MemCardIoMode_38 == MemCardIoMode_Init)
                     {
                         result                     = MemCardResult_InitComplete;
-                        g_MemCard_Work.state_4     = CardState_Idle;
+                        g_MemCard_Work.state_4     = MemCardCardState_Idle;
                         g_MemCard_Work.stateStep_8 = 0;
                     }
                     else if (!((g_MemCard_Work.devicesPending_0 >> g_MemCard_Work.deviceId_3C) & (1 << 0)))
                     {
-                        g_MemCard_Work.state_4     = CardState_DirRead;
+                        g_MemCard_Work.state_4     = MemCardCardState_DirRead;
                         g_MemCard_Work.stateStep_8 = 0;
                     }
                     else
                     {
-                        g_MemCard_Work.state_4     = CardState_Check;
+                        g_MemCard_Work.state_4     = MemCardCardState_Check;
                         g_MemCard_Work.stateStep_8 = 0;
                     }
                     break;
@@ -1598,19 +1597,19 @@ s32 MemCard_State_Init(void) // 0x80030AD8
                     if (g_MemCard_Work.MemCardIoMode_38 == MemCardIoMode_Init)
                     {
                         result                 = MemCardResult_InitError;
-                        g_MemCard_Work.state_4     = CardState_Idle;
+                        g_MemCard_Work.state_4     = MemCardCardState_Idle;
                         g_MemCard_Work.stateStep_8 = 0;
                     }
                     else
                     {
-                        g_MemCard_Work.state_4     = CardState_Check;
+                        g_MemCard_Work.state_4     = MemCardCardState_Check;
                         g_MemCard_Work.stateStep_8 = 0;
                     }
                     break;
 
                 case EvSpTIMOUT: // Not connected.
                     result                 = MemCardResult_NotConnected;
-                    g_MemCard_Work.state_4     = CardState_Idle;
+                    g_MemCard_Work.state_4     = MemCardCardState_Idle;
                     g_MemCard_Work.stateStep_8 = 0;
                     break;
 
@@ -1652,13 +1651,13 @@ s32 MemCard_State_Check(void) // 0x80030C88
             switch (MemCard_HwEventsTest())
             {
                 case EvSpIOE: // Completed.
-                    g_MemCard_Work.state_4     = CardState_Load;
+                    g_MemCard_Work.state_4     = MemCardCardState_Load;
                     g_MemCard_Work.stateStep_8 = 0;
                     break;
 
                 case EvSpTIMOUT: // Card not connected.
                     result                 = MemCardResult_NotConnected;
-                    g_MemCard_Work.state_4     = CardState_Idle;
+                    g_MemCard_Work.state_4     = MemCardCardState_Idle;
                     g_MemCard_Work.stateStep_8 = 0;
                     break;
 
@@ -1709,7 +1708,7 @@ s32 MemCard_State_Load(void) // 0x80030DC8
             switch (MemCard_SwEventsTest())
             {
                 case EvSpIOE: // Read completed.
-                    g_MemCard_Work.state_4           = CardState_DirRead;
+                    g_MemCard_Work.state_4           = MemCardCardState_DirRead;
                     g_MemCard_Work.stateStep_8       = 0;
                     g_MemCard_Work.devicesPending_0 &= ~(1 << g_MemCard_Work.deviceId_3C);
                     break;
@@ -1724,14 +1723,14 @@ s32 MemCard_State_Load(void) // 0x80030DC8
                     else
                     {
                         result                 = MemCardResult_LoadError;
-                        g_MemCard_Work.state_4     = CardState_Idle;
+                        g_MemCard_Work.state_4     = MemCardCardState_Idle;
                         g_MemCard_Work.stateStep_8 = 0;
                     }
                     break;
 
                 case EvSpTIMOUT: // Not connected.
                     result                 = MemCardResult_NotConnected;
-                    g_MemCard_Work.state_4     = CardState_Idle;
+                    g_MemCard_Work.state_4     = MemCardCardState_Idle;
                     g_MemCard_Work.stateStep_8 = 0;
                     break;
 
@@ -1753,12 +1752,12 @@ s32 MemCard_State_DirRead(void) // 0x80030F7C
     s32              result;
     s32              i;
 
-    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
+    for (i = 0; i < MEMCARD_FILE_COUNT_MAX; i++)
     {
         MemCard_DirectoryFileClear(i);
     }
 
-    for (i = 0; i < CARD_DEVICE_FILE_COUNT; i++)
+    for (i = 0; i < MEMCARD_FILE_COUNT_MAX; i++)
     {
         if (i == 0)
         {
@@ -1782,7 +1781,7 @@ s32 MemCard_State_DirRead(void) // 0x80030F7C
 
     result = (g_MemCard_Work.hasNewDevice_70 == true) ? MemCardResult_NewDevice : MemCardResult_NoNewDevice;
 
-    g_MemCard_Work.state_4     = CardState_Idle;
+    g_MemCard_Work.state_4     = MemCardCardState_Idle;
     g_MemCard_Work.stateStep_8 = 0;
 
     return result;
@@ -1808,7 +1807,7 @@ s32 MemCard_State_FileCreate(void) // 0x800310B4
                 if (g_MemCard_Work.retryCount_78++ >= 15)
                 {
                     result                 = MemCardResult_FileCreateError;
-                    g_MemCard_Work.state_4     = CardState_Idle;
+                    g_MemCard_Work.state_4     = MemCardCardState_Idle;
                     g_MemCard_Work.stateStep_8 = 0;
                     break;
                 }
@@ -1816,7 +1815,7 @@ s32 MemCard_State_FileCreate(void) // 0x800310B4
             else
             {
                 close(g_MemCard_Work.fileHandle_74);
-                g_MemCard_Work.state_4     = CardState_FileOpen;
+                g_MemCard_Work.state_4     = MemCardCardState_FileOpen;
                 g_MemCard_Work.stateStep_8 = 0;
             }
             break;
@@ -1862,14 +1861,14 @@ s32 MemCard_State_FileOpen(void) // 0x80031184
                 if (g_MemCard_Work.retryCount_78++ >= 15)
                 {
                     result                 = MemCardResult_FileOpenError;
-                    g_MemCard_Work.state_4     = CardState_Idle;
+                    g_MemCard_Work.state_4     = MemCardCardState_Idle;
                     g_MemCard_Work.stateStep_8 = 0;
                     break;
                 }
             }
             else
             {
-                g_MemCard_Work.state_4     = CardState_FileReadWrite;
+                g_MemCard_Work.state_4     = MemCardCardState_FileReadWrite;
                 g_MemCard_Work.stateStep_8 = 0;
             }
             break;
@@ -1898,7 +1897,7 @@ s32 MemCard_State_FileReadWrite(void) // 0x80031260
                 if (g_MemCard_Work.retryCount_78++ >= 15)
                 {
                     result                     = MemCardResult_FileSeekError;
-                    g_MemCard_Work.state_4     = CardState_Idle;
+                    g_MemCard_Work.state_4     = MemCardCardState_Idle;
                     g_MemCard_Work.stateStep_8 = 0;
                 }
             }
@@ -1933,7 +1932,7 @@ s32 MemCard_State_FileReadWrite(void) // 0x80031260
                 if (g_MemCard_Work.retryCount_78++ >= 15)
                 {
                     result                 = MemCardResult_FileIoError;
-                    g_MemCard_Work.state_4     = CardState_Idle;
+                    g_MemCard_Work.state_4     = MemCardCardState_Idle;
                     g_MemCard_Work.stateStep_8 = 0;
                     close(g_MemCard_Work.fileHandle_74);
                 }
@@ -1949,21 +1948,21 @@ s32 MemCard_State_FileReadWrite(void) // 0x80031260
             {
                 case EvSpIOE: // Completed.
                     result                     = MemCardResult_FileIoComplete;
-                    g_MemCard_Work.state_4     = CardState_Idle;
+                    g_MemCard_Work.state_4     = MemCardCardState_Idle;
                     g_MemCard_Work.stateStep_8 = 0;
                     close(g_MemCard_Work.fileHandle_74);
                     break;
 
                 case EvSpTIMOUT: // Card not connected.
                     result                     = MemCardResult_NotConnected;
-                    g_MemCard_Work.state_4     = CardState_Idle;
+                    g_MemCard_Work.state_4     = MemCardCardState_Idle;
                     g_MemCard_Work.stateStep_8 = 0;
                     close(g_MemCard_Work.fileHandle_74);
                     break;
 
                 case EvSpNEW: // New card detected.
                     result                     = MemCardResult_FileIoError;
-                    g_MemCard_Work.state_4     = CardState_Idle;
+                    g_MemCard_Work.state_4     = MemCardCardState_Idle;
                     g_MemCard_Work.stateStep_8 = 0;
                     close(g_MemCard_Work.fileHandle_74);
 
@@ -1985,4 +1984,4 @@ void MemCard_DevicePathGenerate(s32 deviceId, char* result) // 0x800314A4
     result[3] = '0' + (deviceId & ((1 << 0) | (1 << 1)));
 }
 
-const s32 unused_Rodata_80024C98 = 0x8E080000;
+const s32 pad_rodata_80024C98 = 0x8E080000;

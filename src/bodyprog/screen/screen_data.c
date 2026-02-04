@@ -1,9 +1,24 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math/math.h"
 
-// GsOT_TAG g_OtTags0[2][16];
-// q19_12 g_DeltaTime0;
-// GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
+s32      g_VBlanks;
+
+s32      g_UncappedVBlanks;
+
+s32      pad_bss_800B5C3C;
+
+GsOT_TAG g_OtTags0[2][16];
+
+q19_12   g_DeltaTime0;
+
+GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
+
+s32      pad_bss_800B9CC4;
+
+q19_12   g_DeltaTime2;
+
+s32      g_MainLoop_FrameCount;
 
 // SH2 symbols indicate this should be in `vc_main.c`, but the file already has its data segment assigned.
 // It's possible this is part of another split as there is also some inbetween data in

@@ -2385,13 +2385,36 @@ extern u8 D_800AE185;
 
 extern u8 D_800AE186;
 
+extern u8 g_SysState_GameOver_TipIdx;
+
+extern s8 pad_bss_800BCD81[3];
+
 /** Copy of delta timers.
  * Appears to be used as save of the delta timer currently used as some instances where 2D backgrounds
  * are drawn uses `g_DeltaTime1` while `g_DeltaTime0` is being stopped.
  */
 extern s32 g_DeltaTimeCpy;
 
-extern u8 g_SysState_GameOver_TipIdx;
+extern s32 pad_bss_800BCD88[2];
+
+extern s_EventParam* g_ItemTriggerEvents[];
+
+extern s32 pad_bss_800BCD94[5];
+
+extern s_800BCDA8 D_800BCDA8[2];
+
+extern s_MapPoint2d D_800BCDB0;
+
+extern s32 pad_bss_800BCDD0;
+
+/** Related to special item interactions. */
+extern s32 g_ItemTriggerItemIds[5];
+
+extern u8 D_800BCDD4;
+
+extern s8 pad_bss_800BCDD5[3];
+
+extern s_EventParam* g_MapEventParam;
 
 /** `e_InventoryItemId` | related to displaying items. */
 extern u8 D_800AE187;
@@ -2480,10 +2503,6 @@ extern s_FsImageDesc D_800A90A4;
 
 extern s_FsImageDesc D_800A90B4;
 
-extern GsOT_TAG g_OtTags0[2][16];
-
-extern GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
-
 extern s_SubCharacter D_800BA00C; // Often passed to `func_800700F8`, might not be full `s_SubCharacter`?
 
 extern u8 D_800BC74F;
@@ -2521,23 +2540,7 @@ extern s32 g_Screen_FadeStatus;
  */
 extern s32 g_DemoLoadAttempCount;
 
-extern u32 D_800BCD58;
-
 extern s32 D_800BCD5C;
-
-extern s32 g_MapMsg_StateMachineIdx1;
-
-extern s32 g_MapMsg_StateMachineIdx2;
-
-extern s32 g_MapMsg_DisplayLength;
-
-/** Map message index. */
-extern s32 g_MapMsg_MainIdx;
-
-/** How many glyphs at a time to advance the message roll. */
-extern s32 g_MapMsg_DisplayInc;
-
-extern s32 D_800BCD74;
 
 extern s_MapMsgSelect g_MapMsg_Select;
 
@@ -2546,17 +2549,6 @@ extern u8 g_MapMsg_AudioLoadBlock;
 extern s8 g_MapMsg_SelectCancelIdx;
 
 extern s32 D_800BCD84;
-
-extern s_EventParam* g_ItemTriggerEvents[];
-
-extern s_800BCDA8 D_800BCDA8[2];
-
-extern s_MapPoint2d D_800BCDB0;
-
-/** Related to special item interactions. */
-extern s32 g_ItemTriggerItemIds[5];
-
-extern u8 D_800BCDD4;
 
 /** Related to main menu fog randomization. */
 extern s8* D_800BCDE0; // Type assumed.
@@ -2782,8 +2774,6 @@ extern s32 D_800C48F0;
 
 extern RECT D_801E557C[];
 
-extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
-
 extern u8 D_800C6E90;
 
 extern u8 D_800AD480[24];
@@ -2820,7 +2810,7 @@ bool Gfx_2dBackgroundMotionBlur(s32 vBlanks);
 /** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
  * Draws some string in display space.
  */
-void SaveLoad_NowLoadingStringDraw(void);
+void func_80032CE8(void);
 
 void func_80032D1C(void);
 

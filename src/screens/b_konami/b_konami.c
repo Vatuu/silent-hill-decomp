@@ -124,7 +124,7 @@ e_KcetLogoStateStep GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
 
     if (saveEntryType0 == SavegameEntryType_Save || saveEntryType1 == SavegameEntryType_Save)
     {
-        g_MemCard_ActiveSavegameEntry = GetActiveSavegameEntry(g_SelectedSaveSlotIdx);
+        g_MemCard_ActiveSavegameEntry = MemCard_ActiveSavegameEntryGet(g_SelectedSaveSlotIdx);
         g_MemCard_ActiveSavegameEntry = &g_MemCard_ActiveSavegameEntry[g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]];
 
         D_800BCD40                    = g_MemCard_ActiveSavegameEntry->field_5;

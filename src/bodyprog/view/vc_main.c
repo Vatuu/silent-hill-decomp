@@ -3,6 +3,7 @@
 #include <abs.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/view/vc_main.h"

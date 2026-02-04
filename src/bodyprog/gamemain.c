@@ -10,9 +10,8 @@
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound_system.h"
 
-#include "bodyprog/savegame.h"
-#include "screens/saveload.h"
 #include "bodyprog/memcard.h"
+#include "screens/saveload.h"
 
 // q19_12  g_DeltaTime2;
 // s32     g_MainLoop_FrameCount;

@@ -63,10 +63,13 @@ segments:
       - [0x4,    .rodata, memcard/memcard]
       - [0x140,  .rodata, screen/screen_fade]
       - [0x1E4,  .rodata, globals]
-      - [0x5AC,  .rodata, bodyprog_80032D1C]
+      - [0x5AC,  .rodata, fs_screens]
       - [0x5BC,  .rodata, settings_reset]
       - [0x618,  .rodata, memcard/memcard_2]
-      - [0x69C,  .rodata, bodyprog_800348C0]
+      - [0x6A0,  .rodata, ingame_init]
+      - [0x6D4,  .rodata, background_sound_2]
+      - [0x700,  .rodata, mapmsg_display]
+      - [0x758,  .rodata, bodyprog_80037154]
       - [0x91C,  .rodata, bodyprog_8003AB28]
       - [0x1094, .rodata, sound/sd_call]
       - [0x119C, .rodata, sound/sd_snd]
@@ -97,22 +100,33 @@ segments:
       - [0x99D8, .rodata, libsd/smf_mid]
 
       # .text section
-      - [0x9AD0,    c, bodyprog] # Data
-      - [0x9AD0,    c, globals] # Data
-      - [0x9AD0,    c, syswork_functable] # Data
+      
+      # data only files
+      - [0x9AD0,    c, bodyprog]
+      - [0x9AD0,    c, globals]
+      - [0x9AD0,    c, syswork_functable]
+      - [0x9AD0,    c, screen/screen_data]
+      
+      
       - [0x9AD0,    c, memcard/memcard]
       - [0xC98C,    c, screen/background_draw]
       - [0xD39C,    c, screen/text_draw_debug]
       - [0xD7F8,    c, screen/screen_draw]
       - [0xDA44,    c, screen/screen_fade]
-      - [0xE070,    c, screen/fs_main_screen]
-      - [0xE188,    c, bodyprog_80032D1C]
+      - [0xE070,    c, fs_screens]
       - [0xE1BC,    c, gamemain] # Name from SH2 symbols. This name also applies for SH4 instance too.
       - [0xE86C,    c, settings_reset]
       - [0xE978,    c, memcard/memcard_2]
-      - [0xF580,    c, warmboot]
+      - [0xF580,    c, warmboot] # Possibly `sh1_init/sh_init` or some `init` derivative name considering SH2 and 4 symbols.
       - [0xF8BC,    c, controls/joy_1]
-      - [0xFD60,    c, bodyprog_800348C0]
+      - [0xFD60,    c, ingame_init]
+      - [0x1072C,   c, fs_npc_anim]
+      - [0x10C20,   c, background_sound_1]
+      - [0x10FA4,   c, loadscreen]
+      - [0x11254,   c, background_sound_2]
+      - [0x11A58,   c, mapmsg_display]
+      - [0x122E8,   c, bodyprog_80036E48]
+      - [0x125F4,   c, bodyprog_80037154]
       - [0x15FC8,   c, bodyprog_8003AB28]
       - [0x1B4EC,   c, view/vc_util]
       - [0x1BF04,   c, bodyprog_80040A64]
@@ -135,7 +149,6 @@ segments:
       - [0x6A3C0,   c, demo]
       - [0x6ADEC,   c, credits]
       - [0x6CF9C,   c, bodyprog_data_800A8D98] # Data
-      - [0x6CF9C,   c, screen/screen_data]     # Data
       - [0x6CF9C,   c, bodyprog_data_800A90FC] # Data
       - [0x6CF9C, lib, libapi, a09]
       - [0x6CFAC, lib, libapi, a11]
@@ -314,6 +327,7 @@ segments:
       - [0x843E4, .data, screen/screen_data]
       - [0x8459C, .data, bodyprog_data_800A90FC]
       - [0x84ECC, .data, syswork_functable]
+      #- [0x84F08, .data, syswork_functable]
       - [0x84F2C, .data, bodyprog_8003AB28]
       - [0x85468, .data, sound/sd_data]
       - [0x88920, .data, view/vw_calc]
@@ -357,30 +371,31 @@ segments:
       - [0x8DAB8, .bss, memcard/memcard]
       - [0x910C0, .bss, screen/text_draw_debug]
       - [0x910C8, .bss, screen/screen_draw]
-      - [0x910CC,  pad]
+      - [0x910CC,  pad] # Garbage.
       - [0x910D0, .bss, screen/screen_fade]
-      - [0x910D4,  bss, bodyprog_800B5C34]
-      - [0x9545C,  pad]
+      - [0x910D4, .bss, screen/screen_data]
+      - [0x95170,  bss]
       - [0x95460, .bss, globals]
-      - [0x981A0,  pad]
-      - [0x981AC,  bss]
-      - [0x981B0,  pad]
-      - [0x981B8,  bss, memcard/memcard_2]
-      - [0x981E0,  pad]
+      - [0x981A0,  bss]
+      - [0x981B4,  pad] # Garbage.
+      - [0x981B8,  bss] # memcard related
+      - [0x981CC, .bss, memcard/memcard_2]
+      - [0x981E0,  pad] # Garbage.
       - [0x981E8,  bss]
-      - [0x981EC,  pad]
-      - [0x981F0,  bss]
-      - [0x9821C,  pad]
-      - [0x98220,  bss]
-      - [0x9827C,  pad]
+      - [0x981EC,  pad] # Garbage.
+      - [0x981F0, .bss, background_sound_2]
+      - [0x98200, .bss, mapmsg_display]
+      - [0x9821C,  pad] # Garbage.
+      - [0x98220, .bss, bodyprog_80037154]
+      - [0x9827C,  pad] # Garbage.
       - [0x98280,  bss]
-      - [0x98284,  pad]
+      - [0x98284,  pad] # Garbage.
       - [0x98288,  bss]
-      - [0x9B08C,  pad]
+      - [0x9B08C,  pad] # Garbage.
       - [0x9B090,  bss]
-      - [0x9CA4C,  pad]
+      - [0x9CA4C,  pad] # Garbage.
       - [0x9CA50,  bss]
-      - [0x9CA54,  pad]
+      - [0x9CA54,  pad] # Garbage.
       - [0x9CA58,  .bss, sound/sd_call]
       - [0x9CB18,  bss] # sound
       - [0x9EC80,  bss]

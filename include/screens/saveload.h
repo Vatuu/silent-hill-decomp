@@ -5,11 +5,6 @@
  * function specifically intended for the save and load screen.
  */
 
-#define SAVEGAME_SLOT_COUNT_MAX 11
-//#define SAVEGAME_COUNT_MAX      CARD_DEVICE_FILE_COUNT * SAVEGAME_SLOT_COUNT_MAX
-#define SAVEGAME_COUNT_MAX      15 * SAVEGAME_SLOT_COUNT_MAX
-#define CARD_SLOT_COUNT         2
-
 // ============
 // ENUMERATORS
 // ============
@@ -22,34 +17,6 @@ typedef enum _SaveScreenState
     SaveScreenState_Save   = 2,
     SaveScreenState_Load   = 3
 } e_SaveScreenState;
-
-typedef enum _FormatState
-{
-    FormatState_0,
-    FormatState_1,
-    FormatState_2,
-    FormatState_3
-} e_FormatState;
-
-typedef enum _SaveState
-{
-    SaveState_0,
-    SaveState_1,
-    SaveState_2
-} e_SaveState;
-
-typedef enum _LoadState
-{
-    LoadState_0,
-    LoadState_1,
-    LoadState_2
-} e_LoadState;
-
-typedef enum _ContinueState
-{
-    ContinueState_0,
-    ContinueState_1
-} e_ContinueState;
 
 // ========
 // GLOBALS
@@ -109,7 +76,7 @@ extern s32 g_SaveScreen_MemCardStateDisplay;
  * in the same function, it writes 1 again
  * without any conditional.
  */
-extern s16 D_801E7514[CARD_SLOT_COUNT];
+extern s16 D_801E7514[MEMCARD_SLOT_COUNT_MAX];
 
 /** @brief Broken code.
  * This is used in some way to determine the y position
@@ -120,7 +87,7 @@ extern s16 D_801E7514[CARD_SLOT_COUNT];
  * it reaches 5 or if one of the elements to be draw is the last
  * element of the memory card.
  */
-extern s16 D_801E7518[CARD_SLOT_COUNT];
+extern s16 D_801E7518[MEMCARD_SLOT_COUNT_MAX];
 
 extern s32 g_SaveScreen_State; /** `e_SaveScreenState` */
 
@@ -159,7 +126,7 @@ extern s32 D_801E7560;
  * 
  * Used in: `SaveScreen_MemCardInfoReset` and `SaveScreen_SavesSlotDraw`.
  */
-extern s32 D_801E7564[CARD_SLOT_COUNT];
+extern s32 D_801E7564[MEMCARD_SLOT_COUNT_MAX];
 
 /** @brief Dead code.
  * Constantly updates changing the value from 0 up to
@@ -167,12 +134,12 @@ extern s32 D_801E7564[CARD_SLOT_COUNT];
  *
  * Code indicate that it is related the draw of file borders color.
  */
-extern s16 D_801E756C[CARD_SLOT_COUNT];
+extern s16 D_801E756C[MEMCARD_SLOT_COUNT_MAX];
 
 /** @brief Count of saves hidden as the user scrolls down
  * through the displayed saves in the slot.
  */
-extern s16 g_SaveScreen_HiddenSaves[CARD_SLOT_COUNT];
+extern s16 g_SaveScreen_HiddenSaves[MEMCARD_SLOT_COUNT_MAX];
 
 /** @brief Dead code.
  * The only usage it is given is to check it is in `SaveScreen_SavesSlotDraw`
@@ -182,7 +149,7 @@ extern s16 g_SaveScreen_HiddenSaves[CARD_SLOT_COUNT];
  * is assigned is when booting the save screen when it get assigned
  * the value of -1 so it's always realizing the conditional.
  */
-extern s16 D_801E7574[CARD_SLOT_COUNT];
+extern s16 D_801E7574[MEMCARD_SLOT_COUNT_MAX];
 
 /** @brief Stores the index of the element selected in each
  * slot based on what is visually available in the slot.
@@ -192,26 +159,26 @@ extern s16 D_801E7574[CARD_SLOT_COUNT];
  * `New Save` element will be 4 and not 9 (index starting from 0)
  * as it is the fifth element visually available in the slot.
  */
-extern s16 g_SaveScreen_VisualElementIdx[CARD_SLOT_COUNT];
+extern s16 g_SaveScreen_VisualElementIdx[MEMCARD_SLOT_COUNT_MAX];
 
 extern s8 D_801E757C[8];
 
 /** @brief Dead code. */
-extern s8 D_801E7584[SAVEGAME_COUNT_MAX * CARD_SLOT_COUNT];
+extern s8 D_801E7584[SAVEGAME_COUNT_MAX * MEMCARD_SLOT_COUNT_MAX];
 
 /** @brief Stores the index of the last save done.
  *
  * Depending on the slot where the last save was done
  * the value representing the other slot is turn into -1.
  */
-extern s8 g_SaveScreen_LastSaveIdx[CARD_SLOT_COUNT];
+extern s8 g_SaveScreen_LastSaveIdx[MEMCARD_SLOT_COUNT_MAX];
 
 /** @brief Boolean. State if save information should be displayed. */
 extern s8 g_SaveScreen_DisplaySaveInfo;
 
 extern s8 D_801E76D1;
 
-extern u8 g_SaveScreen_IsMemCardNotInserted[CARD_SLOT_COUNT]; /** `bool` */
+extern u8 g_SaveScreen_IsMemCardNotInserted[MEMCARD_SLOT_COUNT_MAX]; /** `bool` */
 
 extern s8 g_SaveScreen_SaveFlashTimer;
 
@@ -251,16 +218,16 @@ void SaveScreen_FileIdxDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryType)
  * @param saveEntry Save metadata entry being processed.
  * @return Returns true or false depending if the save is in "Next Fear" mode or not.
  */
-bool SaveScreen_NextFearModeSave(s_Savegame_Metadata* saveEntry);
+bool SaveScreen_NextFearModeSave(s_MemCard_SaveMetadata* saveEntry);
 
 /** @brief Draws location of saves. */
-void SaveScreen_SaveLocationDraw(s_Savegame_Entry* saveEntry, s32 saveIdx, s32 slotIdx);
+void SaveScreen_SaveLocationDraw(s_SaveScreen_Element* saveEntry, s32 saveIdx, s32 slotIdx);
 
 /** @brief Draws saves borders. */
-void SaveScreen_SaveBorder(s_Savegame_Entry* saveEntry, s_Savegame_Entry* nextSaveEntry, s32 saveIdx, s32 slotIdx);
+void SaveScreen_SaveBorder(s_SaveScreen_Element* saveEntry, s_SaveScreen_Element* nextSaveEntry, s32 saveIdx, s32 slotIdx);
 
 /** @brief Draws saves, information and slots. */
-void SaveScreen_SavesSlotDraw(s_Savegame_Entry* saveEntry, s32 saveIdx, s32 slotIdx);
+void SaveScreen_SavesSlotDraw(s_SaveScreen_Element* saveEntry, s32 saveIdx, s32 slotIdx);
 
 /** @brief Draws memory card state.
  *
@@ -303,7 +270,7 @@ void SaveScreen_NavigationDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, 
 /** @brief Draws a flash on the selected save menu entry after saving sucessfully. */
 void Savegame_SaveEntryFlashDraw(void);
 
-void SaveScreen_SaveBorderDraw(s_Savegame_Entry* saveEntry, s_Savegame_Entry* nextSaveEntry, s32 saveIdx, s32 slotIdx); // 0x801E4D90
+void SaveScreen_SaveBorderDraw(s_SaveScreen_Element* saveEntry, s_SaveScreen_Element* nextSaveEntry, s32 saveIdx, s32 slotIdx); // 0x801E4D90
 
 /** @brief Defines parameters used to draw the message
  * box use when the memory card is in an unavailable state.

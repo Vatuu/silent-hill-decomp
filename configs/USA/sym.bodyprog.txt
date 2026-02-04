@@ -292,7 +292,7 @@ GameFs_SaveLoadBinLoad                       = 0x80032CA8; // type:func
 //--------------------------------------------------------------------
 //--- PA: 0x00E188   VA: 0x80032CE8   subsegment: c, bodyprog_80032D1C
 //--------------------------------------------------------------------
-SaveLoad_NowLoadingStringDraw                = 0x80032CE8; // type:func
+func_80032CE8                = 0x80032CE8; // type:func
 
 //-----------------------------------------------------------
 //--- PA: 0x00E1BC   VA: 0x80032D1C   subsegment: c, gamemain
@@ -2297,10 +2297,10 @@ g_MemCard_PrevSavegameCount                  = 0x800A9A88;
 MAIN_MENU_ENTRY_STRINGS                      = 0x800A9A8C;
 DIFFICULTY_MENU_ENTRY_STRINGS                = 0x800A9AA0;
 FOG_COUNT.68                                 = 0x800A9EB0;
-IMG.81                                       = 0x800A9EB4;
-IMG_TIM.86                                   = 0x800A9EBC;
-IMG_ETC.87                                   = 0x800A9EC4;
-IMG_FLAME.241                                = 0x800A9FA8;
+IMAGE.81                                       = 0x800A9EB4;
+IMAGE_TIM.86                                   = 0x800A9EBC;
+IMAGE_ETC.87                                   = 0x800A9EC4;
+IMAGE_FLAME.241                                = 0x800A9FA8;
 Y_ARRAY.295                                  = 0x800A9FB4;
 
 //--------------------------------------------------------------------
@@ -2729,14 +2729,14 @@ g_Screen_FadeStatus                          = 0x800BCD0C;
 //--- PA: 0x0981B8   VA: 0x800BCD18   subsegment: bss, memcard/memcard_2
 //----------------------------------------------------------------------
 g_MemCard_SavegameCount                      = 0x800BCD28;
-g_MemCard_ActiveSavegameEntry                = 0x800BCD2C;
-g_Savegame_ElementCount0                     = 0x800BCD30;
-g_MemCard_AllMemCardsStatus                  = 0x800BCD34;
-g_SaveScreen_SaveScreenState                 = 0x800BCD38;
-g_MemCard_TotalElementsCount                 = 0x800BCD3A;
-g_Savegame_ElementCount1                     = 0x800BCD3C;
-g_Savegame_SelectedElementIdx                = 0x800BCD3E;
-g_SelectedFileIdx                            = 0x800BCD3F;
+activeSavegameEntry                = 0x800BCD2C;
+slotElementCount0                     = 0x800BCD30;
+allMemCardsStatus                  = 0x800BCD34;
+saveScreenState                 = 0x800BCD38;
+totalElementsCount                 = 0x800BCD3A;
+slotElementCount1                     = 0x800BCD3C;
+selectedElementIdx                = 0x800BCD3E;
+selectedFileIdx                            = 0x800BCD3F;
 g_SelectedDeviceId                           = 0x800BCD40;
 
 //---------------------------------------------------
@@ -2748,11 +2748,11 @@ g_DemoLoadAttempCount                        = 0x800BCD48;
 //--- PA: 0x0981F0   VA: 0x800BCD50   subsegment: bss
 //---------------------------------------------------
 bgmLayerVolumes                              = 0x800BCD50;
-g_MapMsg_StateMachineIdx1                    = 0x800BCD60; // type:s32
-g_MapMsg_StateMachineIdx2                    = 0x800BCD64; // type:s32
-g_MapMsg_DisplayLength                       = 0x800BCD68; // type:s32
-g_MapMsg_MainIdx                             = 0x800BCD6C; // type:s32
-g_MapMsg_DisplayInc                          = 0x800BCD70; // type:s32
+stateMachineIdx1                    = 0x800BCD60; // type:s32
+stateMachineIdx2                    = 0x800BCD64; // type:s32
+msgDisplayLength                       = 0x800BCD68; // type:s32
+msgIdx                             = 0x800BCD6C; // type:s32
+msgDisplayInc                          = 0x800BCD70; // type:s32
 g_MapMsg_Select                              = 0x800BCD78; // type:MapMsgSelect size:2
 g_MapMsg_AudioLoadBlock                      = 0x800BCD7A; // type:u8
 g_MapMsg_SelectCancelIdx                     = 0x800BCD7B; // type:s8

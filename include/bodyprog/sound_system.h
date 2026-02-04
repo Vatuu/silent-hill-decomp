@@ -214,9 +214,6 @@ extern u8 D_800AA604[][];
 
 extern s_XaItemData g_XaItemData[];
 
-// TODO: Likely declared as `static` inside the function that uses it.
-extern s8 bgmLayerVolumes[8];
-
 extern u8 g_Sd_BgmLayerLimits[8];
 
 extern s_VabPlayingInfo g_Sd_VabPlayingInfo;

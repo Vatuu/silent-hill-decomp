@@ -83,13 +83,13 @@ void Settings_RestoreControlDefaults(s32 arg0) // 0x80033480
         }
     };
 
-    static const u8 __PAD[8] = {};
-
     for (i = 0, ptr = &g_GameWorkPtr->config_0.controllerConfig_0; i < INPUT_ACTION_COUNT; i++, ptr++)
     {
         *ptr = (&DEFAULT_CONTROLLER_CONFIGS[arg0].enter_0)[i];
     }
 }
+
+const s32 pad_rodata_80025170[2] = {};
 
 void nullsub_800334C8(void) {} // 0x800334C8
 

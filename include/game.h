@@ -1883,16 +1883,11 @@ extern GsOT g_OrderingTable0[2];
 extern GsOT g_OrderingTable1[2];
 extern GsOT g_OrderingTable2[2];
 
-extern q19_12        g_DeltaTime0;
 extern q19_12        g_DeltaTime1;
-extern q19_12        g_DeltaTime2;
 extern u32           g_MapEventIdx;
-extern s_EventParam* g_MapEventParam;
 
 extern s32 g_IntervalVBlanks;
 extern s32 g_PrevVBlanks;
-extern s32 g_VBlanks;
-extern s32 g_UncappedVBlanks;
 
 /** @brief Sets `sysState` in `g_SysWork` for the next tick.
  *
