@@ -10,22 +10,23 @@
 #include "bodyprog/math/math.h"
 
 // Reference view transform?
-extern MATRIX D_800C3868;
+MATRIX D_800C3868;
+MATRIX VbWvsMatrix;
 
 void vwRenewalXZVelocityToTargetPos(q19_12* velo_x, q19_12* velo_z, const VECTOR3* now_pos, const VECTOR3* tgt_pos, q19_12 tgt_r,
                                     q19_12 accel, q19_12 total_max_spd, q19_12 dec_forwd_lim_spd, q19_12 dec_accel_side) // 0x80048F28
 {
 // SH2 locals
 #if 0
-    /* 0x1d */ float vec_xz[4];//
+    /* 0x1d */ float vec_xz[4];
     /* 0x1d */ float lim_spd;
     /* 0x1d */ float to_tgt_dist;
     /* 0x16 */ float to_tgt_ang_y;
     /* 0x18 */ float ang_y;
     /* 0x1d */ float spd;
-    /* 0x2 */ float add_spd;
-    /* 0x1d */ float cam2tgt_dir_vec[4];//
-    /* 0x1d */ float cam_mv_ang_y;//
+    /* 0x2  */ float add_spd;
+    /* 0x1d */ float cam2tgt_dir_vec[4];
+    /* 0x1d */ float cam_mv_ang_y;
     /* 0x1d */ float cam2tgt_ang_y;
 #endif
 

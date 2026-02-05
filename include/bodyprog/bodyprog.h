@@ -257,14 +257,6 @@ typedef struct
     struct TMD_STRUCT models_c[1];
 } s_TmdFile;
 
-// Used in string parsing.
-typedef struct
-{
-    s32 lineCount_0;
-    s8  unk_1;
-    s8  unk_38B4;
-} s_800C38B4;
-
 typedef struct
 {
     u8  unk_0;
@@ -2128,8 +2120,6 @@ extern const s_AnimInfo* D_800297B8;
 
 extern u_Filename D_8002B2CC;
 
-extern s32 g_MapMsg_WidthTable[];
-
 extern u8 g_BackgroundColor;
 
 extern DR_MODE D_800A8E5C[];
@@ -2487,11 +2477,7 @@ extern SVECTOR D_800AFDB0;
 
 extern s32 D_800AFDEC;
 
-extern PACKET D_800BFBF0[][0xA10];
-
-extern GsF_LIGHT D_800C3AC8[];
-
-extern GsDOBJ2 D_800C3E08;
+extern PACKET D_800BFBF0[2][0xA10];
 
 extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold. 0x800AD4A0
 
@@ -2554,14 +2540,14 @@ extern s32 D_800BCD84;
 extern s8* D_800BCDE0; // Type assumed.
 
 /** Angles. */
-extern s16 D_800BCDE8[];
+extern s16 D_800BCDE8[8];
 
 extern u16 D_800BCE14;
 
 // TODO: Rename to `g_WorldGfxWork`.
 extern s_WorldGfxWork g_WorldGfx;
 
-extern s_IpdCollisionData* D_800C1010[];
+extern s_IpdCollisionData* D_800C1010[4];
 
 extern s_Map g_Map;
 
@@ -2571,60 +2557,14 @@ extern s8 D_800C15B4;
 
 extern s16 D_800C16A4;
 
-extern s32 D_800C16C8; // Type assumed.
-
 extern s32 D_800C3920;
-
-/** Packed weapon attack. See `WEAPON_ATTACK`. */
-extern s8 g_Player_WeaponAttack;
-
-extern s32 D_800C3954;
-
-extern s32 D_800C3958;
-
-extern s32 D_800C395C;
-
-/** `e_MapOverlayId ` */
-extern s8 D_800C3960;
-
-extern s8 D_800C3961;
-
-extern s8 D_800C3962;
-
-extern u8 D_800C3963;
-
-/** Game difficulty. */
-extern s32 D_800C3994;
-
-extern s_800C38B0 D_800C38B0;
-
-extern s_800C38B4 D_800C38B4;
 
 /** Times. */
 extern q19_12 D_800C4710[];
 
-/** String position. */
-extern DVECTOR g_StringPosition; // 0x800C38A8
-
-/** String X position as `s32`. It's unclear why there are two. */
-extern s32 g_StringPositionX1; // 0x800C38AC
-
-/** String glyph sprite. */
-extern GsSPRITE D_800C38F8;
-
-extern s16 D_800C38FC;
-
-extern s16 D_800C38FE;
-
-extern s16 D_800C391C;
-
 extern s16 D_800C391E;
 
 extern s8 D_800C39A0;
-
-extern GsF_LIGHT D_800C3A88[];
-
-extern u8 D_800C3E40;
 
 /** Functions from `bodyprog_8003AB28` access `g_WorldEnvWork` as constant, but some functions from `bodyprog_80055028` write to it.
  * It appears that g_WorldEnvWork is intended to be defined inside `bodyprog_80055028` as writable and declared as read-only (`const`) outside of it.

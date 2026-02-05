@@ -29,9 +29,9 @@ g_Controller1                                = 0x80024D50; // type:u32
 g_GameWorkPtr                                = 0x80024D54; // type:u32
 MAP_INFOS                                    = 0x8002500C; // type:MapType size:0xF0
 
-//--------------------------------------------------------------------------
-//--- PA: 0x0005AC   VA: 0x8002510C   subsegment: .rodata, bodyprog_80032D1C
-//--------------------------------------------------------------------------
+//-------------------------------------------------------------------
+//--- PA: 0x0005AC   VA: 0x8002510C   subsegment: .rodata, fs_screens
+//-------------------------------------------------------------------
 
 //-----------------------------------------------------------------------
 //--- PA: 0x0005BC   VA: 0x8002511C   subsegment: .rodata, settings_reset
@@ -42,13 +42,37 @@ DEFAULT_CONTROLLER_CONFIGS                   = 0x8002511C;
 //--- PA: 0x000618   VA: 0x80025178   subsegment: .rodata, memcard/memcard_2
 //--------------------------------------------------------------------------
 
+//--------------------------------------------------------------------
+//--- PA: 0x0006A0   VA: 0x80025200   subsegment: .rodata, ingame_init
+//--------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+//--- PA: 0x0006D4   VA: 0x80025234   subsegment: .rodata, background_sound_2
+//---------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------
+//--- PA: 0x000700   VA: 0x80025260   subsegment: .rodata, mapmsg_display
+//-----------------------------------------------------------------------
+
 //--------------------------------------------------------------------------
-//--- PA: 0x00069C   VA: 0x800251FC   subsegment: .rodata, bodyprog_800348C0
+//--- PA: 0x000758   VA: 0x800252B8   subsegment: .rodata, bodyprog_80037154
 //--------------------------------------------------------------------------
 SfxPairs                                     = 0x800252BC; // type:AreaLoadSfx size:0x64
 
+//--------------------------------------------------------------
+//--- PA: 0x000918   VA: 0x80025478   subsegment: .rodata, title
+//--------------------------------------------------------------
+
 //--------------------------------------------------------------------------
-//--- PA: 0x00091C   VA: 0x8002547C   subsegment: .rodata, bodyprog_8003AB28
+//--- PA: 0x0009C8   VA: 0x80025528   subsegment: .rodata, bodyprog_8003BD2C
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x001054   VA: 0x80025BB4   subsegment: .rodata, bodyprog_8003E5E8
+//--------------------------------------------------------------------------
+
+//--------------------------------------------------------------------------
+//--- PA: 0x001084   VA: 0x80025BE4   subsegment: .rodata, bodyprog_80040004
 //--------------------------------------------------------------------------
 
 //----------------------------------------------------------------------
@@ -279,20 +303,16 @@ Screen_BlackBorderDraw.0                     = 0x8003289C; // filename:Screen_Bl
 Screen_CutsceneCameraStateUpdate             = 0x80032904; // type:func
 Screen_VSyncCallback                         = 0x80032B80; // type:func
 
-//------------------------------------------------------------------------
-//--- PA: 0x00E070   VA: 0x80032BD0   subsegment: c, screen/fs_main_screen
-//------------------------------------------------------------------------
+//-------------------------------------------------------------
+//--- PA: 0x00E070   VA: 0x80032BD0   subsegment: c, fs_screens
+//-------------------------------------------------------------
 GameFs_TitleGfxSeek                          = 0x80032BD0; // type:func
 GameFs_TitleGfxLoad                          = 0x80032BF0; // type:func
 GameFs_StreamBinSeek                         = 0x80032C20; // type:func
 GameFs_StreamBinLoad                         = 0x80032C40; // type:func
 GameFs_OptionBinLoad                         = 0x80032C68; // type:func
 GameFs_SaveLoadBinLoad                       = 0x80032CA8; // type:func
-
-//--------------------------------------------------------------------
-//--- PA: 0x00E188   VA: 0x80032CE8   subsegment: c, bodyprog_80032D1C
-//--------------------------------------------------------------------
-func_80032CE8                = 0x80032CE8; // type:func
+func_80032CE8                                = 0x80032CE8; // type:func
 
 //-----------------------------------------------------------
 //--- PA: 0x00E1BC   VA: 0x80032D1C   subsegment: c, gamemain
@@ -329,9 +349,9 @@ Joy_Update                                   = 0x8003446C; // type:func
 Joy_ControllerDataUpdate                     = 0x80034494; // type:func
 ControllerData_AnalogToDigital               = 0x80034670; // type:func
 
-//--------------------------------------------------------------------
-//--- PA: 0x00FD60   VA: 0x800348C0   subsegment: c, bodyprog_800348C0
-//--------------------------------------------------------------------
+//--------------------------------------------------------------
+//--- PA: 0x00FD60   VA: 0x800348C0   subsegment: c, ingame_init
+//--------------------------------------------------------------
 Anim_CharaTypeAnimInfoClear                  = 0x800348C0; // type:func
 GameState_LoadScreen_Update                  = 0x800348E8; // type:func
 GameFs_MapStartup                            = 0x80034964; // type:func
@@ -342,11 +362,19 @@ Game_InGameInit                              = 0x80034FB8; // type:func
 Game_SavegameInitialize                      = 0x800350BC; // type:func
 Game_PlayerInit                              = 0x80035178; // type:func
 GameFs_MapLoad                               = 0x8003521C; // type:func
+
+//--------------------------------------------------------------
+//--- PA: 0x01072C   VA: 0x8003528C   subsegment: c, fs_npc_anim
+//--------------------------------------------------------------
 Fs_CharaAnimDataSizeCheck                    = 0x8003528C; // type:func
 Fs_CharaAnimDataInfoIdxGet                   = 0x800352F8; // type:func
 Fs_CharaAnimDataAlloc                        = 0x80035338; // type:func
 Fs_CharaAnimInfoUpdate                       = 0x80035560; // type:func
 Fs_CharaAnimBoneInfoUpdate                   = 0x8003569C; // type:func
+
+//---------------------------------------------------------------------
+//--- PA: 0x010C20   VA: 0x80035780   subsegment: c, background_sound_1
+//---------------------------------------------------------------------
 Bgm_Init                                     = 0x80035780; // type:func
 Bgm_IsCurrentBgmTargetCheck                  = 0x800358A8; // type:func
 Bgm_TrackSet                                 = 0x800358DC; // type:func
@@ -355,10 +383,18 @@ func_8003596C                                = 0x8003596C; // type:func
 Sd_AmbientSfxInit                            = 0x8003599C; // type:func
 Sd_IsCurrentAmbientTargetCheck               = 0x80035AB0; // type:func
 Sd_AmbientSfxSet                             = 0x80035AC8; // type:func
+
+//-------------------------------------------------------------
+//--- PA: 0x010FA4   VA: 0x80035B04   subsegment: c, loadscreen
+//-------------------------------------------------------------
 Math_MatrixTransform                         = 0x80035B04; // type:func
 Gfx_MapEffectsSet                            = 0x80035B58; // type:func
 Gfx_LoadingScreen_BackgroundTexture          = 0x80035BBC; // type:func
 Gfx_LoadingScreen_PlayerRun                  = 0x80035BE0; // type:func
+
+//---------------------------------------------------------------------
+//--- PA: 0x011254   VA: 0x80035DB4   subsegment: c, background_sound_2
+//---------------------------------------------------------------------
 Bgm_TrackUpdate                              = 0x80035DB4; // type:func
 Bgm_AllLayersMute                            = 0x80035E1C; // type:func
 Bgm_LayerOnCheck                             = 0x80035E44; // type:func
@@ -368,8 +404,20 @@ func_800363D0                                = 0x800363D0; // type:func
 Bgm_TrackChange                              = 0x8003640C; // type:func
 Savegame_MapRoomIdxUpdate                    = 0x80036420; // type:func
 func_8003652C                                = 0x8003652C; // type:func
+
+//-----------------------------------------------------------------
+//--- PA: 0x011A58   VA: 0x800365B8   subsegment: c, mapmsg_display
+//-----------------------------------------------------------------
 Gfx_MapMsg_Draw                              = 0x800365B8; // type:func
 Gfx_MapMsg_SelectionUpdate                   = 0x80036B5C; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x0122E8   VA: 0x80036E48   subsegment: c, bodyprog_80036E48
+//--------------------------------------------------------------------
+
+//--------------------------------------------------------------------
+//--- PA: 0x0125F4   VA: 0x80037154   subsegment: c, bodyprog_80037154
+//--------------------------------------------------------------------
 Game_RadioSoundStop                          = 0x80037188; // type:func
 Chara_PositionSet                            = 0x800371E8; // type:func
 Game_PlayerHeightUpdate                      = 0x80037334; // type:func
@@ -408,9 +456,9 @@ SysState_EventPlaySound_Update               = 0x8003A4B4; // type:func
 SysState_GameOver_Update                     = 0x8003A52C; // type:func
 GameState_MapEvent_Update                    = 0x8003AA4C; // type:func
 
-//--------------------------------------------------------------------
-//--- PA: 0x015FC8   VA: 0x8003AB28   subsegment: c, bodyprog_8003AB28
-//--------------------------------------------------------------------
+//--------------------------------------------------------
+//--- PA: 0x015FC8   VA: 0x8003AB28   subsegment: c, title
+//--------------------------------------------------------
 GameState_MainMenu_Update                    = 0x8003AB28; // type:func
 MainMenu_SelectedOptionIdxReset              = 0x8003B550; // type:func
 Gfx_MainMenu_MainTextDraw                    = 0x8003B568; // type:func
@@ -421,6 +469,10 @@ Gfx_MainMenu_FogDraw                         = 0x8003BA08; // type:func
 Gfx_MainMenu_FogRandomize                    = 0x8003BAC4; // type:func
 Gfx_MainMenu_FogScatter                      = 0x8003BBF4; // type:func
 Gfx_MainMenu_FogUpdate                       = 0x8003BC8C; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x0171CC   VA: 0x8003BD2C   subsegment: c, bodyprog_8003BD2C
+//--------------------------------------------------------------------
 Map_TypeGet                                  = 0x8003BD2C; // type:func
 WorldGfx_CharaModelBonesGet                  = 0x8003BE50; // type:func
 GameFs_BgEtcGfxLoad                          = 0x8003BE6C; // type:func
@@ -464,6 +516,10 @@ WorldGfx_PlayerModelProcessLoad              = 0x8003D938; // type:func
 WorldGfx_CharaModelProcessAllLoads           = 0x8003D95C; // type:func
 WorldGfx_CharaModelProcessLoad               = 0x8003D9C8; // type:func
 WorldGfx_HeldItemAttach                      = 0x8003DD80; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x019A88   VA: 0x8003E5E8   subsegment: c, bodyprog_8003E5E8
+//--------------------------------------------------------------------
 Options_BrightnessMenu_LinesDraw             = 0x8003E5E8;
 GameFs_FlameGfxLoad                          = 0x8003E710; // type:func
 Game_SpotlightLoadScreenAttribsFix           = 0x8003EB54; // type:func
@@ -480,6 +536,10 @@ Gfx_MapEffectsStepUpdate                     = 0x8003EF74; // type:func
 Gfx_FogParametersSet                         = 0x8003F08C; // type:func
 Gfx_FlashlightUpdate                         = 0x8003F170; // type:func
 Math_WeightedAverageGet                      = 0x8003F7E4; // type:func
+
+//--------------------------------------------------------------------
+//--- PA: 0x01B4A4   VA: 0x80040004   subsegment: c, bodyprog_80040004
+//--------------------------------------------------------------------
 
 //---------------------------------------------------------------
 //--- PA: 0x01B4EC   VA: 0x8004004C   subsegment: c, view/vc_util
@@ -546,6 +606,10 @@ IpdHeader_ModelLinkObjectLists               = 0x80043E50; // type:func
 LmHeader_ModelHeaderSearch                   = 0x80043F2C; // type:func
 IpdHeader_ModelBufferLinkObjectLists         = 0x80043F88; // type:func
 Gfx_IpdChunkDraw                             = 0x80044090; // type:func
+
+//-------------------------------------------------------------------------
+//--- PA: 0x01FA44   VA: 0x800445A4   subsegment: c, bodyprog_anim_800445A4
+//-------------------------------------------------------------------------
 Anim_BoneInit                                = 0x800445A4; // type:func
 Anim_BoneUpdate                              = 0x800446D8; // type:func
 Anim_DurationGet                             = 0x800449AC; // type:func
@@ -621,9 +685,9 @@ Sd_KdtLoad_LoadCheck                         = 0x80048498; // type:func
 //--- PA: 0x023A50   VA: 0x800485B0   subsegment: c, sound/bodyprog_nullsub_800485B0
 //----------------------------------------------------------------------------------
 
-//----------------------------------------------------------------
-//--- PA: 0x023A78   VA: 0x800485D8   subsegment: c, sound/sd_data
-//----------------------------------------------------------------
+//--------------------------------------------------------------------------
+//--- PA: 0x023A78   VA: 0x800485D8   subsegment: c, sound/bodyprog_800485D8
+//--------------------------------------------------------------------------
 Sd_TaskPoolExecute                           = 0x800485D8; // type:func
 Sd_CdPrimitiveCmdTry                         = 0x80048954; // type:func
 
@@ -2291,16 +2355,25 @@ g_Demo_ReproducedCount                       = 0x800A9A80;
 g_MainMenu_NewGameSelectedDifficultyIdx      = 0x800A9A84;
 g_MemCard_PrevSavegameCount                  = 0x800A9A88;
 
-//------------------------------------------------------------------------
-//--- PA: 0x084F2C   VA: 0x800A9A8C   subsegment: .data, bodyprog_8003AB28
-//------------------------------------------------------------------------
+//------------------------------------------------------------
+//--- PA: 0x084F2C   VA: 0x800A9A8C   subsegment: .data, title
+//------------------------------------------------------------
 MAIN_MENU_ENTRY_STRINGS                      = 0x800A9A8C;
 DIFFICULTY_MENU_ENTRY_STRINGS                = 0x800A9AA0;
+
+//------------------------------------------------------------------------
+//--- PA: 0x08534C   VA: 0x800A9EAC   subsegment: .data, bodyprog_8003BD2C
+//------------------------------------------------------------------------
+RAND.67                                      = 0x800A9EAC;
 FOG_COUNT.68                                 = 0x800A9EB0;
-IMAGE.81                                       = 0x800A9EB4;
-IMAGE_TIM.86                                   = 0x800A9EBC;
-IMAGE_ETC.87                                   = 0x800A9EC4;
-IMAGE_FLAME.241                                = 0x800A9FA8;
+IMAGE.81                                     = 0x800A9EB4;
+IMAGE_TIM.86                                 = 0x800A9EBC;
+IMAGE_ETC.87                                 = 0x800A9EC4;
+
+//------------------------------------------------------------------------
+//--- PA: 0x085424   VA: 0x800A9F84   subsegment: .data, bodyprog_8003E5E8
+//------------------------------------------------------------------------
+IMAGE_FLAME.241                              = 0x800A9FA8;
 Y_ARRAY.295                                  = 0x800A9FB4;
 
 //--------------------------------------------------------------------
@@ -2701,9 +2774,9 @@ g_PrevScreenFadeProgress                     = 0x800B5C28; // type:s32
 //------------------------------------------------------------------------
 g_ScreenFadeTimestep                         = 0x800B5C30; // type:s32
 
-//----------------------------------------------------------------------
-//--- PA: 0x0910D4   VA: 0x800B5C34   subsegment: bss, bodyprog_800B5C34
-//----------------------------------------------------------------------
+//------------------------------------------------------------------------
+//--- PA: 0x0910D4   VA: 0x800B5C34   subsegment: .bss, screen/screen_data
+//------------------------------------------------------------------------
 g_VBlanks                                    = 0x800B5C34; // type:s32
 g_UncappedVBlanks                            = 0x800B5C38; // type:s32
 g_OtTags0                                    = 0x800B5C40; // type:u32 size:0x80
@@ -2711,6 +2784,10 @@ g_DeltaTime0                                 = 0x800B5CC0; // type:s32 - Q19.12 
 g_OtTags1                                    = 0x800B5CC4; // type:u32 size:0x4000
 g_DeltaTime2                                 = 0x800B9CC8; // type:s32
 g_MainLoop_FrameCount                        = 0x800B9CCC;
+
+//---------------------------------------------------
+//--- PA: 0x095170   VA: 0x800B9CD0   subsegment: bss
+//---------------------------------------------------
 vcWork                                       = 0x800B9CD0; // type:VC_WORK size:0x2E8
 g_ActiveBufferIdx                            = 0x800B9FB8;
 
@@ -2721,22 +2798,26 @@ g_SysWork                                    = 0x800B9FC0; // type:SysWork size:
 g_GameWork                                   = 0x800BC728; // type:GameWork size:0x5D8
 
 //---------------------------------------------------
-//--- PA: 0x0981AC   VA: 0x800BCD0C   subsegment: bss
+//--- PA: 0x0981A0   VA: 0x800BCD00   subsegment: bss
 //---------------------------------------------------
 g_Screen_FadeStatus                          = 0x800BCD0C;
 
-//----------------------------------------------------------------------
-//--- PA: 0x0981B8   VA: 0x800BCD18   subsegment: bss, memcard/memcard_2
-//----------------------------------------------------------------------
+//---------------------------------------------------
+//--- PA: 0x0981B8   VA: 0x800BCD18   subsegment: bss
+//---------------------------------------------------
 g_MemCard_SavegameCount                      = 0x800BCD28;
-activeSavegameEntry                = 0x800BCD2C;
-slotElementCount0                     = 0x800BCD30;
-allMemCardsStatus                  = 0x800BCD34;
-saveScreenState                 = 0x800BCD38;
-totalElementsCount                 = 0x800BCD3A;
-slotElementCount1                     = 0x800BCD3C;
-selectedElementIdx                = 0x800BCD3E;
-selectedFileIdx                            = 0x800BCD3F;
+
+//-----------------------------------------------------------------------
+//--- PA: 0x0981CC   VA: 0x800BCD2C   subsegment: .bss, memcard/memcard_2
+//-----------------------------------------------------------------------
+activeSavegameEntry                          = 0x800BCD2C;
+slotElementCount0                            = 0x800BCD30;
+allMemCardsStatus                            = 0x800BCD34;
+saveScreenState                              = 0x800BCD38;
+totalElementsCount                           = 0x800BCD3A;
+slotElementCount1                            = 0x800BCD3C;
+selectedElementIdx                           = 0x800BCD3E;
+selectedFileIdx                              = 0x800BCD3F;
 g_SelectedDeviceId                           = 0x800BCD40;
 
 //---------------------------------------------------
@@ -2744,46 +2825,55 @@ g_SelectedDeviceId                           = 0x800BCD40;
 //---------------------------------------------------
 g_DemoLoadAttempCount                        = 0x800BCD48;
 
-//---------------------------------------------------
-//--- PA: 0x0981F0   VA: 0x800BCD50   subsegment: bss
-//---------------------------------------------------
+//------------------------------------------------------------------------
+//--- PA: 0x0981F0   VA: 0x800BCD50   subsegment: .bss, background_sound_2
+//------------------------------------------------------------------------
 bgmLayerVolumes                              = 0x800BCD50;
-stateMachineIdx1                    = 0x800BCD60; // type:s32
-stateMachineIdx2                    = 0x800BCD64; // type:s32
-msgDisplayLength                       = 0x800BCD68; // type:s32
-msgIdx                             = 0x800BCD6C; // type:s32
-msgDisplayInc                          = 0x800BCD70; // type:s32
+
+//--------------------------------------------------------------------
+//--- PA: 0x098200   VA: 0x800BCD60   subsegment: .bss, mapmsg_display
+//--------------------------------------------------------------------
+stateMachineIdx1                             = 0x800BCD60; // type:s32
+stateMachineIdx2                             = 0x800BCD64; // type:s32
+msgDisplayLength                             = 0x800BCD68; // type:s32
+msgIdx                                       = 0x800BCD6C; // type:s32
+msgDisplayInc                                = 0x800BCD70; // type:s32
 g_MapMsg_Select                              = 0x800BCD78; // type:MapMsgSelect size:2
 g_MapMsg_AudioLoadBlock                      = 0x800BCD7A; // type:u8
 g_MapMsg_SelectCancelIdx                     = 0x800BCD7B; // type:s8
 
-//---------------------------------------------------
-//--- PA: 0x098220   VA: 0x800BCD80   subsegment: bss
-//---------------------------------------------------
+//-----------------------------------------------------------------------
+//--- PA: 0x098220   VA: 0x800BCD80   subsegment: .bss, bodyprog_80037154
+//-----------------------------------------------------------------------
 g_SysState_GameOver_TipIdx                   = 0x800BCD80; // type:u8
 g_DeltaTimeCpy                               = 0x800BCD84; // type:s32
 g_ItemTriggerEvents                          = 0x800BCD90; // type:s32 size:0x14
 g_ItemTriggerItemIds                         = 0x800BCDC0; // type:s32 size:0x14
 g_MapEventParam                              = 0x800BCDD8; // type:u32 - pointer to `s_EventParam`.
 
-//---------------------------------------------------
-//--- PA: 0x098280   VA: 0x800BCDE0   subsegment: bss
-//---------------------------------------------------
+//-----------------------------------------------------------
+//--- PA: 0x098280   VA: 0x800BCDE0   subsegment: .bss, title
+//-----------------------------------------------------------
+
+//-----------------------------------------------------------------------
+//--- PA: 0x098288   VA: 0x800BCDE8   subsegment: .bss, bodyprog_8003E5E8
+//-----------------------------------------------------------------------
 
 //---------------------------------------------------
-//--- PA: 0x098288   VA: 0x800BCDE8   subsegment: bss
+//--- PA: 0x098298   VA: 0x800BCDF8   subsegment: bss
 //---------------------------------------------------
 vcRefPosSt                                   = 0x800BCDF8; // type:VECTOR3 size:0xC
 g_WorldGfx                                   = 0x800BCE18; // type:u8 size:0x2DBC
 
-//---------------------------------------------------
-//--- PA: 0x09B090   VA: 0x800BFBF0   subsegment: bss
-//---------------------------------------------------
+//-----------------------------------------------------------------------
+//--- PA: 0x09B090   VA: 0x800BFBF0   subsegment: .bss, bodyprog_80040A64
+//-----------------------------------------------------------------------
+D_800BFBF0                                   = 0x800BFBF0; // size:0x1420
 g_Map                                        = 0x800C1020; // type:u8 size:0x58C - size from bzero call
 
-//---------------------------------------------------
-//--- PA: 0x09CA50   VA: 0x800C15B0   subsegment: bss
-//---------------------------------------------------
+//----------------------------------------------------------------------------
+//--- PA: 0x09CA50   VA: 0x800C15B0   subsegment: .bss, bodyprog_anim_800445A4
+//----------------------------------------------------------------------------
 
 //-------------------------------------------------------------------
 //--- PA: 0x09CA58   VA: 0x800C15B8   subsegment: .bss, sound/sd_call
@@ -2791,30 +2881,49 @@ g_Map                                        = 0x800C1020; // type:u8 size:0x58C
 D_800C15E8                                   = 0x800C15E8;
 g_AudioPlayingPitchList                      = 0x800C1628;
 g_Sd_AudioWork                               = 0x800C1658;
-g_Sd_AudioStreamingStates                    = 0x800C1670;
-
-//---------------------------------------------------
-//--- PA: 0x09CB18   VA: 0x800C1678   subsegment: bss
-//---------------------------------------------------
-gSDVolConfig                                 = 0x800C1678;
-g_Sd_ReverbDepth                             = 0x800C1687;
-g_Sd_VabPlayingInfo                          = 0x800C1698;
+g_Sd_AudioStreamingStates                    = 0x800C1670; // size:0x4
+gSDVolConfig                                 = 0x800C1678; // size:0x10
+g_Sd_VabPlayingInfo                          = 0x800C1698; // size:0x10
 g_Sd_TaskPool                                = 0x800C16A8; // type:u8 size:0x20
+
+//------------------------------------------------------------------
+//--- PA: 0x09EC68   VA: 0x800C37C8   subsegment: .bss, sound/sd_snd
+//------------------------------------------------------------------
 g_Sd_AudioType                               = 0x800C37C8;
 g_Sd_DataMoved                               = 0x800C37CC;
 g_Sd_VabLoadAttemps                          = 0x800C37D0;
 g_Sd_VabTargetLoad                           = 0x800C37D4;
 g_Sd_KdTargetLoad                            = 0x800C37D8;
+
+//-----------------------------------------------------------------------------
+//--- PA: 0x09EC7C   VA: 0x800C37DC   subsegment: .bss, sound/bodyprog_800485D8
+//-----------------------------------------------------------------------------
 g_Sd_CurrentTask                             = 0x800C37DD;
 
-//---------------------------------------------------
-//--- PA: 0x09EC80   VA: 0x800C37E0   subsegment: bss
-//---------------------------------------------------
+//------------------------------------------------------------------
+//--- PA: 0x09EC80   VA: 0x800C37E0   subsegment: .bss, view/vw_main
+//------------------------------------------------------------------
 vwViewPointInfo                              = 0x800C37E0; // type:VW_VIEW_WORK size:0x84
+
+//------------------------------------------------------------------
+//--- PA: 0x09ED08   VA: 0x800C3868   subsegment: .bss, view/vw_calc
+//------------------------------------------------------------------
 VbWvsMatrix                                  = 0x800C3888; // type:MATRIX size:0x20
+
+//----------------------------------------------------------------------
+//--- PA: 0x09ED48   VA: 0x800C38A8   subsegment: .bss, screen/text_draw
+//----------------------------------------------------------------------
 g_StringPosition                             = 0x800C38A8; // type:DVECTOR
 g_StringPositionX1                           = 0x800C38AC; // type:s32
 g_MapMsg_WidthTable                          = 0x800C38C8; // type:s32
+
+//----------------------------------------------------------------------
+//--- PA: 0x09EDC0   VA: 0x800C3920   subsegment: bss, bodyprog_80036E48
+//----------------------------------------------------------------------
+
+//--------------------------------------------------------------
+//--- PA: 0x09EDC8   VA: 0x800C3928   subsegment: bss, inventory
+//--------------------------------------------------------------
 D_800C3928                                   = 0x800C3928;
 g_Player_WeaponAttack                        = 0x800C3950;
 g_Inventory_IsUpClicked                      = 0x800C3968; // type:s32
@@ -2836,26 +2945,34 @@ g_Items_Transforms                           = 0x800C3BE8;
 g_Items_ItemsModelData                       = 0x800C3D78;
 g_Inventory_EquippedItemIdx                  = 0x800C3E34;
 g_Items_Coords                               = 0x800C3E48;
+
+//-------------------------------------------------------------
+//--- PA: 0x09F608   VA: 0x800C4168   subsegment: bss, worldgfx
+//-------------------------------------------------------------
 g_WorldEnvWork                               = 0x800C4168; // type:u8 size:0x150 - size likely incomplete
 
-//---------------------------------------------------
-//--- PA: 0x09F760   VA: 0x800C42C0   subsegment: bss
-//---------------------------------------------------
+//------------------------------------------------------------
+//--- PA: 0x09F760   VA: 0x800C42C0   subsegment: bss, 3daudio
+//------------------------------------------------------------
 
-//---------------------------------------------------
-//--- PA: 0x09F778   VA: 0x800C42D8   subsegment: bss
-//---------------------------------------------------
+//------------------------------------------------------------------------
+//--- PA: 0x09F770   VA: 0x800C42D0   subsegment: bss, bodyprog_800706E4_1
+//------------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+//--- PA: 0x09F778   VA: 0x800C42D8   subsegment: bss, bodyprog_80055028
+//----------------------------------------------------------------------
 g_LoadedEffectTextureFlags                   = 0x800C42D8;
 D_800C4418                                   = 0x800C4418; // size:0x10
 D_800C4449                                   = 0x800C4449; // type:u8
 
-//---------------------------------------------------
-//--- PA: 0x09F8F8   VA: 0x800C4458   subsegment: bss
-//---------------------------------------------------
+//------------------------------------------------------------------------
+//--- PA: 0x09F8F8   VA: 0x800C4458   subsegment: bss, bodyprog_80055028_2
+//------------------------------------------------------------------------
 
-//---------------------------------------------------
-//--- PA: 0x09F970   VA: 0x800C44D0   subsegment: bss
-//---------------------------------------------------
+//----------------------------------------------------------------------
+//--- PA: 0x09F970   VA: 0x800C44D0   subsegment: bss, bodyprog_800706E4
+//----------------------------------------------------------------------
 D_800C44F0                                   = 0x800C44F0; // size:0x50
 g_TargetEnemyPosition                        = 0x800C4540;
 g_Player_HasMoveInput                        = 0x800C4558;
@@ -2881,15 +2998,23 @@ g_Player_PrevPosition                        = 0x800C45F8;
 g_Player_IsRunning                           = 0x800C4604;
 g_Player_HeadingAngle                        = 0x800C4608;
 
-//---------------------------------------------------
-//--- PA: 0x09FAC0   VA: 0x800C4620   subsegment: bss
-//---------------------------------------------------
+//------------------------------------------------------------------------
+//--- PA: 0x09FAC0   VA: 0x800C4620   subsegment: bss, bodyprog_800706E4_2
+//------------------------------------------------------------------------
 
-//---------------------------------------------------
-//--- PA: 0x09FAD0   VA: 0x800C4630   subsegment: bss
-//---------------------------------------------------
+//-----------------------------------------------------------------
+//--- PA: 0x09FAD0   VA: 0x800C4630   subsegment: bss, view/vc_main
+//-----------------------------------------------------------------
 vcWatchMvPrmSt                               = 0x800C4630; // type:VC_WATCH_MV_PARAM size:0xC
 vcSelfViewTimer                              = 0x800C463C; // type:s32
+
+//----------------------------------------------------------------------
+//--- PA: 0x09FAE0   VA: 0x800C4640   subsegment: bss, bodyprog_80085D78
+//----------------------------------------------------------------------
+
+//---------------------------------------------------------
+//--- PA: 0x09FCE0   VA: 0x800C4840   subsegment: bss, demo
+//---------------------------------------------------------
 g_Demo_DemoFileIdx                           = 0x800C4840; // type:s32
 g_Demo_PlayFileIdx                           = 0x800C4844; // type:s32
 g_Demo_UserConfigBackup                      = 0x800C4850; // type:ShSaveUserConfig size:0x38
@@ -2898,6 +3023,14 @@ g_Demo_RandSeedBackup                        = 0x800C488C;
 g_Demo_CurFrameData                          = 0x800C4890;
 g_Demo_DemoStep                              = 0x800C4894;
 g_Demo_VideoPresentInterval                  = 0x800C4898;
+
+//---------------------------------------------------------
+//--- PA: 0x09FD40   VA: 0x800C48A0   subsegment: bss, rank
+//---------------------------------------------------------
+
+//-----------------------------------------------------------
+//--- PA: 0x09FD90   VA: 0x800C48F0   subsegment: bss, rank_2
+//-----------------------------------------------------------
 
 //------------------------------------------------------------------------
 //--- PA: 0x09FD98   VA: 0x800C48F8   subsegment: lib, libapi, first, .bss

@@ -200,8 +200,6 @@ extern const s32 D_800CB304[12][2];
 extern const s32 D_800CB364[12][2];
 extern const s32 D_800CB3A4[12][2];
 
-extern MATRIX D_800C3868; // type assumed
-
 extern s32 D_800EAF20[];
 
 extern s32 D_800EB320;

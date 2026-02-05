@@ -11,6 +11,9 @@
 
 #define CD_ERROR_LIMIT 600 // Matches value used in beatmania `FSCD.C`.
 
+u8 D_800C37DC;
+u8 g_Sd_CurrentTask;
+
 void Sd_TaskPoolExecute(void) // 0x800485D8
 {
     g_Sd_CurrentTask = g_Sd_TaskPool[0];

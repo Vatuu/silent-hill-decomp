@@ -81,6 +81,7 @@ extern q19_12            excl_r_ary[9];
 extern VC_WORK           vcWork;
 extern VECTOR3           vcRefPosSt; /** Q19.12 */
 extern VW_VIEW_WORK      vwViewPointInfo;
+extern MATRIX            D_800C3868;
 extern MATRIX            VbWvsMatrix;
 extern VC_WATCH_MV_PARAM vcWatchMvPrmSt;
 extern q19_12            vcSelfViewTimer;

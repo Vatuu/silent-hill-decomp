@@ -35,6 +35,27 @@ extern DVECTOR g_Gfx_DebugStringPosition0; // 0x800B5C20
 
 extern DVECTOR g_Gfx_DebugStringPosition1; // 0x800B5C24
 
+/** String position. */
+extern DVECTOR g_StringPosition; // 0x800C38A8
+
+/** String X position as `s32`. It's unclear why there are two. */
+extern s32 g_StringPositionX1; // 0x800C38AC
+
+extern s_800C38B0 D_800C38B0;
+
+extern s8 pad_bss_800C38B2[2];
+
+extern s32 D_800C38B4;
+
+extern s32 pad_bss_800C38B8[4];
+
+extern s32 g_MapMsg_WidthTable[12];
+
+/** String glyph sprite. */
+extern GsSPRITE D_800C38F8;
+
+extern s16 D_800C391C;
+
 // ==========
 // FUNCTIONS
 // ==========

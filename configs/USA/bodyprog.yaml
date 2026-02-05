@@ -70,7 +70,10 @@ segments:
       - [0x6D4,  .rodata, background_sound_2]
       - [0x700,  .rodata, mapmsg_display]
       - [0x758,  .rodata, bodyprog_80037154]
-      - [0x91C,  .rodata, bodyprog_8003AB28]
+      - [0x918,  .rodata, title]
+      - [0x9C8,  .rodata, bodyprog_8003BD2C]
+      - [0x1054, .rodata, bodyprog_8003E5E8]
+      - [0x1084, .rodata, bodyprog_80040004]
       - [0x1094, .rodata, sound/sd_call]
       - [0x119C, .rodata, sound/sd_snd]
       - [0x11DC, .rodata, sound/bodyprog_800485D8]
@@ -106,6 +109,9 @@ segments:
       - [0x9AD0,    c, globals]
       - [0x9AD0,    c, syswork_functable]
       - [0x9AD0,    c, screen/screen_data]
+      - [0x9AD0,    c, sound/sd_data]
+      - [0x9AD0,    c, bodyprog_data_800A8D98]
+      - [0x9AD0,    c, bodyprog_data_800A90FC]
       
       
       - [0x9AD0,    c, memcard/memcard]
@@ -127,14 +133,17 @@ segments:
       - [0x11A58,   c, mapmsg_display]
       - [0x122E8,   c, bodyprog_80036E48]
       - [0x125F4,   c, bodyprog_80037154]
-      - [0x15FC8,   c, bodyprog_8003AB28]
+      - [0x15FC8,   c, title] # Name convention from SH2/4.
+      - [0x171CC,   c, bodyprog_8003BD2C]
+      - [0x19A88,   c, bodyprog_8003E5E8]
+      - [0x1B4A4,   c, bodyprog_80040004]
       - [0x1B4EC,   c, view/vc_util]
       - [0x1BF04,   c, bodyprog_80040A64]
+      - [0x1FA44,   c, bodyprog_anim_800445A4]
       - [0x20F1C,   c, sound/sd_call]
       - [0x22FC4,   c, sound/sd_snd]
       - [0x23A50,   c, sound/bodyprog_nullsub_800485B0]
       - [0x23A78,   c, sound/bodyprog_800485D8]
-      - [0x23A78,   c, sound/sd_data] # Data
       - [0x23ED8,   c, view/vw_main]
       - [0x243C8,   c, view/vw_calc] # Contains part of SH2's `vb_main`?
       - [0x25D1C,   c, screen/text_draw]
@@ -148,8 +157,6 @@ segments:
       - [0x61218,   c, bodyprog_80085D78]
       - [0x6A3C0,   c, demo]
       - [0x6ADEC,   c, credits]
-      - [0x6CF9C,   c, bodyprog_data_800A8D98] # Data
-      - [0x6CF9C,   c, bodyprog_data_800A90FC] # Data
       - [0x6CF9C, lib, libapi, a09]
       - [0x6CFAC, lib, libapi, a11]
       - [0x6CFBC, lib, libapi, a39]
@@ -328,7 +335,9 @@ segments:
       - [0x8459C, .data, bodyprog_data_800A90FC]
       - [0x84ECC, .data, syswork_functable]
       #- [0x84F08, .data, syswork_functable]
-      - [0x84F2C, .data, bodyprog_8003AB28]
+      - [0x84F2C, .data, title]
+      - [0x8534C, .data, bodyprog_8003BD2C]
+      - [0x85424, .data, bodyprog_8003E5E8]
       - [0x85468, .data, sound/sd_data]
       - [0x88920, .data, view/vw_calc]
       - [0x88938, .data, screen/text_draw]
@@ -388,30 +397,43 @@ segments:
       - [0x9821C,  pad] # Garbage.
       - [0x98220, .bss, bodyprog_80037154]
       - [0x9827C,  pad] # Garbage.
-      - [0x98280,  bss]
+      - [0x98280, .bss, title]
       - [0x98284,  pad] # Garbage.
-      - [0x98288,  bss]
+      - [0x98288, .bss, bodyprog_8003E5E8]
+      - [0x98298,  bss]
       - [0x9B08C,  pad] # Garbage.
-      - [0x9B090,  bss]
+      - [0x9B090, .bss, bodyprog_80040A64]
       - [0x9CA4C,  pad] # Garbage.
-      - [0x9CA50,  bss]
+      - [0x9CA50, .bss, bodyprog_anim_800445A4]
       - [0x9CA54,  pad] # Garbage.
-      - [0x9CA58,  .bss, sound/sd_call]
-      - [0x9CB18,  bss] # sound
-      - [0x9EC80,  bss]
-      - [0x9F75C,  pad]
-      - [0x9F760,  bss]
-      - [0x9F774,  pad]
-      - [0x9F778,  bss]
-      - [0x9F8F4,  pad]
-      - [0x9F8F8,  bss]
-      - [0x9F96C,  pad]
-      - [0x9F970,  bss]
-      - [0x9FABC,  pad]
-      - [0x9FAC0,  bss]
-      - [0x9FACC,  pad]
-      - [0x9FAD0,  bss]
-      - [0x9FD88,  pad]
+      - [0x9CA58, .bss, sound/sd_call]
+      - [0x9EC68, .bss, sound/sd_snd]
+      - [0x9EC7C, .bss, sound/bodyprog_800485D8]
+      - [0x9EC80, .bss, view/vw_main]
+      - [0x9ED08, .bss, view/vw_calc]
+      - [0x9ED48, .bss, screen/text_draw]
+      - [0x9EDC0,  bss, bodyprog_80036E48]
+      - [0x9EDC8,  bss, inventory]
+      - [0x9F608,  bss, worldgfx]
+      - [0x9F75C,  pad] # Garbage.
+      - [0x9F760,  bss, 3daudio]
+      - [0x9F770,  bss, bodyprog_800706E4_1]
+      - [0x9F774,  pad] # Garbage.
+      - [0x9F778,  bss, bodyprog_80055028]
+      - [0x9F8F4,  pad] # Garbage.
+      - [0x9F8F8,  bss, bodyprog_80055028_2]
+      - [0x9F96C,  pad] # Garbage.
+      - [0x9F970,  bss, bodyprog_800706E4]
+      - [0x9FABC,  pad] # Garbage.
+      - [0x9FAC0,  bss, bodyprog_800706E4_2]
+      - [0x9FACC,  pad] # Garbage.
+      - [0x9FAD0,  bss, view/vc_main]
+      - [0x9FAE0,  bss, bodyprog_80085D78]
+      - [0x9FCE0,  bss, demo]
+      - [0x9FD40,  bss, rank]
+      - [0x9FD88,  pad] # Garbage.
+      - [0x9FD90,  bss, rank_2]
+      - [0x9FD94,  pad] # Garbage.
       - [0x9FD98, lib, libapi, first, .bss]
       - [0x9FDC8, lib, libapi, pad, .bss]
       - [0x9FDD8, lib, libapi, patch, .bss]
@@ -426,20 +448,20 @@ segments:
       - [0xA2288, lib, libgs, gs_001, .bss]
       - [0xA2348, lib, libgs, matrix, .bss] # Resized matrix.o .bss section from 0x80 to 0x78.
       - [0xA23C0, lib, libgs, gs_104, .bss]
-      - [0xA23DC, pad, garbagebss/bodyprog_800C6F3C] # Contains random padding data.
+      - [0xA23DC, pad]  # Garbage.
       - [0xA23E0, lib, libgs, gs_107, .bss]
       - [0xA2420, lib, libgs, gs_123, .bss]
       - [0xA24A0, lib, libgs, global, .bss]
-      - [0xA24CC, pad, garbagebss/bodyprog_800C702C] # Contains random padding data.
+      - [0xA24CC, pad]  # Garbage.
       - [0xA24D0, lib, libgs, objt3, .bss]
       - [0xA2600, lib, libgte, patchgte, .bss]
       - [0xA2610, lib, libpad, padmain, .bss]
       - [0xA2630, lib, libpad, padcmd, .bss]
       - [0xA2640, lib, libpad, padportd, .bss]
       - [0xA28B0, bss, bodyprog_800C7410]
-      - [0xA2B8C, pad, garbagebss/bodyprog_800C76EC] # Contains random padding data.
+      - [0xA2B8C, pad]  # Garbage.
       - [0xA2B90, bss, bodyprog_800C76F0]
-      - [0xA3F9C, pad, garbagebss/bodyprog_800C8AFC] # Contains random padding data.
+      - [0xA3F9C, pad]  # Garbage.
       - [0xA3FA0, bss, bodyprog_800C8B00]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.

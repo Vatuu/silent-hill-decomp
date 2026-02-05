@@ -138,6 +138,7 @@ typedef struct
     u8  globalVolumeSe_C;  // Global SE volume channel.
     u8  globalVolumeBgm_D; // Global BGM volume channel.
     u8  globalVolumeXa_E;  // Global Voice volume channel (not configurable).
+	u8  reverbDepth_F;
 } s_ChannelsVolumeController;
 
 // Used for the load of XA audios and related to VSync values???
@@ -204,8 +205,6 @@ typedef struct
 
 extern s32 D_800A9FDC[];
 
-extern u8 g_Sd_VabLoadAttemps;
-
 extern s_AudioItemData g_AudioData[];
 
 extern u8 g_Sd_ReverbDepths[];
@@ -215,34 +214,6 @@ extern u8 D_800AA604[][];
 extern s_XaItemData g_XaItemData[];
 
 extern u8 g_Sd_BgmLayerLimits[8];
-
-extern s_VabPlayingInfo g_Sd_VabPlayingInfo;
-
-/** @brief Task pool related to audio and audio data streaming.
- * `Sd_TaskPoolExecute` is the main function responsible for executing tasks.
- *
- * @note Possible name retrieved from debug symbols.
- * `Tokimeki Memorial ~Forever With You~` symbols have a global variable named
- * `gSDEvt`. This function can't be restored, but the name would fit for
- * this purpose. This game also features a similar command pool system
- * to the one in SH1.
- */
-extern u8 g_Sd_TaskPool[32];
-
-/** @brief The type of audio file being loaded. See `e_AudioType`. */
-extern u8 g_Sd_AudioType;
-
-/** @brief Amount of data moved when loading KDT/VAB files. */
-extern u32 g_Sd_DataMoved;
-
-extern s_AudioItemData* g_Sd_VabTargetLoad;
-
-// Pointer to the data of the VAB loading to be used for music.
-extern s_AudioItemData* g_Sd_KdTargetLoad;
-
-extern u8 D_800C37DC; // Boolean.
-
-extern u8 g_Sd_CurrentTask;
 
 extern s_VabInfo g_Vab_InfoTable[420];
 
@@ -271,7 +242,7 @@ extern s_Sd_AudioWork g_Sd_AudioWork;
 /** @brief Hold states for different audio types streaming. */
 extern s_AudioStreamingStates g_Sd_AudioStreamingStates;
 
-extern s32 bssPad_800C1674;
+extern s32 pad_bss_800C1674;
 
 /** @note Name from retrieved debug symbols.
  * Debug symbols from: `Konami International Rally Championship`
@@ -284,9 +255,45 @@ extern s32 bssPad_800C1674;
  */
 extern s_ChannelsVolumeController gSDVolConfig;
 
-extern u8 g_Sd_ReverbDepth;
-
 extern s_800C1688 D_800C1688;
+
+extern s32 pad_bss_800C1694;
+
+extern s_VabPlayingInfo g_Sd_VabPlayingInfo;
+
+/** @brief Task pool related to audio and audio data streaming.
+ * `Sd_TaskPoolExecute` is the main function responsible for executing tasks.
+ *
+ * @note Possible name retrieved from debug symbols.
+ * `Tokimeki Memorial ~Forever With You~` symbols have a global variable named
+ * `gSDEvt`. This function can't be restored, but the name would fit for
+ * this purpose. This game also features a similar command pool system
+ * to the one in SH1.
+ */
+extern u8 g_Sd_TaskPool[32];
+
+extern s32 D_800C16C8[0x840];
+
+/** @brief The type of audio file being loaded. See `e_AudioType`. */
+extern u8 g_Sd_AudioType;
+
+extern char pad_bss_800C37C9[3];
+
+/** @brief Amount of data moved when loading KDT/VAB files. */
+extern u32 g_Sd_DataMoved;
+
+extern u8 g_Sd_VabLoadAttemps;
+
+extern char pad_bss_800C37D1[3];
+
+extern s_AudioItemData* g_Sd_VabTargetLoad;
+
+// Pointer to the data of the VAB loading to be used for music.
+extern s_AudioItemData* g_Sd_KdTargetLoad;
+
+extern u8 D_800C37DC; // Boolean.
+
+extern u8 g_Sd_CurrentTask;
 
 // ==========
 // FUNCTIONS

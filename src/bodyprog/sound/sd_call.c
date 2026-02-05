@@ -13,9 +13,9 @@ static CdlLOC D_800C15E8[2];
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
-const s32 rodataPad_80025BF4 = 0;
+static const s32 pad_rodata_80025BF4 = 0;
 
-s_800C15F0 D_800C15F0[4]; // Not required to be static, but it's only used in this file.
+s_800C15F0 D_800C15F0[4];
 
 u16 g_AudioPlayingIdxList[24];
 
@@ -25,7 +25,20 @@ s_Sd_AudioWork g_Sd_AudioWork;
 
 s_AudioStreamingStates g_Sd_AudioStreamingStates;
 
-s32 bssPad_800C1674;
+s32 pad_bss_800C1674;
+
+s_ChannelsVolumeController gSDVolConfig;
+
+s_800C1688 D_800C1688;
+
+s32 pad_bss_800C1694;
+
+s_VabPlayingInfo g_Sd_VabPlayingInfo;
+
+u8 g_Sd_TaskPool[32];
+
+s32 D_800C16C8[0x840];
+
 
 void SD_Call(u32 cmd) // 0x80045A7C
 {
@@ -254,7 +267,7 @@ void sd_work_init(void) // 0x80045E44
     SdUtReverbOn();
     SpuSetTransferMode(0);
 
-    g_Sd_ReverbDepth = 20;
+    gSDVolConfig.reverbDepth_F = 20;
 
     SdUtSetReverbDepth(20, 20);
     Sd_SetReverbEnable(0);
@@ -434,7 +447,7 @@ void Sd_SfxAttributesUpdate(u16 sfxId, q0_8 balance, u8 vol, s8 pitch) // 0x8004
     }
 
     audioIdx   = sfxId - Sfx_Base;
-    D_800C16A4 = gSDVolConfig.volumeSe_4 + g_Vab_InfoTable[audioIdx].field_5;
+    g_Sd_VabPlayingInfo.volumeLeft_C = gSDVolConfig.volumeSe_4 + g_Vab_InfoTable[audioIdx].field_5;
 
     if (sfxId == Sfx_RadioInterferenceLoop)
     {
@@ -1168,7 +1181,7 @@ void Sd_SetReverbDepth(u8 depth) // 0x80047AD0
 {
     s32 depthCpy;
 
-    g_Sd_ReverbDepth = depth;
+    gSDVolConfig.reverbDepth_F = depth;
 
     depthCpy = depth;
     SdUtSetReverbDepth(depthCpy, depthCpy);

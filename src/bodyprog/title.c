@@ -18,10 +18,12 @@
 // MAIN MENU
 // ========================================
 
+s8* D_800BCDE0;
+
 #define MAIN_MENU_OPTION_COUNT 5
 #define MAIN_MENU_FOG_COUNT    21
 
-const s32 rodataPad_8002547C = 0;
+static const s32 rodataPad_8002547C = 0;
 
 void GameState_MainMenu_Update(void) // 0x8003AB28
 {
@@ -387,20 +389,19 @@ void MainMenu_SelectedOptionIdxReset(void) // 0x8003B550
 
 void func_8003B560(void) {} // 0x8003B560
 
-static const char* MAIN_MENU_ENTRY_STRINGS[] = {
-    "LOAD",
-    "CONTINUE",
-    "START",
-    "OPTION",
-    "EXTRA" /** @unused See `e_MainMenuEntry`. */
-};
-
 void Gfx_MainMenu_MainTextDraw(void) // 0x8003B568
 {
     #define COLUMN_POS_X 158
     #define COLUMN_POS_Y 184
     #define STR_OFFSET_Y 20
 
+	static const char* MAIN_MENU_ENTRY_STRINGS[] = {
+		"LOAD",
+		"CONTINUE",
+		"START",
+		"OPTION",
+		"EXTRA" /** @unused See `e_MainMenuEntry`. */
+	};
     static const u8 STR_OFFSETS_X[] = { 29, 50, 32, 39, 33 }; // @unused Element at index 4. See `g_MainMenu_VisibleEntryFlags`.
 
     s32 i;
@@ -437,12 +438,6 @@ void Gfx_MainMenu_MainTextDraw(void) // 0x8003B568
     }
 }
 
-static const char* DIFFICULTY_MENU_ENTRY_STRINGS[] = {
-    "EASY",
-    "NORMAL",
-    "HARD"
-};
-
 void Gfx_MainMenu_DifficultyTextDraw(s32 idx) // 0x8003B678
 {
     #define DIFFICULTY_MENU_SELECTION_COUNT 3
@@ -450,8 +445,12 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 idx) // 0x8003B678
     #define COLUMN_POS_Y                    204
     #define STR_OFFSET_Y                    20
 
-    static const u8 STR_OFFSETS_X[] = { 28, 43, 30, 76 };               // @unused Last element may have been for a 4th selectable difficulty. "INTENSE" fits this offset.
-    static const u8 UNUSED[]        = { 0, 149, 171, 144, 0, 0, 0, 0 }; // @unused Unknown purpose.
+	static const char* DIFFICULTY_MENU_ENTRY_STRINGS[] = {
+		"EASY",
+		"NORMAL",
+		"HARD"
+	};
+    static const u8 STR_OFFSETS_X[] = { 28, 43, 30 };
 
     s32 i;
 
@@ -703,3 +702,6 @@ void func_8003BCF4(void) // 0x8003BCF4
         Gfx_MainMenu_FogScatter();
     }
 }
+
+static const s8 pad_rodata_8002551F = 0x4C;
+static const s32 pad_rodata_80025520 = 0x90AB9500;
