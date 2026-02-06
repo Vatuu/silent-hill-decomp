@@ -86,8 +86,11 @@ segments:
       - [0x4BF0, .rodata, bodyprog_800706E4]
       - [0x5CF0, .rodata, view/vc_main]
       - [0x5F9C, .rodata, bodyprog_80085D78]
+      - [0x60A4, .rodata, bodyprog_80089090]
+      - [0x6444, .rodata, bodyprog_combat_8008A058]
+      - [0x6754, .rodata, water]
       - [0x6778, .rodata, demo]
-      - [0x6798, .rodata, credits]
+      - [0x6798, .rodata, ranking]
       - [0x6A74,     lib, libcd, iso9660, .rdata]
       - [0x6C64,     lib, libcd, c_011, .rdata]
       - [0x6C84,     lib, libgs, matrix, .rdata]
@@ -155,8 +158,16 @@ segments:
       - [0x4BB84,   c, bodyprog_800706E4]
       - [0x5BDE0,   c, view/vc_main]
       - [0x61218,   c, bodyprog_80085D78]
+      - [0x63348,   c, bgm_0]
+      - [0x63658,   c, bodyprog_800881B8]
+      - [0x6411C,   c, chara_spawn]
+      - [0x64530,   c, bodyprog_80089090]
+      - [0x654F8,   c, bodyprog_combat_8008A058]
+      - [0x67E40,   c, dms]
+      - [0x688BC,   c, water]
       - [0x6A3C0,   c, demo]
-      - [0x6ADEC,   c, credits]
+      - [0x6ADEC,   c, ranking]
+      - [0x6CC18,   c, credits_init]
       - [0x6CF9C, lib, libapi, a09]
       - [0x6CFAC, lib, libapi, a11]
       - [0x6CFBC, lib, libapi, a39]
@@ -344,8 +355,10 @@ segments:
       - [0x88940, .data, items/item_screens_3]
       - [0x8B134, .data, view/vc_main]
       - [0x8B1A4, .data, bodyprog_80085D78]
+      - [0x8B1DC, .data, water]
       - [0x8B258, .data, demo]
-      - [0x8B294, .data, credits]
+      - [0x8B294, .data, ranking]
+      - [0x8B2A8, .data, credits_init]
       - [0x8B31C, lib, libcard, init, .data]
       - [0x8B32C, lib, libapi, pad, .data]
       - [0x8B33C, lib, libcd, cdrom, .data]
@@ -412,8 +425,11 @@ segments:
       - [0x9EC80, .bss, view/vw_main]
       - [0x9ED08, .bss, view/vw_calc]
       - [0x9ED48, .bss, screen/text_draw]
-      - [0x9EDC0,  bss, bodyprog_80036E48]
-      - [0x9EDC8,  bss, inventory]
+      - [0x9EDC0, .bss, bodyprog_80036E48]
+      - [0x9EDC8, .bss, items/item_screens_cam]
+      - [0x9EE00, .bss, items/item_screens_1]
+      - [0x9EE08, .bss, items/item_screens_2]
+      - [0x9EE48, .bss, items/item_screens_3]
       - [0x9F608,  bss, worldgfx]
       - [0x9F75C,  pad] # Garbage.
       - [0x9F760,  bss, 3daudio]
@@ -427,12 +443,14 @@ segments:
       - [0x9FABC,  pad] # Garbage.
       - [0x9FAC0,  bss, bodyprog_800706E4_2]
       - [0x9FACC,  pad] # Garbage.
-      - [0x9FAD0,  bss, view/vc_main]
-      - [0x9FAE0,  bss, bodyprog_80085D78]
-      - [0x9FCE0,  bss, demo]
-      - [0x9FD40,  bss, rank]
-      - [0x9FD88,  pad] # Garbage.
-      - [0x9FD90,  bss, rank_2]
+      - [0x9FAD0, .bss, view/vc_main]
+      - [0x9FAE0, .bss, bodyprog_80085D78]
+      - [0x9FBC8, .bss, bodyprog_combat_8008A058]
+      - [0x9FCB8, .bss, water]
+      - [0x9FCE0, .bss, demo]
+      - [0x9FD40, .bss, ranking]
+      - [0x9FD89,  pad] # Garbage.
+      - [0x9FD8D, .bss, credits_init] # Hack - For some reason garbage data begins just after a struct definition that grabs 9 bytes and in case of properly defining the file position this causes missalignment issues.
       - [0x9FD94,  pad] # Garbage.
       - [0x9FD98, lib, libapi, first, .bss]
       - [0x9FDC8, lib, libapi, pad, .bss]
@@ -458,11 +476,12 @@ segments:
       - [0xA2610, lib, libpad, padmain, .bss]
       - [0xA2630, lib, libpad, padcmd, .bss]
       - [0xA2640, lib, libpad, padportd, .bss]
-      - [0xA28B0, bss, bodyprog_800C7410]
-      - [0xA2B8C, pad]  # Garbage.
-      - [0xA2B90, bss, bodyprog_800C76F0]
-      - [0xA3F9C, pad]  # Garbage.
-      - [0xA3FA0, bss, bodyprog_800C8B00]
+      - [0xA28B0,  bss] # waitrc2.o
+      - [0xA28B8, .bss, libsd/smf_snd]
+      - [0xA2B88,  pad]
+      - [0xA2B90, .bss, libsd/smf_io]
+      - [0xA3F9C,  pad]  # Garbage.
+      - [0xA3FA0, .bss, libsd/smf_mid]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data

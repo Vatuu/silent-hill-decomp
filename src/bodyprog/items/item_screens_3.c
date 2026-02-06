@@ -1,7 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/credits.h"
+#include "bodyprog/ranking.h"
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/joy.h"
@@ -9,7 +9,52 @@
 #include "bodyprog/player_logic.h"
 #include "main/rng.h"
 
-const s32 rodataPad_800262F8 = 0;
+const s32 pad_rodata_800262F8 = 0;
+
+
+GsF_LIGHT g_Items_Lights[7][2];
+
+GsF_LIGHT D_800C3A88[4];
+
+GsF_LIGHT D_800C3AC8[2];
+
+GsCOORDINATE2 D_800C3AE8; // 0x800C3AE8
+
+SVECTOR3 D_800C3B38; // 0x800C3B38
+
+s16 pad_bss_800C3B3E[5];
+
+VbRVIEW D_800C3B48; // 0x800C3B48
+
+DVECTOR D_800C3B68[4][4]; // 0x800C3BE8 - Type assumed.
+
+s32 g_Inventory_ScrollTransitionTimer; // 0x800AE1A4
+
+s32 D_800C3BA8;
+
+s32 D_800C3BAC;
+
+s32 pad_bss_800C3BB0[2];
+
+u8 g_Item_MapLoadableItems[48]; // 0x800C3BB8
+
+GsCOORD2PARAM g_Items_Transforms[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3BE8
+
+GsDOBJ2 g_Items_ItemsModelData[9]; // 0x800C3D78
+
+GsDOBJ2 D_800C3E08;
+
+s32 D_800C3E18[7]; // 0x800C3E18
+
+s32 g_Inventory_EquippedItemIdx; // 0x800C3E34
+
+s32 pad_bss_800C3E38[2];
+
+u8 D_800C3E40;
+
+s8 pad_bss_800C3E41[7];
+
+GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3E48
 
 #include "D_800262FC_Rodata.h"
 
@@ -1018,7 +1063,7 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
             g_Items_Transforms[i].rotate.vx = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vx;
             g_Items_Transforms[i].rotate.vz = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[D_800C3E18[i]].id_0 - 32].vy;
 
-            Gfx_Items_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
+            ItemScreen_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
             func_800548D8(i);
             GsSetFlatLight(0, &g_Items_Lights[i][0]);
             GsSetFlatLight(1, &g_Items_Lights[i][1]);
@@ -1031,7 +1076,7 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
             g_Items_Transforms[7].rotate.vx = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vx;
             g_Items_Transforms[7].rotate.vz = INVENTORY_ITEM_ROTATIONS[g_SavegamePtr->items_0[g_Inventory_EquippedItemIdx].id_0 - 32].vy;
 
-            Gfx_Items_ItemRotate(&g_Items_Coords[7].param->rotate, &g_Items_Coords[7]);
+            ItemScreen_ItemRotate(&g_Items_Coords[7].param->rotate, &g_Items_Coords[7]);
             func_800548D8(7);
             GsSetFlatLight(0, &D_800C3A88[0]);
             GsSetFlatLight(1, &D_800C3A88[1]);
@@ -2053,7 +2098,7 @@ void Gfx_Results_ItemsDisplay() // 0x800521A8
     {
         if ((D_800C3E40 >> i) & (1 << 0))
         {
-            Gfx_Items_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
+            ItemScreen_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
             func_800548D8(i);
             GsSetFlatLight(0, &g_Items_Lights[i][0]);
             GsSetFlatLight(1, &g_Items_Lights[i][1]);
@@ -3396,7 +3441,7 @@ void Gfx_Items_Draw(void) // 0x80054200
 
     D_800AE190 = 0;
 
-    Gfx_ItemScreens_CameraSet(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
+    ItemScreen_CamSet(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
 
     // Define position, rotation, and scale of inventory item initially equipped by player.
     for (i = 0; i < DISPLAYED_ITEM_COUNT_MAX; i++)
@@ -3718,7 +3763,7 @@ void func_80054A04(u8 itemId) // 0x80054A04
     g_Items_Transforms[9].scale.vx = Q12(1.0f);
 
     func_800549A0();
-    Gfx_ItemScreens_CameraSet(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
+    ItemScreen_CamSet(&D_800C3B48, &D_800C3AE8, &D_800C3B38, 0);
 }
 
 bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
@@ -3774,7 +3819,7 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
 
     obj = &D_800C3E08;
 
-    Gfx_Items_ItemRotate(&g_Items_Coords[9].param->rotate, &g_Items_Coords[9]);
+    ItemScreen_ItemRotate(&g_Items_Coords[9].param->rotate, &g_Items_Coords[9]);
 
     // Rotate 180 degrees per second.
     g_Items_Transforms[9].rotate.vy += g_DeltaTime1 >> 1;

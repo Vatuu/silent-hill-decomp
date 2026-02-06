@@ -4,6 +4,8 @@
 
 #include "bodyprog/libsd.h"
 
+SMF_SONG smf_song[2];
+
 extern s32 time_flag; // Only used in this file.
 
 s32 MemCmp(u8* src, u8* des, u32 num) // 0x800A6FB8

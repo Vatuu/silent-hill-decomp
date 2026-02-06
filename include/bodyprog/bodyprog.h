@@ -2559,8 +2559,7 @@ extern s16 D_800C16A4;
 
 extern s32 D_800C3920;
 
-/** Times. */
-extern q19_12 D_800C4710[];
+extern s32 pad_bss_800C3924;
 
 extern s16 D_800C391E;
 
@@ -2679,20 +2678,13 @@ extern u8 g_Player_IsDead;
 
 extern s_Collision D_800C4620;
 
-extern VECTOR3 D_800C4640[][8]; // Or struct?
-
-extern s32 D_800C46A0;
+extern VECTOR3 D_800C4640[2][8];
 
 /** Y angles. */
-extern q3_12 D_800C4700[];
+extern q3_12 D_800C4700[8];
 
-extern s16 D_800C4702;
-
-extern s_RayData D_800C4728;
-
-extern DVECTOR D_800C4748[];
-
-extern VECTOR3 D_800C4758[];
+/** Times. */
+extern q19_12 D_800C4710[];
 
 /** Q19.12 */
 extern VECTOR3 D_800C4788[];
@@ -2706,9 +2698,6 @@ extern VECTOR3 D_800C47E8;
 extern s_RayData D_800C47F8;
 
 extern s_800C4818 D_800C4818;
-
-/** Something for demo handling. Set in `Fs_QueueDoThingWhenEmpty`. */
-extern bool D_800C489C;
 
 extern s32 D_800C48F0;
 
@@ -3508,6 +3497,8 @@ void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOr
 
 /** State step increment. */
 void func_800866D4(s32 arg0, s32 arg1, bool reset);
+
+extern bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3);
 
 void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool reset);
 

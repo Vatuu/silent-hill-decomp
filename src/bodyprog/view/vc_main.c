@@ -11,6 +11,9 @@
 
 #define MIN_IN_ROAD_DIST Q12(1.0f) // `vcGetMinInRoadDist` in SH2, hardcoded to `Q12(1.0f)` in SH1.
 
+VC_WATCH_MV_PARAM vcWatchMvPrmSt;
+q19_12            vcSelfViewTimer;
+
 /** @brief Fallback camera path collision. */
 VC_NEAR_ROAD_DATA vcNullNearRoad = {
     .road_p_0              = vcNullRoadArray,

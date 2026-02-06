@@ -23,24 +23,6 @@
 #define SD_MAGIC_KDT  0x2054444B
 #define SD_MAGIC_KDT1 0x3154444B
 
-extern s32  sd_reverb_mode;
-extern s16  sd_keyoff_mode;
-extern bool sd_interrupt_start_flag;
-extern s32  sd_tick_mode;
-extern u8   sd_vb_malloc_rec[];
-extern s32  sd_reserved_voice;
-extern bool sd_mono_st_flag;
-extern bool sd_int_flag;
-extern bool sd_int_flag2;
-extern s32  sd_timer_sync;
-extern bool smf_start_flag;
-extern u32  body_partly_size;
-extern s16  sd_seq_loop_mode;
-extern s32  sd_timer_event;
-extern s32  smf_file_no;
-extern u32  spu_ch_tbl[24];
-extern u16  PitchTbl[12][128];
-
 typedef enum _SMF_STAT
 {
     SEQ_NON   = 0,
@@ -298,14 +280,39 @@ typedef struct _SD_SPU_ALLOC
 } SD_SPU_ALLOC;
 STATIC_ASSERT_SIZEOF(SD_SPU_ALLOC, 8);
 
-extern VAB_H    vab_h[SD_VAB_SLOTS];
-extern MIDI     smf_midi[2 * 16];   // 2 devices with 16 channels each?
-extern MIDI     smf_midi_sound_off; // Set by `sound_off`, could be `smf_midi[32]`, but game doesn't use offsets for `[32]`?
-extern PORT     smf_port[24];
+// smf_snd.c BSS
+extern VAB_H        vab_h[SD_VAB_SLOTS];
+extern u8           sd_vb_malloc_rec[136];
+extern s16          sd_seq_loop_mode;
+extern s16          pad_bss_800C7662;
+extern s32          sd_tick_mode;
+extern SD_SPU_ALLOC sd_spu_alloc[SD_ALLOC_SLOTS];
+
+// smf_io.c BSS
+extern s32  pad_bss_800C7730[2];
+extern MIDI smf_midi[2 * 16];   // 2 devices with 16 channels each?
+extern MIDI smf_midi_sound_off; // Set by `sound_off`, could be `smf_midi[32]`, but game doesn't use offsets for `[32]`?
+extern s32  pad_bss_800C8314;
+extern PORT smf_port[24];
+extern s32  sd_timer_event;
+
+// smf_mid.c BSS
 extern SMF_SONG smf_song[2];
 
-extern SD_SPU_ALLOC sd_spu_alloc[SD_ALLOC_SLOTS];
-extern s32          sd_reverb_area_size[10];
+extern s32  sd_reverb_area_size[10];
+extern s32  sd_reverb_mode;
+extern s16  sd_keyoff_mode;
+extern bool sd_interrupt_start_flag;
+extern s32  sd_reserved_voice;
+extern bool sd_mono_st_flag;
+extern bool sd_int_flag;
+extern bool sd_int_flag2;
+extern s32  sd_timer_sync;
+extern bool smf_start_flag;
+extern u32  body_partly_size;
+extern s32  smf_file_no;
+extern u32  spu_ch_tbl[24];
+extern u16  PitchTbl[12][128];
 
 static inline PORT* SmfGetPort(s32 voice)
 {

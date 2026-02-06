@@ -6,7 +6,18 @@
 #include "bodyprog/player_logic.h"
 #include "bodyprog/math/math.h"
 
-const s32 rodataPad_80025E90 = 0;
+static const s32 pad_rodata_80025E90 = 0;
+
+
+s8 D_800C3960;
+
+s8 D_800C3961;
+
+s8 D_800C3962;
+
+u8 D_800C3963;
+
+s32 pad_bss_800C3964;
 
 void Inventory_ExitAnimEquippedItemUpdate(u8* weaponId) // 0x8004C088
 {

@@ -77,6 +77,8 @@ extern s32 g_Demo_DemoFileIdx; // 0x800C4840
 
 extern s32 g_Demo_PlayFileIdx; // 0x800C4844
 
+extern s32 pad_bss_800C4848[2];
+
 extern s_SaveUserConfig g_Demo_UserConfigBackup; // 0x800C4850
 
 extern u32 g_Demo_PrevRandSeed; // 0x800C4888
@@ -89,6 +91,9 @@ extern s_DemoFrameData* g_Demo_CurFrameData; // 0x800C4890
 extern s32 g_Demo_DemoStep; // 0x800C4894
 
 extern s32 g_Demo_VideoPresentInterval; // 0x800C4898
+
+/** Something for demo handling. Set in `Fs_QueueDoThingWhenEmpty`. */
+extern bool D_800C489C;
 
 // ==========
 // FUNCTIONS

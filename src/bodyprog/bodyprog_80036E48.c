@@ -6,7 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/memcard.h"
-#include "bodyprog/credits.h"
+#include "bodyprog/ranking.h"
 #include "bodyprog/demo.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/gfx/text_draw.h"
@@ -18,6 +18,9 @@
 #include "main/mem.h"
 #include "main/rng.h"
 #include "screens/stream/stream.h"
+
+s32 D_800C3920;
+s32 pad_bss_800C3924;
 
 // ========================================
 // UNKNOWN

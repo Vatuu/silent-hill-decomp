@@ -5,7 +5,7 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/credits.h"
+#include "bodyprog/ranking.h"
 #include "bodyprog/demo.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/gfx/text_draw.h"
