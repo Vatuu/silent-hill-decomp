@@ -25,23 +25,28 @@ def get_o_target(yaml_file, release, compile_asm_tu):
                 match extension:
                     case "code":
                         for splits in segment.get('subsegments'):
-                            match splits[1]:
-                                case "rodata" | "data" | "sdata" | "bss" | "sbss":
-                                    if len(splits) == 3:
-                                        splits_asm.append(f"{asm_path}/data/{splits[2]}.{splits[1]}.s.o")
-                                    else:
-                                        splits_asm.append(f"{asm_path}/data/{hex(splits[0])[2:].upper()}.{splits[1]}.s.o")
-                                case "c":
-                                    splits_c.append(f"{src_path}/{splits[2]}.c.o")
-                                    asm_tu = f"{asm_base_path}/{splits[2]}.s"
-                                    if compile_asm_tu == "1" and os.path.exists(asm_tu):
-                                        splits_asm.append(f"{build_path}/{asm_tu}.o")
-                                case "asm":
-                                    splits_asm.append(f"{asm_path}/{splits[2]}.s.o")
-                                case ".rodata" | ".data" | ".sdata" | ".bss" | ".sbss" | "pad" | "lib":
-                                    """
-                                    Hi, I don't have any SH fun fact for today.
-                                    """
+                            try:
+                                match splits[1]:
+                                    case "rodata" | "data" | "sdata" | "bss" | "sbss":
+                                        if len(splits) == 3:
+                                            splits_asm.append(f"{asm_path}/data/{splits[2]}.{splits[1]}.s.o")
+                                        else:
+                                            splits_asm.append(f"{asm_path}/data/{hex(splits[0])[2:].upper()}.{splits[1]}.s.o")
+                                    case "c":
+                                        splits_c.append(f"{src_path}/{splits[2]}.c.o")
+                                        asm_tu = f"{asm_base_path}/{splits[2]}.s"
+                                        if compile_asm_tu == "1" and os.path.exists(asm_tu):
+                                            splits_asm.append(f"{build_path}/{asm_tu}.o")
+                                    case "asm":
+                                        splits_asm.append(f"{asm_path}/{splits[2]}.s.o")
+                                    case ".rodata" | ".data" | ".sdata" | ".bss" | ".sbss" | "pad" | "lib":
+                                        """
+                                        Hi, I don't have any SH fun fact for today.
+                                        """
+                            except:
+                                """
+                                H
+                                """
                     case "header":
                         splits_asm.append(f"{asm_path}/{name}.s.o")
                     case _:

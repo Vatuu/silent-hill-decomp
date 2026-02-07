@@ -1,0 +1,7798 @@
+#include "game.h"
+#include "inline_no_dmpsx.h"
+
+#include <psyq/gtemac.h>
+#include <psyq/libapi.h>
+#include <psyq/strings.h>
+
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
+#include "bodyprog/gfx/screen_draw.h"
+#include "bodyprog/item_screens.h"
+#include "bodyprog/player_logic.h"
+#include "bodyprog/sound_system.h"
+#include "main/rng.h"
+
+// ========================================
+// ENVIRONMENT EFFECTS HANDLING
+// ========================================
+
+void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
+{
+    s32 i;
+    s32 effectTexFlags;
+
+    D_800A908C.v     = 0;
+    D_800A908C.clutY = 0;
+    D_800A9094.v     = 128;
+
+    // Get effect texture flags.
+    effectTexFlags = EffectTextureFlag_None;
+    switch (mapIdx)
+    {
+        case NO_VALUE:
+            Fs_QueueStartReadTim(FILE_TIM_BLD_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_BLD_TIM), 0x800), &D_800A9084);
+            g_LoadedEffectTextureFlags = EffectTextureFlag_None;
+            break;
+
+        case MapOverlayId_MAP0_S01:
+            if (!Savegame_EventFlagGet(EventFlag_47))
+            {
+                effectTexFlags = EffectTextureFlag_Glass;
+            }
+            break;
+
+        case MapOverlayId_MAP1_S02:
+        case MapOverlayId_MAP1_S03:
+            effectTexFlags = EffectTextureFlag_Water;
+            break;
+
+        case MapOverlayId_MAP1_S05:
+            effectTexFlags = EffectTextureFlag_Fire | EffectTextureFlag_Ef;
+            break;
+
+        case MapOverlayId_MAP3_S05:
+            if (!Savegame_EventFlagGet(EventFlag_284))
+            {
+                effectTexFlags = EffectTextureFlag_Fire;
+            }
+            break;
+
+        case MapOverlayId_MAP4_S01:
+            if (!Savegame_EventFlagGet(EventFlag_306))
+            {
+                effectTexFlags = EffectTextureFlag_Fire;
+            }
+            break;
+
+        case MapOverlayId_MAP4_S05:
+            effectTexFlags = EffectTextureFlag_Blood;
+            break;
+
+        case MapOverlayId_MAP5_S00:
+        case MapOverlayId_MAP6_S03:
+        case MapOverlayId_MAPX_S00: // @unused
+            effectTexFlags = EffectTextureFlag_WaterRefract;
+            break;
+    }
+
+    if (effectTexFlags == EffectTextureFlag_None)
+    {
+        return;
+    }
+
+    // Run through effect texture flags.
+    g_LoadedEffectTextureFlags = EffectTextureFlag_None;
+    for (i = 0; i < 16; i++)
+    {
+        if (!((effectTexFlags >> i) & (1 << 0)))
+        {
+            continue;
+        }
+
+        // Set global flag.
+        g_LoadedEffectTextureFlags |= 1 << i;
+
+        // TODO: Not sure if this is actually checking something gte related, but the macro/pointless branch is needed for match.
+        if (gte_IsDisabled())
+        {
+            continue;
+        }
+
+        // Load effect textures.
+        switch (1 << i)
+        {
+            case EffectTextureFlag_Glass:
+                Fs_QueueStartReadTim(FILE_TIM_GLASS_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_GLASS_TIM), 0x800), &D_800A908C);
+                break;
+
+            case EffectTextureFlag_WaterRefract:
+                Fs_QueueStartReadTim(FILE_TIM_DR_WAVE_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_DR_WAVE_TIM), 0x800), &D_800A908C);
+                break;
+
+            case EffectTextureFlag_Water:
+                Fs_QueueStartReadTim(FILE_TIM_WATER_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_WATER_TIM), 0x800), &D_800A908C);
+                break;
+
+            case EffectTextureFlag_Fire:
+                D_800A9094.v = 120;
+                Fs_QueueStartReadTim(FILE_TIM_FIRE_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_FIRE_TIM), 0x800), &D_800A9094);
+                break;
+
+            case EffectTextureFlag_Ef:
+                D_800A908C.v     = 64;
+                D_800A908C.clutY = 4;
+                Fs_QueueStartReadTim(FILE_TIM_EF_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_EF_TIM), 0x800), &D_800A908C);
+                break;
+
+            case EffectTextureFlag_Blood:
+                Fs_QueueStartReadTim(FILE_TIM_BLOOD_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TIM_BLOOD_TIM), 0x800), &D_800A908C);
+                break;
+
+            case EffectTextureFlag_WarmTest: // @unused See `e_EffectTextureFlags`.
+                Fs_QueueStartReadTim(FILE_TEST_WARMTEST_TIM, (s32)FONT24_BUFFER - ALIGN(Fs_GetFileSize(FILE_TEST_WARMTEST_TIM), 0x800), &D_800A9094);
+                break;
+        }
+    }
+}
+
+void func_8005E414(s32 orgIdx) // 0x8005E414
+{
+    RECT*      rect;
+    PACKET*    packet;
+    DR_AREA*   area;
+    DR_OFFSET* offset;
+
+    ClearImage(&D_800AE5A8[2], 0, 0, 0);
+
+    area = (DR_AREA*)GsOUT_PACKET_P;
+
+    SetDrawArea(area, &D_800AE5A8[2]);
+
+    rect = &D_800AE5A8[0];
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], area);
+    area++;
+
+    if (g_ActiveBufferIdx == 0)
+    {
+        rect = &D_800AE5A8[1];
+    }
+
+    SetDrawArea(area, rect);
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[orgIdx], area);
+    area++;
+
+    offset = area;
+
+    SetDrawOffset(offset, &D_800AE5C8[0]);
+
+    rect = D_800AE5C8 - 4;
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ORDERING_TABLE_SIZE - 1], offset);
+    offset++;
+
+    if (g_ActiveBufferIdx == 0)
+    {
+        rect = D_800AE5C8 - 2;
+    }
+
+    SetDrawOffset(offset, rect);
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[orgIdx], offset);
+    offset++;
+
+    GsOUT_PACKET_P = offset;
+}
+
+void func_8005E650(s32 mapId) // 0x8005E650
+{
+    s32 i;
+    s16 count;
+
+    count = g_MapOverlayHeader.unkTable1Count_50;
+    for (i = 0; i < count; i++)
+    {
+        g_MapOverlayHeader.unkTable1_4C[i].field_A = 0;
+    }
+
+    count = g_MapOverlayHeader.bloodSplatCount_58;
+    for (i = 0; i < count; i++)
+    {
+        g_MapOverlayHeader.bloodSplats_54[i].field_0 = NO_VALUE;
+    }
+
+    D_800C4408 = 0;
+    D_800C4414 = 0;
+
+    if (g_MapOverlayHeader.worldObjectsInit_3C != NULL)
+    {
+        g_MapOverlayHeader.worldObjectsInit_3C();
+    }
+}
+
+void func_8005E70C(void) // 0x8005E70C
+{
+    s32 i;
+    s16 count;
+    u8  temp_v0;
+
+    count = g_MapOverlayHeader.unkTable1Count_50;
+    for (i = 0; i < count; i++)
+    {
+        temp_v0 = g_MapOverlayHeader.unkTable1_4C[i].field_A;
+        switch (temp_v0)
+        {
+            case 1:
+            case 2:
+            case 3:
+            case 15:
+            case 16:
+            case 17:
+            case 20:
+            case 21:
+            case 22:
+                g_MapOverlayHeader.unkTable1_4C[i].field_A = 0;
+                break;
+        }
+    }
+
+    count = g_MapOverlayHeader.bloodSplatCount_58;
+    for (i = 0; i < count; i++)
+    {
+        g_MapOverlayHeader.bloodSplats_54[i].field_0 = NO_VALUE;
+    }
+
+    D_800C4414 = 0;
+}
+
+s32 func_8005E7E0(s32 arg0) // 0x8005E7E0
+{
+    s32 idx;
+    s32 i;
+
+    idx = D_800C4408;
+
+    for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++, idx++)
+    {
+        if (idx >= g_MapOverlayHeader.unkTable1Count_50)
+        {
+            idx = 0;
+        }
+
+        if (g_MapOverlayHeader.unkTable1_4C[idx].field_A == 0)
+        {
+            break;
+        }
+    }
+
+    if (i == g_MapOverlayHeader.unkTable1Count_50)
+    {
+        return NO_VALUE;
+    }
+
+    g_MapOverlayHeader.unkTable1_4C[idx].field_A = arg0;
+
+    D_800C4408 = idx + 1;
+    return idx;
+}
+
+void func_8005E89C(void) // 0x8005E89C
+{
+    #define CLAMP_CUSTOM(a, b, min, max) \
+        ((((a) >= (max)) ? (max) : (b)) < (min) ? (min) : (((b) >= (max)) ? (max) : (a)))
+
+    SVECTOR          sp10;
+    s32              posX;
+    s32              posZ;
+    s32              posY;
+    s32              i;
+    POLY_FT4*        poly;
+    s_SubCharacter*  chara;
+    s_func_8005E89C* ptr;
+    s_800C42E8*      curPtr;
+
+    ptr = PSX_SCRATCH;
+
+    posX            = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12_SHIFT);
+    posY            = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT);
+    posZ            = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_SHIFT);
+    ptr->field_0.vx = Q8(posX);
+    ptr->field_0.vy = Q8(posY);
+    ptr->field_0.vz = Q8(posZ);
+
+    func_80049C2C(&ptr->field_C, FP_TO(posX, Q12_SHIFT), FP_TO(posY, Q12_SHIFT), FP_TO(posZ, Q12_SHIFT));
+
+    gte_SetRotMatrix(&ptr->field_C);
+    gte_SetTransMatrix(&ptr->field_C);
+    gte_ReadGeomScreen(&ptr->field_2C);
+
+    vwGetViewAngle(&sp10);
+    ptr->field_30.vx = sp10.vx;
+    ptr->field_30.vy = sp10.vy;
+
+    if (D_800C4414 & 0x1)
+    {
+        ptr->field_C4 = Q12_MULT_PRECISE(g_DeltaTime0, g_MapOverlayHeader.field_5C->field_E);
+        ptr->field_C8 = g_MapOverlayHeader.field_5C->field_4 * 16;
+        ptr->field_CA = g_MapOverlayHeader.field_5C->field_5 * 16;
+        ptr->field_CC = (0x100 - g_MapOverlayHeader.field_5C->field_5) * 16;
+        ptr->field_CE = (g_DeltaTime0 * g_MapOverlayHeader.field_5C->field_E) / g_MapOverlayHeader.field_5C->field_16;
+        ptr->field_C6 = (u16)g_MapOverlayHeader.field_5C->field_A >> 2;
+        ptr->field_D0 = g_MapOverlayHeader.field_5C->field_20;
+        ptr->field_D4 = g_MapOverlayHeader.field_5C->field_24;
+        ptr->field_D8 = g_MapOverlayHeader.field_5C->field_6 * (2 * ptr->field_2C);
+
+        switch (g_MapOverlayHeader.field_5C->field_1)
+        {
+            case 0:
+                for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++)
+                {
+                    if (g_MapOverlayHeader.unkTable1_4C[i].field_A == 12)
+                    {
+                        g_MapOverlayHeader.func_60(i, 0);
+                    }
+                }
+                break;
+
+            case 1:
+                g_MapOverlayHeader.field_5C->field_10 = MIN(g_MapOverlayHeader.field_5C->field_10 + ((g_DeltaTime0 * g_MapOverlayHeader.field_5C->field_2) >> 5),
+                                                            Q12(1.0f));
+                break;
+
+            case 2:
+                for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++)
+                {
+                    switch (g_MapOverlayHeader.unkTable1_4C[i].field_A)
+                    {
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
+                            g_MapOverlayHeader.unkTable1_4C[i].field_A = 12;
+                            break;
+                    }
+                }
+                break;
+
+            case 3:
+                g_MapOverlayHeader.field_5C->field_10 = CLAMP_LOW(g_MapOverlayHeader.field_5C->field_10 - ((g_DeltaTime0 * g_MapOverlayHeader.field_5C->field_2) >> 5),
+                                                                  Q12(0.0f));
+
+                for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++)
+                {
+                    if (g_MapOverlayHeader.unkTable1_4C[i].field_A == 12 &&
+                        Rng_GenerateUInt(0, 4095) > g_MapOverlayHeader.field_5C->field_10 &&
+                        Rng_GenerateInt(0, 15) != 0)
+                    {
+                        g_MapOverlayHeader.func_60(i, 1);
+                    }
+                }
+                break;
+        }
+    }
+    else if (D_800C4414 & 2)
+    {
+        if (g_MapOverlayHeader.field_7C->field_1C > 0)
+        {
+            g_MapOverlayHeader.field_7C->field_1C -= g_DeltaTime0;
+            g_MapOverlayHeader.field_7C->field_1C  = MAX(g_MapOverlayHeader.field_7C->field_1C, 0);
+        }
+        else
+        {
+            g_MapOverlayHeader.field_7C->field_10 = Q12_MULT_PRECISE(g_DeltaTime0, g_MapOverlayHeader.field_7C->field_E) +
+                                                    g_MapOverlayHeader.field_7C->field_10;
+            g_MapOverlayHeader.field_7C->field_10 = MIN(g_MapOverlayHeader.field_7C->field_10, Q12(0.25f));
+        }
+    }
+    else if (D_800C4414 & 8)
+    {
+        for (i = 0; i < g_MapOverlayHeader.field_94->field_78; i++)
+        {
+            if (g_MapOverlayHeader.field_94->field_30[i] == 0)
+            {
+                ptr->field_DC[i]            = Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->field_E4[i]            = Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->u_field_EC.raw_0[i]    = (g_MapOverlayHeader.field_94->field_5C[i] >> 1) * Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->u_field_FC.raw_0[i]    = (g_MapOverlayHeader.field_94->field_5C[i] >> 1) * Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->field_10C[i]           = g_MapOverlayHeader.field_94->field_64[i] * Math_Sin(g_MapOverlayHeader.field_94->field_34[i]);
+                ptr->field_11C[i]           = g_MapOverlayHeader.field_94->field_64[i] * Math_Cos(g_MapOverlayHeader.field_94->field_34[i]);
+            }
+            else
+            {
+                ptr->u_field_EC.field_0[i].vx = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy - FP_ANGLE(90.0f)));
+                ptr->u_field_EC.field_0[i].vy = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Sin(ptr->field_30.vy + FP_ANGLE(90.0f)));
+                ptr->u_field_FC.field_0[i].vx = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy - FP_ANGLE(90.0f)));
+                ptr->u_field_FC.field_0[i].vy = Q12_MULT(g_MapOverlayHeader.field_94->field_5C[i] >> 1, Math_Cos(ptr->field_30.vy + FP_ANGLE(90.0f)));
+            }
+        }
+
+        g_MapOverlayHeader.func_9C();
+    }
+
+    for (i = 0; i < 24; i++)
+    {
+        curPtr = &D_800C42E8[i];
+
+        if (D_800C42E8[i].field_0 != 0)
+        {
+            if (D_800C42E8[i].field_1 == 6)
+            {
+                chara = &g_SysWork.playerWork_4C.player_0;
+            }
+            else
+            {
+                chara = &g_SysWork.npcs_1A0[D_800C42E8[i].field_1];
+            }
+
+            ptr->field_34[i] = CLAMP_CUSTOM((chara->position_18.vx + chara->field_D8.offsetX_0) - D_800C42E8[i].field_4,
+                                            (chara->position_18.vx + chara->field_D8.offsetX_0) - curPtr->field_4,
+                                            -Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)),
+                                             Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)));
+
+            ptr->field_64[i] = CLAMP_CUSTOM((chara->position_18.vy + chara->field_C8.field_6) - D_800C42E8[i].field_2,
+                                            (chara->position_18.vy + chara->field_C8.field_6) - curPtr->field_2,
+                                            -Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)) >> 4,
+                                            Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)));
+
+            ptr->field_94[i] = CLAMP_CUSTOM((chara->position_18.vz + chara->field_D8.offsetZ_2) - D_800C42E8[i].field_8,
+                                            (chara->position_18.vz + chara->field_D8.offsetZ_2) - curPtr->field_8,
+                                            -Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)),
+                                             Q12_MULT_PRECISE(g_DeltaTime0, Q12(1.25f)));
+
+            D_800C42E8[i].field_4 += ptr->field_34[i];
+            D_800C42E8[i].field_2 += ptr->field_64[i];
+            D_800C42E8[i].field_8 += ptr->field_94[i];
+        }
+        else
+        {
+            ptr->field_34[i] = 0;
+            ptr->field_64[i] = 0;
+            ptr->field_94[i] = 0;
+        }
+    }
+
+    poly = (POLY_FT4*)GsOUT_PACKET_P;
+
+    for (i = 0; i < g_MapOverlayHeader.unkTable1Count_50; i++)
+    {
+        switch (g_MapOverlayHeader.unkTable1_4C[i].field_A)
+        {
+            case 0:
+                break;
+
+            case 1:
+                func_80060044(&poly, i);
+                break;
+
+            case 2:
+                func_800611C0(&poly, i);
+                break;
+
+            case 3:
+            case 4:
+                func_80062708(&poly, i);
+                break;
+
+            case 15:
+            case 16:
+            case 17:
+            case 18:
+            case 19:
+                func_80063A50(&poly, i);
+                break;
+
+            case 20:
+            case 21:
+            case 22:
+                func_80064334(&poly, i);
+                break;
+
+            case 8:
+            case 10:
+                g_MapOverlayHeader.func_64(&poly, i);
+                break;
+
+            case 9:
+            case 11:
+                g_MapOverlayHeader.func_68(&poly, i);
+                break;
+
+            case 7:
+                g_MapOverlayHeader.func_70(&poly, i);
+                break;
+
+            case 5:
+                g_MapOverlayHeader.func_78(&poly, i);
+                break;
+
+            case 13:
+                g_MapOverlayHeader.func_80(i);
+                break;
+
+            case 14:
+                g_MapOverlayHeader.func_84(&poly, i);
+                break;
+
+            case 23:
+            case 24:
+            case 25:
+            case 26:
+                g_MapOverlayHeader.func_8C(&poly, i);
+                break;
+
+            case 27:
+                g_MapOverlayHeader.func_98(&poly, i);
+                break;
+
+            case 28:
+                g_MapOverlayHeader.func_A4(&poly, i);
+                break;
+
+            case 31:
+                func_80064FC0(&poly, i);
+                break;
+
+            case 32:
+                g_MapOverlayHeader.func_90(&poly, i);
+                break;
+
+            case 33:
+                g_MapOverlayHeader.func_AC(&poly, i);
+                break;
+
+            case 34:
+                g_MapOverlayHeader.func_B0(&poly, i);
+                break;
+
+            case 35:
+                g_MapOverlayHeader.func_B4(&poly, i);
+                break;
+        }
+    }
+
+    GsOUT_PACKET_P = (PACKET*)poly;
+
+    for (i = 0; i < g_MapOverlayHeader.bloodSplatCount_58; i++)
+    {
+        if (g_MapOverlayHeader.bloodSplats_54[i].field_0 != NO_VALUE &&
+            g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[i].field_0].field_A == 0)
+        {
+            g_MapOverlayHeader.bloodSplats_54[i].field_0 = NO_VALUE;
+        }
+    }
+
+    if (D_800C4414 & (1 << 5))
+    {
+        g_MapOverlayHeader.func_A8();
+    }
+
+    if (g_SysWork.field_2388.isFlashlightUnavailable_16 != false && g_SysWork.sysState_8 == 0)
+    {
+        Game_TurnFlashlightOff();
+    }
+}
+
+s32 func_8005F55C(s32 arg0) // 0x8005F55C
+{
+    if (arg0 == 15)
+    {
+        return 0;
+    }
+
+    // TODO: Use available enums.
+    switch (g_GameWork.config_0.optExtraBloodColor_24)
+    {
+        case 3:
+            return 6;
+
+        case 6:
+            return 7;
+
+        case 9:
+            return 5;
+
+        case 12:
+            return 4;
+
+        case 13:
+            return 0;
+    }
+
+    switch (arg0)
+    {
+        case 4:
+            return 9;
+
+        case 1:
+        case 14:
+        {
+            // TODO: Use available enums. Some values appear unused.
+            switch (g_GameWork.config_0.optExtraBloodColor_24)
+            {
+                case 5:
+                    return 7;
+
+                case 2:
+                    return 6;
+
+                case 8:
+                    return 5;
+
+                case 11:
+                    return 4;
+
+                default:
+                    return 0;
+            }
+        }
+
+        case 5:
+        case 8:
+        case 12:
+            return 6;
+
+        case 10:
+            return 7;
+    }
+
+    // TODO: Use available enums. Some values appear unused.
+    switch (g_GameWork.config_0.optExtraBloodColor_24)
+    {
+        case 1:
+        case 2:
+            return 6;
+
+        case 4:
+        case 5:
+            return 7;
+
+        case 7:
+        case 8:
+            return 5;
+
+        case 10:
+        case 11:
+            return 4;
+    }
+
+    return 0;
+}
+
+bool func_8005F680(s_Collision* coll) // 0x8005F680
+{
+    bool cond;
+    s8   temp_v1;
+
+    temp_v1 = coll->field_8;
+
+    cond = false;
+    if (temp_v1 == 0 || temp_v1 == 12 || temp_v1 == 7)
+    {
+        cond = true;
+    }
+    return cond;
+}
+
+void func_8005F6B0(s_SubCharacter* chara, VECTOR* pos, s32 arg2, s32 arg3) // 0x8005F6B0
+{
+    s_Collision    coll;
+    VECTOR3        camPos; // Q19.12
+    q19_12         newPosX;
+    q19_12         newPosZ;
+    q20_12         dists[150];
+    s32            idx;
+    s32            unkCount;
+    s32            var_s5;
+    s32            i;
+    s32            j;
+    s32            k;
+    s32            count;
+    s32            curDist;
+    GsCOORDINATE2* camCoord;
+
+    if (g_GameWork.config_0.optExtraBloodColor_24 == 14) // TODO: Demagic 14.
+    {
+        arg3 = 5;
+    }
+    else
+    {
+        arg3 = func_8005F55C(arg3);
+    }
+
+    switch (arg2)
+    {
+        case 1:
+            var_s5 = 1;
+            count = 0;
+            unkCount = 6;
+            break;
+
+        case 2:
+            var_s5 = 2;
+            count = 1;
+            unkCount = 12;
+            break;
+
+        case 3:
+            var_s5 = 3;
+            count = Rng_GenerateUInt(1, 2);
+            unkCount = 18;
+            break;
+
+        case 4:
+            var_s5 = 3;
+            count = Rng_GenerateUInt(1, 4);
+            unkCount = 24;
+            break;
+
+        case 5:
+            var_s5 = 4;
+            count = Rng_GenerateUInt(2, 5);
+            unkCount = 0x1E;
+            break;
+
+        case 6:
+            var_s5 = 4;
+            count = Rng_GenerateUInt(1, 8);
+            unkCount = 36;
+            break;
+
+        case 7:
+            var_s5 = 5;
+            count = Rng_GenerateUInt(2, 9);
+            unkCount = 42;
+            break;
+
+        case 0:
+        default:
+            var_s5 = 0;
+            count = 0;
+            unkCount = 0;
+            break;
+
+        case 8:
+            var_s5 = 3;
+            count = 0;
+            unkCount = 16;
+            break;
+
+        case 9:
+            var_s5 = 1;
+            count = 0;
+            unkCount = 16;
+            break;
+    }
+
+    if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
+    {
+        count = 0;
+    }
+
+    if (arg2 != 8)
+    {
+        for (i = 0; i < 24; i++)
+        {
+            if (D_800C42E8[i].field_0 == 0)
+            {
+                break;
+            }
+        }
+
+        if (chara->model_0.charaId_0 == Chara_SplitHead)
+        {
+            i = 24;
+        }
+
+        if (i != 24)
+        {
+            D_800C42E8[i].field_0 = 1;
+            D_800C42E8[i].field_1 = Chara_NpcIdxGet(chara);
+            D_800C42E8[i].field_4 = chara->position_18.vx + chara->field_D8.offsetX_0;
+            D_800C42E8[i].field_2 = chara->position_18.vy + chara->field_C8.field_6;
+            D_800C42E8[i].field_8 = chara->position_18.vz + chara->field_D8.offsetZ_2;
+        }
+    }
+    else
+    {
+        i = 24;
+    }
+
+    for (j = 0; j < var_s5; j++)
+    {
+        idx = func_8005E7E0(1);
+
+        if (idx != NO_VALUE)
+        {
+            if (arg2 != 9)
+            {
+                g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = Rng_AddGeneratedUInt(pos->vx, -255, 256);
+                g_MapOverlayHeader.unkTable1_4C[idx].vy_8         = Rng_AddGeneratedUInt(pos->vy, -255, 256);
+                g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = Rng_AddGeneratedUInt(pos->vz, -255, 256);
+            }
+            else
+            {
+                g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = pos->vx;
+                g_MapOverlayHeader.unkTable1_4C[idx].vy_8         = pos->vy;
+                g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = pos->vz;
+            }
+
+            if (Rng_GenerateInt(0, 1) != 0) // 1 in 2 chance.
+            {
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = Rng_GenerateInt(0, 2) + (Rng_GenerateUInt(0, 7) * 8);
+            }
+            else
+            {
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = Rng_GenerateUInt(3, 4) + (Rng_GenerateUInt(0, 1) * 8);
+            }
+
+            g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1  = unkCount;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_2  = arg3;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_B              = i * 4;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 = Rng_GenerateUInt(0, 255);
+
+            if (chara->model_0.charaId_0 == Chara_Floatstinger)
+            {
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3 = 96;
+            }
+            else
+            {
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3 = 32;
+            }
+
+            if (arg2 == 9)
+            {
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3 = 33;
+            }
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    if (count == 0)
+    {
+        return;
+    }
+
+    vwGetViewPosition(&camPos);
+    camCoord   = vwGetViewCoord();
+    camPos.vx += camCoord->coord.m[0][2] * 2;
+    camPos.vz += camCoord->coord.m[2][2] * 2;
+
+    for (j = 0; j < g_MapOverlayHeader.bloodSplatCount_58; j++)
+    {
+        if (g_MapOverlayHeader.bloodSplats_54[j].field_0 == NO_VALUE)
+        {
+            dists[j] = INT_MAX;
+        }
+        else
+        {
+            if (g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_B != 2)
+            {
+                dists[j] = 0;
+            }
+            else
+            {
+
+                newPosX = ABS(camPos.vx - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_0.vx_0);
+                newPosZ = ABS(camPos.vz - g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_4.vz_4);
+
+                dists[j] = MAX(newPosX, newPosZ) + (CLAMP_HIGH(newPosX, newPosZ) >> 1);
+
+                if (dists[j] > Q12(80.0f))
+                {
+                    g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_A = 0;
+                    g_MapOverlayHeader.bloodSplats_54[j].field_0                                          = NO_VALUE;
+                    dists[j]                                                                              = INT_MAX;
+                }
+                else
+                {
+                    dists[j] += Rng_GenerateUInt(0, 16383);
+                }
+            }
+        }
+    }
+
+    for (j = 0; j < count; j++)
+    {
+        if (dists[j] != INT_MAX)
+        {
+            for (k = j + 1; k < g_MapOverlayHeader.bloodSplatCount_58; k++)
+            {
+                curDist = dists[j];
+                if (dists[k] <= curDist)
+                {
+                    continue;
+                }
+
+                dists[j] = dists[k];
+                dists[k] = curDist;
+
+                unkCount                                       = g_MapOverlayHeader.bloodSplats_54[j].field_0;
+                g_MapOverlayHeader.bloodSplats_54[j].field_0 = g_MapOverlayHeader.bloodSplats_54[k].field_0;
+                g_MapOverlayHeader.bloodSplats_54[k].field_0 = unkCount;
+
+                if (dists[j] == INT_MAX)
+                {
+                    break;
+                }
+            }
+
+            if (dists[j] == Q12(0.0f))
+            {
+                count = j;
+                break;
+            }
+        }
+    }
+
+    unkCount = 0;
+
+    for (j = 0; j < count; j++)
+    {
+        if (g_MapOverlayHeader.bloodSplats_54[j].field_0 != NO_VALUE)
+        {
+            g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_B          = 3;
+            g_MapOverlayHeader.unkTable1_4C[g_MapOverlayHeader.bloodSplats_54[j].field_0].field_10.field_0 = 0;
+            g_MapOverlayHeader.bloodSplats_54[j].field_0                                                   = NO_VALUE;
+        }
+
+        idx = func_8005E7E0(2);
+
+        if (idx != NO_VALUE)
+        {
+            g_MapOverlayHeader.unkTable1_4C[idx].field_B      = i * 4;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = Rng_AddGeneratedUInt(pos->vx, -1023, 1024);
+            g_MapOverlayHeader.unkTable1_4C[idx].vy_8         = Rng_AddGeneratedUInt(pos->vy, -2047, 2048);
+            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = Rng_AddGeneratedUInt(pos->vz, -1023, 1024);
+
+            Collision_Get(&coll, g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+
+            if (func_8005F680(&coll) || (coll.groundHeight_0 < (pos->vy - Q12(0.2f))))
+            {
+                g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
+            }
+            else
+            {
+                if (coll.groundHeight_0 < g_MapOverlayHeader.unkTable1_4C[idx].vy_8)
+                {
+                    g_MapOverlayHeader.unkTable1_4C[idx].vy_8 = coll.groundHeight_0;
+
+                    // @hack
+                    unkCount++;
+                    unkCount--;
+                }
+
+                g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 = -(Rng_Rand16() & 0x800);
+                g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_2 = coll.groundHeight_0;
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0  = Rng_GenerateUInt(0, 15);
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_2  = arg3;
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1  = Rng_GenerateUInt(6, 21);
+                g_MapOverlayHeader.bloodSplats_54[j].field_0              = idx;
+                unkCount++;
+            }
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    if (unkCount != 0 && i != 24)
+    {
+        D_800C42E8[i].field_0 += 2;
+    }
+}
+
+bool func_80060044(POLY_FT4** poly, s32 idx) // 0x80060044
+{
+    s32              temp_v0_2;
+    s32              temp_v1_5;
+    s32              temp_v1_5_;
+    s32              var_a2;
+    s32              var_v0_6;
+    s32              temp_a1;
+    s32              temp_a2_2;
+    u8               temp_s0;
+    s_func_80060044* ptr;
+    POLY_FT4*        next;
+
+    ptr = PSX_SCRATCH;
+
+    ptr->field_148 = g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0;
+
+    if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
+    {
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 += (u16)g_DeltaTime0 * 4;
+    }
+    else if (g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3 == 33)
+    {
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 += (u16)g_DeltaTime0 * 2;
+    }
+    else
+    {
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 += g_DeltaTime0;
+    }
+
+    temp_a1 = g_MapOverlayHeader.unkTable1_4C[idx].field_B >> 2;
+    if ((u16)g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 >= 5233)
+    {
+        g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
+
+        if (temp_a1 != 24)
+        {
+            if (D_800C42E8[temp_a1].field_0 & 1)
+            {
+                D_800C42E8[temp_a1].field_0 -= 1;
+            }
+        }
+
+        return false;
+    }
+
+    if (temp_a1 != 24)
+    {
+        g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += ptr->field_0.field_34[temp_a1];
+        g_MapOverlayHeader.unkTable1_4C[idx].vy_8 += ptr->field_0.field_64[temp_a1];
+        g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += ptr->field_0.field_94[temp_a1];
+    }
+
+    *(u32*)&ptr->field_138.vx = (((g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) + (((g_MapOverlayHeader.unkTable1_4C[idx].vy_8 >> 4) - ptr->field_0.field_0.vy) << 0x10);
+    ptr->field_138.vz         = (g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 >> 4) - ptr->field_0.field_0.vz;
+
+    gte_ldv0(&ptr->field_138);
+    gte_rtps();
+    gte_stsxy(&ptr->field_144);
+    gte_stsz(&ptr->field_140);
+
+    temp_v0_2 = ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3;
+
+    if (temp_v0_2 <= 0 || (temp_v0_2 >> 3) >= ORDERING_TABLE_SIZE ||
+        ABS(ptr->field_144.vx) > 200 ||
+        ABS(ptr->field_144.vy) > 160)
+    {
+        return false;
+    }
+
+    ptr->field_14C = ((g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 * 3) + ((ptr->field_148 * 2) / 327) +
+                      (g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 < 3 ? g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 : 0)) *
+                     ptr->field_0.field_2C / ptr->field_140;
+
+    setPolyFT4(*poly);
+
+    setXY0Fast(*poly, (u16)ptr->field_144.vx - (u16)ptr->field_14C, ptr->field_144.vy - ptr->field_14C);
+    setXY1Fast(*poly, (u16)ptr->field_144.vx + (u16)ptr->field_14C, ptr->field_144.vy - ptr->field_14C);
+    setXY2Fast(*poly, (u16)ptr->field_144.vx - (u16)ptr->field_14C, ptr->field_144.vy + ptr->field_14C);
+    setXY3Fast(*poly, (u16)ptr->field_144.vx + (u16)ptr->field_14C, ptr->field_144.vy + ptr->field_14C);
+
+    var_a2    = (g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0) >> 3;
+    temp_a2_2 = var_a2;
+
+    temp_v1_5_ = temp_a2_2 ^ 0x1;
+    temp_v1_5_ = temp_v1_5_ & 0x1;
+
+    temp_v1_5 = (u32)temp_a2_2 >> 1;
+    temp_v1_5 = temp_v1_5 ^ 0x1;
+    temp_v1_5 = temp_v1_5 & 0x1;
+
+    temp_v1_5 = temp_v1_5_ ^ temp_v1_5;
+
+    if ((!(temp_a2_2 & 4) && (temp_v1_5 ^ 1) != 0) || ((temp_a2_2 & 4) && (temp_v1_5) != 0))
+    {
+        var_v0_6 = 0;
+    }
+    else
+    {
+        var_v0_6 = 0x1F;
+    }
+    ptr->field_154 = var_v0_6;
+
+    if (temp_a2_2 >= 4)
+    {
+        ptr->field_168 = 0x1F;
+    }
+    else
+    {
+        ptr->field_168 = 0;
+    }
+
+    temp_v1_5 = temp_a2_2 ^ 0x1;
+    temp_v1_5 = temp_v1_5 & 0x1;
+
+    if ((!(temp_a2_2 & 4) && (temp_v1_5 ^ 1) != 0) || ((temp_a2_2 & 4) && (temp_v1_5) != 0))
+    {
+        var_v0_6 = 0;
+    }
+    else
+    {
+        var_v0_6 = 0x1F;
+    }
+    ptr->field_158 = var_v0_6;
+
+    temp_v1_5 = (u32)temp_a2_2 >> 1;
+    temp_v1_5 = temp_v1_5 ^ 1;
+    temp_v1_5 = temp_v1_5 & 1;
+
+    if ((!(temp_a2_2 & 0x4) && (temp_v1_5 ^ 0x1) != 0) || ((temp_a2_2 & 0x4) && temp_v1_5 != 0))
+    {
+        var_v0_6 = 0x1F;
+    }
+    else
+    {
+        var_v0_6 = 0;
+    }
+    ptr->field_16C = var_v0_6;
+
+    temp_v1_5 = temp_a2_2 ^ 0x1;
+    temp_v1_5 = temp_v1_5 & 0x1;
+
+    if ((!(temp_a2_2 & 0x4) && (temp_v1_5 ^ 0x1) != 0) || ((temp_a2_2 & 0x4) && temp_v1_5 != 0))
+    {
+        var_v0_6 = 0x1F;
+    }
+    else
+    {
+        var_v0_6 = 0;
+    }
+    ptr->field_15C = var_v0_6;
+
+    temp_v1_5 = (u32)temp_a2_2 >> 1;
+    temp_v1_5 = temp_v1_5 ^ 1;
+    temp_v1_5 = temp_v1_5 & 1;
+
+    if ((!(temp_a2_2 & 0x4) && (temp_v1_5 ^ 0x1) != 0) || ((temp_a2_2 & 0x4) && temp_v1_5 != 0))
+    {
+        var_v0_6 = 0;
+    }
+    else
+    {
+        var_v0_6 = 0x1F;
+    }
+    ptr->field_170 = var_v0_6;
+
+    temp_v1_5_ = temp_a2_2 ^ 0x1;
+    temp_v1_5_ = temp_v1_5_ & 0x1;
+
+    temp_v1_5 = (u32)temp_a2_2 >> 1;
+    temp_v1_5 = temp_v1_5 ^ 0x1;
+    temp_v1_5 = temp_v1_5 & 0x1;
+
+    temp_v1_5 = temp_v1_5_ ^ temp_v1_5;
+
+    if ((!(temp_a2_2 & 0x4) && (temp_v1_5 ^ 0x1) != 0) || ((temp_a2_2 & 0x4) && temp_v1_5 != 0))
+    {
+        var_v0_6 = 0x1F;
+    }
+    else
+    {
+        var_v0_6 = 0;
+    }
+    ptr->field_160 = var_v0_6;
+
+    if (temp_a2_2 < 4)
+    {
+        ptr->field_174 = 0x1F;
+    }
+    else
+    {
+        ptr->field_174 = 0;
+    }
+
+    ptr->field_150 = ((g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 & 0x7) + 2);
+    ptr->field_164 = CLAMP_LOW_THEN_MIN((ptr->field_148 / 327), 0, 7);
+
+    setSemiTrans(*poly, true);
+
+    if (g_GameWork.config_0.optExtraBloodColor_24 == 0xE)
+    {
+        *(s32*)&(*poly)->u1 = (((ptr->field_164 << 5) + ptr->field_16C) << 8) + 0x2B0000 + ((ptr->field_150 << 5) + ptr->field_158);
+        *(s32*)&(*poly)->u2 = (((ptr->field_164 << 5) + ptr->field_170) << 8) + ((ptr->field_150 << 5) + ptr->field_15C);
+        *(s32*)&(*poly)->u3 = (((ptr->field_164 << 5) + ptr->field_174) << 8) + ((ptr->field_150 << 5) + ptr->field_160);
+    }
+    else
+    {
+        *(s32*)&(*poly)->u1 = (((ptr->field_164 << 5) + ptr->field_16C) << 8) + 0x4B0000 + ((ptr->field_150 << 5) + ptr->field_158);
+        *(s32*)&(*poly)->u2 = (((ptr->field_164 << 5) + ptr->field_170) << 8) + ((ptr->field_150 << 5) + ptr->field_15C);
+        *(s32*)&(*poly)->u3 = (((ptr->field_164 << 5) + ptr->field_174) << 8) + ((ptr->field_150 << 5) + ptr->field_160);
+    }
+
+    if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 3))
+    {
+        if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
+        {
+            func_80055A90(&ptr->field_130, &ptr->field_134, 0x40, ptr->field_140 * 16);
+
+            *(u16*)&(*poly)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
+            (*poly)->b0         = ptr->field_130.b;
+
+            *(s32*)&(*poly)->u0 = (((ptr->field_164 << 5) + ptr->field_154) << 8) + 0x930000 + ((ptr->field_150 << 5) + ptr->field_168);
+
+            *(*poly + 1) = **poly;
+
+            *(u16*)&(*poly + 1)->r0 = ptr->field_134.r + ((ptr->field_134.g >> 4) << 8);
+            (*poly + 1)->b0         = ptr->field_134.b >> 4;
+            (*poly + 1)->clut       = (g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_2 << 6) | 0x13;
+
+            setSemiTrans(*poly + 1, false);
+
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], *poly);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], *poly + 1);
+            *poly += 2;
+        }
+        else
+        {
+            var_a2 = 0xFF - ((ptr->field_148 * 0x10) / 327);
+            if (var_a2 < 0)
+            {
+                var_a2 = 0;
+            }
+            func_80055A90(&ptr->field_130, &ptr->field_134, var_a2, ptr->field_140 * 16);
+
+            *(u16*)&(*poly)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
+            (*poly)->b0         = ptr->field_130.b;
+
+            *(s32*)&(*poly)->u0 = (((ptr->field_164 << 5) + ptr->field_154) << 8) + 0x930000 + ((ptr->field_150 << 5) + ptr->field_168);
+
+            *(*poly + 3) = *(*poly + 2) = *(*poly + 1) = **poly;
+
+            *(u16*)&(*poly + 1)->r0 = ptr->field_134.r + (ptr->field_134.g << 8);
+            (*poly + 1)->b0         = ptr->field_134.b;
+            (*poly)->tpage          = 43;
+            (*poly + 1)->clut       = (g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_2 << 6) | 0x13;
+            (*poly + 3)->tpage      = 43;
+
+            ptr->field_12C = (PACKET*)*poly + 0xA0;
+            SetPriority(ptr->field_12C, 0, 0);
+            SetPriority(ptr->field_12C + 0xC, 1, 1);
+
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], *poly);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], *poly + 1);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], *poly + 2);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], ptr->field_12C);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], *poly + 3);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], ptr->field_12C + 12);
+            *poly = ptr->field_12C + 0x18;
+        }
+        return true;
+    }
+
+    if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
+    {
+        temp_s0             = func_80055D78(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].vy_8, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+        *(u16*)&(*poly)->r0 = temp_s0 + (func_80055D78(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].vy_8, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4) << 8);
+        (*poly)->b0         = func_80055D78(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].vy_8, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+    }
+    else
+    {
+        var_a2 = 0xFF - (ptr->field_148 * 16) / 327;
+        if (var_a2 < 0)
+        {
+            var_a2 = 0;
+        }
+        *(u16*)&(*poly)->r0 = var_a2 + (var_a2 << 8);
+        (*poly)->b0         = var_a2;
+    }
+
+    *(s32*)&(*poly)->u0 = (((g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_2 << 6) | 0x13) << 16) + (((ptr->field_164 << 5) + ptr->field_168) << 8) + ((ptr->field_150 << 5) + ptr->field_154);
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3) >> 3], *poly);
+
+    *poly += 1;
+
+    return true;
+}
+
+bool func_800611C0(POLY_FT4** poly, s32 idx) // 0x800611C0
+{
+    s_func_800611C0  sp10;
+    s_Collision      colls[4];
+    s16              temp_v1_6;
+    s32              temp_v1_15;
+    s32              temp_v1_15_;
+    s32              var_t0;
+    s32              var_v0_6;
+    u32              idx0;
+    u32              var_a0_3;
+    s32              temp;
+    s_func_800611C0* ptr;
+
+    ptr = PSX_SCRATCH;
+
+    if (!(g_MapOverlayHeader.unkTable1_4C[idx].field_B & 0x3))
+    {
+        idx0 = g_MapOverlayHeader.unkTable1_4C[idx].field_B >> 2;
+
+        if (idx0 != 24)
+        {
+            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += ptr->field_0.field_34[idx0];
+            g_MapOverlayHeader.unkTable1_4C[idx].vy_8 += ptr->field_0.field_64[idx0];
+            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += ptr->field_0.field_94[idx0];
+        }
+
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 = MIN(g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 + (g_DeltaTime2 >> 2), 0x2000);
+
+        g_MapOverlayHeader.unkTable1_4C[idx].vy_8 += g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0;
+
+        if (g_MapOverlayHeader.unkTable1_4C[idx].vy_8 > g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_2)
+        {
+            if (idx0 != 24)
+            {
+                if (D_800C42E8[idx0].field_0 & 2)
+                {
+                    D_800C42E8[idx0].field_0 -= 2;
+                }
+            }
+
+            g_MapOverlayHeader.unkTable1_4C[idx].vy_8 = g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_2;
+
+            sp10 = *ptr;
+
+            ptr->field_178 = g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 << 5;
+
+            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + ptr->field_178, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - ptr->field_178, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + ptr->field_178);
+            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - ptr->field_178);
+
+            if (func_8005F680(&colls[0]) || func_8005F680(&colls[1]) || func_8005F680(&colls[2]) || func_8005F680(&colls[3]) ||
+                (g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - colls[0].groundHeight_0) < Q12(-0.2f) ||
+                (g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - colls[1].groundHeight_0) < Q12(-0.2f) ||
+                (g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - colls[2].groundHeight_0) < Q12(-0.2f) ||
+                (g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - colls[3].groundHeight_0) < Q12(-0.2f))
+            {
+                g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
+            }
+            else
+            {
+                g_MapOverlayHeader.unkTable1_4C[idx].field_B          = 1;
+                g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 = Rng_GenerateUInt(0, 255);
+            }
+
+            *ptr = sp10;
+
+            gte_SetRotMatrix(&ptr->field_0.field_C);
+            gte_SetTransMatrix(&ptr->field_0.field_C);
+        }
+
+        return true;
+    }
+
+    ptr->field_168 = g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0;
+
+    if (g_MapOverlayHeader.unkTable1_4C[idx].field_B == 2)
+    {
+        if (*g_MapOverlayHeader.data_190 != 0)
+        {
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime0;
+            if (g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 > Q12(50.0f))
+            {
+                g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 = Q12(50.0f);
+            }
+
+            ptr->field_168 = 0xCC0;
+        }
+    }
+    else
+    {
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime0;
+
+        if (g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 > 0xCC0)
+        {
+            if (g_MapOverlayHeader.unkTable1_4C[idx].field_B == 1)
+            {
+                g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0    = 0xCC0;
+                g_MapOverlayHeader.unkTable1_4C[idx].field_B             = 2;
+                g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3 = 0x80;
+            }
+            else
+            {
+                g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
+                return false;
+            }
+        }
+    }
+
+    vwGetViewPosition(&ptr->field_14C);
+
+    if (ABS(ptr->field_14C.vx - g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0) +
+        ABS(ptr->field_14C.vz - g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4) > Q12(20.0f))
+    {
+        if (g_MapOverlayHeader.unkTable1_4C[idx].field_B == 3)
+        {
+            g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
+        }
+
+        return false;
+    }
+
+    if ((u32)(g_MapOverlayHeader.unkTable1_4C[idx].field_B & 3) < 3u)
+    {
+        temp           = g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 * 16;
+        temp           = (ptr->field_168 * temp) / 816;
+        ptr->field_178 = temp < (g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 << 5) ? temp : (g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 << 5);
+    }
+    else
+    {
+        ptr->field_178 = g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 << 5;
+    }
+
+    setPolyFT4(*poly);
+
+    *(s32*)&ptr->field_134.vx = ((((g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - ptr->field_178) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+                                (((g_MapOverlayHeader.unkTable1_4C[idx].vy_8 >> 4) - ptr->field_0.field_0.vy) << 16);
+
+    ptr->field_134.vz = ((g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + ptr->field_178) >> 4) - ptr->field_0.field_0.vz;
+
+    *(s32*)&ptr->field_13C.vx = ((((g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + ptr->field_178) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+                                (((g_MapOverlayHeader.unkTable1_4C[idx].vy_8 >> 4) - ptr->field_0.field_0.vy) << 16);
+
+    ptr->field_13C.vz = ((g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + ptr->field_178) >> 4) - ptr->field_0.field_0.vz;
+
+    *(s32*)&ptr->field_144.vx = ((((g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - ptr->field_178) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+                                (((g_MapOverlayHeader.unkTable1_4C[idx].vy_8 >> 4) - ptr->field_0.field_0.vy) << 16);
+
+    ptr->field_144.vz = ((g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - ptr->field_178) >> 4) - ptr->field_0.field_0.vz;
+
+    gte_ldv3c(&ptr->field_134);
+    gte_rtpt();
+    gte_stsxy3_g3(*poly);
+    gte_stsz3c(&ptr->field_158);
+
+    *(s32*)&ptr->field_134.vx = ((((g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + ptr->field_178) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+                                (((g_MapOverlayHeader.unkTable1_4C[idx].vy_8 >> 4) - ptr->field_0.field_0.vy) << 16);
+
+    ptr->field_134.vz = ((g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - ptr->field_178) >> 4) - ptr->field_0.field_0.vz;
+
+    gte_ldv0(&ptr->field_134);
+    gte_rtps();
+    gte_stsxy(&ptr->field_16C);
+    gte_stsz(&ptr->field_164);
+
+    ptr->field_158 = (ptr->field_158 + ptr->field_15C + ptr->field_160 + ptr->field_164) >> 2;
+
+    if (ptr->field_158 - 8 <= 0 || ((ptr->field_158 - 8) >> 3) >= ORDERING_TABLE_SIZE)
+    {
+        return false;
+    }
+
+    if (ABS(ptr->field_16C.vx) > 200)
+    {
+        return false;
+    }
+
+    if (ABS(ptr->field_16C.vy) > 160)
+    {
+        return false;
+    }
+
+    *(s32*)&(*poly)->x3 = *(s32*)&ptr->field_16C;
+
+    ptr->field_17C = !(g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 & 8) << 5;
+
+    if (g_MapOverlayHeader.unkTable1_4C[idx].field_B == 3)
+    {
+        ptr->field_190 = 224;
+    }
+    else
+    {
+        ptr->field_190 = MIN(ptr->field_168 / 408, 7) << 5;
+    }
+
+    var_t0 = g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 & 7;
+
+    temp_v1_15_ = var_t0 ^ 0x1;
+    temp_v1_15_ = temp_v1_15_ & 0x1;
+
+    temp_v1_15 = (u32)var_t0 >> 1;
+    temp_v1_15 = temp_v1_15 ^ 0x1;
+    temp_v1_15 = temp_v1_15 & 0x1;
+
+    temp_v1_15 = temp_v1_15_ ^ temp_v1_15;
+
+    if ((!(var_t0 & 0x4) && (temp_v1_15 ^ 0x1) != 0) || ((var_t0 & 0x4) && temp_v1_15 != 0))
+    {
+        var_v0_6 = 0;
+    }
+    else
+    {
+        var_v0_6 = 0x1F;
+    }
+    ptr->field_180 = var_v0_6;
+
+    if (var_t0 >= 4)
+    {
+        ptr->field_194 = 0x1F;
+    }
+    else
+    {
+        ptr->field_194 = 0;
+    }
+
+    temp_v1_15 = var_t0 ^ 0x1;
+    temp_v1_15 = temp_v1_15 & 0x1;
+
+    if ((!(var_t0 & 0x4) && (temp_v1_15 ^ 0x1) != 0) || ((var_t0 & 0x4) && temp_v1_15 != 0))
+    {
+        var_v0_6 = 0;
+    }
+    else
+    {
+        var_v0_6 = 0x1F;
+    }
+    ptr->field_184 = var_v0_6;
+
+    temp_v1_15 = (u32)var_t0 >> 1;
+    temp_v1_15 = temp_v1_15 ^ 1;
+    temp_v1_15 = temp_v1_15 & 1;
+
+    if ((!(var_t0 & 0x4) && (temp_v1_15 ^ 0x1) != 0) || ((var_t0 & 0x4) && temp_v1_15 != 0))
+    {
+        var_v0_6 = 0x1F;
+    }
+    else
+    {
+        var_v0_6 = 0;
+    }
+    ptr->field_198 = var_v0_6;
+
+    temp_v1_15 = var_t0 ^ 1;
+    temp_v1_15 = temp_v1_15 & 1;
+
+    if ((!(var_t0 & 0x4) && (temp_v1_15 ^ 0x1) != 0) || ((var_t0 & 0x4) && temp_v1_15 != 0))
+    {
+        var_v0_6 = 0x1F;
+    }
+    else
+    {
+        var_v0_6 = 0;
+    }
+    ptr->field_188 = var_v0_6;
+
+    temp_v1_15 = (u32)var_t0 >> 1;
+    temp_v1_15 = temp_v1_15 ^ 1;
+    temp_v1_15 = temp_v1_15 & 1;
+
+    if ((!(var_t0 & 0x4) && (temp_v1_15 ^ 0x1) != 0) || ((var_t0 & 0x4) && temp_v1_15 != 0))
+    {
+        var_v0_6 = 0;
+    }
+    else
+    {
+        var_v0_6 = 0x1F;
+    }
+    ptr->field_19C = var_v0_6;
+
+    temp_v1_15_ = var_t0 ^ 0x1;
+    temp_v1_15_ = temp_v1_15_ & 0x1;
+
+    temp_v1_15 = (u32)var_t0 >> 1;
+    temp_v1_15 = temp_v1_15 ^ 0x1;
+    temp_v1_15 = temp_v1_15 & 0x1;
+
+    temp_v1_15 = temp_v1_15_ ^ temp_v1_15;
+
+    if ((!(var_t0 & 0x4) && (temp_v1_15 ^ 0x1) != 0) || ((var_t0 & 0x4) && temp_v1_15 != 0))
+    {
+        var_v0_6 = 0x1F;
+    }
+    else
+    {
+        var_v0_6 = 0;
+    }
+    ptr->field_18C = var_v0_6;
+
+    if (var_t0 < 4)
+    {
+        ptr->field_1A0 = 0x1F;
+    }
+    else
+    {
+        ptr->field_1A0 = 0;
+    }
+
+    if (g_MapOverlayHeader.unkTable1_4C[idx].field_B == 1)
+    {
+        var_t0 = 0xFF - ((ptr->field_168 * 0x10) / 204);
+        var_t0 = MAX(var_t0, 0x80);
+    }
+    else if (g_MapOverlayHeader.unkTable1_4C[idx].field_B == 2)
+    {
+        if (*g_MapOverlayHeader.data_190 != 0)
+        {
+            temp_v1_6                                                 = (0x80 - (((g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 - 0xCC0) << 7) / 204800)) < 0x20;
+            var_a0_3                                                  = !(temp_v1_6) ? (0x80 - (((g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 - 0xCC0) << 7) / 204800)) : 0x20;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3 = var_a0_3;
+            var_t0                                                    = var_a0_3 & 0xFF;
+        }
+        else
+        {
+            var_t0 = g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3;
+        }
+    }
+    else
+    {
+        var_t0 = g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_3 - ((ptr->field_168 * 8) / 204);
+        var_t0 = MAX(var_t0, 0);
+    }
+
+    *(s32*)&(*poly)->u1 = ((ptr->field_190 + ptr->field_198) << 8) + 0x4B0000 + (ptr->field_17C + ptr->field_184);
+    *(s32*)&(*poly)->u2 = ((ptr->field_190 + ptr->field_19C) << 8) + (ptr->field_17C + ptr->field_188);
+    *(s32*)&(*poly)->u3 = ((ptr->field_190 + ptr->field_1A0) << 8) + (ptr->field_17C + ptr->field_18C);
+
+    setSemiTrans(*poly, true);
+
+    if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3))
+    {
+        *(s32*)&(*poly)->u0 = ((ptr->field_190 + ptr->field_194) << 8) + 0x930000 + (ptr->field_17C + ptr->field_180);
+        func_80055A90(&ptr->field_12C, &ptr->field_130, var_t0, ptr->field_158 * 16);
+        *(u16*)&(*poly)->r0 = ptr->field_12C.r + (ptr->field_12C.g << 8);
+        (*poly)->b0         = ptr->field_12C.b;
+
+        *(*poly + 2) = *(*poly + 1) = **poly;
+
+        (*poly)->tpage          = 0x2B;
+        (*poly + 1)->clut       = (g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_2 << 6) | 0x13;
+        *(u16*)&(*poly + 1)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
+        (*poly + 1)->b0         = ptr->field_130.b;
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_158 >> 3], *poly);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_158 >> 3], *poly + 1);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_158 >> 3], *poly + 2);
+
+        *poly = *poly + 3;
+    }
+    else
+    {
+        *(s32*)&(*poly)->u0 = (((g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_2 << 6) | 0x13) << 16) +
+                              ((ptr->field_190 + ptr->field_194) << 8) + (ptr->field_17C + ptr->field_180);
+        *(u16*)&(*poly)->r0 = var_t0 + (var_t0 << 8);
+        (*poly)->b0         = var_t0;
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_158 >> 3], *poly);
+
+        *poly = *poly + 1;
+    }
+
+    return true;
+}
+
+void func_800622B8(s32 unused, s_SubCharacter* chara, s32 animStatus, s32 arg3) // 0x800622B8
+{
+    s_Collision coll;
+    s32         temp_s0;
+    s32         temp_s2;
+    s32         temp_s3;
+    s32         idx;
+    s32         i;
+
+    if (g_GameWork.config_0.optExtraBloodColor_24 == 14)
+    {
+        return;
+    }
+
+    // Related to blood.
+    arg3 = func_8005F55C(arg3);
+
+    i = D_800AE5CC[animStatus + 1] - D_800AE5CC[animStatus];
+    while (i > 0)
+    {
+        idx = func_8005E7E0(3);
+        if (idx == NO_VALUE)
+        {
+            break;
+        }
+
+        temp_s0 = (D_800AE5CC[animStatus] + i) - 1;
+
+        temp_s3 = Rng_Rand16() % D_800AE5F0[temp_s0 * 4]       + D_800AE5F0[(temp_s0 * 4) + 1];
+        temp_s2 = Rng_Rand16() % D_800AE5F0[(temp_s0 * 4) + 2] + D_800AE5F0[(temp_s0 * 4) + 3];
+
+        g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = chara->position_18.vx +
+                                                            Q12_MULT(temp_s3, Math_Sin(chara->rotation_24.vy)) -
+                                                            Q12_MULT(temp_s2, Math_Cos(chara->rotation_24.vy));
+        g_MapOverlayHeader.unkTable1_4C[idx].vy_8 = chara->position_18.vy;
+        g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = chara->position_18.vz +
+                                                            Q12_MULT(temp_s3, Math_Cos(chara->rotation_24.vy)) +
+                                                            Q12_MULT(temp_s2, Math_Sin(chara->rotation_24.vy));
+
+        Collision_Get(&coll, g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+
+        if (ABS_DIFF(coll.groundHeight_0, chara->position_18.vy) > Q12(0.15f))
+        {
+            g_MapOverlayHeader.unkTable1_4C[(idx)].field_A = 0;
+        }
+        else
+        {
+            g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 = D_800AE700[animStatus] + (Rng_Rand16() % (D_800AE700[animStatus] >> 2));
+            g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 = arg3;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_B             = Rng_GenerateUInt(4, 7);
+            g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = Chara_NpcIdxGet(chara);
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0    = Rng_GenerateUInt(0, 8191);
+        }
+
+        i--;
+    }
+}
+
+void func_800625F4(VECTOR3* arg0, s16 arg1, s32 arg2, s32 arg3) // 0x800625F4
+{
+    s32 idx;
+    s8  var;
+
+    var = func_8005F55C(arg2);
+
+    idx = func_8005E7E0(4);
+    if (idx == NO_VALUE)
+    {
+        return;
+    }
+
+    g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0        = arg0->vx;
+    g_MapOverlayHeader.unkTable1_4C[idx].vy_8                = arg0->vy;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4        = arg0->vz;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 = arg1;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 = var;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_B             = Rng_GenerateUInt(0, 3);
+    g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = 6;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0    = arg3 * Q12(5.0f);
+}
+
+bool func_80062708(POLY_FT4** poly, s32 idx) // 0x80062708
+{
+    s_func_80062708  sp10;
+    s_Collision      colls[4];
+    s32              temp_a1_3;
+    s32              temp_s2;
+    s32              j;
+    s32              i;
+    s32              var_s7;
+    u32              temp_v1_6;
+    s_func_80062708* ptr;
+
+    ptr = PSX_SCRATCH;
+
+    if (g_MapOverlayHeader.unkTable1_4C[idx].field_A == 3)
+    {
+        var_s7 = 0xC;
+        if (g_SysWork.npcs_1A0[g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0].model_0.charaId_0 == Chara_None)
+        {
+            g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
+            return false;
+        }
+    }
+    else
+    {
+        var_s7 = 0x100;
+    }
+
+    if (g_MapOverlayHeader.unkTable1_4C[idx].field_B & (1 << 2))
+    {
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime0;
+
+        if (g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 > Q12(2.5f))
+        {
+            g_MapOverlayHeader.unkTable1_4C[idx].field_B         -= 4;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 = 0;
+        }
+        return false;
+    }
+
+    ptr->field_208 = g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0;
+
+    if (*g_MapOverlayHeader.data_190 != 0)
+    {
+        g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime0;
+
+        if (g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 > Q12(45.0f))
+        {
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 = Q12(45.0f);
+        }
+    }
+    else
+    {
+        if (g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 < Q12(5.0f))
+        {
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 += g_DeltaTime0;
+        }
+    }
+
+    vwGetViewPosition(&ptr->field_1FC);
+
+    if ((ABS(ptr->field_1FC.vx - g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0) +
+         ABS(ptr->field_1FC.vz - g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4)) > Q12(20.0f))
+    {
+        return false;
+    }
+
+    if (ptr->field_208 >= Q12(5.0f))
+    {
+        ptr->field_2DC = (u16)g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2;
+    }
+    else
+    {
+        ptr->field_2DC = (ptr->field_208 * (u16)g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2) / Q12(5.0f);
+        temp_s2        = (ptr->field_2DC >> 1) * 0x10;
+
+        sp10 = *ptr;
+
+        if (Rng_GenerateUInt(0, 1) != 0) // 1 in 2 chance.
+        {
+            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4);
+            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - temp_s2);
+            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + temp_s2);
+        }
+        else
+        {
+            Collision_Get(&colls[0], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - temp_s2);
+            Collision_Get(&colls[1], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - temp_s2);
+            Collision_Get(&colls[2], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + temp_s2);
+            Collision_Get(&colls[3], g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + temp_s2, g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + temp_s2);
+        }
+
+        if (func_8005F680(&colls[0]) || func_8005F680(&colls[1]) || func_8005F680(&colls[2]) || func_8005F680(&colls[3]) ||
+            ABS(colls[0].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) >= 0x267 ||
+            ABS(colls[1].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) >= 0x267 ||
+            ABS(colls[2].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) >= 0x267 ||
+            ABS(colls[3].groundHeight_0 - g_MapOverlayHeader.unkTable1_4C[idx].vy_8) >= 0x267)
+        {
+            g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2  = ptr->field_2DC;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 = 0x5000;
+        }
+
+        *ptr = sp10;
+
+        gte_SetRotMatrix(&ptr->field_0.field_C);
+        gte_SetTransMatrix(&ptr->field_0.field_C);
+    }
+
+    ptr->field_210 = (g_MapOverlayHeader.unkTable1_4C[idx].field_B << 0xD) + 0xE0;
+
+    for (i = 0; i < 5; i++)
+    {
+        for (j = 0; j < 5; j++)
+        {
+            *(s32*)&ptr->field_134[i * 5 + j].vx = (((((g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) - (u16)ptr->field_2DC) + ((ptr->field_2DC >> 1) * j)) & 0xFFFF) +
+                                                   ((((g_MapOverlayHeader.unkTable1_4C[idx].vy_8) >> 4) - ptr->field_0.field_0.vy) << 0x10);
+
+            ptr->field_134[i * 5 + j].vz = (((g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 >> 4) - ptr->field_0.field_0.vz) - ptr->field_2DC) + ((ptr->field_2DC >> 1) * i);
+        }
+    }
+
+    for (i = 0; i < 24; i += 3)
+    {
+        gte_ldv3c(&ptr->field_134[i]);
+        gte_rtpt();
+        gte_stsxy3c(&ptr->field_278[i]);
+        gte_stsz3c(&ptr->field_214[i]);
+    }
+
+    gte_ldv0(&ptr->field_134[24]);
+    gte_rtps();
+    gte_stsxy(&ptr->field_278[24]);
+    gte_stsz(&ptr->field_214[24]);
+
+    for (i = 0; i < 4; i++)
+    {
+        for (j = 0; j < 4; j++)
+        {
+            temp_a1_3 = i * 4 + i + j;
+
+            if (ABS(ptr->field_278[temp_a1_3].vx) >= 0xC9)
+            {
+                continue;
+            }
+
+            if (ABS(ptr->field_278[temp_a1_3].vy) >= 0xA1)
+            {
+                continue;
+            }
+
+            ptr->field_20C = (ptr->field_214[temp_a1_3] + ptr->field_214[temp_a1_3 + 1] + ptr->field_214[temp_a1_3 + 5] + ptr->field_214[temp_a1_3 + 6]) >> 2;
+
+            if (ptr->field_20C <= 0 || ptr->field_20C >> 3 >= ORDERING_TABLE_SIZE)
+            {
+                continue;
+            }
+
+            setPolyFT4(*poly);
+
+            *(s32*)&(*poly)->x0 = *(s32*)&ptr->field_278[temp_a1_3];
+            *(s32*)&(*poly)->x1 = *(s32*)&ptr->field_278[temp_a1_3 + 1];
+            *(s32*)&(*poly)->x2 = *(s32*)&ptr->field_278[temp_a1_3 + 5];
+            *(s32*)&(*poly)->x3 = *(s32*)&ptr->field_278[temp_a1_3 + 6];
+
+            temp_s2             = (j * 8) + (i << 0xB) + ptr->field_210;
+            *(s32*)&(*poly)->u0 = (((g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_1 << 6) | 0x13) << 16) + temp_s2;
+            *(s32*)&(*poly)->u1 = temp_s2 + 0x4B0007;
+
+            setSemiTrans(*poly, true);
+
+            *(s32*)&(*poly)->u2 = temp_s2 + 0x700;
+            *(s32*)&(*poly)->u3 = temp_s2 + 0x707;
+
+            if (ptr->field_208 > 0x5000)
+            {
+                temp_v1_6 = 0xA0 - ((ptr->field_208 - 0x5000) >> 0xA);
+                if (temp_v1_6 >= 0x20)
+                {
+                    temp_s2 = temp_v1_6;
+                }
+                else
+                {
+                    temp_s2 = 0x20;
+                }
+            }
+            else
+            {
+                temp_s2 = 0xA0;
+            }
+
+            if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 3))
+            {
+                func_80055A90(&ptr->field_12C, &ptr->field_130, temp_s2, ptr->field_20C * 0x10);
+                *(u16*)&(*poly)->r0 = ptr->field_12C.r + (ptr->field_12C.g << 8);
+                (*poly)->b0         = ptr->field_12C.b;
+
+                *(*poly + 2) = *(*poly + 1) = **poly;
+
+                (*poly)->tpage = 0x2B;
+                (*poly)->clut = (*poly + 2)->clut = 0x93;
+                *(u16*)&(*poly + 1)->r0           = ptr->field_130.r + (ptr->field_130.g << 8);
+                (*poly + 1)->b0                   = ptr->field_130.b;
+
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_20C + var_s7) >> 3], *poly);
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_20C + var_s7) >> 3], *poly + 1);
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_20C + var_s7) >> 3], *poly + 2);
+
+                *poly = *poly + 3;
+            }
+            else
+            {
+                *(u16*)&(*poly)->r0 = temp_s2 + (temp_s2 << 8);
+                (*poly)->b0         = temp_s2;
+
+                addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_20C + var_s7) >> 3], *poly);
+
+                *poly = *poly + 1;
+            }
+        }
+    }
+
+    return true;
+}
+
+void func_8006342C(s32 weaponAttack, q3_12 angle0, q3_12 angle1, GsCOORDINATE2* coord) // 0x8006342C
+{
+    s32              i;
+    s_func_8006342C* ptr;
+
+    ptr = PSX_SCRATCH;
+
+    // TODO: Use `Math_SetSVectorFast`.
+    switch (weaponAttack)
+    {
+        case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
+            D_800C440C               = coord;
+            *(s32*)&ptr->field_20.vx = -0xEFFFE;
+            ptr->field_20.vz         = 71;
+            break;
+
+        case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
+            D_800C440C               = coord;
+            *(s32*)&ptr->field_20.vx = -0x11FFFD;
+            ptr->field_20.vz         = 109;
+            break;
+
+        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+            D_800C440C               = coord;
+            *(s32*)&ptr->field_20.vx = -0x220002;
+            ptr->field_20.vz         = 221;
+            break;
+
+        case 70: // TODO
+            D_800C4410               = coord;
+            *(s32*)&ptr->field_20.vx = -0x17FFFD;
+            ptr->field_20.vz         = 91;
+            break;
+
+        case 63: // TODO
+            D_800C4410               = coord;
+            *(s32*)&ptr->field_20.vx = -0xCFFFE;
+            ptr->field_20.vz         = 67;
+            break;
+
+        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw, AttackInputType_Tap):
+            D_800C440C = coord;
+            Math_SetSVectorFast(&ptr->field_20, 2, 20, 57);
+            break;
+
+        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
+            D_800C440C = coord;
+            Math_SetSVectorFast(&ptr->field_20, 2, 24, 67);
+            break;
+
+        default:
+            return;
+    }
+
+    Vw_CoordHierarchyMatrixCompute(&coord[10], &ptr->field_0);
+
+    gte_SetRotMatrix(&ptr->field_0);
+    gte_SetTransMatrix(&ptr->field_0);
+    gte_ldv0(&ptr->field_20);
+    gte_rt();
+    gte_stlvnl(&ptr->field_28);
+
+    switch (weaponAttack)
+    {
+        case WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Tap):
+            ptr->field_38 = func_8005E7E0(15);
+            ptr->field_50 = 3;
+
+            for (i = 0; i < 3; i++)
+            {
+                ptr->field_3C[i] = func_8005E7E0(20);
+            }
+            break;
+
+        case WEAPON_ATTACK(EquippedWeaponId_Shotgun, AttackInputType_Tap):
+            ptr->field_38 = func_8005E7E0(16);
+            ptr->field_50 = 5;
+
+            for (i = 0; i < 5; i++)
+            {
+                ptr->field_3C[i] = func_8005E7E0(21);
+            }
+            break;
+
+        case WEAPON_ATTACK(EquippedWeaponId_HuntingRifle, AttackInputType_Tap):
+            ptr->field_38 = func_8005E7E0(17);
+            ptr->field_50 = 3;
+
+            for (i = 0; i < 3; i++)
+            {
+                ptr->field_3C[i] = func_8005E7E0(22);
+            }
+            break;
+
+        // TODO: What weapon attack?
+        case 70:
+            ptr->field_38 = func_8005E7E0(18);
+            ptr->field_50 = 3;
+
+            for (i = 0; i < 3; i++)
+            {
+                ptr->field_3C[i] = func_8005E7E0(20);
+            }
+            break;
+
+        // TODO: What weapon attack?
+        case 63:
+            ptr->field_38 = func_8005E7E0(19);
+            ptr->field_50 = 3;
+
+            for (i = 0; i < 3; i++)
+            {
+                ptr->field_3C[i] = func_8005E7E0(20);
+            }
+            break;
+
+        case WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap):
+        case WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap):
+            ptr->field_50 = 3;
+
+            for (i = 0; i < 3; i++)
+            {
+                ptr->field_3C[i] = func_8005E7E0(20);
+            }
+            break;
+    }
+
+    if (weaponAttack != WEAPON_ATTACK(EquippedWeaponId_Chainsaw,  AttackInputType_Tap) &&
+        weaponAttack != WEAPON_ATTACK(EquippedWeaponId_RockDrill, AttackInputType_Tap))
+    {
+        if (ptr->field_38 != NO_VALUE)
+        {
+            // TODO: Demagic this.
+            if (weaponAttack == 70)
+            {
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.s_0.field_0 = FP_ANGLE(-90.0f);
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.s_0.field_2 = FP_ANGLE(90.0f);
+            }
+            else
+            {
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.s_0.field_0 = angle0;
+                g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_C.s_0.field_2 = angle1;
+            }
+
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_B              = Rng_GenerateUInt(0, 1);
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_10.s_0.field_0 = Rng_GenerateUInt(0, 1023);
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_38].field_10.s_0.field_2 = 0;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    for (i = 0; i < ptr->field_50; i++)
+    {
+        if (ptr->field_3C[i] == NO_VALUE)
+        {
+            break;
+        }
+
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_0.vx_0 = Rng_AddGeneratedUInt(Q4_TO_Q8(ptr->field_28.vx), -128, 127);
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].vy_8         = Rng_AddGeneratedUInt(Q4_TO_Q8(ptr->field_28.vy), -128, 127);
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_4.vz_4 = Rng_AddGeneratedUInt(Q4_TO_Q8(ptr->field_28.vz), -128, 127);
+
+        if (i < 3)
+        {
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_B = i;
+        }
+        else
+        {
+            g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_B = Rng_GenerateInt(0, 2);
+        }
+
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_C.s_0.field_0      = Rng_GenerateUInt(0, 4095);
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_C.s_0.field_2      = 0;
+        g_MapOverlayHeader.unkTable1_4C[ptr->field_3C[i]].field_10.s_0.field_0 = 0;
+    }
+}
+
+bool func_80063A50(POLY_FT4** poly, s32 idx) // 0x80063A50
+{
+    s_func_80063A50* ptr;
+
+    ptr = PSX_SCRATCH;
+
+    switch (g_MapOverlayHeader.unkTable1_4C[idx].field_A)
+    {
+        case 15:
+            ptr->field_1DC         = 0xCC;
+            ptr->field_1E0         = 0x333;
+            ptr->field_1E4         = 0xA3;
+            ptr->field_1E8         = 0x100;
+            Math_SetSVectorFast(&ptr->field_164, 2, 0xFFF1, 0x47);
+
+            Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
+            break;
+
+        default:
+            return false;
+
+        case 16:
+            ptr->field_1DC         = 0xCC;
+            ptr->field_1E0         = 0x28F;
+            ptr->field_1E4         = 0xCC;
+            ptr->field_1E8         = 0x180;
+            Math_SetSVectorFast(&ptr->field_164, 3, 0xFFEE, 0x6D);
+
+            Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
+            break;
+
+        case 17:
+            ptr->field_1DC         = 0xA3;
+            ptr->field_1E0         = 0x2E1;
+            ptr->field_1E4         = 0x51;
+            ptr->field_1E8         = 0xC0;
+            Math_SetSVectorFast(&ptr->field_164, 0xFFFE, 0xFFDD, 0xDD);
+
+            Vw_CoordHierarchyMatrixCompute(&D_800C440C[10], &ptr->field_12C);
+            break;
+
+        case 18:
+            ptr->field_1DC         = 0x7A;
+            ptr->field_1E0         = 0x333;
+            ptr->field_1E4         = 0xA3;
+            ptr->field_1E8         = 0x100;
+            Math_SetSVectorFast(&ptr->field_164, 3, 0xFFE8, 0x5B);
+
+            Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
+            break;
+
+        case 19:
+            ptr->field_1DC         = 0xCC;
+            ptr->field_1E0         = 0x333;
+            ptr->field_1E4         = 0xA3;
+            ptr->field_1E8         = 0x100;
+            Math_SetSVectorFast(&ptr->field_164, 2, 0xFFF3, 0x43);
+
+            Vw_CoordHierarchyMatrixCompute(&D_800C4410[10], &ptr->field_12C);
+            break;
+    }
+
+    if (g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_2 == 0)
+    {
+        func_8003EDA8();
+    }
+    else if (ptr->field_1DC < g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_2)
+    {
+        g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
+        return false;
+    }
+
+    g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_2 += g_DeltaTime0;
+
+    gte_SetRotMatrix(&ptr->field_12C);
+    gte_SetTransMatrix(&ptr->field_12C);
+    gte_ldv0(&ptr->field_164);
+    gte_rt();
+    gte_stlvnl(&ptr->field_1AC);
+
+    g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 = Q4_TO_Q8(ptr->field_1AC.vx);
+    g_MapOverlayHeader.unkTable1_4C[idx].vy_8 = Q4_TO_Q8((u16)ptr->field_1AC.vy);
+    g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 = Q4_TO_Q8(ptr->field_1AC.vz);
+
+    for (ptr->field_1D4 = 0; ptr->field_1D4 < 6; ptr->field_1D4++)
+    {
+        ptr->field_1D0 = g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0 + (FP_TO(ptr->field_1D4, Q12_SHIFT) / 6);
+
+        *(s32*)&ptr->field_14C[0].vx = ((((u16)g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0 + Q12_MULT(ptr->field_1E8, Math_Cos(ptr->field_1D0))) - FP_ANGLE(90.0f)) & 0xFFFF) +
+                                       ((g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 + Q12_MULT(ptr->field_1E8, Math_Sin(ptr->field_1D0))) << 16);
+
+        ptr->field_14C[0].vz = ptr->field_1D0;
+
+        Math_RotMatrixZxyNegGte(&ptr->field_14C, &ptr->field_12C);
+
+        // `Q8(0.0f)`?
+        ptr->field_16C[0].vx = 0;
+        ptr->field_16C[0].vy = 0;
+        ptr->field_16C[0].vz = 0;
+
+        TransMatrix(&ptr->field_12C, &ptr->field_16C[0]);
+
+        gte_SetRotMatrix(&ptr->field_12C);
+        gte_SetTransMatrix(&ptr->field_12C);
+
+        for (ptr->field_1D8 = 0; ptr->field_1D8 < 4; ptr->field_1D8++)
+        {
+            *(u32*)&ptr->field_14C[0].vx = (ptr->field_1D8 & 1) ? (u16)ptr->field_1E4 :
+                                                                 -((u16)ptr->field_1E4) & 0xFFFF;
+
+            ptr->field_14C[0].vz = (ptr->field_1D8 < 2) ? ptr->field_1E0 : 0;
+
+            gte_ldv0(&ptr->field_14C);
+            gte_rt();
+            gte_stlvnl(&ptr->field_16C[ptr->field_1D8]);
+        }
+
+        gte_SetRotMatrix(&ptr->field_0.field_C);
+        gte_SetTransMatrix(&ptr->field_0.field_C);
+
+        for (ptr->field_1D8 = 0; ptr->field_1D8 < 3; ptr->field_1D8++)
+        {
+            *(s32*)&ptr->field_14C[ptr->field_1D8] = (((Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + ptr->field_16C[ptr->field_1D8].vx) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+                                                      ((Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[idx].vy_8 + ptr->field_16C[ptr->field_1D8].vy) - ptr->field_0.field_0.vy) << 16));
+
+            (&ptr->field_14C[ptr->field_1D8])->vz = Q8_TO_Q4(g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + ptr->field_16C[ptr->field_1D8].vz) - ptr->field_0.field_0.vz;
+        }
+
+        gte_ldv3c(&ptr->field_14C);
+        gte_rtpt();
+        gte_stsxy3_g3(*poly);
+        gte_stsz3c(&ptr->field_1BC);
+
+        *(s32*)&ptr->field_14C[0].vx = ((((g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 + ptr->field_19C.vx) >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+                                       ((((g_MapOverlayHeader.unkTable1_4C[idx].vy_8 + ptr->field_19C.vy) >> 4) - ptr->field_0.field_0.vy) << 16);
+        ptr->field_14C[0].vz = ((g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 + ptr->field_19C.vz) >> 4) - ptr->field_0.field_0.vz;
+
+        gte_ldv0(&ptr->field_14C);
+        gte_rtps();
+        gte_stsxy(&ptr->field_1CC);
+        gte_stsz(&ptr->field_1C8);
+
+        ptr->field_1BC = (ptr->field_1BC + ptr->field_1C0 + ptr->field_1C4 + ptr->field_1C8) >> 2;
+
+        if (ptr->field_1BC <= 0 || (ptr->field_1BC >> 3) >= ORDERING_TABLE_SIZE ||
+            ABS(ptr->field_1CC.vx) > 200 ||
+            ABS(ptr->field_1CC.vy) > 160)
+        {
+            return false;
+        }
+
+        *(s32*)&(*poly)->x3 = *(s32*)&ptr->field_1CC;
+
+        if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 3))
+        {
+            *(s32*)&(*poly)->r0 = 0x2E103030;
+        }
+        else
+        {
+            *(s32*)&(*poly)->r0 = 0x2E406060;
+        }
+
+        *(s32*)&(*poly)->u0 = g_MapOverlayHeader.unkTable1_4C[idx].field_B ? 0xD380FF : 0xD380E0;
+        *(s32*)&(*poly)->u1 = (g_MapOverlayHeader.unkTable1_4C[idx].field_B ? 0xFF : 0xE0) +
+                              (g_MapOverlayHeader.unkTable1_4C[idx].field_B ? 0x2B7FE1 : 0x2B801F);
+        *(u16*)&(*poly)->u2 = g_MapOverlayHeader.unkTable1_4C[idx].field_B ? 0x9FFF : 0x9FE0;
+        *(u16*)&(*poly)->u3 = (g_MapOverlayHeader.unkTable1_4C[idx].field_B ? 0xFF : 0xE0) -
+                              (g_MapOverlayHeader.unkTable1_4C[idx].field_B ? 0x611F : 0x60E1);
+
+        addPrimFast(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_1BC >> 3], (*poly), 9);
+        *poly += 1;
+    }
+
+    return true;
+}
+
+bool func_80064334(POLY_FT4** poly, s32 idx) // 0x80064334
+{
+    s32              temp_s0;
+    s32              temp_s4;
+    s32              temp_v0_2;
+    s32              temp_v0_3;
+    q19_12           temp_v1_5;
+    s_func_80064334* ptr;
+    POLY_FT4*        next;
+
+    ptr = PSX_SCRATCH;
+
+    temp_s4 = Q12_MULT_PRECISE(g_DeltaTime0, Rng_GenerateInt(Q12(0.8f), Q12(1.2f) - 2));
+
+    if (g_MapOverlayHeader.unkTable1_4C[idx].field_A == 20)
+    {
+        ptr->field_164 = Q12(0.05f);
+        ptr->field_168 = Q12(0.4f);
+    }
+    else if (g_MapOverlayHeader.unkTable1_4C[idx].field_A == 21)
+    {
+        ptr->field_164 = Q12(0.05f);
+        ptr->field_168 = Q12(0.4f);
+    }
+    else
+    {
+        ptr->field_164 = Q12(0.04f);
+        ptr->field_168 = Q12(0.35f);
+    }
+
+    ptr->field_15A = g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2;
+
+    temp_v0_2 = *g_MapOverlayHeader.windSpeedX_184 >> 6;
+    temp_v0_3 = *g_MapOverlayHeader.windSpeedZ_188 >> 6;
+
+    g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 += temp_s4 + (((SquareRoot0((temp_v0_2 * temp_v0_2) + (temp_v0_3 * temp_v0_3)) << 6) * temp_s4) >> 10);
+
+    if (ptr->field_168 < (u16)g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2)
+    {
+        g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
+    }
+
+    ptr->field_158                                              = g_MapOverlayHeader.unkTable1_4C[idx].field_10.field_0;
+    g_MapOverlayHeader.unkTable1_4C[idx].field_10.s_0.field_0 += temp_s4;
+
+    *(s32*)&ptr->field_138 = (((g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 >> 4) - (u16)ptr->field_0.field_0.vx) & 0xFFFF) +
+                             ((((g_MapOverlayHeader.unkTable1_4C[idx].vy_8) >> 4) - ptr->field_0.field_0.vy) << 16);
+    ptr->field_138.vz = (g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 >> 4) - ptr->field_0.field_0.vz;
+
+    gte_ldv0(&ptr->field_138);
+    gte_rtps();
+    gte_stsxy(&ptr->field_154);
+    gte_stsz(&ptr->field_150);
+
+    if (ptr->field_150 <= 0 || (ptr->field_150 >> 3) >= ORDERING_TABLE_SIZE ||
+        ABS(ptr->field_154.vx) > 200 ||
+        ABS(ptr->field_154.vy) > 160)
+    {
+        return false;
+    }
+
+    ptr->field_160 = (((ptr->field_158 >> 6) + 16) * ptr->field_0.field_2C) / ptr->field_150;
+
+    setPolyFT4(*poly);
+
+    setXY0Fast(*poly, (u16)ptr->field_154.vx - (u16)ptr->field_160, ptr->field_154.vy - ptr->field_160);
+    setXY1Fast(*poly, (u16)ptr->field_154.vx + (u16)ptr->field_160, ptr->field_154.vy - ptr->field_160);
+    setXY2Fast(*poly, (u16)ptr->field_154.vx - (u16)ptr->field_160, ptr->field_154.vy + ptr->field_160);
+    setXY3Fast(*poly, (u16)ptr->field_154.vx + (u16)ptr->field_160, ptr->field_154.vy + ptr->field_160);
+
+    *(s32*)&(*poly)->u0 = (((g_MapOverlayHeader.unkTable1_4C[idx].field_B << 5) + 160) << 8) + 0x011300E0;
+    *(s32*)&(*poly)->u1 = (((g_MapOverlayHeader.unkTable1_4C[idx].field_B << 5) + 160) << 8) + 0x2B00FF;
+    *(u16*)&(*poly)->u2 = (((g_MapOverlayHeader.unkTable1_4C[idx].field_B << 5) + 191) << 8) + 0xE0;
+    *(u16*)&(*poly)->u3 = (((g_MapOverlayHeader.unkTable1_4C[idx].field_B << 5) + 191) << 8) + 0xFF;
+
+    setSemiTrans(*poly, true);
+
+    if (ptr->field_15A < (ptr->field_168 >> 3))
+    {
+        ptr->field_15C = MIN(((ptr->field_15A << 9) / ptr->field_168) + 48, 128);
+    }
+    else
+    {
+        ptr->field_15C = CLAMP_LOW(120 - (ptr->field_15A * 120) / ptr->field_168, 0);
+    }
+
+    if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3))
+    {
+        func_80055A90(&ptr->field_134, &ptr->field_130, ptr->field_15C, ptr->field_150 * 16);
+
+        next  = *poly + 1;
+        *next = **poly;
+
+        (*poly + 1)->clut = 0x93;
+
+        *(u16*)&(*poly)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
+        (*poly)->b0         = ptr->field_130.b;
+
+        *(u16*)&(*poly + 1)->r0 = ptr->field_134.r + (ptr->field_134.g << 8);
+        (*poly + 1)->b0         = ptr->field_134.b;
+
+        ptr->field_12C = (PACKET*)(*poly) + 0x50;
+
+        SetPriority(ptr->field_12C, 0, 0);
+        SetPriority(ptr->field_12C + 12, 1, 1);
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], *poly);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], ptr->field_12C);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], *poly + 1);
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], ptr->field_12C + 12);
+
+        *poly = ptr->field_12C + 24;
+    }
+    else
+    {
+        func_80055E90(&ptr->field_130, ptr->field_15C);
+        *(u16*)&(*poly)->r0 = ptr->field_130.r + (ptr->field_130.g << 8);
+        (*poly)->b0         = ptr->field_130.b;
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_150 >> 3], *poly);
+
+        *poly = *poly + 1;
+    }
+
+    if (ptr->field_164 < ptr->field_158)
+    {
+        temp_v1_5 = Math_Sin(g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0);
+        temp_s0   = Q12_MULT_PRECISE(temp_s4, Q12(0.1f));
+
+        g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += Q12_MULT(temp_s0, temp_v1_5);
+        g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += Q12_MULT(temp_s0, Math_Cos(g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_0));
+
+        if (*g_MapOverlayHeader.data_190 != 0)
+        {
+            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += TIMESTEP_SCALE_30FPS(temp_s4, *g_MapOverlayHeader.windSpeedX_184) >> 2;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += TIMESTEP_SCALE_30FPS(temp_s4, *g_MapOverlayHeader.windSpeedZ_188) >> 2;
+        }
+        else if (*g_MapOverlayHeader.data_18C != 0)
+        {
+            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += TIMESTEP_SCALE_30FPS(temp_s4, *g_MapOverlayHeader.windSpeedX_184) >> 1;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += TIMESTEP_SCALE_30FPS(temp_s4, *g_MapOverlayHeader.windSpeedZ_188) >> 1;
+        }
+        else
+        {
+            g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 += (TIMESTEP_SCALE_30FPS(temp_s4, *g_MapOverlayHeader.windSpeedX_184) * 2) / 3;
+            g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 += (TIMESTEP_SCALE_30FPS(temp_s4, *g_MapOverlayHeader.windSpeedZ_188) * 2) / 3;
+        }
+    }
+
+    return true;
+}
+
+void func_80064F04(VECTOR3* arg0, s8 arg1, s16 arg2) // 0x80064F04
+{
+    s32 idx;
+
+    idx = func_8005E7E0(31);
+    if (idx != NO_VALUE)
+    {
+        g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0            = Q12_TO_Q8(arg0->vx);
+        g_MapOverlayHeader.unkTable1_4C[idx].vy_8    = Q12_TO_Q8(arg0->vy);
+        g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4            = Q12_TO_Q8(arg0->vz);
+        g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_1.field_0 = arg1;
+        g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2     = arg2;
+    }
+}
+
+bool func_80064FC0(POLY_FT4** polys, s32 idx) // 0x80064FC0
+{
+    s_func_80064FC0* ptr;
+    s16              temp;
+
+    ptr = PSX_SCRATCH;
+
+    g_MapOverlayHeader.unkTable1_4C[idx].field_A = 0;
+    temp                                         = g_MapOverlayHeader.unkTable1_4C[idx].field_0.vx_0 - ptr->field_0.field_0.vx;
+    *(s32*)&ptr->field_12C.vx                    = (temp & 0xFFFF) + ((g_MapOverlayHeader.unkTable1_4C[idx].vy_8 - ptr->field_0.field_0.vy) << 16);
+    ptr->field_12C.vz                            = g_MapOverlayHeader.unkTable1_4C[idx].field_4.vz_4 - ptr->field_0.field_0.vz;
+
+    gte_ldv0(&ptr->field_12C);
+    gte_rtps();
+    gte_stsxy(&ptr->field_13C);
+    gte_stsz(&ptr->field_140);
+
+    if (ABS(ptr->field_13C.vx) > 200 || ABS(ptr->field_13C.vy) > 160)
+    {
+        return false;
+    }
+
+    ptr->field_144 = ((g_MapOverlayHeader.unkTable1_4C[idx].field_C.s_0.field_2 * ptr->field_0.field_2C) / ptr->field_140) >> 4;
+    setPolyFT4(*polys);
+    setXY0Fast(*polys, (u16)ptr->field_13C.vx - (u16)ptr->field_144, ptr->field_13C.vy + ptr->field_144);
+    setXY1Fast(*polys, (u16)ptr->field_13C.vx + (u16)ptr->field_144, ptr->field_13C.vy + ptr->field_144);
+    setXY2Fast(*polys, (u16)ptr->field_13C.vx - (u16)ptr->field_144, ptr->field_13C.vy - ptr->field_144);
+    setXY3Fast(*polys, (u16)ptr->field_13C.vx + (u16)ptr->field_144, ptr->field_13C.vy - ptr->field_144);
+    *(u16*)&(*polys)->r0 = 0x1020;
+    (*polys)->b0         = 0x10;
+
+    setSemiTrans((*polys), true);
+
+    *(u32*)&(*polys)->u0 = 0x018C0000;
+    *(u32*)&(*polys)->u1 = 0x2C003F;
+    *(u16*)&(*polys)->u2 = 0x3F00;
+    *(u16*)&(*polys)->u3 = 0x3F3F;
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_140 - 0x20) >> 3], (*polys));
+
+    *polys += 1;
+    return true;
+}
+
+void func_800652F4(VECTOR3* arg0, s16 arg1, s16 arg2, s16 arg3) // 0x800652F4
+{
+    DVECTOR          sp10[32][3];
+    s32              sp190[32][3];
+    s32              i;
+    s32              temp_a1;
+    s32              posY;
+    s32              posX;
+    s32              posZ;
+    s32              temp_v1_3;
+    s32              j;
+    s32              var_s1;
+    s32              var_v0_3;
+    s32              temp;
+    s_func_800652F4* ptr;
+
+    ptr = PSX_SCRATCH;
+
+    posX             = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12_SHIFT);
+    posY             = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT);
+    posZ             = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_SHIFT);
+    ptr->field_40.vx = Q8(posX);
+    ptr->field_40.vy = Q8(posY);
+    ptr->field_40.vz = Q8(posZ);
+
+    func_80049C2C(&ptr->field_20, FP_TO(posX, Q12_SHIFT), FP_TO(posY, Q12_SHIFT), FP_TO(posZ, Q12_SHIFT));
+
+    gte_SetRotMatrix(&ptr->field_20);
+    gte_SetTransMatrix(&ptr->field_20);
+    gte_ReadGeomScreen(&ptr->field_4C);
+
+    for (i = 0; i < 3; i++)
+    {
+        var_s1           = ((arg2 >> 4) + 0x80) * i;
+        temp             = 0x1000;
+        ptr->field_54[i] = -FP_MULTIPLY_PRECISE(CLAMP_LOW((temp - Q12_MULT(var_s1, Math_Sin(arg2 >> 2))) - Math_Cos(arg2 >> 2), 0),
+                                                0x2800,
+                                                Q12_SHIFT);
+        temp             = 0x80;
+        ptr->field_60[i] = FP_MULTIPLY_PRECISE(CLAMP_LOW(arg2 - (Q12_MULT(var_s1, Math_Cos(arg2 >> 2)) - temp), 0),
+                                               0x2800,
+                                               Q12_SHIFT);
+    }
+
+    ptr->field_50 = -0x40;
+
+    for (i = 0; i < 32; i++)
+    {
+        for (j = 0; j < 3; j++)
+        {
+            *(s32*)&ptr->field_8[j] = ((((arg0->vx + FP_FROM(Q12_MULT(ptr->field_60[j], Math_Sin(ptr->field_50)) * Math_Cos(arg1) -
+                                        ptr->field_54[j] * Math_Sin(arg1), Q12_SHIFT)) >> 4) - (u16)ptr->field_40.vx) & 0xFFFF) +
+                                      ((((arg0->vy + Q12_MULT(ptr->field_60[j], Math_Cos(ptr->field_50))) >> 4) - ptr->field_40.vy) << 16);
+
+            (&ptr->field_8[j])->vz = ((arg0->vz + (((Q12_MULT(ptr->field_60[j], Math_Sin(ptr->field_50)) * Math_Sin(arg1)) +
+                                     (ptr->field_54[j] * Math_Cos(arg1))) >> Q12_SHIFT)) >> 4) - ptr->field_40.vz;
+        }
+
+        gte_ldv3c(&ptr->field_8);
+        gte_rtpt();
+        gte_stsxy3c(&sp10[i]);
+        gte_stsz3c(&sp190[i]);
+
+        ptr->field_50 += 0x80;
+    }
+
+    ptr->field_0 = (POLY_G4*)GsOUT_PACKET_P;
+
+    for (i = 0; i < 32; i++)
+    {
+        temp_v1_3 = i + 1;
+        var_v0_3  = temp_v1_3;
+        if (temp_v1_3 < 0)
+        {
+            var_v0_3 = i + 32;
+        }
+
+        temp_a1 = var_v0_3 >> 5;
+        temp_a1 = temp_v1_3 - (temp_a1 << 5);
+
+        for (j = 0; j < 2; j++)
+        {
+            setPolyG4(ptr->field_0);
+
+            setXY0Fast(ptr->field_0, sp10[i][j].vx, sp10[i][j].vy);
+            setXY1Fast(ptr->field_0, sp10[temp_a1][j].vx, sp10[temp_a1][j].vy);
+            setXY2Fast(ptr->field_0, sp10[i][j + 1].vx, sp10[i][j + 1].vy);
+            setXY3Fast(ptr->field_0, sp10[temp_a1][j + 1].vx, sp10[temp_a1][j + 1].vy);
+
+            ptr->field_68 = (sp190[i][j] + sp190[temp_a1][j] + sp190[i][j + 1] + sp190[temp_a1][j + 1]) >> 2;
+            setSemiTrans(ptr->field_0, true);
+
+            ptr->field_0->r0 = ptr->field_0->r1 = CLAMP_LOW(D_800AE710[j].field_0 - (arg3 >> 4) - (arg2 >> 5), 0);
+            ptr->field_0->g0 = ptr->field_0->g1 = CLAMP_LOW(D_800AE710[j].field_1 - (arg3 >> 4) - (arg2 >> 5), 0);
+            ptr->field_0->b0 = ptr->field_0->b1 = CLAMP_LOW(D_800AE710[j].field_2 - (arg3 >> 4) - (arg2 >> 5), 0);
+
+            ptr->field_0->r2 = ptr->field_0->r3 = CLAMP_LOW(D_800AE710[j + 1].field_0 - (arg3 >> 4) - (arg2 >> 5), 0);
+            ptr->field_0->g2 = ptr->field_0->g3 = CLAMP_LOW(D_800AE710[j + 1].field_1 - (arg3 >> 4) - (arg2 >> 5), 0);
+            ptr->field_0->b2 = ptr->field_0->b3 = CLAMP_LOW(D_800AE710[j + 1].field_2 - (arg3 >> 4) - (arg2 >> 5), 0);
+
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_68 >> 3], ptr->field_0);
+
+            ptr->field_0++;
+            ptr->field_4 = (DR_TPAGE*)ptr->field_0;
+            setDrawTPage(ptr->field_4, 0, 1, 0x20);
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_68 >> 3], ptr->field_4);
+            ptr->field_4++;
+            ptr->field_0 = (POLY_G4*)ptr->field_4;
+        }
+    }
+
+    GsOUT_PACKET_P = (PACKET*)ptr->field_0;
+}
+
+void func_80065B94(VECTOR3* arg0, s16 arg1) // 0x80065B94
+{
+    s16              temp_s0;
+    s32              x;
+    s32              y;
+    s32              z;
+    s16              temp_fp;
+    s32              i;
+    s16              temp;
+    s32              temp2;
+    POLY_FT4*        next;
+    s_func_80065B94* ptr;
+
+    ptr = PSX_SCRATCH;
+
+    x                = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12_SHIFT);
+    y                = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT);
+    z                = FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_SHIFT);
+    ptr->field_2C.vx = Q8(x);
+    ptr->field_2C.vy = Q8(y);
+    ptr->field_2C.vz = Q8(z);
+
+    func_80049C2C(&ptr->field_C, Q12(x), Q12(y), Q12(z));
+
+    gte_SetRotMatrix(&ptr->field_C);
+    gte_SetTransMatrix(&ptr->field_C);
+    gte_ReadGeomScreen(&ptr->field_38);
+
+    temp                 = Q12_TO_Q8(arg0->vx) - ptr->field_2C.vx;
+    *(s32*)&ptr->field_4 = (temp & 0xFFFF) + ((Q12_TO_Q8(arg0->vy) - ptr->field_2C.vy) << 16);
+    ptr->field_4.vz      = Q12_TO_Q8(arg0->vz) - ptr->field_2C.vz;
+
+    gte_ldv0(&ptr->field_4);
+    gte_rtps();
+    gte_stsxy(&ptr->field_3C);
+    gte_stsz(&ptr->field_40);
+
+    if (ptr->field_40 < ptr->field_38 && (ptr->field_40 >> 3) >= ORDERING_TABLE_SIZE)
+    {
+        return;
+    }
+
+    ptr->field_0 = (POLY_FT4*)GsOUT_PACKET_P;
+    setPolyFT4(ptr->field_0);
+    *(s32*)&ptr->field_0->u0 = 0x014C4020;
+    *(s32*)&ptr->field_0->u1 = 0x2C403F;
+    *(u16*)&ptr->field_0->u2 = 0x5F20;
+    *(u16*)&ptr->field_0->u3 = 0x5F3F;
+    setSemiTrans(ptr->field_0, true);
+
+    temp_fp = ptr->field_38 * (s32)Q12_MULT_PRECISE((arg1 >> 1) + 0x800, 0x100) / ptr->field_40;
+
+    for (i = 0; i < 8; i++)
+    {
+        temp2 = arg1;
+        if (arg1 == 0)
+        {
+            D_800C4428[i] = (i << 9) + Rng_GenerateInt(0, 255) - 128;
+            D_800C4438[i] = (Math_Cos(Rng_GenerateUInt(0, 2047)) >> 1) + 0x1000;
+        }
+
+        temp_s0 = Q12_MULT_PRECISE(temp_fp, D_800C4438[i]);
+
+        ptr->field_44.vx = Q12_MULT(temp_s0, Math_Sin(D_800C4428[i]));
+        ptr->field_44.vy = Q12_MULT(temp_s0, Math_Sin(D_800C4428[i] + FP_ANGLE(90.0f)));
+
+        ptr->field_48.vx = Q12_MULT(-temp_s0, Math_Cos(D_800C4428[i]));
+        ptr->field_48.vy = Q12_MULT(-temp_s0, Math_Cos(D_800C4428[i] + FP_ANGLE(90.0f)));
+
+        setXY0Fast(ptr->field_0, (u16)ptr->field_3C.vx, ptr->field_3C.vy);
+        setXY1Fast(ptr->field_0, (u16)ptr->field_3C.vx + (u16)ptr->field_44.vx, ptr->field_3C.vy + ptr->field_48.vx);
+        setXY2Fast(ptr->field_0, (u16)ptr->field_3C.vx + (u16)ptr->field_44.vy, ptr->field_3C.vy + ptr->field_48.vy);
+        setXY3Fast(ptr->field_0, (u16)ptr->field_44.vy + ((u16)ptr->field_3C.vx + (u16)ptr->field_44.vx), ptr->field_3C.vy + ptr->field_48.vx + ptr->field_48.vy);
+
+        *(u16*)&ptr->field_0->r0 = ((128 - (temp2 >> 5)) << 8) - (((temp2 * 5) >> 7) - 160);
+        ptr->field_0->b0         = 96 - ((temp2 * 3) >> 7);
+
+        addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[ptr->field_40 >> 3], ptr->field_0);
+
+        next  = ptr->field_0 + 1;
+        *next = *ptr->field_0;
+
+        ptr->field_0++;
+    }
+
+    GsOUT_PACKET_P = (PACKET*)ptr->field_0;
+}
+
+void func_80066184(void) // 0x80066184
+{
+    s32              i;
+    s_func_80066184* ptr;
+    POLY_GT4*        poly;
+
+    if (g_Controller0->btnsClicked_10 & ControllerFlag_R3)
+    {
+        D_800AE73C = 0x2000;
+    }
+
+    if (g_Controller0->btnsHeld_C & ControllerFlag_Cross)
+    {
+        D_800AE73C = ((D_800AE73C - g_DeltaTime0) < 0) ? 0 : (D_800AE73C - g_DeltaTime0);
+    }
+
+    ptr = PSX_SCRATCH;
+
+    ptr->field_3C.vx = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vx, Q12_SHIFT));
+    ptr->field_3C.vy = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vy, Q12_SHIFT));
+    ptr->field_3C.vz = Q12(FP_FROM(g_SysWork.playerWork_4C.player_0.position_18.vz, Q12_SHIFT));
+
+    func_80049C2C(&ptr->field_4, ptr->field_3C.vx, ptr->field_3C.vy, ptr->field_3C.vz);
+
+    gte_SetRotMatrix(&ptr->field_4);
+    gte_SetTransMatrix(&ptr->field_4);
+    gte_ReadGeomScreen(&ptr->field_48);
+
+    for (i = 0; i < 4; i++)
+    {
+        *(s32*)&ptr->field_24[i].vx = (Q12_TO_Q8((D_800AE71C[i][0] - ptr->field_3C.vx)) & 0xFFFF) + (Q12_TO_Q8((-81 - ptr->field_3C.vy)) << 16);
+        ptr->field_24[i].vz         = Q12_TO_Q8(D_800AE71C[i][1] - ptr->field_3C.vz);
+    }
+
+    gte_ldv3c(&ptr->field_24);
+    gte_rtpt();
+    gte_stsxy3c(&ptr->field_4C);
+    gte_stsz3c(&ptr->field_5C);
+    gte_ldv0(&ptr->field_3C);
+    gte_rtps();
+    gte_stsxy(&ptr->field_58);
+    gte_stsz(&ptr->field_68);
+
+    ptr->field_0 = (POLY_GT4*)GsOUT_PACKET_P;
+
+    setPolyGT4(ptr->field_0);
+
+    setXY0Fast(ptr->field_0, (u16)ptr->field_4C.vx, ptr->field_4C.vy);
+    setXY1Fast(ptr->field_0, (u16)ptr->field_50.vx, ptr->field_50.vy);
+    setXY2Fast(ptr->field_0, (u16)ptr->field_54.vx, ptr->field_54.vy);
+    setXY3Fast(ptr->field_0, (u16)ptr->field_58.vx, ptr->field_58.vy);
+
+    ptr->field_6C = MIN(FP_MULTIPLY(CLAMP_MIN_THEN_LOW(D_800AE73C, Q12(0.0f), Q12(1.0f)),
+                                    func_80055D78(Q12(22.7f), Q12(0.0f), Q12(-22.1f)), Q12_SHIFT),
+                        0xFF);
+
+    ptr->field_70 = MIN(FP_MULTIPLY(CLAMP_MIN_THEN_LOW(D_800AE73C - Q12(0.75f), Q12(0.0f), Q12(1.0f)),
+                                    func_80055D78(Q12(22.7f), Q12(0.0f), Q12(-22.1f)), Q12_SHIFT),
+                        0xFF);
+
+    ptr->field_74 = MIN(FP_MULTIPLY(CLAMP_MIN_THEN_LOW(D_800AE73C, Q12(0.0f), Q12(1.0f)),
+                                    func_80055D78(Q12(22.7f), Q12(0.0f), Q12(-22.1f)), Q12_SHIFT),
+                        0xFF);
+
+    ptr->field_78 = MIN(FP_MULTIPLY(CLAMP_MIN_THEN_LOW(D_800AE73C - Q12(0.75f), Q12(0.0f), Q12(1.0f)),
+                                    func_80055D78(Q12(22.7f), Q12(0.0f), Q12(-22.1f)), Q12_SHIFT),
+                        0xFF);
+
+    *(u16*)&ptr->field_0->r0 = ptr->field_6C + (ptr->field_6C << 8);
+    ptr->field_0->b0         = ptr->field_6C;
+    *(u16*)&ptr->field_0->r1 = ptr->field_70 + (ptr->field_70 << 8);
+    ptr->field_0->b1         = ptr->field_70;
+    *(u16*)&ptr->field_0->r2 = ptr->field_74 + (ptr->field_74 << 8);
+    ptr->field_0->b2         = ptr->field_74;
+    *(u16*)&ptr->field_0->r3 = ptr->field_78 + (ptr->field_78 << 8);
+    ptr->field_0->b3         = ptr->field_78;
+
+    setSemiTrans(ptr->field_0, true);
+
+    poly  = ptr->field_0 + 1;
+    *poly = *ptr->field_0;
+
+    *(u32*)&ptr->field_0->u0 = 0xE0000;
+    *(u32*)&ptr->field_0->u1 = 0x2D003F;
+    *(u16*)&ptr->field_0->u2 = 0x3F00;
+    *(u16*)&ptr->field_0->u3 = 0x3F3F;
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_5C + ptr->field_60 + ptr->field_64 + ptr->field_68) >> 5], ptr->field_0);
+
+    ptr->field_0++;
+
+    *(u32*)&ptr->field_0->u0 = 0xE0000;
+    *(u32*)&ptr->field_0->u1 = 0x4D003F;
+    *(u16*)&ptr->field_0->u2 = 0x3F00;
+    *(u16*)&ptr->field_0->u3 = 0x3F3F;
+
+    ptr->field_6C = MIN(FP_MULTIPLY(CLAMP_LOW_THEN_MIN(D_800AE73C - 0x1000, 0, 0x1000),
+                                    func_80055D78(0x16B33, 0, -0x16199), Q12_SHIFT - 1),
+                        0xFF);
+
+    ptr->field_70 = MIN(FP_MULTIPLY(CLAMP_LOW_THEN_MIN(D_800AE73C - 0x1000, 0, 0x1000),
+                                    func_80055D78(0x16B33, 0, -0x16199), Q12_SHIFT - 1),
+                        0xFF);
+
+    ptr->field_74 = MIN(FP_MULTIPLY(CLAMP_LOW_THEN_MIN(D_800AE73C - 0x1000, 0, 0x1000),
+                                    func_80055D78(0x16B33, 0, -0x16199), Q12_SHIFT - 1),
+                        0xFF);
+
+    ptr->field_78 = MIN(FP_MULTIPLY(CLAMP_LOW_THEN_MIN(D_800AE73C - 0x1000, 0, 0x1000),
+                                    func_80055D78(0x16B33, 0, -0x16199), Q12_SHIFT - 1),
+                        0xFF);
+
+    *(u16*)&ptr->field_0->r0 = ptr->field_6C + (ptr->field_6C << 8);
+    ptr->field_0->b0         = ptr->field_6C;
+    *(u16*)&ptr->field_0->r1 = ptr->field_70 + (ptr->field_70 << 8);
+    ptr->field_0->b1         = ptr->field_70;
+    *(u16*)&ptr->field_0->r2 = ptr->field_74 + (ptr->field_74 << 8);
+    ptr->field_0->b2         = ptr->field_74;
+    *(u16*)&ptr->field_0->r3 = ptr->field_78 + (ptr->field_78 << 8);
+    ptr->field_0->b3         = ptr->field_78;
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[(ptr->field_5C + ptr->field_60 + ptr->field_64 + ptr->field_68) >> 5], ptr->field_0);
+
+    GsOUT_PACKET_P = (PACKET*)++ptr->field_0;
+}
+
+// ========================================
+// MAP
+// ========================================
+
+void func_80066D90(void) // 0x80066D90
+{
+    s32       i;
+    DR_TPAGE* var1; // Guessed type.
+    TILE*     var2; // Guessed type.
+
+    for (i = 0; i < 63; i++)
+    {
+        var1 = PSX_SCRATCH;
+        setDrawTPage(var1, 0, 1, getTPageN(0, 2, 0, 0));
+        DrawPrim(var1);
+
+        var2 = PSX_SCRATCH;
+        setlen(var2, 3);
+
+        setRGBC0(var2, 8, 8, 8, PRIM_RECT | RECT_BLEND); // `setTile(); setSemiTrans();`
+        setXY0Fast(var2, -160, -224);
+        setWHFast(var2, 320, 448);
+        DrawPrim(var2);
+
+        Fs_QueueUpdate();
+        VSync(SyncMode_Wait);
+    }
+
+    Fs_QueueWaitForEmpty();
+}
+
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_8005E0DC", hack_D_80028A18_fix);
+
+const RECT D_80028A20 = { SCREEN_WIDTH, 256, 192, SCREEN_HEIGHT };
+
+void func_80066E40(void) // 0x80066E40
+{
+    DrawSync(SyncMode_Wait);
+    StoreImage(&D_80028A20, FS_BUFFER_3);
+    DrawSync(SyncMode_Wait);
+}
+
+void func_80066E7C(void) // 0x80066E7C
+{
+    LoadImage(&D_80028A20, FS_BUFFER_3);
+    DrawSync(SyncMode_Wait);
+}
+
+void GameState_MapScreen_Update(void) // 0x80066EB0
+{
+    s32 temp_s0_2;
+    s32 temp_s4;
+    s8  temp_a0_4;
+    u16 var_s5;
+    u16 var_s6;
+    u32 temp_a0;
+    u32 temp;
+    u32 temp2;
+    u32 temp3;
+    u32 temp4;
+
+    func_800363D0();
+    Game_TimerUpdate();
+
+    switch (g_GameWork.gameStateStep_598[0])
+    {
+        case 0:
+            Screen_Refresh(SCREEN_WIDTH, true);
+
+            D_800C444A = g_PaperMapMarkingFileIdxs[g_SavegamePtr->paperMapIdx_A9];
+            D_800C4448 = g_SavegamePtr->paperMapIdx_A9;
+            D_800C444C = NO_VALUE;
+            D_800C4454 = Q12(1.0f);
+            D_800AE770 = 0;
+
+            Game_RadioSoundStop();
+            SD_Call(Sfx_MenuMap);
+            func_80066E40();
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[D_800C4448], FS_BUFFER_2, &g_PaperMapImg);
+            Fs_QueueWaitForEmpty();
+
+            g_IntervalVBlanks = 1;
+            ScreenFade_Start(true, true, false);
+
+            g_GameWork.gameStateStep_598[0] = 2;
+            g_SysWork.timer_20              = 0;
+            g_GameWork.gameStateStep_598[1] = 0;
+            g_GameWork.gameStateStep_598[2] = 0;
+            break;
+
+        case 2:
+            if (D_800C444C < 0)
+            {
+                var_s5 = 0;
+                var_s6 = 0;
+            }
+            else
+            {
+                temp   = D_800C444C - Q12_MULT_PRECISE(D_800C4454, D_800C444C);
+                var_s6 = FP_FROM(temp, Q12_SHIFT);
+
+                temp2  = D_800C4450 - Q12_MULT_PRECISE(D_800C4454, D_800C4450);
+                var_s5 = FP_FROM(temp2, Q12_SHIFT);
+            }
+
+            temp_s4 = (D_800C4454 >> 1) + 0x800;
+
+            temp_s0_2 = func_80067914(D_800C4448, var_s6, var_s5, temp_s4);
+            func_80068E0C(1, D_800C4448, 0, 0, var_s6, var_s5, temp_s4);
+
+            if (ScreenFade_IsNone())
+            {
+                if (D_800AE770 == 0 && D_800C4454 == Q12(1.0f))
+                {
+                    func_80068CC0(D_800C4448);
+                }
+            }
+
+            func_800692A4(var_s6, var_s5, temp_s4);
+
+            if ((g_GameWork.gameStatePrev_590 == GameState_InventoryScreen && g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) ||
+                (g_GameWork.gameStatePrev_590 != GameState_InventoryScreen && g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.cancel_2 |
+                                                                                                               g_GameWorkPtr->config_0.controllerConfig_0.map_18)))
+            {
+                SD_Call(Sfx_MenuMap);
+
+                if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen)
+                {
+                    GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
+                    VSync(SyncMode_Wait);
+                    GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
+                    func_80066E7C();
+                    GameFs_MapItemsTextureLoad(g_SavegamePtr->mapOverlayId_A4);
+                    func_80066D90();
+                    ScreenFade_ResetTimestep();
+                }
+                else
+                {
+                    ScreenFade_Start(true, false, false);
+                }
+
+                g_GameWork.gameStateStep_598[0] = 4;
+                g_SysWork.timer_20              = 0;
+                g_GameWork.gameStateStep_598[1] = 0;
+                g_GameWork.gameStateStep_598[2] = 0;
+                break;
+            }
+
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            {
+                if (D_800AE770 != 0)
+                {
+                    D_800AE770 = 0;
+                }
+                else
+                {
+                    D_800AE770 = 1;
+
+                    if (D_800C444C < 0)
+                    {
+                        D_800C444C = Q12(CLAMP_LOW_THEN_MIN((s16)temp_s0_2 + 80, 0, 160));
+                        D_800C4450 = Q12(CLAMP_LOW_THEN_MIN((temp_s0_2 >> 16) + 60, 0, 120));
+                    }
+                }
+            }
+
+            if (D_800AE770 == 0)
+            {
+                if (D_800C4454 == Q12(1.0f))
+                {
+                    if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickUp)
+                    {
+                        if (HAS_MAP(D_800AE740[D_800C4448][0]))
+                        {
+                            D_800C4449 = D_800AE740[D_800C4448][0];
+
+                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[D_800C4449]);
+                            ScreenFade_Start(true, false, false);
+
+                            D_800C444C                      = NO_VALUE;
+                            g_GameWork.gameStateStep_598[0] = 3;
+                            g_SysWork.timer_20              = 0;
+                            g_GameWork.gameStateStep_598[1] = 0;
+                            g_GameWork.gameStateStep_598[2] = 0;
+                            break;
+                        }
+                    }
+
+                    if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickDown)
+                    {
+                        if (HAS_MAP(D_800AE740[D_800C4448][1]))
+                        {
+                            D_800C4449 = D_800AE740[D_800C4448][1];
+
+                            Fs_QueueStartSeek(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[D_800C4449]);
+                            ScreenFade_Start(true, false, false);
+
+                            D_800C444C = NO_VALUE;
+                            g_GameWork.gameStateStep_598[0] = 3;
+                            g_SysWork.timer_20              = 0;
+                            g_GameWork.gameStateStep_598[1] = 0;
+                            g_GameWork.gameStateStep_598[2] = 0;
+                            break;
+                        }
+                    }
+                    break;
+                }
+
+                D_800C4454 = MIN(D_800C4454 + 196, Q12(1.0f));
+                break;
+            }
+
+            D_800C4454  = CLAMP_LOW(D_800C4454 - 196, 0);
+            D_800C444C += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
+            D_800C444C  = CLAMP_RANGE(D_800C444C, 0, 0xA0000);
+            D_800C4450 += (g_Controller0->sticks_24.sticks_0.leftY * 16384) / 75;
+            D_800C4450  = CLAMP_RANGE(D_800C4450, 0, 0x78000);
+            break;
+
+        case 3:
+            if (ScreenFade_IsFinished())
+            {
+                D_800C4448 = D_800C4449;
+
+                SD_Call(Sfx_MenuMap);
+
+                g_GameWork.gameStateStep_598[0] = 1;
+                g_SysWork.timer_20              = 0;
+                g_GameWork.gameStateStep_598[1] = 0;
+                g_GameWork.gameStateStep_598[2] = 0;
+                break;
+            }
+
+            func_80067914(D_800C4448, 0, 0, Q12(1.0f));
+            func_80068E0C(1, D_800C4448, 0, 0, 0, 0, Q12(1.0f));
+            func_800692A4(0, 0, Q12(1.0f));
+            break;
+
+        case 1:
+            Fs_QueueStartReadTim(FILE_TIM_MP_0TOWN_TIM + g_PaperMapFileIdxs[D_800C4448], FS_BUFFER_2, &g_PaperMapImg);
+
+            temp_a0_4 = g_PaperMapMarkingFileIdxs[D_800C4448];
+            if (temp_a0_4 != D_800C444A && temp_a0_4 != NO_VALUE)
+            {
+                D_800C444A = g_PaperMapMarkingFileIdxs[D_800C4448];
+                Fs_QueueStartReadTim(FILE_TIM_MR_0TOWN_TIM + g_PaperMapMarkingFileIdxs[D_800C4448], FS_BUFFER_1, &g_PaperMapMarkingAtlasImg);
+            }
+
+            Fs_QueueWaitForEmpty();
+            ScreenFade_Start(true, true, false);
+
+            g_GameWork.gameStateStep_598[0] = 2;
+            g_SysWork.timer_20              = 0;
+            g_GameWork.gameStateStep_598[1] = 0;
+            g_GameWork.gameStateStep_598[2] = 0;
+            break;
+
+        case 4:
+            temp3   = D_800C444C - Q12_MULT_PRECISE(D_800C4454, D_800C444C);
+            var_s6  = FP_FROM(temp3, Q12_SHIFT);
+            temp4   = D_800C4450 - Q12_MULT_PRECISE(D_800C4454, D_800C4450);
+            temp_s4 = (D_800C4454 >> 1) + 0x800;
+            var_s5  = FP_FROM(temp4, Q12_SHIFT);
+
+            func_80067914(D_800C4448, var_s6, var_s5, temp_s4);
+            func_80068E0C(1, D_800C4448, 0, 0, var_s6, var_s5, temp_s4);
+            func_800692A4(var_s6, var_s5, temp_s4);
+
+            if (ScreenFade_IsFinished())
+            {
+                if (g_GameWork.gameStatePrev_590 == GameState_InGame || g_GameWork.gameStatePrev_590 == GameState_LoadMapScreen)
+                {
+                    func_80066E7C();
+                    Screen_Init(SCREEN_WIDTH, false);
+                    g_GameWork.gameStatePrev_590 = GameState_InGame;
+                }
+
+                Game_StateSetPrevious();
+            }
+            break;
+    }
+}
+
+static inline s32 MapCoordIdxGet(q19_12 coord, s32 bias, s32 shift, s32 offset)
+{
+    if (coord < Q12(0.0f))
+    {
+        coord += bias;
+    }
+
+    return (coord >> shift) + offset;
+}
+
+s32 func_80067914(s32 paperMapIdx, u16 arg1, u16 arg2, u16 arg3) // 0x80067914
+{
+    #define MAP_OFFSET(coord) \
+        ((coord) + (((coord) < 0) ? 20 : 21))
+
+    #define MAP_IDX(x, z) \
+        ((MAP_OFFSET(x) * 100) + MAP_OFFSET(z))
+
+    s32      sp10[6];
+    s16      temp_s1;
+    s16      temp_s2;
+    s16      temp_v0_7;
+    s32      var_a3;
+    s32      temp_s4;
+    s32      cellX;
+    s32      cellZ;
+    s32      projCellX1;
+    s32      temp_v1_7;
+    s32      var_v0_16;
+    s32      projCellX0;
+    q3_12    angle;
+    u32      temp_a0;
+    s16      mapCoordIdxX;
+    s16      mapCoordIdxZ;
+    s32      temp;
+    s32      temp2;
+    s32      temp3;
+    s32      temp4;
+    LINE_F4* line;
+    POLY_G3* poly;
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+
+    if (g_SavegamePtr->paperMapIdx_A9 != paperMapIdx)
+    {
+        return 0;
+    }
+
+    if (g_SysWork.playerWork_4C.player_0.position_18.vx <= Q12(0.0f))
+    {
+        cellX = (g_SysWork.playerWork_4C.player_0.position_18.vx - CHUNK_CELL_SIZE) / CHUNK_CELL_SIZE;
+    }
+    else
+    {
+        cellX = (g_SysWork.playerWork_4C.player_0.position_18.vx / CHUNK_CELL_SIZE);
+    }
+
+    if (g_SysWork.playerWork_4C.player_0.position_18.vz <= Q12(0.0f))
+    {
+        cellZ = (g_SysWork.playerWork_4C.player_0.position_18.vz - CHUNK_CELL_SIZE) / CHUNK_CELL_SIZE;
+    }
+    else
+    {
+        cellZ = g_SysWork.playerWork_4C.player_0.position_18.vz / CHUNK_CELL_SIZE;
+    }
+
+    mapCoordIdxX = SHRT_MAX;
+    angle = g_SysWork.playerWork_4C.player_0.rotation_24.vy;
+    mapCoordIdxZ = SHRT_MAX;
+
+    switch (paperMapIdx)
+    {
+        case 1:
+            switch (g_SavegamePtr->mapOverlayId_A4)
+            {
+                case 10:
+                    if (cellZ < 4 || (cellZ < 6 && (cellX >= -1 && cellX < 1)))
+                    {
+                        mapCoordIdxX = MapCoordIdxGet(g_SysWork.playerWork_4C.player_0.position_18.vx, 0x1FFF, 13, 19);
+                        mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0x1FFF, 13, 1);
+                        break;
+                    }
+
+                    switch (MAP_IDX(cellX, cellZ))
+                    {
+                        case 0x5FA:
+                            mapCoordIdxX = 43;
+                            mapCoordIdxZ = -34;
+                            break;
+
+                        case 0x5F8:
+                        case 0x6BE:
+                        case 0x6BF:
+                            mapCoordIdxX = -11;
+                            mapCoordIdxZ = -19;
+                            break;
+
+                        case 0x8B6:
+                            mapCoordIdxX = -63;
+                            mapCoordIdxZ = 73;
+                            break;
+
+                        case 0x97E:
+                            mapCoordIdxX = -63;
+                            mapCoordIdxZ = -28;
+                            break;
+
+                        case 0x918:
+                        case 0x97C:
+                            mapCoordIdxX = -58;
+                            mapCoordIdxZ = 73;
+                            break;
+
+                        case 0x916:
+                        case 0x97A:
+                            mapCoordIdxX = -58;
+                            mapCoordIdxZ = -28;
+                            break;
+
+                        case 0xA42:
+                            mapCoordIdxX = -112;
+                            mapCoordIdxZ = 51;
+                            break;
+
+                        case 0x725:
+                        case 0xA45:
+                            mapCoordIdxX = 116;
+                            mapCoordIdxZ = 47;
+                            break;
+                    }
+                    break;
+
+                case 2:
+                    switch (MAP_IDX(cellX, cellZ))
+                    {
+                        case 0x6B9:
+                            mapCoordIdxX = -103;
+                            mapCoordIdxZ = 103;
+                            break;
+
+                        case 0x655:
+                            mapCoordIdxX = 36;
+                            mapCoordIdxZ = -76;
+                            angle       += FP_ANGLE(90.0f);
+                            break;
+
+                        case 0x5F1:
+                            mapCoordIdxX = 62;
+                            mapCoordIdxZ = 50;
+                            angle       += FP_ANGLE(180.0f);
+                            break;
+                    }
+                    break;
+
+                case 11:
+                    mapCoordIdxX = 38;
+                    mapCoordIdxZ = 50;
+                    angle       += FP_ANGLE(180.0f);
+                    break;
+
+                case 1:
+                    mapCoordIdxX = 33;
+                    mapCoordIdxZ = -28;
+                    break;
+
+                case 9:
+                    mapCoordIdxX = -123;
+                    mapCoordIdxZ = 81;
+                    angle       -= FP_ANGLE(90.0f);
+                    break;
+            }
+            break;
+
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+            if (cellX == -2 && cellZ == 0)
+            {
+                angle       += FP_ANGLE(180.0f);
+                mapCoordIdxX = D_800AE774[2][2][0] + (((g_SysWork.playerWork_4C.player_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(-0.2f));
+                mapCoordIdxZ = D_800AE774[2][2][1] + (((g_SysWork.playerWork_4C.player_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(0.2f));
+            }
+            else
+            {
+                mapCoordIdxX = D_800AE774[cellX + 4][cellZ + 2][0] + (((g_SysWork.playerWork_4C.player_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(0.2f));
+                mapCoordIdxZ = D_800AE774[cellX + 4][cellZ + 2][1] + (((g_SysWork.playerWork_4C.player_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / Q12(-0.2f));
+            }
+            break;
+
+        case 16:
+        case 17:
+        case 18:
+        case 19:
+            mapCoordIdxX = D_800AE7E4[cellX + 1][cellZ + 2][0] + (((g_SysWork.playerWork_4C.player_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / 0x222); // TODO: Demagic into clean float.
+            mapCoordIdxZ = D_800AE7E4[cellX + 1][cellZ + 2][1] + ((((g_SysWork.playerWork_4C.player_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) * 6) / Q12(-0.8f));
+            break;
+
+        case 20:
+        case 21:
+        case 22:
+        case 23:
+            mapCoordIdxX = D_800AE820[cellX + 4][cellZ + 4][0] + (((g_SysWork.playerWork_4C.player_0.position_18.vx - (cellX * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) / 0x222);
+            mapCoordIdxZ = D_800AE820[cellX + 4][cellZ + 4][1] + ((((g_SysWork.playerWork_4C.player_0.position_18.vz - (cellZ * CHUNK_CELL_SIZE)) - (CHUNK_CELL_SIZE / 2)) * 6) / Q12(-0.8f));
+            break;
+
+        case 4:
+            switch (g_SavegamePtr->mapOverlayId_A4)
+            {
+                case 30:
+                    mapCoordIdxX = MapCoordIdxGet(g_SysWork.playerWork_4C.player_0.position_18.vx, 0x1FFF, 13, 0x3C);
+                    mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0x1FFF, 13, -0x55);
+
+                    temp_v1_7 = g_SysWork.playerWork_4C.player_0.position_18.vx / 163840;
+                    if ((g_SysWork.playerWork_4C.player_0.position_18.vx > 0 && (temp_v1_7 + 1) == -4) ||
+                        (g_SysWork.playerWork_4C.player_0.position_18.vx <= 0 && (temp_v1_7 - 1) == -4))
+                    // if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4)) // TODO: Causing mismatch.
+                    {
+                        if (PLAYER_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
+                        {
+                            mapCoordIdxX += 87;
+                            mapCoordIdxZ += 61;
+                            break;
+                        }
+                    }
+
+                    if (PLAYER_IN_MAP_CHUNK(vx, 1, -5, -1, -5) && PLAYER_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
+                    {
+                        mapCoordIdxX += 87;
+                        mapCoordIdxZ += 61;
+                        break;
+                    }
+                    break;
+
+                case 31:
+                    if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+                    {
+                        mapCoordIdxX = 87;
+                        mapCoordIdxZ = -56;
+                        angle       += FP_ANGLE(90.0f);
+                    }
+                    else if (PLAYER_IN_MAP_CHUNK(vx, 1, 4, -1, 4) && PLAYER_IN_MAP_CHUNK(vz, 1, 1, -1, 1))
+                    {
+                        mapCoordIdxX = 54;
+                        mapCoordIdxZ = -53;
+                        angle       += FP_ANGLE(90.0f);
+                    }
+                    break;
+
+                case 32:
+                    switch (MAP_IDX(cellX, cellZ))
+                    {
+                        case 0x912:
+                            mapCoordIdxX = 69;
+                            mapCoordIdxZ = -19;
+                            break;
+
+                        case 0x911:
+                            mapCoordIdxX = 74;
+                            mapCoordIdxZ = -12;
+                            angle       -= FP_ANGLE(90.0f);
+                            break;
+
+                        case 0x8AD:
+                            mapCoordIdxX = 74;
+                            mapCoordIdxZ = -14;
+                            break;
+
+                        case 0x8AE:
+                            mapCoordIdxX = 73;
+                            mapCoordIdxZ = -14;
+                            break;
+                    }
+                    break;
+
+                case 33:
+                    mapCoordIdxX = MapCoordIdxGet(g_SysWork.playerWork_4C.player_0.position_18.vx, 0x1FFF, 13, 0);
+                    mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0x1FFF, 13, 55);
+                    break;
+
+                case 34:
+                    if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+                    {
+                        mapCoordIdxZ = 43;
+                    }
+                    else
+                    {
+                        mapCoordIdxZ = 46;
+                    }
+                    mapCoordIdxX = -77;
+                    break;
+
+                case 35:
+                    mapCoordIdxX = -55;
+                    mapCoordIdxZ = 84;
+
+                    if (!PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2))
+                    {
+                        angle += FP_ANGLE(90.0f);
+                    }
+                    else if (PLAYER_NOT_IN_MAP_CHUNK(vz, 1, -1, -1, -1))
+                    {
+                        angle += FP_ANGLE(90.0f);
+                    }
+                    break;
+            }
+            break;
+
+        case 2:
+        case 3:
+            switch (g_SavegamePtr->mapOverlayId_A4)
+            {
+                case 12:
+                case 24:
+                case 27:
+                    switch (MAP_IDX(cellX, cellZ))
+                    {
+                        case 0x58F:
+                            mapCoordIdxX = 94;
+                            mapCoordIdxZ = -103;
+                            break;
+
+                        case 0x6BB:
+                        case 0x657:
+                            mapCoordIdxX = -12;
+                            mapCoordIdxZ = 63;
+                            angle       += FP_ANGLE(180.0f);
+                            break;
+
+                        case 0x973:
+                            mapCoordIdxX = -16;
+                            mapCoordIdxZ = 91;
+                            break;
+
+                        case 0x6BD:
+                        case 0x6BE:
+                            mapCoordIdxX = MapCoordIdxGet(g_SysWork.playerWork_4C.player_0.position_18.vx, 0xFFF, 12, 80);
+                            mapCoordIdxZ = MapCoordIdxGet(Q12(280.0f) - g_SysWork.playerWork_4C.player_0.position_18.vz, 0xFFF, 12, 0);
+                            break;
+
+                        default:
+                            mapCoordIdxX = MapCoordIdxGet(g_SysWork.playerWork_4C.player_0.position_18.vx, 0xFFF, 12, 80);
+                            mapCoordIdxZ = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0xFFF, 12, 0);
+                            break;
+                    }
+                    break;
+
+                case 23:
+                    mapCoordIdxX = 95;
+                    mapCoordIdxZ = -103;
+                    break;
+
+                case 25:
+                    switch (MAP_IDX(cellX, cellZ))
+                    {
+                        case 0x976:
+                        case 0x9DA:
+                            mapCoordIdxX = 100;
+                            mapCoordIdxZ = -61;
+                            break;
+
+                        case 0x90D:
+                        case 0x971:
+                            mapCoordIdxX = 115;
+                            mapCoordIdxZ = -61;
+                            break;
+
+                        case 0xA3B:
+                            mapCoordIdxX  = 115;
+                            mapCoordIdxZ  = -63;
+                            angle += FP_ANGLE(90.0f);
+                            break;
+
+                        case 0x914:
+                        case 0x978:
+                            mapCoordIdxX = 125;
+                            mapCoordIdxZ = -60;
+                            break;
+                    }
+                    break;
+
+                case 14:
+                    projCellX0 = cellX + 21;
+                    if (cellX < 0)
+                    {
+                        projCellX0 = cellX + 20;
+                    }
+
+                    projCellX1 = projCellX0 * 100;
+                    if (cellZ < 0)
+                    {
+                        var_v0_16 = projCellX1 + 20;
+                    }
+                    else
+                    {
+                        var_v0_16 = projCellX1 + 21;
+                    }
+
+                    switch (var_v0_16 + cellZ)
+                    // switch (MAP_IDX(temp_t3, temp_t4)) // TODO: Causing mismatch.
+                    {
+                        case 0x6BA:
+                            mapCoordIdxX = -19;
+                            mapCoordIdxZ = -14;
+                            break;
+
+                        case 0x781:
+                            mapCoordIdxX = -19;
+                            mapCoordIdxZ = -14;
+                            break;
+
+                        case 0x71D:
+                            mapCoordIdxX = -21;
+                            mapCoordIdxZ = -14;
+                            break;
+                    }
+                    break;
+            }
+            break;
+
+        case 13:
+            mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0x7FF, 11, 0);
+            mapCoordIdxZ  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vx, 0x7FF, 11, 40);
+            angle -= FP_ANGLE(90.0f);
+            break;
+
+        case 14:
+            mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vz, 0x7FF, 11, -80);
+            mapCoordIdxZ  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vx, 0x7FF, 11, -140);
+            angle -= FP_ANGLE(90.0f);
+            break;
+
+        case 15:
+            mapCoordIdxX  = MapCoordIdxGet(-g_SysWork.playerWork_4C.player_0.position_18.vx, 0x7FF, 11, 55);
+            mapCoordIdxZ  = MapCoordIdxGet(g_SysWork.playerWork_4C.player_0.position_18.vz, 0x7FF, 11, -80);
+            angle += FP_ANGLE(180.0f);
+            break;
+
+        default:
+            return 0;
+    }
+
+    var_a3 = mapCoordIdxX;
+
+    if (var_a3 == SHRT_MAX)
+    {
+        return 0;
+    }
+
+    temp_s4 = (mapCoordIdxZ << 16) + var_a3;
+
+    if (g_Controller0->btnsHeld_C & (ControllerFlag_L1 | ControllerFlag_R1))
+    {
+        return temp_s4;
+    }
+
+    temp_a0 = SCREEN_WIDTH / 2;
+    temp3   = ((var_a3 - (arg1 - temp_a0)) * SCREEN_WIDTH);
+    temp    = Q12_MULT_PRECISE(arg3, SCREEN_WIDTH);
+    temp_s2 = (temp3 / temp) - (SCREEN_WIDTH / 2);
+
+    temp_a0 = SCREEN_HEIGHT / 2;
+    temp4   = ((mapCoordIdxZ - (arg2 - temp_a0)) * SCREEN_HEIGHT);
+    temp2   = Q12_MULT_PRECISE(arg3, SCREEN_HEIGHT);
+    temp_s1 = (temp4 / temp2) - (SCREEN_HEIGHT / 2);
+
+    temp_v0_7 = func_8005BF38(angle);
+
+    sp10[0] = temp_s2 + FP_FROM(Math_Sin(temp_v0_7) * 6, Q12_SHIFT);
+    sp10[1] = (temp_s1 + FP_FROM(Math_Cos(temp_v0_7) * -6, Q12_SHIFT)) * 2;
+    sp10[2] = temp_s2 + FP_FROM(Math_Cos(temp_v0_7) * 4 - Math_Sin(temp_v0_7) * 6, Q12_SHIFT);
+    sp10[3] = (temp_s1 + FP_FROM(Math_Sin(temp_v0_7) * 4 + Math_Cos(temp_v0_7) * 6, Q12_SHIFT)) * 2;
+    sp10[4] = temp_s2 + FP_FROM(Math_Cos(temp_v0_7) * -4 - Math_Sin(temp_v0_7) * 6, Q12_SHIFT);
+    sp10[5] = (temp_s1 + FP_FROM(Math_Sin(temp_v0_7) * -4 + Math_Cos(temp_v0_7) * 6, Q12_SHIFT)) * 2;
+
+    line = (LINE_F4*)GsOUT_PACKET_P;
+    setLineF4(line);
+    setXY0Fast(line, sp10[0], sp10[1]);
+    setXY1Fast(line, sp10[2], sp10[3]);
+    setXY2Fast(line, sp10[4], sp10[5]);
+    setXY3Fast(line, sp10[0], sp10[1]);
+    *(u16*)&line->r0 = 0x1010; // TODO: Use packing macro?
+    line->b0         = 0x10;
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], line);
+
+    poly = (POLY_G3*)(++line);
+    setPolyG3(poly);
+    setXY0Fast(poly, sp10[0], sp10[1]);
+    setXY1Fast(poly, sp10[2], sp10[3]);
+    setXY2Fast(poly, sp10[4], sp10[5]);
+    *(u16*)&poly->r0 = 0x0000;
+    poly->b0         = 0xFF;
+    *(u16*)&poly->r1 = 0xFF00;
+    poly->b1         = 0x00;
+    *(u16*)&poly->r2 = 0xFF00;
+    poly->b2         = 0x00;
+
+    addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], poly);
+    GsOUT_PACKET_P = (PACKET*)poly + sizeof(POLY_G3);
+    return temp_s4;
+}
+
+bool func_80068CC0(s32 arg0) // 0x80068CC0
+{
+    s32      i;
+    POLY_G3* poly;
+
+    for (i = 0; i < 2; i++)
+    {
+        if (HAS_MAP(D_800AE740[arg0][i]))
+        {
+            poly = GsOUT_PACKET_P;
+            setPolyG3(poly);
+
+            if (i != 0)
+            {
+                setXY0Fast(poly,  0, 216);
+                setXY1Fast(poly, -8, 200);
+                setXY2Fast(poly,  8, 200);
+            }
+            else
+            {
+                setXY0Fast(poly,  0, -216);
+                setXY1Fast(poly, -8, -200);
+                setXY2Fast(poly,  8, -200);
+            }
+
+            *(u16*)&poly->r0 = 0x1010;
+            poly->b0         = 0xC4;
+            *(u16*)&poly->r1 = 0x8080;
+            poly->b1         = 0xC4;
+            *(u16*)&poly->r2 = 0x8080;
+            poly->b2         = 0xC4;
+
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[2], poly);
+            GsOUT_PACKET_P = ++poly;
+        }
+    }
+
+    return true;
+}
+
+bool func_80068E0C(s32 arg0, s32 idx, s32 arg2, s32 shade, u16 arg4, u16 arg5, u16 arg6) // 0x80068E0C
+{
+    s32              sp0;
+    u16              sp4;
+    s16              y0;
+    s32              x0;
+    s32              x1;
+    s32              y1;
+    s32              j;
+    s32              i;
+    s32              temp;
+    s32              temp2;
+    s16              temp3;
+    s32              temp4;
+    s32              temp6;
+    s_func_80068E0C* ptr;
+
+    ptr = PSX_SCRATCH;
+
+    if (g_PaperMapMarkingFileIdxs[idx] == NO_VALUE)
+    {
+        return false;
+    }
+
+    if (D_800AEDBC[idx].ptr_0 == NULL)
+    {
+        return false;
+    }
+
+    if (D_800AEDBC[idx].ptr_4 == NULL)
+    {
+        return false;
+    }
+
+    ptr->field_0 = (POLY_FT4*)GsOUT_PACKET_P;
+    i            = 0;
+
+    if (arg0 == 2)
+    {
+        i            = (arg2 - D_800AEDBC[idx].field_8) >> 1;
+        ptr->field_C = i + 1;
+    }
+    else
+    {
+        shade         = 128;
+        ptr->field_C = (D_800AEDBC[idx].field_A - D_800AEDBC[idx].field_8) >> 1;
+    }
+
+    for (; i < ptr->field_C; i++)
+    {
+        for (j = 0; j < 2; j++)
+        {
+            if (arg0 == 1 && !Savegame_EventFlagGet(((D_800AEDBC[idx].field_8 + (i * 2)) + j) + 1))
+            {
+                continue;
+            }
+
+            if (arg0 == 2 && (arg2 & (1 << 0)) != j)
+            {
+                continue;
+            }
+
+            ptr->field_8 = *(s_800AE8A0_4*)&D_800AEDBC[idx].ptr_4[i];
+            if (j != 0)
+            {
+                if (ptr->field_8.field_3)
+                {
+                    ptr->field_4 = *(s_800AE8A0_0*)&D_800AEDBC[idx].ptr_0[ptr->field_8.field_3];
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            else if (ptr->field_8.field_2)
+            {
+                ptr->field_4 = *(s_800AE8A0_0*)&D_800AEDBC[idx].ptr_0[ptr->field_8.field_2];
+            }
+            else
+            {
+                continue;
+            }
+
+            sp4   = SCREEN_WIDTH / 2;
+            temp6 = (ptr->field_8.field_0 << 1) - (arg4 - sp4);
+            x0    = (FP_TO(temp6, Q12_SHIFT) / arg6) - (SCREEN_WIDTH / 2);
+
+            sp4   = SCREEN_HEIGHT;
+            temp4 = FP_TO((ptr->field_8.field_1 << 1) - ((arg5 * 2) - sp4), Q12_SHIFT);
+            y0    = (temp4 / arg6) - SCREEN_HEIGHT;
+
+            x1    = x0 + (FP_TO(ptr->field_4.field_2, Q12_SHIFT) / arg6);
+            temp3 = FP_TO(ptr->field_4.field_3, Q12_SHIFT) / arg6;
+            y1    = y0 + temp3;
+
+            // Set polygon vertices.
+            setPolyFT4(ptr->field_0);
+            setXY0Fast(ptr->field_0, x0, y0);
+            setXY1Fast(ptr->field_0, x1, y0);
+            setXY2Fast(ptr->field_0, x0, y1);
+            setXY3Fast(ptr->field_0, x1, y1);
+
+            // Set polygon UVs.
+            temp                       = (ptr->field_4.field_1 << 8) + 0x80;
+            *((s32*)&ptr->field_0->u0) = ptr->field_4.field_0 + temp + (getClut(g_PaperMapMarkingAtlasImg.clutX, g_PaperMapMarkingAtlasImg.clutY) << 16);
+            temp2                      = ptr->field_4.field_2 + 0x80;
+            *((s32*)&ptr->field_0->u1) = ptr->field_4.field_0 + temp2 + (ptr->field_4.field_1 << 8) + 0x470000;
+            sp0                        = ((ptr->field_4.field_1 + ptr->field_4.field_3) << 8) + 0x80;
+            *((s16*)&ptr->field_0->u2) = ptr->field_4.field_0 + sp0;
+            *((s16*)&ptr->field_0->u3) = ptr->field_4.field_2 + (ptr->field_4.field_0 + 0x80) + ((ptr->field_4.field_1 + ptr->field_4.field_3) << 8);
+
+            // Set polygon color.
+            setRGBC0(ptr->field_0, shade, shade, shade, 0x2E);
+
+            addPrim(&g_OrderingTable0[g_ActiveBufferIdx].org[3], ptr->field_0);
+            ptr->field_0++;
+        }
+    }
+
+    GsOUT_PACKET_P = (PACKET*)ptr->field_0;
+    return true;
+}
+
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_8005E0DC", D_80028B2C);
+
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_8005E0DC", D_80028B34);
+
+INCLUDE_ASM("bodyprog/nonmatchings/bodyprog_8005E0DC", func_800692A4); // 0x800692A4
+
+// ========================================
+// ENVIRONMENT AND SCREEN GFX 3
+// ========================================
+
+void func_800697EC(void) // 0x800697EC
+{
+    func_80069820(1);
+    D_800C4478.field_2 = 0;
+}
+
+u16 func_80069810(void) // 0x80069810
+{
+    return D_800C4478.field_0;
+}
+
+void func_80069820(u16 flags) // 0x80069820
+{
+    D_800C4478.field_0 = flags;
+}
+
+void func_8006982C(u16 flags) // 0x8006982C
+{
+    D_800C4478.field_0 |= flags;
+}
+
+void func_80069844(s32 arg0) // 0x80069844
+{
+    D_800C4478.field_0 = (D_800C4478.field_0 & ~arg0) | (1 << 0);
+}
+
+void func_80069860(s32 arg0, s32 arg1, s_func_8006F8FC* arg2) // 0x80069860
+{
+    s_func_8006F8FC* ptr;
+    q19_12           minX;
+    q19_12           maxX;
+    q19_12           minZ;
+    q19_12           maxZ;
+
+    D_800C4478.field_2 = 0;
+
+    for (ptr = arg2; !ptr->endOfArray_0_0; ptr++)
+    {
+        minX = FP_TO(ptr->positionX_0_1, Q12_SHIFT);
+        maxX = FP_TO(ptr->positionX_0_1 + ptr->sizeX_0_21, Q12_SHIFT);
+        minZ = FP_TO(ptr->positionZ_0_11, Q12_SHIFT);
+        maxZ = FP_TO(ptr->positionZ_0_11 + ptr->sizeZ_0_25, Q12_SHIFT);
+
+        minX -= Q12(16.0f);
+        maxX += Q12(16.0f);
+        minZ -= Q12(16.0f);
+        maxZ += Q12(16.0f);
+
+        if (arg0 >= minX && maxX >= arg0 &&
+            arg1 >= minZ && maxZ >= arg1)
+        {
+            D_800C4478.field_4[D_800C4478.field_2] = ptr;
+            D_800C4478.field_2++;
+        }
+    }
+}
+
+// ========================================
+// COLLISIONS HANDLING
+// ========================================
+
+void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C
+{
+    collData->ptr_C  = (u8*)collData->ptr_C + (u32)collData;
+    collData->ptr_10 = (u8*)collData->ptr_10 + (u32)collData;
+    collData->ptr_14 = (u8*)collData->ptr_14 + (u32)collData;
+    collData->ptr_18 = (u8*)collData->ptr_18 + (u32)collData;
+    collData->ptr_20 = (u8*)collData->ptr_20 + (u32)collData;
+    collData->ptr_28 = (u8*)collData->ptr_28 + (u32)collData;
+    collData->ptr_2C = (u8*)collData->ptr_2C + (u32)collData;
+}
+
+void func_80069994(s_IpdCollisionData* collData) // 0x80069994
+{
+    s32* ptr;
+
+    collData->field_30++;
+    if (collData->field_30 > 252)
+    {
+        collData->field_30 = 0;
+
+        // TODO: Is this `memset`/`bzero`?
+        for (ptr = &collData->field_34[0]; ptr < &collData->field_34[256]; ptr++)
+        {
+            *ptr = 0;
+        }
+    }
+}
+
+void func_800699E4(s_IpdCollisionData* collData) // 0x800699E4
+{
+    collData->field_30++;
+}
+
+void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
+{
+    s_func_8006AB50     sp10;
+    VECTOR3             pos;
+    s_func_8006CC44     sp38;
+    s_IpdCollisionData* ipdCollData;
+
+    pos.vx = Q12(0.0f);
+    pos.vy = Q12(0.0f);
+    pos.vz = Q12(0.0f);
+
+    ipdCollData = func_800426E4(posX, posZ);
+    if (ipdCollData == NULL)
+    {
+        coll->groundHeight_0 = Q12(8.0f);
+        coll->field_6        = 0;
+        coll->field_4        = 0;
+        coll->field_8        = 0;
+        return;
+    }
+
+    sp10.position_0.vx = posX;
+    sp10.position_0.vy = Q12(0.0f);
+    sp10.position_0.vz = posZ;
+    sp10.rotation_C.vx = FP_ANGLE(0.0f);
+    sp10.rotation_C.vy = FP_ANGLE(0.0f);
+    sp10.rotation_C.vz = FP_ANGLE(0.0f);
+    func_8006AB50(&sp38, &pos, &sp10, 0);
+
+    sp38.field_0_8  = 0;
+    sp38.field_0_9  = 0;
+    sp38.field_0_10 = 1;
+    func_8006AD44(&sp38, ipdCollData);
+
+    if (sp38.field_90 == 1)
+    {
+        coll->field_8        = 0;
+        coll->groundHeight_0 = Q12(8.0f);
+    }
+    else
+    {
+        coll->field_8        = sp38.field_94;
+        coll->groundHeight_0 = func_8006CC44(sp38.field_4.positionX_18, sp38.field_4.positionZ_1C, &sp38) * 16; // TODO: Converting from Q8 to Q12?
+    }
+
+    coll->field_4 = sp38.field_88;
+    coll->field_6 = sp38.field_8C;
+}
+
+s32 func_80069B24(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0x80069B24
+{
+    s32 var0; 
+    s32 var1;
+
+    var0 = SetSp(0x1F8003D8);
+    var1 = func_80069BA8(arg0, offset, chara, func_80069FFC(arg0, offset, chara));
+    SetSp(var0);
+    return var1; 
+}
+
+s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 arg4) // 0x80069BA8
+{
+    #define POINT_COUNT          9
+    #define ANGLE_STEP           FP_ANGLE(370.0f / POINT_COUNT) // @bug? Maybe `360.0f` was intended.
+    #define WALL_COUNT_THRESHOLD 3                              // Unknown purpose.
+    #define WALL_HEIGHT          Q12(0.5f)
+
+    s_Collision     coll;
+    e_CollisionType collType;
+    s32             groundHeight;
+    q19_12          wallHeightBound;
+    s32             i;
+    s32             wallCount;
+    s32             var_s6;
+
+    if (arg4 == NO_VALUE)
+    {
+        arg4 = 1;
+        if (chara == &g_SysWork.playerWork_4C && chara->health_B0 > Q12(0.0f))
+        {
+            func_80069DF0(arg0, &chara->position_18, chara->position_18.vy, chara->rotation_24.vy);
+        }
+    }
+
+    switch (chara->model_0.charaId_0)
+    {
+        case Chara_Harry:
+        case Chara_Groaner:
+        case Chara_Wormhead:
+        case Chara_LarvalStalker:
+        case Chara_Stalker:
+        case Chara_GreyChild:
+        case Chara_Mumbler:
+        case Chara_Creeper:
+        case Chara_Romper:
+        case Chara_PuppetNurse:
+        case Chara_PuppetDoctor:
+            wallHeightBound = chara->position_18.vy - WALL_HEIGHT;
+
+            switch (arg0->field_14)
+            {
+                case 12:
+                    collType = CollisionType_Unk2;
+                    break;
+
+                default:
+                    collType = (arg0->field_C < wallHeightBound) ? CollisionType_Wall : CollisionType_None;
+                    break;
+            }
+
+            wallCount = 0;
+            if (collType == CollisionType_None)
+            {
+                break;
+            }
+
+            for (i = 0, var_s6 = 12; i < POINT_COUNT; i++)
+            {
+                Collision_Get(&coll,
+                              chara->position_18.vx + Q12_MULT(Math_Sin(i * ANGLE_STEP), Q12(0.2f)),
+                              chara->position_18.vz + Q12_MULT(Math_Cos(i * ANGLE_STEP), Q12(0.2f)));
+
+                switch (collType)
+                {
+                    case CollisionType_Wall:
+                        if (coll.groundHeight_0 < wallHeightBound)
+                        {
+                            wallCount++;
+                        }
+                        break;
+
+                    case CollisionType_Unk2:
+                        if (coll.field_8 != 12)
+                        {
+                            var_s6 = coll.field_8;
+                            groundHeight = coll.groundHeight_0;
+                        }
+                        break;
+                }
+            }
+
+            switch (collType)
+            {
+                case 1:
+                    if (wallCount < WALL_COUNT_THRESHOLD)
+                    {
+                        arg0->field_C = chara->position_18.vy;
+                    }
+                    break;
+
+                case 2:
+                    if (var_s6 != 12)
+                    {
+                        arg0->field_C  = groundHeight;
+                        arg0->field_14 = 12;
+                    }
+                    break;
+            }
+            break;
+    }
+
+    return arg4;
+}
+
+static const u8 unk_rdata[] = { 0, 66, 5, 128, 0, 0, 0, 0 };
+
+void func_80069DF0(s_800C4590* arg0, VECTOR3* pos, s32 arg2, s32 arg3) // 0x80069DF0
+{
+    #define POINT_COUNT 16
+    #define ANGLE_STEP  FP_ANGLE(360.0f / POINT_COUNT)
+
+    s32         groundHeights[POINT_COUNT];
+    s_Collision coll;
+    q19_12      angle;
+    s32         var_a0;
+    q19_12      groundHeight;
+    s32         var_s0;
+    s32         i;
+    q19_12      groundHeightMax;
+    q19_12      groundHeightMin;
+    s32         var_s5;
+
+    groundHeightMin = Q12(-30.0f);
+    groundHeightMax = Q12(30.0f);
+    var_s5 = 0;
+
+    // Collect ground heights around position?
+    for (i = 0; i < POINT_COUNT; i++)
+    {
+        Collision_Get(&coll,
+                      pos->vx + Math_Sin((arg3 & 0xF) + (i * ANGLE_STEP)),
+                      pos->vz + Math_Cos((arg3 & 0xF) + (i * ANGLE_STEP)));
+        groundHeights[i] = coll.groundHeight_0;
+
+        if (groundHeightMin < coll.groundHeight_0)
+        {
+            groundHeightMin = coll.groundHeight_0;
+            var_s5 = i;
+        }
+
+        if (coll.groundHeight_0 < groundHeightMax)
+        {
+            groundHeightMax = coll.groundHeight_0;
+        }
+    }
+
+    groundHeight = (groundHeightMin + groundHeightMax) >> 1; // `/ 2`.
+    if (groundHeight < (arg2 - Q12(0.1f)))
+    {
+        groundHeight = arg2 - Q12(0.1f);
+    }
+
+    for (i = var_s5 + 1, var_a0 = var_s5;
+         i < (var_s5 + POINT_COUNT) && groundHeight < groundHeights[i & 0xF];
+         i++)
+    {
+        var_a0 = i;
+    }
+
+    for (i = var_s5 - 1, var_s0 = var_s5;
+         i < (var_s5 - POINT_COUNT) && groundHeight < groundHeights[i & 0xF];
+         i--)
+    {
+        var_s0 = i;
+    }
+
+    angle = ((var_s0 + var_a0) << 8) >> 1;
+    arg0->offset_0.vx = Q12_MULT_PRECISE(Math_Sin(angle), Q12(1.0f / 16.0f));
+    arg0->offset_0.vz = Q12_MULT_PRECISE(Math_Cos(angle), Q12(1.0f / 16.0f));
+}
+
+s32 func_80069FFC(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0x80069FFC
+{
+    s_func_8006AB50 sp28;
+    VECTOR3         offsetSpy;
+    s32             collDataIdx;
+    s32             charaCount;
+    s32             var_s1; // TODO: Maybe `bool`?
+
+    sp28.position_0.vx = chara->position_18.vx + chara->field_D8.offsetX_4;
+    sp28.position_0.vy = chara->position_18.vy - Q12(0.02f);
+    sp28.position_0.vz = chara->position_18.vz + chara->field_D8.offsetZ_6;
+
+    if (func_800426E4(chara->position_18.vx, chara->position_18.vz) == NULL)
+    {
+        func_8006A178(arg0, Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(8.0f));
+        return 1;
+    }
+
+    sp28.rotation_C.vy = chara->field_C8.field_0;
+    sp28.rotation_C.vx = chara->field_C8.field_2;
+    sp28.rotation_C.vz = chara->field_D4.radius_0;
+
+    sp28.field_12 = chara->field_E1_0;
+
+    offsetSpy = *offset;
+
+    switch (chara->model_0.charaId_0)
+    {
+        case Chara_Harry:
+        case Chara_Groaner:
+        case Chara_Wormhead:
+        case Chara_Romper:
+            var_s1 = 1;
+            break;
+
+        default:
+            var_s1 = 0;
+            break;
+    }
+
+    return func_8006A4A8(arg0, &offsetSpy, &sp28, var_s1, func_800425D8(&collDataIdx), collDataIdx, NULL, 0, func_8006A1A4(&charaCount, chara, true), charaCount);
+}
+
+void func_8006A178(s_800C4590* arg0, q19_12 posX, q19_12 posY, q19_12 posZ, q19_12 heightY) // 0x8006A178
+{
+    arg0->offset_0.vx = posX;
+    arg0->offset_0.vy = posY;
+    arg0->offset_0.vz = posZ;
+    arg0->field_12    = 0;
+    arg0->field_10    = 0;
+    arg0->field_14    = 0;
+    arg0->field_18    = 0xFFFF0000;
+    arg0->field_C     = heightY;
+}
+
+s_SubCharacter** func_8006A1A4(s32* charaCount, s_SubCharacter* chara, bool arg2) // 0x8006A1A4
+{
+    s_SubCharacter* curChara;
+
+    if (chara != NULL &&
+        (chara->model_0.charaId_0 == Chara_None || chara->field_E1_0 == 0 ||
+        (chara->field_E1_0 == 1 && arg2 == true)))
+    {
+        *charaCount = 0;
+        return &D_800C4458;
+    }
+
+    *charaCount = 0;
+    D_800C4474 = &D_800C4458;
+
+    for (curChara = &g_SysWork.npcs_1A0[0]; curChara < &g_SysWork.npcs_1A0[ARRAY_SIZE(g_SysWork.npcs_1A0)]; curChara++)
+    {
+        if (curChara->model_0.charaId_0 != Chara_None)
+        {
+            if (curChara->field_E1_0 != 0 &&
+                (curChara->field_E1_0 != 1 || arg2 != true) &&
+                curChara != chara &&
+                (arg2 != true || chara == NULL || chara->field_E1_0 != 4 || curChara->field_E1_0 >= chara->field_E1_0))
+            {
+                *charaCount += 1;
+                *D_800C4474 = curChara;
+                D_800C4474++;
+                curChara->field_E0 = 0;
+            }
+        }
+    }
+
+    curChara = &g_SysWork.playerWork_4C.player_0;
+    if (curChara->model_0.charaId_0 != Chara_None)
+    {
+        if (curChara->field_E1_0 != 0 &&
+            (curChara->field_E1_0 != 1 || arg2 != true) &&
+            curChara != chara &&
+            (arg2 != true || chara == NULL || chara->field_E1_0 != 4 || curChara->field_E1_0 >= chara->field_E1_0))
+        {
+            *charaCount += 1;
+            *D_800C4474 = curChara;
+            D_800C4474++;
+            curChara->field_E0 = 0;
+        }
+    }
+
+    return &D_800C4458;
+}
+
+s32 func_8006A3B4(s32 arg0, VECTOR* offset, s_func_8006AB50* arg2) // 0x8006A3B4
+{
+    s32 stackPtr;
+    s32 var1;
+
+    stackPtr = SetSp(0x1F8003D8);
+    var1 = func_8006A42C(arg0, offset, arg2);
+    SetSp(stackPtr);
+
+    if (var1 == NO_VALUE)
+    {
+        var1 = 1;
+    }
+
+    return var1;
+}
+
+s32 func_8006A42C(s32 arg0, VECTOR3* offset, s_func_8006AB50* arg2) // 0x8006A42C
+{
+    VECTOR3 offsetCpy;
+    s32     collDataIdx;
+
+    offsetCpy = *offset;
+
+    return func_8006A4A8(arg0, &offsetCpy, arg2, 0, func_800425D8(&collDataIdx), collDataIdx, NULL, 0, NULL, 0);
+}
+
+s32 func_8006A4A8(s_800C4590* arg0, VECTOR3* offset, s_func_8006AB50* arg2, s32 arg3,
+                  s_IpdCollisionData** collDataPtrs, s32 collDataIdx, s_func_8006CF18* arg6, s32 arg7, s_SubCharacter** charas, s32 charaCount) // 0x8006A4A8
+{
+    s_func_8006CC44      sp18;
+    VECTOR3              sp120; // Q19.12
+    VECTOR3              sp130;
+    VECTOR3              offsetCpy;
+    s32                  var_a0;
+    s32                  i;
+    s32                  var_s4;
+    s32                  var_v0;
+    s32                  count;
+    s_SubCharacter**     curChara;
+    s_IpdCollisionData** curCollData;
+    s_SubCharacter*      chara;
+
+    var_s4 = 0;
+
+    if (arg2->field_12 == 5)
+    {
+        func_8006A178(arg0, offset->vx, offset->vy, offset->vz, arg2->position_0.vy);
+        return 0;
+    }
+
+    func_8006A940(offset, arg2, charas, charaCount);
+
+    offsetCpy = *offset;
+
+    arg0->field_18 = func_8006F620(&offsetCpy, arg2, arg2->rotation_C.vz, arg2->rotation_C.vy);
+
+    func_8006AB50(&sp18, &offsetCpy, arg2, arg3);
+
+    sp130 = offsetCpy;
+
+    arg0->offset_0.vz = Q12(0.0f);
+    arg0->offset_0.vx = Q12(0.0f);
+    arg0->offset_0.vy = offsetCpy.vy;
+
+    while (true)
+    {
+        if (sp18.field_0_0 != 0)
+        {
+            sp18.field_0_8  = sp18.field_4.field_8 != 0;
+            sp18.field_0_9  = 0;
+            sp18.field_0_10 = 0;
+        }
+        else
+        {
+            sp18.field_0_8  = sp18.field_4.field_8 != 0;
+            sp18.field_0_9  = 1;
+            sp18.field_0_10 = 1;
+        }
+
+        // Run through collision data.
+        for (curCollData = collDataPtrs; curCollData < &collDataPtrs[collDataIdx]; curCollData++)
+        {
+            func_8006AD44(&sp18, *curCollData);
+        }
+
+        if (sp18.field_44.field_0.field_0 && sp18.field_44.field_0.field_2.vx == sp18.field_44.field_0.field_2.vy)
+        {
+            var_s4 |= 1;
+        }
+
+        func_8006CF18(&sp18, arg6, arg7);
+
+        // Run through characters.
+        for (curChara = charas; curChara < &charas[charaCount]; curChara++)
+        {
+            chara  = *curChara;
+            var_a0 = (chara->field_D4.radius_0 >> 4) + sp18.field_4.field_28;
+
+            if (chara->field_E1_0 < (u32)sp18.field_4.field_0)
+            {
+                var_a0 -= 15;
+            }
+
+            sp18.field_98.field_0 = Q12_TO_Q8(chara->position_18.vx + chara->field_D8.offsetX_4);
+            sp18.field_9C.field_0 = Q12_TO_Q8(chara->position_18.vz + chara->field_D8.offsetZ_6);
+
+            sp18.field_A0.s_1.field_0 = Q12_TO_Q8(chara->field_C8.field_0 + chara->position_18.vy);
+            sp18.field_A0.s_1.field_2 = Q12_TO_Q8(chara->field_C8.field_2 + chara->position_18.vy);
+            sp18.field_A0.s_1.field_4 = var_a0;
+            sp18.field_A0.s_1.field_6 = chara->field_E1_0;
+            sp18.field_A0.s_1.field_8 = &chara->field_E0;
+
+            if (sp18.field_0_0 == 0)
+            {
+                chara->field_E0 = 0;
+            }
+
+            func_8006CC9C(&sp18);
+            func_8006CF18(&sp18, chara->field_E4, chara->field_E1_4);
+        }
+
+        func_8006D01C(&sp120, &sp130, func_8006CB90(&sp18), &sp18);
+
+        arg0->offset_0.vx += sp120.vx;
+        arg0->offset_0.vz += sp120.vz;
+
+        if (sp18.field_0_0)
+        {
+            break;
+        }
+
+        if (sp18.field_44.field_0.field_0 || sp18.field_44.field_30.field_0)
+        {
+            count = 8;
+            if (sp18.field_44.field_8.field_0 < 9)
+            {
+                count = sp18.field_44.field_8.field_0;
+            }
+
+            for (i = 0; i < count; i++)
+            {
+                *sp18.field_44.field_10[i] += 1;
+            }
+        }
+        else if (sp18.field_34)
+        {
+            *sp18.field_40 += 1;
+        }
+        else
+        {
+            break;
+        }
+
+        sp18.field_0_0 = 1;
+        func_8006D774(&sp18, &sp120, &sp130);
+    }
+
+    if (sp18.field_90 == 1)
+    {
+        var_v0         = Q12(8.0f);
+        arg0->field_14 = 0;
+    }
+    else
+    {
+        arg0->field_14 = sp18.field_94;
+        var_v0         = func_8006CC44(sp18.field_4.positionX_18 + Q12_TO_Q8(sp120.vx), sp18.field_4.positionZ_1C + Q12_TO_Q8(sp120.vz), &sp18) * 16;
+    }
+
+    arg0->field_C  = var_v0;
+    arg0->field_10 = sp18.field_88;
+    arg0->field_12 = sp18.field_8C;
+
+    if (var_s4 != 0)
+    {
+        return NO_VALUE;
+    }
+
+    return sp18.field_0_0 != 0;
+}
+
+void func_8006A940(VECTOR3* offset, s_func_8006AB50* arg1, s_SubCharacter** charas, s32 charaCount) // 0x8006A940
+{
+    s32             angle;
+    s32             posZ;
+    s32             posX;
+    s32             var_a0;
+    s32             i;
+    s32             var_s4;
+    s32             var_v0;
+    s32             temp2;
+    s32             temp3;
+    s32             temp4;
+    s32             temp5;
+    s32             temp6;
+    s_SubCharacter* curChara;
+
+    var_s4 = Q12(1.0f);
+    angle  = ratan2(offset->vx, offset->vz);
+
+    for (i = 0; i < charaCount; i++)
+    {
+        curChara = charas[i];
+        if (!curChara->field_E1_0 || curChara->field_E1_0 == (1 << 0) || curChara->field_E1_0 >= arg1->field_12)
+        {
+            continue;
+        }
+
+        temp3 = curChara->field_C8.field_0 + curChara->position_18.vy;
+        temp4 = curChara->field_C8.field_2 + curChara->position_18.vy;
+
+        // TODO: Rotation + position? Seems wrong.
+        temp6 = arg1->rotation_C.vy + arg1->position_0.vy;
+        temp5 = arg1->rotation_C.vx + arg1->position_0.vy;
+        if (temp3 > temp5 || temp4 < temp6)
+        {
+            continue;
+        }
+
+        posX = (curChara->position_18.vx + curChara->field_D8.offsetX_4) - arg1->position_0.vx;
+        posZ = (curChara->position_18.vz + curChara->field_D8.offsetZ_6) - arg1->position_0.vz;
+
+        temp2 = Vc_VectorMagnitudeCalc(posX, Q12(0.0f), posZ);
+        if (((curChara->field_D4.radius_0 + arg1->rotation_C.vz) + FP_ANGLE(36.0f)) < temp2)
+        {
+            continue;
+        }
+
+        var_a0 = Q12_MULT(Math_Cos(ratan2(posX, posZ) - angle), Q12(1.5f));
+
+        var_v0 = MAX(var_a0, 0);
+        var_a0 = var_v0;
+
+        // Radius calc?
+        if (curChara->model_0.charaId_0 == Chara_HangedScratcher)
+        {
+            var_a0 = MIN(var_a0, Q12(0.6f));
+        }
+        else
+        {
+            var_a0 = MIN(var_a0, Q12(0.4f));
+        }
+
+        var_s4 -= var_a0;
+    }
+
+    var_s4 = MAX(var_s4, Q12(0.4f));
+
+    offset->vx = Q12_MULT(var_s4, offset->vx);
+    offset->vz = Q12_MULT(var_s4, offset->vz);
+}
+
+void func_8006AB50(s_func_8006CC44* arg0, VECTOR3* pos, s_func_8006AB50* arg2, s32 arg3) // 0x8006AB50
+{
+    arg0->field_0_0       = 0;
+    arg0->field_2         = D_800C4478.field_0;
+    arg0->field_4.field_4 = arg3;
+
+    func_8006ABC0(&arg0->field_4, pos, arg2);
+
+    arg0->field_7C = 0x1E00;
+    arg0->field_34 = 0;
+    arg0->field_44.field_0.field_0  = 0;
+    arg0->field_44.field_6          = 0;
+    arg0->field_44.field_8.field_0  = 0;
+    arg0->field_44.field_36         = 0;
+    arg0->field_44.field_30.field_0 = 0;
+    arg0->field_8C = 0;
+    arg0->field_88 = 0;
+    arg0->field_90 = 1;
+    arg0->field_94 = 0;
+}
+
+void func_8006ABC0(s_func_8006ABC0* result, VECTOR3* pos, s_func_8006AB50* arg2) // 0x8006ABC0
+{
+    q3_12 angleXz;
+
+    result->field_C.vx = Q12_TO_Q8(pos->vx);
+    result->field_C.vy = Q12_TO_Q8(pos->vy);
+    result->field_C.vz = Q12_TO_Q8(pos->vz);
+
+    result->field_8 = SquareRoot0(SQUARE(result->field_C.vx) + SQUARE(result->field_C.vz));
+
+    if (result->field_8 != 0)
+    {
+        // @unused
+        result->direction_14.vx = Q12(result->field_C.vx) / result->field_8;
+        result->direction_14.vz = Q12(result->field_C.vz) / result->field_8;
+
+        angleXz                 = ratan2(result->field_C.vz, result->field_C.vx);
+        result->direction_14.vx = Math_Cos(angleXz);
+        result->direction_14.vz = Math_Sin(angleXz);
+    }
+    else
+    {
+        result->direction_14.vx = Q12(1.0f);
+        result->direction_14.vz = Q12(0.0f);
+    }
+
+    result->field_28     = FP_FROM(arg2->rotation_C.vz, Q4_SHIFT); // TODO: Packed angle?
+    result->positionX_18 = Q12_TO_Q8(arg2->position_0.vx);
+    result->positionZ_1C = Q12_TO_Q8(arg2->position_0.vz);
+    result->field_20     = result->positionX_18 + result->field_C.vx;
+    result->field_24     = result->positionZ_1C + result->field_C.vz;
+    result->field_2A     = FP_FROM(arg2->rotation_C.vy + arg2->position_0.vy, Q4_SHIFT); // TODO: Position + rotation? Seems wrong.
+    result->field_2C     = FP_FROM(arg2->rotation_C.vx + arg2->position_0.vy, Q4_SHIFT);
+    result->field_0      = arg2->field_12;
+}
+
+void func_8006AD44(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006AD44
+{
+    s32                    endIdx;
+    s32                    startIdx;
+    s32                    i;
+    s32                    j;
+    s_IpdCollisionData_20* curUnk;
+
+    if ((collData->field_8_8 == 0 && collData->field_8_16 == 0 && collData->field_8_24 == 0) ||
+        !func_8006AEAC(arg0, collData))
+    {
+        return;
+    }
+
+    if (arg0->field_0_0 == 0)
+    {
+        func_80069994(collData);
+    }
+
+    startIdx = arg0->field_A0.s_0.field_0;
+    endIdx   = (arg0->field_A0.s_0.field_0 + arg0->field_A0.s_0.field_2) - 1;
+
+    for (i = arg0->field_A0.s_0.field_1; i < (arg0->field_A0.s_0.field_1 + arg0->field_A0.s_0.field_3); i++)
+    {
+        curUnk = &collData->ptr_20[(i * collData->field_1E) + startIdx];
+
+        for (j = startIdx; j <= endIdx; j++, curUnk++)
+        {
+            func_8006B1C8(arg0, collData, curUnk);
+        }
+    }
+
+    if (arg0->field_0_0 == 0)
+    {
+        func_800699E4(collData);
+    }
+
+    if (arg0->field_0_10)
+    {
+        func_8006C838(arg0, collData);
+        if (arg0->field_A0.s_0.field_4 != NULL)
+        {
+            func_8006CA18(arg0, collData, arg0->field_A0.s_0.field_4);
+        }
+    }
+}
+
+bool func_8006AEAC(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006AEAC
+{
+    s_func_8006CC44_A8* curUnk;
+
+    if (!func_8006B004(arg0, collData))
+    {
+        return false;
+    }
+
+    arg0->field_98.vec_0.vx = arg0->field_4.positionX_18 - collData->positionX_0;
+    arg0->field_98.vec_0.vz = arg0->field_4.positionZ_1C - collData->positionZ_4;
+    arg0->field_9C.vec_0.vx = arg0->field_4.field_20 - collData->positionX_0;
+    arg0->field_9C.vec_0.vz = arg0->field_4.field_24 - collData->positionZ_4;
+
+    if ((arg0->field_98.vec_0.vx / collData->field_1C) < 0 || (arg0->field_98.vec_0.vx / collData->field_1C) >= collData->field_1E ||
+        ((arg0->field_98.vec_0.vz / collData->field_1C) < 0) || (arg0->field_98.vec_0.vz / collData->field_1C) >= collData->field_1F)
+    {
+        arg0->field_A0.s_0.field_4 = NULL;
+        return true;
+    }
+
+    arg0->field_A0.s_0.field_4 = (s_func_8006CA18*)&collData->ptr_20[((arg0->field_98.vec_0.vz / collData->field_1C) * collData->field_1E) +
+                                                                     (arg0->field_98.vec_0.vx / collData->field_1C)];
+    arg0->field_C8             = UCHAR_MAX;
+
+    for (curUnk = arg0->field_A0.s_0.field_8; curUnk < &arg0->field_C8; curUnk++)
+    {
+        curUnk->field_0 = 0;
+        curUnk->field_1 = UCHAR_MAX;
+        curUnk->field_4 = INT_MAX;
+    }
+
+    return true;
+}
+
+bool func_8006B004(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006B004
+{
+    s32 var_a0;
+    s32 var_a3;
+    s32 temp_lo;
+    s32 temp_lo_2;
+    s32 temp_t3;
+    s32 temp_t4;
+    s32 var_a2;
+    s32 var_t0;
+
+    temp_lo   = collData->field_1C * collData->field_1E;
+    temp_t3   = temp_lo - 1;
+    temp_lo_2 = collData->field_1C * collData->field_1F;
+    temp_t4   = temp_lo_2 - 1;
+
+    var_a3 = arg0->field_4.positionX_18 - collData->positionX_0;
+    var_t0 = arg0->field_4.field_20 - collData->positionX_0;
+    if (var_t0 < var_a3)
+    {
+        var_t0 ^= var_a3;
+        var_a3 ^= var_t0;
+        var_t0 ^= var_a3;
+    }
+
+    var_a3 -= arg0->field_4.field_28;
+    var_t0 += arg0->field_4.field_28;
+
+    var_a0 = arg0->field_4.positionZ_1C - collData->positionZ_4;
+    var_a2 = arg0->field_4.field_24 - collData->positionZ_4;
+    if (var_a2 < var_a0)
+    {
+        var_a2 ^= var_a0;
+        var_a0 ^= var_a2;
+        var_a2 ^= var_a0;
+    }
+
+    var_a0 -= arg0->field_4.field_28;
+    var_a2 += arg0->field_4.field_28;
+
+    if (temp_lo < var_a3 || temp_lo_2 < var_a0 || var_t0 < 0 || var_a2 < 0)
+    {
+        return false;
+    }
+
+    var_a3 = limitRange(var_a3, 0, temp_t3);
+    var_a0 = limitRange(var_a0, 0, temp_t4);
+    var_t0 = limitRange(var_t0, 0, temp_t3);
+    var_a2 = limitRange(var_a2, 0, temp_t4);
+
+    arg0->field_A0.s_0.field_0 = var_a3 / collData->field_1C;
+    arg0->field_A0.s_0.field_1 = var_a0 / collData->field_1C;
+    arg0->field_A0.s_0.field_2 = ((var_t0 / collData->field_1C) - arg0->field_A0.s_0.field_0) + 1;
+    arg0->field_A0.s_0.field_3 = ((var_a2 / collData->field_1C) - arg0->field_A0.s_0.field_1) + 1;
+
+    return true;
+}
+
+void func_8006B1C8(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_IpdCollisionData_20* arg2) // 0x8006B1C8
+{
+    s32 var;
+    s32 i;
+    u8  idx;
+
+    for (i = arg2[0].field_0; i < arg2[1].field_0; i++)
+    {
+        idx = collData->ptr_28[i];
+
+        if (collData->field_30 >= collData->field_34[idx])
+        {
+            collData->field_34[idx] = collData->field_30 + 1;
+            var                     = collData->field_8_16;
+
+            if (idx < var)
+            {
+                if (func_8006B318(arg0, collData, idx))
+                {
+                    if (arg0->field_0_10)
+                    {
+                        func_8006B6E8(arg0, arg2);
+                    }
+
+                    if (arg0->field_0_8 || arg0->field_0_9)
+                    {
+                        if (arg0->field_CC.field_C.s_field_0.field_1 == 0xFF)
+                        {
+                            func_8006B9C8(arg0);
+                        }
+
+                        if (arg0->field_CC.field_C.s_field_0.field_0 == 0xFF)
+                        {
+                            func_8006B8F8(&arg0->field_CC);
+                            func_8006B9C8(arg0);
+                        }
+                    }
+                }
+            }
+            else if (func_8006C3D4(arg0, collData, idx))
+            {
+                func_8006C45C(arg0);
+            }
+        }
+    }
+}
+
+bool func_8006B318(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx) // 0x8006B318
+{
+    s32                    temp_a0_5;
+    s32                    temp_s0;
+    s32                    temp_v0;
+    s_IpdCollisionData_10* temp_a0;
+    s_IpdCollisionData_14* temp_a3;
+
+    temp_a3 = &collData->ptr_14[idx];
+
+    if (!((arg0->field_2 >> (temp_a3->field_0_14 * 4 | temp_a3->field_2_14)) & (1 << 0)))
+    {
+        return false;
+    }
+
+    arg0->field_CC.ipdCollisionData_0 = collData;
+    arg0->field_CC.field_4 = idx;
+
+    arg0->field_CC.field_6.vx = temp_a3->field_0_0;
+    arg0->field_CC.field_6.vy = temp_a3->field_2_0;
+    arg0->field_CC.field_6.vz = temp_a3->field_4;
+
+    arg0->field_CC.field_12 = collData->ptr_C[temp_a3->field_7];
+    arg0->field_CC.field_18 = collData->ptr_C[temp_a3->field_6];
+
+    arg0->field_CC.field_C.s_field_0.field_0 = temp_a3->field_8;
+
+    if ((arg0->field_CC.field_C.s_field_0.field_0) != 0xFF)
+    {
+        temp_a0                 = &collData->ptr_10[arg0->field_CC.field_C.s_field_0.field_0];
+        arg0->field_CC.field_E  = temp_a0->field_6_8;
+        arg0->field_CC.field_10 = temp_a0->field_6_5;
+
+        if (arg0->field_4.field_4 && (temp_a0->field_6_5 == 1 || temp_a0->field_6_0 == 12))
+        {
+            arg0->field_CC.field_12.vy -= Q12(1.0f);
+            arg0->field_CC.field_18.vy -= Q12(1.0f);
+        }
+    }
+
+    arg0->field_CC.field_C.s_field_0.field_1 = temp_a3->field_9;
+
+    if ((arg0->field_CC.field_C.s_field_0.field_1) != 0xFF)
+    {
+        temp_a0                 = &collData->ptr_10[arg0->field_CC.field_C.s_field_0.field_1];
+        arg0->field_CC.field_F  = temp_a0->field_6_8;
+        arg0->field_CC.field_11 = temp_a0->field_6_5;
+
+        if (arg0->field_4.field_4 && (temp_a0->field_6_5 == 1 || temp_a0->field_6_0 == 12))
+        {
+            arg0->field_CC.field_12.vy = Q12(-1.0f);
+            arg0->field_CC.field_18.vy = Q12(-1.0f);
+        }
+    }
+
+    temp_v0 = (temp_a3->field_0_0 & 0xFFFF) + (temp_a3->field_2_0 << 16);
+    gte_ldR11R12(temp_v0);
+    gte_ldR13R21(temp_v0);
+    temp_v0 = (u16)arg0->field_4.field_C.vx + (arg0->field_4.field_C.vz << 16);
+    gte_ldvxy0(temp_v0);
+    gte_gte_ldvz0();
+    gte_rtv0();
+    gte_stMAC12(&arg0->field_CC.field_20.field_14);
+    temp_v0 = ((arg0->field_98.vec_0.vx - arg0->field_CC.field_12.vx) & 0xFFFF) + ((arg0->field_98.vec_0.vz - arg0->field_CC.field_12.vz) << 16);
+    gte_ldvxy0(temp_v0);
+    gte_gte_ldvz0();
+    gte_rtv0();
+    gte_stMAC12(&arg0->field_CC.field_20.field_0);
+
+    temp_s0                            = arg0->field_CC.field_20.field_0.vx;
+    temp_a0_5                          = arg0->field_CC.field_20.field_0.vz;
+    arg0->field_CC.field_20.field_4.vx = arg0->field_CC.field_20.field_14.vx + temp_s0;
+    arg0->field_CC.field_20.field_4.vz = arg0->field_CC.field_20.field_14.vz + temp_a0_5;
+
+    if (temp_s0 < 0)
+    {
+        arg0->field_CC.field_20.field_8  = 2;
+        arg0->field_CC.field_20.field_C  = SquareRoot0(SQUARE(temp_s0) + SQUARE(temp_a0_5));
+        arg0->field_CC.field_20.field_10 = -temp_s0;
+    }
+    else if (arg0->field_CC.field_6.vz < temp_s0)
+    {
+        arg0->field_CC.field_20.field_8  = 2;
+        arg0->field_CC.field_20.field_C  = SquareRoot0(SQUARE(temp_s0 - arg0->field_CC.field_6.vz) + SQUARE(temp_a0_5));
+        arg0->field_CC.field_20.field_10 = temp_s0 - arg0->field_CC.field_6.vz;
+    }
+    else
+    {
+        if (temp_a0_5 < 0)
+        {
+            arg0->field_CC.field_20.field_C = -temp_a0_5;
+        }
+        else
+        {
+            arg0->field_CC.field_20.field_C = temp_a0_5;
+        }
+
+        arg0->field_CC.field_20.field_8 = 1;
+    }
+
+    return true;
+}
+
+void func_8006B6E8(s_func_8006CC44* arg0, s_IpdCollisionData_20* arg1) // 0x8006B6E8
+{
+    s32                 idx;
+    s32                 temp_s1;
+    s32                 temp_s2;
+    s32                 temp_s3;
+    s32                 temp_s4;
+    s_func_8006CC44_A8* temp_s0;
+
+    temp_s1 = arg0->field_CC.field_C.s_field_0.field_0;
+    temp_s2 = arg0->field_CC.field_C.s_field_0.field_1;
+    temp_s3 = arg0->field_CC.field_10;
+    temp_s4 = arg0->field_CC.field_11;
+
+    if (temp_s1 == 0xFF)
+    {
+        if (temp_s2 == 0xFF)
+        {
+            return;
+        }
+
+        idx = arg0->field_CC.field_F;
+    }
+    else
+    {
+        idx = arg0->field_CC.field_E;
+    }
+
+    temp_s0 = &arg0->field_A0.s_0.field_8[idx];
+    if (!func_8006B7E0(temp_s0, &arg0->field_CC.field_20))
+    {
+        return;
+    }
+
+    temp_s0->field_0 = arg0->field_CC.field_20.field_8;
+    temp_s0->field_4 = arg0->field_CC.field_20.field_C;
+    temp_s0->field_2 = arg0->field_CC.field_20.field_10;
+
+    if (arg0->field_CC.field_20.field_0.vz >= 0)
+    {
+        if (temp_s3 == 1)
+        {
+            temp_s0->field_1 = NO_VALUE;
+        }
+        else
+        {
+            temp_s0->field_1 = temp_s1;
+        }
+    }
+    else
+    {
+        if (temp_s4 == 1)
+        {
+            temp_s0->field_1 = NO_VALUE;
+        }
+        else
+        {
+            temp_s0->field_1 = temp_s2;
+        }
+    }
+}
+
+bool func_8006B7E0(s_func_8006CC44_A8* arg0, s_func_8006CC44_CC_20* arg1) // 0x8006B7E0
+{
+if (arg0->field_0 == 0)
+    {
+        return true;
+    }
+
+    switch (arg1->field_8)
+    {
+        case 0:
+            return false;
+
+        case 1:
+            switch (arg0->field_0)
+            {
+                case 1:
+                    if (arg1->field_C < arg0->field_4)
+                    {
+                        return true;
+                    }
+                    break;
+
+                case 2:
+                    if (arg1->field_C < (arg0->field_4 + 6))
+                    {
+                        return true;
+                    }
+                    break;
+            }
+            break;
+
+        case 2:
+            switch (arg0->field_0)
+            {
+                case 1:
+                    if (arg1->field_C < arg0->field_4 - 6)
+                    {
+                        return true;
+                    }
+                    break;
+
+                case 2:
+                    if (arg1->field_C < (arg0->field_4 - 6))
+                    {
+                        return true;
+                    }
+
+                    if (arg1->field_C < (arg0->field_4 + 6) && arg1->field_10 < arg0->field_2)
+                    {
+                        return true;
+                    }
+                    break;
+            }
+    }
+
+    return false;
+}
+
+void func_8006B8F8(s_func_8006CC44_CC* arg0) // 0x8006B8F8
+{
+    s_func_8006CC44_CC_20* ptr;
+    s32                    temp_a1;
+    s32                    temp_a2;
+    s32                    temp_a3;
+
+    temp_a3                    = (u16)arg0->field_12.vx;
+    temp_a1                    = (u16)arg0->field_18.vx;
+    temp_a2                    = (u16)arg0->field_18.vz;
+    arg0->field_18.vx          = temp_a3;
+    temp_a3                    = (u16)arg0->field_12.vy;
+    arg0->field_12.vy          = arg0->field_18.vy;
+    arg0->field_12.vx          = temp_a1;
+    arg0->field_6.vx           = -arg0->field_6.vx;
+    arg0->field_18.vy          = temp_a3;
+    arg0->field_6.vy           = -arg0->field_6.vy;
+    temp_a3                    = (u16)arg0->field_12.vz;
+    arg0->field_18.vz          = temp_a3;
+    temp_a3                    = arg0->field_C.s_field_0.field_0;
+    arg0->field_20.field_14.vx = -arg0->field_20.field_14.vx;
+
+    arg0->field_12.vz               = temp_a2;
+    arg0->field_C.s_field_0.field_0 = arg0->field_C.s_field_0.field_1;
+
+    ptr = &arg0->field_20;
+
+    arg0->field_C.s_field_0.field_1 = temp_a3;
+    temp_a3                         = arg0->field_E;
+    arg0->field_20.field_14.vz      = -arg0->field_20.field_14.vz;
+    arg0->field_E                   = arg0->field_F;
+    arg0->field_F                   = temp_a3;
+
+    ptr->field_0.vz = -ptr->field_0.vz;
+    ptr->field_0.vx = (arg0->field_6.vz - ptr->field_0.vx);
+    ptr->field_4.vz = -ptr->field_4.vz;
+    ptr->field_4.vx = (arg0->field_6.vz - ptr->field_4.vx);
+}
+
+void func_8006B9C8(s_func_8006CC44* arg0) // 0x8006B9C8
+{
+    s32 field_28;
+
+    if (arg0->field_CC.field_C.s_field_0.field_1 == 0xFF && arg0->field_CC.field_20.field_0.vz < 0 &&
+        (arg0->field_4.field_2C >= arg0->field_CC.field_12.vy || arg0->field_4.field_2C >= arg0->field_CC.field_18.vy))
+    {
+        if (arg0->field_0_9 && arg0->field_CC.field_20.field_C < arg0->field_4.field_28)
+        {
+            func_8006BB50(arg0, 0);
+            return;
+        }
+
+        field_28 = arg0->field_4.field_28;
+        if (arg0->field_0_9 && arg0->field_CC.field_20.field_C < (field_28 + 8))
+        {
+            func_8006BB50(arg0, 1);
+        }
+
+        if (arg0->field_0_8)
+        {
+            if (!arg0->field_44.field_0.field_0 &&
+                (-field_28 < arg0->field_CC.field_20.field_0.vz || -field_28 < arg0->field_CC.field_20.field_4.vz) &&
+                (-field_28 < arg0->field_CC.field_20.field_0.vx || -field_28 < arg0->field_CC.field_20.field_4.vx) &&
+                (arg0->field_CC.field_20.field_0.vx < (field_28 + arg0->field_CC.field_6.vz) || arg0->field_CC.field_20.field_4.vx < (field_28 + arg0->field_CC.field_6.vz)))
+            {
+                func_8006BE40(arg0);
+            }
+        }
+    }
+}
+
+void func_8006BB50(s_func_8006CC44* arg0, s32 arg1) // 0x8006BB50
+{
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    s16    temp2;
+
+    if (func_8006BC34(arg0) < 0)
+    {
+        return;
+    }
+
+    if (arg0->field_CC.field_20.field_0.vx < 0)
+    {
+        deltaX = arg0->field_98.vec_0.vx - arg0->field_CC.field_12.vx;
+        deltaZ = arg0->field_98.vec_0.vz - arg0->field_CC.field_12.vz;
+    }
+    else if (arg0->field_CC.field_6.vz < arg0->field_CC.field_20.field_0.vx)
+    {
+        deltaX = arg0->field_98.vec_0.vx - arg0->field_CC.field_18.vx;
+        deltaZ = arg0->field_98.vec_0.vz - arg0->field_CC.field_18.vz;
+    }
+    else
+    {
+        deltaX = arg0->field_CC.field_6.vy;
+        deltaZ = -arg0->field_CC.field_6.vx;
+    }
+
+    temp2 = arg0->field_4.field_28 - arg0->field_CC.field_20.field_C;
+    func_8006BCC4(&arg0->field_44, (u8*)arg0->field_CC.ipdCollisionData_0 + (arg0->field_CC.field_4 + 52), arg1, deltaX, deltaZ, temp2);
+}
+
+s32 func_8006BC34(s_func_8006CC44* arg0)
+{
+    s16 temp_a2;
+    s16 temp_a3;
+    s16 temp_v0;
+    s16 temp_v1;
+    u16 temp_a1;
+    u16 var_v0;
+
+    temp_v1 = arg0->field_CC.field_20.field_0.vx;
+    if (temp_v1 < 0)
+    {
+        var_v0 = arg0->field_CC.field_12.vy;
+    }
+    else
+    {
+        temp_a2 = arg0->field_CC.field_6.vz;
+        if (temp_a2 < temp_v1)
+        {
+            var_v0 = arg0->field_CC.field_18.vy;
+        }
+        else
+        {
+            temp_a3 = arg0->field_CC.field_12.vy;
+            temp_v0 = arg0->field_CC.field_18.vy;
+            temp_a1 = arg0->field_CC.field_12.vy;
+
+            if (temp_a3 == temp_v0)
+            {
+                var_v0 = temp_a1;
+            }
+            else
+            {
+                var_v0 = temp_a1 + ((s32)((temp_v0 - temp_a3) * temp_v1) / temp_a2);
+            }
+        }
+    }
+
+    return arg0->field_4.field_2C - (s16)var_v0;
+}
+
+void func_8006BCC4(s_func_8006CC44_44* arg0, s8* arg1, u32 arg2, q3_12 deltaX, q3_12 deltaZ, s16 arg5) // 0x8006BCC4
+{
+    q7_8 rotX;
+    q7_8 rotY;
+
+    rotX = Q12_FRACT(ratan2(deltaZ, deltaX) - FP_ANGLE(89.0f));
+    rotY = Q12_FRACT(rotX + FP_ANGLE(178.0f));
+
+    switch (arg2)
+    {
+        case 0:
+            *arg1 += 1;
+
+            func_8006BDDC(&arg0->field_0, rotX, rotY);
+
+            if (arg0->field_6 < arg5)
+            {
+                arg0->field_6 = arg5;
+            }
+            break;
+
+        case 1:
+            func_8006BDDC(&arg0->field_8, rotX, rotY);
+
+            if (arg0->field_8.field_0 < 9)
+            {
+                arg0->field_10[arg0->field_8.field_0 - 1] = arg1;
+            }
+            break;
+
+        case 2:
+            *arg1 += 1;
+
+            func_8006BDDC(&arg0->field_30, rotX, rotY);
+
+            if (arg0->field_36 < arg5)
+            {
+                arg0->field_36 = arg5;
+            }
+            break;
+    }
+}
+
+void func_8006BDDC(s_func_8006CC44_44_0* arg0, q3_12 rotX, q3_12 rotY) // 0x8006BDDC
+{
+    if (arg0->field_0 == 0)
+    {
+        arg0->field_0 = 1;
+        arg0->field_2.vx = rotX;
+        arg0->field_2.vy = rotY;
+        return;
+    }
+
+    arg0->field_0++;
+    Vw_ClampAngleRange(&arg0->field_2.vx, &arg0->field_2.vy, rotX, rotY);
+}
+
+void func_8006BE40(s_func_8006CC44* arg0) // 0x8006BE40
+{
+    s32 temp_a3;
+    s32 var_a2;
+    s32 var_a1;
+    u32 var_v1;
+    s32 temp;
+
+    var_a1  = 0;
+    temp_a3 = -arg0->field_4.field_28;
+    var_a2  = 0;
+
+    if (arg0->field_CC.field_20.field_0.vz >= temp_a3)
+    {
+        if (arg0->field_CC.field_20.field_0.vx >= 0)
+        {
+            if (arg0->field_CC.field_6.vz >= arg0->field_CC.field_20.field_0.vx)
+            {
+                var_a2 = arg0->field_CC.field_20.field_0.vx;
+                var_v1 = 2;
+            }
+            else
+            {
+                var_v1 = 1;
+            }
+        }
+        else
+        {
+            var_v1 = 0;
+        }
+    }
+    else
+    {
+        if (arg0->field_CC.field_20.field_14.vz == 0)
+        {
+            if ((arg0->field_CC.field_20.field_0.vx > 0) && (arg0->field_CC.field_20.field_0.vx < arg0->field_CC.field_6.vz))
+            {
+                var_a1 = 0;
+                var_a2 = arg0->field_CC.field_20.field_0.vx;
+            }
+        }
+        else
+        {
+            var_a1 = FP_TO(temp_a3 - arg0->field_CC.field_20.field_0.vz, Q12_SHIFT) / arg0->field_CC.field_20.field_14.vz;
+            temp   = arg0->field_CC.field_20.field_14.vx * var_a1;
+            temp   = FP_FROM(temp, Q12_SHIFT);
+            var_a2 = temp + arg0->field_CC.field_20.field_0.vx;
+        }
+
+        if (var_a2 < 0)
+        {
+            var_v1 = 0;
+        }
+        else if (arg0->field_CC.field_6.vz < var_a2)
+        {
+            var_v1 = 1;
+        }
+        else
+        {
+            var_v1 = 2;
+        }
+    }
+
+    switch (var_v1)
+    {
+        case 0:
+            func_8006BF88(arg0, &arg0->field_CC.field_12);
+            break;
+
+        case 1:
+            func_8006BF88(arg0, &arg0->field_CC.field_18);
+            break;
+
+        case 2:
+            func_8006C0C8(arg0, var_a1, var_a2);
+            break;
+    }
+}
+
+void func_8006BF88(s_func_8006CC44* arg0, SVECTOR3* arg1) // 0x8006BF88
+{
+    s16 temp_v0;
+    s32 temp2;
+    s32 temp3;
+
+    temp_v0 = func_8006C248(*(s32*)&arg0->field_4.direction_14, arg0->field_4.field_8,
+                            arg1->vx - arg0->field_98.vec_0.vx,
+                            arg1->vz - arg0->field_98.vec_0.vz,
+                            arg0->field_4.field_28);
+    if (temp_v0 != -1 && func_8006C1B8(2, temp_v0, arg0) && arg0->field_4.field_2C > arg1->vy)
+    {
+        arg0->field_38 = temp_v0;
+        arg0->field_34 = 2;
+        temp2          = arg0->field_98.vec_0.vx + Q12_MULT(arg0->field_4.field_C.vx, temp_v0);
+        arg0->field_3A = (arg0->field_4.field_8 * temp_v0) >> 8;
+        arg0->field_40 = (u8*)arg0->field_CC.ipdCollisionData_0 + (arg0->field_CC.field_4 + 52);
+
+        arg0->field_3C = temp2 - arg1->vx;
+        temp3          = arg0->field_98.vec_0.vz + Q12_MULT(arg0->field_4.field_C.vz, temp_v0);
+        arg0->field_3E = temp3 - arg1->vz;
+    }
+}
+
+void func_8006C0C8(s_func_8006CC44* arg0, s16 arg1, s16 arg2) // 0x8006C0C8
+{
+    s32 temp;
+
+    if (!func_8006C1B8(1, arg1, arg0) || arg0->field_CC.field_20.field_14.vz < 0)
+    {
+        return;
+    }
+
+    temp = ((arg0->field_CC.field_18.vy - arg0->field_CC.field_12.vy) * arg2) / arg0->field_CC.field_6.vz;
+
+    if (temp + arg0->field_CC.field_12.vy < arg0->field_4.field_2C)
+    {
+        arg0->field_40 = (u8*)arg0->field_CC.ipdCollisionData_0 + (arg0->field_CC.field_4 + 52);
+        arg0->field_34 = 1;
+        arg0->field_38 = arg1;
+        arg0->field_3A = (arg0->field_4.field_8 * arg1) >> 8;
+        arg0->field_3C = arg0->field_CC.field_6.vy;
+        arg0->field_3E = -arg0->field_CC.field_6.vx;
+    }
+}
+
+bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2) // 0x8006C1B8
+{
+    s32 var;
+
+    var = (arg2->field_4.field_8 * arg1) >> 8;
+    switch (arg0)
+    {
+        default:
+        case 0:
+            return false;
+
+        case 2:
+            if (arg2->field_34 != 1)
+            {
+                if (arg2->field_34 == 0)
+                {
+                   return true;
+                }
+                
+                break;
+            }
+
+            var += 96;
+            break;
+
+        case 1:
+            if (arg2->field_34 != arg0)
+            {
+                if (arg2->field_34 != 0)
+                {
+                    if (arg2->field_34 == 2)
+                    {
+                        var -= 96;
+                    }
+                    
+                    break;
+                }
+
+                return true;
+            }
+            break;
+    }
+
+    return var < arg2->field_3A;
+}
+
+s16 func_8006C248(s32 arg0, s16 arg1, q3_12 deltaX, q3_12 deltaZ, s16 arg4) // 0x8006C248
+{
+    DVECTOR sp10;
+    s16     temp_v0;
+    s16     var_v1;
+    s16     temp_lo;
+
+    gte_ldR11R12(arg0);
+    gte_ldR13R21(arg0);
+    gte_ldvxy0((deltaX & 0xFFFF) + (deltaZ << 16));
+    gte_gte_ldvz0();
+    gte_rtv0();
+    gte_stMAC12(&sp10.vx);
+
+    if (sp10.vx < 0)
+    {
+        var_v1 = SquareRoot0(SQUARE(sp10.vx) + SQUARE(sp10.vy));
+    }
+    else if (arg1 < sp10.vx)
+    {
+        temp_v0 = sp10.vx - arg1;
+        var_v1  = SquareRoot0(SQUARE(temp_v0) + SQUARE(sp10.vy));
+    }
+    else
+    {
+        var_v1 = ABS(sp10.vy);
+    }
+
+    if (arg1 == 0)
+    {
+        temp_lo = -1;
+        if (var_v1 >= arg4)
+        {
+            return temp_lo;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    if (var_v1 >= arg4)
+    {
+        return -1;
+    }
+
+    temp_lo = FP_TO(sp10.vx - SquareRoot0(SQUARE(arg4) - SQUARE(sp10.vy)), Q12_SHIFT) / arg1;
+    temp_lo = CLAMP(temp_lo, Q12(0.0f), Q12(1.0f));
+
+    return temp_lo;
+}
+
+bool func_8006C3D4(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s32 idx) // 0x8006C3D4
+{
+    s_IpdCollisionData_18* temp_a1;
+
+    arg0->field_CC.ipdCollisionData_0 = collData;
+    arg0->field_CC.field_4 = idx;
+    temp_a1 = &collData->ptr_18[idx - collData->field_8_16];
+
+    if (!((arg0->field_2 >> temp_a1->field_0_8) & (1 << 0)))
+    {
+        return false;
+    }
+
+    arg0->field_CC.field_5         = temp_a1->field_0_5;
+    arg0->field_CC.field_6.vx      = temp_a1->vec_2.vx;
+    arg0->field_CC.field_6.vy      = temp_a1->vec_2.vy;
+    arg0->field_CC.field_6.vz      = temp_a1->vec_2.vz;
+    arg0->field_CC.field_C.field_0 = temp_a1->field_8;
+    return true;
+}
+
+void func_8006C45C(s_func_8006CC44* arg0) // 0x8006C45C
+{
+    q3_12 distMax;
+    q3_12 dist;
+    s16   var_s2;
+    s32   bound;
+    s32   deltaX;
+    s32   deltaZ;
+    s32   temp_v1;
+    s32   temp;
+    s32   temp2;
+
+    distMax = arg0->field_4.field_28 + arg0->field_CC.field_C.field_0;
+    bound   = distMax + 8;
+    temp_v1 = arg0->field_CC.field_6.vx - bound;
+
+    if (arg0->field_98.vec_0.vx < temp_v1 &&
+        arg0->field_9C.vec_0.vx < temp_v1)
+    {
+        return;
+    }
+
+    if ((arg0->field_CC.field_6.vx + bound) < arg0->field_98.vec_0.vx &&
+        (arg0->field_CC.field_6.vx + bound) < arg0->field_9C.vec_0.vx)
+    {
+        return;
+    }
+
+    if (arg0->field_98.vec_0.vz < (arg0->field_CC.field_6.vz - bound) &&
+        arg0->field_9C.vec_0.vz < (arg0->field_CC.field_6.vz - bound))
+    {
+        return;
+    }
+
+    if ((arg0->field_CC.field_6.vz + bound) < arg0->field_98.vec_0.vz &&
+        (arg0->field_CC.field_6.vz + bound) < arg0->field_9C.vec_0.vz)
+    {
+        return;
+    }
+
+    deltaX = arg0->field_98.vec_0.vx - arg0->field_CC.field_6.vx;
+    deltaZ = arg0->field_98.vec_0.vz - arg0->field_CC.field_6.vz;
+    dist   = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ));
+
+    if (dist < arg0->field_CC.field_C.field_0 && arg0->field_CC.field_5 != 1 &&
+        (arg0->field_C8 == 0xFF || arg0->field_CC.field_6.vy < arg0->field_CA))
+    {
+        arg0->field_C8 = arg0->field_CC.field_4;
+        arg0->field_CA = arg0->field_CC.field_6.vy;
+    }
+
+    if (!arg0->field_0_8 && !arg0->field_0_9 || dist < arg0->field_CC.field_C.field_0)
+    {
+        return;
+    }
+
+    if (dist < distMax && arg0->field_0_9)
+    {
+        func_8006C794(arg0, 0, dist);
+        return;
+    }
+
+    if (dist < (distMax + 8) && arg0->field_0_9)
+    {
+        func_8006C794(arg0, 1, dist);
+    }
+
+    if (!arg0->field_0_8 || arg0->field_44.field_0.field_0)
+    {
+        return;
+    }
+
+    var_s2 = func_8006C248(*(s32*)&arg0->field_4.direction_14, arg0->field_4.field_8,
+                           arg0->field_CC.field_6.vx - arg0->field_98.vec_0.vx,
+                           arg0->field_CC.field_6.vz - arg0->field_98.vec_0.vz,
+                           distMax);
+
+    if (var_s2 == -1)
+    {
+        return;
+    }
+
+    if (var_s2 < 0)
+    {
+        var_s2 = 0;
+    }
+
+    if (func_8006C1B8(1, var_s2, arg0) && arg0->field_4.field_2C >= arg0->field_CC.field_6.vy)
+    {
+        arg0->field_38 = var_s2;
+        arg0->field_34 = 1;
+        temp           = arg0->field_98.vec_0.vx + Q12_MULT(arg0->field_4.field_C.vx, var_s2);
+        arg0->field_3A = (arg0->field_4.field_8 * var_s2) >> 8;
+        arg0->field_40 = (u8*)arg0->field_CC.ipdCollisionData_0 + (arg0->field_CC.field_4 + 52);
+        arg0->field_3C = temp - arg0->field_CC.field_6.vx;
+        temp2          = arg0->field_98.vec_0.vz + Q12_MULT(arg0->field_4.field_C.vz, var_s2);
+        arg0->field_3E = temp2 - arg0->field_CC.field_6.vz;
+    }
+}
+
+void func_8006C794(s_func_8006CC44* arg0, s32 arg1, s32 dist) // 0x8006C794
+{
+    if (arg0->field_4.field_2C >= (arg0->field_CC.field_6.vy + (dist - arg0->field_CC.field_C.field_0)))
+    {
+        func_8006BCC4(&arg0->field_44,
+                      (u8*)arg0->field_CC.ipdCollisionData_0 + (arg0->field_CC.field_4 + 52),
+                      arg1,
+                      arg0->field_98.vec_0.vx - arg0->field_CC.field_6.vx,
+                      arg0->field_98.vec_0.vz - arg0->field_CC.field_6.vz,
+                      (arg0->field_4.field_28 + arg0->field_CC.field_C.field_0) - dist);
+    }
+}
+
+void func_8006C838(s_func_8006CC44* arg0, s_IpdCollisionData* collData) // 0x8006C838
+{
+    s32                    var_a0;
+    s_func_8006CC44_A8*    curUnk;
+    s_IpdCollisionData_10* temp_a1;
+    s_IpdCollisionData_18* temp_a0;
+
+    if (!arg0->field_A0.s_0.field_4)
+    {
+        return;
+    }
+
+    if (arg0->field_C8 != 0xFF)
+    {
+        if (arg0->field_CA < arg0->field_7C)
+        {
+            temp_a0        = &collData->ptr_18[arg0->field_C8 - collData->field_8_16];
+            arg0->field_7C = arg0->field_CA;
+            arg0->field_80 = arg0->field_98.vec_0.vx + collData->positionX_0;
+            arg0->field_84 = arg0->field_98.vec_0.vz + collData->positionZ_4;
+            arg0->field_88 = 0;
+            arg0->field_8C = 0;
+            arg0->field_90 = temp_a0->field_0_5;
+            arg0->field_94 = temp_a0->field_0_0;
+        }
+    }
+
+    for (curUnk = &arg0->field_A0.s_0.field_8[0]; curUnk < &arg0->field_A0.s_0.field_8[4]; curUnk++)
+    {
+        if (curUnk->field_1 != 0xFF)
+        {
+            temp_a1 = &collData->ptr_10[curUnk->field_1];
+
+            var_a0 = temp_a1->field_2;
+
+            if (temp_a1->field_8 != 0)
+            {
+                var_a0 += FP_FROM(temp_a1->field_8 * (arg0->field_98.vec_0.vx - temp_a1->field_0), Q12_SHIFT);
+            }
+
+            if (temp_a1->field_A != 0)
+            {
+                var_a0 += FP_FROM(temp_a1->field_A * (arg0->field_98.vec_0.vz - temp_a1->field_4), Q12_SHIFT);
+            }
+
+            if (var_a0 < arg0->field_7C)
+            {
+                arg0->field_7C = var_a0;
+                arg0->field_80 = arg0->field_98.vec_0.vx + collData->positionX_0;
+                arg0->field_84 = arg0->field_98.vec_0.vz + collData->positionZ_4;
+                arg0->field_88 = temp_a1->field_8;
+                arg0->field_8C = temp_a1->field_A;
+                arg0->field_90 = temp_a1->field_6_5;
+                arg0->field_94 = temp_a1->field_6_0;
+            }
+        }
+    }
+}
+
+void func_8006CA18(s_func_8006CC44* arg0, s_IpdCollisionData* collData, s_func_8006CA18* arg2) // 0x8006CA18
+{
+    s32                    startIdx;
+    s32                    endIdx;
+    s32                    var_a2;
+    u8*                    curUnk;
+    s_IpdCollisionData_10* ptr;
+
+    startIdx = arg2->field_2;
+    endIdx   = arg2->field_6;
+
+    if (startIdx == endIdx)
+    {
+        return;
+    }
+
+    for (curUnk = &collData->ptr_2C[startIdx]; curUnk < &collData->ptr_2C[endIdx]; curUnk++)
+    {
+        ptr = &collData->ptr_10[*curUnk];
+
+        if (((arg0->field_2 >> ptr->field_6_11) & (1 << 0)) && ptr->field_6_5 != 1)
+        {
+            var_a2 = ptr->field_2;
+
+            if (ptr->field_8 != 0)
+            {
+                var_a2 += FP_FROM(ptr->field_8 * (arg0->field_98.vec_0.vx - ptr->field_0), Q12_SHIFT);
+            }
+
+            if (ptr->field_A != 0)
+            {
+                var_a2 += FP_FROM(ptr->field_A * (arg0->field_98.vec_0.vz - ptr->field_4), Q12_SHIFT);
+            }
+
+            if (var_a2 < arg0->field_7C)
+            {
+                arg0->field_7C = var_a2;
+                arg0->field_80 = arg0->field_98.vec_0.vx + collData->positionX_0;
+                arg0->field_84 = arg0->field_98.vec_0.vz + collData->positionZ_4;
+                arg0->field_88 = ptr->field_8;
+                arg0->field_8C = ptr->field_A;
+                arg0->field_90 = ptr->field_6_5;
+                arg0->field_94 = ptr->field_6_0;
+            }
+        }
+    }
+}
+
+s16 func_8006CB90(s_func_8006CC44* arg0) // 0x8006CB90
+{
+    s32 temp_v0;
+
+    if (arg0->field_7C == 0x1E00)
+    {
+        return Q12(1.0f);
+    }
+
+    temp_v0 = func_8006CC44(arg0->field_4.field_20, arg0->field_4.field_24, arg0);
+    if ((arg0->field_4.field_2C + arg0->field_4.field_C.vy) < temp_v0 ||
+        temp_v0 == arg0->field_7C)
+    {
+        return Q12(1.0f);
+    }
+
+    return FP_TO(arg0->field_4.field_8, Q12_SHIFT) / SquareRoot0(SQUARE(arg0->field_4.field_8) +
+                                                                 SQUARE(temp_v0 - arg0->field_4.field_2C));
+}
+
+s32 func_8006CC44(q23_8 x, q23_8 z, s_func_8006CC44* arg2) // 0x8006CC44
+{
+    if (arg2->field_94 != 12)
+    {
+        return Q12_MULT(arg2->field_88, x - arg2->field_80) +
+               Q12_MULT(arg2->field_8C, z - arg2->field_84) +
+               arg2->field_7C;
+    }
+
+    return Q12(0.5f);
+}
+
+void func_8006CC9C(s_func_8006CC44* arg0) // 0x8006CC9C
+{
+    q19_12 deltaX;
+    q19_12 deltaZ;
+    s32    temp_v0;
+    s32    temp_s4;
+    s32    temp;
+    s32    temp2;
+    s32    temp3;
+    s32    temp4;
+    s32    temp5;
+
+    if (arg0->field_A0.s_1.field_6 < 2 || *arg0->field_A0.s_1.field_8 != 0)
+    {
+        return;
+    }
+
+    if (arg0->field_98.field_0 + (arg0->field_A0.s_1.field_4 + arg0->field_4.field_8) < arg0->field_4.positionX_18 ||
+        arg0->field_4.field_20 < arg0->field_98.field_0 - (arg0->field_A0.s_1.field_4 + arg0->field_4.field_8))
+    {
+        return;
+    }
+
+    if (arg0->field_9C.field_0 + (arg0->field_A0.s_1.field_4 + arg0->field_4.field_8) < arg0->field_4.positionZ_1C ||
+        arg0->field_4.field_24 < arg0->field_9C.field_0 - (arg0->field_A0.s_1.field_4 + arg0->field_4.field_8) ||
+        arg0->field_4.field_2A > arg0->field_A0.s_1.field_2)
+    {
+        return;
+    }
+
+    deltaX = (arg0->field_4.positionX_18 - arg0->field_98.field_0);
+
+    if (arg0->field_4.field_2C < arg0->field_A0.s_1.field_0)
+    {
+        return;
+    }
+
+    deltaZ = arg0->field_4.positionZ_1C - arg0->field_9C.field_0;
+    temp_s4 = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ));
+
+    temp_v0 = func_8006C248(*(s32*)&arg0->field_4.direction_14, arg0->field_4.field_8,
+                            arg0->field_98.field_0 - arg0->field_4.positionX_18,
+                            arg0->field_9C.field_0 - arg0->field_4.positionZ_1C,
+                            arg0->field_A0.s_1.field_4);
+    if (temp_v0 == NO_VALUE)
+    {
+        return;
+    }
+
+    if (temp_v0 == 0)
+    {
+        if (arg0->field_0_9)
+        {
+            temp3 = arg0->field_A0.s_1.field_4 - temp_s4;
+            func_8006BCC4(&arg0->field_44, arg0->field_A0.s_1.field_8, 2, deltaX, deltaZ, temp3);
+        }
+    }
+    else if (arg0->field_0_8 && arg0->field_44.field_0.field_0 == 0 && func_8006C1B8(1, temp_v0, arg0))
+    {
+        temp2 = (arg0->field_4.positionZ_1C - arg0->field_9C.field_0);
+        temp5 = Q12_MULT(temp_v0, arg0->field_4.field_C.vz);
+
+        arg0->field_40 = arg0->field_A0.s_1.field_8;
+        arg0->field_38 = temp_v0;
+
+        arg0->field_34 = 1;
+
+        temp  = (arg0->field_4.positionX_18 - arg0->field_98.field_0);
+        temp4 = Q12_MULT(temp_v0, arg0->field_4.field_C.vx);
+
+        arg0->field_3A = (arg0->field_4.field_8 * temp_v0) >> 8; // TODO: Conversion to Q4?
+        arg0->field_3C = temp + temp4;
+        arg0->field_3E = temp2 + temp5;
+    }
+}
+
+void func_8006CF18(s_func_8006CC44* arg0, s_func_8006CF18* arg1, s32 idx) // 0x8006CF18
+{
+    s32              var_a1;
+    s_func_8006CF18* curArg1;
+
+    for (curArg1 = arg1; curArg1 < &arg1[idx]; curArg1++)
+    {
+        var_a1 = (curArg1->field_10 >> 4) + arg0->field_4.field_28;
+        if (curArg1->field_12 < (u32)arg0->field_4.field_0)
+        {
+            var_a1 -= 15;
+        }
+
+        arg0->field_98.field_0 = curArg1->position_0.vx >> 4;
+        arg0->field_9C.field_0 = curArg1->position_0.vz >> 4;
+
+        arg0->field_A0.s_1.field_0 = (curArg1->field_E + curArg1->position_0.vy) >> 4;
+        arg0->field_A0.s_1.field_2 = (curArg1->field_C + curArg1->position_0.vy) >> 4;
+        arg0->field_A0.s_1.field_4 = var_a1;
+        arg0->field_A0.s_1.field_6 = curArg1->field_12;
+        arg0->field_A0.s_1.field_8 = &curArg1->field_13;
+
+        if (arg0->field_0_0 == 0)
+        {
+            curArg1->field_13 = 0;
+        }
+
+        func_8006CC9C(arg0);
+    }
+}
+
+void func_8006D01C(VECTOR3* arg0, VECTOR3* arg1, s16 arg2, s_func_8006CC44* arg3) // 0x8006D01C
+{
+    VECTOR3 sp10;
+    s32     temp_s0;
+    s32     temp_s1;
+    s32     temp_a0;
+    s32     temp_v0;
+
+    sp10.vx = Q12_MULT(arg1->vx, arg2);
+    sp10.vz = Q12_MULT(arg1->vz, arg2);
+
+    if (arg3->field_44.field_0.field_0 || arg3->field_44.field_30.field_0)
+    {
+        arg0->vx = 0;
+        arg0->vz = 0;
+        *arg1    = sp10;
+        func_8006D2B4(arg1, &arg3->field_44);
+        return;
+    }
+
+    if (!arg3->field_34)
+    {
+        *arg0    = sp10;
+        arg1->vz = 0;
+        arg1->vx = 0;
+        return;
+    }
+
+    if (arg2 < arg3->field_38)
+    {
+        arg3->field_34 = 0;
+        *arg0          = sp10;
+        arg1->vz       = 0;
+        arg1->vx       = 0;
+        return;
+    }
+
+    arg0->vx = Q12_MULT(arg1->vx, arg3->field_38);
+    arg0->vz = Q12_MULT(arg1->vz, arg3->field_38);
+    arg1->vx = sp10.vx - arg0->vx;
+    arg1->vz = sp10.vz - arg0->vz;
+
+    temp_s0 = arg3->field_3C;
+    temp_s1 = arg3->field_3E;
+    temp_a0 = SQUARE(temp_s0) + SQUARE(temp_s1);
+
+    if (temp_a0 < 256)
+    {
+        temp_a0 = SquareRoot0(temp_a0 * 256);
+        temp_s0 = (temp_s0 << 16) / temp_a0;
+        temp_s1 = (temp_s1 << 16) / temp_a0;
+    }
+    else
+    {
+        temp_a0 = SquareRoot0(temp_a0);
+        temp_s0 = (temp_s0 << 12) / temp_a0; // `Q12_SHIFT`?
+        temp_s1 = (temp_s1 << 12) / temp_a0;
+    }
+
+    temp_v0  = FP_FROM((arg1->vx * temp_s1) + (arg1->vz * -temp_s0), Q12_SHIFT);
+    arg1->vx = Q12_MULT(temp_v0, temp_s1);
+    arg1->vz = Q12_MULT(temp_v0, -temp_s0);
+
+    if (temp_s0 > Q12(1.0f / 3.0f))
+    {
+        arg0->vx += Q12(0.004f);
+    }
+    else if (temp_s0 < Q12(-1.0f / 3.0f))
+    {
+        arg0->vx -= Q12(0.004f);
+    }
+
+    if (temp_s1 > Q12(1.0f / 3.0f))
+    {
+        arg0->vz += Q12(0.004f);
+    }
+    else if (temp_s1 < Q12(-1.0f / 3.0f))
+    {
+        arg0->vz -= Q12(0.004f);
+    }
+}
+
+void func_8006D2B4(VECTOR3* arg0, s_func_8006CC44_44* arg1) // 0x8006D2B4
+{
+    s16  sp18;
+    s16  sp1A;
+    s16  sp1C;
+    s16  sp1E;
+    s16  temp_v0;
+    s32  temp_v0_4;
+    bool cond;
+    bool var_s1;
+    s16  var_s1_2;
+    s32  var_v1;
+    s16  var_v1_2;
+    s16  var_a0;
+    s16  diff_a0;
+    s16  diff_v1;
+
+    if (arg1->field_30.field_0 != 0)
+    {
+        var_s1 = false;
+        if (arg1->field_0.field_0 != 0)
+        {
+            sp18 = arg1->field_0.field_2.vx;
+            sp1A = arg1->field_0.field_2.vy;
+            if (arg1->field_8.field_0 != 0)
+            {
+                Vw_ClampAngleRange(&sp18, &sp1A, arg1->field_8.field_2.vx, arg1->field_8.field_2.vy);
+            }
+        }
+        else if (arg1->field_8.field_0 != 0)
+        {
+            sp18 = arg1->field_8.field_2.vx;
+            sp1A = arg1->field_8.field_2.vy;
+        }
+        else
+        {
+            var_s1 = true;
+        }
+
+        if (var_s1)
+        {
+            cond = true;
+        }
+        else
+        {
+            temp_v0  = ratan2(arg0->vz, arg0->vx);
+            var_s1_2 = 0x400;
+            diff_a0  = ((sp1A - (temp_v0 - var_s1_2)) << 20) >> 20;
+            diff_v1  = ((sp18 - (temp_v0 + var_s1_2)) << 20) >> 20;
+            if (diff_a0 < 0 && diff_v1 >= 1)
+            {
+                cond = false;
+            }
+            else
+            {
+                cond = true;
+            }
+        }
+
+        if (cond)
+        {
+            if (arg1->field_0.field_0 == 0)
+            {
+                arg1->field_0 = arg1->field_30;
+                arg1->field_6 = arg1->field_36;
+            }
+            else
+            {
+                arg1->field_0.field_0 += arg1->field_30.field_0;
+
+                Vw_ClampAngleRange(&arg1->field_0.field_2.vx, &arg1->field_0.field_2.vy, arg1->field_30.field_2.vx, arg1->field_30.field_2.vy);
+
+                var_a0 = arg1->field_6;
+
+                if (arg1->field_6 < arg1->field_36)
+                {
+                    var_a0 = arg1->field_36;
+                }
+
+                arg1->field_6 = var_a0;
+            }
+        }
+
+        if (arg1->field_8.field_0 != 0)
+        {
+            if (arg1->field_0.field_0 == 0)
+            {
+                arg1->field_0 = arg1->field_8;
+                arg1->field_6 = 0;
+            }
+            else
+            {
+                arg1->field_0.field_0 += arg1->field_8.field_0;
+                Vw_ClampAngleRange(&arg1->field_0.field_2.vx, &arg1->field_0.field_2.vy, arg1->field_8.field_2.vx, arg1->field_8.field_2.vy);
+            }
+        }
+    }
+
+    if (arg1->field_0.field_0 != 0)
+    {
+        if (arg1->field_0.field_2.vx == arg1->field_0.field_2.vy)
+        {
+            arg0->vx = 0;
+            arg0->vz = 0;
+            return;
+        }
+
+        var_s1_2 = (arg1->field_0.field_2.vx + arg1->field_0.field_2.vy) >> 1;
+
+        if (arg1->field_0.field_2.vy < arg1->field_0.field_2.vx)
+        {
+            var_s1_2 = (var_s1_2 + 0x800) & 0xFFF;
+        }
+
+        if (arg1->field_8.field_0 == 0)
+        {
+            sp1C = arg1->field_0.field_2.vx;
+            sp1E = arg1->field_0.field_2.vy;
+        }
+        else
+        {
+            sp1C = arg1->field_0.field_2.vx;
+            sp1E = arg1->field_0.field_2.vy;
+
+            Vw_ClampAngleRange(&sp1C, &sp1E, arg1->field_8.field_2.vx, arg1->field_8.field_2.vy);
+
+            sp1C = sp1C & 0xFFF;
+            sp1E = sp1E & 0xFFF;
+
+            if (sp1C == sp1E)
+            {
+                sp1C = arg1->field_0.field_2.vx;
+                sp1E = arg1->field_0.field_2.vy;
+            }
+
+            if (sp1C != sp1E)
+            {
+                var_v1    = ((sp1C - var_s1_2) << 20) >> 20;
+                temp_v0_4 = ((sp1E - var_s1_2) << 20) >> 20;
+
+                if (var_v1 >= 0 || temp_v0_4 <= 0)
+                {
+                    if (ABS(var_v1) < ABS(temp_v0_4))
+                    {
+                        var_s1_2 = sp1C;
+                    }
+                    else
+                    {
+                        var_s1_2 = sp1E;
+                    }
+                }
+            }
+        }
+
+        var_v1_2 = MIN(arg1->field_6 + 2, 16) * 16;
+
+        func_8006D600(arg0, var_s1_2, sp1C, sp1E, var_v1_2);
+    }
+}
+
+void func_8006D600(VECTOR3* pos, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8006D600
+{
+    s32    temp_a2;
+    s16    temp_s0;
+    s16    temp_s3;
+    s16    temp;
+    s32    temp_s0_2;
+    s32    deltaX;
+    s32    deltaZ;
+    s32    z;
+    s32    x;
+    s32    temp_v0;
+    s32    var_s0;
+    s32    var_v0_2;
+    q19_12 angle;
+
+    // TODO: Angles here.
+
+    temp_s0 = Q12_FRACT(arg1);
+    temp_s3 = Q12_FRACT(arg2);
+    temp    = Q12_FRACT(arg3);
+
+    if (arg4 > 0x100)
+    {
+        arg4 = 0x100;
+    }
+
+    x      = Q12_MULT(arg4, Math_Cos(temp_s0));
+    var_s0 = temp;
+    z      = Q12_MULT(arg4, Math_Sin(temp_s0));
+    deltaX = pos->vx - x;
+    deltaZ = pos->vz - z;
+    angle  = Q12_FRACT(ratan2(deltaZ, deltaX));
+
+    if (angle < temp_s3)
+    {
+        angle += FP_ANGLE(360.0f);
+    }
+
+    if (var_s0 < temp_s3)
+    {
+        var_s0 += FP_ANGLE(360.0f);
+    }
+
+    temp_a2 = temp_s3 + FP_ANGLE(360.0f);
+    if (var_s0 < angle)
+    {
+        if (((var_s0 + temp_a2) >> 1) < angle)
+        {
+            var_s0 = temp_a2;
+        }
+
+        temp_s0_2 = Math_Sin(var_s0);
+        temp_v0   = Math_Cos(var_s0);
+        var_v0_2  = Q12_MULT(deltaX, temp_v0) + Q12_MULT(deltaZ, temp_s0_2);
+
+        if (var_v0_2 < 0)
+        {
+            var_v0_2 = 0;
+        }
+
+        pos->vx = x + Q12_MULT(var_v0_2, temp_v0);
+        pos->vz = z + Q12_MULT(var_v0_2, temp_s0_2);
+    }
+}
+
+void func_8006D774(s_func_8006CC44* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x8006D774
+{
+    SVECTOR sp10; // Types assumed. `SVECTOR3` might also work but there are 8 bytes between `sp10` and `sp18` and `SVECTOR3` is only 6 bytes.
+    SVECTOR sp18;
+
+    sp10.vx = Q12_TO_Q8(arg1->vx);
+    sp10.vy = Q12_TO_Q8(arg1->vz);
+    sp18.vx = Q12_TO_Q8(arg2->vx);
+    sp18.vy = Q12_TO_Q8(arg2->vz);
+
+    arg0->field_34 = 0;
+    arg0->field_44.field_0.field_0  = 0;
+    arg0->field_44.field_6          = 0;
+    arg0->field_44.field_8.field_0  = 0;
+    arg0->field_44.field_36         = 0;
+    arg0->field_44.field_30.field_0 = 0;
+
+    func_8006D7EC(&arg0->field_4, &sp10, &sp18);
+}
+
+void func_8006D7EC(s_func_8006ABC0* arg0, SVECTOR* arg1, SVECTOR* arg2) // 0x8006D7EC
+{
+    s16 angle;
+    s32 dist;
+    s16 z;
+
+    arg0->field_C.vx = arg2->vx;
+
+    z                = arg2->vy;
+    arg0->field_C.vz = arg2->vy;
+    dist             = SquareRoot0(SQUARE(arg0->field_C.vx) + SQUARE(z));
+
+    arg0->field_8 = dist;
+
+    if (dist != 0)
+    {
+        arg0->direction_14.vx = FP_TO(arg0->field_C.vx, Q12_SHIFT) / dist;
+        arg0->direction_14.vz = FP_TO(arg0->field_C.vz, Q12_SHIFT) / arg0->field_8;
+
+        angle                 = ratan2(arg0->field_C.vz, arg0->field_C.vx);
+        arg0->direction_14.vx = Math_Cos(angle);
+        arg0->direction_14.vz = Math_Sin(angle);
+    }
+    else
+    {
+        arg0->direction_14.vx = Q12(1.0f);
+        arg0->direction_14.vz = Q12(0.0f);
+    }
+
+    arg0->positionX_18 = arg0->positionX_18 + arg1->vx;
+    arg0->positionZ_1C = arg0->positionZ_1C + arg1->vy;
+    arg0->field_20     = arg0->positionX_18 + arg0->field_C.vx;
+    arg0->field_24     = arg0->positionZ_1C + arg0->field_C.vz;
+}
+
+// ========================================
+// COMBAT 2
+// ========================================
+
+bool Ray_LineCheck(s_RayData* ray, VECTOR3* from, VECTOR3* to) // 0x8006D90C
+{
+    s32     scratchPrev;
+    s32     scratchAddr;
+    VECTOR3 dir; // Q19.12
+
+    dir.vx = to->vx - from->vx;
+    dir.vy = to->vy - from->vy;
+    dir.vz = to->vz - from->vz;
+
+    ray->hasHit_0 = false;
+
+    if (Ray_TraceSetup((s32)PSX_SCRATCH, 0, 0, from, &dir, 0, 0, NULL, 0))
+    {
+        scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(984));
+        scratchAddr   = (s32)PSX_SCRATCH;
+        ray->hasHit_0 = Ray_TraceRun(ray, PSX_SCRATCH_ADDR(0));
+
+        SetSp(scratchPrev);
+    }
+
+    if (!ray->hasHit_0)
+    {
+        Ray_MissSet(ray, from, &dir, (s16)*(u16*)(&((u8*)scratchAddr)[92]));
+    }
+
+    return ray->hasHit_0;
+}
+
+bool func_8006DA08(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* chara) // 0x8006DA08
+{
+    s32              sp28;
+    s32              scratchPrev;
+    s32              scratchAddr;
+    s_SubCharacter** charas;
+
+    charas = func_8006A1A4(&sp28, chara, false);
+
+    ray->hasHit_0 = false;
+    if (Ray_TraceSetup((s32)PSX_SCRATCH, 0, 0, from, dir, 0, 0, charas, sp28))
+    {
+        scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
+        scratchAddr   = (s32)PSX_SCRATCH;
+        ray->hasHit_0 = Ray_TraceRun(ray, PSX_SCRATCH_ADDR(0));
+
+        SetSp(scratchPrev);
+    }
+
+    if (!ray->hasHit_0)
+    {
+        Ray_MissSet(ray, from, dir, (s16)*(u16*)(&((u8*)scratchAddr)[92]));
+    }
+
+    return ray->hasHit_0;
+}
+
+void Ray_MissSet(s_RayData* ray, VECTOR3* from, VECTOR3* dir, q23_8 arg3) // 0x8006DAE4
+{
+    ray->hasHit_0   = false;
+    ray->field_1    = 0;
+    ray->field_4.vx = from->vx + dir->vx;
+    ray->field_4.vy = from->vy + dir->vy;
+    ray->field_4.vz = from->vz + dir->vz;
+    ray->chara_10   = NULL;
+    ray->field_14   = Q8_TO_Q12(arg3);
+    ray->field_18   = Q12(1.875f);
+    ray->field_1C   = FP_ANGLE(0.0f);
+}
+
+static inline void func_8006DB3C_Inline(s_RayData* ray, VECTOR3* dir, VECTOR3* offset, u16* ptr)
+{
+    Ray_MissSet(ray, dir, offset, (short)*ptr);
+}
+
+bool func_8006DB3C(s_RayData* ray, VECTOR3* from, VECTOR3* dir, s_SubCharacter* chara) // 0x8006DB3C
+{
+    s32              charaCount;
+    s32              stackPtr;
+    s32              scratchAddr;
+    s_SubCharacter** charas;
+
+    charas       = func_8006A1A4(&charaCount, chara, true);
+    ray->hasHit_0 = false;
+
+    if (Ray_TraceSetup((s32)PSX_SCRATCH, 1, 0, from, dir, 0, 0, charas, charaCount))
+    {
+        stackPtr      = SetSp((s32)PSX_SCRATCH_ADDR(984));
+        scratchAddr   = (s32)PSX_SCRATCH;
+        ray->hasHit_0 = Ray_TraceRun(ray, scratchAddr);
+
+        SetSp(stackPtr);
+    }
+
+    if (!ray->hasHit_0)
+    {
+        func_8006DB3C_Inline(ray, from, dir, &((u8*)scratchAddr)[92]);
+    }
+
+    return ray->hasHit_0;
+}
+
+bool func_8006DC18(s_RayData* ray, VECTOR3* vec1, VECTOR3* vec2) // 0x8006DC18
+{
+    s32 scratchPrev;
+    s32 scratchAddr;
+
+    ray->hasHit_0 = false;
+    if (Ray_TraceSetup((s32)PSX_SCRATCH, 1, 76, vec1, vec2, 0, 0, NULL, 0))
+    {
+        scratchPrev   = SetSp((s32)PSX_SCRATCH_ADDR(0x3D8));
+        scratchAddr   = (s32)PSX_SCRATCH;
+        ray->hasHit_0 = Ray_TraceRun(ray, PSX_SCRATCH_ADDR(0));
+
+        SetSp(scratchPrev);
+    }
+
+    if (!ray->hasHit_0)
+    {
+        Ray_MissSet(ray, vec1, vec2, (s16)*(u16*)(&((u8*)scratchAddr)[92]));
+    }
+
+    return ray->hasHit_0;
+}
+
+bool Ray_TraceSetup(s_RayState* state, s32 arg1, s16 arg2, VECTOR3* pos, VECTOR3* dir, s32 arg5, s32 arg6, s_SubCharacter** charas, s32 charaCount)
+{
+    if (dir->vx == Q12(0.0f) && dir->vz == Q12(0.0f))
+    {
+        return false;
+    }
+
+    state->field_0  = arg1;
+    state->field_4  = D_800C4478.field_0; // Struct could begin some point earlier.
+    state->field_6  = arg2;
+    state->field_8  = SHRT_MAX;
+    state->field_20 = 0;
+
+    state->field_2C.vx = Q12_TO_Q8(pos->vx);
+    state->field_2C.vy = Q12_TO_Q8(pos->vy);
+    state->field_2C.vz = Q12_TO_Q8(pos->vz);
+
+    state->field_50.vx = Q12_TO_Q8(dir->vx);
+    state->field_50.vy = Q12_TO_Q8(dir->vy);
+    state->field_50.vz = Q12_TO_Q8(dir->vz);
+
+    state->field_3C = state->field_2C.vx + state->field_50.vx;
+
+    state->field_4C = Q12_TO_Q8(arg5);
+    state->field_4E = Q12_TO_Q8(arg6);
+
+    state->field_40 = state->field_2C.vy + state->field_50.vy;
+    state->field_44 = state->field_2C.vz + state->field_50.vz;
+
+    state->field_5C = SquareRoot0(SQUARE(state->field_50.vx) + SQUARE(state->field_50.vz));
+    if (state->field_5C == 0)
+    {
+        return false;
+    }
+
+    state->field_58 = (state->field_50.vx << Q12_SHIFT) / state->field_5C;
+    state->field_5A = (state->field_50.vz << Q12_SHIFT) / state->field_5C;
+
+    if (state->field_50.vy < 0)
+    {
+        state->field_5E = state->field_2C.vy + state->field_4E;
+        state->field_60 = state->field_40 + state->field_4E;
+    }
+    else
+    {
+        state->field_60 = state->field_2C.vy + state->field_4E;
+        state->field_5E = state->field_40 + state->field_4E;
+    }
+
+    state->characters_64     = charas;
+    state->characterCount_68 = charaCount;
+
+    return true;
+}
+
+bool Ray_TraceRun(s_RayData* ray, s_RayState* state) // 0x8006DEB0
+{
+    s32                  collDataIdx;
+    s32                  temp_lo;
+    s_IpdCollisionData*  collData;
+    s_SubCharacter**     curChara;
+    s_IpdCollisionData** collDataPtrs;
+    s_IpdCollisionData** curCollData;
+    s_RayState_8C*  curUnk;
+
+    // Run through IPD collision data.
+    collDataPtrs = func_800425D8(&collDataIdx);
+    for (curCollData = collDataPtrs; curCollData < &collDataPtrs[collDataIdx]; curCollData++)
+    {
+        collData = *curCollData;
+
+        if (collData->field_8_8 || collData->field_8_16 || collData->field_8_24)
+        {
+            func_8006E0AC(state, collData);
+            func_80069994(collData);
+
+            for (curUnk = &state->field_8C; curUnk < &state->field_8C[state->field_88]; curUnk++)
+            {
+                temp_lo = curUnk->field_2 * state->field_7C;
+                func_8006E53C(state, &collData->ptr_20[temp_lo + curUnk->field_0], collData);
+            }
+        }
+    }
+
+    // Run through characters.
+    for (curChara = state->characters_64; curChara < &state->characters_64[state->characterCount_68]; curChara++)
+    {
+        func_8006EE0C(&state->field_6C, state->field_0, *curChara);
+        func_8006EEB8(state, *curChara);
+    }
+
+    if (state->field_8 != SHRT_MAX)
+    {
+        ray->field_4.vx = Q8_TO_Q12(state->field_C);
+        ray->field_4.vy = Q8_TO_Q12(state->field_10);
+        ray->field_4.vz = Q8_TO_Q12(state->field_14);
+        ray->chara_10   = state->field_20;
+        ray->field_14   = Q8_TO_Q12(state->field_8);
+        ray->field_18   = Q8_TO_Q12(state->field_1C);
+        ray->field_1C   = ratan2(state->field_24, state->field_26);
+        ray->field_1    = state->field_28;
+        return true;
+    }
+
+    return false;
+}
+
+void func_8006E0AC(s_RayState* state, s_IpdCollisionData* arg1) // 0x8006E0AC
+{
+    // `state` type might be wrong.
+    state->field_6C.field_0 = arg1->positionX_0;
+    state->field_6C.field_4 = arg1->positionZ_4;
+    state->field_6C.field_8 = state->field_2C.vx - state->field_6C.field_0;
+    state->field_6C.field_A = state->field_2C.vz - state->field_6C.field_4;
+    state->field_6C.field_C = state->field_6C.field_8 + state->field_50.vx;
+    state->field_6C.field_E = state->field_6C.field_A + state->field_50.vz;
+    state->field_7C = arg1->field_1E;
+    state->field_80 = arg1->field_1F;
+    state->field_84 = arg1->field_1C;
+
+    func_8006E150(&state->field_6C, ((DVECTOR*)&state->field_50)[0], ((DVECTOR*)&state->field_50)[1]);
+}
+
+void func_8006E150(s_func_8006E490* arg0, DVECTOR arg1, DVECTOR arg2) // 0x8006E150
+{
+    DVECTOR subroutine_arg4;
+    VECTOR  sp18;
+    VECTOR  sp28;
+    s16     temp_lo;
+    s16     temp_lo_2;
+    s32     temp_a0_3;
+    s32     temp_lo_4;
+    s32     temp_t0;
+    s32     temp_t1;
+    s32     var_a2;
+    s32     var_a3;
+    u32     flags;
+
+    flags = 0;
+    arg0->field_1C = 0;
+
+    if (arg0->field_8.vx < 0 && arg0->field_C < 0 &&
+        arg0->field_8.vy < 0 && arg0->field_E < 0)
+    {
+        return;
+    }
+
+    temp_lo   = arg0->field_10 * arg0->field_18;
+    temp_lo_2 = arg0->field_14 * arg0->field_18;
+
+    if (arg0->field_8.vx >= temp_lo && arg0->field_C >= temp_lo &&
+        arg0->field_8.vy >= temp_lo_2 && arg0->field_E >= temp_lo_2)
+    {
+        return;
+    }
+
+    subroutine_arg4 = arg0->field_8;
+
+    sp18.vz  = 0;
+    sp18.pad = 0;
+
+    sp18.vx = Q12(arg0->field_10);
+    sp18.vy = Q12(arg0->field_14);
+
+    if (arg1.vx < 0)
+    {
+        flags             |= 1 << 0;
+        subroutine_arg4.vx = -subroutine_arg4.vx;
+
+        arg1.vx = -arg1.vx;
+        sp18.vz = -sp18.vx;
+        sp18.vx = 0;
+    }
+
+    if (arg2.vx < 0)
+    {
+        flags             |= 1 << 1;
+        subroutine_arg4.vy = -subroutine_arg4.vy;
+        arg2.vx            = -arg2.vx;
+        sp18.pad           = -sp18.vy;
+        sp18.vy            = 0;
+    }
+
+    if (arg1.vx < arg2.vx)
+    {
+        flags |= 1 << 2;
+
+        temp_a0_3          = subroutine_arg4.vx;
+        subroutine_arg4.vx = subroutine_arg4.vy;
+        subroutine_arg4.vy = temp_a0_3;
+
+        temp_a0_3 = arg1.vx;
+        arg1.vx   = arg2.vx;
+        arg2.vx   = temp_a0_3;
+
+        temp_a0_3 = sp18.vz;
+        sp18.vz   = sp18.pad;
+        sp18.pad  = temp_a0_3;
+        temp_a0_3 = sp18.vx;
+        sp18.vx   = sp18.vy;
+        sp18.vy   = temp_a0_3;
+    }
+
+    if (subroutine_arg4.vx + arg1.vx < Q12_MULT(arg0->field_18, sp18.vx))
+    {
+        sp18.vx = Q12(subroutine_arg4.vx + arg1.vx) / arg0->field_18;
+    }
+
+    sp28.vx = Q12(subroutine_arg4.vx) / arg0->field_18;
+    sp28.vy = Q12(subroutine_arg4.vy) / arg0->field_18;
+    sp28.vz = Q12(1.0f);
+
+    sp28.pad  = Q12(arg2.vx) / arg1.vx;
+    temp_lo_4 = Q12_MULT(sp28.pad, Q12_FRACT(sp28.vx));
+
+    if (FP_FROM(sp18.vx, Q12_SHIFT) < FP_FROM(sp28.vx, Q12_SHIFT))
+    {
+        return;
+    }
+
+    do
+    {
+        func_8006E490(arg0, flags, sp28.vx, sp28.vy);
+
+        temp_t0 = sp28.vy;
+        temp_t1 = sp28.vx;
+        var_a3  = temp_t0 + sp28.pad;
+        var_a2  = temp_t1 + Q12(1.0f);
+
+        sp28.vy = var_a3;
+        sp28.vx = var_a2;
+
+        if (FP_FROM(temp_t0, Q12_SHIFT) < FP_FROM(var_a3, Q12_SHIFT))
+        {
+            if (Q12_FRACT(var_a3) < temp_lo_4)
+            {
+                func_8006E490(arg0, flags, var_a2, temp_t0);
+            }
+            else
+            {
+                func_8006E490(arg0, flags, temp_t1, var_a3);
+            }
+        }
+    }
+    while (arg0->field_1C < 20 && FP_FROM(sp28.vx, Q12_SHIFT) <= FP_FROM(sp18.vx, Q12_SHIFT));
+}
+
+void func_8006E490(s_func_8006E490* arg0, u32 flags, q19_12 posX, q19_12 posZ) // 0x8006E490
+{
+    q19_12 tempPosX;
+
+    // TODO: `func_8006E150` also uses these flags. What subsystem are they for?
+    // Flag 0: Invert X.
+    // Flag 1: Invert Z.
+    // Flag 2: Swap XZ.
+
+    if (flags & (1 << 2))
+    {
+        tempPosX = posX;
+        posX     = posZ;
+        posZ     = tempPosX;
+    }
+
+    if (flags & (1 << 1))
+    {
+        posZ = -posZ;
+    }
+
+    if (flags & (1 << 0))
+    {
+        posX = -posX;
+    }
+
+    posX = FP_FROM(posX, Q12_SHIFT);
+    posZ = FP_FROM(posZ, Q12_SHIFT);
+    if (posX >= 0 && posX < arg0->field_10 &&
+        posZ >= 0 && posZ < arg0->field_14)
+    {
+        arg0->field_20[arg0->field_1C].field_0 = posX;
+        arg0->field_20[arg0->field_1C].field_2 = posZ;
+        arg0->field_1C++;
+    }
+}
+
+void func_8006E53C(s_RayState* state, s_IpdCollisionData_20* arg1, s_IpdCollisionData* ipdColl) // 0x8006E53C
+{
+    s32                    i;
+    s32                    temp_v0;
+    s32                    temp_v0_2;
+    bool                   cond0;
+    bool                   cond1;
+    bool                   cond2;
+    s_IpdCollisionData_18* temp_a1_2;
+    u8                     temp_a0;
+    s32                    temp_a0_3;
+    s32                    temp_a2;
+    s32                    idx;
+    s_IpdCollisionData_14* temp_a1;
+
+    for (i = arg1[0].field_0; i < arg1[1].field_0; i++)
+    {
+        idx = ipdColl->ptr_28[i];
+        temp_a0 = ipdColl->field_30;
+
+        if (temp_a0 >= ipdColl->field_34[idx])
+        {
+            ipdColl->field_34[idx] = temp_a0 + 1;
+
+            if (idx < ipdColl->field_8_16)
+            {
+                temp_a1 = &ipdColl->ptr_14[idx];
+
+                temp_v0 = (u16)state->field_4 >> (temp_a1->field_0_14 * 4 | temp_a1->field_2_14);
+
+                if (temp_v0 & (1 << 0))
+                {
+                    temp_a0_3 = temp_a1->field_8;
+                    temp_a2   = temp_a1->field_9;
+
+                    cond0 = temp_a0_3 != 0xFF && temp_a2 != 0xFF;
+
+                    if (state->field_0 == 1)
+                    {
+                        if (cond0)
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        cond1 = false;
+                        cond2 = false;
+
+                        if (temp_a0_3 == 0xFF || ipdColl->ptr_10[temp_a0_3].field_6_0 == 0 ||
+                            ipdColl->ptr_10[temp_a0_3].field_6_0 == 12)
+                        {
+                            cond1 = true;
+                        }
+
+                        if (temp_a2 == 0xFF || ipdColl->ptr_10[temp_a2].field_6_0 == 0 ||
+                            ipdColl->ptr_10[temp_a2].field_6_0 == 12)
+                        {
+                            cond2 = true;
+                        }
+
+                        if (cond1 && cond2)
+                        {
+                            continue;
+                        }
+                    }
+
+                    func_8006E78C(state, temp_a1, ipdColl->ptr_C, ipdColl->ptr_10, cond0);
+                }
+            }
+            else
+            {
+                temp_a1_2 = &ipdColl->ptr_18[idx - ipdColl->field_8_16];
+                temp_v0_2 = (u16)state->field_4 >> temp_a1_2->field_0_8;
+
+                if ((temp_v0_2 & (1 << 0)) &&
+                    (state->field_0 == 1 || (temp_a1_2->field_0_0 && temp_a1_2->field_0_0 != 12)) &&
+                    temp_a1_2->field_8 >= state->field_6)
+                {
+                    func_8006EB8C(state, temp_a1_2);
+                }
+            }
+        }
+    }
+}
+
+void func_8006E78C(s_RayState* state, s_IpdCollisionData_14* arg1, SVECTOR3* arg2, s_IpdCollisionData_10* arg3, s32 arg4) // 0x8006E78C
+{
+    SVECTOR sp0;
+    SVECTOR sp8;
+
+    SVECTOR3  sp10;
+    s32       var_a3;
+    s32       var_a1;
+    s32       var_a2;
+    s32       var_t1;
+    s32       var_t7;
+    SVECTOR3* temp_t1;
+    SVECTOR3* temp_t2;
+    s32       temp_v1;
+    s32       var_v1;
+
+    var_t7  = 0;
+    temp_t1 = &arg2[arg1->field_7];
+    temp_t2 = &arg2[arg1->field_6];
+    if (state->field_5E >= temp_t1->vy || state->field_5E >= temp_t2->vy)
+    {
+        if (arg1->field_8 != 0xFF)
+        {
+            var_t7 = arg3[arg1->field_8].field_6_0;
+        }
+        if (arg1->field_9 != 0xFF)
+        {
+            var_t7 = arg3[arg1->field_9].field_6_0;
+        }
+
+        temp_v1 = state->field_58 + (state->field_5A << 16);
+        gte_ldR11R12(temp_v1);
+        gte_ldR13R21(temp_v1);
+        gte_ldvxy0(((temp_t1->vx - state->field_6C.field_8) & 0xFFFF) + ((temp_t1->vz - state->field_6C.field_A) << 16));
+        gte_gte_ldvz0();
+        gte_rtv0();
+        gte_stMAC12(&sp0);
+
+        gte_ldvxy0(((temp_t2->vx - state->field_6C.field_8) & 0xFFFF) + ((temp_t2->vz - state->field_6C.field_A) << 16));
+        gte_gte_ldvz0();
+        gte_rtv0();
+        gte_stMAC12(&sp8);
+
+        if ((sp0.vy & 0x8000) != (sp8.vy & 0x8000))
+        {
+            if (state->field_0 == 1)
+            {
+                gte_ldsxy3(0, *(s32*)&sp0.vx, *(s32*)&sp8.vx);
+                gte_nclip();
+
+                if (gte_stMAC0() >= 0)
+                {
+                    if (arg1->field_8 != 0xFF)
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    if (arg1->field_9 != 0xFF)
+                    {
+                        return;
+                    }
+                }
+            }
+
+            if (sp0.vy != sp8.vy)
+            {
+                var_v1 = ((sp0.vy << 0xC) / (sp0.vy - sp8.vy));
+                var_a3 = (((sp8.vx - sp0.vx) * var_v1) >> 0xC) + sp0.vx;
+                if (var_a3 >= 0 && state->field_5C >= var_a3)
+                {
+                    gte_lddp(var_v1);
+                    gte_ldsv3_(temp_t2->vx - temp_t1->vx, temp_t2->vy - temp_t1->vy, temp_t2->vz - temp_t1->vz);
+                    gte_gpf12();
+                    gte_stsv(&sp10);
+
+                    sp10.vx += temp_t1->vx;
+                    sp10.vy += temp_t1->vy;
+                    sp10.vz += temp_t1->vz;
+
+                    var_a2 = state->field_2C.vy + state->field_4E;
+                    if (state->field_50.vy != 0)
+                    {
+                        var_a2 += (state->field_50.vy * var_a3) / state->field_5C;
+                    }
+
+                    if (var_a2 >= sp10.vy && var_a3 < state->field_8)
+                    {
+                        var_a1 = arg1->field_2_0;
+                        var_t1 = -arg1->field_0_0;
+                        if (state->field_0 != 1 && arg4 != 0 && (sp8.vy - sp0.vy) > 0)
+                        {
+                            var_a1 = -var_a1;
+                            var_t1 = arg1->field_0_0;
+                        }
+                        state->field_8  = var_a3;
+                        state->field_C  = (sp10.vx + state->field_6C.field_0);
+                        state->field_10 = (var_a2 - state->field_4E);
+                        state->field_14 = (sp10.vz + state->field_6C.field_4);
+                        state->field_1C = sp10.vy;
+                        state->field_24 = var_a1;
+                        state->field_26 = var_t1;
+                        state->field_20 = 0;
+                        state->field_28 = var_t7;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void func_8006EB8C(s_RayState* state, s_IpdCollisionData_18* arg1) // 0x8006EB8C
+{
+    SVECTOR sp10;
+    SVECTOR sp18;
+    s16     temp_a1_3;
+    s32     temp_v0;
+    s16     temp_a1;
+    s32     temp_v1;
+
+    temp_a1 = arg1->field_8;
+    if (state->field_5E <= arg1->vec_2.vy)
+    {
+        return;
+    }
+
+    temp_v1 = state->field_58 + (state->field_5A << 16);
+    gte_ldR11R12(temp_v1);
+    gte_ldR13R21(temp_v1);
+    gte_ldvxy0(((arg1->vec_2.vx - state->field_6C.field_8) & 0xFFFF) + ((arg1->vec_2.vz - state->field_6C.field_A) << 16));
+    gte_gte_ldvz0();
+    gte_rtv0();
+    gte_stMAC12(&sp10);
+
+    if (-temp_a1 < sp10.vx && sp10.vx < (state->field_5C + temp_a1) && -temp_a1 < sp10.vy && sp10.vy < temp_a1)
+    {
+        temp_v0   = SquareRoot0((temp_a1 * temp_a1) - (sp10.vy * sp10.vy));
+        temp_a1_3 = sp10.vx - temp_v0;
+
+        if (temp_a1_3 >= -temp_v0 && state->field_5C >= temp_a1_3 && temp_a1_3 < state->field_8)
+        {
+            gte_lddp(((temp_a1_3 << 12) / state->field_5C));
+            gte_ldsv3_(state->field_50.vx, state->field_50.vy, state->field_50.vz);
+            gte_gpf12();
+            gte_stsv(&sp18);
+
+            if ((sp18.vy + state->field_2C.vy + state->field_4E) >= arg1->vec_2.vy)
+            {
+                state->field_8  = temp_a1_3;
+                state->field_C  = sp18.vx + state->field_6C.field_8 + state->field_6C.field_0;
+                state->field_10 = sp18.vy + state->field_2C.vy;
+                state->field_14 = sp18.vz + state->field_6C.field_A + state->field_6C.field_4;
+                state->field_1C = arg1->vec_2.vy;
+                state->field_24 = (sp18.vx + state->field_6C.field_8) - arg1->vec_2.vx;
+                state->field_26 = (sp18.vz + state->field_6C.field_A) - arg1->vec_2.vz;
+                state->field_20 = 0;
+                state->field_28 = arg1->field_0_0;
+            }
+        }
+    }
+}
+
+void func_8006EE0C(s_RayState_6C* arg0, s32 arg1, s_SubCharacter* chara) // 0x8006EE0C
+{
+    q19_12 offsetZ;
+    q19_12 offsetX;
+    q19_12 unkY;
+
+    if (arg1 == 1)
+    {
+        arg0->field_C = Q12_TO_Q8(chara->field_D4.radius_0);
+        offsetX       = chara->field_D8.offsetX_4;
+        offsetZ       = chara->field_D8.offsetZ_6;
+        unkY          = chara->position_18.vy + chara->field_C8.field_2;
+    }
+    else
+    {
+        arg0->field_C = Q12_TO_Q8(chara->field_D4.field_2);
+        offsetX       = chara->field_D8.offsetX_0;
+        offsetZ       = chara->field_D8.offsetZ_2;
+        unkY          = chara->position_18.vy + chara->field_C8.field_4;
+    }
+
+    arg0->field_A = Q12_TO_Q8(unkY);
+    arg0->field_0 = Q12_TO_Q8(chara->position_18.vx + offsetX);
+    arg0->field_4 = Q12_TO_Q8(chara->position_18.vz + offsetZ);
+    arg0->field_8 = Q12_TO_Q8(chara->position_18.vy + chara->field_C8.field_0);
+}
+
+void func_8006EEB8(s_RayState* state, s_SubCharacter* chara) // 0x8006EEB8
+{
+    VECTOR3 sp18; // Q23.8?
+    s32     bound;
+    s16     temp_v0;
+    s16     temp_v0_2;
+    q23_8   x1;
+    q23_8   z1;
+    q23_8   x0;
+    q23_8   z0;
+    q19_12  var_v1;
+
+    if (state->field_2C.vx <= state->field_3C)
+    {
+        x0 = state->field_2C.vx;
+        z0 = state->field_3C;
+    }
+    else
+    {
+        x0 = state->field_3C;
+        z0 = state->field_2C.vx;
+    }
+
+    if (state->field_2C.vz <= state->field_44)
+    {
+        z1 = state->field_2C.vz;
+        x1 = state->field_44;
+    }
+    else
+    {
+        z1 = state->field_44;
+        x1 = state->field_2C.vz;
+    }
+
+    bound = state->field_6C.field_C;
+    if ((state->field_6C.field_0 + bound) < x0 || z0 < (state->field_6C.field_0 - bound))
+    {
+        return;
+    }
+
+    if ((state->field_6C.field_4 + bound) < z1 || x1 < (state->field_6C.field_4 - bound) ||
+        ((state->field_2C.vy + state->field_4E) < state->field_6C.field_8 && (state->field_40 + state->field_4E) < state->field_6C.field_8) ||
+        ((state->field_2C.vy + state->field_4C) > state->field_6C.field_A && state->field_6C.field_A < (state->field_40 + state->field_4C)))
+    {
+        return;
+    }
+
+    temp_v0 = func_8006C248(*(s32*)&state->field_58, state->field_5C,
+                            state->field_6C.field_0 - state->field_2C.vx,
+                            state->field_6C.field_4 - state->field_2C.vz,
+                            bound);
+    if (temp_v0 == NO_VALUE)
+    {
+        return;
+    }
+
+    temp_v0_2 = Q12_MULT(state->field_5C, temp_v0);
+    if (temp_v0_2 >= state->field_8)
+    {
+        return;
+    }
+
+    sp18.vy = state->field_2C.vy + (Q12_MULT(state->field_50.vy, temp_v0));
+    if (((sp18.vy + state->field_4E) < state->field_6C.field_8) || (state->field_6C.field_A < (sp18.vy + state->field_4C)))
+    {
+        if (state->field_50.vy == 0)
+        {
+            return;
+        }
+
+        if ((sp18.vy + state->field_4E) < state->field_6C.field_8)
+        {
+            var_v1 = Q12(state->field_6C.field_8 - (state->field_2C.vy + state->field_4E)) / state->field_50.vy;
+            if (var_v1 > Q12(1.0f))
+            {
+                return;
+            }
+            sp18.vy = state->field_6C.field_8 - state->field_4E;
+        }
+        else
+        {
+            var_v1 = Q12(state->field_6C.field_A - (state->field_2C.vy + state->field_4C)) / state->field_50.vy;
+            if (var_v1 > Q12(1.0f))
+            {
+                return;
+            }
+            sp18.vy = state->field_6C.field_A - state->field_4C;
+        }
+
+        sp18.vx = state->field_2C.vx + Q12_MULT(state->field_50.vx, var_v1);
+        sp18.vz = state->field_2C.vz + Q12_MULT(state->field_50.vz, var_v1);
+        if ((SQUARE(state->field_6C.field_0 - sp18.vx) + SQUARE(state->field_6C.field_4 - sp18.vz)) >= SQUARE(state->field_6C.field_C))
+        {
+            return;
+        }
+    }
+    else
+    {
+        sp18.vx = state->field_2C.vx + Q12_MULT(state->field_50.vx, temp_v0);
+        sp18.vz = state->field_2C.vz + Q12_MULT(state->field_50.vz, temp_v0);
+    }
+
+    state->field_8  = temp_v0_2;
+    state->field_C  = sp18.vx;
+    state->field_10 = sp18.vy;
+    state->field_14 = sp18.vz;
+    state->field_1C = state->field_6C.field_8;
+    state->field_24 = sp18.vx - state->field_6C.field_0;
+    state->field_26 = sp18.vz - state->field_6C.field_4;
+    state->field_20 = chara;
+    state->field_28 = 0;
+}
+
+void func_8006F250(s32* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ) // 0x8006F250
+{
+    s32              i;
+    s_func_8006F338* scratch;
+
+    scratch = PSX_SCRATCH;
+
+    func_8006F338(scratch, posX, posZ, posDeltaX, posDeltaZ);
+
+    for (i = 0; i < D_800C4478.field_2; i++)
+    {
+        if (func_8006F3C4(scratch, D_800C4478.field_4[i]))
+        {
+            break;
+        }
+    }
+
+    if (scratch->field_28 == Q12(1.0f))
+    {
+        arg0[0] = Q12(32.0f);
+        arg0[1] = Q12(-16.0f);
+    }
+    else
+    {
+        arg0[0] = Math_MulFixed(Vc_VectorMagnitudeCalc(scratch->field_10, Q12(0.0f), scratch->field_14), scratch->field_28, Q12_SHIFT);
+        arg0[1] = scratch->field_2C;
+    }
+}
+
+void func_8006F338(s_func_8006F338* arg0, q19_12 posX, q19_12 posZ, q19_12 posDeltaX, q19_12 posDeltaZ) // 0x8006F338
+{
+    q19_12 newPosX;
+    q19_12 field_4;
+
+    newPosX = posX + posDeltaX;
+
+    arg0->field_0  = posX;
+    arg0->field_4  = posZ;
+    arg0->field_10 = posDeltaX;
+    arg0->field_8  = posX + posDeltaX;
+    arg0->field_28 = Q12(1.0f);
+    arg0->field_2C = Q12(1048560.0f);
+    arg0->field_14 = posDeltaZ;
+
+    arg0->field_C = posZ + posDeltaZ;
+    if (newPosX >= arg0->field_0)
+    {
+        arg0->field_18 = arg0->field_0;
+        arg0->field_1C = arg0->field_8;
+    }
+    else
+    {
+        arg0->field_18 = posX + posDeltaX;
+        arg0->field_1C = arg0->field_0;
+    }
+
+    field_4 = arg0->field_4;
+    if (arg0->field_C >= arg0->field_4)
+    {
+        arg0->field_20 = field_4;
+        arg0->field_24 = arg0->field_C;
+        return;
+    }
+    else
+    {
+        arg0->field_20 = arg0->field_C;
+        arg0->field_24 = arg0->field_4;
+    }
+}
+
+bool func_8006F3C4(s_func_8006F338* arg0, s_func_8006F8FC* arg1) // 0x8006F3C4
+{
+    s32    temp_s1;
+    s32    var_v1;
+    q19_12 minX;
+    q19_12 maxX;
+    q19_12 minZ;
+    q19_12 maxZ;
+    s32    var_s1;
+    s32    var_v0;
+    s32    var_v0_2;
+
+    minX = Q12(arg1->positionX_0_1);
+    maxX = Q12(arg1->positionX_0_1 + arg1->sizeX_0_21);
+    minZ = Q12(arg1->positionZ_0_11);
+    maxZ = Q12(arg1->positionZ_0_11 + arg1->sizeZ_0_25);
+
+    if ((minX >= arg0->field_1C || arg0->field_18 >= maxX) &&
+        (minZ >= arg0->field_24 || arg0->field_20 >= maxZ))
+    {
+        return false;
+    }
+
+    if (arg0->field_0 >= minX && maxX >= arg0->field_0 &&
+        arg0->field_4 >= minZ && maxZ >= arg0->field_4)
+    {
+        arg0->field_28 = Q12(0.0f);
+        arg0->field_2C = (-Q12(arg1->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
+    }
+    else
+    {
+        if (arg0->field_10 >= Q12(0.0f))
+        {
+            if (arg0->field_14 >= Q12(0.0f))
+            {
+                var_s1   = minX;
+                var_v0_2 = minZ;
+            }
+            else
+            {
+                var_s1   = minX;
+                var_v0_2 = maxZ;
+            }
+        }
+        else
+        {
+            if (arg0->field_14 >= Q12(0.0f))
+            {
+                var_s1   = maxX;
+                var_v0_2 = minZ;
+            }
+            else
+            {
+                var_s1   = maxX;
+                var_v0_2 = maxZ;
+            }
+        }
+
+        temp_s1 = func_80048E3C(FP_TO(arg0->field_10, Q12_SHIFT) >> 16, FP_TO(arg0->field_14, Q12_SHIFT) >> 16, FP_TO(var_v0_2 - arg0->field_4, Q12_SHIFT) >> 16,
+                                FP_TO(minX - arg0->field_0, Q12_SHIFT) >> 16, FP_TO(maxX - arg0->field_0, Q12_SHIFT) >> 16);
+        var_v0  = func_80048E3C(FP_TO(arg0->field_14, Q12_SHIFT) >> 16, FP_TO(arg0->field_10, Q12_SHIFT) >> 16, FP_TO(var_s1 - arg0->field_0, Q12_SHIFT) >> 16,
+                                FP_TO(minZ - arg0->field_4, Q12_SHIFT) >> 16, FP_TO(maxZ - arg0->field_4, Q12_SHIFT) >> 16);
+
+        if (var_v0 >= temp_s1)
+        {
+            var_v1 = temp_s1;
+        }
+        else
+        {
+            var_v1 = var_v0;
+        }
+
+        if (var_v1 < arg0->field_28)
+        {
+            arg0->field_28 = var_v1;
+            arg0->field_2C = (-Q12(arg1->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
+        }
+    }
+
+    return arg0->field_28 == 0;
+}
+
+s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3) // 0x8006F620
+{
+    s32              x0;
+    s32              z0;
+    s32              x1;
+    s32              z1;
+    s32              sp28;
+    s32              sp2C;
+    s32              distX;
+    s32              distZ;
+    s32              temp_a0;
+    s32              temp_s0;
+    s32              max1;
+    s32              temp_s0_3;
+    s32              mag0;
+    s32              angle;
+    s32              var_s2;
+    s32              i;
+    q19_12           posX;
+    q19_12           posZ;
+    s32              result;
+    s32              var_v1;
+    s_func_8006F8FC* temp_s2;
+
+    result = Q12(-16.0f);
+
+    distX = Q12(0.0f);
+    distZ = Q12(0.0f);
+    posX  = pos->vx;
+    posZ  = pos->vz;
+    sp28  = arg1->position_0.vy + arg3;
+    sp2C  = sp28 + pos->vy;
+
+    for (i = 0; i < D_800C4478.field_2; i++)
+    {
+        temp_s2 = D_800C4478.field_4[i];
+        temp_s0 = (-Q12(temp_s2->field_0_29) >> 1) - Q12(1.5f); // NOTE: `-` sign on the outside required for match.
+
+        if ((sp2C - temp_s0) >= 0)
+        {
+            continue;
+        }
+
+        func_8006F8FC(&x0, &z0, arg1->position_0.vx + posX, arg1->position_0.vz + posZ, temp_s2);
+        if (MAX(ABS(x0), ABS(z0)) >= arg2)
+        {
+            continue;
+        }
+
+        mag0 = Vc_VectorMagnitudeCalc(x0, Q12(0.0f), z0);
+        if (mag0 >= arg2)
+        {
+            continue;
+        }
+
+        if (mag0 > 0)
+        {
+            func_8006F8FC(&x1, &z1, arg1->position_0.vx, arg1->position_0.vz, temp_s2);
+
+            var_s2 = Q12(0.1f);
+
+            max1 = Vc_VectorMagnitudeCalc(x1, Q12(0.0f), z1);
+
+            if ((arg2 - max1) <= Q12(0.1f))
+            {
+                var_s2 = arg2 - max1;
+            }
+
+            if ((mag0 - max1) < var_s2)
+            {
+                angle = ratan2(x0, z0);
+                temp_s0_3 = var_s2 - (mag0 - max1);
+
+                distX = Math_MulFixed(temp_s0_3, Math_Sin(angle), Q12_SHIFT);
+                distZ = Math_MulFixed(temp_s0_3, Math_Cos(angle), Q12_SHIFT);
+            }
+        }
+        else
+        {
+            if (temp_s0 < result)
+            {
+                result = temp_s0;
+            }
+
+            posX = pos->vx;
+            posZ = pos->vz;
+            break;
+        }
+
+        posX += distX;
+        posZ += distZ;
+    }
+
+    pos->vx = posX;
+    pos->vz = posZ;
+
+    if (result != Q12(-16.0f))
+    {
+        var_v1  = Q12(0.1f);
+        temp_a0 = result - sp28;
+
+        if (temp_a0 < Q12(0.1f))
+        {
+            var_v1 = temp_a0;
+        }
+
+        if (pos->vy < var_v1)
+        {
+            pos->vy = var_v1;
+        }
+    }
+
+    return result;
+}
+
+void func_8006F8FC(q19_12* outX, q19_12* outZ, q19_12 posX, q19_12 posZ, const s_func_8006F8FC* arg4) // 0x8006F8FC
+{
+    q19_12 minX;
+    q19_12 maxX;
+    q19_12 minZ;
+    q19_12 maxZ;
+
+    // TODO: Using `Q12` doesn't match? There's an identical block in `func_8006F3C4`.
+    minX = FP_TO(arg4->positionX_0_1, Q12_SHIFT);
+    maxX = FP_TO(arg4->positionX_0_1 + arg4->sizeX_0_21, Q12_SHIFT);
+    minZ = FP_TO(arg4->positionZ_0_11, Q12_SHIFT);
+    maxZ = FP_TO(arg4->positionZ_0_11 + arg4->sizeZ_0_25, Q12_SHIFT);
+
+    if (posX < minX)
+    {
+        *outX = posX - minX;
+    }
+    else
+    {
+        if (maxX >= posX)
+        {
+            *outX = Q12(0.0f);
+        }
+        else
+        {
+            *outX = posX - maxX;
+        }
+    }
+
+    if (posZ < minZ)
+    {
+        *outZ = posZ - minZ;
+        return;
+    }
+    else if (maxZ >= posZ)
+    {
+        *outZ = Q12(0.0f);
+        return;
+    }
+
+    *outZ = posZ - maxZ;
+}
+
+// ========================================
+// CHARACTERS ANIMATION RELATED
+// ========================================
+
+q19_12 func_8006F99C(s_SubCharacter* chara, q19_12 dist, q3_12 headingAngle) // 0x8006F99C
+{
+    q3_12 curAngleOffset;
+    q3_12 angleOffset;
+    s32   i;
+
+    angleOffset = NO_VALUE;
+    for (i = 0; i < 15; i++)
+    {
+        if (i == 0)
+        {
+            curAngleOffset = Rng_GenerateUInt(-32, 31);
+        }
+        else if (i & 1)
+        {
+            curAngleOffset = (256 << ((i + 1) >> 1)) + Rng_GenerateUInt(0, 63);
+        }
+        else
+        {
+            curAngleOffset = -(256 << (i >> 1)) - Rng_GenerateUInt(0, 63);
+        }
+
+        if (angleOffset != NO_VALUE)
+        {
+            if (ABS(angleOffset) < ABS(curAngleOffset))
+            {
+                continue;
+            }
+        }
+
+        if (!func_8007029C(chara, dist, curAngleOffset + headingAngle))
+        {
+            angleOffset = curAngleOffset;
+        }
+    }
+
+    if (angleOffset != NO_VALUE)
+    {
+        return func_8005BF38(angleOffset + headingAngle);
+    }
+
+    return FP_ANGLE(360.0f);
+}
+
+q19_12 Chara_HeadingAngleGet(s_SubCharacter* chara, q19_12 dist, q19_12 targetPosX, q19_12 targetPosZ, q3_12 spanAngle, bool isClockwise) // 0x8006FAFC
+{
+    s16    spanAngleDiv3;
+    q3_12  curAngle;
+    q19_12 curPosZ;
+    q19_12 curPosX;
+    q25_6  curOffsetX;
+    q25_6  curOffsetZ;
+    q25_6  curDist;
+    s32    i;
+    q19_12 distMinOrMax;
+    s32    stepCount;
+    q3_12  unkAngle;
+
+    // Define if distance should track minimum or maximum.
+    distMinOrMax = Q12(0.0f);
+    if (isClockwise)
+    {
+        distMinOrMax = INT_MAX;
+    }
+
+    spanAngleDiv3 = spanAngle / 3;
+    unkAngle = FP_ANGLE(-360.0f);
+
+    // Define step count.
+    stepCount = 7;
+    if (spanAngle == FP_ANGLE(360.0f))
+    {
+        stepCount = 12;
+    }
+
+    // Run through steps in span.
+    for (i = 0; i < stepCount; i++)
+    {
+        if (spanAngle == FP_ANGLE(360.0f))
+        {
+            curAngle = Q12(((i * 30) + (Rng_Rand16() % 30))) / 360;
+        }
+        else
+        {
+            curAngle = (chara->rotation_24.vy + ((i - 3) * spanAngleDiv3) + ((Rng_Rand16() % spanAngleDiv3) >> 1)) - (spanAngleDiv3 >> 2);
+        }
+
+        curPosX = chara->position_18.vx + Q12_MULT(dist, Math_Sin(curAngle));
+        curPosZ = chara->position_18.vz + Q12_MULT(dist, Math_Cos(curAngle));
+
+        if (!func_80070030(chara, curPosX, chara->position_18.vy, curPosZ))
+        {
+            curOffsetX = Q12_TO_Q6(targetPosX - curPosX);
+            curOffsetZ = Q12_TO_Q6(targetPosZ - curPosZ);
+            curDist    = SQUARE(curOffsetX) + SQUARE(curOffsetZ);
+            if ((!isClockwise && (distMinOrMax < curDist)) ||
+                ( isClockwise && (curDist      < distMinOrMax)))
+            {
+                distMinOrMax = curDist;
+                unkAngle     = curAngle;
+            }
+        }
+    }
+
+    if (unkAngle != FP_ANGLE(-360.0f))
+    {
+        return func_8005BF38(unkAngle);
+    }
+
+    return FP_ANGLE(360.0f);
+}
+
+bool func_8006FD90(s_SubCharacter* chara, s32 count, q19_12 baseDistMax, q19_12 distStep) // 0x8006FD90
+{
+    VECTOR3 sp10;
+    VECTOR3 sp20;
+    VECTOR3 pos;    // Q19.12
+    VECTOR3 offset; // Q19.12
+    s32     i;
+    q19_12  dist;
+    q19_12  distMult;
+    q19_12  distMax;
+
+    if (func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                             g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
+                      chara->rotation_24.vy) < 0)
+    {
+        distMult = (func_8005BF38(ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                        g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
+                                 chara->rotation_24.vy) * 2) + FP_ANGLE(360.0f);
+    }
+    else
+    {
+        distMult = (FP_ANGLE(180.0f) - func_8005BF38((ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                                             g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
+                                                      chara->rotation_24.vy))) * 2;
+    }
+
+    for (i = distMult; count > 0; count--)
+    {
+        distMult = Q12_MULT_PRECISE(distMult, i);
+    }
+
+    dist = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                               g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz);
+    distMax = baseDistMax + Q12_MULT_PRECISE(distStep, distMult);
+    if (distMax < dist)
+    {
+        return false;
+    }
+
+    pos.vx = chara->position_18.vx;
+    pos.vz = chara->position_18.vz;
+
+    offset.vx = g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx;
+    offset.vz = g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz;
+
+    if ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & ((1 << 0) | (1 << 1))) == (1 << 1))
+    {
+        offset.vy = Q12(0.0f);
+        pos.vy = g_SysWork.playerWork_4C.player_0.position_18.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_0;
+    }
+    else
+    {
+        pos.vy = chara->position_18.vy + chara->field_C8.field_6;
+        offset.vy = (g_SysWork.playerWork_4C.player_0.position_18.vy + g_SysWork.playerWork_4C.player_0.field_C8.field_6) -
+                    (chara->position_18.vy - chara->field_C8.field_6);
+    }
+
+    // Maybe `sp10` is not `VECTOR3`. Might need to rewrite this whole function if its `s_RayData`?
+    return func_8006DA08(&sp10, &pos, &offset, chara) == 0 || sp20.vx != 0;
+}
+
+bool func_80070030(s_SubCharacter* chara, q19_12 posX, q19_12 posY, q19_12 posZ)
+{
+    s_RayData ray;
+    VECTOR3   offset; // Q19.12
+
+    offset.vx = posX - chara->position_18.vx;
+    offset.vy = posY - chara->position_18.vy;
+    offset.vz = posZ - chara->position_18.vz;
+
+    func_8006DB3C(&ray, &chara->position_18, &offset, chara);
+}
+
+bool func_80070084(s_SubCharacter* chara, q19_12 fromX, q19_12 fromY, q19_12 fromZ) // 0x80070084
+{
+    s_RayData ray;
+    VECTOR3   dir; // Q19.12
+    bool      isCharaMissed;
+
+    dir.vx = fromX - chara->position_18.vx;
+    dir.vy = fromY - chara->position_18.vy;
+    dir.vz = fromZ - chara->position_18.vz;
+
+    isCharaMissed = false;
+    if (func_8006DB3C(&ray, &chara->position_18, &dir, chara))
+    {
+        isCharaMissed = ray.chara_10 == NULL;
+    }
+    return isCharaMissed;
+}
+
+bool func_800700F8(s_SubCharacter* npc, s_SubCharacter* player) // 0x800700F8
+{
+    s_RayData ray;
+    VECTOR3   pos;    // Q19.12
+    VECTOR3   offset; // Q19.12
+
+    pos = npc->position_18;
+
+    offset.vx = player->position_18.vx - npc->position_18.vx;
+    offset.vy = Q12(-0.1f);
+    offset.vz = player->position_18.vz - npc->position_18.vz;
+
+    return func_8006DB3C(&ray, &pos, &offset, npc) && ray.chara_10 == NULL;
+}
+
+bool func_80070184(s_SubCharacter* chara, s32 arg1, q3_12 rotY) // 0x80070184
+{
+    q19_12 posX;
+    q19_12 posY;
+    q19_12 posZ;
+    q19_12 sinRotY;
+    q19_12 cosRotY;
+
+    sinRotY = Math_Sin(rotY);
+    posX    = chara->position_18.vx + Q12_MULT(arg1, sinRotY);
+
+    cosRotY = Math_Cos(rotY);
+    posY    = chara->position_18.vy;
+    posZ    = chara->position_18.vz + Q12_MULT(arg1, cosRotY);
+
+    // The calls to this often have a return, so assumed it just passes return of `func_80070084`.
+    return func_80070084(chara, posX, posY, posZ);
+}
+
+bool func_80070208(s_SubCharacter* chara, q19_12 dist) // 0x80070208
+{
+    s_RayData var;
+    VECTOR3           offset; // Q19.12
+    bool              cond;
+
+    offset.vx = Q12_MULT(dist, Math_Sin(chara->rotation_24.vy));
+    offset.vy = Q12(0.0f);
+    offset.vz = Q12_MULT(dist, Math_Cos(chara->rotation_24.vy));
+
+    cond = false;
+    if (func_8006DB3C(&var, &chara->position_18, &offset, chara))
+    {
+        cond = var.chara_10 > 0;
+    }
+    return cond;
+}
+
+s32 func_8007029C(s_SubCharacter* chara, q19_12 dist, q3_12 rotY) // 0x8007029C
+{
+    s_RayData var;
+    VECTOR3           offset; // Q19.12
+
+    offset.vx = Q12_MULT(dist, Math_Sin(rotY));
+    offset.vy = Q12(0.0f);
+    offset.vz = Q12_MULT(dist, Math_Cos(rotY));
+
+    return func_8006DB3C(&var, &chara->position_18, &offset, chara);
+}
+
+bool func_80070320(void) // 0x80070320
+{
+    s32 i;
+
+    for (i = 0; i < ARRAY_SIZE(g_SysWork.npcIdxs_2354); i++)
+    {
+        if (g_SysWork.npcIdxs_2354[i] != NO_VALUE)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+q19_12 func_80070360(s_SubCharacter* chara, q19_12 someDist, q3_12 arg2) // 0x80070360
+{
+    q25_6  deltaX;
+    q25_6  deltaZ;
+    q19_12 dist;
+    q19_12 result;
+
+    dist = someDist;
+    if (dist == Q12(0.0f))
+    {
+        deltaX = g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx;
+        deltaX = Q12_TO_Q6(deltaX);
+
+        deltaZ = g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz;
+        deltaZ = Q12_TO_Q6(deltaZ);
+
+        dist = SquareRoot0(SQUARE(deltaX) + SQUARE(deltaZ));
+        dist = Q6_TO_Q12(dist);
+    }
+
+    // TODO: Why `>> 8`?
+    result = Q12_MULT(arg2, g_SysWork.playerWork_4C.player_0.properties_E4.player.field_10C) - (dist >> 8);
+    if (result < 0)
+    {
+        result = 0;
+    }
+    return result;
+}
+
+void func_80070400(s_SubCharacter* chara, s_Keyframe* keyframe0, s_Keyframe* keyframe1) // 0x80070400
+{
+    q19_12 alpha;
+    q19_12 invAlpha;
+
+    // Compute alpha.
+    if (ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
+    {
+        alpha = Q12_FRACT(chara->model_0.anim_4.time_4);
+    }
+    else
+    {
+        alpha = chara->model_0.anim_4.alpha_A;
+    }
+
+    // Compute inverse alpha.
+    invAlpha = Q12(1.0f) - alpha;
+
+    chara->field_C8.field_0   = FP_FROM((keyframe0->field_0 * invAlpha) + (keyframe1->field_0 * alpha), Q12_SHIFT);
+    chara->field_C8.field_2   = FP_FROM((keyframe0->field_2 * invAlpha) + (keyframe1->field_2 * alpha), Q12_SHIFT);
+    chara->field_C8.field_4   = FP_FROM((keyframe0->field_4 * invAlpha) + (keyframe1->field_4 * alpha), Q12_SHIFT);
+    chara->field_C8.field_6   = FP_FROM((keyframe0->field_6 * invAlpha) + (keyframe1->field_6 * alpha), Q12_SHIFT);
+    chara->field_D8.offsetX_4 = FP_FROM((keyframe0->field_10 * invAlpha) + (keyframe1->field_10 * alpha), Q12_SHIFT);
+    chara->field_D8.offsetZ_6 = FP_FROM((keyframe0->field_12 * invAlpha) + (keyframe1->field_12 * alpha), Q12_SHIFT);
+    chara->field_D4.radius_0  = FP_FROM((keyframe0->field_8 * invAlpha) + (keyframe1->field_8 * alpha), Q12_SHIFT);
+    chara->field_D8.offsetX_0 = FP_FROM((keyframe0->field_C * invAlpha) + (keyframe1->field_C * alpha), Q12_SHIFT);
+    chara->field_D8.offsetZ_2 = FP_FROM((keyframe0->field_E * invAlpha) + (keyframe1->field_E * alpha), Q12_SHIFT);
+    chara->field_D4.field_2   = FP_FROM((keyframe0->field_A * invAlpha) + (keyframe1->field_A * alpha), Q12_SHIFT);
+}
+
+void func_800705E4(GsCOORDINATE2* coord, s32 idx, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0x800705E4
+{
+    q3_12 scales[3];
+    s32   row;
+    s32   col;
+
+    scales[0] = scaleX;
+    scales[1] = scaleY;
+    scales[2] = scaleZ;
+
+    for (col = 0; col < ARRAY_SIZE(scales); col++)
+    {
+        if (scales[col] != Q12(1.0f))
+        {
+            for (row = 0; row < 3; row++)
+            {
+                coord[idx].coord.m[row][col] = Q12_MULT_PRECISE(scales[col], coord[idx].coord.m[row][col]);
+            }
+        }
+    }
+
+    coord->flg = false;
+}
+
+// Used to overwrite `HARRY_BASE_ANIM_INFOS[56:76]` with weapon-specific animations.
+// Always copies 20 `s_AnimInfo`s, but most weapons use less than that.
+// @bug `EquippedWeaponId_HyperBlaster` will copy past the end of this array?
+const s_AnimInfo D_80028B94[] = {
+/* `EquippedWeaponId_Axe` */
+/* 0   */ { Anim_Update2, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
+/* 1   */ { Anim_Update0, ANIM_STATUS(28, true), false, ANIM_STATUS(28, true), { Q12(25.0f) }, 568, 577 },
+/* 2   */ { Anim_Update2, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 579 },
+/* 3   */ { Anim_Update0, ANIM_STATUS(29, true), false, ANIM_STATUS(29, true), { Q12(20.0f) }, 579, 598 },
+/* 4   */ { Anim_Update2, ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 599 },
+/* 5   */ { Anim_Update0, ANIM_STATUS(30, true), false, ANIM_STATUS(30, true), { Q12(18.0f) }, 599, 615 },
+/* 6   */ { Anim_Update2, ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 616 },
+/* 7   */ { Anim_Update0, ANIM_STATUS(31, true), false, ANIM_STATUS(31, true), { Q12(20.0f) }, 616, 635 },
+/* 8   */ { Anim_Update2, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 577 },
+/* 9   */ { Anim_Update0, ANIM_STATUS(32, true), false, ANIM_STATUS(32, true), { Q12(-35.0f) }, 568, 577 },
+
+/* `EquippedWeaponId_Hammer` */
+/* 10  */ { Anim_Update2, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
+/* 11  */ { Anim_Update0, ANIM_STATUS(28, true), false, ANIM_STATUS(28, true), { Q12(40.0f) }, 568, 579 },
+/* 12  */ { Anim_Update2, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 584 },
+/* 13  */ { Anim_Update0, ANIM_STATUS(29, true), false, ANIM_STATUS(29, true), { Q12(22.0f) }, 584, 613 },
+/* 14  */ { Anim_Update2, ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 614 },
+/* 15  */ { Anim_Update0, ANIM_STATUS(30, true), false, ANIM_STATUS(30, true), { Q12(16.0f) }, 614, 634 },
+/* 16  */ { Anim_Update2, ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 637 },
+/* 17  */ { Anim_Update0, ANIM_STATUS(31, true), false, ANIM_STATUS(31, true), { Q12(18.0f) }, 637, 659 },
+/* 18  */ { Anim_Update2, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 579 },
+/* 19  */ { Anim_Update0, ANIM_STATUS(32, true), false, ANIM_STATUS(32, true), { Q12(-35.0f) }, 568, 579 },
+
+/* `EquippedWeaponId_SteelPipe` */
+/* 20  */ { Anim_Update2, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
+/* 21  */ { Anim_Update0, ANIM_STATUS(28, true), false, ANIM_STATUS(28, true), { Q12(45.0f) }, 568, 579 },
+/* 22  */ { Anim_Update2, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 584 },
+/* 23  */ { Anim_Update0, ANIM_STATUS(29, true), false, ANIM_STATUS(29, true), { Q12(25.0f) }, 584, 613 },
+/* 24  */ { Anim_Update2, ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 614 },
+/* 25  */ { Anim_Update0, ANIM_STATUS(30, true), false, ANIM_STATUS(30, true), { Q12(16.0f) }, 614, 634 },
+/* 26  */ { Anim_Update2, ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 637 },
+/* 27  */ { Anim_Update0, ANIM_STATUS(31, true), false, ANIM_STATUS(31, true), { Q12(20.0f) }, 637, 659 },
+/* 28  */ { Anim_Update2, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 579 },
+/* 29  */ { Anim_Update0, ANIM_STATUS(32, true), false, ANIM_STATUS(32, true), { Q12(-40.0f) }, 568, 579 },
+
+/* `EquippedWeaponId_KitchenKnife` */
+/* 30  */ { Anim_Update2, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
+/* 31  */ { Anim_Update0, ANIM_STATUS(28, true), false, ANIM_STATUS(28, true), { Q12(30.0f) }, 568, 575 },
+/* 32  */ { Anim_Update2, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 581 },
+/* 33  */ { Anim_Update0, ANIM_STATUS(29, true), false, ANIM_STATUS(29, true), { Q12(20.0f) }, 581, 595 },
+/* 34  */ { Anim_Update2, ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 596 },
+/* 35  */ { Anim_Update0, ANIM_STATUS(30, true), false, ANIM_STATUS(30, true), { Q12(16.0f) }, 596, 611 },
+/* 36  */ { Anim_Update2, ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 613 },
+/* 37  */ { Anim_Update0, ANIM_STATUS(31, true), false, ANIM_STATUS(31, true), { Q12(16.0f) }, 613, 629 },
+/* 38  */ { Anim_Update2, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 577 },
+/* 39  */ { Anim_Update0, ANIM_STATUS(32, true), false, ANIM_STATUS(32, true), { Q12(-40.0f) }, 568, 577 },
+
+/* `EquippedWeaponId_Katana` */
+/* 40  */ { Anim_Update2, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
+/* 41  */ { Anim_Update0, ANIM_STATUS(28, true), false, ANIM_STATUS(28, true), { Q12(30.0f) }, 568, 579 },
+/* 42  */ { Anim_Update2, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 580 },
+/* 43  */ { Anim_Update0, ANIM_STATUS(29, true), false, ANIM_STATUS(29, true), { Q12(25.0f) }, 580, 597 },
+/* 44  */ { Anim_Update2, ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 598 },
+/* 45  */ { Anim_Update0, ANIM_STATUS(30, true), false, ANIM_STATUS(30, true), { Q12(16.0f) }, 598, 611 },
+/* 46  */ { Anim_Update2, ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 615 },
+/* 47  */ { Anim_Update0, ANIM_STATUS(31, true), false, ANIM_STATUS(31, true), { Q12(16.0f) }, 615, 625 },
+/* 48  */ { Anim_Update2, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 579 },
+/* 49  */ { Anim_Update0, ANIM_STATUS(32, true), false, ANIM_STATUS(32, true), { Q12(-35.0f) }, 568, 579 },
+
+/* `EquippedWeaponId_Chainsaw` */
+/* 50  */ { Anim_Update2, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
+/* 51  */ { Anim_Update0, ANIM_STATUS(28, true), false, ANIM_STATUS(28, true), { Q12(15.0f) }, 568, 583 },
+/* 52  */ { Anim_Update2, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 584 },
+/* 53  */ { Anim_Update0, ANIM_STATUS(29, true), false, ANIM_STATUS(29, true), { Q12(16.0f) }, 584, 602 },
+/* 54  */ { Anim_Update2, ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 603 },
+/* 55  */ { Anim_Update0, ANIM_STATUS(30, true), false, ANIM_STATUS(30, true), { Q12(14.0f) }, 603, 618 },
+/* 56  */ { Anim_Update2, ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 619 },
+/* 57  */ { Anim_Update0, ANIM_STATUS(31, true), false, ANIM_STATUS(31, true), { Q12(14.0f) }, 619, 637 },
+/* 58  */ { Anim_Update2, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 649 },
+/* 59  */ { Anim_Update0, ANIM_STATUS(32, true), false, ANIM_STATUS(32, true), { Q12(-35.0f) }, 638, 649 },
+/* 60  */ { Anim_Update2, ANIM_STATUS(33, false), false, ANIM_STATUS(33, true), { Q12(100.0f) }, NO_VALUE, 638 },
+/* 61  */ { Anim_Update0, ANIM_STATUS(33, true), false, ANIM_STATUS(33, true), { Q12(24.0f) }, 638, 649 },
+/* 62  */ { Anim_Update2, ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 650 },
+/* 63  */ { Anim_Update1, ANIM_STATUS(34, true), false, NO_VALUE, { Q12(20.0f) }, 650, 655 },
+
+/* `EquippedWeaponId_RockDrill` */
+/* 64  */ { Anim_Update2, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
+/* 65  */ { Anim_Update0, ANIM_STATUS(28, true), false, ANIM_STATUS(28, true), { Q12(18.0f) }, 568, 583 },
+/* 66  */ { Anim_Update2, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 584 },
+/* 67  */ { Anim_Update0, ANIM_STATUS(29, true), false, ANIM_STATUS(29, true), { Q12(24.0f) }, 584, 597 },
+/* 68  */ { Anim_Update2, ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 598 },
+/* 69  */ { Anim_Update0, ANIM_STATUS(30, true), false, ANIM_STATUS(30, true), { Q12(20.0f) }, 598, 611 },
+/* 70  */ { Anim_Update2, ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 612 },
+/* 71  */ { Anim_Update0, ANIM_STATUS(31, true), false, ANIM_STATUS(31, true), { Q12(22.0f) }, 612, 625 },
+/* 72  */ { Anim_Update2, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 636 },
+/* 73  */ { Anim_Update0, ANIM_STATUS(32, true), false, ANIM_STATUS(32, true), { Q12(-25.0f) }, 626, 636 },
+/* 74  */ { Anim_Update2, ANIM_STATUS(33, false), false, ANIM_STATUS(33, true), { Q12(100.0f) }, NO_VALUE, 626 },
+/* 75  */ { Anim_Update0, ANIM_STATUS(33, true), false, ANIM_STATUS(33, true), { Q12(23.0f) }, 626, 636 },
+/* 76  */ { Anim_Update2, ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 637 },
+/* 77  */ { Anim_Update1, ANIM_STATUS(34, true), false, NO_VALUE, { Q12(24.0f) }, 637, 640 },
+
+/* `EquippedWeaponId_Handgun` */
+/* 78  */ { Anim_Update2, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 570 },
+/* 79  */ { Anim_Update0, ANIM_STATUS(28, true), false, ANIM_STATUS(28, true), { Q12(35.0f) }, 570, 579 },
+/* 80  */ { Anim_Update2, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 582 },
+/* 81  */ { Anim_Update0, ANIM_STATUS(29, true), false, ANIM_STATUS(29, true), { Q12(40.0f) }, 582, 592 },
+/* 82  */ { Anim_Update2, ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 594 },
+/* 83  */ { Anim_Update0, ANIM_STATUS(30, true), false, ANIM_STATUS(30, true), { Q12(25.0f) }, 594, 604 },
+/* 84  */ { Anim_Update2, ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 605 },
+/* 85  */ { Anim_Update0, ANIM_STATUS(31, true), false, ANIM_STATUS(31, true), { Q12(30.0f) }, 605, 658 },
+/* 86  */ { Anim_Update2, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 570 },
+/* 87  */ { Anim_Update0, ANIM_STATUS(32, true), false, ANIM_STATUS(32, true), { Q12(60.0f) }, 570, 592 },
+/* 88  */ { Anim_Update2, ANIM_STATUS(33, false), false, ANIM_STATUS(33, true), { Q12(100.0f) }, NO_VALUE, 579 },
+/* 89  */ { Anim_Update0, ANIM_STATUS(33, true), false, ANIM_STATUS(33, true), { Q12(-35.0f) }, 570, 579 },
+/* 90  */ { Anim_Update2, ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 592 },
+/* 91  */ { Anim_Update0, ANIM_STATUS(34, true), false, ANIM_STATUS(34, true), { Q12(-35.0f) }, 580, 592 },
+/* 92  */ { Anim_Update2, ANIM_STATUS(35, false), false, ANIM_STATUS(35, true), { Q12(100.0f) }, NO_VALUE, 592 },
+/* 93  */ { Anim_Update0, ANIM_STATUS(35, true), false, ANIM_STATUS(35, true), { Q12(-30.0f) }, 570, 592 },
+/* 94  */ { Anim_Update2, ANIM_STATUS(36, false), false, ANIM_STATUS(36, true), { Q12(100.0f) }, NO_VALUE, 582 },
+/* 95  */ { Anim_Update0, ANIM_STATUS(36, true), false, ANIM_STATUS(36, true), { Q12(25.0f) }, 582, 604 },
+
+/* `EquippedWeaponId_HuntingRifle` */
+/* 96  */ { Anim_Update2, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
+/* 97  */ { Anim_Update0, ANIM_STATUS(28, true), false, ANIM_STATUS(28, true), { Q12(35.0f) }, 568, 587 },
+/* 98  */ { Anim_Update2, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 588 },
+/* 99  */ { Anim_Update0, ANIM_STATUS(29, true), false, ANIM_STATUS(29, true), { Q12(25.0f) }, 588, 597 },
+/* 100 */ { Anim_Update2, ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 598 },
+/* 101 */ { Anim_Update0, ANIM_STATUS(30, true), false, ANIM_STATUS(30, true), { Q12(16.0f) }, 598, 607 },
+/* 102 */ { Anim_Update2, ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 608 },
+/* 103 */ { Anim_Update0, ANIM_STATUS(31, true), false, ANIM_STATUS(31, true), { Q12(20.0f) }, 608, 642 },
+/* 104 */ { Anim_Update2, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 588 },
+/* 105 */ { Anim_Update0, ANIM_STATUS(32, true), false, ANIM_STATUS(32, true), { Q12(25.0f) }, 588, 597 },
+/* 106 */ { Anim_Update2, ANIM_STATUS(33, false), false, ANIM_STATUS(33, true), { Q12(100.0f) }, NO_VALUE, 597 },
+/* 107 */ { Anim_Update0, ANIM_STATUS(33, true), false, ANIM_STATUS(33, true), { Q12(-30.0f) }, 588, 597 },
+/* 108 */ { Anim_Update2, ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 597 },
+/* 109 */ { Anim_Update0, ANIM_STATUS(34, true), false, ANIM_STATUS(34, true), { Q12(-30.0f) }, 597, 597 },
+/* 110 */ { Anim_Update2, ANIM_STATUS(35, false), false, ANIM_STATUS(35, true), { Q12(100.0f) }, NO_VALUE, 587 },
+/* 111 */ { Anim_Update0, ANIM_STATUS(35, true), false, ANIM_STATUS(35, true), { Q12(-22.0f) }, 568, 587 },
+/* 112 */ { Anim_Update2, ANIM_STATUS(36, false), false, ANIM_STATUS(36, true), { Q12(100.0f) }, NO_VALUE, 598 },
+/* 113 */ { Anim_Update0, ANIM_STATUS(36, true), false, ANIM_STATUS(36, true), { Q12(16.0f) }, 598, 607 },
+
+/* `EquippedWeaponId_Shotgun` */
+/* 114 */ { Anim_Update2, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 570 },
+/* 115 */ { Anim_Update0, ANIM_STATUS(28, true), false, ANIM_STATUS(28, true), { Q12(40.0f) }, 570, 579 },
+/* 116 */ { Anim_Update2, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 582 },
+/* 117 */ { Anim_Update0, ANIM_STATUS(29, true), false, ANIM_STATUS(29, true), { Q12(30.0f) }, 582, 592 },
+/* 118 */ { Anim_Update2, ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 594 },
+/* 119 */ { Anim_Update0, ANIM_STATUS(30, true), false, ANIM_STATUS(30, true), { Q12(22.0f) }, 594, 604 },
+/* 120 */ { Anim_Update2, ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 605 },
+/* 121 */ { Anim_Update0, ANIM_STATUS(31, true), false, ANIM_STATUS(31, true), { Q12(17.0f) }, 605, 641 },
+/* 122 */ { Anim_Update2, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 570 },
+/* 123 */ { Anim_Update0, ANIM_STATUS(32, true), false, ANIM_STATUS(32, true), { Q12(60.0f) }, 570, 592 },
+/* 124 */ { Anim_Update2, ANIM_STATUS(33, false), false, ANIM_STATUS(33, true), { Q12(100.0f) }, NO_VALUE, 579 },
+/* 125 */ { Anim_Update0, ANIM_STATUS(33, true), false, ANIM_STATUS(33, true), { Q12(-40.0f) }, 570, 579 },
+/* 126 */ { Anim_Update2, ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 592 },
+/* 127 */ { Anim_Update0, ANIM_STATUS(34, true), false, ANIM_STATUS(34, true), { Q12(-40.0f) }, 580, 592 },
+/* 128 */ { Anim_Update2, ANIM_STATUS(35, false), false, ANIM_STATUS(35, true), { Q12(100.0f) }, NO_VALUE, 592 },
+/* 129 */ { Anim_Update0, ANIM_STATUS(35, true), false, ANIM_STATUS(35, true), { Q12(-20.0f) }, 570, 592 },
+/* 130 */ { Anim_Update2, ANIM_STATUS(36, false), false, ANIM_STATUS(36, true), { Q12(100.0f) }, NO_VALUE, 582 },
+/* 131 */ { Anim_Update0, ANIM_STATUS(36, true), false, ANIM_STATUS(36, true), { Q12(22.0f) }, 582, 604 },
+
+/* `EquippedWeaponId_HyperBlaster` */
+/* 132 */ { Anim_Update2, ANIM_STATUS(28, false), false, ANIM_STATUS(28, true), { Q12(100.0f) }, NO_VALUE, 568 },
+/* 133 */ { Anim_Update0, ANIM_STATUS(28, true), false, ANIM_STATUS(28, true), { Q12(24.0f) }, 568, 574 },
+/* 134 */ { Anim_Update2, ANIM_STATUS(29, false), false, ANIM_STATUS(29, true), { Q12(100.0f) }, NO_VALUE, 574 },
+/* 135 */ { Anim_Update0, ANIM_STATUS(29, true), false, ANIM_STATUS(29, true), { Q12(20.0f) }, 574, 574 },
+/* 136 */ { Anim_Update2, ANIM_STATUS(30, false), false, ANIM_STATUS(30, true), { Q12(100.0f) }, NO_VALUE, 575 },
+/* 137 */ { Anim_Update0, ANIM_STATUS(30, true), false, ANIM_STATUS(30, true), { Q12(20.0f) }, 575, 579 },
+/* 138 */ { Anim_Update2, ANIM_STATUS(31, false), false, ANIM_STATUS(31, true), { Q12(100.0f) }, NO_VALUE, 568 },
+/* 139 */ { Anim_Update0, ANIM_STATUS(31, true), false, ANIM_STATUS(31, true), { Q12(17.0f) }, 568, 568 },
+/* 140 */ { Anim_Update2, ANIM_STATUS(32, false), false, ANIM_STATUS(32, true), { Q12(100.0f) }, NO_VALUE, 568 },
+/* 141 */ { Anim_Update0, ANIM_STATUS(32, true), false, ANIM_STATUS(32, true), { Q12(24.0f) }, 568, 574 },
+/* 142 */ { Anim_Update2, ANIM_STATUS(33, false), false, ANIM_STATUS(33, true), { Q12(100.0f) }, NO_VALUE, 574 },
+/* 143 */ { Anim_Update0, ANIM_STATUS(33, true), false, ANIM_STATUS(33, true), { Q12(-20.0f) }, 568, 574 },
+/* 144 */ { Anim_Update2, ANIM_STATUS(34, false), false, ANIM_STATUS(34, true), { Q12(100.0f) }, NO_VALUE, 574 },
+/* 145 */ { Anim_Update0, ANIM_STATUS(34, true), false, ANIM_STATUS(34, true), { Q12(-20.0f) }, 574, 574 },
+/* 146 */ { Anim_Update2, ANIM_STATUS(35, false), false, ANIM_STATUS(35, true), { Q12(100.0f) }, NO_VALUE, 574 },
+/* 147 */ { Anim_Update0, ANIM_STATUS(35, true), false, ANIM_STATUS(35, true), { Q12(-20.0f) }, 568, 574 },
+/* 148 */ { Anim_Update2, ANIM_STATUS(36, false), false, ANIM_STATUS(36, true), { Q12(100.0f) }, NO_VALUE, 574 },
+/* 149 */ { Anim_Update0, ANIM_STATUS(36, true), false, ANIM_STATUS(36, true), { Q12(20.0f) }, 574, 579 }
+};
+
+// Unused data?
+INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_8005E0DC", D_800294F4);

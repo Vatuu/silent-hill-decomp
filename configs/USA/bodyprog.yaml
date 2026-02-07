@@ -82,7 +82,7 @@ segments:
       - [0x1350, .rodata, items/item_screens_2]
       - [0x179C, .rodata, items/item_screens_3]
       - [0x39CC, .rodata, bodyprog_80055028]
-      - [0x4BEC,  rodata]
+      - [0x3A14, .rodata, bodyprog_8005E0DC]
       - [0x4BF0, .rodata, bodyprog_800706E4]
       - [0x5CF0, .rodata, view/vc_main]
       - [0x5F9C, .rodata, bodyprog_80085D78]
@@ -155,6 +155,8 @@ segments:
       - [0x27D7C,   c, items/item_screens_2]
       - [0x2AA7C,   c, items/item_screens_3]
       - [0x304C8,   c, bodyprog_80055028]
+      - [0x38D0C,   c, 3d_audio]
+      - [0x3957C,   c, bodyprog_8005E0DC]
       - [0x4BB84,   c, bodyprog_800706E4]
       - [0x5BDE0,   c, view/vc_main]
       - [0x61218,   c, bodyprog_80085D78]
@@ -390,6 +392,7 @@ segments:
       
       # .bss section
       - [0x8DAB0, data, bodyprog_800B2610] # Unknown data.
+      - { start: 0x8DAB8, type: c, name: memcard/memcard, linker_section: COMMON }
       - [0x8DAB8, .bss, memcard/memcard]
       - [0x910C0, .bss, screen/text_draw_debug]
       - [0x910C8, .bss, screen/screen_draw]
@@ -397,6 +400,7 @@ segments:
       - [0x910D0, .bss, screen/screen_fade]
       - [0x910D4, .bss, screen/screen_data]
       - [0x95170,  bss]
+      - { start: 0x95460, type: c, name: globals, linker_section: COMMON }
       - [0x95460, .bss, globals]
       - [0x981A0,  bss]
       - [0x981B4,  pad] # Garbage.
@@ -432,7 +436,7 @@ segments:
       - [0x9EE48, .bss, items/item_screens_3]
       - [0x9F608,  bss, worldgfx]
       - [0x9F75C,  pad] # Garbage.
-      - [0x9F760,  bss, 3daudio]
+      - [0x9F760, .bss, 3d_audio]
       - [0x9F770,  bss, bodyprog_800706E4_1]
       - [0x9F774,  pad] # Garbage.
       - [0x9F778,  bss, bodyprog_80055028]
