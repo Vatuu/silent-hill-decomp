@@ -79,7 +79,7 @@ s16 func_800CD20C(void) // 0x800CD20C
         g_Items_Transforms[i].rotate.vx = FP_ANGLE(90.0f);
         g_Items_Transforms[i].rotate.vz = FP_ANGLE(0.0f);
 
-        Gfx_Items_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
+        ItemScreen_ItemRotate(&g_Items_Coords[i].param->rotate, &g_Items_Coords[i]);
 
         if (D_800F159C != 0)
         {
@@ -245,7 +245,7 @@ void func_800CD860(void) // 0x800CD860
     D_800F159D = 0;
     D_800ED5C8 = 3;
 
-    Gfx_ItemScreens_CameraSet(&D_800F1570, &D_800F1510, (SVECTOR3*)&D_800F1560, 0);
+    ItemScreen_CamSet(&D_800F1570, &D_800F1510, (SVECTOR3*)&D_800F1560, 0);
 
     for (i = 0; i < 6; i++)
     {

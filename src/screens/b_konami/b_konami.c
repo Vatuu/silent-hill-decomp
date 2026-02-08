@@ -103,10 +103,10 @@ e_KcetLogoStateStep GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
         return KcetLogoStateStep_CheckMemCards;
     }
 
-    g_MemCard_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_BUFFER_0;
+    g_MemCard_ActiveSavegameEntry = (s_SaveScreen_Element*)SAVEGAME_ENTRY_BUFFER_0;
     saveEntryType0                = g_MemCard_ActiveSavegameEntry->type_4;
 
-    g_MemCard_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_BUFFER_1;
+    g_MemCard_ActiveSavegameEntry = (s_SaveScreen_Element*)SAVEGAME_ENTRY_BUFFER_1;
     saveEntryType1                = g_MemCard_ActiveSavegameEntry->type_4;
 
     // No memory cards.
@@ -127,7 +127,7 @@ e_KcetLogoStateStep GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
         g_MemCard_ActiveSavegameEntry = MemCard_ActiveSavegameEntryGet(g_SelectedSaveSlotIdx);
         g_MemCard_ActiveSavegameEntry = &g_MemCard_ActiveSavegameEntry[g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]];
 
-        D_800BCD40                    = g_MemCard_ActiveSavegameEntry->field_5;
+        g_SelectedDeviceId            = g_MemCard_ActiveSavegameEntry->deviceId_5;
         g_SelectedFileIdx             = g_MemCard_ActiveSavegameEntry->fileIdx_6;
         g_Savegame_SelectedElementIdx = g_MemCard_ActiveSavegameEntry->elementIdx_7;
 
@@ -250,7 +250,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     switch (g_GameWork.gameStateStep_598[1])
                     {
                         case 0:
-                            MemCard_ProcessSet(MemCardProcess_Load_Game, D_800BCD40, 0, 0);
+                            MemCard_ProcessSet(MemCardProcess_Load_Game, g_SelectedDeviceId, 0, 0);
                             g_GameWork.gameStateStep_598[2] = 0;
                             g_GameWork.gameStateStep_598[1]++;
 

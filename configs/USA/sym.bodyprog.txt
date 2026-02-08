@@ -2730,14 +2730,14 @@ g_Screen_FadeStatus                          = 0x800BCD0C;
 //--- PA: 0x0981B8   VA: 0x800BCD18   subsegment: bss, memcard/memcard_2
 //----------------------------------------------------------------------
 g_MemCard_SavegameCount                      = 0x800BCD28;
-activeSavegameEntry                = 0x800BCD2C;
-slotElementCount0                     = 0x800BCD30;
-allMemCardsStatus                  = 0x800BCD34;
-saveScreenState                 = 0x800BCD38;
-totalElementsCount                 = 0x800BCD3A;
-slotElementCount1                     = 0x800BCD3C;
-selectedElementIdx                = 0x800BCD3E;
-selectedFileIdx                            = 0x800BCD3F;
+g_MemCard_ActiveSavegameEntry                = 0x800BCD2C;
+g_Savegame_ElementCount0                     = 0x800BCD30;
+g_MemCard_AllMemCardsStatus                  = 0x800BCD34;
+g_SaveScreen_SaveScreenState                 = 0x800BCD38;
+g_MemCard_TotalElementsCount                 = 0x800BCD3A;
+g_Savegame_ElementCount1                     = 0x800BCD3C;
+g_Savegame_SelectedElementIdx                = 0x800BCD3E;
+g_SelectedFileIdx                            = 0x800BCD3F;
 g_SelectedDeviceId                           = 0x800BCD40;
 
 //---------------------------------------------------

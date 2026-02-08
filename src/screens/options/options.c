@@ -2364,7 +2364,7 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
  * 0 corresponds to the presets pane on the left,
  * 1 corresponds to the actions pane on the right.
  */
-DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[CARD_SLOT_COUNT] = {
+DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[2] = {
     {
         .tag  = 0x03000000,
         .code = { 0xE1000200, 0 }
@@ -2379,7 +2379,7 @@ DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[CARD_SLOT_COUNT] = {
  * 0 corresponds to the presets pane on the left,
  * 1 corresponds to the actions pane on the right.
  */
-POLY_G4 g_ControllerMenu_SelectionHighlightQuads[CARD_SLOT_COUNT] = {
+POLY_G4 g_ControllerMenu_SelectionHighlightQuads[2] = {
     {
         .tag  = 0x08000000,
         .r0   = 255,

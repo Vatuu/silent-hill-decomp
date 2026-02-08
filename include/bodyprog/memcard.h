@@ -361,9 +361,9 @@ STATIC_ASSERT_SIZEOF(s_MemCard_SaveWork, 1816);
  */
 
 /** @brief Amount of elements in each memory card. */
-extern u8 slotElementCount0[2];
+extern u8 g_Savegame_ElementCount0[2];
 
-extern s_SaveScreen_Element* activeSavegameEntry; // 0x800BCD2C
+extern s_SaveScreen_Element* g_MemCard_ActiveSavegameEntry; // 0x800BCD2C
 
 extern u8 g_SlotElementSelectedIdx[2]; // 0 - Slot 1, 1 - Slot 2.
 
@@ -388,27 +388,27 @@ extern s32 D_800BCD18[2];
 extern s32 D_800BCD20[2];
 
 /** @brief Stores all memory cards/devices status. */
-extern u32 allMemCardsStatus;
+extern u32 g_MemCard_AllMemCardsStatus;
 
 /** @brief Some determinator for the state of the save screen.
  * 2 - Saving, 3 - Loading.
  */
-extern s8 saveScreenState;
+extern s8 g_SaveScreen_SaveScreenState;
 
 extern s8 D_800BCD39; // Boolean.
 
 /** @brief Counts all elements of all inserted memory cards. */
-extern s16 totalElementsCount;
+extern s16 g_MemCard_TotalElementsCount;
 
 extern s8 g_SelectedDeviceId;
 
 /** @brief Amount of elements in each memory card. */
-extern u8 slotElementCount1[2];
+extern u8 g_Savegame_ElementCount1[2];
 
 /** @brief Index of selected element in each memory card. */
-extern u8 selectedElementIdx;
+extern u8 g_Savegame_SelectedElementIdx;
 
-extern s8 selectedFileIdx;
+extern s8 g_SelectedFileIdx;
 
 extern s_MemCard_SaveHeader g_MemCard_BasicSaveInfo1[MEMCARD_FILE_COUNT_MAX];
 
