@@ -39,6 +39,13 @@ extern s8 D_800D31D8;
 
 extern u16 g_MapMsgSounds[24];
 
+extern u16          D_800D2F28[38];
+extern s_Bgm_Update D_800D2F18;
+extern s_Bgm_Update D_800D2F20;
+extern s_Bgm_Update D_800D2F74;
+extern s_Bgm_Update D_800D2F7C;
+extern s_Bgm_Update D_800D2F84;
+
 void func_800CFFE8(s32 arg0);
 
 void func_800D001C(s32 arg0);
