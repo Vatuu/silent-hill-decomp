@@ -11,7 +11,19 @@ CHECKSUM       ?= 1
 NON_MATCHING   ?= 0
 SKIP_ASM       ?= 0
 
-# Temporal thing
+# Enables usage of the `COMMON` segment.
+# The compiler can create a segment call `COMMON` intended to handle repetite
+# global variables declared in files which later becomes simple data that then
+# get assigned into some data segment. This comes as default and can be disabled,
+# however, MASPSX by default do not emit the segment and instead assign data
+# directly into the data segments. The importance of having this segment
+# supported is specially in the way MASPSX handle data order in a different way
+# to how the actual `COMMON` segment handles data order. It is required to have
+# the segment supported in the linker script, even though, Splat don't have
+# natively support to it, it can be tricked to handle it, see:
+# `https://github.com/ethteck/splat/wiki/Segments#linker_section`
+# However, this currently breaks generation of rodata files required for
+# `INCLUDE_RODATA` macros so this has to be left as an option for the moment.
 USE_COMMON     ?= 0
 
 # Names and Paths
