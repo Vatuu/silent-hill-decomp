@@ -2706,9 +2706,9 @@ void func_800E1FF4(void) // 0x800E1FF4
     MapMsg_DisplayWithTexture1(FILE_TIM_PLANTBK_TIM, Q12(0.0f), Q12(0.0f), 22, 23);
 }
 
-INCLUDE_RODATA("maps/map7_s02/nonmatchings/map7_s02_2", D_800CD944);
+const VECTOR3 sharedData_800CB094_3_s01 = { 0xFFF9B19A, 0xFFFFE000, 0xFFFC319A };
 
-INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800E204C);
+#include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800E204C
 
 void func_800E2DC0(void) // 0x800E2DC0
 {

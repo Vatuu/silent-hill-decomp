@@ -209,6 +209,7 @@ typedef enum _EventFlag
     EventFlag_M3S01_GeneratorOn         = 211,
 
     EventFlag_212 = 212,
+    EventFlag_213 = 213,
     EventFlag_215 = 215,
     EventFlag_216 = 216,
 

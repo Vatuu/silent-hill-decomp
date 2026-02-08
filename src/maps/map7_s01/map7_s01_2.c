@@ -2153,9 +2153,9 @@ void func_800DC080(void) // 0x800DC080
     Event_ItemTake(InventoryItemId_BirdCageKey, DEFAULT_PICKUP_ITEM_COUNT, EventFlag_M7S01_PickupBirdCageKey, 54);
 }
 
-INCLUDE_RODATA("maps/map7_s01/nonmatchings/map7_s01_2", D_800CC794);
+const VECTOR3 sharedData_800CB094_3_s01 = { 0xFFF9B19A, 0xFFFFE000, 0xFFFC319A };
 
-INCLUDE_ASM("maps/map7_s01/nonmatchings/map7_s01_2", func_800DC0AC);
+#include "maps/shared/sharedFunc_800D15F0_3_s01.h" // 0x800DC0AC
 
 void func_800DCE20(void) // 0x800DCE20
 {

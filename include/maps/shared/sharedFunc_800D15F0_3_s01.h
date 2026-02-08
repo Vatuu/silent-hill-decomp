@@ -1,3 +1,27 @@
+#if defined(MAP7_S01) || defined(MAP7_S02)
+#define EventFlagBase0 EventFlag_213
+#define EventFlagBase1 EventFlag_212
+#define EventFlagBase2 EventFlag_216
+#else
+#define EventFlagBase0 EventFlag_212
+#define EventFlagBase1 EventFlag_M3S01_GeneratorOn
+#define EventFlagBase2 EventFlag_215
+#endif
+
+#ifdef MAP3_S01
+#define MAX_IDX 7
+#elif defined(MAP7_S01) || defined(MAP7_S02)
+#define MAX_IDX 5
+#else
+#define MAX_IDX 6
+#endif
+
+#if defined(MAP7_S01) || defined(MAP7_S02)
+#define CHECK_IDX 4
+#else
+#define CHECK_IDX 5
+#endif
+
 void sharedFunc_800D15F0_3_s01(void)
 {
     s32 j;
@@ -30,7 +54,7 @@ void sharedFunc_800D15F0_3_s01(void)
 
             for (i = 0; i < 4; i++)
             {
-                if (Savegame_EventFlagGet(EventFlag_212 + i))
+                if (Savegame_EventFlagGet(EventFlagBase0 + i))
                 {
                     sharedData_800D4D14_3_s01 = (sharedData_800D4CD4_3_s01[i + 1][1] - 110) << 12;
                     sharedData_800D4D18_3_s01 = i;
@@ -50,6 +74,8 @@ void sharedFunc_800D15F0_3_s01(void)
             {
                 func_800862F8(7, Sfx_Unk1840, false);
             }
+#elif defined(MAP7_S01) || defined(MAP7_S02)
+            func_800862F8(7, Sfx_Unk1842, false);
 #else
             func_800862F8(7, Sfx_Unk1843, false);
 #endif
@@ -88,11 +114,7 @@ void sharedFunc_800D15F0_3_s01(void)
                 break;
             }
 
-#ifdef MAP3_S01
-            for (i = 0; i < 7; i++)
-#else
-            for (i = 0; i < 6; i++)
-#endif
+            for (i = 0; i < MAX_IDX; i++)
             {
                 temp = sharedData_800D4CD4_3_s01[i][0];
                 if ((temp - 160) > FP_FROM(sharedData_800D4D10_3_s01, Q12_SHIFT))
@@ -123,10 +145,10 @@ void sharedFunc_800D15F0_3_s01(void)
                     continue;
                 }
 
-#if defined(MAP3_S03) || defined(MAP3_S04) || defined(MAP3_S05)
+#if defined(MAP3_S03) || defined(MAP3_S04) || defined(MAP3_S05) || defined(MAP7_S01) || defined(MAP7_S02)
                 SD_Call(Sfx_Unk1500);
 #endif
-                if (i == 5)
+                if (i == CHECK_IDX)
                 {
 #ifdef MAP3_S01
                     if (Savegame_MapMarkingGet(MapMarkFlag_AltHospital2F_OperatingPrepRoomArrow) &&
@@ -145,12 +167,12 @@ void sharedFunc_800D15F0_3_s01(void)
 #ifdef MAP3_S01
                     if (i != 6 && (i <= 0 || !Savegame_EventFlagGet(EventFlag_M3S01_GeneratorOn + i)))
 #else
-                    if (i <= 0 || !Savegame_EventFlagGet(EventFlag_M3S01_GeneratorOn + i))
+                    if (i <= 0 || !Savegame_EventFlagGet(EventFlagBase1 + i))
 #endif
                     {
                         if (i != 0)
                         {
-                            Savegame_EventFlagSet(EventFlag_215 + i);
+                            Savegame_EventFlagSet(EventFlagBase2 + i);
                             sharedData_800D4D10_3_s01 = 1;
 
                             temp2                     = 1;
@@ -194,6 +216,10 @@ void sharedFunc_800D15F0_3_s01(void)
             g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-112.5f);
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(58.6f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(19.4f);
+#elif defined(MAP7_S01) || defined(MAP7_S02)
+            g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-90.0f);
+            g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-101.9f);
+            g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-60.3f);
 #else
             g_SysWork.playerWork_4C.player_0.rotation_24.vy = FP_ANGLE(-135.0f);
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(18.2f);
@@ -276,7 +302,11 @@ void sharedFunc_800D15F0_3_s01(void)
             g_SysWork.field_28 += g_DeltaTime0;
             if (g_SysWork.field_28 > Q12(0.5f))
             {
+#if defined(MAP7_S01) || defined(MAP7_S02)
+                func_8005DC1C(Sfx_Unk1498, &sharedData_800CB094_3_s01, Q8(0.5f), 0);
+#else
                 func_8005DC1C(Sfx_Unk1498, &sharedData_800CB088_3_s01, Q8(0.5f), 0);
+#endif
                 SysWork_StateStepIncrement(0);
             }
             break;
@@ -288,7 +318,7 @@ void sharedFunc_800D15F0_3_s01(void)
             if (g_SysWork.field_28 > Q12(0.5f))
             {
                 SD_Call(Sfx_Unk1502);
-#if defined(MAP3_S03) || defined(MAP3_S04) || defined(MAP3_S05)
+#if defined(MAP3_S03) || defined(MAP3_S04) || defined(MAP3_S05) || defined(MAP7_S01) || defined(MAP7_S02)
                 func_8005DC1C(Sfx_Unk1501, &sharedData_800CB094_3_s01, Q8(0.5f), 0);
 #else
                 func_8005DC1C(Sfx_Unk1501, &sharedData_800CB0A0_3_s01, Q8(0.5f), 0);
@@ -347,10 +377,17 @@ void sharedFunc_800D15F0_3_s01(void)
             Game_FlashlightAttributesFix();
             g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
 #endif
-
             Sd_SfxStop(Sfx_Unk1499);
             Sd_SfxStop(Sfx_Unk1501);
             Sd_SfxStop(Sfx_Unk1498);
+#if defined(MAP7_S01) || defined(MAP7_S02)
+            temp2 = Q12(-60.9f);
+
+            for (i = 5; i >= 0; i--)
+            {
+                g_WorldObject_Dr[i].position_1C.vz = temp2;
+            }
+#endif
             break;
     }
 }
