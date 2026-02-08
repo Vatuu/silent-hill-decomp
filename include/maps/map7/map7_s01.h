@@ -85,10 +85,6 @@ extern u8  D_800E2C64;
 extern s32 D_800E2C68;
 
 extern s_WorldObjectDesc g_WorldObject_Door;
-
-extern s32 D_800E2CA8;
-extern s32 D_800E2CAC;
-
 extern s_WorldObjectDesc g_WorldObject_Stone0;
 
 extern VECTOR3 D_800E2CD4;

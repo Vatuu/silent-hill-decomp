@@ -169,6 +169,7 @@ MapEvent_KeyOfOphielUse             = 0x800D8668; // type:func
 MapEvent_KeyOfHagithUse             = 0x800D8724; // type:func
 MapEvent_KeyOfPhalegUse             = 0x800D87E0; // type:func
 MapEvent_BirdCageKeyUse             = 0x800D8984; // type:func
+sharedFunc_800DB60C_7_s01           = 0x800DB60C; // type:func
 sharedFunc_800D15F0_3_s01           = 0x800DC0AC; // type:func
 Map_WorldObjectsInit                = 0x800DD368; // type:func
 
@@ -220,11 +221,15 @@ MAP_MESSAGES                        = 0x800E09E0; // type:u32 size:0x184
 //----------------------------------------------------
 //--- PA: 0x0175EC   VA: 0x800E0B64   subsegment: data
 //----------------------------------------------------
+sharedData_800E1570_7_s01           = 0x800E1570;
+sharedData_800E1574_7_s01           = 0x800E1574;
+sharedData_800E1578_7_s01           = 0x800E1578;
 sharedData_800D4CD4_3_s01           = 0x800E15B0;
 sharedData_800CB088_3_s01           = 0x800E15BC;
 g_CommonWorldObjectPoses            = 0x800E15C8; // type:WorldObjectPose size:0xA0
 g_ParticleMapOverlayId0             = 0x800E1668;
 g_ParticleMapOverlayId1             = 0x800E166C; // type:s32
+sharedData_800E1694_7_s01           = 0x800E1694;
 sharedData_800D4D0C_3_s01           = 0x800E1698;
 sharedData_800D4D10_3_s01           = 0x800E169C;
 sharedData_800D4D14_3_s01           = 0x800E16A0;
@@ -249,6 +254,8 @@ sharedData_800E39E2_0_s00           = 0x800E2C32; // type:s16 size:2
 sharedData_800D6BB8_3_s04           = 0x800E2C34; // type:s32
 sharedData_800E2C38_7_s01           = 0x800E2C38; // type:s32
 g_WorldObject_Door                  = 0x800E2C78; // type:WorldObjectDesc size:0x2C
+sharedData_800E2CA8_7_s01           = 0x800E2CA8;
+sharedData_800E2CAC_7_s01           = 0x800E2CAC;
 g_WorldObject_Stone0                = 0x800E2CB8; // type:WorldObjectDesc size:0x2C
 g_WorldObject_Dr                    = 0x800E2CF8; // type:WorldObjectDescNoRot size:0xD8
 g_WorldObject_Key0                  = 0x800E2DE8; // type:WorldObjectDesc size:0x2C

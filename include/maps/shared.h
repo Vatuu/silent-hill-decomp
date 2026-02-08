@@ -1851,6 +1851,15 @@ extern s_Bgm_Update sharedData_800D2F74_7_s00;
 extern s_Bgm_Update sharedData_800D2F7C_7_s00;
 extern s_Bgm_Update sharedData_800D2F84_7_s00;
 
+extern s32 sharedData_800E1570_7_s01;
+extern s32 sharedData_800E1574_7_s01;
+extern u8  sharedData_800E1578_7_s01[3][3][3][2];
+extern u32 sharedData_800E1694_7_s01;
+extern s32 sharedData_800E2CA8_7_s01;
+extern s32 sharedData_800E2CAC_7_s01;
+
+void sharedFunc_800DB60C_7_s01(void);
+
 bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx);
 
 bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx);

@@ -76,9 +76,6 @@ extern s_800EA494 D_800EA494;
 
 extern u8 D_800EA4A9;
 
-extern s32 D_800EB68C;
-extern s32 D_800EB690;
-
 extern VECTOR3 D_800EB694;
 extern VECTOR3 D_800EB6A4;
 

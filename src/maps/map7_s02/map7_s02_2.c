@@ -2101,8 +2101,8 @@ void func_800DFDDC(void) // 0x800DFDDC
                 }
             }
 
-            D_800EB68C = 0;
-            D_800EB690 = 0;
+            sharedData_800E2CA8_7_s01 = 0;
+            sharedData_800E2CAC_7_s01 = 0;
             SysWork_StateStepIncrement(0);
 
         case 8:
@@ -2113,16 +2113,16 @@ void func_800DFDDC(void) // 0x800DFDDC
         case 9:
             func_800862F8(2, 0, false);
 
-            D_800EB68C += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
-            D_800EB68C  = CLAMP_RANGE(D_800EB68C, Q12(-80.0f), Q12(80.0f));
+            sharedData_800E2CA8_7_s01 += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
+            sharedData_800E2CA8_7_s01  = CLAMP_RANGE(sharedData_800E2CA8_7_s01, Q12(-80.0f), Q12(80.0f));
 
-            D_800EB690 += (g_Controller0->sticks_24.sticks_0.leftY * 16384) / 75;
-            D_800EB690  = CLAMP_RANGE(D_800EB690, Q12(-80.0f), Q12(80.0f));
+            sharedData_800E2CAC_7_s01 += (g_Controller0->sticks_24.sticks_0.leftY * 16384) / 75;
+            sharedData_800E2CAC_7_s01  = CLAMP_RANGE(sharedData_800E2CAC_7_s01, Q12(-80.0f), Q12(80.0f));
 
             Game_TimerUpdate();
 
             // TODO: Should `Gfx_CursorDraw` first args be `s16`?
-            Gfx_CursorDraw((s16)(FP_FROM(D_800EB68C, 12) + 8), (s16)FP_FROM(D_800EB690, 12) + 8, 8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
+            Gfx_CursorDraw((s16)(FP_FROM(sharedData_800E2CA8_7_s01, 12) + 8), (s16)FP_FROM(sharedData_800E2CAC_7_s01, 12) + 8, 8, 8, 0, 0x40, 0x20, 0x20, 0x80, 0xC0, 0, 0xC);
 
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
@@ -2139,7 +2139,7 @@ void func_800DFDDC(void) // 0x800DFDDC
                         // TODO: Not sure what's with these multiplies/subtractions, something to do with menu selections?
                         temp_t0  = j * 35;
                         var_v0_3 = temp_t0 - 46; // Only matches as separate var, TODO: add another for `- 24`?
-                        temp_a3  = FP_FROM(D_800EB68C, 12);
+                        temp_a3  = FP_FROM(sharedData_800E2CA8_7_s01, 12);
                         if (temp_a3 < var_v0_3 || temp_a3 > (temp_t0 - 24))
                         {
                             continue;
@@ -2147,7 +2147,7 @@ void func_800DFDDC(void) // 0x800DFDDC
 
                         temp_a0 = i * 35;
                         var_v0_4  = temp_a0 - 37;
-                        temp_v1 = FP_FROM(D_800EB690, 12);
+                        temp_v1   = FP_FROM(sharedData_800E2CAC_7_s01, 12);
                         if (temp_v1 < var_v0_4 || temp_v1 > (temp_a0 - 15))
                         {
                             continue;
@@ -2619,7 +2619,7 @@ void func_800E1398(void) // 0x800E1398
     }
 }
 
-INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800E15D4);
+#include "maps/shared/sharedFunc_800DB60C_7_s01.h" // 0x800E15D4
 
 void func_800E1DAC(void) // 0x800E1DAC
 {
