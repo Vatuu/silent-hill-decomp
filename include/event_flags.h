@@ -460,9 +460,9 @@ typedef enum _EventFlag
     EventFlag_490 = 490,
     EventFlag_491 = 491,
     EventFlag_492 = 492,
-
+    EventFlag_493 = 493,
     EventFlag_494 = 494,
-
+    EventFlag_495 = 495,
     EventFlag_496 = 496,
     EventFlag_497 = 497,
     EventFlag_498 = 498,

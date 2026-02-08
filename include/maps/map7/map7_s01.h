@@ -137,6 +137,11 @@ extern s_WorldObjectPose      g_CommonWorldObjectPoses[8]; // 0x800E15C8
 extern s32 D_800E33A0;
 extern s16 D_800E33A4;
 
+extern s32 D_800E1570;
+extern s32 D_800E1574;
+extern u8  D_800E1578[3][3][3][2];
+extern u32 D_800E1694;
+
 void func_800D6810(s32 arg0);
 
 void func_800D6844(s32 arg0);
