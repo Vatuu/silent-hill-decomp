@@ -1844,6 +1844,13 @@ extern u8 sharedData_800ED458_4_s02[8];
 
 extern void (*g_Romper_ControlFuncs[])(s_SubCharacter* romper);
 
+extern s_Bgm_Update sharedData_800D2F18_7_s00;
+extern s_Bgm_Update sharedData_800D2F20_7_s00;
+extern u16          sharedData_800D2F28_7_s00[38];
+extern s_Bgm_Update sharedData_800D2F74_7_s00;
+extern s_Bgm_Update sharedData_800D2F7C_7_s00;
+extern s_Bgm_Update sharedData_800D2F84_7_s00;
+
 bool sharedFunc_800CE688_1_s03(POLY_FT4** poly, s32 idx);
 
 bool sharedFunc_800CD1F8_0_s01(POLY_FT4** poly, s32 idx);
@@ -2403,6 +2410,8 @@ bool sharedFunc_800CC004_4_s03(POLY_FT4** poly, s32 arg1);
 bool sharedFunc_800CB1B0_4_s03(POLY_FT4** poly, s32 arg1);
 
 void sharedFunc_800CB0A4_4_s03(VECTOR3* arg0, VECTOR3* arg1);
+
+void sharedFunc_800D0110_7_s00(void);
 
 static inline void ModelAnim_AnimInfoSet(s_ModelAnim* anim, s_AnimInfo* animInfo)
 {

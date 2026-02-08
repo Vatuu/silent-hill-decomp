@@ -48,12 +48,12 @@
 
 void func_800D97FC(s32 arg0) // 0x800D97FC
 {
-    (arg0 != 0) ? func_800D9864() : func_800D9924();
+    (arg0 != 0) ? func_800D9864() : sharedFunc_800D0110_7_s00();
 }
 
 void func_800D9830(s32 arg0) // 0x800D9830
 {
-    (arg0 != 0) ? func_800D98E4() : func_800D9924();
+    (arg0 != 0) ? func_800D98E4() : sharedFunc_800D0110_7_s00();
 }
 
 void func_800D9864(void) // 0x800D9864
@@ -89,7 +89,7 @@ void func_800D98E4(void) // 0x800D98E4
     Bgm_TrackChange(Savegame_EventFlagGet(EventFlag_391) ? 40 : 35);
 }
 
-INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800D9924);
+#include "maps/shared/sharedFunc_800D0110_7_s00.h" // 0x800D9924
 
 void func_800DA1A8(void) {}
 
