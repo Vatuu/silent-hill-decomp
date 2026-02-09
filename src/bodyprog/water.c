@@ -398,7 +398,7 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     SetPolyFT4(poly);
     setSemiTrans(poly, 1);
 
-    temp_v0_5 = Q12_MULT(MIN(arg1 * 2, 0x1000), 0x30);
+    temp_v0_5 = Q12_MULT(MIN(arg1 * 2, Q12(1.0f)), 0x30);
     setRGB0(poly, temp_v0_5, temp_v0_5, temp_v0_5);
 
     poly->tpage = 0x2C;
@@ -407,7 +407,7 @@ void func_8008D990(s32 arg0, s32 arg1, VECTOR3* arg2, s32 arg3, s32 arg4) // 0x8
     setUV4(poly, 0, 0, 0x3F, 0, 0, 0x3F, 0x3F, 0x3F);
 
     temp_t0   = arg2->vx + FP_MULTIPLY(temp_s1, 9, Q12_SHIFT - 1);
-    temp_a2_3 = Q12_MULT((arg1 + 0x3000) >> 2, 0x30);
+    temp_a2_3 = Q12_MULT((arg1 + Q12(3.0f)) >> 2, 0x30);
     temp_a3_2 = arg2->vy + FP_MULTIPLY(temp_s0_3, 9, Q12_SHIFT - 1);
 
     setXY4(poly,

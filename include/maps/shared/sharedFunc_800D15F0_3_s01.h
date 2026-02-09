@@ -1,25 +1,25 @@
 #if defined(MAP7_S01) || defined(MAP7_S02)
-#define EventFlagBase0 EventFlag_213
-#define EventFlagBase1 EventFlag_212
-#define EventFlagBase2 EventFlag_216
+    #define EventFlagBase0 EventFlag_213
+    #define EventFlagBase1 EventFlag_212
+    #define EventFlagBase2 EventFlag_216
 #else
-#define EventFlagBase0 EventFlag_212
-#define EventFlagBase1 EventFlag_M3S01_GeneratorOn
-#define EventFlagBase2 EventFlag_215
+    #define EventFlagBase0 EventFlag_212
+    #define EventFlagBase1 EventFlag_M3S01_GeneratorOn
+    #define EventFlagBase2 EventFlag_215
 #endif
 
 #ifdef MAP3_S01
-#define MAX_IDX 7
+    #define MAX_IDX 7
 #elif defined(MAP7_S01) || defined(MAP7_S02)
-#define MAX_IDX 5
+    #define MAX_IDX 5
 #else
-#define MAX_IDX 6
+    #define MAX_IDX 6
 #endif
 
 #if defined(MAP7_S01) || defined(MAP7_S02)
-#define CHECK_IDX 4
+    #define CHECK_IDX 4
 #else
-#define CHECK_IDX 5
+    #define CHECK_IDX 5
 #endif
 
 void sharedFunc_800D15F0_3_s01(void)

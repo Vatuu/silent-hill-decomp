@@ -103,10 +103,10 @@ e_KcetLogoStateStep GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
         return KcetLogoStateStep_CheckMemCards;
     }
 
-    g_MemCard_ActiveSavegameEntry = (s_SaveScreen_Element*)SAVEGAME_ENTRY_BUFFER_0;
+    g_MemCard_ActiveSavegameEntry = (s_SaveScreenElement*)SAVEGAME_ENTRY_BUFFER_0;
     saveEntryType0                = g_MemCard_ActiveSavegameEntry->type_4;
 
-    g_MemCard_ActiveSavegameEntry = (s_SaveScreen_Element*)SAVEGAME_ENTRY_BUFFER_1;
+    g_MemCard_ActiveSavegameEntry = (s_SaveScreenElement*)SAVEGAME_ENTRY_BUFFER_1;
     saveEntryType1                = g_MemCard_ActiveSavegameEntry->type_4;
 
     // No memory cards.

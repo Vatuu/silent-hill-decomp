@@ -380,6 +380,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 		return;
 	}
 
+    #undef MAIN_MENU_GAME_STATE_COUNT
 }
 
 void MainMenu_SelectedOptionIdxReset(void) // 0x8003B550
@@ -703,5 +704,8 @@ void func_8003BCF4(void) // 0x8003BCF4
     }
 }
 
-static const s8 pad_rodata_8002551F = 0x4C;
+static const s8  pad_rodata_8002551F = 0x4C;
 static const s32 pad_rodata_80025520 = 0x90AB9500;
+
+#undef MAIN_MENU_OPTION_COUNT
+#undef MAIN_MENU_FOG_COUNT

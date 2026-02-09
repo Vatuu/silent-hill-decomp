@@ -8,7 +8,7 @@
 
 // u8 D_800BCD10[8] = { 0x00, 0x00, 0x00, 0x00, 0x80, 0x18, 0x13, 0x00 }; // @unused 
 // // 2 bytes of padding.
-// s_SaveScreen_Element* g_MemCard_ActiveSavegameEntry = 0;
+// s_SaveScreenElement* g_MemCard_ActiveSavegameEntry = 0;
 // u8 g_Savegame_ElementCount0[MEMCARD_SLOT_COUNT_MAX] = {};
 // // bytes of padding.
 // u32 g_MemCard_AllMemCardsStatus = 0;
@@ -74,7 +74,7 @@ static inline s32 WrapIdx(s32 idx)
 
 bool func_80033548(void) // 0x80033548
 {
-	static s_SaveScreen_Element* g_MemCard_ActiveSavegameEntry;
+	static s_SaveScreenElement* g_MemCard_ActiveSavegameEntry;
 	static u8                    g_Savegame_ElementCount0[MEMCARD_SLOT_COUNT_MAX];
 	static s16                   pad_bss_800BCD32;
 	static u32                   g_MemCard_AllMemCardsStatus;
@@ -88,7 +88,7 @@ bool func_80033548(void) // 0x80033548
 	//static s8                  D_800A97E0 = 0xFF;
 	//static u32                 allFileStatus[MEMCARD_DEVICE_COUNT_MAX] = { };
     u32                          sp10[MEMCARD_SLOT_COUNT_MAX]; // Boolean.
-    s32                          sp18[MEMCARD_DEVICE_COUNT_MAX]; // Boolean. Important to generate `Create New File` and `New Save`.
+    s32                          sp18[MEMCARD_DEVICE_COUNT_MAX]; // Boolean. Used to generate `Create New File` and `New Save`.
     u32                          prevStatusCpy;
     s32                          sp3C;
     s32                          preMemCardStatus;

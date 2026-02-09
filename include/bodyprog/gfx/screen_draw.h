@@ -25,10 +25,10 @@ extern q19_12 g_ScreenFadeTimestep;
 // ====================
 // GLOBALS (BSS; Hack)
 // ====================
-// For matching the order of the BSS segment it is required to declare
-// each variable as an extern in a determined order.
-// This is done on the meanwhile we found a way to replicate `common`
-// segment behaviour.
+// To match the order of the BSS segment, extern declarations
+// are required in a predetermined order.
+// This is done until a way to replicate `common`
+// segment behavior is found.
 
 extern s32      g_VBlanks;
 extern s32      g_UncappedVBlanks;

@@ -5,13 +5,13 @@ void sharedFunc_800D0110_7_s00(void)
     s32           i;
     s32           var_s2;
     s32           mapRoomIdx;
-    s_Bgm_Update* bgmLayerLimitPtr;
     s32           flags;
+    s_Bgm_Update* bgmLayerLimit;
 
     flags            = 1;
     var_s2           = 0x199;
     mapRoomIdx       = g_SavegamePtr->mapRoomIdx_A5;
-    bgmLayerLimitPtr = NULL;
+    bgmLayerLimit = NULL;
 
     switch (g_GameWork.bgmIdx_5B2)
     {
@@ -68,7 +68,7 @@ void sharedFunc_800D0110_7_s00(void)
             break;
 
         case 4:
-            bgmLayerLimitPtr = &sharedData_800D2F18_7_s00;
+            bgmLayerLimit = &sharedData_800D2F18_7_s00;
 
             switch (mapRoomIdx)
             {
@@ -128,7 +128,7 @@ void sharedFunc_800D0110_7_s00(void)
 
         case 10:
         case 15:
-            bgmLayerLimitPtr = &sharedData_800D2F20_7_s00;
+            bgmLayerLimit = &sharedData_800D2F20_7_s00;
 
             switch (mapRoomIdx)
             {
@@ -180,7 +180,7 @@ void sharedFunc_800D0110_7_s00(void)
 
         case 14:
         case 22:
-            bgmLayerLimitPtr = &sharedData_800D2F74_7_s00;
+            bgmLayerLimit = &sharedData_800D2F74_7_s00;
             flags            = sharedData_800D2F28_7_s00[mapRoomIdx];
 
             switch (mapRoomIdx)
@@ -243,7 +243,7 @@ void sharedFunc_800D0110_7_s00(void)
                 case 29:
                     if (Savegame_EventFlagGet(EventFlag_555))
                     {
-                        if (g_GameWork.bgmIdx_5B2 == 0x16)
+                        if (g_GameWork.bgmIdx_5B2 == 22)
                         {
                             flags = 4;
                         }
@@ -256,7 +256,7 @@ void sharedFunc_800D0110_7_s00(void)
                     {
                         if (Savegame_EventFlagGet(EventFlag_552))
                         {
-                            if (g_GameWork.bgmIdx_5B2 == 0x16)
+                            if (g_GameWork.bgmIdx_5B2 == 22)
                             {
                                 flags = 8;
                             }
@@ -267,7 +267,7 @@ void sharedFunc_800D0110_7_s00(void)
                         }
                         else
                         {
-                            if (g_GameWork.bgmIdx_5B2 == 0x16)
+                            if (g_GameWork.bgmIdx_5B2 == 22)
                             {
                                 flags = 0x18;
                             }
@@ -316,21 +316,21 @@ void sharedFunc_800D0110_7_s00(void)
                 case 33:
                     if (!Savegame_EventFlagGet(EventFlag_560))
                     {
-                        for (flags = 0, i = 0x21C; i < 0x221; i++)
+                        for (flags = 0, i = 540; i < 545; i++)
                         {
                             if (Savegame_EventFlagGet(i))
                             {
-                                flags = (flags * 2) | 2;
+                                flags = (flags * 2) | (1 << 1);
                             }
                         }
                     }
                     break;
             }
 
-            if (g_GameWork.bgmIdx_5B2 == 0x16)
+            if (g_GameWork.bgmIdx_5B2 == 22)
             {
-                temp_v0_2 = flags & 2;
-                temp_v1_5 = flags & 4;
+                temp_v0_2 = flags & (1 << 1);
+                temp_v1_5 = flags & (1 << 2);
                 flags    ^= (temp_v0_2 | temp_v1_5);
                 flags    |= (temp_v0_2 * 2) | (temp_v1_5 >> 1);
             }
@@ -407,7 +407,7 @@ void sharedFunc_800D0110_7_s00(void)
             break;
 
         case 29:
-            bgmLayerLimitPtr = &sharedData_800D2F7C_7_s00;
+            bgmLayerLimit = &sharedData_800D2F7C_7_s00;
             var_s2           = 0xF0000;
 
             if (!Savegame_EventFlagGet(EventFlag_576))
@@ -425,7 +425,7 @@ void sharedFunc_800D0110_7_s00(void)
             break;
 
         case 40:
-            bgmLayerLimitPtr = &sharedData_800D2F84_7_s00;
+            bgmLayerLimit = &sharedData_800D2F84_7_s00;
             if (Savegame_EventFlagGet(EventFlag_575))
             {
                 var_s2 = 0x400;
@@ -435,7 +435,7 @@ void sharedFunc_800D0110_7_s00(void)
 
             if (Savegame_EventFlagGet(EventFlag_580))
             {
-                var_s2 = 0x2000;
+                var_s2 = Q12(2.0f);
                 flags  = 0x301;
                 break;
             }
@@ -468,11 +468,11 @@ void sharedFunc_800D0110_7_s00(void)
 
             if (Savegame_EventFlagGet(EventFlag_577) || Savegame_EventFlagGet(EventFlag_591))
             {
-                if (g_SysWork.bgmLayerVolumes_2748[1] == 0x1000)
+                if (g_SysWork.bgmLayerVolumes_2748[1] == Q12(1.0f))
                 {
                     if (Savegame_EventFlagGet(EventFlag_577))
                     {
-                        var_s2 = 0x1000;
+                        var_s2 = Q12(1.0f);
 
                         if (!(g_SysWork.npcs_1A0[2].flags_3E & 4))
                         {
@@ -487,9 +487,9 @@ void sharedFunc_800D0110_7_s00(void)
                     {
                         var_s2 = 0x1EB;
 
-                        if (g_SysWork.bgmLayerVolumes_2748[2] == 0x1000)
+                        if (g_SysWork.bgmLayerVolumes_2748[2] == Q12(1.0f))
                         {
-                            if (g_SysWork.bgmLayerVolumes_2748[3] == 0x1000)
+                            if (g_SysWork.bgmLayerVolumes_2748[3] == Q12(1.0f))
                             {
                                 flags = 0x11E;
                             }
@@ -520,7 +520,7 @@ void sharedFunc_800D0110_7_s00(void)
 
                 flags = 0x102;
 
-                if (g_SysWork.bgmLayerVolumes_2748[0] != 0x1000)
+                if (g_SysWork.bgmLayerVolumes_2748[0] != Q12(1.0f))
                 {
                     if (!func_80045BC8())
                     {
@@ -530,8 +530,9 @@ void sharedFunc_800D0110_7_s00(void)
                     {
                         Sd_BgmLayerVolumeSet(0, 0x7F);
                         Sd_BgmLayerVolumeSet(1, 1);
-                        g_SysWork.bgmLayerVolumes_2748[0] = 0x1000;
-                        g_SysWork.bgmLayerVolumes_2748[1] = 0x20;
+
+                        g_SysWork.bgmLayerVolumes_2748[0] = Q12(1.0f);
+                        g_SysWork.bgmLayerVolumes_2748[1] = 32;
                     }
                 }
             }
@@ -542,5 +543,5 @@ void sharedFunc_800D0110_7_s00(void)
             break;
     }
 
-    Bgm_Update(flags, var_s2, bgmLayerLimitPtr);
+    Bgm_Update(flags, var_s2, bgmLayerLimit);
 }

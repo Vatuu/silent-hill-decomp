@@ -26,7 +26,7 @@
 // ==============
 
 #define MemCard_ActiveSavegameEntryGet(slotIdx) \
-    ((s_SaveScreen_Element*)&SAVEGAME_ENTRY_BUFFER_0[2640 * (slotIdx)])
+    ((s_SaveScreenElement*)&SAVEGAME_ENTRY_BUFFER_0[2640 * (slotIdx)])
 
 #define MemCard_StatusGet(status, deviceIdx) \
     status >> (deviceIdx * 3) & 0x7
@@ -44,7 +44,7 @@
 // ENUMERATORS
 // ============
 
-/** @brief Used by `s_SaveScreen_Element`. */
+/** @brief Used by `s_SaveScreenElement`. */
 typedef enum _SavegameEntryType
 {
     SavegameEntryType_NoMemCard          = 0,
@@ -240,23 +240,23 @@ typedef struct _Savegame_Metadata
 } s_MemCard_SaveMetadata;
 STATIC_ASSERT_SIZEOF(s_MemCard_SaveMetadata, 12);
 
-/** @brief Information of elements in save screen.
+/** @brief Information of elements in the save screen.
  * 
- * @note This is use to determine both saves and other
+ * @note Used to determine both saves and other
  * elements in save screen as it is use to display
  * the "New Save" or "The file is damage" elements.
- * It is also used to display rectangle status messages
- * as the memory card is not inserted or no save available.
+ * It is also used to display status messages in rectangles,
+ * for example when no memory card is inserted or no save is
+ * available.
  */
-typedef struct _SaveScreen_Element
+typedef struct _SaveScreenElement
 {
-    s16                     totalSavegameCount_0; /** Counter that stores all the times the player have save throughout the entire game.
-	                                               * In order to get the set this value the code will go through all saves in the memory
-	                                               * card and check which have this variable with the biggest value.
+    s16                     totalSavegameCount_0; /** Counter for all savegame instances created throughout the game.
+	                                               * The value is derived by running through all savegames on a memory card
+	                                               * and picking the one with the largest value.
 	                                               *
-	                                               * @bug: For some unknown reason, this counter it is used by the code uses to
-	                                               * determine if the player have selected the "New Save" element which will make
-	                                               * overwrites to not show the "Yes/No" message to show up.
+	                                               * @bug This counter is used to determine if the "New Save" element has
+                                                   * been selected, which causes overwrites to not show the "Yes/No" message.
 	                                               */
     s16                     savegameCount_2;
     s8                      type_4;               /** `e_SavegameEntryType` */
@@ -266,10 +266,10 @@ typedef struct _SaveScreen_Element
     s8                      locationId_8;
     s8                      pad_9[3];
     s_MemCard_SaveMetadata* saveMetadata_C;
-} s_SaveScreen_Element;
-STATIC_ASSERT_SIZEOF(s_SaveScreen_Element, 16);
+} s_SaveScreenElement;
+STATIC_ASSERT_SIZEOF(s_SaveScreenElement, 16);
 
-/** @brief Appended to `ShSavegame` and `ShSaveUserConfig` during game save. Contains 8-bit XOR checksum + magic.
+/** @brief Appended to `ShSavegame` and `ShSaveUserConfig` during agame save. Contains 8-bit XOR checksum + magic.
  * Checksum generated via `MemCard_ChecksumGenerate`.
  */
 typedef struct _SavegameFooter
@@ -320,7 +320,7 @@ typedef struct
 } s_MemCard_DeviceInfo;
 STATIC_ASSERT_SIZEOF(s_MemCard_DeviceInfo, 28);
 
-/** @note Some memory card states information. Related to `s_SaveScreen_Element`.
+/** @note Some memory card states information. Related to `s_SaveScreenElement`.
  * Very likely used only for process related to memory cards.
  */
 typedef struct
@@ -363,7 +363,7 @@ STATIC_ASSERT_SIZEOF(s_MemCard_SaveWork, 1816);
 /** @brief Amount of elements in each memory card. */
 extern u8 g_Savegame_ElementCount0[2];
 
-extern s_SaveScreen_Element* g_MemCard_ActiveSavegameEntry; // 0x800BCD2C
+extern s_SaveScreenElement* g_MemCard_ActiveSavegameEntry; // 0x800BCD2C
 
 extern u8 g_SlotElementSelectedIdx[2]; // 0 - Slot 1, 1 - Slot 2.
 

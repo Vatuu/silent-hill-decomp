@@ -1,10 +1,10 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/ranking.h"
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/ranking.h"
 #include "main/fsqueue.h"
 
 static const s32 pad_rodata_8002B2F8 = 0;

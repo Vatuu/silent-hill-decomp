@@ -110,10 +110,10 @@ extern void (*g_GameState_AutoLoadSavegame_Funcs[])(void);
 // ====================
 // GLOBALS (BSS; Hack)
 // ====================
-// For matching the order of the BSS segment it is required to declare
-// each variable as an extern in a determined order.
-// This is done on the meanwhile we found a way to replicate `common`
-// segment behaviour.
+// To match the order of the BSS segment, extern declarations
+// are required in a predetermined order.
+// This is done until a way to replicate `common`
+// segment behavior is found.
 
 extern s32 D_801E7560;
 
@@ -221,13 +221,13 @@ void SaveScreen_FileIdxDraw(s32 saveIdx, s32 slotIdx, s32 fileId, s32 entryType)
 bool SaveScreen_NextFearModeSave(s_MemCard_SaveMetadata* saveEntry);
 
 /** @brief Draws location of saves. */
-void SaveScreen_SaveLocationDraw(s_SaveScreen_Element* saveEntry, s32 saveIdx, s32 slotIdx);
+void SaveScreen_SaveLocationDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 slotIdx);
 
 /** @brief Draws saves borders. */
-void SaveScreen_SaveBorder(s_SaveScreen_Element* saveEntry, s_SaveScreen_Element* nextSaveEntry, s32 saveIdx, s32 slotIdx);
+void SaveScreen_SaveBorder(s_SaveScreenElement* saveEntry, s_SaveScreenElement* nextSaveEntry, s32 saveIdx, s32 slotIdx);
 
 /** @brief Draws saves, information and slots. */
-void SaveScreen_SavesSlotDraw(s_SaveScreen_Element* saveEntry, s32 saveIdx, s32 slotIdx);
+void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 slotIdx);
 
 /** @brief Draws memory card state.
  *
@@ -270,7 +270,7 @@ void SaveScreen_NavigationDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, 
 /** @brief Draws a flash on the selected save menu entry after saving sucessfully. */
 void Savegame_SaveEntryFlashDraw(void);
 
-void SaveScreen_SaveBorderDraw(s_SaveScreen_Element* saveEntry, s_SaveScreen_Element* nextSaveEntry, s32 saveIdx, s32 slotIdx); // 0x801E4D90
+void SaveScreen_SaveBorderDraw(s_SaveScreenElement* saveEntry, s_SaveScreenElement* nextSaveEntry, s32 saveIdx, s32 slotIdx); // 0x801E4D90
 
 /** @brief Defines parameters used to draw the message
  * box use when the memory card is in an unavailable state.

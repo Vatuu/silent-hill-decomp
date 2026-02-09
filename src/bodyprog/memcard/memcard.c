@@ -1,12 +1,12 @@
 #include "game.h"
 
-#include "main/fsqueue.h"
-#include "bodyprog/memcard.h"
-
 #include <psyq/libapi.h>
 #include <psyq/limits.h>
 #include <psyq/strings.h>
 #include <psyq/sys/file.h>
+
+#include "main/fsqueue.h"
+#include "bodyprog/memcard.h"
 
 s_MemCard_SaveHeader g_MemCard_BasicSaveInfo1[MEMCARD_FILE_COUNT_MAX];
 

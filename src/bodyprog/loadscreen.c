@@ -5,14 +5,14 @@
 #include <psyq/strings.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/memcard.h"
-#include "bodyprog/ranking.h"
 #include "bodyprog/demo.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/memcard.h"
 #include "bodyprog/player_logic.h"
+#include "bodyprog/ranking.h"
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
 #include "main/mem.h"

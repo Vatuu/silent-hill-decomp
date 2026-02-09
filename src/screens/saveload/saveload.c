@@ -3,11 +3,10 @@
 #include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/memcard.h"
-#include "screens/saveload.h"
-
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/memcard.h"
+#include "screens/saveload.h"
 
 #define SAVE_FLASH_TIMER_MAX 40
 #define SLOT_COLUMN_OFFSET   150
@@ -222,7 +221,7 @@ bool SaveScreen_NextFearModeSave(s_MemCard_SaveMetadata* saveEntry) // 0x801E307
     return false;
 }
 
-void SaveScreen_SaveLocationDraw(s_SaveScreen_Element* saveEntry, s32 saveIdx, s32 slotIdx) // 0x801E30C4
+void SaveScreen_SaveLocationDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 slotIdx) // 0x801E30C4
 {
     #define OFFSET_X SCREEN_POSITION_X(47.0f)
     #define MARGIN_X SCREEN_POSITION_X(28.25f)
@@ -241,15 +240,15 @@ void SaveScreen_SaveLocationDraw(s_SaveScreen_Element* saveEntry, s32 saveIdx, s
         77
     };
 
-    s32 visuallySelectedSaveIdx;
-    s16 hiddenSaves;
+    s32 selectedSaveIdx;
+    s16 hiddenSaveCount;
     s32 colorId;
 
-    hiddenSaves = g_SaveScreen_HiddenSaves[slotIdx];
+    hiddenSaveCount = g_SaveScreen_HiddenSaves[slotIdx];
 
-    if (saveIdx >= hiddenSaves && (hiddenSaves + 4) >= saveIdx)
+    if (saveIdx >= hiddenSaveCount && (hiddenSaveCount + 4) >= saveIdx)
     {
-        visuallySelectedSaveIdx = saveIdx - hiddenSaves;
+        selectedSaveIdx = saveIdx - hiddenSaveCount;
 
         SaveScreen_NextFearModeSave(saveEntry->saveMetadata_C);
 
@@ -267,7 +266,7 @@ void SaveScreen_SaveLocationDraw(s_SaveScreen_Element* saveEntry, s32 saveIdx, s
         }
 
         Gfx_StringSetPosition(((slotIdx * OFFSET_X) + MARGIN_X) - (X_OFFSETS[nameIdx] / 2),
-                              (visuallySelectedSaveIdx * OFFSET_Y) + MARGIN_Y);
+                              (selectedSaveIdx * OFFSET_Y) + MARGIN_Y);
         Gfx_StringDraw(g_Savegame_SaveLocationNames[nameIdx], 50);
     }
 
@@ -277,7 +276,7 @@ void SaveScreen_SaveLocationDraw(s_SaveScreen_Element* saveEntry, s32 saveIdx, s
     #undef MARGIN_Y
 }
 
-void SaveScreen_SaveBorder(s_SaveScreen_Element* saveEntry, s_SaveScreen_Element* nextSaveEntry, s32 saveIdx, s32 slotIdx) // 0x801E326C
+void SaveScreen_SaveBorder(s_SaveScreenElement* saveEntry, s_SaveScreenElement* nextSaveEntry, s32 saveIdx, s32 slotIdx) // 0x801E326C
 {
     if (saveIdx == 0)
     {
@@ -297,7 +296,7 @@ void SaveScreen_SaveBorder(s_SaveScreen_Element* saveEntry, s_SaveScreen_Element
     }
 }
 
-void SaveScreen_SavesSlotDraw(s_SaveScreen_Element* saveEntry, s32 saveIdx, s32 slotIdx) // 0x801E3304
+void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 slotIdx) // 0x801E3304
 {
     const char* DIALOG_STRS[11] = {
         "\x07MEMORY_CARD\nis_not_inserted",
@@ -1096,7 +1095,7 @@ void SaveScreen_NavigationDraw(s32 slotIdx, s32 saveCount, s32 selectedSaveIdx, 
     #undef SCROLL_BAR_OFFSET_Y
 }
 
-void SaveScreen_SaveBorderDraw(s_SaveScreen_Element* saveEntry, s_SaveScreen_Element* nextSaveEntry, s32 saveIdx, s32 slotIdx) // 0x801E4D90
+void SaveScreen_SaveBorderDraw(s_SaveScreenElement* saveEntry, s_SaveScreenElement* nextSaveEntry, s32 saveIdx, s32 slotIdx) // 0x801E4D90
 {
     GsOT* ot;
     u32   entryIdx         = saveEntry->elementIdx_7;
@@ -1632,7 +1631,7 @@ void SaveScreen_Init(void) // 0x801E63C0
 void SaveScreen_LogicUpdate(void) // 0x801E649C
 {
     s32               gameStateStep = g_GameWork.gameStateStep_598[1];
-    s_SaveScreen_Element* saveEntry;
+    s_SaveScreenElement* saveEntry;
 	static bool       isSaveWriteOptionSelected;
 
     switch (gameStateStep)
@@ -1684,7 +1683,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 g_SelectedFileIdx             = saveEntry->fileIdx_6;
                 g_Savegame_SelectedElementIdx = saveEntry->elementIdx_7;
 				
-				// This code determines if the screen should show an "Yes/No" options.
+				// Show "Yes/No" option.
                 if (g_SaveScreen_SaveScreenState == SaveScreenState_Save) 
                 {
                     if (saveEntry->totalSavegameCount_0 == 31600)
@@ -1692,10 +1691,9 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                         g_SaveScreen_IsFormatting = true;
                     }
 
-                    // This is the code that defines if the selected element is the `New Save` option.
-					// @bug: While extreamly hard to get, it is possible that the player could reach
-					// the amount required for this value making impossible to select to overwrite or not
-					// files.
+                    // Defines if the selected element is the `New Save` option.
+					// @bug While an edge case, reaching the maximum makes it
+                    // impossible to select or overwrite files.
                     if ((u16)(saveEntry->totalSavegameCount_0 - 1) < 31099)
                     {
                         g_SaveScreen_IsNewSaveSelected = true;
@@ -1801,8 +1799,8 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 Fs_QueueWaitForEmpty();
 
                 // Unused or cut debug feature?
-                // This redirects to the status screen/inventory
-                // if the user was in the status screen/inventory before saving.
+                // This redirects to the status screen/inventory if the user
+                // was in the status screen/inventory before saving.
                 // However, it is impossible to access the save screen from there.
                 if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen)
                 {
@@ -2066,7 +2064,7 @@ void SaveScreen_ScreenDraw(void) // 0x801E70C8
 {
     s32              i;
     s32              j;
-    s_SaveScreen_Element* nextSaveEntry;
+    s_SaveScreenElement* nextSaveEntry;
 
     // Run through save slots.
     for (i = 0; i < MEMCARD_SLOT_COUNT_MAX; i++)

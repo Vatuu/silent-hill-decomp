@@ -170,10 +170,10 @@ extern s8 D_800AE820[8][8][2];
 // ====================
 // GLOBALS (BSS; Hack)
 // ====================
-// For matching the order of the BSS segment it is required to declare
-// each variable as an extern in a determined order.
-// This is done on the meanwhile we found a way to replicate `common`
-// segment behaviour.
+// To match the order of the BSS segment, extern declarations
+// are required in a predetermined order.
+// This is done until a way to replicate `common`
+// segment behavior is found.
 
 //cam.c
 

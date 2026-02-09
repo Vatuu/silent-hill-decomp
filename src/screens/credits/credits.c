@@ -3,9 +3,9 @@
 #include <psyq/libetc.h>
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/ranking.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/ranking.h"
 #include "bodyprog/sound_system.h"
 #include "main/rng.h"
 #include "screens/credits/credits.h"
