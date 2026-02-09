@@ -77,7 +77,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
         Gfx_KonamiScreenDraw();
         Screen_FadeUpdate();
         Fs_QueueUpdate();
-        func_8002EB88();
+        MemCard_Update();
         func_80033548();
         nullsub_800334C8();
         VSync(SyncMode_Wait);
@@ -98,16 +98,16 @@ e_KcetLogoStateStep GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
     s32 saveEntryType1;
 
     // Memory cards not ready yet, rerun this on next frame.
-    if (!func_80033548())
+    if (func_80033548() == false)
     {
         return KcetLogoStateStep_CheckMemCards;
     }
 
-    g_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_BUFFER_0;
-    saveEntryType0        = g_ActiveSavegameEntry->type_4;
+    g_MemCard_ActiveSavegameEntry = (s_SaveScreen_Element*)SAVEGAME_ENTRY_BUFFER_0;
+    saveEntryType0                = g_MemCard_ActiveSavegameEntry->type_4;
 
-    g_ActiveSavegameEntry = (s_SavegameEntry*)SAVEGAME_ENTRY_BUFFER_1;
-    saveEntryType1        = g_ActiveSavegameEntry->type_4;
+    g_MemCard_ActiveSavegameEntry = (s_SaveScreen_Element*)SAVEGAME_ENTRY_BUFFER_1;
+    saveEntryType1                = g_MemCard_ActiveSavegameEntry->type_4;
 
     // No memory cards.
     if (saveEntryType0 == SavegameEntryType_NoMemCard && saveEntryType1 == SavegameEntryType_NoMemCard)
@@ -124,12 +124,12 @@ e_KcetLogoStateStep GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
 
     if (saveEntryType0 == SavegameEntryType_Save || saveEntryType1 == SavegameEntryType_Save)
     {
-        g_ActiveSavegameEntry = GetActiveSavegameEntry(g_SelectedSaveSlotIdx);
-        g_ActiveSavegameEntry = &g_ActiveSavegameEntry[g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]];
+        g_MemCard_ActiveSavegameEntry = MemCard_ActiveSavegameEntryGet(g_SelectedSaveSlotIdx);
+        g_MemCard_ActiveSavegameEntry = &g_MemCard_ActiveSavegameEntry[g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]];
 
-        D_800BCD40        = g_ActiveSavegameEntry->field_5;
-        g_SelectedFileIdx = g_ActiveSavegameEntry->fileIdx_6;
-        g_SelectedSaveIdx = g_ActiveSavegameEntry->elementIdx_7;
+        g_SelectedDeviceId            = g_MemCard_ActiveSavegameEntry->deviceId_5;
+        g_SelectedFileIdx             = g_MemCard_ActiveSavegameEntry->fileIdx_6;
+        g_Savegame_SelectedElementIdx = g_MemCard_ActiveSavegameEntry->elementIdx_7;
 
         return KcetLogoStateStep_HasSaveGame;
     }
@@ -205,7 +205,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     while (g_GameWork.gameStateStep_598[0] < KcetLogoStateStep_NoMemCard)
                     {
                         g_GameWork.gameStateStep_598[0] = GameState_KcetLogo_MemCardCheck();
-                        func_8002EB88();
+                        MemCard_Update();
                         VSync(SyncMode_Wait);
                     }
                 }
@@ -250,12 +250,12 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     switch (g_GameWork.gameStateStep_598[1])
                     {
                         case 0:
-                            func_8002E94C(2, D_800BCD40, 0, 0);
+                            MemCard_ProcessSet(MemCardProcess_Load_Game, g_SelectedDeviceId, 0, 0);
                             g_GameWork.gameStateStep_598[2] = 0;
                             g_GameWork.gameStateStep_598[1]++;
 
                         case 1:
-                            if (func_8002E990() != 1)
+                            if (MemCard_LastMemCardResultGet() != MemCardResult_Success)
                             {
                                 g_GameWork.gameStateStep_598[2] = 0;
                                 g_GameWork.gameStateStep_598[1]++;
@@ -282,7 +282,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                     }
 
                     func_80033548();
-                    func_8002EB88();
+                    MemCard_Update();
                     VSync(SyncMode_Wait);
                 }
 
@@ -345,7 +345,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
         Gfx_KcetScreenDraw();
         Screen_FadeUpdate();
         Fs_QueueUpdate();
-        func_8002EB88();
+        MemCard_Update();
         func_80033548();
         nullsub_800334C8();
         VSync(SyncMode_Wait);

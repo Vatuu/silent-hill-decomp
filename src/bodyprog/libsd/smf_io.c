@@ -2,10 +2,18 @@
 
 #include <psyq/libspu.h>
 
+extern SpuVoiceAttr s_attr; // @hack BSS
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/libsd.h"
 
-extern SpuVoiceAttr s_attr;
+SpuVoiceAttr s_attr;
+s32  pad_bss_800C7730[2];
+MIDI smf_midi[2 * 16];
+MIDI smf_midi_sound_off;
+s32  pad_bss_800C8314;
+PORT smf_port[24];
+s32  sd_timer_event;
 
 void set_note_on(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4) // 0x800A397C
 {

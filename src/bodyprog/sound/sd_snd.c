@@ -11,6 +11,20 @@
 
 #define VAB_BUFFER_LIMIT 0xC800u
 
+u8 g_Sd_AudioType;
+
+char pad_bss_800C37C9[3];
+
+u32 g_Sd_DataMoved;
+
+u8 g_Sd_VabLoadAttemps;
+
+char pad_bss_800C37D1[3];
+
+s_AudioItemData* g_Sd_VabTargetLoad;
+
+s_AudioItemData* g_Sd_KdTargetLoad;
+				
 // ========================================
 // LOAD VAB FILE
 // ========================================
@@ -57,7 +71,7 @@ void Sd_VabLoad(void) // 0x80047B80
             if (cmd >= 170 && cmd <= 204)
             {
                 depth = g_Sd_ReverbDepths[cmd - 170];
-                if (depth != g_Sd_ReverbDepth)
+                if (depth != gSDVolConfig.reverbDepth_F)
                 {
                     Sd_SetReverbDepth(depth);
                 }

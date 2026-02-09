@@ -4,6 +4,9 @@
 #include "bodyprog/view/vw_system.h"
 #include "bodyprog/math/math.h"
 
+VW_VIEW_WORK vwViewPointInfo;
+s32 pad_bss_800C3864;
+
 void vwInitViewInfo(void) // 0x80048A38
 {
     vwViewPointInfo.rview.vp.vz = Q12(0.0f);

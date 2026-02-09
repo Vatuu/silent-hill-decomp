@@ -1,4 +1,6 @@
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/memcard.h"
+#include "screens/saveload.h"
 #include "bodyprog/math/math.h"
 #include "screens/b_konami/b_konami.h"
 
@@ -457,6 +459,8 @@ s32 g_Demo_FrameCount = 0;
 s32 g_UnknownFrameCounter = 0;
 s32 g_PrevVBlanks = 0;
 
+// gamemain.c
+
 u16 D_800A9774[] = {
    160,
    162,
@@ -473,7 +477,7 @@ void (*g_GameStateUpdateFuncs[])(void) = {
     GameState_MovieIntroAlternate_Update,
     GameState_MovieIntro_Update,
     GameState_MainMenu_Update,
-    GameState_SaveScreen_Update,
+    GameState_LoadSavegameScreen_Update,
     GameState_MovieOpening_Update,
     GameState_LoadScreen_Update,
     GameState_InGame_Update,
@@ -481,7 +485,7 @@ void (*g_GameStateUpdateFuncs[])(void) = {
     GameState_ExitMovie_Update,
     GameState_ItemScreens_Update,
     GameState_MapScreen_Update,
-    GameState_SaveScreen_Update,
+    GameState_LoadSavegameScreen_Update,
     GameState_DebugMoviePlayer_Update,
     GameState_Options_Update,
     GameState_LoadStatusScreen_Update,
@@ -489,19 +493,19 @@ void (*g_GameStateUpdateFuncs[])(void) = {
     GameState_Unk15_Update
 };
 
-u8 g_SlotElementSelectedIdx[MEMORY_CARD_SLOT_COUNT] = { 0, 0 };
+u8 g_SlotElementSelectedIdx[MEMCARD_SLOT_COUNT_MAX] = { 0, 0 };
 s8 g_SelectedSaveSlotIdx = 0;
 u8 D_800A97D7 = 0;
-u8 D_800A97D8 = 0xFF;
+s8 D_800A97D8 = 0xFF;
 s8 D_800A97D9 = 0;
 s8 D_800A97DA = 0;
 s8 D_800A97DB = 0;
-s32 D_800A97DC = 0; /** `e_SavegameEntryType` */
-s8 D_800A97E0 = 0xFF;
+s32 D_800A97DC = 0; /** `e_SavegameEntryType` */  // Static variable. Remove when migrating data.
+s8 D_800A97E0 = 0xFF; // Static variable. Remove when migrating data.
 s8 D_800A97E1 = 0;
 s8 D_800A97E2 = 0;
 s8 D_800A97E3 = 0;
-u32 D_800A97E4[8] = {};
+u32 allFileStatus[8] = {}; // Static variable. Remove when migrating data.
 
 /** @brief Task commands for `SD_Call` to load BGM KDT and VAB files. */
 u16 g_BgmTaskLoadCmds[] = {

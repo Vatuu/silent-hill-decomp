@@ -2,6 +2,7 @@
 
 #include "bodyprog/bodyprog.h" // Only needed for `g_OtTags0`.
 #include "bodyprog/gfx/text_draw.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math/math.h"
 
 #include <ctype.h>

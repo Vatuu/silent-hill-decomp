@@ -8,8 +8,10 @@
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/joy.h"
 #include "bodyprog/math/math.h"
-#include "bodyprog/memcard.h"
 #include "bodyprog/sound_system.h"
+
+#include "bodyprog/memcard.h"
+#include "screens/saveload.h"
 
 // q19_12  g_DeltaTime2;
 // s32     g_MainLoop_FrameCount;
@@ -110,9 +112,9 @@ void MainLoop(void) // 0x80032EE0
 
     // Initialize engine.
     GsInitVcount();
-    Savegame_CardCleanInit();
-    func_8002E7BC();
-    func_8002E85C();
+    MemCard_SysInit();
+    MemCard_SysInit2();
+    MemCard_InitStatus();
     Joy_Init();
     VSyncCallback(&Screen_VSyncCallback);
     InitGeom();
@@ -170,7 +172,7 @@ void MainLoop(void) // 0x80032EE0
         }
 
         Screen_FadeUpdate();
-        func_8002EB88();
+        MemCard_Update();
         Sd_TaskPoolExecute();
 
         if (!Sd_AudioStreamingCheck())

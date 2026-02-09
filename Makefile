@@ -11,6 +11,18 @@ CHECKSUM       ?= 1
 NON_MATCHING   ?= 0
 SKIP_ASM       ?= 0
 
+# Enables usage of the `COMMON` segment.
+# The compiler can create a segment call `COMMON` intended to handle repetite
+# global variables declared in files which later becomes simple data that then
+# get assigned into some data segment. This comes as default and can be disabled,
+# however, MASPSX by default do not emit the segment and instead assign data
+# directly into the data segments. The importance of having this segment
+# supported is specially in the way MASPSX handle data order in a different way
+# to how the actual `COMMON` segment handles data order. It is required to have
+# the segment supported in the linker script, even though, Splat don't have
+# natively support to it.
+USE_COMMON     ?= 0
+
 # Names and Paths
 #
 # Versions supported
@@ -123,10 +135,16 @@ COMPTEST        := $(TOOLS_DIR)/compilationTest.sh
 # Flags
 OPT_FLAGS           := -O2
 ENDIAN              := -EL
-INCLUDE_FLAGS       := -Iinclude -I $(BUILD_DIR) -Iinclude/psyq
+INCLUDE_FLAGS       := -Iinclude -I $(BUILD_DIR) -Iinclude/psyq -Iinclude/decomp
 DEFINE_FLAGS        := -D_LANGUAGE_C -DUSE_INCLUDE_ASM
 CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MMD -MP -undef -Wall -lang-c -nostdinc -DVER_${GAME_VERSION}
+ifeq ($(USE_COMMON),1)
+LD_FLAGS            := $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections --no-gc-sections
+COMMON_FLAG         := --use-comm-section
+else
 LD_FLAGS            := $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
+COMMON_FLAG         :=
+endif
 OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
 ifeq ($(GEN_COMP_TU),1)
@@ -165,8 +183,8 @@ define FlagsSwitch
 		$(eval ASPSX_VERSION := 2.77))
 
 	$(if $(or $(findstring smf_mid,$(1)), $(findstring smf_io,$(1)),), \
-		$(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) --run-assembler --expand-div $(AS_FLAGS)), \
-		$(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) --run-assembler $(AS_FLAGS)))
+		$(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) $(COMMON_FLAG) --run-assembler --expand-div $(AS_FLAGS)), \
+		$(eval MASPSX_FLAGS = --aspsx-version=$(ASPSX_VERSION) $(COMMON_FLAG) --run-assembler $(AS_FLAGS)))
 
 	$(eval _rel_path := $(patsubst $(BUILD_DIR)/src/maps/%,%,$(patsubst build/${asm}/maps/%,%,$(1))))
 	$(eval _map_name := $(shell echo $(word 1, $(subst /, ,$(_rel_path))) | tr a-z A-Z))

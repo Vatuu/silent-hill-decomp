@@ -145,89 +145,6 @@ extern s32 g_Inventory_ItemNameTimer; // 0x800AE19C
 /** @brief Timer used for displaying item descriptions in the inventory. */
 extern s32 g_Inventory_DescriptionRollTimer; // 0x800AE1A0
 
-/** @brief Timer used for the transition of selected items
-* when scrolling through the inventory.
-*/
-extern s32 g_Inventory_ScrollTransitionTimer; // 0x800AE1A4
-
-extern GsCOORD2PARAM D_800C3928; // 0x800C3928
-
-extern bool g_Inventory_IsUpClicked; // 0x800C3968
-
-extern bool g_Inventory_IsDownClicked; // 0x800C396C
-
-extern bool g_Inventory_IsLeftClicked; // 0x800C3970
-
-extern bool g_Inventory_IsRightClicked; // 0x800C3974
-
-extern bool g_Inventory_IsUpPulsed; // 0x800C3978
-
-extern bool g_Inventory_IsDownPulsed; // 0x800C397C
-
-extern bool g_Inventory_IsLeftPulsed; // 0x800C3980
-
-extern bool g_Inventory_IsRightPulsed; // 0x800C3984
-
-extern bool g_Inventory_IsLeftHeld; // 0x800C3988
-
-extern bool g_Inventory_IsRightHeld; // 0x800C398C
-
-/** @brief Used for smooth inventory scrolling if a left/right input is held. */
-extern bool g_Inventory_IsScrolling; // 0x800C3990
-
-/** @brief Timer used for the corner borders of the selection box in the inventory.
- *
- * If set to 8, borders will be drawn. If not, it increments until it reaches 8.
- */
-extern s32 g_Gfx_Inventory_SelectionBordersDraw; // 0x800C3998
-
-/** @brief Used for drawing the transition of the corner borders' position when changing
- * the selected option in the inventory. Indicates where the box is moving to.
- *
- * `e_InventorySelectionId`
- *
- * Difficult to notice, but this shares the same value as
- * `g_Inventory_SelectionId`, with the difference of a minor delay.
- */
-extern s32 g_Inventory_PrevSelectionId; // 0x800C399C
-
-extern GsF_LIGHT g_Items_Lights[8][2]; // 0x800C39A8
-
-extern GsCOORDINATE2 D_800C3AE8; // 0x800C3AE8
-
-/** Used for displaying the item models.
- * Could also be camera values.
- */
-extern SVECTOR3 D_800C3B38; // 0x800C3B38
-
-extern VbRVIEW D_800C3B48; // 0x800C3B48
-
-/** Holds the coords for displaying selection box around items and options. */
-extern DVECTOR D_800C3B68[4][4]; // 0x800C3BE8 - Type assumed.
-
-extern s32 D_800C3BA8;
-
-extern s32 D_800C3BAC;
-
-extern GsCOORD2PARAM g_Items_Transforms[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3BE8
-
-extern u8 g_Item_MapLoadableItems[48]; // 0x800C3BB8
-
-/** Used to organize the items displaying in the inventory.
- * 7 is the max number of visible items.
- */
-extern s32 D_800C3E18[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3E18
-
-extern GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3E48
-
-/** This value is based on the index of the equipped item.
- * If the player has nothing equipped, set to `NO_VALUE`.
- */
-extern s32 g_Inventory_EquippedItemIdx; // 0x800C3E34
-
-/** Stores item model data. */
-extern GsDOBJ2 g_Items_ItemsModelData[9]; // 0x800C3D78
-
 extern s_800AEDBC D_800AEDBC[];
 
 extern s32 D_800AE71C[][2];
@@ -250,12 +167,154 @@ extern s8 D_800AE7E4[5][6][2];
 
 extern s8 D_800AE820[8][8][2];
 
+// ====================
+// GLOBALS (BSS; Hack)
+// ====================
+// For matching the order of the BSS segment it is required to declare
+// each variable as an extern in a determined order.
+// This is done on the meanwhile we found a way to replicate `common`
+// segment behaviour.
+
+//cam.c
+
+extern GsCOORD2PARAM D_800C3928;
+
+/** Packed weapon attack. See `WEAPON_ATTACK`. */
+extern s8 g_Player_WeaponAttack;
+
+extern s8 pad_bss_800C3951[3];
+
+extern s32 D_800C3954;
+
+extern s32 D_800C3958;
+
+extern s32 D_800C395C;
+
+//1.c
+
+/** `e_MapOverlayId ` */
+extern s8 D_800C3960;
+
+extern s8 D_800C3961;
+
+extern s8 D_800C3962;
+
+extern u8 D_800C3963;
+
+extern s32 pad_bss_800C3964;
+
+//2.c
+
+extern bool g_Inventory_IsUpClicked; // 0x800C3968
+
+extern bool g_Inventory_IsDownClicked; // 0x800C396C
+
+extern bool g_Inventory_IsLeftClicked; // 0x800C3970
+
+extern bool g_Inventory_IsRightClicked; // 0x800C3974
+
+extern bool g_Inventory_IsUpPulsed; // 0x800C3978
+
+extern bool g_Inventory_IsDownPulsed; // 0x800C397C
+
+extern bool g_Inventory_IsLeftPulsed; // 0x800C3980
+
+extern bool g_Inventory_IsRightPulsed; // 0x800C3984
+
+extern bool g_Inventory_IsLeftHeld; // 0x800C3988
+
+extern bool g_Inventory_IsRightHeld; // 0x800C398C
+
+/** @brief Used for smooth inventory scrolling if a left/right input is held. */
+extern bool g_Inventory_IsScrolling;
+
+/** Game difficulty. */
+extern s32 D_800C3994;
+
+/** @brief Timer used for the corner borders of the selection box in the inventory.
+ *
+ * If set to 8, borders will be drawn. If not, it increments until it reaches 8.
+ */
+extern s32 g_Gfx_Inventory_SelectionBordersDraw;
+
+/** @brief Used for drawing the transition of the corner borders' position when changing
+ * the selected option in the inventory. Indicates where the box is moving to.
+ *
+ * `e_InventorySelectionId`
+ *
+ * Difficult to notice, but this shares the same value as
+ * `g_Inventory_SelectionId`, with the difference of a minor delay.
+ */
+extern s32 g_Inventory_PrevSelectionId;
+
+extern s32 pad_bss_800C39A0[2];
+
+// 3.c
+
+extern GsF_LIGHT g_Items_Lights[7][2];
+
+extern GsF_LIGHT D_800C3A88[4];
+
+extern GsF_LIGHT D_800C3AC8[2];
+
+extern GsCOORDINATE2 D_800C3AE8; // 0x800C3AE8
+
+/** Used for displaying the item models.
+ * Could also be camera values.
+ */
+extern SVECTOR3 D_800C3B38; // 0x800C3B38
+
+extern s16 pad_bss_800C3B3E[5];
+
+extern VbRVIEW D_800C3B48; // 0x800C3B48
+
+/** Holds the coords for displaying selection box around items and options. */
+extern DVECTOR D_800C3B68[4][4]; // 0x800C3BE8 - Type assumed.
+
+/** @brief Timer used for the transition of selected items
+* when scrolling through the inventory.
+*/
+extern s32 g_Inventory_ScrollTransitionTimer; // 0x800AE1A4
+
+extern s32 D_800C3BA8;
+
+extern s32 D_800C3BAC;
+
+extern s32 pad_bss_800C3BB0[2];
+
+extern u8 g_Item_MapLoadableItems[48]; // 0x800C3BB8
+
+extern GsCOORD2PARAM g_Items_Transforms[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3BE8
+
+/** Stores item model data. */
+extern GsDOBJ2 g_Items_ItemsModelData[9]; // 0x800C3D78
+
+extern GsDOBJ2 D_800C3E08;
+
+/** Used to organize the items displaying in the inventory.
+ * 7 is the max number of visible items.
+ */
+extern s32 D_800C3E18[7]; // 0x800C3E18
+
+/** This value is based on the index of the equipped item.
+ * If the player has nothing equipped, set to `NO_VALUE`.
+ */
+extern s32 g_Inventory_EquippedItemIdx; // 0x800C3E34
+
+extern s32 pad_bss_800C3E38[2];
+
+extern u8 D_800C3E40;
+
+extern s8 pad_bss_800C3E41[7];
+
+extern GsCOORDINATE2 g_Items_Coords[DISPLAYED_ITEM_COUNT_MAX]; // 0x800C3E48
+
 // ==========
 // FUNCTIONS
 // ==========
 
 /** Appears to set the camera for items. */
-void Gfx_ItemScreens_CameraSet(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3); // 0x8004BB4C
+void ItemScreen_CamSet(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3); // 0x8004BB4C
 
 void GameFs_TmdDataAlloc(s32* buf); // 0x8004BCBC
 
@@ -263,7 +322,7 @@ void GameFs_TmdDataAlloc(s32* buf); // 0x8004BCBC
  *
  * Name might be inaccurate as it also appears to be used for the camera.
  */
-void Gfx_Items_ItemRotate(SVECTOR* arg0, GsCOORDINATE2* arg1); // 0x8004BCDC
+void ItemScreen_ItemRotate(SVECTOR* arg0, GsCOORDINATE2* arg1); // 0x8004BCDC
 
 void func_8004BD74(s32 displayItemIdx, GsDOBJ2* arg1, s32 arg2); // 0x8004BD74
 

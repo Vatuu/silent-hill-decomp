@@ -13,6 +13,7 @@ src_dir = root_dir + "src/"
 # Project-specific
 CPP_FLAGS = [
     "-Iinclude",
+    "-Iinclude/decomp",
     "-Iinclude/psyq",
     "-Isrc",
     "-D_LANGUAGE_C",

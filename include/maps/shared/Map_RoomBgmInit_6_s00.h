@@ -22,7 +22,7 @@ void Map_RoomBgmInit(bool arg0)
                     {
                         flags = 0xFE;
 
-                        if (g_GameWork.gameStatePrev_590 != GameState_Unk10)
+                        if (g_GameWork.gameStatePrev_590 != GameState_SaveScreen)
                         {
                             var_s1 = Q12(240.0f);
                             break;
@@ -33,7 +33,7 @@ void Map_RoomBgmInit(bool arg0)
                     var_s1 = Q12(3.0f);
                     break;
 
-                case GameState_Unk10:
+                case GameState_SaveScreen:
                     if (g_Screen_FadeStatus >= 6)
                     {
                         flags  = 0xFE;

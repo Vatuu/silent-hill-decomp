@@ -6,6 +6,7 @@
 
 #include "bodyprog/bodyprog.h"
 #include "main/fsqueue.h"
+#include "bodyprog/gfx/text_draw.h"
 
 void GameFs_TitleGfxSeek(void) // 0x80032bd0
 {
@@ -37,4 +38,10 @@ void GameFs_SaveLoadBinLoad(void) // 0x80032CA8
 {
     Fs_QueueStartReadTim(FILE_TIM_SAVELOAD_TIM, FS_BUFFER_1, &g_ItemInspectionImg);
     Fs_QueueStartRead(FILE_VIN_SAVELOAD_BIN, FS_BUFFER_1);
+}
+
+void func_80032CE8(void) // 0x80032CE8
+{
+    Gfx_StringSetPosition(SCREEN_POSITION_X(33.75f), SCREEN_POSITION_Y(43.5f));
+    Gfx_StringDraw("\x7Now_loading.", 100);
 }

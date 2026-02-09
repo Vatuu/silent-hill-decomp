@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/math/math.h"
 
@@ -23,7 +24,25 @@
 #define FONT_12_X_16_LINE_COUNT_MAX     9
 #define FONT_12_X_16_ATLAS_COLUMN_COUNT (FONT_12_X_16_GLYPH_COUNT / 4)
 
-const s32 __PAD = 0;
+static const s32 pad_rodata_80025D68 = 0;
+
+DVECTOR g_StringPosition; // 0x800C38A8
+
+s32 g_StringPositionX1; // 0x800C38AC
+
+s_800C38B0 D_800C38B0;
+
+s8 pad_bss_800C38B2[2];
+
+s32 D_800C38B4;
+
+s32 pad_bss_800C38B8[4];
+
+s32 g_MapMsg_WidthTable[12];
+
+GsSPRITE D_800C38F8;
+
+s16 D_800C391C;
 
 /** @brief Glyph widths for the 12x16 font. Used for kerning. */
 static const u8 FONT_12_X_16_GLYPH_WIDTHS[FONT_12_X_16_GLYPH_COUNT] = {
@@ -270,7 +289,7 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
     s32 msgArg;
     u8* mapMsg;
 
-    D_800C38B4.lineCount_0  = 1;
+    D_800C38B4  = 1;
     g_MapMsg_AudioLoadBlock = 0;
     
     for (i = (FONT_12_X_16_LINE_COUNT_MAX - 1); i >= 0; i--)
@@ -294,7 +313,7 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
             
             case '_':
                 ++mapMsg;
-                g_MapMsg_WidthTable[D_800C38B4.lineCount_0 - 1] += FONT_12_X_16_SPACE_SIZE;
+                g_MapMsg_WidthTable[D_800C38B4 - 1] += FONT_12_X_16_SPACE_SIZE;
                 break;
                 
             case MAP_MSG_CODE_MARKER:
@@ -310,7 +329,7 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
 
                     case MAP_MSG_CODE_NEWLINE:
                         j++;
-                        D_800C38B4.lineCount_0++;
+                        D_800C38B4++;
                         break;
 
                     case MAP_MSG_CODE_END:
@@ -357,7 +376,7 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
                     charCode = '^';
                 }
 
-                g_MapMsg_WidthTable[D_800C38B4.lineCount_0 - 1] += FONT_12_X_16_GLYPH_WIDTHS[charCode - GLYPH_TABLE_ASCII_OFFSET];
+                g_MapMsg_WidthTable[D_800C38B4 - 1] += FONT_12_X_16_GLYPH_WIDTHS[charCode - GLYPH_TABLE_ASCII_OFFSET];
                 mapMsg++;
                 break;
         }
@@ -411,7 +430,7 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
             break;
 
         case 1:
-            g_StringPosition.vy = 76 - ((D_800C38B4.lineCount_0 - 1) * FONT_12_X_16_GLYPH_SIZE_Y);
+            g_StringPosition.vy = 76 - ((D_800C38B4 - 1) * FONT_12_X_16_GLYPH_SIZE_Y);
             break;
 
         case 2:
@@ -419,16 +438,16 @@ s32 Gfx_MapMsg_StringDraw(char* mapMsg, s32 strLength) // 0x8004AF18
             break;
 
         case 3:
-            g_StringPosition.vy = 44 - ((D_800C38B4.lineCount_0 - 1) * FONT_12_X_16_GLYPH_SIZE_Y);
+            g_StringPosition.vy = 44 - ((D_800C38B4 - 1) * FONT_12_X_16_GLYPH_SIZE_Y);
             break;
 
         case 4:
-            g_StringPosition.vy = ((FONT_12_X_16_LINE_COUNT_MAX - D_800C38B4.lineCount_0) * 8) - 76;
+            g_StringPosition.vy = ((FONT_12_X_16_LINE_COUNT_MAX - D_800C38B4) * 8) - 76;
             break;
     }
 
     longestLineWidth = g_MapMsg_WidthTable[0];
-    for (i = 0; i < D_800C38B4.lineCount_0; i++)
+    for (i = 0; i < D_800C38B4; i++)
     {
         if (longestLineWidth < g_MapMsg_WidthTable[i])
         {
@@ -685,7 +704,7 @@ void func_8004B658(void) // 0x8004B658
 
 void Gfx_MapMsg_DefaultStringInfoSet(void) // 0x8004B684
 {
-    D_800C38B4.lineCount_0               = 1;
+    D_800C38B4               = 1;
     D_800C38B0.field_0                   = 0;
     D_800C38B0.positionIdx_1             = 1;
     g_StringPositionX1                   = SCREEN_POSITION_X(-37.5f);
@@ -697,13 +716,13 @@ void func_8004B6D4(s16 arg0, s16 arg1) // 0x8004B6D4
 {
     if (arg0 != NO_VALUE)
     {
-        D_800C38FC = arg0 + (-g_GameWork.gsScreenWidth_588 / 2);
-        D_800C391C = D_800C38FC;
+        D_800C38F8.x = arg0 + (-g_GameWork.gsScreenWidth_588 / 2);
+        D_800C391C   = D_800C38F8.x;
     }
 
     if (arg1 != NO_VALUE)
     {
-        D_800C38FE = arg1 + (-g_GameWork.gsScreenHeight_58A / 2);
+        D_800C38F8.y = arg1 + (-g_GameWork.gsScreenHeight_58A / 2);
     }
 }
 

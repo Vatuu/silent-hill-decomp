@@ -3,12 +3,16 @@
 #include <abs.h>
 
 #include "bodyprog/bodyprog.h"
+#include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/view/vc_main.h"
 #include "bodyprog/view/vw_system.h"
 
 #define MIN_IN_ROAD_DIST Q12(1.0f) // `vcGetMinInRoadDist` in SH2, hardcoded to `Q12(1.0f)` in SH1.
+
+VC_WATCH_MV_PARAM vcWatchMvPrmSt;
+q19_12            vcSelfViewTimer;
 
 /** @brief Fallback camera path collision. */
 VC_NEAR_ROAD_DATA vcNullNearRoad = {

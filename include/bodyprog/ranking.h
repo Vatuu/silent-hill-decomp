@@ -1,9 +1,9 @@
-#ifndef _BODYPROG_CREDITS_H
-#define _BODYPROG_CREDITS_H
+#ifndef _BODYPROG_RANKING_H
+#define _BODYPROG_RANKING_H
 
 /** @brief This header is used to declare any variable, struct, or
  * function part of `BODYPROG.BIN` identified to be related
- * to the credits system.
+ * to the ranking system.
  */
 
 // ========
@@ -21,13 +21,6 @@ typedef struct
     u8 field_6;
     u8 field_7;
     u8 field_8;
-    u8 unk_9;
-    u8 unk_A;
-    u8 unk_B;
-    u8 unk_C;
-    u8 unk_D;
-    u8 unk_E;
-    u8 unk_F;
 } s_800C48E0;
 
 // ========
@@ -101,6 +94,8 @@ extern s8 D_800C48D0;
 
 /** Continue count. */
 extern u8 D_800C48D1;
+
+extern s8 pad_bss_800C48D2[14];
 
 extern s_800C48E0 D_800C48E0;
 

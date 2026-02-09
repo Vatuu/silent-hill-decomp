@@ -6,6 +6,26 @@
 #include "main/fsqueue.h"
 #include "main/rng.h"
 
+s32 g_Demo_DemoFileIdx;
+
+s32 g_Demo_PlayFileIdx;
+
+s32 pad_bss_800C4848[2];
+
+s_SaveUserConfig g_Demo_UserConfigBackup;
+
+u32 g_Demo_PrevRandSeed;
+
+u32 g_Demo_RandSeedBackup;
+
+s_DemoFrameData* g_Demo_CurFrameData;
+
+s32 g_Demo_DemoStep;
+
+s32 g_Demo_VideoPresentInterval;
+
+bool D_800C489C;
+
 s32 g_Demo_DemoId = 0;
 u16 g_Demo_RandSeed = 0;
 // 2 bytes of padding.
@@ -200,7 +220,7 @@ s32 Demo_StateGet(s32 gameState)
             {
                 return DemoState_Exit;
             }
-            else if (g_GameWork.gameStatePrev_590 == GameState_Unk10)
+            else if (g_GameWork.gameStatePrev_590 == GameState_SaveScreen)
             {
                 return DemoState_Exit;
             }

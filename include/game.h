@@ -28,8 +28,6 @@ struct _Model;
 #define GROUP_CHARA_COUNT        4                  /** While up to 6 NPCs and a player can exist in the game world, only 4 different character types (including the player) can be loaded at a time. */
 #define INVENTORY_ITEM_COUNT_MAX 40
 #define INPUT_ACTION_COUNT       14
-#define SAVEGAME_FOOTER_MAGIC    0xDCDC
-#define MEMORY_CARD_SLOT_COUNT   2
 #define CONTROLLER_COUNT_MAX     2
 
 #define DEFAULT_PICKUP_ITEM_COUNT      1
@@ -380,36 +378,6 @@ typedef enum _MapOverlayId
     MapOverlayId_MAPX_S00 = 44  // }
 } e_MapOverlayId;
 
-/** @brief Save location IDs. */
-typedef enum _SaveLocationId
-{
-    SaveLocationId_Anywhere    = 0,
-    SaveLocationId_Cafe        = 1,
-    SaveLocationId_Bus         = 2,
-    SaveLocationId_Store       = 3,
-    SaveLocationId_Infirmary   = 4,
-    SaveLocationId_Doghouse    = 5,
-    SaveLocationId_Gordon      = 6,
-    SaveLocationId_Church      = 7,
-    SaveLocationId_Garage      = 8,
-    SaveLocationId_Police      = 9,
-    SaveLocationId_Reception   = 10,
-    SaveLocationId_Room302     = 11,
-    SaveLocationId_Directors   = 12,
-    SaveLocationId_JewelryShop = 13,
-    SaveLocationId_PoolHall    = 14,
-    SaveLocationId_AntiqueShop = 15,
-    SaveLocationId_ThemePark   = 16,
-    SaveLocationId_Boat        = 17,
-    SaveLocationId_Bridge      = 18,
-    SaveLocationId_Motel       = 19,
-    SaveLocationId_Lighthouse  = 20,
-    SaveLocationId_Sewer       = 21,
-    SaveLocationId_Nowhere     = 22,
-    SaveLocationId_ChildsRoom  = 23,
-    SaveLocationId_NextFear    = 24
-} e_SaveLocationId;
-
 /** @brief Paper map indices. Used for the map screen. */
 typedef enum _PaperMapIdx
 {
@@ -548,7 +516,7 @@ typedef enum _GameState
     GameState_MovieIntroAlternate = 5,
     GameState_MovieIntro          = 6,
     GameState_MainMenu            = 7,
-    GameState_SaveScreen          = 8,
+    GameState_LoadSavegameScreen  = 8,
     GameState_MovieOpening        = 9,
     GameState_MainLoadScreen      = 10,
     GameState_InGame              = 11,
@@ -556,7 +524,7 @@ typedef enum _GameState
     GameState_ExitMovie           = 13,
     GameState_InventoryScreen     = 14,
     GameState_MapScreen           = 15,
-    GameState_Unk10               = 16,
+    GameState_SaveScreen          = 16,
     GameState_DebugMoviePlayer    = 17,
     GameState_OptionScreen        = 18,
     GameState_LoadStatusScreen    = 19,
@@ -1082,32 +1050,6 @@ typedef struct _SaveUserConfig
     u32                palLanguageId_34;
 } s_SaveUserConfig;
 STATIC_ASSERT_SIZEOF(s_SaveUserConfig, 56);
-
-/** @brief Appended to `ShSavegame` and `ShSaveUserConfig` during game save. Contains 8-bit XOR checksum + magic.
- * Checksum generated via `Savegame_ChecksumGenerate`.
- */
-typedef struct _SavegameFooter
-{
-    u8  checksum_0[2];
-    u16 magic_2;
-} s_SavegameFooter;
-STATIC_ASSERT_SIZEOF(s_SavegameFooter, 4);
-
-/** @brief Contains `s_Savegame` data with the footer appended to the end containing the checksum + magic. */
-typedef struct _SavegameContainer
-{
-    s_Savegame       savegame_0;
-    s_SavegameFooter footer_27C;
-} s_SavegameContainer;
-STATIC_ASSERT_SIZEOF(s_SavegameContainer, 640);
-
-/** @brief Contains `s_SaveUserConfig` data padded to 128 bytes with a footer at the end containing checksum + magic. */
-typedef struct _SaveUserConfigContainer
-{
-    s_SaveUserConfig config_0;
-    u8               pad_38[68];
-    s_SavegameFooter footer_7C;
-} s_SaveUserConfigContainer;
 
 /** @brief Game workspace. Stores miscellaneous gameplay-related data.
  */
@@ -1941,16 +1883,11 @@ extern GsOT g_OrderingTable0[2];
 extern GsOT g_OrderingTable1[2];
 extern GsOT g_OrderingTable2[2];
 
-extern q19_12        g_DeltaTime0;
 extern q19_12        g_DeltaTime1;
-extern q19_12        g_DeltaTime2;
 extern u32           g_MapEventIdx;
-extern s_EventParam* g_MapEventParam;
 
 extern s32 g_IntervalVBlanks;
 extern s32 g_PrevVBlanks;
-extern s32 g_VBlanks;
-extern s32 g_UncappedVBlanks;
 
 /** @brief Sets `sysState` in `g_SysWork` for the next tick.
  *

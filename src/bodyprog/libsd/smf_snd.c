@@ -5,6 +5,13 @@
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/libsd.h"
 
+VAB_H        vab_h[SD_VAB_SLOTS];
+u8           sd_vb_malloc_rec[136];
+s16          sd_seq_loop_mode;
+s16          pad_bss_800C7662;
+s32          sd_tick_mode;
+SD_SPU_ALLOC sd_spu_alloc[SD_ALLOC_SLOTS];
+
 void tone_adsr_mem(s16 vab_id) // 0x8009EDA4
 {
     SD_VAB_H* vabData;

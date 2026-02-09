@@ -49,8 +49,8 @@ typedef struct _ControllerMenu_SelectedEntries
 
 extern bool g_ControllerMenu_IsOnActionsPane;
 
-extern DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[MEMORY_CARD_SLOT_COUNT];
-extern POLY_G4 g_ControllerMenu_SelectionHighlightQuad[MEMORY_CARD_SLOT_COUNT];
+extern DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[2];
+extern POLY_G4 g_ControllerMenu_SelectionHighlightQuad[2];
 
 extern s_ControllerMenu_SelectedEntries g_ControllerMenu_SelectedEntries;
 

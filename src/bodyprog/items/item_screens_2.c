@@ -7,7 +7,37 @@
 #include "bodyprog/player_logic.h"
 #include "bodyprog/math/math.h"
 
-const s32 rodataPad_80025EAC = 0;
+static const s32 pad_rodata_80025EAC = 0;
+
+bool g_Inventory_IsUpClicked; // 0x800C3968
+
+bool g_Inventory_IsDownClicked; // 0x800C396C
+
+bool g_Inventory_IsLeftClicked; // 0x800C3970
+
+bool g_Inventory_IsRightClicked; // 0x800C3974
+
+bool g_Inventory_IsUpPulsed; // 0x800C3978
+
+bool g_Inventory_IsDownPulsed; // 0x800C397C
+
+bool g_Inventory_IsLeftPulsed; // 0x800C3980
+
+bool g_Inventory_IsRightPulsed; // 0x800C3984
+
+bool g_Inventory_IsLeftHeld; // 0x800C3988
+
+bool g_Inventory_IsRightHeld; // 0x800C398C
+
+bool g_Inventory_IsScrolling;
+
+s32 D_800C3994;
+
+s32 g_Gfx_Inventory_SelectionBordersDraw;
+
+s32 g_Inventory_PrevSelectionId;
+
+s32 pad_bss_800C39A0[2];
 
 /** Something to do with inventory items. */
 static const s8 D_80025EB0[] = {
@@ -91,7 +121,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             }
 
             if ((g_SavegamePtr->field_27A & (1 << 6)) &&
-                g_GameWork.gameStatePrev_590 == GameState_Unk10)
+                g_GameWork.gameStatePrev_590 == GameState_SaveScreen)
             {
                 g_Demo_ReproducedCount = 0;
 
@@ -335,7 +365,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 Screen_Refresh(320, 0);
                 GameFs_SaveLoadBinLoad();
                 Fs_QueueWaitForEmpty();
-                Game_StateSetNext(GameState_Unk10);
+                Game_StateSetNext(GameState_SaveScreen);
                 return;
             }
             break;

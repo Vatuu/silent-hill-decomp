@@ -257,14 +257,6 @@ typedef struct
     struct TMD_STRUCT models_c[1];
 } s_TmdFile;
 
-// Used in string parsing.
-typedef struct
-{
-    s32 lineCount_0;
-    s8  unk_1;
-    s8  unk_38B4;
-} s_800C38B4;
-
 typedef struct
 {
     u8  unk_0;
@@ -2128,8 +2120,6 @@ extern const s_AnimInfo* D_800297B8;
 
 extern u_Filename D_8002B2CC;
 
-extern s32 g_MapMsg_WidthTable[];
-
 extern u8 g_BackgroundColor;
 
 extern DR_MODE D_800A8E5C[];
@@ -2277,8 +2267,6 @@ extern s8 g_Demo_ReproducedCount;
 
 extern s32 g_MainMenu_NewGameSelectedDifficultyIdx;
 
-extern s32 g_PrevSavegameCount;
-
 extern RECT D_800A9A6C; // `RECT<320, 256, 160, 240>`, only used in `SysState_Fmv_Update`?
 
 extern u32 D_800A9AAC[];
@@ -2387,13 +2375,36 @@ extern u8 D_800AE185;
 
 extern u8 D_800AE186;
 
+extern u8 g_SysState_GameOver_TipIdx;
+
+extern s8 pad_bss_800BCD81[3];
+
 /** Copy of delta timers.
  * Appears to be used as save of the delta timer currently used as some instances where 2D backgrounds
  * are drawn uses `g_DeltaTime1` while `g_DeltaTime0` is being stopped.
  */
 extern s32 g_DeltaTimeCpy;
 
-extern u8 g_SysState_GameOver_TipIdx;
+extern s32 pad_bss_800BCD88[2];
+
+extern s_EventParam* g_ItemTriggerEvents[];
+
+extern s32 pad_bss_800BCD94[5];
+
+extern s_800BCDA8 D_800BCDA8[2];
+
+extern s_MapPoint2d D_800BCDB0;
+
+extern s32 pad_bss_800BCDD0;
+
+/** Related to special item interactions. */
+extern s32 g_ItemTriggerItemIds[5];
+
+extern u8 D_800BCDD4;
+
+extern s8 pad_bss_800BCDD5[3];
+
+extern s_EventParam* g_MapEventParam;
 
 /** `e_InventoryItemId` | related to displaying items. */
 extern u8 D_800AE187;
@@ -2466,11 +2477,7 @@ extern SVECTOR D_800AFDB0;
 
 extern s32 D_800AFDEC;
 
-extern PACKET D_800BFBF0[][0xA10];
-
-extern GsF_LIGHT D_800C3AC8[];
-
-extern GsDOBJ2 D_800C3E08;
+extern PACKET D_800BFBF0[2][0xA10];
 
 extern u8 g_Items_GunsMaxLoadAmmo[36]; // Max loaded ammo that a weapon can hold. 0x800AD4A0
 
@@ -2481,10 +2488,6 @@ extern const char* g_ItemDescriptions[];
 extern s_FsImageDesc D_800A90A4;
 
 extern s_FsImageDesc D_800A90B4;
-
-extern GsOT_TAG g_OtTags0[2][16];
-
-extern GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
 
 extern s_SubCharacter D_800BA00C; // Often passed to `func_800700F8`, might not be full `s_SubCharacter`?
 
@@ -2509,8 +2512,6 @@ extern u16 D_800BCCB2;
  */
 extern s32 g_Screen_FadeStatus;
 
-extern s16 g_SavegameCount;
-
 /** @brief Test if demo loading should be reinitialized.
  * This is used exclusively in `GameFs_MapStartup` with
  * the purpose of testing if demo loading should be reinitialized
@@ -2525,23 +2526,7 @@ extern s16 g_SavegameCount;
  */
 extern s32 g_DemoLoadAttempCount;
 
-extern u32 D_800BCD58;
-
 extern s32 D_800BCD5C;
-
-extern s32 g_MapMsg_StateMachineIdx1;
-
-extern s32 g_MapMsg_StateMachineIdx2;
-
-extern s32 g_MapMsg_DisplayLength;
-
-/** Map message index. */
-extern s32 g_MapMsg_MainIdx;
-
-/** How many glyphs at a time to advance the message roll. */
-extern s32 g_MapMsg_DisplayInc;
-
-extern s32 D_800BCD74;
 
 extern s_MapMsgSelect g_MapMsg_Select;
 
@@ -2551,29 +2536,18 @@ extern s8 g_MapMsg_SelectCancelIdx;
 
 extern s32 D_800BCD84;
 
-extern s_EventParam* g_ItemTriggerEvents[];
-
-extern s_800BCDA8 D_800BCDA8[2];
-
-extern s_MapPoint2d D_800BCDB0;
-
-/** Related to special item interactions. */
-extern s32 g_ItemTriggerItemIds[5];
-
-extern u8 D_800BCDD4;
-
 /** Related to main menu fog randomization. */
 extern s8* D_800BCDE0; // Type assumed.
 
 /** Angles. */
-extern s16 D_800BCDE8[];
+extern s16 D_800BCDE8[8];
 
 extern u16 D_800BCE14;
 
 // TODO: Rename to `g_WorldGfxWork`.
 extern s_WorldGfxWork g_WorldGfx;
 
-extern s_IpdCollisionData* D_800C1010[];
+extern s_IpdCollisionData* D_800C1010[4];
 
 extern s_Map g_Map;
 
@@ -2583,60 +2557,13 @@ extern s8 D_800C15B4;
 
 extern s16 D_800C16A4;
 
-extern s32 D_800C16C8; // Type assumed.
-
 extern s32 D_800C3920;
 
-/** Packed weapon attack. See `WEAPON_ATTACK`. */
-extern s8 g_Player_WeaponAttack;
-
-extern s32 D_800C3954;
-
-extern s32 D_800C3958;
-
-extern s32 D_800C395C;
-
-/** `e_MapOverlayId ` */
-extern s8 D_800C3960;
-
-extern s8 D_800C3961;
-
-extern s8 D_800C3962;
-
-extern u8 D_800C3963;
-
-/** Game difficulty. */
-extern s32 D_800C3994;
-
-extern s_800C38B0 D_800C38B0;
-
-extern s_800C38B4 D_800C38B4;
-
-/** Times. */
-extern q19_12 D_800C4710[];
-
-/** String position. */
-extern DVECTOR g_StringPosition; // 0x800C38A8
-
-/** String X position as `s32`. It's unclear why there are two. */
-extern s32 g_StringPositionX1; // 0x800C38AC
-
-/** String glyph sprite. */
-extern GsSPRITE D_800C38F8;
-
-extern s16 D_800C38FC;
-
-extern s16 D_800C38FE;
-
-extern s16 D_800C391C;
+extern s32 pad_bss_800C3924;
 
 extern s16 D_800C391E;
 
 extern s8 D_800C39A0;
-
-extern GsF_LIGHT D_800C3A88[];
-
-extern u8 D_800C3E40;
 
 /** Functions from `bodyprog_8003AB28` access `g_WorldEnvWork` as constant, but some functions from `bodyprog_80055028` write to it.
  * It appears that g_WorldEnvWork is intended to be defined inside `bodyprog_80055028` as writable and declared as read-only (`const`) outside of it.
@@ -2751,20 +2678,13 @@ extern u8 g_Player_IsDead;
 
 extern s_Collision D_800C4620;
 
-extern VECTOR3 D_800C4640[][8]; // Or struct?
-
-extern s32 D_800C46A0;
+extern VECTOR3 D_800C4640[2][8];
 
 /** Y angles. */
-extern q3_12 D_800C4700[];
+extern q3_12 D_800C4700[8];
 
-extern s16 D_800C4702;
-
-extern s_RayData D_800C4728;
-
-extern DVECTOR D_800C4748[];
-
-extern VECTOR3 D_800C4758[];
+/** Times. */
+extern q19_12 D_800C4710[];
 
 /** Q19.12 */
 extern VECTOR3 D_800C4788[];
@@ -2779,14 +2699,9 @@ extern s_RayData D_800C47F8;
 
 extern s_800C4818 D_800C4818;
 
-/** Something for demo handling. Set in `Fs_QueueDoThingWhenEmpty`. */
-extern bool D_800C489C;
-
 extern s32 D_800C48F0;
 
 extern RECT D_801E557C[];
-
-extern s32 g_MainLoop_FrameCount; // 0x800B9CCC
 
 extern u8 D_800C6E90;
 
@@ -2824,7 +2739,7 @@ bool Gfx_2dBackgroundMotionBlur(s32 vBlanks);
 /** @unused Possibly a leftover from when the save menu was part of `BODYPROG.BIN`.
  * Draws some string in display space.
  */
-void SaveLoad_NowLoadingStringDraw(void);
+void func_80032CE8(void);
 
 void func_80032D1C(void);
 
@@ -3583,6 +3498,8 @@ void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOr
 /** State step increment. */
 void func_800866D4(s32 arg0, s32 arg1, bool reset);
 
+extern bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3);
+
 void func_80086728(s_SubCharacter* chara, s32 arg1, s32 arg2, bool reset);
 
 void func_8008677C(s_SubCharacter* chara, s32 arg1, s32 arg2);
@@ -4107,9 +4024,6 @@ void Settings_RestoreDefaults(void);
 void Settings_RestoreControlDefaults(s32 arg0);
 
 void nullsub_800334C8(void);
-
-// Possibly related to save functionallity.
-s32 func_800334D8(s32 idx);
 
 bool func_80033548(void);
 
@@ -4723,7 +4637,7 @@ void GameState_MapEvent_Update(void);
 void GameState_ExitMovie_Update(void);
 void GameState_ItemScreens_Update(void);
 void GameState_MapScreen_Update(void);
-void GameState_SaveScreen_Update(void);
+void GameState_LoadSavegameScreen_Update(void);
 void GameState_DebugMoviePlayer_Update(void);
 void GameState_Options_Update(void);
 void GameState_LoadMapScreen_Update(void);

@@ -7,6 +7,14 @@
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 
+
+GsCOORD2PARAM D_800C3928;
+s8 g_Player_WeaponAttack;
+s8 pad_bss_800C3951[3];
+s32 D_800C3954;
+s32 D_800C3958;
+s32 D_800C395C;
+
 void func_8004BB10(void) // 0x8004BB10
 {
     GsFCALL4.g3[GsDivMODE_NDIV][GsLMODE_FOG]  = GsTMDfastG3LFG;
@@ -15,7 +23,7 @@ void func_8004BB10(void) // 0x8004BB10
     GsFCALL4.tg4[GsDivMODE_NDIV][GsLMODE_FOG] = GsTMDfastTG4LFG;
 }
 
-void Gfx_ItemScreens_CameraSet(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3) // 0x8004BB4C
+void ItemScreen_CamSet(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* vec, s32 arg3) // 0x8004BB4C
 {
     view->vr.vz = 10;
     view->vp.vx = 0;
@@ -48,7 +56,7 @@ void Gfx_ItemScreens_CameraSet(VbRVIEW* view, GsCOORDINATE2* coord, SVECTOR3* ve
 
     coord->param = &D_800C3928;
 
-    Gfx_Items_ItemRotate((SVECTOR*)vec, coord);
+    ItemScreen_ItemRotate((SVECTOR*)vec, coord);
     vbSetRefView(view);
 }
 
@@ -61,11 +69,11 @@ void func_8004BBF4(VbRVIEW* arg0, GsCOORDINATE2* arg1, SVECTOR* arg2) // 0x8004B
     vx  = arg2->vx;
     arg2->vx = 0;
 
-    Gfx_Items_ItemRotate(arg2, arg1);
+    ItemScreen_ItemRotate(arg2, arg1);
 
     arg2->vx = vx;
 
-    Gfx_Items_ItemRotate(arg2, arg1);
+    ItemScreen_ItemRotate(arg2, arg1);
 
     sVec.vx = 0;
     sVec.vy = 0;
@@ -80,7 +88,7 @@ void GameFs_TmdDataAlloc(s32* buf) // 0x8004BCBC
     GsMapModelingData((unsigned long*)&buf[1]);
 }
 
-void Gfx_Items_ItemRotate(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
+void ItemScreen_ItemRotate(SVECTOR* arg0, GsCOORDINATE2* arg1) // 0x8004BCDC
 {
     MATRIX mat;
 

@@ -26,12 +26,12 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
         return 0;
     }
 
-    if (g_GameWork.gameState_594 == GameState_SaveScreen && g_GameWork.gameStateStep_598[0] == 4)
+    if (g_GameWork.gameState_594 == GameState_LoadSavegameScreen && g_GameWork.gameStateStep_598[0] == 4)
     {
         return 0;
     }
 
-    if (g_GameWork.gameState_594 == GameState_Unk10 && (g_GameWork.gameStateStep_598[0] == 2 || g_GameWork.gameStateStep_598[0] == 3))
+    if (g_GameWork.gameState_594 == GameState_SaveScreen && (g_GameWork.gameStateStep_598[0] == 2 || g_GameWork.gameStateStep_598[0] == 3))
     {
         return 0;
     }

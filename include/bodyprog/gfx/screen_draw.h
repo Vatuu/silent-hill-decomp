@@ -6,6 +6,14 @@
  * to the screen display system (not from PSY-Q SDK).
  */
 
+// ==========
+// CONSTANTS
+// ==========
+
+// ==============
+// HELPER MACROS
+// ==============
+
 // ========
 // GLOBALS
 // ========
@@ -13,6 +21,24 @@
 extern q19_12 g_PrevScreenFadeProgress;
 
 extern q19_12 g_ScreenFadeTimestep;
+
+// ====================
+// GLOBALS (BSS; Hack)
+// ====================
+// For matching the order of the BSS segment it is required to declare
+// each variable as an extern in a determined order.
+// This is done on the meanwhile we found a way to replicate `common`
+// segment behaviour.
+
+extern s32      g_VBlanks;
+extern s32      g_UncappedVBlanks;
+extern s32      pad_bss_800B5C3C;
+extern GsOT_TAG g_OtTags0[2][16];
+extern q19_12   g_DeltaTime0;
+extern GsOT_TAG g_OtTags1[2][ORDERING_TABLE_SIZE];
+extern s32      pad_bss_800B9CC4;
+extern q19_12   g_DeltaTime2;
+extern s32      g_MainLoop_FrameCount; // 0x800B9CCC
 
 // ==========
 // FUNCTIONS

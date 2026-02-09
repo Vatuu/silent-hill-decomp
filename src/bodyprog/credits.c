@@ -1,7 +1,7 @@
 #include "game.h"
 
 #include "bodyprog/bodyprog.h"
-#include "bodyprog/credits.h"
+#include "bodyprog/ranking.h"
 #include "bodyprog/gfx/text_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"

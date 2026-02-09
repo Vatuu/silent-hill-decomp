@@ -25,7 +25,7 @@ void sharedFunc_800D0110_7_s00(void)
                     if (g_GameWork.gameState_594 != GameState_InventoryScreen || g_GameWork.gameStateStep_598[1] != 0x19)
                     {
                         flags = 0xFE;
-                        if (g_GameWork.gameStatePrev_590 != GameState_Unk10)
+                        if (g_GameWork.gameStatePrev_590 != GameState_SaveScreen)
                         {
                             var_s2 = 0xF0000;
                         }
@@ -42,7 +42,7 @@ void sharedFunc_800D0110_7_s00(void)
                     }
                     break;
 
-                case GameState_Unk10:
+                case GameState_SaveScreen:
                     switch (g_Screen_FadeStatus)
                     {
                         default:
