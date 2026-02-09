@@ -107,10 +107,10 @@ echo "Creating or overwriting permuter/$FUNCTION_NAME/target.s file from $ASM_FU
 } > permuter/$FUNCTION_NAME/target.s
 
 echo "Preprocessing the C function $C_FUNCTION and saving to permuter/$FUNCTION_NAME/base.c"
-gcc -E -P -Iinclude -Iinclude/psyq -DPERMUTER $C_FUNCTION > permuter/$FUNCTION_NAME/base.c
+gcc -E -P -Iinclude -Iinclude/decomp -Iinclude/psyq -DPERMUTER $C_FUNCTION > permuter/$FUNCTION_NAME/base.c
 
 echo "Assembling the ASM function permuter/$FUNCTION_NAME/target.o"
-mips-linux-gnu-as -EL -Iinclude -Iinclude/psyq -I build -O2 -march=r3000 -mtune=r3000 -no-pad-sections $G_OPTION -o permuter/$FUNCTION_NAME/target.o permuter/$FUNCTION_NAME/target.s
+mips-linux-gnu-as -EL -Iinclude -Iinclude/decomp -Iinclude/psyq -I build -O2 -march=r3000 -mtune=r3000 -no-pad-sections $G_OPTION -o permuter/$FUNCTION_NAME/target.o permuter/$FUNCTION_NAME/target.s
 
 # Run decomp-permuter if the --run flag is set
 if [ "$RUN" = true ]; then

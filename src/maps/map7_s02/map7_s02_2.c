@@ -2866,7 +2866,136 @@ void func_800E2DEC(void) // 0x800E2DEC
     }
 }
 
-INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800E32E0);
+void func_800E32E0(void) // 0x800E32E0
+{
+    s32 i;
+    s32 j;
+    s32 temp;
+    s16 cursorX;
+
+    switch (g_SysWork.sysStateStep_C[0])
+    {
+        case 0:
+            Player_ControlFreeze();
+            SysWork_StateStepIncrementAfterFade(0, true, 0, Q12(0.0f), false);
+
+            sharedData_800E2CAC_7_s01 = 0;
+            sharedData_800E2CA8_7_s01 = 0;
+
+            for (i = 0; i < ARRAY_SIZE(D_800EA4AC); i++)
+            {
+                D_800EA4AC[i] = 26;
+            }
+
+            SysWork_StateStepIncrement(0);
+
+        case 1:
+            func_800862F8(7, FILE_TIM_ALERTDOR_TIM, false);
+            break;
+
+        case 2:
+            SysWork_StateStepIncrementAfterFade(1, true, 0, Q12(0.0f), false);
+            break;
+
+        case 3:
+            SysWork_StateStepIncrementAfterFade(2, false, false, false, false);
+            func_800862F8(2, 0, false);
+            break;
+
+        case 4:
+            func_800862F8(2, 0, false);
+
+            sharedData_800E2CA8_7_s01 += (g_Controller0->sticks_24.sticks_0.leftX * 16384) / 75;
+            sharedData_800E2CA8_7_s01  = CLAMP_RANGE(sharedData_800E2CA8_7_s01, Q12(-120.0f), Q12(120.0f));
+
+            sharedData_800E2CAC_7_s01 += (g_Controller0->sticks_24.sticks_0.leftY * 16384) / 75;
+            sharedData_800E2CAC_7_s01  = CLAMP_RANGE(sharedData_800E2CAC_7_s01, Q12(-120.0f), Q12(120.0f));
+
+            Game_TimerUpdate();
+
+            cursorX = FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT) + 8;
+            Gfx_CursorDraw(cursorX, FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT) + 8, 8, 8, 0, 64, 32, 32, 128, 192, 0, 12);
+
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
+            {
+                SysWork_StateStepSet(0, 8);
+                break;
+            }
+
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
+            {
+                for (i = 0; i < ARRAY_SIZE(D_800E9DE8); i++)
+                {
+                    if (D_800E9DE8[i][0] - 174 > FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT) ||
+                        D_800E9DE8[i][0] - 146 < FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT) ||
+                        D_800E9DE8[i][1] - 134 > FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT) ||
+                        D_800E9DE8[i][1] - 106 < FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT))
+                    {
+                        continue;
+                    }
+
+                    temp = D_800E9DE8[i][0] - 160 - FP_FROM(sharedData_800E2CA8_7_s01, Q12_SHIFT);
+                    j    = SQUARE(temp);
+                    temp = SQUARE(D_800E9DE8[i][1] - 120 - FP_FROM(sharedData_800E2CAC_7_s01, Q12_SHIFT));
+
+                    if (j + temp >= 197)
+                    {
+                        continue;
+                    }
+
+                    SD_Call(Sfx_Unk1650);
+
+                    for (j = 0; j < (ARRAY_SIZE(D_800EA4AC) - 1); j++)
+                    {
+                        D_800EA4AC[j] = D_800EA4AC[j + 1];
+                    }
+
+                    D_800EA4AC[4] = i;
+
+                    for (j = 0; j < ARRAY_SIZE(D_800EA4AC); j++)
+                    {
+                        if (D_800EA4AC[j] != D_800E9E1C[j])
+                        {
+                            break;
+                        }
+                    }
+
+                    if (j == ARRAY_SIZE(D_800EA4AC))
+                    {
+                        Savegame_EventFlagSet(EventFlag_488);
+
+                        SysWork_StateStepSet(0, 5);
+                    }
+                }
+            }
+            break;
+
+        case 5:
+            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
+            func_800862F8(2, 0, false);
+            break;
+
+        case 6:
+            SD_Call(Sfx_Unk1343);
+            SysWork_StateStepIncrement(0);
+
+        case 7:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementDelayed(Q12(0.6f), false);
+            break;
+
+        case 8:
+            func_800862F8(2, 0, false);
+            SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
+            break;
+
+        default:
+            Player_ControlUnfreeze(false);
+            SysWork_StateSetNext(SysState_Gameplay);
+            SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
+            break;
+    }
+}
 
 void Map_WorldObjectsInit(void) // 0x800E3804
 {
@@ -3008,7 +3137,35 @@ void Map_WorldObjectsInit(void) // 0x800E3804
 
 INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800E4528);
 
-INCLUDE_ASM("maps/map7_s02/nonmatchings/map7_s02_2", func_800E5628);
+void func_800E5628(void) // 0x800E5628
+{
+    if (D_800A9945 != 7 || !func_80040B74(Chara_Stalker))
+    {
+        Anim_CharaTypeAnimInfoClear();
+        Chara_Load(0, 7, g_SysWork.npcCoords_FC0, -1, NULL, NULL);
+        Chara_ProcessLoads();
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_M7S02_PickupKeyOfAratron))
+    {
+        func_80088FF4(Chara_Stalker, 3, 3);
+
+        if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+        {
+            func_80088FF4(Chara_Stalker, 0xA, 0xB);
+            func_80088FF4(Chara_Stalker, 0xA, 3);
+        }
+    }
+
+    if (Savegame_EventFlagGet(EventFlag_549))
+    {
+        Savegame_EventFlagClear(EventFlag_420);
+    }
+    else
+    {
+        Savegame_EventFlagSet(EventFlag_420);
+    }
+}
 
 INCLUDE_RODATA("maps/map7_s02/nonmatchings/map7_s02_2", D_800CDC4C);
 

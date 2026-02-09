@@ -132,6 +132,12 @@ extern s_WorldObjectDesc      g_WorldObject_Diary;
 extern s_WorldObjectDescNoRot g_WorldObject_Kubomi;
 extern s_WorldObjectModel        g_CommonWorldObjects[6];
 
+extern u8 D_800E9DE8[26][2];
+extern u8 D_800EA4AC[5];
+extern u8 D_800E9E1C[5];
+
+extern s8 D_800A9945;
+
 void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void Ai_GhostDoctor_AnimUpdate(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
