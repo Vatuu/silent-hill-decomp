@@ -43,7 +43,9 @@ options:
   undefined_funcs_auto_path: linkers/USA/undefined_funcs_auto.bodyprog.txt
   undefined_syms_auto_path: linkers/USA/undefined_syms_auto.bodyprog.txt
 
-  extensions_path: tools/splat_ext
+  ld_sections_allowlist:
+    - .scommon
+    - COMMON
 
   subalign: 4
 
@@ -393,99 +395,48 @@ segments:
       
       # .bss section
       - [0x8DAB0, data, bodyprog_800B2610] # Unknown data.
-      - { start: 0x8DAB8, type: c, name: memcard/memcard, linker_section: COMMON }
-      - { start: 0x8DAB8, type: c, name: memcard/memcard, linker_section: .scommon }
       - [0x8DAB8, .bss, memcard/memcard]
-      - { start: 0x910C0, type: c, name: screen/text_draw_debug, linker_section: COMMON }
-      - { start: 0x910C0, type: c, name: screen/text_draw_debug, linker_section: .scommon }
       - [0x910C0, .bss, screen/text_draw_debug]
-      - { start: 0x910C8, type: c, name: screen/screen_draw, linker_section: COMMON }
-      - { start: 0x910C8, type: c, name: screen/screen_draw, linker_section: .scommon }
       - [0x910C8, .bss, screen/screen_draw]
       - [0x910CC,  pad] # Garbage.
-      - { start: 0x910D0, type: c, name: screen/screen_fade, linker_section: COMMON }
-      - { start: 0x910D0, type: c, name: screen/screen_fade, linker_section: .scommon }
       - [0x910D0, .bss, screen/screen_fade]
-      - { start: 0x910D4, type: c, name: screen/screen_data, linker_section: COMMON }
-      - { start: 0x910D4, type: c, name: screen/screen_data, linker_section: .scommon }
       - [0x910D4, .bss, screen/screen_data]
       - [0x95170,  bss]
-      - { start: 0x95460, type: c, name: globals, linker_section: COMMON }
       - [0x95460, .bss, globals]
       - [0x981A0,  bss]
       - [0x981B4,  pad] # Garbage.
       - [0x981B8,  bss] # memcard related
-      - { start: 0x981CC, type: c, name: memcard/memcard_2, linker_section: COMMON }
-      - { start: 0x981CC, type: c, name: memcard/memcard_2, linker_section: .scommon }
       - [0x981CC, .bss, memcard/memcard_2]
       - [0x981E0,  pad] # Garbage.
       - [0x981E8,  bss]
       - [0x981EC,  pad] # Garbage.
-      - { start: 0x981F0, type: c, name: background_sound_2, linker_section: COMMON }
-      - { start: 0x981F0, type: c, name: background_sound_2, linker_section: .scommon }
       - [0x981F0, .bss, background_sound_2]
-      - { start: 0x98200, type: c, name: mapmsg_display, linker_section: COMMON }
-      - { start: 0x98200, type: c, name: mapmsg_display, linker_section: .scommon }
       - [0x98200, .bss, mapmsg_display]
       - [0x9821C,  pad] # Garbage.
-      - { start: 0x98220, type: c, name: bodyprog_80037154, linker_section: COMMON }
-      - { start: 0x98220, type: c, name: bodyprog_80037154, linker_section: .scommon }
       - [0x98220, .bss, bodyprog_80037154]
       - [0x9827C,  pad] # Garbage.
-      - { start: 0x98280, type: c, name: title, linker_section: COMMON }
-      - { start: 0x98280, type: c, name: title, linker_section: .scommon }
       - [0x98280, .bss, title]
       - [0x98284,  pad] # Garbage.
-      - { start: 0x98288, type: c, name: bodyprog_8003E5E8, linker_section: COMMON }
-      - { start: 0x98288, type: c, name: bodyprog_8003E5E8, linker_section: .scommon }
       - [0x98288, .bss, bodyprog_8003E5E8]
       - [0x98298,  bss]
       - [0x9B08C,  pad] # Garbage.
-      - { start: 0x9B090, type: c, name: bodyprog_80040A64, linker_section: COMMON }
-      - { start: 0x9B090, type: c, name: bodyprog_80040A64, linker_section: .scommon }
       - [0x9B090, .bss, bodyprog_80040A64]
       - [0x9CA4C,  pad] # Garbage.
-      - { start: 0x9CA50, type: c, name: bodyprog_anim_800445A4, linker_section: COMMON }
-      - { start: 0x9CA50, type: c, name: bodyprog_anim_800445A4, linker_section: .scommon }
       - [0x9CA50, .bss, bodyprog_anim_800445A4]
       - [0x9CA54,  pad] # Garbage.
-      - { start: 0x9CA58, type: c, name: sound/sd_call, linker_section: COMMON }
-      - { start: 0x9CA58, type: c, name: sound/sd_call, linker_section: .scommon }
       - [0x9CA58, .bss, sound/sd_call]
-      - { start: 0x9EC68, type: c, name: sound/sd_snd, linker_section: COMMON }
-      - { start: 0x9EC68, type: c, name: sound/sd_snd, linker_section: .scommon }
       - [0x9EC68, .bss, sound/sd_snd]
-      - { start: 0x9EC7C, type: c, name: sound/bodyprog_800485D8, linker_section: COMMON }
-      - { start: 0x9EC7C, type: c, name: sound/bodyprog_800485D8, linker_section: .scommon }
       - [0x9EC7C, .bss, sound/bodyprog_800485D8]
-      - { start: 0x9EC80, type: c, name: view/vw_main, linker_section: COMMON }
-      - { start: 0x9EC80, type: c, name: view/vw_main, linker_section: .scommon }
       - [0x9EC80, .bss, view/vw_main]
-      - { start: 0x9ED08, type: c, name: view/vw_calc, linker_section: COMMON }
-      - { start: 0x9ED08, type: c, name: view/vw_calc, linker_section: .scommon }
       - [0x9ED08, .bss, view/vw_calc]
-      - { start: 0x9ED48, type: c, name: screen/text_draw, linker_section: COMMON }
-      - { start: 0x9ED48, type: c, name: screen/text_draw, linker_section: .scommon }
       - [0x9ED48, .bss, screen/text_draw]
-      - { start: 0x9EDC0, type: c, name: bodyprog_80036E48, linker_section: COMMON }
-      - { start: 0x9EDC0, type: c, name: bodyprog_80036E48, linker_section: .scommon }
       - [0x9EDC0, .bss, bodyprog_80036E48]
-      - { start: 0x9EDC8, type: c, name: items/item_screens_cam, linker_section: COMMON }
-      - { start: 0x9EDC8, type: c, name: items/item_screens_cam, linker_section: .scommon }
       - [0x9EDC8, .bss, items/item_screens_cam]
-      - { start: 0x9EE00, type: c, name: items/item_screens_1, linker_section: COMMON }
-      - { start: 0x9EE00, type: c, name: items/item_screens_1, linker_section: .scommon }
       - [0x9EE00, .bss, items/item_screens_1]
-      - { start: 0x9EE08, type: c, name: items/item_screens_2, linker_section: COMMON }
-      - { start: 0x9EE08, type: c, name: items/item_screens_2, linker_section: .scommon }
       - [0x9EE08, .bss, items/item_screens_2]
-      - { start: 0x9EE48, type: c, name: items/item_screens_3, linker_section: COMMON }
-      - { start: 0x9EE48, type: c, name: items/item_screens_3, linker_section: .scommon }
       - [0x9EE48, .bss, items/item_screens_3]
       - [0x9F608,  bss, worldgfx]
       - [0x9F75C,  pad] # Garbage.
-      - { start: 0x9F760, type: c, name: 3d_audio, linker_section: COMMON }
-      - { start: 0x9F760, type: c, name: 3d_audio, linker_section: .scommon }
       - [0x9F760, .bss, 3d_audio]
       - [0x9F770,  bss, bodyprog_800706E4_1]
       - [0x9F774,  pad] # Garbage.
@@ -497,23 +448,11 @@ segments:
       - [0x9FABC,  pad] # Garbage.
       - [0x9FAC0,  bss, bodyprog_800706E4_2]
       - [0x9FACC,  pad] # Garbage.
-      - { start: 0x9FAD0, type: c, name: view/vc_main, linker_section: COMMON }
-      - { start: 0x9FAD0, type: c, name: view/vc_main, linker_section: .scommon }
       - [0x9FAD0, .bss, view/vc_main]
-      - { start: 0x9FAE0, type: c, name: bodyprog_80085D78, linker_section: COMMON }
-      - { start: 0x9FAE0, type: c, name: bodyprog_80085D78, linker_section: .scommon }
       - [0x9FAE0, .bss, bodyprog_80085D78]
-      - { start: 0x9FBC8, type: c, name: bodyprog_combat_8008A058, linker_section: COMMON }
-      - { start: 0x9FBC8, type: c, name: bodyprog_combat_8008A058, linker_section: .scommon }
       - [0x9FBC8, .bss, bodyprog_combat_8008A058]
-      #- { start: 0x9FCB8, type: c, name: water, linker_section: COMMON }
-      #- { start: 0x9FCB8, type: c, name: water, linker_section: .scommon }
       - [0x9FCB8, .bss, water]
-      - { start: 0x9FCE0, type: c, name: demo, linker_section: COMMON }
-      - { start: 0x9FCE0, type: c, name: demo, linker_section: .scommon }
       - [0x9FCE0, .bss, demo]
-      - { start: 0x9FD40, type: c, name: ranking, linker_section: COMMON }
-      - { start: 0x9FD40, type: c, name: ranking, linker_section: .scommon }
       - [0x9FD40, .bss, ranking]
       - [0x9FD89,  pad] # Garbage.
       - [0x9FD8D, .bss, credits_init] # Hack - For some reason garbage data begins just after a struct definition that grabs 9 bytes and in case of properly defining the file position this causes missalignment issues.
@@ -543,16 +482,10 @@ segments:
       - [0xA2630, lib, libpad, padcmd, .bss]
       - [0xA2640, lib, libpad, padportd, .bss]
       - [0xA28B0,  bss] # waitrc2.o
-      - { start: 0xA28B8, type: c, name: libsd/smf_snd, linker_section: COMMON }
-      - { start: 0xA28B8, type: c, name: libsd/smf_snd, linker_section: .scommon }
       - [0xA28B8, .bss, libsd/smf_snd]
       - [0xA2B88,  pad]
-      - { start: 0xA2B90, type: c, name: libsd/smf_io, linker_section: COMMON }
-      - { start: 0xA2B90, type: c, name: libsd/smf_io, linker_section: .scommon }
       - [0xA2B90, .bss, libsd/smf_io]
       - [0xA3F9C,  pad]  # Garbage.
-      - { start: 0xA3FA0, type: c, name: libsd/smf_mid, linker_section: COMMON }
-      - { start: 0xA3FA0, type: c, name: libsd/smf_mid, linker_section: .scommon }
       - [0xA3FA0, .bss, libsd/smf_mid]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.

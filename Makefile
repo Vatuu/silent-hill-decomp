@@ -20,10 +20,7 @@ SKIP_ASM       ?= 0
 # supported is specially in the way MASPSX handle data order in a different way
 # to how the actual `COMMON` segment handles data order. It is required to have
 # the segment supported in the linker script, even though, Splat don't have
-# natively support to it, it can be tricked to handle it, see:
-# `https://github.com/ethteck/splat/wiki/Segments#linker_section`
-# However, this currently breaks generation of rodata files required for
-# `INCLUDE_RODATA` macros so this has to be left as an option for the moment.
+# natively support to it.
 USE_COMMON     ?= 0
 
 # Names and Paths

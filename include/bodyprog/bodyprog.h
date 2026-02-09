@@ -4637,7 +4637,7 @@ void GameState_MapEvent_Update(void);
 void GameState_ExitMovie_Update(void);
 void GameState_ItemScreens_Update(void);
 void GameState_MapScreen_Update(void);
-void GameState_SaveScreen_Update(void);
+void GameState_LoadSavegameScreen_Update(void);
 void GameState_DebugMoviePlayer_Update(void);
 void GameState_Options_Update(void);
 void GameState_LoadMapScreen_Update(void);
