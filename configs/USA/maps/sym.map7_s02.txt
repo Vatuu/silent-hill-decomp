@@ -284,6 +284,7 @@ sharedData_800E1574_7_s01           = 0x800E9D94;
 sharedData_800E1578_7_s01           = 0x800E9D98;
 sharedData_800D4CD4_3_s01           = 0x800E9DD0;
 sharedData_800CB088_3_s01           = 0x800E9DDC;
+g_CommonWorldObjectPoses            = 0x800E9E24; // type:WorldObjectPose size:0xA0
 g_ParticleMapOverlayId0             = 0x800E9EC4;
 g_ParticleMapOverlayId1             = 0x800E9EC8; // type:s32
 D_800E9ED4                          = 0x800E9ED4; // size:1

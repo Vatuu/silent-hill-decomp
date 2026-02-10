@@ -87,7 +87,7 @@ extern s_WorldObjectDesc      g_WorldObject_Beans[16];
 extern s16                    D_800EB9F4[16];
 extern s16                    D_800EBA14[16];
 extern s_WorldObjectDesc      g_WorldObject_Dor[4];
-extern s8                     D_800EBAF4;
+extern u8                     D_800EBAF4;
 extern s_WorldObjectDesc      g_WorldObject_Bed3;
 extern s_WorldObjectDescNoRot g_WorldObject_Cover;
 extern s_WorldObjectDesc      D_800EBB64;
@@ -131,12 +131,22 @@ extern s_WorldObjectPose      g_WorldObject_UnkPose1;
 extern s_WorldObjectDesc      g_WorldObject_Diary;
 extern s_WorldObjectDescNoRot g_WorldObject_Kubomi;
 extern s_WorldObjectModel        g_CommonWorldObjects[6];
+extern s_WorldObjectPose         g_CommonWorldObjectPoses[8];
 
 extern u8 D_800E9DE8[26][2];
 extern u8 D_800EA4AC[5];
 extern u8 D_800E9E1C[5];
 
 extern s8 D_800A9945;
+
+extern VECTOR3       D_800EA484;
+extern s16           D_800E9EDC;
+extern GsCOORDINATE2 D_800E9EE4;
+extern RECT          D_800E9D1C;
+extern u16           D_800E9D30;
+extern RECT          D_800E9D0C[];
+extern u16           D_800E9D24[];
+extern u16           D_800E9D2C;
 
 void Ai_GhostDoctor_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
