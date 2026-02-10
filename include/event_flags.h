@@ -391,13 +391,15 @@ typedef enum _EventFlag
     EventFlag_418 = 418,
     EventFlag_419 = 419,
     EventFlag_420 = 420,
-    
+
     EventFlag_423 = 423,
     EventFlag_424 = 424,
     EventFlag_425 = 425,
     EventFlag_426 = 426,
     EventFlag_427 = 427,
     EventFlag_428 = 428,
+    EventFlag_429 = 429,
+    EventFlag_430 = 430,
 
     EventFlag_431             = 431,
     EventFlag_432             = 432,

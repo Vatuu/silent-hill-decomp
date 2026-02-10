@@ -214,6 +214,14 @@ struct _Model;
      ((g_SysWork.playerWork_4C.player_0.position_18.comp >  Q12(0.0f) && (__chunkIdx + (x0)) != (x1)) || \
       (g_SysWork.playerWork_4C.player_0.position_18.comp <= Q12(0.0f) && (__chunkIdx + (x2)) != (x3))))
 
+#define MAP_CHUNK_CHECK_VARIABLE_DECL2() \
+    s32 __chunkIdx2
+
+#define PLAYER_IN_MAP_CHUNK2(comp, x0, x1, x2, x3)                                                      \
+    (__chunkIdx2 = g_SysWork.playerWork_4C.player_0.position_18.comp / Q12(40.0f),                      \
+     ((g_SysWork.playerWork_4C.player_0.position_18.comp > Q12(0.0f) && (__chunkIdx2 + (x0)) < (x1)) || \
+      (g_SysWork.playerWork_4C.player_0.position_18.comp <= Q12(0.0f) && (__chunkIdx2 + (x2)) < (x3))))
+
 #define PLAYER_NEAR_POS(comp, base, tol)                                                                                                                   \
     (((g_SysWork.playerWork_4C.player_0.position_18.comp - Q12(base)) >= Q12(0.0f)) ? ((g_SysWork.playerWork_4C.player_0.position_18.comp - Q12(base)) < Q12(tol)) : \
                                                                                  ((Q12(base) - g_SysWork.playerWork_4C.player_0.position_18.comp) < Q12(tol)))

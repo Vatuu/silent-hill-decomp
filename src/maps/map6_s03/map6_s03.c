@@ -350,10 +350,184 @@ void func_800D8818(void) // 0x800D8818
     WorldObject_ModelNameSet(&g_CommonWorldObjects[5], D_800A99E4.rifleShellsName_1C);
 }
 
-INCLUDE_ASM("maps/map6_s03/nonmatchings/map6_s03", func_800D89A0);
+static const SVECTOR3 D_800CB258 = { 0, 0, 0 };
+static const VECTOR3  D_800CB260 = { Q12(-41.6f), Q12(0.0f), Q12(20.0f) };
+
+void func_800D89A0(void) // 0x800D89A0
+{
+    s32  temp_s0_2;
+    s32  var_v0_2;
+    s32  temp_s0;
+    s16* ptr;
+    s32  flags;
+    s32  temp_a0;
+    s32  i;
+
+    MAP_CHUNK_CHECK_VARIABLE_DECL();
+    MAP_CHUNK_CHECK_VARIABLE_DECL2();
+
+    if (!Savegame_EventFlagGet(EventFlag_429) && Savegame_EventFlagGet(EventFlag_432))
+    {
+        Savegame_EventFlagSet(EventFlag_429);
+        func_8003A16C();
+    }
+    func_80069844(0xFFFF);
+
+    if (PLAYER_IN_MAP_CHUNK2(vx, 1, 0, -1, 0))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_430) && Savegame_EventFlagGet(EventFlag_435))
+        {
+            func_8005DC1C(0x64E, &g_WorldObjectPos0, 0x80, 0);
+            Savegame_EventFlagSet(EventFlag_430);
+
+            for (i = 0; i < 6; i++)
+            {
+                if (g_SysWork.npcs_1A0[i].model_0.charaId_0 && g_SysWork.npcs_1A0[i].position_18.vz < 0x24800)
+                {
+                    g_SysWork.npcs_1A0[i].model_0.charaId_0 = 0;
+                    Savegame_EnemyStateUpdate(&g_SysWork.npcs_1A0[i]);
+                }
+            }
+        }
+
+        temp_s0 = (g_SavegamePtr->eventFlags_168[13] >> 0x13) & 1;
+        WorldGfx_ObjectAdd(&g_WorldObject0[temp_s0], &g_WorldObjectPos0, &D_800CB258);
+        if (temp_s0 != 0)
+        {
+            flags = 0xC;
+        }
+        else
+        {
+            flags = 2;
+        }
+        func_8006982C(flags);
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        temp_a0 = (Rng_Rand16() & 0x1F) + 0x20;
+        if (D_800DFEF4 > 0 && D_800DFEF0 > 0 && temp_a0 < D_800DFEF0)
+        {
+            D_800DFEF4 = -(Rng_Rand16() & 1) - 1;
+        }
+        else if (D_800DFEF4 < 0 && D_800DFEF0 < 0 && temp_a0 < -D_800DFEF0)
+        {
+            D_800DFEF4 = (Rng_Rand16() & 1) + 1;
+        }
+        else if (!D_800DFEF4 || !(Rng_Rand16() & 0x1F))
+        {
+            D_800DFEF4 = (Rng_Rand16() % 5) - 2;
+        }
+
+        ptr       = &D_800DFEF0;
+        temp_s0_2 = D_800DFEF0;
+        if ((Rng_Rand16() & 0xFF) < (ABS(D_800DFEF4) << 6) + 0x40)
+        {
+            if (D_800DFEF4 <= 0)
+            {
+                var_v0_2 = temp_s0_2 - 1;
+            }
+            else
+            {
+                var_v0_2 = temp_s0_2 + 1;
+            }
+        }
+        else
+        {
+            var_v0_2 = temp_s0_2;
+        }
+        *ptr = var_v0_2;
+
+        g_WorldObject1.rotation_28.vy = D_800DFEF0 + 0x800;
+        temp_a0                       = (Rng_Rand16() & 0x1F) + 0x10;
+        if (D_800DFEF5 > 0 && temp_a0 < (D_800DFEF2 + ABS(D_800DFEF0 >> 1)))
+        {
+            D_800DFEF5 = -(Rng_Rand16() & 1) - 1;
+        }
+        else if (D_800DFEF5 == 0 || !(Rng_Rand16() & 0x3F))
+        {
+            D_800DFEF5 = (Rng_Rand16() % 5) - 2;
+        }
+
+        ptr       = &D_800DFEF2;
+        temp_s0_2 = D_800DFEF2;
+        temp_a0   = Rng_Rand16() & 0xFF;
+
+        if (temp_a0 < (ABS(D_800DFEF5) << 6) + 0x60)
+        {
+            if (D_800DFEF5 <= 0)
+            {
+                var_v0_2 = temp_s0_2 - 1;
+            }
+            else
+            {
+                var_v0_2 = temp_s0_2 + 1;
+            }
+        }
+        else
+        {
+            var_v0_2 = temp_s0_2;
+        }
+        *ptr = var_v0_2;
+
+        D_800DFEF2                    = MAX(0, D_800DFEF2);
+        g_WorldObject1.position_1C.vz = D_800DFEF2 + 0x13B33;
+        WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 1, -1, 0, 0) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M6S03_PickupMap))
+        {
+            WorldGfx_ObjectAdd(&g_WorldObject2.object_0, &g_WorldObject2.position_1C, &D_800CB258);
+        }
+    }
+
+    if (!Savegame_EventFlagGet(EventFlag_439) && g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(48.0f))
+    {
+        if (!Vw_AabbVisibleInScreenCheck(0x28, 0x2C, -2, 0, 0x12, 0x16))
+        {
+            Savegame_EventFlagSet(EventFlag_439);
+
+            for (i = 0; i < 6; i++)
+            {
+                if (g_SysWork.npcs_1A0[i].position_18.vx < Q12(32.0f) && g_SysWork.npcs_1A0[i].model_0.charaId_0)
+                {
+                    func_80088F94(&g_SysWork.npcs_1A0[i], 0, 0);
+                }
+            }
+
+            Chara_Spawn(Chara_HangedScratcher, 9, 0x2A333, 0x14E66, 0x400, 6U);
+            func_80088FF4(Chara_HangedScratcher, 9, 6);
+            Chara_Spawn(Chara_HangedScratcher, 0xA, 0x29199, 0x13000, 0x400, 6U);
+            func_80088FF4(Chara_HangedScratcher, 0xA, 6);
+            func_8005DC1C(0x631, &D_800CB260, 0xFF, 2);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M6S03_HealthDrink0))
+        {
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M6S03_HandgunBullets))
+        {
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[1].position_0, &g_CommonWorldObjectPoses[1].rotation_C);
+        }
+    }
+
+    if (PLAYER_IN_MAP_CHUNK(vx, 0, 0, -1, 1) && PLAYER_IN_MAP_CHUNK(vz, 1, 2, -1, 2))
+    {
+        if (!Savegame_EventFlagGet(EventFlag_M6S03_HealthDrink1))
+        {
+            WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[2].position_0, &g_CommonWorldObjectPoses[2].rotation_C);
+        }
+    }
+}
 
 void func_800D936C(void) {}
-
-INCLUDE_RODATA("maps/map6_s03/nonmatchings/map6_s03", D_800CB258);
-
-INCLUDE_RODATA("maps/map6_s03/nonmatchings/map6_s03", D_800CB260);
