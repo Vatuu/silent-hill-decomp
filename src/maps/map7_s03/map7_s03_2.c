@@ -315,7 +315,40 @@ void func_800D88D8(void) // 0x800D88D8
     D_800F3D8C = 1;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D88E8);
+s_800F3D48_0* func_800D88E8(s_800F3D48* arg0) // 0x800D88E8
+{
+    s_800F3D48_0* next;
+    s_800F3D48_0* curPtr;
+    s32           field8Value;
+
+    curPtr      = arg0->ptr_0;
+    field8Value = curPtr->field_8;
+
+    if (field8Value == 1)
+    {
+        curPtr = curPtr->next_4;
+        next   = curPtr->next_4;
+    }
+    else
+    {
+        next = curPtr->next_4;
+    }
+
+    if (arg0->field_4.field_0 <= 0)
+    {
+        if (field8Value != 2 && g_DeltaTime0 != Q12(0.0f))
+        {
+            arg0->ptr_0           = &curPtr[1];
+            arg0->field_4.field_0 = curPtr[1].field_0;
+        }
+    }
+    else
+    {
+        arg0->field_4.field_0--;
+    }
+
+    return next;
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8954);
 
@@ -479,7 +512,17 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBAE8);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBBA0);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBBD8);
+void func_800DBBD8(MATRIX* mat) // 0x800DBBD8
+{
+    MATRIX        sp10;
+    s_D_800F48A8* base;
+
+    base = &D_800F48A8;
+
+    CompMatrix(&base->mat_8, mat, &sp10);
+    SetRotMatrix(&sp10);
+    SetTransMatrix(&sp10);
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBC18);
 
@@ -970,7 +1013,21 @@ void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEA54
     incubus->properties_E4.player.positionY_EC |= 1 << 2;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DEA90);
+q19_12 func_800DEA90(void) // 0x800DEA90
+{
+    q19_12 result;
+
+    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+    {
+        result = Q12(2.0f);
+    }
+    else
+    {
+        result = Q12(5.0f);
+    }
+
+    return result + Rng_GenerateInt(0, Q12(2.0f) - 1);
+}
 
 void func_800DEAF4(s_SubCharacter* incubus) // 0x800DEAF4
 {

@@ -68,10 +68,18 @@ typedef struct
 } s_800F3D48_4;
 STATIC_ASSERT_SIZEOF(s_800F3D48_4, 0x4C);
 
+typedef struct _800F3D48_0
+{
+    s32                 field_0;
+    struct _800F3D48_0* next_4;
+    s32                 field_8; // Some kind of enum? 0 / 1 / 2
+} s_800F3D48_0;
+STATIC_ASSERT_SIZEOF(s_800F3D48_0, 0xC);
+
 typedef struct
 {
-    u8           unk_0[4];
-    s_800F3D48_4 field_4;
+    s_800F3D48_0* ptr_0;
+    s_800F3D48_4  field_4;
 } s_800F3D48;
 STATIC_ASSERT_SIZEOF(s_800F3D48, 0x50);
 
@@ -306,6 +314,8 @@ void func_800D88CC(void);
 
 void func_800D88D8(void);
 
+s_800F3D48_0* func_800D88E8(s_800F3D48* arg0);
+
 s_800F3D48* func_800D905C(void);
 
 void func_800D9114(s_800F3D48* arg0);
@@ -376,12 +386,17 @@ s32 func_800DDBA4(s32 idx);
 
 void func_800DBABC(void);
 
+void func_800DBBD8(MATRIX* mat);
+
 void func_800DDBBC(s_SubCharacter* incubus);
 
 void func_800DDDB0(s_SubCharacter* incubus);
 void func_800DDEEC(s_SubCharacter* incubus);
 void func_800DDF14(s_SubCharacter* incubus);
 void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* coords);
+
+q19_12 func_800DEA90(void);
+
 void func_800DEAF4(s_SubCharacter* incubus);
 void func_800DEC38(s_SubCharacter* incubus);
 void func_800DEC74(s_SubCharacter* incubus, GsCOORDINATE2* coord);
