@@ -267,7 +267,7 @@ void func_800D13D8(void) // 0x800D13D8
 
         case 11:
             Chara_FsImageCalc(&charaTex, Chara_Dahlia, 2);
-            Chara_Load(1, Chara_Dahlia, &g_SysWork.npcCoords_FC0[30], 0, LM_BUFFER2, &charaTex);
+            Chara_Load(1, Chara_Dahlia, &g_SysWork.npcCoords_FC0[30], 0, LM_BUFFER_2, &charaTex);
             SysWork_StateStepIncrement(0);
 
         case 12:

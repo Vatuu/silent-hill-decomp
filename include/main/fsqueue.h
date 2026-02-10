@@ -33,7 +33,7 @@
 #define FS_BUFFER_20     (void*)0x80185600 // }
 #define GLOBAL_LM_BUFFER (s_LmHeader*)0x8016B600
 #define IPD_BUFFER       (s_IpdHeader*)0x80175600 // Used by map.
-#define LM_BUFFER2       (s_LmHeader*)0x8019E600
+#define LM_BUFFER_2      (s_LmHeader*)0x8019E600
 #define FS_BUFFER_3      (void*)0x801B2600
 #define FS_BUFFER_8      (void*)0x801B5E80        // Used for loading inventory item models.
 #define FS_BUFFER_7      (void*)0x801C2600        // Used in `b_konami.c`.

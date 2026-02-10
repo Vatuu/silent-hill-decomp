@@ -358,48 +358,51 @@ void func_800D89A0(void) // 0x800D89A0
     s32  temp_s0_2;
     s32  var_v0_2;
     s32  temp_s0;
-    s16* ptr;
     s32  flags;
     s32  temp_a0;
     s32  i;
+    s16* ptr;
 
     MAP_CHUNK_CHECK_VARIABLE_DECL();
-    MAP_CHUNK_CHECK_VARIABLE_DECL2();
+    MAP_CHUNK_CHECK_VARIABLE_DECL_2();
 
     if (!Savegame_EventFlagGet(EventFlag_429) && Savegame_EventFlagGet(EventFlag_432))
     {
         Savegame_EventFlagSet(EventFlag_429);
         func_8003A16C();
     }
+
     func_80069844(0xFFFF);
 
-    if (PLAYER_IN_MAP_CHUNK2(vx, 1, 0, -1, 0))
+    if (PLAYER_IN_MAP_CHUNK_2(vx, 1, 0, -1, 0))
     {
         if (!Savegame_EventFlagGet(EventFlag_430) && Savegame_EventFlagGet(EventFlag_435))
         {
-            func_8005DC1C(0x64E, &g_WorldObjectPos0, 0x80, 0);
+            func_8005DC1C(Sfx_Unk1614, &g_WorldObjectPos0, Q8(0.5f), 0);
             Savegame_EventFlagSet(EventFlag_430);
 
             for (i = 0; i < 6; i++)
             {
-                if (g_SysWork.npcs_1A0[i].model_0.charaId_0 && g_SysWork.npcs_1A0[i].position_18.vz < 0x24800)
+                if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None &&
+                    g_SysWork.npcs_1A0[i].position_18.vz < Q12(36.5f))
                 {
-                    g_SysWork.npcs_1A0[i].model_0.charaId_0 = 0;
+                    g_SysWork.npcs_1A0[i].model_0.charaId_0 = Chara_None;
                     Savegame_EnemyStateUpdate(&g_SysWork.npcs_1A0[i]);
                 }
             }
         }
 
-        temp_s0 = (g_SavegamePtr->eventFlags_168[13] >> 0x13) & 1;
+        temp_s0 = (g_SavegamePtr->eventFlags_168[13] >> 19) & 0x1;
         WorldGfx_ObjectAdd(&g_WorldObject0[temp_s0], &g_WorldObjectPos0, &D_800CB258);
         if (temp_s0 != 0)
         {
-            flags = 0xC;
+            flags = (1 << 2) | (1 << 3);
         }
         else
         {
-            flags = 2;
+            flags = 1 << 1;
         }
+
         func_8006982C(flags);
     }
 
@@ -408,11 +411,11 @@ void func_800D89A0(void) // 0x800D89A0
         temp_a0 = (Rng_Rand16() & 0x1F) + 0x20;
         if (D_800DFEF4 > 0 && D_800DFEF0 > 0 && temp_a0 < D_800DFEF0)
         {
-            D_800DFEF4 = -(Rng_Rand16() & 1) - 1;
+            D_800DFEF4 = -(Rng_Rand16() & 0x1) - 1;
         }
         else if (D_800DFEF4 < 0 && D_800DFEF0 < 0 && temp_a0 < -D_800DFEF0)
         {
-            D_800DFEF4 = (Rng_Rand16() & 1) + 1;
+            D_800DFEF4 = (Rng_Rand16() & 0x1) + 1;
         }
         else if (!D_800DFEF4 || !(Rng_Rand16() & 0x1F))
         {
@@ -421,7 +424,7 @@ void func_800D89A0(void) // 0x800D89A0
 
         ptr       = &D_800DFEF0;
         temp_s0_2 = D_800DFEF0;
-        if ((Rng_Rand16() & 0xFF) < (ABS(D_800DFEF4) << 6) + 0x40)
+        if ((Rng_Rand16() & 0xFF) < ((ABS(D_800DFEF4) << 6) + 0x40))
         {
             if (D_800DFEF4 <= 0)
             {
@@ -442,7 +445,7 @@ void func_800D89A0(void) // 0x800D89A0
         temp_a0                       = (Rng_Rand16() & 0x1F) + 0x10;
         if (D_800DFEF5 > 0 && temp_a0 < (D_800DFEF2 + ABS(D_800DFEF0 >> 1)))
         {
-            D_800DFEF5 = -(Rng_Rand16() & 1) - 1;
+            D_800DFEF5 = -(Rng_Rand16() & 0x1) - 1;
         }
         else if (D_800DFEF5 == 0 || !(Rng_Rand16() & 0x3F))
         {
@@ -453,7 +456,7 @@ void func_800D89A0(void) // 0x800D89A0
         temp_s0_2 = D_800DFEF2;
         temp_a0   = Rng_Rand16() & 0xFF;
 
-        if (temp_a0 < (ABS(D_800DFEF5) << 6) + 0x60)
+        if (temp_a0 < ((ABS(D_800DFEF5) << 6) + 0x60))
         {
             if (D_800DFEF5 <= 0)
             {
@@ -471,7 +474,7 @@ void func_800D89A0(void) // 0x800D89A0
         *ptr = var_v0_2;
 
         D_800DFEF2                    = MAX(0, D_800DFEF2);
-        g_WorldObject1.position_1C.vz = D_800DFEF2 + 0x13B33;
+        g_WorldObject1.position_1C.vz = D_800DFEF2 + Q12(19.7f);
         WorldGfx_ObjectAdd(&g_WorldObject1.object_0, &g_WorldObject1.position_1C, &g_WorldObject1.rotation_28);
     }
 
@@ -485,23 +488,24 @@ void func_800D89A0(void) // 0x800D89A0
 
     if (!Savegame_EventFlagGet(EventFlag_439) && g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(48.0f))
     {
-        if (!Vw_AabbVisibleInScreenCheck(0x28, 0x2C, -2, 0, 0x12, 0x16))
+        if (!Vw_AabbVisibleInScreenCheck(40, 44, -2, 0, 18, 22))
         {
             Savegame_EventFlagSet(EventFlag_439);
 
-            for (i = 0; i < 6; i++)
+            for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
             {
-                if (g_SysWork.npcs_1A0[i].position_18.vx < Q12(32.0f) && g_SysWork.npcs_1A0[i].model_0.charaId_0)
+                if (g_SysWork.npcs_1A0[i].position_18.vx < Q12(32.0f) &&
+                    g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None)
                 {
                     func_80088F94(&g_SysWork.npcs_1A0[i], 0, 0);
                 }
             }
 
-            Chara_Spawn(Chara_HangedScratcher, 9, 0x2A333, 0x14E66, 0x400, 6U);
+            Chara_Spawn(Chara_HangedScratcher, 9, Q12(42.2f), Q12(20.9), FP_ANGLE(90.0f), 6u);
             func_80088FF4(Chara_HangedScratcher, 9, 6);
-            Chara_Spawn(Chara_HangedScratcher, 0xA, 0x29199, 0x13000, 0x400, 6U);
-            func_80088FF4(Chara_HangedScratcher, 0xA, 6);
-            func_8005DC1C(0x631, &D_800CB260, 0xFF, 2);
+            Chara_Spawn(Chara_HangedScratcher, 10, Q12(41.1f), Q12(19.0f), FP_ANGLE(90.0f), 6u);
+            func_80088FF4(Chara_HangedScratcher, 10, 6);
+            func_8005DC1C(Sfx_Unk1585, &D_800CB260, Q8_CLAMPED(1.0f), 2);
         }
     }
 
