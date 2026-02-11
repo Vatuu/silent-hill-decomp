@@ -66,24 +66,16 @@ void func_800CED74(s_SubCharacter* chara, bool arg1) // 0x800CED74
     {
         cond = false;
 
-        sp10.vx = Q12(-19.05f);
-        sp10.vy = Q12(1.41f);
-        sp10.vz = Q12(-18.46f);
-        sp20.vx = Q12(-19.85f);
-        sp20.vy = Q12(3.46f);
-        sp20.vz = Q12(-21.8f);
+        Math_Vector3Set(&sp10, Q12(-19.05f), Q12(1.41f), Q12(-18.46f));
+        Math_Vector3Set(&sp20, Q12(-19.85f), Q12(3.46f), Q12(-21.8f));
     }
     else
     {
         cond   = true;
         height = MAX(chara->position_18.vy - Q12(3.56f), Q12(-9.65f));
 
-        sp10.vx = Q12(-20.0f);
-        sp10.vy = height;
-        sp10.vz = Q12(-20.01f);
-        sp20.vx = Q12(-20.0f);
-        sp20.vy = height + Q12(2.0f);
-        sp20.vz = Q12(-19.99f);
+        Math_Vector3Set(&sp10, Q12(-20.0f), height, Q12(-20.01f));
+        Math_Vector3Set(&sp20, Q12(-20.0f), height + Q12(2.0f), Q12(-19.99f));
     }
 
     // TODO: These `VC_PRS_F_VIEW_F`/`VC_OLD_PRS_F_VIEW_F` checks have showed up a few times now.
