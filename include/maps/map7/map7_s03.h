@@ -93,7 +93,8 @@ typedef struct
     s32    field_14;
     s32    field_18;
     s32    field_1C;
-    u8     unk_20[8];
+    s32    field_20;
+    u8     unk_24[4];
     s32    field_28[29];
     u8     unk_9C[4];
     s32    field_A0[29];
