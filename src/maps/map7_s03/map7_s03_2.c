@@ -561,7 +561,25 @@ void func_800DC3EC(s_800F3DAC* arg0) // 0x800DC3EC
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DC49C);
+void func_800DC49C(s_800F3DAC* arg0) // 0x800DC49C
+{
+    VECTOR3 vec;
+    MATRIX* mat;
+    bool    cond;
+    
+    cond = D_800F48A8.field_48 != 0;
+
+    if (arg0->field_4F4 == 0)
+    {
+        if (arg0->field_18 == arg0->field_20)
+        {
+            mat = &arg0->mat_118[arg0->field_18 - 1];
+            Math_Vector3Set(&vec, Q8_TO_Q12(mat->t[0]) + D_800F48A8.positionX_0, Q8_TO_Q12(mat->t[1]), Q8_TO_Q12(mat->t[2]) + D_800F48A8.positionZ_4);
+            func_800DAC04(&vec, 0, cond);
+            arg0->field_4F4++;
+        }
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DC544);
 
