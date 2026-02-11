@@ -530,7 +530,36 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBCA4);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBD94);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DC3EC);
+void func_800DC3EC(s_800F3DAC* arg0) // 0x800DC3EC
+{
+    s32 maxVal;
+    s32 field20Val;
+    s32 field1CVal;
+
+    // TODO: Might be using some kind of `CLAMP` in this func, couldn't get match with our macros though.
+    maxVal = arg0->field_18;
+
+    field20Val = ((arg0->field_C - arg0->field_8) * 30) / (arg0->field_C / 2);
+    // TODO: `field20Val = MIN(maxVal, field20Val)`?
+    if (field20Val >= maxVal)
+    {
+        field20Val = maxVal;
+    }
+    arg0->field_20 = field20Val;
+
+    if (arg0->field_8 < (arg0->field_C / 2))
+    {
+        field1CVal = (((arg0->field_C / 2) - arg0->field_8) * 30) / (arg0->field_C / 2);
+        // TODO: `field1CVal = MIN(maxVal, field1CVal)`?
+        if (field1CVal >= maxVal)
+        {
+            field1CVal = maxVal;
+        }
+
+        field1CVal     = MAX(0, field1CVal);
+        arg0->field_1C = field1CVal;
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DC49C);
 

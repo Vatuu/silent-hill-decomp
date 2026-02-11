@@ -342,6 +342,12 @@ void func_800DB288(void);
 
 void func_800DB608(void);
 
+void func_800DBABC(void);
+
+void func_800DBBD8(MATRIX* mat);
+
+void func_800DC3EC(s_800F3DAC* arg0);
+
 // Returns `bool`?
 s32 func_800DC6DC(s32*, s32*, VECTOR3*, s_800F3DAC*);
 
@@ -383,10 +389,6 @@ void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DDB68(s_SubCharacter* chara, s32 soundIdx);
 
 s32 func_800DDBA4(s32 idx);
-
-void func_800DBABC(void);
-
-void func_800DBBD8(MATRIX* mat);
 
 void func_800DDBBC(s_SubCharacter* incubus);
 
