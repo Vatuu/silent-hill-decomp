@@ -3768,7 +3768,57 @@ void func_800E74C4(void) // 0x800E74C4
     GsOUT_PACKET_P = tpage;
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E75B8);
+void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800E75B8
+{
+#define CLAMP_CUSTOM(a, b, min, max, x) \
+    ((((a) - ((b) - (max))) >= (max) || ((a) - ((b) - (max))) >= (min)) ? (((a) - ((b) - (max))) < (max) ? ((a) - ((b) + (x))) : (max)) : (min))
+
+    s32 max;
+    s32 var_s0;
+    int new_var;
+
+    var_s0 = Sound_StereoBalanceGet(arg1);
+
+    if (arg4 == 2)
+    {
+        var_s0 = 0;
+    }
+    else if (arg4 == 1)
+    {
+        var_s0 = var_s0 >> 1;
+
+        if (D_800ED841 < var_s0)
+        {
+            D_800ED841 = CLAMP_HIGH(var_s0, Q12_MULT_PRECISE(g_DeltaTime0, 0xC0) + D_800ED841);
+        }
+
+        if (var_s0 < D_800ED841)
+        {
+            D_800ED841 = MAX(var_s0, D_800ED841 - Q12_MULT_PRECISE(g_DeltaTime0, 0xC0));
+        }
+        var_s0 = D_800ED841;
+    }
+
+    D_800ED841 = var_s0;
+
+    if (arg2 == 0)
+    {
+        arg2 = 0x80;
+    }
+
+    if (arg4 != 0)
+    {
+        arg2 = arg2 >> 1;
+    }
+
+    max     = 0xFF;
+    new_var = 1;
+
+    Sd_SfxAttributesUpdate(arg0, var_s0, CLAMP_CUSTOM(
+        arg2 * Math_Vector3MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - arg1->vx, 
+            g_SysWork.playerWork_4C.player_0.position_18.vy - arg1->vy, 
+            g_SysWork.playerWork_4C.player_0.position_18.vz - arg1->vz) / arg3, arg2, 0, max, new_var), 0);
+}
 
 void func_800E7944(u32 arg0) // 0x800E7944
 {
