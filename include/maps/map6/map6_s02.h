@@ -23,6 +23,8 @@ extern VECTOR3 D_800D3B78[];
 
 extern u16 D_800D3C2C[];
 
+extern s32 D_800D3C84;
+
 extern u8 D_800D3C88;
 
 /** Timer. */
@@ -68,6 +70,9 @@ extern RECT D_800CAB98;
 extern u8 D_800D3C74[8];
 
 extern s_FsImageDesc D_800D3B44[5];
+
+// TODO: Check callers, `chara` might always be player instead.
+void func_800CED74(s_SubCharacter* chara, bool arg1);
 
 void func_800CF0B8(void);
 

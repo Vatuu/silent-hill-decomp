@@ -46,7 +46,90 @@ INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800CE88C);
 
 void func_800CED6C(void) {}
 
-INCLUDE_ASM("maps/map6_s02/nonmatchings/map6_s02_2", func_800CED74);
+void func_800CED74(s_SubCharacter* chara, bool arg1) // 0x800CED74
+{
+    VECTOR3 sp10;
+    VECTOR3 sp20;
+    bool    cond;
+    q19_12  height;
+    bool    vcPrsFViewFlag;
+    bool    vcPrsFViewFlag2;
+    bool    vcOldPrsFViewFlag;
+    bool    warp;
+
+    if (arg1)
+    {
+        D_800D3C84 = NO_VALUE;
+    }
+
+    if (chara->position_18.vy > Q12(3.2f))
+    {
+        cond = false;
+
+        sp10.vx = Q12(-19.05f);
+        sp10.vy = Q12(1.41f);
+        sp10.vz = Q12(-18.46f);
+        sp20.vx = Q12(-19.85f);
+        sp20.vy = Q12(3.46f);
+        sp20.vz = Q12(-21.8f);
+    }
+    else
+    {
+        cond   = true;
+        height = MAX(chara->position_18.vy - Q12(3.56f), Q12(-9.65f));
+
+        sp10.vx = Q12(-20.0f);
+        sp10.vy = height;
+        sp10.vz = Q12(-20.01f);
+        sp20.vx = Q12(-20.0f);
+        sp20.vy = height + Q12(2.0f);
+        sp20.vz = Q12(-19.99f);
+    }
+
+    // TODO: These `VC_PRS_F_VIEW_F`/`VC_OLD_PRS_F_VIEW_F` checks have showed up a few times now.
+    // With the same odd XOR pattern, and `VC_PRS_F_VIEW_F` check followed by `VC_OLD_PRS_F_VIEW_F`.
+    // Inlines have been seen to change condition checks into XOR before, but no luck making an inline for this check yet though.
+    vcPrsFViewFlag = (vcWork.flags_8 & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
+    if (((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
+         (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && vcPrsFViewFlag)) &&
+        (g_GameWorkConst->config_0.optExtraViewMode_29 != 0))
+    {
+        vcPrsFViewFlag2 = (vcWork.flags_8 & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
+
+        if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcPrsFViewFlag2 ^ 1) != 0) ||
+            (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && vcPrsFViewFlag2))
+        {
+            vcOldPrsFViewFlag = (vcWork.flags_8 & VC_OLD_PRS_F_VIEW_F) == VC_OLD_PRS_F_VIEW_F;
+
+            if ((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcOldPrsFViewFlag ^ 1) == 0) ||
+                (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && !vcOldPrsFViewFlag))
+            {
+                vcReturnPreAutoCamWork(true);
+            }
+            else
+            {
+                vcReturnPreAutoCamWork(false);
+            }
+        }
+        else
+        {
+            vcReturnPreAutoCamWork(false);
+        }
+    }
+    else
+    {
+        warp = (cond != D_800D3C84);
+        vcUserCamTarget(&sp10, NULL, warp);
+        vcUserWatchTarget(&sp20, NULL, warp);
+
+        if (warp)
+        {
+            vcExecCamera();
+        }
+    }
+
+    D_800D3C84 = cond;
+}
 
 #include "maps/shared/MapEvent_DoorJammed.h" // 0x800CEF88
 
@@ -1078,7 +1161,7 @@ void func_800D1AE4(void) // 0x800D1AE4
         if (D_800D4E6E == 0)
         {
             Game_TurnFlashlightOn();
-            func_800CED74(&g_SysWork.playerWork_4C.player_0, 1);
+            func_800CED74(&g_SysWork.playerWork_4C.player_0, true);
 
             D_800D4E6E = 1;
         }
@@ -1096,7 +1179,7 @@ void func_800D1AE4(void) // 0x800D1AE4
                            g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(20.0f));
         }
 
-        func_800CED74(&g_SysWork.playerWork_4C.player_0, 0);
+        func_800CED74(&g_SysWork.playerWork_4C.player_0, false);
 
         temp_s2 = angle + FP_ANGLE(70.0f);
 
