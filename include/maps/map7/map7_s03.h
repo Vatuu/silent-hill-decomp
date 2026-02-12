@@ -383,6 +383,8 @@ void func_800DBABC(void);
 
 void func_800DBBD8(MATRIX* mat);
 
+bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec);
+
 void func_800DC3EC(s_800F3DAC* arg0);
 
 void func_800DC49C(s_800F3DAC* arg0);

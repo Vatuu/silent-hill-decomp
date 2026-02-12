@@ -900,7 +900,37 @@ void func_800DBBD8(MATRIX* mat) // 0x800DBBD8
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBC18);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBCA4);
+bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec) // 0x800DBCA4
+{
+    s_D_800F48A8* ptr;
+    MATRIX        torsoMat;
+    s32           deltaX;
+    s32           deltaY;
+    s32           deltaZ;
+    s32           sqrX;
+    s32           sqrY;
+    s32           sqrZ;
+
+    ptr = &D_800F48A8;
+
+    Vw_CoordHierarchyMatrixCompute(&g_SysWork.playerBoneCoords_890[HarryBone_Torso], &torsoMat);
+    deltaX = torsoMat.t[0] - Q12_TO_Q8(ptr->positionX_0);
+    deltaY = torsoMat.t[1];
+    deltaZ = torsoMat.t[2] - Q12_TO_Q8(ptr->positionZ_4);
+
+    sqrX = Q12_TO_Q8(SQUARE(deltaX - mat->t[0]));
+    sqrY = Q12_TO_Q8(SQUARE(deltaY - mat->t[1]));
+    sqrZ = Q12_TO_Q8(SQUARE(deltaZ - mat->t[2]));
+
+    if (sqrX + sqrZ + sqrY <= Q8(SQUARE(2.398f))) // TODO: Odd number, might be different Q format?
+    {
+        outVec->vx = Q8_TO_Q12(deltaX) + D_800F48A8.positionX_0;
+        outVec->vy = Q8_TO_Q12(deltaY);
+        outVec->vz = Q8_TO_Q12(deltaZ) + D_800F48A8.positionZ_4;
+        return true;
+    }
+    return false;
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBD94);
 
