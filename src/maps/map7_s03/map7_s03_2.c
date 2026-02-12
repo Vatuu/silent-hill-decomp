@@ -85,32 +85,390 @@ void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOO
     func_800705E4(coords, 7, temp_s0, temp_s0, temp_s0);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D5D24);
+void func_800D5D24(void) // 0x800D5D24
+{
+    s32  i;
+    s32* ptr;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D5D48);
+    ptr = D_800F2418;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D5E78);
+    for (i = 5; i >= 0; i--)
+    {
+        *ptr++ = 0;
+    }
+}
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D5EC0);
+s32 func_800D5D48(void) // 0x800D5D48
+{
+    s32  var_s0;
+    s32  i;
+    s32* ptr0;
+    s32* ptr1;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D600C);
+    ptr1   = NULL;
+    var_s0 = 0;
+    ptr0   = D_800F2418;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D60E4);
+    for (i = 0; i < 6; i++, ptr0++)
+    {
+        if (*ptr0 <= 0)
+        {
+            ptr1 = ptr0;
+        }
+        else if (D_800EB008 < *ptr0)
+        {
+            var_s0    += 2;
+            D_800EB008 = (Rng_Rand16() / 21) + 0xCCC;
+        }
+        else if (D_800EB00C < *ptr0)
+        {
+            var_s0    += 1;
+            D_800EB00C = (Rng_Rand16() / 41) + 0x666;
+        }
+    }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D621C);
+    if (var_s0 < 2 && ptr1 != NULL)
+    {
+        *ptr1 = 0x2000;
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D625C);
+void func_800D5E78(void) // 0x800D5E78
+{
+    s32  i;
+    s32* ptr;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6548);
+    ptr = D_800F2418;
+
+    for (i = 0; i < 6; i++, ptr++)
+    {
+        if (*ptr > 0)
+        {
+            *ptr -= g_DeltaTime0;
+        }
+    }
+}
+
+void func_800D5EC0(void) // 0x800D5EC0
+{
+    s32                  temp_s0;
+    s32                  temp_s2;
+    s32                  temp_v0;
+    s32                  temp_v0_4;
+    s32                  i;
+    s_func_800D5EC0_A60* var_s4;
+    s_func_800D5EC0*     ptr;
+    s64                  temp;
+
+    ptr = FS_BUFFER_1;
+
+    var_s4 = ptr->field_A60;
+
+    for (i = 0; i < 20; i++, var_s4++)
+    {
+        var_s4->field_34 = 0;
+
+        var_s4->field_0.vx = 0;
+        var_s4->field_0.vy = 0;
+        var_s4->field_0.vz = 0;
+
+        var_s4->field_30 = 0xFF;
+
+        temp_v0 = Rng_Rand16();
+        temp_s2 = Math_Sin(temp_v0);
+        temp_s0 = Math_Cos(temp_v0);
+
+        temp_v0_4 = Q12_MULT_PRECISE((Rng_Rand16() % 0x1000) + 0x800, 0x6000);
+
+        var_s4->field_20.vx = Q12_MULT_PRECISE(temp_s0, temp_v0_4);
+        var_s4->field_20.vy = Q12_MULT_PRECISE(temp_s2, temp_v0_4);
+
+        temp                = -0x1998;
+        var_s4->field_20.vz = temp;
+    }
+}
+
+void func_800D600C(s32 x, s32 y, s32 val) // 0x800D600C
+{
+    s32              offsetX;
+    s32              offsetY;
+    s16              row;
+    s16              col;
+    s_func_800D5EC0* ptr;
+    u8*              buf;
+
+    ptr = FS_BUFFER_1;
+
+    offsetX = ptr->field_A50 & 0xFFFF;
+    offsetY = ptr->field_A50 >> 16;
+
+    col = (x + 82) - offsetX;
+    row = (y + 122) - offsetY;
+
+    col += (col > 0) ? 2 : -2;
+    col /= 4;
+
+    row += (row > 0) ? 2 : -2;
+    row /= 4;
+
+    if (col > 0 && col < 41 && row > 0 && row < 61)
+    {
+        buf  = ptr->field_5D + (col + (41 * row));
+        *buf = val;
+    }
+}
+
+void func_800D60E4(void) // 0x800D60E4
+{
+    SVECTOR              sp10;
+    DVECTOR              sp18[2];
+    s32                  sp20;
+    s32                  i;
+    s_func_800D5EC0_A60* ptr;
+    s_func_800D5EC0*     base;
+
+    base = (s_func_800D5EC0*)FS_BUFFER_1;
+    ptr  = base->field_A60;
+
+    for (i = 0; i < 20; i++, ptr++)
+    {
+        if (ptr->field_34 < 0)
+        {
+            sp10.vx = Q12_TO_Q4(ptr->field_0.vx);
+            sp10.vy = Q12_TO_Q4(ptr->field_0.vy);
+            sp10.vz = Q12_TO_Q4(ptr->field_0.vz);
+
+            RotTransPers(&sp10, &sp18[0], &sp18[1], &sp20);
+            func_800D600C(sp18[0].vx, sp18[0].vy, ptr->field_30);
+
+            ptr->field_0.vx  += ptr->field_20.vx;
+            ptr->field_0.vy  += ptr->field_20.vy;
+            ptr->field_0.vz  += ptr->field_20.vz;
+            ptr->field_20.vz -= 0x199;
+
+            ptr->field_20.vz = MAX(ptr->field_20.vz, -0x1000);
+            ptr->field_30   -= 20;
+            ptr->field_30    = MAX(ptr->field_30, 0);
+        }
+        else
+        {
+            ptr->field_34 -= g_DeltaTime0;
+        }
+    }
+}
+
+s32 func_800D621C(s32 arg0, s32 arg1) // 0x800D621C
+{
+    s_func_800D5EC0* buf;
+
+    buf = (s_func_800D5EC0*)FS_BUFFER_1;
+
+    return D_800EB010[buf->field_5D[(arg1 * 41) + arg0]];
+}
+
+void func_800D625C(void) // 0x800D625C
+{
+    u32              sp18;
+    s_func_800D5EC0* ptr;
+    GsOT_TAG*        ot;
+    s32              x;
+    s32              y;
+    s32              col0;
+    s32              col2;
+    s32              col3;
+    s32              i;
+    s32              j;
+    s32              col1;
+    POLY_G4*         poly;
+    DR_MODE*         mode;
+    PACKET*          packet;
+    s32              col;
+    s32              idx;
+    int              code;
+
+    ptr = (s_func_800D5EC0*)FS_BUFFER_1;
+
+    packet = GsOUT_PACKET_P;
+    poly   = packet;
+
+    x = (ptr->field_A50 & 0xFFFF) - 82;
+    y = ((u32)ptr->field_A50 >> 16) - 122;
+
+    idx = g_ActiveBufferIdx;
+    ot  = g_OrderingTable0[idx].org;
+    ot  = &ot[ptr->field_A54 >> 1];
+
+    col  = 0x3A000000;
+    code = 0x3A;
+
+    for (i = 1; i < 61; i++)
+    {
+        col1 = func_800D621C(0, i - 1);
+        col3 = func_800D621C(0, i);
+
+        for (j = 1; j < 41; j++)
+        {
+            sp18 = ptr->field_5D[(i * 41) + j];
+
+            col0 = col1;
+            col2 = col3;
+            col1 = func_800D621C(j, i - 1);
+
+            col3 = func_800D621C(j, i);
+
+            if (col == col0 &&
+                col0 == col1 &&
+                col0 == col2 &&
+                col2 == col3)
+            {
+                continue;
+            }
+
+            if ((j + i) & 0x1)
+            {
+                poly->x0 = x + (j * 4);
+                poly->y0 = y + (i * 4);
+                poly->x1 = (x + (j * 4)) + 4;
+                poly->y1 = y + (i * 4);
+                poly->x2 = x + (j * 4);
+                poly->y2 = (y + (i * 4)) + 4;
+                poly->x3 = (x + (j * 4)) + 4;
+                poly->y3 = (y + (i * 4)) + 4;
+
+                *(s32*)&poly->r0 = col0;
+                *(s32*)&poly->r1 = col1;
+                *(s32*)&poly->r2 = col2;
+                *(s32*)&poly->r3 = col3;
+            }
+            else
+            {
+                poly->x1 = x + (j * 4);
+                poly->y1 = y + (i * 4);
+                poly->x0 = (x + (j * 4)) + 4;
+                poly->y0 = y + (i * 4);
+                poly->x3 = x + (j * 4);
+                poly->y3 = (y + (i * 4)) + 4;
+                poly->x2 = (x + (j * 4)) + 4;
+                poly->y2 = (y + (i * 4)) + 4;
+
+                *(s32*)&poly->r0 = col1;
+                *(s32*)&poly->r1 = col0;
+                *(s32*)&poly->r2 = col3;
+                *(s32*)&poly->r3 = col2;
+            }
+
+            setPolyG4(poly);
+            poly->code = (float)sp18; // @hack
+            poly->code = code;
+
+            addPrim(ot, poly);
+            poly++;
+        }
+    }
+
+    packet = poly;
+    mode   = packet;
+
+    SetDrawMode(mode, 0, 1, 0x2A, NULL);
+    addPrim(ot, mode);
+    packet         = mode + 1;
+    GsOUT_PACKET_P = packet;
+}
+
+void func_800D6548(void) // 0x800D6548
+{
+    s32              i;
+    s32              j;
+    s32              val;
+    s_func_800D5EC0* buf;
+    u8*              tab;
+
+    buf = FS_BUFFER_1;
+
+    for (i = 0; i < 61; i++)
+    {
+        tab = &buf->field_5D[i * 41];
+
+        for (j = 0; j < 41; j++)
+        {
+            val = tab[j - 41];
+
+            if (j == 0)
+            {
+                val = 0;
+            }
+            else
+            {
+                val += tab[j - 1];
+            }
+
+            if (j == 40)
+            {
+                val = 0;
+            }
+            else
+            {
+                val = val + tab[j + 1];
+            }
+
+            val  += tab[j + 41];
+            val >>= 2;
+            val  -= 1;
+
+            if (val <= 0)
+            {
+                tab[j] = 0;
+            }
+            else
+            {
+                tab[j] = val;
+            }
+
+            if (!Rng_GenerateUInt(0, 4095)) // 1 in 4096 chance.
+            {
+                tab[j] = 0;
+            }
+        }
+    }
+}
 
 void func_800D663C(void) // 0x800D663C
 {
-    memset(FS_BUFFER_1 + 0x34, 0, 0x29);
-    memset(FS_BUFFER_1 + 0x5D, 0, 0x9C5);
-    memset(FS_BUFFER_1 + 0xA22, 0, 0x29);
+    s_func_800D5EC0* buf = FS_BUFFER_1;
+    memset(buf->field_34, 0, sizeof(buf->field_34));
+    memset(buf->field_5D, 0, sizeof(buf->field_5D));
+    memset(buf->field_A22, 0, sizeof(buf->field_A22));
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6690);
+void func_800D6690(VECTOR* arg0, q19_12 rotY) // 0x800D6690
+{
+    MATRIX  mat;
+    VECTOR  sp30;
+    SVECTOR rot; // Q3.12
+
+    SetRotMatrix(&GsWSMATRIX);
+    SetTransMatrix(&GsWSMATRIX);
+    ApplyRotMatrixLV(arg0, &sp30);
+
+    sp30.vx += GsWSMATRIX.t[0];
+    sp30.vy += GsWSMATRIX.t[1];
+    sp30.vz += GsWSMATRIX.t[2];
+
+    TransMatrix(&mat, &sp30);
+    SetTransMatrix(&mat);
+
+    rot.vx = FP_ANGLE(0.0f);
+    rot.vy = rotY;
+    rot.vz = FP_ANGLE(0.0f);
+
+    Math_RotMatrixZxyNeg(&rot, &mat);
+    SetMulRotMatrix(&mat);
+}
 
 s32 func_800D6750(s32* sxy) // 0x800D6750
 {
@@ -123,7 +481,23 @@ s32 func_800D6750(s32* sxy) // 0x800D6750
     return RotTransPers(&sp10, sxy, &sp18, &sp18);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6788);
+void func_800D6788(void) // 0x800D6788
+{
+    s_func_800D5EC0* buf = FS_BUFFER_1;
+
+    if (buf->field_A5C > 0)
+    {
+        buf->field_A5C -= g_DeltaTime0;
+        return;
+    }
+
+    func_800D6690(&buf->field_4, buf->field_A58);
+    buf->field_A54 = func_800D6750(&buf->field_A50);
+
+    func_800D60E4();
+    func_800D6548();
+    func_800D625C();
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D6804);
 
