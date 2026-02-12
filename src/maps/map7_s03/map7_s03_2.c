@@ -539,7 +539,7 @@ void func_800DC3EC(s_800F3DAC* arg0) // 0x800DC3EC
     // TODO: Might be using some kind of `CLAMP` in this func, couldn't get match with our macros though.
     maxVal = arg0->field_18;
 
-    field20Val = ((arg0->field_C - arg0->field_8) * 30) / (arg0->field_C / 2);
+    field20Val = ((arg0->field_C - arg0->timer_8) * 30) / (arg0->field_C / 2);
     // TODO: `field20Val = MIN(maxVal, field20Val)`?
     if (field20Val >= maxVal)
     {
@@ -547,9 +547,9 @@ void func_800DC3EC(s_800F3DAC* arg0) // 0x800DC3EC
     }
     arg0->field_20 = field20Val;
 
-    if (arg0->field_8 < (arg0->field_C / 2))
+    if (arg0->timer_8 < (arg0->field_C / 2))
     {
-        field1CVal = (((arg0->field_C / 2) - arg0->field_8) * 30) / (arg0->field_C / 2);
+        field1CVal = (((arg0->field_C / 2) - arg0->timer_8) * 30) / (arg0->field_C / 2);
         // TODO: `field1CVal = MIN(maxVal, field1CVal)`?
         if (field1CVal >= maxVal)
         {
@@ -581,7 +581,43 @@ void func_800DC49C(s_800F3DAC* arg0) // 0x800DC49C
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DC544);
+void func_800DC544(GsOT_TAG* ot) // 0x800DC544
+{
+    s_800F3DAC* ptr;
+    s32         i;
+
+    ptr = D_800F3DAC;
+
+    for (i = 0; i < 30; i++, ptr++)
+    {
+        if (ptr->field_0 == 0)
+        {
+            continue;
+        }
+
+        if (ptr->timer_8 > Q12(0.0f) || ptr->field_1C != ptr->field_18)
+        {
+            func_800DC3EC(ptr);
+
+            if (ptr->field_4F0)
+            {
+                ptr->field_4F0(ptr);
+            }
+
+            func_800DBD94(ptr, ot);
+            ptr->timer_8 -= g_DeltaTime0;
+        }
+        else
+        {
+            ptr->field_0 = 0;
+            func_800DD4CC(ptr);
+        }
+    }
+
+    D_800F3DB4 += g_DeltaTime0;
+
+    func_800DBBA0();
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DC650);
 
@@ -714,7 +750,7 @@ void func_800DD260(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD260
         ptr->field_4D8 = Q12(0.12f);
         ptr->field_4E4 = 4;
         ptr->field_C   = Q12(0.5f);
-        ptr->field_8   = Q12(0.5f);
+        ptr->timer_8   = Q12(0.5f);
         ptr->field_14  = Q12(0.125f);
 
         func_800DCDDC(ptr, arg0, arg1);
@@ -731,7 +767,7 @@ void func_800DD2C8(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD2C8
         ptr->field_4D8 = Q12(0.5f);
         ptr->field_4E4 = 4;
         ptr->field_C   = Q12(0.5f);
-        ptr->field_8   = Q12(0.5f);
+        ptr->timer_8   = Q12(0.5f);
         ptr->field_14  = Q12(0.125f);
 
         func_800DCDDC(ptr, arg0, arg1);

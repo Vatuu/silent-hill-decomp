@@ -83,11 +83,11 @@ typedef struct
 } s_800F3D48;
 STATIC_ASSERT_SIZEOF(s_800F3D48, 0x50);
 
-typedef struct
+typedef struct _800F3DAC
 {
     s32    field_0;
     u8     unk_4[4];
-    s32    field_8;
+    q19_12 timer_8;
     s32    field_C;
     s32    field_10;
     s32    field_14;
@@ -106,7 +106,7 @@ typedef struct
     s32    field_4E4;
     s32    field_4E8;
     u8     unk_4EC[4];
-    s32    field_4F0;
+    void   (*field_4F0)(struct _800F3DAC*);
     s32    field_4F4;
 } s_800F3DAC;
 STATIC_ASSERT_SIZEOF(s_800F3DAC, 0x4F8);
@@ -131,6 +131,8 @@ extern s32 D_800F2438; // Length of `D_800F3D48` array.
 extern s_800F3D48* D_800F3D48;
 
 extern s_800F3DAC* D_800F3DAC; // Pointer to `s_800F3DAC[30]`.
+
+extern q19_12 D_800F3DB4; // Timer.
 
 extern s_D_800F48A8 D_800F48A8;
 
@@ -350,6 +352,8 @@ void func_800DBBD8(MATRIX* mat);
 void func_800DC3EC(s_800F3DAC* arg0);
 
 void func_800DC49C(s_800F3DAC* arg0);
+
+void func_800DC544(GsOT_TAG* ot);
 
 // Returns `bool`?
 s32 func_800DC6DC(s32*, s32*, VECTOR3*, s_800F3DAC*);
