@@ -90,7 +90,7 @@ typedef struct _800F3DAC
     q19_12 timer_8;
     s32    field_C;
     s32    field_10;
-    s32    field_14;
+    s32    field_14; // Values seem like `FP_ANGLE`, but haven't confirmed how it's used yet.
     s32    field_18;
     s32    field_1C;
     s32    field_20;
@@ -101,7 +101,7 @@ typedef struct _800F3DAC
     u8     unk_114[4];
     MATRIX mat_118[29];
     u8     unk_4B8[32];
-    s32    field_4D8;
+    s32    rotZ_4D8; // Passed as `z` to `ApplyRotMatrix`.
     u8     unk_4DC[8];
     s32    field_4E4;
     s32    field_4E8;
@@ -466,6 +466,8 @@ void func_800DD260(VECTOR3* arg0, VECTOR3* arg1);
 void func_800DD2C8(VECTOR3* arg0, VECTOR3* arg1);
 
 void func_800DD3D4(void* arg0, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
+
+void func_800DD464(VECTOR3* arg0);
 
 void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s32 arg3);
 

@@ -1691,7 +1691,7 @@ void func_800DC49C(s_800F3DAC* arg0) // 0x800DC49C
     VECTOR3 vec;
     MATRIX* mat;
     bool    cond;
-    
+
     cond = D_800F48A8.field_48 != 0;
 
     if (arg0->field_4F4 == 0)
@@ -1804,7 +1804,7 @@ void func_800DCDDC(s_800F3DAC* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800DCDDC
 
         sp38.vx = 0;
         sp38.vy = 0;
-        sp38.vz = arg0->field_4D8;
+        sp38.vz = arg0->rotZ_4D8;
         ApplyRotMatrix(&sp38, &sp40);
 
         sp18.vx += sp40.vx;
@@ -1872,11 +1872,11 @@ void func_800DD260(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD260
     ptr = func_800DD090();
     if (ptr != NULL)
     {
-        ptr->field_4D8 = Q12(0.12f);
+        ptr->rotZ_4D8  = FP_ANGLE(43.2f);
         ptr->field_4E4 = 4;
         ptr->field_C   = Q12(0.5f);
         ptr->timer_8   = Q12(0.5f);
-        ptr->field_14  = Q12(0.125f);
+        ptr->field_14  = FP_ANGLE(45.0f);
 
         func_800DCDDC(ptr, arg0, arg1);
     }
@@ -1889,11 +1889,11 @@ void func_800DD2C8(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD2C8
     ptr = func_800DD090();
     if (ptr != NULL)
     {
-        ptr->field_4D8 = Q12(0.5f);
+        ptr->rotZ_4D8  = FP_ANGLE(180.0f);
         ptr->field_4E4 = 4;
         ptr->field_C   = Q12(0.5f);
         ptr->timer_8   = Q12(0.5f);
-        ptr->field_14  = Q12(0.125f);
+        ptr->field_14  = FP_ANGLE(45.0f);
 
         func_800DCDDC(ptr, arg0, arg1);
     }
@@ -1915,7 +1915,23 @@ void func_800DD3D4(void* arg0, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0
     func_800DD32C(arg0, &pos);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD464);
+void func_800DD464(VECTOR3* arg0) // 0x800DD464
+{
+    s_800F3DAC* ptr;
+
+    ptr = func_800DD090();
+    if (ptr != NULL)
+    {
+        ptr->field_4F0 = func_800DC49C;
+        ptr->rotZ_4D8  = FP_ANGLE(90.0f);
+        ptr->field_4E4 = 2;
+        ptr->field_C   = Q12(1.5f);
+        ptr->timer_8   = Q12(1.5f);
+        ptr->field_14  = FP_ANGLE(20.0f);
+
+        func_800DCDDC(ptr, arg0, arg0);
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD4CC);
 
