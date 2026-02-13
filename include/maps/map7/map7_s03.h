@@ -400,11 +400,11 @@ void func_800D7F2C(void*, s32, s32, s32, s32, s16, s16, s32);
 
 s32 func_800D822C(SVECTOR* worldPos, s16* outScreenX, s16* outScreenY);
 
-void func_800D82AC(void* arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_800D82AC(void* ot, s32 arg1, s32 arg2, s32 arg3);
 
-void func_800D8738(s32* arg0, s32 abr);
+void func_800D8738(void* ot, s32 abr);
 
-void func_800D87D4(void* arg0);
+void func_800D87D4(void* ot);
 
 void func_800D8858(s32);
 

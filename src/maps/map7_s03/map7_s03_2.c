@@ -1385,7 +1385,7 @@ s32 func_800D822C(SVECTOR* worldPos, s16* outScreenX, s16* outScreenY) // 0x800D
     return scale;
 }
 
-void func_800D82AC(void* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800D82AC
+void func_800D82AC(void* ot, s32 arg1, s32 arg2, s32 arg3) // 0x800D82AC
 {
     s32 val1;
     s32 val2;
@@ -1393,12 +1393,12 @@ void func_800D82AC(void* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800D82AC
     val1 = Q12_MULT_PRECISE(arg3, 3000);
     val2 = Q12_MULT_PRECISE(arg3, 5000);
 
-    func_800D7F2C(arg0, 16, D_800EBC14, val2, val1, arg1, arg2, 0x141414);
-    func_800D7F2C(arg0, 12, 0, val2, val1, arg1, arg2, 0x141414);
+    func_800D7F2C(ot, 16, D_800EBC14, val2, val1, arg1, arg2, 0x141414);
+    func_800D7F2C(ot, 12, 0, val2, val1, arg1, arg2, 0x141414);
 
     D_800EBC14 += 4;
 
-    func_800D7F2C(arg0, 4, -512,
+    func_800D7F2C(ot, 4, -512,
                   Q12_MULT_PRECISE(arg3, 15000), Q12_MULT_PRECISE(arg3, 1500),
                   arg1, arg2, 0x102020);
 }
@@ -1407,18 +1407,18 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8438);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8454);
 
-void func_800D8738(s32* arg0, s32 abr) // 0x800D8738
+void func_800D8738(void* ot, s32 abr) // 0x800D8738
 {
     DR_MODE* drMode;
 
     drMode = func_800D7F10();
     SetDrawMode(drMode, 0, 1, getTPage(0, abr, 640, 0), NULL);
-    addPrim(arg0, drMode);
+    addPrim(ot, drMode);
 
     func_800D7F20(&drMode[1]);
 }
 
-void func_800D87D4(void* arg0) // 0x800D87D4
+void func_800D87D4(void* ot) // 0x800D87D4
 {
     SVECTOR worldPos;
     s16     screenX;
@@ -1430,9 +1430,9 @@ void func_800D87D4(void* arg0) // 0x800D87D4
     screenDepth = func_800D822C(&worldPos, &screenX, &screenY);
     if (screenDepth <= 100)
     {
-        func_800D82AC(arg0, screenX, screenY, screenDepth);
-        func_800D8454(arg0, screenX, screenY, screenDepth);
-        func_800D8738(arg0, 1);
+        func_800D82AC(ot, screenX, screenY, screenDepth);
+        func_800D8454(ot, screenX, screenY, screenDepth);
+        func_800D8738(ot, 1);
     }
 }
 
