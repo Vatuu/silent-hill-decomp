@@ -398,9 +398,13 @@ void func_800D7F20(u8* arg0);
 
 void func_800D7F2C(void*, s32, s32, s32, s32, s16, s16, s32);
 
-s32 func_800D822C(SVECTOR* worldPos, u16* outScreenX, u16* outScreenY);
+s32 func_800D822C(SVECTOR* worldPos, s16* outScreenX, s16* outScreenY);
 
 void func_800D82AC(void* arg0, s32 arg1, s32 arg2, s32 arg3);
+
+void func_800D8738(s32* arg0, s32 abr);
+
+void func_800D87D4(void* arg0);
 
 void func_800D8858(s32);
 
@@ -421,6 +425,8 @@ void func_800D9394(void);
 void func_800D947C(void);
 
 void func_800D952C(void);
+
+q19_12 func_800DA420(VECTOR3* result);
 
 void func_800DA4B4(s32* arg0, s32* arg1); // Assumed types.
 
@@ -509,7 +515,8 @@ void func_800DEC74(s_SubCharacter* incubus, GsCOORDINATE2* coord);
 void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* coord);
 void func_800DEE44(s_SubCharacter* incubus);
 void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr,  GsCOORDINATE2* coord);
-void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coord);
+void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords);
+void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DF074(s_SubCharacter* incubus);
 void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
@@ -532,6 +539,7 @@ void func_800E05DC(s_SubCharacter*, GsCOORDINATE2*);
 void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void func_800E0728(s_SubCharacter* chara);
 void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
+void func_800E07F0(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coord);
 void func_800E0914(s_SubCharacter* chara);

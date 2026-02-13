@@ -1366,13 +1366,13 @@ void func_800D7F20(u8* arg0) // 0x800D7F20
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7F2C);
 
-s32 func_800D822C(SVECTOR* worldPos, u16* outScreenX, u16* outScreenY) // 0x800D822C
+s32 func_800D822C(SVECTOR* worldPos, s16* outScreenX, s16* outScreenY) // 0x800D822C
 {
     DVECTOR screenCoords[2];
     s32     depth;
     s32     scale;
-    u16     screenX;
-    u16     screenY;
+    s16     screenX;
+    s16     screenY;
 
     depth = RotTransPers(worldPos, &screenCoords[0], &screenCoords[1], &screenCoords[1]);
     scale = (ReadGeomScreen() * 200) / (depth + 1);
@@ -1407,9 +1407,34 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8438);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8454);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8738);
+void func_800D8738(s32* arg0, s32 abr) // 0x800D8738
+{
+    DR_MODE* drMode;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D87D4);
+    drMode = func_800D7F10();
+    SetDrawMode(drMode, 0, 1, getTPage(0, abr, 640, 0), NULL);
+    addPrim(arg0, drMode);
+
+    func_800D7F20(&drMode[1]);
+}
+
+void func_800D87D4(void* arg0) // 0x800D87D4
+{
+    SVECTOR worldPos;
+    s16     screenX;
+    s16     screenY;
+    s32     screenDepth;
+
+    Math_SVectorSet(&worldPos, 0, 0, 0);
+
+    screenDepth = func_800D822C(&worldPos, &screenX, &screenY);
+    if (screenDepth <= 100)
+    {
+        func_800D82AC(arg0, screenX, screenY, screenDepth);
+        func_800D8454(arg0, screenX, screenY, screenDepth);
+        func_800D8738(arg0, 1);
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8858);
 
@@ -1542,7 +1567,19 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA178);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA1F4);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA420);
+q19_12 func_800DA420(VECTOR3* result) // 0x800DA420
+{
+    s32 posX;
+    s32 posY;
+
+    posX = Q12_MULT_PRECISE(Math_Sin(FP_ANGLE(15.0f)), Q12(5.0f));
+    posY = Q12_MULT_PRECISE(Math_Cos(FP_ANGLE(15.0f)), Q12(5.0f));
+
+    result->vx = posX;
+    result->vy = posY;
+    result->vz = 0;
+    return FP_ANGLE(15.0f);
+}
 
 void func_800DA4B4(s32* arg0, s32* arg1) // 0x800DA4B4
 {
@@ -2334,15 +2371,38 @@ void func_800DEE44(s_SubCharacter* incubus) // 0x800DEE44
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DEE90);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DEF50);
+void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEF50
+{
+    MATRIX mat;
+    s32    posY;
+    s32    posX;
+    s32    posZ;
 
-void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coord) // 0x800DEFE8
+    Vw_CoordHierarchyMatrixCompute(&coords[2], &mat);
+    posX = Q8_TO_Q12(mat.t[0]) - incubus->position_18.vx;
+    posY = Q8_TO_Q12(mat.t[1]) - incubus->position_18.vy;
+    posZ = Q8_TO_Q12(mat.t[2]) - incubus->position_18.vz;
+
+    incubus->field_D4.radius_0 = Q12(0.5f);
+    incubus->field_D4.field_2  = Q12(0.5f);
+    incubus->field_C8.field_0  = posY - Q12(0.25f);
+    incubus->field_C8.field_2  = posY;
+    incubus->field_C8.field_4  = posY + Q12(0.25f);
+    incubus->field_C8.field_6  = posY;
+
+    sharedFunc_800CD920_3_s03(incubus, posX, posZ);
+
+    incubus->field_D8.offsetX_0 = incubus->field_D8.offsetX_4;
+    incubus->field_D8.offsetZ_2 = incubus->field_D8.offsetZ_6;
+}
+
+void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEFE8
 {
     q19_12 posY;
 
     if (incubus->model_0.anim_4.flags_2 & AnimFlag_Visible)
     {
-        func_800DEF50();
+        func_800DEF50(incubus, coords);
         return;
     }
 
@@ -2707,7 +2767,30 @@ void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E07F0);
+void func_800E07F0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E07F0
+{
+    MATRIX mat;
+    s32    posY;
+    s32    posX;
+    s32    posZ;
+
+    Vw_CoordHierarchyMatrixCompute(&coords[2], &mat);
+    posX = Q8_TO_Q12(mat.t[0]) - chara->position_18.vx;
+    posY = Q8_TO_Q12(mat.t[1]) - chara->position_18.vy;
+    posZ = Q8_TO_Q12(mat.t[2]) - chara->position_18.vz;
+
+    chara->field_D4.radius_0 = Q12(0.5f);
+    chara->field_D4.field_2  = Q12(0.5f);
+    chara->field_C8.field_0  = posY - Q12(0.25f);
+    chara->field_C8.field_2  = posY;
+    chara->field_C8.field_4  = posY + Q12(0.25f);
+    chara->field_C8.field_6  = posY;
+
+    sharedFunc_800CD920_3_s03(chara, posX, posZ);
+
+    chara->field_D8.offsetX_0 = chara->field_D8.offsetX_4;
+    chara->field_D8.offsetZ_2 = chara->field_D8.offsetZ_6;
+}
 
 void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0888
 {
@@ -2715,7 +2798,7 @@ void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0888
 
     if (chara->model_0.anim_4.flags_2 & AnimFlag_Visible)
     {
-        func_800E07F0();
+        func_800E07F0(chara, coords);
         return;
     }
 
