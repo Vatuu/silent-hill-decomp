@@ -888,59 +888,381 @@ void func_800D71A4(s32 arg0) // 0x800D71A4
     D_800F2430 = arg0;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D71B0);
-
-void func_800D74F4(s32 x, s32 z, s32 val) // 0x800D74F4
+void func_800D71B0(VECTOR3* arg0, s32 arg1) // 0x800D71B0
 {
-    u8* basePtr = (u8*)0x80167600;
-    s16 idxX;
-    s16 newZDiv8;
-    s16 newX = x + 164;
-    s16 newZ = z + 100;
+    s32                  temp_hi_4;
+    s32                  temp_hi_5;
+    s32                  temp_hi_6;
+    s32                  temp_s1;
+    s32                  temp_s3;
+    s32                  temp_v0;
+    s32                  temp_v0_2;
+    s32                  temp_v0_4;
+    s32                  temp_v0_6;
+    s32                  i;
+    s32                  var_s7;
+    s_func_800D71B0_498* ptr;
+    s_func_800D71B0*     base;
 
-    newX += (newX > 0) ? 4 : -4;
-    idxX = newX / 8;
+    base = FS_BUFFER_25;
+    ptr  = base->field_498;
 
-    newZ += (newZ > 0) ? 4 : -4;
-    newZDiv8 = newZ / 8;
-
-    if ((u16)(idxX - 1) < 40 && newZDiv8 > 0 && newZDiv8 < 25)
+    for (var_s7 = 0, i = 0; i < 0xC8; i++, ptr++)
     {
-        s32 offsetAcc;
-        s32 termZ;
-        u8* destPtr;
-        s32 finalVal;
-
-        offsetAcc = (s16)idxX;
-        termZ = newZDiv8 * 41;
-        offsetAcc = offsetAcc + termZ;
-        offsetAcc = offsetAcc + 93;
-
-        destPtr = basePtr + offsetAcc;
-
-        finalVal = val >> 4;
-        if (finalVal < 0x100)
+        if (ptr->field_20 != 0)
         {
-            *destPtr = (u8)finalVal;
+            continue;
+        }
+
+        if (var_s7 >= arg1)
+        {
+            break;
+        }
+
+        var_s7++;
+
+        temp_v0 = Rng_Rand16();
+        temp_s3 = Math_Sin(temp_v0);
+        temp_s1 = Math_Cos(temp_v0);
+
+        temp_v0_2 = Rng_Rand16();
+        temp_v0_4 = Q12_MULT_PRECISE(temp_s1, Math_Sin(temp_v0_2));
+        temp_v0_6 = Q12_MULT_PRECISE(temp_s1, Math_Cos(temp_v0_2));
+
+        ptr->field_0.vx = arg0->vx + Q12_MULT_PRECISE(temp_v0_4, D_800EB810);
+        ptr->field_0.vy = arg0->vy + Q12_MULT_PRECISE(temp_s3, D_800EB810);
+        ptr->field_0.vz = arg0->vz + Q12_MULT_PRECISE(temp_v0_6, D_800EB810);
+        ptr->field_28   = 0xFFF;
+
+        temp_v0 = Rng_Rand16();
+        temp_s3 = Math_Sin(temp_v0);
+        temp_s1 = Math_Cos(temp_v0);
+
+        temp_v0   = Rng_Rand16();
+        temp_v0_4 = Q12_MULT_PRECISE(Math_Sin(temp_v0), temp_s1);
+        temp_v0_6 = Q12_MULT_PRECISE(Math_Cos(temp_v0), temp_s1);
+
+        temp_hi_4 = Q12_MULT_PRECISE(temp_v0_4, 0x999);
+        temp_hi_5 = Q12_MULT_PRECISE(temp_v0_6, 0x999);
+        temp_hi_6 = Q12_MULT_PRECISE(temp_s3, 0x999);
+
+        ptr->field_10.vx = ((ptr->field_0.vx - arg0->vx) * 4) + Q12_MULT_PRECISE(temp_v0_4, 0x999);
+        ptr->field_10.vy = ((ptr->field_0.vy - arg0->vy) * 4) + Q12_MULT_PRECISE(temp_s3, 0x999);
+        ptr->field_10.vz = ((ptr->field_0.vz - arg0->vz) * 4) + Q12_MULT_PRECISE(temp_v0_6, 0x999);
+
+        temp_v0       = Rng_Rand16();
+        ptr->field_34 = 0;
+        temp_v0       = Rng_Rand16();
+        ptr->field_30 = 0x1000;
+        ptr->field_20 = 1;
+    }
+}
+
+void func_800D74F4(s32 x, s32 y, s32 val) // 0x800D74F4
+{
+    s16              row;
+    s16              col;
+    s_func_800D71B0* ptr;
+    u8*              buf;
+
+    ptr = FS_BUFFER_25;
+
+    col = (x + 164);
+    row = (y + 100);
+
+    col += (col > 0) ? 4 : -4;
+    col /= 8;
+
+    row += (row > 0) ? 4 : -4;
+    row /= 8;
+
+    if (col > 0 && col < 41 && row > 0 && row < 25)
+    {
+        buf = ptr->field_5D + (col + (41 * row));
+        if (val >> 4 < 0x100)
+        {
+            *buf = val >> 4;
         }
         else
         {
-            *destPtr = 0xFF;
+            *buf = 0xFF;
         }
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D75D0);
+void func_800D75D0(void) // 0x800D75D0
+{
+    SVECTOR              sp10;
+    DVECTOR              sp18[2];
+    s32                  sp20;
+    s32                  i;
+    s_func_800D71B0_498* ptr;
+    s_func_800D71B0*     base;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D77A4);
+    base = FS_BUFFER_25;
+    ptr  = base->field_498;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D77E4);
+    for (i = 0; i < 200; i++, ptr++)
+    {
+        if (ptr->field_20 != 0)
+        {
+            if (ptr->field_34 < 0)
+            {
+                sp10.vx = Q12_TO_Q8(ptr->field_0.vx);
+                sp10.vy = Q12_TO_Q8(ptr->field_0.vy);
+                sp10.vz = Q12_TO_Q8(ptr->field_0.vz);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7AD0);
+                RotTransPers(&sp10, &sp18[0], &sp18[1], &sp20);
+                func_800D74F4(sp18[0].vx, sp18[0].vy, ptr->field_28);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7B78);
+                ptr->field_0.vx += Q12_MULT_PRECISE(ptr->field_10.vx, g_DeltaTime0);
+                ptr->field_0.vy += Q12_MULT_PRECISE(ptr->field_10.vy, g_DeltaTime0);
+                ptr->field_0.vz += Q12_MULT_PRECISE(ptr->field_10.vz, g_DeltaTime0);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7BF4);
+                ptr->field_28 -= Q12_MULT_PRECISE(g_DeltaTime0, 0x1000);
+                ptr->field_28  = MAX(ptr->field_28, 0);
+
+                ptr->field_30 -= g_DeltaTime0;
+
+                if (ptr->field_30 < 0)
+                {
+                    ptr->field_20 = 0;
+                }
+            }
+            else
+            {
+                ptr->field_34 -= g_DeltaTime0;
+            }
+        }
+    }
+}
+
+s32 func_800D77A4(s32 arg0, s32 arg1) // 0x800D77A4
+{
+    s_func_800D71B0* buf;
+
+    buf = (s_func_800D71B0*)FS_BUFFER_25;
+
+    return D_800EB814[buf->field_5D[(arg1 * 41) + arg0]];
+}
+
+void func_800D77E4(void) // 0x800D77E4
+{
+    u32              sp18;
+    s_func_800D71B0* ptr;
+    GsOT_TAG*        ot;
+    s32              x;
+    s32              y;
+    s32              col0;
+    s32              col2;
+    s32              col3;
+    s32              i;
+    s32              j;
+    s32              col1;
+    POLY_G4*         poly;
+    DR_MODE*         mode;
+    PACKET*          packet;
+    s32              col;
+    s32              idx;
+    int              code;
+
+    ptr = FS_BUFFER_25;
+
+    x = -0xA4;
+    y = -0x64;
+
+    idx = g_ActiveBufferIdx;
+    ot  = g_OrderingTable0[idx].org;
+
+    if ((ptr->field_490 >> 1) < 0x706)
+    {
+        ot = &ot[(ptr->field_490 >> 1) + 250];
+    }
+    else
+    {
+        ot = &ot[2036];
+    }
+
+    packet = GsOUT_PACKET_P;
+    poly   = packet;
+
+    i    = 1;
+    col  = 0x3A000000;
+    code = 0x3A;
+
+    for (; i < 25; i++)
+    {
+        col1 = func_800D77A4(0, i - 1);
+        col3 = func_800D77A4(0, i);
+
+        for (j = 1; j < 41; j++)
+        {
+            sp18 = ptr->field_5D[(i * 41) + j];
+
+            col0 = col1;
+            col2 = col3;
+            col1 = func_800D77A4(j, i - 1);
+
+            col3 = func_800D77A4(j, i);
+
+            if (col == col0 &&
+                col0 == col1 &&
+                col0 == col2 &&
+                col2 == col3)
+            {
+                continue;
+            }
+
+            if ((j + i) & 0x1)
+            {
+                poly->x0 = x + (j * 8);
+                poly->y0 = y + (i * 8);
+                poly->x1 = (x + (j * 8)) + 8;
+                poly->y1 = y + (i * 8);
+                poly->x2 = x + (j * 8);
+                poly->y2 = (y + (i * 8)) + 8;
+                poly->x3 = (x + (j * 8)) + 8;
+                poly->y3 = (y + (i * 8)) + 8;
+
+                *(s32*)&poly->r0 = col0;
+                *(s32*)&poly->r1 = col1;
+                *(s32*)&poly->r2 = col2;
+                *(s32*)&poly->r3 = col3;
+            }
+            else
+            {
+                poly->x1 = x + (j * 8);
+                poly->y1 = y + (i * 8);
+                poly->x0 = (x + (j * 8)) + 8;
+                poly->y0 = y + (i * 8);
+                poly->x3 = x + (j * 8);
+                poly->y3 = (y + (i * 8)) + 8;
+                poly->x2 = (x + (j * 8)) + 8;
+                poly->y2 = (y + (i * 8)) + 8;
+
+                *(s32*)&poly->r0 = col1;
+                *(s32*)&poly->r1 = col0;
+                *(s32*)&poly->r2 = col3;
+                *(s32*)&poly->r3 = col2;
+            }
+
+            setPolyG4(poly);
+            poly->code = (float)sp18; // @hack
+            poly->code = code;
+
+            addPrim(ot, poly);
+            poly++;
+        }
+        ot -= 0x28 / 4;
+    }
+
+    packet = poly;
+    mode   = packet;
+
+    SetDrawMode(mode, 0, 1, 0x2A, NULL);
+    addPrim(ot, mode);
+    packet         = mode + 1;
+    GsOUT_PACKET_P = packet;
+}
+
+void func_800D7AD0(void) // 0x800D7AD0
+{
+    s32              i;
+    s32              j;
+    s32              val;
+    s_func_800D71B0* buf;
+    u8*              tab;
+
+    buf = FS_BUFFER_25;
+
+    for (i = 0; i < 25; i++)
+    {
+        tab = &buf->field_5D[i * 41];
+
+        for (j = 0; j < 41; j++)
+        {
+            val = tab[j - 41];
+
+            if (j == 0)
+            {
+                val = 0;
+            }
+            else
+            {
+                val += tab[j - 1];
+            }
+
+            if (j == 40)
+            {
+                val = 0;
+            }
+            else
+            {
+                val = val + tab[j + 1];
+            }
+
+            val  += tab[j + 41];
+            val >>= 2;
+            val  -= 1;
+
+            if (val <= 0)
+            {
+                tab[j] = 0;
+            }
+            else
+            {
+                tab[j] = val;
+            }
+        }
+    }
+}
+
+void func_800D7B78(void) // 0x800D7B78
+{
+    s32                  i;
+    s_func_800D71B0_498* ptr;
+    s_func_800D71B0*     buf;
+
+    buf = FS_BUFFER_25;
+
+    ptr = buf->field_498;
+
+    memset(buf->field_34, 0, sizeof(buf->field_34));
+    memset(buf->field_5D, 0, sizeof(buf->field_5D));
+    memset(buf->field_45E, 0, sizeof(buf->field_45E));
+
+    for (i = 199; i >= 0; i--, ptr++)
+    {
+        ptr->field_20 = 0;
+    }
+
+    func_800D71A4(0xFF);
+}
+
+void func_800D7BF4(VECTOR* arg0, q19_12 rotY) // 0x800D7BF4
+{
+    MATRIX  mat;
+    VECTOR  sp30;
+    SVECTOR rot; // Q3.12
+
+    SetRotMatrix(&GsWSMATRIX);
+    SetTransMatrix(&GsWSMATRIX);
+    ApplyRotMatrixLV(arg0, &sp30);
+
+    sp30.vx += GsWSMATRIX.t[0];
+    sp30.vy += GsWSMATRIX.t[1];
+    sp30.vz += GsWSMATRIX.t[2];
+
+    TransMatrix(&mat, &sp30);
+    SetTransMatrix(&mat);
+
+    rot.vx = FP_ANGLE(0.0f);
+    rot.vy = rotY;
+    rot.vz = FP_ANGLE(0.0f);
+
+    Math_RotMatrixZxyNeg(&rot, &mat);
+    SetMulRotMatrix(&mat);
+}
 
 s32 func_800D7CB4(s32* sxy) // 0x800D7CB4
 {
@@ -963,11 +1285,64 @@ void func_800D7CF8(void) // 0x800D7CF8
     D_800F2434 = 1;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7D08);
+void func_800D7D08(void) // 0x800D7D08
+{
+    s_func_800D71B0* buf = FS_BUFFER_25;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7D74);
+    func_800D7BF4(&buf->field_4, buf->field_494);
+    buf->field_490 = func_800D7CB4(&buf->field_48C) + 0x140;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7E50);
+    if (D_800F2434 == 0)
+    {
+        func_800D75D0();
+    }
+    func_800D7AD0();
+    func_800D77E4();
+}
+
+void func_800D7D74(s32 arg0) // 0x800D7D74
+{
+    VECTOR3          sp10;
+    VECTOR3          sp20;
+    s_func_800D71B0* ptr;
+
+    if (D_800F2434 == 0)
+    {
+        sp10.vx = Rng_Rand16() - 0x3FFF;
+        sp10.vy = (Rng_Rand16() >> 2) + 0x4801;
+        sp10.vz = (Rng_Rand16() * 2) - 0x7FFF;
+
+        if (func_800D5D48() != 0)
+        {
+            sp20 = sp10;
+
+            ptr      = FS_BUFFER_25;
+            sp20.vx += ptr->field_4.vx * 0x10;
+            sp20.vy += ptr->field_4.vy * 0x10;
+            sp20.vz += ptr->field_4.vz * 0x10;
+
+            func_8005DC1C(Sfx_Unk1694, &sp20, D_800F2430, 0);
+        }
+
+        func_800D71B0(&sp10, 0x1E);
+    }
+}
+
+void func_800D7E50(VECTOR3* arg0) // 0x800D7E50
+{
+    s_func_800D71B0* ptr;
+
+    ptr = FS_BUFFER_25;
+
+    memset(ptr, 0xA7, sizeof(s_func_800D71B0));
+
+    func_800D7B78();
+
+    ptr->field_494  = 0;
+    ptr->field_4.vx = Q12_TO_Q8(arg0->vx);
+    ptr->field_4.vy = Q12_TO_Q8(arg0->vy);
+    ptr->field_4.vz = Q12_TO_Q8(arg0->vz);
+}
 
 void func_800D7ED0(void) // 0x800D7ED0
 {

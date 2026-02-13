@@ -177,6 +177,33 @@ typedef struct
     s_func_800D68C4_A08 field_A08[100];
 } s_func_800D68C4;
 
+typedef struct
+{
+    VECTOR field_0;
+    VECTOR field_10;
+    s32    field_20;
+    s8     unk_24[4];
+    s32    field_28;
+    s8     unk_1C[4];
+    s32    field_30;
+    s32    field_34;
+} s_func_800D71B0_498;
+
+typedef struct
+{
+    s8                  unk_0[4];
+    VECTOR              field_4;
+    s8                  unk_10[32];
+    s8                  field_34[41];
+    u8                  field_5D[41 * 25];
+    s8                  field_45E[41];
+    s8                  unk_487[5];
+    s32                 field_48C;
+    s32                 field_490;
+    s32                 field_494;
+    s_func_800D71B0_498 field_498[200];
+} s_func_800D71B0;
+
 extern s32 D_800F2438; // Length of `D_800F3D48` array.
 
 extern s_800F3D48* D_800F3D48;
@@ -313,6 +340,10 @@ extern s32 D_800EB010[];
 
 extern s32 D_800EB410[];
 
+extern s32 D_800EB810;
+
+extern s32 D_800EB814[];
+
 void Ai_BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void func_800D3740(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords);
@@ -345,7 +376,7 @@ void func_800D7144(VECTOR3*);
 
 void func_800D71A4(s32 arg0);
 
-void func_800D74F4(s32 x, s32 z, s32 val);
+void func_800D74F4(s32 x, s32 y, s32 val);
 
 s32 func_800D7CB4(s32* sxy);
 
@@ -615,5 +646,25 @@ void func_800D6FF4(VECTOR* arg0, q19_12 rotY);
 void func_800D70EC(void);
 
 void func_800D7144(VECTOR3* arg0);
+
+void func_800D71B0(VECTOR3* arg0, s32 arg1);
+
+void func_800D75D0(void);
+
+s32 func_800D77A4(s32 arg0, s32 arg1);
+
+void func_800D77E4(void);
+
+void func_800D7AD0(void);
+
+void func_800D7B78(void);
+
+void func_800D7BF4(VECTOR* arg0, q19_12 rotY);
+
+void func_800D7D08(void);
+
+void func_800D7D74(s32 arg0);
+
+void func_800D7E50(VECTOR3* arg0);
 
 #endif
