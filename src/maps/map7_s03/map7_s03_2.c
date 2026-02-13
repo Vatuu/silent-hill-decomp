@@ -1366,7 +1366,24 @@ void func_800D7F20(u8* arg0) // 0x800D7F20
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7F2C);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D822C);
+s32 func_800D822C(SVECTOR* worldPos, u16* outScreenX, u16* outScreenY) // 0x800D822C
+{
+    DVECTOR screenCoords[2];
+    s32     depth;
+    s32     scale;
+    u16     screenX;
+    u16     screenY;
+
+    depth = RotTransPers(worldPos, &screenCoords[0], &screenCoords[1], &screenCoords[1]);
+    scale = (ReadGeomScreen() * 200) / (depth + 1);
+
+    screenX = screenCoords[0].vx;
+    screenY = screenCoords[0].vy;
+
+    *outScreenX = screenX;
+    *outScreenY = screenY;
+    return scale;
+}
 
 void func_800D82AC(void* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800D82AC
 {
