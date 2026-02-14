@@ -1364,7 +1364,70 @@ void func_800D7F20(u8* arg0) // 0x800D7F20
     GsOUT_PACKET_P = arg0;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D7F2C);
+void func_800D7F2C(GsOT_TAG* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s16 x1, s16 y1, s32 arg7) // 0x800D7F2C
+{
+    s32      sp14;
+    s32      i;
+    s32      y2;
+    s32      x2;
+    s32      y0;
+    s32      x0;
+    s32      var_s3;
+    POLY_G4* poly;
+    s32      x3;
+    s32      y3;
+
+    sp14 = 0x1000 / arg1;
+    sp14 = sp14 / 2;
+
+    poly   = func_800D7F10();
+    var_s3 = arg2;
+
+    for (i = 0; i < arg1; i++)
+    {
+        x0 = Q12_MULT_PRECISE(Math_Sin(var_s3), arg4);
+        y0 = Q12_MULT_PRECISE(Math_Cos(var_s3), arg4);
+
+        var_s3 += sp14;
+
+        x2 = Q12_MULT_PRECISE(Math_Sin(var_s3), arg3);
+        y2 = Q12_MULT_PRECISE(Math_Cos(var_s3), arg3);
+
+        var_s3 += sp14;
+
+        if (i == (arg1 - 1))
+        {
+            var_s3 = arg2;
+        }
+
+        x0 += x1;
+        x2 += x1;
+        y0 += y1;
+        y2 += y1;
+
+        x3 = Q12_MULT_PRECISE(Math_Sin(var_s3), arg4);
+        y3 = Q12_MULT_PRECISE(Math_Cos(var_s3), arg4);
+
+        x3 += x1;
+        y3 += y1;
+
+        *(s32*)&poly->r0 = 0;
+
+        setPolyG4(poly);
+        setSemiTrans(poly, 1);
+
+        *(s32*)&poly->r1 = arg7;
+        *(s32*)&poly->r2 = 0;
+        *(s32*)&poly->r3 = 0;
+
+        setXY4(poly, x0, y0, x1, y1, x2, y2, x3, y3);
+
+        addPrim(arg0, poly);
+        poly++;
+    }
+
+    func_800D7F20(poly);
+}
 
 s32 func_800D822C(SVECTOR* worldPos, s16* outScreenX, s16* outScreenY) // 0x800D822C
 {
@@ -1385,7 +1448,7 @@ s32 func_800D822C(SVECTOR* worldPos, s16* outScreenX, s16* outScreenY) // 0x800D
     return scale;
 }
 
-void func_800D82AC(void* ot, s32 arg1, s32 arg2, s32 arg3) // 0x800D82AC
+void func_800D82AC(GsOT_TAG* ot, s32 arg1, s32 arg2, s32 arg3) // 0x800D82AC
 {
     s32 val1;
     s32 val2;
