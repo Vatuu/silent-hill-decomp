@@ -12,14 +12,22 @@
 #define F         18   /* upper limit for match_length */
 #define THRESHOLD 2    /* encode string into position and length if match_length is greater than this */
 
-u8* g_Lzss_Window = FS_BUFFER_1;
-s32 D_800CA4F8 = 0;
-bool g_Lzss_IsActive = 0;
-u8* g_Lzss_CurPosition = 0;
-u8* g_Lzss_OutPosition = 0;
-s32 g_Lzss_WindowOffset = 0;
-u8* g_Lzss_EndPosition = 0;
-s32 g_Lzss_CurFlag = 0;
+extern u8*  g_Lzss_Window;
+extern bool g_Lzss_IsActive;
+extern u8*  g_Lzss_CurPosition;
+extern u8*  g_Lzss_OutPosition;
+extern s32  g_Lzss_WindowOffset;
+extern u8*  g_Lzss_EndPosition;
+extern s32  g_Lzss_CurFlag;
+
+u8*  g_Lzss_Window = FS_BUFFER_1;
+
+bool g_Lzss_IsActive;
+u8*  g_Lzss_CurPosition;
+u8*  g_Lzss_OutPosition;
+s32  g_Lzss_WindowOffset;
+u8*  g_Lzss_EndPosition;
+s32  g_Lzss_CurFlag;
 
 void Lzss_Reset(void) // 0x800CA234
 {

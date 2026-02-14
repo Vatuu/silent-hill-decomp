@@ -6,15 +6,11 @@
  * related the audio system of the game, but haven't been recognized
  * to be a function from the Konami's LIBSD system.
  *
- * Code here can still be considered part of the SD system, but no
- * functions with deobfuscated symbols from the SD system should be here.
- *
  * This code is game-specific and not part of the library itself.
- * The library doesn't handle file streaming and the game handles
- * some additional work and conditionals for events.
- */
-
-/** @note Name recognition notes/todo.
+ * This code specifically handle file streaming and some general
+ * sound game effects.
+ * 
+ * @note Name recognition.
  * `Tokimeki Memorial ~Forever With You~` and `Konami International Rally Championship` symbols
  * indicate that what are named `commands` in the decomp are actually named as `tasks`. TM
  * suggests that at some point, they were called `events`.
@@ -179,9 +175,7 @@ typedef struct
 typedef struct
 {
     u8  xaFileIdx_0;
-    u8  unk_1; // } Padding?
-    u8  unk_2; // }
-    u8  unk_3; // }
+    u8  pad_1[3];
     u32 sector_4      : 24;
     u8  field_4_24    : 8; // Index. Element of the group index defined at `field_8_24`.
     u32 audioLength_8 : 24;

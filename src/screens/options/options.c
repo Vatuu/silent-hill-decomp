@@ -9,7 +9,7 @@
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/sound_system.h"
-#include "screens/options/options.h"
+#include "screens/options.h"
 #include "screens/stream/stream.h"
 
 #define LINE_CURSOR_TIMER_MAX 8
@@ -25,6 +25,17 @@ s32  g_MainOptionsMenu_PrevSelectedEntry  = 0;
 s32  g_ExtraOptionsMenu_PrevSelectedEntry = 0;
 bool g_ScreenPosMenu_InvertBackgroundFade = false;
 bool g_ControllerMenu_IsOnActionsPane     = false;
+
+/** @brief Tracks movement time of the cursor highlight. */
+static s32 g_Options_SelectionHighlightTimer;
+/** @brief Number of options to show in the extra options screen. Shows extra unlockable settings if they are unlocked. */
+static s32 g_ExtraOptionsMenu_EntryCount;
+static s32 g_ExtraOptionsMenu_SelectedBloodColorEntry;
+static s32 g_ExtraOptionsMenu_BulletMultMax;
+
+// ========================================
+// MAIN AND EXTRA OPTION SCREEN
+// ========================================
 
 void GameState_Options_Update(void) // 0x801E2D44
 {
@@ -792,7 +803,9 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
     #define LINE_OFFSET_X 16
     #define LINE_OFFSET_Y 16
 
-    s32 i;
+    s32            i;
+    static DVECTOR extraOptions_SelectionHighlightFrom_Unused;
+    static DVECTOR extraOptions_SelectionHighlightTo_Unused;
 
     const DVECTOR STR_POS = { 86, 20 };
 
@@ -815,10 +828,10 @@ void Options_ExtraOptionsMenu_EntryStringsDraw(void) // 0x801E416C
     // @unused Likely an older implementation for active highlight selection position reference setup found in `Options_ExtraOptionsMenu_SelectionHighlightDraw`.
     if (g_Options_SelectionHighlightTimer == 0)
     {
-        g_ExtraOptions_SelectionHighlightFrom_Unused.vx = LINE_BASE_X - LINE_OFFSET_X;
-        g_ExtraOptions_SelectionHighlightTo_Unused.vx   = LINE_BASE_X;
-        g_ExtraOptions_SelectionHighlightFrom_Unused.vy = ((u16)g_MainOptionsMenu_PrevSelectedEntry * LINE_OFFSET_Y) + LINE_BASE_Y;
-        g_ExtraOptions_SelectionHighlightTo_Unused.vy   = ((u16)g_MainOptionsMenu_SelectedEntry     * LINE_OFFSET_Y) + LINE_BASE_Y;
+        extraOptions_SelectionHighlightFrom_Unused.vx = LINE_BASE_X - LINE_OFFSET_X;
+        extraOptions_SelectionHighlightTo_Unused.vx   = LINE_BASE_X;
+        extraOptions_SelectionHighlightFrom_Unused.vy = ((u16)g_MainOptionsMenu_PrevSelectedEntry * LINE_OFFSET_Y) + LINE_BASE_Y;
+        extraOptions_SelectionHighlightTo_Unused.vy   = ((u16)g_MainOptionsMenu_SelectedEntry     * LINE_OFFSET_Y) + LINE_BASE_Y;
     }
     Math_Sin(g_Options_SelectionHighlightTimer << 7);
 
@@ -849,7 +862,9 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     #define LINE_OFFSET_X 16
     #define LINE_OFFSET_Y 16
 
-    s32 i;
+    s32            i;
+    static DVECTOR mainOptions_SelectionHighlightFrom_Unused;
+    static DVECTOR mainOptions_SelectionHighlightTo_Unused;
 
     DVECTOR strPos = { 121, 20 };
 
@@ -870,10 +885,10 @@ void Options_MainOptionsMenu_EntryStringsDraw(void) // 0x801E42EC
     // @unused Likely an older implementation for active highlight selection position reference setup found in `Options_MainOptionsMenu_SelectionHighlightDraw`.
     if (g_Options_SelectionHighlightTimer == 0)
     {
-        g_MainOptions_SelectionHighlightFrom_Unused.vx = LINE_BASE_X - LINE_OFFSET_X;
-        g_MainOptions_SelectionHighlightTo_Unused.vx   = LINE_BASE_X;
-        g_MainOptions_SelectionHighlightFrom_Unused.vy = ((u16)g_MainOptionsMenu_PrevSelectedEntry * LINE_OFFSET_Y) + LINE_BASE_Y;
-        g_MainOptions_SelectionHighlightTo_Unused.vy   = ((u16)g_MainOptionsMenu_SelectedEntry     * LINE_OFFSET_Y) + LINE_BASE_Y;
+        mainOptions_SelectionHighlightFrom_Unused.vx = LINE_BASE_X - LINE_OFFSET_X;
+        mainOptions_SelectionHighlightTo_Unused.vx   = LINE_BASE_X;
+        mainOptions_SelectionHighlightFrom_Unused.vy = ((u16)g_MainOptionsMenu_PrevSelectedEntry * LINE_OFFSET_Y) + LINE_BASE_Y;
+        mainOptions_SelectionHighlightTo_Unused.vy   = ((u16)g_MainOptionsMenu_SelectedEntry     * LINE_OFFSET_Y) + LINE_BASE_Y;
     }
     Math_Sin(g_Options_SelectionHighlightTimer << 7);
 
@@ -909,12 +924,14 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
     #define HIGHLIGHT_OFFSET_X -121
     #define HIGHLIGHT_OFFSET_Y 50
 
-    s32      i;
-    s32      j;
-    q3_12    interpAlpha;
-    s_Line2d highlightLine;
-    s_Quad2d bulletQuads[BULLET_QUAD_COUNT];
-    DVECTOR* quadVerts;
+    s32            i;
+    s32            j;
+    q3_12          interpAlpha;
+    s_Line2d       highlightLine;
+    s_Quad2d       bulletQuads[BULLET_QUAD_COUNT];
+    DVECTOR*       quadVerts;
+    static DVECTOR extraOptions_SelectionHighlightFrom;
+    static DVECTOR extraOptions_SelectionHighlightTo;
 
     const u8 SELECTION_HIGHLIGHT_WIDTHS[] = {
         157, 126, 135, 135, 157, 130, 112, 134
@@ -939,10 +956,10 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
     // Set active selection highlight position references.
     if (g_Options_SelectionHighlightTimer == 0)
     {
-        g_ExtraOptions_SelectionHighlightFrom.vx = SELECTION_HIGHLIGHT_WIDTHS[g_ExtraOptionsMenu_PrevSelectedEntry] + (65536 + HIGHLIGHT_OFFSET_X); // TODO
-        g_ExtraOptions_SelectionHighlightFrom.vy = ((u16)g_ExtraOptionsMenu_PrevSelectedEntry * LINE_OFFSET_Y)      - HIGHLIGHT_OFFSET_Y;
-        g_ExtraOptions_SelectionHighlightTo.vx   = SELECTION_HIGHLIGHT_WIDTHS[g_ExtraOptionsMenu_SelectedEntry]     + (65536 + HIGHLIGHT_OFFSET_X); // TODO
-        g_ExtraOptions_SelectionHighlightTo.vy   = ((u16)g_ExtraOptionsMenu_SelectedEntry * LINE_OFFSET_Y)          - HIGHLIGHT_OFFSET_Y;
+        extraOptions_SelectionHighlightFrom.vx = SELECTION_HIGHLIGHT_WIDTHS[g_ExtraOptionsMenu_PrevSelectedEntry] + (65536 + HIGHLIGHT_OFFSET_X); // TODO
+        extraOptions_SelectionHighlightFrom.vy = ((u16)g_ExtraOptionsMenu_PrevSelectedEntry * LINE_OFFSET_Y)      - HIGHLIGHT_OFFSET_Y;
+        extraOptions_SelectionHighlightTo.vx   = SELECTION_HIGHLIGHT_WIDTHS[g_ExtraOptionsMenu_SelectedEntry]     + (65536 + HIGHLIGHT_OFFSET_X); // TODO
+        extraOptions_SelectionHighlightTo.vy   = ((u16)g_ExtraOptionsMenu_SelectedEntry * LINE_OFFSET_Y)          - HIGHLIGHT_OFFSET_Y;
     }
 
     // Compute sine-based interpolation alpha.
@@ -950,10 +967,10 @@ void Options_ExtraOptionsMenu_SelectionHighlightDraw(void) // 0x801E4450
 
     // Draw active selection highlight.
     highlightLine.vertex0_0.vx = HIGHLIGHT_OFFSET_X;
-    highlightLine.vertex1_4.vx = g_ExtraOptions_SelectionHighlightFrom.vx +
-                                 Q12_MULT(g_ExtraOptions_SelectionHighlightTo.vx - g_ExtraOptions_SelectionHighlightFrom.vx, interpAlpha);
-    highlightLine.vertex1_4.vy = g_ExtraOptions_SelectionHighlightFrom.vy +
-                                 Q12_MULT(g_ExtraOptions_SelectionHighlightTo.vy - g_ExtraOptions_SelectionHighlightFrom.vy, interpAlpha) +
+    highlightLine.vertex1_4.vx = extraOptions_SelectionHighlightFrom.vx +
+                                 Q12_MULT(extraOptions_SelectionHighlightTo.vx - extraOptions_SelectionHighlightFrom.vx, interpAlpha);
+    highlightLine.vertex1_4.vy = extraOptions_SelectionHighlightFrom.vy +
+                                 Q12_MULT(extraOptions_SelectionHighlightTo.vy - extraOptions_SelectionHighlightFrom.vy, interpAlpha) +
                                  LINE_OFFSET_Y;
     highlightLine.vertex0_0.vy = highlightLine.vertex1_4.vy;
     Options_Selection_HighlightDraw(&highlightLine, true, false);
@@ -1000,12 +1017,14 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
     #define HIGHLIGHT_OFFSET_X -121
     #define HIGHLIGHT_OFFSET_Y 58
 
-    s32      i;
-    s32      j;
-    s16      interpAlpha;
-    s_Line2d highlightLine;
-    s_Quad2d bulletQuads[2];
-    DVECTOR* quadVerts;
+    s32            i;
+    s32            j;
+    s16            interpAlpha;
+    s_Line2d       highlightLine;
+    s_Quad2d       bulletQuads[2];
+    DVECTOR*       quadVerts;
+    static DVECTOR mainOptions_SelectionHighlightFrom;
+    static DVECTOR mainOptions_SelectionHighlightTo;
 
     const u8 SELECTION_HIGHLIGHT_WIDTHS[] = {
         59, 169, 174, 156, 104, 112, 75, 129, 112
@@ -1030,10 +1049,10 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
     // Set active selection highlight position references.
     if (g_Options_SelectionHighlightTimer == 0)
     {
-        g_MainOptions_SelectionHighlightFrom.vx = SELECTION_HIGHLIGHT_WIDTHS[g_MainOptionsMenu_PrevSelectedEntry] + (65536 + HIGHLIGHT_OFFSET_X); // TODO
-        g_MainOptions_SelectionHighlightFrom.vy = ((u16)g_MainOptionsMenu_PrevSelectedEntry * LINE_OFFSET_Y)    - HIGHLIGHT_OFFSET_Y;
-        g_MainOptions_SelectionHighlightTo.vx   = SELECTION_HIGHLIGHT_WIDTHS[g_MainOptionsMenu_SelectedEntry]     + (65536 + HIGHLIGHT_OFFSET_X); // TODO
-        g_MainOptions_SelectionHighlightTo.vy   = ((u16)g_MainOptionsMenu_SelectedEntry * LINE_OFFSET_Y)        - HIGHLIGHT_OFFSET_Y;
+        mainOptions_SelectionHighlightFrom.vx = SELECTION_HIGHLIGHT_WIDTHS[g_MainOptionsMenu_PrevSelectedEntry] + (65536 + HIGHLIGHT_OFFSET_X); // TODO
+        mainOptions_SelectionHighlightFrom.vy = ((u16)g_MainOptionsMenu_PrevSelectedEntry * LINE_OFFSET_Y)    - HIGHLIGHT_OFFSET_Y;
+        mainOptions_SelectionHighlightTo.vx   = SELECTION_HIGHLIGHT_WIDTHS[g_MainOptionsMenu_SelectedEntry]     + (65536 + HIGHLIGHT_OFFSET_X); // TODO
+        mainOptions_SelectionHighlightTo.vy   = ((u16)g_MainOptionsMenu_SelectedEntry * LINE_OFFSET_Y)        - HIGHLIGHT_OFFSET_Y;
     }
 
     // Compute sine-based interpolation alpha.
@@ -1041,10 +1060,10 @@ void Options_MainOptionsMenu_SelectionHighlightDraw(void) // 0x801E472C
 
     // Draw active selection highlight.
     highlightLine.vertex0_0.vx = HIGHLIGHT_OFFSET_X;
-    highlightLine.vertex1_4.vx = g_MainOptions_SelectionHighlightFrom.vx +
-                                 FP_FROM((g_MainOptions_SelectionHighlightTo.vx - g_MainOptions_SelectionHighlightFrom.vx) * interpAlpha, Q12_SHIFT);
-    highlightLine.vertex1_4.vy = g_MainOptions_SelectionHighlightFrom.vy +
-                                 FP_FROM((g_MainOptions_SelectionHighlightTo.vy - g_MainOptions_SelectionHighlightFrom.vy) * interpAlpha, Q12_SHIFT) +
+    highlightLine.vertex1_4.vx = mainOptions_SelectionHighlightFrom.vx +
+                                 FP_FROM((mainOptions_SelectionHighlightTo.vx - mainOptions_SelectionHighlightFrom.vx) * interpAlpha, Q12_SHIFT);
+    highlightLine.vertex1_4.vy = mainOptions_SelectionHighlightFrom.vy +
+                                 FP_FROM((mainOptions_SelectionHighlightTo.vy - mainOptions_SelectionHighlightFrom.vy) * interpAlpha, Q12_SHIFT) +
                                  LINE_OFFSET_Y;
     highlightLine.vertex0_0.vy = highlightLine.vertex1_4.vy;
     Options_Selection_HighlightDraw(&highlightLine, true, false);
@@ -1388,9 +1407,9 @@ void Options_MainOptionsMenu_ConfigDraw(void) // 0x801E4FFC
     }
 }
 
-// ==============================
+// ========================================
 // SCREEN POSITION OPTION SCREEN
-// ==============================
+// ========================================
 
 void Options_ScreenPosMenu_Control(void) // 0x801E53A0
 {
@@ -1398,25 +1417,28 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
     #define OPT_SCREEN_POS_Y_RANGE 8
     #define BG_FADE_STEP           16
 
-    s32     i;
-    s8      posX;
-    TILE*   tile;
-    PACKET* packet;
+    s32        i;
+    s8         posX;
+    TILE*      tile;
+    PACKET*    packet;
+	static s32 screenPosMenu_BackgroundFade;
+    static s16 screenPosMenu_PositionX;
+    static s16 screenPosMenu_PositionY;
 
     posX = g_GameWorkConst->config_0.optScreenPosX_1C;
-    if (posX != g_ScreenPosMenu_PositionX || g_GameWorkConst->config_0.optScreenPosY_1D != g_ScreenPosMenu_PositionY)
+    if (posX != screenPosMenu_PositionX || g_GameWorkConst->config_0.optScreenPosY_1D != screenPosMenu_PositionY)
     {
         Screen_XyPositionSet(posX, g_GameWorkConst->config_0.optScreenPosY_1D);
     }
 
-    g_ScreenPosMenu_PositionX = g_GameWorkConst->config_0.optScreenPosX_1C;
-    g_ScreenPosMenu_PositionY = g_GameWorkConst->config_0.optScreenPosY_1D;
+    screenPosMenu_PositionX = g_GameWorkConst->config_0.optScreenPosX_1C;
+    screenPosMenu_PositionY = g_GameWorkConst->config_0.optScreenPosY_1D;
 
     switch (g_GameWork.gameStateStep_598[1])
     {
         case ScreenPosMenuState_0:
             ScreenFade_Start(true, true, false);
-            g_ScreenPosMenu_BackgroundFade  = 255;
+            screenPosMenu_BackgroundFade  = 255;
             g_GameWork.gameStateStep_598[1] = ScreenPosMenuState_1;
             g_GameWork.gameStateStep_598[2] = 0;
 
@@ -1447,8 +1469,8 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             g_GameWorkConst->config_0.optScreenPosY_1D = CLAMP(g_GameWorkConst->config_0.optScreenPosY_1D, -OPT_SCREEN_POS_Y_RANGE, OPT_SCREEN_POS_Y_RANGE);
 
             // Play sound.
-            if (g_GameWorkConst->config_0.optScreenPosX_1C != g_ScreenPosMenu_PositionX ||
-                g_GameWorkConst->config_0.optScreenPosY_1D != g_ScreenPosMenu_PositionY)
+            if (g_GameWorkConst->config_0.optScreenPosX_1C != screenPosMenu_PositionX ||
+                g_GameWorkConst->config_0.optScreenPosY_1D != screenPosMenu_PositionY)
             {
                 Sd_PlaySfx(Sfx_MenuMove, 0, 64);
             }
@@ -1456,9 +1478,9 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
             // Start background color fade.
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
-                if (g_ScreenPosMenu_BackgroundFade == 255)
+                if (screenPosMenu_BackgroundFade == 255)
                 {
-                    g_ScreenPosMenu_BackgroundFade       = 0;
+                    screenPosMenu_BackgroundFade       = 0;
                     g_ScreenPosMenu_InvertBackgroundFade = (g_ScreenPosMenu_InvertBackgroundFade + 1) & (1 << 0);
                 }
             }
@@ -1492,20 +1514,20 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
     }
 
     // Update background fade.
-    g_ScreenPosMenu_BackgroundFade += BG_FADE_STEP;
-    g_ScreenPosMenu_BackgroundFade  = CLAMP(g_ScreenPosMenu_BackgroundFade, 0, 255);
+    screenPosMenu_BackgroundFade += BG_FADE_STEP;
+    screenPosMenu_BackgroundFade  = CLAMP(screenPosMenu_BackgroundFade, 0, 255);
     switch (g_ScreenPosMenu_InvertBackgroundFade)
     {
         case false:
-            g_GameWork.background2dColor_R_58C = ~g_ScreenPosMenu_BackgroundFade;
-            g_GameWork.background2dColor_G_58D = ~g_ScreenPosMenu_BackgroundFade;
-            g_GameWork.background2dColor_B_58E = ~g_ScreenPosMenu_BackgroundFade;
+            g_GameWork.background2dColor_R_58C = ~screenPosMenu_BackgroundFade;
+            g_GameWork.background2dColor_G_58D = ~screenPosMenu_BackgroundFade;
+            g_GameWork.background2dColor_B_58E = ~screenPosMenu_BackgroundFade;
             break;
 
         case true:
-            g_GameWork.background2dColor_R_58C = g_ScreenPosMenu_BackgroundFade;
-            g_GameWork.background2dColor_G_58D = g_ScreenPosMenu_BackgroundFade;
-            g_GameWork.background2dColor_B_58E = g_ScreenPosMenu_BackgroundFade;
+            g_GameWork.background2dColor_R_58C = screenPosMenu_BackgroundFade;
+            g_GameWork.background2dColor_G_58D = screenPosMenu_BackgroundFade;
+            g_GameWork.background2dColor_B_58E = screenPosMenu_BackgroundFade;
             break;
     }
 
@@ -1550,11 +1572,11 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
         switch (g_ScreenPosMenu_InvertBackgroundFade)
         {
             case 0:
-                setRGB0(tile, g_ScreenPosMenu_BackgroundFade, g_ScreenPosMenu_BackgroundFade, g_ScreenPosMenu_BackgroundFade);
+                setRGB0(tile, screenPosMenu_BackgroundFade, screenPosMenu_BackgroundFade, screenPosMenu_BackgroundFade);
                 break;
 
             case 1:
-                setRGB0(tile, ~g_ScreenPosMenu_BackgroundFade, ~g_ScreenPosMenu_BackgroundFade, ~g_ScreenPosMenu_BackgroundFade);
+                setRGB0(tile, ~screenPosMenu_BackgroundFade, ~screenPosMenu_BackgroundFade, ~screenPosMenu_BackgroundFade);
                 break;
         }
 
@@ -1700,9 +1722,9 @@ void Options_ScreenPosMenu_ConfigDraw(void) // 0x801E5CBC
     Gfx_StringDrawInt(3, g_GameWorkConst->config_0.optScreenPosY_1D);
 }
 
-// ========================
+// ========================================
 // BRIGHTNESS OPTION SCREEN
-// ========================
+// ========================================
 
 void Options_BrightnessMenu_Control(void) // 0x801E6018
 {
@@ -2087,15 +2109,16 @@ void Options_Selection_BulletPointDraw(const s_Quad2d* quad, bool isBorder, bool
 
 void Options_ControllerMenu_Control(void) // 0x801E69BC
 {
-    s32           boundActionIdx = NO_VALUE;
-    e_InputAction actionIdx;
+    s32                                     boundActionIdx = NO_VALUE;
+    e_InputAction                           actionIdx;
+	static s_ControllerMenu_SelectedEntries controllerMenu_SelectedEntries;
 
     // Handle controller config menu state.
     switch (g_GameWork.gameStateStep_598[1])
     {
         case ControllerMenuState_Exit:
             ScreenFade_Start(false, true, false);
-            g_ControllerMenu_SelectedEntries.preset_0 = ControllerMenuState_Exit;
+            controllerMenu_SelectedEntries.preset_0 = ControllerMenuState_Exit;
 
             // Leave menu.
             if (g_Controller0->btnsClicked_10 & (g_GameWorkPtr->config_0.controllerConfig_0.enter_0 |
@@ -2131,7 +2154,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
         case ControllerMenuState_Type1:
         case ControllerMenuState_Type2:
         case ControllerMenuState_Type3:
-            g_ControllerMenu_SelectedEntries.preset_0 = g_GameWork.gameStateStep_598[1];
+            controllerMenu_SelectedEntries.preset_0 = g_GameWork.gameStateStep_598[1];
 
             // Set binding preset.
             if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
@@ -2170,36 +2193,36 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
             break;
 
         case ControllerMenuState_Actions:
-            actionIdx = g_ControllerMenu_SelectedEntries.action_4;
+            actionIdx = controllerMenu_SelectedEntries.action_4;
 
             // Move selection cursor up/down.
             if (g_Controller0->btnsPulsedGui_1C & ControllerFlag_LStickUp)
             {
                 if (actionIdx != InputAction_Enter)
                 {
-                    g_ControllerMenu_SelectedEntries.action_4 = actionIdx - 1;
+                    controllerMenu_SelectedEntries.action_4 = actionIdx - 1;
                 }
                 else
                 {
-                    g_ControllerMenu_SelectedEntries.action_4 = InputAction_Option;
+                    controllerMenu_SelectedEntries.action_4 = InputAction_Option;
                 }
             }
             else if (g_Controller0->btnsPulsedGui_1C & ControllerFlag_LStickDown)
             {
                 if (actionIdx != InputAction_Option)
                 {
-                    g_ControllerMenu_SelectedEntries.action_4 = actionIdx + 1;
+                    controllerMenu_SelectedEntries.action_4 = actionIdx + 1;
                 }
                 else
                 {
-                    g_ControllerMenu_SelectedEntries.action_4 = InputAction_Enter;
+                    controllerMenu_SelectedEntries.action_4 = InputAction_Enter;
                 }
             }
             // Move selection cursor left/right.
             else if (g_Controller0->btnsPulsedGui_1C & (ControllerFlag_LStickLeft | ControllerFlag_LStickRight))
             {
                 g_GameWork.gameStateStep_598[2] = 0;
-                g_GameWork.gameStateStep_598[1] = g_ControllerMenu_SelectedEntries.preset_0;
+                g_GameWork.gameStateStep_598[1] = controllerMenu_SelectedEntries.preset_0;
             }
             // Bind button to input action.
             else
@@ -2237,7 +2260,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
     }
 
     // Draw menu graphics.
-    Options_ControllerMenu_EntriesDraw(g_ControllerMenu_IsOnActionsPane, g_ControllerMenu_SelectedEntries.preset_0, g_ControllerMenu_SelectedEntries.action_4, boundActionIdx);
+    Options_ControllerMenu_EntriesDraw(g_ControllerMenu_IsOnActionsPane, controllerMenu_SelectedEntries.preset_0, controllerMenu_SelectedEntries.action_4, boundActionIdx);
 }
 
 s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
@@ -2360,110 +2383,6 @@ s32 Options_ControllerMenu_ConfigUpdate(s32 actionIdx) // 0x801E6CF4
     return boundActionIdx;
 }
 
-/** @brief Draw modes for textured entry selection highlights in the controller config menu.
- * 0 corresponds to the presets pane on the left,
- * 1 corresponds to the actions pane on the right.
- */
-DR_MODE g_ControllerMenu_SelectionHighlightDrawModes[2] = {
-    {
-        .tag  = 0x03000000,
-        .code = { 0xE1000200, 0 }
-    },
-    {
-        .tag  = 0x03000000,
-        .code = { 0xE1000200, 0 }
-    }
-};
-
-/** @brief Quads for textured entry selection highlights in the controller config menu.
- * 0 corresponds to the presets pane on the left,
- * 1 corresponds to the actions pane on the right.
- */
-POLY_G4 g_ControllerMenu_SelectionHighlightQuads[2] = {
-    {
-        .tag  = 0x08000000,
-        .r0   = 255,
-        .g0   = 255,
-        .b0   = 255,
-        .code = 0x3A,
-        .r3   = 255,
-        .g3   = 255,
-        .b3   = 255
-    },
-    {
-        .tag  = 0x08000000,
-        .code = 0x3A,
-        .r1   = 255,
-        .g1   = 255,
-        .b1   = 255,
-        .r2   = 255,
-        .g2   = 255,
-        .b2   = 255
-    },
-};
-
-/** @brief Controller menu entry strings for the presets pane on the left. */
-static const char* CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[] = {
-    "EXIT",
-    "TYPE_1",
-    "TYPE_2",
-    "TYPE_3"
-};
-
-/** @brief Controller menu entry strings for the actions pane on the right. */
-static const char* CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS[] = {
-    "ENTER",
-    "CANCEL",
-    "SKIP",
-    "ACTION",
-    "AIM",
-    "LIGHT",
-    "RUN",
-    "VIEW",
-    "STEP L",
-    "STEP R",
-    "PAUSE",
-    "ITEM",
-    "MAP",
-    "OPTION"
-};
-
-/** @brief Unknown .rodata value.
- * The type is assumed. It is unknown where this is used and
- * could be something defined by a macro.
- */
-static const u16 D_801E2D42 = 4160;
-
-DVECTOR g_ExtraOptions_SelectionHighlightFrom_Unused = DVECTOR(0.0f, 0.0f);
-
-DVECTOR g_ExtraOptions_SelectionHighlightTo_Unused = DVECTOR(0.0f, 0.0f);
-
-DVECTOR g_MainOptions_SelectionHighlightFrom_Unused = DVECTOR(0.0f, 0.0f);
-
-DVECTOR g_MainOptions_SelectionHighlightTo_Unused = DVECTOR(0.0f, 0.0f);
-
-DVECTOR g_ExtraOptions_SelectionHighlightFrom = DVECTOR(0.0f, 0.0f);
-
-DVECTOR g_ExtraOptions_SelectionHighlightTo = DVECTOR(0.0f, 0.0f);
-
-DVECTOR g_MainOptions_SelectionHighlightFrom = DVECTOR(0.0f, 0.0f);
-
-DVECTOR g_MainOptions_SelectionHighlightTo = DVECTOR(0.0f, 0.0f);
-
-s32 g_ScreenPosMenu_BackgroundFade = 0;
-
-s16 g_ScreenPosMenu_PositionX = 0;
-s16 g_ScreenPosMenu_PositionY = 0;
-
-s_ControllerMenu_SelectedEntries g_ControllerMenu_SelectedEntries = { ControllerMenuState_Exit, InputAction_Enter };
-
-s32 g_Options_SelectionHighlightTimer = 0;
-
-s32 g_ExtraOptionsMenu_EntryCount = 0;
-
-s32 g_ExtraOptionsMenu_SelectedBloodColorEntry = 0;
-
-s32 g_ExtraOptionsMenu_BulletMultMax = 0;
 
 void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx, s32 actionsEntryIdx, s32 boundActionIdx) // 0x801E6F60
 {
@@ -2480,10 +2399,79 @@ void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx,
     DR_MODE* drMode;
     POLY_G4* poly;
     GsOT*    ot;
+	
+	/** @brief Draw modes for textured entry selection highlights in the controller config menu.
+	 * 0 corresponds to the presets pane on the left,
+	 * 1 corresponds to the actions pane on the right.
+	 */
+	static DR_MODE controllerMenu_SelectionHighlightDrawModes[2] = {
+		{
+			.tag  = 0x03000000,
+			.code = { 0xE1000200, 0 }
+		},
+		{
+			.tag  = 0x03000000,
+			.code = { 0xE1000200, 0 }
+		}
+	};
+
+	/** @brief Quads for textured entry selection highlights in the controller config menu.
+	 * 0 corresponds to the presets pane on the left,
+	 * 1 corresponds to the actions pane on the right.
+	 */
+	static POLY_G4 controllerMenu_SelectionHighlightQuads[2] = {
+		{
+			.tag  = 0x08000000,
+			.r0   = 255,
+			.g0   = 255,
+			.b0   = 255,
+			.code = 0x3A,
+			.r3   = 255,
+			.g3   = 255,
+			.b3   = 255
+		},
+		{
+			.tag  = 0x08000000,
+			.code = 0x3A,
+			.r1   = 255,
+			.g1   = 255,
+			.b1   = 255,
+			.r2   = 255,
+			.g2   = 255,
+			.b2   = 255
+		},
+	};
+
+	/** @brief Controller menu entry strings for the presets pane on the left. */
+	static const char* CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[] = {
+		"EXIT",
+		"TYPE_1",
+		"TYPE_2",
+		"TYPE_3"
+	};
+
+	/** @brief Controller menu entry strings for the actions pane on the right. */
+	static const char* CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS[] = {
+		"ENTER",
+		"CANCEL",
+		"SKIP",
+		"ACTION",
+		"AIM",
+		"LIGHT",
+		"RUN",
+		"VIEW",
+		"STEP L",
+		"STEP R",
+		"PAUSE",
+		"ITEM",
+		"MAP",
+		"OPTION"
+	};
+
 
     ot     = &g_OtTags0[g_ActiveBufferIdx][15];
-    poly   = &g_ControllerMenu_SelectionHighlightQuads[g_ActiveBufferIdx];
-    drMode = &g_ControllerMenu_SelectionHighlightDrawModes[g_ActiveBufferIdx];
+    poly   = &controllerMenu_SelectionHighlightQuads[g_ActiveBufferIdx];
+    drMode = &controllerMenu_SelectionHighlightDrawModes[g_ActiveBufferIdx];
 
     // Draw entry strings.
     for (i = 0; i < ControllerMenuState_Count; i++)
@@ -2607,3 +2595,10 @@ void Options_ControllerMenu_ButtonIconsDraw(s32 baseX, s32 baseY, u16 config) //
     #undef ICON_SIZE_Y
     #undef ICON_OFFSET_X
 }
+
+
+/** @brief Unknown .rodata value.
+ * The type is assumed. It is unknown where this is used and
+ * could be something defined by a macro.
+ */
+static const u16 D_801E2D42 = 4160;

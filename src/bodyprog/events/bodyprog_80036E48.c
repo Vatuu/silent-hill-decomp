@@ -19,7 +19,6 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
-s32 D_800C3920;
 s32 pad_bss_800C3924;
 
 // ========================================
@@ -28,19 +27,20 @@ s32 pad_bss_800C3924;
 
 void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
 {
-    u16  sp10[4];
-    u8   sp18[16];
-    u8   sp28[12];
-    s32  temp_a0;
-    s32  temp_v0_2;
-    s32  var_a2;
-    s32  i;
-    u8   var_t4;
-    s32  var_v0;
-    u16  temp_v0;
-    u16  var_a3;
-    s16* var_t2;
-    u16* var_t7;
+    u16        sp10[4];
+    u8         sp18[16];
+    u8         sp28[12];
+    s32        temp_a0;
+    s32        temp_v0_2;
+    s32        var_a2;
+    s32        i;
+    u8         var_t4;
+    s32        var_v0;
+    u16        temp_v0;
+    u16        var_a3;
+    s16*       var_t2;
+    u16*       var_t7;
+	static s32 D_800C3920;
 
     var_t2 = arg1;
     var_t4 = 0;

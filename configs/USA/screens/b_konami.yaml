@@ -14,12 +14,14 @@ options:
 
   ld_script_path: linkers/USA/screens/b_konami.ld
 
+  #generate_asm_macros_files: False
   find_file_boundaries: False
   gp_value: 0x80022BB0
   global_vram_start: 0x80010000
   global_vram_end: 0x80200000
 
   o_as_suffix: False
+  ld_bss_is_noload: False
   use_legacy_include_asm: False
 
   asm_function_macro: glabel
@@ -38,8 +40,6 @@ options:
 
   undefined_funcs_auto_path: linkers/USA/screens/undefined_funcs_auto.b_konami.txt
   undefined_syms_auto_path: linkers/USA/screens/undefined_syms_auto.b_konami.txt
-
-  extensions_path: tools/splat_ext
 
   subalign: 4
 
@@ -68,6 +68,8 @@ segments:
       # .data section
       - [0xF78, .data, b_konami]
       - [0xF7C, .data, lzss]
+      - [0xF80, pad]
+      - [0xF84, .bss, lzss]
 
   # Random garbage data at end, define as bin file to make Splat ignore it.
   - name: footer_data

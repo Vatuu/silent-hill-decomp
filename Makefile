@@ -12,7 +12,7 @@ NON_MATCHING   ?= 0
 SKIP_ASM       ?= 0
 
 # Enables usage of the `COMMON` segment.
-# The compiler can create a segment call `COMMON` intended to handle repetite
+# The compiler can create a segment call `COMMON` intended to handle repetive
 # global variables declared in files which later becomes simple data that then
 # get assigned into some data segment. This comes as default and can be disabled,
 # however, MASPSX by default do not emit the segment and instead assign data
@@ -20,7 +20,8 @@ SKIP_ASM       ?= 0
 # supported is specially in the way MASPSX handle data order in a different way
 # to how the actual `COMMON` segment handles data order. It is required to have
 # the segment supported in the linker script, even though, Splat don't have
-# natively support to it.
+# natively support to it, additionally, the linker will reorder variables based
+# upon their names.
 USE_COMMON     ?= 0
 
 # Names and Paths
@@ -134,17 +135,19 @@ COMPTEST        := $(TOOLS_DIR)/compilationTest.sh
 
 # Flags
 OPT_FLAGS           := -O2
+DL_FLAGS            := -G0
 ENDIAN              := -EL
 INCLUDE_FLAGS       := -Iinclude -I $(BUILD_DIR) -Iinclude/psyq -Iinclude/decomp
 DEFINE_FLAGS        := -D_LANGUAGE_C -DUSE_INCLUDE_ASM
 CPP_FLAGS           := $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -P -MMD -MP -undef -Wall -lang-c -nostdinc -DVER_${GAME_VERSION}
 ifeq ($(USE_COMMON),1)
-LD_FLAGS            := $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections --no-gc-sections
+LD_FLAGS_GCSECTIONS := --no-gc-sections
 COMMON_FLAG         := --use-comm-section
 else
-LD_FLAGS            := $(ENDIAN) $(OPT_FLAGS) -nostdlib --no-check-sections
+LD_FLAGS_GCSECTIONS :=
 COMMON_FLAG         :=
 endif
+LD_FLAGS            := $(ENDIAN) $(DL_FLAGS) $(OPT_FLAGS) $(LD_FLAGS_GCSECTIONS) -nostdlib --no-check-sections
 OBJCOPY_FLAGS       := -O binary
 OBJDUMP_FLAGS       := --disassemble-all --reloc --disassemble-zeroes -Mreg-names=32
 ifeq ($(GEN_COMP_TU),1)
@@ -175,6 +178,7 @@ endif
 # - Switches aspsx-version for lib_unk code.
 define FlagsSwitch
 	$(if $(findstring /main/,$(1)), $(eval DL_FLAGS = -G8), $(eval DL_FLAGS = -G0))
+	$(eval LD_FLAGS = $(ENDIAN) $(DL_FLAGS) $(OPT_FLAGS) $(LD_FLAGS_GCSECTIONS) -nostdlib --no-check-sections)
 	$(eval AS_FLAGS = $(ENDIAN) $(INCLUDE_FLAGS) $(OPT_FLAGS) $(DL_FLAGS) -march=r3000 -mtune=r3000 -no-pad-sections)
 	$(eval CC_FLAGS = $(OPT_FLAGS) $(DL_FLAGS) -mips1 -mcpu=3000 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -mgas -fgnu-linker -quiet)
 	

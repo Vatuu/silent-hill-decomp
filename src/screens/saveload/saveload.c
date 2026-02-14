@@ -20,6 +20,9 @@
 
 const pad = 0;
 
+
+extern char* g_Savegame_SaveLocationNames[];
+
 char* g_Savegame_SaveLocationNames[] = {
     "Anywhere",
     "Cafe",
@@ -48,16 +51,80 @@ char* g_Savegame_SaveLocationNames[] = {
     "Next_fear"
 };
 
+
+/** @brief Reduntant code. Some overwrite status.
+ * Indicates if the player is or have overwritten
+ * a save.
+ *
+ * This is used in a switch statement from
+ * `SaveScreen_WriteOptionsStepDraw` with two cases:
+ ** 0: Prepares to draw overwritting options message.
+ ** 1: Draws overwritting options message.
+ * However, the preparation is unnecessary as the only
+ * useful thing it does is assigning the value of `0`
+ * to `g_SaveScreen_MemCardStateDisplay`, the other
+ * two things the code does are useless, most noticiably
+ * it assign itself the value of `1`, however, this
+ * is useless as the case 0 have fallthrough to the case 1.
+ */
 s32 g_SaveScreen_OverwriteActive = 0;
 
+/** @brief Reduntant code. Some display state status.
+ * Indicates if memory card or a save state is
+ * or have been display.
+ *
+ * This is used in a switch statement from
+ * `SaveScreen_MemCardStateDraw` with two cases:
+ ** 0: Prepares to draw process status message.
+ ** 1: Draws process status message.
+ * However, the preparation is unnecessary as the only
+ * useful thing it does is assigning the value of `0`
+ * to `g_SaveScreen_OverwriteActive` and updates some
+ * global variables in case the memory card have been
+ * disconnected during the load of a save, the other
+ * two things the code does are useless. It assign itself
+ * the value of `1`, however, the case 0 have fallthrough
+ * to case 1 and it assign to `D_801E7554` the value
+ * of the string index to be display, but it only used as
+ * an unnecessary double check for updating the message
+ * that indicates a save have been done successfully.
+ */
 s32 g_SaveScreen_MemCardStateDisplay = 0;
 
+/** @brief Dead code
+ * Some boolean statuses for each save slot.
+ *
+ * This seems to be related to the color of the
+ * borders of the file, but appears to do nothing
+ * as the code only defines it as 1 or 0.
+ * It might also be buggy as it constantly oscillates
+ * between 0 and 1. For example:
+ * in `SaveScreen_SavesSlotDraw`, the code has a conditional
+ * that writes 1, but a little later
+ * in the same function, it writes 1 again
+ * without any conditional.
+ */
 s16 D_801E7514[MEMCARD_SLOT_COUNT_MAX] = { false, false };
 
+/** @brief Broken code.
+ * This is used in some way to determine the y position
+ * of some save/memcard states strings from `e_SavegameEntryType`.
+ * This code works in a strange way as it is multiplied by 20
+ * and then it get 20 added, each time the function
+ * `SaveScreen_SavesSlotDraw` is run it get +1 added to it's value until
+ * it reaches 5 or if one of the elements to be draw is the last
+ * element of the memory card.
+ */
 s16 D_801E7518[MEMCARD_SLOT_COUNT_MAX] = { 0, 0 };
 
-s32 g_SaveScreen_State = SaveScreenState_None;
+s32 g_SaveScreen_State = SaveScreenState_None; /** `e_SaveScreenState` */
 
+/** @brief Timer used when displaying the text after finishing any of the following states:
+ * - Formatting
+ * - Saving
+ * - Loading
+ * - Error
+ */
 s32 g_SaveScreen_MemCardStateTextTimer = 0;
 
 // Only used in `GameState_LoadSavegameScreen_Update`.
@@ -70,9 +137,9 @@ void (*g_GameState_SaveScreen_Funcs[])() = {
     SaveScreen_Continue
 };
 
-bool g_SaveScreen_IsFormatting = false;
+bool g_SaveScreen_IsFormatting = false; // `false` - Overwrite, `true` - Format.
 
-bool g_SaveScreen_IsNewSaveSelected = false;
+bool g_SaveScreen_IsNewSaveSelected = false; // `false` - User has `New save` selected, `true` - User has a save selected.
 
 // Only used in `GameState_AutoLoadSavegame_Update`.
 void (*g_GameState_AutoLoadSavegame_Funcs[])() = {
@@ -82,35 +149,76 @@ void (*g_GameState_AutoLoadSavegame_Funcs[])() = {
     SaveScreen_Continue
 };
 
-s32 D_801E7560; // Unused/Pad.
+static s32 D_801E7560; // Unused/Pad.
 
-s32 D_801E7564[MEMCARD_SLOT_COUNT_MAX];
+/** @brief Dead code.
+ * Only used when booting the save screen where both
+ * values are defined as 0, the memory card is being
+ * loaded, or the user has the last save selected in
+ * the slot (where it asks if the value corresponding
+ * to the slot is 0 to then overwrite it with 1).
+ * 
+ * Used in: `SaveScreen_MemCardInfoReset` and `SaveScreen_SavesSlotDraw`.
+ */
+static s32 D_801E7564[MEMCARD_SLOT_COUNT_MAX];
 
-s16 D_801E756C[MEMCARD_SLOT_COUNT_MAX];
+/** @brief Dead code.
+ * Constantly updates changing the value from 0 up to
+ * the amount of files available in the slot.
+ *
+ * Code indicate that it is related the draw of file borders color.
+ */
+static s16 D_801E756C[MEMCARD_SLOT_COUNT_MAX];
 
-s16 g_SaveScreen_HiddenSaves[MEMCARD_SLOT_COUNT_MAX];
+/** @brief Count of saves hidden as the user scrolls down
+ * through the displayed saves in the slot.
+ */
+static s16 g_SaveScreen_HiddenSaves[MEMCARD_SLOT_COUNT_MAX];
 
-s16 D_801E7574[MEMCARD_SLOT_COUNT_MAX];
+/** @brief Dead code.
+ * The only usage it is given is to check it is in `SaveScreen_SavesSlotDraw`
+ * where it is used to check if the value is not the same as
+ * `g_SaveScreen_HiddenSaves` if the condition is true then it assigns
+ * `D_801E7514` a true value. However, the only instance where a value
+ * is assigned is when booting the save screen when it get assigned
+ * the value of -1 so it's always realizing the conditional.
+ */
+static s16 D_801E7574[MEMCARD_SLOT_COUNT_MAX];
 
-s16 g_SaveScreen_VisualElementIdx[MEMCARD_SLOT_COUNT_MAX];
+/** @brief Stores the index of the element selected in each
+ * slot based on what is visually available in the slot.
+ *
+ * For example: if the user has 9 savegames in the slot and
+ * wants to create a new, separate savegame, the index of the
+ * `New Save` element will be 4 and not 9 (index starting from 0)
+ * as it is the fifth element visually available in the slot.
+ */
+static s16 g_SaveScreen_VisualElementIdx[MEMCARD_SLOT_COUNT_MAX];
 
-s8 D_801E757C[8]; // Unused/Pad.
+static s8 D_801E757C[8]; // Unused/Pad.
 
-s8 D_801E7584[SAVEGAME_COUNT_MAX * MEMCARD_SLOT_COUNT_MAX];
+/** @brief Dead code. */
+static s8 D_801E7584[SAVEGAME_COUNT_MAX * MEMCARD_SLOT_COUNT_MAX];
 
-s8 g_SaveScreen_LastSaveIdx[MEMCARD_SLOT_COUNT_MAX];
+/** @brief Stores the index of the last save done.
+ *
+ * Depending on the slot where the last save was done
+ * the value representing the other slot is turn into -1.
+ */
+static s8 g_SaveScreen_LastSaveIdx[MEMCARD_SLOT_COUNT_MAX];
 
-s8 g_SaveScreen_DisplaySaveInfo;
+/** @brief Boolean. State if save information should be displayed. */
+static s8 g_SaveScreen_DisplaySaveInfo;
 
-s8 D_801E76D1; // Unused/Pad.
+static s8 D_801E76D1; // Unused/Pad.
 
-u8 g_SaveScreen_IsMemCardNotInserted[MEMCARD_SLOT_COUNT_MAX];
+static u8 g_SaveScreen_IsMemCardNotInserted[MEMCARD_SLOT_COUNT_MAX];
 
-s8 g_SaveScreen_SaveFlashTimer;
+static s8 g_SaveScreen_SaveFlashTimer;
 
-u8 g_SaveScreen_IsNextFearMode;
+static u8 g_SaveScreen_IsNextFearMode;
 
-u8 g_SaveScreen_IsGameSaving;
+static u8 g_SaveScreen_IsGameSaving;
 
 void SaveScreen_ScreenInfoClear(void) // 0x801E2D8C
 {

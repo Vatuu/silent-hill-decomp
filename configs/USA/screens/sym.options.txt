@@ -63,22 +63,33 @@ g_MainOptionsMenu_PrevSelectedEntry             = 0x801E72FC; // allow_duplicate
 g_ExtraOptionsMenu_PrevSelectedEntry            = 0x801E7300;
 g_ScreenPosMenu_InvertBackgroundFade            = 0x801E7304;
 g_ControllerMenu_IsOnActionsPane                = 0x801E7308;
-g_ControllerMenu_SelectionHighlightDrawModes    = 0x801E730C;
-g_ControllerMenu_SelectionHighlightQuads        = 0x801E7324;
+controllerMenu_SelectionHighlightDrawModes      = 0x801E730C;
+controllerMenu_SelectionHighlightQuads          = 0x801E7324;
 CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS      = 0x801E736C;
 CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS      = 0x801E737C;
-g_ExtraOptions_SelectionHighlightFrom_Unused    = 0x801E73B4;
-g_ExtraOptions_SelectionHighlightTo_Unused      = 0x801E73B8;
-g_MainOptions_SelectionHighlightFrom_Unused     = 0x801E73BC;
-g_MainOptions_SelectionHighlightTo_Unused       = 0x801E73C0;
-g_ExtraOptions_SelectionHighlightFrom           = 0x801E73C4;
-g_ExtraOptions_SelectionHighlightTo             = 0x801E73C8;
-g_MainOptions_SelectionHighlightFrom            = 0x801E73CC;
-g_MainOptions_SelectionHighlightTo              = 0x801E73D0;
-g_ScreenPosMenu_BackgroundFade                  = 0x801E73D4;
-g_ScreenPosMenu_PositionX                       = 0x801E73D8;
-g_ScreenPosMenu_PositionY                       = 0x801E73DA;
-g_ControllerMenu_SelectedEntries                = 0x801E73DC;
+
+
+
+//================================================
+//=== .bss section
+//================================================
+
+
+//-------------------------------------------------------------
+//--- PA: 0x004DB4   VA: 0x801E73B4   subsegment: .bss, options
+//-------------------------------------------------------------
+extraOptions_SelectionHighlightFrom_Unused      = 0x801E73B4;
+extraOptions_SelectionHighlightTo_Unused        = 0x801E73B8;
+mainOptions_SelectionHighlightFrom_Unused       = 0x801E73BC;
+mainOptions_SelectionHighlightTo_Unused         = 0x801E73C0;
+extraOptions_SelectionHighlightFrom             = 0x801E73C4;
+extraOptions_SelectionHighlightTo               = 0x801E73C8;
+mainOptions_SelectionHighlightFrom              = 0x801E73CC;
+mainOptions_SelectionHighlightTo                = 0x801E73D0;
+screenPosMenu_BackgroundFade                    = 0x801E73D4;
+screenPosMenu_PositionX                         = 0x801E73D8;
+screenPosMenu_PositionY                         = 0x801E73DA;
+controllerMenu_SelectedEntries                  = 0x801E73DC;
 g_Options_SelectionHighlightTimer               = 0x801E73E4;
 g_ExtraOptionsMenu_EntryCount                   = 0x801E73E8;
 g_ExtraOptionsMenu_SelectedBloodColorEntry      = 0x801E73EC;

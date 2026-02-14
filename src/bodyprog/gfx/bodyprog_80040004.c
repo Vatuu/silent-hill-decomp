@@ -28,4 +28,4 @@ void func_80040014(void) // 0x80040014
     func_80069860(g_SysWork.playerWork_4C.player_0.position_18.vx, g_SysWork.playerWork_4C.player_0.position_18.vz, g_WorldGfx.field_1BD8);
 };
 
-INCLUDE_RODATA("bodyprog/nonmatchings/bodyprog_80040004", D_80025BE4);
+INCLUDE_RODATA("bodyprog/nonmatchings/gfx/bodyprog_80040004", D_80025BE4);

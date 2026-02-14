@@ -360,11 +360,6 @@ STATIC_ASSERT_SIZEOF(s_MemCard_SaveWork, 1816);
  * `SAVEGAME_ENTRY_BUFFER_1`
  */
 
-/** @brief Amount of elements in each memory card. */
-extern u8 g_Savegame_ElementCount0[2];
-
-extern s_SaveScreenElement* g_MemCard_ActiveSavegameEntry; // 0x800BCD2C
-
 extern u8 g_SlotElementSelectedIdx[2]; // 0 - Slot 1, 1 - Slot 2.
 
 extern s8 g_SelectedSaveSlotIdx; // 0 - Slot 1, 1 - Slot 2.
@@ -383,32 +378,15 @@ extern s8 D_800A97E0;
 
 extern u32 allFileStatus[];
 
-extern s32 D_800BCD18[2];
-
-extern s32 D_800BCD20[2];
-
-/** @brief Stores all memory cards/devices status. */
-extern u32 g_MemCard_AllMemCardsStatus;
-
-/** @brief Some determinator for the state of the save screen.
- * 2 - Saving, 3 - Loading.
- */
-extern s8 g_SaveScreen_SaveScreenState;
-
 extern s8 D_800BCD39; // Boolean.
 
-/** @brief Counts all elements of all inserted memory cards. */
-extern s16 g_MemCard_TotalElementsCount;
-
-extern s8 g_SelectedDeviceId;
-
-/** @brief Amount of elements in each memory card. */
-extern u8 g_Savegame_ElementCount1[2];
-
-/** @brief Index of selected element in each memory card. */
-extern u8 g_Savegame_SelectedElementIdx;
-
-extern s8 g_SelectedFileIdx;
+// ====================
+// GLOBALS (BSS; Hack; memcard.c)
+// ====================
+// To match the order of the BSS segment, extern declarations
+// are required in a predetermined order.
+// This is done until a way to replicate `common`
+// segment behavior is found.
 
 extern s_MemCard_SaveHeader g_MemCard_BasicSaveInfo1[MEMCARD_FILE_COUNT_MAX];
 
@@ -427,7 +405,44 @@ extern s_MemCard_SaveWork g_MemCard_SaveWork;
 
 extern s32 g_MemCard_PrevSavegameCount;
 
+// ====================
+// GLOBALS (BSS; Hack; sys/memcard_2.c)
+// ====================
+
 extern s16 g_MemCard_SavegameCount;
+
+extern s16 pad_bss_800BCD2A;
+
+extern s_SaveScreenElement* g_MemCard_ActiveSavegameEntry;
+
+/** @brief Amount of elements in each memory card. */
+extern u8  g_Savegame_ElementCount0[MEMCARD_SLOT_COUNT_MAX];
+
+extern s16 pad_bss_800BCD32;
+/** @brief Stores all memory cards/devices status. */
+
+extern u32 g_MemCard_AllMemCardsStatus;
+/** @brief Some determinator for the state of the save screen.
+ * 2 - Saving, 3 - Loading.
+ */
+extern s8 g_SaveScreen_SaveScreenState;
+
+extern s8 pad_bss_800BCD39;
+
+/** @brief Counts all elements of all inserted memory cards. */
+extern s16 g_MemCard_TotalElementsCount;
+
+/** @brief Amount of elements in each memory card. */
+extern u8 g_Savegame_ElementCount1[MEMCARD_SLOT_COUNT_MAX];
+
+/** @brief Index of selected element in each memory card. */
+extern u8 g_Savegame_SelectedElementIdx;
+
+extern s8 g_SelectedFileIdx;
+
+extern s8 g_SelectedDeviceId;
+
+extern s8 pad_bss_800BCD41[3];
 
 // ==========
 // FUNCTIONS
@@ -445,7 +460,7 @@ void MemCard_RamClear(s32 deviceId);
 /** @brief Clear all files status. */
 void MemCard_FileStatusClear(s32 deviceId);
 
-bool MemCard_AreFilesAllNotUnused(s32 deviceId);
+bool MemCard_AreAllFilesNotUnused(s32 deviceId);
 
 void MemCard_SysInit2(void);
 

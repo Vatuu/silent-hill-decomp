@@ -102,7 +102,7 @@ void MemCard_FileStatusClear(s32 deviceId) // 0x8002E730
     }
 }
 
-bool MemCard_AreFilesAllNotUnused(s32 deviceId) // 0x8002E76C
+bool MemCard_AreAllFilesNotUnused(s32 deviceId) // 0x8002E76C
 {
     bool result;
     s32  i;
@@ -623,7 +623,7 @@ void MemCard_Process_Load(s_MemCard_Process* statusPtr)
         case 0: // Checks if any file from the memory card is used.
             if (statusPtr->processId_0 == MemCardProcess_Load_Game)
             {
-                if (MemCard_AreFilesAllNotUnused(statusPtr->deviceId_4) != true)
+                if (MemCard_AreAllFilesNotUnused(statusPtr->deviceId_4) != true)
                 {
                     fileIdx = MemCard_BiggestTotalSavegameCountGet(statusPtr->deviceId_4);
                     if (fileIdx == NO_VALUE)
@@ -786,7 +786,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
                 }
                 else
                 {
-                    if (MemCard_AreFilesAllNotUnused(statusPtr->deviceId_4) == true)
+                    if (MemCard_AreAllFilesNotUnused(statusPtr->deviceId_4) == true)
                     {
                         fileIdxCpy                 = 0;
                         statusPtr->processState_10 = 1;

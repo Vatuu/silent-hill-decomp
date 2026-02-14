@@ -13,6 +13,7 @@
 #include "bodyprog/memcard.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/ranking.h"
+#include "bodyprog/sound_background.h"
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
 #include "main/mem.h"
@@ -20,7 +21,7 @@
 #include "screens/stream/stream.h"
 
 // ========================================
-// AUDIO HANDLING
+// BACKGROUND MUSIC INIT & SET
 // ========================================
 
 s32 Bgm_Init(void) // 0x80035780
@@ -124,6 +125,10 @@ void func_8003596C(void) // 0x8003596C
     }
 }
 
+// ========================================
+// AMBIENT SOUND INIT & SET
+// ========================================
+
 s32 Sd_AmbientSfxInit(void) // 0x8003599C
 {
     if (Sd_AudioStreamingCheck() || Fs_QueueGetLength() > 0)
@@ -166,7 +171,7 @@ s32 Sd_AmbientSfxInit(void) // 0x8003599C
     return 0;
 }
 
-s32 Sd_IsCurrentAmbientTargetCheck(s32 ambIdx) // 0x80035AB0
+bool Sd_IsCurrentAmbientTargetCheck(s32 ambIdx) // 0x80035AB0
 {
     return g_GameWork.ambientIdx_5B4 != ambIdx;
 }
