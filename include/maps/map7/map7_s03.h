@@ -53,18 +53,20 @@ STATIC_ASSERT_SIZEOF(s_800ED7E0_ptr, 60);
 
 typedef struct
 {
-    s32 field_0;
-    s16 field_4;
-    s16 field_6;
-    s32 field_8;
-    s16 field_C;
-    s16 field_E;
-    u8  unk_10[16];
-    s32 field_20;
-    u8  unk_24[24];
-    s32 field_3C;
-    s32 field_40;
-    u8  unk_44[8];
+    s32     field_0;
+    s16     field_4;
+    s16     field_6;
+    s32     field_8;
+    s16     field_C;
+    s16     field_E;
+    u8      unk_10[8];
+    VECTOR3 field_18;
+    u8      unk_24[4];
+    VECTOR3 field_28;
+    u8      unk_34[0x8];
+    s32     field_3C;
+    s32     field_40;
+    u8      unk_44[8];
 } s_800F3D48_4;
 STATIC_ASSERT_SIZEOF(s_800F3D48_4, 0x4C);
 
@@ -427,6 +429,8 @@ void func_800D947C(void);
 
 void func_800D952C(void);
 
+s_800F3D48_0* func_800D9740(s_800F3D48* arg0);
+
 q19_12 func_800DA420(VECTOR3* result);
 
 void func_800DA4B4(s32* arg0, s32* arg1); // Assumed types.
@@ -507,7 +511,7 @@ void func_800DDB68(s_SubCharacter* chara, s32 soundIdx);
 s32 func_800DDBA4(s32 idx);
 
 void func_800DDBBC(s_SubCharacter* incubus);
-
+void func_800DDCC4(s_SubCharacter* incubus);
 void func_800DDDB0(s_SubCharacter* incubus);
 void func_800DDEEC(s_SubCharacter* incubus);
 void func_800DDF14(s_SubCharacter* incubus);
@@ -518,8 +522,8 @@ q19_12 func_800DEA90(void);
 void func_800DEAF4(s_SubCharacter* incubus);
 void func_800DEBA8(s_SubCharacter* incubus);
 void func_800DEC38(s_SubCharacter* incubus);
-void func_800DEC74(s_SubCharacter* incubus, GsCOORDINATE2* coord);
-void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* coord);
+void func_800DEC74(s_SubCharacter* incubus, GsCOORDINATE2* coords);
+void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DEE44(s_SubCharacter* incubus);
 void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords);
@@ -538,6 +542,7 @@ void func_800DFB50(s_SubCharacter* chara);
 void func_800DFB74(s_SubCharacter* chara);
 bool Ai_Unknown23_Init(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DFCE4(s_SubCharacter* chara);
+void func_800DFE10(s_SubCharacter* chara);
 void func_800DFEF0(s_SubCharacter* chara);
 void func_800DFF28(s_SubCharacter* chara);
 void func_800DFF44(s_SubCharacter* chara);

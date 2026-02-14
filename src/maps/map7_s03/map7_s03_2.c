@@ -1526,7 +1526,7 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D90C8);
 
 void func_800D9114(s_800F3D48* arg0) // 0x800D9114
 {
-    arg0->field_4.field_20 += Q12_MULT_PRECISE(arg0->field_4.field_8, g_DeltaTime0);
+    arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_8, g_DeltaTime0);
 
     if (g_DeltaTime0 != Q12(0.0f))
     {
@@ -1537,7 +1537,42 @@ void func_800D9114(s_800F3D48* arg0) // 0x800D9114
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D917C);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D9394);
+void func_800D9394(void) // 0x800D9394
+{
+    s_FsImageDesc image;
+
+    image.tPage[0] = 0;
+    image.tPage[1] = 55;
+    image.u        = 0;
+    image.v        = 0;
+    image.clutX    = 80;
+    image.clutY    = 0;
+    Fs_QueueStartReadTim(FILE_TIM_ELAST_TIM, FS_BUFFER_1, &image);
+
+    image.tPage[0] = 0;
+    image.tPage[1] = 56;
+    image.u        = 0;
+    image.v        = 0;
+    image.clutX    = 96;
+    image.clutY    = 0;
+    Fs_QueueStartReadTim(FILE_TIM_ELAST2_TIM, FS_BUFFER_1, &image);
+
+    image.tPage[0] = 0;
+    image.tPage[1] = 54;
+    image.u        = 0;
+    image.v        = 0;
+    image.clutX    = 64;
+    image.clutY    = 0;
+    Fs_QueueStartReadTim(FILE_TIM_EF1_TIM, FS_BUFFER_1, &image);
+
+    image.tPage[0] = 0;
+    image.tPage[1] = 57;
+    image.u        = 0;
+    image.v        = 0;
+    image.clutX    = 112;
+    image.clutY    = 0;
+    Fs_QueueStartReadTim(FILE_TIM_ELAST3_TIM, FS_BUFFER_1, &image);
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D947C);
 
@@ -1545,7 +1580,24 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D952C);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D95D4);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D9740);
+s_800F3D48_0* func_800D9740(s_800F3D48* arg0) // 0x800D9740
+{
+    s_800F3D48_0* ptr;
+
+    arg0->field_4.field_18.vx += Q12_MULT_PRECISE(arg0->field_4.field_28.vx, g_DeltaTime0);
+    arg0->field_4.field_18.vy += Q12_MULT_PRECISE(arg0->field_4.field_28.vy, g_DeltaTime0);
+    arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_28.vz, g_DeltaTime0);
+
+    ptr = func_800D88E8(arg0);
+
+    if (arg0->ptr_0->field_8 == 2)
+    {
+        arg0->field_4.field_4 = 0;
+        arg0->field_4.field_6 = 0;
+    }
+
+    return ptr;
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D982C);
 
@@ -2372,7 +2424,33 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
     Chara_DamageClear(incubus);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DDCC4);
+void func_800DDCC4(s_SubCharacter* incubus) // 0x800DDCC4
+{
+    s16 temp_v0;
+    s16 var_v0;
+    s16 var_v0_2;
+    s32 tmp;
+
+    temp_v0 = func_8005BF38(ratan2(
+                                g_SysWork.playerWork_4C.player_0.position_18.vx - incubus->position_18.vx,
+                                g_SysWork.playerWork_4C.player_0.position_18.vz - incubus->position_18.vz) -
+                            incubus->rotation_24.vy);
+    var_v0  = ABS(temp_v0);
+
+    if (var_v0 > FP_ANGLE(10.0f))
+    {
+        var_v0_2 = FP_ANGLE(120.0f);
+        tmp      = Q12_MULT_PRECISE(g_DeltaTime0, var_v0_2);
+        if (temp_v0 > 0)
+        {
+            incubus->rotation_24.vy += tmp;
+        }
+        else
+        {
+            incubus->rotation_24.vy -= tmp;
+        }
+    }
+}
 
 void func_800DDDB0(s_SubCharacter* incubus) // 0x800DDDB0
 {
@@ -2508,7 +2586,33 @@ void func_800DEC38(s_SubCharacter* incubus) // 0x800DEC38
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DEC74);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DED68);
+void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DED68
+{
+    MATRIX mat;
+
+    func_800DB608();
+
+    switch (incubus->model_0.controlState_2)
+    {
+        case IncubusControl_6:
+            func_800DDF3C(incubus, coords);
+            break;
+
+        case IncubusControl_7:
+            func_800DE2A4(incubus, coords);
+            break;
+
+        case IncubusControl_8:
+            func_800DE68C(incubus, coords);
+            break;
+    }
+
+    if (incubus->model_0.anim_4.status_0 != ANIM_STATUS(IncubusAnim_3, true))
+    {
+        Vw_CoordHierarchyMatrixCompute(&coords[2], &mat);
+        func_80080A30(Q12_MULT_FLOAT_PRECISE(Q8_TO_Q12(mat.t[1]), 0.65f));
+    }
+}
 
 void func_800DEE44(s_SubCharacter* incubus) // 0x800DEE44
 {
@@ -2832,7 +2936,33 @@ void func_800DFCE4(s_SubCharacter* chara) // 0x800DFCE4
     Chara_DamageClear(chara);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DFE10);
+void func_800DFE10(s_SubCharacter* chara) // 0x800DFE10
+{
+    s16 temp_v0;
+    s16 var_v0;
+    s16 var_v0_2;
+    s32 tmp;
+
+    temp_v0 = func_8005BF38(ratan2(
+                                g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
+                            chara->rotation_24.vy);
+    var_v0  = ABS(temp_v0);
+
+    if (var_v0 > FP_ANGLE(10.0f))
+    {
+        var_v0_2 = FP_ANGLE(90.0f);
+        tmp      = Q12_MULT_PRECISE(g_DeltaTime0, var_v0_2);
+        if (temp_v0 > 0)
+        {
+            chara->rotation_24.vy += tmp;
+        }
+        else
+        {
+            chara->rotation_24.vy -= tmp;
+        }
+    }
+}
 
 void func_800DFEF0(s_SubCharacter* chara) // 0x800DFEF0
 {
