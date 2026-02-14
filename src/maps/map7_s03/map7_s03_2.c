@@ -1676,7 +1676,35 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D9DF8);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA04C);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA08C);
+q19_12 func_800DA08C(s32 arg0, q19_12 arg1, q19_12 arg2) // 0x800DA08C
+{
+    q19_12 scaledArg0;
+    q19_12 scaledArg1;
+
+    switch (arg2)
+    {
+        case 0:
+            if (arg1 < arg0)
+            {
+                s32 temp = arg0;
+                arg0     = arg1;
+                arg1     = temp;
+            }
+
+            // TODO: Unsure what 0x6486 is meant to be.
+            // 0x6486 = Q12(6.2828f), while sqrt(6.2828) is 2.50655141579
+            // Q12(SQUARE(2.5f)) is very close, but gives 0x6400 instead of 0x6486...
+            scaledArg0 = Q12_MULT_PRECISE(Q12_MULT_PRECISE(arg0, arg0), 0x6486);
+            scaledArg1 = Q12_MULT_PRECISE(Q12_MULT_PRECISE(arg1, arg1), 0x6486);
+            return scaledArg1 - scaledArg0;
+
+        case 1:
+            return Q12_MULT_PRECISE(arg0, arg1);
+
+        default:
+            return 0;
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA178);
 

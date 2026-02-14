@@ -431,6 +431,8 @@ void func_800D952C(void);
 
 s_800F3D48_0* func_800D9740(s_800F3D48* arg0);
 
+q19_12 func_800DA08C(s32 arg0, q19_12 arg1, q19_12 arg2);
+
 q19_12 func_800DA420(VECTOR3* result);
 
 void func_800DA4B4(s32* arg0, s32* arg1); // Assumed types.
