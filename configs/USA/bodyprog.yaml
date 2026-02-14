@@ -459,17 +459,28 @@ segments:
       - [0x9F608,  bss, worldgfx]
       - [0x9F75C,  pad] # Garbage.
       - [0x9F760, .bss, 3d_audio]
-      - [0x9F770,  bss, bodyprog_800706E4_1]
+      - [0x9F770,  bss] # Player related? - Dead code.
+                        # Variables only ever used in `Player_CombatUpdate`
+                        # where it get assigned the position of player, but
+                        # never used for anything else.
+                        # This shouldn't be part of `bodyprog_800706E4`
+                        # because of how far it is from bss data actually part
+                        # of the file.
       - [0x9F774,  pad] # Garbage.
       - [0x9F778, .bss, bodyprog_8005E0DC]
       - [0x9F8C8, .bss, bodyprog_800652F4]
       - [0x9F8E8, .bss, bodyprog_mapscreen_80066EB0]
       - [0x9F8F4,  pad] # Garbage.
-      - [0x9F8F8,  bss, bodyprog_8005E0DC_2]
+      - [0x9F8F8, .bss, bodyprog_800697EC]
       - [0x9F96C,  pad] # Garbage.
-      - [0x9F970,  bss, bodyprog_800706E4]
+      - [0x9F970, .bss, bodyprog_800706E4]
       - [0x9FABC,  pad] # Garbage.
-      - [0x9FAC0,  bss, bodyprog_800706E4_2]
+      - [0x9FAC0,  bss, bodyprog_800706E4_2] # Only contains `D_800C4620` which must be nested
+                                             # static inside `func_800806AC` (since it's only used
+                                             # there), however, it would require make another split
+                                             # to `bodyprog_800706E4.c`, but to not make incorrect
+                                             # premature splits better finish code recognition in order
+                                             # to make proper guesses where to do the split is.
       - [0x9FACC,  pad] # Garbage.
       - [0x9FAD0, .bss, view/vc_main]
       - [0x9FAE0, .bss, bodyprog_80085D78]

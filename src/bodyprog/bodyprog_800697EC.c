@@ -13,6 +13,8 @@
 #include "bodyprog/sound_system.h"
 #include "main/rng.h"
 
+s_800C4478 D_800C4478;
+
 // ========================================
 // ENVIRONMENT AND SCREEN GFX 3
 // ========================================
@@ -400,6 +402,8 @@ void func_8006A178(s_800C4590* arg0, q19_12 posX, q19_12 posY, q19_12 posZ, q19_
 s_SubCharacter** func_8006A1A4(s32* charaCount, s_SubCharacter* chara, bool arg2) // 0x8006A1A4
 {
     s_SubCharacter* curChara;
+	static s_SubCharacter* D_800C4458[7];
+	static s_SubCharacter** D_800C4474; /** Array of active characters? */
 
     if (chara != NULL &&
         (chara->model_0.charaId_0 == Chara_None || chara->field_E1_0 == 0 ||

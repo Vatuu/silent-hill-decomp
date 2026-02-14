@@ -435,6 +435,22 @@ extern s32 g_Player_MeleeAttackType;
 
 extern s_800AFBF4 D_800AFBF4[11];
 
+extern q19_12 D_800C45DC;
+
+// ====================
+// GLOBALS (BSS; Hack)
+// ====================
+// To match the order of the BSS segment, extern declarations
+// are required in a predetermined order.
+// This is done until a way to replicate `common`
+// segment behavior is found.
+
+/** Table of player keyframe indices. Purpose unknown. */
+extern s_800C44F0 D_800C44F0[10];
+
+// Enemy target.
+extern VECTOR3 g_TargetEnemyPosition; // 0x800C4540
+
 /** @brief Player rotation speed.
  * More context is required for a name.
  */
@@ -445,11 +461,28 @@ extern q19_12 D_800C454C;
  */
 extern q19_12 D_800C4550;
 
-/** @brief Used to cancel the idle state if the Action or Run button is tapped. */
-extern s32 g_Player_HasActionInput;
+extern s16 D_800C4554; // Timer?
+
+extern s16 D_800C4556; // Timer?
 
 /** @brief Determines if the player is pressing a movement button or the right analog stick. */
 extern s32 g_Player_HasMoveInput;
+
+/** @brief Used to cancel the idle state if the Action or Run button is tapped. */
+extern s32 g_Player_HasActionInput;
+
+extern s8 D_800C4560;
+
+extern u8 g_Player_IsDead;
+
+/** `bool`
+ *
+ * @note Possibly inaccurrate name or buggy functionality. If enemies grab the
+ * player with this set to `true`, the user will be unable to interact with anything.
+ */
+extern u8 g_Player_DisableDamage;
+
+extern u8 pad_bss_800C4563[13];
 
 extern s_800AFBF4 g_Player_EquippedWeaponInfo;
 
@@ -475,6 +508,8 @@ extern s_800AFBF4 g_Player_EquippedWeaponInfo;
  */
 extern u8 D_800C457C;
 
+extern u8 pad_bss_800C457D;
+
 /** @brief Defines if the player is triggering the aiming action. */
 extern u16 g_Player_IsAiming;
 
@@ -490,11 +525,21 @@ extern u16 g_Player_IsTurningLeft;
 /** `bool` */
 extern u16 g_Player_IsTurningRight;
 
+extern u8 D_800C4588;
+
+extern s8 pad_bss_800C4589[7];
+
+/** Player instance of this struct. */
+extern s_800C4590 D_800C4590;
+
 /** `bool` */
 extern u16 g_Player_IsSteppingLeftHold;
 
 /** `bool` */
 extern u16 g_Player_IsSteppingRightHold;
+
+/** Q19.12 | Position. */
+extern VECTOR3 D_800C45B0; // Assumed type
 
 /** `bool` */
 extern u16 g_Player_IsHoldAttack;
@@ -505,28 +550,40 @@ extern u16 g_Player_IsAttacking;
 /** `bool` */
 extern u16 g_Player_IsShooting;
 
+extern s8 pad_bss_800C45C2[6];
+
+extern s_800C45C8 D_800C45C8;
+
+extern s8 pad_bss_800C45E0[8];
+
 /** `bool` */
 extern u16 g_Player_IsMovingForward;
+
+extern s8 pad_bss_800C45EA[2];
+
+/** Related to game difficulty. Maybe multiplier? */
+extern s32 D_800C45EC;
 
 /** `bool` */
 extern u16 g_Player_IsMovingBackward;
 
-/** @brief Defines if the player is triggering the running action. */
-extern u16 g_Player_IsRunning;
-
-extern q19_12 g_Player_HeadingAngle;
-
-/** `bool`
- *
- * @note Possibly inaccurrate name or buggy functionality. If enemies grab the
- * player with this set to `true`, the user will be unable to interact with anything.
- */
-extern u8 g_Player_DisableDamage;
-
-extern q19_12 D_800C45DC;
+extern s8 pad_bss_800C45F2[6];
 
 /** XZ player position copy. */
 extern VECTOR3 g_Player_PrevPosition;
+
+/** @brief Defines if the player is triggering the running action. */
+extern u16 g_Player_IsRunning;
+
+extern s16 pad_bss_800C4606;
+
+extern q19_12 g_Player_HeadingAngle;
+
+extern s32 pad_bss_800C460C;
+
+/** Displacement offset. */
+extern VECTOR3 D_800C4610;
+
 
 // ==========
 // FUNCTIONS

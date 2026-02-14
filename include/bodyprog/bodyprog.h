@@ -2582,32 +2582,11 @@ extern s_800C4418 D_800C4418;
 
 extern s16 D_800C4454;
 
-extern s_SubCharacter* D_800C4458;
-
-/** Array of active characters? */
-extern s_SubCharacter** D_800C4474;
-
 // emoose: Also works: `extern u16 D_800C4478[];`, `arg0->field_4 = D_800C4478[0];`.
 // Didn't see any array accesses in Ghidra though, struct might be more likely.
 extern s_800C4478 D_800C4478;
 
 extern s8 D_800C447A;
-
-extern s32 D_800C44D0;
-
-extern s32 D_800C44D4;
-
-extern s_PlayerCombat D_800C44E0;
-
-/** Table of player keyframe indices. Purpose unknown. */
-extern s_800C44F0 D_800C44F0[10];
-
-// Enemy target.
-extern VECTOR3 g_TargetEnemyPosition; // 0x800C4540
-
-extern s16 D_800C4554; // Timer?
-
-extern s16 D_800C4556; // Timer?
 
 extern s16 D_800AEEDC[][2]; // Type assumed.
 
@@ -2621,27 +2600,7 @@ extern s16 D_800AF070[]; // Type assumed.
 
 extern s16 D_800AF1FC[]; // Type assumed.
 
-extern u8 D_800C4588;
-
-/** Player instance of this struct. */
-extern s_800C4590 D_800C4590;
-
-/** Q19.12 | Position. */
-extern VECTOR3 D_800C45B0; // Assumed type
-
-extern s_800C45C8 D_800C45C8;
-
-/** Related to game difficulty. Maybe multiplier? */
-extern s32 D_800C45EC;
-
 extern u8 D_800C4606;
-
-/** Displacement offset. */
-extern VECTOR3 D_800C4610;
-
-extern s8 D_800C4560;
-
-extern u8 g_Player_IsDead;
 
 extern s_Collision D_800C4620;
 
