@@ -12,22 +12,13 @@
 #define F         18   /* upper limit for match_length */
 #define THRESHOLD 2    /* encode string into position and length if match_length is greater than this */
 
-extern u8*  g_Lzss_Window;
-extern bool g_Lzss_IsActive;
-extern u8*  g_Lzss_CurPosition;
-extern u8*  g_Lzss_OutPosition;
-extern s32  g_Lzss_WindowOffset;
-extern u8*  g_Lzss_EndPosition;
-extern s32  g_Lzss_CurFlag;
-
-u8*  g_Lzss_Window = FS_BUFFER_1;
-
-bool g_Lzss_IsActive;
-u8*  g_Lzss_CurPosition;
-u8*  g_Lzss_OutPosition;
-s32  g_Lzss_WindowOffset;
-u8*  g_Lzss_EndPosition;
-s32  g_Lzss_CurFlag;
+static u8*  g_Lzss_Window = FS_BUFFER_1;
+static bool g_Lzss_IsActive;
+static u8*  g_Lzss_CurPosition;
+static u8*  g_Lzss_OutPosition;
+static s32  g_Lzss_WindowOffset;
+static u8*  g_Lzss_EndPosition;
+static s32  g_Lzss_CurFlag;
 
 void Lzss_Reset(void) // 0x800CA234
 {
@@ -75,17 +66,17 @@ void Lzss_Decode(s32 timeLimit) // 0x800CA2C8
     s32 var_a1;
 
     s32 windowOffset; // `g_Lzss_WindowOffset`
-    u32 flag; // `g_Lzss_CurFlag`
+    u32 flag;         // `g_Lzss_CurFlag`
     s32 expectedTime;
 
     u32 temp_v0_2;
     u32 temp_v0_3;
     u32 temp_v1;
     
-    u8* curPos;  // `g_Lzss_CurPosition`
-    u8* endPos; // `g_Lzss_EndPosition`
+    u8* curPos;    // `g_Lzss_CurPosition`
+    u8* endPos;    // `g_Lzss_EndPosition`
     u8* windowPos;
-    u8* outPos; // `g_Lzss_OutPosition`
+    u8* outPos;    // `g_Lzss_OutPosition`
 
     if (g_Lzss_IsActive != true)
     {
