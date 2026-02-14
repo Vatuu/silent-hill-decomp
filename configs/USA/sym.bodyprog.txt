@@ -3109,29 +3109,29 @@ D_800C4449                                   = 0x800C4449; // type:u8
 //--- PA: 0x09F970   VA: 0x800C44D0   subsegment: .bss, bodyprog_800706E4
 //-----------------------------------------------------------------------
 D_800C44F0                                   = 0x800C44F0; // size:0x50
-g_TargetEnemyPosition                        = 0x800C4540; // defined:true
-g_Player_HasMoveInput                        = 0x800C4558; // defined:true
-g_Player_HasActionInput                      = 0x800C455C; // defined:true
-g_Player_IsDead                              = 0x800C4561; // defined:true
-g_Player_DisableDamage                       = 0x800C4562; // defined:true
+g_TargetEnemyPosition                        = 0x800C4540; 
+g_Player_HasMoveInput                        = 0x800C4558; 
+g_Player_HasActionInput                      = 0x800C455C; 
+g_Player_IsDead                              = 0x800C4561; 
+g_Player_DisableDamage                       = 0x800C4562; 
 g_Player_EquippedWeaponInfo                  = 0x800C4570; // size:12
-g_Player_IsAiming                            = 0x800C457E; // defined:true
-g_Player_IsSteppingLeftTap                   = 0x800C4580; // defined:true
-g_Player_IsSteppingRightTap                  = 0x800C4582; // defined:true
-g_Player_IsTurningLeft                       = 0x800C4584; // defined:true
-g_Player_IsTurningRight                      = 0x800C4586; // defined:true
+g_Player_IsAiming                            = 0x800C457E; 
+g_Player_IsSteppingLeftTap                   = 0x800C4580; 
+g_Player_IsSteppingRightTap                  = 0x800C4582; 
+g_Player_IsTurningLeft                       = 0x800C4584; 
+g_Player_IsTurningRight                      = 0x800C4586; 
 D_800C4590                                   = 0x800C4590; // size:0x1c
-g_Player_IsSteppingLeftHold                  = 0x800C45AC; // defined:true
-g_Player_IsSteppingRightHold                 = 0x800C45AE; // defined:true
+g_Player_IsSteppingLeftHold                  = 0x800C45AC; 
+g_Player_IsSteppingRightHold                 = 0x800C45AE; 
 D_800C45B0                                   = 0x800C45B0; // type:VECTOR3 size:0xC
-g_Player_IsHoldAttack                        = 0x800C45BC; // defined:true
-g_Player_IsAttacking                         = 0x800C45BE; // defined:true
-g_Player_IsShooting                          = 0x800C45C0; // defined:true
-g_Player_IsMovingForward                     = 0x800C45E8; // defined:true
-g_Player_IsMovingBackward                    = 0x800C45F0; // defined:true
-g_Player_PrevPosition                        = 0x800C45F8; // defined:true
-g_Player_IsRunning                           = 0x800C4604; // defined:true
-g_Player_HeadingAngle                        = 0x800C4608; // defined:true
+g_Player_IsHoldAttack                        = 0x800C45BC; 
+g_Player_IsAttacking                         = 0x800C45BE; 
+g_Player_IsShooting                          = 0x800C45C0; 
+g_Player_IsMovingForward                     = 0x800C45E8; 
+g_Player_IsMovingBackward                    = 0x800C45F0; 
+g_Player_PrevPosition                        = 0x800C45F8; 
+g_Player_IsRunning                           = 0x800C4604; 
+g_Player_HeadingAngle                        = 0x800C4608; 
 
 //------------------------------------------------------------------------
 //--- PA: 0x09FAC0   VA: 0x800C4620   subsegment: bss, bodyprog_800706E4_2
