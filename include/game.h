@@ -1408,7 +1408,7 @@ typedef struct _PropertiesHangedScratcher
 /** @brief Could be Incubus or Incubator. */
 typedef struct _PropertiesIncubus
 {
-    s32    field_E8;
+    s32    timer_E8;
     s32    field_EC;
     s32    someState_F0;
     q19_12 bossFightTimer_F4;

@@ -88,7 +88,7 @@ typedef struct _800F3DAC
     s32    field_0;
     u8     unk_4[4];
     q19_12 timer_8;
-    s32    field_C;
+    q19_12 timer_C;
     s32    field_10;
     s32    field_14; // Values seem like `FP_ANGLE`, but haven't confirmed how it's used yet.
     s32    field_18;
@@ -473,6 +473,8 @@ void func_800DD260(VECTOR3* arg0, VECTOR3* arg1);
 
 void func_800DD2C8(VECTOR3* arg0, VECTOR3* arg1);
 
+void func_800DD32C(VECTOR3* arg0, VECTOR3* arg1);
+
 void func_800DD3D4(void* arg0, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
 
 void func_800DD464(VECTOR3* arg0);
@@ -484,9 +486,10 @@ void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DD67C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void func_800DD6CC(void);
-
-void func_800DD7D0(VECTOR3*);
+void func_800DD738(VECTOR3* arg0, VECTOR3* arg1, s32 rotZ, s32 timer);
+void func_800DD7D0(VECTOR3* charaPos);
 void func_800DD868(void);
+void func_800DD8CC(VECTOR3* charaPos);
 s32  func_800DD964(void);
 void func_800DD98C(bool disableDamage);
 void func_800DD9B0(s_SubCharacter* chara);
@@ -510,6 +513,7 @@ void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 q19_12 func_800DEA90(void);
 
 void func_800DEAF4(s_SubCharacter* incubus);
+void func_800DEBA8(s_SubCharacter* incubus);
 void func_800DEC38(s_SubCharacter* incubus);
 void func_800DEC74(s_SubCharacter* incubus, GsCOORDINATE2* coord);
 void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* coord);

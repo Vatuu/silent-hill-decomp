@@ -1718,7 +1718,7 @@ void func_800DC3EC(s_800F3DAC* arg0) // 0x800DC3EC
     // TODO: Might be using some kind of `CLAMP` in this func, couldn't get match with our macros though.
     maxVal = arg0->field_18;
 
-    field20Val = ((arg0->field_C - arg0->timer_8) * 30) / (arg0->field_C / 2);
+    field20Val = ((arg0->timer_C - arg0->timer_8) * 30) / (arg0->timer_C / 2);
     // TODO: `field20Val = MIN(maxVal, field20Val)`?
     if (field20Val >= maxVal)
     {
@@ -1726,9 +1726,9 @@ void func_800DC3EC(s_800F3DAC* arg0) // 0x800DC3EC
     }
     arg0->field_20 = field20Val;
 
-    if (arg0->timer_8 < (arg0->field_C / 2))
+    if (arg0->timer_8 < (arg0->timer_C / 2))
     {
-        field1CVal = (((arg0->field_C / 2) - arg0->timer_8) * 30) / (arg0->field_C / 2);
+        field1CVal = (((arg0->timer_C / 2) - arg0->timer_8) * 30) / (arg0->timer_C / 2);
         // TODO: `field1CVal = MIN(maxVal, field1CVal)`?
         if (field1CVal >= maxVal)
         {
@@ -1928,7 +1928,7 @@ void func_800DD260(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD260
     {
         ptr->rotZ_4D8  = FP_ANGLE(43.2f);
         ptr->field_4E4 = 4;
-        ptr->field_C   = Q12(0.5f);
+        ptr->timer_C   = Q12(0.5f);
         ptr->timer_8   = Q12(0.5f);
         ptr->field_14  = FP_ANGLE(45.0f);
 
@@ -1945,7 +1945,7 @@ void func_800DD2C8(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD2C8
     {
         ptr->rotZ_4D8  = FP_ANGLE(180.0f);
         ptr->field_4E4 = 4;
-        ptr->field_C   = Q12(0.5f);
+        ptr->timer_C   = Q12(0.5f);
         ptr->timer_8   = Q12(0.5f);
         ptr->field_14  = FP_ANGLE(45.0f);
 
@@ -1953,7 +1953,32 @@ void func_800DD2C8(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD2C8
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD32C);
+void func_800DD32C(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD32C
+{
+    s_800F3DAC*   retPtr;
+    s_D_800F48A8* ptr;
+
+    ptr    = &D_800F48A8;
+    retPtr = func_800DD090();
+    if (retPtr != NULL)
+    {
+        retPtr->field_4F0 = func_800DC49C;
+        retPtr->rotZ_4D8  = FP_ANGLE(216.0f);
+        retPtr->field_4E4 = 6;
+        retPtr->timer_C   = Q12(2.0f);
+        retPtr->timer_8   = Q12(2.0f);
+        retPtr->field_14  = FP_ANGLE(45.0f);
+
+        func_800DCDDC(retPtr, arg0, arg1);
+
+        if (ptr->field_48 == 0)
+        {
+            func_800DBAE8(arg0, 0);
+        }
+
+        func_800DBAE8(arg0, 2);
+    }
+}
 
 void func_800DD3D4(void* arg0, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0x800DD3D4
 {
@@ -1979,7 +2004,7 @@ void func_800DD464(VECTOR3* arg0) // 0x800DD464
         ptr->field_4F0 = func_800DC49C;
         ptr->rotZ_4D8  = FP_ANGLE(90.0f);
         ptr->field_4E4 = 2;
-        ptr->field_C   = Q12(1.5f);
+        ptr->timer_C   = Q12(1.5f);
         ptr->timer_8   = Q12(1.5f);
         ptr->field_14  = FP_ANGLE(20.0f);
 
@@ -2050,9 +2075,52 @@ void func_800DD6CC(void) // 0x800DD6CC
     func_800D917C();
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD738);
+void func_800DD738(VECTOR3* arg0, VECTOR3* arg1, s32 rotZ, s32 timer) // 0x800DD738
+{
+    s_800F3DAC* ptr;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD7D0);
+    ptr = func_800DD090();
+    if (ptr != NULL)
+    {
+        ptr->field_4E4 = 7;
+        ptr->rotZ_4D8  = rotZ;
+        ptr->timer_C   = timer;
+        ptr->timer_8   = timer;
+        ptr->field_14  = FP_ANGLE(45.0f);
+
+        func_800DCDDC(ptr, arg0, arg1);
+
+        if (rotZ > FP_ANGLE(108.0f))
+        {
+            func_800DBAE8(arg0, 0);
+        }
+        else
+        {
+            func_800DBAE8(arg0, 4);
+        }
+    }
+}
+
+void func_800DD7D0(VECTOR3* charaPos) // 0x800DD7D0
+{
+    s32           gridX;
+    s32           gridZ;
+    s_D_800F48A8* ptr;
+
+    ptr = &D_800F48A8;
+
+    // TODO: Possibly an inline/macro, based on needing separate `s_D_800F48A8*`
+    gridX            = (charaPos->vx / Q12(64.0f)) * Q12(64.0f);
+    gridZ            = (charaPos->vz / Q12(64.0f)) * Q12(64.0f);
+    ptr->positionX_0 = gridX;
+    ptr->positionZ_4 = gridZ;
+
+    ptr->playerPosition_30 = g_SysWork.playerWork_4C.player_0.position_18;
+    ptr->field_44          = 1;
+    ptr->field_48          = 2;
+
+    func_800DCFF8();
+}
 
 void func_800DD868(void) // 0x800DD868
 {
@@ -2070,7 +2138,26 @@ void func_800DD868(void) // 0x800DD868
     func_800DC544(ot);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD8CC);
+void func_800DD8CC(VECTOR3* charaPos) // 0x800DD8CC
+{
+    s32           gridX;
+    s32           gridZ;
+    s_D_800F48A8* ptr;
+
+    ptr = &D_800F48A8;
+
+    // TODO: Possibly an inline/macro, based on needing separate `s_D_800F48A8*`
+    gridX            = (charaPos->vx / Q12(64.0f)) * Q12(64.0f);
+    gridZ            = (charaPos->vz / Q12(64.0f)) * Q12(64.0f);
+    ptr->positionX_0 = gridX;
+    ptr->positionZ_4 = gridZ;
+
+    ptr->playerPosition_30 = g_SysWork.playerWork_4C.player_0.position_18;
+    ptr->field_44          = 1;
+    ptr->field_48          = 2;
+
+    func_800DD044();
+}
 
 s32 func_800DD964(void) // 0x8007F250
 {
@@ -2309,11 +2396,9 @@ q19_12 func_800DEA90(void) // 0x800DEA90
 
 void func_800DEAF4(s_SubCharacter* incubus) // 0x800DEAF4
 {
-    // TODO: Wrong union members used here.
-
     if (incubus->model_0.stateStep_3 == IncubusStateStep_0)
     {
-        incubus->properties_E4.player.afkTimer_E8 = func_800DEA90();
+        incubus->properties_E4.incubus.timer_E8 = func_800DEA90();
         incubus->model_0.stateStep_3++;
         return;
     }
@@ -2324,7 +2409,7 @@ void func_800DEAF4(s_SubCharacter* incubus) // 0x800DEAF4
     switch (incubus->model_0.stateStep_3)
     {
         case IncubusStateStep_1:
-            if (incubus->properties_E4.player.afkTimer_E8 <= Q12(0.0f))
+            if (incubus->properties_E4.incubus.timer_E8 <= Q12(0.0f))
             {
                 incubus->model_0.stateStep_3 = IncubusStateStep_2;
             }
@@ -2336,10 +2421,35 @@ void func_800DEAF4(s_SubCharacter* incubus) // 0x800DEAF4
             break;
     }
 
-    incubus->properties_E4.player.afkTimer_E8 -= g_DeltaTime0;
+    incubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DEBA8);
+void func_800DEBA8(s_SubCharacter* incubus) // 0x800DEBA8
+{
+    s_SubCharacter* localIncubus = incubus;
+
+    if (incubus->model_0.stateStep_3 == IncubusStateStep_0)
+    {
+        if (incubus->model_0.anim_4.status_0 != ANIM_STATUS(IncubusAnim_3, true))
+        {
+            incubus->model_0.anim_4.status_0 = ANIM_STATUS(IncubusAnim_3, false);
+        }
+
+        incubus->properties_E4.incubus.timer_E8 = Q12(0.5f);
+        incubus->model_0.stateStep_3++;
+    }
+    else
+    {
+        if (incubus->properties_E4.incubus.timer_E8 < 0)
+        {
+            Savegame_EventFlagSet(EventFlag_578);
+            incubus->model_0.controlState_2 = IncubusControl_13;
+            incubus->model_0.stateStep_3    = IncubusStateStep_0;
+        }
+
+        localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+    }
+}
 
 void func_800DEC38(s_SubCharacter* incubus) // 0x800DEC38
 {
@@ -2699,7 +2809,7 @@ void func_800E0528(s_SubCharacter* chara) // 0x800E0528
 
     if (chara->model_0.stateStep_3 == 0)
     {
-        chara->properties_E4.player.afkTimer_E8 = func_800E04C4();
+        chara->properties_E4.incubus.timer_E8 = func_800E04C4();
         chara->model_0.stateStep_3++;
         return;
     }
@@ -2709,7 +2819,7 @@ void func_800E0528(s_SubCharacter* chara) // 0x800E0528
     switch (chara->model_0.stateStep_3)
     {
         case 1:
-            if (chara->properties_E4.player.afkTimer_E8 <= Q12(0.0f))
+            if (chara->properties_E4.incubus.timer_E8 <= Q12(0.0f))
             {
                 chara->model_0.stateStep_3 = 2;
             }
@@ -2721,7 +2831,7 @@ void func_800E0528(s_SubCharacter* chara) // 0x800E0528
             break;
     }
 
-    chara->properties_E4.player.afkTimer_E8 -= g_DeltaTime0;
+    chara->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
 }
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E05DC);
