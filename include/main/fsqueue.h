@@ -48,6 +48,7 @@
 #define FS_BUFFER_23     (u_int*)0x801A2200
 #define FS_BUFFER_24     (void*)0x801A0600
 #define FS_BUFFER_25     (void*)0x80167600
+#define FS_BUFFER_26     (void*)0x8018C600
 
 #define IMAGE_BUFFER   (u_long*)0x801AFA00
 #define IMAGE_BUFFER_0 (u_long*)0x801CFA00

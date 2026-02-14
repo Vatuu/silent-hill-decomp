@@ -1,3 +1,5 @@
+#include <memory.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/math/math.h"
 #include "bodyprog/memcard.h"
@@ -1585,7 +1587,16 @@ s_800F3D48* func_800D905C(void) // 0x800D905C
     return NULL;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D90C8);
+void func_800D90C8(void) // 0x800D90C8
+{
+    s_800F3D58* ptr;
+
+    ptr = &D_800F3D58;
+
+    func_80049C2C(&ptr->mat_10, ptr->field_0.vx, 0, ptr->field_0.vz);
+    SetRotMatrix(&ptr->mat_10);
+    SetTransMatrix(&ptr->mat_10);
+}
 
 void func_800D9114(s_800F3D48* arg0) // 0x800D9114
 {
@@ -1694,6 +1705,7 @@ q19_12 func_800DA08C(s32 arg0, q19_12 arg1, q19_12 arg2) // 0x800DA08C
             // TODO: Unsure what 0x6486 is meant to be.
             // 0x6486 = Q12(6.2828f), while sqrt(6.2828) is 2.50655141579
             // Q12(SQUARE(2.5f)) is very close, but gives 0x6400 instead of 0x6486...
+            // Maybe 6.2828 is approximation of PI*2? Doesn't work with our PI macro though.
             scaledArg0 = Q12_MULT_PRECISE(Q12_MULT_PRECISE(arg0, arg0), 0x6486);
             scaledArg1 = Q12_MULT_PRECISE(Q12_MULT_PRECISE(arg1, arg1), 0x6486);
             return scaledArg1 - scaledArg0;
@@ -2849,7 +2861,7 @@ void func_800DF7F8(void) // 0x800DF7F8
     memset(0x8018CB54, 0, 0x29);
 }
 
-void func_800DF84C(VECTOR* arg0, s16 arg1) // 0x800DF84C
+void func_800DF84C(VECTOR* arg0, s32 arg1) // 0x800DF84C
 {
     MATRIX  mat;
     VECTOR  vec;
@@ -2882,11 +2894,72 @@ s32 func_800DF90C(void) // 0x800DF90C
     return RotTransPers(&sp10, &sp18, &sp18, &sp18);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF944);
+void func_800DF944(void) // 0x800DF944
+{
+    s_func_800DFA48* ptr;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DFA14);
+    ptr = FS_BUFFER_26;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DFA48);
+    switch (D_800F3DB8)
+    {
+        case 0:
+            break;
+
+        case 1:
+            func_800DF7F8();
+            func_800DF1D4();
+            D_800F3DB8++;
+
+        default:
+            func_800DF84C(&ptr->field_4, ptr->field_588);
+            ptr->field_584 = func_800DF90C();
+
+            if (g_DeltaTime0 != Q12(0.0f))
+            {
+                func_800DF348();
+                func_800DF750();
+            }
+
+            func_800DF458();
+
+            D_800F3DB8 += g_DeltaTime0;
+            if (D_800F3DB8 > Q12(1.5f))
+            {
+                D_800F3DB8 = 0;
+            }
+            break;
+    }
+}
+
+void func_800DFA14(void) // 0x800DFA14
+{
+    D_800F3DB8 = 0;
+    memset(FS_BUFFER_26, 0xA7, 0x1CFC);
+}
+
+void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
+{
+    s_func_800DFA48* ptr;
+    s32              angle;
+
+    ptr = FS_BUFFER_26;
+
+    // TODO: Some kind of inline/macro that sets `attackReceived_41` on a chara?
+    (&g_SysWork.playerWork_4C.player_0)->attackReceived_41 = 0x44;
+
+    angle                                                    = ratan2(arg0->vx - arg1->vx, arg0->vz - arg1->vz);
+    g_SysWork.playerWork_4C.player_0.damage_B4.amount_C      = 1;
+    g_SysWork.playerWork_4C.player_0.damage_B4.position_0.vy = angle;
+    ptr->field_588                                           = angle;
+
+    D_800F3DB8 = 1;
+
+    ptr->field_4.vx = Q12_TO_Q8(arg0->vx);
+    ptr->field_4.vy = Q12_TO_Q8(arg0->vy) - Q8(1.3f);
+    ptr->field_4.vz = Q12_TO_Q8(arg0->vz);
+
+    func_8005DC1C(Sfx_Unk1673, &g_SysWork.playerWork_4C.player_0.position_18, Q8(0.5f), 0);
+}
 
 s32 func_800DFB04(void) // 0x800DFB04
 {
@@ -3332,7 +3405,17 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E14DC);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E16FC);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E1788);
+void func_800E1788(s32 arg0) // 0x800E1788
+{
+    if (arg0 != D_800F4B40.field_0)
+    {
+        D_800F4B40.field_0  = arg0;
+        D_800F4B40.field_4  = 0;
+        D_800F4B40.field_8  = 0;
+        D_800F4B40.field_C  = 0;
+        D_800F4B40.field_10 = 0;
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E17B8);
 

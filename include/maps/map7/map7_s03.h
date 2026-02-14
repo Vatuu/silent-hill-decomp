@@ -207,6 +207,31 @@ typedef struct
     s_func_800D71B0_498 field_498[200];
 } s_func_800D71B0;
 
+typedef struct
+{
+    u8      unk_0[4];
+    VECTOR3 field_4;
+    u8      unk_10[0x574];
+    s32     field_584;
+    s32     field_588;
+} s_func_800DFA48;
+
+typedef struct
+{
+    s32 field_0;
+    s32 field_4;
+    s32 field_8;
+    s32 field_C;
+    s32 field_10;
+} s_800F4B40;
+
+typedef struct
+{
+    VECTOR3 field_0;
+    u8      unk_C[4];
+    MATRIX  mat_10;
+} s_800F3D58;
+
 extern s32 D_800F2438; // Length of `D_800F3D48` array.
 
 extern s_800F3D48* D_800F3D48;
@@ -214,6 +239,8 @@ extern s_800F3D48* D_800F3D48;
 extern s_800F3DAC* D_800F3DAC; // Pointer to `s_800F3DAC[30]`.
 
 extern q19_12 D_800F3DB4; // Timer.
+
+extern q19_12 D_800F3DB8; // Timer.
 
 extern s_D_800F48A8 D_800F48A8;
 
@@ -347,6 +374,10 @@ extern s32 D_800EB810;
 
 extern s32 D_800EB814[];
 
+extern s_800F3D58 D_800F3D58;
+
+extern s_800F4B40 D_800F4B40;
+
 void Ai_BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void func_800D3740(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords);
@@ -420,6 +451,8 @@ void func_800D88D8(void);
 s_800F3D48_0* func_800D88E8(s_800F3D48* arg0);
 
 s_800F3D48* func_800D905C(void);
+
+void func_800D90C8(void);
 
 void func_800D9114(s_800F3D48* arg0);
 
@@ -535,10 +568,12 @@ void func_800DF074(s_SubCharacter* incubus);
 void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800DF7F8(void);
-void func_800DF84C(VECTOR* arg0, s16 arg1);
+void func_800DF84C(VECTOR* arg0, s32 arg1);
 s32  func_800DF90C(void);
+void func_800DF944(void);
 void func_800DFA14(void);
-s32 func_800DFB04(void);
+void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1);
+s32  func_800DFB04(void);
 void func_800DFB2C(bool disableDamage);
 void func_800DFB50(s_SubCharacter* chara);
 void func_800DFB74(s_SubCharacter* chara);
@@ -571,7 +606,7 @@ void func_800E14D4(void);
 
 void func_800E14DC(s_PlayerWork*, s_SubCharacter*, bool);
 
-void func_800E1788(s32);
+void func_800E1788(s32 arg0);
 
 q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target);
 
