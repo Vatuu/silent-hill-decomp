@@ -2276,4 +2276,22 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
     (chara)->damage_B4.position_0.vy = Q12(0.0f); \
     (chara)->damage_B4.position_0.vx = Q12(0.0f)
 
+/** @brief Sets a characters attack-type-received field.
+ *
+ * TODO: Could make this use WEAPON_ATTACK macro, and take the values needed for that instead.
+ * (maybe devs did similar thing, which is why this separate macro/inline is needed for match?)
+ *
+ * @param chara Character to update.
+ * @param val Attack type to set.
+ */
+#define Chara_AttackReceivedSet(chara, val) \
+    (chara)->attackReceived_41 = (val)
+
+/** @brief Gets a characters attack-type-received field.
+ *
+ * @param chara Character to read from.
+ */
+#define Chara_AttackReceivedGet(chara) \
+    (chara)->attackReceived_41
+
 #endif

@@ -2944,8 +2944,8 @@ void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
 
     ptr = FS_BUFFER_26;
 
-    // TODO: Some kind of inline/macro that sets `attackReceived_41` on a chara?
-    (&g_SysWork.playerWork_4C.player_0)->attackReceived_41 = 0x44;
+    // TODO: Decode into `WEAPON_ATTACK` macro.
+    Chara_AttackReceivedSet(&g_SysWork.playerWork_4C.player_0, 0x44);
 
     angle                                                    = ratan2(arg0->vx - arg1->vx, arg0->vz - arg1->vz);
     g_SysWork.playerWork_4C.player_0.damage_B4.amount_C      = 1;

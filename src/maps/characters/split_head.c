@@ -1690,8 +1690,10 @@ void sharedFunc_800D3B30_1_s05(s_SubCharacter* splitHead)
                 sp28.field_0 < var_v1_3 &&
                 !(splitHeadProps.flags_E8 & SplitHeadFlag_9))
             {
-                (&g_SysWork.playerWork_4C)->player_0.attackReceived_41 = WEAPON_ATTACK(EquippedWeaponId_Unk37, AttackInputType_Hold);
-                splitHeadProps.flags_E8           |= SplitHeadFlag_1 | SplitHeadFlag_9;
+                Chara_AttackReceivedSet(&g_SysWork.playerWork_4C.player_0, WEAPON_ATTACK(EquippedWeaponId_Unk37, AttackInputType_Hold));
+
+                splitHeadProps.flags_E8 |= SplitHeadFlag_1 | SplitHeadFlag_9;
+
                 func_8005DC1C(Sfx_Unk1473, &g_SysWork.playerWork_4C.player_0.position_18, Q8(0.999f), 2);
             }
         }

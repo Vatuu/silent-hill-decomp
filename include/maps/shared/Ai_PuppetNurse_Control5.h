@@ -40,7 +40,7 @@ void Ai_PuppetNurse_Control5(s_SubCharacter* nurse)
     }
     else if (controlState == 2)
     {
-        if ((&g_SysWork.playerWork_4C.player_0)->attackReceived_41 == NO_VALUE)
+        if (Chara_AttackReceivedGet(&g_SysWork.playerWork_4C.player_0) == NO_VALUE)
         {
             nurse->model_0.controlState_2 = PuppetNurseControl_8;
             nurse->model_0.stateStep_3 = 0;

@@ -319,7 +319,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                             g_SysWork.playerWork_4C.player_0.field_40 = Chara_NpcIdxGet(larvalStalker);
                         }
 
-                        g_SysWork.playerWork_4C.player_0.attackReceived_41 = WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap);
+                        Chara_AttackReceivedSet(&g_SysWork.playerWork_4C.player_0, WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap));
                         g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += (FP_TO(D_800AD4C8[WEAPON_ATTACK(EquippedWeaponId_Handgun, AttackInputType_Multitap)].field_4, Q12_SHIFT) * ((Rng_Rand16() & 0x1F) + 0x55)) / 100;
                     }
                 }
@@ -368,7 +368,7 @@ void Ai_LarvalStalker_ControlUpdate(s_SubCharacter* larvalStalker)
                     }
                 }
 
-                if ((&g_SysWork.playerWork_4C.player_0)->attackReceived_41 == NO_VALUE)
+                if (Chara_AttackReceivedGet(&g_SysWork.playerWork_4C.player_0) == NO_VALUE)
                 {
                     g_SysWork.field_2284[3] &= ~(1 << 0);
                     larvalStalker->model_0.anim_4.status_0 = ANIM_STATUS(LarvalStalkerAnim_5, false);
