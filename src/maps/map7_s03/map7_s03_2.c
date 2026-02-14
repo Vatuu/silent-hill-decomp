@@ -1638,7 +1638,28 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DB288);
 
 #include "maps/shared/sharedFunc_800CD940_3_s03.h" // 0x800DB5C8
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DB608);
+void func_800DB608(void) // 0x800DB608
+{
+    s_D_800F48A8* ptr;
+    q19_12        speed;
+
+    ptr = &D_800F48A8;
+
+    if (g_DeltaTime0 != Q12(0.0f))
+    {
+        speed = (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy) ? Q12(0.2f) : Q12(0.7f);
+
+        // Velocity value based on previously saved player position?
+        ptr->velocityX_3C      = ((g_SysWork.playerWork_4C.player_0.position_18.vx - ptr->playerPosition_30.vx) * speed) / g_DeltaTime0;
+        ptr->velocityZ_40      = ((g_SysWork.playerWork_4C.player_0.position_18.vz - ptr->playerPosition_30.vz) * speed) / g_DeltaTime0;
+        ptr->playerPosition_30 = g_SysWork.playerWork_4C.player_0.position_18;
+    }
+    else
+    {
+        ptr->velocityX_3C = Q12(0.0f);
+        ptr->velocityZ_40 = Q12(0.0f);
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DB6D0);
 
@@ -2012,7 +2033,28 @@ void func_800DD464(VECTOR3* arg0) // 0x800DD464
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD4CC);
+void func_800DD4CC(s_800F3DAC* arg0) // 0x800DD4CC
+{
+    VECTOR3 vec0;
+    VECTOR3 vec1;
+    MATRIX  mat;
+    s32     temp_v1;
+
+    if (arg0->field_4E4 == 3)
+    {
+        temp_v1 = arg0->field_18 - 1;
+        vec0.vx = Q8_TO_Q12(arg0->mat_118[temp_v1].t[0]) + D_800F48A8.positionX_0;
+        vec0.vy = Q8_TO_Q12(arg0->mat_118[temp_v1].t[1]);
+        vec0.vz = Q8_TO_Q12(arg0->mat_118[temp_v1].t[2]) + D_800F48A8.positionZ_4;
+
+        Vw_CoordHierarchyMatrixCompute(&D_800F48A8.coords_2C[arg0->coordIdx_4EC], &mat);
+        vec1.vx = Q8_TO_Q12(mat.t[0]);
+        vec1.vy = Q8_TO_Q12(mat.t[1]);
+        vec1.vz = Q8_TO_Q12(mat.t[2]);
+
+        func_800DD260(&vec0, &vec1);
+    }
+}
 
 void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s32 arg3) // 0x800DD594
 {
@@ -2479,7 +2521,25 @@ void func_800DEE44(s_SubCharacter* incubus) // 0x800DEE44
     incubus->rotation_24.vy = func_8005BF38(incubus->rotation_24.vy);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DEE90);
+void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DEE90
+{
+    s32 origVal;
+    s32 newVal;
+
+    Math_MatrixTransform(&incubus->position_18, &incubus->rotation_24, coords);
+
+    origVal = func_800DDBA4(FP_FROM(incubus->model_0.anim_4.time_4, Q12_SHIFT));
+    if (incubus->model_0.anim_4.status_0 != 0)
+    {
+        INCUBUS_ANIM_INFOS[incubus->model_0.anim_4.status_0].updateFunc_0(&incubus->model_0, anmHdr, coords, &INCUBUS_ANIM_INFOS[incubus->model_0.anim_4.status_0]);
+    }
+
+    newVal = func_800DDBA4(FP_FROM(incubus->model_0.anim_4.time_4, Q12_SHIFT));
+    if (newVal != 13 && newVal != origVal)
+    {
+        func_800DDB68(incubus, newVal);
+    }
+}
 
 void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEF50
 {
@@ -2594,7 +2654,27 @@ void func_800DF7F8(void) // 0x800DF7F8
     memset(0x8018CB54, 0, 0x29);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF84C);
+void func_800DF84C(VECTOR* arg0, s16 arg1) // 0x800DF84C
+{
+    MATRIX  mat;
+    VECTOR  vec;
+    SVECTOR svec;
+
+    SetRotMatrix(&GsWSMATRIX);
+    SetTransMatrix(&GsWSMATRIX);
+
+    ApplyRotMatrixLV(arg0, &vec);
+
+    vec.vx += GsWSMATRIX.t[0];
+    vec.vy += GsWSMATRIX.t[1];
+    vec.vz += GsWSMATRIX.t[2];
+    TransMatrix(&mat, &vec);
+    SetTransMatrix(&mat);
+
+    Math_SVectorSet(&svec, 0, arg1, 0);
+    Math_RotMatrixZxyNeg(&svec, &mat);
+    SetMulRotMatrix(&mat);
+}
 
 s32 func_800DF90C(void) // 0x800DF90C
 {
@@ -3479,7 +3559,35 @@ void func_800E3B6C(void) // 0x800E3B6C
     func_800E2E90();
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E3C48);
+void func_800E3C48(void) // 0x800E3C48
+{
+    switch (D_800F4805)
+    {
+        case 0:
+            if (Savegame_EventFlagGet(EventFlag_449))
+            {
+                func_800E787C();
+                Savegame_EventFlagSet(EventFlag_583);
+                Savegame_EventFlagSet(EventFlag_587);
+            }
+            else
+            {
+                func_800E86BC();
+                Savegame_EventFlagSet(EventFlag_585);
+                Savegame_EventFlagSet(EventFlag_587);
+            }
+            g_SysWork.playerWork_4C.player_0.health_B0 = Q12(100.0f);
+            break;
+
+        default:
+            SysWork_StateSetNext(SysState_Gameplay);
+            D_800F4805 = 0;
+            break;
+    }
+
+    D_800C48F0 += g_VBlanks;
+    func_800E2E90();
+}
 
 void func_800E3D18(void) // 0x800E3D18
 {

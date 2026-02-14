@@ -105,7 +105,7 @@ typedef struct _800F3DAC
     u8     unk_4DC[8];
     s32    field_4E4;
     s32    field_4E8;
-    u8     unk_4EC[4];
+    s32    coordIdx_4EC;
     void   (*field_4F0)(struct _800F3DAC*);
     s32    field_4F4;
 } s_800F3DAC;
@@ -120,7 +120,8 @@ typedef struct
     s_SubCharacter* field_28;
     GsCOORDINATE2*  coords_2C;
     VECTOR3         playerPosition_30;
-    u8              unk_3C[8];
+    q19_12          velocityX_3C; // } Some kind of velocity based on `playerChara.position_18` - `this.playerPosition_30`
+    q19_12          velocityZ_40; // }
     s32             field_44;
     s32             field_48;
 } s_D_800F48A8;
@@ -479,6 +480,8 @@ void func_800DD3D4(void* arg0, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
 
 void func_800DD464(VECTOR3* arg0);
 
+void func_800DD4CC(s_800F3DAC* arg0);
+
 void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s32 arg3);
 
 void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
@@ -518,7 +521,7 @@ void func_800DEC38(s_SubCharacter* incubus);
 void func_800DEC74(s_SubCharacter* incubus, GsCOORDINATE2* coord);
 void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* coord);
 void func_800DEE44(s_SubCharacter* incubus);
-void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr,  GsCOORDINATE2* coord);
+void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DEFE8(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* coords);
@@ -526,6 +529,7 @@ void func_800DF074(s_SubCharacter* incubus);
 void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800DF7F8(void);
+void func_800DF84C(VECTOR* arg0, s16 arg1);
 s32  func_800DF90C(void);
 void func_800DFA14(void);
 s32 func_800DFB04(void);
@@ -572,6 +576,8 @@ void func_800E2E90(void);
 void func_800E3390(void);
 
 void func_800E3B6C(void);
+
+void func_800E3C48(void);
 
 void func_800E3D18(void);
 
