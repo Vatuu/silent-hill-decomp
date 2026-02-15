@@ -36,7 +36,9 @@ typedef enum _IncubusStateStep
 {
     IncubusStateStep_0 = 0,
     IncubusStateStep_1 = 1,
-    IncubusStateStep_2 = 2
+    IncubusStateStep_2 = 2,
+    IncubusStateStep_3 = 3,
+    IncubusStateStep_4 = 4
 } e_IncubusStateStep;
 
 #endif

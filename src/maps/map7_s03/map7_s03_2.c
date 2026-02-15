@@ -1502,7 +1502,21 @@ void func_800D87D4(void* ot) // 0x800D87D4
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8858);
+void func_800D8858(s32 arg0) // 0x800D8858
+{
+    GsOT_TAG* ot;
+    s32       bufferIdx;
+
+    if (arg0 < 3)
+    {
+        bufferIdx = g_ActiveBufferIdx;
+        ot        = g_OrderingTable0[bufferIdx].org;
+        ot        = &ot[300];
+
+        func_800D7BF4(&D_800EC018[arg0], 0);
+        func_800D87D4(ot);
+    }
+}
 
 void func_800D88C4(void) // 0x800D88C4
 {
@@ -1653,7 +1667,28 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D947C);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D952C);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D95D4);
+s_800F3D48_0* func_800D95D4(s_800F3D48* arg0) // 0x800D95D4
+{
+    s_800F3D48_0* result;
+
+    arg0->field_4.field_18.vx += Q12_MULT_PRECISE(arg0->field_4.field_28.vx, g_DeltaTime0);
+    arg0->field_4.field_18.vy += Q12_MULT_PRECISE(arg0->field_4.field_28.vy, g_DeltaTime0);
+    arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_28.vz, g_DeltaTime0);
+
+    result = func_800D88E8(arg0);
+
+    if (arg0->ptr_0->field_8 == 2)
+    {
+        arg0->field_4.field_4 = 0;
+        arg0->field_4.field_6 = 0;
+    }
+
+    arg0->field_4.field_28.vx = Q12_MULT_FLOAT_PRECISE(arg0->field_4.field_28.vx, 0.8f);
+    arg0->field_4.field_28.vy = Q12_MULT_FLOAT_PRECISE(arg0->field_4.field_28.vy, 0.8f);
+    arg0->field_4.field_28.vz = Q12_MULT_FLOAT_PRECISE(arg0->field_4.field_28.vz, 0.8f);
+
+    return result;
+}
 
 s_800F3D48_0* func_800D9740(s_800F3D48* arg0) // 0x800D9740
 {
@@ -2565,7 +2600,59 @@ void func_800DDDB0(s_SubCharacter* incubus) // 0x800DDDB0
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DDDD8);
+void func_800DDDD8(s_SubCharacter* incubus) // 0x800DDDD8
+{
+    s_SubCharacter* localIncubus;
+
+    localIncubus = incubus;
+
+    if (incubus->model_0.stateStep_3 == IncubusStateStep_0)
+    {
+        incubus->model_0.anim_4.status_0        = ANIM_STATUS(IncubusAnim_2, false);
+        incubus->properties_E4.incubus.timer_E8 = Q12(0.0f);
+        incubus->model_0.stateStep_3++;
+        return;
+    }
+
+    switch (incubus->model_0.stateStep_3)
+    {
+        case IncubusStateStep_1:
+            if (incubus->properties_E4.incubus.timer_E8 >= Q12(1.5f))
+            {
+                incubus->model_0.stateStep_3 = 2;
+            }
+            break;
+
+        case IncubusStateStep_2:
+            if (incubus->properties_E4.incubus.timer_E8 >= Q12(2.5f))
+            {
+                incubus->model_0.stateStep_3 = 3;
+            }
+            break;
+
+        case IncubusStateStep_3:
+            if (incubus->properties_E4.incubus.timer_E8 >= Q12(3.5f))
+            {
+                incubus->model_0.stateStep_3 = 4;
+            }
+            break;
+
+        case IncubusStateStep_4:
+            if (incubus->properties_E4.incubus.timer_E8 >= Q12(4.5f))
+            {
+                incubus->model_0.stateStep_3 = 5;
+            }
+            break;
+    }
+
+    if (incubus->model_0.anim_4.status_0 == ANIM_STATUS(4, false))
+    {
+        incubus->model_0.controlState_2 = IncubusControl_5;
+        incubus->model_0.stateStep_3    = 0;
+    }
+
+    localIncubus->properties_E4.incubus.timer_E8 += g_DeltaTime0;
+}
 
 void func_800DDEEC(s_SubCharacter* incubus) // 0x800DDEEC
 {
@@ -2597,8 +2684,8 @@ void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEA54
 {
     func_800DDB3C(incubus, coords);
 
-    incubus->model_0.controlState_2     = ANIM_STATUS(IncubusAnim_5, true);
-    incubus->model_0.stateStep_3 = IncubusStateStep_0;
+    incubus->model_0.controlState_2             = IncubusControl_11;
+    incubus->model_0.stateStep_3                = IncubusStateStep_0;
     incubus->properties_E4.player.positionY_EC |= 1 << 2;
 }
 
@@ -2640,8 +2727,8 @@ void func_800DEAF4(s_SubCharacter* incubus) // 0x800DEAF4
             break;
 
         case IncubusStateStep_2:
-            incubus->model_0.controlState_2     =  IncubusControl_7;
-            incubus->model_0.stateStep_3 = IncubusStateStep_0;
+            incubus->model_0.controlState_2 = IncubusControl_7;
+            incubus->model_0.stateStep_3    = IncubusStateStep_0;
             break;
     }
 

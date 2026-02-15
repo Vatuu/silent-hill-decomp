@@ -374,6 +374,8 @@ extern s32 D_800EB810;
 
 extern s32 D_800EB814[];
 
+extern VECTOR D_800EC018[];
+
 extern s_800F3D58 D_800F3D58;
 
 extern s_800F4B40 D_800F4B40;
@@ -440,7 +442,7 @@ void func_800D8738(void* ot, s32 abr);
 
 void func_800D87D4(void* ot);
 
-void func_800D8858(s32);
+void func_800D8858(s32 arg0);
 
 void func_800D88C4(void);
 
@@ -461,6 +463,8 @@ void func_800D9394(void);
 void func_800D947C(void);
 
 void func_800D952C(void);
+
+s_800F3D48_0* func_800D95D4(s_800F3D48* arg0);
 
 s_800F3D48_0* func_800D9740(s_800F3D48* arg0);
 
@@ -548,6 +552,7 @@ s32 func_800DDBA4(s32 idx);
 void func_800DDBBC(s_SubCharacter* incubus);
 void func_800DDCC4(s_SubCharacter* incubus);
 void func_800DDDB0(s_SubCharacter* incubus);
+void func_800DDDD8(s_SubCharacter* incubus);
 void func_800DDEEC(s_SubCharacter* incubus);
 void func_800DDF14(s_SubCharacter* incubus);
 void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* coords);
