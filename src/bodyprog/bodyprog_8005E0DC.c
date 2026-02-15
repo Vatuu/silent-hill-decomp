@@ -7105,7 +7105,7 @@ s32 func_8006F620(VECTOR3* pos, s_func_8006AB50* arg1, s32 arg2, s32 arg3) // 0x
     s32              max1;
     s32              temp_s0_3;
     s32              mag0;
-    s32              angle;
+    q19_12           angle;
     s32              var_s2;
     s32              i;
     q19_12           posX;

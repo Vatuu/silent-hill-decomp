@@ -63,7 +63,7 @@ typedef struct
     VECTOR3 field_18;
     u8      unk_24[4];
     VECTOR3 field_28;
-    u8      unk_34[0x8];
+    u8      unk_34[8];
     s32     field_3C;
     s32     field_40;
     u8      unk_44[8];
@@ -92,7 +92,7 @@ typedef struct _800F3DAC
     q19_12 timer_8;
     q19_12 timer_C;
     s32    field_10;
-    s32    field_14; // Values seem like `FP_ANGLE`, but haven't confirmed how it's used yet.
+    q19_12 field_14; // Values seem like `FP_ANGLE`, but haven't confirmed how it's used yet.
     s32    field_18;
     s32    field_1C;
     s32    field_20;
@@ -103,7 +103,7 @@ typedef struct _800F3DAC
     u8     unk_114[4];
     MATRIX mat_118[29];
     u8     unk_4B8[32];
-    s32    rotZ_4D8; // Passed as `z` to `ApplyRotMatrix`.
+    q19_12 rotZ_4D8; // Passed as `z` to `ApplyRotMatrix`.
     u8     unk_4DC[8];
     s32    field_4E4;
     s32    field_4E8;
@@ -131,7 +131,7 @@ STATIC_ASSERT_SIZEOF(s_D_800F48A8, 0x4C); // Assumed size.
 
 typedef struct
 {
-    VECTOR3  field_0;
+    VECTOR3  field_0; // Q19.12
     s8       unk_C[20];
     SVECTOR3 field_20;
     s8       unk_28[8];
@@ -151,7 +151,7 @@ typedef struct
     s8                  field_A4B[5];
     s32                 field_A50;
     s32                 field_A54;
-    s32                 field_A58;
+    q19_12              field_A58; // Angle.
     s32                 field_A5C;
     s_func_800D5EC0_A60 field_A60[20];
 } s_func_800D5EC0;
@@ -160,7 +160,7 @@ typedef struct
 {
     VECTOR3  field_0;
     s8       unk_C[20];
-    SVECTOR3 field_20;
+    SVECTOR3 field_20; // Q3.12 | Position?
     s8       unk_26[10];
     s32      field_30;
 } s_func_800D68C4_A08;
@@ -430,7 +430,7 @@ PACKET* func_800D7F10(void);
 
 void func_800D7F20(u8* arg0);
 
-void func_800D7F2C(GsOT_TAG*, s32, s32, s32, s32, s16, s16, s32);
+void func_800D7F2C(GsOT_TAG* ot, s32 arg1, q19_12 angle, q19_12 dist0, q19_12 dist1, s16 x1, s16 y1, s32 arg7);
 
 s32 func_800D822C(SVECTOR* worldPos, s16* outScreenX, s16* outScreenY);
 
@@ -625,6 +625,7 @@ void func_800E3D18(void);
 
 void func_800E3E84(void);
 
+/** Ending cutscene event? */
 void func_800E3F30(void);
 
 void func_800E4714(void);
@@ -671,9 +672,14 @@ void func_800E9AC8(void);
 
 void func_800E9C28(void);
 
+
+// TODO: Alphabetise these.
+
+
+
 void func_800D5D24(void);
 
-s32 func_800D5D48(void);
+bool func_800D5D48(void);
 
 void func_800D5E78(void);
 
@@ -711,7 +717,7 @@ void func_800D70EC(void);
 
 void func_800D7144(VECTOR3* arg0);
 
-void func_800D71B0(VECTOR3* arg0, s32 arg1);
+void func_800D71B0(VECTOR3* pos, s32 arg1);
 
 void func_800D75D0(void);
 

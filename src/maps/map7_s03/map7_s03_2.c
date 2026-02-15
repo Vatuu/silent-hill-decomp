@@ -100,7 +100,7 @@ void func_800D5D24(void) // 0x800D5D24
     }
 }
 
-s32 func_800D5D48(void) // 0x800D5D48
+bool func_800D5D48(void) // 0x800D5D48
 {
     s32  var_s0;
     s32  i;
@@ -111,6 +111,7 @@ s32 func_800D5D48(void) // 0x800D5D48
     var_s0 = 0;
     ptr0   = D_800F2418;
 
+    // TODO: 6 refers to NPCs array?
     for (i = 0; i < 6; i++, ptr0++)
     {
         if (*ptr0 <= 0)
@@ -120,23 +121,23 @@ s32 func_800D5D48(void) // 0x800D5D48
         else if (D_800EB008 < *ptr0)
         {
             var_s0    += 2;
-            D_800EB008 = (Rng_Rand16() / 21) + 0xCCC;
+            D_800EB008 = (Rng_Rand16() / 21) + Q12(0.8f);
         }
         else if (D_800EB00C < *ptr0)
         {
-            var_s0    += 1;
-            D_800EB00C = (Rng_Rand16() / 41) + 0x666;
+            var_s0++;
+            D_800EB00C = (Rng_Rand16() / 41) + Q12(0.4f);
         }
     }
 
     if (var_s0 < 2 && ptr1 != NULL)
     {
-        *ptr1 = 0x2000;
-        return 1;
+        *ptr1 = Q12(2.0f);
+        return true;
     }
     else
     {
-        return 0;
+        return false;
     }
 }
 
@@ -147,6 +148,7 @@ void func_800D5E78(void) // 0x800D5E78
 
     ptr = D_800F2418;
 
+    // TODO: 6 refers to NPCs array?
     for (i = 0; i < 6; i++, ptr++)
     {
         if (*ptr > 0)
@@ -158,40 +160,40 @@ void func_800D5E78(void) // 0x800D5E78
 
 void func_800D5EC0(void) // 0x800D5EC0
 {
-    s32                  temp_s0;
-    s32                  temp_s2;
-    s32                  temp_v0;
-    s32                  temp_v0_4;
+    q19_12               cosAngle;
+    q19_12               sinAngle;
+    q19_12               randAngle;
+    q19_12               dist;
     s32                  i;
-    s_func_800D5EC0_A60* var_s4;
+    s_func_800D5EC0_A60* ptr1;
     s_func_800D5EC0*     ptr;
     s64                  temp;
 
     ptr = FS_BUFFER_1;
 
-    var_s4 = ptr->field_A60;
+    ptr1 = ptr->field_A60;
 
-    for (i = 0; i < 20; i++, var_s4++)
+    for (i = 0; i < 20; i++, ptr1++)
     {
-        var_s4->field_34 = 0;
+        ptr1->field_34 = 0;
 
-        var_s4->field_0.vx = 0;
-        var_s4->field_0.vy = 0;
-        var_s4->field_0.vz = 0;
+        ptr1->field_0.vx = Q12(0.0f);
+        ptr1->field_0.vy = Q12(0.0f);
+        ptr1->field_0.vz = Q12(0.0f);
 
-        var_s4->field_30 = 0xFF;
+        ptr1->field_30 = 0xFF;
 
-        temp_v0 = Rng_Rand16();
-        temp_s2 = Math_Sin(temp_v0);
-        temp_s0 = Math_Cos(temp_v0);
+        randAngle = Rng_Rand16();
+        sinAngle = Math_Sin(randAngle);
+        cosAngle = Math_Cos(randAngle);
 
-        temp_v0_4 = Q12_MULT_PRECISE((Rng_Rand16() % 0x1000) + 0x800, 0x6000);
+        dist = Q12_MULT_PRECISE((Rng_Rand16() % Q12(1.0f)) + Q12(0.5f), Q12(6.0f));
 
-        var_s4->field_20.vx = Q12_MULT_PRECISE(temp_s0, temp_v0_4);
-        var_s4->field_20.vy = Q12_MULT_PRECISE(temp_s2, temp_v0_4);
+        ptr1->field_20.vx = Q12_MULT_PRECISE(cosAngle, dist);
+        ptr1->field_20.vy = Q12_MULT_PRECISE(sinAngle, dist);
 
-        temp                = -0x1998;
-        var_s4->field_20.vz = temp;
+        temp                = Q12(-1.6f) + 1;
+        ptr1->field_20.vz = temp;
     }
 }
 
@@ -376,7 +378,7 @@ void func_800D625C(void) // 0x800D625C
     packet = poly;
     mode   = packet;
 
-    SetDrawMode(mode, 0, 1, 0x2A, NULL);
+    SetDrawMode(mode, 0, 1, 42, NULL);
     addPrim(ot, mode);
     packet         = mode + 1;
     GsOUT_PACKET_P = packet;
@@ -503,44 +505,44 @@ void func_800D6788(void) // 0x800D6788
 
 void func_800D6804(VECTOR3* arg0, VECTOR3* arg1) // 0x800D6804
 {
-    s32              temp_s0;
-    s32              temp_s1;
-    s32              var_a0;
-    s32              var_a1;
+    q19_12           x0;
+    q19_12           z0;
+    q19_12           x1;
+    q19_12           z1;
     s_func_800D5EC0* buf;
 
     buf = FS_BUFFER_1;
 
-    temp_s0 = arg1->vx - arg0->vx;
-    temp_s1 = arg1->vz - arg0->vz;
+    x0 = arg1->vx - arg0->vx;
+    z0 = arg1->vz - arg0->vz;
 
-    buf->field_A58 = ratan2(temp_s0, temp_s1);
+    buf->field_A58 = ratan2(x0, z0);
 
-    if (temp_s0 < 0)
+    if (x0 < Q12(0.0f))
     {
-        var_a0 = temp_s0 + 3;
+        x1 = x0 + 3;
     }
     else
     {
-        var_a0 = temp_s0;
+        x1 = x0;
     }
 
-    temp_s0 = arg0->vx + (var_a0 >> 2);
+    x0 = arg0->vx + (x1 >> 2);
 
-    if (temp_s1 < 0)
+    if (z0 < Q12(0.0f))
     {
-        var_a1 = temp_s1 + 3;
+        z1 = z0 + 3;
     }
     else
     {
-        var_a1 = temp_s1;
+        z1 = z0;
     }
 
-    temp_s1 = (arg0->vz + (var_a1 >> 2));
+    z0 = (arg0->vz + (z1 >> 2));
 
-    buf->field_4.vx = temp_s0 >> 4;
-    buf->field_4.vy = -0x100;
-    buf->field_4.vz = temp_s1 >> 4;
+    buf->field_4.vx = Q12_TO_Q8(x0);
+    buf->field_4.vy = Q8(-1.0f);
+    buf->field_4.vz = Q12_TO_Q8(z0);
 
     buf->field_A5C = 0;
 
@@ -550,38 +552,37 @@ void func_800D6804(VECTOR3* arg0, VECTOR3* arg1) // 0x800D6804
 
 void func_800D68C4(void) // 0x800D68C4
 {
-    s32                  temp_s0;
-    s32                  temp_s4;
-    s32                  temp_s2;
-    s32                  temp_v0;
+    q19_12               posX;
+    q19_12               posY;
+    q19_12               posZ;
+    q19_12               dist;
+    q19_12               randAngle;
     s32                  i;
-    s32                  temp_lo;
     s_func_800D68C4*     base;
     s_func_800D68C4_A08* ptr;
 
     base = FS_BUFFER_1;
-
     ptr = base->field_A08;
 
     for (i = 0; i < 100; i++, ptr++)
     {
-        ptr->field_0.vx = 0;
-        ptr->field_0.vy = 0;
-        ptr->field_0.vz = 0;
+        ptr->field_0.vx = Q12(0.0f);
+        ptr->field_0.vy = Q12(0.0f);
+        ptr->field_0.vz = Q12(0.0f);
 
         ptr->field_30 = 0xFF;
 
-        temp_v0 = Rng_Rand16();
-        temp_s4 = Q12_MULT_PRECISE(Math_Sin(temp_v0), 0x999);
-        temp_s2 = Q12_MULT_PRECISE(Math_Cos(temp_v0), 0x999);
+        randAngle = Rng_Rand16();
+        posY = Q12_MULT_PRECISE(Math_Sin(randAngle), Q12(0.6f));
+        dist = Q12_MULT_PRECISE(Math_Cos(randAngle), Q12(0.6f));
 
-        temp_v0 = Rng_Rand16();
-        temp_s0 = Q12_MULT_PRECISE(Math_Sin(temp_v0), temp_s2);
-        temp_lo = Q12_MULT_PRECISE(Math_Cos(temp_v0), temp_s2);
+        randAngle = Rng_Rand16();
+        posX = Q12_MULT_PRECISE(Math_Sin(randAngle), dist);
+        posZ = Q12_MULT_PRECISE(Math_Cos(randAngle), dist);
 
-        ptr->field_20.vx = temp_s0;
-        ptr->field_20.vy = temp_s4;
-        ptr->field_20.vz = temp_lo;
+        ptr->field_20.vx = posX;
+        ptr->field_20.vy = posY;
+        ptr->field_20.vz = posZ;
     }
 }
 
@@ -756,7 +757,7 @@ void func_800D6C0C(void) // 0x800D6C0C
     packet = poly;
     mode   = packet;
 
-    SetDrawMode(mode, 0, 1, 0x2A, NULL);
+    SetDrawMode(mode, 0, 1, 42, NULL);
     addPrim(ot, mode);
     packet         = mode + 1;
     GsOUT_PACKET_P = packet;
@@ -890,72 +891,72 @@ void func_800D71A4(s32 arg0) // 0x800D71A4
     D_800F2430 = arg0;
 }
 
-void func_800D71B0(VECTOR3* arg0, s32 arg1) // 0x800D71B0
+void func_800D71B0(VECTOR3* pos, s32 arg1) // 0x800D71B0
 {
     s32                  temp_hi_4;
     s32                  temp_hi_5;
     s32                  temp_hi_6;
-    s32                  temp_s1;
-    s32                  temp_s3;
-    s32                  temp_v0;
-    s32                  temp_v0_2;
+    q19_12               sinAngle;
+    q19_12               cosAngle;
+    q19_12               randAngle0;
+    s32                  randAngle1;
     s32                  temp_v0_4;
     s32                  temp_v0_6;
     s32                  i;
-    s32                  var_s7;
+    s32                  j;
     s_func_800D71B0_498* ptr;
     s_func_800D71B0*     base;
 
     base = FS_BUFFER_25;
     ptr  = base->field_498;
 
-    for (var_s7 = 0, i = 0; i < 0xC8; i++, ptr++)
+    for (j = 0, i = 0; i < 200; i++, ptr++)
     {
         if (ptr->field_20 != 0)
         {
             continue;
         }
 
-        if (var_s7 >= arg1)
+        if (j >= arg1)
         {
             break;
         }
 
-        var_s7++;
+        j++;
 
-        temp_v0 = Rng_Rand16();
-        temp_s3 = Math_Sin(temp_v0);
-        temp_s1 = Math_Cos(temp_v0);
+        randAngle0 = Rng_Rand16();
+        sinAngle = Math_Sin(randAngle0);
+        cosAngle = Math_Cos(randAngle0);
 
-        temp_v0_2 = Rng_Rand16();
-        temp_v0_4 = Q12_MULT_PRECISE(temp_s1, Math_Sin(temp_v0_2));
-        temp_v0_6 = Q12_MULT_PRECISE(temp_s1, Math_Cos(temp_v0_2));
+        randAngle1 = Rng_Rand16();
+        temp_v0_4 = Q12_MULT_PRECISE(cosAngle, Math_Sin(randAngle1));
+        temp_v0_6 = Q12_MULT_PRECISE(cosAngle, Math_Cos(randAngle1));
 
-        ptr->field_0.vx = arg0->vx + Q12_MULT_PRECISE(temp_v0_4, D_800EB810);
-        ptr->field_0.vy = arg0->vy + Q12_MULT_PRECISE(temp_s3, D_800EB810);
-        ptr->field_0.vz = arg0->vz + Q12_MULT_PRECISE(temp_v0_6, D_800EB810);
+        ptr->field_0.vx = pos->vx + Q12_MULT_PRECISE(temp_v0_4, D_800EB810);
+        ptr->field_0.vy = pos->vy + Q12_MULT_PRECISE(sinAngle, D_800EB810);
+        ptr->field_0.vz = pos->vz + Q12_MULT_PRECISE(temp_v0_6, D_800EB810);
         ptr->field_28   = 0xFFF;
 
-        temp_v0 = Rng_Rand16();
-        temp_s3 = Math_Sin(temp_v0);
-        temp_s1 = Math_Cos(temp_v0);
+        randAngle0 = Rng_Rand16();
+        sinAngle = Math_Sin(randAngle0);
+        cosAngle = Math_Cos(randAngle0);
 
-        temp_v0   = Rng_Rand16();
-        temp_v0_4 = Q12_MULT_PRECISE(Math_Sin(temp_v0), temp_s1);
-        temp_v0_6 = Q12_MULT_PRECISE(Math_Cos(temp_v0), temp_s1);
+        randAngle0   = Rng_Rand16();
+        temp_v0_4 = Q12_MULT_PRECISE(Math_Sin(randAngle0), cosAngle);
+        temp_v0_6 = Q12_MULT_PRECISE(Math_Cos(randAngle0), cosAngle);
 
-        temp_hi_4 = Q12_MULT_PRECISE(temp_v0_4, 0x999);
-        temp_hi_5 = Q12_MULT_PRECISE(temp_v0_6, 0x999);
-        temp_hi_6 = Q12_MULT_PRECISE(temp_s3, 0x999);
+        temp_hi_4 = Q12_MULT_PRECISE(temp_v0_4, Q12(0.6f));
+        temp_hi_5 = Q12_MULT_PRECISE(temp_v0_6, Q12(0.6f));
+        temp_hi_6 = Q12_MULT_PRECISE(sinAngle, Q12(0.6f));
 
-        ptr->field_10.vx = ((ptr->field_0.vx - arg0->vx) * 4) + Q12_MULT_PRECISE(temp_v0_4, 0x999);
-        ptr->field_10.vy = ((ptr->field_0.vy - arg0->vy) * 4) + Q12_MULT_PRECISE(temp_s3, 0x999);
-        ptr->field_10.vz = ((ptr->field_0.vz - arg0->vz) * 4) + Q12_MULT_PRECISE(temp_v0_6, 0x999);
+        ptr->field_10.vx = ((ptr->field_0.vx - pos->vx) * 4) + Q12_MULT_PRECISE(temp_v0_4, Q12(0.6f));
+        ptr->field_10.vy = ((ptr->field_0.vy - pos->vy) * 4) + Q12_MULT_PRECISE(sinAngle, Q12(0.6f));
+        ptr->field_10.vz = ((ptr->field_0.vz - pos->vz) * 4) + Q12_MULT_PRECISE(temp_v0_6, Q12(0.6f));
 
-        temp_v0       = Rng_Rand16();
+        randAngle0       = Rng_Rand16();
         ptr->field_34 = 0;
-        temp_v0       = Rng_Rand16();
-        ptr->field_30 = 0x1000;
+        randAngle0       = Rng_Rand16();
+        ptr->field_30 = Q12(1.0f);
         ptr->field_20 = 1;
     }
 }
@@ -1161,7 +1162,7 @@ void func_800D77E4(void) // 0x800D77E4
     packet = poly;
     mode   = packet;
 
-    SetDrawMode(mode, 0, 1, 0x2A, NULL);
+    SetDrawMode(mode, 0, 1, 42, NULL);
     addPrim(ot, mode);
     packet         = mode + 1;
     GsOUT_PACKET_P = packet;
@@ -1314,7 +1315,7 @@ void func_800D7D74(s32 arg0) // 0x800D7D74
         sp10.vy = (Rng_Rand16() >> 2) + 0x4801;
         sp10.vz = (Rng_Rand16() * 2) - 0x7FFF;
 
-        if (func_800D5D48() != 0)
+        if (func_800D5D48())
         {
             sp20 = sp10;
 
@@ -1366,40 +1367,40 @@ void func_800D7F20(u8* arg0) // 0x800D7F20
     GsOUT_PACKET_P = arg0;
 }
 
-void func_800D7F2C(GsOT_TAG* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s16 x1, s16 y1, s32 arg7) // 0x800D7F2C
+void func_800D7F2C(GsOT_TAG* ot, s32 arg1, q19_12 angle, q19_12 dist0, q19_12 dist1, s16 x1, s16 y1, s32 arg7) // 0x800D7F2C
 {
-    s32      sp14;
+    q19_12   sp14;
     s32      i;
-    s32      y2;
-    s32      x2;
-    s32      y0;
-    s32      x0;
-    s32      var_s3;
+    q19_12   angle0;
+    q19_12   y2;
+    q19_12   x2;
+    q19_12   y0;
+    q19_12   x0;
+    q19_12   x3;
+    q19_12   y3;
     POLY_G4* poly;
-    s32      x3;
-    s32      y3;
 
-    sp14 = 0x1000 / arg1;
+    sp14 = Q12(1.0f) / arg1;
     sp14 = sp14 / 2;
 
     poly   = func_800D7F10();
-    var_s3 = arg2;
+    angle0 = angle;
 
     for (i = 0; i < arg1; i++)
     {
-        x0 = Q12_MULT_PRECISE(Math_Sin(var_s3), arg4);
-        y0 = Q12_MULT_PRECISE(Math_Cos(var_s3), arg4);
+        x0 = Q12_MULT_PRECISE(Math_Sin(angle0), dist1);
+        y0 = Q12_MULT_PRECISE(Math_Cos(angle0), dist1);
 
-        var_s3 += sp14;
+        angle0 += sp14;
 
-        x2 = Q12_MULT_PRECISE(Math_Sin(var_s3), arg3);
-        y2 = Q12_MULT_PRECISE(Math_Cos(var_s3), arg3);
+        x2 = Q12_MULT_PRECISE(Math_Sin(angle0), dist0);
+        y2 = Q12_MULT_PRECISE(Math_Cos(angle0), dist0);
 
-        var_s3 += sp14;
+        angle0 += sp14;
 
         if (i == (arg1 - 1))
         {
-            var_s3 = arg2;
+            angle0 = angle;
         }
 
         x0 += x1;
@@ -1407,8 +1408,8 @@ void func_800D7F2C(GsOT_TAG* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s16 x
         y0 += y1;
         y2 += y1;
 
-        x3 = Q12_MULT_PRECISE(Math_Sin(var_s3), arg4);
-        y3 = Q12_MULT_PRECISE(Math_Cos(var_s3), arg4);
+        x3 = Q12_MULT_PRECISE(Math_Sin(angle0), dist1);
+        y3 = Q12_MULT_PRECISE(Math_Cos(angle0), dist1);
 
         x3 += x1;
         y3 += y1;
@@ -1424,7 +1425,7 @@ void func_800D7F2C(GsOT_TAG* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s16 x
 
         setXY4(poly, x0, y0, x1, y1, x2, y2, x3, y3);
 
-        addPrim(arg0, poly);
+        addPrim(ot, poly);
         poly++;
     }
 
@@ -1703,9 +1704,9 @@ q19_12 func_800DA08C(s32 arg0, q19_12 arg1, q19_12 arg2) // 0x800DA08C
             }
 
             // TODO: Unsure what 0x6486 is meant to be.
-            // 0x6486 = Q12(6.2828f), while sqrt(6.2828) is 2.50655141579
-            // Q12(SQUARE(2.5f)) is very close, but gives 0x6400 instead of 0x6486...
-            // Maybe 6.2828 is approximation of PI*2? Doesn't work with our PI macro though.
+            // 0x6486 = `Q12(6.2828f)`, while `sqrt(6.2828)` is 2.50655141579
+            // `Q12(SQUARE(2.5f))` is very close, but gives 0x6400 instead of 0x6486...
+            // Maybe 6.2828 is approximation of `PI * 2`? Doesn't work with our `PI` macro though.
             scaledArg0 = Q12_MULT_PRECISE(Q12_MULT_PRECISE(arg0, arg0), 0x6486);
             scaledArg1 = Q12_MULT_PRECISE(Q12_MULT_PRECISE(arg1, arg1), 0x6486);
             return scaledArg1 - scaledArg0;
@@ -1724,15 +1725,15 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA1F4);
 
 q19_12 func_800DA420(VECTOR3* result) // 0x800DA420
 {
-    s32 posX;
-    s32 posY;
+    q19_12 posX;
+    q19_12 posY;
 
     posX = Q12_MULT_PRECISE(Math_Sin(FP_ANGLE(15.0f)), Q12(5.0f));
     posY = Q12_MULT_PRECISE(Math_Cos(FP_ANGLE(15.0f)), Q12(5.0f));
 
     result->vx = posX;
     result->vy = posY;
-    result->vz = 0;
+    result->vz = Q12(0.0f);
     return FP_ANGLE(15.0f);
 }
 
@@ -1855,12 +1856,12 @@ bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec) // 0x800DBCA4
 {
     s_D_800F48A8* ptr;
     MATRIX        torsoMat;
-    s32           deltaX;
-    s32           deltaY;
-    s32           deltaZ;
-    s32           sqrX;
-    s32           sqrY;
-    s32           sqrZ;
+    q23_8         deltaX;
+    q23_8         deltaY;
+    q23_8         deltaZ;
+    q23_8         sqrX;
+    q23_8         sqrY;
+    q23_8         sqrZ;
 
     ptr = &D_800F48A8;
 
@@ -1873,7 +1874,7 @@ bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec) // 0x800DBCA4
     sqrY = Q12_TO_Q8(SQUARE(deltaY - mat->t[1]));
     sqrZ = Q12_TO_Q8(SQUARE(deltaZ - mat->t[2]));
 
-    if (sqrX + sqrZ + sqrY <= Q8(SQUARE(2.398f))) // TODO: Odd number, might be different Q format?
+    if ((sqrX + sqrZ + sqrY) <= Q8(SQUARE(2.398f))) // TODO: Odd number, might be different Q format?
     {
         outVec->vx = Q8_TO_Q12(deltaX) + D_800F48A8.positionX_0;
         outVec->vy = Q8_TO_Q12(deltaY);
@@ -2095,7 +2096,7 @@ void func_800DD240(VECTOR3* vec) // 0x800DD240
     func_800DD0EC(vec, 2);
 }
 
-void func_800DD260(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD260
+void func_800DD260(VECTOR3* arg0, VECTOR3* pos) // 0x800DD260
 {
     s_800F3DAC* ptr;
 
@@ -2108,7 +2109,7 @@ void func_800DD260(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD260
         ptr->timer_8   = Q12(0.5f);
         ptr->field_14  = FP_ANGLE(45.0f);
 
-        func_800DCDDC(ptr, arg0, arg1);
+        func_800DCDDC(ptr, arg0, pos);
     }
 }
 
@@ -2190,24 +2191,24 @@ void func_800DD464(VECTOR3* arg0) // 0x800DD464
 
 void func_800DD4CC(s_800F3DAC* arg0) // 0x800DD4CC
 {
-    VECTOR3 vec0;
-    VECTOR3 vec1;
+    VECTOR3 newPos;  // Q19.12
+    VECTOR3 prevPos; // Q19.12
     MATRIX  mat;
     s32     temp_v1;
 
     if (arg0->field_4E4 == 3)
     {
         temp_v1 = arg0->field_18 - 1;
-        vec0.vx = Q8_TO_Q12(arg0->mat_118[temp_v1].t[0]) + D_800F48A8.positionX_0;
-        vec0.vy = Q8_TO_Q12(arg0->mat_118[temp_v1].t[1]);
-        vec0.vz = Q8_TO_Q12(arg0->mat_118[temp_v1].t[2]) + D_800F48A8.positionZ_4;
+        newPos.vx = Q8_TO_Q12(arg0->mat_118[temp_v1].t[0]) + D_800F48A8.positionX_0;
+        newPos.vy = Q8_TO_Q12(arg0->mat_118[temp_v1].t[1]);
+        newPos.vz = Q8_TO_Q12(arg0->mat_118[temp_v1].t[2]) + D_800F48A8.positionZ_4;
 
         Vw_CoordHierarchyMatrixCompute(&D_800F48A8.coords_2C[arg0->coordIdx_4EC], &mat);
-        vec1.vx = Q8_TO_Q12(mat.t[0]);
-        vec1.vy = Q8_TO_Q12(mat.t[1]);
-        vec1.vz = Q8_TO_Q12(mat.t[2]);
+        prevPos.vx = Q8_TO_Q12(mat.t[0]);
+        prevPos.vy = Q8_TO_Q12(mat.t[1]);
+        prevPos.vz = Q8_TO_Q12(mat.t[2]);
 
-        func_800DD260(&vec0, &vec1);
+        func_800DD260(&newPos, &prevPos);
     }
 }
 
@@ -2736,7 +2737,7 @@ void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* 
     Math_MatrixTransform(&incubus->position_18, &incubus->rotation_24, coords);
 
     origVal = func_800DDBA4(FP_FROM(incubus->model_0.anim_4.time_4, Q12_SHIFT));
-    if (incubus->model_0.anim_4.status_0 != 0)
+    if (incubus->model_0.anim_4.status_0 != ANIM_STATUS(IncubusAnim_Still, false))
     {
         INCUBUS_ANIM_INFOS[incubus->model_0.anim_4.status_0].updateFunc_0(&incubus->model_0, anmHdr, coords, &INCUBUS_ANIM_INFOS[incubus->model_0.anim_4.status_0]);
     }
@@ -2751,9 +2752,9 @@ void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* 
 void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEF50
 {
     MATRIX mat;
-    s32    posY;
-    s32    posX;
-    s32    posZ;
+    q19_12 posY;
+    q19_12 posX;
+    q19_12 posZ;
 
     Vw_CoordHierarchyMatrixCompute(&coords[2], &mat);
     posX = Q8_TO_Q12(mat.t[0]) - incubus->position_18.vx;
@@ -2940,12 +2941,12 @@ void func_800DFA14(void) // 0x800DFA14
 void func_800DFA48(VECTOR3* arg0, VECTOR3* arg1) // 0x800DFA48
 {
     s_func_800DFA48* ptr;
-    s32              angle;
+    q19_12           angle;
 
     ptr = FS_BUFFER_26;
 
     // TODO: Decode into `WEAPON_ATTACK` macro.
-    Chara_AttackReceivedSet(&g_SysWork.playerWork_4C.player_0, 0x44);
+    Chara_AttackReceivedSet(&g_SysWork.playerWork_4C.player_0, 68);
 
     angle                                                    = ratan2(arg0->vx - arg1->vx, arg0->vz - arg1->vz);
     g_SysWork.playerWork_4C.player_0.damage_B4.amount_C      = 1;
@@ -3254,9 +3255,9 @@ void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* co
 void func_800E07F0(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E07F0
 {
     MATRIX mat;
-    s32    posY;
-    s32    posX;
-    s32    posZ;
+    q19_12 posY;
+    q19_12 posX;
+    q19_12 posZ;
 
     Vw_CoordHierarchyMatrixCompute(&coords[2], &mat);
     posX = Q8_TO_Q12(mat.t[0]) - chara->position_18.vx;

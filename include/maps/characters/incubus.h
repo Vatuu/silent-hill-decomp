@@ -29,7 +29,6 @@ typedef enum _IncubusControl
     IncubusControl_11 = 11,
     IncubusControl_12 = 12,
     IncubusControl_13 = 13
-
 } e_IncubusControl;
 
 /** @brief Incubus character state steps. */

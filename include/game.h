@@ -1408,7 +1408,7 @@ typedef struct _PropertiesHangedScratcher
 /** @brief Could be Incubus or Incubator. */
 typedef struct _PropertiesIncubus
 {
-    s32    timer_E8;
+    q19_12 timer_E8;
     s32    field_EC;
     s32    someState_F0;
     q19_12 bossFightTimer_F4;
@@ -2276,20 +2276,20 @@ static inline void Character_AnimStateReset(s_SubCharacter* chara)
     (chara)->damage_B4.position_0.vy = Q12(0.0f); \
     (chara)->damage_B4.position_0.vx = Q12(0.0f)
 
-/** @brief Sets a characters attack-type-received field.
+/** @brief Sets a character's received attack type.
  *
- * TODO: Could make this use WEAPON_ATTACK macro, and take the values needed for that instead.
- * (maybe devs did similar thing, which is why this separate macro/inline is needed for match?)
+ * TODO: Could make this use `WEAPON_ATTACK` macro and take the values needed for that instead.
+ * Maybe devs did similar thing, which is why this separate macro/inline is needed for a match?
  *
  * @param chara Character to update.
- * @param val Attack type to set.
+ * @param attack Attack type to set.
  */
-#define Chara_AttackReceivedSet(chara, val) \
-    (chara)->attackReceived_41 = (val)
+#define Chara_AttackReceivedSet(chara, attack) \
+    (chara)->attackReceived_41 = (attack)
 
-/** @brief Gets a characters attack-type-received field.
+/** @brief Gets a character's received attack type.
  *
- * @param chara Character to read from.
+ * @param chara Character to update.
  */
 #define Chara_AttackReceivedGet(chara) \
     (chara)->attackReceived_41
