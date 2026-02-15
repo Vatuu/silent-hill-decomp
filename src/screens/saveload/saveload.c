@@ -20,9 +20,6 @@
 
 const pad = 0;
 
-
-extern char* g_Savegame_SaveLocationNames[];
-
 char* g_Savegame_SaveLocationNames[] = {
     "Anywhere",
     "Cafe",
