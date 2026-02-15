@@ -1869,7 +1869,21 @@ void func_800DBABC(void) // 0x800DBABC
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBAE8);
+void func_800DBAE8(VECTOR3* arg0, s32 arg1) // 0x800DBAE8
+{
+    s32 temp_s0;
+
+    temp_s0 = D_800EC770[arg1].field_6;
+    if (temp_s0 < D_800F3D98[arg1])
+    {
+        temp_s0 = D_800EC770[arg1].field_4;
+
+        D_800EC770[arg1].field_6 = temp_s0 + (Rng_Rand16() / ((SHRT_MAX / (temp_s0 >> 3)) + 1));
+        D_800F3D98[arg1]         = 0;
+
+        func_8005DC1C(D_800EC770[arg1].field_0, arg0, D_800EC770[arg1].field_2, 0);
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBBA0);
 
@@ -3630,18 +3644,67 @@ q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target) // 0x800
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E24A0);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E2664);
+void func_800E2664(s32 arg0, s16 arg1) // 0x800E2664
+{
+    VECTOR3 sp10;
+    VECTOR3 sp20;
+    s32     angle;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E27D0);
+    if (arg1 > FP_ANGLE_NORM_U(func_800E28F4()))
+    {
+        VECTOR3* srcPos;
+        srcPos = &g_SysWork.npcs_1A0[4].position_18;
 
-s32 func_800E28F4(void) // 0x800E28F4
+        angle   = FP_ANGLE_NORM_U(func_800E28F4());
+        sp20.vx = srcPos->vx + Q12_MULT(Math_Sin(angle), arg0);
+        sp20.vz = srcPos->vz + Q12_MULT(Math_Cos(angle), arg0);
+        sp20.vy = ((func_800E28F4() % (arg0 * 2)) - arg0) - Q12(1.0f);
+
+        sp10     = g_SysWork.npcs_1A0[4].position_18;
+        sp10.vy -= Q12(1.1f);
+        sp10.vx += Q12_MULT_FLOAT(Math_Sin(angle), 0.4f);
+        sp10.vz += Q12_MULT_FLOAT(Math_Cos(angle), 0.4f);
+
+        func_800DD738(&sp20, &sp10, FP_ANGLE(54.0f), Q12(1.0f));
+    }
+}
+
+void func_800E27D0(s32 arg0, s16 arg1, s32 arg2, VECTOR3* arg3) // 0x800E27D0
+{
+    VECTOR3* srcPos;
+    VECTOR3  sp10;
+    s32      angle;
+
+    if (arg2 != 0 || arg1 > FP_ANGLE_NORM_U(func_800E28F4()))
+    {
+        angle = FP_ANGLE_NORM_U(func_800E28F4());
+        if (arg2 != 0)
+        {
+            srcPos  = &g_SysWork.npcs_1A0[1].position_18;
+            sp10.vx = srcPos->vx - Q12(0.5f);
+            sp10.vy = srcPos->vy - Q12(1.2f);
+            sp10.vz = srcPos->vz;
+        }
+        else
+        {
+            // @hack Pointer to `position_18` needed for match, but doesn't work as a `VECTOR3*` variable?
+            sp10.vx = (&g_SysWork.npcs_1A0[4].position_18)->vx + Q12_MULT(Math_Sin(angle), arg0);
+            sp10.vz = (&g_SysWork.npcs_1A0[4].position_18)->vz + Q12_MULT(Math_Cos(angle), arg0);
+            sp10.vy = (func_800E28F4() % (arg0 >> 1)) - (arg0 >> 2);
+        }
+
+        func_800DD738(arg3, &sp10, FP_ANGLE(180.0f), Q12(0.5f));
+    }
+}
+
+s16 func_800E28F4(void) // 0x800E28F4
 {
     if (g_DeltaTime0 != 0)
     {
         D_800ED73C = ((s32)(D_800ED740 * 0x7169AC35) >> 3) ^ 0xA547B39E;
         D_800ED740 = ((u32)(D_800ED73C * 0x892D719C) >> 3) ^ 0xC65A4B97;
     }
-    return (u16)D_800ED73C & SHRT_MAX;
+    return D_800ED73C & SHRT_MAX;
 }
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E2968);

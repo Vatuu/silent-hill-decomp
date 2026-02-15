@@ -218,6 +218,14 @@ typedef struct
 
 typedef struct
 {
+    u16 field_0;
+    u16 field_2;
+    u16 field_4;
+    u16 field_6;
+} s_800EC770;
+
+typedef struct
+{
     s32 field_0;
     s32 field_4;
     s32 field_8;
@@ -333,7 +341,7 @@ extern u8 D_800F481B;
 extern u8 D_800F481C;
 extern u8 D_800EC8FC[340];
 extern s_SfxVolume D_800EC8C8[13];
-extern s32 D_800F3D98[4];
+extern u32 D_800F3D98[4];
 
 extern q19_12 D_800F4820; // Time.
 
@@ -375,6 +383,8 @@ extern s32 D_800EB810;
 extern s32 D_800EB814[];
 
 extern VECTOR D_800EC018[];
+
+extern s_800EC770 D_800EC770[];
 
 extern s_800F3D58 D_800F3D58;
 
@@ -489,6 +499,8 @@ void func_800DB288(void);
 void func_800DB608(void);
 
 void func_800DBABC(void);
+
+void func_800DBAE8(VECTOR3* arg0, s32 arg1);
 
 void func_800DBBD8(MATRIX* mat);
 
@@ -615,8 +627,10 @@ void func_800E1788(s32 arg0);
 
 q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target);
 
+void func_800E2664(s32 arg0, s16 arg1);
+
 // Some kind of RNG? Constants don't seem well known?
-s32 func_800E28F4(void);
+s16 func_800E28F4(void);
 
 void func_800E2E90(void);
 
