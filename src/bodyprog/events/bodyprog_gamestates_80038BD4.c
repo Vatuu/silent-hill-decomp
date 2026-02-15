@@ -19,6 +19,24 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
+static void (*g_SysStateFuncs[])(void) = {
+    SysState_Gameplay_Update,
+    SysState_OptionsMenu_Update,
+    SysState_StatusMenu_Update,
+    SysState_MapScreen_Update,
+    SysState_Fmv_Update,
+    SysState_LoadArea_Update,
+    SysState_LoadArea_Update,
+    SysState_ReadMessage_Update,
+    SysState_SaveMenu_Update,
+    SysState_SaveMenu_Update,
+    SysState_EventCallFunc_Update,
+    SysState_EventSetFlag_Update,
+    SysState_EventPlaySound_Update,
+    SysState_GameOver_Update,
+    SysState_GamePaused_Update
+};
+
 // ========================================
 // GAME STATES UPDATERS
 // ========================================
@@ -272,6 +290,8 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
 
 void SysState_GamePaused_Update(void) // 0x800391E8
 {
+	static s32 D_800A9A68 = 0;
+	
     D_800A9A68 += g_DeltaTime1;
     if (!((D_800A9A68 >> 11) & (1 << 0)))
     {
@@ -552,6 +572,7 @@ void GameState_LoadMapScreen_Update(void) // 0x8003991C
 void SysState_Fmv_Update(void) // 0x80039A58
 {
     #define BASE_AUDIO_FILE_IDX FILE_XA_ZC_14392
+	static RECT D_800A9A6C = { 320, 256, 160, 240 };
 
     switch (g_SysWork.sysStateStep_C[0])
     {

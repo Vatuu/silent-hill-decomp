@@ -14,6 +14,14 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
+static s32 g_MainMenuState = 0;
+
+static s32 g_MainMenu_SelectedEntry = MainMenuEntry_Start;
+
+static u32 g_MainMenu_VisibleEntryFlags = (1 << MainMenuEntry_Start) | (1 << MainMenuEntry_Option);
+
+s8 g_Demo_ReproducedCount = 0;
+
 // ========================================
 // MAIN MENU
 // ========================================
@@ -42,6 +50,8 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
     s32         prevGameDifficultyIdx;
     s32         nextGameDifficultyIdx;
     e_GameState prevState;
+	static s32  g_MainMenu_NewGameSelectedDifficultyIdx = 1;
+	static s32  g_MemCard_PrevSavegameCount             = 0;
 
     func_80033548();
 

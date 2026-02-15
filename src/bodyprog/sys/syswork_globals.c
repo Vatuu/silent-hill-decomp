@@ -1,0 +1,14 @@
+#include "bodyprog/bodyprog.h"
+#include "bodyprog/math/math.h"
+#include "game.h"
+
+s_SysWork  g_SysWork;
+s_GameWork g_GameWork;
+
+s_GameWork* const       g_GameWorkConst = &g_GameWork;
+s_Savegame* const       g_SavegamePtr   = &g_GameWork.savegame_30C;
+s_ControllerData* const g_Controller0   = &g_GameWork.controllers_38[0];
+s_ControllerData* const g_Controller1   = &g_GameWork.controllers_38[1];
+s_GameWork* const       g_GameWorkPtr   = &g_GameWork;
+
+const u32 D_80024D58 = 0; // Nothing references it. Might be just padding.

@@ -19,6 +19,37 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
+s8 g_CharaAnimInfoIdxs[Chara_Count] = {
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 3 0x00 padding.
+};
+
+s_CharaAnimDataInfo g_CharaTypeAnimInfo[GROUP_CHARA_COUNT] = {
+    {
+        .charaId0_0         = Chara_Harry,
+        .charaId1_1         = Chara_Harry,
+        .animFile0_4        = FS_BUFFER_0,
+        .animFile1_8        = (s_AnmHeader*)FS_BUFFER_0,
+        .animBufferSize1_C  = 0x2E630,
+        .animBufferSize2_10 = 0x2E630,
+        .npcCoords_14       = NULL
+    }, {}, {}, {}
+};
+
+s_AnimInfo D_800A998C = {
+    .updateFunc_0           = Anim_Update1,
+    .status_4               = 0,
+    .hasVariableDuration_5 = false,
+    .status_6              = ANIM_STATUS(0, false),
+    .duration_8            = { Q12(8.0f) },
+    .startKeyframeIdx_C    = 26,
+    .endKeyframeIdx_E      = 44
+};
+
 // ========================================
 // CHARACTER ANIMATIONS MEMORY ALLOC
 // ========================================

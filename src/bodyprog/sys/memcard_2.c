@@ -34,6 +34,12 @@ s8  g_SelectedDeviceId;
 
 s8  pad_bss_800BCD41[3];
 
+u8 g_SlotElementSelectedIdx[MEMCARD_SLOT_COUNT_MAX] = { 0, 0 };
+s8 g_SelectedSaveSlotIdx = 0;
+u8 D_800A97D7 = 0;
+s8 D_800A97D8 = 0xFF;
+s8 D_800A97D9 = 0;
+
 bool MemCard_FilesAreNotUsedCheck(s32 idx) // 0x800334D8
 {
     s32  i;
@@ -68,11 +74,6 @@ static inline s32 WrapIdx(s32 idx)
 
 bool func_80033548(void) // 0x80033548
 {
-	static s32                  D_800BCD18[2];
-	static s32                  D_800BCD20[2];
-	//static s32                D_800A97DC = 0;
-	//static s8                 D_800A97E0 = 0xFF;
-	//static u32                allFileStatus[MEMCARD_DEVICE_COUNT_MAX] = { };
     u32                         sp10[MEMCARD_SLOT_COUNT_MAX]; // Boolean.
     s32                         sp18[MEMCARD_DEVICE_COUNT_MAX]; // Boolean. Used to generate `Create New File` and `New Save`.
     u32                         prevStatusCpy;
@@ -88,6 +89,11 @@ bool func_80033548(void) // 0x80033548
     s32                         k;
     u32                         memCardStatus;
     s_MemCard_SaveMetadata*     saveMetadata;
+	static s32                  D_800BCD18[2];
+	static s32                  D_800BCD20[2];
+	static s32                  D_800A97DC = 0; /** `e_SavegameEntryType` */
+	static s8                   D_800A97E0 = NO_VALUE;
+	static u32                  allFileStatus[MEMCARD_DEVICE_COUNT_MAX] = { };
 
     sp3C = 1;
 

@@ -19,6 +19,10 @@
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
+s32 g_MapMsg_CurrentIdx = 0;
+
+s16 g_MapMsg_SelectFlashTimer = 0;
+
 s_MapMsgSelect g_MapMsg_Select;
 
 u8 g_MapMsg_AudioLoadBlock;

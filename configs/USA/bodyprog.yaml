@@ -59,15 +59,16 @@ segments:
       - [0x0,    .rodata, bodyprog]
       - [0x4,    .rodata, memcard]
       - [0x140,  .rodata, screen/screen_fade]
-      - [0x1E4,  .rodata, sys/globals]
+      - [0x1E4,  .rodata, sys/syswork_globals]
+      - [0x1FC,  .rodata, sys/map_info]
       - [0x5AC,  .rodata, sys/fs_screens]
       - [0x5BC,  .rodata, sys/settings_reset]
       - [0x618,  .rodata, sys/memcard_2]
-      - [0x6A0,  .rodata, ingame_init]
+      - [0x6A0,  .rodata, game_init/ingame_init]
       - [0x6D4,  .rodata, events/bgm_update]
       - [0x700,  .rodata, events/mapmsg_display]
       - [0x75C,  .rodata, events/bodyprog_gamestates_80038BD4]
-      - [0x8E8,  .rodata, events/bodyprog_event2_80039F30]
+      - [0x8E8,  .rodata, events/bodyprog_event_80039F30]
       - [0x918,  .rodata, title]
       - [0x9C8,  .rodata, gfx/bodyprog_8003BD2C]
       - [0x1054, .rodata, gfx/bodyprog_8003E5E8]
@@ -111,12 +112,13 @@ segments:
       
       # data only files
       - [auto,      c, bodyprog]
-      - [auto,      c, sys/globals]
-      - [auto,      c, syswork_functable]
       - [auto,      c, screen/screen_data]
+      - [auto,      c, sys/syswork_globals]
+      - [auto,      c, sys/chara_data_info]
+      - [auto,      c, sys/map_info]
+      - [auto,      c, events/bodyprog_data_800A99B4]
       - [auto,      c, sound/sd_data]
       - [auto,      c, bodyprog_data_800A8D98]
-      - [auto,      c, bodyprog_data_800A90FC]
       
       
       - [0x9AD0,    c, memcard]
@@ -127,13 +129,13 @@ segments:
       - [0xE070,    c, sys/fs_screens]
       - [0xE1BC,    c, sys/gamemain] # Name from SH2 symbols. This name also applies for SH4 instance too.
       - [0xE86C,    c, sys/settings_reset]
-      - [0xE978,    c, sys/memcard_2]
+      - [0xE978,    c, sys/memcard_2] # `memcard_update.c?`
       - [0xF580,    c, sys/warmboot] # Possibly `sh1_init/sh_init` or some `init` derivative name considering SH2 and 4 symbols.
       - [0xF8BC,    c, sys/joy]
-      - [0xFD60,    c, ingame_init]
-      - [0x1072C,   c, fs_npc_anim]
-      - [0x10C20,   c, background_sound_1]
-      - [0x10FA4,   c, loadscreen]
+      - [0xFD60,    c, game_init/ingame_init]
+      - [0x1072C,   c, game_init/fs_npc_anim]
+      - [0x10C20,   c, game_init/background_sound_init]
+      - [0x10FA4,   c, game_init/loadscreen]
                                                             # All this files could be part of a same folder. 
                                                             # Both SH2 and 4 symbols shows that developers usually place
                                                             # events update, message display and the radio effect functions
@@ -148,10 +150,10 @@ segments:
       - [0x11A58,   c, events/mapmsg_display]               # }
       - [0x122E8,   c, events/bodyprog_80036E48]            # }
       - [0x125F4,   c, events/radio]                        # }
-      - [0x12688,   c, events/bodyprog_event1_800371E8]     # }
+      - [0x12688,   c, events/bodyprog_event_800371E8]      # }
       - [0x13264,   c, events/bodyprog_npc_80037DC4]        # }
       - [0x14074,   c, events/bodyprog_gamestates_80038BD4] # }
-      - [0x153D0,   c, events/bodyprog_event2_80039F30]     # }
+      - [0x153D0,   c, events/bodyprog_event_80039F30]      # }
       - [0x15FC8,   c, title] # Name convention from SH2/4.
       - [0x171CC,   c, gfx/bodyprog_8003BD2C]
       - [0x19A88,   c, gfx/bodyprog_8003E5E8]
@@ -334,29 +336,29 @@ segments:
       - [0x78758, lib, libspu, s_crwa]
       - [0x788F8, lib, libapi, a10]
       - [0x78908, lib, libspu, s_m_util] # _SpuIsInAllocateArea _SpuIsInAllocateArea_
-      - [0x78A18, lib, libspu, s_stm] # SpuSetTransferMode
-      - [0x78A48, lib, libspu, s_sva] # SpuSetVoiceAttr
-      - [0x79048, lib, libspu, s_n2p] # _spu_note2pitch _spu_pitch2note
-      - [0x79248, lib, libspu, s_gva] # SpuGetVoiceAttr
+      - [0x78A18, lib, libspu, s_stm]    # SpuSetTransferMode
+      - [0x78A48, lib, libspu, s_sva]    # SpuSetVoiceAttr
+      - [0x79048, lib, libspu, s_n2p]    # _spu_note2pitch _spu_pitch2note
+      - [0x79248, lib, libspu, s_gva]    # SpuGetVoiceAttr
       - [0x79638,   c, lib_unk/lib_8009E198]
       - [0x7A244,   c, libsd/smf_snd]
-      - [0x7D7FC, lib, libspu, s_q] # SpuQuit
-      - [0x7D87C, lib, libapi, a13] # DisableEvent
+      - [0x7D7FC, lib, libspu, s_q]      # SpuQuit
+      - [0x7D87C, lib, libapi, a13]      # DisableEvent
       - [0x7D88C, lib, libspu, s_m_init] # SpuInitMalloc
-      - [0x7D8EC, lib, libspu, s_sr] # SpuSetReverb
-      - [0x7D9BC, lib, libspu, s_srmp] # SpuSetReverbModeParam
-      - [0x7DE9C, lib, libspu, s_sra] # _spu_setReverbAttr
-      - [0x7E36C, lib, libspu, s_rrwa] # SpuReserveReverbWorkArea
-      - [0x7E3BC, lib, libspu, s_srv] # SpuSetReverbVoice
-      - [0x7E3EC, lib, libspu, s_sav] # _SpuSetAnyVoice
-      - [0x7E6AC, lib, libspu, s_sk] # SpuSetKey
-      - [0x7E86C, lib, libspu, s_gks] # SpuGetKeyStatus
-      - [0x7E8FC, lib, libspu, s_skowa] # SpuSetKeyOnWithAttr
-      - [0x7E92C, lib, libspu, s_w] # SpuWrite
-      - [0x7E98C, lib, libspu, s_stsa] # SpuSetTransferStartAddr
-      - [0x7E9EC, lib, libspu, s_itc] # SpuIsTransferCompleted
-      - [0x7EA9C, lib, libspu, s_sca] # SpuSetCommonAttr
-      - [0x7EE1C,   c, libsd/smf_io]
+      - [0x7D8EC, lib, libspu, s_sr]     # SpuSetReverb
+      - [0x7D9BC, lib, libspu, s_srmp]   # SpuSetReverbModeParam
+      - [0x7DE9C, lib, libspu, s_sra]    # _spu_setReverbAttr
+      - [0x7E36C, lib, libspu, s_rrwa]   # SpuReserveReverbWorkArea
+      - [0x7E3BC, lib, libspu, s_srv]    # SpuSetReverbVoice
+      - [0x7E3EC, lib, libspu, s_sav]    # _SpuSetAnyVoice
+      - [0x7E6AC, lib, libspu, s_sk]     # SpuSetKey
+      - [0x7E86C, lib, libspu, s_gks]    # SpuGetKeyStatus
+      - [0x7E8FC, lib, libspu, s_skowa]  # SpuSetKeyOnWithAttr
+      - [0x7E92C, lib, libspu, s_w]      # SpuWrite
+      - [0x7E98C, lib, libspu, s_stsa]   # SpuSetTransferStartAddr
+      - [0x7E9EC, lib, libspu, s_itc]    # SpuIsTransferCompleted
+      - [0x7EA9C, lib, libspu, s_sca]    # SpuSetCommonAttr
+      - [0x7EE1C,   c, libsd/smf_io]          
       - [0x82158, lib, libspu, s_grv] # SpuGetReverbVoice
       - [0x82188, lib, libspu, s_gav] # _SpuGetAnyVoice
       - [0x821B8,   c, libsd/smf_main]
@@ -367,10 +369,18 @@ segments:
       - [0x842F8, .data, screen/background_draw]
       - [0x842FC, .data, screen/screen_fade]
       - [0x843E4, .data, screen/screen_data]
-      - [0x8459C, .data, bodyprog_data_800A90FC]
-      - [0x84ECC, .data, syswork_functable]
-      #- [0x84F08, .data, syswork_functable]
-      - [0x84F2C, .data, title]
+      - [0x8459C, .data, sys/chara_data_info]
+      - [0x8486C, .data, sys/map_info]
+      - [0x84C08, .data, sys/gamemain]
+      - [0x84C74, .data, sys/memcard_2]
+      - [0x84CA4, .data, game_init/background_sound_init]
+      - [0x84CA4, .data, game_init/fs_npc_anim]
+      - [0x84DCC, .data, events/bgm_update]
+      - [0x84E4C, .data, events/mapmsg_display]
+      - [0x84E54, .data, events/bodyprog_data_800A99B4]
+      - [0x84EC0, .data, events/bodyprog_event_800371E8]
+      - [0x84ECC, .data, events/bodyprog_gamestates_80038BD4]
+      - [0x84F14, .data, title]
       - [0x8534C, .data, gfx/bodyprog_8003BD2C]
       - [0x85424, .data, gfx/bodyprog_8003E5E8]
       - [0x85468, .data, sound/sd_data]
@@ -421,7 +431,7 @@ segments:
       - [0x910D0, .bss, screen/screen_fade]
       - [0x910D4, .bss, screen/screen_data]
       - [0x95170,  bss]
-      - [0x95460, .bss, sys/globals]
+      - [0x95460, .bss, sys/syswork_globals]
       - [0x981A0,  bss]
       - [0x981B4,  pad] # Garbage.
       - [0x981B8, .bss, sys/memcard_2]
@@ -429,12 +439,12 @@ segments:
                          # In case of assigning the proper offset (0x981E1) it will cause missmatch as the linker
                          # will add another 4 bytes.
       - [0x981E4,  pad] # Garbage.
-      - [0x981E8, .bss, ingame_init]
+      - [0x981E8, .bss, game_init/ingame_init]
       - [0x981EC,  pad] # Garbage.
       - [0x981F0, .bss, events/bgm_update]
       - [0x98200, .bss, events/mapmsg_display]
       - [0x9821C,  pad] # Garbage.
-      - [0x98220, .bss, events/bodyprog_event2_80039F30]
+      - [0x98220, .bss, events/bodyprog_event_80039F30]
       - [0x9827C,  pad] # Garbage.
       - [0x98280, .bss, title]
       - [0x98284,  pad] # Garbage.

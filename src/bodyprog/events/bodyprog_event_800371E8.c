@@ -269,10 +269,13 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
 
 bool Event_CollideFacingCheck(s_MapPoint2d* mapPoint) // 0x800378D4
 {
-    q19_12 deltaX;
-    q19_12 deltaZ;
-    q3_12  rotY;
-    q19_12 deltaRotY;
+    q19_12     deltaX;
+    q19_12     deltaZ;
+    q3_12      rotY;
+    q19_12     deltaRotY;
+	static s32 D_800A9A20 = 0;
+	static s32 D_800A9A24 = 0;
+	static s32 D_800A9A28 = 0;
 
     if (g_MainLoop_FrameCount > D_800A9A20)
     {
