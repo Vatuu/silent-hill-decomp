@@ -59,7 +59,8 @@ typedef struct
     s32     field_8;
     s16     field_C;
     s16     field_E;
-    u8      unk_10[8];
+    s32     field_10;
+    u8      unk_14[4];
     VECTOR3 field_18;
     u8      unk_24[4];
     VECTOR3 field_28;
@@ -341,7 +342,7 @@ extern u8 D_800F481B;
 extern u8 D_800F481C;
 extern u8 D_800EC8FC[340];
 extern s_SfxVolume D_800EC8C8[13];
-extern u32 D_800F3D98[4];
+extern q20_12 D_800F3D98[5]; // Time.
 
 extern q19_12 D_800F4820; // Time.
 
@@ -488,6 +489,8 @@ s32 func_800DA4EC(s32 min, s32 max);
 
 void func_800DA774(s_800ED7E0_ptr*);
 
+s_800F3D48_0* func_800DA884(s_800F3D48* arg0);
+
 void func_800DACFC(VECTOR3* vec, s32 arg1, s32 arg2);
 
 void func_800DAD54(void);
@@ -501,6 +504,8 @@ void func_800DB608(void);
 void func_800DBABC(void);
 
 void func_800DBAE8(VECTOR3* arg0, s32 arg1);
+
+void func_800DBBA0(void);
 
 void func_800DBBD8(MATRIX* mat);
 
@@ -522,6 +527,8 @@ void func_800DCDDC(s_800F3DAC* arg0, VECTOR3* arg1, VECTOR3* arg2);
 void func_800DCF94(void);
 
 s_800F3DAC* func_800DD090(void);
+
+void func_800DD0EC(VECTOR3* arg0, s32 coordIdx);
 
 void func_800DD240(VECTOR3* vec);
 
@@ -602,13 +609,13 @@ void func_800DFF28(s_SubCharacter* chara);
 void func_800DFF44(s_SubCharacter* chara);
 q19_12 func_800E04C4(void);
 void func_800E0528(s_SubCharacter* chara);
-void func_800E05DC(s_SubCharacter*, GsCOORDINATE2*);
-void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord);
+void func_800E05DC(s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800E0728(s_SubCharacter* chara);
 void func_800E0774(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void func_800E07F0(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords);
-void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coord);
+void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800E0914(s_SubCharacter* chara);
 void Ai_Unknown23_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
@@ -624,6 +631,8 @@ void func_800E14D4(void);
 void func_800E14DC(s_PlayerWork*, s_SubCharacter*, bool);
 
 void func_800E1788(s32 arg0);
+
+void func_800E22AC(VECTOR3* arg0, s32* arg1, s16* mv_pos, s16* now_spd, VECTOR3* arg4, s32 arg5, VECTOR3* arg6, s32 arg7, s16 total_max_spd);
 
 q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target);
 

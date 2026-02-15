@@ -1797,7 +1797,47 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA550);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA774);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA884);
+s_800F3D48_0* func_800DA884(s_800F3D48* arg0) // 0x800DA884
+{
+    s_800F3D48_0* result;
+
+    switch (arg0->field_4.field_C)
+    {
+        case 0:
+            if (arg0->field_4.field_10 <= 0)
+            {
+                arg0->field_4.field_10 = 8;
+                arg0->field_4.field_C++;
+            }
+            else
+            {
+                arg0->field_4.field_10 -= g_DeltaTime0;
+            }
+            break;
+
+        case 1:
+            if (arg0->field_4.field_10 < 0)
+            {
+                arg0->field_4.field_40 = 10;
+            }
+
+            arg0->field_4.field_10--;
+
+            arg0->field_4.field_18.vx += Q12_MULT_PRECISE(arg0->field_4.field_28.vx, g_DeltaTime0);
+            arg0->field_4.field_18.vy += Q12_MULT_PRECISE(arg0->field_4.field_28.vy, g_DeltaTime0);
+            arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_28.vz, g_DeltaTime0);
+
+            result = func_800D88E8(arg0);
+            if (arg0->ptr_0->field_8 == 2)
+            {
+                arg0->field_4.field_4 = 0;
+                arg0->field_4.field_6 = 0;
+            }
+
+            return result;
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA9F8);
 
@@ -1885,7 +1925,18 @@ void func_800DBAE8(VECTOR3* arg0, s32 arg1) // 0x800DBAE8
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBBA0);
+void func_800DBBA0(void) // 0x800DBBA0
+{
+    q19_12 time;
+    s32    i;
+
+    time = g_DeltaTime0;
+
+    for (i = 0; i < 5; i++)
+    {
+        D_800F3D98[i] += time;
+    }
+}
 
 void func_800DBBD8(MATRIX* mat) // 0x800DBBD8
 {
@@ -2138,7 +2189,52 @@ s_800F3DAC* func_800DD090(void) // 0x800DD090
     return NULL;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD0EC);
+void func_800DD0EC(VECTOR3* arg0, s32 coordIdx) // 0x800DD0EC
+{
+    VECTOR        sp10;
+    VECTOR        sp20;
+    SVECTOR       sp30;
+    SVECTOR       sp38;
+    MATRIX        sp40;
+    s_800F3DAC*   temp_v0;
+    s_D_800F48A8* ptr;
+
+    sp38 = (SVECTOR){ 0, 0, Q12(1.5f) }; // .rodata 0x800CAEAC
+
+    ptr = &D_800F48A8;
+
+    temp_v0 = func_800DD090();
+    if (temp_v0 != NULL)
+    {
+        sp30.vx = Rng_Rand16();
+        sp30.vy = Rng_Rand16();
+        sp30.vz = 0;
+        Math_RotMatrixXyz(&sp30, &sp40);
+
+        SetRotMatrix(&sp40);
+        ApplyRotMatrix(&sp38, &sp20);
+
+        sp10.vx               = arg0->vx + sp20.vx;
+        sp10.vy               = arg0->vy + sp20.vy;
+        sp10.vz               = arg0->vz + sp20.vz;
+        temp_v0->field_4E4    = 3;
+        temp_v0->rotZ_4D8     = FP_ANGLE(108.0f);
+        temp_v0->timer_C      = Q12(1.0f);
+        temp_v0->timer_8      = Q12(1.0f);
+        temp_v0->coordIdx_4EC = coordIdx;
+        temp_v0->field_14     = FP_ANGLE(15.0f);
+        func_800DCDDC(temp_v0, &sp10, arg0);
+
+        if (ptr->field_48 == 0)
+        {
+            func_800DBAE8(arg0, 2);
+        }
+        else
+        {
+            func_800DBAE8(arg0, 4);
+        }
+    }
+}
 
 void func_800DD240(VECTOR3* vec) // 0x800DD240
 {
@@ -2685,8 +2781,6 @@ void func_800DDF14(s_SubCharacter* incubus) // 0x800DDF14
         incubus->model_0.stateStep_3++;
     }
 }
-
-INCLUDE_RODATA("maps/map7_s03/nonmatchings/map7_s03_2", D_800CAEAC);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DDF3C);
 
@@ -3310,9 +3404,31 @@ void func_800E0528(s_SubCharacter* chara) // 0x800E0528
     chara->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E05DC);
+void func_800E05DC(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E05DC
+{
+    switch (chara->model_0.controlState_2)
+    {
+        case 4:
+            func_800DFEF0(chara);
+            return;
+        case 5:
+            func_800DFF28(chara);
+            return;
+        case 6:
+            func_800DFF44(chara);
+            return;
+        case 3:
+            func_800DFF60(chara, 0);
+            return;
+        case 2:
+            func_800E0528(chara);
+            return;
+        case 1:
+            return;
+    }
+}
 
-void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800E0670
+void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0670
 {
     s32 dist;
 
@@ -3320,7 +3436,7 @@ void func_800E0670(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800E0670
 
     if (chara->model_0.controlState_2 == 3)
     {
-        func_800DFF60(chara, coord);
+        func_800DFF60(chara, coords);
     }
 
     dist = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
@@ -3395,11 +3511,11 @@ void func_800E0888(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E0888
     chara->field_C8.field_6 = posY - Q12(0.5f);
 }
 
-void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x800E08E4
+void func_800E08E4(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800E08E4
 {
     if (chara->model_0.stateStep_3 == 0)
     {
-        func_800E05DC(chara, coord);
+        func_800E05DC(chara, coords);
     }
 }
 
@@ -3616,7 +3732,15 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E1FE0);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E20A4);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E22AC);
+void func_800E22AC(VECTOR3* arg0, s32* arg1, s16* mv_pos, s16* now_spd, VECTOR3* arg4, s32 arg5, VECTOR3* arg6, s32 arg7, s16 total_max_spd) // 0x800E22AC
+{
+    *now_spd = vwRetNewVelocityToTargetVal(*now_spd, *mv_pos, Q12(1.0f), Q12(2.0f), total_max_spd, Q12(10.0f));
+    *mv_pos += Q12_MULT_PRECISE(*now_spd, g_DeltaTime0);
+    *arg1    = arg7 + Q12_MULT(*mv_pos, (arg5 - arg7));
+    arg0->vx = arg6->vx + Q12_MULT(*mv_pos, (arg4->vx - arg6->vx));
+    arg0->vy = arg6->vy + Q12_MULT(*mv_pos, (arg4->vy - arg6->vy));
+    arg0->vz = arg6->vz + Q12_MULT(*mv_pos, (arg4->vz - arg6->vz));
+}
 
 q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target) // 0x800E2444
 {
