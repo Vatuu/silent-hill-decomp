@@ -426,9 +426,7 @@ segments:
       - [0x8DAB0, data, bodyprog_800B2610] # Unknown data.
       - [0x8DAB8, .bss, memcard]
       - [0x910C0, .bss, screen/text_draw_debug]
-      - [0x910C8, .bss, screen/screen_draw]
-      - [0x910CC,  pad] # Garbage.
-      - [0x910D0, .bss, screen/screen_fade]
+      - [0x910C8, .bss, screen/screen_fade]
       - [0x910D4, .bss, screen/screen_data]
       - [0x95170,  bss]
       - [0x95460, .bss, sys/syswork_globals]
