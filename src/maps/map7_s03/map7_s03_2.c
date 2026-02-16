@@ -4190,7 +4190,72 @@ void func_800E0C10(void) // 0x800E0C10
 
 void func_800E14D4(void) {}
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E14DC);
+void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warpCamera) // 0x800E14DC
+{
+    VECTOR3 camTargetPos;
+    VECTOR3 camWatchPos;
+    bool    camUpdated;
+    s32     angleToOtherChara;
+    s32     vcPrsFViewFlag;
+
+    camUpdated        = false;
+    angleToOtherChara = ratan2(player->position_18.vx - otherChara->position_18.vx, player->position_18.vz - otherChara->position_18.vz);
+
+    vcPrsFViewFlag = (vcWork.flags_8 & VC_PRS_F_VIEW_F) == VC_PRS_F_VIEW_F;
+    if (((g_GameWorkConst->config_0.optExtraViewCtrl_28 && (vcPrsFViewFlag ^ 1) != 0) ||
+         (!g_GameWorkConst->config_0.optExtraViewCtrl_28 && vcPrsFViewFlag)) &&
+        (g_GameWorkConst->config_0.optExtraViewMode_29 == 0))
+    {
+        camUpdated = true;
+
+        camTargetPos.vx = player->position_18.vx +
+                          Q12_MULT_FLOAT(Math_Sin(player->rotation_24.vy), 1.5f) +
+                          Q12_MULT_FLOAT(Math_Sin(angleToOtherChara), 2.5f);
+        camTargetPos.vz = player->position_18.vz +
+                          Q12_MULT_FLOAT(Math_Cos(player->rotation_24.vy), 1.5f) +
+                          Q12_MULT_FLOAT(Math_Cos(angleToOtherChara), 2.5f);
+
+        if (otherChara->model_0.charaId_0 == Chara_Incubus)
+        {
+            camTargetPos.vy = Q12(-1.4f);
+        }
+        else
+        {
+            camTargetPos.vy = Q12(-2.3f);
+        }
+
+        camWatchPos.vx = otherChara->position_18.vx + FP_FROM(Q12(Math_Sin(angleToOtherChara)), Q12_SHIFT);
+        camWatchPos.vz = otherChara->position_18.vz + FP_FROM(Q12(Math_Cos(angleToOtherChara)), Q12_SHIFT);
+
+        if (warpCamera)
+        {
+            camWatchPos.vy = Q12(-0.002f);
+        }
+        else if (otherChara->model_0.charaId_0 == Chara_Incubus)
+        {
+            camWatchPos.vy = func_80080A3C();
+        }
+        else
+        {
+            camWatchPos.vy = Q12(-0.8f);
+        }
+    }
+
+    if (camUpdated)
+    {
+        vcUserCamTarget(&camTargetPos, NULL, warpCamera);
+        vcUserWatchTarget(&camWatchPos, NULL, warpCamera);
+
+        if (warpCamera)
+        {
+            vcExecCamera();
+        }
+    }
+    else
+    {
+        vcReturnPreAutoCamWork(false);
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E16FC);
 
@@ -4666,7 +4731,7 @@ void func_800E3390(void) // 0x800E3390
 
             SD_Call(19);
 
-            func_800E14DC(&g_SysWork.playerWork_4C, &g_SysWork.npcs_1A0[2], 1);
+            func_800E14DC(&g_SysWork.playerWork_4C.player_0, &g_SysWork.npcs_1A0[2], 1);
             D_800F4805           = 0;
             g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
             break;
@@ -7237,11 +7302,11 @@ void func_800E972C(void) // 0x800E972C
     {
         if (Savegame_EventFlagGet(EventFlag_391))
         {
-            func_800E14DC(&g_SysWork.playerWork_4C, &g_SysWork.npcs_1A0[2], false);
+            func_800E14DC(&g_SysWork.playerWork_4C.player_0, &g_SysWork.npcs_1A0[2], false);
         }
         else
         {
-            func_800E14DC(&g_SysWork.playerWork_4C, &g_SysWork.npcs_1A0[4], false);
+            func_800E14DC(&g_SysWork.playerWork_4C.player_0, &g_SysWork.npcs_1A0[4], false);
         }
     }
 

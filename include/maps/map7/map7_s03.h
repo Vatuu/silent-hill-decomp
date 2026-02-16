@@ -650,7 +650,7 @@ void func_800E0C10(void);
 
 void func_800E14D4(void);
 
-void func_800E14DC(s_PlayerWork*, s_SubCharacter*, bool);
+void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warpCamera);
 
 void func_800E1788(s32 arg0);
 
