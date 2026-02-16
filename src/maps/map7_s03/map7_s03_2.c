@@ -4485,7 +4485,25 @@ void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warp
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E16FC);
+void func_800E16FC(void) // 0x800E16FC
+{
+    D_800F4B40.field_0  = NO_VALUE;
+    D_800F4B40.field_18 = 250;
+    D_800F4B40.field_19 = 200;
+    D_800F4B40.field_1A = 150;
+
+    D_800F4B40.field_1C[0].vec_0  = &D_800F4B40.field_B8[0];
+    D_800F4B40.field_1C[1].vec_0  = &D_800F4B40.field_B8[1];
+    D_800F4B40.field_1C[4].vec_0  = &D_800F4B40.field_B8[2];
+    D_800F4B40.field_1C[5].vec_0  = &D_800F4B40.field_B8[3];
+    D_800F4B40.field_1C[9].vec_0  = &D_800F4B40.field_B8[4];
+    D_800F4B40.field_1C[10].vec_0 = &D_800F4B40.field_B8[5];
+    D_800F4B40.field_1C[13].vec_0 = &D_800F4B40.field_B8[6];
+    D_800F4B40.field_8            = 0;
+    D_800F4B40.field_1C[14].vec_0 = &D_800F4B40.field_B8[7];
+
+    func_800E1788(0);
+}
 
 void func_800E1788(s32 arg0) // 0x800E1788
 {

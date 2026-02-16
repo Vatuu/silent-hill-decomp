@@ -248,11 +248,25 @@ typedef struct
 
 typedef struct
 {
-    s32 field_0;
-    s32 field_4;
-    s32 field_8;
-    s32 field_C;
-    s32 field_10;
+    VECTOR3* vec_0;
+    u8       unk_4[4];
+} s_800F4B40_1C;
+
+typedef struct
+{
+    s32           field_0;
+    s32           field_4;
+    s32           field_8;
+    s32           field_C;
+    s32           field_10;
+    u8            unk_14[4];
+    u8            field_18;
+    u8            field_19;
+    u8            field_1A;
+    u8            unk_1B[1];
+    s_800F4B40_1C field_1C[15];
+    u8            unk_94[0x24];
+    VECTOR3       field_B8[8]; // Guessed type based on size, likely incorrect.
 } s_800F4B40;
 
 typedef struct
@@ -667,6 +681,8 @@ void func_800E0C10(void);
 void func_800E14D4(void);
 
 void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warpCamera);
+
+void func_800E16FC(void);
 
 void func_800E1788(s32 arg0);
 
