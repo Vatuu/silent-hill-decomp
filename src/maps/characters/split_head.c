@@ -283,7 +283,7 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
     VECTOR unkPos;
     q3_12  angleDeltaToPlayer;
     q19_12 distToPlayer;
-    
+
     distToPlayer       = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - splitHead->position_18.vx,
                                              g_SysWork.playerWork_4C.player_0.position_18.vz - splitHead->position_18.vz);
     angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
@@ -1045,7 +1045,7 @@ void sharedFunc_800D267C_1_s05(s_SubCharacter* splitHead)
     sharedData_800D8616_1_s05 = Q12(0.0f);
 }
 
-void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr) 
+void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
 {
     SVECTOR     sp10;
     MATRIX      sp18;
@@ -1091,7 +1091,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
                         if (splitHead->moveSpeed_38 >= Q12(0.0f))
                         {
                             sharedData_800D5884_1_s05 = MAX(sharedData_800D5884_1_s05, Q12(8.0f));
-                        } 
+                        }
                         else
                         {
                             sharedData_800D5884_1_s05 = CLAMP_HIGH(sharedData_800D5884_1_s05, Q12(-8.0f));
@@ -1108,7 +1108,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
                         if (splitHead->moveSpeed_38 > Q12(0.0f))
                         {
                             splitHeadProps.flags_E8 |= SplitHeadFlag_5;
-                        } 
+                        }
                         else if (splitHead->moveSpeed_38 < Q12(0.0f))
                         {
                             splitHeadProps.flags_E8 &= ~SplitHeadFlag_5;
@@ -1135,7 +1135,7 @@ void sharedFunc_800D274C_1_s05(s_SubCharacter* splitHead, s_AnmHeader* anmHdr)
                     else
                     {
                         if (FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) > 187 &&
-                            FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 203) 
+                            FP_FROM(splitHead->model_0.anim_4.time_4, Q12_SHIFT) < 203)
                         {
                             sharedData_800D5884_1_s05 = Q12(24.0f);
                         }

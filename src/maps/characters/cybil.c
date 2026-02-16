@@ -87,10 +87,10 @@ void Ai_Cybil_MovementUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 }
 
 /** Addresses
- * MAP0_S01: 
- * MAP4_S01: 
- * MAP6_S01: 
- * MAP7_S03: 
+ * MAP0_S01:
+ * MAP4_S01:
+ * MAP6_S01:
+ * MAP7_S03:
  */
 void Ai_Cybil_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 {

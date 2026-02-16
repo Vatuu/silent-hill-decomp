@@ -13,7 +13,7 @@ typedef enum
 {
     ParticleState_Spawn  = 0,
     ParticleState_Active = 1,
-    ParticleState_Rest   = 2  
+    ParticleState_Rest   = 2
 } e_ParticleState;
 
 typedef enum
@@ -67,7 +67,7 @@ typedef struct
     u8      field_5;
     u8      field_6;
     u8      field_7;
-} s_func_800CC8FC_0; 
+} s_func_800CC8FC_0;
 
 typedef struct
 {
@@ -120,10 +120,10 @@ extern e_MapOverlayId g_ParticleMapOverlayId1;
 void Particle_SystemUpdate(s32 unused, e_MapOverlayId mapOverlayId, s32 arg3);
 
 /** @brief Checks if the particle spawn origin has moved significantly since the last tick.
- * 
+ *
  * Returns `true` if position delta exceeds 10000 units (?) or the Y rotation exceeds 45 degrees.
  * Used to determine when particles need repositioning to follow the moving spawn origin.
- * 
+ *
  * @return `true` if spawn origin moved beyond threshold, `false` otherwise.
  */
 bool Particle_CameraMovedCheck(void);

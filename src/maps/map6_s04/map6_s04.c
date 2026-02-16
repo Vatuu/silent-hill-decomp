@@ -610,7 +610,7 @@ void func_800D9790(s_SubCharacter* chara, s_Model* model) // 0x800D9790
             }
 
             func_80069B24(&sp10, &sp40, chara);
-         
+
             chara->position_18.vx += sp10.offset_0.vx;
             chara->position_18.vz += sp10.offset_0.vz;
             chara->field_34        = Q12(0.0f);

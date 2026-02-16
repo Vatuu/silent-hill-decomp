@@ -82,7 +82,7 @@ void GameState_Options_Update(void) // 0x801E2D44
             g_Options_SelectionHighlightTimer    = 0;
             g_ExtraOptionsMenu_BulletMultMax     = 1;
             unlockedOptFlags                     = g_GameWork.config_0.optExtraOptionsEnabled_27;
-            
+
             // Set available bullet multiplier.
             for (i = 0; i < 5; i++)
             {
@@ -278,7 +278,7 @@ void Options_ExtraOptionsMenu_Control(void) // 0x801E318C
         g_ExtraOptionsMenu_PrevSelectedEntry = g_ExtraOptionsMenu_SelectedEntry;
 
         // Leave to gameplay (if options menu was accessed with `Option` input action).
-        if (g_GameWork.gameStatePrev_590 == GameState_InGame && 
+        if (g_GameWork.gameStatePrev_590 == GameState_InGame &&
             !(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) &&
             (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.option_1A))
         {
@@ -491,7 +491,7 @@ void Options_MainOptionsMenu_Control(void) // 0x801E3770
     g_MainOptionsMenu_PrevSelectedEntry = g_MainOptionsMenu_SelectedEntry;
 
     // Leave to gameplay (if options menu was accessed with `Option` input action).
-    if (g_GameWork.gameStatePrev_590 == GameState_InGame && 
+    if (g_GameWork.gameStatePrev_590 == GameState_InGame &&
         !(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) &&
         (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.option_1A))
     {
@@ -1109,7 +1109,7 @@ void Options_Menu_VignetteDraw(void) // 0x801E49F0
     s32      i;
     GsOT*    ot;
     POLY_G4* poly;
-    
+
     ot = &g_OrderingTable0[g_ActiveBufferIdx];
 
     xy3 = 160 + (0xFFA0 << 16); // TODO: -96
@@ -1421,7 +1421,7 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
     s8         posX;
     TILE*      tile;
     PACKET*    packet;
-	static s32 screenPosMenu_BackgroundFade;
+    static s32 screenPosMenu_BackgroundFade;
     static s16 screenPosMenu_PositionX;
     static s16 screenPosMenu_PositionY;
 
@@ -1935,7 +1935,7 @@ void Options_Selection_ArrowDraw(const s_Triangle2d* arrow, bool isFlashing, boo
     s32      colorEnd;
     POLY_G3* arrowPoly;
     GsOT*    ot;
-    
+
     ot = &g_OrderingTable2[g_ActiveBufferIdx];
 
     // @unused `resetColor` doesn't serve any meaningful purpose.
@@ -2111,7 +2111,7 @@ void Options_ControllerMenu_Control(void) // 0x801E69BC
 {
     s32                                     boundActionIdx = NO_VALUE;
     e_InputAction                           actionIdx;
-	static s_ControllerMenu_SelectedEntries controllerMenu_SelectedEntries;
+    static s_ControllerMenu_SelectedEntries controllerMenu_SelectedEntries;
 
     // Handle controller config menu state.
     switch (g_GameWork.gameStateStep_598[1])
@@ -2399,74 +2399,74 @@ void Options_ControllerMenu_EntriesDraw(bool isOnRightPane, s32 presetsEntryIdx,
     DR_MODE* drMode;
     POLY_G4* poly;
     GsOT*    ot;
-	
-	/** @brief Draw modes for textured entry selection highlights in the controller config menu.
-	 * 0 corresponds to the presets pane on the left,
-	 * 1 corresponds to the actions pane on the right.
-	 */
-	static DR_MODE controllerMenu_SelectionHighlightDrawModes[2] = {
-		{
-			.tag  = 0x03000000,
-			.code = { 0xE1000200, 0 }
-		},
-		{
-			.tag  = 0x03000000,
-			.code = { 0xE1000200, 0 }
-		}
-	};
 
-	/** @brief Quads for textured entry selection highlights in the controller config menu.
-	 * 0 corresponds to the presets pane on the left,
-	 * 1 corresponds to the actions pane on the right.
-	 */
-	static POLY_G4 controllerMenu_SelectionHighlightQuads[2] = {
-		{
-			.tag  = 0x08000000,
-			.r0   = 255,
-			.g0   = 255,
-			.b0   = 255,
-			.code = 0x3A,
-			.r3   = 255,
-			.g3   = 255,
-			.b3   = 255
-		},
-		{
-			.tag  = 0x08000000,
-			.code = 0x3A,
-			.r1   = 255,
-			.g1   = 255,
-			.b1   = 255,
-			.r2   = 255,
-			.g2   = 255,
-			.b2   = 255
-		},
-	};
+    /** @brief Draw modes for textured entry selection highlights in the controller config menu.
+     * 0 corresponds to the presets pane on the left,
+     * 1 corresponds to the actions pane on the right.
+     */
+    static DR_MODE controllerMenu_SelectionHighlightDrawModes[2] = {
+        {
+            .tag  = 0x03000000,
+            .code = { 0xE1000200, 0 }
+        },
+        {
+            .tag  = 0x03000000,
+            .code = { 0xE1000200, 0 }
+        }
+    };
 
-	/** @brief Controller menu entry strings for the presets pane on the left. */
-	static const char* CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[] = {
-		"EXIT",
-		"TYPE_1",
-		"TYPE_2",
-		"TYPE_3"
-	};
+    /** @brief Quads for textured entry selection highlights in the controller config menu.
+     * 0 corresponds to the presets pane on the left,
+     * 1 corresponds to the actions pane on the right.
+     */
+    static POLY_G4 controllerMenu_SelectionHighlightQuads[2] = {
+        {
+            .tag  = 0x08000000,
+            .r0   = 255,
+            .g0   = 255,
+            .b0   = 255,
+            .code = 0x3A,
+            .r3   = 255,
+            .g3   = 255,
+            .b3   = 255
+        },
+        {
+            .tag  = 0x08000000,
+            .code = 0x3A,
+            .r1   = 255,
+            .g1   = 255,
+            .b1   = 255,
+            .r2   = 255,
+            .g2   = 255,
+            .b2   = 255
+        },
+    };
 
-	/** @brief Controller menu entry strings for the actions pane on the right. */
-	static const char* CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS[] = {
-		"ENTER",
-		"CANCEL",
-		"SKIP",
-		"ACTION",
-		"AIM",
-		"LIGHT",
-		"RUN",
-		"VIEW",
-		"STEP L",
-		"STEP R",
-		"PAUSE",
-		"ITEM",
-		"MAP",
-		"OPTION"
-	};
+    /** @brief Controller menu entry strings for the presets pane on the left. */
+    static const char* CONTROLLER_MENU_PRESETS_PANE_ENTRY_STRINGS[] = {
+        "EXIT",
+        "TYPE_1",
+        "TYPE_2",
+        "TYPE_3"
+    };
+
+    /** @brief Controller menu entry strings for the actions pane on the right. */
+    static const char* CONTROLLER_MENU_ACTIONS_PANE_ENTRY_STRINGS[] = {
+        "ENTER",
+        "CANCEL",
+        "SKIP",
+        "ACTION",
+        "AIM",
+        "LIGHT",
+        "RUN",
+        "VIEW",
+        "STEP L",
+        "STEP R",
+        "PAUSE",
+        "ITEM",
+        "MAP",
+        "OPTION"
+    };
 
 
     ot     = &g_OtTags0[g_ActiveBufferIdx][15];

@@ -1,6 +1,6 @@
 /** @brief Waits for an external timer to be above `timeMin`, incrementing the timer until it reaches
  * `timeMax`. After this time, it increments the cutscene state step.
- * 
+ *
  * TODO: Specific to cutscene map events. Revised name could be `SysWork_CutsceneStateStepIncrement` or `Map_CutsceneStateStepIncrement`.
  *
  * @param timer External timer.

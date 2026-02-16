@@ -12,7 +12,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(20.8f) 
+      .positionZ_8 = Q12(20.8f)
    },
    {
       .positionX_0 = Q12(-144.0f),
@@ -28,7 +28,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(18.0f) 
+      .positionZ_8 = Q12(18.0f)
    },
    {
       .positionX_0 = Q12(-178.4f),
@@ -44,7 +44,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(20.8f) 
+      .positionZ_8 = Q12(20.8f)
    },
    {
       .positionX_0 = Q12(-101.2f),
@@ -60,7 +60,7 @@
             .field_4_24 = 6,
          }
       },
-      .positionZ_8 = Q12(17.9f) 
+      .positionZ_8 = Q12(17.9f)
    },
    {
       .positionX_0 = Q12(-247.50f),
@@ -76,7 +76,7 @@
             .field_4_24 = 6,
          }
       },
-      .positionZ_8 = Q12(-206.9f) 
+      .positionZ_8 = Q12(-206.9f)
    },
    {
       .positionX_0 = Q12(-100.35f),
@@ -92,7 +92,7 @@
             .field_4_24 = 3,
          }
       },
-      .positionZ_8 = Q12(22.2f) 
+      .positionZ_8 = Q12(22.2f)
    },
    {
       .positionX_0 = Q12(-144.0f),
@@ -108,7 +108,7 @@
             .field_4_24 = 16,
          }
       },
-      .positionZ_8 = Q12(16.0f) 
+      .positionZ_8 = Q12(16.0f)
    },
    {
       .positionX_0 = Q12(30.0f),
@@ -124,7 +124,7 @@
             .field_4_24 = 16,
          }
       },
-      .positionZ_8 = Q12(154.0f) 
+      .positionZ_8 = Q12(154.0f)
    },
    {
       .positionX_0 = Q12(-177.95996093750f),
@@ -140,7 +140,7 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8 = Q12(22.3f) 
+      .positionZ_8 = Q12(22.3f)
    },
    {
       .positionX_0 = Q12(-177.8098144531250f),
@@ -156,7 +156,7 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8 = Q12(21.9299316406250f) 
+      .positionZ_8 = Q12(21.9299316406250f)
    },
    {
       .positionX_0 = Q12(-178.1799316406250f),
@@ -172,7 +172,7 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8 = Q12(21.779785156250f) 
+      .positionZ_8 = Q12(21.779785156250f)
    },
    {
       .positionX_0 = Q12(-178.3298339843750f),
@@ -188,7 +188,7 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8 = Q12(22.149902343750f) 
+      .positionZ_8 = Q12(22.149902343750f)
    },
    {
       .positionX_0 = Q12(-177.6f),
@@ -204,7 +204,7 @@
             .field_4_24 = 5,
          }
       },
-      .positionZ_8 = Q12(20.9f) 
+      .positionZ_8 = Q12(20.9f)
    },
    {
       .positionX_0 = Q12(-177.8f),
@@ -220,7 +220,7 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8 = Q12(16.0f) 
+      .positionZ_8 = Q12(16.0f)
    },
    {
       .positionX_0 = Q12(82.6f),
@@ -236,7 +236,7 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8 = Q12(-97.4f) 
+      .positionZ_8 = Q12(-97.4f)
    },
    {
       .positionX_0 = Q12(-177.6f),
@@ -252,7 +252,7 @@
             .field_4_24 = 20,
          }
       },
-      .positionZ_8 = Q12(21.649902343750f) 
+      .positionZ_8 = Q12(21.649902343750f)
    },
    {
       .positionX_0 = Q12(-178.98f),
@@ -268,7 +268,7 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8 = Q12(19.779785156250f) 
+      .positionZ_8 = Q12(19.779785156250f)
    },
    {
       .positionX_0 = Q12(-179.069824218750f),
@@ -284,7 +284,7 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8 = Q12(19.3898925781250f) 
+      .positionZ_8 = Q12(19.3898925781250f)
    },
    {
       .positionX_0 = Q12(-179.45996093750f),
@@ -300,7 +300,7 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8 = Q12(19.48f) 
+      .positionZ_8 = Q12(19.48f)
    },
    {
       .positionX_0 = Q12(-179.3698730468750f),
@@ -316,7 +316,7 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8 = Q12(19.8698730468750f) 
+      .positionZ_8 = Q12(19.8698730468750f)
    },
    {
       .positionX_0 = Q12(-177.5197753906250f),
@@ -332,7 +332,7 @@
             .field_4_24 = 5,
          }
       },
-      .positionZ_8 = Q12(19.649902343750f) 
+      .positionZ_8 = Q12(19.649902343750f)
    },
    {
       .positionX_0 = Q12(-146.4f),
@@ -348,7 +348,7 @@
             .field_4_24 = 7,
          }
       },
-      .positionZ_8 = Q12(21.1f) 
+      .positionZ_8 = Q12(21.1f)
    },
    {
       .positionX_0 = Q12(-146.4f),
@@ -364,7 +364,7 @@
             .field_4_24 = 7,
          }
       },
-      .positionZ_8 = Q12(21.6f) 
+      .positionZ_8 = Q12(21.6f)
    },
    {
       .positionX_0 = Q12(-177.609863281250f),
@@ -380,7 +380,7 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8 = Q12(21.2f) 
+      .positionZ_8 = Q12(21.2f)
    },
    {
       .positionX_0 = Q12(-140.2697753906250f),
@@ -396,7 +396,7 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8 = Q12(58.1f) 
+      .positionZ_8 = Q12(58.1f)
    },
    {
       .positionX_0 = Q12(-140.8698730468750f),
@@ -412,7 +412,7 @@
             .field_4_24 = 12,
          }
       },
-      .positionZ_8 = Q12(62.1f) 
+      .positionZ_8 = Q12(62.1f)
    },
    {
       .positionX_0 = Q12(122.50f),
@@ -428,7 +428,7 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8 = Q12(218.0f) 
+      .positionZ_8 = Q12(218.0f)
    },
    {
       .positionX_0 = Q12(-146.0f),
@@ -444,7 +444,7 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8 = Q12(18.35f) 
+      .positionZ_8 = Q12(18.35f)
    },
    {
       .positionX_0 = Q12(-145.4f),
@@ -460,7 +460,7 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8 = Q12(18.35f) 
+      .positionZ_8 = Q12(18.35f)
    },
    {
       .positionX_0 = Q12(-147.1250f),
@@ -476,7 +476,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(22.2f) 
+      .positionZ_8 = Q12(22.2f)
    },
    {
       .positionX_0 = Q12(-141.7268066406250f),
@@ -492,7 +492,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(21.0f) 
+      .positionZ_8 = Q12(21.0f)
    },
    {
       .positionX_0 = Q12(-141.0f),
@@ -508,7 +508,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(19.024902343750f) 
+      .positionZ_8 = Q12(19.024902343750f)
    },
    {
       .positionX_0 = Q12(-137.750f),
@@ -524,7 +524,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(18.6f) 
+      .positionZ_8 = Q12(18.6f)
    },
    {
       .positionX_0 = Q12(-182.8750f),
@@ -540,7 +540,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(19.4748535156250f) 
+      .positionZ_8 = Q12(19.4748535156250f)
    },
    {
       .positionX_0 = Q12(-100.3098144531250f),
@@ -556,7 +556,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(18.8698730468750f) 
+      .positionZ_8 = Q12(18.8698730468750f)
    },
    {
       .positionX_0 = Q12(-100.3698730468750f),
@@ -572,5 +572,5 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(18.74f) 
+      .positionZ_8 = Q12(18.74f)
    }

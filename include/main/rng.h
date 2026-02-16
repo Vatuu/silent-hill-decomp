@@ -116,7 +116,7 @@ extern u32 g_RngSeed;
 u32 Rng_Rand32(void);
 
 /** @brief Generates a new random 16-bit unsigned integer.
- * 
+ *
  * Calls `Rng_Rand32` to generate a random number, then
  * shifts the result right to produce a value within the range
  * of `[0, 0x7FFF]`.

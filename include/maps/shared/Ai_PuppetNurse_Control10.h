@@ -20,7 +20,7 @@ void Ai_PuppetNurse_Control10(s_SubCharacter* nurse)
     {
         nurse->model_0.controlState_2 = PuppetNurseControl_9;
         nurse->model_0.stateStep_3 = 0;
-        
+
         if (Rng_Rand16() & 0x80)
         {
             animStatus = ANIM_STATUS(7, false);

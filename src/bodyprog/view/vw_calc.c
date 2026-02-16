@@ -460,7 +460,7 @@ bool Vw_AabbVisibleInScreenCheck(s32 minX, s32 maxX, s32 minY, s32 maxY, s32 min
     func_80049C2C(&worldMat, minX, minY, minZ);
     SetRotMatrix(&worldMat);
     SetTransMatrix(&worldMat);
-    
+
     screenMaxY = INT_MAX + 1;
     screenMaxX = INT_MAX + 1;
     screenMinY = INT_MAX;
@@ -838,7 +838,7 @@ bool func_8004A54C(s_func_8004A54C* arg0) // 0x8004A54C
 void vwAngleToVector(SVECTOR* vec, const SVECTOR* ang, s32 r) // 0x8004A66C
 {
     s32 entou_r; // 2D radius on XZ plane.
-    
+
     entou_r = Q12_MULT(r, Math_Cos(ang->vx));
     vec->vy = Q12_MULT(-r, Math_Sin(ang->vx));
     vec->vx = Q12_MULT(entou_r, Math_Sin(ang->vy));

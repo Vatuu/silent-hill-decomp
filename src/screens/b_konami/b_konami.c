@@ -31,7 +31,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
 
                 // Load `1ST/KONAMI2.TIM` (Konami logo).
                 Fs_QueueStartReadTim(FILE_1ST_KONAMI2_TIM, FS_BUFFER_1, &g_KcetLogoImg);
-                
+
                 WorldGfx_HarryCharaLoad();
                 GameFs_BgItemLoad();
                 Map_EffectTexturesLoad(NO_VALUE);
@@ -110,7 +110,7 @@ s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
 
     // No free space on any card.
     if ((saveEntryType0 == SavegameEntryType_OutOfBlocks && (saveEntryType1 == SavegameEntryType_OutOfBlocks || saveEntryType1 == SavegameEntryType_NoMemCard)) ||
-        (saveEntryType0 == SavegameEntryType_NoMemCard && saveEntryType1 == SavegameEntryType_OutOfBlocks)) 
+        (saveEntryType0 == SavegameEntryType_NoMemCard && saveEntryType1 == SavegameEntryType_OutOfBlocks))
     {
         return KcetLogoStateStep_NoMemCardFreeSpace;
     }
@@ -334,7 +334,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 }
                 break;
         }
-        
+
         BootScreen_KcetScreenDraw();
         Screen_FadeUpdate();
         Fs_QueueUpdate();

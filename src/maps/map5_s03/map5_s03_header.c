@@ -15,7 +15,7 @@ extern s_AnimInfo HARRY_M5S03_ANIM_INFOS[];
 extern s_UnkStruct3_Mo g_MapHeaderTable_38[];
 extern u8 LOADABLE_INVENTORY_ITEMS[];
 
-void (*g_LoadScreenFuncs[])() = 
+void (*g_LoadScreenFuncs[])() =
 {
     NULL,
     Gfx_LoadingScreen_PlayerRun,
@@ -307,18 +307,18 @@ s_MapPoint2d MAP_POINTS[40] =
     },
 };
 
-void (*g_MapEventFuncs[])() = 
+void (*g_MapEventFuncs[])() =
 {
-  MapEvent_DoorJammed, 
-  MapEvent_DoorLocked, 
-  MapEvent_DoorUnlocked, 
-  MapEvent_CommonItemTake, 
-  func_800D1628, 
-  func_800D1904, 
-  func_800D1A84, 
+  MapEvent_DoorJammed,
+  MapEvent_DoorLocked,
+  MapEvent_DoorUnlocked,
+  MapEvent_CommonItemTake,
+  func_800D1628,
+  func_800D1904,
+  func_800D1A84,
   func_800D1ACC,
-  func_800D1AF8, 
-  func_800D2640, 
+  func_800D1AF8,
+  func_800D2640,
   func_800D2674
 };
 

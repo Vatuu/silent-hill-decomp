@@ -40,7 +40,7 @@ void func_80036E48(u16* arg0, s16* arg1) // 0x80036E48
     u16        var_a3;
     s16*       var_t2;
     u16*       var_t7;
-	static s32 D_800C3920;
+    static s32 D_800C3920;
 
     var_t2 = arg1;
     var_t4 = 0;
@@ -165,7 +165,7 @@ void func_8003708C(s16* ptr0, u16* ptr1) // 0x8003708C
             *ptr0++ = var1;
             var1    = 0;
         }
-    } 
+    }
 }
 
 void func_80037124(void) // 0x80037124

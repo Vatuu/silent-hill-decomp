@@ -160,7 +160,7 @@ void func_800D1910(void) // 0x800D1910
                 u8  tpageAbr;
 
                 // @hack Might have been a switch instead?
-                setXY0Fast(scratch->sprt_0, 
+                setXY0Fast(scratch->sprt_0,
                            (i * 256) - ((layer < 2) ? ((layer == 1) ? 159 : 161) : 160),
                            ((layer < 2) ? -112 : ((layer == 2) ? -111 : -113)));
 

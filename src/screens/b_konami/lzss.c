@@ -72,7 +72,7 @@ void Lzss_Decode(s32 timeLimit) // 0x800CA2C8
     u32 temp_v0_2;
     u32 temp_v0_3;
     u32 temp_v1;
-    
+
     u8* curPos;    // `g_Lzss_CurPosition`
     u8* endPos;    // `g_Lzss_EndPosition`
     u8* windowPos;
@@ -102,7 +102,7 @@ void Lzss_Decode(s32 timeLimit) // 0x800CA2C8
 
     while (true)
     {
-        if (curPos == endPos) 
+        if (curPos == endPos)
         {
             g_Lzss_IsActive = false;
             break;
@@ -118,7 +118,7 @@ void Lzss_Decode(s32 timeLimit) // 0x800CA2C8
             break;
         }
 
-        // Shift register. If 'sentinel' bit at bit 8 is gone, 
+        // Shift register. If 'sentinel' bit at bit 8 is gone,
         // 8 bits have been processed and need to read new flag byte.
         flag = flag >> 1;
 
@@ -156,7 +156,7 @@ void Lzss_Decode(s32 timeLimit) // 0x800CA2C8
             temp_v0_2 = *curPos & 0xF0;
             temp_v0_3 = (*curPos & 0xF) + THRESHOLD + 1;
             temp_v0_2 = temp_v0_2 << 4;
-            
+
             var_a1    = temp_v0 | temp_v0_2;
             temp_v1_2 = var_a1 + temp_v0_3;
             curPos++;
@@ -165,7 +165,7 @@ void Lzss_Decode(s32 timeLimit) // 0x800CA2C8
             for (; var_a1 < (s16)temp_v1_2; var_a1++, outPos++)
             {
                 temp_v0_3 = g_Lzss_Window[var_a1 & (N - 1)];
-                
+
                 g_Lzss_Window[windowOffset] = temp_v0_3;
                 *outPos = temp_v0_3;
 

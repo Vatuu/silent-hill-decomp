@@ -352,7 +352,7 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     s32  endKeyframeIdx;
     s32  timestep;
     s32  alpha;
-    
+
     setNewAnimStatus = false;
     startKeyframeIdx = animInfo->startKeyframeIdx_C;
     endKeyframeIdx   = animInfo->endKeyframeIdx_E;
@@ -383,7 +383,7 @@ void Anim_Update2(s_Model* model, s_AnmHeader* anmHdr, GsCOORDINATE2* coord, s_A
     {
         startKeyframeIdx            = endKeyframeIdx;
         model->anim_4.keyframeIdx_8 = endKeyframeIdx;
-        
+
         alpha            = Q12(0.0f);
         setNewAnimStatus = true;
     }
@@ -474,7 +474,7 @@ void func_80044F14(GsCOORDINATE2* coord, q3_12 rotZ, q3_12 rotX, q19_12 rotY) //
     *(q3_12*)0x1F800000 = rotX;
 
     // TODO: Make FS buffer constant for this.
-    
+
     Math_RotMatrixZxyNegGte((SVECTOR*)0x1F800000, (MATRIX*)0x1F800008);
     MulMatrix(&coord->coord, (MATRIX*)0x1F800008);
 }
@@ -590,7 +590,7 @@ void func_80045108(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2, s32 arg3) // 0
 void Skeleton_BoneModelAssign(s_Skeleton* skel, s_LmHeader* lmHdr, s8* arg2) // 0x800451B0
 {
     s32 modelIdx;
-    
+
     modelIdx = Bone_ModelIdxGet(arg2, true);
     while (modelIdx != BoneHierarchy_End)
     {
@@ -701,7 +701,7 @@ void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
         {
             bones[modelIdx].bone_0.modelInfo_0.field_0 |= 1 << 31;
         }
-        
+
         modelIdx = Bone_ModelIdxGet(arg1, false);
     }
 }

@@ -203,7 +203,7 @@ void func_8008D1D0(s32* prevKeyframe, s32* nextKeyframe, q19_12* alpha, q19_12 t
 
     prevVal = 0;
     nextVal = 0;
-    
+
     switch (Dms_IntervalStateGet(time, dmsHdr))
     {
         case DmsIntervalState_Interpolating:

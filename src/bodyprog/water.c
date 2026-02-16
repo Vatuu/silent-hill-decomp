@@ -185,7 +185,7 @@ s32 func_8008D850(void) // 0x8008D850
 {
     s16 rectX;
     RECT rect;
-    s_8008D850 unk; 
+    s_8008D850 unk;
 
     rectX = 784;
     if (g_ActiveBufferIdx == 0)
@@ -197,7 +197,7 @@ s32 func_8008D850(void) // 0x8008D850
     rect.w = 2;
     rect.x = rectX;
     rect.h = 1;
-    
+
     DrawSync(SyncMode_Wait);
     StoreImage2(&rect, &unk.field_0);
     DrawSync(SyncMode_Wait);

@@ -1075,7 +1075,7 @@ typedef struct _GameWork
     u8                 field_58F;            // Command code? Maybe `s_PrimColor` fits here.
     e_GameState        gameStatePrev_590;
     e_GameState        gameState_594;
-    s32                gameStateStep_598[3]; /** Temp data used by current `gameState`. Can be another state ID or other data. 
+    s32                gameStateStep_598[3]; /** Temp data used by current `gameState`. Can be another state ID or other data.
                                               * This states could be sub-states for specific events of individual screens
                                               * because of the way it's normally used in menus. For example: in the settings
                                               * screen, [0] is used to define what option the player has selected, and [1] is used
@@ -1121,9 +1121,9 @@ typedef struct _ModelAnim
     u8          status_0;         /** Is active: bit 0, Anim index: bits 1-7. Possible original name: `anim_status`. */
     u8          maybeSomeState_1; // State says if `time_4` is anim time/anim status or a func ptr? That field could be a union.
     u16         flags_2;          /** `e_AnimFlags` */
-    q19_12      time_4;           /** Time on timeline. */ 
+    q19_12      time_4;           /** Time on timeline. */
     s16         keyframeIdx_8;    /** Active keyframe index. */
-    q3_12       alpha_A;          /** Keyframe progress alpha. Rename to `keyframeAlpha_A`? */ 
+    q3_12       alpha_A;          /** Keyframe progress alpha. Rename to `keyframeAlpha_A`? */
     s_AnimInfo* animInfo_C;       // } Arrays of anim infos?
     s_AnimInfo* animInfo_10;      // }
 } s_ModelAnim;
@@ -1142,7 +1142,7 @@ typedef struct _Model
 } s_Model;
 STATIC_ASSERT_SIZEOF(s_Model, 24);
 
-typedef union 
+typedef union
 {
     s32 val32;
     s16 val16[2];
@@ -1301,7 +1301,7 @@ typedef struct _PropertiesCreeper
     q19_12 timer_F0;                // Timer with unknown purpose.
     q19_12 targetPositionX_F4;
     q19_12 targetPositionZ_F8;
-    q19_12 prevTargetPositionX_FC;  // } Unsure. Maybe home position to return to? 
+    q19_12 prevTargetPositionX_FC;  // } Unsure. Maybe home position to return to?
     q19_12 prevTargetPositionZ_100; // }
     q19_12 timer_104;               // Timer with unknown purpose.
     q3_12  rotationY_108;
@@ -1443,7 +1443,7 @@ STATIC_ASSERT_SIZEOF(s_PropertiesLarvalStalker, 64);
 
 /** @brief Monster Cybil character properties. */
 typedef struct _PropertiesMonsterCybil
-{   
+{
     s32    field_E8;
     s16    field_EC;
     s16    field_EE; // Anim index?
@@ -1964,14 +1964,14 @@ static inline s32 SysWork_StateStepSet(s32 stepIdx, s32 sysStateStep)
     }
     else if (stepIdx == 1)
     {
-        step                        = 
+        step                        =
         g_SysWork.sysStateStep_C[1] = sysStateStep;
         g_SysWork.timer_2C          = 0;//Q12(0.0f);
         g_SysWork.sysStateStep_C[2] = 0;
     }
     else
     {
-        step                        = 
+        step                        =
         g_SysWork.sysStateStep_C[2] = sysStateStep;
     }
 

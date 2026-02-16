@@ -22,7 +22,7 @@ typedef enum _FsFile
 #endif
     FS_FILE_COUNT /** Number of files in `g_FileTable`. 2074 in USA/JAP0. */
 } e_FsFile;
- 
+
 typedef enum _FileType
 {
     FileType_Tim = 0,
@@ -163,7 +163,7 @@ void Fs_GetFileInfoName(char* outName, const s_FileInfo* const fileEntry);
  * used by the file table.
  * The name is stored in two 32-bit integers pointed to by `outName0123` and `outName4567`,
  * corresponding to the `s_FileInfo` fields of the same name.
- * 
+ *
  * Example of the file name encoding:
  *   For string like 'HERO':
  *   i0: 'H' - 0x20 << 0       = 0x28     (0000 0000 0000 0000 0010 1000)

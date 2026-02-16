@@ -419,7 +419,7 @@ void func_800D5DD8(void) // 0x800D5DD8
 
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
-            
+
             Savegame_EventFlagSet(EventFlag_M1S06_ChurchMarkedOnMap);
             Savegame_MapMarkingSet(MapMarkFlag_OldTown_BalkanChurchCircle);
             break;
@@ -529,7 +529,7 @@ void func_800D6578(void) // 0x800D6578
 
             Savegame_EventFlagSet(EventFlag_142);
         }
-    
+
         if (Savegame_EventFlagGet(EventFlag_142))
         {
             D_800DAF78 -= Q12_MULT_FLOAT_PRECISE(g_DeltaTime0, 0.2f);

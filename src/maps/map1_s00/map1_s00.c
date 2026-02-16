@@ -211,7 +211,7 @@ void func_800D7B2C(void)
         default:
             func_800862F8(6, 0, false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(2.5f), false);
-            
+
             Savegame_EventFlagSet(EventFlag_71);
             Savegame_MapMarkingSet(MapMarkFlag_FogSchool1F_ClockTowerCircle);
 
@@ -498,7 +498,7 @@ void func_800D85D8(void) // 0x800D85D8
 
                 Savegame_EventFlagClear(EventFlag_184);
                 Savegame_EventFlagClear(EventFlag_78);
-            } 
+            }
             else if (Savegame_EventFlagGet(EventFlag_81))
             {
                 g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(-60.0f);
@@ -834,7 +834,7 @@ void Map_WorldObjectsUpdate(void)
         {
             WorldGfx_ObjectAdd(&g_WorldObject5.object_0, &g_WorldObject5.position_1C, &(SVECTOR3){ 0, 0, 0 });
         }
-        
+
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -3, -1, -3) && PLAYER_IN_MAP_CHUNK(vz, 1, -2, -1, -2))
@@ -954,7 +954,7 @@ void Map_WorldObjectsUpdate(void)
         if (!Savegame_EventFlagGet(EventFlag_M1S00_HandgunBullets0))
         {
             WorldGfx_ObjectAdd(&g_CommonWorldObjects[3], &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
-        }     
+        }
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, 3, -1, 3) && PLAYER_IN_MAP_CHUNK(vz, 1, 4, -1, 4))

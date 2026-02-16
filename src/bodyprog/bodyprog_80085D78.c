@@ -23,7 +23,7 @@ u8 D_800AFD04 = 0;
 u8 D_800AFD05 = 0;
 // 2 bytes of padding.
 
-bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3) = 
+bool (*D_800AFD08[])(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr, u32* arg3) =
 {
     func_80089A30,
     func_80089BB8,
@@ -85,7 +85,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             {
                 g_MapOverlayHeader.func_D4(arg2);
             }
-            else 
+            else
             {
                 g_MapOverlayHeader.func_124(chara);
             }
@@ -95,7 +95,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             if (chara == &g_SysWork.playerWork_4C.player_0)
             {
                 keyframeState = g_MapOverlayHeader.func_E8(chara);
-                if (keyframeState == 1) 
+                if (keyframeState == 1)
                 {
                     func_80085D78(reset);
                 }
@@ -126,7 +126,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
             {
                 g_MapOverlayHeader.playerAnimUnlock_E4(chara, arg2);
             }
-            else 
+            else
             {
                 g_MapOverlayHeader.func_134(chara);
             }
@@ -138,7 +138,7 @@ void func_80085EB8(u32 arg0, s_SubCharacter* chara, s32 arg2, bool reset) // 0x8
                 g_MapOverlayHeader.playerAnimUnlock_E4(chara, arg2);
                 g_MapOverlayHeader.func_D8();
             }
-            else 
+            else
             {
                 g_MapOverlayHeader.func_128(chara);
             }
@@ -167,7 +167,7 @@ void MapMsg_DisplayAndHandleSelection(bool hasSelection, s32 mapMsgIdx, s32 step
     {
         return;
     }
-    
+
     if (!hasSelection)
     {
         func_80085D78(stepSecondary);
@@ -389,7 +389,7 @@ void func_80086470(u32 stateStep, e_InventoryItemId itemId, s32 itemCount, bool 
     {
         case 0:
             GameFs_UniqueItemModelLoad(itemId);
-            
+
             if (stateStep == 0)
             {
                 SysWork_StateStepIncrement(1);
@@ -427,7 +427,7 @@ void func_80086470(u32 stateStep, e_InventoryItemId itemId, s32 itemCount, bool 
 
 void func_800865FC(bool isPos, s32 idx0, s32 idx1, q3_12 angleY, q19_12 offsetOrPosX, q19_12 offsetOrPosZ) // 0x800865FC
 {
-    if (!isPos) 
+    if (!isPos)
     {
         D_800C4640[idx0][idx1].vx = g_SysWork.playerWork_4C.player_0.position_18.vx + offsetOrPosX;
         D_800C4640[idx0][idx1].vy = g_SysWork.playerWork_4C.player_0.position_18.vy;
@@ -646,7 +646,7 @@ void Camera_LookAtSet(VECTOR3* lookAt, q19_12 lookAtOffsetOrPosX, q19_12 lookAtO
     {
         camLookAtMoveParams.max_ang_spd_x = angularSpeedXMax;
     }
-    
+
     // Set max angular speed on Y axis.
     if (angularSpeedYMax == FP_ANGLE(0.0f))
     {
@@ -869,7 +869,7 @@ void MapMsg_DisplayWithTexture(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_12
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             MapMsg_DisplayAndHandleSelection(false, mapMsgIdx, 0, 0, 0, true);
             break;
-        
+
         case 5:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
             SysWork_StateStepIncrementAfterFade(2, true, 0, fadeTimestep1, true);
@@ -907,7 +907,7 @@ void MapMsg_DisplayWithTexture1(e_FsFile texFileIdx, q19_12 fadeTimestep0, q19_1
 
         case 4:
             func_800862F8(2, FILE_1ST_2ZANKO80_TIM, false);
-            
+
             if (mapMsgIdx0 != MapMsgCode_None)
             {
                 MapMsg_DisplayAndHandleSelection(false, mapMsgIdx0, 0, 0, 0, true);
@@ -958,7 +958,7 @@ void Event_ItemTake(e_InventoryItemId itemId, s32 itemCount, e_EventFlag eventFl
                 break;
             }
         }
-        
+
         if (i != ARRAY_SIZE(g_SysWork.npcs_1A0))
         {
             g_DeltaTime0 = Q12(0.0f);

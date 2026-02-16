@@ -12,7 +12,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(260.0f) 
+      .positionZ_8 = Q12(260.0f)
    },
    {
       .positionX_0 = Q12(5.1f),
@@ -28,7 +28,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(274.1f) 
+      .positionZ_8 = Q12(274.1f)
    },
    {
       .positionX_0 = Q12(5.0f),
@@ -44,7 +44,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(267.3f) 
+      .positionZ_8 = Q12(267.3f)
    },
    {
       .positionX_0 = Q12(5.0f),
@@ -60,7 +60,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(267.3f) 
+      .positionZ_8 = Q12(267.3f)
    },
    {
       .positionX_0 = Q12(2.3f),
@@ -76,7 +76,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(273.9f) 
+      .positionZ_8 = Q12(273.9f)
    },
    {
       .positionX_0 = Q12(3.0f),
@@ -92,7 +92,7 @@
             .field_4_24 = 32,
          }
       },
-      .positionZ_8 = Q12(270.5f) 
+      .positionZ_8 = Q12(270.5f)
    },
    {
       .positionX_0 = Q12(0.8f),
@@ -108,7 +108,7 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8 = Q12(269.5f) 
+      .positionZ_8 = Q12(269.5f)
    },
    {
       .positionX_0 = Q12(22.2f),
@@ -124,7 +124,7 @@
             .field_4_24 = 8,
          }
       },
-      .positionZ_8 = Q12(56.5f) 
+      .positionZ_8 = Q12(56.5f)
    },
    {
       .positionX_0 = Q12(3.6f),
@@ -140,7 +140,7 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8 = Q12(266.5f) 
+      .positionZ_8 = Q12(266.5f)
    },
    {
       .positionX_0 = Q12(4.8f),
@@ -156,7 +156,7 @@
             .field_4_24 = 3,
          }
       },
-      .positionZ_8 = Q12(274.5f) 
+      .positionZ_8 = Q12(274.5f)
    },
    {
       .positionX_0 = Q12(4.9f),
@@ -172,7 +172,7 @@
             .field_4_24 = 4,
          }
       },
-      .positionZ_8 = Q12(265.899902f) 
+      .positionZ_8 = Q12(265.899902f)
    },
    {
       .positionX_0 = Q12(3.9f),
@@ -188,7 +188,7 @@
             .field_4_24 = 12,
          }
       },
-      .positionZ_8 = Q12(265.7f) 
+      .positionZ_8 = Q12(265.7f)
    },
    {
       .positionX_0 = Q12(3.3f),
@@ -204,7 +204,7 @@
             .field_4_24 = 12,
          }
       },
-      .positionZ_8 = Q12(265.7f) 
+      .positionZ_8 = Q12(265.7f)
    },
    {
       .positionX_0 = Q12(5.1f),
@@ -220,7 +220,7 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(273.7f) 
+      .positionZ_8 = Q12(273.7f)
    },
    {
       .positionX_0 = Q12(4.95f),
@@ -236,5 +236,5 @@
             .field_4_24 = 0,
          }
       },
-      .positionZ_8 = Q12(267.5f) 
+      .positionZ_8 = Q12(267.5f)
    }

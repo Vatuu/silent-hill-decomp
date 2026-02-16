@@ -1071,7 +1071,7 @@ void Ipd_ChunkInit(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
     g_Map.positionX_578 = posX1;
     g_Map.positionX_57C = posZ1;
 
-    if (g_Map.globalLm_138.queueIdx_8 == NO_VALUE) 
+    if (g_Map.globalLm_138.queueIdx_8 == NO_VALUE)
     {
         g_Map.globalLm_138.queueIdx_8 = Fs_QueueStartRead(g_Map.globalLm_138.fileIdx_4, g_Map.globalLm_138.lmHdr_0);
     }
@@ -1079,7 +1079,7 @@ void Ipd_ChunkInit(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
     Map_ChunkLoad(&g_Map, posX0, posZ0, posX1, posZ1);
 
     if (Fs_QueueEntryLoadStatusGet(g_Map.globalLm_138.queueIdx_8) >= FsQueueEntryLoadStatus_Loaded &&
-        !g_Map.globalLm_138.lmHdr_0->isLoaded_2) 
+        !g_Map.globalLm_138.lmHdr_0->isLoaded_2)
     {
         fullPageTexCount                         = g_Map.ipdTextures_430.fullPage_0.count_0;
         g_Map.ipdTextures_430.fullPage_0.count_0 = 4;
@@ -1091,7 +1091,7 @@ void Ipd_ChunkInit(q19_12 posX0, q19_12 posZ0, q19_12 posX1, q19_12 posZ1) // 0x
         g_Map.ipdTextures_430.fullPage_0.count_0 = fullPageTexCount;
     }
 
-    for (curChunk = g_Map.ipdActive_15C; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++) 
+    for (curChunk = g_Map.ipdActive_15C; curChunk < &g_Map.ipdActive_15C[g_Map.ipdActiveSize_158]; curChunk++)
     {
         if (Fs_QueueEntryLoadStatusGet(curChunk->queueIdx_4) >= FsQueueEntryLoadStatus_Loaded)
         {
@@ -1216,7 +1216,7 @@ void Ipd_ActiveChunksSample(s_Map* map, q19_12 posX0, q19_12 posZ0, q19_12 posX1
             curChunk->distance0_C  = INT_MAX;
             curChunk->distance1_10 = INT_MAX;
         }
-        else 
+        else
         {
             Ipd_DistanceToEdgeCalc(curChunk, posX0, posZ0, posX1, posZ1, isExterior);
         }
@@ -1316,7 +1316,7 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior)
 
     for (curChunk = chunks; curChunk < &chunks[g_Map.ipdActiveSize_158]; curChunk++)
     {
-        if (!isExterior) 
+        if (!isExterior)
         {
             if (curChunk->queueIdx_4 == NO_VALUE)
             {
@@ -1334,11 +1334,11 @@ s_IpdChunk* Ipd_FreeChunkFind(s_IpdChunk* chunks, bool isExterior)
         }
         else
         {
-            if (curChunk->queueIdx_4 == NO_VALUE) 
+            if (curChunk->queueIdx_4 == NO_VALUE)
             {
                 matCount = 0;
-                
-                if (largestMatCount == 0) 
+
+                if (largestMatCount == 0)
                 {
                     dist = INT_MAX;
                 }
@@ -1458,7 +1458,7 @@ bool func_8004393C(q19_12 posX, q19_12 posZ) // 0x8004393C
 
     cellX = FLOOR_TO_STEP(Q12_TO_Q8(posX), Q12_TO_Q8(CHUNK_CELL_SIZE));
     cellZ = FLOOR_TO_STEP(Q12_TO_Q8(posZ), Q12_TO_Q8(CHUNK_CELL_SIZE));
-    
+
     if (g_Map.isExterior_588)
     {
         return Ipd_DistanceToEdgeGet(Q12_TO_Q8(g_Map.positionX_578), Q12_TO_Q8(g_Map.positionX_57C), cellX, cellZ) <= Q8(4.5f);

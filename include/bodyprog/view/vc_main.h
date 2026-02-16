@@ -92,12 +92,12 @@ s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_
  * TODO
  *
  * @param out_nearest_p_addr Output for the closest camera path collision.
- * @param chk_type 
- * @param rd_type 
- * @param pos 
- * @param w_p 
- * @param w_p 
- * @param chk_only_set_marge_f 
+ * @param chk_type
+ * @param rd_type
+ * @param pos
+ * @param w_p
+ * @param w_p
+ * @param chk_only_set_marge_f
  * @return Distance to...?
  */
 q19_12 vcGetNearestNEAR_ROAD_DATA(VC_NEAR_ROAD_DATA** out_nearest_p_addr, VC_CAM_CHK_TYPE chk_type, VC_ROAD_TYPE rd_type, VECTOR3* pos, VC_WORK* w_p, bool chk_only_set_marge_f);

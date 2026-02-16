@@ -487,18 +487,18 @@ extern u8 pad_bss_800C4563[13];
 extern s_800AFBF4 g_Player_EquippedWeaponInfo;
 
 /** `D_800C457C` could be related to animations that play during cutscenes.
- * 
+ *
  * Called by:
  * - 'func_800D2C7C' in map0_s00.c
  * - 'func_800D2D2C' in map0_s00.c
- * 
+ *
  * The value changes during cutscenes when the player does any of the following
  * actions:
  * * 0 - Nothing
  * * 1 - Walking
  * * 3 - Moves to the right?
  * * 4 - Moves to the left
- * 
+ *
  * This behaviour is irregular. After the first in-game dialogue
  * with Harry, the value is kept as 1 (even when he is not walking or in
  * a cutscene) until the next dialogue triggers (when Harry sees
@@ -659,7 +659,7 @@ void Player_CombatStateUpdate(s_SubCharacter* chara, s_PlayerExtra* extra);
 void Player_StepWallStop_MovementCancel(s_SubCharacter* chara, s32 arg1, s32 animStatus, s32 keyframeIdx, e_PlayerLowerBodyState lowerBodyState, s32 headingAngle, s32 aimState);
 
 /** @brief Main player movement function. */
-void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra); 
+void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra);
 
 /** @brief Multiple purposes.
  * * Assigns the value used by a global that handles player movement.

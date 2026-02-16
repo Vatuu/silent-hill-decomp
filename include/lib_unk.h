@@ -21,7 +21,7 @@ typedef struct
 {
     u32 bits_0_0   : 8;
     u32 bits_0_8   : 1;
-    u32 bits_0_9   : 7; 
+    u32 bits_0_9   : 7;
 
     u32 bits_0_16  : 3;
     u32 bits_0_19  : 5;

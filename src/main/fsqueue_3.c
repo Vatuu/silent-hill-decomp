@@ -85,7 +85,7 @@ bool Fs_QueueTickRead(s_FsQueueEntry* entry)
 
     // Round up to sector boundary. Masking not needed because of `>> 11` below.
     sectorCount = ((entry->info->blockCount_0_19 * FS_BLOCK_SIZE) + FS_SECTOR_SIZE) - 1;
-    
+
     // Overflow check?
     if (sectorCount < 0)
     {
@@ -108,7 +108,7 @@ bool Fs_QueueResetTick(s_FsQueueEntry* entry)
         result                = true;
         g_FsQueue.resetTimer0 = 0;
         g_FsQueue.resetTimer1++;
-        
+
         if (g_FsQueue.resetTimer1 >= 9)
         {
             if (CdReset(0) == 1)

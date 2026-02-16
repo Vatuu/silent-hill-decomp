@@ -168,9 +168,9 @@ void func_800EA3F0(void) // 0x800EA3F0
 
         // @hack
         tmp1 = (g_SysWork.playerWork_4C.player_0.position_18.vx / ((s32)(40.0f * Q12(1.0f))));
-        
+
         objRot.vx = D_800ED8B0[i];
-        
+
         if (PLAYER_IN_MAP_CHUNK(vx, 1, 2, -1, 2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
         {
             WorldGfx_ObjectAdd(&g_WorldObject_Fan0, &objPos, &objRot);
@@ -185,10 +185,10 @@ void func_800EA3F0(void) // 0x800EA3F0
         vol = Q8(1.0f);
     }
     else
-    {        
+    {
         dist0 = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - Q12(61.0f), g_SysWork.playerWork_4C.player_0.position_18.vz - Q12(27.5f));
         dist1 = Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - Q12(61.0f), g_SysWork.playerWork_4C.player_0.position_18.vz - Q12(17.5f));
-        if (dist1 >= dist0) 
+        if (dist1 >= dist0)
         {
             tmp0 = dist0;
         }
@@ -208,7 +208,7 @@ void func_800EA3F0(void) // 0x800EA3F0
         }
     }
 
-    if (vol != Q8(0.0f)) 
+    if (vol != Q8(0.0f))
     {
         if (!D_800F13AC)
         {

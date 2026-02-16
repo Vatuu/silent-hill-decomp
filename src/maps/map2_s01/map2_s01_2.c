@@ -284,7 +284,7 @@ void func_800CED88(void) // 0x800CED88
             if (g_Timer0 >= Q12(142.0f))
             {
                 g_Timer0 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(10.0f));
-        
+
                 if (g_Timer0 > Q12(165.0f))
                 {
                     g_Timer0 = Q12(165.0f);
@@ -356,7 +356,7 @@ void func_800CED88(void) // 0x800CED88
             if (g_Timer0 < Q12(166.0f))
             {
                 g_Timer0 = Q12(166.0f);
-            } 
+            }
             else
             {
                 g_Timer0 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(15.0f));

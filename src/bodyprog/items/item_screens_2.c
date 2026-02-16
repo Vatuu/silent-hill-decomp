@@ -281,7 +281,7 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
                 WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
                 func_8003D01C();
                 Fs_QueueWaitForEmpty();
-                
+
                 Game_StateSetNext(GameState_InGame);
                 return;
             }
@@ -408,7 +408,7 @@ void Gfx_Results_Save(void) // 0x8004D1A0
     s8       rgColor;
     LINE_F2* line;
 
-    const s_ResultStringOffset STR_OFFSETS[] = 
+    const s_ResultStringOffset STR_OFFSETS[] =
     {
         {   0,   0,   0,  64 },
         {   0,   0, 100,   0 },
@@ -442,34 +442,34 @@ void Gfx_Results_Save(void) // 0x8004D1A0
         "\x07Is_it_OK_to_save?",
         "\x07Yes_____________No"
     };
-    
+
     for (i = 0; i < 24; i++)
     {
         line = (LINE_F2*)GsOUT_PACKET_P;
         setLineF2(line);
-        
-        if (i % 12 < 8) 
+
+        if (i % 12 < 8)
         {
             colorVar0  = i % 12;
             colorVar0 += ((i % 12) < 0) ? 3 : 0;
             colorVar1  = colorVar0 >> 2;
             rgColor    = FP_COLOR(0.375f) - (colorVar1 << 6);
             setRGB0(line, rgColor, rgColor, 0xFF);
-        } 
-        else 
+        }
+        else
         {
             colorVar1 = ((i % 12) - 4) / 2;
             rgColor   = FP_COLOR(0.375f) - (colorVar1 << 6);
             setRGB0(line, rgColor, rgColor, 0xFF);
         }
 
-        if (i < 12) 
+        if (i < 12)
         {
             setXY2(line,
                    STR_OFFSETS[i].x0_0 + 0xFF98, STR_OFFSETS[i].y0_1 + 0xFFB8,
                    STR_OFFSETS[i].x1_2 + 0xFF98, STR_OFFSETS[i].y1_3 + 0xFFB8);
         }
-        else 
+        else
         {
             setXY2(line,
                    (STR_OFFSETS[i].x0_0 + 0xFFB4) + (g_Inventory_SelectionId * 102), STR_OFFSETS[i].y0_1 + 6,
@@ -1182,7 +1182,7 @@ void Inventory_ItemUse(s32 inventoryItemIdx) // 0x8004E6D4
     }
     else
     {
-        // If any active events are requesting the item ID that was used, set `extra_128.lastUsedItem_28` for `Event_Update` to make use of it. 
+        // If any active events are requesting the item ID that was used, set `extra_128.lastUsedItem_28` for `Event_Update` to make use of it.
         for (i = 0; g_ItemTriggerItemIds[i] != NO_VALUE; i++)
         {
             if (g_ItemTriggerItemIds[i] == g_SavegamePtr->items_0[inventoryItemIdx].id_0)
@@ -1378,13 +1378,13 @@ void Gfx_Inventory_ScrollArrowsDraw(s32* invSelectionId) // 0x8004EC7C
     };
 
     // Only draw arrows when item is selected.
-    if (*invSelectionId != InventorySelectionId_Item) 
+    if (*invSelectionId != InventorySelectionId_Item)
     {
         return;
     }
 
     // Draw 2 flashing left/right double arrows.
-    for (i = 0; i < ARROW_COUNT; i++) 
+    for (i = 0; i < ARROW_COUNT; i++)
     {
         timestep = g_SysWork.timer_1C & 0x1F;
 
@@ -1469,7 +1469,7 @@ void func_8004EF48() // 0x8004EF48
         else if (inventoryItemId >= InventoryItemId_HealthDrink && inventoryItemId < InventoryItemId_LobbyKey)
         {
             g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_UseHealth;
-        } 
+        }
         else if (inventoryItemId >= InventoryItemId_KitchenKnife && inventoryItemId < InventoryItemId_Flashlight)
         {
             if (inventoryItemId == equippedItemId)
@@ -1487,19 +1487,19 @@ void func_8004EF48() // 0x8004EF48
             else
             {
                 itemIdGroup = inventoryItemId / 32;
-                if (itemIdGroup == 6) 
+                if (itemIdGroup == 6)
                 {
                     g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Reload;
                     if (equippedItemId + 0x20)
                     {
                         g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Reload;
                     }
-                } 
-                else if (itemIdGroup == 5 && inventoryItemId != InventoryItemId_HyperBlaster) 
+                }
+                else if (itemIdGroup == 5 && inventoryItemId != InventoryItemId_HyperBlaster)
                 {
                     g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_EquipReload;
-                } 
-                else 
+                }
+                else
                 {
                     g_SavegamePtr->items_0[i].command_2 = InventoryCmdId_Equip;
                 }
@@ -1596,7 +1596,7 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
             savePtr->items_0[i].id_0 = 0xFF;
         }
     }
-    
+
     for (i = 0; i < (INVENTORY_ITEM_COUNT_MAX - 1); i++)
     {
         savePtr->items_0[i].field_3 = D_80025EB0[savePtr->items_0[i].id_0 - InventoryItemId_HealthDrink];
@@ -1655,11 +1655,11 @@ s32 func_8004F190(s_Savegame* save) // 0x8004F190
             {
                 j = i;
             }
-            else 
+            else
             {
                 item = &savePtr->items_0[0];
                 id = item[j].id_0;
-                
+
                 if (savePtr->items_0[j].id_0 == savePtr->items_0[i].id_0)
                 {
                     if ((id >> 5) == 6)

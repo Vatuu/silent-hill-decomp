@@ -1,4 +1,4 @@
-void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse) 
+void sharedFunc_800CF0B4_3_s03(s_SubCharacter* nurse)
 {
     q19_12          limit;
     q3_12           angle;

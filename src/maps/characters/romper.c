@@ -253,7 +253,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
     s_Collision coll;
     s32         keyframeIdx;
     q19_12      unkHealth;
-    s32         prevControlState; 
+    s32         prevControlState;
 
     if (romper->health_B0 > Q12(0.0f))
     {
@@ -373,7 +373,7 @@ void sharedFunc_800E6420_2_s02(s_SubCharacter* romper)
 
     romperProps.field_10E    = 0;
     romperProps.rotationY_F2 = FP_ANGLE(360.0f);
-    
+
     Chara_DamageClear(romper);
 
     if (prevControlState != romper->model_0.controlState_2)

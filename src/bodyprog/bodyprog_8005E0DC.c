@@ -28,10 +28,10 @@ s_800C4418     D_800C4418;
 
 void Map_EffectTexturesLoad(s32 mapIdx) // 0x8005E0DC
 {
-    s32 i;
-    s32 effectTexFlags;
-	static u16 loadedEffectTextureFlags;
-	static s16 pad_bss_800C42DA[7];
+    s32        i;
+    s32        effectTexFlags;
+    static u16 loadedEffectTextureFlags;
+    static s16 pad_bss_800C42DA[7];
 
     D_800A908C.v     = 0;
     D_800A908C.clutY = 0;

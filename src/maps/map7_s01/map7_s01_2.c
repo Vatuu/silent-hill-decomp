@@ -2216,7 +2216,7 @@ void func_800DDCD4(void) // 0x800DDCD4
     else
     {
         projCellX0 = cellX0 + 15;
-    } 
+    }
 
     if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(0.0f))
     {
@@ -2266,7 +2266,7 @@ void func_800DDCD4(void) // 0x800DDCD4
                         npcTimer = (Q12(-24.0f) - g_SysWork.npcs_1A0[0].position_18.vz) / 5;
                         v1 = (npcTimer < D_800E33A4) ? D_800E33A4 : npcTimer;
                         D_800E33A4 = v1;
-                    } 
+                    }
                     else
                     {
                         D_800E33A4 = audioStream;
@@ -2277,7 +2277,7 @@ void func_800DDCD4(void) // 0x800DDCD4
                     D_800E33A4 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.6f));
                     npcTimer = D_800E33A4;
                 }
-    
+
                 tmp2 = npcTimer;
                 if (tmp2 > Q12(1.0f))
                 {
@@ -2295,9 +2295,9 @@ void func_800DDCD4(void) // 0x800DDCD4
                     tmp2 = Q12(0.0f);
                 }
                 npcTimer = tmp2;
-                
+
                 g_SysWork.npcs_1A0[0].timer_C6 = npcTimer;
-                if (g_SysWork.npcs_1A0[0].position_18.vz < Q12(-30.0f) || g_SysWork.npcs_1A0[0].timer_C6 == Q12(1.0f)) 
+                if (g_SysWork.npcs_1A0[0].position_18.vz < Q12(-30.0f) || g_SysWork.npcs_1A0[0].timer_C6 == Q12(1.0f))
                 {
                     func_80088F94(g_SysWork.npcs_1A0, 0, 0);
                 }
@@ -2305,7 +2305,7 @@ void func_800DDCD4(void) // 0x800DDCD4
             break;
 
         case PACKED_CELL_XZ(11, 15):
-            if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupKeyOfPhaleg)) 
+            if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupKeyOfPhaleg))
             {
                 WorldGfx_ObjectAdd(&g_WorldObject_Key0.object_0, &g_WorldObject_Key0.position_1C, &g_WorldObject_Key0.rotation_28);
 
@@ -2331,21 +2331,21 @@ void func_800DDCD4(void) // 0x800DDCD4
             {
                 g_SysWork.npcs_1A0[0].timer_C6 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.2f));
 
-                if (g_SysWork.npcs_1A0[0].timer_C6 > Q12(1.0f)) 
+                if (g_SysWork.npcs_1A0[0].timer_C6 > Q12(1.0f))
                 {
                     func_80088F94(&g_SysWork.npcs_1A0[0], 0, 0);
                 }
             }
-    
+
             objPtr = &g_WorldObject_KaigaR[0];
             if (Savegame_EventFlagGet(EventFlag_498))
             {
                 objPtr = &g_WorldObject_KaigaR[1];
             }
             WorldGfx_ObjectAdd(objPtr, &g_WorldObject_UnkPos0, &g_WorldObject_UnkRot0);
-    
+
             objPtr = &g_WorldObject_KaigaL[0];
-            if (Savegame_EventFlagGet(EventFlag_499)) 
+            if (Savegame_EventFlagGet(EventFlag_499))
             {
                 objPtr = &g_WorldObject_KaigaL[1];
             }
@@ -2412,10 +2412,10 @@ void func_800DDCD4(void) // 0x800DDCD4
             {
                 WorldGfx_ObjectAdd(&g_WorldObject_Futa[0], &g_WorldObject_UnkPose1.position_0, &g_WorldObject_UnkPose1.rotation_C);
             }
-            
-            if (Savegame_EventFlagGet(EventFlag_486) && !Savegame_EventFlagGet(EventFlag_549)) 
+
+            if (Savegame_EventFlagGet(EventFlag_486) && !Savegame_EventFlagGet(EventFlag_549))
             {
-                if (D_800E2CE8) 
+                if (D_800E2CE8)
                 {
                     D_800E2CE8 -= g_DeltaTime0;
                     if (D_800E2CE8 < 0)
@@ -2423,7 +2423,7 @@ void func_800DDCD4(void) // 0x800DDCD4
                         D_800E2CE8 = 0;
                     }
                     break;
-                } 
+                }
 
                 func_8005DC1C(Sfx_Unk1653, &D_800CC998, Q8(0.125f), 0);
 
@@ -2459,7 +2459,7 @@ void func_800DDCD4(void) // 0x800DDCD4
                 WorldGfx_ObjectAdd(&g_WorldObject_Dr[i].object_0, &g_WorldObject_Dr[i].position_1C, &D_800CC990);
             }
             break;
-    
+
         case PACKED_CELL_XZ(11, 13):
             if (!Savegame_EventFlagGet(EventFlag_M7S01_PickupRingOfContract))
             {
@@ -2481,7 +2481,7 @@ void func_800DDCD4(void) // 0x800DDCD4
             {
                 WorldGfx_ObjectAdd(&g_WorldObject_Ana.object_0, &g_WorldObject_Ana.position_1C, &g_WorldObject_Ana.rotation_28);
             }
-    
+
             if (!Savegame_EventFlagGet(EventFlag_489))
             {
                 WorldGfx_ObjectAdd(&g_WorldObject_KeyX1, &g_WorldObject_UnkPos2, &g_WorldObject_UnkRot1);
@@ -2498,7 +2498,7 @@ void func_800DDCD4(void) // 0x800DDCD4
 
                 WorldGfx_ObjectAdd(&g_WorldObject_KeyX2, &g_WorldObject_UnkPos2, &g_WorldObject_UnkRot4);
             }
-    
+
             WorldGfx_ObjectAdd(&g_WorldObject_SavePad, &g_WorldObject_UnkPose0.position_0, &g_WorldObject_UnkPose0.rotation_C);
             break;
     }

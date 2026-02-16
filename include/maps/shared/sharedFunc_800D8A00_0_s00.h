@@ -27,7 +27,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
             sharedData_800DF1F8_0_s00 = 0;
             charaStateEC = 1;
             break;
-        
+
         case 1:
             if (arg2[0].vx == chara->position_18.vx && arg2[0].vz == chara->position_18.vz)
             {
@@ -62,7 +62,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                 }
             }
             break;
-        
+
         case 2:
             Math_ShortestAngleGet(chara->rotation_24.vy, sharedData_800DF1FA_0_s00, &shortestAngle);
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
@@ -71,7 +71,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                 charaStateEC = 3;
             }
             break;
-        
+
         case 3:
             dist = SquareRoot0(Q12_2D_DISTANCE_SQR(arg2[0], chara->position_18));
 
@@ -89,14 +89,14 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                 charaStateEC = 4;
             }
             break;
-        
+
         case 4:
             sharedData_800DF1FA_0_s00 = FP_ANGLE_ABS(ratan2(arg2[sharedData_800DF1F8_0_s00].vx - chara->position_18.vx, arg2[sharedData_800DF1F8_0_s00].vz - chara->position_18.vz));
             sharedData_800DF1F4_0_s00 = SquareRoot0(Q12_2D_DISTANCE_SQR(arg2[sharedData_800DF1F8_0_s00], chara->position_18));
 
             charaStateEC = 5;
             break;
-            
+
         case 5:
             // Test against next `VECTOR3` unless last one has been reached.
             if ((sharedData_800DF1F8_0_s00 + 1) < arg4)
@@ -150,10 +150,10 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                     charaStateEC = 4;
                 }
             }
-            
+
             sharedData_800DF1F4_0_s00 = dist;
             break;
-        
+
         case 6:
             Math_ShortestAngleGet(chara->rotation_24.vy, angleIn, &shortestAngle);
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
@@ -179,7 +179,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                 charaStateEC = 7;
             }
             break;
-        
+
         case 7:
             Math_ShortestAngleGet(chara->rotation_24.vy, angleIn, &shortestAngle);
             if (ABS(shortestAngle) < ANGLE_THRESHOLD)
@@ -191,7 +191,7 @@ bool sharedFunc_800D8A00_0_s00(s_SubCharacter* chara, s32 arg1, VECTOR3* arg2In,
                 charaStateEC = 8;
             }
             break;
-        
+
         case 8:
             charaStateF4 = 1;
             sharedData_800DF1FA_0_s00 = 0;

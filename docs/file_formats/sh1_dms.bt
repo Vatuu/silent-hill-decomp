@@ -43,29 +43,29 @@ struct CharacterFrame
 };
 
 struct DMSEntry(int isCharacter)
-{    
+{
     int16 keyframeCount_0; // TODO: Are these actually keyframes?
     byte svectorCount_2;
     byte field_3; // Usually 0, but sometimes filled in, possibly junk data left in padding byte.
     char name[4];
     int svectorOffset_8;
     int keyframeOffset_C;
-    
+
     local long end = FTell();
-    
+
     // SVECTOR values look similar to DMSIntervals, but instead of a start+length it uses start+end values?
     // Each value seems to follow the last, eg.
     // (0, 4, xx) (5, 6, xx) (7, 10, xx) (11, 13, xx) - unsure what the xx value is for
     FSeek(svectorOffset_8);
     SVECTOR3 svector[svectorCount_2]<optimize=false>;
-    
+
     FSeek(keyframeOffset_C);
-    
+
     if (isCharacter == 1)
         CharacterFrame keyframes[keyframeCount_0]<optimize=false>;
     else
         CameraFrame keyframes[keyframeCount_0]<optimize=false>;
-        
+
     FSeek(end);
 };
 
@@ -90,6 +90,6 @@ DMSEntry camera(0);
 // Seems these are related to cutscene timing somehow, but unsure what the purpose of them is yet
 FSeek(header.intervalOffset_8);
 DMSInterval intervals[header.intervalCount_2];
-    
+
 FSeek(header.charactersOffset_10);
 DMSEntry characters(1)[header.characterCount_1]<optimize=false>;

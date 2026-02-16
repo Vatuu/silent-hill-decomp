@@ -21,7 +21,7 @@ void Ai_PuppetNurse_Control1(s_SubCharacter* nurse)
                 nurse->model_0.anim_4.status_0 = ANIM_STATUS(PuppetNurseAnim_21, false);
             }
         }
-        
+
         nurse->properties_E4.puppetNurse.field_11E = func_80070320();
         localNurse->model_0.stateStep_3++;
         nurse->properties_E4.puppetNurse.field_104 = Q12(1.0f);

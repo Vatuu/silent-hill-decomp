@@ -2048,7 +2048,7 @@ void func_800EC080(void) // 0x800EC080
     else
     {
         projCellX0 = cellX0 + 15;
-    } 
+    }
 
     if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(0.0f))
     {
@@ -2095,7 +2095,7 @@ void func_800EC080(void) // 0x800EC080
             break;
 
         case PACKED_CELL_XZ(21, 13):
-            if (Savegame_EventFlagGet(EventFlag_163)) 
+            if (Savegame_EventFlagGet(EventFlag_163))
             {
                 flags |= 1 << 2;
                 if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(198.0f))
@@ -2203,7 +2203,7 @@ void func_800EC080(void) // 0x800EC080
     cellZ1 = g_SysWork.playerWork_4C.player_0.position_18.vz / CHUNK_CELL_SIZE;
     cellX1 = g_SysWork.playerWork_4C.player_0.position_18.vx / CHUNK_CELL_SIZE;
 
-    if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(0.0f)) 
+    if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(0.0f))
     {
         projCellX1 = cellX1 + 17;
     }
@@ -2212,7 +2212,7 @@ void func_800EC080(void) // 0x800EC080
         projCellX1 = cellX1 + 15;
     }
 
-    if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(0.0f)) 
+    if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(0.0f))
     {
         projCellZ1 = cellZ1 + 17;
     }

@@ -422,7 +422,7 @@ void func_800DAA28(void) // 0x800DAA28
                 {
                     MapMsg_DisplayAndHandleSelection(false, 35, false, false, 0, false); // "Nothing special."
                 }
-            } 
+            }
             else if (g_MapEventParam->field_5 == 17 || g_MapEventParam->field_5 == 18)
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
@@ -431,7 +431,7 @@ void func_800DAA28(void) // 0x800DAA28
                 }
                 else
                 {
-    
+
                     MapMsg_DisplayAndHandleSelection(false, 33, false, false, 0, false); // "There's a hanging key."
                 }
             }
@@ -466,7 +466,7 @@ void func_800DABC4(void) // 0x800DABC4
                     func_800862F8(false, FILE_TIM_HOLEKEY0_TIM, false);
                     Savegame_EventFlagSet(EventFlag_112);
                 }
-            } 
+            }
             else if (g_MapEventParam->field_5 == 19 || g_MapEventParam->field_5 == 20)
             {
                 if (g_MapEventParam->activationType_4_4 == TriggerActivationType_Item || Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
@@ -526,7 +526,7 @@ void func_800DABC4(void) // 0x800DABC4
                         MapMsg_DisplayAndHandleSelection(false, 35, false, false, 0, false); // "Nothing special."
                     }
                 }
-            } 
+            }
             else
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
@@ -595,7 +595,7 @@ void func_800DAF18(void) // 0x800DAF18
             D_800E2100 = 0;
 
             Savegame_MapMarkingSet(MapMarkFlag_AltSchoolRF_ValveSign);
-            
+
             D_800E2101                  = 0;
             g_SysWork.field_28          = 0;
             g_SysWork.sysStateStep_C[1] = 0;
@@ -1252,7 +1252,7 @@ void func_800DC780(void) // 0x800DC780
         case 0:
             Player_ControlFreeze();
             SysWork_StateStepIncrement(0);
-            
+
         case 1:
             Savegame_EventFlagSet(EventFlag_105);
 
@@ -1645,8 +1645,8 @@ void func_800DD688(void) // 0x800DD688
                     {
                         // Warp camera.
                         Camera_PositionSet(NULL, Q12(-60.27f), Q12(-0.41f), g_SysWork.playerWork_4C.player_0.position_18.vz - Q12(2.25f),
-                                           Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800E62D0 == 0); 
-                        Camera_LookAtSet(NULL, Q12(-59.75f), Q12(-1.09f), g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(1.65f), 
+                                           Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800E62D0 == 0);
+                        Camera_LookAtSet(NULL, Q12(-59.75f), Q12(-1.09f), g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(1.65f),
                                          Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), D_800E62D0 == 0);
 
                         D_800E62D0 = 1;
@@ -1661,7 +1661,7 @@ void func_800DD688(void) // 0x800DD688
                     }
                 }
             }
-            else 
+            else
             {
                 if (D_800E62D0 == 2)
                 {
@@ -1699,7 +1699,7 @@ void func_800DD688(void) // 0x800DD688
         {
             D_800E638C += g_DeltaTime0;
         }
-        else if (x < Q12(-99.0f)) 
+        else if (x < Q12(-99.0f))
         {
             D_800E638C += Q12_MULT_PRECISE(g_DeltaTime0, (x + Q12(100.0f)));
         }
@@ -1713,7 +1713,7 @@ void func_800DD688(void) // 0x800DD688
         {
             func_8005DC1C(0x5BC, &QVECTOR3(-96.1f, -1.2f, 141.8f), 0xFF, 2);
             D_800E6388++;
-        }   
+        }
     }
     else if (D_800E6388)
     {
@@ -1919,7 +1919,7 @@ void func_800DE828(void) // 0x800DE828
 
                     func_8005DC1C(Sfx_Unk1434, &g_WorldObject2.position_1C, Q8_CLAMPED(1.0f), 2);
                 }
-            } 
+            }
             else if ((g_WorldObject2.rotation_28.vy < FP_ANGLE(-168.8f) && D_800E20E8 < 0) ||
                      (g_WorldObject2.rotation_28.vy >= FP_ANGLE(-157.45f) && D_800E20E8 > 0))
             {
@@ -1968,7 +1968,7 @@ void func_800DE828(void) // 0x800DE828
                     {
                         func_8005DC1C(Sfx_Unk1435, &sfxPos, Q8_CLAMPED(0.5f), 0);
                         g_WorldObject1.rotation_28.vy = 0;
-    
+
                         if (D_800E20E8 >= 8 && !Rng_GenerateUInt(0, 3)) // 1 in 4 chance.
                         {
                             D_800E20E8 = 0;
@@ -1983,7 +1983,7 @@ void func_800DE828(void) // 0x800DE828
                 else if (g_WorldObject1.rotation_28.vy < FP_ANGLE(-1.8f))
                 {
                     func_8005DC1C(Sfx_Unk1435, &sfxPos, Q8_CLAMPED(0.5f), 0);
-    
+
                     D_800E20E8 = ~Rng_GenerateUInt(0, 3) - D_800E20E8;
                     D_800E20E8 = MAX(D_800E20E8, 1);
                 }
@@ -2077,7 +2077,7 @@ void func_800DE828(void) // 0x800DE828
                 default:
                     break;
             }
-        } 
+        }
         else
         {
             g_WorldObject1.rotation_28.vy = FP_ANGLE(-157.5f);

@@ -37,14 +37,14 @@ void Ai_PuppetNurse_Control9(s_SubCharacter* nurse)
             {
                 sharedFunc_800CEEE0_3_s03(nurse);
                 break;
-            } 
+            }
             else
             {
                 nurse->model_0.stateStep_3 = 2;
             }
 
         case 2:
-            if (!cond) 
+            if (!cond)
             {
                 nurse->model_0.stateStep_3 = 1;
             }

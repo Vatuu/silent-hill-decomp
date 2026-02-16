@@ -19,7 +19,7 @@ extern s_AnimInfo HARRY_M0S00_ANIM_INFOS[];
 extern s_UnkStruct3_Mo g_MapHeaderTable_38[18];
 extern u8 LOADABLE_INVENTORY_ITEMS[8];
 
-void (*g_LoadScreenFuncs[])() = 
+void (*g_LoadScreenFuncs[])() =
 {
     NULL,
     Gfx_LoadingScreen_PlayerRun,
@@ -27,12 +27,12 @@ void (*g_LoadScreenFuncs[])() =
     Gfx_LoadingScreen_StageString
 };
 
-s_MapPoint2d MAP_POINTS[] = 
+s_MapPoint2d MAP_POINTS[] =
 {
     #include "area_load_params.h"
 };
 
-void (*g_MapEventFuncs[])() = 
+void (*g_MapEventFuncs[])() =
 {
     func_800D9610,
     NULL,

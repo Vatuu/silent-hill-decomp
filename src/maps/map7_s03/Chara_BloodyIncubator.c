@@ -113,7 +113,7 @@ void func_800D38D8(s_SubCharacter* bloodyIncubator, GsCOORDINATE2* coords) // 0x
             Model_AnimStatusSet(&bloodyIncubator->model_0, 7, false);
             Character_AnimStateReset(bloodyIncubator);
             break;
-            
+
         case 10:
             Model_AnimStatusSet(&bloodyIncubator->model_0, 8, false);
             Character_AnimStateReset(bloodyIncubator);

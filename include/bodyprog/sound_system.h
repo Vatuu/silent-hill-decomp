@@ -9,7 +9,7 @@
  * This code is game-specific and not part of the library itself.
  * This code specifically handle file streaming and some general
  * sound game effects.
- * 
+ *
  * @note Name recognition.
  * `Tokimeki Memorial ~Forever With You~` and `Konami International Rally Championship` symbols
  * indicate that what are named `commands` in the decomp are actually named as `tasks`. TM
@@ -124,7 +124,7 @@ typedef struct
                       */
     s16 volumeBgm_8;
     s16 volumeGlobal_A;
-    
+
     /** As main difference with previous volume controlers, this seems to influence the behavior of the game.
      * When reducing `globalVolumeXa_E`, the current voice line continues playing at the same
      * volume while the next plays at the volume set here. Other volume controllers don't do this and instantly adjust audio volume.
@@ -134,7 +134,7 @@ typedef struct
     u8  globalVolumeSe_C;  // Global SE volume channel.
     u8  globalVolumeBgm_D; // Global BGM volume channel.
     u8  globalVolumeXa_E;  // Global Voice volume channel (not configurable).
-	u8  reverbDepth_F;
+    u8  reverbDepth_F;
 } s_ChannelsVolumeController;
 
 // Used for the load of XA audios and related to VSync values???
@@ -344,7 +344,7 @@ void Sd_AudioSystemSet(u8 isStereo);
  * The function can be found in many Konami games with the LIBSD library,
  * but `International Rally Championship` (name as `SD_Call`) and
  * Winning Eleven 5 (Inside `SOUNDCD.IRX`; Name as `sd_call`) have more
- * similarity to SH1. Additionally, SH2 has a similarly named function 
+ * similarity to SH1. Additionally, SH2 has a similarly named function
  * (`shSdInit`) which is completely different.
  */
 void SD_Init(void);

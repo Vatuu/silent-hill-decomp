@@ -45,17 +45,17 @@ void func_80087EDC(s32 cmd) // 0x80087EDC
             g_SysWork.sysFlags_22A0 |= SysFlag_7;
             SysWork_StateStepIncrement(1);
             break;
-        
+
         case 1:
             g_SysWork.sysFlags_22A0 |= SysFlag_7;
             SD_Call(23);
 
             SysWork_StateStepIncrement(1);
             break;
-        
+
         case 2:
             g_SysWork.sysFlags_22A0 |= SysFlag_7;
-            
+
             if (!func_80045BC8())
             {
                 Bgm_TrackSet(cmd);
@@ -63,7 +63,7 @@ void func_80087EDC(s32 cmd) // 0x80087EDC
                 SysWork_StateStepIncrement(1);
             }
             break;
-        
+
         case 3:
             SysWork_StateStepIncrement(0); // Resets `field_10` to 0.
             break;
@@ -131,6 +131,6 @@ void func_800880F0(s32 arg0) // 0x800880F0
             {
                 SysWork_StateStepIncrement(0); // Resets `field_10` to 0.
             }
-            break; 
+            break;
     }
 }

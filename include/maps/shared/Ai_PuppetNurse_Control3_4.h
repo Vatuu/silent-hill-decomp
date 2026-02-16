@@ -7,7 +7,7 @@ void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor)
 
     if (!nurse->model_0.stateStep_3)
     {
-        if (nurse->model_0.anim_4.status_0 == ANIM_STATUS(PuppetNurseAnim_2, true)) 
+        if (nurse->model_0.anim_4.status_0 == ANIM_STATUS(PuppetNurseAnim_2, true))
         {
             return;
         }
@@ -31,7 +31,7 @@ void Ai_PuppetNurse_Control3_4(s_SubCharacter* nurse, bool isDoctor)
             func_800622B8(3, nurse, g_PuppetNurse_AnimStatus1[isDoctor], 11);
 
             localNurse->properties_E4.puppetNurse.flags_122 |= PuppetNurseFlag_1;
-        } 
+        }
         else if (nurse->model_0.anim_4.status_0 == ANIM_STATUS(PuppetNurseAnim_15, true) && nurse->health_B0 > Q12(0.0f))
         {
             nurse->model_0.anim_4.status_0 = ANIM_STATUS(PuppetNurseAnim_5, false);

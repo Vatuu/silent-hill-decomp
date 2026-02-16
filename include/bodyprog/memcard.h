@@ -96,9 +96,9 @@ typedef enum _MemCardProcess
     MemCardProcess_Init          = 1,
     MemCardProcess_Load_Game     = 2,
     MemCardProcess_Save_3        = 3,
-	MemCardProcess_Load_Settings = 4,
-	MemCardProcess_Save_5        = 5,
-	MemCardProcess_Format        = 6
+    MemCardProcess_Load_Settings = 4,
+    MemCardProcess_Save_5        = 5,
+    MemCardProcess_Format        = 6
 } e_MemCardProcess;
 
 typedef enum _UnkMemCardState1
@@ -107,8 +107,8 @@ typedef enum _UnkMemCardState1
     UnkMemCardState1_1  = 1,
     UnkMemCardState1_2  = 2,
     UnkMemCardState1_3  = 3,
-	UnkMemCardState1_4  = 4,
-	UnkMemCardState1_5  = 5
+    UnkMemCardState1_4  = 4,
+    UnkMemCardState1_5  = 5
 } e_UnkMemCardState1;
 
 typedef enum _FileState
@@ -241,7 +241,7 @@ typedef struct _Savegame_Metadata
 STATIC_ASSERT_SIZEOF(s_MemCard_SaveMetadata, 12);
 
 /** @brief Information of elements in the save screen.
- * 
+ *
  * @note Used to determine both saves and other
  * elements in save screen as it is use to display
  * the "New Save" or "The file is damage" elements.
@@ -252,12 +252,12 @@ STATIC_ASSERT_SIZEOF(s_MemCard_SaveMetadata, 12);
 typedef struct _SaveScreenElement
 {
     s16                     totalSavegameCount_0; /** Counter for all savegame instances created throughout the game.
-	                                               * The value is derived by running through all savegames on a memory card
-	                                               * and picking the one with the largest value.
-	                                               *
-	                                               * @bug This counter is used to determine if the "New Save" element has
+                                                   * The value is derived by running through all savegames on a memory card
+                                                   * and picking the one with the largest value.
+                                                   *
+                                                   * @bug This counter is used to determine if the "New Save" element has
                                                    * been selected, which causes overwrites to not show the "Yes/No" message.
-	                                               */
+                                                   */
     s16                     savegameCount_2;
     s8                      type_4;               /** `e_SavegameEntryType` */
     s8                      deviceId_5;
@@ -338,7 +338,7 @@ STATIC_ASSERT_SIZEOF(s_MemCard_Process, 24);
 typedef struct
 {
     s_MemCard_DeviceInfo   devices_0[MEMCARD_DEVICE_COUNT_MAX];
-    s_MemCard_Process      saveWork_E0[2]; // This seems to be used mainly for processes. Element 0 is used for general processes while 1 is exclusively used for 
+    s_MemCard_Process      saveWork_E0[2]; // This seems to be used mainly for processes. Element 0 is used for general processes while 1 is exclusively used for
     s32                    memCardInitalized_110;
     s32                    unk_114;
     s_PsxSaveBlock         saveBlock_118;
@@ -354,7 +354,7 @@ STATIC_ASSERT_SIZEOF(s_MemCard_SaveWork, 1816);
 
 /** @brief Basic information required to draw information of elements in save slots.
  * Address access is based on the slot: slot 1 = 0x801E09E0, slot 2 = 0x801E1440.
- * 
+ *
  * @note Macros for its references are in `saveload.h`:
  * `SAVEGAME_ENTRY_BUFFER_0`
  * `SAVEGAME_ENTRY_BUFFER_1`
@@ -460,7 +460,7 @@ void MemCard_RamClear(s32 deviceId);
 /** @brief Clear all files status. */
 void MemCard_FileStatusClear(s32 deviceId);
 
-bool MemCard_AreAllFilesNotUnused(s32 deviceId);
+bool MemCard_AreAllFilesUsed(s32 deviceId);
 
 void MemCard_SysInit2(void);
 

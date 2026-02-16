@@ -187,7 +187,7 @@ s32 Bgm_Init(void) // 0x80035780
             {
                 SD_Call(18);
                 Bgm_AllLayersMute();
-        
+
                 g_GameWork.gameStateStep_598[1]++;
             }
             break;
@@ -294,7 +294,7 @@ s32 Sd_AmbientSfxInit(void) // 0x8003599C
                 return 1;
             }
             break;
-            
+
         case 1:
             Sd_AmbientSfxSet((s8)g_MapOverlayHeader.ambientAudioIdx_15);
             g_GameWork.gameStateStep_598[1]++;

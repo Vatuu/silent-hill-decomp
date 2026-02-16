@@ -181,7 +181,7 @@ void func_800D13D8(void) // 0x800D13D8
     VECTOR3       pos;
     SVECTOR3      rot;
 
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) && 
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 52)
     {
         SysWork_StateStepSet(0, 53);
@@ -552,7 +552,7 @@ void func_800D13D8(void) // 0x800D13D8
 
 void func_800D236C(void) // 0x800D236C
 {
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) && 
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 3 && g_SysWork.sysStateStep_C[0] < 8)
     {
         SysWork_StateStepSet(0, 8);

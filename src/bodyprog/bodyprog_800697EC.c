@@ -164,13 +164,13 @@ void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ) // 0x800699F8
 
 s32 func_80069B24(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara) // 0x80069B24
 {
-    s32 var0; 
+    s32 var0;
     s32 var1;
 
     var0 = SetSp(0x1F8003D8);
     var1 = func_80069BA8(arg0, offset, chara, func_80069FFC(arg0, offset, chara));
     SetSp(var0);
-    return var1; 
+    return var1;
 }
 
 s32 func_80069BA8(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara, s32 arg4) // 0x80069BA8
@@ -402,8 +402,8 @@ void func_8006A178(s_800C4590* arg0, q19_12 posX, q19_12 posY, q19_12 posZ, q19_
 s_SubCharacter** func_8006A1A4(s32* charaCount, s_SubCharacter* chara, bool arg2) // 0x8006A1A4
 {
     s_SubCharacter* curChara;
-	static s_SubCharacter* D_800C4458[7];
-	static s_SubCharacter** D_800C4474; /** Array of active characters? */
+    static s_SubCharacter* D_800C4458[7];
+    static s_SubCharacter** D_800C4474; /** Array of active characters? */
 
     if (chara != NULL &&
         (chara->model_0.charaId_0 == Chara_None || chara->field_E1_0 == 0 ||
@@ -1513,7 +1513,7 @@ bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2) // 0x8006C1B8
                 {
                    return true;
                 }
-                
+
                 break;
             }
 
@@ -1529,7 +1529,7 @@ bool func_8006C1B8(u32 arg0, s16 arg1, s_func_8006CC44* arg2) // 0x8006C1B8
                     {
                         var -= 96;
                     }
-                    
+
                     break;
                 }
 

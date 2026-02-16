@@ -46,7 +46,7 @@ s16 D_800C391C;
 
 /** @brief Glyph widths for the 12x16 font. Used for kerning. */
 static const u8 FONT_12_X_16_GLYPH_WIDTHS[FONT_12_X_16_GLYPH_COUNT] = {
-    3,  7,  7,  11, 11, 4,  10, 4,  6,  10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4,  4, 
+    3,  7,  7,  11, 11, 4,  10, 4,  6,  10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 4,  4,
     10, 11, 10, 8,  13, 12, 12, 12, 13, 11, 11, 13, 12, 9,  9,  12, 12, 13, 12, 13, 11,
     13, 12, 10, 11, 13, 12, 12, 12, 11, 12, 6,  4,  6,  8,  0,  3,  9,  10,  9, 9,  9,
     7,  11, 11, 6,  6,  10, 6,  13, 11, 10, 11, 10, 8,  8,  7,  10, 10, 12, 10, 10, 9
@@ -157,14 +157,14 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
     }
 
     // Parse string.
-    while (sizeCpy > 0) 
+    while (sizeCpy > 0)
     {
         charCode = *strCpy;
 
         // TODO: Try refactoring into switch.
 
         // Convert literal `!` and `&` into `char`s mappable to representative atlas glyphs.
-        if (charCode == '!') 
+        if (charCode == '!')
         {
             charCode = '\\';
         }
@@ -227,7 +227,7 @@ bool Gfx_StringDraw(char* str, s32 strLength) // 0x8004A8E8
 
                 glyphSprt              = (SPRT*)packet;
                 *((u32*)&glyphSprt->w) = 0x10000C;
-                
+
                 glyphIdx = charCode - GLYPH_TABLE_ASCII_OFFSET;
                 posX    += FONT_12_X_16_GLYPH_WIDTHS[glyphIdx];
 
@@ -291,7 +291,7 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
 
     D_800C38B4  = 1;
     g_MapMsg_AudioLoadBlock = 0;
-    
+
     for (i = (FONT_12_X_16_LINE_COUNT_MAX - 1); i >= 0; i--)
     {
         g_MapMsg_WidthTable[i] = 0;
@@ -302,7 +302,7 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
     for (j = 0; j < FONT_12_X_16_LINE_COUNT_MAX; )
     {
         charCode = *mapMsg;
-        
+
         switch (charCode)
         {
             case '\t':
@@ -310,17 +310,17 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
             case ' ':
                 mapMsg++;
                 break;
-            
+
             case '_':
                 ++mapMsg;
                 g_MapMsg_WidthTable[D_800C38B4 - 1] += FONT_12_X_16_SPACE_SIZE;
                 break;
-                
+
             case MAP_MSG_CODE_MARKER:
                 msgCode = *++mapMsg;
                 msgArg  = *++mapMsg - '0';
-                
-                switch (msgCode) 
+
+                switch (msgCode)
                 {
                     case MAP_MSG_CODE_COLOR:
                     case MAP_MSG_CODE_SELECT:
@@ -360,17 +360,17 @@ void Gfx_MapMsg_CalculateWidths(s32 mapMsgIdx) // 0x8004ACF4
 
                 mapMsg++;
                 break;
-            
+
             case 0:
                 j = FONT_12_X_16_LINE_COUNT_MAX;
                 break;
-            
+
             default:
                 // Convert literal `!` and `&` into `char`s mappable to representative atlas glyphs.
                 if (charCode == '!')
                 {
                     charCode = '\\';
-                } 
+                }
                 else if (charCode == '&')
                 {
                     charCode = '^';
@@ -757,7 +757,7 @@ void func_8004B76C(char* str, bool useFixedWidth) // 0x8004B76C
     // Parse string.
     while (*str != '\0')
     {
-        switch (*str) 
+        switch (*str)
         {
             // Draw glyph sprite.
             default:
@@ -768,8 +768,8 @@ void func_8004B76C(char* str, bool useFixedWidth) // 0x8004B76C
                 if (useFixedWidth)
                 {
                     glyphSprt->w = GLYPH_SIZE_X;
-                } 
-                else 
+                }
+                else
                 {
                     glyphSprt->w = FONT_12_X_16_GLYPH_WIDTHS[glyphIdx];
                 }
@@ -794,7 +794,7 @@ void func_8004B76C(char* str, bool useFixedWidth) // 0x8004B76C
             case '\b':
                 glyphSprt->x -= SPACE_SIZE;
                 break;
-            
+
             // Newline.
             case '\n':
                 glyphSprt->x  = D_800C391C;
@@ -808,7 +808,7 @@ void func_8004B76C(char* str, bool useFixedWidth) // 0x8004B76C
                 break;
         }
 
-        str++; 
+        str++;
     }
 
     D_800C38F8 = *glyphSprt;
@@ -824,9 +824,9 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
     s32   i;
     char* str;
 
-    if (widthMin > 0) 
+    if (widthMin > 0)
     {
-        for (i = 0; i < (widthMin - 1); i++) 
+        for (i = 0; i < (widthMin - 1); i++)
         {
             D_800C38F8.x += GLYPH_SIZE_X;
         }
@@ -835,12 +835,12 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
     str  = (char*)PSX_SCRATCH_ADDR(0x2F);
     *str = 0;
 
-    if (val < 0) 
+    if (val < 0)
     {
         isNegative = true;
         val        = -val;
-    } 
-    else 
+    }
+    else
     {
         isNegative = false;
     }
@@ -851,12 +851,12 @@ void Gfx_StringDrawInt(s32 widthMin, s32 val) // 0x8004B9F8
         str--;
         quotient = (val / ATLAS_COLUMN_COUNT) >> 32;
         *str     = (val - (quotient * ATLAS_COLUMN_COUNT)) + '0';
-            
-        if (widthMin > 0) 
+
+        if (widthMin > 0)
         {
             D_800C38F8.x -= GLYPH_SIZE_X;
         }
-        
+
         val = quotient;
     }
 

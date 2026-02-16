@@ -591,7 +591,7 @@ bool Particle_CameraMovedCheck(void)
  *
  * particlesAdded = 0;
  * toAddPerTick   = 1 or 3;
- * 
+ *
  * // Perform spawn tick.
  * while (particlesAdded < SNOW_SPAWN_COUNT_MAX)
  * {
@@ -600,7 +600,7 @@ bool Particle_CameraMovedCheck(void)
  *     {
  *        updateParticle(i); // These particles will re-add below if they expire.
  *     }
- 
+
  *     // Add new particles.
  *     for (i = 0; i < toAddPerTick; i++)
  *     {
@@ -725,7 +725,7 @@ void Particle_SnowInitialize(s_Particle* parts)
 
                     case ParticleState_Active:
                         Particle_SpawnMovementApply(settingsState, part, &rand, &deltaTime);
-                        
+
                         // Step to rest state when Y position reaches 0.
                         if (part->position0_0.vy == 0)
                         {
@@ -776,7 +776,7 @@ bool Particle_Update(s_Particle* partHead)
 {
     #define SNOW_REST_TICKS_UPDATE_MAX 32
 
-#if MAP_PARTICLE_HAS_RAIN 
+#if MAP_PARTICLE_HAS_RAIN
     s32 sp64;
 #endif
     MATRIX      mat0;
@@ -808,7 +808,7 @@ bool Particle_Update(s_Particle* partHead)
         }
     }
 #endif
-    
+
     GsInitCoordinate2(0, &g_SysWork.coord_22A8);
 
     g_Particle_Position.vx = g_ParticleVectors0.viewPosition_C.vx + Q12_MULT(Math_Sin(g_ParticleVectors0.viewRotation_20.vy), Q12(3.0));
@@ -833,7 +833,7 @@ bool Particle_Update(s_Particle* partHead)
     g_SysWork.coord_22A8.coord.t[1] = Q8(0.0f);
     g_SysWork.coord_22A8.coord.t[0] = Q12_TO_Q8(g_Particle_Position.vx);
     g_SysWork.coord_22A8.coord.t[2] = Q12_TO_Q8(g_Particle_Position.vz);
-    
+
     g_SysWork.coord_22A8.flg = false;
     func_80049B6C(&g_SysWork.coord_22A8, &mat1, &mat0);
     gte_SetRotMatrix(&mat0);
@@ -976,7 +976,7 @@ bool Particle_Update(s_Particle* partHead)
 
         case 7:
             if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-55.0f) &&
-                g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-33.0f) && 
+                g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-33.0f) &&
                 g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-14.0f) &&
                 g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(0.0f))
             {
@@ -995,7 +995,7 @@ bool Particle_Update(s_Particle* partHead)
                     sharedData_800E326C_0_s00.corners_0[5].vz = Q12(-11.2f);
             }
             else if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-90.0f) &&
-                     g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-56.0f) && 
+                     g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-56.0f) &&
                      g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-14.0f) &&
                      g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(0.0f))
             {
@@ -1021,7 +1021,7 @@ bool Particle_Update(s_Particle* partHead)
 
         case 1:
             if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-240.0f) &&
-                g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-226.0f) && 
+                g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-226.0f) &&
                 g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(136.0f))
             {
                 sharedData_800DD591_0_s00 = 10;
@@ -1059,7 +1059,7 @@ bool Particle_Update(s_Particle* partHead)
 
         case 6:
             if (g_SysWork.playerWork_4C.player_0.position_18.vx > Q12(-225.0f) &&
-                g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-195.0f) && 
+                g_SysWork.playerWork_4C.player_0.position_18.vx < Q12(-195.0f) &&
                 g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(-100.0f) &&
                 g_SysWork.playerWork_4C.player_0.position_18.vz < Q12(-72.0f))
             {
@@ -1259,7 +1259,7 @@ bool Particle_Update(s_Particle* partHead)
             #endif
                 break;
         }
-        
+
         // Handle particles in this state.
         for (updateCount = updatePrev;
              updateCount < (updatePrev + g_ParticlesAddedCount[pass]);
@@ -1391,7 +1391,7 @@ bool func_800CC6E8(s_800E34FC* arg0, s_800E330C* arg1, s32 mapId) // 0x800CC6E8
     MATRIX      sp30;
     s_func_800CC8FC sp50;
     VECTOR3         sp90[12];
-    s32         sp120[32]; // @hack Unknown type, it's passed to `func_800CC8FC` but it's an unused parameter. 
+    s32         sp120[32]; // @hack Unknown type, it's passed to `func_800CC8FC` but it's an unused parameter.
     s32         temp_s4;
     s32         i;
     s_800E330C* curArg1;
@@ -2375,9 +2375,9 @@ void func_800CE544(s32 idx0, s32 arg1, s_800E34FC* arg2) // 0x800CE544
  *
  * Maps define one or more HAS_PARTICLE_CASE_X flags to include their
  * respective switch cases.
- * When only a single case is present (`PARTICLE_CASE_COUNT == 1`), the 
+ * When only a single case is present (`PARTICLE_CASE_COUNT == 1`), the
  * macro below replaces `case N:` with `default:` so that the compiler
- * collapses the switch into a direct block, matching single-case maps 
+ * collapses the switch into a direct block, matching single-case maps
  * that skip checking the case entirely.
  */
 #if PARTICLE_CASE_COUNT > 1
@@ -2402,7 +2402,7 @@ void Particle_SnowDraw(s_Particle* part)
     u8          primColorG;
     u8          primColorB;
     u8          primColorR;
-    
+
     s_Particle* localPart;
     POLY_FT3*   polyFt3;
 
@@ -3073,7 +3073,7 @@ void Particle_SpawnMovementApply(s32 arg0, s_Particle* part, u16* rand, s32* del
     u16      localRand;
     s16      movement;
     VECTOR3* pos;
-    
+
     pos = &part->position0_0;
 
     switch (arg0)
@@ -3132,7 +3132,7 @@ void Particle_MovementUpdate(s32 pass, s_Particle* part, u16* rand, q19_12* delt
     q19_12      deltaZCase1;
     u16         localRand;
     s_Particle* localPart = part;
-    
+
 // Value used in case 0 comparison.
 #if defined(MAP1_S06)
     #define UNK_VAL 6
@@ -3343,16 +3343,16 @@ void sharedFunc_800CFFF8_0_s00(s32 pass, s_Particle* part, s16* rand)
 
     absX = abs(part->position0_0.vx);
 
-    // This helps match the original code: `threshold = threshold = ...` 
+    // This helps match the original code: `threshold = threshold = ...`
     // Also matches:
     // threshold = FP_TO(pass + 5, Q12_SHIFT); threshold = threshold += 0;
     threshold = threshold = FP_TO(pass + PASS_ADD, Q12_SHIFT);
-    
+
     if (ABS_ADD(part->position0_0.vz, absX) > threshold)
     {
         part->stateStep_1E = ParticleState_Spawn;
     }
-    
+
     if (part->type_1F == SnowType_HeavyWindy || part->type_1F == 243)
     {
         part->position1_C.vx = part->position0_0.vx;
@@ -3391,7 +3391,7 @@ void sharedFunc_800CE954_7_s03(s32 pass, s_Particle* part, s16* rand, q19_12* de
     s_Particle* ptr;
 
     ptr = part;
-    
+
     deltaX = g_Particle_PrevPosition.vx - g_Particle_Position.vx;
     deltaZ = g_Particle_PrevPosition.vz - g_Particle_Position.vz;
 
@@ -3501,7 +3501,7 @@ void Particle_Spawn(s32 arg0, s_Particle* part, u16* rand)
         case 1:
 #if MAP_PARTICLE_HAS_RAIN
             localPart->type_1F = ParticleType_Rain;
-            
+
             // Set start position.
             localPart->position0_0.vy = g_Particle_Position.vy + Q12(Rng_GenerateInt(0, 2));
 

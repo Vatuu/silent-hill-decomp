@@ -236,7 +236,7 @@ const char* g_ItemDescriptions[] = {
     "Heals_injury_to_provide\n\t\t\t\t\tmoderate_stamina_recovery.",
     "Relieve_pain_to_recover\n\t\t\t\t\tstamina_to_high.\n\t\t\t\t\tEffect_lasts_for_a_while.",
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    "The_key_to_open\n\t\t\t\t\tthe_door_to_the_lobby.\n\t\t\t\t\tI_found_it_in_the_locker_room.", 
+    "The_key_to_open\n\t\t\t\t\tthe_door_to_the_lobby.\n\t\t\t\t\tI_found_it_in_the_locker_room.",
     "The_house_key\n\t\t\t\t\thidden_in_the_dog_house.",
     "The_key_to_the_garden_of\n\t\t\t\t\tthe_house._Found_in_patrol\n\t\t\t\t\tcar's_trunk.",
     "The_key_to_the_garden_of\n\t\t\t\t\tthe_house._Found_in_the\n\t\t\t\t\tbasketball_court.",
@@ -446,7 +446,7 @@ u16 D_800AE5C8[2] = { 0x01E0, 0x0170 }; // Passed to `SetDrawOffset` and is acce
 
 // https://decomp.me/scratch/HNL4n something to do with animations?
 // `var_s7 = *(((animStatus + 1) * 2) + &D_800AE5CC) - *((animStatus * 2) + &D_800AE5CC);`
-s16 D_800AE5CC[18] = 
+s16 D_800AE5CC[18] =
 {
     0x0,  0x1,  0x4,  0x7,
     0x09, 0xB,  0xD,  0xF,
@@ -1017,7 +1017,7 @@ void Gfx_ItemScreens_DrawInit(u32* selectedItemId) // 0x8004F764
         { 118, -80 },
         { 144, 304 },
         { 36, 304 },
-        { 240, 304 }, 
+        { 240, 304 },
         { 218, -80 },
         { 40, -80 },
         { 16, 184 },
@@ -1141,7 +1141,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
 
     s_Inventory_SelectionOutlineVector SelectionOuline_InnerLine[] = // 0x80027E54
     {
-        { { 0xFFE0, 0xFFCC }, { 0x0040, 0x0080 } }, 
+        { { 0xFFE0, 0xFFCC }, { 0x0040, 0x0080 } },
         { { 0xFFD0, 0xFF38 }, { 0x0060, 0x0090 } },
         { { 0xFFD0, 0x00B9 }, { 0x0060, 0x0018 } },
         { { 0xFF70, 0x00B9 }, { 0x0060, 0x0018 } },
@@ -1222,12 +1222,12 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         }
     }
     else
-    {   
+    {
         var_t5 = -1;
         var_t6 = -1;
     }
 
-    if (g_GameWork.gameStateStep_598[1] != 20) 
+    if (g_GameWork.gameStateStep_598[1] != 20)
     {
         for (i = 0; i < 2; i++)
         {
@@ -1247,8 +1247,8 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                                 {
                                     setRGB0(poly_g4, spA0 - 0x80, 0xC0, spA0 * 3);
                                     setRGB2(poly_g4, spA0 - 0x80, 0xC0, spA0 * 3);
-                                } 
-                                else 
+                                }
+                                else
                                 {
                                     setRGB0(poly_g4, 0x80, 0xC0, 0);
                                     setRGB2(poly_g4, 0x80, 0xC0, 0);
@@ -1307,7 +1307,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                                 {
                                     setRGB1(poly_g4, spA0 * 3, spA0 - 0x80, 0xC0);
                                     setRGB3(poly_g4, spA0 * 3, spA0 - 0x80, 0xC0);
-                                } 
+                                }
                                 else
                                 {
                                     setRGB1(poly_g4, 0, 0x80, 0xC0);
@@ -1332,7 +1332,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                         setRGB0(poly_g4, 0, 0, 0);
                         setRGB2(poly_g4, 0, 0, 0);
                     }
-            
+
                     if (i != 0)
                     {
                         setXY4(poly_g4,
@@ -1346,7 +1346,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                         setXY4(poly_g4,
                                -0x8C + (0x60 * j), -0xC0 + (6 * k),
                                -0x8C + (0x60 * j), -0xBA + (6 * k),
-                               -0x34 + (0x60 * j), -0xC0 + (6 * k), 
+                               -0x34 + (0x60 * j), -0xC0 + (6 * k),
                                -0x34 + (0x60 * j), -0xBA + (6 * k));
                     }
 
@@ -1365,23 +1365,23 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
             D_800C3B68[3 - i][j].vy = D_800C3B68[2 - i][j].vy;
         }
     }
-    
+
     temp_t3   = (Math_Cos(g_Gfx_Inventory_SelectionBordersDraw << 7) * Math_Cos(g_Gfx_Inventory_SelectionBordersDraw << 7) * 0x10) >> 0x10;
 
-    D_800C3B68[0][0].vx = SelectionOuline_InnerLine[*arg0].field_0.vx + 
+    D_800C3B68[0][0].vx = SelectionOuline_InnerLine[*arg0].field_0.vx +
     FP_FROM((new_var = SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx - SelectionOuline_InnerLine[*arg0].field_0.vx) * temp_t3, Q12_SHIFT);
-    
-    D_800C3B68[0][0].vy = SelectionOuline_InnerLine[*arg0].field_0.vy + 
+
+    D_800C3B68[0][0].vy = SelectionOuline_InnerLine[*arg0].field_0.vy +
         FP_FROM((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vy - SelectionOuline_InnerLine[*arg0].field_0.vy) * temp_t3, Q12_SHIFT);
-    
+
     D_800C3B68[0][1].vx = D_800C3B68[0][0].vx;
-    
-    D_800C3B68[0][1].vy = SelectionOuline_InnerLine[*arg0].field_0.vy + SelectionOuline_InnerLine[*arg0].field_4.vy + 
-        FP_FROM(((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vy + SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_4.vy) - 
+
+    D_800C3B68[0][1].vy = SelectionOuline_InnerLine[*arg0].field_0.vy + SelectionOuline_InnerLine[*arg0].field_4.vy +
+        FP_FROM(((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vy + SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_4.vy) -
         (SelectionOuline_InnerLine[*arg0].field_0.vy + SelectionOuline_InnerLine[*arg0].field_4.vy)) * temp_t3, Q12_SHIFT);
 
-    D_800C3B68[0][2].vx = SelectionOuline_InnerLine[*arg0].field_0.vx + SelectionOuline_InnerLine[*arg0].field_4.vx + 
-        FP_FROM(((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx + SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_4.vx) - 
+    D_800C3B68[0][2].vx = SelectionOuline_InnerLine[*arg0].field_0.vx + SelectionOuline_InnerLine[*arg0].field_4.vx +
+        FP_FROM(((SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_0.vx + SelectionOuline_InnerLine[g_Inventory_PrevSelectionId].field_4.vx) -
         (SelectionOuline_InnerLine[*arg0].field_0.vx + SelectionOuline_InnerLine[*arg0].field_4.vx)) * temp_t3, Q12_SHIFT);
     D_800C3B68[0][3].vx = D_800C3B68[0][2].vx;
     D_800C3B68[0][2].vy = D_800C3B68[0][1].vy;
@@ -1394,40 +1394,40 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
         setPolyG4(poly_g4);
         setSemiTrans(poly_g4, true);
 
-        if (D_800AE190 < 0x21) 
+        if (D_800AE190 < 0x21)
         {
             setRGB0(poly_g4,
                     (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
                     (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
                     (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10));
-            setRGB1(poly_g4, 
+            setRGB1(poly_g4,
                     (D_800AE190 >= 0x20) ? 0xFE : (D_800AE190 * 8),
                     (D_800AE190 >= 0x20) ? 0xFE : (D_800AE190 * 8),
                     (D_800AE190 >= 0x20) ? 0xFE : (D_800AE190 * 8));
-            setRGB2(poly_g4, 
+            setRGB2(poly_g4,
                     (D_800AE190 >= 8) ? 0xFE : (D_800AE190 * 32),
                     (D_800AE190 >= 8) ? 0xFE : (D_800AE190 * 32),
                     (D_800AE190 >= 8) ? 0xFE : (D_800AE190 * 32));
-            setRGB3(poly_g4, 
+            setRGB3(poly_g4,
                     (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
                     (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10),
                     (D_800AE190 >= 0x10) ? 0xFE : (D_800AE190 * 0x10));
-        } 
-        else 
+        }
+        else
         {
             setRGB0(poly_g4,
                     (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
                     (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
                     (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0);
-            setRGB1(poly_g4, 
+            setRGB1(poly_g4,
                     (D_800AE190 < 0x40) ? ((0x40 - D_800AE190) * 8) : 0,
                     (D_800AE190 < 0x40) ? ((0x40 - D_800AE190) * 8) : 0,
                     (D_800AE190 < 0x40) ? ((0x40 - D_800AE190) * 8) : 0);
-            setRGB2(poly_g4, 
+            setRGB2(poly_g4,
                     (D_800AE190 < 0x28) ? ((0x28 - D_800AE190) * 32) : 0,
                     (D_800AE190 < 0x28) ? ((0x28 - D_800AE190) * 32) : 0,
                     (D_800AE190 < 0x28) ? ((0x28 - D_800AE190) * 32) : 0);
-            setRGB3(poly_g4, 
+            setRGB3(poly_g4,
                     (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
                     (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0,
                     (D_800AE190 < 0x30) ? ((0x30 - D_800AE190) * 0x10) : 0);
@@ -1453,7 +1453,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
                 poly_ft4->clut = getClut(g_ItemInspectionImg.clutX, g_ItemInspectionImg.clutY);
                 setRGB0(poly_ft4, 0x80, 0x80, 0x80);
 
-                if (i != 0) 
+                if (i != 0)
                 {
                     poly_ft4->tpage = 0x86;
                     setUV4(poly_ft4,
@@ -1490,7 +1490,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
 
     for (j = 0; j < 4; j++)
     {
-        for (i = 0; i < 4; i++) 
+        for (i = 0; i < 4; i++)
         {
             line_g2 = (LINE_G2*)GsOUT_PACKET_P;
             setLineG2(line_g2);
@@ -1542,7 +1542,7 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
             setXY2(line_g2, SelectionOuline_ConerLines[*arg0].field_4.vx,
                    (i == 4) ? (SelectionOuline_ConerLines[*arg0].field_4.vy - 1) : SelectionOuline_ConerLines[*arg0].field_4.vy,
                    (i != 5) ? (SelectionOuline_ConerLines[*arg0].field_4.vx - (SelectionOuline_InnerLine[*arg0].field_4.vx >> 1)) : SelectionOuline_ConerLines[*arg0].field_4.vx,
-                   (i == 5) ? (SelectionOuline_ConerLines[*arg0].field_4.vy - (SelectionOuline_InnerLine[*arg0].field_4.vy >> 1)) : 
+                   (i == 5) ? (SelectionOuline_ConerLines[*arg0].field_4.vy - (SelectionOuline_InnerLine[*arg0].field_4.vy >> 1)) :
                    (i == 4) ? (SelectionOuline_ConerLines[*arg0].field_4.vy - 1) : SelectionOuline_ConerLines[*arg0].field_4.vy);
         }
         else
@@ -1550,18 +1550,18 @@ void Gfx_Inventory_2dBackgroundDraw(s32* arg0) // 0x8004FBCC
             setXY2(line_g2, SelectionOuline_ConerLines[*arg0].field_0.vx,
                    (i == 1) ? (SelectionOuline_ConerLines[*arg0].field_0.vy - 1) : SelectionOuline_ConerLines[*arg0].field_0.vy,
                    (i != 2) ? (SelectionOuline_ConerLines[*arg0].field_0.vx + (SelectionOuline_InnerLine[*arg0].field_4.vx >> 1)) : SelectionOuline_ConerLines[*arg0].field_0.vx,
-                   (i == 2) ? (SelectionOuline_ConerLines[*arg0].field_0.vy + (SelectionOuline_InnerLine[*arg0].field_4.vy >> 1)) : 
+                   (i == 2) ? (SelectionOuline_ConerLines[*arg0].field_0.vy + (SelectionOuline_InnerLine[*arg0].field_4.vy >> 1)) :
                    (i == 1) ? (SelectionOuline_ConerLines[*arg0].field_0.vy - 1) : SelectionOuline_ConerLines[*arg0].field_0.vy);
         }
 
         addPrim(&ot0->org[7], line_g2);
         GsOUT_PACKET_P = (PACKET*)line_g2 + sizeof(LINE_G2);
-    }  
+    }
 }
 
 static inline s16 GetUvOrRandom(void)
 {
-    if (D_800AE198 == 1) 
+    if (D_800AE198 == 1)
     {
         D_800AE1A8 = Rng_GenerateInt(0, 133);
         return D_800AE1A8;
@@ -1587,11 +1587,11 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
     POLY_G4*  poly_g4;
     DR_TPAGE* tPage;
 
-    u8 D_80027F04[] = { 
-        0xFF, 0x00, 0x00, 0x00, 
-        0xFF, 0xA0, 0x00, 0x00, 
-        0xa0, 0xFF, 0x00, 0x00, 
-        0x00, 0xFF, 0x00, 0x00 
+    u8 D_80027F04[] = {
+        0xFF, 0x00, 0x00, 0x00,
+        0xFF, 0xA0, 0x00, 0x00,
+        0xa0, 0xFF, 0x00, 0x00,
+        0x00, 0xFF, 0x00, 0x00
     };
 
     ot     = &g_OrderingTable0[g_ActiveBufferIdx];
@@ -1600,7 +1600,7 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
     if (health < Q12(10.0f))
     {
         healthStage = 3;
-    } 
+    }
     else if (health < Q12(50.0f))
     {
         healthStage = 2;
@@ -1624,7 +1624,7 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
                 {
                     D_800AE198++;
 
-                    if (D_800AE198 == 4) 
+                    if (D_800AE198 == 4)
                     {
                         D_800AE198 = 0;
                     }
@@ -1633,7 +1633,7 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
                 {
                     continue;
                 }
-            } 
+            }
 
             poly_ft4 = (POLY_FT4*)GsOUT_PACKET_P;
             setPolyFT4(poly_ft4);
@@ -1641,7 +1641,7 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
             poly_ft4->clut  = getClut(g_HealthPortraitImg.clutX, g_HealthPortraitImg.clutY);
             setRGB0(poly_ft4, 0x80, 0x80, 0x80);
 
-            switch (i) 
+            switch (i)
             {
                 case 0:
                     setUV4(poly_ft4,
@@ -1719,8 +1719,8 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
         {
             overlayYPos = -52;
         }
-    } 
-    else 
+    }
+    else
     {
         overlayYPos = -52;
     }
@@ -1761,7 +1761,7 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
         for (i = 0; i < 2; i++)
         {
             poly_g4 = (POLY_G4*)GsOUT_PACKET_P;
-            
+
             setPolyG4(poly_g4);
             setRGB0(poly_g4,
                     redVal   - ((redVal   * g_Inventory_HealthStatusColorGradientTimer) >> 6),
@@ -1785,7 +1785,7 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
                           -182 :
                           (g_Inventory_HealthStatusScanlinePosition - (g_Inventory_HealthStatusColorGradientTimer >> 1)),
                     -56,  poly_g4->y0 - 16);
-            } 
+            }
             else
             {
                 setXY4(poly_g4,
@@ -1818,7 +1818,7 @@ void Gfx_Inventory_HealthStatusDraw(void) // 0x80051020
     }
 
     g_Inventory_HealthStatusColorGradientTimer = healthStage + g_Inventory_HealthStatusColorGradientTimer;
-    
+
     if (g_Inventory_HealthStatusColorGradientTimer >= 64)
     {
         g_Inventory_HealthStatusColorGradientTimer = 0;
@@ -1862,7 +1862,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
             idx = g_SysWork.playerCombat_38.weaponInventoryIdx_12;
             break;
     }
-    
+
     if (D_800AE185 != ((g_SavegamePtr->items_0[idx].id_0 >> 5) - 1) ||
         D_800AE186 != (g_SavegamePtr->items_0[idx].id_0 & 0x1F))
     {
@@ -1873,13 +1873,13 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
         D_800AE18E                       = 0;
         D_800AE178                       = 0;
     }
-    
+
     if (idx != NO_VALUE && *selectedItemId != 2 && *selectedItemId != 3 && *selectedItemId != 4)
     {
         for (i = 0; i < g_SavegamePtr->inventorySlotCount_AB; i++)
         {
             if (i == idx)
-            {    
+            {
                 if (idx + 1 >= 10)
                 {
                     Gfx_StringSetPosition(45, 184);
@@ -1899,12 +1899,12 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
     {
         Gfx_StringSetPosition(122, 30);
         Gfx_StringDraw(D_80027F94[0], 10);
-        
-        for (i = 0; i < g_SavegamePtr->inventorySlotCount_AB; i++) 
+
+        for (i = 0; i < g_SavegamePtr->inventorySlotCount_AB; i++)
         {
-            if (g_Inventory_EquippedItem == g_SavegamePtr->items_0[i].id_0) 
+            if (g_Inventory_EquippedItem == g_SavegamePtr->items_0[i].id_0)
             {
-                if (g_SavegamePtr->items_0[i].count_1 >= 10) 
+                if (g_SavegamePtr->items_0[i].count_1 >= 10)
                 {
                     Gfx_StringSetPosition(178, 30);
                 }
@@ -1925,15 +1925,15 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
         return;
     }
 
-    switch (g_SavegamePtr->items_0[idx].id_0) 
+    switch (g_SavegamePtr->items_0[idx].id_0)
     {
         case InventoryItemId_Flashlight:
             Gfx_StringSetPosition(stringPos.vx, stringPos.vy);
             if (!Game_FlashlightIsOn())
             {
                 Gfx_StringDraw(D_80027F94[2], 10);
-            } 
-            else 
+            }
+            else
             {
                 Gfx_StringDraw(D_80027F94[1], 10);
             }
@@ -1968,7 +1968,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
                     break;
             }
             break;
-        
+
         case InventoryItemId_HealthDrink:
         case InventoryItemId_FirstAidKit:
         case InventoryItemId_Ampoule:
@@ -1980,7 +1980,7 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
         case InventoryItemId_ShotgunShells:
             Gfx_StringSetPosition(stringPos.vx, stringPos.vy);
             Gfx_StringDraw(D_80027F94[0], 10);
-            if (g_SavegamePtr->items_0[idx].id_0 != 0xFF) 
+            if (g_SavegamePtr->items_0[idx].id_0 != 0xFF)
             {
                 if (g_SavegamePtr->items_0[idx].count_1 >= 100)
                 {
@@ -2047,16 +2047,16 @@ void Gfx_Inventory_ItemDescriptionDraw(s32* selectedItemId) // 0x8005192C
                 case 2:
                     Gfx_StringDraw(g_ItemDescriptions[g_SavegamePtr->items_0[idx].id_0 - 32], 100);
                     break;
-                
+
                 case 3:
                     Gfx_StringDraw(D_80027F14[0], 100);
                     break;
-                
+
                 case 4:
                     Gfx_StringDraw(D_80027F14[1], 100);
                     break;
             }
-            
+
             if (idx == g_Inventory_SelectedItemIdx)
             {
                 g_Inventory_ItemNameTimer = 0;
@@ -2454,7 +2454,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                         D_800C3BA8                        = temp4;
                     }
                     while (0); // @hack
-                 
+
                     func_8004EF48();
                 }
                 else
@@ -2482,7 +2482,7 @@ void Inventory_PlayerItemScroll(u32* selectedItemId) // 0x800523D8
                     g_Inventory_ScrollTransitionTimer                                                    = 0;
 
                     func_8004EF48();
-                    
+
                     *selectedItemId                 = 0;
                     D_800AE188                      = 0;
                     temp5                           = g_GameWork.gameStateStep_598[2];
@@ -2913,7 +2913,7 @@ void func_800539A4(s32 scrollDirection, s32 arg1) // 0x800539A4
  * - `GameFs_MapItemsModelLoad` and `GameFs_MapItemsTextureLoad` load packs of textures and
  *   models of items, though while `GameFs_UniqueItemModelLoad` seems to load
  *   them individually based on what is being passed as argument,
- * - `GameFs_MapItemsModelLoad` and `GameFs_MapItemsTextureLoad` load the packs based on the 
+ * - `GameFs_MapItemsModelLoad` and `GameFs_MapItemsTextureLoad` load the packs based on the
  *   map being loaded.
  */
 
@@ -3400,7 +3400,7 @@ void func_800540A4(s8 arg0) // 0x800540A4
 
     for (i = 0; i < g_SavegamePtr->inventorySlotCount_AB; i++)
     {
-        if (g_SavegamePtr->items_0[i].id_0 >> 5 == 6 && 
+        if (g_SavegamePtr->items_0[i].id_0 >> 5 == 6 &&
             g_SavegamePtr->items_0[i].id_0 == (g_SavegamePtr->items_0[g_SysWork.playerCombat_38.weaponInventoryIdx_12].id_0 + 32))
         {
             g_SavegamePtr->items_0[i].count_1 = g_SysWork.playerCombat_38.totalWeaponAmmo_11;
@@ -3627,7 +3627,7 @@ void Gfx_PlayerHeldItemAttach(u8 weaponAttack) // 0x800546A8
     }
 }
 
-void Gfx_Items_Display(s_TmdFile* tmd, s32 displayItemIdx, s32 loadableItemIdx) 
+void Gfx_Items_Display(s_TmdFile* tmd, s32 displayItemIdx, s32 loadableItemIdx)
 {
     u8                 itemId;
     GsDOBJ2*           ptr;
@@ -3649,22 +3649,22 @@ void Gfx_Items_Display(s_TmdFile* tmd, s32 displayItemIdx, s32 loadableItemIdx)
         itemId = g_MapOverlayHeader.loadableItems_2C[loadableItemIdx];
     }
 
-    switch (itemId) 
+    switch (itemId)
     {
-        case InventoryItemId_HealthDrink: 
-        case InventoryItemId_FirstAidKit: 
+        case InventoryItemId_HealthDrink:
+        case InventoryItemId_FirstAidKit:
         case InventoryItemId_Ampoule:
-        case InventoryItemId_KitchenKnife: 
+        case InventoryItemId_KitchenKnife:
         case InventoryItemId_SteelPipe:
-        case InventoryItemId_Hammer: 
+        case InventoryItemId_Hammer:
         case InventoryItemId_Chainsaw:
-        case InventoryItemId_Handgun: 
-        case InventoryItemId_HuntingRifle: 
+        case InventoryItemId_Handgun:
+        case InventoryItemId_HuntingRifle:
         case InventoryItemId_Shotgun:
-        case InventoryItemId_HandgunBullets: 
-        case InventoryItemId_RifleShells: 
+        case InventoryItemId_HandgunBullets:
+        case InventoryItemId_RifleShells:
         case InventoryItemId_ShotgunShells:
-        case InventoryItemId_Flashlight: 
+        case InventoryItemId_Flashlight:
         case InventoryItemId_PocketRadio:
         case InventoryItemId_Axe:
             ptr->attribute = 0;
@@ -3778,10 +3778,10 @@ bool Gfx_PickupItemAnimate(u8 itemId) // 0x80054AD8
     g_Items_Coords[9].coord.t[0] = Q8(0.0f);
     g_Items_Coords[9].coord.t[2] = Q8(-32.6875);
 
-    switch (g_Items_PickupAnimState) 
+    switch (g_Items_PickupAnimState)
     {
         case 0: // Expand without rotation?
-            if (g_Items_PickupScale >= Q12(0.5f)) 
+            if (g_Items_PickupScale >= Q12(0.5f))
             {
                 g_Items_PickupAnimState = 1;
             }

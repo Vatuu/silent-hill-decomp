@@ -8,9 +8,9 @@
  *
  * Maps define one or more HAS_Chara_X flags to include their
  * respective switch cases.
- * When only a single case is present (MAP_CHARA_COUNT == 1), the 
+ * When only a single case is present (MAP_CHARA_COUNT == 1), the
  * macro below replaces `case N:` with `default:` so that the compiler
- * collapses the switch into a direct block, matching single-case maps 
+ * collapses the switch into a direct block, matching single-case maps
  * that skip checking the case entirely.
  *
  * `sharedFunc_800D8964_0_s00` includes very close copy of this switch.

@@ -494,7 +494,7 @@ void Gfx_FlashlightUpdate(void) // 0x8003F170
 
     temp = Q12_MULT(func_8003F4DC(&coord, &rot, ptr2->effectsInfo_0.field_4, ptr2->effectsInfo_0.field_0.s_field_0.field_2, func_80080A10(), &g_SysWork), g_SysWork.pointLightIntensity_2378);
 
-    func_800554C4(temp, ptr2->flashlightLensFlareIntensity_2C, coord, g_SysWork.field_235C, &rot, 
+    func_800554C4(temp, ptr2->flashlightLensFlareIntensity_2C, coord, g_SysWork.field_235C, &rot,
                   g_SysWork.pointLightPosition_2360.vx, g_SysWork.pointLightPosition_2360.vy, g_SysWork.pointLightPosition_2360.vz,
                   g_WorldGfx.mapInfo_0->waterZones_8);
     func_80055814(ptr2->field_30);
@@ -808,7 +808,7 @@ void func_8003F838(s_StructUnk3* arg0, s_StructUnk3* arg1, s_StructUnk3* arg2, q
 void func_8003FCB0(s_MapEffectsInfo* arg0, s_MapEffectsInfo* arg1, s_MapEffectsInfo* arg2, q19_12 alphaTo) // 0x8003FCB0
 {
     q19_12 alphaFrom;
-    
+
     alphaFrom = Q12(1.0f) - alphaTo;
     LoadAverageCol(&arg1->field_21.r, &arg2->field_21.r, alphaFrom, alphaTo, &arg0->field_21.r);
     LoadAverageCol(&arg1->field_25.r, &arg2->field_25.r, alphaFrom, alphaTo, &arg0->field_25.r);

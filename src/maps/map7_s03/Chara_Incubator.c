@@ -83,7 +83,7 @@ void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* coords) // 0x800D3E
         case 2:
             Model_AnimStatusKeyframeSet(incubator->model_0, 3, true, INCUBATOR_ANIM_INFOS, 0);
 
-            if (incubator->properties_E4.dahlia.resetStateIdx0_F8) 
+            if (incubator->properties_E4.dahlia.resetStateIdx0_F8)
             {
                 incubator->properties_E4.dahlia.stateIdx0 = 0;
                 incubator->model_0.stateStep_3 = 0;
@@ -102,11 +102,11 @@ void func_800D3E18(s_SubCharacter* incubator, GsCOORDINATE2* coords) // 0x800D3E
             }
             break;
     }
-    
+
     incubator->headingAngle_3C = incubator->rotation_24.vy;
     incubator->moveSpeed_38 = incubator->properties_E4.splitHead.moveDistance_126;
     incubator->field_34 += g_DeltaTime2;
-    
+
     coords->flg = false;
     Math_RotMatrixZxyNegGte(&incubator->rotation_24, &coords->coord);
 }

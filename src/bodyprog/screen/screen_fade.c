@@ -85,11 +85,11 @@ s32 D_800A8F40 = 0;
 
 void Screen_FadeDrawModeSet(DR_MODE* drMode) // 0x800325A4
 {
-    if (IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus)) 
+    if (IS_SCREEN_FADE_WHITE(g_Screen_FadeStatus))
     {
         SetDrawMode(drMode, 0, 1, 32, NULL);
     }
-    else 
+    else
     {
         SetDrawMode(drMode, 0, 1, 64, NULL);
     }

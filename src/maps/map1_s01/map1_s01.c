@@ -649,7 +649,7 @@ void MapEvent_PianoPuzzle(bool playNote) // 0x800D7F18
             {
                 keyIdx = ARRAY_SIZE(g_PianoKeys);
             }
-        } 
+        }
         else
         {
             for (i = 0; i < ARRAY_SIZE(g_PianoKeys); i++)
@@ -1103,7 +1103,7 @@ void func_800D9514(void) // 0x800D9514
             if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupGoldMedallion))
             {
                 WorldGfx_ObjectAdd(&g_WorldObject6, &D_800DF080, &(SVECTOR3){ 0, 0, 0 });
-            } 
+            }
             WorldGfx_ObjectAdd(&g_WorldObject5, &D_800DF080, &(SVECTOR3){ 0, 0, 0 });
         }
         else
@@ -1117,7 +1117,7 @@ void func_800D9514(void) // 0x800D9514
         if (!Savegame_EventFlagGet(EventFlag_M1S01_PickupChemical))
         {
             WorldGfx_ObjectAdd(&g_WorldObject7.object_0, &g_WorldObject7.position_1C, &(SVECTOR3){ 0, 0, 0 });
-        }       
+        }
     }
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -2, -1, -2) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))

@@ -163,7 +163,7 @@ void vcWorkSetFlags(VC_FLAGS enable, VC_FLAGS disable) // 0x80080BF8
 s32 Vc_LookAtOffsetYMaxSet(s32 lookAtOffsetYMax) // 0x80080C18
 {
     s32 prevVal;
-    
+
     prevVal                   = vcWork.watch_tgt_max_y_88;
     vcWork.watch_tgt_max_y_88 = lookAtOffsetYMax;
     return prevVal;
@@ -1169,7 +1169,7 @@ s32 vcGetBestNewCurNearRoad(VC_NEAR_ROAD_DATA** new_cur_pp, VC_CAM_CHK_TYPE chk_
     VC_NEAR_ROAD_DATA* eff_nearest_p;
     VC_NEAR_ROAD_DATA* road_nearest_p;
     VC_NEAR_ROAD_DATA* new_cur_p;
-    
+
     new_cur_p    = NULL;
     new_cur_dist = INT_MAX;
 
@@ -2683,7 +2683,7 @@ void vcRenewalBaseCamAngAndAdjustOfsCamAng(VC_WORK* w_p, SVECTOR* new_base_cam_a
     MATRIX new_base_mat;
     MATRIX new_base_matT;
     MATRIX ofs_mat;     // } Names for these two might be switched.
-    MATRIX adj_ofs_mat; // } 
+    MATRIX adj_ofs_mat; // }
 
     ofs_mat = GsIDMATRIX;
     Math_RotMatrixZxyNeg(&w_p->base_cam_ang_C8, &old_base_mat);

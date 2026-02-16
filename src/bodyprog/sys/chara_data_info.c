@@ -2,7 +2,6 @@
 #include "bodyprog/math/math.h"
 #include "game.h"
 
-
 s_CharaFileInfo CHARA_FILE_INFOS[] = {
 /* `Chara_` name       { `animFileIdx`          `modelFileIdx`         `textureFileIdx`       `field_6`  `materialBlendMode_6_10` `field_8`    `cameraAnchor_C_0`      `cameraOffsetY_C_2` } */
 /* None             */ {  NO_VALUE,              FILE_1ST_2ZANKO80_TIM, FILE_1ST_2ZANKO80_TIM, Q8(0.0f),  BlendMode_Average,       NULL,        CameraAnchor_Character, Q8(0.0f)           },
@@ -51,4 +50,3 @@ s_CharaFileInfo CHARA_FILE_INFOS[] = {
 /* Parasite         */ {  FILE_ANIM_ICU_ANM,     FILE_CHARA_ICU_ILM,    FILE_CHARA_ICU_TIM,    Q8(0.25f), BlendMode_Additive,      NULL,        CameraAnchor_Character, Q8(0.0f)           },
 /* Padlock          */ {  FILE_1ST_2ZANKO80_TIM, FILE_1ST_2ZANKO80_TIM, FILE_1ST_2ZANKO80_TIM, Q8(0.0f),  BlendMode_Average,       NULL,        CameraAnchor_Character, Q8(0.0f)           }
 };
-

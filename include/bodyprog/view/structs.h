@@ -132,7 +132,7 @@ typedef struct _VC_WORK
     MATRIX                    field_DC;
     u8                        field_FC;                       /** `bool` */
     u8                        field_FD; // Padding?
-    q3_12                     cam_chara2ideal_ang_y_FE;  
+    q3_12                     cam_chara2ideal_ang_y_FE;
     VECTOR3                   cam_tgt_velo_100;               /** Target velocity. */
     q3_12                     cam_tgt_mv_ang_y_10C;           /** Target Y angles. */
     // 2 bytes of padding.

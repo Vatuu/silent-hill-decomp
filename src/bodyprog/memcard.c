@@ -61,8 +61,8 @@ void MemCard_SysInit(void) // 0x8002E630
 
         MemCard_FileStatusClear(i);
 
-        switch (i) 
-        {                          
+        switch (i)
+        {
             case 0:
                 ptr = g_MemCard_BasicSaveInfo1;
                 break;
@@ -79,7 +79,7 @@ void MemCard_SysInit(void) // 0x8002E630
         g_MemCard_SaveWork.devices_0[i].saveHeader_14 = ptr;
 
         MemCard_RamClear(i);
-    } 
+    }
 }
 
 void MemCard_RamClear(s32 deviceId) // 0x8002E6E4
@@ -102,7 +102,7 @@ void MemCard_FileStatusClear(s32 deviceId) // 0x8002E730
     }
 }
 
-bool MemCard_AreAllFilesNotUnused(s32 deviceId) // 0x8002E76C
+bool MemCard_AreAllFilesUsed(s32 deviceId) // 0x8002E76C
 {
     bool result;
     s32  i;
@@ -407,7 +407,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
                 statusPtr->processState_10 = 1;
             }
             break;
-        
+
         case 1: // Checks if previous step has gone right.
             memCardResult = MemCard_StateResult();
             switch (memCardResult)
@@ -486,7 +486,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
 
         case 5: // Checks if memory card contains game directory.
             fileIdx++;
-			checkSumValidationAttempts = 0;
+            checkSumValidationAttempts = 0;
 
             for (fileIdx; fileIdx < MEMCARD_FILE_COUNT_MAX; fileIdx++)
             {
@@ -507,7 +507,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
                 statusPtr->processState_10 = 9;
             }
             break;
-            
+
         case 6: // Copies memory card header data and ties game directory to file.
             MemCard_FilenameGenerate(filePath, fileIdx);
 
@@ -554,19 +554,19 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
 
         case 8: // Checks if save header checksum matches with current save header data.
             saveHeaderPtr = &g_MemCard_SaveWork.devices_0[statusPtr->deviceId_4].saveHeader_14[fileIdx];
-			
-			// Checksum check.
+
+            // Checksum check.
             if (MemCard_ChecksumValidate(&saveHeaderPtr->footer_FC, (s8*)saveHeaderPtr, sizeof(s_MemCard_SaveHeader)))
             {
                 deviceInfoPtr->fileState_4[fileIdx] = FileState_Used;
                 statusPtr->processState_10          = 5;
                 return;
             }
-			
-			// If checksum check fails start a process where the memory card will be read three times,
-			// if the file fails to load after three attempts the file will be qualified to be damage.
-			checkSumValidationAttempts++;
-			
+
+            // If checksum check fails start a process where the memory card will be read three times,
+            // if the file fails to load after three attempts the file will be qualified to be damage.
+            checkSumValidationAttempts++;
+
             if (checkSumValidationAttempts >= 3)
             {
                 statusPtr->processState_10          = 5;
@@ -578,7 +578,7 @@ void MemCard_Process_Init(s_MemCard_Process* statusPtr) // 0x8002ED7C
             break;
 
         case 9: // Finalize and marks as succesful memory card initalization process.
-			// For some reason also updates the file limit of the memory card.
+            // For some reason also updates the file limit of the memory card.
             deviceInfoPtr->fileLimit_18     = MemCard_FileLimitUpdate(statusPtr->deviceId_4, &directoryInfoCpy);
             statusPtr->lastMemCardResult_14 = MemCardResult_FileIoComplete;
             deviceInfoPtr->status_0         = UnkMemCardState1_3;
@@ -623,7 +623,7 @@ void MemCard_Process_Load(s_MemCard_Process* statusPtr)
         case 0: // Checks if any file from the memory card is used.
             if (statusPtr->processId_0 == MemCardProcess_Load_Game)
             {
-                if (MemCard_AreAllFilesNotUnused(statusPtr->deviceId_4) != true)
+                if (MemCard_AreAllFilesUsed(statusPtr->deviceId_4) != true)
                 {
                     fileIdx = MemCard_BiggestTotalSavegameCountGet(statusPtr->deviceId_4);
                     if (fileIdx == NO_VALUE)
@@ -786,7 +786,7 @@ void MemCard_Process_Save(s_MemCard_Process* statusPtr)
                 }
                 else
                 {
-                    if (MemCard_AreAllFilesNotUnused(statusPtr->deviceId_4) == true)
+                    if (MemCard_AreAllFilesUsed(statusPtr->deviceId_4) == true)
                     {
                         fileIdxCpy                 = 0;
                         statusPtr->processState_10 = 1;
@@ -1240,8 +1240,8 @@ s32 MemCard_DeviceFormat(s32 deviceId) // 0x8003030C
     MemCard_DevicePathGenerate(deviceId, buf);
 
     return format(buf);
-	
-	#undef BUF_SIZE
+
+    #undef BUF_SIZE
 }
 
 s32 MemCard_FileClear(s32 deviceId, char* fileName) // 0x80030334
@@ -1255,8 +1255,8 @@ s32 MemCard_FileClear(s32 deviceId, char* fileName) // 0x80030334
     strcat(buf, fileName);
 
     return erase(buf);
-	
-	#undef BUF_SIZE
+
+    #undef BUF_SIZE
 }
 
 s32 MemCard_FileRename(s32 deviceId, char* prevName, char* newName) // 0x80030370
@@ -1273,8 +1273,8 @@ s32 MemCard_FileRename(s32 deviceId, char* prevName, char* newName) // 0x8003037
     strcat(newBuf, newName);
 
     return rename(prevBuf, newBuf);
-	
-	#undef BUF_SIZE
+
+    #undef BUF_SIZE
 }
 
 // ========================================

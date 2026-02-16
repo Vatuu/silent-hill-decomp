@@ -35,7 +35,7 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
     switch (Map_TypeGet())
     {
         case 0:
-            if (chara->position_18.vx >= Q12(191.6f) && chara->position_18.vx <= Q12(198.8f) && 
+            if (chara->position_18.vx >= Q12(191.6f) && chara->position_18.vx <= Q12(198.8f) &&
                 chara->position_18.vz >= Q12(-96.0f) && chara->position_18.vz <= Q12(-90.3f))
             {
                 var_s0 = (var_s0 & ~0x2) | 0x4;
@@ -44,8 +44,8 @@ void func_8003BD48(s_SubCharacter* chara) // 0x8003BD48
 
         case 3:
         case 4:
-            if (chara->position_18.vx >= Q12(-100.0f) && chara->position_18.vx <= Q12(-94.5f) && 
-                chara->position_18.vz >= Q12(-70.3f) && chara->position_18.vz <= Q12(-62.0f)) 
+            if (chara->position_18.vx >= Q12(-100.0f) && chara->position_18.vx <= Q12(-94.5f) &&
+                chara->position_18.vz >= Q12(-70.3f) && chara->position_18.vz <= Q12(-62.0f))
             {
                 var_s0 = (var_s0 & ~0x2) | 0x4;
             }
@@ -186,7 +186,7 @@ void CharaModel_AllModelsFree(void) // 0x8003C110
         {
             g_WorldGfx.registeredCharaModels_18[i] = NULL;
         }
-    } 
+    }
 
     g_WorldGfx.charaLmBuffer_14 = MAP_CHARA_LM_BUFFER;
     for (curModel = &g_WorldGfx.charaModels_CC[0]; curModel < &g_WorldGfx.charaModels_CC[4]; curModel++)
@@ -219,7 +219,7 @@ void Ipd_PlayerChunkInit(s_MapOverlayHeader* mapHdr, s32 playerPosX, s32 playerP
     if (flags & MapFlag_OneActiveChunk)
     {
         activeIpdCount = 1;
-    } 
+    }
     else if (flags & MapFlag_TwoActiveChunks)
     {
         activeIpdCount = 2;
@@ -250,7 +250,7 @@ void Map_WorldClear(void) // 0x8003C30C
     u8 flags;
 
     flags = g_WorldGfx.mapInfo_0->flags_6;
-    if ((flags & MapFlag_Interior) && (flags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks))) 
+    if ((flags & MapFlag_Interior) && (flags & (MapFlag_OneActiveChunk | MapFlag_TwoActiveChunks)))
     {
         Map_WorldClearReset();
         return;
@@ -278,7 +278,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
                           //
                           // Most of the time, X and Z share the same value as
                           // the player player position or a position slightly ahead computed from the heading angle.
-                          // 
+                          //
                           // In Old Silent Hill (after Cafe 5to2) while standing still, this value is
                           // the same as `g_SysWork.playerWork_4C.player_0.position_18`.
     VECTOR3         pos1; // Draw distance?
@@ -338,7 +338,7 @@ void Ipd_CloseRangeChunksInit(void) // 0x8003C3AC
         {
             var_s1 = Q12(0.0f);
         }
-        
+
         temp_s0_2 = Q12_MULT(var_s1, Math_Sin(ang.vy));
         temp_s0_2 = CLAMP(temp_s0_2, Q12(-6.0f), Q12(6.0f));
 
@@ -457,7 +457,7 @@ void WorldGfx_ObjectAdd(s_WorldObjectModel* arg0, const VECTOR3* pos, const SVEC
             }
 
             arg0->metadata_10.lmIdx_9 = lmIdx;
-        } 
+        }
 
         // Compute geometry position and rotation.
         geomPosX = Q12_TO_Q8(pos->vx);
@@ -826,13 +826,13 @@ void WorldGfx_HeldItemDraw(void) // 0x8003D058
     if (heldItem->itemId_0 == InventoryItemId_CutscenePhone)
     {
         coord = &g_SysWork.playerBoneCoords_890[HarryBone_LeftHand];
-    } 
-    else 
+    }
+    else
     {
         coord = &g_SysWork.playerBoneCoords_890[HarryBone_RightHand];
     }
 
-    if (Fs_QueueIsEntryLoaded(heldItem->queueIdx_4)) 
+    if (Fs_QueueIsEntryLoaded(heldItem->queueIdx_4))
     {
         lmHdr = heldItem->lmHdr_14;
         if (!lmHdr->isLoaded_2)
@@ -895,11 +895,11 @@ s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr) // 0x8003D21C
         curCharaId = mapHdr->charaGroupIds_248[i];
         curModel   = &g_WorldGfx.charaModels_CC[i];
 
-        if (curCharaId != Chara_None) 
+        if (curCharaId != Chara_None)
         {
-            if (!cond) 
+            if (!cond)
             {
-                if (curCharaId != curModel->charaId_0) 
+                if (curCharaId != curModel->charaId_0)
                 {
                     cond = true;
                     for (j = i; j < ARRAY_SIZE(g_WorldGfx.charaModels_CC); j++)
@@ -907,9 +907,9 @@ s32 WorldGfx_MapInitCharaLoad(s_MapOverlayHeader* mapHdr) // 0x8003D21C
                         g_WorldGfx.charaModels_CC[j].charaId_0 = Chara_None;
                     }
                 }
-            } 
+            }
 
-            if (cond) 
+            if (cond)
             {
                 Chara_FsImageCalc(&image, curCharaId, i);
                 queueIdx = WorldGfx_CharaModelLoad(curCharaId, i, (s_LmHeader*)g_WorldGfx.charaLmBuffer_14, &image);
@@ -952,7 +952,7 @@ void Chara_FsImageCalc(s_FsImageDesc* image, s32 charaId, s32 modelIdx) // 0x800
         clutX = 736;
         clutY = 480;
     }
-    else 
+    else
     {
         clutY = 464;
         clutX = (modelIdx * 16) + 704;
@@ -1056,7 +1056,7 @@ void WorldGfx_CharaLmBufferAssign(s8 forceFree) // 0x8003D5B4
         }
     }
 
-    i = 0; 
+    i = 0;
     g_WorldGfx.charaLmBuffer_14 = MAP_CHARA_LM_BUFFER;
     for (; i < ARRAY_SIZE(g_WorldGfx.charaModels_CC); i++)
     {
@@ -1092,12 +1092,12 @@ void WorldGfx_CharaLoad(e_CharacterId charaId, s32 modeIdx, s_LmHeader* lmHdr, s
     if (lmHdr != NULL)
     {
         lmHdrBuf = lmHdr;
-    } 
-    else if (g_WorldGfx.charaModels_CC[modeIdx].charaId_0 != Chara_None) 
+    }
+    else if (g_WorldGfx.charaModels_CC[modeIdx].charaId_0 != Chara_None)
     {
         lmHdrBuf = g_WorldGfx.charaModels_CC[modeIdx].lmHdr_8;
-    } 
-    else 
+    }
+    else
     {
         lmHdrBuf = (s_LmHeader*)g_WorldGfx.charaLmBuffer_14;
         WorldGfx_CharaLmBufferAdvance(&g_WorldGfx.charaLmBuffer_14, charaId);
@@ -1107,8 +1107,8 @@ void WorldGfx_CharaLoad(e_CharacterId charaId, s32 modeIdx, s_LmHeader* lmHdr, s
     if (tex != NULL)
     {
         image = *tex;
-    } 
-    else 
+    }
+    else
     {
         Chara_FsImageCalc(&image, charaId, modeIdx);
     }
@@ -1128,16 +1128,16 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
     modelTex     = &model->texture_C;
 
     // If character is invalid, set model as unused.
-    if (charaId == Chara_None) 
+    if (charaId == Chara_None)
     {
         g_WorldGfx.registeredCharaModels_18[modelCharaId] = NULL;
         return 0;
     }
 
     // Register character model.
-    if (modelCharaId != Chara_None) 
+    if (modelCharaId != Chara_None)
     {
-        if (charaId == modelCharaId) 
+        if (charaId == modelCharaId)
         {
             if (lmHdr == model->lmHdr_8 && memcmp(tex, modelTex, sizeof(s_FsImageDesc)) == 0)
             {
@@ -1151,7 +1151,7 @@ s32 WorldGfx_CharaModelLoad(e_CharacterId charaId, s32 modelIdx, s_LmHeader* lmH
 
     // Load model and texture files.
     queueIdx = Fs_QueueStartRead(CHARA_FILE_INFOS[charaId].modelFileIdx, lmHdr);
-    if (CHARA_FILE_INFOS[charaId].textureFileIdx != NO_VALUE) 
+    if (CHARA_FILE_INFOS[charaId].textureFileIdx != NO_VALUE)
     {
         queueIdx = Fs_QueueStartReadTim(CHARA_FILE_INFOS[charaId].textureFileIdx, FS_BUFFER_1, tex);
     }
@@ -1177,10 +1177,10 @@ void WorldGfx_CharaModelProcessAllLoads(void) // 0x8003D95C
 
     for (i = 0; i < Chara_Count; i++)
     {
-        if (i != Chara_Harry) 
+        if (i != Chara_Harry)
         {
             model = g_WorldGfx.registeredCharaModels_18[i];
-            if (model != NULL) 
+            if (model != NULL)
             {
                 WorldGfx_CharaModelProcessLoad(model);
             }

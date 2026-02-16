@@ -998,7 +998,7 @@ void func_800D429C(void) // 0x800D429C
     else
     {
         projCellX0 = cellX0 + 15;
-    } 
+    }
 
     if (g_SysWork.playerWork_4C.player_0.position_18.vz > Q12(0.0f))
     {

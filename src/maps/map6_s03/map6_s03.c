@@ -32,7 +32,7 @@ u8 Map_RoomIdxGet(s32 x, s32 z) // 0x800D7F24
     if (x < Q12(27.0f))
     {
         ret = 17;
-        if (x <= Q12(13.0f)) 
+        if (x <= Q12(13.0f))
         {
             ret = 15;
             if (x > Q12(-13.0f))
@@ -40,7 +40,7 @@ u8 Map_RoomIdxGet(s32 x, s32 z) // 0x800D7F24
                 ret = 16;
             }
         }
-    } 
+    }
     else if (x < Q12(56.0f))
     {
         ret = 18;
@@ -75,7 +75,7 @@ void func_800D7F98(void) // 0x800D7F98
     if (Savegame_EventFlagGet(EventFlag_435))
     {
         flags = 1 << 0;
-        if (Savegame_EventFlagGet(EventFlag_437)) 
+        if (Savegame_EventFlagGet(EventFlag_437))
         {
             fArg1 = 0x547;
         }
@@ -101,8 +101,8 @@ void func_800D7F98(void) // 0x800D7F98
                     }
                     else
                     {
-                        dist0 = Q8(0.313f) - Q12_MULT_PRECISE((dist0 - Q12(5.0f)), 3); 
-                        if (dist0 < Q12(0.0f)) 
+                        dist0 = Q8(0.313f) - Q12_MULT_PRECISE((dist0 - Q12(5.0f)), 3);
+                        if (dist0 < Q12(0.0f))
                         {
                             dist0 = Q12(0.0f);
                         }
@@ -152,7 +152,7 @@ void func_800D7F98(void) // 0x800D7F98
                     break;
             }
         }
-    } 
+    }
     else
     {
         flags = (1 << 1) | (1 << 2);

@@ -79,7 +79,7 @@ typedef enum _MapFlags
     MapFlag_TwoActiveChunks  = 1 << 1,
     MapFlag_Interior         = 1 << 2,
     MapFlag_Unk3             = 1 << 3  /** @unused Unused map type `XXX` has this flag. */
-} e_MapFlags;   
+} e_MapFlags;
 
 /** @brief Used as index into `MAP_INFOS` array.
  * TODO: Add descriptions for which areas are included in each type?
@@ -1567,7 +1567,7 @@ typedef struct
     u8     field_78;
 } s_MapOverlayHeader_94;
 
-/** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`. 
+/** TODO: `g_MapOverlayHeader` is part of the map overlay BIN files. Maybe should be moved to `maps/shared.h`.
  * If field has a comment that lists only certain map(s) it means all others set this field to 0.
  * func(?) means the signature is unknown and a default void() was selected for now.
  */
@@ -1585,8 +1585,8 @@ typedef struct _MapOverlayHeader
                                                // A value of 3 sets the map to night.
                                                // A value of 2 will sets the map to use a tint used during the hallaway
                                                // intro.
-											   // Giving this and next variable a name will require further investigation
-											   // of `particle.c` code.
+                                               // Giving this and next variable a name will require further investigation
+                                               // of `particle.c` code.
     s8                     field_17;           // Set weather to play. Rain, heavy rain, or snow.
     void                   (**loadingScreenFuncs_18)();
     s_MapPoint2d*          mapPointsOfInterest_1C;
@@ -1769,7 +1769,7 @@ typedef struct
             s32      depthP_3E0;
             MATRIX   field_3E4;
         } vertex;
-        
+
         struct
         {
             s_Normal field_3DC;
@@ -1792,7 +1792,7 @@ typedef struct
 } s_GteScratchData2;
 
 typedef struct
-{  
+{
     s16   field_0;
     s16   field_2; // Move dist?
     q3_12 field_4; // Angle.
@@ -2772,7 +2772,7 @@ s32 func_800868F4(s32 arg0, s32 arg1, s32 idx);
  *
  * @param a First value.
  * @param b Second value.
- * @param weight Weight as a fixed-point alpha in Q3.12, range `[0, 4096]`. 
+ * @param weight Weight as a fixed-point alpha in Q3.12, range `[0, 4096]`.
  * @return Weighted average of `a` and `b`.
  */
 q19_12 Math_WeightedAverageGet(s32 a, s32 b, q19_12 weight);

@@ -334,7 +334,7 @@ void func_800D0CF8(void) // 0x800D0CF8
                     D_800D253C = Q12(182.0f);
                     SysWork_StateStepIncrement(0);
                 }
-            } 
+            }
             else
             {
                 D_800D253C = Q12(175.0f);
@@ -467,7 +467,7 @@ void func_800D1A98(void) // 0x800D1A98
 {
     static const SVECTOR3 EMPTY_ROT = {};
     static const VECTOR3  SOUND_POS = VECTOR3(22.5f, -1.5f, 137.0f);
-    
+
     s32 x;
     s32 tmp;
     s32 rand0;

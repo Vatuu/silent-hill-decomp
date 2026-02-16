@@ -85,7 +85,7 @@ void Sd_TaskPoolExecute(void) // 0x800485D8
         }
 
         gSDVolConfig.volumeBgm_6 = gSDVolConfig.volumeBgm_8;
-        
+
         Sd_SetVolBgm(gSDVolConfig.volumeBgm_8, gSDVolConfig.volumeBgm_8);
     }
     else if (gSDVolConfig.volumeBgm_6 != gSDVolConfig.volumeBgm_8)
@@ -93,7 +93,7 @@ void Sd_TaskPoolExecute(void) // 0x800485D8
         if (gSDVolConfig.volumeBgm_8 < gSDVolConfig.volumeBgm_6)
         {
             gSDVolConfig.volumeBgm_8++;
-            if (ABS(gSDVolConfig.volumeBgm_8 - gSDVolConfig.volumeBgm_6) < 2) 
+            if (ABS(gSDVolConfig.volumeBgm_8 - gSDVolConfig.volumeBgm_6) < 2)
             {
                 gSDVolConfig.volumeBgm_8 = gSDVolConfig.volumeBgm_6;
             }
@@ -101,7 +101,7 @@ void Sd_TaskPoolExecute(void) // 0x800485D8
         else
         {
             gSDVolConfig.volumeBgm_8--;
-            if (ABS(gSDVolConfig.volumeBgm_8 - gSDVolConfig.volumeBgm_6) < 2) 
+            if (ABS(gSDVolConfig.volumeBgm_8 - gSDVolConfig.volumeBgm_6) < 2)
             {
                 gSDVolConfig.volumeBgm_8 = gSDVolConfig.volumeBgm_6;
             }
@@ -134,7 +134,7 @@ void Sd_TaskPoolExecute(void) // 0x800485D8
             {
                 gSDVolConfig.volumeGlobal_A = 0;
             }
-            
+
             SdSetMVol(gSDVolConfig.volumeGlobal_A, gSDVolConfig.volumeGlobal_A);
         }
     }
@@ -147,7 +147,7 @@ void Sd_TaskPoolExecute(void) // 0x800485D8
             {
                 gSDVolConfig.volumeGlobal_A = OPT_SOUND_VOLUME_MAX - 1;
             }
-            
+
             SdSetMVol(gSDVolConfig.volumeGlobal_A, gSDVolConfig.volumeGlobal_A);
         }
     }
@@ -161,7 +161,7 @@ void Sd_TaskPoolExecute(void) // 0x800485D8
         {
             g_Sd_AudioStreamingStates.audioLoadState_0 = 1;
         }
-        
+
         g_Sd_AudioStreamingStates.xaLoadState_1    = 0;
         g_Sd_AudioStreamingStates.xaStopState_2    = 0;
         g_Sd_AudioStreamingStates.xaPreLoadState_3 = 0;
@@ -173,7 +173,7 @@ u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res) // 0x80048954
 {
     u8 syncRes;
     u8 comCopy;
-    
+
     comCopy = com;
 
     if (CdSync(1, &syncRes) == CdlComplete && CdControl(comCopy, param, res))
@@ -189,12 +189,12 @@ u8 Sd_CdPrimitiveCmdTry(s32 com, u8* param, u8* res) // 0x80048954
         CdReset(0);
         CdControlB(CdlNop, NULL, NULL);
         VSync(SyncMode_Wait3);
-        
+
         if (g_Sd_AudioStreamingStates.audioLoadState_0 != 0)
         {
             g_Sd_AudioStreamingStates.audioLoadState_0 = 1;
         }
-        
+
         g_Sd_AudioStreamingStates.xaLoadState_1    = 0;
         g_Sd_AudioStreamingStates.xaStopState_2    = 0;
         g_Sd_AudioStreamingStates.xaPreLoadState_3 = 0;

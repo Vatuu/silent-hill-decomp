@@ -435,7 +435,7 @@ void func_800D0FD4(s32* ord, void* arg1, u8* arg2, MATRIX* arg3, s32 arg4, s32 a
         }
     }
 
-    tpage = packet; 
+    tpage = packet;
 
     setDrawTPage(tpage, 0, 1, getTPage(0, abr, 320, 0));
     addPrim(ot, tpage);
@@ -758,7 +758,7 @@ void func_800D1D3C(GsOT_TAG* tag, SVECTOR3* arg1, MATRIX* arg2, s32 arg3) // 0x8
     PushMatrix();
     temp_v0 = func_80055F08(arg1, &D_800DAE58, arg2) & 0xFF;
     temp_a2 = Q12_MULT_PRECISE(temp_v0, arg3);
-    if (temp_a2 < 0x100) 
+    if (temp_a2 < 0x100)
     {
         var_a1 = temp_a2;
     }

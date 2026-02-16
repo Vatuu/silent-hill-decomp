@@ -3815,8 +3815,8 @@ void func_800E75B8(s32 arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0x8
     new_var = 1;
 
     Sd_SfxAttributesUpdate(arg0, var_s0, CLAMP_CUSTOM(
-        arg2 * Math_Vector3MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - arg1->vx, 
-            g_SysWork.playerWork_4C.player_0.position_18.vy - arg1->vy, 
+        arg2 * Math_Vector3MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - arg1->vx,
+            g_SysWork.playerWork_4C.player_0.position_18.vy - arg1->vy,
             g_SysWork.playerWork_4C.player_0.position_18.vz - arg1->vz) / arg3, arg2, 0, max, new_var), 0);
 }
 

@@ -39,7 +39,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
 
     s32 NEXT_GAME_STATES[MAIN_MENU_GAME_STATE_COUNT] = // 0x80025480
     {
-        GameState_LoadSavegameScreen, 
+        GameState_LoadSavegameScreen,
         GameState_AutoLoadSavegame,
         GameState_MovieOpening,
         GameState_OptionScreen,
@@ -50,8 +50,8 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
     s32         prevGameDifficultyIdx;
     s32         nextGameDifficultyIdx;
     e_GameState prevState;
-	static s32  g_MainMenu_NewGameSelectedDifficultyIdx = 1;
-	static s32  g_MemCard_PrevSavegameCount             = 0;
+    static s32  g_MainMenu_NewGameSelectedDifficultyIdx = 1;
+    static s32  g_MemCard_PrevSavegameCount             = 0;
 
     func_80033548();
 
@@ -65,7 +65,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
     if (g_GameWork.gameStateStep_598[0] == 0)
     {
         g_MainMenuState = 0;
-        
+
         if (playInGameDemo)
         {
             g_SysWork.processFlags_2298 = SysWorkProcessFlag_BootDemo;
@@ -118,7 +118,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
             if (g_MemCard_SavegameCount > 0)
             {
                 g_MainMenu_VisibleEntryFlags |= (1 << MainMenuEntry_Load) | (1 << MainMenuEntry_Continue);
-                
+
                 if (g_MemCard_PrevSavegameCount < g_MemCard_SavegameCount && g_MainMenu_SelectedEntry != MainMenuEntry_Load)
                 {
                     g_MainMenu_SelectedEntry = MainMenuEntry_Continue;
@@ -244,7 +244,7 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                                                  g_GameWorkPtr->config_0.controllerConfig_0.cancel_2))
             {
                 g_GameWork.gameState_594 = GameState_MainMenu;
-                
+
                 if (g_GameWork.gameStateStep_598[0] != 1)
                 {
                     g_GameWork.gameStateStep_598[0] = 1;
@@ -381,14 +381,14 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
         Gfx_MainMenu_DifficultyTextDraw(g_MainMenu_NewGameSelectedDifficultyIdx);
         return;
     }
-	else
-	{
-		*(s32*)0x1F800000 = 0x200000;
-		*(s32*)0x1F800004 = 0x01C00140;
-		ClearImage2((RECT*)0x1F800000, 0u, 0u, 0u);
-		Screen_Init(SCREEN_WIDTH, false);
-		return;
-	}
+    else
+    {
+        *(s32*)0x1F800000 = 0x200000;
+        *(s32*)0x1F800004 = 0x01C00140;
+        ClearImage2((RECT*)0x1F800000, 0u, 0u, 0u);
+        Screen_Init(SCREEN_WIDTH, false);
+        return;
+    }
 
     #undef MAIN_MENU_GAME_STATE_COUNT
 }
@@ -406,13 +406,13 @@ void Gfx_MainMenu_MainTextDraw(void) // 0x8003B568
     #define COLUMN_POS_Y 184
     #define STR_OFFSET_Y 20
 
-	static const char* MAIN_MENU_ENTRY_STRINGS[] = {
-		"LOAD",
-		"CONTINUE",
-		"START",
-		"OPTION",
-		"EXTRA" /** @unused See `e_MainMenuEntry`. */
-	};
+    static const char* MAIN_MENU_ENTRY_STRINGS[] = {
+        "LOAD",
+        "CONTINUE",
+        "START",
+        "OPTION",
+        "EXTRA" /** @unused See `e_MainMenuEntry`. */
+    };
     static const u8 STR_OFFSETS_X[] = { 29, 50, 32, 39, 33 }; // @unused Element at index 4. See `g_MainMenu_VisibleEntryFlags`.
 
     s32 i;
@@ -456,11 +456,11 @@ void Gfx_MainMenu_DifficultyTextDraw(s32 idx) // 0x8003B678
     #define COLUMN_POS_Y                    204
     #define STR_OFFSET_Y                    20
 
-	static const char* DIFFICULTY_MENU_ENTRY_STRINGS[] = {
-		"EASY",
-		"NORMAL",
-		"HARD"
-	};
+    static const char* DIFFICULTY_MENU_ENTRY_STRINGS[] = {
+        "EASY",
+        "NORMAL",
+        "HARD"
+    };
     static const u8 STR_OFFSETS_X[] = { 28, 43, 30 };
 
     s32 i;
@@ -667,7 +667,7 @@ void Gfx_MainMenu_FogScatter(void) // 0x8003BBF4
     for (i = 0; i < MAIN_MENU_FOG_COUNT; i++)
     {
         ptr = &D_800BCDE0[i * MAIN_MENU_FOG_COUNT];
-        
+
         for (j = 0; j < MAIN_MENU_FOG_COUNT; j++)
         {
             val   = ptr[j + MAIN_MENU_FOG_COUNT];
@@ -676,12 +676,12 @@ void Gfx_MainMenu_FogScatter(void) // 0x8003BBF4
             val  += ptr[j + 1];
             val >>= 2;
             val--;
-            
-            if (val <= 0) 
+
+            if (val <= 0)
             {
                 ptr[j] = 0;
-            } 
-            else 
+            }
+            else
             {
                 ptr[j] = val;
             }

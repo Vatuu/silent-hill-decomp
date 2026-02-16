@@ -42,7 +42,7 @@ s32 func_80089128(void) // 0x80089128
     s_func_8009ECCC* var_s0;
     s_func_8009ECCC* temp_s1;
     s_SysWork_2514*  var_s2;
-    
+
     var_s2 = &g_SysWork.field_2514;
 
     temp_s0 = g_SysWork.field_2510;
@@ -210,12 +210,12 @@ void func_80089314(s32 arg0) // 0x80089314
 
     var0        = 24;
     D_800AFD05 += g_VBlanks;
-    
+
     if (arg0 != 0)
     {
         var0 = 6;
     }
-    
+
     if ((s32)D_800AFD05 >= var0)
     {
         var0 = Rng_RandQ12();
@@ -227,10 +227,10 @@ void func_80089314(s32 arg0) // 0x80089314
         {
             var1 = ((var0 * 20) >> 12) + 60;
         }
-        
+
         D_800AFD04 = (D_800AFD04 + var1) & 0x7F;
     }
-    
+
     func_800892DC(21, D_800AFD04 + 32);
 }
 
@@ -246,11 +246,11 @@ void func_800893D0(q19_12 arg0) // 0x800893D0
     {
         var = 100;
     }
-    else 
+    else
     {
         var = ((arg0 + Q12(15.0f)) / Q12(5.0f)) * 25;
     }
-    
+
     func_800892DC(10, var);
 }
 
@@ -376,7 +376,7 @@ bool func_8008973C(s_SysWork_2514* arg0, s_func_8009ECCC* arg1, s_8002AC04* ptr,
     {
         case 0:
             func_8009E2A0(arg0);
-            break; 
+            break;
 
         case 1:
             func_8009E2D8(arg0);
@@ -484,7 +484,7 @@ void func_8008992C(s_SysWork_2514* arg0, u16 arg1, s32 (*arg2)(u16, s32)) // 0x8
 
         curr = next;
     }
-}   
+}
 
 void func_800899BC(s_SysWork_2514* arg0, s32 arg1) // 0x800899BC
 {

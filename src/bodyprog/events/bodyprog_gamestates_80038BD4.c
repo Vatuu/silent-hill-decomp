@@ -44,7 +44,7 @@ static void (*g_SysStateFuncs[])(void) = {
 const s32 pad_rodata_800252B8 = 0;
 
 /** @brief SFX pairs.
- * 
+ *
  * @note Used when loading areas. Maybe facilitates things like the
  * opening and closing door SFX when the player moves between rooms. */
 s_AreaLoadSfx const SfxPairs[25] = {
@@ -290,8 +290,8 @@ void SysState_Gameplay_Update(void) // 0x80038BD4
 
 void SysState_GamePaused_Update(void) // 0x800391E8
 {
-	static s32 D_800A9A68 = 0;
-	
+    static s32 D_800A9A68 = 0;
+
     D_800A9A68 += g_DeltaTime1;
     if (!((D_800A9A68 >> 11) & (1 << 0)))
     {
@@ -391,7 +391,7 @@ void func_8003943C(void) // 0x8003943C
             func_8008B40C(0, 0);
         }
     }
-    
+
     switch (g_SavegamePtr->mapOverlayId_A4)
     {
         case MapOverlayId_MAP0_S01:
@@ -572,7 +572,7 @@ void GameState_LoadMapScreen_Update(void) // 0x8003991C
 void SysState_Fmv_Update(void) // 0x80039A58
 {
     #define BASE_AUDIO_FILE_IDX FILE_XA_ZC_14392
-	static RECT D_800A9A6C = { 320, 256, 160, 240 };
+    static RECT D_800A9A6C = { 320, 256, 160, 240 };
 
     switch (g_SysWork.sysStateStep_C[0])
     {

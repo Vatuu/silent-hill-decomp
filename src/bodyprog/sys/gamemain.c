@@ -102,7 +102,7 @@ void GameState_Boot_Update(void) // 0x80032D1C
                 Fs_QueueWaitForEmpty();
 
                 gameState = g_GameWork.gameState_594;
-                
+
                 g_SysWork.timer_1C = 0;
                 g_SysWork.timer_20 = 0;
 
@@ -276,7 +276,7 @@ void MainLoop(void) // 0x80032EE0
             // Update V blanks.
             g_UncappedVBlanks = g_VBlanks;
             g_VBlanks         = MIN(g_VBlanks, V_BLANKS_MAX);
-            
+
             // Update V count.
             vCount     = MIN(GsGetVcount(), H_BLANKS_PER_FRAME_MIN); // NOTE: Will call `GsGetVcount` twice.
             vCountCopy = vCount;

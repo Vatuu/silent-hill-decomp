@@ -8,7 +8,7 @@ Since the goal of this project is a matching decompilation, understanding these 
 ### Data Files
 The table below summarizes each file format encountered so far, their known or suspected purposes, and any available documentation or parsing tools.
 
-> [!NOTE]  
+> [!NOTE]
 > Many formats are still being reversed/inferred during the decompilation process. Contributions of parsers, template definitions, or observations are welcome!
 
 | File Type | Purpose | Parser/Documentation |
@@ -35,7 +35,7 @@ These containers have no header or file table inside it, instead the list of fil
 
 The game itself usually refers to each file by its index in the table, and uses the table to find which sector to seek to in order to read the file.
 
-> [!NOTE]  
+> [!NOTE]
 > [silentassets.py](/tools/silentassets/extract.py) tool can handle parsing the file table and extracting from these containers.
 
 ### Folder Paths

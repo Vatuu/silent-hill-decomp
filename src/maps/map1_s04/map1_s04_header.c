@@ -13,7 +13,7 @@ extern s_AnimInfo HARRY_M1S04_ANIM_INFOS[];
 extern s_UnkStruct3_Mo g_MapHeaderTable_38[];
 extern u8 LOADABLE_INVENTORY_ITEMS[];
 
-void (*g_LoadScreenFuncs[])() = 
+void (*g_LoadScreenFuncs[])() =
 {
     NULL,
     Gfx_LoadingScreen_PlayerRun,
@@ -21,12 +21,12 @@ void (*g_LoadScreenFuncs[])() =
     Gfx_LoadingScreen_StageString
 };
 
-s_MapPoint2d MAP_POINTS[] = 
+s_MapPoint2d MAP_POINTS[] =
 {
     {}
 };
 
-void (*g_MapEventFuncs[])() = 
+void (*g_MapEventFuncs[])() =
 {
     NULL,
     func_800CCA2C,

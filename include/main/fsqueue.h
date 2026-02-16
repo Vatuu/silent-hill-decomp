@@ -216,7 +216,7 @@ typedef struct _FsQueueEntry
 } s_FsQueueEntry;
 
 /** @brief Queue pointer.
- * 
+ *
  * These had to be wrapped into a struct for some code to match.
  * Used for last added element, current read/seek op and current post process op.
  */
@@ -254,7 +254,7 @@ typedef struct _FsQueue
 extern s_FsQueue g_FsQueue;
 
 /** @brief Check if queue entry index has been loaded and post-loaded.
- * 
+ *
  * @param queueIdx Index of the queue entry to check.
  * @return `true` if the entry has been fully processed, `false` otherwise.
  */

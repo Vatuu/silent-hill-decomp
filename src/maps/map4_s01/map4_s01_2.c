@@ -785,7 +785,7 @@ void func_800D3420(void) // 0x800D3420
             D_800D5AF9 = 1;
 
             Savegame_EventFlagSet(EventFlag_312);
- 
+
             func_8003D03C();
             sharedFunc_800D2EB4_0_s00();
             SysWork_StateStepIncrement(0);

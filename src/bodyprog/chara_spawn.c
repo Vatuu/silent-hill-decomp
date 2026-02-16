@@ -73,7 +73,7 @@ s32 Chara_Spawn(e_CharacterId charaId, s32 arg1, q19_12 posX, q19_12 posZ, q3_12
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
             if (g_SysWork.npcs_1A0[i].model_0.charaId_0 != Chara_None)
-            { 
+            {
                 var_a0++;
             }
         }

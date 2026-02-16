@@ -23,7 +23,7 @@ void sharedFunc_800D02E4_3_s03(s_SubCharacter* nurse, GsCOORDINATE2* coords)
         pos.vx = posX;
         pos.vy = posY;
         pos.vz = posZ;
-        
+
         if (localNurse->model_0.controlState_2 == PuppetNurseControl_1)
         {
             weaponAttack = localNurse->properties_E4.npc.field_124->field_20;

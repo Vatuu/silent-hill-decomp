@@ -34,7 +34,7 @@ void Ai_PuppetNurse_Control11(s_SubCharacter* nurse)
 
             nurse->model_0.controlState_2 = controlState;
             nurse->model_0.stateStep_3 = 0;
-        } 
+        }
         else
         {
             nurse->model_0.anim_4.status_0 = g_PuppetNurse_AnimStatus4[(Rng_Rand16() >> 2) & 3];

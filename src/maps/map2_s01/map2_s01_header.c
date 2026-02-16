@@ -17,7 +17,7 @@ extern s_AnimInfo HARRY_M2S01_ANIM_INFOS[];
 extern s_UnkStruct3_Mo g_MapHeaderTable_38[];
 extern u8 LOADABLE_INVENTORY_ITEMS[];
 
-void (*g_LoadScreenFuncs[])() = 
+void (*g_LoadScreenFuncs[])() =
 {
     NULL,
     Gfx_LoadingScreen_PlayerRun,
@@ -211,7 +211,7 @@ s_MapPoint2d MAP_POINTS[] = {
   }
 };
 
-void (*g_MapEventFuncs[])() = 
+void (*g_MapEventFuncs[])() =
 {
     func_800CEB9C,
     func_800CEC30,

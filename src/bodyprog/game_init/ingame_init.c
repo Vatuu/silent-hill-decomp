@@ -56,10 +56,11 @@ static inline void Game_StateStepIncrement(void) // TODO: Move to header?
 
 void GameFs_MapStartup(void) // 0x80034964
 {
-	// It makes up to 5 attemps. If the load fails, it restarts
-	// the entire process by restarting the timer used to check if a demo
-	// should be triggered.
-	static s32 demoLoadAttempCount;
+    // It makes up to 5 attemps. If the load fails, it restarts
+    // the entire process by restarting the timer used to check if a demo
+    // should be triggered.
+    static s32 demoLoadAttempCount;
+
     switch (g_GameWork.gameStateStep_598[0])
     {
         case 0:
@@ -149,7 +150,7 @@ void GameFs_MapStartup(void) // 0x80034964
 
             g_GameWork.gameStateStep_598[0]++;
             break;
-        
+
         case 5:
             Fs_CharaAnimDataAlloc(1, g_MapOverlayHeader.charaGroupIds_248[0], NULL, 0);
             Fs_CharaAnimDataAlloc(2, g_MapOverlayHeader.charaGroupIds_248[1], NULL, 0);
@@ -338,8 +339,8 @@ void Game_SavegameInitialize(s8 overlayId, s32 difficulty) // 0x800350BC
     g_SavegamePtr->gameDifficulty_260 = difficulty;
     g_SavegamePtr->paperMapIdx_A9     = PaperMapIdx_OldTown;
 
-	// Defines all enemies from an overlay as alive.
-	// Odd code. Possibly a hack.
+    // Defines all enemies from an overlay as alive.
+    // Odd code. Possibly a hack.
     for (i = 0; i < 45; i++)
     {
         ovlEnemyStatesPtr[44] = NO_VALUE;

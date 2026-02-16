@@ -1077,12 +1077,12 @@ void Sd_SetVolume(u8 xaVol, s16 bgmVol, u8 seVol) // 0x80047798
     gSDVolConfig.globalVolumeXa_E  = xaVol;
     gSDVolConfig.globalVolumeBgm_D = bgmVol;
     gSDVolConfig.globalVolumeSe_C  = seVol;
-    
+
     if (g_Sd_AudioWork.field_E != 0)
     {
         Sd_SetVolBgm(gSDVolConfig.volumeBgm_8, gSDVolConfig.volumeBgm_8);
     }
-    
+
     if (g_Sd_AudioWork.xaAudioIdx_4 != 0)
     {
         Sd_SetVolXa(gSDVolConfig.volumeXa_0, gSDVolConfig.volumeXa_0);

@@ -131,7 +131,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                 {
                     if (g_MapMsg_Select.maxIdx_0 == temp)
                     {
-                        if (!((g_MapMsg_AudioLoadBlock & (1 << 0)) || !hasInput) || 
+                        if (!((g_MapMsg_AudioLoadBlock & (1 << 0)) || !hasInput) ||
                             (g_MapMsg_AudioLoadBlock != 0 && g_SysWork.mapMsgTimer_234C == 0))
                         {
                             stateMachineIdx2 = FINISH_MAP_MSG;
@@ -142,7 +142,7 @@ s32 Gfx_MapMsg_Draw(s32 mapMsgIdx) // 0x800365B8
                             }
                             break;
                         }
-                    } 
+                    }
                     else if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
                     {
                         g_MapMsg_Select.maxIdx_0           = temp;

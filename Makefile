@@ -12,16 +12,15 @@ NON_MATCHING   ?= 0
 SKIP_ASM       ?= 0
 
 # Enables usage of the `COMMON` segment.
-# The compiler can create a segment call `COMMON` intended to handle repetive
+# The compiler can create a segment call `COMMON` intended to handle repetitive
 # global variables declared in files which later becomes simple data that then
 # get assigned into some data segment. This comes as default and can be disabled,
 # however, MASPSX by default do not emit the segment and instead assign data
 # directly into the data segments. The importance of having this segment
 # supported is specially in the way MASPSX handle data order in a different way
 # to how the actual `COMMON` segment handles data order. It is required to have
-# the segment supported in the linker script, even though, Splat don't have
-# natively support to it, additionally, the linker will reorder variables based
-# upon their names.
+# the segment supported in the linker script, even though Splat doesn't natively
+# support it. Additionally, the linker will reorder variables based on their names.
 USE_COMMON     ?= 0
 
 # Names and Paths

@@ -30,7 +30,7 @@ s_MapPoint2d MAP_POINTS[] = {
     #include "area_load_params.h"
 };
 
-void (*g_MapEventFuncs[])() = 
+void (*g_MapEventFuncs[])() =
 {
     NULL,
     NULL,

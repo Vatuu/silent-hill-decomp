@@ -3,7 +3,7 @@
 
 // Defines region and revision-specific version macros, based on the `VER_XXX` Makefile target.
 //
-// Supports both region-gated code and date-based gating where changes are known to propagate 
+// Supports both region-gated code and date-based gating where changes are known to propagate
 // forward across releases (e.g. `#if VERSION_DATE >= VERSION_DATE_NTSCJ_1_1`).
 //
 // `VERSION_DATE` is set to the date of the game build being compiled.

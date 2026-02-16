@@ -44,7 +44,6 @@ void Ai_PuppetNurse_Control8(s_SubCharacter* nurse)
                 if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
                 {
                     controlState = PuppetNurseControl_9;
-                    
                 }
                 else
                 {

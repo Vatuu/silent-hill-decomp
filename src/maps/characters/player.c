@@ -639,7 +639,7 @@ void Player_AnimUnlock(void)
 s32 sharedFunc_800D2DAC_0_s00(void)
 {
     s_Model*    model;
-    s_AnimInfo* animInfo;   
+    s_AnimInfo* animInfo;
 
     // NOTE: There are 37 base anims for Harry. 38 and beyond are map-specific.
     model    = &g_SysWork.playerWork_4C.player_0.model_0;

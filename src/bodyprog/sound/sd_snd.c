@@ -24,7 +24,7 @@ char pad_bss_800C37D1[3];
 s_AudioItemData* g_Sd_VabTargetLoad;
 
 s_AudioItemData* g_Sd_KdTargetLoad;
-				
+
 // ========================================
 // LOAD VAB FILE
 // ========================================
@@ -175,7 +175,7 @@ void Sd_VabLoad_OffVagDataSet(void) // 0x80047E3C
         ptr1 = (u8*)CD_ADDR_0;
         ptr0 = g_Sd_VabBuffers[g_Sd_AudioType];
 
-        for (i = 0; i < g_Sd_VabTargetLoad->vagDataOffset_2; i++) 
+        for (i = 0; i < g_Sd_VabTargetLoad->vagDataOffset_2; i++)
         {
             *ptr0++ = *ptr1++;
         }
@@ -207,7 +207,7 @@ void Sd_VabLoad_VagDataMove(void) // 0x80047F18
         g_Sd_DataMoved                             = VAB_BUFFER_LIMIT;
         g_Sd_AudioStreamingStates.audioLoadState_0 = 6;
     }
-    
+
     if (dataMoveCheck == NO_VALUE && g_Sd_VabLoadAttemps < 16)
     {
         g_Sd_VabLoadAttemps++;
@@ -241,7 +241,7 @@ void Sd_VabLoad_NextVagDataMove(void) // 0x8004807C
     {
         return;
     }
-    
+
     remainingData = g_Sd_VabTargetLoad->fileSize_4 - g_Sd_DataMoved;
     if (remainingData < VAB_BUFFER_LIMIT)
     {
@@ -251,7 +251,7 @@ void Sd_VabLoad_NextVagDataMove(void) // 0x8004807C
     {
         CdRead(25, CD_ADDR_0, 128);
     }
-    
+
     g_Sd_AudioStreamingStates.audioLoadState_0 = 8;
 }
 
@@ -333,23 +333,23 @@ void Sd_KdtLoad(void) // 0x800482D8
             g_Sd_AudioType                             = g_Sd_KdTargetLoad->typeIdx_0;
             g_Sd_AudioStreamingStates.audioLoadState_0 = 1;
             break;
-        
+
         case 1:
             Sd_KdtLoad_StopSeq();
             break;
-        
+
         case 2:
             Sd_KdtLoad_OffSet();
             break;
-        
+
         case 3:
             Sd_KdtLoad_FileLoad();
             break;
-        
+
         case 4:
             Sd_KdtLoad_LoadCheck();
             break;
-        
+
         default:
             break;
     }
@@ -378,7 +378,7 @@ void Sd_KdtLoad_FileLoad(void) // 0x80048424
     if (CdSync(1, 0) == 2)
     {
         CdRead((g_Sd_KdTargetLoad->fileSize_4 + 2047) / 2048, FS_BUFFER_1, 128);
-        
+
         g_Sd_AudioStreamingStates.audioLoadState_0 = 4;
         g_Sd_AudioWork.cdErrorCount_0              = 0;
     }
@@ -396,14 +396,14 @@ void Sd_KdtLoad_LoadCheck(void) // 0x80048498
     {
         ptr1 = (u8*)FS_BUFFER_1;
         ptr0 = g_Sd_KdtBuffer[g_Sd_AudioType];
-        
+
         for (i = 0; i < g_Sd_KdTargetLoad->fileSize_4; i++)
         {
             *ptr0++ = *ptr1++;
         }
 
         i = SdSeqOpen(g_Sd_KdtBuffer[g_Sd_AudioType], 3);
-        
+
         if (i == NO_VALUE && g_Sd_VabLoadAttemps < 16)
         {
             g_Sd_VabLoadAttemps++;

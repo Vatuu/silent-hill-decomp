@@ -65,7 +65,7 @@ void Map_RoomBgmInit(bool arg0) // 0x800D94F8
         }
     }
     else
-    {     
+    {
         Savegame_EventFlagClear(EventFlag_20);
         var1 = Q12(0.3f);
     }
@@ -155,7 +155,7 @@ void MapEvent_OpeningCutscene(void) // 0x0x800D9748
 
             g_SysWork.field_30 = 20;
             ScreenFade_ResetTimestep();
-            
+
             g_SysWork.flags_22A4 |= SysFlag2_3;
 
             Sd_PlaySfx(Sfx_Unk1361, 0, 0x90);
@@ -484,7 +484,7 @@ void func_800DA5A0(void) // 0x800DA5A0
         case 3:
             Camera_LookAtSet(&g_SysWork.npcs_1A0[0].position_18, Q12(0.0f), Q12(-1.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), false);
             break;
-        
+
         case 7:
         case 8:
         case 9:
@@ -754,7 +754,7 @@ void func_800DAEFC(void) // 0x800DAEFC
 
         case 6:
             func_800866D4(54, 1, false);
-         
+
             offsetY = Q12_MULT(Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy), Q12(0.6f)) - Q12(1.84f);
             temp = Q12_MULT(Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy), Q12(2.0f)) + Q12(4.0f);
 
@@ -762,8 +762,8 @@ void func_800DAEFC(void) // 0x800DAEFC
             {
                 temp2 = Q12_MULT(Math_Cos(g_SysWork.playerWork_4C.player_0.rotation_24.vy), Q12(2.0f)) + Q12(4.0f);
                 offsetZ = g_SysWork.playerWork_4C.player_0.position_18.vz + temp2;
-            } 
-            else 
+            }
+            else
             {
                 offsetZ = Q12(130.0f);
             }
@@ -1154,13 +1154,13 @@ void Map_WorldObjectsUpdate(void) // 0x800DBF08
 
     if (!Savegame_EventFlagGet(EventFlag_24))
     {
-        if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) && 
+        if (PLAYER_IN_MAP_CHUNK(vx, 1, -7, -1, -7) &&
             (PLAYER_IN_MAP_CHUNK(vz, 1, 6, -1, 6) || PLAYER_IN_MAP_CHUNK(vz, 1, 7, -1, 7)))
         {
             D_800E3AAC.vz += Q12_MULT_PRECISE(g_DeltaTime0, (-0x400 - (Rng_Rand16() & 0x1FF)));
             WorldGfx_ObjectAdd(&D_800E3A5C[0], &D_800E3A9C, &D_800E3AAC);
             WorldGfx_ObjectAdd(&D_800E3A5C[1], &D_800E3A9C, &D_800E3AAC);
-        
+
             if (g_SysWork.sysFlags_22A0 & SysFlag_6)
             {
                 Savegame_EventFlagClear(EventFlag_188);
@@ -1260,7 +1260,7 @@ block7:
         if (temp_a0_2 > Q12(1.8f))
         {
             D_800DFAD0 = temp_a0_2 + Q12(0.9f);
-        } 
+        }
         else if (D_800DFAD0 > Q12(1.8f))
         {
             var_a2 = Q12(1.8f);
@@ -1471,7 +1471,7 @@ void func_800DCC54(void) // 0x800DCC54
         }
 
         D_800DFADC = func_800DCF38(D_800DFADC);
-    } 
+    }
     else
     {
         D_800DFADC = func_800DCDA8();

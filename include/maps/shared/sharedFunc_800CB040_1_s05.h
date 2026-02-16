@@ -101,7 +101,7 @@ bool sharedFunc_800CB040_1_s05(POLY_FT4** poly, s32 idx)
         if (sharedData_800D8568_1_s05.flags_0 & (1 << 1) && sharedData_800DFB7C_0_s00[idx].field_A == 8)
         {
             sharedData_800DFB7C_0_s00[idx].field_C.s_0.field_0 = (u16)sharedData_800D8568_1_s05.field_10 + Rng_GenerateUInt(0, 0xFFF);
-            if ((sharedData_800D8568_1_s05.flags_0 & (1 << 3)) && 
+            if ((sharedData_800D8568_1_s05.flags_0 & (1 << 3)) &&
                 Rng_GenerateUInt(0, 15) == 0) // 1 in 16 chance.
             {
                 sharedData_800DFB7C_0_s00[idx].field_A = 11;

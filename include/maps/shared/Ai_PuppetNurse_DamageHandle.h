@@ -14,7 +14,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
             Ai_PuppetNurse_SfxPlay(nurse, sfxIdx);
         }
 
-        switch (nurse->properties_E4.puppetNurse.field_118) 
+        switch (nurse->properties_E4.puppetNurse.field_118)
         {
             case 0:
                 nurse->properties_E4.puppetNurse.damage_F4 = nurse->damage_B4;
@@ -30,7 +30,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                 if (newHealth <= Q12(120.0f))
                 {
                     nurse->properties_E4.puppetNurse.field_118++;
-                    
+
                     if (!Ai_PuppetNurse_SomeAngleCheck(nurse))
                     {
                         nurse->model_0.controlState_2 = PuppetNurseControl_4;
@@ -49,7 +49,7 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                 }
                 else
                 {
-                    if (nurse->model_0.controlState_2 != PuppetNurseControl_2 && 
+                    if (nurse->model_0.controlState_2 != PuppetNurseControl_2 &&
                         ((nurse->properties_E4.puppetNurse.field_124->field_4 < nurse->properties_E4.puppetNurse.field_114) ||
                          (nurse->damage_B4.amount_C > Q12(320.0f))))
                     {

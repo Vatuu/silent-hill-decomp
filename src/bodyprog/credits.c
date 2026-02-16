@@ -465,8 +465,8 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringDraw(D_8002B4C0[0], 20);
         Gfx_StringSetPosition(0x18, -0x38);
         Gfx_StringDraw(D_8002B4C0[1], 20);
-        
-        switch (D_800C48D0) 
+
+        switch (D_800C48D0)
         {
             case -1:
                 Gfx_StringSetPosition(0xFC, -0x38);
@@ -486,7 +486,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
             default:
                 break;
         }
-        
+
         temp_s1 = func_8009134C(D_800C48A0);
         Gfx_StringSetPosition(0x18, 7);
         Gfx_StringDraw(D_8002B4C0[5], 20);
@@ -533,7 +533,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
             Gfx_StringDrawInt(1, 0);
         }
 
-        if (D_800C48A6 < 0xAu) 
+        if (D_800C48A6 < 0xAu)
         {
             Gfx_StringDrawInt(1, 0);
         }
@@ -581,7 +581,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
         Gfx_StringSetPosition(0x124, 0x70);
         Gfx_StringDraw(")", 1);
         Gfx_StringSetColor(StringColorId_White);
-        
+
         temp_s1 = func_8009134C(D_800C48B0);
         Gfx_StringSetPosition(0x18, -0x23);
         Gfx_StringDraw(D_8002B4C0[18], 20);
@@ -623,7 +623,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
             default:
                 break;
         }
-        
+
         Gfx_StringSetColor(StringColorId_White);
         Gfx_StringSetPosition(0x18, 0x9A);
         Gfx_StringDraw(D_8002B4C0[27], 0x20);
@@ -702,7 +702,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
 
             g_SysWork.enableHighResGlyphs_2350_0 = false;
 
-            for (i = 0; i < temp_a0; i++) 
+            for (i = 0; i < temp_a0; i++)
             {
                 Gfx_StringDraw(D_8002B4C0[26], 1);
             }
@@ -712,7 +712,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
             g_SysWork.enableHighResGlyphs_2350_0 = true;
             Gfx_StringSetPosition(160, 194);
 
-            for (i = 0; i < temp_v1; i++) 
+            for (i = 0; i < temp_v1; i++)
             {
                 Gfx_StringDraw(D_8002B4C0[26], 20);
             }
@@ -720,7 +720,7 @@ void Results_DisplayInfo(u32* arg0) // 0x80090664
             g_SysWork.enableHighResGlyphs_2350_0 = false;
             Gfx_StringSetPosition(160, 300);
 
-            for (i = 0; i < temp_a0; i++) 
+            for (i = 0; i < temp_a0; i++)
             {
                 Gfx_StringDraw(D_8002B4C0[26], 20);
             }
@@ -791,29 +791,29 @@ void func_80091388(s32 arg0, s32 arg1, s32 arg2) // 0x80091388
 {
     s32 var_a0;
     s32 var_v0;
-    
-    if (arg1 <= 0) 
+
+    if (arg1 <= 0)
     {
         arg1 = 0;
-    } 
-    else 
+    }
+    else
     {
         arg0 = (arg0 - arg1) - 1;
     }
-    
+
     Gfx_DebugStringDraw(Math_IntegerToString(arg0, FP_FROM(arg2, Q12_SHIFT)));
-    
-    if (arg1 > 0) 
+
+    if (arg1 > 0)
     {
         Gfx_DebugStringDraw(".");
-        do 
+        do
         {
             var_v0 = (arg2 < 0) ? (arg2 + 0xFFF) : arg2;
             arg2  -= FP_TO(FP_FROM(var_v0, Q12_SHIFT), Q12_SHIFT);
             arg2  *= 10;
             var_a0 = arg2 % 40960;
             Gfx_DebugStringDraw(Math_IntegerToString(1, FP_FROM(var_a0, Q12_SHIFT)));
-        } 
+        }
         while (--arg1 > 0);
     }
 }
@@ -826,19 +826,19 @@ u32 func_8009146C(s32 arg0) // 0x8009146C
     u32 res;
     u32 var_v1_2;
 
-    if (arg0 == 0) 
+    if (arg0 == 0)
     {
         var_v1_2 = g_SavegamePtr->meleeKillCount_25D;
         var_v0   = (g_SavegamePtr->meleeKillCountB_25E & 0xF) << 8;
-    } 
-    else 
+    }
+    else
     {
         var_v1_2 = g_SavegamePtr->rangedKillCount_25F;
         var_v0 = (g_SavegamePtr->meleeKillCountB_25E & 0xF0) * 16;
     }
-    
+
     res = var_v1_2 + var_v0;
-    if (res > 4000) 
+    if (res > 4000)
     {
         res = 4000;
     }
@@ -847,17 +847,17 @@ u32 func_8009146C(s32 arg0) // 0x8009146C
 
 void func_800914C4(s32 arg0, u32 val) // 0x800914C4
 {
-    if (val > 4000) 
+    if (val > 4000)
     {
         val = 4000;
     }
 
-    if (arg0 == 0) 
+    if (arg0 == 0)
     {
         g_SavegamePtr->meleeKillCount_25D  = val;
         g_SavegamePtr->meleeKillCountB_25E = (g_SavegamePtr->meleeKillCountB_25E & 0xF0) | ((val >> 8) & 0x0F);
-    } 
-    else 
+    }
+    else
     {
         g_SavegamePtr->rangedKillCount_25F = val;
         g_SavegamePtr->meleeKillCountB_25E = (g_SavegamePtr->meleeKillCountB_25E & 0x0F) | ((val >> 4) & 0xF0);

@@ -983,7 +983,7 @@ void func_800DC1E0(void) // 0x800DC1E0
     q19_12 rotY0;
     q19_12 rotY1;
 
-    switch (g_SysWork.sysStateStep_C[0]) 
+    switch (g_SysWork.sysStateStep_C[0])
     {
         case 0:
             Player_ControlFreeze();
@@ -994,7 +994,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             g_SysWork.timer_2C = 0;
             g_SysWork.sysStateStep_C[2] = 0;
             g_SysWork.sysStateStep_C[0]++;
-    
+
         case 1:
             MapMsg_DisplayAndHandleSelection(2, 41, 2, 4, NO_VALUE, false);
 
@@ -1003,17 +1003,17 @@ void func_800DC1E0(void) // 0x800DC1E0
             D_800E1FDC.vy = 0;
             D_800E1FDC.vx = 0;
             break;
-            
+
         case 2:
             D_800E1FE3 = 1;
-    
+
         case 4:
-            if (D_800E1FE2 == 0) 
+            if (D_800E1FE2 == 0)
             {
                 Camera_PositionSet(NULL, Q12(61.0f), Q12(-1.2f), Q12(-60.0f), Q12(2.5f), Q12(0.75f), Q12(1.5f), Q12(0.5f), false);
                 SysWork_StateStepIncrementDelayed(Q12(2.0f), false);
-                
-                if (g_SysWork.sysStateStep_C[0] != 2 && g_SysWork.sysStateStep_C[0] != 4) 
+
+                if (g_SysWork.sysStateStep_C[0] != 2 && g_SysWork.sysStateStep_C[0] != 4)
                 {
                     g_SysWork.sysStateStep_C[0] = 5;
                     g_SysWork.field_28 = 0;
@@ -1032,13 +1032,13 @@ void func_800DC1E0(void) // 0x800DC1E0
                 g_SysWork.sysStateStep_C[2] = 0;
             }
             break;
-            
+
         case 5:
-            if (Savegame_EventFlagGet(EventFlag_118)) 
+            if (Savegame_EventFlagGet(EventFlag_118))
             {
                 func_8005DC1C(Sfx_Unk1452, &D_800CB934, Q8(0.5f), 0);
-            } 
-            else 
+            }
+            else
             {
                 func_8005DC1C(Sfx_Unk1452, &D_800CB940, Q8(0.5f), 0);
             }
@@ -1054,27 +1054,27 @@ void func_800DC1E0(void) // 0x800DC1E0
             break;
 
         case 7:
-            if (D_800E1FDC.vx == 0) 
+            if (D_800E1FDC.vx == 0)
             {
                 SD_Call(Sfx_Unk1453);
             }
 
-            if (D_800E1FDC.vx < Q12(0.25f)) 
+            if (D_800E1FDC.vx < Q12(0.25f))
             {
                 D_800E1FE0 += Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.1666f));
-            } 
-            else 
+            }
+            else
             {
                 D_800E1FE0 -= Q12_MULT_PRECISE(g_DeltaTime0, Q12(0.1666f));
                 D_800E1FE0 = MAX(D_800E1FE0, 170); // TODO: Float.
             }
 
-            if (D_800E1FE3 != 0) 
+            if (D_800E1FE3 != 0)
             {
-                if (Savegame_EventFlagGet(EventFlag_118)) 
+                if (Savegame_EventFlagGet(EventFlag_118))
                 {
                     rotY0 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)));
-                    if ((D_800E1FDC.vx - rotY0) > FP_ANGLE(180.0f)) 
+                    if ((D_800E1FDC.vx - rotY0) > FP_ANGLE(180.0f))
                     {
                         rotY0 = D_800E1FDC.vx - FP_ANGLE(180.0f);
                         D_800E1FDC.vx = FP_ANGLE(180.0f);
@@ -1085,7 +1085,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                     }
 
                     rotY1 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f))) >> 1;
-                    if ((D_800E1FDC.vy - rotY1) > FP_ANGLE(90.0f)) 
+                    if ((D_800E1FDC.vy - rotY1) > FP_ANGLE(90.0f))
                     {
                         rotY1 = D_800E1FDC.vy - FP_ANGLE(90.0f);
                         D_800E1FDC.vy = FP_ANGLE(90.0f);
@@ -1094,11 +1094,11 @@ void func_800DC1E0(void) // 0x800DC1E0
                     {
                         D_800E1FDC.vy -= rotY1;
                     }
-                } 
-                else 
+                }
+                else
                 {
                     rotY1 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)));
-                    if ((D_800E1FDC.vx - rotY1) > FP_ANGLE(180.0f)) 
+                    if ((D_800E1FDC.vx - rotY1) > FP_ANGLE(180.0f))
                     {
                         rotY1 = D_800E1FDC.vx - FP_ANGLE(180.0f);
                         D_800E1FDC.vx = FP_ANGLE(180.0f);
@@ -1107,7 +1107,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                     {
                         D_800E1FDC.vx -= rotY1;
                     }
-    
+
                     rotY0 = -Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f))) >> 1;
                     if ((D_800E1FDC.vy - rotY0) > FP_ANGLE(90.0f))
                     {
@@ -1119,11 +1119,11 @@ void func_800DC1E0(void) // 0x800DC1E0
                         D_800E1FDC.vy -= rotY0;
                     }
                 }
-            } 
-            else if (Savegame_EventFlagGet(EventFlag_118)) 
+            }
+            else if (Savegame_EventFlagGet(EventFlag_118))
             {
                 rotY0 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)));
-                if ((D_800E1FDC.vx + rotY0) > FP_ANGLE(180.0f)) 
+                if ((D_800E1FDC.vx + rotY0) > FP_ANGLE(180.0f))
                 {
                     rotY0 = FP_ANGLE(180.0f) - D_800E1FDC.vx;
                     D_800E1FDC.vx = FP_ANGLE(180.0f);
@@ -1132,9 +1132,9 @@ void func_800DC1E0(void) // 0x800DC1E0
                 {
                     D_800E1FDC.vx += rotY0;
                 }
-                
+
                 rotY1 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f))) >> 1;
-                if ((D_800E1FDC.vy + rotY1) > FP_ANGLE(90.0f)) 
+                if ((D_800E1FDC.vy + rotY1) > FP_ANGLE(90.0f))
                 {
                     rotY1 = FP_ANGLE(90.0f) - D_800E1FDC.vy;
                     D_800E1FDC.vy = FP_ANGLE(90.0f);
@@ -1143,11 +1143,11 @@ void func_800DC1E0(void) // 0x800DC1E0
                 {
                     D_800E1FDC.vy += rotY1;
                 }
-            } 
-            else 
+            }
+            else
             {
                 rotY1 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f)));
-                if ((D_800E1FDC.vx + rotY1) > FP_ANGLE(180.0f)) 
+                if ((D_800E1FDC.vx + rotY1) > FP_ANGLE(180.0f))
                 {
                     rotY1 = FP_ANGLE(180.0f) - D_800E1FDC.vx;
                     D_800E1FDC.vx = FP_ANGLE(180.0f);
@@ -1156,7 +1156,7 @@ void func_800DC1E0(void) // 0x800DC1E0
                 {
                     D_800E1FDC.vx += rotY1;
                 }
-    
+
                 rotY0 = Q12_MULT_PRECISE(g_DeltaTime0, MIN(D_800E1FE0, FP_ANGLE(60.0f))) >> 1;
                 if ((D_800E1FDC.vy + rotY0) > FP_ANGLE(90.0f))
                 {
@@ -1168,18 +1168,18 @@ void func_800DC1E0(void) // 0x800DC1E0
                     D_800E1FDC.vy += rotY0;
                 }
             }
-            
+
             g_WorldObject6.rotation_28.vy += rotY0;
             g_WorldObject7.rotation_28.vy += rotY1;
-            
+
             func_8005DE0C(Sfx_Unk1453, &D_800CB94C, D_800E1FE0 >> 3, Q12(18.0f), 0);
-            
-            if (D_800E1FDC.vx == FP_ANGLE(180.0f) && D_800E1FDC.vy == FP_ANGLE(90.0f)) 
+
+            if (D_800E1FDC.vx == FP_ANGLE(180.0f) && D_800E1FDC.vy == FP_ANGLE(90.0f))
             {
                 // TODO: What are these angles?
                 g_WorldObject6.rotation_28.vy = (g_WorldObject6.rotation_28.vy + 0x1040) & 0xC00;
                 g_WorldObject7.rotation_28.vy = (g_WorldObject7.rotation_28.vy + 0x1040) & 0xC00;
-                
+
                 Sd_SfxStop(Sfx_Unk1453);
 
                 g_SysWork.sysStateStep_C[0] = 1;
@@ -1198,7 +1198,7 @@ void func_800DC1E0(void) // 0x800DC1E0
             Savegame_EventFlagClear(EventFlag_119);
             Savegame_EventFlagClear(EventFlag_118);
 
-            if (D_800E1FE2 != 0) 
+            if (D_800E1FE2 != 0)
             {
                 vcReturnPreAutoCamWork(false);
             }
@@ -1487,7 +1487,7 @@ void func_800DDA84(void) // 0x800DDA84
         }
 
         func_8005DE0C(Sfx_Unk1455, &g_ObjPosC[0], Q8(0.766f), Q12(16.0f), Q8(-0.25f));
-    } 
+    }
     else
     {
         if (D_800E5A98)

@@ -255,7 +255,7 @@ void func_8005DE0C(e_SfxId sfxId, VECTOR3* pos, s32 vol, q19_12 falloff, s8 pitc
     {
         balance = Sound_StereoBalanceGet(pos);
     }
-    
+
     if (vol > 0xFF)
     {
         vol = 0xFF;

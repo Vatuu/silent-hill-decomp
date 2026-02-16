@@ -4,7 +4,7 @@
 #include "main/rng.h"
 #include "maps/shared.h"
 #include "maps/characters/creeper.h"
-    
+
 #define creeperProps creeper->properties_E4.creeper
 
 void Ai_Creeper_Update(s_SubCharacter* creeper, s_AnmHeader* anmHdr, GsCOORDINATE2* coords)
@@ -240,7 +240,7 @@ void Ai_Creeper_ControlUpdate(s_SubCharacter* creeper)
         case CreeperControl_3:
             Ai_Creeper_Control_3(creeper);
             break;
-    
+
         case CreeperControl_4:
             Ai_Creeper_Control_4(creeper);
             break;

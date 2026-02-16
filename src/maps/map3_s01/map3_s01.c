@@ -501,7 +501,7 @@ void func_800D2E54(void) // 0x800D2E54
             else if (g_GeneratorMakeNoise == true)
             {
                 func_8005DE0C(Sfx_Unk1495, &D_800D4CE4, 0x80, Q12(16.0f), 0);
-                func_8005DE0C(Sfx_Unk1503, &D_800D4CE4, 0x80, Q12(16.0f), 0); 
+                func_8005DE0C(Sfx_Unk1503, &D_800D4CE4, 0x80, Q12(16.0f), 0);
             }
         }
     }

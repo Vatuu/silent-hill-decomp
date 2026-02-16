@@ -184,7 +184,7 @@ void func_800D0B64(void) // 0x800D0B64
 
             Chara_Spawn(Chara_Lisa, 0, Q12(17.4f), Q12(139.1f), 0, 3);
             SysWork_StateStepIncrement(0);
-    
+
             SD_Call(Sfx_Unk1640);
 
             D_800D4362 = 0;
@@ -226,7 +226,7 @@ void func_800D0B64(void) // 0x800D0B64
         case 8:
             func_80085EB8(0, &playerChara, 136, false);
             SysWork_StateStepIncrement(0);
-    
+
         case 9:
             Map_MessageWithAudio(30, &g_MapMsgSoundIdx, &g_MapMsgSounds);
             SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(2.5f), Q12(1.0f), Q12(62.0f), true, false);
@@ -264,7 +264,7 @@ void func_800D0B64(void) // 0x800D0B64
             func_80085EB8(0, &playerChara, 138, false);
             func_80085EB8(0, &lisaChara, 16, false);
             SysWork_StateStepIncrement(0);
-    
+
         case 17:
             SysWork_StateStepIncrementAfterTime(&g_Timer0, Q12(7.5f), Q12(65.0f), Q12(81.0f), true, true);
             Map_MessageWithAudio(37, &g_MapMsgSoundIdx, &g_MapMsgSounds);
@@ -273,7 +273,7 @@ void func_800D0B64(void) // 0x800D0B64
         case 18:
             func_80088F94(&lisaChara, 0, 0);
             func_80085EB8(0, &playerChara, 139, false);
-    
+
             Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(16.3f), Q12(-1.55f), Q12(-138.6f));
 
             // @hack This macro should work but must access `vz` by pointer for a match.
@@ -331,7 +331,7 @@ void func_800D0B64(void) // 0x800D0B64
         default:
             Player_ControlUnfreeze(true);
             SysWork_StateSetNext(SysState_Gameplay);
-    
+
             vcReturnPreAutoCamWork(true);
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);

@@ -22,7 +22,7 @@ Game uses a mixture of custom file formats and some PSY-Q/Sony proprietary forma
 
 Several pre-release demos and versions were released during development. A table of known releases is listed below. The [silentassets](/tools/silentassets/extract.py) tool supports extracting from each version listed here.
 
-> [!NOTE]  
+> [!NOTE]
 > This repo only targets the **Silent Hill (U) v1.1** release, though other releases give insights into parts of the code or include code/data which may be useful for the decompilation.
 
 | Date (YY-MM-DD) | Title | Game/disc code | Notes |

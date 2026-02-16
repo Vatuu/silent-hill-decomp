@@ -5,7 +5,7 @@
 #include "maps/shared.h"
 #include "maps/characters/air_screamer.h"
 
-// NOTES: 
+// NOTES:
 // - M0S01 includes some extra functions missing from other maps, but also removes the body of most `Ai_AirScreamer_Control_X` functions.
 //  (also seems to remove the funcs that those removed control funcs would have called into)
 //  See `#ifdef MAP0_S01` and `#ifndef MAP0_S01` blocks below.
@@ -918,7 +918,7 @@ s32 sharedFunc_800D3814_0_s01(s_SubCharacter* airScreamer)
     {
         dist = Q12(0.0f);
     }
-    
+
     if (g_Player_IsAiming)
     {
         distProp8 = func_8007FD2C();

@@ -115,7 +115,7 @@ void Fs_CharaAnimDataAlloc(s32 idx, e_CharacterId charaId, s_AnmHeader* animFile
     // then it ensures the animation buffer pointer matches with the previously estimated one, but
     // if the estimated pointer is in a position behind of the currently saved one then it moves
     // data to the position of the estimated pointer.
-    // 
+    //
     // If any of the previous checks fail, values previously assigned at index are cleared. Then, if
     // the character hasn't been loaded in a different `g_InitializedCharaAnimInfo` slot, the
     // animation file is loaded.

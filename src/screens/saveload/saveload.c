@@ -154,7 +154,7 @@ static s32 D_801E7560; // Unused/Pad.
  * loaded, or the user has the last save selected in
  * the slot (where it asks if the value corresponding
  * to the slot is 0 to then overwrite it with 1).
- * 
+ *
  * Used in: `SaveScreen_MemCardInfoReset` and `SaveScreen_SavesSlotDraw`.
  */
 static s32 D_801E7564[MEMCARD_SLOT_COUNT_MAX];
@@ -254,8 +254,8 @@ void SaveScreen_SlotStrAndBottomRectDraw(void) // 0x801E2EBC
 {
     s_Line2d line;
     s32      i;
-    
-    const DVECTOR SLOT_STR_POS_TABLE[] = 
+
+    const DVECTOR SLOT_STR_POS_TABLE[] =
     {
         { 59, 16 },
         { 209, 16 }
@@ -267,7 +267,7 @@ void SaveScreen_SlotStrAndBottomRectDraw(void) // 0x801E2EBC
     };
 
     Gfx_StringSetColor(StringColorId_White);
-    
+
     for (i = 0; i < MEMCARD_SLOT_COUNT_MAX; i++)
     {
         Gfx_StringSetPosition(SLOT_STR_POS_TABLE[i].vx, SLOT_STR_POS_TABLE[i].vy);
@@ -580,7 +580,7 @@ void SaveScreen_SavesSlotDraw(s_SaveScreenElement* saveEntry, s32 saveIdx, s32 s
 void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardState) // 0x801E3910
 {
     s32        strIdx;
-	static s32 D_801E7554;
+    static s32 D_801E7554;
 
     const char* DIALOG_STRS[] = {
         " ",
@@ -616,11 +616,11 @@ void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardSt
             switch (memCardState)
             {
                 case MemCardResult_NotConnected:
-                    strIdx = 1; 
+                    strIdx = 1;
                     break;
 
                 case MemCardResult_Success:
-                    strIdx = 3; 
+                    strIdx = 3;
                     break;
 
                 case MemCardResult_FileCreateError:
@@ -628,15 +628,15 @@ void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardSt
                     break;
 
                 case MemCardResult_FileIoComplete:
-                    strIdx = 5; 
+                    strIdx = 5;
                     break;
 
                 case MemCardResult_FileIoError:
-                    strIdx = 6; 
+                    strIdx = 6;
                     break;
 
                 default:
-                    strIdx = 0; 
+                    strIdx = 0;
                     break;
             }
             break;
@@ -695,7 +695,7 @@ void SaveScreen_MemCardStateDraw(s32 g_SaveScreen_SaveScreenState, s32 memCardSt
 
             D_801E7554 = strIdx;
             g_SaveScreen_MemCardStateDisplay++;
-            
+
         case 1:
             if (g_SaveScreen_SaveScreenState == SaveScreenState_Save && memCardState == MemCardResult_Success)
             {
@@ -729,7 +729,7 @@ void SaveScreen_WriteOptionsStepDraw(s32 stringIdx, bool optionSelected) // 0x80
     u32         time;
     GsOT*       ot;
     POLY_F4*    poly;
-	static bool D_801E7558;
+    static bool D_801E7558;
 
     const char* DIALOG_STRS[] = {
         "\x07Is_it_OK_to_overwrite?",
@@ -772,16 +772,15 @@ void SaveScreen_WriteOptionsStepDraw(s32 stringIdx, bool optionSelected) // 0x80
                 color = 96 - ((time - 32) * 2);
                 setRGB0(poly, color, color, 32);
             }
-			
-            
+
             if (optionSelected)
             {
-				// Player has "YES" selected.
+                // Player has "YES" selected.
                 setXY4(poly, -66, 82, -66, 98, -18, 82, -18, 98);
             }
             else
             {
-				// Player has "NO" selected.
+                // Player has "NO" selected.
                 setXY4(poly, 18, 82, 18, 98, 66, 82, 66, 98);
             }
 
@@ -1330,7 +1329,7 @@ void SaveScreen_SlotStatusMsgDraw(s32 slotIdx, s32 entryType) // 0x801E52D8
         },
         // Green line.
         {
-            { { -142, -33 }, { 136, 33 } }, 
+            { { -142, -33 }, { 136, 33 } },
             0, 255, 0,
             0
         }
@@ -1354,11 +1353,11 @@ void SaveScreen_SlotStatusMsgDraw(s32 slotIdx, s32 entryType) // 0x801E52D8
         }
     };
 
-    if (entryType == SavegameEntryType_UnformattedMemCard && g_GameWork.gameState_594 == GameState_SaveScreen) 
+    if (entryType == SavegameEntryType_UnformattedMemCard && g_GameWork.gameState_594 == GameState_SaveScreen)
     {
         SaveScreen_SlotStatusMsgStepDraw(&BORDER_LINES, &BORDER_GLOW_QUADS, &COLORED_LINES[1], slotIdx);
-    } 
-    else 
+    }
+    else
     {
         SaveScreen_SlotStatusMsgStepDraw(&BORDER_LINES, &BORDER_GLOW_QUADS, &COLORED_LINES[0], slotIdx);
     }
@@ -1412,9 +1411,9 @@ void SaveScreen_SlotStatusMsgStepDraw(s_LineBorder* borderLines, s_QuadBorder* b
         addPrim((u8*)ot->org + LAYER_32, glowPoly);
         GsOUT_PACKET_P = (u8*)glowPoly + sizeof(POLY_G4);
     }
-    
+
     Gfx_Primitive2dTextureSet(0, 0, 5, 1);
-    
+
     // Draw (???)'
     unkPoly = (POLY_F4*)GsOUT_PACKET_P;
     setPolyF4(unkPoly);
@@ -1737,18 +1736,18 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
 {
     s32               gameStateStep = g_GameWork.gameStateStep_598[1];
     s_SaveScreenElement* saveEntry;
-	static bool       isSaveWriteOptionSelected;
+    static bool       isSaveWriteOptionSelected;
 
     switch (gameStateStep)
     {
         case 0:
-            if (func_80033548() == false) 
+            if (func_80033548() == false)
             {
                 break;
             }
 
             // Memory cards are inserted and user is moving between slots.
-            if (g_Savegame_ElementCount0[0] != 0 && g_Savegame_ElementCount0[1] != 0 && 
+            if (g_Savegame_ElementCount0[0] != 0 && g_Savegame_ElementCount0[1] != 0 &&
                 (g_Controller0->btnsClicked_10 & (ControllerFlag_LStickRight | ControllerFlag_LStickLeft)))
             {
                 g_SelectedSaveSlotIdx ^= 1;
@@ -1763,9 +1762,9 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 g_MemCard_ActiveSavegameEntry = MemCard_ActiveSavegameEntryGet(g_SelectedSaveSlotIdx);
 
                 // Move down savegame entry.
-                if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp) 
+                if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickUp)
                 {
-                    if (g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx] != 0) 
+                    if (g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx] != 0)
                     {
                         g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx]--;
                         SD_Call(Sfx_MenuMove);
@@ -1773,7 +1772,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 }
 
                 // Move up savegame entry.
-                if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown) 
+                if (g_Controller0->btnsPulsed_18 & ControllerFlag_LStickDown)
                 {
                     if (g_SlotElementSelectedIdx[g_SelectedSaveSlotIdx] < g_Savegame_ElementCount0[g_SelectedSaveSlotIdx] - 1)
                     {
@@ -1787,9 +1786,9 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 g_SelectedDeviceId            = saveEntry->deviceId_5;
                 g_SelectedFileIdx             = saveEntry->fileIdx_6;
                 g_Savegame_SelectedElementIdx = saveEntry->elementIdx_7;
-				
-				// Show "Yes/No" option.
-                if (g_SaveScreen_SaveScreenState == SaveScreenState_Save) 
+
+                // Show "Yes/No" option.
+                if (g_SaveScreen_SaveScreenState == SaveScreenState_Save)
                 {
                     if (saveEntry->totalSavegameCount_0 == 31600)
                     {
@@ -1797,7 +1796,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                     }
 
                     // Defines if the selected element is the `New Save` option.
-					// @bug While an edge case, reaching the maximum makes it
+                    // @bug While an edge case, reaching the maximum makes it
                     // impossible to select or overwrite files.
                     if ((u16)(saveEntry->totalSavegameCount_0 - 1) < 31099)
                     {
@@ -1806,7 +1805,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
                 }
 
                 // Overwrite or format savegame entry.
-                if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) 
+                if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
                 {
                     if (g_SaveScreen_IsFormatting | g_SaveScreen_IsNewSaveSelected)
                     {
@@ -1827,7 +1826,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
             }
 
             // Exit save screen.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) 
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
                 ScreenFade_Start(false, false, false);
                 g_GameWork.gameStateStep_598[1] = 2;
@@ -1835,7 +1834,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
 
                 SD_Call(Sfx_MenuCancel);
 
-                if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen) 
+                if (g_GameWork.gameStatePrev_590 == GameState_InventoryScreen)
                 {
                     SD_Call(23);
                     GameFs_TitleGfxLoad();
@@ -1845,26 +1844,26 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
             break;
 
         case 1:
-            if (func_80033548() == false) 
+            if (func_80033548() == false)
             {
                 break;
             }
 
             g_SaveScreen_MemCardStateTextTimer = 0;
 
-            if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft) 
+            if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickLeft)
             {
                 isSaveWriteOptionSelected = gameStateStep;
                 SD_Call(Sfx_MenuMove);
             }
 
-            if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight) 
+            if (g_Controller0->btnsClicked_10 & ControllerFlag_LStickRight)
             {
                 isSaveWriteOptionSelected = false;
                 SD_Call(Sfx_MenuMove);
             }
 
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0) 
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.enter_0)
             {
                 if (!isSaveWriteOptionSelected)
                 {
@@ -1884,7 +1883,7 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
             }
 
             // Cancel overwrite.
-            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2) 
+            if (g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.cancel_2)
             {
                 g_GameWork.gameStateStep_598[1] = 0;
                 g_GameWork.gameStateStep_598[2] = 0;
@@ -2132,7 +2131,7 @@ void SaveScreen_Continue(void) // 0x801E6F38
             g_GameWork.autosave_90 = g_GameWork.savegame_30C;
 
             Game_PlayerInit();
-            
+
             g_SysWork.processFlags_2298 = SysWorkProcessFlag_LoadSave;
 
             GameFs_MapLoad(g_SavegamePtr->mapOverlayId_A4);

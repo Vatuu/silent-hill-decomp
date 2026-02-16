@@ -1675,7 +1675,7 @@ s32 SdUtKeyOffV(s16 vo) // 0x800A18F4
         sd_int_flag = false;
         return -1;
     }
- 
+
     sd_int_flag = false;
     return 0;
 }
@@ -1708,7 +1708,7 @@ s32 SdUtKeyOffVWithRROff(s16 vo) // 0x800A1A18
         sd_int_flag = false;
         return -1;
     }
- 
+
     sd_int_flag = false;
     return 0;
 }

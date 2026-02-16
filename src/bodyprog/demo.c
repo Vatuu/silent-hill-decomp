@@ -35,7 +35,7 @@ bool Demo_SequenceAdvance(s32 incrementAmt) // 0x8008EF20
 {
     #define DEMO_FILE_COUNT_MAX 5
 
-    static s_DemoFileInfo DEMO_FILE_INFOS[DEMO_FILE_COUNT_MAX] = 
+    static s_DemoFileInfo DEMO_FILE_INFOS[DEMO_FILE_COUNT_MAX] =
     {
         { FILE_MISC_DEMO0009_DAT, FILE_MISC_PLAY0009_DAT, 0 },
         { FILE_MISC_DEMO000A_DAT, FILE_MISC_PLAY000A_DAT, 0 },
@@ -248,7 +248,7 @@ void Demo_ExitDemo(void) // 0x8008F4E4
 
 void func_8008F518(void) {} // 0x8008F518
 
-bool func_8008F520(void) // 0x8008F520 
+bool func_8008F520(void) // 0x8008F520
 {
     return false;
 }

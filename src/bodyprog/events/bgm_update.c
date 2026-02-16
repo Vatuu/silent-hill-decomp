@@ -74,26 +74,26 @@ bool Bgm_LayerOnCheck(void) // 0x80035E44
 {
     s32 i;
     u16 val;
-    
+
     for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
     {
-        if (g_SysWork.bgmLayerVolumes_2748[i] != Q12(0.0f)) 
+        if (g_SysWork.bgmLayerVolumes_2748[i] != Q12(0.0f))
         {
             return false;
         }
     }
 
     val = func_80045BC8();
-    if (val == 0) 
+    if (val == 0)
     {
         return true;
     }
-    else if (val == 0xFFFF) 
+    else if (val == 0xFFFF)
     {
         return false;
     }
 
-    for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++) 
+    for (i = 1; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
     {
         if (Sd_BgmLayerVolumeGet(i) != 0)
         {
@@ -138,7 +138,7 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
     s32       endLayerIdx;
     q3_12*    bgmLayerVols;
     u8*       bgmLayerLimitCpy;
-	static s8 bgmLayerVolumes[8];
+    static s8 bgmLayerVolumes[8];
 
     flagsCpy           = flags;
     bgmLayerLimitCpy   = bgmLayerLimitPtr;
@@ -155,7 +155,7 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
         flagsCpy |= BgmFlag_Unk0;
         arg1      = Q12(0.2f);
     }
-    
+
     if (!(flagsCpy & BgmFlag_Unk8))
     {
         if (g_RadioPitchState > 0 && g_SavegamePtr->itemToggleFlags_AC & ItemToggleFlag_RadioOn)
@@ -185,29 +185,29 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
     {
         curLayerVol = bgmLayerVols[i];
 
-        if (i == endLayerIdx) 
+        if (i == endLayerIdx)
         {
             var_t0 = Q12_MULT_FLOAT_PRECISE(g_DeltaTime1, 0.25f);
             if (g_SysWork.sysFlags_22A0 & SysFlag_1)
             {
                 var_a0 = Q12(1.0f);
-            } 
+            }
             else if (g_SysWork.sysFlags_22A0 & SysFlag_2)
             {
                 var_a0 = Q12(0.75f);
-            } 
-            else 
+            }
+            else
             {
                 var_a0 = (g_SysWork.sysFlags_22A0 << 8) & 0x800; // TODO: Weird `SysFlag_3` check.
             }
-        } 
-        else 
+        }
+        else
         {
             if ((flagsCpy >> i) & BgmFlag_Unk0)
             {
                 var_t0 = FP_MULTIPLY(g_DeltaTime1, arg1, Q12_SHIFT - 1); // @hack Should be multiplied by 2 but doesn't match.
                 var_a0 = Q12(1.0f);
-            } 
+            }
             else
             {
                 var_t0 = Q12_MULT(g_DeltaTime1, arg1);
@@ -216,13 +216,13 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
         }
 
         var_a2 = var_a0 - curLayerVol;
-        if (curLayerVol != var_a0) 
+        if (curLayerVol != var_a0)
         {
-            if (var_t0 < var_a2) 
+            if (var_t0 < var_a2)
             {
                 curLayerVol += var_t0;
-            } 
-            else if (var_a2 >= -var_t0) 
+            }
+            else if (var_a2 >= -var_t0)
             {
                 curLayerVol = var_a0;
             }
@@ -243,19 +243,19 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
         curLayerVol1        = bgmLayerVols[i];
         isBgmLayerActive |= curLayerVol1 != Q12(0.0f);
 
-        if (i == 0) 
+        if (i == 0)
         {
             curLayerVol1 = Q12_MULT_PRECISE(curLayerVol1, temp_v0);
         }
 
         curLayerVol1 = Q12_MULT_PRECISE(curLayerVol1, Q12(0.0312f));
-        if (curLayerVol1 > Q12(0.0312f)) 
+        if (curLayerVol1 > Q12(0.0312f))
         {
             curLayerVol1 = Q12(0.0312f);
         }
 
         curLayerVol1 = (curLayerVol1 * bgmLayerLimitCpy[i]) >> 7;
-        if (curLayerVol1 > Q12(0.0312f)) 
+        if (curLayerVol1 > Q12(0.0312f))
         {
             curLayerVol1 = Q12(0.0312f);
         }
@@ -269,18 +269,18 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
     cond0 = temp_s2;
     cond0 = temp_s2 != 0 && cond0 != 0xFFFF;
 
-    if (isBgmLayerActive) 
+    if (isBgmLayerActive)
     {
-        switch (D_800A99A0) 
+        switch (D_800A99A0)
         {
             case 3:
                 Bgm_AllLayersMute();
 
-                if (cond0) 
+                if (cond0)
                 {
                     D_800A99A0 = 0;
-                } 
-                else 
+                }
+                else
                 {
                     Bgm_BgmChannelSet();
                     D_800A99A0 = 2;
@@ -293,11 +293,11 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
                 break;
 
             case 1:
-                if (cond0) 
+                if (cond0)
                 {
                     Bgm_GlobalLayerVariablesUpdate();
-                } 
-                else 
+                }
+                else
                 {
                     Bgm_AllLayersMute();
                 }
@@ -309,30 +309,30 @@ void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr) // 0x800
                 isMusicPlayer = true;
                 break;
         }
-    } 
-    else if (flagsCpy & BgmFlag_Unk9) 
+    }
+    else if (flagsCpy & BgmFlag_Unk9)
     {
-        if (D_800A99A0 != 3) 
+        if (D_800A99A0 != 3)
         {
             D_800A99A0 = 3;
             SD_Call(18);
         }
-    } 
-    else if (D_800A99A0 == 0) 
+    }
+    else if (D_800A99A0 == 0)
     {
         isMusicPlayer = true;
     }
 
     if (isMusicPlayer)
     {
-        if (cond0) 
+        if (cond0)
         {
             for (i = 0; i < (ARRAY_SIZE(g_SysWork.bgmLayerVolumes_2748) - 1); i++)
             {
                 Sd_BgmLayerVolumeSet(i, bgmLayerVolumes[i]);
             }
-        } 
-        else 
+        }
+        else
         {
             Bgm_AllLayersMute();
             D_800A99A0 = 3;
@@ -374,8 +374,8 @@ void Savegame_MapRoomIdxUpdate(void) // 0x80036420
     if (g_MapOverlayHeader.getMapRoomIdxFunc_4 == NULL)
     {
         newMapRoomIdx = 0;
-    } 
-    else 
+    }
+    else
     {
         newMapRoomIdx = g_MapOverlayHeader.getMapRoomIdxFunc_4(x, z);
     }
@@ -400,7 +400,7 @@ u32 func_800364BC(void) // 0x800364BC
 {
     u32        var0;
     u32        var1;
-	static u32 D_800BCD58;
+    static u32 D_800BCD58;
 
     D_800BCD58 += g_DeltaTime1 * (Q12(64.0f) + 1);
 

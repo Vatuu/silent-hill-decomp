@@ -3149,7 +3149,7 @@ s_Texture* Texture_Get(s_Material* mat, s_ActiveTextures* activeTexs, void* fsBu
     u32        queueIdx;
     s_Texture* curTex;
     s_Texture* foundTex;
-    
+
     smallestQueueIdx = INT_MAX;
     mat->texture_8 = NULL;
     foundTex = NULL;

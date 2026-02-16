@@ -89,11 +89,11 @@ bool func_80033548(void) // 0x80033548
     s32                         k;
     u32                         memCardStatus;
     s_MemCard_SaveMetadata*     saveMetadata;
-	static s32                  D_800BCD18[2];
-	static s32                  D_800BCD20[2];
-	static s32                  D_800A97DC = 0; /** `e_SavegameEntryType` */
-	static s8                   D_800A97E0 = NO_VALUE;
-	static u32                  allFileStatus[MEMCARD_DEVICE_COUNT_MAX] = { };
+    static s32                  D_800BCD18[2];
+    static s32                  D_800BCD20[2];
+    static s32                  D_800A97DC = 0; /** `e_SavegameEntryType` */
+    static s8                   D_800A97E0 = NO_VALUE;
+    static u32                  allFileStatus[MEMCARD_DEVICE_COUNT_MAX] = { };
 
     sp3C = 1;
 

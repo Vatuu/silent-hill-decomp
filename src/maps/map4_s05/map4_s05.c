@@ -1129,7 +1129,7 @@ bool func_800D4458(s_SubCharacter* floatstinger, VECTOR3* arg1) // 0x800D4458
             var_s3 = arg1->vz - D_800D780C[i].field_8[1];
             break;
     }
-    
+
 
     angle1 = ABS(func_8005BF38(angle0 - floatstinger->rotation_24.vy));
     if ((FP_ANGLE(90.0f) - angle1) < FP_ANGLE(0.0f))
@@ -1863,7 +1863,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
     MAP_CHUNK_CHECK_VARIABLE_DECL();
 
     func_80069844(0xFFFF);
-    
+
     if (PLAYER_IN_MAP_CHUNK(vz, 1, 3, -1, 3))
     {
         if (D_800DB9B0 == 0)
@@ -1894,7 +1894,7 @@ void Map_WorldObjectsUpdate(void) // 0x800D7360
             {
                 Savegame_EventFlagClear(EventFlag_346);
             }
-        } 
+        }
         else
         {
             func_8006982C(2);

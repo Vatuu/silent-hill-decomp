@@ -30,7 +30,7 @@ void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINAT
         sharedData_800E3A28_0_s00 = Q12(6.0f);
         sharedData_800E3A2C_0_s00 = Q12(100.0f);
     }
-    
+
     // Initialize.
     if (stalker->model_0.controlState_2 == StalkerControl_None)
     {
@@ -48,7 +48,7 @@ void Ai_Stalker_Update(s_SubCharacter* stalker, s_AnmHeader* anmHdr, GsCOORDINAT
 
         sharedFunc_800D6970_0_s00(stalker, anmHdr, coords);
         sharedFunc_800D70C4_0_s00(stalker);
-        
+
         if (g_DeltaTime0 != Q12(0.0f))
         {
             sharedFunc_800D7BE8_0_s00(stalker);
@@ -1510,7 +1510,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
                 stalkerProps.timer_F8              = Rng_Rand16() % Q12(0.5f);
             }
         }
-    } 
+    }
     else if (ANIM_TIME_RANGE_CHECK(stalker->model_0.anim_4.time_4, 472, 476))
     {
         vec0.vx = stalker->position_18.vx;
@@ -1619,7 +1619,7 @@ void Ai_Stalker_Control_8(s_SubCharacter* stalker)
     {
         animMult = Q12(0.3f);
         animDivTmp = 7;
-    } 
+    }
     else if (activeKeyframeIdx >= 117 && activeKeyframeIdx < 121)
     {
         animMult = Q12(0.3f);
@@ -1827,7 +1827,7 @@ void Ai_Stalker_Control_9(s_SubCharacter* stalker)
             {
                 stalker->model_0.anim_4.status_0 = ANIM_STATUS(StalkerAnim_13, false);
             }
-            
+
             stalker->model_0.controlState_2 = StalkerControl_8;
             stalkerProps.flags_E8 |= StalkerFlag_7;
             stalkerProps.flags_E8 &= ~StalkerFlag_6;

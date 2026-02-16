@@ -73,12 +73,12 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
 {
     s32 i;
     void (**unfreezePlayerFunc)(bool);
-	
-	// When `SysState_ReadMessage_Update` is called, the game world freezes.
-	// The following conditions unfreeze:
-	// - A specific event related flag is disenabled.
-	// - A specific camera related flag is disenabled.
-	// - There is no alive enemy.
+
+    // When `SysState_ReadMessage_Update` is called, the game world freezes.
+    // The following conditions unfreeze:
+    // - A specific event related flag is disenabled.
+    // - A specific camera related flag is disenabled.
+    // - There is no alive enemy.
     if (!(g_MapEventParam->flags_8_13 & EventParamUnkState_0) && !(g_SysWork.flags_22A4 & SysFlag2_5))
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
@@ -105,7 +105,7 @@ void SysState_ReadMessage_Update(void) // 0x80039FB8
         g_MapOverlayHeader.playerControlFreeze_C8();
     }
 
-    switch (Gfx_MapMsg_Draw(g_MapEventIdx)) 
+    switch (Gfx_MapMsg_Draw(g_MapEventIdx))
     {
         case MapMsgState_Finish:
             break;
@@ -185,7 +185,7 @@ void SysState_SaveMenu_Update(void) // 0x8003A230
                 SysWork_StateStepIncrement(0);
             }
             break;
-        
+
         case 1:
             if (D_800A9A0C != 0)
             {

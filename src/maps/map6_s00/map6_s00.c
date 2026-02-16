@@ -282,7 +282,7 @@ void func_800EB11C(void) // 0x800EB11C
         case EventState_Skip:
             SysWork_StateStepIncrementAfterFade(2, true, 0, Q12(0.0f), false);
             break;
-            
+
         default:
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);

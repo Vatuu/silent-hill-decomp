@@ -314,7 +314,7 @@ void sharedFunc_800E384C_2_s00(s_SubCharacter* groaner)
     #define getIndex() \
         ((((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 3) == 0) * 2) + ((g_SysWork.field_2388.field_154.effectsInfo_0.field_0.field_0 & 0x3) == 2))
 
-    if (func_80070360(groaner, Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - groaner->position_18.vx, 
+    if (func_80070360(groaner, Math_Vector2MagCalc(g_SysWork.playerWork_4C.player_0.position_18.vx - groaner->position_18.vx,
             g_SysWork.playerWork_4C.player_0.position_18.vz - groaner->position_18.vz), UNK_VAL) != 0 ||
         func_8006FD90(groaner, 1, sharedData_800EEE3C_2_s00[getIndex()].field_0, sharedData_800EEE3C_2_s00[getIndex()].field_4))
     {
@@ -1496,7 +1496,7 @@ void sharedFunc_800E6338_2_s00(s_SubCharacter* groaner)
             keyframeIdx0 = (keyframeIdx2 - !(keyframeIdx2 < 9));
             keyframeIdx1 = (FP_FROM(groaner->model_0.anim_4.time_4, Q12_SHIFT) - 264) - !(keyframeIdx2 < 8);
             func_80070400(groaner, &sharedData_800EF638_2_s00[keyframeIdx0], &sharedData_800EF638_2_s00[keyframeIdx1]);
-         
+
             groanerProps.relKeyframeIdx_100 = 25;
             break;
 

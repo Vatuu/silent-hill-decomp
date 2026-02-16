@@ -32,7 +32,7 @@ void MapEvent_CommonItemTake(void) // 0x800CEBC8
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M0S02_HealthDrink0;
             break;
-            
+
         case 31:
             pickupType   = CommonPickupItemId_HealthDrink;
             eventFlagIdx = EventFlag_M0S02_HealthDrink1;
@@ -189,7 +189,7 @@ void Map_WorldObjectsUpdate(void)
             WorldGfx_ObjectAdd(&g_CommonWorldObjects[0], &g_CommonWorldObjectPoses[0].position_0, &g_CommonWorldObjectPoses[0].rotation_C);
         }
     }
-    
+
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
     {
         if (!Savegame_EventFlagGet(EventFlag_M0S02_HealthDrink0))
@@ -200,7 +200,7 @@ void Map_WorldObjectsUpdate(void)
 
     if (PLAYER_IN_MAP_CHUNK(vx, 1, -4, -1, -4) && PLAYER_IN_MAP_CHUNK(vz, 0, 0, -1, 1))
     {
-   
+
         if (!Savegame_EventFlagGet(EventFlag_M0S02_HealthDrink1))
         {
             WorldGfx_ObjectAdd(&g_CommonWorldObjects[1], &g_CommonWorldObjectPoses[2].position_0, &g_CommonWorldObjectPoses[2].rotation_C);

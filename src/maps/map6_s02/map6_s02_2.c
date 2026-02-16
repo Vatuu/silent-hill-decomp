@@ -150,7 +150,7 @@ void func_800CF0B8(void) // 0x800CF0B8
     Savegame_EventFlagClear(EventFlag_412);
 
     hasSkippedEarly = false;
-    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) && 
+    if ((g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
         g_SysWork.sysStateStep_C[0] >= 2 && g_SysWork.sysStateStep_C[0] <= 19)
     {
         // Sets flag to `true` if player skipped before step 19.
@@ -234,7 +234,7 @@ void func_800CF0B8(void) // 0x800CF0B8
             // Warp player.
             Camera_PositionSet(NULL, Q12(56.79f), Q12(-7.9f), Q12(-27.3f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
             Camera_LookAtSet(NULL, Q12(57.96f), Q12(-5.03f), Q12(-24.77f), Q12(0.0f), Q12(0.0f), Q12(0.0f), Q12(0.0f), true);
-        
+
             // Warp player.
             g_SysWork.playerWork_4C.player_0.position_18.vx = Q12(59.6f);
             g_SysWork.playerWork_4C.player_0.position_18.vz = Q12(-19.0f);
@@ -1102,7 +1102,7 @@ void func_800D1718(void) // 0x800D1718
             g_SysWork.pointLightIntensity_2378 = Q12(2.8f);
             Math_Vector3Set(&g_SysWork.pointLightPosition_2360, Q12(60.0f), Q12(-2.5f), Q12(-20.0f));
             Math_SetSVectorFast(&g_SysWork.pointLightRot_2370, FP_ANGLE(-90.0f), FP_ANGLE(0.0f), FP_ANGLE(0.0f));
-            
+
             func_800D2170(false);
             SD_Call(Sfx_Unk1611);
 
@@ -1198,7 +1198,7 @@ s32 func_800D1D40(void) // 0x800D1D40
     angle = ratan2(g_SysWork.playerWork_4C.player_0.position_18.vx + Q12(20.0f),
                    g_SysWork.playerWork_4C.player_0.position_18.vz + Q12(20.0f));
 
-    if (D_800D4E6C == 0) 
+    if (D_800D4E6C == 0)
     {
         Savegame_EventFlagSet(EventFlag_416);
 
@@ -1223,7 +1223,7 @@ s32 func_800D1D40(void) // 0x800D1D40
                 D_800D4E6C--;
             }
         }
-    } 
+    }
     else
     {
         if (angle < FP_ANGLE(0.0f) && angle > FP_ANGLE(-78.8f))
@@ -1422,14 +1422,14 @@ void func_800D2170(s32 arg0) // 0x800D2170
         func_800D1EB8(D_800D3C74[k + 1], buffers[k & 1], buffers[(k & 0x1) == 0]);
     }
 
-    for (k = 0, rowPtr = s3; k < 16; k++, rowPtr++) 
+    for (k = 0, rowPtr = s3; k < 16; k++, rowPtr++)
     {
         for (i = 0, j = 0; i < 16; j++, i++)
         {
             rng0 = Rng_Rand16();
             rng15 = rng0 & 0xF;
 
-            if (rng15 < 8) 
+            if (rng15 < 8)
             {
                 temp_a0 = (rng0 >> 4) & 0x7FFFF;
                 (&(&s6[(rng15) << 8])[k])[j * 16] = temp_a0;

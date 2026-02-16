@@ -18,10 +18,10 @@ typedef enum
 
 typedef enum
 {
-	KonamiLogoStateStep_Init,
-	KonamiLogoStateStep_WaitForFade,
-	KonamiLogoStateStep_LogoDelay,
-	KonamiLogoStateStep_FinishAfterFade
+    KonamiLogoStateStep_Init,
+    KonamiLogoStateStep_WaitForFade,
+    KonamiLogoStateStep_LogoDelay,
+    KonamiLogoStateStep_FinishAfterFade
 } e_KonamiLogoStateStep;
 
 /** Displays the Konami logo and starts loading base hero animations. */

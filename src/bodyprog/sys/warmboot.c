@@ -61,15 +61,15 @@ s32 MainLoop_ShouldWarmReset(void) // 0x80034108
 
     if (g_UnknownFrameCounter >= 121)
     {
-        return 2; 
+        return 2;
     }
     else if (g_Controller0->btnsHeld_C == UNK_BTN_FLAGS_0 && (g_Controller0->btnsClicked_10 & UNK_BTN_FLAGS_0))
     {
-        return 2; 
+        return 2;
     }
     else if (g_Controller0->btnsHeld_C == UNK_BTN_FLAGS_1 && (g_Controller0->btnsClicked_10 & ControllerFlag_Start))
     {
-        return 2; 
+        return 2;
     }
 
     return (g_SysWork.flags_22A4 & SysFlag2_8) ? 2 : 0;
