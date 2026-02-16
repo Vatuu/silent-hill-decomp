@@ -314,7 +314,7 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
             }
         }
 
-        if (TIMESTEP_ANGLE_0 < ABS(angleDeltaToPlayer))
+        if (TIMESTEP_ANGLE(1, 4) < ABS(angleDeltaToPlayer))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
@@ -367,7 +367,7 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
 
         Chara_MoveSpeedUpdate3(splitHead, Q12(1.2f), Q12(0.0f));
 
-        if (TIMESTEP_ANGLE_1 < ABS(angleDeltaToPlayer))
+        if (TIMESTEP_ANGLE(3, 4) < ABS(angleDeltaToPlayer))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
@@ -402,7 +402,7 @@ void Ai_SplitHead_Control_1(s_SubCharacter* splitHead)
             Chara_MoveSpeedUpdate3(splitHead, Q12(1.2f), Q12(0.6f));
         }
 
-        if (TIMESTEP_ANGLE_1 < ABS(angleDeltaToPlayer))
+        if (TIMESTEP_ANGLE(3, 4) < ABS(angleDeltaToPlayer))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
@@ -519,7 +519,7 @@ void Ai_SplitHead_Control_2(s_SubCharacter* splitHead)
     splitHeadProps.timer_F2 += g_DeltaTime0;
 
     angleToPlayer = func_8005BF38((splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
-    if (TIMESTEP_ANGLE_2 < ABS(angleToPlayer))
+    if (TIMESTEP_ANGLE(3, 3) < ABS(angleToPlayer))
     {
         if (angleToPlayer > FP_ANGLE(0.0f))
         {
@@ -629,7 +629,7 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
             }
         }
 
-        if (TIMESTEP_ANGLE_2 < ABS(angleDeltaToPlayer))
+        if (TIMESTEP_ANGLE(3, 3) < ABS(angleDeltaToPlayer))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
@@ -670,7 +670,7 @@ void Ai_SplitHead_Control_3(s_SubCharacter* splitHead)
             Chara_MoveSpeedUpdate3(splitHead, Q12(4.0f), Q12(2.4f));
         }
 
-        if (TIMESTEP_ANGLE_1 < ABS(angleDeltaToPlayer))
+        if (TIMESTEP_ANGLE(3, 4) < ABS(angleDeltaToPlayer))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
@@ -849,7 +849,7 @@ void Ai_SplitHead_Control_5(s_SubCharacter* splitHead)
 
     angleToPlayer = func_8005BF38((splitHeadProps.angle_F0 - splitHead->rotation_24.vy));
 
-    if (TIMESTEP_ANGLE_0 < ABS(angleToPlayer))
+    if (TIMESTEP_ANGLE(1, 4) < ABS(angleToPlayer))
     {
         if (angleToPlayer > FP_ANGLE(0.0f))
         {
@@ -980,7 +980,7 @@ void Ai_SplitHead_Control_7(s_SubCharacter* splitHead)
 
         angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(splitHead->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                            splitHead->rotation_24.vy);
-        if (TIMESTEP_ANGLE_2 < ABS(angleDeltaToPlayer)) // @hack `(g_DeltaTime0 / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
+        if (TIMESTEP_ANGLE(3, 3) < ABS(angleDeltaToPlayer)) // @hack `(g_DeltaTime0 / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {

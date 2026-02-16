@@ -503,7 +503,7 @@ void func_800DB608(void);
 
 void func_800DBABC(void);
 
-void func_800DBAE8(VECTOR3* arg0, s32 arg1);
+void func_800DBAE8(VECTOR3* pos, s32 idx);
 
 void func_800DBBA0(void);
 
@@ -528,7 +528,7 @@ void func_800DCF94(void);
 
 s_800F3DAC* func_800DD090(void);
 
-void func_800DD0EC(VECTOR3* arg0, s32 coordIdx);
+void func_800DD0EC(VECTOR3* pos, s32 coordIdx);
 
 void func_800DD240(VECTOR3* vec);
 
@@ -551,7 +551,7 @@ void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
 void func_800DD67C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void func_800DD6CC(void);
-void func_800DD738(VECTOR3* arg0, VECTOR3* arg1, s32 rotZ, s32 timer);
+void func_800DD738(VECTOR3* pos0, VECTOR3* pos1, q19_12 rotZ, q19_12 timer);
 void func_800DD7D0(VECTOR3* charaPos);
 void func_800DD868(void);
 void func_800DD8CC(VECTOR3* charaPos);
@@ -637,6 +637,8 @@ void func_800E22AC(VECTOR3* arg0, s32* arg1, s16* mv_pos, s16* now_spd, VECTOR3*
 q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target);
 
 void func_800E2664(s32 arg0, s16 arg1);
+
+void func_800E27D0(s32 arg0, s16 arg1, s32 arg2, VECTOR3* pos);
 
 // Some kind of RNG? Constants don't seem well known?
 s16 func_800E28F4(void);

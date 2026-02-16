@@ -426,7 +426,7 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
                 Chara_MoveSpeedUpdate3(creeper, Q12(1.5f), (creeperProps.moveSpeed_10C * (FP_ANGLE(90.0f) - ABS(angleDeltaToPlayer))) >> 10);
             }
 
-            if (TIMESTEP_ANGLE_3 < ABS(angleDeltaToPlayer) && Rng_GenerateInt(0, 7)) // 1 in 8 chance.
+            if (TIMESTEP_ANGLE(1, 2) < ABS(angleDeltaToPlayer) && Rng_GenerateInt(0, 7)) // 1 in 8 chance.
             {
                 if (angleDeltaToPlayer > FP_ANGLE(0.0f))
                 {
@@ -472,7 +472,7 @@ void Ai_Creeper_Control_2(s_SubCharacter* creeper)
         }
 
         unkAngleDelta = func_8005BF38(creeperProps.rotationY_108 - creeper->rotation_24.vy);
-        if (TIMESTEP_ANGLE_3 < ABS(unkAngleDelta))
+        if (TIMESTEP_ANGLE(1, 2) < ABS(unkAngleDelta))
         {
             if (unkAngleDelta > FP_ANGLE(0.0f))
             {
@@ -544,7 +544,7 @@ void Ai_Creeper_Control_3(s_SubCharacter* creeper)
             creeper->moveSpeed_38 = moveSpeed;
         }
 
-        if (TIMESTEP_ANGLE_3 < ABS(func_8005BF38((Math_AngleBetweenPositionsGet(creeper->position_18, playerPos) - creeper->rotation_24.vy))))
+        if (TIMESTEP_ANGLE(1, 2) < ABS(func_8005BF38((Math_AngleBetweenPositionsGet(creeper->position_18, playerPos) - creeper->rotation_24.vy))))
         {
             if ((func_8005BF38((Math_AngleBetweenPositionsGet(creeper->position_18, playerPos) - creeper->rotation_24.vy)) << 16) > 0)
             {

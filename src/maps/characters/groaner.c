@@ -354,7 +354,7 @@ void sharedFunc_800E39D8_2_s00(s_SubCharacter* groaner)
     if (groanerProps.flags_E8.val16[0] & GroanerFlag_0)
     {
         unkAngleDelta = func_8005BF38(groanerProps.angle_FC - groaner->rotation_24.vy);
-        if (TIMESTEP_ANGLE_5 < ABS(unkAngleDelta))
+        if (TIMESTEP_ANGLE(3, 2) < ABS(unkAngleDelta))
         {
             if (unkAngleDelta > FP_ANGLE(0.0f))
             {
@@ -633,7 +633,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
     if (ANIM_STATUS_IDX_GET(groaner->model_0.anim_4.status_0) == GroanerAnim_15 ||
         ANIM_TIME_REL_KEYFRAME_IDX_GET(groaner->model_0.anim_4.time_4, 214) < 9u)
     {
-        temp_v1 = TIMESTEP_ANGLE_4;
+        temp_v1 = TIMESTEP_ANGLE(1, 3);
 
         if ((angleDeltaToPlayer0 >= FP_ANGLE(0.0f) && temp_v1 <  angleDeltaToPlayer0) ||
             (angleDeltaToPlayer0 <  FP_ANGLE(0.0f) && temp_v1 < -angleDeltaToPlayer0))
@@ -650,7 +650,7 @@ void sharedFunc_800E4830_2_s00(s_SubCharacter* groaner)
             angleDeltaToPlayer1 = func_8005BF38(Math_AngleBetweenPositionsGet(groaner->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                                 groaner->rotation_24.vy);
 
-            rotMax = TIMESTEP_ANGLE_4;
+            rotMax = TIMESTEP_ANGLE(1, 3);
             if ((angleDeltaToPlayer1 >= FP_ANGLE(0.0f) && rotMax <  angleDeltaToPlayer1) ||
                 (angleDeltaToPlayer1 <  FP_ANGLE(0.0f) && rotMax < -angleDeltaToPlayer1))
             {

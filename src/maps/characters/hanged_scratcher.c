@@ -378,7 +378,7 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
                                        scratcher->rotation_24.vy);
     angleDeltaToPlayer = ABS(angleDeltaToPlayer);
 
-    if (angleDeltaToPlayer < TIMESTEP_ANGLE_3)
+    if (angleDeltaToPlayer < TIMESTEP_ANGLE(1, 2))
     {
         Chara_MoveSpeedUpdate4(scratcher, Q12(4.0f), scratcherProps.radiusMax_10C);
 
@@ -437,7 +437,7 @@ void Ai_HangedScratcher_Control_3(s_SubCharacter* scratcher)
         }
 
         targetRotDelta = func_8005BF38(scratcherProps.targetHeadingAngle_EC - scratcher->rotation_24.vy);
-        if (ABS(targetRotDelta) > TIMESTEP_ANGLE_3)
+        if (ABS(targetRotDelta) > TIMESTEP_ANGLE(1, 2))
         {
             if (targetRotDelta > FP_ANGLE(0.0f))
             {
@@ -503,7 +503,7 @@ void Ai_HangedScratcher_Control_4(s_SubCharacter* scratcher)
 
     if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 98, 103))
     {
-        if (angleDeltaToPlayerAbs > TIMESTEP_ANGLE_3)
+        if (angleDeltaToPlayerAbs > TIMESTEP_ANGLE(1, 2))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {
@@ -654,7 +654,7 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
 
     cond = func_800700F8(scratcher, &g_SysWork.playerWork_4C.player_0);
 
-    if (angleDeltaToPlayerAbs < TIMESTEP_ANGLE_4 && !cond)
+    if (angleDeltaToPlayerAbs < TIMESTEP_ANGLE(1, 3) && !cond)
     {
         Chara_MoveSpeedUpdate4(scratcher, Q12(2.0f), scratcherProps.radiusMin_10E);
         scratcherProps.timer_EA = Q12(0.0f);
@@ -702,7 +702,7 @@ void Ai_HangedScratcher_Control_7(s_SubCharacter* scratcher)
         }
 
         targetRotDelta = func_8005BF38(scratcherProps.targetHeadingAngle_EC - scratcher->rotation_24.vy);
-        if (ABS(targetRotDelta) > TIMESTEP_ANGLE_4)
+        if (ABS(targetRotDelta) > TIMESTEP_ANGLE(1, 3))
         {
             if (targetRotDelta > FP_ANGLE(0.0f))
             {
@@ -1042,7 +1042,7 @@ void Ai_HangedScratcher_Control_15(s_SubCharacter* scratcher)
 
     if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 116, 128))
     {
-        if (ABS(angleDeltaToPlayer) > TIMESTEP_ANGLE_0)
+        if (ABS(angleDeltaToPlayer) > TIMESTEP_ANGLE(1, 4))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {

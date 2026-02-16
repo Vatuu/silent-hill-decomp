@@ -67,7 +67,7 @@
 #define CHECK_FLAG(bitfield, flag, isSet) \
     (!((bitfield) & (flag)) == !(isSet))
 
-/** @brief Scales a Q19.12 fixed-point value by a delta time relative to a 30 FPS time step.
+/** @brief Scales a Q19.12 fixed-point value by a delta time relative to a 30 FPS timestep.
  *
  * @param deltaTime Time delta.
  * @param x Q19.12 fixed-point value to scale.
@@ -76,7 +76,7 @@
 #define TIMESTEP_SCALE_30FPS(deltaTime, x) \
     (((x) * (deltaTime)) / TIMESTEP_30_FPS)
 
-/** @brief Scales a Q19.12 fixed-point value by a delta time relative to a 60 FPS time step.
+/** @brief Scales a Q19.12 fixed-point value by a delta time relative to a 60 FPS timestep.
  *
  * @param deltaTime Time delta.
  * @param x Q19.12 fixed-point value to scale.
@@ -85,13 +85,13 @@
 #define TIMESTEP_SCALE_60FPS(deltaTime, x) \
     (((x) * (deltaTime)) / TIMESTEP_60_FPS)
 
-// TODO: Could these have been one common macro? Used as the maximum rotation allowed on the current tick with a minimum of 1.
-#define TIMESTEP_ANGLE_0 (((g_DeltaTime0) >> 4) + 1)
-#define TIMESTEP_ANGLE_1 ((((g_DeltaTime0) / 3) >> 4) + 1)
-#define TIMESTEP_ANGLE_2 ((((g_DeltaTime0) / 3) >> 3) + 1)
-#define TIMESTEP_ANGLE_3 ((g_DeltaTime0 >> 2) + 1)
-#define TIMESTEP_ANGLE_4 ((g_DeltaTime0 >> 3) + 1)
-#define TIMESTEP_ANGLE_5 (((g_DeltaTime0 / 3) >> 2) + 1)
+/** @brief Used as the maximum rotation allowed on the current tick with a minimum of 1.
+ *
+ * TODO: Could this have been a more abstract macro which was garbled by optimizations taking advantage of 1 fixed-point
+ * full rotation being the same as 1 fixed-point second (4096)?
+ */
+#define TIMESTEP_ANGLE(denom, shift) \
+    (((g_DeltaTime0 / (denom)) >> (shift)) + 1)
 
 /** @brief Multiplies an integer in fixed-point Q format by a float converted to fixed-point Q format,
  * using a 64-bit intermediate via `Math_MulFixed` for higher precision.

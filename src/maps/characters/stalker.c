@@ -694,7 +694,7 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
 
         for (i = 3 + ((ABS(angleDeltaToPlayer) > FP_ANGLE(90.0f)) ? 1 : 0); i > 0; i--)
         {
-            if (TIMESTEP_ANGLE_3 < ABS(angleDeltaToPlayer))
+            if (TIMESTEP_ANGLE(1, 2) < ABS(angleDeltaToPlayer))
             {
                 if (angleDeltaToPlayer > FP_ANGLE(0.0f))
                 {
@@ -710,7 +710,7 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
                                                    stalker->rotation_24.vy);
             }
 
-            if (ABS(angleDeltaToPlayer) < TIMESTEP_ANGLE_3 || distToPlayer > Q12(2.0f))
+            if (ABS(angleDeltaToPlayer) < TIMESTEP_ANGLE(1, 2) || distToPlayer > Q12(2.0f))
             {
                 break;
             }
@@ -831,7 +831,7 @@ void Ai_Stalker_Control_2(s_SubCharacter* stalker)
         else
         {
             angleDeltaToTargetHeading = func_8005BF38(stalkerProps.targetHeadingAngle_100 - stalker->rotation_24.vy);
-            if (TIMESTEP_ANGLE_3 < ABS(angleDeltaToTargetHeading))
+            if (TIMESTEP_ANGLE(1, 2) < ABS(angleDeltaToTargetHeading))
             {
                 if (angleDeltaToTargetHeading > FP_ANGLE(0.0f))
                 {
@@ -954,7 +954,7 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
         {
             for (i = 3 + ((ABS(angleDeltaToPlayer) > FP_ANGLE(90.0f)) ? 1 : 0); i > 0; i--)
             {
-                if (TIMESTEP_ANGLE_4 < ABS(angleDeltaToPlayer))
+                if (TIMESTEP_ANGLE(1, 3) < ABS(angleDeltaToPlayer))
                 {
                     if (angleDeltaToPlayer > FP_ANGLE(0.0f))
                     {
@@ -970,7 +970,7 @@ void Ai_Stalker_Control_3(s_SubCharacter* stalker)
                                                        stalker->rotation_24.vy);
                 }
 
-                if (ABS(angleDeltaToPlayer) < TIMESTEP_ANGLE_4 || distToPlayer > (radiusMin >> 2))
+                if (ABS(angleDeltaToPlayer) < TIMESTEP_ANGLE(1, 3) || distToPlayer > (radiusMin >> 2))
                 {
                     break;
                 }
@@ -1212,7 +1212,7 @@ void Ai_Stalker_Control_4(s_SubCharacter* stalker)
     // Smoothly rotate toward target direction
     angle = func_8005BF38(stalkerProps.targetHeadingAngle_100 - stalker->rotation_24.vy);
 
-    if (TIMESTEP_ANGLE_0 < ABS(angle))
+    if (TIMESTEP_ANGLE(1, 4) < ABS(angle))
     {
         if (angle > FP_ANGLE(0.0f))
         {
@@ -1336,7 +1336,7 @@ void Ai_Stalker_Control_5(s_SubCharacter* stalker)
         {
             angleDeltaToPlayer = func_8005BF38(Math_AngleBetweenPositionsGet(stalker->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
                                                stalker->rotation_24.vy);
-            angle1 = TIMESTEP_ANGLE_2; // @hack `(g_DeltaTime0 / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
+            angle1 = TIMESTEP_ANGLE(3, 3); // @hack `(g_DeltaTime0 / 3) >> 3` should be same as `g_DeltaTime / 24`, but that doesn't match?
             if ((angleDeltaToPlayer >= FP_ANGLE(0.0f) && angle1 <  angleDeltaToPlayer) ||
                 (angleDeltaToPlayer <  FP_ANGLE(0.0f) && angle1 < -angleDeltaToPlayer))
             {
@@ -1444,7 +1444,7 @@ void Ai_Stalker_Control_6(s_SubCharacter* stalker)
 
     for (i = 0; i < 3; i++)
     {
-        if (TIMESTEP_ANGLE_0 < ABS(angleDeltaToPlayer))
+        if (TIMESTEP_ANGLE(1, 4) < ABS(angleDeltaToPlayer))
         {
             if (angleDeltaToPlayer > FP_ANGLE(0.0f))
             {

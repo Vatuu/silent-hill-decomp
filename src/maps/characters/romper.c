@@ -449,7 +449,7 @@ void Ai_Romper_Control_2(s_SubCharacter* romper)
     bool   cond;
 
     angleDeltaToTarget = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
-    if (TIMESTEP_ANGLE_2 < ABS(angleDeltaToTarget))
+    if (TIMESTEP_ANGLE(3, 3) < ABS(angleDeltaToTarget))
     {
         if (angleDeltaToTarget > FP_ANGLE(0.0f))
         {
@@ -665,7 +665,7 @@ void Ai_Romper_Control_3(s_SubCharacter* romper)
     {
         angleToTarget = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
 
-        if (TIMESTEP_ANGLE_4 < ABS(angleToTarget))
+        if (TIMESTEP_ANGLE(1, 3) < ABS(angleToTarget))
         {
             if (angleToTarget > FP_ANGLE(0.0f))
             {
@@ -835,7 +835,7 @@ void Ai_Romper_Control_4(s_SubCharacter* romper)
     for (i = 0; i < 3; i++)
     {
         angle0 = func_8005BF38(romperProps.rotationY_F2 - romper->rotation_24.vy);
-        if (TIMESTEP_ANGLE_0 < ABS(angle0))
+        if (TIMESTEP_ANGLE(1, 4) < ABS(angle0))
         {
             if (angle0 > 0)
             {
@@ -941,7 +941,7 @@ void Ai_Romper_Control_5(s_SubCharacter* romper)
     else if (romper->model_0.anim_4.status_0 == ANIM_STATUS(RomperAnim_2, true))
     {
         unkAngle1 = func_8005BF38(temp_v0_3 - romper->rotation_24.vy);
-        if (TIMESTEP_ANGLE_0 < ABS(unkAngle1))
+        if (TIMESTEP_ANGLE(1, 4) < ABS(unkAngle1))
         {
             if (unkAngle1 > FP_ANGLE(0.0f))
             {
