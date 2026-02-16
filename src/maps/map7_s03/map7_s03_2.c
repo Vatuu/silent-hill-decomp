@@ -2316,9 +2316,78 @@ q19_12 func_800DA08C(s32 arg0, q19_12 arg1, q19_12 arg2) // 0x800DA08C
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA178);
+s32 func_800DA178(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800DA178
+{
+    s32 temp_t0;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA1F4);
+    if (arg2 < arg1)
+    {
+        temp_t0 = arg1;
+        arg1    = arg2;
+        arg2    = temp_t0;
+    }
+
+    temp_t0 = arg2 - arg1;
+    arg0    = Q12_MULT_PRECISE(arg0, arg3);
+
+    if ((arg4 != 0) && (temp_t0 != 0))
+    {
+        arg0 = Q12_MULT_PRECISE(arg0, temp_t0);
+    }
+    else
+    {
+        arg0 = Q12_MULT_PRECISE(arg0, g_DeltaTime0);
+    }
+    return arg0;
+}
+
+s32 func_800DA1F4(VECTOR3* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800DA1F4
+{
+    s32      temp_a0;
+    s32      temp_s1;
+    s32      temp_s2;
+    s32      temp_v0;
+    s32      var_fp;
+    s32      temp_s0;
+    VECTOR3* ptr;
+
+    var_fp = 0x80;
+
+    ptr = &D_800F3D58.field_0;
+
+    switch (arg4)
+    {
+        case 0:
+            temp_s0 = (arg3 - arg2) >> 3;
+            temp_a0 = Rng_Rand16() / (0x7FFF / temp_s0 + 1);
+            temp_a0 = temp_a0 * 8;
+            temp_s1 = arg2 + temp_a0;
+            var_fp  = (0xA000 - temp_a0) / 320;
+
+            temp_v0 = Rng_Rand16();
+
+            temp_s2 = Q12_MULT_PRECISE(Math_Sin(temp_v0), temp_s1);
+            temp_v0 = Q12_MULT_PRECISE(Math_Cos(temp_v0), temp_s1);
+
+            arg1->vx = (temp_s2 + arg0->vx) - ptr->vx;
+            arg1->vy = arg0->vy - ptr->vy;
+            arg1->vz = (temp_v0 + arg0->vz) - ptr->vz;
+            break;
+
+        case 1:
+            temp_a0 = Rng_Rand16() / (0x7FFF / arg2 + 1);
+            temp_s2 = temp_a0 - (arg2 / 2);
+            temp_a0 = Rng_Rand16() / (0x7FFF / arg3 + 1);
+
+            arg1->vx = (temp_s2 + arg0->vx) - ptr->vx;
+            arg1->vy = arg0->vy - ptr->vy;
+            temp_a0  = temp_a0 - arg3 / 2;
+            arg1->vz = (temp_a0 + arg0->vz) - ptr->vz;
+            break;
+    }
+
+    return var_fp;
+}
 
 q19_12 func_800DA420(VECTOR3* result) // 0x800DA420
 {
@@ -2355,9 +2424,93 @@ s32 func_800DA4EC(s32 min, s32 max) // 0x800DA4EC
     return min;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA550);
+void func_800DA550(s_800ED7E0_ptr* arg0) // 0x800DA550
+{
+    s32         temp_s4;
+    s_800F3D48* ptr;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA774);
+    ptr = func_800D905C();
+
+    if (ptr == NULL)
+    {
+        return;
+    }
+
+    ptr->field_4.field_3C = func_800DA1F4(arg0, &ptr->field_4.field_18, arg0->field_C, arg0->field_10, arg0->field_24);
+    ptr->field_4.field_14 = func_800DA4EC(arg0->field_1C, arg0->field_20);
+    temp_s4               = func_800DA4EC(arg0->field_14, arg0->field_18);
+
+    switch (arg0->field_28)
+    {
+        case 0:
+            ptr->field_4.field_8  = arg0->field_2C;
+            ptr->field_4.field_40 = arg0->field_30;
+            ptr->field_4.field_38 = func_800DA420(&ptr->field_4.field_28);
+
+            func_800DA4B4(&ptr->field_4.field_18, &ptr->field_4.field_28);
+
+            ptr->ptr_0                = &D_800EC6EC;
+            ptr->field_4.field_44     = func_800D9DF8;
+            ptr->field_4.field_48     = func_800D8D90;
+            ptr->field_4.field_18.vx += Q12_MULT_PRECISE(ptr->field_4.field_28.vx, temp_s4);
+            ptr->field_4.field_18.vy += Q12_MULT_PRECISE(ptr->field_4.field_28.vy, temp_s4);
+            break;
+
+        case 1:
+            ptr->field_4.field_14 *= 2;
+            ptr->field_4.field_8   = arg0->field_2C;
+            ptr->field_4.field_40  = arg0->field_30;
+            ptr->ptr_0             = &D_800EC680[Rng_Rand16() / 0x1000];
+            ptr->field_4.field_44  = func_800D9C20;
+            ptr->field_4.field_10  = temp_s4;
+            ptr->field_4.field_48  = func_800D8954;
+            break;
+
+        case 2:
+            ptr->field_4.field_38 = func_800DA420(&ptr->field_4.field_28);
+            func_800DA4B4(&ptr->field_4.field_18, &ptr->field_4.field_28);
+            break;
+    }
+}
+
+void func_800DA774(s_800ED7E0_ptr* arg0) // 0x800DA774
+{
+    s32 temp_v0;
+    s32 i;
+    s32 var_s0_2;
+    s32 var_s1;
+
+    if (arg0->field_28 == 0x63)
+    {
+        Rng_SetSeed(0);
+        func_800DA04C();
+        return;
+    }
+
+    var_s0_2 = func_800DA178(func_800DA08C(arg0->field_C, arg0->field_10, arg0->field_24),
+                             arg0->field_14, arg0->field_18, arg0->field_34, arg0->flags_38 & 2);
+
+    var_s1    = var_s0_2 >> 0xC;
+    var_s0_2 %= 0x1000;
+
+    temp_v0  = Rng_Rand16();
+    temp_v0 %= 0x1000;
+
+    if (var_s0_2 > temp_v0)
+    {
+        var_s1++;
+    }
+
+    if (var_s1 > 0x32)
+    {
+        Rng_SetSeed(0);
+    }
+
+    for (i = 0; i < var_s1; i++)
+    {
+        func_800DA550(arg0);
+    }
+}
 
 s_800F3D48_0* func_800DA884(s_800F3D48* arg0) // 0x800DA884
 {
@@ -2402,11 +2555,86 @@ s_800F3D48_0* func_800DA884(s_800F3D48* arg0) // 0x800DA884
     return NULL;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA9F8);
+void func_800DA9F8(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800DA9F8
+{
+    s_800F3D48_0* sp10[3];
+    s_800F3D48*   ptr;
+    VECTOR3*      vec;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DAB18);
+    memcpy(sp10, D_800CAE30, sizeof(D_800CAE30));
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DAC04);
+    vec = &D_800F3D58.field_0;
+
+    ptr = func_800D905C();
+
+    if (ptr != NULL)
+    {
+        ptr->field_4.field_18.vx = arg0->vx - vec->vx;
+        ptr->field_4.field_18.vy = arg0->vy - vec->vy;
+        ptr->field_4.field_18.vz = arg0->vz - vec->vz;
+
+        ptr->field_4.field_28.vx = 0;
+        ptr->field_4.field_28.vy = 0;
+        ptr->field_4.field_28.vz = 0;
+
+        ptr->field_4.field_3C = 0x80;
+        ptr->field_4.field_14 = arg4;
+
+        ptr->ptr_0 = sp10[arg1];
+
+        ptr->field_4.field_E  = arg2 << 6;
+        ptr->field_4.field_44 = func_800DA884;
+        ptr->field_4.field_10 = arg3;
+        ptr->field_4.field_48 = func_800D8954;
+    }
+}
+
+void func_800DAB18(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800DAB18
+{
+    s_800F3D48* ptr;
+    VECTOR3*    vec;
+
+    vec = &D_800F3D58.field_0;
+
+    ptr = func_800D905C();
+
+    if (ptr != NULL)
+    {
+        ptr->field_4.field_18.vx = arg0->vx - vec->vx;
+        ptr->field_4.field_18.vy = arg0->vy - vec->vy;
+        ptr->field_4.field_18.vz = arg0->vz - vec->vz;
+        ptr->field_4.field_3C    = 0x1E;
+        ptr->field_4.field_28.vx = 0;
+        ptr->field_4.field_28.vy = 0;
+        ptr->field_4.field_28.vz = 0;
+        ptr->ptr_0               = &D_800EC1B8;
+        ptr->field_4.field_14    = arg3;
+        ptr->field_4.field_E     = arg1 << 6;
+        ptr->field_4.field_10    = arg2;
+        ptr->field_4.field_44    = func_800DA884;
+        ptr->field_4.field_48    = func_800D8954;
+    }
+}
+
+void func_800DAC04(VECTOR3* arg0, void* arg1, s32 arg2) // 0x800DAC04
+{
+    s32 i;
+    s32 var_s4;
+
+    if (Rng_Rand16() & 0x50)
+    {
+        var_s4 = 2;
+    }
+    else
+    {
+        var_s4 = 3;
+    }
+
+    for (i = 0; i < var_s4; i++)
+    {
+        func_800DA9F8(arg0, Rng_Rand16() / 10923, arg2, D_800EC758[i], D_800EC764[Rng_Rand16() / 10923]);
+    }
+}
 
 void func_800DACFC(VECTOR3* vec, s32 arg1, s32 arg2) // 0x800DACFC
 {
