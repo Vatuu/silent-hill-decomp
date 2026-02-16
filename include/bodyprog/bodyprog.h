@@ -1901,11 +1901,6 @@ typedef struct
 
 typedef struct
 {
-    u8 field_0[8]; // TODO: Might be split into 8 different fields for specific things?
-} s_Bgm_Update;
-
-typedef struct
-{
     VECTOR3 field_0; // Q23.8 | Position.
     MATRIX  field_C;
     s32     field_2C;
@@ -2242,9 +2237,9 @@ extern s_FsImageDesc D_800A9A04;
 
 extern s32 D_800A9A0C; // Old IDB name `FS_AllFilesLoaded`, though FS code doesn't set it.
 
-extern e_SysState g_MapEventSysState;
+extern s32 g_MapEventSysState; /** `e_InventoryItemId` */
 
-extern e_InventoryItemId g_MapEventLastUsedItem;
+extern s32 g_MapEventLastUsedItem; /** `e_InventoryItemId` */
 
 /** Radio pitch state based on the distance from the player to an enemy. Range: `[0, 3]`. */
 extern s32 g_RadioPitchState;
@@ -2465,6 +2460,8 @@ extern u8 D_800AFD04;
 
 extern u8 D_800AFD05;
 
+extern const s_AreaLoadSfx SfxPairs[25];
+
 extern s32 D_800AFD3C;
 
 extern s32 D_800AFD44;
@@ -2511,20 +2508,6 @@ extern u16 D_800BCCB2;
  * 16    - Fades to black.
  */
 extern s32 g_Screen_FadeStatus;
-
-/** @brief Test if demo loading should be reinitialized.
- * This is used exclusively in `GameFs_MapStartup` with
- * the purpose of testing if demo loading should be reinitialized
- * if file load has failed.
- *
- * It makes up to 5 attemps. If the load fails, it restarts
- * the entire process by restarting the timer used to check if a demo
- * should be triggered.
- *
- * @note Strange decision to make this a global when it's
- * only ever used in that function.
- */
-extern s32 g_DemoLoadAttempCount;
 
 extern s32 D_800BCD5C;
 
@@ -2580,12 +2563,11 @@ extern u16 D_800C42D0;
 
 extern u16 D_800C42D2;
 
-/** Size 24? */
-extern s_800C42E8 D_800C42E8[];
-
-extern u16 g_LoadedEffectTextureFlags;
+extern s_800C42E8 D_800C42E8[24];
 
 extern s16 D_800C4408;
+
+extern s16 pad_bss_800C440A;
 
 extern GsCOORDINATE2* D_800C440C;
 
@@ -2594,53 +2576,17 @@ extern GsCOORDINATE2* D_800C4410;
 /** Flags. */
 extern s8 D_800C4414;
 
+extern s8 pad_bss_800C4415[3];
+
 extern s_800C4418 D_800C4418;
 
-/** Angles. */
-extern q3_12 D_800C4428[];
-
-/** Angles? */
-extern s16 D_800C4438[];
-
-extern u8 D_800C4448;
-
-/** Index into `g_PaperMapFileIdxs`. */
-extern u8 D_800C4449;
-
-extern s8 D_800C444A;
-
-extern s32 D_800C444C;
-
-extern s32 D_800C4450;
-
 extern s16 D_800C4454;
-
-extern s_SubCharacter* D_800C4458;
-
-/** Array of active characters? */
-extern s_SubCharacter** D_800C4474;
 
 // emoose: Also works: `extern u16 D_800C4478[];`, `arg0->field_4 = D_800C4478[0];`.
 // Didn't see any array accesses in Ghidra though, struct might be more likely.
 extern s_800C4478 D_800C4478;
 
 extern s8 D_800C447A;
-
-extern s32 D_800C44D0;
-
-extern s32 D_800C44D4;
-
-extern s_PlayerCombat D_800C44E0;
-
-/** Table of player keyframe indices. Purpose unknown. */
-extern s_800C44F0 D_800C44F0[10];
-
-// Enemy target.
-extern VECTOR3 g_TargetEnemyPosition; // 0x800C4540
-
-extern s16 D_800C4554; // Timer?
-
-extern s16 D_800C4556; // Timer?
 
 extern s16 D_800AEEDC[][2]; // Type assumed.
 
@@ -2654,27 +2600,7 @@ extern s16 D_800AF070[]; // Type assumed.
 
 extern s16 D_800AF1FC[]; // Type assumed.
 
-extern u8 D_800C4588;
-
-/** Player instance of this struct. */
-extern s_800C4590 D_800C4590;
-
-/** Q19.12 | Position. */
-extern VECTOR3 D_800C45B0; // Assumed type
-
-extern s_800C45C8 D_800C45C8;
-
-/** Related to game difficulty. Maybe multiplier? */
-extern s32 D_800C45EC;
-
 extern u8 D_800C4606;
-
-/** Displacement offset. */
-extern VECTOR3 D_800C4610;
-
-extern s8 D_800C4560;
-
-extern u8 g_Player_IsDead;
 
 extern s_Collision D_800C4620;
 
@@ -4087,24 +4013,6 @@ void Fs_CharaAnimInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFil
 /** @brief Updates character type bone initialization coordinates and reinitializes them. */
 void Fs_CharaAnimBoneInfoUpdate(void);
 
-s32 Bgm_Init(void);
-
-/** @brief Checks if currently assigned song is the same as target. */
-bool Bgm_IsCurrentBgmTargetCheck(s32 bgmIdx);
-
-void Bgm_TrackSet(s32 bgmIdx);
-
-/** Executes sound command. */
-void Bgm_BgmChannelSet(void);
-
-void func_8003596C(void);
-
-s32 Sd_AmbientSfxInit(void); 
-
-s32 Sd_IsCurrentAmbientTargetCheck(s32 ambIdx);
-
-void Sd_AmbientSfxSet(s32 idx);
-
 /** @brief Updates the translation and rotation (pose) of a matrix in a coordinate.
  *
  * @param pos Translation to apply.
@@ -4129,24 +4037,6 @@ void Gfx_LoadingScreen_BackgroundTexture(void);
 
 void Gfx_LoadingScreen_PlayerRun(void);
 
-void Bgm_TrackUpdate(bool);
-
-void Bgm_AllLayersMute(void);
-
-/** @unused. */
-bool Bgm_LayerOnCheck(void);
-
-void Bgm_GlobalLayerVariablesUpdate(void);
-
-// Main music trigger and handler.
-void Bgm_Update(s32 flags, q19_12 arg1, s_Bgm_Update* bgmLayerLimitPtr);
-
-/** @brief Updates the track index and disables radio effects. */
-void func_800363D0(void);
-
-void Bgm_TrackChange(s32 idx);
-
-/** `Savegame_MapRoomIdxUpdate` */
 void Savegame_MapRoomIdxUpdate(void);
 
 /** @Unused */

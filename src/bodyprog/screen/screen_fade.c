@@ -1,14 +1,18 @@
 #include "game.h"
 
+#include <libetc.h>
+#include <libgs.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
 
-#include <libetc.h>
-#include <libgs.h>
-
 const s32 rodataPad_80024CA0 = 0;
+
+q19_12 g_PrevScreenFadeProgress;
+
+s32 pad_bss_0x800B5C2C;
 
 q19_12 g_ScreenFadeTimestep;
 

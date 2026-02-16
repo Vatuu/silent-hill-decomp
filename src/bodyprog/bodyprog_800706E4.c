@@ -13,6 +13,50 @@
 #include "bodyprog/sound_system.h"
 #include "main/rng.h"
 
+s_800C44F0 D_800C44F0[10];
+VECTOR3    g_TargetEnemyPosition;
+q19_12     D_800C454C;
+q19_12     D_800C4550;
+s16        D_800C4554;
+s16        D_800C4556;
+s32        g_Player_HasMoveInput;
+s32        g_Player_HasActionInput;
+s8         D_800C4560;
+u8         g_Player_IsDead;
+u8         g_Player_DisableDamage;
+u8         pad_bss_800C4563[13];
+s_800AFBF4 g_Player_EquippedWeaponInfo;
+u8         D_800C457C;
+u8         pad_bss_800C457D;
+u16        g_Player_IsAiming;
+u16        g_Player_IsSteppingLeftTap;
+u16        g_Player_IsSteppingRightTap;
+u16        g_Player_IsTurningLeft;
+u16        g_Player_IsTurningRight;
+u8         D_800C4588;
+s8         pad_bss_800C4589[7];
+s_800C4590 D_800C4590;
+u16        g_Player_IsSteppingLeftHold;
+u16        g_Player_IsSteppingRightHold;
+VECTOR3    D_800C45B0;
+u16        g_Player_IsHoldAttack;
+u16        g_Player_IsAttacking;
+u16        g_Player_IsShooting;
+s8         pad_bss_800C45C2[6];
+s_800C45C8 D_800C45C8;
+s8         pad_bss_800C45E0[8];
+u16        g_Player_IsMovingForward;
+s8         pad_bss_800C45EA[2];
+s32        D_800C45EC;
+u16        g_Player_IsMovingBackward;
+s8         pad_bss_800C45F2[6];
+VECTOR3    g_Player_PrevPosition;
+u16        g_Player_IsRunning;
+s16        pad_bss_800C4606;
+q19_12     g_Player_HeadingAngle;
+s32        pad_bss_800C460C;
+VECTOR3    D_800C4610;
+
 // Some kind of `Anim_UpdateX` function, included in some `s_AnimInfo` array which also had pointers to `Anim_Update1`/`Anim_Update2`.
 
 s32 func_800706E4(s_Model* model) // 0x800706E4
@@ -2425,6 +2469,9 @@ bool Player_UpperBodyMainUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 
     s32 i;
     s16 var_s0;
     s32 playerTurn;
+	static s32 D_800C44D0;
+	static s32 D_800C44D4;
+
 
     bool Player_CombatAnimUpdate(void) // 0x80074350
     {
@@ -5879,7 +5926,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 }
             }
 
-            if (D_800C45DC <= Q12(0.5f) &&
+            if (D_800C45C8.field_14 <= Q12(0.5f) &&
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 != Q12(0.0f))
             {
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 -= (TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.4f))) * 4;
@@ -5920,7 +5967,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 }
             }
 
-            if (D_800C45DC < Q12(0.3401f))
+            if (D_800C45C8.field_14 < Q12(0.3401f))
             {
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
             }
@@ -5958,7 +6005,7 @@ void Player_LowerBodyUpdate(s_SubCharacter* chara, s_PlayerExtra* extra) // 0x80
                 }
             }
 
-            if (D_800C45DC < Q12(0.3401f))
+            if (D_800C45C8.field_14 < Q12(0.3401f))
             {
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 = Q12(0.0f);
             }
@@ -7394,22 +7441,25 @@ s32 func_8007D6F0(s_SubCharacter* chara, s_800C45C8* arg1) // 0x8007D6F0
 
 void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D970
 {
-    VECTOR   sp20; // Q19.12
-    VECTOR   sp30; // Q19.12
-    VECTOR   sp40; // Q19.12
-    MATRIX   sp50;
-    VECTOR   sp70; // Q23.8
-    VECTOR   sp80; // Q23.8
-    SVECTOR  sp90;
-    DVECTOR  sp98;
-    s32      temp_s0;
-    q23_8    temp_v0_5;
-    q23_8    temp_v0_6;
-    q3_12    unkAngle;
-    VECTOR*  vec;  // Q19.12
-    VECTOR*  vec2; // Q19.12
-    VECTOR*  vec3; // Q19.12
-    s_Model* model;
+    VECTOR                sp20; // Q19.12
+    VECTOR                sp30; // Q19.12
+    VECTOR                sp40; // Q19.12
+    MATRIX                sp50;
+    VECTOR                sp70; // Q23.8
+    VECTOR                sp80; // Q23.8
+    SVECTOR               sp90;
+    DVECTOR               sp98;
+    s32                   temp_s0;
+    q23_8                 temp_v0_5;
+    q23_8                 temp_v0_6;
+    q3_12                 unkAngle;
+    VECTOR*               vec;  // Q19.12
+    VECTOR*               vec2; // Q19.12
+    VECTOR*               vec3; // Q19.12
+    s_Model*              model;
+	static s32            pad_bss_800C44D8[2];
+	static VECTOR3        D_800C44E0;
+	static s32            pad_bss_800C44EC;
 
     model = &g_SysWork.playerWork_4C.extra_128.model_0;
 
@@ -7650,11 +7700,11 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
             {
                 if (D_800C4554 != NO_VALUE || D_800C4556 != D_800C4554)
                 {
-                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombat_38.weaponAttack_F, chara, &D_800C44E0.field_0, &g_SysWork.npcs_1A0[0], D_800C4556, D_800C4554);
+                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombat_38.weaponAttack_F, chara, &D_800C44E0, &g_SysWork.npcs_1A0[0], D_800C4556, D_800C4554);
                 }
                 else
                 {
-                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombat_38.weaponAttack_F, chara, &D_800C44E0.field_0, &g_SysWork.npcs_1A0[0], sp98.vx, sp98.vy);
+                    func_8008A0E4(chara->field_44.field_0, g_SysWork.playerCombat_38.weaponAttack_F, chara, &D_800C44E0, &g_SysWork.npcs_1A0[0], sp98.vx, sp98.vy);
                 }
             }
             else
@@ -7667,7 +7717,7 @@ void Player_CombatUpdate(s_SubCharacter* chara, GsCOORDINATE2* coord) // 0x8007D
         }
     }
 
-    D_800C44E0.field_0 = g_SysWork.playerCombat_38.field_0;
+    D_800C44E0 = g_SysWork.playerCombat_38.field_0;
 }
 
 void Game_SavegameResetPlayer(void) // 0x8007E530
@@ -8837,6 +8887,7 @@ void func_800805BC(VECTOR3* pos, SVECTOR* rot, GsCOORDINATE2* rootCoord, s32 arg
 bool func_800806AC(s32 arg0, s32 arg1, s32 arg2, s32 arg3) // 0x800806AC
 {
     bool result;
+	//static s_Collision D_800C4620;
 
     result = arg0 != 0;
     if (!result)

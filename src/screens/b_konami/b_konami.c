@@ -16,13 +16,6 @@
 
 void GameState_KonamiLogo_Update(void) // 0x800C95AC
 {
-    typedef enum
-    {
-        KonamiLogoStateStep_Init,
-        KonamiLogoStateStep_WaitForFade,
-        KonamiLogoStateStep_LogoDelay,
-        KonamiLogoStateStep_FinishAfterFade
-    } e_KonamiLogoStateStep;
 
     while (g_GameWork.gameState_594 == GameState_KonamiLogo)
     {
@@ -74,7 +67,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
                 break;
         }
 
-        Gfx_KonamiScreenDraw();
+        BootScreen_KonamiScreenDraw();
         Screen_FadeUpdate();
         Fs_QueueUpdate();
         MemCard_Update();
@@ -92,7 +85,7 @@ void GameState_KonamiLogo_Update(void) // 0x800C95AC
     }
 }
 
-e_KcetLogoStateStep GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
+s32 GameState_KcetLogo_MemCardCheck(void) // 0x800C9874
 {
     s32 saveEntryType0;
     s32 saveEntryType1;
@@ -342,7 +335,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
                 break;
         }
         
-        Gfx_KcetScreenDraw();
+        BootScreen_KcetScreenDraw();
         Screen_FadeUpdate();
         Fs_QueueUpdate();
         MemCard_Update();
@@ -360,7 +353,7 @@ void GameState_KcetLogo_Update(void) // 0x800C99A4
     }
 }
 
-void Gfx_BootScreenImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y) // 0x800C9E6C
+void BootScreen_ImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s32 vramY, s32 w, s32 h, s32 x, s32 y) // 0x800C9E6C
 {
     DR_TPAGE* tPage;
     SPRT*     prim     = (SPRT*)GsOUT_PACKET_P;
@@ -386,15 +379,15 @@ void Gfx_BootScreenImageSegmentDraw(s_FsImageDesc* image, s32 otz, s32 vramX, s3
     GsOUT_PACKET_P = (u8*)prim + 28;
 }
 
-void Gfx_KonamiScreenDraw(void) // 0x800C9FB8
+void BootScreen_KonamiScreenDraw(void) // 0x800C9FB8
 {
     s32* ptr;
 
     // Draw Konami logo.
-    Gfx_BootScreenImageSegmentDraw(&g_KonamiLogoImg, 0xF, 0, 0, 256, 256, -192, -192);
-    Gfx_BootScreenImageSegmentDraw(&g_KonamiLogoImg, 0xF, 256, 0, 128, 256, 64, -192);
-    Gfx_BootScreenImageSegmentDraw(&g_KonamiLogoImg, 0xF, 0, 256, 256, 128, -192, 64);
-    Gfx_BootScreenImageSegmentDraw(&g_KonamiLogoImg, 0xF, 256, 256, 128, 128, 64, 64);
+    BootScreen_ImageSegmentDraw(&g_KonamiLogoImg, 0xF, 0, 0, 256, 256, -192, -192);
+    BootScreen_ImageSegmentDraw(&g_KonamiLogoImg, 0xF, 256, 0, 128, 256, 64, -192);
+    BootScreen_ImageSegmentDraw(&g_KonamiLogoImg, 0xF, 0, 256, 256, 128, -192, 64);
+    BootScreen_ImageSegmentDraw(&g_KonamiLogoImg, 0xF, 256, 256, 128, 128, 64, 64);
 
     // Draw fading overlay tile.
     ptr = &g_OtTags0[g_ActiveBufferIdx][15];
@@ -405,13 +398,13 @@ void Gfx_KonamiScreenDraw(void) // 0x800C9FB8
     GsOUT_PACKET_P = (PACKET*)((u8*)GsOUT_PACKET_P + sizeof(TILE));
 }
 
-void Gfx_KcetScreenDraw(void) // 0x800CA120
+void BootScreen_KcetScreenDraw(void) // 0x800CA120
 {
     u32* ptr;
 
     // Draw KCET logo.
-    Gfx_BootScreenImageSegmentDraw(&g_KcetLogoImg, 0xF, 0, 0, 256, 160, -208, -80);
-    Gfx_BootScreenImageSegmentDraw(&g_KcetLogoImg, 0xF, 256, 0, 160, 160, 48, -80);
+    BootScreen_ImageSegmentDraw(&g_KcetLogoImg, 0xF, 0, 0, 256, 160, -208, -80);
+    BootScreen_ImageSegmentDraw(&g_KcetLogoImg, 0xF, 256, 0, 160, 160, 48, -80);
 
     // Draw fading overlay tile.
     ptr = &g_OtTags0[g_ActiveBufferIdx][15];

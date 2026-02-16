@@ -13,6 +13,7 @@
 #include "bodyprog/memcard.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/ranking.h"
+#include "bodyprog/sound_background.h"
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
 #include "main/mem.h"
@@ -55,6 +56,10 @@ static inline void Game_StateStepIncrement(void) // TODO: Move to header?
 
 void GameFs_MapStartup(void) // 0x80034964
 {
+	// It makes up to 5 attemps. If the load fails, it restarts
+	// the entire process by restarting the timer used to check if a demo
+	// should be triggered.
+	static s32 demoLoadAttempCount;
     switch (g_GameWork.gameStateStep_598[0])
     {
         case 0:
@@ -70,7 +75,7 @@ void GameFs_MapStartup(void) // 0x80034964
             }
             else if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_BootDemo)
             {
-                g_DemoLoadAttempCount           = 0;
+                demoLoadAttempCount             = 0;
                 g_GameWork.gameStateStep_598[0] = 1;
                 g_SysWork.timer_20              = 1;
             }
@@ -102,11 +107,11 @@ void GameFs_MapStartup(void) // 0x80034964
                 Demo_SequenceAdvance(1);
                 Demo_DemoDataRead();
 
-                g_DemoLoadAttempCount++;
-                if (g_DemoLoadAttempCount >= 5)
+                demoLoadAttempCount++;
+                if (demoLoadAttempCount >= 5)
                 {
-                    g_DemoLoadAttempCount = 0;
-                    g_SysWork.timer_20    = 0;
+                    demoLoadAttempCount = 0;
+                    g_SysWork.timer_20  = 0;
                     break;
                 }
             }

@@ -13,6 +13,7 @@
 #include "bodyprog/memcard.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/ranking.h"
+#include "bodyprog/sound_background.h"
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
 #include "main/mem.h"
@@ -29,13 +30,19 @@
  * The situation is that `D_800BCD58` is only ever used within
  * `func_800364BC` meaning that `D_800BCD5C` is either declared in a
  * different file, or `func_800364BC` is actually part of the same split
- * which contain all "CURRENT ROOM RELATED" and "UNKNOWN" functions
+ * which contain all "CURRENT ROOM INFO GET" and "UNKNOWN" functions
 */
 
 s32 D_800BCD5C;
 
+u32 unknown_D_800A999C = 0x80025234;
+
+s32 D_800A99A0 = 0;
+
+u8 g_Sd_BgmLayerLimits[8] = { 128, 128, 128, 128, 128, 128, 128, 128 };
+
 // ========================================
-// IN-GAME MUSIC HANDLING RELATED
+// MUSIC UPDATE
 // ========================================
 
 void Bgm_TrackUpdate(bool arg0) // 0x80035DB4
@@ -351,7 +358,7 @@ void Bgm_TrackChange(s32 idx) // 0x8003640C
 }
 
 // ========================================
-// CURRENT ROOM RELATED
+// CURRENT ROOM INFO GET
 // ========================================
 
 void Savegame_MapRoomIdxUpdate(void) // 0x80036420

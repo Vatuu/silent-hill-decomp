@@ -14,6 +14,7 @@ options:
 
   ld_script_path: linkers/USA/screens/saveload.ld
 
+  #generate_asm_macros_files: False
   find_file_boundaries: False
   gp_value: 0x80022BB0
   global_vram_start: 0x80010000
@@ -37,9 +38,7 @@ options:
 
   undefined_funcs_auto_path: linkers/USA/screens/undefined_funcs_auto.saveload.txt
   undefined_syms_auto_path: linkers/USA/screens/undefined_syms_auto.saveload.txt
-
-  extensions_path: tools/splat_ext
-
+  
   subalign: 4
 
   string_encoding: ASCII

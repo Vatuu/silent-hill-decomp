@@ -8,6 +8,7 @@
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/item_screens.h"
 #include "bodyprog/math/math.h"
+#include "bodyprog/sound_background.h"
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
 

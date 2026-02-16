@@ -1,14 +1,12 @@
 #include "game.h"
 
+#include <libetc.h>
+#include <libgs.h>
+
 #include "bodyprog/bodyprog.h"
 #include "bodyprog/gfx/screen_draw.h"
 #include "bodyprog/math/math.h"
 #include "main/fsqueue.h"
-
-#include <libetc.h>
-#include <libgs.h>
-
-q19_12 g_PrevScreenFadeProgress;
 
 void Screen_RectInterlacedClear(s16 x, s16 y, s16 w, s16 h, u8 r, u8 g, u8 b) // 0x80032358
 {

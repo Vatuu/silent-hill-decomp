@@ -13,14 +13,151 @@
 #include "bodyprog/memcard.h"
 #include "bodyprog/player_logic.h"
 #include "bodyprog/ranking.h"
+#include "bodyprog/sound_background.h"
 #include "bodyprog/sound_system.h"
 #include "main/fsqueue.h"
 #include "main/mem.h"
 #include "main/rng.h"
 #include "screens/stream/stream.h"
 
+/** @brief Task commands for `SD_Call` to load BGM KDT and VAB files. */
+u16 g_BgmTaskLoadCmds[] = {
+    0,
+    0,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    45,
+    70,
+    71,
+    63
+};
+
+/** @brief Task commands for `SD_Call` to set current BGM channels to be used. */
+u16 g_BgmChannelSetTaskCmds[] = {
+    0,
+    0,
+    769,
+    770,
+    771,
+    772,
+    773,
+    774,
+    775,
+    776,
+    777,
+    778,
+    779,
+    780,
+    781,
+    783,
+    784,
+    785,
+    786,
+    787,
+    788,
+    789,
+    790,
+    791,
+    792,
+    793,
+    794,
+    795,
+    796,
+    797,
+    798,
+    799,
+    801,
+    802,
+    803,
+    804,
+    805,
+    806,
+    782,
+    807,
+    808,
+    800
+};
+
+/** @brief Task commands for `SD_Call` to load ambient VAB files. */
+u16 g_AmbientVabTaskLoadCmds[] = {
+    0,
+    162,
+    170,
+    171,
+    204,
+    172,
+    173,
+    174,
+    175,
+    176,
+    177,
+    178,
+    179,
+    179,
+    179,
+    180,
+    181,
+    182,
+    183,
+    184,
+    185,
+    186,
+    187,
+    188,
+    189,
+    184,
+    190,
+    191,
+    192,
+    193,
+    194,
+    195,
+    196,
+    197,
+    198,
+    199,
+    200,
+    201,
+    202,
+    203
+};
+
 // ========================================
-// AUDIO HANDLING
+// BACKGROUND MUSIC INIT & SET
 // ========================================
 
 s32 Bgm_Init(void) // 0x80035780
@@ -124,6 +261,10 @@ void func_8003596C(void) // 0x8003596C
     }
 }
 
+// ========================================
+// AMBIENT SOUND INIT & SET
+// ========================================
+
 s32 Sd_AmbientSfxInit(void) // 0x8003599C
 {
     if (Sd_AudioStreamingCheck() || Fs_QueueGetLength() > 0)
@@ -166,7 +307,7 @@ s32 Sd_AmbientSfxInit(void) // 0x8003599C
     return 0;
 }
 
-s32 Sd_IsCurrentAmbientTargetCheck(s32 ambIdx) // 0x80035AB0
+bool Sd_IsCurrentAmbientTargetCheck(s32 ambIdx) // 0x80035AB0
 {
     return g_GameWork.ambientIdx_5B4 != ambIdx;
 }
