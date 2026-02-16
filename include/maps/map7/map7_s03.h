@@ -53,6 +53,18 @@ STATIC_ASSERT_SIZEOF(s_800ED7E0_ptr, 60);
 
 typedef struct
 {
+    s16 field_0;
+    s16 field_2;
+    s16 field_4;
+    s16 field_6;
+    s16 field_8;
+    s16 field_A;
+    u16 field_C;
+    u16 field_E;
+} s_800F3D48_0_0;
+
+typedef struct
+{
     s32     field_0;
     s16     field_4;
     s16     field_6;
@@ -60,14 +72,14 @@ typedef struct
     s16     field_C;
     s16     field_E;
     s32     field_10;
-    u8      unk_14[4];
-    VECTOR3 field_18;
-    u8      unk_24[4];
-    VECTOR3 field_28;
-    u8      unk_34[8];
+    s32                  field_14;
+    VECTOR               field_18;
+    VECTOR               field_28;
+    s32                  field_38;
     s32     field_3C;
     s32     field_40;
-    u8      unk_44[8];
+    struct s_800F3D48_0* (*field_44)(struct s_800F3D48*);
+    void                 (*field_48)(struct s_800F3D48*, s_800F3D48_0_0*);
 } s_800F3D48_4;
 STATIC_ASSERT_SIZEOF(s_800F3D48_4, 0x4C);
 
@@ -390,6 +402,16 @@ extern s_800EC770 D_800EC770[];
 extern s_800F3D58 D_800F3D58;
 
 extern s_800F4B40 D_800F4B40;
+
+extern s_800F3D48_0 D_800EC3EC;
+extern s_800F3D48_0 D_800EC34C;
+extern s_800F3D48_0 D_800EC680[];
+extern s_800F3D48_0 D_800EC53C;
+extern s_800F3D48_0 D_800EC614;
+extern s_800F3D48_0 D_800EC5A8;
+
+extern s_800F3D48 D_800F2448;
+extern s32        D_800F3D90;
 
 void Ai_BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
@@ -766,5 +788,31 @@ void func_800D7D08(void);
 void func_800D7D74(s32 arg0);
 
 void func_800D7E50(VECTOR3* arg0);
+
+void func_800D947C(void);
+
+void func_800D952C(void);
+
+void func_800D917C(void);
+
+void func_800D8954(s_800F3D48* arg0, s_800F3D48_0_0* arg1);
+
+void func_800D8CD4(s32 arg0, SVECTOR* arg1);
+
+void func_800D8D90(s_800F3D48* arg0, s_800F3D48_0_0* arg1);
+
+void func_800D982C(s_800F3D48* arg0);
+
+void func_800D997C(s_800F3D48* arg0);
+
+void func_800D9AA0(s_800F3D48* arg0);
+
+void func_800D9B90(s_800F3D48* arg0);
+
+s_800F3D48_0* func_800D9C20(s_800F3D48* arg0);
+
+s_800F3D48_0* func_800D9DF8(s_800F3D48* arg0);
+
+void func_800DA04C(void);
 
 #endif

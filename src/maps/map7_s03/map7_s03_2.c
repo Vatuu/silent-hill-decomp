@@ -1567,11 +1567,211 @@ s_800F3D48_0* func_800D88E8(s_800F3D48* arg0) // 0x800D88E8
     return next;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8954);
+void func_800D8954(s_800F3D48* arg0, s_800F3D48_0_0* arg1) // 0x800D8954
+{
+    SVECTOR   sp10;
+    DVECTOR   sp18[2];
+    s32       sp20;
+    GsOT_TAG* ot;
+    s16       temp_a2;
+    s16       temp_a3;
+    s32       temp_lo_2;
+    s32       temp_lo_3;
+    s32       temp_lo_4;
+    s32       temp_lo_5;
+    s32       temp_s1;
+    s32       temp_s3;
+    s32       temp_t0;
+    s32       temp_v0;
+    POLY_FT4* poly;
+    s32       temp;
+    s32       temp2;
+    s32       bufferIdx;
+    s32       otIdx;
+    s32       temp5;
+    s32       temp6;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8CD4);
+    temp5   = 0x10101;
+    temp_s3 = arg0->field_4.field_3C * temp5;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8D90);
+    sp10.vx = (arg0->field_4.field_18.vx >> 4);
+    sp10.vy = (arg0->field_4.field_18.vy >> 4);
+    sp10.vz = (arg0->field_4.field_18.vz >> 4);
+
+    temp_s1 = RotTransPers(&sp10, &sp18[0], &sp18[1], &sp20);
+
+    if (sp20 & 0x20000)
+    {
+        return;
+    }
+
+    temp_v0 = ReadGeomScreen();
+    temp_t0 = arg0->field_4.field_14;
+
+    temp_lo_2 = arg1->field_4;
+    temp_lo_3 = arg1->field_6;
+
+    temp_lo_2 = (temp_lo_2 * temp_v0 / 4) / temp_s1;
+    temp_lo_3 = (temp_lo_3 * temp_v0 / 4) / temp_s1;
+
+    temp_lo_4 = (arg1->field_C / 4 * temp_v0) / temp_s1;
+    temp_lo_5 = (arg1->field_E / 4 * temp_v0) / temp_s1;
+
+    temp_lo_2 = Q12_MULT_PRECISE(temp_lo_2, temp_t0);
+    temp_lo_3 = Q12_MULT_PRECISE(temp_lo_3, temp_t0);
+
+    temp  = Q12_MULT_PRECISE(temp_lo_4, temp_t0);
+    temp2 = Q12_MULT_PRECISE(temp_lo_5, temp_t0);
+
+    temp6   = sp18[0].vy;
+    temp_a2 = sp18[0].vx - temp;
+    temp_a3 = temp6 - temp2;
+
+    if (temp_a2 < (-temp_lo_2 - 0xA0) || temp_a2 > 0xA0 || temp_a3 < (-temp_lo_3 - 0xA0) || temp_a3 > 0x70)
+    {
+        return;
+    }
+
+    poly = GsOUT_PACKET_P;
+
+    setXY4(poly, temp_a2, temp_a3, temp_a2 + temp_lo_2, temp_a3, temp_a2,
+           temp_a3 + temp_lo_3, temp_a2 + temp_lo_2, temp_a3 + temp_lo_3);
+
+    setUV4(poly, arg1->field_0, arg1->field_2, arg1->field_0 + arg1->field_4, arg1->field_2,
+           arg1->field_0, arg1->field_2 + arg1->field_6, arg1->field_0 + arg1->field_4, arg1->field_2 + arg1->field_6);
+
+    *(s32*)&poly->r0 = temp_s3;
+    poly->tpage      = arg1->field_8;
+    poly->clut       = arg1->field_A + arg0->field_4.field_E;
+
+    setPolyFT4(poly);
+    setSemiTrans(poly, 1);
+
+    bufferIdx = g_ActiveBufferIdx;
+    ot        = g_OrderingTable0[bufferIdx].org;
+    otIdx     = temp_s1 >> 1;
+    ot        = &ot[otIdx];
+
+    addPrim(ot, poly);
+    poly++;
+
+    GsOUT_PACKET_P = poly;
+}
+
+void func_800D8CD4(s32 arg0, SVECTOR* arg1) // 0x800D8CD4
+{
+    MATRIX      sp10;
+    VECTOR      sp30;
+    SVECTOR     sp40;
+    SVECTOR     sp48;
+    s_800F3D58* ptr;
+    s32         temp;
+
+    ptr = &D_800F3D58;
+    ApplyRotMatrix(arg1, &sp30);
+    sp30.vx += ptr->mat_10.t[0];
+    sp30.vy += ptr->mat_10.t[1];
+    sp30.vz += ptr->mat_10.t[2];
+    TransMatrix(&sp10, &sp30);
+    SetTransMatrix(&sp10);
+    vwGetViewAngle(&sp48);
+    sp40.vx = 0;
+    sp40.vz = -arg0;
+    temp    = sp48.vy;
+    sp40.vy = temp;
+    Math_RotMatrixZxy(&sp40, &sp10);
+    SetMulRotMatrix(&sp10);
+}
+
+void func_800D8D90(s_800F3D48* arg0, s_800F3D48_0_0* arg1) // 0x800D8D90
+{
+    SVECTOR   sp28;
+    SVECTOR   sp30;
+    SVECTOR   sp38;
+    SVECTOR   sp40;
+    SVECTOR   sp48;
+    DVECTOR   sp50[4];
+    s32       sp60;
+    s32       sp64;
+    GsOT_TAG* ot;
+    s32       temp_a2;
+    s32       temp_t1;
+    s32       temp_s2;
+    s32       temp_v0;
+    POLY_FT4* poly;
+    s32       bufferIdx;
+    s32       otIdx;
+    s32       temp;
+
+    PushMatrix();
+
+    sp28.vx = (arg0->field_4.field_18.vx >> 4);
+    sp28.vy = (arg0->field_4.field_18.vy >> 4);
+    sp28.vz = (arg0->field_4.field_18.vz >> 4);
+
+    func_800D8CD4(arg0->field_4.field_38, &sp28);
+
+    temp_t1 = arg1->field_4;
+    temp_v0 = arg0->field_4.field_14;
+    temp_a2 = arg1->field_6;
+
+    temp_t1 = Q12_MULT_PRECISE(temp_t1, temp_v0);
+    temp_a2 = Q12_MULT_PRECISE(temp_a2, temp_v0);
+
+    temp = 0x10101;
+
+    sp30.vx = -temp_t1;
+    sp30.vy = -temp_a2;
+    sp30.vz = 0;
+
+    sp38.vx = temp_t1;
+    sp38.vy = -temp_a2;
+    sp38.vz = 0;
+
+    sp40.vx = -temp_t1;
+    sp40.vy = temp_a2;
+    sp40.vz = 0;
+
+    sp48.vx = temp_t1;
+    sp48.vy = temp_a2;
+    sp48.vz = 0;
+
+    temp_s2 = RotTransPers4(&sp30, &sp38, &sp40, &sp48, &sp50[0], &sp50[1], &sp50[2], &sp50[3], &sp60, &sp64);
+
+    PopMatrix();
+
+    if (sp64 & 0x60000)
+    {
+        return;
+    }
+
+    poly = GsOUT_PACKET_P;
+
+    *(s32*)&poly->x0 = *(s32*)&sp50[0];
+    *(s32*)&poly->x1 = *(s32*)&sp50[1];
+    *(s32*)&poly->x2 = *(s32*)&sp50[2];
+    *(s32*)&poly->x3 = *(s32*)&sp50[3];
+
+    setUV4(poly, arg1->field_0, arg1->field_2, arg1->field_0 + arg1->field_4, arg1->field_2,
+           arg1->field_0, arg1->field_2 + arg1->field_6, arg1->field_0 + arg1->field_4, arg1->field_2 + arg1->field_6);
+
+    *(s32*)&poly->r0 = arg0->field_4.field_3C * temp;
+    poly->tpage      = arg1->field_8;
+    poly->clut       = arg1->field_A;
+
+    setPolyFT4(poly);
+    setSemiTrans(poly, 1);
+
+    bufferIdx = g_ActiveBufferIdx;
+    ot        = g_OrderingTable0[bufferIdx].org;
+    otIdx     = temp_s2 >> 1;
+    ot        = &ot[otIdx];
+
+    addPrim(ot, poly);
+    poly++;
+
+    GsOUT_PACKET_P = poly;
+}
 
 s_800F3D48* func_800D905C(void) // 0x800D905C
 {
@@ -1624,7 +1824,73 @@ void func_800D9114(s_800F3D48* arg0) // 0x800D9114
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D917C);
+void func_800D917C(void) // 0x800D917C
+{
+    s32             i;
+    s_800F3D48*     ptr0;
+    s_800F3D48_0*   ptr1;
+    s_800F3D48_0_0* ptr2;
+
+    ptr0 = D_800F3D48;
+
+    func_800D90C8();
+
+    for (i = 0; i < D_800F2438; i++, ptr0++)
+    {
+        if (ptr0->field_4.field_4 != 0)
+        {
+            if (ptr0->field_4.field_44 != NULL)
+            {
+                if (D_800F3D8C == 0)
+                {
+                    ptr1 = ptr0->field_4.field_44(ptr0);
+
+                    if (ptr1 != NULL && ptr0->field_4.field_48 != NULL && D_800F3D90 == 0)
+                    {
+                        ptr0->field_4.field_48(ptr0, ptr1);
+                    }
+                }
+                else if (ptr0->field_4.field_48 != NULL && D_800F3D90 == 0)
+                {
+                    // TODO: `func_800D88E8` returns different struct.
+                    ptr2 = (s_800F3D48_0_0*)func_800D88E8(ptr0);
+                    ptr0->field_4.field_48(ptr0, ptr2);
+                }
+                func_800D9114(ptr0);
+            }
+        }
+    }
+
+    ptr0 = D_800F3D48;
+
+    for (i = 0; i < D_800F2438; i++, ptr0++)
+    {
+        if (ptr0->field_4.field_6 != 0)
+        {
+            ptr0->field_4.field_4 = 1;
+            ptr0->field_4.field_6 = 0;
+
+            if (ptr0->field_4.field_44 != NULL)
+            {
+                if (D_800F3D8C == 0)
+                {
+                    ptr1 = ptr0->field_4.field_44(ptr0);
+
+                    if (ptr1 != NULL && ptr0->field_4.field_48 != NULL && D_800F3D90 == 0)
+                    {
+                        ptr0->field_4.field_48(ptr0, ptr1);
+                    }
+                }
+                else if (ptr0->field_4.field_48 != NULL && D_800F3D90 == 0)
+                {
+                    // TODO: `func_800D88E8` returns different struct.
+                    ptr2 = (s_800F3D48_0_0*)func_800D88E8(ptr0);
+                    ptr0->field_4.field_48(ptr0, ptr2);
+                }
+            }
+        }
+    }
+}
 
 void func_800D9394(void) // 0x800D9394
 {
@@ -1663,9 +1929,61 @@ void func_800D9394(void) // 0x800D9394
     Fs_QueueStartReadTim(FILE_TIM_ELAST3_TIM, FS_BUFFER_1, &image);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D947C);
+void func_800D947C(void) // 0x800D947C
+{
+    s_800F3D48* ptr1;
+    s32         i;
+    s_800F3D58* ptr0;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D952C);
+    D_800F3D48 = (s_800F3D48*)0x80196E00;
+    D_800F2438 = 0x50;
+
+    ptr0 = &D_800F3D58;
+
+    memset(D_800F3D48, 0xA7, 0x1900);
+
+    ptr1 = D_800F3D48;
+
+    for (i = 0; i < D_800F2438; i++, ptr1++)
+    {
+        ptr1->field_4.field_4 = 0;
+        ptr1->field_4.field_6 = 0;
+    }
+
+    D_800F3D8C = 0;
+
+    ptr0->field_0.vx = 0x40000;
+    ptr0->field_0.vy = 0;
+    ptr0->field_0.vz = -0x40000;
+}
+
+void func_800D952C(void) // 0x800D952C
+{
+    s_800F3D48* ptr1;
+    s32         i;
+    s_800F3D58* ptr0;
+
+    D_800F3D48 = &D_800F2448;
+    D_800F2438 = 0x50;
+
+    ptr0 = &D_800F3D58;
+
+    memset(&D_800F2448, 0xA5, 0x1900);
+
+    ptr1 = D_800F3D48;
+
+    for (i = 0; i < D_800F2438; i++, ptr1++)
+    {
+        ptr1->field_4.field_4 = 0;
+        ptr1->field_4.field_6 = 0;
+    }
+
+    D_800F3D8C = 0;
+
+    ptr0->field_0.vx = 0x40000;
+    ptr0->field_0.vy = 0;
+    ptr0->field_0.vz = -0x40000;
+}
 
 s_800F3D48_0* func_800D95D4(s_800F3D48* arg0) // 0x800D95D4
 {
@@ -1709,19 +2027,263 @@ s_800F3D48_0* func_800D9740(s_800F3D48* arg0) // 0x800D9740
     return ptr;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D982C);
+void func_800D982C(s_800F3D48* arg0) // 0x800D982C
+{
+    s32         rand;
+    s32         temp;
+    s_800F3D48* ptr;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D997C);
+    ptr = func_800D905C();
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D9AA0);
+    if (ptr != NULL)
+    {
+        ptr->field_4.field_18 = arg0->field_4.field_18;
+        rand                  = (Rng_Rand16() / 41) + 0x4CC;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D9B90);
+        ptr->field_4.field_28.vx = Q12_MULT_PRECISE(arg0->field_4.field_28.vx, rand);
+        ptr->field_4.field_28.vy = Q12_MULT_PRECISE(arg0->field_4.field_28.vy, rand);
+        ptr->field_4.field_28.vz = Q12_MULT_PRECISE(arg0->field_4.field_28.vz, rand);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D9C20);
+        temp = arg0->field_4.field_14;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D9DF8);
+        ptr->ptr_0 = &D_800EC5A8;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DA04C);
+        ptr->field_4.field_44 = func_800D9740;
+        ptr->field_4.field_48 = func_800D8D90;
+
+        ptr->field_4.field_14 = temp;
+        ptr->field_4.field_3C = arg0->field_4.field_3C;
+        ptr->field_4.field_38 = arg0->field_4.field_38;
+    }
+}
+
+void func_800D997C(s_800F3D48* arg0) // 0x800D997C
+{
+    s32         rand;
+    s_800F3D48* ptr;
+
+    ptr = func_800D905C();
+
+    if (ptr != NULL)
+    {
+        ptr->field_4.field_3C    = arg0->field_4.field_3C;
+        ptr->field_4.field_18    = arg0->field_4.field_18;
+        ptr->field_4.field_18.vy = 0;
+
+        rand = Rng_Rand16();
+
+        ptr->field_4.field_28.vx = Q12_MULT_PRECISE(Math_Sin(rand), 0x1000);
+        ptr->field_4.field_28.vy = 0;
+        ptr->field_4.field_28.vz = Q12_MULT_PRECISE(Math_Cos(rand), 0x1000);
+
+        ptr->field_4.field_14 = Q12_MULT_PRECISE(arg0->field_4.field_14, 0x2000);
+
+        ptr->ptr_0            = &D_800EC53C;
+        ptr->field_4.field_44 = func_800D95D4;
+        ptr->field_4.field_48 = func_800D8954;
+    }
+}
+
+void func_800D9AA0(s_800F3D48* arg0) // 0x800D9AA0
+{
+    s32         temp;
+    s_800F3D48* ptr;
+
+    ptr = func_800D905C();
+
+    if (ptr != NULL)
+    {
+        ptr->field_4.field_18 = arg0->field_4.field_18;
+        ptr->field_4.field_3C = arg0->field_4.field_3C;
+
+        temp = arg0->field_4.field_14;
+
+        ptr->ptr_0 = &D_800EC614;
+
+        ptr->field_4.field_28.vx = 0;
+        ptr->field_4.field_28.vz = 0;
+
+        ptr->field_4.field_44 = func_800D9740;
+        ptr->field_4.field_48 = func_800D8954;
+        ptr->field_4.field_14 = temp;
+
+        ptr->field_4.field_18.vy += Q12_MULT_PRECISE(temp, -0x400);
+        ptr->field_4.field_28.vy  = Q12_MULT_PRECISE(temp, -0x1000);
+    }
+}
+
+void func_800D9B90(s_800F3D48* arg0) // 0x800D9B90
+{
+    s_800F3D48* ptr;
+    s32         temp;
+    s32         temp2;
+
+    ptr = func_800D905C();
+
+    if (ptr != NULL)
+    {
+        ptr->field_4.field_18 = arg0->field_4.field_18;
+
+        temp2 = arg0->field_4.field_14;
+        temp  = arg0->field_4.field_3C;
+
+        ptr->field_4.field_28.vx = 0;
+        ptr->field_4.field_28.vz = 0;
+        ptr->field_4.field_28.vy = 0x1000;
+
+        ptr->ptr_0            = &D_800EC53C;
+        ptr->field_4.field_44 = func_800D9740;
+        ptr->field_4.field_48 = func_800D8954;
+        ptr->field_4.field_3C = temp;
+        ptr->field_4.field_14 = temp2;
+    }
+}
+
+s_800F3D48_0* func_800D9C20(s_800F3D48* arg0) // 0x800D9C20
+{
+    VECTOR3       sp10;
+    s_800F3D48_0* ret;
+    s_800F3D58*   ptr;
+
+    ret = NULL;
+
+    ptr = &D_800F3D58;
+
+    switch (arg0->field_4.field_C)
+    {
+        case 0:
+            arg0->ptr_0            = &D_800EC680[Rng_Rand16() / 0x1000];
+            arg0->field_4.field_48 = func_800D8954;
+
+            if (func_800D5D48() != false)
+            {
+                sp10.vx = arg0->field_4.field_18.vx + ptr->field_0.vx;
+                sp10.vy = arg0->field_4.field_18.vy + ptr->field_0.vy;
+                sp10.vz = arg0->field_4.field_18.vz + ptr->field_0.vz;
+                func_8005DC1C(0x69C, &sp10, 0xFF, 0);
+            }
+            arg0->field_4.field_C++;
+
+        case 1:
+            ret = func_800D88E8(arg0);
+            if (ret == &D_800EC34C)
+            {
+                func_800D9AA0(arg0);
+            }
+
+            if (Rng_Rand16() == 0)
+            {
+                func_800D9B90(arg0);
+            }
+
+            if (arg0->field_4.field_10 < 0)
+            {
+                arg0->field_4.field_10 = 0xB33;
+                arg0->field_4.field_C++;
+            }
+            break;
+
+        case 2:
+            ret                    = func_800D88E8(arg0);
+            arg0->field_4.field_3C = Q12_MULT_PRECISE(arg0->field_4.field_3C, 0xE66);
+            if (arg0->field_4.field_10 < 0)
+            {
+                arg0->field_4.field_4 = 0;
+                arg0->field_4.field_6 = 0;
+            }
+            break;
+    }
+
+    arg0->field_4.field_10 -= g_DeltaTime0;
+    return ret;
+}
+
+s_800F3D48_0* func_800D9DF8(s_800F3D48* arg0) // 0x800D9DF8
+{
+    s_Collision   sp10;
+    SVECTOR       sp20;
+    s32           temp;
+    s32           i;
+    s_800F3D48_0* ret;
+    s_800F3D58*   ptr;
+
+    ret = NULL;
+
+    ptr = &D_800F3D58;
+
+    switch (arg0->field_4.field_C)
+    {
+        case 0:
+            sp20.vx = (arg0->field_4.field_18.vx >> 4);
+            sp20.vy = (arg0->field_4.field_18.vy >> 4);
+            sp20.vz = (arg0->field_4.field_18.vz >> 4);
+
+            arg0->field_4.field_18.vx += Q12_MULT_PRECISE(arg0->field_4.field_28.vx, g_DeltaTime0);
+            arg0->field_4.field_18.vy += Q12_MULT_PRECISE(arg0->field_4.field_28.vy, g_DeltaTime0);
+            arg0->field_4.field_18.vz += Q12_MULT_PRECISE(arg0->field_4.field_28.vz, g_DeltaTime0);
+
+            if (arg0->field_4.field_18.vy >= 0x5001)
+            {
+                arg0->field_4.field_4 = 0;
+                arg0->field_4.field_6 = 0;
+            }
+            else
+            {
+                PushMatrix();
+
+                temp = arg0->field_4.field_18.vy + ptr->field_0.vy;
+
+                Collision_Get(&sp10, arg0->field_4.field_18.vx + ptr->field_0.vx,
+                              arg0->field_4.field_18.vz + ptr->field_0.vz);
+                PopMatrix();
+
+                if (sp10.groundHeight_0 < temp)
+                {
+                    arg0->field_4.field_18.vy = sp10.groundHeight_0;
+                    arg0->field_4.field_48    = NULL;
+                    arg0->field_4.field_10    = 0x5000;
+                    arg0->field_4.field_C++;
+
+                    for (i = 0; i < 5; i++)
+                    {
+                        func_800D997C(arg0);
+                    }
+                }
+            }
+
+            ret = func_800D88E8(arg0);
+
+            if (ret == &D_800EC3EC)
+            {
+                func_800D982C(arg0);
+            }
+            break;
+
+        case 1:
+            arg0->field_4.field_C  = 0;
+            arg0->field_4.field_10 = 0x5000;
+            arg0->field_4.field_44 = func_800D9C20;
+            arg0->field_4.field_14 = Q12_MULT_PRECISE(arg0->field_4.field_14, 0x2000);
+            break;
+    }
+
+    arg0->field_4.field_10 -= g_DeltaTime0;
+    return ret;
+}
+
+void func_800DA04C(void) // 0x800DA04C
+{
+    s_800F3D48* ptr;
+    s32         i;
+
+    ptr = D_800F3D48;
+
+    for (i = 0; i < D_800F2438; i++, ptr++)
+    {
+        ptr->field_4.field_4 = 0;
+        ptr->field_4.field_6 = 0;
+    }
+}
 
 q19_12 func_800DA08C(s32 arg0, q19_12 arg1, q19_12 arg2) // 0x800DA08C
 {
