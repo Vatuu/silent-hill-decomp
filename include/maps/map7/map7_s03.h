@@ -240,6 +240,14 @@ typedef struct
 
 typedef struct
 {
+    s32     field_0;
+    VECTOR3 field_4;
+    u8      unk_10[0x14];
+    u8      field_24[1]; // Unknown size
+} s_func_800E1FE0;
+
+typedef struct
+{
     u16 field_0;
     u16 field_2;
     u16 field_4;
@@ -249,7 +257,7 @@ typedef struct
 typedef struct
 {
     VECTOR3* vec_0;
-    u8       unk_4[4];
+    void*    ptr_4;
 } s_800F4B40_1C;
 
 typedef struct
@@ -265,7 +273,9 @@ typedef struct
     u8            field_1A;
     u8            unk_1B[1];
     s_800F4B40_1C field_1C[15];
-    u8            unk_94[0x24];
+    u8            unk_94[0x10];
+    u8            field_A4[0xA];
+    u8            field_AE[0xA];
     VECTOR3       field_B8[8]; // Guessed type based on size, likely incorrect.
 } s_800F4B40;
 
@@ -685,6 +695,8 @@ void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warp
 void func_800E16FC(void);
 
 void func_800E1788(s32 arg0);
+
+void func_800E1FE0(s_func_800E1FE0* arg0);
 
 void func_800E22AC(VECTOR3* arg0, s32* arg1, s16* mv_pos, s16* now_spd, VECTOR3* arg4, s32 arg5, VECTOR3* arg6, s32 arg7, s16 total_max_spd);
 

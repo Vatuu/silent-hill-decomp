@@ -4610,7 +4610,29 @@ const char* MAP_MESSAGES[] = {
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E1854);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E1FE0);
+void func_800E1FE0(s_func_800E1FE0* arg0) // 0x800E1FE0
+{
+    bzero(D_800F4B40.field_A4, 10);
+    bzero(D_800F4B40.field_AE, 10);
+
+    D_800F4B40.field_1C[8].vec_0 = &arg0->field_4;
+    D_800F4B40.field_1C[8].ptr_4 = &arg0->field_24;
+
+    // TODO: Conflicting second arg type passed to these funcs.
+    // Some calls pass VECTOR3* while others pass s_800F4B40_1C*?
+    if (arg0->field_0 != 0)
+    {
+        func_800E17B8(&D_800F4B40.field_1C[0], &arg0->field_4);
+        func_800E17B8(&D_800F4B40.field_1C[4], &arg0->field_24);
+        func_800E17B8(&D_800F4B40.field_1C[9], &arg0->field_4);
+        func_800E17B8(&D_800F4B40.field_1C[13], &arg0->field_24);
+    }
+    else
+    {
+        func_800E17B8(&D_800F4B40.field_1C[9], &D_800F4B40.field_1C[0]);
+        func_800E17B8(&D_800F4B40.field_1C[13], &D_800F4B40.field_1C[4]);
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E20A4);
 
