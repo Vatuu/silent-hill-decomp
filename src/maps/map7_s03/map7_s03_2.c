@@ -5244,17 +5244,15 @@ void func_800E1FE0(s_func_800E1FE0* arg0) // 0x800E1FE0
     bzero(&D_800F4B40.field_A4[0], sizeof(D_800F4B40.field_A4[0]));
     bzero(&D_800F4B40.field_A4[1], sizeof(D_800F4B40.field_A4[1]));
 
-    D_800F4B40.field_5C = &arg0->field_4;
-    D_800F4B40.field_60 = &arg0->field_24;
+    D_800F4B40.field_5C = &arg0->field_4[0];
+    D_800F4B40.field_60 = &arg0->field_4[1];
 
-    // TODO: Conflicting second arg type passed to these funcs.
-    // Some calls pass VECTOR3* while others pass s_800F4B40_1C*?
     if (arg0->field_0 != 0)
     {
-        func_800E17B8(&D_800F4B40.field_1C[0], &arg0->field_4);
-        func_800E17B8(&D_800F4B40.field_1C[1], &arg0->field_24);
-        func_800E17B8(&D_800F4B40.field_64[0], &arg0->field_4);
-        func_800E17B8(&D_800F4B40.field_64[1], &arg0->field_24);
+        func_800E17B8(&D_800F4B40.field_1C[0], &arg0->field_4[0]);
+        func_800E17B8(&D_800F4B40.field_1C[1], &arg0->field_4[1]);
+        func_800E17B8(&D_800F4B40.field_64[0], &arg0->field_4[0]);
+        func_800E17B8(&D_800F4B40.field_64[1], &arg0->field_4[1]);
     }
     else
     {

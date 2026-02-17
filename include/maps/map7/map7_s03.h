@@ -240,14 +240,6 @@ typedef struct
 
 typedef struct
 {
-    s32     field_0;
-    VECTOR3 field_4;
-    u8      unk_10[20];
-    u8      field_24[1]; // Unknown size
-} s_func_800E1FE0;
-
-typedef struct
-{
     u16 field_0;
     u16 field_2;
     u16 field_4;
@@ -305,6 +297,12 @@ typedef struct
     u8      unk_C[4];
     MATRIX  mat_10;
 } s_800F3D58;
+
+typedef struct
+{
+    s32           field_0;
+    s_800F4B40_1C field_4[2];
+} s_func_800E1FE0;
 
 typedef struct
 {
