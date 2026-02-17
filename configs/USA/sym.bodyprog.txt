@@ -470,7 +470,7 @@ Event_CollideObbCheck                        = 0x80037C5C; // type:func
 //--- PA: 0x013264   VA: 0x80037DC4   subsegment: c, events/bodyprog_npc_80037DC4
 //-------------------------------------------------------------------------------
 Savegame_EnemyStateUpdate                    = 0x80037DC4; // type:func
-Chara_DamageFlagUpdate                       = 0x80037E40;
+Chara_DamagedFlagUpdate                      = 0x80037E40;
 Game_NpcRoomInitSpawn                        = 0x80037F24; // type:func
 func_800382B0.0                              = 0x800382B0; // filename:func_800382B0 type:func - Compiler adds suffix to end of nested func names.
 func_800382EC.0                              = 0x800382EC; // filename:func_800382EC type:func - Compiler adds suffix to end of nested func names.
@@ -1070,6 +1070,8 @@ Chara_Spawn                                  = 0x80088D78; // type:func
 //---------------------------------------------------------------------------
 //--- PA: 0x0654F8   VA: 0x8008A058   subsegment: c, bodyprog_combat_8008A058
 //---------------------------------------------------------------------------
+Chara_Flag8Clear                             = 0x8008A384; // type:func
+Chara_Flag8Set                               = 0x8008A398; // type:func
 
 //------------------------------------------------------
 //--- PA: 0x067E40   VA: 0x8008C9A0   subsegment: c, dms

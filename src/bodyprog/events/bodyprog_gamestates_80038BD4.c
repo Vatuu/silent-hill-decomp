@@ -187,7 +187,7 @@ void GameState_InGame_Update(void) // 0x80038BD4
         if (player->model_0.anim_4.flags_2 & AnimFlag_Visible)
         {
             func_8003DA9C(Chara_Harry, g_SysWork.playerBoneCoords_890, 1, g_SysWork.playerWork_4C.player_0.timer_C6, 0);
-            func_8008A384(&g_SysWork.playerWork_4C.player_0);
+            Chara_Flag8Clear(&g_SysWork.playerWork_4C.player_0);
             Player_CombatUpdate(&g_SysWork.playerWork_4C, g_SysWork.playerBoneCoords_890);
             func_8008A3AC(&g_SysWork.playerWork_4C.player_0);
         }

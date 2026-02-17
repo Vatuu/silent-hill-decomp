@@ -493,16 +493,16 @@ typedef enum _ControllerFlags
 /** @brief Character flags. Used by `s_SubCharacter::flags_3E`. */
 typedef enum _CharaFlags
 {
-    CharaFlag_None = 0,
-    CharaFlag_Unk1 = 1 << 0,
-    CharaFlag_Unk2 = 1 << 1,
-    CharaFlag_Unk3 = 1 << 2,
-    CharaFlag_Unk4 = 1 << 3,
-    CharaFlag_Unk5 = 1 << 4,
-    CharaFlag_Unk6 = 1 << 5,
-    CharaFlag_Unk7 = 1 << 6,
-    CharaFlag_Unk8 = 1 << 7,
-    CharaFlag_Unk9 = 1 << 8
+    CharaFlag_None    = 0,
+    CharaFlag_Unk1    = 1 << 0, // Specific to padlock. Maybe used for special handling.
+    CharaFlag_Unk2    = 1 << 1, // Related to being damaged. Maybe to recoil or notify of danger?
+    CharaFlag_Unk3    = 1 << 2,
+    CharaFlag_Unk4    = 1 << 3,
+    CharaFlag_Unk5    = 1 << 4, // Camera-related.
+    CharaFlag_Damaged = 1 << 5,
+    CharaFlag_Dead    = 1 << 6, // Unure.
+    CharaFlag_Unk8    = 1 << 7,
+    CharaFlag_Unk9    = 1 << 8  // Only set for bosses and NPCs in special scenarios.
 } e_CharaFlags;
 
 /** @brief Character animation flags. */
@@ -1607,7 +1607,7 @@ STATIC_ASSERT_SIZEOF(s_SubCharacter_D8, 8);
 
 typedef struct
 {
-    s16 field_0;
+    s16 field_0; // Something dependent on `CharaFlag_Unk8`.
     u8  field_2; // In player: packed weapon attack. See `WEAPON_ATTACK`.
                  // This is not the same as `attackReceived_41`, as this value only resets when player is aiming.
                  // In NPCs: Indicates attack performed on player.

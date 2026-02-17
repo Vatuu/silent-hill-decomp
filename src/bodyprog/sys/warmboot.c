@@ -17,62 +17,68 @@ void SysWork_Clear(void) // 0x800340E0
 
 s32 MainLoop_ShouldWarmReset(void) // 0x80034108
 {
-    #define RESET_BTN_FLAGS (ControllerFlag_Select | ControllerFlag_Start)
-    #define UNK_BTN_FLAGS_0 (ControllerFlag_Select | ControllerFlag_Start | ControllerFlag_L2 | ControllerFlag_R2 | ControllerFlag_L1 | ControllerFlag_R1)
-    #define UNK_BTN_FLAGS_1 (ControllerFlag_Start | ControllerFlag_Triangle | ControllerFlag_Square)
+    #define RESET_BTN_FLAGS       (ControllerFlag_Select | ControllerFlag_Start)
+    #define WARM_BOOT_BTN_FLAGS_0 (ControllerFlag_Select | ControllerFlag_Start | \
+                                   ControllerFlag_L2 | ControllerFlag_R2 | ControllerFlag_L1 | ControllerFlag_R1)
+    #define WARM_BOOT_BTN_FLAGS_1 (ControllerFlag_Start | ControllerFlag_Triangle | ControllerFlag_Square)
 
     if (g_GameWork.gameState_594 < GameState_MovieIntroAlternate)
     {
-        return 0;
+        return ResetType_None;
     }
 
     if (g_GameWork.gameState_594 == GameState_LoadSavegameScreen && g_GameWork.gameStateStep_598[0] == 4)
     {
-        return 0;
+        return ResetType_None;
     }
 
-    if (g_GameWork.gameState_594 == GameState_SaveScreen && (g_GameWork.gameStateStep_598[0] == 2 || g_GameWork.gameStateStep_598[0] == 3))
+    if (g_GameWork.gameState_594 == GameState_SaveScreen &&
+        (g_GameWork.gameStateStep_598[0] == 2 || g_GameWork.gameStateStep_598[0] == 3))
     {
-        return 0;
+        return ResetType_None;
     }
 
     if (g_SysWork.flags_22A4 & SysFlag2_1)
     {
         if (g_Demo_FrameCount > (TICKS_PER_SECOND * 30))
         {
-            return 2;
+            return ResetType_WarmBoot;
         }
     }
     else
     {
-        g_Demo_FrameCount = 0;
+        g_Demo_FrameCount = ResetType_None;
     }
 
     if (g_GameWork.gameState_594 == GameState_MainMenu)
     {
-        return 0;
+        return ResetType_None;
     }
 
-    // Reset something.
+    // Reset frame counter if reset buttons not held.
     if ((g_Controller0->btnsHeld_C & RESET_BTN_FLAGS) != RESET_BTN_FLAGS)
     {
         g_UnknownFrameCounter = 0;
     }
 
-    if (g_UnknownFrameCounter >= 121)
+    if (g_UnknownFrameCounter > (TICKS_PER_SECOND * 2))
     {
-        return 2;
+        return ResetType_WarmBoot;
     }
-    else if (g_Controller0->btnsHeld_C == UNK_BTN_FLAGS_0 && (g_Controller0->btnsClicked_10 & UNK_BTN_FLAGS_0))
+    else if (g_Controller0->btnsHeld_C == WARM_BOOT_BTN_FLAGS_0 && (g_Controller0->btnsClicked_10 & WARM_BOOT_BTN_FLAGS_0))
     {
-        return 2;
+        return ResetType_WarmBoot;
     }
-    else if (g_Controller0->btnsHeld_C == UNK_BTN_FLAGS_1 && (g_Controller0->btnsClicked_10 & ControllerFlag_Start))
+    else if (g_Controller0->btnsHeld_C == WARM_BOOT_BTN_FLAGS_1 && (g_Controller0->btnsClicked_10 & ControllerFlag_Start))
     {
-        return 2;
+        return ResetType_WarmBoot;
     }
 
-    return (g_SysWork.flags_22A4 & SysFlag2_8) ? 2 : 0;
+    return (g_SysWork.flags_22A4 & SysFlag2_8) ? ResetType_WarmBoot : ResetType_None;
+
+    #undef RESET_BTN_FLAGS
+    #undef WARM_BOOT_BTN_FLAGS_0
+    #undef WARM_BOOT_BTN_FLAGS_1
 }
 
 void Game_WarmBoot(void) // 0x80034264

@@ -231,7 +231,8 @@ void movie_main(char* file_name, s32 f_size, s32 sector) // 0x801E2B9C
         strSync(&m->dec);
         VSync(SyncMode_Wait);
     }
-    while (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) && MainLoop_ShouldWarmReset() <= 0);
+    while (!(g_Controller0->btnsClicked_10 & g_GameWorkPtr->config_0.controllerConfig_0.skip_4) &&
+           MainLoop_ShouldWarmReset() <= ResetType_None);
 
     SsSetSerialVol(0, 0, 0);
 

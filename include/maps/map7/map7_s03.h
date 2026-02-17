@@ -289,10 +289,9 @@ typedef struct
 typedef struct
 {
     s_800F3D48_0* field_0;
-    ;
     s32    field_4;
     s32    field_8;
-    VECTOR field_C;
+    VECTOR field_C; // Q19.12 | Bone offset?
     s32    field_1C;
     s8     unk_20[4];
     s32    field_24;
@@ -899,7 +898,8 @@ s_800F3D48_0* func_800D9DF8(s_800F3D48* arg0);
 
 void func_800DA04C(void);
 
-q19_12 func_800DA178(q19_12 arg0, q19_12 arg1, q19_12 arg2, q19_12 arg3, s32 arg4);
+/** Does some kind of timer computation. */
+q19_12 func_800DA178(q19_12 arg0, q19_12 arg1, q19_12 arg2, q19_12 arg3, q19_12 arg4);
 
 s32 func_800DA1F4(VECTOR3* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
 
@@ -913,13 +913,16 @@ void func_800DAB18(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void func_800DAC04(VECTOR3* arg0, void* arg1, s32 arg2);
 
+// Does something wth character bones. Likely Harry-specific.
 void func_800DAD54(void);
 
+// Does something wth character bones. Likely Harry-specific.
 s_func_800DAD54* func_800DAD90(void);
 
 void func_800DADE0(s_func_800DAD54* arg0, s_800F3D48_0_0* arg1);
 
-void func_800DB154(GsCOORDINATE2* arg0);
+// Does something wth character bones. Likely Harry-specific.
+void func_800DB154(GsCOORDINATE2* coords);
 
 void func_800DB288(void);
 

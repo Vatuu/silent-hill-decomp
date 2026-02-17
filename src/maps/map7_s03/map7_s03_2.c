@@ -2319,11 +2319,11 @@ q19_12 func_800DA08C(q19_12 arg0, q19_12 arg1, q19_12 arg2) // 0x800DA08C
             return Q12_MULT_PRECISE(arg0, arg1);
 
         default:
-            return 0;
+            return Q12(0.0f);
     }
 }
 
-q19_12 func_800DA178(q19_12 arg0, q19_12 arg1, q19_12 arg2, q19_12 arg3, s32 arg4) // 0x800DA178
+q19_12 func_800DA178(q19_12 arg0, q19_12 arg1, q19_12 arg2, q19_12 arg3, q19_12 arg4) // 0x800DA178
 {
     q19_12 temp_t0;
 
@@ -2337,7 +2337,7 @@ q19_12 func_800DA178(q19_12 arg0, q19_12 arg1, q19_12 arg2, q19_12 arg3, s32 arg
     temp_t0 = arg2 - arg1;
 
     arg0 = Q12_MULT_PRECISE(arg0, arg3);
-    if (arg4 != 0 && temp_t0 != 0)
+    if (arg4 != Q12(0.0f) && temp_t0 != Q12(0.0f))
     {
         arg0 = Q12_MULT_PRECISE(arg0, temp_t0);
     }
@@ -2656,16 +2656,16 @@ void func_800DAD54(void) // 0x800DAD54
     VECTOR3*         vec;
 
     vec = &D_800F3D58.field_0;
-    ptr = (s_func_800DAD54*)0x801D6E00;
+    ptr = (s_func_800DAD54*)FS_BUFFER_28;
 
     for (i = 399; i >= 0; i--, ptr++)
     {
         ptr->field_28 = 0;
     }
 
-    vec->vx = 0x40000;
-    vec->vy = 0;
-    vec->vz = -0x40000;
+    vec->vx = Q12(64.0f);
+    vec->vy = Q12(0.0f);
+    vec->vz = Q12(-64.0f);
 }
 
 s_func_800DAD54* func_800DAD90(void) // 0x800DAD90
@@ -2673,7 +2673,7 @@ s_func_800DAD54* func_800DAD90(void) // 0x800DAD90
     s32              i;
     s_func_800DAD54* ptr;
 
-    ptr = (s_func_800DAD54*)0x801D6E00;
+    ptr = (s_func_800DAD54*)FS_BUFFER_28;
 
     for (i = 0; i < 400; i++, ptr++)
     {
@@ -2684,12 +2684,13 @@ s_func_800DAD54* func_800DAD90(void) // 0x800DAD90
             return ptr;
         }
     }
+
     return NULL;
 }
 
 void func_800DADE0(s_func_800DAD54* arg0, s_800F3D48_0_0* arg1) // 0x800DADE0
 {
-    SVECTOR   sp10;                                             // Q23.8
+    SVECTOR   sp10; // Q23.8
     DVECTOR   sp18[2];
     s32       sp20;
     s16       x0;
@@ -2782,46 +2783,48 @@ void func_800DADE0(s_func_800DAD54* arg0, s_800F3D48_0_0* arg1) // 0x800DADE0
     GsOUT_PACKET_P = poly;
 }
 
-void func_800DB154(GsCOORDINATE2* arg0) // 0x800DB154
+void func_800DB154(GsCOORDINATE2* coords) // 0x800DB154
 {
-    MATRIX           sp10;
-    VECTOR           sp30[18];
-    GsCOORDINATE2*   var_s1;
+    MATRIX           boneMat;
+    VECTOR           boneOffsets[HarryBone_Count];
     s32              i;
-    s_func_800DAD54* var_s3;
-    VECTOR*          temp_v0;
-    VECTOR3*         vec;
-    s32              temp;
+    s32              coordCount;
+    GsCOORDINATE2*   curCoord;
+    s_func_800DAD54* curPtr;
+    VECTOR*          boneOffset;
+    VECTOR3*         pos;
 
-    var_s3 = (s_func_800DAD54*)0x801D6E00;
-    temp   = 0x11;
+    curPtr = (s_func_800DAD54*)FS_BUFFER_28;
+    coordCount = HarryBone_Count - 1;
 
-    vec = &D_800F3D58.field_0;
+    pos = &D_800F3D58.field_0;
 
-    var_s1 = arg0;
-    var_s1++;
+    curCoord = coords;
+    curCoord++;
 
-    for (i = 1; i <= temp; i++, var_s1++)
+    // Get bone offsets.
+    for (i = 1; i <= coordCount; i++, curCoord++)
     {
-        Vw_CoordHierarchyMatrixCompute(var_s1, &sp10);
+        Vw_CoordHierarchyMatrixCompute(curCoord, &boneMat);
 
-        sp30[i].vx = (sp10.t[0] * 0x10) - vec->vx;
-        sp30[i].vy = (sp10.t[1] * 0x10) - vec->vy;
-        sp30[i].vz = (sp10.t[2] * 0x10) - vec->vz;
+        boneOffsets[i].vx = Q8_TO_Q12(boneMat.t[0]) - pos->vx;
+        boneOffsets[i].vy = Q8_TO_Q12(boneMat.t[1]) - pos->vy;
+        boneOffsets[i].vz = Q8_TO_Q12(boneMat.t[2]) - pos->vz;
     }
 
     func_800D90C8();
 
-    for (i = 0; i < 400; i++, var_s3++)
+    for (i = 0; i < 400; i++, curPtr++)
     {
-        if (var_s3->field_28 != 0)
+        if (curPtr->field_28 != 0)
         {
-            temp_v0            = &sp30[var_s3->field_24];
-            var_s3->field_C.vx = temp_v0->vx;
-            var_s3->field_C.vy = temp_v0->vy;
-            var_s3->field_C.vz = temp_v0->vz;
+            boneOffset         = &boneOffsets[curPtr->field_24];
+            curPtr->field_C.vx = boneOffset->vx;
+            curPtr->field_C.vy = boneOffset->vy;
+            curPtr->field_C.vz = boneOffset->vz;
+
             // TODO: `func_800D88E8` returns different struct.
-            func_800DADE0(var_s3, (s_800F3D48_0_0*)func_800D88E8(var_s3));
+            func_800DADE0(curPtr, (s_800F3D48_0_0*)func_800D88E8(curPtr));
         }
     }
 }
@@ -2838,13 +2841,13 @@ void func_800DB288(void) // 0x800DB288
 
         if (ptr != NULL)
         {
-            rand = Rng_Rand16() / 0x1000;
+            rand = Rng_Rand16() / Q12(1.0f);
 
             ptr->field_0 = &D_800EC680[rand];
 
-            rand = Rng_Rand16() / 0x10;
+            rand = Rng_Rand16() / 16;
 
-            ptr->field_8  = rand + 0x800;
+            ptr->field_8  = rand + Q12(0.5f);
             ptr->field_1C = 0x60;
             ptr->field_24 = i;
         }
@@ -2895,7 +2898,7 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
     s32     sp6C;
     s32     var_s4;
     s32     var_s5;
-    s32     var_s0;
+    q19_12  angle;
     s32     temp_s3;
     s32     temp_s6;
     s32     temp_s2;
@@ -2917,18 +2920,18 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
     else
     {
         var_s4 = 0;
-        var_s5 = 0x1000;
+        var_s5 = Q12(1.0f);
         sp68   = 0;
-        sp6C   = 0x1000;
+        sp6C   = Q12(1.0f);
     }
 
     temp_v1 = arg2->vx;
     var_s1  = temp_v1 - arg1->vx;
     temp_s6 = arg2->vy - arg1->vy;
-    var_s0  = arg2->vz - arg1->vz;
+    angle  = arg2->vz - arg1->vz;
 
     temp_a3 = Q12_MULT(var_s1, var_s1);
-    temp_a0 = Q12_MULT(var_s0, var_s0);
+    temp_a0 = Q12_MULT(angle, angle);
     sp5C    = Q12_MULT(temp_s6, temp_s6);
 
     temp_s2 = SquareRoot12(temp_a3 + temp_a0);
@@ -2936,7 +2939,7 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
     if (temp_s2 != 0)
     {
         sp64   = FP_TO(var_s1, Q12_SHIFT) / temp_s2;
-        var_fp = FP_TO(var_s0, Q12_SHIFT) / temp_s2;
+        var_fp = FP_TO(angle, Q12_SHIFT) / temp_s2;
     }
     else
     {
@@ -2946,8 +2949,8 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
 
     if (arg3 != NULL)
     {
-        var_s0  = ratan2(var_s4, var_s5);
-        temp_v1 = ratan2(sp64, var_fp) - var_s0;
+        angle  = ratan2(var_s4, var_s5);
+        temp_v1 = ratan2(sp64, var_fp) - angle;
         temp_v1 = FP_ANGLE_NORM_S(temp_v1);
         temp2   = ABS(temp_v1);
 
@@ -2955,14 +2958,15 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
         {
             if (temp_v1 <= 0)
             {
-                var_s0 = var_s0 - temp_s3;
+                angle = angle - temp_s3;
             }
             else
             {
-                var_s0 = var_s0 + temp_s3;
+                angle = angle + temp_s3;
             }
-            sp64   = Math_Sin(var_s0);
-            var_fp = Math_Cos(var_s0);
+
+            sp64   = Math_Sin(angle);
+            var_fp = Math_Cos(angle);
         }
     }
 
@@ -2983,8 +2987,8 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
 
     if (arg3 != NULL)
     {
-        var_s0  = ratan2(sp68, sp6C);
-        temp_v1 = ratan2(var_s4, var_s1) - var_s0;
+        angle  = ratan2(sp68, sp6C);
+        temp_v1 = ratan2(var_s4, var_s1) - angle;
         temp_v1 = FP_ANGLE_NORM_S(temp_v1);
         temp2   = ABS(temp_v1);
 
@@ -2992,31 +2996,31 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
         {
             if (temp_v1 <= 0)
             {
-                var_s0 = var_s0 - temp_s3;
+                angle = angle - temp_s3;
             }
             else
             {
-                var_s0 = var_s0 + temp_s3;
+                angle = angle + temp_s3;
             }
 
-            var_s4 = Math_Sin(var_s0);
-            var_s1 = Math_Cos(var_s0);
+            var_s4 = Math_Sin(angle);
+            var_s1 = Math_Cos(angle);
         }
     }
 
     vwGetViewAngle(&sp50);
 
-    sp10.m[0][0] = 0x1000;
+    sp10.m[0][0] = Q12(1.0f);
     sp10.m[0][1] = 0;
     sp10.m[0][2] = 0;
 
     sp10.m[1][0] = 0;
-    sp10.m[1][1] = 0x1000;
+    sp10.m[1][1] = Q12(1.0f);
     sp10.m[1][2] = 0;
 
     sp10.m[2][0] = 0;
     sp10.m[2][1] = 0;
-    sp10.m[2][2] = 0x1000;
+    sp10.m[2][2] = Q12(1.0f);
 
     Math_RotMatrixZ(0, &sp10);
     MulMatrix(arg0, &sp10);
@@ -3026,14 +3030,14 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
     sp30.m[0][2] = sp64;
 
     sp30.m[1][0] = 0;
-    sp30.m[1][1] = 0x1000;
+    sp30.m[1][1] = Q12(1.0f);
     sp30.m[1][2] = 0;
 
     sp30.m[2][0] = -sp64;
     sp30.m[2][1] = 0;
     sp30.m[2][2] = var_fp;
 
-    sp10.m[0][0] = 0x1000;
+    sp10.m[0][0] = Q12(1.0f);
     sp10.m[0][1] = 0;
     sp10.m[0][2] = 0;
 

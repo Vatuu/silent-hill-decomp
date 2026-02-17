@@ -260,12 +260,12 @@ s32 func_8008A35C(s_800AD4C8* arg0, s32 arg1) // 0x8008A35C
     return res;
 }
 
-void func_8008A384(s_SubCharacter* chara) // 0x8008A384
+void Chara_Flag8Clear(s_SubCharacter* chara) // 0x8008A384
 {
     chara->flags_3E &= ~CharaFlag_Unk8;
 }
 
-void func_8008A398(s_SubCharacter* chara) // 0x8008A398
+void Chara_Flag8Set(s_SubCharacter* chara) // 0x8008A398
 {
     chara->flags_3E |= CharaFlag_Unk8;
 }
@@ -364,8 +364,8 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
     static DVECTOR D_800C4748[4];
     static VECTOR3 D_800C4758[4];
 
-    sp30 = -1;
-    func_8008A398(chara);
+    sp30 = NO_VALUE;
+    Chara_Flag8Set(chara);
 
     sp10 = chara->field_44.field_0;
     sp14 = (u8)chara->field_44.field_2;
@@ -439,7 +439,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
         return 0;
     }
 
-    if (g_DeltaTime0 != 0)
+    if (g_DeltaTime0 != Q12(0.0f))
     {
         if (sp28 >= sp2C)
         {
@@ -489,20 +489,20 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 }
                 else
                 {
-                    var_a0_2 = 0x2000;
+                    var_a0_2 = Q12(2.0f);
                 }
 
-                if (var_a0_2 < 0x800)
+                if (var_a0_2 < Q12(0.5f))
                 {
-                    var_a0_2 = 0x800;
+                    var_a0_2 = Q12(0.5f);
                 }
-                else if (var_a0_2 > 0x2000)
+                else if (var_a0_2 > Q12(2.0f))
                 {
-                    var_a0_2 = 0x2000;
+                    var_a0_2 = Q12(2.0f);
                 }
 
-                temp_v1 = FP_TO(var_a0_2 - 0x800, Q12_SHIFT) / 6144;
-                var_s2  = Q12_MULT_PRECISE(temp_v1, -0x1800) + 0x1C00;
+                temp_v1 = FP_TO(var_a0_2 - Q12(0.5f), Q12_SHIFT) / 6144;
+                var_s2  = Q12_MULT_PRECISE(temp_v1, Q12(-1.5f)) + Q12(1.75f);
                 var_s2  = Q12_MULT_PRECISE(var_s2, sp48);
 
                 if (var_s2 < 0xAA)
@@ -553,7 +553,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
                                 sp30 = SquareRoot12(temp_s0);
 
-                                if (temp_s1_2->flags_3E & 2)
+                                if (temp_s1_2->flags_3E & CharaFlag_Unk2)
                                 {
                                     temp_s0 = temp_s0 - 0x800;
                                     if (temp_s0 < 0)
@@ -571,11 +571,11 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                                     }
                                 }
 
-                                if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & 1))
+                                if (!(g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0)))
                                 {
                                     if (temp_t3_2 >= sp30)
                                     {
-                                        if (sp30 <= 0x2000)
+                                        if (sp30 <= Q12(2.0f))
                                         {
                                             sp30   = 0;
                                             var_s2 = 0;
@@ -836,7 +836,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                 {
                     case 32:
                     case 33:
-                        if (sp30 != -1)
+                        if (sp30 != NO_VALUE)
                         {
                             if (g_SysWork.field_2388.field_154.effectsInfo_0.field_0.s_field_0.field_0 & (1 << 0))
                             {
@@ -875,7 +875,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
 
                     case 8:
                     case 9:
-                        var_s0_2 = -1;
+                        var_s0_2 = NO_VALUE;
                         break;
 
                     default:
@@ -883,7 +883,7 @@ s32 func_8008A3E0(s_SubCharacter* chara) // 0x8008A3E0
                         break;
                 }
 
-                if (var_s0_2 != -1)
+                if (var_s0_2 != NO_VALUE)
                 {
                     func_8009151C(var_s0_2, chara->field_44.field_8 != 0, func_8007FD2C());
                 }

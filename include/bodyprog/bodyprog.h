@@ -174,6 +174,13 @@ typedef enum _StaticModelLoadState
     StaticModelLoadState_Loaded    = 3
 } e_StaticModelLoadState;
 
+/** @brief Reset types used in `MainLoop_ShouldWarmReset`. */
+typedef enum _ResetType
+{
+    ResetType_None     = 0,
+    ResetType_WarmBoot = 2
+} e_ResetType;
+
 // ================
 // UNKNOWN STRUCTS
 // ================
@@ -1600,7 +1607,7 @@ typedef struct _MapOverlayHeader
     void                   (*worldObjectsInit_3C)(void); // func(?).
     void                   (*worldObjectsUpdate_40)(void);
     void                   (*func_44)();
-    void                   (*func_48)(); // func(?).
+    void                   (*npcSpawnEvent_48)(); // func(?).
     s_MapHdr_field_4C*     unkTable1_4C; // Related to collision?
     s16                    unkTable1Count_50;
     s8                     unk_52[2];
@@ -1685,7 +1692,7 @@ typedef struct _MapOverlayHeader
     s32*                   windSpeedZ_188;
     s32*                   data_18C;
     s32*                   data_190;
-    void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter*, s_AnmHeader*, GsCOORDINATE2*); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
+    void                   (*charaUpdateFuncs_194[Chara_Count])(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE2* coords); /** Guessed params. Funcptrs for each `e_CharacterId`, set to 0 for IDs not included in the map overlay. Called by `Game_NpcUpdate`. */
     s8                     charaGroupIds_248[GROUP_CHARA_COUNT];                              /** `e_CharacterId` values where if `s_MapPoint2d::data.spawnInfo.charaId_4 == Chara_None`, `charaGroupIds_248[0]` is used for `charaSpawns_24C[0]` and `charaGroupIds_248[1]` for `charaSpawns_24C[1]`. */
     s_MapPoint2d           charaSpawns_24C[2][16];                                            /** Array of character type/position/flags. `flags_6 == 0` are unused slots? Read by `Game_NpcRoomInitSpawn`. */
     VC_ROAD_DATA           roadDataList_3CC[48];
@@ -3607,10 +3614,11 @@ u32 func_8008A270(s32 idx);
 
 s32 func_8008A35C(s_800AD4C8* arg0, s32 arg1);
 
-void func_8008A384(s_SubCharacter* chara);
+void Chara_Flag8Clear(s_SubCharacter* chara);
 
-void func_8008A398(s_SubCharacter* chara);
+void Chara_Flag8Set(s_SubCharacter* chara);
 
+/** Large function. Runs if `CharaFlag_Unk8` is set. */
 void func_8008A3AC(s_SubCharacter* chara);
 
 s32 func_8008A3E0(s_SubCharacter* chara);
@@ -3959,8 +3967,13 @@ void SysWork_SavegameUpdatePlayer(void);
 /** @brief Updates SysWork with player info from the savegame buffer (position, rotation, health). */
 void SysWork_SavegameReadPlayer(void);
 
+/** @brief Checks for a specific combination of inputs to determine if a soft reboot should take place.
+ *
+ * @return `ResetType_WarmBoot` if a soft reboot should take place, `ResetType_None` otherwise.
+ */
 s32 MainLoop_ShouldWarmReset(void);
 
+/** @brief Handles a warm game reboot. */
 void Game_WarmBoot(void);
 
 /** Handles `g_GameWork.gameStateStep_598[0]`.
@@ -3971,6 +3984,7 @@ void GameFs_MapStartup(void); // 0x80034964
 /** Draws the loading screen with Harry running. */
 void Gfx_LoadingScreenDraw(void); // 0x80034E58
 
+/** @brief Clears all NPC fields for reuse. */
 void Game_NpcClear(void); // 0x80034EC8
 
 void Game_NpcInit(void); // 0x80034F18
@@ -4080,7 +4094,11 @@ void Savegame_EnemyStateUpdate(s_SubCharacter* chara);
 
 void Event_Update(bool disableButtonEvents);
 
-void Chara_DamageFlagUpdate(s_SubCharacter* chara);
+/** @brief Updates character's damage flag to reflect if damage was taken.
+ *
+ * @param chara Character to update.
+ */
+void Chara_DamagedFlagUpdate(s_SubCharacter* chara);
 
 void func_80037E78(s_SubCharacter* chara);
 

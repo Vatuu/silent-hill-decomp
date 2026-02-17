@@ -31,15 +31,15 @@ void Savegame_EnemyStateUpdate(s_SubCharacter* chara) // 0x80037DC4
     }
 }
 
-void Chara_DamageFlagUpdate(s_SubCharacter* chara) // 0x80037E40
+void Chara_DamagedFlagUpdate(s_SubCharacter* chara) // 0x80037E40
 {
     if (chara->damage_B4.amount_C > Q12(0.0f))
     {
-        chara->flags_3E |= CharaFlag_Unk6;
+        chara->flags_3E |= CharaFlag_Damaged;
     }
     else
     {
-        chara->flags_3E &= ~CharaFlag_Unk6;
+        chara->flags_3E &= ~CharaFlag_Damaged;
     }
 }
 
@@ -52,13 +52,13 @@ void func_80037E78(s_SubCharacter* chara) // 0x80037E78
     if (chara->health_B0 <= Q12(0.0f) && (*(s32*)&chara->headingAngle_3C & 0x600000) == 0x200000)
     {
         idx = chara->attackReceived_41;
-        if (idx < 39)
+        if (idx < 39) // TODO: What weapon attack?
         {
             cond = D_800AD4C8[idx].field_10 == 3;
             func_800914C4(cond, func_8009146C(cond) + 1);
         }
 
-        chara->flags_3E |= CharaFlag_Unk7;
+        chara->flags_3E |= CharaFlag_Dead;
     }
 }
 
@@ -82,9 +82,9 @@ void Game_NpcRoomInitSpawn(bool cond) // 0x80037F24
     {
         func_80037154();
 
-        if (g_MapOverlayHeader.func_48 != NULL)
+        if (g_MapOverlayHeader.npcSpawnEvent_48 != NULL)
         {
-            g_MapOverlayHeader.func_48();
+            g_MapOverlayHeader.npcSpawnEvent_48();
         }
     }
 
@@ -316,8 +316,8 @@ void Game_NpcUpdate(void) // 0x80038354
             animDataInfoIdx = g_CharaAnimInfoIdxs[npc->model_0.charaId_0];
             coord           = g_CharaTypeAnimInfo[animDataInfoIdx].npcCoords_14;
 
-            func_8008A384(npc);
-            Chara_DamageFlagUpdate(npc);
+            Chara_Flag8Clear(npc);
+            Chara_DamagedFlagUpdate(npc);
             func_8003BD48(npc);
 
             g_MapOverlayHeader.charaUpdateFuncs_194[npc->model_0.charaId_0](npc, g_CharaTypeAnimInfo[animDataInfoIdx].animFile1_8, coord);
