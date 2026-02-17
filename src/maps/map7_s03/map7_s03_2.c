@@ -4856,6 +4856,7 @@ void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warp
 void func_800E16FC(void) // 0x800E16FC
 {
     D_800F4B40.field_0  = NO_VALUE;
+    D_800F4B40.timer_8  = Q12(0.0f);
     D_800F4B40.field_18 = 250;
     D_800F4B40.field_19 = 200;
     D_800F4B40.field_1A = 150;
@@ -4867,7 +4868,6 @@ void func_800E16FC(void) // 0x800E16FC
     D_800F4B40.field_64[0].vec_0 = &D_800F4B40.field_B8[4];
     D_800F4B40.field_64[0].vec_8 = &D_800F4B40.field_B8[5];
     D_800F4B40.field_64[1].vec_0 = &D_800F4B40.field_B8[6];
-    D_800F4B40.timer_8           = Q12(0.0f);
     D_800F4B40.field_64[1].vec_8 = &D_800F4B40.field_B8[7];
 
     func_800E1788(0);
