@@ -677,6 +677,7 @@ void func_800DDDB0(s_SubCharacter* incubus);
 void func_800DDDD8(s_SubCharacter* incubus);
 void func_800DDEEC(s_SubCharacter* incubus);
 void func_800DDF14(s_SubCharacter* incubus);
+void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DEA54(s_SubCharacter* incubus, GsCOORDINATE2* coords);
