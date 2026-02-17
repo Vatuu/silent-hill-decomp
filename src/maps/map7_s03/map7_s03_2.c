@@ -2649,15 +2649,207 @@ void func_800DACFC(VECTOR3* vec, s32 arg1, s32 arg2) // 0x800DACFC
     func_800DAC04(vec, arg1, arg2);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DAD54);
+void func_800DAD54(void) // 0x800DAD54
+{
+    s32              i;
+    s_func_800DAD54* ptr;
+    VECTOR3*         vec;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DAD90);
+    vec = &D_800F3D58.field_0;
+    ptr = (s_func_800DAD54*)0x801D6E00;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DADE0);
+    for (i = 399; i >= 0; i--, ptr++)
+    {
+        ptr->field_28 = 0;
+    }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DB154);
+    vec->vx = 0x40000;
+    vec->vy = 0;
+    vec->vz = -0x40000;
+}
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DB288);
+s_func_800DAD54* func_800DAD90(void) // 0x800DAD90
+{
+    s32              i;
+    s_func_800DAD54* ptr;
+
+    ptr = (s_func_800DAD54*)0x801D6E00;
+
+    for (i = 0; i < 400; i++, ptr++)
+    {
+        if (ptr->field_28 == 0)
+        {
+            ptr->field_4  = 0;
+            ptr->field_28 = 1;
+            return ptr;
+        }
+    }
+    return NULL;
+}
+
+void func_800DADE0(s_func_800DAD54* arg0, s_800F3D48_0_0* arg1) // 0x800DADE0
+{
+    SVECTOR   sp10;                                             // Q23.8
+    DVECTOR   sp18[2];
+    s32       sp20;
+    s16       x0;
+    s16       y0;
+    s32       offsetX;
+    s32       offsetY;
+    s32       temp_lo_4;
+    s32       temp_lo_5;
+    s32       temp_s1;
+    s32       temp_s3;
+    s32       temp_t0;
+    s32       temp_v0;
+    s32       temp;
+    s32       temp2;
+    s32       bufferIdx;
+    s32       otIdx;
+    s32       temp5;
+    s32       temp6;
+    GsOT_TAG* ot;
+    POLY_FT4* poly;
+
+    temp5   = 0x10101;
+    temp_s3 = arg0->field_1C * temp5;
+
+    sp10.vx = Q12_TO_Q8(arg0->field_C.vx);
+    sp10.vy = Q12_TO_Q8(arg0->field_C.vy);
+    sp10.vz = Q12_TO_Q8(arg0->field_C.vz);
+
+    temp_s1 = RotTransPers(&sp10, &sp18[0], &sp18[1], &sp20);
+
+    if (sp20 & 0x20000)
+    {
+        return;
+    }
+
+    temp_v0 = ReadGeomScreen();
+    temp_t0 = arg0->field_8;
+
+    offsetX = arg1->field_4;
+    offsetY = arg1->field_6;
+
+    offsetX = ((offsetX * temp_v0) / 4) / temp_s1;
+    offsetY = ((offsetY * temp_v0) / 4) / temp_s1;
+
+    temp_lo_4 = ((arg1->field_C / 4) * temp_v0) / temp_s1;
+    temp_lo_5 = ((arg1->field_E / 4) * temp_v0) / temp_s1;
+
+    offsetX = Q12_MULT_PRECISE(offsetX, temp_t0);
+    offsetY = Q12_MULT_PRECISE(offsetY, temp_t0);
+
+    temp  = Q12_MULT_PRECISE(temp_lo_4, temp_t0);
+    temp2 = Q12_MULT_PRECISE(temp_lo_5, temp_t0);
+
+    temp6 = sp18[0].vy;
+    x0    = sp18[0].vx - temp;
+    y0    = temp6 - temp2;
+
+    if (x0 < (-offsetX - 160) || x0 > 160 ||
+        y0 < (-offsetY - 160) || y0 > 112)
+    {
+        return;
+    }
+
+    poly = GsOUT_PACKET_P;
+
+    setXY4(poly,
+           x0, y0,
+           x0 + offsetX, y0,
+           x0, y0 + offsetY,
+           x0 + offsetX, y0 + offsetY);
+
+    setUV4(poly, arg1->field_0, arg1->field_2, arg1->field_0 + arg1->field_4, arg1->field_2,
+           arg1->field_0, arg1->field_2 + arg1->field_6, arg1->field_0 + arg1->field_4, arg1->field_2 + arg1->field_6);
+
+    *(s32*)&poly->r0 = temp_s3;
+    poly->tpage      = arg1->field_8;
+    poly->clut       = arg1->field_A;
+
+    setPolyFT4(poly);
+    setSemiTrans(poly, 1);
+
+    bufferIdx = g_ActiveBufferIdx;
+    ot        = g_OrderingTable0[bufferIdx].org;
+    otIdx     = temp_s1 >> 1;
+    ot        = &ot[otIdx];
+
+    addPrim(ot, poly);
+    poly++;
+
+    GsOUT_PACKET_P = poly;
+}
+
+void func_800DB154(GsCOORDINATE2* arg0) // 0x800DB154
+{
+    MATRIX           sp10;
+    VECTOR           sp30[18];
+    GsCOORDINATE2*   var_s1;
+    s32              i;
+    s_func_800DAD54* var_s3;
+    VECTOR*          temp_v0;
+    VECTOR3*         vec;
+    s32              temp;
+
+    var_s3 = (s_func_800DAD54*)0x801D6E00;
+    temp   = 0x11;
+
+    vec = &D_800F3D58.field_0;
+
+    var_s1 = arg0;
+    var_s1++;
+
+    for (i = 1; i <= temp; i++, var_s1++)
+    {
+        Vw_CoordHierarchyMatrixCompute(var_s1, &sp10);
+
+        sp30[i].vx = (sp10.t[0] * 0x10) - vec->vx;
+        sp30[i].vy = (sp10.t[1] * 0x10) - vec->vy;
+        sp30[i].vz = (sp10.t[2] * 0x10) - vec->vz;
+    }
+
+    func_800D90C8();
+
+    for (i = 0; i < 400; i++, var_s3++)
+    {
+        if (var_s3->field_28 != 0)
+        {
+            temp_v0            = &sp30[var_s3->field_24];
+            var_s3->field_C.vx = temp_v0->vx;
+            var_s3->field_C.vy = temp_v0->vy;
+            var_s3->field_C.vz = temp_v0->vz;
+            // TODO: `func_800D88E8` returns different struct.
+            func_800DADE0(var_s3, (s_800F3D48_0_0*)func_800D88E8(var_s3));
+        }
+    }
+}
+
+void func_800DB288(void) // 0x800DB288
+{
+    s32              i;
+    s32              rand;
+    s_func_800DAD54* ptr;
+
+    for (i = 1; i < 18; i++)
+    {
+        ptr = func_800DAD90();
+
+        if (ptr != NULL)
+        {
+            rand = Rng_Rand16() / 0x1000;
+
+            ptr->field_0 = &D_800EC680[rand];
+
+            rand = Rng_Rand16() / 0x10;
+
+            ptr->field_8  = rand + 0x800;
+            ptr->field_1C = 0x60;
+            ptr->field_24 = i;
+        }
+    }
+}
 
 #include "maps/shared/sharedFunc_800CD6B0_3_s03.h" // 0x800DB338
 
@@ -2690,7 +2882,171 @@ void func_800DB608(void) // 0x800DB608
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DB6D0);
+void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 arg4) // 0x800DB6D0
+{
+    MATRIX  sp10;
+    MATRIX  sp30;
+    SVECTOR sp50;
+    s32     temp_a3;
+    s32     sp5C;
+    s32     temp_a0;
+    s32     sp64;
+    s32     sp68;
+    s32     sp6C;
+    s32     var_s4;
+    s32     var_s5;
+    s32     var_s0;
+    s32     temp_s3;
+    s32     temp_s6;
+    s32     temp_s2;
+    s32     temp_v0_2;
+    s32     temp_v1;
+    s32     var_fp;
+    s32     var_s1;
+    s32     temp2;
+
+    temp_s3 = arg4;
+
+    if (arg3 != NULL)
+    {
+        var_s4 = -arg3->m[2][0];
+        var_s5 = arg3->m[0][0];
+        sp68   = -arg3->m[1][2];
+        sp6C   = arg3->m[1][1];
+    }
+    else
+    {
+        var_s4 = 0;
+        var_s5 = 0x1000;
+        sp68   = 0;
+        sp6C   = 0x1000;
+    }
+
+    temp_v1 = arg2->vx;
+    var_s1  = temp_v1 - arg1->vx;
+    temp_s6 = arg2->vy - arg1->vy;
+    var_s0  = arg2->vz - arg1->vz;
+
+    temp_a3 = Q12_MULT(var_s1, var_s1);
+    temp_a0 = Q12_MULT(var_s0, var_s0);
+    sp5C    = Q12_MULT(temp_s6, temp_s6);
+
+    temp_s2 = SquareRoot12(temp_a3 + temp_a0);
+
+    if (temp_s2 != 0)
+    {
+        sp64   = FP_TO(var_s1, Q12_SHIFT) / temp_s2;
+        var_fp = FP_TO(var_s0, Q12_SHIFT) / temp_s2;
+    }
+    else
+    {
+        sp64   = var_s4;
+        var_fp = var_s5;
+    }
+
+    if (arg3 != NULL)
+    {
+        var_s0  = ratan2(var_s4, var_s5);
+        temp_v1 = ratan2(sp64, var_fp) - var_s0;
+        temp_v1 = FP_ANGLE_NORM_S(temp_v1);
+        temp2   = ABS(temp_v1);
+
+        if (temp_s3 < temp2)
+        {
+            if (temp_v1 <= 0)
+            {
+                var_s0 = var_s0 - temp_s3;
+            }
+            else
+            {
+                var_s0 = var_s0 + temp_s3;
+            }
+            sp64   = Math_Sin(var_s0);
+            var_fp = Math_Cos(var_s0);
+        }
+    }
+
+    temp_v0_2 = SquareRoot12(sp5C + temp_a3 + temp_a0);
+
+    if (temp_v0_2 != 0)
+    {
+        var_s4 = -FP_TO(temp_s6, Q12_SHIFT) / temp_v0_2;
+        var_s1 = FP_TO(temp_s2, Q12_SHIFT) / temp_v0_2;
+    }
+    else
+    {
+        var_s4 = sp68;
+        var_s1 = sp6C;
+    }
+
+    temp_s3 = temp_s3 / 2;
+
+    if (arg3 != NULL)
+    {
+        var_s0  = ratan2(sp68, sp6C);
+        temp_v1 = ratan2(var_s4, var_s1) - var_s0;
+        temp_v1 = FP_ANGLE_NORM_S(temp_v1);
+        temp2   = ABS(temp_v1);
+
+        if (temp_s3 < temp2)
+        {
+            if (temp_v1 <= 0)
+            {
+                var_s0 = var_s0 - temp_s3;
+            }
+            else
+            {
+                var_s0 = var_s0 + temp_s3;
+            }
+
+            var_s4 = Math_Sin(var_s0);
+            var_s1 = Math_Cos(var_s0);
+        }
+    }
+
+    vwGetViewAngle(&sp50);
+
+    sp10.m[0][0] = 0x1000;
+    sp10.m[0][1] = 0;
+    sp10.m[0][2] = 0;
+
+    sp10.m[1][0] = 0;
+    sp10.m[1][1] = 0x1000;
+    sp10.m[1][2] = 0;
+
+    sp10.m[2][0] = 0;
+    sp10.m[2][1] = 0;
+    sp10.m[2][2] = 0x1000;
+
+    Math_RotMatrixZ(0, &sp10);
+    MulMatrix(arg0, &sp10);
+
+    sp30.m[0][0] = var_fp;
+    sp30.m[0][1] = 0;
+    sp30.m[0][2] = sp64;
+
+    sp30.m[1][0] = 0;
+    sp30.m[1][1] = 0x1000;
+    sp30.m[1][2] = 0;
+
+    sp30.m[2][0] = -sp64;
+    sp30.m[2][1] = 0;
+    sp30.m[2][2] = var_fp;
+
+    sp10.m[0][0] = 0x1000;
+    sp10.m[0][1] = 0;
+    sp10.m[0][2] = 0;
+
+    sp10.m[1][0] = 0;
+    sp10.m[1][1] = var_s1;
+    sp10.m[1][2] = -var_s4;
+
+    sp10.m[2][0] = 0;
+    sp10.m[2][1] = var_s4;
+    sp10.m[2][2] = var_s1;
+
+    MulMatrix0(&sp30, &sp10, arg0);
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBA08);
 

@@ -286,6 +286,19 @@ typedef struct
     MATRIX  mat_10;
 } s_800F3D58;
 
+typedef struct
+{
+    s_800F3D48_0* field_0;
+    ;
+    s32    field_4;
+    s32    field_8;
+    VECTOR field_C;
+    s32    field_1C;
+    s8     unk_20[4];
+    s32    field_24;
+    s32    field_28;
+} s_func_800DAD54;
+
 extern s32 D_800F2438; // Length of `D_800F3D48` array.
 
 extern s_800F3D48* D_800F3D48;
@@ -899,5 +912,17 @@ void func_800DA9F8(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 void func_800DAB18(VECTOR3* arg0, s32 arg1, s32 arg2, s32 arg3);
 
 void func_800DAC04(VECTOR3* arg0, void* arg1, s32 arg2);
+
+void func_800DAD54(void);
+
+s_func_800DAD54* func_800DAD90(void);
+
+void func_800DADE0(s_func_800DAD54* arg0, s_800F3D48_0_0* arg1);
+
+void func_800DB154(GsCOORDINATE2* arg0);
+
+void func_800DB288(void);
+
+void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 arg4);
 
 #endif
