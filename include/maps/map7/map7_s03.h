@@ -707,6 +707,7 @@ void func_800DFE10(s_SubCharacter* chara);
 void func_800DFEF0(s_SubCharacter* chara);
 void func_800DFF28(s_SubCharacter* chara);
 void func_800DFF44(s_SubCharacter* chara);
+void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords);
 q19_12 func_800E04C4(void);
 void func_800E0528(s_SubCharacter* chara);
 void func_800E05DC(s_SubCharacter* chara, GsCOORDINATE2* coords);

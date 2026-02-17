@@ -4191,7 +4191,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                 {
                     localIncubus->properties_E4.incubus.timer_E8 = Q12(0.3f);
                     incubus->model_0.stateStep_3++;
-                    return;
+                    break;
                 }
                 localIncubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
             }
@@ -4839,7 +4839,227 @@ void func_800DFF44(s_SubCharacter* chara) // 0x800DFF44
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DFF60);
+void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
+{
+    MATRIX          coordsMat;
+    VECTOR3         coordsVec;
+    q3_12           angle;
+    s_SubCharacter* localChara;
+
+    localChara = chara;
+
+    // TODO: Use Chara_Unknown23 properties struct instead of Incubus properties.
+
+    if (chara->model_0.stateStep_3 == 0)
+    {
+        chara->model_0.stateStep_3++;
+        chara->properties_E4.incubus.timer_E8 = Q12(1.5f);
+        chara->flags_3E                      &= ~CharaFlag_Unk3;
+        return;
+    }
+
+    if (coords == NULL)
+    {
+        func_800DFE10(chara);
+    }
+
+    switch (chara->model_0.stateStep_3)
+    {
+        case 1:
+            if (coords)
+            {
+                Vw_CoordHierarchyMatrixCompute(&coords[6], &coordsMat);
+                coordsVec.vx = Q8_TO_Q12(coordsMat.t[0]);
+                coordsVec.vy = Q8_TO_Q12(coordsMat.t[1]);
+                coordsVec.vz = Q8_TO_Q12(coordsMat.t[2]);
+
+                if (!(Rng_Rand16() & 0xF0))
+                {
+                    func_800DD0EC(&coordsVec, 6);
+                }
+
+                Vw_CoordHierarchyMatrixCompute(&coords[10], &coordsMat);
+                coordsVec.vx = Q8_TO_Q12(coordsMat.t[0]);
+                coordsVec.vy = Q8_TO_Q12(coordsMat.t[1]);
+                coordsVec.vz = Q8_TO_Q12(coordsMat.t[2]);
+
+                if (!(Rng_Rand16() & 0xF0))
+                {
+                    func_800DD0EC(&coordsVec, 10);
+                }
+
+                if (localChara->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                {
+                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    {
+                        localChara->properties_E4.incubus.timer_E8 = Q12(2.0f);
+                    }
+                    else
+                    {
+                        localChara->properties_E4.incubus.timer_E8 = Q12(2.5f);
+                    }
+
+                    chara->model_0.stateStep_3++;
+                }
+
+                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+            }
+            break;
+
+        case 2:
+            if (coords)
+            {
+                Vw_CoordHierarchyMatrixCompute(&coords[6], &coordsMat);
+                coordsVec.vx = Q8_TO_Q12(coordsMat.t[0]);
+                coordsVec.vy = Q8_TO_Q12(coordsMat.t[1]);
+                coordsVec.vz = Q8_TO_Q12(coordsMat.t[2]);
+
+                if (!(Rng_Rand16() & 0xFC))
+                {
+                    func_800DD0EC(&coordsVec, 6);
+                }
+
+                if (!(Rng_Rand16() & 0x30))
+                {
+                    func_800DD260(&coordsVec, &coordsVec);
+                }
+
+                Vw_CoordHierarchyMatrixCompute(&coords[10], &coordsMat);
+                coordsVec.vx = Q8_TO_Q12(coordsMat.t[0]);
+                coordsVec.vy = Q8_TO_Q12(coordsMat.t[1]);
+                coordsVec.vz = Q8_TO_Q12(coordsMat.t[2]);
+
+                if (!(Rng_Rand16() & 0xFC))
+                {
+                    func_800DD0EC(&coordsVec, 10);
+                }
+
+                if (!(Rng_Rand16() & 0x30))
+                {
+                    func_800DD260(&coordsVec, &coordsVec);
+                }
+
+                if (!(Rng_Rand16() & 0xFC))
+                {
+                    func_800DD464(&coordsVec);
+                }
+
+                angle = abs(func_8005BF38(ratan2(
+                                              g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
+                                              g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
+                                          chara->rotation_24.vy));
+
+                if (localChara->properties_E4.incubus.timer_E8 < Q12(0.0f) && angle < FP_ANGLE(12.0f))
+                {
+                    localChara->properties_E4.incubus.timer_E8 = Q12(0.3f);
+                    chara->model_0.stateStep_3++;
+                    break;
+                }
+
+                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+            }
+            break;
+
+        case 3:
+            if (coords)
+            {
+                Vw_CoordHierarchyMatrixCompute(&coords[6], &coordsMat);
+                coordsVec.vx = Q8_TO_Q12(coordsMat.t[0]);
+                coordsVec.vy = Q8_TO_Q12(coordsMat.t[1]);
+                coordsVec.vz = Q8_TO_Q12(coordsMat.t[2]);
+
+                if (!(Rng_Rand16() & 0xFC))
+                {
+                    func_800DD0EC(&coordsVec, 6);
+                }
+
+                if (!(Rng_Rand16() & 0x30))
+                {
+                    func_800DD3D4(&coordsVec, D_800F48A8.velocityX_3C, 0, D_800F48A8.velocityZ_40);
+                }
+
+                Vw_CoordHierarchyMatrixCompute(&coords[10], &coordsMat);
+                coordsVec.vx = Q8_TO_Q12(coordsMat.t[0]);
+                coordsVec.vy = Q8_TO_Q12(coordsMat.t[1]);
+                coordsVec.vz = Q8_TO_Q12(coordsMat.t[2]);
+
+                if (!(Rng_Rand16() & 0xFC))
+                {
+                    func_800DD0EC(&coordsVec, 10);
+                }
+
+                if (!(Rng_Rand16() & 0x30))
+                {
+                    func_800DD3D4(&coordsVec, D_800F48A8.velocityX_3C, 0, D_800F48A8.velocityZ_40);
+                }
+
+                if (!(Rng_Rand16() & 0xFC))
+                {
+                    func_800DD464(&coordsVec);
+                }
+
+                if (localChara->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                {
+                    chara->model_0.stateStep_3++;
+
+                    if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Hard)
+                    {
+                        localChara->properties_E4.incubus.timer_E8 = Q12(2.5f);
+                    }
+                    else
+                    {
+                        localChara->properties_E4.incubus.timer_E8 = Q12(1.5f);
+                    }
+                }
+
+                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+            }
+            break;
+
+        case 4:
+            if (coords)
+            {
+                Vw_CoordHierarchyMatrixCompute(&coords[6], &coordsMat);
+                coordsVec.vx = Q8_TO_Q12(coordsMat.t[0]);
+                coordsVec.vy = Q8_TO_Q12(coordsMat.t[1]);
+                coordsVec.vz = Q8_TO_Q12(coordsMat.t[2]);
+
+                if (!(Rng_Rand16() & 0x70))
+                {
+                    func_800DD3D4(&coordsVec, D_800F48A8.velocityX_3C, 0, D_800F48A8.velocityZ_40);
+                }
+
+                Vw_CoordHierarchyMatrixCompute(&coords[10], &coordsMat);
+                coordsVec.vx = Q8_TO_Q12(coordsMat.t[0]);
+                coordsVec.vy = Q8_TO_Q12(coordsMat.t[1]);
+                coordsVec.vz = Q8_TO_Q12(coordsMat.t[2]);
+
+                if (!(Rng_Rand16() & 0x70))
+                {
+                    func_800DD3D4(&coordsVec, D_800F48A8.velocityX_3C, 0, D_800F48A8.velocityZ_40);
+                }
+
+                if (!(Rng_Rand16() & 0xFC))
+                {
+                    func_800DD464(&coordsVec);
+                }
+
+                if (localChara->properties_E4.incubus.timer_E8 < Q12(0.0f))
+                {
+                    chara->model_0.stateStep_3++;
+                }
+
+                localChara->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+            }
+            break;
+
+        case 5:
+            chara->model_0.controlState_2 = 2;
+            chara->model_0.stateStep_3    = 0;
+            chara->flags_3E              |= CharaFlag_Unk3;
+            break;
+    }
+}
 
 q19_12 func_800E04C4(void) // 0x800E04C4
 {
