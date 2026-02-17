@@ -4499,7 +4499,7 @@ void func_800E16FC(void) // 0x800E16FC
     D_800F4B40.field_1C[9].vec_0  = &D_800F4B40.field_B8[4];
     D_800F4B40.field_1C[10].vec_0 = &D_800F4B40.field_B8[5];
     D_800F4B40.field_1C[13].vec_0 = &D_800F4B40.field_B8[6];
-    D_800F4B40.field_8            = 0;
+    D_800F4B40.timer_8            = Q12(0.0f);
     D_800F4B40.field_1C[14].vec_0 = &D_800F4B40.field_B8[7];
 
     func_800E1788(0);
@@ -4511,9 +4511,9 @@ void func_800E1788(s32 arg0) // 0x800E1788
     {
         D_800F4B40.field_0  = arg0;
         D_800F4B40.field_4  = 0;
-        D_800F4B40.field_8  = 0;
+        D_800F4B40.timer_8  = Q12(0.0f);
         D_800F4B40.field_C  = 0;
-        D_800F4B40.field_10 = 0;
+        D_800F4B40.timer_10 = Q12(0.0f);
     }
 }
 
@@ -4608,7 +4608,268 @@ const char* MAP_MESSAGES[] = {
     "~J0(1.0)\tGo. ~E "
 };
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E1854);
+void func_800E1854(void) // 0x800E1854
+{
+    VECTOR3 sp10;
+    VECTOR3 sp20;
+    q19_12  var_v0;
+
+    switch (D_800F4B40.field_0)
+    {
+        case NO_VALUE:
+            return;
+
+        case 0:
+            func_800E1FE0(&D_800ED274);
+            break;
+
+        case 1:
+            if (D_800F4B40.field_4 == 0)
+            {
+                D_800F4B40.field_4 = 1;
+                func_800E1FE0(&D_800ED2B8);
+            }
+            break;
+
+        case 2:
+            if (D_800F4B40.field_4 == 0)
+            {
+                D_800F4B40.field_4 = 1;
+                func_800E1FE0(&D_800ED2FC);
+            }
+            break;
+
+        case 3:
+            switch (D_800F4B40.field_4)
+            {
+                case 0:
+                    func_800E1FE0(&D_800ED340);
+                    D_800F4B40.field_4++;
+                    break;
+
+                case 1:
+                    if (D_800F4B40.timer_8 > Q12(0.6f))
+                    {
+                        D_800F4B40.field_4 = 2;
+                        func_800E1FE0(&D_800ED384);
+                        D_800F4B40.timer_8 = Q12(0.0f);
+                    }
+                    break;
+            }
+            break;
+
+        case 5:
+            if (D_800F4B40.field_4 == 0)
+            {
+                D_800F4B40.field_4 = 1;
+                func_800E1FE0(&D_800ED3C8);
+            }
+            break;
+
+        case 6:
+            if (D_800F4B40.field_4 == 0)
+            {
+                D_800F4B40.field_4 = 1;
+                func_800E1FE0(&D_800ED40C);
+            }
+            break;
+
+        case 7:
+            D_800F4B30.vx = Q8_TO_Q12(g_SysWork.npcCoords_FC0[1].workm.t[0]);
+            D_800F4B30.vy = Q8_TO_Q12(g_SysWork.npcCoords_FC0[1].workm.t[1]);
+            D_800F4B30.vz = Q8_TO_Q12(g_SysWork.npcCoords_FC0[1].workm.t[2]);
+
+            if (D_800F4B40.field_4 == 0)
+            {
+                D_800F4B40.field_4 = 1;
+                func_800E1FE0(&D_800ED450);
+            }
+            break;
+
+        case 8:
+            D_800F4B30.vx = Q8_TO_Q12(g_SysWork.npcCoords_FC0[1].workm.t[0]);
+            D_800F4B30.vy = Q8_TO_Q12(g_SysWork.npcCoords_FC0[1].workm.t[1]);
+            D_800F4B30.vz = Q8_TO_Q12(g_SysWork.npcCoords_FC0[1].workm.t[2]);
+
+            if (D_800F4B40.field_4 == 0 && D_800F4B40.timer_8 > Q12(0.5f))
+            {
+                D_800F4B40.field_4 = 1;
+                func_800E1FE0(&D_800ED494);
+            }
+            break;
+
+        case 9:
+            if (D_800F4B40.field_4 == 0)
+            {
+                D_800F4B40.field_4 = 1;
+                func_800E1FE0(&D_800ED4D8);
+            }
+            break;
+
+        case 11:
+            if (D_800F4B40.field_4 == 0)
+            {
+                D_800F4B40.field_4 = 1;
+                func_800E1FE0(&D_800ED51C);
+            }
+            break;
+
+        case 12:
+            switch (D_800F4B40.field_4)
+            {
+                case 0:
+                    D_800F4B40.field_4 = 1;
+                    func_800E1FE0(&D_800ED560);
+                    break;
+
+                case 1:
+                    if (D_800F4B40.timer_8 > Q12(3.5f))
+                    {
+                        D_800F4B40.field_4 = 2;
+                        func_800E1FE0(&D_800ED5A4);
+                        D_800F4B40.timer_8 = Q12(0.0f);
+                    }
+                    break;
+            }
+            break;
+
+        case 13:
+            switch (D_800F4B40.field_4)
+            {
+                case 0:
+                    func_800E1FE0(&D_800ED5E8);
+                    D_800F4B40.field_4++;
+                    break;
+
+                case 1:
+                    if (D_800F4B40.timer_8 > Q12(2.0f))
+                    {
+                        func_800E1FE0(&D_800ED62C);
+                        D_800F4B40.timer_8 = Q12(0.0f);
+                        D_800F4B40.field_4++;
+                    }
+                    break;
+
+                case 2:
+                    if (D_800F4B40.timer_8 > Q12(3.0f))
+                    {
+                        D_800F4B40.timer_8 = Q12(0.0f);
+                        D_800F4B40.field_4++;
+                    }
+                    // @bug Missed `break` here?
+
+                case 3:
+                    if (D_800F4B40.timer_8 > Q12(0.1f))
+                    {
+                        func_800E1FE0(&D_800ED670);
+                        D_800F4B40.timer_8 = Q12(0.0f);
+                        D_800F4B40.field_4++;
+                    }
+                    break;
+
+                case 4:
+                    if (D_800F4B40.timer_8 > Q12(0.25f))
+                    {
+                        func_800E1FE0(&D_800ED62C);
+                        D_800F4B40.timer_8 = Q12(0.0f);
+                        D_800F4B40.field_4--;
+                    }
+                    break;
+            }
+            break;
+
+        case 14:
+            if (D_800F4B40.field_4 == 0 && D_800F4B40.timer_8 > Q12(4.0f))
+            {
+                func_800E1FE0(&D_800ED6B4);
+                D_800F4B40.field_4++;
+            }
+            break;
+
+        case 15:
+            if (D_800F4B40.field_4 == 0)
+            {
+                func_800E1FE0(&D_800ED6F8);
+                D_800F4B40.field_4++;
+            }
+            break;
+    }
+
+    switch (D_800F4B40.field_0)
+    {
+        case 4:
+            if (D_800F4B40.field_C == 0)
+            {
+                D_800F4B40.field_C = 1;
+                func_800DD7D0(&D_800ED244);
+            }
+
+            if (D_800F4B40.timer_10 < Q12(11.0f))
+            {
+                var_v0 = Q12(0.0f);
+            }
+            else
+            {
+                var_v0 = MIN(D_800F4B40.timer_10 - Q12(11.0f), Q12(6.0f)) / 6;
+            }
+
+            func_800E2664(Q12(1.8f), Q12_MULT_FLOAT(var_v0, 0.3f) + 245);
+            func_800DD868();
+            break;
+
+        case 5:
+            if (D_800F4B40.timer_10 < Q12(2.0f))
+            {
+                VECTOR3* srcPos = &g_SysWork.npcs_1A0[4].position_18;
+                sp10            = *srcPos;
+                sp10.vy        -= Q12(1.1f);
+
+                D_800F4B40.field_C++;
+                if (D_800F4B40.field_C % 2)
+                {
+                    func_800E27D0(Q12(4.0f), Q12(0.4f), 1, &sp10);
+                }
+
+                func_800E27D0(Q12(3.5f), Q12(1.0f), 0, &sp10);
+                func_800E27D0(Q12(3.5f), Q12(0.5f), 0, &sp10);
+                func_800DD868();
+            }
+            break;
+
+        case 10:
+            if (D_800F4B40.field_C == 0)
+            {
+                func_800DD8CC(&D_800ED244);
+                D_800F4B40.field_C++;
+            }
+
+            if (D_800F4B40.timer_10 < Q12(2.0f))
+            {
+                sp20     = D_800ED250;
+                sp20.vy -= Q12(3.81f);
+
+                D_800F4B40.field_C++;
+                if (D_800F4B40.field_C % 2)
+                {
+                    func_800E27D0(Q12(3.5f), Q12(0.5f), 1, &sp20);
+                    func_800E27D0(Q12(3.5f), Q12(0.5f), 1, &sp20);
+                }
+
+                func_800E27D0(Q12(3.0f), Q12(1.0f), 0, &sp20);
+                func_800E27D0(Q12(3.0f), Q12(0.5f), 0, &sp20);
+                func_800DD868();
+            }
+            break;
+    }
+
+    func_800E20A4(&D_800F4B40.field_1C[0], D_800F4B40.field_A4, D_800F4B40.field_1C[8].vec_0, &D_800F4B40.field_1C[9]);
+    func_800E20A4(&D_800F4B40.field_1C[4], D_800F4B40.field_AE, D_800F4B40.field_1C[8].ptr_4, &D_800F4B40.field_1C[13]);
+    func_800E24A0(&D_800F4B40.field_1C[0]);
+    func_800E24A0(&D_800F4B40.field_1C[4]);
+
+    D_800F4B40.timer_8  += g_DeltaTime0;
+    D_800F4B40.timer_10 += g_DeltaTime0;
+}
 
 void func_800E1FE0(s_func_800E1FE0* arg0) // 0x800E1FE0
 {

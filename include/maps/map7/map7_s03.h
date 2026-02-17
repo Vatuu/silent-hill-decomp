@@ -264,9 +264,9 @@ typedef struct
 {
     s32           field_0;
     s32           field_4;
-    s32           field_8;
+    q19_12        timer_8;
     s32           field_C;
-    s32           field_10;
+    q19_12        timer_10;
     u8            unk_14[4];
     u8            field_18;
     u8            field_19;
@@ -452,6 +452,30 @@ extern s_800F3D48_0  D_800EC1B8;
 
 extern s32 D_800EC758[];
 extern s32 D_800EC764[];
+
+extern VECTOR3 D_800F4B30;
+extern VECTOR3 D_800ED244;
+extern VECTOR3 D_800ED250;
+
+// TODO: Possibly array.
+extern s_func_800E1FE0 D_800ED274;
+extern s_func_800E1FE0 D_800ED2B8;
+extern s_func_800E1FE0 D_800ED2FC;
+extern s_func_800E1FE0 D_800ED340;
+extern s_func_800E1FE0 D_800ED384;
+extern s_func_800E1FE0 D_800ED3C8;
+extern s_func_800E1FE0 D_800ED40C;
+extern s_func_800E1FE0 D_800ED450;
+extern s_func_800E1FE0 D_800ED494;
+extern s_func_800E1FE0 D_800ED4D8;
+extern s_func_800E1FE0 D_800ED51C;
+extern s_func_800E1FE0 D_800ED560;
+extern s_func_800E1FE0 D_800ED5A4;
+extern s_func_800E1FE0 D_800ED5E8;
+extern s_func_800E1FE0 D_800ED62C;
+extern s_func_800E1FE0 D_800ED670;
+extern s_func_800E1FE0 D_800ED6B4;
+extern s_func_800E1FE0 D_800ED6F8;
 
 void Ai_BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
@@ -695,6 +719,8 @@ void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warp
 void func_800E16FC(void);
 
 void func_800E1788(s32 arg0);
+
+void func_800E1854(void);
 
 void func_800E1FE0(s_func_800E1FE0* arg0);
 
