@@ -154,7 +154,7 @@ typedef struct _VC_WORK
     VC_NEAR_ROAD_DATA         cur_near_road_2B8;                             /** Closest camera path? */
     struct _SubCharacter*     nearest_enemy_2DC;                             /** Closest enemy character. */
     q19_12                    nearest_enemy_xz_dist_2E0;                     /** Distance to the closest enemy character on the XZ plane. */
-    q19_12                    field_2E4;                                     // Some Y position?
+    q19_12                    watch_pos_y_2E4;                               /** Guessed name. Camera look-at Y position base? Combined with another value later. */
 } VC_WORK;
 STATIC_ASSERT_SIZEOF(VC_WORK, 744);
 

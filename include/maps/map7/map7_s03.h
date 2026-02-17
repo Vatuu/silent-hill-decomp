@@ -78,13 +78,13 @@ typedef struct
     s16     field_4;
     s16     field_6;
     s32     field_8;
-    s16     field_C;
+    s16     field_C; // Used for switch case in `func_800D9DF8`.
     s16     field_E;
-    s32     field_10;
-    s32                  field_14;
-    VECTOR               field_18;
-    VECTOR               field_28;
-    s32                  field_38;
+    q19_12  field_10; // Timer.
+    s32     field_14;
+    VECTOR  field_18;
+    VECTOR  field_28; // Q19.12 | Offset.
+    s32     field_38;
     s32     field_3C;
     s32     field_40;
     struct s_800F3D48_0* (*field_44)(struct s_800F3D48*);
@@ -242,7 +242,7 @@ typedef struct
 {
     s32     field_0;
     VECTOR3 field_4;
-    u8      unk_10[0x14];
+    u8      unk_10[20];
     u8      field_24[1]; // Unknown size
 } s_func_800E1FE0;
 
@@ -273,9 +273,9 @@ typedef struct
     u8            field_1A;
     u8            unk_1B[1];
     s_800F4B40_1C field_1C[15];
-    u8            unk_94[0x10];
-    u8            field_A4[0xA];
-    u8            field_AE[0xA];
+    u8            unk_94[16];
+    u8            field_A4[10];
+    u8            field_AE[10];
     VECTOR3       field_B8[8]; // Guessed type based on size, likely incorrect.
 } s_800F4B40;
 
@@ -565,7 +565,7 @@ s_800F3D48_0* func_800D95D4(s_800F3D48* arg0);
 
 s_800F3D48_0* func_800D9740(s_800F3D48* arg0);
 
-q19_12 func_800DA08C(s32 arg0, q19_12 arg1, q19_12 arg2);
+q19_12 func_800DA08C(q19_12 arg0, q19_12 arg1, q19_12 arg2);
 
 q19_12 func_800DA420(VECTOR3* result);
 
@@ -714,6 +714,7 @@ void func_800E0C10(void);
 
 void func_800E14D4(void);
 
+/** Camera function. */
 void func_800E14DC(s_SubCharacter* player, s_SubCharacter* otherChara, bool warpCamera);
 
 void func_800E16FC(void);
@@ -867,7 +868,7 @@ void func_800D917C(void);
 
 void func_800D8954(s_800F3D48* arg0, s_800F3D48_0_0* arg1);
 
-void func_800D8CD4(s32 arg0, SVECTOR* arg1);
+void func_800D8CD4(q19_12 rotZ, SVECTOR* rot);
 
 void func_800D8D90(s_800F3D48* arg0, s_800F3D48_0_0* arg1);
 
@@ -885,7 +886,7 @@ s_800F3D48_0* func_800D9DF8(s_800F3D48* arg0);
 
 void func_800DA04C(void);
 
-s32 func_800DA178(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
+q19_12 func_800DA178(q19_12 arg0, q19_12 arg1, q19_12 arg2, q19_12 arg3, s32 arg4);
 
 s32 func_800DA1F4(VECTOR3* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
 

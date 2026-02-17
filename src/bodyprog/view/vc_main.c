@@ -104,14 +104,14 @@ s32 func_80080A10(void) // 0x80080A10
     return vcWork.cur_near_road_2B8.road_p_0->field_15;
 }
 
-void func_80080A30(s32 arg0) // 0x80080A30
+void Vc_LookAtPositionYSet(q19_12 lookAtPosY) // 0x80080A30
 {
-    vcWork.field_2E4 = arg0;
+    vcWork.watch_pos_y_2E4 = lookAtPosY;
 }
 
-s32 func_80080A3C(void) // 0x80080A3C
+q19_12 Vc_LookAtPositionYGet(void) // 0x80080A3C
 {
-    return vcWork.field_2E4;
+    return vcWork.watch_pos_y_2E4;
 }
 
 void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, bool use_through_door_cam_f) // 0x80080A4C
@@ -1736,7 +1736,7 @@ void vcMakeFarWatchTgtPos(VECTOR3* watch_tgt_pos, VC_WORK* w_p, VC_AREA_SIZE_TYP
                 break;
 
             case CameraAnchor_Camera:
-                watch_y = w_p->field_2E4 + ofs_y;
+                watch_y = w_p->watch_pos_y_2E4 + ofs_y;
                 break;
         }
 

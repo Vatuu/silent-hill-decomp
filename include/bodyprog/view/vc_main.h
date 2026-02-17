@@ -15,9 +15,17 @@ void vcEndCameraSystem(void);
 
 s32 func_80080A10(void);
 
-void func_80080A30(s32 arg0);
+/** @brief Sets the camera's look-at Y position.
+ *
+ * @param lookAtYPos New look-at Y position.
+ */
+void Vc_LookAtPositionYSet(q19_12 lookAtPosY);
 
-s32 func_80080A3C(void);
+/** @brief Returns the camera's look-at Y position.
+ *
+ * @return Camera look-at Y position.
+ */
+q19_12 Vc_LookAtPositionYGet(void);
 
 void vcSetFirstCamWork(VECTOR3* cam_pos, s16 chara_eye_ang_y, bool use_through_door_cam_f);
 
