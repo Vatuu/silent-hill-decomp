@@ -384,7 +384,7 @@ extern s_WorldObjectDesc g_WorldObject_Nu;
 
 extern s_WorldObjectDesc g_WorldObject_Baby;
 
-extern u8 D_800F3E58; // Unknown type, pointer passed to func_800DB154
+extern GsCOORDINATE2 D_800F3E58[HarryBone_Count];
 
 extern s32 D_800F47F0;
 
@@ -484,6 +484,11 @@ extern s32 D_800EC758[];
 extern s32 D_800EC764[];
 
 extern VECTOR3 D_800F4B30;
+
+extern s_FsImageDesc D_800ED218;
+extern s_FsImageDesc D_800ED220;
+extern s_FsImageDesc D_800ED228;
+
 extern VECTOR3 D_800ED244;
 extern VECTOR3 D_800ED250;
 
@@ -787,7 +792,7 @@ void func_800E86BC(void);
 
 void func_800E8D20(void);
 
-void func_800E9260(e_CharacterId, s32);
+void func_800E9260(e_CharacterId charaId, s32 arg1);
 
 void func_800E941C(void);
 

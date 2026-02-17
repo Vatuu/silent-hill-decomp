@@ -4367,7 +4367,58 @@ void func_800DEC38(s_SubCharacter* incubus) // 0x800DEC38
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DEC74);
+void func_800DEC74(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEC74
+{
+    switch (incubus->model_0.controlState_2)
+    {
+        case IncubusControl_1:
+            break;
+
+        case IncubusControl_2:
+            func_800DDDB0(incubus);
+            break;
+
+        case IncubusControl_3:
+            func_800DDDD8(incubus);
+            break;
+
+        case IncubusControl_4:
+            func_800DDEEC(incubus);
+            break;
+
+        case IncubusControl_5:
+            func_800DDF14(incubus);
+            break;
+
+        case IncubusControl_6:
+            func_800DDF3C(incubus, 0);
+            break;
+
+        case IncubusControl_7:
+            func_800DE2A4(incubus, 0);
+            break;
+
+        case IncubusControl_8:
+            func_800DE68C(incubus, 0);
+            break;
+
+        case IncubusControl_11:
+            func_800DEAF4(incubus);
+            break;
+
+        case IncubusControl_10:
+            func_800DEA54(incubus, coords);
+            break;
+
+        case IncubusControl_12:
+            func_800DEBA8(incubus);
+            break;
+
+        case IncubusControl_13:
+            func_800DEC38(incubus);
+            break;
+    }
+}
 
 void func_800DED68(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DED68
 {
@@ -7278,7 +7329,7 @@ void func_800E514C(void) // 0x800E514C
 
     if (g_SysWork.sysStateStep_C[0] >= 62 && g_SysWork.sysStateStep_C[0] < 64)
     {
-        func_800DB154(&D_800F3E58); // TODO: Retype `D_800F3E58` as `GsCOORDINATE2` array.
+        func_800DB154(&D_800F3E58[0]);
     }
 }
 
@@ -7748,7 +7799,7 @@ void func_800E70F0(void) // 0x800E70F0
 
     if (g_SysWork.sysStateStep_C[0] >= 5 && g_SysWork.sysStateStep_C[0] < 8)
     {
-        func_800DB154(&D_800F3E58);
+        func_800DB154(&D_800F3E58[0]);
     }
 }
 
@@ -8633,7 +8684,44 @@ void func_800E8D20(void) // 0x800E8D20
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E9260);
+void func_800E9260(e_CharacterId charaId, s32 arg1) // 0x800E9260
+{
+    // TODO: Setup buffer defines for these (or maybe they're included in existing buffer?)
+
+    WorldGfx_CharaLmBufferAssign(1 << (arg1 - 1));
+
+    switch (arg1)
+    {
+        case 1:
+            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)0x80142A00, &g_SysWork.npcCoords_FC0[0]);
+            WorldGfx_CharaLoad(charaId, 0, (s_LmHeader*)0x80102E00, &D_800ED218);
+            break;
+
+        case 2:
+            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)0x80156A00, &g_SysWork.npcCoords_FC0[30]);
+            WorldGfx_CharaLoad(charaId, 1, LM_BUFFER_2, &D_800ED220);
+            break;
+
+        case 3:
+            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)FS_BUFFER_26, &D_800F3E58[0]);
+            WorldGfx_CharaLoad(charaId, 2, (s_LmHeader*)0x80106E00, &D_800ED228);
+            break;
+
+        case 4:
+            func_800E94C0();
+            Fs_CharaAnimDataAlloc(arg1 - 3, charaId, (s_AnmHeader*)0x80142A00, &g_SysWork.npcCoords_FC0[0]);
+            WorldGfx_CharaLoad(charaId, 0, (s_LmHeader*)0x80102E00, &D_800ED218);
+            func_800E94F4();
+            break;
+
+        case 5:
+            func_800E94C0();
+            Fs_CharaAnimDataAlloc(arg1 - 3, charaId, (s_AnmHeader*)0x80153A00, &g_SysWork.npcCoords_FC0[30]);
+            WorldGfx_CharaLoad(charaId, 1, (s_LmHeader*)0x80163200, &D_800ED220);
+            func_800E94F4();
+            break;
+    }
+}
 
 void func_800E941C(void) // 0x800E941C
 {
