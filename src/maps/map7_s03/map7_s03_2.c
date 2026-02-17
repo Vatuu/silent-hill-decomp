@@ -4860,15 +4860,15 @@ void func_800E16FC(void) // 0x800E16FC
     D_800F4B40.field_19 = 200;
     D_800F4B40.field_1A = 150;
 
-    D_800F4B40.field_1C[0].vec_0  = &D_800F4B40.field_B8[0];
-    D_800F4B40.field_1C[1].vec_0  = &D_800F4B40.field_B8[1];
-    D_800F4B40.field_1C[4].vec_0  = &D_800F4B40.field_B8[2];
-    D_800F4B40.field_1C[5].vec_0  = &D_800F4B40.field_B8[3];
-    D_800F4B40.field_1C[9].vec_0  = &D_800F4B40.field_B8[4];
-    D_800F4B40.field_1C[10].vec_0 = &D_800F4B40.field_B8[5];
-    D_800F4B40.field_1C[13].vec_0 = &D_800F4B40.field_B8[6];
-    D_800F4B40.timer_8            = Q12(0.0f);
-    D_800F4B40.field_1C[14].vec_0 = &D_800F4B40.field_B8[7];
+    D_800F4B40.field_1C[0].vec_0 = &D_800F4B40.field_B8[0];
+    D_800F4B40.field_1C[0].vec_8 = &D_800F4B40.field_B8[1];
+    D_800F4B40.field_1C[1].vec_0 = &D_800F4B40.field_B8[2];
+    D_800F4B40.field_1C[1].vec_8 = &D_800F4B40.field_B8[3];
+    D_800F4B40.field_64[0].vec_0 = &D_800F4B40.field_B8[4];
+    D_800F4B40.field_64[0].vec_8 = &D_800F4B40.field_B8[5];
+    D_800F4B40.field_64[1].vec_0 = &D_800F4B40.field_B8[6];
+    D_800F4B40.timer_8           = Q12(0.0f);
+    D_800F4B40.field_64[1].vec_8 = &D_800F4B40.field_B8[7];
 
     func_800E1788(0);
 }
@@ -5230,10 +5230,10 @@ void func_800E1854(void) // 0x800E1854
             break;
     }
 
-    func_800E20A4(&D_800F4B40.field_1C[0], D_800F4B40.field_A4, D_800F4B40.field_1C[8].vec_0, &D_800F4B40.field_1C[9]);
-    func_800E20A4(&D_800F4B40.field_1C[4], D_800F4B40.field_AE, D_800F4B40.field_1C[8].ptr_4, &D_800F4B40.field_1C[13]);
+    func_800E20A4(&D_800F4B40.field_1C[0], &D_800F4B40.field_A4[0], D_800F4B40.field_5C, &D_800F4B40.field_64[0]);
+    func_800E20A4(&D_800F4B40.field_1C[1], &D_800F4B40.field_A4[1], D_800F4B40.field_60, &D_800F4B40.field_64[1]);
     func_800E24A0(&D_800F4B40.field_1C[0]);
-    func_800E24A0(&D_800F4B40.field_1C[4]);
+    func_800E24A0(&D_800F4B40.field_1C[1]);
 
     D_800F4B40.timer_8  += g_DeltaTime0;
     D_800F4B40.timer_10 += g_DeltaTime0;
@@ -5241,29 +5241,56 @@ void func_800E1854(void) // 0x800E1854
 
 void func_800E1FE0(s_func_800E1FE0* arg0) // 0x800E1FE0
 {
-    bzero(D_800F4B40.field_A4, 10);
-    bzero(D_800F4B40.field_AE, 10);
+    bzero(&D_800F4B40.field_A4[0], sizeof(D_800F4B40.field_A4[0]));
+    bzero(&D_800F4B40.field_A4[1], sizeof(D_800F4B40.field_A4[1]));
 
-    D_800F4B40.field_1C[8].vec_0 = &arg0->field_4;
-    D_800F4B40.field_1C[8].ptr_4 = &arg0->field_24;
+    D_800F4B40.field_5C = &arg0->field_4;
+    D_800F4B40.field_60 = &arg0->field_24;
 
     // TODO: Conflicting second arg type passed to these funcs.
     // Some calls pass VECTOR3* while others pass s_800F4B40_1C*?
     if (arg0->field_0 != 0)
     {
         func_800E17B8(&D_800F4B40.field_1C[0], &arg0->field_4);
-        func_800E17B8(&D_800F4B40.field_1C[4], &arg0->field_24);
-        func_800E17B8(&D_800F4B40.field_1C[9], &arg0->field_4);
-        func_800E17B8(&D_800F4B40.field_1C[13], &arg0->field_24);
+        func_800E17B8(&D_800F4B40.field_1C[1], &arg0->field_24);
+        func_800E17B8(&D_800F4B40.field_64[0], &arg0->field_4);
+        func_800E17B8(&D_800F4B40.field_64[1], &arg0->field_24);
     }
     else
     {
-        func_800E17B8(&D_800F4B40.field_1C[9], &D_800F4B40.field_1C[0]);
-        func_800E17B8(&D_800F4B40.field_1C[13], &D_800F4B40.field_1C[4]);
+        func_800E17B8(&D_800F4B40.field_64[0], &D_800F4B40.field_1C[0]);
+        func_800E17B8(&D_800F4B40.field_64[1], &D_800F4B40.field_1C[1]);
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E20A4);
+void func_800E20A4(s_800F4B40_1C* arg0, s_800F4B40_A4* arg1, s_800F4B40_1C* arg2, s_800F4B40_1C* arg3) // 0x800E20A4
+{
+    s32 var_v1;
+
+    arg0->field_1E = arg2->field_1E;
+    arg0->field_12 = func_800E2444(arg2->field_16, arg0->field_12, arg2->field_12);
+
+    var_v1 = ABS((arg2->field_14 - arg3->field_14) / 15) + 1;
+    if (arg0->field_14 > (arg2->field_14 + var_v1))
+    {
+        arg0->field_14 -= var_v1;
+    }
+    else if (arg0->field_14 < (arg2->field_14 - var_v1))
+    {
+        arg0->field_14 += var_v1;
+    }
+    else
+    {
+        arg0->field_14 = arg2->field_14;
+    }
+
+    arg1->now_spd_0 = vwRetNewVelocityToTargetVal(arg1->now_spd_0, arg0->pos_10, arg2->pos_10, Q12(0.586f), arg2->total_max_spd_18, Q12(1.9532f));
+    arg0->pos_10   += Q12_MULT_PRECISE(arg1->now_spd_0, g_DeltaTime0);
+
+    // TODO: Rename the struct fields `field_8` etc passed here to match `func_800E22AC` param names.
+    func_800E22AC(arg0->vec_0, &arg0->ptr_4, &arg1->field_8, &arg1->field_6, arg2->vec_0, arg2->ptr_4, arg3->vec_0, arg3->ptr_4, arg2->field_1C);
+    func_800E22AC(arg0->vec_8, &arg0->field_C, &arg1->field_4, &arg1->field_2, arg2->vec_8, arg2->field_C, arg3->vec_8, arg3->field_C, arg2->field_1A);
+}
 
 void func_800E22AC(VECTOR3* arg0, s32* arg1, s16* mv_pos, s16* now_spd, VECTOR3* arg4, s32 arg5, VECTOR3* arg6, s32 arg7, s16 total_max_spd) // 0x800E22AC
 {

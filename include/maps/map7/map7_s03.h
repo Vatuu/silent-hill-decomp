@@ -258,25 +258,45 @@ typedef struct
 {
     VECTOR3* vec_0;
     void*    ptr_4;
+    VECTOR3* vec_8;
+    s32      field_C;
+    s16      pos_10;
+    s16      field_12;
+    s16      field_14;
+    s16      field_16;
+    s16      total_max_spd_18;
+    s16      field_1A;
+    s16      field_1C;
+    s16      field_1E;
 } s_800F4B40_1C;
 
 typedef struct
 {
-    s32           field_0;
-    s32           field_4;
-    q19_12        timer_8;
-    s32           field_C;
-    q19_12        timer_10;
-    u8            unk_14[4];
-    u8            field_18;
-    u8            field_19;
-    u8            field_1A;
-    u8            unk_1B[1];
-    s_800F4B40_1C field_1C[15];
-    u8            unk_94[16];
-    u8            field_A4[10];
-    u8            field_AE[10];
-    VECTOR3       field_B8[8]; // Guessed type based on size, likely incorrect.
+    s16 now_spd_0;
+    s16 field_2;
+    s16 field_4;
+    s16 field_6;
+    s16 field_8;
+} s_800F4B40_A4;
+
+typedef struct
+{
+    s32            field_0;
+    s32            field_4;
+    q19_12         timer_8;
+    s32            field_C;
+    q19_12         timer_10;
+    u8             unk_14[4];
+    u8             field_18;
+    u8             field_19;
+    u8             field_1A;
+    u8             unk_1B[1];
+    s_800F4B40_1C  field_1C[2];
+    s_800F4B40_1C* field_5C;
+    s_800F4B40_1C* field_60;
+    s_800F4B40_1C  field_64[2];
+    s_800F4B40_A4  field_A4[2];
+    VECTOR3        field_B8[8]; // Guessed type based on size, likely incorrect.
 } s_800F4B40;
 
 typedef struct
@@ -736,6 +756,8 @@ void func_800E1788(s32 arg0);
 void func_800E1854(void);
 
 void func_800E1FE0(s_func_800E1FE0* arg0);
+
+void func_800E20A4(s_800F4B40_1C* arg0, s_800F4B40_A4* arg1, s_800F4B40_1C* arg2, s_800F4B40_1C* arg3);
 
 void func_800E22AC(VECTOR3* arg0, s32* arg1, s16* mv_pos, s16* now_spd, VECTOR3* arg4, s32 arg5, VECTOR3* arg6, s32 arg7, s16 total_max_spd);
 
