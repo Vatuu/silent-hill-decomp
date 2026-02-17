@@ -487,25 +487,7 @@ extern VECTOR3 D_800F4B30;
 extern VECTOR3 D_800ED244;
 extern VECTOR3 D_800ED250;
 
-// TODO: Possibly array.
-extern s_func_800E1FE0 D_800ED274;
-extern s_func_800E1FE0 D_800ED2B8;
-extern s_func_800E1FE0 D_800ED2FC;
-extern s_func_800E1FE0 D_800ED340;
-extern s_func_800E1FE0 D_800ED384;
-extern s_func_800E1FE0 D_800ED3C8;
-extern s_func_800E1FE0 D_800ED40C;
-extern s_func_800E1FE0 D_800ED450;
-extern s_func_800E1FE0 D_800ED494;
-extern s_func_800E1FE0 D_800ED4D8;
-extern s_func_800E1FE0 D_800ED51C;
-extern s_func_800E1FE0 D_800ED560;
-extern s_func_800E1FE0 D_800ED5A4;
-extern s_func_800E1FE0 D_800ED5E8;
-extern s_func_800E1FE0 D_800ED62C;
-extern s_func_800E1FE0 D_800ED670;
-extern s_func_800E1FE0 D_800ED6B4;
-extern s_func_800E1FE0 D_800ED6F8;
+extern s_func_800E1FE0 D_800ED274[18];
 
 void Ai_BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);

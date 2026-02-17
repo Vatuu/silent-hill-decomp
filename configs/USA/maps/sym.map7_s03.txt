@@ -237,6 +237,7 @@ MAP_MESSAGES                        = 0x800ECFEC; // type:u32 size:0x190
 //----------------------------------------------------
 //--- PA: 0x023C04   VA: 0x800ED17C   subsegment: data
 //----------------------------------------------------
+D_800ED274                          = 0x800ED274; // size:0x4C8
 g_ParticleMapOverlayId0             = 0x800ED9F8;
 g_ParticleMapOverlayId1             = 0x800ED9FC;
 g_Particle_SpeedX                   = 0x800EDA10; // type:s32

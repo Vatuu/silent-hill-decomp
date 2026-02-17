@@ -5007,14 +5007,14 @@ void func_800E1854(void) // 0x800E1854
             return;
 
         case 0:
-            func_800E1FE0(&D_800ED274);
+            func_800E1FE0(&D_800ED274[0]);
             break;
 
         case 1:
             if (D_800F4B40.field_4 == 0)
             {
                 D_800F4B40.field_4 = 1;
-                func_800E1FE0(&D_800ED2B8);
+                func_800E1FE0(&D_800ED274[1]);
             }
             break;
 
@@ -5022,7 +5022,7 @@ void func_800E1854(void) // 0x800E1854
             if (D_800F4B40.field_4 == 0)
             {
                 D_800F4B40.field_4 = 1;
-                func_800E1FE0(&D_800ED2FC);
+                func_800E1FE0(&D_800ED274[2]);
             }
             break;
 
@@ -5030,7 +5030,7 @@ void func_800E1854(void) // 0x800E1854
             switch (D_800F4B40.field_4)
             {
                 case 0:
-                    func_800E1FE0(&D_800ED340);
+                    func_800E1FE0(&D_800ED274[3]);
                     D_800F4B40.field_4++;
                     break;
 
@@ -5038,7 +5038,7 @@ void func_800E1854(void) // 0x800E1854
                     if (D_800F4B40.timer_8 > Q12(0.6f))
                     {
                         D_800F4B40.field_4 = 2;
-                        func_800E1FE0(&D_800ED384);
+                        func_800E1FE0(&D_800ED274[4]);
                         D_800F4B40.timer_8 = Q12(0.0f);
                     }
                     break;
@@ -5049,7 +5049,7 @@ void func_800E1854(void) // 0x800E1854
             if (D_800F4B40.field_4 == 0)
             {
                 D_800F4B40.field_4 = 1;
-                func_800E1FE0(&D_800ED3C8);
+                func_800E1FE0(&D_800ED274[5]);
             }
             break;
 
@@ -5057,7 +5057,7 @@ void func_800E1854(void) // 0x800E1854
             if (D_800F4B40.field_4 == 0)
             {
                 D_800F4B40.field_4 = 1;
-                func_800E1FE0(&D_800ED40C);
+                func_800E1FE0(&D_800ED274[6]);
             }
             break;
 
@@ -5069,7 +5069,7 @@ void func_800E1854(void) // 0x800E1854
             if (D_800F4B40.field_4 == 0)
             {
                 D_800F4B40.field_4 = 1;
-                func_800E1FE0(&D_800ED450);
+                func_800E1FE0(&D_800ED274[7]);
             }
             break;
 
@@ -5081,7 +5081,7 @@ void func_800E1854(void) // 0x800E1854
             if (D_800F4B40.field_4 == 0 && D_800F4B40.timer_8 > Q12(0.5f))
             {
                 D_800F4B40.field_4 = 1;
-                func_800E1FE0(&D_800ED494);
+                func_800E1FE0(&D_800ED274[8]);
             }
             break;
 
@@ -5089,7 +5089,7 @@ void func_800E1854(void) // 0x800E1854
             if (D_800F4B40.field_4 == 0)
             {
                 D_800F4B40.field_4 = 1;
-                func_800E1FE0(&D_800ED4D8);
+                func_800E1FE0(&D_800ED274[9]);
             }
             break;
 
@@ -5097,7 +5097,7 @@ void func_800E1854(void) // 0x800E1854
             if (D_800F4B40.field_4 == 0)
             {
                 D_800F4B40.field_4 = 1;
-                func_800E1FE0(&D_800ED51C);
+                func_800E1FE0(&D_800ED274[10]);
             }
             break;
 
@@ -5106,14 +5106,14 @@ void func_800E1854(void) // 0x800E1854
             {
                 case 0:
                     D_800F4B40.field_4 = 1;
-                    func_800E1FE0(&D_800ED560);
+                    func_800E1FE0(&D_800ED274[11]);
                     break;
 
                 case 1:
                     if (D_800F4B40.timer_8 > Q12(3.5f))
                     {
                         D_800F4B40.field_4 = 2;
-                        func_800E1FE0(&D_800ED5A4);
+                        func_800E1FE0(&D_800ED274[12]);
                         D_800F4B40.timer_8 = Q12(0.0f);
                     }
                     break;
@@ -5124,14 +5124,14 @@ void func_800E1854(void) // 0x800E1854
             switch (D_800F4B40.field_4)
             {
                 case 0:
-                    func_800E1FE0(&D_800ED5E8);
+                    func_800E1FE0(&D_800ED274[13]);
                     D_800F4B40.field_4++;
                     break;
 
                 case 1:
                     if (D_800F4B40.timer_8 > Q12(2.0f))
                     {
-                        func_800E1FE0(&D_800ED62C);
+                        func_800E1FE0(&D_800ED274[14]);
                         D_800F4B40.timer_8 = Q12(0.0f);
                         D_800F4B40.field_4++;
                     }
@@ -5148,7 +5148,7 @@ void func_800E1854(void) // 0x800E1854
                 case 3:
                     if (D_800F4B40.timer_8 > Q12(0.1f))
                     {
-                        func_800E1FE0(&D_800ED670);
+                        func_800E1FE0(&D_800ED274[15]);
                         D_800F4B40.timer_8 = Q12(0.0f);
                         D_800F4B40.field_4++;
                     }
@@ -5157,7 +5157,7 @@ void func_800E1854(void) // 0x800E1854
                 case 4:
                     if (D_800F4B40.timer_8 > Q12(0.25f))
                     {
-                        func_800E1FE0(&D_800ED62C);
+                        func_800E1FE0(&D_800ED274[14]);
                         D_800F4B40.timer_8 = Q12(0.0f);
                         D_800F4B40.field_4--;
                     }
@@ -5168,7 +5168,7 @@ void func_800E1854(void) // 0x800E1854
         case 14:
             if (D_800F4B40.field_4 == 0 && D_800F4B40.timer_8 > Q12(4.0f))
             {
-                func_800E1FE0(&D_800ED6B4);
+                func_800E1FE0(&D_800ED274[16]);
                 D_800F4B40.field_4++;
             }
             break;
@@ -5176,7 +5176,7 @@ void func_800E1854(void) // 0x800E1854
         case 15:
             if (D_800F4B40.field_4 == 0)
             {
-                func_800E1FE0(&D_800ED6F8);
+                func_800E1FE0(&D_800ED274[17]);
                 D_800F4B40.field_4++;
             }
             break;
