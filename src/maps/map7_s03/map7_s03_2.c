@@ -4885,7 +4885,26 @@ void func_800E1788(s32 arg0) // 0x800E1788
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E17B8);
+void func_800E17B8(s_800F4B40_1C* dest, s_800F4B40_1C* src) // 0x800E17B8
+{
+    VECTOR3* origVec0Ptr;
+    VECTOR3* origVec1Ptr;
+
+    // Backup original `VECTOR3` pointers
+    origVec0Ptr = dest->vec_0;
+    origVec1Ptr = dest->vec_8;
+
+    // Copy struct data
+    *dest = *src;
+
+    // Restore `VECTOR3` pointers
+    dest->vec_0 = origVec0Ptr;
+    dest->vec_8 = origVec1Ptr;
+
+    // Copy `VECTOR3` data
+    *dest->vec_0 = *src->vec_0;
+    *dest->vec_8 = *src->vec_8;
+}
 
 const char* MAP_MESSAGES[] = {
     #include "maps/shared/mapMsg_common.h"

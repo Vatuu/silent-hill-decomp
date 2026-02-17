@@ -751,6 +751,9 @@ void func_800E16FC(void);
 
 void func_800E1788(s32 arg0);
 
+/** Deep copy of data from `src` into `dest`, preserving `dest` vector pointers. */
+void func_800E17B8(s_800F4B40_1C* dest, s_800F4B40_1C* src);
+
 void func_800E1854(void);
 
 void func_800E1FE0(s_func_800E1FE0* arg0);
