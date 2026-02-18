@@ -295,6 +295,14 @@ typedef struct
 
 typedef struct
 {
+    s16 field_0;
+    s16 field_2;
+    u8  field_4[4];
+} s_800F4B40_118;
+STATIC_ASSERT_SIZEOF(s_800F4B40_118, 8);
+
+typedef struct
+{
     s32            field_0;
     s32            field_4;
     q19_12         timer_8;
@@ -308,8 +316,8 @@ typedef struct
     s_800F4B40_1C* field_60;
     s_800F4B40_1C  field_64[2];
     s_800F4B40_A4  field_A4[2];
-    VECTOR3        field_B8[8]; // Guessed type based on size, likely incorrect.
-    u8             field_118[1]; // Unknown type, passed to `func_800E2968` and `func_800E2C28`
+    VECTOR3        field_B8[8];  // Guessed type based on size, likely incorrect.
+    s_800F4B40_118 field_118[1]; // Unknown array size.
 } s_800F4B40;
 
 typedef struct
@@ -353,6 +361,8 @@ extern s_D_800F48A8 D_800F48A8;
 
 extern s32 D_800ED73C; // } RNG related values?
 extern s32 D_800ED740; // }
+
+extern s32 D_800ED744[9];
 
 extern u16 D_800ED768;
 
@@ -813,6 +823,8 @@ void func_800E27D0(s32 arg0, s16 arg1, s32 arg2, VECTOR3* pos);
 
 // Some kind of RNG? Constants don't seem well known?
 q3_12 func_800E28F4(void);
+
+void func_800E2968(s_800F4B40_118* arg0, s32 arg1, s32 arg2, DVECTOR* arg3, DVECTOR* arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, u8* arg9, s32 arg10, u8 arg11);
 
 void func_800E2E90(void);
 

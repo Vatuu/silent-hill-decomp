@@ -6293,7 +6293,73 @@ q3_12 func_800E28F4(void) // 0x800E28F4
     return D_800ED73C & SHRT_MAX;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E2968);
+void func_800E2968(s_800F4B40_118* arg0, s32 arg1, s32 arg2, DVECTOR* arg3, DVECTOR* arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, u8* arg9, s32 arg10, u8 arg11) // 0x800E2968
+{
+    u8  sp18[4];
+    s32 i;
+    s32 j;
+    s32 temp_lo;
+    s32 temp_s0;
+    s32 temp_s3;
+    s32 temp_s4;
+    s32 temp_s5;
+    s32 temp_v0;
+    s32 temp_v1;
+
+    for (i = 0; i < arg2; i++)
+    {
+        temp_lo = Q12(i) / (arg2 - 1);
+        temp_v0 = vwOresenHokan(D_800ED744, ARRAY_SIZE(D_800ED744), temp_lo, 0, Q12(1.0f));
+
+        temp_v1 = Q12_MULT(arg10, Q12_MULT(arg9[0], temp_v0));
+        if (temp_v1 < arg11)
+        {
+            sp18[0] = temp_v1;
+        }
+        else
+        {
+            sp18[0] = arg11;
+        }
+
+        temp_v1 = Q12_MULT(arg10, Q12_MULT(arg9[1], temp_v0));
+        if (temp_v1 < arg11)
+        {
+            sp18[1] = temp_v1;
+        }
+        else
+        {
+            sp18[1] = arg11;
+        }
+
+        temp_v1 = Q12_MULT(arg10, Q12_MULT(arg9[2], temp_v0));
+        if (temp_v1 < arg11)
+        {
+            sp18[2] = temp_v1;
+        }
+        else
+        {
+            sp18[2] = arg11;
+        }
+
+        temp_s5 = arg3->vx + Q12_MULT(temp_lo, arg4->vx - arg3->vx);
+        temp_s4 = arg3->vy + Q12_MULT(temp_lo, arg4->vy - arg3->vy);
+        temp_s3 = arg5 + Q12_MULT(temp_lo, arg6 - arg5);
+
+        for (j = 0; j < arg1; j++)
+        {
+            s_800F4B40_118* temp_s1;
+            temp_s1 = &arg0[(arg1 * i) + j];
+
+            *(s32*)&temp_s1->field_4 = *(s32*)sp18;
+
+            temp_s0  = arg7;
+            temp_s0 += FP_FROM((Q12(j) / (arg1 - 1)) * (arg8 - temp_s0), Q12_SHIFT);
+
+            temp_s1->field_0 = temp_s5 + Q12_MULT(temp_s3, Math_Cos(temp_s0));
+            temp_s1->field_2 = temp_s4 + Q12_MULT(temp_s3, Math_Sin(temp_s0));
+        }
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E2C28);
 
