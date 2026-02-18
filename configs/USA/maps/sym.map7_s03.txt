@@ -278,4 +278,4 @@ g_WorldObject_UnkPos                = 0x800F47F8; // type:VECTOR3 size:0xC
 g_WorldObject_Real                  = 0x800F4848; // type:WorldObject_0 size:0x1C
 g_WorldObject_Ura                   = 0x800F4868; // type:WorldObject_0 size:0x1C
 g_WorldObject_Under                 = 0x800F4888; // type:WorldObject_0 size:0x1C
-D_800F4B40                          = 0x800F4B40; // size:0x118 - Assumed size.
+D_800F4B40                          = 0x800F4B40; // size:0x119 - Assumed size.

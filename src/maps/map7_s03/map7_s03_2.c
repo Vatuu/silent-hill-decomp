@@ -3331,11 +3331,54 @@ void func_800DCDDC(s_800F3DAC* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800DCDDC
     arg0->field_18 = i;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DCF94);
+void func_800DCF94(void) // 0x800DCF94
+{
+    s32         i;
+    s_800F3DAC* ptr;
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DCFF8);
+    D_800F3DAC = (s_800F3DAC*)0x801950F0;
+    ptr        = D_800F3DAC;
+    memset(ptr, 0xA7, sizeof(s_800F3DAC) * 30);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DD044);
+    for (i = 0; i < 30; i++, ptr++)
+    {
+        ptr->field_0 = 0;
+    }
+
+    func_800DBABC();
+}
+
+void func_800DCFF8(void) // 0x800DCFF8
+{
+    s32         i;
+    s_800F3DAC* ptr;
+
+    D_800F3DAC = (s_800F3DAC*)0x80156A00;
+    ptr        = D_800F3DAC;
+
+    for (i = 0; i < 30; i++, ptr++)
+    {
+        ptr->field_0 = 0;
+    }
+
+    func_800DBABC();
+}
+
+void func_800DD044(void) // 0x800DD044
+{
+    s32         i;
+    s_800F3DAC* ptr;
+
+    D_800F3DAC = (s_800F3DAC*)FS_BUFFER_1;
+    ptr        = D_800F3DAC;
+
+    for (i = 0; i < 30; i++, ptr++)
+    {
+        ptr->field_0 = 0;
+    }
+
+    func_800DBABC();
+}
 
 s_800F3DAC* func_800DD090(void) // 0x800DD090
 {
@@ -4741,7 +4784,12 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF288);
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF348);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF418);
+s32 func_800DF418(s32 arg0, s32 arg1) // 0x800DF418
+{
+    s_func_800D71B0* ptr = (s_func_800D71B0*)FS_BUFFER_26;
+
+    return D_800ECA50[ptr->field_5D[(arg1 * 0x29) + arg0]];
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF458);
 
@@ -5614,9 +5662,9 @@ void func_800E16FC(void) // 0x800E16FC
 {
     D_800F4B40.field_0  = NO_VALUE;
     D_800F4B40.timer_8  = Q12(0.0f);
-    D_800F4B40.field_18 = 250;
-    D_800F4B40.field_19 = 200;
-    D_800F4B40.field_1A = 150;
+    D_800F4B40.field_18[0] = 250;
+    D_800F4B40.field_18[1] = 200;
+    D_800F4B40.field_18[2] = 150;
 
     D_800F4B40.field_1C[0].vec_0 = &D_800F4B40.field_B8[0];
     D_800F4B40.field_1C[0].vec_8 = &D_800F4B40.field_B8[1];
@@ -6062,7 +6110,7 @@ void func_800E20A4(s_800F4B40_1C* arg0, s_800F4B40_A4* arg1, s_800F4B40_1C* arg2
     arg0->pos_10   += Q12_MULT_PRECISE(arg1->now_spd_0, g_DeltaTime0);
 
     // TODO: Rename the struct fields `field_8` etc passed here to match `func_800E22AC` param names.
-    func_800E22AC(arg0->vec_0, &arg0->ptr_4, &arg1->field_8, &arg1->field_6, arg2->vec_0, arg2->ptr_4, arg3->vec_0, arg3->ptr_4, arg2->field_1C);
+    func_800E22AC(arg0->vec_0, &arg0->field_4, &arg1->field_8, &arg1->field_6, arg2->vec_0, arg2->field_4, arg3->vec_0, arg3->field_4, arg2->field_1C);
     func_800E22AC(arg0->vec_8, &arg0->field_C, &arg1->field_4, &arg1->field_2, arg2->vec_8, arg2->field_C, arg3->vec_8, arg3->field_C, arg2->field_1A);
 }
 
@@ -6101,7 +6149,40 @@ q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target) // 0x800
     return result;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E24A0);
+void func_800E24A0(s_800F4B40_1C* arg0) // 0x800E24A0
+{
+    VECTOR3 sp30;
+    VECTOR3 sp40;
+    VECTOR3 sp50;
+    s32     temp_s0;
+    q23_8   var_a1;
+
+    if (arg0->pos_10 != Q12(0.0f) && arg0->field_12 != 0 && arg0->field_14 != 0)
+    {
+        SetRotMatrix(&GsWSMATRIX);
+        SetTransMatrix(&GsWSMATRIX);
+
+        sp30.vx = Q12_TO_Q8(arg0->vec_0->vx);
+        sp30.vy = Q12_TO_Q8(arg0->vec_0->vy + arg0->field_4);
+        sp30.vz = Q12_TO_Q8(arg0->vec_0->vz);
+
+        sp40.vx = Q12_TO_Q8(arg0->vec_8->vx);
+        sp40.vy = Q12_TO_Q8(arg0->vec_8->vy + arg0->field_C);
+        sp40.vz = Q12_TO_Q8(arg0->vec_8->vz);
+
+        temp_s0 = func_80049530(&sp30, &sp50) * 4; // << 2
+        func_80049530(&sp40, &sp50.vz);
+
+        var_a1 = Q8(16.0f);
+        if (arg0->field_1E != 0)
+        {
+            var_a1 = Q8(16384.0f) / MAX(temp_s0, Q8(1.5f));
+        }
+
+        func_800E2968(&D_800F4B40.field_118[0], 16, 6, &sp50, &sp50.vz, 0, Math_MulFixed(Q12_TO_Q8(arg0->pos_10), var_a1, Q12_SHIFT), 0, Q12(1.0f), D_800F4B40.field_18, arg0->field_12, (u8)arg0->field_14);
+        func_800E2C28(&D_800F4B40.field_118[0], 16, 6, 1, 1);
+    }
+}
 
 void func_800E2664(s32 arg0, s16 arg1) // 0x800E2664
 {

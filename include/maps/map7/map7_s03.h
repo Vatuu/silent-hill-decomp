@@ -249,9 +249,9 @@ typedef struct
 typedef struct
 {
     VECTOR3* vec_0;
-    void*    ptr_4;
+    q19_12   field_4;
     VECTOR3* vec_8;
-    s32      field_C;
+    q19_12   field_C;
     s16      pos_10;
     s16      field_12;
     s16      field_14;
@@ -279,9 +279,7 @@ typedef struct
     s32            field_C;
     q19_12         timer_10;
     u8             unk_14[4];
-    u8             field_18;
-    u8             field_19;
-    u8             field_1A;
+    u8             field_18[3];
     u8             unk_1B[1];
     s_800F4B40_1C  field_1C[2];
     s_800F4B40_1C* field_5C;
@@ -289,6 +287,7 @@ typedef struct
     s_800F4B40_1C  field_64[2];
     s_800F4B40_A4  field_A4[2];
     VECTOR3        field_B8[8]; // Guessed type based on size, likely incorrect.
+    u8             field_118[1]; // Unknown type, passed to `func_800E2968` & `func_800E2C28`
 } s_800F4B40;
 
 typedef struct
@@ -487,6 +486,8 @@ extern s_800F3D48_0  D_800EC1B8;
 extern s32 D_800EC758[];
 extern s32 D_800EC764[];
 
+extern s32 D_800ECA50[];
+
 extern VECTOR3 D_800F4B30;
 
 extern s_FsImageDesc D_800ED218;
@@ -637,6 +638,12 @@ void func_800DCDDC(s_800F3DAC* arg0, VECTOR3* arg1, VECTOR3* arg2);
 
 void func_800DCF94(void);
 
+void func_800DCFF8(void);
+
+void func_800DCF94(void);
+
+void func_800DD044(void);
+
 s_800F3DAC* func_800DD090(void);
 
 void func_800DD0EC(VECTOR3* pos, s32 coordIdx);
@@ -705,6 +712,7 @@ void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DF074(s_SubCharacter* incubus);
 void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+s32 func_800DF418(s32 arg0, s32 arg1);
 void func_800DF7F8(void);
 void func_800DF84C(VECTOR* arg0, s32 arg1);
 s32  func_800DF90C(void);
@@ -762,6 +770,8 @@ void func_800E20A4(s_800F4B40_1C* arg0, s_800F4B40_A4* arg1, s_800F4B40_1C* arg2
 void func_800E22AC(VECTOR3* arg0, s32* arg1, s16* mv_pos, s16* now_spd, VECTOR3* arg4, s32 arg5, VECTOR3* arg6, s32 arg7, s16 total_max_spd);
 
 q19_12 func_800E2444(q19_12 dampingRate, q19_12 current, q19_12 target);
+
+void func_800E24A0(s_800F4B40_1C* arg0);
 
 void func_800E2664(s32 arg0, s16 arg1);
 
