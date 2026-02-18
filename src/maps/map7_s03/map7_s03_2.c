@@ -6222,10 +6222,10 @@ void func_800E24A0(s_800F4B40_1C* arg0) // 0x800E24A0
             var_a1 = Q8(16384.0f) / MAX(temp_s0, Q8(1.5f));
         }
 
-        func_800E2968(&D_800F4B40.field_118[0], 16, 6, &sp50, &sp58, 0,
+        func_800E2968(D_800F4B40.field_118, 16, 6, &sp50, &sp58, 0,
                       Math_MulFixed(Q12_TO_Q8(arg0->pos_10), var_a1, Q12_SHIFT), 0, Q12(1.0f),
-                      D_800F4B40.field_18, arg0->field_12, (u8)arg0->field_14);
-        func_800E2C28(&D_800F4B40.field_118[0], 16, 6, 1, 1);
+                      D_800F4B40.field_18, arg0->field_12, arg0->field_14);
+        func_800E2C28(D_800F4B40.field_118, 16, 6, 1, 1);
     }
 }
 

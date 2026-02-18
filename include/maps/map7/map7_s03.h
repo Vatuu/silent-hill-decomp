@@ -317,7 +317,7 @@ typedef struct
     s_800F4B40_1C  field_64[2];
     s_800F4B40_A4  field_A4[2];
     VECTOR3        field_B8[8];  // Guessed type based on size, likely incorrect.
-    s_800F4B40_118 field_118[1]; // Unknown array size.
+    s_800F4B40_118 field_118[16][6];
 } s_800F4B40;
 
 typedef struct
