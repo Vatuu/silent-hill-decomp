@@ -246,8 +246,11 @@ typedef struct
     VECTOR              field_4;
     s8                  unk_10[32];
     s8                  field_34[41];
-    u8                  field_5D[32 * 41];
-    u8                  unk_580[12];
+    u8                  field_5D[31 * 41];
+    u8                  field_554[41];
+    s8                  unk_57D[7];
+    s32                 field_584;
+    s8                  unk_588[4];
     s_func_800DF1D4_58C field_58C[100];
 } s_func_800DF1D4;
 
@@ -1008,5 +1011,11 @@ void func_800DB154(GsCOORDINATE2* coords);
 void func_800DB288(void);
 
 void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 arg4);
+
+void func_800DF288(s32 x, s32 y, s32 val);
+
+void func_800DF458(void);
+
+void func_800DF348(void);
 
 #endif
