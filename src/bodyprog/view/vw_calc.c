@@ -174,7 +174,7 @@ q19_12 vwRetNewAngSpdToTargetAng(q19_12 now_ang_spd, q3_12 now_ang, q3_12 tgt_an
     return vwRetNewVelocityToTargetVal(now_ang_spd, Q12(0.0f), FP_ANGLE_NORM_S(tgt_ang - now_ang), accel_spd, total_max_ang_spd, dec_val_lim_spd);
 }
 
-s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2)
+s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2) // 0x800494B0
 {
     s32 range;
     s32 arange;
@@ -191,7 +191,7 @@ s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2)
     return FP_TO(arange, Q12_SHIFT) / g_DeltaTime0;
 }
 
-s32 func_80049530(VECTOR* arg0, VECTOR* arg1) // 0x80049530
+s32 func_80049530(VECTOR* arg0, DVECTOR* arg1) // 0x80049530
 {
     VECTOR sp10;
     s32    ret;

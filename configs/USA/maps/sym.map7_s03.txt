@@ -274,6 +274,7 @@ sharedData_800E2C38_7_s01           = 0x800F2414; // type:s32
 g_WorldObject_Bin                   = 0x800F3DC8; // type:WorldObjectDesc size:0x2C
 g_WorldObject_Nu                    = 0x800F3DF8; // type:WorldObjectDesc size:0x2C
 g_WorldObject_Baby                  = 0x800F3E28; // type:WorldObjectDesc size:0x2C
+g_NpcBoneCoords                     = 0x800F3E58;
 g_WorldObject_UnkPos                = 0x800F47F8; // type:VECTOR3 size:0xC
 g_WorldObject_Real                  = 0x800F4848; // type:WorldObject_0 size:0x1C
 g_WorldObject_Ura                   = 0x800F4868; // type:WorldObject_0 size:0x1C

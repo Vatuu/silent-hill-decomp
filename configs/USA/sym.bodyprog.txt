@@ -2473,7 +2473,6 @@ g_CharaTypeAnimInfo                          = 0x800A992C;
 D_800A998C                                   = 0x800A998C; // type:AnimInfo size:0x10
 D_800A99A0                                   = 0x800A99A0;
 g_Sd_BgmLayerLimits                          = 0x800A99A4;
-g_HarryBoneCoords = 0x800F3E58;
 
 //----------------------------------------------------------------------------
 //--- PA: 0x084E4C   VA: 0x800A99AC   subsegment: .data, events/mapmsg_display

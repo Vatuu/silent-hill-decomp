@@ -321,6 +321,8 @@ extern s_800F3D48* D_800F3D48;
 
 extern s_800F3DAC* D_800F3DAC; // Pointer to `s_800F3DAC[30]`.
 
+extern s32 D_800F3DB0;
+
 extern q19_12 D_800F3DB4; // Timer.
 
 extern q19_12 D_800F3DB8; // Timer.
@@ -383,7 +385,7 @@ extern s_WorldObjectDesc g_WorldObject_Nu;
 
 extern s_WorldObjectDesc g_WorldObject_Baby;
 
-extern GsCOORDINATE2 g_HarryBoneCoords[HarryBone_Count];
+extern GsCOORDINATE2 g_NpcBoneCoords[HarryBone_Count];
 
 extern s32 D_800F47F0;
 
@@ -391,16 +393,16 @@ extern VECTOR3 g_WorldObject_UnkPos;
 
 extern u8 D_800F4804;
 extern u8 D_800F4805;
-extern s8 D_800F4806;
-extern s8 D_800F4807;
-extern s8 D_800F4808;
-extern s8 D_800F4809;
-extern s8 D_800F480A;
-extern s8 D_800F480B;
+extern u8 D_800F4806;
+extern u8 D_800F4807;
+extern u8 D_800F4808;
+extern u8 D_800F4809;
+extern u8 D_800F480A;
+extern u8 D_800F480B;
 extern u8 D_800F480C;
-extern s8 D_800F480D;
-extern s8 D_800F480E;
-extern s8 D_800F480F;
+extern u8 D_800F480D;
+extern u8 D_800F480E;
+extern u8 D_800F480F;
 extern u8 D_800F4810;
 extern u8 D_800F4811;
 extern u8 D_800F4812;
@@ -494,10 +496,17 @@ extern s_FsImageDesc D_800ED218;
 extern s_FsImageDesc D_800ED220;
 extern s_FsImageDesc D_800ED228;
 
+extern void* D_800ED230[];
+
 extern VECTOR3 D_800ED244;
 extern VECTOR3 D_800ED250;
 
 extern s_func_800E1FE0 D_800ED274[18];
+
+extern VECTOR3 D_800F47B8;
+extern VECTOR3 D_800F47C8;
+extern VECTOR3 D_800F47D8;
+extern SVECTOR3 D_800F47E8;
 
 void Ai_BloodyIncubator_Update(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 void Ai_BloodyIncubator_AnimUpdate(s_SubCharacter* bloodyIncubator, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
@@ -618,6 +627,8 @@ void func_800DBAE8(VECTOR3* pos, s32 idx);
 void func_800DBBA0(void);
 
 void func_800DBBD8(MATRIX* mat);
+
+void func_800DBC18(s32 arg0);
 
 bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec);
 

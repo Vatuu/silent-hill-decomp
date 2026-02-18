@@ -24,6 +24,10 @@ q19_12 vwRetNewVelocityToTargetVal(q19_12 now_spd, q19_12 mv_pos, q19_12 tgt_pos
  */
 q19_12 vwRetNewAngSpdToTargetAng(q19_12 now_ang_spd, q3_12 now_ang, q3_12 tgt_ang, q19_12 accel_spd, q19_12 total_max_ang_spd, q19_12 dec_val_lim_spd);
 
+s32 func_800494B0(s32 arg0, s32 arg1, s32 arg2);
+
+s32 func_80049530(VECTOR* arg0, DVECTOR* arg1);
+
 void vwMatrixToAngleYXZ(SVECTOR* ang, const MATRIX* mat);
 
 void Vw_MultiplyAndTransformMatrix(MATRIX* transformMat, MATRIX* inMat, MATRIX* outMat);
