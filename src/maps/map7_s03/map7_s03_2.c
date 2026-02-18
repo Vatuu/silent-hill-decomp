@@ -48,8 +48,6 @@
 
 #include "maps/shared/sharedFunc_800D923C_0_s00.h" // 0x800D5B68
 
-extern s32 D_800EBC14;
-
 void Ai_LittleIncubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800D5BC8
 {
     s32         temp_s0;
@@ -1469,7 +1467,10 @@ void func_800D82AC(GsOT_TAG* ot, s32 arg1, s32 arg2, s32 arg3) // 0x800D82AC
                   arg1, arg2, 0x102020);
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8438);
+s32 func_800D8438(s32 idx) // 0x800D8438
+{
+    return D_800EBC18[idx];
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800D8454);
 
@@ -3233,7 +3234,22 @@ void func_800DC544(GsOT_TAG* ot) // 0x800DC544
     func_800DBBA0();
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DC650);
+q19_12 func_800DC650(VECTOR3* origin, VECTOR3* target, q19_12 maxDist) // 0x800DC650
+{
+    q19_12 x;
+    q19_12 y;
+    q19_12 z;
+
+    x = target->vx - origin->vx;
+    y = target->vy - origin->vy;
+    z = target->vz - origin->vz;
+
+    x = FP_SQUARE(x, Q12_SHIFT);
+    y = FP_SQUARE(y, Q12_SHIFT);
+    z = FP_SQUARE(z, Q12_SHIFT);
+
+    return maxDist < abs(SquareRoot12(x + z + y));
+}
 
 INCLUDE_RODATA("maps/map7_s03/nonmatchings/map7_s03_2", D_800CAE30);
 

@@ -108,6 +108,15 @@
 #define FP_DIVIDE(a, b, shift) \
     (((a) << (shift)) / (b))
 
+/** @brief Squares a fixed-point value.
+ *
+ * @param x Fixed-point value to be squared.
+ * @param shift Fixed-point shift.
+ * @return Fixed-point square of `x`.
+ */
+#define FP_SQUARE(x, shift) \
+    FP_MULTIPLY(x, x, shift)
+
 /** @brief Squares a fixed-point value, using 64-bit intermediates for higher precision.
  *
  * @param x Fixed-point value to be squared.

@@ -458,6 +458,10 @@ extern s32 D_800EB810;
 
 extern s32 D_800EB814[];
 
+extern s32 D_800EBC14;
+
+extern s32 D_800EBC18[]; // Possibly array of pointers.
+
 extern VECTOR D_800EC018[];
 
 extern s_800EC770 D_800EC770[];
@@ -552,6 +556,8 @@ s32 func_800D822C(SVECTOR* worldPos, s16* outScreenX, s16* outScreenY);
 
 void func_800D82AC(GsOT_TAG* ot, s32 arg1, s32 arg2, s32 arg3);
 
+s32 func_800D8438(s32 idx);
+
 void func_800D8738(void* ot, s32 abr);
 
 void func_800D87D4(void* ot);
@@ -619,6 +625,8 @@ void func_800DC3EC(s_800F3DAC* arg0);
 void func_800DC49C(s_800F3DAC* arg0);
 
 void func_800DC544(GsOT_TAG* ot);
+
+q19_12 func_800DC650(VECTOR3* origin, VECTOR3* target, q19_12 maxDist);
 
 // Returns `bool`?
 s32 func_800DC6DC(s32*, s32*, VECTOR3*, s_800F3DAC*);
