@@ -3113,10 +3113,8 @@ void func_800DBBD8(MATRIX* mat) // 0x800DBBD8
 
 void func_800DBC18(s32 arg0) // 0x800DBC18
 {
-    s32 var_a1;
     s32 i;
 
-    var_a1                                             = arg0;
     g_SysWork.playerWork_4C.player_0.attackReceived_41 = 0x43;
 
     if (D_800F3DB4 > Q12(0.8f))
@@ -3132,10 +3130,10 @@ void func_800DBC18(s32 arg0) // 0x800DBC18
 
     for (i = 1; i < D_800F3DB0; i++)
     {
-        var_a1 = var_a1 >> 1;
+        arg0 = arg0 >> 1;
     }
 
-    g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += var_a1;
+    g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += arg0;
 }
 
 bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec) // 0x800DBCA4
