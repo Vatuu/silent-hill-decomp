@@ -4836,7 +4836,63 @@ s32 func_800DF418(s32 arg0, s32 arg1) // 0x800DF418
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF458);
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF750);
+void func_800DF750(void) // 0x800DF750
+{
+    #define NUM_ROWS 31
+    #define NUM_COLS 41
+
+    s32 row;
+    s32 col;
+    s32 value;
+
+    s_func_800D5EC0* base = (s_func_800D5EC0*)FS_BUFFER_26;
+
+    for (row = 0; row < NUM_ROWS; row++)
+    {
+        for (col = 0; col < NUM_COLS; col++)
+        {
+            // TODO: Maybe `field_5D` actually begins at 0x34, but the first row (0x34 to 0x5D) only gets used indirectly? 0x5D is weird offset to start at.
+            // (no luck using multi-dim array yet neither)
+            u8* ptr = &base->field_5D[row * NUM_COLS];
+
+            value = ptr[col - NUM_COLS]; // Add same column from previous row
+            if (col == 0)
+            {
+                value = 0;
+            }
+            else
+            {
+                value += ptr[col - 1]; // Add value from previous column
+            }
+
+            if (col == (NUM_COLS - 1))
+            {
+                value = 0;
+            }
+            else
+            {
+                value += ptr[col + 1]; // Add value from next column
+            }
+
+            value += ptr[col + NUM_COLS]; // Add column from next row
+
+            value >>= 2;
+            value  -= 1;
+
+            if (value <= 0)
+            {
+                ptr[col] = 0;
+            }
+            else
+            {
+                ptr[col] = value;
+            }
+        }
+    }
+
+    #undef NUM_ROWS
+    #undef NUM_COLS
+}
 
 void func_800DF7F8(void) // 0x800DF7F8
 {

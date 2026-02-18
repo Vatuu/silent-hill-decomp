@@ -756,6 +756,7 @@ void func_800DF074(s_SubCharacter* incubus);
 void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
 void func_800DF1D4(void);
+void func_800DF750(void);
 s32 func_800DF418(s32 arg0, s32 arg1);
 void func_800DF7F8(void);
 void func_800DF84C(VECTOR* arg0, s32 arg1);
