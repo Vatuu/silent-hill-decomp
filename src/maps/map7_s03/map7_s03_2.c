@@ -4797,7 +4797,31 @@ void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINAT
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF1D4);
+void func_800DF1D4(void) // 0x800DF1D4
+{
+    s32 i;
+    s32 rand;
+    s32 randSin;
+    s32 randCos;
+
+    s_func_800DF1D4_58C* ptr = ((s_func_800DF1D4*)FS_BUFFER_26)->field_58C;
+
+    for (i = 0; i < 100; i++, ptr++)
+    {
+        Math_Vector3Set(&ptr->field_8, 0, 0, 0);
+
+        ptr->field_38 = 255;
+
+        rand    = Rng_Rand16();
+        randSin = Math_Sin(rand);
+        randCos = Math_Cos(rand);
+
+        Math_SVectorSet(&ptr->field_28, randCos, randSin, 0);
+
+        ptr->field_0 = 0;
+        ptr->field_4 = Q12(1.0f);
+    }
+}
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF288);
 
@@ -4805,7 +4829,7 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF348);
 
 s32 func_800DF418(s32 arg0, s32 arg1) // 0x800DF418
 {
-    s_func_800D71B0* ptr = (s_func_800D71B0*)FS_BUFFER_26;
+    s_func_800DF1D4* ptr = (s_func_800DF1D4*)FS_BUFFER_26;
 
     return D_800ECA50[ptr->field_5D[(arg1 * 41) + arg0]];
 }
@@ -4816,7 +4840,8 @@ INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF750);
 
 void func_800DF7F8(void) // 0x800DF7F8
 {
-    // TODO: FS_BUFFER?
+    // TODO: Use pointer to `s_func_XXX*` with FS_BUFFER_6, and pass fields to memset instead
+    // (like how `func_800D663C` works)
     memset(0x8018C634, 0, 0x29);
     memset(0x8018C65D, 0, 0x4F7);
     memset(0x8018CB54, 0, 0x29);

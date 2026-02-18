@@ -231,6 +231,28 @@ typedef struct
 
 typedef struct
 {
+    s32     field_0;
+    s32     field_4;
+    VECTOR  field_8;
+    u8      unk_18[0x10];
+    SVECTOR field_28;
+    u8      unk_30[8];
+    s32     field_38;
+} s_func_800DF1D4_58C;
+
+typedef struct
+{
+    s8                  unk_0[4];
+    VECTOR              field_4;
+    s8                  unk_10[32];
+    s8                  field_34[41];
+    u8                  field_5D[32 * 41];
+    u8                  unk_580[12];
+    s_func_800DF1D4_58C field_58C[100];
+} s_func_800DF1D4;
+
+typedef struct
+{
     u8      unk_0[4];
     VECTOR3 field_4;
     u8      unk_10[0x574];
@@ -723,6 +745,7 @@ void func_800DF044(s_SubCharacter* incubus, GsCOORDINATE2* coords);
 void func_800DF074(s_SubCharacter* incubus);
 void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords);
 
+void func_800DF1D4(void);
 s32 func_800DF418(s32 arg0, s32 arg1);
 void func_800DF7F8(void);
 void func_800DF84C(VECTOR* arg0, s32 arg1);
