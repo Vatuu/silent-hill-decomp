@@ -6349,75 +6349,117 @@ q3_12 func_800E28F4(void) // 0x800E28F4
     return D_800ED73C & SHRT_MAX;
 }
 
-void func_800E2968(s_800F4B40_118* arg0, s32 arg1, s32 arg2, DVECTOR* arg3, DVECTOR* arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, u8* arg9, s32 arg10, u8 arg11) // 0x800E2968
+void func_800E2968(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, DVECTOR* arg3, DVECTOR* arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s_PrimColor* color, s32 arg10, u8 arg11) // 0x800E2968
 {
-    u8  sp18[4];
-    s32 i;
-    s32 j;
-    s32 temp_lo;
-    s32 temp_s0;
-    s32 temp_s3;
-    s32 temp_s4;
-    s32 temp_s5;
-    s32 temp_v0;
-    s32 temp_v1;
+    s_PrimColor sp18;
+    s32         i;
+    s32         j;
+    s32         temp_lo;
+    s32         temp_s0;
+    s32         temp_s3;
+    s32         temp_s4;
+    s32         temp_s5;
+    s32         temp_v0;
+    s32         temp_v1;
 
-    for (i = 0; i < arg2; i++)
+    for (i = 0; i < rowCount; i++)
     {
-        temp_lo = Q12(i) / (arg2 - 1);
+        temp_lo = Q12(i) / (rowCount - 1);
         temp_v0 = vwOresenHokan(D_800ED744, ARRAY_SIZE(D_800ED744), temp_lo, 0, Q12(1.0f));
 
-        temp_v1 = Q12_MULT(arg10, Q12_MULT(arg9[0], temp_v0));
+        temp_v1 = Q12_MULT(arg10, Q12_MULT(color->r, temp_v0));
         if (temp_v1 < arg11)
         {
-            sp18[0] = temp_v1;
+            sp18.r = temp_v1;
         }
         else
         {
-            sp18[0] = arg11;
+            sp18.r = arg11;
         }
 
-        temp_v1 = Q12_MULT(arg10, Q12_MULT(arg9[1], temp_v0));
+        temp_v1 = Q12_MULT(arg10, Q12_MULT(color->g, temp_v0));
         if (temp_v1 < arg11)
         {
-            sp18[1] = temp_v1;
+            sp18.g = temp_v1;
         }
         else
         {
-            sp18[1] = arg11;
+            sp18.g = arg11;
         }
 
-        temp_v1 = Q12_MULT(arg10, Q12_MULT(arg9[2], temp_v0));
+        temp_v1 = Q12_MULT(arg10, Q12_MULT(color->b, temp_v0));
         if (temp_v1 < arg11)
         {
-            sp18[2] = temp_v1;
+            sp18.b = temp_v1;
         }
         else
         {
-            sp18[2] = arg11;
+            sp18.b = arg11;
         }
 
         temp_s5 = arg3->vx + Q12_MULT(temp_lo, arg4->vx - arg3->vx);
         temp_s4 = arg3->vy + Q12_MULT(temp_lo, arg4->vy - arg3->vy);
         temp_s3 = arg5 + Q12_MULT(temp_lo, arg6 - arg5);
 
-        for (j = 0; j < arg1; j++)
+        for (j = 0; j < colCount; j++)
         {
             s_800F4B40_118* temp_s1;
-            temp_s1 = &arg0[(arg1 * i) + j];
+            temp_s1 = &arg0[(colCount * i) + j];
 
-            *(s32*)&temp_s1->field_4 = *(s32*)sp18;
+            *(s32*)&temp_s1->color_4 = *(s32*)&sp18;
 
             temp_s0  = arg7;
-            temp_s0 += FP_FROM((Q12(j) / (arg1 - 1)) * (arg8 - temp_s0), Q12_SHIFT);
+            temp_s0 += FP_FROM((Q12(j) / (colCount - 1)) * (arg8 - temp_s0), Q12_SHIFT);
 
-            temp_s1->field_0 = temp_s5 + Q12_MULT(temp_s3, Math_Cos(temp_s0));
-            temp_s1->field_2 = temp_s4 + Q12_MULT(temp_s3, Math_Sin(temp_s0));
+            temp_s1->x_0 = temp_s5 + Q12_MULT(temp_s3, Math_Cos(temp_s0));
+            temp_s1->y_2 = temp_s4 + Q12_MULT(temp_s3, Math_Sin(temp_s0));
         }
     }
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800E2C28);
+void func_800E2C28(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, s32 zDepth, s32 arg4) // 0x800E2C28
+{
+    POLY_G4*        poly;
+    GsOT_TAG*       ot;
+    s32             row;
+    s32             col;
+    s_800F4B40_118* colData;
+    DR_MODE*        drMode;
+
+    poly = GsOUT_PACKET_P;
+    ot   = &g_OrderingTable0[g_ActiveBufferIdx].org[zDepth];
+
+    for (row = 0; row < rowCount - 1; row++)
+    {
+        for (col = 0; col < colCount - 1; col++, poly++)
+        {
+            colData = &arg0[(row * colCount) + col];
+
+            *(s32*)&poly->x0 = *(s32*)&colData[0].x_0;
+            *(s32*)&poly->r0 = *(s32*)&colData[0].color_4;
+            *(s32*)&poly->x1 = *(s32*)&colData[1].x_0;
+            *(s32*)&poly->r1 = *(s32*)&colData[1].color_4;
+
+            // Fetch x2/x3 from same column in next row
+            *(s32*)&poly->x2 = *(s32*)&colData[colCount + 0].x_0;
+            *(s32*)&poly->r2 = *(s32*)&colData[colCount + 0].color_4;
+            *(s32*)&poly->x3 = *(s32*)&colData[colCount + 1].x_0;
+            *(s32*)&poly->r3 = *(s32*)&colData[colCount + 1].color_4;
+
+            setPolyG4(poly);
+            setSemiTrans(poly, 1);
+
+            addPrim(ot, poly);
+        }
+    }
+
+    GsOUT_PACKET_P = poly;
+
+    drMode = poly;
+    SetDrawMode(drMode, 0, 1, (arg4 & 3) << 5, NULL);
+    GsOUT_PACKET_P = &drMode[1];
+    addPrim(ot, drMode);
+}
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800E2DF8
 

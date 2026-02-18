@@ -295,9 +295,9 @@ typedef struct
 
 typedef struct
 {
-    s16 field_0;
-    s16 field_2;
-    u8  field_4[4];
+    s16         x_0;
+    s16         y_2;
+    s_PrimColor color_4;
 } s_800F4B40_118;
 STATIC_ASSERT_SIZEOF(s_800F4B40_118, 8);
 
@@ -317,7 +317,7 @@ typedef struct
     s_800F4B40_1C  field_64[2];
     s_800F4B40_A4  field_A4[2];
     VECTOR3        field_B8[8];  // Guessed type based on size, likely incorrect.
-    s_800F4B40_118 field_118[16][6];
+    s_800F4B40_118 field_118[6][16];
 } s_800F4B40;
 
 typedef struct
@@ -825,7 +825,9 @@ void func_800E27D0(s32 arg0, s16 arg1, s32 arg2, VECTOR3* pos);
 // Some kind of RNG? Constants don't seem well known?
 q3_12 func_800E28F4(void);
 
-void func_800E2968(s_800F4B40_118* arg0, s32 arg1, s32 arg2, DVECTOR* arg3, DVECTOR* arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, u8* arg9, s32 arg10, u8 arg11);
+void func_800E2968(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, DVECTOR* arg3, DVECTOR* arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s_PrimColor* color, s32 arg10, u8 arg11);
+
+void func_800E2C28(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, s32 zDepth, s32 arg4);
 
 void func_800E2E90(void);
 
