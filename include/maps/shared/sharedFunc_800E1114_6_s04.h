@@ -6,15 +6,15 @@ s32 sharedFunc_800E1114_6_s04(s32 arg0, s32 arg1)
     {
         result = 5;
     }
-    else if (FP_SQUARE_PRECISE(arg0 + Q12(16.0f), Q12_SHIFT) + FP_SQUARE_PRECISE(arg1 + Q12(64.0f), Q12_SHIFT) < Q12(SQUARE(18)))
+    else if (Q12_SQUARE_PRECISE(arg0 + Q12(16.0f)) + Q12_SQUARE_PRECISE(arg1 + Q12(64.0f)) < Q12(SQUARE(18)))
     {
         result = 3;
     }
-    else if (FP_SQUARE_PRECISE(arg0 + Q12(-14.0f), Q12_SHIFT) + FP_SQUARE_PRECISE(arg1 + Q12(28.0f), Q12_SHIFT) < Q12(SQUARE(18)))
+    else if (Q12_SQUARE_PRECISE(arg0 + Q12(-14.0f)) + Q12_SQUARE_PRECISE(arg1 + Q12(28.0f)) < Q12(SQUARE(18)))
     {
         result = 2;
     }
-    else if (FP_SQUARE_PRECISE(arg0 + Q12(14.0f), Q12_SHIFT) + FP_SQUARE_PRECISE(arg1 + Q12(28.0f), Q12_SHIFT) < Q12(SQUARE(5)))
+    else if (Q12_SQUARE_PRECISE(arg0 + Q12(14.0f)) + Q12_SQUARE_PRECISE(arg1 + Q12(28.0f)) < Q12(SQUARE(5)))
     {
         result = 4;
     }

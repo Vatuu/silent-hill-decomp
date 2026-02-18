@@ -217,8 +217,8 @@ void Game_NpcUpdate(void) // 0x80038354
         return NO_VALUE;
     }
 
-    posXShift6 = g_SysWork.playerWork_4C.player_0.position_18.vx >> 6;
-    posZShift6 = g_SysWork.playerWork_4C.player_0.position_18.vz >> 6;
+    posXShift6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vx);
+    posZShift6 = Q12_TO_Q6(g_SysWork.playerWork_4C.player_0.position_18.vz);
 
     Demo_DemoRandSeedBackup();
     Demo_DemoRandSeedRestore();
@@ -236,8 +236,8 @@ void Game_NpcUpdate(void) // 0x80038354
         {
             if (npc->model_0.charaId_0 <= Chara_MonsterCybil)
             {
-                temp_t3 = FP_SQUARE_PRECISE((npc->position_18.vx >> 6) - posXShift6, Q12_SHIFT) +
-                          FP_SQUARE_PRECISE((npc->position_18.vz >> 6) - posZShift6, Q12_SHIFT);
+                temp_t3 = Q12_SQUARE_PRECISE(Q12_TO_Q6(npc->position_18.vx) - posXShift6) +
+                          Q12_SQUARE_PRECISE(Q12_TO_Q6(npc->position_18.vz) - posZShift6);
                 var_t5 = 0;
 
                 if (g_MapOverlayHeader.mapInfo_0->flags_6 & MapFlag_Interior)

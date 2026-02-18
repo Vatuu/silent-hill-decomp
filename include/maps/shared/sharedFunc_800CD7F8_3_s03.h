@@ -11,7 +11,8 @@ void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ, 
     deltaX = chara->field_D8.offsetX_4 - posX;
     deltaZ = chara->field_D8.offsetZ_6 - posZ;
 
-    deltaSqr = FP_SQUARE_PRECISE(deltaX, Q12_SHIFT) + FP_SQUARE_PRECISE(deltaZ, Q12_SHIFT);
+    deltaSqr = Q12_SQUARE_PRECISE(deltaX) +
+               Q12_SQUARE_PRECISE(deltaZ);
     if (deltaSqr > Q12_MULT_PRECISE(range, 4))
     {
         rootDeltaSqr = SquareRoot12(deltaSqr);

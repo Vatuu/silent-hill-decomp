@@ -1073,7 +1073,10 @@ void func_800E03C4(VECTOR3* vec0, VECTOR3* vec1, q19_12 arg2, s32 arg3) // 0x800
         ptr->vec_14.vy = Q12_MULT_PRECISE(sp20.vy, arg2);
         ptr->vec_14.vz = Q12_MULT_PRECISE(sp20.vz, arg2);
 
-        ptr->field_0    = FP_TO(SquareRoot12(FP_SQUARE_PRECISE(sp10.vx, Q12_SHIFT) + FP_SQUARE_PRECISE(sp10.vy, Q12_SHIFT) + FP_SQUARE_PRECISE(sp10.vz, Q12_SHIFT)), Q12_SHIFT) / arg2;
+        ptr->field_0    = Q12_DIV(SquareRoot12(Q12_SQUARE_PRECISE(sp10.vx) +
+                                               Q12_SQUARE_PRECISE(sp10.vy) +
+                                               Q12_SQUARE_PRECISE(sp10.vz)),
+                                  arg2);
         ptr->field_28   = Q12(255.0f);
         ptr->field_2C   = arg3 << 8;
         ptr->funcPtr_30 = func_800E0358;

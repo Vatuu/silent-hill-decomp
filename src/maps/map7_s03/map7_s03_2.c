@@ -3246,9 +3246,9 @@ q19_12 func_800DC650(const VECTOR3* from, const VECTOR3* to, q19_12 distMax) // 
     y = to->vy - from->vy;
     z = to->vz - from->vz;
 
-    x = FP_SQUARE(x, Q12_SHIFT);
-    y = FP_SQUARE(y, Q12_SHIFT);
-    z = FP_SQUARE(z, Q12_SHIFT);
+    x = Q12_SQUARE(x);
+    y = Q12_SQUARE(y);
+    z = Q12_SQUARE(z);
 
     return distMax < abs(SquareRoot12(x + z + y));
 }

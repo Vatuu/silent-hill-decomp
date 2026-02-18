@@ -47,7 +47,8 @@ q19_12 sharedFunc_800CD6B0_3_s03(MATRIX* mat, s32 matCount, VECTOR3* center)
     posX      = Q8_TO_Q12(posX);
     posZ      = maxZ - minZ;
     posZ      = Q8_TO_Q12(posZ);
-    radius = SquareRoot12(FP_SQUARE_PRECISE(posX, Q12_SHIFT) + FP_SQUARE_PRECISE(posZ, Q12_SHIFT));
+    radius = SquareRoot12(Q12_SQUARE_PRECISE(posX) +
+                          Q12_SQUARE_PRECISE(posZ));
 
     posX       = Q8_TO_Q12(minX) + (posX / 2);
     posZ       = Q8_TO_Q12(minZ) + (posZ / 2);

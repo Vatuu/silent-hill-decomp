@@ -680,8 +680,9 @@ bool sharedFunc_800D2FB4_0_s01(s_SubCharacter* airScreamer, VECTOR3* playerPos, 
     offsetY = playerPos->vx - (airScreamer->position_18.vx + Q12_MULT_PRECISE(dist, Math_Sin(rotY)));
     offsetZ = playerPos->vz - (airScreamer->position_18.vz + Q12_MULT_PRECISE(dist, Math_Cos(rotY)));
 
-    roughDist = FP_SQUARE_PRECISE(offsetY, Q12_SHIFT) + FP_SQUARE_PRECISE(offsetZ, Q12_SHIFT);
-    if (roughDist > FP_SQUARE_PRECISE(Q12_MULT_PRECISE(var_s1, playerField10C), Q12_SHIFT))
+    roughDist = Q12_SQUARE_PRECISE(offsetY) +
+                Q12_SQUARE_PRECISE(offsetZ);
+    if (roughDist > Q12_SQUARE_PRECISE(Q12_MULT_PRECISE(var_s1, playerField10C)))
     {
         return false;
     }
@@ -730,8 +731,9 @@ bool sharedFunc_800D31D0_0_s01(s_SubCharacter* airScreamer, const VECTOR3* pos, 
     offsetX            = pos->vx - (airScreamer->position_18.vx + Q12_MULT_PRECISE(offsetDist, Math_Sin(offsetHeadingAngle)));
     offsetZ            = pos->vz - (airScreamer->position_18.vz + Q12_MULT_PRECISE(offsetDist, Math_Cos(offsetHeadingAngle)));
 
-    roughDist = FP_SQUARE_PRECISE(offsetX, Q12_SHIFT) + FP_SQUARE_PRECISE(offsetZ, Q12_SHIFT);
-    distMax   = FP_SQUARE_PRECISE(var_s1, Q12_SHIFT);
+    roughDist = Q12_SQUARE_PRECISE(offsetX) +
+                Q12_SQUARE_PRECISE(offsetZ);
+    distMax   = Q12_SQUARE_PRECISE(var_s1);
     distMax   = Q12_MULT_PRECISE(distMax, arg2);
     if (roughDist > distMax)
     {
@@ -9791,7 +9793,7 @@ void sharedFunc_800DDA80_2_s00(s_SubCharacter* airScreamer)
                 newPosX = Q12(-8.0f);
             }
 
-            newPosZ = Q12(400.0f) - FP_SQUARE_PRECISE(newPosX - playerPosX, Q12_SHIFT);
+            newPosZ = Q12(400.0f) - Q12_SQUARE_PRECISE(newPosX - playerPosX);
             if (newPosZ < Q12(0.0f))
             {
                 newPosZ = playerPosZ;
@@ -9831,7 +9833,7 @@ void sharedFunc_800DDA80_2_s00(s_SubCharacter* airScreamer)
                 newPosZ = Q12(-8.0f);
             }
 
-            newPosX = Q12(400.0f) - FP_SQUARE_PRECISE(newPosZ - playerPosZ, Q12_SHIFT);
+            newPosX = Q12(400.0f) - Q12_SQUARE_PRECISE(newPosZ - playerPosZ);
 
             if (newPosX < 0)
             {
@@ -10051,7 +10053,8 @@ bool sharedFunc_800DE250_2_s00(s_SubCharacter* airScreamer)
     deltaZ     = posZ - unkPosZ;
     angleToUnk = ratan2(deltaX, deltaZ);
 
-    sp28    = SquareRoot12(FP_SQUARE_PRECISE(deltaX, Q12_SHIFT) + FP_SQUARE_PRECISE(deltaZ, Q12_SHIFT));
+    sp28    = SquareRoot12(Q12_SQUARE_PRECISE(deltaX) +
+                           Q12_SQUARE_PRECISE(deltaZ));
     unkDist = (Rng_RandQ12() * 4) + Q12(4.0f);
 
     if (Rng_TestProbability(Q12(0.5f)))
@@ -10446,7 +10449,8 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
         playerOffsetX = sharedData_800E2350_0_s01.offset_0.vx;
         playerOffsetZ = sharedData_800E2350_0_s01.offset_0.vz;
 
-        playerMoveSpeed    = SquareRoot12(FP_SQUARE_PRECISE(playerOffsetX, Q12_SHIFT) + FP_SQUARE_PRECISE(playerOffsetZ, Q12_SHIFT));
+        playerMoveSpeed    = SquareRoot12(Q12_SQUARE_PRECISE(playerOffsetX) +
+                                          Q12_SQUARE_PRECISE(playerOffsetZ));
         playerMoveSpeed    = FP_TO(playerMoveSpeed, Q12_SHIFT) / g_DeltaTime0;
         playerheadingAngle = ratan2(playerOffsetX, playerOffsetZ);
     }
@@ -10461,7 +10465,8 @@ s32 sharedFunc_800DEE24_2_s00(s_SubCharacter* airScreamer)
 
     if (temp_v0_2 > -0x2AB && temp_v0_2 < 0x2AA)
     {
-        playerOffsetZ = SquareRoot12(FP_SQUARE_PRECISE(playerOffsetX, Q12_SHIFT) + FP_SQUARE_PRECISE(playerOffsetZ, Q12_SHIFT));
+        playerOffsetZ = SquareRoot12(Q12_SQUARE_PRECISE(playerOffsetX) +
+                                     Q12_SQUARE_PRECISE(playerOffsetZ));
 
         if (var_s2 < Q12(1.0f))
         {
@@ -12080,9 +12085,9 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
     airScreamer->damage_B4.position_0.vy = Q12(0.0f);
     airScreamer->damage_B4.position_0.vz = Q12(0.0f);
 
-    sp1C = SquareRoot12(FP_SQUARE_PRECISE(newPosX, Q12_SHIFT) +
-                        FP_SQUARE_PRECISE(newPosY, Q12_SHIFT) +
-                        FP_SQUARE_PRECISE(newPosZ, Q12_SHIFT));
+    sp1C = SquareRoot12(Q12_SQUARE_PRECISE(newPosX) +
+                        Q12_SQUARE_PRECISE(newPosY) +
+                        Q12_SQUARE_PRECISE(newPosZ));
 
     angle2 = airScreamerProps.field_EC;
     angle0 = airScreamerProps.field_F0;
@@ -12138,8 +12143,9 @@ void sharedFunc_800D6600_0_s01(s_SubCharacter* airScreamer)
     sharedFunc_800D6C7C_0_s01(&sharedData_800DE200_0_s01, airScreamer, temp, &sharedData_800E21D0_0_s01.unk_140);
 
     angle1 = ratan2(posX, posZ);
-    angle0 = FP_SQUARE_PRECISE(posX, Q12_SHIFT) + FP_SQUARE_PRECISE(posZ, Q12_SHIFT);
-    angle2 = angle0 + FP_SQUARE_PRECISE(posY, Q12_SHIFT);
+    angle0 = Q12_SQUARE_PRECISE(posX) +
+             Q12_SQUARE_PRECISE(posZ);
+    angle2 = angle0 + Q12_SQUARE_PRECISE(posY);
     angle0 = SquareRoot12(angle0);
     angle2 = SquareRoot12(angle2);
     angle0 = ratan2(posY, angle0);
@@ -13197,7 +13203,8 @@ void sharedFunc_800D82B8_0_s01(s_SubCharacter* airScreamer)
             idx0  = var_t0_2[i].vy - posY;
             temp2 = var_t0_2[i].vz - posZ;
 
-            temp_a0_2 = FP_SQUARE_PRECISE(temp, Q12_SHIFT) + FP_SQUARE_PRECISE(temp2, Q12_SHIFT);
+            temp_a0_2 = Q12_SQUARE_PRECISE(temp) +
+                        Q12_SQUARE_PRECISE(temp2);
             if (var_t1 < temp_a0_2)
             {
                 var_t1 = temp_a0_2;
