@@ -25,8 +25,8 @@ void Ai_PuppetNurse_DamageHandle(s_SubCharacter* nurse)
                 {
                     newHealth = Q12(0.0f);
                 }
-
                 nurse->health_B0 = newHealth;
+
                 if (newHealth <= Q12(120.0f))
                 {
                     nurse->properties_E4.puppetNurse.field_118++;

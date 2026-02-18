@@ -436,7 +436,7 @@ void Game_NpcUpdate(void) // 0x80038354
     }
 }
 
-bool Math_Distance2dCheck(const VECTOR3* posFrom, const VECTOR3* posTo, q19_12 radius) // 0x80038A6C
+bool Math_Distance2dCheck(const VECTOR3* from, const VECTOR3* to, q19_12 radius) // 0x80038A6C
 {
     q19_12 deltaX;
     q19_12 deltaZ;
@@ -444,7 +444,7 @@ bool Math_Distance2dCheck(const VECTOR3* posFrom, const VECTOR3* posTo, q19_12 r
     q19_12 sum;
 
     // Check rough radius intersection on X axis.
-    deltaX = posFrom->vx - posTo->vx;
+    deltaX = from->vx - to->vx;
     if (radius < deltaX)
     {
         return true;
@@ -455,7 +455,7 @@ bool Math_Distance2dCheck(const VECTOR3* posFrom, const VECTOR3* posTo, q19_12 r
     }
 
     // Check rough radius intersection on Z axis.
-    deltaZ = posFrom->vz - posTo->vz;
+    deltaZ = from->vz - to->vz;
     if (radius < deltaZ)
     {
         return true;

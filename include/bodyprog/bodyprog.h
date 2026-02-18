@@ -4106,19 +4106,19 @@ s32 func_800382B0(s32 arg0);
 
 /** @brief Computes the distance between two positions.
  *
- * @param posFrom First position (Q19.12).
- * @param posTo Second position (Q19.12).
+ * @param from First position (Q19.12).
+ * @param to Second position (Q19.12).
  * @return Distance between positions.
  */
-q19_12 Math_DistanceGet(const VECTOR3* posFrom, const VECTOR3* posTo);
+q19_12 Math_DistanceGet(const VECTOR3* from, const VECTOR3* to);
 
 /** @brief Computes the 2D distance on the XZ plane between two positions.
  *
- * @param posFrom First position (Q19.12).
- * @param posTo Second position (Q19.12).
+ * @param from First position (Q19.12).
+ * @param to Second position (Q19.12).
  * @return 2D distance between positions.
  */
-q19_12 Math_Distance2dGet(const VECTOR3* posFrom, const VECTOR3* posTo);
+q19_12 Math_Distance2dGet(const VECTOR3* from, const VECTOR3* to);
 
 void func_800803FC(VECTOR3* pos, s32 idx);
 
@@ -4127,12 +4127,12 @@ void Input_SelectClickSet(void);
 
 /** @brief Performs a 2D distance check on the XZ plane between two positions.
  *
- * @param posFrom First position (Q19.12).
- * @param posTo Second position (Q19.12).
+ * @param from First position (Q19.12).
+ * @param to Second position (Q19.12).
  * @param radius Intersection radius.
  * @return `true` if the 2D distance exceeds the radius, `false` otherwise.
  */
-bool Math_Distance2dCheck(const VECTOR3* posFrom, const VECTOR3* posTo, q19_12 radius);
+bool Math_Distance2dCheck(const VECTOR3* from, const VECTOR3* to, q19_12 radius);
 
 /** @brief Computes the squared 2D distance on the XZ plane from the reference position to the camera.
  *
@@ -4484,8 +4484,8 @@ void func_8007FD4C(bool cond);
 /** Returns footstep sound effect ID and random pitches? `arg0` usually comes from `s_Collision` */
 void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1);
 
-/** Presumably, returns a heading angle from `posFrom` to `posTo`. If so, rename to `Math_AngleBetweenPositionsGet`. */
-q19_12 func_80080478(const VECTOR3* posFrom, const VECTOR3* posTo);
+/** Presumably, returns a heading angle from `from` to `to`. If so, rename to `Math_AngleBetweenPositionsGet`. */
+q19_12 func_80080478(const VECTOR3* from, const VECTOR3* to);
 
 /** @brief Generates a random Q12 fixed-point number in the range `[0.0f, 1.0f)`. Used for angles and multipliers.
  *

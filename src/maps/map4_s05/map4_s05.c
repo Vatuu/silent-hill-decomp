@@ -165,7 +165,6 @@ void func_800D1968(s_SubCharacter* floatstinger) // 0x800D1968
         Player_DisableDamage(&sp20, 0u);
 
         newHealth = floatstinger->health_B0 - floatstinger->damage_B4.amount_C;
-
         if (sp20 != 0)
         {
             if (newHealth <= Q12(0.0f))

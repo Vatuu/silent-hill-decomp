@@ -8737,27 +8737,27 @@ void func_8007FDE0(s8 arg0, e_SfxId* sfxId, s8* pitch0, s8* pitch1) // 0x8007FDE
     }
 }
 
-q19_12 Math_DistanceGet(const VECTOR3* posFrom, const VECTOR3* posTo) // 0x800802CC
+q19_12 Math_DistanceGet(const VECTOR3* from, const VECTOR3* to) // 0x800802CC
 {
     q19_12 deltaX;
     q19_12 deltaY;
     q19_12 deltaZ;
 
-    deltaX = posTo->vx - posFrom->vx;
-    deltaY = posTo->vy - posFrom->vy;
-    deltaZ = posTo->vz - posFrom->vz;
+    deltaX = to->vx - from->vx;
+    deltaY = to->vy - from->vy;
+    deltaZ = to->vz - from->vz;
     return SquareRoot12(Q12_MULT_PRECISE(deltaX, deltaX) +
                         Q12_MULT_PRECISE(deltaY, deltaY) +
                         Q12_MULT_PRECISE(deltaZ, deltaZ));
 }
 
-q19_12 Math_Distance2dGet(const VECTOR3* posFrom, const VECTOR3* posTo) // 0x8008037C
+q19_12 Math_Distance2dGet(const VECTOR3* from, const VECTOR3* to) // 0x8008037C
 {
     q19_12 deltaX;
     q19_12 deltaZ;
 
-    deltaX = posTo->vx - posFrom->vx;
-    deltaZ = posTo->vz - posFrom->vz;
+    deltaX = to->vx - from->vx;
+    deltaZ = to->vz - from->vz;
     return SquareRoot12(Q12_MULT_PRECISE(deltaX, deltaX) +
                         Q12_MULT_PRECISE(deltaZ, deltaZ));
 }

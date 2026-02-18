@@ -18,6 +18,8 @@
 #include "maps/characters/kaufmann.h"
 #include "screens/credits/credits.h"
 
+#define incubusProps incubus->properties_E4.incubus
+
 #include "maps/shared/sharedFunc_800D88AC_0_s00.h" // 0x800D5040
 
 #include "maps/shared/sharedFunc_800D88C0_0_s00.h" // 0x800D5054
@@ -3779,11 +3781,12 @@ void func_800DD9F8(s_SubCharacter* chara) // 0x800DD9F8
 bool Ai_Incubus_Init(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDA1C
 {
     u8              activeStateStep;
-    s_SubCharacter* localIncubus; // TODO: Not sure why this is needed here, could be an inline in this func.
+    s_SubCharacter* localIncubus; // TODO: Not sure why this is needed here, could be an inline in this func and others.
 
     incubus->model_0.anim_4.alpha_A = Q12(0.0f);
     localIncubus                    = incubus;
 
+    // Set starting health.
     if (g_SavegamePtr->gameDifficulty_260 == GameDifficulty_Easy)
     {
         incubus->health_B0 = Q12(30000.0f);
@@ -3853,9 +3856,9 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
 {
     q19_12 newHealth;
 
-    if (incubus->properties_E4.incubus.someState_F0 == 0)
+    if (incubusProps.someState_F0 == 0)
     {
-        if (incubus->properties_E4.incubus.bossFightTimer_F4 < Q12(0.0f))
+        if (incubusProps.bossFightTimer_F4 < Q12(0.0f))
         {
             incubus->health_B0 = Q12(0.0f);
             incubus->damage_B4.amount_C = 1;
@@ -3863,10 +3866,10 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
 
         if (!func_8004C328(false))
         {
-            incubus->properties_E4.incubus.bossFightTimer_F4 -= g_DeltaTime0;
+            incubusProps.bossFightTimer_F4 -= g_DeltaTime0;
         }
 
-        if (!(incubus->flags_3E & (1 << 2)))
+        if (!(incubus->flags_3E & CharaFlag_Unk3))
         {
             incubus->damage_B4.amount_C *= 10;
         }
@@ -3885,7 +3888,7 @@ void func_800DDBBC(s_SubCharacter* incubus) // 0x800DDBBC
                 incubus->health_B0 = Q12(0.0f);
                 incubus->model_0.controlState_2 = IncubusControl_12;
                 incubus->model_0.stateStep_3 = IncubusStateStep_0;
-                incubus->properties_E4.incubus.someState_F0++;
+                incubusProps.someState_F0++;
             }
         }
     }
@@ -3939,7 +3942,7 @@ void func_800DDDD8(s_SubCharacter* incubus) // 0x800DDDD8
     if (incubus->model_0.stateStep_3 == IncubusStateStep_0)
     {
         incubus->model_0.anim_4.status_0        = ANIM_STATUS(IncubusAnim_2, false);
-        incubus->properties_E4.incubus.timer_E8 = Q12(0.0f);
+        incubusProps.timer_E8 = Q12(0.0f);
         incubus->model_0.stateStep_3++;
         return;
     }
@@ -3947,28 +3950,28 @@ void func_800DDDD8(s_SubCharacter* incubus) // 0x800DDDD8
     switch (incubus->model_0.stateStep_3)
     {
         case IncubusStateStep_1:
-            if (incubus->properties_E4.incubus.timer_E8 >= Q12(1.5f))
+            if (incubusProps.timer_E8 >= Q12(1.5f))
             {
                 incubus->model_0.stateStep_3 = 2;
             }
             break;
 
         case IncubusStateStep_2:
-            if (incubus->properties_E4.incubus.timer_E8 >= Q12(2.5f))
+            if (incubusProps.timer_E8 >= Q12(2.5f))
             {
                 incubus->model_0.stateStep_3 = 3;
             }
             break;
 
         case IncubusStateStep_3:
-            if (incubus->properties_E4.incubus.timer_E8 >= Q12(3.5f))
+            if (incubusProps.timer_E8 >= Q12(3.5f))
             {
                 incubus->model_0.stateStep_3 = 4;
             }
             break;
 
         case IncubusStateStep_4:
-            if (incubus->properties_E4.incubus.timer_E8 >= Q12(4.5f))
+            if (incubusProps.timer_E8 >= Q12(4.5f))
             {
                 incubus->model_0.stateStep_3 = 5;
             }
@@ -4014,7 +4017,7 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
     if (incubus->model_0.stateStep_3 == 0)
     {
         incubus->model_0.stateStep_3++;
-        incubus->properties_E4.incubus.timer_E8 = Q12(1.5f);
+        incubusProps.timer_E8 = Q12(1.5f);
         return;
     }
 
@@ -4159,7 +4162,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
 
     if (incubus->model_0.stateStep_3 == 0)
     {
-        incubus->properties_E4.incubus.timer_E8 = Q12(1.5f);
+        incubusProps.timer_E8 = Q12(1.5f);
         incubus->flags_3E                      &= ~CharaFlag_Unk3;
         incubus->model_0.stateStep_3++;
         return;
@@ -4326,7 +4329,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
     if (incubus->model_0.stateStep_3 == IncubusStateStep_0)
     {
         incubus->model_0.stateStep_3++;
-        incubus->properties_E4.incubus.timer_E8 = Q12(1.5f);
+        incubusProps.timer_E8 = Q12(1.5f);
         return;
     }
 
@@ -4500,7 +4503,7 @@ void func_800DEAF4(s_SubCharacter* incubus) // 0x800DEAF4
 {
     if (incubus->model_0.stateStep_3 == IncubusStateStep_0)
     {
-        incubus->properties_E4.incubus.timer_E8 = func_800DEA90();
+        incubusProps.timer_E8 = func_800DEA90();
         incubus->model_0.stateStep_3++;
         return;
     }
@@ -4511,7 +4514,7 @@ void func_800DEAF4(s_SubCharacter* incubus) // 0x800DEAF4
     switch (incubus->model_0.stateStep_3)
     {
         case IncubusStateStep_1:
-            if (incubus->properties_E4.incubus.timer_E8 <= Q12(0.0f))
+            if (incubusProps.timer_E8 <= Q12(0.0f))
             {
                 incubus->model_0.stateStep_3 = IncubusStateStep_2;
             }
@@ -4523,7 +4526,7 @@ void func_800DEAF4(s_SubCharacter* incubus) // 0x800DEAF4
             break;
     }
 
-    incubus->properties_E4.incubus.timer_E8 -= g_DeltaTime0;
+    incubusProps.timer_E8 -= g_DeltaTime0;
 }
 
 void func_800DEBA8(s_SubCharacter* incubus) // 0x800DEBA8
@@ -4537,12 +4540,12 @@ void func_800DEBA8(s_SubCharacter* incubus) // 0x800DEBA8
             incubus->model_0.anim_4.status_0 = ANIM_STATUS(IncubusAnim_3, false);
         }
 
-        incubus->properties_E4.incubus.timer_E8 = Q12(0.5f);
+        incubusProps.timer_E8 = Q12(0.5f);
         incubus->model_0.stateStep_3++;
     }
     else
     {
-        if (incubus->properties_E4.incubus.timer_E8 < 0)
+        if (incubusProps.timer_E8 < 0)
         {
             Savegame_EventFlagSet(EventFlag_578);
             incubus->model_0.controlState_2 = IncubusControl_13;
@@ -9285,3 +9288,5 @@ void func_800E9C28(void) // 0x800E9C28
 }
 
 INCLUDE_RODATA("maps/map7_s03/nonmatchings/map7_s03_2", D_800CD168);
+
+#undef incubusProps

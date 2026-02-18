@@ -172,6 +172,22 @@
 #define Q12_DIV(a, b) \
     FP_DIVIDE(a, b, Q12_SHIFT)
 
+/** @brief Squares a Q*.12 value.
+ *
+ * @param x Q*.12 value to be squared.
+ * @return Q*.12 square of `x`.
+ */
+#define Q12_SQUARE(x) \
+    FP_SQUARE(x, Q12_SHIFT)
+
+/** @brief Squares a fixed-point value, using 64-bit intermediates for higher precision.
+ *
+ * @param x Q*.12 value to be squared.
+ * @return Q*.12 square of `x`.
+ */
+#define Q12_SQUARE_PRECISE(x) \
+    FP_SQUARE_PRECISE(x, Q12_SHIFT)
+
 /** @brief Computes the square 2D distance between two positions in Q19.12 fixed-point,
  * using Q21.8 fixed-point intermediates to avoid overflow.
  *
