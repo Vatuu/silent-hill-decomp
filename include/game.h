@@ -1405,7 +1405,7 @@ typedef struct _PropertiesHangedScratcher
     q4_12  radiusMin_10E; // }
 } s_PropertiesHangedScratcher;
 
-/** @brief Could be Incubus or Incubator. */
+/** @brief Incubus or Incubator character properties. TODO: Check which one. */
 typedef struct _PropertiesIncubus
 {
     q19_12 timer_E8;

@@ -51,6 +51,13 @@
 #define FS_BUFFER_26     (void*)0x8018C600
 #define FS_BUFFER_27     (void*)0x80196E00
 #define FS_BUFFER_28     (void*)0x801D6E00
+#define FS_BUFFER_29     (void*)0x80142A00
+#define FS_BUFFER_30     (void*)0x80156A00
+#define FS_BUFFER_31     (void*)0x80102E00
+#define FS_BUFFER_32     (void*)0x80106E00
+#define FS_BUFFER_33     (void*)0x80153A00
+#define FS_BUFFER_34     (void*)0x80163200
+#define FS_BUFFER_35     (void*)0x801950F0
 
 #define IMAGE_BUFFER   (u_long*)0x801AFA00
 #define IMAGE_BUFFER_0 (u_long*)0x801CFA00

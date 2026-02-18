@@ -3234,21 +3234,21 @@ void func_800DC544(GsOT_TAG* ot) // 0x800DC544
     func_800DBBA0();
 }
 
-q19_12 func_800DC650(VECTOR3* origin, VECTOR3* target, q19_12 maxDist) // 0x800DC650
+q19_12 func_800DC650(const VECTOR3* from, const VECTOR3* to, q19_12 distMax) // 0x800DC650
 {
     q19_12 x;
     q19_12 y;
     q19_12 z;
 
-    x = target->vx - origin->vx;
-    y = target->vy - origin->vy;
-    z = target->vz - origin->vz;
+    x = to->vx - from->vx;
+    y = to->vy - from->vy;
+    z = to->vz - from->vz;
 
     x = FP_SQUARE(x, Q12_SHIFT);
     y = FP_SQUARE(y, Q12_SHIFT);
     z = FP_SQUARE(z, Q12_SHIFT);
 
-    return maxDist < abs(SquareRoot12(x + z + y));
+    return distMax < abs(SquareRoot12(x + z + y));
 }
 
 INCLUDE_RODATA("maps/map7_s03/nonmatchings/map7_s03_2", D_800CAE30);
@@ -3334,15 +3334,15 @@ void func_800DCDDC(s_800F3DAC* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800DCDDC
 void func_800DCF94(void) // 0x800DCF94
 {
     s32         i;
-    s_800F3DAC* ptr;
+    s_800F3DAC* curPtr;
 
-    D_800F3DAC = (s_800F3DAC*)0x801950F0;
-    ptr        = D_800F3DAC;
-    memset(ptr, 0xA7, sizeof(s_800F3DAC) * 30);
+    D_800F3DAC = (s_800F3DAC*)FS_BUFFER_35;
+    curPtr     = D_800F3DAC;
+    memset(curPtr, 0xA7, sizeof(s_800F3DAC) * 30);
 
-    for (i = 0; i < 30; i++, ptr++)
+    for (i = 0; i < 30; i++, curPtr++)
     {
-        ptr->field_0 = 0;
+        curPtr->field_0 = 0;
     }
 
     func_800DBABC();
@@ -3351,14 +3351,14 @@ void func_800DCF94(void) // 0x800DCF94
 void func_800DCFF8(void) // 0x800DCFF8
 {
     s32         i;
-    s_800F3DAC* ptr;
+    s_800F3DAC* curPtr;
 
-    D_800F3DAC = (s_800F3DAC*)0x80156A00;
-    ptr        = D_800F3DAC;
+    D_800F3DAC = (s_800F3DAC*)FS_BUFFER_30;
 
-    for (i = 0; i < 30; i++, ptr++)
+    curPtr = D_800F3DAC;
+    for (i = 0; i < 30; i++, curPtr++)
     {
-        ptr->field_0 = 0;
+        curPtr->field_0 = 0;
     }
 
     func_800DBABC();
@@ -4004,10 +4004,9 @@ void func_800DDF14(s_SubCharacter* incubus) // 0x800DDF14
 
 void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
 {
-    MATRIX  coordsMat;
-    VECTOR3 coordsVec;
-    q3_12   angle;
-
+    MATRIX          coordsMat;
+    VECTOR3         coordsVec;
+    q3_12           angleDeltaToPlayer;
     s_SubCharacter* localIncubus;
 
     localIncubus = incubus;
@@ -4072,12 +4071,10 @@ void func_800DDF3C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DDF3C
                     func_800DD464(&coordsVec);
                 }
 
-                angle = abs(func_8005BF38(ratan2(
-                                              g_SysWork.playerWork_4C.player_0.position_18.vx - incubus->position_18.vx,
-                                              g_SysWork.playerWork_4C.player_0.position_18.vz - incubus->position_18.vz) -
-                                          incubus->rotation_24.vy));
+                angleDeltaToPlayer = abs(func_8005BF38(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                                                       incubus->rotation_24.vy));
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angle < FP_ANGLE(12.0f))
+                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < FP_ANGLE(12.0f))
                 {
                     localIncubus->properties_E4.incubus.timer_E8 = Q12(0.3f);
                     incubus->model_0.stateStep_3++;
@@ -4155,7 +4152,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
 {
     MATRIX          coordsMat;
     VECTOR3         coordsVec;
-    q3_12           angle;
+    q3_12           angleDeltaToPlayer;
     s_SubCharacter* localIncubus;
 
     localIncubus = incubus;
@@ -4230,12 +4227,10 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
                     func_800DD464(&coordsVec);
                 }
 
-                angle = abs(func_8005BF38(ratan2(
-                                              g_SysWork.playerWork_4C.player_0.position_18.vx - incubus->position_18.vx,
-                                              g_SysWork.playerWork_4C.player_0.position_18.vz - incubus->position_18.vz) -
-                                          incubus->rotation_24.vy));
+                angleDeltaToPlayer = abs(func_8005BF38(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                                                       incubus->rotation_24.vy));
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angle < FP_ANGLE(12.0f))
+                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < FP_ANGLE(12.0f))
                 {
                     localIncubus->properties_E4.incubus.timer_E8 = Q12(0.3f);
                     incubus->model_0.stateStep_3++;
@@ -4293,7 +4288,7 @@ void func_800DE2A4(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE2A4
 
                 if (!(Rng_Rand16() & 0x51))
                 {
-                    func_800DD3D4(&coordsVec, D_800F48A8.velocityX_3C, 0, D_800F48A8.velocityZ_40);
+                    func_800DD3D4(&coordsVec, D_800F48A8.velocityX_3C, Q12(0.0f), D_800F48A8.velocityZ_40);
                 }
 
                 if (!(Rng_Rand16() & 0xFC))
@@ -4323,7 +4318,7 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
     MATRIX          coordsMat;
     VECTOR3         coordsVec;
     VECTOR3         playerPos;
-    q3_12           angle;
+    q3_12           angleDeltaToPlayer;
     s_SubCharacter* localIncubus;
 
     localIncubus = incubus;
@@ -4388,12 +4383,10 @@ void func_800DE68C(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DE68C
                     func_800DD464(&coordsVec);
                 }
 
-                angle = abs(func_8005BF38(ratan2(
-                                              g_SysWork.playerWork_4C.player_0.position_18.vx - incubus->position_18.vx,
-                                              g_SysWork.playerWork_4C.player_0.position_18.vz - incubus->position_18.vz) -
-                                          incubus->rotation_24.vy));
+                angleDeltaToPlayer = abs(func_8005BF38(Math_AngleBetweenPositionsGet(incubus->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                                                       incubus->rotation_24.vy));
 
-                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angle < FP_ANGLE(12.0f))
+                if (localIncubus->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < FP_ANGLE(12.0f))
                 {
                     localIncubus->properties_E4.incubus.timer_E8 = Q12(0.3f);
                     incubus->model_0.stateStep_3++;
@@ -4788,7 +4781,7 @@ s32 func_800DF418(s32 arg0, s32 arg1) // 0x800DF418
 {
     s_func_800D71B0* ptr = (s_func_800D71B0*)FS_BUFFER_26;
 
-    return D_800ECA50[ptr->field_5D[(arg1 * 0x29) + arg0]];
+    return D_800ECA50[ptr->field_5D[(arg1 * 41) + arg0]];
 }
 
 INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DF458);
@@ -5105,12 +5098,12 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
 {
     MATRIX          coordsMat;
     VECTOR3         coordsVec;
-    q3_12           angle;
+    q3_12           angleDeltaToPlayer;
     s_SubCharacter* localChara;
 
     localChara = chara;
 
-    // TODO: Use Chara_Unknown23 properties struct instead of Incubus properties.
+    // TODO: Use `Chara_Unknown23` properties struct instead of Incubus properties.
 
     if (chara->model_0.stateStep_3 == 0)
     {
@@ -5206,12 +5199,10 @@ void func_800DFF60(s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DFF60
                     func_800DD464(&coordsVec);
                 }
 
-                angle = abs(func_8005BF38(ratan2(
-                                              g_SysWork.playerWork_4C.player_0.position_18.vx - chara->position_18.vx,
-                                              g_SysWork.playerWork_4C.player_0.position_18.vz - chara->position_18.vz) -
-                                          chara->rotation_24.vy));
+                angleDeltaToPlayer = abs(func_8005BF38(Math_AngleBetweenPositionsGet(chara->position_18, g_SysWork.playerWork_4C.player_0.position_18) -
+                                                       chara->rotation_24.vy));
 
-                if (localChara->properties_E4.incubus.timer_E8 < Q12(0.0f) && angle < FP_ANGLE(12.0f))
+                if (localChara->properties_E4.incubus.timer_E8 < Q12(0.0f) && angleDeltaToPlayer < FP_ANGLE(12.0f))
                 {
                     localChara->properties_E4.incubus.timer_E8 = Q12(0.3f);
                     chara->model_0.stateStep_3++;
@@ -5695,18 +5686,18 @@ void func_800E17B8(s_800F4B40_1C* dest, s_800F4B40_1C* src) // 0x800E17B8
     VECTOR3* origVec0Ptr;
     VECTOR3* origVec1Ptr;
 
-    // Backup original `VECTOR3` pointers
+    // Backup original `VECTOR3` pointers.
     origVec0Ptr = dest->vec_0;
     origVec1Ptr = dest->vec_8;
 
-    // Copy struct data
+    // Copy struct data.
     *dest = *src;
 
-    // Restore `VECTOR3` pointers
+    // Restore `VECTOR3` pointers.
     dest->vec_0 = origVec0Ptr;
     dest->vec_8 = origVec1Ptr;
 
-    // Copy `VECTOR3` data
+    // Copy `VECTOR3` data.
     *dest->vec_0 = *src->vec_0;
     *dest->vec_8 = *src->vec_8;
 }
@@ -6170,7 +6161,7 @@ void func_800E24A0(s_800F4B40_1C* arg0) // 0x800E24A0
         sp40.vy = Q12_TO_Q8(arg0->vec_8->vy + arg0->field_C);
         sp40.vz = Q12_TO_Q8(arg0->vec_8->vz);
 
-        temp_s0 = func_80049530(&sp30, &sp50) * 4; // << 2
+        temp_s0 = func_80049530(&sp30, &sp50) * 4;
         func_80049530(&sp40, &sp50.vz);
 
         var_a1 = Q8(16.0f);
@@ -6179,7 +6170,9 @@ void func_800E24A0(s_800F4B40_1C* arg0) // 0x800E24A0
             var_a1 = Q8(16384.0f) / MAX(temp_s0, Q8(1.5f));
         }
 
-        func_800E2968(&D_800F4B40.field_118[0], 16, 6, &sp50, &sp50.vz, 0, Math_MulFixed(Q12_TO_Q8(arg0->pos_10), var_a1, Q12_SHIFT), 0, Q12(1.0f), D_800F4B40.field_18, arg0->field_12, (u8)arg0->field_14);
+        func_800E2968(&D_800F4B40.field_118[0], 16, 6, &sp50, &sp50.vz, 0,
+                      Math_MulFixed(Q12_TO_Q8(arg0->pos_10), var_a1, Q12_SHIFT), 0, Q12(1.0f),
+                      D_800F4B40.field_18, arg0->field_12, (u8)arg0->field_14);
         func_800E2C28(&D_800F4B40.field_118[0], 16, 6, 1, 1);
     }
 }
@@ -6237,7 +6230,7 @@ void func_800E27D0(s32 arg0, s16 arg1, s32 arg2, VECTOR3* pos) // 0x800E27D0
     }
 }
 
-s16 func_800E28F4(void) // 0x800E28F4
+q3_12 func_800E28F4(void) // 0x800E28F4
 {
     if (g_DeltaTime0 != Q12(0.0f))
     {
@@ -7573,12 +7566,12 @@ void func_800E514C(void) // 0x800E514C
 
     if (g_SysWork.sysStateStep_C[0] >= 62 && g_SysWork.sysStateStep_C[0] < 64)
     {
-        func_800DB154(&D_800F3E58[0]);
+        func_800DB154(&g_HarryBoneCoords[HarryBone_Root]);
     }
 }
 
 // Referenced by some .data struct?
-const u8 g_rodata_800CC320[0x28] = { 0 };
+const u8 g_rodata_800CC320[40] = { 0 };
 
 INCLUDE_RODATA("maps/map7_s03/nonmatchings/map7_s03_2", D_800CC348);
 
@@ -8043,7 +8036,7 @@ void func_800E70F0(void) // 0x800E70F0
 
     if (g_SysWork.sysStateStep_C[0] >= 5 && g_SysWork.sysStateStep_C[0] < 8)
     {
-        func_800DB154(&D_800F3E58[0]);
+        func_800DB154(&g_HarryBoneCoords[HarryBone_Root]);
     }
 }
 
@@ -8937,31 +8930,31 @@ void func_800E9260(e_CharacterId charaId, s32 arg1) // 0x800E9260
     switch (arg1)
     {
         case 1:
-            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)0x80142A00, &g_SysWork.npcCoords_FC0[0]);
-            WorldGfx_CharaLoad(charaId, 0, (s_LmHeader*)0x80102E00, &D_800ED218);
+            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)FS_BUFFER_29, &g_SysWork.npcCoords_FC0[0]);
+            WorldGfx_CharaLoad(charaId, 0, (s_LmHeader*)FS_BUFFER_31, &D_800ED218);
             break;
 
         case 2:
-            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)0x80156A00, &g_SysWork.npcCoords_FC0[30]);
+            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)FS_BUFFER_30, &g_SysWork.npcCoords_FC0[30]);
             WorldGfx_CharaLoad(charaId, 1, LM_BUFFER_2, &D_800ED220);
             break;
 
         case 3:
-            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)FS_BUFFER_26, &D_800F3E58[0]);
-            WorldGfx_CharaLoad(charaId, 2, (s_LmHeader*)0x80106E00, &D_800ED228);
+            Fs_CharaAnimDataAlloc(arg1, charaId, (s_AnmHeader*)FS_BUFFER_26, &g_HarryBoneCoords[HarryBone_Root]);
+            WorldGfx_CharaLoad(charaId, 2, (s_LmHeader*)FS_BUFFER_32, &D_800ED228);
             break;
 
         case 4:
             func_800E94C0();
-            Fs_CharaAnimDataAlloc(arg1 - 3, charaId, (s_AnmHeader*)0x80142A00, &g_SysWork.npcCoords_FC0[0]);
-            WorldGfx_CharaLoad(charaId, 0, (s_LmHeader*)0x80102E00, &D_800ED218);
+            Fs_CharaAnimDataAlloc(arg1 - 3, charaId, (s_AnmHeader*)FS_BUFFER_29, &g_SysWork.npcCoords_FC0[0]);
+            WorldGfx_CharaLoad(charaId, 0, (s_LmHeader*)FS_BUFFER_31, &D_800ED218);
             func_800E94F4();
             break;
 
         case 5:
             func_800E94C0();
-            Fs_CharaAnimDataAlloc(arg1 - 3, charaId, (s_AnmHeader*)0x80153A00, &g_SysWork.npcCoords_FC0[30]);
-            WorldGfx_CharaLoad(charaId, 1, (s_LmHeader*)0x80163200, &D_800ED220);
+            Fs_CharaAnimDataAlloc(arg1 - 3, charaId, (s_AnmHeader*)FS_BUFFER_33, &g_SysWork.npcCoords_FC0[30]);
+            WorldGfx_CharaLoad(charaId, 1, (s_LmHeader*)FS_BUFFER_34, &D_800ED220);
             func_800E94F4();
             break;
     }

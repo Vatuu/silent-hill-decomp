@@ -256,7 +256,7 @@ typedef struct
     s16      field_12;
     s16      field_14;
     s16      field_16;
-    s16      total_max_spd_18;
+    s16      total_max_spd_18; // Guessed name.
     s16      field_1A;
     s16      field_1C;
     s16      field_1E;
@@ -264,7 +264,7 @@ typedef struct
 
 typedef struct
 {
-    s16 now_spd_0;
+    s16 now_spd_0; // Guessed name.
     s16 field_2;
     s16 field_4;
     s16 field_6;
@@ -287,7 +287,7 @@ typedef struct
     s_800F4B40_1C  field_64[2];
     s_800F4B40_A4  field_A4[2];
     VECTOR3        field_B8[8]; // Guessed type based on size, likely incorrect.
-    u8             field_118[1]; // Unknown type, passed to `func_800E2968` & `func_800E2C28`
+    u8             field_118[1]; // Unknown type, passed to `func_800E2968` and `func_800E2C28`
 } s_800F4B40;
 
 typedef struct
@@ -383,7 +383,7 @@ extern s_WorldObjectDesc g_WorldObject_Nu;
 
 extern s_WorldObjectDesc g_WorldObject_Baby;
 
-extern GsCOORDINATE2 D_800F3E58[HarryBone_Count];
+extern GsCOORDINATE2 g_HarryBoneCoords[HarryBone_Count];
 
 extern s32 D_800F47F0;
 
@@ -627,7 +627,7 @@ void func_800DC49C(s_800F3DAC* arg0);
 
 void func_800DC544(GsOT_TAG* ot);
 
-q19_12 func_800DC650(VECTOR3* origin, VECTOR3* target, q19_12 maxDist);
+q19_12 func_800DC650(const VECTOR3* from, const VECTOR3* to, q19_12 distMax);
 
 // Returns `bool`?
 s32 func_800DC6DC(s32*, s32*, VECTOR3*, s_800F3DAC*);
@@ -778,7 +778,7 @@ void func_800E2664(s32 arg0, s16 arg1);
 void func_800E27D0(s32 arg0, s16 arg1, s32 arg2, VECTOR3* pos);
 
 // Some kind of RNG? Constants don't seem well known?
-s16 func_800E28F4(void);
+q3_12 func_800E28F4(void);
 
 void func_800E2E90(void);
 
