@@ -32,11 +32,11 @@
 typedef struct
 {
     s32     field_0;
-    VECTOR  vec_4;
+    VECTOR  vec_4; // Origin of something.
     VECTOR  vec_14;
     bool    isSlotInUse_24;
     q19_12  field_28;
-    s32     field_2C;
+    s32     field_2C; // Q23.8?
     void    (*funcPtr_30)(struct s_func_800E030C*);
     s32     field_34;
 } s_func_800E030C;
@@ -373,7 +373,7 @@ s_func_800E030C* func_800E030C(void);
 
 void func_800E0358(s_func_800E030C* arg0); // Unknown return type/args.
 
-void func_800E03C4(VECTOR3* vec0, VECTOR3* vec1, q19_12 arg2, s32 arg3);
+void func_800E03C4(const VECTOR3* from, const VECTOR3* to, q19_12 dist, s32 arg3);
 
 void func_800E0FAC(s32); // Assumed return type.
 

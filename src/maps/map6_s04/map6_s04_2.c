@@ -1051,32 +1051,33 @@ void func_800E0358(s_func_800E030C* arg0) // 0x800E0358
     }
 }
 
-void func_800E03C4(VECTOR3* vec0, VECTOR3* vec1, q19_12 arg2, s32 arg3) // 0x800E03C4
+void func_800E03C4(const VECTOR3* from, const VECTOR3* to, q19_12 dist, s32 arg3) // 0x800E03C4
 {
-    VECTOR           sp10;
-    VECTOR           sp20;
+    VECTOR           disp; // Q19.12
+    VECTOR           dir;  // Q19.12
     s_func_800E030C* ptr;
 
     ptr = func_800E030C();
     if (ptr != NULL)
     {
-        ptr->vec_4.vx = vec0->vx;
-        ptr->vec_4.vy = vec0->vy;
-        ptr->vec_4.vz = vec0->vz;
+        ptr->vec_4.vx = from->vx;
+        ptr->vec_4.vy = from->vy;
+        ptr->vec_4.vz = from->vz;
 
-        sp10.vx = vec1->vx - vec0->vx;
-        sp10.vy = vec1->vy - vec0->vy;
-        sp10.vz = vec1->vz - vec0->vz;
-        VectorNormal(&sp10, &sp20);
+        // Compute direction.
+        disp.vx = to->vx - from->vx;
+        disp.vy = to->vy - from->vy;
+        disp.vz = to->vz - from->vz;
+        VectorNormal(&disp, &dir);
 
-        ptr->vec_14.vx = Q12_MULT_PRECISE(sp20.vx, arg2);
-        ptr->vec_14.vy = Q12_MULT_PRECISE(sp20.vy, arg2);
-        ptr->vec_14.vz = Q12_MULT_PRECISE(sp20.vz, arg2);
+        ptr->vec_14.vx = Q12_MULT_PRECISE(dir.vx, dist);
+        ptr->vec_14.vy = Q12_MULT_PRECISE(dir.vy, dist);
+        ptr->vec_14.vz = Q12_MULT_PRECISE(dir.vz, dist);
 
-        ptr->field_0    = Q12_DIV(SquareRoot12(Q12_SQUARE_PRECISE(sp10.vx) +
-                                               Q12_SQUARE_PRECISE(sp10.vy) +
-                                               Q12_SQUARE_PRECISE(sp10.vz)),
-                                  arg2);
+        ptr->field_0    = Q12_DIV(SquareRoot12(Q12_SQUARE_PRECISE(disp.vx) +
+                                               Q12_SQUARE_PRECISE(disp.vy) +
+                                               Q12_SQUARE_PRECISE(disp.vz)),
+                                  dist);
         ptr->field_28   = Q12(255.0f);
         ptr->field_2C   = arg3 << 8;
         ptr->funcPtr_30 = func_800E0358;

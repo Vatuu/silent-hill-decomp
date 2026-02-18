@@ -22,10 +22,10 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
 {
     #define STEREO_BALANCE_RANGE 127
 
-    VECTOR3 camPos;
-    VECTOR  vec0; // Q27.4?
-    VECTOR  vec1; // Q19.12
-    MATRIX  mat;
+    VECTOR3 camPos; // Q19.12
+    VECTOR  disp;   // Q25.6
+    VECTOR  dir;    // Q19.12
+    MATRIX  viewMat;
     s32     dot;
     s32     balance;
 
@@ -35,16 +35,16 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
         return 0;
     }
 
-    // Compute normal from camera and sound source positions.
+    // Compute direction from camera to sound.
     vwGetViewPosition(&camPos);
-    vec0.vx = (soundPos->vx - camPos.vx) >> 6; // TODO: Use `QX_12_TO_QX_4` here?
-    vec0.vy = (soundPos->vy - camPos.vy) >> 6;
-    vec0.vz = (soundPos->vz - camPos.vz) >> 6;
-    VectorNormal(&vec0, &vec1);
+    disp.vx = Q12_TO_Q6(soundPos->vx - camPos.vx);
+    disp.vy = Q12_TO_Q6(soundPos->vy - camPos.vy);
+    disp.vz = Q12_TO_Q6(soundPos->vz - camPos.vz);
+    VectorNormal(&disp, &dir);
 
     // Compute stereo balance.
-    Vw_CoordHierarchyMatrixCompute(vwGetViewCoord(), &mat);
-    dot     = Math_MultiplyMatrix(mat, vec1);
+    Vw_CoordHierarchyMatrixCompute(vwGetViewCoord(), &viewMat);
+    dot     = Math_MultiplyMatrix(viewMat, dir);
     balance = CLAMP(dot, -STEREO_BALANCE_RANGE, STEREO_BALANCE_RANGE);
     return balance;
 }
@@ -211,27 +211,28 @@ void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5) // 0x80
     }
 }
 
-void func_80041074(GsOT* arg0, s32 arg1, SVECTOR* arg2, VECTOR3* arg3) // 0x80041074
+void func_80041074(GsOT* ot, s32 arg1, SVECTOR* rot, const VECTOR3* pos) // 0x80041074
 {
-    VECTOR3 sp18;
-    s32     sp28;
-    s32     sp2C;
+    VECTOR3 pos0; // Q19.12
+    q19_12  rotY;
+    q19_12  rotX;
 
-    func_800410D8(&sp18, &sp28, &sp2C, arg2, arg3);
-    func_800414E0(arg0, &sp18, arg1, sp28, sp2C);
+    func_800410D8(&pos0, &rotY, &rotX, rot, pos);
+    func_800414E0(ot, &pos0, arg1, rotY, rotX);
 }
 
-void func_800410D8(VECTOR3* pos0, s32* arg1, s32* arg2, SVECTOR* rot, VECTOR3* pos1) // 0x800410D8
+void func_800410D8(VECTOR3* pos0, q19_12* rotY, q19_12* rotX, SVECTOR* rot, const VECTOR3* pos1) // 0x800410D8
 {
-    MATRIX        mat;
+    MATRIX        transformMat;
     SVECTOR       vec0;
     GsCOORDINATE2 coord;
-    VECTOR        vec1;
-    VECTOR        vec2;
+    VECTOR        disp0; // Q19.12
+    VECTOR        disp1; // Q19.12
     s32           flag;
 
     memset(&vec0, 0, sizeof(SVECTOR));
 
+    // Compute coord.
     coord.super      = NULL;
     coord.workm      = GsIDMATRIX;
     coord.workm.t[0] = Q12_TO_Q8(pos1->vx);
@@ -239,39 +240,52 @@ void func_800410D8(VECTOR3* pos0, s32* arg1, s32* arg2, SVECTOR* rot, VECTOR3* p
     coord.workm.t[2] = Q12_TO_Q8(pos1->vz);
     coord.flg        = true;
 
-    func_80049AF8(&coord, &mat);
-    SetRotMatrix(&mat);
-    SetTransMatrix(&mat);
-    RotTrans(&vec0, &vec1, &flag);
-    ApplyRotMatrix(rot, &vec2);
-    func_8004122C(arg1, arg2, &vec1, &vec2);
-    func_8004137C(pos0, &vec1, &vec2, ReadGeomScreen());
+    func_80049AF8(&coord, &transformMat);
+    SetRotMatrix(&transformMat);
+    SetTransMatrix(&transformMat);
+    RotTrans(&vec0, &disp0, &flag);
+
+    ApplyRotMatrix(rot, &disp1);
+
+    func_8004122C(rotY, rotX, &disp0, &disp1);
+    func_8004137C(pos0, &disp0, &disp1, ReadGeomScreen());
 }
 
-void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3) // 0x8004122C
+void func_8004122C(q19_12* rotY, q19_12* rotX, const VECTOR* disp0, const VECTOR* disp1) // 0x8004122C
 {
-    VECTOR  vec0;
-    VECTOR  vec1;
-    VECTOR  vec2;
+    VECTOR  dir0;   // Q19.12
+    VECTOR  dir1;   // Q19.12
+    VECTOR  cross0; // Q19.12
     SVECTOR svec0;
     SVECTOR svec1;
-    VECTOR  vec3;
+    VECTOR  cross1; // Q19.12
 
-    VectorNormal(arg2, &vec0);
-    VectorNormal(arg3, &vec1);
-    OuterProduct12(&vec0, &vec1, &vec2);
-    VectorNormal(&vec2, &vec2);
+    // Compute vector from cross product of directions.
+    VectorNormal(disp0, &dir0);
+    VectorNormal(disp1, &dir1);
+    OuterProduct12(&dir0, &dir1, &cross0);
+    VectorNormal(&cross0, &cross0);
 
-    *angle0 = FP_ANGLE_NORM_U(ratan2(vec2.vy, vec2.vx) - FP_ANGLE(90.0f));
+    // Compute Y rotation (azimuth).
+    *rotY = FP_ANGLE_NORM_U(ratan2(cross0.vy, cross0.vx) - FP_ANGLE(90.0f));
 
-    svec0.vx = FP_FROM((vec0.vx * vec1.vx) + (vec0.vy * vec1.vy) + (vec0.vz * vec1.vz), Q12_SHIFT);
-    OuterProduct12(&vec2, &vec0, &vec3);
-    svec1.vx = FP_FROM((vec1.vx * vec3.vx) + (vec1.vy * vec3.vy) + (vec1.vz * vec3.vz), Q12_SHIFT);
+    // Compute vector from ??? TODO.
+    svec0.vx = Q12_MULT(dir0.vx, dir1.vx) +
+               Q12_MULT(dir0.vy, dir1.vy) +
+               Q12_MULT(dir0.vz, dir1.vz);
+    svec0.vx = FP_FROM((dir0.vx * dir1.vx) +
+                       (dir0.vy * dir1.vy) +
+                       (dir0.vz * dir1.vz), Q12_SHIFT); // @hack Duplicate operation required for match.
+    OuterProduct12(&cross0, &dir0, &cross1);
+    svec1.vx = FP_FROM((dir1.vx * cross1.vx) +
+                       (dir1.vy * cross1.vy) +
+                       (dir1.vz * cross1.vz), Q12_SHIFT);
 
-    *angle1 = FP_ANGLE_NORM_U(ratan2(svec1.vx, svec0.vx));
+    // Compute X rotation (altitude).
+    *rotX = FP_ANGLE_NORM_U(ratan2(svec1.vx, svec0.vx));
 }
 
-void func_8004137C(VECTOR3* result, VECTOR* vec0, VECTOR* vec1, s32 screenDist)
+void func_8004137C(VECTOR3* result, const VECTOR* disp0, const VECTOR* disp1, s32 screenDist)
 {
     VECTOR vec;
     s32    offsetX;
@@ -281,21 +295,21 @@ void func_8004137C(VECTOR3* result, VECTOR* vec0, VECTOR* vec1, s32 screenDist)
 
     screenDistHalf = screenDist / 2;
 
-    if (screenDistHalf < vec0->vz)
+    if (screenDistHalf < disp0->vz)
     {
-        vec = *vec0;
+        vec = *disp0;
     }
     else
     {
         z = 1;
-        if (vec1->vz != 0)
+        if (disp1->vz != 0)
         {
-            z = vec1->vz;
+            z = disp1->vz;
         }
 
         vec.vz = screenDistHalf;
-        vec.vx = (((screenDistHalf - vec0->vz) * vec1->vx) / z) + vec0->vx;
-        vec.vy = (((screenDistHalf - vec0->vz) * vec1->vy) / z) + vec0->vy;
+        vec.vx = (((screenDistHalf - disp0->vz) * disp1->vx) / z) + disp0->vx;
+        vec.vy = (((screenDistHalf - disp0->vz) * disp1->vy) / z) + disp0->vy;
     }
 
     ReadGeomOffset(&offsetX, &offsetY);

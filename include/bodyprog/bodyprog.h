@@ -2812,13 +2812,13 @@ void func_80040BAC(void);
 
 void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5);
 
-void func_80041074(GsOT* arg0, s32 arg1, SVECTOR* arg2, VECTOR3* arg3);
+void func_80041074(GsOT* ot, s32 arg1, SVECTOR* rot, const VECTOR3* pos);
 
-void func_800410D8(VECTOR3* pos0, s32* arg1, s32* arg2, SVECTOR* rot, VECTOR3* pos1);
+void func_800410D8(VECTOR3* pos0, q19_12* rotY, q19_12* rotX, SVECTOR* rot, const VECTOR3* pos1);
 
-void func_8004122C(s32* angle0, s32* angle1, VECTOR* arg2, VECTOR* arg3);
+void func_8004122C(q19_12* rotY, q19_12* rotX, const VECTOR* diso0, const VECTOR* disp1);
 
-void func_8004137C(VECTOR3* result, VECTOR* vec0, VECTOR* vec1, s32 screenDist);
+void func_8004137C(VECTOR3* result, const VECTOR* disp0, const VECTOR* disp1, s32 screenDist);
 
 void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
 

@@ -343,7 +343,8 @@
 // ABSTRACT Q FORMAT CONVERSION AND UTILS
 // =======================================
 
-/** @brief Converts a normalized floating-point analog stick value in the range `[-1.0f, 1.0f]` to Q0.7 fixed-point, clamped integer range `[-128, 127]`.
+/** @brief Converts a normalized floating-point analog stick value in the range `[-1.0f, 1.0f]` to Q0.7 fixed-point,
+ * clamped integer range `[-128, 127]`.
  *
  * @param analog Analog stick value (`float`).
  * @return Analog stick value in Q0.7 fixed-point, clamped integer range `[-128, 127]`.
@@ -352,7 +353,8 @@
     (s8)(((analog) >= 0) ? CLAMP(Q8(analog) / 2, 0, (Q8(1.0f) / 2) - 1) : \
                           -CLAMP(Q8(ABS(analog)) / 2, 0, Q8(1.0f) / 2))
 
-/** @brief Converts a normalized floating-point color component in the range `[0.0f, 1.0f]` to Q0.8 fixed-point, integer range `[0, 255]`.
+/** @brief Converts a normalized floating-point color component in the range `[0.0f, 1.0f]` to Q0.8 fixed-point,
+ * integer range `[0, 255]`.
  *
  * TODO: Deprecated, don't use. Doesn't make sense to have `float` color components in this project.
  *
@@ -430,7 +432,8 @@
 #define FP_ANGLE_NORM_U(angle) \
     ((angle) & (FP_ANGLE(360.0f) - 1))
 
-/** @brief Converts floating-point radians in the range `[-PI, PI]` to the fixed-point full rotation integer range `[0, 20480]`.
+/** @brief Converts floating-point radians in the range `[-PI, PI]` to the fixed-point full rotation,
+ * integer range `[0, 20480]`.
  *
  * This angle format is only used in `vcSetDataToVwSystem`.
  *
