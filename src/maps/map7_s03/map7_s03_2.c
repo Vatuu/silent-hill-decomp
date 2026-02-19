@@ -2470,7 +2470,7 @@ void func_800DA550(s_800ED7E0_ptr* arg0) // 0x800DA550
             ptr->field_4.field_14 *= 2;
             ptr->field_4.field_8   = arg0->field_2C;
             ptr->field_4.field_40  = arg0->field_30;
-            ptr->ptr_0             = &D_800EC680[Rng_Rand16() / 0x1000];
+            ptr->ptr_0             = &D_800EC680[Rng_Rand16() / Q12(1.0f)];
             ptr->field_4.field_44  = func_800D9C20;
             ptr->field_4.field_10  = temp_s4;
             ptr->field_4.field_48  = func_800D8954;
@@ -2655,15 +2655,15 @@ void func_800DACFC(VECTOR3* vec, s32 arg1, s32 arg2) // 0x800DACFC
 void func_800DAD54(void) // 0x800DAD54
 {
     s32              i;
-    s_func_800DAD54* ptr;
+    s_func_800DAD54* curPtr;
     VECTOR3*         vec;
 
     vec = &D_800F3D58.field_0;
-    ptr = (s_func_800DAD54*)FS_BUFFER_28;
 
-    for (i = 399; i >= 0; i--, ptr++)
+    curPtr = (s_func_800DAD54*)FS_BUFFER_28;
+    for (i = 399; i >= 0; i--, curPtr++)
     {
-        ptr->field_28 = 0;
+        curPtr->field_28 = 0;
     }
 
     vec->vx = Q12(64.0f);
@@ -2674,17 +2674,16 @@ void func_800DAD54(void) // 0x800DAD54
 s_func_800DAD54* func_800DAD90(void) // 0x800DAD90
 {
     s32              i;
-    s_func_800DAD54* ptr;
+    s_func_800DAD54* curPtr;
 
-    ptr = (s_func_800DAD54*)FS_BUFFER_28;
-
-    for (i = 0; i < 400; i++, ptr++)
+    curPtr = (s_func_800DAD54*)FS_BUFFER_28;
+    for (i = 0; i < 400; i++, curPtr++)
     {
-        if (ptr->field_28 == 0)
+        if (curPtr->field_28 == 0)
         {
-            ptr->field_4  = 0;
-            ptr->field_28 = 1;
-            return ptr;
+            curPtr->field_4  = 0;
+            curPtr->field_28 = 1;
+            return curPtr;
         }
     }
 
@@ -2695,7 +2694,7 @@ void func_800DADE0(s_func_800DAD54* arg0, s_800F3D48_0_0* arg1) // 0x800DADE0
 {
     SVECTOR   sp10; // Q23.8
     DVECTOR   sp18[2];
-    s32       sp20;
+    s32       flags;
     s16       x0;
     s16       y0;
     s32       offsetX;
@@ -2722,9 +2721,9 @@ void func_800DADE0(s_func_800DAD54* arg0, s_800F3D48_0_0* arg1) // 0x800DADE0
     sp10.vy = Q12_TO_Q8(arg0->field_C.vy);
     sp10.vz = Q12_TO_Q8(arg0->field_C.vz);
 
-    temp_s1 = RotTransPers(&sp10, &sp18[0], &sp18[1], &sp20);
+    temp_s1 = RotTransPers(&sp10, &sp18[0], &sp18[1], &flags);
 
-    if (sp20 & 0x20000)
+    if (flags & (1 << 17))
     {
         return;
     }
@@ -2901,17 +2900,17 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
     s32     sp6C;
     s32     var_s4;
     s32     var_s5;
-    q19_12  angle;
-    s32     temp_s3;
+    q19_12  angle0;
+    q19_12  angle1;
     s32     temp_s6;
     s32     temp_s2;
-    s32     temp_v0_2;
-    s32     temp_v1;
+    q19_12  dist;
+    q19_12  angle2;
     s32     var_fp;
     s32     var_s1;
-    s32     temp2;
+    q19_12  absAngle2;
 
-    temp_s3 = arg4;
+    angle1 = arg4;
 
     if (arg3 != NULL)
     {
@@ -2928,21 +2927,21 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
         sp6C   = Q12(1.0f);
     }
 
-    temp_v1 = arg2->vx;
-    var_s1  = temp_v1 - arg1->vx;
+    angle2 = arg2->vx;
+    var_s1  = angle2 - arg1->vx;
     temp_s6 = arg2->vy - arg1->vy;
-    angle  = arg2->vz - arg1->vz;
+    angle0  = arg2->vz - arg1->vz;
 
     temp_a3 = Q12_MULT(var_s1, var_s1);
-    temp_a0 = Q12_MULT(angle, angle);
+    temp_a0 = Q12_MULT(angle0, angle0);
     sp5C    = Q12_MULT(temp_s6, temp_s6);
 
     temp_s2 = SquareRoot12(temp_a3 + temp_a0);
 
     if (temp_s2 != 0)
     {
-        sp64   = FP_TO(var_s1, Q12_SHIFT) / temp_s2;
-        var_fp = FP_TO(angle, Q12_SHIFT) / temp_s2;
+        sp64   = Q12_DIV(var_s1, temp_s2);
+        var_fp = Q12_DIV(angle0, temp_s2);
     }
     else
     {
@@ -2952,33 +2951,32 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
 
     if (arg3 != NULL)
     {
-        angle  = ratan2(var_s4, var_s5);
-        temp_v1 = ratan2(sp64, var_fp) - angle;
-        temp_v1 = FP_ANGLE_NORM_S(temp_v1);
-        temp2   = ABS(temp_v1);
+        angle0 = ratan2(var_s4, var_s5);
+        angle2 = ratan2(sp64, var_fp) - angle0;
+        angle2 = FP_ANGLE_NORM_S(angle2);
+        absAngle2  = ABS(angle2);
 
-        if (temp_s3 < temp2)
+        if (angle1 < absAngle2)
         {
-            if (temp_v1 <= 0)
+            if (angle2 <= FP_ANGLE(0.0f))
             {
-                angle = angle - temp_s3;
+                angle0 = angle0 - angle1;
             }
             else
             {
-                angle = angle + temp_s3;
+                angle0 = angle0 + angle1;
             }
 
-            sp64   = Math_Sin(angle);
-            var_fp = Math_Cos(angle);
+            sp64   = Math_Sin(angle0);
+            var_fp = Math_Cos(angle0);
         }
     }
 
-    temp_v0_2 = SquareRoot12(sp5C + temp_a3 + temp_a0);
-
-    if (temp_v0_2 != 0)
+    dist = SquareRoot12(sp5C + temp_a3 + temp_a0);
+    if (dist != Q12(0.0f))
     {
-        var_s4 = -FP_TO(temp_s6, Q12_SHIFT) / temp_v0_2;
-        var_s1 = FP_TO(temp_s2, Q12_SHIFT) / temp_v0_2;
+        var_s4 = -FP_TO(temp_s6, Q12_SHIFT) / dist; // TODO: `Q12_DIV` doesn't match.
+        var_s1 = Q12_DIV(temp_s2, dist);
     }
     else
     {
@@ -2986,28 +2984,28 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
         var_s1 = sp6C;
     }
 
-    temp_s3 = temp_s3 / 2;
+    angle1 = angle1 / 2;
 
     if (arg3 != NULL)
     {
-        angle  = ratan2(sp68, sp6C);
-        temp_v1 = ratan2(var_s4, var_s1) - angle;
-        temp_v1 = FP_ANGLE_NORM_S(temp_v1);
-        temp2   = ABS(temp_v1);
+        angle0  = ratan2(sp68, sp6C);
+        angle2 = ratan2(var_s4, var_s1) - angle0;
+        angle2 = FP_ANGLE_NORM_S(angle2);
+        absAngle2   = ABS(angle2);
 
-        if (temp_s3 < temp2)
+        if (angle1 < absAngle2)
         {
-            if (temp_v1 <= 0)
+            if (angle2 <= 0)
             {
-                angle = angle - temp_s3;
+                angle0 = angle0 - angle1;
             }
             else
             {
-                angle = angle + temp_s3;
+                angle0 = angle0 + angle1;
             }
 
-            var_s4 = Math_Sin(angle);
-            var_s1 = Math_Cos(angle);
+            var_s4 = Math_Sin(angle0);
+            var_s1 = Math_Cos(angle0);
         }
     }
 
@@ -3070,7 +3068,7 @@ void func_800DBABC(void) // 0x800DBABC
     }
 }
 
-void func_800DBAE8(VECTOR3* pos, s32 idx) // 0x800DBAE8
+void func_800DBAE8(const VECTOR3* pos, s32 idx) // 0x800DBAE8
 {
     s32 temp_s0;
 
@@ -3263,7 +3261,7 @@ void func_800DC544(GsOT_TAG* ot) // 0x800DC544
     func_800DBBA0();
 }
 
-bool Math_DistanceBetweenPositionsCheck(const VECTOR3* from, const VECTOR3* to, q19_12 distMax) // 0x800DC650
+bool Math_DistanceCheck(const VECTOR3* from, const VECTOR3* to, q19_12 distMax) // 0x800DC650
 {
     q19_12 offsetX;
     q19_12 offsetY;
@@ -3437,7 +3435,7 @@ s_800F3DAC* func_800DD090(void) // 0x800DD090
 
     return NULL;
 }
-void func_800DD0EC(VECTOR3* pos, s32 coordIdx) // 0x800DD0EC
+void func_800DD0EC(const VECTOR3* pos, s32 coordIdx) // 0x800DD0EC
 {
     VECTOR        newPos;     // Q19.12
     VECTOR        offset;     // Q19.12
@@ -3488,12 +3486,12 @@ void func_800DD0EC(VECTOR3* pos, s32 coordIdx) // 0x800DD0EC
     }
 }
 
-void func_800DD240(VECTOR3* vec) // 0x800DD240
+void func_800DD240(const VECTOR3* vec) // 0x800DD240
 {
     func_800DD0EC(vec, 2);
 }
 
-void func_800DD260(VECTOR3* arg0, VECTOR3* pos) // 0x800DD260
+void func_800DD260(const VECTOR3* arg0, const VECTOR3* pos) // 0x800DD260
 {
     s_800F3DAC* ptr;
 
@@ -3510,7 +3508,7 @@ void func_800DD260(VECTOR3* arg0, VECTOR3* pos) // 0x800DD260
     }
 }
 
-void func_800DD2C8(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD2C8
+void func_800DD2C8(const VECTOR3* arg0, const VECTOR3* arg1) // 0x800DD2C8
 {
     s_800F3DAC* ptr;
 
@@ -3527,7 +3525,7 @@ void func_800DD2C8(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD2C8
     }
 }
 
-void func_800DD32C(VECTOR3* arg0, VECTOR3* arg1) // 0x800DD32C
+void func_800DD32C(const VECTOR3* arg0, const VECTOR3* arg1) // 0x800DD32C
 {
     s_800F3DAC*   retPtr;
     s_D_800F48A8* ptr;
@@ -3568,7 +3566,7 @@ void func_800DD3D4(void* arg0, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ) // 0
     func_800DD32C(arg0, &pos);
 }
 
-void func_800DD464(VECTOR3* arg0) // 0x800DD464
+void func_800DD464(const VECTOR3* arg0) // 0x800DD464
 {
     s_800F3DAC* ptr;
 
@@ -3609,7 +3607,7 @@ void func_800DD4CC(s_800F3DAC* arg0) // 0x800DD4CC
     }
 }
 
-void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s32 arg3) // 0x800DD594
+void func_800DD594(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s32 arg3) // 0x800DD594
 {
     q19_12        newPosX;
     q19_12        newPosZ;
@@ -3641,13 +3639,13 @@ void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s
     func_800DCF94();
 }
 
-void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DD62C
+void func_800DD62C(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DD62C
 {
     func_800D952C();
     func_800DD594(pos, chara, coords, 0);
 }
 
-void func_800DD67C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DD67C
+void func_800DD67C(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords) // 0x800DD67C
 {
     func_800D952C();
     func_800DD594(pos, chara, coords, 1);
@@ -3670,7 +3668,7 @@ void func_800DD6CC(void) // 0x800DD6CC
     func_800D917C();
 }
 
-void func_800DD738(VECTOR3* pos0, VECTOR3* pos1, q19_12 rotZ, q19_12 timer) // 0x800DD738
+void func_800DD738(const VECTOR3* pos0, const VECTOR3* pos1, q19_12 rotZ, q19_12 timer) // 0x800DD738
 {
     s_800F3DAC* ptr;
 

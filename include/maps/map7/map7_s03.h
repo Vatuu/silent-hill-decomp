@@ -658,7 +658,7 @@ void func_800DB608(void);
 
 void func_800DBABC(void);
 
-void func_800DBAE8(VECTOR3* pos, s32 idx);
+void func_800DBAE8(const VECTOR3* pos, s32 idx);
 
 void func_800DBBA0(void);
 
@@ -681,7 +681,7 @@ void func_800DC544(GsOT_TAG* ot);
  * @param distMax Maximum distance between positions.
  * @return `true` if the positions are within the maximum distance of each other, `false` otherwise.
  */
-bool Math_DistanceBetweenPositionsCheck(const VECTOR3* from, const VECTOR3* to, q19_12 distMax);
+bool Math_DistanceCheck(const VECTOR3* from, const VECTOR3* to, q19_12 distMax);
 
 // Returns `bool`?
 s32 func_800DC6DC(s32*, s32*, VECTOR3*, s_800F3DAC*);
@@ -700,30 +700,30 @@ void func_800DD044(void);
 
 s_800F3DAC* func_800DD090(void);
 
-void func_800DD0EC(VECTOR3* pos, s32 coordIdx);
+void func_800DD0EC(const VECTOR3* pos, s32 coordIdx);
 
-void func_800DD240(VECTOR3* vec);
+void func_800DD240(const VECTOR3* vec);
 
-void func_800DD260(VECTOR3* arg0, VECTOR3* arg1);
+void func_800DD260(const VECTOR3* arg0, const VECTOR3* arg1);
 
-void func_800DD2C8(VECTOR3* arg0, VECTOR3* arg1);
+void func_800DD2C8(const VECTOR3* arg0, const VECTOR3* arg1);
 
-void func_800DD32C(VECTOR3* arg0, VECTOR3* arg1);
+void func_800DD32C(const VECTOR3* arg0, const VECTOR3* arg1);
 
 void func_800DD3D4(void* arg0, q19_12 scaleX, q19_12 scaleY, q19_12 scaleZ);
 
-void func_800DD464(VECTOR3* arg0);
+void func_800DD464(const VECTOR3* arg0);
 
 void func_800DD4CC(s_800F3DAC* arg0);
 
-void func_800DD594(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s32 arg3);
+void func_800DD594(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords, s32 arg3);
 
-void func_800DD62C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800DD62C(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
 
-void func_800DD67C(VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
+void func_800DD67C(const VECTOR3* pos, s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void func_800DD6CC(void);
-void func_800DD738(VECTOR3* pos0, VECTOR3* pos1, q19_12 rotZ, q19_12 timer);
+void func_800DD738(const VECTOR3* pos0, const VECTOR3* pos1, q19_12 rotZ, q19_12 timer);
 void func_800DD7D0(VECTOR3* charaPos);
 void func_800DD868(void);
 void func_800DD8CC(VECTOR3* charaPos);
