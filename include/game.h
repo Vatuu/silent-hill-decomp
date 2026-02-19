@@ -874,7 +874,6 @@ typedef enum _TriggerActivationType
     TriggerActivationType_Item      = 3, /** Requires an inventory item to activate. */
 } e_TriggerActivationType;
 
-
 /** Some events indicate specific cutscenes behavior via flags. */
 typedef enum _EventParamUnkState
 {
@@ -1090,10 +1089,7 @@ typedef struct _GameWork
     s_Savegame         savegame_30C;
     u16                gsScreenWidth_588;
     u16                gsScreenHeight_58A;
-    u8                 background2dColor_R_58C;
-    u8                 background2dColor_G_58D;
-    u8                 background2dColor_B_58E;
-    u8                 field_58F;            // Command code? Maybe `s_PrimColor` fits here.
+    s_PrimColor        background2dColor_58C;
     e_GameState        gameStatePrev_590;
     e_GameState        gameState_594;
     s32                gameStateStep_598[3]; /** Temp data used by current `gameState`. Can be another state ID or other data.
@@ -1494,7 +1490,7 @@ typedef struct _PropertiesMonsterCybil
 } s_PropertiesMonsterCybil;
 STATIC_ASSERT_SIZEOF(s_PropertiesMonsterCybil, 64);
 
-/** @brief Puppet Nurse or Pupper Doctor character properties. */
+/** @brief Puppet Nurse or Puppet Doctor character properties. */
 typedef struct _PropertiesPuppetNurse
 {
     VECTOR3          position_E8; /** Q19.12 */

@@ -1473,9 +1473,9 @@ typedef struct _MapPoint2d
         } spawnInfo;
         struct
         {
-            u32 unk_4_0  : 12;
-            u32 geo_4_12 : 12; // TODO: Figure out how this is decoded.
-            u32 unk_4_24 : 8;
+            u32 unk_4_0    : 16;
+            u32 field_4_16 : 8;
+            u32 field_4_24 : 8;
         } touchFacing;
         struct
         {
@@ -2633,8 +2633,6 @@ extern s_RayData D_800C47F8;
 extern s_800C4818 D_800C4818;
 
 extern s32 D_800C48F0;
-
-extern RECT D_801E557C[];
 
 extern u8 D_800C6E90;
 

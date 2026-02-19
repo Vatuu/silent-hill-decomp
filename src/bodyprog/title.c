@@ -79,9 +79,9 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
     switch (g_MainMenuState)
     {
         case MenuState_Start:
-            g_GameWork.background2dColor_R_58C = 0;
-            g_GameWork.background2dColor_G_58D = 0;
-            g_GameWork.background2dColor_B_58E = 0;
+            g_GameWork.background2dColor_58C.r = 0;
+            g_GameWork.background2dColor_58C.g = 0;
+            g_GameWork.background2dColor_58C.b = 0;
 
             Screen_RectInterlacedClear(0, 32, SCREEN_WIDTH, FRAMEBUFFER_HEIGHT_INTERLACED, 0, 0, 0);
             Screen_Init(SCREEN_WIDTH, true);
@@ -357,9 +357,9 @@ void GameState_MainMenu_Update(void) // 0x8003AB28
                 {
                     g_Demo_ReproducedCount++;
 
-                    g_GameWork.background2dColor_R_58C = 0;
-                    g_GameWork.background2dColor_G_58D = 0;
-                    g_GameWork.background2dColor_B_58E = 0;
+                    g_GameWork.background2dColor_58C.r = 0;
+                    g_GameWork.background2dColor_58C.g = 0;
+                    g_GameWork.background2dColor_58C.b = 0;
 
                     Game_StateSetNext(GameState_MovieIntro);
                 }

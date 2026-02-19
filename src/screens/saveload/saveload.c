@@ -1708,9 +1708,9 @@ void SaveScreen_Init(void) // 0x801E63C0
     g_IntervalVBlanks = 1;
     ScreenFade_Start(true, true, false);
 
-    g_GameWork.background2dColor_R_58C = 0;
-    g_GameWork.background2dColor_G_58D = 0;
-    g_GameWork.background2dColor_B_58E = 0;
+    g_GameWork.background2dColor_58C.r = 0;
+    g_GameWork.background2dColor_58C.g = 0;
+    g_GameWork.background2dColor_58C.b = 0;
 
     D_800BCD39 = false;
     if (g_GameWork.gameState_594 == GameState_AutoLoadSavegame || g_GameWork.gameState_594 == GameState_LoadSavegameScreen)
@@ -1896,9 +1896,9 @@ void SaveScreen_LogicUpdate(void) // 0x801E649C
         case 2:
             if (ScreenFade_IsFinished())
             {
-                g_GameWork.background2dColor_R_58C = 0;
-                g_GameWork.background2dColor_G_58D = 0;
-                g_GameWork.background2dColor_B_58E = 0;
+                g_GameWork.background2dColor_58C.r = 0;
+                g_GameWork.background2dColor_58C.g = 0;
+                g_GameWork.background2dColor_58C.b = 0;
 
                 Fs_QueueWaitForEmpty();
 

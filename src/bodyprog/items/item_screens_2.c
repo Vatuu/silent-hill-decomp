@@ -174,9 +174,9 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             }
 
             g_SysWork.playerWork_4C.extra_128.lastUsedItem_28 = InventoryItemId_Unequipped;
-            g_GameWork.background2dColor_R_58C     = 0;
-            g_GameWork.background2dColor_G_58D     = 0;
-            g_GameWork.background2dColor_B_58E     = 0;
+            g_GameWork.background2dColor_58C.r                = 0;
+            g_GameWork.background2dColor_58C.g                = 0;
+            g_GameWork.background2dColor_58C.b                = 0;
 
             Gfx_Items_DrawInit();
             func_8004EF48();
@@ -297,9 +297,9 @@ void GameState_ItemScreens_Update(void) // 0x8004C9B0
             ScreenFade_Start(true, true, false);
             g_ScreenFadeTimestep               = Q12(3.0f);
 
-            g_GameWork.background2dColor_R_58C = 0;
-            g_GameWork.background2dColor_G_58D = 0;
-            g_GameWork.background2dColor_B_58E = 0;
+            g_GameWork.background2dColor_58C.r = 0;
+            g_GameWork.background2dColor_58C.g = 0;
+            g_GameWork.background2dColor_58C.b = 0;
             g_Inventory_SelectionId            = InventorySelectionId_Item;
 
             Gfx_Items_DrawInit();

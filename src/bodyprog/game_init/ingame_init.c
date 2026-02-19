@@ -65,9 +65,9 @@ void GameFs_MapStartup(void) // 0x80034964
     {
         case 0:
             g_IntervalVBlanks                  = 1;
-            g_GameWork.background2dColor_R_58C = 0;
-            g_GameWork.background2dColor_G_58D = 0;
-            g_GameWork.background2dColor_B_58E = 0;
+            g_GameWork.background2dColor_58C.r = 0;
+            g_GameWork.background2dColor_58C.g = 0;
+            g_GameWork.background2dColor_58C.b = 0;
 
             if (g_SysWork.processFlags_2298 == SysWorkProcessFlag_RoomTransition)
             {

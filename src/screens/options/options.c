@@ -63,9 +63,9 @@ void GameState_Options_Update(void) // 0x801E2D44
                 VSync(SyncMode_Wait8);
             }
 
-            g_GameWork.background2dColor_R_58C = 0;
-            g_GameWork.background2dColor_G_58D = 0;
-            g_GameWork.background2dColor_B_58E = 0;
+            g_GameWork.background2dColor_58C.r = 0;
+            g_GameWork.background2dColor_58C.g = 0;
+            g_GameWork.background2dColor_58C.b = 0;
 
             ScreenFade_Start(false, true, false);
             g_IntervalVBlanks   = 1;
@@ -1505,9 +1505,9 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
                 g_SysWork.timer_20                 = 0;
                 g_GameWork.gameStateStep_598[1]    = 0;
                 g_GameWork.gameStateStep_598[2]    = 0;
-                g_GameWork.background2dColor_R_58C = 0;
-                g_GameWork.background2dColor_G_58D = 0;
-                g_GameWork.background2dColor_B_58E = 0;
+                g_GameWork.background2dColor_58C.r = 0;
+                g_GameWork.background2dColor_58C.g = 0;
+                g_GameWork.background2dColor_58C.b = 0;
                 return;
             }
             break;
@@ -1519,15 +1519,15 @@ void Options_ScreenPosMenu_Control(void) // 0x801E53A0
     switch (g_ScreenPosMenu_InvertBackgroundFade)
     {
         case false:
-            g_GameWork.background2dColor_R_58C = ~screenPosMenu_BackgroundFade;
-            g_GameWork.background2dColor_G_58D = ~screenPosMenu_BackgroundFade;
-            g_GameWork.background2dColor_B_58E = ~screenPosMenu_BackgroundFade;
+            g_GameWork.background2dColor_58C.r = ~screenPosMenu_BackgroundFade;
+            g_GameWork.background2dColor_58C.g = ~screenPosMenu_BackgroundFade;
+            g_GameWork.background2dColor_58C.b = ~screenPosMenu_BackgroundFade;
             break;
 
         case true:
-            g_GameWork.background2dColor_R_58C = screenPosMenu_BackgroundFade;
-            g_GameWork.background2dColor_G_58D = screenPosMenu_BackgroundFade;
-            g_GameWork.background2dColor_B_58E = screenPosMenu_BackgroundFade;
+            g_GameWork.background2dColor_58C.r = screenPosMenu_BackgroundFade;
+            g_GameWork.background2dColor_58C.g = screenPosMenu_BackgroundFade;
+            g_GameWork.background2dColor_58C.b = screenPosMenu_BackgroundFade;
             break;
     }
 
@@ -1792,9 +1792,9 @@ void Options_BrightnessMenu_Control(void) // 0x801E6018
                 g_SysWork.timer_20                 = 0;
                 g_GameWork.gameStateStep_598[1]    = 0;
                 g_GameWork.gameStateStep_598[2]    = 0;
-                g_GameWork.background2dColor_R_58C = 0;
-                g_GameWork.background2dColor_G_58D = 0;
-                g_GameWork.background2dColor_B_58E = 0;
+                g_GameWork.background2dColor_58C.r = 0;
+                g_GameWork.background2dColor_58C.g = 0;
+                g_GameWork.background2dColor_58C.b = 0;
             }
             break;
     }

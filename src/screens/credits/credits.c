@@ -145,10 +145,10 @@ bool func_801E2FC0(void) // 0x801E2FC0
 
 void GameState_Unk15_Update(void) // 0x801E3094
 {
-    s32* (*routines[3])() = { func_801E3124, func_801E342C, func_801E3304 };
+    bool (*routines[3])() = { func_801E3124, func_801E342C, func_801E3304 };
 
     D_800C48F0 += g_VBlanks;
-    if (routines[g_GameWork.gameStateStep_598[0]]() != 0)
+    if (routines[g_GameWork.gameStateStep_598[0]]())
     {
         g_SysWork.timer_20              = 0;
         g_GameWork.gameStateStep_598[1] = 0;
@@ -165,15 +165,15 @@ bool func_801E3124(void) // 0x801E3124
             switch (g_Screen_FadeStatus)
             {
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, true):
-                    g_GameWork.background2dColor_R_58C = FP_COLOR(1.0f);
-                    g_GameWork.background2dColor_G_58D = FP_COLOR(1.0f);
-                    g_GameWork.background2dColor_B_58E = FP_COLOR(1.0f);
+                    g_GameWork.background2dColor_58C.r = FP_COLOR(1.0f);
+                    g_GameWork.background2dColor_58C.g = FP_COLOR(1.0f);
+                    g_GameWork.background2dColor_58C.b = FP_COLOR(1.0f);
                     break;
 
                 case SCREEN_FADE_STATUS(ScreenFadeState_FadeOutComplete, false):
-                    g_GameWork.background2dColor_R_58C = FP_COLOR(0.0f);
-                    g_GameWork.background2dColor_G_58D = FP_COLOR(0.0f);
-                    g_GameWork.background2dColor_B_58E = FP_COLOR(0.0f);
+                    g_GameWork.background2dColor_58C.r = FP_COLOR(0.0f);
+                    g_GameWork.background2dColor_58C.g = FP_COLOR(0.0f);
+                    g_GameWork.background2dColor_58C.b = FP_COLOR(0.0f);
                     break;
             }
 
@@ -214,9 +214,9 @@ bool func_801E3124(void) // 0x801E3124
 
             if (D_801E5E74 <= 0 && Sd_AudioStreamingCheck() < 2)
             {
-                g_GameWork.background2dColor_R_58C = 0;
-                g_GameWork.background2dColor_G_58D = 0;
-                g_GameWork.background2dColor_B_58E = 0;
+                g_GameWork.background2dColor_58C.r = 0;
+                g_GameWork.background2dColor_58C.g = 0;
+                g_GameWork.background2dColor_58C.b = 0;
                 return true;
             }
 

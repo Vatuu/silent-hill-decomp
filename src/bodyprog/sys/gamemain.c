@@ -58,9 +58,9 @@ void GameState_Boot_Update(void) // 0x80032D1C
     switch (g_GameWork.gameStateStep_598[0])
     {
         case 0:
-            g_GameWork.background2dColor_R_58C = 0;
-            g_GameWork.background2dColor_G_58D = 0;
-            g_GameWork.background2dColor_B_58E = 0;
+            g_GameWork.background2dColor_58C.r = 0;
+            g_GameWork.background2dColor_58C.g = 0;
+            g_GameWork.background2dColor_58C.b = 0;
 
             Screen_Init(SCREEN_WIDTH, false);
             g_SysWork.timer_20              = 0;
@@ -290,7 +290,7 @@ void MainLoop(void) // 0x80032EE0
 
         // Draw objects?
         GsSwapDispBuff();
-        GsSortClear(g_GameWork.background2dColor_R_58C, g_GameWork.background2dColor_G_58D, g_GameWork.background2dColor_B_58E, &g_OrderingTable0[g_ActiveBufferIdx]);
+        GsSortClear(g_GameWork.background2dColor_58C.r, g_GameWork.background2dColor_58C.g, g_GameWork.background2dColor_58C.b, &g_OrderingTable0[g_ActiveBufferIdx]);
         GsDrawOt(&g_OrderingTable0[g_ActiveBufferIdx]);
         GsDrawOt(&g_OrderingTable2[g_ActiveBufferIdx]);
     }
