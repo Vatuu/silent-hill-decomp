@@ -1473,9 +1473,9 @@ typedef struct _MapPoint2d
         } spawnInfo;
         struct
         {
-            u32 unk_4_0    : 16;
-            u32 field_4_16 : 8;
-            u32 field_4_24 : 8;
+            u32 unk_4_0        : 16;
+            u32 faceAngle_4_16 : 8; // Facing angle of the interactable surface. (`FP_ANGLE_FROM_PACKED` to decode)
+            u32 faceWidth_4_24 : 8; // Width of the interactable surface/edge.
         } touchFacing;
         struct
         {
