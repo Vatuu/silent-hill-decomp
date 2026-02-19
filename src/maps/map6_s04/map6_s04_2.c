@@ -118,7 +118,7 @@ s32 func_800DE350(s32 arg0) // 0x800DE350
     return D_800EAF20[idx] | 0x3A000000;
 }
 
-PACKET* func_800DE380(GsOT_TAG* arg0, PACKET* arg1) // 0x800DE380
+void* func_800DE380(GsOT_TAG* arg0, PACKET* arg1) // 0x800DE380
 {
     s32       i;
     s32       temp_s0;
@@ -176,7 +176,14 @@ PACKET* func_800DE380(GsOT_TAG* arg0, PACKET* arg1) // 0x800DE380
     return (PACKET*)(tPage + 1);
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE5CC);
+void func_800DE5CC(void) // 0x800DE5CC
+{
+    s_func_800DE274* base;
+
+    base = (s_func_800DE274*)FS_BUFFER_6;
+
+    GsOUT_PACKET_P = func_800DE380(&g_OrderingTable0[g_ActiveBufferIdx].org[base->field_4318], GsOUT_PACKET_P);
+}
 
 void func_800DE62C(void) // 0x800DE62C
 {
@@ -820,7 +827,7 @@ void func_800DFD08(void) // 0x800DFD08
     D_800ED588++;
 }
 
-PACKET* func_800DFD3C(GsOT_TAG* ot, PACKET* packet, MATRIX* mat, s32 arg3, s32 arg4) // 0x800DFD3C
+void* func_800DFD3C(GsOT_TAG* ot, PACKET* packet, MATRIX* mat, s32 arg3, s32 arg4) // 0x800DFD3C
 {
     SVECTOR   sp28;
     SVECTOR   sp30;
@@ -921,14 +928,10 @@ void func_800E00F4(void) // 0x800E00F4
 {
     MATRIX           sp18;
     s_func_800DE274* base;
-    GsOT_TAG*        ot;
 
     base = (s_func_800DE274*)FS_BUFFER_6;
 
-    ot = g_OrderingTable0[g_ActiveBufferIdx].org;
-    ot = &ot[base->field_4318];
-
-    GsOUT_PACKET_P = func_800DFD3C(ot, GsOUT_PACKET_P, &sp18, 0x100, 7);
+    GsOUT_PACKET_P = func_800DFD3C(&g_OrderingTable0[g_ActiveBufferIdx].org[base->field_4318], GsOUT_PACKET_P, &sp18, 0x100, 7);
 }
 
 void func_800E0164(void) // 0x800E0164

@@ -316,7 +316,10 @@ void func_800DBE5C(s_SubCharacter* chara);
 
 s32 func_800DE350(s32 arg0);
 
-PACKET* func_800DE380(GsOT_TAG* arg0, PACKET* arg1);
+// Returns PACKET* but that causes mismatches?
+void* func_800DE380(GsOT_TAG* arg0, PACKET* arg1);
+
+void func_800DE5CC(void);
 
 void func_800DE62C(void);
 
@@ -362,13 +365,18 @@ PACKET* func_800DF6C4(GsOT_TAG* ot, PACKET* packet, MATRIX* mat);
 
 void func_800DFA38(MATRIX* mat);
 
+void func_800DFB44(void);
+
 bool func_800DFBB0(s_800ED848* arg0);
 
 void func_800DFC94(s32* arg0);
 
 void func_800DFD08(void);
 
-PACKET* func_800DFD3C(GsOT_TAG* ot, PACKET* packet, MATRIX* mat, s32 arg3, s32 arg4);
+// Returns PACKET* but that causes mismatches?
+void* func_800DFD3C(GsOT_TAG* ot, PACKET* packet, MATRIX* mat, s32 arg3, s32 arg4);
+
+void func_800E00F4(void);
 
 void func_800E01F4(void);
 
