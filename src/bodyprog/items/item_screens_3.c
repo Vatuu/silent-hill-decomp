@@ -3603,7 +3603,7 @@ void Gfx_PlayerHeldItemAttach(u8 weaponAttack) // 0x800546A8
     switch (weaponAttack)
     {
         case EquippedWeaponId_KitchenKnife:
-            WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(2, 2));
+            WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(2, 2));
             break;
 
         case EquippedWeaponId_SteelPipe:
@@ -3612,17 +3612,17 @@ void Gfx_PlayerHeldItemAttach(u8 weaponAttack) // 0x800546A8
         case EquippedWeaponId_Katana:
         case EquippedWeaponId_Axe:
         case EquippedWeaponId_RockDrill:
-            WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(2, 2));
+            WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(2, 2));
             break;
 
         case EquippedWeaponId_Handgun:
         case EquippedWeaponId_HuntingRifle:
         case EquippedWeaponId_Shotgun:
-            WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(3, 1));
+            WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(3, 1));
             break;
 
         default:
-            WorldGfx_HeldItemAttach(Chara_Harry, UNK_PACKED_DATA(1, 0));
+            WorldGfx_HeldItemAttach(Chara_Harry, MODEL_BONE(1, 0));
             break;
     }
 }

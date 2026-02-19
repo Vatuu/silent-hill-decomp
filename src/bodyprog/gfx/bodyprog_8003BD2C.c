@@ -1310,7 +1310,7 @@ void WorldGfx_HeldItemAttach(e_CharacterId charaId, s32 arg1) // 0x8003DD80
 
 void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
 {
-    s32 maskedVal;
+    s32 idx;
 
     static s32 D_800A9ECC = 0xFE16FD13;
     static s32 D_800A9ED0 = 0x0000FE13;
@@ -1323,12 +1323,12 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
     static s32 D_800A9EEC = 0x0000FE12;
 
     // Process first masked value.
-    maskedVal = arg1 & 0xF;
-    if (maskedVal != 0)
+    idx = MODEL_BONE_IDX_0_GET(arg1);
+    if (idx != 0)
     {
         func_80045468(skel, &D_800A9ECC, false);
 
-        switch (maskedVal)
+        switch (idx)
         {
             case 1:
                 func_80045468(skel, &D_800A9ED0, true);
@@ -1353,18 +1353,18 @@ void func_8003DE60(s_Skeleton* skel, s32 arg1) // 0x8003DE60
     }
 
     // Process second masked value.
-    maskedVal = arg1 & 0xF0;
-    if (maskedVal != 0)
+    idx = MODEL_BONE_IDX_1_GET(arg1);
+    if (idx != 0)
     {
         func_80045468(skel, &D_800A9EE4, false);
 
-        switch (maskedVal)
+        switch (idx)
         {
-            case 16:
+            case 1 << 4:
                 func_80045468(skel, &D_800A9EE8, true);
                 break;
 
-            case 32:
+            case 2 << 4:
                 func_80045468(skel, &D_800A9EEC, true);
                 break;
         }
@@ -1375,17 +1375,17 @@ static const s32 pad_rodata_80025BB0 = 0;
 
 void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
 {
-    s32 maskedVal;
+    s32 idx;
 
     static s32 D_800A9EF0 = 0x0000FE14;
     static s32 D_800A9EF4 = 0x00FE1514;
     static s32 D_800A9EF8 = 0x0000FE12;
     static s32 D_800A9EFC = 0x00FE1312;
 
-    maskedVal = arg1 & 0xF;
-    if (maskedVal != 0)
+    idx = MODEL_BONE_IDX_0_GET(arg1);
+    if (idx != 0)
     {
-        switch (maskedVal)
+        switch (idx)
         {
             case 1:
                 func_80045468(skel, &D_800A9EF4, false);
@@ -1399,17 +1399,17 @@ void func_8003DF84(s_Skeleton* skel, s32 arg1) // 0x8003DF84
         }
     }
 
-    maskedVal = arg1 & 0xF0;
-    if (maskedVal != 0)
+    idx = MODEL_BONE_IDX_1_GET(arg1);
+    if (idx != 0)
     {
-        switch (maskedVal)
+        switch (idx)
         {
-            case 16:
+            case 1 << 4:
                 func_80045468(skel, &D_800A9EFC, false);
                 func_80045468(skel, &D_800A9EF8, true);
                 break;
 
-            case 32:
+            case 2 << 4:
                 func_80045468(skel, &D_800A9EF8, false);
                 func_80045468(skel, &D_800A9EFC, true);
                 break;
@@ -1426,7 +1426,7 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
     static s32 D_800A9F08 = 0x0000FE00;
     static s32 D_800A9F0C = 0x00FE0100;
 
-    maskedVal = arg1 & 0xF;
+    maskedVal = MODEL_BONE_IDX_0_GET(arg1);
     if (maskedVal != 0)
     {
         switch (maskedVal)
@@ -1443,17 +1443,17 @@ void func_8003E08C(s_Skeleton* skel, s32 arg1) // 0x8003E08C
         }
     }
 
-    maskedVal = arg1 & 0xF0;
+    maskedVal = MODEL_BONE_IDX_1_GET(arg1);
     if (maskedVal != 0)
     {
         switch (maskedVal)
         {
-            case 16:
+            case 1 << 4:
                 func_80045468(skel, &D_800A9F0C, false);
                 func_80045468(skel, &D_800A9F08, true);
                 break;
 
-            case 32:
+            case 2 << 4:
                 func_80045468(skel, &D_800A9F08, false);
                 func_80045468(skel, &D_800A9F0C, true);
                 break;
@@ -1470,7 +1470,7 @@ void func_8003E194(s_Skeleton* skel, s32 arg1) // 0x8003E194
     static s32 D_800A9F18 = 0x00FE0201;
     static s32 D_800A9F1C = 0x0000FE03;
 
-    maskedVal = arg1 & 0xF;
+    maskedVal = MODEL_BONE_IDX_0_GET(arg1);
     if (maskedVal != 0)
     {
         func_80045468(skel, &D_800A9F10, false);
@@ -1507,7 +1507,7 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
     static s32 D_800A9F40 = 0x0000FE01;
     static s32 D_800A9F44 = 0x00FE0201;
 
-    maskedVal = arg1 & 0xF;
+    maskedVal = MODEL_BONE_IDX_0_GET(arg1);
     if (maskedVal != 0)
     {
         func_80045468(skel, &D_800A9F20, false);
@@ -1533,22 +1533,22 @@ void func_8003E238(s_Skeleton* skel, s32 arg1) // 0x8003E238
     }
 
 
-    maskedVal = arg1 & 0xF0;
+    maskedVal = MODEL_BONE_IDX_1_GET(arg1);
     if (maskedVal != 0)
     {
         func_80045468(skel, &D_800A9F38, false);
 
         switch (maskedVal)
         {
-            case 16:
+            case 1 << 4:
                 func_80045468(skel, &D_800A9F3C, true);
                 break;
 
-            case 32:
+            case 2 << 4:
                 func_80045468(skel, &D_800A9F40, true);
                 break;
 
-            case 48:
+            case 3 << 4:
                 func_80045468(skel, &D_800A9F44, true);
                 break;
         }
@@ -1562,7 +1562,7 @@ void func_8003E388(s_Skeleton* skel, s32 arg1) // 0x8003E388
     static s32 D_800A9F48 = 0x0000FE05;
     static s32 D_800A9F4C = 0x0000FE06;
 
-    maskedVal = arg1 & 0xF;
+    maskedVal = MODEL_BONE_IDX_0_GET(arg1);
     if (maskedVal != 0)
     {
         switch (maskedVal)
@@ -1617,7 +1617,7 @@ void func_8003E4A0(s_Skeleton* skel, s32 arg1) // 0x8003E4A0
     static s32 D_800A9F64 = 0x00FE0603;
     static s32 D_800A9F68 = 0x00FE0704;
 
-    maskedVal = arg1 & 0xF;
+    maskedVal = MODEL_BONE_IDX_0_GET(arg1);
     if (maskedVal != 0)
     {
         func_80045468(skel, &D_800A9F58, false);
@@ -1649,7 +1649,7 @@ void func_8003E544(s_Skeleton* skel, s32 arg1) // 0x8003E544
     static s32 D_800A9F78 = 0x00FE0603;
     static s32 D_800A9F7C = 0x00FE0704;
 
-    maskedVal = arg1 & 0xF;
+    maskedVal = MODEL_BONE_IDX_0_GET(arg1);
     if (maskedVal == 0)
     {
         return;

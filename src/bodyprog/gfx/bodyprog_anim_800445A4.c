@@ -685,7 +685,7 @@ void func_800453E8(s_Skeleton* skel, bool cond) // 0x800453E8
 void func_80045468(s_Skeleton* skel, s32* arg1, bool cond) // 0x80045468
 {
     s_LinkedBone* bones;
-    s32     modelIdx;
+    s32           modelIdx;
 
     bones = skel->bones_8;
 

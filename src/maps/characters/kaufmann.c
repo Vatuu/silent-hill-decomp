@@ -138,23 +138,23 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusSet(&chara->model_0, 3, false);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S03)
-            WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(4, 3));
+            WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(4, 3));
 #endif
             break;
 
         case 5:
             Model_AnimStatusKeyframeSet(chara->model_0, 1, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
-            WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(1, 0));
+            WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 0));
             break;
 
         case 24:
             Model_AnimStatusKeyframeSet(chara->model_0, 20, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S03)
-            WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(4, 3));
+            WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(4, 3));
 #else
-            WorldGfx_HeldItemAttach(Chara_EndingKaufmann, UNK_PACKED_DATA(1, 3));
+            WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(1, 3));
 #endif
             break;
 
@@ -162,7 +162,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusKeyframeSet(chara->model_0, 4, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 #if defined(MAP3_S00)
-            WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(3, 1));
+            WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(3, 1));
 #endif
             break;
 
@@ -176,7 +176,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusSet(&chara->model_0, 5, false);
             Character_AnimStateReset(chara);
 #if defined(MAP3_S00)
-            WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(3, 1));
+            WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(3, 1));
 #endif
             break;
 
@@ -184,7 +184,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusSet(&chara->model_0, 6, false);
             Character_AnimStateReset(chara);
 #if defined(MAP3_S00)
-            WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(3, 1));
+            WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(3, 1));
 #endif
             break;
 
@@ -193,12 +193,12 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Character_AnimStateReset(chara);
             if (chara->model_0.anim_4.keyframeIdx_8 < 139 || !ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
             {
-                WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(1, 1));
+                WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
             }
             else
             {
                 Savegame_EventFlagSet(EventFlag_198);
-                WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(1, 3));
+                WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 3));
             }
             break;
 
@@ -211,7 +211,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusKeyframeSet(chara->model_0, 9, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S02)
-            WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(1, 1));
+            WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
 #endif
             break;
 
@@ -219,7 +219,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusKeyframeSet(chara->model_0, 22, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S02)
-            WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(1, 1));
+            WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
 #endif
             break;
 
@@ -227,7 +227,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusSet(&chara->model_0, 10, false);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S02)
-            WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(1, 1));
+            WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
 #endif
             break;
 
@@ -235,7 +235,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusSet(&chara->model_0, 11, false);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S02)
-            WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(1, 1));
+            WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 1));
 #endif
             break;
 
@@ -245,7 +245,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 
             if (chara->model_0.anim_4.keyframeIdx_8 >= 364 && ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
             {
-                WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(4, 0));
+                WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(4, 0));
             }
             break;
 
@@ -253,14 +253,14 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusSet(&chara->model_0, 2, false);
             Character_AnimStateReset(chara);
 #if defined(MAP5_S03)
-            WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(1, 3));
+            WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(1, 3));
 #endif
             break;
 
         case 25:
             Model_AnimStatusSet(&chara->model_0, 21, false);
             Character_AnimStateReset(chara);
-            WorldGfx_HeldItemAttach(Chara_EndingKaufmann, UNK_PACKED_DATA(3, 3));
+            WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(3, 3));
             break;
 
         case 17:
@@ -276,11 +276,11 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             // TODO: Invert like case 15? can't find how to match.
             if (chara->model_0.anim_4.keyframeIdx_8 < 78 || !ANIM_STATUS_IS_ACTIVE(chara->model_0.anim_4.status_0))
             {
-                WorldGfx_HeldItemAttach(Chara_EndingKaufmann, UNK_PACKED_DATA(1, 3));
+                WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(1, 3));
             }
             else
             {
-                WorldGfx_HeldItemAttach(Chara_EndingKaufmann, UNK_PACKED_DATA(4, 3));
+                WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(4, 3));
             }
 #endif
             break;
@@ -289,7 +289,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusSet(&chara->model_0, 17, false);
             Character_AnimStateReset(chara);
 #if defined(MAP7_S03)
-            WorldGfx_HeldItemAttach(Chara_EndingKaufmann, UNK_PACKED_DATA(4, 3));
+            WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(4, 3));
 #endif
             break;
 
@@ -300,11 +300,11 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
 #if defined(MAP7_S03)
             if (chara->model_0.anim_4.keyframeIdx_8 < 141)
             {
-                WorldGfx_HeldItemAttach(Chara_EndingKaufmann, UNK_PACKED_DATA(4, 3));
+                WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(4, 3));
             }
             else
             {
-                WorldGfx_HeldItemAttach(Chara_EndingKaufmann, UNK_PACKED_DATA(1, 3));
+                WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(1, 3));
             }
 #endif
             break;
@@ -314,7 +314,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Character_AnimStateReset(chara);
 
 #if defined(MAP7_S03)
-            WorldGfx_HeldItemAttach(Chara_EndingKaufmann, UNK_PACKED_DATA(1, 1));
+            WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(1, 1));
 #endif
             break;
 
@@ -322,7 +322,7 @@ void Ai_Kaufmann_AnimStateUpdate(s_SubCharacter* chara, GsCOORDINATE2* coords)
             Model_AnimStatusKeyframeSet(chara->model_0, 19, true, KAUFMANN_ANIM_INFOS, 0);
             Character_AnimStateReset(chara);
 #if defined(MAP7_S03)
-            WorldGfx_HeldItemAttach(Chara_EndingKaufmann, UNK_PACKED_DATA(1, 3));
+            WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(1, 3));
 #endif
             break;
 
@@ -435,9 +435,9 @@ void Ai_Kaufmann_Init(s_SubCharacter* chara)
     sharedData_800D5CF4_3_s00 = 0;
 
 #ifdef MAP7_S03
-    WorldGfx_HeldItemAttach(Chara_EndingKaufmann, UNK_PACKED_DATA(0, 1)); // TODO: MAP7_S03 `Ai_Kaufmann` funcs could be `Ai_EndingKaufmann` instead, if other `Ai_Kaufmann` funcs don't match other overlays.
+    WorldGfx_HeldItemAttach(Chara_EndingKaufmann, MODEL_BONE(0, 1)); // TODO: MAP7_S03 `Ai_Kaufmann` funcs could be `Ai_EndingKaufmann` instead, if other `Ai_Kaufmann` funcs don't match other overlays.
 #else
-    WorldGfx_HeldItemAttach(Chara_Kaufmann, UNK_PACKED_DATA(0, 1));
+    WorldGfx_HeldItemAttach(Chara_Kaufmann, MODEL_BONE(0, 1));
 #endif
 
 #ifdef MAP7_S02

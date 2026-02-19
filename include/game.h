@@ -43,15 +43,6 @@ struct _Model;
 
 #define BGM_LAYER_COUNT 9
 
-/** @brief Unknown packed data used for something to do with character model bones.
- *
- * @param a First value.
- * @param b Second value.
- * @return Packed `a` and `b`.
- */
-#define UNK_PACKED_DATA(a, b) \
-    (s16)((a) | ((b) << 4))
-
 /** @brief Converts a floating-point X screen position in percent to a fixed-point X screen coodinate. */
 #define SCREEN_POSITION_X(percent) \
     (s32)(SCREEN_WIDTH * ((percent) / 100.0f))
@@ -64,7 +55,37 @@ struct _Model;
 #define HAS_MAP(mapIdx) \
     ((((u32*)&g_SavegamePtr->hasMapsFlags_164)[(mapIdx) / 32] >> ((mapIdx) % 32)) & (1 << 0))
 
-/** @brief Packs a weapon attack containing a weapon ID and attack input type
+// TODO: Name might be wrong, but these have something to do with held item meshes.
+// First index is the mesh variant, second is the container of meshes (not bone index in skeleton)?
+// Data addresses are hardcoded.
+/** @brief Packs a model bone containing ???
+ *
+ * @param idx0 ???
+ * @param idx1 ???
+ * @return Packed model bone containing ???
+ */
+#define MODEL_BONE(idx0, idx1) \
+    (s16)((idx0) | ((idx1) << 4))
+
+// TODO
+/** @brief Retrieves ???
+ *
+ * @param modelBone Packed model bone containing ???
+ * @return Unknown first index.
+ */
+#define MODEL_BONE_IDX_0_GET(modelBone) \
+    ((modelBone) & 0xF)
+
+// TODO
+/** @brief Retrieves ???
+ *
+ * @param modelBone Packed model bone containing ???
+ * @return Unknown second index.
+ */
+#define MODEL_BONE_IDX_1_GET(modelBone) \
+    ((modelBone) & 0xF0)
+
+/** @brief Packs a weapon attack containing a weapon ID and attack input type.
  *
  * @param weaponId Weapon ID.
  * @param attackInputType Attack input type.

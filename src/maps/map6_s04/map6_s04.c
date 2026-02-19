@@ -141,7 +141,7 @@ void Ai_MonsterCybil_Init(s_SubCharacter* chara, s_Model* extraModel) // 0x800D8
     g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[11].val8[2] = 0;
     g_SysWork.npcs_1A0[0].properties_E4.dummy.properties_E8[3].val32    = 0;
 
-    WorldGfx_HeldItemAttach(Chara_MonsterCybil, UNK_PACKED_DATA(1, 1));
+    WorldGfx_HeldItemAttach(Chara_MonsterCybil, MODEL_BONE(1, 1));
 }
 
 void func_800D8A90(s_SubCharacter* chara) // 0x800D8A90
