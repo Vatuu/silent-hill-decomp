@@ -38,6 +38,8 @@ typedef struct
     s32 field_4318;
 } s_func_800DE274;
 
+#define UNK_FS_BUFFER_6 ((s_func_800DE274*)FS_BUFFER_6)
+
 typedef struct
 {
     s32     field_0;

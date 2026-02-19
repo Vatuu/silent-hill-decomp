@@ -110,7 +110,7 @@ s32 func_800DE350(s32 arg0) // 0x800DE350
 {
     s32 idx;
 
-    idx = ((s_func_800DE274*)FS_BUFFER_6)->field_4101[arg0];
+    idx = UNK_FS_BUFFER_6->field_4101[arg0];
 
     return D_800EAF20[idx] | 0x3A000000;
 }
@@ -175,16 +175,12 @@ void* func_800DE380(GsOT_TAG* arg0, PACKET* arg1) // 0x800DE380
 
 void func_800DE5CC(void) // 0x800DE5CC
 {
-    s_func_800DE274* base;
-
-    base = (s_func_800DE274*)FS_BUFFER_6;
-
-    GsOUT_PACKET_P = func_800DE380(&g_OrderingTable0[g_ActiveBufferIdx].org[base->field_4318], GsOUT_PACKET_P);
+    GsOUT_PACKET_P = func_800DE380(&g_OrderingTable0[g_ActiveBufferIdx].org[UNK_FS_BUFFER_6->field_4318], GsOUT_PACKET_P);
 }
 
 void func_800DE62C(void) // 0x800DE62C
 {
-    memset(((s_func_800DE274*)FS_BUFFER_6)->field_4101, 0, ARRAY_SIZE(((s_func_800DE274*)FS_BUFFER_6)->field_4101));
+    memset(UNK_FS_BUFFER_6->field_4101, 0, ARRAY_SIZE(UNK_FS_BUFFER_6->field_4101));
 }
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE658);
@@ -211,7 +207,7 @@ void func_800DE95C(void) // 0x800DE95C
     s_func_800DE274* ptr1;
 
     ptr0 = D_800ED848;
-    ptr1 = (s_func_800DE274*)FS_BUFFER_6;
+    ptr1 = UNK_FS_BUFFER_6;
 
     func_800DE62C();
 
@@ -394,7 +390,7 @@ void func_800DEF50(VECTOR3* arg0, GsCOORDINATE2* arg1, s32* arg2) // 0x800DEF50
 
     memcpy(&sp10, &D_800CB6AC, sizeof(D_800CB6AC));
 
-    ptr1 = (s_func_800DE274*)FS_BUFFER_6;
+    ptr1 = UNK_FS_BUFFER_6;
 
     for (i = 0; i < 6; i++)
     {
@@ -559,7 +555,7 @@ bool func_800DF41C(s_800ED848* arg0) // 0x800DF41C
     MATRIX*          mat;
     s_func_800DE274* ptr0;
 
-    ptr0 = (s_func_800DE274*)FS_BUFFER_6;
+    ptr0 = UNK_FS_BUFFER_6;
 
     func_800DF2F0(&arg0->field_28, arg0->field_14, arg0->field_68);
     SetRotMatrix(&arg0->field_28);
@@ -621,7 +617,7 @@ s32 func_800DF670(s32 arg0) // 0x800DF670
     s32 temp_a0;
     s32 var_a0;
 
-    var_a0  = ((s_func_800DE274*)FS_BUFFER_6)->field_4101[arg0];
+    var_a0  = UNK_FS_BUFFER_6->field_4101[arg0];
     temp_a0 = (var_a0 > 100) ? (200 - var_a0) : var_a0;
     var_a0  = MAX(temp_a0, 0);
 
@@ -752,7 +748,7 @@ void func_800DFB44(void) // 0x800DFB44
     MATRIX           sp10;
     s_func_800DE274* base;
 
-    base = (s_func_800DE274*)FS_BUFFER_6;
+    base = UNK_FS_BUFFER_6;
 
     func_800DFA38(&sp10);
 
@@ -763,7 +759,7 @@ bool func_800DFBB0(s_800ED848* arg0) // 0x800DFBB0
 {
     s_func_800DE274* ptr;
 
-    ptr = (s_func_800DE274*)FS_BUFFER_6;
+    ptr = UNK_FS_BUFFER_6;
 
     switch (arg0->field_48)
     {
@@ -920,12 +916,9 @@ void* func_800DFD3C(GsOT_TAG* ot, PACKET* packet, MATRIX* mat, s32 arg3, s32 arg
 
 void func_800E00F4(void) // 0x800E00F4
 {
-    MATRIX           sp18;
-    s_func_800DE274* base;
+    MATRIX sp18;
 
-    base = (s_func_800DE274*)FS_BUFFER_6;
-
-    GsOUT_PACKET_P = func_800DFD3C(&g_OrderingTable0[g_ActiveBufferIdx].org[base->field_4318], GsOUT_PACKET_P, &sp18, 0x100, 7);
+    GsOUT_PACKET_P = func_800DFD3C(&g_OrderingTable0[g_ActiveBufferIdx].org[UNK_FS_BUFFER_6->field_4318], GsOUT_PACKET_P, &sp18, 0x100, 7);
 }
 
 void func_800E0164(void) // 0x800E0164
@@ -936,9 +929,9 @@ void func_800E0164(void) // 0x800E0164
     u8* ptr;
     s32 temp;
 
-    ptr = ((s_func_800DE274*)FS_BUFFER_6)->field_4101;
+    ptr = UNK_FS_BUFFER_6->field_4101;
 
-    for (i = 0; i < 532; i++)
+    for (i = 0; i < ARRAY_SIZE(UNK_FS_BUFFER_6->field_4101); i++)
     {
         val = *ptr;
 
