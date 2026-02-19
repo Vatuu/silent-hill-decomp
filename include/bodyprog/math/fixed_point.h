@@ -102,7 +102,7 @@
 /** @brief Divides an integer in a fixed-point Q format by another.
  *
  * @param a Fixed-point numerator.
- * @param b Fixed-point divisor.
+ * @param b Fixed-point denominator.
  * @return Fixed-point result of `a` divided by `b`.
  */
 #define FP_DIVIDE(a, b, shift) \
@@ -166,7 +166,7 @@
 /** @brief Divides an integer in Q*.12 fixed-point by another.
  *
  * @param a Q*.12 fixed-point numerator.
- * @param b Q*.12 fixed-point divisor.
+ * @param b Q*.12 fixed-point denominator.
  * @return Q*.12 result of `a` divided by `b`.
  */
 #define Q12_DIV(a, b) \

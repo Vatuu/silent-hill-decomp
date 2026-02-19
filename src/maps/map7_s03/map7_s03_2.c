@@ -2887,7 +2887,7 @@ void func_800DB608(void) // 0x800DB608
     }
 }
 
-void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 arg4) // 0x800DB6D0
+void func_800DB6D0(MATRIX* arg0, const VECTOR* rot0, const VECTOR* rot1, const MATRIX* mat, s32 arg4) // 0x800DB6D0
 {
     MATRIX  sp10;
     MATRIX  sp30;
@@ -2912,12 +2912,12 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
 
     angle1 = arg4;
 
-    if (arg3 != NULL)
+    if (mat != NULL)
     {
-        var_s4 = -arg3->m[2][0];
-        var_s5 = arg3->m[0][0];
-        sp68   = -arg3->m[1][2];
-        sp6C   = arg3->m[1][1];
+        var_s4 = -mat->m[2][0];
+        var_s5 = mat->m[0][0];
+        sp68   = -mat->m[1][2];
+        sp6C   = mat->m[1][1];
     }
     else
     {
@@ -2927,10 +2927,10 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
         sp6C   = Q12(1.0f);
     }
 
-    angle2 = arg2->vx;
-    var_s1  = angle2 - arg1->vx;
-    temp_s6 = arg2->vy - arg1->vy;
-    angle0  = arg2->vz - arg1->vz;
+    angle2 = rot1->vx;
+    var_s1  = angle2 - rot0->vx;
+    temp_s6 = rot1->vy - rot0->vy;
+    angle0  = rot1->vz - rot0->vz;
 
     temp_a3 = Q12_MULT(var_s1, var_s1);
     temp_a0 = Q12_MULT(angle0, angle0);
@@ -2949,7 +2949,7 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
         var_fp = var_s5;
     }
 
-    if (arg3 != NULL)
+    if (mat != NULL)
     {
         angle0 = ratan2(var_s4, var_s5);
         angle2 = ratan2(sp64, var_fp) - angle0;
@@ -2986,7 +2986,7 @@ void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 a
 
     angle1 = angle1 / 2;
 
-    if (arg3 != NULL)
+    if (mat != NULL)
     {
         angle0  = ratan2(sp68, sp6C);
         angle2 = ratan2(var_s4, var_s1) - angle0;

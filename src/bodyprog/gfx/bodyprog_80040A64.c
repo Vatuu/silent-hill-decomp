@@ -319,7 +319,7 @@ void func_8004137C(VECTOR3* result, const VECTOR* offset0, const VECTOR* offset1
     result->vy = ((vec.vy * screenDist) / vec.vz) + offsetY;
 }
 
-void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0x800414E0
+void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 angle1) // 0x800414E0
 {
     s32      sp10[4];
     DVECTOR  sp20[4];
@@ -346,13 +346,13 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     POLY_G4* poly_g4;
     POLY_F4* poly_f4;
 
-    if (arg1->vz < 0x400)
+    if (arg1->vz < Q12(0.25f))
     {
-        var_s1 = 0x1000;
+        var_s1 = Q12(1.0f);
     }
     else
     {
-        var_s1 = 0x400000 / arg1->vz;
+        var_s1 = Q12(1024.0f) / arg1->vz;
     }
 
     var_v0 = arg2 * 0x1F4;
@@ -363,17 +363,17 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
     }
 
     var_s0 = ((var_v0 >> 12) << 10) / arg1->vz;
-    var_v1 = var_s0 * (0x3000 - Q12_MULT(var_s1, Math_Cos(arg4)));
-    var_s0 = var_v1 / 16384;
+    var_v1 = var_s0 * (Q12(3.0f) - Q12_MULT(var_s1, Math_Cos(angle1)));
+    var_s0 = var_v1 / ((SHRT_MAX / 2) + 1);
 
     sp10[0] = (var_s0 / 5);
     sp10[1] = (var_s0 * 4) / 10;
     sp10[2] = (var_s0 * 7) / 10;
     sp10[3] = var_s0;
 
-    temp_s1 = Math_Sin(arg4);
-    temp_s2 = Math_Cos(arg3);
-    temp_a3 = Math_Sin(arg3);
+    temp_s1 = Math_Sin(angle1);
+    temp_s2 = Math_Cos(angle0);
+    temp_a3 = Math_Sin(angle0);
 
     for (i = 0; i < 4; i++)
     {
@@ -422,8 +422,7 @@ void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4) // 0
 
     for (i = 0; i < 4; i++)
     {
-        var_s1_2 = var_t4 + i * 17;
-
+        var_s1_2 = var_t4 + (i * 17);
         for (j = 0; j < 17; j++, var_s1_2++)
         {
             temp_s0_3 = Math_Cos(j << 8);

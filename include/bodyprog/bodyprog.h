@@ -2828,7 +2828,7 @@ void Math_RelativeRotationGet(q19_12* azimuthAngle, q19_12* altitudeAngle, const
 
 void func_8004137C(VECTOR3* result, const VECTOR* offset0, const VECTOR* offset1, s32 screenDist);
 
-void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
+void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, q19_12 angle0, q19_12 angle1);
 
 /** @brief Gets the load status of a queue entry by utilizing `Fs_QueueIsEntryLoaded`.
  *
@@ -3101,6 +3101,10 @@ void GameFs_UniqueItemModelLoad(u8 itemId);
 
 void GameFs_MapItemsTextureLoad(s32 mapId);
 
+/** @brief Attaches a weapon model to the player's hand.
+ *
+ * @param weaponAttack Packed weapon attack. See `WEAPON_ATTACK`.
+ */
 void Gfx_PlayerHeldItemAttach(u8 weaponAttack);
 
 void func_8005487C(s32);
@@ -3779,6 +3783,12 @@ void func_80069994(s_IpdCollisionData* collData);
 
 void func_800699E4(s_IpdCollisionData* collData);
 
+/** @brief Gets the point collision at a given 2D world position.
+ *
+ * @param coll Output point collision.
+ * @param posX X world position.
+ * @param posZ Z world position.
+ */
 void Collision_Get(s_Collision* coll, q19_12 posX, q19_12 posZ);
 
 s32 func_80069B24(s_800C4590* arg0, VECTOR3* offset, s_SubCharacter* chara);
@@ -3987,15 +3997,15 @@ void Game_WarmBoot(void);
 /** Handles `g_GameWork.gameStateStep_598[0]`.
  * Used to handle map loading and room changes.
  */
-void GameFs_MapStartup(void); // 0x80034964
+void GameFs_MapStartup(void);
 
-/** Draws the loading screen with Harry running. */
-void Gfx_LoadingScreenDraw(void); // 0x80034E58
+/** @brief Draws the motion-blurred loading screen of Harry running away from the camera. */
+void Gfx_LoadingScreenDraw(void);
 
 /** @brief Clears all NPC fields for reuse. */
-void Game_NpcClear(void); // 0x80034EC8
+void Game_NpcClear(void);
 
-void Game_NpcInit(void); // 0x80034F18
+void Game_NpcInit(void);
 
 /** Crucial for getting in-game.
  * Removing it breaks the camera, inventory's 3D elements, effects
@@ -4003,11 +4013,12 @@ void Game_NpcInit(void); // 0x80034F18
  * doing any action unrelated to aiming a weapon or interacting
  * with the environment crashes the game.
  */
-void Game_InGameInit(void); // 0x80034FB8
+void Game_InGameInit(void);
 
 void Game_SavegameInitialize(s8 overlayId, s32 difficulty);
 
-void Game_PlayerInit(void); // 0x80035178
+/** @brief Initializes the player character model. */
+void Game_PlayerInit(void);
 
 /** Loads a map file into `g_OvlDynamic`. */
 void GameFs_MapLoad(s32 mapIdx);
@@ -4035,7 +4046,7 @@ void Fs_CharaAnimInfoUpdate(s32 idx, e_CharacterId charaId, s_AnmHeader* animFil
 /** @brief Updates character type bone initialization coordinates and reinitializes them. */
 void Fs_CharaAnimBoneInfoUpdate(void);
 
-/** @brief Updates the translation and rotation (pose) of a matrix in a coordinate.
+/** @brief Updates the translation and rotation of a matrix in a coordinate.
  *
  * @param pos Translation to apply.
  * @param rot Rotation to apply.
@@ -4338,7 +4349,7 @@ void WorldGfx_CharaModelProcessAllLoads(void);
 
 void WorldGfx_CharaModelProcessLoad(s_CharaModel* model);
 
-void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4);
+void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, q3_12 timer, s32 arg4);
 
 /** Something for Harry. `arg` is a packed value. */
 void func_8003DE60(s_Skeleton* skel, s32 arg1);
@@ -4437,8 +4448,6 @@ void func_8007E9C4(void);
 
 /** Sound func. */
 void func_8007F14C(u8 weaponAttack);
-
-void func_8007FB94(s_SubCharacter*, s_PlayerExtra*, s32);
 
 /** Resets several global variables to 0. */
 void func_8007F1CC(void);

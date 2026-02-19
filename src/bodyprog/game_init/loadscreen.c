@@ -51,7 +51,7 @@ void Gfx_LoadingScreen_BackgroundTexture(void) // 0x80035BBC
 
 void Gfx_LoadingScreen_PlayerRun(void) // 0x80035BE0
 {
-    VECTOR3        camLookAt;
+    VECTOR3        camLookAt; // Q19.12
     s32            temp;
     s_Model*       model;
     GsCOORDINATE2* boneCoords;

@@ -360,7 +360,7 @@ void Game_PlayerInit(void) // 0x80035178
 
     g_SysWork.field_229C = NO_VALUE;
 
-    if ((g_SavegamePtr->itemToggleFlags_AC >> 1) & (1 << 0)) // & `ItemToggleFlag_FlashlightOff`
+    if ((g_SavegamePtr->itemToggleFlags_AC >> 1) & (1 << 0)) // `& ItemToggleFlag_FlashlightOff`
     {
         Game_TurnFlashlightOff();
     }
@@ -385,9 +385,9 @@ void GameFs_MapLoad(s32 mapIdx) // 0x8003521C
     // If the player spawns in the map with a weapon equipped (either because it's a demo
     // or because the player saved the game with a weapon equipped), this and the next function
     // make it appear and allocate its data.
-    // @note This code has some special functionallity if player spawna without an equipped weapon.
-    if (g_SysWork.processFlags_2298 & (SysWorkProcessFlag_NewGame | SysWorkProcessFlag_LoadSave
-                                       | SysWorkProcessFlag_Continue | SysWorkProcessFlag_BootDemo))
+    // @note This code has some special functionallity if the player spawns without an equipped weapon.
+    if (g_SysWork.processFlags_2298 & (SysWorkProcessFlag_NewGame | SysWorkProcessFlag_LoadSave |
+                                       SysWorkProcessFlag_Continue | SysWorkProcessFlag_BootDemo))
     {
         WorldGfx_PlayerPrevHeldItem(&g_SysWork.playerCombat_38);
     }

@@ -1020,7 +1020,7 @@ void func_800DB154(GsCOORDINATE2* coords);
 
 void func_800DB288(void);
 
-void func_800DB6D0(MATRIX* arg0, VECTOR* arg1, VECTOR* arg2, MATRIX* arg3, s32 arg4);
+void func_800DB6D0(MATRIX* arg0, const VECTOR* rot0, const VECTOR* rot1, const MATRIX* mat, s32 arg4);
 
 void func_800DF288(s32 x, s32 y, s32 val);
 

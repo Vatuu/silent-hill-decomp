@@ -77,7 +77,7 @@ void func_80069860(s32 arg0, s32 arg1, s_func_8006F8FC* arg2) // 0x80069860
 }
 
 // ========================================
-// COLLISIONS HANDLING
+// COLLISION HANDLING
 // ========================================
 
 void IpdCollData_FixOffsets(s_IpdCollisionData* collData) // 0x8006993C

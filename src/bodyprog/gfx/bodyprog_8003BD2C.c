@@ -1209,7 +1209,7 @@ void WorldGfx_CharaModelProcessLoad(s_CharaModel* model) // 0x8003D9C8
     }
 }
 
-void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, s16 arg3, s32 arg4) // 0x8003DA9C
+void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, q3_12 timer, s32 arg4) // 0x8003DA9C
 {
     CVECTOR tintColor = { 0 };
     s16     ret;
@@ -1220,7 +1220,7 @@ void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, s16 ar
         return;
     }
 
-    arg3 = CLAMP(arg3, Q12(0.0f), Q12(1.0f));
+    timer = CLAMP(timer, Q12(0.0f), Q12(1.0f));
 
     // Something to do with items held by player.
     if (charaId == Chara_Harry)
@@ -1230,21 +1230,21 @@ void func_8003DA9C(e_CharacterId charaId, GsCOORDINATE2* coord, s32 arg2, s16 ar
 
     ret = func_8003DD74(charaId, arg4);
 
-    if (arg3 != 0)
+    if (timer != Q12(0.0f))
     {
         tintColor = g_WorldEnvWork.worldTintColor_28;
 
         func_80055330(g_WorldEnvWork.field_0, g_WorldEnvWork.field_20, g_WorldEnvWork.field_3,
-                      Q12_MULT_PRECISE(Q12(1.0f) - arg3, g_WorldEnvWork.worldTintColor_28.r) << 5,
-                      Q12_MULT_PRECISE(Q12(1.0f) - arg3, g_WorldEnvWork.worldTintColor_28.g) << 5,
-                      Q12_MULT_PRECISE(Q12(1.0f) - arg3, g_WorldEnvWork.worldTintColor_28.b) << 5,
+                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor_28.r) << 5,
+                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor_28.g) << 5,
+                      Q12_MULT_PRECISE(Q12(1.0f) - timer, g_WorldEnvWork.worldTintColor_28.b) << 5,
                       g_WorldEnvWork.screenBrightness_8);
     }
 
     func_80045534(&g_WorldGfx.registeredCharaModels_18[charaId]->skeleton_14, &g_OrderingTable0[g_ActiveBufferIdx], arg2,
                   coord, Q8_TO_Q12(CHARA_FILE_INFOS[charaId].field_6), ret, CHARA_FILE_INFOS[charaId].field_8);
 
-    if (arg3 != 0)
+    if (timer != Q12(0.0f))
     {
         func_80055330(g_WorldEnvWork.field_0, g_WorldEnvWork.field_20, g_WorldEnvWork.field_3, tintColor.r << 5, tintColor.g << 5, tintColor.b << 5, g_WorldEnvWork.screenBrightness_8);
     }
