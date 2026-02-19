@@ -1847,7 +1847,7 @@ extern void (*g_Romper_ControlFuncs[])(s_SubCharacter* romper);
 
 extern s_Bgm_Update sharedData_800D2F18_7_s00;
 extern s_Bgm_Update sharedData_800D2F20_7_s00;
-extern u16          sharedData_800D2F28_7_s00[38];
+extern u16          sharedData_800D2F28_7_s00[38]; // Flags array.
 extern s_Bgm_Update sharedData_800D2F74_7_s00;
 extern s_Bgm_Update sharedData_800D2F7C_7_s00;
 extern s_Bgm_Update sharedData_800D2F84_7_s00;

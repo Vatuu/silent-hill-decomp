@@ -408,7 +408,7 @@ void sharedFunc_800CDAA8_0_s02(s_SubCharacter* playerChara, s_PlayerExtra* extra
             {
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 += TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.75f));
                 g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126 =
-                    CLAMP(g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126, 0, Q12(4.0f));
+                    CLAMP(g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126, Q12(0.0f), Q12(4.0f));
             }
 
             sharedData_800D32A0_0_s02 = g_SysWork.playerWork_4C.player_0.properties_E4.player.moveDistance_126;

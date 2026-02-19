@@ -1161,10 +1161,10 @@ void Ai_AirScreamer_Control_0(s_SubCharacter* airScreamer)
 
         case AirScreamerStateStep_9:
             var0 = 3;
-            animStatus = ANIM_STATUS(AirScreamerAnim_19, true);;
+            animStatus = ANIM_STATUS(AirScreamerAnim_19, true);
             controlState = AirScreamerControl_19;
             var2 = 2;
-            airScreamer->health_B0 *= 4;;
+            airScreamer->health_B0 *= 4;
             break;
 
         case AirScreamerStateStep_11:

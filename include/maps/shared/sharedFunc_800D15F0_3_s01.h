@@ -258,7 +258,7 @@ void sharedFunc_800D15F0_3_s01(void)
                     g_SysWork.field_28 = Q12(1.0f);
                 }
 
-                func_8005DE0C(0x5DB, &sharedData_800CB088_3_s01, g_SysWork.field_28 >> 5, Q12(16.0f), 0);
+                func_8005DE0C(Sfx_Unk1499, &sharedData_800CB088_3_s01, g_SysWork.field_28 >> 5, Q12(16.0f), 0);
                 SysWork_StateStepIncrementAfterFade(2, true, false, Q12(1.0f), false);
             }
             else
