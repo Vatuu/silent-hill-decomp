@@ -746,7 +746,17 @@ void func_800DFA38(MATRIX* mat) // 0x800DFA38
     SetMulRotMatrix(mat);
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DFB44);
+void func_800DFB44(void) // 0x800DFB44
+{
+    MATRIX           sp10;
+    s_func_800DE274* base;
+
+    base = (s_func_800DE274*)FS_BUFFER_6;
+
+    func_800DFA38(&sp10);
+
+    GsOUT_PACKET_P = func_800DF6C4(&g_OrderingTable0[g_ActiveBufferIdx].org[base->field_4318], GsOUT_PACKET_P, &sp10);
+}
 
 bool func_800DFBB0(s_800ED848* arg0) // 0x800DFBB0
 {
@@ -907,7 +917,19 @@ PACKET* func_800DFD3C(GsOT_TAG* ot, PACKET* packet, MATRIX* mat, s32 arg3, s32 a
     return (PACKET*)(tPage + 2);
 }
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800E00F4);
+void func_800E00F4(void) // 0x800E00F4
+{
+    MATRIX           sp18;
+    s_func_800DE274* base;
+    GsOT_TAG*        ot;
+
+    base = (s_func_800DE274*)FS_BUFFER_6;
+
+    ot = g_OrderingTable0[g_ActiveBufferIdx].org;
+    ot = &ot[base->field_4318];
+
+    GsOUT_PACKET_P = func_800DFD3C(ot, GsOUT_PACKET_P, &sp18, 0x100, 7);
+}
 
 void func_800E0164(void) // 0x800E0164
 {

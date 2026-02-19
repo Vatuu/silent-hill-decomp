@@ -29,6 +29,13 @@
 #define HAS_Chara_Alessa
 #define MAP_CHARA_COUNT 3
 
+// Used with `FS_BUFFER_6`
+typedef struct
+{
+    u8  field_0[0x4318];
+    s32 field_4318;
+} s_func_800DE274;
+
 typedef struct
 {
     s32     field_0;
