@@ -234,7 +234,7 @@ typedef struct
     s32     field_0;
     s32     field_4;
     VECTOR  field_8;
-    u8      unk_18[0x10];
+    u8      unk_18[16];
     SVECTOR field_28;
     u8      unk_30[8];
     s32     field_38;
@@ -298,8 +298,8 @@ typedef struct
 
 typedef struct
 {
-    s16         x_0;
-    s16         y_2;
+    q3_12       x_0;
+    q3_12       y_2;
     s_PrimColor color_4;
 } s_800F4B40_118;
 STATIC_ASSERT_SIZEOF(s_800F4B40_118, 8);
@@ -422,36 +422,37 @@ extern s_WorldObjectDesc g_WorldObject_Baby;
 
 extern GsCOORDINATE2 g_NpcBoneCoords[HarryBone_Count];
 
-extern s32 D_800F47F0;
+extern s32 D_800F47F0; // Count of objects to load?
 
 extern VECTOR3 g_WorldObject_UnkPos;
 
-extern u8 D_800F4804;
+// Vars below might not be `bool`s but states of some kind, and 0/1 just happen to be most common.
+extern u8 D_800F4804; // `bool`
 extern u8 D_800F4805;
-extern u8 D_800F4806;
-extern u8 D_800F4807;
-extern u8 D_800F4808;
-extern u8 D_800F4809;
-extern u8 D_800F480A;
-extern u8 D_800F480B;
-extern u8 D_800F480C;
-extern u8 D_800F480D;
-extern u8 D_800F480E;
-extern u8 D_800F480F;
-extern u8 D_800F4810;
-extern u8 D_800F4811;
-extern u8 D_800F4812;
+extern u8 D_800F4806; // `bool`
+extern u8 D_800F4807; // `bool`
+extern u8 D_800F4808; // `bool`
+extern u8 D_800F4809; // `bool`
+extern u8 D_800F480A; // `bool`
+extern u8 D_800F480B; // `bool`
+extern u8 D_800F480C; // `bool`
+extern u8 D_800F480D; // `bool`
+extern u8 D_800F480E; // `bool`
+extern u8 D_800F480F; // `bool`
+extern u8 D_800F4810; // `bool`
+extern u8 D_800F4811; // `bool`
+extern u8 D_800F4812; // `bool`
 extern u8 D_800F4813;
 extern u8 D_800F4814;
-extern u8 D_800F4815;
-extern u8 D_800F4816;
-extern u8 D_800F4817;
-extern u8 D_800F4818;
+extern u8 D_800F4815; // `bool`
+extern u8 D_800F4816; // `bool`
+extern u8 D_800F4817; // `bool`
+extern u8 D_800F4818; // `bool`
 extern u8 D_800F4819;
 extern u8 D_800F481A;
 extern u8 D_800F481B;
 extern u8 D_800F481C;
-extern u8 D_800EC8FC[340];
+extern u8 D_800EC8FC[340]; // Related to Incubus keyframes.
 extern s_SfxVolume D_800EC8C8[13];
 extern q20_12 D_800F3D98[5]; // Time.
 
@@ -663,7 +664,7 @@ void func_800DBBA0(void);
 
 void func_800DBBD8(MATRIX* mat);
 
-void func_800DBC18(s32 arg0);
+void func_800DBC18(q19_12 damageAmt);
 
 bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec);
 
@@ -730,6 +731,7 @@ void func_800DDB3C(s_SubCharacter* chara, GsCOORDINATE2* coords);
 
 void func_800DDB68(s_SubCharacter* chara, s32 soundIdx);
 
+/** Incubus SFX indices related to keyframes. */
 s32 func_800DDBA4(s32 idx);
 
 void func_800DDBBC(s_SubCharacter* incubus);
@@ -828,7 +830,8 @@ void func_800E27D0(s32 arg0, s16 arg1, s32 arg2, VECTOR3* pos);
 // Some kind of RNG? Constants don't seem well known?
 q3_12 func_800E28F4(void);
 
-void func_800E2968(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, DVECTOR* arg3, DVECTOR* arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s_PrimColor* color, s32 arg10, u8 arg11);
+void func_800E2968(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, DVECTOR* arg3, DVECTOR* arg4,
+                   s32 arg5, s32 arg6, q19_12 angle0, q19_12 angle1, s_PrimColor* color, s32 arg10, u8 arg11);
 
 void func_800E2C28(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, s32 zDepth, s32 arg4);
 

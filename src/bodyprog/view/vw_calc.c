@@ -198,7 +198,7 @@ s32 func_80049530(VECTOR* arg0, DVECTOR* arg1) // 0x80049530
 
     ApplyRotMatrixLV(arg0, &sp10);
 
-    // TODO: Make macros for there?
+    // TODO: Make macros for these?
 
     __asm__ volatile(
         "cfc2        $12, $5;"
@@ -325,7 +325,6 @@ void vbSetRefView(VbRVIEW* rview) // 0x800498D8
     vbSetWorldScreenMatrix(&coord);
 }
 
-// Something to do with bone hierarchy?
 void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat) // 0x80049984
 {
     GsCOORDINATE2* prevCoord;

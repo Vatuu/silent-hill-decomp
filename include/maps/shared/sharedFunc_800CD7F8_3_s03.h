@@ -1,41 +1,41 @@
-void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 posX, q19_12 posZ, q19_12 range)
+void sharedFunc_800CD7F8_3_s03(s_SubCharacter* chara, q19_12 offsetX, q19_12 offsetZ, q19_12 range)
 {
-    q19_12 deltaX;
-    q19_12 deltaZ;
-    q19_12 deltaSqr;
-    q19_12 rootDeltaSqr;
+    q19_12 adjOffsetX;
+    q19_12 adjOffsetZ;
+    q19_12 adjOffsetSqr;
+    q19_12 rootAdjOffsetSqr;
     q19_12 scale;
-    q19_12 scaledDeltaX;
-    q19_12 scaledDeltaZ;
+    q19_12 scaledAdjX;
+    q19_12 scaledAdjZ;
 
-    deltaX = chara->field_D8.offsetX_4 - posX;
-    deltaZ = chara->field_D8.offsetZ_6 - posZ;
+    adjOffsetX = chara->field_D8.offsetX_4 - offsetX;
+    adjOffsetZ = chara->field_D8.offsetZ_6 - offsetZ;
 
-    deltaSqr = Q12_SQUARE_PRECISE(deltaX) +
-               Q12_SQUARE_PRECISE(deltaZ);
-    if (deltaSqr > Q12_MULT_PRECISE(range, 4))
+    adjOffsetSqr = Q12_SQUARE_PRECISE(adjOffsetX) +
+                   Q12_SQUARE_PRECISE(adjOffsetZ);
+    if (adjOffsetSqr > Q12_MULT_PRECISE(range, 4))
     {
-        rootDeltaSqr = SquareRoot12(deltaSqr);
-        scale        = FP_TO(rootDeltaSqr - 128, Q12_SHIFT) / rootDeltaSqr;
+        rootAdjOffsetSqr = SquareRoot12(adjOffsetSqr);
+        scale            = FP_TO(rootAdjOffsetSqr - 128, Q12_SHIFT) / rootAdjOffsetSqr;
 
-        scaledDeltaX = scale * deltaX;
-        if (scaledDeltaX < Q12(0.0f))
+        scaledAdjX = scale * adjOffsetX;
+        if (scaledAdjX < Q12(0.0f))
         {
-            scaledDeltaX += Q12_CLAMPED(1.0f);
+            scaledAdjX += Q12_CLAMPED(1.0f);
         }
-        deltaX = FP_FROM(scaledDeltaX, Q12_SHIFT);
+        adjOffsetX = FP_FROM(scaledAdjX, Q12_SHIFT);
 
-        scaledDeltaZ = scale * deltaZ;
-        if (scaledDeltaZ < Q12(0.0f))
+        scaledAdjZ = scale * adjOffsetZ;
+        if (scaledAdjZ < Q12(0.0f))
         {
-            scaledDeltaZ += Q12_CLAMPED(1.0f);
+            scaledAdjZ += Q12_CLAMPED(1.0f);
         }
-        deltaZ = FP_FROM(scaledDeltaZ, Q12_SHIFT);
+        adjOffsetZ = FP_FROM(scaledAdjZ, Q12_SHIFT);
 
-        posX += deltaX;
-        posZ += deltaZ;
+        offsetX += adjOffsetX;
+        offsetZ += adjOffsetZ;
     }
 
-    chara->field_D8.offsetX_4 = posX;
-    chara->field_D8.offsetZ_6 = posZ;
+    chara->field_D8.offsetX_4 = offsetX;
+    chara->field_D8.offsetZ_6 = offsetZ;
 }

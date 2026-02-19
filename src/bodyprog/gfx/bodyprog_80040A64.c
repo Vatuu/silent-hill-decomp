@@ -23,7 +23,7 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
     #define STEREO_BALANCE_RANGE 127
 
     VECTOR3 camPos; // Q19.12
-    VECTOR  disp;   // Q25.6
+    VECTOR  offset; // Q25.6
     VECTOR  dir;    // Q19.12
     MATRIX  viewMat;
     s32     dot;
@@ -37,10 +37,10 @@ s8 Sound_StereoBalanceGet(const VECTOR3* soundPos) // 0x80040A64
 
     // Compute direction from camera to sound.
     vwGetViewPosition(&camPos);
-    disp.vx = Q12_TO_Q6(soundPos->vx - camPos.vx);
-    disp.vy = Q12_TO_Q6(soundPos->vy - camPos.vy);
-    disp.vz = Q12_TO_Q6(soundPos->vz - camPos.vz);
-    VectorNormal(&disp, &dir);
+    offset.vx = Q12_TO_Q6(soundPos->vx - camPos.vx);
+    offset.vy = Q12_TO_Q6(soundPos->vy - camPos.vy);
+    offset.vz = Q12_TO_Q6(soundPos->vz - camPos.vz);
+    VectorNormal(&offset, &dir);
 
     // Compute stereo balance.
     Vw_CoordHierarchyMatrixCompute(vwGetViewCoord(), &viewMat);
@@ -221,13 +221,13 @@ void func_80041074(GsOT* ot, s32 arg1, SVECTOR* rot, const VECTOR3* pos) // 0x80
     func_800414E0(ot, &pos0, arg1, rotY, rotX);
 }
 
-void func_800410D8(VECTOR3* pos0, q19_12* rotY, q19_12* rotX, SVECTOR* rot, const VECTOR3* pos1) // 0x800410D8
+void func_800410D8(VECTOR3* pos0, q19_12* azimuthAngle, q19_12* altitudeAngle, SVECTOR* rot, const VECTOR3* pos1) // 0x800410D8
 {
     MATRIX        transformMat;
     SVECTOR       vec0;
     GsCOORDINATE2 coord;
-    VECTOR        disp0; // Q19.12
-    VECTOR        disp1; // Q19.12
+    VECTOR        offset0; // Q19.12
+    VECTOR        offset1; // Q19.12
     s32           flag;
 
     memset(&vec0, 0, sizeof(SVECTOR));
@@ -243,49 +243,49 @@ void func_800410D8(VECTOR3* pos0, q19_12* rotY, q19_12* rotX, SVECTOR* rot, cons
     func_80049AF8(&coord, &transformMat);
     SetRotMatrix(&transformMat);
     SetTransMatrix(&transformMat);
-    RotTrans(&vec0, &disp0, &flag);
+    RotTrans(&vec0, &offset0, &flag);
 
-    ApplyRotMatrix(rot, &disp1);
+    ApplyRotMatrix(rot, &offset1);
 
-    func_8004122C(rotY, rotX, &disp0, &disp1);
-    func_8004137C(pos0, &disp0, &disp1, ReadGeomScreen());
+    Math_RelativeRotationGet(azimuthAngle, altitudeAngle, &offset0, &offset1);
+    func_8004137C(pos0, &offset0, &offset1, ReadGeomScreen());
 }
 
-void func_8004122C(q19_12* rotY, q19_12* rotX, const VECTOR* disp0, const VECTOR* disp1) // 0x8004122C
+void Math_RelativeRotationGet(q19_12* azimuthAngle, q19_12* altitudeAngle, const VECTOR* offsetFrom, const VECTOR* offsetTo) // 0x8004122C
 {
-    VECTOR  dir0;   // Q19.12
-    VECTOR  dir1;   // Q19.12
-    VECTOR  cross0; // Q19.12
-    SVECTOR svec0;
-    SVECTOR svec1;
-    VECTOR  cross1; // Q19.12
+    VECTOR  dir0;        // Q19.12
+    VECTOR  dir1;        // Q19.12
+    VECTOR  planeNormal; // Q19.12
+    SVECTOR cosTheta;
+    SVECTOR sinTheta;
+    VECTOR  sideStep;    // Q19.12
 
     // Compute vector from cross product of directions.
-    VectorNormal(disp0, &dir0);
-    VectorNormal(disp1, &dir1);
-    OuterProduct12(&dir0, &dir1, &cross0);
-    VectorNormal(&cross0, &cross0);
+    VectorNormal(offsetFrom, &dir0);
+    VectorNormal(offsetTo, &dir1);
+    OuterProduct12(&dir0, &dir1, &planeNormal);
+    VectorNormal(&planeNormal, &planeNormal);
 
     // Compute Y rotation (azimuth).
-    *rotY = FP_ANGLE_NORM_U(ratan2(cross0.vy, cross0.vx) - FP_ANGLE(90.0f));
+    *azimuthAngle = FP_ANGLE_NORM_U(ratan2(planeNormal.vy, planeNormal.vx) - FP_ANGLE(90.0f));
 
     // Compute vector from ??? TODO.
-    svec0.vx = Q12_MULT(dir0.vx, dir1.vx) +
-               Q12_MULT(dir0.vy, dir1.vy) +
-               Q12_MULT(dir0.vz, dir1.vz);
-    svec0.vx = FP_FROM((dir0.vx * dir1.vx) +
-                       (dir0.vy * dir1.vy) +
-                       (dir0.vz * dir1.vz), Q12_SHIFT); // @hack Duplicate operation required for match.
-    OuterProduct12(&cross0, &dir0, &cross1);
-    svec1.vx = FP_FROM((dir1.vx * cross1.vx) +
-                       (dir1.vy * cross1.vy) +
-                       (dir1.vz * cross1.vz), Q12_SHIFT);
+    cosTheta.vx = Q12_MULT(dir0.vx, dir1.vx) +
+                  Q12_MULT(dir0.vy, dir1.vy) +
+                  Q12_MULT(dir0.vz, dir1.vz);
+    cosTheta.vx = FP_FROM((dir0.vx * dir1.vx) +
+                          (dir0.vy * dir1.vy) +
+                          (dir0.vz * dir1.vz), Q12_SHIFT); // @hack Duplicate operation required for match.
+    OuterProduct12(&planeNormal, &dir0, &sideStep);
+    sinTheta.vx = FP_FROM((dir1.vx * sideStep.vx) +
+                          (dir1.vy * sideStep.vy) +
+                          (dir1.vz * sideStep.vz), Q12_SHIFT);
 
     // Compute X rotation (altitude).
-    *rotX = FP_ANGLE_NORM_U(ratan2(svec1.vx, svec0.vx));
+    *altitudeAngle = FP_ANGLE_NORM_U(ratan2(sinTheta.vx, cosTheta.vx));
 }
 
-void func_8004137C(VECTOR3* result, const VECTOR* disp0, const VECTOR* disp1, s32 screenDist)
+void func_8004137C(VECTOR3* result, const VECTOR* offset0, const VECTOR* offset1, s32 screenDist)
 {
     VECTOR vec;
     s32    offsetX;
@@ -295,21 +295,21 @@ void func_8004137C(VECTOR3* result, const VECTOR* disp0, const VECTOR* disp1, s3
 
     screenDistHalf = screenDist / 2;
 
-    if (screenDistHalf < disp0->vz)
+    if (screenDistHalf < offset0->vz)
     {
-        vec = *disp0;
+        vec = *offset0;
     }
     else
     {
         z = 1;
-        if (disp1->vz != 0)
+        if (offset1->vz != 0)
         {
-            z = disp1->vz;
+            z = offset1->vz;
         }
 
         vec.vz = screenDistHalf;
-        vec.vx = (((screenDistHalf - disp0->vz) * disp1->vx) / z) + disp0->vx;
-        vec.vy = (((screenDistHalf - disp0->vz) * disp1->vy) / z) + disp0->vy;
+        vec.vx = (((screenDistHalf - offset0->vz) * offset1->vx) / z) + offset0->vx;
+        vec.vy = (((screenDistHalf - offset0->vz) * offset1->vy) / z) + offset0->vy;
     }
 
     ReadGeomOffset(&offsetX, &offsetY);

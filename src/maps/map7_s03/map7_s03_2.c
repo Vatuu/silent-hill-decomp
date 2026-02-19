@@ -559,18 +559,18 @@ void func_800D68C4(void) // 0x800D68C4
     q19_12               randAngle;
     s32                  i;
     s_func_800D68C4*     base;
-    s_func_800D68C4_A08* ptr;
+    s_func_800D68C4_A08* curPtr;
 
     base = FS_BUFFER_1;
-    ptr = base->field_A08;
 
-    for (i = 0; i < 100; i++, ptr++)
+    curPtr = base->field_A08;
+    for (i = 0; i < 100; i++, curPtr++)
     {
-        ptr->field_0.vx = Q12(0.0f);
-        ptr->field_0.vy = Q12(0.0f);
-        ptr->field_0.vz = Q12(0.0f);
+        curPtr->field_0.vx = Q12(0.0f);
+        curPtr->field_0.vy = Q12(0.0f);
+        curPtr->field_0.vz = Q12(0.0f);
 
-        ptr->field_30 = 0xFF;
+        curPtr->field_30 = 0xFF;
 
         randAngle = Rng_Rand16();
         posY = Q12_MULT_PRECISE(Math_Sin(randAngle), Q12(0.6f));
@@ -580,9 +580,9 @@ void func_800D68C4(void) // 0x800D68C4
         posX = Q12_MULT_PRECISE(Math_Sin(randAngle), dist);
         posZ = Q12_MULT_PRECISE(Math_Cos(randAngle), dist);
 
-        ptr->field_20.vx = posX;
-        ptr->field_20.vy = posY;
-        ptr->field_20.vz = posZ;
+        curPtr->field_20.vx = posX;
+        curPtr->field_20.vy = posY;
+        curPtr->field_20.vz = posZ;
     }
 }
 
@@ -622,26 +622,26 @@ void func_800D6ADC(void) // 0x800D6ADC
     DVECTOR              sp18[2];
     s32                  sp20;
     s32                  i;
-    s_func_800D68C4_A08* ptr;
+    s_func_800D68C4_A08* curPtr;
     s_func_800D68C4*     base;
 
     base = (s_func_800D68C4*)FS_BUFFER_1;
-    ptr  = base->field_A08;
 
-    for (i = 0; i < 100; i++, ptr++)
+    curPtr = base->field_A08;
+    for (i = 0; i < 100; i++, curPtr++)
     {
-        sp10.vx = Q12_TO_Q4(ptr->field_0.vx);
-        sp10.vy = Q12_TO_Q4(ptr->field_0.vy);
-        sp10.vz = Q12_TO_Q4(ptr->field_0.vz);
+        sp10.vx = Q12_TO_Q4(curPtr->field_0.vx);
+        sp10.vy = Q12_TO_Q4(curPtr->field_0.vy);
+        sp10.vz = Q12_TO_Q4(curPtr->field_0.vz);
 
         RotTransPers(&sp10, &sp18[0], &sp18[1], &sp20);
-        func_800D6A10(sp18[0].vx, sp18[0].vy, ptr->field_30);
+        func_800D6A10(sp18[0].vx, sp18[0].vy, curPtr->field_30);
 
-        ptr->field_0.vx += ptr->field_20.vx;
-        ptr->field_0.vy += ptr->field_20.vy;
-        ptr->field_0.vz += ptr->field_20.vz;
-        ptr->field_30    = ptr->field_30 - 8;
-        ptr->field_30    = MAX(ptr->field_30, 0);
+        curPtr->field_0.vx += curPtr->field_20.vx;
+        curPtr->field_0.vy += curPtr->field_20.vy;
+        curPtr->field_0.vz += curPtr->field_20.vz;
+        curPtr->field_30    = curPtr->field_30 - 8;
+        curPtr->field_30    = MAX(curPtr->field_30, 0);
     }
 }
 
@@ -3101,21 +3101,21 @@ void func_800DBBA0(void) // 0x800DBBA0
 
 void func_800DBBD8(MATRIX* mat) // 0x800DBBD8
 {
-    MATRIX        sp10;
+    MATRIX        transformMat;
     s_D_800F48A8* base;
 
     base = &D_800F48A8;
 
-    CompMatrix(&base->mat_8, mat, &sp10);
-    SetRotMatrix(&sp10);
-    SetTransMatrix(&sp10);
+    CompMatrix(&base->mat_8, mat, &transformMat);
+    SetRotMatrix(&transformMat);
+    SetTransMatrix(&transformMat);
 }
 
-void func_800DBC18(s32 arg0) // 0x800DBC18
+void func_800DBC18(q19_12 damageAmt) // 0x800DBC18
 {
     s32 i;
 
-    g_SysWork.playerWork_4C.player_0.attackReceived_41 = 0x43;
+    g_SysWork.playerWork_4C.player_0.attackReceived_41 = 67; // TODO: What weapon attack?
 
     if (D_800F3DB4 > Q12(0.8f))
     {
@@ -3130,10 +3130,10 @@ void func_800DBC18(s32 arg0) // 0x800DBC18
 
     for (i = 1; i < D_800F3DB0; i++)
     {
-        arg0 = arg0 >> 1;
+        damageAmt >>= 1;
     }
 
-    g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += arg0;
+    g_SysWork.playerWork_4C.player_0.damage_B4.amount_C += damageAmt;
 }
 
 bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec) // 0x800DBCA4
@@ -3165,6 +3165,7 @@ bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec) // 0x800DBCA4
         outVec->vz = Q8_TO_Q12(deltaZ) + D_800F48A8.positionZ_4;
         return true;
     }
+
     return false;
 }
 
@@ -3203,7 +3204,7 @@ void func_800DC3EC(s_800F3DAC* arg0) // 0x800DC3EC
 
 void func_800DC49C(s_800F3DAC* arg0) // 0x800DC49C
 {
-    VECTOR3 vec;
+    VECTOR3 pos;
     MATRIX* mat;
     bool    cond;
 
@@ -3214,8 +3215,11 @@ void func_800DC49C(s_800F3DAC* arg0) // 0x800DC49C
         if (arg0->field_18 == arg0->field_20)
         {
             mat = &arg0->mat_118[arg0->field_18 - 1];
-            Math_Vector3Set(&vec, Q8_TO_Q12(mat->t[0]) + D_800F48A8.positionX_0, Q8_TO_Q12(mat->t[1]), Q8_TO_Q12(mat->t[2]) + D_800F48A8.positionZ_4);
-            func_800DAC04(&vec, 0, cond);
+            Math_Vector3Set(&pos,
+                            Q8_TO_Q12(mat->t[0]) + D_800F48A8.positionX_0,
+                            Q8_TO_Q12(mat->t[1]),
+                            Q8_TO_Q12(mat->t[2]) + D_800F48A8.positionZ_4);
+            func_800DAC04(&pos, NULL, cond);
             arg0->field_4F4++;
         }
     }
@@ -3223,8 +3227,8 @@ void func_800DC49C(s_800F3DAC* arg0) // 0x800DC49C
 
 void func_800DC544(GsOT_TAG* ot) // 0x800DC544
 {
-    s_800F3DAC* ptr;
     s32         i;
+    s_800F3DAC* ptr;
 
     ptr = D_800F3DAC;
 
@@ -4686,44 +4690,48 @@ void func_800DEE44(s_SubCharacter* incubus) // 0x800DEE44
 
 void func_800DEE90(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINATE2* coords) // 0x800DEE90
 {
-    s32 origVal;
-    s32 newVal;
+    s32 prevSfxIdx;
+    s32 sfxIdx;
+
+    #define animUpdateFunc INCUBUS_ANIM_INFOS[incubus->model_0.anim_4.status_0].updateFunc_0
 
     Math_MatrixTransform(&incubus->position_18, &incubus->rotation_24, coords);
 
-    origVal = func_800DDBA4(FP_FROM(incubus->model_0.anim_4.time_4, Q12_SHIFT));
+    prevSfxIdx = func_800DDBA4(FP_FROM(incubus->model_0.anim_4.time_4, Q12_SHIFT));
     if (incubus->model_0.anim_4.status_0 != ANIM_STATUS(IncubusAnim_Still, false))
     {
-        INCUBUS_ANIM_INFOS[incubus->model_0.anim_4.status_0].updateFunc_0(&incubus->model_0, anmHdr, coords, &INCUBUS_ANIM_INFOS[incubus->model_0.anim_4.status_0]);
+        animUpdateFunc(&incubus->model_0, anmHdr, coords, &INCUBUS_ANIM_INFOS[incubus->model_0.anim_4.status_0]);
     }
 
-    newVal = func_800DDBA4(FP_FROM(incubus->model_0.anim_4.time_4, Q12_SHIFT));
-    if (newVal != 13 && newVal != origVal)
+    sfxIdx = func_800DDBA4(FP_FROM(incubus->model_0.anim_4.time_4, Q12_SHIFT));
+    if (sfxIdx != 13 && sfxIdx != prevSfxIdx)
     {
-        func_800DDB68(incubus, newVal);
+        func_800DDB68(incubus, sfxIdx);
     }
+
+    #undef animUpdateFunc
 }
 
 void func_800DEF50(s_SubCharacter* incubus, GsCOORDINATE2* coords) // 0x800DEF50
 {
-    MATRIX mat;
-    q19_12 posY;
-    q19_12 posX;
-    q19_12 posZ;
+    MATRIX coordMat;
+    q19_12 offsetY;
+    q19_12 offsetX;
+    q19_12 offsetZ;
 
-    Vw_CoordHierarchyMatrixCompute(&coords[2], &mat);
-    posX = Q8_TO_Q12(mat.t[0]) - incubus->position_18.vx;
-    posY = Q8_TO_Q12(mat.t[1]) - incubus->position_18.vy;
-    posZ = Q8_TO_Q12(mat.t[2]) - incubus->position_18.vz;
+    Vw_CoordHierarchyMatrixCompute(&coords[2], &coordMat);
+    offsetX = Q8_TO_Q12(coordMat.t[0]) - incubus->position_18.vx;
+    offsetY = Q8_TO_Q12(coordMat.t[1]) - incubus->position_18.vy;
+    offsetZ = Q8_TO_Q12(coordMat.t[2]) - incubus->position_18.vz;
 
     incubus->field_D4.radius_0 = Q12(0.5f);
     incubus->field_D4.field_2  = Q12(0.5f);
-    incubus->field_C8.field_0  = posY - Q12(0.25f);
-    incubus->field_C8.field_2  = posY;
-    incubus->field_C8.field_4  = posY + Q12(0.25f);
-    incubus->field_C8.field_6  = posY;
+    incubus->field_C8.field_0  = offsetY - Q12(0.25f);
+    incubus->field_C8.field_2  = offsetY;
+    incubus->field_C8.field_4  = offsetY + Q12(0.25f);
+    incubus->field_C8.field_6  = offsetY;
 
-    sharedFunc_800CD920_3_s03(incubus, posX, posZ);
+    sharedFunc_800CD920_3_s03(incubus, offsetX, offsetZ);
 
     incubus->field_D8.offsetX_0 = incubus->field_D8.offsetX_4;
     incubus->field_D8.offsetZ_2 = incubus->field_D8.offsetZ_6;
@@ -4799,27 +4807,26 @@ void Ai_Incubus_Update(s_SubCharacter* incubus, s_AnmHeader* anmHdr, GsCOORDINAT
 
 void func_800DF1D4(void) // 0x800DF1D4
 {
-    s32 i;
-    s32 rand;
-    s32 randSin;
-    s32 randCos;
+    s32    i;
+    q19_12 randAngle;
+    q19_12 sinARandAngle;
+    q19_12 cosRandAngle;
 
-    s_func_800DF1D4_58C* ptr = ((s_func_800DF1D4*)FS_BUFFER_26)->field_58C;
-
-    for (i = 0; i < 100; i++, ptr++)
+    s_func_800DF1D4_58C* curPtr = ((s_func_800DF1D4*)FS_BUFFER_26)->field_58C;
+    for (i = 0; i < 100; i++, curPtr++)
     {
-        Math_Vector3Set(&ptr->field_8, 0, 0, 0);
+        Math_Vector3Set(&curPtr->field_8, 0, 0, 0);
 
-        ptr->field_38 = 255;
+        curPtr->field_38 = 255;
 
-        rand    = Rng_Rand16();
-        randSin = Math_Sin(rand);
-        randCos = Math_Cos(rand);
+        randAngle     = Rng_Rand16();
+        sinARandAngle = Math_Sin(randAngle);
+        cosRandAngle  = Math_Cos(randAngle);
 
-        Math_SVectorSet(&ptr->field_28, randCos, randSin, 0);
+        Math_SVectorSet(&curPtr->field_28, cosRandAngle, sinARandAngle, 0);
 
-        ptr->field_0 = 0;
-        ptr->field_4 = Q12(1.0f);
+        curPtr->field_0 = 0;
+        curPtr->field_4 = Q12(1.0f);
     }
 }
 
@@ -4832,8 +4839,8 @@ void func_800DF288(s32 x, s32 y, s32 val) // 0x800DF288
 
     ptr = FS_BUFFER_26;
 
-    col = (x + 160);
-    row = (y + 120);
+    col = x + 160;
+    row = y + 120;
 
     col += (col > 0) ? 4 : -4;
     col /= 8;
@@ -4854,26 +4861,26 @@ void func_800DF348(void) // 0x800DF348
     DVECTOR              sp18[2];
     s32                  sp20;
     s32                  i;
-    s_func_800DF1D4_58C* ptr;
+    s_func_800DF1D4_58C* curPtr;
     s_func_800DF1D4*     base;
 
     base = (s_func_800DF1D4*)FS_BUFFER_26;
-    ptr  = base->field_58C;
 
-    for (i = 0; i < 100; i++, ptr++)
+    curPtr = base->field_58C;
+    for (i = 0; i < 100; i++, curPtr++)
     {
-        sp10.vx = ptr->field_8.vx >> 7;
-        sp10.vy = ptr->field_8.vy >> 7;
+        sp10.vx = curPtr->field_8.vx >> 7;
+        sp10.vy = curPtr->field_8.vy >> 7;
         sp10.vz = 0;
 
         RotTransPers(&sp10, &sp18[0], &sp18[1], &sp20);
-        func_800DF288(sp18[0].vx, sp18[0].vy, ptr->field_38);
+        func_800DF288(sp18[0].vx, sp18[0].vy, curPtr->field_38);
 
-        ptr->field_8.vx += ptr->field_28.vx;
-        ptr->field_8.vy += ptr->field_28.vy;
-        ptr->field_8.vz += ptr->field_28.vz;
-        ptr->field_38    = ptr->field_38 - 8;
-        ptr->field_38    = MAX(ptr->field_38, 0);
+        curPtr->field_8.vx += curPtr->field_28.vx;
+        curPtr->field_8.vy += curPtr->field_28.vy;
+        curPtr->field_8.vz += curPtr->field_28.vz;
+        curPtr->field_38    = curPtr->field_38 - 8;
+        curPtr->field_38    = MAX(curPtr->field_38, 0);
     }
 }
 
@@ -4939,17 +4946,17 @@ void func_800DF458(void) // 0x800DF458
 
             if ((j + i) & 0x1)
             {
-                poly->x0 = -0xA8 + (j * 8);
-                poly->y0 = -0x78 + (i * 8);
+                poly->x0 = -168 + (j * 8);
+                poly->y0 = -120 + (i * 8);
 
-                poly->x1 = (-0xA8 + (j * 8)) + 8;
-                poly->y1 = -0x78 + (i * 8);
+                poly->x1 = (-168 + (j * 8)) + 8;
+                poly->y1 = -120 + (i * 8);
 
-                poly->x2 = -0xA8 + (j * 8);
-                poly->y2 = (-0x78 + (i * 8)) + 8;
+                poly->x2 = -168 + (j * 8);
+                poly->y2 = (-120 + (i * 8)) + 8;
 
-                poly->x3 = (-0xA8 + (j * 8)) + 8;
-                poly->y3 = (-0x78 + (i * 8)) + 8;
+                poly->x3 = (-168 + (j * 8)) + 8;
+                poly->y3 = (-120 + (i * 8)) + 8;
 
                 *(s32*)&poly->r0 = col0;
                 *(s32*)&poly->r1 = col1;
@@ -4958,17 +4965,17 @@ void func_800DF458(void) // 0x800DF458
             }
             else
             {
-                poly->x1 = -0xA8 + (j * 8);
-                poly->y1 = -0x78 + (i * 8);
+                poly->x1 = -168 + (j * 8);
+                poly->y1 = -120 + (i * 8);
 
-                poly->x0 = (-0xA8 + (j * 8)) + 8;
-                poly->y0 = -0x78 + (i * 8);
+                poly->x0 = (-168 + (j * 8)) + 8;
+                poly->y0 = -120 + (i * 8);
 
-                poly->x3 = -0xA8 + (j * 8);
-                poly->y3 = (-0x78 + (i * 8)) + 8;
+                poly->x3 = -168 + (j * 8);
+                poly->y3 = (-120 + (i * 8)) + 8;
 
-                poly->x2 = (-0xA8 + (j * 8)) + 8;
-                poly->y2 = (-0x78 + (i * 8)) + 8;
+                poly->x2 = (-168 + (j * 8)) + 8;
+                poly->y2 = (-120 + (i * 8)) + 8;
 
                 *(s32*)&poly->r0 = col1;
                 *(s32*)&poly->r1 = col0;
@@ -4996,65 +5003,71 @@ void func_800DF458(void) // 0x800DF458
 
 void func_800DF750(void) // 0x800DF750
 {
-    #define NUM_ROWS 31
-    #define NUM_COLS 41
+    #define ROW_COUNT 31
+    #define COL_COUNT 41
 
     s32 row;
     s32 col;
-    s32 value;
+    s32 val;
 
     s_func_800DF1D4* base = (s_func_800DF1D4*)FS_BUFFER_26;
 
-    for (row = 0; row < NUM_ROWS; row++)
+    for (row = 0; row < ROW_COUNT; row++)
     {
-        for (col = 0; col < NUM_COLS; col++)
+        for (col = 0; col < COL_COUNT; col++)
         {
-            // TODO: Maybe `field_5D` actually begins at 0x34, but the first row (0x34 to 0x5D) only gets used indirectly? 0x5D is weird offset to start at.
-            // (no luck using multi-dim array yet neither)
-            u8* ptr = &base->field_5D[row * NUM_COLS];
+            // TODO: Maybe `field_5D` actually begins at 0x34, but the first row (0x34 to 0x5D) only gets used indirectly?
+            // 0x5D is weird offset to start at. No luck using multi-dimensional array yet either.
+            u8* ptr = &base->field_5D[row * COL_COUNT];
 
-            value = ptr[col - NUM_COLS]; // Add same column from previous row
+            val = ptr[col - COL_COUNT];
+
             if (col == 0)
             {
-                value = 0;
+                // Add same column from previous row.
+                val = 0;
             }
             else
             {
-                value += ptr[col - 1]; // Add value from previous column
+                // Add value from previous column.
+                val += ptr[col - 1];
             }
 
-            if (col == (NUM_COLS - 1))
+            if (col == (COL_COUNT - 1))
             {
-                value = 0;
+                val = 0;
             }
             else
             {
-                value += ptr[col + 1]; // Add value from next column
+                // Add value from next column.
+                val += ptr[col + 1];
             }
 
-            value += ptr[col + NUM_COLS]; // Add column from next row
+            // Add column from next row.
+            val += ptr[col + COL_COUNT];
 
-            value >>= 2;
-            value  -= 1;
+            val >>= 2;
+            val--;
 
-            if (value <= 0)
+            if (val <= 0)
             {
                 ptr[col] = 0;
             }
             else
             {
-                ptr[col] = value;
+                ptr[col] = val;
             }
         }
     }
 
-    #undef NUM_ROWS
-    #undef NUM_COLS
+    #undef ROW_COUNT
+    #undef COL_COUNT
 }
 
 void func_800DF7F8(void) // 0x800DF7F8
 {
     s_func_800DF1D4* buf = FS_BUFFER_26;
+
     memset(buf->field_34, 0, sizeof(buf->field_34));
     memset(buf->field_5D, 0, sizeof(buf->field_5D));
     memset(buf->field_554, 0, sizeof(buf->field_554));
@@ -6506,52 +6519,53 @@ q3_12 func_800E28F4(void) // 0x800E28F4
     return D_800ED73C & SHRT_MAX;
 }
 
-void func_800E2968(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, DVECTOR* arg3, DVECTOR* arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8, s_PrimColor* color, s32 arg10, u8 arg11) // 0x800E2968
+void func_800E2968(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, DVECTOR* arg3, DVECTOR* arg4,
+                   s32 arg5, s32 arg6, q19_12 angle0, q19_12 angle1, s_PrimColor* color, s32 arg10, u8 arg11) // 0x800E2968
 {
-    s_PrimColor sp18;
+    s_PrimColor color0;
     s32         i;
     s32         j;
     s32         temp_lo;
-    s32         temp_s0;
+    q19_12      angle2;
     s32         temp_s3;
     s32         temp_s4;
     s32         temp_s5;
     s32         temp_v0;
-    s32         temp_v1;
+    s32         colorComp;
 
     for (i = 0; i < rowCount; i++)
     {
         temp_lo = Q12(i) / (rowCount - 1);
         temp_v0 = vwOresenHokan(D_800ED744, ARRAY_SIZE(D_800ED744), temp_lo, 0, Q12(1.0f));
 
-        temp_v1 = Q12_MULT(arg10, Q12_MULT(color->r, temp_v0));
-        if (temp_v1 < arg11)
+        colorComp = Q12_MULT(arg10, Q12_MULT(color->r, temp_v0));
+        if (colorComp < arg11)
         {
-            sp18.r = temp_v1;
+            color0.r = colorComp;
         }
         else
         {
-            sp18.r = arg11;
+            color0.r = arg11;
         }
 
-        temp_v1 = Q12_MULT(arg10, Q12_MULT(color->g, temp_v0));
-        if (temp_v1 < arg11)
+        colorComp = Q12_MULT(arg10, Q12_MULT(color->g, temp_v0));
+        if (colorComp < arg11)
         {
-            sp18.g = temp_v1;
+            color0.g = colorComp;
         }
         else
         {
-            sp18.g = arg11;
+            color0.g = arg11;
         }
 
-        temp_v1 = Q12_MULT(arg10, Q12_MULT(color->b, temp_v0));
-        if (temp_v1 < arg11)
+        colorComp = Q12_MULT(arg10, Q12_MULT(color->b, temp_v0));
+        if (colorComp < arg11)
         {
-            sp18.b = temp_v1;
+            color0.b = colorComp;
         }
         else
         {
-            sp18.b = arg11;
+            color0.b = arg11;
         }
 
         temp_s5 = arg3->vx + Q12_MULT(temp_lo, arg4->vx - arg3->vx);
@@ -6563,23 +6577,23 @@ void func_800E2968(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, DVECTOR* ar
             s_800F4B40_118* temp_s1;
             temp_s1 = &arg0[(colCount * i) + j];
 
-            *(s32*)&temp_s1->color_4 = *(s32*)&sp18;
+            *(s32*)&temp_s1->color_4 = *(s32*)&color0;
 
-            temp_s0  = arg7;
-            temp_s0 += FP_FROM((Q12(j) / (colCount - 1)) * (arg8 - temp_s0), Q12_SHIFT);
+            angle2  = angle0;
+            angle2 += FP_FROM((Q12(j) / (colCount - 1)) * (angle1 - angle2), Q12_SHIFT);
 
-            temp_s1->x_0 = temp_s5 + Q12_MULT(temp_s3, Math_Cos(temp_s0));
-            temp_s1->y_2 = temp_s4 + Q12_MULT(temp_s3, Math_Sin(temp_s0));
+            temp_s1->x_0 = temp_s5 + Q12_MULT(temp_s3, Math_Cos(angle2));
+            temp_s1->y_2 = temp_s4 + Q12_MULT(temp_s3, Math_Sin(angle2));
         }
     }
 }
 
 void func_800E2C28(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, s32 zDepth, s32 arg4) // 0x800E2C28
 {
-    POLY_G4*        poly;
-    GsOT_TAG*       ot;
     s32             row;
     s32             col;
+    POLY_G4*        poly;
+    GsOT_TAG*       ot;
     s_800F4B40_118* colData;
     DR_MODE*        drMode;
 
@@ -6620,7 +6634,7 @@ void func_800E2C28(s_800F4B40_118* arg0, s32 colCount, s32 rowCount, s32 zDepth,
 
 #include "maps/shared/SysWork_StateStepIncrementAfterTime.h" // 0x800E2DF8
 
-void func_800E2E90(void)                                     // 0x800E2E90
+void func_800E2E90(void) // 0x800E2E90
 {
     if (D_800F47F0 >= 0)
     {
@@ -6628,7 +6642,7 @@ void func_800E2E90(void)                                     // 0x800E2E90
         {
             Dms_CharacterGetPosRot(&g_SysWork.playerWork_4C.player_0.position_18, &g_SysWork.playerWork_4C.player_0.rotation_24, "HERO", D_800F47F0, D_800ED230[D_800F4806]);
         }
-        if (D_800F4808 != 0)
+        if (D_800F4808)
         {
             Dms_CharacterGetPosRot(&g_SysWork.npcs_1A0[0].position_18, &g_SysWork.npcs_1A0[0].rotation_24, "SIBYL", D_800F47F0, D_800ED230[D_800F4806]);
         }
@@ -6680,8 +6694,11 @@ void func_800E2E90(void)                                     // 0x800E2E90
         Dms_CharacterGetPosRot(&D_800F47D8, &D_800F47E8, "L_INT", D_800F47F0, D_800ED230[D_800F4806]);
 
         // Set light rotation.
-        g_SysWork.pointLightRot_2370.vx = -ratan2(D_800F47D8.vy - g_SysWork.pointLightPosition_2360.vy, Math_Vector2MagCalc(D_800F47D8.vx - g_SysWork.pointLightPosition_2360.vx, D_800F47D8.vz - g_SysWork.pointLightPosition_2360.vz));
-        g_SysWork.pointLightRot_2370.vy = ratan2(D_800F47D8.vx - g_SysWork.pointLightPosition_2360.vx, D_800F47D8.vz - g_SysWork.pointLightPosition_2360.vz);
+        g_SysWork.pointLightRot_2370.vx = -ratan2(D_800F47D8.vy - g_SysWork.pointLightPosition_2360.vy,
+                                                  Math_Vector2MagCalc(D_800F47D8.vx - g_SysWork.pointLightPosition_2360.vx,
+                                                                      D_800F47D8.vz - g_SysWork.pointLightPosition_2360.vz));
+        g_SysWork.pointLightRot_2370.vy = ratan2(D_800F47D8.vx - g_SysWork.pointLightPosition_2360.vx,
+                                                 D_800F47D8.vz - g_SysWork.pointLightPosition_2360.vz);
         g_SysWork.pointLightRot_2370.vz = FP_ANGLE(0.0f);
     }
 }
@@ -6701,6 +6718,7 @@ void func_800E3390(void) // 0x800E3390
     switch (D_800F4805)
     {
         case 0:
+            // Freeze player.
             Player_ControlFreeze();
             func_8003A16C();
             Gfx_MapInitMapEffectsUpdate(18, 18);
@@ -6821,6 +6839,7 @@ void func_800E3390(void) // 0x800E3390
                 {
                     Fs_QueueStartRead(FILE_ANIM_LAST3_DMS, FS_BUFFER_18);
                 }
+
                 Fs_QueueWaitForEmpty();
                 DmsHeader_FixOffsets(FS_BUFFER_18);
 
@@ -6839,6 +6858,7 @@ void func_800E3390(void) // 0x800E3390
                         WorldGfx_CharaLmBufferAssign(CHARA_FORCE_FREE_ALL);
                         func_800E9260(Chara_Incubus, 1);
                     }
+
                     func_800E941C();
                 }
 
@@ -6864,6 +6884,7 @@ void func_800E3390(void) // 0x800E3390
                 {
                     Fs_QueueStartRead(FILE_ANIM_LAST5_DMS, FS_BUFFER_18);
                 }
+
                 Fs_QueueWaitForEmpty();
                 DmsHeader_FixOffsets(FS_BUFFER_18);
 
@@ -6875,6 +6896,7 @@ void func_800E3390(void) // 0x800E3390
                         WorldGfx_CharaLmBufferAssign(CHARA_FORCE_FREE_ALL);
                         func_800E9260(Chara_Incubator, 1);
                     }
+
                     func_800E941C();
                 }
 
@@ -6899,9 +6921,12 @@ void func_800E3390(void) // 0x800E3390
 
             func_800D9394();
             Fs_QueueWaitForEmpty();
-            D_800F4807 = 1;
+
+            D_800F4807 = true;
+
             Model_AnimFlagsSet(&g_SysWork.playerWork_4C.player_0.model_0, 2);
             func_800E2E90();
+
             D_800F4805 = NO_VALUE;
 
             if (Savegame_EventFlagGet(EventFlag_391))
@@ -6912,6 +6937,7 @@ void func_800E3390(void) // 0x800E3390
             {
                 func_800E1788(6);
             }
+
             SysWork_StateStepIncrementAfterFade(0, false, 0, Q12(0.0f), false);
 
         default:
@@ -6935,12 +6961,12 @@ void func_800E3390(void) // 0x800E3390
             SysWork_StateStepIncrementAfterFade(0, false, 2, Q12(0.0f), false);
 
             D_800F47F0 = NO_VALUE;
+
             func_8003D01C();
             sharedFunc_800D2EF4_0_s00();
-
             SD_Call(19);
-
             func_800E14DC(&g_SysWork.playerWork_4C.player_0, &g_SysWork.npcs_1A0[2], 1);
+
             D_800F4805           = 0;
             g_SysWork.pointLightIntensity_2378 = Q12(1.0f);
             break;
@@ -8771,7 +8797,7 @@ void func_800E787C(void) // 0x800E787C
 
             D_800F480D = 1;
             D_800F4808 = 0;
-            D_800F4807 = 0;
+            D_800F4807 = false;
 
             Model_AnimFlagsSet(&g_SysWork.npcs_1A0[5].model_0, 2);
             func_80085EB8(0, &g_SysWork.playerWork_4C.player_0, 51, false);

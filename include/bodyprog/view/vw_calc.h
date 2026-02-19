@@ -36,6 +36,11 @@ void vbSetWorldScreenMatrix(GsCOORDINATE2* coord);
 
 void vbSetRefView(VbRVIEW* rview);
 
+/** @brief Computes the transformation matrix of a given coord.
+ *
+ * @param rootCoord Root coord.
+ * @param outMat Output transformation matrix.
+ */
 void Vw_CoordHierarchyMatrixCompute(GsCOORDINATE2* rootCoord, MATRIX* outMat);
 
 void func_80049AF8(GsCOORDINATE2* rootCoord, MATRIX* outMat);

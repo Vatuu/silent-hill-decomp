@@ -2814,11 +2814,19 @@ void func_80040E7C(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5);
 
 void func_80041074(GsOT* ot, s32 arg1, SVECTOR* rot, const VECTOR3* pos);
 
-void func_800410D8(VECTOR3* pos0, q19_12* rotY, q19_12* rotX, SVECTOR* rot, const VECTOR3* pos1);
+void func_800410D8(VECTOR3* pos0, q19_12* azimuthAngle, q19_12* altitudeAngle, SVECTOR* rot, const VECTOR3* pos1);
 
-void func_8004122C(q19_12* rotY, q19_12* rotX, const VECTOR* diso0, const VECTOR* disp1);
+/** @brief Computes the relative spherical rotation on the Y-axis from one direction to another,
+ * derived from normalized world-space offsets.
+ *
+ * @param azimuthAngle Output azimuth angle (Y rotation).
+ * @param altitudeAngle Output altitude angle (X rotation).
+ * @param offsetFrom First world-space offset (Q19.12).
+ * @param offsetTo Second world-space offset (Q19.12).
+ */
+void Math_RelativeRotationGet(q19_12* azimuthAngle, q19_12* altitudeAngle, const VECTOR* offsetFrom, const VECTOR* offsetTo);
 
-void func_8004137C(VECTOR3* result, const VECTOR* disp0, const VECTOR* disp1, s32 screenDist);
+void func_8004137C(VECTOR3* result, const VECTOR* offset0, const VECTOR* offset1, s32 screenDist);
 
 void func_800414E0(GsOT* arg0, VECTOR3* arg1, s32 arg2, s32 arg3, s32 arg4);
 
