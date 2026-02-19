@@ -181,6 +181,7 @@ sharedFunc_800CD6B0_3_s03           = 0x800DB338; // type:func
 sharedFunc_800CD7F8_3_s03           = 0x800DB480; // type:func
 sharedFunc_800CD920_3_s03           = 0x800DB5A8; // type:func
 sharedFunc_800CD940_3_s03           = 0x800DB5C8; // type:func
+Math_DistanceBetweenPositionsCheck  = 0x800DC650; // type:func
 Ai_Incubus_Init                     = 0x800DDA1C; // type:func
 Ai_Incubus_Update                   = 0x800DF0D8; // type:func
 Ai_Unknown23_Init                   = 0x800DFB98; // type:func

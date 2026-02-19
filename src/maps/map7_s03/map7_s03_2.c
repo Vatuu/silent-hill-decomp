@@ -3263,21 +3263,24 @@ void func_800DC544(GsOT_TAG* ot) // 0x800DC544
     func_800DBBA0();
 }
 
-q19_12 func_800DC650(const VECTOR3* from, const VECTOR3* to, q19_12 distMax) // 0x800DC650
+bool Math_DistanceBetweenPositionsCheck(const VECTOR3* from, const VECTOR3* to, q19_12 distMax) // 0x800DC650
 {
-    q19_12 x;
-    q19_12 y;
-    q19_12 z;
+    q19_12 offsetX;
+    q19_12 offsetY;
+    q19_12 offsetZ;
 
-    x = to->vx - from->vx;
-    y = to->vy - from->vy;
-    z = to->vz - from->vz;
+    // Compute offset.
+    offsetX = to->vx - from->vx;
+    offsetY = to->vy - from->vy;
+    offsetZ = to->vz - from->vz;
 
-    x = Q12_SQUARE(x);
-    y = Q12_SQUARE(y);
-    z = Q12_SQUARE(z);
+    // Compute square offset.
+    offsetX = Q12_SQUARE(offsetX);
+    offsetY = Q12_SQUARE(offsetY);
+    offsetZ = Q12_SQUARE(offsetZ);
 
-    return distMax < abs(SquareRoot12(x + z + y));
+    // Check offset distance.
+    return distMax < abs(SquareRoot12(offsetX + offsetZ + offsetY));
 }
 
 INCLUDE_RODATA("maps/map7_s03/nonmatchings/map7_s03_2", D_800CAE30);
@@ -3293,7 +3296,7 @@ void func_800DCD94(MATRIX* mat, VECTOR3* pos) // 0x800DCD94
     mat->t[2] = Q12_TO_Q8(pos->vz - D_800F48A8.positionZ_4);
 }
 
-void func_800DCDDC(s_800F3DAC* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800DCDDC
+void func_800DCDDC(s_800F3DAC* arg0, const VECTOR3* arg1, const VECTOR3* arg2) // 0x800DCDDC
 {
     VECTOR  sp18;
     VECTOR  sp28;

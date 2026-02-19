@@ -674,14 +674,21 @@ void func_800DC49C(s_800F3DAC* arg0);
 
 void func_800DC544(GsOT_TAG* ot);
 
-q19_12 func_800DC650(const VECTOR3* from, const VECTOR3* to, q19_12 distMax);
+/** @brief Checks if the distance between two positions is within a given maximum threshold.
+ *
+ * @param from First position (Q19.12).
+ * @param to Second world position (Q19.12).
+ * @param distMax Maximum distance between positions.
+ * @return `true` if the positions are within the maximum distance of each other, `false` otherwise.
+ */
+bool Math_DistanceBetweenPositionsCheck(const VECTOR3* from, const VECTOR3* to, q19_12 distMax);
 
 // Returns `bool`?
 s32 func_800DC6DC(s32*, s32*, VECTOR3*, s_800F3DAC*);
 
 void func_800DCD94(MATRIX* mat, VECTOR3* pos);
 
-void func_800DCDDC(s_800F3DAC* arg0, VECTOR3* arg1, VECTOR3* arg2);
+void func_800DCDDC(s_800F3DAC* arg0, const VECTOR3* arg1, const VECTOR3* arg2);
 
 void func_800DCF94(void);
 
