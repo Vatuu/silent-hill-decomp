@@ -108,12 +108,9 @@ INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE274);
 
 s32 func_800DE350(s32 arg0) // 0x800DE350
 {
-    u8* ptr;
     s32 idx;
 
-    ptr = (u8*)FS_BUFFER_6;
-
-    idx = ptr[0x4101 + arg0];
+    idx = ((s_func_800DE274*)FS_BUFFER_6)->field_4101[arg0];
 
     return D_800EAF20[idx] | 0x3A000000;
 }
@@ -187,8 +184,7 @@ void func_800DE5CC(void) // 0x800DE5CC
 
 void func_800DE62C(void) // 0x800DE62C
 {
-    // TODO: Find which `FS_BUFFER_x` this is zeroing part of.
-    memset((void*)FS_BUFFER_6 + 0x4101, 0, 0x214);
+    memset(((s_func_800DE274*)FS_BUFFER_6)->field_4101, 0, ARRAY_SIZE(((s_func_800DE274*)FS_BUFFER_6)->field_4101));
 }
 
 INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE658);
@@ -208,14 +204,14 @@ void func_800DE8F0(MATRIX* mat, SVECTOR* arg1, SVECTOR3* result) // 0x800DE8F0
 
 void func_800DE95C(void) // 0x800DE95C
 {
-    SVECTOR3    sp18;
-    s32         temp_a0;
-    s32         i;
-    s_800ED848* ptr0;
-    u8*         ptr1;
+    SVECTOR3         sp18;
+    s32              temp_a0;
+    s32              i;
+    s_800ED848*      ptr0;
+    s_func_800DE274* ptr1;
 
     ptr0 = D_800ED848;
-    ptr1 = FS_BUFFER_6;
+    ptr1 = (s_func_800DE274*)FS_BUFFER_6;
 
     func_800DE62C();
 
@@ -390,15 +386,15 @@ bool func_800DEDEC(s_800ED848* arg0) // 0x800DEDEC
 
 void func_800DEF50(VECTOR3* arg0, GsCOORDINATE2* arg1, s32* arg2) // 0x800DEF50
 {
-    s_800CB6AC  sp10[6];
-    s32         idx;
-    s_800ED848* ptr;
-    s32*        ptr1;
-    s32         i;
+    s_800CB6AC       sp10[6];
+    s32              idx;
+    s_800ED848*      ptr;
+    s_func_800DE274* ptr1;
+    s32              i;
 
     memcpy(&sp10, &D_800CB6AC, sizeof(D_800CB6AC));
 
-    ptr1 = FS_BUFFER_6;
+    ptr1 = (s_func_800DE274*)FS_BUFFER_6;
 
     for (i = 0; i < 6; i++)
     {
@@ -427,16 +423,16 @@ void func_800DEF50(VECTOR3* arg0, GsCOORDINATE2* arg1, s32* arg2) // 0x800DEF50
                 ptr->field_60    = Q12(100.0f);
             }
 
-            ptr->field_C  = sp10[i].field_4;
-            ptr->field_8  = ptr->field_C;
-            ptr->field_10 = sp10[i].field_8;
-            ptr->field_64 = sp10[i].field_C;
-            ptr->field_24 = &func_800DEDEC;
-            ptr->field_4  = 1;
-            ptr1[4294]    = 0;
-            ptr->field_5C = 0;
-            ptr->field_4C = arg2;
-            ptr->field_48 = 0;
+            ptr->field_C     = sp10[i].field_4;
+            ptr->field_8     = ptr->field_C;
+            ptr->field_10    = sp10[i].field_8;
+            ptr->field_64    = sp10[i].field_C;
+            ptr->field_24    = &func_800DEDEC;
+            ptr->field_4     = 1;
+            ptr1->field_4318 = 0;
+            ptr->field_5C    = 0;
+            ptr->field_4C    = arg2;
+            ptr->field_48    = 0;
         }
     }
 }
@@ -558,12 +554,12 @@ void func_800DF2F0(MATRIX* arg0, VECTOR3* arg1, VECTOR3* arg2) // 0x800DF2F0
 
 bool func_800DF41C(s_800ED848* arg0) // 0x800DF41C
 {
-    s32     i;
-    s32     var_v1;
-    MATRIX* mat;
-    u8*     ptr0;
+    s32              i;
+    s32              var_v1;
+    MATRIX*          mat;
+    s_func_800DE274* ptr0;
 
-    ptr0 = FS_BUFFER_6;
+    ptr0 = (s_func_800DE274*)FS_BUFFER_6;
 
     func_800DF2F0(&arg0->field_28, arg0->field_14, arg0->field_68);
     SetRotMatrix(&arg0->field_28);
@@ -624,10 +620,8 @@ s32 func_800DF670(s32 arg0) // 0x800DF670
 {
     s32 temp_a0;
     s32 var_a0;
-    u8* ptr;
 
-    ptr     = FS_BUFFER_6;
-    var_a0  = ptr[arg0 + 0x4101];
+    var_a0  = ((s_func_800DE274*)FS_BUFFER_6)->field_4101[arg0];
     temp_a0 = (var_a0 > 100) ? (200 - var_a0) : var_a0;
     var_a0  = MAX(temp_a0, 0);
 
@@ -767,9 +761,9 @@ void func_800DFB44(void) // 0x800DFB44
 
 bool func_800DFBB0(s_800ED848* arg0) // 0x800DFBB0
 {
-    u8* ptr;
+    s_func_800DE274* ptr;
 
-    ptr = FS_BUFFER_6;
+    ptr = (s_func_800DE274*)FS_BUFFER_6;
 
     switch (arg0->field_48)
     {
@@ -942,7 +936,7 @@ void func_800E0164(void) // 0x800E0164
     u8* ptr;
     s32 temp;
 
-    ptr = (u8*)FS_BUFFER_6 + 0x4101;
+    ptr = ((s_func_800DE274*)FS_BUFFER_6)->field_4101;
 
     for (i = 0; i < 532; i++)
     {

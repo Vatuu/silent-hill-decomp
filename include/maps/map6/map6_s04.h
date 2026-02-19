@@ -32,7 +32,9 @@
 // Used with `FS_BUFFER_6`
 typedef struct
 {
-    u8  field_0[0x4318];
+    u8  field_0[0x4101];
+    u8  field_4101[0x214];
+    u8  unk_4315[3];
     s32 field_4318;
 } s_func_800DE274;
 
