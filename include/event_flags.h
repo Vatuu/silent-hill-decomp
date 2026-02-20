@@ -225,8 +225,6 @@ typedef enum _EventFlag
     EventFlag_216 = 216,
     EventFlag_217 = 217,
     EventFlag_218 = 218,
-    EventFlag_217 = 217,
-    EventFlag_218 = 218,
     EventFlag_219 = 219,
     EventFlag_220 = 220,
     EventFlag_221 = 221,
@@ -999,7 +997,7 @@ typedef enum _EventFlag
     EventFlag_1204 = 1204,
 
     EventFlag_1206 = 1206,
-    EventFlag_1223 = 1207,
+
     EventFlag_1208 = 1208,
 
     EventFlag_1222 = 1222,
