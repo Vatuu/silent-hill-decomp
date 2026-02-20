@@ -9,7 +9,7 @@ s_EventParam D_800D1EC0[21] = {
     },
     {
         .requiredEventFlag_0 = EventFlag_237,
-        .disabledEventFlag_2 = 238,
+        .disabledEventFlag_2 = EventFlag_238,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadRoom,
         .eventData_8_5       = 1,
@@ -121,7 +121,7 @@ s_EventParam D_800D1EC0[21] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = 235,
+        .disabledEventFlag_2  = EventFlag_235,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
@@ -132,7 +132,7 @@ s_EventParam D_800D1EC0[21] = {
         .field_8_24           = 1,
     },
     {
-        .requiredEventFlag_0 = 235,
+        .requiredEventFlag_0 = EventFlag_235,
         .disabledEventFlag_2 = EventFlag_236,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,

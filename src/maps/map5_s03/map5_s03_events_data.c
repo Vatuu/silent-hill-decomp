@@ -228,7 +228,7 @@ s_EventParam D_800D39B4[46] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP5_S01,
     },
     {
-        .requiredEventFlag_0  = 388,
+        .requiredEventFlag_0  = EventFlag_388,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 2,
@@ -238,7 +238,7 @@ s_EventParam D_800D39B4[46] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP5_S01,
     },
     {
-        .disabledEventFlag_2  = 388,
+        .disabledEventFlag_2  = EventFlag_388,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 2,

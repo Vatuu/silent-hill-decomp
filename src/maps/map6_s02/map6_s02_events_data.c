@@ -37,7 +37,7 @@ s_EventParam D_800D3AB0[12] = {
     },
     {
         .requiredEventFlag_0 = EventFlag_405,
-        .disabledEventFlag_2 = 409,
+        .disabledEventFlag_2 = EventFlag_409,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadRoom,
         .eventData_8_5       = 3,
@@ -59,7 +59,7 @@ s_EventParam D_800D3AB0[12] = {
         .eventData_8_5       = 4,
     },
     {
-        .requiredEventFlag_0 = 409,
+        .requiredEventFlag_0 = EventFlag_409,
         .disabledEventFlag_2 = EventFlag_410,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,

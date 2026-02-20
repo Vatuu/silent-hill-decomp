@@ -56,7 +56,7 @@ s_EventParam D_800D03AC[28] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 927,
+        .disabledEventFlag_2  = EventFlag_927,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,

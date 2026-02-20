@@ -55,15 +55,15 @@ s_EventParam D_800D30F8[13] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP3_S00,
     },
     {
-        .disabledEventFlag_2  = 472,
+        .disabledEventFlag_2  = EventFlag_472,
         .triggerType_4_0      = TriggerType_TouchAabb,
         .pointOfInterestIdx_5 = 5,
         .sysState_8_0         = SysState_EventCallFunc,
         .eventData_8_5        = 4, // `func_800D1604`
     },
     {
-        .requiredEventFlag_0 = 472,
-        .disabledEventFlag_2 = 473,
+        .requiredEventFlag_0 = EventFlag_472,
+        .disabledEventFlag_2 = EventFlag_473,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadOverlay,
         .eventData_8_5       = 6,

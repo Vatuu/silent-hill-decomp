@@ -79,7 +79,7 @@ s_EventParam D_800D58F0[25] = {
     },
     {
         .requiredEventFlag_0 = EventFlag_303,
-        .disabledEventFlag_2 = 315,
+        .disabledEventFlag_2 = EventFlag_315,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_LoadRoom,
         .eventData_8_5       = 18,
@@ -93,7 +93,7 @@ s_EventParam D_800D58F0[25] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 304,
+        .disabledEventFlag_2  = EventFlag_304,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 17,
@@ -102,7 +102,7 @@ s_EventParam D_800D58F0[25] = {
         .flags_8_13           = 2,
     },
     {
-        .requiredEventFlag_0 = 304,
+        .requiredEventFlag_0 = EventFlag_304,
         .disabledEventFlag_2 = EventFlag_305,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
@@ -152,7 +152,7 @@ s_EventParam D_800D58F0[25] = {
         .mapOverlayIdx_8_25  = MapOverlayId_MAP4_S04,
     },
     {
-        .requiredEventFlag_0 = 308,
+        .requiredEventFlag_0 = EventFlag_308,
         .disabledEventFlag_2 = EventFlag_309,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,

@@ -2,7 +2,7 @@
 
 s_EventParam D_800D7C8C[18] = {
     {
-        .requiredEventFlag_0 = 347,
+        .requiredEventFlag_0 = EventFlag_347,
         .disabledEventFlag_2 = EventFlag_349,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
@@ -32,7 +32,7 @@ s_EventParam D_800D7C8C[18] = {
     },
     {
         .requiredEventFlag_0  = EventFlag_346,
-        .disabledEventFlag_2  = 347,
+        .disabledEventFlag_2  = EventFlag_347,
         .triggerType_4_0      = TriggerType_TouchAabb,
         .pointOfInterestIdx_5 = 12,
         .sysState_8_0         = SysState_LoadRoom,

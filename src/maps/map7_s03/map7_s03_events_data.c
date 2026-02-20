@@ -10,7 +10,7 @@ s_EventParam D_800ED17C[13] = {
     },
     {
         .requiredEventFlag_0 = EventFlag_583,
-        .disabledEventFlag_2 = 589,
+        .disabledEventFlag_2 = EventFlag_589,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_Fmv,
         .eventData_8_5       = 3,
@@ -41,13 +41,13 @@ s_EventParam D_800ED17C[13] = {
     },
     {
         .requiredEventFlag_0 = EventFlag_590,
-        .disabledEventFlag_2 = 589,
+        .disabledEventFlag_2 = EventFlag_589,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_Fmv,
         .flags_8_13          = 1,
     },
     {
-        .requiredEventFlag_0 = 589,
+        .requiredEventFlag_0 = EventFlag_589,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
         .eventData_8_5       = 8, // `func_800E9C28`

@@ -34,14 +34,14 @@ s_EventParam D_800DB654[31] = {
     },
     {
         .requiredEventFlag_0 = EventFlag_330,
-        .disabledEventFlag_2 = 331,
+        .disabledEventFlag_2 = EventFlag_331,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_Fmv,
         .eventData_8_5       = 11,
         .flags_8_13          = 2,
     },
     {
-        .requiredEventFlag_0 = 331,
+        .requiredEventFlag_0 = EventFlag_331,
         .disabledEventFlag_2 = EventFlag_332,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,

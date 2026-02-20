@@ -11,14 +11,14 @@ s_EventParam D_800D2424[17] = {
     },
     {
         .requiredEventFlag_0 = EventFlag_195,
-        .disabledEventFlag_2 = 196,
+        .disabledEventFlag_2 = EvnetFlag_196,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_Fmv,
         .eventData_8_5       = 13,
         .flags_8_13          = 2,
     },
     {
-        .requiredEventFlag_0 = 196,
+        .requiredEventFlag_0 = EvnetFlag_196,
         .disabledEventFlag_2 = EventFlag_197,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
@@ -39,7 +39,7 @@ s_EventParam D_800D2424[17] = {
         .eventData_8_5        = 47,
     },
     {
-        .disabledEventFlag_2  = 1424,
+        .disabledEventFlag_2  = EventFlag_1424,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
@@ -57,7 +57,7 @@ s_EventParam D_800D2424[17] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP6_S01,
     },
     {
-        .disabledEventFlag_2  = 1427,
+        .disabledEventFlag_2  = EventFlag_1427,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 2,
@@ -67,7 +67,7 @@ s_EventParam D_800D2424[17] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP3_S01,
     },
     {
-        .disabledEventFlag_2  = 1431,
+        .disabledEventFlag_2  = EventFlag_1431,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 1,
@@ -77,7 +77,7 @@ s_EventParam D_800D2424[17] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP3_S01,
     },
     {
-        .disabledEventFlag_2 = 1433,
+        .disabledEventFlag_2 = EventFlag_1433,
         .triggerType_4_0     = TriggerType_TouchObbFacing,
         .activationType_4_4  = TriggerActivationType_Button,
         .sysState_8_0        = SysState_LoadOverlay,

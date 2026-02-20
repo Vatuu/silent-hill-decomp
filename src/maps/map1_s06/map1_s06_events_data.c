@@ -69,7 +69,7 @@ s_EventParam D_800D7510[49] = {
         .eventData_8_5        = 8, // `MapEvent_MapTake`
     },
     {
-        .disabledEventFlag_2  = 140,
+        .disabledEventFlag_2  = EventFlag_140,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 1,
@@ -78,7 +78,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .requiredEventFlag_0  = 140,
+        .requiredEventFlag_0  = EventFlag_140,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 1,
@@ -88,7 +88,7 @@ s_EventParam D_800D7510[49] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP2_S00,
     },
     {
-        .disabledEventFlag_2  = 141,
+        .disabledEventFlag_2  = EventFlag_141,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 2,
@@ -97,7 +97,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .requiredEventFlag_0  = 141,
+        .requiredEventFlag_0  = EventFlag_141,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 2,
@@ -107,7 +107,7 @@ s_EventParam D_800D7510[49] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP2_S00,
     },
     {
-        .disabledEventFlag_2  = 139,
+        .disabledEventFlag_2  = EventFlag_139,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 14,
@@ -116,13 +116,13 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .requiredEventFlag_0 = 139,
-        .disabledEventFlag_2 = 1069,
+        .requiredEventFlag_0 = EventFlag_139,
+        .disabledEventFlag_2 = EventFlag_1069,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventSetFlag,
     },
     {
-        .requiredEventFlag_0  = 139,
+        .requiredEventFlag_0  = EventFlag_139,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 19,
@@ -132,7 +132,7 @@ s_EventParam D_800D7510[49] = {
         .field_8_24           = 1,
     },
     {
-        .requiredEventFlag_0  = 139,
+        .requiredEventFlag_0  = EventFlag_139,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 14,
@@ -141,7 +141,7 @@ s_EventParam D_800D7510[49] = {
         .field_8_19           = 2,
     },
     {
-        .disabledEventFlag_2  = 138,
+        .disabledEventFlag_2  = EventFlag_138,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 22,
@@ -150,13 +150,13 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .requiredEventFlag_0 = 138,
-        .disabledEventFlag_2 = 1079,
+        .requiredEventFlag_0 = EventFlag_138,
+        .disabledEventFlag_2 = EventFlag_1079,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventSetFlag,
     },
     {
-        .requiredEventFlag_0  = 138,
+        .requiredEventFlag_0  = EventFlag_138,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 15,
@@ -166,7 +166,7 @@ s_EventParam D_800D7510[49] = {
         .field_8_24           = 1,
     },
     {
-        .requiredEventFlag_0  = 138,
+        .requiredEventFlag_0  = EventFlag_138,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 22,
@@ -176,7 +176,7 @@ s_EventParam D_800D7510[49] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = 1228,
+        .disabledEventFlag_2  = EventFlag_1228,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 39,
@@ -184,7 +184,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1076,
+        .disabledEventFlag_2  = EventFlag_1076,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 5,
@@ -192,7 +192,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1122,
+        .disabledEventFlag_2  = EventFlag_1122,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 16,
@@ -200,7 +200,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1075,
+        .disabledEventFlag_2  = EventFlag_1075,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 18,
@@ -209,7 +209,7 @@ s_EventParam D_800D7510[49] = {
         .field_8_19           = 1,
     },
     {
-        .disabledEventFlag_2  = 1075,
+        .disabledEventFlag_2  = EventFlag_1075,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 21,
@@ -219,7 +219,7 @@ s_EventParam D_800D7510[49] = {
         .field_8_24           = 1,
     },
     {
-        .disabledEventFlag_2  = 1072,
+        .disabledEventFlag_2  = EventFlag_1072,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 17,
@@ -227,7 +227,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1124,
+        .disabledEventFlag_2  = EventFlag_1124,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 23,
@@ -235,7 +235,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1230,
+        .disabledEventFlag_2  = EventFlag_1230,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 40,
@@ -243,7 +243,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1090,
+        .disabledEventFlag_2  = EventFlag_1090,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 24,
@@ -251,7 +251,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1240,
+        .disabledEventFlag_2  = EventFlag_1240,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 41,
@@ -259,7 +259,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1088,
+        .disabledEventFlag_2  = EventFlag_1088,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 25,
@@ -267,7 +267,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1238,
+        .disabledEventFlag_2  = EventFlag_1238,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 42,
@@ -275,7 +275,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1086,
+        .disabledEventFlag_2  = EventFlag_1086,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 26,
@@ -283,7 +283,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1236,
+        .disabledEventFlag_2  = EventFlag_1236,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 43,
@@ -291,7 +291,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1084,
+        .disabledEventFlag_2  = EventFlag_1084,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 27,
@@ -299,7 +299,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1234,
+        .disabledEventFlag_2  = EventFlag_1234,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 44,
@@ -307,7 +307,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1082,
+        .disabledEventFlag_2  = EventFlag_1082,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 28,
@@ -315,7 +315,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1232,
+        .disabledEventFlag_2  = EventFlag_1232,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 45,
@@ -323,7 +323,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1046,
+        .disabledEventFlag_2  = EventFlag_1046,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 34,
@@ -331,7 +331,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 1,
     },
     {
-        .disabledEventFlag_2  = 1049,
+        .disabledEventFlag_2  = EventFlag_1049,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 35,
@@ -340,7 +340,7 @@ s_EventParam D_800D7510[49] = {
         .field_8_19           = 17,
     },
     {
-        .disabledEventFlag_2  = 1049,
+        .disabledEventFlag_2  = EventFlag_1049,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 37,
@@ -356,7 +356,7 @@ s_EventParam D_800D7510[49] = {
         .eventData_8_5        = 7,
     },
     {
-        .disabledEventFlag_2  = 135,
+        .disabledEventFlag_2  = EventFlag_135,
         .triggerType_4_0      = TriggerType_TouchAabb,
         .pointOfInterestIdx_5 = 38,
         .sysState_8_0         = SysState_LoadRoom,
@@ -364,7 +364,7 @@ s_EventParam D_800D7510[49] = {
         .flags_8_13           = 2,
     },
     {
-        .requiredEventFlag_0 = 135,
+        .requiredEventFlag_0 = EventFlag_135,
         .disabledEventFlag_2 = EventFlag_M1S06_ChurchMarkedOnMap,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,

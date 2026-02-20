@@ -65,9 +65,9 @@ typedef enum _EventFlag
 
     EventFlag_M0S02_PickupKatana = 56,
 
-    EventFlag_57 = 57,
-    EventFlag_58 = 58,
-
+    EventFlag_57                          = 57,
+    EventFlag_58                          = 58,
+    EventFlag_59                          = 59,
     EventFlag_M0S02_PickupGasolineTank    = 60,
     EventFlag_61                          = 61,
     EventFlag_62                          = 62,
@@ -96,6 +96,7 @@ typedef enum _EventFlag
 
     EventFlag_M7S01_HealthDrink1 = 86,
 
+    EventFlag_91                               = 91,
     EventFlag_92                               = 92,
     EventFlag_M1S02_PickupPictureCard          = 93,
     EventFlag_M1S02_SeenDoorWithHorizontalSlot = 94,
@@ -135,10 +136,14 @@ typedef enum _EventFlag
     EventFlag_132 = 132,
     EventFlag_133 = 133,
     EventFlag_134 = 134,
+    EventFlag_135 = 135,
 
-    EventFlag_M1S06_ChurchMarkedOnMap = 136,
-    EventFlag_M1S06_PickupKGordonKey  = 137,
-
+    EventFlag_M1S06_ChurchMarkedOnMap     = 136,
+    EventFlag_M1S06_PickupKGordonKey      = 137,
+    EventFlag_138                         = 138,
+    EventFlag_139                         = 139,
+    EventFlag_140                         = 140,
+    EventFlag_141                         = 141,
     EventFlag_142                         = 142,
     EventFlag_143                         = 143,
     EventFlag_M0S02_PickupChannelingStone = 144,
@@ -150,13 +155,13 @@ typedef enum _EventFlag
     EventFlag_M2S00_PickupKeyOfLion       = 150,
     EventFlag_M2S00_PickupKeyOfWoodman    = 151,
     EventFlag_M2S00_PickupKeyOfScarecrow  = 152,
-
-    EventFlag_M2S00_LockOfLionOpen      = 154,
-    EventFlag_M2S00_LockOfWoodmanOpen   = 155,
-    EventFlag_M2S00_LockOfScarecrowOpen = 156,
-    EventFlag_M2S00_DoorOfEclypseOpen   = 157,
-    EventFlag_158                       = 158,
-    EventFlag_159                       = 159,
+    EventFlag_153                         = 153,
+    EventFlag_M2S00_LockOfLionOpen        = 154,
+    EventFlag_M2S00_LockOfWoodmanOpen     = 155,
+    EventFlag_M2S00_LockOfScarecrowOpen   = 156,
+    EventFlag_M2S00_DoorOfEclypseOpen     = 157,
+    EventFlag_158                         = 158,
+    EventFlag_159                         = 159,
 
     EventFlag_M2S00_PickupSteelPipe   = 161,
     EventFlag_M2S00_KGordonDoorOpen   = 162,
@@ -196,9 +201,9 @@ typedef enum _EventFlag
     EventFlag_193                   = 193,
     EventFlag_194                   = 194,
     EventFlag_195                   = 195,
-
-    EventFlag_197 = 197,
-    EventFlag_198 = 198,
+    EvnetFlag_196                   = 196,
+    EventFlag_197                   = 197,
+    EventFlag_198                   = 198,
 
     EventFlag_M3S00_FirstAidKit = 199, // Odd numbering not with other common items, possibly some default that goes unused. Shared with M3S01 and M3S06.
     EventFlag_200               = 200,
@@ -215,23 +220,29 @@ typedef enum _EventFlag
 
     EventFlag_212 = 212,
     EventFlag_213 = 213,
+    EventFlag_214 = 214,
     EventFlag_215 = 215,
     EventFlag_216 = 216,
-
+    EventFlag_217 = 217,
+    EventFlag_218 = 218,
+    EventFlag_217 = 217,
+    EventFlag_218 = 218,
     EventFlag_219 = 219,
-
+    EventFlag_220 = 220,
+    EventFlag_221 = 221,
+    EventFlag_222 = 222,
     EventFlag_223 = 223,
     EventFlag_224 = 224,
     EventFlag_225 = 225,
     EventFlag_226 = 226,
 
-    EventFlag_232 = 232,
-    EventFlag_233 = 233,
-    EventFlag_234 = 234,
-
-    EventFlag_236 = 236,
-    EventFlag_237 = 237,
-
+    EventFlag_232                       = 232,
+    EventFlag_233                       = 233,
+    EventFlag_234                       = 234,
+    EventFlag_235                       = 235,
+    EventFlag_236                       = 236,
+    EventFlag_237                       = 237,
+    EventFlag_238                       = 238,
     EventFlag_239                       = 239,
     EventFlag_240                       = 240,
     EventFlag_M3S04_PickupPlateOfQueen  = 241,
@@ -250,26 +261,26 @@ typedef enum _EventFlag
 
     EventFlag_M3S05_PickupExaminationRoomKey = 257,
     EventFlag_258                            = 258,
+    EventFlag_259                            = 259,
+    EventFlag_260                            = 260,
 
-    EventFlag_260 = 260,
-
-    EventFlag_265 = 265,
-    EventFlag_266 = 266,
-    EventFlag_267 = 267,
-    EventFlag_268 = 268,
-    EventFlag_269 = 269,
-    EventFlag_270 = 270,
-    EventFlag_271 = 271,
-    EventFlag_272 = 272,
-    EventFlag_273 = 273,
-    EventFlag_274 = 274,
-    EventFlag_275 = 275,
-    EventFlag_276 = 276,
-    EventFlag_277 = 277,
-    EventFlag_278 = 278,
-    EventFlag_279 = 279,
-    EventFlag_280 = 280,
-
+    EventFlag_265                        = 265,
+    EventFlag_266                        = 266,
+    EventFlag_267                        = 267,
+    EventFlag_268                        = 268,
+    EventFlag_269                        = 269,
+    EventFlag_270                        = 270,
+    EventFlag_271                        = 271,
+    EventFlag_272                        = 272,
+    EventFlag_273                        = 273,
+    EventFlag_274                        = 274,
+    EventFlag_275                        = 275,
+    EventFlag_276                        = 276,
+    EventFlag_277                        = 277,
+    EventFlag_278                        = 278,
+    EventFlag_279                        = 279,
+    EventFlag_280                        = 280,
+    EventFlag_281                        = 281,
     EventFlag_M3S05_CabinetPushed        = 282,
     EventFlag_M3S05_AlcoholPouredOnVines = 283,
     EventFlag_284                        = 284,
@@ -280,6 +291,7 @@ typedef enum _EventFlag
 
     EventFlag_M3S05_PickupHammer = 289,
 
+    EventFlag_292                        = 292,
     EventFlag_293                        = 293,
     EventFlag_294                        = 294,
     EventFlag_295                        = 295,
@@ -291,22 +303,23 @@ typedef enum _EventFlag
     EventFlag_301                        = 301,
     EventFlag_302                        = 302,
     EventFlag_303                        = 303,
-
-    EventFlag_305 = 305,
-    EventFlag_306 = 306,
-    EventFlag_307 = 307,
-
-    EventFlag_309             = 309,
-    EventFlag_M4S01_PickupAxe = 310,
-    EventFlag_311             = 311,
-    EventFlag_312             = 312,
-    EventFlag_313             = 313,
+    EventFlag_304                        = 304,
+    EventFlag_305                        = 305,
+    EventFlag_306                        = 306,
+    EventFlag_307                        = 307,
+    EventFlag_308                        = 308,
+    EventFlag_309                        = 309,
+    EventFlag_M4S01_PickupAxe            = 310,
+    EventFlag_311                        = 311,
+    EventFlag_312                        = 312,
+    EventFlag_313                        = 313,
 
     EventFlag_314 = 314,
-
+    EventFlag_315 = 315,
     EventFlag_316 = 316,
     EventFlag_317 = 317,
 
+    EventFlag_319 = 319,
     EventFlag_320 = 320,
     EventFlag_321 = 321,
     EventFlag_322 = 322,
@@ -319,9 +332,9 @@ typedef enum _EventFlag
     EventFlag_M4S03_PickupHuntingRifle = 328,
     EventFlag_329                      = 329,
     EventFlag_330                      = 330,
-
-    EventFlag_332 = 332,
-    EventFlag_333 = 333,
+    EventFlag_331                      = 331,
+    EventFlag_332                      = 332,
+    EventFlag_333                      = 333,
 
     EventFlag_334 = 334,
 
@@ -331,9 +344,10 @@ typedef enum _EventFlag
     EventFlag_338 = 338,
     EventFlag_339 = 339,
     EventFlag_340 = 340,
+    EventFlag_341 = 341,
 
     EventFlag_346 = 346,
-
+    EventFlag_347 = 347,
     EventFlag_348 = 348,
 
     EventFlag_349                  = 349,
@@ -364,10 +378,10 @@ typedef enum _EventFlag
 
     EventFlag_M5S03_PickupMagnet = 386,
     EventFlag_387                = 387,
-
-    EventFlag_389 = 389,
-    EventFlag_390 = 390,
-    EventFlag_391 = 391,
+    EventFlag_388                = 388,
+    EventFlag_389                = 389,
+    EventFlag_390                = 390,
+    EventFlag_391                = 391,
 
     EventFlag_M5S03_SeenSecondNewspaper = 393,
     EventFlag_M5S01_KaufmannKeyUsed     = 394,
@@ -384,9 +398,9 @@ typedef enum _EventFlag
     EventFlag_406 = 406,
     EventFlag_407 = 407,
     EventFlag_408 = 408,
-
+    EventFlag_409 = 409,
     EventFlag_410 = 410,
-
+    EventFlag_411 = 411,
     EventFlag_412 = 412,
     EventFlag_413 = 413,
     EventFlag_414 = 414,
@@ -448,14 +462,15 @@ typedef enum _EventFlag
     EventFlag_469 = 469,
     EventFlag_470 = 470,
     EventFlag_471 = 471,
-
+    EventFlag_472 = 472,
+    EventFlag_473 = 473,
     EventFlag_474 = 474,
     EventFlag_476 = 476,
     EventFlag_475 = 475,
     EventFlag_477 = 477,
     EventFlag_478 = 478,
     EventFlag_479 = 479,
-
+    EventFlag_480 = 480,
     EventFlag_481 = 481,
     EventFlag_482 = 482,
     EventFlag_483 = 483,
@@ -478,7 +493,12 @@ typedef enum _EventFlag
     EventFlag_499 = 499,
 
     EventFlag_500 = 500, // Used as base event index added to `D_800E1690.field_0` in loop.
-
+    EventFlag_501 = 501,
+    EventFlag_502 = 502,
+    EventFlag_503 = 503,
+    EventFlag_504 = 504,
+    EventFlag_505 = 505,
+    EventFlag_506 = 506,
     EventFlag_507 = 507, // } Used in `for (i < 4)` loop.
     EventFlag_508 = 508, // }
     EventFlag_509 = 509, // }
@@ -522,20 +542,22 @@ typedef enum _EventFlag
     EventFlag_543                          = 543, // }
     EventFlag_544                          = 544, // }
     EventFlag_545                          = 545,
+    EventFlag_546                          = 546,
+    EventFlag_547                          = 547,
+    EventFlag_548                          = 548,
+    EventFlag_549                          = 549,
+    EventFlag_550                          = 550,
+    EventFlag_551                          = 551,
+    EventFlag_552                          = 552,
+    EventFlag_553                          = 553,
+    EventFlag_554                          = 554,
+    EventFlag_555                          = 555,
+    EventFlag_556                          = 556,
+    EventFlag_557                          = 557,
 
-    EventFlag_548 = 548,
-    EventFlag_549 = 549,
-
-    EventFlag_551 = 551,
-    EventFlag_552 = 552,
-    EventFlag_553 = 553,
-    EventFlag_554 = 554,
-    EventFlag_555 = 555,
-    EventFlag_556 = 556,
-    EventFlag_557 = 557,
-
+    EventFlag_559 = 559,
     EventFlag_560 = 560,
-
+    EventFlag_561 = 561,
     EventFlag_562 = 562,
     EventFlag_563 = 563,
     EventFlag_564 = 564, // } Used in `for (i < 5)` loop.
@@ -563,11 +585,12 @@ typedef enum _EventFlag
     EventFlag_586 = 586,
     EventFlag_587 = 587,
     EventFlag_588 = 588,
-
+    EventFlag_589 = 589,
     EventFlag_590 = 590,
     EventFlag_591 = 591,
     EventFlag_592 = 592,
     EventFlag_593 = 593,
+    EventFlag_594 = 594,
 
     /** `MAP0_S01` common item pickups. */
 
@@ -767,6 +790,480 @@ typedef enum _EventFlag
     EventFlag_M6S03_HealthDrink1   = 727,
 
     EventFlag_868 = 868,
+
+    EventFlag_876 = 876,
+
+    EventFlag_878 = 878,
+
+    EventFlag_880 = 880,
+
+    EventFlag_882 = 882,
+
+    EventFlag_884 = 884,
+
+    EventFlag_886 = 886,
+
+    EventFlag_888 = 888,
+
+    EventFlag_890 = 890,
+
+    EventFlag_894 = 894,
+
+    EventFlag_896 = 896,
+
+    EventFlag_898 = 898,
+
+    EventFlag_900 = 900,
+
+    EventFlag_902 = 902,
+
+    EventFlag_904 = 904,
+
+    EventFlag_906 = 906,
+
+    EventFlag_910 = 910,
+
+    EventFlag_914 = 914,
+
+    EventFlag_922 = 922,
+
+    EventFlag_925 = 925,
+
+    EventFlag_927 = 927,
+
+    EventFlag_944 = 944,
+
+    EventFlag_948 = 948,
+
+    EventFlag_950 = 950,
+
+    EventFlag_952 = 952,
+
+    EventFlag_954 = 954,
+
+    EventFlag_956 = 956,
+
+    EventFlag_982 = 982,
+
+    EventFlag_984 = 984,
+
+    EventFlag_986 = 986,
+
+    EventFlag_988 = 988,
+
+    EventFlag_990 = 990,
+
+    EventFlag_992 = 992,
+
+    EventFlag_994 = 994,
+
+    EventFlag_996 = 996,
+
+    EventFlag_998 = 998,
+
+    EventFlag_1000 = 1000,
+
+    EventFlag_1002 = 1002,
+
+    EventFlag_1012 = 1012,
+
+    EventFlag_1014 = 1014,
+
+    EventFlag_1016 = 1016,
+
+    EventFlag_1018 = 1018,
+
+    EventFlag_1020 = 1020,
+
+    EventFlag_1022 = 1022,
+
+    EventFlag_1046 = 1046,
+
+    EventFlag_1049 = 1049,
+
+    EventFlag_1057 = 1057,
+
+    EventFlag_1059 = 1059,
+
+    EventFlag_1069 = 1069,
+    EventFlag_1070 = 1070,
+    EventFlag_1071 = 1071,
+    EventFlag_1072 = 1072,
+    EventFlag_1073 = 1073,
+
+    EventFlag_1075 = 1075,
+    EventFlag_1076 = 1076,
+    EventFlag_1077 = 1077,
+    EventFlag_1078 = 1078,
+    EventFlag_1079 = 1079,
+    EventFlag_1080 = 1080,
+    EventFlag_1081 = 1081,
+    EventFlag_1082 = 1082,
+
+    EventFlag_1084 = 1084,
+    EventFlag_1085 = 1085,
+    EventFlag_1086 = 1086,
+    EventFlag_1087 = 1087,
+    EventFlag_1088 = 1088,
+    EventFlag_1089 = 1089,
+    EventFlag_1090 = 1090,
+    EventFlag_1091 = 1091,
+
+    EventFlag_1093 = 1093,
+
+    EventFlag_1095 = 1095,
+    EventFlag_1096 = 1096,
+
+    EventFlag_1099 = 1099,
+    EventFlag_1100 = 1100,
+
+    EventFlag_1103 = 1103,
+    EventFlag_1104 = 1104,
+
+    EventFlag_1106 = 1106,
+
+    EventFlag_1108 = 1108,
+
+    EventFlag_1110 = 1110,
+
+    EventFlag_1112 = 1112,
+
+    EventFlag_1115 = 1115,
+
+    EventFlag_1117 = 1117,
+    EventFlag_1118 = 1118,
+
+    EventFlag_1120 = 1120,
+
+    EventFlag_1122 = 1122,
+
+    EventFlag_1124 = 1124,
+
+    EventFlag_1144 = 1144,
+
+    EventFlag_1147 = 1147,
+
+    EventFlag_1148 = 1148,
+    EventFlag_1149 = 1149,
+
+    EventFlag_1151 = 1151,
+
+    EventFlag_1153 = 1153,
+    EventFlag_1154 = 1154,
+    EventFlag_1155 = 1155,
+
+    EventFlag_1157 = 1157,
+    EventFlag_1158 = 1158,
+    EventFlag_1159 = 1159,
+
+    EventFlag_1161 = 1161,
+
+    EventFlag_1163 = 1163,
+
+    EventFlag_1165 = 1165,
+    EventFlag_1166 = 1166,
+
+    EventFlag_1169 = 1169,
+
+    EventFlag_1171 = 1171,
+
+    EventFlag_1173 = 1173,
+
+    EventFlag_1175 = 1175,
+
+    EventFlag_1177 = 1177,
+
+    EventFlag_1179 = 1179,
+    EventFlag_1180 = 1180,
+    EventFlag_1181 = 1181,
+
+    EventFlag_1183 = 1183,
+    EventFlag_1184 = 1184,
+
+    EventFlag_1187 = 1187,
+
+    EventFlag_1189 = 1189,
+
+    EventFlag_1191 = 1191,
+
+    EventFlag_1193 = 1193,
+
+    EventFlag_1195 = 1195,
+    EventFlag_1196 = 1196,
+
+    EventFlag_1198 = 1198,
+
+    EventFlag_1200 = 1200,
+    EventFlag_1201 = 1201,
+
+    EventFlag_1204 = 1204,
+
+    EventFlag_1206 = 1206,
+    EventFlag_1223 = 1207,
+    EventFlag_1208 = 1208,
+
+    EventFlag_1222 = 1222,
+    EventFlag_1223 = 1223,
+
+    EventFlag_1225 = 1225,
+
+    EventFlag_1227 = 1227,
+    EventFlag_1228 = 1228,
+    EventFlag_1229 = 1229,
+    EventFlag_1230 = 1230,
+    EventFlag_1231 = 1231,
+    EventFlag_1232 = 1232,
+    EventFlag_1233 = 1233,
+    EventFlag_1234 = 1234,
+    EventFlag_1235 = 1235,
+    EventFlag_1236 = 1236,
+    EventFlag_1237 = 1237,
+    EventFlag_1238 = 1238,
+    EventFlag_1239 = 1239,
+    EventFlag_1240 = 1240,
+    EventFlag_1241 = 1241,
+
+    EventFlag_1243 = 1243,
+    EventFlag_1244 = 1244,
+    EventFlag_1245 = 1245,
+    EventFlag_1247 = 1247,
+
+    EventFlag_1249 = 1249,
+
+    EventFlag_1251 = 1251,
+
+    EventFlag_1253 = 1253,
+
+    EventFlag_1255 = 1255,
+
+    EventFlag_1257 = 1257,
+
+    EventFlag_1259 = 1259,
+
+    EventFlag_1261 = 1261,
+
+    EventFlag_1263 = 1263,
+
+    EventFlag_1265 = 1265,
+
+    EventFlag_1267 = 1267,
+    EventFlag_1268 = 1268,
+
+    EventFlag_1270 = 1270,
+
+    EventFlag_1289 = 1289,
+    EventFlag_1290 = 1290,
+
+    EventFlag_1293 = 1293,
+    EventFlag_1294 = 1294,
+    EventFlag_1295 = 1295,
+    EventFlag_1296 = 1296,
+    EventFlag_1297 = 1297,
+
+    EventFlag_1299 = 1299,
+    EventFlag_1300 = 1300,
+    EventFlag_1301 = 1301,
+    EventFlag_1302 = 1302,
+    EventFlag_1303 = 1303,
+
+    EventFlag_1305 = 1305,
+
+    EventFlag_1307 = 1307,
+
+    EventFlag_1309 = 1309,
+    EventFlag_1310 = 1310,
+    EventFlag_1311 = 1311,
+    EventFlag_1312 = 1312,
+
+    EventFlag_1314 = 1314,
+
+    EventFlag_1317 = 1317,
+
+    EventFlag_1319 = 1319,
+
+    EventFlag_1321 = 1321,
+
+    EventFlag_1323 = 1323,
+
+    EventFlag_1325 = 1325,
+
+    EventFlag_1327 = 1327,
+
+    EventFlag_1329 = 1329,
+
+    EventFlag_1331 = 1331,
+    EventFlag_1332 = 1332,
+
+    EventFlag_1334 = 1334,
+
+    EventFlag_1336 = 1336,
+
+    EventFlag_1339 = 1339,
+
+    EventFlag_1354 = 1354,
+
+    EventFlag_1363 = 1363,
+    EventFlag_1364 = 1364,
+
+    EventFlag_1370 = 1370,
+
+    EventFlag_1371 = 1371,
+    EventFlag_1372 = 1372,
+    EventFlag_1373 = 1373,
+
+    EventFlag_1375 = 1375,
+    EventFlag_1377 = 1377,
+
+    EventFlag_1390 = 1390,
+    EventFlag_1391 = 1391,
+
+    EventFlag_1393 = 1393,
+
+    EventFlag_1395 = 1395,
+
+    EventFlag_1397 = 1397,
+    EventFlag_1398 = 1398,
+
+    EventFlag_1414 = 1414,
+
+    EventFlag_1424 = 1424,
+
+    EventFlag_1427 = 1427,
+
+    EventFlag_1429 = 1429,
+
+    EventFlag_1431 = 1431,
+
+    EventFlag_1433 = 1433,
+
+    EventFlag_1435 = 1435,
+    EventFlag_1436 = 1436,
+
+    EventFlag_1438 = 1438,
+
+    EventFlag_1441 = 1441,
+    EventFlag_1442 = 1442,
+    EventFlag_1443 = 1443,
+    EventFlag_1444 = 1444,
+    EventFlag_1445 = 1445,
+    EventFlag_1446 = 1446,
+    EventFlag_1447 = 1447,
+    EventFlag_1448 = 1448,
+    EventFlag_1449 = 1449,
+    EventFlag_1450 = 1450,
+
+    EventFlag_1452 = 1452,
+
+    EventFlag_1454 = 1454,
+
+    EventFlag_1468 = 1468,
+
+    EventFlag_1472 = 1472,
+
+    EventFlag_1474 = 1474,
+    EventFlag_1475 = 1475,
+    EventFlag_1476 = 1476,
+    EventFlag_1477 = 1477,
+
+    EventFlag_1479 = 1479,
+
+    EventFlag_1481 = 1481,
+    EventFlag_1482 = 1482,
+
+    EventFlag_1485 = 1485,
+
+    EventFlag_1487 = 1487,
+
+    EventFlag_1489 = 1489,
+
+    EventFlag_1491 = 1491,
+    EventFlag_1492 = 1492,
+
+    EventFlag_1494 = 1494,
+
+    EventFlag_1496 = 1496,
+
+    EventFlag_1513 = 1513,
+    EventFlag_1514 = 1514,
+
+    EventFlag_1516 = 1516,
+
+    EventFlag_1519 = 1519,
+    EventFlag_1520 = 1520,
+
+    EventFlag_1533 = 1533,
+
+    EventFlag_1535 = 1535,
+    EventFlag_1536 = 1536,
+    EventFlag_1537 = 1537,
+
+    EventFlag_1539 = 1539,
+    EventFlag_1540 = 1540,
+
+    EventFlag_1552 = 1552,
+
+    EventFlag_1558 = 1558,
+
+    EventFlag_1564 = 1564,
+    EventFlag_1565 = 1565,
+
+    EventFlag_1567 = 1567,
+    EventFlag_1568 = 1568,
+
+    EventFlag_1571 = 1571,
+
+    EventFlag_1573 = 1573,
+
+    EventFlag_1575 = 1575,
+
+    EventFlag_1577 = 1577,
+    EventFlag_1578 = 1578,
+    EventFlag_1579 = 1579,
+
+    EventFlag_1580 = 1580,
+
+    EventFlag_1582 = 1582,
+
+    EventFlag_1585 = 1585,
+
+    EventFlag_1587 = 1587,
+    EventFlag_1588 = 1588,
+
+    EventFlag_1590 = 1590,
+
+    EventFlag_1593 = 1593,
+
+    EventFlag_1595 = 1595,
+
+    EventFlag_1610 = 1610,
+
+    EventFlag_1611 = 1611,
+    EventFlag_1612 = 1612,
+
+    EventFlag_1615 = 1615,
+    EventFlag_1616 = 1616,
+
+    EventFlag_1619 = 1619,
+    EventFlag_1620 = 1620,
+
+    EventFlag_1623 = 1623,
+
+    EventFlag_1625 = 1625,
+
+    EventFlag_1627 = 1627,
+    EventFlag_1628 = 1628,
+
+    EventFlag_1631 = 1631,
+
+    EventFlag_1633 = 1633,
+
+    EventFlag_1635 = 1635,
+    EventFlag_1636 = 1636,
+
+    EventFlag_1639 = 1639,
+
+    EventFlag_1641 = 1641,
+    EventFlag_1642 = 1642,
 
     EventFlag_Hack = -1, // @hack Force enum to be treated as `s32`.
 } e_EventFlag;
