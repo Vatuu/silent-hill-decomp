@@ -70,376 +70,8 @@ const char* MAP_MESSAGES[] = {
     "\tI_have_more_important_stuff_to_do. ~E "
 };
 
-s_EventParam D_800DDFB8[23] = {
-    {
-        .requiredEventFlag_0  = EventFlag_None,
-        .disabledEventFlag_2  = EventFlag_M0S01_HealthDrink0,
-        .triggerType_4_0      = TriggerType_TouchFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 13,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 2, // `MapEvent_CommonItemTake`
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_None,
-        .disabledEventFlag_2  = EventFlag_M0S01_HealthDrink1,
-        .triggerType_4_0      = TriggerType_TouchFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 14,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 2, // `MapEvent_CommonItemTake`
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_None,
-        .disabledEventFlag_2  = EventFlag_39,
-        .triggerType_4_0      = TriggerType_None,
-        .activationType_4_4   = TriggerActivationType_None,
-        .pointOfInterestIdx_5 = 0,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_Fmv,
-        .eventData_8_5        = 15,
-        .flags_8_13           = 2,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_39,
-        .disabledEventFlag_2  = EventFlag_40,
-        .triggerType_4_0      = TriggerType_None,
-        .activationType_4_4   = TriggerActivationType_None,
-        .pointOfInterestIdx_5 = 0,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 3, // `MapEvent_CafeCutscene`
-        .flags_8_13           = 1,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_43,
-        .disabledEventFlag_2  = EventFlag_45,
-        .triggerType_4_0      = TriggerType_TouchObbFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 6,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 5, // `MapEvent_AirScreamerIntroCutscene`
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_48,
-        .disabledEventFlag_2  = EventFlag_51,
-        .triggerType_4_0      = TriggerType_None,
-        .activationType_4_4   = TriggerActivationType_None,
-        .pointOfInterestIdx_5 = 0,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 11, // `MapEvent_AirScreamerDeath`
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_M0S01_PickupPocketRadio,
-        .disabledEventFlag_2  = EventFlag_None,
-        .triggerType_4_0      = TriggerType_TouchObbFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 6,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_LoadOverlay,
-        .eventData_8_5        = 7,
-        .flags_8_13           = 0,
-        .field_8_19           = 1,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP2_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_48,
-        .disabledEventFlag_2  = EventFlag_None,
-        .triggerType_4_0      = TriggerType_TouchObbFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 6,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 71,
-        .flags_8_13           = 1,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_50,
-        .disabledEventFlag_2  = EventFlag_None,
-        .triggerType_4_0      = TriggerType_TouchObbFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 6,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 70,
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_None,
-        .disabledEventFlag_2  = EventFlag_None,
-        .triggerType_4_0      = TriggerType_TouchObbFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 6,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 67,
-        .flags_8_13           = 1,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_None,
-        .disabledEventFlag_2  = EventFlag_M0S01_PickupKitchenKnife,
-        .triggerType_4_0      = TriggerType_TouchFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 1,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 6, // `MapEvent_KitchenKnifeItemTake`
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_None,
-        .disabledEventFlag_2  = EventFlag_M0S01_PickupFlashlight,
-        .triggerType_4_0      = TriggerType_TouchFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 2,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 7, // `MapEvent_FlashlightItemTake`
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_None,
-        .disabledEventFlag_2  = EventFlag_M0S01_PickupMap,
-        .triggerType_4_0      = TriggerType_TouchFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 3,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 8, // `MapEvent_MapItemTake`
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_48,
-        .disabledEventFlag_2  = EventFlag_M0S01_PickupPocketRadio,
-        .triggerType_4_0      = TriggerType_TouchFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 4,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_EventCallFunc,
-        .eventData_8_5        = 9, // `MapEvent_PocketRadioItemTake`
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_50,
-        .disabledEventFlag_2  = EventFlag_None,
-        .triggerType_4_0      = TriggerType_TouchFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 4,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 69,
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_49,
-        .disabledEventFlag_2  = EventFlag_None,
-        .triggerType_4_0      = TriggerType_TouchFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 4,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 65,
-        .flags_8_13           = 1,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_50,
-        .disabledEventFlag_2  = EventFlag_None,
-        .triggerType_4_0      = TriggerType_TouchObbFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 10,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 75,
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_None,
-        .disabledEventFlag_2  = EventFlag_None,
-        .triggerType_4_0      = TriggerType_TouchObbFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 10,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_SaveMenu0,
-        .eventData_8_5        = 1,
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_None,
-        .disabledEventFlag_2  = EventFlag_None,
-        .triggerType_4_0      = TriggerType_TouchObbFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 8,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 73,
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_None,
-        .disabledEventFlag_2  = EventFlag_None,
-        .triggerType_4_0      = TriggerType_TouchObbFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 11,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 73,
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_None,
-        .disabledEventFlag_2  = EventFlag_None,
-        .triggerType_4_0      = TriggerType_TouchObbFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 12,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 73,
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_None,
-        .disabledEventFlag_2  = EventFlag_None,
-        .triggerType_4_0      = TriggerType_TouchObbFacing,
-        .activationType_4_4   = TriggerActivationType_Button,
-        .pointOfInterestIdx_5 = 9,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_ReadMessage,
-        .eventData_8_5        = 74,
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    },
-    {
-        .requiredEventFlag_0  = EventFlag_None,
-        .disabledEventFlag_2  = EventFlag_None,
-        .triggerType_4_0      = TriggerType_EndOfArray,
-        .activationType_4_4   = TriggerActivationType_None,
-        .pointOfInterestIdx_5 = 0,
-        .requiredItemId_6     = InventoryItemId_Unequipped,
-        .unk_7                = { 0 },
-        .sysState_8_0         = SysState_Gameplay,
-        .eventData_8_5        = 0,
-        .flags_8_13           = 0,
-        .field_8_19           = 0,
-        .field_8_24           = 0,
-        .mapOverlayIdx_8_25   = MapOverlayId_MAP0_S00,
-        .field_8_31           = 0,
-    }
-};
+// @hack Including here until we get splits figured out.
+#include "map0_s01_events_data.c"
 
 void MapEvent_CafeCutscene(void) // 0x800DA980
 {
@@ -981,7 +613,7 @@ void MapEvent_AirScreamerIntroCutscene(void) // 0x800DBAA0
         case 10:
             g_Timer0 = MAX(g_Timer0, Q12(53.0f));
             D_800E23A1 = 0x80;
-            Savegame_EventFlagSet(EventFlag_45);
+            Savegame_EventFlagSet(EventFlag_M0S01_AirScreamerIntroCutsceneStarted);
 
             SysWork_StateStepIncrementDelayed(Q12(1.5f), false);
             break;
@@ -1264,7 +896,7 @@ void MapEvent_AirScreamerDeath(void) // 0x800DC8C8
             Player_ControlUnfreeze(false);
             SysWork_StateSetNext(SysState_Gameplay);
 
-            Savegame_EventFlagSet(EventFlag_51);
+            Savegame_EventFlagSet(EventFlag_M0S01_AirScreamerDeathPlayed);
             break;
     }
 }
@@ -1287,7 +919,7 @@ void Map_WorldObjectsInit(void) // 0x800DC9C8
     WorldObjectInit(&g_EventThing_Map,          "MAP_HIDE", 5.24f, -1.0f,  267.21f,  0.0f, 57.0f,  0.0f);
     WorldObjectInit(&g_EventThing_PocketRadio,  "RADIO_HI", 2.31f, -0.6f,  273.95f,  0.0f, 147.0f, 0.0f);
 
-    if (Savegame_EventFlagGet(EventFlag_40) && !Savegame_EventFlagGet(EventFlag_47))
+    if (Savegame_EventFlagGet(EventFlag_M0S01_CafeCutsceneStarted) && !Savegame_EventFlagGet(EventFlag_47))
     {
         g_SysWork.flags_22A4 |= SysFlag2_5 | SysFlag2_9;
 
@@ -1350,18 +982,18 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
 
     if (Savegame_EventFlagGet(EventFlag_M0S01_PickupKitchenKnife) && Savegame_EventFlagGet(EventFlag_M0S01_PickupMap))
     {
-        Savegame_EventFlagSet(EventFlag_43);
+        Savegame_EventFlagSet(EventFlag_M0S01_PickedUpKnifeAndMap);
     }
     else
     {
-        Savegame_EventFlagClear(EventFlag_43);
+        Savegame_EventFlagClear(EventFlag_M0S01_PickedUpKnifeAndMap);
     }
 
     if (Savegame_EventFlagGet(EventFlag_47))
     {
         CutsceneObjects_Add(2);
     }
-    else if (Savegame_EventFlagGet(EventFlag_45) && !Savegame_EventFlagGet(EventFlag_46))
+    else if (Savegame_EventFlagGet(EventFlag_M0S01_AirScreamerIntroCutsceneStarted) && !Savegame_EventFlagGet(EventFlag_46))
     {
         CutsceneObjects_Add(1);
     }
@@ -1419,7 +1051,7 @@ void Map_WorldObjectsUpdate(void) // 0x800DCCF4
     {
         if (g_SysWork.npcs_1A0[0].model_0.charaId_0 == Chara_AirScreamer && g_SysWork.npcs_1A0[0].health_B0 == NO_VALUE)
         {
-            Savegame_EventFlagSet(EventFlag_48);
+            Savegame_EventFlagSet(EventFlag_M0S01_AirScreamerDied);
             Savegame_EventFlagClear(EventFlag_49);
             Savegame_EventFlagClear(EventFlag_50);
         }

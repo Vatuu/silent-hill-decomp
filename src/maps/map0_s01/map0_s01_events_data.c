@@ -18,23 +18,23 @@ s_EventParam D_800DDFB8[23] = {
         .eventData_8_5        = 2, // `MapEvent_CommonItemTake`
     },
     {
-        .disabledEventFlag_2 = EventFlag_39,
+        .disabledEventFlag_2 = EventFlag_M0S01_FmvStarted,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_Fmv,
         .eventData_8_5       = 15,
         .flags_8_13          = 2,
     },
     {
-        .requiredEventFlag_0 = EventFlag_39,
-        .disabledEventFlag_2 = EventFlag_40,
+        .requiredEventFlag_0 = EventFlag_M0S01_FmvStarted,
+        .disabledEventFlag_2 = EventFlag_M0S01_CafeCutsceneStarted,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
         .eventData_8_5       = 3, // `MapEvent_CafeCutscene`
         .flags_8_13          = 1,
     },
     {
-        .requiredEventFlag_0  = EventFlag_43,
-        .disabledEventFlag_2  = EventFlag_45,
+        .requiredEventFlag_0  = EventFlag_M0S01_PickedUpKnifeAndMap,
+        .disabledEventFlag_2  = EventFlag_M0S01_AirScreamerIntroCutsceneStarted,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 6,
@@ -42,8 +42,8 @@ s_EventParam D_800DDFB8[23] = {
         .eventData_8_5        = 5, // `MapEvent_AirScreamerIntroCutscene`
     },
     {
-        .requiredEventFlag_0 = EventFlag_48,
-        .disabledEventFlag_2 = EventFlag_51,
+        .requiredEventFlag_0 = EventFlag_M0S01_AirScreamerDied,
+        .disabledEventFlag_2 = EventFlag_M0S01_AirScreamerDeathPlayed,
         .triggerType_4_0     = TriggerType_None,
         .sysState_8_0        = SysState_EventCallFunc,
         .eventData_8_5       = 11, // `MapEvent_AirScreamerDeath`
@@ -59,7 +59,7 @@ s_EventParam D_800DDFB8[23] = {
         .mapOverlayIdx_8_25   = MapOverlayId_MAP2_S00,
     },
     {
-        .requiredEventFlag_0  = EventFlag_48,
+        .requiredEventFlag_0  = EventFlag_M0S01_AirScreamerDied,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 6,
@@ -108,7 +108,7 @@ s_EventParam D_800DDFB8[23] = {
         .eventData_8_5        = 8, // `MapEvent_MapItemTake`
     },
     {
-        .requiredEventFlag_0  = EventFlag_48,
+        .requiredEventFlag_0  = EventFlag_M0S01_AirScreamerDied,
         .disabledEventFlag_2  = EventFlag_M0S01_PickupPocketRadio,
         .triggerType_4_0      = TriggerType_TouchFacing,
         .activationType_4_4   = TriggerActivationType_Button,
