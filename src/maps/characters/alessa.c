@@ -108,7 +108,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
         case 2:
             if (alessaProps.moveSpeed_126 > Q12(1.25f))
             {
-                alessaProps.moveSpeed_126 -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.5f));
+                alessaProps.moveSpeed_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12(0.5f));
                 if (alessaProps.moveSpeed_126 < Q12(1.25f))
                 {
                     alessaProps.moveSpeed_126 = Q12(1.25f);
@@ -116,7 +116,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
             }
             else if (alessaProps.moveSpeed_126 < Q12(1.25f))
             {
-                alessaProps.moveSpeed_126 += TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.4f));
+                alessaProps.moveSpeed_126 += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12(0.4f));
                 alessaProps.moveSpeed_126  = CLAMP(alessaProps.moveSpeed_126, Q12(0.0f), Q12(1.25f));
             }
 
@@ -127,7 +127,7 @@ void Ai_Alessa_AnimStateUpdate(s_SubCharacter* alessa, GsCOORDINATE2* coords)
         case 1:
             if (alessaProps.moveSpeed_126 != Q12(0.0f))
             {
-                alessaProps.moveSpeed_126 -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, Q12(0.4f)) * 2;
+                alessaProps.moveSpeed_126 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, Q12(0.4f)) * 2;
                 if (alessaProps.moveSpeed_126 < Q12(0.0f))
                 {
                     alessaProps.moveSpeed_126 = Q12(0.0f);

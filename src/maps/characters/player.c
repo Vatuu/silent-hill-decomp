@@ -494,7 +494,7 @@ bool sharedFunc_800D23EC_0_s00(s32 playerExtraState, VECTOR3* vec, q3_12 angle, 
             Math_ShortestAngleGet(playerChara->rotation_24.vy, sharedData_800E39E2_0_s00, &playerRotDelta);
 
             // Turn toward.
-            angleStep = TIMESTEP_SCALE_30FPS(g_DeltaTime0, (playerRotDelta < FP_ANGLE(45.0f)) ? FP_ANGLE(2.9f) : FP_ANGLE(22.5f));
+            angleStep = TIMESTEP_SCALE_30_FPS(g_DeltaTime0, (playerRotDelta < FP_ANGLE(45.0f)) ? FP_ANGLE(2.9f) : FP_ANGLE(22.5f));
 
             if (ABS(playerRotDelta) < ANGLE_THRESHOLD)
             {

@@ -1978,7 +1978,7 @@ void func_800DC018(s_SubCharacter* chara) // 0x800DC018
     switch (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_116)
     {
         case 2:
-            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 += TIMESTEP_SCALE_30FPS(g_DeltaTime0, FP_ANGLE(11.25f / 4.0f));
+            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, FP_ANGLE(11.25f / 4.0f));
             g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 = CLAMP(g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106,
                                                                                FP_ANGLE(0.0f),
                                                                                FP_ANGLE(135.0f));
@@ -1986,7 +1986,7 @@ void func_800DC018(s_SubCharacter* chara) // 0x800DC018
             newRotY = chara->rotation_24.vy;
             if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 < FP_ANGLE(90.0f))
             {
-                newRotY += TIMESTEP_SCALE_30FPS(g_DeltaTime0, FP_ANGLE(11.25f / 4.0f));
+                newRotY += TIMESTEP_SCALE_30_FPS(g_DeltaTime0, FP_ANGLE(11.25f / 4.0f));
             }
             chara->rotation_24.vy = newRotY;
 
@@ -1998,7 +1998,7 @@ void func_800DC018(s_SubCharacter* chara) // 0x800DC018
             break;
 
         case 3:
-            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, FP_ANGLE(11.25f / 4.0f));
+            g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, FP_ANGLE(11.25f / 4.0f));
             g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 = CLAMP(g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106,
                                                                                FP_ANGLE(-135.0f),
                                                                                FP_ANGLE(0.0f));
@@ -2006,7 +2006,7 @@ void func_800DC018(s_SubCharacter* chara) // 0x800DC018
             newRotY = chara->rotation_24.vy;
             if (g_SysWork.npcs_1A0[0].properties_E4.monsterCybil.field_106 > FP_ANGLE(-90.0f))
             {
-                newRotY -= TIMESTEP_SCALE_30FPS(g_DeltaTime0, FP_ANGLE(11.25f / 4.0f));
+                newRotY -= TIMESTEP_SCALE_30_FPS(g_DeltaTime0, FP_ANGLE(11.25f / 4.0f));
             }
             chara->rotation_24.vy = newRotY;
 

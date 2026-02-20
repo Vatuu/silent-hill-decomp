@@ -759,7 +759,7 @@ void Ai_HangedScratcher_Control_8(s_SubCharacter* scratcher)
 
     if (ANIM_TIME_RANGE_CHECK(scratcher->model_0.anim_4.time_4, 245, 256))
     {
-        scratcher->rotation_24.vz = MAX(Q12(0.0f), scratcher->rotation_24.vz - TIMESTEP_SCALE_60FPS(g_DeltaTime0, 45));
+        scratcher->rotation_24.vz = MAX(Q12(0.0f), scratcher->rotation_24.vz - TIMESTEP_SCALE_60_FPS(g_DeltaTime0, 45));
     }
 
     if (ANIM_STATUS_IDX_GET(scratcher->model_0.anim_4.status_0) == HangedScratcherAnim_15)

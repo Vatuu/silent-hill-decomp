@@ -382,7 +382,7 @@
  *
  * @note 1 degree = 0.711111 units.
  *
- * @param deg Degrees (`float`).
+ * @param deg Angle in degrees (`float`).
  * @return Unsigned Q0.8 fixed-point packed angle, clamped full rotation integer range `[0, 255]` (`q0_8`).
  */
 #define FP_ANGLE_PACKED(deg) \
@@ -439,7 +439,7 @@
  *
  * @note π = 10240 units.
  *
- * @param rad Radians (`float`).
+ * @param rad Angle in radians (`float`).
  * @return Fixed-point radian representation, full rotation integer range `[0, 20480]` (`s32`).
  */
 #define FP_RADIAN(rad)                                                                \
