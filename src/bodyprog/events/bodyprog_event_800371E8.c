@@ -135,12 +135,12 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         disabledEventFlag_temp = mapEvent->disabledEventFlag_2;
         disabledEventFlag      = disabledEventFlag_temp;
 
-        if (requiredEventFlag != 0 && !Savegame_EventFlagGet(requiredEventFlag))
+        if (requiredEventFlag != EventFlag_None && !Savegame_EventFlagGet(requiredEventFlag))
         {
             continue;
         }
 
-        if (disabledEventFlag != 0 && Savegame_EventFlagGet(disabledEventFlag) &&
+        if (disabledEventFlag != EventFlag_None && Savegame_EventFlagGet(disabledEventFlag) &&
             (disabledEventFlag < 867 || mapEvent->activationType_4_4 == TriggerActivationType_Exclusive || mapEvent->sysState_8_0 == SysState_EventSetFlag))
         {
             continue;

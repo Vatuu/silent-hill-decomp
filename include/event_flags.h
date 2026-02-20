@@ -3,8 +3,11 @@
  */
 typedef enum _EventFlag
 {
-    EventFlag_0 = 0, // M0S01 FirstAidKit? Also used in M0S02, might just be a default.
+    EventFlag_None = 0,
 
+    EventFlag_1  = 1,
+    EventFlag_2  = 2,
+    EventFlag_3  = 3,
     EventFlag_4  = 4,
     EventFlag_5  = 5,
     EventFlag_6  = 6,
@@ -13,19 +16,21 @@ typedef enum _EventFlag
     EventFlag_9  = 9,
     EventFlag_10 = 10,
     EventFlag_11 = 11,
-
+    EventFlag_12 = 12,
     EventFlag_13 = 13,
     EventFlag_14 = 14,
     EventFlag_15 = 15,
     EventFlag_16 = 16,
     EventFlag_17 = 17,
     EventFlag_18 = 18,
-
+    EventFlag_19 = 19,
     EventFlag_20 = 20,
-
+    EventFlag_21 = 21,
+    EventFlag_22 = 22,
     EventFlag_23 = 23,
     EventFlag_24 = 24,
     EventFlag_25 = 25,
+    EventFlag_26 = 26,
 
     /** `MAP7_S01` and `MAP7_S02` common item pickups. Early numbers could be reclaimed flags or Nowhere was designed very early on? */
 
@@ -760,6 +765,8 @@ typedef enum _EventFlag
     EventFlag_M6S03_HealthDrink0   = 725,
     EventFlag_M6S03_HandgunBullets = 726,
     EventFlag_M6S03_HealthDrink1   = 727,
+
+    EventFlag_868 = 868,
 
     EventFlag_Hack = -1, // @hack Force enum to be treated as `s32`.
 } e_EventFlag;
