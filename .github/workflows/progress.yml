@@ -26,6 +26,9 @@ jobs:
           submodules: recursive
           lfs: true
 
+      - name: "Install Extra Dependencies"
+        run: apt-get install -y binutils-mipsel-linux-gnu
+
       - name: "Setup Python"
         run: pip3 install -r requirements.txt --break-system-packages
 
