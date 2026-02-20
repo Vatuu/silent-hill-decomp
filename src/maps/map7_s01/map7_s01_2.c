@@ -531,21 +531,21 @@ void func_800D7A60(void) // 0x800D7A60
 
 void func_800D8230(void) // 0x800D8230
 {
-    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vz };
 
     Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
 }
 
 void func_800D82C4(void) // 0x800D82C4
 {
-    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vz };
 
     Map_MessageWithSfx(MapMsgIdx_DoorLocked, Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800D8358(void) // 0x800D8358
 {
-    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vz };
 
     Map_MessageWithSfx(MapMsgIdx_DoorUnlocked, Sfx_DoorUnlocked, &sfxPos);
 }
@@ -558,7 +558,7 @@ void MapEvent_CommonItemTake(void) // 0x800D83EC
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventParam->field_5)
+    switch (g_MapEventParam->pointOfInterestIdx_5)
     {
         case 170:
             pickupType   = CommonPickupItemId_RifleShells;
@@ -606,28 +606,28 @@ void MapEvent_CommonItemTake(void) // 0x800D83EC
 
 void func_800D84AC(void) // 0x800D84AC
 {
-    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vz };
 
     Map_MessageWithSfx(81, Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800D8540(void) // 0x800D8540
 {
-    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vz };
 
     Map_MessageWithSfx(83, Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800D85D4(void) // 0x800D85D4
 {
-    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vz };
 
     Map_MessageWithSfx(85, Sfx_DoorLocked, &sfxPos);
 }
 
 void MapEvent_KeyOfOphielUse(void) // 0x800D8668
 {
-    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vz };
 
     Player_ItemRemove(InventoryItemId_KeyOfOphiel, 1);
     Map_MessageWithSfx(48, Sfx_UseKey, &sfxPos);
@@ -636,7 +636,7 @@ void MapEvent_KeyOfOphielUse(void) // 0x800D8668
 
 void MapEvent_KeyOfHagithUse(void) // 0x800D8724
 {
-    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vz };
 
     Player_ItemRemove(InventoryItemId_KeyOfHagith, 1);
     Map_MessageWithSfx(49, Sfx_UseKey, &sfxPos);
@@ -645,7 +645,7 @@ void MapEvent_KeyOfHagithUse(void) // 0x800D8724
 
 void MapEvent_KeyOfPhalegUse(void) // 0x800D87E0
 {
-    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->field_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->field_5].vz };
+    VECTOR3 sfxPos = { D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vx, Q12(-1.2f), D_800E00CC[g_MapEventParam->pointOfInterestIdx_5].vz };
 
     Player_ItemRemove(InventoryItemId_KeyOfPhaleg, 1);
     Map_MessageWithSfx(50, Sfx_UseKey, &sfxPos);

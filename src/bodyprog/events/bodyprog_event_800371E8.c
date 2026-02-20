@@ -102,7 +102,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         g_MapEventParam        = g_ItemTriggerEvents[i];
         g_MapEventLastUsedItem = g_SysWork.playerWork_4C.extra_128.lastUsedItem_28;
         g_MapEventSysState     = g_MapEventParam->sysState_8_0;
-        g_MapEventIdx          = g_MapEventParam->pointOfInterestIdx_8_5;
+        g_MapEventIdx          = g_MapEventParam->eventData_8_5;
 
         g_SysWork.playerWork_4C.extra_128.lastUsedItem_28 = InventoryItemId_Unequipped;
         Event_ItemTriggersClear();
@@ -153,7 +153,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         {
             g_MapEventParam    = mapEvent;
             g_MapEventSysState = mapEvent->sysState_8_0;
-            g_MapEventIdx      = mapEvent->pointOfInterestIdx_8_5;
+            g_MapEventIdx      = mapEvent->eventData_8_5;
             return;
         }
 
@@ -164,8 +164,8 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
             continue;
         }
 
-        // TODO: This uses `field_5` as the map point index, but there is also a separate `pointOfInterestIdx_8_5` field.
-        mapPoint = &g_MapOverlayHeader.mapPointsOfInterest_1C[mapEvent->field_5];
+        // TODO: This uses `field_5` as the map point index, but there is also a separate `eventData_8_5` field.
+        mapPoint = &g_MapOverlayHeader.mapPointsOfInterest_1C[mapEvent->pointOfInterestIdx_5];
 
         switch (mapEvent->triggerType_4_0)
         {
@@ -238,7 +238,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
                 ((g_SysWork.field_2388.field_1C[0].effectsInfo_0.field_0.s_field_0.field_0 & 1) || (g_SysWork.field_2388.field_1C[1].effectsInfo_0.field_0.s_field_0.field_0 & 1)))
             {
                 if (mapEvent->sysState_8_0 != SysState_LoadOverlay &&
-                    (mapEvent->sysState_8_0 != SysState_LoadRoom && mapEvent->pointOfInterestIdx_8_5 > 1))
+                    (mapEvent->sysState_8_0 != SysState_LoadRoom && mapEvent->eventData_8_5 > 1))
                 {
                     continue;
                 }
@@ -258,7 +258,7 @@ void Event_Update(bool disableButtonEvents) // 0x800373CC
         // Set `g_MapEventSysState` to the SysState needed for the event to be ran on next tick (`SysState_ReadMessage`/`SaveMenu`/`EventCallFunc`/etc.).
         g_MapEventParam    = mapEvent;
         g_MapEventSysState = mapEvent->sysState_8_0;
-        g_MapEventIdx      = mapEvent->pointOfInterestIdx_8_5;
+        g_MapEventIdx      = mapEvent->eventData_8_5;
         return;
     }
 

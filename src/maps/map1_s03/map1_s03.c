@@ -278,7 +278,7 @@ void func_800DA630(void) {}
 
 void func_800DA7F4(void) // 0x800DA7F4
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_LibraryReserveKey, 1);
     Map_MessageWithSfx(37, Sfx_UseKey, &sfxPos); // "Used the Library reverse key."
@@ -287,7 +287,7 @@ void func_800DA7F4(void) // 0x800DA7F4
 
 void func_800DA8B0(void) // 0x800DA8B0
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_ClassroomKey, 1);
     Map_MessageWithSfx(38, Sfx_UseKey, &sfxPos); // "Used classroom key."
@@ -338,7 +338,7 @@ void func_800DA950(void) // 0x800DA950
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventParam->field_5)
+    switch (g_MapEventParam->pointOfInterestIdx_5)
     {
         case 84:
             pickupType   = CommonPickupItemId_ShotgunShells;
@@ -411,7 +411,7 @@ void func_800DAA28(void) // 0x800DAA28
             break;
 
         case 3:
-            if (g_MapEventParam->field_5 == 19 || g_MapEventParam->field_5 == 20)
+            if (g_MapEventParam->pointOfInterestIdx_5 == 19 || g_MapEventParam->pointOfInterestIdx_5 == 20)
             {
                 if (g_MapEventParam->activationType_4_4 == TriggerActivationType_Item)
                 {
@@ -423,7 +423,7 @@ void func_800DAA28(void) // 0x800DAA28
                     MapMsg_DisplayAndHandleSelection(false, 35, false, false, 0, false); // "Nothing special."
                 }
             }
-            else if (g_MapEventParam->field_5 == 17 || g_MapEventParam->field_5 == 18)
+            else if (g_MapEventParam->pointOfInterestIdx_5 == 17 || g_MapEventParam->pointOfInterestIdx_5 == 18)
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S02_PickupClassroomKey))
                 {
@@ -455,7 +455,7 @@ void func_800DABC4(void) // 0x800DABC4
         case 0:
             Player_ControlFreeze();
 
-            if (g_MapEventParam->field_5 == 17 || g_MapEventParam->field_5 == 18)
+            if (g_MapEventParam->pointOfInterestIdx_5 == 17 || g_MapEventParam->pointOfInterestIdx_5 == 18)
             {
                 if (Savegame_EventFlagGet(EventFlag_M1S03_KeyDownTheDrain))
                 {
@@ -467,7 +467,7 @@ void func_800DABC4(void) // 0x800DABC4
                     Savegame_EventFlagSet(EventFlag_112);
                 }
             }
-            else if (g_MapEventParam->field_5 == 19 || g_MapEventParam->field_5 == 20)
+            else if (g_MapEventParam->pointOfInterestIdx_5 == 19 || g_MapEventParam->pointOfInterestIdx_5 == 20)
             {
                 if (g_MapEventParam->activationType_4_4 == TriggerActivationType_Item || Savegame_EventFlagGet(EventFlag_M1S02_UsedRubberBall))
                 {
@@ -508,7 +508,7 @@ void func_800DABC4(void) // 0x800DABC4
 
         case 7:
             func_800862F8(2, 0, false);
-            if (g_MapEventParam->field_5 == 19 || g_MapEventParam->field_5 == 20)
+            if (g_MapEventParam->pointOfInterestIdx_5 == 19 || g_MapEventParam->pointOfInterestIdx_5 == 20)
             {
                 if (g_MapEventParam->activationType_4_4 == TriggerActivationType_Item)
                 {

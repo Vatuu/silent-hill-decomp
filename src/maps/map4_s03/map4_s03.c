@@ -3324,7 +3324,7 @@ void MapEvent_CommonItemTake(void) // 0x800D667C
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventParam->field_5)
+    switch (g_MapEventParam->pointOfInterestIdx_5)
     {
         case 27:
             pickupType   = CommonPickupItemId_FirstAidKit;

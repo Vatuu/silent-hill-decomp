@@ -52,16 +52,16 @@ void func_800CEB94(void) {} // 0x800CEB94
 
 void func_800CEB9C(void) // 0x800CEB9C
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
 
     Map_MessageWithSfx(MapMsgIdx_DoorJammed, Sfx_DoorJammed, &sfxPos);
 }
 
 void func_800CEC30(void) // 0x800CEC30
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
 
-    if (g_MapEventParam->field_5 == 2)
+    if (g_MapEventParam->pointOfInterestIdx_5 == 2)
     {
         if (Savegame_EventFlagGet(EventFlag_180))
         {
@@ -124,7 +124,7 @@ void func_800CED44(void) // 0x800CED44
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventParam->field_5)
+    switch (g_MapEventParam->pointOfInterestIdx_5)
     {
         case 25:
             pickupType   = CommonPickupItemId_HealthDrink;

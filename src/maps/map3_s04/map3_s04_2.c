@@ -100,9 +100,9 @@ const VECTOR3 D_800CB1E0 = { 0x0000E800, 0xFFFFF000, 0x0008BE66 };
 void func_800D21C4(void) // 0x800D21C4
 {
     s32     i;
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
 
-    if (!Savegame_EventFlagGet(EventFlag_232) && g_MapEventParam->field_5 == 5)
+    if (!Savegame_EventFlagGet(EventFlag_232) && g_MapEventParam->pointOfInterestIdx_5 == 5)
     {
         for (i = 0; i < ARRAY_SIZE(g_SysWork.npcs_1A0); i++)
         {
@@ -177,7 +177,7 @@ void func_800D2470(void) // 0x800D2470
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventParam->field_5)
+    switch (g_MapEventParam->pointOfInterestIdx_5)
     {
         case 52:
             pickupType   = CommonPickupItemId_HealthDrink;
@@ -210,7 +210,7 @@ void func_800D2470(void) // 0x800D2470
 
 void func_800D250C(void) // 0x800D250C
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_ExaminationRoomKey, 1);
     Map_MessageWithSfx(48, Sfx_UseKey, &sfxPos);

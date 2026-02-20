@@ -859,6 +859,7 @@ typedef enum _GameDifficulty
 
 typedef enum _TriggerType
 {
+    TriggerType_EndOfArray     = NO_VALUE,
     TriggerType_None           = 0, /** Skips trigger/activation type checks. Always activates if required event flags are set and skips processing later events until flags deactivate it. */
     TriggerType_TouchAabb      = 1, /** Checks if the player has entered a rectangular area aligned to world axes. */
     TriggerType_TouchFacing    = 2, /** Checks if the player is within a small area and facing toward the trigger point. */
@@ -1037,18 +1038,18 @@ typedef struct _EventParam
 {
     s16 requiredEventFlag_0;
     s16 disabledEventFlag_2;
-    s8  triggerType_4_0        : 4; /** `e_TriggerType` */
-    u8  activationType_4_4     : 4; /** `e_TriggerActivationType` */
-    u8  field_5;                    // Index into `D_800E839C`. Related pickup item SFX.
-    u8  requiredItemId_6;           /** `e_InventoryItemId` that player must use from item screen. */
+    s8  triggerType_4_0    : 4; /** `e_TriggerType` */
+    u8  activationType_4_4 : 4; /** `e_TriggerActivationType` */
+    u8  pointOfInterestIdx_5;   /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
+    u8  requiredItemId_6;       /** `e_InventoryItemId` that player must use from item screen. */
     u8  unk_7[1];
-    u32 sysState_8_0           : 5; /** `e_SysState` used by the event. */
-    u32 pointOfInterestIdx_8_5 : 8; /** Index into `g_MapOverlayHeader.mapPointsOfInterest_1C`. */
-    u32 flags_8_13             : 6; /** `e_EventParamUnkCutsceneState` */
-    u32 field_8_19             : 5;
-    u32 field_8_24             : 1;
-    u32 mapOverlayIdx_8_25     : 6;
-    u32 field_8_31             : 1;
+    u32 sysState_8_0       : 5; /** `e_SysState` used by the event. */
+    u32 eventData_8_5      : 8; /** Can be an ID of a MapMsg, sound effect, index into `mapEventFuncs_20`, or index into `mapPointsOfInterest_1C` for areaLoad events. */
+    u32 flags_8_13         : 6; /** `e_EventParamUnkCutsceneState` */
+    u32 field_8_19         : 5;
+    u32 field_8_24         : 1;
+    u32 mapOverlayIdx_8_25 : 6;
+    u32 field_8_31         : 1;
 } s_EventParam;
 STATIC_ASSERT_SIZEOF(s_EventParam, 12);
 

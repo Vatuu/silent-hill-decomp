@@ -50,7 +50,7 @@ void func_800CCF9C(void) // 0x800CCF9C
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventParam->field_5)
+    switch (g_MapEventParam->pointOfInterestIdx_5)
     {
         case 24:
             pickupType   = CommonPickupItemId_ShotgunShells;

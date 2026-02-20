@@ -645,11 +645,11 @@ void SysState_LoadArea_Update(void) // 0x80039C40
         g_SysWork.flags_22A4 |= SysFlag2_10;
     }
 
-    D_800BCDB0 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->pointOfInterestIdx_8_5];
+    D_800BCDB0 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->eventData_8_5];
 
     if (D_800BCDB0.data.areaLoad.field_4_24 == 1)
     {
-        mapPoint                = &g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->field_5];
+        mapPoint                = &g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->pointOfInterestIdx_5];
         var1                    = g_SysWork.playerWork_4C.player_0.position_18.vz - mapPoint->positionZ_8;
         D_800BCDB0.positionX_0 += g_SysWork.playerWork_4C.player_0.position_18.vx - mapPoint->positionX_0;
         D_800BCDB0.positionZ_8 += var1;
@@ -666,9 +666,9 @@ void SysState_LoadArea_Update(void) // 0x80039C40
         g_SysWork.processFlags_2298 = SysWorkProcessFlag_RoomTransition;
         Bgm_TrackChange(g_MapEventParam->mapOverlayIdx_8_25);
 
-        if (g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->pointOfInterestIdx_8_5].data.areaLoad.field_4_5 != 0)
+        if (g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->eventData_8_5].data.areaLoad.field_4_5 != 0)
         {
-            g_SysWork.field_2349 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->pointOfInterestIdx_8_5].data.areaLoad.field_4_5 - 1;
+            g_SysWork.field_2349 = g_MapOverlayHeader.mapPointsOfInterest_1C[g_MapEventParam->eventData_8_5].data.areaLoad.field_4_5 - 1;
         }
     }
 

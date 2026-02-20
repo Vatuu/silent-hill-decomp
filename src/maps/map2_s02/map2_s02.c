@@ -54,7 +54,7 @@ void func_800E9C24(void) {}
 
 void func_800E9D54(void) // 0x800E9D54
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_AntiqueShopKey, 1);
     Map_MessageWithSfx(15, Sfx_UseKey, &sfxPos);
@@ -76,7 +76,7 @@ void func_800E9E10(void) // 0x800E9E10
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventParam->field_5)
+    switch (g_MapEventParam->pointOfInterestIdx_5)
     {
         case 41:
             pickupType   = CommonPickupItemId_HealthDrink;

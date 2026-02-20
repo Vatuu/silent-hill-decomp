@@ -611,7 +611,7 @@ void MapEvent_CommonItemTake(void) // 0x800DB3D8
     pickupType   = CommonPickupItemId_FirstAidKit;
     eventFlagIdx = 0;
 
-    switch (g_MapEventParam->field_5)
+    switch (g_MapEventParam->pointOfInterestIdx_5)
     {
         case 212:
             pickupType   = CommonPickupItemId_RifleShells;
@@ -659,21 +659,21 @@ void MapEvent_CommonItemTake(void) // 0x800DB3D8
 
 void func_800DB498(void) // 0x800DB498
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
 
     Map_MessageWithSfx(86, Sfx_DoorLocked, &sfxPos);
 }
 
 void func_800DB52C(void) // 0x800DB52C
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
 
     Map_MessageWithSfx(88, Sfx_DoorLocked, &sfxPos);
 }
 
 void MapEvent_KeyOfBethorUse(void) // 0x800DB5C0
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_KeyOfBethor, 1);
     Map_MessageWithSfx(77, Sfx_UseKey, &sfxPos);
@@ -682,7 +682,7 @@ void MapEvent_KeyOfBethorUse(void) // 0x800DB5C0
 
 void MapEvent_KeyOfAratronUse(void) // 0x800DB67C
 {
-    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->field_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->field_5].positionZ_8 };
+    VECTOR3 sfxPos = { MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionX_0, Q12(-1.2f), MAP_POINTS[g_MapEventParam->pointOfInterestIdx_5].positionZ_8 };
 
     Player_ItemRemove(InventoryItemId_KeyOfAratron, 1);
     Map_MessageWithSfx(78, Sfx_UseKey, &sfxPos);
