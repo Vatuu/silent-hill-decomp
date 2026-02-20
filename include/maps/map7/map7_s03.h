@@ -1028,4 +1028,6 @@ void func_800DF458(void);
 
 void func_800DF348(void);
 
+void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot);
+
 #endif

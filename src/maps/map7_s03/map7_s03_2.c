@@ -3167,7 +3167,198 @@ bool func_800DBCA4(MATRIX* mat, VECTOR3* outVec) // 0x800DBCA4
     return false;
 }
 
-INCLUDE_ASM("maps/map7_s03/nonmatchings/map7_s03_2", func_800DBD94);
+void func_800DBD94(s_800F3DAC* arg0, GsOT_TAG* ot) // 0x800DBD94
+{
+    SVECTOR       sp10;
+    SVECTOR       sp18;
+    VECTOR3       sp20;
+    s32           sp30;
+    s32           sp34;
+    s32           sp38;
+    s32           sp3C;
+    s32           sp40;
+    s32*          sp44;
+    s32           sp48;
+    u16           sp4C;
+    GsOT_TAG*     temp_a0_3;
+    MATRIX*       var_s7;
+    s16           temp_v0_6;
+    s32           temp_s0;
+    s32           temp_v1;
+    s32           var_a2;
+    s32           i;
+    s32           var_s4;
+    s32           var_s5;
+    s32           var_s6;
+    s32*          var_s3;
+    s32           var_a0;
+    POLY_FT4*     poly;
+    PACKET*       packet;
+    s_D_800F48A8* ptr;
+
+    sp4C = 0x43;
+    sp48 = Q12_MULT_PRECISE(arg0->rotZ_4D8, 0xE66);
+
+    if (g_SysWork.npcs_1A0[2].model_0.charaId_0 == 0x16)
+    {
+        sp4C = 3;
+    }
+
+    sp44   = arg0->field_A0;
+    var_s7 = arg0->mat_118;
+    var_s3 = arg0->field_28;
+
+    sp38 = 0x80808;
+    sp40 = arg0->field_20;
+
+    for (i = 0; i < arg0->field_1C; i++, var_s7++, var_s3++, sp44++)
+        ;
+
+    var_s4 = *sp44;
+
+    sp10.vx = (Q12_MULT_PRECISE(Math_Sin(var_s4), sp48) >> 4);
+    sp10.vy = (Q12_MULT_PRECISE(Math_Cos(var_s4), sp48) >> 4);
+    temp_s0 = var_s4 + 0x400;
+    sp18.vx = (Q12_MULT_PRECISE(Math_Sin(temp_s0), sp48) >> 4);
+
+    var_s3++;
+    i++;
+    sp44++;
+
+    sp18.vy = (Q12_MULT_PRECISE(Math_Cos(temp_s0), sp48) >> 4);
+    sp18.vz = 0;
+    sp10.vz = 0;
+
+    func_800DBBD8(var_s7++);
+
+    var_a2 = func_800DBA08(&sp10, &sp30, &sp34);
+
+    packet = GsOUT_PACKET_P;
+    poly   = packet;
+    ptr    = &D_800F48A8;
+
+    for (; i < sp40;
+         i++,
+         var_s7++,
+         var_s3++,
+         sp44++)
+    {
+        var_a0 = var_s4;
+        var_s4 = *sp44;
+        sp3C   = var_a2;
+
+        do
+        {
+            temp_v0_6 = func_8005BF38(var_s4 - var_a0);
+        } while (0); // @hack
+
+        temp_s0 = temp_v0_6;
+
+        if (ABS(temp_v0_6) < 0x400)
+        {
+            var_s6 = sp30;
+            var_s5 = sp34;
+        }
+        else
+        {
+            var_s6 = sp34;
+            var_s5 = sp30;
+        }
+
+        sp10.vx = (Q12_MULT_PRECISE(Math_Sin(var_s4), sp48) >> 4);
+        sp10.vy = (Q12_MULT_PRECISE(Math_Cos(var_s4), sp48) >> 4);
+        temp_s0 = var_s4 + 0x400;
+        sp18.vx = (Q12_MULT_PRECISE(Math_Sin(temp_s0), sp48) >> 4);
+        sp18.vy = (Q12_MULT_PRECISE(Math_Cos(temp_s0), sp48) >> 4);
+        sp18.vz = 0;
+        sp10.vz = 0;
+
+        if (arg0->field_4E8 == 0 && func_800DBCA4(var_s7, &sp20) && g_DeltaTime0 != 0 && ptr->field_44 == 0)
+        {
+            if (ptr->field_48 != 2)
+            {
+                if (ptr->field_48 == 0)
+                {
+                    func_800DBC18(0x1E000);
+                    func_800DACFC(&sp20, 0, 0);
+                    func_800DBAE8(&g_SysWork.playerWork_4C.player_0.position_18, 1);
+                }
+                else
+                {
+                    func_800DBC18(0x14000);
+                    func_800DACFC(&sp20, 0, 1);
+                }
+                func_800DBAE8(&g_SysWork.playerWork_4C.player_0.position_18, 3);
+            }
+
+            if (i < arg0->field_20)
+            {
+                sp40 = i;
+                if (i < arg0->field_18)
+                {
+                    sp40 = i + 1;
+                }
+
+                arg0->field_18 = sp40;
+                arg0->field_20 = sp40;
+            }
+            arg0->field_4E8 = 1;
+        }
+
+        func_800DBBD8(var_s7);
+
+        var_a2 = func_800DBA08(&sp10, &sp30, &sp34);
+
+        if (var_a2 == 0 || sp3C == 0)
+        {
+            continue;
+        }
+
+        if ((u16)var_s6 > 0x140 && (u32)(var_s6 >> 16) > 0xE0 && (u16)var_s5 > 0x140 && (u32)(var_s5 >> 16) > 0xE0)
+        {
+            // @hack Some optimized out code?
+            temp_v1 = sp30;
+            temp_v1++;
+            temp_v1--;
+            sp30 = temp_v1;
+        }
+
+        if (*var_s3 == 0)
+        {
+            continue;
+        }
+
+        *(s32*)&poly->x0 = var_s6;
+        *(s32*)&poly->x1 = var_s5;
+        *(s32*)&poly->x2 = sp30;
+        *(s32*)&poly->x3 = sp34;
+
+        var_a0  = (i & 1) ? 0 : 0x7F;
+        temp_v1 = 0x40;
+
+        setUV4(poly, 0, var_a0, temp_v1, var_a0, 0, var_a0 + 0x7F, temp_v1, var_a0 + 0x7F);
+
+        poly->tpage = 0x35;
+        poly->clut  = sp4C;
+
+        if (g_DeltaTime0 != 0)
+        {
+            *var_s3 -= sp38;
+        }
+
+        *(s32*)&poly->r0 = *var_s3;
+
+        setPolyFT4(poly);
+        setSemiTrans(poly, 1);
+
+        temp_a0_3 = &ot[((sp3C + var_a2) / 2) >> 1];
+        addPrim(temp_a0_3, poly);
+        poly++;
+    }
+
+    packet         = poly;
+    GsOUT_PACKET_P = packet;
+}
 
 void func_800DC3EC(s_800F3DAC* arg0) // 0x800DC3EC
 {
