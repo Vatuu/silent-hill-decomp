@@ -104,7 +104,44 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
 
 void func_800DE26C(void) {}
 
-INCLUDE_ASM("maps/map6_s04/nonmatchings/map6_s04_2", func_800DE274);
+void func_800DE274(void) // 0x800DE274
+{
+    s_func_800DE274* ptr;
+    s32              diff;
+    s32              j;
+    s32              i;
+    u8*              var_s1;
+    s32              range;
+    s32              square;
+    s32              temp;
+
+    ptr = UNK_FS_BUFFER_6;
+
+    range  = 64;
+    var_s1 = UNK_FS_BUFFER_6->field_0;
+
+    for (i = -range; i <= range; i++)
+    {
+        square = SQUARE(i);
+
+        for (j = -range; j <= range; j++, var_s1++)
+        {
+            diff = range - SquareRoot0(square + SQUARE(j));
+            if (diff > 0)
+            {
+                temp    = (diff << 8) / range;
+                temp    = MIN(255, temp);
+                *var_s1 = temp;
+            }
+            else
+            {
+                *var_s1 = 0;
+            }
+        }
+    }
+
+    ptr->field_4318 = 0;
+}
 
 s32 func_800DE350(s32 arg0) // 0x800DE350
 {

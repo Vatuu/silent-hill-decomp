@@ -316,6 +316,8 @@ void Ai_Parasite_Update(s_SubCharacter* chara, s_AnmHeader* anmHdr, GsCOORDINATE
 
 void func_800DE26C(void);
 
+void func_800DE274(void);
+
 void func_800DBE5C(s_SubCharacter* chara);
 
 s32 func_800DE350(s32 arg0);
