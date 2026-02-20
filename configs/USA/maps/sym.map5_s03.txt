@@ -175,8 +175,12 @@ g_MapEventFuncs                     = 0x800D3878;
 //-----------------------------------------------------------------
 MAP_MESSAGES                        = 0x800D38A4; // type:u32 size:0x110
 
+//---------------------------------------------------------------------------
+//--- PA: 0x00A43C   VA: 0x800D39B4   subsegment: .data, map5_s03_events_data
+//---------------------------------------------------------------------------
+
 //----------------------------------------------------
-//--- PA: 0x00A43C   VA: 0x800D39B4   subsegment: data
+//--- PA: 0x00A664   VA: 0x800D3BDC   subsegment: data
 //----------------------------------------------------
 g_WorldObjectPose_HealthDrink0      = 0x800D3BFC; // type:WorldObjectPose size:0x14
 g_WorldObjectPose_ShotgunShells     = 0x800D3C10; // type:WorldObjectPose size:0x14

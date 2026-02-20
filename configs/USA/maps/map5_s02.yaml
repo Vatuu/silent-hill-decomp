@@ -59,6 +59,8 @@ segments:
       - [0x155C, rodata]
       - [0x1560, .rodata, map5_s02_2]
 
+      - [0x2154, c, map5_s02_events_data]
+      
       # .text section
       - [0x2154, c, map5_s02]
       - [0x9930, c, Chara_Kaufmann]
@@ -67,5 +69,6 @@ segments:
       # .data section
       - [0xD9C0, data]
       - [0xFD3C, .data, map5_s02_2]
-      - [0xFE08, data]
+      - [0xFE08, .data, map5_s02_events_data]
+      - [0xFF04, data]
   - [0x11500]

@@ -64,6 +64,7 @@ segments:
       # .text section
       - [0x1A98, c, map2_s01_anim_info]
       - [0x1A98, c, map2_s01_header]
+      - [0x1A98, c, map2_s01_events_data]
       - [0x1A98, c, map2_s01]
       - [0x3C94, c, Chara_Dahlia]
       - [0x4828, c, map2_s01_2]
@@ -73,5 +74,6 @@ segments:
       - [0x6874, data] # TODO: Dahlia anim info, other data
       - [0x6C24, .data, map2_s01_header]
       - [0x6D84, .data, map2_s01_2]
-      - [0x6E34, data]
+      - [0x6E34, .data, map2_s01_events_data]
+      - [0x6F84, data]
   - [0x8300]

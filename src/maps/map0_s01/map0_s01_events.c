@@ -70,9 +70,6 @@ const char* MAP_MESSAGES[] = {
     "\tI_have_more_important_stuff_to_do. ~E "
 };
 
-// @hack Including here until we get splits figured out.
-#include "map0_s01_events_data.c"
-
 void MapEvent_CafeCutscene(void) // 0x800DA980
 {
     typedef enum _EventState

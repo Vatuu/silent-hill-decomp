@@ -63,6 +63,8 @@ segments:
       - [0x1BD8, .rodata, Chara_Kaufmann]
       - [0x1CA4, rodata]
       - [0x1CA8, .rodata, map7_s02_2]
+      
+      - [0x46EC, c, map7_s02_events_data]
 
       # .text section
       - [0x46EC, c, map7_s02]
@@ -78,5 +80,6 @@ segments:
       # .data section
       - [0x1C1B8, data]
       - [0x1F92C, .data, map7_s02_2]
-      - [0x1FBA8, data]
+      - [0x1FBA8, .data, map7_s02_events_data]
+      - [0x2076C, data]
   - [0x22F00]

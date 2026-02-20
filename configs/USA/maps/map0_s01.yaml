@@ -65,6 +65,7 @@ segments:
       # .text section
       - [0x3614, c, map0_s01_header]
       - [0x3614, c, map0_s01_anim_info]
+      - [0x3614, c, map0_s01_events_data]
       - [0x3614, c, map0_s01]
       - [0xF29C, c, Chara_Cybil]
       - [0x10594, c, map0_s01_2]
@@ -75,5 +76,6 @@ segments:
       - [0x14220, data]
       - [0x1481C, .data, map0_s01_header]
       - [0x14910, .data, map0_s01_events]
+      - [0x14A40, .data, map0_s01_events_data]
       - [0x14B54, data]
   - [0x19100]

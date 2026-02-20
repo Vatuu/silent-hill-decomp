@@ -61,6 +61,7 @@ segments:
       # .text section
       - [0x13E4, c, map1_s04_anim_info]
       - [0x13E4, c, map1_s04_header]
+      - [0x13E4, c, map1_s04_events_data]
       - [0x13E4, c, map1_s04]
 
       # .data section
@@ -68,5 +69,6 @@ segments:
       - [0x39A4, data]
       - [0x3A38, .data, map1_s04_header]
       - [0x3A5C, .data, map1_s04]
-      - [0x3A9C, data]
+      - [0x3A9C, .data, map1_s04_events_data]
+      - [0x3AC0, data]
   - [0x4B00]

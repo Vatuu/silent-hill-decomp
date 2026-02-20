@@ -58,6 +58,8 @@ segments:
       - [0x1328, .rodata, Chara_Lisa]
       - [0x13C8, .rodata, map4_s04_2]
 
+      - [0x26E8, c, map4_s04_events_data]
+
       # .text section
       - [0x26E8, c, map4_s04]
       - [0x6928, c, Chara_Lisa]
@@ -66,5 +68,6 @@ segments:
       # .data section
       - [0x9A18, data]
       - [0x9F54, .data, map4_s04_2]
-      - [0xA09C, data]
+      - [0xA09C, .data, map4_s04_events_data]
+      - [0xA198, data]
   - [0xDA00]

@@ -169,8 +169,12 @@ MAP_POINTS                     = 0x800DCCB8;
 //---------------------------------------------------------------
 MAP_MESSAGES                   = 0x800DD1BC; // type:u32 size:0xA0
 
+//---------------------------------------------------------------------------
+//--- PA: 0x013CE4   VA: 0x800DD25C   subsegment: .data, map1_s00_events_data
+//---------------------------------------------------------------------------
+
 //----------------------------------------------------
-//--- PA: 0x013CE4   VA: 0x800DD25C   subsegment: data
+//--- PA: 0x0141A0   VA: 0x800DD718   subsegment: data
 //----------------------------------------------------
 g_CommonWorldObjectPoses       = 0x800DD71C; // type:WorldObjectPos size:0x64
 g_ParticleMapOverlayId0        = 0x800DD780;

@@ -60,6 +60,8 @@ segments:
       - [0x13A0, .rodata, map3_s06_2]
       - [0x1D65, rodata] # 3 random bytes, linker artifact, splat doesn't seem to write to .s so postbuild.py has to patch them back in.
 
+      - [0x1D68, c, map3_s06_events_data]
+
       # .text section
       - [0x1D68, c, map3_s06]
       - [0x5B80, c, Chara_Dahlia]
@@ -68,5 +70,6 @@ segments:
       # .data section
       - [0x8648, data]
       - [0x8E44, .data, map3_s06_2]
-      - [0x8F00, data]
+      - [0x8F00, .data, map3_s06_events_data]
+      - [0x9158, data]
   - [0xCB00]

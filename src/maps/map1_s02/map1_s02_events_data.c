@@ -255,7 +255,7 @@ s_EventParam D_800E1930[121] = {
         .flags_8_13           = 1,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1223,
+        .requiredEventFlag_0  = EventFlag_1207,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 12,
@@ -264,7 +264,7 @@ s_EventParam D_800E1930[121] = {
         .field_8_19           = 2,
     },
     {
-        .requiredEventFlag_0  = EventFlag_1223,
+        .requiredEventFlag_0  = EventFlag_1207,
         .triggerType_4_0      = TriggerType_TouchObbFacing,
         .activationType_4_4   = TriggerActivationType_Button,
         .pointOfInterestIdx_5 = 26,

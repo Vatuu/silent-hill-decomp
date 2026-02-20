@@ -59,6 +59,8 @@ segments:
       - [0x20AC, rodata]
       - [0x20B0, .rodata, map6_s04_2]
 
+      - [0x3268, c, map6_s04_events_data]
+
       # .text section
       - [0x3268, c, map6_s04]
       - [0x12D3C, c, Chara_AlessaDahlia]
@@ -67,5 +69,6 @@ segments:
       # .data section
       - [0x1E620, data]
       - [0x222A4, .data, map6_s04_2]
-      - [0x223D4, data]
+      - [0x223D4, .data, map6_s04_events_data]
+      - [0x224B8, data]
   - [0x24A00]

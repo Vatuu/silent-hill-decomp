@@ -56,11 +56,14 @@ segments:
       # .rodata section
       - [0x0, .rodata, map1_s00]
 
+      - [0x2230, c, map1_s00_events_data]
+
       # .text section
       - [0x2230, c, map1_s00]
 
       # .data section
       - [0x10ED4, data]
       - [0x13C44, .data, map1_s00]
-      - [0x13CE4, data]
+      - [0x13CE4, .data, map1_s00_events_data]
+      - [0x141A0, data]
   - [0x17D00]

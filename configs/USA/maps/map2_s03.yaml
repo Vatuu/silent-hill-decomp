@@ -61,6 +61,7 @@ segments:
       # .text section
       - [0x138C, c, map2_s03_anim_info]
       - [0x138C, c, map2_s03_header]
+      - [0x138C, c, map2_s03_events_data]
       - [0x138C, c, map2_s03]
 
       # .data section
@@ -68,5 +69,6 @@ segments:
       - [0x3638, data]
       - [0x373C, .data, map2_s03_header]
       - [0x375C, .data, map2_s03]
-      - [0x379C, data]
+      - [0x379C, .data, map2_s03_events_data]
+      - [0x37B4, data]
   - [0x4A00]

@@ -56,11 +56,14 @@ segments:
       # .rodata section
       - [0x0, .rodata, map6_s03]
 
+      - [0x1CF4, c, map6_s03_events_data]
+
       # .text section
       - [0x1CF4, c, map6_s03]
 
       # .data section
       - [0xFDFC, data]
       - [0x12868, .data, map6_s03]
-      - [0x128AC, data]
+      - [0x128AC, .data, map6_s03_events_data]
+      - [0x1296C, data]
   - [0x16B00]

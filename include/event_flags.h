@@ -997,6 +997,7 @@ typedef enum _EventFlag
     EventFlag_1204 = 1204,
 
     EventFlag_1206 = 1206,
+    EventFlag_1207 = 1207,
 
     EventFlag_1208 = 1208,
 

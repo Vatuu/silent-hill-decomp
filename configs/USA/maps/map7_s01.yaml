@@ -60,6 +60,8 @@ segments:
       - [0x1858, .rodata, Chara_Lisa]
       - [0x18F8, .rodata, map7_s01_2]
 
+      - [0x342C, c, map7_s01_events_data]
+      
       # .text section
       - [0x342C, c, map7_s01]
       - [0xB440, c, Chara_GhostChildAlessa]
@@ -70,5 +72,6 @@ segments:
       # .data section
       - [0x159D0, data]
       - [0x17468, .data, map7_s01_2]
-      - [0x175EC, data]
+      - [0x175EC, .data, map7_s01_events_data]
+      - [0x17F70, data]
   - [0x19F00]

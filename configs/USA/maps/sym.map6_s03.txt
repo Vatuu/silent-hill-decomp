@@ -185,8 +185,12 @@ sharedData_800D9B2C_5_s00        = 0x800DBB4C;
 //---------------------------------------------------------------
 MAP_MESSAGES                     = 0x800DBDE0; // type:u32 size:0x44
 
+//---------------------------------------------------------------------------
+//--- PA: 0x0128AC   VA: 0x800DBE24   subsegment: .data, map6_s03_events_data
+//---------------------------------------------------------------------------
+
 //----------------------------------------------------
-//--- PA: 0x0128AC   VA: 0x800DBE24   subsegment: data
+//--- PA: 0x01296C   VA: 0x800DBEE4   subsegment: data
 //----------------------------------------------------
 g_CommonWorldObjectPoses         = 0x800DBEE4; // type:WorldObjectPose size:0x3C
 g_ParticleMapOverlayId0          = 0x800DBF20;

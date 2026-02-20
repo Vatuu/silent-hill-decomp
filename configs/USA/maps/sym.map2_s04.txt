@@ -115,8 +115,12 @@ g_MapEventFuncs               = 0x800CDE4C;
 //---------------------------------------------------------------
 MAP_MESSAGES                  = 0x800CDE68; // type:u32 size:0x6C
 
+//---------------------------------------------------------------------------
+//--- PA: 0x00495C   VA: 0x800CDED4   subsegment: .data, map2_s04_events_data
+//---------------------------------------------------------------------------
+
 //----------------------------------------------------
-//--- PA: 0x00495C   VA: 0x800CDED4   subsegment: data
+//--- PA: 0x004AAC   VA: 0x800CE024   subsegment: data
 //----------------------------------------------------
 g_CommonWorldObjectPoses      = 0x800CE024; // type:WorldObjectPos size:0xC4
 g_ParticleMapOverlayId0       = 0x800CE0B0;
