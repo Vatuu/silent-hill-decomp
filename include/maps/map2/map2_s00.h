@@ -153,6 +153,8 @@ void func_800EB7E0(void);
 
 void func_800EB824(s32);
 
+void func_800EB908(void);
+
 void func_800EC080(void);
 
 /** Index getter. */

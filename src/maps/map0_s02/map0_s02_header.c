@@ -7,9 +7,6 @@
 
 #define BLOOD_SPLAT_COUNT_MAX 50
 
-#define func_800CECB0 (0x800CECB0)
-#define func_800CECDC (0x800CECDC)
-
 extern u8 D_800CFD90[];
 extern s_BloodSplat g_Effect_BloodSplats[BLOOD_SPLAT_COUNT_MAX];
 extern s_AnimInfo HARRY_M0S02_ANIM_INFOS[];

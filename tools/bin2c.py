@@ -15,6 +15,7 @@ Recommend using @tools/bin2c.cfg argument to read in default settings/mappings.
 
 # TODO:
 # - inner-structs might have issues with `self.struct_field_types`?
+# - to_initializer has issues getting the right type for bitfield members inside unions
 
 import sys
 import argparse
@@ -1063,7 +1064,8 @@ class StructParser:
                 # Return symbol name if value exists inside sym_addrs, else return pointer as hex
                 return self.sym_addrs[value] if value in self.sym_addrs else f"0x{value:X}"
             else:
-                if field_type in self.enum_value_mappings:
+                # TODO: field_type == None is caused by bitfield members inside unions
+                if field_type != None and field_type in self.enum_value_mappings:
                     enum_val = self.lookup_enum_name(field_type, value)
                     if enum_val is not None:
                         return enum_val
